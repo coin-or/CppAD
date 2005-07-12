@@ -1,0 +1,8 @@
+Simple Vector concept checking ($xref/CheckSimpleVector/$$) was
+added to the routines:
+$xref/LuFactor/$$,
+$xref/LuSolve/$$,
+$xref/LuInvert/$$,
+$xref/OdeErrControl/$$,
+$xref/Runge45/$$, and
+$xref/Rosen34/$$.

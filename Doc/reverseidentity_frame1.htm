@@ -1,0 +1,180 @@
+<html><head>
+<title>An Important Reverse Mode Identity</title>
+<meta name="description" content="An Important Reverse Mode Identity">
+<meta name="keywords" content=" "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="acosreverse.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="speed.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="reverseidentity.htm" target="_top">section</a>, <a href="reverseidentity_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+
+
+<center><b><big><big>An Important Reverse Mode Identity</big></big></b></center>
+The theorem and the proof below is a restatement
+of the results on page 236 of
+<a href="bib_frame1.htm#Evaluating Derivatives" target="frame1"><i><span style='white-space: nowrap'>Evaluating&nbsp;Derivatives</span></i></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Theorem">Theorem</a></big></b>
+<br>
+Suppose we are given an differentiable <code>
+<span style='white-space: nowrap'>&nbsp;F&nbsp;:&nbsp;B^n&nbsp;\rightarrow&nbsp;&nbsp;B^m</span></code>
+.
+We define the functions 
+<code>
+<span style='white-space: nowrap'>&nbsp;X&nbsp;:&nbsp;B&nbsp;\times&nbsp;B^{n&nbsp;\times&nbsp;p}&nbsp;\rightarrow&nbsp;B^n</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;Y&nbsp;:&nbsp;B&nbsp;\times&nbsp;B^{n&nbsp;\times&nbsp;p&nbsp;}\rightarrow&nbsp;B^m</span></code>
+,
+and
+<code>
+<span style='white-space: nowrap'>&nbsp;y^{(j)}&nbsp;:&nbsp;B&nbsp;\times&nbsp;B^{n&nbsp;\times&nbsp;p&nbsp;}\rightarrow&nbsp;B^m</span></code>
+ by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X(t,&nbsp;x)&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;x^{(0)}&nbsp;+&nbsp;x^{(1)}&nbsp;t&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;x^{(p)}&nbsp;t^p<br>
+\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y(t,&nbsp;x)&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;F&nbsp;[&nbsp;X(t,&nbsp;x)&nbsp;]<br>
+\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y^{(j)}&nbsp;(t,&nbsp;x)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;\frac{1}{j&nbsp;!}&nbsp;\Dpow{j}{t}&nbsp;Y(t,&nbsp;x)<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+where <code>
+<span style='white-space: nowrap'>&nbsp;x^{(j)}</span></code>
+ denotes the <i>j</i>-th column of 
+<code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;\in&nbsp;B^{n&nbsp;\times&nbsp;p}</span></code>
+.
+It follows that
+for all <code>
+<span style='white-space: nowrap'>&nbsp;i,&nbsp;j</span></code>
+ such that <code>
+<span style='white-space: nowrap'>&nbsp;i&nbsp;\leq&nbsp;j&nbsp;\leq&nbsp;p</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+\D{&nbsp;y^{(j)}&nbsp;}{&nbsp;x^{(i)}&nbsp;}&nbsp;(0,&nbsp;x)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;\D{&nbsp;y^{(j-i)}&nbsp;}{&nbsp;x^{(0)}&nbsp;}&nbsp;(0,&nbsp;x)<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Proof">Proof</a></big></b>
+<br>
+If follows from the definitions that
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rclr}<br>
+\D{&nbsp;y^{(j)}&nbsp;}{&nbsp;x^{(i)}&nbsp;}&nbsp;(t,&nbsp;x)<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+\D{&nbsp;}{&nbsp;x^{(i)}&nbsp;}&nbsp;\frac{1}{j&nbsp;!&nbsp;}&nbsp;\Dpow{j}{t}&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(F&nbsp;\circ&nbsp;&nbsp;X)&nbsp;(t,&nbsp;x)&nbsp;<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+\frac{1}{j&nbsp;!&nbsp;}&nbsp;\Dpow{j}{t}&nbsp;<br>
+\D{&nbsp;}{&nbsp;x^{(i)}&nbsp;}&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(F&nbsp;\circ&nbsp;&nbsp;X)&nbsp;(t,&nbsp;x)&nbsp;<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+\frac{1}{j&nbsp;!&nbsp;}&nbsp;\Dpow{j}{t}&nbsp;<br>
+[&nbsp;t^i&nbsp;(&nbsp;F^{(1)}&nbsp;\circ&nbsp;X&nbsp;)&nbsp;(t,&nbsp;x)&nbsp;]&nbsp;<br>
+&amp;&nbsp;\hspace{2cm}&nbsp;(*)<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+Using the previous equation (*) we obtain 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\D{&nbsp;y^{(j-i)}&nbsp;}{&nbsp;x^{(0)}&nbsp;}&nbsp;(t,&nbsp;x)<br>
+=<br>
+\frac{1}{(j-i)&nbsp;!&nbsp;}&nbsp;\Dpow{j-i}{t}&nbsp;<br>
+(&nbsp;F^{(1)}&nbsp;\circ&nbsp;X&nbsp;)&nbsp;(t,&nbsp;x)<br>
+\]&nbsp;</span></code>
+
+Note that <code>
+<span style='white-space: nowrap'>&nbsp;i&nbsp;\leq&nbsp;j</span></code>
+
+and if <code>
+<span style='white-space: nowrap'>&nbsp;i&nbsp;&lt;&nbsp;k&nbsp;\leq&nbsp;j</span></code>
+ the <i>k</i>-th derivative
+of <code>
+<span style='white-space: nowrap'>&nbsp;t^i</span></code>
+ is zero.
+Starting with equation (*),
+and using <code>
+<span style='white-space: nowrap'>&nbsp;k</span></code>
+ to index the number of derivatives
+of <code>
+<span style='white-space: nowrap'>&nbsp;t^i</span></code>
+,
+we have
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+\D{&nbsp;y^{(j)}&nbsp;}{&nbsp;x^{(i)}&nbsp;}&nbsp;(t,&nbsp;x)<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+\frac{1}{j&nbsp;!&nbsp;}&nbsp;\Dpow{j}{t}&nbsp;<br>
+[&nbsp;t^i&nbsp;(&nbsp;F^{(1)}&nbsp;\circ&nbsp;X&nbsp;)&nbsp;(t,&nbsp;x)&nbsp;]&nbsp;<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+\frac{1}{j&nbsp;!}&nbsp;\sum_{k=0}^i&nbsp;<br>
+\left(&nbsp;\begin{array}{c}&nbsp;j&nbsp;\\&nbsp;k&nbsp;\end{array}&nbsp;\right)<br>
+\frac{&nbsp;i&nbsp;!&nbsp;}{&nbsp;(i&nbsp;-&nbsp;k)&nbsp;!&nbsp;}&nbsp;t^{i-k}&nbsp;\;&nbsp;<br>
+\Dpow{j-k}{t}&nbsp;(&nbsp;F^{(1)}&nbsp;\circ&nbsp;X&nbsp;)&nbsp;(t,&nbsp;x)<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+\frac{1}{j&nbsp;!}&nbsp;\sum_{k=0}^i&nbsp;<br>
+\frac{&nbsp;j&nbsp;!&nbsp;}{&nbsp;k&nbsp;!&nbsp;\;&nbsp;(j&nbsp;-&nbsp;k)&nbsp;!&nbsp;}<br>
+\frac{&nbsp;i&nbsp;!&nbsp;}{&nbsp;(i&nbsp;-&nbsp;k)&nbsp;!&nbsp;}&nbsp;t^{i-k}&nbsp;\;&nbsp;<br>
+(j&nbsp;-&nbsp;k)&nbsp;!&nbsp;\;&nbsp;\D{&nbsp;y^{(j-k)}&nbsp;}{&nbsp;x^{(0)}&nbsp;}&nbsp;<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+Substituting zero for <code>
+<span style='white-space: nowrap'>&nbsp;t</span></code>
+,
+only the term corresponding to <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;i</span></code>
+ is non-zero,
+so we have
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+\D{&nbsp;y^{(j)}&nbsp;}{&nbsp;x^{(i)}&nbsp;}&nbsp;(0,&nbsp;x)<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+\frac{&nbsp;j&nbsp;!&nbsp;\;&nbsp;i&nbsp;!&nbsp;\;&nbsp;(j&nbsp;-&nbsp;i)&nbsp;!&nbsp;}{&nbsp;j&nbsp;!&nbsp;\;&nbsp;i&nbsp;!&nbsp;\;&nbsp;(j&nbsp;-&nbsp;i)&nbsp;!&nbsp;}<br>
+\D{&nbsp;y^{(j-i)}&nbsp;}{&nbsp;x^{(0)}&nbsp;}&nbsp;(0,&nbsp;x)<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+\D{&nbsp;y^{(j-i)}&nbsp;}{&nbsp;x^{(0)}&nbsp;}&nbsp;(0,&nbsp;x)<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+
+
+
+<hr>Input File: omh\ReverseIdentity.omh
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<html><head>
+<title>Multiple Tapes: Example and Test</title>
+<meta name="description" content="Multiple Tapes: Example and Test">
+<meta name="keywords" content=" multiple tape "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="multape.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="library.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="multape.cpp.htm" target="_top">section</a>, <a href="multape.cpp_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+<center><b><big><big>Multiple Tapes: Example and Test</big></big></b></center>
+<br>
+<b><big><a name="Description">Description</a></big></b>
+<br>
+This is an example and test of using multiple levels of taping to compute
+the value
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\frac{d}{dx}&nbsp;\left[&nbsp;f^{(1)}&nbsp;(x)&nbsp;*&nbsp;v&nbsp;\right]<br>
+\]&nbsp;</span></code>
+
+where <code>
+<span style='white-space: nowrap'>&nbsp;f&nbsp;:&nbsp;\R^n&nbsp;\rightarrow&nbsp;\R</span></code>
+ and
+<code>
+<span style='white-space: nowrap'>&nbsp;v&nbsp;\in&nbsp;\R^n</span></code>
+.
+The example <a href="hestimesdir.cpp.htm" target="_top"><span style='white-space: nowrap'>HesTimesDir.cpp</span></a>
+ computes the same value using only
+one level of taping (more efficient) and the identity
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\frac{d}{dx}&nbsp;\left[&nbsp;f^{(1)}&nbsp;(x)&nbsp;*&nbsp;v&nbsp;\right]&nbsp;=&nbsp;f^{(2)}&nbsp;(x)&nbsp;*&nbsp;v<br>
+\]&nbsp;</span></code>
+
+
+
+
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+<br>
+namespace&nbsp;{&nbsp;//&nbsp;put&nbsp;this&nbsp;function&nbsp;in&nbsp;the&nbsp;empty&nbsp;namespace<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;f(x)&nbsp;=&nbsp;|x|^2&nbsp;=&nbsp;x[0]^2&nbsp;+&nbsp;...&nbsp;+&nbsp;x[n-1]^2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;&lt;class&nbsp;Type&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type&nbsp;f(CppADvector&lt;Type&gt;&nbsp;&amp;x)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;Type&nbsp;sum&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;i&nbsp;=&nbsp;x.size();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while(i--)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum&nbsp;+=&nbsp;x[i]&nbsp;*&nbsp;x[i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;sum;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br>
+}<br>
+<br>
+bool&nbsp;MulTape()&nbsp;<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;=&nbsp;true;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;initialize&nbsp;test&nbsp;result<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;so&nbsp;do&nbsp;not&nbsp;need&nbsp;CppAD::<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef&nbsp;AD&lt;double&gt;&nbsp;&nbsp;&nbsp;ADdouble;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;type&nbsp;for&nbsp;one&nbsp;level&nbsp;of&nbsp;taping<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef&nbsp;AD&lt;ADdouble&gt;&nbsp;ADDdouble;&nbsp;&nbsp;&nbsp;//&nbsp;type&nbsp;for&nbsp;two&nbsp;levels&nbsp;of&nbsp;taping<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;n&nbsp;=&nbsp;5;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;dimension&nbsp;for&nbsp;example<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;i;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;a&nbsp;temporary&nbsp;index&nbsp;variable<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;&nbsp;&nbsp;&nbsp;x(n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;ADdouble&gt;&nbsp;&nbsp;ax(n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;ADDdouble&gt;&nbsp;aax(n);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;value&nbsp;of&nbsp;the&nbsp;independent&nbsp;variables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ax[i]&nbsp;=&nbsp;x[i]&nbsp;=&nbsp;double(i);&nbsp;&nbsp;//&nbsp;x[i]&nbsp;=&nbsp;i<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(ax);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;ax&nbsp;is&nbsp;indedendent&nbsp;for&nbsp;ADdouble<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;aax[i]&nbsp;=&nbsp;ax[i];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;track&nbsp;how&nbsp;aax&nbsp;depends&nbsp;on&nbsp;ax<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(aax);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;aax&nbsp;is&nbsp;independent&nbsp;for&nbsp;ADDdouble<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compute&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;ADDdouble&gt;&nbsp;aaf(1);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;scalar&nbsp;valued&nbsp;fucntion<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;aaf[0]&nbsp;=&nbsp;f(aax);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;has&nbsp;only&nbsp;one&nbsp;component<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;declare&nbsp;inner&nbsp;function&nbsp;(corresponding&nbsp;to&nbsp;ADDdouble&nbsp;calculation)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;ADdouble&gt;&nbsp;aF(aax,&nbsp;aaf);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compute&nbsp;f'(x)&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;p&nbsp;=&nbsp;1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;order&nbsp;of&nbsp;derivative&nbsp;of&nbsp;aF<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;ADdouble&gt;&nbsp;aw(1);&nbsp;&nbsp;//&nbsp;weight&nbsp;vector&nbsp;for&nbsp;aF<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;ADdouble&gt;&nbsp;ag(n);&nbsp;&nbsp;//&nbsp;gradient&nbsp;of&nbsp;aF<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;aw[0]&nbsp;=&nbsp;1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;weighted&nbsp;fucntion&nbsp;is&nbsp;f<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ag&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;aF.Reverse(p,&nbsp;aw);&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;gradient&nbsp;of&nbsp;f<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;declare&nbsp;outter&nbsp;function&nbsp;(corresponding&nbsp;to&nbsp;ADdouble&nbsp;calculation)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;double&gt;&nbsp;G(ax,&nbsp;ag);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compute&nbsp;the&nbsp;derivative&nbsp;of&nbsp;f'(x)&nbsp;*&nbsp;v<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;v(n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;dgv(n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[i]&nbsp;=&nbsp;double(n&nbsp;-&nbsp;i);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dgv&nbsp;=&nbsp;G.Reverse(p,&nbsp;v);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;f(x)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;x[0]^2&nbsp;+&nbsp;x[1]^2&nbsp;+&nbsp;...&nbsp;+&nbsp;x[n-1]^2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;f'(x)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2&nbsp;(x[0],&nbsp;x[1],&nbsp;...&nbsp;,&nbsp;x[n-1])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;f'(x)&nbsp;*&nbsp;v&nbsp;=&nbsp;2&nbsp;(&nbsp;x[0]*v[0]&nbsp;+&nbsp;x[1]*v[1]&nbsp;+&nbsp;...&nbsp;+&nbsp;x[n-1]*v[n-1]&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(dgv[i],&nbsp;2.*v[i],&nbsp;1e-10,&nbsp;1e-10);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+}<br>
+</span></font></code>
+<hr>Input File: Example\MulTape.cpp
+
+</body>
+</html>

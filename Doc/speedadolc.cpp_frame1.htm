@@ -1,0 +1,45 @@
+<html><head>
+<title>Run All The ADOLC Speed Comparison Tests</title>
+<meta name="description" content="Run All The ADOLC Speed Comparison Tests">
+<meta name="keywords" content=" run all Adolc speed test "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="adolc.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="exampleadolc.cpp.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="speedadolc.cpp.htm" target="_top">section</a>, <a href="speedadolc.cpp_frame1.htm" target="_top">frame</a></div>
+<hr><center><b><big><big>Run All The ADOLC Speed Comparison Tests</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+#&nbsp;include&nbsp;&lt;cstddef&gt;<br>
+<br>
+<br>
+std::string&nbsp;DetMinorCp&nbsp;&nbsp;(size_t&nbsp;size,&nbsp;size_t&nbsp;repeat);<br>
+std::string&nbsp;DetMinorAd&nbsp;&nbsp;(size_t&nbsp;size,&nbsp;size_t&nbsp;repeat);<br>
+std::string&nbsp;DetLuCp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(size_t&nbsp;size,&nbsp;size_t&nbsp;repeat);<br>
+std::string&nbsp;DetLuAd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(size_t&nbsp;size,&nbsp;size_t&nbsp;repeat);<br>
+<br>
+int&nbsp;main()<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::SpeedTest;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SpeedTest(DetMinorCp,&nbsp;&nbsp;&nbsp;&nbsp;1,&nbsp;2,&nbsp;7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SpeedTest(DetMinorAd,&nbsp;&nbsp;&nbsp;&nbsp;1,&nbsp;2,&nbsp;7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SpeedTest(DetLuCp,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,&nbsp;2,&nbsp;7);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SpeedTest(DetLuAd,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,&nbsp;2,&nbsp;7);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;0;<br>
+}<br>
+<br>
+</span></font></code>
+<hr>Input File: ADOLC\Speed.cpp
+
+</body>
+</html>

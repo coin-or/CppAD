@@ -1,0 +1,385 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Compute Determinant and Solve Linear Equations</title>
+<meta name="description" content="Compute Determinant and Solve Linear Equations"/>
+<meta name="keywords" content=" Lusolve linear equation determinant Lu solve "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="lusolve.xml" target="_top">section</a>, <a href="lusolve_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+Use an LU factorization of the matrix <i>A</i> to
+compute its determinant 
+and solve for <i>X</i> in the linear of equation
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mi mathvariant='italic'>A</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>X</mi>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>B</mi>
+</mrow></math>
+
+where <i>A</i> is an 
+<i>n</i> by <i>n</i> matrix,
+<i>X</i> is an 
+<i>n</i> by <i>m</i> matrix, and
+<i>B</i> is an 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mi mathvariant='italic'>x</mi>
+<mi mathvariant='italic'>m</mi>
+</mrow></math>
+
+ matrix.
+
+<br/>
+<br/>
+<b><big><a name="Include">Include</a></big></b>
+<br/>
+The file <code><font color="blue">CppAD/LuSolve.h</font></code> is included by <code><font color="blue">CppAD/CppAD.h</font></code>
+but it can also be included separately with out the rest of 
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br/>
+<br/>
+<b><big><a name="Factor and Invert">Factor and Invert</a></big></b>
+<br/>
+This routine is an easy to user interface to
+<a href="lufactor.xml" target="_top"><span style='white-space: nowrap'>LuFactor</span></a>
+ and <a href="luinvert.xml" target="_top"><span style='white-space: nowrap'>LuInvert</span></a>
+ for computing determinants and
+solutions of linear equations.
+These separate routines should be used if
+one right hand side <i>B</i>
+depends on the solution corresponding to another
+right hand side (with the same value of <i>A</i>).
+In this case only one call to <code><font color="blue">LuFactor</font></code> is required
+but there will be multiple calls to <code><font color="blue">LuInvert</font></code>.
+
+
+<br/>
+<br/>
+<b><big><a name="Matrix Storage">Matrix Storage</a></big></b>
+<br/>
+All matrices are stored in row major order.
+To be specific, if 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>Y</mi>
+</mrow></math>
+
+ is a vector
+that contains a 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>p</mi>
+</mrow></math>
+
+ by 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>q</mi>
+</mrow></math>
+
+ matrix,
+the size of 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>Y</mi>
+</mrow></math>
+
+ must be equal to 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>p</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>q</mi>
+</mrow></math>
+
+ and for
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>i</mi>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>p</mi>
+<mn>-1</mn>
+</mrow></math>
+
+,
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>j</mi>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>q</mi>
+<mn>-1</mn>
+</mrow></math>
+
+,
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<msub><mi mathvariant='italic'>Y</mi>
+<mrow><mi mathvariant='italic'>i</mi>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>Y</mi>
+<mo stretchy="false">[</mo>
+<mi mathvariant='italic'>i</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>q</mi>
+<mo stretchy="false">+</mo>
+<mi mathvariant='italic'>j</mi>
+<mo stretchy="false">]</mo>
+</mrow></math>
+
+<br/>
+<b><big><a name="signdet">signdet</a></big></b>
+<br/>
+The return value <i>signdet</i> is a <code><font color="blue">int</font></code> value
+that specifies the sign factor for the determinant of <i>A</i>.
+This determinant of <i>A</i> is zero if and only if <i>signdet</i>
+is zero. 
+
+<br/>
+<br/>
+<b><big><a name="n">n</a></big></b>
+<br/>
+The argument <i>n</i> has type <code><font color="blue">size_t</font></code> 
+and specifies the number of rows in the matrices
+<i>A</i>,
+<i>X</i>,
+and <i>B</i>.
+The number of columns in <i>A</i> is also equal to <i>n</i>.
+
+<br/>
+<br/>
+<b><big><a name="m">m</a></big></b>
+<br/>
+The argument <i>m</i> has type <code><font color="blue">size_t</font></code> 
+and specifies the number of columns in the matrices
+<i>X</i>
+and <i>B</i>.
+If <i>m</i> is zero,
+only the determinant of <i>A</i> is computed and
+the matrices <i>X</i> and <i>B</i> are not used.
+
+<br/>
+<br/>
+<b><big><a name="A">A</a></big></b>
+<br/>
+The argument <i>A</i> has the prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>FloatVector</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>A</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>and the size of <i>A</i> must equal 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>n</mi>
+</mrow></math>
+
+
+(see description of <a href="lusolve_frame2.xml#FloatVector" target="frame1"><i><span style='white-space: nowrap'>FloatVector</span></i></a>
+ below).
+This is the 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+</mrow></math>
+
+ by <i>n</i> matrix that 
+we are computing the determinant of 
+and that defines the linear equation.
+
+<br/>
+<br/>
+<b><big><a name="B">B</a></big></b>
+<br/>
+The argument <i>B</i> has the prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>FloatVector</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>B</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>and the size of <i>B</i> must equal 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>m</mi>
+</mrow></math>
+
+
+(see description of <a href="lusolve_frame2.xml#FloatVector" target="frame1"><i><span style='white-space: nowrap'>FloatVector</span></i></a>
+ below).
+This is the 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+</mrow></math>
+
+ by <i>m</i> matrix that 
+defines the right hand side of the linear equations.
+If <i>m</i> is zero, <i>B</i> is not used.
+
+<br/>
+<br/>
+<b><big><a name="X">X</a></big></b>
+<br/>
+The argument <i>X</i> has the prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>FloatVector</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>X</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>and the size of <i>X</i> must equal 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>m</mi>
+</mrow></math>
+
+
+(see description of <a href="lusolve_frame2.xml#FloatVector" target="frame1"><i><span style='white-space: nowrap'>FloatVector</span></i></a>
+ below).
+The input value of <i>X</i> does not matter.
+On output, the elements of <i>X</i> contain the solution
+of the equation we wish to solve
+(unless <i>signdet</i> is equal to zero).
+If <i>m</i> is zero, <i>X</i> is not used.
+
+<br/>
+<br/>
+<b><big><a name="logdet">logdet</a></big></b>
+<br/>
+On input, the value of <i>logdet</i> does not matter.
+On output, it has been set to the 
+log of the determinant of <i>A</i> 
+(but not quite).
+To be more specific,
+the determinant of <i>A</i> is given by the formula
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>det</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>signdet</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*&#xA0;exp(&#xA0;</span></font></code><i><span style='white-space: nowrap'>logdet</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;)<br/>
+</span></font></code>This enables <code><font color="blue">LuSolve</font></code> to use logs of absolute values
+in the case where <i>Float</i> corresponds to a real number.
+
+<br/>
+<br/>
+<b><big><a name="Float">Float</a></big></b>
+<br/>
+The following operations must be defined for any pair
+of <i>Float</i> objects <i>x</i> and <i>y</i>:
+
+<table><tr><td align='left'  valign='top'>
+
+<b>Operation</b> </td><td align='left'  valign='top'>
+ <b>Description</b>  </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>Float</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> </td><td align='left'  valign='top'>
+
+	constructs a <i>Float</i> object from the <code><font color="blue">int</font></code> <i>i</i>
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"><span style='white-space: nowrap'>log(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> </td><td align='left'  valign='top'>
+
+	returns the logarithm of <i>x</i> as a <i>Float</i> object
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>y</span></i> </td><td align='left'  valign='top'>
+
+	assignment operator 
+	(sets current <i>x</i> value equal to current <i>y</i> value)
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;+=&#xA0;</span></font></code><i><span style='white-space: nowrap'>y</span></i> </td><td align='left'  valign='top'>
+
+	computed assignment addition operator
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;-=&#xA0;</span></font></code><i><span style='white-space: nowrap'>y</span></i> </td><td align='left'  valign='top'>
+
+	computed assignment subtraction operator
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;/=&#xA0;</span></font></code><i><span style='white-space: nowrap'>y</span></i> </td><td align='left'  valign='top'>
+
+	computed assignment division operator
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*&#xA0;</span></font></code><i><span style='white-space: nowrap'>y</span></i> </td><td align='left'  valign='top'>
+
+	multiplication operator (returns a <i>Float</i> object)
+</td></tr>
+</table>
+<br/>
+<b><big><a name="FloatVector">FloatVector</a></big></b>
+<br/>
+The type <i>FloatVector</i> must be a <a href="simplevector.xml" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector_frame1.xml#Elements of Specified Type" target="frame1"><i><span style='white-space: nowrap'>elements&#xA0;of&#xA0;type&#xA0;Float</span></i></a>
+.
+The routine <a href="checksimplevector.xml" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br/>
+<br/>
+<b><big><a name="LeqZero">LeqZero</a></big></b>
+<br/>
+Including the file <code><font color="blue">LuSolve.h</font></code> defines the template function 
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;template&#xA0;&lt;typename&#xA0;</span></font></code><i><span style='white-space: nowrap'>Float</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;LeqZero&lt;</span></font></code><i><span style='white-space: nowrap'>Float</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;(const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Float</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>in the <code><font color="blue">CppAD</font></code> namespace.
+This function returns true if <i>x</i> is less than or equal to zero
+and false otherwise.
+It is used by <code><font color="blue">LuSolve</font></code> to avoid taking the log of
+zero (or a negative number if <i>Float</i> corresponds to real numbers).
+This template function definition assumes that the operator 
+<code><font color="blue">&lt;=</font></code> is defined for <i>Float</i> objects. 
+If this operator is not defined for your use of <i>Float</i>,
+you will need to specialize this template so that it works for your
+use of <code><font color="blue">LuSolve</font></code>.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>Complex numbers do not have the operation or <code><font color="blue">&lt;=</font></code> defined.
+In addition, in the complex case, 
+one can take the log of a negative number.
+The specializations
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;LeqZero&lt;&#xA0;std::complex&lt;float&gt;&#xA0;&gt;&#xA0;(const&#xA0;std::complex&lt;float&gt;&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;LeqZero&lt;&#xA0;std::complex&lt;double&gt;&#xA0;&gt;(const&#xA0;std::complex&lt;double&gt;&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>are defined by including <code><font color="blue">LuSolve.h</font></code>.
+These return true if <i>x</i> is zero and false otherwise.
+
+<br/>
+<br/>
+<b><big><a name="AbsGeq">AbsGeq</a></big></b>
+<br/>
+Including the file <code><font color="blue">LuSolve.h</font></code> defines the template function 
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;template&#xA0;&lt;typename&#xA0;</span></font></code><i><span style='white-space: nowrap'>Float</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;AbsGeq&lt;</span></font></code><i><span style='white-space: nowrap'>Float</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;(const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Float</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Float</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>If the type <i>Float</i> does not support the <code><font color="blue">&lt;=</font></code> operation
+and it is not <code><font color="blue">std::complex&lt;float&gt;</font></code> or <code><font color="blue">std::complex&lt;double&gt;</font></code>,
+see the documentation for <code><font color="blue">AbsGeq</font></code> in <a href="lufactor_frame2.xml#AbsGeq" target="frame1"><i><span style='white-space: nowrap'>LuFactor</span></i></a>
+. 
+
+
+<br/>
+<br/>
+<b><big><a name="Example">Example</a></big></b>
+<br/>
+The file 
+<a href="lusolve.cpp.xml" target="_top"><span style='white-space: nowrap'>LuSolve.cpp</span></a>
+
+contains an example and test of using this routine.
+It returns true if it succeeds and false otherwise.
+
+
+<hr/>Input File: CppAD\LuSolve.h
+
+</body>
+</html>

@@ -1,0 +1,287 @@
+<html><head>
+<title>Forward Mode</title>
+<meta name="description" content="Forward Mode">
+<meta name="keywords" content=" forward derivative order Taylor coefficient "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="forward.htm" target="_top">section</a>, <a href="forward_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+Evaluates the <i>p</i>-th order 
+<a href="glossary_frame1.htm#Taylor Coefficient" target="frame1"><i><span style='white-space: nowrap'>Taylor&nbsp;coefficient</span></i></a>
+
+for the function <code>
+<span style='white-space: nowrap'>&nbsp;F&nbsp;\circ&nbsp;U</span></code>
+ defined by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F&nbsp;\circ&nbsp;X&nbsp;(t)&nbsp;=&nbsp;F[&nbsp;X(t)&nbsp;]<br>
+\]&nbsp;</span></code>
+
+where <code>
+<span style='white-space: nowrap'>&nbsp;F&nbsp;:&nbsp;B^n&nbsp;\rightarrow&nbsp;B^m</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;n</span></code>
+ is the dimension of the 
+<a href="adfun_frame2.htm#Domain" target="frame1"><i><span style='white-space: nowrap'>domain</span></i></a>
+ space for <i>F</i>,
+and <code>
+<span style='white-space: nowrap'>&nbsp;m</span></code>
+ is the dimension of the 
+<a href="adfun_frame2.htm#Range" target="frame1"><i><span style='white-space: nowrap'>range</span></i></a>
+ space for <i>F</i>, and
+<code>
+<span style='white-space: nowrap'>&nbsp;X&nbsp;:&nbsp;B&nbsp;\rightarrow&nbsp;B^m</span></code>
+ is defined by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X(t)&nbsp;=&nbsp;x^{(0)}&nbsp;+&nbsp;x^{(1)}&nbsp;t&nbsp;+&nbsp;\cdots,&nbsp;+&nbsp;x^{(p)}&nbsp;t^p&nbsp;<br>
+\]&nbsp;</span></code>
+ 
+Note that for <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;p</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x^{(k)}&nbsp;=&nbsp;\frac{1}{k&nbsp;!}&nbsp;X^{(k)}&nbsp;(0)&nbsp;<br>
+\]&nbsp;</span></code>
+
+is the <i>k</i>-th order Taylor coefficient for <code>
+<span style='white-space: nowrap'>&nbsp;X</span></code>
+
+(see below for how <code>
+<span style='white-space: nowrap'>&nbsp;x^{(k)}&nbsp;\in&nbsp;B^n</span></code>
+ is specified).
+
+<br>
+<br>
+<b><big><a name="F">F</a></big></b>
+<br>
+The object <i>F</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>ADFun&lt;</span></i><code><font color="blue"><span style='white-space: nowrap'>Base</span></font></code><i><span style='white-space: nowrap'>&gt;&nbsp;</span></i><code><font color="blue"><span style='white-space: nowrap'>F</span></font></code><i><span style='white-space: nowrap'><br>
+</span></i><br>
+<b><big><a name="Forward">Forward</a></big></b>
+<br>
+The function <code><font color="blue">Forward</font></code> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+template&nbsp;&lt;typename&nbsp;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;<br>
+template&nbsp;&lt;typename&nbsp;</span></font></code><i><span style='white-space: nowrap'>VectorBase</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;<br>
+</span></font></code><i><span style='white-space: nowrap'>VectorBase</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;::Forward(size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>VectorBase</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>up</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code><br>
+<b><big><a name="VectorBase">VectorBase</a></big></b>
+<br>
+The type <i>VectorBase</i> must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector_frame1.htm#Elements of Specified Type" target="frame1"><i><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type&nbsp;Base</span></i></a>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="x">x</a></big></b>
+<br>
+For <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;p-1</span></code>
+,
+the <i>k</i>-th order Taylor coefficient 
+<code>
+<span style='white-space: nowrap'>&nbsp;x^{(k)}&nbsp;\in&nbsp;B^n</span></code>
+ is the value of <i>xk</i> in
+the previous call to <code><font color="blue"></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font></code><i><span style='white-space: nowrap'>k</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>xk</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>. 
+If there is no previous call with <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;x^{(0)}</span></code>
+ is the value of the independent variables when <i>F</i> 
+was constructed as an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object.
+The <i>p</i>-th order Taylor coefficient 
+<code>
+<span style='white-space: nowrap'>&nbsp;x^{(p)}</span></code>
+ is specified by the value of <i>xp</i>
+in this call to <code><font color="blue"></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>xp</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>. 
+
+<br>
+<br>
+<b><big><a name="Order">Order</a></big></b>
+<br>
+The function call
+<a href="adfun_frame2.htm#Order" target="frame1"><i><span style='white-space: nowrap'>F.Order()</span></i></a>
+ returns the highest order of the 
+Taylor coefficients currently stored in <i>F</i>.
+This must be greater than or equal to <code>
+<span style='white-space: nowrap'>&nbsp;p-1</span></code>
+ when
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Forward(</span></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>xp</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> is called.
+It will be equal to <i>p</i> after this call.
+
+
+<br>
+<br>
+<b><big><a name="yp">yp</a></big></b>
+<br>
+The return column vector <code>
+<span style='white-space: nowrap'>&nbsp;yp</span></code>
+,
+denoted by <code>
+<span style='white-space: nowrap'>&nbsp;y^{(p)}&nbsp;\in&nbsp;B^m</span></code>
+ below,
+has length <code>
+<span style='white-space: nowrap'>&nbsp;m</span></code>
+ and contains
+the <i>p</i>-th order Taylor coefficient for <code>
+<span style='white-space: nowrap'>&nbsp;F&nbsp;\circ&nbsp;X</span></code>
+; i.e.,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y^{(p)}&nbsp;=&nbsp;\frac{1}{p&nbsp;!}&nbsp;*&nbsp;(F&nbsp;\circ&nbsp;X)^{(p)}&nbsp;(0)&nbsp;<br>
+\]&nbsp;</span></code>
+ 
+
+<br>
+<br>
+<b><a name="yp.Zero Order">Zero Order</a></b>
+<br>
+In the case where <i>p</i> is zero,
+the return value <code>
+<span style='white-space: nowrap'>&nbsp;y^{(p)}&nbsp;\in&nbsp;B^m</span></code>
+ is
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+y^{(p)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;y^{(0)}&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;(F&nbsp;\circ&nbsp;X)&nbsp;(&nbsp;0&nbsp;)&nbsp;\\<br>
+F[&nbsp;x^{(0)}&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;y^{(p)}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><a name="yp.First Order">First Order</a></b>
+<br>
+In the case where <i>p</i> is one,
+the return value <code>
+<span style='white-space: nowrap'>&nbsp;y^{(p)}&nbsp;\in&nbsp;B^m</span></code>
+ is
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+y^{(p)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;y^{(1)}&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;(F&nbsp;\circ&nbsp;X)^{(1)}&nbsp;(&nbsp;0&nbsp;)&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;F^{(1)}&nbsp;[&nbsp;X(0)&nbsp;]&nbsp;*&nbsp;&nbsp;X^{(1)}&nbsp;(0)&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;F^{(1)}&nbsp;(&nbsp;x^{(0)}&nbsp;)&nbsp;*&nbsp;&nbsp;x^{(1)}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+Note that if <code>
+<span style='white-space: nowrap'>&nbsp;x^{(1)}</span></code>
+ is the <i>j</i>-th 
+<a href="glossary_frame1.htm#Elementary Vector" target="frame1"><i><span style='white-space: nowrap'>elementary&nbsp;vector</span></i></a>
+
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\D{F}{x_j}&nbsp;(&nbsp;x^{(0)}&nbsp;)&nbsp;=&nbsp;y^{(p)}<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><a name="yp.Second Order">Second Order</a></b>
+<br>
+In the case where <i>p</i> is two,
+the <i>i</i>-th element of 
+the return value <code>
+<span style='white-space: nowrap'>&nbsp;y^{(p)}&nbsp;\in&nbsp;B^m</span></code>
+ is
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+y_i^{(p)}&nbsp;<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\frac{1}{2}&nbsp;(F_i&nbsp;\circ&nbsp;X)^{(2)}&nbsp;(&nbsp;0&nbsp;)&nbsp;<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\frac{1}{2}&nbsp;\left[&nbsp;F_i^{(1)}&nbsp;[&nbsp;X(0)&nbsp;]&nbsp;*&nbsp;X^{(2)}&nbsp;(0)&nbsp;<br>
+&nbsp;&nbsp;+&nbsp;X^{(1)}&nbsp;(0)^T&nbsp;*&nbsp;F_i^{(2)}&nbsp;[&nbsp;X(0)&nbsp;]&nbsp;*&nbsp;X^{(1)}&nbsp;(0)&nbsp;\right]<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;&nbsp;\frac{1}{2}&nbsp;&nbsp;\left[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F_i^{(1)}&nbsp;(&nbsp;x^{(0)}&nbsp;)&nbsp;*&nbsp;x^{(2)}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;x^{(1)}&nbsp;)^T&nbsp;*&nbsp;F_i^{(2)}&nbsp;(&nbsp;x^{(0)}&nbsp;)&nbsp;*&nbsp;x^{(1)}<br>
+\right&nbsp;&nbsp;]<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+Note that if <code>
+<span style='white-space: nowrap'>&nbsp;x^{(1)}</span></code>
+ is the <i>j</i>-th 
+<a href="glossary_frame1.htm#Elementary Vector" target="frame1"><i><span style='white-space: nowrap'>elementary&nbsp;vector</span></i></a>
+
+and <code>
+<span style='white-space: nowrap'>&nbsp;x^{(2)}</span></code>
+ is zero,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\DD{F_i}{x_j}{x_j}&nbsp;(&nbsp;x^{(0)}&nbsp;)&nbsp;=&nbsp;2&nbsp;y_i^{(p)}&nbsp;<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+If <code>
+<span style='white-space: nowrap'>&nbsp;x^{(1)}</span></code>
+ is the sum of the <i>j</i>-th and <i>l</i>-th 
+<a href="glossary_frame1.htm#Elementary Vector" target="frame1"><i><span style='white-space: nowrap'>elementary&nbsp;vectors</span></i></a>
+
+and <code>
+<span style='white-space: nowrap'>&nbsp;x^{(2)}</span></code>
+ is zero,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y_i^{(p)}&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;\frac{1}{2}&nbsp;\left[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\DD{F_i}{x_j}{x_j}&nbsp;(&nbsp;x^{(0)}&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\DD{F_i}{x_j}{x_\ell}&nbsp;(&nbsp;x^{(0)}&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\DD{F_i}{x_\ell}{x_j}&nbsp;(&nbsp;x^{(0)}&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\DD{F_i}{x_\ell}{x_\ell}&nbsp;(&nbsp;x^{(0)}&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\right]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\DD{F_i}{x_\ell}{x_j}&nbsp;(&nbsp;x^{(0)}&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y_i^{(p)}&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\frac{1}{2}&nbsp;\DD{F_i}{x_j}{x_j}&nbsp;(&nbsp;x^{(0)}&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\frac{1}{2}&nbsp;\DD{F_i}{x_\ell}{x_\ell}&nbsp;(&nbsp;x^{(0)}&nbsp;)<br>
+\end{array}&nbsp;<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="forward.h.htm" target="_top"><span style='white-space: nowrap'>Forward.h</span></a>
+
+contains an example and a test of this operation.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: CppAD\local\Forward.h
+
+</body>
+</html>

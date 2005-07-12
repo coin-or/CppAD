@@ -1,0 +1,213 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+/*
+$begin LuSolveSpeed.cpp$$
+$spell
+	Geq
+	Cpp
+	Lu
+$$
+
+$section Speed Test Lu Factor and Solve: Example and Test$$
+
+$index Lu, speed$$
+$index speed, Lu$$
+
+$comment This file is in the Example subdirectory$$ 
+$code
+$verbatim%Example/LuVecADOk.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$$
+
+$end
+*/
+
+// BEGIN PROGRAM
+
+# include <CppAD/CppAD.h>
+# include "../Example/LuVecAD.h"
+
+# include <sstream>
+# include <string>
+
+std::string LuSolve(size_t size, size_t repeat)
+{
+	using namespace std;
+	using namespace CppAD;
+	typedef AD<double> ADdouble;
+
+	size_t n = size;
+	size_t m = size - 1;
+
+	CppADvector<ADdouble>   A       (n * n);
+	CppADvector<ADdouble>   CopyA   (n * n);
+	CppADvector<ADdouble>   Rhs     (n * m);
+	CppADvector<ADdouble>   Result  (n * m);
+	ADdouble                logdet;
+	ADdouble                signdet;
+
+	// matrix defining the linear equations
+	CppADvector<double> a     (n * n);
+	CppADvector<double> rhs   (n * m);
+	CppADvector<double> result(n * m);
+
+	size_t  i;
+	size_t  j;
+	size_t  k;
+
+	double  t;
+	double  tj;
+
+	// Original matrix
+	for(i = 0; i < n; i++)
+	{	t  = i / double(n);
+		tj = 1.;
+		for(j = 0; j < n; j++)
+		{	A[i * n + j] = a[i * n + j] = tj;
+			tj *= t;
+		}
+	}
+
+	// right hand side
+	for(j = 0; j < n; j++)
+		for(k = 0; k < m; k++)
+			rhs[ j * m + k ] = double(j + k);
+
+	size_t memory = 0;
+	size_t length = 0;
+	while(repeat--)
+	{
+		Independent(A);
+
+		// copy A
+		for(i = 0; i < n * n; i++)
+			CopyA[i] = A[i];
+
+		// copy rhs
+		for(i = 0; i < n * m; i++)
+			Rhs[i] = rhs[i];
+
+		// Solve the equation
+		signdet = LuSolve(n, m, CopyA, Rhs, Result, logdet);
+
+		// construct f: A -> Result
+		ADFun<double> f(A, Result);
+
+		// solve A * Rhs = Result
+ 		result = f.Forward(0, a);
+
+		// save for later return
+		length = f.Size();
+		memory = f.Memory();
+	}
+
+	ostringstream buf;
+	buf << "Solve Linear equations with retaping: Length = "
+	    << length << ", Memory = " << memory;
+	
+	return buf.str();
+}
+
+std::string LuVecAD(size_t size, size_t repeat)
+{
+	using namespace std;
+	using namespace CppAD;
+	typedef AD<double> ADdouble;
+
+	size_t n = size;
+	size_t m = size - 1;
+
+	CppADvector<ADdouble>     A         (n * n);
+	CppADvector<ADdouble>     CopyResult(n * m);
+
+	VecAD<double>       CopyA     (n * n);
+	VecAD<double>       Rhs       (n * m);
+	VecAD<double>       Result    (n * m);
+
+	ADdouble            logdet;
+	ADdouble            signdet;
+
+	// matrix defining the linear equations
+	CppADvector<double> a(n * n);
+
+	// dependent variable is solution of linear equations
+	CppADvector<double> result(n * m);
+
+	size_t  i;
+	size_t  j;
+	size_t  k;
+
+	double  t;
+	double  tj;
+
+	// Original matrix
+	for(i = 0; i < n; i++)
+	{	t  = i / double(n);
+		tj = 1.;
+		for(j = 0; j < n; j++)
+		{	A[i * n + j] = a[i * n + j] = tj;
+			tj *= t;
+		}
+	}
+
+	// right hand side
+	for(j = 0; j < n; j++)
+		for(k = 0; k < m; k++)
+			Rhs[ j * m + k ] = double(j + k);
+
+	Independent(A);
+
+	// Copy the matrix
+	ADdouble index(0);
+	for(i = 0; i < n*n; i++)
+	{	CopyA[index] = A[i];
+		index += 1.;
+	}
+
+	// Solve the equation
+	signdet = LuVecAD(n, m, CopyA, Rhs, Result, logdet);
+
+	// copy the result
+	index = 0.;
+	for(i = 0; i < n * m; i++)
+	{	CopyResult[i] = Result[index];
+		index += 1.;
+	}
+
+	// construct f: A -> Result
+	ADFun<double> f(A, CopyResult);
+
+	while(repeat--)
+	{	// pretend to copy new matrix
+		for(i = 0; i < n*n; i++)
+			a[i] = a[i];
+
+		// solve a * Rhs = result
+ 		result = f.Forward(0, a);
+	}
+
+	ostringstream buf;
+	buf << "Solve Linear equations with out retaping: Length = "
+	    << f.Size() << ", Memory = " << f.Memory();
+	
+	return buf.str();
+}
+
+// END PROGRAM

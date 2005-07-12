@@ -1,0 +1,48 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Run All The ADOLC Speed Comparison Tests</title>
+<meta name="description" content="Run All The ADOLC Speed Comparison Tests"/>
+<meta name="keywords" content=" run all Adolc speed test "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="adolc.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="exampleadolc.cpp.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="speedadolc.cpp.xml" target="_top">section</a>, <a href="speedadolc.cpp_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Run All The ADOLC Speed Comparison Tests</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD.h&gt;<br/>
+#&#xA0;include&#xA0;&lt;cstddef&gt;<br/>
+<br/>
+<br/>
+std::string&#xA0;DetMinorCp&#xA0;&#xA0;(size_t&#xA0;size,&#xA0;size_t&#xA0;repeat);<br/>
+std::string&#xA0;DetMinorAd&#xA0;&#xA0;(size_t&#xA0;size,&#xA0;size_t&#xA0;repeat);<br/>
+std::string&#xA0;DetLuCp&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;(size_t&#xA0;size,&#xA0;size_t&#xA0;repeat);<br/>
+std::string&#xA0;DetLuAd&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;(size_t&#xA0;size,&#xA0;size_t&#xA0;repeat);<br/>
+<br/>
+int&#xA0;main()<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;CppAD::SpeedTest;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;SpeedTest(DetMinorCp,&#xA0;&#xA0;&#xA0;&#xA0;1,&#xA0;2,&#xA0;7);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;SpeedTest(DetMinorAd,&#xA0;&#xA0;&#xA0;&#xA0;1,&#xA0;2,&#xA0;7);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;SpeedTest(DetLuCp,&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;1,&#xA0;2,&#xA0;7);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;SpeedTest(DetLuAd,&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;1,&#xA0;2,&#xA0;7);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;0;<br/>
+}<br/>
+<br/>
+</span></font></code>
+<hr/>Input File: ADOLC\Speed.cpp
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Printing During Forward Mode: Example and Test</title>
+<meta name="description" content="Printing During Forward Mode: Example and Test"/>
+<meta name="keywords" content=" forward example print "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="printfor.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="stdmathlib.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="printfor.cpp.xml" target="_top">section</a>, <a href="printfor.cpp_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+<center><b><big><big>Printing During Forward Mode: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD.h&gt;<br/>
+<br/>
+int&#xA0;main(void)<br/>
+{<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;namespace&#xA0;CppAD;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;std::cout;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;std::endl;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;independent&#xA0;variable&#xA0;vector<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;AD&lt;double&gt;&#xA0;&gt;&#xA0;U(2);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;U[0]&#xA0;=&#xA0;0.;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;U[1]&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(U);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;a&#xA0;parameter<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;AD&lt;double&gt;&#xA0;p&#xA0;=&#xA0;5.;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;dependent&#xA0;variable&#xA0;vector&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;AD&lt;double&gt;&#xA0;&gt;&#xA0;Z(1);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Z[0]&#xA0;=&#xA0;U[0]&#xA0;+&#xA0;U[1];<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;print&#xA0;a&#xA0;variable<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;PrintFor(&#xA0;&#xA0;&quot;u[0]&#xA0;+&#xA0;u[1]&#xA0;=&#xA0;&quot;,&#xA0;Z[0]);&#xA0;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;print&#xA0;a&#xA0;parameter&#xA0;(\n&#xA0;separates&#xA0;this&#xA0;output&#xA0;from&#xA0;previous&#xA0;output)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;PrintFor(&quot;\np&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;&quot;,&#xA0;p);&#xA0;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;create&#xA0;f:&#xA0;U&#xA0;-&gt;&#xA0;Z&#xA0;and&#xA0;vectors&#xA0;used&#xA0;for&#xA0;derivative&#xA0;calculations<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADFun&lt;double&gt;&#xA0;f(U,&#xA0;Z);&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;u(2);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;forward&#xA0;computation&#xA0;with&#xA0;u[0]&#xA0;=&#xA0;1&#xA0;and&#xA0;u[1]&#xA0;=&#xA0;1<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;u[0]&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;u[1]&#xA0;=&#xA0;1.;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;cout&#xA0;&lt;&lt;&#xA0;&quot;u[0]&#xA0;+&#xA0;u[1]&#xA0;=&#xA0;2&quot;&#xA0;&lt;&lt;&#xA0;endl;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;cout&#xA0;&lt;&lt;&#xA0;&quot;p&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;5&quot;&#xA0;&lt;&lt;&#xA0;endl;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;cout&#xA0;&lt;&lt;&#xA0;&quot;This&#xA0;test&#xA0;pases&#xA0;if&#xA0;the&#xA0;two&#xA0;lines&#xA0;above&#xA0;repate&#xA0;below:&quot;&#xA0;&lt;&lt;&#xA0;endl;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;f.Forward(0,&#xA0;u);&#xA0;&#xA0;&#xA0;&#xA0;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;print&#xA0;a&#xA0;new&#xA0;line&#xA0;after&#xA0;output<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;std::cout&#xA0;&lt;&lt;&#xA0;std::endl;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;0;<br/>
+}<br/>
+<br/>
+</span></font></code>
+<hr/>Input File: PrintFor\PrintFor.cpp
+
+</body>
+</html>

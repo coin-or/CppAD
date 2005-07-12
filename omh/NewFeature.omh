@@ -1,0 +1,76 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+$begin NewFeature$$
+$spell
+	CppAD
+	Makefile
+	Microsoft
+	OMhelp
+	cvs
+	dsp
+	nobase
+$$
+
+$section Adding a New Feature to the CppAD Distribution$$
+
+$head Overview$$
+Suppose that you add a new feature to CppAD and the 
+corresponding include file is $syntax%%Name%.h%$$.
+You should check each of the following steps: 
+
+$list number$$
+Add the new file $syntax%%Name%.h%$$ to the cvs repository.
+
+$lnext
+Add a test file called $syntax%Example/%Name%.cpp%$$ that check 
+for correct results (and run the test to make sure it works).
+
+$lnext
+Add the new file $syntax%Example/%Name%.cpp%$$ to the cvs repository.
+
+$lnext
+Add a call to the new test in the file $code Example/Example.cpp$$.
+
+$lnext
+Add the file $syntax%%Name%.cpp%$$ to the list of 
+$code Example_SOURCES$$ in the file $code Example/Makefile.am$$.
+
+$lnext
+Add the file $syntax%%Name%.cpp%$$ to the list of source files
+corresponding to the Microsoft C++ project file $code Example/Example.dsp$$.
+
+$lnext
+Add the file $syntax%%Name%.h%$$ to the list of 
+$code nobase_include_HEADERS$$ in the file $code Makefile.am$$.
+
+$lnext
+Add the new feature to the OMhelp documentation tree.
+
+$lnext
+Add the new feature the CppAD/CppAD.h include tree.
+
+$lnext
+Mention the new feature in the WhatsNew file for the current year.
+
+$lend
+
+
+$end

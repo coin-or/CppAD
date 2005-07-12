@@ -1,0 +1,173 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>The CheckSimpleVector Function: Example and Test</title>
+<meta name="description" content="The CheckSimpleVector Function: Example and Test"/>
+<meta name="keywords" content=" Checksimplevector example check Simplevector test "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="checksimplevector.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="cppaderror.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="checksimplevector.cpp.xml" target="_top">section</a>, <a href="checksimplevector.cpp_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+<center><b><big><big>The CheckSimpleVector Function: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD_vector.h&gt;<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CheckSimpleVector.h&gt;<br/>
+#&#xA0;include&#xA0;&lt;iostream&gt;<br/>
+<br/>
+<br/>
+//&#xA0;Chosing&#xA0;a&#xA0;value&#xA0;between&#xA0;1&#xA0;and&#xA0;9&#xA0;selects&#xA0;a&#xA0;simple&#xA0;vector&#xA0;properity&#xA0;to&#xA0;be&#xA0;<br/>
+//&#xA0;omitted&#xA0;and&#xA0;result&#xA0;in&#xA0;an&#xA0;error&#xA0;message&#xA0;being&#xA0;generated&#xA0;<br/>
+#&#xA0;define&#xA0;CppADMyVectorOmit&#xA0;0<br/>
+<br/>
+//&#xA0;-------------------------------------------------------------------------<br/>
+template&#xA0;&lt;class&#xA0;Scalar&gt;<br/>
+class&#xA0;MyVector&#xA0;{<br/>
+private:<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;length;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Scalar&#xA0;*&#xA0;data;<br/>
+public:<br/>
+<br/>
+#&#xA0;if&#xA0;CppADMyVectorOmit&#xA0;!=&#xA0;1<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;type&#xA0;of&#xA0;the&#xA0;elements&#xA0;in&#xA0;the&#xA0;vector<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;typedef&#xA0;Scalar&#xA0;value_type;<br/>
+#&#xA0;endif<br/>
+<br/>
+#&#xA0;if&#xA0;CppADMyVectorOmit&#xA0;!=&#xA0;2<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;default&#xA0;constructor<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;inline&#xA0;MyVector(void)&#xA0;:&#xA0;length(0)&#xA0;,&#xA0;data(0)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;}<br/>
+#&#xA0;endif<br/>
+<br/>
+#&#xA0;if&#xA0;CppADMyVectorOmit&#xA0;!=&#xA0;3<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;constructor&#xA0;with&#xA0;a&#xA0;specified&#xA0;size<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;inline&#xA0;MyVector(size_t&#xA0;n)&#xA0;:&#xA0;length(n)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;if(&#xA0;length&#xA0;==&#xA0;0&#xA0;)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;data&#xA0;=&#xA0;0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;else&#xA0;data&#xA0;=&#xA0;new&#xA0;Scalar[length];&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+#&#xA0;endif<br/>
+<br/>
+#&#xA0;if&#xA0;CppADMyVectorOmit&#xA0;!=&#xA0;4<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;copy&#xA0;constructor<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;inline&#xA0;MyVector(const&#xA0;MyVector&#xA0;&amp;x)&#xA0;:&#xA0;length(x.length)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;i;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;if(&#xA0;length&#xA0;==&#xA0;0&#xA0;)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;data&#xA0;=&#xA0;0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;else&#xA0;data&#xA0;=&#xA0;new&#xA0;Scalar[length];&#xA0;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;length;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;data[i]&#xA0;=&#xA0;x.data[i];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+#&#xA0;endif<br/>
+<br/>
+#&#xA0;if&#xA0;CppADMyVectorOmit&#xA0;!=&#xA0;4&#xA0;<br/>
+#&#xA0;if&#xA0;CppADMyVectorOmit&#xA0;!=&#xA0;7<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;destructor&#xA0;(it&#xA0;is&#xA0;not&#xA0;safe&#xA0;to&#xA0;delete&#xA0;the&#xA0;pointer&#xA0;in&#xA0;cases&#xA0;4&#xA0;and&#xA0;7)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;~MyVector(void)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;delete&#xA0;[]&#xA0;data;&#xA0;}<br/>
+#&#xA0;endif<br/>
+#&#xA0;endif<br/>
+<br/>
+#&#xA0;if&#xA0;CppADMyVectorOmit&#xA0;!=&#xA0;5<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;size&#xA0;function<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;inline&#xA0;size_t&#xA0;size(void)&#xA0;const<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;length;&#xA0;}<br/>
+#&#xA0;endif<br/>
+#&#xA0;if&#xA0;CppADMyVectorOmit&#xA0;!=&#xA0;6<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;resize&#xA0;function<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;inline&#xA0;void&#xA0;resize(size_t&#xA0;n)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;if(&#xA0;length&#xA0;&gt;&#xA0;0&#xA0;)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;delete&#xA0;[]&#xA0;data;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;length&#xA0;=&#xA0;n;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;if(&#xA0;length&#xA0;&gt;&#xA0;0&#xA0;)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;data&#xA0;=&#xA0;new&#xA0;Scalar[length];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;else&#xA0;data&#xA0;=&#xA0;0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+#&#xA0;endif<br/>
+<br/>
+#&#xA0;if&#xA0;CppADMyVectorOmit&#xA0;!=&#xA0;7<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;assignment&#xA0;operator<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;inline&#xA0;MyVector&#xA0;&amp;&#xA0;operator=(const&#xA0;MyVector&#xA0;&amp;x)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;i;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;length;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;data[i]&#xA0;=&#xA0;x.data[i];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;*this;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+#&#xA0;endif<br/>
+<br/>
+#&#xA0;if&#xA0;CppADMyVectorOmit&#xA0;!=&#xA0;8<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;non-constant&#xA0;element&#xA0;access<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Scalar&#xA0;&amp;&#xA0;operator[](size_t&#xA0;i)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;data[i];&#xA0;}<br/>
+#&#xA0;endif<br/>
+<br/>
+#&#xA0;if&#xA0;CppADMyVectorOmit&#xA0;!=&#xA0;9<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;constant&#xA0;element&#xA0;access<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;Scalar&#xA0;&amp;&#xA0;operator[](size_t&#xA0;i)&#xA0;const<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;data[i];&#xA0;}<br/>
+#&#xA0;endif<br/>
+};<br/>
+//&#xA0;-------------------------------------------------------------------------<br/>
+<br/>
+/*<br/>
+Compute&#xA0;r&#xA0;=&#xA0;a&#xA0;*&#xA0;v,&#xA0;where&#xA0;a&#xA0;is&#xA0;a&#xA0;scalar&#xA0;with&#xA0;same&#xA0;type&#xA0;as&#xA0;the&#xA0;elements&#xA0;of&#xA0;<br/>
+the&#xA0;Simple&#xA0;Vector&#xA0;v.&#xA0;This&#xA0;routine&#xA0;uses&#xA0;the&#xA0;CheckSimpleVector&#xA0;function&#xA0;to&#xA0;ensure&#xA0;that&#xA0;<br/>
+the&#xA0;types&#xA0;agree.<br/>
+*/&#xA0;<br/>
+namespace&#xA0;{&#xA0;//&#xA0;Empty&#xA0;namespace<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;template&#xA0;&lt;class&#xA0;Scalar,&#xA0;class&#xA0;Vector&gt;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Vector&#xA0;Sscal(const&#xA0;Scalar&#xA0;&amp;a,&#xA0;const&#xA0;Vector&#xA0;&amp;v)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;invoke&#xA0;CheckSimpleVector&#xA0;function&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppAD::CheckSimpleVector&lt;Scalar,&#xA0;Vector&gt;();<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;n&#xA0;=&#xA0;v.size();<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Vector&#xA0;r(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;i;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;r[i]&#xA0;=&#xA0;a&#xA0;*&#xA0;v[i];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;r;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+}<br/>
+<br/>
+bool&#xA0;CheckSimpleVector(void)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;ok&#xA0;&#xA0;=&#xA0;true;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;CppAD::vector;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;--------------------------------------------------------<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;If&#xA0;you&#xA0;change&#xA0;double&#xA0;to&#xA0;float&#xA0;in&#xA0;the&#xA0;next&#xA0;statement,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;CheckSimpleVector&#xA0;will&#xA0;generate&#xA0;an&#xA0;error&#xA0;message&#xA0;at&#xA0;compile&#xA0;time.<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;a&#xA0;=&#xA0;3.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;--------------------------------------------------------<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;n&#xA0;=&#xA0;2;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;MyVector&lt;double&gt;&#xA0;v(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;v[0]&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;v[1]&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;2.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;MyVector&lt;double&gt;&#xA0;r&#xA0;=&#xA0;Sscal(a,&#xA0;v);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&amp;=&#xA0;(r[0]&#xA0;==&#xA0;3.);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&amp;=&#xA0;(r[1]&#xA0;==&#xA0;6.);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;ok;<br/>
+}<br/>
+<br/>
+</span></font></code>
+<hr/>Input File: Example\CheckSimpleVector.cpp
+
+</body>
+</html>

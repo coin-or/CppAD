@@ -1,0 +1,119 @@
+<html><head>
+<title>The Power Function: Example and Test</title>
+<meta name="description" content="The Power Function: Example and Test">
+<meta name="keywords" content=" pow example test "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="powint.cpp.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="sin.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="pow.cpp.htm" target="_top">section</a>, <a href="pow.cpp_frame1.htm" target="_top">frame</a></div>
+<hr><center><b><big><big>The Power Function: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+#&nbsp;include&nbsp;&quot;NearEqualExt.h&quot;<br>
+#&nbsp;include&nbsp;&lt;cmath&gt;<br>
+<br>
+bool&nbsp;Pow(void)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;=&nbsp;true;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::pow;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::exp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;independent&nbsp;variable&nbsp;vector,&nbsp;indices,&nbsp;values,&nbsp;and&nbsp;declaration<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;U(2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;s&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;t&nbsp;=&nbsp;1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;U[s]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;U[t]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(U);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;dependent&nbsp;variable&nbsp;vector&nbsp;and&nbsp;indices<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;Z(2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;x&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;y&nbsp;=&nbsp;1;<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;dependent&nbsp;variable&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;double&gt;&nbsp;u&nbsp;=&nbsp;exp(U[s]);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;u&nbsp;=&nbsp;exp(s)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Z[x]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;pow(u,&nbsp;U[t]);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;x&nbsp;=&nbsp;exp(s&nbsp;*&nbsp;t)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Z[y]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;pow(Z[x],&nbsp;u);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;y&nbsp;=&nbsp;exp(&nbsp;s&nbsp;*&nbsp;t&nbsp;*&nbsp;exp(s)&nbsp;)<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;create&nbsp;f:&nbsp;U&nbsp;-&gt;&nbsp;Z&nbsp;and&nbsp;vectors&nbsp;used&nbsp;for&nbsp;derivative&nbsp;calculations<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;double&gt;&nbsp;f(U,&nbsp;Z);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;v(&nbsp;f.Domain()&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;w(&nbsp;f.Range()&nbsp;);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u_s&nbsp;&nbsp;(s,&nbsp;t)&nbsp;=&nbsp;u<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u_t&nbsp;&nbsp;(s,&nbsp;t)&nbsp;=&nbsp;0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y_s&nbsp;&nbsp;(s,&nbsp;t)&nbsp;=&nbsp;(1&nbsp;+&nbsp;s)&nbsp;t&nbsp;*&nbsp;u&nbsp;*&nbsp;y<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y_t&nbsp;&nbsp;(s,&nbsp;t)&nbsp;=&nbsp;s&nbsp;*&nbsp;u&nbsp;*&nbsp;y<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y_st&nbsp;(s,&nbsp;t)&nbsp;=&nbsp;(&nbsp;u&nbsp;+&nbsp;s&nbsp;*&nbsp;u&nbsp;)&nbsp;*&nbsp;y<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;(&nbsp;t&nbsp;*&nbsp;u&nbsp;+&nbsp;s&nbsp;*&nbsp;t&nbsp;*&nbsp;u&nbsp;)&nbsp;*&nbsp;s&nbsp;*&nbsp;u&nbsp;*&nbsp;y<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;check&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(Z[x]&nbsp;,&nbsp;exp(2.&nbsp;*&nbsp;3.),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1e-10&nbsp;,&nbsp;1e-10);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(Z[y]&nbsp;,&nbsp;exp(&nbsp;2.&nbsp;*&nbsp;3.&nbsp;*&nbsp;exp(2.)&nbsp;),&nbsp;&nbsp;1e-10&nbsp;,&nbsp;1e-10);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;forward&nbsp;computation&nbsp;of&nbsp;partials&nbsp;w.r.t.&nbsp;s<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[s]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[t]&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;=&nbsp;f.Forward(1,&nbsp;v);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(&nbsp;w[x]&nbsp;==&nbsp;U[t]&nbsp;*&nbsp;Z[x]&nbsp;);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;dx/ds<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(&nbsp;w[y]&nbsp;==&nbsp;(1.&nbsp;+&nbsp;U[s])&nbsp;*&nbsp;U[t]&nbsp;*&nbsp;u&nbsp;*&nbsp;Z[y]&nbsp;);&nbsp;//&nbsp;dy/ds<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;forward&nbsp;computation&nbsp;of&nbsp;partials&nbsp;w.r.t.&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[s]&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[t]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;=&nbsp;f.Forward(1,&nbsp;v);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(&nbsp;w[y]&nbsp;==&nbsp;U[s]&nbsp;*&nbsp;u&nbsp;*&nbsp;Z[y]&nbsp;);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;dy/dt<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;forward&nbsp;computation&nbsp;of&nbsp;second&nbsp;Taylor&nbsp;coefficient&nbsp;w.r.t.&nbsp;t&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[t]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;f.Forward(1,&nbsp;v);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[t]&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;f_tt&nbsp;=&nbsp;f.Forward(2,&nbsp;v);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;forward&nbsp;computation&nbsp;of&nbsp;second&nbsp;Taylor&nbsp;coefficient&nbsp;w.r.t.&nbsp;s&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[s]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;f.Forward(1,&nbsp;v);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[s]&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;f_ss&nbsp;=&nbsp;f.Forward(2,&nbsp;v);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;second&nbsp;Taylor&nbsp;coefficient&nbsp;w.r.t.&nbsp;direction&nbsp;r&nbsp;=&nbsp;(s,t)&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[s]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[t]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;f.Forward(1,&nbsp;v);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[s]&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[t]&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;f_rr&nbsp;=&nbsp;f.Forward(2,&nbsp;v);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;check&nbsp;second&nbsp;order&nbsp;partial&nbsp;of&nbsp;y<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f_rr[y]&nbsp;-&nbsp;f_ss[y]&nbsp;-&nbsp;f_tt[y],&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(1.&nbsp;+&nbsp;U[s])&nbsp;*&nbsp;u&nbsp;*&nbsp;Z[y]&nbsp;+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(1.&nbsp;+&nbsp;U[s])&nbsp;*&nbsp;U[t]&nbsp;*&nbsp;u&nbsp;*&nbsp;U[s]&nbsp;*&nbsp;u&nbsp;*&nbsp;Z[y],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1e-10&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1e-10&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+}<br>
+<br>
+</span></font></code>
+<hr>Input File: Example\Pow.cpp
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<html><head>
+<title>The AD Multiplication Computed Assignment Operator</title>
+<meta name="description" content="The AD Multiplication Computed Assignment Operator">
+<meta name="keywords" content=" *= computed assign times multiply "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="muleq.htm" target="_top">section</a>, <a href="muleq_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+Suppose that <i>left</i> is an
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object, 
+and <i>right</i> is an <code><font color="blue">int</font></code>, <i>Base</i>
+or <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object.
+In this case
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>left</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;*=&nbsp;</span></font></code><i><span style='white-space: nowrap'>right</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>returns an
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object
+where <code><font color="blue">*=</font></code> has the same interpretation as
+for the <i>Base</i> type.
+In addition, this must be the same as
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>left</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>left</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font></code><i><span style='white-space: nowrap'>right</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code><br>
+<b><big><a name="Operands">Operands</a></big></b>
+<br>
+Note the value of the left operand is changed
+and the value of the right remains unchanged.
+If one of the operands has value zero and is a
+<a href="glossary_frame1.htm#Parameter" target="frame1"><i><span style='white-space: nowrap'>parameter</span></i></a>
+ or a <i>Base</i> operand,
+the result is a parameter.
+Otherwise,
+if the left or right operand is a variable,
+the result is a 
+<a href="glossary_frame1.htm#Variable" target="frame1"><i><span style='white-space: nowrap'>variable</span></i></a>
+.
+
+<br>
+<br>
+<b><big><a name="Assumptions">Assumptions</a></big></b>
+<br>
+If the <code><font color="blue">*=</font></code> operator is used with an 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object,
+it must be a
+<a href="compeq.htm" target="_top"><span style='white-space: nowrap'>computed&nbsp;assignment&nbsp;operator</span></a>
+
+for the base type <i>Base</i>.
+In addition,
+if <code>
+<span style='white-space: nowrap'>&nbsp;f</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;g</span></code>
+ are 
+<a href="glossary_frame1.htm#Base Function" target="frame1"><i><span style='white-space: nowrap'>Base&nbsp;functions</span></i></a>
+
+with the same range dimension,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{[&nbsp;f(x)&nbsp;*&nbsp;g(x)&nbsp;]}{x}&nbsp;=&nbsp;g(x)*\D{f(x)}{x}&nbsp;+&nbsp;f(x)*\D{g(x)}{x}<br>
+\]&nbsp;</span></code>
+
+
+
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="muleq.cpp.htm" target="_top"><span style='white-space: nowrap'>MulEq.cpp</span></a>
+
+contains an example and a test of these operations.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: CppAD\local\MulEq.h
+
+</body>
+</html>

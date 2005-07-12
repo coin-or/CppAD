@@ -1,0 +1,66 @@
+<html><head>
+<title>The Inverse Cosine Function</title>
+<meta name="description" content="The Inverse Cosine Function">
+<meta name="keywords" content=" cos inverse acos "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="acos.htm" target="_top">section</a>, <a href="acos_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+Returns an
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object that is equal to
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;acos(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>where <code><font color="blue">acos</font></code> has the same interpretation as
+for the corresponding <a href="glossary_frame1.htm#Base Type" target="frame1"><i><span style='white-space: nowrap'>base&nbsp;type</span></i></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Base Type Requirement">Base Type Requirement</a></big></b>
+<br>
+A definition for the <code><font color="blue">acos</font></code> function
+is automatically included (in the <code><font color="blue">CppAD</font></code> namespace)
+for the following 
+<a href="glossary_frame1.htm#Base Type" target="frame1"><i><span style='white-space: nowrap'>base&nbsp;types</span></i></a>
+:
+<code><font color="blue">float</font></code> and <code><font color="blue">double</font></code>.
+If the <code><font color="blue">acos</font></code> function is used with any other base type, 
+it must be a defined for that base type.
+
+<br>
+<br>
+<b><big><a name="Derivative Assumption">Derivative Assumption</a></big></b>
+<br>
+It is assumed that
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{lcr}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{[&nbsp;{\rm&nbsp;acos}&nbsp;(x)&nbsp;]}{x}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;-&nbsp;(1&nbsp;-&nbsp;x&nbsp;*&nbsp;x)^{-1/2}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="acos.cpp.htm" target="_top"><span style='white-space: nowrap'>Acos.cpp</span></a>
+
+contains an example and a test of this function.   
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: CppAD\local\Acos.h
+
+</body>
+</html>

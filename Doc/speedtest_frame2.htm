@@ -1,0 +1,159 @@
+<html><head>
+<title>Run One Speed Test</title>
+<meta name="description" content="Run One Speed Test">
+<meta name="keywords" content=" Speedtest test speed "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="speedtest.htm" target="_top">section</a>, <a href="speedtest_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+The <code><font color="blue">SpeedTest</font></code> function executes a speed test
+for various sized problems
+and reports the results on standard output; i.e. <code><font color="blue">std::cout</font></code>.
+The size of each test problem is included in its report
+(unless <i>first</i> is equal to <i>last</i>).
+
+<br>
+<br>
+<b><big><a name="Repeat Factor">Repeat Factor</a></big></b>
+<br>
+It is important to separate small calculation units
+and test them individually.
+This way individual changes can be tested in the context of the
+routine that they are in.
+On many machines, accurate timing of a very short execution 
+sequences is not possible.
+In addition,
+there may be set up time for a test that
+we do not really want included in the timing.
+For this reason <code><font color="blue">SpeedTest</font></code>
+automatically determines how many times to 
+repeat the section of the test that we wish to time.
+
+
+<br>
+<br>
+<b><big><a name="Include">Include</a></big></b>
+<br>
+The file <code><font color="blue">SpeedTest.h</font></code> contains the prototype for 
+the <code><font color="blue">SpeedTest</font></code> function.
+This file is included by <code><font color="blue">CppAD/CppAD.h</font></code>
+but it can also be included separately with out the rest of 
+the <code><font color="blue">CppAD</font></code> routines.
+
+
+<br>
+<br>
+<b><big><a name="Linkage">Linkage</a></big></b>
+<br>
+The CppAD Unix installation
+compiles this function and places the object
+in the <code><font color="blue">CppAD.a</font></code> library; 
+i.e., you will need the command
+line argument <code><font color="blue">-lCppAD</font></code> when you link to this routine under Unix.
+If you are using Microsoft visual studio,
+you will have to include the file
+<code><font color="blue">lib/SpeedTest.cpp</font></code> in your set of project source files.
+
+<br>
+<br>
+<b><big><a name="Test">Test</a></big></b>
+<br>
+The argument <i>Test</i> is a function such that
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Test</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>size</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>repeat</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>repeats a test for a specified size and number of times
+and then returns a name for the test as a string.
+The arguments <i>size</i> and <i>repeat</i> 
+(to <i>Test</i>) have type <code><font color="blue">size_t</font></code>.
+Only one name is reported per call to <code><font color="blue">SpeedTest</font></code>
+and it is the return value from the a call to <i>Test</i> 
+where <i>size</i> is equal to <i>first</i> and
+the value of <i>repeat</i> is not specified.
+If the name returned by <i>Test</i>
+is the empty string, 
+the name of the test is not reported by <code><font color="blue">SpeedTest</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="first">first</a></big></b>
+<br>
+The argument <i>first</i> has type <code><font color="blue">size_t</font></code> and
+specifies the size of the first test problem reported by this call to 
+<code><font color="blue">SpeedTest</font></code>.
+	
+<br>
+<br>
+<b><big><a name="last">last</a></big></b>
+<br>
+The argument <i>last</i> has type <code><font color="blue">size_t</font></code> and
+specifies the size of the last test problem reported by this call to 
+<code><font color="blue">SpeedTest</font></code>.
+
+<br>
+<br>
+<b><big><a name="inc">inc</a></big></b>
+<br>
+The argument <i>inc</i> has type <code><font color="blue">int</font></code> and
+specifies the increment between problem sizes; i.e.,
+all values of <i>size</i> in calls to <i>Test</i> are given by
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>size</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>first</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font></code><i><span style='white-space: nowrap'>j</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font></code><i><span style='white-space: nowrap'>inc</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>where <i>j</i> is a positive integer.
+The increment can be positive or negative but it cannot be zero.
+The values <i>first</i>, <i>last</i> and <i>inc</i> must 
+satisfy the relation
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inc&nbsp;*&nbsp;(&nbsp;last&nbsp;-&nbsp;first&nbsp;)&nbsp;\geq&nbsp;0<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="rate">rate</a></big></b>
+<br>
+The value displayed in the <code><font color="blue">rate</font></code> column on <code><font color="blue">std::cout</font></code>
+is defined as the value of <i>repeat</i> divided by the 
+corresponding elapsed execution time in seconds.
+The elapsed execution time is measured by the difference in
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(double)&nbsp;clock()&nbsp;/&nbsp;(double)&nbsp;CLOCKS_PER_SEC<br>
+</span>
+</font></code>
+in the context of the standard <code><font color="blue">&lt;ctime&gt;</font></code> definitions.
+
+
+<br>
+<br>
+<b><big><a name="Errors">Errors</a></big></b>
+<br>
+If one of the restrictions above is violated,
+the error reporting macro 
+<a href="cppaderror_frame2.htm#Description.CppADUsageError" target="frame1"><i><span style='white-space: nowrap'>CppADUsageError</span></i></a>
+
+is used to report the error.
+You can redefine this action using the instructions in
+<a href="cppaderror.htm" target="_top"><span style='white-space: nowrap'>CppADError</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+
+<br>
+The section <a href="speedtestexample.htm" target="_top"><span style='white-space: nowrap'>SpeedTestExample</span></a>
+ contains an example usage
+of <code><font color="blue">SpeedTest</font></code>.
+
+
+<hr>Input File: lib\SpeedTest.cpp
+
+</body>
+</html>

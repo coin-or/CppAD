@@ -1,0 +1,63 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>The Output Operator for AD Objects: Example and Test</title>
+<meta name="description" content="The Output Operator for AD Objects: Example and Test"/>
+<meta name="keywords" content=" output test example "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="output.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="printfor.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="output.cpp.xml" target="_top">section</a>, <a href="output.cpp_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+
+
+<center><b><big><big>The Output Operator for AD Objects: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD.h&gt;<br/>
+<br/>
+#&#xA0;include&#xA0;&lt;sstream&gt;<br/>
+#&#xA0;include&#xA0;&lt;string&gt;<br/>
+<br/>
+bool&#xA0;Output(void)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;namespace&#xA0;CppAD;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;namespace&#xA0;std;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;ok&#xA0;=&#xA0;true;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;string&#xA0;str;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;n;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ostringstream&#xA0;buf;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;AD&lt;double&gt;&#xA0;&#xA0;&#xA0;&#xA0;s&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;VecAD&lt;double&gt;&#xA0;T(2);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;T[s]&#xA0;=&#xA0;2.;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;buf&#xA0;&lt;&lt;&#xA0;s;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;buf&#xA0;&lt;&lt;&#xA0;T[s];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;str&#xA0;=&#xA0;buf.str();<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;n&#xA0;&#xA0;&#xA0;=&#xA0;str.size();<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;(n&#xA0;==&#xA0;2);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;(str[0]&#xA0;==&#xA0;'1');<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;(str[1]&#xA0;==&#xA0;'2');<br/>
+<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;ok;<br/>
+}<br/>
+</span></font></code>
+<hr/>Input File: Example\Output.cpp
+
+</body>
+</html>

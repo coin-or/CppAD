@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+<title>Convert a Value to an Integer</title>
+<meta name="description" content="Convert a Value to an Integer"/>
+<meta name="keywords" content=" integer "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<frameset cols="15%,*">
+<frame src="integer_links.xml"/>
+<frameset rows="100%,*">
+<frame src="integer_frame1.xml" name="frame1"/>
+</frameset>
+</frameset>
+</html>

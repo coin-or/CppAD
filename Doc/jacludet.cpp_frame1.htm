@@ -1,0 +1,76 @@
+<html><head>
+<title>Gradient of Determinant Using Lu Factorization: Example and Test</title>
+<meta name="description" content="Gradient of Determinant Using Lu Factorization: Example and Test">
+<meta name="keywords" content=" gradient Lu example test "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="jacminordet.cpp.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="hesminordet.cpp.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="jacludet.cpp.htm" target="_top">section</a>, <a href="jacludet.cpp_frame1.htm" target="_top">frame</a></div>
+<hr><center><b><big><big>Gradient of Determinant Using Lu Factorization: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+#&nbsp;include&nbsp;&quot;NearEqualExt.h&quot;<br>
+#&nbsp;include&nbsp;&quot;DetByLu.h&quot;<br>
+<br>
+bool&nbsp;JacLuDet()<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;=&nbsp;true;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;n&nbsp;=&nbsp;2;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;object&nbsp;for&nbsp;computing&nbsp;determinants<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetByLu&lt;ADComplex&gt;&nbsp;Det(n);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;independent&nbsp;and&nbsp;dependent&nbsp;variable&nbsp;vectors<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;ADComplex&gt;&nbsp;&nbsp;X(n&nbsp;*&nbsp;n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;ADComplex&gt;&nbsp;&nbsp;D(1);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;value&nbsp;of&nbsp;the&nbsp;independent&nbsp;variable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n&nbsp;*&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X[i]&nbsp;=&nbsp;Complex(int(i),&nbsp;-int(i));<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;set&nbsp;the&nbsp;independent&nbsp;variables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(X);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compute&nbsp;the&nbsp;determinant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D[0]&nbsp;&nbsp;=&nbsp;Det(X);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;create&nbsp;the&nbsp;function&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;Complex&gt;&nbsp;f(X,&nbsp;D);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;argument&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;Complex&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x(&nbsp;n&nbsp;*&nbsp;n&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n&nbsp;*&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[i]&nbsp;=&nbsp;Complex(2&nbsp;*&nbsp;i,&nbsp;i);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;first&nbsp;derivative&nbsp;of&nbsp;the&nbsp;determinant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;Complex&gt;&nbsp;J(&nbsp;n&nbsp;*&nbsp;n&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J&nbsp;=&nbsp;f.Jacobian(x);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f(x)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;x[0]&nbsp;*&nbsp;x[3]&nbsp;-&nbsp;x[1]&nbsp;*&nbsp;x[2]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Complex&nbsp;Jtrue[]&nbsp;&nbsp;=&nbsp;{&nbsp;x[3],&nbsp;-x[2],&nbsp;-x[1],&nbsp;x[0]&nbsp;};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n*n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(&nbsp;Jtrue[i],&nbsp;J[i],&nbsp;1e-10&nbsp;,&nbsp;1e-10&nbsp;);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+}<br>
+<br>
+</span></font></code>
+<hr>Input File: Example\JacLuDet.cpp
+
+</body>
+</html>

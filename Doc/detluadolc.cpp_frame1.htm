@@ -1,0 +1,164 @@
+<html><head>
+<title>ADOLC &amp; CppAD Gradient of Determinant by Lu Factorization</title>
+<meta name="description" content="ADOLC &amp; CppAD Gradient of Determinant by Lu Factorization">
+<meta name="keywords" content=" Adolc speed determinant Lu factor "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="detminoradolc.cpp.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="fadbad.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="detluadolc.cpp.htm" target="_top">section</a>, <a href="detluadolc.cpp_frame1.htm" target="_top">frame</a></div>
+<hr><center><b><big><big>ADOLC &amp; CppAD Gradient of Determinant by Lu Factorization</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+#&nbsp;include&nbsp;&quot;../Example/DetByLu.h&quot;<br>
+#&nbsp;include&nbsp;&quot;../Example/NearEqualExt.h&quot;<br>
+<br>
+#&nbsp;include&nbsp;&lt;adolc/adouble.h&gt;<br>
+#&nbsp;include&nbsp;&lt;adolc/interfaces.h&gt;<br>
+<br>
+void&nbsp;DetLuCp(size_t&nbsp;size,&nbsp;size_t&nbsp;repeat,&nbsp;CppADvector&lt;double&gt;&nbsp;&amp;u)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;j;<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;-----------------------------------------------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Do&nbsp;this&nbsp;set&nbsp;up&nbsp;once&nbsp;so&nbsp;not&nbsp;significant&nbsp;in&nbsp;timing&nbsp;test<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;object&nbsp;for&nbsp;computing&nbsp;determinant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetByLu&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;Det(size);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detA(1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;&nbsp;&nbsp;A(&nbsp;size&nbsp;*&nbsp;size&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;size;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;A[&nbsp;i&nbsp;]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(j&nbsp;=&nbsp;1;&nbsp;j&nbsp;&lt;&nbsp;size;&nbsp;j++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[i&nbsp;+&nbsp;j&nbsp;*&nbsp;size]&nbsp;=&nbsp;double(i)&nbsp;*&nbsp;A[&nbsp;i&nbsp;+&nbsp;(j-1)&nbsp;*&nbsp;size&nbsp;];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;vectors&nbsp;for&nbsp;reverse&nbsp;mode&nbsp;input&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;v(1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[0]&nbsp;=&nbsp;1.;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;------------------------------------------------------<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while(repeat--)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;declare&nbsp;independent&nbsp;variables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(A);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compute&nbsp;the&nbsp;determinant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detA[0]&nbsp;=&nbsp;Det(A);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;create&nbsp;function&nbsp;object&nbsp;f&nbsp;:&nbsp;A&nbsp;-&gt;&nbsp;detA<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;double&gt;&nbsp;f(A,&nbsp;detA);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;evalute&nbsp;and&nbsp;return&nbsp;gradient&nbsp;using&nbsp;reverse&nbsp;mode<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u&nbsp;=&nbsp;f.Reverse(1,&nbsp;v);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+void&nbsp;DetLuAd(size_t&nbsp;size,&nbsp;size_t&nbsp;repeat,&nbsp;double&nbsp;*u)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;j;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;&nbsp;deta;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;-----------------------------------------------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Do&nbsp;this&nbsp;set&nbsp;up&nbsp;once&nbsp;so&nbsp;not&nbsp;significant&nbsp;in&nbsp;timing&nbsp;test<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;object&nbsp;for&nbsp;computing&nbsp;determinant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::DetByLu&lt;adouble&gt;&nbsp;Det(size);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;adouble&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detA;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;adouble&gt;&nbsp;&nbsp;A(&nbsp;size&nbsp;*&nbsp;size&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;&nbsp;&nbsp;a(&nbsp;size&nbsp;*&nbsp;size&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;size;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;a[&nbsp;i&nbsp;]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(j&nbsp;=&nbsp;1;&nbsp;j&nbsp;&lt;&nbsp;size;&nbsp;j++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a[i&nbsp;+&nbsp;j&nbsp;*&nbsp;size]&nbsp;=&nbsp;double(i)&nbsp;*&nbsp;a[&nbsp;i&nbsp;+&nbsp;(j-1)&nbsp;*&nbsp;size&nbsp;];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;vectors&nbsp;for&nbsp;reverse&nbsp;mode&nbsp;input&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;v[1];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[0]&nbsp;=&nbsp;1.;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;tag,&nbsp;keep,&nbsp;and&nbsp;order&nbsp;flags<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;tag&nbsp;&nbsp;=&nbsp;1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;keep&nbsp;=&nbsp;1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;d&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;0;&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;number&nbsp;of&nbsp;elements&nbsp;in&nbsp;A<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;length&nbsp;=&nbsp;size&nbsp;*&nbsp;size;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;------------------------------------------------------<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while(repeat--)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;declare&nbsp;independent&nbsp;variables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trace_on(tag,&nbsp;keep);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;length;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[i]&nbsp;&lt;&lt;=&nbsp;a[i];<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compute&nbsp;the&nbsp;determinant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detA&nbsp;=&nbsp;Det(A);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;create&nbsp;function&nbsp;object&nbsp;f&nbsp;:&nbsp;A&nbsp;-&gt;&nbsp;detA<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detA&nbsp;&gt;&gt;=&nbsp;deta;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trace_off();<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;evalute&nbsp;and&nbsp;return&nbsp;gradient&nbsp;using&nbsp;reverse&nbsp;mode<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reverse(tag,&nbsp;1,&nbsp;length,&nbsp;d,&nbsp;v,&nbsp;u);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+bool&nbsp;DetLu(void)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;=&nbsp;true;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;size&nbsp;&nbsp;&nbsp;=&nbsp;4;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;repeat&nbsp;=&nbsp;1;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;*uAd&nbsp;=&nbsp;new&nbsp;double[size&nbsp;*&nbsp;size];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;uCp(size&nbsp;*&nbsp;size);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetLuCp(size,&nbsp;repeat,&nbsp;uCp);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetLuAd(size,&nbsp;repeat,&nbsp;uAd);<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;size&nbsp;*&nbsp;size;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;CppAD::NearEqual(uCp[i],&nbsp;uAd[i],&nbsp;1e-12,&nbsp;1e-12);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;[]&nbsp;uAd;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+}<br>
+std::string&nbsp;DetLuCp(size_t&nbsp;size,&nbsp;size_t&nbsp;repeat)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;u(size&nbsp;*&nbsp;size);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetLuCp(size,&nbsp;repeat,&nbsp;u);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;&quot;CppAD:&nbsp;gradient&nbsp;of&nbsp;Determinant&nbsp;by&nbsp;Lu&nbsp;Factorization&quot;;<br>
+}<br>
+std::string&nbsp;DetLuAd(size_t&nbsp;size,&nbsp;size_t&nbsp;repeat)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;*u&nbsp;=&nbsp;new&nbsp;double[size&nbsp;*&nbsp;size];<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetLuAd(size,&nbsp;repeat,&nbsp;u);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;[]&nbsp;u;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;&quot;ADOLC:&nbsp;gradient&nbsp;of&nbsp;Determinant&nbsp;by&nbsp;Lu&nbsp;Factorization&quot;;<br>
+}<br>
+<br>
+</span></font></code>
+<hr>Input File: ADOLC\DetLu.cpp
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Taylor's Method Ode Solver: An Example and Test</title>
+<meta name="description" content="Taylor's Method Ode Solver: An Example and Test"/>
+<meta name="keywords" content=" Ode Taylor example test "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="hesludet.cpp.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="exampleutility.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="odetaylor.cpp.xml" target="_top">section</a>, <a href="odetaylor.cpp_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Taylor's Method Ode Solver: An Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD.h&gt;<br/>
+#&#xA0;include&#xA0;&quot;NearEqualExt.h&quot;<br/>
+<br/>
+#&#xA0;include&#xA0;&lt;cmath&gt;<br/>
+<br/>
+//&#xA0;-----------&#xA0;Define&#xA0;types&#xA0;-------------------------------<br/>
+<br/>
+//&#xA0;define&#xA0;types&#xA0;for&#xA0;each&#xA0;level<br/>
+typedef&#xA0;CppAD::AD&lt;double&gt;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADdouble;&#xA0;<br/>
+typedef&#xA0;CppAD::AD&lt;&#xA0;ADdouble&#xA0;&gt;&#xA0;&#xA0;ADDdouble;<br/>
+<br/>
+//&#xA0;-------------------------------------------------------------------------<br/>
+<br/>
+<br/>
+//&#xA0;y0(t)&#xA0;=&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;a[0]&#xA0;*&#xA0;t^1&#xA0;/&#xA0;1&#xA0;!&#xA0;<br/>
+//&#xA0;y1(t)&#xA0;=&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;a[1]&#xA0;*&#xA0;a[0]&#xA0;*&#xA0;t^2&#xA0;/&#xA0;2&#xA0;!<br/>
+//&#xA0;y2(t)&#xA0;=&#xA0;a[2]&#xA0;*&#xA0;a[1]&#xA0;*&#xA0;a[0]&#xA0;*&#xA0;t^3&#xA0;/&#xA0;3&#xA0;!<br/>
+//&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;...<br/>
+class&#xA0;Ode&#xA0;{<br/>
+public:<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Ode(&#xA0;CppADvector&lt;&#xA0;ADdouble&#xA0;&gt;&#xA0;a_&#xA0;)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;a.resize(&#xA0;a_.size()&#xA0;);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;a&#xA0;=&#xA0;a_;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;ADDdouble&#xA0;&gt;&#xA0;operator()(<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;CppADvector&lt;&#xA0;ADDdouble&#xA0;&gt;&#xA0;&amp;y<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;)&#xA0;const<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;n&#xA0;=&#xA0;y.size();<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;ADDdouble&#xA0;&gt;&#xA0;dydt(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;i;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;dydt[0]&#xA0;=&#xA0;a[0];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;1;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;dydt[i]&#xA0;=&#xA0;a[i]&#xA0;*&#xA0;y[i-1];<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;dydt;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+private:<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;ADdouble&#xA0;&gt;&#xA0;a;<br/>
+};<br/>
+<br/>
+CppADvector&#xA0;&lt;&#xA0;ADdouble&#xA0;&gt;&#xA0;TaylorOde(<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Ode&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;f&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;order&#xA0;,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;nstep&#xA0;,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADdouble&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&amp;dt&#xA0;&#xA0;&#xA0;,&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;ADdouble&#xA0;&gt;&#xA0;&amp;y0&#xA0;&#xA0;&#xA0;)<br/>
+{<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;namespace&#xA0;CppAD;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;n&#xA0;=&#xA0;y0.size();<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;ADDdouble&#xA0;&gt;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Y(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;ADDdouble&#xA0;&gt;&#xA0;&#xA0;&#xA0;DYDT(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;ADdouble&#xA0;&gt;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;y(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;ADdouble&#xA0;&gt;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;y_j(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;ADdouble&#xA0;&gt;&#xA0;&#xA0;&#xA0;&#xA0;y_jp(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;initialize&#xA0;y<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;i;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;y[i]&#xA0;=&#xA0;y0[i];<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;k;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(k&#xA0;=&#xA0;0;&#xA0;k&#xA0;&lt;&#xA0;nstep;&#xA0;k++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Y[i]&#xA0;=&#xA0;y_j[i]&#xA0;=&#xA0;y[i];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;define&#xA0;differentiable&#xA0;version&#xA0;of&#xA0;F:&#xA0;Y&#xA0;-&gt;&#xA0;DYDT<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(Y);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;DYDT&#xA0;=&#xA0;f(Y);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADFun&lt;ADdouble&gt;&#xA0;F(Y,&#xA0;DYDT);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;Use&#xA0;Taylor's&#xA0;method&#xA0;to&#xA0;take&#xA0;a&#xA0;step<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;j;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADdouble&#xA0;dt_j&#xA0;=&#xA0;dt;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;0;&#xA0;j&#xA0;&lt;=&#xA0;order;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;evaluate&#xA0;j-th&#xA0;Taylor&#xA0;coefficient&#xA0;for&#xA0;derivative&#xA0;of&#xA0;y<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;y_jp&#xA0;=&#xA0;F.Forward(j,&#xA0;y_j);<br/>
+&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;convert&#xA0;to&#xA0;(j+1)-Taylor&#xA0;coefficient&#xA0;for&#xA0;y<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;y_jp[i]&#xA0;/=&#xA0;ADdouble(j&#xA0;+&#xA0;1);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;add&#xA0;term&#xA0;for&#xA0;to&#xA0;this&#xA0;Taylor&#xA0;coefficient<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;y[i]&#xA0;&#xA0;&#xA0;&#xA0;+=&#xA0;y_jp[i]&#xA0;*&#xA0;dt_j;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;next&#xA0;power&#xA0;of&#xA0;t<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;dt_j&#xA0;*=&#xA0;dt;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;next&#xA0;Taylor&#xA0;coefficient<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;y_j&#xA0;&#xA0;&#xA0;=&#xA0;y_jp;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;y;<br/>
+}<br/>
+<br/>
+bool&#xA0;OdeTaylor(void)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;initialize&#xA0;the&#xA0;return&#xA0;value&#xA0;as&#xA0;true&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;ok&#xA0;=&#xA0;true;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;CppAD&#xA0;namespace&#xA0;(so&#xA0;we&#xA0;do&#xA0;not&#xA0;need&#xA0;CppAD&#xA0;in&#xA0;front&#xA0;of&#xA0;its&#xA0;utilities)&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;namespace&#xA0;CppAD;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;number&#xA0;of&#xA0;components&#xA0;in&#xA0;differential&#xA0;equation<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;n&#xA0;=&#xA0;4;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;parameter&#xA0;vector&#xA0;in&#xA0;differential&#xA0;equation<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;ADdouble&gt;&#xA0;A(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;&#xA0;&#xA0;a(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;i;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;A[i]&#xA0;=&#xA0;a[i]&#xA0;=&#xA0;double(i&#xA0;+&#xA0;1);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;declare&#xA0;the&#xA0;parameters&#xA0;as&#xA0;the&#xA0;independent&#xA0;variable<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(A);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;arguments&#xA0;to&#xA0;Taylor's&#xA0;method&#xA0;for&#xA0;integrating&#xA0;differential&#xA0;equations<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Ode&#xA0;F(A);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;&#xA0;order&#xA0;=&#xA0;n;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;&#xA0;nstep&#xA0;=&#xA0;2;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADdouble&#xA0;Dt&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;ADdouble&#xA0;&gt;&#xA0;Y0(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Y0[i]&#xA0;=&#xA0;0.;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;integrate&#xA0;the&#xA0;differential&#xA0;equation<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;ADdouble&#xA0;&gt;&#xA0;Y&#xA0;=&#xA0;TaylorOde(F,&#xA0;order,&#xA0;nstep,&#xA0;Dt,&#xA0;Y0);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;create&#xA0;g:&#xA0;A&#xA0;-&gt;&#xA0;Y<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADFun&lt;double&gt;&#xA0;g(A,&#xA0;Y);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;u(&#xA0;g.Domain()&#xA0;);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;v(&#xA0;g.Range()&#xA0;);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;check&#xA0;function&#xA0;values<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;yi&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;yi&#xA0;*=&#xA0;a[i]&#xA0;*&#xA0;(nstep&#xA0;*&#xA0;Value(Dt))&#xA0;/&#xA0;double(i&#xA0;+&#xA0;1);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;NearEqual(Value(Y[i]),&#xA0;yi,&#xA0;1e-10,&#xA0;1e-10);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;check&#xA0;derivative&#xA0;values<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;j;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;0;&#xA0;j&#xA0;&lt;&#xA0;n;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;compute&#xA0;partial&#xA0;derivative&#xA0;w.r.t&#xA0;a[j]<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;u[i]&#xA0;=&#xA0;0.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;u[j]&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;v&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;g.Forward(1,&#xA0;u);<br/>
+<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;j;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;NearEqual(v[i],&#xA0;0.,&#xA0;1e-10,&#xA0;1e-10);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;j;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;yi&#xA0;&#xA0;=&#xA0;Value(Y[i]);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;NearEqual(v[i],&#xA0;yi&#xA0;/&#xA0;a[j],&#xA0;1e-10,&#xA0;1e-10);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;ok;<br/>
+}<br/>
+<br/>
+<br/>
+</span></font></code>
+<hr/>Input File: Example\OdeTaylor.cpp
+
+</body>
+</html>

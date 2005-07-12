@@ -1,0 +1,20 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+<title>Negation: The Unary Minus Operator</title>
+<meta name="description" content="Negation: The Unary Minus Operator"/>
+<meta name="keywords" content=" unary minus negative operator - "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<frameset cols="15%,*">
+<frame src="neg_links.xml"/>
+<frameset rows="20%,80%">
+<frame src="neg_frame1.xml" name="frame1"/>
+<frame src="neg_frame2.xml" name="frame2"/>
+</frameset>
+</frameset>
+</html>

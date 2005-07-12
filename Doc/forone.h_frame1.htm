@@ -1,0 +1,92 @@
+<html><head>
+<title>Partial w.r.t One Domain Component: Example and Test</title>
+<meta name="description" content="Partial w.r.t One Domain Component: Example and Test">
+<meta name="keywords" content=" partial one component derivative example test "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="forone.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="revone.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="forone.h.htm" target="_top">section</a>, <a href="forone.h_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+
+
+
+
+
+<center><b><big><big>Partial w.r.t One Domain Component: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+<br>
+//&nbsp;----------------------------------------------------------------------------<br>
+<br>
+template&nbsp;&lt;typename&nbsp;VectorDouble&gt;&nbsp;//&nbsp;vector&nbsp;class,&nbsp;elements&nbsp;of&nbsp;type&nbsp;double<br>
+bool&nbsp;ForOne()<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;=&nbsp;true;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::exp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::sin;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::cos;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;n&nbsp;=&nbsp;2;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;m&nbsp;=&nbsp;3;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;independent&nbsp;and&nbsp;dependent&nbsp;variable&nbsp;vectors<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;&nbsp;X(n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;&nbsp;Y(m);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;value&nbsp;of&nbsp;the&nbsp;independent&nbsp;variable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X[0]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X[1]&nbsp;=&nbsp;2.;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;set&nbsp;the&nbsp;independent&nbsp;variables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(X);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;comupute&nbsp;the&nbsp;dependent&nbsp;variable&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y[0]&nbsp;=&nbsp;X[0]&nbsp;*&nbsp;exp(&nbsp;X[1]&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y[1]&nbsp;=&nbsp;X[0]&nbsp;*&nbsp;sin(&nbsp;X[1]&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y[2]&nbsp;=&nbsp;X[0]&nbsp;*&nbsp;cos(&nbsp;X[1]&nbsp;);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;create&nbsp;the&nbsp;function&nbsp;object&nbsp;F&nbsp;:&nbsp;X&nbsp;-&gt;&nbsp;Y<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;double&gt;&nbsp;F(X,&nbsp;Y);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;argument&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VectorDouble&nbsp;x(n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[0]&nbsp;=&nbsp;2.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[1]&nbsp;=&nbsp;1.;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compute&nbsp;and&nbsp;check&nbsp;partials&nbsp;of&nbsp;F&nbsp;w.r.t&nbsp;x[0]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VectorDouble&nbsp;dF(m);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dF&nbsp;&nbsp;=&nbsp;F.ForOne(x,&nbsp;0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;&nbsp;NearEqual(&nbsp;dF[0],&nbsp;exp(x[1]),&nbsp;1e-10,&nbsp;1e-10&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;&nbsp;NearEqual(&nbsp;dF[1],&nbsp;sin(x[1]),&nbsp;1e-10,&nbsp;1e-10&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;&nbsp;NearEqual(&nbsp;dF[2],&nbsp;cos(x[1]),&nbsp;1e-10,&nbsp;1e-10&nbsp;);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compute&nbsp;and&nbsp;check&nbsp;partials&nbsp;of&nbsp;F&nbsp;w.r.t&nbsp;x[1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dF&nbsp;&nbsp;=&nbsp;F.ForOne(x,&nbsp;1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;&nbsp;NearEqual(&nbsp;dF[0],&nbsp;&nbsp;x[0]*exp(x[1]),&nbsp;1e-10,&nbsp;1e-10&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;&nbsp;NearEqual(&nbsp;dF[1],&nbsp;&nbsp;x[0]*cos(x[1]),&nbsp;1e-10,&nbsp;1e-10&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;&nbsp;NearEqual(&nbsp;dF[2],&nbsp;-x[0]*sin(x[1]),&nbsp;1e-10,&nbsp;1e-10&nbsp;);<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+<br>
+}<br>
+<br>
+</span></font></code>
+<hr>Input File: Example\ForOne.h
+
+</body>
+</html>

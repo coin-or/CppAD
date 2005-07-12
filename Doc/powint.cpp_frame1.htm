@@ -1,0 +1,76 @@
+<html><head>
+<title>Integer Powers: Example and Test</title>
+<meta name="description" content="Integer Powers: Example and Test">
+<meta name="keywords" content=" pow example test "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="pow.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="pow.cpp.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="powint.cpp.htm" target="_top">section</a>, <a href="powint.cpp_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+<center><b><big><big>Integer Powers: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+#&nbsp;include&nbsp;&quot;NearEqualExt.h&quot;<br>
+#&nbsp;include&nbsp;&lt;cmath&gt;<br>
+<br>
+bool&nbsp;PowInt(void)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;=&nbsp;true;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::pow;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::exp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::log;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;independent&nbsp;variable&nbsp;vector,&nbsp;indices,&nbsp;values,&nbsp;and&nbsp;declaration<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;U(1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;U[0]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(U);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;dependent&nbsp;variable&nbsp;vector&nbsp;and&nbsp;indices<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;Z(2);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;dependent&nbsp;variable&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Z[0]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;pow(U[0],&nbsp;5);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;x&nbsp;=&nbsp;u^5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Z[1]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;pow(U[0],&nbsp;-5);&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;y&nbsp;=&nbsp;u^{-5}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;create&nbsp;f:&nbsp;U&nbsp;-&gt;&nbsp;Z&nbsp;and&nbsp;vectors&nbsp;used&nbsp;for&nbsp;derivative&nbsp;calculations<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;double&gt;&nbsp;f(U,&nbsp;Z);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;v(&nbsp;f.Domain()&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;w(&nbsp;f.Range()&nbsp;);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x_u&nbsp;=&nbsp;5&nbsp;*&nbsp;u^4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y_u&nbsp;=&nbsp;-&nbsp;5&nbsp;*&nbsp;u^{-6}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;check&nbsp;function&nbsp;values&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;u&nbsp;=&nbsp;Value(U[0]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(Z[0]&nbsp;,&nbsp;exp(&nbsp;log(u)&nbsp;*&nbsp;5.),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1e-10&nbsp;,&nbsp;1e-10);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(Z[1]&nbsp;,&nbsp;exp(&nbsp;-&nbsp;log(u)&nbsp;*&nbsp;5.),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1e-10&nbsp;,&nbsp;1e-10);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;forward&nbsp;computation&nbsp;of&nbsp;partials&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[0]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;=&nbsp;f.Forward(1,&nbsp;v);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(w[0]&nbsp;,&nbsp;5.&nbsp;*&nbsp;exp(&nbsp;log(u)&nbsp;*&nbsp;4.),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1e-10&nbsp;,&nbsp;1e-10);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(w[1]&nbsp;,&nbsp;-&nbsp;5.&nbsp;*&nbsp;exp(&nbsp;-&nbsp;log(u)&nbsp;*&nbsp;6.),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1e-10&nbsp;,&nbsp;1e-10);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+}<br>
+<br>
+</span></font></code>
+<hr>Input File: Example\PowInt.cpp
+
+</body>
+</html>

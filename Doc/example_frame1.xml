@@ -1,0 +1,53 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>General Purpose Examples</title>
+<meta name="description" content="General Purpose Examples"/>
+<meta name="keywords" content=" "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="cppaderror.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="getstarted.cpp.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="example.xml" target="_top">section</a>, <a href="example_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>General Purpose Examples</big></big></b></center>
+<br/>
+<b><big><a name="Introduction">Introduction</a></big></b>
+<br/>
+Each CppAD operation,
+for example <a href="add.xml" target="_top"><span style='white-space: nowrap'>Add</span></a>
+,
+has its own specific example.
+The examples listed here are not connected to a specific operation.
+
+<br/>
+<br/>
+<b><big><a name="Running Examples">Running Examples</a></big></b>
+<br/>
+The 
+<a href="install.xml" target="_top"><span style='white-space: nowrap'>installation&#xA0;instructions</span></a>
+
+show how the examples can be run on your system.
+
+
+<br/>
+<br/>
+<b><big><a name="Contents">Contents</a></big></b>
+<br/>
+<div><a href="getstarted.cpp.xml" target="_top">Getting&#xA0;Started&#xA0;Using&#xA0;CppAD&#xA0;With&#xA0;A&#xA0;Polynomial&#xA0;Example</a><br/>
+<a href="realistic.xml" target="_top">Examples&#xA0;Using&#xA0;CppAD&#xA0;in&#xA0;a&#xA0;Realistic&#xA0;Application</a><br/>
+<a href="exampleutility.xml" target="_top">Utility&#xA0;Routines&#xA0;used&#xA0;by&#xA0;CppAD&#xA0;Examples</a><br/>
+<a href="listallexamples.xml" target="_top">List&#xA0;of&#xA0;All&#xA0;the&#xA0;CppAD&#xA0;Examples</a><br/>
+</div>
+<hr/>Input File: omh\Example.omh
+
+</body>
+</html>

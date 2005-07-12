@@ -1,0 +1,206 @@
+<html><head>
+<title>Constructing Differentiable Functions From The Tape</title>
+<meta name="description" content="Constructing Differentiable Functions From The Tape">
+<meta name="keywords" content=" construct differentiable function tape Size Adfun Order Domain Range Parameter Memory Compare operator compare "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="adfun.htm" target="_top">section</a>, <a href="adfun_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+This constructs a function object corresponding to a
+<a href="glossary_frame1.htm#Base Function" target="frame1"><i><span style='white-space: nowrap'>Base&nbsp;function</span></i></a>
+
+<code>
+<span style='white-space: nowrap'>&nbsp;F&nbsp;:&nbsp;B^n&nbsp;\rightarrow&nbsp;B^m</span></code>
+
+where <i>B</i> is the space corresponding to objects of type <i>Base</i>,
+<i>n</i> is the size of <i>X</i>,
+and <i>m</i> is the size of <i>Y</i>.
+The <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> operations that 
+map from the elements of <i>X</i>
+to the elements of <i>Y</i>
+define the function.
+
+<br>
+<br>
+<b><big><a name="Tape State">Tape State</a></big></b>
+<br>
+The tape that records <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> operations
+must be in the Recording <a href="glossary_frame1.htm#Tape State" target="frame1"><i><span style='white-space: nowrap'>state</span></i></a>
+
+when this constructed is called.
+The tape that records <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> operations
+will be in the Empty state after this constructor is called.
+
+<br>
+<br>
+<b><big><a name="VectorADBase">VectorADBase</a></big></b>
+<br>
+The type <i>VectorADBase</i> must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector_frame1.htm#Elements of Specified Type" target="frame1"><i><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type&nbsp;AD&lt;Base&gt;</span></i></a>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="X">X</a></big></b>
+<br>
+The vector <i>X</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>VectorADBase</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>X</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>The length of <i>X</i> is the number of independent variables
+(dimension of the domain space for the <code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object).
+The current recording of <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> operations
+must have started recording with the call 
+<a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent(X)</span></a>
+.
+In addition, none of the element of <i>X</i>
+may change value between the call to <code><font color="blue">Independent</font></code>
+and the <code><font color="blue">ADFun</font></code> constructor.
+
+<br>
+<br>
+<b><big><a name="Y">Y</a></big></b>
+<br>
+The vector <i>Y</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>VectorADBase</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>Y</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>The length of <i>Y</i> is the number of dependent variables
+(dimension of the range space for the <code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object).
+
+<br>
+<br>
+<b><big><a name="Size">Size</a></big></b>
+
+<br>
+The operation 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Size(void)&nbsp;const<br>
+</span></font></code>returns the number of tape records that correspond to the function <i>F</i>.
+
+<br>
+<br>
+<b><big><a name="Order">Order</a></big></b>
+
+<br>
+The function 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Order(void)&nbsp;const<br>
+</span></font></code>returns the order of the previous forward operation
+using the function <i>F</i>.
+This is the highest order of the 
+<a href="glossary_frame1.htm#Taylor Coefficient" target="frame1"><i><span style='white-space: nowrap'>Taylor&nbsp;coefficients</span></i></a>
+
+that are currently stored in <i>F</i>.
+
+<br>
+<br>
+<b><big><a name="Domain">Domain</a></big></b>
+
+<br>
+The function
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Domain(void)&nbsp;const<br>
+</span></font></code>returns the dimension of the domain space; i.e., the length of the
+vector <i>X</i> in the constructor for <i>F</i>.
+
+<br>
+<br>
+<b><big><a name="Range">Range</a></big></b>
+
+<br>
+The function
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Range(void)&nbsp;const<br>
+</span></font></code>returns the dimension of the range space; i.e., the length of the
+vector <i>Y</i> in the constructor for <i>F</i>.
+
+<br>
+<br>
+<b><big><a name="Parameter">Parameter</a></big></b>
+
+<br>
+The function
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Parameter(size_t&nbsp;i)&nbsp;const<br>
+</span></font></code>returns true if the range space component of <i>F</i> 
+with index <i>i</i> corresponds to a
+<a href="glossary_frame1.htm#Parameter" target="frame1"><i><span style='white-space: nowrap'>parameter</span></i></a>
+ 
+where <i>i</i>
+is less than <code><font color="blue"></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Range()</span></font></code>.
+If a component of the range of <i>F</i> is a parameter, 
+it does not depend on any of the components in the domain of <i>F</i>; 
+i.e., all of its partial derivatives are zero.
+
+<br>
+<br>
+<b><big><a name="Memory">Memory</a></big></b>
+
+<br>
+The operation
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Memory(void)&nbsp;const<br>
+</span></font></code>returns the number of memory units (<code><font color="blue">sizeof</font></code>) required to store
+the operations and derivative information corresponding to <i>F</i>.
+This memory is returned to the system when the destructor for 
+<i>F</i> is called.
+
+<br>
+<br>
+<b><big><a name="CompareChange">CompareChange</a></big></b>
+
+
+
+<br>
+If <code><font color="blue">NDEBUG</font></code> is defined,
+this function does not exist.
+Otherwise, the operation
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.CompareChange(void)&nbsp;const<br>
+</span></font></code>return the number of 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> <a href="compare.htm" target="_top"><span style='white-space: nowrap'>comparison</span></a>
+ 
+operations corresponding to
+the previous zero order <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ that have a different result from
+when <i>F</i> was created by taping an algorithm.
+When it is non-zero, some comparison operator results are different.
+This can be used to detect when <i>F</i>
+no longer represents the algorithm that was taped.
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+<br>
+The files
+<a href="fun.h.htm" target="_top"><span style='white-space: nowrap'>Fun.h</span></a>
+ and <a href="comparechange.cpp.htm" target="_top"><span style='white-space: nowrap'>CompareChange.cpp</span></a>
+
+contain examples and tests of these operations.
+They return true if they succeed and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Contents">Contents</a></big></b>
+<br>
+<div><a href="parameter.htm" target="_top">Is&nbsp;This&nbsp;AD&nbsp;Object&nbsp;a&nbsp;Parameter</a><br>
+<a href="independent.htm" target="_top">Declare&nbsp;Independent&nbsp;Variables&nbsp;and&nbsp;Start&nbsp;Recording</a><br>
+<a href="drivers.htm" target="_top">First&nbsp;and&nbsp;Second&nbsp;Derivatives:&nbsp;Easy&nbsp;Drivers</a><br>
+<a href="forward.htm" target="_top">Forward&nbsp;Mode</a><br>
+<a href="reverse.htm" target="_top">Reverse&nbsp;Mode</a><br>
+<a href="fun.h.htm" target="_top">Differentiable&nbsp;Function&nbsp;Constructor:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
+<a href="comparechange.cpp.htm" target="_top">CompareChange&nbsp;Function:&nbsp;Example&nbsp;and&nbsp;Test</a><br>
+<a href="multape.htm" target="_top">Using&nbsp;Multiple&nbsp;Tapes</a><br>
+</div>
+<hr>Input File: CppAD\local\Fun.h
+
+</body>
+</html>

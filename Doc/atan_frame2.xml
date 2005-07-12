@@ -1,0 +1,88 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>The Inverse Tangent Function</title>
+<meta name="description" content="The Inverse Tangent Function"/>
+<meta name="keywords" content=" tan inverse atan "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="atan.xml" target="_top">section</a>, <a href="atan_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+Returns an
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object that is equal to
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;atan(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>where <code><font color="blue">atan</font></code> has the same interpretation as
+for the corresponding <a href="glossary_frame1.xml#Base Type" target="frame1"><i><span style='white-space: nowrap'>base&#xA0;type</span></i></a>
+.
+
+<br/>
+<br/>
+<b><big><a name="Base Type Requirement">Base Type Requirement</a></big></b>
+<br/>
+A definition for the <code><font color="blue">atan</font></code> function
+is automatically included (in the <code><font color="blue">CppAD</font></code> namespace)
+for the following 
+<code><font color="blue">float</font></code> and <code><font color="blue">double</font></code>
+<a href="glossary_frame1.xml#Base Type" target="frame1"><i><span style='white-space: nowrap'>base&#xA0;types</span></i></a>
+.
+If the <code><font color="blue">atan</font></code> function is used with any other base type, 
+it must be a defined for that base type.
+
+<br/>
+<br/>
+<b><big><a name="Derivative Assumption">Derivative Assumption</a></big></b>
+<br/>
+It is assumed that
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mtable rowalign="center" ><mtr><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<mo stretchy="false">[</mo>
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>atan</mi>
+</mstyle></mrow>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">]</mo>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<mi mathvariant='italic'>x</mi>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="center" >
+<mo stretchy="false">=</mo>
+</mtd><mtd columnalign="right" >
+<mfrac><mrow><mn>1</mn>
+</mrow>
+<mrow><mn>1</mn>
+<mo stretchy="false">+</mo>
+<msup><mi mathvariant='italic'>x</mi>
+<mn>2</mn>
+</msup>
+</mrow>
+</mfrac>
+</mtd></mtr></mtable>
+</mrow></math>
+
+<br/>
+<b><big><a name="Example">Example</a></big></b>
+
+<br/>
+The file
+<a href="atan.cpp.xml" target="_top"><span style='white-space: nowrap'>Atan.cpp</span></a>
+
+contains an example and a test of this function.   
+It returns true if it succeeds and false otherwise.
+
+
+<hr/>Input File: CppAD\local\Atan.h
+
+</body>
+</html>

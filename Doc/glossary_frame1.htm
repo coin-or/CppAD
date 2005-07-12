@@ -1,0 +1,217 @@
+<html><head>
+<title>Glossary</title>
+<meta name="description" content="Glossary">
+<meta name="keywords" content=" base function type dependent variable elementary vector independent parameter tape state empty recording taylor coefficient "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="detlufadbad.cpp.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="bib.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="glossary.htm" target="_top">section</a>, <a href="glossary_frame1.htm" target="_top">frame</a></div>
+<hr><center><b><big><big>Glossary</big></big></b></center>
+<br>
+<b><big><a name="Base Function">Base Function</a></big></b>
+<br>
+If <i>Base</i> is a C++ class,
+a function <code>
+<span style='white-space: nowrap'>&nbsp;f</span></code>
+ is referred to as a <i>Base</i> function
+if its domain and range are finite dimensional vector with components in the
+space represented by <i>Base</i>; i.e. <code>
+<span style='white-space: nowrap'>&nbsp;f&nbsp;:&nbsp;B^n&nbsp;\rightarrow&nbsp;B^m</span></code>
+.
+
+<br>
+<br>
+<b><big><a name="Base Type">Base Type</a></big></b>
+<br>
+If <i>x</i> is an <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object,
+<i>Base</i> is referred to as the base type for <i>x</i>.
+
+<br>
+<br>
+<b><big><a name="Dependent Variable">Dependent Variable</a></big></b>
+<br>
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object is a dependent variable
+if it is a variable and is not an independent variable.
+
+<br>
+<br>
+<b><big><a name="Elementary Vector">Elementary Vector</a></big></b>
+<br>
+The <i>j</i>-th elementary vector <code>
+<span style='white-space: nowrap'>&nbsp;u&nbsp;\in&nbsp;B^m</span></code>
+ is defined by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+u_i&nbsp;=&nbsp;\left\{&nbsp;\begin{array}{ll}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&amp;&nbsp;{\rm&nbsp;if}&nbsp;\;&nbsp;i&nbsp;=&nbsp;j&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&amp;&nbsp;{\rm&nbsp;otherwise}<br>
+\end{array}&nbsp;\right.<br>
+\]&nbsp;</span></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Independent Variable">Independent Variable</a></big></b>
+<br>
+The set of independent variables are specified by
+the <a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ function call
+that starts recording operations on the corresponding tape.
+
+<br>
+<br>
+<b><big><a name="Parameter">Parameter</a></big></b>
+<br>
+All <i>Base</i> objects are always parameters.
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object is currently a parameter if
+it is not currently a variable.
+All <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> objects are currently parameters
+when the tape is in the Empty state.
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object <i>x</i> is 
+currently a parameter if and only if
+<a href="parameter.htm" target="_top"><span style='white-space: nowrap'>Parameter(x)</span></a>
+ is true.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Note that we often drop the word currently and 
+just refer to an <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object as a variable
+or parameter.
+ 
+<br>
+<br>
+<b><big><a name="Tape State">Tape State</a></big></b>
+<br>
+For each class <i>Base</i>,
+the tape that records 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> 
+operations has two possible states:
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enum&nbsp;TapeState&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Empty,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Recording,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+</span>
+</font></code>
+The tape is initially in the <code><font color="blue">Empty</font></code> state.
+It is in the recording state after each call to 
+<a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ with a <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> argument.
+It is in the <code><font color="blue">Empty</font></code> state after each call to
+<a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun&lt;Base&gt;</span></a>
+.
+
+
+<br>
+<br>
+<b><a name="Tape State.Empty">Empty</a></b>
+<br>
+The tape is empty 
+(hence all <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> objects are parameters).
+The tape is initially in this state and it enters this state whenever a
+<a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object is constructed.
+
+<br>
+<br>
+<b><a name="Tape State.Recording">Recording</a></b>
+<br>
+All of the independent variables have been specified
+and the tape is currently recording the operations that define
+the more variables as <i>Base</i> scalar functions of the
+independent variables.
+The tape enters this state when a
+<a href="independent.htm" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ calculation is preformed.
+
+<br>
+<br>
+<b><big><a name="Taylor Coefficient">Taylor Coefficient</a></big></b>
+<br>
+Suppose <code>
+<span style='white-space: nowrap'>&nbsp;X&nbsp;:&nbsp;B&nbsp;\rightarrow&nbsp;B^n</span></code>
+ is a 
+is <code>
+<span style='white-space: nowrap'>&nbsp;p</span></code>
+ times continuously differentiable function
+in some neighborhood of zero.
+For <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;p</span></code>
+, 
+we use the column vector <code>
+<span style='white-space: nowrap'>&nbsp;x^{(k)}&nbsp;\in&nbsp;B^n</span></code>
+ for the <i>k</i>-th order 
+Taylor coefficient corresponding to <code>
+<span style='white-space: nowrap'>&nbsp;X</span></code>
+ 
+which is defined by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x^{(k)}&nbsp;=&nbsp;\frac{1}{k&nbsp;!}&nbsp;\Dpow{k}{t}&nbsp;X(0)<br>
+\]&nbsp;</span></code>
+
+It follows that 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X(t)&nbsp;=&nbsp;x^{(0)}&nbsp;+&nbsp;x^{(1)}&nbsp;t&nbsp;+&nbsp;\cdots&nbsp;+&nbsp;x^{(p)}&nbsp;t^p&nbsp;&nbsp;+&nbsp;R(t)<br>
+\]</span></code>
+
+where the remainder <code>
+<span style='white-space: nowrap'>&nbsp;R(t)</span></code>
+ divided by <code>
+<span style='white-space: nowrap'>&nbsp;t^p</span></code>
+ 
+converges to zero and <code>
+<span style='white-space: nowrap'>&nbsp;t</span></code>
+ goes to zero.
+
+
+<br>
+<br>
+<b><big><a name="Variable">Variable</a></big></b>
+<br>
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object is currently a variable if
+the corresponding tape is in the Recording state
+and the current value of an <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object 
+depends on the value of at least one of the 
+<a href="glossary_frame1.htm#Independent Variable" target="frame1"><i><span style='white-space: nowrap'>independent</span></i></a>
+ variables.
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object <i>x</i> is currently
+a variable if and only if
+<a href="parameter.htm" target="_top"><span style='white-space: nowrap'>Parameter(x)</span></a>
+ is currently false.
+For example,
+directly after the code sequence
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;double&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>[0];<br>
+</span></font></code>the <code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code> object <i>x</i> is currently a variable.
+Directly after the code sequence
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;double&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>[0];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;5;<br>
+</span></font></code><i>x</i>  is currently not a variable 
+(it is currently a <a href="glossary_frame1.htm#Parameter" target="frame1"><i><span style='white-space: nowrap'>parameter</span></i></a>
+).
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Note that we often drop the word currently and 
+just refer to an <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object as a variable
+or parameter.
+
+
+<hr>Input File: omh\glossary.omh
+
+</body>
+</html>

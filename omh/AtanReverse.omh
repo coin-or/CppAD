@@ -1,0 +1,154 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithm Differentiation Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+$begin AtanReverse$$
+$spell
+	Arctangent
+	atan
+	Taylor
+$$
+
+$index atan, reverse theory$$
+$index theory, atan reverse$$
+$index reverse, atan theory$$
+
+$section Arctangent Function Reverse Mode Theory$$
+
+
+We use the reverse theory
+$xref%
+	ReverseTheory%
+	Standard Math Functions%
+	standard math function
+%$$
+definition for the functions $latex H$$ and $latex G$$.
+In addition, 
+
+we use $latex b$$ 
+for the $th p$$ order Taylor coefficient 
+row vectors corresponding to 
+$latex 1 + X(t) * X(t)$$ 
+and replace $latex z^{(j)}$$ by
+$latex \[
+	( z^{(j)} , b^{(j)} )
+\] $$ 
+in the definition for $latex G$$ and $latex H$$.
+The forward mode formulas for the
+$xref/AtanForward//arctangent/$$ 
+function are
+$latex \[
+\begin{array}{rcl}
+	z^{(j)}  & = & \arctan ( x^{(0)} ) \\
+	b^{(j)}  & = & 1 + x^{(0)} x^{(0)}
+\end{array}
+\] $$
+
+for the case $latex j = 0$$, and for $latex j > 0$$,
+
+$latex \[
+\begin{array}{rcl}
+b^{(j)} & = &  
+	\sum_{k=0}^j x^{(k)} x^{(j-k)} 
+\\
+z^{(j)} & = & \frac{1}{j} \frac{1}{ b^{(0)} } 
+\left(
+	j x^{(j)}
+	- \sum_{k=1}^{j-1} k z^{(k)}  b^{(j-k)} 
+\right)
+\end{array}
+\] $$ 
+
+If $latex j = 0$$, we have the relation
+
+$latex \[
+\begin{array}{rcl}
+\D{H}{ x^{(j)} } & = & 
+\D{G}{ x^{(j)} }  
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(0)} }
++ \D{G}{ b^{(j)} } \D{ b^{(j)} }{ x^{(0)} }
+\\
+& = &
+\D{G}{ x^{(j)} }  
++ \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
++ \D{G}{ b^{(j)} } 2 x^{(0)}
+\end{array}
+\] $$ 
+
+If $latex j > 0$$, then for $latex k = 1, \ldots , j-1$$
+
+$latex \[
+\begin{array}{rcl}
+\D{H}{ b^{(0)} } & = & 
+\D{G}{ b^{(0)} } 
+- \D{G}{ z^{(j)} } \D{ z^{(j)} }{ b^{(0)} }
+\\
+& = &
+\D{G}{ b^{(0)} } 
+- \D{G}{ z^{(j)} } \frac{ z^{(j)} }{ b^{(0)} } 
+\\
+\D{H}{ x^{(j)} } & = & 
+\D{G}{ x^{(j)} } 
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(j)} }
++ \D{G}{ b^{(j)} } \D{ b^{(j)} }{ x^{(j)} }
+\\
+& = &
+\D{G}{ x^{(j)} } 
++ \D{G}{ z^{(j)} } \frac{1}{ b^{(0)} }
++ \D{G}{ b^{(j)} } 2 x^{(0)}
+\\
+\D{H}{ x^{(0)} } & = & 
+\D{G}{ x^{(0)} } 
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(0)} }
++ \D{G}{ b^{(j)} } \D{ b^{(j)} }{ x^{(0)} }
+\\
+& = & 
+\D{G}{ x^{(0)} } + 
+\D{G}{ b^{(j)} } 2 x^{(j)}
+\\
+\D{H}{ x^{(k)} } & = & 
+\D{G}{ x^{(k)} } 
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
++ \D{G}{ b^{(j)} } \D{ b^{(j)} }{ x^{(k)} }
+\\
+& = & 
+\D{G}{ x^{(k)} } 
++ \D{G}{ b^{(j)} } 2 x^{(j-k)}
+\\
+\D{H}{ z^{(k)} } & = & 
+\D{G}{ z^{(k)} } 
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ z^{(k)} }
++ \D{G}{ b^{(j)} } \D{ b^{(j)} }{ z^{(k)} }
+\\
+& = & 
+\D{G}{ z^{(k)} } 
+- \D{G}{ z^{(j)} } \frac{k b^{(j-k)} }{ j b^{(0)} }
+\\
+\D{H}{ b^{(j-k)} } & = & 
+\D{G}{ b^{(j-k)} } 
++ \D{G}{ z^{(j)} } \D{ z^{(j)} }{ b^{(j-k)} }
++ \D{G}{ b^{(j)} } \D{ b^{(j)} }{ b^{(j-k)} }
+\\
+& = & 
+\D{G}{ b^{(j-k)} } 
+- \D{G}{ z^{(j)} } \frac{k z^{(k)} }{ j b^{(0)} } 
+\end{array}
+\] $$ 
+
+$end

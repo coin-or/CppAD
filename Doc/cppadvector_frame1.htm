@@ -1,0 +1,100 @@
+<html><head>
+<title>Choosing The CppADvector Template Class</title>
+<meta name="description" content="Choosing The CppADvector Template Class">
+<meta name="keywords" content=" Cppadvector "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="simplevector.cpp.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="vecad.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="cppadvector.htm" target="_top">section</a>, <a href="cppadvector_frame1.htm" target="_top">frame</a></div>
+<hr><center><b><big><big>Choosing The CppADvector Template Class</big></big></b></center>
+<br>
+<b><big><a name="Introduction">Introduction</a></big></b>
+<br>
+Many of the CppAD <a href="example.htm" target="_top"><span style='white-space: nowrap'>examples</span></a>
+ and tests use 
+the <code><font color="blue">CppADvector</font></code> template class to pass information.
+The default definition for this template class is
+<a href="cppad_vector.htm" target="_top"><span style='white-space: nowrap'>CppAD::vector</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="CppAD::vector">CppAD::vector</a></big></b>
+<br>
+The default for the preprocessor symbol <code><font color="blue">CppADvector</font></code>
+is specified by the following source code
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+<br>
+//&nbsp;The&nbsp;next&nbsp;line&nbsp;is&nbsp;C++&nbsp;source&nbsp;code&nbsp;and&nbsp;its&nbsp;replacement&nbsp;is&nbsp;discussed&nbsp;below<br>
+#&nbsp;if&nbsp;CppAD_CPPADVECTOR<br>
+#&nbsp;define&nbsp;CppADvector&nbsp;CppAD::vector<br>
+#&nbsp;endif<br>
+<br>
+</span>
+</font></code>
+You can replace this default definition of the preprocessor symbol
+<code><font color="blue">CppADvector</font></code> by any other <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ template class.
+This will test using your replacement template vector class with CppAD.
+
+<br>
+<br>
+<b><big><a name="std::vector">std::vector</a></big></b>
+<br>
+If you specify <code><font color="blue">--with-stdvector</font></code> on the <code><font color="blue">configure</font></code>
+command line during CppAD <a href="install.htm" target="_top"><span style='white-space: nowrap'>installation</span></a>
+,
+the following code replaces the definition of <code><font color="blue">CppADvector</font></code> 
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+<br>
+#&nbsp;if&nbsp;CppAD_STDVECTOR<br>
+#&nbsp;include&nbsp;&lt;vector&gt;<br>
+#&nbsp;define&nbsp;CppADvector&nbsp;std::vector<br>
+#&nbsp;endif<br>
+<br>
+</span>
+</font></code>
+then CppAD will use <code><font color="blue">std::vector</font></code> for its examples and tests.
+Use of <code><font color="blue">CppAD::vector</font></code>, <code><font color="blue">std::vector</font></code>,
+and <code><font color="blue">std::valarray</font></code> with CppAD is always tested to some degree.
+Specifying <code><font color="blue">--with-stdvector</font></code> will increase the amount of
+<code><font color="blue">std::vector</font></code> testing. 
+
+<br>
+<br>
+<b><big><a name="boost::numeric::ublas::vector">boost::numeric::ublas::vector</a></big></b>
+<br>
+If you specify a value for <i>BoostDir</i> on the <code><font color="blue">configure</font></code>
+command line during CppAD <a href="install.htm" target="_top"><span style='white-space: nowrap'>installation</span></a>
+,
+the following code replaces the definition of <code><font color="blue">CppADvector</font></code> 
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+<br>
+#&nbsp;if&nbsp;CppAD_BOOSTVECTOR<br>
+#&nbsp;include&nbsp;&lt;boost/numeric/ublas/vector.hpp&gt;<br>
+#&nbsp;define&nbsp;CppADvector&nbsp;boost::numeric::ublas::vector<br>
+#&nbsp;endif<br>
+<br>
+</span>
+</font></code>
+to be the directory where you installed 
+In the Windows case, you will also need to change the windows project files
+and add <i>BoostDir</i> to the extra include directories.
+
+
+<hr>Input File: CppAD\local\CppADvector.h
+
+</body>
+</html>

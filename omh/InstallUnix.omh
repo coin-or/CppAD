@@ -1,0 +1,321 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+$begin InstallUnix$$
+$dollar @$$
+$spell
+	gprof
+	config
+	cppad-yy-mm-dd
+	stdvector
+	std
+	CppADvector
+	ublas
+	hpp
+	adouble
+	badiff
+	usr
+	cygdrive
+	htm
+	xml
+	Dir
+	xvzf
+	gz
+	GetStarted
+	workspace
+	Makefile
+	exe
+	Cygwin
+	Microsoft
+	dsw
+	CppAD
+	Adolc
+	Fadbad
+	ls
+	aclocal
+$$
+
+$index free, unix install$$
+$index CppAD, unix install$$
+$index install, unix CppAD$$
+
+$section Unix Installation and Testing$$
+
+$head Download Current Version$$
+Download the current version of the file
+$href%
+	http://www.seanet.com/~bradbell/CppAD.unix.tar.gz%
+	CppAD.unix.tar.gz
+%$$
+
+$head Extraction$$
+Use the command
+$codep
+	tar -xvzf CppAD.unix.tar.gz
+$$
+to decompress and extract the unix format version
+into the distribution directory
+$syntax%
+	cppad-%yy%-%mm%-%dd%
+%$$
+The value $syntax%%yy%-%mm%-%dd%$$ is the corresponding version
+of CppAD.
+
+$head User Documentation$$
+The $code Doc$$ sub-directory of the distribution directory
+contains user documentation for CppAD.
+The files $syntax%Doc/%*%.htm%$$ are in HTML format.
+If your browser supports XHTML+MATHML format,
+an easier to read copy is available in the files
+$syntax%Doc/%*%.xml%$$.
+
+$head Developer Documentation$$
+The $code Developer$$ sub-directory of the distribution directory
+contains developer documentation for CppAD. 
+
+$head Configure$$
+Enter the directory created by the extraction and execute the command:
+$syntax%
+	./configure \
+		[ prefix=%prefix% ] \
+		[ ADOLC_DIR=%AdolcDir% ] \
+		[ FADBAD_DIR=%FadbadDir% ] \
+		[ --with-stdvector ]  [ BOOST_DIR=%BoostDir% ] \
+		[ CPP_ERROR_WARN=%CppErrorsAndWarnings% ] \
+		[ --with-profiling ]
+%$$
+where the entries between the brackets $code [$$ and $code ]$$ are optional,
+the brackets are not included,
+and the entires in italic are replaced values that you choose.
+
+$head Prefix$$
+The default value for $italic prefix$$ is $code @HOME$$; 
+i.e., by default the CppAD include files 
+will install in
+$syntax%
+	@HOME/include/CppAD
+%$$
+and the CppAD library is
+$syntax%
+	@HOME/lib/libCppAD.a
+%$$
+If you want to install elsewhere, you will have to use this option.
+For example,
+if you have permission to write into the directories 
+$code /usr/local/include$$ and $code /usr/local/lib$$,
+$codep
+	./configure --prefix=/usr/local
+$$ 
+will set up for installing the CppAD include files in the directory
+$syntax%
+	/usr/local/include/CppAD
+%$$
+and the CppAD library will be
+$syntax%
+	/usr/local/lib/libCppAD.a
+%$$
+This is the standard location for such files on many systems.
+If $italic prefix$$ is not a standard location for your system,
+you will need the compiler switches
+$syntax%
+	-I %prefix%/include -L %prefix%/lib
+%$$
+on the command line when you compile and link your programs with CppAD.
+ 
+$head Vector Class$$
+The default definition for 
+$xref/CppADvector/$$ is $xref/CppAD_vector//CppAD::vector/$$.
+$pre
+
+$$
+If the command line argument $code --with-stdvector$$ is specified,
+this definition is replaced by $code std::vector$$.
+In this case $italic BoostDir$$ must not be specified.
+$pre
+
+$$
+If the command line argument
+$syntax%
+	BOOST_DIR=%BoostDir%
+%$$
+is present, $code --with-stdvector$$ must not also be present.
+The value of $italic BoostDir$$ must be such that
+$syntax%
+	%BoostDir%/boost/numeric/ublas/vector.hpp
+%$$
+is a valid reference to the file $code vector.hpp$$.
+This replaces the default definition of $code CppADvector$$ with 
+$codep
+	boost::numeric::ublas::vector
+$$
+See $href%http://www.boost.org%boost%$$.
+
+$head C++ Errors And Warnings$$
+If the command line argument $italic CppErrorsAndWarnings$$ is present,
+it specifies compiler error and warning flags. 
+For example,
+$syntax%
+	CPP_ERROR_AND_WARN="-Wall -ansi"
+%$$
+would specify that error and warning flags $code -Wall$$
+and $code -ansi$$ should be included
+in all the C++ compile commands.
+The error and warning flags chosen must be valid options
+for the C++ compiler.
+The default value for $italic CppErrorsAndWarnings$$ is the
+empty string.
+
+$head Profiling$$
+See the $xref/InstallUnix/Speed Testing/Profiling/Profiling/1/$$ sub-heading
+under the Speed tests.
+
+$head Building All Tests and Examples$$
+The following command will build all of the examples
+and tests:
+$codep
+	make
+$$
+
+$head Getting Started$$
+The following commands will run the getting started example:
+$codep
+	cd GetStarted
+	./GetStarted
+$$
+
+$head Extensive Examples and Testing$$
+The following commands will an 
+extensive set of examples and tests:
+$codep
+	cd Example
+	./Example
+$$
+The following commands will execute an example and test
+of printing values during forward mode calculations:
+$codep
+	cd PrintFor
+	./PrintFor
+$$
+
+$head More Correctness Testing$$
+The following commands run some more  
+correctness tests:
+$codep
+	cd TestMore
+	./TestMore
+$$
+
+$head Speed Testing$$
+The following commands run a 
+set of speed and tests:
+$codep
+	cd Speed
+	./Speed
+$$
+
+$subhead Profiling$$
+If the command line argument $code --with-profiling$$ is specified,
+a program called $code Speed/Speed_p$$ is generated.
+In this case, the following commands will profile the speed tests:
+$codep
+	cd Speed
+	./Speed_p
+	gprof -b Speed_p
+$$ 
+If you are using a windows operating system, 
+you may have to replace $code Speed_p$$ by $code Speed_p.exe$$
+in the command above.
+Profiling is only support for the GNU C++ compiler.
+
+$head Compare CppAD with Adolc$$
+If you have 
+$href%
+	http://www.math.tu-dresden.de/~adol-c/%
+	ADOLC
+%$$
+installed on your system, you can 
+specify a value for $italic AdolcDir$$ in the 
+$xref/InstallUnix/Configure/configure/$$ command line.
+The value of $italic AdolcDir$$ must be such that
+$syntax%
+	%AdolcDir%/include/adolc/adouble.h
+%$$
+is a valid way to reference $code adouble.h$$.
+In this case you can compare the correctness 
+and speed of your version of CppAD with version 1.9 of Adolc.
+The commands
+$syntax%
+	cd Adolc
+	./Example
+	./Speed
+%$$
+will run both the speed and correctness tests.
+$pre
+
+$$
+If you are using Cygwin, 
+you will have to add to following lines to the file
+$code .profile$$ in your home directory:
+$syntax%
+	PATH=%AdolcDir%/bin:@PATH
+	export PATH
+%$$
+in order for Adolc to run properly.
+If $italic AdolcDir$$ begins with a disk specification,
+you must use the Cygwin format for the disk specification.
+For example, 
+if $code d:/ADOLC19$$ is the proper directory,
+$code /cygdrive/d/ADOLC19$$ should be used for $italic AdolcDir$$.
+
+
+$head Compare CppAD with Fadbad$$
+If you have
+$href%
+	http://www.imm.dtu.dk/fadbad.html/%
+	FADBAD++
+%$$
+installed on your system, you can 
+specify a value for $italic FadbadDir$$.
+It must be such that
+$syntax%
+	%FadbadDir%/FADBAD++/badiff.h
+%$$
+is a valid reference to $code badiff.h$$.
+In this case you can compare the correctness 
+and speed of your version of CppAD with FADBAD.
+The commands
+$syntax%
+	cd Fadbad
+	./Example
+	./Speed
+%$$
+will run both the speed and correctness tests.
+
+
+$head Final Installation$$
+Once you are satisfied that the tests are giving correct results,
+you can install CppAD into easy to use directories by executing the command
+$codep
+	make install
+$$
+This will install CppAD in the location specified by 
+$xref/InstallUnix/Prefix/prefix/$$.
+
+$end

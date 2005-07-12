@@ -1,0 +1,157 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Windows Installation and Testing</title>
+<meta name="description" content="Windows Installation and Testing"/>
+<meta name="keywords" content=" free install Cppad windows "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="installunix.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="ad.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="installwindows.xml" target="_top">section</a>, <a href="installwindows_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+
+
+
+
+
+
+<center><b><big><big>Windows Installation and Testing</big></big></b></center>
+<br/>
+<b><big><a name="Download Current Version">Download Current Version</a></big></b>
+<br/>
+If you are using 
+<a href="http://www.cygwin.com" target="_top"><span style='white-space: nowrap'>Cygwin</span></a>
+
+or,
+<a href="http://www.mingw.org" target="_top"><span style='white-space: nowrap'>MinGW&#xA0;with&#xA0;MSYS</span></a>
+,
+with Unix formatted files,
+just follow all of the <a href="installunix.xml" target="_top"><span style='white-space: nowrap'>Unix&#xA0;installation</span></a>
+ steps.
+Otherwise,
+download the file current version of the file
+<a href="http://www.seanet.com/~bradbell/CppAD.dos.tar.gz" target="_top"><span style='white-space: nowrap'>CppAD.dos.tar.gz</span></a>
+
+
+<br/>
+<br/>
+<b><big><a name="Extraction">Extraction</a></big></b>
+<br/>
+Use 
+<a href="http://www.winzip.com" target="_top"><span style='white-space: nowrap'>WinZip</span></a>
+
+or some other program to decompress the file
+<code><font color="blue">CppAD.dos.tar.gz</font></code> to <code><font color="blue">CppAD.dos.tar</font></code> 
+and to extract the individual
+files from <code><font color="blue">CppAD.dos.tar</font></code> into the distribution directory
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;cppad-</span></font></code><i><span style='white-space: nowrap'>yy</span></i><code><font color="blue"><span style='white-space: nowrap'>-</span></font></code><i><span style='white-space: nowrap'>mm</span></i><code><font color="blue"><span style='white-space: nowrap'>-</span></font></code><i><span style='white-space: nowrap'>dd</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>All the command sequences below assume that you start in the
+distribution directory; i.e.,
+the one that is created by this extraction.
+If you are using Cygwin, or MinGW with MSYS, (with dos file formats)
+you should follow the <a href="installunix.xml" target="_top"><span style='white-space: nowrap'>Unix&#xA0;installation</span></a>
+ steps
+for the rest of the install.
+Otherwise, continue with the steps below:
+
+<br/>
+<br/>
+<b><big><a name="User Documentation">User Documentation</a></big></b>
+<br/>
+The <code><font color="blue">Doc</font></code> sub-directory of the distribution directory
+contains user documentation for CppAD.
+The files <code><font color="blue"><span style='white-space: nowrap'>Doc/</span></font></code><i><span style='white-space: nowrap'>*</span></i><code><font color="blue"><span style='white-space: nowrap'>.htm</span></font></code> are in HTML format.
+If your browser supports XHTML+MATHML format,
+an easier to read copy is available in the files
+<code><font color="blue"><span style='white-space: nowrap'>Doc/</span></font></code><i><span style='white-space: nowrap'>*</span></i><code><font color="blue"><span style='white-space: nowrap'>.xml</span></font></code>.
+
+<br/>
+<br/>
+<b><big><a name="Developer Documentation">Developer Documentation</a></big></b>
+<br/>
+The <code><font color="blue">Developer</font></code> sub-directory of the distribution directory
+contains developer documentation for CppAD. 
+
+<br/>
+<br/>
+<b><big><a name="Getting Started">Getting Started</a></big></b>
+<br/>
+Using Microsoft Visual C++,
+open the workspace <code><font color="blue">GetStarted/GetStarted.dsw</font></code>
+in Visual Studio and then select <code><font color="blue">Build | Build GetStarted.exe</font></code>.
+Then in a Dos box, execute the following commands
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;cd&#xA0;GetStarted\Debug<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;GetStarted<br/>
+</span>
+</font></code>
+<br/>
+<b><big><a name="Extensive Examples and Testing">Extensive Examples and Testing</a></big></b>
+<br/>
+Using Microsoft Visual C++,
+open the workspace <code><font color="blue">Example/Example.dsw</font></code> in Visual Studio.
+Then select <code><font color="blue">Build | Build Example.exe</font></code>.
+Then in a Dos box, execute the following commands
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;cd&#xA0;Example\Debug<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Example<br/>
+</span>
+</font></code>
+<br/>
+<b><big><a name="Printing During Forward Mode Example and Testing">Printing During Forward Mode Example and Testing</a></big></b>
+<br/>
+Using Microsoft Visual C++,
+open the workspace <code><font color="blue">PrintFor/PrintFor.dsw</font></code> in Visual Studio.
+Then select <code><font color="blue">Build | Build PrintFor.exe</font></code>.
+Then in a Dos box, execute the following commands
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;cd&#xA0;PrintFor\Debug<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;PrintFor<br/>
+</span>
+</font></code>
+<br/>
+<b><big><a name="More Correctness Testing">More Correctness Testing</a></big></b>
+<br/>
+Using Microsoft Visual C++,
+open the workspace <code><font color="blue">TestMore/TestMore.dsw</font></code>
+in Visual Studio and then select <code><font color="blue">Build | Build TestMore.exe</font></code>.
+Then in a Dos box, execute the following commands
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;cd&#xA0;TestMore\Debug<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;TestMore<br/>
+</span>
+</font></code>
+<br/>
+<b><big><a name="Speed Testing">Speed Testing</a></big></b>
+<br/>
+Using Microsoft Visual C++,
+open the workspace <code><font color="blue">Speed/Speed.dsw</font></code>
+in Visual Studio and then select <code><font color="blue">Build | Build Speed.exe</font></code>.
+Then in a Dos box, execute the following commands
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;cd&#xA0;Speed\Release<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Speed<br/>
+</span>
+</font></code>
+
+<hr/>Input File: omh\InstallWindows.omh
+
+</body>
+</html>

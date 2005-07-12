@@ -1,0 +1,122 @@
+<html><head>
+<title>Compute the Determinant of a Minor</title>
+<meta name="description" content="Compute the Determinant of a Minor">
+<meta name="keywords" content=" Detofminor determinant minor matrix "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="detofminor.htm" target="_top">section</a>, <a href="detofminor_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Inclusion">Inclusion</a></big></b>
+<br>
+The template function <code><font color="blue">DetOfMinor</font></code> is defined in the <code><font color="blue">CppAD</font></code>
+namespace by including 
+the file <code><font color="blue">Example/DetOfMinor.h</font></code>.
+It is only intended for example and testing purposes, 
+so it is not automatically included by
+<a href="cppad.htm" target="_top"><span style='white-space: nowrap'>CppAD.h</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Description">Description</a></big></b>
+<br>
+This template function
+returns the determinant of a minor of the matrix <i>A</i>
+using expansion by minors.
+The minor <i>M</i> of the matrix <i>A</i> is defined by
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>M</i>(<i>i</i>,&nbsp;<i>j</i>)&nbsp;=&nbsp;<i>A</i>(&nbsp;<i>R</i>(<i>i</i>),&nbsp;<i>C</i>(<i>j</i>)&nbsp;)<br>
+</span></code>where  the functions <code><span style='white-space: nowrap'><i>R</i>(<i>i</i>)</span></code> and <code><span style='white-space: nowrap'><i>C</i>(<i>j</i>)</span></code> are defined below.
+Expansion by minors is chosen as an example because it uses
+a lot of floating point operations yet does not require much source code
+(on the order of <i>m</i> factorial floating point operations and 
+about 75 lines of source code).
+This is not an efficient method for computing a determinant;
+for example, using an LU factorization would be better.
+
+<br>
+<br>
+<b><big><a name="A">A</a></big></b>
+<br>
+The <i>Type</i> vector defines 
+an <i>m</i> by <i>m</i> matrix by
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>A</i>(<i>i</i>,&nbsp;<i>j</i>)&nbsp;=&nbsp;<i>A</i>[&nbsp;<i>i</i>&nbsp;+&nbsp;<i>j</i>&nbsp;*&nbsp;<i>m</i>]<br>
+</span></code><br>
+<b><big><a name="m">m</a></big></b>
+<br>
+The size of the original matrix <i>A</i>.
+
+<br>
+<br>
+<b><big><a name="n">n</a></big></b>
+<br>
+The size of the minor <i>M</i>
+(must be less than or equal <i>m</i>).
+
+<br>
+<br>
+<b><big><a name="r">r</a></big></b>
+<br>
+This vector of length <code><span style='white-space: nowrap'><i>m</i>+1</span></code> is a linked list that
+defines the row indices of <i>A</i>
+that are included in the minor.
+To be specific, we define the function <code><span style='white-space: nowrap'><i>R</i>(<i>i</i>)</span></code> 
+for <code><span style='white-space: nowrap'><i>i</i>=0,&nbsp;...&nbsp;,&nbsp;<i>n</i>-1</span></code> as follows:
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>R</i>(0)&nbsp;&nbsp;&nbsp;=&nbsp;<i>r</i>[<i>m</i>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>R</i>(<i>i</i>+1)&nbsp;=&nbsp;&nbsp;<i>r</i>[&nbsp;<i>R</i>(<i>i</i>)&nbsp;]<br>
+</span></code>The <i>i</i>-th row of the minor is a sub-vector of row index
+<code><span style='white-space: nowrap'><i>R</i>(<i>i</i>)</span></code> in <i>A</i>.
+(All the elements of <i>r</i> must be less than <i>m</i>.)
+The vector <i>r</i> is modified during the computation, but it is restored
+to its original value before the return.
+
+<br>
+<br>
+<b><big><a name="c">c</a></big></b>
+<br>
+This vector of length <code><span style='white-space: nowrap'><i>m</i>+1</span></code> is a linked list that
+defines the column indices of <i>A</i>
+that are included in the minor.
+To be specific, we define the function <code><span style='white-space: nowrap'><i>C</i>(<i>i</i>)</span></code> 
+for <code><span style='white-space: nowrap'><i>i</i>=0,&nbsp;...&nbsp;,&nbsp;<i>n</i>-1</span></code> as follows:
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>C</i>(0)&nbsp;&nbsp;&nbsp;=&nbsp;<i>c</i>[<i>m</i>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>C</i>(<i>j</i>+1)&nbsp;=&nbsp;&nbsp;<i>c</i>[&nbsp;<i>C</i>(<i>j</i>)&nbsp;]<br>
+</span></code>The <i>j</i>-th column of the minor is a sub-vector of column index
+<code><span style='white-space: nowrap'><i>C</i>(<i>j</i>)</span></code> in <i>A</i>.
+(All the elements of <i>c</i> must be less than <i>m</i>.)
+The vector <i>c</i> is modified during the computation, but it is restored
+to its original value before the return.
+
+
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+<br>
+The file
+<a href="detofminor.cpp.htm" target="_top"><span style='white-space: nowrap'>DetOfMinor.cpp</span></a>
+ 
+contains an example and a test of <code><font color="blue">DetOfMinor.h</font></code>.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Source Code">Source Code</a></big></b>
+<br>
+The file
+<a href="detofminor.h.htm" target="_top"><span style='white-space: nowrap'>DetOfMinor.h</span></a>
+ 
+contains the source for this template function.
+
+
+
+<hr>Input File: Example\DetOfMinor.h
+
+</body>
+</html>

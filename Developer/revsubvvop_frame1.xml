@@ -1,0 +1,236 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Reverse Mode Subtraction Operator</title>
+<meta name="description" content="Reverse Mode Subtraction Operator"/>
+<meta name="keywords" content=" Revsubvvop reverse minus subtract "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="forsubvvop.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="adforward.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="revsubvvop.xml" target="_top">section</a>, <a href="revsubvvop_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+
+
+<center><b><big><big>Reverse Mode Subtraction Operator</big></big></b></center>
+<table><tr><td align='left'  valign='top'>
+<b>Syntax</b> 
+</td><td align='left'  valign='top'>
+
+<code><font color="blue"><span style='white-space: nowrap'>inline&#xA0;void&#xA0;RevSubvvOp(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>d</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>pz</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>px</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>py</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+</td><td align='left'  valign='top'>
+
+<code><font color="blue"><span style='white-space: nowrap'>inline&#xA0;void&#xA0;RevSubpvOp(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>d</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>pz</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>py</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+</td><td align='left'  valign='top'>
+
+<code><font color="blue"><span style='white-space: nowrap'>inline&#xA0;void&#xA0;RevSubvpOp(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>d</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>pz</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>px</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+</td></tr>
+</table>
+<br/>
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+We are given the partial derivatives for a function
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>G</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>z</mi>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>y</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+ and we wish to compute the partial derivatives for
+the function
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mi mathvariant='italic'>H</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>y</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>G</mi>
+<mo stretchy="false">[</mo>
+<mi mathvariant='italic'>Z</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>y</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>y</mi>
+<mo stretchy="false">]</mo>
+</mrow></math>
+
+where 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>Z</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>y</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+ is defined as the 
+<i>d</i>-th order Taylor coefficient row vector for <i>Z</i> as
+a function of the corresponding vectors for 
+<i>X</i> and <i>Y</i> where
+
+<table><tr><td align='left'  valign='top'>
+
+Operation  </td><td align='left'  valign='top'>
+ Value  </td></tr><tr><td align='left'  valign='top'>
+
+Subvv       </td><td align='left'  valign='top'>
+ 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>Z</mi>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>X</mi>
+<mo stretchy="false">-</mo>
+<mi mathvariant='italic'>Y</mi>
+</mrow></math>
+
+ </td></tr><tr><td align='left'  valign='top'>
+
+Subpv       </td><td align='left'  valign='top'>
+ 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>Z</mi>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>P</mi>
+<mo stretchy="false">-</mo>
+<mi mathvariant='italic'>Y</mi>
+</mrow></math>
+
+ </td></tr><tr><td align='left'  valign='top'>
+
+Subvp       </td><td align='left'  valign='top'>
+ 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>Z</mi>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>X</mi>
+<mo stretchy="false">-</mo>
+<mi mathvariant='italic'>P</mi>
+</mrow></math>
+
+ 
+</td></tr>
+</table>
+Note that <i>Z</i> has been used both the original subtraction 
+function and for the corresponding mapping of Taylor coefficients.
+
+<br/>
+<br/>
+<b><big><a name="pz">pz</a></big></b>
+<br/>
+The vector <i>pz</i> has length 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>d</mi>
+<mo stretchy="false">+</mo>
+<mn>1</mn>
+</mrow></math>
+
+ and 
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>pz</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>j</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code> contains the partial for <i>G</i>
+with respect to the <i>j</i>-th order Taylor coefficient for <i>Z</i>.
+
+<br/>
+<br/>
+<b><big><a name="On Input">On Input</a></big></b>
+
+
+<br/>
+<br/>
+<b><a name="On Input.px">px</a></b>
+<br/>
+The vector <i>px</i> has length 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>d</mi>
+<mo stretchy="false">+</mo>
+<mn>1</mn>
+</mrow></math>
+
+ and 
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>px</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>j</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code> contains the partial for <i>G</i>
+with respect to the <i>j</i>-th order Taylor coefficient for <i>X</i>.
+
+<br/>
+<br/>
+<b><a name="On Input.py">py</a></b>
+<br/>
+The vector <i>py</i> has length 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>d</mi>
+<mo stretchy="false">+</mo>
+<mn>1</mn>
+</mrow></math>
+
+ and 
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>py</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>j</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code> contains the partial for <i>G</i>
+with respect to the <i>j</i>-th order Taylor coefficient for <i>Y</i>.
+
+<br/>
+<br/>
+<b><big><a name="On Output">On Output</a></big></b>
+
+
+<br/>
+<br/>
+<b><a name="On Output.px">px</a></b>
+<br/>
+If present,
+the vector <i>px</i> has length 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>d</mi>
+<mo stretchy="false">+</mo>
+<mn>1</mn>
+</mrow></math>
+
+ and 
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>px</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>j</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code> contains the partial for <i>H</i>
+with respect to the <i>j</i>-th order Taylor coefficient for <i>X</i>.
+
+<br/>
+<br/>
+<b><a name="On Output.py">py</a></b>
+<br/>
+If present,
+the vector <i>py</i> has length 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>d</mi>
+<mo stretchy="false">+</mo>
+<mn>1</mn>
+</mrow></math>
+
+ and 
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>py</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>j</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code> contains the partial for <i>H</i>
+with respect to the <i>j</i>-th order Taylor coefficient for <i>Y</i>.
+
+
+
+<hr/>Input File: CppAD\local\SubOp.h
+
+</body>
+</html>

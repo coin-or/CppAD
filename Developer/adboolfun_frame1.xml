@@ -1,0 +1,60 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>CppAD Boolean Valued User Defined Functions Implementation</title>
+<meta name="description" content="CppAD Boolean Valued User Defined Functions Implementation"/>
+<meta name="keywords" content=" Unarybool Binarybool "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="adtape.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="op.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="adboolfun.xml" target="_top">section</a>, <a href="adboolfun_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+
+
+<center><b><big><big>CppAD Boolean Valued User Defined Functions Implementation</big></big></b></center>
+<br/>
+<b><big><a name="UnaryBool">UnaryBool</a></big></b>
+
+<br/>
+The procedure call
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+inline&#xA0;bool&#xA0;UnaryBool(&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;</span></font></code><i><span style='white-space: nowrap'>FunName</span></i><code><font color="blue"><span style='white-space: nowrap'>(const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>),<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>uses a call to the procedure <i>FunName</i> to evaluate a unary 
+boolean valued function of a base type argument
+and returns it as the value of the corresponding AD argument.
+
+
+<br/>
+<br/>
+<b><big><a name="BinaryBool">BinaryBool</a></big></b>
+
+<br/>
+The procedure call
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+inline&#xA0;bool&#xA0;BinaryBool(&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;</span></font></code><i><span style='white-space: nowrap'>FunName</span></i><code><font color="blue"><span style='white-space: nowrap'>(const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>),<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;const&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>uses a call to the procedure <i>FunName</i> to evaluate a binary 
+boolean valued function of two base type arguments
+and returns it as the value of the corresponding AD arguments.
+
+
+
+
+<hr/>Input File: CppAD\local\ADBoolFun.h
+
+</body>
+</html>

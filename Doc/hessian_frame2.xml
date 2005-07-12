@@ -1,0 +1,216 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Hessian of One Component: Easy Driver</title>
+<meta name="description" content="Hessian of One Component: Easy Driver"/>
+<meta name="keywords" content=" Hessian easy driver "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="hessian.xml" target="_top">section</a>, <a href="hessian_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+Given an <a href="adfun.xml" target="_top"><span style='white-space: nowrap'>ADFun&lt;Base&gt;</span></a>
+ object 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>F</mi>
+<mo stretchy="false">:</mo>
+<msup><mi mathvariant='italic'>B</mi>
+<mi mathvariant='italic'>n</mi>
+</msup>
+<mo stretchy="false">&#x02192;</mo>
+<msup><mi mathvariant='italic'>B</mi>
+<mi mathvariant='italic'>m</mi>
+</msup>
+</mrow></math>
+
+,
+this routine returns the Hessian of 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<msub><mi mathvariant='italic'>F</mi>
+<mi mathvariant='italic'>i</mi>
+</msub>
+</mrow></math>
+
+ at the point 
+<i>x</i>; i.e.,
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mi mathvariant='italic'>H</mi>
+<mo stretchy="false">=</mo>
+<msubsup><mi mathvariant='italic'>F</mi>
+<mi mathvariant='italic'>i</mi>
+<mrow><mo stretchy="false">(</mo>
+<mn>2</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+</msubsup>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+<br/>
+<b><big><a name="F">F</a></big></b>
+<br/>
+The object <i>F</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code><br/>
+<b><big><a name="VectorBase">VectorBase</a></big></b>
+<br/>
+The type <i>VectorBase</i> must be a <a href="simplevector.xml" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector_frame1.xml#Elements of Specified Type" target="frame1"><i><span style='white-space: nowrap'>elements&#xA0;of&#xA0;type&#xA0;Base</span></i></a>
+.
+The routine <a href="checksimplevector.xml" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br/>
+<br/>
+<b><big><a name="x">x</a></big></b>
+<br/>
+The vector <i>x</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>VectorBase</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>It must have length <i>n</i> and specifies
+that point at which to evaluate the Hessian.
+
+<br/>
+<br/>
+<b><big><a name="i">i</a></big></b>
+<br/>
+The index <i>i</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>It must be between zero and 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>m</mi>
+<mn>-1</mn>
+</mrow></math>
+
+
+and specifies the component of <i>F</i>
+for which we are evaluating the Hessian.
+
+<br/>
+<br/>
+<b><big><a name="H">H</a></big></b>
+<br/>
+The vector <i>H</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>VectorBase</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;</span></font></code><i><span style='white-space: nowrap'>H</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>It must have length <code><font color="blue"></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*&#xA0;</span></font></code><i><span style='white-space: nowrap'>n</span></i>.
+After the assignment to <i>H</i>, 
+for 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>j</mi>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>n</mi>
+<mo stretchy="false">-</mo>
+<mn>1</mn>
+</mrow></math>
+
+ and 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mo stretchy="false">&#x02113;</mo>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>n</mi>
+<mo stretchy="false">-</mo>
+<mn>1</mn>
+</mrow></math>
+
+
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mi mathvariant='italic'>H</mi>
+<mo stretchy="false">[</mo>
+<mi mathvariant='italic'>j</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>m</mi>
+<mo stretchy="false">+</mo>
+<mo stretchy="false">&#x02113;</mo>
+<mo stretchy="false">]</mo>
+<mo stretchy="false">=</mo>
+<mfrac><mrow><msup><mo stretchy="false">&#x02202;</mo>
+<mn>2</mn>
+</msup>
+<msub><mi mathvariant='italic'>F</mi>
+<mi mathvariant='italic'>i</mi>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>x</mi>
+<mi mathvariant='italic'>j</mi>
+</msub>
+<mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>x</mi>
+<mo stretchy="false">&#x02113;</mo>
+</msub>
+</mrow>
+</mfrac>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+<br/>
+<b><big><a name="Forward">Forward</a></big></b>
+<br/>
+The object <i>F</i> stores information related to previous
+calls to <code><font color="blue"></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>.
+After this operation,
+the previous calls to <a href="forward.xml" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ are undefined
+with the exception of the zero order call which has the form
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Forward(0,&#xA0;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>.
+
+<br/>
+<br/>
+<b><big><a name="Examples">Examples</a></big></b>
+
+<br/>
+The routine 
+<a href="hessian.h.xml" target="_top"><span style='white-space: nowrap'>Hessian</span></a>
+ is both an example and a test.
+It returns <code><font color="blue">true</font></code>, if it succeeds and <code><font color="blue">false</font></code> otherwise.
+
+
+<br/>
+<br/>
+<b><a name="Examples.Determinant Using Expansion by Minors">Determinant Using Expansion by Minors</a></b>
+<br/>
+The routine 
+<a href="hesminordet.cpp.xml" target="_top"><span style='white-space: nowrap'>HesMinorDet</span></a>
+ is both an example and a test.
+It returns <code><font color="blue">true</font></code>, if it succeeds and <code><font color="blue">false</font></code> otherwise.
+
+<br/>
+<br/>
+<b><a name="Examples.Determinant Using Lu Factorization">Determinant Using Lu Factorization</a></b>
+<br/>
+The routine 
+<a href="hesludet.cpp.xml" target="_top"><span style='white-space: nowrap'>HesLuDet</span></a>
+ is both an example and a test.
+It returns <code><font color="blue">true</font></code>, if it succeeds and <code><font color="blue">false</font></code> otherwise.
+
+
+<hr/>Input File: CppAD\local\Hessian.h
+
+</body>
+</html>

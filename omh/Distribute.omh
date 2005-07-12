@@ -1,0 +1,104 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+$begin Distribute$$ 
+$spell
+	cd
+	Fadbad
+	CppADpackage
+	gz
+	xvzf
+	sys
+	cppad-yy-mm-dd
+	Adolc
+	Dir
+	Fadbad
+	badiff
+	adouble
+$$
+$section Building and Testing a Distribution$$
+
+$head Creating Distribution Files$$
+$list number$$
+Change into the $code CppADpackage$$ directory.
+$lnext
+Execute the bash shell script $code ./Build$$
+$lend
+This will create the distribution files
+$codep
+	CppADpackage/CppAD.dos.tar.gz
+	CppADpackage/CppAD.unix.tar.gz
+$$
+
+$head Testing Distribution$$
+$list number$$
+Execute the command 
+$syntax%
+	tar -xvzf CppAD.%sys%.tar.gz
+%$$
+where $italic sys$$ is $code dos$$ or $code unix$$
+depending on your system type.
+$lnext
+Execute the command
+$syntax%
+	cd cppad-%yy%-%mm%-%dd%
+%$$
+where $syntax %yy%-%mm%-%dd%$$ is the current date.
+$lnext
+Execute the command
+$syntax%
+	configure ADOLC_DIR=%AdolcDir% FADBAD_DIR=%FadbadDir%
+%$$
+where the paths 
+$syntax%
+	%AdolcDir%/include/adolc/adouble.h
+	%FadbadDir%/FADBAD++/badiff.h
+%$$
+are a valid way to reference the $code adouble.h$$ file in the 
+$href%
+	http://www.math.tu-dresden.de/~adol-c/%
+	ADOLC
+%$$
+distribution and the $code badiff.h$$ in the 
+$href%
+	http://www.imm.dtu.dk/fadbad.html/%
+	FADBAD++
+%$$
+distribution.
+$lnext
+Execute the command
+$codep
+	make
+$$
+If no compiler errors occur, the distribution passed this test.
+$lnext
+Execute the command
+$codep
+	cd GetStarted
+	./GetStarted
+$$
+If the result is
+$code
+$verbatim%GetStarted/GetStarted.out%$$
+$$
+then the distribution passed this test.
+$lend
+
+$end

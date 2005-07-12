@@ -1,0 +1,220 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Constructing Differentiable Functions From The Tape</title>
+<meta name="description" content="Constructing Differentiable Functions From The Tape"/>
+<meta name="keywords" content=" construct differentiable function tape Size Adfun Order Domain Range Parameter Memory Compare operator compare "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="adfun.xml" target="_top">section</a>, <a href="adfun_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+This constructs a function object corresponding to a
+<a href="glossary_frame1.xml#Base Function" target="frame1"><i><span style='white-space: nowrap'>Base&#xA0;function</span></i></a>
+
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>F</mi>
+<mo stretchy="false">:</mo>
+<msup><mi mathvariant='italic'>B</mi>
+<mi mathvariant='italic'>n</mi>
+</msup>
+<mo stretchy="false">&#x02192;</mo>
+<msup><mi mathvariant='italic'>B</mi>
+<mi mathvariant='italic'>m</mi>
+</msup>
+</mrow></math>
+
+
+where <i>B</i> is the space corresponding to objects of type <i>Base</i>,
+<i>n</i> is the size of <i>X</i>,
+and <i>m</i> is the size of <i>Y</i>.
+The <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> operations that 
+map from the elements of <i>X</i>
+to the elements of <i>Y</i>
+define the function.
+
+<br/>
+<br/>
+<b><big><a name="Tape State">Tape State</a></big></b>
+<br/>
+The tape that records <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> operations
+must be in the Recording <a href="glossary_frame1.xml#Tape State" target="frame1"><i><span style='white-space: nowrap'>state</span></i></a>
+
+when this constructed is called.
+The tape that records <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> operations
+will be in the Empty state after this constructor is called.
+
+<br/>
+<br/>
+<b><big><a name="VectorADBase">VectorADBase</a></big></b>
+<br/>
+The type <i>VectorADBase</i> must be a <a href="simplevector.xml" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector_frame1.xml#Elements of Specified Type" target="frame1"><i><span style='white-space: nowrap'>elements&#xA0;of&#xA0;type&#xA0;AD&lt;Base&gt;</span></i></a>
+.
+The routine <a href="checksimplevector.xml" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br/>
+<br/>
+<b><big><a name="X">X</a></big></b>
+<br/>
+The vector <i>X</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>VectorADBase</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>X</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>The length of <i>X</i> is the number of independent variables
+(dimension of the domain space for the <code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object).
+The current recording of <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> operations
+must have started recording with the call 
+<a href="independent.xml" target="_top"><span style='white-space: nowrap'>Independent(X)</span></a>
+.
+In addition, none of the element of <i>X</i>
+may change value between the call to <code><font color="blue">Independent</font></code>
+and the <code><font color="blue">ADFun</font></code> constructor.
+
+<br/>
+<br/>
+<b><big><a name="Y">Y</a></big></b>
+<br/>
+The vector <i>Y</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>VectorADBase</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>Y</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>The length of <i>Y</i> is the number of dependent variables
+(dimension of the range space for the <code><font color="blue"><span style='white-space: nowrap'>ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object).
+
+<br/>
+<br/>
+<b><big><a name="Size">Size</a></big></b>
+
+<br/>
+The operation 
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Size(void)&#xA0;const<br/>
+</span></font></code>returns the number of tape records that correspond to the function <i>F</i>.
+
+<br/>
+<br/>
+<b><big><a name="Order">Order</a></big></b>
+
+<br/>
+The function 
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Order(void)&#xA0;const<br/>
+</span></font></code>returns the order of the previous forward operation
+using the function <i>F</i>.
+This is the highest order of the 
+<a href="glossary_frame1.xml#Taylor Coefficient" target="frame1"><i><span style='white-space: nowrap'>Taylor&#xA0;coefficients</span></i></a>
+
+that are currently stored in <i>F</i>.
+
+<br/>
+<br/>
+<b><big><a name="Domain">Domain</a></big></b>
+
+<br/>
+The function
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Domain(void)&#xA0;const<br/>
+</span></font></code>returns the dimension of the domain space; i.e., the length of the
+vector <i>X</i> in the constructor for <i>F</i>.
+
+<br/>
+<br/>
+<b><big><a name="Range">Range</a></big></b>
+
+<br/>
+The function
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Range(void)&#xA0;const<br/>
+</span></font></code>returns the dimension of the range space; i.e., the length of the
+vector <i>Y</i> in the constructor for <i>F</i>.
+
+<br/>
+<br/>
+<b><big><a name="Parameter">Parameter</a></big></b>
+
+<br/>
+The function
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Parameter(size_t&#xA0;i)&#xA0;const<br/>
+</span></font></code>returns true if the range space component of <i>F</i> 
+with index <i>i</i> corresponds to a
+<a href="glossary_frame1.xml#Parameter" target="frame1"><i><span style='white-space: nowrap'>parameter</span></i></a>
+ 
+where <i>i</i>
+is less than <code><font color="blue"></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Range()</span></font></code>.
+If a component of the range of <i>F</i> is a parameter, 
+it does not depend on any of the components in the domain of <i>F</i>; 
+i.e., all of its partial derivatives are zero.
+
+<br/>
+<br/>
+<b><big><a name="Memory">Memory</a></big></b>
+
+<br/>
+The operation
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Memory(void)&#xA0;const<br/>
+</span></font></code>returns the number of memory units (<code><font color="blue">sizeof</font></code>) required to store
+the operations and derivative information corresponding to <i>F</i>.
+This memory is returned to the system when the destructor for 
+<i>F</i> is called.
+
+<br/>
+<br/>
+<b><big><a name="CompareChange">CompareChange</a></big></b>
+
+
+
+<br/>
+If <code><font color="blue">NDEBUG</font></code> is defined,
+this function does not exist.
+Otherwise, the operation
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.CompareChange(void)&#xA0;const<br/>
+</span></font></code>return the number of 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> <a href="compare.xml" target="_top"><span style='white-space: nowrap'>comparison</span></a>
+ 
+operations corresponding to
+the previous zero order <a href="forward.xml" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ that have a different result from
+when <i>F</i> was created by taping an algorithm.
+When it is non-zero, some comparison operator results are different.
+This can be used to detect when <i>F</i>
+no longer represents the algorithm that was taped.
+
+<br/>
+<br/>
+<b><big><a name="Example">Example</a></big></b>
+<br/>
+The files
+<a href="fun.h.xml" target="_top"><span style='white-space: nowrap'>Fun.h</span></a>
+ and <a href="comparechange.cpp.xml" target="_top"><span style='white-space: nowrap'>CompareChange.cpp</span></a>
+
+contain examples and tests of these operations.
+They return true if they succeed and false otherwise.
+
+<br/>
+<br/>
+<b><big><a name="Contents">Contents</a></big></b>
+<br/>
+<div><a href="parameter.xml" target="_top">Is&#xA0;This&#xA0;AD&#xA0;Object&#xA0;a&#xA0;Parameter</a><br/>
+<a href="independent.xml" target="_top">Declare&#xA0;Independent&#xA0;Variables&#xA0;and&#xA0;Start&#xA0;Recording</a><br/>
+<a href="drivers.xml" target="_top">First&#xA0;and&#xA0;Second&#xA0;Derivatives:&#xA0;Easy&#xA0;Drivers</a><br/>
+<a href="forward.xml" target="_top">Forward&#xA0;Mode</a><br/>
+<a href="reverse.xml" target="_top">Reverse&#xA0;Mode</a><br/>
+<a href="fun.h.xml" target="_top">Differentiable&#xA0;Function&#xA0;Constructor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+<a href="comparechange.cpp.xml" target="_top">CompareChange&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+<a href="multape.xml" target="_top">Using&#xA0;Multiple&#xA0;Tapes</a><br/>
+</div>
+<hr/>Input File: CppAD\local\Fun.h
+
+</body>
+</html>

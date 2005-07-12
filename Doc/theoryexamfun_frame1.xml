@@ -1,0 +1,138 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>An Example Function</title>
+<meta name="description" content="An Example Function"/>
+<meta name="keywords" content=" example function polynomial "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="theoryexam.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="theoryexamproc.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="theoryexamfun.xml" target="_top">section</a>, <a href="theoryexamfun_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+
+<center><b><big><big>An Example Function</big></big></b></center>
+Given a positive integer 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+</mrow></math>
+
+ and
+a vector 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>a</mi>
+<mo stretchy="false">&#x02208;</mo>
+<msup><mrow><mstyle mathvariant='bold'><mi mathvariant='bold'>R</mi>
+</mstyle></mrow>
+<mrow><mi mathvariant='italic'>n</mi>
+<mo stretchy="false">+</mo>
+<mn>1</mn>
+</mrow>
+</msup>
+</mrow></math>
+
+
+we define the function
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>p</mi>
+<mo stretchy="false">:</mo>
+<mrow><mstyle mathvariant='bold'><mi mathvariant='bold'>R</mi>
+</mstyle></mrow>
+<mo stretchy="false">&#x02192;</mo>
+<mrow><mstyle mathvariant='bold'><mi mathvariant='bold'>R</mi>
+</mstyle></mrow>
+</mrow></math>
+
+ by
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mi mathvariant='italic'>p</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">=</mo>
+<msub><mi mathvariant='italic'>a</mi>
+<mn>0</mn>
+</msub>
+<msup><mi mathvariant='italic'>x</mi>
+<mn>0</mn>
+</msup>
+<mo stretchy="false">+</mo>
+<msub><mi mathvariant='italic'>a</mi>
+<mn>1</mn>
+</msub>
+<msup><mi mathvariant='italic'>x</mi>
+<mn>1</mn>
+</msup>
+<mo stretchy="false">+</mo>
+<mo stretchy="false">&#x022EF;</mo>
+<mo stretchy="false">+</mo>
+<msub><mi mathvariant='italic'>a</mi>
+<mi mathvariant='italic'>n</mi>
+</msub>
+<msup><mi mathvariant='italic'>x</mi>
+<mi mathvariant='italic'>n</mi>
+</msup>
+</mrow></math>
+
+It follows that the derivative of 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>p</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+ is given by
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<mi mathvariant='italic'>p</mi>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<mi mathvariant='italic'>x</mi>
+</mrow>
+</mfrac>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">=</mo>
+<msub><mi mathvariant='italic'>a</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">+</mo>
+<mn>2</mn>
+<msub><mi mathvariant='italic'>a</mi>
+<mn>2</mn>
+</msub>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">+</mo>
+<mo stretchy="false">&#x022EF;</mo>
+<mo stretchy="false">+</mo>
+<mi mathvariant='italic'>n</mi>
+<msub><mi mathvariant='italic'>a</mi>
+<mi mathvariant='italic'>n</mi>
+</msub>
+<msup><mi mathvariant='italic'>x</mi>
+<mrow><mi mathvariant='italic'>n</mi>
+<mn>-1</mn>
+</mrow>
+</msup>
+</mrow></math>
+
+
+<hr/>Input File: omh\TheoryExamList.omh
+
+</body>
+</html>

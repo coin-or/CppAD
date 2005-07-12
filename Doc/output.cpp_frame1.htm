@@ -1,0 +1,60 @@
+<html><head>
+<title>The Output Operator for AD Objects: Example and Test</title>
+<meta name="description" content="The Output Operator for AD Objects: Example and Test">
+<meta name="keywords" content=" output test example "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="output.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="printfor.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="output.cpp.htm" target="_top">section</a>, <a href="output.cpp_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+
+<center><b><big><big>The Output Operator for AD Objects: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+<br>
+#&nbsp;include&nbsp;&lt;sstream&gt;<br>
+#&nbsp;include&nbsp;&lt;string&gt;<br>
+<br>
+bool&nbsp;Output(void)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;std;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;=&nbsp;true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;str;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;n;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ostringstream&nbsp;buf;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;double&gt;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;double&gt;&nbsp;T(2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T[s]&nbsp;=&nbsp;2.;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buf&nbsp;&lt;&lt;&nbsp;s;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buf&nbsp;&lt;&lt;&nbsp;T[s];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str&nbsp;=&nbsp;buf.str();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;&nbsp;&nbsp;=&nbsp;str.size();<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(n&nbsp;==&nbsp;2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(str[0]&nbsp;==&nbsp;'1');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(str[1]&nbsp;==&nbsp;'2');<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+}<br>
+</span></font></code>
+<hr>Input File: Example\Output.cpp
+
+</body>
+</html>

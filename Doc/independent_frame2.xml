@@ -1,0 +1,100 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Declare Independent Variables and Start Recording</title>
+<meta name="description" content="Declare Independent Variables and Start Recording"/>
+<meta name="keywords" content=" Independent start tape variable independent state parameter variables "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="independent.xml" target="_top">section</a>, <a href="independent_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+Calling the <code><font color="blue">Independent</font></code> 
+starts the recording of <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> operations.
+This is the first step in defining a CppAD differentiable function object
+(<a href="adfun.xml" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object).
+
+<br/>
+<br/>
+<b><big><a name="VectorADBase">VectorADBase</a></big></b>
+<br/>
+The type <i>VectorADBase</i> must be a <a href="simplevector.xml" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector_frame1.xml#Elements of Specified Type" target="frame1"><i><span style='white-space: nowrap'>elements&#xA0;of&#xA0;type&#xA0;AD&lt;Base&gt;</span></i></a>
+.
+The routine <a href="checksimplevector.xml" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br/>
+<br/>
+<b><big><a name="u">u</a></big></b>
+<br/>
+The vector <i>u</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>VectorADBase</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>The length of <i>u</i> is the number of independent variables
+(dimension of the domain space for the <a href="adfun.xml" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object)
+
+
+<br/>
+<br/>
+<b><big><a name="Tape State">Tape State</a></big></b>
+
+
+<br/>
+The operation can only be done while the tape 
+that records <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> operations is in the 
+Empty <a href="glossary_frame1.xml#Tape State" target="frame1"><i><span style='white-space: nowrap'>state</span></i></a>
+.
+After this operation, the tape will be in the Recording state.
+
+<br/>
+<br/>
+<b><big><a name="Parameters">Parameters</a></big></b>
+
+<br/>
+Directly before <code><font color="blue">Independent</font></code> is called, 
+all other <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> objects are 
+<a href="glossary_frame1.xml#Parameter" target="frame1"><i><span style='white-space: nowrap'>parameters</span></i></a>
+; i.e.,
+they do not dependent on the independent variables.
+For example, after the code sequence
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>);<br/>
+</span></font></code>all of the elements of the vector <i>v</i> are parameters.
+Hence their partial derivatives with respect to each of the 
+elements of <i>u</i> are identically zero.
+
+<br/>
+<br/>
+<b><big><a name="Variables">Variables</a></big></b>
+
+<br/>
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object is a 
+<a href="glossary_frame1.xml#Variable" target="frame1"><i><span style='white-space: nowrap'>variable</span></i></a>
+
+if and only if its value depends on the value
+of one of the independent variables.
+For example, after the code sequence
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(</span></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>;<br/>
+</span></font></code>all of the elements of the vector <i>v</i> are variables.
+In fact, the partial of <code><font color="blue"></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code> with respect to
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code> is one.
+
+
+
+<hr/>Input File: CppAD\local\Independent.h
+
+</body>
+</html>

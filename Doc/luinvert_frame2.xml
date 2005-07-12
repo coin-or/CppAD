@@ -1,0 +1,282 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Invert an LU Factored Equation</title>
+<meta name="description" content="Invert an LU Factored Equation"/>
+<meta name="keywords" content=" Luinvert linear invert Lu equation "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="luinvert.xml" target="_top">section</a>, <a href="luinvert_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+Solves the matrix equation <code><font color="blue"></font></code><i><span style='white-space: nowrap'>A</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*&#xA0;</span></font></code><i><span style='white-space: nowrap'>X</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>B</span></i> 
+using an LU factorization computed by <a href="lufactor.xml" target="_top"><span style='white-space: nowrap'>LuFactor</span></a>
+.
+
+<br/>
+<br/>
+<b><big><a name="Include">Include</a></big></b>
+<br/>
+The file <code><font color="blue">CppAD/LuInvert.h</font></code> is included by <code><font color="blue">CppAD/CppAD.h</font></code>
+but it can also be included separately with out the rest of 
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br/>
+<br/>
+<b><big><a name="Matrix Storage">Matrix Storage</a></big></b>
+<br/>
+All matrices are stored in row major order.
+To be specific, if 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>Y</mi>
+</mrow></math>
+
+ is a vector
+that contains a 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>p</mi>
+</mrow></math>
+
+ by 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>q</mi>
+</mrow></math>
+
+ matrix,
+the size of 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>Y</mi>
+</mrow></math>
+
+ must be equal to 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>p</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>q</mi>
+</mrow></math>
+
+ and for
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>i</mi>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>p</mi>
+<mn>-1</mn>
+</mrow></math>
+
+,
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>j</mi>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>q</mi>
+<mn>-1</mn>
+</mrow></math>
+
+,
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<msub><mi mathvariant='italic'>Y</mi>
+<mrow><mi mathvariant='italic'>i</mi>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>Y</mi>
+<mo stretchy="false">[</mo>
+<mi mathvariant='italic'>i</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>q</mi>
+<mo stretchy="false">+</mo>
+<mi mathvariant='italic'>j</mi>
+<mo stretchy="false">]</mo>
+</mrow></math>
+
+<br/>
+<b><big><a name="ip">ip</a></big></b>
+<br/>
+The argument <i>ip</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>SizeVector</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>ip</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>(see description for <i>SizeVector</i> in
+<a href="lufactor_frame2.xml#SizeVector" target="frame1"><i><span style='white-space: nowrap'>LuFactor</span></i></a>
+ specifications).
+The size of <i>ip</i> is referred to as <i>n</i> in the
+specifications below.
+The elements of <i>ip</i> determine
+the order of the rows in the permuted matrix.
+
+<br/>
+<br/>
+<b><big><a name="jp">jp</a></big></b>
+<br/>
+The argument <i>jp</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>SizeVector</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>jp</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>(see description for <i>SizeVector</i> in
+<a href="lufactor_frame2.xml#SizeVector" target="frame1"><i><span style='white-space: nowrap'>LuFactor</span></i></a>
+ specifications).
+The size of <i>jp</i> must be equal to <i>n</i>.
+The elements of <i>jp</i> determine
+the order of the columns in the permuted matrix.
+
+<br/>
+<br/>
+<b><big><a name="LU">LU</a></big></b>
+<br/>
+The argument <i>LU</i> has the prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>FloatVector</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>LU</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>and the size of <i>LU</i> must equal 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>n</mi>
+</mrow></math>
+
+
+(see description for <i>FloatVector</i> in
+<a href="lufactor_frame2.xml#FloatVector" target="frame1"><i><span style='white-space: nowrap'>LuFactor</span></i></a>
+ specifications).
+
+<br/>
+<br/>
+<b><a name="LU.L">L</a></b>
+<br/>
+We define the lower triangular matrix <i>L</i> in terms of <i>LU</i>.
+The matrix <i>L</i> is zero above the diagonal
+and the rest of the elements are defined by
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>L</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font></code><i><span style='white-space: nowrap'>j</span></i><code><font color="blue"><span style='white-space: nowrap'>)&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>LU</span></i><code><font color="blue"><span style='white-space: nowrap'>[&#xA0;</span></font></code><i><span style='white-space: nowrap'>ip</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>]&#xA0;*&#xA0;</span></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;+&#xA0;</span></font></code><i><span style='white-space: nowrap'>jp</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>j</span></i><code><font color="blue"><span style='white-space: nowrap'>]&#xA0;]<br/>
+</span></font></code>for 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>i</mi>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>n</mi>
+<mn>-1</mn>
+</mrow></math>
+
+ and 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>j</mi>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>i</mi>
+</mrow></math>
+
+.
+
+<br/>
+<br/>
+<b><a name="LU.U">U</a></b>
+<br/>
+We define the upper triangular matrix <i>U</i> in terms of <i>LU</i>.
+The matrix <i>U</i> is zero below the diagonal,
+one on the diagonal,
+and the rest of the elements are defined by
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>U</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font></code><i><span style='white-space: nowrap'>j</span></i><code><font color="blue"><span style='white-space: nowrap'>)&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>LU</span></i><code><font color="blue"><span style='white-space: nowrap'>[&#xA0;</span></font></code><i><span style='white-space: nowrap'>ip</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>]&#xA0;*&#xA0;</span></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;+&#xA0;</span></font></code><i><span style='white-space: nowrap'>jp</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>j</span></i><code><font color="blue"><span style='white-space: nowrap'>]&#xA0;]<br/>
+</span></font></code>for 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>i</mi>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>n</mi>
+<mn>-2</mn>
+</mrow></math>
+
+ and 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>j</mi>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>i</mi>
+<mo stretchy="false">+</mo>
+<mn>1</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>n</mi>
+<mn>-1</mn>
+</mrow></math>
+
+.
+
+<br/>
+<br/>
+<b><a name="LU.P">P</a></b>
+<br/>
+We define the permuted matrix <i>P</i> in terms of 
+the matrix <i>L</i> and the matrix <i>U</i> 
+by <code><font color="blue"></font></code><i><span style='white-space: nowrap'>P</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>L</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*&#xA0;</span></font></code><i><span style='white-space: nowrap'>U</span></i>.
+
+<br/>
+<br/>
+<b><a name="LU.A">A</a></b>
+<br/>
+The matrix <i>A</i>, 
+which defines the linear equations that we are solving, is given by
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>P</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font></code><i><span style='white-space: nowrap'>j</span></i><code><font color="blue"><span style='white-space: nowrap'>)&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>A</span></i><code><font color="blue"><span style='white-space: nowrap'>[&#xA0;</span></font></code><i><span style='white-space: nowrap'>ip</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>]&#xA0;*&#xA0;</span></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;+&#xA0;</span></font></code><i><span style='white-space: nowrap'>jp</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>j</span></i><code><font color="blue"><span style='white-space: nowrap'>]&#xA0;]<br/>
+</span></font></code>(Hence 
+<i>LU</i> contains a permuted factorization of the matrix <i>A</i>.)
+
+
+<br/>
+<br/>
+<b><big><a name="X">X</a></big></b>
+<br/>
+The argument <i>X</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>FloatVector</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>X</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>(see description for <i>FloatVector</i> in
+<a href="lufactor_frame2.xml#FloatVector" target="frame1"><i><span style='white-space: nowrap'>LuFactor</span></i></a>
+ specifications).
+The matrix <i>X</i>
+must have the same number of rows as the matrix <i>A</i>.
+The input value of <i>X</i> is the matrix <i>B</i> and the 
+output value solves the matrix equation <code><font color="blue"></font></code><i><span style='white-space: nowrap'>A</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*&#xA0;</span></font></code><i><span style='white-space: nowrap'>X</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>B</span></i>.
+
+
+
+<br/>
+<br/>
+<b><big><a name="Example">Example</a></big></b>
+<br/>
+The file <a href="lusolve.h.xml" target="_top"><span style='white-space: nowrap'>LuSolve.h</span></a>
+ is a good example usage of 
+<code><font color="blue">LuFactor</font></code> with <code><font color="blue">LuInvert</font></code>.
+The file 
+<a href="luinvert.cpp.xml" target="_top"><span style='white-space: nowrap'>LuInvert.cpp</span></a>
+
+contains an example and test of using <code><font color="blue">LuInvert</font></code> by itself.
+It returns true if it succeeds and false otherwise.
+
+
+<hr/>Input File: CppAD\LuInvert.h
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Polynomials and Their Derivatives</title>
+<meta name="description" content="Polynomials and Their Derivatives"/>
+<meta name="keywords" content=" polynomial derivative "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="near_equal.cpp.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="poly.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="polynomial.xml" target="_top">section</a>, <a href="polynomial_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Polynomials and Their Derivatives</big></big></b></center>
+<br/>
+<b><big><a name="Contents">Contents</a></big></b>
+<br/>
+<div><a href="poly.xml" target="_top">Evaluate&#xA0;a&#xA0;Polynomial&#xA0;or&#xA0;its&#xA0;Derivative</a><br/>
+<a href="poly.h.xml" target="_top">Poly&#xA0;Source&#xA0;Code</a><br/>
+</div>
+<hr/>Input File: omh\Polynomial.omh
+
+</body>
+</html>

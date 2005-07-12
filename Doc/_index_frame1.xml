@@ -1,0 +1,956 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Keyword Index</title>
+<meta name="description" content="Keyword Index"/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="_reference.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;index&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="_index.xml" target="_top">section</a>, <a href="_index_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Keyword Index</big></big></b></center>
+<b>!=</b>&#160;<a href="compare.xml" target="_top">The&#xA0;AD&#xA0;Comparison&#xA0;Operators</a><br/>
+<b>*</b><br/>
+&#160;&#160;&#160;&#160;&#160;binary&#160;<a href="mul.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Multiplication&#xA0;Operator</a><br/>
+<b>*=</b>&#160;<a href="muleq.xml" target="_top">The&#xA0;AD&#xA0;Multiplication&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="muleq.cpp.xml" target="_top">Multiplication&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+<b>+</b><br/>
+&#160;&#160;&#160;&#160;&#160;binary&#160;<a href="add.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Addition&#xA0;Operator</a><br/>
+<b>+=</b>&#160;<a href="addeq.xml" target="_top">The&#xA0;AD&#xA0;Addition&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="addeq.cpp.xml" target="_top">Addition&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+<b>-</b>&#160;<a href="neg.xml" target="_top">Negation:&#xA0;The&#xA0;Unary&#xA0;Minus&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;binary&#160;<a href="div.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Division&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;binary&#160;<a href="sub.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Subtraction&#xA0;Operator</a><br/>
+<b>-=</b>&#160;<a href="subeq.xml" target="_top">The&#xA0;AD&#xA0;Subtraction&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="subeq.cpp.xml" target="_top">Subtraction&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+<b>/</b><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="div.cpp.xml" target="_top">Binary&#xA0;Division:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+<b>/=</b>&#160;<a href="diveq.xml" target="_top">The&#xA0;AD&#xA0;Division&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="diveq.cpp.xml" target="_top">Division&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+<b>&lt;</b>&#160;<a href="compare.xml" target="_top">The&#xA0;AD&#xA0;Comparison&#xA0;Operators</a><br/>
+<b>&lt;=</b>&#160;<a href="compare.xml" target="_top">The&#xA0;AD&#xA0;Comparison&#xA0;Operators</a><br/>
+<b>=</b>&#160;<a href="eq.xml" target="_top">The&#xA0;AD&#xA0;Assignment&#xA0;Operator</a><br/>
+<b>==</b>&#160;<a href="compare.xml" target="_top">The&#xA0;AD&#xA0;Comparison&#xA0;Operators</a><br/>
+<b>&gt;</b>&#160;<a href="compare.xml" target="_top">The&#xA0;AD&#xA0;Comparison&#xA0;Operators</a><br/>
+<b>&gt;=</b>&#160;<a href="compare.xml" target="_top">The&#xA0;AD&#xA0;Comparison&#xA0;Operators</a><br/>
+<b>[]</b><br/>
+&#160;&#160;&#160;&#160;&#160;vector&#160;<a href="cppad_vector_frame2.xml#Element Access" target="frame1"><i>The&#xA0;CppAD::vector&#xA0;Template&#xA0;Class:&#160;Element&#xA0;Access</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;vector&#160;<a href="simplevector_frame1.xml#Element Access" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Element&#xA0;Access</i></a><br/>
+
+<b><big><a name="A">A</a></big></b>
+<br/>
+AbsGeq&#160;<a href="boolfun.cpp.xml" target="_top">Defining&#xA0;Boolean&#xA0;Functions&#xA0;with&#xA0;AD&#xA0;Arguments:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+AD&#160;<a href="copy.xml" target="_top">Creating&#xA0;A&#xA0;Copy&#xA0;of&#xA0;an&#xA0;AD&#xA0;Variable</a><br/>
+&#160;&#160;&#160;&#160;&#160;NearEqual&#160;<a href="nearequalext.xml" target="_top">Near&#xA0;Equal&#xA0;Extended&#xA0;to&#xA0;AD&#xA0;Types</a><br/>
+&#160;&#160;&#160;&#160;&#160;stream<b>&#xA0;</b>output&#160;<a href="output.xml" target="_top">Writing&#xA0;an&#xA0;AD&#xA0;Value&#xA0;on&#xA0;a&#xA0;Output&#xA0;Stream</a><br/>
+ADFun&#160;<a href="fun.h.xml" target="_top">Differentiable&#xA0;Function&#xA0;Constructor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+ADOLC&#160;<a href="speedadolc.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;ADOLC&#xA0;Speed&#xA0;Comparison&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="adolc.xml" target="_top">Routines&#xA0;for&#xA0;Comparing&#xA0;CppAD&#xA0;with&#xA0;ADOLC</a><br/>
+&#160;&#160;&#160;&#160;&#160;compare&#160;<a href="exampleadolc.cpp.xml" target="_top">Compare&#xA0;ADOLC&#xA0;and&#xA0;CppAD&#xA0;Results</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant&#160;<a href="detluadolc.cpp.xml" target="_top">ADOLC&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant&#160;<a href="detminoradolc.cpp.xml" target="_top">ADOLC&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Minors</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>factor&#160;<a href="detluadolc.cpp.xml" target="_top">ADOLC&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;Minor<b>&#xA0;</b>expand&#160;<a href="detminoradolc.cpp.xml" target="_top">ADOLC&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Minors</a><br/>
+&#160;&#160;&#160;&#160;&#160;speed&#160;<a href="detluadolc.cpp.xml" target="_top">ADOLC&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;speed&#160;<a href="detminoradolc.cpp.xml" target="_top">ADOLC&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Minors</a><br/>
+abs&#160;<a href="abs.cpp.xml" target="_top">The&#xA0;Absolute&#xA0;Value&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;<a href="abs.xml" target="_top">The&#xA0;Absolute&#xA0;Value&#xA0;Function</a><br/>
+absolute<br/>
+&#160;&#160;&#160;&#160;&#160;difference&#160;<a href="nearequal.xml" target="_top">Determine&#xA0;if&#xA0;Two&#xA0;Values&#xA0;Are&#xA0;Nearly&#xA0;Equal</a><br/>
+&#160;&#160;&#160;&#160;&#160;value&#160;<a href="abs.xml" target="_top">The&#xA0;Absolute&#xA0;Value&#xA0;Function</a><br/>
+acos&#160;<a href="acos.xml" target="_top">The&#xA0;Inverse&#xA0;Cosine&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="acos.cpp.xml" target="_top">The&#xA0;Acos&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>theory&#160;<a href="acosforward.xml" target="_top">Arccosine&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse<b>&#xA0;</b>theory&#160;<a href="acosreverse.xml" target="_top">Arccosine&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+add<br/>
+&#160;&#160;&#160;&#160;&#160;<b>+=</b>&#160;<a href="addeq.xml" target="_top">The&#xA0;AD&#xA0;Addition&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>+=&#xA0;</b>example&#160;<a href="addeq.cpp.xml" target="_top">Addition&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;binary&#160;<a href="add.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Addition&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="add.cpp.xml" target="_top">Binary&#xA0;Addition:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+algorithm<br/>
+&#160;&#160;&#160;&#160;&#160;differentiation&#160;<a href="cppad.xml" target="_top">A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05</a><br/>
+all&#160;<a href="speedfadbad.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;FADBAD&#xA0;Speed&#xA0;Comparison&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;<a href="speedadolc.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;ADOLC&#xA0;Speed&#xA0;Comparison&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;<a href="speed.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;Speed&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;<a href="example.cpp.xml" target="_top">Program&#xA0;That&#xA0;Runs&#xA0;the&#xA0;CppAD&#xA0;Example&#xA0;Suite</a><br/>
+and&#160;<a href="faq_frame1.xml#Assignment and Independent" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Assignment&#xA0;and&#xA0;Independent</i></a><br/>
+answers&#160;<a href="faq.xml" target="_top">Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers</a><br/>
+application&#160;<a href="realistic.xml" target="_top">Examples&#xA0;Using&#xA0;CppAD&#xA0;in&#xA0;a&#xA0;Realistic&#xA0;Application</a><br/>
+asin&#160;<a href="asin.xml" target="_top">The&#xA0;Inverse&#xA0;Sine&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="asin.cpp.xml" target="_top">The&#xA0;Asin&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>theory&#160;<a href="asinforward.xml" target="_top">Arcsine&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse<b>&#xA0;</b>theory&#160;<a href="asinreverse.xml" target="_top">Arcsine&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+asked&#160;<a href="faq.xml" target="_top">Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers</a><br/>
+assert<br/>
+&#160;&#160;&#160;&#160;&#160;error<b>&#xA0;</b>macro&#160;<a href="cppaderror.xml" target="_top">CppAD&#xA0;Error&#xA0;Detection&#xA0;and&#xA0;Reporting</a><br/>
+assign&#160;<a href="eq.cpp.xml" target="_top">AD&#xA0;Assignment&#xA0;Operator:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>*=</b>&#160;<a href="muleq.xml" target="_top">The&#xA0;AD&#xA0;Multiplication&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>*=&#xA0;</b>example&#160;<a href="muleq.cpp.xml" target="_top">Multiplication&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>+=</b>&#160;<a href="addeq.xml" target="_top">The&#xA0;AD&#xA0;Addition&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>+=&#xA0;</b>example&#160;<a href="addeq.cpp.xml" target="_top">Addition&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>-=</b>&#160;<a href="subeq.xml" target="_top">The&#xA0;AD&#xA0;Subtraction&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>-=&#xA0;</b>example&#160;<a href="subeq.cpp.xml" target="_top">Subtraction&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>/=</b>&#160;<a href="diveq.xml" target="_top">The&#xA0;AD&#xA0;Division&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>/=&#xA0;</b>example&#160;<a href="diveq.cpp.xml" target="_top">Division&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;conditional&#160;<a href="discrete_frame2.xml#Conditional Assignment" target="frame1"><i>User&#xA0;Defined&#xA0;Discrete&#xA0;Functions:&#160;Conditional&#xA0;Assignment</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;conditional&#160;<a href="condexp.xml" target="_top">The&#xA0;Conditional&#xA0;Expression&#xA0;Function</a><br/>
+assignment&#160;<a href="eq.xml" target="_top">The&#xA0;AD&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="compeq.xml" target="_top">Computed&#xA0;Assignment&#xA0;Operators</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="faq_frame1.xml#Assignment and Independent" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Assignment&#xA0;and&#xA0;Independent</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;vector&#160;<a href="cppad_vector_frame2.xml#Assignment" target="frame1"><i>The&#xA0;CppAD::vector&#xA0;Template&#xA0;Class:&#160;Assignment</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;vector&#160;<a href="simplevector_frame1.xml#Assignment" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Assignment</i></a><br/>
+atan&#160;<a href="atan.xml" target="_top">The&#xA0;Inverse&#xA0;Tangent&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="atan.cpp.xml" target="_top">The&#xA0;Atan&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>theory&#160;<a href="atanforward.xml" target="_top">Arctangent&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse<b>&#xA0;</b>theory&#160;<a href="atanreverse.xml" target="_top">Arctangent&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+atan2&#160;<a href="atan2.cpp.xml" target="_top">The&#xA0;Two&#xA0;Argument&#xA0;Inverse&#xA0;Tangent:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="atan2.xml" target="_top">The&#xA0;Two&#xA0;Argument&#xA0;Inverse&#xA0;Tangent&#xA0;Function</a><br/>
+
+<b><big><a name="B">B</a></big></b>
+<br/>
+Base<b>&#xA0;</b>Value&#160;<a href="value.cpp.xml" target="_top">Conversion&#xA0;to&#xA0;Base&#xA0;Type:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+base&#160;<a href="glossary_frame1.xml#Base Type" target="frame1"><i>Glossary:&#160;Base&#xA0;Type</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="glossary_frame1.xml#Base Function" target="frame1"><i>Glossary:&#160;Base&#xA0;Function</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="binaryop.xml" target="_top">Base&#xA0;Type&#xA0;Binary&#xA0;Operators</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="value.xml" target="_top">Base&#xA0;Type&#xA0;Value</a><br/>
+&#160;&#160;&#160;&#160;&#160;construct<b>&#xA0;</b>AD<b>&#xA0;</b>from&#160;<a href="frombase.xml" target="_top">Construct&#xA0;An&#xA0;AD&#xA0;Object&#xA0;From&#xA0;its&#xA0;Base&#xA0;Type</a><br/>
+&#160;&#160;&#160;&#160;&#160;convert<b>&#xA0;</b>to<b>&#xA0;</b>AD&#160;<a href="frombase.cpp.xml" target="_top">AD&#xA0;Constructor&#xA0;From&#xA0;Base&#xA0;Type:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;type<b>&#xA0;</b>require&#160;<a href="cppad_frame2.xml#Base Type Requirements" target="frame1"><i>A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05:&#160;Base&#xA0;Type&#xA0;Requirements</i></a><br/>
+base<b>&#xA0;</b>10<br/>
+&#160;&#160;&#160;&#160;&#160;log&#160;<a href="log10.xml" target="_top">The&#xA0;Log&#xA0;Base&#xA0;10&#xA0;Function</a><br/>
+binary&#160;<a href="theoryexambinary.xml" target="_top">A&#xA0;Binary&#xA0;Representation&#xA0;of&#xA0;the&#xA0;Procedure</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="binaryop.xml" target="_top">Base&#xA0;Type&#xA0;Binary&#xA0;Operators</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>*</b>&#160;<a href="mul.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Multiplication&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>+</b>&#160;<a href="add.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Addition&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>-</b>&#160;<a href="div.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Division&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>-</b>&#160;<a href="sub.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Subtraction&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;division&#160;<a href="div.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Division&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;multiply&#160;<a href="mul.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Multiplication&#xA0;Operator</a><br/>
+bool&#160;<a href="boolfun.xml" target="_top">Defining&#xA0;Boolean&#xA0;Functions&#xA0;with&#xA0;AD&#xA0;Arguments</a><br/>
+bugs&#160;<a href="faq_frame1.xml#Bugs" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Bugs</i></a><br/>
+
+<b><big><a name="C">C</a></big></b>
+<br/>
+C<b>++</b><br/>
+&#160;&#160;&#160;&#160;&#160;algorithm<b>&#xA0;</b>derivative&#160;<a href="cppad.xml" target="_top">A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05</a><br/>
+CheckSimpleVector&#160;<a href="checksimplevector.cpp.xml" target="_top">The&#xA0;CheckSimpleVector&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+Compare<br/>
+&#160;&#160;&#160;&#160;&#160;tape<b>&#xA0;</b>operator&#160;<a href="adfun_frame2.xml#CompareChange" target="frame1"><i>Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape:&#160;CompareChange</i></a><br/>
+CondExp&#160;<a href="condexp.cpp.xml" target="_top">Conditional&#xA0;Expressions:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+CppAD<br/>
+&#160;&#160;&#160;&#160;&#160;CppAD<b>&#xA0;</b>namespace&#160;<a href="cppad_frame2.xml#Syntax.using namespace CppAD" target="frame1"><i>A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05:&#160;Syntax.using&#xA0;namespace&#xA0;CppAD</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;include<b>&#xA0;</b>CppAD&#160;<a href="cppad_frame2.xml#Syntax.include CppAD.h" target="frame1"><i>A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05:&#160;Syntax.include&#xA0;CppAD.h</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;install<b>&#xA0;</b>windows&#160;<a href="installwindows.xml" target="_top">Windows&#xA0;Installation&#xA0;and&#xA0;Testing</a><br/>
+&#160;&#160;&#160;&#160;&#160;unix<b>&#xA0;</b>install&#160;<a href="installunix.xml" target="_top">Unix&#xA0;Installation&#xA0;and&#xA0;Testing</a><br/>
+&#160;&#160;&#160;&#160;&#160;version&#160;<a href="cppad.xml" target="_top">A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05</a><br/>
+CppAD<b>::</b>vector<br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="cppad_vector.cpp.xml" target="_top">CppAD::vector&#xA0;Template&#xA0;Class:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;source&#160;<a href="cppad_vector.h.xml" target="_top">CppAD::vector&#xA0;Source&#xA0;Code</a><br/>
+CppADError&#160;<a href="cppaderror.xml" target="_top">CppAD&#xA0;Error&#xA0;Detection&#xA0;and&#xA0;Reporting</a><br/>
+CppADvector&#160;<a href="cppadvector.xml" target="_top">Choosing&#xA0;The&#xA0;CppADvector&#xA0;Template&#xA0;Class</a><br/>
+check<br/>
+&#160;&#160;&#160;&#160;&#160;simple<b>&#xA0;</b>vector&#160;<a href="checksimplevector.xml" target="_top">Check&#xA0;Simple&#xA0;Vector&#xA0;Concept</a><br/>
+class<br/>
+&#160;&#160;&#160;&#160;&#160;simple<b>&#xA0;</b>vector&#160;<a href="simplevector.xml" target="_top">Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector</a><br/>
+&#160;&#160;&#160;&#160;&#160;template<b>&#xA0;</b>vector&#160;<a href="cppad_vector.xml" target="_top">The&#xA0;CppAD::vector&#xA0;Template&#xA0;Class</a><br/>
+coefficient&#160;<a href="glossary_frame1.xml#Taylor Coefficient" target="frame1"><i>Glossary:&#160;Taylor&#xA0;Coefficient</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="reverse.xml" target="_top">Reverse&#xA0;Mode</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forward.xml" target="_top">Forward&#xA0;Mode</a><br/>
+compare&#160;<a href="fadbad.xml" target="_top">Routines&#xA0;for&#xA0;Comparing&#xA0;CppAD&#xA0;with&#xA0;FADBAD</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="adolc.xml" target="_top">Routines&#xA0;for&#xA0;Comparing&#xA0;CppAD&#xA0;with&#xA0;ADOLC</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="compare.cpp.xml" target="_top">AD&#xA0;Comparison&#xA0;Operators:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;change&#160;<a href="comparechange.cpp.xml" target="_top">CompareChange&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+comparechange&#160;<a href="faq_frame1.xml#CompareChange" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;CompareChange</i></a><br/>
+comparison&#160;<a href="compare.xml" target="_top">The&#xA0;AD&#xA0;Comparison&#xA0;Operators</a><br/>
+complex&#160;<a href="complexpoly.cpp.xml" target="_top">Complex&#xA0;Polynomial:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;boolean&#160;<a href="boolfun.cpp.xml" target="_top">Defining&#xA0;Boolean&#xA0;Functions&#xA0;with&#xA0;AD&#xA0;Arguments:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>factor&#160;<a href="detbylu.h.xml" target="_top">Determinant&#xA0;using&#xA0;Lu&#xA0;Factorization:&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;LuSolve&#160;<a href="lusolve.cpp.xml" target="_top">LuSolve&#xA0;With&#xA0;Complex&#xA0;Arguments:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+compute&#160;<a href="compeq.xml" target="_top">Computed&#xA0;Assignment&#xA0;Operators</a><br/>
+computed<br/>
+&#160;&#160;&#160;&#160;&#160;<b>*=</b>&#160;<a href="muleq.xml" target="_top">The&#xA0;AD&#xA0;Multiplication&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>*=&#xA0;</b>example&#160;<a href="muleq.cpp.xml" target="_top">Multiplication&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>+=</b>&#160;<a href="addeq.xml" target="_top">The&#xA0;AD&#xA0;Addition&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>+=&#xA0;</b>example&#160;<a href="addeq.cpp.xml" target="_top">Addition&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>-=</b>&#160;<a href="subeq.xml" target="_top">The&#xA0;AD&#xA0;Subtraction&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>-=&#xA0;</b>example&#160;<a href="subeq.cpp.xml" target="_top">Subtraction&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>/=</b>&#160;<a href="diveq.xml" target="_top">The&#xA0;AD&#xA0;Division&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>/=&#xA0;</b>example&#160;<a href="diveq.cpp.xml" target="_top">Division&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;add&#160;<a href="boolfun.cpp.xml" target="_top">Defining&#xA0;Boolean&#xA0;Functions&#xA0;with&#xA0;AD&#xA0;Arguments:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+concept<br/>
+&#160;&#160;&#160;&#160;&#160;check<b>&#xA0;</b>simple<b>&#xA0;</b>vector&#160;<a href="checksimplevector.xml" target="_top">Check&#xA0;Simple&#xA0;Vector&#xA0;Concept</a><br/>
+conditional<br/>
+&#160;&#160;&#160;&#160;&#160;expression&#160;<a href="condexp.xml" target="_top">The&#xA0;Conditional&#xA0;Expression&#xA0;Function</a><br/>
+conditional<b>&#xA0;</b>assign&#160;<a href="discrete_frame2.xml#Conditional Assignment" target="frame1"><i>User&#xA0;Defined&#xA0;Discrete&#xA0;Functions:&#160;Conditional&#xA0;Assignment</i></a><br/>
+construct&#160;<a href="adfun.xml" target="_top">Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="vecad_frame2.xml#Constructor" target="frame1"><i>Vectors&#xA0;That&#xA0;Record&#xA0;Indexing&#xA0;Operations:&#160;Constructor</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="copy.xml" target="_top">Creating&#xA0;A&#xA0;Copy&#xA0;of&#xA0;an&#xA0;AD&#xA0;Variable</a><br/>
+&#160;&#160;&#160;&#160;&#160;default&#160;<a href="default.cpp.xml" target="_top">Default&#xA0;AD&#xA0;Constructor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;default&#160;<a href="default.xml" target="_top">The&#xA0;Default&#xA0;AD&#xA0;Constructor</a><br/>
+&#160;&#160;&#160;&#160;&#160;from<b>&#xA0;</b>base<b>&#xA0;</b>type&#160;<a href="frombase.cpp.xml" target="_top">AD&#xA0;Constructor&#xA0;From&#xA0;Base&#xA0;Type:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;from<b>&#xA0;</b>base<b>&#xA0;</b>type&#160;<a href="frombase.xml" target="_top">Construct&#xA0;An&#xA0;AD&#xA0;Object&#xA0;From&#xA0;its&#xA0;Base&#xA0;Type</a><br/>
+constructor<br/>
+&#160;&#160;&#160;&#160;&#160;copy<b>&#xA0;</b>vector&#160;<a href="simplevector_frame1.xml#Copy Constructor" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Copy&#xA0;Constructor</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;element&#160;<a href="simplevector_frame1.xml#Element Constructor and Destructor" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Element&#xA0;Constructor&#xA0;and&#xA0;Destructor</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;size<b>&#xA0;</b>vector&#160;<a href="simplevector_frame1.xml#Sizing Constructor" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Sizing&#xA0;Constructor</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;vector<b>&#xA0;</b>default&#160;<a href="simplevector_frame1.xml#Default Constructor" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Default&#xA0;Constructor</i></a><br/>
+control<br/>
+&#160;&#160;&#160;&#160;&#160;ODE<b>&#xA0;</b>error&#160;<a href="odeerrcontrol.xml" target="_top">An&#xA0;Error&#xA0;Controller&#xA0;for&#xA0;ODE&#xA0;Solvers</a><br/>
+convert<br/>
+&#160;&#160;&#160;&#160;&#160;from<b>&#xA0;</b>base<b>&#xA0;</b>to<b>&#xA0;</b>AD<b>&#xA0;</b>type&#160;<a href="frombase.xml" target="_top">Construct&#xA0;An&#xA0;AD&#xA0;Object&#xA0;From&#xA0;its&#xA0;Base&#xA0;Type</a><br/>
+copy&#160;<a href="copy.cpp.xml" target="_top">AD&#xA0;Copy&#xA0;Constructor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="copy.xml" target="_top">Creating&#xA0;A&#xA0;Copy&#xA0;of&#xA0;an&#xA0;AD&#xA0;Variable</a><br/>
+&#160;&#160;&#160;&#160;&#160;vector<b>&#xA0;</b>constructor&#160;<a href="simplevector_frame1.xml#Copy Constructor" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Copy&#xA0;Constructor</i></a><br/>
+cos&#160;<a href="cos.cpp.xml" target="_top">The&#xA0;Cosine&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;<a href="cos.xml" target="_top">The&#xA0;Cosine&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>theory&#160;<a href="cosforward.xml" target="_top">Cosine&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;inverse&#160;<a href="acos.xml" target="_top">The&#xA0;Inverse&#xA0;Cosine&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse<b>&#xA0;</b>theory&#160;<a href="sincosreverse.xml" target="_top">Sine&#xA0;and&#xA0;Cosine&#xA0;Functions&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+cppadvector&#160;<a href="faq_frame1.xml#Namespace.CppADvector" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Namespace.CppADvector</i></a><br/>
+
+<b><big><a name="D">D</a></big></b>
+<br/>
+DetByLu&#160;<a href="detbylu.h.xml" target="_top">Determinant&#xA0;using&#xA0;Lu&#xA0;Factorization:&#xA0;Source&#xA0;Code</a><br/>
+DetByMinor&#160;<a href="detbyminor.h.xml" target="_top">Determinant&#xA0;using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Source&#xA0;Code</a><br/>
+DetOfMinor&#160;<a href="detofminor.h.xml" target="_top">Compute&#xA0;the&#xA0;Determinant&#xA0;of&#xA0;a&#xA0;Minor:&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="detofminor.xml" target="_top">Compute&#xA0;the&#xA0;Determinant&#xA0;of&#xA0;a&#xA0;Minor</a><br/>
+Domain<br/>
+&#160;&#160;&#160;&#160;&#160;ADFun&#160;<a href="adfun_frame2.xml#Domain" target="frame1"><i>Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape:&#160;Domain</i></a><br/>
+default<br/>
+&#160;&#160;&#160;&#160;&#160;construct&#160;<a href="default.cpp.xml" target="_top">Default&#xA0;AD&#xA0;Constructor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;construct&#160;<a href="default.xml" target="_top">The&#xA0;Default&#xA0;AD&#xA0;Constructor</a><br/>
+&#160;&#160;&#160;&#160;&#160;vector<b>&#xA0;</b>constructor&#160;<a href="simplevector_frame1.xml#Default Constructor" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Default&#xA0;Constructor</i></a><br/>
+dependent&#160;<a href="glossary_frame1.xml#Dependent Variable" target="frame1"><i>Glossary:&#160;Dependent&#xA0;Variable</i></a><br/>
+derivative&#160;<a href="reverse.xml" target="_top">Reverse&#xA0;Mode</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forward.xml" target="_top">Forward&#xA0;Mode</a><br/>
+&#160;&#160;&#160;&#160;&#160;easy&#160;<a href="revone.xml" target="_top">Derivative&#xA0;of&#xA0;One&#xA0;Range&#xA0;Component:&#xA0;Reverse&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;first<b>&#xA0;</b>easy&#160;<a href="jacobian.xml" target="_top">Jacobian:&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;one<b>&#xA0;</b>component&#160;<a href="revone.h.xml" target="_top">Derivative&#xA0;of&#xA0;One&#xA0;Range&#xA0;Component:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;one<b>&#xA0;</b>component&#160;<a href="forone.h.xml" target="_top">Partial&#xA0;w.r.t&#xA0;One&#xA0;Domain&#xA0;Component:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;polynomial&#160;<a href="polynomial.xml" target="_top">Polynomials&#xA0;and&#xA0;Their&#xA0;Derivatives</a><br/>
+&#160;&#160;&#160;&#160;&#160;polynomial<b>&#xA0;</b>template&#160;<a href="poly.xml" target="_top">Evaluate&#xA0;a&#xA0;Polynomial&#xA0;or&#xA0;its&#xA0;Derivative</a><br/>
+&#160;&#160;&#160;&#160;&#160;second<b>&#xA0;</b>easy&#160;<a href="revtwo.xml" target="_top">Subset&#xA0;of&#xA0;Second&#xA0;Partial&#xA0;Derivatives:&#xA0;Reverse&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;second<b>&#xA0;</b>easy&#160;<a href="fortwo.xml" target="_top">Subset&#xA0;of&#xA0;Second&#xA0;Partial&#xA0;Derivatives:&#xA0;Forward&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;tape<b>&#xA0;</b>calculation&#160;<a href="multape.xml" target="_top">Using&#xA0;Multiple&#xA0;Tapes</a><br/>
+destructor<br/>
+&#160;&#160;&#160;&#160;&#160;element&#160;<a href="simplevector_frame1.xml#Element Constructor and Destructor" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Element&#xA0;Constructor&#xA0;and&#xA0;Destructor</i></a><br/>
+determinant&#160;<a href="detbyminor.h.xml" target="_top">Determinant&#xA0;using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="detofminor.h.xml" target="_top">Compute&#xA0;the&#xA0;Determinant&#xA0;of&#xA0;a&#xA0;Minor:&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="detofminor.xml" target="_top">Compute&#xA0;the&#xA0;Determinant&#xA0;of&#xA0;a&#xA0;Minor</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="lufactor_frame2.xml#LU.Determinant" target="frame1"><i>LU&#xA0;Factorization&#xA0;of&#xA0;A&#xA0;Square&#xA0;Matrix:&#160;LU.Determinant</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="ludetandsolve.xml" target="_top">Compute&#xA0;Determinants&#xA0;and&#xA0;Solve&#xA0;Equations&#xA0;by&#xA0;LU&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;ADOLC&#160;<a href="detluadolc.cpp.xml" target="_top">ADOLC&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;ADOLC&#160;<a href="detminoradolc.cpp.xml" target="_top">ADOLC&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Minors</a><br/>
+&#160;&#160;&#160;&#160;&#160;by<b>&#xA0;</b>minors&#160;<a href="detbylu.cpp.xml" target="_top">Determinant&#xA0;Using&#xA0;Lu&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;by<b>&#xA0;</b>minors&#160;<a href="detbyminor.cpp.xml" target="_top">Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;by<b>&#xA0;</b>minors&#160;<a href="detofminor.cpp.xml" target="_top">Determinant&#xA0;of&#xA0;a&#xA0;Minor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;FADBAD&#160;<a href="detlufadbad.cpp.xml" target="_top">FADBAD&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;FADBAD&#160;<a href="detminorfadbad.cpp.xml" target="_top">FADBAD&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Minors</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu&#160;<a href="luvecad.xml" target="_top">Lu&#xA0;Factor&#xA0;and&#xA0;Solve&#xA0;with&#xA0;Recorded&#xA0;Pivoting</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu&#160;<a href="lusolve.xml" target="_top">Compute&#xA0;Determinant&#xA0;and&#xA0;Solve&#xA0;Linear&#xA0;Equations</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>factor&#160;<a href="detbylu.xml" target="_top">Determinant&#xA0;Using&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>factor&#160;<a href="lufactor.xml" target="_top">LU&#xA0;Factorization&#xA0;of&#xA0;A&#xA0;Square&#xA0;Matrix</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>speed&#160;<a href="detluspeed.cpp.xml" target="_top">Determinant&#xA0;by&#xA0;Lu&#xA0;Factor&#xA0;and&#xA0;Solve:&#xA0;Speed&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;minors<b>&#xA0;</b>speed&#160;<a href="detminorspeed.cpp.xml" target="_top">Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Speed&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;source<b>&#xA0;</b>code&#160;<a href="lusolve.h.xml" target="_top">LuSolve&#xA0;Source&#xA0;Code</a><br/>
+difference<br/>
+&#160;&#160;&#160;&#160;&#160;absolute<b>&#xA0;</b>or<b>&#xA0;</b>relative&#160;<a href="nearequal.xml" target="_top">Determine&#xA0;if&#xA0;Two&#xA0;Values&#xA0;Are&#xA0;Nearly&#xA0;Equal</a><br/>
+differentiable&#160;<a href="adfun.xml" target="_top">Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape</a><br/>
+differential&#160;<a href="odespeed.cpp.xml" target="_top">ODE&#xA0;Solver:&#xA0;Speed&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;equation&#160;<a href="rosen34.xml" target="_top">A&#xA0;3rd&#xA0;and&#xA0;4th&#xA0;Order&#xA0;Rosenbrock&#xA0;ODE&#xA0;Solver</a><br/>
+&#160;&#160;&#160;&#160;&#160;equation&#160;<a href="runge45.xml" target="_top">An&#xA0;Embedded&#xA0;4th&#xA0;and&#xA0;5th&#xA0;Order&#xA0;Runge-Kutta&#xA0;ODE&#xA0;Solver</a><br/>
+&#160;&#160;&#160;&#160;&#160;ODE<b>&#xA0;</b>error<b>&#xA0;</b>control&#160;<a href="odeerrcontrol.xml" target="_top">An&#xA0;Error&#xA0;Controller&#xA0;for&#xA0;ODE&#xA0;Solvers</a><br/>
+differentiation<br/>
+&#160;&#160;&#160;&#160;&#160;algorithm&#160;<a href="cppad.xml" target="_top">A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05</a><br/>
+direction<br/>
+&#160;&#160;&#160;&#160;&#160;times<b>&#xA0;</b>Hessian&#160;<a href="hestimesdir.cpp.xml" target="_top">Hessian&#xA0;Times&#xA0;Direction:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+discrete&#160;<a href="discrete.cpp.xml" target="_top">User&#xA0;Defined&#xA0;Discrete&#xA0;Functions:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+disk&#160;<a href="faq_frame1.xml#Tape Storage: Disk or Memory" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Tape&#xA0;Storage:&#xA0;Disk&#xA0;or&#xA0;Memory</i></a><br/>
+divide<br/>
+&#160;&#160;&#160;&#160;&#160;<b>/=</b>&#160;<a href="diveq.xml" target="_top">The&#xA0;AD&#xA0;Division&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>/=&#xA0;</b>example&#160;<a href="diveq.cpp.xml" target="_top">Division&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+division<br/>
+&#160;&#160;&#160;&#160;&#160;binary&#160;<a href="div.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Division&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="div.cpp.xml" target="_top">Binary&#xA0;Division:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+driver<br/>
+&#160;&#160;&#160;&#160;&#160;easy&#160;<a href="drivers.xml" target="_top">First&#xA0;and&#xA0;Second&#xA0;Derivatives:&#xA0;Easy&#xA0;Drivers</a><br/>
+&#160;&#160;&#160;&#160;&#160;easy<b>&#xA0;</b>derivative&#160;<a href="revone.xml" target="_top">Derivative&#xA0;of&#xA0;One&#xA0;Range&#xA0;Component:&#xA0;Reverse&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;easy<b>&#xA0;</b>first<b>&#xA0;</b>derivative&#160;<a href="jacobian.xml" target="_top">Jacobian:&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;easy<b>&#xA0;</b>partial&#160;<a href="forone.xml" target="_top">Partial&#xA0;w.r.t&#xA0;One&#xA0;Domain&#xA0;Component:&#xA0;Forward&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;easy<b>&#xA0;</b>second<b>&#xA0;</b>derivative&#160;<a href="revtwo.xml" target="_top">Subset&#xA0;of&#xA0;Second&#xA0;Partial&#xA0;Derivatives:&#xA0;Reverse&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;easy<b>&#xA0;</b>second<b>&#xA0;</b>derivative&#160;<a href="fortwo.xml" target="_top">Subset&#xA0;of&#xA0;Second&#xA0;Partial&#xA0;Derivatives:&#xA0;Forward&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;Hessian&#160;<a href="hessian.xml" target="_top">Hessian&#xA0;of&#xA0;One&#xA0;Component:&#xA0;Easy&#xA0;Driver</a><br/>
+
+<b><big><a name="E">E</a></big></b>
+<br/>
+easy<br/>
+&#160;&#160;&#160;&#160;&#160;derivative&#160;<a href="revone.xml" target="_top">Derivative&#xA0;of&#xA0;One&#xA0;Range&#xA0;Component:&#xA0;Reverse&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;driver&#160;<a href="drivers.xml" target="_top">First&#xA0;and&#xA0;Second&#xA0;Derivatives:&#xA0;Easy&#xA0;Drivers</a><br/>
+&#160;&#160;&#160;&#160;&#160;first<b>&#xA0;</b>derivative<b>&#xA0;</b>driver&#160;<a href="jacobian.xml" target="_top">Jacobian:&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;Hessian&#160;<a href="hessian.xml" target="_top">Hessian&#xA0;of&#xA0;One&#xA0;Component:&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;partial&#160;<a href="forone.xml" target="_top">Partial&#xA0;w.r.t&#xA0;One&#xA0;Domain&#xA0;Component:&#xA0;Forward&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;second<b>&#xA0;</b>derivative&#160;<a href="revtwo.xml" target="_top">Subset&#xA0;of&#xA0;Second&#xA0;Partial&#xA0;Derivatives:&#xA0;Reverse&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;second<b>&#xA0;</b>derivative&#160;<a href="fortwo.xml" target="_top">Subset&#xA0;of&#xA0;Second&#xA0;Partial&#xA0;Derivatives:&#xA0;Forward&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+elementary&#160;<a href="glossary_frame1.xml#Elementary Vector" target="frame1"><i>Glossary:&#160;Elementary&#xA0;Vector</i></a><br/>
+empty&#160;<a href="glossary_frame1.xml#Tape State.Empty" target="frame1"><i>Glossary:&#160;Tape&#xA0;State.Empty</i></a><br/>
+equal<br/>
+&#160;&#160;&#160;&#160;&#160;near&#160;<a href="nearequal.xml" target="_top">Determine&#xA0;if&#xA0;Two&#xA0;Values&#xA0;Are&#xA0;Nearly&#xA0;Equal</a><br/>
+equation&#160;<a href="odespeed.cpp.xml" target="_top">ODE&#xA0;Solver:&#xA0;Speed&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;differential&#160;<a href="rosen34.xml" target="_top">A&#xA0;3rd&#xA0;and&#xA0;4th&#xA0;Order&#xA0;Rosenbrock&#xA0;ODE&#xA0;Solver</a><br/>
+&#160;&#160;&#160;&#160;&#160;differential&#160;<a href="runge45.xml" target="_top">An&#xA0;Embedded&#xA0;4th&#xA0;and&#xA0;5th&#xA0;Order&#xA0;Runge-Kutta&#xA0;ODE&#xA0;Solver</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>factor&#160;<a href="lufactor.xml" target="_top">LU&#xA0;Factorization&#xA0;of&#xA0;A&#xA0;Square&#xA0;Matrix</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>invert&#160;<a href="luinvert.xml" target="_top">Invert&#xA0;an&#xA0;LU&#xA0;Factored&#xA0;Equation</a><br/>
+&#160;&#160;&#160;&#160;&#160;linear&#160;<a href="lusolve.xml" target="_top">Compute&#xA0;Determinant&#xA0;and&#xA0;Solve&#xA0;Linear&#xA0;Equations</a><br/>
+&#160;&#160;&#160;&#160;&#160;linear&#160;<a href="ludetandsolve.xml" target="_top">Compute&#xA0;Determinants&#xA0;and&#xA0;Solve&#xA0;Equations&#xA0;by&#xA0;LU&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;ODE<b>&#xA0;</b>error<b>&#xA0;</b>control&#160;<a href="odeerrcontrol.xml" target="_top">An&#xA0;Error&#xA0;Controller&#xA0;for&#xA0;ODE&#xA0;Solvers</a><br/>
+&#160;&#160;&#160;&#160;&#160;solve<b>&#xA0;</b>linear&#160;<a href="luvecad.xml" target="_top">Lu&#xA0;Factor&#xA0;and&#xA0;Solve&#xA0;with&#xA0;Recorded&#xA0;Pivoting</a><br/>
+erf&#160;<a href="erf.cpp.xml" target="_top">The&#xA0;Error&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+error<br/>
+&#160;&#160;&#160;&#160;&#160;assert<b>&#xA0;</b>macro&#160;<a href="cppaderror.xml" target="_top">CppAD&#xA0;Error&#xA0;Detection&#xA0;and&#xA0;Reporting</a><br/>
+&#160;&#160;&#160;&#160;&#160;control<b>&#xA0;</b>ODE&#160;<a href="odeerrcontrol.xml" target="_top">An&#xA0;Error&#xA0;Controller&#xA0;for&#xA0;ODE&#xA0;Solvers</a><br/>
+evaluation&#160;<a href="theoryexameval.xml" target="_top">An&#xA0;Evaluation&#xA0;of&#xA0;the&#xA0;Binary&#xA0;Representation</a><br/>
+example&#160;<a href="theoryexamrev.xml" target="_top">A&#xA0;Reverse&#xA0;Mode&#xA0;Evaluation</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="theoryrevnotation.xml" target="_top">Function&#xA0;Definitions&#xA0;for&#xA0;Understanding&#xA0;Reverse&#xA0;Mode&#xA0;Evaluation</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="theoryexamfor.xml" target="_top">A&#xA0;Forward&#xA0;Mode&#xA0;Evaluation</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="theoryexameval.xml" target="_top">An&#xA0;Evaluation&#xA0;of&#xA0;the&#xA0;Binary&#xA0;Representation</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="theoryexambinary.xml" target="_top">A&#xA0;Binary&#xA0;Representation&#xA0;of&#xA0;the&#xA0;Procedure</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="theoryexamproc.xml" target="_top">A&#xA0;Procedural&#xA0;Representation&#xA0;of&#xA0;the&#xA0;Example&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="theoryexamfun.xml" target="_top">An&#xA0;Example&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="example.cpp.xml" target="_top">Program&#xA0;That&#xA0;Runs&#xA0;the&#xA0;CppAD&#xA0;Example&#xA0;Suite</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="realistic.xml" target="_top">Examples&#xA0;Using&#xA0;CppAD&#xA0;in&#xA0;a&#xA0;Realistic&#xA0;Application</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="output.cpp.xml" target="_top">The&#xA0;Output&#xA0;Operator&#xA0;for&#xA0;AD&#xA0;Objects:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>*=</b>&#160;<a href="muleq.cpp.xml" target="_top">Multiplication&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>+=</b>&#160;<a href="addeq.cpp.xml" target="_top">Addition&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>-=</b>&#160;<a href="subeq.cpp.xml" target="_top">Subtraction&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>/</b>&#160;<a href="div.cpp.xml" target="_top">Binary&#xA0;Division:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>/=</b>&#160;<a href="diveq.cpp.xml" target="_top">Division&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;ADFun&#160;<a href="fun.h.xml" target="_top">Differentiable&#xA0;Function&#xA0;Constructor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;abs&#160;<a href="abs.cpp.xml" target="_top">The&#xA0;Absolute&#xA0;Value&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;acos&#160;<a href="acos.cpp.xml" target="_top">The&#xA0;Acos&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;add&#160;<a href="add.cpp.xml" target="_top">Binary&#xA0;Addition:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;asin&#160;<a href="asin.cpp.xml" target="_top">The&#xA0;Asin&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;assign&#160;<a href="eq.cpp.xml" target="_top">AD&#xA0;Assignment&#xA0;Operator:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;atan&#160;<a href="atan.cpp.xml" target="_top">The&#xA0;Atan&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;atan2&#160;<a href="atan2.cpp.xml" target="_top">The&#xA0;Two&#xA0;Argument&#xA0;Inverse&#xA0;Tangent:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;boolean&#160;<a href="boolfun.cpp.xml" target="_top">Defining&#xA0;Boolean&#xA0;Functions&#xA0;with&#xA0;AD&#xA0;Arguments:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;CompareChange&#160;<a href="comparechange.cpp.xml" target="_top">CompareChange&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;CondExp&#160;<a href="condexp.cpp.xml" target="_top">Conditional&#xA0;Expressions:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;CppAD<b>::</b>vector&#160;<a href="cppad_vector.cpp.xml" target="_top">CppAD::vector&#xA0;Template&#xA0;Class:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;check<b>&#xA0;</b>SimpleVector&#160;<a href="checksimplevector.cpp.xml" target="_top">The&#xA0;CheckSimpleVector&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;compare&#160;<a href="compare.cpp.xml" target="_top">AD&#xA0;Comparison&#xA0;Operators:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;complex&#160;<a href="lusolve.cpp.xml" target="_top">LuSolve&#xA0;With&#xA0;Complex&#xA0;Arguments:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;complex<b>&#xA0;</b>polynomial&#160;<a href="complexpoly.cpp.xml" target="_top">Complex&#xA0;Polynomial:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;construct<b>&#xA0;</b>from<b>&#xA0;</b>base&#160;<a href="frombase.cpp.xml" target="_top">AD&#xA0;Constructor&#xA0;From&#xA0;Base&#xA0;Type:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;copy&#160;<a href="copy.cpp.xml" target="_top">AD&#xA0;Copy&#xA0;Constructor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;cos&#160;<a href="cos.cpp.xml" target="_top">The&#xA0;Cosine&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;default<b>&#xA0;</b>constructor&#160;<a href="default.cpp.xml" target="_top">Default&#xA0;AD&#xA0;Constructor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;derivative&#160;<a href="revone.h.xml" target="_top">Derivative&#xA0;of&#xA0;One&#xA0;Range&#xA0;Component:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant<b>&#xA0;</b>by<b>&#xA0;</b>minors&#160;<a href="detbylu.cpp.xml" target="_top">Determinant&#xA0;Using&#xA0;Lu&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant<b>&#xA0;</b>by<b>&#xA0;</b>minors&#160;<a href="detbyminor.cpp.xml" target="_top">Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant<b>&#xA0;</b>by<b>&#xA0;</b>minors&#160;<a href="detofminor.cpp.xml" target="_top">Determinant&#xA0;of&#xA0;a&#xA0;Minor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;discrete&#160;<a href="discrete.cpp.xml" target="_top">User&#xA0;Defined&#xA0;Discrete&#xA0;Functions:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;division&#160;<a href="div.cpp.xml" target="_top">Binary&#xA0;Division:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;erf&#160;<a href="erf.cpp.xml" target="_top">The&#xA0;Error&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Forward&#160;<a href="forward.h.xml" target="_top">Forward&#xA0;Mode:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>print&#160;<a href="printfor.cpp.xml" target="_top">Printing&#xA0;During&#xA0;Forward&#xA0;Mode:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;gradient&#160;<a href="hesludet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;LU&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;gradient&#160;<a href="hesminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;gradient&#160;<a href="jacludet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Lu&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;gradient&#160;<a href="jacminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Hessian&#160;<a href="hessian.h.xml" target="_top">Hessian&#xA0;of&#xA0;Scalar&#xA0;Valued&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Jacobian&#160;<a href="jacobian.h.xml" target="_top">Derivative&#xA0;of&#xA0;Vector&#xA0;Valued&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;LU&#160;<a href="hesludet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;LU&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu&#160;<a href="jacludet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Lu&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>record<b>&#xA0;</b>pivot&#160;<a href="luvecadok.cpp.xml" target="_top">Lu&#xA0;Factor&#xA0;and&#xA0;Solve&#xA0;With&#xA0;Recorded&#xA0;Pivoting:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;LuFactor&#160;<a href="lufactor.cpp.xml" target="_top">LuFactor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;LuInvert&#160;<a href="luinvert.cpp.xml" target="_top">LuInvert:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;LuSolve&#160;<a href="lusolve.cpp.xml" target="_top">LuSolve&#xA0;With&#xA0;Complex&#xA0;Arguments:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;log&#160;<a href="log10.cpp.xml" target="_top">The&#xA0;Base&#xA0;10&#xA0;Logarithm&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;log&#160;<a href="log.cpp.xml" target="_top">The&#xA0;Logarithm&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;minors<b>&#xA0;</b>expansion&#160;<a href="hesminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;minors<b>&#xA0;</b>expansion&#160;<a href="jacminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;minus&#160;<a href="sub.cpp.xml" target="_top">Binary&#xA0;Subtraction:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;multiply&#160;<a href="mul.cpp.xml" target="_top">Binary&#xA0;Multiplication:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;NearEqual&#160;<a href="near_equal.cpp.xml" target="_top">NearEqual&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;negative&#160;<a href="neg.cpp.xml" target="_top">Negative&#xA0;Operator:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;ODE&#160;<a href="odetaylor.cpp.xml" target="_top">Taylor's&#xA0;Method&#xA0;Ode&#xA0;Solver:&#xA0;An&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;OdeErrControl&#160;<a href="odeerrcontrol.cpp.xml" target="_top">OdeErrControl:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;output&#160;<a href="output.cpp.xml" target="_top">The&#xA0;Output&#xA0;Operator&#xA0;for&#xA0;AD&#xA0;Objects:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;partial&#160;<a href="forone.h.xml" target="_top">Partial&#xA0;w.r.t&#xA0;One&#xA0;Domain&#xA0;Component:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;plus&#160;<a href="add.cpp.xml" target="_top">Binary&#xA0;Addition:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;polynomial&#160;<a href="poly.cpp.xml" target="_top">Polynomial&#xA0;Evaluation:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;pow&#160;<a href="pow.cpp.xml" target="_top">The&#xA0;Power&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;pow&#160;<a href="powint.cpp.xml" target="_top">Integer&#xA0;Powers:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Reverse&#160;<a href="reverse.h.xml" target="_top">Reverse&#xA0;Mode:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Rosen34&#160;<a href="rosen34.cpp.xml" target="_top">Rosen34:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Runge45&#160;<a href="runge45.cpp.xml" target="_top">Runge45:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;SpeedTest&#160;<a href="speedtestexample.xml" target="_top">Example&#xA0;Use&#xA0;of&#xA0;SpeedTest</a><br/>
+&#160;&#160;&#160;&#160;&#160;second<b>&#xA0;</b>partial&#160;<a href="revtwo.h.xml" target="_top">Second&#xA0;Partials&#xA0;Reverse&#xA0;Driver:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;second<b>&#xA0;</b>partial&#160;<a href="fortwo.h.xml" target="_top">Subset&#xA0;of&#xA0;Second&#xA0;Order&#xA0;Partials:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;simple<b>&#xA0;</b>vector&#160;<a href="simplevector.cpp.xml" target="_top">Simple&#xA0;Vector&#xA0;Template&#xA0;Class:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;sin&#160;<a href="sin.cpp.xml" target="_top">The&#xA0;Sine&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;sin&#160;<a href="exp.cpp.xml" target="_top">The&#xA0;Exponential&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;sqrt&#160;<a href="sqrt.cpp.xml" target="_top">The&#xA0;Square&#xA0;Root&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;subtract&#160;<a href="sub.cpp.xml" target="_top">Binary&#xA0;Subtraction:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;times&#160;<a href="mul.cpp.xml" target="_top">Binary&#xA0;Multiplication:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Value&#160;<a href="value.cpp.xml" target="_top">Conversion&#xA0;to&#xA0;Base&#xA0;Type:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;VecAD&#160;<a href="vec.cpp.xml" target="_top">Recording&#xA0;Vector&#xA0;Indexing&#xA0;Operations:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+exceptions&#160;<a href="faq_frame1.xml#Exceptions" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Exceptions</i></a><br/>
+exercise<br/>
+&#160;&#160;&#160;&#160;&#160;CppAD<b>::</b>vector&#160;<a href="cppad_vector_frame2.xml#Exercise" target="frame1"><i>The&#xA0;CppAD::vector&#xA0;Template&#xA0;Class:&#160;Exercise</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;NearEqual&#160;<a href="nearequal_frame2.xml#Exercise" target="frame1"><i>Determine&#xA0;if&#xA0;Two&#xA0;Values&#xA0;Are&#xA0;Nearly&#xA0;Equal:&#160;Exercise</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;simple<b>&#xA0;</b>vector&#160;<a href="simplevector_frame1.xml#Exercise" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Exercise</i></a><br/>
+exp&#160;<a href="exp.xml" target="_top">The&#xA0;Exponential&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>theory&#160;<a href="expforward.xml" target="_top">Exponential&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;inverse&#160;<a href="log.xml" target="_top">The&#xA0;Logarithm&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse<b>&#xA0;</b>theory&#160;<a href="expreverse.xml" target="_top">Exponential&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+expansion&#160;<a href="hesminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="jacminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+exponent&#160;<a href="pow.xml" target="_top">The&#xA0;Power&#xA0;Function</a><br/>
+expression<br/>
+&#160;&#160;&#160;&#160;&#160;conditional&#160;<a href="condexp.xml" target="_top">The&#xA0;Conditional&#xA0;Expression&#xA0;Function</a><br/>
+extend<br/>
+&#160;&#160;&#160;&#160;&#160;NearEqual&#160;<a href="nearequalext.xml" target="_top">Near&#xA0;Equal&#xA0;Extended&#xA0;to&#xA0;AD&#xA0;Types</a><br/>
+
+<b><big><a name="F">F</a></big></b>
+<br/>
+FADBAD&#160;<a href="speedfadbad.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;FADBAD&#xA0;Speed&#xA0;Comparison&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="fadbad.xml" target="_top">Routines&#xA0;for&#xA0;Comparing&#xA0;CppAD&#xA0;with&#xA0;FADBAD</a><br/>
+&#160;&#160;&#160;&#160;&#160;compare<b>&#xA0;</b>results&#160;<a href="examplefadbad.cpp.xml" target="_top">Compare&#xA0;FADBAD&#xA0;and&#xA0;CppAD&#xA0;Results</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant&#160;<a href="detlufadbad.cpp.xml" target="_top">FADBAD&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant&#160;<a href="detminorfadbad.cpp.xml" target="_top">FADBAD&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Minors</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>factor&#160;<a href="detlufadbad.cpp.xml" target="_top">FADBAD&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;Minor<b>&#xA0;</b>expand&#160;<a href="detminorfadbad.cpp.xml" target="_top">FADBAD&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Minors</a><br/>
+&#160;&#160;&#160;&#160;&#160;speed&#160;<a href="detlufadbad.cpp.xml" target="_top">FADBAD&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;speed&#160;<a href="detminorfadbad.cpp.xml" target="_top">FADBAD&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Minors</a><br/>
+Forward&#160;<a href="forward.h.xml" target="_top">Forward&#xA0;Mode:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+factor<br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>complex&#160;<a href="detbylu.h.xml" target="_top">Determinant&#xA0;using&#xA0;Lu&#xA0;Factorization:&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>determinant&#160;<a href="detbylu.xml" target="_top">Determinant&#xA0;Using&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;matrix&#160;<a href="ludetandsolve.xml" target="_top">Compute&#xA0;Determinants&#xA0;and&#xA0;Solve&#xA0;Equations&#xA0;by&#xA0;LU&#xA0;Factorization</a><br/>
+first<br/>
+&#160;&#160;&#160;&#160;&#160;derivative<b>&#xA0;</b>easy<b>&#xA0;</b>driver&#160;<a href="jacobian.xml" target="_top">Jacobian:&#xA0;Easy&#xA0;Driver</a><br/>
+forward&#160;<a href="theoryexamfor.xml" target="_top">A&#xA0;Forward&#xA0;Mode&#xA0;Evaluation</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forward.xml" target="_top">Forward&#xA0;Mode</a><br/>
+&#160;&#160;&#160;&#160;&#160;acos<b>&#xA0;</b>theory&#160;<a href="acosforward.xml" target="_top">Arccosine&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;asin<b>&#xA0;</b>theory&#160;<a href="asinforward.xml" target="_top">Arcsine&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;atan<b>&#xA0;</b>theory&#160;<a href="atanforward.xml" target="_top">Arctangent&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;cos<b>&#xA0;</b>theory&#160;<a href="cosforward.xml" target="_top">Cosine&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;easy<b>&#xA0;</b>driver&#160;<a href="drivers.xml" target="_top">First&#xA0;and&#xA0;Second&#xA0;Derivatives:&#xA0;Easy&#xA0;Drivers</a><br/>
+&#160;&#160;&#160;&#160;&#160;example<b>&#xA0;</b>print&#160;<a href="printfor.cpp.xml" target="_top">Printing&#xA0;During&#xA0;Forward&#xA0;Mode:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;exp<b>&#xA0;</b>theory&#160;<a href="expforward.xml" target="_top">Exponential&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;log<b>&#xA0;</b>theory&#160;<a href="logforward.xml" target="_top">Logarithm&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;print&#160;<a href="printfor.xml" target="_top">Printing&#xA0;Values&#xA0;During&#xA0;Forward&#xA0;Mode&#xA0;Calculations</a><br/>
+&#160;&#160;&#160;&#160;&#160;sin<b>&#xA0;</b>theory&#160;<a href="sinforward.xml" target="_top">Sine&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;sqrt<b>&#xA0;</b>theory&#160;<a href="sqrtforward.xml" target="_top">Square&#xA0;Root&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+free<br/>
+&#160;&#160;&#160;&#160;&#160;install<b>&#xA0;</b>CppAD&#160;<a href="installwindows.xml" target="_top">Windows&#xA0;Installation&#xA0;and&#xA0;Testing</a><br/>
+&#160;&#160;&#160;&#160;&#160;unix<b>&#xA0;</b>install&#160;<a href="installunix.xml" target="_top">Unix&#xA0;Installation&#xA0;and&#xA0;Testing</a><br/>
+frequently&#160;<a href="faq.xml" target="_top">Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers</a><br/>
+function&#160;<a href="glossary_frame1.xml#Base Function" target="frame1"><i>Glossary:&#160;Base&#xA0;Function</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="theoryexamfun.xml" target="_top">An&#xA0;Example&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="adfun.xml" target="_top">Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="boolfun.xml" target="_top">Defining&#xA0;Boolean&#xA0;Functions&#xA0;with&#xA0;AD&#xA0;Arguments</a><br/>
+functions&#160;<a href="faq_frame1.xml#Intrinsic Functions" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Intrinsic&#xA0;Functions</i></a><br/>
+
+<b><big><a name="G">G</a></big></b>
+<br/>
+getstarted<br/>
+&#160;&#160;&#160;&#160;&#160;polynomial&#160;<a href="getstarted.cpp.xml" target="_top">Getting&#xA0;Started&#xA0;Using&#xA0;CppAD&#xA0;With&#xA0;A&#xA0;Polynomial&#xA0;Example</a><br/>
+gradient&#160;<a href="hesludet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;LU&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="hesminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="jacludet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Lu&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="jacminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+
+<b><big><a name="H">H</a></big></b>
+<br/>
+Hessian&#160;<a href="hessian.h.xml" target="_top">Hessian&#xA0;of&#xA0;Scalar&#xA0;Valued&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="hessian.xml" target="_top">Hessian&#xA0;of&#xA0;One&#xA0;Component:&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;times<b>&#xA0;</b>direction&#160;<a href="hestimesdir.cpp.xml" target="_top">Hessian&#xA0;Times&#xA0;Direction:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+
+<b><big><a name="I">I</a></big></b>
+<br/>
+Independent&#160;<a href="independent.xml" target="_top">Declare&#xA0;Independent&#xA0;Variables&#xA0;and&#xA0;Start&#xA0;Recording</a><br/>
+IsReal&#160;<a href="boolfun.cpp.xml" target="_top">Defining&#xA0;Boolean&#xA0;Functions&#xA0;with&#xA0;AD&#xA0;Arguments:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+include<br/>
+&#160;&#160;&#160;&#160;&#160;include<b>&#xA0;</b>CppAD&#160;<a href="cppad_frame2.xml#Syntax.include CppAD.h" target="frame1"><i>A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05:&#160;Syntax.include&#xA0;CppAD.h</i></a><br/>
+independent&#160;<a href="glossary_frame1.xml#Independent Variable" target="frame1"><i>Glossary:&#160;Independent&#xA0;Variable</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="faq_frame1.xml#Independent Variables" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Independent&#xA0;Variables</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="faq_frame1.xml#Assignment and Independent" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Assignment&#xA0;and&#xA0;Independent</i></a><br/>
+index<br/>
+&#160;&#160;&#160;&#160;&#160;record&#160;<a href="vec.cpp.xml" target="_top">Recording&#xA0;Vector&#xA0;Indexing&#xA0;Operations:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;record&#160;<a href="vecad.xml" target="_top">Vectors&#xA0;That&#xA0;Record&#xA0;Indexing&#xA0;Operations</a><br/>
+install&#160;<a href="install.xml" target="_top">Installing&#xA0;and&#xA0;Testing&#xA0;CppAD</a><br/>
+&#160;&#160;&#160;&#160;&#160;unix<b>&#xA0;</b>CppAD&#160;<a href="installunix.xml" target="_top">Unix&#xA0;Installation&#xA0;and&#xA0;Testing</a><br/>
+&#160;&#160;&#160;&#160;&#160;windows<b>&#xA0;</b>CppAD&#160;<a href="installwindows.xml" target="_top">Windows&#xA0;Installation&#xA0;and&#xA0;Testing</a><br/>
+intrinsic&#160;<a href="faq_frame1.xml#Intrinsic Functions" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Intrinsic&#xA0;Functions</i></a><br/>
+introduction&#160;<a href="cppad_frame2.xml#Introduction" target="frame1"><i>A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05:&#160;Introduction</i></a><br/>
+inverse&#160;<a href="faq_frame1.xml#Matrix Inverse" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Matrix&#xA0;Inverse</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;cos&#160;<a href="acos.xml" target="_top">The&#xA0;Inverse&#xA0;Cosine&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;exp&#160;<a href="log.xml" target="_top">The&#xA0;Logarithm&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;log&#160;<a href="exp.xml" target="_top">The&#xA0;Exponential&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;sin&#160;<a href="asin.xml" target="_top">The&#xA0;Inverse&#xA0;Sine&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;tan&#160;<a href="atan2.xml" target="_top">The&#xA0;Two&#xA0;Argument&#xA0;Inverse&#xA0;Tangent&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;tan&#160;<a href="atan.xml" target="_top">The&#xA0;Inverse&#xA0;Tangent&#xA0;Function</a><br/>
+
+<b><big><a name="J">J</a></big></b>
+<br/>
+Jacobian&#160;<a href="jacobian.h.xml" target="_top">Derivative&#xA0;of&#xA0;Vector&#xA0;Valued&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="jacobian.xml" target="_top">Jacobian:&#xA0;Easy&#xA0;Driver</a><br/>
+
+<b><big><a name="K">K</a></big></b>
+<br/>
+Kutta<br/>
+&#160;&#160;&#160;&#160;&#160;ODE&#160;<a href="runge45.xml" target="_top">An&#xA0;Embedded&#xA0;4th&#xA0;and&#xA0;5th&#xA0;Order&#xA0;Runge-Kutta&#xA0;ODE&#xA0;Solver</a><br/>
+
+<b><big><a name="L">L</a></big></b>
+<br/>
+LU&#160;<a href="hesludet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;LU&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+Lu&#160;<a href="jacludet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Lu&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant<b>&#xA0;</b>speed&#160;<a href="detluspeed.cpp.xml" target="_top">Determinant&#xA0;by&#xA0;Lu&#xA0;Factor&#xA0;and&#xA0;Solve:&#xA0;Speed&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;linear<b>&#xA0;</b>equation&#160;<a href="luvecad.xml" target="_top">Lu&#xA0;Factor&#xA0;and&#xA0;Solve&#xA0;with&#xA0;Recorded&#xA0;Pivoting</a><br/>
+&#160;&#160;&#160;&#160;&#160;record<b>&#xA0;</b>pivot&#160;<a href="luvecadok.cpp.xml" target="_top">Lu&#xA0;Factor&#xA0;and&#xA0;Solve&#xA0;With&#xA0;Recorded&#xA0;Pivoting:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;speed&#160;<a href="lusolvespeed.cpp.xml" target="_top">Speed&#xA0;Test&#xA0;Lu&#xA0;Factor&#xA0;and&#xA0;Solve:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+Lu<b>&#xA0;</b>factor<br/>
+&#160;&#160;&#160;&#160;&#160;ADOLC&#160;<a href="detluadolc.cpp.xml" target="_top">ADOLC&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;complex&#160;<a href="detbylu.h.xml" target="_top">Determinant&#xA0;using&#xA0;Lu&#xA0;Factorization:&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant&#160;<a href="detbylu.xml" target="_top">Determinant&#xA0;Using&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;FADBAD&#160;<a href="detlufadbad.cpp.xml" target="_top">FADBAD&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Lu&#xA0;Factorization</a><br/>
+LuFactor&#160;<a href="lufactor.xml" target="_top">LU&#xA0;Factorization&#xA0;of&#xA0;A&#xA0;Square&#xA0;Matrix</a><br/>
+&#160;&#160;&#160;&#160;&#160;source&#160;<a href="lufactor.h.xml" target="_top">LuFactor&#xA0;Source&#xA0;Code</a><br/>
+LuInvert&#160;<a href="luinvert.xml" target="_top">Invert&#xA0;an&#xA0;LU&#xA0;Factored&#xA0;Equation</a><br/>
+&#160;&#160;&#160;&#160;&#160;source&#160;<a href="luinvert.h.xml" target="_top">LuInvert&#xA0;Source&#xA0;Code</a><br/>
+LuSolve&#160;<a href="lusolve.xml" target="_top">Compute&#xA0;Determinant&#xA0;and&#xA0;Solve&#xA0;Linear&#xA0;Equations</a><br/>
+&#160;&#160;&#160;&#160;&#160;source<b>&#xA0;</b>code&#160;<a href="lusolve.h.xml" target="_top">LuSolve&#xA0;Source&#xA0;Code</a><br/>
+LuVecAD&#160;<a href="luvecad.xml" target="_top">Lu&#xA0;Factor&#xA0;and&#xA0;Solve&#xA0;with&#xA0;Recorded&#xA0;Pivoting</a><br/>
+library<br/>
+&#160;&#160;&#160;&#160;&#160;standard<b>&#xA0;</b>math&#160;<a href="stdmathlib.xml" target="_top">The&#xA0;Standard&#xA0;Library&#xA0;Unary&#xA0;Math&#xA0;Functions</a><br/>
+linear<br/>
+&#160;&#160;&#160;&#160;&#160;equation&#160;<a href="lusolve.xml" target="_top">Compute&#xA0;Determinant&#xA0;and&#xA0;Solve&#xA0;Linear&#xA0;Equations</a><br/>
+&#160;&#160;&#160;&#160;&#160;equation&#160;<a href="ludetandsolve.xml" target="_top">Compute&#xA0;Determinants&#xA0;and&#xA0;Solve&#xA0;Equations&#xA0;by&#xA0;LU&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;equation<b>&#xA0;</b>source<b>&#xA0;</b>code&#160;<a href="lusolve.h.xml" target="_top">LuSolve&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;invert<b>&#xA0;</b>Lu<b>&#xA0;</b>equation&#160;<a href="luinvert.xml" target="_top">Invert&#xA0;an&#xA0;LU&#xA0;Factored&#xA0;Equation</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>factor<b>&#xA0;</b>equation&#160;<a href="lufactor.xml" target="_top">LU&#xA0;Factorization&#xA0;of&#xA0;A&#xA0;Square&#xA0;Matrix</a><br/>
+&#160;&#160;&#160;&#160;&#160;solve<b>&#xA0;</b>equation&#160;<a href="luvecad.xml" target="_top">Lu&#xA0;Factor&#xA0;and&#xA0;Solve&#xA0;with&#xA0;Recorded&#xA0;Pivoting</a><br/>
+log&#160;<a href="log10.cpp.xml" target="_top">The&#xA0;Base&#xA0;10&#xA0;Logarithm&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;<a href="log.xml" target="_top">The&#xA0;Logarithm&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;base<b>&#xA0;</b>10&#160;<a href="log10.xml" target="_top">The&#xA0;Log&#xA0;Base&#xA0;10&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="log.cpp.xml" target="_top">The&#xA0;Logarithm&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>theory&#160;<a href="logforward.xml" target="_top">Logarithm&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;inverse&#160;<a href="exp.xml" target="_top">The&#xA0;Exponential&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse<b>&#xA0;</b>theory&#160;<a href="logreverse.xml" target="_top">Logarithm&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+
+<b><big><a name="M">M</a></big></b>
+<br/>
+Memory<br/>
+&#160;&#160;&#160;&#160;&#160;ADFun&#160;<a href="adfun_frame2.xml#Memory" target="frame1"><i>Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape:&#160;Memory</i></a><br/>
+Minor<br/>
+&#160;&#160;&#160;&#160;&#160;FADBAD<b>&#xA0;</b>expand&#160;<a href="detminorfadbad.cpp.xml" target="_top">FADBAD&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Minors</a><br/>
+Minors<br/>
+&#160;&#160;&#160;&#160;&#160;ADOLC<b>&#xA0;</b>expand&#160;<a href="detminoradolc.cpp.xml" target="_top">ADOLC&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Minors</a><br/>
+macro<br/>
+&#160;&#160;&#160;&#160;&#160;error<b>&#xA0;</b>assert&#160;<a href="cppaderror.xml" target="_top">CppAD&#xA0;Error&#xA0;Detection&#xA0;and&#xA0;Reporting</a><br/>
+math<br/>
+&#160;&#160;&#160;&#160;&#160;standard<b>&#xA0;</b>function&#160;<a href="faq_frame1.xml#Namespace.Using" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Namespace.Using</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;standard<b>&#xA0;</b>library&#160;<a href="stdmathlib.xml" target="_top">The&#xA0;Standard&#xA0;Library&#xA0;Unary&#xA0;Math&#xA0;Functions</a><br/>
+matrix&#160;<a href="detbyminor.h.xml" target="_top">Determinant&#xA0;using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="detofminor.h.xml" target="_top">Compute&#xA0;the&#xA0;Determinant&#xA0;of&#xA0;a&#xA0;Minor:&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="detofminor.xml" target="_top">Compute&#xA0;the&#xA0;Determinant&#xA0;of&#xA0;a&#xA0;Minor</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="faq_frame1.xml#Matrix Inverse" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Matrix&#xA0;Inverse</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant&#160;<a href="ludetandsolve.xml" target="_top">Compute&#xA0;Determinants&#xA0;and&#xA0;Solve&#xA0;Equations&#xA0;by&#xA0;LU&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;factor&#160;<a href="ludetandsolve.xml" target="_top">Compute&#xA0;Determinants&#xA0;and&#xA0;Solve&#xA0;Equations&#xA0;by&#xA0;LU&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;factor<b>&#xA0;</b>source&#160;<a href="lusolve.h.xml" target="_top">LuSolve&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;LuFactor<b>&#xA0;</b>source&#160;<a href="lufactor.h.xml" target="_top">LuFactor&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;LuInvert<b>&#xA0;</b>source&#160;<a href="luinvert.h.xml" target="_top">LuInvert&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;linear<b>&#xA0;</b>equation&#160;<a href="ludetandsolve.xml" target="_top">Compute&#xA0;Determinants&#xA0;and&#xA0;Solve&#xA0;Equations&#xA0;by&#xA0;LU&#xA0;Factorization</a><br/>
+memory&#160;<a href="faq_frame1.xml#Tape Storage: Disk or Memory" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Tape&#xA0;Storage:&#xA0;Disk&#xA0;or&#xA0;Memory</i></a><br/>
+minor&#160;<a href="detbyminor.h.xml" target="_top">Determinant&#xA0;using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="detofminor.h.xml" target="_top">Compute&#xA0;the&#xA0;Determinant&#xA0;of&#xA0;a&#xA0;Minor:&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="detofminor.xml" target="_top">Compute&#xA0;the&#xA0;Determinant&#xA0;of&#xA0;a&#xA0;Minor</a><br/>
+minors&#160;<a href="hesminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="jacminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+minus&#160;<a href="neg.xml" target="_top">Negation:&#xA0;The&#xA0;Unary&#xA0;Minus&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>-=</b>&#160;<a href="subeq.xml" target="_top">The&#xA0;AD&#xA0;Subtraction&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>-=&#xA0;</b>example&#160;<a href="subeq.cpp.xml" target="_top">Subtraction&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;binary&#160;<a href="sub.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Subtraction&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="sub.cpp.xml" target="_top">Binary&#xA0;Subtraction:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+mode&#160;<a href="theoryexamrev.xml" target="_top">A&#xA0;Reverse&#xA0;Mode&#xA0;Evaluation</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="theoryexamfor.xml" target="_top">A&#xA0;Forward&#xA0;Mode&#xA0;Evaluation</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="reverse.xml" target="_top">Reverse&#xA0;Mode</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="faq_frame1.xml#Mode" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Mode</i></a><br/>
+multiple<br/>
+&#160;&#160;&#160;&#160;&#160;tape&#160;<a href="multape.cpp.xml" target="_top">Multiple&#xA0;Tapes:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;tape&#160;<a href="multape.xml" target="_top">Using&#xA0;Multiple&#xA0;Tapes</a><br/>
+multiply<br/>
+&#160;&#160;&#160;&#160;&#160;<b>*=</b>&#160;<a href="muleq.xml" target="_top">The&#xA0;AD&#xA0;Multiplication&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>*=&#xA0;</b>example&#160;<a href="muleq.cpp.xml" target="_top">Multiplication&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;binary&#160;<a href="mul.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Multiplication&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="mul.cpp.xml" target="_top">Binary&#xA0;Multiplication:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+
+<b><big><a name="N">N</a></big></b>
+<br/>
+NDEBUG&#160;<a href="simplevector_frame1.xml#Exercise" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Exercise</i></a><br/>
+NearEqual<br/>
+&#160;&#160;&#160;&#160;&#160;AD&#160;<a href="nearequalext.xml" target="_top">Near&#xA0;Equal&#xA0;Extended&#xA0;to&#xA0;AD&#xA0;Types</a><br/>
+&#160;&#160;&#160;&#160;&#160;double<b>&#xA0;</b>and<b>&#xA0;</b>complex&#160;<a href="nearequal.xml" target="_top">Determine&#xA0;if&#xA0;Two&#xA0;Values&#xA0;Are&#xA0;Nearly&#xA0;Equal</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="near_equal.cpp.xml" target="_top">NearEqual&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+namespace&#160;<a href="faq_frame1.xml#Namespace" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Namespace</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;CppAD<b>&#xA0;</b>namespace&#160;<a href="cppad_frame2.xml#Syntax.using namespace CppAD" target="frame1"><i>A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05:&#160;Syntax.using&#xA0;namespace&#xA0;CppAD</i></a><br/>
+negative&#160;<a href="neg.cpp.xml" target="_top">Negative&#xA0;Operator:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="neg.xml" target="_top">Negation:&#xA0;The&#xA0;Unary&#xA0;Minus&#xA0;Operator</a><br/>
+notation&#160;<a href="theoryrevnotation.xml" target="_top">Function&#xA0;Definitions&#xA0;for&#xA0;Understanding&#xA0;Reverse&#xA0;Mode&#xA0;Evaluation</a><br/>
+
+<b><big><a name="O">O</a></big></b>
+<br/>
+ODE&#160;<a href="odespeed.cpp.xml" target="_top">ODE&#xA0;Solver:&#xA0;Speed&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;control<b>&#xA0;</b>error&#160;<a href="odeerrcontrol.xml" target="_top">An&#xA0;Error&#xA0;Controller&#xA0;for&#xA0;ODE&#xA0;Solvers</a><br/>
+&#160;&#160;&#160;&#160;&#160;Rosenbrock&#160;<a href="rosen34.xml" target="_top">A&#xA0;3rd&#xA0;and&#xA0;4th&#xA0;Order&#xA0;Rosenbrock&#xA0;ODE&#xA0;Solver</a><br/>
+&#160;&#160;&#160;&#160;&#160;Runge<b>-</b>Kutta&#160;<a href="runge45.xml" target="_top">An&#xA0;Embedded&#xA0;4th&#xA0;and&#xA0;5th&#xA0;Order&#xA0;Runge-Kutta&#xA0;ODE&#xA0;Solver</a><br/>
+&#160;&#160;&#160;&#160;&#160;Taylor&#160;<a href="odetaylor.cpp.xml" target="_top">Taylor's&#xA0;Method&#xA0;Ode&#xA0;Solver:&#xA0;An&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+OdeErrControl&#160;<a href="odeerrcontrol.xml" target="_top">An&#xA0;Error&#xA0;Controller&#xA0;for&#xA0;ODE&#xA0;Solvers</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="odeerrcontrol.cpp.xml" target="_top">OdeErrControl:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+Order<br/>
+&#160;&#160;&#160;&#160;&#160;ADFun&#160;<a href="adfun_frame2.xml#Order" target="frame1"><i>Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape:&#160;Order</i></a><br/>
+one<br/>
+&#160;&#160;&#160;&#160;&#160;component<b>&#xA0;</b>derivative&#160;<a href="revone.h.xml" target="_top">Derivative&#xA0;of&#xA0;One&#xA0;Range&#xA0;Component:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;component<b>&#xA0;</b>partial&#160;<a href="forone.h.xml" target="_top">Partial&#xA0;w.r.t&#xA0;One&#xA0;Domain&#xA0;Component:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+operator&#160;<a href="eq.xml" target="_top">The&#xA0;AD&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="compare.xml" target="_top">The&#xA0;AD&#xA0;Comparison&#xA0;Operators</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="compeq.xml" target="_top">Computed&#xA0;Assignment&#xA0;Operators</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="binaryop.xml" target="_top">Base&#xA0;Type&#xA0;Binary&#xA0;Operators</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="neg.xml" target="_top">Negation:&#xA0;The&#xA0;Unary&#xA0;Minus&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;compare<b>&#xA0;</b>tape&#160;<a href="adfun_frame2.xml#CompareChange" target="frame1"><i>Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape:&#160;CompareChange</i></a><br/>
+order&#160;<a href="forward.xml" target="_top">Forward&#xA0;Mode</a><br/>
+ordinary&#160;<a href="odespeed.cpp.xml" target="_top">ODE&#xA0;Solver:&#xA0;Speed&#xA0;Test</a><br/>
+output&#160;<a href="output.cpp.xml" target="_top">The&#xA0;Output&#xA0;Operator&#xA0;for&#xA0;AD&#xA0;Objects:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="output.cpp.xml" target="_top">The&#xA0;Output&#xA0;Operator&#xA0;for&#xA0;AD&#xA0;Objects:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;AD&#160;<a href="output.xml" target="_top">Writing&#xA0;an&#xA0;AD&#xA0;Value&#xA0;on&#xA0;a&#xA0;Output&#xA0;Stream</a><br/>
+
+<b><big><a name="P">P</a></big></b>
+<br/>
+Parameter&#160;<a href="parameter.xml" target="_top">Is&#xA0;This&#xA0;AD&#xA0;Object&#xA0;a&#xA0;Parameter</a><br/>
+&#160;&#160;&#160;&#160;&#160;ADFun&#160;<a href="adfun_frame2.xml#Parameter" target="frame1"><i>Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape:&#160;Parameter</i></a><br/>
+Poly&#160;<a href="poly.xml" target="_top">Evaluate&#xA0;a&#xA0;Polynomial&#xA0;or&#xA0;its&#xA0;Derivative</a><br/>
+&#160;&#160;&#160;&#160;&#160;source&#160;<a href="poly.h.xml" target="_top">Poly&#xA0;Source&#xA0;Code</a><br/>
+parameter&#160;<a href="glossary_frame1.xml#Parameter" target="frame1"><i>Glossary:&#160;Parameter</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="independent_frame2.xml#Parameters" target="frame1"><i>Declare&#xA0;Independent&#xA0;Variables&#xA0;and&#xA0;Start&#xA0;Recording:&#160;Parameters</i></a><br/>
+partial<br/>
+&#160;&#160;&#160;&#160;&#160;easy&#160;<a href="forone.xml" target="_top">Partial&#xA0;w.r.t&#xA0;One&#xA0;Domain&#xA0;Component:&#xA0;Forward&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;one<b>&#xA0;</b>component&#160;<a href="forone.h.xml" target="_top">Partial&#xA0;w.r.t&#xA0;One&#xA0;Domain&#xA0;Component:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;second&#160;<a href="revtwo.h.xml" target="_top">Second&#xA0;Partials&#xA0;Reverse&#xA0;Driver:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;second&#160;<a href="fortwo.h.xml" target="_top">Subset&#xA0;of&#xA0;Second&#xA0;Order&#xA0;Partials:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+plus<br/>
+&#160;&#160;&#160;&#160;&#160;<b>+=</b>&#160;<a href="addeq.xml" target="_top">The&#xA0;AD&#xA0;Addition&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>+=&#xA0;</b>example&#160;<a href="addeq.cpp.xml" target="_top">Addition&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;binary&#160;<a href="add.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Addition&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="add.cpp.xml" target="_top">Binary&#xA0;Addition:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+polynomial&#160;<a href="theoryexamfun.xml" target="_top">An&#xA0;Example&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="complexpoly.cpp.xml" target="_top">Complex&#xA0;Polynomial:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="poly.xml" target="_top">Evaluate&#xA0;a&#xA0;Polynomial&#xA0;or&#xA0;its&#xA0;Derivative</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="polynomial.xml" target="_top">Polynomials&#xA0;and&#xA0;Their&#xA0;Derivatives</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="poly.cpp.xml" target="_top">Polynomial&#xA0;Evaluation:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;getstarted&#160;<a href="getstarted.cpp.xml" target="_top">Getting&#xA0;Started&#xA0;Using&#xA0;CppAD&#xA0;With&#xA0;A&#xA0;Polynomial&#xA0;Example</a><br/>
+pow&#160;<a href="pow.cpp.xml" target="_top">The&#xA0;Power&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;<a href="powint.cpp.xml" target="_top">Integer&#xA0;Powers:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;<a href="pow.xml" target="_top">The&#xA0;Power&#xA0;Function</a><br/>
+print<br/>
+&#160;&#160;&#160;&#160;&#160;forward&#160;<a href="printfor.xml" target="_top">Printing&#xA0;Values&#xA0;During&#xA0;Forward&#xA0;Mode&#xA0;Calculations</a><br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>example&#160;<a href="printfor.cpp.xml" target="_top">Printing&#xA0;During&#xA0;Forward&#xA0;Mode:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+procedure&#160;<a href="theoryexamproc.xml" target="_top">A&#xA0;Procedural&#xA0;Representation&#xA0;of&#xA0;the&#xA0;Example&#xA0;Function</a><br/>
+program&#160;<a href="example.cpp.xml" target="_top">Program&#xA0;That&#xA0;Runs&#xA0;the&#xA0;CppAD&#xA0;Example&#xA0;Suite</a><br/>
+
+<b><big><a name="Q">Q</a></big></b>
+<br/>
+questions&#160;<a href="faq.xml" target="_top">Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers</a><br/>
+
+<b><big><a name="R">R</a></big></b>
+<br/>
+Range<br/>
+&#160;&#160;&#160;&#160;&#160;ADFun&#160;<a href="adfun_frame2.xml#Range" target="frame1"><i>Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape:&#160;Range</i></a><br/>
+Reverse&#160;<a href="reverse.h.xml" target="_top">Reverse&#xA0;Mode:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+Rosen34&#160;<a href="rosen34.xml" target="_top">A&#xA0;3rd&#xA0;and&#xA0;4th&#xA0;Order&#xA0;Rosenbrock&#xA0;ODE&#xA0;Solver</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="rosen34.cpp.xml" target="_top">Rosen34:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+Rosenbrock<br/>
+&#160;&#160;&#160;&#160;&#160;ODE&#160;<a href="rosen34.xml" target="_top">A&#xA0;3rd&#xA0;and&#xA0;4th&#xA0;Order&#xA0;Rosenbrock&#xA0;ODE&#xA0;Solver</a><br/>
+Runge<br/>
+&#160;&#160;&#160;&#160;&#160;ODE&#160;<a href="runge45.xml" target="_top">An&#xA0;Embedded&#xA0;4th&#xA0;and&#xA0;5th&#xA0;Order&#xA0;Runge-Kutta&#xA0;ODE&#xA0;Solver</a><br/>
+Runge45&#160;<a href="runge45.xml" target="_top">An&#xA0;Embedded&#xA0;4th&#xA0;and&#xA0;5th&#xA0;Order&#xA0;Runge-Kutta&#xA0;ODE&#xA0;Solver</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="runge45.cpp.xml" target="_top">Runge45:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+real&#160;<a href="realistic.xml" target="_top">Examples&#xA0;Using&#xA0;CppAD&#xA0;in&#xA0;a&#xA0;Realistic&#xA0;Application</a><br/>
+record<br/>
+&#160;&#160;&#160;&#160;&#160;index&#160;<a href="vecad.xml" target="_top">Vectors&#xA0;That&#xA0;Record&#xA0;Indexing&#xA0;Operations</a><br/>
+recording&#160;<a href="glossary_frame1.xml#Tape State.Recording" target="frame1"><i>Glossary:&#160;Tape&#xA0;State.Recording</i></a><br/>
+relative<br/>
+&#160;&#160;&#160;&#160;&#160;difference&#160;<a href="nearequal.xml" target="_top">Determine&#xA0;if&#xA0;Two&#xA0;Values&#xA0;Are&#xA0;Nearly&#xA0;Equal</a><br/>
+represent&#160;<a href="theoryexambinary.xml" target="_top">A&#xA0;Binary&#xA0;Representation&#xA0;of&#xA0;the&#xA0;Procedure</a><br/>
+require<br/>
+&#160;&#160;&#160;&#160;&#160;base<b>&#xA0;</b>type&#160;<a href="cppad_frame2.xml#Base Type Requirements" target="frame1"><i>A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05:&#160;Base&#xA0;Type&#xA0;Requirements</i></a><br/>
+resize<br/>
+&#160;&#160;&#160;&#160;&#160;vector&#160;<a href="simplevector_frame1.xml#Resize" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Resize</i></a><br/>
+reverse&#160;<a href="theoryexamrev.xml" target="_top">A&#xA0;Reverse&#xA0;Mode&#xA0;Evaluation</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="theoryrevnotation.xml" target="_top">Function&#xA0;Definitions&#xA0;for&#xA0;Understanding&#xA0;Reverse&#xA0;Mode&#xA0;Evaluation</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="reverse.xml" target="_top">Reverse&#xA0;Mode</a><br/>
+&#160;&#160;&#160;&#160;&#160;acos<b>&#xA0;</b>theory&#160;<a href="acosreverse.xml" target="_top">Arccosine&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;asin<b>&#xA0;</b>theory&#160;<a href="asinreverse.xml" target="_top">Arcsine&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;atan<b>&#xA0;</b>theory&#160;<a href="atanreverse.xml" target="_top">Arctangent&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;cos<b>&#xA0;</b>theory&#160;<a href="sincosreverse.xml" target="_top">Sine&#xA0;and&#xA0;Cosine&#xA0;Functions&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;easy<b>&#xA0;</b>driver&#160;<a href="drivers.xml" target="_top">First&#xA0;and&#xA0;Second&#xA0;Derivatives:&#xA0;Easy&#xA0;Drivers</a><br/>
+&#160;&#160;&#160;&#160;&#160;exp<b>&#xA0;</b>theory&#160;<a href="expreverse.xml" target="_top">Exponential&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;log<b>&#xA0;</b>theory&#160;<a href="logreverse.xml" target="_top">Logarithm&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;sin<b>&#xA0;</b>theory&#160;<a href="sincosreverse.xml" target="_top">Sine&#xA0;and&#xA0;Cosine&#xA0;Functions&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;sqrt<b>&#xA0;</b>theory&#160;<a href="sqrtreverse.xml" target="_top">Square&#xA0;Root&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+root<br/>
+&#160;&#160;&#160;&#160;&#160;square&#160;<a href="sqrt.xml" target="_top">The&#xA0;Square&#xA0;Root&#xA0;Function</a><br/>
+run&#160;<a href="speedfadbad.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;FADBAD&#xA0;Speed&#xA0;Comparison&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;<a href="speedadolc.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;ADOLC&#xA0;Speed&#xA0;Comparison&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;<a href="speed.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;Speed&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;<a href="example.cpp.xml" target="_top">Program&#xA0;That&#xA0;Runs&#xA0;the&#xA0;CppAD&#xA0;Example&#xA0;Suite</a><br/>
+
+<b><big><a name="S">S</a></big></b>
+<br/>
+Size<br/>
+&#160;&#160;&#160;&#160;&#160;ADFun&#160;<a href="adfun_frame2.xml#Size" target="frame1"><i>Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape:&#160;Size</i></a><br/>
+SpeedTest&#160;<a href="speedtest.xml" target="_top">Run&#xA0;One&#xA0;Speed&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="speedtestexample.xml" target="_top">Example&#xA0;Use&#xA0;of&#xA0;SpeedTest</a><br/>
+second<br/>
+&#160;&#160;&#160;&#160;&#160;derivative<b>&#xA0;</b>easy&#160;<a href="revtwo.xml" target="_top">Subset&#xA0;of&#xA0;Second&#xA0;Partial&#xA0;Derivatives:&#xA0;Reverse&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;derivative<b>&#xA0;</b>easy&#160;<a href="fortwo.xml" target="_top">Subset&#xA0;of&#xA0;Second&#xA0;Partial&#xA0;Derivatives:&#xA0;Forward&#xA0;Mode&#xA0;Easy&#xA0;Driver</a><br/>
+&#160;&#160;&#160;&#160;&#160;partial&#160;<a href="revtwo.h.xml" target="_top">Second&#xA0;Partials&#xA0;Reverse&#xA0;Driver:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;partial&#160;<a href="fortwo.h.xml" target="_top">Subset&#xA0;of&#xA0;Second&#xA0;Order&#xA0;Partials:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+simple<br/>
+&#160;&#160;&#160;&#160;&#160;vector&#160;<a href="simplevector.xml" target="_top">Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector</a><br/>
+&#160;&#160;&#160;&#160;&#160;vector<b>&#xA0;</b>check&#160;<a href="checksimplevector.xml" target="_top">Check&#xA0;Simple&#xA0;Vector&#xA0;Concept</a><br/>
+&#160;&#160;&#160;&#160;&#160;vector<b>&#xA0;</b>example&#160;<a href="simplevector.cpp.xml" target="_top">Simple&#xA0;Vector&#xA0;Template&#xA0;Class:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+sin&#160;<a href="sin.cpp.xml" target="_top">The&#xA0;Sine&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;<a href="sin.xml" target="_top">The&#xA0;Sine&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;<a href="exp.cpp.xml" target="_top">The&#xA0;Exponential&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>theory&#160;<a href="sinforward.xml" target="_top">Sine&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;inverse&#160;<a href="asin.xml" target="_top">The&#xA0;Inverse&#xA0;Sine&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse<b>&#xA0;</b>theory&#160;<a href="sincosreverse.xml" target="_top">Sine&#xA0;and&#xA0;Cosine&#xA0;Functions&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+size<br/>
+&#160;&#160;&#160;&#160;&#160;vector&#160;<a href="simplevector_frame1.xml#Size" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Size</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;vector<b>&#xA0;</b>constructor&#160;<a href="simplevector_frame1.xml#Sizing Constructor" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Sizing&#xA0;Constructor</i></a><br/>
+solve<br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>factor&#160;<a href="lufactor.xml" target="_top">LU&#xA0;Factorization&#xA0;of&#xA0;A&#xA0;Square&#xA0;Matrix</a><br/>
+&#160;&#160;&#160;&#160;&#160;linear<b>&#xA0;</b>equation&#160;<a href="luvecad.xml" target="_top">Lu&#xA0;Factor&#xA0;and&#xA0;Solve&#xA0;with&#xA0;Recorded&#xA0;Pivoting</a><br/>
+&#160;&#160;&#160;&#160;&#160;linear<b>&#xA0;</b>equation&#160;<a href="lusolve.xml" target="_top">Compute&#xA0;Determinant&#xA0;and&#xA0;Solve&#xA0;Linear&#xA0;Equations</a><br/>
+&#160;&#160;&#160;&#160;&#160;ODE&#160;<a href="rosen34.xml" target="_top">A&#xA0;3rd&#xA0;and&#xA0;4th&#xA0;Order&#xA0;Rosenbrock&#xA0;ODE&#xA0;Solver</a><br/>
+&#160;&#160;&#160;&#160;&#160;ODE&#160;<a href="runge45.xml" target="_top">An&#xA0;Embedded&#xA0;4th&#xA0;and&#xA0;5th&#xA0;Order&#xA0;Runge-Kutta&#xA0;ODE&#xA0;Solver</a><br/>
+source<br/>
+&#160;&#160;&#160;&#160;&#160;CppAD<b>::</b>vector&#160;<a href="cppad_vector.h.xml" target="_top">CppAD::vector&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;LuFactor&#160;<a href="lufactor.h.xml" target="_top">LuFactor&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;LuInvert&#160;<a href="luinvert.h.xml" target="_top">LuInvert&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;LuSolve&#160;<a href="lusolve.h.xml" target="_top">LuSolve&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;Poly&#160;<a href="poly.h.xml" target="_top">Poly&#xA0;Source&#xA0;Code</a><br/>
+special<b>&#xA0;</b>functions&#160;<a href="faq_frame1.xml#Intrinsic Functions" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Intrinsic&#xA0;Functions</i></a><br/>
+speed&#160;<a href="speedfadbad.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;FADBAD&#xA0;Speed&#xA0;Comparison&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="speedadolc.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;ADOLC&#xA0;Speed&#xA0;Comparison&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="odespeed.cpp.xml" target="_top">ODE&#xA0;Solver:&#xA0;Speed&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;Speed&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="speed.xml" target="_top">Routines&#xA0;That&#xA0;Speed&#xA0;Test&#xA0;CppAD</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="faq_frame1.xml#Speed" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Speed</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;ADOLC&#160;<a href="detluadolc.cpp.xml" target="_top">ADOLC&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;ADOLC&#160;<a href="detminoradolc.cpp.xml" target="_top">ADOLC&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Minors</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant<b>&#xA0;</b>by<b>&#xA0;</b>minors&#160;<a href="detminorspeed.cpp.xml" target="_top">Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Speed&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;FADBAD&#160;<a href="detlufadbad.cpp.xml" target="_top">FADBAD&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Lu&#xA0;Factorization</a><br/>
+&#160;&#160;&#160;&#160;&#160;FADBAD&#160;<a href="detminorfadbad.cpp.xml" target="_top">FADBAD&#xA0;&amp;&#xA0;CppAD&#xA0;Gradient&#xA0;of&#xA0;Determinant&#xA0;by&#xA0;Minors</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu&#160;<a href="lusolvespeed.cpp.xml" target="_top">Speed&#xA0;Test&#xA0;Lu&#xA0;Factor&#xA0;and&#xA0;Solve:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>determinant&#160;<a href="detluspeed.cpp.xml" target="_top">Determinant&#xA0;by&#xA0;Lu&#xA0;Factor&#xA0;and&#xA0;Solve:&#xA0;Speed&#xA0;Test</a><br/>
+sqrt&#160;<a href="sqrt.cpp.xml" target="_top">The&#xA0;Square&#xA0;Root&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="sqrt.xml" target="_top">The&#xA0;Square&#xA0;Root&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>theory&#160;<a href="sqrtforward.xml" target="_top">Square&#xA0;Root&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse<b>&#xA0;</b>theory&#160;<a href="sqrtreverse.xml" target="_top">Square&#xA0;Root&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+square<b>&#xA0;</b>root&#160;<a href="sqrt.xml" target="_top">The&#xA0;Square&#xA0;Root&#xA0;Function</a><br/>
+standard<br/>
+&#160;&#160;&#160;&#160;&#160;math<b>&#xA0;</b>function&#160;<a href="faq_frame1.xml#Namespace.Using" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Namespace.Using</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;math<b>&#xA0;</b>library&#160;<a href="stdmathlib.xml" target="_top">The&#xA0;Standard&#xA0;Library&#xA0;Unary&#xA0;Math&#xA0;Functions</a><br/>
+start<br/>
+&#160;&#160;&#160;&#160;&#160;tape&#160;<a href="independent.xml" target="_top">Declare&#xA0;Independent&#xA0;Variables&#xA0;and&#xA0;Start&#xA0;Recording</a><br/>
+state&#160;<a href="glossary_frame1.xml#Tape State" target="frame1"><i>Glossary:&#160;Tape&#xA0;State</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;tape&#160;<a href="independent_frame2.xml#Tape State" target="frame1"><i>Declare&#xA0;Independent&#xA0;Variables&#xA0;and&#xA0;Start&#xA0;Recording:&#160;Tape&#xA0;State</i></a><br/>
+stiff<br/>
+&#160;&#160;&#160;&#160;&#160;ODE&#160;<a href="rosen34.xml" target="_top">A&#xA0;3rd&#xA0;and&#xA0;4th&#xA0;Order&#xA0;Rosenbrock&#xA0;ODE&#xA0;Solver</a><br/>
+storage<b>:</b>&#160;<a href="faq_frame1.xml#Tape Storage: Disk or Memory" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Tape&#xA0;Storage:&#xA0;Disk&#xA0;or&#xA0;Memory</i></a><br/>
+stream<br/>
+&#160;&#160;&#160;&#160;&#160;AD<b>&#xA0;</b>output&#160;<a href="output.xml" target="_top">Writing&#xA0;an&#xA0;AD&#xA0;Value&#xA0;on&#xA0;a&#xA0;Output&#xA0;Stream</a><br/>
+subtract<br/>
+&#160;&#160;&#160;&#160;&#160;<b>-=</b>&#160;<a href="subeq.xml" target="_top">The&#xA0;AD&#xA0;Subtraction&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>-=&#xA0;</b>example&#160;<a href="subeq.cpp.xml" target="_top">Subtraction&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;binary&#160;<a href="sub.xml" target="_top">The&#xA0;AD&#xA0;Binary&#xA0;Subtraction&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="sub.cpp.xml" target="_top">Binary&#xA0;Subtraction:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+
+<b><big><a name="T">T</a></big></b>
+<br/>
+Taylor&#160;<a href="reverse.xml" target="_top">Reverse&#xA0;Mode</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forward.xml" target="_top">Forward&#xA0;Mode</a><br/>
+&#160;&#160;&#160;&#160;&#160;ODE&#160;<a href="odetaylor.cpp.xml" target="_top">Taylor's&#xA0;Method&#xA0;Ode&#xA0;Solver:&#xA0;An&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+tan<br/>
+&#160;&#160;&#160;&#160;&#160;inverse&#160;<a href="atan2.cpp.xml" target="_top">The&#xA0;Two&#xA0;Argument&#xA0;Inverse&#xA0;Tangent:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;inverse&#160;<a href="atan2.xml" target="_top">The&#xA0;Two&#xA0;Argument&#xA0;Inverse&#xA0;Tangent&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;inverse&#160;<a href="atan.xml" target="_top">The&#xA0;Inverse&#xA0;Tangent&#xA0;Function</a><br/>
+tape&#160;<a href="glossary_frame1.xml#Tape State" target="frame1"><i>Glossary:&#160;Tape&#xA0;State</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="odespeed.cpp.xml" target="_top">ODE&#xA0;Solver:&#xA0;Speed&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="adfun.xml" target="_top">Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="faq_frame1.xml#Tape Storage: Disk or Memory" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Tape&#xA0;Storage:&#xA0;Disk&#xA0;or&#xA0;Memory</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;compare<b>&#xA0;</b>operator&#160;<a href="adfun_frame2.xml#CompareChange" target="frame1"><i>Constructing&#xA0;Differentiable&#xA0;Functions&#xA0;From&#xA0;The&#xA0;Tape:&#160;CompareChange</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;index&#160;<a href="vecad.xml" target="_top">Vectors&#xA0;That&#xA0;Record&#xA0;Indexing&#xA0;Operations</a><br/>
+&#160;&#160;&#160;&#160;&#160;multiple&#160;<a href="multape.cpp.xml" target="_top">Multiple&#xA0;Tapes:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;multiple&#160;<a href="multape.xml" target="_top">Using&#xA0;Multiple&#xA0;Tapes</a><br/>
+&#160;&#160;&#160;&#160;&#160;start&#160;<a href="independent.xml" target="_top">Declare&#xA0;Independent&#xA0;Variables&#xA0;and&#xA0;Start&#xA0;Recording</a><br/>
+&#160;&#160;&#160;&#160;&#160;state&#160;<a href="independent_frame2.xml#Tape State" target="frame1"><i>Declare&#xA0;Independent&#xA0;Variables&#xA0;and&#xA0;Start&#xA0;Recording:&#160;Tape&#xA0;State</i></a><br/>
+taylor&#160;<a href="glossary_frame1.xml#Taylor Coefficient" target="frame1"><i>Glossary:&#160;Taylor&#xA0;Coefficient</i></a><br/>
+template<br/>
+&#160;&#160;&#160;&#160;&#160;polynomial<b>&#xA0;</b>derivative&#160;<a href="poly.xml" target="_top">Evaluate&#xA0;a&#xA0;Polynomial&#xA0;or&#xA0;its&#xA0;Derivative</a><br/>
+&#160;&#160;&#160;&#160;&#160;simple<b>&#xA0;</b>vector<b>&#xA0;</b>class&#160;<a href="simplevector.xml" target="_top">Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector</a><br/>
+&#160;&#160;&#160;&#160;&#160;vector<b>&#xA0;</b>class&#160;<a href="cppad_vector.xml" target="_top">The&#xA0;CppAD::vector&#xA0;Template&#xA0;Class</a><br/>
+test&#160;<a href="speedfadbad.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;FADBAD&#xA0;Speed&#xA0;Comparison&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="speedadolc.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;ADOLC&#xA0;Speed&#xA0;Comparison&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="odespeed.cpp.xml" target="_top">ODE&#xA0;Solver:&#xA0;Speed&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="speed.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;Speed&#xA0;Tests</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="speed.xml" target="_top">Routines&#xA0;That&#xA0;Speed&#xA0;Test&#xA0;CppAD</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="example.cpp.xml" target="_top">Program&#xA0;That&#xA0;Runs&#xA0;the&#xA0;CppAD&#xA0;Example&#xA0;Suite</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="output.cpp.xml" target="_top">The&#xA0;Output&#xA0;Operator&#xA0;for&#xA0;AD&#xA0;Objects:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="install.xml" target="_top">Installing&#xA0;and&#xA0;Testing&#xA0;CppAD</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>/</b>&#160;<a href="div.cpp.xml" target="_top">Binary&#xA0;Division:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;ADFun&#160;<a href="fun.h.xml" target="_top">Differentiable&#xA0;Function&#xA0;Constructor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;abs&#160;<a href="abs.cpp.xml" target="_top">The&#xA0;Absolute&#xA0;Value&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;acos&#160;<a href="acos.cpp.xml" target="_top">The&#xA0;Acos&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;add&#160;<a href="add.cpp.xml" target="_top">Binary&#xA0;Addition:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;asin&#160;<a href="asin.cpp.xml" target="_top">The&#xA0;Asin&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;assign&#160;<a href="eq.cpp.xml" target="_top">AD&#xA0;Assignment&#xA0;Operator:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;atan&#160;<a href="atan.cpp.xml" target="_top">The&#xA0;Atan&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;atan2&#160;<a href="atan2.cpp.xml" target="_top">The&#xA0;Two&#xA0;Argument&#xA0;Inverse&#xA0;Tangent:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;boolean&#160;<a href="boolfun.cpp.xml" target="_top">Defining&#xA0;Boolean&#xA0;Functions&#xA0;with&#xA0;AD&#xA0;Arguments:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;CompareChange&#160;<a href="comparechange.cpp.xml" target="_top">CompareChange&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;CondExp&#160;<a href="condexp.cpp.xml" target="_top">Conditional&#xA0;Expressions:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;CppAD<b>::</b>vector&#160;<a href="cppad_vector.cpp.xml" target="_top">CppAD::vector&#xA0;Template&#xA0;Class:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;check<b>&#xA0;</b>SimpleVector&#160;<a href="checksimplevector.cpp.xml" target="_top">The&#xA0;CheckSimpleVector&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;compare&#160;<a href="compare.cpp.xml" target="_top">AD&#xA0;Comparison&#xA0;Operators:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;complex&#160;<a href="lusolve.cpp.xml" target="_top">LuSolve&#xA0;With&#xA0;Complex&#xA0;Arguments:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;complex<b>&#xA0;</b>polynomial&#160;<a href="complexpoly.cpp.xml" target="_top">Complex&#xA0;Polynomial:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;construct<b>&#xA0;</b>from<b>&#xA0;</b>base&#160;<a href="frombase.cpp.xml" target="_top">AD&#xA0;Constructor&#xA0;From&#xA0;Base&#xA0;Type:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;copy&#160;<a href="copy.cpp.xml" target="_top">AD&#xA0;Copy&#xA0;Constructor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;cos&#160;<a href="cos.cpp.xml" target="_top">The&#xA0;Cosine&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;default<b>&#xA0;</b>constructor&#160;<a href="default.cpp.xml" target="_top">Default&#xA0;AD&#xA0;Constructor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;derivative&#160;<a href="revone.h.xml" target="_top">Derivative&#xA0;of&#xA0;One&#xA0;Range&#xA0;Component:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant<b>&#xA0;</b>by<b>&#xA0;</b>minors&#160;<a href="detbylu.cpp.xml" target="_top">Determinant&#xA0;Using&#xA0;Lu&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant<b>&#xA0;</b>by<b>&#xA0;</b>minors&#160;<a href="detbyminor.cpp.xml" target="_top">Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;determinant<b>&#xA0;</b>by<b>&#xA0;</b>minors&#160;<a href="detofminor.cpp.xml" target="_top">Determinant&#xA0;of&#xA0;a&#xA0;Minor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;discrete&#160;<a href="discrete.cpp.xml" target="_top">User&#xA0;Defined&#xA0;Discrete&#xA0;Functions:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;division&#160;<a href="div.cpp.xml" target="_top">Binary&#xA0;Division:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;erf&#160;<a href="erf.cpp.xml" target="_top">The&#xA0;Error&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Forward&#160;<a href="forward.h.xml" target="_top">Forward&#xA0;Mode:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;gradient&#160;<a href="hesludet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;LU&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;gradient&#160;<a href="hesminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;gradient&#160;<a href="jacludet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Lu&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;gradient&#160;<a href="jacminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Hessian&#160;<a href="hessian.h.xml" target="_top">Hessian&#xA0;of&#xA0;Scalar&#xA0;Valued&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Jacobian&#160;<a href="jacobian.h.xml" target="_top">Derivative&#xA0;of&#xA0;Vector&#xA0;Valued&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;LU&#160;<a href="hesludet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;LU&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu&#160;<a href="jacludet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Lu&#xA0;Factorization:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Lu<b>&#xA0;</b>record<b>&#xA0;</b>pivot&#160;<a href="luvecadok.cpp.xml" target="_top">Lu&#xA0;Factor&#xA0;and&#xA0;Solve&#xA0;With&#xA0;Recorded&#xA0;Pivoting:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;LuFactor&#160;<a href="lufactor.cpp.xml" target="_top">LuFactor:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;LuInvert&#160;<a href="luinvert.cpp.xml" target="_top">LuInvert:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;LuSolve&#160;<a href="lusolve.cpp.xml" target="_top">LuSolve&#xA0;With&#xA0;Complex&#xA0;Arguments:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;log&#160;<a href="log10.cpp.xml" target="_top">The&#xA0;Base&#xA0;10&#xA0;Logarithm&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;log&#160;<a href="log.cpp.xml" target="_top">The&#xA0;Logarithm&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;minors<b>&#xA0;</b>expansion&#160;<a href="hesminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;minors<b>&#xA0;</b>expansion&#160;<a href="jacminordet.cpp.xml" target="_top">Gradient&#xA0;of&#xA0;Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;minus&#160;<a href="sub.cpp.xml" target="_top">Binary&#xA0;Subtraction:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;multiply&#160;<a href="mul.cpp.xml" target="_top">Binary&#xA0;Multiplication:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;NearEqual&#160;<a href="near_equal.cpp.xml" target="_top">NearEqual&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;negative&#160;<a href="neg.cpp.xml" target="_top">Negative&#xA0;Operator:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;ODE&#160;<a href="odetaylor.cpp.xml" target="_top">Taylor's&#xA0;Method&#xA0;Ode&#xA0;Solver:&#xA0;An&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;OdeErrControl&#160;<a href="odeerrcontrol.cpp.xml" target="_top">OdeErrControl:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;output&#160;<a href="output.cpp.xml" target="_top">The&#xA0;Output&#xA0;Operator&#xA0;for&#xA0;AD&#xA0;Objects:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;partial&#160;<a href="forone.h.xml" target="_top">Partial&#xA0;w.r.t&#xA0;One&#xA0;Domain&#xA0;Component:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;plus&#160;<a href="add.cpp.xml" target="_top">Binary&#xA0;Addition:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;polynomial&#160;<a href="poly.cpp.xml" target="_top">Polynomial&#xA0;Evaluation:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;pow&#160;<a href="pow.cpp.xml" target="_top">The&#xA0;Power&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;pow&#160;<a href="powint.cpp.xml" target="_top">Integer&#xA0;Powers:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Reverse&#160;<a href="reverse.h.xml" target="_top">Reverse&#xA0;Mode:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Rosen34&#160;<a href="rosen34.cpp.xml" target="_top">Rosen34:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Runge45&#160;<a href="runge45.cpp.xml" target="_top">Runge45:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;second<b>&#xA0;</b>partial&#160;<a href="revtwo.h.xml" target="_top">Second&#xA0;Partials&#xA0;Reverse&#xA0;Driver:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;second<b>&#xA0;</b>partial&#160;<a href="fortwo.h.xml" target="_top">Subset&#xA0;of&#xA0;Second&#xA0;Order&#xA0;Partials:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;simple<b>&#xA0;</b>vector&#160;<a href="simplevector.cpp.xml" target="_top">Simple&#xA0;Vector&#xA0;Template&#xA0;Class:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;sin&#160;<a href="sin.cpp.xml" target="_top">The&#xA0;Sine&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;sin&#160;<a href="exp.cpp.xml" target="_top">The&#xA0;Exponential&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;speed&#160;<a href="speedtest.xml" target="_top">Run&#xA0;One&#xA0;Speed&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;sqrt&#160;<a href="sqrt.cpp.xml" target="_top">The&#xA0;Square&#xA0;Root&#xA0;Function:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;subtract&#160;<a href="sub.cpp.xml" target="_top">Binary&#xA0;Subtraction:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;times&#160;<a href="mul.cpp.xml" target="_top">Binary&#xA0;Multiplication:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;Value&#160;<a href="value.cpp.xml" target="_top">Conversion&#xA0;to&#xA0;Base&#xA0;Type:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;VecAD&#160;<a href="vec.cpp.xml" target="_top">Recording&#xA0;Vector&#xA0;Indexing&#xA0;Operations:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+theory<br/>
+&#160;&#160;&#160;&#160;&#160;acos<b>&#xA0;</b>forward&#160;<a href="acosforward.xml" target="_top">Arccosine&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;acos<b>&#xA0;</b>reverse&#160;<a href="acosreverse.xml" target="_top">Arccosine&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;asin<b>&#xA0;</b>forward&#160;<a href="asinforward.xml" target="_top">Arcsine&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;asin<b>&#xA0;</b>reverse&#160;<a href="asinreverse.xml" target="_top">Arcsine&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;atan<b>&#xA0;</b>forward&#160;<a href="atanforward.xml" target="_top">Arctangent&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;atan<b>&#xA0;</b>reverse&#160;<a href="atanreverse.xml" target="_top">Arctangent&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;cos<b>&#xA0;</b>forward&#160;<a href="cosforward.xml" target="_top">Cosine&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;cos<b>&#xA0;</b>reverse&#160;<a href="sincosreverse.xml" target="_top">Sine&#xA0;and&#xA0;Cosine&#xA0;Functions&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;exp<b>&#xA0;</b>forward&#160;<a href="expforward.xml" target="_top">Exponential&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;exp<b>&#xA0;</b>reverse&#160;<a href="expreverse.xml" target="_top">Exponential&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;log<b>&#xA0;</b>forward&#160;<a href="logforward.xml" target="_top">Logarithm&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;log<b>&#xA0;</b>reverse&#160;<a href="logreverse.xml" target="_top">Logarithm&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;sin<b>&#xA0;</b>forward&#160;<a href="sinforward.xml" target="_top">Sine&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;sin<b>&#xA0;</b>reverse&#160;<a href="sincosreverse.xml" target="_top">Sine&#xA0;and&#xA0;Cosine&#xA0;Functions&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;sqrt<b>&#xA0;</b>forward&#160;<a href="sqrtforward.xml" target="_top">Square&#xA0;Root&#xA0;Function&#xA0;Forward&#xA0;Taylor&#xA0;Polynomial&#xA0;Theory</a><br/>
+&#160;&#160;&#160;&#160;&#160;sqrt<b>&#xA0;</b>reverse&#160;<a href="sqrtreverse.xml" target="_top">Square&#xA0;Root&#xA0;Function&#xA0;Reverse&#xA0;Mode&#xA0;Theory</a><br/>
+times<br/>
+&#160;&#160;&#160;&#160;&#160;<b>*=</b>&#160;<a href="muleq.xml" target="_top">The&#xA0;AD&#xA0;Multiplication&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;<b>*=&#xA0;</b>example&#160;<a href="muleq.cpp.xml" target="_top">Multiplication&#xA0;Computed&#xA0;Assignment:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;example&#160;<a href="mul.cpp.xml" target="_top">Binary&#xA0;Multiplication:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+type&#160;<a href="glossary_frame1.xml#Base Type" target="frame1"><i>Glossary:&#160;Base&#xA0;Type</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;<a href="value.xml" target="_top">Base&#xA0;Type&#xA0;Value</a><br/>
+&#160;&#160;&#160;&#160;&#160;base<b>&#xA0;</b>require&#160;<a href="cppad_frame2.xml#Base Type Requirements" target="frame1"><i>A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05:&#160;Base&#xA0;Type&#xA0;Requirements</i></a><br/>
+
+<b><big><a name="U">U</a></big></b>
+<br/>
+unary&#160;<a href="neg.xml" target="_top">Negation:&#xA0;The&#xA0;Unary&#xA0;Minus&#xA0;Operator</a><br/>
+using&#160;<a href="faq_frame1.xml#Namespace.Using" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Namespace.Using</i></a><br/>
+
+<b><big><a name="V">V</a></big></b>
+<br/>
+Variable&#160;<a href="parameter.xml" target="_top">Is&#xA0;This&#xA0;AD&#xA0;Object&#xA0;a&#xA0;Parameter</a><br/>
+VecAD&#160;<a href="vec.cpp.xml" target="_top">Recording&#xA0;Vector&#xA0;Indexing&#xA0;Operations:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;<a href="vecad_frame2.xml#Constructor" target="frame1"><i>Vectors&#xA0;That&#xA0;Record&#xA0;Indexing&#xA0;Operations:&#160;Constructor</i></a><br/>
+value&#160;<a href="value.xml" target="_top">Base&#xA0;Type&#xA0;Value</a><br/>
+&#160;&#160;&#160;&#160;&#160;absolute&#160;<a href="abs.xml" target="_top">The&#xA0;Absolute&#xA0;Value&#xA0;Function</a><br/>
+value<b>_</b>type<br/>
+&#160;&#160;&#160;&#160;&#160;vector&#160;<a href="simplevector_frame1.xml#Value Type" target="frame1"><i>Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector:&#160;Value&#xA0;Type</i></a><br/>
+variable&#160;<a href="glossary_frame1.xml#Variable" target="frame1"><i>Glossary:&#160;Variable</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="glossary_frame1.xml#Independent Variable" target="frame1"><i>Glossary:&#160;Independent&#xA0;Variable</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="glossary_frame1.xml#Dependent Variable" target="frame1"><i>Glossary:&#160;Dependent&#xA0;Variable</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;independent&#160;<a href="independent.xml" target="_top">Declare&#xA0;Independent&#xA0;Variables&#xA0;and&#xA0;Start&#xA0;Recording</a><br/>
+variables&#160;<a href="independent_frame2.xml#Variables" target="frame1"><i>Declare&#xA0;Independent&#xA0;Variables&#xA0;and&#xA0;Start&#xA0;Recording:&#160;Variables</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="faq_frame1.xml#Independent Variables" target="frame1"><i>Frequently&#xA0;Asked&#xA0;Questions&#xA0;and&#xA0;Answers:&#160;Independent&#xA0;Variables</i></a><br/>
+vector&#160;<a href="glossary_frame1.xml#Elementary Vector" target="frame1"><i>Glossary:&#160;Elementary&#xA0;Vector</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;CppAD&#160;<a href="cppad_vector.cpp.xml" target="_top">CppAD::vector&#xA0;Template&#xA0;Class:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;CppAD<b>&#xA0;</b>source&#160;<a href="cppad_vector.h.xml" target="_top">CppAD::vector&#xA0;Source&#xA0;Code</a><br/>
+&#160;&#160;&#160;&#160;&#160;record<b>&#xA0;</b>index&#160;<a href="vec.cpp.xml" target="_top">Recording&#xA0;Vector&#xA0;Indexing&#xA0;Operations:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;record<b>&#xA0;</b>index&#160;<a href="vecad.xml" target="_top">Vectors&#xA0;That&#xA0;Record&#xA0;Indexing&#xA0;Operations</a><br/>
+&#160;&#160;&#160;&#160;&#160;simple&#160;<a href="simplevector.cpp.xml" target="_top">Simple&#xA0;Vector&#xA0;Template&#xA0;Class:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+&#160;&#160;&#160;&#160;&#160;simple&#160;<a href="simplevector.xml" target="_top">Definition&#xA0;of&#xA0;a&#xA0;Simple&#xA0;Vector</a><br/>
+&#160;&#160;&#160;&#160;&#160;simple<b>&#xA0;</b>check&#160;<a href="checksimplevector.xml" target="_top">Check&#xA0;Simple&#xA0;Vector&#xA0;Concept</a><br/>
+&#160;&#160;&#160;&#160;&#160;template<b>&#xA0;</b>class&#160;<a href="cppad_vector.xml" target="_top">The&#xA0;CppAD::vector&#xA0;Template&#xA0;Class</a><br/>
+version<br/>
+&#160;&#160;&#160;&#160;&#160;CppAD&#160;<a href="cppad.xml" target="_top">A&#xA0;Package&#xA0;for&#xA0;Differentiation&#xA0;of&#xA0;C++&#xA0;Algorithms:&#xA0;CppAD&#xA0;Version&#xA0;05-07-05</a><br/>
+
+<b><big><a name="W">W</a></big></b>
+<br/>
+windows<br/>
+&#160;&#160;&#160;&#160;&#160;CppAD<b>&#xA0;</b>install&#160;<a href="installwindows.xml" target="_top">Windows&#xA0;Installation&#xA0;and&#xA0;Testing</a><br/>
+
+</body>
+</html>

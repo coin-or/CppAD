@@ -1,0 +1,93 @@
+<html><head>
+<title>Determinant using Lu Factorization: Source Code</title>
+<meta name="description" content="Determinant using Lu Factorization: Source Code">
+<meta name="keywords" content=" Detbylu complex Lu factor "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="detbylu.cpp.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="luvecad.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="detbylu.h.htm" target="_top">section</a>, <a href="detbylu.h_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+
+<center><b><big><big>Determinant using Lu Factorization: Source Code</big></big></b></center>
+<code><font color="blue"># ifndef CppADDetByLuIncluded
+<code><span style='white-space: nowrap'><br>
+</span></code># define CppADDetByLuIncluded
+
+<span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+#&nbsp;include&nbsp;&lt;complex&gt;<br>
+<br>
+typedef&nbsp;std::complex&lt;double&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Complex;<br>
+typedef&nbsp;CppAD::AD&lt;Complex&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADComplex;<br>
+<br>
+<br>
+//&nbsp;BEGIN&nbsp;CppAD&nbsp;namespace<br>
+namespace&nbsp;CppAD&nbsp;{<br>
+<br>
+//&nbsp;specializatgion&nbsp;of&nbsp;LeqZero&nbsp;and&nbsp;AbsGeq&nbsp;for&nbsp;ADComplex&nbsp;case<br>
+CppADCreateUnaryBool(Complex,&nbsp;&nbsp;LeqZero&nbsp;)<br>
+CppADCreateBinaryBool(Complex,&nbsp;AbsGeq&nbsp;)<br>
+<br>
+template&nbsp;&lt;class&nbsp;Type&gt;<br>
+class&nbsp;DetByLu&nbsp;{<br>
+public:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetByLu(size_t&nbsp;n_)&nbsp;:&nbsp;m(0),&nbsp;n(n_),&nbsp;A(n_&nbsp;*&nbsp;n_)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;Type&nbsp;operator()(const&nbsp;CppADvector&lt;Type&gt;&nbsp;&amp;x)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::exp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logdet;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;det;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;signdet;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;copy&nbsp;matrix&nbsp;so&nbsp;it&nbsp;is&nbsp;not&nbsp;overwritten<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n&nbsp;*&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[i]&nbsp;=&nbsp;x[i];<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;comput&nbsp;log&nbsp;determinant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;signdet&nbsp;=&nbsp;CppAD::LuSolve(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n,&nbsp;m,&nbsp;A,&nbsp;B,&nbsp;X,&nbsp;logdet);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;convert&nbsp;to&nbsp;determinant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;det&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;Type(&nbsp;signdet&nbsp;)&nbsp;*&nbsp;exp(&nbsp;logdet&nbsp;);&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;FADBAD&nbsp;requires&nbsp;tempories&nbsp;to&nbsp;be&nbsp;set&nbsp;to&nbsp;constants<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n&nbsp;*&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[i]&nbsp;=&nbsp;0;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;det;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+private:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;size_t&nbsp;m;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;size_t&nbsp;n;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;Type&gt;&nbsp;A;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;Type&gt;&nbsp;B;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;Type&gt;&nbsp;X;<br>
+};<br>
+<br>
+<br>
+}&nbsp;//&nbsp;END&nbsp;CppAD&nbsp;namespace<br>
+<br>
+</span># endif
+</font></code>
+
+
+<hr>Input File: Example\DetByLu.h
+
+</body>
+</html>

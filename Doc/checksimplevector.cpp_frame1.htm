@@ -1,0 +1,170 @@
+<html><head>
+<title>The CheckSimpleVector Function: Example and Test</title>
+<meta name="description" content="The CheckSimpleVector Function: Example and Test">
+<meta name="keywords" content=" Checksimplevector example check Simplevector test "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="checksimplevector.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="cppaderror.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="checksimplevector.cpp.htm" target="_top">section</a>, <a href="checksimplevector.cpp_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+<center><b><big><big>The CheckSimpleVector Function: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD_vector.h&gt;<br>
+#&nbsp;include&nbsp;&lt;CppAD/CheckSimpleVector.h&gt;<br>
+#&nbsp;include&nbsp;&lt;iostream&gt;<br>
+<br>
+<br>
+//&nbsp;Chosing&nbsp;a&nbsp;value&nbsp;between&nbsp;1&nbsp;and&nbsp;9&nbsp;selects&nbsp;a&nbsp;simple&nbsp;vector&nbsp;properity&nbsp;to&nbsp;be&nbsp;<br>
+//&nbsp;omitted&nbsp;and&nbsp;result&nbsp;in&nbsp;an&nbsp;error&nbsp;message&nbsp;being&nbsp;generated&nbsp;<br>
+#&nbsp;define&nbsp;CppADMyVectorOmit&nbsp;0<br>
+<br>
+//&nbsp;-------------------------------------------------------------------------<br>
+template&nbsp;&lt;class&nbsp;Scalar&gt;<br>
+class&nbsp;MyVector&nbsp;{<br>
+private:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;length;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scalar&nbsp;*&nbsp;data;<br>
+public:<br>
+<br>
+#&nbsp;if&nbsp;CppADMyVectorOmit&nbsp;!=&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;type&nbsp;of&nbsp;the&nbsp;elements&nbsp;in&nbsp;the&nbsp;vector<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef&nbsp;Scalar&nbsp;value_type;<br>
+#&nbsp;endif<br>
+<br>
+#&nbsp;if&nbsp;CppADMyVectorOmit&nbsp;!=&nbsp;2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;default&nbsp;constructor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;MyVector(void)&nbsp;:&nbsp;length(0)&nbsp;,&nbsp;data(0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;}<br>
+#&nbsp;endif<br>
+<br>
+#&nbsp;if&nbsp;CppADMyVectorOmit&nbsp;!=&nbsp;3<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;constructor&nbsp;with&nbsp;a&nbsp;specified&nbsp;size<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;MyVector(size_t&nbsp;n)&nbsp;:&nbsp;length(n)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;length&nbsp;==&nbsp;0&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;data&nbsp;=&nbsp;new&nbsp;Scalar[length];&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+#&nbsp;endif<br>
+<br>
+#&nbsp;if&nbsp;CppADMyVectorOmit&nbsp;!=&nbsp;4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;copy&nbsp;constructor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;MyVector(const&nbsp;MyVector&nbsp;&amp;x)&nbsp;:&nbsp;length(x.length)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;length&nbsp;==&nbsp;0&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;data&nbsp;=&nbsp;new&nbsp;Scalar[length];&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;length;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data[i]&nbsp;=&nbsp;x.data[i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+#&nbsp;endif<br>
+<br>
+#&nbsp;if&nbsp;CppADMyVectorOmit&nbsp;!=&nbsp;4&nbsp;<br>
+#&nbsp;if&nbsp;CppADMyVectorOmit&nbsp;!=&nbsp;7<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;destructor&nbsp;(it&nbsp;is&nbsp;not&nbsp;safe&nbsp;to&nbsp;delete&nbsp;the&nbsp;pointer&nbsp;in&nbsp;cases&nbsp;4&nbsp;and&nbsp;7)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~MyVector(void)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;[]&nbsp;data;&nbsp;}<br>
+#&nbsp;endif<br>
+#&nbsp;endif<br>
+<br>
+#&nbsp;if&nbsp;CppADMyVectorOmit&nbsp;!=&nbsp;5<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;size&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;size_t&nbsp;size(void)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;length;&nbsp;}<br>
+#&nbsp;endif<br>
+#&nbsp;if&nbsp;CppADMyVectorOmit&nbsp;!=&nbsp;6<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;resize&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;void&nbsp;resize(size_t&nbsp;n)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;length&nbsp;&gt;&nbsp;0&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;[]&nbsp;data;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length&nbsp;=&nbsp;n;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;length&nbsp;&gt;&nbsp;0&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;=&nbsp;new&nbsp;Scalar[length];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;data&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+#&nbsp;endif<br>
+<br>
+#&nbsp;if&nbsp;CppADMyVectorOmit&nbsp;!=&nbsp;7<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;assignment&nbsp;operator<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;MyVector&nbsp;&amp;&nbsp;operator=(const&nbsp;MyVector&nbsp;&amp;x)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;length;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data[i]&nbsp;=&nbsp;x.data[i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;*this;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+#&nbsp;endif<br>
+<br>
+#&nbsp;if&nbsp;CppADMyVectorOmit&nbsp;!=&nbsp;8<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;non-constant&nbsp;element&nbsp;access<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scalar&nbsp;&amp;&nbsp;operator[](size_t&nbsp;i)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;data[i];&nbsp;}<br>
+#&nbsp;endif<br>
+<br>
+#&nbsp;if&nbsp;CppADMyVectorOmit&nbsp;!=&nbsp;9<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;constant&nbsp;element&nbsp;access<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;Scalar&nbsp;&amp;&nbsp;operator[](size_t&nbsp;i)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;data[i];&nbsp;}<br>
+#&nbsp;endif<br>
+};<br>
+//&nbsp;-------------------------------------------------------------------------<br>
+<br>
+/*<br>
+Compute&nbsp;r&nbsp;=&nbsp;a&nbsp;*&nbsp;v,&nbsp;where&nbsp;a&nbsp;is&nbsp;a&nbsp;scalar&nbsp;with&nbsp;same&nbsp;type&nbsp;as&nbsp;the&nbsp;elements&nbsp;of&nbsp;<br>
+the&nbsp;Simple&nbsp;Vector&nbsp;v.&nbsp;This&nbsp;routine&nbsp;uses&nbsp;the&nbsp;CheckSimpleVector&nbsp;function&nbsp;to&nbsp;ensure&nbsp;that&nbsp;<br>
+the&nbsp;types&nbsp;agree.<br>
+*/&nbsp;<br>
+namespace&nbsp;{&nbsp;//&nbsp;Empty&nbsp;namespace<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;&lt;class&nbsp;Scalar,&nbsp;class&nbsp;Vector&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vector&nbsp;Sscal(const&nbsp;Scalar&nbsp;&amp;a,&nbsp;const&nbsp;Vector&nbsp;&amp;v)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;invoke&nbsp;CheckSimpleVector&nbsp;function&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::CheckSimpleVector&lt;Scalar,&nbsp;Vector&gt;();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;n&nbsp;=&nbsp;v.size();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vector&nbsp;r(n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r[i]&nbsp;=&nbsp;a&nbsp;*&nbsp;v[i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;r;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+bool&nbsp;CheckSimpleVector(void)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;&nbsp;=&nbsp;true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::vector;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;--------------------------------------------------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;If&nbsp;you&nbsp;change&nbsp;double&nbsp;to&nbsp;float&nbsp;in&nbsp;the&nbsp;next&nbsp;statement,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;CheckSimpleVector&nbsp;will&nbsp;generate&nbsp;an&nbsp;error&nbsp;message&nbsp;at&nbsp;compile&nbsp;time.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;a&nbsp;=&nbsp;3.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;--------------------------------------------------------<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;n&nbsp;=&nbsp;2;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MyVector&lt;double&gt;&nbsp;v(n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[0]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[1]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MyVector&lt;double&gt;&nbsp;r&nbsp;=&nbsp;Sscal(a,&nbsp;v);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;=&nbsp;(r[0]&nbsp;==&nbsp;3.);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;=&nbsp;(r[1]&nbsp;==&nbsp;6.);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+}<br>
+<br>
+</span></font></code>
+<hr>Input File: Example\CheckSimpleVector.cpp
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>The CppAD::vector Template Class</title>
+<meta name="description" content="The CppAD::vector Template Class"/>
+<meta name="keywords" content=" vector template class assignment [] exercise Cppad::vector "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="vectortempclass.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="cppad_vector.cpp.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="cppad_vector.xml" target="_top">section</a>, <a href="cppad_vector_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>The CppAD::vector Template Class</big></big></b></center>
+<table><tr><td align='left'  valign='top'>
+<b>Syntax</b> </td><td align='left'  valign='top'>
+
+<code><font color="blue"># include &lt;CppAD/CppAD_vector.h&gt;</font></code> 
+</td></tr>
+</table>
+
+
+</body>
+</html>

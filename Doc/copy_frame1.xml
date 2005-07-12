@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Creating A Copy of an AD Variable</title>
+<meta name="description" content="Creating A Copy of an AD Variable"/>
+<meta name="keywords" content=" Ad copy construct "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="frombase.cpp.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="copy.cpp.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="copy.xml" target="_top">section</a>, <a href="copy_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Creating A Copy of an AD Variable</big></big></b></center>
+<table><tr><td align='left'  valign='top'>
+<b>Syntax</b>
+</td><td align='left'  valign='top'>
+ <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;::AD(const&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> 
+</td></tr>
+</table>
+
+
+</body>
+</html>

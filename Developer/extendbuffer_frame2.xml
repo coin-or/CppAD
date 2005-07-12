@@ -1,0 +1,47 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Extends the Length of a Buffer</title>
+<meta name="description" content="Extends the Length of a Buffer"/>
+<meta name="keywords" content=" "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="extendbuffer.xml" target="_top">section</a>, <a href="extendbuffer_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+This function increases the length of the array pointed to by
+<i>buffer</i>.
+
+<br/>
+<br/>
+<b><big><a name="length">length</a></big></b>
+<br/>
+is the length of the array pointed to by the new buffer.
+
+<br/>
+<br/>
+<b><big><a name="number">number</a></big></b>
+<br/>
+is the number of elements in the buffer
+that have important values which must be copied to the new buffer.
+
+<br/>
+<br/>
+<b><big><a name="buffer">buffer</a></big></b>
+<br/>
+On input, <i>buffer</i> points to  <i>number</i> elements of information
+that must be copied from the old buffer to the new one.
+On output, <i>buffer</i> points to the new buffer.
+The data is copied to the new buffer using the <i>Type</i>
+assignment operation.
+
+
+<hr/>Input File: CppAD\local\ExtendBuffer.h
+
+</body>
+</html>

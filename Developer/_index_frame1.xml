@@ -1,0 +1,245 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Keyword Index</title>
+<meta name="description" content="Keyword Index"/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="_reference.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;index&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="_index.xml" target="_top">section</a>, <a href="_index_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Keyword Index</big></big></b></center>
+<b>&gt;</b>&#160;<a href="greaterthanzero.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Greater&#xA0;Than&#xA0;Zero</a><br/>
+&#160;&#160;<a href="lessthanzero.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Less&#xA0;Than&#xA0;Zero</a><br/>
+<b>&gt;=</b>&#160;<a href="lessthanorzero.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Less&#xA0;Than&#xA0;Zero</a><br/>
+
+<b><big><a name="A">A</a></big></b>
+<br/>
+ADForward&#160;<a href="adforward.xml" target="_top">Forward&#xA0;Computation&#xA0;of&#xA0;Taylor&#xA0;Coefficients</a><br/>
+ADReverse&#160;<a href="adreverse.xml" target="_top">Reverse&#xA0;Mode&#xA0;Computation&#xA0;of&#xA0;Derivatives&#xA0;of&#xA0;Taylor&#xA0;Coefficients</a><br/>
+abs<br/>
+&#160;&#160;&#160;&#160;&#160;forward&#160;<a href="forabsop.xml" target="_top">Forward&#xA0;Mode&#xA0;Absolute&#xA0;Value&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse&#160;<a href="revabsop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Absolute&#xA0;Value&#xA0;Function</a><br/>
+acos<br/>
+&#160;&#160;&#160;&#160;&#160;forward&#160;<a href="foracosop.xml" target="_top">Forward&#xA0;Mode&#xA0;Acos&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse&#160;<a href="revacosop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Acos&#xA0;Function</a><br/>
+add<br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>operator&#160;<a href="foraddop.xml" target="_top">Forward&#xA0;Mode&#xA0;Addition&#xA0;Operators</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse<b>&#xA0;</b>operator&#160;<a href="revaddop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Addition&#xA0;Operator</a><br/>
+asin<br/>
+&#160;&#160;&#160;&#160;&#160;forward&#160;<a href="forasinop.xml" target="_top">Forward&#xA0;Mode&#xA0;Asin&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse&#160;<a href="revasinop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Asin&#xA0;Function</a><br/>
+atan<br/>
+&#160;&#160;&#160;&#160;&#160;forward&#160;<a href="foratanop.xml" target="_top">Forward&#xA0;Mode&#xA0;Atan&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse&#160;<a href="revatanop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Atan&#xA0;Function</a><br/>
+
+<b><big><a name="B">B</a></big></b>
+<br/>
+BinaryBool&#160;<a href="adboolfun_frame1.xml#BinaryBool" target="frame1"><i>CppAD&#xA0;Boolean&#xA0;Valued&#xA0;User&#xA0;Defined&#xA0;Functions&#xA0;Implementation:&#160;BinaryBool</i></a><br/>
+
+<b><big><a name="C">C</a></big></b>
+<br/>
+coefficient&#160;<a href="adreverse.xml" target="_top">Reverse&#xA0;Mode&#xA0;Computation&#xA0;of&#xA0;Derivatives&#xA0;of&#xA0;Taylor&#xA0;Coefficients</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="adforward.xml" target="_top">Forward&#xA0;Computation&#xA0;of&#xA0;Taylor&#xA0;Coefficients</a><br/>
+cos<br/>
+&#160;&#160;&#160;&#160;&#160;forward&#160;<a href="forsincos.xml" target="_top">Forward&#xA0;Mode&#xA0;Sine&#xA0;and&#xA0;Cosine&#xA0;Functions</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse&#160;<a href="revsincos.xml" target="_top">Reverse&#xA0;Mode&#xA0;Sine&#xA0;and&#xA0;Cosine&#xA0;Functions</a><br/>
+cppadfoldbinaryoperator&#160;<a href="admacro_frame1.xml#CppADFoldBinaryOperator" target="frame1"><i>Macros&#xA0;Used&#xA0;by&#xA0;CppAD&#xA0;Implementation:&#160;CppADFoldBinaryOperator</i></a><br/>
+cppadnull&#160;<a href="admacro_frame1.xml#CppADNull" target="frame1"><i>Macros&#xA0;Used&#xA0;by&#xA0;CppAD&#xA0;Implementation:&#160;CppADNull</i></a><br/>
+cppadstandardmathbinaryfun&#160;<a href="admacro_frame1.xml#CppADStandardMathBinaryFun" target="frame1"><i>Macros&#xA0;Used&#xA0;by&#xA0;CppAD&#xA0;Implementation:&#160;CppADStandardMathBinaryFun</i></a><br/>
+cppadstandardmathfun&#160;<a href="admacro_frame1.xml#CppADStandardMathFun" target="frame1"><i>Macros&#xA0;Used&#xA0;by&#xA0;CppAD&#xA0;Implementation:&#160;CppADStandardMathFun</i></a><br/>
+
+<b><big><a name="D">D</a></big></b>
+<br/>
+definition&#160;<a href="admacro.xml" target="_top">Macros&#xA0;Used&#xA0;by&#xA0;CppAD&#xA0;Implementation</a><br/>
+derivative&#160;<a href="adreverse.xml" target="_top">Reverse&#xA0;Mode&#xA0;Computation&#xA0;of&#xA0;Derivatives&#xA0;of&#xA0;Taylor&#xA0;Coefficients</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="adforward.xml" target="_top">Forward&#xA0;Computation&#xA0;of&#xA0;Taylor&#xA0;Coefficients</a><br/>
+description&#160;<a href="adtape_frame2.xml#Description" target="frame1"><i>ADTape:&#xA0;The&#xA0;CppAD&#xA0;Tape:&#160;Description</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="developer_frame2.xml#Description" target="frame1"><i>CppAD&#xA0;Developer&#xA0;Documentation:&#160;Description</i></a><br/>
+divide<br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>operator&#160;<a href="fordivvvop.xml" target="_top">Forward&#xA0;Mode&#xA0;Division&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse<b>&#xA0;</b>operator&#160;<a href="revdivvvop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Division&#xA0;Operator</a><br/>
+
+<b><big><a name="E">E</a></big></b>
+<br/>
+Erase&#160;<a href="adtape_frame2.xml#Erase" target="frame1"><i>ADTape:&#xA0;The&#xA0;CppAD&#xA0;Tape:&#160;Erase</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;TapeRec&#160;<a href="taperec_frame2.xml#Erase" target="frame1"><i>A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape:&#160;Erase</i></a><br/>
+equal<br/>
+&#160;&#160;&#160;&#160;&#160;identical&#160;<a href="identicalequal.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Identically&#xA0;Equal&#xA0;Another</a><br/>
+erase&#160;<a href="adtape_frame2.xml#Erase" target="frame1"><i>ADTape:&#xA0;The&#xA0;CppAD&#xA0;Tape:&#160;Erase</i></a><br/>
+exp<br/>
+&#160;&#160;&#160;&#160;&#160;forward&#160;<a href="forexpop.xml" target="_top">Forward&#xA0;Mode&#xA0;Exponential&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse&#160;<a href="revexpop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Exponential&#xA0;Function</a><br/>
+
+<b><big><a name="F">F</a></big></b>
+<br/>
+ForAbsOp&#160;<a href="forabsop.xml" target="_top">Forward&#xA0;Mode&#xA0;Absolute&#xA0;Value&#xA0;Function</a><br/>
+ForAcosOp&#160;<a href="foracosop.xml" target="_top">Forward&#xA0;Mode&#xA0;Acos&#xA0;Function</a><br/>
+ForAdd&#160;<a href="foraddop.xml" target="_top">Forward&#xA0;Mode&#xA0;Addition&#xA0;Operators</a><br/>
+ForAsinOp&#160;<a href="forasinop.xml" target="_top">Forward&#xA0;Mode&#xA0;Asin&#xA0;Function</a><br/>
+ForAtanOp&#160;<a href="foratanop.xml" target="_top">Forward&#xA0;Mode&#xA0;Atan&#xA0;Function</a><br/>
+ForDiv&#160;<a href="revdivvvop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Division&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="fordivvvop.xml" target="_top">Forward&#xA0;Mode&#xA0;Division&#xA0;Operator</a><br/>
+ForExpOp&#160;<a href="forexpop.xml" target="_top">Forward&#xA0;Mode&#xA0;Exponential&#xA0;Function</a><br/>
+ForLogOp&#160;<a href="forlogop.xml" target="_top">Forward&#xA0;Mode&#xA0;Logarithm&#xA0;Function</a><br/>
+ForMul&#160;<a href="formulvvop.xml" target="_top">Forward&#xA0;Mode&#xA0;Multiplication&#xA0;Operator</a><br/>
+ForSinCos&#160;<a href="forsincos.xml" target="_top">Forward&#xA0;Mode&#xA0;Sine&#xA0;and&#xA0;Cosine&#xA0;Functions</a><br/>
+ForSqrtOp&#160;<a href="revsqrtop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Square&#xA0;Root&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="forsqrtop.xml" target="_top">Forward&#xA0;Mode&#xA0;Square&#xA0;Root&#xA0;Function</a><br/>
+ForSub&#160;<a href="forsubvvop.xml" target="_top">Forward&#xA0;Mode&#xA0;Subtraction&#xA0;Operators</a><br/>
+forward<br/>
+&#160;&#160;&#160;&#160;&#160;abs&#160;<a href="forabsop.xml" target="_top">Forward&#xA0;Mode&#xA0;Absolute&#xA0;Value&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;acos&#160;<a href="foracosop.xml" target="_top">Forward&#xA0;Mode&#xA0;Acos&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;add<b>&#xA0;</b>operator&#160;<a href="foraddop.xml" target="_top">Forward&#xA0;Mode&#xA0;Addition&#xA0;Operators</a><br/>
+&#160;&#160;&#160;&#160;&#160;asin&#160;<a href="forasinop.xml" target="_top">Forward&#xA0;Mode&#xA0;Asin&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;atan&#160;<a href="foratanop.xml" target="_top">Forward&#xA0;Mode&#xA0;Atan&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;cos&#160;<a href="forsincos.xml" target="_top">Forward&#xA0;Mode&#xA0;Sine&#xA0;and&#xA0;Cosine&#xA0;Functions</a><br/>
+&#160;&#160;&#160;&#160;&#160;divide<b>&#xA0;</b>operator&#160;<a href="fordivvvop.xml" target="_top">Forward&#xA0;Mode&#xA0;Division&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;exp&#160;<a href="forexpop.xml" target="_top">Forward&#xA0;Mode&#xA0;Exponential&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;log&#160;<a href="forlogop.xml" target="_top">Forward&#xA0;Mode&#xA0;Logarithm&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;multiply<b>&#xA0;</b>operator&#160;<a href="formulvvop.xml" target="_top">Forward&#xA0;Mode&#xA0;Multiplication&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;sin&#160;<a href="forsincos.xml" target="_top">Forward&#xA0;Mode&#xA0;Sine&#xA0;and&#xA0;Cosine&#xA0;Functions</a><br/>
+&#160;&#160;&#160;&#160;&#160;sqrt&#160;<a href="revsqrtop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Square&#xA0;Root&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;sqrt&#160;<a href="forsqrtop.xml" target="_top">Forward&#xA0;Mode&#xA0;Square&#xA0;Root&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;subtract<b>&#xA0;</b>operator&#160;<a href="forsubvvop.xml" target="_top">Forward&#xA0;Mode&#xA0;Subtraction&#xA0;Operators</a><br/>
+
+<b><big><a name="G">G</a></big></b>
+<br/>
+Get<br/>
+&#160;&#160;&#160;&#160;&#160;TapeRec&#160;<a href="taperec_frame2.xml#Get" target="frame1"><i>A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape:&#160;Get</i></a><br/>
+GreaterThanZero&#160;<a href="greaterthanzero.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Greater&#xA0;Than&#xA0;Zero</a><br/>
+
+<b><big><a name="I">I</a></big></b>
+<br/>
+identical&#160;<a href="identicalone.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Identically&#xA0;One</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="identicalzero.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Identically&#xA0;Zero</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="identicalpar.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Identically&#xA0;a&#xA0;Parameter</a><br/>
+&#160;&#160;&#160;&#160;&#160;equal&#160;<a href="identicalequal.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Identically&#xA0;Equal&#xA0;Another</a><br/>
+integer&#160;<a href="integer.xml" target="_top">Convert&#xA0;a&#xA0;Value&#xA0;to&#xA0;an&#xA0;Integer</a><br/>
+
+<b><big><a name="L">L</a></big></b>
+<br/>
+LessThanOrZero&#160;<a href="lessthanorzero.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Less&#xA0;Than&#xA0;Zero</a><br/>
+LessThanZero&#160;<a href="lessthanzero.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Less&#xA0;Than&#xA0;Zero</a><br/>
+log<br/>
+&#160;&#160;&#160;&#160;&#160;forward&#160;<a href="forlogop.xml" target="_top">Forward&#xA0;Mode&#xA0;Logarithm&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse&#160;<a href="revlogop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Logarithm&#xA0;Function</a><br/>
+
+<b><big><a name="M">M</a></big></b>
+<br/>
+Memory<br/>
+&#160;&#160;&#160;&#160;&#160;TapeRec&#160;<a href="taperec_frame2.xml#Memory" target="frame1"><i>A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape:&#160;Memory</i></a><br/>
+macro&#160;<a href="admacro.xml" target="_top">Macros&#xA0;Used&#xA0;by&#xA0;CppAD&#xA0;Implementation</a><br/>
+minus&#160;<a href="revsubvvop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Subtraction&#xA0;Operator</a><br/>
+multiply<br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>operator&#160;<a href="formulvvop.xml" target="_top">Forward&#xA0;Mode&#xA0;Multiplication&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse<b>&#xA0;</b>operator&#160;<a href="revmulvvop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Multiplication&#xA0;Operator</a><br/>
+
+<b><big><a name="N">N</a></big></b>
+<br/>
+Num<br/>
+&#160;&#160;&#160;&#160;&#160;TapeRec&#160;<a href="taperec_frame2.xml#Num" target="frame1"><i>A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape:&#160;Num</i></a><br/>
+NumInd&#160;<a href="numind.xml" target="_top">Number&#xA0;of&#xA0;Ind&#xA0;field&#xA0;Values&#xA0;Corresponding&#xA0;to&#xA0;an&#xA0;Op&#xA0;Code</a><br/>
+NumVar&#160;<a href="numvar.xml" target="_top">Number&#xA0;of&#xA0;Variables&#xA0;Corresponding&#xA0;to&#xA0;an&#xA0;Op&#xA0;Code</a><br/>
+negative&#160;<a href="lessthanorzero.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Less&#xA0;Than&#xA0;Zero</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="lessthanzero.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Less&#xA0;Than&#xA0;Zero</a><br/>
+
+<b><big><a name="O">O</a></big></b>
+<br/>
+one&#160;<a href="identicalone.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Identically&#xA0;One</a><br/>
+operator&#160;<a href="opcode.xml" target="_top">The&#xA0;Tape&#xA0;Operator&#xA0;Codes</a><br/>
+&#160;&#160;&#160;&#160;&#160;add<b>&#xA0;</b>forward&#160;<a href="foraddop.xml" target="_top">Forward&#xA0;Mode&#xA0;Addition&#xA0;Operators</a><br/>
+&#160;&#160;&#160;&#160;&#160;add<b>&#xA0;</b>reverse&#160;<a href="revaddop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Addition&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;divide<b>&#xA0;</b>forward&#160;<a href="fordivvvop.xml" target="_top">Forward&#xA0;Mode&#xA0;Division&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;divide<b>&#xA0;</b>reverse&#160;<a href="revdivvvop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Division&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;multiply<b>&#xA0;</b>forward&#160;<a href="formulvvop.xml" target="_top">Forward&#xA0;Mode&#xA0;Multiplication&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;multiply<b>&#xA0;</b>reverse&#160;<a href="revmulvvop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Multiplication&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;print&#160;<a href="printop.xml" target="_top">Print&#xA0;the&#xA0;Information&#xA0;Corresponding&#xA0;to&#xA0;One&#xA0;Tape&#xA0;Operation</a><br/>
+&#160;&#160;&#160;&#160;&#160;subtract<b>&#xA0;</b>forward&#160;<a href="forsubvvop.xml" target="_top">Forward&#xA0;Mode&#xA0;Subtraction&#xA0;Operators</a><br/>
+order&#160;<a href="adforward.xml" target="_top">Forward&#xA0;Computation&#xA0;of&#xA0;Taylor&#xA0;Coefficients</a><br/>
+
+<b><big><a name="P">P</a></big></b>
+<br/>
+Put<br/>
+&#160;&#160;&#160;&#160;&#160;TapeRec&#160;<a href="taperec_frame2.xml#Put" target="frame1"><i>A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape:&#160;Put</i></a><br/>
+parameter&#160;<a href="identicalpar.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Identically&#xA0;a&#xA0;Parameter</a><br/>
+positive&#160;<a href="greaterthanzero.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Greater&#xA0;Than&#xA0;Zero</a><br/>
+printOp&#160;<a href="printop.xml" target="_top">Print&#xA0;the&#xA0;Information&#xA0;Corresponding&#xA0;to&#xA0;One&#xA0;Tape&#xA0;Operation</a><br/>
+
+<b><big><a name="R">R</a></big></b>
+<br/>
+Replace<br/>
+&#160;&#160;&#160;&#160;&#160;TapeRec&#160;<a href="taperec_frame2.xml#Replace" target="frame1"><i>A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape:&#160;Replace</i></a><br/>
+RevAbsOp&#160;<a href="revabsop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Absolute&#xA0;Value&#xA0;Function</a><br/>
+RevAcosOp&#160;<a href="revacosop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Acos&#xA0;Function</a><br/>
+RevAdd&#160;<a href="revaddop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Addition&#xA0;Operator</a><br/>
+RevAsinOp&#160;<a href="revasinop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Asin&#xA0;Function</a><br/>
+RevAtanOp&#160;<a href="revatanop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Atan&#xA0;Function</a><br/>
+RevExpOp&#160;<a href="revexpop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Exponential&#xA0;Function</a><br/>
+RevLogOp&#160;<a href="revlogop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Logarithm&#xA0;Function</a><br/>
+RevMul&#160;<a href="revmulvvop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Multiplication&#xA0;Operator</a><br/>
+RevSinCos&#160;<a href="revsincos.xml" target="_top">Reverse&#xA0;Mode&#xA0;Sine&#xA0;and&#xA0;Cosine&#xA0;Functions</a><br/>
+RevSubvvOp&#160;<a href="revsubvvop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Subtraction&#xA0;Operator</a><br/>
+rec&#160;<a href="adtape_frame2.xml#Rec" target="frame1"><i>ADTape:&#xA0;The&#xA0;CppAD&#xA0;Tape:&#160;Rec</i></a><br/>
+record<br/>
+&#160;&#160;&#160;&#160;&#160;tape&#160;<a href="taperec.xml" target="_top">A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape</a><br/>
+reverse&#160;<a href="revsubvvop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Subtraction&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;abs&#160;<a href="revabsop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Absolute&#xA0;Value&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;acos&#160;<a href="revacosop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Acos&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;add<b>&#xA0;</b>operator&#160;<a href="revaddop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Addition&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;asin&#160;<a href="revasinop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Asin&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;atan&#160;<a href="revatanop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Atan&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;cos&#160;<a href="revsincos.xml" target="_top">Reverse&#xA0;Mode&#xA0;Sine&#xA0;and&#xA0;Cosine&#xA0;Functions</a><br/>
+&#160;&#160;&#160;&#160;&#160;divide<b>&#xA0;</b>operator&#160;<a href="revdivvvop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Division&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;exp&#160;<a href="revexpop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Exponential&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;log&#160;<a href="revlogop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Logarithm&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;multiply<b>&#xA0;</b>operator&#160;<a href="revmulvvop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Multiplication&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;sin&#160;<a href="revsincos.xml" target="_top">Reverse&#xA0;Mode&#xA0;Sine&#xA0;and&#xA0;Cosine&#xA0;Functions</a><br/>
+
+<b><big><a name="S">S</a></big></b>
+<br/>
+second&#160;<a href="adforward.xml" target="_top">Forward&#xA0;Computation&#xA0;of&#xA0;Taylor&#xA0;Coefficients</a><br/>
+sin<br/>
+&#160;&#160;&#160;&#160;&#160;forward&#160;<a href="forsincos.xml" target="_top">Forward&#xA0;Mode&#xA0;Sine&#xA0;and&#xA0;Cosine&#xA0;Functions</a><br/>
+&#160;&#160;&#160;&#160;&#160;reverse&#160;<a href="revsincos.xml" target="_top">Reverse&#xA0;Mode&#xA0;Sine&#xA0;and&#xA0;Cosine&#xA0;Functions</a><br/>
+sqrt<br/>
+&#160;&#160;&#160;&#160;&#160;forward&#160;<a href="revsqrtop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Square&#xA0;Root&#xA0;Function</a><br/>
+&#160;&#160;&#160;&#160;&#160;forward&#160;<a href="forsqrtop.xml" target="_top">Forward&#xA0;Mode&#xA0;Square&#xA0;Root&#xA0;Function</a><br/>
+state&#160;<a href="adtape_frame2.xml#state" target="frame1"><i>ADTape:&#xA0;The&#xA0;CppAD&#xA0;Tape:&#160;state</i></a><br/>
+subtract&#160;<a href="revsubvvop.xml" target="_top">Reverse&#xA0;Mode&#xA0;Subtraction&#xA0;Operator</a><br/>
+&#160;&#160;&#160;&#160;&#160;forward<b>&#xA0;</b>operator&#160;<a href="forsubvvop.xml" target="_top">Forward&#xA0;Mode&#xA0;Subtraction&#xA0;Operators</a><br/>
+
+<b><big><a name="T">T</a></big></b>
+<br/>
+TapeRec&#160;<a href="taperec.xml" target="_top">A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape</a><br/>
+&#160;&#160;&#160;&#160;&#160;Erase&#160;<a href="taperec_frame2.xml#Erase" target="frame1"><i>A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape:&#160;Erase</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;Get&#160;<a href="taperec_frame2.xml#Get" target="frame1"><i>A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape:&#160;Get</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;Memory&#160;<a href="taperec_frame2.xml#Memory" target="frame1"><i>A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape:&#160;Memory</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;Num&#160;<a href="taperec_frame2.xml#Num" target="frame1"><i>A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape:&#160;Num</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;Put&#160;<a href="taperec_frame2.xml#Put" target="frame1"><i>A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape:&#160;Put</i></a><br/>
+&#160;&#160;&#160;&#160;&#160;Replace&#160;<a href="taperec_frame2.xml#Replace" target="frame1"><i>A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape:&#160;Replace</i></a><br/>
+Taylor&#160;<a href="adreverse.xml" target="_top">Reverse&#xA0;Mode&#xA0;Computation&#xA0;of&#xA0;Derivatives&#xA0;of&#xA0;Taylor&#xA0;Coefficients</a><br/>
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;<a href="adforward.xml" target="_top">Forward&#xA0;Computation&#xA0;of&#xA0;Taylor&#xA0;Coefficients</a><br/>
+tape&#160;<a href="opcode.xml" target="_top">The&#xA0;Tape&#xA0;Operator&#xA0;Codes</a><br/>
+&#160;&#160;&#160;&#160;&#160;record&#160;<a href="taperec.xml" target="_top">A&#xA0;CppAD&#xA0;Program&#xA0;as&#xA0;Recorded&#xA0;on&#xA0;Tape</a><br/>
+trace<br/>
+&#160;&#160;&#160;&#160;&#160;tape<b>&#xA0;</b>operation&#160;<a href="printop.xml" target="_top">Print&#xA0;the&#xA0;Information&#xA0;Corresponding&#xA0;to&#xA0;One&#xA0;Tape&#xA0;Operation</a><br/>
+
+<b><big><a name="U">U</a></big></b>
+<br/>
+UnaryBool&#160;<a href="adboolfun_frame1.xml#UnaryBool" target="frame1"><i>CppAD&#xA0;Boolean&#xA0;Valued&#xA0;User&#xA0;Defined&#xA0;Functions&#xA0;Implementation:&#160;UnaryBool</i></a><br/>
+
+<b><big><a name="Z">Z</a></big></b>
+<br/>
+zero&#160;<a href="identicalzero.xml" target="_top">Check&#xA0;if&#xA0;a&#xA0;Value&#xA0;is&#xA0;Identically&#xA0;Zero</a><br/>
+
+</body>
+</html>

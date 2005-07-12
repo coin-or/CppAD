@@ -1,0 +1,432 @@
+<html><head>
+<title>An Error Controller for ODE Solvers</title>
+<meta name="description" content="An Error Controller for ODE Solvers">
+<meta name="keywords" content=" Odeerrcontrol Ode control error differential equation "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="odeerrcontrol.htm" target="_top">section</a>, <a href="odeerrcontrol_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+Let <code>
+<span style='white-space: nowrap'>&nbsp;\R</span></code>
+ denote the real numbers
+and let <code>
+<span style='white-space: nowrap'>&nbsp;F&nbsp;:&nbsp;\R&nbsp;\times&nbsp;\R^n&nbsp;\rightarrow&nbsp;\R^n</span></code>
+ be a smooth function.
+We define <code>
+<span style='white-space: nowrap'>&nbsp;X&nbsp;:&nbsp;[ti&nbsp;,&nbsp;tf]&nbsp;\rightarrow&nbsp;\R^n</span></code>
+ by 
+the following initial value problem:
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X(ti)&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;xi&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X'(t)&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;F[t&nbsp;,&nbsp;X(t)]&nbsp;<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+The routine <code><font color="blue">OdeErrControl</font></code> can be used to adjust the step size
+used by either of these methods in order to be as fast as possible
+and still with in a requested error bound.
+
+<br>
+<br>
+<b><big><a name="Notation">Notation</a></big></b>
+<br>
+The template parameter types <a href="odeerrcontrol_frame2.htm#Scalar" target="frame1"><i><span style='white-space: nowrap'>Scalar</span></i></a>
+ and
+<a href="odeerrcontrol_frame2.htm#Vector" target="frame1"><i><span style='white-space: nowrap'>Vector</span></i></a>
+ are documented below.
+
+<br>
+<br>
+<b><big><a name="Method">Method</a></big></b>
+<br>
+The class <i>Method</i>
+and the object <i>method</i> satisfy the following syntax
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Method</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>method</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>The object <i>method</i> must support the following syntax 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+</span></font></code><i><span style='white-space: nowrap'>method</span></i><code><font color="blue"><span style='white-space: nowrap'>.step(</span></font></code><i><span style='white-space: nowrap'>ta</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>tb</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>xa</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>xb</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>eb</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code><br>
+<b><a name="Method.ta">ta</a></b>
+<br>
+The argument <i>ta</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>ta</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>It specifies the initial time for this step in the 
+ODE integration.
+(see description of <a href="odeerrcontrol_frame2.htm#Scalar" target="frame1"><i><span style='white-space: nowrap'>Scalar</span></i></a>
+ below). 
+
+<br>
+<br>
+<b><a name="Method.tb">tb</a></b>
+<br>
+The argument <i>tb</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>tb</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>It specifies the final time for this step in the 
+ODE integration.
+
+<br>
+<br>
+<b><a name="Method.xa">xa</a></b>
+<br>
+The argument <i>xa</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>xa</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and size <i>n</i>.
+It specifies the value of <code>
+<span style='white-space: nowrap'>&nbsp;X(ta)</span></code>
+.
+(see description of <a href="odeerrcontrol_frame2.htm#Vector" target="frame1"><i><span style='white-space: nowrap'>Vector</span></i></a>
+ below). 
+
+<br>
+<br>
+<b><a name="Method.xb">xb</a></b>
+<br>
+The argument value <i>xb</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>xb</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and size <i>n</i>.
+The input value of its elements does not matter.
+On output, 
+it contains the approximation for <code>
+<span style='white-space: nowrap'>&nbsp;X(tb)</span></code>
+ that the method obtains.
+
+<br>
+<br>
+<b><a name="Method.eb">eb</a></b>
+<br>
+The argument value <i>eb</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>eb</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and size <i>n</i>.
+The input value of its elements does not matter.
+On output, 
+it contains an estimate for the error in the approximation <i>xb</i>.
+It is assumed (locally) that the error bound in this approximation 
+nearly equal to <code>
+<span style='white-space: nowrap'>&nbsp;K&nbsp;(tb&nbsp;-&nbsp;ta)^m</span></code>
+ 
+where <i>K</i> is a fixed constant and <i>m</i>
+is the corresponding argument to <code><font color="blue">CodeControl</font></code>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>If <i>m</i> is <code><font color="blue">size_t</font></code>,
+the object <i>method</i> must also support the following syntax 
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+</span></font></code><i><span style='white-space: nowrap'>m</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>method</span></i><code><font color="blue"><span style='white-space: nowrap'>.order()<br>
+</span></font></code>The return value <i>m</i> is the order of the ODE integration method;
+i.e., there is a constant K such that if <code>
+<span style='white-space: nowrap'>&nbsp;ti&nbsp;\leq&nbsp;ta&nbsp;\leq&nbsp;tb&nbsp;\leq&nbsp;tf</span></code>
+,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;X(tb)&nbsp;-&nbsp;xb&nbsp;|&nbsp;\leq&nbsp;K&nbsp;|&nbsp;tb&nbsp;-&nbsp;ta&nbsp;|^m<br>
+\]&nbsp;</span></code>
+
+where <i>ta</i>, <i>tb</i>, and <i>xb</i> are as in 
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>method</span></i><code><font color="blue"><span style='white-space: nowrap'>.step(</span></font></code><i><span style='white-space: nowrap'>ta</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>tb</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>xa</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>xb</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>eb</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="ti">ti</a></big></b>
+<br>
+The argument <i>ti</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>ti</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>It specifies the initial time for the integration of 
+the differential equation.
+
+
+<br>
+<br>
+<b><big><a name="tf">tf</a></big></b>
+<br>
+The argument <i>tf</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>tf</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>It specifies the final time for the integration of 
+the differential equation.
+
+<br>
+<br>
+<b><big><a name="xi">xi</a></big></b>
+<br>
+The argument <i>xi</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>xi</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and size <i>n</i>.
+It specifies value of <code>
+<span style='white-space: nowrap'>&nbsp;X(ti)</span></code>
+.
+
+<br>
+<br>
+<b><big><a name="smin">smin</a></big></b>
+<br>
+The argument <i>smin</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>smin</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>The step size during a call to <i>method</i> is defined as
+the corresponding value of <code>
+<span style='white-space: nowrap'>&nbsp;tb&nbsp;-&nbsp;ta</span></code>
+.
+If <code>
+<span style='white-space: nowrap'>&nbsp;tf&nbsp;-&nbsp;ti&nbsp;\leq&nbsp;smin</span></code>
+,
+the integration will be done in one step of size <i>tf - ti</i>.
+Otherwise,
+the minimum value of <i>tb - ta</i> will be <code>
+<span style='white-space: nowrap'>&nbsp;smin</span></code>
+
+except for the last two calls to <i>method</i> where it may be
+as small as <code>
+<span style='white-space: nowrap'>&nbsp;smin&nbsp;/&nbsp;2</span></code>
+.
+
+<br>
+<br>
+<b><big><a name="smax">smax</a></big></b>
+<br>
+The argument <i>smax</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>smax</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>It specifies the maximum step size to use during the integration; 
+i.e., the maximum value for <code>
+<span style='white-space: nowrap'>&nbsp;tb&nbsp;-&nbsp;ta</span></code>
+ in a call to <i>method</i>.
+The value of <i>smax</i> must be greater than or equal <i>smin</i>.
+
+<br>
+<br>
+<b><big><a name="scur">scur</a></big></b>
+<br>
+The argument <i>scur</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>scur</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>The value of <i>scur</i> is the suggested next step size,
+based on error criteria, to try in the next call to <i>method</i>.
+On input it corresponds to the first call to <i>method</i>,
+in this call to <code><font color="blue">OdeErrControl</font></code> (where <code>
+<span style='white-space: nowrap'>&nbsp;ta&nbsp;=&nbsp;ti</span></code>
+).
+On output it corresponds to the next call to <i>method</i>,
+in a subsequent call to <code><font color="blue">OdeErrControl</font></code> (where <i>ta = tf</i>).
+
+<br>
+<br>
+<b><big><a name="eabs">eabs</a></big></b>
+<br>
+The argument <i>eabs</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>eabs</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and size <i>n</i>.
+Each of the elements of <i>eabs</i> must be 
+greater than or equal zero.
+It specifies a bound for the absolute
+error in the return value <i>xf</i> as an approximation for <code>
+<span style='white-space: nowrap'>&nbsp;X(tf)</span></code>
+.
+(see description of total error bound under <i>erel</i>).
+
+<br>
+<br>
+<b><big><a name="erel">erel</a></big></b>
+<br>
+The argument <i>erel</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>erel</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and is greater than or equal zero.
+It specifies a bound for the relative 
+error in the return value <i>xf</i> as an approximation for <code>
+<span style='white-space: nowrap'>&nbsp;X(tf)</span></code>
+.
+The total error bound is the sum of the absolute and relative error bounds; 
+i.e., the error bound for the <i>j</i>-th component is 
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xf[j]&nbsp;-&nbsp;X_j&nbsp;(tf)&nbsp;|&nbsp;\leq&nbsp;eabs[j]&nbsp;+&nbsp;erel&nbsp;*&nbsp;|&nbsp;X_j&nbsp;(tf)&nbsp;|<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="ef">ef</a></big></b>
+<br>
+The argument value <i>ef</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>ef</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and size <i>n</i>.
+The input value of its elements does not matter.
+On output, 
+it contains an estimate for the 
+absolute error in the approximation <i>xf</i>; i.e.,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ef_i&nbsp;\approx&nbsp;|&nbsp;X(&nbsp;tf&nbsp;)_i&nbsp;-&nbsp;xf_i&nbsp;|<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="Scalar">Scalar</a></big></b>
+<br>
+The following operations must be defined for <i>Scalar</i> objects
+<i>a</i> and <i>b</i>:
+
+<table><tr><td align='left'  valign='top'>
+
+<b>Operation</b> </td><td align='left'  valign='top'>
+ <b>Description</b>  </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> </td><td align='left'  valign='top'>
+
+	constructs a <i>Scalar</i> object from the <code><font color="blue">int</font></code> <i>i</i>
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>b</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> </td><td align='left'  valign='top'>
+
+	constructs <i>a</i> with the same value as <i>b</i>.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	returns true (false) if <i>a</i> is less than or equal 
+	(greater than) <i>b</i>.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	returns true (false) if <i>a</i> is equal to <i>b</i>.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	changes the value of <i>a</i> so it is equal to <i>b</i>.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	returns a <i>Scalar</i> equal to the sum <code>
+<span style='white-space: nowrap'>&nbsp;a&nbsp;+&nbsp;b</span></code>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	returns a <i>Scalar</i> equal to the difference <code>
+<span style='white-space: nowrap'>&nbsp;a&nbsp;-&nbsp;b</span></code>
+ 
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	returns a <i>Scalar</i> equal to the product <code>
+<span style='white-space: nowrap'>&nbsp;a&nbsp;*&nbsp;b</span></code>
+ 
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	returns a <i>Scalar</i> equal to the quotient <code>
+<span style='white-space: nowrap'>&nbsp;a&nbsp;/&nbsp;b</span></code>
+ 
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"><span style='white-space: nowrap'>log(</span></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> </td><td align='left'  valign='top'>
+
+	returns a <i>Scalar</i> equal to the logarithm of <i>a</i>
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"><span style='white-space: nowrap'>exp(</span></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> </td><td align='left'  valign='top'>
+
+	returns a <i>Scalar</i> equal to the exponential of <i>a</i>
+</td></tr>
+</table>
+<br>
+<b><big><a name="Vector">Vector</a></big></b>
+<br>
+The type <i>Vector</i> must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector_frame1.htm#Elements of Specified Type" target="frame1"><i><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type&nbsp;Scalar</span></i></a>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="odeerrcontrol.cpp.htm" target="_top"><span style='white-space: nowrap'>OdeErrControl.cpp</span></a>
+
+contains an example and test a test of using this routine.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Theory">Theory</a></big></b>
+<br>
+Let <code>
+<span style='white-space: nowrap'>&nbsp;e(s)</span></code>
+ be the error as a function of the
+step size <code>
+<span style='white-space: nowrap'>&nbsp;s</span></code>
+ and suppose that there is a constant
+<code>
+<span style='white-space: nowrap'>&nbsp;K</span></code>
+ such that <code>
+<span style='white-space: nowrap'>&nbsp;e(s)&nbsp;=&nbsp;K&nbsp;s^m</span></code>
+.
+Let <code>
+<span style='white-space: nowrap'>&nbsp;a</span></code>
+ be our error bound.
+Given the value of <code>
+<span style='white-space: nowrap'>&nbsp;e(s)</span></code>
+, a step of size <code>
+<span style='white-space: nowrap'>&nbsp;\lambda&nbsp;s</span></code>
+
+would be ok provided that
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;&nbsp;&amp;&nbsp;\geq&nbsp;&amp;&nbsp;e(&nbsp;\lambda&nbsp;s&nbsp;)&nbsp;(tf&nbsp;-&nbsp;ti)&nbsp;/&nbsp;(&nbsp;\lambda&nbsp;s&nbsp;)&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;&nbsp;&amp;&nbsp;\geq&nbsp;&amp;&nbsp;K&nbsp;\lambda^m&nbsp;s^m&nbsp;(tf&nbsp;-&nbsp;ti)&nbsp;/&nbsp;(&nbsp;\lambda&nbsp;s&nbsp;)&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;&nbsp;&amp;&nbsp;\geq&nbsp;&amp;&nbsp;\lambda^{m-1}&nbsp;s^{m-1}&nbsp;(tf&nbsp;-&nbsp;ti)&nbsp;e(s)&nbsp;/&nbsp;s^m&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;&nbsp;&amp;&nbsp;\geq&nbsp;&amp;&nbsp;\lambda^{m-1}&nbsp;(tf&nbsp;-&nbsp;ti)&nbsp;e(s)&nbsp;/&nbsp;s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\lambda^{m-1}&nbsp;&amp;&nbsp;\leq&nbsp;&amp;&nbsp;\frac{a}{e(s)}&nbsp;\frac{s}{tf&nbsp;-&nbsp;ti}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+Thus if the right hand side of the last inequality is greater 
+than or equal to one, the step of size <code>
+<span style='white-space: nowrap'>&nbsp;s</span></code>
+ is ok. 
+
+<br>
+<br>
+<b><big><a name="Source Code">Source Code</a></big></b>
+<br>
+The source code for this routine is in the file
+<code><font color="blue">CppAD/OdeErrControl.h</font></code>.
+
+
+<hr>Input File: CppAD\OdeErrControl.h
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Poly Source Code</title>
+<meta name="description" content="Poly Source Code"/>
+<meta name="keywords" content=" source Poly "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="poly.cpp.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="speedtest.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="poly.h.xml" target="_top">section</a>, <a href="poly.h_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+<center><b><big><big>Poly Source Code</big></big></b></center>
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+#&#xA0;include&#xA0;&lt;cstddef&gt;&#xA0;&#xA0;//&#xA0;used&#xA0;to&#xA0;defined&#xA0;size_t<br/>
+namespace&#xA0;CppAD&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;BEGIN&#xA0;CppAD&#xA0;namespace<br/>
+<br/>
+template&#xA0;&lt;class&#xA0;Type,&#xA0;class&#xA0;Vector&gt;<br/>
+Type&#xA0;Poly(size_t&#xA0;k,&#xA0;const&#xA0;Vector&#xA0;&amp;a,&#xA0;const&#xA0;Type&#xA0;&amp;z)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;i;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;d&#xA0;=&#xA0;a.size()&#xA0;-&#xA0;1;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;case&#xA0;where&#xA0;derivative&#xA0;order&#xA0;greater&#xA0;than&#xA0;degree&#xA0;of&#xA0;polynomial<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;if(&#xA0;k&#xA0;&gt;&#xA0;d&#xA0;)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;Type(0);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;case&#xA0;where&#xA0;we&#xA0;are&#xA0;evaluating&#xA0;a&#xA0;derivative<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;if(&#xA0;k&#xA0;&gt;&#xA0;0&#xA0;)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;initialize&#xA0;factor&#xA0;as&#xA0;(k-1)&#xA0;!<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;factor&#xA0;=&#xA0;1;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;2;&#xA0;i&#xA0;&lt;&#xA0;k;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;factor&#xA0;*=&#xA0;i;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;set&#xA0;b&#xA0;to&#xA0;coefficient&#xA0;vector&#xA0;corresponding&#xA0;to&#xA0;derivative<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Vector&#xA0;b(d&#xA0;-&#xA0;k&#xA0;+&#xA0;1);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;k;&#xA0;i&#xA0;&lt;=&#xA0;d;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;factor&#xA0;&#xA0;&#xA0;*=&#xA0;i;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;b[i&#xA0;-&#xA0;k]&#xA0;&#xA0;=&#xA0;a[i]&#xA0;*&#xA0;Type(factor);&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;factor&#xA0;&#xA0;&#xA0;/=&#xA0;(i&#xA0;-&#xA0;k&#xA0;+&#xA0;1);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;value&#xA0;of&#xA0;derivative&#xA0;polynomial<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;Poly(0,&#xA0;b,&#xA0;z);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;case&#xA0;where&#xA0;we&#xA0;are&#xA0;evaluating&#xA0;the&#xA0;original&#xA0;polynomial<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Type&#xA0;sum&#xA0;=&#xA0;a[d];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;i&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;d;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;while(i&#xA0;&gt;&#xA0;0)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;sum&#xA0;*=&#xA0;z;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;sum&#xA0;+=&#xA0;a[--i];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;sum;<br/>
+}<br/>
+}&#xA0;//&#xA0;END&#xA0;CppAD&#xA0;namespace<br/>
+</span>
+</font></code>
+
+<hr/>Input File: CppAD\Poly.h
+
+</body>
+</html>

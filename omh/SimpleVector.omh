@@ -1,0 +1,223 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+/*
+$begin SimpleVector$$
+$spell
+	std
+	valarray
+	Cpp
+	const
+	Resize
+$$
+
+$index vector, simple$$
+$index simple, vector$$
+$index class, simple vector$$
+$index template, simple vector class$$
+
+$section Definition of a Simple Vector$$
+
+$head Template Class Requirements$$
+A simple vector template class $italic SimpleVector$$,
+is any template class
+that satisfies the requirements below.
+The following is a list of some simple vector template classes:
+$table
+$bold Name$$ $cnext $bold Documentation$$   $rnext
+$code std::vector$$      $cnext Section 16.3 of 
+$xref/Bib/The C++ Programming Language/The C++ Programming Language/$$
+$rnext
+$code std::valarray$$    $cnext Section 22.4 of  
+$xref/Bib/The C++ Programming Language/The C++ Programming Language/$$
+$rnext
+$code CppAD::vector$$    $cnext $tref CppAD_vector$$
+$tend
+
+$head Elements of Specified Type$$
+A simple vector class with elements of type $italic Scalar$$,
+is any class that satisfies the requirements for a class of the form
+$syntax%
+	%SimpleVector%<%Scalar%>
+%$$
+The routine $xref/CheckSimpleVector/$$ can be used to check
+that a class is a simple vector class with a specified element type.
+
+$head Default Constructor$$
+$index default, vector constructor$$
+$index constructor, vector default$$
+The syntax 
+$syntax%
+	%SimpleVector%<%Scalar%> %x%;
+%$$
+creates an empty vector $italic x$$ ($syntax%%x%.size()%$$ is zero)
+that can later contain elements of the specified type
+(see $xref/SimpleVector/Resize/resize/$$ below).
+
+$head Sizing Constructor$$
+$index size, vector constructor$$
+$index constructor, size vector$$
+If $italic n$$ has type $code size_t$$, 
+$syntax%
+	%SimpleVector%<%Scalar%> %x%(%n%)
+%$$
+creates a vector $italic x$$ with $italic n$$ elements
+each of the specified type.
+
+$head Copy Constructor$$
+$index copy, vector constructor$$
+$index constructor, copy vector$$
+If $italic x$$ is a $syntax%%SimpleVector%<%Scalar%>%$$ object,
+$syntax%
+	%SimpleVector%<%Scalar%> %y%(%x%)
+%$$
+creates a vector with the same type and number of elements
+as $italic x$$.
+The $italic Scalar$$ assignment operator ( $code =$$ )
+is used to set each element of $italic y$$
+equal to the corresponding element of $italic x$$.
+This is a `deep copy' in that the values of the elements
+of $italic x$$ and $italic y$$ can be set independently after the copy.
+The argument $italic x$$ is passed by reference
+and may be $code const$$.
+
+$head Element Constructor and Destructor$$
+$index constructor, element$$
+$index destructor, element$$
+The constructor for every element in a vector is called
+when the vector element is created and
+the corresponding destructor is called when it is removed
+from the vector (this includes when the vector is destroyed).
+
+
+$head Assignment$$
+$index assignment, vector$$
+If $italic x$$ and $italic y$$ are 
+$syntax%%SimpleVector%<%Scalar%>%$$ objects,
+$syntax%
+	%y% = %x%
+%$$
+uses the $italic Scalar$$ assignment operator ( $code =$$ )
+to set each element of $italic y$$ equal to 
+the corresponding element of $italic x$$.
+This is a `deep assignment' in that the values of the elements
+of $italic x$$ and $italic y$$ can be set independently after the assignment.
+The vectors $italic x$$ and $italic y$$ must have
+the same number of elements.
+The argument $italic x$$ is passed by reference
+and may be $code const$$.
+
+$head Size$$
+$index size, vector$$
+If $italic x$$ is a $syntax%%SimpleVector%<%Scalar%>%$$ object
+and $code n$$ has type $code size_t$$,
+$syntax%
+	%n% = %x%.size()
+%$$
+sets $italic n$$ to the number of elements in the vector $italic x$$.
+The object $italic x$$ may be $code const$$.
+
+$head Resize$$
+$index resize, vector$$
+If $italic x$$ is a $syntax%%SimpleVector%<%Scalar%>%$$ object
+and $code n$$ has type $code size_t$$,
+$syntax%
+	%x%.resize(%n%)
+%$$
+changes the number of elements contained in the vector $italic x$$
+to be $italic n$$.
+The value of the elements of $italic x$$
+are specified after this operation; i.e.,
+any values previously stored in $italic x$$ are lost.
+(The object $italic x$$ can not be $code const$$.)
+
+
+$head Element Access$$
+$index [], vector$$
+If $italic x$$ is a $syntax%%SimpleVector%<%Scalar%>%$$ object
+and $code i$$ has type $code size_t$$,
+$syntax%
+	%x%[%i%]
+%$$
+returns a reference to the element of $italic x$$ with index $italic i$$.
+If the object $italic x$$ is $code const$$ (not $code const$$),
+the reference is $code const$$ (not $code const$$).
+The index $italic i$$ must be less than the
+number of elements in $italic x$$.
+
+$head Value Type$$
+$index value_type, vector$$
+If $italic Vector$$ is any simple vector class,
+the syntax
+$syntax%
+	%Vector%::value_type
+%$$
+is the type of the elements corresponding to the vector class; i.e.,
+$syntax%
+	%SimpleVector%<%Scalar%>::value_type
+%$$
+is equal to $italic Scalar$$.
+
+$head Example$$
+$children%
+	Example/SimpleVector.cpp
+%$$
+The file
+$xref/SimpleVector.cpp/$$
+contains an example and test of a Simple template class.
+It returns true if it succeeds and false otherwise.
+(It is easy to modify to test addition simple vector template classes.)
+
+$head Exercise$$
+$index exercise, simple vector$$
+$list number$$
+If $italic Vector$$ is a simple vector template class,
+the following code may not be valid:
+$syntax%
+	%Vector%<double> x(2);
+	x[2] = 1.;
+%$$
+Create and run a program that executes the code segment
+above where $italic Vector$$ is each of the following cases:
+$code std::vector$$,
+$code CppAD::vector$$.
+$index NDEBUG$$
+Do this both where the compiler option 
+$code -DNDEBUG$$ is and is not present on the compilation command line.
+$lnext
+If $italic Vector$$ is a simple vector template class,
+the following code may not be valid:
+$syntax%
+	%Vector%<int> x(2);
+	%Vector%<int> y(1);
+	x[0] = 0;
+	x[1] = 1;
+	y    = x;
+%$$
+Create and run a program that executes the code segment
+above where $italic Vector$$ is each of the following cases:
+$code std::valarray$$,
+$code CppAD::vector$$.
+Do this both where the compiler option 
+$code -DNDEBUG$$ is and is not present on the compilation command line.
+$lend
+
+
+$end

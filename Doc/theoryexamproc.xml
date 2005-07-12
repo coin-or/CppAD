@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+<title>A Procedural Representation of the Example Function</title>
+<meta name="description" content="A Procedural Representation of the Example Function"/>
+<meta name="keywords" content=" example procedure "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<frameset cols="15%,*">
+<frame src="theoryexamproc_links.xml"/>
+<frameset rows="100%,*">
+<frame src="theoryexamproc_frame1.xml" name="frame1"/>
+</frameset>
+</frameset>
+</html>

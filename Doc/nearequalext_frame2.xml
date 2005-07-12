@@ -1,0 +1,69 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Near Equal Extended to AD Types</title>
+<meta name="description" content="Near Equal Extended to AD Types"/>
+<meta name="keywords" content=" Nearequal Ad extend "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="nearequalext.xml" target="_top">section</a>, <a href="nearequalext_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+This is an extension of the
+<a href="nearequal.xml" target="_top"><span style='white-space: nowrap'>NearEqual</span></a>
+ routine to more cases.
+It returns true if 
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>y</mi>
+<mspace width='.3em'/>
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>or</mi>
+</mstyle></mrow>
+<mspace width='.3em'/>
+<mo stretchy="false">|</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">-</mo>
+<mi mathvariant='italic'>y</mi>
+<mo stretchy="false">|</mo>
+<mo stretchy="false">&#x02264;</mo>
+<mi mathvariant='italic'>a</mi>
+<mspace width='.3em'/>
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>or</mi>
+</mstyle></mrow>
+<mspace width='.3em'/>
+<mfrac><mrow><mo stretchy="false">|</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">-</mo>
+<mi mathvariant='italic'>y</mi>
+<mo stretchy="false">|</mo>
+</mrow>
+<mrow><mo stretchy="false">|</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">|</mo>
+<mo stretchy="false">+</mo>
+<mo stretchy="false">|</mo>
+<mi mathvariant='italic'>y</mi>
+<mo stretchy="false">|</mo>
+</mrow>
+</mfrac>
+<mo stretchy="false">&#x02264;</mo>
+<mi mathvariant='italic'>r</mi>
+</mrow></math>
+
+Otherwise, it return false.
+Note that <i>a</i> is an absolute error bound
+and <i>r</i> is a relative error bound.
+
+
+
+<hr/>Input File: Example\NearEqualExt.h
+
+</body>
+</html>

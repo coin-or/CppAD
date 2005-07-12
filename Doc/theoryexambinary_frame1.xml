@@ -1,0 +1,169 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>A Binary Representation of the Procedure</title>
+<meta name="description" content="A Binary Representation of the Procedure"/>
+<meta name="keywords" content=" example binary represent "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="theoryexamproc.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="theoryexameval.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="theoryexambinary.xml" target="_top">section</a>, <a href="theoryexambinary_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+<center><b><big><big>A Binary Representation of the Procedure</big></big></b></center>
+We define the variable
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>0</mn>
+</msub>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">=</mo>
+<msub><mi mathvariant='italic'>a</mi>
+<mi mathvariant='italic'>n</mi>
+</msub>
+</mrow></math>
+
+ for all 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">&#x02208;</mo>
+<mrow><mstyle mathvariant='bold'><mi mathvariant='bold'>R</mi>
+</mstyle></mrow>
+</mrow></math>
+
+
+and
+for 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>i</mi>
+<mo stretchy="false">=</mo>
+<mn>1</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>n</mi>
+</mrow></math>
+
+,
+we define 
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<msub><mi mathvariant='italic'>s</mi>
+<mi mathvariant='italic'>i</mi>
+</msub>
+<mo stretchy="false">:</mo>
+<mrow><mstyle mathvariant='bold'><mi mathvariant='bold'>R</mi>
+</mstyle></mrow>
+<mo stretchy="false">&#x02192;</mo>
+<mrow><mstyle mathvariant='bold'><mi mathvariant='bold'>R</mi>
+</mstyle></mrow>
+</mrow></math>
+
+ and 
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<msub><mi mathvariant='italic'>t</mi>
+<mi mathvariant='italic'>i</mi>
+</msub>
+<mo stretchy="false">:</mo>
+<mrow><mstyle mathvariant='bold'><mi mathvariant='bold'>R</mi>
+</mstyle></mrow>
+<mo stretchy="false">&#x02192;</mo>
+<mrow><mstyle mathvariant='bold'><mi mathvariant='bold'>R</mi>
+</mstyle></mrow>
+</mrow></math>
+
+ 
+by:
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mtable rowalign="center" ><mtr><mtd columnalign="right" >
+<msub><mi mathvariant='italic'>t</mi>
+<mi mathvariant='italic'>i</mi>
+</msub>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+</mtd><mtd columnalign="center" >
+<mo stretchy="false">=</mo>
+</mtd><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>s</mi>
+<mrow><mi mathvariant='italic'>i</mi>
+<mn>-1</mn>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mspace width='.3em'/>
+<mi mathvariant='italic'>x</mi>
+</mtd></mtr><mtr><mtd columnalign="right" >
+<msub><mi mathvariant='italic'>s</mi>
+<mi mathvariant='italic'>i</mi>
+</msub>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+</mtd><mtd columnalign="center" >
+<mo stretchy="false">=</mo>
+</mtd><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>t</mi>
+<mi mathvariant='italic'>i</mi>
+</msub>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">+</mo>
+<msub><mi mathvariant='italic'>a</mi>
+<mrow><mi mathvariant='italic'>n</mi>
+<mo stretchy="false">-</mo>
+<mi mathvariant='italic'>i</mi>
+</mrow>
+</msub>
+</mtd></mtr></mtable>
+</mrow></math>
+
+It follows that 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<msub><mi mathvariant='italic'>s</mi>
+<mi mathvariant='italic'>n</mi>
+</msub>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+ and 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<msub><mi mathvariant='italic'>t</mi>
+<mi mathvariant='italic'>n</mi>
+</msub>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+
+are equal to the values of the variables <code><font color="blue">s</font></code> and <code><font color="blue">t</font></code> 
+on the <i>n</i>-th iteration of the loop in the 
+<a href="theoryexamproc.xml" target="_top"><span style='white-space: nowrap'>example&#xA0;procedure</span></a>
+.
+
+
+<hr/>Input File: omh\TheoryExamList.omh
+
+</body>
+</html>

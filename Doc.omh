@@ -1,0 +1,192 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+$begin CppAD$$
+
+$spell
+	std
+	templated
+	const
+	CppADvector
+	multiplicative
+	Microsoft
+	bool
+	Det
+	namespace
+	Cpp
+	Var
+	Diff
+	initializes
+$$
+
+$index algorithm, differentiation$$
+$index differentiation, algorithm$$
+$index C++, algorithm derivative$$
+$index CppAD, version$$
+$index version, CppAD$$
+
+$section 
+A Package for Differentiation of C++ Algorithms: CppAD Version 05-07-05
+$$ 
+
+$table
+$bold Syntax$$
+$cnext $syntax%# include "CppAD.h"%$$ $rnext
+$cnext $syntax%using namespace CppAD;%$$ $rnext
+$tend
+
+$fend 20$$
+
+$head Introduction$$
+$index introduction$$
+We refer to the
+step by step conversion from an algorithm that computes function values
+to an algorithm that computes derivative values
+as $italic Algorithmic Differentiation$$
+(often referred to as $italic Automatic Differentiation$$.) 
+Given a C++ algorithm that computes function values,
+CppAD generates an algorithm that computes its derivative values.
+
+$list number$$
+Uses operator overloading to compute derivatives of algorithms defined in C++
+(see $xref/WhatsNew05/$$ for a list of recent changes).
+$lnext
+A Taped sequence of operations are stored as a 
+$xref/ADFun//differentiable function object/$$ which
+can be evaluated with different argument values.
+$lnext
+Valid for multiple base types; for example,
+$code double$$, 
+$code complex$$,
+$code complex<double>$$, and
+$code AD<double>$$
+(see $xref/CppAD/Base Type Requirements/base type requirements/$$).
+$lnext
+Arbitrary order Forward and Reverse mode calculation of derivatives.
+$lnext
+Allows for replacement of it's $xref/CppADvector//vector/$$ class; for example,
+you can use the
+$href%http://www.boost.org/libs/numeric/ublas/doc/index.htm%uBlas%$$ 
+vector class.
+$lnext
+Includes the templated ODE solvers 
+$xref/Runge45/$$, $xref/Rosen34/$$, and $xref/OdeErrControl/$$,
+which can be used to 
+differentiate solutions of ordinary differential equations. 
+$lnext
+Includes a templated $xref/LuSolve//LU/$$ solver that can be used to 
+differentiate determinants and solutions of linear equations. 
+$lnext
+Derivatives of functions that use other derivatives
+can be computed by taping the derivative computation; for example,
+see  $xref/MulTape/$$ for a simple example,
+and $xref/OdeTaylor.cpp//$$ for a more realistic example.
+$lnext
+Taped evaluation of user defined unary 
+$xref/Discrete//discrete functions/$$; i.e.,
+functions with identically zero derivatives.
+$lnext
+Taped evaluation of
+$xref/CondExp//conditional expressions/$$.
+$lnext
+User defined unary and binary
+$xref/BoolFun//boolean valued functions/$$
+as well as the normal
+$xref/Compare//comparison/$$ operators.
+$lnext
+Supports both standard compliant C++ and Microsoft C++ compilers.
+$lnext
+Distributed under the Gnu public $xref/License/$$ with extensive
+user and developer documentation.
+$lend
+
+You can find out about other algorithmic differentiation tools
+and about algorithmic differentiation in general at the web site
+$href%http://www.autodiff.org%$$
+or at
+$href%
+	http://www.math.tu-dresden.de/wir/staff/griewank/%
+	Andreas Griewank's home page
+%$$.
+
+$subhead Example$$
+The file
+$xref/GetStarted.cpp/$$
+contains an example and test of using CppAD to compute
+the derivative of a polynomial.
+There are many other 
+$xref/Example//examples/$$.
+
+$head Base Type Requirements$$
+$index require, base type$$
+$index type, base require$$
+$index base, type require$$
+
+The currently allowable base types are:
+$code float$$,
+$code double$$,
+$code std::complex<float>$$,
+$code std::complex<double>$$.
+In addition, if $italic Base$$ is a valid base type,
+$syntax%AD<%Base%>%$$ is also an allowable base type.
+For example
+$code AD< AD<double> >$$ is a valid type.
+
+$head Syntax$$
+
+$subhead include CppAD.h$$
+$cindex include CppAD$$
+This include directive will define the template class
+$syntax%CppAD::AD<%Base%>%$$ 
+for the rest of the current compilation unit.
+All the preprocessor symbols used by CppAD begin with $code CppAD$$.
+For example, 
+the preprocessor symbol $code CppADIncluded$$ is used to determine
+if $code CppAD.h$$ has already been included.
+As another example,  
+the preprocessor symbol $xref/CppADvector/$$ determines which
+$xref/SimpleVector/$$ template class is used by CppAD.
+
+$subhead using namespace CppAD$$
+$cindex CppAD namespace$$
+If you use this compiler command,
+you will not need to place $code CppAD::$$ in front of
+$syntax%AD<%Base%>%$$ 
+each time you use this template class.
+The documentation for this template class is all relative to 
+the $code CppAD$$ namespace. 
+
+
+
+$childtable%
+	omh/license.omh%
+	omh/Faq.omh%
+	omh/Install.omh%
+	CppAD/local/UserAD.h%
+	omh/VectorTypes.omh%
+	CppAD/local/Fun.h%
+	omh/library.omh%
+	CppAD/CppADError.h%
+	omh/Example.omh%
+	omh/Appendix.omh
+%$$
+
+$include CppAD.tex$$ 
+
+$end

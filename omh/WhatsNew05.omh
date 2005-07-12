@@ -1,0 +1,393 @@
+o/ BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+$begin WhatsNew05$$
+$spell
+	CppADvector
+	Jon Pearce
+	namespace
+	dsw
+	dsp
+	sln
+	vcproj
+	CondExp
+	Microsoft
+	inline
+	scur
+	Vec
+	Rosen
+	Runge-Kutta
+	Linux
+	typedef
+	Cpp
+	atan
+$$
+
+$section Changes and Additions to CppAD During 2005$$
+
+$head Introduction$$
+This section contains a list of the changes plus future plans for 
+CppAD during 2005
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions.
+
+
+$head Wish List$$
+
+$list number$$
+Some 
+$href%
+	http://www.boost.org/libs/concept_check/concept_check.htm%
+	concept checking
+%$$
+was added in the $xref/WhatsNew05/07-04/07-04/$$ release.
+More of this should be done.
+$lnext
+Some users have expressed an interest in having multiple tapes recording
+at the same time. The idea is something like this:
+$codep
+	Independent(x);    // perhaps in thread 1
+	Independent(y);    // perhaps in thread 2
+	z = x * x;         // operation on tape corresponding to x
+	w = y * y;         // operation on tape corresponding to y
+	a = w * z;         // would generate an error because cannot mix tapes
+$$
+$lnext
+It would be useful for $code AD$$ types to have a function that behaves 
+like the coercion from $code double$$ to $code int$$.
+This function would have a derivative that is identically zero; i.e.,
+the resulting integer value would be fixed and not change with the
+$code AD$$ argument.
+$lnext
+The $xref/Atan2//atan2/$$ function could be made faster by adding
+a special operator for it.
+$lend
+
+$head 07-05$$
+The $xref/Rosen34.cpp/$$ example mixed the 
+$xref/CppAD_vector//CppAD::vector/$$ and $xref/CppADvector/$$
+vector types.
+This caused the compilation of the examples to fail when 
+$code CppADvector$$ was defined as something other than 
+$code CppAD::vector$$ (found by Jon Pearce).
+This has been fixed.
+$pre
+
+$$
+The $xref/CheckSimpleVector/$$ run time code has been improved so that it is 
+only run once per case that is being checked.
+$pre
+
+$$
+Simple Vector concept checking ($xref/CheckSimpleVector/$$) was
+added to the routines:
+$xref/ForOne/$$,
+$xref/ForTwo/$$,
+$xref/Forward/$$,
+$xref/ADFun/$$,
+$xref/Hessian/$$,
+$xref/Independent/$$,
+$xref/Jacobian/$$,
+$xref/RevOne/$$,
+$xref/RevTwo/$$, and
+$xref/Reverse/$$.
+
+$head 07-04$$
+Simple Vector concept checking ($xref/CheckSimpleVector/$$) was
+added to the routines:
+$xref/LuFactor/$$,
+$xref/LuSolve/$$,
+$xref/LuInvert/$$,
+$xref/OdeErrControl/$$,
+$xref/Runge45/$$, and
+$xref/Rosen34/$$.
+$pre
+
+$$
+The previous version of the 
+routine $xref/OdeErrControl/$$ was mistakenly in the global namespace. 
+It has been moved to the $code CppAD$$ namespace 
+(where all the other $xref/library/$$ routines are).
+$pre
+
+$$
+The previous distribution (version 05-07-02) was missing the file
+$code CppAD/local/Default.h$$.
+This has been fixed.
+
+$head 07-03$$
+Added $xref/CheckSimpleVector/$$, a C++ concept checking utility
+that checks if a vector type has all the necessary conditions
+to be a $xref/SimpleVector/$$ class with a specific element type.
+
+$head 07-02$$
+Version 7 of Microsoft's C++ compiler
+supports the standard declaration for a friend template function.
+Version 6 did not and 
+CppAD used macros to substitute the empty string for
+$code <Base>$$, $code < AD<Base> >$$, and  $code < VecAD<Base> >$$
+in these declarations.
+These macro substitutions have been removed 
+because Version 6 of Microsoft's C++ compiler
+is no longer supported by CppAD.
+$pre
+
+$$
+The $xref/FromBase/$$ section was split into the $xref/Default//default/$$ 
+constructor and the 
+$xref/FromBase//construction for the base type/$$.
+The construction from base type has been
+extended to include any type that is convertible to the base type.
+As a special case, this provides the previous wish list item of
+a constructor from an arbitrary $italic Base$$ to a 
+$syntax%AD< AD<%Base%> >%$$, $syntax%AD< AD< AD<%Base%> > >%$$ etc.
+
+
+$head 07-01$$
+The permissions were set as executable for many of the no-executable files
+in the distribution; for example, the $code README$$, file.
+This has been fixed.
+
+$head 06-25$$
+Some improvements were made to the 
+README, AUTHORS, COPYING, and INSTALL files.
+In addition, the file
+$href%
+	../UWCopy040507.html%
+	UWCopy040507.html
+%$$
+which contains the University of Washington's copyright
+policy (see Section 2) was added to the distribution.
+
+$head 06-24$$
+The $code List2Vector$$ 
+$xref/ExampleUtility//example utility/$$ is no longer used and has
+been removed.
+
+$head 06-18$$
+CppAD is now supported by Microsoft Visual C++ version 7 or higher.
+The version 6 project files
+$syntax%%*%.dsw%$$ and $syntax%%*%.dsp%$$ 
+have been replaced by the version 7 project files
+$syntax%%*%.sln%$$ and $syntax%%*%.vcproj%$$.
+
+$head 06-14$$
+A new $xref/CondExp.cpp//CondExp example/$$ has been added and
+the old $xref/CondExp/$$ example has been moved to the 
+$code TestMore$$ directory (it is now only a test).
+
+
+$head 06-13$$
+The changes made on 06-06 do not run under Microsoft Visual C++ version 6.0
+(even though they are within the C++ standard).
+Preliminary testing under version 7 indicates that Microsoft
+has fixed this problem in later versions of their C++ compiler.
+
+$head 06-06$$
+Converted the routines
+$xref/Forward/$$ and $xref/Reverse/$$ to allow for any
+$xref/SimpleVector/$$ instead of just $xref/CppADVector/$$.
+In addition, separated the syntax of the function call
+from the prototype for each of the arguments.
+This was also done for all the easy to use $xref/Drivers/$$
+as well as the $xref/Independent/$$ function and
+the $xref/ADFun/$$ constructor.
+$pre
+
+$$
+Add a section containing a list of
+$xref/ListAllExamples//all the examples/$$.
+
+$head 05-19$$
+A significant improvement in speed was obtained by moving
+the buffer extension to a separate function and then 
+inline the rest of putting operators in the tape.
+For example, 
+here is part of the speed test output before this change:
+$codep
+	Tape of Expansion by Minors Determinant: Length = 350, Memory = 6792
+	size = 5 rate = 230
+	size = 4 rate = 1,055
+	size = 3 rate = 3,408
+	size = 2 rate = 7,571
+	size = 1 rate = 13,642
+$$
+and here is the same output after this change:
+$codep
+	Tape of Expansion by Minors Determinant: Length = 350, Memory = 6792
+	size = 5 rate = 448
+	size = 4 rate = 2,004
+	size = 3 rate = 5,761
+	size = 2 rate = 10,221
+	size = 1 rate = 14,734
+$$
+Note that your results will vary depending on operating system and machine.
+
+$head 05-18$$
+Change name of $code OdeControl$$ to $xref/OdeErrControl/$$
+and improve its documentation.
+$pre
+
+$$
+Correct the syntax for the $xref/Parameter/$$ and $code Variable$$ functions.
+
+
+$head 05-16$$
+Change $xref/OdeErrControl/$$ to have method return its order instead
+of having a separate argument to $code OdeErrControl$$.
+$pre
+
+$$
+Add the argument $italic scur$$ to $code OdeErrControl$$,
+improve $code OdeErrControl$$ choice of step size and documentation.
+
+
+$head 05-12$$
+Using profiling, the 
+$xref/Mul//multiplication operator/$$ was show to take a significant
+amount of time. It was reorganized in order to make it faster.
+The profiling indicated an improvement so that same change was made 
+to the following operators:
+$mref/Add/AddEq/Sub/SubEq/MulEq/Div/DivEq/$$.
+
+
+$head 05-06$$
+The documentation for 
+$xref/SimpleVector/$$ and $xref/NearEqual/$$
+were changed to use more syntax (what the user enters)
+and simpler prototypes 
+(the compiler oriented description of the arguments).
+In addition, exercises were added at the end of the
+$xref/SimpleVector/$$, $xref/CppAD_vector/$$, and $xref/NearEqual/$$
+documentation.
+$pre
+
+$$
+There was a undesired divide by zero case in the file 
+$code TestMore/VecUnary.cpp$$ that just happened to work
+in corresponding $xref/NearEqual/$$ check.
+The $code NearEqual$$ routine has been changed
+to return false if either of the values being compared
+is infinite or not a number.
+In addition, the divide by zero has been removed from 
+the $code TestMore/VecUnary.cpp$$ test.
+
+
+
+$head 05-01$$
+The doubly linked list was also removed from the $xref/VecAD/$$
+internal data structure because this method of coding is simpler
+and it makes it more like the rest of CppAD.
+
+$head 04-21$$
+The profiling indicated that the destructor for an AD object was using a 
+significant amount of time.
+The internal data structure of an AD object had a doubly linked list
+that pointed to the current variables and this was modified when
+an AD object was destroyed.
+In order to speed AD operations in general,
+the internal data structure of an AD object has been changed so that
+this list is no longer necessary (a tape id number is used in its place)
+$pre
+
+$$
+During the process above, the function $xref/Parameter//Variable/$$ was added.
+
+
+$head 04-20$$
+Add $xref/InstallUnix/Speed Testing/Profiling/Profiling/1/$$ to
+the speed tests.
+
+$head 04-19$$
+Remove an extra (not necessary) 
+semi-colon from the file $code CppAD/local/Operator.h$$.
+
+$head 03-26$$
+The new routine $xref/OdeErrControl/$$ does
+automatic step size control for the ODE solvers.
+
+$head 03-23$$
+The routine $xref/Rosen34/$$ is an improved stiff integration method
+that has an optional error estimate in the calling sequence.
+You must change all your calls to $code OdeImplicit$$
+to use $code Rosen34$$ (but do not need to change other arguments
+because error estimate is optional).
+
+$head 03-22$$
+The routine $xref/Runge45/$$ is an improved Runge-Kutta method
+that has an optional error estimate in the calling sequence.
+You must change all your calls to $code OdeRunge$$
+to use $code Runge45$$ (but do not need to change other arguments
+because error estimate is optional).
+
+$head 03-09$$
+Some extra semi-colons (empty statements)
+were generating warnings on some compilers.
+The ones that occurred after the macros
+$code CppADStandardMathBinaryFun$$,
+$code CppADCompareMember$$,
+$code CppADBinaryMember$$, and
+$code CppADFoldBinaryOperator$$ have been removed.
+
+$head 03-04$$
+An new multiple tape example $xref/MulTape/$$ was added.
+
+$head 03-01$$
+An option that specifies error and warning 
+$xref/InstallUnix/C++ Errors And Warnings/flags/$$
+for all the C++ compile commands,
+was added to the
+$xref/InstallUnix//Unix installation instructions/$$.
+
+
+$head 02-24$$
+The routine $xref/LuSolve/$$ was split into $xref/LuFactor/$$
+and $xref/LuInvert/$$. This enables one to efficiently
+solve equations where the matrix does not change
+and the right hand side for one equation depends on the 
+left hand side for a previous equation.
+$pre
+
+$$
+An extra requirement was added to the
+$xref/SimpleVector/$$ template class.
+There must be a typedef for $code value_type$$
+which is the type of elements in the vector
+$pre
+
+$$
+Under Mandrake Linux 10.1,
+some template friend declarations were failing because the corresponding
+operations were not declared before being indicated as friends
+(found by 
+$href%mailto:Jean-Pierre.Dussault@Usherbrooke.ca%Jean-Pierre Dussault%$$).
+This has been fixed.
+
+$head 01-08$$
+The $xref/erf/$$ function was added. 
+The implementation of this function used conditional expressions
+($xref/CondExp/$$) and some times the expression that was not
+valid in a region caused division by zero.
+For this reason, the check and abort on division by zero 
+has been removed.
+
+
+$end

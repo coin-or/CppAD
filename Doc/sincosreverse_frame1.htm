@@ -1,0 +1,136 @@
+<html><head>
+<title>Sine and Cosine Functions Reverse Mode Theory</title>
+<meta name="description" content="Sine and Cosine Functions Reverse Mode Theory">
+<meta name="keywords" content=" sin reverse theory cos "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="sqrtreverse.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="atanreverse.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="sincosreverse.htm" target="_top">section</a>, <a href="sincosreverse_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+
+
+
+
+
+
+
+
+<center><b><big><big>Sine and Cosine Functions Reverse Mode Theory</big></big></b></center>
+We use the reverse theory
+<a href="reversetheory_frame1.htm#Standard Math Functions" target="frame1"><i><span style='white-space: nowrap'>standard&nbsp;math&nbsp;function</span></i></a>
+
+definition for the functions <code>
+<span style='white-space: nowrap'>&nbsp;H</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;G</span></code>
+.
+In addition, 
+
+we use <code>
+<span style='white-space: nowrap'>&nbsp;s</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;c</span></code>
+
+for the <i>p</i>-th order Taylor coefficient 
+row vectors corresponding to 
+<code>
+<span style='white-space: nowrap'>&nbsp;\sin&nbsp;[&nbsp;X(t)&nbsp;]</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;\cos&nbsp;[&nbsp;X(t)&nbsp;]</span></code>
+.
+For the sine and cosine function cases,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;z^{(j)}&nbsp;=&nbsp;(&nbsp;s^{(j)}&nbsp;,&nbsp;c^{(j)}&nbsp;)<br>
+\]&nbsp;</span></code>
+ 
+in the definition for <code>
+<span style='white-space: nowrap'>&nbsp;G</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;H</span></code>
+.
+The forward mode formulas for the
+<a href="sinforward.htm" target="_top"><span style='white-space: nowrap'>sine</span></a>
+ and <a href="cosforward.htm" target="_top"><span style='white-space: nowrap'>cosine</span></a>
+ 
+functions are
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s^{(j)}&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;\sin&nbsp;(&nbsp;x^{(0)}&nbsp;)&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c^{(j)}&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;\cos&nbsp;(&nbsp;x^{(0)}&nbsp;)<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+for the case <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;=&nbsp;0</span></code>
+, and for <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;&gt;&nbsp;0</span></code>
+,
+
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+s^{(j)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;\frac{1}{j}&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\sum_{k=1}^{j}&nbsp;k&nbsp;x^{(k)}&nbsp;c^{(j-k)}&nbsp;&nbsp;\\<br>
+c^{(j)}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;-&nbsp;\frac{1}{j}&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\sum_{k=1}^{j}&nbsp;k&nbsp;x^{(k)}&nbsp;s^{(j-k)}&nbsp;<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+ 
+
+If <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;=&nbsp;0</span></code>
+, we have the relation
+
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+\D{H}{&nbsp;x^{(j)}&nbsp;}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+\D{G}{&nbsp;x^{(j)}&nbsp;}&nbsp;&nbsp;<br>
++&nbsp;\D{G}{&nbsp;s^{(j)}&nbsp;}&nbsp;c^{(0)}<br>
+-&nbsp;\D{G}{&nbsp;c^{(j)}&nbsp;}&nbsp;s^{(0)}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+ 
+
+If <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;&gt;&nbsp;0</span></code>
+, then for <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;1,&nbsp;\ldots&nbsp;,&nbsp;j-1</span></code>
+
+
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+\D{H}{&nbsp;x^{(k)}&nbsp;}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+\D{G}{&nbsp;x^{(k)}&nbsp;}&nbsp;&nbsp;<br>
++&nbsp;\D{G}{&nbsp;s^{(j)}&nbsp;}&nbsp;\frac{1}{j}&nbsp;k&nbsp;c^{(j-k)}<br>
+-&nbsp;\D{G}{&nbsp;c^{(j)}&nbsp;}&nbsp;\frac{1}{j}&nbsp;k&nbsp;s^{(j-k)}<br>
+\\<br>
+\D{H}{&nbsp;s^{(j-k)}&nbsp;}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+\D{G}{&nbsp;s^{(j-k)}&nbsp;}&nbsp;-&nbsp;\D{G}{&nbsp;c^{(j)}&nbsp;}&nbsp;k&nbsp;x^{(k)}<br>
+\\<br>
+\D{H}{&nbsp;c^{(j-k)}&nbsp;}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+\D{G}{&nbsp;c^{(j-k)}&nbsp;}&nbsp;+&nbsp;\D{G}{&nbsp;s^{(j)}&nbsp;}&nbsp;k&nbsp;x^{(k)}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+
+<hr>Input File: omh\SinCosReverse.omh
+
+</body>
+</html>

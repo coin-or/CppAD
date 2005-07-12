@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+<title>Definition of a Simple Vector</title>
+<meta name="description" content="Definition of a Simple Vector"/>
+<meta name="keywords" content=" vector simple class template default constructor size copy element destructor assignment resize [] value_type exercise Ndebug "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<frameset cols="15%,*">
+<frame src="simplevector_links.xml"/>
+<frameset rows="100%,*">
+<frame src="simplevector_frame1.xml" name="frame1"/>
+</frameset>
+</frameset>
+</html>

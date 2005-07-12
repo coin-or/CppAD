@@ -1,0 +1,142 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+
+
+$begin Realistic$$
+$spell
+	Cpp
+$$
+
+$mindex real example application$$
+$section Examples Using CppAD in a Realistic Application$$
+
+$childtable%
+	Example/ComplexPoly.cpp%
+	Example/JacMinorDet.cpp%
+	Example/JacLuDet.cpp%
+	Example/HesMinorDet.cpp%
+	Example/HesLuDet.cpp%
+	Example/OdeTaylor.cpp
+%$$
+
+$end
+
+-----------------------------------------------------------------------------
+$begin ExampleUtility$$
+$spell
+	CppAD
+$$
+
+$section Utility Routines used by CppAD Examples$$
+
+$childtable%
+	Example/Example.cpp%
+	Example/NearEqualExt.h%
+	Example/DetOfMinor.h%
+	Example/DetByMinor.h%
+	Example/DetByLu.h%
+	Example/LuVecAD.cpp
+%$$ 
+
+$end
+-----------------------------------------------------------------------------
+$begin ListAllExamples$$
+$spell 
+	CppAD
+$$
+
+$section List of All the CppAD Examples$$
+
+$comment 
+	omit:   TestOne.cpp OneCase.cpp LuVecAD.cpp
+$$
+
+$table
+$rref Abs.cpp$$
+$rref Acos.cpp$$
+$rref Add.cpp$$
+$rref AddEq.cpp$$
+$rref Asin.cpp$$
+$rref Atan.cpp$$
+$rref Atan2.cpp$$
+$rref BoolFun.cpp$$
+$rref Compare.cpp$$
+$rref CompareChange.cpp$$
+$rref ComplexPoly.cpp$$
+$rref CondExp.cpp$$
+$rref Copy.cpp$$
+$rref Cos.cpp$$
+$rref CppAD_vector.cpp$$
+$rref DetByLu.cpp$$
+$rref DetByMinor.cpp$$
+$rref DetOfMinor.cpp$$
+$rref Discrete.cpp$$
+$rref Div.cpp$$
+$rref DivEq.cpp$$
+$rref Eq.cpp$$
+$rref Erf.cpp$$
+$rref Example.cpp$$
+$rref Exp.cpp$$
+$rref ForOne.h$$
+$rref ForTwo.h$$
+$rref Forward.h$$
+$rref FromBase.cpp$$
+$rref Fun.h$$
+$rref HesLuDet.cpp$$
+$rref HesMinorDet.cpp$$
+$rref HesTimesDir.cpp$$
+$rref Hessian.h$$
+$rref JacLuDet.cpp$$
+$rref JacMinorDet.cpp$$
+$rref Jacobian.h$$
+$rref Log.cpp$$
+$rref Log10.cpp$$
+$rref LuFactor.cpp$$
+$rref LuInvert.cpp$$
+$rref LuSolve.cpp$$
+$rref LuVecADOk.cpp$$
+$rref Mul.cpp$$
+$rref MulEq.cpp$$
+$rref Multape.cpp$$
+$rref Near_Equal.cpp$$
+$rref Neg.cpp$$
+$rref OdeErrControl.cpp$$
+$rref OdeTaylor.cpp$$
+$rref Output.cpp$$
+$rref Poly.cpp$$
+$rref Pow.cpp$$
+$rref PowInt.cpp$$
+$rref RevOne.h$$
+$rref RevTwo.h$$
+$rref Reverse.h$$
+$rref Rosen34.cpp$$
+$rref Runge45.cpp$$
+$rref SimpleVector.cpp$$
+$rref Sin.cpp$$
+$rref Sqrt.cpp$$
+$rref Sub.cpp$$
+$rref SubEq.cpp$$
+$rref Value.cpp$$
+$rref Vec.cpp$$
+$tend
+
+$end
+

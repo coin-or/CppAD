@@ -1,0 +1,149 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+$begin MulTape$$
+$spell
+	Taylor
+	fout
+	const
+	var
+	Cpp
+	CppADvector
+	Arg
+$$
+
+$index multiple, tape$$
+$index tape, multiple$$
+$index derivative, tape calculation$$
+
+$section Using Multiple Tapes$$
+
+
+$head Background$$
+If $italic f$$ is an $syntax%ADFun<%Base%>%$$ object,
+the vectors returned by 
+$xref/Forward//f.Forward/$$,
+and
+$xref/Reverse//f.Reverse/$$,
+have values in the base type ($italic Base$$) and not
+$syntax%AD<%Base%>%$$.
+This reflects the fact that operations used to calculate
+these function values are not recorded by the tape corresponding to
+$syntax%AD<%Base%>%$$ operations. 
+
+$head Motivation$$
+Suppose that you uses derivatives of one or more inner functions
+as part of the operations 
+needed to compute an outer function.
+For example,
+the derivatives returned by $syntax%%f%.Forward%$$
+might be used as part of 
+Taylor's method for solving ordinary
+differential equations. 
+In addition, we might want to differentiate the
+solution of a differential equation with respect to parameters
+in the equation.
+This can be accomplished in the following way:
+
+$list number$$
+The operations during the calculations of the function defining the
+differential equation could be preformed using the a class of the form
+$syntax% AD< AD<double> >%$$. 
+
+$lnext
+The operations during the calculation of Taylor's method
+could be preformed using the $syntax% AD<double>%$$ class.
+
+$lnext
+The results of the solution of the differential equation
+could then be preformed using the $code double$$ class.
+
+$lend
+
+$head General Solution$$
+Provided that we are currently recording
+$syntax% AD<double>%$$ operations,
+and $italic fin$$ is an $syntax%ADFun< AD<double> >%$$ object,
+the operations used to compute the vectors
+returned by 
+$syntax%%fin%.Forward%$$,
+$syntax%%fin%.Rev%$$,
+and
+$syntax%%fin%.RevTwo%$$,
+will be recorded on the tape corresponding to
+$syntax%AD<double>%$$ operations. 
+
+
+$head General Procedure$$
+
+$subhead Start ADBaseTape$$
+The first step is to declare the independent variables using a
+$syntax%CppADvector<double>%$$ argument to the
+$xref/Independent/$$ function.
+This will start recording all
+operations performed using $syntax%AD<double>%$$ class objects.
+
+$subhead Start ADDBaseTape$$
+The next step is to declare the independent variables using a
+$syntax%CppADvector< AD< AD<double> > >%$$ argument to the
+$code Independent$$ function.
+This will start recording all
+operations performed using $syntax%AD< AD<double> >%$$ class objects.
+
+$subhead Inner Function Calculations$$
+The next step is to calculation
+the inner functions 
+using $syntax%AD< AD<double> >%$$ class objects.
+
+$subhead Derivative of Inner Function$$
+The next step is to create the 
+$syntax%ADFun< AD<double> >%$$ function object $italic fin$$.
+This will also stop the recording of
+operations performed using $syntax%AD< AD<double> >%$$ class objects.
+The $italic fin$$ object can then be used to calculate
+the derivatives needed to compute the outer function.
+
+$subhead Outer Function$$
+The next step is to compute the 
+outer function
+using $syntax%AD<double>%$$ class objects.
+
+$subhead Derivative of Outer Function$$
+The next step is to create the 
+$syntax%ADFun<double>%$$ function object $italic fout$$.
+This will also stop the recording of
+operations performed using $syntax%AD<double>%$$ class objects.
+The $italic fout$$ object can then be used to calculate
+the derivatives of the outer function.
+
+
+$children%
+	Example/MulTape.cpp
+%$$
+
+$head Example$$
+The file
+$xref/MulTape.cpp/$$
+contains an example and a test of this procedure.   
+It returns true if it succeeds and false otherwise.
+The file $xref/OdeTaylor.cpp/$$ is a more complex example
+use of multiple tapes.
+
+$end

@@ -1,0 +1,65 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Routines That Speed Test CppAD</title>
+<meta name="description" content="Routines That Speed Test CppAD"/>
+<meta name="keywords" content=" speed test "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="reverseidentity.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="speed.cpp.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="speed.xml" target="_top">section</a>, <a href="speed_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Routines That Speed Test CppAD</big></big></b></center>
+<br/>
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+These examples are in the directory <code><font color="blue">CppAD/Speed</font></code>.
+
+
+<br/>
+<br/>
+<b><big><a name="Unix">Unix</a></big></b>
+<br/>
+In a unix operating system (or in a Cygwin shell on an Microsoft system),
+you can compile link and run the list of examples and 
+verification tests with the following commands:
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;cd&#xA0;CppAD/Speed<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;make&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Speed<br/>
+</span>
+</font></code>
+<br/>
+<b><big><a name="Windows">Windows</a></big></b>
+<br/>
+In Microsoft Visual Studio.
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;File&#xA0;|&#xA0;Open&#xA0;Workspace&#xA0;|&#xA0;CppAD\Speed\Speed.dsw<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Build&#xA0;|&#xA0;Set&#xA0;Active&#xA0;Configuration&#xA0;|&#xA0;Speed&#xA0;-&#xA0;Win32&#xA0;Release<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Build&#xA0;|&#xA0;Speed.exe<br/>
+</span>
+</font></code>
+<br/>
+<b><big><a name="Contents">Contents</a></big></b>
+<br/>
+<div><a href="speed.cpp.xml" target="_top">Run&#xA0;All&#xA0;The&#xA0;Speed&#xA0;Tests</a><br/>
+<a href="detminorspeed.cpp.xml" target="_top">Determinant&#xA0;Using&#xA0;Expansion&#xA0;by&#xA0;Minors:&#xA0;Speed&#xA0;Test</a><br/>
+<a href="detluspeed.cpp.xml" target="_top">Determinant&#xA0;by&#xA0;Lu&#xA0;Factor&#xA0;and&#xA0;Solve:&#xA0;Speed&#xA0;Test</a><br/>
+<a href="odespeed.cpp.xml" target="_top">ODE&#xA0;Solver:&#xA0;Speed&#xA0;Test</a><br/>
+<a href="lusolvespeed.cpp.xml" target="_top">Speed&#xA0;Test&#xA0;Lu&#xA0;Factor&#xA0;and&#xA0;Solve:&#xA0;Example&#xA0;and&#xA0;Test</a><br/>
+</div>
+<hr/>Input File: omh\Speed.omh
+
+</body>
+</html>

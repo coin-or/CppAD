@@ -1,0 +1,68 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+/*
+$begin Developer$$
+$spell
+	Num
+	Op
+	Dep
+	Prog
+	ivalue
+	Len
+	Cpp
+	const
+	Var
+	ptr
+$$
+$aindex head$$
+
+$section CppAD Developer Documentation$$
+
+$table
+$bold Syntax$$
+$cnext $syntax%AD<%Base%> %x%$$
+$tend
+
+$fend 20$$
+
+$head Description$$
+This is the documentation for the implementation details for CppAD.
+Routines and data structures that are visible to the 
+CppAD user, are documented in $href%../Doc/CppAD.xml%$$.
+
+$contents%
+	omh/Distribute.omh%
+	omh/NewFeature.omh%
+	CppAD/local/ADDefine.h%
+	CppAD/local/Ordered.h%
+	CppAD/local/Identical.h%
+	CppAD/local/Integer.h%
+	CppAD/local/Operator.h%
+	CppAD/local/TapeRec.h%
+	CppAD/local/ADTape.h%
+	CppAD/local/ADBoolFun.h%
+	CppAD/local/Op.h%
+	CppAD/local/ADForward.h%
+	CppAD/local/ADReverse.h%
+	CppAD/local/ExtendBuffer.h
+%$$
+
+
+$end

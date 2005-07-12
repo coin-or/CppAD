@@ -1,0 +1,124 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>LuInvert: Example and Test</title>
+<meta name="description" content="LuInvert: Example and Test"/>
+<meta name="keywords" content=" example Luinvert test "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="luinvert.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="luinvert.h.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="luinvert.cpp.xml" target="_top">section</a>, <a href="luinvert.cpp_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>LuInvert: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+#&#xA0;include&#xA0;&lt;cstdlib&gt;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;for&#xA0;rand&#xA0;function<br/>
+#&#xA0;include&#xA0;&lt;CppAD/LuInvert.h&gt;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;for&#xA0;CppAD::LuInvert<br/>
+#&#xA0;include&#xA0;&lt;CppAD/NearEqual.h&gt;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;for&#xA0;CppAD::NearEqual<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD_vector.h&gt;&#xA0;&#xA0;//&#xA0;for&#xA0;CppAD::vector<br/>
+<br/>
+bool&#xA0;LuInvert(void)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;&#xA0;ok&#xA0;=&#xA0;true;<br/>
+<br/>
+#&#xA0;ifndef&#xA0;_MSC_VER<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;std::rand;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;std::srand;<br/>
+#&#xA0;endif<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;n&#xA0;=&#xA0;7;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;number&#xA0;rows&#xA0;in&#xA0;A&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;m&#xA0;=&#xA0;3;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;number&#xA0;columns&#xA0;in&#xA0;B<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;&#xA0;rand_max&#xA0;=&#xA0;double(RAND_MAX);&#xA0;&#xA0;//&#xA0;maximum&#xA0;rand&#xA0;value<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;&#xA0;sum;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;element&#xA0;of&#xA0;L&#xA0;*&#xA0;U<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;i,&#xA0;j,&#xA0;k;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;temporary&#xA0;indices<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;dimension&#xA0;matrices<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppAD::vector&lt;double&gt;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;A(n*n),&#xA0;X(n*m),&#xA0;B(n*m),&#xA0;LU(n*n),&#xA0;L(n*n),&#xA0;U(n*n);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;seed&#xA0;the&#xA0;random&#xA0;number&#xA0;generator<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;srand(123);&#xA0;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;pivot&#xA0;vectors<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppAD::vector&lt;size_t&gt;&#xA0;ip(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppAD::vector&lt;size_t&gt;&#xA0;jp(n);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;set&#xA0;pivot&#xA0;vectors<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;ip[i]&#xA0;=&#xA0;(i&#xA0;+&#xA0;2)&#xA0;%&#xA0;n;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;ip&#xA0;=&#xA0;2&#xA0;,&#xA0;3,&#xA0;...&#xA0;,&#xA0;n-1,&#xA0;0,&#xA0;1<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;jp[i]&#xA0;=&#xA0;(n&#xA0;+&#xA0;2&#xA0;-&#xA0;i)&#xA0;%&#xA0;n;&#xA0;&#xA0;//&#xA0;jp&#xA0;=&#xA0;2&#xA0;,&#xA0;1,&#xA0;n-1,&#xA0;n-2,&#xA0;...&#xA0;,&#xA0;3<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;chose&#xA0;L,&#xA0;a&#xA0;random&#xA0;lower&#xA0;triangular&#xA0;matrix<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;0;&#xA0;j&#xA0;&lt;=&#xA0;i;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;L&#xA0;[i&#xA0;*&#xA0;n&#xA0;+&#xA0;j]&#xA0;&#xA0;=&#xA0;rand()&#xA0;/&#xA0;rand_max;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;i+1;&#xA0;j&#xA0;&lt;&#xA0;n;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;L&#xA0;[i&#xA0;*&#xA0;n&#xA0;+&#xA0;j]&#xA0;&#xA0;=&#xA0;0.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;chose&#xA0;U,&#xA0;a&#xA0;random&#xA0;upper&#xA0;triangular&#xA0;matrix&#xA0;with&#xA0;ones&#xA0;on&#xA0;diagonal<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;0;&#xA0;j&#xA0;&lt;&#xA0;i;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;U&#xA0;[i&#xA0;*&#xA0;n&#xA0;+&#xA0;j]&#xA0;&#xA0;=&#xA0;0.;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;U[&#xA0;i&#xA0;*&#xA0;n&#xA0;+&#xA0;i&#xA0;]&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;i+1;&#xA0;j&#xA0;&lt;&#xA0;n;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;U&#xA0;[i&#xA0;*&#xA0;n&#xA0;+&#xA0;j]&#xA0;&#xA0;=&#xA0;rand()&#xA0;/&#xA0;rand_max;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;chose&#xA0;X,&#xA0;a&#xA0;random&#xA0;matrix<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;for(k&#xA0;=&#xA0;0;&#xA0;k&#xA0;&lt;&#xA0;m;&#xA0;k++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;X[i&#xA0;*&#xA0;m&#xA0;+&#xA0;k]&#xA0;=&#xA0;rand()&#xA0;/&#xA0;rand_max;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;set&#xA0;LU&#xA0;to&#xA0;a&#xA0;permuted&#xA0;combination&#xA0;of&#xA0;both&#xA0;L&#xA0;and&#xA0;U<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;0;&#xA0;j&#xA0;&lt;=&#xA0;i;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;LU&#xA0;[&#xA0;ip[i]&#xA0;*&#xA0;n&#xA0;+&#xA0;jp[j]&#xA0;]&#xA0;&#xA0;=&#xA0;L[i&#xA0;*&#xA0;n&#xA0;+&#xA0;j];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;i+1;&#xA0;j&#xA0;&lt;&#xA0;n;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;LU&#xA0;[&#xA0;ip[i]&#xA0;*&#xA0;n&#xA0;+&#xA0;jp[j]&#xA0;]&#xA0;&#xA0;=&#xA0;U[i&#xA0;*&#xA0;n&#xA0;+&#xA0;j];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;set&#xA0;A&#xA0;to&#xA0;a&#xA0;permuted&#xA0;version&#xA0;of&#xA0;L&#xA0;*&#xA0;U&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;0;&#xA0;j&#xA0;&lt;&#xA0;n;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;compute&#xA0;(i,j)&#xA0;entry&#xA0;in&#xA0;permuted&#xA0;matrix<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;sum&#xA0;=&#xA0;0.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(k&#xA0;=&#xA0;0;&#xA0;k&#xA0;&lt;&#xA0;n;&#xA0;k++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;sum&#xA0;+=&#xA0;L[i&#xA0;*&#xA0;n&#xA0;+&#xA0;k]&#xA0;*&#xA0;U[k&#xA0;*&#xA0;n&#xA0;+&#xA0;j];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;A[&#xA0;ip[i]&#xA0;*&#xA0;n&#xA0;+&#xA0;jp[j]&#xA0;]&#xA0;=&#xA0;sum;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;set&#xA0;B&#xA0;to&#xA0;A&#xA0;*&#xA0;X<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;for(k&#xA0;=&#xA0;0;&#xA0;k&#xA0;&lt;&#xA0;m;&#xA0;k++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;compute&#xA0;(i,k)&#xA0;entry&#xA0;of&#xA0;B<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;sum&#xA0;=&#xA0;0.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;0;&#xA0;j&#xA0;&lt;&#xA0;n;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;sum&#xA0;+=&#xA0;A[i&#xA0;*&#xA0;n&#xA0;+&#xA0;j]&#xA0;*&#xA0;X[j&#xA0;*&#xA0;m&#xA0;+&#xA0;k];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;B[i&#xA0;*&#xA0;m&#xA0;+&#xA0;k]&#xA0;=&#xA0;sum;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;solve&#xA0;for&#xA0;X<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppAD::LuInvert(ip,&#xA0;jp,&#xA0;LU,&#xA0;B);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;check&#xA0;result<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;n;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;for(k&#xA0;=&#xA0;0;&#xA0;k&#xA0;&lt;&#xA0;m;&#xA0;k++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;CppAD::NearEqual(<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;X[i&#xA0;*&#xA0;m&#xA0;+&#xA0;k],&#xA0;B[i&#xA0;*&#xA0;m&#xA0;+&#xA0;k],&#xA0;1e-10,&#xA0;1e-10<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;ok;<br/>
+}<br/>
+<br/>
+</span></font></code>
+<hr/>Input File: Example\LuInvert.cpp
+
+</body>
+</html>

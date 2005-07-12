@@ -1,0 +1,72 @@
+<html><head>
+<title>The Power Function</title>
+<meta name="description" content="The Power Function">
+<meta name="keywords" content=" pow exponent "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="pow.htm" target="_top">section</a>, <a href="pow_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+Returns an
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object specified by
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\rm&nbsp;pow}&nbsp;(x,&nbsp;y)&nbsp;=&nbsp;x^y<br>
+\]&nbsp;</span></code>
+
+If <i>y</i> is an <code><font color="blue">int</font></code>, the calculation is performed using
+repeated multiplications.
+Otherwise the <a href="log.htm" target="_top"><span style='white-space: nowrap'>log</span></a>
+ of <i>y</i> must be defined.
+(for example, if <i>y</i> is zero, its log is not defined).
+
+
+<br>
+<br>
+<b><big><a name="Assumptions">Assumptions</a></big></b>
+<br>
+If <i>y</i> is not an <code><font color="blue">int</font></code>,
+the derivative assumptions for the 
+<a href="log.htm" target="_top"><span style='white-space: nowrap'>log</span></a>
+ and <a href="exp.htm" target="_top"><span style='white-space: nowrap'>exp</span></a>
+ functions must hold.
+
+<br>
+<br>
+<b><big><a name="Standard Base Types">Standard Base Types</a></big></b>
+<br>
+A definition for the <code><font color="blue">pow</font></code> function
+is automatically included (in the <code><font color="blue">CppAD</font></code> namespace)
+for the following 
+<a href="glossary_frame1.htm#Base Type" target="frame1"><i><span style='white-space: nowrap'>base&nbsp;types</span></i></a>
+:
+<code><font color="blue">float</font></code>, <code><font color="blue">double</font></code>, <code><font color="blue">complex&lt;float&gt;</font></code>, 
+and <code><font color="blue">complex&lt;double&gt;</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="powint.cpp.htm" target="_top"><span style='white-space: nowrap'>PowInt.cpp</span></a>
+
+contains an example and test of this function for the case
+where <i>y</i> is an <code><font color="blue">int</font></code>.   
+The file
+<a href="pow.cpp.htm" target="_top"><span style='white-space: nowrap'>Pow.cpp</span></a>
+
+contains an example and test of this function for the case
+where <i>y</i> is not an <code><font color="blue">int</font></code>.   
+Both tests return true if they succeed and false otherwise.
+
+
+<hr>Input File: CppAD\local\Pow.h
+
+</body>
+</html>

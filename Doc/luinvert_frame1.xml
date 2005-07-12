@@ -1,0 +1,35 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Invert an LU Factored Equation</title>
+<meta name="description" content="Invert an LU Factored Equation"/>
+<meta name="keywords" content=" Luinvert linear invert Lu equation "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="lufactor.h.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="luinvert.cpp.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="luinvert.xml" target="_top">section</a>, <a href="luinvert_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Invert an LU Factored Equation</big></big></b></center>
+<code><span style='white-space: nowrap'><br/>
+</span></code><table><tr><td align='left'  valign='top'>
+<b>Syntax</b> </td><td align='left'  valign='top'>
+ <code><font color="blue"># include &lt;CppAD/LuInvert.h&gt;</font></code>
+</td></tr><tr><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 
+<code><font color="blue"><span style='white-space: nowrap'>LuInvert(</span></font></code><i><span style='white-space: nowrap'>ip</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font></code><i><span style='white-space: nowrap'>jp</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font></code><i><span style='white-space: nowrap'>LU</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font></code><i><span style='white-space: nowrap'>X</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+</td></tr>
+</table>
+
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Compute the Determinant of a Minor: Source Code</title>
+<meta name="description" content="Compute the Determinant of a Minor: Source Code"/>
+<meta name="keywords" content=" Detofminor determinant minor matrix "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="detofminor.cpp.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="detbyminor.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="detofminor.h.xml" target="_top">section</a>, <a href="detofminor.h_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+
+
+
+<center><b><big><big>Compute the Determinant of a Minor: Source Code</big></big></b></center>
+<code><font color="blue"># ifndef CppADDetOfMinorIncluded
+<code><span style='white-space: nowrap'><br/>
+</span></code># define CppADDetOfMinorIncluded
+
+<span style='white-space: nowrap'><br/>
+<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD.h&gt;<br/>
+<br/>
+<br/>
+//&#xA0;BEGIN&#xA0;CppAD&#xA0;namespace<br/>
+namespace&#xA0;CppAD&#xA0;{<br/>
+<br/>
+template&#xA0;&lt;class&#xA0;Type&gt;<br/>
+Type&#xA0;DetOfMinor(<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;CppADvector&lt;Type&gt;&#xA0;&amp;A,&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;m,&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;n,&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;size_t&gt;&#xA0;&amp;r,&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;size_t&gt;&#xA0;&amp;c)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;R0;&#xA0;&#xA0;//&#xA0;R(0)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Cj;&#xA0;&#xA0;//&#xA0;C(j)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;&#xA0;previous;&#xA0;&#xA0;//&#xA0;C(j)&#xA0;=&#xA0;c[previous]<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;j;&#xA0;&#xA0;//&#xA0;column&#xA0;index&#xA0;in&#xA0;M<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Type&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;detM;&#xA0;&#xA0;//&#xA0;determinant&#xA0;of&#xA0;M<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Type&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;detS;&#xA0;&#xA0;//&#xA0;determinant&#xA0;of&#xA0;sub-minor&#xA0;of&#xA0;M<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Type&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;m0j;&#xA0;&#xA0;//&#xA0;an&#xA0;element&#xA0;of&#xA0;the&#xA0;first&#xA0;row&#xA0;of&#xA0;M<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;int&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;s;&#xA0;&#xA0;&#xA0;//&#xA0;sign&#xA0;of&#xA0;the&#xA0;current&#xA0;sub-minor&#xA0;in&#xA0;summation<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;indices&#xA0;in&#xA0;A&#xA0;of&#xA0;M(0,&#xA0;0)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;R0&#xA0;=&#xA0;r[m];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Cj&#xA0;=&#xA0;c[m];<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;check&#xA0;for&#xA0;1&#xA0;by&#xA0;1&#xA0;case<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;if(&#xA0;n&#xA0;==&#xA0;1&#xA0;)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;A[&#xA0;R0&#xA0;*&#xA0;m&#xA0;+&#xA0;Cj&#xA0;];<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;/*<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;compute&#xA0;determinant&#xA0;of&#xA0;M&#xA0;by&#xA0;expanding&#xA0;minors&#xA0;along&#xA0;its&#xA0;first&#xA0;row<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;*/<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;initialize&#xA0;summation<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;detM&#xA0;=&#xA0;0;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;initialize&#xA0;sign&#xA0;of&#xA0;permutation<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;s&#xA0;=&#xA0;1;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;remove&#xA0;first&#xA0;row&#xA0;from&#xA0;sub-minors&#xA0;of&#xA0;M<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;r[m]&#xA0;=&#xA0;r[R0];<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;initialize&#xA0;previous&#xA0;column&#xA0;index<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;previous&#xA0;=&#xA0;m;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;for&#xA0;each&#xA0;column&#xA0;of&#xA0;M<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;0;&#xA0;j&#xA0;&lt;&#xA0;n;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;M(0,&#xA0;j)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;m0j&#xA0;=&#xA0;A[&#xA0;R0&#xA0;*&#xA0;m&#xA0;+&#xA0;Cj&#xA0;];<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;remove&#xA0;column&#xA0;index&#xA0;j&#xA0;from&#xA0;sub-minor&#xA0;of&#xA0;M<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;c[previous]&#xA0;=&#xA0;c[Cj];<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;determinant&#xA0;of&#xA0;subminor<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;detS&#xA0;=&#xA0;DetOfMinor(A,&#xA0;m,&#xA0;n&#xA0;-&#xA0;1,&#xA0;r,&#xA0;c);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;restore&#xA0;column&#xA0;index&#xA0;j&#xA0;to&#xA0;sub-minor&#xA0;of&#xA0;M<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;c[previous]&#xA0;=&#xA0;Cj;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;include&#xA0;in&#xA0;summation<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;if(&#xA0;s&#xA0;&gt;&#xA0;0&#xA0;)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;detM&#xA0;=&#xA0;detM&#xA0;+&#xA0;m0j&#xA0;*&#xA0;detS;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;else<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;detM&#xA0;=&#xA0;detM&#xA0;-&#xA0;m0j&#xA0;*&#xA0;detS;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;advance&#xA0;to&#xA0;next&#xA0;column&#xA0;of&#xA0;M<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;previous&#xA0;=&#xA0;Cj;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Cj&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;c[Cj];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;s&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;-s;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;restore&#xA0;column&#xA0;index&#xA0;zero&#xA0;to&#xA0;M<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;r[m]&#xA0;=&#xA0;R0;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;detM;<br/>
+}<br/>
+<br/>
+}&#xA0;//&#xA0;END&#xA0;CppAD&#xA0;namespace<br/>
+<br/>
+</span># endif
+</font></code>
+
+
+<hr/>Input File: Example\DetOfMinor.h
+
+</body>
+</html>

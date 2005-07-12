@@ -1,0 +1,112 @@
+<html><head>
+<title>Square Root Function Reverse Mode Theory</title>
+<meta name="description" content="Square Root Function Reverse Mode Theory">
+<meta name="keywords" content=" sqrt reverse theory "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="logreverse.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="sincosreverse.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="sqrtreverse.htm" target="_top">section</a>, <a href="sqrtreverse_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+
+
+
+
+<center><b><big><big>Square Root Function Reverse Mode Theory</big></big></b></center>
+We use the reverse theory
+<a href="reversetheory_frame1.htm#Standard Math Functions" target="frame1"><i><span style='white-space: nowrap'>standard&nbsp;math&nbsp;function</span></i></a>
+
+definition for the functions <code>
+<span style='white-space: nowrap'>&nbsp;H</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;G</span></code>
+.
+
+The forward mode formulas for the
+<a href="sqrtforward.htm" target="_top"><span style='white-space: nowrap'>square&nbsp;root</span></a>
+
+function are
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;z^{(j)}&nbsp;&nbsp;=&nbsp;&nbsp;\sqrt&nbsp;{&nbsp;x^{(0)}&nbsp;}&nbsp;<br>
+\]&nbsp;</span></code>
+
+
+for the case <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;=&nbsp;0</span></code>
+, and for <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;&gt;&nbsp;0</span></code>
+,
+
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+z^{(j)}&nbsp;&nbsp;=&nbsp;&nbsp;\frac{1}{j}&nbsp;\frac{1}{&nbsp;z^{(0)}&nbsp;}&nbsp;<br>
+\left(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\frac{j}{2}&nbsp;x^{(j)&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;\sum_{k=1}^{j-1}&nbsp;k&nbsp;z^{(k)}&nbsp;z^{(j-k)}&nbsp;&nbsp;<br>
+\right)<br>
+\]&nbsp;</span></code>
+ 
+
+If <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;=&nbsp;0</span></code>
+, we have the relation
+
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+\D{H}{&nbsp;x^{(j)}&nbsp;}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+\D{G}{&nbsp;x^{(j)}&nbsp;}&nbsp;&nbsp;+&nbsp;\D{G}{&nbsp;z^{(j)}&nbsp;}&nbsp;\D{&nbsp;z^{(j)}&nbsp;}{&nbsp;x^{(0)}&nbsp;}<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+\D{G}{&nbsp;x^{(j)}&nbsp;}&nbsp;&nbsp;+&nbsp;\D{G}{&nbsp;z^{(j)}&nbsp;}&nbsp;\frac{1}{2&nbsp;z^{(0)}&nbsp;}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+If <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;&gt;&nbsp;0</span></code>
+, then for <code>
+<span style='white-space: nowrap'>&nbsp;k&nbsp;=&nbsp;1,&nbsp;\ldots&nbsp;,&nbsp;j-1</span></code>
+
+
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+\D{H}{&nbsp;z^{(0)}&nbsp;}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+\D{G}{&nbsp;z^{(0)}&nbsp;}&nbsp;&nbsp;+&nbsp;\D{G}&nbsp;{&nbsp;z^{(j)}&nbsp;}&nbsp;\D{&nbsp;z^{(j)}&nbsp;}{&nbsp;z^{(0)}&nbsp;}&nbsp;<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+\D{G}{&nbsp;z^{(0)}&nbsp;}&nbsp;&nbsp;-&nbsp;<br>
+\D{G}{&nbsp;z^{(j)}&nbsp;}&nbsp;&nbsp;\frac{&nbsp;z^{(j)}&nbsp;}{&nbsp;z^{(0)}&nbsp;}<br>
+\\<br>
+\D{H}{&nbsp;x^{(j)}&nbsp;}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+\D{G}{&nbsp;x^{(j)}&nbsp;}&nbsp;&nbsp;+&nbsp;\D{G}{&nbsp;z^{(j)}&nbsp;}&nbsp;\D{&nbsp;z^{(j)}&nbsp;}{&nbsp;x^{(j)}&nbsp;}<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+\D{G}{&nbsp;x^{(j)}&nbsp;}&nbsp;&nbsp;+&nbsp;\D{G}{&nbsp;z^{(j)}&nbsp;}&nbsp;\frac{1}{&nbsp;2&nbsp;z^{(0)}&nbsp;}&nbsp;<br>
+\\<br>
+\D{H}{&nbsp;z^{(k)}&nbsp;}&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;<br>
+\D{G}{&nbsp;z^{(k)}&nbsp;}&nbsp;&nbsp;-&nbsp;\D{G}{&nbsp;z^{(j)}&nbsp;}&nbsp;\D{&nbsp;z^{(j)}&nbsp;}{&nbsp;z^{(k)}&nbsp;}<br>
+\\<br>
+&amp;&nbsp;=&nbsp;&amp;<br>
+\D{G}{&nbsp;z^{(k)}&nbsp;}&nbsp;&nbsp;-&nbsp;\D{G}{&nbsp;z^{(j)}&nbsp;}&nbsp;\frac{&nbsp;z^{(j-k)}&nbsp;}{&nbsp;z^{(0)}&nbsp;}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+
+<hr>Input File: omh\SqrtReverse.omh
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+<html><head>
+<title>LuFactor Source Code</title>
+<meta name="description" content="LuFactor Source Code">
+<meta name="keywords" content=" Lufactor source matrix "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="lufactor.cpp.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="luinvert.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="lufactor.h.htm" target="_top">section</a>, <a href="lufactor.h_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+<center><b><big><big>LuFactor Source Code</big></big></b></center>
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+#&nbsp;include&nbsp;&lt;complex&gt;<br>
+#&nbsp;include&nbsp;&lt;vector&gt;<br>
+<br>
+#&nbsp;ifdef&nbsp;_MSC_VER<br>
+//&nbsp;Fix&nbsp;for&nbsp;problem&nbsp;with&nbsp;MSC&nbsp;standard&nbsp;math&nbsp;functions&nbsp;name&nbsp;space&nbsp;location<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;&nbsp;&nbsp;<br>
+#&nbsp;endif<br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppADError.h&gt;<br>
+#&nbsp;include&nbsp;&lt;CppAD/CheckSimpleVector.h&gt;<br>
+<br>
+namespace&nbsp;CppAD&nbsp;{&nbsp;//&nbsp;BEGIN&nbsp;CppAD&nbsp;namespace<br>
+<br>
+//&nbsp;AbsGeq<br>
+template&nbsp;&lt;typename&nbsp;Float&gt;<br>
+inline&nbsp;bool&nbsp;AbsGeq(const&nbsp;Float&nbsp;&amp;x,&nbsp;const&nbsp;Float&nbsp;&amp;y)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;Float&nbsp;xabs&nbsp;=&nbsp;x;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;xabs&nbsp;&lt;=&nbsp;Float(0)&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xabs&nbsp;=&nbsp;-&nbsp;xabs;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Float&nbsp;yabs&nbsp;=&nbsp;y;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;yabs&nbsp;&lt;=&nbsp;Float(0)&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yabs&nbsp;=&nbsp;-&nbsp;yabs;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;xabs&nbsp;&gt;=&nbsp;yabs;<br>
+}<br>
+inline&nbsp;bool&nbsp;AbsGeq(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::complex&lt;double&gt;&nbsp;&amp;x,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::complex&lt;double&gt;&nbsp;&amp;y)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;xsq&nbsp;=&nbsp;x.real()&nbsp;*&nbsp;x.real()&nbsp;+&nbsp;x.imag()&nbsp;*&nbsp;x.imag();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;ysq&nbsp;=&nbsp;y.real()&nbsp;*&nbsp;y.real()&nbsp;+&nbsp;y.imag()&nbsp;*&nbsp;y.imag();<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;xsq&nbsp;&gt;=&nbsp;ysq;<br>
+}<br>
+inline&nbsp;bool&nbsp;AbsGeq(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::complex&lt;float&gt;&nbsp;&amp;x,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;std::complex&lt;float&gt;&nbsp;&amp;y)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;float&nbsp;xsq&nbsp;=&nbsp;x.real()&nbsp;*&nbsp;x.real()&nbsp;+&nbsp;x.imag()&nbsp;*&nbsp;x.imag();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;float&nbsp;ysq&nbsp;=&nbsp;y.real()&nbsp;*&nbsp;y.real()&nbsp;+&nbsp;y.imag()&nbsp;*&nbsp;y.imag();<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;xsq&nbsp;&gt;=&nbsp;ysq;<br>
+}<br>
+<br>
+//&nbsp;LuFactor<br>
+template&nbsp;&lt;typename&nbsp;SizeVector,&nbsp;typename&nbsp;FloatVector&gt;<br>
+int&nbsp;LuFactor(SizeVector&nbsp;&amp;ip,&nbsp;SizeVector&nbsp;&amp;jp,&nbsp;FloatVector&nbsp;&amp;LU)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;type&nbsp;of&nbsp;the&nbsp;elements&nbsp;of&nbsp;LU<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef&nbsp;typename&nbsp;FloatVector::value_type&nbsp;Float;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;check&nbsp;simple&nbsp;vector&nbsp;class&nbsp;specifications<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CheckSimpleVector&lt;Float,&nbsp;FloatVector&gt;();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CheckSimpleVector&lt;size_t,&nbsp;SizeVector&gt;();<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;i,&nbsp;j;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;some&nbsp;temporary&nbsp;indices<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;Float&nbsp;zero(&nbsp;0&nbsp;);&nbsp;//&nbsp;the&nbsp;value&nbsp;zero&nbsp;as&nbsp;a&nbsp;Float&nbsp;object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;imax;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;row&nbsp;index&nbsp;of&nbsp;maximum&nbsp;element<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;jmax;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;column&nbsp;indx&nbsp;of&nbsp;maximum&nbsp;element<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Float&nbsp;&nbsp;&nbsp;&nbsp;emax;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;maximum&nbsp;absolute&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;count&nbsp;pivots<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sign;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;sign&nbsp;of&nbsp;the&nbsp;permutation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Float&nbsp;&nbsp;&nbsp;etmp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;temporary&nbsp;element<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Float&nbsp;&nbsp;&nbsp;pivot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;pivot&nbsp;element<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;-------------------------------------------------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;n&nbsp;=&nbsp;ip.size();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADUsageError(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jp.size()&nbsp;==&nbsp;n,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Error&nbsp;in&nbsp;LuFactor:&nbsp;jp&nbsp;must&nbsp;have&nbsp;size&nbsp;equal&nbsp;to&nbsp;n&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADUsageError(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LU.size()&nbsp;==&nbsp;n&nbsp;*&nbsp;n,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Error&nbsp;in&nbsp;LuFactor:&nbsp;LU&nbsp;must&nbsp;have&nbsp;size&nbsp;equal&nbsp;to&nbsp;n&nbsp;*&nbsp;m&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;-------------------------------------------------------<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;initialize&nbsp;row&nbsp;and&nbsp;column&nbsp;order&nbsp;in&nbsp;matrix&nbsp;not&nbsp;yet&nbsp;pivoted<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;ip[i]&nbsp;=&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jp[i]&nbsp;=&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;initialize&nbsp;the&nbsp;sign&nbsp;of&nbsp;the&nbsp;permutation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sign&nbsp;=&nbsp;1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;---------------------------------------------------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Reduce&nbsp;the&nbsp;matrix&nbsp;P&nbsp;to&nbsp;L&nbsp;*&nbsp;U&nbsp;using&nbsp;n&nbsp;pivots<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(p&nbsp;=&nbsp;0;&nbsp;p&nbsp;&lt;&nbsp;n;&nbsp;p++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;determine&nbsp;row&nbsp;and&nbsp;column&nbsp;corresponding&nbsp;to&nbsp;element&nbsp;of&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;maximum&nbsp;absolute&nbsp;value&nbsp;in&nbsp;remaining&nbsp;part&nbsp;of&nbsp;P<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;imax&nbsp;=&nbsp;jmax&nbsp;=&nbsp;n;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;emax&nbsp;=&nbsp;zero;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;p;&nbsp;i&nbsp;&lt;&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;for(j&nbsp;=&nbsp;p;&nbsp;j&nbsp;&lt;&nbsp;n;&nbsp;j++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;CppADUnknownError(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ip[i]&nbsp;&lt;&nbsp;n)&nbsp;&amp;&nbsp;(jp[j]&nbsp;&lt;&nbsp;n)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etmp&nbsp;=&nbsp;LU[&nbsp;ip[i]&nbsp;*&nbsp;n&nbsp;+&nbsp;jp[j]&nbsp;];<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;check&nbsp;if&nbsp;maximum&nbsp;absolute&nbsp;value&nbsp;so&nbsp;far<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;AbsGeq&nbsp;(etmp,&nbsp;emax)&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;imax&nbsp;=&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jmax&nbsp;=&nbsp;j;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;emax&nbsp;=&nbsp;etmp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADUsageError(&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(imax&nbsp;&lt;&nbsp;n)&nbsp;&amp;&nbsp;(jmax&nbsp;&lt;&nbsp;n)&nbsp;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;AbsGeq&nbsp;must&nbsp;return&nbsp;true&nbsp;when&nbsp;second&nbsp;argument&nbsp;is&nbsp;zero&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;imax&nbsp;!=&nbsp;p&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;switch&nbsp;rows&nbsp;so&nbsp;max&nbsp;absolute&nbsp;element&nbsp;is&nbsp;in&nbsp;row&nbsp;p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;ip[p];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ip[p]&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;ip[imax];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ip[imax]&nbsp;=&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sign&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;-sign;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;jmax&nbsp;!=&nbsp;p&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;switch&nbsp;columns&nbsp;so&nbsp;max&nbsp;absolute&nbsp;element&nbsp;is&nbsp;in&nbsp;column&nbsp;p<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;jp[p];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jp[p]&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;jp[jmax];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jp[jmax]&nbsp;=&nbsp;j;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sign&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;-sign;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;pivot&nbsp;using&nbsp;the&nbsp;max&nbsp;absolute&nbsp;element<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pivot&nbsp;&nbsp;&nbsp;=&nbsp;LU[&nbsp;ip[p]&nbsp;*&nbsp;n&nbsp;+&nbsp;jp[p]&nbsp;];<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;check&nbsp;for&nbsp;determinant&nbsp;equal&nbsp;to&nbsp;zero<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;pivot&nbsp;==&nbsp;zero&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;abort&nbsp;the&nbsp;mission<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;&nbsp;&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Reduce&nbsp;U&nbsp;by&nbsp;the&nbsp;elementary&nbsp;transformations&nbsp;that&nbsp;maps&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;LU(&nbsp;ip[p],&nbsp;jp[p]&nbsp;)&nbsp;to&nbsp;one.&nbsp;&nbsp;Only&nbsp;need&nbsp;transform&nbsp;elements<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;above&nbsp;the&nbsp;diagonal&nbsp;in&nbsp;U&nbsp;and&nbsp;LU(&nbsp;ip[p]&nbsp;,&nbsp;jp[p]&nbsp;)&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;corresponding&nbsp;value&nbsp;below&nbsp;diagonal&nbsp;in&nbsp;L.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(j&nbsp;=&nbsp;p+1;&nbsp;j&nbsp;&lt;&nbsp;n;&nbsp;j++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LU[&nbsp;ip[p]&nbsp;*&nbsp;n&nbsp;+&nbsp;jp[j]&nbsp;]&nbsp;/=&nbsp;pivot;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Reduce&nbsp;U&nbsp;by&nbsp;the&nbsp;elementary&nbsp;transformations&nbsp;that&nbsp;maps&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;LU(&nbsp;ip[i],&nbsp;jp[p]&nbsp;)&nbsp;to&nbsp;zero.&nbsp;Only&nbsp;need&nbsp;transform&nbsp;elements&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;above&nbsp;the&nbsp;diagonal&nbsp;in&nbsp;U&nbsp;and&nbsp;LU(&nbsp;ip[i],&nbsp;jp[p]&nbsp;)&nbsp;is&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;corresponding&nbsp;value&nbsp;below&nbsp;diagonal&nbsp;in&nbsp;L.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;p+1;&nbsp;i&nbsp;&lt;&nbsp;n;&nbsp;i++&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;etmp&nbsp;=&nbsp;LU[&nbsp;ip[i]&nbsp;*&nbsp;n&nbsp;+&nbsp;jp[p]&nbsp;];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(j&nbsp;=&nbsp;p+1;&nbsp;j&nbsp;&lt;&nbsp;n;&nbsp;j++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;LU[&nbsp;ip[i]&nbsp;*&nbsp;n&nbsp;+&nbsp;jp[j]&nbsp;]&nbsp;-=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etmp&nbsp;*&nbsp;LU[&nbsp;ip[p]&nbsp;*&nbsp;n&nbsp;+&nbsp;jp[j]&nbsp;];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;sign;<br>
+}<br>
+}&nbsp;//&nbsp;END&nbsp;CppAD&nbsp;namespace&nbsp;<br>
+</span>
+</font></code>
+
+<hr>Input File: CppAD\LuFactor.h
+
+</body>
+</html>

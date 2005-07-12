@@ -1,0 +1,104 @@
+<html><head>
+<title>LuInvert Source Code</title>
+<meta name="description" content="LuInvert Source Code">
+<meta name="keywords" content=" Luinvert source matrix "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="luinvert.cpp.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="runge45.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="luinvert.h.htm" target="_top">section</a>, <a href="luinvert.h_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+<center><b><big><big>LuInvert Source Code</big></big></b></center>
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppADError.h&gt;<br>
+#&nbsp;include&nbsp;&lt;CppAD/CheckSimpleVector.h&gt;<br>
+<br>
+namespace&nbsp;CppAD&nbsp;{&nbsp;//&nbsp;BEGIN&nbsp;CppAD&nbsp;namespace<br>
+<br>
+//&nbsp;LuInvert<br>
+template&nbsp;&lt;typename&nbsp;SizeVector,&nbsp;typename&nbsp;FloatVector&gt;<br>
+void&nbsp;LuInvert(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;SizeVector&nbsp;&nbsp;&amp;ip,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;SizeVector&nbsp;&nbsp;&amp;jp,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;FloatVector&nbsp;&amp;LU,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FloatVector&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;B&nbsp;)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;k;&nbsp;//&nbsp;column&nbsp;index&nbsp;in&nbsp;X<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;p;&nbsp;//&nbsp;index&nbsp;along&nbsp;diagonal&nbsp;in&nbsp;LU<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;i;&nbsp;//&nbsp;row&nbsp;index&nbsp;in&nbsp;LU&nbsp;and&nbsp;X<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef&nbsp;typename&nbsp;FloatVector::value_type&nbsp;Float;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;check&nbsp;simple&nbsp;vector&nbsp;class&nbsp;specifications<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CheckSimpleVector&lt;Float,&nbsp;FloatVector&gt;();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CheckSimpleVector&lt;size_t,&nbsp;SizeVector&gt;();<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Float&nbsp;etmp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;n&nbsp;=&nbsp;ip.size();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADUsageError(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jp.size()&nbsp;==&nbsp;n,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Error&nbsp;in&nbsp;LuInvert:&nbsp;jp&nbsp;must&nbsp;have&nbsp;size&nbsp;equal&nbsp;to&nbsp;n&nbsp;*&nbsp;n&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADUsageError(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LU.size()&nbsp;==&nbsp;n&nbsp;*&nbsp;n,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Error&nbsp;in&nbsp;LuInvert:&nbsp;Lu&nbsp;must&nbsp;have&nbsp;size&nbsp;equal&nbsp;to&nbsp;n&nbsp;*&nbsp;m&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;m&nbsp;=&nbsp;B.size()&nbsp;/&nbsp;n;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADUsageError(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B.size()&nbsp;==&nbsp;n&nbsp;*&nbsp;m,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Error&nbsp;in&nbsp;LuSolve:&nbsp;B&nbsp;must&nbsp;have&nbsp;size&nbsp;equal&nbsp;to&nbsp;a&nbsp;multiple&nbsp;of&nbsp;n&quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;temporary&nbsp;storage&nbsp;for&nbsp;reordered&nbsp;solution<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FloatVector&nbsp;x(n);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;loop&nbsp;over&nbsp;equations<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(k&nbsp;=&nbsp;0;&nbsp;k&nbsp;&lt;&nbsp;m;&nbsp;k++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;invert&nbsp;the&nbsp;equation&nbsp;c&nbsp;=&nbsp;L&nbsp;*&nbsp;b<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(p&nbsp;=&nbsp;0;&nbsp;p&nbsp;&lt;&nbsp;n;&nbsp;p++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;solve&nbsp;for&nbsp;c[p]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etmp&nbsp;=&nbsp;B[&nbsp;ip[p]&nbsp;*&nbsp;m&nbsp;+&nbsp;k&nbsp;]&nbsp;/&nbsp;LU[&nbsp;ip[p]&nbsp;*&nbsp;n&nbsp;+&nbsp;jp[p]&nbsp;];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B[&nbsp;ip[p]&nbsp;*&nbsp;m&nbsp;+&nbsp;k&nbsp;]&nbsp;=&nbsp;etmp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;subtract&nbsp;off&nbsp;effect&nbsp;on&nbsp;other&nbsp;variables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;p+1;&nbsp;i&nbsp;&lt;&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B[&nbsp;ip[i]&nbsp;*&nbsp;m&nbsp;+&nbsp;k&nbsp;]&nbsp;-=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etmp&nbsp;*&nbsp;LU[&nbsp;ip[i]&nbsp;*&nbsp;n&nbsp;+&nbsp;jp[p]&nbsp;];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;invert&nbsp;the&nbsp;equation&nbsp;x&nbsp;=&nbsp;U&nbsp;*&nbsp;c<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p&nbsp;=&nbsp;n;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while(&nbsp;p&nbsp;&gt;&nbsp;0&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;--p;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etmp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;B[&nbsp;ip[p]&nbsp;*&nbsp;m&nbsp;+&nbsp;k&nbsp;];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[&nbsp;jp[p]&nbsp;]&nbsp;=&nbsp;etmp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;p;&nbsp;i++&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B[&nbsp;ip[i]&nbsp;*&nbsp;m&nbsp;+&nbsp;k&nbsp;]&nbsp;-=&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;etmp&nbsp;*&nbsp;LU[&nbsp;ip[i]&nbsp;*&nbsp;n&nbsp;+&nbsp;jp[p]&nbsp;];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;copy&nbsp;reordered&nbsp;solution&nbsp;into&nbsp;B<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B[i&nbsp;*&nbsp;m&nbsp;+&nbsp;k]&nbsp;=&nbsp;x[i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>
+}<br>
+}&nbsp;//&nbsp;END&nbsp;CppAD&nbsp;namespace&nbsp;<br>
+</span>
+</font></code>
+
+<hr>Input File: CppAD\LuInvert.h
+
+</body>
+</html>

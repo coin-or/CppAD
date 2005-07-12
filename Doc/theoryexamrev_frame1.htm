@@ -1,0 +1,87 @@
+<html><head>
+<title>A Reverse Mode Evaluation</title>
+<meta name="description" content="A Reverse Mode Evaluation">
+<meta name="keywords" content=" example reverse mode "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="theoryrevnotation.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="forwardtheory.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="theoryexamrev.htm" target="_top">section</a>, <a href="theoryexamrev_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+<center><b><big><big>A Reverse Mode Evaluation</big></big></b></center>
+The reverse mode evaluation of the derivative of <code>
+<span style='white-space: nowrap'>&nbsp;p(x)</span></code>
+
+with respect to <code>
+<span style='white-space: nowrap'>&nbsp;x</span></code>
+ corresponding to the 
+<a href="theoryexameval.htm" target="_top"><span style='white-space: nowrap'>example&nbsp;evaluation</span></a>
+ is
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{l}<br>
+%<br>
+\begin{array}{llllll}<br>
+{\rm&nbsp;parameter}&nbsp;&amp;&nbsp;{\rm&nbsp;value}&nbsp;&amp;&nbsp;{\rm&nbsp;variable}&nbsp;&amp;&nbsp;{\rm&nbsp;value&nbsp;}&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;{\rm&nbsp;variable}&nbsp;&amp;&nbsp;{\rm&nbsp;value}&nbsp;<br>
+\\<br>
+n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;s_0&nbsp;&nbsp;&nbsp;&amp;&nbsp;1&nbsp;<br>
+\\<br>
+a_0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;t_1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;3<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;s_1&nbsp;&nbsp;&nbsp;&amp;&nbsp;4<br>
+\\<br>
+a_1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;t_2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;12<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;s_2&nbsp;&nbsp;&nbsp;&amp;&nbsp;13<br>
+\\<br>
+a_2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;p&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;13<br>
+\end{array}<br>
+%<br>
+\\<br>
+\begin{array}{llll}<br>
+{\rm&nbsp;function}<br>
+&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\rm&nbsp;partial}&nbsp;&amp;&nbsp;{\rm&nbsp;expression}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;{\rm&nbsp;value&nbsp;}<br>
+\\<br>
+p_6&nbsp;(s_2,&nbsp;t_2,&nbsp;s_1,&nbsp;t_1&nbsp;,&nbsp;s_0&nbsp;,&nbsp;x&nbsp;)&nbsp;=&nbsp;s_2<br>
+&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{p_6}{s_2}&nbsp;&nbsp;&amp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;1<br>
+\\<br>
+p_5&nbsp;=&nbsp;p_6&nbsp;[&nbsp;(&nbsp;t_2&nbsp;+&nbsp;a_0&nbsp;)&nbsp;,&nbsp;t_2,&nbsp;s_1,&nbsp;t_1&nbsp;,&nbsp;s_0&nbsp;,&nbsp;x&nbsp;]<br>
+&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{p_5}{t_2}&nbsp;&nbsp;&amp;&nbsp;\D{p_6}{s_2}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;&nbsp;1<br>
+\\<br>
+p_4&nbsp;=&nbsp;p_5&nbsp;[&nbsp;(&nbsp;s_1&nbsp;\;&nbsp;x&nbsp;)&nbsp;,&nbsp;s_1,&nbsp;t_1&nbsp;,&nbsp;s_0&nbsp;,&nbsp;x&nbsp;]<br>
+&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{p_4}{s_1}&nbsp;&nbsp;&amp;&nbsp;\D{p_5}{t_2}&nbsp;\;&nbsp;x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;&nbsp;3<br>
+\\<br>
+&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{p_4}{x}&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;\D{p_5}{t_2}&nbsp;\;&nbsp;s_1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;&nbsp;4<br>
+\\<br>
+p_3&nbsp;=&nbsp;p_4&nbsp;[&nbsp;(&nbsp;t_1&nbsp;+&nbsp;a_1&nbsp;)&nbsp;,&nbsp;t_1&nbsp;,&nbsp;s_0&nbsp;,&nbsp;x&nbsp;]<br>
+&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{p_3}{t_1}&nbsp;&nbsp;&amp;&nbsp;\D{p_4}{s_1}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;&nbsp;3<br>
+\\<br>
+&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{p_3}{x}&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;\D{p_4}{x}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;&nbsp;4<br>
+\\<br>
+p_2&nbsp;=&nbsp;p_3&nbsp;[&nbsp;(&nbsp;s_0&nbsp;\;&nbsp;x&nbsp;)&nbsp;,&nbsp;s_0&nbsp;,&nbsp;x&nbsp;]<br>
+&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{p_2}{s_0}&nbsp;&nbsp;&amp;&nbsp;\D{p_3}{t_1}&nbsp;\;&nbsp;x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;&nbsp;12<br>
+\\<br>
+&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{p_2}{x}&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;\D{p_3}{x}&nbsp;+&nbsp;\D{p_3}{t_1}&nbsp;\;&nbsp;s_0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;&nbsp;7<br>
+\\<br>
+p&nbsp;=&nbsp;p_2(&nbsp;a_0&nbsp;,&nbsp;x&nbsp;)<br>
+&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\D{p}{x}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;\D{p_2}{x}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&nbsp;7&nbsp;<br>
+\end{array}<br>
+%<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+
+
+<hr>Input File: omh\TheoryExamList.omh
+
+</body>
+</html>

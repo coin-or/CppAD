@@ -1,0 +1,79 @@
+<html><head>
+<title>Determinant of a Minor: Example and Test</title>
+<meta name="description" content="Determinant of a Minor: Example and Test">
+<meta name="keywords" content=" determinant by minors example test "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="detofminor.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="detofminor.h.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="detofminor.cpp.htm" target="_top">section</a>, <a href="detofminor.cpp_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+<center><b><big><big>Determinant of a Minor: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+#&nbsp;include&nbsp;&quot;DetOfMinor.h&quot;<br>
+<br>
+bool&nbsp;DetOfMinor()<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;=&nbsp;true;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;dimension&nbsp;of&nbsp;the&nbsp;matrix<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;m&nbsp;=&nbsp;3;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;size_t&gt;&nbsp;r(m&nbsp;+&nbsp;1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;size_t&gt;&nbsp;c(m&nbsp;+&nbsp;1);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;det;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;m;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;r[i]&nbsp;=&nbsp;i+1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c[i]&nbsp;=&nbsp;i+1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r[m]&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c[m]&nbsp;=&nbsp;0;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;&nbsp;a[]&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.,&nbsp;2.,&nbsp;3.,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.,&nbsp;2.,&nbsp;1.,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.,&nbsp;1.,&nbsp;2.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;A(9);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;9;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[i]&nbsp;=&nbsp;a[i];<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;evaluate&nbsp;the&nbsp;function<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;det&nbsp;=&nbsp;DetOfMinor(A,&nbsp;m,&nbsp;m,&nbsp;r,&nbsp;c);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(det&nbsp;==&nbsp;(double)&nbsp;(1*(2*2-1*1)&nbsp;-&nbsp;2*(3*2-1*2)&nbsp;+&nbsp;3*(3*1-2*2))&nbsp;);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;evaluate&nbsp;minor&nbsp;corresponding&nbsp;to&nbsp;row&nbsp;index&nbsp;0,&nbsp;column&nbsp;index&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;by&nbsp;skiping&nbsp;thoes&nbsp;indices&nbsp;in&nbsp;the&nbsp;linked&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r[m]&nbsp;=&nbsp;1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c[0]&nbsp;=&nbsp;2;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;det&nbsp;=&nbsp;DetOfMinor(A,&nbsp;m,&nbsp;m-1,&nbsp;r,&nbsp;c);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(det&nbsp;==&nbsp;(double)&nbsp;(3*2-1*2)&nbsp;);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+}<br>
+<br>
+</span></font></code>
+<hr>Input File: Example\DetOfMinor.cpp
+
+</body>
+</html>

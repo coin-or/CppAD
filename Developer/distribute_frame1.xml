@@ -1,0 +1,101 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Building and Testing a Distribution</title>
+<meta name="description" content="Building and Testing a Distribution"/>
+<meta name="keywords" content=" "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="_contents.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="newfeature.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="distribute.xml" target="_top">section</a>, <a href="distribute_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Building and Testing a Distribution</big></big></b></center>
+<br/>
+<b><big><a name="Creating Distribution Files">Creating Distribution Files</a></big></b>
+
+<ol type="1"><li>
+Change into the <code><font color="blue">CppADpackage</font></code> directory.
+</li><li>
+
+Execute the bash shell script <code><font color="blue">./Build</font></code>
+</li></ol>
+
+This will create the distribution files
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADpackage/CppAD.dos.tar.gz<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADpackage/CppAD.unix.tar.gz<br/>
+</span>
+</font></code>
+<br/>
+<b><big><a name="Testing Distribution">Testing Distribution</a></big></b>
+
+<ol type="1"><li>
+Execute the command 
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;tar&#xA0;-xvzf&#xA0;CppAD.</span></font></code><i><span style='white-space: nowrap'>sys</span></i><code><font color="blue"><span style='white-space: nowrap'>.tar.gz<br/>
+</span></font></code>where <i>sys</i> is <code><font color="blue">dos</font></code> or <code><font color="blue">unix</font></code>
+depending on your system type.
+</li><li>
+
+Execute the command
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;cd&#xA0;cppad-</span></font></code><i><span style='white-space: nowrap'>yy</span></i><code><font color="blue"><span style='white-space: nowrap'>-</span></font></code><i><span style='white-space: nowrap'>mm</span></i><code><font color="blue"><span style='white-space: nowrap'>-</span></font></code><i><span style='white-space: nowrap'>dd</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>where <code><font color="blue"><span style='white-space: nowrap'>%yy%-%mm%-%dd%</span></font></code> is the current date.
+</li><li>
+
+Execute the command
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;configure&#xA0;ADOLC_DIR=</span></font></code><i><span style='white-space: nowrap'>AdolcDir</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;FADBAD_DIR=</span></font></code><i><span style='white-space: nowrap'>FadbadDir</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>where the paths 
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>AdolcDir</span></i><code><font color="blue"><span style='white-space: nowrap'>/include/adolc/adouble.h<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>FadbadDir</span></i><code><font color="blue"><span style='white-space: nowrap'>/FADBAD++/badiff.h<br/>
+</span></font></code>are a valid way to reference the <code><font color="blue">adouble.h</font></code> file in the 
+<a href="http://www.math.tu-dresden.de/~adol-c/" target="_top"><span style='white-space: nowrap'>ADOLC</span></a>
+
+distribution and the <code><font color="blue">badiff.h</font></code> in the 
+<a href="http://www.imm.dtu.dk/fadbad.html/" target="_top"><span style='white-space: nowrap'>FADBAD++</span></a>
+
+distribution.
+</li><li>
+
+Execute the command
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;make<br/>
+</span>
+</font></code>
+If no compiler errors occur, the distribution passed this test.
+</li><li>
+
+Execute the command
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;cd&#xA0;GetStarted<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;./GetStarted<br/>
+</span>
+</font></code>
+If the result is
+<code><font color="blue">
+<br/>
+<span style='white-space: nowrap'>Poly&#xA0;&#xA0;computed&#xA0;derivative&#xA0;=&#xA0;142<br/>
+CppAD&#xA0;computed&#xA0;derivative&#xA0;=&#xA0;142<br/>
+</span></font></code>then the distribution passed this test.
+</li></ol>
+
+
+
+<hr/>Input File: omh\Distribute.omh
+
+</body>
+</html>

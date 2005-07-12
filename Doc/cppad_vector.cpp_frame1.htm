@@ -1,0 +1,66 @@
+<html><head>
+<title>CppAD::vector Template Class: Example and Test</title>
+<meta name="description" content="CppAD::vector Template Class: Example and Test">
+<meta name="keywords" content=" vector Cppad Cppad::vector example test "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="cppad_vector.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="cppad_vector.h.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="cppad_vector.cpp.htm" target="_top">section</a>, <a href="cppad_vector.cpp_frame1.htm" target="_top">frame</a></div>
+<hr><center><b><big><big>CppAD::vector Template Class: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD_vector.h&gt;<br>
+#&nbsp;include&nbsp;&lt;sstream&gt;&nbsp;//&nbsp;sstream&nbsp;and&nbsp;string&nbsp;are&nbsp;used&nbsp;to&nbsp;test&nbsp;output&nbsp;operation<br>
+#&nbsp;include&nbsp;&lt;string&gt;<br>
+<br>
+bool&nbsp;CppAD_vector(void)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;=&nbsp;true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;CppAD::vector;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;so&nbsp;can&nbsp;use&nbsp;vector&nbsp;instead&nbsp;of&nbsp;CppAD::vector&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef&nbsp;double&nbsp;Type;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;change&nbsp;double&nbsp;to&nbsp;test&nbsp;other&nbsp;types<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vector&lt;Type&gt;&nbsp;x;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;default&nbsp;constructor&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(x.size()&nbsp;==&nbsp;0);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x.resize(2);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;resize&nbsp;and&nbsp;set&nbsp;element&nbsp;assignment<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(x.size()&nbsp;==&nbsp;2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[0]&nbsp;=&nbsp;Type(0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[1]&nbsp;=&nbsp;Type(1);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vector&lt;Type&gt;&nbsp;y(2);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;sizing&nbsp;constructor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(y.size()&nbsp;==&nbsp;2);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;vector&lt;Type&gt;&nbsp;z(x);&nbsp;//&nbsp;copy&nbsp;constructor&nbsp;and&nbsp;const&nbsp;element&nbsp;access<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(z.size()&nbsp;==&nbsp;2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(&nbsp;(z[0]&nbsp;==&nbsp;Type(0))&nbsp;&amp;&amp;&nbsp;(z[1]&nbsp;==&nbsp;Type(1))&nbsp;);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[0]&nbsp;=&nbsp;2;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;modify&nbsp;so&nbsp;that&nbsp;assignment&nbsp;changes&nbsp;x<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;y&nbsp;=&nbsp;z;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;vector&nbsp;assignment<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(&nbsp;(x[0]&nbsp;==&nbsp;Type(0))&nbsp;&amp;&amp;&nbsp;(x[1]&nbsp;==&nbsp;Type(1))&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(&nbsp;(y[0]&nbsp;==&nbsp;Type(0))&nbsp;&amp;&amp;&nbsp;(y[1]&nbsp;==&nbsp;Type(1))&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(&nbsp;(z[0]&nbsp;==&nbsp;Type(0))&nbsp;&amp;&amp;&nbsp;(z[1]&nbsp;==&nbsp;Type(1))&nbsp;);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;test&nbsp;of&nbsp;output<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;correct=&nbsp;&quot;{&nbsp;0,&nbsp;1&nbsp;}&quot;;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::ostringstream&nbsp;buf;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buf&nbsp;&lt;&lt;&nbsp;z;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str&nbsp;=&nbsp;buf.str();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(str&nbsp;==&nbsp;correct);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+}<br>
+<br>
+</span></font></code>
+<hr>Input File: Example\CppAD_vector.cpp
+
+</body>
+</html>

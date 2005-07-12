@@ -1,0 +1,142 @@
+<html><head>
+<title>Vectors That Record Indexing Operations</title>
+<meta name="description" content="Vectors That Record Indexing Operations">
+<meta name="keywords" content=" vector record index tape Vecad construct "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="vecad.htm" target="_top">section</a>, <a href="vecad_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+Each element of a 
+<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> 
+object has the properties of an 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> 
+object with the exception that the computed assignments
+<a href="compeq.htm" target="_top"><span style='white-space: nowrap'>+=&nbsp;,&nbsp;-=&nbsp;,&nbsp;*=&nbsp;,&nbsp;/=</span></a>
+ 
+are not allowed with these elements.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The class <code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> tapes its indexing
+and these operations are transferred to the corresponding
+<a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object <i>f</i>.
+The indices are evaluated each time
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>f.Forward</span></a>
+ is used to evaluate the zero order Taylor
+coefficients.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>If <i>Vector</i> is 
+<a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ template class, 
+the class <code><font color="blue"></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&lt;&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&gt;</span></font></code> 
+has elements with type <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> 
+and is faster and uses less memory than
+<code><font color="blue"><span style='white-space: nowrap'>VecAD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> 
+because it does not tape its indexing operations.
+
+<br>
+<br>
+<b><big><a name="Constructor">Constructor</a></big></b>
+
+<br>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>creates an <code><font color="blue">VecAD</font></code> object <i>v</i> with 
+<i>n</i> elements.
+The initial value of the elements is unspecified.
+
+<br>
+<br>
+<b><big><a name="Size">Size</a></big></b>
+<br>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>.size()<br>
+</span></font></code>returns the number of elements in the vector <i>v</i>.
+
+<br>
+<br>
+<b><big><a name="Element Access">Element Access</a></big></b>
+<br>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>returns the element of <i>v</i> with index <i>i</i>
+and 
+<code><font color="blue"><span style='white-space: nowrap'>floor(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> 
+respectively.
+We use 
+<code><font color="blue"><span style='white-space: nowrap'>floor(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> 
+to denote the greatest integer less than or equal <i>x</i>.
+If <i>x</i> is a complex type, the index is
+<code><font color="blue"><span style='white-space: nowrap'>floor(real(</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>))</span></font></code> is used for the indexing operation.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <code><font color="blue">size_t</font></code> indexing form
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>can only be used when the tape is in the
+<a href="glossary_frame1.htm#Tape State" target="frame1"><i><span style='white-space: nowrap'>Empty&nbsp;state</span></i></a>
+.
+If the tape is in the Recording state,
+the dependence of the value of
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code> 
+on <i>x</i> is recorded.
+On the other hand,
+the derivative of
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>]</span></font></code> 
+with respect to <i>x</i>
+is computed by CppAD as identically zero.
+This is similar to the 
+<a href="discrete.htm" target="_top"><span style='white-space: nowrap'>Discrete</span></a>
+ functions.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The value of <i>x</i> (and <i>i</i>) must be greater than or equal zero
+and less than the number of elements in <i>v</i>.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The return <i>Type</i> is unspecified except for the fact that
+it is derived from
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> and inherits all the properties of that type
+(with the exception that the
+<a href="compeq.htm" target="_top"><span style='white-space: nowrap'>+=&nbsp;,&nbsp;-=&nbsp;,&nbsp;*=&nbsp;,&nbsp;/=</span></a>
+ 
+are not allowed with these elements.)
+
+
+<br>
+<br>
+<b><a name="Element Access.Assignment Operations">Assignment Operations</a></b>
+<br>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>v</span></i><code><font color="blue"><span style='white-space: nowrap'>[</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>assigns the value of <i>y</i> to the corresponding element of <i>v</i>
+where <i>y</i> has type <i>Base</i> or <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>.
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="vec.cpp.htm" target="_top"><span style='white-space: nowrap'>Vec.cpp</span></a>
+
+contains an example and a test of this function.   
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: CppAD\local\Vec.h
+
+</body>
+</html>

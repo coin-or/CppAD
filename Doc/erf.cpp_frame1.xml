@@ -1,0 +1,76 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>The Error Function: Example and Test</title>
+<meta name="description" content="The Error Function: Example and Test"/>
+<meta name="keywords" content=" erf example test "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="erf.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="exp.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="erf.cpp.xml" target="_top">section</a>, <a href="erf.cpp_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+
+<center><b><big><big>The Error Function: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD.h&gt;<br/>
+#&#xA0;include&#xA0;&lt;cmath&gt;<br/>
+<br/>
+bool&#xA0;Erf(void)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;ok&#xA0;=&#xA0;true;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;namespace&#xA0;CppAD;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;CppAD::atan;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;CppAD::exp;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;CppAD::sqrt;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;Construct&#xA0;function&#xA0;object&#xA0;corresponding&#xA0;to&#xA0;erf<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;AD&lt;double&gt;&#xA0;&gt;&#xA0;X(1);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;AD&lt;double&gt;&#xA0;&gt;&#xA0;Y(1);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;X[0]&#xA0;=&#xA0;0.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(X);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Y[0]&#xA0;=&#xA0;erf(X[0]);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADFun&lt;double&gt;&#xA0;Erf(X,&#xA0;Y);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;vectors&#xA0;to&#xA0;use&#xA0;with&#xA0;function&#xA0;object<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;x(1);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;y(1);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;dx(1);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;dy(1);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;check&#xA0;value&#xA0;at&#xA0;zero<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;x[0]&#xA0;&#xA0;=&#xA0;0.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;y&#xA0;=&#xA0;Erf.Forward(0,&#xA0;x);&#xA0;&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;NearEqual(0.,&#xA0;y[0],&#xA0;1e-10,&#xA0;1e-10);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;check&#xA0;the&#xA0;derivative&#xA0;of&#xA0;error&#xA0;function<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;dx[0]&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;pi&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;4.&#xA0;*&#xA0;atan(1.);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;factor&#xA0;=&#xA0;2.&#xA0;/&#xA0;sqrt(&#xA0;pi&#xA0;);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;int&#xA0;i;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;-30;&#xA0;i&#xA0;&lt;=&#xA0;30;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;x[0]&#xA0;=&#xA0;i&#xA0;/&#xA0;4.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Erf.Forward(0,&#xA0;x);&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;derf&#xA0;=&#xA0;factor&#xA0;*&#xA0;exp(&#xA0;-&#xA0;x[0]&#xA0;*&#xA0;x[0]&#xA0;);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;dy&#xA0;=&#xA0;Erf.Forward(1,&#xA0;dx);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;NearEqual(derf,&#xA0;dy[0],&#xA0;1e-10,&#xA0;1e-10);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;ok;<br/>
+}<br/>
+<br/>
+</span></font></code>
+<hr/>Input File: Example\Erf.cpp
+
+</body>
+</html>

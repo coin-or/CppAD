@@ -1,0 +1,101 @@
+<html><head>
+<title>CompareChange Function: Example and Test</title>
+<meta name="description" content="CompareChange Function: Example and Test">
+<meta name="keywords" content=" compare change example Comparechange test "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="fun.h.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="multape.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="comparechange.cpp.htm" target="_top">section</a>, <a href="comparechange.cpp_frame1.htm" target="_top">frame</a></div>
+<hr><center><b><big><big>CompareChange Function: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+<br>
+namespace&nbsp;{&nbsp;//&nbsp;put&nbsp;this&nbsp;function&nbsp;in&nbsp;the&nbsp;empty&nbsp;namespace<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;template&nbsp;&lt;typename&nbsp;Type&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type&nbsp;Minimum(const&nbsp;Type&nbsp;&amp;x,&nbsp;const&nbsp;Type&nbsp;&amp;y)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Use&nbsp;a&nbsp;comparision&nbsp;to&nbsp;compute&nbsp;the&nbsp;min(x,&nbsp;y)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;(Note&nbsp;that&nbsp;CondExp&nbsp;would&nbsp;never&nbsp;require&nbsp;retaping).&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;x&nbsp;&lt;&nbsp;y&nbsp;)&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;x;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;y;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+bool&nbsp;CompareChange(void)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;=&nbsp;true;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;create&nbsp;independent&nbsp;variables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;X(2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X[0]&nbsp;=&nbsp;3.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X[1]&nbsp;=&nbsp;4.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(X);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;create&nbsp;dependent&nbsp;variables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;Y(1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y[0]&nbsp;=&nbsp;Minimum(X[0],&nbsp;X[1]);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;F&nbsp;:&nbsp;X&nbsp;-&gt;&nbsp;Y&nbsp;(use&nbsp;pointer&nbsp;so&nbsp;can&nbsp;delete&nbsp;and&nbsp;retape)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;double&gt;&nbsp;*F;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F&nbsp;=&nbsp;new&nbsp;ADFun&lt;double&gt;(X,&nbsp;Y);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;new&nbsp;function&nbsp;argument&nbsp;where&nbsp;conditional&nbsp;has&nbsp;the&nbsp;same&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;x(2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[0]&nbsp;=&nbsp;3.5;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[1]&nbsp;=&nbsp;4.;&nbsp;&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;evaluate&nbsp;the&nbsp;function&nbsp;at&nbsp;new&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;y(1);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;=&nbsp;F-&gt;Forward(0,&nbsp;x);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Note&nbsp;that&nbsp;the&nbsp;result&nbsp;of&nbsp;the&nbsp;comparision&nbsp;has&nbsp;not&nbsp;changed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Also&nbsp;note&nbsp;that&nbsp;F-&gt;CompareChange&nbsp;is&nbsp;not&nbsp;defined&nbsp;when&nbsp;NDEBUG&nbsp;is&nbsp;true<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(y[0]&nbsp;==&nbsp;x[0]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(F-&gt;CompareChange()&nbsp;==&nbsp;0);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;evaluate&nbsp;the&nbsp;function&nbsp;at&nbsp;new&nbsp;argument<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;where&nbsp;conditional&nbsp;has&nbsp;a&nbsp;different&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[0]&nbsp;=&nbsp;4.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[1]&nbsp;=&nbsp;3.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;=&nbsp;F-&gt;Forward(0,&nbsp;x);<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Note&nbsp;that&nbsp;y[0]&nbsp;is&nbsp;no&nbsp;longer&nbsp;the&nbsp;minimum&nbsp;element&nbsp;in&nbsp;x&nbsp;(the&nbsp;result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;of&nbsp;the&nbsp;comparision&nbsp;has&nbsp;changed).&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(y[0]&nbsp;==&nbsp;x[0]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(F-&gt;CompareChange()&nbsp;==&nbsp;1);&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;retape&nbsp;the&nbsp;same&nbsp;calculation&nbsp;at&nbsp;new&nbsp;argument&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X[0]&nbsp;=&nbsp;4.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X[1]&nbsp;=&nbsp;3.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(X);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y[0]&nbsp;=&nbsp;Minimum(X[0],&nbsp;X[1]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;F;&nbsp;//&nbsp;free&nbsp;memory&nbsp;corresponding&nbsp;to&nbsp;previous&nbsp;new<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;new&nbsp;ADFun&lt;double&gt;(X,&nbsp;Y);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;evaluate&nbsp;the&nbsp;function&nbsp;at&nbsp;new&nbsp;argument&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[0]&nbsp;=&nbsp;4.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[1]&nbsp;=&nbsp;3.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;=&nbsp;F-&gt;Forward(0,&nbsp;x);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(y[0]&nbsp;==&nbsp;x[1]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(F-&gt;CompareChange()&nbsp;==&nbsp;0);&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;F;&nbsp;//&nbsp;free&nbsp;memory&nbsp;corresponding&nbsp;to&nbsp;previous&nbsp;new<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+}<br>
+<br>
+<br>
+</span></font></code>
+<hr>Input File: Example\CompareChange.cpp
+
+</body>
+</html>

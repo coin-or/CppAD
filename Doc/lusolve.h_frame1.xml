@@ -1,0 +1,134 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>LuSolve Source Code</title>
+<meta name="description" content="LuSolve Source Code"/>
+<meta name="keywords" content=" source Lusolve code determinant linear equation matrix factor "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="lusolve.cpp.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="lufactor.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="lusolve.h.xml" target="_top">section</a>, <a href="lusolve.h_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+
+<center><b><big><big>LuSolve Source Code</big></big></b></center>
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+#&#xA0;include&#xA0;&lt;complex&gt;<br/>
+#&#xA0;include&#xA0;&lt;vector&gt;<br/>
+<br/>
+#&#xA0;ifdef&#xA0;_MSC_VER<br/>
+//&#xA0;Fix&#xA0;for&#xA0;problem&#xA0;with&#xA0;MSC&#xA0;standard&#xA0;math&#xA0;functions&#xA0;name&#xA0;space&#xA0;location<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD.h&gt;&#xA0;&#xA0;<br/>
+#&#xA0;endif<br/>
+<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppADError.h&gt;<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CheckSimpleVector.h&gt;<br/>
+#&#xA0;include&#xA0;&lt;CppAD/LuFactor.h&gt;<br/>
+#&#xA0;include&#xA0;&lt;CppAD/LuInvert.h&gt;<br/>
+<br/>
+namespace&#xA0;CppAD&#xA0;{&#xA0;//&#xA0;BEGIN&#xA0;CppAD&#xA0;namespace<br/>
+<br/>
+//&#xA0;LeqZero<br/>
+template&#xA0;&lt;typename&#xA0;Float&gt;<br/>
+inline&#xA0;bool&#xA0;LeqZero(const&#xA0;Float&#xA0;&amp;x)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;x&#xA0;&lt;=&#xA0;Float(0);&#xA0;}<br/>
+inline&#xA0;bool&#xA0;LeqZero(&#xA0;const&#xA0;std::complex&lt;double&gt;&#xA0;&amp;x&#xA0;)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;x&#xA0;==&#xA0;std::complex&lt;double&gt;(0);&#xA0;}<br/>
+inline&#xA0;bool&#xA0;LeqZero(&#xA0;const&#xA0;std::complex&lt;float&gt;&#xA0;&amp;x&#xA0;)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;x&#xA0;==&#xA0;std::complex&lt;float&gt;(0);&#xA0;}<br/>
+<br/>
+//&#xA0;LuSolve<br/>
+template&#xA0;&lt;typename&#xA0;Float,&#xA0;typename&#xA0;FloatVector&gt;<br/>
+int&#xA0;LuSolve(<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;n&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;m&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;,&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;FloatVector&#xA0;&amp;A&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;,&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;FloatVector&#xA0;&amp;B&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;,&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;FloatVector&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&amp;X&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;,&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Float&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&amp;logdet&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;check&#xA0;simple&#xA0;vector&#xA0;class&#xA0;specifications<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CheckSimpleVector&lt;Float,&#xA0;FloatVector&gt;();<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;p;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;index&#xA0;of&#xA0;pivot&#xA0;element&#xA0;(diagonal&#xA0;of&#xA0;L)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;int&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;signdet;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;sign&#xA0;of&#xA0;the&#xA0;determinant<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Float&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;pivot;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;pivot&#xA0;element<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;the&#xA0;value&#xA0;zero<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;Float&#xA0;zero(0);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;pivot&#xA0;row&#xA0;and&#xA0;column&#xA0;order&#xA0;in&#xA0;the&#xA0;matrix<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;std::vector&lt;size_t&gt;&#xA0;ip(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;std::vector&lt;size_t&gt;&#xA0;jp(n);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;-------------------------------------------------------<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADUsageError(<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;A.size()&#xA0;==&#xA0;n&#xA0;*&#xA0;n,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&quot;Error&#xA0;in&#xA0;LuSolve:&#xA0;A&#xA0;must&#xA0;have&#xA0;size&#xA0;equal&#xA0;to&#xA0;n&#xA0;*&#xA0;n&quot;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADUsageError(<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;B.size()&#xA0;==&#xA0;n&#xA0;*&#xA0;m,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&quot;Error&#xA0;in&#xA0;LuSolve:&#xA0;B&#xA0;must&#xA0;have&#xA0;size&#xA0;equal&#xA0;to&#xA0;n&#xA0;*&#xA0;m&quot;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADUsageError(<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;X.size()&#xA0;==&#xA0;n&#xA0;*&#xA0;m,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&quot;Error&#xA0;in&#xA0;LuSolve:&#xA0;X&#xA0;must&#xA0;have&#xA0;size&#xA0;equal&#xA0;to&#xA0;n&#xA0;*&#xA0;m&quot;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;-------------------------------------------------------<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;copy&#xA0;A&#xA0;so&#xA0;that&#xA0;it&#xA0;does&#xA0;not&#xA0;change<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;FloatVector&#xA0;Lu(A);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;copy&#xA0;B&#xA0;so&#xA0;that&#xA0;it&#xA0;does&#xA0;not&#xA0;change<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;X&#xA0;=&#xA0;B;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;Lu&#xA0;factor&#xA0;the&#xA0;matrix&#xA0;A<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;signdet&#xA0;=&#xA0;LuFactor(ip,&#xA0;jp,&#xA0;Lu);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;compute&#xA0;the&#xA0;log&#xA0;of&#xA0;the&#xA0;determinant<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;logdet&#xA0;&#xA0;=&#xA0;Float(0);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(p&#xA0;=&#xA0;0;&#xA0;p&#xA0;&lt;&#xA0;n;&#xA0;p++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;pivot&#xA0;using&#xA0;the&#xA0;max&#xA0;absolute&#xA0;element<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;pivot&#xA0;&#xA0;&#xA0;=&#xA0;Lu[&#xA0;ip[p]&#xA0;*&#xA0;n&#xA0;+&#xA0;jp[p]&#xA0;];<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;check&#xA0;for&#xA0;determinant&#xA0;equal&#xA0;to&#xA0;zero<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;if(&#xA0;pivot&#xA0;==&#xA0;zero&#xA0;)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;abort&#xA0;the&#xA0;mission<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;logdet&#xA0;=&#xA0;Float(0);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;&#xA0;&#xA0;0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;update&#xA0;the&#xA0;determinant<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;if(&#xA0;LeqZero&#xA0;(&#xA0;pivot&#xA0;)&#xA0;)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;logdet&#xA0;+=&#xA0;log(&#xA0;-&#xA0;pivot&#xA0;);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;signdet&#xA0;=&#xA0;-&#xA0;signdet;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;else&#xA0;logdet&#xA0;+=&#xA0;log(&#xA0;pivot&#xA0;);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;solve&#xA0;the&#xA0;linear&#xA0;equations<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;LuInvert(ip,&#xA0;jp,&#xA0;Lu,&#xA0;X);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;return&#xA0;the&#xA0;sign&#xA0;factor&#xA0;for&#xA0;the&#xA0;determinant<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;signdet;<br/>
+}<br/>
+}&#xA0;//&#xA0;END&#xA0;CppAD&#xA0;namespace&#xA0;<br/>
+</span>
+</font></code>
+
+<hr/>Input File: CppAD\LuSolve.h
+
+</body>
+</html>

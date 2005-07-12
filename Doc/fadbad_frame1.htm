@@ -1,0 +1,85 @@
+<html><head>
+<title>Routines for Comparing CppAD with FADBAD</title>
+<meta name="description" content="Routines for Comparing CppAD with FADBAD">
+<meta name="keywords" content=" Fadbad compare "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="detluadolc.cpp.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="speedfadbad.cpp.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="fadbad.htm" target="_top">section</a>, <a href="fadbad_frame1.htm" target="_top">frame</a></div>
+<hr><center><b><big><big>Routines for Comparing CppAD with FADBAD</big></big></b></center>
+<br>
+<b><big><a name="Description">Description</a></big></b>
+<br>
+These examples and speed tests are used to compare
+<a href="http://www.imm.dtu.dk/fadbad.html/" target="_top"><span style='white-space: nowrap'>FADBAD</span></a>
+
+with CppAD.
+They are located in the directory <code><font color="blue">CppAD/FADBAD</font></code>.
+Note that they can only be run under Unix 
+(or Cygwin on Microsoft windows).
+
+<br>
+<br>
+<b><big><a name="FADBAD Install Directory">FADBAD Install Directory</a></big></b>
+<br>
+The following text appears 
+in the  file <code><font color="blue">CppAD/FADBAD/Makefile</font></code>.
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FADBAD&nbsp;=&nbsp;d:/FADBAD++<br>
+</span>
+</font></code>
+Before you compile and run these tests you will have to replace
+the text <code><font color="blue">d:/FADBAD++</font></code> with directory where FADBAD++
+is installed on your machine.
+
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+<br>
+In a unix operating system (or in a Cygwin shell on an Microsoft system),
+you can compile link and run this list examples and 
+results comparison between FADBAD and CppAD using the following commands:
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;CppAD/FADBAD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;&nbsp;Example<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example<br>
+</span>
+</font></code>
+<br>
+<b><big><a name="Speed">Speed</a></big></b>
+<br>
+In a unix operating system (or in a Cygwin shell on an Microsoft system),
+you can compile link and run the list of speed
+comparisons between CppAD and FADBAD
+using the following commands:
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;CppAD/FADBAD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;&nbsp;Speed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Speed<br>
+</span>
+</font></code>
+<br>
+<b><big><a name="Contents">Contents</a></big></b>
+<br>
+<div><a href="speedfadbad.cpp.htm" target="_top">Run&nbsp;All&nbsp;The&nbsp;FADBAD&nbsp;Speed&nbsp;Comparison&nbsp;Tests</a><br>
+<a href="examplefadbad.cpp.htm" target="_top">Compare&nbsp;FADBAD&nbsp;and&nbsp;CppAD&nbsp;Results</a><br>
+<a href="detminorfadbad.cpp.htm" target="_top">FADBAD&nbsp;&amp;&nbsp;CppAD&nbsp;Gradient&nbsp;of&nbsp;Determinant&nbsp;by&nbsp;Minors</a><br>
+<a href="detlufadbad.cpp.htm" target="_top">FADBAD&nbsp;&amp;&nbsp;CppAD&nbsp;Gradient&nbsp;of&nbsp;Determinant&nbsp;by&nbsp;Lu&nbsp;Factorization</a><br>
+</div>
+<hr>Input File: omh\FADBAD.omh
+
+</body>
+</html>

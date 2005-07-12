@@ -1,0 +1,55 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+$begin Example$$
+$spell
+	CppAD
+	Cygwin
+	Microsoft
+	chdir
+	nmake
+	mak
+	Workspace
+	dsw
+	exe
+	Example Example
+$$
+
+$section General Purpose Examples$$
+
+
+$head Introduction$$
+Each CppAD operation,
+for example $xref/Add/$$,
+has its own specific example.
+The examples listed here are not connected to a specific operation.
+
+$head Running Examples$$
+The 
+$xref/Install//installation instructions/$$
+show how the examples can be run on your system.
+
+
+$contents%
+	GetStarted/GetStarted.cpp%
+	omh/ExampleList.omh
+%$$
+
+$end

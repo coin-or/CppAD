@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+<title>Forward Mode Atan Function</title>
+<meta name="description" content="Forward Mode Atan Function"/>
+<meta name="keywords" content=" forward atan Foratanop "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<frameset cols="15%,*">
+<frame src="foratanop_links.xml"/>
+<frameset rows="100%,*">
+<frame src="foratanop_frame1.xml" name="frame1"/>
+</frameset>
+</frameset>
+</html>

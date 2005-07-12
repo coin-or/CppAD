@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+<title>The Sine Function: Example and Test</title>
+<meta name="description" content="The Sine Function: Example and Test"/>
+<meta name="keywords" content=" sin example test "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<frameset cols="15%,*">
+<frame src="sin.cpp_links.xml"/>
+<frameset rows="100%,*">
+<frame src="sin.cpp_frame1.xml" name="frame1"/>
+</frameset>
+</frameset>
+</html>

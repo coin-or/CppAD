@@ -1,0 +1,91 @@
+<html><head>
+<title>The AD Comparison Operators</title>
+<meta name="description" content="The AD Comparison Operators">
+<meta name="keywords" content=" comparison operator &lt; &lt;= &gt; &gt;= == != "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="compare.htm" target="_top">section</a>, <a href="compare_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+Suppose that either <i>left</i> or <i>right</i> is an
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object, 
+and the other operand is an <code><font color="blue">int</font></code>, <i>Base</i>
+or <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object.
+In this case
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>left</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>Op</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>right</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>returns a <code><font color="blue">bool</font></code> value (true or false)
+where <i>Op</i> is any of the following operators:
+<table><tr><td align='left'  valign='top'>
+
+<i>Op</i> </td><td align='left'  valign='top'>
+ <b>True Case</b> 
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">&lt;</font></code>    </td><td align='left'  valign='top'>
+ <i>left</i> is less than <i>right</i> 
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">&lt;=</font></code>   </td><td align='left'  valign='top'>
+ <i>left</i> is less than or equal <i>right</i> 
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">&gt;</font></code>    </td><td align='left'  valign='top'>
+ <i>left</i> is greater than <i>right</i> 
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">&gt;=</font></code>   </td><td align='left'  valign='top'>
+ <i>left</i> is greater than or equal <i>right</i> 
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">==</font></code>   </td><td align='left'  valign='top'>
+ <i>left</i> is equal to <i>right</i> 
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">!=</font></code>   </td><td align='left'  valign='top'>
+ <i>left</i> is not equal to <i>right</i> 
+</td></tr>
+</table>
+<br>
+<b><big><a name="Definition">Definition</a></big></b>
+<br>
+An operator <i>Op</i> is a <i>Base</i> comparison operator
+if for each pair of <i>Base</i> objects <i>x</i> and <i>y</i>,
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>Op</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>is defined and returns a <code><font color="blue">bool</font></code> value.
+For example,
+<code><font color="blue">&lt;</font></code> is a <code><font color="blue">double</font></code> comparison operator
+but <code><font color="blue">+</font></code> is not a <code><font color="blue">double</font></code> comparison operator
+(see <a href="binaryop.htm" target="_top"><span style='white-space: nowrap'>Base&nbsp;type&nbsp;binary&nbsp;operator</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="Assumptions">Assumptions</a></big></b>
+<br>
+If one of the <i>Op</i> operators listed above
+is used with an <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object,
+it is assumed that the same operator is supported by the base type 
+<i>Base</i>.
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="compare.cpp.htm" target="_top"><span style='white-space: nowrap'>Compare.cpp</span></a>
+
+contains an example and a test of these operations.
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: CppAD\local\Compare.h
+
+</body>
+</html>

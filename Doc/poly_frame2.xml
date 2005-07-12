@@ -1,0 +1,196 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Evaluate a Polynomial or its Derivative</title>
+<meta name="description" content="Evaluate a Polynomial or its Derivative"/>
+<meta name="keywords" content=" Poly polynomial derivative template "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="poly.xml" target="_top">section</a>, <a href="poly_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+Computes the <i>k</i>-th derivative of the polynomial 
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>P</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>z</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+ where
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mi mathvariant='italic'>P</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>z</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">=</mo>
+<msub><mi mathvariant='italic'>a</mi>
+<mn>0</mn>
+</msub>
+<mo stretchy="false">+</mo>
+<msub><mi mathvariant='italic'>a</mi>
+<mn>1</mn>
+</msub>
+<msup><mi mathvariant='italic'>z</mi>
+<mn>1</mn>
+</msup>
+<mo stretchy="false">+</mo>
+<mo stretchy="false">&#x022EF;</mo>
+<mo stretchy="false">+</mo>
+<msub><mi mathvariant='italic'>a</mi>
+<mi mathvariant='italic'>d</mi>
+</msub>
+<msup><mi mathvariant='italic'>z</mi>
+<mi mathvariant='italic'>d</mi>
+</msup>
+</mrow></math>
+
+and <i>a</i> is a vector of length <i>d+1</i>.
+If <i>k</i> is equal to zero, the return value is 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>P</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>z</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+.
+
+<br/>
+<br/>
+<b><big><a name="Include">Include</a></big></b>
+<br/>
+The file <code><font color="blue">CppAD/Poly.h</font></code> is included by <code><font color="blue">CppAD/CppAD.h</font></code>
+but it can also be included separately with out the rest of 
+the <code><font color="blue">CppAD</font></code> routines.
+Including this file defines
+<code><font color="blue">Poly</font></code> within the <code><font color="blue">CppAD</font></code> namespace.
+
+<br/>
+<br/>
+<b><big><a name="p">p</a></big></b>
+<br/>
+The return value <i>p</i> is a <i>Type</i> object
+and is set equal to 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<msup><mi mathvariant='italic'>P</mi>
+<mrow><mo stretchy="false">(</mo>
+<mi mathvariant='italic'>k</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>z</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+
+(see the description of <a href="poly_frame2.xml#Type" target="frame1"><i><span style='white-space: nowrap'>Type</span></i></a>
+ below).
+
+<br/>
+<br/>
+<b><big><a name="k">k</a></big></b>
+<br/>
+The argument <i>k</i> has type <i>size_t</i>
+and specifies the order of the derivative.
+
+<br/>
+<br/>
+<b><big><a name="a">a</a></big></b>
+<br/>
+The argument <i>a</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>(see description of <a href="poly_frame2.xml#Vector" target="frame1"><i><span style='white-space: nowrap'>Vector</span></i></a>
+ below).
+It specifies the vector corresponding to the polynomial 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>P</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>z</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+.
+
+<br/>
+<br/>
+<b><big><a name="z">z</a></big></b>
+<br/>
+The argument <i>z</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Type</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>z</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>(see description of <i>Type</i> below).
+It specifies the point at which to evaluate the polynomial
+
+
+<br/>
+<br/>
+<b><big><a name="Type">Type</a></big></b>
+<br/>
+It is assumed that
+multiplication and addition of <i>Type</i> objects
+are commutative.
+
+<br/>
+<br/>
+<b><a name="Type.Casting">Casting</a></b>
+<br/>
+The syntax <code><font color="blue"></font></code><i><span style='white-space: nowrap'>Type</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> 
+must convert from a <code><font color="blue">size_t</font></code> value <i>i</i>
+to a <i>Type</i> object. 
+
+<br/>
+<br/>
+<b><a name="Type.Operations">Operations</a></b>
+<br/>
+The following operations must be supported by <i>Type</i>:
+<table><tr><td align='left'  valign='top'>
+
+<code><font color="blue"> =</font></code>    </td><td align='left'  valign='top'>
+ assignment     </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"> *=</font></code>   </td><td align='left'  valign='top'>
+ multiplication computed assignment </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"> +=</font></code>   </td><td align='left'  valign='top'>
+ addition computed assignment 
+
+</td></tr>
+</table>
+<br/>
+<b><big><a name="Vector">Vector</a></big></b>
+<br/>
+The type <i>Vector</i> must have all the operations
+specified by 
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>SimpleVector</span></i><code><font color="blue"><span style='white-space: nowrap'>&lt;</span></font></code><i><span style='white-space: nowrap'>Type</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code><i><span style='white-space: nowrap'><br/>
+</span></i>where <i>SimpleVector</i> is a 
+<a href="simplevector.xml" target="_top"><span style='white-space: nowrap'>Simple&#xA0;Vector</span></a>
+ template class. 
+
+<br/>
+<br/>
+<b><big><a name="Example">Example</a></big></b>
+
+<br/>
+The file
+<a href="poly.cpp.xml" target="_top"><span style='white-space: nowrap'>Poly.cpp</span></a>
+
+contains an example and test of this routine.
+It returns true if it succeeds and false otherwise.
+
+
+
+<hr/>Input File: CppAD\Poly.h
+
+</body>
+</html>

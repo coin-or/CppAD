@@ -1,0 +1,82 @@
+<html><head>
+<title>Getting Started Using CppAD With A Polynomial Example</title>
+<meta name="description" content="Getting Started Using CppAD With A Polynomial Example">
+<meta name="keywords" content=" getstarted polynomial "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="example.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="realistic.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="getstarted.cpp.htm" target="_top">section</a>, <a href="getstarted.cpp_frame1.htm" target="_top">frame</a></div>
+<hr><center><b><big><big>Getting Started Using CppAD With A Polynomial Example</big></big></b></center>
+Select this link to view specifications for <a href="poly.htm" target="_top"><span style='white-space: nowrap'>Poly</span></a>
+:
+
+ 
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+<br>
+//&nbsp;standard&nbsp;input&nbsp;output&nbsp;library<br>
+#&nbsp;include&nbsp;&lt;iostream&gt;<br>
+<br>
+//&nbsp;directory&nbsp;where&nbsp;CppAD/CppAD.h&nbsp;is&nbsp;stored&nbsp;must&nbsp;be&nbsp;searched&nbsp;by&nbsp;compiler<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+<br>
+int&nbsp;main(void)<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;make&nbsp;CppAD&nbsp;routines&nbsp;visible&nbsp;without&nbsp;CppAD::&nbsp;infront&nbsp;of&nbsp;names<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;degree&nbsp;of&nbsp;the&nbsp;polynomial&nbsp;that&nbsp;we&nbsp;will&nbsp;differentiate<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;deg&nbsp;=&nbsp;4;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;vector&nbsp;that&nbsp;will&nbsp;hold&nbsp;polynomial&nbsp;coefficients&nbsp;for&nbsp;p(z)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;A(deg&nbsp;+&nbsp;1);&nbsp;&nbsp;//&nbsp;AD&lt;double&gt;&nbsp;elements<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a(deg&nbsp;+&nbsp;1);&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;&nbsp;elements<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;set&nbsp;the&nbsp;polynomial&nbsp;coefficients<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[0]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;k;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(k&nbsp;=&nbsp;1;&nbsp;k&nbsp;&lt;=&nbsp;deg;&nbsp;k++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[k]&nbsp;=&nbsp;a[k]&nbsp;=&nbsp;1.;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;independent&nbsp;variables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;Z(1);&nbsp;//&nbsp;one&nbsp;independent&nbsp;variable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Z[0]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3.;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;value&nbsp;of&nbsp;independent&nbsp;variable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(Z);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;declare&nbsp;independent&nbsp;variable<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;dependent&nbsp;variables&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;P(1);&nbsp;//&nbsp;one&nbsp;dependent&nbsp;variable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P[0]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;Poly(0,&nbsp;A,&nbsp;Z[0]);&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;value&nbsp;of&nbsp;polynomial&nbsp;at&nbsp;Z[0]<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;define&nbsp;f&nbsp;:&nbsp;Z&nbsp;-&gt;&nbsp;P&nbsp;as&nbsp;a&nbsp;function&nbsp;mapping&nbsp;independent&nbsp;to&nbsp;dependent&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;double&gt;&nbsp;f(Z,&nbsp;P);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;ADFun&nbsp;corresponding&nbsp;to&nbsp;polynomial<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compute&nbsp;derivative&nbsp;of&nbsp;polynomial<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;z(1);&nbsp;&nbsp;//&nbsp;vector&nbsp;of&nbsp;length&nbsp;f.Domain()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;J(1);&nbsp;&nbsp;//&nbsp;vector&nbsp;of&nbsp;length&nbsp;f.Range&nbsp;*&nbsp;f.Domain()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;z[0]&nbsp;=&nbsp;3.;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;point&nbsp;at&nbsp;which&nbsp;to&nbsp;compute&nbsp;derivative<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;f.Jacobian(z);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;value&nbsp;of&nbsp;derivative<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compare&nbsp;with&nbsp;derivative&nbsp;as&nbsp;computed&nbsp;by&nbsp;Poly<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::cout&nbsp;&lt;&lt;&nbsp;&quot;Poly&nbsp;&nbsp;computed&nbsp;derivative&nbsp;=&nbsp;&quot;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;&nbsp;Poly(1,&nbsp;a,&nbsp;z[0])&nbsp;&lt;&lt;&nbsp;std::endl;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::cout&nbsp;&lt;&lt;&nbsp;&quot;CppAD&nbsp;computed&nbsp;derivative&nbsp;=&nbsp;&quot;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;&lt;&nbsp;J[0]&nbsp;&lt;&lt;&nbsp;std::endl;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;return&nbsp;value&nbsp;not&nbsp;significant<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;0;<br>
+}<br>
+<br>
+</span></font></code>
+<hr>Input File: GetStarted\GetStarted.cpp
+
+</body>
+</html>

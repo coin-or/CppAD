@@ -1,0 +1,49 @@
+<html><head>
+<title>The Conditional Expression Function</title>
+<meta name="description" content="The Conditional Expression Function">
+<meta name="keywords" content=" conditional expression assign "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="condexp.htm" target="_top">section</a>, <a href="condexp_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+Returns a object <i>result</i> that is given by
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span></font></code><i><span style='white-space: nowrap'>exp1</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>(0)&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>result</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>exp2</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;</span></font></code><i><span style='white-space: nowrap'>result</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>exp3</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>where <i>Type</i> is <code><font color="blue">float</font></code> or <code><font color="blue">double</font></code>
+or <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> where <i>Base</i> is a valid
+type for conditional expressions.
+If <i>Type</i> is <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code>, 
+conditional expressions are taped and transferred to the corresponding
+<a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object <i>f</i>.
+The choice of expression values is made each time
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>f.Forward</span></a>
+ is used to evaluate the zero order Taylor
+coefficients.
+(See <a href="discrete.htm" target="_top"><span style='white-space: nowrap'>Discrete</span></a>
+ for another type of taped evaluation). 
+
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="condexp.cpp.htm" target="_top"><span style='white-space: nowrap'>CondExp.cpp</span></a>
+
+contains an example and a test of this function.   
+It returns true if it succeeds and false otherwise.
+
+
+<hr>Input File: CppAD\local\CondExp.h
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+<title>Forward Computation of Taylor Coefficients</title>
+<meta name="description" content="Forward Computation of Taylor Coefficients"/>
+<meta name="keywords" content=" Adforward derivative second order Taylor coefficient "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<frameset cols="15%,*">
+<frame src="adforward_links.xml"/>
+<frameset rows="20%,80%">
+<frame src="adforward_frame1.xml" name="frame1"/>
+<frame src="adforward_frame2.xml" name="frame2"/>
+</frameset>
+</frameset>
+</html>

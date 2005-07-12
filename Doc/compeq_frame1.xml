@@ -1,0 +1,49 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Computed Assignment Operators</title>
+<meta name="description" content="Computed Assignment Operators"/>
+<meta name="keywords" content=" compute assignment operator "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="div.cpp.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="addeq.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="compeq.xml" target="_top">section</a>, <a href="compeq_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Computed Assignment Operators</big></big></b></center>
+<br/>
+<b><big><a name="Definition">Definition</a></big></b>
+<br/>
+An operator <code><font color="blue"></font></code><i><span style='white-space: nowrap'>Op</span></i><code><font color="blue"><span style='white-space: nowrap'>=</span></font></code> is a base type computed assignment operator
+if for each pair of <i>Base</i> objects <i>x</i> and <i>y</i>,
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;</span></font></code><i><span style='white-space: nowrap'>Op</span></i><code><font color="blue"><span style='white-space: nowrap'>=&#xA0;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>is defined has the same effect at
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;</span></font></code><i><span style='white-space: nowrap'>Op</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;</span></font></code><i><span style='white-space: nowrap'>y</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>For example, if <i>Base</i> is <code><font color="blue">double</font></code>,
+<code><font color="blue">+=</font></code> is a base type computed assignment operator,
+but <code><font color="blue">==</font></code> is not. 
+
+<br/>
+<br/>
+<b><big><a name="Contents">Contents</a></big></b>
+<br/>
+<div><a href="addeq.xml" target="_top">The&#xA0;AD&#xA0;Addition&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+<a href="subeq.xml" target="_top">The&#xA0;AD&#xA0;Subtraction&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+<a href="muleq.xml" target="_top">The&#xA0;AD&#xA0;Multiplication&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+<a href="diveq.xml" target="_top">The&#xA0;AD&#xA0;Division&#xA0;Computed&#xA0;Assignment&#xA0;Operator</a><br/>
+</div>-------------------------------------------------------------------------------
+
+<hr/>Input File: CppAD\local\CompEq.h
+
+</body>
+</html>

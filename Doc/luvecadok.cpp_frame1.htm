@@ -1,0 +1,150 @@
+<html><head>
+<title>Lu Factor and Solve With Recorded Pivoting: Example and Test</title>
+<meta name="description" content="Lu Factor and Solve With Recorded Pivoting: Example and Test">
+<meta name="keywords" content=" Lu record pivot example test "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="luvecad.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="listallexamples.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="luvecadok.cpp.htm" target="_top">section</a>, <a href="luvecadok.cpp_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+<center><b><big><big>Lu Factor and Solve With Recorded Pivoting: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+#&nbsp;include&nbsp;&quot;LuVecAD.h&quot;<br>
+#&nbsp;include&nbsp;&quot;NearEqualExt.h&quot;<br>
+#&nbsp;include&nbsp;&quot;DetByMinor.h&quot;<br>
+<br>
+bool&nbsp;LuVecADOk(void)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;&nbsp;ok&nbsp;=&nbsp;true;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef&nbsp;AD&lt;double&gt;&nbsp;ADdouble;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;=&nbsp;3;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m&nbsp;=&nbsp;2;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;a1[]&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.,&nbsp;0.,&nbsp;0.,&nbsp;//&nbsp;(1,1)&nbsp;is&nbsp;first&nbsp;&nbsp;pivot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.,&nbsp;2.,&nbsp;1.,&nbsp;//&nbsp;(2,2)&nbsp;is&nbsp;second&nbsp;pivot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.,&nbsp;0.,&nbsp;.5&nbsp;&nbsp;//&nbsp;(3,3)&nbsp;is&nbsp;third&nbsp;&nbsp;pivot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;a2[]&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.,&nbsp;2.,&nbsp;1.,&nbsp;//&nbsp;(2,2)&nbsp;is&nbsp;second&nbsp;pivot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.,&nbsp;0.,&nbsp;0.,&nbsp;//&nbsp;(2,1)&nbsp;is&nbsp;first&nbsp;&nbsp;pivot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.,&nbsp;0.,&nbsp;.5&nbsp;&nbsp;//&nbsp;(3,3)&nbsp;is&nbsp;third&nbsp;&nbsp;pivot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;rhs[]&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.,&nbsp;3.,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.,&nbsp;2.,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.,&nbsp;1.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;double&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Copy&nbsp;&nbsp;&nbsp;&nbsp;(n&nbsp;*&nbsp;n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;double&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rhs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(n&nbsp;*&nbsp;m);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VecAD&lt;double&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Result&nbsp;&nbsp;(n&nbsp;*&nbsp;m);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADdouble&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;logdet;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADdouble&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;signdet;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;routine&nbsp;for&nbsp;checking&nbsp;determinants&nbsp;using&nbsp;expansion&nbsp;by&nbsp;minors<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetByMinor&lt;ADdouble&gt;&nbsp;Det(n);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;matrix&nbsp;we&nbsp;are&nbsp;computing&nbsp;the&nbsp;determinant&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;ADdouble&gt;&nbsp;A(n&nbsp;*&nbsp;n);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;dependent&nbsp;variable&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;ADdouble&gt;&nbsp;Y(1&nbsp;+&nbsp;n&nbsp;*&nbsp;m);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;j;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;k;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Original&nbsp;matrix<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n&nbsp;*&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[i]&nbsp;=&nbsp;a1[i];<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;right&nbsp;hand&nbsp;side<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(j&nbsp;=&nbsp;0;&nbsp;j&nbsp;&lt;&nbsp;n;&nbsp;j++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(k&nbsp;=&nbsp;0;&nbsp;k&nbsp;&lt;&nbsp;m;&nbsp;k++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rhs[&nbsp;j&nbsp;*&nbsp;m&nbsp;+&nbsp;k&nbsp;]&nbsp;=&nbsp;rhs[&nbsp;j&nbsp;*&nbsp;m&nbsp;+&nbsp;k&nbsp;];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Declare&nbsp;independent&nbsp;variables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(A);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Copy&nbsp;the&nbsp;matrix<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADdouble&nbsp;index(0);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n*n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;Copy[index]&nbsp;=&nbsp;A[i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;+=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Solve&nbsp;the&nbsp;equation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;signdet&nbsp;=&nbsp;LuVecAD(n,&nbsp;m,&nbsp;Copy,&nbsp;Rhs,&nbsp;Result,&nbsp;logdet);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Result&nbsp;is&nbsp;the&nbsp;first&nbsp;n&nbsp;*&nbsp;m&nbsp;dependent&nbsp;variables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n&nbsp;*&nbsp;m;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;Y[i]&nbsp;=&nbsp;Result[index];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index&nbsp;+=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Determinant&nbsp;is&nbsp;last&nbsp;component&nbsp;of&nbsp;the&nbsp;solution<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y[&nbsp;n&nbsp;*&nbsp;m&nbsp;]&nbsp;=&nbsp;signdet&nbsp;*&nbsp;exp(&nbsp;logdet&nbsp;);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;construct&nbsp;f:&nbsp;A&nbsp;-&gt;&nbsp;Y<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;double&gt;&nbsp;f(A,&nbsp;Y);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;check&nbsp;determinant&nbsp;using&nbsp;minors&nbsp;routine<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADdouble&nbsp;determinant&nbsp;=&nbsp;Det(&nbsp;A&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(Y[n&nbsp;*&nbsp;m],&nbsp;determinant,&nbsp;1e-10,&nbsp;1e-10);<br>
+<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Check&nbsp;solution&nbsp;of&nbsp;Rhs&nbsp;=&nbsp;A&nbsp;*&nbsp;Result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;sum;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(k&nbsp;=&nbsp;0;&nbsp;k&nbsp;&lt;&nbsp;m;&nbsp;k++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;sum&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(j&nbsp;=&nbsp;0;&nbsp;j&nbsp;&lt;&nbsp;n;&nbsp;j++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum&nbsp;+=&nbsp;a1[i&nbsp;*&nbsp;n&nbsp;+&nbsp;j]&nbsp;*&nbsp;Value(&nbsp;Y[j&nbsp;*&nbsp;m&nbsp;+&nbsp;k]&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(&nbsp;rhs[i&nbsp;*&nbsp;m&nbsp;+&nbsp;k],&nbsp;sum,&nbsp;1e-10,&nbsp;1e-10&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;y2(1&nbsp;+&nbsp;n&nbsp;*&nbsp;m);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;A2(n&nbsp;*&nbsp;n);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n&nbsp;*&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[i]&nbsp;=&nbsp;A2[i]&nbsp;=&nbsp;a2[i];<br>
+<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;f.Forward(0,&nbsp;A2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;determinant&nbsp;=&nbsp;Det(A);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(y2[&nbsp;n&nbsp;*&nbsp;m],&nbsp;Value(determinant),&nbsp;1e-10,&nbsp;1e-10);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Check&nbsp;solution&nbsp;of&nbsp;Rhs&nbsp;=&nbsp;A2&nbsp;*&nbsp;Result<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(k&nbsp;=&nbsp;0;&nbsp;k&nbsp;&lt;&nbsp;m;&nbsp;k++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;sum&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(j&nbsp;=&nbsp;0;&nbsp;j&nbsp;&lt;&nbsp;n;&nbsp;j++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum&nbsp;+=&nbsp;a2[i&nbsp;*&nbsp;n&nbsp;+&nbsp;j]&nbsp;*&nbsp;y2[j&nbsp;*&nbsp;m&nbsp;+&nbsp;k];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;NearEqual(&nbsp;rhs[i&nbsp;*&nbsp;m&nbsp;+&nbsp;k],&nbsp;sum,&nbsp;1e-10,&nbsp;1e-10&nbsp;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+}<br>
+<br>
+</span></font></code>
+<hr>Input File: Example\LuVecADOk.cpp
+
+</body>
+</html>

@@ -1,0 +1,254 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Lu Factor and Solve with Recorded Pivoting</title>
+<meta name="description" content="Lu Factor and Solve with Recorded Pivoting"/>
+<meta name="keywords" content=" Luvecad Lu linear equation determinant solve "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="luvecad.xml" target="_top">section</a>, <a href="luvecad_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+Solves the linear equation
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mi mathvariant='italic'>Matrix</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>Result</mi>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>Rhs</mi>
+</mrow></math>
+
+where <i>Matrix</i> is an 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mo stretchy="false">&#x000D7;</mo>
+<mi mathvariant='italic'>n</mi>
+</mrow></math>
+
+ matrix,
+<i>Rhs</i> is an 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mi mathvariant='italic'>x</mi>
+<mi mathvariant='italic'>m</mi>
+</mrow></math>
+
+ matrix, and
+<i>Result</i> is an 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mi mathvariant='italic'>x</mi>
+<mi mathvariant='italic'>m</mi>
+</mrow></math>
+
+ matrix.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>The routine <a href="lusolve.xml" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ uses an arbitrary vector type,
+instead of <code><font color="blue">VecAD</font></code>,
+to hold its elements.
+Thus it is faster to execute and compute derivatives
+but corresponding <a href="adfun.xml" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ objects have a fixed
+set of pivoting operations.
+The pivoting operations for a <code><font color="blue">ADFun</font></code> object
+corresponding to an <code><font color="blue">LuVecAD</font></code> solution
+will change to be optimal for the matrix being factored.
+
+<br/>
+<br/>
+<b><big><a name="Storage Convention">Storage Convention</a></big></b>
+<br/>
+The matrices stored in row major order.
+To be specific, if 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>A</mi>
+</mrow></math>
+
+ contains the vector storage for an
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mi mathvariant='italic'>x</mi>
+<mi mathvariant='italic'>m</mi>
+</mrow></math>
+
+ matrix,
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>i</mi>
+</mrow></math>
+
+ is between zero and 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mn>-1</mn>
+</mrow></math>
+
+,
+and 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>j</mi>
+</mrow></math>
+
+ is between zero and 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>m</mi>
+<mn>-1</mn>
+</mrow></math>
+
+,
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<msub><mi mathvariant='italic'>A</mi>
+<mrow><mi mathvariant='italic'>i</mi>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>A</mi>
+<mo stretchy="false">[</mo>
+<mi mathvariant='italic'>i</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>M</mi>
+<mo stretchy="false">+</mo>
+<mi mathvariant='italic'>j</mi>
+<mo stretchy="false">]</mo>
+</mrow></math>
+
+(The length of 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>A</mi>
+</mrow></math>
+
+ must be equal to 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mo stretchy="false">*</mo>
+<mi mathvariant='italic'>M</mi>
+</mrow></math>
+
+.)
+
+<br/>
+<br/>
+<b><big><a name="n">n</a></big></b>
+<br/>
+is the number of rows in 
+<i>Matrix</i>,
+<i>Rhs</i>,
+and <i>Result</i>.
+
+<br/>
+<br/>
+<b><big><a name="m">m</a></big></b>
+<br/>
+is the number of columns in 
+<i>Rhs</i>
+and <i>Result</i>.
+It is ok for <i>m</i> to be zero which is reasonable when
+you are only interested in the determinant of <i>Matrix</i>.
+
+
+<br/>
+<br/>
+<b><big><a name="Matrix">Matrix</a></big></b>
+<br/>
+On input, this is an
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mo stretchy="false">&#x000D7;</mo>
+<mi mathvariant='italic'>n</mi>
+</mrow></math>
+
+ matrix containing the variable coefficients for 
+the equation we wish to solve.
+On output, the elements of <i>Matrix</i> have been overwritten
+and are not specified.
+
+<br/>
+<br/>
+<b><big><a name="Rhs">Rhs</a></big></b>
+<br/>
+On input, this is an
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mo stretchy="false">&#x000D7;</mo>
+<mi mathvariant='italic'>m</mi>
+</mrow></math>
+
+ matrix containing the right hand side
+for the equation we wish to solve.
+On output, the elements of <i>Rhs</i> have been overwritten
+and are not specified.
+If <i>m</i> is zero, <i>Rhs</i> is not used.
+
+<br/>
+<br/>
+<b><big><a name="Result">Result</a></big></b>
+<br/>
+On input, this is an
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>n</mi>
+<mo stretchy="false">&#x000D7;</mo>
+<mi mathvariant='italic'>m</mi>
+</mrow></math>
+
+ matrix and the value of its elements do not matter.
+On output, the elements of <i>Rhs</i> contain the solution
+of the equation we wish to solve
+(unless the value returned by <code><font color="blue">LuVecAD</font></code> is equal to zero).
+If <i>m</i> is zero, <i>Result</i> is not used.
+
+<br/>
+<br/>
+<b><big><a name="logdet">logdet</a></big></b>
+<br/>
+On input, the value of <i>logdet</i> does not matter.
+On output, it has been set to the 
+log of the determinant of <i>Matrix</i> (but not quite).
+To be more specific,
+if <i>signdet</i> is the value returned by <code><font color="blue">LuVecAD</font></code>,
+the determinant of <i>Matrix</i> is given by the formula
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mi mathvariant='italic'>det</mi>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>signdet</mi>
+<mi>exp</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>logdet</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+This enables <code><font color="blue">LuVecAD</font></code> to use logs of absolute values.
+
+
+<br/>
+<br/>
+<b><big><a name="Example">Example</a></big></b>
+
+<br/>
+The file
+<a href="luvecadok.cpp.xml" target="_top"><span style='white-space: nowrap'>LuVecADOk.cpp</span></a>
+
+contains an example and a test of <code><font color="blue">LuVecAD</font></code>.
+It returns true if it succeeds and false otherwise.
+
+
+
+<hr/>Input File: Example\LuVecAD.cpp
+
+</body>
+</html>

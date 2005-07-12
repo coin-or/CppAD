@@ -1,0 +1,61 @@
+<html><head>
+<title>A Binary Representation of the Procedure</title>
+<meta name="description" content="A Binary Representation of the Procedure">
+<meta name="keywords" content=" example binary represent "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="theoryexamproc.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="theoryexameval.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="theoryexambinary.htm" target="_top">section</a>, <a href="theoryexambinary_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+<center><b><big><big>A Binary Representation of the Procedure</big></big></b></center>
+We define the variable
+<code>
+<span style='white-space: nowrap'>&nbsp;s_0&nbsp;(x)&nbsp;=&nbsp;a_n</span></code>
+ for all <code>
+<span style='white-space: nowrap'>&nbsp;x&nbsp;\in&nbsp;\R</span></code>
+
+and
+for <code>
+<span style='white-space: nowrap'>&nbsp;i&nbsp;=&nbsp;1,&nbsp;\ldots&nbsp;,&nbsp;n</span></code>
+,
+we define 
+<code>
+<span style='white-space: nowrap'>&nbsp;s_i&nbsp;:&nbsp;\R&nbsp;\rightarrow&nbsp;\R</span></code>
+ and 
+<code>
+<span style='white-space: nowrap'>&nbsp;t_i&nbsp;:&nbsp;\R&nbsp;\rightarrow&nbsp;\R</span></code>
+ 
+by:
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t_i&nbsp;(x)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;s_{i-1}&nbsp;(x)&nbsp;\;&nbsp;x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_i&nbsp;(x)&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;t_i&nbsp;(x)&nbsp;+&nbsp;a_{n&nbsp;-&nbsp;i}<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+It follows that <code>
+<span style='white-space: nowrap'>&nbsp;s_n(x)</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;t_n(x)</span></code>
+
+are equal to the values of the variables <code><font color="blue">s</font></code> and <code><font color="blue">t</font></code> 
+on the <i>n</i>-th iteration of the loop in the 
+<a href="theoryexamproc.htm" target="_top"><span style='white-space: nowrap'>example&nbsp;procedure</span></a>
+.
+
+
+<hr>Input File: omh\TheoryExamList.omh
+
+</body>
+</html>

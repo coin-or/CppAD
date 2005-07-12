@@ -1,0 +1,48 @@
+<html><head>
+<title>Printing Values During Forward Mode Calculations</title>
+<meta name="description" content="Printing Values During Forward Mode Calculations">
+<meta name="keywords" content=" print forward "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="printfor.htm" target="_top">section</a>, <a href="printfor_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+This form of printing values is delayed until 
+<a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ mode is called with order equal to zero; 
+i.e., when the value of the independent variables is changed.
+This is can be helpful for understanding why tape evaluations
+have trouble, for example, if the result of a tape calculation
+is the IEEE code for not a number <code><font color="blue">Nan</font></code>.
+The text specified by <i>text</i>, 
+followed by the value specified by <i>x</i>,
+are is printed to <code><font color="blue">std::cout</font></code>. 
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The <a href="output.htm" target="_top"><span style='white-space: nowrap'>Output</span></a>
+ section describes the normal 
+printing of values; i.e., printing when the corresponding
+code is executed.
+
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+
+<br>
+The program
+<a href="printfor.cpp.htm" target="_top"><span style='white-space: nowrap'>PrintFor.cpp</span></a>
+
+is an example and a test of this operation.
+The output of this program
+states the conditions for passing and failing the test.
+
+
+<hr>Input File: CppAD\local\PrintFor.h
+
+</body>
+</html>

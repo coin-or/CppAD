@@ -1,0 +1,121 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithm Differentiation Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+$begin AcosForward$$
+$spell
+	acos
+	Arccosine
+	Taylor
+$$
+
+$index acos, forward theory$$
+$index theory, acos forward$$
+$index forward, acos theory$$
+
+$section Arccosine Function Forward Taylor Polynomial Theory$$
+
+If $latex F(x)  = \arccos(x) $$ it follows that
+$latex \[
+	\sqrt{ 1 - x * x } * F^{(1)} (x) - 0 * F (u)  = -1
+\] $$
+and in the
+$xref/
+	ForwardTheory/ 
+	Standard Math Functions/ 
+	Differential Equation/
+	standard math function differential equation/
+	1
+/$$,
+$latex A(x) = 0$$,
+$latex B(x) = \sqrt{1 - x * x }$$,
+and $latex D(x) = -1$$.
+We use $latex a$$, $latex b$$, $latex d$$ and $latex z$$ to denote the 
+Taylor coefficients for
+$latex A [ X (t) ] $$, 
+$latex B [ X (t) ]$$, 
+$latex D [ X (t) ] $$,
+and $latex F [ X(t) ] $$ respectively.
+$pre
+
+$$
+We define $latex Q(x) = 1 - x * x$$
+and let $latex q$$ be the corresponding Taylor coefficients for 
+$latex Q[ X(t) ]$$.
+It follows that
+$latex \[
+q^{(j)} = \left\{ \begin{array}{ll}
+	1 - x^{(0)} * x^{(0)}            & {\rm if} \; j = 0 \\
+	- \sum_{k=0}^j x^{(k)} x^{(j-k)} & {\rm otherwise}
+\end{array} \right.
+\] $$
+It follows that 
+$latex B[ X(t) ] = \sqrt{ Q[ X(t) ] }$$ and
+from the equations for the
+$xref/SqrtForward//square root/$$
+that for $latex j = 0 , 1, \ldots$$,
+$latex \[
+\begin{array}{rcl}
+b^{(0)}   & = & \sqrt{ q^{(0)} }
+\\
+b^{(j+1)} & = &
+	\frac{1}{j+1} \frac{1}{ b^{(0)} } 
+	\left(
+		\frac{j+1}{2} q^{(j+1) }
+		- \sum_{k=1}^j k b^{(k)} b^{(j+1-k)}  
+	\right)
+\end{array}
+\] $$
+It now follows from the general
+$xref/
+	ForwardTheory/
+	Standard Math Functions/
+	Taylor Coefficients Recursion Formula/
+	Taylor coefficients recursion formula/
+	1
+/$$
+that for $latex j = 0 , 1, \ldots$$,
+$latex \[
+\begin{array}{rcl}
+z^{(0)} & = & \arccos ( x^{(0)} )
+\\
+e^{(j)} 
+& = & d^{(j)} + \sum_{k=0}^{j} a^{(j-k)} * z^{(k)}
+\\
+& = & \left\{ \begin{array}{ll}
+	-1 & {\rm if} \; j = 0 \\
+	0 & {\rm otherwise}
+\end{array} \right.
+\\
+z^{(j+1)} & = & \frac{1}{j+1} \frac{1}{ b^{(0)} } 
+\left(
+	\sum_{k=0}^j e^{(k)} (j+1-k) x^{(j+1-k)} 
+	- \sum_{k=1}^j b^{(k)} (j+1-k) z^{(j+1-k)}  
+\right)
+\\
+z^{(j+1)} & = & - \frac{1}{j+1} \frac{1}{ b^{(0)} } 
+\left(
+	(j+1) x^{(j+1)}
+	+ \sum_{k=1}^j k z^{(k)}  b^{(j+1-k)} 
+\right)
+\end{array}
+\] $$ 
+
+
+$end 

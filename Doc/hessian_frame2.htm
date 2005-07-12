@@ -1,0 +1,137 @@
+<html><head>
+<title>Hessian of One Component: Easy Driver</title>
+<meta name="description" content="Hessian of One Component: Easy Driver">
+<meta name="keywords" content=" Hessian easy driver "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="hessian.htm" target="_top">section</a>, <a href="hessian_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+Given an <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun&lt;Base&gt;</span></a>
+ object <code>
+<span style='white-space: nowrap'>&nbsp;F&nbsp;:&nbsp;B^n&nbsp;\rightarrow&nbsp;B^m</span></code>
+,
+this routine returns the Hessian of <code>
+<span style='white-space: nowrap'>&nbsp;F_i</span></code>
+ at the point 
+<i>x</i>; i.e.,
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;H&nbsp;=&nbsp;F_i^{(2)}&nbsp;(x)<br>
+\]&nbsp;</span></code>
+
+
+<br>
+<br>
+<b><big><a name="F">F</a></big></b>
+<br>
+The object <i>F</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code><br>
+<b><big><a name="VectorBase">VectorBase</a></big></b>
+<br>
+The type <i>VectorBase</i> must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector_frame1.htm#Elements of Specified Type" target="frame1"><i><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type&nbsp;Base</span></i></a>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="x">x</a></big></b>
+<br>
+The vector <i>x</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>VectorBase</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>It must have length <i>n</i> and specifies
+that point at which to evaluate the Hessian.
+
+<br>
+<br>
+<b><big><a name="i">i</a></big></b>
+<br>
+The index <i>i</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>It must be between zero and <code>
+<span style='white-space: nowrap'>&nbsp;m-1</span></code>
+
+and specifies the component of <i>F</i>
+for which we are evaluating the Hessian.
+
+<br>
+<br>
+<b><big><a name="H">H</a></big></b>
+<br>
+The vector <i>H</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>VectorBase</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>H</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>It must have length <code><font color="blue"></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font></code><i><span style='white-space: nowrap'>n</span></i>.
+After the assignment to <i>H</i>, 
+for <code>
+<span style='white-space: nowrap'>&nbsp;j&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;n&nbsp;-&nbsp;1&nbsp;</span></code>
+ and <code>
+<span style='white-space: nowrap'>&nbsp;\ell&nbsp;=&nbsp;0&nbsp;,&nbsp;\ldots&nbsp;,&nbsp;n&nbsp;-&nbsp;1</span></code>
+
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;H[&nbsp;j&nbsp;*&nbsp;m&nbsp;+&nbsp;\ell&nbsp;]&nbsp;=&nbsp;\DD{&nbsp;F_i&nbsp;}{&nbsp;x_j&nbsp;}{&nbsp;x_\ell&nbsp;}&nbsp;(&nbsp;x&nbsp;)<br>
+\]&nbsp;</span></code>
+
+
+
+<br>
+<br>
+<b><big><a name="Forward">Forward</a></big></b>
+<br>
+The object <i>F</i> stores information related to previous
+calls to <code><font color="blue"></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Forward</span></font></code>.
+After this operation,
+the previous calls to <a href="forward.htm" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ are undefined
+with the exception of the zero order call which has the form
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Forward(0,&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>.
+
+<br>
+<br>
+<b><big><a name="Examples">Examples</a></big></b>
+
+<br>
+The routine 
+<a href="hessian.h.htm" target="_top"><span style='white-space: nowrap'>Hessian</span></a>
+ is both an example and a test.
+It returns <code><font color="blue">true</font></code>, if it succeeds and <code><font color="blue">false</font></code> otherwise.
+
+
+<br>
+<br>
+<b><a name="Examples.Determinant Using Expansion by Minors">Determinant Using Expansion by Minors</a></b>
+<br>
+The routine 
+<a href="hesminordet.cpp.htm" target="_top"><span style='white-space: nowrap'>HesMinorDet</span></a>
+ is both an example and a test.
+It returns <code><font color="blue">true</font></code>, if it succeeds and <code><font color="blue">false</font></code> otherwise.
+
+<br>
+<br>
+<b><a name="Examples.Determinant Using Lu Factorization">Determinant Using Lu Factorization</a></b>
+<br>
+The routine 
+<a href="hesludet.cpp.htm" target="_top"><span style='white-space: nowrap'>HesLuDet</span></a>
+ is both an example and a test.
+It returns <code><font color="blue">true</font></code>, if it succeeds and <code><font color="blue">false</font></code> otherwise.
+
+
+<hr>Input File: CppAD\local\Hessian.h
+
+</body>
+</html>

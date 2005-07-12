@@ -1,0 +1,20 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+<title>The AD Multiplication Computed Assignment Operator</title>
+<meta name="description" content="The AD Multiplication Computed Assignment Operator"/>
+<meta name="keywords" content=" *= computed assign times multiply "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<frameset cols="15%,*">
+<frame src="muleq_links.xml"/>
+<frameset rows="20%,80%">
+<frame src="muleq_frame1.xml" name="frame1"/>
+<frame src="muleq_frame2.xml" name="frame2"/>
+</frameset>
+</frameset>
+</html>

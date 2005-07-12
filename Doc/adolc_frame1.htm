@@ -1,0 +1,85 @@
+<html><head>
+<title>Routines for Comparing CppAD with ADOLC</title>
+<meta name="description" content="Routines for Comparing CppAD with ADOLC">
+<meta name="keywords" content=" Adolc compare "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="lusolvespeed.cpp.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="speedadolc.cpp.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="adolc.htm" target="_top">section</a>, <a href="adolc_frame1.htm" target="_top">frame</a></div>
+<hr><center><b><big><big>Routines for Comparing CppAD with ADOLC</big></big></b></center>
+<br>
+<b><big><a name="Description">Description</a></big></b>
+<br>
+These examples and speed tests are used to compare
+<a href="http://www.math.tu-dresden.de/~adol-c/" target="_top"><span style='white-space: nowrap'>ADOLC</span></a>
+
+with CppAD.
+They are located in the directory <code><font color="blue">CppAD/ADOLC</font></code>.
+Note that they can only be run under Unix 
+(or Cygwin on Microsoft windows).
+
+<br>
+<br>
+<b><big><a name="ADOLC Install Directory">ADOLC Install Directory</a></big></b>
+<br>
+The following text appears 
+in the  file <code><font color="blue">CppAD/ADOLC/Makefile</font></code>.
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADOLC&nbsp;=&nbsp;d:/ADOLC18<br>
+</span>
+</font></code>
+Before you compile and run these tests you will have to replace
+the text <code><font color="blue">d:/ADOLC18</font></code> with directory where ADOLC
+is installed on your machine.
+
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+<br>
+In a unix operating system (or in a Cygwin shell on an Microsoft system),
+you can compile link and run this list examples and 
+results comparison between ADOLC and CppAD using the following commands:
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;CppAD/ADOLC<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;&nbsp;Example<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example<br>
+</span>
+</font></code>
+<br>
+<b><big><a name="Speed">Speed</a></big></b>
+<br>
+In a unix operating system (or in a Cygwin shell on an Microsoft system),
+you can compile link and run the list of speed
+comparisons between CppAD and ADOLC
+using the following commands:
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;CppAD/ADOLC<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make&nbsp;&nbsp;Speed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Speed<br>
+</span>
+</font></code>
+<br>
+<b><big><a name="Contents">Contents</a></big></b>
+<br>
+<div><a href="speedadolc.cpp.htm" target="_top">Run&nbsp;All&nbsp;The&nbsp;ADOLC&nbsp;Speed&nbsp;Comparison&nbsp;Tests</a><br>
+<a href="exampleadolc.cpp.htm" target="_top">Compare&nbsp;ADOLC&nbsp;and&nbsp;CppAD&nbsp;Results</a><br>
+<a href="detminoradolc.cpp.htm" target="_top">ADOLC&nbsp;&amp;&nbsp;CppAD&nbsp;Gradient&nbsp;of&nbsp;Determinant&nbsp;by&nbsp;Minors</a><br>
+<a href="detluadolc.cpp.htm" target="_top">ADOLC&nbsp;&amp;&nbsp;CppAD&nbsp;Gradient&nbsp;of&nbsp;Determinant&nbsp;by&nbsp;Lu&nbsp;Factorization</a><br>
+</div>
+<hr>Input File: omh\ADOLC.omh
+
+</body>
+</html>

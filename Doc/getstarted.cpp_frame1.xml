@@ -1,0 +1,85 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Getting Started Using CppAD With A Polynomial Example</title>
+<meta name="description" content="Getting Started Using CppAD With A Polynomial Example"/>
+<meta name="keywords" content=" getstarted polynomial "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="example.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="realistic.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="getstarted.cpp.xml" target="_top">section</a>, <a href="getstarted.cpp_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Getting Started Using CppAD With A Polynomial Example</big></big></b></center>
+Select this link to view specifications for <a href="poly.xml" target="_top"><span style='white-space: nowrap'>Poly</span></a>
+:
+
+ 
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+<br/>
+//&#xA0;standard&#xA0;input&#xA0;output&#xA0;library<br/>
+#&#xA0;include&#xA0;&lt;iostream&gt;<br/>
+<br/>
+//&#xA0;directory&#xA0;where&#xA0;CppAD/CppAD.h&#xA0;is&#xA0;stored&#xA0;must&#xA0;be&#xA0;searched&#xA0;by&#xA0;compiler<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD.h&gt;<br/>
+<br/>
+int&#xA0;main(void)<br/>
+{<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;make&#xA0;CppAD&#xA0;routines&#xA0;visible&#xA0;without&#xA0;CppAD::&#xA0;infront&#xA0;of&#xA0;names<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;namespace&#xA0;CppAD;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;degree&#xA0;of&#xA0;the&#xA0;polynomial&#xA0;that&#xA0;we&#xA0;will&#xA0;differentiate<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;deg&#xA0;=&#xA0;4;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;vector&#xA0;that&#xA0;will&#xA0;hold&#xA0;polynomial&#xA0;coefficients&#xA0;for&#xA0;p(z)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;AD&lt;double&gt;&#xA0;&gt;&#xA0;A(deg&#xA0;+&#xA0;1);&#xA0;&#xA0;//&#xA0;AD&lt;double&gt;&#xA0;elements<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;a(deg&#xA0;+&#xA0;1);&#xA0;&#xA0;//&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;&#xA0;elements<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;set&#xA0;the&#xA0;polynomial&#xA0;coefficients<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;A[0]&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;k;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(k&#xA0;=&#xA0;1;&#xA0;k&#xA0;&lt;=&#xA0;deg;&#xA0;k++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;A[k]&#xA0;=&#xA0;a[k]&#xA0;=&#xA0;1.;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;independent&#xA0;variables<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;AD&lt;double&gt;&#xA0;&gt;&#xA0;Z(1);&#xA0;//&#xA0;one&#xA0;independent&#xA0;variable<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Z[0]&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;3.;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;value&#xA0;of&#xA0;independent&#xA0;variable<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(Z);&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;declare&#xA0;independent&#xA0;variable<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;dependent&#xA0;variables&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;AD&lt;double&gt;&#xA0;&gt;&#xA0;P(1);&#xA0;//&#xA0;one&#xA0;dependent&#xA0;variable<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;P[0]&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;Poly(0,&#xA0;A,&#xA0;Z[0]);&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;value&#xA0;of&#xA0;polynomial&#xA0;at&#xA0;Z[0]<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;define&#xA0;f&#xA0;:&#xA0;Z&#xA0;-&gt;&#xA0;P&#xA0;as&#xA0;a&#xA0;function&#xA0;mapping&#xA0;independent&#xA0;to&#xA0;dependent&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADFun&lt;double&gt;&#xA0;f(Z,&#xA0;P);&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;ADFun&#xA0;corresponding&#xA0;to&#xA0;polynomial<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;compute&#xA0;derivative&#xA0;of&#xA0;polynomial<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;z(1);&#xA0;&#xA0;//&#xA0;vector&#xA0;of&#xA0;length&#xA0;f.Domain()<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;J(1);&#xA0;&#xA0;//&#xA0;vector&#xA0;of&#xA0;length&#xA0;f.Range&#xA0;*&#xA0;f.Domain()<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;z[0]&#xA0;=&#xA0;3.;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;point&#xA0;at&#xA0;which&#xA0;to&#xA0;compute&#xA0;derivative<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;J&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;f.Jacobian(z);&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;value&#xA0;of&#xA0;derivative<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;compare&#xA0;with&#xA0;derivative&#xA0;as&#xA0;computed&#xA0;by&#xA0;Poly<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;std::cout&#xA0;&lt;&lt;&#xA0;&quot;Poly&#xA0;&#xA0;computed&#xA0;derivative&#xA0;=&#xA0;&quot;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&lt;&lt;&#xA0;Poly(1,&#xA0;a,&#xA0;z[0])&#xA0;&lt;&lt;&#xA0;std::endl;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;std::cout&#xA0;&lt;&lt;&#xA0;&quot;CppAD&#xA0;computed&#xA0;derivative&#xA0;=&#xA0;&quot;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&lt;&lt;&#xA0;J[0]&#xA0;&lt;&lt;&#xA0;std::endl;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;return&#xA0;value&#xA0;not&#xA0;significant<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;0;<br/>
+}<br/>
+<br/>
+</span></font></code>
+<hr/>Input File: GetStarted\GetStarted.cpp
+
+</body>
+</html>

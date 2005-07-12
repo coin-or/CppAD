@@ -1,0 +1,160 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+$begin InstallWindows$$
+$dollar @$$
+$spell
+	cppad-yy-mm-dd
+	stdvector
+	std
+	ublas
+	hpp
+	adouble
+	badiff
+	usr
+	cygdrive
+	htm
+	xml
+	Dir
+	xvzf
+	gz
+	GetStarted
+	workspace
+	Makefile
+	exe
+	Cygwin
+	Microsoft
+	dsw
+	CppAD
+	Adolc
+	Fadbad
+$$
+$index free, install CppAD$$
+$index install, windows CppAD$$
+$index windows, CppAD install$$
+$index CppAD, install windows$$
+
+$section Windows Installation and Testing$$
+
+$head Download Current Version$$
+If you are using 
+$href%
+	http://www.cygwin.com%
+	Cygwin
+%$$
+or,
+$href%
+	http://www.mingw.org%
+	MinGW with MSYS
+%$$,
+with Unix formatted files,
+just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
+Otherwise,
+download the file current version of the file
+$href%
+	http://www.seanet.com/~bradbell/CppAD.dos.tar.gz%
+	CppAD.dos.tar.gz
+%$$
+
+$head Extraction$$
+Use 
+$href%
+	http://www.winzip.com%
+	WinZip
+%$$
+or some other program to decompress the file
+$code CppAD.dos.tar.gz$$ to $code CppAD.dos.tar$$ 
+and to extract the individual
+files from $code CppAD.dos.tar$$ into the distribution directory
+$syntax%
+	cppad-%yy%-%mm%-%dd%
+%$$
+All the command sequences below assume that you start in the
+distribution directory; i.e.,
+the one that is created by this extraction.
+If you are using Cygwin, or MinGW with MSYS, (with dos file formats)
+you should follow the $xref/InstallUnix//Unix installation/$$ steps
+for the rest of the install.
+Otherwise, continue with the steps below:
+
+$head User Documentation$$
+The $code Doc$$ sub-directory of the distribution directory
+contains user documentation for CppAD.
+The files $syntax%Doc/%*%.htm%$$ are in HTML format.
+If your browser supports XHTML+MATHML format,
+an easier to read copy is available in the files
+$syntax%Doc/%*%.xml%$$.
+
+$head Developer Documentation$$
+The $code Developer$$ sub-directory of the distribution directory
+contains developer documentation for CppAD. 
+
+$head Getting Started$$
+Using Microsoft Visual C++,
+open the workspace $code GetStarted/GetStarted.dsw$$
+in Visual Studio and then select $code Build | Build GetStarted.exe$$.
+Then in a Dos box, execute the following commands
+$codep
+	cd GetStarted\Debug
+	GetStarted
+$$
+
+$head Extensive Examples and Testing$$
+Using Microsoft Visual C++,
+open the workspace $code Example/Example.dsw$$ in Visual Studio.
+Then select $code Build | Build Example.exe$$.
+Then in a Dos box, execute the following commands
+$codep
+	cd Example\Debug
+	Example
+$$
+
+$head Printing During Forward Mode Example and Testing$$
+Using Microsoft Visual C++,
+open the workspace $code PrintFor/PrintFor.dsw$$ in Visual Studio.
+Then select $code Build | Build PrintFor.exe$$.
+Then in a Dos box, execute the following commands
+$codep
+	cd PrintFor\Debug
+	PrintFor
+$$
+
+$head More Correctness Testing$$
+Using Microsoft Visual C++,
+open the workspace $code TestMore/TestMore.dsw$$
+in Visual Studio and then select $code Build | Build TestMore.exe$$.
+Then in a Dos box, execute the following commands
+$codep
+	cd TestMore\Debug
+	TestMore
+$$
+
+
+$head Speed Testing$$
+Using Microsoft Visual C++,
+open the workspace $code Speed/Speed.dsw$$
+in Visual Studio and then select $code Build | Build Speed.exe$$.
+Then in a Dos box, execute the following commands
+$codep
+	cd Speed\Release
+	Speed
+$$
+
+$end

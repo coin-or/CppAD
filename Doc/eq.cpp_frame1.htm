@@ -1,0 +1,96 @@
+<html><head>
+<title>AD Assignment Operator: Example and Test</title>
+<meta name="description" content="AD Assignment Operator: Example and Test">
+<meta name="keywords" content=" assign example test "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="eq.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="output.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="eq.cpp.htm" target="_top">section</a>, <a href="eq.cpp_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+<center><b><big><big>AD Assignment Operator: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+<br>
+bool&nbsp;Eq(void)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;=&nbsp;true;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;independent&nbsp;variable&nbsp;vector,&nbsp;indices,&nbsp;values,&nbsp;and&nbsp;declaration<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;U(2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;s&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;t&nbsp;=&nbsp;1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;U[s]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5.;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;AD&lt;double&gt;&nbsp;=&nbsp;double<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;U[t]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;U[s];&nbsp;&nbsp;&nbsp;//&nbsp;AD&lt;double&gt;&nbsp;=&nbsp;AD&lt;double&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(U);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;dependent&nbsp;variable&nbsp;vector&nbsp;and&nbsp;indices<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;&nbsp;AD&lt;double&gt;&nbsp;&gt;&nbsp;Z(3);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;x&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;y&nbsp;=&nbsp;1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;z&nbsp;=&nbsp;2;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;assign&nbsp;the&nbsp;dependent&nbsp;variable&nbsp;equal&nbsp;to&nbsp;an&nbsp;expression<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;and&nbsp;use&nbsp;the&nbsp;value&nbsp;returned&nbsp;by&nbsp;assignment&nbsp;(for&nbsp;another&nbsp;assignment)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Z[x]&nbsp;=&nbsp;Z[y]&nbsp;=&nbsp;U[t]&nbsp;+&nbsp;1.;&nbsp;&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;assign&nbsp;the&nbsp;dependent&nbsp;variable&nbsp;equal&nbsp;to&nbsp;an&nbsp;independent&nbsp;variable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;(choose&nbsp;the&nbsp;first&nbsp;independent&nbsp;variable&nbsp;to&nbsp;check&nbsp;a&nbsp;special&nbsp;case)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Z[z]&nbsp;=&nbsp;U[s];&nbsp;&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;check&nbsp;parameter&nbsp;flag<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;!&nbsp;Parameter(Z[x]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;!&nbsp;Parameter(Z[y]);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;!&nbsp;Parameter(Z[z]);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;construct&nbsp;f&nbsp;:&nbsp;U&nbsp;-&gt;&nbsp;Z&nbsp;and&nbsp;vectors&nbsp;for&nbsp;derivative&nbsp;calculations<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;double&gt;&nbsp;f(U,&nbsp;Z);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;v(&nbsp;f.Domain()&nbsp;);&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADvector&lt;double&gt;&nbsp;w(&nbsp;f.Range()&nbsp;);&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;check&nbsp;parameter&nbsp;flag<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;!&nbsp;f.Parameter(x);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;!&nbsp;f.Parameter(y);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;!&nbsp;f.Parameter(z);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;check&nbsp;variable&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(&nbsp;&nbsp;&nbsp;Z[x]&nbsp;==&nbsp;6.);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(&nbsp;&nbsp;&nbsp;Z[y]&nbsp;==&nbsp;6.);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(&nbsp;&nbsp;&nbsp;Z[z]&nbsp;==&nbsp;5.);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compute&nbsp;partials&nbsp;w.r.t&nbsp;t<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[s]&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v[t]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;f.Forward(1,&nbsp;v);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(w[x]&nbsp;==&nbsp;1.);&nbsp;&nbsp;//&nbsp;dx/dt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(w[y]&nbsp;==&nbsp;1.);&nbsp;&nbsp;//&nbsp;dy/dt<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(w[z]&nbsp;==&nbsp;0.);&nbsp;&nbsp;//&nbsp;dz/dt<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compute&nbsp;partials&nbsp;of&nbsp;z<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w[x]&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w[y]&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w[z]&nbsp;=&nbsp;1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;f.Reverse(1,w);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(v[s]&nbsp;==&nbsp;1.);&nbsp;&nbsp;//&nbsp;dz/ds<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(v[t]&nbsp;==&nbsp;0.);&nbsp;&nbsp;//&nbsp;dz/dt<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+}<br>
+<br>
+</span></font></code>
+<hr>Input File: Example\Eq.cpp
+
+</body>
+</html>

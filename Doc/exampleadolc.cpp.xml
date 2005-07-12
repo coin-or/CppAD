@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+<title>Compare ADOLC and CppAD Results</title>
+<meta name="description" content="Compare ADOLC and CppAD Results"/>
+<meta name="keywords" content=" Adolc compare "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<frameset cols="15%,*">
+<frame src="exampleadolc.cpp_links.xml"/>
+<frameset rows="100%,*">
+<frame src="exampleadolc.cpp_frame1.xml" name="frame1"/>
+</frameset>
+</frameset>
+</html>

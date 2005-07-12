@@ -1,0 +1,45 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>The AD Assignment Operator</title>
+<meta name="description" content="The AD Assignment Operator"/>
+<meta name="keywords" content=" assignment operator = "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="eq.xml" target="_top">section</a>, <a href="eq_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+Assigns the left operand
+to have the same value as <i>x</i>.
+If <i>x</i> is a 
+<a href="glossary_frame1.xml#Parameter" target="frame1"><i><span style='white-space: nowrap'>parameter</span></i></a>
+ then 
+the left operand is a parameter after the assignment.
+Otherwise,
+the left operand is a 
+<a href="glossary_frame1.xml#Variable" target="frame1"><i><span style='white-space: nowrap'>variable</span></i></a>
+
+after the assignment.
+
+
+<br/>
+<br/>
+<b><big><a name="Example">Example</a></big></b>
+
+<br/>
+The file
+<a href="eq.cpp.xml" target="_top"><span style='white-space: nowrap'>Eq.cpp</span></a>
+
+contains an example and a test of these operations.
+It returns true if it succeeds and false otherwise.
+
+
+<hr/>Input File: CppAD\local\Eq.h
+
+</body>
+</html>

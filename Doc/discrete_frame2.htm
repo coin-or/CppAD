@@ -1,0 +1,109 @@
+<html><head>
+<title>User Defined Discrete Functions</title>
+<meta name="description" content="User Defined Discrete Functions">
+<meta name="keywords" content=" conditional assign "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="discrete.htm" target="_top">section</a>, <a href="discrete_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+The results of the <a href="compare.htm" target="_top"><span style='white-space: nowrap'>Compare</span></a>
+ operations are boolean values
+and hence are not recorded in the corresponding <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object.
+One can record the results of simulated logical operations
+using the discrete functions described here.
+
+<br>
+<br>
+<b><big><a name="Definition">Definition</a></big></b>
+<br>
+The preprocessor macro invocation
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADCreateDiscrete(</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>FunName</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>creates a function with the following prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>FunName</span></i><code><font color="blue"><span style='white-space: nowrap'>(const&nbsp;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>w</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>This function will compute its values using a user provided function
+with the following prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>FunName</span></i><code><font color="blue"><span style='white-space: nowrap'>(const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>w</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code><br>
+<b><big><a name="Derivatives">Derivatives</a></big></b>
+<br>
+An <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object will compute the value of a discrete function
+using the user provided version.
+All the derivatives of a discrete function are treated as zero.
+
+<br>
+<br>
+<b><big><a name="Conditional Assignment">Conditional Assignment</a></big></b>
+
+
+<br>
+The conditional expression function <a href="condexp.htm" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+
+is the preferred way to do conditional assignments.
+Unfortunately, this requires that the <code><font color="blue">&gt;</font></code> operator be 
+defined for the base type.
+If <code><font color="blue">&gt;</font></code> is not defined for the base type, you can 
+use the following construction to obtain conditional assignments:
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>Suppose that 
+<i>w</i>,
+<i>x</i>,
+<i>y</i>, and <i>z</i> are <code><font color="blue">AD&lt; std::complex&lt;double&gt; &gt;</font></code> variables
+and our computations contain a statement of the form
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;w&nbsp;==&nbsp;0.&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;z&nbsp;=&nbsp;x;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;z&nbsp;=&nbsp;y;<br>
+</span>
+</font></code>
+The corresponding <a href="adfun.htm" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ would only contain the
+assignment that is executed. 
+Further suppose that the function
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;EqZero(const&nbsp;double&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>w</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>returns one if <code>
+<span style='white-space: nowrap'>&nbsp;w&nbsp;=&nbsp;0</span></code>
+ and zero otherwise and we use the command
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppADCreateDiscrete(&nbsp;std::complex&lt;double&gt;&nbsp;,&nbsp;EqZero)<br>
+</span></font></code>If we replace the computations above by
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;z&nbsp;=&nbsp;EqZero(w)&nbsp;*&nbsp;x&nbsp;+&nbsp;(1.&nbsp;-&nbsp;EqZero(w))&nbsp;*&nbsp;y<br>
+</span>
+</font></code>
+the value of <i>z</i> will be the same as in the previous computations.
+Furthermore the corresponding <code><font color="blue">ADFun</font></code> will record 
+this conditional assignment.
+(Note that while the value of <code><font color="blue">EqZero(w)</font></code> depends on <code><font color="blue">w</font></code>,
+all of its derivatives are treated as being zero.)
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="discrete.cpp.htm" target="_top"><span style='white-space: nowrap'>Discrete.cpp</span></a>
+
+contains an example and a test of using discrete functions.   
+It returns true if it succeeds and false otherwise.
+
+
+
+<hr>Input File: CppAD\local\Discrete.h
+
+</body>
+</html>

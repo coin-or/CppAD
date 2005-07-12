@@ -1,0 +1,35 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Evaluate a Polynomial or its Derivative</title>
+<meta name="description" content="Evaluate a Polynomial or its Derivative"/>
+<meta name="keywords" content=" Poly polynomial derivative template "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="polynomial.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="poly.cpp.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="poly.xml" target="_top">section</a>, <a href="poly_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Evaluate a Polynomial or its Derivative</big></big></b></center>
+<table><tr><td align='left'  valign='top'>
+<b>Syntax</b>
+</td><td align='left'  valign='top'>
+ <code><font color="blue"># include &lt;CppAD/Poly.h&gt;</font></code>
+</td></tr><tr><td align='left'  valign='top'>
+ </td><td align='left'  valign='top'>
+ 
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>p</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;Poly(</span></font></code><i><span style='white-space: nowrap'>k</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;</span></font></code><i><span style='white-space: nowrap'>z</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+</td></tr>
+</table>
+
+
+</body>
+</html>

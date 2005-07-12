@@ -1,0 +1,86 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Determinant Using Lu Factorization</title>
+<meta name="description" content="Determinant Using Lu Factorization"/>
+<meta name="keywords" content=" determinant Lu factor "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="detbylu.xml" target="_top">section</a>, <a href="detbylu_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Inclusion">Inclusion</a></big></b>
+<br/>
+The template class <code><font color="blue">DetByLu</font></code> is defined in the <code><font color="blue">CppAD</font></code>
+namespace by including 
+the file <code><font color="blue">Example/DetByLu.h</font></code>.
+It is only intended for example and testing purposes, 
+so it is not automatically included by
+<a href="cppad.xml" target="_top"><span style='white-space: nowrap'>CppAD.h</span></a>
+.
+
+<br/>
+<br/>
+<b><big><a name="Constructor">Constructor</a></big></b>
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;DetByLu&lt;</span></font></code><i><span style='white-space: nowrap'>Type</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;</span></font></code><i><span style='white-space: nowrap'>Det</span></i><code><font color="blue"><span style='white-space: nowrap'>(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>constructs the object <i>Det</i> which can be used for 
+evaluating the determinant of <i>n</i> by <i>n</i> matrices
+using Lu factorization.
+
+<br/>
+<br/>
+<b><big><a name="Evaluation">Evaluation</a></big></b>
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>Type</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;</span></font></code><i><span style='white-space: nowrap'>Det</span></i><code><font color="blue"><span style='white-space: nowrap'>(CppADvector&lt;</span></font></code><i><span style='white-space: nowrap'>Type</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>A</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>returns the determinant of <i>A</i> using expansion by minors.
+
+
+
+<br/>
+<br/>
+<b><big><a name="Complex Types">Complex Types</a></big></b>
+<br/>
+The complex data types <code><font color="blue">Complex</font></code> and <code><font color="blue">ADComplex</font></code>
+are defined by
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;typedef&#xA0;std::complex&lt;double&gt;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Complex;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;typedef&#xA0;CppAD::AD&lt;Complex&gt;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADComplex;<br/>
+</span></font></code>These are used to specialize the template functions
+<code><font color="blue">LeqZero</font></code> and <code><font color="blue">AbsGeq</font></code> so they can be used
+by <a href="lusolve.xml" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ with the <code><font color="blue">Complex</font></code> and <code><font color="blue">ADComplex</font></code>
+types.
+
+<br/>
+<br/>
+<b><big><a name="Example">Example</a></big></b>
+<br/>
+The file
+<a href="detbylu.cpp.xml" target="_top"><span style='white-space: nowrap'>DetByLu.cpp</span></a>
+ 
+contains an example and a test of <code><font color="blue">DetByLu.h</font></code>.
+It returns true if it succeeds and false otherwise.
+
+<br/>
+<br/>
+<b><big><a name="Source Code">Source Code</a></big></b>
+<br/>
+The file
+<a href="detbylu.h.xml" target="_top"><span style='white-space: nowrap'>DetByLu.h</span></a>
+ 
+contains the source for this template function.
+
+
+
+<hr/>Input File: Example\DetByLu.h
+
+</body>
+</html>

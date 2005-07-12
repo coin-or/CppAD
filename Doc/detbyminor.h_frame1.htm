@@ -1,0 +1,74 @@
+<html><head>
+<title>Determinant using Expansion by Minors: Source Code</title>
+<meta name="description" content="Determinant using Expansion by Minors: Source Code">
+<meta name="keywords" content=" Detbyminor determinant minor matrix "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="detbyminor.cpp.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="detbylu.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="detbyminor.h.htm" target="_top">section</a>, <a href="detbyminor.h_frame1.htm" target="_top">frame</a></div>
+<hr>
+
+
+
+
+<center><b><big><big>Determinant using Expansion by Minors: Source Code</big></big></b></center>
+<code><font color="blue"># ifndef CppADDetByMinorIncluded
+<code><span style='white-space: nowrap'><br>
+</span></code># define CppADDetByMinorIncluded
+
+<span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+#&nbsp;include&nbsp;&quot;DetOfMinor.h&quot;<br>
+<br>
+//&nbsp;BEGIN&nbsp;CppAD&nbsp;namespace<br>
+namespace&nbsp;CppAD&nbsp;{<br>
+<br>
+template&nbsp;&lt;class&nbsp;Type&gt;<br>
+class&nbsp;DetByMinor&nbsp;{<br>
+public:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetByMinor(size_t&nbsp;m_)&nbsp;:&nbsp;m(m_)&nbsp;,&nbsp;r(m_&nbsp;+&nbsp;1)&nbsp;,&nbsp;c(m_&nbsp;+&nbsp;1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;i;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;values&nbsp;for&nbsp;r&nbsp;and&nbsp;c&nbsp;that&nbsp;correspond&nbsp;to&nbsp;entire&nbsp;matrix<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;m;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;r[i]&nbsp;=&nbsp;i+1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c[i]&nbsp;=&nbsp;i+1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r[m]&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c[m]&nbsp;=&nbsp;0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inline&nbsp;Type&nbsp;operator()(const&nbsp;CppADvector&lt;Type&gt;&nbsp;&amp;x)&nbsp;const<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;DetOfMinor(x,&nbsp;m,&nbsp;m,&nbsp;r,&nbsp;c);&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+<br>
+private:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;mutable&nbsp;because&nbsp;DetOfMinor&nbsp;modifies&nbsp;and&nbsp;restores&nbsp;these&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mutable&nbsp;CppADvector&lt;size_t&gt;&nbsp;r;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mutable&nbsp;CppADvector&lt;size_t&gt;&nbsp;c;<br>
+};<br>
+<br>
+}&nbsp;//&nbsp;END&nbsp;CppAD&nbsp;namespace<br>
+<br>
+</span># endif
+</font></code>
+
+
+<hr>Input File: Example\DetByMinor.h
+
+</body>
+</html>

@@ -1,0 +1,368 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Glossary</title>
+<meta name="description" content="Glossary"/>
+<meta name="keywords" content=" base function type dependent variable elementary vector independent parameter tape state empty recording taylor coefficient "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="detlufadbad.cpp.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="bib.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="glossary.xml" target="_top">section</a>, <a href="glossary_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Glossary</big></big></b></center>
+<br/>
+<b><big><a name="Base Function">Base Function</a></big></b>
+<br/>
+If <i>Base</i> is a C++ class,
+a function 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>f</mi>
+</mrow></math>
+
+ is referred to as a <i>Base</i> function
+if its domain and range are finite dimensional vector with components in the
+space represented by <i>Base</i>; i.e. 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>f</mi>
+<mo stretchy="false">:</mo>
+<msup><mi mathvariant='italic'>B</mi>
+<mi mathvariant='italic'>n</mi>
+</msup>
+<mo stretchy="false">&#x02192;</mo>
+<msup><mi mathvariant='italic'>B</mi>
+<mi mathvariant='italic'>m</mi>
+</msup>
+</mrow></math>
+
+.
+
+<br/>
+<br/>
+<b><big><a name="Base Type">Base Type</a></big></b>
+<br/>
+If <i>x</i> is an <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object,
+<i>Base</i> is referred to as the base type for <i>x</i>.
+
+<br/>
+<br/>
+<b><big><a name="Dependent Variable">Dependent Variable</a></big></b>
+<br/>
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object is a dependent variable
+if it is a variable and is not an independent variable.
+
+<br/>
+<br/>
+<b><big><a name="Elementary Vector">Elementary Vector</a></big></b>
+<br/>
+The <i>j</i>-th elementary vector 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>u</mi>
+<mo stretchy="false">&#x02208;</mo>
+<msup><mi mathvariant='italic'>B</mi>
+<mi mathvariant='italic'>m</mi>
+</msup>
+</mrow></math>
+
+ is defined by
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<msub><mi mathvariant='italic'>u</mi>
+<mi mathvariant='italic'>i</mi>
+</msub>
+<mo stretchy="false">=</mo>
+<mrow><mo stretchy="true">{</mo><mrow><mtable rowalign="center" ><mtr><mtd columnalign="left" >
+<mn>1</mn>
+</mtd><mtd columnalign="left" >
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>if</mi>
+</mstyle></mrow>
+<mspace width='.3em'/>
+<mi mathvariant='italic'>i</mi>
+<mo stretchy="false">=</mo>
+<mi mathvariant='italic'>j</mi>
+</mtd></mtr><mtr><mtd columnalign="left" >
+<mn>0</mn>
+</mtd><mtd columnalign="left" >
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>otherwise</mi>
+</mstyle></mrow>
+</mtd></mtr></mtable>
+</mrow><mo stretchy="true"> </mo></mrow>
+</mrow></math>
+
+<br/>
+<b><big><a name="Independent Variable">Independent Variable</a></big></b>
+<br/>
+The set of independent variables are specified by
+the <a href="independent.xml" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ function call
+that starts recording operations on the corresponding tape.
+
+<br/>
+<br/>
+<b><big><a name="Parameter">Parameter</a></big></b>
+<br/>
+All <i>Base</i> objects are always parameters.
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object is currently a parameter if
+it is not currently a variable.
+All <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> objects are currently parameters
+when the tape is in the Empty state.
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object <i>x</i> is 
+currently a parameter if and only if
+<a href="parameter.xml" target="_top"><span style='white-space: nowrap'>Parameter(x)</span></a>
+ is true.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>Note that we often drop the word currently and 
+just refer to an <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object as a variable
+or parameter.
+ 
+<br/>
+<br/>
+<b><big><a name="Tape State">Tape State</a></big></b>
+<br/>
+For each class <i>Base</i>,
+the tape that records 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> 
+operations has two possible states:
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;enum&#xA0;TapeState&#xA0;{<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Empty,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Recording,<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+</span>
+</font></code>
+The tape is initially in the <code><font color="blue">Empty</font></code> state.
+It is in the recording state after each call to 
+<a href="independent.xml" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ with a <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> argument.
+It is in the <code><font color="blue">Empty</font></code> state after each call to
+<a href="adfun.xml" target="_top"><span style='white-space: nowrap'>ADFun&lt;Base&gt;</span></a>
+.
+
+
+<br/>
+<br/>
+<b><a name="Tape State.Empty">Empty</a></b>
+<br/>
+The tape is empty 
+(hence all <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> objects are parameters).
+The tape is initially in this state and it enters this state whenever a
+<a href="adfun.xml" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ object is constructed.
+
+<br/>
+<br/>
+<b><a name="Tape State.Recording">Recording</a></b>
+<br/>
+All of the independent variables have been specified
+and the tape is currently recording the operations that define
+the more variables as <i>Base</i> scalar functions of the
+independent variables.
+The tape enters this state when a
+<a href="independent.xml" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ calculation is preformed.
+
+<br/>
+<br/>
+<b><big><a name="Taylor Coefficient">Taylor Coefficient</a></big></b>
+<br/>
+Suppose 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>X</mi>
+<mo stretchy="false">:</mo>
+<mi mathvariant='italic'>B</mi>
+<mo stretchy="false">&#x02192;</mo>
+<msup><mi mathvariant='italic'>B</mi>
+<mi mathvariant='italic'>n</mi>
+</msup>
+</mrow></math>
+
+ is a 
+is 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>p</mi>
+</mrow></math>
+
+ times continuously differentiable function
+in some neighborhood of zero.
+For 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>k</mi>
+<mo stretchy="false">=</mo>
+<mn>0</mn>
+<mo stretchy="false">,</mo>
+<mo stretchy="false">&#x02026;</mo>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>p</mi>
+</mrow></math>
+
+, 
+we use the column vector 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<msup><mi mathvariant='italic'>x</mi>
+<mrow><mo stretchy="false">(</mo>
+<mi mathvariant='italic'>k</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+<mo stretchy="false">&#x02208;</mo>
+<msup><mi mathvariant='italic'>B</mi>
+<mi mathvariant='italic'>n</mi>
+</msup>
+</mrow></math>
+
+ for the <i>k</i>-th order 
+Taylor coefficient corresponding to 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>X</mi>
+</mrow></math>
+
+ 
+which is defined by
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<msup><mi mathvariant='italic'>x</mi>
+<mrow><mo stretchy="false">(</mo>
+<mi mathvariant='italic'>k</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+<mo stretchy="false">=</mo>
+<mfrac><mrow><mn>1</mn>
+</mrow>
+<mrow><mi mathvariant='italic'>k</mi>
+<mo stretchy="false">!</mo>
+</mrow>
+</mfrac>
+<mfrac><mrow><msup><mo stretchy="false">&#x02202;</mo>
+<mrow><mi mathvariant='italic'>k</mi>
+</mrow>
+</msup>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msup><mrow><mi mathvariant='italic'>t</mi>
+</mrow>
+<mrow><mi mathvariant='italic'>k</mi>
+</mrow>
+</msup>
+</mrow>
+</mfrac>
+<mi mathvariant='italic'>X</mi>
+<mo stretchy="false">(</mo>
+<mn>0</mn>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+It follows that 
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mi mathvariant='italic'>X</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>t</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">=</mo>
+<msup><mi mathvariant='italic'>x</mi>
+<mrow><mo stretchy="false">(</mo>
+<mn>0</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+<mo stretchy="false">+</mo>
+<msup><mi mathvariant='italic'>x</mi>
+<mrow><mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+<mi mathvariant='italic'>t</mi>
+<mo stretchy="false">+</mo>
+<mo stretchy="false">&#x022EF;</mo>
+<mo stretchy="false">+</mo>
+<msup><mi mathvariant='italic'>x</mi>
+<mrow><mo stretchy="false">(</mo>
+<mi mathvariant='italic'>p</mi>
+<mo stretchy="false">)</mo>
+</mrow>
+</msup>
+<msup><mi mathvariant='italic'>t</mi>
+<mi mathvariant='italic'>p</mi>
+</msup>
+<mo stretchy="false">+</mo>
+<mi mathvariant='italic'>R</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>t</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+where the remainder 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>R</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>t</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+ divided by 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<msup><mi mathvariant='italic'>t</mi>
+<mi mathvariant='italic'>p</mi>
+</msup>
+</mrow></math>
+
+ 
+converges to zero and 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>t</mi>
+</mrow></math>
+
+ goes to zero.
+
+
+<br/>
+<br/>
+<b><big><a name="Variable">Variable</a></big></b>
+<br/>
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object is currently a variable if
+the corresponding tape is in the Recording state
+and the current value of an <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object 
+depends on the value of at least one of the 
+<a href="glossary_frame1.xml#Independent Variable" target="frame1"><i><span style='white-space: nowrap'>independent</span></i></a>
+ variables.
+An <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object <i>x</i> is currently
+a variable if and only if
+<a href="parameter.xml" target="_top"><span style='white-space: nowrap'>Parameter(x)</span></a>
+ is currently false.
+For example,
+directly after the code sequence
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;AD&lt;double&gt;&#xA0;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>[0];<br/>
+</span></font></code>the <code><font color="blue"><span style='white-space: nowrap'>AD&lt;double&gt;</span></font></code> object <i>x</i> is currently a variable.
+Directly after the code sequence
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;AD&lt;double&gt;&#xA0;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;</span></font></code><i><span style='white-space: nowrap'>u</span></i><code><font color="blue"><span style='white-space: nowrap'>[0];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;=&#xA0;5;<br/>
+</span></font></code><i>x</i>  is currently not a variable 
+(it is currently a <a href="glossary_frame1.xml#Parameter" target="frame1"><i><span style='white-space: nowrap'>parameter</span></i></a>
+).
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>Note that we often drop the word currently and 
+just refer to an <code><font color="blue"><span style='white-space: nowrap'>AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;</span></font></code> object as a variable
+or parameter.
+
+
+<hr/>Input File: omh\glossary.omh
+
+</body>
+</html>

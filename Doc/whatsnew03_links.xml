@@ -1,0 +1,83 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head><body>
+<a href="cppad.xml" target="_top">CppAD</a><br/>
+&#xA0;&#xA0;<a href="appendix.xml" target="_top">Appendix</a><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;<a href="whatsnew03.xml" target="_top">WhatsNew03</a><br/>
+<hr/>
+<b>Siblings</b><br/>
+<a href="theory.xml" target="_top">Theory</a><br/>
+<a href="speed.xml" target="_top">Speed</a><br/>
+<a href="adolc.xml" target="_top">ADOLC</a><br/>
+<a href="fadbad.xml" target="_top">FADBAD</a><br/>
+<a href="glossary.xml" target="_top">glossary</a><br/>
+<a href="bib.xml" target="_top">Bib</a><br/>
+<a href="whatsnew05.xml" target="_top">WhatsNew05</a><br/>
+<a href="whatsnew04.xml" target="_top">WhatsNew04</a><br/>
+WhatsNew03<br/>
+<hr/>
+<b>Headings</b><br/>
+<a href="whatsnew03_frame1.xml#Introduction" target="frame1"><i>Introduction</i></a><br/>
+<a href="whatsnew03_frame1.xml#12-24" target="frame1"><i>12-24</i></a><br/>
+<a href="whatsnew03_frame1.xml#12-22" target="frame1"><i>12-22</i></a><br/>
+<a href="whatsnew03_frame1.xml#12-14" target="frame1"><i>12-14</i></a><br/>
+<a href="whatsnew03_frame1.xml#12-13" target="frame1"><i>12-13</i></a><br/>
+<a href="whatsnew03_frame1.xml#12-12" target="frame1"><i>12-12</i></a><br/>
+<a href="whatsnew03_frame1.xml#12-10" target="frame1"><i>12-10</i></a><br/>
+<a href="whatsnew03_frame1.xml#12-05" target="frame1"><i>12-05</i></a><br/>
+<a href="whatsnew03_frame1.xml#12-01" target="frame1"><i>12-01</i></a><br/>
+<a href="whatsnew03_frame1.xml#11-21" target="frame1"><i>11-21</i></a><br/>
+<a href="whatsnew03_frame1.xml#11-20" target="frame1"><i>11-20</i></a><br/>
+<a href="whatsnew03_frame1.xml#11-16" target="frame1"><i>11-16</i></a><br/>
+<a href="whatsnew03_frame1.xml#11-15" target="frame1"><i>11-15</i></a><br/>
+<a href="whatsnew03_frame1.xml#11-14" target="frame1"><i>11-14</i></a><br/>
+<a href="whatsnew03_frame1.xml#11-12" target="frame1"><i>11-12</i></a><br/>
+<a href="whatsnew03_frame1.xml#11-11" target="frame1"><i>11-11</i></a><br/>
+<a href="whatsnew03_frame1.xml#11-06" target="frame1"><i>11-06</i></a><br/>
+<a href="whatsnew03_frame1.xml#11-04" target="frame1"><i>11-04</i></a><br/>
+<a href="whatsnew03_frame1.xml#11-02" target="frame1"><i>11-02</i></a><br/>
+<a href="whatsnew03_frame1.xml#10-21" target="frame1"><i>10-21</i></a><br/>
+<a href="whatsnew03_frame1.xml#10-16" target="frame1"><i>10-16</i></a><br/>
+<a href="whatsnew03_frame1.xml#10-14" target="frame1"><i>10-14</i></a><br/>
+<a href="whatsnew03_frame1.xml#10-10" target="frame1"><i>10-10</i></a><br/>
+<a href="whatsnew03_frame1.xml#10-06" target="frame1"><i>10-06</i></a><br/>
+<a href="whatsnew03_frame1.xml#10-05" target="frame1"><i>10-05</i></a><br/>
+<a href="whatsnew03_frame1.xml#09-30" target="frame1"><i>09-30</i></a><br/>
+<a href="whatsnew03_frame1.xml#09-20" target="frame1"><i>09-20</i></a><br/>
+<a href="whatsnew03_frame1.xml#09-19" target="frame1"><i>09-19</i></a><br/>
+<a href="whatsnew03_frame1.xml#09-18" target="frame1"><i>09-18</i></a><br/>
+<a href="whatsnew03_frame1.xml#09-15" target="frame1"><i>09-15</i></a><br/>
+<a href="whatsnew03_frame1.xml#09-14" target="frame1"><i>09-14</i></a><br/>
+<a href="whatsnew03_frame1.xml#09-13" target="frame1"><i>09-13</i></a><br/>
+<a href="whatsnew03_frame1.xml#09-06" target="frame1"><i>09-06</i></a><br/>
+<a href="whatsnew03_frame1.xml#09-05" target="frame1"><i>09-05</i></a><br/>
+<a href="whatsnew03_frame1.xml#09-04" target="frame1"><i>09-04</i></a><br/>
+<a href="whatsnew03_frame1.xml#09-03" target="frame1"><i>09-03</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-23" target="frame1"><i>08-23</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-22" target="frame1"><i>08-22</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-19" target="frame1"><i>08-19</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-17" target="frame1"><i>08-17</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-16" target="frame1"><i>08-16</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-11" target="frame1"><i>08-11</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-10" target="frame1"><i>08-10</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-07" target="frame1"><i>08-07</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-06" target="frame1"><i>08-06</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-05" target="frame1"><i>08-05</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-04" target="frame1"><i>08-04</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-03" target="frame1"><i>08-03</i></a><br/>
+<a href="whatsnew03_frame1.xml#08-01" target="frame1"><i>08-01</i></a><br/>
+<a href="whatsnew03_frame1.xml#07-30" target="frame1"><i>07-30</i></a><br/>
+<a href="whatsnew03_frame1.xml#07-29" target="frame1"><i>07-29</i></a><br/>
+<a href="whatsnew03_frame1.xml#07-26" target="frame1"><i>07-26</i></a><br/>
+<a href="whatsnew03_frame1.xml#07-22" target="frame1"><i>07-22</i></a><br/>
+<a href="whatsnew03_frame1.xml#07-20" target="frame1"><i>07-20</i></a><br/>
+<a href="whatsnew03_frame1.xml#07-18" target="frame1"><i>07-18</i></a><br/>
+<a href="whatsnew03_frame1.xml#07-16" target="frame1"><i>07-16</i></a><br/>
+<a href="whatsnew03_frame1.xml#07-14" target="frame1"><i>07-14</i></a><br/>
+</body>
+</html>

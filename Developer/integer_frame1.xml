@@ -1,0 +1,37 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Convert a Value to an Integer</title>
+<meta name="description" content="Convert a Value to an Integer"/>
+<meta name="keywords" content=" integer "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="identicalequal.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="opcode.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="integer.xml" target="_top">section</a>, <a href="integer_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Convert a Value to an Integer</big></big></b></center>
+<table><tr><td align='left'  valign='top'>
+<b>Syntax</b> </td><td align='left'  valign='top'>
+
+<code><font color="blue"><span style='white-space: nowrap'>inline&#xA0;int&#xA0;Integer(const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Type</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+</td></tr>
+</table>
+<br/>
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+This function returns a static cast of <i>x</i> to an integer.
+
+
+<hr/>Input File: CppAD\local\Integer.h
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>A CppAD Program as Recorded on Tape</title>
+<meta name="description" content="A CppAD Program as Recorded on Tape"/>
+<meta name="keywords" content=" tape record Taperec Erase Put Get Num Replace Memory "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="taperec.xml" target="_top">section</a>, <a href="taperec_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Default Constructors">Default Constructors</a></big></b>
+<br/>
+The default constructor 
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;TapeRec&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'><br/>
+</span></font></code>creates a program recording called <i>Rec</i> with no contents and some
+default setting for the size of its buffers.
+
+<br/>
+<br/>
+<b><big><a name="Copy Constructor">Copy Constructor</a></big></b>
+<br/>
+The copy constructor
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;TapeRec&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>(const&#xA0;TapeRec&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>Other</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>creates <i>Rec</i> as a program recording with all the same
+information as <i>Other</i> and with the smallest possible buffer sizes
+that will hold that information.
+
+<br/>
+<br/>
+<b><big><a name="Erase">Erase</a></big></b>
+
+
+<br/>
+The syntax 
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;void&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.Erase(void)<br/>
+</span></font></code>erases the contents of <i>Rec</i>.
+The buffers used to store information are not erased
+and can be used for a new recording.
+
+<br/>
+<br/>
+<b><big><a name="Put">Put</a></big></b>
+
+
+
+
+<br/>
+<br/>
+<b><a name="Put.Op">Op</a></b>
+<br/>
+The function call
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;inline&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.PutOp(OpCode&#xA0;</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>places the value <i>op</i> at the end of the current Op recording
+and returns the offset for the corresponding variable 
+(if the operator has a resulting variable).
+With each call, this index increments by the number of variables required
+for the previous call to <code><font color="blue">PutOp</font></code>.
+
+<br/>
+<br/>
+<b><a name="Put.Ind">Ind</a></b>
+<br/>
+The function call
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;inline&#xA0;void&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.PutInd(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>ind0</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;inline&#xA0;void&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.PutInd(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>ind0</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>ind1</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;inline&#xA0;void&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.PutInd(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>ind0</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>ind1</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>ind2</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>places the values passed to <code><font color="blue">PutInd</font></code> at the end of the
+Ind recording and in the order passed; i.e., <i>ind0</i>
+comes before <i>ind1</i> which is before <i>ind2</i>.
+
+
+<br/>
+<br/>
+<b><a name="Put.Par">Par</a></b>
+<br/>
+The function call
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;inline&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.PutPar(const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;&amp;</span></font></code><i><span style='white-space: nowrap'>par</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>places the value <i>par</i> in the Par recording
+and returns its index with in the recording.
+This value is not necessarily placed at the end of the recording
+so there is no specified pattern to the return values.
+
+<br/>
+<br/>
+<b><a name="Put.VecInd">VecInd</a></b>
+<br/>
+The function call
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;inline&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.PutVecInd(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>vecInd</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>places the value <i>vecInd</i> at the end of the current VecInd recording
+and returns its index with in the recording.
+This index starts at zero after each <code><font color="blue">Erase</font></code> or default constructor
+and increments by one for each call to this function.
+
+<br/>
+<br/>
+<b><big><a name="Get">Get</a></big></b>
+
+
+
+
+<br/>
+<br/>
+<b><a name="Get.Op">Op</a></b>
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;OpCode&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.GetOp(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>)&#xA0;const<br/>
+</span></font></code>returns the value of <i>op</i> in the <i>i+1</i>-th call to 
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.PutOp(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>.
+
+<br/>
+<br/>
+<b><a name="Get.VecInd">VecInd</a></b>
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;OpCode&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.GetVecInd(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>)&#xA0;const<br/>
+</span></font></code>returns the value of <i>vecInd</i> in the corresponding call 
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.PutVecInd(</span></font></code><i><span style='white-space: nowrap'>vecInd</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+where <i>i</i> is the return value of <code><font color="blue">PutVecInd</font></code>. 
+
+<br/>
+<br/>
+<b><a name="Get.Ind">Ind</a></b>
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;size_t&#xA0;*</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.GetInd(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>n</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>)&#xA0;const<br/>
+</span></font></code>returns a pointer to a copy of <i>n</i> values in the Ind recording
+starting at the index <i>i</i>.
+
+<br/>
+<br/>
+<b><a name="Get.Par">Par</a></b>
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;const&#xA0;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&#xA0;*</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.GetPar(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>)&#xA0;const<br/>
+</span></font></code>returns a pointer to a value equal to
+<i>par</i> in the corresponding call 
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.PutPar(</span></font></code><i><span style='white-space: nowrap'>par</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> 
+where <i>i</i> is the return value of <code><font color="blue">PutPar</font></code>.
+(If <code><font color="blue">NDEBUG</font></code> is not defined, <code><font color="blue">GetPar</font></code> checks that
+the argument <i>i</i> is valid.)
+
+<br/>
+<br/>
+<b><big><a name="Num">Num</a></big></b>
+
+
+
+
+<br/>
+<br/>
+<b><a name="Num.Op">Op</a></b>
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.NumOp(void)&#xA0;const<br/>
+</span></font></code>returns the number of Op values
+that are currently stored in <i>Rec</i>.
+This increments by one each time <code><font color="blue">PutOp</font></code> is called; i.e.,
+it is the number of calls to <code><font color="blue">PutOp</font></code>.
+
+<br/>
+<br/>
+<b><a name="Num.Ind">Ind</a></b>
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.NumInd(void)&#xA0;const<br/>
+</span></font></code>returns the number of Ind values
+that are currently stored in <i>Rec</i>.
+This increments by one for each value that is stored by <code><font color="blue">PutInd</font></code>.
+
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.NumVecInd(void)&#xA0;const<br/>
+</span></font></code>returns the number of VecInd values
+that are currently stored in <i>Rec</i>.
+This increments by one each time <code><font color="blue">PutVecInd</font></code> is called.
+
+<br/>
+<br/>
+<b><a name="Num.Par">Par</a></b>
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.NumPar(void)&#xA0;const<br/>
+</span></font></code>returns the number of Par values
+that are currently stored in <i>Rec</i>.
+This increment by one or zero each time <code><font color="blue">PutPar</font></code> is called.
+
+<br/>
+<br/>
+<b><big><a name="Replace">Replace</a></big></b>
+
+
+
+
+<br/>
+<br/>
+<b><a name="Replace.Ind">Ind</a></b>
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.ReplaceInd(size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>index</span></i><code><font color="blue"><span style='white-space: nowrap'>,&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>value</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br/>
+</span></font></code>Replaces the single value with index <i>index</i> in the sequence of
+Ind values stored by calls to <code><font color="blue"></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.PutInd</span></font></code>.
+The argument <i>index</i> must be less than <code><font color="blue"></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.NumInd()</span></font></code>.
+
+
+<br/>
+<br/>
+<b><big><a name="Memory">Memory</a></big></b>
+
+
+<br/>
+The syntax
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;</span></font></code><i><span style='white-space: nowrap'>Rec</span></i><code><font color="blue"><span style='white-space: nowrap'>.Memory(void)&#xA0;const<br/>
+</span></font></code>returns the number of memory units (<code><font color="blue">sizeof</font></code>) required to store
+the information in <i>Rec</i>.
+
+
+
+
+<hr/>Input File: CppAD\local\TapeRec.h
+
+</body>
+</html>

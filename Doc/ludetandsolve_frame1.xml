@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Compute Determinants and Solve Equations by LU Factorization</title>
+<meta name="description" content="Compute Determinants and Solve Equations by LU Factorization"/>
+<meta name="keywords" content=" matrix factor determinant linear equation "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="speedtestexample.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="lusolve.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="ludetandsolve.xml" target="_top">section</a>, <a href="ludetandsolve_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Compute Determinants and Solve Equations by LU Factorization</big></big></b></center>
+<br/>
+<b><big><a name="Contents">Contents</a></big></b>
+<br/>
+<table>
+<tr><td><a href="lusolve.xml" target="_top">LuSolve</a></td><td>Compute&#xA0;Determinant&#xA0;and&#xA0;Solve&#xA0;Linear&#xA0;Equations</td></tr><tr><td><a href="lusolve.h.xml" target="_top">LuSolve.h</a></td><td>LuSolve&#xA0;Source&#xA0;Code</td></tr><tr><td><a href="lufactor.xml" target="_top">LuFactor</a></td><td>LU&#xA0;Factorization&#xA0;of&#xA0;A&#xA0;Square&#xA0;Matrix</td></tr><tr><td><a href="lufactor.h.xml" target="_top">LuFactor.h</a></td><td>LuFactor&#xA0;Source&#xA0;Code</td></tr><tr><td><a href="luinvert.xml" target="_top">LuInvert</a></td><td>Invert&#xA0;an&#xA0;LU&#xA0;Factored&#xA0;Equation</td></tr><tr><td><a href="luinvert.h.xml" target="_top">LuInvert.h</a></td><td>LuInvert&#xA0;Source&#xA0;Code</td></tr></table>
+<hr/>Input File: omh\LuDetAndSolve.omh
+
+</body>
+</html>

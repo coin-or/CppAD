@@ -1,0 +1,91 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Hessian Times Direction: Example and Test</title>
+<meta name="description" content="Hessian Times Direction: Example and Test"/>
+<meta name="keywords" content=" Hessian times direction "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="reverse.h.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="fun.h.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="hestimesdir.cpp.xml" target="_top">section</a>, <a href="hestimesdir.cpp_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>Hessian Times Direction: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+//&#xA0;Example&#xA0;and&#xA0;test&#xA0;of&#xA0;computing&#xA0;the&#xA0;Hessian&#xA0;times&#xA0;a&#xA0;direction;&#xA0;i.e.,<br/>
+//&#xA0;given&#xA0;f:R^n&#xA0;-&gt;&#xA0;R&#xA0;and&#xA0;a&#xA0;direction&#xA0;x1&#xA0;in&#xA0;R^n,&#xA0;we&#xA0;compute&#xA0;f''(x)&#xA0;*&#xA0;x1<br/>
+<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD.h&gt;<br/>
+<br/>
+namespace&#xA0;{&#xA0;//&#xA0;put&#xA0;this&#xA0;function&#xA0;in&#xA0;the&#xA0;empty&#xA0;namespace<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;f(x)&#xA0;=&#xA0;|x|^2&#xA0;=&#xA0;x[0]^2&#xA0;+&#xA0;...&#xA0;+&#xA0;x[n-1]^2<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;template&#xA0;&lt;class&#xA0;Type&gt;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Type&#xA0;f(CppADvector&lt;Type&gt;&#xA0;&amp;x)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;Type&#xA0;sum&#xA0;=&#xA0;0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;i&#xA0;=&#xA0;x.size();<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;while(i--)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;sum&#xA0;+=&#xA0;x[i]&#xA0;*&#xA0;x[i];<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;sum;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;}&#xA0;<br/>
+}<br/>
+<br/>
+bool&#xA0;HesTimesDir()&#xA0;<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;ok&#xA0;=&#xA0;true;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;initialize&#xA0;test&#xA0;result<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;namespace&#xA0;CppAD;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;so&#xA0;do&#xA0;not&#xA0;need&#xA0;CppAD::<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;n&#xA0;=&#xA0;5;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;dimension&#xA0;for&#xA0;example<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;j;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;a&#xA0;temporary&#xA0;index&#xA0;variable<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;x(n);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;AD&lt;double&gt;&#xA0;&gt;&#xA0;&#xA0;X(n);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;value&#xA0;of&#xA0;the&#xA0;independent&#xA0;variables<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;0;&#xA0;j&#xA0;&lt;&#xA0;n;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;X[j]&#xA0;=&#xA0;x[j]&#xA0;=&#xA0;double(j);&#xA0;&#xA0;//&#xA0;x[j]&#xA0;=&#xA0;j<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;declare&#xA0;independent&#xA0;variables<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(X);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;compute&#xA0;function<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;AD&lt;double&gt;&#xA0;&gt;&#xA0;F(1);&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;scalar&#xA0;valued&#xA0;fucntion<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;F[0]&#xA0;=&#xA0;f(X);&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;has&#xA0;only&#xA0;one&#xA0;component<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;declare&#xA0;the&#xA0;AD&#xA0;function&#xA0;object<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADFun&lt;double&gt;&#xA0;Fun(X,&#xA0;F);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;compute&#xA0;y1(x)&#xA0;=&#xA0;f'(x)&#xA0;*&#xA0;x1<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;p&#xA0;=&#xA0;1;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;order&#xA0;of&#xA0;the&#xA0;forward&#xA0;operation<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;x1(n);&#xA0;&#xA0;//&#xA0;direction&#xA0;vector&#xA0;for&#xA0;forward&#xA0;operation<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;0;&#xA0;j&#xA0;&lt;&#xA0;n;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;x1[j]&#xA0;=&#xA0;double(n&#xA0;-&#xA0;j);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;y1(1);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;y1&#xA0;=&#xA0;Fun.Forward(p,&#xA0;x1);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;compute&#xA0;y1'(x)&#xA0;=&#xA0;f''(x)&#xA0;*&#xA0;x1<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;p&#xA0;=&#xA0;2;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;order&#xA0;of&#xA0;derivative&#xA0;being&#xA0;calculated<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;w(1);&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;weighting&#xA0;vector&#xA0;reverse&#xA0;mode<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;w[0]&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;dw(n&#xA0;*&#xA0;p);&#xA0;//&#xA0;return&#xA0;value&#xA0;from&#xA0;reverse<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;dw&#xA0;=&#xA0;Fun.Reverse(p,&#xA0;w);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;f(x)&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;x[0]^2&#xA0;+&#xA0;x[1]^2&#xA0;+&#xA0;...&#xA0;+&#xA0;x[n-1]^2<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;f''(x)&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;2&#xA0;*&#xA0;I<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;f''(x)&#xA0;*&#xA0;x1&#xA0;=&#xA0;2&#xA0;*&#xA0;x1<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(j&#xA0;=&#xA0;0;&#xA0;j&#xA0;&lt;&#xA0;n;&#xA0;j++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;NearEqual(dw[j&#xA0;*&#xA0;p&#xA0;+&#xA0;1],&#xA0;2.*x1[j],&#xA0;1e-10,&#xA0;1e-10);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;ok;<br/>
+}<br/>
+</span></font></code>
+<hr/>Input File: Example\HesTimesDir.cpp
+
+</body>
+</html>

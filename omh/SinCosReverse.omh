@@ -1,0 +1,105 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithm Differentiation Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+$begin SinCosReverse$$
+$spell
+	Taylor
+	cos
+$$
+
+$index sin, reverse theory$$
+$index theory, sin reverse$$
+$index reverse, sin theory$$
+
+$index cos, reverse theory$$
+$index theory, cos reverse$$
+$index reverse, cos theory$$
+
+$section Sine and Cosine Functions Reverse Mode Theory$$
+
+
+We use the reverse theory
+$xref%
+	ReverseTheory%
+	Standard Math Functions%
+	standard math function
+%$$
+definition for the functions $latex H$$ and $latex G$$.
+In addition, 
+
+we use $latex s$$ and $latex c$$
+for the $th p$$ order Taylor coefficient 
+row vectors corresponding to 
+$latex \sin [ X(t) ]$$ and $latex \cos [ X(t) ]$$.
+For the sine and cosine function cases,
+$latex \[
+	z^{(j)} = ( s^{(j)} , c^{(j)} )
+\] $$ 
+in the definition for $latex G$$ and $latex H$$.
+The forward mode formulas for the
+$xref/SinForward//sine/$$ and $xref/CosForward//cosine/$$ 
+functions are
+$latex \[
+\begin{array}{rcl}
+	s^{(j)}  & = & \sin ( x^{(0)} ) \\
+	c^{(j)}  & = & \cos ( x^{(0)} )
+\end{array}
+\] $$
+
+for the case $latex j = 0$$, and for $latex j > 0$$,
+
+$latex \[
+\begin{array}{rcl}
+s^{(j)} & = & \frac{1}{j} 
+	\sum_{k=1}^{j} k x^{(k)} c^{(j-k)}  \\
+c^{(j)} & = & - \frac{1}{j} 
+	\sum_{k=1}^{j} k x^{(k)} s^{(j-k)} 
+\end{array}
+\] $$ 
+
+If $latex j = 0$$, we have the relation
+
+$latex \[
+\begin{array}{rcl}
+\D{H}{ x^{(j)} } & = & 
+\D{G}{ x^{(j)} }  
++ \D{G}{ s^{(j)} } c^{(0)}
+- \D{G}{ c^{(j)} } s^{(0)}
+\end{array}
+\] $$ 
+
+If $latex j > 0$$, then for $latex k = 1, \ldots , j-1$$
+
+$latex \[
+\begin{array}{rcl}
+\D{H}{ x^{(k)} } & = & 
+\D{G}{ x^{(k)} }  
++ \D{G}{ s^{(j)} } \frac{1}{j} k c^{(j-k)}
+- \D{G}{ c^{(j)} } \frac{1}{j} k s^{(j-k)}
+\\
+\D{H}{ s^{(j-k)} } & = & 
+\D{G}{ s^{(j-k)} } - \D{G}{ c^{(j)} } k x^{(k)}
+\\
+\D{H}{ c^{(j-k)} } & = & 
+\D{G}{ c^{(j-k)} } + \D{G}{ s^{(j)} } k x^{(k)}
+\end{array}
+\] $$
+
+$end

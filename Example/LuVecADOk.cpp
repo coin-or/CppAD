@@ -1,0 +1,167 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+/*
+$begin LuVecADOk.cpp$$
+$spell
+	Geq
+	Cpp
+	Lu
+$$
+
+$section Lu Factor and Solve With Recorded Pivoting: Example and Test$$
+
+$index Lu, record pivot$$
+$index example, Lu record pivot$$
+$index test, Lu record pivot$$
+
+$comment This file is in the Example subdirectory$$ 
+$code
+$verbatim%Example/LuVecADOk.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$$
+
+$end
+*/
+
+// BEGIN PROGRAM
+
+# include <CppAD/CppAD.h>
+# include "LuVecAD.h"
+# include "NearEqualExt.h"
+# include "DetByMinor.h"
+
+bool LuVecADOk(void)
+{	bool  ok = true;
+
+	using namespace CppAD;
+	typedef AD<double> ADdouble;
+
+	size_t              n = 3;
+	size_t              m = 2;
+	double a1[] = {
+		3., 0., 0., // (1,1) is first  pivot
+		1., 2., 1., // (2,2) is second pivot
+		1., 0., .5  // (3,3) is third  pivot
+	};
+	double a2[] = {
+		1., 2., 1., // (2,2) is second pivot
+		3., 0., 0., // (2,1) is first  pivot
+		1., 0., .5  // (3,3) is third  pivot
+	};
+	double rhs[] = {
+		1., 3.,
+		2., 2.,
+		3., 1.
+	};
+
+	VecAD<double>       Copy    (n * n);
+	VecAD<double>       Rhs     (n * m);
+	VecAD<double>       Result  (n * m);
+	ADdouble            logdet;
+	ADdouble            signdet;
+
+	// routine for checking determinants using expansion by minors
+	DetByMinor<ADdouble> Det(n);
+
+	// matrix we are computing the determinant of
+	CppADvector<ADdouble> A(n * n);
+
+	// dependent variable values
+	CppADvector<ADdouble> Y(1 + n * m);
+
+	size_t  i;
+	size_t  j;
+	size_t  k;
+
+	// Original matrix
+	for(i = 0; i < n * n; i++)
+		A[i] = a1[i];
+
+	// right hand side
+	for(j = 0; j < n; j++)
+		for(k = 0; k < m; k++)
+			Rhs[ j * m + k ] = rhs[ j * m + k ];
+		
+	// Declare independent variables
+	Independent(A);
+
+	// Copy the matrix
+	ADdouble index(0);
+	for(i = 0; i < n*n; i++)
+	{	Copy[index] = A[i];
+		index += 1.;
+	}
+
+	// Solve the equation
+	signdet = LuVecAD(n, m, Copy, Rhs, Result, logdet);
+
+	// Result is the first n * m dependent variables
+	index = 0.;
+	for(i = 0; i < n * m; i++)
+	{	Y[i] = Result[index];
+		index += 1.;
+	}
+
+	// Determinant is last component of the solution
+	Y[ n * m ] = signdet * exp( logdet );
+
+	// construct f: A -> Y
+	ADFun<double> f(A, Y);
+
+	// check determinant using minors routine
+	ADdouble determinant = Det( A );
+	ok &= NearEqual(Y[n * m], determinant, 1e-10, 1e-10);
+
+
+	// Check solution of Rhs = A * Result
+	double sum;
+	for(k = 0; k < m; k++)
+	{	for(i = 0; i < n; i++)
+		{	sum = 0.;
+			for(j = 0; j < n; j++)
+				sum += a1[i * n + j] * Value( Y[j * m + k] );
+			ok &= NearEqual( rhs[i * m + k], sum, 1e-10, 1e-10 );
+		}
+	}
+ 
+ 	CppADvector<double> y2(1 + n * m);
+ 	CppADvector<double> A2(n * n);
+ 	for(i = 0; i < n * n; i++)
+ 		A[i] = A2[i] = a2[i];
+
+ 
+ 	y2          = f.Forward(0, A2);
+ 	determinant = Det(A);
+ 	ok &= NearEqual(y2[ n * m], Value(determinant), 1e-10, 1e-10);
+
+	// Check solution of Rhs = A2 * Result
+	for(k = 0; k < m; k++)
+	{	for(i = 0; i < n; i++)
+		{	sum = 0.;
+			for(j = 0; j < n; j++)
+				sum += a2[i * n + j] * y2[j * m + k];
+			ok &= NearEqual( rhs[i * m + k], sum, 1e-10, 1e-10 );
+		}
+	}
+
+	return ok;
+}
+
+// END PROGRAM

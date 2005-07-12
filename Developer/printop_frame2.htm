@@ -1,0 +1,78 @@
+<html><head>
+<title>Print the Information Corresponding to One Tape Operation</title>
+<meta name="description" content="Print the Information Corresponding to One Tape Operation">
+<meta name="keywords" content=" printop operator print trace tape operation "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="printop.htm" target="_top">section</a>, <a href="printop_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="os">os</a></big></b>
+<br>
+is the output stream that the information is printed on.
+
+<br>
+<br>
+<b><big><a name="Rec">Rec</a></big></b>
+<br>
+Is the entire recording for the tape that this operator is in.
+
+<br>
+<br>
+<b><big><a name="i_var">i_var</a></big></b>
+<br>
+is the variable index for the result of this operation
+(ignored if <code><font color="blue"><span style='white-space: nowrap'>NumVar(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)&nbsp;==&nbsp;0</span></font></code>).
+
+<br>
+<br>
+<b><big><a name="op">op</a></big></b>
+<br>
+The operator code for this operation.
+
+<br>
+<br>
+<b><big><a name="ind">ind</a></big></b>
+<br>
+is the vector of indices for this operation
+(must have  <code><font color="blue"><span style='white-space: nowrap'>NumInd(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> elements).
+
+<br>
+<br>
+<b><big><a name="nfz">nfz</a></big></b>
+<br>
+is the number of forward calculated Taylor coefficients 
+that correspond to this operation
+(ignored if <code><font color="blue"><span style='white-space: nowrap'>NumVar(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)&nbsp;==&nbsp;0</span></font></code>).
+
+<br>
+<br>
+<b><big><a name="fz">fz</a></big></b>
+<br>
+points to the first forward calculated Taylor coefficient 
+that correspond to this operation
+(ignored if <code><font color="blue"><span style='white-space: nowrap'>NumVar(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)&nbsp;==&nbsp;0</span></font></code>).
+
+<br>
+<br>
+<b><big><a name="nrz">nrz</a></big></b>
+<br>
+is the number of reverse calculated Taylor coefficient derivatives
+that correspond to this operation
+(ignored if <code><font color="blue"><span style='white-space: nowrap'>NumVar(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)&nbsp;==&nbsp;0</span></font></code>).
+
+<br>
+<br>
+<b><big><a name="rz">rz</a></big></b>
+<br>
+points to the first reverse calculated Taylor coefficient derivative
+that correspond to this operation
+(ignored if <code><font color="blue"><span style='white-space: nowrap'>NumVar(</span></font></code><i><span style='white-space: nowrap'>op</span></i><code><font color="blue"><span style='white-space: nowrap'>)&nbsp;==&nbsp;0</span></font></code>).
+
+
+<hr>Input File: CppAD\local\Operator.h
+
+</body>
+</html>

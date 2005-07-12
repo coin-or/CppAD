@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+<title>ADOLC &amp; CppAD Gradient of Determinant by Lu Factorization</title>
+<meta name="description" content="ADOLC &amp; CppAD Gradient of Determinant by Lu Factorization"/>
+<meta name="keywords" content=" Adolc speed determinant Lu factor "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<frameset cols="15%,*">
+<frame src="detluadolc.cpp_links.xml"/>
+<frameset rows="100%,*">
+<frame src="detluadolc.cpp_frame1.xml" name="frame1"/>
+</frameset>
+</frameset>
+</html>

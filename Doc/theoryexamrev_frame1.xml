@@ -1,0 +1,541 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>A Reverse Mode Evaluation</title>
+<meta name="description" content="A Reverse Mode Evaluation"/>
+<meta name="keywords" content=" example reverse mode "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="theoryrevnotation.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="forwardtheory.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="theoryexamrev.xml" target="_top">section</a>, <a href="theoryexamrev_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>A Reverse Mode Evaluation</big></big></b></center>
+The reverse mode evaluation of the derivative of 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>p</mi>
+<mo stretchy="false">(</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+</mrow></math>
+
+
+with respect to 
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow>
+<mi mathvariant='italic'>x</mi>
+</mrow></math>
+
+ corresponding to the 
+<a href="theoryexameval.xml" target="_top"><span style='white-space: nowrap'>example&#xA0;evaluation</span></a>
+ is
+
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>
+<mtable rowalign="center" ><mtr><mtd columnalign="left" >
+<mtable rowalign="center" ><mtr><mtd columnalign="left" >
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>parameter</mi>
+</mstyle></mrow>
+</mtd><mtd columnalign="left" >
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>value</mi>
+</mstyle></mrow>
+</mtd><mtd columnalign="left" >
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>variable</mi>
+</mstyle></mrow>
+</mtd><mtd columnalign="left" >
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>value</mi>
+</mstyle></mrow>
+</mtd><mtd columnalign="left" >
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>variable</mi>
+</mstyle></mrow>
+</mtd><mtd columnalign="left" >
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>value</mi>
+</mstyle></mrow>
+</mtd></mtr><mtr><mtd columnalign="left" >
+<mi mathvariant='italic'>n</mi>
+</mtd><mtd columnalign="left" >
+<mn>2</mn>
+</mtd><mtd columnalign="left" >
+<mi mathvariant='italic'>x</mi>
+</mtd><mtd columnalign="left" >
+<mn>3</mn>
+</mtd><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>s</mi>
+<mn>0</mn>
+</msub>
+</mtd><mtd columnalign="left" >
+<mn>1</mn>
+</mtd></mtr><mtr><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>a</mi>
+<mn>0</mn>
+</msub>
+</mtd><mtd columnalign="left" >
+<mn>1</mn>
+</mtd><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>t</mi>
+<mn>1</mn>
+</msub>
+</mtd><mtd columnalign="left" >
+<mn>3</mn>
+</mtd><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>s</mi>
+<mn>1</mn>
+</msub>
+</mtd><mtd columnalign="left" >
+<mn>4</mn>
+</mtd></mtr><mtr><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>a</mi>
+<mn>1</mn>
+</msub>
+</mtd><mtd columnalign="left" >
+<mn>1</mn>
+</mtd><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>t</mi>
+<mn>2</mn>
+</msub>
+</mtd><mtd columnalign="left" >
+<mn>12</mn>
+</mtd><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>s</mi>
+<mn>2</mn>
+</msub>
+</mtd><mtd columnalign="left" >
+<mn>13</mn>
+</mtd></mtr><mtr><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>a</mi>
+<mn>2</mn>
+</msub>
+</mtd><mtd columnalign="left" >
+<mn>1</mn>
+</mtd><mtd columnalign="left" >
+<mi mathvariant='italic'>p</mi>
+</mtd><mtd columnalign="left" >
+<mn>13</mn>
+</mtd></mtr></mtable>
+</mtd></mtr><mtr><mtd columnalign="left" >
+<mtable rowalign="center" ><mtr><mtd columnalign="left" >
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>function</mi>
+</mstyle></mrow>
+</mtd><mtd columnalign="left" >
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>partial</mi>
+</mstyle></mrow>
+</mtd><mtd columnalign="left" >
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>expression</mi>
+</mstyle></mrow>
+</mtd><mtd columnalign="left" >
+<mrow><mstyle mathvariant='normal'><mi mathvariant='normal'>value</mi>
+</mstyle></mrow>
+</mtd></mtr><mtr><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>p</mi>
+<mn>6</mn>
+</msub>
+<mo stretchy="false">(</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>2</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>2</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>0</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">=</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>2</mn>
+</msub>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>6</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>2</mn>
+</msub>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mn>1</mn>
+</mtd><mtd columnalign="left" >
+<mn>1</mn>
+</mtd></mtr><mtr><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>p</mi>
+<mn>5</mn>
+</msub>
+<mo stretchy="false">=</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>6</mn>
+</msub>
+<mo stretchy="false">[</mo>
+<mo stretchy="false">(</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>2</mn>
+</msub>
+<mo stretchy="false">+</mo>
+<msub><mi mathvariant='italic'>a</mi>
+<mn>0</mn>
+</msub>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>2</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>0</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">]</mo>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>5</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>2</mn>
+</msub>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>6</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>2</mn>
+</msub>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mn>1</mn>
+</mtd></mtr><mtr><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>p</mi>
+<mn>4</mn>
+</msub>
+<mo stretchy="false">=</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>5</mn>
+</msub>
+<mo stretchy="false">[</mo>
+<mo stretchy="false">(</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>1</mn>
+</msub>
+<mspace width='.3em'/>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>0</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">]</mo>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>4</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>1</mn>
+</msub>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>5</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>2</mn>
+</msub>
+</mrow>
+</mfrac>
+<mspace width='.3em'/>
+<mi mathvariant='italic'>x</mi>
+</mtd><mtd columnalign="left" >
+<mn>3</mn>
+</mtd></mtr><mtr><mtd columnalign="left" >
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>4</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<mi mathvariant='italic'>x</mi>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>5</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>2</mn>
+</msub>
+</mrow>
+</mfrac>
+<mspace width='.3em'/>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>1</mn>
+</msub>
+</mtd><mtd columnalign="left" >
+<mn>4</mn>
+</mtd></mtr><mtr><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>p</mi>
+<mn>3</mn>
+</msub>
+<mo stretchy="false">=</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>4</mn>
+</msub>
+<mo stretchy="false">[</mo>
+<mo stretchy="false">(</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">+</mo>
+<msub><mi mathvariant='italic'>a</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>1</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>0</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">]</mo>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>3</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>1</mn>
+</msub>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>4</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>1</mn>
+</msub>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mn>3</mn>
+</mtd></mtr><mtr><mtd columnalign="left" >
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>3</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<mi mathvariant='italic'>x</mi>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>4</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<mi mathvariant='italic'>x</mi>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mn>4</mn>
+</mtd></mtr><mtr><mtd columnalign="left" >
+<msub><mi mathvariant='italic'>p</mi>
+<mn>2</mn>
+</msub>
+<mo stretchy="false">=</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>3</mn>
+</msub>
+<mo stretchy="false">[</mo>
+<mo stretchy="false">(</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>0</mn>
+</msub>
+<mspace width='.3em'/>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+<mo stretchy="false">,</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>0</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">]</mo>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>2</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>0</mn>
+</msub>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>3</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>1</mn>
+</msub>
+</mrow>
+</mfrac>
+<mspace width='.3em'/>
+<mi mathvariant='italic'>x</mi>
+</mtd><mtd columnalign="left" >
+<mn>12</mn>
+</mtd></mtr><mtr><mtd columnalign="left" >
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>2</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<mi mathvariant='italic'>x</mi>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>3</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<mi mathvariant='italic'>x</mi>
+</mrow>
+</mfrac>
+<mo stretchy="false">+</mo>
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>3</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>t</mi>
+<mn>1</mn>
+</msub>
+</mrow>
+</mfrac>
+<mspace width='.3em'/>
+<msub><mi mathvariant='italic'>s</mi>
+<mn>0</mn>
+</msub>
+</mtd><mtd columnalign="left" >
+<mn>7</mn>
+</mtd></mtr><mtr><mtd columnalign="left" >
+<mi mathvariant='italic'>p</mi>
+<mo stretchy="false">=</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>2</mn>
+</msub>
+<mo stretchy="false">(</mo>
+<msub><mi mathvariant='italic'>a</mi>
+<mn>0</mn>
+</msub>
+<mo stretchy="false">,</mo>
+<mi mathvariant='italic'>x</mi>
+<mo stretchy="false">)</mo>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<mi mathvariant='italic'>p</mi>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<mi mathvariant='italic'>x</mi>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mfrac><mrow><mo stretchy="false">&#x02202;</mo>
+<msub><mi mathvariant='italic'>p</mi>
+<mn>2</mn>
+</msub>
+</mrow>
+<mrow><mo stretchy="false">&#x02202;</mo>
+<mi mathvariant='italic'>x</mi>
+</mrow>
+</mfrac>
+</mtd><mtd columnalign="left" >
+<mn>7</mn>
+</mtd></mtr></mtable>
+</mtd></mtr></mtable>
+</mrow></math>
+
+
+<hr/>Input File: omh\TheoryExamList.omh
+
+</body>
+</html>

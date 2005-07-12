@@ -1,0 +1,534 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Changes and Additions to CppAD During 2005</title>
+<meta name="description" content="Changes and Additions to CppAD During 2005"/>
+<meta name="keywords" content=" "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="bib.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="whatsnew04.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="whatsnew05.xml" target="_top">section</a>, <a href="whatsnew05_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+
+<center><b><big><big>Changes and Additions to CppAD During 2005</big></big></b></center>
+<br/>
+<b><big><a name="Introduction">Introduction</a></big></b>
+<br/>
+This section contains a list of the changes plus future plans for 
+CppAD during 2005
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions.
+
+
+<br/>
+<br/>
+<b><big><a name="Wish List">Wish List</a></big></b>
+
+
+<ol type="1"><li>
+Some 
+<a href="http://www.boost.org/libs/concept_check/concept_check.htm" target="_top"><span style='white-space: nowrap'>concept&#xA0;checking</span></a>
+
+was added in the <a href="whatsnew05_frame1.xml#07-04" target="frame1"><i><span style='white-space: nowrap'>07-04</span></i></a>
+ release.
+More of this should be done.
+</li><li>
+
+Some users have expressed an interest in having multiple tapes recording
+at the same time. The idea is something like this:
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(x);&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;perhaps&#xA0;in&#xA0;thread&#xA0;1<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(y);&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;perhaps&#xA0;in&#xA0;thread&#xA0;2<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;z&#xA0;=&#xA0;x&#xA0;*&#xA0;x;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;operation&#xA0;on&#xA0;tape&#xA0;corresponding&#xA0;to&#xA0;x<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;w&#xA0;=&#xA0;y&#xA0;*&#xA0;y;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;operation&#xA0;on&#xA0;tape&#xA0;corresponding&#xA0;to&#xA0;y<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;a&#xA0;=&#xA0;w&#xA0;*&#xA0;z;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;would&#xA0;generate&#xA0;an&#xA0;error&#xA0;because&#xA0;cannot&#xA0;mix&#xA0;tapes<br/>
+</span>
+</font></code>
+</li><li>
+It would be useful for <code><font color="blue">AD</font></code> types to have a function that behaves 
+like the coercion from <code><font color="blue">double</font></code> to <code><font color="blue">int</font></code>.
+This function would have a derivative that is identically zero; i.e.,
+the resulting integer value would be fixed and not change with the
+<code><font color="blue">AD</font></code> argument.
+</li><li>
+
+The <a href="atan2.xml" target="_top"><span style='white-space: nowrap'>atan2</span></a>
+ function could be made faster by adding
+a special operator for it.
+</li></ol>
+
+
+<br/>
+<br/>
+<b><big><a name="07-05">07-05</a></big></b>
+<br/>
+The <a href="rosen34.cpp.xml" target="_top"><span style='white-space: nowrap'>Rosen34.cpp</span></a>
+ example mixed the 
+<a href="cppad_vector.xml" target="_top"><span style='white-space: nowrap'>CppAD::vector</span></a>
+ and <a href="cppadvector.xml" target="_top"><span style='white-space: nowrap'>CppADvector</span></a>
+
+vector types.
+This caused the compilation of the examples to fail when 
+<code><font color="blue">CppADvector</font></code> was defined as something other than 
+<code><font color="blue">CppAD::vector</font></code> (found by Jon Pearce).
+This has been fixed.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>The <a href="checksimplevector.xml" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ run time code has been improved so that it is 
+only run once per case that is being checked.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>Simple Vector concept checking (<a href="checksimplevector.xml" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+) was
+added to the routines:
+<a href="forone.xml" target="_top"><span style='white-space: nowrap'>ForOne</span></a>
+,
+<a href="fortwo.xml" target="_top"><span style='white-space: nowrap'>ForTwo</span></a>
+,
+<a href="forward.xml" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+,
+<a href="adfun.xml" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+,
+<a href="hessian.xml" target="_top"><span style='white-space: nowrap'>Hessian</span></a>
+,
+<a href="independent.xml" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+,
+<a href="jacobian.xml" target="_top"><span style='white-space: nowrap'>Jacobian</span></a>
+,
+<a href="revone.xml" target="_top"><span style='white-space: nowrap'>RevOne</span></a>
+,
+<a href="revtwo.xml" target="_top"><span style='white-space: nowrap'>RevTwo</span></a>
+, and
+<a href="reverse.xml" target="_top"><span style='white-space: nowrap'>Reverse</span></a>
+.
+
+<br/>
+<br/>
+<b><big><a name="07-04">07-04</a></big></b>
+<br/>
+Simple Vector concept checking (<a href="checksimplevector.xml" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+) was
+added to the routines:
+<a href="lufactor.xml" target="_top"><span style='white-space: nowrap'>LuFactor</span></a>
+,
+<a href="lusolve.xml" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+,
+<a href="luinvert.xml" target="_top"><span style='white-space: nowrap'>LuInvert</span></a>
+,
+<a href="odeerrcontrol.xml" target="_top"><span style='white-space: nowrap'>OdeErrControl</span></a>
+,
+<a href="runge45.xml" target="_top"><span style='white-space: nowrap'>Runge45</span></a>
+, and
+<a href="rosen34.xml" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
+.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>The previous version of the 
+routine <a href="odeerrcontrol.xml" target="_top"><span style='white-space: nowrap'>OdeErrControl</span></a>
+ was mistakenly in the global namespace. 
+It has been moved to the <code><font color="blue">CppAD</font></code> namespace 
+(where all the other <a href="library.xml" target="_top"><span style='white-space: nowrap'>library</span></a>
+ routines are).
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>The previous distribution (version 05-07-02) was missing the file
+<code><font color="blue">CppAD/local/Default.h</font></code>.
+This has been fixed.
+
+<br/>
+<br/>
+<b><big><a name="07-03">07-03</a></big></b>
+<br/>
+Added <a href="checksimplevector.xml" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+, a C++ concept checking utility
+that checks if a vector type has all the necessary conditions
+to be a <a href="simplevector.xml" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with a specific element type.
+
+<br/>
+<br/>
+<b><big><a name="07-02">07-02</a></big></b>
+<br/>
+Version 7 of Microsoft's C++ compiler
+supports the standard declaration for a friend template function.
+Version 6 did not and 
+CppAD used macros to substitute the empty string for
+<code><font color="blue">&lt;Base&gt;</font></code>, <code><font color="blue">&lt; AD&lt;Base&gt; &gt;</font></code>, and  <code><font color="blue">&lt; VecAD&lt;Base&gt; &gt;</font></code>
+in these declarations.
+These macro substitutions have been removed 
+because Version 6 of Microsoft's C++ compiler
+is no longer supported by CppAD.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>The <a href="frombase.xml" target="_top"><span style='white-space: nowrap'>FromBase</span></a>
+ section was split into the <a href="default.xml" target="_top"><span style='white-space: nowrap'>default</span></a>
+ 
+constructor and the 
+<a href="frombase.xml" target="_top"><span style='white-space: nowrap'>construction&#xA0;for&#xA0;the&#xA0;base&#xA0;type</span></a>
+.
+The construction from base type has been
+extended to include any type that is convertible to the base type.
+As a special case, this provides the previous wish list item of
+a constructor from an arbitrary <i>Base</i> to a 
+<code><font color="blue"><span style='white-space: nowrap'>AD&lt;&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;&gt;</span></font></code>, <code><font color="blue"><span style='white-space: nowrap'>AD&lt;&#xA0;AD&lt;&#xA0;AD&lt;</span></font></code><i><span style='white-space: nowrap'>Base</span></i><code><font color="blue"><span style='white-space: nowrap'>&gt;&#xA0;&gt;&#xA0;&gt;</span></font></code> etc.
+
+
+<br/>
+<br/>
+<b><big><a name="07-01">07-01</a></big></b>
+<br/>
+The permissions were set as executable for many of the no-executable files
+in the distribution; for example, the <code><font color="blue">README</font></code>, file.
+This has been fixed.
+
+<br/>
+<br/>
+<b><big><a name="06-25">06-25</a></big></b>
+<br/>
+Some improvements were made to the 
+README, AUTHORS, COPYING, and INSTALL files.
+In addition, the file
+<a href="../UWCopy040507.html" target="_top"><span style='white-space: nowrap'>UWCopy040507.html</span></a>
+
+which contains the University of Washington's copyright
+policy (see Section 2) was added to the distribution.
+
+<br/>
+<br/>
+<b><big><a name="06-24">06-24</a></big></b>
+<br/>
+The <code><font color="blue">List2Vector</font></code> 
+<a href="exampleutility.xml" target="_top"><span style='white-space: nowrap'>example&#xA0;utility</span></a>
+ is no longer used and has
+been removed.
+
+<br/>
+<br/>
+<b><big><a name="06-18">06-18</a></big></b>
+<br/>
+CppAD is now supported by Microsoft Visual C++ version 7 or higher.
+The version 6 project files
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>*</span></i><code><font color="blue"><span style='white-space: nowrap'>.dsw</span></font></code> and <code><font color="blue"></font></code><i><span style='white-space: nowrap'>*</span></i><code><font color="blue"><span style='white-space: nowrap'>.dsp</span></font></code> 
+have been replaced by the version 7 project files
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>*</span></i><code><font color="blue"><span style='white-space: nowrap'>.sln</span></font></code> and <code><font color="blue"></font></code><i><span style='white-space: nowrap'>*</span></i><code><font color="blue"><span style='white-space: nowrap'>.vcproj</span></font></code>.
+
+<br/>
+<br/>
+<b><big><a name="06-14">06-14</a></big></b>
+<br/>
+A new <a href="condexp.cpp.xml" target="_top"><span style='white-space: nowrap'>CondExp&#xA0;example</span></a>
+ has been added and
+the old <a href="condexp.xml" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+ example has been moved to the 
+<code><font color="blue">TestMore</font></code> directory (it is now only a test).
+
+
+<br/>
+<br/>
+<b><big><a name="06-13">06-13</a></big></b>
+<br/>
+The changes made on 06-06 do not run under Microsoft Visual C++ version 6.0
+(even though they are within the C++ standard).
+Preliminary testing under version 7 indicates that Microsoft
+has fixed this problem in later versions of their C++ compiler.
+
+<br/>
+<br/>
+<b><big><a name="06-06">06-06</a></big></b>
+<br/>
+Converted the routines
+<a href="forward.xml" target="_top"><span style='white-space: nowrap'>Forward</span></a>
+ and <a href="reverse.xml" target="_top"><span style='white-space: nowrap'>Reverse</span></a>
+ to allow for any
+<a href="simplevector.xml" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ instead of just <a href="cppadvector.xml" target="_top"><span style='white-space: nowrap'>CppADVector</span></a>
+.
+In addition, separated the syntax of the function call
+from the prototype for each of the arguments.
+This was also done for all the easy to use <a href="drivers.xml" target="_top"><span style='white-space: nowrap'>Drivers</span></a>
+
+as well as the <a href="independent.xml" target="_top"><span style='white-space: nowrap'>Independent</span></a>
+ function and
+the <a href="adfun.xml" target="_top"><span style='white-space: nowrap'>ADFun</span></a>
+ constructor.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>Add a section containing a list of
+<a href="listallexamples.xml" target="_top"><span style='white-space: nowrap'>all&#xA0;the&#xA0;examples</span></a>
+.
+
+<br/>
+<br/>
+<b><big><a name="05-19">05-19</a></big></b>
+<br/>
+A significant improvement in speed was obtained by moving
+the buffer extension to a separate function and then 
+inline the rest of putting operators in the tape.
+For example, 
+here is part of the speed test output before this change:
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Tape&#xA0;of&#xA0;Expansion&#xA0;by&#xA0;Minors&#xA0;Determinant:&#xA0;Length&#xA0;=&#xA0;350,&#xA0;Memory&#xA0;=&#xA0;6792<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size&#xA0;=&#xA0;5&#xA0;rate&#xA0;=&#xA0;230<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size&#xA0;=&#xA0;4&#xA0;rate&#xA0;=&#xA0;1,055<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size&#xA0;=&#xA0;3&#xA0;rate&#xA0;=&#xA0;3,408<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size&#xA0;=&#xA0;2&#xA0;rate&#xA0;=&#xA0;7,571<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size&#xA0;=&#xA0;1&#xA0;rate&#xA0;=&#xA0;13,642<br/>
+</span>
+</font></code>
+and here is the same output after this change:
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Tape&#xA0;of&#xA0;Expansion&#xA0;by&#xA0;Minors&#xA0;Determinant:&#xA0;Length&#xA0;=&#xA0;350,&#xA0;Memory&#xA0;=&#xA0;6792<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size&#xA0;=&#xA0;5&#xA0;rate&#xA0;=&#xA0;448<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size&#xA0;=&#xA0;4&#xA0;rate&#xA0;=&#xA0;2,004<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size&#xA0;=&#xA0;3&#xA0;rate&#xA0;=&#xA0;5,761<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size&#xA0;=&#xA0;2&#xA0;rate&#xA0;=&#xA0;10,221<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size&#xA0;=&#xA0;1&#xA0;rate&#xA0;=&#xA0;14,734<br/>
+</span>
+</font></code>
+Note that your results will vary depending on operating system and machine.
+
+<br/>
+<br/>
+<b><big><a name="05-18">05-18</a></big></b>
+<br/>
+Change name of <code><font color="blue">OdeControl</font></code> to <a href="odeerrcontrol.xml" target="_top"><span style='white-space: nowrap'>OdeErrControl</span></a>
+
+and improve its documentation.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>Correct the syntax for the <a href="parameter.xml" target="_top"><span style='white-space: nowrap'>Parameter</span></a>
+ and <code><font color="blue">Variable</font></code> functions.
+
+
+<br/>
+<br/>
+<b><big><a name="05-16">05-16</a></big></b>
+<br/>
+Change <a href="odeerrcontrol.xml" target="_top"><span style='white-space: nowrap'>OdeErrControl</span></a>
+ to have method return its order instead
+of having a separate argument to <code><font color="blue">OdeErrControl</font></code>.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>Add the argument <i>scur</i> to <code><font color="blue">OdeErrControl</font></code>,
+improve <code><font color="blue">OdeErrControl</font></code> choice of step size and documentation.
+
+
+<br/>
+<br/>
+<b><big><a name="05-12">05-12</a></big></b>
+<br/>
+Using profiling, the 
+<a href="mul.xml" target="_top"><span style='white-space: nowrap'>multiplication&#xA0;operator</span></a>
+ was show to take a significant
+amount of time. It was reorganized in order to make it faster.
+The profiling indicated an improvement so that same change was made 
+to the following operators:
+ <a href="add.xml" target="_top"><span style='white-space: nowrap'>Add</span></a>
+,  <a href="addeq.xml" target="_top"><span style='white-space: nowrap'>AddEq</span></a>
+,  <a href="sub.xml" target="_top"><span style='white-space: nowrap'>Sub</span></a>
+,  <a href="subeq.xml" target="_top"><span style='white-space: nowrap'>SubEq</span></a>
+,  <a href="muleq.xml" target="_top"><span style='white-space: nowrap'>MulEq</span></a>
+,  <a href="div.xml" target="_top"><span style='white-space: nowrap'>Div</span></a>
+,  <a href="diveq.xml" target="_top"><span style='white-space: nowrap'>DivEq</span></a>
+.
+
+
+<br/>
+<br/>
+<b><big><a name="05-06">05-06</a></big></b>
+<br/>
+The documentation for 
+<a href="simplevector.xml" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ and <a href="nearequal.xml" target="_top"><span style='white-space: nowrap'>NearEqual</span></a>
+
+were changed to use more syntax (what the user enters)
+and simpler prototypes 
+(the compiler oriented description of the arguments).
+In addition, exercises were added at the end of the
+<a href="simplevector.xml" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+, <a href="cppad_vector.xml" target="_top"><span style='white-space: nowrap'>CppAD_vector</span></a>
+, and <a href="nearequal.xml" target="_top"><span style='white-space: nowrap'>NearEqual</span></a>
+
+documentation.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>There was a undesired divide by zero case in the file 
+<code><font color="blue">TestMore/VecUnary.cpp</font></code> that just happened to work
+in corresponding <a href="nearequal.xml" target="_top"><span style='white-space: nowrap'>NearEqual</span></a>
+ check.
+The <code><font color="blue">NearEqual</font></code> routine has been changed
+to return false if either of the values being compared
+is infinite or not a number.
+In addition, the divide by zero has been removed from 
+the <code><font color="blue">TestMore/VecUnary.cpp</font></code> test.
+
+
+
+<br/>
+<br/>
+<b><big><a name="05-01">05-01</a></big></b>
+<br/>
+The doubly linked list was also removed from the <a href="vecad.xml" target="_top"><span style='white-space: nowrap'>VecAD</span></a>
+
+internal data structure because this method of coding is simpler
+and it makes it more like the rest of CppAD.
+
+<br/>
+<br/>
+<b><big><a name="04-21">04-21</a></big></b>
+<br/>
+The profiling indicated that the destructor for an AD object was using a 
+significant amount of time.
+The internal data structure of an AD object had a doubly linked list
+that pointed to the current variables and this was modified when
+an AD object was destroyed.
+In order to speed AD operations in general,
+the internal data structure of an AD object has been changed so that
+this list is no longer necessary (a tape id number is used in its place)
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>During the process above, the function <a href="parameter.xml" target="_top"><span style='white-space: nowrap'>Variable</span></a>
+ was added.
+
+
+<br/>
+<br/>
+<b><big><a name="04-20">04-20</a></big></b>
+<br/>
+Add <a href="installunix_frame1.xml#Speed Testing.Profiling" target="frame1"><i><span style='white-space: nowrap'>Profiling</span></i></a>
+ to
+the speed tests.
+
+<br/>
+<br/>
+<b><big><a name="04-19">04-19</a></big></b>
+<br/>
+Remove an extra (not necessary) 
+semi-colon from the file <code><font color="blue">CppAD/local/Operator.h</font></code>.
+
+<br/>
+<br/>
+<b><big><a name="03-26">03-26</a></big></b>
+<br/>
+The new routine <a href="odeerrcontrol.xml" target="_top"><span style='white-space: nowrap'>OdeErrControl</span></a>
+ does
+automatic step size control for the ODE solvers.
+
+<br/>
+<br/>
+<b><big><a name="03-23">03-23</a></big></b>
+<br/>
+The routine <a href="rosen34.xml" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
+ is an improved stiff integration method
+that has an optional error estimate in the calling sequence.
+You must change all your calls to <code><font color="blue">OdeImplicit</font></code>
+to use <code><font color="blue">Rosen34</font></code> (but do not need to change other arguments
+because error estimate is optional).
+
+<br/>
+<br/>
+<b><big><a name="03-22">03-22</a></big></b>
+<br/>
+The routine <a href="runge45.xml" target="_top"><span style='white-space: nowrap'>Runge45</span></a>
+ is an improved Runge-Kutta method
+that has an optional error estimate in the calling sequence.
+You must change all your calls to <code><font color="blue">OdeRunge</font></code>
+to use <code><font color="blue">Runge45</font></code> (but do not need to change other arguments
+because error estimate is optional).
+
+<br/>
+<br/>
+<b><big><a name="03-09">03-09</a></big></b>
+<br/>
+Some extra semi-colons (empty statements)
+were generating warnings on some compilers.
+The ones that occurred after the macros
+<code><font color="blue">CppADStandardMathBinaryFun</font></code>,
+<code><font color="blue">CppADCompareMember</font></code>,
+<code><font color="blue">CppADBinaryMember</font></code>, and
+<code><font color="blue">CppADFoldBinaryOperator</font></code> have been removed.
+
+<br/>
+<br/>
+<b><big><a name="03-04">03-04</a></big></b>
+<br/>
+An new multiple tape example <a href="multape.xml" target="_top"><span style='white-space: nowrap'>MulTape</span></a>
+ was added.
+
+<br/>
+<br/>
+<b><big><a name="03-01">03-01</a></big></b>
+<br/>
+An option that specifies error and warning 
+<a href="installunix_frame1.xml#C++ Errors And Warnings" target="frame1"><i><span style='white-space: nowrap'>flags</span></i></a>
+
+for all the C++ compile commands,
+was added to the
+<a href="installunix.xml" target="_top"><span style='white-space: nowrap'>Unix&#xA0;installation&#xA0;instructions</span></a>
+.
+
+
+<br/>
+<br/>
+<b><big><a name="02-24">02-24</a></big></b>
+<br/>
+The routine <a href="lusolve.xml" target="_top"><span style='white-space: nowrap'>LuSolve</span></a>
+ was split into <a href="lufactor.xml" target="_top"><span style='white-space: nowrap'>LuFactor</span></a>
+
+and <a href="luinvert.xml" target="_top"><span style='white-space: nowrap'>LuInvert</span></a>
+. This enables one to efficiently
+solve equations where the matrix does not change
+and the right hand side for one equation depends on the 
+left hand side for a previous equation.
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>An extra requirement was added to the
+<a href="simplevector.xml" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ template class.
+There must be a typedef for <code><font color="blue">value_type</font></code>
+which is the type of elements in the vector
+<code><span style='white-space: nowrap'><br/>
+<br/>
+</span></code>Under Mandrake Linux 10.1,
+some template friend declarations were failing because the corresponding
+operations were not declared before being indicated as friends
+(found by 
+<a href="mailto:Jean-Pierre.Dussault@Usherbrooke.ca" target="_top"><span style='white-space: nowrap'>Jean-Pierre&#xA0;Dussault</span></a>
+).
+This has been fixed.
+
+<br/>
+<br/>
+<b><big><a name="01-08">01-08</a></big></b>
+<br/>
+The <a href="erf.xml" target="_top"><span style='white-space: nowrap'>erf</span></a>
+ function was added. 
+The implementation of this function used conditional expressions
+(<a href="condexp.xml" target="_top"><span style='white-space: nowrap'>CondExp</span></a>
+) and some times the expression that was not
+valid in a region caused division by zero.
+For this reason, the check and abort on division by zero 
+has been removed.
+
+
+
+<hr/>Input File: omh\WhatsNew05.omh
+
+</body>
+</html>

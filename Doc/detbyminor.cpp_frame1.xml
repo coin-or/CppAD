@@ -1,0 +1,67 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>Determinant Using Expansion by Minors: Example and Test</title>
+<meta name="description" content="Determinant Using Expansion by Minors: Example and Test"/>
+<meta name="keywords" content=" determinant by minors example test "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="detbyminor.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="detbyminor.h.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="detbyminor.cpp.xml" target="_top">section</a>, <a href="detbyminor.cpp_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+
+<center><b><big><big>Determinant Using Expansion by Minors: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD.h&gt;<br/>
+#&#xA0;include&#xA0;&quot;DetByMinor.h&quot;<br/>
+<br/>
+bool&#xA0;DetByMinor()<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;ok&#xA0;=&#xA0;true;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;dimension&#xA0;of&#xA0;the&#xA0;matrix<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;n&#xA0;=&#xA0;3;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;construct&#xA0;the&#xA0;determinat&#xA0;object<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppAD::DetByMinor&lt;double&gt;&#xA0;Det(n);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;&#xA0;a[]&#xA0;=&#xA0;{<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;1.,&#xA0;2.,&#xA0;3.,&#xA0;&#xA0;//&#xA0;a[0]&#xA0;a[1]&#xA0;a[2]<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;3.,&#xA0;2.,&#xA0;1.,&#xA0;&#xA0;//&#xA0;a[3]&#xA0;a[4]&#xA0;a[5]<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;2.,&#xA0;1.,&#xA0;2.&#xA0;&#xA0;&#xA0;//&#xA0;a[6]&#xA0;a[7]&#xA0;a[8]<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;};<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;A(9);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;i;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;for(i&#xA0;=&#xA0;0;&#xA0;i&#xA0;&lt;&#xA0;9;&#xA0;i++)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;A[i]&#xA0;=&#xA0;a[i];<br/>
+<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;evaluate&#xA0;the&#xA0;determinant<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;det&#xA0;=&#xA0;Det(A);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;check;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;check&#xA0;=&#xA0;a[0]*(a[4]*a[8]&#xA0;-&#xA0;a[5]*a[7])<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;-&#xA0;a[1]*(a[3]*a[8]&#xA0;-&#xA0;a[5]*a[6])<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;+&#xA0;a[2]*(a[3]*a[7]&#xA0;-&#xA0;a[4]*a[6]);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;=&#xA0;det&#xA0;==&#xA0;check;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;ok;<br/>
+}<br/>
+<br/>
+</span></font></code>
+<hr/>Input File: Example\DetByMinor.cpp
+
+</body>
+</html>

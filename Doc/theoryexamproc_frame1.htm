@@ -1,0 +1,55 @@
+<html><head>
+<title>A Procedural Representation of the Example Function</title>
+<meta name="description" content="A Procedural Representation of the Example Function">
+<meta name="keywords" content=" example procedure "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="theoryexamfun.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="theoryexambinary.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="theoryexamproc.htm" target="_top">section</a>, <a href="theoryexamproc_frame1.htm" target="_top">frame</a></div>
+<hr> 
+
+
+
+<center><b><big><big>A Procedural Representation of the Example Function</big></big></b></center>
+The following is a C++ template function
+that calculates the value of the 
+<a href="theoryexamfun.htm" target="_top"><span style='white-space: nowrap'>example&nbsp;function</span></a>
+: 
+<code><font color="blue">
+<span style='white-space: nowrap'><br>
+template&nbsp;&lt;class&nbsp;Base&gt;<br>
+Base&nbsp;p(unsigned&nbsp;int&nbsp;n,&nbsp;const&nbsp;std::vector&lt;Base&gt;&nbsp;&amp;a,&nbsp;const&nbsp;Base&nbsp;&amp;x)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;Base&nbsp;&nbsp;s&nbsp;=&nbsp;a[n];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned&nbsp;int&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Base&nbsp;i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i&nbsp;=&nbsp;1;&nbsp;i&nbsp;&lt;=&nbsp;n;&nbsp;i++)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;=&nbsp;s&nbsp;*&nbsp;x;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;=&nbsp;t&nbsp;+&nbsp;a[n-i];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;s;<br>
+}<br>
+</span>
+</font></code>
+It follows that the return value of the procedure <code><font color="blue">p</font></code>
+is equal to the
+<a href="theoryexamfun.htm" target="_top"><span style='white-space: nowrap'>example&nbsp;function</span></a>
+ value <code>
+<span style='white-space: nowrap'>&nbsp;p(x)</span></code>
+
+(<a href="poly.h.htm" target="_top"><span style='white-space: nowrap'>Poly.h</span></a>
+ contains an implementation of a similar template function.)
+
+
+<hr>Input File: omh\TheoryExamList.omh
+
+</body>
+</html>

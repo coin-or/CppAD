@@ -1,0 +1,237 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+$begin Faq$$
+$escape #$$
+$spell
+	whatsnew
+	bradbell
+	seanet
+	sqrt
+	cmath
+	Namespace
+	Dvector
+	Gcc
+	CppAD
+	Lu
+$$
+
+$aindex section head subhead$$
+
+$section Frequently Asked Questions #and Answers$$
+
+$head Assignment and Independent$$
+Why does the code sequence
+$syntax%
+	Independent(%u%);
+	%v% = %u%;
+%$$
+behave differently from the code sequence
+$syntax%
+	%v% = %u%;
+	Independent(%u%);
+%$$
+While the tape state is 
+$xref/glossary/Tape State/Empty/empty/1/$$,
+the assignment operator just assigns values and does not
+track the dependency of one variable upon another.
+Thus in the first case, $italic y$$ is a vector of 
+$xref/glossary/Variable/variables/$$
+and in the second case it is a vector of
+$xref/glossary/Parameter/parameters/$$.
+
+$head Bugs$$
+What should I do if I suspect that there is a bug in CppAD ?
+$pre
+
+$$
+$list number$$
+The first step is to search this page for mention of
+some feature that perhaps you interpreting as a bug
+(and is not).
+If this does not solve your problem, continue
+to the next step.
+$lnext
+The second step is to check the 
+$xref/WhatsNew04//whatsnew/$$ messages from the date 
+of the release that you are using to the current date.
+If the bug has been mentioned and fixed,
+then $xref/install/$$ the current version of CppAD.
+If this does not solve your problem, continue
+to the next step.
+$lnext
+Send $code bradbell$$ at $code seanet.com$$ e-mail with 
+a description of the bug.
+Attaching the source code for small sample program that 
+demonstrates the bug is always helpful.
+A smaller program
+that executes fewer statements 
+makes a better bug report.
+$lend
+
+$head CompareChange$$
+If you attempt to use the 
+$xref/ADFun/CompareChange/CompareChange/$$
+function when $code NDEBUG$$ is true,
+you will get an error message stating that
+$code CompareChange$$ is not a member of the
+$xref/ADFun/$$ template class.
+
+
+$head Exceptions$$
+Why, in all the examples, do you pass back a boolean variable instead
+of throwing an exception ?
+$pre
+
+$$
+The examples are also used to test the correctness of CppAD
+and to check your installation.
+For these two uses, it is helpful to run all the tests
+and to know which ones failed.
+The actual code in CppAD uses the $xref/CppADError/$$ utility
+to signal an exception.
+Specifications are given redefining this action.
+
+$head Independent Variables$$
+Is it possible to evaluate the same tape recording with different values 
+for the independent variables ?
+$pre
+
+$$
+Yes (see $xref/ADFun/$$ and 
+$xref/Forward/yp/Zero Order/zero order/1/$$ in forward mode.)
+
+$head Intrinsic Functions$$
+$index special functions$$
+Are there plans to add more intrinsic functions to CppAD ?
+$pre
+
+$$
+Yes. The $xref/StdMathLib/$$ section contains
+a list of the intrinsic functions included so far.
+Contact 
+$href%mailto:bradbell@seanet.com%bradbell@seanet.com%$$
+if you need a standard math function that is has not yet been included.
+
+
+
+$head Matrix Inverse$$
+
+Is it possible to differentiate (with respect to the matrix elements)
+the computation of the inverse of a matrix 
+where the computation of the inverse uses pivoting ? 
+$pre
+
+$$
+The example routine $xref/LuSolve/$$ can be used to do this
+because the inverse is a special case of the solution of linear equations.
+The examples 
+$xref/JacLuDet.cpp/$$ and $xref/HesLuDet.cpp/$$
+use LuSolve to compute derivatives of the 
+determinant with respect to the components of the matrix.
+
+$head Mode$$
+When evaluating derivatives, 
+one always has a choice between 
+forward and reverse mode.
+How does one decide which mode to use ?
+$pre
+
+$$
+In general, the best mode depends on the number of domain and range
+components in the function that your are differentiating.
+Each call to $xref/Forward/$$ computes the derivative of all 
+the range directions with respect to one domain direction.
+Each call to $xref/Reverse/$$ computes the derivative of one 
+range direction with respect to all the domain directions.
+The times required for (speed of) 
+calls $code Forward$$ and $code Reverse$$ are about equal.  
+The $xref/ADFun/Parameter/Parameter/$$ 
+function can be used to quickly determine that 
+some range directions have derivative zero.
+
+
+
+$head Namespace$$
+
+
+$subhead CppADvector$$
+Why do you use $code CppADvector$$ instead of a namespace for
+the CppAD vector class ?
+$pre
+
+$$
+Actually, the default definition for $code CppADvector$$ is the
+$xref/CppAD_vector//CppAD::vector/$$ template class; 
+i.e., it is in the $code CppAD$$ namespace.
+The preprocessor symbol 
+$xref/CppADvector/$$ can be used
+to make CppAD use a different 
+$xref/SimpleVector/$$ template class of your choosing.
+All preprocessor symbols that are defined or used
+by CppAD begin with $code CppAD$$.
+
+$subhead Using$$
+$index standard, math function$$
+$index math, standard function$$
+Why do I have trouble when the following command
+$codep
+	using namespace CppAD
+$$
+is at the global level 
+(not within a function or some other limited scope).
+$pre
+
+$$
+Some versions of $code # include <cmath>$$ for
+gcc and Visual C++ define the standard math functions,
+(for example $syntax%double sqrt(double %x%)%$$)
+at the global level.
+It is necessary to put your $code using$$ commands within the scope
+of a function,
+or some other limited scope,
+in order to shadow these improper global definitions.
+
+$head Speed$$
+How do I get the best speed performance out of CppAD ?
+$pre
+
+$$
+You should compile your code with optimization, without debugging,
+and with the preprocessor symbol $code NDEBUG$$ defined.
+(The $xref/Speed/$$ tests do this.)
+Note that defining $code NDEBUG$$
+will turn off all of the error checking and reporting that
+is done using the default definitions in $xref/CppADError/$$. 
+
+$head Tape Storage: Disk #or Memory$$
+Does CppAD store the tape on disk or in memory ?
+$pre
+
+$$
+CppAD uses memory to store a different tape for recording operations
+for each $syntax%AD<%Base%>%$$ type that is used.
+If you have a very large number calculations that are recorded
+on a tape, the tape will keep growing to hold the necessary information.
+Eventually, virtual memory may be used to store the tape 
+and the calculations may slow down because of necessary disk access.
+
+
+$end

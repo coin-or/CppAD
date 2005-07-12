@@ -1,0 +1,99 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>AD Assignment Operator: Example and Test</title>
+<meta name="description" content="AD Assignment Operator: Example and Test"/>
+<meta name="keywords" content=" assign example test "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="eq.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="output.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="eq.cpp.xml" target="_top">section</a>, <a href="eq.cpp_frame1.xml" target="_top">frame</a></div>
+<hr/>
+
+
+<center><b><big><big>AD Assignment Operator: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br/>
+<br/>
+#&#xA0;include&#xA0;&lt;CppAD/CppAD.h&gt;<br/>
+<br/>
+bool&#xA0;Eq(void)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;ok&#xA0;=&#xA0;true;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;namespace&#xA0;CppAD;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;independent&#xA0;variable&#xA0;vector,&#xA0;indices,&#xA0;values,&#xA0;and&#xA0;declaration<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;AD&lt;double&gt;&#xA0;&gt;&#xA0;U(2);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;s&#xA0;=&#xA0;0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;t&#xA0;=&#xA0;1;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;U[s]&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;5.;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;AD&lt;double&gt;&#xA0;=&#xA0;double<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;U[t]&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;U[s];&#xA0;&#xA0;&#xA0;//&#xA0;AD&lt;double&gt;&#xA0;=&#xA0;AD&lt;double&gt;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Independent(U);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;dependent&#xA0;variable&#xA0;vector&#xA0;and&#xA0;indices<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;&#xA0;AD&lt;double&gt;&#xA0;&gt;&#xA0;Z(3);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;x&#xA0;=&#xA0;0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;y&#xA0;=&#xA0;1;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;size_t&#xA0;z&#xA0;=&#xA0;2;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;assign&#xA0;the&#xA0;dependent&#xA0;variable&#xA0;equal&#xA0;to&#xA0;an&#xA0;expression<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;and&#xA0;use&#xA0;the&#xA0;value&#xA0;returned&#xA0;by&#xA0;assignment&#xA0;(for&#xA0;another&#xA0;assignment)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Z[x]&#xA0;=&#xA0;Z[y]&#xA0;=&#xA0;U[t]&#xA0;+&#xA0;1.;&#xA0;&#xA0;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;assign&#xA0;the&#xA0;dependent&#xA0;variable&#xA0;equal&#xA0;to&#xA0;an&#xA0;independent&#xA0;variable<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;(choose&#xA0;the&#xA0;first&#xA0;independent&#xA0;variable&#xA0;to&#xA0;check&#xA0;a&#xA0;special&#xA0;case)<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Z[z]&#xA0;=&#xA0;U[s];&#xA0;&#xA0;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;check&#xA0;parameter&#xA0;flag<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;!&#xA0;Parameter(Z[x]);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;!&#xA0;Parameter(Z[y]);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;!&#xA0;Parameter(Z[z]);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;construct&#xA0;f&#xA0;:&#xA0;U&#xA0;-&gt;&#xA0;Z&#xA0;and&#xA0;vectors&#xA0;for&#xA0;derivative&#xA0;calculations<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ADFun&lt;double&gt;&#xA0;f(U,&#xA0;Z);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;v(&#xA0;f.Domain()&#xA0;);&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;CppADvector&lt;double&gt;&#xA0;w(&#xA0;f.Range()&#xA0;);&#xA0;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;check&#xA0;parameter&#xA0;flag<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;!&#xA0;f.Parameter(x);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;!&#xA0;f.Parameter(y);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;!&#xA0;f.Parameter(z);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;check&#xA0;variable&#xA0;values<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;(&#xA0;&#xA0;&#xA0;Z[x]&#xA0;==&#xA0;6.);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;(&#xA0;&#xA0;&#xA0;Z[y]&#xA0;==&#xA0;6.);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;(&#xA0;&#xA0;&#xA0;Z[z]&#xA0;==&#xA0;5.);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;compute&#xA0;partials&#xA0;w.r.t&#xA0;t<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;v[s]&#xA0;=&#xA0;0.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;v[t]&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;w&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;f.Forward(1,&#xA0;v);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;(w[x]&#xA0;==&#xA0;1.);&#xA0;&#xA0;//&#xA0;dx/dt<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;(w[y]&#xA0;==&#xA0;1.);&#xA0;&#xA0;//&#xA0;dy/dt<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;(w[z]&#xA0;==&#xA0;0.);&#xA0;&#xA0;//&#xA0;dz/dt<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;compute&#xA0;partials&#xA0;of&#xA0;z<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;w[x]&#xA0;=&#xA0;0.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;w[y]&#xA0;=&#xA0;0.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;w[z]&#xA0;=&#xA0;1.;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;v&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;f.Reverse(1,w);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;(v[s]&#xA0;==&#xA0;1.);&#xA0;&#xA0;//&#xA0;dz/ds<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;(v[t]&#xA0;==&#xA0;0.);&#xA0;&#xA0;//&#xA0;dz/dt<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;ok;<br/>
+}<br/>
+<br/>
+</span></font></code>
+<hr/>Input File: Example\Eq.cpp
+
+</body>
+</html>

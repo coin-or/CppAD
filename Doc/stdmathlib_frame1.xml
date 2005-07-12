@@ -1,0 +1,42 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>The Standard Library Unary Math Functions</title>
+<meta name="description" content="The Standard Library Unary Math Functions"/>
+<meta name="keywords" content=" standard math library "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="printfor.cpp.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="abs.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="stdmathlib.xml" target="_top">section</a>, <a href="stdmathlib_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>The Standard Library Unary Math Functions</big></big></b></center>
+<br/>
+<b><big><a name="Contents">Contents</a></big></b>
+<br/>
+<div><a href="abs.xml" target="_top">The&#xA0;Absolute&#xA0;Value&#xA0;Function</a><br/>
+<a href="acos.xml" target="_top">The&#xA0;Inverse&#xA0;Cosine&#xA0;Function</a><br/>
+<a href="asin.xml" target="_top">The&#xA0;Inverse&#xA0;Sine&#xA0;Function</a><br/>
+<a href="atan.xml" target="_top">The&#xA0;Inverse&#xA0;Tangent&#xA0;Function</a><br/>
+<a href="atan2.xml" target="_top">The&#xA0;Two&#xA0;Argument&#xA0;Inverse&#xA0;Tangent&#xA0;Function</a><br/>
+<a href="cos.xml" target="_top">The&#xA0;Cosine&#xA0;Function</a><br/>
+<a href="erf.xml" target="_top">Error&#xA0;Function</a><br/>
+<a href="exp.xml" target="_top">The&#xA0;Exponential&#xA0;Function</a><br/>
+<a href="log.xml" target="_top">The&#xA0;Logarithm&#xA0;Function</a><br/>
+<a href="log10.xml" target="_top">The&#xA0;Log&#xA0;Base&#xA0;10&#xA0;Function</a><br/>
+<a href="pow.xml" target="_top">The&#xA0;Power&#xA0;Function</a><br/>
+<a href="sin.xml" target="_top">The&#xA0;Sine&#xA0;Function</a><br/>
+<a href="sqrt.xml" target="_top">The&#xA0;Square&#xA0;Root&#xA0;Function</a><br/>
+</div>
+<hr/>Input File: CppAD\local\StdMathLib.h
+
+</body>
+</html>

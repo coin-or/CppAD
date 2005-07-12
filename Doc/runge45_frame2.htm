@@ -1,0 +1,289 @@
+<html><head>
+<title>An Embedded 4th and 5th Order Runge-Kutta ODE Solver</title>
+<meta name="description" content="An Embedded 4th and 5th Order Runge-Kutta ODE Solver">
+<meta name="keywords" content=" Runge45 Ode Runge-kutta Runge Kutta solve differential equation "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="runge45.htm" target="_top">section</a>, <a href="runge45_frame2.htm" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br>
+This is the Cash-Karp embedded 4th and 5th order Runge-Kutta ODE solver 
+(see Section 16.2 of <a href="bib_frame1.htm#Numerical Recipes" target="frame1"><i><span style='white-space: nowrap'>Numerical&nbsp;Recipes</span></i></a>
+).
+We use <code>
+<span style='white-space: nowrap'>&nbsp;n</span></code>
+ for the size of the vector <i>xi</i>.
+Let <code>
+<span style='white-space: nowrap'>&nbsp;\R</span></code>
+ denote the real numbers
+and let <code>
+<span style='white-space: nowrap'>&nbsp;F&nbsp;:&nbsp;\R&nbsp;\times&nbsp;\R^n&nbsp;\rightarrow&nbsp;\R^n</span></code>
+ be a smooth function.
+The return value <i>xf</i> contains a 5th order
+approximation for the value <code>
+<span style='white-space: nowrap'>&nbsp;X(tf)</span></code>
+ where 
+<code>
+<span style='white-space: nowrap'>&nbsp;X&nbsp;:&nbsp;[ti&nbsp;,&nbsp;tf]&nbsp;\rightarrow&nbsp;\R^n</span></code>
+ is defined by 
+the following initial value problem:
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+\begin{array}{rcl}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X(ti)&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;xi&nbsp;&nbsp;&nbsp;&nbsp;\\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X'(t)&nbsp;&nbsp;&amp;&nbsp;=&nbsp;&amp;&nbsp;F[t&nbsp;,&nbsp;X(t)]&nbsp;<br>
+\end{array}<br>
+\]&nbsp;</span></code>
+
+If your set of ordinary differential equations
+are stiff, an implicit method may be better
+(perhaps <a href="rosen34.htm" target="_top"><span style='white-space: nowrap'>Rosen34</span></a>
+.)
+
+<br>
+<br>
+<b><big><a name="Include">Include</a></big></b>
+<br>
+The file <code><font color="blue">CppAD/Runge45.h</font></code> is included by <code><font color="blue">CppAD/CppAD.h</font></code>
+but it can also be included separately with out the rest of 
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br>
+<br>
+<b><big><a name="xf">xf</a></big></b>
+<br>
+The return value <i>xf</i> has the prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>xf</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>an the size of <i>xf</i> is equal to <i>n</i> 
+(see description of <a href="runge45_frame2.htm#Vector" target="frame1"><i><span style='white-space: nowrap'>Vector</span></i></a>
+ below).
+<code>
+<span style='white-space: nowrap'>&nbsp;\[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X(tf)&nbsp;=&nbsp;xf&nbsp;+&nbsp;O(&nbsp;h^6&nbsp;)<br>
+\]&nbsp;</span></code>
+
+where <code>
+<span style='white-space: nowrap'>&nbsp;h&nbsp;=&nbsp;(tf&nbsp;-&nbsp;ti)&nbsp;/&nbsp;M</span></code>
+ is the step size.
+
+<br>
+<br>
+<b><big><a name="Fun">Fun</a></big></b>
+<br>
+The class <i>Fun</i> 
+and the object <i>F</i> satisfy the prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Fun</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>The object <i>F</i> (and the class <i>Fun</i>)
+must have a member function named <code><font color="blue">Ode</font></code> 
+that supports the syntax
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Ode(</span></font></code><i><span style='white-space: nowrap'>t</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code><br>
+<b><a name="Fun.t">t</a></b>
+<br>
+The argument <i>t</i> to <code><font color="blue"></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Ode</span></font></code> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>t</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>(see description of <a href="runge45_frame2.htm#Scalar" target="frame1"><i><span style='white-space: nowrap'>Scalar</span></i></a>
+ below). 
+
+<br>
+<br>
+<b><a name="Fun.x">x</a></b>
+<br>
+The argument <i>x</i> to <code><font color="blue"></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Ode</span></font></code> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>x</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and has size <i>n</i>
+(see description of <a href="runge45_frame2.htm#Vector" target="frame1"><i><span style='white-space: nowrap'>Vector</span></i></a>
+ below). 
+
+<br>
+<br>
+<b><a name="Fun.f">f</a></b>
+<br>
+The argument <i>f</i> to <code><font color="blue"></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Ode</span></font></code> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>f</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>On input and output, <i>f</i> is a vector of size <i>n</i>
+and the input values of the elements of <i>f</i> do not matter.
+On output,
+<i>f</i> is set equal to <code>
+<span style='white-space: nowrap'>&nbsp;F(t,&nbsp;x)</span></code>
+ in the differential equation.
+<b>Warning</b>: the argument <i>f</i> to <code><font color="blue"></font></code><i><span style='white-space: nowrap'>F</span></i><code><font color="blue"><span style='white-space: nowrap'>.Ode</span></font></code>
+must have a call by reference in its prototype; i.e.,
+do not forget the <code><font color="blue">&amp;</font></code> in the prototype for <i>f</i>.
+
+<br>
+<br>
+<b><big><a name="M">M</a></big></b>
+<br>
+The argument <i>M</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font></code><i><span style='white-space: nowrap'>M</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>It specifies the number of steps
+to use when solving the differential equation.
+This must be greater than or equal one.
+The step size is given by <code>
+<span style='white-space: nowrap'>&nbsp;h&nbsp;=&nbsp;(tf&nbsp;-&nbsp;ti)&nbsp;/&nbsp;M</span></code>
+, thus
+the larger <i>M</i>, the more accurate the
+return value <i>xf</i> is as an approximation
+for <code>
+<span style='white-space: nowrap'>&nbsp;X(tf)</span></code>
+.
+
+<br>
+<br>
+<b><big><a name="ti">ti</a></big></b>
+<br>
+The argument <i>ti</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>ti</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>(see description of <a href="runge45_frame2.htm#Scalar" target="frame1"><i><span style='white-space: nowrap'>Scalar</span></i></a>
+ below). 
+It specifies the initial time for <i>t</i> in the 
+differential equation; i.e., 
+the time corresponding to the value <i>xi</i>.
+
+<br>
+<br>
+<b><big><a name="tf">tf</a></big></b>
+<br>
+The argument <i>tf</i> has prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>tf</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>It specifies the final time for <i>t</i> in the 
+differential equation; i.e., 
+the time corresponding to the value <i>xf</i>.
+
+<br>
+<br>
+<b><big><a name="xi">xi</a></big></b>
+<br>
+The argument <i>xi</i> has the prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>xi</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>and the size of <i>xi</i> is equal to <i>n</i>.
+It specifies the value of <code>
+<span style='white-space: nowrap'>&nbsp;X(ti)</span></code>
+
+
+<br>
+<br>
+<b><big><a name="e">e</a></big></b>
+<br>
+The argument <i>e</i> is optional and has the prototype
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></code><i><span style='white-space: nowrap'>Vector</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&amp;</span></font></code><i><span style='white-space: nowrap'>e</span></i><code><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>If <i>e</i> is present,
+the size of <i>e</i> must be equal to <i>n</i>.
+The input value of the elements of <i>e</i> does not matter.
+On output
+it contains a bound on the absolute value
+of the element by element difference between <i>xf</i> 
+and a fourth order solution of the same differential equation.
+
+<br>
+<br>
+<b><big><a name="Scalar">Scalar</a></big></b>
+<br>
+The following operations must be defined for <i>Scalar</i> objects
+<i>a</i> and <i>b</i>:
+
+<table><tr><td align='left'  valign='top'>
+
+<b>Operation</b> </td><td align='left'  valign='top'>
+ <b>Description</b>  </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>i</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> </td><td align='left'  valign='top'>
+
+	constructs a <i>Scalar</i> object from the <code><font color="blue">int</font></code> <i>i</i>
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>Scalar</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>(</span></font></code><i><span style='white-space: nowrap'>b</span></i><code><font color="blue"><span style='white-space: nowrap'>)</span></font></code> </td><td align='left'  valign='top'>
+
+	constructs <i>a</i> with the same value as <i>b</i>.
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	assignment operator
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;+=&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	computed addition operator 
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;-=&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	computed subtraction operator 
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	addition operator (returns a <i>Scalar</i> object)
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	subtraction operator (returns a <i>Scalar</i> object)
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	multiplication operator (returns a <i>Scalar</i> object)
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	division operator (returns a <i>Scalar</i> object)
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue"></font></code><i><span style='white-space: nowrap'>a</span></i><code><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;&nbsp;</span></font></code><i><span style='white-space: nowrap'>b</span></i> </td><td align='left'  valign='top'>
+
+	less than operator (returns a <code><font color="blue">bool</font></code> object)
+</td></tr>
+</table>
+<br>
+<b><big><a name="Vector">Vector</a></big></b>
+<br>
+The type <i>Vector</i> must be a <a href="simplevector.htm" target="_top"><span style='white-space: nowrap'>SimpleVector</span></a>
+ class with
+<a href="simplevector_frame1.htm#Elements of Specified Type" target="frame1"><i><span style='white-space: nowrap'>elements&nbsp;of&nbsp;type&nbsp;Scalar</span></i></a>
+.
+The routine <a href="checksimplevector.htm" target="_top"><span style='white-space: nowrap'>CheckSimpleVector</span></a>
+ will generate an error message
+if this is not the case.
+
+<br>
+<br>
+<b><big><a name="Example">Example</a></big></b>
+
+<br>
+The file
+<a href="runge45.cpp.htm" target="_top"><span style='white-space: nowrap'>Runge45.cpp</span></a>
+
+contains an example and test a test of using this routine.
+It returns true if it succeeds and false otherwise.
+
+<br>
+<br>
+<b><big><a name="Source Code">Source Code</a></big></b>
+<br>
+The source code for this routine is in the file
+<code><font color="blue">CppAD/Runge45.h</font></code>.
+
+
+<hr>Input File: CppAD\Runge45.h
+
+</body>
+</html>

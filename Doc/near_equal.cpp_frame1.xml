@@ -1,0 +1,81 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>NearEqual Function: Example and Test</title>
+<meta name="description" content="NearEqual Function: Example and Test"/>
+<meta name="keywords" content=" Nearequal example test "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="nearequal.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="polynomial.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="near_equal.cpp.xml" target="_top">section</a>, <a href="near_equal.cpp_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>NearEqual Function: Example and Test</big></big></b></center>
+<br/>
+<b><big><a name="File Name">File Name</a></big></b>
+<br/>
+This file is called <code><font color="blue">Near_Equal.cpp</font></code> instead of 
+<code><font color="blue">NearEqual.cpp</font></code>
+to avoid a name conflict with <code><font color="blue">../lib/NearEqual.cpp</font></code>
+in the corresponding Microsoft project file.
+
+
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+<br/>
+#&#xA0;include&#xA0;&lt;CppAD/NearEqual.h&gt;<br/>
+<br/>
+#&#xA0;include&#xA0;&lt;complex&gt;<br/>
+<br/>
+bool&#xA0;Near_Equal(void)<br/>
+{&#xA0;&#xA0;&#xA0;&#xA0;bool&#xA0;ok&#xA0;=&#xA0;true;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;typedef&#xA0;std::complex&lt;double&gt;&#xA0;Complex;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;using&#xA0;CppAD::NearEqual;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;double&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;x&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;1.00000;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;y&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;1.00001;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;a&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;&#xA0;.00005;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;r&#xA0;&#xA0;&#xA0;&#xA0;=&#xA0;&#xA0;.00005;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;zero&#xA0;=&#xA0;0.;&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;inf&#xA0;&#xA0;=&#xA0;1.&#xA0;/&#xA0;zero;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;double&#xA0;nan&#xA0;&#xA0;=&#xA0;0.&#xA0;/&#xA0;zero;<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;NearEqual(x,&#xA0;y,&#xA0;zero,&#xA0;a);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;NearEqual(x,&#xA0;y,&#xA0;r,&#xA0;zero);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;NearEqual(x,&#xA0;y,&#xA0;r,&#xA0;a);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;!&#xA0;NearEqual(inf,&#xA0;inf,&#xA0;r,&#xA0;a);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;!&#xA0;NearEqual(-inf,&#xA0;-inf,&#xA0;r,&#xA0;a);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;!&#xA0;NearEqual(nan,&#xA0;nan,&#xA0;r,&#xA0;a);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;complex&#xA0;<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Complex&#xA0;X(x,&#xA0;2.&#xA0;*&#xA0;x);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Complex&#xA0;Y(y,&#xA0;2.&#xA0;*&#xA0;y);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Complex&#xA0;Inf(inf,&#xA0;zero);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;Complex&#xA0;Nan(zero,&#xA0;nan);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;NearEqual(X,&#xA0;Y,&#xA0;zero,&#xA0;a);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;NearEqual(X,&#xA0;Y,&#xA0;r,&#xA0;zero);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;NearEqual(X,&#xA0;Y,&#xA0;r,&#xA0;a);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;!&#xA0;NearEqual(Inf,&#xA0;Inf,&#xA0;r,&#xA0;a);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;!&#xA0;NearEqual(-Inf,&#xA0;-inf,&#xA0;r,&#xA0;a);<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;ok&#xA0;&amp;=&#xA0;!&#xA0;NearEqual(Nan,&#xA0;Nan,&#xA0;r,&#xA0;a);<br/>
+<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;return&#xA0;ok;<br/>
+}<br/>
+<br/>
+</span></font></code>
+<hr/>Input File: Example\Near_Equal.cpp
+
+</body>
+</html>

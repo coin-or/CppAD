@@ -1,0 +1,42 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>The CppAD General Purpose Library</title>
+<meta name="description" content="The CppAD General Purpose Library"/>
+<meta name="keywords" content=" "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="multape.cpp.xml" target="_top">previous</a>
+&#xA0;&#xA0;<a href="vectortempclass.xml" target="_top">next</a>
+&#xA0;&#xA0;<a href="_contents.xml" target="_top">contents</a>
+&#xA0;&#xA0;<a href="_reference.xml" target="_top">reference</a>
+&#xA0;&#xA0;<a href="_index.xml" target="_top">index</a>
+&#xA0;&#xA0;<a href="_search.xml" target="_top">search</a>
+&#xA0;&#xA0;<a href="_external.xml" target="_top">external</a>
+&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="library.xml" target="_top">section</a>, <a href="library_frame1.xml" target="_top">frame</a></div>
+<hr/><center><b><big><big>The CppAD General Purpose Library</big></big></b></center>
+The routines listed in this section are general purpose utilities
+can be used outside the context of CppAD.
+
+<br/>
+<br/>
+<b><big><a name="Contents">Contents</a></big></b>
+<br/>
+<div><a href="vectortempclass.xml" target="_top">The&#xA0;CppAD&#xA0;vector&#xA0;template&#xA0;class</a><br/>
+<a href="nearequal.xml" target="_top">Determine&#xA0;if&#xA0;Two&#xA0;Values&#xA0;Are&#xA0;Nearly&#xA0;Equal</a><br/>
+<a href="polynomial.xml" target="_top">Polynomials&#xA0;and&#xA0;Their&#xA0;Derivatives</a><br/>
+<a href="speedtest.xml" target="_top">Run&#xA0;One&#xA0;Speed&#xA0;Test</a><br/>
+<a href="ludetandsolve.xml" target="_top">Compute&#xA0;Determinants&#xA0;and&#xA0;Solve&#xA0;Equations&#xA0;by&#xA0;LU&#xA0;Factorization</a><br/>
+<a href="runge45.xml" target="_top">An&#xA0;Embedded&#xA0;4th&#xA0;and&#xA0;5th&#xA0;Order&#xA0;Runge-Kutta&#xA0;ODE&#xA0;Solver</a><br/>
+<a href="rosen34.xml" target="_top">A&#xA0;3rd&#xA0;and&#xA0;4th&#xA0;Order&#xA0;Rosenbrock&#xA0;ODE&#xA0;Solver</a><br/>
+<a href="odeerrcontrol.xml" target="_top">An&#xA0;Error&#xA0;Controller&#xA0;for&#xA0;ODE&#xA0;Solvers</a><br/>
+<a href="checksimplevector.xml" target="_top">Check&#xA0;Simple&#xA0;Vector&#xA0;Concept</a><br/>
+</div>
+<hr/>Input File: omh\library.omh
+
+</body>
+</html>

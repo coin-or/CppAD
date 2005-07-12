@@ -1,0 +1,185 @@
+# BEGIN SHORT COPYRIGHT
+# ---------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+# 
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+# ---------------------------------------------------------------------------
+# END SHORT COPYRIGHT
+#
+# Build distribution
+#
+echo "make sure certain files are not executable"
+SetNoExecute
+#
+# Check for aclocal.m4
+if [ ! -e aclocal.m4 ]
+then
+	echo "aclocal.m4 does not exist so running aclocal"
+	if [ -e configure ]
+	then
+		rm configure
+	fi
+	echo "aclocal"
+	aclocal
+else
+	echo "aclocal.m4 exists so not running aclocal"
+fi  
+#
+# Today's date in YY-MM-DD decimal digit format with leading zeros
+Today=`date +%g-%m-%d`
+#
+# Date currently in configure.ac
+AcDate=`grep "^ *AC_INIT(" configure.ac | \
+	sed -e "s/.*, *\([0-9][0-9]-[0-9][0-9]-[0-9][0-9]\) *,.*/\1/"`
+#
+# Update version 
+if [ $Today != $AcDate ]
+then
+	echo "update version in configure.ac and Doc.omh"
+	#
+	sed configure.ac > configure.tmp -e \
+	"s/(CppAD, [0-9][0-9]-[0-9][0-9]-[0-9][0-9],/(CppAD, $Today,/"
+	#
+	diff configure.ac  configure.tmp
+	mv   configure.tmp configure.ac
+	#
+	sed Doc.omh > Doc.tmp -e \
+	"s/Version [0-9][0-9]-[0-9][0-9]-[0-9][0-9]/Version $Today/g"
+	#
+	diff Doc.omh Doc.tmp
+	mv   Doc.tmp Doc.omh
+	#
+	# configure file is out of date
+	if [ -e configure ]
+	then
+		rm configure
+	fi
+fi
+#
+# clean out old distribution files
+if [ -e cppad-$Today ]
+then
+	rm -r cppad-$Today
+fi
+for file in CppAD.dos.tar.gz CppAD.unix.tar.gz
+do
+	if [ -e $file ]
+	then
+		rm $file
+	fi
+done
+#
+# Make sure configure is up to date
+if [ ! -e configure ]
+then
+	echo "configure does not exist so running"
+	echo "autoheader, autoconf, automake, configure, OMhelp Developer"
+	#
+	echo "autoheader"
+	autoheader
+	#
+	echo "autoconf"
+	autoconf
+	#
+	echo "automake -add-missing"
+	automake --add-missing
+	#
+	echo "configure \\"
+	echo "	--with-profiling \\"
+	echo "	ADOLC_DIR=$HOME/adolc_base \\"
+	echo "	FADBAD_DIR=$HOME \\"
+	echo "	CPP_ERROR_WARN=\"-Wall -ansi -pedantic-errors -std=c++98\""
+	configure \
+		--with-profiling \
+		ADOLC_DIR=$HOME/adolc_base \
+		FADBAD_DIR=$HOME \
+		CPP_ERROR_WARN="-Wall -ansi -pedantic-errors -std=c++98"
+	#
+	#
+	# Fix Makefile for what appears to be a bug in gzip under cygwin
+	echo "FixMakefile"
+	FixMakefile
+	#
+	echo "RunOMhelp Developer"
+	RunOMhelp Developer
+else
+	echo "configure exists so not running"
+	echo "autoheader, autoconf, automake, configure, OMhelp Developer"
+fi
+#
+echo "make"
+make
+#
+echo "RunOMhelp Doc"
+RunOMhelp Doc
+#
+# build the dirtribution file cppad-$Today.tar.gz
+if [ $Today != $AcDate ]
+then
+	FixMakefile
+fi
+make dist
+#
+# extract from compressed tar
+tar -xvzf cppad-$Today.tar.gz 
+#
+# create the Dos version
+mv cppad-$Today.tar.gz CppAD.dos.tar.gz
+#
+# convert files to unix format
+for file in  cppad-$Today/*
+do
+	dos2unix $file
+done
+for dir in \
+	Adolc \
+	CppAD \
+	CppAD/local \
+	CppAD/library \
+	Developer \
+	Doc \
+	Example \
+	Fadbad \
+	GetStarted \
+	lib \
+	Speed \
+	TestMore
+do
+	for file in cppad-$Today/$dir/*
+	do
+		dos2unix $file
+	done
+done
+#
+# Make sure that dates in certain files are in certain order
+# (necessary because of dos2unix conversion above)
+touch cppad-$Today/aclocal.m4
+sleep 2
+touch cppad-$Today/CppAD/config.h.in
+sleep 2
+touch cppad-$Today/Makefile.in
+touch cppad-$Today/*/Makefile.in
+sleep 2
+touch cppad-$Today/configure
+#
+# Remove config.h because it is not needed by Unix version
+rm cppad-$Today/CppAD/config.h
+#
+# create the Unix version
+tar -cvf CppAD.unix.tar cppad-$Today
+gzip CppAD.unix.tar 
+#
+# clean up
+rm -r cppad-$Today

@@ -1,0 +1,61 @@
+<html><head>
+<title>Differentiable Function Constructor: Example and Test</title>
+<meta name="description" content="Differentiable Function Constructor: Example and Test">
+<meta name="keywords" content=" Adfun example test "><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'><a href="hestimesdir.cpp.htm" target="_top">previous</a>
+&nbsp;&nbsp;<a href="comparechange.cpp.htm" target="_top">next</a>
+&nbsp;&nbsp;<a href="_contents.htm" target="_top">contents</a>
+&nbsp;&nbsp;<a href="_reference.htm" target="_top">reference</a>
+&nbsp;&nbsp;<a href="_index.htm" target="_top">index</a>
+&nbsp;&nbsp;<a href="_search.htm" target="_top">search</a>
+&nbsp;&nbsp;<a href="_external.htm" target="_top">external</a>
+&nbsp;&nbsp;This:&nbsp;&nbsp;<a href="fun.h.htm" target="_top">section</a>, <a href="fun.h_frame1.htm" target="_top">frame</a></div>
+<hr><center><b><big><big>Differentiable Function Constructor: Example and Test</big></big></b></center>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+<br>
+#&nbsp;include&nbsp;&lt;CppAD/CppAD.h&gt;<br>
+<br>
+template&nbsp;&lt;typename&nbsp;VectorADdouble&gt;&nbsp;//&nbsp;vector&nbsp;class,&nbsp;elements&nbsp;of&nbsp;type&nbsp;AD&lt;double&gt;<br>
+bool&nbsp;Fun(void)<br>
+{&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;ok&nbsp;=&nbsp;true;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;using&nbsp;namespace&nbsp;CppAD;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;create&nbsp;independent&nbsp;variable&nbsp;vector&nbsp;with&nbsp;assigned&nbsp;values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VectorADdouble&nbsp;X(3);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X[0]&nbsp;=&nbsp;0.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X[1]&nbsp;=&nbsp;-1.;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X[2]&nbsp;=&nbsp;2.;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;declare&nbsp;the&nbsp;independent&nbsp;variables&nbsp;and&nbsp;start&nbsp;recording<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Independent(X);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;square&nbsp;root&nbsp;of&nbsp;the&nbsp;discriminant&nbsp;for&nbsp;the&nbsp;quadratic&nbsp;equation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;0&nbsp;=&nbsp;&nbsp;x[0]&nbsp;+&nbsp;x[1]&nbsp;*&nbsp;y&nbsp;+&nbsp;x[2]&nbsp;*&nbsp;y^2&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AD&lt;double&gt;&nbsp;RootD&nbsp;=&nbsp;sqrt(&nbsp;X[1]&nbsp;*&nbsp;X[1]&nbsp;-&nbsp;4.&nbsp;*&nbsp;X[2]&nbsp;*&nbsp;X[0]&nbsp;);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;compute&nbsp;the&nbsp;two&nbsp;solutions&nbsp;of&nbsp;the&nbsp;quadratic&nbsp;equation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VectorADdouble&nbsp;Y(2);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y[0]&nbsp;=&nbsp;(-&nbsp;X[1]&nbsp;+&nbsp;RootD&nbsp;)&nbsp;/&nbsp;(2.&nbsp;*&nbsp;X[2]);&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y[1]&nbsp;=&nbsp;(-&nbsp;X[1]&nbsp;-&nbsp;RootD&nbsp;)&nbsp;/&nbsp;(2.&nbsp;*&nbsp;X[2]);&nbsp;<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;stop&nbsp;recording&nbsp;and&nbsp;create&nbsp;function&nbsp;object&nbsp;F&nbsp;:&nbsp;X&nbsp;-&gt;&nbsp;Y<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADFun&lt;double&gt;&nbsp;F(X,&nbsp;Y);<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(F.Order()&nbsp;==&nbsp;0&nbsp;);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;initial&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(F.Domain()&nbsp;==&nbsp;X.size());&nbsp;&nbsp;//&nbsp;never&nbsp;changes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ok&nbsp;&amp;=&nbsp;(F.Range()&nbsp;==&nbsp;Y.size());&nbsp;&nbsp;&nbsp;//&nbsp;never&nbsp;changes<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ok;<br>
+<br>
+}<br>
+</span></font></code>
+<hr>Input File: Example\Fun.h
+
+</body>
+</html>

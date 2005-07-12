@@ -1,0 +1,142 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<title>CppAD Error Detection and Reporting</title>
+<meta name="description" content="CppAD Error Detection and Reporting"/>
+<meta name="keywords" content=" Cppaderror error assert macro "/><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head>
+<body>
+<div align='right'>&#xA0;&#xA0;This:&#xA0;&#xA0;<a href="cppaderror.xml" target="_top">section</a>, <a href="cppaderror_frame2.xml" target="_top">frame</a></div>
+
+<b><big><a name="Description">Description</a></big></b>
+<br/>
+The macros defined by the file <code><font color="blue">CppAD/CppADError.h</font></code>
+are used to support two types of error detection and reporting:
+
+<br/>
+<br/>
+<b><a name="Description.CppADUsageError">CppADUsageError</a></b>
+<br/>
+The first error type occurs when a routine in the <code><font color="blue">CppAD</font></code> namespace
+detects a violation of it's specifications. 
+In this case the error is thought of as an error using CppAD 
+and the macro <code><font color="blue">CppADUsageError</font></code> is invoked.
+
+<br/>
+<br/>
+<b><a name="Description.CppADUnknownError">CppADUnknownError</a></b>
+<br/>
+The second type occurs when a routine in the <code><font color="blue">CppAD</font></code> namespace
+detects an error but does not know the cause of the error.
+In this case the error is thought of as coming from an unknown source
+and the macro <code><font color="blue">CppADUnknownError</font></code> is invoked.
+
+<br/>
+<br/>
+<b><big><a name="Include">Include</a></big></b>
+<br/>
+The file <code><font color="blue">CppAD/CppADError.h</font></code> is included by <code><font color="blue">CppAD/CppAD.h</font></code>
+but it can also be included separately with out the rest of 
+the <code><font color="blue">CppAD</font></code> routines.
+
+<br/>
+<br/>
+<b><big><a name="Exp">Exp</a></big></b>
+<br/>
+As an argument to either 
+<code><font color="blue">CppADUsageError</font></code> or <code><font color="blue">CppADUnknownError</font></code>, 
+the expression specified by <i>exp</i>
+must result in a <code><font color="blue">bool</font></code> value.
+The resulting value should be true. 
+If it is false, an error has occurred.
+This expression may be execute any number of times (including zero times)
+so it must have not side effects.
+
+<br/>
+<br/>
+<b><big><a name="Text">Text</a></big></b>
+<br/>
+As an argument to <code><font color="blue">CppADUsageError</font></code>,
+the text specified by <i>text</i> is a <code><font color="blue">'\0'</font></code> terminated
+character string that contains a description of the error
+in the case where <i>exp</i> is false.
+
+<br/>
+<br/>
+<b><big><a name="Replacing Defaults">Replacing Defaults</a></big></b>
+<br/>
+You can define you own version of 
+<code><font color="blue">CppADUsageError</font></code> or <code><font color="blue">CppADUnknownError</font></code> 
+provided that you meet the corresponding specifications
+given above.
+In addition, you must included your definition before including 
+<code><font color="blue">CppAD/CppADError.h</font></code>. 
+Note that once you provide a definition for 
+<code><font color="blue">CppADUsageError</font></code> or <code><font color="blue">CppADUnknownError</font></code> 
+it will prevent the corresponding default definition 
+from being interpreted by the preprocessor (see default definitions
+below).
+
+<br/>
+<br/>
+<b><a name="Replacing Defaults.CppADUsageError">CppADUsageError</a></b>
+<br/>
+Below is the default CppAD usage error handler.
+The preprocessor symbol <code><font color="blue">PACKAGE_STRING</font></code>
+is equal to <code><font color="blue"><span style='white-space: nowrap'>cppad-</span></font></code><i><span style='white-space: nowrap'>yy</span></i><code><font color="blue"><span style='white-space: nowrap'>-</span></font></code><i><span style='white-space: nowrap'>mm</span></i><code><font color="blue"><span style='white-space: nowrap'>-</span></font></code><i><span style='white-space: nowrap'>dd</span></i>
+where <code><font color="blue"></font></code><i><span style='white-space: nowrap'>yy</span></i><code><font color="blue"><span style='white-space: nowrap'>-</span></font></code><i><span style='white-space: nowrap'>mm</span></i><code><font color="blue"><span style='white-space: nowrap'>-</span></font></code><i><span style='white-space: nowrap'>dd</span></i> is the year, month, and date
+corresponding to this version of CppAD.
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+<br/>
+#&#xA0;include&#xA0;&lt;assert.h&gt;<br/>
+#&#xA0;include&#xA0;&lt;iostream&gt;<br/>
+#&#xA0;include&#xA0;&lt;CppAD/config.h&gt;<br/>
+<br/>
+#&#xA0;ifndef&#xA0;CppADUsageError<br/>
+#&#xA0;ifdef&#xA0;NDEBUG<br/>
+#&#xA0;define&#xA0;CppADUsageError(exp,&#xA0;text)&#xA0;&#xA0;//&#xA0;do&#xA0;nothing<br/>
+#&#xA0;else<br/>
+#&#xA0;define&#xA0;CppADUsageError(exp,&#xA0;text)&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;\<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;if(&#xA0;!&#xA0;(exp)&#xA0;)&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;\<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;std::cerr&#xA0;&lt;&lt;&#xA0;PACKAGE_STRING&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;\<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&lt;&lt;&#xA0;&quot;&#xA0;usage&#xA0;error&quot;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;\<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&lt;&lt;&#xA0;&quot;:\n&quot;&#xA0;&lt;&lt;&#xA0;text&#xA0;&lt;&lt;&#xA0;std::endl;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;\<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;assert(exp);&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;\<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+#&#xA0;endif<br/>
+#&#xA0;endif<br/>
+<br/>
+</span>
+</font></code>
+<b><a name="Replacing Defaults.CppADUnknownError">CppADUnknownError</a></b>
+<br/>
+Below is the default CppAD handler for errors from an unknown source:
+<code><font color="blue">
+<span style='white-space: nowrap'><br/>
+<br/>
+#&#xA0;ifndef&#xA0;CppADUnknownError<br/>
+#&#xA0;ifdef&#xA0;NDEBUG<br/>
+#&#xA0;define&#xA0;CppADUnknownError(exp)&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;//&#xA0;do&#xA0;nothing<br/>
+#&#xA0;else<br/>
+#&#xA0;define&#xA0;CppADUnknownError(exp)&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;\<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;{&#xA0;&#xA0;&#xA0;&#xA0;if(&#xA0;!&#xA0;(exp)&#xA0;)&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;\<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;std::cerr&#xA0;&lt;&lt;&#xA0;PACKAGE_STRING&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;\<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&lt;&lt;&#xA0;&quot;&#xA0;error&#xA0;from&#xA0;an&#xA0;unknown&#xA0;source&quot;&#xA0;&#xA0;&#xA0;&#xA0;\<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&lt;&lt;&#xA0;&quot;:\n&quot;&#xA0;&lt;&lt;&#xA0;std::endl;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;\<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;assert(exp);&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;\<br/>
+&#xA0;&#xA0;&#xA0;&#xA0;}<br/>
+#&#xA0;endif<br/>
+#&#xA0;endif<br/>
+<br/>
+</span>
+</font></code>
+
+<hr/>Input File: CppAD\CppADError.h
+
+</body>
+</html>

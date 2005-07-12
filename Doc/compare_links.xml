@@ -1,0 +1,39 @@
+<?xml version='1.0'?>
+<?xml-stylesheet type='text/xsl' href='pmathml.xsl'?>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head><style type='text/css'>
+BODY { color : black }
+BODY { background-color : white }
+</style>
+</head><body>
+<a href="cppad.xml" target="_top">CppAD</a><br/>
+&#xA0;&#xA0;<a href="ad.xml" target="_top">AD</a><br/>
+&#xA0;&#xA0;&#xA0;&#xA0;<a href="compare.xml" target="_top">Compare</a><br/>
+<hr/>
+<b>Siblings</b><br/>
+<a href="default.xml" target="_top">Default</a><br/>
+<a href="frombase.xml" target="_top">FromBase</a><br/>
+<a href="copy.xml" target="_top">Copy</a><br/>
+<a href="value.xml" target="_top">Value</a><br/>
+<a href="neg.xml" target="_top">Neg</a><br/>
+<a href="binaryop.xml" target="_top">BinaryOp</a><br/>
+<a href="compeq.xml" target="_top">CompEq</a><br/>
+Compare<br/>
+<a href="eq.xml" target="_top">Eq</a><br/>
+<a href="output.xml" target="_top">Output</a><br/>
+<a href="printfor.xml" target="_top">PrintFor</a><br/>
+<a href="stdmathlib.xml" target="_top">StdMathLib</a><br/>
+<a href="condexp.xml" target="_top">CondExp</a><br/>
+<a href="discrete.xml" target="_top">Discrete</a><br/>
+<a href="boolfun.xml" target="_top">BoolFun</a><br/>
+<hr/>
+<b>Children</b><br/>
+<a href="compare.cpp.xml" target="_top">Compare.cpp</a><br/>
+<hr/>
+<b>Headings</b><br/>
+<a href="compare_frame2.xml#Description" target="frame2"><i>Description</i></a><br/>
+<a href="compare_frame2.xml#Definition" target="frame2"><i>Definition</i></a><br/>
+<a href="compare_frame2.xml#Assumptions" target="frame2"><i>Assumptions</i></a><br/>
+<a href="compare_frame2.xml#Example" target="frame2"><i>Example</i></a><br/>
+</body>
+</html>
