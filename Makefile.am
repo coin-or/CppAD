@@ -153,4 +153,4 @@ EXTRA_DIST = \
 	Doc
 #
 dist-hook:
-	rm -rf `find $(distdir)/omh -name CVS`
+	rm -rf `find $(distdir)/omh -name .svn`

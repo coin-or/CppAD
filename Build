@@ -133,12 +133,12 @@ make dist
 tar -xvzf cppad-$Today.tar.gz 
 #
 # create the Dos version
-mv cppad-$Today.tar.gz CppAD.dos.tar.gz
+mv cppad-$Today.tar.gz CppAD.unix.tar.gz
 #
 # convert files to unix format
 for file in  cppad-$Today/*
 do
-	dos2unix $file
+	unix2dos $file
 done
 for dir in \
 	Adolc \
@@ -156,12 +156,12 @@ for dir in \
 do
 	for file in cppad-$Today/$dir/*
 	do
-		dos2unix $file
+		unix2dos $file
 	done
 done
 #
 # Make sure that dates in certain files are in certain order
-# (necessary because of dos2unix conversion above)
+# (necessary because of unix2dos conversion above)
 touch cppad-$Today/aclocal.m4
 sleep 2
 touch cppad-$Today/CppAD/config.h.in
@@ -175,8 +175,8 @@ touch cppad-$Today/configure
 rm cppad-$Today/CppAD/config.h
 #
 # create the Unix version
-tar -cvf CppAD.unix.tar cppad-$Today
-gzip CppAD.unix.tar 
+tar -cvf CppAD.dox.tar cppad-$Today
+gzip CppAD.dox.tar 
 #
 # clean up
 rm -r cppad-$Today
