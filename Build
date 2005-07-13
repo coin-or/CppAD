@@ -24,20 +24,6 @@
 AcDate=`grep "^ *AC_INIT(" configure.ac | \
 	sed -e "s/.*, *\([0-9][0-9]-[0-9][0-9]-[0-9][0-9]\) *,.*/\1/"`
 #
-# aclocal
-#
-if [ "$1" = "aclocal" ]
-then
-	if [ -e configure ]
-	then
-		rm configure
-	fi
-	echo "aclocal"
-	aclocal
-	#
-	exit
-fi  
-#
 # version
 #
 if [ "$1" = "version" ]
@@ -63,7 +49,23 @@ then
 	then
 		rm configure
 	fi
+	#
+	exit
 fi
+#
+# aclocal
+#
+if [ "$1" = "aclocal" ]
+then
+	if [ -e configure ]
+	then
+		rm configure
+	fi
+	echo "aclocal"
+	aclocal
+	#
+	exit
+fi  
 #
 # autoheader
 #
@@ -227,15 +229,15 @@ fi
 #
 if [ "$1" = "" ]
 then
-	echo "usage: Build option (where option is one of the following)"
+	echo "usage: Build option (where valid options are listed below)" 
 else
-	echo "$1 is not a valid option to the Build command"
-	echo "the valid options are"
+	echo "$1 is not a valid option (valid options are listed below)"
 fi
+echo "If you are uncertain, execute all the options in order"
 echo "option"
 echo "------"
-echo "aclocal     create aclocal.m4 file"
 echo "version     update configure.ac and Doc.omh version number"
+echo "aclocal     create aclocal.m4 file"
 echo "autoheader  create a CppAD/config.h.in file"
 echo "automake    run autoconf and automake to create configure script"
 echo "configure   run configure script to create make files"
