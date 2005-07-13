@@ -112,9 +112,9 @@ $index push, CppAD vector$$
 $index vector, CppAD push back$$
 If $italic x$$ is a $syntax%CppAD::vector<%Type%>%$$ object
 with size equal to $italic n$$ and
-$code t$$ has type $italic Type$$,
+$italic t$$ has type $italic Type$$,
 $syntax%
-	%x%.push_back(t)
+	%x%.push_back(%t%)
 %$$
 extends the vector $italic x$$ so that its new size is $italic n$$ plus one
 and $syntax%%x%[%n%]%$$ is equal to $italic t$$
@@ -125,7 +125,7 @@ If $italic x$$ is a $syntax%CppAD::vector<%Type%>%$$ object
 and $italic os$$ is an $code std::ostream$$,
 and the operation
 $syntax%
-	%os% << x
+	%os% << %x%
 %$$
 will output the vector $italic x$$ to the standard
 output stream $italic os$$.
