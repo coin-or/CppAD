@@ -25,6 +25,7 @@ Old OdeRunge example now used just for valiadation testing of Runge45
 # include <CppAD/CppAD.h>
 # include <iostream>
 # include <cassert>
+# include <Example/NearEqualExt.h>
 
 namespace { // BEGIN Empty namespace
 	class TestFun {
