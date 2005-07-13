@@ -296,7 +296,7 @@ class VecAD {
 	friend class VecADelem<Base>;
 public:
 	// default constructor
-	VecAD(void) : length(0)
+	VecAD(void) : length(0) , data(CppADNull)
 	{ }
 
 	// constructor 
