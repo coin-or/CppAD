@@ -140,17 +140,18 @@ SUBDIRS = \
 	TestMore 
 #
 EXTRA_DIST = \
-	UWCopy040507.html \
 	Build \
-	SetNoExecute \
-	FixMakefile \
-	RunOMhelp \
-	Developer.omh \
-	Doc.omh \
+	CheckIncludeFile \
 	CppAD.tex \
-	omh \
 	Developer \
-	Doc
+	Developer.omh \
+	Doc \
+	Doc.omh \
+	Example/OneTest \
+	FixMakefile \
+	omh \
+	RunOMhelp \
+	UWCopy040507.html
 #
 dist-hook:
 	rm -rf `find $(distdir)/omh -name .svn`
