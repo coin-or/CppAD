@@ -20,31 +20,31 @@
 #
 # Build distribution
 #
-# Check for aclocal.m4
-if [ ! -e aclocal.m4 ]
+# date currently in configure.ac
+AcDate=`grep "^ *AC_INIT(" configure.ac | \
+	sed -e "s/.*, *\([0-9][0-9]-[0-9][0-9]-[0-9][0-9]\) *,.*/\1/"`
+#
+# aclocal
+#
+if [ "$1" = "aclocal" ]
 then
-	echo "aclocal.m4 does not exist so running aclocal"
 	if [ -e configure ]
 	then
 		rm configure
 	fi
 	echo "aclocal"
 	aclocal
-else
-	echo "aclocal.m4 exists so not running aclocal"
+	#
+	exit
 fi  
 #
-# Today's date in YY-MM-DD decimal digit format with leading zeros
-Today=`date +%g-%m-%d`
+# version
 #
-# Date currently in configure.ac
-AcDate=`grep "^ *AC_INIT(" configure.ac | \
-	sed -e "s/.*, *\([0-9][0-9]-[0-9][0-9]-[0-9][0-9]\) *,.*/\1/"`
-#
-# Update version 
-if [ $Today != $AcDate ]
+if [ "$1" = "version" ]
 then
-	echo "update version in configure.ac and Doc.omh"
+	#
+	# Today's date in yy-mm-dd decimal digit format with leading zeros
+	Today=`date +%g-%m-%d`
 	#
 	sed configure.ac > configure.tmp -e \
 	"s/(CppAD, [0-9][0-9]-[0-9][0-9]-[0-9][0-9],/(CppAD, $Today,/"
@@ -58,34 +58,31 @@ then
 	diff Doc.omh Doc.tmp
 	mv   Doc.tmp Doc.omh
 	#
-	# configure file is out of date
+	# configure file is out of date so remove it
 	if [ -e configure ]
 	then
 		rm configure
 	fi
 fi
 #
-# clean out old distribution files
-if [ -e cppad-$Today ]
-then
-	rm -r cppad-$Today
-fi
-for file in CppAD.dos.tar.gz CppAD.unix.tar.gz
-do
-	if [ -e $file ]
-	then
-		rm $file
-	fi
-done
+# autoheader
 #
-# Make sure configure is up to date
-if [ ! -e configure ]
+if [ "$1" = "autoheader" ]
 then
-	echo "configure does not exist so running"
-	echo "autoheader, autoconf, automake, configure, OMhelp Developer"
-	#
 	echo "autoheader"
 	autoheader
+	#
+	exit
+fi
+#
+# automake
+#
+if [ "$1" = "automake" ]
+then
+	if [ -e configure ]
+	then
+		rm configure
+	fi
 	#
 	echo "autoconf"
 	autoconf
@@ -93,90 +90,155 @@ then
 	echo "automake -add-missing"
 	automake --add-missing
 	#
+	exit
+fi
+#
+# configure
+#
+if [ "$1" = "configure" ]
+then
+	#
 	echo "configure \\"
 	echo "	--with-profiling \\"
 	echo "	ADOLC_DIR=$HOME/adolc_base \\"
 	echo "	FADBAD_DIR=$HOME \\"
 	echo "	CPP_ERROR_WARN=\"-Wall -ansi -pedantic-errors -std=c++98\""
+	#
 	configure \
 		--with-profiling \
 		ADOLC_DIR=$HOME/adolc_base \
 		FADBAD_DIR=$HOME \
 		CPP_ERROR_WARN="-Wall -ansi -pedantic-errors -std=c++98"
 	#
-	#
 	# Fix Makefile for what appears to be a bug in gzip under cygwin
 	echo "FixMakefile"
 	FixMakefile
 	#
+	exit
+fi
+#
+# test
+#
+if [ "$1" = "test" ]
+then
+	echo "make"
+	make
+	#
+	exit
+fi
+#
+# omhelp
+#
+if [ "$1" = "omhelp" ]
+then
 	echo "RunOMhelp Developer"
 	RunOMhelp Developer
-else
-	echo "configure exists so not running"
-	echo "autoheader, autoconf, automake, configure, OMhelp Developer"
+	#
+	echo "RunOMhelp Doc"
+	RunOMhelp Doc
+	#
+	exit
 fi
 #
-echo "make"
-make
+# dist
 #
-echo "RunOMhelp Doc"
-RunOMhelp Doc
-#
-# build the dirtribution file cppad-$Today.tar.gz
-if [ $Today != $AcDate ]
+if [ "$1" = "dist" ]
 then
-	FixMakefile
-fi
-make dist
-#
-# extract from compressed tar
-tar -xvzf cppad-$Today.tar.gz 
-#
-# create the Dos version
-mv cppad-$Today.tar.gz CppAD.unix.tar.gz
-#
-# convert files to unix format
-for file in  cppad-$Today/*
-do
-	unix2dos $file
-done
-for dir in \
-	Adolc \
-	CppAD \
-	CppAD/local \
-	CppAD/library \
-	Developer \
-	Doc \
-	Example \
-	Fadbad \
-	GetStarted \
-	lib \
-	Speed \
-	TestMore
-do
-	for file in cppad-$Today/$dir/*
+	#
+	if [ -e cppad-$AcDate ]
+	then
+		echo "rm -r cppad-$AcDate"
+		rm -r cppad-$AcDate
+	fi
+	for file in CppAD.dos.tar.gz CppAD.unix.tar.gz
+	do
+		if [ -e $file ]
+		then
+			echo "rm $file"
+			rm $file
+		fi
+	done
+	#
+	echo "make dist"
+	make dist
+	#
+	if [ ! -e cppad-$AcDate.tar.gz ]
+	then
+		echo "cppad-$AcDate.tar.gz does not exist"
+		echo "perhaps version is out of date"
+		#
+		exit
+	fi
+	#
+	# extract from compressed tar
+	tar -xvzf cppad-$AcDate.tar.gz 
+	#
+	# create the unix version
+	mv cppad-$AcDate.tar.gz CppAD.unix.tar.gz
+	#
+	# convert files to unix format
+	for file in  cppad-$AcDate/*
 	do
 		unix2dos $file
 	done
-done
+	for dir in \
+		Adolc \
+		CppAD \
+		CppAD/local \
+		CppAD/library \
+		Developer \
+		Doc \
+		Example \
+		Fadbad \
+		GetStarted \
+		lib \
+		Speed \
+		TestMore
+	do
+		for file in cppad-$AcDate/$dir/*
+		do
+			unix2dos $file
+		done
+	done
+	#
+	# Make sure that dates in certain files are in certain order
+	# (necessary because of unix2dos conversion above)
+	touch cppad-$AcDate/aclocal.m4
+	sleep 2
+	touch cppad-$AcDate/CppAD/config.h.in
+	sleep 2
+	touch cppad-$AcDate/Makefile.in
+	touch cppad-$AcDate/*/Makefile.in
+	sleep 2
+	touch cppad-$AcDate/configure
+	#
+	# create the dos version
+	tar -cvf CppAD.dos.tar cppad-$AcDate
+	gzip CppAD.dos.tar 
+	#
+	# clean up
+	rm -r cppad-$AcDate
+	#
+	# Remove config.h from the it is not needed by Unix version
+	# rm cppad-$AcDate/CppAD/config.h
+	#
+	exit
+fi
 #
-# Make sure that dates in certain files are in certain order
-# (necessary because of unix2dos conversion above)
-touch cppad-$Today/aclocal.m4
-sleep 2
-touch cppad-$Today/CppAD/config.h.in
-sleep 2
-touch cppad-$Today/Makefile.in
-touch cppad-$Today/*/Makefile.in
-sleep 2
-touch cppad-$Today/configure
-#
-# Remove config.h because it is not needed by Unix version
-rm cppad-$Today/CppAD/config.h
-#
-# create the Unix version
-tar -cvf CppAD.dox.tar cppad-$Today
-gzip CppAD.dox.tar 
-#
-# clean up
-rm -r cppad-$Today
+if [ "$1" = "" ]
+then
+	echo "usage: Build option (where option is one of the following)"
+else
+	echo "$1 is not a valid option to the Build command"
+	echo "the valid options are"
+fi
+echo "option"
+echo "------"
+echo "aclocal     create aclocal.m4 file"
+echo "version     update configure.ac and Doc.omh version number"
+echo "autoheader  create a CppAD/config.h.in file"
+echo "automake    run autoconf and automake to create configure script"
+echo "configure   run configure script to create make files"
+echo "test        compile all of the tests"
+echo "omhelp      build all the documentation"
+echo "dist        create the distribution files CppAD.*.tar.gz"
