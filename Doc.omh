@@ -42,7 +42,7 @@ $index CppAD, version$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: CppAD Version 05-07-05
+A Package for Differentiation of C++ Algorithms: CppAD Version 05-07-12
 $$ 
 
 $table

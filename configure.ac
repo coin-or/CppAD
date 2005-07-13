@@ -22,7 +22,7 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 
 dnl   package   version           bug-report
-AC_INIT(CppAD, 05-07-05, bradbell@seanet.com)
+AC_INIT(CppAD, 05-07-12, bradbell@seanet.com)
 
 dnl ----------------------------------------------------------------------
 dnl Command line argument results

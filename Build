@@ -20,9 +20,6 @@
 #
 # Build distribution
 #
-echo "make sure certain files are not executable"
-SetNoExecute
-#
 # Check for aclocal.m4
 if [ ! -e aclocal.m4 ]
 then
