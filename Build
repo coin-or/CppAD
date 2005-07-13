@@ -117,9 +117,9 @@ then
 	exit
 fi
 #
-# test
+# compile
 #
-if [ "$1" = "test" ]
+if [ "$1" = "compile" ]
 then
 	echo "make"
 	make
@@ -239,6 +239,6 @@ echo "version     update configure.ac and Doc.omh version number"
 echo "autoheader  create a CppAD/config.h.in file"
 echo "automake    run autoconf and automake to create configure script"
 echo "configure   run configure script to create make files"
-echo "test        compile all of the tests"
+echo "compile     compile all of the tests"
 echo "omhelp      build all the documentation"
 echo "dist        create the distribution files CppAD.*.tar.gz"
