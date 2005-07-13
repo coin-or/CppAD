@@ -88,7 +88,11 @@ int main()
 	SpeedTest(HesOde,                5, -1, 1);
 
 	SpeedTest(LuSolve,               5, -1, 1);
-	SpeedTest(LuVecAD,               5, -1, 1);
+
+	// Commented out because this generates a segmentation fault
+	// A similar problem occurs when the ../Example/*.cpp files are 
+	// compiled with the g++ -O2 option
+	// SpeedTest(LuVecAD,               5, -1, 1);
 
 	return 0;
 }
