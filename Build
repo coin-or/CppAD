@@ -194,6 +194,7 @@ then
 		Fadbad \
 		GetStarted \
 		lib \
+		omh \
 		Speed \
 		TestMore
 	do
