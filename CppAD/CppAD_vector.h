@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin CppAD_vector$$
 $spell
+	resize
 	cout
 	endl
 	std
@@ -34,9 +35,9 @@ $spell
 	elem
 $$
 
-$index vector, template class$$
-$index class, template vector$$
-$index template, vector class$$
+$index vector, CppAD template class$$
+$index class, template CppAD vector$$
+$index template, CppAD vector class$$
 
 $section The CppAD::vector Template Class$$
 
@@ -60,7 +61,7 @@ but it can also be included separately with out the rest of the
 CppAD include files.
 
 $head Assignment$$
-$index assignment, vector$$
+$index assignment, CppAD vector$$
 If $italic x$$ and $italic y$$ are 
 $syntax%CppAD::vector<%Type%>%$$ objects,
 $syntax%
@@ -88,7 +89,8 @@ $syntax%
 %$$
 
 $head Element Access$$
-$index [], vector$$
+$index [], CppAD vector$$
+$index vector, [] CppAD$$
 If $italic x$$ is a $syntax%CppAD::vector<%Type%>%$$ object
 and $code i$$ has type $code size_t$$,
 $syntax%
@@ -104,6 +106,19 @@ If $italic i$$ is not less than the size of the $italic x$$,
 $code CppAD::vector$$ will use
 $xref/CppADError/Description/CppADUsageError/CppADUsageError/1/$$
 to generate an appropriate error report.
+
+$head Push Back$$
+$index push, CppAD vector$$
+$index vector, CppAD push back$$
+If $italic x$$ is a $syntax%CppAD::vector<%Type%>%$$ object
+with size equal to $italic n$$ and
+$code t$$ has type $italic Type$$,
+$syntax%
+	%x%.push_back(t)
+%$$
+extends the vector $italic x$$ so that its new size is $italic n$$ plus one
+and $syntax%%x%[%n%]%$$ is equal to $italic t$$
+(in the sense of the $italic Type$$ assignment operator).
 
 $head Output$$
 If $italic x$$ is a $syntax%CppAD::vector<%Type%>%$$ object
@@ -168,6 +183,7 @@ $spell
 	namespace
 	inline
 	typedef
+	tmp
 $$
 
 $section CppAD::vector Source Code$$
@@ -191,6 +207,7 @@ namespace CppAD { //  BEGIN CppAD namespace
 template <class Type>
 class vector {
 private:
+	size_t capacity;
 	size_t length;
 	Type   * data;
 public:
@@ -198,20 +215,38 @@ public:
 	typedef Type value_type;
 
 	// default constructor
-	inline vector(void) : length(0) , data(CppADNull)
+	inline vector(void) : capacity(0), length(0) , data(CppADNull)
 	{ }
 	// constructor with a specified size
-	inline vector(size_t n) : length(n)
+	inline vector(size_t n) : capacity(n), length(n)
 	{	if( length == 0 )
 			data = CppADNull;
-		else	data = new Type[length]; 
+		else
+		{	try 
+			{	data = new Type[capacity];
+			}
+			catch (...) 
+			{	CppADUsageError(0,
+				"CppAD::vector: cannot allocate enough memory"
+				);	 
+			}
+		}
 	}
 	// copy constructor
-	inline vector(const vector &x) : length(x.length)
+	inline vector(const vector &x) : capacity(x.length), length(x.length)
 	{	size_t i;
 		if( length == 0 )
 			data = CppADNull;
-		else	data = new Type[length]; 
+		else
+		{	try 
+			{	data = new Type[capacity];
+			}
+			catch (...) 
+			{	CppADUsageError(0,
+				"CppAD::vector: cannot allocate enough memory"
+				);	 
+			}
+		}
 
 		for(i = 0; i < length; i++)
 			data[i] = x.data[i];
@@ -226,12 +261,24 @@ public:
 
 	// resize function
 	inline void resize(size_t n)
-	{	if( length > 0 )
+	{	length = n;
+		if( capacity >= n )
+			return;
+		if( capacity > 0 )
 			delete [] data;
-		length = n;
-		if( length > 0 )
-			data = new Type[length];
-		else	data = CppADNull;
+		capacity = n;
+		if( capacity == 0 )
+			data = CppADNull;
+		else
+		{	try 
+			{	data = new Type[capacity];
+			}
+			catch (...) 
+			{	CppADUsageError(0,
+				"CppAD::vector: cannot allocate enough memory"
+				);	 
+			}
+		}
 	}
 	// assignment operator
 	inline vector & operator=(const vector &x)
@@ -259,6 +306,33 @@ public:
 			"vector index greater than or equal vector size"
 		);
 		return data[i]; 
+	}
+	// add to the back of the array
+	void push_back(const Type &x)
+	{	CppADUnknownError( length <= capacity );
+		if( length == capacity )
+		{	// allocate more capacity
+			Type *tmp;
+			if( capacity == 0 )
+				capacity = 2;
+			else	capacity = 2 * length;
+
+			try 
+			{	tmp = new Type[capacity];
+			}
+			catch (...) 
+			{	CppADUsageError(0,
+				"CppAD::vector: cannot allocate enough memory"
+				);	 
+			}
+
+			size_t i;
+			for(i = 0; i < length; i++)
+				tmp[i] = data[i];
+			delete [] data;
+			data = tmp;
+		}
+		data[length++] = x;
 	}
 };
 // output operator
