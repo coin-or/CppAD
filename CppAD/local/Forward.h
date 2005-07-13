@@ -49,59 +49,66 @@ $tend
 $fend 20$$
 
 $head Description$$
-Evaluates the $th p$$ order 
-$xref/glossary/Taylor Coefficient/Taylor coefficient/$$
-for the function $latex F \circ U$$ defined by
+Given the functions $latex X : B \rightarrow B^n$$
+and $latex F : B^n \rightarrow B^m$$,
+$code Forward$$ computes the $th p$$ order 
+$xref/glossary/Taylor Coefficient/Taylor coefficient/$$ 
+for a function $latex F \circ X : B \rightarrow B^m$$ 
+which is given by
 $latex \[
-	F \circ X (t) = F[ X(t) ]
+	y^{(p)} = \frac{1}{p !} (F \circ X)^{(p)} (0)
 \] $$
-where $latex F : B^n \rightarrow B^m$$,
-$latex n$$ is the dimension of the 
-$xref/ADFun/Domain/domain/$$ space for $italic F$$,
-and $latex m$$ is the dimension of the 
-$xref/ADFun/Range/range/$$ space for $italic F$$, and
-$latex X : B \rightarrow B^m$$ is defined by
-$latex \[
-	X(t) = x^{(0)} + x^{(1)} t + \cdots, + x^{(p)} t^p 
-\] $$ 
-Note that for $latex k = 0 , \ldots , p$$,
-$latex \[
-	x^{(k)} = \frac{1}{k !} X^{(k)} (0) 
-\] $$
-is the $th k$$ order Taylor coefficient for $latex X$$
-(see below for how $latex x^{(k)} \in B^n$$ is specified).
 
 $head F$$
 The object $italic F$$ has prototype
 $syntax%
-	%ADFun<%Base%> %F%
+	ADFun<%Base%> %F%
 %$$
+It defines a function
+$latex F : B^n \rightarrow B^m$$,
+where $latex n$$ is the dimension of the 
+$xref/ADFun/Domain/domain/$$ space for $italic F$$, and
+$latex m$$ is the dimension of the 
+$xref/ADFun/Range/range/$$ space for $italic F$$.
 
-$head Forward$$
-The function $code Forward$$ has prototype
+$head X$$
+The function
+$latex X : B \rightarrow B^m$$ is defined in terms of
+$latex x^{(k)}$$ for $latex k = 0 , \ldots , p$$ by
+$latex \[
+	X(t) = x^{(0)} + x^{(1)} t + \cdots, + x^{(p)} t^p 
+\] $$ 
+Note that for $latex k = 0 , \ldots , p$$,
+$latex x^{(k)}$$ is related to the $th k$$ derivative of $latex X(t)$$ by
+$latex \[
+	x^{(k)} = \frac{1}{k !} X^{(k)} (0) 
+\] $$
+For $latex k = 0 , \ldots , p-1$$,
+the $th k$$ order Taylor coefficient 
+$latex x^{(k)} \in B^n$$ is the value of $italic xk$$ in
+the previous call to 
 $syntax%
-template <typename %Base%>
-template <typename %VectorBase%>
-%VectorBase% ADFun<%Base%>::Forward(size_t %p%, const %VectorBase% &%up%)
+	%F%.Forward(%k%, %xk%)
+%$$ 
+If there is no previous call with $latex k = 0$$,
+$latex x^{(0)}$$ is the value of the independent variables when $italic F$$ 
+was constructed as an $xref/ADFun/$$ object.
+
+$head xp$$
+The argument $italic xp$$ has prototype
+$syntax%
+	const %VectorBase% &%xp%
 %$$
+and is a vector with size $italic n$$.
+In this call to $code Forward$$,
+$latex xp$$ specifies $latex x^{(p)}$$; i.e.,
+the $th p$$ order Taylor coefficient for the function $latex X(t)$$.
 
 $head VectorBase$$
 The type $italic VectorBase$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type Base/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
-
-$head x$$
-For $latex k = 0 , \ldots , p-1$$,
-the $th k$$ order Taylor coefficient 
-$latex x^{(k)} \in B^n$$ is the value of $italic xk$$ in
-the previous call to $syntax%%F%.Forward(%k%, %xk%)%$$. 
-If there is no previous call with $latex k = 0$$,
-$latex x^{(0)}$$ is the value of the independent variables when $italic F$$ 
-was constructed as an $xref/ADFun/$$ object.
-The $th p$$ order Taylor coefficient 
-$latex x^{(p)}$$ is specified by the value of $italic xp$$
-in this call to $syntax%%F%.Forward(%p%, %xp%)%$$. 
 
 $head Order$$
 The function call
@@ -113,13 +120,17 @@ It will be equal to $italic p$$ after this call.
 
 
 $head yp$$
-The return column vector $latex yp$$,
-denoted by $latex y^{(p)} \in B^m$$ below,
-has length $latex m$$ and contains
+The return value $latex yp$$ has prototype
+$syntax%
+	%VectorBase% %yp%
+%$$
+is a vector of size $latex m$$ and contains
 the $th p$$ order Taylor coefficient for $latex F \circ X$$; i.e.,
 $latex \[
 	y^{(p)} = \frac{1}{p !} * (F \circ X)^{(p)} (0) 
 \] $$ 
+The column vector corresponding to $italic yp$$
+is denoted by $latex y^{(p)} \in B^m$$ below.
 
 $subhead Zero Order$$
 In the case where $italic p$$ is zero,

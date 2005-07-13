@@ -48,43 +48,69 @@ $tend
 $fend 20$$
 
 $head Description$$
-We are given $latex F : B^n \rightarrow B^m$$,
-where $latex n$$ is the dimension of the 
-$xref/ADFun/Domain/domain/$$ space for $italic F$$,
-and $latex m$$ is the dimension of the 
-$xref/ADFun/Range/range/$$ space for $italic F$$.
-The $syntax%%F%.Reverse%$$ routine evaluates the partial derivatives 
+We are given the functions
+$latex X : B \times B^{n \times p} \rightarrow B^n$$
+and  $latex F : B^n \rightarrow B^m$$.
+The $code Reverse$$ routine evaluates the partial derivatives 
 with respect to $latex x^{(0)}$$
 of the functions
 $latex W^{(k)} : B \times B^{n \times p} \rightarrow B$$ 
 defined by
 $latex \[
 \begin{array}{rcl}
-	X(t, x) & = & x^{(0)} + x^{(1)} t + \cdots + x^{(p-1)} t^{p-1} \\
-	W(t, x) & = & \sum_{i=0}^{n-1} w_i F_i [ X(t, x) ] \\
-	W^{(k)} (t, x) & = & \frac{1}{k !} \Dpow{k}{t} W(t, x) 
+	X(t, x^{(0)}, \ldots , x^{(p-1)} ) 
+		& = & x^{(0)} + x^{(1)} t + \cdots + x^{(p-1)} t^{p-1} 
+	\\
+	W(t, x^{(0)}, \ldots , x^{(p-1)} ) 
+		& = & \sum_{i=0}^{n-1} w_i 
+			F_i [ X(t, x^{(0)}, \ldots , x^{(p-1)} ) ]
+	\\
+	W^{(k)} (t, x^{(0)}, \ldots , x^{(p-1)} ) 
+		& = & \frac{1}{k !} \Dpow{k}{t} 
+			W [ X(t, x^{(0)}, \ldots , x^{(p-1)} ) ]
 \end{array}
 \] $$
-We note that $latex W^{(k)} (0, x) \in B$$ is the $th k$$ order
-$xref/glossary/Taylor Coefficient/Taylor coefficient/$$
-for the function $latex W( \cdot , x)$$
-and $latex x^{(k)} \in B^n$$ is the $th k$$ order 
-Taylor coefficient for $latex X( \cdot , x )$$
-(see below for how $latex x^{(k)} \in B^n$$ is specified).
 
 $head F$$
 The object $italic F$$ has prototype
 $syntax%
-	%ADFun<%Base%> %F%
+	ADFun<%Base%> %F%
 %$$
+It defines a function
+$latex F : B^n \rightarrow B^m$$,
+where $latex n$$ is the dimension of the 
+$xref/ADFun/Domain/domain/$$ space for $italic F$$, and
+$latex m$$ is the dimension of the 
+$xref/ADFun/Range/range/$$ space for $italic F$$.
 
-$head Reverse$$
-The function $code Reverse$$ has prototype
+$head X$$
+The function
+$latex X : B \times B^{n \times p} \rightarrow B^n$$ is defined in terms of
+$latex x^{(k)}$$ for $latex k = 0 , \ldots , p$$ by
+$latex \[
+	X(t, x^{(0)}, \ldots , x^{(p-1)} ) 
+	= 
+	x^{(0)} + x^{(1)} t + \cdots, + x^{(p)} t^p 
+\] $$ 
+Note that for $latex k = 0 , \ldots , p$$,
+$latex x^{(k)}$$ is related to the $th k$$ partial of $latex X$$ 
+with respect to $latex t$$ by
+$latex \[
+	x^{(k)} = 
+		\frac{1}{k !} \Dpow{k}{t} 
+			X(0, x^{(0)}, \ldots , x^{(p-1)} ) 
+\] $$
+For $latex k = 0 , \ldots , p-1$$,
+the $th k$$ order Taylor coefficient 
+$latex x^{(k)} \in B^n$$ is the value of $italic xk$$ in
+the previous call to $xref/Forward/$$ with the syntax
 $syntax%
-template <typename %Base%>
-template <typename %VectorBase%>
-%VectorBase% ADFun<%Base%>::Reverse(size_t %p%, const %VectorBase% &%up%)
-%$$
+	%F%.Forward(%k%, %xk%)
+%$$ 
+If there is no previous call with $latex k = 0$$,
+$latex x^{(0)}$$ is the value of the independent variables when $italic F$$ 
+was constructed as an $xref/ADFun/$$ object.
+
 
 $head VectorBase$$
 The type $italic VectorBase$$ must be a $xref/SimpleVector/$$ class with
@@ -92,18 +118,13 @@ $xref/SimpleVector/Elements of Specified Type/elements of type Base/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head x$$
-For $latex k = 0 , \ldots , p-1$$,
-the $th k$$ order Taylor coefficient 
-$latex x^{(k)} \in B^n$$ is the value of $italic xk$$ in
-the previous call to $syntax%%F%.Forward(%k%, %xk%)%$$. 
-If there is no previous call with $latex k = 0$$,
-$latex x^{(0)}$$ is the value of the independent variables when $italic F$$ 
-was constructed as an $xref/ADFun/$$ object.
-
 $head w$$
-The weighting vector $italic w$$ is a vector of length $latex m$$
-that specifies the function $latex W$$.
+The argument $italic w$$ is a vector of length $latex m$$ and has prototype
+$syntax%
+	const %VectorBase% &%w%
+%$$
+It specifies the weighting vector
+in the definition of $latex W$$ above.
 
 
 $head Order$$
@@ -125,25 +146,29 @@ $xref/ADFun/Memory/F.Memory()/$$ function to determine
 how much memory is required.
 
 $head dw$$
-The return value $italic dw$$ is a vector of
-length $latex n \times p$$.
+The return value $italic dw$$ has prototype
+$syntax%
+	%VectorBase% %dw%
+%$$
+and is a vector of length $latex n \times p$$.
 For $latex j = 0, \ldots, n-1$$ and $latex k = 0 , \ldots , p-1$$
 $latex \[
-	dw[ j * p + k ] = \D{ W^{(k)} }{ x_j^{(0)} } (0, x) 
-	\hspace{2cm} (*)
+	dw[ j * p + k ] = 
+		\D{ W^{(k)} }{ x_j^{(0)} } 
+			(0, x^{(0)}, \ldots , x^{(p-1)} ) 
+	\hspace{2cm} (\star)
 \] $$
 
 $subhead First Order$$
 Suppose  $latex p = 1$$ and $latex w$$ is the $th i$$ 
 $xref/glossary/Elementary Vector/elementary vector/$$.
-It follows that $latex k = 0$$ in (*) and
+It follows that $latex k = 0$$ in $latex (\star)$$ and
 $latex \[
-\begin{array}{rcl}
-dw[ j ] & = & \D{ W^{(0)} }{ x_j^{(0)} } (0, x)      \\
-	& = & \D{ W }{ x_j^{(0)} } (0, x)            \\
-	& = & \D{ F_i \circ X }{ x_j^{(0)} } (0, x)  \\
-	& = & \D{ F_i }{ x_j^{(0)} } ( x^{(0)} )
-\end{array}
+dw[ j ] 
+= \D{ W^{(0)} }{ x_j^{(0)} } (0, x^{(0)} ) 
+= \D{ W }{ x_j^{(0)} } (0, x^{(0} ) 
+= \D{ F_i \circ X }{ x_j^{(0)} } (0, x^{(0)} ) 
+= \D{ F_i }{ x_j^{(0)} } ( x^{(0)} )
 \] $$
 
 $subhead Second Order$$
@@ -158,11 +183,11 @@ dw[ j * 2 + 0 ]
 & = & \D{ F_i }{ x_j^{(0)} } ( x^{(0)} )
 \\
 dw[ j * 2 + 1 ] 
-& = & \D{ W^{(1)} }{ x_j^{(0)} } (0, x)  
+& = & \D{ W^{(1)} }{ x_j^{(0)} } ( 0, x^{(0)} , x^{(1)} )  
 \\
 & = & 
 \D{ }{ x_j^{(0)} } 
-\D{F_i \circ X }{t} (0, x)  
+\D{F_i \circ X }{t} (0, x^{(0)} , x^{(1)} )  
 \\
 & = &
 \D{ }{ x_j^{(0)} } 
@@ -185,7 +210,12 @@ It follows that for $latex j = 0, \ldots, n-1$$
 $latex \[
 \begin{array}{rcl}
 dw[ j * 2 + 1 ] 
-& = & \D{ W^{(1)} }{ x_j^{(0)} } (0, x)  
+& = & 
+\D{ W^{(1)} }{ x_j^{(0)} } (0, x^{(0)} , x^{(1)} )  
+\\
+& = &
+\D{ }{ x_j^{(0)} } 
+F^{(1)} ( x^{(0)} ) * x^{(1)}
 \\
 & = &
 \sum_{\ell=0}^{n-1} 
