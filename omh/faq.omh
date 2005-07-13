@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 $begin Faq$$
-$escape #$$
+$escape !$$
 $spell
 	whatsnew
 	bradbell
@@ -33,11 +33,13 @@ $spell
 	Lu
 $$
 
-$aindex section head subhead$$
-
-$section Frequently Asked Questions #and Answers$$
+$index FAQ$$
+$section Frequently Asked Questions and Answers$$
 
 $head Assignment and Independent$$
+$index assignment, operator$$
+$index operator, assignment$$
+$index independent$$
 Why does the code sequence
 $syntax%
 	Independent(%u%);
@@ -58,6 +60,7 @@ and in the second case it is a vector of
 $xref/glossary/Parameter/parameters/$$.
 
 $head Bugs$$
+$index bugs, reporting$$
 What should I do if I suspect that there is a bug in CppAD ?
 $pre
 
@@ -70,7 +73,7 @@ If this does not solve your problem, continue
 to the next step.
 $lnext
 The second step is to check the 
-$xref/WhatsNew04//whatsnew/$$ messages from the date 
+$xref/WhatsNew05//whatsnew/$$ messages from the date 
 of the release that you are using to the current date.
 If the bug has been mentioned and fixed,
 then $xref/install/$$ the current version of CppAD.
@@ -87,6 +90,8 @@ makes a better bug report.
 $lend
 
 $head CompareChange$$
+$index CompareChange$$
+$index NDEBUG$$
 If you attempt to use the 
 $xref/ADFun/CompareChange/CompareChange/$$
 function when $code NDEBUG$$ is true,
@@ -96,6 +101,9 @@ $xref/ADFun/$$ template class.
 
 
 $head Exceptions$$
+$index test, exception$$
+$index exception, test$$
+$index CppADError$$
 Why, in all the examples, do you pass back a boolean variable instead
 of throwing an exception ?
 $pre
@@ -110,6 +118,10 @@ to signal an exception.
 Specifications are given redefining this action.
 
 $head Independent Variables$$
+$index independent variable$$
+$index tape, avoid$$
+$index record, avoid$$
+$index speed, avoid taping$$
 Is it possible to evaluate the same tape recording with different values 
 for the independent variables ?
 $pre
@@ -119,7 +131,10 @@ Yes (see $xref/ADFun/$$ and
 $xref/Forward/yp/Zero Order/zero order/1/$$ in forward mode.)
 
 $head Intrinsic Functions$$
-$index special functions$$
+$index special, functions$$
+$index function, special$$
+$index function, intrinsic$$
+$index intrinsic, function$$
 Are there plans to add more intrinsic functions to CppAD ?
 $pre
 
@@ -133,7 +148,8 @@ if you need a standard math function that is has not yet been included.
 
 
 $head Matrix Inverse$$
-
+$index inverse, matrix$$
+$index matrix, inverse$$
 Is it possible to differentiate (with respect to the matrix elements)
 the computation of the inverse of a matrix 
 where the computation of the inverse uses pivoting ? 
@@ -147,7 +163,10 @@ $xref/JacLuDet.cpp/$$ and $xref/HesLuDet.cpp/$$
 use LuSolve to compute derivatives of the 
 determinant with respect to the components of the matrix.
 
-$head Mode$$
+$head Mode: Forward or Reverse$$
+$index forward$$
+$index reverse$$
+$index mode$$
 When evaluating derivatives, 
 one always has a choice between 
 forward and reverse mode.
@@ -170,15 +189,21 @@ some range directions have derivative zero.
 
 
 $head Namespace$$
+$index namespace$$
 
 
-$subhead CppADvector$$
+$subhead CppADvector Preprocessor Symbol$$
+$index CppADvector$$
+$index preprocessor, symbols$$
+$index symbols, preprocessor$$
 Why do you use $code CppADvector$$ instead of a namespace for
 the CppAD vector class ?
 $pre
 
 $$
-Actually, the default definition for $code CppADvector$$ is the
+The $code CppADvector$$ $xref/SimpleVector/$$ template class 
+is used for extensive testing.
+The default definition for $code CppADvector$$ is the
 $xref/CppAD_vector//CppAD::vector/$$ template class; 
 i.e., it is in the $code CppAD$$ namespace.
 The preprocessor symbol 
@@ -191,6 +216,7 @@ by CppAD begin with $code CppAD$$.
 $subhead Using$$
 $index standard, math function$$
 $index math, standard function$$
+$index using, namespace$$
 Why do I have trouble when the following command
 $codep
 	using namespace CppAD
@@ -210,6 +236,8 @@ or some other limited scope,
 in order to shadow these improper global definitions.
 
 $head Speed$$
+$index speed$$
+$index NDEBUG$$
 How do I get the best speed performance out of CppAD ?
 $pre
 
@@ -221,7 +249,11 @@ Note that defining $code NDEBUG$$
 will turn off all of the error checking and reporting that
 is done using the default definitions in $xref/CppADError/$$. 
 
-$head Tape Storage: Disk #or Memory$$
+$head Tape Storage: Disk or Memory$$
+$index storage, tape$$
+$index tape, storage$$
+$index memory, tape$$
+$index disk, tape$$
 Does CppAD store the tape on disk or in memory ?
 $pre
 
