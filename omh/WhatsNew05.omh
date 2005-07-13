@@ -81,6 +81,19 @@ The $xref/Atan2//atan2/$$ function could be made faster by adding
 a special operator for it.
 $lend
 
+$head 07-11$$
+The $xref/CppAD_vector/Push Back/push_back/$$ funciton has 
+been added to the $code CppAD::vector$$ template class.
+$pre
+
+$$
+It appears that the $code TestMore/Runge45.cpp$$ file was missing 
+an include of $code Example/NearEqualExt.h$$. This has been fixed.
+
+$head 07-08$$
+The documentation for $xref/Forward/$$ and $xref/Reverse/$$ has been 
+improved.
+
 $head 07-05$$
 The $xref/Rosen34.cpp/$$ example mixed the 
 $xref/CppAD_vector//CppAD::vector/$$ and $xref/CppADvector/$$
