@@ -318,7 +318,7 @@ private:
 template <typename Base>
 template <typename VectorADBase>
 ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
-{	size_t   n;
+{	size_t   n = z.size();
 	size_t   i;
 	size_t   z_index;
 	OpCode   op;
@@ -336,7 +336,6 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	// set parameter flag and
 	// create a copy of z where parameters are in the tape
 	CppADUnknownError( NumInd(ParOp) == 1 );
-	n = z.size();
 	parameter.resize(n);
 	VectorADBase z_copy(n);
 	for(i = 0; i < n; i++)
