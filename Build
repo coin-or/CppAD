@@ -26,7 +26,7 @@ AcDate=`grep "^ *AC_INIT(" configure.ac | \
 #
 # version
 #
-if [ "$1" = "version" ]
+if [ "$1" = "version" ] || [ "$1" = "all" ]
 then
 	#
 	# Today's date in yy-mm-dd decimal digit format with leading zeros
@@ -50,12 +50,15 @@ then
 		rm configure
 	fi
 	#
-	exit
+	if [ "$1" != "all" ]
+	then
+		exit
+	fi
 fi
 #
 # aclocal
 #
-if [ "$1" = "aclocal" ]
+if [ "$1" = "aclocal" ] || [ "$1" = "all" ]
 then
 	if [ -e configure ]
 	then
@@ -64,22 +67,28 @@ then
 	echo "aclocal"
 	aclocal
 	#
-	exit
+	if [ "$1" != "all" ]
+	then
+		exit
+	fi
 fi  
 #
 # autoheader
 #
-if [ "$1" = "autoheader" ]
+if [ "$1" = "autoheader" ] || [ "$1" = "all" ]
 then
 	echo "autoheader"
 	autoheader
 	#
-	exit
+	if [ "$1" != "all" ]
+	then
+		exit
+	fi
 fi
 #
 # automake
 #
-if [ "$1" = "automake" ]
+if [ "$1" = "automake" ] || [ "$1" = "all" ]
 then
 	if [ -e configure ]
 	then
@@ -92,12 +101,15 @@ then
 	echo "automake -add-missing"
 	automake --add-missing
 	#
-	exit
+	if [ "$1" != "all" ]
+	then
+		exit
+	fi
 fi
 #
 # configure
 #
-if [ "$1" = "configure" ]
+if [ "$1" = "configure" ] || [ "$1" = "all" ]
 then
 	#
 	echo "configure \\"
@@ -116,22 +128,28 @@ then
 	echo "FixMakefile"
 	FixMakefile
 	#
-	exit
+	if [ "$1" != "all" ]
+	then
+		exit
+	fi
 fi
 #
 # compile
 #
-if [ "$1" = "compile" ]
+if [ "$1" = "compile" ] || [ "$1" = "all" ]
 then
 	echo "make"
 	make
 	#
-	exit
+	if [ "$1" != "all" ]
+	then
+		exit
+	fi
 fi
 #
 # omhelp
 #
-if [ "$1" = "omhelp" ]
+if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
 then
 	echo "RunOMhelp Developer"
 	RunOMhelp Developer
@@ -139,12 +157,15 @@ then
 	echo "RunOMhelp Doc"
 	RunOMhelp Doc
 	#
-	exit
+	if [ "$1" != "all" ]
+	then
+		exit
+	fi
 fi
 #
 # dist
 #
-if [ "$1" = "dist" ]
+if [ "$1" = "dist" ] || [ "$1" = "all" ]
 then
 	#
 	if [ -e cppad-$AcDate ]
@@ -234,7 +255,6 @@ then
 else
 	echo "$1 is not a valid option (valid options are listed below)"
 fi
-echo "If you are uncertain, execute all the options in order"
 echo "option"
 echo "------"
 echo "version     update configure.ac and Doc.omh version number"
@@ -245,3 +265,5 @@ echo "configure   run configure script to create make files"
 echo "compile     compile all of the tests"
 echo "omhelp      build all the documentation"
 echo "dist        create the distribution files CppAD.*.tar.gz"
+echo
+echo "Build all: This command will execute all the options in the order above"
