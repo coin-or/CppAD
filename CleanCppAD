@@ -1,9 +1,6 @@
 if [ "$1" = "-remove" ]
 then
 	rm -r -f `find .               \
-	\( -name 'cppad-*'        \) -or \
-	\( -name '*.o'            \) -or \
-	\( -name '*.obj'          \) -or \
 	\( -name '_adolc-*'       \) -or \
 	\( -name '_adolc-*'       \) -or \
 	\( -name '_adolc-*'       \) -or \
@@ -16,6 +13,7 @@ then
 	\( -name 'config.h'       \) -or \
 	\( -name 'config.h.in'    \) -or \
 	\( -name 'config.status'  \) -or \
+	\( -name 'cppad-*'        \) -or \
         \( -name 'Debug'          \) -or \
         \( -name '.deps'          \) -or \
 	\( -name 'Developer'      \) -or \
@@ -30,12 +28,16 @@ then
 	\( -name 'temp'           \) -or \
 	\( -name 'temp?'          \) -or \
 	\( -name 'temp.*'         \) -or \
+	\( -name 'TestOne.cpp'    \) -or \
 	\( -name '*.a'            \) -or \
 	\( -name '*.exe'          \) -or \
 	\( -name '*.gz'           \) -or \
 	\( -name '*.log'          \) -or \
 	\( -name '*.ncb'          \) -or \
 	\( -name '*.new'          \) -or \
+	\( -name '*.o'            \) -or \
+	\( -name '*.obj'          \) -or \
+	\( -name '*.old'          \) -or \
 	\( -name '*.out'          \) -or \
 	\( -name '*.stackdump'    \) -or \
 	\( -name '*.suo'          \) -or \
@@ -44,9 +46,6 @@ then
 	\( -name '*.zip'          \)`
 else
 	find .                         \
-	\( -name 'cppad-*'        \) -or \
-	\( -name '*.o'            \) -or \
-	\( -name '*.obj'          \) -or \
 	\( -name '_adolc-*'       \) -or \
 	\( -name '_adolc-*'       \) -or \
 	\( -name '_adolc-*'       \) -or \
@@ -59,6 +58,7 @@ else
 	\( -name 'config.h'       \) -or \
 	\( -name 'config.h.in'    \) -or \
 	\( -name 'config.status'  \) -or \
+	\( -name 'cppad-*'        \) -or \
         \( -name 'Debug'          \) -or \
         \( -name '.deps'          \) -or \
 	\( -name 'Developer'      \) -or \
@@ -73,13 +73,17 @@ else
 	\( -name 'temp'           \) -or \
 	\( -name 'temp?'          \) -or \
 	\( -name 'temp.*'         \) -or \
+	\( -name 'TestOne.cpp'    \) -or \
 	\( -name '*.a'            \) -or \
 	\( -name '*.exe'          \) -or \
 	\( -name '*.gz'           \) -or \
 	\( -name '*.log'          \) -or \
 	\( -name '*.ncb'          \) -or \
 	\( -name '*.new'          \) -or \
-	\( -name '*.out'          \) -or \
+	\( -name '*.o'            \) -or \
+	\( -name '*.obj'          \) -or \
+	\( -name '*.obj'          \) -or \
+	\( -name '*.old'          \) -or \
 	\( -name '*.stackdump'    \) -or \
 	\( -name '*.suo'          \) -or \
 	\( -name '.*.swp'         \) -or \
