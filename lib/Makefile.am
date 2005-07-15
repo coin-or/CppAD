@@ -20,19 +20,25 @@
 #
 # automake input file
 #
+if CppAD_BOOSTVECTOR
+BoostInclude = -I$(BOOST_DIR)
+else
+BoostInclude =
+endif
+#
 # libCppAD
 #
 lib_LIBRARIES         = libCppAD.a 
-libCppAD_a_CPPFLAGS   = -I. -I$(top_builddir)
-libCppAD_a_CXXFLAGS   = -g
+libCppAD_a_CPPFLAGS   = -I. -I$(top_builddir) $(BoostInclude)
+libCppAD_a_CXXFLAGS   = -g $(CPP_ERROR_WARN)
 libCppAD_a_SOURCES    = NearEqual.cpp SpeedTest.cpp ErrFun.cpp
 #
 # libCppAD_p
 #
 if CppAD_PROFILING
 lib_LIBRARIES        += libCppAD_p.a 
-libCppAD_p_a_CPPFLAGS = -I. -I$(top_builddir) -DNDEBUG
-libCppAD_p_a_CXXFLAGS = -pg -g
+libCppAD_p_a_CPPFLAGS = -I. -I$(top_builddir) $(BoostInclude) -DNDEBUG
+libCppAD_p_a_CXXFLAGS = -pg -g $(CPP_ERROR_WARN)
 libCppAD_p_a_SOURCES  = NearEqual.cpp SpeedTest.cpp ErrFun.cpp
 endif
 #
@@ -40,8 +46,8 @@ endif
 #
 noinst_PROGRAMS           = SpeedTestExample
 noinst_DATA               = SpeedTestExample.out
-SpeedTestExample_CPPFLAGS = -I. -I$(top_builddir)
-SpeedTestExample_CXXFLAGS = -g
+SpeedTestExample_CPPFLAGS = -I. -I$(top_builddir) $(BoostInclude)
+SpeedTestExample_CXXFLAGS = -g $(CPP_ERROR_WARN)
 SpeedTestExample_SOURCES = SpeedTestExample.cpp SpeedTest.cpp
 #
 SpeedTestExample.out : SpeedTestExample$(EXEEXT)
