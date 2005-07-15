@@ -20,6 +20,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew05$$
 $spell
+	gcc
+	Cygwin
+	std
 	Lu
 	CppADvector
 	Jon Pearce
@@ -51,14 +54,18 @@ The purpose of this section is to
 assist you in learning about changes between various versions.
 
 $head Bugs$$
-There appear to be a problem 
-(CppAD may generate a segmentation fault)
-with the following compiler option: $code g++ -O2$$.
-The test in $code Speed/LuVecAD$$ is commented out 
-$code Speed/Speed.cpp$$ and will remain so until this is resolved.
-A similar problem occurs if one compiles the $code Example$$ program
-with $code g++ -O2$$.
-This is a high priority item and we are currently working on it.
+There appears to be a problem with gcc version 3.4.4 
+under Cygwin using the compiler option $code -O2$$.
+If you are running gcc 3.4.4, try using the 
+$xref/installUnix/Configure/configure/$$ option
+$codep
+	CPP_ERROR_WARN="-O2 -Wall -ansi -pedantic-errors -std=c++98"
+$$
+If the $code -O2$$ compiler option is a problem for your compiler,
+you will get warnings that do not make sense when executing the 
+$code make$$ command in the $code Example$$ sub-directory.
+In addition, the $code Example/Example$$ program will generate a
+segmentation fault.
 
 
 $head Wish List$$
