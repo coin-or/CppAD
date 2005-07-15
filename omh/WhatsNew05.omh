@@ -99,6 +99,19 @@ The $xref/Atan2//atan2/$$ function could be made faster by adding
 a special operator for it.
 $lend
 
+$head 07-15$$
+The $code BOOST_DIR$$ and $code CPP_ERROR_WARN$$
+$xref/InstallUnix/Configure/configure/$$ options 
+were not properly implemented for compiling the  
+$code lib$$ sub-directory.
+This has been fixed.
+$pre
+
+$$
+Some compiler warnings in the file $code lib/ErrFun.cpp$$,
+which computes the $xref/erf/$$ function,
+have been fixed.
+
 $head 07-11$$
 The $xref/CppAD_vector/Push Back/push_back/$$ function has 
 been added to the $code CppAD::vector$$ template class.
