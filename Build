@@ -111,17 +111,29 @@ fi
 #
 if [ "$1" = "configure" ] || [ "$1" = "all" ]
 then
+	if [ -e $HOME/adolc_base ]
+	then
+		ADOLC="ADOLC_DIR=$HOME/adolc_base"
+	else
+		ADOLC=""
+	fi
+	if [ -e $HOME/FADBAD++ ]
+	then
+		FADBAD="FADBAD_DIR=$HOME"
+	else
+		FADBAD=""
+	fi
 	#
 	echo "configure \\"
 	echo "	--with-profiling \\"
-	echo "	ADOLC_DIR=$HOME/adolc_base \\"
-	echo "	FADBAD_DIR=$HOME \\"
+	echo "	$ADOLC  \\"
+	echo "	$FADBAD \\"
 	echo "	CPP_ERROR_WARN=\"-Wall -ansi -pedantic-errors -std=c++98\""
 	#
 	configure \
 		--with-profiling \
-		ADOLC_DIR=$HOME/adolc_base \
-		FADBAD_DIR=$HOME \
+		$ADOLC \
+		$FADBAD \
 		CPP_ERROR_WARN="-Wall -ansi -pedantic-errors -std=c++98"
 	#
 	# Fix Makefile for what appears to be a bug in gzip under cygwin
