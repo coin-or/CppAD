@@ -1,0 +1,54 @@
+$begin WishList$$
+$spell
+	Cpp
+	Atan
+$$
+
+$section The CppAD Wish List$$
+$index wish list$$
+$index new, features$$
+$index features, new$$
+
+$head Concept Checking$$
+$index concept, checking$$
+$index checking, concept$$
+Some 
+$href%
+	http://www.boost.org/libs/concept_check/concept_check.htm%
+	concept checking
+%$$
+was added in the $xref/WhatsNew05/07-04/07-04/$$ release.
+More of this should be done.
+
+$head Multiple Tapes With Same Base Type$$
+$index multiple, tape$$
+$index tape, multiple$$
+Some users have expressed an interest in having multiple tapes,
+with the same base type,
+recording at the same time. 
+The idea is something like this:
+$codep
+	Independent(x);    // perhaps in thread 1
+	Independent(y);    // perhaps in thread 2
+	z = x * x;         // operation on tape corresponding to x
+	w = y * y;         // operation on tape corresponding to y
+	a = w * z;         // would generate an error because cannot mix tapes
+$$
+One application of this is where each of the tapes is on a different
+processor in a shared memory multiple processor application.
+
+
+$head Integer Function$$
+$index int, of CppAD<Base>$$
+It would be useful for $code AD$$ types to have a function that behaves 
+like the coercion from $code double$$ to $code int$$.
+This function would have a derivative that is identically zero; i.e.,
+the resulting integer value would be fixed and not change with the
+$code AD$$ argument.
+
+$head Atan2$$
+$index atan2$$
+The $xref/Atan2//atan2/$$ function could be made faster by adding
+a special operator for it.
+
+$end

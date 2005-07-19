@@ -31,9 +31,9 @@ $childtable%
 	omh/FADBAD.omh%
 	omh/glossary.omh%
 	omh/Bib.omh%
-	omh/WhatsNew05.omh%
-	omh/WhatsNew04.omh%
-	omh/WhatsNew03.omh
+	omh/Bugs.omh%
+	omh/WishList.omh%
+	omh/WhatsNew05.omh
 %$$
 
 $end

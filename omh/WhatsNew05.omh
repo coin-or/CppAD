@@ -44,60 +44,28 @@ $spell
 	atan
 $$
 
-$section Changes and Additions to CppAD During 2005$$
+$section Changes and Additions to CppAD$$
+
+$children%
+	omh/WhatsNew04.omh%
+	omh/WhatsNew03.omh
+%$$
 
 $head Introduction$$
-This section contains a list of the changes plus future plans for 
-CppAD during 2005
+Changes and additions to CppAD during previous years can be found in
+$table
+$tref WhatsNew03$$ $rnext
+$tref WhatsNew04$$ 
+$tend
+This section contains a list of the changes to CppAD during 2005
 (in reverse order by date).
-The purpose of this section is to
-assist you in learning about changes between various versions.
+The purpose of these sections is to
+assist you in learning about changes between various versions of CppAD.
 
-$head Bugs$$
-There appears to be a problem with gcc version 3.4.4 
-under Cygwin using the compiler option $code -O2$$.
-If you are running gcc 3.4.4, try using the 
-$xref/installUnix/Configure/configure/$$ option
-$codep
-	CPP_ERROR_WARN="-O2 -Wall -ansi -pedantic-errors -std=c++98"
-$$
-If the $code -O2$$ compiler option is a problem for your compiler,
-you will get warnings that do not make sense when executing the 
-$code make$$ command in the $code Example$$ sub-directory.
-In addition, the $code Example/Example$$ program will generate a
-segmentation fault.
+$head 07-19$$
+The $xref/WishList/$$ and $xref/Bugs/$$ information
+were moved out of this section and into their own separate sections.
 
-
-$head Wish List$$
-
-$list number$$
-Some 
-$href%
-	http://www.boost.org/libs/concept_check/concept_check.htm%
-	concept checking
-%$$
-was added in the $xref/WhatsNew05/07-04/07-04/$$ release.
-More of this should be done.
-$lnext
-Some users have expressed an interest in having multiple tapes recording
-at the same time. The idea is something like this:
-$codep
-	Independent(x);    // perhaps in thread 1
-	Independent(y);    // perhaps in thread 2
-	z = x * x;         // operation on tape corresponding to x
-	w = y * y;         // operation on tape corresponding to y
-	a = w * z;         // would generate an error because cannot mix tapes
-$$
-$lnext
-It would be useful for $code AD$$ types to have a function that behaves 
-like the coercion from $code double$$ to $code int$$.
-This function would have a derivative that is identically zero; i.e.,
-the resulting integer value would be fixed and not change with the
-$code AD$$ argument.
-$lnext
-The $xref/Atan2//atan2/$$ function could be made faster by adding
-a special operator for it.
-$lend
 
 $head 07-15$$
 The $code BOOST_DIR$$ and $code CPP_ERROR_WARN$$

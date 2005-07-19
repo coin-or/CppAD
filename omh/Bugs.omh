@@ -1,0 +1,30 @@
+$begin Bugs$$
+$spell
+	CppAD
+	Gcc
+	Cygwin
+	std
+$$
+
+$section Know Bugs and Problems Using CppAD$$
+$index bugs, using CppAD$$
+$index problem, using CppAD$$
+
+
+$head Gcc Version 3.4.4$$
+$index gcc 3.4.4, bug$$
+$index bug, gcc 3.4.4$$
+There appears to be a problem with gcc version 3.4.4 
+under Cygwin using the compiler option $code -O2$$.
+If you are running gcc 3.4.4, try using the 
+$xref/installUnix/Configure/configure/$$ option
+$codep
+	CPP_ERROR_WARN="-O2 -Wall -ansi -pedantic-errors -std=c++98"
+$$
+If the $code -O2$$ compiler option is a problem for your compiler,
+you will get warnings that do not make sense when executing the 
+$code make$$ command in the $code Example$$ sub-directory.
+In addition, the $code Example/Example$$ program will generate a
+segmentation fault.
+
+$end
