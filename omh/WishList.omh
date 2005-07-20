@@ -1,5 +1,6 @@
 $begin WishList$$
 $spell
+	Vec
 	Cpp
 	Atan
 $$
@@ -8,6 +9,21 @@ $section The CppAD Wish List$$
 $index wish list$$
 $index new, features$$
 $index features, new$$
+
+$head VecAD$$
+The $code VecAD$$ vector type is currently 
+$xref/VecAD/Inefficient/inefficient/$$ because they require
+a lot of conversion from a $code VecAD$$ element to a normal
+CppAD variable.
+This could be avoided if the $syntax%CppAD<%Base%>%$$ type
+were changed so as to distinguish between tape indices
+and $code VecAD$$ variable indices.
+A similar distinction could also be used to identify
+parameter indices and only one tape copy of a parameter
+would be necessary for each CppAD parameter object
+(currently a separate copy is constructed for each use).
+ 
+
 
 $head Concept Checking$$
 $index concept, checking$$

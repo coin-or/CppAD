@@ -23,6 +23,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin VecAD$$
 $spell
+	grep
+	Ld
+	vp
+	Lu
+	wc
+	op
+	Ldp
+	Ldv
 	Taylor
 	VecAD
 	const
@@ -164,6 +172,43 @@ The file
 $xref/Vec.cpp/$$
 contains an example and a test of this function.   
 It returns true if it succeeds and false otherwise.
+
+$head Inefficient$$
+$index inefficient, VecAD$$
+$index efficient, VecAD$$
+The $xref/VecAD/$$ vector type is inefficient because every
+time an element of a vector is accessed, a new CppAD 
+$xref/glossary/Variable/variable/$$ is created on the tape
+using either the $code Ldp$$ or $code Ldv$$ operation
+(unless all of the elements of the vector are
+$xref/glossary/Parameter/parameters/$$).
+The effect of this can be seen by executing the following steps:
+
+$list number$$
+In the file $code CppAD/local/ADForward.h$$,
+change the definition of $code CppADForwardTrace$$ to
+$codep
+	# define CppADForwardTrace 1
+$$
+$lnext
+In the $code Example$$ directory, execute the command
+$codep
+	OneTest LuVecADOk "LuVecAD.cpp -DNDEBUG" > LuVecADOk.log
+$$
+This will write a trace of all the forward tape operations,
+for the test case $xref/LuVecADOk.cpp/$$,
+to the file $code LuVecADOk.log$$.
+$lnext
+In the $code Example$$ directory execute the commands
+$codep
+	wc -l LuVecADOk.log
+	grep "op= Ld[vp]" LuVecADOk.log | wc -l
+$$
+The first command will give a rough idea of how many operations
+there are in total (1018).
+The second command will give a rough idea how many are 
+correspond to accessing an element of a $code VecAD$$ array (348).
+$lend
 
 $end
 ------------------------------------------------------------------------ 

@@ -65,6 +65,13 @@ assist you in learning about changes between various versions of CppAD.
 $head 07-19$$
 The $xref/WishList/$$ and $xref/Bugs/$$ information
 were moved out of this section and into their own separate sections.
+$pre
+
+$$
+A discussion of 
+$xref/VecAD/Inefficient/VecAD inefficiency/$$ was added
+as well as an entry in the 
+$xref/WishList/$$ to make it more efficient.
 
 
 $head 07-15$$
