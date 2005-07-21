@@ -106,9 +106,6 @@ AD<Base> AD<Base>::Cos (void) const
 		// add this operation to the tape
 		Tape()->RecordOp(CosOp, result, index);
 
-		// directly follow with a NonOp because cosines and sines
-		// must be computed in pairs
-		Tape()->RecordNonOp();
 	}
 
 	return result;

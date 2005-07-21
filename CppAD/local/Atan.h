@@ -131,10 +131,6 @@ AD<Base> AD<Base>::Atan (void) const
 	{
 		// add this operation to the tape
 		Tape()->RecordOp(AtanOp, result, index);
-
-		// directly follow with a NonOp because 1 + x * x
-		// must be computed along with atan(x)
-		Tape()->RecordNonOp();
 	}
 
 	return result;

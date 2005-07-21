@@ -62,6 +62,10 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-21$$
+Remove unecessary no-op that was left in tape for the following cases:
+$xref/Acos/$$, $xref/Asin/$$, $xref/Atan/$$, and $xref/cos/$$.
+
 $head 07-19$$
 The $xref/WishList/$$ and $xref/Bugs/$$ information
 were moved out of this section and into their own separate sections.

@@ -107,11 +107,6 @@ AD<Base> AD<Base>::Sin (void) const
 		// add this operation to the tape
 		Tape()->RecordOp(SinOp, result, index);
 
-# if 0
-		// directly follow with a NonOp because sines and cosines
-		// must be computed in pairs
-		Tape()->RecordNonOp();
-# endif
 	}
 
 	return result;

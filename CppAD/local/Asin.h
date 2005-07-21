@@ -134,10 +134,6 @@ AD<Base> AD<Base>::Asin (void) const
 	{
 		// add this operation to the tape
 		Tape()->RecordOp(AsinOp, result, index);
-
-		// directly follow with a NonOp because asin and 
-		// sqrt(1 - x^2) must be computed in pairs
-		Tape()->RecordNonOp();
 	}
 
 	return result;

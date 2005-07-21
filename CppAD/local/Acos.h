@@ -135,9 +135,6 @@ AD<Base> AD<Base>::Acos (void) const
 		// add this operation to the tape
 		Tape()->RecordOp(AcosOp, result, index);
 
-		// directly follow with a NonOp because acos and 
-		// sqrt(1 - x^2) must be computed in pairs
-		Tape()->RecordNonOp();
 	}
 
 	return result;
