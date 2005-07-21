@@ -154,7 +154,7 @@ public:
 	{	AD<Base> z;
 
 		z.value = f(x.value);
-		if( (AD<Base>::Tape()->State()==Recording) & (! Parameter(x)) )
+		if( (AD<Base>::Tape()->State()==Recording) & Variable(x) )
 		{	AD<Base>::Tape()->RecordDisOp(
 				z,
 				x.index,
