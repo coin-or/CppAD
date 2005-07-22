@@ -38,7 +38,11 @@ $spell
 $$
 
 $section Forward Mode$$ 
-$mindex forward derivative order Taylor coefficient$$
+
+$index forward, mode$$
+$index mode, forward$$
+$index derivative, forward mode$$
+$index calculate, forward mode$$
 
 $table
 $bold Syntax$$ $cnext

@@ -37,8 +37,12 @@ $spell
 $$
 
 $section Reverse Mode$$ 
-$mindex reverse mode derivative Taylor coefficient$$
 
+
+$index reverse, mode$$
+$index mode, reverse$$
+$index derivative, reverse mode$$
+$index calculate, reverse mode$$
 
 $table
 $bold Syntax$$ $cnext

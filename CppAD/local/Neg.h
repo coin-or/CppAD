@@ -30,7 +30,11 @@ $spell
 	Add
 $$
 
-$mindex unary minus negative operator -$$
+$index unary, minus$$
+$index negative, operator$$
+$index -, unary$$
+$index operator, unary minus$$
+
 $section Negation: The Unary Minus Operator$$
 
 $table

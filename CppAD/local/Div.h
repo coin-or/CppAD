@@ -33,8 +33,8 @@ $$
 $index binary, division$$
 $index division, binary$$
 
-$index binary, -$$
-$index -, binary$$
+$index binary, /$$
+$index /, binary$$
 
 $section The AD Binary Division Operator$$
 

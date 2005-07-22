@@ -35,6 +35,8 @@ $spell
 $$
 
 $index CppADvector$$
+$index vector, test$$
+$index test, vector$$
 
 $section Choosing The CppADvector Template Class$$
 

@@ -28,7 +28,9 @@ $spell
 	Cpp
 $$
 
-$section Using AD Class Objects$$
+$section Using AD<Base> Class Objects$$
+
+$index AD<Base>, using$$
 
 $head Description$$
 The template class

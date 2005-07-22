@@ -30,7 +30,9 @@ $spell
 	bool
 $$
 
-$mindex integer$$
+$index int, convert to$$
+$index convert, to int$$
+
 $section Convert a Value to an Integer$$
 
 $table

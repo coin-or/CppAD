@@ -30,8 +30,8 @@ $$
 
 $section The Default AD Constructor$$
 
-$index construct, default$$
-$index default, construct$$
+$index constructor, default$$
+$index default, constructor$$
 
 $table
 $bold Syntax$$ $cnext

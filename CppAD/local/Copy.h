@@ -30,7 +30,10 @@ $spell
 	const
 $$
 
-$mindex AD copy construct$$
+$index AD, copy constructor$$
+$index copy, AD constructor$$
+$index constructor, copy AD$$
+
 $section Creating A Copy of an AD Variable$$
 
 $table

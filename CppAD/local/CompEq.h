@@ -29,7 +29,9 @@ $spell
 	const
 $$
 
-$mindex compute assignment operator$$
+$index computed, assignment operator$$
+$index assignment, computed operator$$
+$index operator, computed assignment$$
 
 $section Computed Assignment Operators$$
 

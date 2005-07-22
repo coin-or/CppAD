@@ -36,8 +36,11 @@ $$
 $spell
 $$
 
-$section Constructing Differentiable Functions From The Tape$$
-$mindex construct differentiable function tape$$
+$section Constructing an ADFun Object From The Tape$$
+
+$index constructor,  ADFun$$
+$index ADFun, constructor$$
+$index tape, convert to ADFun$$
 
 $table
 $bold Syntax$$ $cnext 

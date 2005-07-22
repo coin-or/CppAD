@@ -32,6 +32,7 @@ $spell
 $$
 
 $index cos$$
+$index trigonometric, cos$$
 
 $section The Cosine Function$$
 

@@ -30,7 +30,9 @@ $spell
 	bool
 $$
 
-$mindex identical parameter$$
+$index identical, parameter$$
+$index paraemter, identical$$
+
 $section Check if a Value is Identically a Parameter$$
 
 $table
@@ -57,7 +59,9 @@ $spell
 	bool
 $$
 
-$mindex identical zero$$
+$index identical, zero$$
+$index zero, identical$$
+
 $section Check if a Value is Identically Zero$$
 
 $table
@@ -87,7 +91,9 @@ $spell
 	bool
 $$
 
-$mindex identical one$$
+$index identical, one$$
+$index one, identical$$
+
 $section Check if a Value is Identically One$$
 
 $table
@@ -117,6 +123,7 @@ $$
 
 $index identical, equal$$
 $index equal, identical$$
+
 $section Check if a Value is Identically Equal Another$$
 
 $table

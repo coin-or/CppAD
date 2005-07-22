@@ -31,7 +31,9 @@ $spell
 	compliation
 $$
 
-$mindex bool function$$
+$index bool, function$$
+$index function, bool$$
+
 $section Defining Boolean Functions with AD Arguments$$
 
 $table

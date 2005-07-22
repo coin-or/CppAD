@@ -29,7 +29,9 @@ $spell
 	const
 $$
 
-$mindex base binary operator$$
+$index operator, base binary$$
+$index binary, base operator$$
+$index base, binary operator$$
 
 $section Base Type Binary Operators$$
 
