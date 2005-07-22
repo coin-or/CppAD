@@ -63,6 +63,13 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-22$$
+The $xref/ADFun/Size/ADFun Size/$$ function documentation
+has been changed to state that it returns the number of variables.
+The documentation used to refer to the 
+number of operations 
+(which used to be the same as the number of variables).
+
 
 $head 07-21$$
 Remove unnecessary no-op that was left in tape for the following cases:
