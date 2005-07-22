@@ -102,7 +102,8 @@ The operation
 $syntax%
 	size_t %F%.Size(void) const
 %$$
-returns the number of tape records that correspond to the function $italic F$$.
+returns the total number of variables
+that are used to calculate the function $italic F$$.
 
 $head Order$$
 $index Order, ADFun$$
