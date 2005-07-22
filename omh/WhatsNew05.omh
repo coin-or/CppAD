@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew05$$
 $spell
+	op
 	gcc
 	Cygwin
 	std
@@ -62,9 +63,15 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+
 $head 07-21$$
-Remove unecessary no-op that was left in tape for the following cases:
+Remove unnecessary no-op that was left in tape for the following cases:
 $xref/Acos/$$, $xref/Asin/$$, $xref/Atan/$$, and $xref/cos/$$.
+$pre
+
+$$
+Improve the index entries in the documentation that corresponds
+to the $code CppAD/local$$ directory source code.
 
 $head 07-19$$
 The $xref/WishList/$$ and $xref/Bugs/$$ information
