@@ -104,7 +104,7 @@ AD<Base> AD<Base>::Sqrt (void) const
 
 	if(	(Tape()->State() == Recording) & Variable(*this) ) 
 	{	// add this operation to the tape
-		Tape()->RecordOp(SqrtOp, result, index);
+		Tape()->RecordOp(SqrtOp, result, taddr);
 	}
 
 	return result;

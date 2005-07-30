@@ -133,7 +133,7 @@ AD<Base> AD<Base>::Acos (void) const
 	if(	(Tape()->State() == Recording) & Variable(*this) ) 
 	{
 		// add this operation to the tape
-		Tape()->RecordOp(AcosOp, result, index);
+		Tape()->RecordOp(AcosOp, result, taddr);
 
 	}
 

@@ -137,15 +137,15 @@ inline bool AD<Base>::operator < (const AD<Base> &right) const
 		break;
 		
 		case 1:
-		Tape()->RecordOp(LtfpvOp, value, right.index);
+		Tape()->RecordOp(LtfpvOp, value, right.taddr);
 		break;
 
 		case 2:
-		Tape()->RecordOp(LtfvpOp, index, right.value);
+		Tape()->RecordOp(LtfvpOp, taddr, right.value);
 		break;
 
 		case 3:
-		Tape()->RecordOp(LtfvvOp, index, right.index);
+		Tape()->RecordOp(LtfvvOp, taddr, right.taddr);
 		break;
 
 		case 4:
@@ -153,15 +153,15 @@ inline bool AD<Base>::operator < (const AD<Base> &right) const
 		break;
 		
 		case 5:
-		Tape()->RecordOp(LttpvOp, value, right.index);
+		Tape()->RecordOp(LttpvOp, value, right.taddr);
 		break;
 
 		case 6:
-		Tape()->RecordOp(LttvpOp, index, right.value);
+		Tape()->RecordOp(LttvpOp, taddr, right.value);
 		break;
 
 		case 7:
-		Tape()->RecordOp(LttvvOp, index, right.index);
+		Tape()->RecordOp(LttvvOp, taddr, right.taddr);
 		break;
 	}
 	return result;
@@ -198,15 +198,15 @@ inline bool AD<Base>::operator <= (const AD<Base> &right) const
 		break;
 		
 		case 1:
-		Tape()->RecordOp(LefpvOp, value, right.index);
+		Tape()->RecordOp(LefpvOp, value, right.taddr);
 		break;
 
 		case 2:
-		Tape()->RecordOp(LefvpOp, index, right.value);
+		Tape()->RecordOp(LefvpOp, taddr, right.value);
 		break;
 
 		case 3:
-		Tape()->RecordOp(LefvvOp, index, right.index);
+		Tape()->RecordOp(LefvvOp, taddr, right.taddr);
 		break;
 
 		case 4:
@@ -214,15 +214,15 @@ inline bool AD<Base>::operator <= (const AD<Base> &right) const
 		break;
 		
 		case 5:
-		Tape()->RecordOp(LetpvOp, value, right.index);
+		Tape()->RecordOp(LetpvOp, value, right.taddr);
 		break;
 
 		case 6:
-		Tape()->RecordOp(LetvpOp, index, right.value);
+		Tape()->RecordOp(LetvpOp, taddr, right.value);
 		break;
 
 		case 7:
-		Tape()->RecordOp(LetvvOp, index, right.index);
+		Tape()->RecordOp(LetvvOp, taddr, right.taddr);
 		break;
 	}
 	return result;
@@ -259,15 +259,15 @@ inline bool AD<Base>::operator > (const AD<Base> &left) const
 		break;
 		
 		case 1:
-		Tape()->RecordOp(LtfpvOp, left.value, index);
+		Tape()->RecordOp(LtfpvOp, left.value, taddr);
 		break;
 
 		case 2:
-		Tape()->RecordOp(LtfvpOp, left.index, value);
+		Tape()->RecordOp(LtfvpOp, left.taddr, value);
 		break;
 
 		case 3:
-		Tape()->RecordOp(LtfvvOp, left.index, index);
+		Tape()->RecordOp(LtfvvOp, left.taddr, taddr);
 		break;
 
 		case 4:
@@ -275,15 +275,15 @@ inline bool AD<Base>::operator > (const AD<Base> &left) const
 		break;
 		
 		case 5:
-		Tape()->RecordOp(LttpvOp, left.value, index);
+		Tape()->RecordOp(LttpvOp, left.value, taddr);
 		break;
 
 		case 6:
-		Tape()->RecordOp(LttvpOp, left.index, value);
+		Tape()->RecordOp(LttvpOp, left.taddr, value);
 		break;
 
 		case 7:
-		Tape()->RecordOp(LttvvOp, left.index, index);
+		Tape()->RecordOp(LttvvOp, left.taddr, taddr);
 		break;
 	}
 	return result;
@@ -321,15 +321,15 @@ inline bool AD<Base>::operator >= (const AD<Base> &left) const
 		break;
 		
 		case 1:
-		Tape()->RecordOp(LefpvOp, left.value, index);
+		Tape()->RecordOp(LefpvOp, left.value, taddr);
 		break;
 
 		case 2:
-		Tape()->RecordOp(LefvpOp, left.index, value);
+		Tape()->RecordOp(LefvpOp, left.taddr, value);
 		break;
 
 		case 3:
-		Tape()->RecordOp(LefvvOp, left.index, index);
+		Tape()->RecordOp(LefvvOp, left.taddr, taddr);
 		break;
 
 		case 4:
@@ -337,15 +337,15 @@ inline bool AD<Base>::operator >= (const AD<Base> &left) const
 		break;
 		
 		case 5:
-		Tape()->RecordOp(LetpvOp, left.value, index);
+		Tape()->RecordOp(LetpvOp, left.value, taddr);
 		break;
 
 		case 6:
-		Tape()->RecordOp(LetvpOp, left.index, value);
+		Tape()->RecordOp(LetvpOp, left.taddr, value);
 		break;
 
 		case 7:
-		Tape()->RecordOp(LetvvOp, left.index, index);
+		Tape()->RecordOp(LetvvOp, left.taddr, taddr);
 		break;
 	}
 	return result;
@@ -382,15 +382,15 @@ inline bool AD<Base>::operator == (const AD<Base> &right) const
 		break;
 		
 		case 1:
-		Tape()->RecordOp(EqfpvOp, value, right.index);
+		Tape()->RecordOp(EqfpvOp, value, right.taddr);
 		break;
 
 		case 2:
-		Tape()->RecordOp(EqfvpOp, index, right.value);
+		Tape()->RecordOp(EqfvpOp, taddr, right.value);
 		break;
 
 		case 3:
-		Tape()->RecordOp(EqfvvOp, index, right.index);
+		Tape()->RecordOp(EqfvvOp, taddr, right.taddr);
 		break;
 
 		case 4:
@@ -398,15 +398,15 @@ inline bool AD<Base>::operator == (const AD<Base> &right) const
 		break;
 		
 		case 5:
-		Tape()->RecordOp(EqtpvOp, value, right.index);
+		Tape()->RecordOp(EqtpvOp, value, right.taddr);
 		break;
 
 		case 6:
-		Tape()->RecordOp(EqtvpOp, index, right.value);
+		Tape()->RecordOp(EqtvpOp, taddr, right.value);
 		break;
 
 		case 7:
-		Tape()->RecordOp(EqtvvOp, index, right.index);
+		Tape()->RecordOp(EqtvvOp, taddr, right.taddr);
 		break;
 	}
 	return result;
@@ -443,15 +443,15 @@ inline bool AD<Base>::operator != (const AD<Base> &right) const
 		break;
 		
 		case 1:
-		Tape()->RecordOp(EqfpvOp, value, right.index);
+		Tape()->RecordOp(EqfpvOp, value, right.taddr);
 		break;
 
 		case 2:
-		Tape()->RecordOp(EqfvpOp, index, right.value);
+		Tape()->RecordOp(EqfvpOp, taddr, right.value);
 		break;
 
 		case 3:
-		Tape()->RecordOp(EqfvvOp, index, right.index);
+		Tape()->RecordOp(EqfvvOp, taddr, right.taddr);
 		break;
 
 		case 4:
@@ -459,15 +459,15 @@ inline bool AD<Base>::operator != (const AD<Base> &right) const
 		break;
 		
 		case 5:
-		Tape()->RecordOp(EqtpvOp, value, right.index);
+		Tape()->RecordOp(EqtpvOp, value, right.taddr);
 		break;
 
 		case 6:
-		Tape()->RecordOp(EqtvpOp, index, right.value);
+		Tape()->RecordOp(EqtvpOp, taddr, right.value);
 		break;
 
 		case 7:
-		Tape()->RecordOp(EqtvvOp, index, right.index);
+		Tape()->RecordOp(EqtvvOp, taddr, right.taddr);
 		break;
 	}
 	return ! result;

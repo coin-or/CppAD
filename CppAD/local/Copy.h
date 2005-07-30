@@ -81,7 +81,7 @@ inline AD<Base>::AD(const AD &x)
 
 	value   = x.value;
 	id      = x.id;
-	index   = x.index;
+	taddr   = x.taddr;
 
 	return;
 }

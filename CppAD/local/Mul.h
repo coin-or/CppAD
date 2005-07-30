@@ -120,14 +120,14 @@ AD<Base> AD<Base>::operator *(const AD<Base> &right) const
 				{	if( IdenticalOne(value) )
 					{	// z = 1 * right
 						result.MakeVariable(
-							right.index
+							right.taddr
 						);
 					}
 					else	Tape()->RecordOp(
 							MulpvOp, 
 							result, 
 							value, 
-							right.index
+							right.taddr
 					);
 				}
 			}
@@ -137,13 +137,13 @@ AD<Base> AD<Base>::operator *(const AD<Base> &right) const
 			{	if( IdenticalOne(right.value) )
 				{	// z = left * 1
 					result.MakeVariable(	
-						index
+						taddr
 					);
 				}
 				else	Tape()->RecordOp(
 						MulvpOp, 
 						result, 
-						index, 
+						taddr, 
 						right.value
 				);
 			}
@@ -151,8 +151,8 @@ AD<Base> AD<Base>::operator *(const AD<Base> &right) const
 		else	Tape()->RecordOp(
 				MulvvOp, 
 				result, 
-				index, 
-				right.index
+				taddr, 
+				right.taddr
 		);
 	}
 	return result;

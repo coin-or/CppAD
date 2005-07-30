@@ -105,7 +105,7 @@ AD<Base> AD<Base>::Sin (void) const
 	if(	(Tape()->State() == Recording) & Variable(*this) ) 
 	{
 		// add this operation to the tape
-		Tape()->RecordOp(SinOp, result, index);
+		Tape()->RecordOp(SinOp, result, taddr);
 
 	}
 

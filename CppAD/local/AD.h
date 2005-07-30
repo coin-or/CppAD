@@ -197,11 +197,11 @@ public:
 	}
 
 	// Make this object correspond to a new variable on the tape
-	inline void MakeVariable( size_t index_ )
+	inline void MakeVariable( size_t taddr_ )
 	{	CppADUnknownError( Parameter(*this) ); // currently a parameter
-		CppADUnknownError( index_ > 0 );       // make sure valid index
+		CppADUnknownError( taddr_ > 0 );       // make sure valid taddr
 
-		index = index_;
+		taddr = taddr_;
 		id    = *ADTape<Base>::Id();
 	}
 
@@ -217,10 +217,10 @@ private:
 	// value corresponding to this object
 	Base value;
 
-	// index in tape for this variable 
-	size_t index;
+	// taddr in tape for this variable 
+	size_t taddr;
 
-	// identifier corresponding to index
+	// identifier corresponding to taddr
 	// This is a parameter if and only if id != *ADTape<Base>::Id()
 	size_t id;
 }; 

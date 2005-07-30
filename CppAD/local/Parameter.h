@@ -68,12 +68,12 @@ $end
 namespace CppAD {
 	template <class Base>
 	inline bool Parameter(const AD<Base> &u)
-	{	CppADUnknownError( u.id != *ADTape<Base>::Id() || u.index > 0 );
+	{	CppADUnknownError( u.id != *ADTape<Base>::Id() || u.taddr > 0 );
 		return ( u.id != *ADTape<Base>::Id() ); 
 	}
 	template <class Base>
 	inline bool Variable(const AD<Base> &u)
-	{	CppADUnknownError( u.id != *ADTape<Base>::Id() || u.index > 0 );
+	{	CppADUnknownError( u.id != *ADTape<Base>::Id() || u.taddr > 0 );
 		return ( u.id == *ADTape<Base>::Id() ); 
 	}
 } 

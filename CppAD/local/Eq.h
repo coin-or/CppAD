@@ -84,7 +84,7 @@ inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
 
 	value   = right.value;
 	id      = right.id;
-	index   = right.index;
+	taddr   = right.taddr;
 
 	return *this;
 }

@@ -105,11 +105,11 @@ a PripOp that prints the parameter
 value $italic x$$ to standard output.
 The procedure call
 $syntax%
-	void %Tape%.RecordPrivOp(const char *%text%, %x_index%)
+	void %Tape%.RecordPrivOp(const char *%text%, %x_taddr%)
 %$$
 places, in the next tape location,
 a PrivOp that prints the variable
-corresponding to $italic x_index$$ to standard output.
+corresponding to $italic x_taddr$$ to standard output.
 These operators enables the user to determine the value of intermediate
 variables during forward and reverse mode.
 
@@ -121,7 +121,7 @@ $syntax%
 %$$
 creates a $code ParOp$$ record with the value 
 specified by $italic z$$.
-The return value is the index of this operation in the tape.
+The return value is the taddr of this operation in the tape.
 
 $subhead Independent$$
 The procedure call
@@ -133,13 +133,13 @@ The field $syntax%%z%.value%$$ is an input and all the other
 fields of $italic z$$ are outputs.
 Upon return from $code RecordInvOp$$, 
 $italic z$$ is in the list of variables and
-$syntax%%z%.index%$$ 
-is the index of the new tape record. 
+$syntax%%z%.taddr%$$ 
+is the taddr of the new tape record. 
 $pre
 
 $$
 The tape state must be Empty.
-On input, the value $syntax%%z%.index%$$ must be zero. 
+On input, the value $syntax%%z%.taddr%$$ must be zero. 
 
 $subhead Loading Vector Element$$
 The procedure call
@@ -148,7 +148,7 @@ $syntax%
 		OpCode      %op%,
 		AD<%Base%> &%z%,
 		size_t    %offset%,
-		size_t    %x_index%
+		size_t    %x_taddr%
 	)
 %$$
 creates a tape record corresponding to the value of a $code VecAD$$ element.
@@ -164,33 +164,33 @@ $syntax%
 %$$
 is the offset where this $code VecAD$$ array
 starts in the cumulative array containing all the $code VecAD$$ arrays.
-It indexes the length of this $code VecAD$$ array 
+It taddres the length of this $code VecAD$$ array 
 and the rest of the array follows.
 $syntax%
 
-%x_index%
+%x_taddr%
 %$$
-provides the information necessary to retriever the index in for this 
+provides the information necessary to retriever the taddr in for this 
 element within the $code VecAD$$ array.
 This has the following meaning depending on the value of $italic op$$:
 $table
 $bold op$$    
-	$cnext $bold x_index$$ $rnext
+	$cnext $bold x_taddr$$ $rnext
 $code LdpOp$$ 
 	$cnext location of the index in $syntax%%Rec%.GetPar%$$ $rnext
 $code LdvOp$$ 
-	$cnext location of the index as a variable in the tape
+	$cnext location of the taddr as a variable in the tape
 $tend
 $syntax%
 
-%z%.index
+%z%.taddr
 %$$
 is modified so that it corresponds to the new tape record when 
 $code RecordLoadOp$$ returns.
 Upon return from $code RecordLoadOp$$, 
 $italic z$$ is in the list of variables and
-$syntax%%z%.index%$$ 
-is the index in the tape for this $italic op$$ operator. 
+$syntax%%z%.taddr%$$ 
+is the taddr in the tape for this $italic op$$ operator. 
 
 
 $subhead Storing Vector Element$$
@@ -200,8 +200,8 @@ $syntax%
 		OpCode      %op%,
 		AD<%Base%> &%z%,
 		size_t    %offset%,
-		size_t    %x_index%,
-		size_t    %y_index%
+		size_t    %x_taddr%,
+		size_t    %y_taddr%
 	)
 %$$
 creates a tape record corresponding to storing a new value for
@@ -218,45 +218,45 @@ $syntax%
 %$$
 is the offset where this $code VecAD$$ array
 starts in the cumulative array containing all the $code VecAD$$ arrays.
-It indexes the length of this $code VecAD$$ array 
+It taddres the length of this $code VecAD$$ array 
 and the rest of the array follows.
 $syntax%
 
-%x_index%
+%x_taddr%
 %$$
-provides the information necessary to retrieve the index for this 
+provides the information necessary to retrieve the taddr for this 
 $code VecAD$$ element within this $code VecAD$$ array.
 This has the following meaning depending on the value of $italic op$$:
 $table
 $bold op$$    
-	$cnext $bold x_index$$ $rnext
+	$cnext $bold x_taddr$$ $rnext
 $code StppOp$$
 	$cnext location of the index in $syntax%%Rec%.GetPar%$$ $rnext
 $code StpvOp$$
 	$cnext location of the index in $syntax%%Rec%.GetPar%$$ $rnext
 $code StvpOp$$ 
-	$cnext location of the index as a variable in the tape  $rnext
+	$cnext location of the taddr as a variable in the tape  $rnext
 $code StvvOp$$ 
-	$cnext location of the index as a variable in the tape 
+	$cnext location of the taddr as a variable in the tape 
 $tend
 $syntax%
 
-%y_index%
+%y_taddr%
 %$$
 provides the information necessary to retrieve the value for this 
 $code VecAD$$ element within this $code VecAD$$ array.
 This has the following meaning depending on the value of $italic op$$:
 $table
 $bold op$$    
-	$cnext $bold y_index$$ $rnext
+	$cnext $bold y_taddr$$ $rnext
 $code StppOp$$
 	$cnext location of the value in $syntax%%Rec%.GetPar%$$ $rnext
 $code StvpOp$$
 	$cnext location of the value in $syntax%%Rec%.GetPar%$$ $rnext
 $code StpvOp$$ 
-	$cnext location of the index as a variable in the tape  $rnext
+	$cnext location of the taddr as a variable in the tape  $rnext
 $code StvvOp$$ 
-	$cnext location of the index as a variable in the tape  
+	$cnext location of the taddr as a variable in the tape  
 $tend
 $syntax%
 
@@ -265,8 +265,8 @@ $syntax%
 is modified so that it corresponds to the new tape record.
 Upon return from $code RecordStoreOp$$, 
 $italic z$$ is in the list of variables and
-$syntax%%z%.index%$$ 
-is the index in the tape for this $italic op$$ operator. 
+$syntax%%z%.taddr%$$ 
+is the taddr in the tape for this $italic op$$ operator. 
 
 $subhead Op(Variable, Variable)$$
 The procedure call 
@@ -274,24 +274,24 @@ $syntax%
 inline void %Tape%.RecordOp(
 	OpCode           %op%,
 	AD<%Base%>       &%z%,
-	size_t      %x_index%,
-	size_t      %y_index%
+	size_t      %x_taddr%,
+	size_t      %y_taddr%
 )%$$
 places a new dependent variable $italic z$$ in the tape
-and sets $syntax%%z%.index%$$ to the corresponding index.
+and sets $syntax%%z%.taddr%$$ to the corresponding taddr.
 The tape record specifies the operation
 $syntax%
 	%z% = %op%(%x%, %y%)
 %$$ 
-where $italic x_index$$ is the index of $italic x$$ in the tape
-and $italic y_index$$ is the index of $italic y$$ in the tape
+where $italic x_taddr$$ is the taddr of $italic x$$ in the tape
+and $italic y_taddr$$ is the taddr of $italic y$$ in the tape
 (neither of these indices can be zero).
 The field $syntax%%z%.value%$$ is an input and all the other
 fields of $italic z$$ are outputs.
 Upon return from $code RecordOp$$, 
 $italic z$$ is in the list of variables and
-$syntax%%z%.index%$$ 
-is to the index of the new tape record. 
+$syntax%%z%.taddr%$$ 
+is to the taddr of the new tape record. 
 $pre
 
 $$
@@ -299,8 +299,8 @@ The procedure call
 $syntax%
 inline void %Tape%.RecordOp(
 	OpCode           %op%,
-	size_t      %x_index%,
-	size_t      %y_index%
+	size_t      %x_taddr%,
+	size_t      %y_taddr%
 )%$$
 is the same as above except that no variable results from the 
 tape operation; i.e., $syntax%NumVar(%op%)%$$ is zero.
@@ -311,23 +311,23 @@ $syntax%
 inline void %Tape%.RecordOp(
 	OpCode           %op%,
 	AD<%Base%>       &%z%,
-	size_t      %x_index%,
+	size_t      %x_taddr%,
 	const %Base%     &%p% 
 )%$$
 places a new dependent variable $italic z$$ in the tape
-and sets $syntax%%z%.index%$$ to the corresponding index.
+and sets $syntax%%z%.taddr%$$ to the corresponding taddr.
 The tape record specifies the operation
 $syntax%
 	%z% = %op%(%x%, %p%)
 %$$ 
-where $italic x_index$$ is the index of $italic x$$ in the tape
-(this index can not be zero).
+where $italic x_taddr$$ is the taddr of $italic x$$ in the tape
+(this taddr can not be zero).
 The field $syntax%%z%.value%$$ is an input and all the other
 fields of $italic z$$ are outputs.
 Upon return from $code RecordOp$$, 
 $italic z$$ is in the list of variables and
-$syntax%%z%.index%$$ 
-is to the index of the new tape record. 
+$syntax%%z%.taddr%$$ 
+is to the taddr of the new tape record. 
 The value $italic p$$ corresponds to a parameter.
 $pre
 
@@ -336,7 +336,7 @@ The procedure call
 $syntax%
 inline void %Tape%.RecordOp(
 	OpCode           %op%,
-	size_t      %x_index%,
+	size_t      %x_taddr%,
 	const %Base%     &%p% 
 )%$$
 is the same as above except that no variable results from the 
@@ -349,22 +349,22 @@ inline void %Tape%.RecordOp(
 	OpCode           %op%,
 	AD<%Base%>       &%z%,
 	const %Base%     &%p%,
-	size_t      %y_index%
+	size_t      %y_taddr%
 )%$$
 places a new dependent variable $italic z$$ in the tape
-and sets $syntax%%z%.index%$$ to the corresponding index.
+and sets $syntax%%z%.taddr%$$ to the corresponding taddr.
 The tape record specifies the operation
 $syntax%
 	%z% = %op%(%p%, %y%)
 %$$ 
-where $italic y_index$$ is the index of $italic y$$ in the tape
-(this index can not be zero).
+where $italic y_taddr$$ is the taddr of $italic y$$ in the tape
+(this taddr can not be zero).
 The field $syntax%%z%.value%$$ is an input and all the other
 fields of $italic z$$ are outputs.
 Upon return from $code RecordOp$$, 
 $italic z$$ is in the list of variables and
-$syntax%%z%.index%$$ 
-is to the index of the new tape record. 
+$syntax%%z%.taddr%$$ 
+is to the taddr of the new tape record. 
 The value $italic p$$ corresponds to a parameter.
 $pre
 
@@ -374,7 +374,7 @@ $syntax%
 inline void %Tape%.RecordOp(
 	OpCode           %op%,
 	const %Base%     &%p%,
-	size_t      %y_index%
+	size_t      %y_taddr%
 )%$$
 is the same as above except that no variable results from the 
 tape operation; i.e., $syntax%NumVar(%op%)%$$ is zero.
@@ -398,55 +398,55 @@ $syntax%
 inline void %Tape%.RecordOp(
 	OpCode           %op%,
 	AD<%Base%>       &%z%,
-	size_t      %x_index%
+	size_t      %x_taddr%
 )%$$
 places a new dependent variable $italic z$$ in the tape
-and sets $syntax%%z%.index%$$ to the corresponding index.
+and sets $syntax%%z%.taddr%$$ to the corresponding taddr.
 The tape record specifies the operation
 $syntax%
 	%z% = %op%(%x%)
 %$$ 
-where $italic x_index$$ is the index of $italic x$$ in the tape
-(this index can not be zero) and $italic op$$ specifies the
+where $italic x_taddr$$ is the taddr of $italic x$$ in the tape
+(this taddr can not be zero) and $italic op$$ specifies the
 unary function.
 The field $syntax%%z%.value%$$ is an input and all the other
 fields of $italic z$$ are outputs.
 Upon return from $code RecordOp$$, 
 $italic z$$ is in the list of variables and
-$syntax%%z%.index%$$ 
-is to the index of the new tape record. 
+$syntax%%z%.taddr%$$ 
+is to the taddr of the new tape record. 
 
 $subhead User Defined Functions$$
 The procedure call 
 $syntax%
 void %Tape%.RecordDisOp(
 	AD<%Base%>       &%z%,
-	size_t      %x_index%,
-	size_t      %y_index%
+	size_t      %x_taddr%,
+	size_t      %y_taddr%
 )%$$
 places a new dependent variable $italic z$$ in the tape
-and sets $syntax%%z%.index%$$ to the corresponding index.
+and sets $syntax%%z%.taddr%$$ to the corresponding taddr.
 The tape record specifies the operation
 $syntax%
 	%z% = %f%(%x%)%
 %$$ 
-where $italic x_index$$ is the index of $italic x$$ in the tape
-and $italic y_index$$ is the index corresponding to the 
+where $italic x_taddr$$ is the taddr of $italic x$$ in the tape
+and $italic y_taddr$$ is the taddr corresponding to the 
 Discrete function $italic f$$
-(the value $italic x_index$$ cannot be zero).
+(the value $italic x_taddr$$ cannot be zero).
 The field $syntax%%z%.value%$$ is an input and all the other
 fields of $italic z$$ are outputs.
 Upon return from $code RecordDisOp$$, 
 $italic z$$ is in the list of variables and
-$syntax%%z%.index%$$ 
-is to the index of the new tape record. 
+$syntax%%z%.taddr%$$ 
+is to the taddr of the new tape record. 
 
 $subhead Variable Indexed Arrays$$
 The procedure call
 $syntax%
 	size_t %Tape%.AddVec(size_t  %length%, const %Base% *%data%)
 %$$
-adds a variable indexed array with the specified length and values to the tape.
+adds a variable taddred array with the specified length and values to the tape.
 We use $italic i$$ to denote the value returned by $code AddVec$$.
 The value $italic length$$ is added to $italic Rec$$ as follows:
 $syntax%
@@ -566,7 +566,7 @@ private:
 		OpCode         op,
 		AD<Base>       &z, 
 		size_t     offset,
-		size_t    x_index
+		size_t    x_taddr
 	);
 
 	// store ADVec element 
@@ -574,43 +574,43 @@ private:
 		OpCode         op,
 		AD<Base>       &z, 
 		size_t     offset,
-		size_t    x_index,
-		size_t    y_index
+		size_t    x_taddr,
+		size_t    y_taddr
 	);
 
 	// add a tape entry specified by operator
 	inline void RecordOp( 
 		OpCode         op, 
 		AD<Base>       &z, 
-		size_t    x_index,
-		size_t    y_index
+		size_t    x_taddr,
+		size_t    y_taddr
 	);
 	inline void RecordOp( 
 		OpCode         op, 
-		size_t    x_index,
-		size_t    y_index
+		size_t    x_taddr,
+		size_t    y_taddr
 	);
 	inline void RecordOp( 
 		OpCode         op, 
 		AD<Base>       &z, 
-		size_t    x_index,
+		size_t    x_taddr,
 		const Base     &y
 	);
 	inline void RecordOp( 
 		OpCode         op, 
-		size_t    x_index,
+		size_t    x_taddr,
 		const Base     &y
 	);
 	inline void RecordOp( 
 		OpCode         op, 
 		AD<Base>       &z, 
 		const Base     &x,
-		size_t    y_index
+		size_t    y_taddr
 	);
 	inline void RecordOp( 
 		OpCode         op, 
 		const Base     &x,
-		size_t    y_index
+		size_t    y_taddr
 	);
 	inline void RecordOp( 
 		OpCode         op, 
@@ -620,12 +620,12 @@ private:
 	inline void RecordOp( 
 		OpCode         op, 
 		AD<Base>       &z, 
-		size_t    x_index
+		size_t    x_taddr
 	);
 	void RecordDisOp( 
 		AD<Base>       &z, 
-		size_t    x_index,
-		size_t    y_index
+		size_t    x_taddr,
+		size_t    y_taddr
 	);
 	void RecordPripOp(
 		const char  *text,
@@ -633,7 +633,7 @@ private:
 	);
 	void RecordPrivOp(
 		const char  *text,
-		size_t    x_index
+		size_t    x_taddr
 	);
 	size_t AddVec(
 		size_t        length,
@@ -660,21 +660,21 @@ void ADTape<Base>::RecordNonOp(void)
 
 template <class Base>
 size_t ADTape<Base>::RecordParOp(const Base &z)
-{	size_t z_index;
+{	size_t z_taddr;
 	size_t ind;
 
 	CppADUnknownError( NumInd(ParOp) == 1 );
-	z_index = Rec.PutOp(ParOp);
+	z_taddr = Rec.PutOp(ParOp);
 	ind     = Rec.PutPar(z);
 	Rec.PutInd(ind);
 
-	return z_index;
+	return z_taddr;
 }
 
 template  <class Base>
 void ADTape<Base>::RecordInvOp(AD<Base> &z)
 {
-	size_t z_index;
+	size_t z_taddr;
 
 	// in the independent variable case, should not already be in tape
 	CppADUnknownError( Parameter(z) );
@@ -682,9 +682,9 @@ void ADTape<Base>::RecordInvOp(AD<Base> &z)
 
 
 	// Make z correspond to a next variable in tape
-	z_index = Rec.PutOp(InvOp);
+	z_taddr = Rec.PutOp(InvOp);
 	z.id    = *Id();
-	z.index = z_index;
+	z.taddr = z_taddr;
 
 	// no Ind values for this instruction
 	CppADUnknownError( NumInd(InvOp) == 0 );
@@ -699,22 +699,22 @@ void ADTape<Base>::RecordLoadOp(
 	OpCode         op,
 	AD<Base>       &z,
 	size_t     offset,
-	size_t     x_index
+	size_t     x_taddr
 )
-{	size_t z_index;
+{	size_t z_taddr;
 
 	CppADUnknownError( (op == LdvOp) | (op == LdpOp) );
 	CppADUnknownError( state == Recording );
 	CppADUnknownError( NumInd(op) == 3 );
 
 	// Make z correspond to a next variable in tape
-	z_index = Rec.PutOp(op);
+	z_taddr = Rec.PutOp(op);
 	z.id    = *Id();
-	z.index = z_index;
+	z.taddr = z_taddr;
 
 	// Ind values for this instruction
-	// (space reserved by third index is set by f.Forward(0, *) )
-	Rec.PutInd(offset, x_index, 0);
+	// (space reserved by third taddr is set by f.Forward(0, *) )
+	Rec.PutInd(offset, x_taddr, 0);
 
 	// check that z is a dependent variable
 	CppADUnknownError( Variable(z) );
@@ -725,11 +725,11 @@ void ADTape<Base>::RecordStoreOp(
 	OpCode         op,
 	AD<Base>       &z,
 	size_t     offset,
-	size_t    x_index,
-	size_t    y_index
+	size_t    x_taddr,
+	size_t    y_taddr
 )
 {
-	size_t z_index;
+	size_t z_taddr;
 
 	CppADUnknownError( 
 		(op == StppOp) | 
@@ -738,17 +738,17 @@ void ADTape<Base>::RecordStoreOp(
 		(op == StvvOp) 
 	);
 	CppADUnknownError( state == Recording );
-	CppADUnknownError( y_index != 0 );
+	CppADUnknownError( y_taddr != 0 );
 	CppADUnknownError( NumInd(op) == 3 );
 
 
 	// Make z correspond to a next variable in tape
-	z_index = Rec.PutOp(op);
+	z_taddr = Rec.PutOp(op);
 	z.id    = *Id();
-	z.index = z_index;
+	z.taddr = z_taddr;
 
 	// Ind values for this instruction
-	Rec.PutInd(offset, x_index, y_index);
+	Rec.PutInd(offset, x_taddr, y_taddr);
 
 	// check that z is a dependent variable
 	CppADUnknownError( Variable(z) );
@@ -759,25 +759,25 @@ template  <class Base>
 inline void ADTape<Base>::RecordOp(
 	OpCode         op,
 	AD<Base>       &z,
-	size_t    x_index,
-	size_t    y_index
+	size_t    x_taddr,
+	size_t    y_taddr
 )
 {
-	size_t z_index;
+	size_t z_taddr;
 
 	CppADUnknownError( state == Recording );
-	CppADUnknownError( (x_index != 0) & (y_index != 0) );
+	CppADUnknownError( (x_taddr != 0) & (y_taddr != 0) );
 	CppADUnknownError( (op != InvOp) & (op != DisOp) );
 	CppADUnknownError( NumInd(op) == 2 );
 
 
 	// Make z correspond to a next variable in tape
-	z_index = Rec.PutOp(op);
+	z_taddr = Rec.PutOp(op);
 	z.id    = *Id();
-	z.index = z_index;
+	z.taddr = z_taddr;
 
 	// Ind values for this instruction
-	Rec.PutInd(x_index, y_index);
+	Rec.PutInd(x_taddr, y_taddr);
 
 	// check that z is a dependent variable
 	CppADUnknownError( Variable(z) );
@@ -786,13 +786,13 @@ inline void ADTape<Base>::RecordOp(
 template  <class Base>
 inline void ADTape<Base>::RecordOp(
 	OpCode         op,
-	size_t    x_index,
-	size_t    y_index
+	size_t    x_taddr,
+	size_t    y_taddr
 )
 {
 
 	CppADUnknownError( state == Recording );
-	CppADUnknownError( (x_index != 0) & (y_index != 0) );
+	CppADUnknownError( (x_taddr != 0) & (y_taddr != 0) );
 	CppADUnknownError( (op != InvOp) & (op != DisOp) );
 	CppADUnknownError( NumInd(op) == 2 );
 	CppADUnknownError( NumVar(op) == 0 );
@@ -801,32 +801,32 @@ inline void ADTape<Base>::RecordOp(
 	Rec.PutOp(op);
 
 	// Ind values for this instruction
-	Rec.PutInd(x_index, y_index);
+	Rec.PutInd(x_taddr, y_taddr);
 }
 
 template  <class Base>
 inline void ADTape<Base>::RecordOp(
 	OpCode           op,
 	AD<Base>         &z,
-	size_t      x_index,
+	size_t      x_taddr,
 	const Base       &y
 )
 {
-	size_t z_index;
+	size_t z_taddr;
 
 	CppADUnknownError( state == Recording );
-	CppADUnknownError( x_index != 0 );
+	CppADUnknownError( x_taddr != 0 );
 	CppADUnknownError( (op != InvOp) & (op != DisOp) );
 	CppADUnknownError( NumInd(op) == 2 );
 
 
 	// Make z correspond to a next variable in tape
-	z_index = Rec.PutOp(op);
+	z_taddr = Rec.PutOp(op);
 	z.id    = *Id();
-	z.index = z_index;
+	z.taddr = z_taddr;
 
 	// Ind values for this instruction
-	Rec.PutInd(x_index, Rec.PutPar(y));
+	Rec.PutInd(x_taddr, Rec.PutPar(y));
 
 	// check that z is a dependent variable
 	CppADUnknownError( Variable(z) );
@@ -835,13 +835,13 @@ inline void ADTape<Base>::RecordOp(
 template  <class Base>
 inline void ADTape<Base>::RecordOp(
 	OpCode           op,
-	size_t      x_index,
+	size_t      x_taddr,
 	const Base       &y
 )
 {
 
 	CppADUnknownError( state == Recording );
-	CppADUnknownError( x_index != 0 );
+	CppADUnknownError( x_taddr != 0 );
 	CppADUnknownError( (op != InvOp) & (op != DisOp) );
 	CppADUnknownError( NumInd(op) == 2 );
 	CppADUnknownError( NumVar(op) == 0 );
@@ -850,7 +850,7 @@ inline void ADTape<Base>::RecordOp(
 	Rec.PutOp(op);
 
 	// Ind values for this instruction
-	Rec.PutInd(x_index, Rec.PutPar(y));
+	Rec.PutInd(x_taddr, Rec.PutPar(y));
 }
 
 template  <class Base>
@@ -858,24 +858,24 @@ inline void ADTape<Base>::RecordOp(
 	OpCode           op,
 	AD<Base>         &z,
 	const Base       &x,
-	size_t      y_index
+	size_t      y_taddr
 )
 {
-	size_t z_index;
+	size_t z_taddr;
 
 	CppADUnknownError( state == Recording );
-	CppADUnknownError( y_index != 0 );
+	CppADUnknownError( y_taddr != 0 );
 	CppADUnknownError( (op != InvOp) & (op != DisOp) );
 	CppADUnknownError( NumInd(op) == 2 );
 
 
 	// Make z correspond to a next variable in tape
-	z_index = Rec.PutOp(op);
+	z_taddr = Rec.PutOp(op);
 	z.id    = *Id();
-	z.index = z_index;
+	z.taddr = z_taddr;
 
 	// Ind values for this instruction
-	Rec.PutInd(Rec.PutPar(x), y_index);
+	Rec.PutInd(Rec.PutPar(x), y_taddr);
 
 	// check that z is a dependent variable
 	CppADUnknownError( Variable(z) );
@@ -885,12 +885,12 @@ template  <class Base>
 inline void ADTape<Base>::RecordOp(
 	OpCode           op,
 	const Base       &x,
-	size_t      y_index
+	size_t      y_taddr
 )
 {
 
 	CppADUnknownError( state == Recording );
-	CppADUnknownError( y_index != 0 );
+	CppADUnknownError( y_taddr != 0 );
 	CppADUnknownError( (op != InvOp) & (op != DisOp) );
 	CppADUnknownError( NumInd(op) == 2 );
 	CppADUnknownError( NumVar(op) == 0 );
@@ -899,7 +899,7 @@ inline void ADTape<Base>::RecordOp(
 	Rec.PutOp(op);
 
 	// Ind values for this instruction
-	Rec.PutInd(Rec.PutPar(x), y_index);
+	Rec.PutInd(Rec.PutPar(x), y_taddr);
 }
 
 template  <class Base>
@@ -926,24 +926,24 @@ template  <class Base>
 inline void ADTape<Base>::RecordOp(
 	OpCode           op,
 	AD<Base>         &z,
-	size_t      x_index
+	size_t      x_taddr
 )
 {
-	size_t z_index;
+	size_t z_taddr;
 
 	CppADUnknownError( state == Recording );
-	CppADUnknownError( x_index != 0 );
+	CppADUnknownError( x_taddr != 0 );
 	CppADUnknownError( (op != InvOp) & (op != DisOp) );
 	CppADUnknownError( NumInd(op) == 1 );
 
 
 	// Make z correspond to a next variable in tape
-	z_index = Rec.PutOp(op);
+	z_taddr = Rec.PutOp(op);
 	z.id    = *Id();
-	z.index = z_index;
+	z.taddr = z_taddr;
 
 	// Ind value for this instruction
-	Rec.PutInd(x_index);
+	Rec.PutInd(x_taddr);
 
 	// check that z is a dependent variable
 	CppADUnknownError( Variable(z) );
@@ -952,23 +952,23 @@ inline void ADTape<Base>::RecordOp(
 template  <class Base>
 void ADTape<Base>::RecordDisOp(
 	AD<Base>         &z,
-	size_t      x_index,
-	size_t      y_index
+	size_t      x_taddr,
+	size_t      y_taddr
 )
 {
-	size_t z_index;
+	size_t z_taddr;
 
 	CppADUnknownError( state == Recording );
-	CppADUnknownError( x_index != 0 );
+	CppADUnknownError( x_taddr != 0 );
 	CppADUnknownError( NumInd(DisOp) == 2 );
 
 	// Make z correspond to a next variable in tape
-	z_index = Rec.PutOp(DisOp);
+	z_taddr = Rec.PutOp(DisOp);
 	z.id    = *Id();
-	z.index = z_index;
+	z.taddr = z_taddr;
 
 	// Ind values for this instruction
-	Rec.PutInd(x_index, y_index);
+	Rec.PutInd(x_taddr, y_taddr);
 
 	// check that z is a dependent variable
 	CppADUnknownError( Variable(z) );
@@ -989,7 +989,7 @@ void ADTape<Base>::RecordPripOp(const char *text, const Base &x)
 }
 
 template <class Base>
-void ADTape<Base>::RecordPrivOp(const char *text, size_t x_index)
+void ADTape<Base>::RecordPrivOp(const char *text, size_t x_taddr)
 {
 
 	CppADUnknownError( state == Recording );
@@ -999,7 +999,7 @@ void ADTape<Base>::RecordPrivOp(const char *text, size_t x_index)
 	Rec.PutOp(PrivOp);
 
 	// Ind values for this instruction 
-	Rec.PutInd(Rec.PutTxt(text), x_index);
+	Rec.PutInd(Rec.PutTxt(text), x_taddr);
 }
 
 
@@ -1019,7 +1019,7 @@ size_t ADTape<Base>::AddVec(size_t length, const Base *data)
 		Rec.PutVecInd( vecInd );
 	}
  
-	// return the index of the length (where the vector starts)
+	// return the taddr of the length (where the vector starts)
 	return start;
 }
 

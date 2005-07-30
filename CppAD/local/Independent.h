@@ -129,7 +129,7 @@ void ADTape<Base>::Independent(VectorADBase &u)
 	CppADUnknownError( Rec.NumOp() == 0 );
 	CppADUnknownError( Rec.TotNumVar() == 0 );
 
-	// skip the first record (parameters use index zero)
+	// skip the first record (parameters use taddr zero)
 	Rec.PutOp(NonOp);
 
 	// no Ind values for this operator
@@ -139,7 +139,7 @@ void ADTape<Base>::Independent(VectorADBase &u)
 	size_t i;
 	for(i = 0; i < u.size(); i++)
 	{	RecordInvOp(u[i]);
-		CppADUnknownError( u[i].index == i+1 );
+		CppADUnknownError( u[i].taddr == i+1 );
 	}
 
 	// done specifying all of the independent variables

@@ -105,7 +105,7 @@ AD<Base> AD<Base>::Log (void) const
 
 	if(	(Tape()->State() == Recording) & Variable(*this) ) 
 	{	// add this operation to the tape
-		Tape()->RecordOp(LogOp, result, index);
+		Tape()->RecordOp(LogOp, result, taddr);
 	}
 
 	return result;

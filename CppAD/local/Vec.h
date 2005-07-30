@@ -302,7 +302,7 @@ public:
 				// note that x is mutable
 				if( Parameter(x) )
 				{	x.id = *ADTape<Base>::Id();
-					x.index = 
+					x.taddr = 
 					AD<Base>::Tape()->RecordParOp(x.value);
 				}
 	
@@ -311,10 +311,10 @@ public:
 					LdvOp,
 					result,
 					vec->offset,
-					x.index
+					x.taddr
 				);
 				CppADUnknownError( 
-					x.index > 0 && Variable(x)
+					x.taddr > 0 && Variable(x)
 				);
 			}
 		}
@@ -443,9 +443,9 @@ AD<Base> VecADelem<Base>::operator=(const AD<Base> &y)
 	CppADUnknownError( vec->id == *ADTape<Base>::Id() );
 	CppADUnknownError( vec->offset > 0 );
 	if( Parameter(x) ) AD<Base>::Tape()->RecordStoreOp(
-			StpvOp, result, vec->offset, i, y.index );
+			StpvOp, result, vec->offset, i, y.taddr );
 	else	AD<Base>::Tape()->RecordStoreOp(
-			StvvOp, result, vec->offset, x.index, y.index );
+			StvvOp, result, vec->offset, x.taddr, y.taddr );
 
 	return result;
 }
@@ -454,7 +454,7 @@ template <class Base>
 AD<Base> VecADelem<Base>::operator=(const Base &y)
 {	AD<Base> result;
 
-	size_t y_index;
+	size_t y_taddr;
 
 	size_t i = static_cast<size_t>( Integer(x) );
 	CppADUnknownError( i < vec->length );
@@ -469,15 +469,15 @@ AD<Base> VecADelem<Base>::operator=(const Base &y)
 	}
 
 	// place a copy of y in the tape
-	y_index = AD<Base>::Tape()->Rec.PutPar(y);
+	y_taddr = AD<Base>::Tape()->Rec.PutPar(y);
 
 	// record the setting of this array element
 	CppADUnknownError( vec->id == *ADTape<Base>::Id() );
 	CppADUnknownError( vec->offset > 0 );
 	if( Parameter(x) ) AD<Base>::Tape()->RecordStoreOp(
-			StppOp, result, vec->offset, i, y_index );
+			StppOp, result, vec->offset, i, y_taddr );
 	else	AD<Base>::Tape()->RecordStoreOp(
-			StvpOp, result, vec->offset, x.index, y_index );
+			StvpOp, result, vec->offset, x.taddr, y_taddr );
 
 	return result;
 }

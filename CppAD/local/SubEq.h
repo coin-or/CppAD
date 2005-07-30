@@ -118,19 +118,19 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 	{	if( Parameter(*this) )
 		{	if( Variable(right) )
 			{	Tape()->RecordOp(SubpvOp, 
-					*this, left, right.index
+					*this, left, right.taddr
 				);
 			}
 		}
 		else if( Parameter(right) )
 		{	if( ! IdenticalZero(right) )
 			{	Tape()->RecordOp(SubvpOp, 
-					*this, index, right.value
+					*this, taddr, right.value
 				);
 			}
 		}
 		else	Tape()->RecordOp(SubvvOp, 
-				*this, index, right.index
+				*this, taddr, right.taddr
 		);
 	}
 	return *this;

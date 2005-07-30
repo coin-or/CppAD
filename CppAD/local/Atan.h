@@ -130,7 +130,7 @@ AD<Base> AD<Base>::Atan (void) const
 	if(	(Tape()->State() == Recording) & Variable(*this) ) 
 	{
 		// add this operation to the tape
-		Tape()->RecordOp(AtanOp, result, index);
+		Tape()->RecordOp(AtanOp, result, taddr);
 	}
 
 	return result;

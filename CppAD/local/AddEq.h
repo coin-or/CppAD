@@ -120,22 +120,22 @@ AD<Base>& AD<Base>::operator += (const AD<Base> &right)
 		{	if( Variable(right) )
 			{	if( IdenticalZero(left) )
 				{	// z = 0 + right
-					MakeVariable(right.index);
+					MakeVariable(right.taddr);
 				}
 				else	Tape()->RecordOp(AddpvOp, 
-						*this, left, right.index
+						*this, left, right.taddr
 				);
 			}
 		}
 		else if( Parameter(right) )
 		{	if( ! IdenticalZero( right.value ) )
 			{	Tape()->RecordOp(AddvpOp, 
-					*this, index, right.value
+					*this, taddr, right.value
 				);
 			}
 		}
 		else	Tape()->RecordOp(AddvvOp, 
-					*this, index, right.index
+					*this, taddr, right.taddr
 		);
 	}
 	return *this;

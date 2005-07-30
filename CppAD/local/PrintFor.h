@@ -80,7 +80,7 @@ void PrintFor(const char *text, const AD<Base> &x)
 { 	if( AD<Base>::Tape()->State() == Recording )
 	{	if( Parameter(x) )
 			AD<Base>::Tape()->RecordPripOp(text, x.value);
-		else	AD<Base>::Tape()->RecordPrivOp(text, x.index);
+		else	AD<Base>::Tape()->RecordPrivOp(text, x.taddr);
 	}
 }
 

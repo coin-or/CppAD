@@ -102,7 +102,7 @@ AD<Base> AD<Base>::Exp (void) const
 
 	if(	(Tape()->State() == Recording) & Variable(*this) ) 
 	{	// add this operation to the tape
-		Tape()->RecordOp(ExpOp, result, index);
+		Tape()->RecordOp(ExpOp, result, taddr);
 	}
 
 	return result;

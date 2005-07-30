@@ -164,9 +164,9 @@ void ADTape<Base>::RecordCondExp(
 	const AD<Base> &exp2,
 	const AD<Base> &exp3
 )
-{	size_t   op_index;
+{	size_t   op_taddr;
 	size_t   ind0, ind1, ind2;
-	size_t   z_index;
+	size_t   z_taddr;
 	OpCode   op;
 
 	static OpCode List[] = {
@@ -179,39 +179,39 @@ void ADTape<Base>::RecordCondExp(
 		CEvvpOp,
 		CEvvvOp
 	};
-	op_index = 0;
+	op_taddr = 0;
 	if( Variable(exp1) )
-		op_index += 4;
+		op_taddr += 4;
 	if( Variable(exp2) )
-		op_index += 2;
+		op_taddr += 2;
 	if( Variable(exp3) )
-		op_index += 1;
+		op_taddr += 1;
 
-	CppADUnknownError( 0 < op_index && op_index < 8 ); 
-	op       = List[op_index];
+	CppADUnknownError( 0 < op_taddr && op_taddr < 8 ); 
+	op       = List[op_taddr];
 
-	// index of this variable
-	z_index = Rec.PutOp(op);
+	// taddr of this variable
+	z_taddr = Rec.PutOp(op);
 
-	// Make sure z is in the list of variables and set its index
+	// Make sure z is in the list of variables and set its taddr
 	if( Parameter(z) )
-		z.MakeVariable( z_index );
-	else	z.index = z_index;
+		z.MakeVariable( z_taddr );
+	else	z.taddr = z_taddr;
 
 	// ind for exp1
 	if( Parameter(exp1) )
 		ind0 = Rec.PutPar(exp1.value);
-	else	ind0 = exp1.index;	
+	else	ind0 = exp1.taddr;	
 
 	// ind for exp2
 	if( Parameter(exp2) )
 		ind1 = Rec.PutPar(exp2.value);
-	else	ind1 = exp2.index;	
+	else	ind1 = exp2.taddr;	
 
 	// ind for exp3
 	if( Parameter(exp3) )
 		ind2 = Rec.PutPar(exp3.value);
-	else	ind2 = exp3.index;	
+	else	ind2 = exp3.taddr;	
 
 	CppADUnknownError( NumInd(op) == 3 );
 	Rec.PutInd(ind0, ind1, ind2);

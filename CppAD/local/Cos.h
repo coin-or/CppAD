@@ -105,7 +105,7 @@ AD<Base> AD<Base>::Cos (void) const
 	if(	(Tape()->State() == Recording) & Variable(*this) ) 
 	{
 		// add this operation to the tape
-		Tape()->RecordOp(CosOp, result, index);
+		Tape()->RecordOp(CosOp, result, taddr);
 
 	}
 

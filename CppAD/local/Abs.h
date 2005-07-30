@@ -144,7 +144,7 @@ AD<Base> AD<Base>::Abs (void) const
 	if(	(Tape()->State() == Recording) & Variable(*this) ) 
 	{
 		// add this operation to the tape
-		Tape()->RecordOp(AbsOp, result, index);
+		Tape()->RecordOp(AbsOp, result, taddr);
 
 	}
 

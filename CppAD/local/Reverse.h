@@ -261,10 +261,10 @@ template <typename Base>
 template <typename VectorBase>
 VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &v)
 {
-	if( PartialRowDim < p )
+	if( PartialColDim < p )
 	{	if( Partial != CppADNull ) delete [] Partial;
-		PartialRowDim = p;
-		Partial = new Base[length * PartialRowDim];
+		PartialColDim = p;
+		Partial = new Base[totalNumVar * PartialColDim];
 	}
 
 	// check VectorBase is Simple Vector class with Base type elements
@@ -288,35 +288,35 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &v)
 	// initialize entire Partial matrix to zero
 	size_t i;
 	size_t j;
-	for(i = 0; i < length; i++)
+	for(i = 0; i < totalNumVar; i++)
 		for(j = 0; j < p; j++)
-			Partial[i * PartialRowDim + j] = Base(0);
+			Partial[i * PartialColDim + j] = Base(0);
 
 	// set the dependent variable direction
 	// (use += because two dependent variables can point to same location)
 	size_t n = depvar.size();
 	for(i = 0; i < n; i++)
-	{	CppADUnknownError( depvar[i] < length );
-		Partial[depvar[i] * PartialRowDim + p - 1] += v[i];
+	{	CppADUnknownError( depvar[i] < totalNumVar );
+		Partial[depvar[i] * PartialColDim + p - 1] += v[i];
 	}
 
 	// evaluate the derivatives
-	ADReverse(p - 1, length, Rec, 
-		TaylorRowDim, Taylor, PartialRowDim, Partial);
+	ADReverse(p - 1, totalNumVar, Rec, 
+		TaylorColDim, Taylor, PartialColDim, Partial);
 
 	// return the derivative values
 	size_t m = indvar.size();
 	VectorBase value(m * p);
 	for(i = 0; i < m; i++)
-	{	CppADUnknownError( indvar[i] < length );
-		// independent variable index equals its operator index 
+	{	CppADUnknownError( indvar[i] < totalNumVar );
+		// independent variable taddr equals its operator taddr 
 		CppADUnknownError( Rec->GetOp( indvar[i] ) == InvOp );
 
 		// by the Reverse Identity Theorem 
 		// partial of y^{(j)} w.r.t. u^{(0)} is equal to 				// partial of y^{(p-1)} w.r.t. u^{(p - 1 - j)}
 		for(j = 0; j < p; j++)
 			value[i * p + j ] = 
-				Partial[indvar[i] * PartialRowDim + p - 1 - j];
+				Partial[indvar[i] * PartialColDim + p - 1 - j];
 	}
 
 	return value;

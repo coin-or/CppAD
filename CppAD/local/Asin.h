@@ -133,7 +133,7 @@ AD<Base> AD<Base>::Asin (void) const
 	if(	(Tape()->State() == Recording) & Variable(*this) ) 
 	{
 		// add this operation to the tape
-		Tape()->RecordOp(AsinOp, result, index);
+		Tape()->RecordOp(AsinOp, result, taddr);
 	}
 
 	return result;

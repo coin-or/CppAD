@@ -230,7 +230,7 @@ public:
 
 	// size of this function object
 	size_t Size(void) const
-	{	return length; }
+	{	return totalNumVar; }
 
 	// order of this function object
 	size_t Order(void) const
@@ -255,8 +255,8 @@ public:
 
 	// amount of memory for each variable
 	size_t Memory(void) const
-	{	size_t pervar  = (TaylorRowDim + PartialRowDim) * sizeof(Base);
-		size_t total   = length * pervar + Rec->Memory();
+	{	size_t pervar  = (TaylorColDim + PartialColDim) * sizeof(Base);
+		size_t total   = totalNumVar * pervar + Rec->Memory();
 		return total;
 	}
 
@@ -301,21 +301,38 @@ public:
 		const VectorSize_t &J );
 
 private:
-	// values that are set during the constructor and do not change 
-	size_t		        compareChange;
-	size_t                          order;
-	size_t                   TaylorRowDim;
-	size_t                  PartialRowDim;
-	size_t                         length;
+	// debug checking number of comparision operations that changed
+	size_t compareChange;
 
-	CppAD::vector<size_t>          indvar;
-	CppAD::vector<size_t>          depvar;
-	CppAD::vector<bool>         parameter;
+	// order of the informaiton currently stored in Taylor array
+	size_t order;
 
-	TapeRec<Base>                    *Rec;
+	// number of columns in the currently allocated Taylor array
+	size_t TaylorColDim;
 
-	Base                          *Taylor;
-	Base                         *Partial;
+	// number of rows in the currently allocated Partial array
+	size_t PartialColDim;
+
+	// number of rows (variables) in the Taylor and Partial arrays
+	size_t totalNumVar;
+
+	// row indices for the independent variables
+	CppAD::vector<size_t> indvar;
+
+	// row indices for the dependent variables
+	CppAD::vector<size_t> depvar;
+
+	// which of the dependent variables are parameters 
+	CppAD::vector<bool> parameter;
+
+	// the operations corresponding to this function
+	TapeRec<Base> *Rec;
+
+	// the results of the forward mode calculations
+	Base *Taylor;
+
+	// the results of the reverse mode calculations
+	Base *Partial;
 };
 // ---------------------------------------------------------------------------
 
@@ -324,7 +341,7 @@ template <typename VectorADBase>
 ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 {	size_t   n = z.size();
 	size_t   i;
-	size_t   z_index;
+	size_t   z_taddr;
 	OpCode   op;
 
 	// check VectorADBase is Simple Vector class with AD<Base> elements
@@ -344,31 +361,31 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	VectorADBase z_copy(n);
 	for(i = 0; i < n; i++)
 	{	z_copy[i].value = z[i].value;
-		z_index         = z[i].index;
+		z_taddr         = z[i].taddr;
 		parameter[i]    = CppAD::Parameter(z[i]);
 		if( parameter[i] )
-			z_index = AD<Base>::Tape()->RecordParOp( z[i].value );
+			z_taddr = AD<Base>::Tape()->RecordParOp( z[i].value );
 
-		z_copy[i].MakeVariable( z_index );
+		z_copy[i].MakeVariable( z_taddr );
 	}
 
-	// length of the recording 
-	length = AD<Base>::Tape()->Rec.TotNumVar();
+	// total number of varables in this recording 
+	totalNumVar = AD<Base>::Tape()->Rec.TotNumVar();
 
 	// current order and row dimensions
 	order         = 0;
-	TaylorRowDim  = 1;
-	PartialRowDim = 0;
+	TaylorColDim  = 1;
+	PartialColDim = 0;
 
 	// recording
 	Rec     = new TapeRec<Base>( AD<Base>::Tape()->Rec );
-	Taylor  = new Base[length];
+	Taylor  = new Base[totalNumVar];
 	Partial = CppADNull;
 
 	// number of elements in u
 	n = u.size();
 	CppADUsageError(
-		n < length,
+		n < totalNumVar,
 		"independent variables vector has changed"
 	);
 
@@ -377,10 +394,10 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	for(i = 0; i < n; i++)
 	{	
 		CppADUsageError( 
-			u[i].index == i+1,
+			u[i].taddr == i+1,
 			"independent variable vector has changed"
 		);
-		// i+1 is both the operator and independent variable index
+		// i+1 is both the operator and independent variable taddr
 		op = Rec->GetOp(i+1);
 		CppADUsageError(
 			op == InvOp,
@@ -404,14 +421,14 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	n = z_copy.size();
 	depvar.resize(n);
 	for(i = 0; i < n; i++)
-	{	z_index  = z_copy[i].index;
-		CppADUnknownError( z_index > 0 );
-		CppADUnknownError( z_index < length );
-		depvar[i] = z_index;
+	{	z_taddr  = z_copy[i].taddr;
+		CppADUnknownError( z_taddr > 0 );
+		CppADUnknownError( z_taddr < totalNumVar );
+		depvar[i] = z_taddr;
 	}
 
 	// use independent variable values to fill in values for others
-	compareChange = ADForward(false, 0, length, Rec, TaylorRowDim, Taylor);
+	compareChange = ADForward(false, 0, totalNumVar, Rec, TaylorColDim, Taylor);
 	CppADUnknownError( compareChange == 0 );
 
 	// check the dependent variable values

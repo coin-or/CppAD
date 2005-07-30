@@ -146,7 +146,7 @@ template <class Base>
 class ADDiscrete {
 	typedef Base (*F) (const Base &x);
 public:
-	ADDiscrete(F f_) : f(f_), y_index( List()->size() )
+	ADDiscrete(F f_) : f(f_), y_taddr( List()->size() )
 	{	List()->push_back(this); }
 
 	// used during the recording process
@@ -157,24 +157,24 @@ public:
 		if( (AD<Base>::Tape()->State()==Recording) & Variable(x) )
 		{	AD<Base>::Tape()->RecordDisOp(
 				z,
-				x.index,
-				y_index
+				x.taddr,
+				y_taddr
 			);
 		}
 		return z;
 	}
 
 	// used to evaluate from the recording
-	static Base Eval(size_t y_index, const Base &x)
+	static Base Eval(size_t y_taddr, const Base &x)
 	{
-		CppADUnknownError(y_index < List()->size() );
+		CppADUnknownError(y_taddr < List()->size() );
 
-		return (*List())[y_index]->f(x);
+		return (*List())[y_taddr]->f(x);
 	}
 
 private:
 	const F            f;
-	const size_t y_index;
+	const size_t y_taddr;
 
 	static std::vector<ADDiscrete *> *List(void)
 	{	static std::vector<ADDiscrete *> list;
