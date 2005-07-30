@@ -397,7 +397,8 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 			u[i].taddr == i+1,
 			"independent variable vector has changed"
 		);
-		// i+1 is both the operator and independent variable taddr
+		// i+1 is both the operator index 
+		// and the independent variable taddr
 		op = Rec->GetOp(i+1);
 		CppADUsageError(
 			op == InvOp,
