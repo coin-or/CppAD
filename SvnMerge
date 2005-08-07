@@ -1,0 +1,32 @@
+# script to help in execution of svn merge command
+#
+# execute this script form the directory corresponding to 
+# http://www.coin-or.org/svn/CppAD/ 
+cd ..
+#
+# change trunk to the directory that will receive the changes
+ToDirectory=trunk
+#
+# change 56 to the version corresponding to the ToDirectory before
+# the changes
+StartRevision=56
+#
+# change branches/Brad to the direcotry that contains the changes 
+# (which have all been committed to the repository)
+FromDirectory=branches/Brad
+# 
+# change 60 to the version number corresponding to the FromDirectory
+EndRevision=60
+#
+# echo the svn merge command
+echo "cd  .."
+echo "svn merge \\"
+echo "	http://www.coin-or.org/svn/CppAD/$ToDirectory@$StartRevision \\"
+echo "	http://www.coin-or.org/svn/CppAD/$FromDirectory@$EndRevision \\"
+echo "	$ToDirectory"
+#
+# execute the svn merge command
+svn merge \
+	http://www.coin-or.org/svn/CppAD/$ToDirectory@$StartRevision \
+	http://www.coin-or.org/svn/CppAD/$FromDirectory@$EndRevision \
+	$ToDirectory
