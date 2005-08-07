@@ -25,6 +25,7 @@ $begin ADTape$$
 $aindex head$$
 
 $spell
+	taddr
 	inline
 	Var
 	Prip
@@ -164,7 +165,7 @@ $syntax%
 %$$
 is the offset where this $code VecAD$$ array
 starts in the cumulative array containing all the $code VecAD$$ arrays.
-It taddres the length of this $code VecAD$$ array 
+It indexes the length of this $code VecAD$$ array 
 and the rest of the array follows.
 $syntax%
 
@@ -218,7 +219,7 @@ $syntax%
 %$$
 is the offset where this $code VecAD$$ array
 starts in the cumulative array containing all the $code VecAD$$ arrays.
-It taddres the length of this $code VecAD$$ array 
+It indexes the length of this $code VecAD$$ array 
 and the rest of the array follows.
 $syntax%
 
@@ -446,7 +447,7 @@ The procedure call
 $syntax%
 	size_t %Tape%.AddVec(size_t  %length%, const %Base% *%data%)
 %$$
-adds a variable taddred array with the specified length and values to the tape.
+adds a variable indexed array with the specified length and values to the tape.
 We use $italic i$$ to denote the value returned by $code AddVec$$.
 The value $italic length$$ is added to $italic Rec$$ as follows:
 $syntax%

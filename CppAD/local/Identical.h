@@ -31,7 +31,7 @@ $spell
 $$
 
 $index identical, parameter$$
-$index paraemter, identical$$
+$index parameter, identical$$
 
 $section Check if a Value is Identically a Parameter$$
 
