@@ -255,8 +255,10 @@ Type Erf(const Type &x)
 
 	Type ax, value;
 
+	Type zero(0);
+
 	// |x|
-	ax = CondExp(x, x, -x);
+	ax = CondExpGe(x, zero, x, -x);
 
 	// erf(|x|) when |x| <= 0.84375
 	z = ax*ax;
@@ -272,7 +274,7 @@ Type Erf(const Type &x)
 	value = erx + P/Q; 
 
 	// erf(|x|) when |x| <= 1.25
-	Type Le1Dot25 = CondExp(ax - 0.84375, value, Le0Dot84375);
+	Type Le1Dot25 = CondExpGt(ax, Type(0.84375), value, Le0Dot84375);
 
 	// erf(|x|) when 1.25 < |x| <= 1 / 0.35
 	s = one/(ax*ax);
@@ -284,7 +286,7 @@ Type Erf(const Type &x)
 	value = one-r/ax;
 
 	// erf(|x|) when |x| <= 1 / 0.35
-	Type Le1OverDot35 = CondExp(ax - 1.25, value, Le1Dot25);
+	Type Le1OverDot35 = CondExpGt(ax, Type(1.25), value, Le1Dot25);
 
 	// erf(|x|) when 1 / 0.35 < |x| <= 6
 	R=rb0+s*(rb1+s*(rb2+s*(rb3+s*(rb4+s*(
@@ -295,17 +297,17 @@ Type Erf(const Type &x)
 	value = one-r/ax;
 
 	// erf(|x|) when |x| <= 6
-	Type Le6 = CondExp(ax - 1/.35, value, Le1OverDot35); 
+	Type Le6 = CondExpGt(ax, Type(1/.35), value, Le1OverDot35); 
 
 	// erf(|x|) when |x| > 6
 	Type Gt6 = one - tiny;
 
 	// erf(|x|) 
-	Type Gt0 = CondExp(ax - 6., Gt6, Le6);
+	Type Gt0 = CondExpGt(ax, Type(6.), Gt6, Le6);
 
-	// erf(x)
-	// in the x = 0 case, ax = -1, so want to switch sign again
-	return CondExp(x, Gt0, -Gt0);
+	// Gt0 = erf( CondExpGe(x, zero, x, -x) )
+	// so must switch sign in case where x < 0
+	return CondExpGe(x, zero, Gt0, -Gt0);
 }
 
 

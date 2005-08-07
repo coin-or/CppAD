@@ -1,5 +1,5 @@
-# ifndef CppADADMacroIncluded
-# define CppADADMacroIncluded
+# ifndef CppADADDefineIncluded
+# define CppADADDefineIncluded
 // BEGIN SHORT COPYRIGHT
 
 /* -----------------------------------------------------------------------
@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 /*
-$begin ADMacro$$
+$begin ADDefine$$
 $spell
 	Microsoft
 	VecADelem

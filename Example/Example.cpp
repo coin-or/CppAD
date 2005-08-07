@@ -147,25 +147,24 @@ bool Run(bool TestOk(void), const char *name)
 	)
 
 // macro that runs template cases with AD<double> elements
-# define RunADdouble(fun, name)                              \
-	ok &= Run(                                           \
-		 fun   < CppAD::vector  < AD<double> > >,    \
-	         name " with CppAD::vector"                  \
-	);                                                   \
-	ok &= Run(                                           \
-		 fun   <   std::vector  < AD<double> > >,    \
-		name  " with std::vector "                   \
-	);                                                   \
-	ok &= Run(                                           \
-		 fun   <   std::valarray< AD<double> > >,    \
-		name  " with std::valarray "                 \
+# define RunADdouble(fun, name)                                    \
+	ok &= Run(                                                 \
+		 fun   < CppAD::vector  < CppAD::AD<double> > >,   \
+	         name " with CppAD::vector"                        \
+	);                                                         \
+	ok &= Run(                                                 \
+		 fun   <   std::vector  < CppAD::AD<double> > >,   \
+		name  " with std::vector "                         \
+	);                                                         \
+	ok &= Run(                                                 \
+		 fun   <   std::valarray< CppAD::AD<double> > >,   \
+		name  " with std::valarray "                       \
 	)
 
-                // main program that runs all the tests
+// main program that runs all the tests
 int main(void)
 {	bool ok = true;
 	using namespace std;
-	using namespace CppAD;
 
 	// This comment is used by OneTest 
 

@@ -79,6 +79,8 @@ int main(void)
 {	bool ok = true;
 	using namespace std;
 
+	// This comment is used by OneTest 
+
 	ok &= Run( Add,             "Add"            );
 	ok &= Run( AddEq,           "AddEq"          );
 	ok &= Run( AddZero,         "AddZero"        );

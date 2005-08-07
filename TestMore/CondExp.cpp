@@ -19,102 +19,330 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 /*
-Old CondExp example now only used for testing
+Comprehensive test built on 08/07 for new user interface to CondExp 
 */
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
 
-bool CondExp(void)
+bool CondExp_pvvv(void)
 {	bool ok = true;
 
 	using namespace CppAD;
 
-	// independent variable vector, indices, values, and declaration
-	CppADvector< AD<double> > V(3);
-	size_t s = 0;
-	size_t t = 1;
-	size_t u = 2;
-	V[s]     = 1.;
-	V[t]     = 2.;
-	V[u]     = 3.;
-	Independent(V);
+	// independent variable vector
+	CppADvector< AD<double> > X(3);
+	X[0]     = 0.;
+	X[1]     = 1.;
+	X[2]     = 2.;
+	Independent(X);
 
-	// dependent variable vector and indices
-	CppADvector< AD<double> > W(5);
-	size_t x = 0;
-	size_t y = 1;
-	size_t z = 2;
-	size_t a = 3;
-	size_t b = 4;
+	// parameter value
+	AD<double> one = 1.; 
 
-	// CondExp(parameter, variable, variable)
-	AD<double> p = 1.;
-	W[x] = CondExp(p, V[t], V[u]);
+	// dependent variable vector 
+	CppADvector< AD<double> > Y(5);
 
-	// CondExp(variable, variable, variable)
-	W[y] = CondExp(V[s], V[t], V[u]);
+	// CondExp(parameter, variable, variable, variable)
+	Y[0] = CondExpLt(one, X[0], X[1], X[2]);
+	Y[1] = CondExpLe(one, X[0], X[1], X[2]);
+	Y[2] = CondExpEq(one, X[0], X[1], X[2]);
+	Y[3] = CondExpGe(one, X[0], X[1], X[2]);
+	Y[4] = CondExpGt(one, X[0], X[1], X[2]);
 
-	// CondExp(variable, variable, parameter)
-	W[z] = CondExp(V[s], V[t], p);
+	// create f: X -> Y 
+	ADFun<double> f(X, Y);
 
-	// CondExp(variable, parameter, variable)
-	W[a] = CondExp(V[s], p, V[u]);
-
-	// CondExp(variable, parameter, parameter)
-	AD<double> q = 2.;
-	W[b] = CondExp(V[s], p, q);
-
-	// create f: V -> W and vectors used for derivative calculations
-	ADFun<double> f(V, W);
+	// vectors for function values
 	CppADvector<double> v( f.Domain() );
 	CppADvector<double> w( f.Range() );
 
+	// vectors for derivative values
 	CppADvector<double> dv( f.Domain() );
 	CppADvector<double> dw( f.Range() );
 
-	// check function values
-	ok &= ( W[x] == V[t] );
-	ok &= ( W[y] == V[t] );
-	ok &= ( W[z] == V[t] );
-	ok &= ( W[a] == p );
-	ok &= ( W[b] == p );
-
-	// a case where V[s] <= 0
-	v[s] = -1.;
-	v[t] = 2.;
-	v[u] = 3.;
+	// check original function values
+	ok &= Y[0] == X[2];
+	ok &= Y[1] == X[2];
+	ok &= Y[2] == X[2];
+	ok &= Y[3] == X[1];
+	ok &= Y[4] == X[1];
 
 	// function values 
+	v[0] = 2.;
+	v[1] = 1.;
+	v[2] = 0.;
 	w    = f.Forward(0, v);
-	ok &= ( w[x] == v[t] );
-	ok &= ( w[y] == v[u] );
-	ok &= ( w[z] == p );
-	ok &= ( w[a] == v[u] );
-	ok &= ( w[b] == q );
+	ok &= ( w[0] == v[1] );
+	ok &= ( w[1] == v[1] );
+	ok &= ( w[2] == v[2] );
+	ok &= ( w[3] == v[2] );
+	ok &= ( w[4] == v[2] );
 
 	// forward mode derivative values
-	dv[s] = 1.;
-	dv[t] = 2.;
-	dv[u] = 3.;
+	dv[0] = 1.;
+	dv[1] = 2.;
+	dv[2] = 3.;
 	dw    = f.Forward(1, dv);
-	ok   &= (dw[x] == dv[t] );
-	ok   &= (dw[y] == dv[u] );
-	ok   &= (dw[z] == 0. );
-	ok   &= (dw[a] == dv[u] );
-	ok   &= (dw[b] == 0. );
+	ok   &= (dw[0] == dv[1] );
+	ok   &= (dw[1] == dv[1] );
+	ok   &= (dw[2] == dv[2] );
+	ok   &= (dw[3] == dv[2] );
+	ok   &= (dw[4] == dv[2] );
 
 	// reverse mode derivative values
-	dw[x] = 1.;
-	dw[y] = 2.;
-	dw[z] = 3.;
-	dw[a] = 4.;
-	dw[b] = 5.;
+	dw[0] = 1.;
+	dw[1] = 2.;
+	dw[2] = 3.;
+	dw[3] = 4.;
+	dw[4] = 5.;
 	dv    = f.Reverse(1, dw);
-	ok   &= (dv[s] == 0.);
-	ok   &= (dv[t] == dw[x] );
-	ok   &= (dv[u] == dw[y] + dw[a] );
+	ok   &= (dv[0] == 0.);
+	ok   &= (dv[1] == dw[0] + dw[1] );
+	ok   &= (dv[2] == dw[2] + dw[3] + dw[4] );
 	
+	return ok;
+}
+bool CondExp_vpvv(void)
+{	bool ok = true;
+
+	using namespace CppAD;
+
+	// independent variable vector
+	CppADvector< AD<double> > X(3);
+	X[0]     = 0.;
+	X[1]     = 1.;
+	X[2]     = 2.;
+	Independent(X);
+
+	// parameter value
+	AD<double> one = 1.; 
+
+	// dependent variable vector 
+	CppADvector< AD<double> > Y(5);
+
+	// CondExp(variable, parameter, variable, variable)
+	Y[0] = CondExpLt(X[0], one, X[1], X[2]);
+	Y[1] = CondExpLe(X[0], one, X[1], X[2]);
+	Y[2] = CondExpEq(X[0], one, X[1], X[2]);
+	Y[3] = CondExpGe(X[0], one, X[1], X[2]);
+	Y[4] = CondExpGt(X[0], one, X[1], X[2]);
+
+	// create f: X -> Y 
+	ADFun<double> f(X, Y);
+
+	// vectors for function values
+	CppADvector<double> v( f.Domain() );
+	CppADvector<double> w( f.Range() );
+
+	// vectors for derivative values
+	CppADvector<double> dv( f.Domain() );
+	CppADvector<double> dw( f.Range() );
+
+	// check original function values
+	ok &= Y[0] == X[1];
+	ok &= Y[1] == X[1];
+	ok &= Y[2] == X[2];
+	ok &= Y[3] == X[2];
+	ok &= Y[4] == X[2];
+
+	// function values 
+	v[0] = 2.;
+	v[1] = 1.;
+	v[2] = 0.;
+	w    = f.Forward(0, v);
+	ok &= ( w[0] == v[2] );
+	ok &= ( w[1] == v[2] );
+	ok &= ( w[2] == v[2] );
+	ok &= ( w[3] == v[1] );
+	ok &= ( w[4] == v[1] );
+
+	// forward mode derivative values
+	dv[0] = 1.;
+	dv[1] = 2.;
+	dv[2] = 3.;
+	dw    = f.Forward(1, dv);
+	ok   &= (dw[0] == dv[2] );
+	ok   &= (dw[1] == dv[2] );
+	ok   &= (dw[2] == dv[2] );
+	ok   &= (dw[3] == dv[1] );
+	ok   &= (dw[4] == dv[1] );
+
+	// reverse mode derivative values
+	dw[0] = 1.;
+	dw[1] = 2.;
+	dw[2] = 3.;
+	dw[3] = 4.;
+	dw[4] = 5.;
+	dv    = f.Reverse(1, dw);
+	ok   &= (dv[0] == 0.);
+	ok   &= (dv[1] == dw[3] + dw[4] );
+	ok   &= (dv[2] == dw[0] + dw[1] + dw[2] );
+	
+	return ok;
+}
+bool CondExp_vvpv(void)
+{	bool ok = true;
+
+	using namespace CppAD;
+
+	// independent variable vector
+	CppADvector< AD<double> > X(3);
+	X[0]     = 0.;
+	X[1]     = 1.;
+	X[2]     = 2.;
+	Independent(X);
+
+	// parameter value
+	AD<double> three = 3.; 
+
+	// dependent variable vector 
+	CppADvector< AD<double> > Y(5);
+
+	// CondExp(variable, variable, parameter, variable)
+	Y[0] = CondExpLt(X[0], X[1], three, X[2]);
+	Y[1] = CondExpLe(X[0], X[1], three, X[2]);
+	Y[2] = CondExpEq(X[0], X[1], three, X[2]);
+	Y[3] = CondExpGe(X[0], X[1], three, X[2]);
+	Y[4] = CondExpGt(X[0], X[1], three, X[2]);
+
+	// create f: X -> Y 
+	ADFun<double> f(X, Y);
+
+	// vectors for function values
+	CppADvector<double> v( f.Domain() );
+	CppADvector<double> w( f.Range() );
+
+	// vectors for derivative values
+	CppADvector<double> dv( f.Domain() );
+	CppADvector<double> dw( f.Range() );
+
+	// check original function values
+	ok &= Y[0] == three;
+	ok &= Y[1] == three;
+	ok &= Y[2] == X[2];
+	ok &= Y[3] == X[2];
+	ok &= Y[4] == X[2];
+
+	// function values 
+	v[0] = 2.;
+	v[1] = 1.;
+	v[2] = 0.;
+	w    = f.Forward(0, v);
+	ok &= ( w[0] == v[2] );
+	ok &= ( w[1] == v[2] );
+	ok &= ( w[2] == v[2] );
+	ok &= ( w[3] == three );
+	ok &= ( w[4] == three );
+
+	// forward mode derivative values
+	dv[0] = 1.;
+	dv[1] = 2.;
+	dv[2] = 3.;
+	dw    = f.Forward(1, dv);
+	ok   &= (dw[0] == dv[2] );
+	ok   &= (dw[1] == dv[2] );
+	ok   &= (dw[2] == dv[2] );
+	ok   &= (dw[3] == 0.    );
+	ok   &= (dw[4] == 0.    );
+
+	// reverse mode derivative values
+	dw[0] = 1.;
+	dw[1] = 2.;
+	dw[2] = 3.;
+	dw[3] = 4.;
+	dw[4] = 5.;
+	dv    = f.Reverse(1, dw);
+	ok   &= (dv[0] == 0.);
+	ok   &= (dv[1] == 0.);
+	ok   &= (dv[2] == dw[0] + dw[1] + dw[2] );
+	
+	return ok;
+}
+bool CondExp_vvvp(void)
+{	bool ok = true;
+
+	using namespace CppAD;
+
+	// independent variable vector
+	CppADvector< AD<double> > X(3);
+	X[0]     = 0.;
+	X[1]     = 1.;
+	X[2]     = 2.;
+	Independent(X);
+
+	// parameter value
+	AD<double> three = 3.; 
+
+	// dependent variable vector 
+	CppADvector< AD<double> > Y(5);
+
+	// CondExp(variable, variable, variable, parameter)
+	Y[0] = CondExpLt(X[0], X[1], X[2], three);
+	Y[1] = CondExpLe(X[0], X[1], X[2], three);
+	Y[2] = CondExpEq(X[0], X[1], X[2], three);
+	Y[3] = CondExpGe(X[0], X[1], X[2], three);
+	Y[4] = CondExpGt(X[0], X[1], X[2], three);
+
+	// create f: X -> Y 
+	ADFun<double> f(X, Y);
+
+	// vectors for function values
+	CppADvector<double> v( f.Domain() );
+	CppADvector<double> w( f.Range() );
+
+	// vectors for derivative values
+	CppADvector<double> dv( f.Domain() );
+	CppADvector<double> dw( f.Range() );
+
+	// check original function values
+	ok &= Y[0] == X[2];
+	ok &= Y[1] == X[2];
+	ok &= Y[2] == three;
+	ok &= Y[3] == three;
+	ok &= Y[4] == three;
+
+	// function values 
+	v[0] = 2.;
+	v[1] = 1.;
+	v[2] = 0.;
+	w    = f.Forward(0, v);
+	ok &= ( w[0] == three );
+	ok &= ( w[1] == three );
+	ok &= ( w[2] == three );
+	ok &= ( w[3] == v[2]  );
+	ok &= ( w[4] == v[2]  );
+
+	// forward mode derivative values
+	dv[0] = 1.;
+	dv[1] = 2.;
+	dv[2] = 3.;
+	dw    = f.Forward(1, dv);
+	ok   &= (dw[0] == 0.    );
+	ok   &= (dw[1] == 0.    );
+	ok   &= (dw[2] == 0.    );
+	ok   &= (dw[3] == dv[2] );
+	ok   &= (dw[4] == dv[2] );
+
+	// reverse mode derivative values
+	dw[0] = 1.;
+	dw[1] = 2.;
+	dw[2] = 3.;
+	dw[3] = 4.;
+	dw[4] = 5.;
+	dv    = f.Reverse(1, dw);
+	ok   &= (dv[0] == 0.);
+	ok   &= (dv[1] == 0.);
+	ok   &= (dv[2] == dw[3] + dw[4] );
+	
+	return ok;
+}
+bool CondExp(void)
+{	bool ok  = true;
+	ok      &= CondExp_pvvv();
+	ok      &= CondExp_vpvv();
+	ok      &= CondExp_vvpv();
+	ok      &= CondExp_vvvp();
 	return ok;
 }
 // END PROGRAM

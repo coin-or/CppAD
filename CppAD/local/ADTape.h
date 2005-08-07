@@ -134,7 +134,7 @@ fields of $italic z$$ are outputs.
 Upon return from $code RecordInvOp$$, 
 $italic z$$ is in the list of variables and
 $syntax%%z%.taddr%$$ 
-is the taddr of the new independent variable in the tape.
+is the taddr of the new tape record. 
 $pre
 
 $$
@@ -164,13 +164,13 @@ $syntax%
 %$$
 is the offset where this $code VecAD$$ array
 starts in the cumulative array containing all the $code VecAD$$ arrays.
-This offset corresponds to the length of this $code VecAD$$ array 
+It taddres the length of this $code VecAD$$ array 
 and the rest of the array follows.
 $syntax%
 
 %x_taddr%
 %$$
-provides the information necessary to retriever the index for this 
+provides the information necessary to retriever the taddr in for this 
 element within the $code VecAD$$ array.
 This has the following meaning depending on the value of $italic op$$:
 $table
@@ -179,7 +179,7 @@ $bold op$$
 $code LdpOp$$ 
 	$cnext location of the index in $syntax%%Rec%.GetPar%$$ $rnext
 $code LdvOp$$ 
-	$cnext taddr as a variable in the tape
+	$cnext location of the taddr as a variable in the tape
 $tend
 $syntax%
 
@@ -218,13 +218,13 @@ $syntax%
 %$$
 is the offset where this $code VecAD$$ array
 starts in the cumulative array containing all the $code VecAD$$ arrays.
-This offset corresponds to the length of this $code VecAD$$ array 
+It taddres the length of this $code VecAD$$ array 
 and the rest of the array follows.
 $syntax%
 
 %x_taddr%
 %$$
-provides the information necessary to retrieve the index for this 
+provides the information necessary to retrieve the taddr for this 
 $code VecAD$$ element within this $code VecAD$$ array.
 This has the following meaning depending on the value of $italic op$$:
 $table
@@ -235,9 +235,9 @@ $code StppOp$$
 $code StpvOp$$
 	$cnext location of the index in $syntax%%Rec%.GetPar%$$ $rnext
 $code StvpOp$$ 
-	$cnext taddr as a variable in the tape  $rnext
+	$cnext location of the taddr as a variable in the tape  $rnext
 $code StvvOp$$ 
-	$cnext taddr as a variable in the tape 
+	$cnext location of the taddr as a variable in the tape 
 $tend
 $syntax%
 
@@ -254,9 +254,9 @@ $code StppOp$$
 $code StvpOp$$
 	$cnext location of the value in $syntax%%Rec%.GetPar%$$ $rnext
 $code StpvOp$$ 
-	$cnext taddr as a variable in the tape  $rnext
+	$cnext location of the taddr as a variable in the tape  $rnext
 $code StvvOp$$ 
-	$cnext taddr as a variable in the tape  
+	$cnext location of the taddr as a variable in the tape  
 $tend
 $syntax%
 
@@ -446,7 +446,7 @@ The procedure call
 $syntax%
 	size_t %Tape%.AddVec(size_t  %length%, const %Base% *%data%)
 %$$
-adds a variable indexed array with the specified length and values to the tape.
+adds a variable taddred array with the specified length and values to the tape.
 We use $italic i$$ to denote the value returned by $code AddVec$$.
 The value $italic length$$ is added to $italic Rec$$ as follows:
 $syntax%
@@ -502,10 +502,12 @@ class ADTape {
 	friend void PrintFor <Base>
 		(const char *text, const AD<Base> &x);
 
-	friend AD<Base> CondExp   <Base> (
-		const AD<Base> &exp1, 
-		const AD<Base> &exp2, 
-		const AD<Base> &exp3 
+	friend AD<Base> CondExpOp <Base> (
+		enum CompareOp  cop          ,
+		const AD<Base> &left         , 
+		const AD<Base> &right        , 
+		const AD<Base> &trueCase     , 
+		const AD<Base> &falseCase 
 	);
 
 	friend bool Parameter     <Base> 
@@ -555,10 +557,12 @@ private:
 
 	// see CondExp.h
 	void RecordCondExp(
-		AD<Base>       &z,
-		const AD<Base> &e1,
-		const AD<Base> &e2,
-		const AD<Base> &e3
+		enum CompareOp  cop           ,
+		AD<Base>       &returnValue   ,
+		const AD<Base> &left          ,
+		const AD<Base> &right         ,
+		const AD<Base> &trueCase      ,
+		const AD<Base> &falseCase
 	);
 
 	// load ADVec element 
@@ -713,7 +717,7 @@ void ADTape<Base>::RecordLoadOp(
 	z.taddr = z_taddr;
 
 	// Ind values for this instruction
-	// (reserve space for third index which is set by f.Forward(0, *) )
+	// (space reserved by third taddr is set by f.Forward(0, *) )
 	Rec.PutInd(offset, x_taddr, 0);
 
 	// check that z is a dependent variable
@@ -1019,7 +1023,7 @@ size_t ADTape<Base>::AddVec(size_t length, const Base *data)
 		Rec.PutVecInd( vecInd );
 	}
  
-	// return the index in VecInd of the length (where the vector starts)
+	// return the taddr of the length (where the vector starts)
 	return start;
 }
 

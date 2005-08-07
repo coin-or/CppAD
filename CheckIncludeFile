@@ -42,3 +42,4 @@ diff -b junk.2 junk.3
 #
 echo "-----------------------------------------------------"
 echo "Nothing should be between the two dashed lines above"
+echo "If CppAD/config.h appears, run Build all and try again"

@@ -43,10 +43,13 @@ namespace CppAD {
 	template <class Base> bool GreaterThanZero (const AD<Base> &u);
 	
 	// CondExp
-	template <class Base> AD<Base> CondExp (
-		const AD<Base> &exp1, 
-		const AD<Base> &exp2, 
-		const AD<Base> &exp3 
+	enum CompareOp {CompareLt, CompareLe, CompareEq, CompareGe, CompareGt};
+	template <class Base> AD<Base> CondExpOp (
+		enum CompareOp         cop ,
+		const AD<Base>       &left , 
+		const AD<Base>      &right , 
+		const AD<Base>   &trueCase , 
+		const AD<Base>  &falseCase 
 	);
 	
 	// IdenticalEqual

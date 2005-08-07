@@ -41,7 +41,7 @@ $spell
 	exe
 	Cygwin
 	Microsoft
-	dsw
+	sln
 	CppAD
 	Adolc
 	Fadbad
@@ -108,7 +108,7 @@ contains developer documentation for CppAD.
 
 $head Getting Started$$
 Using Microsoft Visual C++,
-open the workspace $code GetStarted/GetStarted.dsw$$
+open the workspace $code GetStarted/GetStarted.sln$$
 in Visual Studio and then select $code Build | Build GetStarted.exe$$.
 Then in a Dos box, execute the following commands
 $codep
@@ -118,7 +118,7 @@ $$
 
 $head Extensive Examples and Testing$$
 Using Microsoft Visual C++,
-open the workspace $code Example/Example.dsw$$ in Visual Studio.
+open the workspace $code Example/Example.sln$$ in Visual Studio.
 Then select $code Build | Build Example.exe$$.
 Then in a Dos box, execute the following commands
 $codep
@@ -128,7 +128,7 @@ $$
 
 $head Printing During Forward Mode Example and Testing$$
 Using Microsoft Visual C++,
-open the workspace $code PrintFor/PrintFor.dsw$$ in Visual Studio.
+open the workspace $code PrintFor/PrintFor.sln$$ in Visual Studio.
 Then select $code Build | Build PrintFor.exe$$.
 Then in a Dos box, execute the following commands
 $codep
@@ -138,7 +138,7 @@ $$
 
 $head More Correctness Testing$$
 Using Microsoft Visual C++,
-open the workspace $code TestMore/TestMore.dsw$$
+open the workspace $code TestMore/TestMore.sln$$
 in Visual Studio and then select $code Build | Build TestMore.exe$$.
 Then in a Dos box, execute the following commands
 $codep
@@ -149,7 +149,7 @@ $$
 
 $head Speed Testing$$
 Using Microsoft Visual C++,
-open the workspace $code Speed/Speed.dsw$$
+open the workspace $code Speed/Speed.sln$$
 in Visual Studio and then select $code Build | Build Speed.exe$$.
 Then in a Dos box, execute the following commands
 $codep

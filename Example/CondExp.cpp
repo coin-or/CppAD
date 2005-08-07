@@ -72,17 +72,20 @@ bool CondExp(void)
 		X[i] = 1.;
 	Independent(X);
 
-	// sum of log (- infinity if any negative)
+	// Sum with respect to i of log of absolute value of X[i]
+	// sould be - infinity if any of the X[i] are zero
 	AD<double> MinusInfinity = - Infinity(0.);
 	AD<double> Sum           = 0.;
-	AD<double> Term;
+	AD<double> Zero(0);
 	for(i = 0; i < m; i++)
-	{	// if X[i] > 0., Term = log(X[i])
-		// if X[i] < 0., Term = log(-X[i])
-		// Otherwise,    Term = - infinity
-		Term = CondExp(X[i], log(X[i]), MinusInfinity);
-		Term = CondExp(-X[i], log(-X[i]), Term);
-		Sum += Term;
+	{	// if X[i] > 0
+		Sum += CondExpGt(X[i], Zero, log(X[i]),     Zero);
+
+		// if X[i] < 0
+		Sum += CondExpLt(X[i], Zero, log(-X[i]),    Zero);
+
+		// if X[i] == 0
+		Sum += CondExpEq(X[i], Zero, MinusInfinity, Zero);
 	}
 
 	// dependent variable vector 

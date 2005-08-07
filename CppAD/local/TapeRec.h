@@ -98,10 +98,12 @@ $syntax%
 	inline void %Rec%.PutInd(size_t %ind0%)
 	inline void %Rec%.PutInd(size_t %ind0%, size_t %ind1%)
 	inline void %Rec%.PutInd(size_t %ind0%, size_t %ind1%, size_t %ind2%)
+	inline void %Rec%.PutInd(
+		size_t %ind0%, size_t %ind1%, size_t %ind2%, size_t %ind3%)
 %$$
 places the values passed to $code PutInd$$ at the end of the
 Ind recording and in the order passed; i.e., $italic ind0$$
-comes before $italic ind1$$ which is before $italic ind2$$.
+comes before $italic ind1$$ e.t.c.
 
 
 $subhead Par$$
@@ -384,6 +386,14 @@ public:
 	inline void PutInd(size_t ind0); 
 	inline void PutInd(size_t ind0, size_t ind1); 
 	inline void PutInd(size_t ind0, size_t ind1, size_t ind2); 
+	inline void PutInd(
+		size_t ind0, 
+		size_t ind1, 
+		size_t ind2, 
+		size_t ind3, 
+		size_t ind4, 
+		size_t ind5
+	); 
 	inline size_t PutTxt(const char *text);
 
 	/*
@@ -569,6 +579,31 @@ inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2)
 	Ind[NumberInd++] = ind1;
 	Ind[NumberInd++] = ind2;
 
+}
+
+template <class Base>
+inline void TapeRec<Base>::PutInd(
+	size_t ind0, 
+	size_t ind1, 
+	size_t ind2, 
+	size_t ind3, 
+	size_t ind4, 
+	size_t ind5
+)
+{ 
+	CppADUnknownError( LengthInd > 0 );
+	CppADUnknownError( NumberInd <= LengthInd );
+	if( NumberInd + 6 >= LengthInd )
+	{	LengthInd    = 6 + 2 * LengthInd;
+		ExtendBuffer(LengthInd, NumberInd, Ind);
+	}
+	CppADUnknownError( NumberInd + 6 < LengthInd );
+	Ind[NumberInd++] = ind0;
+	Ind[NumberInd++] = ind1;
+	Ind[NumberInd++] = ind2;
+	Ind[NumberInd++] = ind3;
+	Ind[NumberInd++] = ind4;
+	Ind[NumberInd++] = ind5;
 }
 
 template <class Base>

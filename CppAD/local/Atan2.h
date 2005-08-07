@@ -58,8 +58,9 @@ $latex \[
 	\cos ( \theta )  & = & x  / \sqrt{ x^2 + y^2 }
 \end{array}
 \] $$
-The $code >$$ operator must be defined for objects of type $italic Base$$;
-for example, $italic Base$$ cannot be $code std::complex<double>$$. 
+The type $italic Base$$ must support 
+$xref/CondExp/Type/conditional expressions/$$; 
+for example, $italic Base$$ can be $code float$$ or $code double$$.
 
 $head Example$$
 $children%
@@ -84,8 +85,9 @@ AD<Base> atan2 (
 	AD<Base> beta;
 	AD<Base> theta;
 
-	Base pi2 = Base(2) * atan(1.);
-	Base pi  = Base(2) * pi2;
+	AD<Base> zero = 0;
+	AD<Base> pi2  = 2. * atan(1.);
+	AD<Base> pi   = 2. * pi2;
 
 	AD<Base> ax = abs(x);
 	AD<Base> ay = abs(y);
@@ -95,15 +97,15 @@ AD<Base> atan2 (
 	// else	theta = pi2 - atan(ax / ay);
 	alpha = atan(ay / ax);
 	beta  = pi2 - atan(ax / ay);
-	theta = CondExp(ax - ay, alpha, beta); 
+	theta = CondExpGt(ax, ay, alpha, beta); 
 
-	// if( x <= Base(0) )
+	// if( x <= 0 )
 	// 	theta = pi - theta;
-	theta = CondExp(x, theta, pi - theta);
+	theta = CondExpLe(x, zero, pi - theta, theta);
 	
-	// if( y <= Base(0) )
+	// if( y <= 0 )
 	// 	theta = - theta;
-	theta = CondExp(y, theta, -theta);
+	theta = CondExpLe(y, zero, -theta, theta);
 
 	return theta;
 }

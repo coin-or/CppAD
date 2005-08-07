@@ -172,6 +172,13 @@ void ADReverse(
 	Base            *pX;
 	Base          *pTmp;
 
+	// used by CExp operator 
+	Base        *trueCase;
+	Base        *falseCase;
+	const Base  *left;
+	const Base  *right;
+	const Base   zero = Base(0);
+
 	// check numvar argument
 	CppADUnknownError( Rec->TotNumVar() == numvar );
 	CppADUnknownError( numvar > 0 );
@@ -315,115 +322,36 @@ void ADReverse(
 			break;
 			// -------------------------------------------------
 
-			case CEpppOp:
+			case CExpOp:
 			CppADUnknownError( n_var == 1);
-			CppADUnknownError(0); // this instruction is not used
-			break;
-			// ---------------------------------------------------
-
-			case CEpvpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 3 );
-			CppADUnknownError( ind[1] < i_var );
-			pX     = Partial + ind[1] * K;
-			pX[d] += CondExp(
-				*(Rec->GetPar( ind[0] )),
-				pZ[d],
-				Base(0)
-			);
-			break;
-
-			// ---------------------------------------------------
-
-			case CEppvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 3 );
-			CppADUnknownError( ind[2] < i_var );
-			pY     = Partial + ind[2] * K;
-			pY[d] += CondExp(
-				*(Rec->GetPar( ind[0] )),
-				Base(0),
-				pZ[d]
-			);
-			break;
-
-			// ---------------------------------------------------
-
-			case CEpvvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 3 );
-			CppADUnknownError( ind[1] < i_var );
-			CppADUnknownError( ind[2] < i_var );
-			pX     = Partial + ind[1] * K;
-			pY     = Partial + ind[2] * K;
-			pX[d] += CondExp(
-				*(Rec->GetPar( ind[0] )),
-				pZ[d],
-				Base(0)
-			);
-			pY[d] += CondExp(
-				*(Rec->GetPar( ind[0] )),
-				Base(0),
-				pZ[d]
-			);
-			break;
-			// --------------------------------------------------
-
-			case CEvppOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 3 );
-
-			break;
-			// ---------------------------------------------------
-
-			case CEvvpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 3 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
-			pX     = Partial + ind[1] * K;
-			pX[d] += CondExp(
-				*(Taylor + ind[0] * J),
-				pZ[d],
-				Base(0)
-			);
-			break;
-
-			// ---------------------------------------------------
-
-			case CEvpvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 3 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[2] < i_var );
-			pY     = Partial + ind[2] * K;
-			pY[d] += CondExp(
-				*(Taylor + ind[0] * J),
-				Base(0),
-				pZ[d]
-			);
-			break;
-
-			// ---------------------------------------------------
-
-			case CEvvvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 3 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
-			CppADUnknownError( ind[2] < i_var );
-			pX     = Partial + ind[1] * K;
-			pY     = Partial + ind[2] * K;
-			pX[d] += CondExp(
-				*(Taylor + ind[0] * J),
-				pZ[d],
-				Base(0)
-			);
-			pY[d] += CondExp(
-				*(Taylor + ind[0] * J),
-				Base(0),
-				pZ[d]
-			);
+			CppADUnknownError( n_ind == 6);
+			CppADUnknownError( ind[1] != 0 );
+			if( ind[1] & 1 )
+				left = Taylor + ind[2] * J;
+			else	left = Rec->GetPar(ind[2]);
+			if( ind[1] & 2 )
+				right = Taylor + ind[3] * J;
+			else	right = Rec->GetPar(ind[3]);
+			if( ind[1] & 4 )
+			{	trueCase = Partial + ind[4] * K;
+				trueCase[d] += CondExpOp(
+					CompareOp( ind[0] ),
+					*left,
+					*right,
+					pZ[d],
+					zero
+				);
+			}
+			if( ind[1] & 8 )
+			{	falseCase = Partial + ind[5] * K;
+				falseCase[d] += CondExpOp(
+					CompareOp( ind[0] ),
+					*left,
+					*right,
+					zero,
+					pZ[d]
+				);
+			}
 			break;
 			// --------------------------------------------------
 

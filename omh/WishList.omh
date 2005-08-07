@@ -1,6 +1,5 @@
 $begin WishList$$
 $spell
-	Taylor
 	Vec
 	Cpp
 	Atan
@@ -10,20 +9,6 @@ $section The CppAD Wish List$$
 $index wish list$$
 $index new, features$$
 $index features, new$$
-
-$head Use Less Memory$$
-The $code Partial$$ array, which is used for reverse mode calculations,
-does not retain information between calls to $xref/Reverse/$$.
-It should be deleted between calls instead of retained for repeated use.
-$pre
-
-$$
-The $code Taylor$$ array, which is used for forward mode calculations,
-does retain information between calls to $xref/Forward/$$ and 
-is used also used by $xref/Reverse/$$.
-There should be an option to completely remove its memory
-when the user chooses to do so.
-
 
 $head VecAD$$
 The $code VecAD$$ vector type is currently 
