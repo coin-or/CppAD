@@ -64,14 +64,14 @@ $end
 # include <CppAD/Runge45.h>      // CppAD::Runge45
 
 namespace {
+	// --------------------------------------------------------------
 	class Fun {
+	private:
+		 CppAD::vector<double> w;
 	public:
 		// constructor
-		Fun(const CppAD::vector<double> &w_)
-		{	w.resize(2);
-			w[0] = w_[0];
-			w[1] = w_[1];
-		}
+		Fun(const CppAD::vector<double> &w_) : w(w_)
+		{ } 
 
 		// set f = x'(t)
 		void Ode(
@@ -81,11 +81,12 @@ namespace {
 		{	f[0] = - w[0] * x[0];
 			f[1] = + w[0] * x[0] - w[1] * x[1];	
 		}
-	private:
-		 CppAD::vector<double> w;
 	};
 
+	// --------------------------------------------------------------
 	class Method {
+	private:
+		Fun F;
 	public:
 		// constructor
 		Method(const CppAD::vector<double> &w_) : F(w_)
@@ -100,8 +101,6 @@ namespace {
 		}
 		size_t order(void)
 		{	return 4; }
-	private:
-		Fun F;
 	};
 }
 

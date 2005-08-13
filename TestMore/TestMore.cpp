@@ -49,6 +49,7 @@ extern bool Log(void);
 extern bool Mul(void);
 extern bool MulEq(void);
 extern bool MulZeroOne(void);
+extern bool OdeErrControl(void);
 extern bool Reverse(void);
 extern bool Rosen34(void);
 extern bool Runge45(void);
@@ -100,6 +101,7 @@ int main(void)
 	ok &= Run( Mul,             "Mul"            );
 	ok &= Run( MulEq,           "MulEq"          );
 	ok &= Run( MulZeroOne,      "MulZeroOne"     );
+	ok &= Run( OdeErrControl,   "OdeErrControl"  );
 	ok &= Run( Reverse,         "Reverse"        );
 	ok &= Run( Rosen34,         "Rosen34"        );
 	ok &= Run( Runge45,         "Runge45"        );

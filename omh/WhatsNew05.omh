@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew05$$
 $spell
+	cos
 	Le
 	Lt
 	Eq
@@ -77,6 +78,11 @@ $xref/InstallUnix/More Correctness Testing/unix/$$ ,
 $xref/InstallWindows/More Correctness Testing/windows/$$ 
 )
 has been added for the $xref/Sin//sin/$$ and $xref/Cos//cos/$$ functions.
+$pre
+
+$$
+The $xref/OdeErrControl/$$ routine could lock in an infinite loop.
+This has been fixed and a test case has been added to check for this problem.
 
 $head 08-07$$
 The $xref/CondExp//conditional expression/$$ function has been changed

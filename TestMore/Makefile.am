@@ -55,6 +55,7 @@ TestMore_SOURCES  = TestMore.cpp \
 	Mul.cpp \
 	MulEq.cpp \
 	MulZeroOne.cpp \
+	OdeErrControl.cpp \
 	Rosen34.cpp \
 	Runge45.cpp \
 	Reverse.cpp \

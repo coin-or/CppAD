@@ -400,23 +400,17 @@ Vector OdeErrControl(
 		step = scur;
 
 		// check maximum
-		if( smax <= step )
+		if( step >= smax )
 			step = smax;
 
 		// check minimum
 		if( step <= smin )
 			step = smin;
 
-		// check past end
-		if( tf - ta <= step )
+		// check if near the end
+		if( tf <= ta + 1.5 * step )
 			tb = tf;
-		else
-		{	if( step == smin )
-				tb = ta + step;
-			else if( tf - (ta + step) <= smin )
-				tb = (ta + tf) / two;
-			else	tb = ta + step;
-		}
+		else	tb = ta + step;
 
 		// try using this step size
 		method.step(ta, tb, xa, xb, eb);
@@ -436,11 +430,12 @@ Vector OdeErrControl(
 					lambda = root;
 			}
 		}
-		if( one <= lambda || step <= smin)
-		{	// this step is within error limits or of minimum size
+		if( one <= lambda || step <= 1.5 * smin)
+		{	// this step is within error limits or 
+			// close to the minimum size
+			ta = tb;
 			for(i = 0; i < n; i++)
-			{	ta     = tb;
-				xa[i]  = xb[i];
+			{	xa[i]  = xb[i];
 				ef[i] += eb[i];
 			}
 		}
