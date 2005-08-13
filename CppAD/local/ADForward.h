@@ -390,7 +390,22 @@ size_t ADForward(
 			// use Tmp for data stored in variable record
 			Tmp = Taylor + (i_var+1) * J;
 			X   = Taylor + ind[0] * J;
-			ForSinCos(d, Tmp, Z, X);
+			ForTrigSinCos(d, Tmp, Z, X);
+			break;
+			// ---------------------------------------------------
+
+			case CoshOp:
+			CppADUnknownError( n_ind == 1 );
+			CppADUnknownError( ind[0] < i_var );
+
+			// hyperbolic cosine and sine must come in pairs
+			CppADUnknownError( n_var == 2);
+			CppADUnknownError( (i_var+1) < numvar  );
+
+			// use Tmp for data stored in variable record
+			Tmp = Taylor + (i_var+1) * J;
+			X   = Taylor + ind[0] * J;
+			ForHypSinCos(d, Tmp, Z, X);
 			break;
 			// -------------------------------------------------
 
@@ -922,7 +937,22 @@ size_t ADForward(
 			// use Tmp for data stored in second variable
 			Tmp = Taylor + (i_var+1) * J;
 			X   = Taylor + ind[0] * J;
-			ForSinCos(d, Z, Tmp, X);
+			ForTrigSinCos(d, Z, Tmp, X);
+			break;
+			// -------------------------------------------------
+
+			case SinhOp:
+			CppADUnknownError( n_ind == 1 );
+			CppADUnknownError( ind[0] < i_var );
+
+			// sine and cosine must come in pairs
+			CppADUnknownError( n_var == 2);
+			CppADUnknownError( (i_var+1) < numvar  );
+
+			// use Tmp for data stored in second variable
+			Tmp = Taylor + (i_var+1) * J;
+			X   = Taylor + ind[0] * J;
+			ForHypSinCos(d, Z, Tmp, X);
 			break;
 			// -------------------------------------------------
 

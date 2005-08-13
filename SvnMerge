@@ -7,16 +7,16 @@ cd ..
 # change trunk to the directory that will receive the changes
 ToDirectory=trunk
 #
-# change 56 to the version corresponding to the ToDirectory before
+# change 63 to the version corresponding to the ToDirectory before
 # the changes
-StartRevision=56
+StartRevision=63
 #
 # change branches/Brad to the direcotry that contains the changes 
 # (which have all been committed to the repository)
 FromDirectory=branches/Brad
 # 
-# change 60 to the version number corresponding to the FromDirectory
-EndRevision=60
+# change 68 to the version number corresponding to the FromDirectory
+EndRevision=68
 #
 # echo the svn merge command
 echo "cd  .."

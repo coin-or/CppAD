@@ -1,5 +1,5 @@
-# ifndef CppADSinIncluded
-# define CppADSinIncluded
+# ifndef CppADSinhIncluded
+# define CppADSinhIncluded
 
 // BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
@@ -23,23 +23,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 -------------------------------------------------------------------------------
-$begin Sin$$
+$begin Sinh$$
 $spell
 	Cpp
 	namespace
 	const
-	sin
+	sinh
 $$
 
-$index sin$$
-$index trigonometric, sine$$
+$index sinh$$
+$index hyperbolic, sine$$
 
-$section The Trigonometric Sine Function$$
+$section The Hyperbolic Sine Function$$
 
 $table
 $bold Syntax$$ 
 $cnext 
-$syntax%AD<%Base%> sin (const AD<%Base%> &%x%)%$$
+$syntax%AD<%Base%> sinh (const AD<%Base%> &%x%)%$$
 $tend
 
 $fend 20$$
@@ -48,28 +48,28 @@ $head Description$$
 Returns an
 $syntax%AD<%Base%>%$$ object that is equal to
 $syntax%
-	sin(%x%)
+	sinh(%x%)
 %$$
-where $code sin$$ has the same interpretation as
+where $code sinh$$ has the same interpretation as
 for the corresponding $xref/glossary/Base Type/base type/$$.
 
 
 $head Base Type Requirement$$
-A definition for the $code sin$$ function
+A definition for the $code sinh$$ function
 is automatically included (in the $code CppAD$$ namespace)
 for the following 
 $xref/glossary/Base Type/base types/$$:
 $code float$$, $code double$$, $code complex<float>$$, 
 and $code complex<double>$$.
-If the $code sin$$ function is used with any other base type, 
+If the $code sinh$$ function is used with any other base type, 
 it must be a defined for that base type.
 
 $head Derivative Assumption$$
 It is assumed that
 $latex \[
 \begin{array}{lcr}
-	\D{[ \sin (x) ]}{x} & = & \cos (x)   \\
-	\D{[ \cos (x) ]}{x} & = & - \sin (x)
+	\D{[ \sinh (x) ]}{x} & = & \cosh (x)   \\
+	\D{[ \cosh (x) ]}{x} & = & \sinh (x)
 \end{array}
 \] $$
 
@@ -77,10 +77,10 @@ $latex \[
 
 $head Example$$
 $children%
-	Example/Sin.cpp
+	Example/Sinh.cpp
 %$$
 The file
-$xref/Sin.cpp/$$
+$xref/Sinh.cpp/$$
 contains an example and a test of this function.   
 It returns true if it succeeds and false otherwise.
 
@@ -91,22 +91,22 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-CppADStandardMathFun(sin)
+CppADStandardMathFun(sinh)
 
 
 template <class Base>
-AD<Base> AD<Base>::Sin (void) const
-{	using CppAD::sin;
+AD<Base> AD<Base>::Sinh (void) const
+{	using CppAD::sinh;
 
 	AD<Base> result;
 	CppADUnknownError( result.id == 0 );
 
-	result.value   = sin(value);
+	result.value   = sinh(value);
 
 	if(	(Tape()->State() == Recording) & Variable(*this) ) 
 	{
 		// add this operation to the tape
-		Tape()->RecordOp(SinOp, result, taddr);
+		Tape()->RecordOp(SinhOp, result, taddr);
 
 	}
 
@@ -114,12 +114,12 @@ AD<Base> AD<Base>::Sin (void) const
 }
 
 template <class Base>
-inline AD<Base> sin(const AD<Base> &x)
-{	return x.Sin(); }
+inline AD<Base> sinh(const AD<Base> &x)
+{	return x.Sinh(); }
 
 template <class Base>
-inline AD<Base> sin(const VecADelem<Base> &x)
-{	return sin( x.ADBase() ); }
+inline AD<Base> sinh(const VecADelem<Base> &x)
+{	return sinh( x.ADBase() ); }
 
 } // END CppAD namespace
 

@@ -24,15 +24,23 @@ $spell
 	cos
 $$
 
-$index sin, reverse theory$$
-$index theory, sin reverse$$
-$index reverse, sin theory$$
+$index sin, reverse$$
+$index sinh, reverse$$
+$index cos, reverse$$
+$index cosh, reverse$$
 
-$index cos, reverse theory$$
-$index theory, cos reverse$$
-$index reverse, cos theory$$
+$index theory, sin$$
+$index theory, sinh$$
+$index theory, cos$$
+$index theory, cosh$$
 
-$section Sine and Cosine Functions Reverse Mode Theory$$
+$index reverse, sin$$
+$index reverse, sinh$$
+$index reverse, cos$$
+$index reverse, cosh$$
+
+
+$section Trigonometric and Hyperbolic Sine and Cosine Reverse Theory$$
 
 
 We use the reverse theory
@@ -43,23 +51,39 @@ $xref%
 %$$
 definition for the functions $latex H$$ and $latex G$$.
 In addition, 
+we use the following definitions for $latex s$$ and $latex c$$
+and the integer $latex \ell$$
 
-we use $latex s$$ and $latex c$$
-for the $th p$$ order Taylor coefficient 
-row vectors corresponding to 
-$latex \sin [ X(t) ]$$ and $latex \cos [ X(t) ]$$.
-For the sine and cosine function cases,
+$table
+Coefficients 
+	$cnext $cnext $latex s$$ 
+	$cnext $cnext $latex c$$ 
+	$cnext $cnext $latex \ell$$
+$rnext
+Trigonometric Case  
+	$cnext $cnext $latex \sin [ X(t) ]$$
+	$cnext $cnext $latex \cos [ X(t) ]$$
+	$cnext $cnext 1
+$rnext
+Hyperbolic Case     
+	$cnext $cnext $latex \sinh [ X(t) ]$$ 
+	$cnext $cnext $latex \cosh [ X(t) ]$$ 
+	$cnext $cnext -1
+$tend
+We use the value
 $latex \[
 	z^{(j)} = ( s^{(j)} , c^{(j)} )
 \] $$ 
 in the definition for $latex G$$ and $latex H$$.
 The forward mode formulas for the
-$xref/SinForward//sine/$$ and $xref/CosForward//cosine/$$ 
-functions are
+$xref/SinCosForward//sine and cosine/$$ functions are
 $latex \[
 \begin{array}{rcl}
-	s^{(j)}  & = & \sin ( x^{(0)} ) \\
-	c^{(j)}  & = & \cos ( x^{(0)} )
+s^{(j)}  & = & \frac{1 + \ell}{2} \sin ( x^{(0)} ) 
+           +   \frac{1 - \ell}{2} \sinh ( x^{(0)} ) 
+\\
+c^{(j)}  & = & \frac{1 + \ell}{2} \cos ( x^{(0)} ) 
+           +   \frac{1 - \ell}{2} \cosh ( x^{(0)} ) 
 \end{array}
 \] $$
 
@@ -69,7 +93,7 @@ $latex \[
 \begin{array}{rcl}
 s^{(j)} & = & \frac{1}{j} 
 	\sum_{k=1}^{j} k x^{(k)} c^{(j-k)}  \\
-c^{(j)} & = & - \frac{1}{j} 
+c^{(j)} & = & \ell \frac{1}{j} 
 	\sum_{k=1}^{j} k x^{(k)} s^{(j-k)} 
 \end{array}
 \] $$ 
@@ -81,7 +105,7 @@ $latex \[
 \D{H}{ x^{(j)} } & = & 
 \D{G}{ x^{(j)} }  
 + \D{G}{ s^{(j)} } c^{(0)}
-- \D{G}{ c^{(j)} } s^{(0)}
++ \ell \D{G}{ c^{(j)} } s^{(0)}
 \end{array}
 \] $$ 
 
@@ -92,10 +116,10 @@ $latex \[
 \D{H}{ x^{(k)} } & = & 
 \D{G}{ x^{(k)} }  
 + \D{G}{ s^{(j)} } \frac{1}{j} k c^{(j-k)}
-- \D{G}{ c^{(j)} } \frac{1}{j} k s^{(j-k)}
++ \ell \D{G}{ c^{(j)} } \frac{1}{j} k s^{(j-k)}
 \\
 \D{H}{ s^{(j-k)} } & = & 
-\D{G}{ s^{(j-k)} } - \D{G}{ c^{(j)} } k x^{(k)}
+\D{G}{ s^{(j-k)} } + \ell \D{G}{ c^{(j)} } k x^{(k)}
 \\
 \D{H}{ c^{(j-k)} } & = & 
 \D{G}{ c^{(j-k)} } + \D{G}{ s^{(j)} } k x^{(k)}

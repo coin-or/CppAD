@@ -24,6 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin ForSinCos$$
 $spell
+	Hyp
 	Sin
 	Cos
 	Taylor
@@ -34,27 +35,41 @@ $spell
 $$
 
 $index forward, cos$$
+$index forward, cosh$$
 $index forward, sin$$
+$index forward, sinh$$
 $index cos, forward$$
+$index cosh, forward$$
 $index sin, forward$$
+$index sinh, forward$$
 $index ForSinCos$$
 
-$section Forward Mode Sine and Cosine Functions$$
+$section Forward Mode Trigonometric and Hyperbolic Sine and Cosine$$
 
 $table
 $bold Syntax$$ 
 $cnext
-$syntax%inline void ForSinCos(size_t %d%, 
+$syntax%inline void For%Type%SinCos(size_t %d%, 
 	%Base% *%s%, %Base% *%c%, const %Base% *%x%)%$$
 $tend
 
 $head Description$$
 Computes the $italic d$$ order Taylor coefficient for $latex S$$
-and $latex C$$ where 
-$syntax%
-	%S% = sin(%X%)
-	%C% = cos(%X%)
-%$$
+and $latex C$$ where  are given by
+
+$table
+$italic Type$$
+	$cnext $latex S$$              
+	$cnext $latex C$$         
+$rnext
+$code Trig$$   
+	$cnext $latex \sin [ X(t) ]$$  
+	$cnext $latex \cos [ X(t) ]$$    
+$rnext
+$code Hyp$$    
+	$cnext $latex \sinh[  X(t) ]$$ 
+	$cnext $latex \cosh [ X(t) ]$$ 
+$tend
 
 $head x$$
 The vector $italic x$$ has length $latex d+1$$ and contains the
@@ -67,7 +82,7 @@ $th d-1$$ order Taylor coefficient matrix for $italic S$$.
 On output it contains the
 $th d$$ order Taylor coefficient matrix for $italic S$$; i.e.,
 $syntax%%s%[%d%]%$$ is set equal to the $th d$$ Taylor coefficient for
-the function $italic S$$.
+the function $latex S$$.
 
 $head c$$
 The vector $italic c$$ has length $latex d+1$$.
@@ -76,13 +91,15 @@ $th d-1$$ order Taylor coefficient matrix for $italic C$$.
 On output it contains the
 $th d$$ order Taylor coefficient matrix for $italic C$$; i.e.,
 $syntax%%c%[%d%]%$$ is set equal to the $th d$$ Taylor coefficient for
-the function $italic C$$.
+the function $latex C$$.
 
 $end
 ------------------------------------------------------------------------------
 $begin RevSinCos$$
 $spell
+	Hyp
 	Cos
+	Cosh
 	ps
 	Sin
 	Taylor
@@ -95,9 +112,13 @@ $spell
 $$
 
 $index reverse, cos$$
+$index reverse, cosh$$
 $index reverse, sin$$
+$index reverse, sinh$$
 $index cos, reverse$$
+$index cosh, reverse$$
 $index sin, reverse$$
+$index sinh, reverse$$
 $index RevSinCos$$
 
 $section Reverse Mode Sine and Cosine Functions$$
@@ -105,7 +126,7 @@ $section Reverse Mode Sine and Cosine Functions$$
 $table
 $bold Syntax$$ 
 $cnext
-$syntax%inline void RevSinCos(size_t %d%, 
+$syntax%inline void Rev%Type%SinCos(size_t %d%, 
 	const %Base%  *%s%, const %Base%  *%c%, const %Base%  *%x%,
 	      %Base% *%ps%,       %Base% *%pc%,       %Base% *%px%)%$$
 $tend
@@ -120,12 +141,21 @@ $latex \[
 where $latex S(x)$$ and $latex C(x)$$ are defined as the 
 $th d$$ order Taylor coefficient matrix for sine and cosine
 as a function of the corresponding matrix for $italic X$$; i.e.,
-$latex \[
-\begin{array}{rcl}
-	S & = & \sin(X) \\
-	C & = & \cos(X) 
-\end{array}
-\]$$
+
+$table
+$italic Type$$
+	$cnext $latex S$$              
+	$cnext $latex C$$         
+$rnext
+$code Trig$$   
+	$cnext $latex \sin [ X(t) ]$$  
+	$cnext $latex \cos [ X(t) ]$$    
+$rnext
+$code Hyp$$    
+	$cnext $latex \sinh[  X(t) ]$$ 
+	$cnext $latex \cosh [ X(t) ]$$ 
+$tend
+
 Note that $italic S$$ and $latex C$$ have
 been used both the original 
 functions and for the corresponding mapping of Taylor coefficients.
@@ -186,7 +216,7 @@ $end
 namespace CppAD {
 
 template <class Base>
-inline void ForSinCos(size_t j, 
+inline void ForTrigSinCos(size_t j, 
 	Base *s, Base *c, const Base *x)
 {	size_t k;
 
@@ -208,7 +238,29 @@ inline void ForSinCos(size_t j,
 }
 
 template <class Base>
-inline void RevSinCos(size_t d, 
+inline void ForHypSinCos(size_t j, 
+	Base *s, Base *c, const Base *x)
+{	size_t k;
+
+	if( j == 0 )
+	{	s[j] = sinh( x[0] );
+		c[j] = cosh( x[0] );
+	}
+	else
+	{
+		s[j] = Base(0);
+		c[j] = Base(0);
+		for(k = 1; k <= j; k++)
+		{	s[j] += Base(k) * x[k] * c[j-k];
+			c[j] += Base(k) * x[k] * s[j-k];
+		}
+		s[j] /= Base(j);
+		c[j] /= Base(j);
+	}
+}
+
+template <class Base>
+inline void RevTrigSinCos(size_t d, 
 	const Base  *s, const Base  *c, const Base *x,
 	      Base *ps,       Base *pc,       Base *px)
 {	size_t k;
@@ -233,6 +285,34 @@ inline void RevSinCos(size_t d,
 	}
 	px[0] += ps[0] * c[0];
 	px[0] -= pc[0] * s[0];
+}
+
+template <class Base>
+inline void RevHypSinCos(size_t d, 
+	const Base  *s, const Base  *c, const Base *x,
+	      Base *ps,       Base *pc,       Base *px)
+{	size_t k;
+
+	// number of indices to access
+	size_t j = d;
+
+	while(j)
+	{
+		ps[j]   /= Base(j);
+		pc[j]   /= Base(j);
+		for(k = 1; k <= j; k++)
+		{
+			px[k]   += ps[j] * Base(k) * c[j-k];
+			px[k]   += pc[j] * Base(k) * s[j-k];
+	
+			ps[j-k] += pc[j] * Base(k) * x[k];
+			pc[j-k] += ps[j] * Base(k) * x[k];
+
+		}
+		--j;
+	}
+	px[0] += ps[0] * c[0];
+	px[0] += pc[0] * s[0];
 }
 
 } // END CppAD namespace

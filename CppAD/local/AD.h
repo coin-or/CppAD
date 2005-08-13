@@ -171,7 +171,9 @@ public:
 	inline AD Log(void) const;
 	inline AD Exp(void) const;
 	inline AD Cos(void) const;
+	inline AD Cosh(void) const;
 	inline AD Sin(void) const;
+	inline AD Sinh(void) const;
 	inline AD Atan(void) const;
 	inline AD Sqrt(void) const;
 	inline AD Asin(void) const;

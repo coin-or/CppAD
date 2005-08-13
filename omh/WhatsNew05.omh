@@ -68,6 +68,16 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-13$$
+The standard math functions $xref/Sinh//sinh/$$ and $xref/Cosh//cosh/$$ have
+been added. 
+In addition, more correctness testing 
+(
+$xref/InstallUnix/More Correctness Testing/unix/$$ , 
+$xref/InstallWindows/More Correctness Testing/windows/$$ 
+)
+has been added for the $xref/Sin//sin/$$ and $xref/Cos//cos/$$ functions.
+
 $head 08-07$$
 The $xref/CondExp//conditional expression/$$ function has been changed
 from just $code CondExp$$ to

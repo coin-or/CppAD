@@ -52,6 +52,7 @@ Example_SOURCES   = \
 	CondExp.cpp \
 	Copy.cpp \
 	Cos.cpp \
+	Cosh.cpp \
 	CppAD_vector.cpp \
 	Default.cpp \
 	DetByLu.cpp \
@@ -106,6 +107,7 @@ Example_SOURCES   = \
 	CheckSimpleVector.cpp \
 	SimpleVector.cpp \
 	Sin.cpp \
+	Sinh.cpp \
 	Sqrt.cpp \
 	Sub.cpp \
 	SubEq.cpp \

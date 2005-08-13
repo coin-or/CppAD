@@ -204,8 +204,7 @@ $children%
 	omh\ExpForward.omh%
 	omh\LogForward.omh%
 	omh\SqrtForward.omh%
-	omh\SinForward.omh%
-	omh\CosForward.omh%
+	omh\SinCosForward.omh%
 	omh\AtanForward.omh%
 	omh\AsinForward.omh%
 	omh\AcosForward.omh
@@ -216,8 +215,7 @@ $table
 $tref ExpForward$$       $rnext
 $tref LogForward$$       $rnext
 $tref SqrtForward$$      $rnext
-$tref SinForward$$       $rnext
-$tref CosForward$$       $rnext
+$tref SinCosForward$$    $rnext
 $tref AtanForward$$      $rnext
 $tref AsinForward$$      $rnext
 $tref AcosForward$$

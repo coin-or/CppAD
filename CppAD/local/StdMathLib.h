@@ -38,12 +38,14 @@ $contents%
 	CppAD/local/Atan.h%
 	CppAD/local/Atan2.h%
 	CppAD/local/Cos.h%
+	CppAD/local/Cosh.h%
 	lib/ErrFun.cpp%
 	CppAD/local/Exp.h%
 	CppAD/local/Log.h%
 	CppAD/local/Log10.h%
 	CppAD/local/Pow.h%
 	CppAD/local/Sin.h%
+	CppAD/local/Sinh.h%
 	CppAD/local/Sqrt.h
 %$$
 
@@ -56,12 +58,14 @@ $end
 # include <CppAD/local/Atan.h>
 # include <CppAD/local/Atan2.h>
 # include <CppAD/local/Cos.h>
+# include <CppAD/local/Cosh.h>
 # include <CppAD/local/Erf.h>
 # include <CppAD/local/Exp.h>
 # include <CppAD/local/Log.h>
 # include <CppAD/local/Log10.h>
 # include <CppAD/local/Pow.h>
 # include <CppAD/local/Sin.h>
+# include <CppAD/local/Sinh.h>
 # include <CppAD/local/Sqrt.h>
 
 

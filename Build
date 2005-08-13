@@ -221,8 +221,6 @@ then
 		CppAD \
 		CppAD/local \
 		CppAD/library \
-		Developer \
-		Doc \
 		Example \
 		Fadbad \
 		GetStarted \
@@ -232,6 +230,19 @@ then
 		TestMore
 	do
 		for file in cppad-$AcDate/$dir/*
+		do
+			unix2dos $file
+		done
+	done
+	for dir in \
+		Developer \
+		Doc 
+	do
+		for file in \
+			cppad-$AcDate/$dir/*.xml \
+			cppad-$AcDate/$dir/*.htm \
+			cppad-$AcDate/$dir/*.js  \
+			cppad-$AcDate/$dir/*.xsl 
 		do
 			unix2dos $file
 		done

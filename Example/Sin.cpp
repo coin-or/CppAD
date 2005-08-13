@@ -23,7 +23,7 @@ $begin Sin.cpp$$
 $spell
 $$
 
-$section The Sine Function: Example and Test$$
+$section The Trigonometric Sine Function: Example and Test$$
 $index sin$$
 $index example, sin$$
 $index test, sin$$
@@ -38,8 +38,6 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "NearEqualExt.h"
-# include <cmath>
 
 bool Sin(void)
 {	bool ok = true;

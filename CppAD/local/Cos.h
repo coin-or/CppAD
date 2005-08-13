@@ -32,9 +32,9 @@ $spell
 $$
 
 $index cos$$
-$index trigonometric, cos$$
+$index trigonometric, cosine$$
 
-$section The Cosine Function$$
+$section The Trigonometric Cosine Function$$
 
 $table
 $bold Syntax$$ 

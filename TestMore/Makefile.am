@@ -59,6 +59,7 @@ TestMore_SOURCES  = TestMore.cpp \
 	Runge45.cpp \
 	Reverse.cpp \
 	SimpleVector.cpp \
+	SinCos.cpp \
 	Sqrt.cpp \
 	Sub.cpp \
 	SubEq.cpp \

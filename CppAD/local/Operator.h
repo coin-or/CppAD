@@ -83,6 +83,7 @@ $spell
 	Div
 	CondExp
 	Cos
+	Cosh
 	Ind
 	Acos
 	Asin
@@ -112,6 +113,8 @@ The value $italic op$$ is one of the following enum type values:
 $codep */
 
 namespace CppAD {
+
+	// alphabetical order (ignoring the Op at the end)
 	enum OpCode {
 		AbsOp,    //  abs(variable)
 		AcosOp,   // asin(variable)
@@ -122,6 +125,7 @@ namespace CppAD {
 		AtanOp,   // atan(variable)
 		CExpOp,   // CondExp(cop, left, right, trueCase, falseCase)
 		CosOp,    //  cos(variable)
+		CoshOp,   // cosh(variable)
 		DisOp,    //  dis(variable,    index)
 		DivpvOp,  //      parameter  / variable
 		DivvpOp,  //      variable   / parameter
@@ -163,6 +167,7 @@ namespace CppAD {
 		PripOp,   //      text         parameter
 		PrivOp,   //      text         parameter
 		SinOp,    //  sin(variable)
+		SinhOp,   // sinh(variable)
 		SqrtOp,   // sqrt(variable)
 		StppOp,   //    z[parameter] = parameter
 		StvpOp,   //    z[variable]  = parameter
@@ -311,6 +316,7 @@ $end
 
 namespace CppAD {
 
+// alphabetical order (ignoring the Op at the end)
 const size_t NumIndTable[] = {
 	1, // AbsOp
 	1, // AcosOp
@@ -321,6 +327,7 @@ const size_t NumIndTable[] = {
 	1, // AtanOp
 	6, // CEpppOp
 	1, // CosOp
+	1, // CoshOp
 	2, // DisOp
 	2, // DivpvOp
 	2, // DivvpOp
@@ -362,6 +369,7 @@ const size_t NumIndTable[] = {
 	2, // PripOp
 	2, // PrivOp
 	1, // SinOp
+	1, // SinhOp
 	1, // SqrtOp
 	3, // StppOp
 	3, // StvpOp
@@ -382,6 +390,7 @@ inline size_t NumInd(OpCode op)
 	return NumIndTable[(size_t) op];
 }
 
+// alphabetical order (ignoring the Op at the end)
 const size_t NumVarTable[] = {
 	1, // AbsOp
 	2, // AcosOp
@@ -392,6 +401,7 @@ const size_t NumVarTable[] = {
 	2, // AtanOp
 	1, // CExpOp
 	2, // CosOp
+	2, // CoshOp
 	1, // DisOp
 	1, // DivpvOp
 	1, // DivvpOp
@@ -433,6 +443,7 @@ const size_t NumVarTable[] = {
 	1, // PripOp
 	1, // PrivOp
 	2, // SinOp
+	2, // SinhOp
 	1, // SqrtOp
 	1, // StppOp
 	1, // StvpOp
@@ -517,6 +528,7 @@ void printOp(
 		"Atan"  ,
 		"CExp"  ,
 		"Cos"   ,
+		"Cosh"   ,
 		"DisOp" ,
 		"Divpv" ,
 		"Divvp" ,
@@ -558,6 +570,7 @@ void printOp(
 		"Prip"  ,
 		"Priv"  ,
 		"Sin"   ,
+		"Sinh"  ,
 		"Sqrt"  ,
 		"Stpp"  ,
 		"Stvp"  ,
@@ -676,9 +689,11 @@ void printOp(
 		case AsinOp:
 		case AtanOp:
 		case CosOp:
+		case CoshOp:
 		case ExpOp:
 		case LogOp:
 		case SinOp:
+		case SinhOp:
 		case SqrtOp:
 		CppADUnknownError( NumInd(op) == 1 );
 		printOpField(os, "x_i=", ind[0], 5);

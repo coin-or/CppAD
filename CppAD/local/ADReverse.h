@@ -368,7 +368,24 @@ void ADReverse(
 			pTmp = Partial + (i_var+1) * K;
 			X    = Taylor  + ind[0] * J;
 			pX   = Partial + ind[0] * K;
-			RevSinCos(d, Tmp, Z, X, pTmp, pZ, pX);
+			RevTrigSinCos(d, Tmp, Z, X, pTmp, pZ, pX);
+			break;
+			// --------------------------------------------------
+
+			case CoshOp:
+			CppADUnknownError( n_ind == 1 );
+			CppADUnknownError( ind[0] < i_var );
+
+			// cosine and sine must come in pairs
+			CppADUnknownError( n_var == 2);
+			CppADUnknownError( i_var < numvar - 1 );
+
+			// use Tmp for data stored in second record
+			Tmp  = Taylor  + (i_var+1) * J;
+			pTmp = Partial + (i_var+1) * K;
+			X    = Taylor  + ind[0] * J;
+			pX   = Partial + ind[0] * K;
+			RevHypSinCos(d, Tmp, Z, X, pTmp, pZ, pX);
 			break;
 			// --------------------------------------------------
 
@@ -573,7 +590,24 @@ void ADReverse(
 			pTmp = Partial + (i_var+1) * K;
 			X    = Taylor  + ind[0] * J;
 			pX   = Partial + ind[0] * K;
-			RevSinCos(d, Z, Tmp, X, pZ, pTmp, pX);
+			RevTrigSinCos(d, Z, Tmp, X, pZ, pTmp, pX);
+			break;
+			// -------------------------------------------------
+
+			case SinhOp:
+			CppADUnknownError( n_ind == 1 );
+			CppADUnknownError( ind[0] < i_var );
+
+			// sine and cosine come in pairs
+			CppADUnknownError( n_var == 2);
+			CppADUnknownError( i_var < numvar - 1 );
+
+			// use Tmp for data stored in cosine slot record
+			Tmp  = Taylor  + (i_var+1) * J;
+			pTmp = Partial + (i_var+1) * K;
+			X    = Taylor  + ind[0] * J;
+			pX   = Partial + ind[0] * K;
+			RevHypSinCos(d, Z, Tmp, X, pZ, pTmp, pX);
 			break;
 			// --------------------------------------------------
 
