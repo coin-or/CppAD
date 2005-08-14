@@ -56,7 +56,7 @@ $head Restrictions$$
 The following extra assumption is made by $code CheckSimpleVector$$:
 The type $italic Scalar$$ supports the syntax
 $syntax%
-	%Scalar%(%i%)% == %Scalar%(%j%)%
+	%Scalar%(%i%) == %Scalar%(%j%)%
 %$$
 where $italic i$$ and $italic j$$ are either $code 0$$ or $code 1$$.
 In addition, this syntax returns the value true (false) if and only if
