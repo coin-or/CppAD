@@ -70,14 +70,14 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 08-13$$
-The standard math functions $xref/Sinh//sinh/$$ and $xref/Cosh//cosh/$$ have
+The standard math functions $xref/sinh//sinh/$$ and $xref/cosh//cosh/$$ have
 been added. 
 In addition, more correctness testing 
 (
 $xref/InstallUnix/More Correctness Testing/unix/$$ , 
 $xref/InstallWindows/More Correctness Testing/windows/$$ 
 )
-has been added for the $xref/Sin//sin/$$ and $xref/Cos//cos/$$ functions.
+has been added for the $xref/Sin//sin/$$ and $xref/cos//cos/$$ functions.
 $pre
 
 $$
@@ -99,7 +99,7 @@ The old $code CondExp$$ function has been deprecated.
 
 $head 07-21$$
 Remove unnecessary no-op that was left in tape for the following cases:
-$xref/Acos/$$, $xref/Asin/$$, $xref/Atan/$$, and $xref/cos/$$.
+$xref/acos/$$, $xref/asin/$$, $xref/atan/$$, and $xref/cos/$$.
 $pre
 
 $$

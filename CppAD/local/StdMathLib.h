@@ -31,7 +31,7 @@ $index math, standard library$$
 $index library, standard math$$
 $section The Standard Library Unary Math Functions$$
 
-$contents%
+$children%
 	CppAD/local/Abs.h%
 	CppAD/local/Acos.h%
 	CppAD/local/Asin.h%
@@ -48,6 +48,24 @@ $contents%
 	CppAD/local/Sinh.h%
 	CppAD/local/Sqrt.h
 %$$
+$table
+$rref abs$$
+$rref acos$$
+$rref asin$$
+$rref atan$$
+$rref atan2$$
+$rref cos$$
+$rref cosh$$
+$rref erf$$
+$rref exp$$
+$rref log$$
+$rref log10$$
+$rref  pow$$
+$rref  sin$$
+$rref  sinh$$
+$rref  sqrt$$
+$tend
+	
 
 $end
 */

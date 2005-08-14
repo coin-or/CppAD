@@ -471,15 +471,15 @@ $code CppAD/Test$$ directory.
 
 
 $head 06-04$$
-The $xref/Atan2//atan2/$$ function was added.
+The $xref/atan2//atan2/$$ function was added.
 
 $head 06-03$$
-The $xref/Asin//asin/$$ and $xref/Acos//acos/$$ functions were added.
+The $xref/asin//asin/$$ and $xref/acos//acos/$$ functions were added.
 $pre
 
 $$
 There was a bug the reverse mode theory and calculation of 
-derivatives of $xref/Sqrt//sqrt/$$ for fourth and higher orders. 
+derivatives of $xref/sqrt//sqrt/$$ for fourth and higher orders. 
 This has been fixed.
 In addition,
 the following examples have been changed
@@ -494,7 +494,7 @@ $xref/Sqrt.cpp//sqrt/$$.
 
 
 $head 06-01$$
-There was a bug in the $xref/Atan//atan/$$ function 
+There was a bug in the $xref/atan//atan/$$ function 
 $xref/Forward//forward mode/$$ calculations for Taylor coefficient
 orders greater than two.
 This has been fixed.
@@ -674,17 +674,17 @@ and an increase in the speed for $xref/VecAD/$$ operations.
 $pre
 
 $$
-The $xref/Log10//log10/$$ function was added.
+The $xref/log10//log10/$$ function was added.
 
 
 $head 04-22$$
 Add $xref/CondExp/$$ and use it to speed up $xref/LuVecAD/$$.
 
 $head 04-21$$
-Use $xref/Abs//abs/$$ to speed up $xref/LuVecAD/$$.
+Use $xref/abs//abs/$$ to speed up $xref/LuVecAD/$$.
 
 $head 04-20$$
-The $xref/Abs//absolute value/$$ function was added.
+The $xref/abs//absolute value/$$ function was added.
 $pre
 
 $$
