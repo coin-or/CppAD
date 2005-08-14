@@ -220,7 +220,6 @@ then
 		Adolc \
 		CppAD \
 		CppAD/local \
-		CppAD/library \
 		Example \
 		Fadbad \
 		GetStarted \
