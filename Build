@@ -38,6 +38,9 @@ then
 	diff configure.ac  configure.tmp
 	mv   configure.tmp configure.ac
 	#
+	# change Autoconf date to today
+	AcDate=$Today
+	#
 	sed Doc.omh > Doc.tmp -e \
 	"s/Version [0-9][0-9]-[0-9][0-9]-[0-9][0-9]/Version $Today/g"
 	#
