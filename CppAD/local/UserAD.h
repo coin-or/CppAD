@@ -48,6 +48,7 @@ $childtable%
 	CppAD/local/FromBase.h%
 	CppAD/local/Copy.h%
 	CppAD/local/Value.h%
+	CppAD/local/Integer.h%
 	CppAD/local/Neg.h%
 	CppAD/local/BinaryOp.h%
 	CppAD/local/CompEq.h%

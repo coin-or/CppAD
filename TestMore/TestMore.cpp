@@ -59,6 +59,7 @@ extern bool Sqrt(void);
 extern bool Sub(void);
 extern bool SubEq(void);
 extern bool SubZero(void);
+extern bool Value(void);
 extern bool VecADPar(void);
 extern bool VecUnary(void);
 
@@ -111,6 +112,7 @@ int main(void)
 	ok &= Run( Sub,             "Sub"            );
 	ok &= Run( SubEq,           "SubEq"          );
 	ok &= Run( SubZero,         "SubZero"        );
+	ok &= Run( Value,           "Value"          );
 	ok &= Run( VecADPar,        "VecADPar"       );
 	ok &= Run( VecUnary,        "VecUnary"       );
 

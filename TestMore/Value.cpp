@@ -19,24 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 /*
-$begin Value.cpp$$
-$spell
-	Cpp
-	cstddef
-$$
-
-$section Conversion to Base Type: Example and Test$$
-$index Value$$
-$index base type, value$$
-$index example, Value$$
-$index test, Value$$
-
-$comment This file is in the Example subdirectory$$ 
-$code
-$verbatim%Example/Value.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-$$
-
-$end
+Old Value example now used just for valiadation testing
 */
 // BEGIN PROGRAM
 
@@ -47,34 +30,37 @@ bool Value(void)
 
 	using namespace CppAD;
 
-	// independent variable vector
-	CppADvector< AD<double> > X(2);
-	X[0] = 3.;
-	X[1] = 4.;
+	// independent variable vector, indices, values, and declaration
+	CppADvector< AD<double> > U(2);
+	size_t s = 0;
+	size_t t = 1;
+	U[s] = 3.;
+	U[t] = 4.;
+	Independent(U);
 
-	// check value before recording
-	ok &= (Value(X[0]) == 3.);
-	ok &= (Value(X[1]) == 4.);
+	// cannot call Value after Independent (tape is recording)
 
-	// start recording
+	// dependent variable vector and indices
+	CppADvector< AD<double> > Z(1);
+	size_t x = 0;
 
-	Independent(X);
+	// dependent variable values
+	Z[x] = - U[t];
 
-	// cannot call Value here (tape is recording)
-
-	// dependent variable vector 
-	CppADvector< AD<double> > Y(1);
-	Y[0] = - X[1];
-
-	// create f: X -> Y and vectors used for derivative calculations
-	ADFun<double> f(X, Y);
+	// create f: U -> Z and vectors used for derivative calculations
+	ADFun<double> f(U, Z);
 	CppADvector<double> v( f.Domain() );
 	CppADvector<double> w( f.Range() );
 
-	// check value after recording
-	ok &= (Value(X[0]) == 3.);
-	ok &= (Value(X[1]) == 4.);
-	ok &= (Value(Y[0]) == -4.);
+	// can call Value after ADFun constructor (tape is no longer recording)
+
+	// check value of s
+	double sValue = Value(U[s]);
+	ok &= ( sValue == 3. );
+
+	// check value of x
+	double xValue = Value(Z[x]);
+	ok &= ( xValue == -4. );
 
 	return ok;
 }

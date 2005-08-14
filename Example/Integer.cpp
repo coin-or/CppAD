@@ -19,21 +19,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 /*
-$begin Value.cpp$$
+$begin Integer.cpp$$
 $spell
 	Cpp
 	cstddef
 $$
 
 $section Conversion to Base Type: Example and Test$$
-$index Value$$
+$index Integer$$
 $index base type, value$$
-$index example, Value$$
-$index test, Value$$
+$index example, Integer$$
+$index test, Integer$$
 
 $comment This file is in the Example subdirectory$$ 
 $code
-$verbatim%Example/Value.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/Integer.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -42,25 +42,25 @@ $end
 
 # include <CppAD/CppAD.h>
 
-bool Value(void)
+bool Integer(void)
 {	bool ok = true;
 
 	using namespace CppAD;
 
 	// independent variable vector
 	CppADvector< AD<double> > X(2);
-	X[0] = 3.;
-	X[1] = 4.;
+	X[0] = 3.5;
+	X[1] = 4.5;
 
-	// check value before recording
-	ok &= (Value(X[0]) == 3.);
-	ok &= (Value(X[1]) == 4.);
-
-	// start recording
+	// check integer before recording
+	ok &= (Integer(X[0]) == 3);
+	ok &= (Integer(X[1]) == 4);
 
 	Independent(X);
 
-	// cannot call Value here (tape is recording)
+	// check integer during recording
+	ok &= (Integer(X[0]) == 3);
+	ok &= (Integer(X[1]) == 4);
 
 	// dependent variable vector 
 	CppADvector< AD<double> > Y(1);
@@ -71,10 +71,10 @@ bool Value(void)
 	CppADvector<double> v( f.Domain() );
 	CppADvector<double> w( f.Range() );
 
-	// check value after recording
-	ok &= (Value(X[0]) == 3.);
-	ok &= (Value(X[1]) == 4.);
-	ok &= (Value(Y[0]) == -4.);
+	// check integer after recording
+	ok &= (Integer(X[0]) == 3.);
+	ok &= (Integer(X[1]) == 4.);
+	ok &= (Integer(Y[0]) == -4.);
 
 	return ok;
 }

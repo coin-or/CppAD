@@ -69,6 +69,14 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-14$$
+An $xref/Integer/$$ conversion function as been added.
+$pre
+
+$$
+The $xref/Value.cpp/$$ example has been improved and the old example
+has been moved into the $code TestMore$$ directory.
+
 $head 08-13$$
 The standard math functions $xref/sinh//sinh/$$ and $xref/cosh//cosh/$$ have
 been added. 
