@@ -20,13 +20,13 @@ EndRevision=68
 #
 # echo the svn merge command
 echo "cd  .."
-echo "svn merge \\"
+echo "svn merge > SvnMerge.out \\"
 echo "	http://www.coin-or.org/svn/CppAD/$ToDirectory@$StartRevision \\"
 echo "	http://www.coin-or.org/svn/CppAD/$FromDirectory@$EndRevision \\"
 echo "	$ToDirectory"
 #
 # execute the svn merge command
-svn merge \
+svn merge > SvnMerge.out \
 	http://www.coin-or.org/svn/CppAD/$ToDirectory@$StartRevision \
 	http://www.coin-or.org/svn/CppAD/$FromDirectory@$EndRevision \
 	$ToDirectory
