@@ -422,6 +422,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Cosh.cpp">
+			</File>
+			<File
 				RelativePath="CppAD_vector.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -746,6 +749,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Integer.cpp">
 			</File>
 			<File
 				RelativePath="JacLuDet.cpp">
@@ -1246,6 +1252,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Sinh.cpp">
 			</File>
 			<File
 				RelativePath="Sqrt.cpp">

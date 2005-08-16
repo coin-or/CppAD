@@ -100,7 +100,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile=".\Debug/Speed.exe"
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\Debug/Speed.pdb"

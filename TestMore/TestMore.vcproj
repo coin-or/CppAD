@@ -502,6 +502,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\OdeErrControl.cpp">
+			</File>
+			<File
 				RelativePath="Reverse.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -580,6 +583,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\SinCos.cpp">
 			</File>
 			<File
 				RelativePath="Sqrt.cpp">
@@ -680,6 +686,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Value.cpp">
 			</File>
 			<File
 				RelativePath="VecADPar.cpp">

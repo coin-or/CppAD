@@ -69,6 +69,12 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-15$$
+The Microsoft project files $code Example/Example.vcproj$$ and 
+$code TestMore/TestMore.vcproj$$ were missing some necessary routines.
+In addition, $code Speed/Speed.vcproj$$ was generating a warning.
+This has been fixed. 
+
 $head 08-14$$
 An $xref/Integer/$$ conversion function as been added.
 $pre
