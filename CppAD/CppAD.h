@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <CppAD/LuSolve.h>
 # include <CppAD/NearEqual.h>
 # include <CppAD/Runge45.h>
+# include <CppAD/Romberg.h>
 # include <CppAD/Rosen34.h>
 # include <CppAD/OdeErrControl.h>
 # include <CppAD/Poly.h>
