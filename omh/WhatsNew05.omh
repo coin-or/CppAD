@@ -69,11 +69,6 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 08-19$$
-Added a $xref/Romberg/$$ integration routine for 
-where the argument types are template parameters
-(for use with AD types).
-
 $head 08-15$$
 The Microsoft project files $code Example/Example.vcproj$$ and 
 $code TestMore/TestMore.vcproj$$ were missing some necessary routines.

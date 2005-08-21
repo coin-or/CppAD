@@ -94,7 +94,6 @@ extern bool Output(void);
 extern bool Poly(void);
 extern bool Pow(void);
 extern bool PowInt(void);
-extern bool Romberg(void);
 extern bool Rosen34(void);
 extern bool Runge45(void);
 extern bool SimpleVector(void);
@@ -233,7 +232,6 @@ int main(void)
 	RunDouble( Reverse,           "Reverse"          );
 	RunDouble( RevOne,            "RevOne"           );
 	RunDouble( RevTwo,            "RevTwo"           );
-	ok &= Run( Romberg,           "Romberg"          );
 	ok &= Run( Rosen34,           "Rosen34"          );
 	ok &= Run( Runge45,           "Runge45"          );
 	ok &= Run( SimpleVector,      "SimpleVector"     );

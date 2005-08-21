@@ -34,7 +34,6 @@ $contents%
 	omh/Polynomial.omh%
 	lib/SpeedTest.cpp%
 	omh/LuDetAndSolve.omh%
-	CppAD/Romberg.h%
 	CppAD/Runge45.h%
 	CppAD/Rosen34.h%
 	CppAD/OdeErrControl.h%
