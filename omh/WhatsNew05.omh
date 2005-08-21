@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew05$$
 $spell
+	Romberg
 	cos
 	Le
 	Lt
@@ -68,6 +69,17 @@ This section contains a list of the changes to CppAD during 2005
 (in reverse order by date).
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 08-20$$
+Backed out addition of $code Romberg$$ integration routine
+(at this point uncertain of the interface that is most useful in
+the context of AD.)
+
+
+$head 08-19$$
+Added a $code Romberg$$ integration routine for 
+where the argument types are template parameters
+(for use with AD types).
 
 $head 08-15$$
 The Microsoft project files $code Example/Example.vcproj$$ and 
