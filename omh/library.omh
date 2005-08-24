@@ -23,21 +23,49 @@ $spell
 	CppAD
 $$
 
+$index numerical, C++ template library$$
+$index template, numerical C++ library$$
+$index C++, numerical template library$$
+$index library, numerical C++ template$$
+
 $section The CppAD General Purpose Library$$
 
-The routines listed in this section are general purpose utilities
-can be used outside the context of CppAD.
-
-$contents%
+$children%
 	omh/VectorTempClass.omh%
 	lib/NearEqual.cpp%
 	omh/Polynomial.omh%
 	lib/SpeedTest.cpp%
 	omh/LuDetAndSolve.omh%
+	CppAD/RombergOne.h%
+	CppAD/RombergMul.h%
 	CppAD/Runge45.h%
 	CppAD/Rosen34.h%
 	CppAD/OdeErrControl.h%
 	CppAD/CheckSimpleVector.h
 %$$
+
+$head Some Numerical Testing Utilities$$
+The routines listed below are general purpose numerical testing routines:
+$table
+$rref NearEqual$$
+$rref SpeedTest$$
+$tend
+
+$head A Numerical C++ Template Library$$
+The routines listed below are general purpose numerical routines
+written with the floating point type A C++ template parameter.
+This enables them to be used with algorithmic differentiation types,
+as well as for other purposes. 
+$table
+$rref CheckSimpleVector$$
+$rref LuDetAndSolve$$
+$rref Polynomial$$
+$rref RombergOne$$
+$rref RombergMul$$
+$rref Rosen34$$
+$rref Runge45$$
+$rref OdeErrControl$$
+$rref VectorTempClass$$
+$tend
 
 $end

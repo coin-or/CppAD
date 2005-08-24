@@ -4,19 +4,19 @@
 # http://www.coin-or.org/svn/CppAD/ 
 cd ..
 #
-# change branches/Brad to the directory that will receive the changes
-ToDirectory=branches/Brad
+# change trunk to the directory that will receive the changes
+ToDirectory=trunk
 #
-# change 68 to the version corresponding to the ToDirectory before
+# change 81 to the version corresponding to the ToDirectory before
 # the changes
-StartRevision=68
+StartRevision=81
 #
-# change trunk to the direcotry that contains the changes 
+# change branches/Brad to the direcotry that contains the changes 
 # (which have all been committed to the repository)
-FromDirectory=trunk
+FromDirectory=branches/Brad
 # 
-# change 81 to the version number corresponding to the FromDirectory
-EndRevision=81
+# change 96 to the version number corresponding to the FromDirectory
+EndRevision=96
 #
 # echo the svn merge command
 echo "cd  .."
@@ -30,3 +30,5 @@ svn merge > SvnMerge.out \
 	http://www.coin-or.org/svn/CppAD/$ToDirectory@$StartRevision \
 	http://www.coin-or.org/svn/CppAD/$FromDirectory@$EndRevision \
 	$ToDirectory
+#
+# put comment here so have newline at end of command above

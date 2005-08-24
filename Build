@@ -185,8 +185,8 @@ then
 	#
 	if [ -e cppad-$AcDate ]
 	then
-		echo "rm -r cppad-$AcDate"
-		rm -r cppad-$AcDate
+		echo "rm -f -r cppad-$AcDate"
+		rm -f -r cppad-$AcDate
 	fi
 	for file in CppAD.dos.tar.gz CppAD.unix.tar.gz
 	do

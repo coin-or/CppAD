@@ -103,6 +103,8 @@ Example_SOURCES   = \
 	RevOne.h \
 	RevTwo.h \
 	Reverse.h \
+	RombergMul.cpp \
+	RombergOne.cpp \
 	Rosen34.cpp \
 	Runge45.cpp \
 	CheckSimpleVector.cpp \

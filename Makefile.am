@@ -33,6 +33,8 @@ nobase_include_HEADERS =  \
 	CppAD/NearEqual.h \
 	CppAD/OdeErrControl.h \
 	CppAD/Poly.h \
+	CppAD/RombergOne.h \
+	CppAD/RombergMul.h \
 	CppAD/Rosen34.h \
 	CppAD/Runge45.h \
 	CppAD/SpeedTest.h \
