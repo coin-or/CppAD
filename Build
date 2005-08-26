@@ -1,4 +1,4 @@
-# BEGIN SHORT COPYRIGHT
+# ! /bin/bash
 # ---------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 # 
@@ -16,7 +16,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # ---------------------------------------------------------------------------
-# END SHORT COPYRIGHT
 #
 # Build distribution
 #
@@ -133,7 +132,7 @@ then
 	echo "	$FADBAD \\"
 	echo "	CPP_ERROR_WARN=\"-Wall -ansi -pedantic-errors -std=c++98\""
 	#
-	configure \
+	./configure \
 		--with-profiling \
 		$ADOLC \
 		$FADBAD \
@@ -141,7 +140,7 @@ then
 	#
 	# Fix Makefile for what appears to be a bug in gzip under cygwin
 	echo "FixMakefile"
-	FixMakefile
+	./FixMakefile
 	#
 	if [ "$1" != "all" ]
 	then
@@ -167,10 +166,10 @@ fi
 if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
 then
 	echo "RunOMhelp Developer"
-	RunOMhelp Developer
+	./RunOMhelp Developer
 	#
 	echo "RunOMhelp Doc"
-	RunOMhelp Doc
+	./RunOMhelp Doc
 	#
 	if [ "$1" != "all" ]
 	then
@@ -214,7 +213,7 @@ then
 	# create the unix version
 	mv cppad-$AcDate.tar.gz CppAD.unix.tar.gz
 	#
-	# convert files to unix format
+	# convert files to dos format
 	for file in  cppad-$AcDate/*
 	do
 		unix2dos $file
