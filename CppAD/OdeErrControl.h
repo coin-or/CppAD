@@ -77,6 +77,11 @@ The routine $code OdeErrControl$$ can be used to adjust the step size
 used by either of these methods in order to be as fast as possible
 and still with in a requested error bound.
 
+$head Include$$
+The file $code CppAD/OdeErrControl.h$$ is included by $code CppAD/CppAD.h$$
+but it can also be included separately with out the rest of 
+the $code CppAD$$ routines.
+
 $head Notation$$
 The template parameter types $xref/OdeErrControl/Scalar/Scalar/$$ and
 $xref/OdeErrControl/Vector/Vector/$$ are documented below.
