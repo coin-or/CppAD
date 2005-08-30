@@ -1074,6 +1074,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\OdeErrMaxabs.cpp">
+			</File>
+			<File
 				RelativePath="OdeTaylor.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

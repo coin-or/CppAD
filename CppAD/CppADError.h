@@ -102,13 +102,13 @@ You can define you own version of
 $code CppADUsageError$$ or $code CppADUnknownError$$ 
 provided that you meet the corresponding specifications
 given above.
-In addition, you must included your definition before including 
-$code CppAD/CppADError.h$$. 
-Note that once you provide a definition for 
+In addition, you must included your definition before including $code CppAD.h$$
+or any of the other CppAD header files.
+This will ensure that  your definition for 
 $code CppADUsageError$$ or $code CppADUnknownError$$ 
-it will prevent the corresponding default definition 
-from being interpreted by the preprocessor (see default definitions
-below).
+will prevent the corresponding default definition 
+from being interpreted by the preprocessor 
+(see default definitions extracted from $code CppAD/CppADError.h$$ below).
 
 $subhead CppADUsageError$$
 Below is the default CppAD usage error handler.

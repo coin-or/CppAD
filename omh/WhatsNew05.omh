@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew05$$
 $spell
+	maxabs
 	Romberg
 	cos
 	Le
@@ -69,6 +70,20 @@ This section contains a list of the changes to CppAD during 2005
 (in reverse order by date).
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 08-30$$
+The $italic maxabs$$ argument has been added to the
+$xref/OdeErrControl/$$ function so that it can be used
+with relative errors where components of the ODE solution may be zero
+(some of the time).
+In addition, some of the rest of the OdeErrControl documentation
+has been improved.
+$pre
+
+$$
+The documentation for 
+$xref/CppADError/Replacing Defaults/replacing defaults/$$
+in $xref/CppADError/$$ has been improved.
 
 $head 08-24$$
 Changed $code Romberg$$ to $xref/RombergOne/$$ and added $xref/RombergMul/$$.

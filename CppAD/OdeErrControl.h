@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 $begin OdeErrControl$$
 
 $spell
+	maxabs
 	exp
 	scur
 	CppAD
@@ -56,8 +57,8 @@ $table
 $bold Syntax$$ 
 $cnext $code # include <CppAD/OdeErrControl.h>$$
 $rnext $cnext
-$syntax%%xf% = OdeErrControl(%method%, 
-	%ti%, %tf%, %xi%, %smin%, %smax%, %scur%, %eabs%, %erel%, %ef% )%$$
+$syntax%%xf% = OdeErrControl(%method%, %ti%, %tf%, %xi%, 
+	%smin%, %smax%, %scur%, %eabs%, %erel%, %ef% , %maxabs% )%$$
 $tend
 
 $fend 20$$
@@ -92,12 +93,15 @@ and the object $italic method$$ satisfy the following syntax
 $syntax%
 	%Method% &%method%
 %$$
-The object $italic method$$ must support the following syntax 
-$syntax%
+The object $italic method$$ must support $code step$$ and 
+$code order$$ member functions defined below:
 
-%method%.step(%ta%, %tb%, %xa%, %xb%, %eb%)
+$subhead step$$
+The syntax
+$syntax%
+	%method%.step(%ta%, %tb%, %xa%, %xb%, %eb%)
 %$$
-$subhead ta$$
+executes one step of the integration method. 
 The argument $italic ta$$ has prototype
 $syntax%
 	const %Scalar% &%ta%
@@ -105,16 +109,12 @@ $syntax%
 It specifies the initial time for this step in the 
 ODE integration.
 (see description of $xref/OdeErrControl/Scalar/Scalar/$$ below). 
-
-$subhead tb$$
 The argument $italic tb$$ has prototype
 $syntax%
 	const %Scalar% &%tb%
 %$$
 It specifies the final time for this step in the 
 ODE integration.
-
-$subhead xa$$
 The argument $italic xa$$ has prototype
 $syntax%
 	const %Vector% &%xa%
@@ -122,8 +122,6 @@ $syntax%
 and size $italic n$$.
 It specifies the value of $latex X(ta)$$.
 (see description of $xref/OdeErrControl/Vector/Vector/$$ below). 
-
-$subhead xb$$
 The argument value $italic xb$$ has prototype
 $syntax%
 	%Vector% &%xb%
@@ -132,8 +130,6 @@ and size $italic n$$.
 The input value of its elements does not matter.
 On output, 
 it contains the approximation for $latex X(tb)$$ that the method obtains.
-
-$subhead eb$$
 The argument value $italic eb$$ has prototype
 $syntax%
 	%Vector% &%eb%
@@ -146,14 +142,12 @@ It is assumed (locally) that the error bound in this approximation
 nearly equal to $latex K (tb - ta)^m$$ 
 where $italic K$$ is a fixed constant and $italic m$$
 is the corresponding argument to $code CodeControl$$.
-$pre
 
-$$
+$subhead order$$
 If $italic m$$ is $code size_t$$,
 the object $italic method$$ must also support the following syntax 
 $syntax%
-
-%m% = %method%.order()
+	%m% = %method%.order()
 %$$
 The return value $italic m$$ is the order of the ODE integration method;
 i.e., there is a constant K such that if $latex ti \leq ta \leq tb \leq tf$$,
@@ -234,7 +228,9 @@ Each of the elements of $italic eabs$$ must be
 greater than or equal zero.
 It specifies a bound for the absolute
 error in the return value $italic xf$$ as an approximation for $latex X(tf)$$.
-(see description of total error bound under $italic erel$$).
+(see the 
+$xref/OdeErrControl/Error Criteria Discussion/error criteria discussion/$$ 
+below). 
 
 $head erel$$
 The argument $italic erel$$ has prototype
@@ -243,12 +239,10 @@ $syntax%
 %$$
 and is greater than or equal zero.
 It specifies a bound for the relative 
-error in the return value $italic xf$$ as an approximation for $latex X(tf)$$.
-The total error bound is the sum of the absolute and relative error bounds; 
-i.e., the error bound for the $th j$$ component is 
-$latex \[
-	| xf[j] - X_j (tf) | \leq eabs[j] + erel * | X_j (tf) |
-\] $$
+error in the return value $italic xf$$ as an approximation for $latex X(tf)$$
+(see the 
+$xref/OdeErrControl/Error Criteria Discussion/error criteria discussion/$$ 
+below). 
 
 $head ef$$
 The argument value $italic ef$$ has prototype
@@ -263,6 +257,51 @@ absolute error in the approximation $italic xf$$; i.e.,
 $latex \[
 	ef_i \approx | X( tf )_i - xf_i |
 \] $$
+
+$head maxabs$$
+The argument $italic maxabs$$ is optional in the call to $code OdeErrControl$$.
+If it is present, it has the prototype
+$syntax%
+	%Vector% &%maxabs%
+%$$
+and size $italic n$$.
+The input value of its elements does not matter.
+On output, 
+it contains an estimate for the 
+absolute error in the approximation to $latex X(t)$$; i.e.,
+$latex \[
+	maxabs[i] \approx \max \left\{ 
+		| X( t )_i | \; : \;  t \in [ti, tf] 
+	\right\}
+\] $$
+
+$head Error Criteria Discussion$$
+The relative error criteria $italic erel$$ and
+absolute error criteria $italic eabs$$ are enforced during each step of the
+integration of the ordinary differential equations.
+In addition, they are inversely scaled by the step size so that
+the total error bound is less than the sum of the error bounds.
+To be specific, if $latex \tilde{X} (t)$$ is the approximate solution
+at time $latex t$$, 
+$italic ta$$ is the initial step time,
+and $italic tb$$ is the final step time,
+$latex \[
+\left| \tilde{X} (tb)_j  - X (tb)_j \right| 
+\leq 
+\frac{tf - ti}{tb - ta}
+\left[ eabs[j] + erel \;  | \tilde{X} (tb)_j | \right] 
+\] $$
+If $latex X(tb)_j$$ is near zero for some $latex tb \in [ti , tf]$$,
+and one uses an absolute error criteria $latex eabs[j]$$ of zero,
+the error criteria above will force $code OdeErrControl$$
+to use step sizes equal to 
+$xref/OdeErrControl/smin/smin/$$
+for steps ending near $latex tb$$.
+In this case, the error relative to $italic maxabs$$ can be judged after
+$code OdeErrControl$$ returns.
+If $italic ef$$ is to large relative to $italic maxabs$$, 
+$code OdeErrControl$$ can be called again 
+with a smaller value of $italic smin$$.
 
 $head Scalar$$
 The following operations must be defined for $italic Scalar$$ objects
@@ -297,6 +336,9 @@ $syntax%%a% * %b%$$ $cnext
 $rnext
 $syntax%%a% / %b%$$ $cnext
 	returns a $italic Scalar$$ equal to the quotient $latex a / b$$ 
+$rnext
+$syntax%- %a%$$ $cnext
+	returns a $italic Scalar$$ equal to the negative of $italic a$$
 $rnext
 $syntax%log(%a%)%$$ $cnext
 	returns a $italic Scalar$$ equal to the logarithm of $italic a$$
@@ -364,7 +406,8 @@ Vector OdeErrControl(
 	Scalar          &scur  ,
 	const Vector    &eabs  , 
 	const Scalar    &erel  , 
-	Vector          &ef    ) 
+	Vector          &ef    ,
+	Vector          &maxabs) 
 {
 	// check simple vector class specifications
 	CheckSimpleVector<Scalar, Vector>();
@@ -378,6 +421,10 @@ Vector OdeErrControl(
 	CppADUsageError(
 		eabs.size() == n,
 		"Error in OdeErrControl: size of eabs is not equal to n"
+	);
+	CppADUsageError(
+		maxabs.size() == n,
+		"Error in OdeErrControl: size of maxabs is not equal to n"
 	);
 	size_t m = method.order();
 	CppADUsageError(
@@ -397,6 +444,10 @@ Vector OdeErrControl(
 	for(i = 0; i < n; i++)
 	{	ef[i] = zero;
 		xa[i] = xi[i];
+		if( zero <= xi[i] )
+			maxabs[i] = xi[i];
+		else	maxabs[i] = - xi[i];
+
 	}  
 
 	Scalar tb, step, lambda, axbi, a, r, root;
@@ -405,7 +456,7 @@ Vector OdeErrControl(
 		step = scur;
 
 		// check maximum
-		if( step >= smax )
+		if( smax <= step )
 			step = smax;
 
 		// check minimum
@@ -426,7 +477,9 @@ Vector OdeErrControl(
 		for(i = 0; i < n; i++)
 		{	if( zero <= xb[i] )
 				axbi = xb[i];
-			else	axbi = -xb[i];
+			else	axbi = - xb[i];
+			if( axbi > maxabs[i] )
+				maxabs[i] = axbi;
 			a    = eabs[i] + erel * axbi;
 			if( ! (eb[i] == zero) )
 			{	r = ( a / eb[i] ) * step / (tf - ti);
@@ -440,8 +493,8 @@ Vector OdeErrControl(
 			// close to the minimum size
 			ta = tb;
 			for(i = 0; i < n; i++)
-			{	xa[i]  = xb[i];
-				ef[i] += eb[i];
+			{	xa[i] = xb[i];
+				ef[i] = ef[i] + eb[i];
 			}
 		}
 
@@ -451,6 +504,24 @@ Vector OdeErrControl(
 			scur = lambda * step / two;
 	}
 	return xa;
+}
+
+template <typename Scalar, typename Vector, typename Method>
+Vector OdeErrControl(
+	Method          &method, 
+	const Scalar    &ti    , 
+	const Scalar    &tf    , 
+	const Vector    &xi    , 
+	const Scalar    &smin  , 
+	const Scalar    &smax  , 
+	Scalar          &scur  ,
+	const Vector    &eabs  , 
+	const Scalar    &erel  , 
+	Vector          &ef    ) 
+{	Vector maxabs(xi.size());
+	return OdeErrControl(
+		method, ti, tf, xi, smin, smax, scur, eabs, erel, ef, maxabs
+	);
 }
 
 } // End CppAD namespace 

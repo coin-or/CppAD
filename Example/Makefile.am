@@ -95,6 +95,7 @@ Example_SOURCES   = \
 	NearEqualExt.h \
 	Neg.cpp \
 	OdeErrControl.cpp \
+	OdeErrMaxabs.cpp \
 	OdeTaylor.cpp \
 	Output.cpp \
 	Poly.cpp \

@@ -89,6 +89,7 @@ extern bool MulTape(void);
 extern bool Near_Equal(void);
 extern bool Neg(void);
 extern bool OdeErrControl(void);
+extern bool OdeErrMaxabs(void);
 extern bool OdeTaylor(void);
 extern bool Output(void);
 extern bool Poly(void);
@@ -226,6 +227,7 @@ int main(void)
 	ok &= Run( Near_Equal,        "Near_Equal"       );
 	ok &= Run( Neg,               "Neg"              );
 	ok &= Run( OdeErrControl,     "OdeErrControl"    );
+	ok &= Run( OdeErrMaxabs,      "OdeErrMaxabs"     );
 	ok &= Run( OdeTaylor,         "OdeTaylor"        );
 	ok &= Run( Output,            "Output"           );
 	ok &= Run( Pow,               "Poly"             );
