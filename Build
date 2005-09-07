@@ -40,11 +40,15 @@ then
 	# change Autoconf date to today
 	AcDate=$Today
 	#
-	sed Doc.omh > Doc.tmp -e \
-	"s/Version [0-9][0-9]-[0-9][0-9]-[0-9][0-9]/Version $Today/g"
-	#
-	diff Doc.omh Doc.tmp
-	mv   Doc.tmp Doc.omh
+	for name in Doc omh/InstallUnix omh/InstallWindows
+	do
+		sed $name.omh > $name.tmp \
+		-e "s/CppAD-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/CppAD-$Today/g" \
+		-e "s/cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/cppad-$Today/g" 
+		#
+		diff $name.omh $name.tmp
+		mv   $name.tmp $name.omh
+	done
 	#
 	# configure file is out of date so remove it
 	if [ -e configure ]
@@ -187,7 +191,7 @@ then
 		echo "rm -f -r cppad-$AcDate"
 		rm -f -r cppad-$AcDate
 	fi
-	for file in CppAD.dos.tar.gz CppAD.unix.tar.gz
+	for file in CppAD-*.tar.gz CppAD-*.zip
 	do
 		if [ -e $file ]
 		then
@@ -210,8 +214,10 @@ then
 	# extract from compressed tar
 	tar -xvzf cppad-$AcDate.tar.gz 
 	#
-	# create the unix version
-	mv cppad-$AcDate.tar.gz CppAD.unix.tar.gz
+	# create the unix version by changing cppad to upper case
+	# (use temporary file to avoid error on rename in Cygwin case)
+	mv cppad-$AcDate.tar.gz CppAD-$AcDate.tmp
+	mv CppAD-$AcDate.tmp    CppAD-$AcDate.tar.gz
 	#
 	# convert files to dos format
 	for file in  cppad-$AcDate/*
@@ -260,15 +266,11 @@ then
 	sleep 2
 	touch cppad-$AcDate/configure
 	#
-	# create the dos version
-	tar -cvf CppAD.dos.tar cppad-$AcDate
-	gzip CppAD.dos.tar 
+	# create the dos version CppAD-$AcDate.zip
+	zip -r CppAD-$AcDate cppad-$AcDate
 	#
 	# clean up
 	rm -r cppad-$AcDate
-	#
-	# Remove config.h from the it is not needed by Unix version
-	# rm cppad-$AcDate/CppAD/config.h
 	#
 	exit
 fi

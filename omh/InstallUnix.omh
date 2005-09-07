@@ -21,9 +21,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 $begin InstallUnix$$
 $dollar @$$
 $spell
+	cppad
 	gprof
 	config
-	cppad-yy-mm-dd
 	stdvector
 	std
 	CppADvector
@@ -59,24 +59,23 @@ $index install, unix CppAD$$
 $section Unix Installation and Testing$$
 
 $head Download Current Version$$
-Download the current version of the file
+Download the file
 $href%
-	http://www.seanet.com/~bradbell/CppAD.unix.tar.gz%
-	CppAD.unix.tar.gz
+	http://www.coin-or.org/Tarballs/CppAD-05-09-07.tar.gz%
+	CppAD-05-09-07.tar.gz
 %$$
 
 $head Extraction$$
 Use the command
 $codep
-	tar -xvzf CppAD.unix.tar.gz
+	tar -xvzf CppAD.05-09-06.tar.gz
 $$
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-%yy%-%mm%-%dd%
+	cppad-05-09-07
 %$$
-The value $syntax%%yy%-%mm%-%dd%$$ is the corresponding version
-of CppAD.
+Note that $code 05-09-06$$ is the version number for CppAD.
 
 $head User Documentation$$
 The $code Doc$$ sub-directory of the distribution directory

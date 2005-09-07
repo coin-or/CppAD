@@ -4,19 +4,19 @@
 # http://www.coin-or.org/svn/CppAD/ 
 cd ..
 #
-# change trunk to the directory that will receive the changes
-ToDirectory=trunk
+# change branches/Brad to the directory that will receive the changes
+ToDirectory=branches/Brad
 #
-# change 81 to the version corresponding to the ToDirectory before
+# change 96 to the version corresponding to the ToDirectory before
 # the changes
-StartRevision=81
+StartRevision=96
 #
-# change branches/Brad to the direcotry that contains the changes 
+# change trunk to the direcotry that contains the changes 
 # (which have all been committed to the repository)
-FromDirectory=branches/Brad
+FromDirectory=trunk
 # 
-# change 96 to the version number corresponding to the FromDirectory
-EndRevision=96
+# change 100 to the version number corresponding to the FromDirectory
+EndRevision=100
 #
 # echo the svn merge command
 echo "cd  .."

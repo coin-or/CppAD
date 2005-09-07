@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 $begin InstallWindows$$
 $dollar @$$
 $spell
-	cppad-yy-mm-dd
+	cppad
 	stdvector
 	std
 	ublas
@@ -67,10 +67,10 @@ $href%
 with Unix formatted files,
 just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
 Otherwise,
-download the file current version of the file
+download the archive
 $href%
-	http://www.seanet.com/~bradbell/CppAD.dos.tar.gz%
-	CppAD.dos.tar.gz
+	http://www.coin-or.org/Tarballs/CppAD-05-09-07.zip%
+	CppAD-05-09-07.zip
 %$$
 
 $head Extraction$$
@@ -79,16 +79,14 @@ $href%
 	http://www.winzip.com%
 	WinZip
 %$$
-or some other program to decompress the file
-$code CppAD.dos.tar.gz$$ to $code CppAD.dos.tar$$ 
-and to extract the individual
-files from $code CppAD.dos.tar$$ into the distribution directory
+or some other program to decompress the archive
+$code CppAD-05-09-07.zip$$.
+This will create the distribution directory 
 $syntax%
-	cppad-%yy%-%mm%-%dd%
+	cppad-05-09-07
 %$$
-All the command sequences below assume that you start in the
-distribution directory; i.e.,
-the one that is created by this extraction.
+All the command sequences below assume that you start in this
+distribution directory.
 If you are using Cygwin, or MinGW with MSYS, (with dos file formats)
 you should follow the $xref/InstallUnix//Unix installation/$$ steps
 for the rest of the install.
