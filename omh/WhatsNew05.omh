@@ -20,6 +20,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew05$$
 $spell
+	yy
+	mm
+	dd
+	pkzip
+	gz
+	Neg
 	maxabs
 	Romberg
 	cos
@@ -70,6 +76,20 @@ This section contains a list of the changes to CppAD during 2005
 (in reverse order by date).
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 09-09$$
+Add the $xref/UnaryPlus/$$ operator and move the $code Neg$$
+examples and tests to $xref/UnaryMinus/$$. 
+
+$head 09-07$$
+Change name of distribution files from 
+$code CppAD.unix.tar.gz$$ and $code CppAD.dos.tar.gz$$ 
+to 
+$syntax%CppAD-%yy%-%mm%-%dd%.tar.gz%$$ and $syntax%CppAD-%yy%-%mm%-%dd%.zip%$$ 
+(the $syntax%%*%.zip%$$ file
+uses pkzip compression as discussed in 
+$xref/InstallWindows/Extraction/windows install extraction/$$).
+
 
 $head 08-30$$
 The $italic maxabs$$ argument has been added to the
