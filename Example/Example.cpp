@@ -87,7 +87,6 @@ extern bool Mul(void);
 extern bool MulEq(void);
 extern bool MulTape(void);
 extern bool Near_Equal(void);
-extern bool Neg(void);
 extern bool OdeErrControl(void);
 extern bool OdeErrMaxabs(void);
 extern bool OdeTaylor(void);
@@ -105,6 +104,8 @@ extern bool Sinh(void);
 extern bool Sqrt(void);
 extern bool Sub(void);
 extern bool SubEq(void);
+extern bool UnaryMinus(void);
+extern bool UnaryPlus(void);
 extern bool Value(void);
 extern bool Vec(void);
 
@@ -225,7 +226,6 @@ int main(void)
 	ok &= Run( MulEq,             "MulEq"            );
 	ok &= Run( MulTape,           "MulTape"          );
 	ok &= Run( Near_Equal,        "Near_Equal"       );
-	ok &= Run( Neg,               "Neg"              );
 	ok &= Run( OdeErrControl,     "OdeErrControl"    );
 	ok &= Run( OdeErrMaxabs,      "OdeErrMaxabs"     );
 	ok &= Run( OdeTaylor,         "OdeTaylor"        );
@@ -246,6 +246,8 @@ int main(void)
 	ok &= Run( Sqrt,              "Sqrt"             );
 	ok &= Run( Sub,               "Sub"              );
 	ok &= Run( SubEq,             "SubEq"            );
+	ok &= Run( UnaryMinus,        "UnaryMinus"       );
+	ok &= Run( UnaryPlus,         "UnaryPlus"        );
 	ok &= Run( Value,             "Value"            );
 	ok &= Run( Vec,               "Vec"              );
 

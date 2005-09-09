@@ -93,7 +93,6 @@ Example_SOURCES   = \
 	MulTape.cpp \
 	Near_Equal.cpp \
 	NearEqualExt.h \
-	Neg.cpp \
 	OdeErrControl.cpp \
 	OdeErrMaxabs.cpp \
 	OdeTaylor.cpp \
@@ -115,5 +114,7 @@ Example_SOURCES   = \
 	Sqrt.cpp \
 	Sub.cpp \
 	SubEq.cpp \
+	UnaryMinus.cpp \
+	UnaryPlus.cpp \
 	Value.cpp \
 	Vec.cpp 

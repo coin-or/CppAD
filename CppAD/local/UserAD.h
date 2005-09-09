@@ -49,7 +49,8 @@ $childtable%
 	CppAD/local/Copy.h%
 	CppAD/local/Value.h%
 	CppAD/local/Integer.h%
-	CppAD/local/Neg.h%
+	CppAD/local/UnaryPlus.h%
+	CppAD/local/UnaryMinus.h%
 	CppAD/local/BinaryOp.h%
 	CppAD/local/CompEq.h%
 	CppAD/local/Compare.h%
@@ -70,7 +71,8 @@ $end
 # include <CppAD/local/FromBase.h>     // construction from base type
 # include <CppAD/local/Copy.h>         // copy constructor
 # include <CppAD/local/Value.h>        // base type value
-# include <CppAD/local/Neg.h>          // the unary minus operator
+# include <CppAD/local/UnaryPlus.h>    // the unary plus operator
+# include <CppAD/local/UnaryMinus.h>   // the unary minus operator
 # include <CppAD/local/BinaryOp.h>     // base type Binary operators
 # include <CppAD/local/CompEq.h>       // computed assignment operators
 # include <CppAD/local/Compare.h>      // Logical Binary operators

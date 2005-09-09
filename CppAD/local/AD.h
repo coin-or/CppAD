@@ -162,6 +162,10 @@ public:
 	CppADAssignMember( *= )
 	CppADAssignMember( /= )
 
+	// unary operators
+	inline AD operator +(void) const;
+	inline AD operator -(void) const;
+
 	// destructor
 	~AD(void)
 	{ }

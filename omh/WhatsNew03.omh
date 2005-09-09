@@ -489,7 +489,7 @@ $tend
 
 $head 08-22$$
 The 
-$xref/Neg//negation/$$ operator was added to the AD operations.
+$xref/UnaryMinus//unary minus/$$ operator was added to the AD operations.
 
 
 $head 08-19$$

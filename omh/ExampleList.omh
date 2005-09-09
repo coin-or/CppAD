@@ -121,7 +121,6 @@ $rref Mul.cpp$$
 $rref MulEq.cpp$$
 $rref Multape.cpp$$
 $rref Near_Equal.cpp$$
-$rref Neg.cpp$$
 $rref OdeErrControl.cpp$$
 $rref OdeTaylor.cpp$$
 $rref Output.cpp$$
@@ -141,6 +140,8 @@ $rref Sinh.cpp$$
 $rref Sqrt.cpp$$
 $rref Sub.cpp$$
 $rref SubEq.cpp$$
+$rref UnaryMinus.cpp$$
+$rref UnaryPlus.cpp$$
 $rref Value.cpp$$
 $rref Vec.cpp$$
 $tend

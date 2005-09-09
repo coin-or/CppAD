@@ -19,20 +19,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 /*
-$begin Neg.cpp$$
+$begin UnaryPlus.cpp$$
 $spell
 	Cpp
 	cstddef
 $$
 
-$section Negative Operator: Example and Test$$
+$section Unary Plus Operator: Example and Test$$
 $index negative$$
 $index example, negative$$
 $index test, negative$$
 
 $comment This file is in the Example subdirectory$$ 
 $code
-$verbatim%Example/Neg.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/UnaryPlus.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -41,52 +41,44 @@ $end
 
 # include <CppAD/CppAD.h>
 
-bool Neg(void)
+bool UnaryPlus(void)
 {	bool ok = true;
 
 	using namespace CppAD;
 
-	// independent variable vector, indices, values, and declaration
-	CppADvector< AD<double> > U(2);
-	size_t s = 0;
-	size_t t = 1;
-	U[s]     = 3.;
-	U[t]     = 4.;
-	Independent(U);
+	size_t n = 1; // number of independent variables
+	size_t m = 1; // number of dependent variables
 
-	// dependent variable vector and indices
-	CppADvector< AD<double> > Z(1);
-	size_t x = 0;
+	// independent variable vector
+	CppADvector< AD<double> > X(n);
+	double x0 = 3.;
+	X[0]      = x0;
+	Independent(X);
 
-	// dependent variable values
-	Z[x] = - U[t];   //  - AD<double> 
+	// dependent variable vector 
+	CppADvector< AD<double> > Y(m);
+	Y[0] = + X[0];
 
-	// create f: U -> Z and vectors used for derivative calculations
-	ADFun<double> f(U, Z);
-	CppADvector<double> v( f.Domain() );
-	CppADvector<double> w( f.Range() );
+	// create f: X -> Y and vectors used for derivative calculations
+	ADFun<double> f(X, Y);
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
 
 	// check values
-	ok &= ( Z[x] == -4. );
+	ok &= ( Y[0] == +x0 );
 
-	// forward computation of partials w.r.t. s
-	v[s] = 1.;
-	v[t] = 0.;
-	w    = f.Forward(1, v);
-	ok &= ( w[x] == 0. );   // dx/ds
+	// forward computation of partials w.r.t. x[0]
+	size_t p = 1;
+	dx[0]    = 1.;
+	dy       = f.Forward(p, dx);
+	ok      &= ( dy[0] == +1. );   // dy[0] / dx[0]
 
-	// forward computation of partials w.r.t. t
-	v[s] = 0.;
-	v[t] = 1.;
-	w    = f.Forward(1, v);
-	ok &= ( w[x] == -1. );   // dx/dt
-
-	// reverse computation of second partials of z
-	CppADvector<double> r( f.Domain() * 2 );
-	w[x] = 1.;
-	r    = f.Reverse(2, w);
-	ok &= ( r[2 * s + 1] == 0. );  // d^2 x / (ds ds)
-	ok &= ( r[2 * t + 1] == 0. );  // d^2 x / (ds dt)
+	// reverse computation of dertivative of y
+	CppADvector<double> r(n * p);
+	CppADvector<double> w(m);
+	w[0] = 1.;
+	r    = f.Reverse(p, w);
+	ok &= ( r[0] == +1. );   // dy[0] / dx[0]
 	 
 	return ok;
 }

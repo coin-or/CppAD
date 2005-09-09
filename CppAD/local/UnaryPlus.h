@@ -1,5 +1,5 @@
-# ifndef CppADNegIncluded
-# define CppADNegIncluded
+# ifndef CppADUnaryPlusIncluded
+# define CppADUnaryPlusIncluded
 
 // BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 /*
-$begin Neg$$
+$begin UnaryPlus$$
 $spell
 	Var
 	const
@@ -35,7 +35,7 @@ $index negative, operator$$
 $index -, unary$$
 $index operator, unary minus$$
 
-$section Negation: The Unary Minus Operator$$
+$section The Unary Plus Operator$$
 
 $table
 $bold Syntax$$ 
@@ -74,10 +74,10 @@ $latex \[
 
 $head Example$$
 $children%
-	Example/Neg.cpp
+	Example/UnaryPlus.cpp
 %$$
 The file
-$xref/Neg.cpp/$$
+$xref/UnaryPlus.cpp/$$
 contains an example and a test of this operation.
 
 $end
@@ -87,20 +87,17 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-// Broken g++ compiler inhibits declaring unary minus a member or friend
 template <class Base>
-inline AD<Base> operator - (AD<Base> const &right) 
-{	AD<Base> result(0);
-
-	result  -= right;
+inline AD<Base> AD<Base>::operator + (void) const 
+{	AD<Base> result(*this);
 
 	return result;
 }
 
 
 template <class Base>
-inline AD<Base> operator - (VecADelem<Base> const &right) 
-{	return - right.ADBase(); }
+inline AD<Base> operator + (VecADelem<Base> const &right) 
+{	return right.ADBase(); }
 
 }
 //  END CppAD namespace
