@@ -140,31 +140,18 @@ and its output value is an approximation for the absolute error in
 the integral estimate.
 
 $head Float$$
-The type float is defined as the type of the elements of
+The type $italic Float$$ is defined as the type of the elements of
 $xref/RombergMul/FloatVector/FloatVector/$$.
-The following operations must be defined for $italic Float$$ objects
-$italic x$$ and $italic y$$:
-
-
-$table
-$bold Operation$$       
-	$cnext $bold Description$$ $rnext
-$syntax%%Float%(%i%)%$$ 
-	$cnext converts $italic i$$ to $italic Float$$    $rnext
-$syntax%%x% = %y%$$     
-	$cnext assigns current $italic y$$ to $italic x$$ $rnext
-$syntax%%x% + %y%$$     
-	$cnext returns sum of $italic x$$ and $italic y$$ $rnext
-$syntax%%x% - %y%$$     
-	$cnext returns difference of $italic x$$ and $italic y$$ $rnext
-$syntax%%x% * %y%$$     
-	$cnext returns quotient of $italic x$$ and $italic y$$ $rnext
-$syntax%%x% / %y%$$     
-	$cnext returns quotient of $italic x$$ and $italic y$$ $rnext
-$syntax%%x% < %y%$$     
-	$cnext returns the $code bool$$ value true if 
-	$italic x$$ is less than $italic y$$                   $rnext
-$tend
+The type $italic Float$$ must satisfy the conditions
+for a $xref/NumericType/$$ type.
+The routine $xref/CheckNumericType/$$ will generate an error message
+if this is not the case.
+In addition, if $italic x$$ and $italic y$$ are $italic Float$$ objects,
+$syntax%
+	%x% < %y%
+%$$     
+returns the $code bool$$ value true if $italic x$$ is less than 
+$italic y$$ and false otherwise.
 
 $head FloatVector$$
 The type $italic FloatVector$$ must be a $xref/SimpleVector/$$ class.
@@ -192,6 +179,7 @@ $end
 */
 
 # include <CppAD/RombergOne.h>
+# include <CppAD/CheckNumericType.h>
 # include <CppAD/CheckSimpleVector.h>
 
 namespace CppAD { // BEGIN CppAD namespace
@@ -328,6 +316,9 @@ public:
 
 		// check simple vector class specifications
 		CheckSimpleVector<Float, FloatVector>();
+
+		// check numeric type specifications
+		CheckNumericType<Float>();
 
 		IntegrateOne F0(&F, 0, a, b, n, p);
 

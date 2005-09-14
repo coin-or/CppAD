@@ -122,29 +122,16 @@ $latex \[
 \] $$
 
 $head Float$$
-The following operations must be defined for $italic Float$$ objects
-$italic x$$, $italic y$$ and $code size_t$$ object $italic i$$.
-The result is of type $italic Float$$ unless otherwise specified.
-
-$table
-$bold Operation$$       
-	$cnext $bold Description$$ $rnext
-$syntax%%Float%(%i%)%$$ 
-	$cnext converts $italic i$$ to $italic Float$$    $rnext
-$syntax%%x% = %y%$$     
-	$cnext assigns current $italic y$$ to $italic x$$ $rnext
-$syntax%%x% + %y%$$     
-	$cnext returns sum of $italic x$$ and $italic y$$ $rnext
-$syntax%%x% - %y%$$     
-	$cnext returns difference of $italic x$$ and $italic y$$ $rnext
-$syntax%%x% * %y%$$     
-	$cnext returns quotient of $italic x$$ and $italic y$$ $rnext
-$syntax%%x% / %y%$$     
-	$cnext returns quotient of $italic x$$ and $italic y$$ $rnext
-$syntax%%x% < %y%$$     
-	$cnext returns the $code bool$$ value true if 
-	$italic x$$ is less than $italic y$$                   $rnext
-$tend
+The type $italic Float$$ must satisfy the conditions
+for a $xref/NumericType/$$ type.
+The routine $xref/CheckNumericType/$$ will generate an error message
+if this is not the case.
+In addition, if $italic x$$ and $italic y$$ are $italic Float$$ objects,
+$syntax%
+	%x% < %y%
+%$$     
+returns the $code bool$$ value true if $italic x$$ is less than 
+$italic y$$ and false otherwise.
 
 $children%
 	Example/RombergOne.cpp
@@ -165,6 +152,7 @@ $code CppAD/RombergOne.h$$.
 $end
 */
 
+# include <CppAD/CheckNumericType.h>
 # include <CppAD/CppADError.h>
 # include <CppAD/CppAD_vector.h>
 
@@ -185,6 +173,9 @@ Float RombergOne(
 	size_t ipow2 = 1;
 	Float  zero  = Float(0);
 	Float  two   = Float(2);
+
+	// check specifications for a NumericType
+	CheckNumericType<Float>();
 
 	CppADUsageError(
 		n >= 2,

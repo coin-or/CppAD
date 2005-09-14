@@ -31,18 +31,32 @@ $index library, numerical C++ template$$
 $section The CppAD General Purpose Library$$
 
 $children%
-	omh/VectorTempClass.omh%
+	omh/NumericType.omh%
+	omh/SimpleVector.omh%
 	lib/NearEqual.cpp%
-	omh/Polynomial.omh%
 	lib/SpeedTest.cpp%
+	omh/VectorTempClass.omh%
+	CppAD/CheckSimpleVector.h%
+	CppAD/CheckNumericType.h%
 	omh/LuDetAndSolve.omh%
+	omh/Polynomial.omh%
 	CppAD/RombergOne.h%
 	CppAD/RombergMul.h%
 	CppAD/Runge45.h%
 	CppAD/Rosen34.h%
-	CppAD/OdeErrControl.h%
-	CppAD/CheckSimpleVector.h
+	CppAD/OdeErrControl.h
 %$$
+
+$head C++ Concepts$$
+$index concept, C++$$
+We refer to a the set of classes that satisfy certain conditions
+as a C++ concept.
+The following concepts are used by CppAD and its library routines:
+$table
+$rref NumericType$$
+$rref SimpleVector$$
+$tend
+
 
 $head Some Numerical Testing Utilities$$
 The routines listed below are general purpose numerical testing routines:
@@ -58,6 +72,8 @@ This enables them to be used with algorithmic differentiation types,
 as well as for other purposes. 
 $table
 $rref CheckSimpleVector$$
+$rref SimpleVector$$
+$rref CheckNumericType$$
 $rref LuDetAndSolve$$
 $rref Polynomial$$
 $rref RombergOne$$

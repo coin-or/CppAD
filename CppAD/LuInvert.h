@@ -187,6 +187,7 @@ $codep */
 
 # include <CppAD/CppADError.h>
 # include <CppAD/CheckSimpleVector.h>
+# include <CppAD/CheckNumericType.h>
 
 namespace CppAD { // BEGIN CppAD namespace
 
@@ -202,6 +203,9 @@ void LuInvert(
 	size_t i; // row index in LU and X
 
 	typedef typename FloatVector::value_type Float;
+
+	// check numeric type specifications
+	CheckNumericType<Float>();
 
 	// check simple vector class specifications
 	CheckSimpleVector<Float, FloatVector>();

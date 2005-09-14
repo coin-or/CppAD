@@ -38,6 +38,7 @@ nobase_include_HEADERS =  \
 	CppAD/Rosen34.h \
 	CppAD/Runge45.h \
 	CppAD/SpeedTest.h \
+	CppAD/CheckNumericType.h \
 	CppAD/CheckSimpleVector.h \
 	CppAD/local/AD.h \
 	CppAD/local/ADBoolFun.h \

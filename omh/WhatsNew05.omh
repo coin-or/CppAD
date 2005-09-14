@@ -77,6 +77,23 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-14$$
+Added the $xref/NumericType/$$ concept and made the following
+library routines require this
+concept for their floating point template parameter type:
+$xref/LuSolve/$$,
+$xref/LuFactor/$$,
+$xref/RombergOne/$$, 
+$xref/RombergMul/$$,
+$xref/Runge45/$$,
+$xref/Rosen34/$$, and
+$xref/OdeErrControl/$$.
+This is more restrictive than the previous requirements
+for these routines but it 
+enables future changes to the implementation of these routines
+(for optimization purposes) with out affecting their specifications.
+
+
 $head 09-09$$
 Add the $xref/UnaryPlus/$$ operator and move the $code Neg$$
 examples and tests to $xref/UnaryMinus/$$. 

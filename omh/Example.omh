@@ -20,7 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin Example$$
 $spell
-	CppAD
+	CppADvector
 	Cygwin
 	Microsoft
 	chdir
@@ -47,9 +47,17 @@ $xref/Install//installation instructions/$$
 show how the examples can be run on your system.
 
 
+$head Choosing CppADvector$$
+Many of the examples use the $xref/CppADvector/$$ preprocessor symbol 
+to determine which $xref/SimpleVector/$$ template class is used with
+the examples. 
+
+
 $contents%
 	GetStarted/GetStarted.cpp%
-	omh/ExampleList.omh
+	omh/ExampleList.omh%
+	CppAD/local/CppADvector.h
 %$$
+
 
 $end

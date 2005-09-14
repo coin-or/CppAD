@@ -60,7 +60,8 @@ $childtable%
 	CppAD/local/StdMathLib.h%
 	CppAD/local/CondExp.h%
 	CppAD/local/Discrete.h%
-	CppAD/local/BoolFun.h
+	CppAD/local/BoolFun.h%
+	CppAD/local/Vec.h
 %$$
 
 $end

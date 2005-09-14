@@ -42,7 +42,7 @@ $index CppAD, version$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: CppAD-05-09-07
+A Package for Differentiation of C++ Algorithms: CppAD-05-09-14
 $$ 
 
 $table
@@ -179,7 +179,6 @@ $childtable%
 	omh/Faq.omh%
 	omh/Install.omh%
 	CppAD/local/UserAD.h%
-	omh/VectorTypes.omh%
 	CppAD/local/Fun.h%
 	omh/library.omh%
 	CppAD/CppADError.h%

@@ -304,41 +304,21 @@ $code OdeErrControl$$ can be called again
 with a smaller value of $italic smin$$.
 
 $head Scalar$$
-The following operations must be defined for $italic Scalar$$ objects
-$italic a$$ and $italic b$$:
+The type $italic Scalar$$ must satisfy the conditions
+for a $xref/NumericType/$$ type.
+The routine $xref/CheckNumericType/$$ will generate an error message
+if this is not the case.
+In addition, the following operations must be defined for 
+$italic Scalar$$ objects $italic a$$ and $italic b$$:
 
 $table
 $bold Operation$$ $cnext $bold Description$$  $rnext
-$syntax%%Scalar% %a%(%i%)%$$ $cnext
-	constructs a $italic Scalar$$ object from the $code int$$ $italic i$$
-$rnext
-$syntax%%Scalar% %a%(%b%)%$$ $cnext
-	constructs $italic a$$ with the same value as $italic b$$.
-$rnext
 $syntax%%a% <= %b%$$ $cnext
 	returns true (false) if $italic a$$ is less than or equal 
 	(greater than) $italic b$$.
 $rnext
 $syntax%%a% == %b%$$ $cnext
 	returns true (false) if $italic a$$ is equal to $italic b$$.
-$rnext
-$syntax%%a% = %b%$$ $cnext
-	changes the value of $italic a$$ so it is equal to $italic b$$.
-$rnext
-$syntax%%a% + %b%$$ $cnext
-	returns a $italic Scalar$$ equal to the sum $latex a + b$$
-$rnext
-$syntax%%a% - %b%$$ $cnext
-	returns a $italic Scalar$$ equal to the difference $latex a - b$$ 
-$rnext
-$syntax%%a% * %b%$$ $cnext
-	returns a $italic Scalar$$ equal to the product $latex a * b$$ 
-$rnext
-$syntax%%a% / %b%$$ $cnext
-	returns a $italic Scalar$$ equal to the quotient $latex a / b$$ 
-$rnext
-$syntax%- %a%$$ $cnext
-	returns a $italic Scalar$$ equal to the negative of $italic a$$
 $rnext
 $syntax%log(%a%)%$$ $cnext
 	returns a $italic Scalar$$ equal to the logarithm of $italic a$$

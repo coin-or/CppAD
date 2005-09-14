@@ -189,38 +189,15 @@ of the element by element difference between $italic xf$$
 and a fourth order solution of the same differential equation.
 
 $head Scalar$$
-The following operations must be defined for $italic Scalar$$ objects
-$italic a$$ and $italic b$$:
+The type $italic Scalar$$ must satisfy the conditions
+for a $xref/NumericType/$$ type.
+The routine $xref/CheckNumericType/$$ will generate an error message
+if this is not the case.
+In addition, the following operations must be defined for 
+$italic Scalar$$ objects $italic a$$ and $italic b$$:
 
 $table
 $bold Operation$$ $cnext $bold Description$$  $rnext
-$syntax%%Scalar% %a%(%i%)%$$ $cnext
-	constructs a $italic Scalar$$ object from the $code int$$ $italic i$$
-$rnext
-$syntax%%Scalar% %a%(%b%)%$$ $cnext
-	constructs $italic a$$ with the same value as $italic b$$.
-$rnext
-$syntax%%a% = %b%$$ $cnext
-	assignment operator
-$rnext
-$syntax%%a% += %b%$$ $cnext
-	computed addition operator 
-$rnext
-$syntax%%a% -= %b%$$ $cnext
-	computed subtraction operator 
-$rnext
-$syntax%%a% + %b%$$ $cnext
-	addition operator (returns a $italic Scalar$$ object)
-$rnext
-$syntax%%a% - %b%$$ $cnext
-	subtraction operator (returns a $italic Scalar$$ object)
-$rnext
-$syntax%%a% * %b%$$ $cnext
-	multiplication operator (returns a $italic Scalar$$ object)
-$rnext
-$syntax%%a% / %b%$$ $cnext
-	division operator (returns a $italic Scalar$$ object)
-$rnext
 $syntax%%a% < %b%$$ $cnext
 	less than operator (returns a $code bool$$ object)
 $tend
@@ -250,6 +227,7 @@ $end
 # include <cstddef>
 # include <CppAD/CppADError.h>
 # include <CppAD/CheckSimpleVector.h>
+# include <CppAD/CheckNumericType.h>
 
 namespace CppAD { // BEGIN CppAD namespace
 
@@ -273,6 +251,9 @@ Vector Runge45(
 	const Vector &xi ,
 	Vector       &e )
 {
+	// check numeric type specifications
+	CheckNumericType<Scalar>();
+
 	// check simple vector class specifications
 	CheckSimpleVector<Scalar, Vector>();
 

@@ -46,6 +46,8 @@ Example_SOURCES   = \
 	Atan.cpp \
 	Atan2.cpp \
 	BoolFun.cpp \
+	CheckNumericType.cpp \
+	CheckSimpleVector.cpp \
 	Compare.cpp \
 	CompareChange.cpp \
 	ComplexPoly.cpp \
@@ -107,7 +109,6 @@ Example_SOURCES   = \
 	RombergOne.cpp \
 	Rosen34.cpp \
 	Runge45.cpp \
-	CheckSimpleVector.cpp \
 	SimpleVector.cpp \
 	Sin.cpp \
 	Sinh.cpp \

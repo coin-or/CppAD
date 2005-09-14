@@ -183,34 +183,17 @@ if this is not the case.
 $head Float$$
 This notation is used to denote the type corresponding
 to the elements of a $italic FloatVector$$.
-(Both real and complex numbers are usually represented by
-a floating point type.)
-The following operations must be defined for any pair
+The type $italic Float$$ must satisfy the conditions
+for a $xref/NumericType/$$ type.
+The routine $xref/CheckNumericType/$$ will generate an error message
+if this is not the case.
+In addition, the following operations must be defined for any pair
 of $italic Float$$ objects $italic x$$ and $italic y$$:
 
 $table
 $bold Operation$$ $cnext $bold Description$$  $rnext
-$syntax%%Float% %x%(%i%)%$$ $cnext
-	constructs a $italic Float$$ object from the $code int$$ $italic i$$
-$rnext
 $syntax%log(%x%)%$$ $cnext
 	returns the logarithm of $italic x$$ as a $italic Float$$ object
-$rnext
-$syntax%%x% = %y%$$ $cnext
-	assignment operator 
-	(sets current $italic x$$ value equal to current $italic y$$ value)
-$rnext
-$syntax%%x% += %y%$$ $cnext
-	computed assignment addition operator
-$rnext
-$syntax%%x% -= %y%$$ $cnext
-	computed assignment subtraction operator
-$rnext
-$syntax%%x% /= %y%$$ $cnext
-	computed assignment division operator
-$rnext
-$syntax%%x% * %y%$$ $cnext
-	multiplication operator (returns a $italic Float$$ object)
 $tend
 
 $head AbsGeq$$
@@ -302,6 +285,7 @@ $codep */
 
 # include <CppAD/CppADError.h>
 # include <CppAD/CheckSimpleVector.h>
+# include <CppAD/CheckNumericType.h>
 
 namespace CppAD { // BEGIN CppAD namespace
 
@@ -339,6 +323,9 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)
 {	
 	// type of the elements of LU
 	typedef typename FloatVector::value_type Float;
+
+	// check numeric type specifications
+	CheckNumericType<Float>();
 
 	// check simple vector class specifications
 	CheckSimpleVector<Float, FloatVector>();

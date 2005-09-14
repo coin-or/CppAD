@@ -1,0 +1,121 @@
+// BEGIN SHORT COPYRIGHT
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+// END SHORT COPYRIGHT
+
+/*
+$begin NumericType$$
+$spell
+	const
+$$
+
+$index numeric$$
+$index class, numeric$$
+
+$section Definition of a Numeric Type$$
+
+$head Type Requirements$$
+A $italic NumericType$$ is any type
+that satisfies the requirements below.
+The following is a list of some numeric classes:
+$code int$$, $code double$$, $code AD<double>$$.
+The routine $xref/CheckNumericType/$$ can be used to check
+that a class satisfies these conditions.
+
+$head Default Constructor$$
+$index default, numeric constructor$$
+$index constructor, numeric$$
+The syntax 
+$syntax%
+	%NumericType% %x%;
+%$$
+creates a $italic NumericType$$ object
+with an unspecified value.
+
+$head Constructor From Integer$$
+$index int, numeric constructor$$
+$index constructor, numeric$$
+If $italic i$$ is an $code int$$,
+the syntax 
+$syntax%
+	%NumericType% %x%(%i%);
+%$$
+creates a $italic NumericType$$ object with a value
+equal to $italic i$$ where $italic i$$ can be $code const$$.
+
+$head Copy Constructor$$
+$index copy, numeric constructor$$
+$index constructor, numeric copy$$
+If $italic x$$ is a $italic NumericType$$ object
+the syntax 
+$syntax%
+	%NumericType% %y%(%x%);
+%$$
+creates a $italic NumericType$$ object $italic y$$
+with the same value as $italic x$$
+where $italic x$$ can be $code const$$.
+
+$head Assignment$$
+If $italic x$$ and $italic y$$ are $italic NumericType$$ objects,
+the syntax
+$syntax%
+	%x% = %y%
+%$$
+sets the value of $italic x$$ equal to the value of $italic y$$
+where $italic y$$ can be $code const$$.
+The expression corresponding to this operation is unspecified; i.e.,
+it could be $code void$$ and hence
+$syntax%
+	%x% = %y% = %z%
+%$$
+may not be legal.
+
+$head Operators$$
+Suppose $italic x$$, $italic y$$ and $italic z$$
+$italic NumericType$$ objects where
+$italic x$$ and $italic y$$ my be $code const$$.
+In the result type column,
+$italic NumericType$$ can be replaced by any type that can 
+be used just like a $italic NumericType$$ object.
+$table
+$bold Operation$$     $cnext $bold Description$$               $cnext
+	$bold Result Type$$  $rnext
+$syntax%+%x%$$        $cnext unary plus                        $cnext
+	$italic NumericType$$    $rnext
+$syntax%-%x%$$        $cnext unary minus                       $cnext
+	$italic NumericType$$    $rnext
+$syntax%%x% +  %y%$$  $cnext binary addition                   $cnext
+	$italic NumericType$$    $rnext
+$syntax%%x% -  %y%$$  $cnext binary subtraction                $cnext
+	$italic NumericType$$    $rnext
+$syntax%%x% *  %y%$$  $cnext binary multiplication             $cnext
+	$italic NumericType$$    $rnext
+$syntax%%x% /  %y%$$  $cnext binary division                   $cnext
+	$italic NumericType$$    $rnext
+$syntax%%z% += %y%$$  $cnext computed assignment addition       $cnext
+	unspecified          $rnext
+$syntax%%z% -= %y%$$  $cnext computed assignment subtraction    $cnext
+	unspecified          $rnext
+$syntax%%z% *= %y%$$  $cnext computed assignment multiplication $cnext
+	unspecified          $rnext
+$syntax%%z% /= %y%$$  $cnext computed assignment division       $cnext
+	unspecified      
+$tend
+
+
+$end
