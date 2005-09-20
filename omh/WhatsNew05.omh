@@ -77,6 +77,13 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-20$$
+The Microsoft compiler project files 
+$code Example/Example.vcproj$$ and $code TestMore/TestMore.vcproj$$ 
+were not up to date.
+This has been fixed.
+In addition, the example $xref/NumericType.cpp/$$ has been added.
+
 $head 09-14$$
 Added the $xref/NumericType/$$ concept and made the following
 library routines require this
