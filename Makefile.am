@@ -121,6 +121,27 @@ nobase_include_HEADERS =  \
 	CppAD/local/Value.h \
 	CppAD/local/Vec.h
 #
+# Did user specify --with-Example
+if CppAD_EXAMPLE
+EXAMPLE = Example
+else
+EXAMPLE =
+endif
+#
+# Did user specify --with-TestMore
+if CppAD_TESTMORE
+TESTMORE = TestMore
+else
+TESTMORE =
+endif
+#
+# Did user specify --with-Speed
+if CppAD_SPEED
+SPEED = Speed
+else
+SPEED =
+endif
+#
 # Did user specify a value for ADOLC_DIR in configure command line
 if CppAD_ADOLC
 ADOLC = Adolc
@@ -138,12 +159,12 @@ endif
 SUBDIRS = \
 	lib \
 	$(ADOLC) \
-	Example \
+	$(EXAMPLE) \
 	$(FADBAD) \
 	GetStarted \
 	PrintFor \
-	Speed \
-	TestMore 
+	$(SPEED) \
+	$(TESTMORE) 
 #
 EXTRA_DIST = \
 	Build \

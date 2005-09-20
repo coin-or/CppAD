@@ -83,6 +83,14 @@ $code Example/Example.vcproj$$ and $code TestMore/TestMore.vcproj$$
 were not up to date.
 This has been fixed.
 In addition, the example $xref/NumericType.cpp/$$ has been added.
+$pre
+
+$$
+Make the building of the 
+$code Example$$, $code TestMore$$, and $code Speed$$, directories
+optional during the $xref/InstallUnix/Configure/configure/$$ command.
+The $xref/InstallUnix//Unix installation instructions/$$ were 
+overhauled to make the larger set of options easy to understand.
 
 $head 09-14$$
 Added the $xref/NumericType/$$ concept and made the following
@@ -163,7 +171,7 @@ The standard math functions $xref/sinh//sinh/$$ and $xref/cosh//cosh/$$ have
 been added. 
 In addition, more correctness testing 
 (
-$xref/InstallUnix/More Correctness Testing/unix/$$ , 
+$xref/InstallUnix/--with-TestMore/unix/$$ , 
 $xref/InstallWindows/More Correctness Testing/windows/$$ 
 )
 has been added for the $xref/Sin//sin/$$ and $xref/cos//cos/$$ functions.
@@ -465,7 +473,7 @@ During the process above, the function $xref/Parameter//Variable/$$ was added.
 
 
 $head 04-20$$
-Add $xref/InstallUnix/Speed Testing/Profiling/Profiling/1/$$ to
+Add $xref/InstallUnix/--with-profiling/profiling/$$ to
 the speed tests.
 
 $head 04-19$$
@@ -504,7 +512,7 @@ An new multiple tape example $xref/MulTape/$$ was added.
 
 $head 03-01$$
 An option that specifies error and warning 
-$xref/InstallUnix/C++ Errors And Warnings/flags/$$
+$xref/InstallUnix/CppErrorsAndWarnings/flags/$$
 for all the C++ compile commands,
 was added to the
 $xref/InstallUnix//Unix installation instructions/$$.

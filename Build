@@ -117,29 +117,39 @@ fi
 #
 if [ "$1" = "configure" ] || [ "$1" = "all" ]
 then
+	ADOLC=""
 	if [ -e $HOME/adolc_base ]
 	then
 		ADOLC="ADOLC_DIR=$HOME/adolc_base"
-	else
-		ADOLC=""
 	fi
+	#
+	FADBAD=""
 	if [ -e $HOME/FADBAD++ ]
 	then
 		FADBAD="FADBAD_DIR=$HOME"
-	else
-		FADBAD=""
+	fi
+	#
+	TEST=""
+	if [ "$2" == "test" ]
+	then
+		TEST="$TEST --with-Example"
+		TEST="$TEST --with-TestMore"
+		TEST="$TEST --with-Speed"
+		TEST="$TEST --with-profiling"
 	fi
 	#
 	echo "configure \\"
 	echo "	--with-profiling \\"
 	echo "	$ADOLC  \\"
 	echo "	$FADBAD \\"
+	echo "  $TEST   \\"
 	echo "	CPP_ERROR_WARN=\"-Wall -ansi -pedantic-errors -std=c++98\""
 	#
 	./configure \
 		--with-profiling \
-		$ADOLC \
+		$ADOLC  \
 		$FADBAD \
+		$TEST   \
 		CPP_ERROR_WARN="-Wall -ansi -pedantic-errors -std=c++98"
 	#
 	# Fix Makefile for what appears to be a bug in gzip under cygwin
@@ -283,13 +293,20 @@ else
 fi
 echo "option"
 echo "------"
-echo "version     update configure.ac and Doc.omh version number"
-echo "aclocal     create aclocal.m4 file"
-echo "autoheader  create a CppAD/config.h.in file"
-echo "automake    run autoconf and automake to create configure script"
-echo "configure   run configure script to create make files"
-echo "compile     compile all of the tests"
-echo "omhelp      build all the documentation"
-echo "dist        create the distribution files CppAD.*.tar.gz"
+echo "version         update configure.ac and Doc.omh version number"
+echo "aclocal         create aclocal.m4 file"
+echo "autoheader      create a CppAD/config.h.in file"
+echo "automake        run autoconf and automake to create configure script"
+echo "configure       configure excludes Example, TestMore, Speed, profiling"
+echo "configure test  configure includes Example, TestMore, Speed, profiling"
+echo "compile         compile all of the tests"
+echo "omhelp          build all the documentation"
+echo "dist            create the distribution files CppAD.*.tar.gz"
 echo
-echo "Build all: This command will execute all the options in the order above"
+echo "Build all"
+echo "This command will execute all the options in the order above"
+echo "with the exception that \"configue test\" will be excluded."
+echo
+echo "Build all test"
+echo "This command will execute all the options in the order above"
+echo "with the exception that \"configue\" will be excluded."

@@ -22,7 +22,7 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 
 dnl   package   version           bug-report
-AC_INIT(CppAD, 05-08-20, bradbell@seanet.com)
+AC_INIT(CppAD, 05-09-20, bradbell@seanet.com)
 
 dnl ----------------------------------------------------------------------
 dnl Command line argument results
@@ -94,6 +94,48 @@ if test "$stdvector${BOOST_DIR}" = "no"; then
 	AC_MSG_RESULT( [yes] )
 else
 	AC_DEFINE(CppAD_CPPADVECTOR, 0, [using CppAD vectors])
+	AC_MSG_RESULT( [no] )
+fi
+
+dnl Are we building the Example directory
+AC_MSG_CHECKING( [with Example] )
+AC_ARG_WITH(Example, 
+	AC_HELP_STRING( [--with-Example], [default is no] ),
+	[Example="yes"],
+	[Example="no"]
+)
+AM_CONDITIONAL(CppAD_EXAMPLE, test $Example = "yes" )
+if test $Example = "yes"; then
+	AC_MSG_RESULT( [yes] )
+else
+	AC_MSG_RESULT( [no] )
+fi
+
+dnl Are we building the TestMore directory
+AC_MSG_CHECKING( [with TestMore] )
+AC_ARG_WITH(TestMore, 
+	AC_HELP_STRING( [--with-TestMore], [default is no] ),
+	[TestMore="yes"],
+	[TestMore="no"]
+)
+AM_CONDITIONAL(CppAD_TESTMORE, test $TestMore = "yes" )
+if test $TestMore = "yes"; then
+	AC_MSG_RESULT( [yes] )
+else
+	AC_MSG_RESULT( [no] )
+fi
+
+dnl Are we building the Speed directory
+AC_MSG_CHECKING( [with Speed] )
+AC_ARG_WITH(Speed, 
+	AC_HELP_STRING( [--with-Speed], [default is no] ),
+	[Speed="yes"],
+	[Speed="no"]
+)
+AM_CONDITIONAL(CppAD_SPEED, test $Speed = "yes" )
+if test $Speed = "yes"; then
+	AC_MSG_RESULT( [yes] )
+else
 	AC_MSG_RESULT( [no] )
 fi
 

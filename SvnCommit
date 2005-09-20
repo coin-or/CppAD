@@ -1,34 +1,18 @@
-# Add numeric type example and bring MS project files up to date
-#  
-# SvnCommit:             script file for previous commit command
-# SvnStatus:             script that checks status without deleting temp files
-# CheckNumericType.h:    add statement that avoids MS compiler warning
-# CppAD.h:               include CheckNumericType.h  (was missing) 
-# NumericType.omh:       add example and otherwise improve documentaiton
-# SimpleVector.omh:      correct english
-# NumericType.cpp:       add numeric type example
-# CheckSimpleVector.cpp: remove some unecessay white space
-# CheckNumericType.cpp:  ... ,remove inlines, and add copy constructor
-# Example.cpp            add NumericType.cpp
-# Makefile.am            add NumericType.cpp
-# Example.vcproj         ... and previously missing files 
-# TestMore.vcproj        add Neg.cpp (a previously missing file)
+# Make building Example, TestMore, and Speed directoriers 
+# optional during configure and Build scripts
+#
+# Build            Make Example, TestMore, and Speed optional
+# configure.ac     ...
+# Makefile.am      ...
+# InstallUnix.omh  add new configure arguments and totally reorganize
+# WhatsNew05.omh   users view of the changes
+# SvnCommit        script file used for this commit
 #
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-svn add SvnCommit
-svn add SvnStatus
-svn add Example/NumericType.cpp
 svn commit --file svn.log                \
-	SvnCommit                        \
-	SvnStatus                        \
-	CppAD/CheckNumericType.h         \
-	CppAD/CppAD.h                    \
-	omh/NumericType.omh              \
-	omh/SimpleVector.omh             \
-	Example/NumericType.cpp          \
-	Example/CheckNumericType.cpp     \
-	Example/CheckSimpleVector.cpp    \
-	Example/Example.vcproj           \
-	Example/Example.cpp              \
-	Example/Makefile.am              \
-	TestMore/TestMore.vcproj
+	Build                            \
+	configure.ac                     \
+	Makefile.am                      \
+	omh/InstallUnix.omh              \
+	omh/WhatsNew05.omh               \
+	SvnCommit
