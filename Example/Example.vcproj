@@ -299,6 +299,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\CheckNumericType.cpp">
+			</File>
+			<File
 				RelativePath=".\CheckSimpleVector.cpp">
 			</File>
 			<File
@@ -1034,24 +1037,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="Neg.cpp">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"/>
-				</FileConfiguration>
+				RelativePath=".\NumericType.cpp">
 			</File>
 			<File
 				RelativePath="OdeErrControl.cpp">
@@ -1324,6 +1310,12 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\UnaryMinus.cpp">
+			</File>
+			<File
+				RelativePath=".\UnaryPlus.cpp">
 			</File>
 			<File
 				RelativePath="Value.cpp">

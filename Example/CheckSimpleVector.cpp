@@ -53,13 +53,11 @@ public:
 	// type of the elements in the vector
 	typedef Scalar value_type;
 # endif
-
 # if CppADMyVectorOmit != 2
 	// default constructor
 	inline MyVector(void) : length(0) , data(0)
 	{ }
 # endif
-
 # if CppADMyVectorOmit != 3
 	// constructor with a specified size
 	inline MyVector(size_t n) : length(n)
@@ -68,7 +66,6 @@ public:
 		else	data = new Scalar[length]; 
 	}
 # endif
-
 # if CppADMyVectorOmit != 4
 	// copy constructor
 	inline MyVector(const MyVector &x) : length(x.length)
@@ -81,7 +78,6 @@ public:
 			data[i] = x.data[i];
 	}
 # endif
-
 # if CppADMyVectorOmit != 4 
 # if CppADMyVectorOmit != 7
 	// destructor (it is not safe to delete the pointer in cases 4 and 7)
@@ -89,7 +85,6 @@ public:
 	{	delete [] data; }
 # endif
 # endif
-
 # if CppADMyVectorOmit != 5
 	// size function
 	inline size_t size(void) const
@@ -106,7 +101,6 @@ public:
 		else	data = 0;
 	}
 # endif
-
 # if CppADMyVectorOmit != 7
 	// assignment operator
 	inline MyVector & operator=(const MyVector &x)
@@ -116,13 +110,11 @@ public:
 		return *this;
 	}
 # endif
-
 # if CppADMyVectorOmit != 8
 	// non-constant element access
 	Scalar & operator[](size_t i)
 	{	return data[i]; }
 # endif
-
 # if CppADMyVectorOmit != 9
 	// constant element access
 	const Scalar & operator[](size_t i) const

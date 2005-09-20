@@ -502,6 +502,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Neg.cpp">
+			</File>
+			<File
 				RelativePath=".\OdeErrControl.cpp">
 			</File>
 			<File

@@ -152,6 +152,7 @@ namespace CppAD {
 		/* 
 		use all values so as to avoid warnings
 		*/
+		check_NumericType_default_constructor = x;
 		return
 			+ check_NumericType_default_constructor
 			+ check_NumericType_constructor_from_int
