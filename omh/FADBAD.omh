@@ -18,8 +18,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 // END SHORT COPYRIGHT
 
-$begin FADBAD$$
+$begin Fadbad$$
 $spell
+	Fadbad
 	Makefile
 	Cygwin
 	CppAD
@@ -28,38 +29,27 @@ $spell
 	Speed Speed
 $$
 
-$mindex FADBAD compare$$
-$section Routines for Comparing CppAD with FADBAD$$
+$mindex Fadbad compare$$
+$section Routines for Comparing CppAD with Fadbad$$
 
 
 $head Description$$
 These examples and speed tests are used to compare
 $href%
 	http://www.imm.dtu.dk/fadbad.html/%
-	FADBAD
+	Fadbad
 %$$
 with CppAD.
-They are located in the directory $code CppAD/FADBAD$$.
+They are located in the directory $code CppAD/Fadbad$$.
 Note that they can only be run under Unix 
 (or Cygwin on Microsoft windows).
-
-$head FADBAD Install Directory$$
-The following text appears 
-in the  file $code CppAD/FADBAD/Makefile$$.
-$codep
-	FADBAD = d:/FADBAD++
-$$
-Before you compile and run these tests you will have to replace
-the text $code d:/FADBAD++$$ with directory where FADBAD++
-is installed on your machine.
-
 
 $head Example$$
 In a unix operating system (or in a Cygwin shell on an Microsoft system),
 you can compile link and run this list examples and 
-results comparison between FADBAD and CppAD using the following commands:
+results comparison between Fadbad and CppAD using the following commands:
 $codep
-	cd CppAD/FADBAD
+	cd CppAD/Fadbad
 	make  Example
 	Example
 $$
@@ -68,10 +58,10 @@ $$
 $head Speed$$
 In a unix operating system (or in a Cygwin shell on an Microsoft system),
 you can compile link and run the list of speed
-comparisons between CppAD and FADBAD
+comparisons between CppAD and Fadbad
 using the following commands:
 $codep
-	cd CppAD/FADBAD
+	cd CppAD/Fadbad
 	make  Speed
 	Speed
 $$
@@ -79,10 +69,10 @@ $$
 
 
 $contents%
-	FADBAD/Speed.cpp%
-	FADBAD/Example.cpp%
-	FADBAD/DetMinor.cpp%
-	FADBAD/DetLu.cpp
+	Fadbad/Speed.cpp%
+	Fadbad/Example.cpp%
+	Fadbad/DetMinor.cpp%
+	Fadbad/DetLu.cpp
 %$$
 
 $end
