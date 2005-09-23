@@ -18,8 +18,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 // END SHORT COPYRIGHT
 
-$begin ADOLC$$
+$begin Adolc$$
 $spell
+	Adolc
 	Makefile
 	Cygwin
 	CppAD
@@ -28,38 +29,27 @@ $spell
 	Speed Speed
 $$
 
-$mindex ADOLC compare$$
-$section Routines for Comparing CppAD with ADOLC$$
+$mindex Adolc compare$$
+$section Routines for Comparing CppAD with Adolc$$
 
 
 $head Description$$
 These examples and speed tests are used to compare
 $href%
 	http://www.math.tu-dresden.de/~adol-c/%
-	ADOLC
+	Adolc
 %$$
 with CppAD.
-They are located in the directory $code CppAD/ADOLC$$.
+They are located in the directory $code CppAD/Adolc$$.
 Note that they can only be run under Unix 
 (or Cygwin on Microsoft windows).
-
-$head ADOLC Install Directory$$
-The following text appears 
-in the  file $code CppAD/ADOLC/Makefile$$.
-$codep
-	ADOLC = d:/ADOLC18
-$$
-Before you compile and run these tests you will have to replace
-the text $code d:/ADOLC18$$ with directory where ADOLC
-is installed on your machine.
-
 
 $head Example$$
 In a unix operating system (or in a Cygwin shell on an Microsoft system),
 you can compile link and run this list examples and 
-results comparison between ADOLC and CppAD using the following commands:
+results comparison between Adolc and CppAD using the following commands:
 $codep
-	cd CppAD/ADOLC
+	cd CppAD/Adolc
 	make  Example
 	Example
 $$
@@ -68,10 +58,10 @@ $$
 $head Speed$$
 In a unix operating system (or in a Cygwin shell on an Microsoft system),
 you can compile link and run the list of speed
-comparisons between CppAD and ADOLC
+comparisons between CppAD and Adolc
 using the following commands:
 $codep
-	cd CppAD/ADOLC
+	cd CppAD/Adolc
 	make  Speed
 	Speed
 $$
@@ -79,10 +69,10 @@ $$
 
 
 $contents%
-	ADOLC/Speed.cpp%
-	ADOLC/Example.cpp%
-	ADOLC/DetMinor.cpp%
-	ADOLC/DetLu.cpp
+	Adolc/Speed.cpp%
+	Adolc/Example.cpp%
+	Adolc/DetMinor.cpp%
+	Adolc/DetLu.cpp
 %$$
 
 $end
