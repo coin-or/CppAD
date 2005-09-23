@@ -18,17 +18,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 // END SHORT COPYRIGHT
 /*
-$begin SpeedFADBAD.cpp$$
+$begin SpeedFadbad.cpp$$
 $spell
+	Fadbad
 	Cpp
 $$
 
-$mindex run all FADBAD speed test$$
-$section Run All The FADBAD Speed Comparison Tests$$
+$mindex run all Fadbad speed test$$
+$section Run All The Fadbad Speed Comparison Tests$$
 
-$comment This file is in the FADBAD subdirectory$$ 
+$comment This file is in the Fadbad subdirectory$$ 
 $code
-$verbatim%FADBAD/Speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Fadbad/Speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

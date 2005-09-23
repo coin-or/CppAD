@@ -15,8 +15,8 @@ StartRevision=101
 # (which have all been committed to the repository)
 FromDirectory=trunk
 # 
-# change 106 to the version number corresponding to the FromDirectory
-EndRevision=106
+# change 114 to the version number corresponding to the FromDirectory
+EndRevision=114
 #
 # echo the svn merge command
 echo "cd  .."

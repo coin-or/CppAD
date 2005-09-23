@@ -19,17 +19,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 /*
-$begin ExampleADOLC.cpp$$
+$begin ExampleAdolc.cpp$$
 $spell
+	Adolc
 	Cpp
 $$
 
-$index ADOLC, compare$$
-$section Compare ADOLC and CppAD Results$$
+$index Adolc, compare$$
+$section Compare Adolc and CppAD Results$$
 
-$comment This file is in the ADOLC subdirectory$$ 
+$comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%ADOLC/Example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Adolc/Example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

@@ -18,23 +18,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 // END SHORT COPYRIGHT
 /*
-$begin DetMinorFADBAD.cpp$$
+$begin DetMinorFadbad.cpp$$
 $spell
+	Fadbad
 	Cpp
 $$
 
-$section FADBAD & CppAD Gradient of Determinant by Minors$$
+$section Fadbad & CppAD Gradient of Determinant by Minors$$
 
-$index FADBAD, speed$$
-$index speed, FADBAD$$
-$index determinant, FADBAD$$
-$index FADBAD, determinant$$
-$index Minor, FADBAD expand$$
-$index FADBAD, Minor expand$$
+$index Fadbad, speed$$
+$index speed, Fadbad$$
+$index determinant, Fadbad$$
+$index Fadbad, determinant$$
+$index Minor, Fadbad expand$$
+$index Fadbad, Minor expand$$
 
-$comment This file is in the FADBAD subdirectory$$ 
+$comment This file is in the Fadbad subdirectory$$ 
 $code
-$verbatim%FADBAD/DetMinor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Fadbad/DetMinor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -45,7 +46,7 @@ $end
 # include "../Example/DetByMinor.h"
 
 # include <iostream.h>
-# include <FADBAD++/badiff.h>
+# include <Fadbad++/badiff.h>
 
 void DetMinorCp(size_t size, size_t repeat, CppADvector<double> &u)
 {
@@ -164,7 +165,7 @@ std::string DetMinorFa(size_t size, size_t repeat)
 {	CppADvector<double> u(size * size);
 
 	DetMinorFa(size, repeat, u);
-	return "FADBAD: gradient of Determinant by Minors";
+	return "Fadbad: gradient of Determinant by Minors";
 }
 
 // END PROGRAM

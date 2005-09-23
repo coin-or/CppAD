@@ -18,17 +18,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 // END SHORT COPYRIGHT
 /*
-$begin SpeedADOLC.cpp$$
+$begin SpeedAdolc.cpp$$
 $spell
+	Adolc
 	Cpp
 $$
 
-$mindex run all ADOLC speed test$$
-$section Run All The ADOLC Speed Comparison Tests$$
+$mindex run all Adolc speed test$$
+$section Run All The Adolc Speed Comparison Tests$$
 
-$comment This file is in the ADOLC subdirectory$$ 
+$comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%ADOLC/Speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Adolc/Speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

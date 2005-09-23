@@ -1,18 +1,34 @@
-# Make building Example, TestMore, and Speed directoriers 
-# optional during configure and Build scripts
+# Fix upper and lower case in OMhelp input file names and include commands
 #
-# Build            Make Example, TestMore, and Speed optional
-# configure.ac     ...
-# Makefile.am      ...
-# InstallUnix.omh  add new configure arguments and totally reorganize
-# WhatsNew05.omh   users view of the changes
-# SvnCommit        script file used for this commit
+# SvnCommit:       This file
+# CheckIncludeOmh: Check verbatim commands
+# SvnMerge:        Previous merge command
+# Faq.omh:         Move the file omh/faq.omh -> omh/Faq.omh
+# Adolc.omh:       Move the file omh/ADOLC.omh -> omh/Adolc.omh,
+# Fadbad.omh:      Move the file omh/FADBAD.omh -> omh/Fadbad.omh,
 #
+# Change ADOLC -> Adolc and FADBAD -> Fadbad in the following files:
+# Fadbad/Speed.cpp, Adolc/Speed.cpp
+# Fadbad/DetMinor.cpp, Adolc/DetMinor.cpp
+# Fadbad/Example.cpp, Adolc/Example.cpp
+# Fadbad/DetLu.cpp, Adolc/DetLu.cpp
+# Adolc/AllocMat.h, Adolc/AllocVec.cpp
+#          
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log                \
-	Build                            \
-	configure.ac                     \
-	Makefile.am                      \
-	omh/InstallUnix.omh              \
-	omh/WhatsNew05.omh               \
-	SvnCommit
+	SvnCommit                        \
+	CheckIncludeOmh                  \
+	SvnMerge                         \
+	omh/Faq.omh                      \
+	omh/Adolc.omh                    \
+	omh/Fadbad.omh                   \
+	Fadbad/Speed.cpp                 \
+	Adolc/Speed.cpp                  \
+	Fadbad/DetMinor.cpp              \
+	Adolc/DetMinor.cpp               \
+	Fadbad/Example.cpp               \
+	Adolc/Example.cpp                \
+	Fadbad/DetLu.cpp                 \
+	Adolc/DetLu.cpp                  \
+	Adolc/AllocMat.h                 \
+	Adolc/AllocVec.cpp

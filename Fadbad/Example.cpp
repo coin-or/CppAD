@@ -19,17 +19,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 /*
-$begin ExampleFADBAD.cpp$$
+$begin ExampleFadbad.cpp$$
 $spell
+	Fadbad
 	Cpp
 $$
 
-$index FADBAD, compare results$$
-$section Compare FADBAD and CppAD Results$$
+$index Fadbad, compare results$$
+$section Compare Fadbad and CppAD Results$$
 
-$comment This file is in the FADBAD subdirectory$$ 
+$comment This file is in the Fadbad subdirectory$$ 
 $code
-$verbatim%FADBAD/Example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Fadbad/Example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

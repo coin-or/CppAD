@@ -18,25 +18,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 // END SHORT COPYRIGHT
 /*
-$begin DetLuFADBAD.cpp$$
+$begin DetLuFadbad.cpp$$
 $spell
+	Fadbad
 	Lu
 	Cpp
 $$
 
-$section FADBAD & CppAD Gradient of Determinant by Lu Factorization$$
+$section Fadbad & CppAD Gradient of Determinant by Lu Factorization$$
 
-$index FADBAD, speed$$
-$index speed, FADBAD$$
-$index determinant, FADBAD$$
-$index FADBAD, determinant$$
-$index Lu factor, FADBAD$$
-$index FADBAD, Lu factor$$
+$index Fadbad, speed$$
+$index speed, Fadbad$$
+$index determinant, Fadbad$$
+$index Fadbad, determinant$$
+$index Lu factor, Fadbad$$
+$index Fadbad, Lu factor$$
 
 
-$comment This file is in the FADBAD subdirectory$$ 
+$comment This file is in the Fadbad subdirectory$$ 
 $code
-$verbatim%FADBAD/DetLu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Fadbad/DetLu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -47,7 +48,7 @@ $end
 # include "../Example/NearEqualExt.h"
 
 # include <iostream.h>
-# include <FADBAD++/badiff.h>
+# include <Fadbad++/badiff.h>
 
 void DetLuCp(size_t size, size_t repeat, CppADvector<double> &u)
 {
@@ -167,7 +168,7 @@ std::string DetLuFa(size_t size, size_t repeat)
 	DetLuFa(size, repeat, u);
 
 	delete [] u;
-	return "FADBAD: gradient of Determinant by Lu Factorization";
+	return "Fadbad: gradient of Determinant by Lu Factorization";
 }
 
 // END PROGRAM

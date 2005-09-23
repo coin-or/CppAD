@@ -18,25 +18,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 // END SHORT COPYRIGHT
 /*
-$begin DetLuADOLC.cpp$$
+$begin DetLuAdolc.cpp$$
 $spell
+	Adolc
 	Lu
 	Cpp
 $$
 
-$section ADOLC & CppAD Gradient of Determinant by Lu Factorization$$
+$section Adolc & CppAD Gradient of Determinant by Lu Factorization$$
 
-$index ADOLC, speed$$
-$index speed, ADOLC$$
-$index determinant, ADOLC$$
-$index ADOLC, determinant$$
-$index Lu factor, ADOLC$$
-$index ADOLC, Lu factor$$
+$index Adolc, speed$$
+$index speed, Adolc$$
+$index determinant, Adolc$$
+$index Adolc, determinant$$
+$index Lu factor, Adolc$$
+$index Adolc, Lu factor$$
 
 
-$comment This file is in the ADOLC subdirectory$$ 
+$comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%ADOLC/DetLu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Adolc/DetLu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -179,7 +180,7 @@ std::string DetLuAd(size_t size, size_t repeat)
 	DetLuAd(size, repeat, u);
 
 	delete [] u;
-	return "ADOLC: gradient of Determinant by Lu Factorization";
+	return "Adolc: gradient of Determinant by Lu Factorization";
 }
 
 // END PROGRAM

@@ -72,7 +72,7 @@ Here the values $italic nr$$ and $italic nc$$ are those
 used in the constructor for $italic M$$.
 
 $children%
-	ADOLC/AllocMat.cpp
+	Adolc/AllocMat.cpp
 %$$
 
 $head Example$$

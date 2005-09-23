@@ -18,24 +18,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 // END SHORT COPYRIGHT
 /*
-$begin DetMinorADOLC.cpp$$
+$begin DetMinorAdolc.cpp$$
 $spell
+	Adolc
 	Cpp
 $$
 
-$section ADOLC & CppAD Gradient of Determinant by Minors$$
+$section Adolc & CppAD Gradient of Determinant by Minors$$
 
 
-$index ADOLC, speed$$
-$index speed, ADOLC$$
-$index determinant, ADOLC$$
-$index ADOLC, determinant$$
-$index Minors, ADOLC expand$$
-$index ADOLC, Minor expand$$
+$index Adolc, speed$$
+$index speed, Adolc$$
+$index determinant, Adolc$$
+$index Adolc, determinant$$
+$index Minors, Adolc expand$$
+$index Adolc, Minor expand$$
 
-$comment This file is in the ADOLC subdirectory$$ 
+$comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%ADOLC/DetMinor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Adolc/DetMinor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -178,7 +179,7 @@ std::string DetMinorAd(size_t size, size_t repeat)
 	DetMinorAd(size, repeat, u);
 
 	delete [] u;
-	return "ADOLC: gradient of Determinant by Minors";
+	return "Adolc: gradient of Determinant by Minors";
 }
 
 // END PROGRAM

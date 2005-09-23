@@ -30,9 +30,9 @@ $$
 $mindex AllocVec test example$$
 $section Example and Test of AllocVec Template Class$$
 
-$comment This file is in the ADOLC subdirectory$$ 
+$comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%ADOLC/AllocVec.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Adolc/AllocVec.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
