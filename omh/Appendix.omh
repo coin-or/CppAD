@@ -27,8 +27,8 @@ $section Appendix$$
 $childtable%
 	omh/Theory.omh%
 	omh/Speed.omh%
-	omh/ADOLC.omh%
-	omh/FADBAD.omh%
+	omh/Adolc.omh%
+	omh/Fadbad.omh%
 	omh/glossary.omh%
 	omh/Bib.omh%
 	omh/Bugs.omh%
