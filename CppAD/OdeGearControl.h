@@ -1,5 +1,5 @@
-# ifndef CppADOdeErrControlIncluded
-# define CppADOdeErrControlIncluded
+# ifndef CppADOdeGearControlIncluded
+# define CppADOdeGearControlIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
@@ -20,46 +20,42 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin OdeErrControl$$
-
+$begin OdeGearControl$$
 $spell
-	nstep
-	maxabs
-	exp
-	scur
 	CppAD
 	xf
-	tf
 	xi
 	smin
 	smax
 	eabs
-	erel
 	ef
-	ta
-	tb
-	xa
-	xb
+	maxabs
+	nstep
+	tf
+	sini
+	erel
+	dep
 	const
-	eb
+	tb
+	ta
+	exp
 $$
 
-$index OdeErrControl$$
-$index ODE, control error$$
-$index control, ODE error$$
-$index error, control ODE$$
-$index differential, ODE error control$$
-$index equation, ODE error control$$
+$index OdeGearControl$$
+$index control, Ode Gear$$
+$index error, Gear Ode$$
+$index differential, Ode Gear control$$
+$index equation, Ode Gear control$$
 
  
-$section An Error Controller for ODE Solvers$$
+$section An Error Controller for Gear's Ode Solvers$$
 
 $table
 $bold Syntax$$ 
-$cnext $code # include <CppAD/OdeErrControl.h>$$
+$cnext $code # include <CppAD/OdeGearControl.h>$$
 $rnext $cnext
-$syntax%%xf% = OdeErrControl(%method%, %ti%, %tf%, %xi%, 
-	%smin%, %smax%, %scur%, %eabs%, %erel%, %ef% , %maxabs%, %nstep% )%$$
+$syntax%%xf% = OdeGearControl(%F%, %M%, %ti%, %tf%, %xi%, 
+	%smin%, %smax%, %sini%, %eabs%, %erel%, %ef% , %maxabs%, %nstep% )%$$
 $tend
 
 $fend 20$$
@@ -75,89 +71,84 @@ $latex \[
 	X'(t)  & = & F[t , X(t)] 
 \end{array}
 \] $$
-The routine $code OdeErrControl$$ can be used to adjust the step size
+The routine $code OdeGearControl$$ can be used to adjust the step size
 used by either of these methods in order to be as fast as possible
 and still with in a requested error bound.
 
 $head Include$$
-The file $code CppAD/OdeErrControl.h$$ is included by $code CppAD/CppAD.h$$
+The file $code CppAD/OdeGearControl.h$$ is included by $code CppAD/CppAD.h$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
 $head Notation$$
-The template parameter types $xref/OdeErrControl/Scalar/Scalar/$$ and
-$xref/OdeErrControl/Vector/Vector/$$ are documented below.
+The template parameter types $xref/OdeGearControl/Scalar/Scalar/$$ and
+$xref/OdeGearControl/Vector/Vector/$$ are documented below.
 
-$head Method$$
-The class $italic Method$$
-and the object $italic method$$ satisfy the following syntax
+$head Fun$$
+The class $italic Fun$$ 
+and the object $italic F$$ satisfy the prototype
 $syntax%
-	%Method% &%method%
+	%Fun% &%F%
 %$$
-The object $italic method$$ must support $code step$$ and 
-$code order$$ member functions defined below:
+This must support the following set of calls
+$syntax%
+	%F%.Ode(%t%, %x%, %f%)
+	%F%.Ode_dep(%t%, %x%, %f_x%)
+%$$
 
-$subhead step$$
-The syntax
+$subhead t$$
+The argument $italic t$$ has prototype
 $syntax%
-	%method%.step(%ta%, %tb%, %xa%, %xb%, %eb%)
+	const %Scalar% &%t%
 %$$
-executes one step of the integration method. 
-The argument $italic ta$$ has prototype
+(see description of $xref/OdeGear/Scalar/Scalar/$$ below). 
+
+$subhead x$$
+The argument $italic x$$ has prototype
 $syntax%
-	const %Scalar% &%ta%
+	const %Vector% &%x%
 %$$
-It specifies the initial time for this step in the 
-ODE integration.
-(see description of $xref/OdeErrControl/Scalar/Scalar/$$ below). 
-The argument $italic tb$$ has prototype
+and has size $italic N$$
+(see description of $xref/OdeGear/Vector/Vector/$$ below). 
+
+$subhead f$$
+The argument $italic f$$ to $syntax%%F%.Ode%$$ has prototype
 $syntax%
-	const %Scalar% &%tb%
+	%Vector% &%f%
 %$$
-It specifies the final time for this step in the 
-ODE integration.
-The argument $italic xa$$ has prototype
+On input and output, $italic f$$ is a vector of size $italic N$$
+and the input values of the elements of $italic f$$ do not matter.
+On output,
+$italic f$$ is set equal to $latex f(t, x)$$
+(see $italic f(t, x)$$ in $xref/OdeGear/Description/Description/$$). 
+
+$subhead f_x$$
+The argument $italic f_x$$ has prototype
 $syntax%
-	const %Vector% &%xa%
+	%Vector% &%f_x%
 %$$
-and size $italic n$$.
-It specifies the value of $latex X(ta)$$.
-(see description of $xref/OdeErrControl/Vector/Vector/$$ below). 
-The argument value $italic xb$$ has prototype
-$syntax%
-	%Vector% &%xb%
-%$$
-and size $italic n$$.
-The input value of its elements does not matter.
+On input and output, $italic f_x$$ is a vector of size $latex N * N$$
+and the input values of the elements of $italic f_x$$ do not matter.
 On output, 
-it contains the approximation for $latex X(tb)$$ that the method obtains.
-The argument value $italic eb$$ has prototype
-$syntax%
-	%Vector% &%eb%
-%$$
-and size $italic n$$.
-The input value of its elements does not matter.
-On output, 
-it contains an estimate for the error in the approximation $italic xb$$.
-It is assumed (locally) that the error bound in this approximation 
-nearly equal to $latex K (tb - ta)^m$$ 
-where $italic K$$ is a fixed constant and $italic m$$
-is the corresponding argument to $code CodeControl$$.
-
-$subhead order$$
-If $italic m$$ is $code size_t$$,
-the object $italic method$$ must also support the following syntax 
-$syntax%
-	%m% = %method%.order()
-%$$
-The return value $italic m$$ is the order of the error estimate;
-i.e., there is a constant K such that if $latex ti \leq ta \leq tb \leq tf$$,
 $latex \[
-	| eb(tb) | \leq K | tb - ta |^m
-\] $$
-where $italic ta$$, $italic tb$$, and $italic eb$$ are as in 
-$syntax%%method%.step(%ta%, %tb%, %xa%, %xb%, %eb%)%$$
+	f_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
+\] $$ 
 
+$subhead Warning$$
+The arguments $italic f$$, and $italic f_x$$
+must have a call by reference in their prototypes; i.e.,
+do not forget the $code &$$ in the prototype for 
+$italic f$$ and $italic f_x$$.
+
+$head M$$
+The argument $italic M$$ has prototype
+$syntax%
+	size_t %M%
+%$$
+It specifies the order of the multi-step method; i.e.,
+the order of the approximating polynomial
+(after the initialization process).
+The argument $italic M$$ must greater than or equal one.
 
 $head ti$$
 The argument $italic ti$$ has prototype
@@ -166,7 +157,6 @@ $syntax%
 %$$
 It specifies the initial time for the integration of 
 the differential equation.
-
 
 $head tf$$
 The argument $italic tf$$ has prototype
@@ -189,14 +179,10 @@ The argument $italic smin$$ has prototype
 $syntax%
 	const %Scalar% &%smin%
 %$$
-The step size during a call to $italic method$$ is defined as
-the corresponding value of $latex tb - ta$$.
-If $latex tf - ti \leq smin$$,
-the integration will be done in one step of size $italic tf - ti$$.
-Otherwise,
-the minimum value of $italic tb - ta$$ will be $latex smin$$
-except for the last two calls to $italic method$$ where it may be
+The minimum value of $latex T[M] -  T[M-1]$$ in a call to $code OdeGear$$
+will be $latex smin$$ except for the last two calls where it may be
 as small as $latex smin / 2$$.
+The value of $italic smin$$ must be less than or equal $italic smax$$.
 
 $head smax$$
 The argument $italic smax$$ has prototype
@@ -204,20 +190,18 @@ $syntax%
 	const %Scalar% &%smax%
 %$$
 It specifies the maximum step size to use during the integration; 
-i.e., the maximum value for $latex tb - ta$$ in a call to $italic method$$.
-The value of $italic smax$$ must be greater than or equal $italic smin$$.
+i.e., the maximum value for $latex T[M] - T[M-1]$$ 
+in a call to $code OdeGear$$.
 
-$head scur$$
-The argument $italic scur$$ has prototype
+$head sini$$
+The argument $italic sini$$ has prototype
 $syntax%
-	%Scalar% &%scur%
+	%Scalar% &%sini%
 %$$
-The value of $italic scur$$ is the suggested next step size,
-based on error criteria, to try in the next call to $italic method$$.
-On input it corresponds to the first call to $italic method$$,
-in this call to $code OdeErrControl$$ (where $latex ta = ti$$).
-On output it corresponds to the next call to $italic method$$,
-in a subsequent call to $code OdeErrControl$$ (where $italic ta = tf$$).
+The value of $italic sini$$ is the minimum 
+step size to use during initialization of the multi-step method; i.e.,
+for calls to $code OdeGear$$ where $latex m < M$$.
+The value of $italic sini$$ must be less than or equal $italic smax$$.
 
 $head eabs$$
 The argument $italic eabs$$ has prototype
@@ -230,7 +214,7 @@ greater than or equal zero.
 It specifies a bound for the absolute
 error in the return value $italic xf$$ as an approximation for $latex X(tf)$$.
 (see the 
-$xref/OdeErrControl/Error Criteria Discussion/error criteria discussion/$$ 
+$xref/OdeGearControl/Error Criteria Discussion/error criteria discussion/$$ 
 below). 
 
 $head erel$$
@@ -242,7 +226,7 @@ and is greater than or equal zero.
 It specifies a bound for the relative 
 error in the return value $italic xf$$ as an approximation for $latex X(tf)$$
 (see the 
-$xref/OdeErrControl/Error Criteria Discussion/error criteria discussion/$$ 
+$xref/OdeGearControl/Error Criteria Discussion/error criteria discussion/$$ 
 below). 
 
 $head ef$$
@@ -260,7 +244,7 @@ $latex \[
 \] $$
 
 $head maxabs$$
-The argument $italic maxabs$$ is optional in the call to $code OdeErrControl$$.
+The argument $italic maxabs$$ is optional in the call to $code OdeGearControl$$.
 If it is present, it has the prototype
 $syntax%
 	%Vector% &%maxabs%
@@ -277,14 +261,13 @@ $latex \[
 \] $$
 
 $head nstep$$
-The argument $italic nstep$$ is optional in the call to $code OdeErrControl$$.
-If it is present, it has the prototype
+The argument $italic nstep$$ has the prototype
 $syntax%
 	%size_t% &%nstep%
 %$$
 Its input value does not matter and its output value
-is the number of calls to $syntax%%method%.step%$$ 
-used by $code OdeErrControl$$.
+is the number of calls to $xref/OdeGear/$$
+used by $code OdeGearControl$$.
 
 $head Error Criteria Discussion$$
 The relative error criteria $italic erel$$ and
@@ -304,14 +287,14 @@ $latex \[
 \] $$
 If $latex X(tb)_j$$ is near zero for some $latex tb \in [ti , tf]$$,
 and one uses an absolute error criteria $latex eabs[j]$$ of zero,
-the error criteria above will force $code OdeErrControl$$
+the error criteria above will force $code OdeGearControl$$
 to use step sizes equal to 
-$xref/OdeErrControl/smin/smin/$$
+$xref/OdeGearControl/smin/smin/$$
 for steps ending near $latex tb$$.
 In this case, the error relative to $italic maxabs$$ can be judged after
-$code OdeErrControl$$ returns.
+$code OdeGearControl$$ returns.
 If $italic ef$$ is to large relative to $italic maxabs$$, 
-$code OdeErrControl$$ can be called again 
+$code OdeGearControl$$ can be called again 
 with a smaller value of $italic smin$$.
 
 $head Scalar$$
@@ -347,10 +330,10 @@ if this is not the case.
 
 $head Example$$
 $children%
-	Example/OdeErrControl.cpp
+	Example/OdeGearControl.cpp
 %$$
 The file
-$xref/OdeErrControl.cpp/$$
+$xref/OdeGearControl.cpp/$$
 contains an example and test a test of using this routine.
 It returns true if it succeeds and false otherwise.
 
@@ -375,26 +358,26 @@ than or equal to one, the step of size $latex s$$ is ok.
 
 $head Source Code$$
 The source code for this routine is in the file
-$code CppAD/OdeErrControl.h$$.
+$code CppAD/OdeGearControl.h$$.
 
 $end
 --------------------------------------------------------------------------
 */
 
-# include <CppAD/CppADError.h>
-# include <CppAD/CheckSimpleVector.h>
+# include <CppAD/OdeGear.h>
 
 namespace CppAD { // Begin CppAD namespace
 
-template <typename Scalar, typename Vector, typename Method>
-Vector OdeErrControl(
-	Method          &method, 
+template <class Scalar, class Vector, class Fun>
+Vector OdeGearControl(
+	Fun             &F     , 
+	size_t           M     ,
 	const Scalar    &ti    , 
 	const Scalar    &tf    , 
 	const Vector    &xi    , 
 	const Scalar    &smin  , 
 	const Scalar    &smax  , 
-	Scalar          &scur  ,
+	Scalar          &sini  , 
 	const Vector    &eabs  , 
 	const Scalar    &erel  , 
 	Vector          &ef    ,
@@ -404,141 +387,150 @@ Vector OdeErrControl(
 	// check simple vector class specifications
 	CheckSimpleVector<Scalar, Vector>();
 
+	// dimension of the state space
 	size_t n = xi.size();
 
 	CppADUsageError(
+		M >= 1,
+		"Error in OdeGearControl: M is less than one"
+	);
+	CppADUsageError(
 		smin <= smax,
-		"Error in OdeErrControl: smin > smax"
+		"Error in OdeGearControl: smin is greater than smax"
+	);
+	CppADUsageError(
+		sini <= smax,
+		"Error in OdeGearControl: sini is greater than smax"
 	);
 	CppADUsageError(
 		eabs.size() == n,
-		"Error in OdeErrControl: size of eabs is not equal to n"
+		"Error in OdeGearControl: size of eabs is not equal to n"
 	);
 	CppADUsageError(
 		maxabs.size() == n,
-		"Error in OdeErrControl: size of maxabs is not equal to n"
-	);
-	size_t m = method.order();
-	CppADUsageError(
-		m > 1,
-		"Error in OdeErrControl: m is less than or equal one"
+		"Error in OdeGearControl: size of maxabs is not equal to n"
 	);
 
-	size_t i;
-	Vector xa(n), xb(n), eb(n);
+	// some constants
+	const Scalar zero(0);
+	const Scalar one(1);
+	const Scalar two(2);
 
-	// initialization
-	Scalar zero(0);
-	Scalar one(1);
-	Scalar two(2);
-	Scalar m1(m-1);
-	Scalar ta = ti;
+	// temporary indices
+	size_t i, j, k;
+
+	// temporary Scalars
+	Scalar step, sprevious, lambda, axi, a, root, r;
+
+	// vectors of Scalars
+	Vector T  (M + 1);
+	Vector X( (M + 1) * n );
+	Vector e(n);
+	Vector xf(n);
+
+	// initial integer values
+	size_t m = 1;
+	nstep    = 0;
+
+	// initialize T
+	T[0] = ti;
+
+	// initialize X, ef, maxabs
+	for(i = 0; i < n; i++) 
 	for(i = 0; i < n; i++)
-	{	ef[i] = zero;
-		xa[i] = xi[i];
+	{	X[i] = xi[i];
+		ef[i] = zero;
+		X[i]  = xi[i];
 		if( zero <= xi[i] )
 			maxabs[i] = xi[i];
 		else	maxabs[i] = - xi[i];
 
 	}  
-	nstep = 0;
 
-	Scalar tb, step, lambda, axbi, a, r, root;
-	while( ! (ta == tf) )
-	{	// start with value suggested by error criteria
-		step = scur;
+	// initial step size
+	step = smin;
 
-		// check maximum
+	while( T[m-1] < tf )
+	{	sprevious = step;
+
+	 	// check maximum
 		if( smax <= step )
 			step = smax;
 
 		// check minimum
-		if( step <= smin )
-			step = smin;
+		if( m < M )
+		{	if( step <= sini )
+				step = sini;
+		}
+		else	if( step <= smin )
+				step = smin;
 
 		// check if near the end
-		if( tf <= ta + 1.5 * step )
-			tb = tf;
-		else	tb = ta + step;
+		if( tf <= T[m-1] + 1.5 * step )
+			T[m] = tf;
+		else	T[m] = T[m-1] + step;
 
 		// try using this step size
 		nstep++;
-		method.step(ta, tb, xa, xb, eb);
-		step = tb - ta;
+		OdeGear(F, m, n, T, X, e);
+		step = T[m] - T[m-1];
 
 		// compute value of lambda for this step
-		lambda = Scalar(10) * scur / step;
+		lambda = Scalar(10) *  sprevious / step;
 		for(i = 0; i < n; i++)
-		{	if( zero <= xb[i] )
-				axbi = xb[i];
-			else	axbi = - xb[i];
-			a    = eabs[i] + erel * axbi;
-			if( ! (eb[i] == zero) )
-			{	r = ( a / eb[i] ) * step / (tf - ti);
-				root = exp( log(r) / m1 ); 
+		{	axi = X[m * n + i];
+			if( axi <= zero )
+				axi = - axi;
+			a  = eabs[i] + erel * axi;
+			if( e[i] > zero )
+			{	if( m == 1 )
+					root = .1 * a / e[i];
+				else
+				{	r = ( a / e[i] ) * step / (tf - ti);
+					root = exp( log(r) / Scalar(m-1) ); 
+				}
 				if( root <= lambda )
 					lambda = root;
 			}
 		}
-		if( one <= lambda || step <= 1.5 * smin)
-		{	// this step is within error limits or 
-			// close to the minimum size
-			ta = tb;
-			for(i = 0; i < n; i++)
-			{	xa[i] = xb[i];
-				ef[i] = ef[i] + eb[i];
-				if( zero <= xb[i] )
-					axbi = xb[i];
-				else	axbi = - xb[i];
-				if( axbi > maxabs[i] )
-					maxabs[i] = axbi;
+
+		bool advance;
+		if( m == M )
+			advance = one <= lambda || step <= 1.5 * smin;
+		else	advance = one <= lambda || step <= 1.5 * sini; 
+
+
+		if( advance )
+		{	// accept the results of this time step
+			CppADUnknownError( m <= M );
+			if( m == M )
+			{	// shift for next step
+				for(k = 0; k < m; k++)
+				{	T[k] = T[k+1];
+					for(i = 0; i < n; i++)
+						X[k*n + i] = X[(k+1)*n + i];
+				}
 			}
+			// update ef and maxabs
+			for(i = 0; i < n; i++)
+			{	ef[i] = ef[i] + e[i];
+				axi = X[m * n + i];
+				if( axi <= zero )
+					axi = - axi;
+				if( axi > maxabs[i] )
+					maxabs[i] = axi;
+			}
+			if( m != M )
+				m++;  // all we need do in this case
 		}
 
-		// step suggested by error criteria 
-		// do not use last step becasue it may be very small
-		if( ! (ta == tf) )
-			scur = lambda * step / two;
+		// new step suggested by error criteria 
+		step = lambda * step / two;
 	}
-	return xa;
-}
+	for(i = 0; i < n; i++)
+		xf[i] = X[(m-1) * n + i];
 
-template <typename Scalar, typename Vector, typename Method>
-Vector OdeErrControl(
-	Method          &method, 
-	const Scalar    &ti    , 
-	const Scalar    &tf    , 
-	const Vector    &xi    , 
-	const Scalar    &smin  , 
-	const Scalar    &smax  , 
-	Scalar          &scur  ,
-	const Vector    &eabs  , 
-	const Scalar    &erel  , 
-	Vector          &ef    ) 
-{	Vector maxabs(xi.size());
-	size_t nstep;
-	return OdeErrControl(
-	method, ti, tf, xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep
-	);
-}
-
-template <typename Scalar, typename Vector, typename Method>
-Vector OdeErrControl(
-	Method          &method, 
-	const Scalar    &ti    , 
-	const Scalar    &tf    , 
-	const Vector    &xi    , 
-	const Scalar    &smin  , 
-	const Scalar    &smax  , 
-	Scalar          &scur  ,
-	const Vector    &eabs  , 
-	const Scalar    &erel  , 
-	Vector          &ef    ,
-	Vector          &maxabs) 
-{	size_t nstep;
-	return OdeErrControl(
-	method, ti, tf, xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep
-	);
+	return xf;
 }
 
 } // End CppAD namespace 

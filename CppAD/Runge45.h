@@ -184,9 +184,12 @@ If $italic e$$ is present,
 the size of $italic e$$ must be equal to $italic n$$.
 The input value of the elements of $italic e$$ does not matter.
 On output
-it contains a bound on the absolute value
-of the element by element difference between $italic xf$$ 
-and a fourth order solution of the same differential equation.
+it contains an element by element
+estimated bound for the absolute value of the error in $italic xf$$
+$latex \[
+	e = O( h^5 )
+\] $$
+where $latex h = (tf - ti) / M$$ is the step size.
 
 $head Scalar$$
 The type $italic Scalar$$ must satisfy the conditions

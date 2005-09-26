@@ -31,56 +31,64 @@ $index library, numerical C++ template$$
 $section The CppAD General Purpose Library$$
 
 $children%
-	omh/NumericType.omh%
-	omh/SimpleVector.omh%
 	lib/NearEqual.cpp%
 	lib/SpeedTest.cpp%
-	omh/VectorTempClass.omh%
-	CppAD/CheckSimpleVector.h%
+	omh/NumericType.omh%
 	CppAD/CheckNumericType.h%
+	omh/SimpleVector.omh%
+	CppAD/CheckSimpleVector.h%
+	omh/VectorTempClass.omh%
 	omh/LuDetAndSolve.omh%
 	omh/Polynomial.omh%
 	CppAD/RombergOne.h%
 	CppAD/RombergMul.h%
 	CppAD/Runge45.h%
 	CppAD/Rosen34.h%
-	CppAD/OdeErrControl.h
+	CppAD/OdeErrControl.h%
+	CppAD/OdeGear.h%
+	CppAD/OdeGearControl.h
 %$$
 
-$head C++ Concepts$$
-$index concept, C++$$
-We refer to a the set of classes that satisfy certain conditions
-as a C++ concept.
-The following concepts are used by CppAD and its library routines:
-$table
-$rref NumericType$$
-$rref SimpleVector$$
-$tend
-
-
-$head Some Numerical Testing Utilities$$
+$head Some Testing Utilities$$
 The routines listed below are general purpose numerical testing routines:
 $table
 $rref NearEqual$$
 $rref SpeedTest$$
 $tend
 
-$head A Numerical C++ Template Library$$
+$head C++ Concepts$$
+$index concept, C++$$
+We refer to a the set of classes that satisfy certain conditions
+as a C++ concept.
+The following concepts are used by the CppAD Template library:
+$table
+$rref NumericType$$
+$rref CheckNumericType$$
+$rref SimpleVector$$
+$rref CheckSimpleVector$$
+$tend
+
+
+$head CppAD Numerical Template Library$$
 The routines listed below are general purpose numerical routines
 written with the floating point type A C++ template parameter.
 This enables them to be used with algorithmic differentiation types,
 as well as for other purposes. 
 $table
-$rref CheckSimpleVector$$
-$rref SimpleVector$$
-$rref CheckNumericType$$
 $rref LuDetAndSolve$$
 $rref Polynomial$$
 $rref RombergOne$$
 $rref RombergMul$$
-$rref Rosen34$$
 $rref Runge45$$
+$rref Rosen34$$
 $rref OdeErrControl$$
+$rref OdeGear$$
+$rref OdeGearControl$$
+$tend
+
+$head CppAD Support Template Classes$$
+The classes listed are used to support CppAD calculations:
+$table
 $rref VectorTempClass$$
 $tend
 

@@ -19,16 +19,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 /*
-$begin OdeErrControl.cpp$$
+$begin OdeGearControl.cpp$$
 $spell
 	Runge
 $$
 
-$section OdeErrControl: Example and Test$$
+$section OdeGearControl: Example and Test$$
 
-$index OdeErrControl, example$$
-$index example, OdeErrControl$$
-$index test, OdeErrControl$$
+$index OdeGearControl, example$$
+$index example, OdeGearControl$$
+$index test, OdeGearControl$$
 
 Define 
 $latex X : \R \rightarrow \R^2$$ by
@@ -45,23 +45,19 @@ $latex \[
 	X_1^{(1)} (t) & = & + w_0 X_0 (t) - w_1 X_1 (t) 
 \end{array}
 \] $$
-The example tests OdeErrControl using the relations above:
+The example tests OdeGearControl using the relations above:
 
 $comment This file is in the Example subdirectory$$ 
 $code
-$verbatim%Example/OdeErrControl.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/OdeGearControl.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 // BEGIN PROGRAM
 
-# include <cstddef>              // for size_t
-# include <cmath>                // for exp
-# include <CppAD/OdeErrControl.h>   // CppAD::OdeErrControl
-# include <CppAD/NearEqual.h>    // CppAD::NearEqual
-# include <CppAD/CppAD_vector.h> // CppAD::vector
-# include <CppAD/Runge45.h>      // CppAD::Runge45
+# include <CppAD/CppAD.h>
+# include <CppAD/OdeGearControl.h>   // CppAD::OdeGearControl
 
 namespace {
 	// --------------------------------------------------------------
@@ -74,43 +70,64 @@ namespace {
 		{ } 
 
 		// set f = x'(t)
+		template <typename Scalar>
 		void Ode(
-			const double                &t, 
-			const CppAD::vector<double> &x, 
-			CppAD::vector<double>       &f)
+			const Scalar                &t, 
+			const CppAD::vector<Scalar> &x, 
+			CppAD::vector<Scalar>       &f)
 		{	f[0] = - w[0] * x[0];
 			f[1] = + w[0] * x[0] - w[1] * x[1];	
 		}
-	};
 
-	// --------------------------------------------------------------
-	class Method {
-	private:
-		Fun F;
-	public:
-		// constructor
-		Method(const CppAD::vector<double> &w_) : F(w_)
-		{ }
-		void step(
-			double ta, 
-			double tb, 
-			CppAD::vector<double> &xa ,
-			CppAD::vector<double> &xb ,
-			CppAD::vector<double> &eb )
-		{	xb = CppAD::Runge45(F, 1, ta, tb, xa, eb);
+		void Ode_dep(
+			const double              &t, 
+			const CppADvector<double> &x, 
+			CppADvector<double>       &f_x)
+		{	using namespace CppAD;
+
+			size_t n  = x.size();	
+			CppADvector< AD<double> > T(1);
+			CppADvector< AD<double> > X(n);
+			CppADvector< AD<double> > F(n);
+
+			// set argument values
+			T[0] = t;
+			size_t i, j;
+			for(i = 0; i < n; i++)
+				X[i] = x[i];
+
+			// declare independent variables
+			Independent(X);
+
+			// compute f(t, x)
+			this->Ode(T[0], X, F);
+
+			// define AD function object
+			ADFun<double> Fun(X, F);
+
+			// compute partial of f w.r.t x
+			CppADvector<double> dx(n);
+			CppADvector<double> df(n);
+			for(j = 0; j < n; j++)
+				dx[j] = 0.;
+			for(j = 0; j < n; j++)
+			{	dx[j] = 1.;
+				df = Fun.Forward(1, dx);
+				for(i = 0; i < n; i++)
+					f_x [i * n + j] = df[i];
+				dx[j] = 0.;
+			}
 		}
-		size_t order(void)
-		{	return 4; }
 	};
 }
 
-bool OdeErrControl(void)
+bool OdeGearControl(void)
 {	bool ok = true;     // initial return value
 
 	CppAD::vector<double> w(2);
 	w[0] = 10.;
 	w[1] = 1.;
-	Method method(w);
+	Fun F(w);
 
 	CppAD::vector<double> xi(2);
 	xi[0] = 1.;
@@ -120,23 +137,23 @@ bool OdeErrControl(void)
 	eabs[0] = 1e-4;
 	eabs[1] = 1e-4;
 
-	// inputs
+	// return values
+	CppAD::vector<double> ef(2);
+	CppAD::vector<double> maxabs(2);
+	CppAD::vector<double> xf(2);
+	size_t                nstep;
+
+	// input values
+	size_t  M   = 5;
 	double ti   = 0.;
 	double tf   = 1.;
-	double smin = 1e-4;
+	double smin = 1e-8;
 	double smax = 1.;
-	double scur = .5;
+	double sini = 1e-10;
 	double erel = 0.;
-
-	// outputs
-	CppAD::vector<double> ef(2);
-	CppAD::vector<double> xf(2);
-	CppAD::vector<double> maxabs(2);
-	size_t nstep;
-
 	
-	xf = OdeErrControl(method,
-		ti, tf, xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep);
+	xf = CppAD::OdeGearControl(F, M,
+		ti, tf, xi, smin, smax, sini, eabs, erel, ef, maxabs, nstep);
 
 	double x0 = exp(-w[0]*tf);
 	ok &= CppAD::NearEqual(x0, xf[0], 1e-4, 1e-4);

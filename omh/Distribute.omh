@@ -37,68 +37,80 @@ $section Building and Testing a Distribution$$
 
 $head Creating Distribution Files$$
 $list number$$
-Change into the $code CppADpackage$$ directory.
+Change into the $code CppAD/trunk$$ directory.
+
 $lnext
-Execute the bash shell script $code ./Build$$
-$lend
-This will create the distribution files
+Execute the command
 $codep
-	CppADpackage/CppAD.dos.tar.gz
-	CppADpackage/CppAD.unix.tar.gz
+	 ./Build all
 $$
+This will create the distribution files
+$syntax%
+	CppAD-%yy%-%mm%-%dd%.tar.gz
+	CppAD-%yy%-%mm%-%dd%.zip
+%$$
+where $syntax%%yy%-%mm%-%dd%$$ is the current date.
+$lend
 
 $head Testing Distribution$$
 $list number$$
 Execute the command 
 $syntax%
-	tar -xvzf CppAD.%sys%.tar.gz
+	tar -xvzf CppAD-%yy%-%mm%-%dd%.tar.gz
 %$$
-where $italic sys$$ is $code dos$$ or $code unix$$
-depending on your system type.
+
 $lnext
 Execute the command
 $syntax%
 	cd cppad-%yy%-%mm%-%dd%
 %$$
-where $syntax %yy%-%mm%-%dd%$$ is the current date.
+
 $lnext
 Execute the command
 $syntax%
-	configure ADOLC_DIR=%AdolcDir% FADBAD_DIR=%FadbadDir%
+	Build configure test
 %$$
-where the paths 
-$syntax%
-	%AdolcDir%/include/adolc/adouble.h
-	%FadbadDir%/FADBAD++/badiff.h
-%$$
-are a valid way to reference the $code adouble.h$$ file in the 
-$href%
-	http://www.math.tu-dresden.de/~adol-c/%
-	ADOLC
-%$$
-distribution and the $code badiff.h$$ in the 
-$href%
-	http://www.imm.dtu.dk/fadbad.html/%
-	FADBAD++
-%$$
-distribution.
+
 $lnext
 Execute the command
 $codep
 	make
 $$
 If no compiler errors occur, the distribution passed this test.
+
 $lnext
 Execute the command
 $codep
-	cd GetStarted
-	./GetStarted
+	GetStarted/GetStarted
 $$
 If the result is
 $code
 $verbatim%GetStarted/GetStarted.out%$$
 $$
 then the distribution passed this test.
+
+$lnext
+Execute the command
+$codep
+	Example/Example
+$$
+If the result at the end is
+$code
+	All the tests passed.
+$$
+then the distribution passed this test.
+
+$lnext
+Execute the command
+$codep
+	TestMore/TestMore
+$$
+If the result at the end is
+$code
+	All the tests passed.
+$$
+then the distribution passed this test.
+
 $lend
 
 $end

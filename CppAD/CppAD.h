@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <CppAD/RombergMul.h>
 # include <CppAD/Rosen34.h>
 # include <CppAD/OdeErrControl.h>
+# include <CppAD/OdeGear.h>
+# include <CppAD/OdeGearControl.h>
 # include <CppAD/Poly.h>
 # include <CppAD/SpeedTest.h>
 # include <CppAD/CppAD_vector.h>

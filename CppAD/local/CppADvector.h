@@ -40,12 +40,22 @@ $index test, vector$$
 
 $section Choosing The CppADvector Template Class$$
 
+$table
+$bold Syntax$$ $cnext
+$syntax%CppADvector<%Scalar%>%$$
+$bold File$$   $cnext
+$code CppAD/local/CppADvector.h$$
+$tend
+
+$fend 20$$
+
 
 $head Introduction$$
 Many of the CppAD $xref/Example//examples/$$ and tests use 
 the $code CppADvector$$ template class to pass information.
 The default definition for this template class is
-$xref/CppAD_vector//CppAD::vector/$$.
+$xref/CppAD_vector//CppAD::vector/$$
+(see the file $code CppAD/local/CppADvector.h$$).
 
 $head CppAD::vector$$
 The default for the preprocessor symbol $code CppADvector$$

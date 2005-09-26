@@ -98,6 +98,9 @@ Example_SOURCES   = \
 	NumericType.cpp \
 	OdeErrControl.cpp \
 	OdeErrMaxabs.cpp \
+	OdeGear.cpp \
+	OdeGearControl.cpp\
+	OdeStiff.cpp \
 	OdeTaylor.cpp \
 	Output.cpp \
 	Poly.cpp \

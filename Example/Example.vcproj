@@ -1063,6 +1063,15 @@
 				RelativePath=".\OdeErrMaxabs.cpp">
 			</File>
 			<File
+				RelativePath=".\OdeGear.cpp">
+			</File>
+			<File
+				RelativePath=".\OdeGearControl.cpp">
+			</File>
+			<File
+				RelativePath=".\OdeStiff.cpp">
+			</File>
+			<File
 				RelativePath="OdeTaylor.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

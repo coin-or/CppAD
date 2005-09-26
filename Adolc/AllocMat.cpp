@@ -29,9 +29,8 @@ $$
 $mindex AllocMat test example$$
 $section Example and Test of AllocMat Template Class$$
 
-$comment This file is in the ADOLC subdirectory$$ 
 $code
-$verbatim%ADOLC/AllocMat.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Adolc/AllocMat.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

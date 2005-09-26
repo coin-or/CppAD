@@ -68,7 +68,7 @@ memory where the $italic length$$ elements of $italic v$$ are stored
 where $italic length$$ is the value in the constructor for $italic v$$.
 
 $children%
-	ADOLC/AllocVec.cpp
+	Adolc/AllocVec.cpp
 %$$
 
 $head Example$$

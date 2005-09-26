@@ -32,6 +32,8 @@ nobase_include_HEADERS =  \
 	CppAD/LuSolve.h \
 	CppAD/NearEqual.h \
 	CppAD/OdeErrControl.h \
+	CppAD/OdeGear.h \
+	CppAD/OdeGearControl.h \
 	CppAD/Poly.h \
 	CppAD/RombergOne.h \
 	CppAD/RombergMul.h \
