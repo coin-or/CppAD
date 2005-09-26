@@ -1,34 +1,41 @@
+# ! /bin/bash
+#
+# Merge the changes that occurred in FromDirectory into the ToDirectory
+#
+DryRun="--dry-run"
+if [ "$1" == "not--dry-run" ]
+then
+	DryRun=""
+fi
+echo "DryRun = $DryRun"
+#
 # script to help in execution of svn merge command
 #
-# execute this script form the directory corresponding to 
+# Change into the directory corresponding to the entire repository; i.e.,
 # http://www.coin-or.org/svn/CppAD/ 
 cd ..
 #
-# change branches/Brad to the directory that will receive the changes
-ToDirectory=branches/Brad
+# Name of the directory that will receive the changes
+ToDirectory=trunk
 #
-# change 101 to the version corresponding to the ToDirectory before
-# the changes
-StartRevision=101
+# Name of the directory where the changes have been committed
+FromDirectory=branches/Brad
 #
-# change trunk to the direcotry that contains the changes 
-# (which have all been committed to the repository)
-FromDirectory=trunk
+# Version of the repository corresponding the the beginning of the changes
+Start=107
 # 
-# change 114 to the version number corresponding to the FromDirectory
-EndRevision=114
+# Version of the repository corresponding the the end of the changes
+End=138
 #
 # echo the svn merge command
 echo "cd  .."
-echo "svn merge > SvnMerge.out \\"
-echo "	http://www.coin-or.org/svn/CppAD/$ToDirectory@$StartRevision \\"
-echo "	http://www.coin-or.org/svn/CppAD/$FromDirectory@$EndRevision \\"
+echo "svn merge > SvnMerge.out $DryRun -r $Start:$End   \\"
+echo "	http://www.coin-or.org/svn/CppAD/$FromDirectory \\"
 echo "	$ToDirectory"
 #
 # execute the svn merge command
-svn merge > SvnMerge.out \
-	http://www.coin-or.org/svn/CppAD/$ToDirectory@$StartRevision \
-	http://www.coin-or.org/svn/CppAD/$FromDirectory@$EndRevision \
+svn merge $DryRun > SvnMerge.out -r $Start:$End    \
+	http://www.coin-or.org/svn/CppAD/$FromDirectory      \
 	$ToDirectory
 #
 # put comment here so have newline at end of command above
