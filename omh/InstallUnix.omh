@@ -61,19 +61,19 @@ $section Unix Installation and Testing$$
 $head Download Current Version$$
 Download the file
 $href%
-	http://www.coin-or.org/Tarballs/CppAD-05-09-26.tar.gz%
-	CppAD-05-09-26.tar.gz
+	http://www.coin-or.org/Tarballs/CppAD-05-09-28.tar.gz%
+	CppAD-05-09-28.tar.gz
 %$$
 
 $head Extraction$$
 Use the command
 $codep
-	tar -xvzf CppAD-05-09-26.tar.gz
+	tar -xvzf CppAD-05-09-28.tar.gz
 $$
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-05-09-26
+	cppad-05-09-28
 %$$
 Note that $code 05-09-06$$ is the version number for CppAD.
 All of the commands below are to be executed starting from this
@@ -95,12 +95,13 @@ $head Configure$$
 Enter the directory created by the extraction and execute the command:
 $syntax%
 	./configure                            \
-	prefix=%Prefix%                          \
+	prefix=%PrefixDir%                     \
 	--with-Example                         \
 	--with-TestMore                        \
 	--with-Speed                           \
 	--with-profiling                       \
 	--with-stdvector                       \  
+	POSTFIX_DIR=%PostfixDir%               \
 	ADOLC_DIR=%AdolcDir%                     \
 	FADBAD_DIR=%FadbadDir%                   \
 	BOOST_DIR=%BoostDir%                     \
@@ -110,10 +111,12 @@ where only the $code configure$$ command need appear.
 The entries one each of the other lines are optional
 and the text in italic is replaced values that you choose.
 
-$head Prefix$$
+$head PrefixDir and PostfixDir$$
 $index configure, prefix$$
 $index prefix, configure$$
-The default value for $italic Prefix$$ is $code @HOME$$; 
+$index postfix, configure$$
+The default value for $italic PrefixDir$$ is $code @HOME$$
+and the default value for $italic PostfixDir$$ is the empty string; 
 i.e., by default the CppAD include files 
 will install in
 $syntax%
@@ -124,7 +127,10 @@ $syntax%
 	@HOME/lib/libCppAD.a
 %$$
 If you want to install elsewhere, you will have to use this option.
-For example,
+$pre
+
+$$
+As an example of using just the $code --prefix$$ option,
 if you have permission to write into the directories 
 $code /usr/local/include$$ and $code /usr/local/lib$$,
 $codep
@@ -139,12 +145,31 @@ $syntax%
 	/usr/local/lib/libCppAD.a
 %$$
 This is the standard location for such files on many systems.
-If $italic Prefix$$ is not a standard location for your system,
+$pre
+
+$$
+If the resulting location is not a standard place for includes and libraries, 
 you will need the compiler switches
 $syntax%
 	-I %Prefix%/include -L %Prefix%/lib
 %$$
 on the command line when you compile and link your programs with CppAD.
+$pre
+
+$$
+As an example of using both the 
+$code --prefix$$ and $code POSTFIX_DIR$$ options,
+$codep
+	./configure --prefix=/usr POSTFIX_DIR=test
+$$ 
+will set up for installing the CppAD include files in the directory
+$syntax%
+	/usr/include/test/CppAD
+%$$
+and the CppAD library will be
+$syntax%
+	/usr/lib/test/libCppAD.a
+%$$
 
 $head --with-Example$$
 If the command line argument $code --with-Example$$ is specified,
@@ -337,6 +362,6 @@ $codep
 	make install
 $$
 This will install CppAD in the location specified by 
-$xref/InstallUnix/Prefix/prefix/$$.
+$xref/InstallUnix/PrefixDir and PostfixDir/PrefixDir and PostfixDir/$$.
 
 $end

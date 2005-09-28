@@ -22,7 +22,14 @@
 #
 # Note that config.h is needed by VC++; i.e., for users that do not run
 # the configure script but rather use the project files 
-nobase_include_HEADERS =  \
+#
+if CppAD_POSTFIX
+myincludedir = $(includedir)/$(POSTFIX_DIR)
+else
+myincludedir = $(includedir)
+endif
+#
+nobase_myinclude_HEADERS =  \
 	CppAD/config.h \
 	CppAD/CppAD.h \
 	CppAD/CppADError.h \

@@ -1,42 +1,19 @@
 # Merge changes from branches/Brad into trunk
 # 
-# Conflicts:
-# SvnCommit: This script file changes for each commit
-# configure.ac: Only difference was date which is automatically updated
-# InstallUnix.omh: use branches/Brad version
-# library.omh: add changes in branches/Brad plus reorganize
-# WhatsNew05.omh: uses view of this commit
-#
 # Other Changes:
-# AllocMat.cpp: change ADOLC to Adolc
-# AllocVec.h: change ADOLC to Adolc
-# OdeErrControl.cpp: remove printing of nstep during test
-# OdeGearControl.cpp: remove printing of nstep during test
+# SvnCommit: command that made this commit
+# SvnMerge: command that merged the changes
+# CheckIncludeOmh: add */*.out to list of files to check for a match
+# OdeGearControl.h: remove the unused variable j
 #
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/Runge45.h \
-	CppAD/Rosen34.h \
-	CppAD/local/CppADvector.h \
-	CppAD/OdeGear.h \
-	CppAD/OdeGearControl.h \
-	CppAD/OdeErrControl.h \
-	CppAD/CppAD.h \
-	SvnStatus \
+	SvnMerge \
+	configure.ac \
+	lib/Makefile.am \
 	omh/InstallUnix.omh \
-	omh/Distribute.omh \
-	omh/library.omh \
 	omh/WhatsNew05.omh \
-	omh/ExampleList.omh \
-	Example/OdeErrControl.cpp \
-	Example/OdeStiff.cpp \
-	Example/NumericType.cpp \
-	Example/OdeGear.cpp \
-	Example/OdeGearControl.cpp \
-	Example/Example.vcproj \
-	Example/Example.cpp \
-	Example/Makefile.am \
 	Makefile.am \
-	Adolc/AllocMat.cpp \
-	Adolc/AllocVec.h
+	CheckIncludeOmh \
+	CppAD/OdeGearControl.h

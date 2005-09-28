@@ -417,7 +417,7 @@ Vector OdeGearControl(
 	const Scalar two(2);
 
 	// temporary indices
-	size_t i, j, k;
+	size_t i, k;
 
 	// temporary Scalars
 	Scalar step, sprevious, lambda, axi, a, root, r;

@@ -77,6 +77,11 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-27$$
+Add the $xref/InstallUnix/PrefixDir and PostfixDir/POSTFIX_DIR/$$
+option to the $code configure$$ command line.
+This gives the user more control over the location where CppAD is installed.
+
 $head 09-24$$
 The stiff Ode routines,
 $xref/OdeGear/$$ and $xref/OdeGearControl/$$,

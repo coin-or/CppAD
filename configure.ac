@@ -22,7 +22,7 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 
 dnl   package   version           bug-report
-AC_INIT(CppAD, 05-09-20, bradbell@seanet.com)
+AC_INIT(CppAD, 05-09-28, bradbell@seanet.com)
 
 dnl ----------------------------------------------------------------------
 dnl Command line argument results
@@ -35,6 +35,16 @@ if test "$CPP_ERROR_WARN" ; then
 else
 	AC_MSG_RESULT( no )
 fi 
+
+dnl The postfix directiory corresponding to this installation of CppAD
+AC_MSG_CHECKING( [with Postfix] )
+AC_SUBST(POSTFIX_DIR)
+AM_CONDITIONAL(CppAD_POSTFIX, test $POSTFIX_DIR )
+if test $POSTFIX_DIR ; then
+	AC_MSG_RESULT( [yes] )
+else
+	AC_MSG_RESULT( [no] )
+fi
 
 dnl The prefix corresponding to the installation of Adolc
 dnl The default action is to not include Adolc examples and tests

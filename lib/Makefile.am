@@ -26,9 +26,15 @@ else
 BoostInclude =
 endif
 #
+if CppAD_POSTFIX
+mylibdir = $(libdir)/$(POSTFIX_DIR)
+else
+mylibdir = $(libdir)
+endif
+#
 # libCppAD
 #
-lib_LIBRARIES         = libCppAD.a 
+mylib_LIBRARIES       = libCppAD.a 
 libCppAD_a_CPPFLAGS   = -I. -I$(top_builddir) $(BoostInclude)
 libCppAD_a_CXXFLAGS   = -g $(CPP_ERROR_WARN)
 libCppAD_a_SOURCES    = NearEqual.cpp SpeedTest.cpp ErrFun.cpp
@@ -36,7 +42,7 @@ libCppAD_a_SOURCES    = NearEqual.cpp SpeedTest.cpp ErrFun.cpp
 # libCppAD_p
 #
 if CppAD_PROFILING
-lib_LIBRARIES        += libCppAD_p.a 
+mylib_LIBRARIES      += libCppAD_p.a 
 libCppAD_p_a_CPPFLAGS = -I. -I$(top_builddir) $(BoostInclude) -DNDEBUG
 libCppAD_p_a_CXXFLAGS = -pg -g $(CPP_ERROR_WARN)
 libCppAD_p_a_SOURCES  = NearEqual.cpp SpeedTest.cpp ErrFun.cpp
