@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew05$$
 $spell
+	bool
 	yy
 	mm
 	dd
@@ -76,6 +77,16 @@ This section contains a list of the changes to CppAD during 2005
 (in reverse order by date).
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 09-29$$
+Add a specialization to $xref/CppAD_vector/$$ for the 
+$code CppAD::vector<bool>$$ case.
+A test for the $code push_back$$ member function as well as a
+$xref/CheckSimpleVector/$$ test has been added to $xref/CppAD_vector.cpp/$$.
+The source code for this template vector class,
+$code CppAD/CppAD_vector.h$$,
+has been removed from the documentation.
+
 
 $head 09-27$$
 Add the $xref/InstallUnix/PrefixDir and PostfixDir/POSTFIX_DIR/$$

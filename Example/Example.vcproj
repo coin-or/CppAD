@@ -279,6 +279,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Bool_vector.cpp">
+			</File>
+			<File
 				RelativePath="BoolFun.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

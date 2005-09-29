@@ -51,6 +51,7 @@ extern bool Asin(void);
 extern bool Atan(void);
 extern bool Atan2(void);
 extern bool BoolFun(void);
+extern bool Bool_vector(void);
 extern bool CheckNumericType(void);
 extern bool CheckSimpleVector(void);
 extern bool Compare(void);
@@ -189,6 +190,7 @@ int main(void)
 	ok &= Run( Atan,              "Atan"             );
 	ok &= Run( Atan2,             "Atan2"            );
 	ok &= Run( BoolFun,           "BoolFun"          );
+	ok &= Run( Bool_vector,       "Bool_vector"      );
 	ok &= Run( CheckNumericType,  "CheckNumericType" );
 	ok &= Run( CheckSimpleVector, "CheckSimpleVector");
 	ok &= Run( Compare,           "Compare"          );

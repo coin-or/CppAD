@@ -1,19 +1,29 @@
-# Merge changes from branches/Brad into trunk
+# Add template specialization for the case CppAD::vector<bool> 
 # 
-# Other Changes:
 # SvnCommit: command that made this commit
-# SvnMerge: command that merged the changes
-# CheckIncludeOmh: add */*.out to list of files to check for a match
-# OdeGearControl.h: remove the unused variable j
+# CppAD_vector.h: add specialization and exclude source from documentation
+# SvnStatus: remove *.exe.stackdump
+# WhatsNew04.omh: remove link to CppAD::vector source code
+# library.omh: include CppAD_vector.h instead of VectorTempClass
+# WhatsNew05.omh: users view of the changes
+# VectorTempClass.omh: not necessary once CppAD_vector source was removed
+# Bool_vector.cpp: test of CppAD::vector<bool>
+# CppAD_vector.cpp: add push_back and CheckSimpleVector to tests 
+# Example.vcproj: add Bool_vector to the list of examples and tests
+# Example.cpp: add Bool_vector to the list of examples and tests
+# Makefile.am: add Bool_vector to the list of examples and tests
 #
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	SvnMerge \
-	configure.ac \
-	lib/Makefile.am \
-	omh/InstallUnix.omh \
+	CppAD/CppAD_vector.h \
+	SvnStatus \
+	omh/WhatsNew04.omh \
+	omh/library.omh \
 	omh/WhatsNew05.omh \
-	Makefile.am \
-	CheckIncludeOmh \
-	CppAD/OdeGearControl.h
+	omh/VectorTempClass.omh \
+	Example/Bool_vector.cpp \
+	Example/CppAD_vector.cpp \
+	Example/Example.vcproj \
+	Example/Example.cpp \
+	Example/Makefile.am

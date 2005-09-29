@@ -19,21 +19,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 /*
-$begin CppAD_vector.cpp$$
+$begin Bool_vector.cpp$$
 $spell
 	Cpp
+	bool
 $$
 
-$section CppAD::vector Template Class: Example and Test$$
+$section CppAD::vector<bool> Template Class: Example and Test$$
 
-$index vector, CppAD$$
-$index CppAD::vector, example$$
-$index example, CppAD::vector$$
-$index test, CppAD::vector$$
+$index bool, CppAD::vector$$
+$index vector<bool>, CppAD$$
+$index CppAD::vector<bool>, example$$
+$index example, CppAD::vector<bool>$$
+$index test, CppAD::vector<bool>$$
 
-$comment This file is in the Example subdirectory$$
 $code
-$verbatim%Example/CppAD_vector.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/Bool_vector.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -45,36 +46,35 @@ $end
 # include <sstream> // sstream and string are used to test output operation
 # include <string>
 
-bool CppAD_vector(void)
+bool Bool_vector(void)
 {	bool ok = true;
 	using CppAD::vector;     // so can use vector instead of CppAD::vector 
-	typedef double Type;     // change double to test other types
 
-	vector<Type> x;          // default constructor 
+	vector<bool> x;          // default constructor 
 	ok &= (x.size() == 0);
 
 	x.resize(2);             // resize and set element assignment
 	ok &= (x.size() == 2);
-	x[0] = Type(0);
-	x[1] = Type(1);
+	x[0] = false;
+	x[1] = true;
 
-	vector<Type> y(2);       // sizing constructor
+	vector<bool> y(2);       // sizing constructor
 	ok &= (y.size() == 2);
 
-	const vector<Type> z(x); // copy constructor and const element access
+	const vector<bool> z(x); // copy constructor and const element access
 	ok &= (z.size() == 2);
-	ok &= ( (z[0] == Type(0)) && (z[1] == Type(1)) );
+	ok &= ( (z[0] == false) && (z[1] == true) );
 
-	x[0] = Type(2);          // modify, assignment changes x
-	ok &= (x[0] == Type(2));
+	x[0] = true;           // modify, assignment changes x
+	ok &= (x[0] == true);
 
 	x = y = z;               // vector assignment
-	ok &= ( (x[0] == Type(0)) && (x[1] == Type(1)) );
-	ok &= ( (y[0] == Type(0)) && (y[1] == Type(1)) );
-	ok &= ( (z[0] == Type(0)) && (z[1] == Type(1)) );
+	ok &= ( (x[0] == false) && (x[1] == true) );
+	ok &= ( (y[0] == false) && (y[1] == true) );
+	ok &= ( (z[0] == false) && (z[1] == true) );
 
 	// test of output
-	std::string        correct= "{ 0, 1 }";
+	std::string        correct= "01";
 	std::string        str;
 	std::ostringstream buf;
 	buf << z;
@@ -85,13 +85,13 @@ bool CppAD_vector(void)
 	size_t i;
 	x.resize(0);
 	for(i = 0; i < 100; i++)
-		x.push_back( Type(i) );
+		x.push_back( (i % 3) != 0 );
 	ok &= (x.size() == 100);
 	for(i = 0; i < 100; i++)
-		ok &= ( x[i] == Type(i) );
+		ok &= ( x[i] == ((i % 3) != 0) );
 
 	// check Simple Vector specifications
-	CppAD::CheckSimpleVector< Type, vector<Type> >();
+	CppAD::CheckSimpleVector< bool, vector<bool> >();
 
 	return ok;
 }

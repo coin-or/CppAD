@@ -78,7 +78,7 @@ The documentation for $xref/CppADError/$$ was improved.
 The package title in $xref/CppAD/$$ was changed.
 The documentation for $xref/CppAD_vector//CppAD::vector/$$ 
 was improved and the corresponding source code 
-$xref/CppAD_vector.h/$$ was included.
+$code CppAD/CppAD_vector.h$$ was included.
 
 $head 12-09$$
 The $xref/LuSolve/$$ and $code OdeRunge$$ source code

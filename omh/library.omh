@@ -37,7 +37,7 @@ $children%
 	CppAD/CheckNumericType.h%
 	omh/SimpleVector.omh%
 	CppAD/CheckSimpleVector.h%
-	omh/VectorTempClass.omh%
+	CppAD/CppAD_vector.h%
 	omh/LuDetAndSolve.omh%
 	omh/Polynomial.omh%
 	CppAD/RombergOne.h%
@@ -89,7 +89,7 @@ $tend
 $head CppAD Support Template Classes$$
 The classes listed are used to support CppAD calculations:
 $table
-$rref VectorTempClass$$
+$rref CppAD_vector$$
 $tend
 
 $end
