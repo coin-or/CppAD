@@ -232,7 +232,10 @@ then
 	# convert files to dos format
 	for file in  cppad-$AcDate/*
 	do
-		unix2dos $file
+		if [ -f $file ]
+		then
+			unix2dos $file
+		fi
 	done
 	for dir in \
 		Adolc \
@@ -248,7 +251,10 @@ then
 	do
 		for file in cppad-$AcDate/$dir/*
 		do
-			unix2dos $file
+			if [ -f $file ]
+			then
+				unix2dos $file
+			fi
 		done
 	done
 	for dir in \
