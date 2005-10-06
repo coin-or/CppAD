@@ -117,17 +117,6 @@ fi
 #
 if [ "$1" = "configure" ] || [ "$1" = "all" ]
 then
-	ADOLC=""
-	if [ -e $HOME/adolc_base ]
-	then
-		ADOLC="ADOLC_DIR=$HOME/adolc_base"
-	fi
-	#
-	FADBAD=""
-	if [ -e $HOME/FADBAD++ ]
-	then
-		FADBAD="FADBAD_DIR=$HOME"
-	fi
 	#
 	TEST=""
 	if [ "$2" == "test" ]
@@ -136,19 +125,21 @@ then
 		TEST="$TEST --with-TestMore"
 		TEST="$TEST --with-Speed"
 		TEST="$TEST --with-profiling"
+		if [ -e $HOME/adolc_base ]
+		then
+			TEST="$TEST ADOLC_DIR=$HOME/adolc_base"
+		fi
+		if [ -e $HOME/FADBAD++ ]
+		then
+			TEST="$TEST FADBAD_DIR=$HOME"
+		fi
 	fi
 	#
 	echo "configure \\"
-	echo "	--with-profiling \\"
-	echo "	$ADOLC  \\"
-	echo "	$FADBAD \\"
 	echo "  $TEST   \\"
 	echo "	CPP_ERROR_WARN=\"-Wall -ansi -pedantic-errors -std=c++98\""
 	#
 	./configure \
-		--with-profiling \
-		$ADOLC  \
-		$FADBAD \
 		$TEST   \
 		CPP_ERROR_WARN="-Wall -ansi -pedantic-errors -std=c++98"
 	#
