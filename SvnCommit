@@ -1,29 +1,20 @@
-# Add template specialization for the case CppAD::vector<bool> 
+# Improve Build and configure scripts
+# Fix bugs in some example cases
 # 
 # SvnCommit: command that made this commit
-# CppAD_vector.h: add specialization and exclude source from documentation
-# SvnStatus: remove *.exe.stackdump
-# WhatsNew04.omh: remove link to CppAD::vector source code
-# library.omh: include CppAD_vector.h instead of VectorTempClass
+# Build: make Boost vector as default test case for CppADvector
+# configure.ac: make configure notation and arg order same as documentation
+# SvnStatus: remove files of the form junk.*
 # WhatsNew05.omh: users view of the changes
-# VectorTempClass.omh: not necessary once CppAD_vector source was removed
-# Bool_vector.cpp: test of CppAD::vector<bool>
-# CppAD_vector.cpp: add push_back and CheckSimpleVector to tests 
-# Example.vcproj: add Bool_vector to the list of examples and tests
-# Example.cpp: add Bool_vector to the list of examples and tests
-# Makefile.am: add Bool_vector to the list of examples and tests
+# OdeGearControl.cpp: change CppAD::vector to CppADvector (more general)
+# OdeStiff.cpp: same as previous plus add CppAD:: in front of OdeErrControl
 #
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/CppAD_vector.h \
+	Build \
+	configure.ac \
 	SvnStatus \
-	omh/WhatsNew04.omh \
-	omh/library.omh \
 	omh/WhatsNew05.omh \
-	omh/VectorTempClass.omh \
-	Example/Bool_vector.cpp \
-	Example/CppAD_vector.cpp \
-	Example/Example.vcproj \
-	Example/Example.cpp \
-	Example/Makefile.am
+	Example/OdeGearControl.cpp \
+	Example/OdeStiff.cpp

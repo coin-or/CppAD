@@ -106,14 +106,14 @@ namespace {
 		Fun F;
 	public:
 		// constructor
-		RungeMethod(const CppAD::vector<double> &a_) : F(a_)
+		RungeMethod(const CppADvector<double> &a_) : F(a_)
 		{ }
 		void step(
-			double                 ta , 
-			double                 tb , 
-			CppAD::vector<double> &xa ,
-			CppAD::vector<double> &xb ,
-			CppAD::vector<double> &eb )
+			double               ta , 
+			double               tb , 
+			CppADvector<double> &xa ,
+			CppADvector<double> &xb ,
+			CppADvector<double> &eb )
 		{	xb = CppAD::Runge45(F, 1, ta, tb, xa, eb);
 		}
 		size_t order(void)
@@ -124,14 +124,14 @@ namespace {
 		Fun F;
 	public:
 		// constructor
-		RosenMethod(const CppAD::vector<double> &a_) : F(a_)
+		RosenMethod(const CppADvector<double> &a_) : F(a_)
 		{ }
 		void step(
-			double                 ta , 
-			double                 tb , 
-			CppAD::vector<double> &xa ,
-			CppAD::vector<double> &xb ,
-			CppAD::vector<double> &eb )
+			double               ta , 
+			double               tb , 
+			CppADvector<double> &xa ,
+			CppADvector<double> &xb ,
+			CppADvector<double> &eb )
 		{	xb = CppAD::Rosen34(F, 1, ta, tb, xa, eb);
 		}
 		size_t order(void)
@@ -142,24 +142,24 @@ namespace {
 bool OdeStiff(void)
 {	bool ok = true;     // initial return value
 
-	CppAD::vector<double> a(2);
+	CppADvector<double> a(2);
 	a[0] = 1e3;
 	a[1] = 1.;
 	RosenMethod rosen(a);
 	RungeMethod runge(a);
 	Fun          gear(a);
 
-	CppAD::vector<double> xi(2);
+	CppADvector<double> xi(2);
 	xi[0] = 1.;
 	xi[1] = 0.;
 
-	CppAD::vector<double> eabs(2);
+	CppADvector<double> eabs(2);
 	eabs[0] = 1e-6;
 	eabs[1] = 1e-6;
 
-	CppAD::vector<double> ef(2);
-	CppAD::vector<double> xf(2);
-	CppAD::vector<double> maxabs(2);
+	CppADvector<double> ef(2);
+	CppADvector<double> xf(2);
+	CppADvector<double> maxabs(2);
 	size_t                nstep;
 
 	size_t k;
@@ -177,17 +177,17 @@ bool OdeStiff(void)
 		const char *method;
 		if( k == 0 )
 		{	method = "Rosen34";
-			xf = OdeErrControl(rosen, ti, tf, 
+			xf = CppAD::OdeErrControl(rosen, ti, tf, 
 			xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep);
 		}
 		else if( k == 1 )
 		{	method = "Runge45";
-			xf = OdeErrControl(runge, ti, tf, 
+			xf = CppAD::OdeErrControl(runge, ti, tf, 
 			xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep);
 		}
 		else if( k == 2 )
 		{	method = "Gear5";
-			xf = OdeGearControl(gear, M, ti, tf,
+			xf = CppAD::OdeGearControl(gear, M, ti, tf,
 			xi, smin, smax, sini, eabs, erel, ef, maxabs, nstep);
 		}
 		double x0 = exp(-a[0]*tf);

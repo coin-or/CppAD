@@ -22,147 +22,127 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 
 dnl   package   version           bug-report
-AC_INIT(CppAD, 05-09-28, bradbell@seanet.com)
+AC_INIT(CppAD, 05-10-06, bradbell@seanet.com)
 
-dnl ----------------------------------------------------------------------
-dnl Command line argument results
-
-dnl The C++ error and warning flags for every compliation
-AC_SUBST(CPP_ERROR_WARN)
-AC_MSG_CHECKING( [extra C++ flags] )
-if test "$CPP_ERROR_WARN" ; then
-	AC_MSG_RESULT( $CPP_ERROR_WARN ) 
-else
-	AC_MSG_RESULT( no )
-fi 
-
-dnl The postfix directiory corresponding to this installation of CppAD
-AC_MSG_CHECKING( [with Postfix] )
-AC_SUBST(POSTFIX_DIR)
-AM_CONDITIONAL(CppAD_POSTFIX, test $POSTFIX_DIR )
-if test $POSTFIX_DIR ; then
-	AC_MSG_RESULT( [yes] )
-else
-	AC_MSG_RESULT( [no] )
-fi
-
-dnl The prefix corresponding to the installation of Adolc
-dnl The default action is to not include Adolc examples and tests
-AC_MSG_CHECKING( [with Adolc] )
-AC_SUBST(ADOLC_DIR)
-AM_CONDITIONAL(CppAD_ADOLC, test $ADOLC_DIR )
-if test $ADOLC_DIR ; then
-	AC_MSG_RESULT( [yes] )
-else
-	AC_MSG_RESULT( [no] )
-fi
-
-dnl The directory corresponding to the installation of FADBAD
-dnl The default action is to not include Fadbad examples and tests
-AC_MSG_CHECKING( [with Fadbad] )
-AC_SUBST(FADBAD_DIR)
-AM_CONDITIONAL(CppAD_FADBAD, test $FADBAD_DIR )
-if test $FADBAD_DIR ; then
-	AC_MSG_RESULT( [yes] )
-else
-	AC_MSG_RESULT( [no] )
-fi
-
-dnl Are we using standard vectors
-dnl This will define CppADvector as std::vector
-AC_MSG_CHECKING( [with std vector] )
-AC_ARG_WITH(stdvector, 
-	AC_HELP_STRING( [--with-stdvector], [default is no] ),
-	[stdvector="yes"],
-	[stdvector="no"]
-)
-if test "$stdvector" = "no" ; then
-	AC_DEFINE(CppAD_STDVECTOR, 0, [not using stdandard vector])
-	AC_MSG_RESULT( [no] )
-else
-	AC_DEFINE(CppAD_STDVECTOR, 1, [using stdandard vector])
-	AC_MSG_RESULT( [yes] )
-fi
-
-dnl The directory corresponding to the installation of BOOST
-dnl This will define CppADvector as boost::numeric::ublas::vector
-AC_MSG_CHECKING( [with boost vector] )
-AC_SUBST(BOOST_DIR)
-AM_CONDITIONAL(CppAD_BOOSTVECTOR, test $BOOST_DIR )
-if test "X${BOOST_DIR}" = "X"; then
-	AC_DEFINE(CppAD_BOOSTVECTOR, 0, [not using boost vectors])
-	AC_MSG_RESULT( [no] )
-else
-	AC_DEFINE(CppAD_BOOSTVECTOR, 1, [using boost vectors])
-	AC_MSG_RESULT( [yes] )
-fi
-
-dnl Check if we are using the default definition for CppADvector
-AC_MSG_CHECKING( [with CppAD vector] )
-if test "$stdvector${BOOST_DIR}" = "no"; then
-	AC_DEFINE(CppAD_CPPADVECTOR, 1, [using CppAD vectors])
-	AC_MSG_RESULT( [yes] )
-else
-	AC_DEFINE(CppAD_CPPADVECTOR, 0, [using CppAD vectors])
-	AC_MSG_RESULT( [no] )
-fi
-
-dnl Are we building the Example directory
-AC_MSG_CHECKING( [with Example] )
+dnl **********************************************************************
+dnl Command Line Arguments
+dnl
+dnl Are we building the Example directory --------------------------------
+AC_MSG_CHECKING( [--with-Example] )
 AC_ARG_WITH(Example, 
 	AC_HELP_STRING( [--with-Example], [default is no] ),
 	[Example="yes"],
 	[Example="no"]
 )
-AM_CONDITIONAL(CppAD_EXAMPLE, test $Example = "yes" )
-if test $Example = "yes"; then
-	AC_MSG_RESULT( [yes] )
-else
-	AC_MSG_RESULT( [no] )
-fi
+AM_CONDITIONAL(CppAD_EXAMPLE, test "$Example" = "yes" )
+AC_MSG_RESULT([$Example])
 
-dnl Are we building the TestMore directory
-AC_MSG_CHECKING( [with TestMore] )
+dnl Are we building the TestMore directory -------------------------------
+AC_MSG_CHECKING( [--with-TestMore] )
 AC_ARG_WITH(TestMore, 
 	AC_HELP_STRING( [--with-TestMore], [default is no] ),
 	[TestMore="yes"],
 	[TestMore="no"]
 )
-AM_CONDITIONAL(CppAD_TESTMORE, test $TestMore = "yes" )
-if test $TestMore = "yes"; then
-	AC_MSG_RESULT( [yes] )
-else
-	AC_MSG_RESULT( [no] )
-fi
+AM_CONDITIONAL(CppAD_TESTMORE, test "$TestMore" = "yes" )
+AC_MSG_RESULT( [$TestMore] )
 
-dnl Are we building the Speed directory
-AC_MSG_CHECKING( [with Speed] )
+dnl Are we building the Speed directory ----------------------------------
+AC_MSG_CHECKING( [--with-Speed] )
 AC_ARG_WITH(Speed, 
 	AC_HELP_STRING( [--with-Speed], [default is no] ),
 	[Speed="yes"],
 	[Speed="no"]
 )
-AM_CONDITIONAL(CppAD_SPEED, test $Speed = "yes" )
-if test $Speed = "yes"; then
-	AC_MSG_RESULT( [yes] )
-else
-	AC_MSG_RESULT( [no] )
-fi
+AM_CONDITIONAL(CppAD_SPEED, test "$Speed" = "yes" )
+AC_MSG_RESULT( [$Speed] )
 
-dnl Are we including profiling
-AC_MSG_CHECKING( [with profiling] )
+dnl Are we including profiling -------------------------------------------
+AC_MSG_CHECKING( [--with-profiling] )
 AC_ARG_WITH(profiling, 
 	AC_HELP_STRING( [--with-profiling], [default is no] ),
 	[profiling="yes"],
 	[profiling="no"]
 )
-AM_CONDITIONAL(CppAD_PROFILING, test $profiling = "yes" )
-if test $profiling = "yes"; then
-	AC_MSG_RESULT( [yes] )
+AM_CONDITIONAL(CppAD_PROFILING, test "$profiling" = "yes" )
+AC_MSG_RESULT( [$profiling] )
+
+dnl Are we using standard vectors ----------------------------------------
+AC_MSG_CHECKING( [--with-stdvector] )
+AC_ARG_WITH(stdvector, 
+	AC_HELP_STRING( [--with-stdvector], [default is no] ),
+	[stdvector="yes"],
+	[stdvector="no"]
+)
+if test "$stdvector" = "yes" ; then
+	AC_DEFINE(CppAD_STDVECTOR, 1, [is CppADvector == std::vector])
+else
+	AC_DEFINE(CppAD_STDVECTOR, 0, [is CppADvector == std::vector])
+fi
+AC_MSG_RESULT( [$stdvector] )
+
+dnl The postfix directiory corresponding to this installation of CppAD --
+AC_MSG_CHECKING( [POSTFIX_DIR] )
+AC_SUBST(POSTFIX_DIR)
+AM_CONDITIONAL(CppAD_POSTFIX, test "$POSTFIX_DIR" != "" )
+if test "$POSTFIX_DIR" != "" ; then
+	AC_MSG_RESULT( [POSTFIX_DIR=$POSTFIX_DIR] )
 else
 	AC_MSG_RESULT( [no] )
 fi
-dnl ----------------------------------------------------------------------
+
+dnl The prefix corresponding to the installation of Adolc ---------------
+AC_MSG_CHECKING( [ADOLC_DIR] )
+AC_SUBST(ADOLC_DIR)
+AM_CONDITIONAL(CppAD_ADOLC, test "$ADOLC_DIR" != "" )
+if test "$ADOLC_DIR" != "" ; then
+	AC_MSG_RESULT( [ADOLC_DIR=$ADOLC_DIR] )
+else
+	AC_MSG_RESULT( [no] )
+fi
+
+dnl The directory corresponding to the installation of FADBAD -----------
+AC_MSG_CHECKING( [FADBAD_DIR] )
+AC_SUBST(FADBAD_DIR)
+AM_CONDITIONAL(CppAD_FADBAD, test "$FADBAD_DIR" != "" )
+if test "$FADBAD_DIR" != "" ; then
+	AC_MSG_RESULT( [FADBAD_DIR=$FADBAD_DIR] )
+else
+	AC_MSG_RESULT( [no] )
+fi
+
+dnl The directory corresponding to the installation of BOOST ------------
+AC_MSG_CHECKING( [BOOST_DIR] )
+AC_SUBST(BOOST_DIR)
+AM_CONDITIONAL(CppAD_BOOSTVECTOR, test "$BOOST_DIR" != "" )
+if test "$BOOST_DIR" != "" ; then
+	AC_DEFINE(CppAD_BOOSTVECTOR, 1, 
+		[is CppADvector == boost::numeric::ublas::vector]
+	)
+	AC_MSG_RESULT( [BOOST_DIR=$BOOST_DIR] )
+else
+	AC_DEFINE(CppAD_BOOSTVECTOR, 0, 
+		[is CppADvector == boost::numeric::ublas::vector]
+	)
+	AC_MSG_RESULT( [no] )
+fi
+
+dnl The C++ error and warning flags for every compliation ---------------
+AC_MSG_CHECKING( [CPP_ERROR_WARN] )
+AC_SUBST(CPP_ERROR_WARN)
+if test "$CPP_ERROR_WARN" != "" ; then
+	AC_MSG_RESULT( [CPP_ERROR_WARN=$CPP_ERROR_WARN] ) 
+else
+	AC_MSG_RESULT( [no] )
+fi 
+dnl *********************************************************************
+
+dnl Check which definition we are using for CppADvector
+if test "$stdvector$BOOST_DIR" = "no" ; then
+	AC_DEFINE(CppAD_CPPADVECTOR, 1, [is CppADvector == CppAD::vector])
+else 
+	AC_DEFINE(CppAD_CPPADVECTOR, 0, [is CppADvector == CppAD::vector])
+fi
 
 dnl Set the default install prefix to the installers home directory
 AC_PREFIX_DEFAULT(${HOME})

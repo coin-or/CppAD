@@ -63,18 +63,18 @@ namespace {
 	// --------------------------------------------------------------
 	class Fun {
 	private:
-		 CppAD::vector<double> w;
+		 CppADvector<double> w;
 	public:
 		// constructor
-		Fun(const CppAD::vector<double> &w_) : w(w_)
+		Fun(const CppADvector<double> &w_) : w(w_)
 		{ } 
 
 		// set f = x'(t)
 		template <typename Scalar>
 		void Ode(
-			const Scalar                &t, 
-			const CppAD::vector<Scalar> &x, 
-			CppAD::vector<Scalar>       &f)
+			const Scalar              &t, 
+			const CppADvector<Scalar> &x, 
+			CppADvector<Scalar>       &f)
 		{	f[0] = - w[0] * x[0];
 			f[1] = + w[0] * x[0] - w[1] * x[1];	
 		}
@@ -124,23 +124,23 @@ namespace {
 bool OdeGearControl(void)
 {	bool ok = true;     // initial return value
 
-	CppAD::vector<double> w(2);
+	CppADvector<double> w(2);
 	w[0] = 10.;
 	w[1] = 1.;
 	Fun F(w);
 
-	CppAD::vector<double> xi(2);
+	CppADvector<double> xi(2);
 	xi[0] = 1.;
 	xi[1] = 0.;
 
-	CppAD::vector<double> eabs(2);
+	CppADvector<double> eabs(2);
 	eabs[0] = 1e-4;
 	eabs[1] = 1e-4;
 
 	// return values
-	CppAD::vector<double> ef(2);
-	CppAD::vector<double> maxabs(2);
-	CppAD::vector<double> xf(2);
+	CppADvector<double> ef(2);
+	CppADvector<double> maxabs(2);
+	CppADvector<double> xf(2);
 	size_t                nstep;
 
 	// input values

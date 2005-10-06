@@ -78,6 +78,17 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-06$$
+Change the Unix install $code configure$$ script
+so that is reports information using the same order and notation as its
+$xref/InstallUnix/Configure/documentation/$$.
+$pre
+
+$$
+Some compiler errors in the $xref/OdeGearControl.cpp/$$ and 
+$xref/OdeStiff.cpp/$$ examples were fixed.
+
+
 $head 09-29$$
 Add a specialization to $xref/CppAD_vector/$$ for the 
 $code CppAD::vector<bool>$$ case.

@@ -133,6 +133,10 @@ then
 		then
 			TEST="$TEST FADBAD_DIR=$HOME"
 		fi
+		if [ -e $HOME/boost_1_32_0 ]
+		then
+			TEST="$TEST BOOST_DIR=$HOME/boost_1_32_0"
+		fi
 	fi
 	#
 	echo "configure \\"
