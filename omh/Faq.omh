@@ -80,13 +80,15 @@ then $xref/install/$$ the current version of CppAD.
 If this does not solve your problem, continue
 to the next step.
 $lnext
-Send $code bradbell$$ at $code seanet.com$$ e-mail with 
-a description of the bug.
-Attaching the source code for small sample program that 
+Send an e-mail message to the mailing list 
+$href%
+	http://list.coin-or.org/mailman/listinfo/cppad%
+	cppad@list.coin-or.org
+%$$
+with a description of the bug.
+Attaching a small source code sample program that 
 demonstrates the bug is always helpful.
-A smaller program
-that executes fewer statements 
-makes a better bug report.
+The smaller the program, the better the bug report.
 $lend
 
 $head CompareChange$$
