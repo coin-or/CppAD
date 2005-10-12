@@ -78,6 +78,19 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-12$$
+Change the 
+$xref/InstallUnix/Configure/configure/$$ script so that compilation of the
+$xref/GetStarted.cpp/$$ and $xref/PrintFor.cpp/$$ examples are optional.
+$pre
+
+$$
+One of the dates in the Unix installation
+$xref/InstallUnix/Extraction/extraction/$$ discussion was
+out of date. This has been fixed.
+
+
+
 $head 10-06$$
 Change the Unix install $code configure$$ script
 so that is reports information using the same order and notation as its

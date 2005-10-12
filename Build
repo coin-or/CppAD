@@ -43,9 +43,9 @@ then
 	for name in Doc omh/InstallUnix omh/InstallWindows
 	do
 		sed $name.omh > $name.tmp \
-		-e "s/CppAD-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/CppAD-$Today/g" \
-		-e "s/cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/cppad-$Today/g" 
-		#
+	-e "s/\([^0-9]\)[0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/\1$Today/g" \
+	-e "s/\([^0-9]\)[0-9][0-9]-[0-9][0-9]-[0-9][0-9]\([^0-9]\)/\1$Today\2/g" 
+	#
 		diff $name.omh $name.tmp
 		mv   $name.tmp $name.omh
 	done
@@ -121,9 +121,11 @@ then
 	TEST=""
 	if [ "$2" == "test" ]
 	then
+		TEST="$TEST --with-GetStarted"
 		TEST="$TEST --with-Example"
 		TEST="$TEST --with-TestMore"
 		TEST="$TEST --with-Speed"
+		TEST="$TEST --with-PrintFor"
 		TEST="$TEST --with-profiling"
 		if [ -e $HOME/adolc_base ]
 		then
@@ -298,8 +300,8 @@ echo "version         update configure.ac and Doc.omh version number"
 echo "aclocal         create aclocal.m4 file"
 echo "autoheader      create a CppAD/config.h.in file"
 echo "automake        run autoconf and automake to create configure script"
-echo "configure       configure excludes Example, TestMore, Speed, profiling"
-echo "configure test  configure includes Example, TestMore, Speed, profiling"
+echo "configure       configure excludes all the --with-* options"
+echo "configure test  configure includes all the possible options"
 echo "compile         compile all of the tests"
 echo "omhelp          build all the documentation"
 echo "dist            create the distribution files CppAD.*.tar.gz"

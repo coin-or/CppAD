@@ -22,11 +22,21 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 
 dnl   package   version           bug-report
-AC_INIT(CppAD, 05-10-06, bradbell@seanet.com)
+AC_INIT(CppAD, 05-10-12, bradbell@seanet.com)
 
 dnl **********************************************************************
 dnl Command Line Arguments
-dnl
+
+dnl Are we building the GetStarted directory -----------------------------
+AC_MSG_CHECKING( [--with-GetStarted] )
+AC_ARG_WITH(GetStarted, 
+	AC_HELP_STRING( [--with-GetStarted], [default is no] ),
+	[GetStarted="yes"],
+	[GetStarted="no"]
+)
+AM_CONDITIONAL(CppAD_GETSTARTED, test "$GetStarted" = "yes" )
+AC_MSG_RESULT([$GetStarted])
+
 dnl Are we building the Example directory --------------------------------
 AC_MSG_CHECKING( [--with-Example] )
 AC_ARG_WITH(Example, 
@@ -56,6 +66,16 @@ AC_ARG_WITH(Speed,
 )
 AM_CONDITIONAL(CppAD_SPEED, test "$Speed" = "yes" )
 AC_MSG_RESULT( [$Speed] )
+
+dnl Are we building the PrintFor directory --------------------------------
+AC_MSG_CHECKING( [--with-PrintFor] )
+AC_ARG_WITH(PrintFor, 
+	AC_HELP_STRING( [--with-PrintFor], [default is no] ),
+	[PrintFor="yes"],
+	[PrintFor="no"]
+)
+AM_CONDITIONAL(CppAD_PRINTFOR, test "$PrintFor" = "yes" )
+AC_MSG_RESULT( [$PrintFor] )
 
 dnl Are we including profiling -------------------------------------------
 AC_MSG_CHECKING( [--with-profiling] )

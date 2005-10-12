@@ -30,11 +30,7 @@ sed > SvnStatus.out                                           \
 # Add differences for automatically updated files
 echo                            >> SvnStatus.out \
 " //////////// Differences for Automatically Edited Files ///////////"
-svn diff Doc.omh                |
-sed -e "/^[^+-]/d"              >> SvnStatus.out
-svn diff configure.ac           |
-sed -e "/^[^+-]/d"              >> SvnStatus.out
-svn diff omh/InstallUnix.omh    |
-sed -e "/^[^+-]/d"              >> SvnStatus.out
-svn diff omh/InstallWindows.omh |
-sed -e "/^[^+-]/d"              >> SvnStatus.out
+./diffToday Doc.omh                  >> SvnStatus.out
+./diffToday configure.ac             >> SvnStatus.out
+./diffToday omh/InstallUnix.omh      >> SvnStatus.out
+./diffToday omh/InstallWindows.omh   >> SvnStatus.out

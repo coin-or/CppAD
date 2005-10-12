@@ -61,21 +61,21 @@ $section Unix Installation and Testing$$
 $head Download Current Version$$
 Download the file
 $href%
-	http://www.coin-or.org/Tarballs/CppAD-05-09-28.tar.gz%
-	CppAD-05-09-28.tar.gz
+	http://www.coin-or.org/Tarballs/CppAD-05-10-12.tar.gz%
+	CppAD-05-10-12.tar.gz
 %$$
 
 $head Extraction$$
 Use the command
 $codep
-	tar -xvzf CppAD-05-09-28.tar.gz
+	tar -xvzf CppAD-05-10-12.tar.gz
 $$
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-05-09-28
+	cppad-05-10-12
 %$$
-Note that $code 05-09-06$$ is the version number for CppAD.
+Note that $code 05-10-12$$ is the version number for CppAD.
 All of the commands below are to be executed starting from this
 directory.
 
@@ -95,13 +95,15 @@ $head Configure$$
 Enter the directory created by the extraction and execute the command:
 $syntax%
 	./configure                            \
-	prefix=%PrefixDir%                     \
+	prefix=%PrefixDir%                       \
+	--with-GetStarted                      \
 	--with-Example                         \
 	--with-TestMore                        \
 	--with-Speed                           \
+	--with-PrintFor                        \
 	--with-profiling                       \
 	--with-stdvector                       \  
-	POSTFIX_DIR=%PostfixDir%               \
+	POSTFIX_DIR=%PostfixDir%                 \
 	ADOLC_DIR=%AdolcDir%                     \
 	FADBAD_DIR=%FadbadDir%                   \
 	BOOST_DIR=%BoostDir%                     \
@@ -171,9 +173,18 @@ $syntax%
 	/usr/lib/test/libCppAD.a
 %$$
 
+$head --with-GetStarted$$
+If the command line argument $code --with-GetStarted$$ is specified,
+the $xref/GetStarted.cpp/$$ example will be built.
+Once the $code make$$ command 
+has been executed, you can run this example by executing the command 
+$codep
+	GetStarted/GetStarted
+$$
+
 $head --with-Example$$
 If the command line argument $code --with-Example$$ is specified,
-extensive set of examples and correctness tests will be compiled by the
+an extensive set of examples and correctness tests will be compiled by the
 $xref/InstallUnix/make/make/$$ command. Once the $code make$$ command 
 has been executed, you can run these examples by executing the command 
 $codep
@@ -196,6 +207,15 @@ $xref/InstallUnix/make/make/$$ command. Once the $code make$$ command
 has been executed, you can run these speed tests by executing the command 
 $codep
 	Speed/Speed
+$$
+
+$head --with-PrintFor$$
+If the command line argument $code --with-PrintFor$$ is specified,
+the $xref/PrintFor.cpp/$$ example will be built.
+Once the $code make$$ command 
+has been executed, you can run this example by executing the command 
+$codep
+	PrintFor/PrintFor
 $$
 
 $head --with-profiling$$
@@ -333,25 +353,13 @@ $codep
 	make
 $$
 will compile all of the examples and tests.  
-
-$subhead Getting Started$$
-The following commands will run the getting started example:
-$codep
-	GetStarted/GetStarted
-$$
-
-$subhead PrintFor$$
-The following commands will execute an example and test
-of printing values during forward mode calculations:
-$codep
-	PrintFor/PrintFor
-$$
-
-$subhead Other$$
-The other more extensive examples and tests are described under
+An extensive set of examples and tests can be run as described under
+the headings
+$xref/InstallUnix/--with-GetStarted/--with-GetStarted/$$,
 $xref/InstallUnix/--with-Example/--with-Example/$$,
 $xref/InstallUnix/--with-TestMore/--with-TestMore/$$,
 $xref/InstallUnix/--with-Speed/--with-Speed/$$,
+$xref/InstallUnix/--with-PrintFor/--with-PrintFor/$$,
 $xref/InstallUnix/AdolcDir/AdolcDir/$$, and
 $xref/InstallUnix/FadbadDir/FadbadDir/$$ above.
 

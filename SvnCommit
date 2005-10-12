@@ -1,20 +1,25 @@
 # Improve Build and configure scripts
-# Fix bugs in some example cases
 # 
 # SvnCommit: command that made this commit
-# Build: make Boost vector as default test case for CppADvector
-# configure.ac: make configure notation and arg order same as documentation
-# SvnStatus: remove files of the form junk.*
+# Build: Make the GetStarted and PrintFor case optional and impove the 
+#        automatic editing of date to catch more cases
+# configure.ac: make GetStarted and PrintFor optional
+# SvnStatus: improve differencing of automatically edited files
+# InstallUnix.omh: document optional GetStarted and PrintFor
 # WhatsNew05.omh: users view of the changes
-# OdeGearControl.cpp: change CppAD::vector to CppADvector (more general)
-# OdeStiff.cpp: same as previous plus add CppAD:: in front of OdeErrControl
+# Makefile.am: make GetStarted and PrintFor optional
+# omh/Distribute.omh: remove requirement for GetStarted/GetStarted.out
+# diffToday: map yy-mm-dd in repository version to Today and then difference 
 #
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
+svn add diffToday
 svn commit --file svn.log \
+	diffToday \
 	SvnCommit \
 	Build \
 	configure.ac \
 	SvnStatus \
+	omh/InstallUnix.omh \
+	omh/Distribute.omh \
 	omh/WhatsNew05.omh \
-	Example/OdeGearControl.cpp \
-	Example/OdeStiff.cpp
+	Makefile.am
