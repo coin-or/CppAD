@@ -1,25 +1,11 @@
-# Improve Build and configure scripts
+# Make CppAD::vector memory allocation more efficent when NDEBUG is defined
 # 
 # SvnCommit: command that made this commit
-# Build: Make the GetStarted and PrintFor case optional and impove the 
-#        automatic editing of date to catch more cases
-# configure.ac: make GetStarted and PrintFor optional
-# SvnStatus: improve differencing of automatically edited files
-# InstallUnix.omh: document optional GetStarted and PrintFor
-# WhatsNew05.omh: users view of the changes
-# Makefile.am: make GetStarted and PrintFor optional
-# omh/Distribute.omh: remove requirement for GetStarted/GetStarted.out
-# diffToday: map yy-mm-dd in repository version to Today and then difference 
+# CppAD_vector.h: split memory allocation into NDEBUG and not NDEBUG cases
+# WhatsNew05.omh: change from users point of view
 #
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-svn add diffToday
 svn commit --file svn.log \
-	diffToday \
 	SvnCommit \
-	Build \
-	configure.ac \
-	SvnStatus \
-	omh/InstallUnix.omh \
-	omh/Distribute.omh \
-	omh/WhatsNew05.omh \
-	Makefile.am
+	CppAD/CppAD_vector.h \
+	omh/WhatsNew05.omh

@@ -198,6 +198,25 @@ $end
 
 namespace CppAD { //  BEGIN CppAD namespace
 
+// ------------------ CppAD::vector<Type> ----------------------------------
+
+# ifdef NDEBUG
+# define CppADvectorAllocate(data, Type, capacity)                         \
+	data = new Type[capacity];
+# else
+# define CppADvectorAllocate(data, Type, capacity)                         \
+	{	try                                                        \
+		{	data = new Type[capacity];                         \
+		}                                                          \
+		catch (...)                                                \
+		{	CppADUsageError(0,                                 \
+			"CppAD::vector: cannot allocate enough memory"     \
+			);	                                           \
+		}                                                          \
+	}
+# endif
+
+
 template <class Type>
 class vector {
 private:
@@ -215,32 +234,14 @@ public:
 	inline vector(size_t n) : capacity(n), length(n)
 	{	if( length == 0 )
 			data = CppADNull;
-		else
-		{	try 
-			{	data = new Type[capacity];
-			}
-			catch (...) 
-			{	CppADUsageError(0,
-				"CppAD::vector: cannot allocate enough memory"
-				);	 
-			}
-		}
+		else	CppADvectorAllocate(data, Type, capacity);
 	}
 	// copy constructor
 	inline vector(const vector &x) : capacity(x.length), length(x.length)
 	{	size_t i;
 		if( length == 0 )
 			data = CppADNull;
-		else
-		{	try 
-			{	data = new Type[capacity];
-			}
-			catch (...) 
-			{	CppADUsageError(0,
-				"CppAD::vector: cannot allocate enough memory"
-				);	 
-			}
-		}
+		else	CppADvectorAllocate(data, Type, capacity);
 
 		for(i = 0; i < length; i++)
 			data[i] = x.data[i];
@@ -263,16 +264,7 @@ public:
 		capacity = n;
 		if( capacity == 0 )
 			data = CppADNull;
-		else
-		{	try 
-			{	data = new Type[capacity];
-			}
-			catch (...) 
-			{	CppADUsageError(0,
-				"CppAD::vector: cannot allocate enough memory"
-				);	 
-			}
-		}
+		else	CppADvectorAllocate(data, Type, capacity);
 	}
 	// assignment operator
 	inline vector & operator=(const vector &x)
@@ -311,14 +303,7 @@ public:
 				capacity = 2;
 			else	capacity = 2 * length;
 
-			try 
-			{	tmp = new Type[capacity];
-			}
-			catch (...) 
-			{	CppADUsageError(0,
-				"CppAD::vector: cannot allocate enough memory"
-				);	 
-			}
+			CppADvectorAllocate(tmp, Type, capacity);
 
 			size_t i;
 			for(i = 0; i < length; i++)
@@ -329,6 +314,7 @@ public:
 		data[length++] = x;
 	}
 };
+
 // output operator
 template <class Type>
 inline std::ostream& operator << (
@@ -350,6 +336,22 @@ inline std::ostream& operator << (
 /*
 ------------- Specialization for CppAD::vector<bool> -----------------------
 */
+# undef  CppADvectorAllocate
+# ifdef NDEBUG
+# define CppADvectorAllocate(data, UnitType, nunit)                        \
+	data = new UnitType[nunit]; 
+# else
+# define CppADvectorAllocate(data, UnitType, nunit)                        \
+	{	try                                                        \
+		{	data = new UnitType[nunit];                        \
+		}                                                          \
+		catch (...)                                                \
+		{	CppADUsageError(0,                                 \
+			"CppAD::vectorBool: cannot allocate enough memory" \
+			);	                                           \
+		}                                                          \
+	}
+# endif
 
 class elementBool_vector {
 	typedef size_t UnitType;
@@ -394,14 +396,8 @@ public:
 	{	if( n != 0 )
 		{	nunit    = (n - 1) / BitPerUnit + 1;
 			length   = n;
-			try
-			{	data = new UnitType[nunit];
-			}
-			catch (...) 
-			{	CppADUsageError(0,
-				"CppAD::vector: cannot allocate enough memory"
-				);	 
-			}
+
+			CppADvectorAllocate(data, UnitType, nunit);
 		}
 	}
 	// copy constructor
@@ -409,16 +405,7 @@ public:
 	{	size_t i;
 		if( nunit == 0 )
 			data = CppADNull;
-		else
-		{	try 
-			{	data = new UnitType[v.nunit];
-			}
-			catch (...) 
-			{	CppADUsageError(0,
-				"CppAD::vector: cannot allocate enough memory"
-				);	 
-			}
-		}
+		else	CppADvectorAllocate(data, UnitType, nunit);
 
 		for(i = 0; i < nunit; i++)
 			data[i] = v.data[i];
@@ -442,14 +429,7 @@ public:
 			data = CppADNull;
 		else
 		{	nunit    = (n - 1) / BitPerUnit + 1;
-			try 
-			{	data = new UnitType[nunit];
-			}
-			catch (...) 
-			{	CppADUsageError(0,
-				"CppAD::vector: cannot allocate enough memory"
-				);	 
-			}
+			CppADvectorAllocate(data, UnitType, nunit);
 		}
 	}
 	// assignment operator
@@ -499,14 +479,9 @@ public:
 		{	// allocate another unit
 			UnitType *tmp;
 			nunit++;
-			try 
-			{	tmp = new UnitType[nunit];
-			}
-			catch (...) 
-			{	CppADUsageError(0,
-				"CppAD::vector: cannot allocate enough memory"
-				);	 
-			}
+
+			CppADvectorAllocate(tmp, UnitType, nunit);
+
 			for(i = 0; i < nunit; i++)
 				tmp[i] = data[i];
 			delete [] data;
@@ -535,6 +510,7 @@ inline std::ostream& operator << (
 	return os;
 }
 
+# undef  CppADvectorAllocate
 
 } // END CppAD namespace
 

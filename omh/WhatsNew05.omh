@@ -78,6 +78,14 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-14$$
+The template class $xref/CppAD_vector/$$ uses a try/catch block
+during the allocation of memory (for error reporting).
+This may be slow down memory allocation and hence it
+is now replaced by simple memory allocation when 
+the preprocessor variable $code NDEBUG$$ is defined.
+
+
 $head 10-12$$
 Change the 
 $xref/InstallUnix/Configure/configure/$$ script so that compilation of the
