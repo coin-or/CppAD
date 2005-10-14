@@ -84,6 +84,13 @@ during the allocation of memory (for error reporting).
 This may be slow down memory allocation and hence it
 is now replaced by simple memory allocation when 
 the preprocessor variable $code NDEBUG$$ is defined.
+$pre
+
+$$
+The specialization of $code CppAD::vector<bool>$$
+was moved to $xref/CppAD_vector/vectorBool/vectorBool/$$
+so that $code CppAD::vector<bool>$$ does not pack one bit per value 
+(which can be slow to access).
 
 
 $head 10-12$$

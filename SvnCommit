@@ -1,11 +1,22 @@
-# Make CppAD::vector memory allocation more efficent when NDEBUG is defined
+# Change vector<bool> to vectorBool so that user has a choice between them
 # 
 # SvnCommit: command that made this commit
-# CppAD_vector.h: split memory allocation into NDEBUG and not NDEBUG cases
+# CppAD_vector.h: actual implementation
+# vectorBool.cpp: move from vector_bool.cpp to here (and edit)
+# Bool_vector.cpp: move from here to vector_bool.cpp (and edit) 
+# Makefile.am: move Bool_vector.cpp to vectorBool.cpp
+# Example.cpp: move Bool_vector.cpp to vectorBool.cpp
+# Example.vcproj: move Bool_vector.cpp to vectorBool.cpp
+# OneTest: add Boost to list of include directories
 # WhatsNew05.omh: change from users point of view
 #
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
 	CppAD/CppAD_vector.h \
+	Example/vectorBool.cpp \
+	Example/Makefile.am \
+	Example/Example.cpp \
+	Example/Example.vcproj \
+	Example/OneTest \
 	omh/WhatsNew05.omh

@@ -46,7 +46,7 @@ Example_SOURCES   = \
 	Atan.cpp \
 	Atan2.cpp \
 	BoolFun.cpp \
-	Bool_vector.cpp \
+	vectorBool.cpp \
 	CheckNumericType.cpp \
 	CheckSimpleVector.cpp \
 	Compare.cpp \

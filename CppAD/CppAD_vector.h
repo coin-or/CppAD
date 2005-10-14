@@ -142,14 +142,20 @@ $syntax%
 will output the value $italic e$$ to the standard
 output stream $italic os$$.
 
-$head Bool$$
-There is a specialization for $code CppAD::vector<bool>$$ that
-conserves on memory.
-Except for the output operator, this specialization has the 
-same specifications as any other $syntax%CppAD::vector<%Type%>%$$.
+
+$head vectorBool$$
+$index vectorBool$$
+The file $code <CppAD/CppAD_vector.h>$$ also defines the class
+$code CppAD::vectorBool$$.
+This has the same specifications as $code CppAD::vector<bool>$$ except
+that $code vectorBool$$ conserves on memory
+(on the other hand, $code vectorBool$$ is expected to be faster
+than $code vectorBool$$).
+Another exception is the output operator for $code vectorBool$$
+which is specified below:
 
 $subhead Output$$
-The $code CppAD::vector<bool>$$ output operator
+The $code CppAD::vectorBool$$ output operator
 prints each boolean value as 
 a $code 0$$ for false,
 a $code 1$$ for true, 
@@ -160,11 +166,11 @@ surrounding $code {$$, $code }$$ and with no separating commas or spaces.
 $head Example$$
 $children%
 	Example/CppAD_vector.cpp%
-	Example/Bool_vector.cpp
+	Example/vectorBool.cpp
 %$$
 The files
 $xref/CppAD_vector.cpp/$$ and
-$xref/Bool_vector.cpp/$$ each
+$xref/vectorBool.cpp/$$ each
 contain an example and test of this template class.
 They return true if they succeed and false otherwise.
 
@@ -334,7 +340,7 @@ inline std::ostream& operator << (
 }
 
 /*
-------------- Specialization for CppAD::vector<bool> -----------------------
+--------------------------- vectorBool -------------------------------------
 */
 # undef  CppADvectorAllocate
 # ifdef NDEBUG
@@ -353,21 +359,21 @@ inline std::ostream& operator << (
 	}
 # endif
 
-class elementBool_vector {
+class vectorBoolElement {
 	typedef size_t UnitType;
 private:
 	UnitType *unit;
 	UnitType mask;
 public:
-	elementBool_vector(UnitType *unit_, UnitType mask_)
+	vectorBoolElement(UnitType *unit_, UnitType mask_)
 	: unit(unit_) , mask(mask_)
 	{ }
-	elementBool_vector(const elementBool_vector &e)
+	vectorBoolElement(const vectorBoolElement &e)
 	: unit(e.unit) , mask(e.mask)
 	{ }
 	operator bool() const
 	{	return (*unit & mask) != 0; }
-	elementBool_vector& operator=(bool bit)
+	vectorBoolElement& operator=(bool bit)
 	{	if(bit)
 			*unit |= mask;
 		else	*unit &= ~mask;
@@ -375,8 +381,7 @@ public:
 	} 
 };
 
-template <>
-class vector<bool> {
+class vectorBool {
 	typedef size_t UnitType;
 private:
 	static const  size_t BitPerUnit 
@@ -389,10 +394,10 @@ public:
 	typedef bool value_type;
 
 	// default constructor
-	inline vector(void) : nunit(0), length(0) , data(CppADNull)
+	inline vectorBool(void) : nunit(0), length(0) , data(CppADNull)
 	{ }
 	// constructor with a specified size
-	inline vector(size_t n) : nunit(0), length(0), data(CppADNull)
+	inline vectorBool(size_t n) : nunit(0), length(0), data(CppADNull)
 	{	if( n != 0 )
 		{	nunit    = (n - 1) / BitPerUnit + 1;
 			length   = n;
@@ -401,7 +406,8 @@ public:
 		}
 	}
 	// copy constructor
-	inline vector(const vector &v) : nunit(v.nunit), length(v.length)
+	inline vectorBool(const vectorBool &v) 
+	: nunit(v.nunit), length(v.length)
 	{	size_t i;
 		if( nunit == 0 )
 			data = CppADNull;
@@ -411,7 +417,7 @@ public:
 			data[i] = v.data[i];
 	}
 	// destructor
-	~vector(void)
+	~vectorBool(void)
 	{	delete [] data; }
 
 	// size function
@@ -433,7 +439,7 @@ public:
 		}
 	}
 	// assignment operator
-	inline vector & operator=(const vector &v)
+	inline vectorBool & operator=(const vectorBool &v)
 	{	size_t i;
 		CppADUsageError(
 			length == v.length ,
@@ -445,7 +451,7 @@ public:
 		return *this;
 	}
 	// non-constant element access
-	elementBool_vector operator[](size_t k)
+	vectorBoolElement operator[](size_t k)
 	{	size_t i, j;
 		CppADUsageError(
 			k < length,
@@ -453,7 +459,7 @@ public:
 		);
 		i    = k / BitPerUnit;
 		j    = k - i * BitPerUnit;
-		return elementBool_vector(data + i , UnitType(1) << j );
+		return vectorBoolElement(data + i , UnitType(1) << j );
 	}
 	// constant element access
 	bool operator[](size_t k) const
@@ -498,10 +504,9 @@ public:
 };
 
 // output operator
-template <> 
 inline std::ostream& operator << (
-	std::ostream       &os  , 
-	const vector<bool> &v   )
+	std::ostream     &os  , 
+	const vectorBool &v   )
 {	size_t i = 0;
 	size_t n = v.size();
 
