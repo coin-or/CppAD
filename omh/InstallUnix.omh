@@ -61,21 +61,21 @@ $section Unix Installation and Testing$$
 $head Download Current Version$$
 Download the file
 $href%
-	http://www.coin-or.org/Tarballs/CppAD-05-10-12.tar.gz%
-	CppAD-05-10-12.tar.gz
+	http://www.coin-or.org/Tarballs/CppAD-05-10-19.tar.gz%
+	CppAD-05-10-19.tar.gz
 %$$
 
 $head Extraction$$
 Use the command
 $codep
-	tar -xvzf CppAD-05-10-12.tar.gz
+	tar -xvzf CppAD-05-10-19.tar.gz
 $$
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-05-10-12
+	cppad-05-10-19
 %$$
-Note that $code 05-10-12$$ is the version number for CppAD.
+Note that $code 05-10-19$$ is the version number for CppAD.
 All of the commands below are to be executed starting from this
 directory.
 
@@ -95,7 +95,7 @@ $head Configure$$
 Enter the directory created by the extraction and execute the command:
 $syntax%
 	./configure                            \
-	prefix=%PrefixDir%                       \
+	--prefix=%PrefixDir%                   \
 	--with-GetStarted                      \
 	--with-Example                         \
 	--with-TestMore                        \

@@ -1,22 +1,15 @@
-# Change vector<bool> to vectorBool so that user has a choice between them
+# Minor changes
 # 
 # SvnCommit: command that made this commit
-# CppAD_vector.h: actual implementation
-# vectorBool.cpp: move from vector_bool.cpp to here (and edit)
-# Bool_vector.cpp: move from here to vector_bool.cpp (and edit) 
-# Makefile.am: move Bool_vector.cpp to vectorBool.cpp
-# Example.cpp: move Bool_vector.cpp to vectorBool.cpp
-# Example.vcproj: move Bool_vector.cpp to vectorBool.cpp
-# OneTest: add Boost to list of include directories
+# SvnStatus: use standard output instead of a file
+# Bool_vector.cpp: forget to commit this deletion in previous commit
+# InstallUnix.omh: change prefix to --prefix in configure command line
 # WhatsNew05.omh: change from users point of view
 #
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/CppAD_vector.h \
-	Example/vectorBool.cpp \
-	Example/Makefile.am \
-	Example/Example.cpp \
-	Example/Example.vcproj \
-	Example/OneTest \
+	SvnStatus \
+	Example/Bool_vector.cpp \
+	omh/InstallUnix.omh \
 	omh/WhatsNew05.omh
