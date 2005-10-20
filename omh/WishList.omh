@@ -1,5 +1,6 @@
 $begin WishList$$
 $spell
+	Jacobian
 	Vec
 	Cpp
 	Atan
@@ -10,31 +11,19 @@ $index wish list$$
 $index new, features$$
 $index features, new$$
 
+$head Sparsity Structure$$
+Some users have requested that CppAD be able to compute the sparsity 
+structure for a function for the Jacobian of a vector valued function
+and for the Hessian of a scalar valued function.
+
 $head VecAD$$
 The $code VecAD$$ vector type is currently 
 $xref/VecAD/Inefficient/inefficient/$$ because they require
 a lot of conversion from a $code VecAD$$ element to a normal
 CppAD variable.
-This could be avoided if the $syntax%CppAD<%Base%>%$$ type
-were changed so as to distinguish between tape indices
-and $code VecAD$$ variable indices.
-A similar distinction could also be used to identify
-parameter indices and only one tape copy of a parameter
-would be necessary for each CppAD parameter object
-(currently a separate copy is constructed for each use).
- 
+It would be good for CppAD to have a more efficient implementation
+of this vector type.
 
-
-$head Concept Checking$$
-$index concept, checking$$
-$index checking, concept$$
-Some 
-$href%
-	http://www.boost.org/libs/concept_check/concept_check.htm%
-	concept checking
-%$$
-was added in the $xref/WhatsNew05/07-04/07-04/$$ release.
-More of this should be done.
 
 $head Multiple Tapes With Same Base Type$$
 $index multiple, tape$$

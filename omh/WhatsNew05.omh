@@ -78,9 +78,13 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-20$$
+Add $xref/WishList/Sparsity Structure/sparsity structure/$$ to 
+the whish list.
+
 $head 10-18$$
 The Unix install $xref/InstallUnix/Configure/configure/$$ command
-was missing the $code --$$ infront of the $code prefix$$ command line
+was missing the $code --$$ before of the $code prefix$$ command line
 argument.
 
 $head 10-14$$
