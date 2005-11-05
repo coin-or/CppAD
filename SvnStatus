@@ -13,6 +13,7 @@ sed                                                           \
 	-e '/^[?].*\.deps$/d'                                 \
 	-e '/^[?].*\.a$/d'                                    \
 	-e '/^[?].*\.log$/d'                                  \
+	-e '/^[?].*TestOne.cpp$/d'                            \
 	-e '/^[?].*Makefile$/d'                               \
 	-e '/^[?].*Debug$/d'                                  \
 	-e '/^[?].*junk$/d'                                   \

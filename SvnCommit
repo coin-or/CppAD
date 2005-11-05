@@ -1,15 +1,28 @@
-# Minor changes
-# 
-# SvnCommit: command that made this commit
-# SvnStatus: use standard output instead of a file
-# Bool_vector.cpp: forget to commit this deletion in previous commit
-# InstallUnix.omh: change prefix to --prefix in configure command line
-# WhatsNew05.omh: change from users point of view
+# Move Jacobian sparsity pattern results so that retained between calls
+# (for future use with Hessian sparsity calculations)
 #
+# SvnCommit: command that made this commit.
+# SvnMerge: command that preformed the merge.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
+	SvnMerge \
+	CppAD/local/ForJacSweep.h \
+	CppAD/local/Operator.h \
+	CppAD/local/ADForward.h \
+	CppAD/local/ADReverse.h \
+	CppAD/local/Fun.h \
+	CppAD/local/Forward.h \
+	CppAD/local/ForSparseJac.h \
 	SvnStatus \
-	Example/Bool_vector.cpp \
-	omh/InstallUnix.omh \
-	omh/WhatsNew05.omh
+	omh/WhatsNew05.omh \
+	omh/ExampleList.omh \
+	Example/Example.vcproj \
+	Example/ForSparseJac.cpp \
+	Example/Example.cpp \
+	Example/Makefile.am \
+	TestMore/ForSparseJac.cpp \
+	TestMore/TestMore.cpp \
+	TestMore/TestMore.vcproj \
+	TestMore/Makefile.am \
+	Developer.omh

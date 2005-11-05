@@ -46,7 +46,7 @@ $index calculate, forward mode$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%%yp% = %F%.Forward(%p%, &%xp% )%$$
+$syntax%%yp% = %F%.Forward(%p%, %xp% )%$$
 $rnext $cnext
 $tend
 
@@ -97,6 +97,13 @@ $syntax%
 If there is no previous call with $latex k = 0$$,
 $latex x^{(0)}$$ is the value of the independent variables when $italic F$$ 
 was constructed as an $xref/ADFun/$$ object.
+
+$head p$$
+The argument $italic p$$ has prototype
+$syntax%
+	size_t %p%
+%$$
+It specifies the order of the forward mode calculation.
 
 $head xp$$
 The argument $italic xp$$ has prototype
@@ -245,7 +252,7 @@ VectorBase ADFun<Base>::Forward(size_t p, const VectorBase &up)
 
 	CppADUsageError(
 		up.size() == indvar.size(),
-		"Argument to Forward does not have length equal to\n"
+		"Second argument to Forward does not have length equal to\n"
 		"the dimension of the domain for the corresponding ADFun."
 	);
 	CppADUsageError(

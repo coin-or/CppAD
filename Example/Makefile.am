@@ -73,6 +73,7 @@ Example_SOURCES   = \
 	ForOne.h \
 	ForTwo.h \
 	Forward.h \
+	ForSparseJac.cpp \
 	FromBase.cpp \
 	Fun.h \
 	HesLuDet.cpp \

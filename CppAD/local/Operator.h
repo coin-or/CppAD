@@ -440,7 +440,7 @@ const size_t NumVarTable[] = {
 	1, // MulvpOp
 	1, // NonOp
 	1, // ParOp
-	1, // PripOp
+	0, // PripOp
 	1, // PrivOp
 	2, // SinOp
 	2, // SinhOp
@@ -505,7 +505,7 @@ void printOpField(
 		os << " "; 
 }
 
-template <class Base>
+template <class Base, class Value>
 void printOp(
 	std::ostream          &os     , 
 	const TapeRec<Base>   *Rec    ,
@@ -513,9 +513,9 @@ void printOp(
 	OpCode                 op     ,
 	const size_t          *ind    ,
 	size_t                 nfz    ,
-	const  Base           *fz     ,
+	const  Value          *fz     ,
 	size_t                 nrz    ,
-	const  Base           *rz     )
+	const  Value          *rz     )
 {	
 	static char *CompareOpName[] = { "Lt", "Le", "Eq", "Ge", "Gt" };
 	static char *OpName[] = {

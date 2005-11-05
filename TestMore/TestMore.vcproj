@@ -382,6 +382,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\ForSparseJac.cpp">
+			</File>
+			<File
 				RelativePath="Forward.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

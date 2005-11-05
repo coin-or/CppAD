@@ -102,6 +102,7 @@ $rref Exp.cpp$$
 $rref ForOne.h$$
 $rref ForTwo.h$$
 $rref Forward.h$$
+$rref ForSparseJac.cpp$$
 $rref FromBase.cpp$$
 $rref Fun.h$$
 $rref HesLuDet.cpp$$

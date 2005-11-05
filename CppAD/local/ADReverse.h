@@ -563,7 +563,7 @@ void ADReverse(
 
 			// --------------------------------------------------
 			case PripOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( i_ind > n_ind );
 			break;

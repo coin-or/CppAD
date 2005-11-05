@@ -60,6 +60,7 @@ $contents%
 	CppAD/local/Op.h%
 	CppAD/local/ADForward.h%
 	CppAD/local/ADReverse.h%
+	CppAD/local/ForJacSweep.h%
 	CppAD/local/ExtendBuffer.h
 %$$
 

@@ -1,5 +1,5 @@
-# ifndef CppADADForwardIncluded
-# define CppADADForwardIncluded
+# ifndef CppADForJacSweepIncluded
+# define CppADForJacSweepIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
@@ -20,51 +20,37 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin ADForward$$
+$begin ForJacSweep$$  $comment CppAD Developer Documentation$$
 $spell
-	Var
+	Jacobian
+	ForJacSweep
+	npv
 	numvar
-	bool
-	Prip
-	Priv
-	Inv
 	Num
-	Len
-	const
+	Var
+	Op
 	Taylor
-	CppAD
-	zs
-	op
-	Ind
+	Inv
 $$
 
-$section Forward Computation of Taylor Coefficients$$
-$index ADForward$$
-$index mode, forward$$
-$index forward, mode$$
-$index derivative, forward$$
-$index Taylor coefficient, forward$$
-
+$section Forward Computation of Dependency Matrix$$
+$index ForJacSweep$$
+$index sparsity, forward Jacobian$$
+$index forward, Jacobian sparsity$$
+$index pattern, forward Jacobian$$
+$index bit pattern, Jacobian$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%size_t ADForward(
-	bool                   %print%,
-	size_t                 %d%,
+$syntax%void ForJacSweep(
+	size_t                 %npv%,
 	size_t                 %numvar%,
 	TapeRec<%Base%>       *%Rec%,
-	size_t                 %J%,
-	Base                  *%Taylor%,
+	%Pack%                *%ForJac%
 )%$$
 $tend
 
 $fend 20$$
-
-$head Return Value$$
-The return value is equal to the number of
-$syntax%AD<%Base%>%$$ comparison operations have a different result
-from when the information in $italic Rec$$ was recorded.
-
 
 $head Rec$$
 The information stored in $italic Rec$$
@@ -73,46 +59,38 @@ $latex \[
 	F : B^n \rightarrow B^m
 \] $$
 
-$head print$$
-If $italic print$$ is false,
-suppress the output that is otherwise generated 
-by the PripOp and PrivOp instructions.
-
-
-$head d$$
-Given the $th d-1$$ order Taylor coefficients matrix for all the variables,
-and the $th d$$ order Taylor coefficients for all the independent variables,
-$code ADForward$$ computes the $th d$$ order Taylor coefficients 
+$head Description$$
+Given the sparsity pattern for the independent variables,
+$code ForJacSweep$$ computes the sparsity pattern
 for all the other variables.
 
 
 $head numvar$$
-is the number of rows in the matrix $italic Taylor$$.
+is the number of rows in the entire sparsity pattern $italic ForJac$$.
 It must also be equal to $syntax%%Rec%->TotNumVar()%$$.
 
 
-$head J$$
-Is the number of columns in the coefficient matrix $italic Taylor$$.
-This must be greater than or equal $latex d+1$$.
-
+$head npv$$
+Is the number of elements of type $italic P$$
+(per variable) in the sparsity pattern $italic ForJac$$.
 
 $head On Input$$
 
 $subhead Independent Variables and Operators$$
 The independent variable records come first.
-For $latex i = 1, \ldots , n$$ and $latex j = 0 , \ldots , d$$,
+For $latex i = 1, \ldots , n$$ and $latex j = 0 , \ldots , npv$$,
 $table
 	$bold field$$ $cnext 
 	$bold Value$$          
 $rnext
-	$syntax%%Taylor%[%0% * %J% + %j%]%$$      $cnext 
+	$syntax%%ForJac%[%0% * %npv% + %j%]%$$      $cnext 
 	the variable with index zero is not used
 $rnext
 	$syntax%%Rec%->GetOp(0)%$$                $cnext 
 	the operator with index zero must be a $code NonOp$$
 $rnext
-	$syntax%%Taylor%[%i% * %J% + %j%]%$$      $cnext 
-	$th j$$ order coefficient for variable with index $italic i$$   
+	$syntax%%ForJac%[%i% * %npv% + %j%]%$$      $cnext 
+	$th j$$ set of sparsity pattern for variable with index $italic i$$   
 $rnext
 	$syntax%%Rec%->GetOp(%i%)%$$              $cnext 
 	the operator with index $italic i$$ must be a $code InvOp$$
@@ -121,14 +99,14 @@ $tend
 $subhead Other Variables and Operators$$
 The other variables follow the independent variables.
 For $latex i = n+1, \ldots , numvar-1$$,
-$latex j = 0 , \ldots , d-1$$,
+$latex j = 0 , \ldots , npv-1$$,
 and $latex k = n+1, \ldots ,$$ $syntax%%Rec%->NumOp() - 1%$$,
 $table
 	$bold field$$ $cnext 
 	$bold Value$$          
 $rnext
-	$syntax%%Taylor%[%i% * %J% + %j%]%$$      $cnext 
-	$th j$$ coefficient for variable with index $italic i$$     
+	$syntax%%ForJac%[%i% * %npv% + %j%]%$$      $cnext 
+	$th j$$ set of sparsity pattern for variable with index $italic i$$     
 $rnext
 	$syntax%%Rec%->GetOp(%i%)%$$              $cnext 
 	any operator except for $code InvOp$$ 
@@ -140,34 +118,31 @@ $subhead Rec$$
 None of the values stored in $italic Rec$$ are modified.
 
 $subhead Independent Variables$$
-For $latex i = 1, \ldots , n$$ and $latex j = 0 , \ldots , J-1$$,
-$syntax%%Taylor%[%i% * %J% + %j%]%$$ is not modified.
+For $latex i = 1, \ldots , n$$ and $latex j = 0 , \ldots , npv-1$$,
+$syntax%%Taylor%[%i% * %npv% + %j%]%$$ is not modified.
 
 
 $subhead Other Variables$$
-For $latex i = n+1, \ldots , numvar-1$$ and $latex j < d$$,
-$syntax%%Taylor%[%i% * %J% + %j%]%$$ is not modified.
-For $latex i = n+1, \ldots , numvar-1$$, 
-$syntax%%Taylor%[%i% * %J% + %d%]%$$ is set equal to the
-$th d$$ order Taylor coefficient for the variable with index $italic i$$.
+For $latex i = m+1, \ldots , numvar-1$$ and $latex j = 0 , \ldots , npv-1$$,
+$syntax%%ForJac%[%i% * %npv% + %j%]%$$ is set equal to the
+$th j$$ set of sparsity pattern for the variable with index $italic i$$.
 
 
 $end
 ------------------------------------------------------------------------------
 */
-# define CppADForwardTrace 0
+# define CppADForJacSweepTrace 0
+
 
 // BEGIN CppAD namespace
 namespace CppAD {
 
-template <class Base>
-size_t ADForward(
-	bool                  print,
-	size_t                d,
+template <class Base, class Pack>
+void ForJacSweep(
+	size_t                npv,
 	size_t                numvar,
 	TapeRec<Base>        *Rec,
-	size_t                J,
-	Base                 *Taylor
+	Pack                 *ForJac
 )
 {
 	size_t        numop;
@@ -179,43 +154,29 @@ size_t ADForward(
 	size_t        n_ind;
 
 	const size_t   *ind;
-	const Base       *P;
-	const Base       *X;
-	const Base       *Y;
+	const Pack       *X;
+	const Pack       *Y;
 
 	// used by CExp operator 
-	const Base  *left, *right, *trueCase, *falseCase;
-	const Base  zero = Base(0);
+	const Pack  *trueCase, *falseCase;
 
-	Base             *Z;
-	Base           *Tmp;
+	Pack             *Z;
+	Pack           *Tmp;
 
 	size_t            i;
-	size_t          len;
+	size_t            j;
 
-
-	// The status is only computed when d is zero and
-	static size_t compareCount;
-	if( d == 0 )
-		compareCount = 0;
-
-	// if this is an order zero calculation, initialize vector indices
-	size_t *VectorInd;
-	bool   *VectorSto;
-	i = Rec->NumVecInd();
+	// initial VecAD sparsity pattern (inefficient because just the index
+	// corresponding to size is used for all elements in a VecAD array)
+	Pack   *VectorSto;
+	i  = Rec->NumVecInd();
 	if( i > 0 )
-	{	VectorInd = new size_t[i];
-		VectorSto = new bool[i];
+	{	VectorSto = new Pack[i * npv];
 		while(i--)
-		{	VectorInd[i] = Rec->GetVecInd(i);
-			VectorSto[i] = false;
-		}
+		for(j = 0; j < npv; j++)
+			VectorSto[j + i * npv ] = 0;
 	}
-	else
-	{	VectorInd = CppADNull;
-		VectorSto = CppADNull;
-	}
-
+	else	VectorSto = CppADNull;
 
 	// check numvar argument
 	CppADUnknownError( Rec->TotNumVar() == numvar );
@@ -251,18 +212,18 @@ size_t ADForward(
 		ind    = Rec->GetInd(n_ind, i_ind);
 
 		// value of z for this op
-		Z      = Taylor + i_var * J;
+		Z      = ForJac + i_var * npv;
 
 		// rest of information depends on the case
-
 		switch( op )
 		{
 			case AbsOp:
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 1 );
 			CppADUnknownError( ind[0] < i_var );
-			X   = Taylor + ind[0] * J;
-			ForAbsOp(d, Z, X);
+			X   = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j];
 			break;
 			// -------------------------------------------------
 
@@ -272,9 +233,10 @@ size_t ADForward(
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
 
-			X = Taylor + ind[0] * J;
-			Y = Taylor + ind[1] * J;
-			ForAddvvOp(d, Z, X, Y);
+			X = ForJac + ind[0] * npv;
+			Y = ForJac + ind[1] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j] | Y[j];
 			break;
 			// -------------------------------------------------
 
@@ -283,9 +245,9 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
 
-			P = Rec->GetPar( ind[0] );
-			Y = Taylor + ind[1] * J;
-			ForAddpvOp(d, Z, P, Y);
+			Y = ForJac + ind[1] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = Y[j];
 			break;
 			// -------------------------------------------------
 
@@ -294,9 +256,9 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = Taylor + ind[0] * J;
-			P = Rec->GetPar( ind[1] );
-			ForAddvpOp(d, Z, X, P);
+			X = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j];
 			break;
 			// -------------------------------------------------
 
@@ -309,9 +271,10 @@ size_t ADForward(
 			CppADUnknownError( (i_var+1) < numvar  );
 
 			// use Tmp for data stored in variable record
-			Tmp = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForAcosOp(d, Z, Tmp, X);
+			Tmp = ForJac + (i_var+1) * npv;
+			X   = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Tmp[j] = Z[j] = X[j];
 			break;
 			// -------------------------------------------------
 
@@ -324,9 +287,10 @@ size_t ADForward(
 			CppADUnknownError( (i_var+1) < numvar  );
 
 			// use Tmp for data stored in variable record
-			Tmp = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForAsinOp(d, Z, Tmp, X);
+			Tmp = ForJac + (i_var+1) * npv;
+			X   = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Tmp[j] = Z[j] = X[j];
 			break;
 			// -------------------------------------------------
 
@@ -339,9 +303,10 @@ size_t ADForward(
 			CppADUnknownError( (i_var+1) < numvar  );
 
 			// use Tmp for data stored in variable record
-			Tmp = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForAtanOp(d, Z, Tmp, X);
+			Tmp = ForJac + (i_var+1) * npv;
+			X   = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Tmp[j] = Z[j] = X[j];
 			break;
 			// -------------------------------------------------
 
@@ -349,35 +314,16 @@ size_t ADForward(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 6);
 			CppADUnknownError( ind[1] != 0 );
-			if( ind[1] & 1 )
-				left = Taylor + ind[2] * J;
-			else	left = Rec->GetPar(ind[2]);
-			if( ind[1] & 2 )
-				right = Taylor + ind[3] * J;
-			else	right = Rec->GetPar(ind[3]);
-			if( d == 0 )
+
+			trueCase  = ForJac + ind[4] * npv; // if ind[1] & 4 true
+			falseCase = ForJac + ind[5] * npv; // if ind[1] & 8 true
+			for(j = 0; j < npv; j++)
 			{	if( ind[1] & 4 )
-					trueCase = Taylor + ind[4] * J;
-				else	trueCase = Rec->GetPar(ind[4]);
+					Z[j] = trueCase[j];
+				else	Z[j] = 0;
 				if( ind[1] & 8 )
-					falseCase = Taylor + ind[5] * J;
-				else	falseCase = Rec->GetPar(ind[5]);
+					Z[j] |= falseCase[j];
 			}
-			else
-			{	if( ind[1] & 4 )
-					trueCase = Taylor + ind[4] * J + d;
-				else	trueCase = &zero;
-				if( ind[1] & 8 )
-					falseCase = Taylor + ind[5] * J + d;
-				else	falseCase = &zero;
-			}
-			Z[d] = CondExpOp(
-				CompareOp( ind[0] ),
-				*left,
-				*right,
-				*trueCase,
-				*falseCase
-			);
 			break;
 			// ---------------------------------------------------
 
@@ -390,9 +336,10 @@ size_t ADForward(
 			CppADUnknownError( (i_var+1) < numvar  );
 
 			// use Tmp for data stored in variable record
-			Tmp = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForTrigSinCos(d, Tmp, Z, X);
+			Tmp = ForJac + (i_var+1) * npv;
+			X   = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Tmp[j] = Z[j] = X[j];
 			break;
 			// ---------------------------------------------------
 
@@ -405,22 +352,19 @@ size_t ADForward(
 			CppADUnknownError( (i_var+1) < numvar  );
 
 			// use Tmp for data stored in variable record
-			Tmp = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForHypSinCos(d, Tmp, Z, X);
+			Tmp = ForJac + (i_var+1) * npv;
+			X   = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Tmp[j] = Z[j] = X[j];
 			break;
 			// -------------------------------------------------
 
 			case DisOp:
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 2 );
-			if( d == 0 ) 
-			{	ind    = Rec->GetInd(n_ind, i_ind);
-				CppADUnknownError( ind[0] < i_var );
-				X   = Taylor + ind[0] * J;
-				Z[0] = ADDiscrete<Base>::Eval(ind[1], X[0]);
-			}
-			else	Z[d] = Base(0);
+
+			for(j = 0; j < npv; j++)
+				Z[j] = 0;
 			break;
 			// -------------------------------------------------
 
@@ -430,9 +374,10 @@ size_t ADForward(
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
 
-			X = Taylor + ind[0] * J;
-			Y = Taylor + ind[1] * J;
-			ForDivvvOp(d, Z, X, Y);
+			X = ForJac + ind[0] * npv;
+			Y = ForJac + ind[1] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j] | Y[j];
 			break;
 			// -------------------------------------------------
 
@@ -441,9 +386,9 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
 
-			Y = Taylor + ind[1] * J;
-			P = Rec->GetPar( ind[0] );
-			ForDivpvOp(d, Z, P, Y);
+			Y = ForJac + ind[1] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = Y[j];
 			break;
 			// -------------------------------------------------
 
@@ -452,31 +397,21 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 
-			P = Rec->GetPar( ind[1] );
-			X = Taylor + ind[0] * J;
-			ForDivvpOp(d, Z, X, P);
+			X = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j];
 			break;
 			// -------------------------------------------------
 
 			case EqfppOp:
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
-			if( d == 0 )
-			{	X            = Rec->GetPar( ind[0] );
-				Y            = Rec->GetPar( ind[1] );
-				compareCount += (X[0] == Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
 			case EqtppOp:
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
-			if( d == 0 )
-			{	X            = Rec->GetPar( ind[0] );
-				Y            = Rec->GetPar( ind[1] );
-				compareCount += (X[0] != Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -484,11 +419,6 @@ size_t ADForward(
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	P            = Rec->GetPar( ind[0] );
-				Y            = Taylor + ind[1] * J;
-				compareCount += (*P == Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -496,11 +426,6 @@ size_t ADForward(
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	P            = Rec->GetPar( ind[0] );
-				Y            = Taylor + ind[1] * J;
-				compareCount += (*P != Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -508,11 +433,6 @@ size_t ADForward(
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				P            = Rec->GetPar( ind[1] );
-				compareCount += (X[0] == *P);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -520,11 +440,6 @@ size_t ADForward(
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				P            = Rec->GetPar( ind[1] );
-				compareCount += (X[0] != *P);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -533,11 +448,6 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				Y            = Taylor + ind[1] * J;
-				compareCount += (X[0] == Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -546,11 +456,6 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				Y            = Taylor + ind[1] * J;
-				compareCount += (X[0] != Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -559,14 +464,16 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 1 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = Taylor + ind[0] * J;
-			ForExpOp(d, Z, X);
+			X = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j];
 			break;
 			// -------------------------------------------------
 
 			case InvOp:
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 0 );
+			// Z is already defined
 			break;
 			// -------------------------------------------------
 
@@ -576,36 +483,11 @@ size_t ADForward(
 			
 			CppADUnknownError( ind[0] > 0 );
 			CppADUnknownError( ind[0] < Rec->NumVecInd() );
-			CppADUnknownError( VectorInd != CppADNull );
 			CppADUnknownError( VectorSto != CppADNull );
 
-			if( d == 0 )
-			{	i   = ind[1];
-				CppADUnknownError( 
-					i < VectorInd[ind[0] - 1] 
-				);
-				CppADUnknownError( 
-					i + ind[0] < Rec->NumVecInd() 
-				);
-
-				if( VectorSto[ i + ind[0] ] )
-				{	i   = VectorInd[ i + ind[0] ];
-					Rec->ReplaceInd(i_ind + 2, i);
-					CppADUnknownError(i > 0 );
-				}
-				else
-				{	i   = VectorInd[ i + ind[0] ];
-					Rec->ReplaceInd(i_ind + 2, 0);
-					Z[d] = *(Rec->GetPar(i));
-					i    = 0;
-				}
-			}
-			else	i = ind[2];
-			if( i > 0 )
-			{	CppADUnknownError( i < i_var );
-				Y     = Taylor + i * J;
-				Z[d]  = Y[d];
-			}
+			// use sparsity for entire vector for this value
+			for(j = 0; j < npv; j++)
+				Z[j] = VectorSto[ j + (ind[0] - 1) * npv ];
 			break;
 			// -------------------------------------------------
 
@@ -615,62 +497,23 @@ size_t ADForward(
 			
 			CppADUnknownError( ind[0] > 0 );
 			CppADUnknownError( ind[0] < Rec->NumVecInd() );
-			CppADUnknownError( VectorInd != CppADNull );
 			CppADUnknownError( VectorSto != CppADNull );
 
-			if( d == 0 )
-			{
-				X   = Taylor + ind[1] * J;
-				i   = Integer( X[0] );
-				len = VectorInd[ ind[0] - 1 ];
-				CppADUsageError( 
-					i < len,
-					"VecAD index value >= vector length"
-				);
-				CppADUnknownError( 
-					i + ind[0] < Rec->NumVecInd() 
-				);
-
-				if( VectorSto[ i + ind[0] ] )
-				{	i   = VectorInd[ i + ind[0] ];
-					Rec->ReplaceInd(i_ind + 2, i);
-					CppADUnknownError(i > 0 );
-				}
-				else
-				{	i   = VectorInd[ i + ind[0] ];
-					Rec->ReplaceInd(i_ind + 2, 0);
-					Z[d] = *(Rec->GetPar(i));
-					i    = 0;
-				}
-			}
-			else	i = ind[2];
-			if( i > 0 )
-			{	CppADUnknownError( i < i_var );
-				Y     = Taylor + i * J;
-				Z[d]  = Y[d];
-			}
+			// use sparsity for entire vector for this value
+			for(j = 0; j < npv; j++)
+				Z[j] = VectorSto[ j + (ind[0] - 1) * npv ];
 			break;
 			// -------------------------------------------------
 
 			case LefppOp:
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
-			if( d == 0 )
-			{	X            = Rec->GetPar( ind[0] );
-				Y            = Rec->GetPar( ind[1] );
-				compareCount += LessThanOrZero(X[0] - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
 			case LetppOp:
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
-			if( d == 0 )
-			{	X            = Rec->GetPar( ind[0] );
-				Y            = Rec->GetPar( ind[1] );
-				compareCount += ! LessThanOrZero(X[0] - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -678,11 +521,6 @@ size_t ADForward(
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	P            = Rec->GetPar( ind[0] );
-				Y            = Taylor + ind[1] * J;
-				compareCount += LessThanOrZero(*P - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -690,11 +528,6 @@ size_t ADForward(
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	P            = Rec->GetPar( ind[0] );
-				Y            = Taylor + ind[1] * J;
-				compareCount += ! LessThanOrZero(*P - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -702,11 +535,6 @@ size_t ADForward(
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				P            = Rec->GetPar( ind[1] );
-				compareCount += LessThanOrZero(X[0] - *P);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -714,11 +542,6 @@ size_t ADForward(
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				P            = Rec->GetPar( ind[1] );
-				compareCount += ! LessThanOrZero(X[0] - *P);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -727,11 +550,6 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				Y            = Taylor + ind[1] * J;
-				compareCount += LessThanOrZero(X[0] - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -740,11 +558,6 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				Y            = Taylor + ind[1] * J;
-				compareCount += ! LessThanOrZero(X[0] - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -753,30 +566,22 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 1 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = Taylor + ind[0] * J;
-			ForLogOp(d, Z, X);
+			X = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j];
 			break;
 			// -------------------------------------------------
 
 			case LtfppOp:
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
-			if( d == 0 )
-			{	X            = Rec->GetPar( ind[0] );
-				Y            = Rec->GetPar( ind[1] );
-				compareCount += LessThanZero(X[0] - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
+
 
 			case LttppOp:
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
-			if( d == 0 )
-			{	X            = Rec->GetPar( ind[0] );
-				Y            = Rec->GetPar( ind[1] );
-				compareCount += ! LessThanZero(X[0] - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -784,11 +589,6 @@ size_t ADForward(
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	P            = Rec->GetPar( ind[0] );
-				Y            = Taylor + ind[1] * J;
-				compareCount += LessThanZero(*P - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -796,11 +596,6 @@ size_t ADForward(
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	P            = Rec->GetPar( ind[0] );
-				Y            = Taylor + ind[1] * J;
-				compareCount += ! LessThanZero(*P - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -808,11 +603,6 @@ size_t ADForward(
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				P            = Rec->GetPar( ind[1] );
-				compareCount += LessThanZero(X[0] - *P);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -820,11 +610,6 @@ size_t ADForward(
 			CppADUnknownError( n_var == 0 );
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				P            = Rec->GetPar( ind[1] );
-				compareCount += ! LessThanZero(X[0] - *P);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -833,11 +618,6 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				Y            = Taylor + ind[1] * J;
-				compareCount += LessThanZero(X[0] - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -846,11 +626,6 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				Y            = Taylor + ind[1] * J;
-				compareCount += ! LessThanZero(X[0] - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -860,9 +635,10 @@ size_t ADForward(
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
 
-			X = Taylor + ind[0] * J;
-			Y = Taylor + ind[1] * J;
-			ForMulvvOp(d, Z, X, Y);
+			X = ForJac + ind[0] * npv;
+			Y = ForJac + ind[1] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j] | Y[j];
 			break;
 			// -------------------------------------------------
 
@@ -871,9 +647,9 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
 
-			Y = Taylor + ind[1] * J;
-			P = Rec->GetPar( ind[0] );
-			ForMulpvOp(d, Z, P, Y);
+			Y = ForJac + ind[1] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = Y[j];
 			break;
 			// -------------------------------------------------
 
@@ -882,51 +658,37 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = Taylor + ind[0] * J;
-			P = Rec->GetPar( ind[1] );
-			ForMulvpOp(d, Z, X, P);
+			X = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j];
 			break;
 			// -------------------------------------------------
 
 			case NonOp:
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 0 );
+			for(j = 0; j < npv; j++)
+				Z[j] = 0;
 			break;
-			// -------------------------------------------------
 
 			case ParOp:
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 1 );
-
-			P = Rec->GetPar( ind[0] );
-			if( d == 0 )
-				Z[d] = *P;
-			else	Z[d] = Base(0); 
+			for(j = 0; j < npv; j++)
+				Z[j] = 0;
 			break;
 			// -------------------------------------------------
 
 			case PripOp:
-			CppADUnknownError( n_var == 0);
-			if( print & (d == 0) )
-			{	n_ind  = 2;
-				CppADUnknownError( ind[0] < Rec->NumTxt() );
-				std::cout << Rec->GetTxt(ind[0]);
-				std::cout << *(Rec->GetPar(ind[1]));
-			}
+			CppADUnknownError( n_var == 1);
+			for(j = 0; j < npv; j++)
+				Z[j] = 0;
 			break;
 			// -------------------------------------------------
 
 			case PrivOp:
+			// nvar should be zero for this case
 			CppADUnknownError( n_var == 1);
-			if( print & (d == 0) )
-			{	n_ind  = 2;
-				CppADUnknownError( ind[0] < Rec->NumTxt() );
-				CppADUnknownError( ind[1] < i_var );
-
-				X      = Taylor + ind[1] * J;
-				std::cout << Rec->GetTxt(ind[0]);
-				std::cout << X[0];
-			}
 			break;
 			// -------------------------------------------------
 
@@ -939,9 +701,10 @@ size_t ADForward(
 			CppADUnknownError( (i_var+1) < numvar  );
 
 			// use Tmp for data stored in second variable
-			Tmp = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForTrigSinCos(d, Z, Tmp, X);
+			Tmp = ForJac + (i_var+1) * npv;
+			X   = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = Tmp[j] = X[j];
 			break;
 			// -------------------------------------------------
 
@@ -954,9 +717,10 @@ size_t ADForward(
 			CppADUnknownError( (i_var+1) < numvar  );
 
 			// use Tmp for data stored in second variable
-			Tmp = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForHypSinCos(d, Z, Tmp, X);
+			Tmp = ForJac + (i_var+1) * npv;
+			X   = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = Tmp[j] = X[j];
 			break;
 			// -------------------------------------------------
 
@@ -965,8 +729,9 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 1 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = Taylor + ind[0] * J;
-			ForSqrtOp(d, Z, X);
+			X = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j];
 			break;
 			// -------------------------------------------------
 
@@ -974,22 +739,9 @@ size_t ADForward(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 3 );
 
-			if( d == 0 )
-			{	CppADUnknownError( VectorInd != CppADNull );
-				CppADUnknownError( VectorSto != CppADNull );
-				CppADUnknownError( ind[0] < Rec->NumVecInd() );
-
-				i   = ind[1];
-				CppADUnknownError(i < VectorInd[ind[0] - 1]);
-				CppADUnknownError( 
-					i + ind[0] < Rec->NumVecInd() 
-				);
-				VectorInd[ i + ind[0] ] = i_var;
-				VectorSto[ i + ind[0] ] = true;
-
-				Z[d] = *( Rec->GetPar( ind[2] ) );
-			}
-			else	Z[d] = Base(0);
+			// sparsity of vector does not change in this case
+			for(j = 0; j < npv; j++)
+				Z[j] = 0;
 			break;
 			// -------------------------------------------------
 
@@ -997,22 +749,12 @@ size_t ADForward(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 3 );
 
-			if( d == 0 )
-			{	CppADUnknownError( VectorInd != CppADNull );
-				CppADUnknownError( VectorSto != CppADNull );
-				CppADUnknownError( ind[0] < Rec->NumVecInd() );
-				CppADUnknownError( ind[2] < i_var );
-
-				i   = ind[1];
-				CppADUnknownError(i < VectorInd[ind[0] - 1]);
-				CppADUnknownError( 
-					i + ind[0] < Rec->NumVecInd() 
-				);
-				VectorInd[ i + ind[0] ] = i_var;
-				VectorSto[ i + ind[0] ] = true;
+			// update sparsity for entire vector
+			Y = ForJac + ind[2] * npv;
+			for(j = 0; j < npv; j++)
+			{	Z[j] = Y[j];
+				VectorSto[ j + (ind[0] - 1) * npv] |= Y[j];
 			}
-			Y    = Taylor + ind[2] * J;
-			Z[d] = Y[d];
 			break;
 			// -------------------------------------------------
 
@@ -1020,28 +762,9 @@ size_t ADForward(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 3 );
 
-			if( d == 0 )
-			{	CppADUnknownError( VectorInd != CppADNull );
-				CppADUnknownError( VectorSto != CppADNull );
-				CppADUnknownError( ind[0] < Rec->NumVecInd() );
-				CppADUnknownError( ind[1] < i_var );
-
-				X   = Taylor + ind[1] * J;
-				i   = Integer( X[0] );
-				len = VectorInd[ ind[0] - 1 ];
-				CppADUsageError( 
-					i < len,
-					"VecAD index value >= vector length"
-				);
-				CppADUnknownError( 
-					i + ind[0] < Rec->NumVecInd() 
-				);
-				VectorInd[ i + ind[0] ] = i_var;
-				VectorSto[ i + ind[0] ] = true;
-
-				Z[d] = *( Rec->GetPar( ind[2] ) );
-			}
-			else	Z[d] = Base(0);
+			// sparsity of vector does not change in this case
+			for(j = 0; j < npv; j++)
+				Z[j] = 0;
 			break;
 			// -------------------------------------------------
 
@@ -1049,28 +772,11 @@ size_t ADForward(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 3 );
 
-			if( d == 0 )
-			{	CppADUnknownError( VectorInd != CppADNull );
-				CppADUnknownError( VectorSto != CppADNull );
-				CppADUnknownError( ind[0] < Rec->NumVecInd() );
-				CppADUnknownError( ind[1] < i_var );
-				CppADUnknownError( ind[2] < i_var );
-
-				X   = Taylor + ind[1] * J;
-				i   = Integer( X[0] );
-				len = VectorInd[ ind[0] - 1 ];
-				CppADUsageError( 
-					i < len,
-					"VecAD index value >= vector length"
-				);
-				CppADUnknownError( 
-					i + ind[0] < Rec->NumVecInd() 
-				);
-				VectorInd[ i + ind[0] ] = i_var;
-				VectorSto[ i + ind[0] ] = true;
+			Y    = ForJac + ind[2] * npv;
+			for(j = 0; j < npv; j++)
+			{	Z[j] = Y[j];
+				VectorSto[ j + (ind[0] - 1) * npv] |= Y[j];
 			}
-			Y    = Taylor + ind[2] * J;
-			Z[d] = Y[d];
 			break;
 			// -------------------------------------------------
 
@@ -1080,9 +786,10 @@ size_t ADForward(
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
 
-			X = Taylor + ind[0] * J;
-			Y = Taylor + ind[1] * J;
-			ForSubvvOp(d, Z, X, Y);
+			X = ForJac + ind[0] * npv;
+			Y = ForJac + ind[1] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j] | Y[j];
 			break;
 			// -------------------------------------------------
 
@@ -1091,9 +798,9 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
 
-			P = Rec->GetPar( ind[0] );
-			Y = Taylor + ind[1] * J;
-			ForSubpvOp(d, Z, P, Y);
+			Y = ForJac + ind[1] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = Y[j];
 			break;
 			// -------------------------------------------------
 
@@ -1102,26 +809,26 @@ size_t ADForward(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = Taylor + ind[0] * J;
-			P = Rec->GetPar( ind[1] );
-			ForSubvpOp(d, Z, X, P);
+			X = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j];
 			break;
 			// -------------------------------------------------
 
 			default:
 			CppADUnknownError(0);
 		}
-# if CppADForwardTrace
+# if CppADForJacSweepTrace
 		printOp(
 			std::cout, 
 			Rec,
 			i_var,
 			op, 
 			ind,
-			d + 1, 
+			npv, 
 			Z, 
 			0, 
-			(Base *) CppADNull
+			(Pack *) CppADNull
 		);
 	}
 	std::cout << std::endl;
@@ -1129,16 +836,15 @@ size_t ADForward(
 	}
 # endif
 	CppADUnknownError( (i_var + n_var) == Rec->TotNumVar() );
-	if( VectorInd != CppADNull )
-		delete [] VectorInd;
+
 	if( VectorSto != CppADNull )
 		delete [] VectorSto;
 
-	return compareCount;
+	return;
 }
 
 } // END CppAD namespace
 
-# undef CppADForwardTrace
+# undef CppADForJacSweepTrace
 
 # endif

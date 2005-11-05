@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew05$$
 $spell
+	Jacobian
 	bool
 	yy
 	mm
@@ -77,6 +78,9 @@ This section contains a list of the changes to CppAD during 2005
 (in reverse order by date).
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-01$$
+Add forward mode $xref/ForSparseJac//Jacobian sparsity/$$ calculation.
 
 $head 10-20$$
 Add $xref/WishList/Sparsity Structure/sparsity structure/$$ to 

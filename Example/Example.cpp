@@ -72,6 +72,7 @@ extern bool DivEq(void);
 extern bool Eq(void);
 extern bool Erf(void);
 extern bool Exp(void);
+extern bool ForSparseJac(void);
 extern bool FromBase(void);
 extern bool HesLuDet(void);
 extern bool HesMinorDet(void);
@@ -215,6 +216,7 @@ int main(void)
 	RunDouble( ForOne,            "ForOne"           );
 	RunDouble( ForTwo,            "ForTwo"           );
 	RunDouble( Forward,           "Forward"          ); 
+	ok &= Run( ForSparseJac,      "ForSparseJac"     );
 	RunADdouble(Fun,              "Fun"              ); 
 	ok &= Run( HesLuDet,          "HesLuDet"         );
 	ok &= Run( HesMinorDet,       "HesMinorDet"      );
