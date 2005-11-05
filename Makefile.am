@@ -90,7 +90,9 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/ExtendBuffer.h \
 	CppAD/local/ForOne.h \
 	CppAD/local/ForTwo.h \
+	CppAD/local/ForJacSweep.h \
 	CppAD/local/Forward.h \
+	CppAD/local/ForSparseJac.h \
 	CppAD/local/FromBase.h \
 	CppAD/local/Fun.h \
 	CppAD/local/Hessian.h \
