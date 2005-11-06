@@ -683,6 +683,9 @@
 				RelativePath=".\ForTwo.cpp">
 			</File>
 			<File
+				RelativePath=".\Forward.cpp">
+			</File>
+			<File
 				RelativePath="FromBase.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

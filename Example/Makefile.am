@@ -70,7 +70,7 @@ Example_SOURCES   = \
 	Exp.cpp \
 	ForOne.cpp \
 	ForTwo.cpp \
-	Forward.h \
+	Forward.cpp \
 	ForSparseJac.cpp \
 	FromBase.cpp \
 	Fun.cpp \

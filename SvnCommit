@@ -1,19 +1,15 @@
-# Convert ForTwo example from include form to standard example form.
+# Convert Forward example from include form to standard example form.
 #
 # SvnCommit: command that made this commit.
 # WhatsNew05.omh: users view of the changes.
-# CppADvector.h: (documentation) add missing new row in a table command.
-# Doc.omh: minor improvements to introduction.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
-	CppAD/local/CppADvector.h \
-	Doc.omh \
 	SvnCommit \
-	CppAD/local/ForTwo.h  \
+	CppAD/local/Forward.h  \
 	omh/WhatsNew05.omh \
 	omh/ExampleList.omh \
-	Example/ForTwo.cpp \
+	Example/Forward.cpp \
 	Example/Example.vcproj \
 	Example/Example.cpp \
-	Example/ForTwo.h \
+	Example/Forward.h \
 	Example/Makefile.am 

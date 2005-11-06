@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -16,10 +15,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
-$begin Forward.h$$
+$begin Forward.cpp$$
 $spell
 	Cpp
 $$
@@ -30,7 +28,7 @@ $index example, Forward$$
 $index test, Forward$$
 
 $code
-$verbatim%Example/Forward.h%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/Forward.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -39,8 +37,9 @@ $end
 
 # include <CppAD/CppAD.h>
 
+namespace { // Begin empty namespace
 template <typename VectorDouble> // vector class, elements of type double
-bool Forward(void)
+bool ForwardCases(void)
 {	bool ok = true;
 
 	using namespace CppAD;
@@ -106,6 +105,16 @@ bool Forward(void)
 	double F_01 = y2[0] - F_00 / 2. - F_11 / 2.;
 	ok         &= NearEqual(F_01 , 2.*x0[0], 1e-10, 1e-10);
 
+	return ok;
+}
+} // End empty namespace 
+# include <vector>
+# include <valarray>
+bool Forward(void)
+{	bool ok = true;
+	ok &= ForwardCases< CppAD::vector  <double> >();
+	ok &= ForwardCases< std::vector    <double> >();
+	ok &= ForwardCases< std::valarray  <double> >();
 	return ok;
 }
 // END PROGRAM
