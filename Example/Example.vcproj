@@ -697,6 +697,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Fun.cpp">
+			</File>
+			<File
 				RelativePath="HesLuDet.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
