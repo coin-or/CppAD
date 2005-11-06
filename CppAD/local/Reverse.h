@@ -1,7 +1,6 @@
 # ifndef CppADReverseIncluded
 # define CppADReverseIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Reverse$$
@@ -234,11 +232,11 @@ F^{(1)} ( x^{(0)} ) * x^{(1)}
 
 $head Example$$
 $children%
-	Example/Reverse.h%
+	Example/Reverse.cpp%
 	Example/HesTimesDir.cpp
 %$$
 The file
-$xref/Reverse.h/$$
+$xref/Reverse.cpp/$$
 contains an example and test of the 
 $xref/Reverse/dw/First Order/first/1/$$ and
 $xref/Reverse/dw/Second Order/second/1/$$ order

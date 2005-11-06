@@ -105,6 +105,7 @@ extern bool Output(void);
 extern bool Poly(void);
 extern bool Pow(void);
 extern bool PowInt(void);
+extern bool Reverse(void);
 extern bool RombergMul(void);
 extern bool RombergOne(void);
 extern bool Rosen34(void);
@@ -121,7 +122,6 @@ extern bool Value(void);
 extern bool Vec(void);
 
 // templated tests in example directory
-# include "Reverse.h"  // bool  Reverse<Vectordouble>  (void)
 # include "RevOne.h"   // bool   RevOne<Vectordouble>  (void)
 # include "RevTwo.h"   // bool   RevTwo<Vectordouble>  (void)
 
@@ -245,7 +245,7 @@ int main(void)
 	ok &= Run( Pow,               "Poly"             );
 	ok &= Run( Pow,               "Pow"              );
 	ok &= Run( PowInt,            "PowInt"           );
-	RunDouble( Reverse,           "Reverse"          );
+	ok &= Run( Reverse,           "Reverse"          );
 	RunDouble( RevOne,            "RevOne"           );
 	RunDouble( RevTwo,            "RevTwo"           );
 	ok &= Run( RombergMul,        "RombergMul"       );

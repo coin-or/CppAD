@@ -108,7 +108,7 @@ Example_SOURCES   = \
 	PowInt.cpp \
 	RevOne.h \
 	RevTwo.h \
-	Reverse.h \
+	Reverse.cpp \
 	RombergMul.cpp \
 	RombergOne.cpp \
 	Rosen34.cpp \

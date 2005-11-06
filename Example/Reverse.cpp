@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -16,10 +15,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
-$begin Reverse.h$$
+$begin Reverse.cpp$$
 $spell
 	Cpp
 $$
@@ -30,7 +28,7 @@ $index example, Reverse$$
 $index test, Reverse$$
 
 $code
-$verbatim%Example/Reverse.h%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/Reverse.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -39,8 +37,9 @@ $end
 
 # include <CppAD/CppAD.h>
 
+namespace { // Begin empty namespace
 template <typename VectorDouble> // vector class, elements of type double
-bool Reverse(void)
+bool ReverseCases(void)
 {	bool ok = true;
 
 	using namespace CppAD;
@@ -100,6 +99,16 @@ bool Reverse(void)
 	// check partial of F w.r.t X[1] & X[0]
 	ok  &= NearEqual(dw2[1 * 2 + 1] , 2.*x0[0], 1e-10, 1e-10); 
 
+	return ok;
+}
+} // End empty namespace 
+# include <vector>
+# include <valarray>
+bool Reverse(void)
+{	bool ok = true;
+	ok &= ReverseCases< CppAD::vector  <double> >();
+	ok &= ReverseCases< std::vector    <double> >();
+	ok &= ReverseCases< std::valarray  <double> >();
 	return ok;
 }
 // END PROGRAM
