@@ -106,6 +106,7 @@ extern bool Poly(void);
 extern bool Pow(void);
 extern bool PowInt(void);
 extern bool Reverse(void);
+extern bool RevOne(void);
 extern bool RombergMul(void);
 extern bool RombergOne(void);
 extern bool Rosen34(void);
@@ -122,7 +123,6 @@ extern bool Value(void);
 extern bool Vec(void);
 
 // templated tests in example directory
-# include "RevOne.h"   // bool   RevOne<Vectordouble>  (void)
 # include "RevTwo.h"   // bool   RevTwo<Vectordouble>  (void)
 
 // standard array template classes used by tests
@@ -246,7 +246,7 @@ int main(void)
 	ok &= Run( Pow,               "Pow"              );
 	ok &= Run( PowInt,            "PowInt"           );
 	ok &= Run( Reverse,           "Reverse"          );
-	RunDouble( RevOne,            "RevOne"           );
+	ok &= Run( RevOne,            "RevOne"           );
 	RunDouble( RevTwo,            "RevTwo"           );
 	ok &= Run( RombergMul,        "RombergMul"       );
 	ok &= Run( RombergOne,        "RombergOne"       );

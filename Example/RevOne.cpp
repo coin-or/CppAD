@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -16,10 +15,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
-$begin RevOne.h$$
+$begin RevOne.cpp$$
 $spell
 	Cpp
 $$
@@ -32,7 +30,7 @@ $index example, derivative$$
 $index test, derivative$$
 
 $code
-$verbatim%Example/RevOne.h%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/RevOne.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -43,8 +41,9 @@ $end
 
 // ----------------------------------------------------------------------------
 
+namespace { // Begin empty namespace
 template <typename VectorDouble> // vector class, elements of type double
-bool RevOne()
+bool RevOneCases()
 {	bool ok = true;
 
 	using namespace CppAD;
@@ -100,4 +99,14 @@ bool RevOne()
 
 }
 
+} // End empty namespace 
+# include <vector>
+# include <valarray>
+bool RevOne(void)
+{	bool ok = true;
+	ok &= RevOneCases< CppAD::vector  <double> >();
+	ok &= RevOneCases< std::vector    <double> >();
+	ok &= RevOneCases< std::valarray  <double> >();
+	return ok;
+}
 // END PROGRAM

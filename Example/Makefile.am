@@ -106,7 +106,7 @@ Example_SOURCES   = \
 	Poly.cpp \
 	Pow.cpp \
 	PowInt.cpp \
-	RevOne.h \
+	RevOne.cpp \
 	RevTwo.h \
 	Reverse.cpp \
 	RombergMul.cpp \

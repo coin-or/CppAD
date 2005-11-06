@@ -1196,6 +1196,9 @@
 				RelativePath=".\Reverse.cpp">
 			</File>
 			<File
+				RelativePath=".\RevOne.cpp">
+			</File>
+			<File
 				RelativePath=".\RombergMul.cpp">
 			</File>
 			<File

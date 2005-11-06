@@ -1,15 +1,15 @@
-# Convert Reverse example from include form to standard example form.
+# Convert RevOne example from include form to standard example form.
 #
 # SvnCommit: command that made this commit.
 # WhatsNew05.omh: users view of the changes.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/Reverse.h  \
+	CppAD/local/RevOne.h  \
 	omh/WhatsNew05.omh \
 	omh/ExampleList.omh \
-	Example/Reverse.cpp \
+	Example/RevOne.cpp \
 	Example/Example.vcproj \
 	Example/Example.cpp \
-	Example/Reverse.h \
+	Example/RevOne.h \
 	Example/Makefile.am 

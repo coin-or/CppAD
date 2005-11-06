@@ -82,6 +82,7 @@ $head 11-05$$
 The cases of $code std::vector$$, $code std::valarray$$, and 
 $code CppAD::vector$$ were folded into the standard example and tests
 format for the following cases:
+$xref/RevOne.cpp/$$,
 $xref/Reverse.cpp/$$,
 $xref/Hessian.cpp/$$,
 $xref/Jacobian.cpp/$$,

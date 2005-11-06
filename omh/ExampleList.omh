@@ -127,7 +127,7 @@ $rref Output.cpp$$
 $rref Poly.cpp$$
 $rref Pow.cpp$$
 $rref PowInt.cpp$$
-$rref RevOne.h$$
+$rref RevOne.cpp$$
 $rref RevTwo.h$$
 $rref Reverse.cpp$$
 $rref RombergOne.cpp$$
