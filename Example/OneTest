@@ -32,10 +32,14 @@ sed < Example.cpp > TestOne.cpp \
 	-e '/^	RunADdouble/d' \
 	-e "s/.*OneTest.*/	ok \&= Run( $1, \"$1\");/"  
 #
-echo "g++ -g -I.. -I$HOME/boost_1_32_0 -L../lib TestOne.cpp \\"
-echo "	$1.cpp $2 -lCppAD -o TestOne.exe"
-g++ -g -I.. -I$HOME/boost_1_32_0 -L../lib TestOne.cpp \
-	$1.cpp $2 -lCppAD -o TestOne.exe
+echo "g++ TestOne.cpp $1.cpp $2  -o TestOne.exe  \\"
+echo "	-g -Wall -ansi -pedantic-errors -std=c++98 \\"
+echo "	-I.. -I$HOME/boost_1_32_0 -L../lib \\"
+echo "	-lCppAD" 
+g++ TestOne.cpp $1.cpp $2  -o TestOne.exe  \
+	-g -Wall -ansi -pedantic-errors -std=c++98 \
+	-I.. -I$HOME/boost_1_32_0 -L../lib \
+	-lCppAD 
 #
 echo "./TestOne.exe"
 ./TestOne.exe
