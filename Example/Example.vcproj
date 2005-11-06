@@ -749,6 +749,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Hessian.cpp">
+			</File>
+			<File
 				RelativePath="HesTimesDir.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

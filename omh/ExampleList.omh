@@ -106,7 +106,7 @@ $rref Fun.cpp$$
 $rref HesLuDet.cpp$$
 $rref HesMinorDet.cpp$$
 $rref HesTimesDir.cpp$$
-$rref Hessian.h$$
+$rref Hessian.cpp$$
 $rref Integer.cpp$$
 $rref JacLuDet.cpp$$
 $rref JacMinorDet.cpp$$

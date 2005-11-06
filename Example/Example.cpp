@@ -78,6 +78,7 @@ extern bool FromBase(void);
 extern bool Fun(void);
 extern bool HesLuDet(void);
 extern bool HesMinorDet(void);
+extern bool Hessian(void);
 extern bool HesTimesDir(void);
 extern bool Integer(void);
 extern bool JacLuDet(void);
@@ -120,7 +121,6 @@ extern bool Value(void);
 extern bool Vec(void);
 
 // templated tests in example directory
-# include "Hessian.h"  // bool  Hessian<Vectordouble>  (void)
 # include "Reverse.h"  // bool  Reverse<Vectordouble>  (void)
 # include "RevOne.h"   // bool   RevOne<Vectordouble>  (void)
 # include "RevTwo.h"   // bool   RevTwo<Vectordouble>  (void)
@@ -218,7 +218,7 @@ int main(void)
 	ok &= Run( Fun,               "Fun"              ); 
 	ok &= Run( HesLuDet,          "HesLuDet"         );
 	ok &= Run( HesMinorDet,       "HesMinorDet"      );
-	RunDouble( Hessian,           "Hessian"          );
+	ok &= Run( Hessian,           "Hessian"          );
 	ok &= Run( HesTimesDir,       "HesTimesDir"      );
 	ok &= Run( Integer,           "Integer"          );
 	ok &= Run( JacLuDet,          "JacLuDet"         );

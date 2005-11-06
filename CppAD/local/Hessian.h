@@ -1,7 +1,6 @@
 # ifndef CppADHessianIncluded
 # define CppADHessianIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Hessian$$
@@ -106,10 +104,10 @@ $syntax%
 
 $head Examples$$
 $children%
-	Example/Hessian.h
+	Example/Hessian.cpp
 %$$
 The routine 
-$xref/Hessian.h//Hessian/$$ is both an example and a test.
+$xref/Hessian.cpp//Hessian/$$ is both an example and a test.
 It returns $code true$$, if it succeeds and $code false$$ otherwise.
 
 

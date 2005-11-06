@@ -76,7 +76,7 @@ Example_SOURCES   = \
 	Fun.cpp \
 	HesLuDet.cpp \
 	HesMinorDet.cpp \
-	Hessian.h \
+	Hessian.cpp \
 	HesTimesDir.cpp \
 	Integer.cpp \
 	JacLuDet.cpp \

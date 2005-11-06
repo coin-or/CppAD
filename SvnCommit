@@ -1,15 +1,15 @@
-# Convert Jacobian example from include form to standard example form.
+# Convert Hessian example from include form to standard example form.
 #
 # SvnCommit: command that made this commit.
 # WhatsNew05.omh: users view of the changes.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/Jacobian.h  \
+	CppAD/local/Hessian.h  \
 	omh/WhatsNew05.omh \
 	omh/ExampleList.omh \
-	Example/Jacobian.cpp \
+	Example/Hessian.cpp \
 	Example/Example.vcproj \
 	Example/Example.cpp \
-	Example/Jacobian.h \
+	Example/Hessian.h \
 	Example/Makefile.am 
