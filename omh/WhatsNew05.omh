@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew05$$
 $spell
+	valarray
 	Jacobian
 	bool
 	yy
@@ -78,6 +79,12 @@ This section contains a list of the changes to CppAD during 2005
 (in reverse order by date).
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-05$$
+The cases of $code std::vector$$, $code std::valarray$$, and 
+$code CppAD::vector$$ were folded into the standard example and tests
+format for the following cases:
+$xref/Fun.cpp/$$.
 
 $head 11-01$$
 Add forward mode $xref/ForSparseJac//Jacobian sparsity/$$ calculation.

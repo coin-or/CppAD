@@ -75,7 +75,7 @@ Example_SOURCES   = \
 	Forward.h \
 	ForSparseJac.cpp \
 	FromBase.cpp \
-	Fun.h \
+	Fun.cpp \
 	HesLuDet.cpp \
 	HesMinorDet.cpp \
 	Hessian.h \

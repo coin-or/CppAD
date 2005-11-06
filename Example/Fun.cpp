@@ -19,7 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 /*
-$begin Fun.h$$
+$begin Fun.cpp$$
 $spell
 	Cpp
 $$
@@ -30,7 +30,7 @@ $index example, ADFun$$
 $index test, ADFun$$
 
 $code
-$verbatim%Example/Fun.h%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/Fun.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -39,9 +39,11 @@ $end
 
 # include <CppAD/CppAD.h>
 
+namespace { // Begin empty namespace
 template <typename VectorADdouble> // vector class, elements of type AD<double>
-bool Fun(void)
+bool FunCases(void)
 {	bool ok = true;
+	using CppAD::sqrt;
 
 	using namespace CppAD;
 
@@ -72,5 +74,16 @@ bool Fun(void)
 
 	return ok;
 
+}
+} // End empty namespace 
+# include <vector>
+# include <valarray>
+bool Fun(void)
+{	bool ok = true;
+	typedef CppAD::AD<double> ADdouble;
+	ok &= FunCases< CppAD::vector  <ADdouble> >();
+	ok &= FunCases< std::vector    <ADdouble> >();
+	ok &= FunCases< std::valarray  <ADdouble> >();
+	return ok;
 }
 // END PROGRAM

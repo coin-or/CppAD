@@ -1,28 +1,14 @@
-# Move Jacobian sparsity pattern results so that retained between calls
-# (for future use with Hessian sparsity calculations)
+# Convert ADFun example from include form to standard example form.
 #
 # SvnCommit: command that made this commit.
-# SvnMerge: command that preformed the merge.
+# WhatsNew05.omh: users view of the changes.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	SvnMerge \
-	CppAD/local/ForJacSweep.h \
-	CppAD/local/Operator.h \
-	CppAD/local/ADForward.h \
-	CppAD/local/ADReverse.h \
-	CppAD/local/Fun.h \
-	CppAD/local/Forward.h \
-	CppAD/local/ForSparseJac.h \
-	SvnStatus \
 	omh/WhatsNew05.omh \
+	CppAD/local/Fun.h  \
 	omh/ExampleList.omh \
-	Example/Example.vcproj \
-	Example/ForSparseJac.cpp \
+	Example/Fun.cpp \
 	Example/Example.cpp \
-	Example/Makefile.am \
-	TestMore/ForSparseJac.cpp \
-	TestMore/TestMore.cpp \
-	TestMore/TestMore.vcproj \
-	TestMore/Makefile.am \
-	Developer.omh
+	Example/Fun.h \
+	Example/Makefile.am 

@@ -104,7 +104,7 @@ $rref ForTwo.h$$
 $rref Forward.h$$
 $rref ForSparseJac.cpp$$
 $rref FromBase.cpp$$
-$rref Fun.h$$
+$rref Fun.cpp$$
 $rref HesLuDet.cpp$$
 $rref HesMinorDet.cpp$$
 $rref HesTimesDir.cpp$$

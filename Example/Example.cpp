@@ -74,6 +74,7 @@ extern bool Erf(void);
 extern bool Exp(void);
 extern bool ForSparseJac(void);
 extern bool FromBase(void);
+extern bool Fun(void);
 extern bool HesLuDet(void);
 extern bool HesMinorDet(void);
 extern bool HesTimesDir(void);
@@ -117,7 +118,6 @@ extern bool Value(void);
 extern bool Vec(void);
 
 // templated tests in example directory
-# include "Fun.h"      // bool      Fun<VectorADdouble>(void)
 # include "ForOne.h"   // bool   ForOne<Vectordouble>  (void)
 # include "ForTwo.h"   // bool   ForTwo<Vectordouble>  (void)
 # include "Forward.h"  // bool  Forward<Vectordouble>  (void)
@@ -212,12 +212,12 @@ int main(void)
 	ok &= Run( Eq,                "Eq"               );
 	ok &= Run( Erf,               "Erf"              );
 	ok &= Run( Exp,               "Exp"              );
-	ok &= Run( FromBase,          "FromBase"         );
 	RunDouble( ForOne,            "ForOne"           );
 	RunDouble( ForTwo,            "ForTwo"           );
 	RunDouble( Forward,           "Forward"          ); 
 	ok &= Run( ForSparseJac,      "ForSparseJac"     );
-	RunADdouble(Fun,              "Fun"              ); 
+	ok &= Run( FromBase,          "FromBase"         );
+	ok &= Run( Fun,               "Fun"              ); 
 	ok &= Run( HesLuDet,          "HesLuDet"         );
 	ok &= Run( HesMinorDet,       "HesMinorDet"      );
 	RunDouble( Hessian,           "Hessian"          );

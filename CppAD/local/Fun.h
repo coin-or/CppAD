@@ -182,7 +182,7 @@ no longer represents the algorithm that was taped.
 
 $head Example$$
 The files
-$xref/Fun.h/$$ and $xref/CompareChange.cpp/$$
+$xref/Fun.cpp/$$ and $xref/CompareChange.cpp/$$
 contain examples and tests of these operations.
 They return true if they succeed and false otherwise.
 
@@ -192,7 +192,7 @@ $contents%
 	omh/Drivers.omh%
 	CppAD/local/Forward.h%
 	CppAD/local/Reverse.h%
-	Example/Fun.h%
+	Example/Fun.cpp%
 	Example/CompareChange.cpp%
 	omh/MulTape.omh%
 	CppAD/local/ForSparseJac.h
