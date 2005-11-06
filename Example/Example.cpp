@@ -82,6 +82,7 @@ extern bool HesTimesDir(void);
 extern bool Integer(void);
 extern bool JacLuDet(void);
 extern bool JacMinorDet(void);
+extern bool Jacobian(void);
 extern bool Log(void);
 extern bool Log10(void);
 extern bool LuFactor(void);
@@ -119,7 +120,6 @@ extern bool Value(void);
 extern bool Vec(void);
 
 // templated tests in example directory
-# include "Jacobian.h" // bool Jacobian<Vectordouble>  (void)
 # include "Hessian.h"  // bool  Hessian<Vectordouble>  (void)
 # include "Reverse.h"  // bool  Reverse<Vectordouble>  (void)
 # include "RevOne.h"   // bool   RevOne<Vectordouble>  (void)
@@ -223,7 +223,7 @@ int main(void)
 	ok &= Run( Integer,           "Integer"          );
 	ok &= Run( JacLuDet,          "JacLuDet"         );
 	ok &= Run( JacMinorDet,       "JacMinorDet"      );
-	RunDouble( Jacobian,          "Jacobian"         );
+	ok &= Run( Jacobian,          "Jacobian"         );
 	ok &= Run( Log,               "Log"              );
 	ok &= Run( Log10,             "Log10"            );
 	ok &= Run( LuFactor,          "LuFactor"         );

@@ -1,15 +1,15 @@
-# Convert Forward example from include form to standard example form.
+# Convert Jacobian example from include form to standard example form.
 #
 # SvnCommit: command that made this commit.
 # WhatsNew05.omh: users view of the changes.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/Forward.h  \
+	CppAD/local/Jacobian.h  \
 	omh/WhatsNew05.omh \
 	omh/ExampleList.omh \
-	Example/Forward.cpp \
+	Example/Jacobian.cpp \
 	Example/Example.vcproj \
 	Example/Example.cpp \
-	Example/Forward.h \
+	Example/Jacobian.h \
 	Example/Makefile.am 

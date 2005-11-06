@@ -812,6 +812,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Jacobian.cpp">
+			</File>
+			<File
 				RelativePath="Log.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

@@ -81,7 +81,7 @@ Example_SOURCES   = \
 	Integer.cpp \
 	JacLuDet.cpp \
 	JacMinorDet.cpp \
-	Jacobian.h \
+	Jacobian.cpp \
 	Log.cpp \
 	Log10.cpp \
 	LuFactor.cpp \

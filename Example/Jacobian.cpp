@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -16,10 +15,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
-$begin Jacobian.h$$
+$begin Jacobian.cpp$$
 $spell
 	Cpp
 	Jacobian
@@ -31,7 +29,7 @@ $index example, Jacobian$$
 $index test, Jacobian$$
 
 $code
-$verbatim%Example/Jacobian.h%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/Jacobian.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -44,8 +42,9 @@ $end
 
 // ----------------------------------------------------------------------------
 
+namespace { // Begin empty namespace
 template <typename VectorDouble> // vector class, elements of type double
-bool Jacobian()
+bool JacobianCases()
 {	bool ok = true;
 
 	using namespace CppAD;
@@ -103,4 +102,14 @@ bool Jacobian()
 
 }
 
+} // End empty namespace 
+# include <vector>
+# include <valarray>
+bool Jacobian(void)
+{	bool ok = true;
+	ok &= JacobianCases< CppAD::vector  <double> >();
+	ok &= JacobianCases< std::vector    <double> >();
+	ok &= JacobianCases< std::valarray  <double> >();
+	return ok;
+}
 // END PROGRAM
