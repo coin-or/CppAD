@@ -1,4 +1,3 @@
-# BEGIN SHORT COPYRIGHT
 # ---------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 # 
@@ -16,7 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # ---------------------------------------------------------------------------
-# END SHORT COPYRIGHT
 # automake input file
 #
 # Microsoft project files
@@ -71,7 +69,7 @@ Example_SOURCES   = \
 	Erf.cpp \
 	Exp.cpp \
 	ForOne.cpp \
-	ForTwo.h \
+	ForTwo.cpp \
 	Forward.h \
 	ForSparseJac.cpp \
 	FromBase.cpp \

@@ -42,7 +42,7 @@ $index CppAD, version$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: CppAD-05-09-26
+A Package for Differentiation of C++ Algorithms: CppAD-05-11-06
 $$ 
 
 $table
@@ -80,15 +80,18 @@ $code AD<double>$$
 $lnext
 Arbitrary order Forward and Reverse mode calculation of derivatives.
 $lnext
-Allows for replacement of it's $xref/CppADvector//vector/$$ class; for example,
-you can use the
+Allows for replacement of $xref/CppADvector//CppADvector/$$ 
+template vector class which is used for extensive testing; 
+for example, you can use the
 $href%http://www.boost.org/libs/numeric/ublas/doc/index.htm%uBlas%$$ 
-vector class.
+template vector class.
 $lnext
 Includes the templated ODE solvers 
-$xref/Runge45/$$, $xref/Rosen34/$$, and $xref/OdeErrControl/$$,
+$xref/Runge45/$$, 
+$xref/Rosen34/$$, and $xref/OdeErrControl/$$,
 which can be used to 
-differentiate solutions of ordinary differential equations. 
+differentiate solutions of ordinary differential equations
+(see also $xref/OdeGear/$$ and $xref/OdeGearControl/$$). 
 $lnext
 Includes a templated $xref/LuSolve//LU/$$ solver that can be used to 
 differentiate determinants and solutions of linear equations. 
@@ -110,7 +113,8 @@ $xref/BoolFun//boolean valued functions/$$
 as well as the normal
 $xref/Compare//comparison/$$ operators.
 $lnext
-Supports both standard compliant C++ and Microsoft C++ compilers.
+Includes make files for Unix systems and 
+project files for Microsoft systems.
 $lnext
 Distributed under the Gnu public $xref/License/$$ with extensive
 user and developer documentation.

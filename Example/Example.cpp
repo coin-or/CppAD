@@ -71,6 +71,7 @@ extern bool Eq(void);
 extern bool Erf(void);
 extern bool Exp(void);
 extern bool ForOne(void);
+extern bool ForTwo(void);
 extern bool ForSparseJac(void);
 extern bool FromBase(void);
 extern bool Fun(void);
@@ -117,7 +118,6 @@ extern bool Value(void);
 extern bool Vec(void);
 
 // templated tests in example directory
-# include "ForTwo.h"   // bool   ForTwo<Vectordouble>  (void)
 # include "Forward.h"  // bool  Forward<Vectordouble>  (void)
 # include "Jacobian.h" // bool Jacobian<Vectordouble>  (void)
 # include "Hessian.h"  // bool  Hessian<Vectordouble>  (void)
@@ -211,7 +211,7 @@ int main(void)
 	ok &= Run( Erf,               "Erf"              );
 	ok &= Run( Exp,               "Exp"              );
 	ok &= Run( ForOne,            "ForOne"           );
-	RunDouble( ForTwo,            "ForTwo"           );
+	ok &= Run( ForTwo,            "ForTwo"           );
 	RunDouble( Forward,           "Forward"          ); 
 	ok &= Run( ForSparseJac,      "ForSparseJac"     );
 	ok &= Run( FromBase,          "FromBase"         );

@@ -43,6 +43,7 @@ $section Choosing The CppADvector Template Class$$
 $table
 $bold Syntax$$ $cnext
 $syntax%CppADvector<%Scalar%>%$$
+$rnext
 $bold File$$   $cnext
 $code CppAD/local/CppADvector.h$$
 $tend
