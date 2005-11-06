@@ -1,4 +1,3 @@
-o/ BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 $begin WhatsNew05$$
 $spell
@@ -84,6 +82,7 @@ $head 11-05$$
 The cases of $code std::vector$$, $code std::valarray$$, and 
 $code CppAD::vector$$ were folded into the standard example and tests
 format for the following cases:
+$xref/ForOne.cpp/$$,
 $xref/Fun.cpp/$$.
 
 $head 11-01$$

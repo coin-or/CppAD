@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Example.cpp$$
@@ -72,6 +70,7 @@ extern bool DivEq(void);
 extern bool Eq(void);
 extern bool Erf(void);
 extern bool Exp(void);
+extern bool ForOne(void);
 extern bool ForSparseJac(void);
 extern bool FromBase(void);
 extern bool Fun(void);
@@ -118,7 +117,6 @@ extern bool Value(void);
 extern bool Vec(void);
 
 // templated tests in example directory
-# include "ForOne.h"   // bool   ForOne<Vectordouble>  (void)
 # include "ForTwo.h"   // bool   ForTwo<Vectordouble>  (void)
 # include "Forward.h"  // bool  Forward<Vectordouble>  (void)
 # include "Jacobian.h" // bool Jacobian<Vectordouble>  (void)
@@ -212,7 +210,7 @@ int main(void)
 	ok &= Run( Eq,                "Eq"               );
 	ok &= Run( Erf,               "Erf"              );
 	ok &= Run( Exp,               "Exp"              );
-	RunDouble( ForOne,            "ForOne"           );
+	ok &= Run( ForOne,            "ForOne"           );
 	RunDouble( ForTwo,            "ForTwo"           );
 	RunDouble( Forward,           "Forward"          ); 
 	ok &= Run( ForSparseJac,      "ForSparseJac"     );

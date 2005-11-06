@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -16,10 +15,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
-$begin ForOne.h$$
+$begin ForOne.cpp$$
 $spell
 	Cpp
 $$
@@ -32,7 +30,7 @@ $index test, partial$$
 $section Partial w.r.t One Domain Component: Example and Test$$
 
 $code
-$verbatim%Example/ForOne.h%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/ForOne.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -43,8 +41,9 @@ $end
 
 // ----------------------------------------------------------------------------
 
+namespace { // Begin empty namespace
 template <typename VectorDouble> // vector class, elements of type double
-bool ForOne()
+bool ForOneCases()
 {	bool ok = true;
 
 	using namespace CppAD;
@@ -98,4 +97,14 @@ bool ForOne()
 
 }
 
+} // End empty namespace 
+# include <vector>
+# include <valarray>
+bool ForOne(void)
+{	bool ok = true;
+	ok &= ForOneCases< CppAD::vector  <double> >();
+	ok &= ForOneCases< std::vector    <double> >();
+	ok &= ForOneCases< std::valarray  <double> >();
+	return ok;
+}
 // END PROGRAM

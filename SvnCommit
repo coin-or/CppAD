@@ -1,14 +1,15 @@
-# Convert ADFun example from include form to standard example form.
+# Convert ForOne example from include form to standard example form.
 #
 # SvnCommit: command that made this commit.
 # WhatsNew05.omh: users view of the changes.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
+	CppAD/local/ForOne.h  \
 	omh/WhatsNew05.omh \
-	CppAD/local/Fun.h  \
 	omh/ExampleList.omh \
-	Example/Fun.cpp \
+	Example/ForOne.cpp \
+	Example/Example.vcproj \
 	Example/Example.cpp \
-	Example/Fun.h \
+	Example/ForOne.h \
 	Example/Makefile.am 
