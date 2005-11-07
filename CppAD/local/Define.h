@@ -20,7 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin Define$$
+$begin Define$$ $comment CppAD Developer Documentation$$
 $spell
 	Microsoft
 	VecADelem

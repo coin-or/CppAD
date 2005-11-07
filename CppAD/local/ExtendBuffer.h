@@ -2,7 +2,7 @@
 # define CppADExtendBufferIncluded
 
 /*
-$begin ExtendBuffer$$
+$begin ExtendBuffer$$ $comment CppAD Developer Documentation$$
 
 $section Extends the Length of a Buffer$$
 

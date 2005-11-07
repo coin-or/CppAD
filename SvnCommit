@@ -1,9 +1,16 @@
-# forgoten in previous commit
+# Add comment that OMhelp commands link to developer (no user) documentaiton
 #
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/AD.h \
-	CppAD/local/BoolFun.h \
-	CppAD/CppAD.h \
-	Developer.omh 
+	CppAD/local/ADTape.h \
+	CppAD/local/ForJacSweep.h \
+	CppAD/local/ForwardSweep.h \
+	CppAD/local/ReverseSweep.h \
+	CppAD/local/TapeRec.h \
+	CppAD/local/Define.h \
+	CppAD/local/Operator.h \
+	CppAD/local/ExtendBuffer.h \
+	CppAD/local/BoolFunLink.h \
+	CppAD/local/Ordered.h \
+	CppAD/local/Identical.h

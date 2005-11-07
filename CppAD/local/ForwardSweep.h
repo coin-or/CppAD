@@ -20,7 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin ForwardSweep$$
+$begin ForwardSweep$$ $comment CppAD Developer Documentation$$
 $spell
 	Var
 	numvar
