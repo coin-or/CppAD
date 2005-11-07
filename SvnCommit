@@ -1,15 +1,9 @@
-# move CppAD/local/ADDefine.h to CppAD/local/Define.h
-# move CppAD/local/ADUndef.h to CppAD/local/Undef.h
-# move CppAD/local/ADBoolFun.h to CppAD/local/BoolFunLink.h
-# (AD*.h used to mean developer level documentaiton in file)
+# forgoten in previous commit
 #
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/ADBoolFun.h \
-	CppAD/local/BoolFunLink.h \
-	CppAD/local/ADDefine.h \
-	CppAD/local/Define.h \
-	CppAD/local/ADUndef.h \
-	CppAD/local/Undef.h \
-	Makefile.am
+	CppAD/local/AD.h \
+	CppAD/local/BoolFun.h \
+	CppAD/CppAD.h \
+	Developer.omh 

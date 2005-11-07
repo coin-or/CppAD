@@ -116,7 +116,7 @@ It returns true if it succeeds and false otherwise.
 $end
 */
 
-# include <CppAD/local/ADBoolFun.h>
+# include <CppAD/local/BoolFunLink.h>
 
 # define CppADCreateUnaryBool(Base, FunName)                                 \
 	inline bool FunName (const CppAD::AD<Base> &x)                       \

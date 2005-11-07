@@ -55,7 +55,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <CppAD/config.h>
 
 // definitions that are local to the CppAD include files
-# include <CppAD/local/ADDefine.h>
+# include <CppAD/local/Define.h>
 
 // vectors used with CppAD
 # include <CppAD/local/CppADvector.h>
@@ -76,7 +76,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <CppAD/local/UserAD.h>       // AD class methods available to the user
 # include <CppAD/local/Vec.h>          // vectors with AD indices
 
-// undo definitions in ADDefine.h
-# include <CppAD/local/ADUndef.h>   
+// undo definitions in Define.h
+# include <CppAD/local/Undef.h>   
 
 # endif

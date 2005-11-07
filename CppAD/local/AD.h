@@ -187,7 +187,7 @@ public:
 	Functions declared public so can be accessed by user through
 	a macro interface not not intended for direct use.
 	Macro interface is documented in BoolFun.h.
-	Developer documentation for these fucntions is in ADBoolFun.h
+	Developer documentation for these fucntions is in BoolFunLink.h
 	*/
 	static inline bool UnaryBool(
 		bool FunName(const Base &x),
