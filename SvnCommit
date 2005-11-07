@@ -1,16 +1,20 @@
-# Convert RevTwo example from include form to standard example form.
+# Remove blank lines from some example files.
 #
 # SvnCommit: command that made this commit.
 # WhatsNew05.omh: users view of the changes.
-# Example.cpp: also remove RunDouble and RunADdouble macros (no longer used).
+# ForSparseJac.h: add comments about computing entire sparsity pattern.
+# ForSparseJac.cpp: change dependency matrix to sparsity pattern (comments).
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/RevTwo.h  \
+	CppAD/local/ForSparseJac.h \
+	Example/ForSparseJac.cpp \
 	omh/WhatsNew05.omh \
-	omh/ExampleList.omh \
+	Example/Jacobian.cpp \
+	Example/Reverse.cpp \
+	Example/ForTwo.cpp \
 	Example/RevTwo.cpp \
-	Example/Example.vcproj \
-	Example/Example.cpp \
-	Example/RevTwo.h \
-	Example/Makefile.am 
+	Example/ForOne.cpp \
+	Example/RevOne.cpp \
+	Example/Forward.cpp \
+	Example/Hessian.cpp

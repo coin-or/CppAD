@@ -120,6 +120,23 @@ $xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
+$head Entire Sparsity Pattern$$
+Suppose that $latex q = n$$ and the function 
+$latex X : B^q \rightarrow B^n$$ is the identity; i.e., $latex X(x) = x$$.
+If follows that 
+$latex \[
+Px [ i * q + j ] = \left\{ \begin{array}{ll}
+	{\rm true}  & {\rm if} \; i = j \\
+	{\rm flase} & {\rm otherwise}
+\end{array} \right. 
+\] $$
+is an efficient sparsity pattern for $latex X$$; i.e., the choice
+for $italic Px$$ has a few true values as possible.
+In addition, the corresponding value for $italic Py$$ is a 
+sparsity pattern for $italic F$$.
+
+
+
 $head Example$$
 $children%
 	Example/ForSparseJac.cpp

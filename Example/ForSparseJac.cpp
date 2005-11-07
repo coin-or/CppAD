@@ -27,10 +27,10 @@ $$
 
 $section Forward Mode Jacobian Dependency: Example and Test$$
 $index ForSparseJac$$
-$index example, forward Jacobian depend$$
-$index example, Jacobian  forward depend$$
-$index test, forward Jacobian depend$$
-$index test, Jacobian forward depend$$
+$index example, forward Jacobian sparsity$$
+$index example, Jacobian  forward sparsity$$
+$index test, forward Jacobian sparsity$$
+$index test, Jacobian forward sparsity$$
 
 $code
 $verbatim%Example/ForSparseJac.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -72,7 +72,7 @@ bool ForSparseJacCases(void)
 	// create function object F : X -> Y
 	ADFun<double> F(X, Y);
 
-	// dependency matrix for the identity function W(x) = x
+	// sparsity pattern for the identity function U(x) = x
 	VectorBool Px(n * n);
 	size_t i, j;
 	for(i = 0; i < n; i++)
@@ -81,7 +81,7 @@ bool ForSparseJacCases(void)
 		Px[ i * n + i ] = true;
 	}
 
-	// evaluate the dependency matrix for F(X(x))
+	// sparsity pattern for F(X(x))
 	VectorBool Py(m * n);
 	Py = F.ForSparseJac(n, Px);
 

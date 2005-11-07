@@ -37,11 +37,7 @@ $$
 $end
 */
 // BEGIN PROGRAM
-
 # include <CppAD/CppAD.h>
-
-// ----------------------------------------------------------------------------
-
 namespace { // Begin empty namespace
 template <typename VectorDouble> // vector class, elements of type double
 bool RevTwoCases()
@@ -108,9 +104,7 @@ bool RevTwoCases()
 	ok &=  NearEqual( -x[0]*x[0]*sin(x[1]), dF[1*L+1], 1e-10, 1e-10 );
 
 	return ok;
-
 }
-
 } // End empty namespace 
 # include <vector>
 # include <valarray>

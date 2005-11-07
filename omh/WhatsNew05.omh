@@ -78,6 +78,13 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-07$$
+Remove some blank lines from the example files listed
+directly below (under 11-06).
+Comments for computing the entire Jacobian
+$xref/ForSparseJac/Entire Sparsity Pattern/entire sparsity pattern/$$
+was added.
+
 $head 11-06$$
 The cases of $code std::vector$$, $code std::valarray$$, and 
 $code CppAD::vector$$ were folded into the standard example and tests

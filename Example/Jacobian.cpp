@@ -38,10 +38,6 @@ $end
 
 # include <CppAD/CppAD.h>
 # include "NearEqualExt.h"
-
-
-// ----------------------------------------------------------------------------
-
 namespace { // Begin empty namespace
 template <typename VectorDouble> // vector class, elements of type double
 bool JacobianCases()
@@ -101,7 +97,6 @@ bool JacobianCases()
 	return ok;
 
 }
-
 } // End empty namespace 
 # include <vector>
 # include <valarray>

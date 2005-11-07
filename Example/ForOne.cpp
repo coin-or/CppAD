@@ -36,11 +36,7 @@ $$
 $end
 */
 // BEGIN PROGRAM
-
 # include <CppAD/CppAD.h>
-
-// ----------------------------------------------------------------------------
-
 namespace { // Begin empty namespace
 template <typename VectorDouble> // vector class, elements of type double
 bool ForOneCases()
@@ -92,11 +88,8 @@ bool ForOneCases()
 	ok &=  NearEqual( dF[1],  x[0]*cos(x[1]), 1e-10, 1e-10 );
 	ok &=  NearEqual( dF[2], -x[0]*sin(x[1]), 1e-10, 1e-10 );
 
-
 	return ok;
-
 }
-
 } // End empty namespace 
 # include <vector>
 # include <valarray>
