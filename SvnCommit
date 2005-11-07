@@ -1,15 +1,16 @@
-# Convert RevOne example from include form to standard example form.
+# Convert RevTwo example from include form to standard example form.
 #
 # SvnCommit: command that made this commit.
 # WhatsNew05.omh: users view of the changes.
+# Example.cpp: also remove RunDouble and RunADdouble macros (no longer used).
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/RevOne.h  \
+	CppAD/local/RevTwo.h  \
 	omh/WhatsNew05.omh \
 	omh/ExampleList.omh \
-	Example/RevOne.cpp \
+	Example/RevTwo.cpp \
 	Example/Example.vcproj \
 	Example/Example.cpp \
-	Example/RevOne.h \
+	Example/RevTwo.h \
 	Example/Makefile.am 

@@ -107,6 +107,7 @@ extern bool Pow(void);
 extern bool PowInt(void);
 extern bool Reverse(void);
 extern bool RevOne(void);
+extern bool RevTwo(void);
 extern bool RombergMul(void);
 extern bool RombergOne(void);
 extern bool Rosen34(void);
@@ -123,7 +124,6 @@ extern bool Value(void);
 extern bool Vec(void);
 
 // templated tests in example directory
-# include "RevTwo.h"   // bool   RevTwo<Vectordouble>  (void)
 
 // standard array template classes used by tests
 # include <vector>
@@ -142,36 +142,6 @@ bool Run(bool TestOk(void), const char *name)
 
 	return ok;
 }
-
-// macro that runs template cases with double elements
-# define RunDouble(fun, name)                          \
-	ok &= Run(                                     \
-		 fun   < CppAD::vector  <double> >,    \
-	         name " with CppAD::vector"            \
-	);                                             \
-	ok &= Run(                                     \
-		 fun   <   std::vector  <double> >,    \
-		name  " with std::vector "             \
-	);                                             \
-	ok &= Run(                                     \
-		 fun   <   std::valarray<double> >,    \
-		name  " with std::valarray "           \
-	)
-
-// macro that runs template cases with AD<double> elements
-# define RunADdouble(fun, name)                                    \
-	ok &= Run(                                                 \
-		 fun   < CppAD::vector  < CppAD::AD<double> > >,   \
-	         name " with CppAD::vector"                        \
-	);                                                         \
-	ok &= Run(                                                 \
-		 fun   <   std::vector  < CppAD::AD<double> > >,   \
-		name  " with std::vector "                         \
-	);                                                         \
-	ok &= Run(                                                 \
-		 fun   <   std::valarray< CppAD::AD<double> > >,   \
-		name  " with std::valarray "                       \
-	)
 
 // main program that runs all the tests
 int main(void)
@@ -247,7 +217,7 @@ int main(void)
 	ok &= Run( PowInt,            "PowInt"           );
 	ok &= Run( Reverse,           "Reverse"          );
 	ok &= Run( RevOne,            "RevOne"           );
-	RunDouble( RevTwo,            "RevTwo"           );
+	ok &= Run( RevTwo,            "RevTwo"           );
 	ok &= Run( RombergMul,        "RombergMul"       );
 	ok &= Run( RombergOne,        "RombergOne"       );
 	ok &= Run( Rosen34,           "Rosen34"          );
