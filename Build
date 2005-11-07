@@ -217,14 +217,27 @@ then
 		#
 		exit
 	fi
-	#
-	# extract from compressed tar
-	tar -xvzf cppad-$AcDate.tar.gz 
-	#
 	# create the unix version by changing cppad to upper case
 	# (use temporary file to avoid error on rename in Cygwin case)
 	mv cppad-$AcDate.tar.gz CppAD-$AcDate.tmp
 	mv CppAD-$AcDate.tmp    CppAD-$AcDate.tar.gz
+	#
+	if [ "$1" != "all" ]
+	then
+		exit
+	fi
+fi
+if [ "$1" = "dos" ] || ( [ "$1" = "all" ] && [ "$2" != "unix" ] )
+then
+	#
+	if [ -e cppad-$AcDate ]
+	then
+		echo "rm -f -r cppad-$AcDate"
+		rm -f -r cppad-$AcDate
+	fi
+	#
+	# extract from compressed tar
+	tar -xvzf CppAD-$AcDate.tar.gz 
 	#
 	# convert files to dos format
 	for file in  cppad-$AcDate/*
@@ -285,6 +298,13 @@ then
 	# clean up
 	rm -r cppad-$AcDate
 	#
+	if [ "$1" != "all" ]
+	then
+		exit
+	fi
+fi
+if [ "$1" = "all" ]
+then
 	exit
 fi
 #
@@ -305,6 +325,7 @@ echo "configure test  configure includes all the possible options"
 echo "compile         compile all of the tests"
 echo "omhelp          build all the documentation"
 echo "dist            create the distribution files CppAD.*.tar.gz"
+echo "dos             create the distribution files CppAD.*.zip"
 echo
 echo "Build all"
 echo "This command will execute all the options in the order above"
@@ -313,3 +334,7 @@ echo
 echo "Build all test"
 echo "This command will execute all the options in the order above"
 echo "with the exception that \"configue\" will be excluded."
+echo
+echo "Build all unix"
+echo "This command will execute all the options in the order above"
+echo "with the exception that \"configue\" and \"dos\" will be excluded."
