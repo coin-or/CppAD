@@ -1,6 +1,5 @@
-# ifndef CppADADDefineIncluded
-# define CppADADDefineIncluded
-// BEGIN SHORT COPYRIGHT
+# ifndef CppADDefineIncluded
+# define CppADDefineIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
@@ -19,10 +18,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
-$begin ADDefine$$
+$begin Define$$
 $spell
 	Microsoft
 	VecADelem
@@ -41,7 +39,7 @@ $section Macros Used by CppAD Implementation$$
 $head CppADNull$$
 The preprocessor symbol $code CppADNull$$ is used for a null pointer. 
 If it is not yet defined,
-it is defined when $code CppAD/local/ADDefine.h$$ is included is included.
+it is defined when $code CppAD/local/Define.h$$ is included is included.
 
 $head CppADStandardMathFun$$
 The macro call

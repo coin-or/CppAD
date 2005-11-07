@@ -50,10 +50,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/CheckNumericType.h \
 	CppAD/CheckSimpleVector.h \
 	CppAD/local/AD.h \
-	CppAD/local/ADBoolFun.h \
-	CppAD/local/ADDefine.h \
 	CppAD/local/ADTape.h \
-	CppAD/local/ADUndef.h \
 	CppAD/local/Abs.h \
 	CppAD/local/AbsOp.h \
 	CppAD/local/Acos.h \
@@ -68,6 +65,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/AtanOp.h \
 	CppAD/local/BinaryOp.h \
 	CppAD/local/BoolFun.h \
+	CppAD/local/BoolFunLink.h \
 	CppAD/local/CompEq.h \
 	CppAD/local/Compare.h \
 	CppAD/local/CondExp.h \
@@ -77,6 +75,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/CppADvector.h \
 	CppAD/local/Declare.h \
 	CppAD/local/Default.h \
+	CppAD/local/Define.h \
 	CppAD/local/Discrete.h \
 	CppAD/local/Div.h \
 	CppAD/local/DivEq.h \
@@ -129,6 +128,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/UserAD.h \
 	CppAD/local/UnaryMinus.h \
 	CppAD/local/UnaryPlus.h \
+	CppAD/local/Undef.h \
 	CppAD/local/Value.h \
 	CppAD/local/Vec.h
 #
