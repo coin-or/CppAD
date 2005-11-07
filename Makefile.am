@@ -52,7 +52,6 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/AD.h \
 	CppAD/local/ADBoolFun.h \
 	CppAD/local/ADDefine.h \
-	CppAD/local/ADReverse.h \
 	CppAD/local/ADTape.h \
 	CppAD/local/ADUndef.h \
 	CppAD/local/Abs.h \
@@ -116,6 +115,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/RevOne.h \
 	CppAD/local/RevTwo.h \
 	CppAD/local/Reverse.h \
+	CppAD/local/ReverseSweep.h \
 	CppAD/local/Sin.h \
 	CppAD/local/Sinh.h \
 	CppAD/local/SinCos.h \

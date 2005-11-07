@@ -1,7 +1,6 @@
-# ifndef CppADADReverseIncluded
-# define CppADADReverseIncluded
+# ifndef CppADReverseSweepIncluded
+# define CppADReverseSweepIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -19,9 +18,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 /*
-$begin ADReverse$$
+$begin ReverseSweep$$
 $spell
 	Var
 	numvar
@@ -37,11 +35,11 @@ $spell
 $$
 
 $section Reverse Mode Computation of Derivatives of Taylor Coefficients$$
-$mindex ADReverse derivative Taylor coefficient$$
+$mindex ReverseSweep derivative Taylor coefficient$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%void ADReverse(
+$syntax%void ReverseSweep(
 	size_t                 %d%,
 	size_t                 %numvar%,
 	const TapeRec<%Base%> *%Rec%,
@@ -74,7 +72,7 @@ $latex \[
 \] $$
 Note that the scale factor of $latex 1 / d !$$ converts
 $th d$$ order derivatives to $th d$$ order Taylor coefficients.
-The routine $code ADReverse$$ computes all the first order partial
+The routine $code ReverseSweep$$ computes all the first order partial
 derivatives of $latex G$$ with respect to each of the Taylor coefficients
 for the independent variables 
 $latex u^{(j)}$$ for $latex j = 0 , \ldots , d$$.
@@ -137,13 +135,13 @@ $end
 ------------------------------------------------------------------------------
 */
 
-# define CppADReverseTrace 0
+# define CppADReverseSweepTrace 0
 
 // BEGIN CppAD namespace
 namespace CppAD {
 
 template <class Base>
-void ADReverse(
+void ReverseSweep(
 	size_t                d,
 	size_t                numvar,
 	const TapeRec<Base>  *Rec,
@@ -210,7 +208,7 @@ void ADReverse(
 		pZ  = Partial + i_var * K;
 
 		// rest of informaiton depends on the case
-# if CppADReverseTrace
+# if CppADReverseSweepTrace
 		n_ind = NumInd(op);
 		printOp(
 			std::cout, 
@@ -690,7 +688,7 @@ void ADReverse(
 			CppADUnknownError(0);
 		}
 	}
-# if CppADReverseTrace
+# if CppADReverseSweepTrace
 	std::cout << std::endl;
 # endif
 	CppADUnknownError( i_op == 1 );
@@ -700,6 +698,6 @@ void ADReverse(
 
 } // END CppAD namespace
 
-# undef CppADReverseTrace
+# undef CppADReverseSweepTrace
 
 # endif

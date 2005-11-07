@@ -299,7 +299,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &v)
 	}
 
 	// evaluate the derivatives
-	ADReverse(p - 1, totalNumVar, Rec, 
+	ReverseSweep(p - 1, totalNumVar, Rec, 
 		TaylorColDim, Taylor, PartialColDim, Partial);
 
 	// return the derivative values

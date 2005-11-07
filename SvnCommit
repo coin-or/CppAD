@@ -1,12 +1,12 @@
-# move CppAD/local/ADForward.h to CppAD/local/ForwardSweep.h
+# move CppAD/local/ADReverse.h to CppAD/local/ReverseSweep.h
 # (AD*.h used to mean developer level documentaiton in file)
 #
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/ForwardSweep.h \
+	CppAD/local/ReverseSweep.h \
 	CppAD/local/Vec.h \
-	CppAD/local/ADForward.h \
+	CppAD/local/ADReverse.h \
 	CppAD/local/Fun.h \
-	CppAD/local/Forward.h \
+	CppAD/local/Reverse.h \
 	Makefile.am

@@ -463,7 +463,7 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 # include <CppAD/local/Independent.h>
 # include <CppAD/local/ForwardSweep.h>
 # include <CppAD/local/Forward.h>
-# include <CppAD/local/ADReverse.h>
+# include <CppAD/local/ReverseSweep.h>
 # include <CppAD/local/Reverse.h>
 # include <CppAD/local/ForJacSweep.h>
 # include <CppAD/local/ForSparseJac.h>
