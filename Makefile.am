@@ -52,7 +52,6 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/AD.h \
 	CppAD/local/ADBoolFun.h \
 	CppAD/local/ADDefine.h \
-	CppAD/local/ADForward.h \
 	CppAD/local/ADReverse.h \
 	CppAD/local/ADTape.h \
 	CppAD/local/ADUndef.h \
@@ -91,8 +90,9 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/ForOne.h \
 	CppAD/local/ForTwo.h \
 	CppAD/local/ForJacSweep.h \
-	CppAD/local/Forward.h \
 	CppAD/local/ForSparseJac.h \
+	CppAD/local/Forward.h \
+	CppAD/local/ForwardSweep.h \
 	CppAD/local/FromBase.h \
 	CppAD/local/Fun.h \
 	CppAD/local/Hessian.h \

@@ -1,20 +1,12 @@
-# Remove blank lines from some example files.
+# move CppAD/local/ADForward.h to CppAD/local/ForwardSweep.h
+# (AD*.h used to mean developer level documentaiton in file)
 #
-# SvnCommit: command that made this commit.
-# WhatsNew05.omh: users view of the changes.
-# ForSparseJac.h: add comments about computing entire sparsity pattern.
-# ForSparseJac.cpp: change dependency matrix to sparsity pattern (comments).
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/ForSparseJac.h \
-	Example/ForSparseJac.cpp \
-	omh/WhatsNew05.omh \
-	Example/Jacobian.cpp \
-	Example/Reverse.cpp \
-	Example/ForTwo.cpp \
-	Example/RevTwo.cpp \
-	Example/ForOne.cpp \
-	Example/RevOne.cpp \
-	Example/Forward.cpp \
-	Example/Hessian.cpp
+	CppAD/local/ForwardSweep.h \
+	CppAD/local/Vec.h \
+	CppAD/local/ADForward.h \
+	CppAD/local/Fun.h \
+	CppAD/local/Forward.h \
+	Makefile.am

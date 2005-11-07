@@ -1,7 +1,6 @@
 # ifndef CppADVecIncluded
 # define CppADVecIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 /*
 $begin VecAD$$
 $spell
@@ -185,10 +183,10 @@ $xref/glossary/Parameter/parameters/$$).
 The effect of this can be seen by executing the following steps:
 
 $list number$$
-In the file $code CppAD/local/ADForward.h$$,
-change the definition of $code CppADForwardTrace$$ to
+In the file $code CppAD/local/ForwardSweep.h$$,
+change the definition of $code CppADForwardSweepTrace$$ to
 $codep
-	# define CppADForwardTrace 1
+	# define CppADForwardSweepTrace 1
 $$
 $lnext
 In the $code Example$$ directory, execute the command

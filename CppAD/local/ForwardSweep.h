@@ -1,5 +1,5 @@
-# ifndef CppADADForwardIncluded
-# define CppADADForwardIncluded
+# ifndef CppADForwardSweepIncluded
+# define CppADForwardSweepIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
@@ -20,7 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin ADForward$$
+$begin ForwardSweep$$
 $spell
 	Var
 	numvar
@@ -39,7 +39,7 @@ $spell
 $$
 
 $section Forward Computation of Taylor Coefficients$$
-$index ADForward$$
+$index ForwardSweep$$
 $index mode, forward$$
 $index forward, mode$$
 $index derivative, forward$$
@@ -48,7 +48,7 @@ $index Taylor coefficient, forward$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%size_t ADForward(
+$syntax%size_t ForwardSweep(
 	bool                   %print%,
 	size_t                 %d%,
 	size_t                 %numvar%,
@@ -82,7 +82,7 @@ by the PripOp and PrivOp instructions.
 $head d$$
 Given the $th d-1$$ order Taylor coefficients matrix for all the variables,
 and the $th d$$ order Taylor coefficients for all the independent variables,
-$code ADForward$$ computes the $th d$$ order Taylor coefficients 
+$code ForwardSweep$$ computes the $th d$$ order Taylor coefficients 
 for all the other variables.
 
 
@@ -155,13 +155,13 @@ $th d$$ order Taylor coefficient for the variable with index $italic i$$.
 $end
 ------------------------------------------------------------------------------
 */
-# define CppADForwardTrace 0
+# define CppADForwardSweepTrace 0
 
 // BEGIN CppAD namespace
 namespace CppAD {
 
 template <class Base>
-size_t ADForward(
+size_t ForwardSweep(
 	bool                  print,
 	size_t                d,
 	size_t                numvar,
@@ -1111,7 +1111,7 @@ size_t ADForward(
 			default:
 			CppADUnknownError(0);
 		}
-# if CppADForwardTrace
+# if CppADForwardSweepTrace
 		printOp(
 			std::cout, 
 			Rec,
@@ -1139,6 +1139,6 @@ size_t ADForward(
 
 } // END CppAD namespace
 
-# undef CppADForwardTrace
+# undef CppADForwardSweepTrace
 
 # endif

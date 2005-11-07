@@ -1,7 +1,6 @@
 # ifndef CppADADFunIncluded
 # define CppADADFunIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 /*
 $begin ADFun$$
 $spell 
@@ -447,7 +445,7 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	}
 
 	// use independent variable values to fill in values for others
-	compareChange = ADForward(false, 0, totalNumVar, Rec, TaylorColDim, Taylor);
+	compareChange = ForwardSweep(false, 0, totalNumVar, Rec, TaylorColDim, Taylor);
 	CppADUnknownError( compareChange == 0 );
 
 	// check the dependent variable values
@@ -463,7 +461,7 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 
 # include <CppAD/local/Parameter.h>
 # include <CppAD/local/Independent.h>
-# include <CppAD/local/ADForward.h>
+# include <CppAD/local/ForwardSweep.h>
 # include <CppAD/local/Forward.h>
 # include <CppAD/local/ADReverse.h>
 # include <CppAD/local/Reverse.h>
