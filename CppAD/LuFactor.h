@@ -25,6 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 $begin LuFactor$$
 $escape #$$
 $spell
+	CondExpGt
 	Cpp
 	Geq
 	Lu
@@ -51,7 +52,7 @@ $$
 $table
 $bold Syntax$$ $cnext $code# include <CppAD/LuFactor.h>$$
 $rnext $cnext 
-$syntax%%sign% = LuFactor(%ip%, %jp%, %LU%)%$$
+$syntax%%sign% = LuFactor(%ip%, %jp%, %LU%, %ratio%)%$$
 $tend
 
 $fend 25$$
@@ -167,6 +168,52 @@ $syntax%
 	%sign% * %LU%[%ip%[0], %jp%[0]] * %...% * %LU%[%ip%[%n%-1], %jp%[%n%-1]] 
 %$$
 
+$head ratio$$
+The argument $italic ratio$$ is optional and has prototype
+$syntax%
+        %Float% &%ratio%
+%$$
+On input, the value of $italic ratio$$ does not matter.
+On output it is a measure of how good the choice of pivots is.
+For $latex p = 0 , \ldots , n-1$$, the $th p$$ pivot factors the first row
+of an $latex (n-p) \times (n-p)$$ matrix.
+The ratio corresponding to each element for this pivot is the element
+divided by the pivot element.
+The return value of $italic ratio$$ is the maximum absolute value of
+such ratios over with respect to all such elements and all the pivots.
+The pivots will be chosen so that this ratio is equal to one.
+(Actually ratio will be equal to the absolute value of the 
+pivot element divided by itself.) 
+
+$subhead Purpose$$
+Suppose that $italic Float$$ is a $syntax%AD<%Base%>%$$ type
+and the corresponding $xref/ADFun/$$ object is used to evaluate 
+this LU factorization for other values of $italic A$$
+(input values of the matrix $italic LU$$).
+In this case, $italic ratio$$ may not be one.
+If $italic ratio$$ is too large (the meaning of too large is up to you), 
+the current pivots do not yield a stable LU factorization of $italic A$$.
+A better choice for the pivots (for this value of $italic A$$)
+will be made if you recreate the $code ADFun$$ object
+starting with the corresponding $xref/Independent/$$ variable values
+that correspond to this value of $italic A$$.
+
+$subhead Restrictions$$
+If the argument $italic ratio$$ is present then the syntax
+$syntax%
+	%y% = abs(%x%)
+%$$
+must assign the absolute value of the $italic Float$$ object $italic x$$
+to the $italic Float$$ object $italic y$$.
+In addition the $xref/CondExp//CppAD::CondExpGt/$$ function must
+be supported by $italic Float$$.
+
+$subhead Example$$
+The file 
+$xref/LuFactorRatio.cpp/$$
+contains an example and test of using the optional argument $italic ratio$$.
+It returns true if it succeeds and false otherwise.
+
 
 $head SizeVector$$
 The type $italic SizeVector$$ must be a $xref/SimpleVector/$$ class with
@@ -228,20 +275,22 @@ of $italic x$$ is greater than or equal the
 sum of the square of the real and imaginary parts of $italic y$$. 
 
 $children%
-	Example/LuFactor.cpp
+	Example/LuFactor.cpp%
+	Example/LuFactorRatio.cpp
 %$$
 $head Example$$
 The file $xref/LuSolve.h/$$ is a good example usage of 
 $code LuFactor$$ with $code LuInvert$$.
 The file 
 $xref/LuFactor.cpp/$$
-contains an example and test of using $code LuInvert$$ by itself.
+contains an example and test of using $code LuFactor$$ by itself.
 It returns true if it succeeds and false otherwise.
 
 $end
 --------------------------------------------------------------------------
 $begin LuFactor.h$$
 $spell
+	CondExpGt
 	Cpp
 	Geq
 	Lu
@@ -317,12 +366,12 @@ inline bool AbsGeq(
 	return xsq >= ysq;
 }
 
-// LuFactor
-template <typename SizeVector, typename FloatVector>
-int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)
+// Case One (with ratio): Lines different from next case end with       //
+template <class SizeVector, class FloatVector>                          //
+int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 {	
-	// type of the elements of LU
-	typedef typename FloatVector::value_type Float;
+	// type of the elements of LU                                   //
+	typedef typename FloatVector::value_type Float;                 //
 
 	// check numeric type specifications
 	CheckNumericType<Float>();
@@ -361,6 +410,7 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)
 	// initialize the sign of the permutation
 	sign = 1;
 	// ---------------------------------------------------------
+
 	// Reduce the matrix P to L * U using n pivots
 	for(p = 0; p < n; p++)
 	{	// determine row and column corresponding to element of 
@@ -382,6 +432,127 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)
 				}
 			}
 		}
+		CppADUsageError( 
+			(imax < n) & (jmax < n) ,
+			"AbsGeq must return true when second argument is zero"
+		);
+		if( imax != p )
+		{	// switch rows so max absolute element is in row p
+			i        = ip[p];
+			ip[p]    = ip[imax];
+			ip[imax] = i;
+			sign     = -sign;
+		}
+		if( jmax != p )
+		{	// switch columns so max absolute element is in column p
+			j        = jp[p];
+			jp[p]    = jp[jmax];
+			jp[jmax] = j;
+			sign     = -sign;
+		}
+		// pivot using the max absolute element
+		pivot   = LU[ ip[p] * n + jp[p] ];
+
+		// check for determinant equal to zero
+		if( pivot == zero )
+		{	// abort the mission
+			return   0;
+		}
+
+		// Reduce U by the elementary transformations that maps 
+		// LU( ip[p], jp[p] ) to one.  Only need transform elements
+		// above the diagonal in U and LU( ip[p] , jp[p] ) is
+		// corresponding value below diagonal in L.
+		for(j = p+1; j < n; j++)
+			LU[ ip[p] * n + jp[j] ] /= pivot;
+
+		// Reduce U by the elementary transformations that maps 
+		// LU( ip[i], jp[p] ) to zero. Only need transform elements 
+		// above the diagonal in U and LU( ip[i], jp[p] ) is 
+		// corresponding value below diagonal in L.
+		for(i = p+1; i < n; i++ )
+		{	etmp = LU[ ip[i] * n + jp[p] ];
+			for(j = p+1; j < n; j++)
+			{	LU[ ip[i] * n + jp[j] ] -= 
+					etmp * LU[ ip[p] * n + jp[j] ];
+			} 
+		}
+	}
+	return sign;
+}
+
+// Case Two (with ratio): Lines different from previous case end with       //
+template <class SizeVector, class FloatVector, class Float>                 //
+int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU, Float &ratio) //
+{	
+	// check numeric type specifications
+	CheckNumericType<Float>();
+
+	// check simple vector class specifications
+	CheckSimpleVector<Float, FloatVector>();
+	CheckSimpleVector<size_t, SizeVector>();
+
+	size_t  i, j;          // some temporary indices
+	const Float zero( 0 ); // the value zero as a Float object
+	size_t  imax;          // row index of maximum element
+	size_t  jmax;          // column indx of maximum element
+	Float    emax;         // maximum absolute value
+	size_t  p;             // count pivots
+	int     sign;          // sign of the permutation
+	Float   etmp;          // temporary element
+	Float   pivot;         // pivot element
+
+	// -------------------------------------------------------
+	size_t n = ip.size();
+	CppADUsageError(
+		jp.size() == n,
+		"Error in LuFactor: jp must have size equal to n"
+	);
+	CppADUsageError(
+		LU.size() == n * n,
+		"Error in LuFactor: LU must have size equal to n * m"
+	);
+	// -------------------------------------------------------
+
+	// initialize row and column order in matrix not yet pivoted
+	for(i = 0; i < n; i++)
+	{	ip[i] = i;
+		jp[i] = i;
+	}
+	// initialize the sign of the permutation
+	sign = 1;
+	// initialize the ratio                                             //
+	ratio = Float(1);                                                   //
+	// ---------------------------------------------------------
+
+	// Reduce the matrix P to L * U using n pivots
+	for(p = 0; p < n; p++)
+	{	// determine row and column corresponding to element of 
+		// maximum absolute value in remaining part of P
+		imax = jmax = n;
+		emax = zero;
+		for(i = p; i < n; i++)
+		{	for(j = p; j < n; j++)
+			{	CppADUnknownError(
+					(ip[i] < n) & (jp[j] < n)
+				);
+				etmp = LU[ ip[i] * n + jp[j] ];
+
+				// check if maximum absolute value so far
+				if( AbsGeq (etmp, emax) )
+				{	imax = i;
+					jmax = j;
+					emax = etmp;
+				}
+			}
+		}
+		for(i = p; i < n; i++)                                       //
+		{	for(j = p; j < n; j++)                               //
+			{	etmp  = abs(LU[ ip[i] * n + jp[j] ] / emax); //
+				ratio =                                      //
+				CppAD::CondExpGt(etmp, ratio, etmp, ratio);  //
+			}                                                    //
+		}                                                            //
 		CppADUsageError( 
 			(imax < n) & (jmax < n) ,
 			"AbsGeq must return true when second argument is zero"

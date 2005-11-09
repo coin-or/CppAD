@@ -114,6 +114,7 @@ $rref Jacobian.cpp$$
 $rref Log.cpp$$
 $rref Log10.cpp$$
 $rref LuFactor.cpp$$
+$rref LuFactorRatio.cpp$$
 $rref LuInvert.cpp$$
 $rref LuSolve.cpp$$
 $rref LuVecADOk.cpp$$

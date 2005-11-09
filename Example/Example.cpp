@@ -87,6 +87,7 @@ extern bool Jacobian(void);
 extern bool Log(void);
 extern bool Log10(void);
 extern bool LuFactor(void);
+extern bool LuFactorRatio(void);
 extern bool LuInvert(void);
 extern bool LuSolve(void);
 extern bool LuVecADOk(void);
@@ -197,6 +198,7 @@ int main(void)
 	ok &= Run( Log,               "Log"              );
 	ok &= Run( Log10,             "Log10"            );
 	ok &= Run( LuFactor,          "LuFactor"         );
+	ok &= Run( LuFactorRatio,     "LuFactorRatio"    );
 	ok &= Run( LuInvert,          "LuInvert"         );
 	ok &= Run( LuSolve,           "LuSolve"          );
 	ok &= Run( LuVecADOk,         "LuVecADOk"        );

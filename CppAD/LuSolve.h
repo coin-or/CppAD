@@ -159,6 +159,10 @@ of the equation we wish to solve
 If $italic m$$ is zero, $italic X$$ is not used.
 
 $head logdet$$
+The argument $italic logdet$$ has prototype
+$syntax%
+	%Float% &%logdet%
+%$$
 On input, the value of $italic logdet$$ does not matter.
 On output, it has been set to the 
 log of the determinant of $italic A$$ 

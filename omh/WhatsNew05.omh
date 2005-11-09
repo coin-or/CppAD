@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew05$$
 $spell
+	logdet
 	valarray
 	Jacobian
 	bool
@@ -77,6 +78,15 @@ This section contains a list of the changes to CppAD during 2005
 (in reverse order by date).
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-09$$
+Add prototype documentation for $xref/LuSolve/logdet/logdet/$$ in 
+the $xref/LuSolve/$$ function.
+$pre
+
+$$
+Add the optional $xref/LuFactor/ratio/ratio/$$ argument to the
+$xref/LuFactor/$$ routine.
 
 $head 11-07$$
 Remove some blank lines from the example files listed

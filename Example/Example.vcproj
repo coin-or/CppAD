@@ -878,6 +878,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\LuFactorRatio.cpp">
+			</File>
+			<File
 				RelativePath="LuInvert.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

@@ -1,16 +1,23 @@
-# Add comment that OMhelp commands link to developer (no user) documentaiton
+# Add ratio argument to LuFactor routine
 #
+# LuSolve.h: add prototype for loget argument to documentation.
+# LuFactor.h: add the ratio (optional argument).
+# WhatsNew05.omh: changes from users point of view.
+# ExampleList.omh: add LuFactorRatio example case.
+# LuFactorRatio.cpp: example of optional ration argument.
+# Example.cpp: add LuFactorRatio example case.
+# Example.vcproj: add LuFactorRatio example case.
+# Makefile.am: add LuFactorRatio example case.
+
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
+svn add Example/LuFactorRatio.cpp
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/ADTape.h \
-	CppAD/local/ForJacSweep.h \
-	CppAD/local/ForwardSweep.h \
-	CppAD/local/ReverseSweep.h \
-	CppAD/local/TapeRec.h \
-	CppAD/local/Define.h \
-	CppAD/local/Operator.h \
-	CppAD/local/ExtendBuffer.h \
-	CppAD/local/BoolFunLink.h \
-	CppAD/local/Ordered.h \
-	CppAD/local/Identical.h
+	CppAD/LuSolve.h \
+	CppAD/LuFactor.h \
+	omh/WhatsNew05.omh \
+	omh/ExampleList.omh \
+	Example/LuFactorRatio.cpp \
+	Example/Example.vcproj \
+	Example/Example.cpp \
+	Example/Makefile.am 
