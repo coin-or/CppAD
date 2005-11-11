@@ -1,23 +1,9 @@
-# Add ratio argument to LuFactor routine
+# The optional ratio argument to LuFactor requires the rest of CppAD.
 #
-# LuSolve.h: add prototype for loget argument to documentation.
-# LuFactor.h: add the ratio (optional argument).
-# WhatsNew05.omh: changes from users point of view.
-# ExampleList.omh: add LuFactorRatio example case.
-# LuFactorRatio.cpp: example of optional ration argument.
-# Example.cpp: add LuFactorRatio example case.
-# Example.vcproj: add LuFactorRatio example case.
-# Makefile.am: add LuFactorRatio example case.
-
+# CppAD.h: modified to include LuSolve.h after the rest of CppAD.
+# LuFactor.h: documentation now suggests including CppAD.h when using ratio. 
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-svn add Example/LuFactorRatio.cpp
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/LuSolve.h \
-	CppAD/LuFactor.h \
-	omh/WhatsNew05.omh \
-	omh/ExampleList.omh \
-	Example/LuFactorRatio.cpp \
-	Example/Example.vcproj \
-	Example/Example.cpp \
-	Example/Makefile.am 
+	CppAD/CppAD.h \
+	CppAD/LuFactor.h

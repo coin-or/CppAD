@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // CppAD general purpose library routines (can be included separately)
 
-# include <CppAD/LuSolve.h>
 # include <CppAD/NearEqual.h>
 # include <CppAD/Runge45.h>
 # include <CppAD/RombergOne.h>
@@ -78,5 +77,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 // undo definitions in Define.h
 # include <CppAD/local/Undef.h>   
+
+// ---------------------------------------------------------------------------
+// routines that can be included separately, but that have extra options
+// when included with the rest of CppAD
+# include <CppAD/LuSolve.h>
 
 # endif

@@ -207,6 +207,10 @@ must assign the absolute value of the $italic Float$$ object $italic x$$
 to the $italic Float$$ object $italic y$$.
 In addition the $xref/CondExp//CppAD::CondExpGt/$$ function must
 be supported by $italic Float$$.
+If you are using the $italic ratio$$ argument,
+it is suggested that you include $code CppAD/CppAD.h$$
+(not try to include $code CppAD/LuFactor.h$$ separately).
+
 
 $subhead Example$$
 The file 
