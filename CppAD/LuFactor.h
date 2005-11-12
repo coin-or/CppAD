@@ -554,7 +554,7 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU, Float &ratio) //
 		{	for(j = p; j < n; j++)                               //
 			{	etmp  = abs(LU[ ip[i] * n + jp[j] ] / emax); //
 				ratio =                                      //
-				CppAD::CondExpGt(etmp, ratio, etmp, ratio);  //
+				CondExpGt(etmp, ratio, etmp, ratio);         //
 			}                                                    //
 		}                                                            //
 		CppADUsageError( 
