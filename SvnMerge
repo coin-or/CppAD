@@ -19,13 +19,13 @@ cd ..
 ToDirectory=trunk
 #
 # Name of the directory where the changes have been committed
-FromDirectory=branches/BitPattern
+FromDirectory=branches/Brad
 #
 # Version of the repository corresponding the the beginning of the changes
-Start=160
+Start=195
 # 
 # Version of the repository corresponding the the end of the changes
-End=171
+End=198
 #
 # echo the svn merge command
 echo "cd  .."
