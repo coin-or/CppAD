@@ -1,5 +1,5 @@
-# ifndef CppADForSparseJacIncluded
-# define CppADForSparseJacIncluded
+# ifndef CppADRevSparseJacIncluded
+# define CppADRevSparseJacIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
@@ -20,7 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin ForSparseJac$$
+$begin RevSparseJac$$
 $spell
 	Py 
 	Px
@@ -32,15 +32,15 @@ $spell
 	proportional
 $$
 
-$section Forward Mode Jacobian Sparsity Pattern$$ 
+$section Reverse Mode Jacobian Sparsity Pattern$$ 
 
-$index forward, sparse Jacobian$$
-$index sparse, forward Jacobian$$
-$index pattern, forward Jacobian$$
+$index reverse, sparse Jacobian$$
+$index sparse, reverse Jacobian$$
+$index pattern, reverse Jacobian$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%%Py% = %F%.ForSparseJac(%q%, %Px%)%$$
+$syntax%%Px% = %F%.RevSparseJac(%p%, %Py%)%$$
 $rnext $cnext
 $tend
 
@@ -61,10 +61,10 @@ P_{i,j} = {\rm false} \Rightarrow G^{(1)}_{i,j} (x) = 0
 $head Description$$
 Given the function 
 $latex F : B^n \rightarrow B^m$$ defined by the argument $italic F$$,
-and a Jacobian sparsity pattern $latex Px$$ for a function
-$latex X : B^q \rightarrow B^n$$,
-$code ForSparseJac$$ returns a sparsity pattern for the function
-$latex F \circ X : B^q \rightarrow B^m$$. 
+and a Jacobian sparsity pattern $latex Py$$ for a function
+$latex Y : B^m \rightarrow B^p$$,
+$code RevSparseJac$$ returns a sparsity pattern for the function
+$latex Y \circ F : B^n \rightarrow B^p$$. 
 
 $head F$$
 The object $italic F$$ has prototype
@@ -78,41 +78,41 @@ $xref/ADFun/Domain/domain/$$ space for $italic F$$, and
 $latex m$$ is the dimension of the 
 $xref/ADFun/Range/range/$$ space for $italic F$$.
 
-$head q$$
-The argument $italic q$$ has prototype
+$head p$$
+The argument $italic p$$ has prototype
 $syntax%
-	size_t %q%
+	size_t %p%
 %$$
-It specifies the number of components we are computing the 
+It specifies the number of functions components we are computing the 
 sparsity pattern with respect to.
 Note that the memory required for the calculation is proportional 
-to $latex q$$ times the total number of variables on the tape.
+to $latex p$$ times the total number of variables on the tape.
 Thus it may be desireable to break the sparsity calculation into 
 groups that do not require to much memory. 
 
-$head Px$$
-The argument $italic Px$$ has prototype
-$syntax%
-	const %VectorBool% &%Px%
-%$$
-and is a vector with size $latex n * q$$.
-The sparsity pattern for $latex X$$ is given by
-$latex \[
-	Px_{i,j} = Px [ i * q + j ]
-\] $$
-for $latex i = 1 , \ldots , n$$ and $latex j = 1 , \ldots , q$$.
-
 $head Py$$
-The return value $italic Py$$ has prototype
+The argument $italic Py$$ has prototype
 $syntax%
-	%VectorBool% %Py%
+	const %VectorBool% &%Py%
 %$$
-and is a vector with size $latex m * q$$.
-The sparsity pattern for $latex F \circ X$$ is given by
+and is a vector with size $latex p * m$$.
+The sparsity pattern for $latex Y$$ is given by
 $latex \[
-	Py_{i,j} = Py [ i * q + j ]
+	Py_{i,j} = Py [ i * m + j ]
 \] $$
-for $latex i = 1 , \ldots , m$$ and $latex j = 1 , \ldots , q$$.
+for $latex i = 1 , \ldots , p$$ and $latex j = 1 , \ldots , m$$.
+
+$head Px$$
+The return value $italic Px$$ has prototype
+$syntax%
+	%VectorBool% %Px%
+%$$
+and is a vector with size $latex p * n$$.
+The sparsity pattern for $latex Y \circ F$$ is given by
+$latex \[
+	Py_{i,j} = Py [ i * n + j ]
+\] $$
+for $latex i = 1 , \ldots , p$$ and $latex j = 1 , \ldots , n$$.
 
 $head VectorBool$$
 The type $italic VectorBool$$ must be a $xref/SimpleVector/$$ class with
@@ -121,28 +121,28 @@ The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
 $head Entire Sparsity Pattern$$
-Suppose that $latex q = n$$ and the function 
-$latex X : B^q \rightarrow B^n$$ is the identity; i.e., $latex X(x) = x$$.
+Suppose that $latex p = m$$ and the function 
+$latex Y : B^m \rightarrow B^p$$ is the identity; i.e., $latex Y(y) = y$$.
 If follows that 
 $latex \[
-Px [ i * q + j ] = \left\{ \begin{array}{ll}
+Py [ i * m + j ] = \left\{ \begin{array}{ll}
 	{\rm true}  & {\rm if} \; i = j \\
 	{\rm flase} & {\rm otherwise}
 \end{array} \right. 
 \] $$
 is an efficient sparsity pattern for $latex X$$; i.e., the choice
-for $italic Px$$ has as few true values as possible.
-In addition, the corresponding value for $italic Py$$ is a 
+for $italic Py$$ has as few true values as possible.
+In addition, the corresponding value for $italic Px$$ is a 
 sparsity pattern for $italic F$$.
 
 
 
 $head Example$$
 $children%
-	Example/ForSparseJac.cpp
+	Example/RevSparseJac.cpp
 %$$
 The file
-$xref/ForSparseJac.cpp/$$
+$xref/RevSparseJac.cpp/$$
 contains an example and a test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -155,13 +155,13 @@ namespace CppAD {
 
 template <class Base>
 template <class VectorBool>
-VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
+VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 {
 	// type used to pack bits (must support standard bit operations)
 	typedef size_t Pack;
 
 	// temporary indices
-	size_t i, j, k, p;
+	size_t i, j, k, q;
 
 	// check VectorBool is Simple Vector class with bpp; type elements
 	CheckSimpleVector<bool, VectorBool>();
@@ -171,23 +171,24 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
 	size_t n = indvar.size();
 
 	CppADUsageError(
-		q > 0,
-		"ForSparseJac: q (first arugment) is not greater than zero"
+		p > 0,
+		"RevSparseJac: first argument is not greater than zero"
 	);
 
 	CppADUsageError(
-		Px.size() == n * q,
-		"ForSparseJac: Py (second argument) length is not equal to\n"
-		"q (first argument) times domain dimension for ADFun object."
+		Py.size() == p * m,
+		"RevSparseJac: Second argument length is not equal to\n"
+		"first argument times range dimension for ADFun object."
 	);
 
+	
 	// number of packed values per variable on the tape
-	size_t npv = 1 + (q - 1) / sizeof(Pack);
+	size_t npv = 1 + (p - 1) / sizeof(Pack);
 
 	// array that will hold packed values
-	if( ForJacColDim < npv )
+	if( RevJacColDim < npv )
 	{	try
-		{	ForJac = new Pack[totalNumVar * npv]; 
+		{	RevJac = new Pack[totalNumVar * npv]; 
 		}
 		catch(...)
 		{	CppADUsageError(0, "cannot allocate sufficient memory");
@@ -195,46 +196,47 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
 		}
 	}
 
-	// set values corresponding to independent variables
-	Pack mask;
-	for(i = 0; i < n; i++)
-	{	CppADUnknownError( indvar[i] < totalNumVar );
-		// indvar[i] is operator taddr for i-th independent variable
-		CppADUnknownError( Rec->GetOp( indvar[i] ) == InvOp );
-
-		// initialize all bits as zero
+	// initialize entire RevJac matrix as false
+	for(i = 0; i < totalNumVar; i++)
 		for(k = 0; k < npv; k++)
-			ForJac[ indvar[i] * npv + k ] = 0;
+			RevJac[ i * npv + k ] = 0;
+
+	// set values corresponding to dependent variables
+	Pack mask;
+	for(j = 0; j < m; j++)
+	{	CppADUnknownError( depvar[j] < totalNumVar );
 
 		// set bits that are true
-		for(j = 0; j < q; j++) 
-		{	k    = j / sizeof(Pack);
-			p    = j - k * sizeof(Pack);
-			mask = Pack(1) << p;
-			if( Px[ i * q + j ] )
-				ForJac[ indvar[i] * npv + k ] |= mask;
+		for(i = 0; i < p; i++) 
+		{	k    = i / sizeof(Pack);
+			q    = i - k * sizeof(Pack);
+			mask = Pack(1) << q;
+			if( Py[ i * m + j ] )
+				RevJac[ depvar[j] * npv + k ] |= mask;
 		}
 	}
 
 	// evaluate the sparsity patterns
-	ForJacSweep(npv, totalNumVar, Rec, ForJac);
+	RevJacSweep(npv, totalNumVar, Rec, RevJac);
 
 	// return values corresponding to dependent variables
-	VectorBool Py(m * q);
-	for(i = 0; i < m; i++)
-	{	CppADUnknownError( depvar[i] < totalNumVar );
+	VectorBool Px(p * n);
+	for(j = 0; j < n; j++)
+	{	CppADUnknownError( indvar[j] < totalNumVar );
+		// indvar[j] is operator taddr for j-th independent variable
+		CppADUnknownError( Rec->GetOp( indvar[j] ) == InvOp );
 
 		// set bits 
-		for(j = 0; j < q; j++) 
-		{	k     = j / sizeof(Pack);
-			p     = j - k * sizeof(Pack);
-			mask  = Pack(1) << p;
-			mask &=	ForJac[ depvar[i] * npv + k ];
-			Py[ i * q + j ] = (mask != 0);
+		for(i = 0; i < p; i++) 
+		{	k     = i / sizeof(Pack);
+			q     = i - k * sizeof(Pack);
+			mask  = Pack(1) << q;
+			mask &=	RevJac[ indvar[j] * npv + k ];
+			Px[ i * n + j ] = (mask != 0);
 		}
 	}
 
-	return Py;
+	return Px;
 }
 
 } // END CppAD namespace

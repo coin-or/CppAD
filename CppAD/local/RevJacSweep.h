@@ -1,5 +1,5 @@
-# ifndef CppADForJacSweepIncluded
-# define CppADForJacSweepIncluded
+# ifndef CppADRevJacSweepIncluded
+# define CppADRevJacSweepIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
@@ -20,10 +20,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin ForJacSweep$$ $comment CppAD Developer Documentation$$
+$begin RevJacSweep$$ $comment CppAD Developer Documentation$$
 $spell
 	Jacobian
-	ForJacSweep
+	RevJacSweep
 	npv
 	numvar
 	Num
@@ -33,20 +33,20 @@ $spell
 	Inv
 $$
 
-$section Forward Computation of Sparsity Pattern$$
-$index ForJacSweep$$
-$index sparsity, forward Jacobian$$
-$index forward, Jacobian sparsity$$
-$index pattern, forward Jacobian$$
+$section Reverse Computation of Jacobian Sparsity Pattern$$
+$index RevJacSweep$$
+$index sparsity, reverse Jacobian$$
+$index reverse, Jacobian sparsity$$
+$index pattern, reverse Jacobian$$
 $index bit pattern, Jacobian$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%void ForJacSweep(
+$syntax%void RevJacSweep(
 	size_t                 %npv%,
 	size_t                 %numvar%,
 	TapeRec<%Base%>       *%Rec%,
-	%Pack%                *%ForJac%
+	%Pack%                *%RevJac%
 )%$$
 $tend
 
@@ -60,92 +60,70 @@ $latex \[
 \] $$
 
 $head Description$$
-Given the sparsity pattern for the independent variables,
-$code ForJacSweep$$ computes the sparsity pattern
+Given the sparsity pattern for the dependent variables,
+$code RevJacSweep$$ computes the sparsity pattern
 for all the other variables.
 
 
 $head numvar$$
-is the number of rows in the entire sparsity pattern $italic ForJac$$.
+is the number of rows in the entire sparsity pattern $italic RevJac$$.
 It must also be equal to $syntax%%Rec%->TotNumVar()%$$.
 
 
 $head npv$$
 Is the number of elements of type $italic Pack$$
-(per variable) in the sparsity pattern $italic ForJac$$.
+(per variable) in the sparsity pattern $italic RevJac$$.
 
 $head On Input$$
 
-$subhead Independent Variables and Operators$$
-The independent variable records come first.
-For $latex i = 1, \ldots , n$$ and $latex j = 0 , \ldots , npv$$,
-$table
-	$bold field$$ $cnext 
-	$bold Value$$          
-$rnext
-	$syntax%%ForJac%[%0% * %npv% + %j%]%$$      $cnext 
-	the variable with index zero is not used
-$rnext
-	$syntax%%Rec%->GetOp(0)%$$                $cnext 
-	the operator with index zero must be a $code NonOp$$
-$rnext
-	$syntax%%ForJac%[%i% * %npv% + %j%]%$$      $cnext 
-	$th j$$ subset of sparsity pattern for variable with index $italic i$$
-$rnext
-	$syntax%%Rec%->GetOp(%i%)%$$              $cnext 
-	the operator with index $italic i$$ must be a $code InvOp$$
-$tend
+$subhead Dependent Variables and Operators$$
+The dependent variable records come first last.
+For $latex i = numvar-m, \ldots , numvar-1$$ 
+and $latex j = 0 , \ldots , npv$$,
+$syntax%%RevJac%[%i% * %npv% + %j%]%$$
+is the $th j$$ subset of the sparsity pattern for 
+variable with index $italic i$$.   
 
 $subhead Other Variables and Operators$$
 The other variables follow the independent variables.
-For $latex i = n+1, \ldots , numvar-1$$,
-$latex j = 0 , \ldots , npv-1$$,
-and $latex k = n+1, \ldots ,$$ $syntax%%Rec%->NumOp() - 1%$$,
-$table
-	$bold field$$ $cnext 
-	$bold Value$$          
-$rnext
-	$syntax%%ForJac%[%i% * %npv% + %j%]%$$      $cnext 
-	$th j$$ set of sparsity pattern for variable with index $italic i$$     
-$rnext
-	$syntax%%Rec%->GetOp(%i%)%$$              $cnext 
-	any operator except for $code InvOp$$ 
-$tend
+For $latex i = 0, \ldots , numvar-m-1$$,
+$latex j = 1 , \ldots , npv-1$$,
+$syntax%%RevJac%[%i% * %npv% + %j%]%$$
+is equal to zero (all false).
 
 $head On Output$$
 
 $subhead Rec$$
 None of the values stored in $italic Rec$$ are modified.
 
-$subhead Independent Variables$$
-For $latex i = 1, \ldots , n$$ and $latex j = 0 , \ldots , npv-1$$,
+$subhead Dependent Variables$$
+For $latex i = numvar-m, \ldots , numvar-1$$ 
+and $latex j = 0 , \ldots , npv-1$$,
 $syntax%%Taylor%[%i% * %npv% + %j%]%$$ is not modified.
 
 
 $subhead Other Variables$$
-For $latex i = m+1, \ldots , numvar-1$$ and $latex j = 0 , \ldots , npv-1$$,
-$syntax%%ForJac%[%i% * %npv% + %j%]%$$ is set equal to the
-$th j$$ set of sparsity pattern for the variable with index $italic i$$.
-
+For $latex i = 1, \ldots , numvar-m-1$$ and $latex j = 0 , \ldots , npv-1$$,
+$syntax%%RevJac%[%i% * %npv% + %j%]%$$ is the
+$th j$$ subset of the sparsity pattern for the variable with index $italic i$$.
 
 $end
 ------------------------------------------------------------------------------
 */
-# define CppADForJacSweepTrace 0
+# define CppADRevJacSweepTrace 0
 
 
 // BEGIN CppAD namespace
 namespace CppAD {
 
 template <class Base, class Pack>
-void ForJacSweep(
+void RevJacSweep(
 	size_t                npv,
 	size_t                numvar,
 	TapeRec<Base>        *Rec,
-	Pack                 *ForJac
+	Pack                 *RevJac
 )
 {
-	size_t        numop;
 	OpCode           op;
 	size_t         i_op;
 	size_t        i_var;
@@ -154,20 +132,19 @@ void ForJacSweep(
 	size_t        n_ind;
 
 	const size_t   *ind;
-	const Pack       *X;
-	const Pack       *Y;
+	Pack             *X;
+	Pack             *Y;
+	const Pack       *Z;
 
 	// used by CExp operator 
-	const Pack  *trueCase, *falseCase;
-
-	Pack             *Z;
-	Pack           *Tmp;
+	Pack      *trueCase;
+	Pack     *falseCase;
 
 	size_t            i;
 	size_t            j;
 
-	// initial VecAD sparsity pattern (inefficient because just the indices
-	// of VecSto that corresponds to an array size are used)
+	// initial VecAD sparsity pattern (inefficient because just the index
+	// corresponding to size is used for all elements in a VecAD array)
 	Pack   *VectorSto;
 	i  = Rec->NumVecInd();
 	if( i > 0 )
@@ -180,39 +157,47 @@ void ForJacSweep(
 
 	// check numvar argument
 	CppADUnknownError( Rec->TotNumVar() == numvar );
+	CppADUnknownError( numvar > 0 );
 
-	// set the number of operators
-	numop = Rec->NumOp();
+	// Initialize
+	i_op   = Rec->NumOp();
+	i_var  = Rec->TotNumVar();
+	i_ind  = Rec->NumInd();
+	op     = NonOp;         // phony operator that is not there
 
-	// skip the NonOp at the beginning of the recording
-	i_op  = 0;
-	i_var = 0;
-	i_ind = 0;
-	op    = Rec->GetOp(i_op);
-	n_var = NumVar(op);
-	n_ind = NumInd(op);
-	CppADUnknownError( op == NonOp );
-	CppADUnknownError( n_var == 1 );
-	CppADUnknownError( n_ind == 0 );
+	while(i_op > 1)
+	{	--i_op;
 
-	while(++i_op < numop)
-	{
-		// increment for previous op
-		i_var += n_var;
-		i_ind += n_ind;
-
-		// this op
+		// next op
 		op     = Rec->GetOp(i_op);
 
-		// number of variables
+		// corresponding varable
 		n_var  = NumVar(op);
+		CppADUnknownError( i_var >= n_var );
+		i_var -= n_var;
 
-		// index field values for this op
+		// corresponding index values
 		n_ind  = NumInd(op);
+		CppADUnknownError( i_ind >= n_ind );
+		i_ind -= n_ind;
 		ind    = Rec->GetInd(n_ind, i_ind);
 
-		// value of z for this op
-		Z      = ForJac + i_var * npv;
+		// sparsity for z corresponding to this op
+		Z      = RevJac + i_var * npv;
+
+# if CppADForJacSweepTrace
+		printOp(
+			std::cout, 
+			Rec,
+			i_var,
+			op, 
+			ind,
+			npv, 
+			Z, 
+			0, 
+			(Pack *) CppADNull
+		);
+# endif
 
 		// rest of information depends on the case
 		switch( op )
@@ -221,9 +206,9 @@ void ForJacSweep(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 1 );
 			CppADUnknownError( ind[0] < i_var );
-			X   = ForJac + ind[0] * npv;
+			X   = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -233,10 +218,12 @@ void ForJacSweep(
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
 
-			X = ForJac + ind[0] * npv;
-			Y = ForJac + ind[1] * npv;
+			X = RevJac + ind[0] * npv;
+			Y = RevJac + ind[1] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = X[j] | Y[j];
+			{	X[j] |= Z[j];
+				Y[j] |= Z[j];
+			}
 			break;
 			// -------------------------------------------------
 
@@ -245,9 +232,9 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
 
-			Y = ForJac + ind[1] * npv;
+			Y = RevJac + ind[1] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = Y[j];
+				Y[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -256,9 +243,9 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = ForJac + ind[0] * npv;
+			X = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -270,11 +257,9 @@ void ForJacSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in variable record
-			Tmp = ForJac + (i_var+1) * npv;
-			X   = ForJac + ind[0] * npv;
+			X   = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Tmp[j] = Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -286,11 +271,9 @@ void ForJacSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in variable record
-			Tmp = ForJac + (i_var+1) * npv;
-			X   = ForJac + ind[0] * npv;
+			X   = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Tmp[j] = Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -302,11 +285,9 @@ void ForJacSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in variable record
-			Tmp = ForJac + (i_var+1) * npv;
-			X   = ForJac + ind[0] * npv;
+			X   = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Tmp[j] = Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -315,14 +296,13 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 6);
 			CppADUnknownError( ind[1] != 0 );
 
-			trueCase  = ForJac + ind[4] * npv; // if ind[1] & 4 true
-			falseCase = ForJac + ind[5] * npv; // if ind[1] & 8 true
+			trueCase  = RevJac + ind[4] * npv; // if ind[1] & 4 true
+			falseCase = RevJac + ind[5] * npv; // if ind[1] & 8 true
 			for(j = 0; j < npv; j++)
 			{	if( ind[1] & 4 )
-					Z[j] = trueCase[j];
-				else	Z[j] = 0;
+					trueCase[j] |= Z[j];
 				if( ind[1] & 8 )
-					Z[j] |= falseCase[j];
+					falseCase[j] |= Z[j];
 			}
 			break;
 			// ---------------------------------------------------
@@ -342,11 +322,9 @@ void ForJacSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in variable record
-			Tmp = ForJac + (i_var+1) * npv;
-			X   = ForJac + ind[0] * npv;
+			X   = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Tmp[j] = Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// ---------------------------------------------------
 
@@ -358,11 +336,9 @@ void ForJacSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in variable record
-			Tmp = ForJac + (i_var+1) * npv;
-			X   = ForJac + ind[0] * npv;
+			X   = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Tmp[j] = Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -370,8 +346,6 @@ void ForJacSweep(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 2 );
 
-			for(j = 0; j < npv; j++)
-				Z[j] = 0;
 			break;
 			// -------------------------------------------------
 
@@ -381,10 +355,12 @@ void ForJacSweep(
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
 
-			X = ForJac + ind[0] * npv;
-			Y = ForJac + ind[1] * npv;
+			X = RevJac + ind[0] * npv;
+			Y = RevJac + ind[1] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = X[j] | Y[j];
+			{	X[j] |= Z[j];
+				Y[j] |= Z[j];
+			}
 			break;
 			// -------------------------------------------------
 
@@ -393,9 +369,9 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
 
-			Y = ForJac + ind[1] * npv;
+			Y = RevJac + ind[1] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = Y[j];
+				Y[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -404,9 +380,9 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = ForJac + ind[0] * npv;
+			X = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -415,9 +391,9 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 1 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = ForJac + ind[0] * npv;
+			X = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -438,7 +414,7 @@ void ForJacSweep(
 
 			// use sparsity for entire vector for this value
 			for(j = 0; j < npv; j++)
-				Z[j] = VectorSto[ j + (ind[0] - 1) * npv ];
+				VectorSto[ j + (ind[0] - 1) * npv ] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -452,7 +428,7 @@ void ForJacSweep(
 
 			// use sparsity for entire vector for this value
 			for(j = 0; j < npv; j++)
-				Z[j] = VectorSto[ j + (ind[0] - 1) * npv ];
+				VectorSto[ j + (ind[0] - 1) * npv ] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -461,9 +437,9 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 1 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = ForJac + ind[0] * npv;
+			X = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -473,10 +449,12 @@ void ForJacSweep(
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
 
-			X = ForJac + ind[0] * npv;
-			Y = ForJac + ind[1] * npv;
+			X = RevJac + ind[0] * npv;
+			Y = RevJac + ind[1] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = X[j] | Y[j];
+			{	X[j] |= Z[j];
+				Y[j] |= Z[j];
+			}
 			break;
 			// -------------------------------------------------
 
@@ -485,9 +463,9 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
 
-			Y = ForJac + ind[1] * npv;
+			Y = RevJac + ind[1] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = Y[j];
+				Y[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -496,37 +474,36 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = ForJac + ind[0] * npv;
+			X = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
 			case NonOp:
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 0 );
-			for(j = 0; j < npv; j++)
-				Z[j] = 0;
+
 			break;
+			// -------------------------------------------------
 
 			case ParOp:
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 1 );
-			for(j = 0; j < npv; j++)
-				Z[j] = 0;
+
 			break;
 			// -------------------------------------------------
 
 			case PripOp:
 			CppADUnknownError( n_var == 1);
-			for(j = 0; j < npv; j++)
-				Z[j] = 0;
+
 			break;
 			// -------------------------------------------------
 
 			case PrivOp:
 			// nvar should be zero for this case
 			CppADUnknownError( n_var == 1);
+
 			break;
 			// -------------------------------------------------
 
@@ -538,11 +515,9 @@ void ForJacSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in second variable
-			Tmp = ForJac + (i_var+1) * npv;
-			X   = ForJac + ind[0] * npv;
+			X   = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = Tmp[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -554,11 +529,9 @@ void ForJacSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in second variable
-			Tmp = ForJac + (i_var+1) * npv;
-			X   = ForJac + ind[0] * npv;
+			X   = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = Tmp[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -567,9 +540,9 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 1 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = ForJac + ind[0] * npv;
+			X = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -577,9 +550,6 @@ void ForJacSweep(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 3 );
 
-			// sparsity of vector does not change in this case
-			for(j = 0; j < npv; j++)
-				Z[j] = 0;
 			break;
 			// -------------------------------------------------
 
@@ -588,10 +558,10 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 3 );
 
 			// update sparsity for entire vector
-			Y = ForJac + ind[2] * npv;
+			Y = RevJac + ind[2] * npv;
 			for(j = 0; j < npv; j++)
-			{	Z[j] = Y[j];
-				VectorSto[ j + (ind[0] - 1) * npv] |= Y[j];
+			{	Y[j] |= Z[j];
+				VectorSto[ j + (ind[0] - 1) * npv] |= Z[j];
 			}
 			break;
 			// -------------------------------------------------
@@ -600,9 +570,6 @@ void ForJacSweep(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 3 );
 
-			// sparsity of vector does not change in this case
-			for(j = 0; j < npv; j++)
-				Z[j] = 0;
 			break;
 			// -------------------------------------------------
 
@@ -610,10 +577,10 @@ void ForJacSweep(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 3 );
 
-			Y    = ForJac + ind[2] * npv;
+			Y    = RevJac + ind[2] * npv;
 			for(j = 0; j < npv; j++)
-			{	Z[j] = Y[j];
-				VectorSto[ j + (ind[0] - 1) * npv] |= Y[j];
+			{	Y[j] |= Z[j];
+				VectorSto[ j + (ind[0] - 1) * npv] |= Z[j];
 			}
 			break;
 			// -------------------------------------------------
@@ -624,10 +591,12 @@ void ForJacSweep(
 			CppADUnknownError( ind[0] < i_var );
 			CppADUnknownError( ind[1] < i_var );
 
-			X = ForJac + ind[0] * npv;
-			Y = ForJac + ind[1] * npv;
+			X = RevJac + ind[0] * npv;
+			Y = RevJac + ind[1] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = X[j] | Y[j];
+			{	X[j] |= Z[j];
+				Y[j] |= Z[j];
+			}
 			break;
 			// -------------------------------------------------
 
@@ -636,9 +605,9 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[1] < i_var );
 
-			Y = ForJac + ind[1] * npv;
+			Y = RevJac + ind[1] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = Y[j];
+				Y[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -647,33 +616,19 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 2 );
 			CppADUnknownError( ind[0] < i_var );
 
-			X = ForJac + ind[0] * npv;
+			X = RevJac + ind[0] * npv;
 			for(j = 0; j < npv; j++)
-				Z[j] = X[j];
+				X[j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
 			default:
 			CppADUnknownError(0);
 		}
-# if CppADForJacSweepTrace
-		printOp(
-			std::cout, 
-			Rec,
-			i_var,
-			op, 
-			ind,
-			npv, 
-			Z, 
-			0, 
-			(Pack *) CppADNull
-		);
 	}
-	std::cout << std::endl;
-# else
-	}
-# endif
-	CppADUnknownError( (i_var + n_var) == Rec->TotNumVar() );
+	CppADUnknownError( i_op == 1 );
+	CppADUnknownError( Rec->GetOp(i_op-1) == NonOp );
+	CppADUnknownError( i_var == NumVar(NonOp)  );
 
 	if( VectorSto != CppADNull )
 		delete [] VectorSto;
@@ -683,6 +638,6 @@ void ForJacSweep(
 
 } // END CppAD namespace
 
-# undef CppADForJacSweepTrace
+# undef CppADRevJacSweepTrace
 
 # endif

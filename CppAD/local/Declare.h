@@ -32,18 +32,21 @@ namespace CppAD {
 	template <class Base> class ADDiscrete;
 	
 	// Boolean functions of one AD<Base> argument
-	template <class Base> int  Integer         (const AD<Base> &u);
-	template <class Base> bool Parameter       (const AD<Base> &u);
-	template <class Base> bool Variable        (const AD<Base> &u);
-	template <class Base> bool IdenticalZero   (const AD<Base> &u);
-	template <class Base> bool IdenticalOne    (const AD<Base> &u);
-	template <class Base> bool IdenticalPar    (const AD<Base> &u);
-	template <class Base> bool LessThanZero    (const AD<Base> &u);
-	template <class Base> bool LessThanOrZero  (const AD<Base> &u);
-	template <class Base> bool GreaterThanZero (const AD<Base> &u);
+	template <class Base> int  Integer           (const AD<Base> &u);
+	template <class Base> bool Parameter         (const AD<Base> &u);
+	template <class Base> bool Variable          (const AD<Base> &u);
+	template <class Base> bool IdenticalZero     (const AD<Base> &u);
+	template <class Base> bool IdenticalOne      (const AD<Base> &u);
+	template <class Base> bool IdenticalPar      (const AD<Base> &u);
+	template <class Base> bool LessThanZero      (const AD<Base> &u);
+	template <class Base> bool LessThanOrZero    (const AD<Base> &u);
+	template <class Base> bool GreaterThanZero   (const AD<Base> &u);
+	template <class Base> bool GreaterThanOrZero (const AD<Base> &u);
 	
 	// CondExp
-	enum CompareOp {CompareLt, CompareLe, CompareEq, CompareGe, CompareGt};
+	enum CompareOp 
+	{CompareLt, CompareLe, CompareEq, CompareGe, CompareGt, CompareNe};
+
 	template <class Base> AD<Base> CondExpOp (
 		enum CompareOp         cop ,
 		const AD<Base>       &left , 

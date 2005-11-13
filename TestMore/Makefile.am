@@ -61,6 +61,7 @@ TestMore_SOURCES  = TestMore.cpp \
 	Rosen34.cpp \
 	Runge45.cpp \
 	Reverse.cpp \
+	RevSparseJac.cpp \
 	SimpleVector.cpp \
 	SinCos.cpp \
 	Sqrt.cpp \

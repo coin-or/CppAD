@@ -111,9 +111,11 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/Parameter.h \
 	CppAD/local/Pow.h \
 	CppAD/local/PrintFor.h \
-	CppAD/local/RevOne.h \
-	CppAD/local/RevTwo.h \
 	CppAD/local/Reverse.h \
+	CppAD/local/RevJacSweep.h \
+	CppAD/local/RevOne.h \
+	CppAD/local/RevSparseJac.h \
+	CppAD/local/RevTwo.h \
 	CppAD/local/ReverseSweep.h \
 	CppAD/local/Sin.h \
 	CppAD/local/Sinh.h \

@@ -1,5 +1,5 @@
-# ifndef CppADDivvvOpIncluded
-# define CppADDivvvOpIncluded
+# ifndef CppADDivOpIncluded
+# define CppADDivOpIncluded
 
 // BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------

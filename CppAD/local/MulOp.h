@@ -1,5 +1,5 @@
-# ifndef CppADMulvvOpIncluded
-# define CppADMulvvOpIncluded
+# ifndef CppADMulOpIncluded
+# define CppADMulOpIncluded
 
 // BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------

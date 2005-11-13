@@ -1,5 +1,5 @@
-# ifndef CppADADFunIncluded
-# define CppADADFunIncluded
+# ifndef CppADFunIncluded
+# define CppADFunIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
@@ -193,7 +193,8 @@ $contents%
 	Example/Fun.cpp%
 	Example/CompareChange.cpp%
 	omh/MulTape.omh%
-	CppAD/local/ForSparseJac.h
+	CppAD/local/ForSparseJac.h%
+	CppAD/local/RevSparseJac.h
 %$$
 
 $end
@@ -221,6 +222,8 @@ public:
 			delete [] Partial;
 		if( ForJac != CppADNull )
 			delete [] ForJac;
+		if( RevJac != CppADNull )
+			delete [] RevJac;
 
 	}
 
@@ -232,9 +235,13 @@ public:
 	template <typename VectorBase>
 	VectorBase Reverse(size_t p, const VectorBase &v);
 
-	// forward mode dependency sweep
+	// forward mode sparsity sweep
 	template <typename VectorBase>
 	VectorBase ForSparseJac(size_t q, const VectorBase &Dx);
+
+	// reverse mode sparsity sweep
+	template <typename VectorBase>
+	VectorBase RevSparseJac(size_t q, const VectorBase &Dx);
 
 	// size of this function object
 	size_t Size(void) const
@@ -264,7 +271,7 @@ public:
 	// amount of memory for each variable
 	size_t Memory(void) const
 	{	size_t pervar  = (TaylorColDim + PartialColDim) * sizeof(Base)
-		               + ForJacColDim * sizeof(Pack);
+		               + (ForJacColDim + RevJacColDim)  * sizeof(Pack);
 		size_t total   = totalNumVar * pervar + Rec->Memory();
 		return total;
 	}
@@ -325,6 +332,9 @@ private:
 	// number of columns currently allocated for ForJac array
 	size_t ForJacColDim;
 
+	// number of columns currently allocated for RevJac array
+	size_t RevJacColDim;
+
 	// number of rows (variables) in the recording (Rec)
 	size_t totalNumVar;
 
@@ -348,6 +358,9 @@ private:
 
 	// results of the forward mode Jacobian sparsity calculations
 	Pack *ForJac;
+
+	// results of the reverse mode Jacobian sparsity calculations
+	Pack *RevJac;
 };
 // ---------------------------------------------------------------------------
 
@@ -392,12 +405,14 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	TaylorColDim  = 1;
 	PartialColDim = 0;
 	ForJacColDim  = 0;
+	RevJacColDim  = 0;
 
 	// recording
 	Rec     = new TapeRec<Base>( AD<Base>::Tape()->Rec );
 	Taylor  = new Base[totalNumVar];
 	Partial = CppADNull;
 	ForJac  = CppADNull;
+	RevJac  = CppADNull;
 
 	// number of elements in u
 	n = u.size();
@@ -467,6 +482,8 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 # include <CppAD/local/Reverse.h>
 # include <CppAD/local/ForJacSweep.h>
 # include <CppAD/local/ForSparseJac.h>
+# include <CppAD/local/RevJacSweep.h>
+# include <CppAD/local/RevSparseJac.h>
 //
 // driver routines
 # include <CppAD/local/Jacobian.h>

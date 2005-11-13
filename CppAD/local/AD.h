@@ -77,6 +77,8 @@ class AD {
 		(const AD<Base> &u);
 	friend bool LessThanOrZero  <Base> 
 		(const AD<Base> &u);
+	friend bool GreaterThanOrZero  <Base> 
+		(const AD<Base> &u);
 	friend bool Parameter     <Base> 
 		(const AD<Base> &u);
 	friend bool Variable      <Base> 

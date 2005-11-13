@@ -53,6 +53,7 @@ extern bool MulZeroOne(void);
 extern bool Neg(void);
 extern bool OdeErrControl(void);
 extern bool Reverse(void);
+extern bool RevSparseJac(void);
 extern bool Rosen34(void);
 extern bool Runge45(void);
 extern bool SimpleVector(void);
@@ -108,6 +109,7 @@ int main(void)
 	ok &= Run( Neg,             "Neg"            );
 	ok &= Run( OdeErrControl,   "OdeErrControl"  );
 	ok &= Run( Reverse,         "Reverse"        );
+	ok &= Run( RevSparseJac,    "RevSparseJac"   );
 	ok &= Run( Rosen34,         "Rosen34"        );
 	ok &= Run( Runge45,         "Runge45"        );
 	ok &= Run( SimpleVector,    "SimpleVector"   );

@@ -50,6 +50,35 @@ $syntax%
 
 $end 
 ---------------------------------------------------------------------------
+$begin GreaterThanOrZero$$ $comment CppAD Developer Documentation$$
+$spell
+	inline
+	const
+	bool
+$$
+
+$index >=$$
+$index GreaterThanOrZero$$
+$index positive$$
+$section Check if a Value is Greater Than Or Equal Zero$$
+
+$table
+$bold Syntax$$ $cnext
+$syntax%inline bool GreaterThanZero(const %Type% &%x%)%$$
+$tend
+
+$head Description$$
+If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
+$italic x$$ is greater than or equal zero if and only if
+$syntax%%x%.value%$$ is greater than zero.
+If $italic Type$$ is not $syntax%AD<%Base%>%$$ for some $italic Base$$,
+$italic x$$ is greater than zero if and only if
+$syntax%
+	%x% >= 0.
+%$$
+
+$end 
+---------------------------------------------------------------------------
 $begin LessThanZero$$ $comment CppAD Developer Documentation$$
 $spell
 	inline
@@ -89,7 +118,7 @@ $$
 $index >=$$
 $index LessThanOrZero$$
 $index negative$$
-$section Check if a Value is Less Than Zero$$
+$section Check if a Value is Less Than Or Equal Zero$$
 
 $table
 $bold Syntax$$ $cnext
@@ -139,6 +168,34 @@ inline bool GreaterThanZero(std::complex<double> x)
 template <class Base>
 inline bool GreaterThanZero(const AD<Base> &x)
 {	return GreaterThanZero(x.value); }
+
+
+// GreaterThanOrZero ---------------------------------------------------------
+inline bool GreaterThanOrZero(float x)
+{	return x >= 0.; }
+
+inline bool GreaterThanOrZero(double x)
+{	return x >= 0.; }
+
+inline bool GreaterThanOrZero(std::complex<float> x)
+{	CppADUsageError(
+		0,
+		"Attempt to use std::complex<float> as an ordered type"
+	);
+	return false;
+}
+
+inline bool GreaterThanOrZero(std::complex<double> x)
+{	CppADUsageError(
+		0,
+		"Attempt to use std::complex<double> as an ordered type"
+	);
+	return false;
+}
+
+template <class Base>
+inline bool GreaterThanOrZero(const AD<Base> &x)
+{	return GreaterThanOrZero(x.value); }
 
 
 // LessThanZero  ------------------------------------------------------------

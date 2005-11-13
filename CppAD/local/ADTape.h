@@ -564,6 +564,14 @@ private:
 		const AD<Base> &falseCase
 	);
 
+	// see Compare.h
+	void RecordCompare(
+		enum CompareOp  cop      ,
+		bool            result   ,
+		const AD<Base> &left     ,
+		const AD<Base> &right
+	);
+
 	// load ADVec element 
 	void RecordLoadOp( 
 		OpCode         op,

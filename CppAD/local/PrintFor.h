@@ -1,5 +1,5 @@
-# ifndef CppADPrintIncluded
-# define CppADPrintIncluded
+# ifndef CppADPrintForIncluded
+# define CppADPrintForIncluded
 
 // BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------

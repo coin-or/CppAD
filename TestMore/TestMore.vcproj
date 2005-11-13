@@ -531,6 +531,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\RevSparseJac.cpp">
+			</File>
+			<File
 				RelativePath="Rosen34.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

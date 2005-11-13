@@ -17,7 +17,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin ForSparseJac.cpp$$
+$begin RevSparseJac.cpp$$
 $spell
 	Jacobian
 	Jac
@@ -25,15 +25,15 @@ $spell
 	Cpp
 $$
 
-$section Forward Mode Jacobian Sparsity: Example and Test$$
-$index ForSparseJac$$
-$index example, forward Jacobian sparsity$$
-$index example, Jacobian  forward sparsity$$
-$index test, forward Jacobian sparsity$$
-$index test, Jacobian forward sparsity$$
+$section Reverse Mode Jacobian Sparsity: Example and Test$$
+$index RevSparseJac$$
+$index example, reverse Jacobian sparsity$$
+$index example, Jacobian  reverse sparsity$$
+$index test, reverse Jacobian sparsity$$
+$index test, Jacobian reverse sparsity$$
 
 $code
-$verbatim%Example/ForSparseJac.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/RevSparseJac.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -47,7 +47,7 @@ $end
 
 namespace { // Begin empty namespace
 template <typename VectorBool> // vector class, elements of type bool
-bool ForSparseJacCases(void)
+bool RevSparseJacCases(void)
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -72,38 +72,38 @@ bool ForSparseJacCases(void)
 	// create function object F : X -> Y
 	ADFun<double> F(X, Y);
 
-	// sparsity pattern for the identity function U(x) = x
-	VectorBool Px(n * n);
+	// sparsity pattern for the identity function U(y) = y
+	VectorBool Py(m * m);
 	size_t i, j;
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-			Px[ i * n + j ] = false;
-		Px[ i * n + i ] = true;
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < m; j++)
+			Py[ i * m + j ] = false;
+		Py[ i * m + i ] = true;
 	}
 
-	// sparsity pattern for F(U(x))
-	VectorBool Py(m * n);
-	Py = F.ForSparseJac(n, Px);
+	// sparsity pattern for U(F(x))
+	VectorBool Px(m * n);
+	Px = F.RevSparseJac(m, Py);
 
 	// check values
-	ok &= (Py[ 0 * n + 0 ] == true);  // Y[0] does     depend on X[0]
-	ok &= (Py[ 0 * n + 1 ] == false); // Y[0] does not depend on X[1]
-	ok &= (Py[ 1 * n + 0 ] == true);  // Y[1] does     depend on X[0]
-	ok &= (Py[ 1 * n + 1 ] == true);  // Y[1] does     depend on X[1]
-	ok &= (Py[ 2 * n + 0 ] == false); // Y[2] does not depend on X[0]
-	ok &= (Py[ 2 * n + 1 ] == true);  // Y[2] does     depend on X[1]
+	ok &= (Px[ 0 * n + 0 ] == true);  // Y[0] does     depend on X[0]
+	ok &= (Px[ 0 * n + 1 ] == false); // Y[0] does not depend on X[1]
+	ok &= (Px[ 1 * n + 0 ] == true);  // Y[1] does     depend on X[0]
+	ok &= (Px[ 1 * n + 1 ] == true);  // Y[1] does     depend on X[1]
+	ok &= (Px[ 2 * n + 0 ] == false); // Y[2] does not depend on X[0]
+	ok &= (Px[ 2 * n + 1 ] == true);  // Y[2] does     depend on X[1]
 
 	return ok;
 }
 } // End empty namespace
 
-bool ForSparseJac(void)
+bool RevSparseJac(void)
 {	bool ok = true;
 
-	ok &= ForSparseJacCases< CppAD::vectorBool     >();
-	ok &= ForSparseJacCases< CppAD::vector  <bool> >();
-	ok &= ForSparseJacCases< std::vector    <bool> >(); 
-	ok &= ForSparseJacCases< std::valarray  <bool> >(); 
+	ok &= RevSparseJacCases< CppAD::vectorBool     >();
+	ok &= RevSparseJacCases< CppAD::vector  <bool> >();
+	ok &= RevSparseJacCases< std::vector    <bool> >(); 
+	ok &= RevSparseJacCases< std::valarray  <bool> >(); 
 
 	return ok;
 }

@@ -131,6 +131,7 @@ $rref PowInt.cpp$$
 $rref RevOne.cpp$$
 $rref RevTwo.cpp$$
 $rref Reverse.cpp$$
+$rref RevSparseJac.cpp$$
 $rref RombergOne.cpp$$
 $rref RombergMul.cpp$$
 $rref Rosen34.cpp$$

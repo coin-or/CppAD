@@ -54,9 +54,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	Check[index * n + 1] = true;   \
 	Check[index * n + 2] = false;  \
 	index++;
+ 
 
 
-bool ForSparseJac(void)
+bool RevSparseJac(void)
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -128,26 +129,27 @@ bool ForSparseJac(void)
 	// check final index
 	assert( index == m );
 
+
 	// create function object F : X -> Y
 	ADFun<double> F(X, Y);
 
-	// dependency matrix for the identity function W(x) = x
-	CppADvector< bool > Px(n * n);
+	// dependency matrix for the identity function U(y) = y
+	CppADvector< bool > Py(m * m);
 	size_t i, j;
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j < n; j++)
-			Px[ i * n + j ] = false;
-		Px[ i * n + i ] = true;
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < m; j++)
+			Py[ i * m + j ] = false;
+		Py[ i * m + i ] = true;
 	}
 
-	// evaluate the dependency matrix for F(X(x))
-	CppADvector< bool > Py(m * n);
-	Py = F.ForSparseJac(n, Px);
+	// evaluate the dependency matrix for U(F(x))
+	CppADvector< bool > Px(m * n);
+	Px = F.RevSparseJac(m, Py);
 
 	// check values
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
-			ok &= (Py[i * n + j] == Check[i * n + j]);
+			ok &= (Px[i * n + j] == Check[i * n + j]);
 	}	
 
 	return ok;

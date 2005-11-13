@@ -107,9 +107,10 @@ Example_SOURCES   = \
 	Poly.cpp \
 	Pow.cpp \
 	PowInt.cpp \
-	RevOne.cpp \
-	RevTwo.cpp \
 	Reverse.cpp \
+	RevOne.cpp \
+	RevSparseJac.cpp \
+	RevTwo.cpp \
 	RombergMul.cpp \
 	RombergOne.cpp \
 	Rosen34.cpp \

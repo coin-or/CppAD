@@ -183,9 +183,12 @@ size_t ForwardSweep(
 	const Base       *X;
 	const Base       *Y;
 
-	// used by CExp operator 
+	// used by CExp operator (left and right also used by Com operator)
 	const Base  *left, *right, *trueCase, *falseCase;
 	const Base  zero = Base(0);
+
+	// used by Com operator
+	bool result;
 
 	Base             *Z;
 	Base           *Tmp;
@@ -194,10 +197,8 @@ size_t ForwardSweep(
 	size_t          len;
 
 
-	// The status is only computed when d is zero and
-	static size_t compareCount;
-	if( d == 0 )
-		compareCount = 0;
+	// initialize the comparision operator (ComOp) counter
+	size_t compareCount = 0;
 
 	// if this is an order zero calculation, initialize vector indices
 	size_t *VectorInd;
@@ -381,6 +382,58 @@ size_t ForwardSweep(
 			break;
 			// ---------------------------------------------------
 
+			case ComOp:
+			CppADUnknownError( n_var == 0);
+			CppADUnknownError( n_ind == 4);
+			CppADUnknownError( ind[1] > 1 );
+			if( d == 0 )
+			{	if( ind[1] & 1 )
+					result = true;
+				else	result = false;
+				if( ind[1] & 2 )
+					left = Taylor + ind[2] * J;
+				else	left = Rec->GetPar(ind[2]);
+				if( ind[1] & 4 )
+					right = Taylor + ind[3] * J;
+				else	right = Rec->GetPar(ind[3]);
+				switch( CompareOp( ind[0] ) )
+				{	case CompareLt:
+					compareCount += ( result != 
+					LessThanZero(*left - *right) );
+					break;
+
+					case CompareLe:
+					compareCount += ( result !=
+					LessThanOrZero(*left - *right) );
+					break;
+
+					case CompareEq:
+					compareCount += ( result != 
+					(*left == *right) );
+					break;
+
+					case CompareGe:
+					compareCount += ( result !=
+					GreaterThanOrZero(*left - *right) );
+					break;
+
+					case CompareGt:
+					compareCount += ( result != 
+					GreaterThanZero(*left - *right) );
+					break;
+
+					case CompareNe:
+					compareCount += ( result != 
+					(*left != *right) );
+					break;
+
+					default:
+					CppADUnknownError(0);
+				}
+			}
+			break;
+			// ---------------------------------------------------
+
 			case CosOp:
 			CppADUnknownError( n_ind == 1 );
 			CppADUnknownError( ind[0] < i_var );
@@ -455,102 +508,6 @@ size_t ForwardSweep(
 			P = Rec->GetPar( ind[1] );
 			X = Taylor + ind[0] * J;
 			ForDivvpOp(d, Z, X, P);
-			break;
-			// -------------------------------------------------
-
-			case EqfppOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			if( d == 0 )
-			{	X            = Rec->GetPar( ind[0] );
-				Y            = Rec->GetPar( ind[1] );
-				compareCount += (X[0] == Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case EqtppOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			if( d == 0 )
-			{	X            = Rec->GetPar( ind[0] );
-				Y            = Rec->GetPar( ind[1] );
-				compareCount += (X[0] != Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case EqfpvOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	P            = Rec->GetPar( ind[0] );
-				Y            = Taylor + ind[1] * J;
-				compareCount += (*P == Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case EqtpvOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	P            = Rec->GetPar( ind[0] );
-				Y            = Taylor + ind[1] * J;
-				compareCount += (*P != Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case EqfvpOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				P            = Rec->GetPar( ind[1] );
-				compareCount += (X[0] == *P);
-			}
-			break;
-			// -------------------------------------------------
-
-			case EqtvpOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				P            = Rec->GetPar( ind[1] );
-				compareCount += (X[0] != *P);
-			}
-			break;
-			// -------------------------------------------------
-
-			case EqfvvOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				Y            = Taylor + ind[1] * J;
-				compareCount += (X[0] == Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case EqtvvOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				Y            = Taylor + ind[1] * J;
-				compareCount += (X[0] != Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 
@@ -652,102 +609,6 @@ size_t ForwardSweep(
 			break;
 			// -------------------------------------------------
 
-			case LefppOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			if( d == 0 )
-			{	X            = Rec->GetPar( ind[0] );
-				Y            = Rec->GetPar( ind[1] );
-				compareCount += LessThanOrZero(X[0] - Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LetppOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			if( d == 0 )
-			{	X            = Rec->GetPar( ind[0] );
-				Y            = Rec->GetPar( ind[1] );
-				compareCount += ! LessThanOrZero(X[0] - Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LefpvOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	P            = Rec->GetPar( ind[0] );
-				Y            = Taylor + ind[1] * J;
-				compareCount += LessThanOrZero(*P - Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LetpvOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	P            = Rec->GetPar( ind[0] );
-				Y            = Taylor + ind[1] * J;
-				compareCount += ! LessThanOrZero(*P - Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LefvpOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				P            = Rec->GetPar( ind[1] );
-				compareCount += LessThanOrZero(X[0] - *P);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LetvpOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				P            = Rec->GetPar( ind[1] );
-				compareCount += ! LessThanOrZero(X[0] - *P);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LefvvOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				Y            = Taylor + ind[1] * J;
-				compareCount += LessThanOrZero(X[0] - Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LetvvOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				Y            = Taylor + ind[1] * J;
-				compareCount += ! LessThanOrZero(X[0] - Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
 			case LogOp:
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 1 );
@@ -755,102 +616,6 @@ size_t ForwardSweep(
 
 			X = Taylor + ind[0] * J;
 			ForLogOp(d, Z, X);
-			break;
-			// -------------------------------------------------
-
-			case LtfppOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			if( d == 0 )
-			{	X            = Rec->GetPar( ind[0] );
-				Y            = Rec->GetPar( ind[1] );
-				compareCount += LessThanZero(X[0] - Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LttppOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			if( d == 0 )
-			{	X            = Rec->GetPar( ind[0] );
-				Y            = Rec->GetPar( ind[1] );
-				compareCount += ! LessThanZero(X[0] - Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LtfpvOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	P            = Rec->GetPar( ind[0] );
-				Y            = Taylor + ind[1] * J;
-				compareCount += LessThanZero(*P - Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LttpvOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	P            = Rec->GetPar( ind[0] );
-				Y            = Taylor + ind[1] * J;
-				compareCount += ! LessThanZero(*P - Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LtfvpOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				P            = Rec->GetPar( ind[1] );
-				compareCount += LessThanZero(X[0] - *P);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LttvpOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				P            = Rec->GetPar( ind[1] );
-				compareCount += ! LessThanZero(X[0] - *P);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LtfvvOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				Y            = Taylor + ind[1] * J;
-				compareCount += LessThanZero(X[0] - Y[0]);
-			}
-			break;
-			// -------------------------------------------------
-
-			case LttvvOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
-			if( d == 0 )
-			{	X            = Taylor + ind[0] * J;
-				Y            = Taylor + ind[1] * J;
-				compareCount += ! LessThanZero(X[0] - Y[0]);
-			}
 			break;
 			// -------------------------------------------------
 

@@ -23,33 +23,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 $begin OpCode$$ $comment CppAD Developer Documentation$$
 $aindex subhead$$
 $spell
-	Ltfpp
-	Lttpp
-	Ltfpv
-	Lttpv
-	Ltfvp
-	Lttvp
-	Ltfvv
-	Lttvv
-
-	Lefpp
-	Letpp
-	Lefpv
-	Letpv
-	Lefvp
-	Letvp
-	Lefvv
-	Letvv
-
-	Eqfpp
-	Eqtpp
-	Eqfpv
-	Eqtpv
-	Eqfvp
-	Eqtvp
-	Eqfvv
-	Eqtvv
-
 	Addpv
 	Addvp
 	Addvv
@@ -122,41 +95,18 @@ namespace CppAD {
 		AsinOp,   // asin(variable)
 		AtanOp,   // atan(variable)
 		CExpOp,   // CondExp(cop, left, right, trueCase, falseCase)
+		ComOp,    // Compare(cop, result, left, right)
 		CosOp,    //  cos(variable)
 		CoshOp,   // cosh(variable)
 		DisOp,    //  dis(variable,    index)
 		DivpvOp,  //      parameter  / variable
 		DivvpOp,  //      variable   / parameter
 		DivvvOp,  //      variable   / variable
-		EqfppOp,  //      parameter == parameter if false
-		EqtppOp,  //      parameter == parameter if true
-		EqfpvOp,  //      parameter == variable  is false
-		EqtpvOp,  //      parameter == variable  is true
-		EqfvpOp,  //      variable  == parameter is false
-		EqtvpOp,  //      variable  == parameter is true
-		EqfvvOp,  //      variable  == variable  is false
-		EqtvvOp,  //      variable  == variable  is true
 		ExpOp,    //  exp(variable)
 		LdpOp,    //    z[parameter]
 		LdvOp,    //    z[variable]
 		InvOp,    //                             independent variable
-		LefppOp,  //      parameter <= parameter is false
-		LetppOp,  //      parameter <= parameter is true
-		LefpvOp,  //      parameter <= variable  is false
-		LetpvOp,  //      parameter <= variable  is true
-		LefvpOp,  //      variable  <= parameter is false
-		LetvpOp,  //      variable  <= parameter is true
-		LefvvOp,  //      variable  <= variable  is false
-		LetvvOp,  //      variable  <= variable  is true
 		LogOp,    //  log(variable)
-		LtfppOp,  //      parameter < parameter is false
-		LttppOp,  //      parameter < parameter is true
-		LtfpvOp,  //      parameter < variable  is false
-		LttpvOp,  //      parameter < variable  is true
-		LtfvpOp,  //      variable  < parameter is false
-		LttvpOp,  //      variable  < parameter is true
-		LtfvvOp,  //      variable  < variable  is false
-		LttvvOp,  //      variable  < variable  is true
 		MulpvOp,  //      parameter  * variable
 		MulvpOp,  //      variable   * parameter
 		MulvvOp,  //      variable   * variable
@@ -323,42 +273,19 @@ const size_t NumIndTable[] = {
 	2, // AddvvOp
 	1, // AsinOp
 	1, // AtanOp
-	6, // CEpppOp
+	6, // CExpOp
+	4, // ComOp
 	1, // CosOp
 	1, // CoshOp
 	2, // DisOp
 	2, // DivpvOp
 	2, // DivvpOp
 	2, // DivvvOp
-	2, // EqfppOp
-	2, // EqtppOp
-	2, // EqfpvOp
-	2, // EqtpvOp
-	2, // EqfvpOp
-	2, // EqtvpOp
-	2, // EqfvvOp
-	2, // EqtvvOp
 	1, // ExpOp
 	3, // LdpOp
 	3, // LdvOp
 	0, // InvOp
-	2, // LefppOp
-	2, // LetppOp
-	2, // LefpvOp
-	2, // LetpvOp
-	2, // LefvpOp
-	2, // LetvpOp
-	2, // LefvvOp
-	2, // LetvvOp
 	1, // LogOp
-	2, // LtfppOp
-	2, // LttppOp
-	2, // LtfpvOp
-	2, // LttpvOp
-	2, // LtfvpOp
-	2, // LttvpOp
-	2, // LtfvvOp
-	2, // LttvvOp
 	2, // MulvvOp
 	2, // MulpvOp
 	2, // MulvpOp
@@ -398,41 +325,18 @@ const size_t NumVarTable[] = {
 	2, // AsinOp
 	2, // AtanOp
 	1, // CExpOp
+	0, // ComOp
 	2, // CosOp
 	2, // CoshOp
 	1, // DisOp
 	1, // DivpvOp
 	1, // DivvpOp
 	1, // DivvvOp
-	0, // EqfppOp
-	0, // EqtppOp
-	0, // EqfpvOp
-	0, // EqtpvOp
-	0, // EqfvpOp
-	0, // EqtvpOp
-	0, // EqfvvOp
-	0, // EqtvvOp
 	1, // ExpOp
 	1, // LdpOp
 	1, // LdvOp
 	1, // InvOp
-	0, // LefppOp
-	0, // LetppOp
-	0, // LefpvOp
-	0, // LetpvOp
-	0, // LefvpOp
-	0, // LetvpOp
-	0, // LefvvOp
-	0, // LetvvOp
 	1, // LogOp
-	0, // LtfppOp
-	0, // LttppOp
-	0, // LtfpvOp
-	0, // LttpvOp
-	0, // LtfvpOp
-	0, // LttvpOp
-	0, // LtfvvOp
-	0, // LttvvOp
 	1, // MulvvOp
 	1, // MulpvOp
 	1, // MulvpOp
@@ -515,7 +419,7 @@ void printOp(
 	size_t                 nrz    ,
 	const  Value          *rz     )
 {	
-	static char *CompareOpName[] = { "Lt", "Le", "Eq", "Ge", "Gt" };
+	static char *CompareOpName[] = { "Lt", "Le", "Eq", "Ge", "Gt", "Ne" };
 	static char *OpName[] = {
 		"Abs"   ,
 		"Acos"  ,
@@ -525,41 +429,18 @@ void printOp(
 		"Asin"  ,
 		"Atan"  ,
 		"CExp"  ,
+		"Com"   ,
 		"Cos"   ,
-		"Cosh"   ,
+		"Cosh"  ,
 		"DisOp" ,
 		"Divpv" ,
 		"Divvp" ,
 		"Divvv" ,
-		"Eqfpp" ,
-		"Eqtpp" ,
-		"Eqfpv" ,
-		"Eqtpv" ,
-		"Eqfvp" ,
-		"Eqtvp" ,
-		"Eqfvv" ,
-		"Eqtvv" ,
 		"Exp"   ,
 		"Ldp"   ,
 		"Ldv"   ,
 		"Inv"   ,
-		"Lefpp" ,
-		"Letpp" ,
-		"Lefpv" ,
-		"Letpv" ,
-		"Lefvp" ,
-		"Letvp" ,
-		"Lefvv" ,
-		"Letvv" ,
 		"Log"   ,
-		"Ltfpp" ,
-		"Lttpp" ,
-		"Ltfpv" ,
-		"Lttpv" ,
-		"Ltfvp" ,
-		"Lttvp" ,
-		"Ltfvv" ,
-		"Lttvv" ,
 		"Mulpv" ,
 		"Mulvp" ,
 		"Mulvv" ,
@@ -581,8 +462,20 @@ void printOp(
 	CppADUnknownError( 
 		size_t(SubvvOp) == sizeof(OpName) / sizeof(OpName[0]) - 1
 	);
+
+	// print operator
 	printOpField(os,  "i=",      i_var, 5);
-	printOpField(os, "op=", OpName[op], 6); 
+	if( op == CExpOp )
+	{	printOpField(os, "op=", OpName[op], 4); 
+		printOpField(os, "", CompareOpName[ ind[0] ], 3);
+	}
+	else if( op == ComOp )
+	{	printOpField(os, "op=", OpName[op], 3); 
+		printOpField(os, "", CompareOpName[ ind[0] ], 4);
+	}
+	else	printOpField(os, "op=", OpName[op], 7); 
+
+	// print other fields
 	switch( op )
 	{
 		case LdpOp:
@@ -625,12 +518,6 @@ void printOp(
 		printOpField(os, "y_i=", ind[2], 5);
 		break;
 
-		case EqtvvOp:
-		case EqfvvOp:
-		case LetvvOp:
-		case LefvvOp:
-		case LttvvOp:
-		case LtfvvOp:
 		case AddvvOp:
 		case DivvvOp:
 		case MulvvOp:
@@ -641,12 +528,6 @@ void printOp(
 		printOpField(os, "y_i=", ind[1], 5);
 		break;
 
-		case EqtpvOp:
-		case EqfpvOp:
-		case LetpvOp:
-		case LefpvOp:
-		case LttpvOp:
-		case LtfpvOp:
 		case AddpvOp:
 		case SubpvOp:
 		case MulpvOp:
@@ -656,12 +537,6 @@ void printOp(
 		printOpField(os, "y_i=", ind[1], 5);
 		break;
 
-		case EqtvpOp:
-		case EqfvpOp:
-		case LetvpOp:
-		case LefvpOp:
-		case LttvpOp:
-		case LtfvpOp:
 		case AddvpOp:
 		case DivvpOp:
 		case MulvpOp:
@@ -671,12 +546,6 @@ void printOp(
 		printOpField(os, "  p=", *(Rec->GetPar(ind[1])), 5);
 		break;
 
-		case EqfppOp:
-		case EqtppOp:
-		case LefppOp:
-		case LetppOp:
-		case LtfppOp:
-		case LttppOp:
 		CppADUnknownError( NumInd(op) == 2 );
 		printOpField(os, "  x=", *(Rec->GetPar(ind[0])), 5);
 		printOpField(os, "  y=", *(Rec->GetPar(ind[1])), 5);
@@ -722,19 +591,32 @@ void printOp(
 		case CExpOp:
 		CppADUnknownError(ind[1] != 0);
 		CppADUnknownError( NumInd(op) == 6 );
-		printOpField(os, "", CompareOpName[ ind[0] ], 3);
 		if( ind[1] & 1 )
-			printOpField(os, "vleft=", ind[2], 5);
-		else	printOpField(os, "pleft=", *(Rec->GetPar(ind[2])), 5);
+			printOpField(os, "vl =", ind[2], 5);
+		else	printOpField(os, "pl =", *(Rec->GetPar(ind[2])), 5);
 		if( ind[1] & 2 )
-			printOpField(os, "vright=", ind[3], 5);
-		else	printOpField(os, "pright=", *(Rec->GetPar(ind[3])), 5);
+			printOpField(os, "vr =", ind[3], 5);
+		else	printOpField(os, "pr =", *(Rec->GetPar(ind[3])), 5);
 		if( ind[1] & 4 )
-			printOpField(os, "vtrue=", ind[4], 5);
-		else	printOpField(os, "ptrue=", *(Rec->GetPar(ind[4])), 5);
+			printOpField(os, "vt =", ind[4], 5);
+		else	printOpField(os, "pt =", *(Rec->GetPar(ind[4])), 5);
 		if( ind[1] & 8 )
-			printOpField(os, "vfalse=", ind[5], 5);
-		else	printOpField(os, "pfalse=", *(Rec->GetPar(ind[5])), 5);
+			printOpField(os, "vf =", ind[5], 5);
+		else	printOpField(os, "pf =", *(Rec->GetPar(ind[5])), 5);
+		break;
+
+		case ComOp:
+		CppADUnknownError(ind[1] != 0);
+		CppADUnknownError( NumInd(op) == 4 );
+		if( ind[1] & 1 )
+			printOpField(os, "res=", 1, 5);
+		else	printOpField(os, "res=", 0, 5);
+		if( ind[1] & 2 )
+			printOpField(os, "vl =", ind[2], 5);
+		else	printOpField(os, "pl =", *(Rec->GetPar(ind[2])), 5);
+		if( ind[1] & 4 )
+			printOpField(os, "vr =", ind[3], 5);
+		else	printOpField(os, "pr =", *(Rec->GetPar(ind[3])), 5);
 		break;
 
 		default:
@@ -744,9 +626,9 @@ void printOp(
 	if( NumVar(op) > 0 )
 	{ 
 		for(k = 0; k < nfz; k++)
-			std::cout << ", fz[" << k << "]=" << fz[k];
+			std::cout << "| fz[" << k << "]=" << fz[k];
 		for(k = 0; k < nrz; k++)
-			std::cout << ", rz[" << k << "]=" << rz[k];
+			std::cout << "| rz[" << k << "]=" << rz[k];
 	}
 	std::cout << std::endl;
 }

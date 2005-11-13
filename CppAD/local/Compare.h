@@ -1,7 +1,6 @@
-# ifndef CppADCompIncluded
-# define CppADCompIncluded
+# ifndef CppADCompareIncluded
+# define CppADCompareIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -109,6 +107,54 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
+template <class Base>
+
+// -------------- RecordCompare(cop, result, left, right) --------------------
+void ADTape<Base>::RecordCompare(
+	enum CompareOp  cop   ,
+	bool           result ,
+	const AD<Base> &left  ,
+	const AD<Base> &right )
+{	size_t ind0, ind1, ind2, ind3;
+
+	// ind[1] = base 2 representation of [result, Var(left), Var(right])
+	ind1 = 0;
+
+	// ind[2] = left address
+	if( Parameter(left) )
+		ind2 = Rec.PutPar(left.value);
+	else
+	{	ind1 += 2;
+		ind2 =  left.taddr;
+	}
+
+	// ind[3] = right address
+	if( Parameter(right) )
+		ind3 = Rec.PutPar(right.value);
+	else
+	{	ind1 += 4;
+		ind3 =  right.taddr;
+	}
+
+	// If both left and right are parameters, do not need to record
+	if( ind1 == 0 )
+		return;
+
+	// ind[1] & 1 = result
+	if( result )
+		ind1+= 1;
+
+	// ind[0] = cop 
+	ind0 = size_t (cop);
+
+	CppADUnknownError( ind1 > 1 );
+	CppADUnknownError( NumInd(ComOp) == 4 );
+
+	// put the operator in the tape
+	Rec.PutOp(ComOp);
+	Rec.PutInd(ind0, ind1, ind2, ind3);
+}
+
 // -------------------------------- < -------------------------
 # ifdef NDEBUG
 
@@ -123,47 +169,11 @@ template <class Base>
 inline bool AD<Base>::operator < (const AD<Base> &right) const
 {	bool result =  (value < right.value); 
 
-	bool vleft, vright;
-	if( Tape()->State() != Recording )
+	if( AD<Base>::Tape()->State() == Empty )
 		return result;
 
-	vleft     =  Variable(*this);
-	vright    =  Variable(right);
-	size_t id = result * 4 + vleft * 2 + vright;
-	switch( id )
-	{
-		case 0:
-		Tape()->RecordOp(LtfppOp, value, right.value);
-		break;
-		
-		case 1:
-		Tape()->RecordOp(LtfpvOp, value, right.taddr);
-		break;
+	AD<Base>::Tape()->RecordCompare(CompareLt, result, *this, right);
 
-		case 2:
-		Tape()->RecordOp(LtfvpOp, taddr, right.value);
-		break;
-
-		case 3:
-		Tape()->RecordOp(LtfvvOp, taddr, right.taddr);
-		break;
-
-		case 4:
-		Tape()->RecordOp(LttppOp, value, right.value);
-		break;
-		
-		case 5:
-		Tape()->RecordOp(LttpvOp, value, right.taddr);
-		break;
-
-		case 6:
-		Tape()->RecordOp(LttvpOp, taddr, right.value);
-		break;
-
-		case 7:
-		Tape()->RecordOp(LttvvOp, taddr, right.taddr);
-		break;
-	}
 	return result;
 }
 # endif
@@ -184,175 +194,68 @@ template <class Base>
 inline bool AD<Base>::operator <= (const AD<Base> &right) const
 { 	bool result =  (value <= right.value); 
 
-	bool  vleft, vright;
-	if( Tape()->State() != Recording )
+	if( AD<Base>::Tape()->State() == Empty )
 		return result;
 
-	vleft     =  Variable(*this);
-	vright    =  Variable(right);
-	size_t id = result * 4 + vleft * 2 + vright;
-	switch( id )
-	{
-		case 0:
-		Tape()->RecordOp(LefppOp, value, right.value);
-		break;
-		
-		case 1:
-		Tape()->RecordOp(LefpvOp, value, right.taddr);
-		break;
+	AD<Base>::Tape()->RecordCompare(CompareLe, result, *this, right);
 
-		case 2:
-		Tape()->RecordOp(LefvpOp, taddr, right.value);
-		break;
-
-		case 3:
-		Tape()->RecordOp(LefvvOp, taddr, right.taddr);
-		break;
-
-		case 4:
-		Tape()->RecordOp(LetppOp, value, right.value);
-		break;
-		
-		case 5:
-		Tape()->RecordOp(LetpvOp, value, right.taddr);
-		break;
-
-		case 6:
-		Tape()->RecordOp(LetvpOp, taddr, right.value);
-		break;
-
-		case 7:
-		Tape()->RecordOp(LetvvOp, taddr, right.taddr);
-		break;
-	}
 	return result;
 }
 # endif
 
 CppADFoldBinaryOperator(bool, <=)
 
+
 // -------------------------------- > -------------------------
 # ifdef NDEBUG
 
 template <class Base>
-inline bool AD<Base>::operator > (const AD<Base> &left) const
-{	bool result =  (left.value < value);      // reverse order and use < 
+inline bool AD<Base>::operator > (const AD<Base> &right) const
+{	bool result =  (value > right.value); 
 	return result;
 }
 
-# else 
+# else
 template <class Base>
-inline bool AD<Base>::operator > (const AD<Base> &left) const
-{	bool result =  (left.value < value);      // reverse order and use < 
+inline bool AD<Base>::operator > (const AD<Base> &right) const
+{	bool result =  (value > right.value); 
 
-	bool  vleft, vright;
-	if( Tape()->State() != Recording )
+	if( AD<Base>::Tape()->State() == Empty )
 		return result;
 
-	vleft     =  Variable(left);
-	vright    =  Variable(*this);
-	size_t id = result * 4 + vleft * 2 + vright;
-	switch( id )
-	{
-		case 0:
-		Tape()->RecordOp(LtfppOp, left.value, value);
-		break;
-		
-		case 1:
-		Tape()->RecordOp(LtfpvOp, left.value, taddr);
-		break;
+	AD<Base>::Tape()->RecordCompare(CompareGt, result, *this, right);
 
-		case 2:
-		Tape()->RecordOp(LtfvpOp, left.taddr, value);
-		break;
-
-		case 3:
-		Tape()->RecordOp(LtfvvOp, left.taddr, taddr);
-		break;
-
-		case 4:
-		Tape()->RecordOp(LttppOp, left.value, value);
-		break;
-		
-		case 5:
-		Tape()->RecordOp(LttpvOp, left.value, taddr);
-		break;
-
-		case 6:
-		Tape()->RecordOp(LttvpOp, left.taddr, value);
-		break;
-
-		case 7:
-		Tape()->RecordOp(LttvvOp, left.taddr, taddr);
-		break;
-	}
 	return result;
 }
 # endif
 
 CppADFoldBinaryOperator(bool, >)
 
-
 // -------------------------------- >= -------------------------
 # ifdef NDEBUG
 
 template <class Base>
-inline bool AD<Base>::operator >= (const AD<Base> &left) const
-{	bool result =  (left.value <= value);      // reverse order and use <= 
+inline bool AD<Base>::operator >= (const AD<Base> &right) const
+{ 	bool result =  (value >= right.value); 
 	return result;
 }
 
 # else
 template <class Base>
-inline bool AD<Base>::operator >= (const AD<Base> &left) const
-{	bool result =  (left.value <= value);      // reverse order and use <= 
+inline bool AD<Base>::operator >= (const AD<Base> &right) const
+{ 	bool result =  (value >= right.value); 
 
-	bool vleft, vright;
-	if( Tape()->State() != Recording )
+	if( AD<Base>::Tape()->State() == Empty )
 		return result;
 
-	vleft     =  Variable(left);
-	vright    =  Variable(*this);
-	size_t id = result * 4 + vleft * 2 + vright;
-	switch( id )
-	{
-		case 0:
-		Tape()->RecordOp(LefppOp, left.value, value);
-		break;
-		
-		case 1:
-		Tape()->RecordOp(LefpvOp, left.value, taddr);
-		break;
+	AD<Base>::Tape()->RecordCompare(CompareGe, result, *this, right);
 
-		case 2:
-		Tape()->RecordOp(LefvpOp, left.taddr, value);
-		break;
-
-		case 3:
-		Tape()->RecordOp(LefvvOp, left.taddr, taddr);
-		break;
-
-		case 4:
-		Tape()->RecordOp(LetppOp, left.value, value);
-		break;
-		
-		case 5:
-		Tape()->RecordOp(LetpvOp, left.value, taddr);
-		break;
-
-		case 6:
-		Tape()->RecordOp(LetvpOp, left.taddr, value);
-		break;
-
-		case 7:
-		Tape()->RecordOp(LetvvOp, left.taddr, taddr);
-		break;
-	}
 	return result;
 }
 # endif
 
 CppADFoldBinaryOperator(bool, >=)
+
 
 // -------------------------------- == -------------------------
 # ifdef NDEBUG
@@ -368,47 +271,11 @@ template <class Base>
 inline bool AD<Base>::operator == (const AD<Base> &right) const
 {	bool result =  (value == right.value); 
 
-	bool vleft, vright;
-	if( Tape()->State() != Recording )
+	if( AD<Base>::Tape()->State() == Empty )
 		return result;
 
-	vleft     =  Variable(*this);
-	vright    =  Variable(right);
-	size_t id = result * 4 + vleft * 2 + vright;
-	switch( id )
-	{
-		case 0:
-		Tape()->RecordOp(EqfppOp, value, right.value);
-		break;
-		
-		case 1:
-		Tape()->RecordOp(EqfpvOp, value, right.taddr);
-		break;
+	AD<Base>::Tape()->RecordCompare(CompareEq, result, *this, right);
 
-		case 2:
-		Tape()->RecordOp(EqfvpOp, taddr, right.value);
-		break;
-
-		case 3:
-		Tape()->RecordOp(EqfvvOp, taddr, right.taddr);
-		break;
-
-		case 4:
-		Tape()->RecordOp(EqtppOp, value, right.value);
-		break;
-		
-		case 5:
-		Tape()->RecordOp(EqtpvOp, value, right.taddr);
-		break;
-
-		case 6:
-		Tape()->RecordOp(EqtvpOp, taddr, right.value);
-		break;
-
-		case 7:
-		Tape()->RecordOp(EqtvvOp, taddr, right.taddr);
-		break;
-	}
 	return result;
 }
 # endif
@@ -420,57 +287,21 @@ CppADFoldBinaryOperator(bool, ==)
 
 template <class Base>
 inline bool AD<Base>::operator != (const AD<Base> &right) const
-{	bool result =  (value == right.value);   // convert to == check 
-	return ! result;
+{	bool result =  (value != right.value);
+	return result;
 }
 
 # else
 template <class Base>
 inline bool AD<Base>::operator != (const AD<Base> &right) const
-{	bool result =  (value == right.value);   // convert to == check 
+{	bool result =  (value != right.value);
 
-	bool vleft, vright;
-	if( Tape()->State() != Recording )
-		return ! result;
+	if( AD<Base>::Tape()->State() == Empty )
+		return result;
 
-	vleft     =  Variable(*this);
-	vright    =  Variable(right);
-	size_t id = result * 4 + vleft * 2 + vright;
-	switch( id )
-	{
-		case 0:
-		Tape()->RecordOp(EqfppOp, value, right.value);
-		break;
-		
-		case 1:
-		Tape()->RecordOp(EqfpvOp, value, right.taddr);
-		break;
+	AD<Base>::Tape()->RecordCompare(CompareNe, result, *this, right);
 
-		case 2:
-		Tape()->RecordOp(EqfvpOp, taddr, right.value);
-		break;
-
-		case 3:
-		Tape()->RecordOp(EqfvvOp, taddr, right.taddr);
-		break;
-
-		case 4:
-		Tape()->RecordOp(EqtppOp, value, right.value);
-		break;
-		
-		case 5:
-		Tape()->RecordOp(EqtpvOp, value, right.taddr);
-		break;
-
-		case 6:
-		Tape()->RecordOp(EqtvpOp, taddr, right.value);
-		break;
-
-		case 7:
-		Tape()->RecordOp(EqtvvOp, taddr, right.taddr);
-		break;
-	}
-	return ! result;
+	return result;
 }
 # endif
 

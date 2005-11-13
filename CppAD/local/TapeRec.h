@@ -80,6 +80,7 @@ $index TapeRec, Put$$
 $index Put, TapeRec$$
 
 $subhead Op$$
+$index PutOp$$
 The function call
 $syntax%
 	inline size_t %Rec%.PutOp(OpCode %op%)
@@ -91,13 +92,21 @@ With each call, this index increments by the number of variables required
 for the previous call to $code PutOp$$.
 
 $subhead Ind$$
+$index PutInd$$
 The function call
 $syntax%
 	inline void %Rec%.PutInd(size_t %ind0%)
 	inline void %Rec%.PutInd(size_t %ind0%, size_t %ind1%)
-	inline void %Rec%.PutInd(size_t %ind0%, size_t %ind1%, size_t %ind2%)
+	%.%
+	%.%
+	%.%
 	inline void %Rec%.PutInd(
-		size_t %ind0%, size_t %ind1%, size_t %ind2%, size_t %ind3%)
+		size_t %ind0%, 
+		size_t %ind1%, 
+		size_t %ind2%, 
+		size_t %ind3%,
+		size_t %ind4%
+		size_t %ind5%)
 %$$
 places the values passed to $code PutInd$$ at the end of the
 Ind recording and in the order passed; i.e., $italic ind0$$
@@ -105,6 +114,7 @@ comes before $italic ind1$$ e.t.c.
 
 
 $subhead Par$$
+$index PutPar$$
 The function call
 $syntax%
 	inline size_t %Rec%.PutPar(const %Base% &%par%)
@@ -115,6 +125,7 @@ This value is not necessarily placed at the end of the recording
 so there is no specified pattern to the return values.
 
 $subhead VecInd$$
+$index PutVecInd$$
 The function call
 $syntax%
 	inline size_t %Rec%.PutVecInd(size_t %vecInd%)
@@ -129,6 +140,7 @@ $index TapeRec, Get$$
 $index Get, TapeRec$$
 
 $subhead Op$$
+$index GetOp$$
 The syntax
 $syntax%
 	OpCode %Rec%.GetOp(size_t %i%) const
@@ -137,6 +149,7 @@ returns the value of $italic op$$ in the $th i+1$$ call to
 $syntax%%Rec%.PutOp(%op%)%$$.
 
 $subhead VecInd$$
+$index GetVecInd$$
 The syntax
 $syntax%
 	OpCode %Rec%.GetVecInd(size_t %i%) const
@@ -146,6 +159,7 @@ $syntax%%Rec%.PutVecInd(%vecInd%)%$$
 where $italic i$$ is the return value of $code PutVecInd$$. 
 
 $subhead Ind$$
+$index GetInd$$
 The syntax
 $syntax%
 	const size_t *%Rec%.GetInd(size_t %n%, size_t %i%) const
@@ -154,6 +168,7 @@ returns a pointer to a copy of $italic n$$ values in the Ind recording
 starting at the index $italic i$$.
 
 $subhead Par$$
+$index GetPar$$
 The syntax
 $syntax%
 	const %Base% *%Rec%.GetPar(size_t %i%) const
@@ -170,6 +185,7 @@ $index TapeRec, Num$$
 $index Num, TapeRec$$
 
 $subhead Op$$
+$index NumOp$$
 The syntax
 $syntax%
 	size_t %Rec%.NumOp(void) const
@@ -180,6 +196,7 @@ This increments by one each time $code PutOp$$ is called; i.e.,
 it is the number of calls to $code PutOp$$.
 
 $subhead Ind$$
+$index NumInd$$
 The syntax
 $syntax%
 	size_t %Rec%.NumInd(void) const
@@ -197,6 +214,7 @@ that are currently stored in $italic Rec$$.
 This increments by one each time $code PutVecInd$$ is called.
 
 $subhead Par$$
+$index NumPar$$
 The syntax
 $syntax%
 	size_t %Rec%.NumPar(void) const
@@ -210,6 +228,7 @@ $index TapeRec, Replace$$
 $index Replace, TapeRec$$
 
 $subhead Ind$$
+$index ReplaceInd$$
 The syntax
 $syntax%
 	size_t %Rec%.ReplaceInd(size_t %index%, size_t %value%)
@@ -384,14 +403,12 @@ public:
 	inline void PutInd(size_t ind0); 
 	inline void PutInd(size_t ind0, size_t ind1); 
 	inline void PutInd(size_t ind0, size_t ind1, size_t ind2); 
-	inline void PutInd(
-		size_t ind0, 
-		size_t ind1, 
-		size_t ind2, 
-		size_t ind3, 
-		size_t ind4, 
-		size_t ind5
-	); 
+	inline void PutInd(size_t ind0, size_t ind1, size_t ind2, size_t ind3); 
+	inline void PutInd(size_t ind0, size_t ind1, size_t ind2, size_t ind3,
+		size_t ind4);
+	inline void PutInd(size_t ind0, size_t ind1, size_t ind2, size_t ind3,
+		size_t ind4, size_t ind5);
+
 	inline size_t PutTxt(const char *text);
 
 	/*
@@ -532,7 +549,7 @@ inline size_t TapeRec<Base>::PutPar(const Base &par)
 
 	return NumberPar - 1;
 }
-
+ // -------------------------- PutInd --------------------------------------
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0)
 { 
@@ -544,58 +561,80 @@ inline void TapeRec<Base>::PutInd(size_t ind0)
 	}
 	CppADUnknownError( NumberInd < LengthInd );
 	Ind[NumberInd++] = ind0;
-
 }
-
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1)
 { 
 	CppADUnknownError( LengthInd > 0 );
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 1 >= LengthInd )
-	{	LengthInd    = 2 * LengthInd;
+	{	LengthInd    = 1 + 2 * LengthInd;
 		ExtendBuffer(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 1 < LengthInd );
 	Ind[NumberInd++] = ind0;
 	Ind[NumberInd++] = ind1;
-
 }
-
-
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2)
 { 
 	CppADUnknownError( LengthInd > 0 );
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 2 >= LengthInd )
-	{	LengthInd    = 2 * LengthInd;
+	{	LengthInd    = 2 + 2 * LengthInd;
 		ExtendBuffer(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 2 < LengthInd );
 	Ind[NumberInd++] = ind0;
 	Ind[NumberInd++] = ind1;
 	Ind[NumberInd++] = ind2;
-
 }
-
 template <class Base>
-inline void TapeRec<Base>::PutInd(
-	size_t ind0, 
-	size_t ind1, 
-	size_t ind2, 
-	size_t ind3, 
-	size_t ind4, 
-	size_t ind5
-)
+inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
+	size_t ind3)
 { 
 	CppADUnknownError( LengthInd > 0 );
 	CppADUnknownError( NumberInd <= LengthInd );
-	if( NumberInd + 6 >= LengthInd )
-	{	LengthInd    = 6 + 2 * LengthInd;
+	if( NumberInd + 3 >= LengthInd )
+	{	LengthInd    = 3 + 2 * LengthInd;
 		ExtendBuffer(LengthInd, NumberInd, Ind);
 	}
-	CppADUnknownError( NumberInd + 6 < LengthInd );
+	CppADUnknownError( NumberInd + 3 < LengthInd );
+	Ind[NumberInd++] = ind0;
+	Ind[NumberInd++] = ind1;
+	Ind[NumberInd++] = ind2;
+	Ind[NumberInd++] = ind3;
+
+}
+template <class Base>
+inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
+	size_t ind3, size_t ind4)
+{ 
+	CppADUnknownError( LengthInd > 0 );
+	CppADUnknownError( NumberInd <= LengthInd );
+	if( NumberInd + 4 >= LengthInd )
+	{	LengthInd    = 4 + 2 * LengthInd;
+		ExtendBuffer(LengthInd, NumberInd, Ind);
+	}
+	CppADUnknownError( NumberInd + 4 < LengthInd );
+	Ind[NumberInd++] = ind0;
+	Ind[NumberInd++] = ind1;
+	Ind[NumberInd++] = ind2;
+	Ind[NumberInd++] = ind3;
+	Ind[NumberInd++] = ind4;
+
+}
+template <class Base>
+inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2, 
+	size_t ind3, size_t ind4, size_t ind5)
+{ 
+	CppADUnknownError( LengthInd > 0 );
+	CppADUnknownError( NumberInd <= LengthInd );
+	if( NumberInd + 5 >= LengthInd )
+	{	LengthInd    = 5 + 2 * LengthInd;
+		ExtendBuffer(LengthInd, NumberInd, Ind);
+	}
+	CppADUnknownError( NumberInd + 5 < LengthInd );
 	Ind[NumberInd++] = ind0;
 	Ind[NumberInd++] = ind1;
 	Ind[NumberInd++] = ind2;
