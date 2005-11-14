@@ -1,5 +1,5 @@
-# ifndef CppADIncluded
-# define CppADIncluded
+# ifndef CppADCppADIncluded
+# define CppADCppADIncluded
 
 // BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------

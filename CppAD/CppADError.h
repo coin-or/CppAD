@@ -1,5 +1,5 @@
-# ifndef CppADErrorIncluded
-# define CppADErrorIncluded
+# ifndef CppADCppADErrorIncluded
+# define CppADCppADErrorIncluded
 
 // BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------

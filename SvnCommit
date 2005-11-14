@@ -1,36 +1,13 @@
-# Merge in changes from branches/Brad.
+# Correct filename in # define CppAD<filename>Included statements
+# in the files CppADErrors.h and CppAD.h.
 #
+# CheckIncludeDef: script that checks define statements.
+# Build: add description of aclocal warnings.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
+svn add CheckIncludeDef
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/ADTape.h \
-	CppAD/local/PrintFor.h \
-	CppAD/local/ForwardSweep.h \
-	CppAD/local/ForJacSweep.h \
-	CppAD/local/ReverseSweep.h \
-	CppAD/local/TapeRec.h \
-	CppAD/local/Operator.h \
-	CppAD/local/Declare.h \
-	CppAD/local/AD.h \
-	CppAD/local/SubOp.h \
-	CppAD/local/MulOp.h \
-	CppAD/local/RevJacSweep.h \
-	CppAD/local/Ordered.h \
-	CppAD/local/Fun.h \
-	CppAD/local/DivOp.h \
-	CppAD/local/ForSparseJac.h \
-	CppAD/local/Compare.h \
-	CppAD/local/RevSparseJac.h \
-	omh/WhatsNew05.omh \
-	omh/ExampleList.omh \
-	Example/Example.vcproj \
-	Example/ForSparseJac.cpp \
-	Example/RevSparseJac.cpp \
-	Example/Example.cpp \
-	Example/Makefile.am \
-	TestMore/ForSparseJac.cpp \
-	TestMore/RevSparseJac.cpp \
-	TestMore/TestMore.cpp \
-	TestMore/TestMore.vcproj \
-	TestMore/Makefile.am \
-	Makefile.am 
+	CheckIncludeDef \
+	CppAD/CppADError.h \
+	CppAD/CppAD.h \
+	Build
