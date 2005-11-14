@@ -1,13 +1,7 @@
-# Correct filename in # define CppAD<filename>Included statements
-# in the files CppADErrors.h and CppAD.h.
-#
-# CheckIncludeDef: script that checks define statements.
-# Build: add description of aclocal warnings.
+# NearEqualExt.h: Correct filename in # define CppAD<filename>Included.
+# Build: put build parameters that can be modified at beginning of script.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-svn add CheckIncludeDef
 svn commit --file svn.log \
 	SvnCommit \
-	CheckIncludeDef \
-	CppAD/CppADError.h \
-	CppAD/CppAD.h \
-	Build
+	Build \
+	Example/NearEqualExt.h

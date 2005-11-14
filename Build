@@ -17,7 +17,13 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # ---------------------------------------------------------------------------
 #
-# Build distribution
+# Bash script for building the CppAD distribution.
+#
+# Default values used for arguments to configure during this script.
+# These defaults my be development system dependent and can be changed.
+ADOLC_DIR=$HOME/adolc_base
+FADBAD_DIR=$HOME
+BOOST_DIR=/usr/include/boost-1_33
 #
 # date currently in configure.ac
 AcDate=`grep "^ *AC_INIT(" configure.ac | \
@@ -131,17 +137,17 @@ then
 		TEST="$TEST --with-Speed"
 		TEST="$TEST --with-PrintFor"
 		TEST="$TEST --with-profiling"
-		if [ -e $HOME/adolc_base ]
+		if [ -e $ADOLC_DIR/adolc_base ]
 		then
-			TEST="$TEST ADOLC_DIR=$HOME/adolc_base"
+			TEST="$TEST ADOLC_DIR=$ADOLC_DIR"
 		fi
-		if [ -e $HOME/FADBAD++ ]
+		if [ -e $FADBAD_DIR/FADBAD++ ]
 		then
-			TEST="$TEST FADBAD_DIR=$HOME"
+			TEST="$TEST FADBAD_DIR=$FADBAD_DIR"
 		fi
-		if [ -e $HOME/boost_1_32_0 ]
+		if [ -e $BOOST_DIR/boost ]
 		then
-			TEST="$TEST BOOST_DIR=$HOME/boost_1_32_0"
+			TEST="$TEST BOOST_DIR=$BOOST_DIR"
 		fi
 	fi
 	#

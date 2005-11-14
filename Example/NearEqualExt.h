@@ -1,5 +1,5 @@
-# ifndef CppADNearEqualExtendIncluded
-# define CppADNearEqualExtendIncluded
+# ifndef CppADNearEqualExtIncluded
+# define CppADNearEqualExtIncluded
 
 // BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
