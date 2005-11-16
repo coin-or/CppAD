@@ -79,6 +79,10 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-15$$
+Fix a memory leak in both the $xref/ForSparseJac/$$ and
+$xref/RevSparseJac/$$ calculations.
+
 $head 11-12$$
 Add reverse mode $xref/RevSparseJac//Jacobian sparsity/$$ calculation.
 

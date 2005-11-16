@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin ForJacSweep$$ $comment CppAD Developer Documentation$$
 $spell
+	const
 	Jacobian
 	ForJacSweep
 	npv
@@ -45,7 +46,7 @@ $bold Syntax$$ $cnext
 $syntax%void ForJacSweep(
 	size_t                 %npv%,
 	size_t                 %numvar%,
-	TapeRec<%Base%>       *%Rec%,
+	const TapeRec<%Base%> *%Rec%,
 	%Pack%                *%ForJac%
 )%$$
 $tend
@@ -114,9 +115,6 @@ $tend
 
 $head On Output$$
 
-$subhead Rec$$
-None of the values stored in $italic Rec$$ are modified.
-
 $subhead Independent Variables$$
 For $latex i = 1, \ldots , n$$ and $latex j = 0 , \ldots , npv-1$$,
 $syntax%%Taylor%[%i% * %npv% + %j%]%$$ is not modified.
@@ -141,7 +139,7 @@ template <class Base, class Pack>
 void ForJacSweep(
 	size_t                npv,
 	size_t                numvar,
-	TapeRec<Base>        *Rec,
+	const TapeRec<Base>  *Rec,
 	Pack                 *ForJac
 )
 {

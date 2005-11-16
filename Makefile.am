@@ -196,6 +196,8 @@ SUBDIRS = \
 EXTRA_DIST = \
 	Build \
 	CheckIncludeFile \
+	CheckIncludeOmh \
+	CheckIncludeDef \
 	CppAD.tex \
 	Developer \
 	Developer.omh \

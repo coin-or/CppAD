@@ -224,6 +224,8 @@ public:
 			delete [] ForJac;
 		if( RevJac != CppADNull )
 			delete [] RevJac;
+		if( RevHes != CppADNull )
+			delete [] RevHes;
 
 	}
 
@@ -271,7 +273,7 @@ public:
 	// amount of memory for each variable
 	size_t Memory(void) const
 	{	size_t pervar  = (TaylorColDim + PartialColDim) * sizeof(Base)
-		               + (ForJacColDim + RevJacColDim)  * sizeof(Pack);
+		+ (ForJacColDim + RevJacColDim + RevHesColDim)  * sizeof(Pack);
 		size_t total   = totalNumVar * pervar + Rec->Memory();
 		return total;
 	}
@@ -323,6 +325,9 @@ private:
 	// order of the informaiton currently stored in Taylor array
 	size_t order;
 
+	// number of bits currently calculated per row of the ForJac array
+	size_t ForJacBitDim; 
+
 	// number of columns currently allocated for Taylor array
 	size_t TaylorColDim;
 
@@ -334,6 +339,9 @@ private:
 
 	// number of columns currently allocated for RevJac array
 	size_t RevJacColDim;
+
+	// number of columns currently allocated for RevHes array
+	size_t RevHesColDim;
 
 	// number of rows (variables) in the recording (Rec)
 	size_t totalNumVar;
@@ -361,6 +369,9 @@ private:
 
 	// results of the reverse mode Jacobian sparsity calculations
 	Pack *RevJac;
+
+	// results of the reverse mode Hessian sparsity calculations
+	Pack *RevHes;
 };
 // ---------------------------------------------------------------------------
 
@@ -405,7 +416,9 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	TaylorColDim  = 1;
 	PartialColDim = 0;
 	ForJacColDim  = 0;
+	ForJacBitDim  = 0;
 	RevJacColDim  = 0;
+	RevHesColDim  = 0;
 
 	// recording
 	Rec     = new TapeRec<Base>( AD<Base>::Tape()->Rec );
@@ -413,6 +426,7 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	Partial = CppADNull;
 	ForJac  = CppADNull;
 	RevJac  = CppADNull;
+	RevHes  = CppADNull;
 
 	// number of elements in u
 	n = u.size();
@@ -477,12 +491,12 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 # include <CppAD/local/Parameter.h>
 # include <CppAD/local/Independent.h>
 # include <CppAD/local/ForwardSweep.h>
-# include <CppAD/local/Forward.h>
 # include <CppAD/local/ReverseSweep.h>
+# include <CppAD/local/Forward.h>
 # include <CppAD/local/Reverse.h>
 # include <CppAD/local/ForJacSweep.h>
-# include <CppAD/local/ForSparseJac.h>
 # include <CppAD/local/RevJacSweep.h>
+# include <CppAD/local/ForSparseJac.h>
 # include <CppAD/local/RevSparseJac.h>
 //
 // driver routines

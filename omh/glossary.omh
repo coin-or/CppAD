@@ -76,6 +76,20 @@ $$
 Note that we often drop the word currently and 
 just refer to an $syntax%AD<%Base%>%$$ object as a variable
 or parameter.
+
+$head Sparsity Pattern$$
+$index sparsity, pattern$$
+$index pattern, sparsity$$
+Given a function a matrix valued function
+$latex G : B^n \rightarrow B^{p \times q}$$.
+a boolean valued $latex p \times q$$ matrix $latex P$$ is a 
+sparsity pattern for $latex G$$ if 
+for $latex i = 1, \ldots , p$$ and $latex j = 1 , \ldots q$$,
+$latex \[
+[ P_{i,j} = {\rm false} ]
+\; \Rightarrow \; 
+[ G_{i,j} (x) = 0  , {\rm \; for \; all \;} x \in B^n ]
+\] $$
  
 $head Tape State$$
 For each class $italic Base$$,

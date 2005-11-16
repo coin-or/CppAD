@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin RevJacSweep$$ $comment CppAD Developer Documentation$$
 $spell
+	const
 	Jacobian
 	RevJacSweep
 	npv
@@ -45,7 +46,7 @@ $bold Syntax$$ $cnext
 $syntax%void RevJacSweep(
 	size_t                 %npv%,
 	size_t                 %numvar%,
-	TapeRec<%Base%>       *%Rec%,
+	const TapeRec<%Base%> *%Rec%,
 	%Pack%                *%RevJac%
 )%$$
 $tend
@@ -60,9 +61,9 @@ $latex \[
 \] $$
 
 $head Description$$
-Given the sparsity pattern for the dependent variables,
-$code RevJacSweep$$ computes the sparsity pattern
-for all the other variables.
+Given the Jacobian sparsity pattern for the dependent variables,
+$code RevJacSweep$$ computes the sparsity pattern for the dependent
+variables with respect to the independent variables.
 
 
 $head numvar$$
@@ -77,7 +78,7 @@ Is the number of elements of type $italic Pack$$
 $head On Input$$
 
 $subhead Dependent Variables and Operators$$
-The dependent variable records come first last.
+The dependent variable records come last.
 For $latex i = numvar-m, \ldots , numvar-1$$ 
 and $latex j = 0 , \ldots , npv$$,
 $syntax%%RevJac%[%i% * %npv% + %j%]%$$
@@ -93,13 +94,10 @@ is equal to zero (all false).
 
 $head On Output$$
 
-$subhead Rec$$
-None of the values stored in $italic Rec$$ are modified.
-
 $subhead Dependent Variables$$
 For $latex i = numvar-m, \ldots , numvar-1$$ 
 and $latex j = 0 , \ldots , npv-1$$,
-$syntax%%Taylor%[%i% * %npv% + %j%]%$$ is not modified.
+$syntax%%RevJac%[%i% * %npv% + %j%]%$$ is not modified.
 
 
 $subhead Other Variables$$
@@ -120,7 +118,7 @@ template <class Base, class Pack>
 void RevJacSweep(
 	size_t                npv,
 	size_t                numvar,
-	TapeRec<Base>        *Rec,
+	const TapeRec<Base>  *Rec,
 	Pack                 *RevJac
 )
 {

@@ -46,24 +46,13 @@ $tend
 
 $fend 20$$
 
-$head Jacobian Sparsity Pattern$$
-$index sparse, pattern$$
-Suppose that $latex G : B^q \rightarrow B^p$$ is a differentiable function.
-A boolean valued $latex p \times q$$ matrix $latex P$$ is a 
-sparsity pattern for $latex G$$ if 
-for $latex i = 1, \ldots , p$$ and $latex j = 1 , \ldots q$$,
-$latex \[
-P_{i,j} = {\rm false} \Rightarrow G^{(1)}_{i,j} (x) = 0  
-\hspace{1cm} ({\rm for \; all}) \; x \in B^p
-\] $$
-
-
 $head Description$$
 Given the function 
-$latex F : B^n \rightarrow B^m$$ defined by the argument $italic F$$,
-and a Jacobian sparsity pattern $latex Px$$ for a function
-$latex X : B^q \rightarrow B^n$$,
-$code ForSparseJac$$ returns a sparsity pattern for the function
+$latex F : B^n \rightarrow B^m$$ defined by the object $italic F$$, 
+a linear function $latex X : B^q \rightarrow B^n$$, and a 
+$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+$latex Px$$ for the Jacobian of $latex X$$,
+$code ForSparseJac$$ returns a sparsity pattern for the Jacobian of
 $latex F \circ X : B^q \rightarrow B^m$$. 
 
 $head F$$
@@ -96,7 +85,8 @@ $syntax%
 	const %VectorBool% &%Px%
 %$$
 and is a vector with size $latex n * q$$.
-The sparsity pattern for $latex X$$ is given by
+A sparsity pattern for the Jacobian
+$latex X^{(1)} : B^q \rightarrow B^{n \times q}$$ is given by
 $latex \[
 	Px_{i,j} = Px [ i * q + j ]
 \] $$
@@ -108,7 +98,8 @@ $syntax%
 	%VectorBool% %Py%
 %$$
 and is a vector with size $latex m * q$$.
-The sparsity pattern for $latex F \circ X$$ is given by
+A sparsity pattern for the Jacobian
+$latex (F \circ X)^{(1)} : B^q \rightarrow B^{m \times q}$$ is given by
 $latex \[
 	Py_{i,j} = Py [ i * q + j ]
 \] $$
@@ -130,12 +121,14 @@ Px [ i * q + j ] = \left\{ \begin{array}{ll}
 	{\rm flase} & {\rm otherwise}
 \end{array} \right. 
 \] $$
-is an efficient sparsity pattern for $latex X$$; i.e., the choice
-for $italic Px$$ has as few true values as possible.
-In addition, the corresponding value for $italic Py$$ is a 
-sparsity pattern for $italic F$$.
+is an efficient sparsity pattern for the Jacobian of $latex X$$; 
+i.e., the choice for $italic Px$$ has as few true values as possible.
+$pre
 
-
+$$
+In the case defined above, 
+the corresponding value for $italic Py$$ is a 
+sparsity pattern for the Jacobian $italic F^{(1)} (x)$$.
 
 $head Example$$
 $children%
@@ -163,7 +156,7 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
 	// temporary indices
 	size_t i, j, k, p;
 
-	// check VectorBool is Simple Vector class with bpp; type elements
+	// check VectorBool is Simple Vector class with bool elements
 	CheckSimpleVector<bool, VectorBool>();
 
 	// range and domain dimensions for F
@@ -193,6 +186,7 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
 		{	CppADUsageError(0, "cannot allocate sufficient memory");
 			abort();
 		}
+		ForJacColDim = npv;
 	}
 
 	// set values corresponding to independent variables
@@ -233,6 +227,9 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
 			Py[ i * q + j ] = (mask != 0);
 		}
 	}
+
+	// update number of bits currently stored in ForJac
+	ForJacBitDim = q;
 
 	return Py;
 }
