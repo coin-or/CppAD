@@ -1,20 +1,10 @@
 # SvnCommit: this file.
-# ForJacSweep.h: declare Rec a const argument.
-# RevJacSweep.h: declare Rec a const argument, fix some documentation errors.
-# Fun.h: add more member variables needed for sparse Hessian calculation.
-# ForSparseJac.h: set ForJacColDim (forgot), set ForJacBitDim (sparse Hessian).
-# RevSparseJac.h: forgot to set ForJacColDim, improve error messages.
-# glossary.omh: add a definition for a Sparsity pattern.
 # WhatsNew05.omh: users view of the changes.
-# Makefile.am: include more file checking scripts in distribution.
+# Build: Adolc tests were not building with "Build all test" (fixed).
+# configure: improve messages about command line arguments during configure.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/ForJacSweep.h \
-	CppAD/local/RevJacSweep.h \
-	CppAD/local/Fun.h \
-	CppAD/local/ForSparseJac.h \
-	CppAD/local/RevSparseJac.h \
-	omh/glossary.omh \
 	omh/WhatsNew05.omh \
-	Makefile.am
+	Build \
+	configure.ac

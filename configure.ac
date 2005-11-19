@@ -22,10 +22,9 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 
 dnl   package   version           bug-report
-AC_INIT(CppAD, 05-10-12, bradbell@seanet.com)
+AC_INIT(CppAD, 05-11-19, bradbell@seanet.com)
 
-dnl **********************************************************************
-dnl Command Line Arguments
+AC_MSG_NOTICE([******** Begin Checking Command Line arguments ***************])
 
 dnl Are we building the GetStarted directory -----------------------------
 AC_MSG_CHECKING( [--with-GetStarted] )
@@ -35,7 +34,7 @@ AC_ARG_WITH(GetStarted,
 	[GetStarted="no"]
 )
 AM_CONDITIONAL(CppAD_GETSTARTED, test "$GetStarted" = "yes" )
-AC_MSG_RESULT([$GetStarted])
+AC_MSG_RESULT( [$GetStarted] )
 
 dnl Are we building the Example directory --------------------------------
 AC_MSG_CHECKING( [--with-Example] )
@@ -45,7 +44,7 @@ AC_ARG_WITH(Example,
 	[Example="no"]
 )
 AM_CONDITIONAL(CppAD_EXAMPLE, test "$Example" = "yes" )
-AC_MSG_RESULT([$Example])
+AC_MSG_RESULT( [$Example] )
 
 dnl Are we building the TestMore directory -------------------------------
 AC_MSG_CHECKING( [--with-TestMore] )
@@ -106,7 +105,7 @@ AC_MSG_CHECKING( [POSTFIX_DIR] )
 AC_SUBST(POSTFIX_DIR)
 AM_CONDITIONAL(CppAD_POSTFIX, test "$POSTFIX_DIR" != "" )
 if test "$POSTFIX_DIR" != "" ; then
-	AC_MSG_RESULT( [POSTFIX_DIR=$POSTFIX_DIR] )
+	AC_MSG_RESULT( [$POSTFIX_DIR] )
 else
 	AC_MSG_RESULT( [no] )
 fi
@@ -116,7 +115,7 @@ AC_MSG_CHECKING( [ADOLC_DIR] )
 AC_SUBST(ADOLC_DIR)
 AM_CONDITIONAL(CppAD_ADOLC, test "$ADOLC_DIR" != "" )
 if test "$ADOLC_DIR" != "" ; then
-	AC_MSG_RESULT( [ADOLC_DIR=$ADOLC_DIR] )
+	AC_MSG_RESULT( [$ADOLC_DIR] )
 else
 	AC_MSG_RESULT( [no] )
 fi
@@ -126,7 +125,7 @@ AC_MSG_CHECKING( [FADBAD_DIR] )
 AC_SUBST(FADBAD_DIR)
 AM_CONDITIONAL(CppAD_FADBAD, test "$FADBAD_DIR" != "" )
 if test "$FADBAD_DIR" != "" ; then
-	AC_MSG_RESULT( [FADBAD_DIR=$FADBAD_DIR] )
+	AC_MSG_RESULT( [$FADBAD_DIR] )
 else
 	AC_MSG_RESULT( [no] )
 fi
@@ -139,7 +138,7 @@ if test "$BOOST_DIR" != "" ; then
 	AC_DEFINE(CppAD_BOOSTVECTOR, 1, 
 		[is CppADvector == boost::numeric::ublas::vector]
 	)
-	AC_MSG_RESULT( [BOOST_DIR=$BOOST_DIR] )
+	AC_MSG_RESULT( [$BOOST_DIR] )
 else
 	AC_DEFINE(CppAD_BOOSTVECTOR, 0, 
 		[is CppADvector == boost::numeric::ublas::vector]
@@ -151,11 +150,11 @@ dnl The C++ error and warning flags for every compliation ---------------
 AC_MSG_CHECKING( [CPP_ERROR_WARN] )
 AC_SUBST(CPP_ERROR_WARN)
 if test "$CPP_ERROR_WARN" != "" ; then
-	AC_MSG_RESULT( [CPP_ERROR_WARN=$CPP_ERROR_WARN] ) 
+	AC_MSG_RESULT( [$CPP_ERROR_WARN] ) 
 else
 	AC_MSG_RESULT( [no] )
 fi 
-dnl *********************************************************************
+AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
 
 dnl Check which definition we are using for CppADvector
 if test "$stdvector$BOOST_DIR" = "no" ; then
