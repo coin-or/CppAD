@@ -179,13 +179,7 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
 
 	// array that will hold packed values
 	if( ForJacColDim < npv )
-	{	try
-		{	ForJac = new Pack[totalNumVar * npv]; 
-		}
-		catch(...)
-		{	CppADUsageError(0, "cannot allocate sufficient memory");
-			abort();
-		}
+	{	ForJac       = ExtendBuffer(totalNumVar * npv, 0, ForJac);
 		ForJacColDim = npv;
 	}
 

@@ -59,7 +59,9 @@ $contents%
 	CppAD/local/ForwardSweep.h%
 	CppAD/local/ReverseSweep.h%
 	CppAD/local/ForJacSweep.h%
-	CppAD/local/ExtendBuffer.h
+	CppAD/local/RevJacSweep.h%
+	CppAD/local/ExtendBuffer.h%
+	CppAD/local/ExtendCol.h
 %$$
 
 

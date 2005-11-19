@@ -1,7 +1,6 @@
 # ifndef CppADCppADIncluded
 # define CppADCppADIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation Copyright (C) 2003-04 Bradley M. Bell
 
@@ -19,11 +18,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 // ---------------------------------------------------------------------------
 // CppAD general purpose library routines (can be included separately)
 
+# include <CppAD/LuSolve.h>
 # include <CppAD/NearEqual.h>
 # include <CppAD/Runge45.h>
 # include <CppAD/RombergOne.h>
@@ -62,6 +61,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // Declare classes and fucntions that are used before defined
 # include <CppAD/local/Declare.h>
 
+// Memory allocations routines with error checking
+# include <CppAD/local/ExtendBuffer.h>
+# include <CppAD/local/ExtendCol.h>
+
 // ---------------------------------------------------------------------------
 // files containing only implementation details
 
@@ -77,10 +80,5 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 // undo definitions in Define.h
 # include <CppAD/local/Undef.h>   
-
-// ---------------------------------------------------------------------------
-// routines that can be included separately, but that have extra options
-// when included with the rest of CppAD
-# include <CppAD/LuSolve.h>
 
 # endif

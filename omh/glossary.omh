@@ -90,6 +90,9 @@ $latex \[
 \; \Rightarrow \; 
 [ G_{i,j} (x) = 0  , {\rm \; for \; all \;} x \in B^n ]
 \] $$
+Given two sparsity patterns $latex P$$ and $italic Q$$ 
+for a function $latex G$$, we say that $italic P$$ is more efficient than
+$italic Q$$ if $italic P$$ has fewer true elements than $italic Q$$.
  
 $head Tape State$$
 For each class $italic Base$$,

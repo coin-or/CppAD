@@ -183,13 +183,7 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 
 	// array that will hold packed values
 	if( RevJacColDim < npv )
-	{	try
-		{	RevJac = new Pack[totalNumVar * npv]; 
-		}
-		catch(...)
-		{	CppADUsageError(0, "cannot allocate sufficient memory");
-			abort();
-		}
+	{	RevJac       = ExtendBuffer(totalNumVar * npv, 0, RevJac);
 		RevJacColDim = npv;
 	}
 
