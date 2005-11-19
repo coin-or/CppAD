@@ -88,6 +88,11 @@ $$
 Put a try and catch block around all of the uses of
 $code new$$ so that if a memory allocation error occurs, 
 it will generate a $xref/CppADError//CppADUsageError/$$ message.
+$pre
+
+$$
+The $xref/GetStarted.cpp/$$ example has been simplified
+so that it is easier to understand.
 
 $head 11-15$$
 Fix a memory leak in both the $xref/ForSparseJac/$$ and

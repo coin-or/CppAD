@@ -1,39 +1,24 @@
 # SvnCommit: this file.
 # WhatsNew05.omh: users view of the changes.
-# ExtendCol.h: routine for extending the number of columns in a matrix.
-# ForJacSweep.h: use ExtendBuffer instead of using new directly.
-# ForwardSweep.h: use ExtendBuffer instead of using new directly.
-# Vec.h: use ExtendBuffer instead of using new directly.
-# RevJacSweep.h: use ExtendBuffer instead of using new directly.
-# Fun.h: use ExtendBuffer instead of using new directly.
-# ForSparseJac.h: use ExtendBuffer instead of using new directly.
-# RevSparseJac.h: use ExtendBuffer instead of using new directly.
-# CppAD.h: move ExtenBuffer.h include here and add ExtendCol include.
-# Reverse.h: use ExtendCol instead of using new directly.
-# Forward.h: use ExtendCol instead of using new directly.
-# TapeRec.h: use new syntax for ExtendBuffer.
-# ExtendBuffer.h: improve syntax, functionality, and documentation.
-# glossary.omh: add efficiency to definition of sparsity pattern.
-# Developer.omh: add ExtendCol.
-# Makefile.am: add ExtendCol.
-#
+# Makefile.am: add ExtendCol.h (forgot in previous commit).
+# GetStarted.cpp: complete overhaul of this example.
+# TestMore/Makefile.am: include Poly.
+# TestMore.cpp: include Poly.
+# TestMore.vcproj: include Poly.
+# Poly.cpp: old GetStarted example.
+# Example.omh: remove BEGIN SHORT COPYRIGHT.
+# ExampleList.omh: add GetStarted.cpp.
+# Build: include --with-GetStarted in Build all.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-svn add CppAD/local/ExtendCol.h
 svn commit --file svn.log \
 	SvnCommit \
 	omh/WhatsNew05.omh \
-	CppAD/local/ExtendCol.h \
-	CppAD/local/ForJacSweep.h \
-	CppAD/local/ForwardSweep.h \
-	CppAD/local/Reverse.h \
-	CppAD/local/Vec.h \
-	CppAD/local/TapeRec.h \
-	CppAD/local/RevJacSweep.h \
-	CppAD/local/ExtendBuffer.h \
-	CppAD/local/Fun.h \
-	CppAD/local/Forward.h
-	CppAD/local/ForSparseJac.h \
-	CppAD/local/RevSparseJac.h \
-	CppAD/CppAD.h \
-	omh/glossary.omh \
-	Developer.omh
+	omh/ExampleList.omh \
+	omh/Example.omh \
+	TestMore/Poly.cpp \
+	TestMore/TestMore.cpp \
+	TestMore/TestMore.vcproj \
+	TestMore/Makefile.am \
+	GetStarted/GetStarted.cpp \
+	Makefile.am \
+	Build

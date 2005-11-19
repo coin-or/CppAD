@@ -511,6 +511,9 @@
 				RelativePath=".\OdeErrControl.cpp">
 			</File>
 			<File
+				RelativePath=".\Poly.cpp">
+			</File>
+			<File
 				RelativePath="Reverse.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

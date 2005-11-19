@@ -103,6 +103,7 @@ $rref Forward.cpp$$
 $rref ForSparseJac.cpp$$
 $rref FromBase.cpp$$
 $rref Fun.cpp$$
+$rref GetStarted.cpp$$
 $rref HesLuDet.cpp$$
 $rref HesMinorDet.cpp$$
 $rref HesTimesDir.cpp$$

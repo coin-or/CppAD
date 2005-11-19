@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -16,80 +15,118 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin GetStarted.cpp$$
 $spell
 	Cpp
 	getstarted
+	namespace
+	iostream
+	const
+	std
+	powz
+	Jacobian
+	endl
+	da
+	cout
 $$
 
-$section Getting Started Using CppAD With A Polynomial Example$$
-$index getstarted, polynomial$$
-$index polynomial, getstarted$$
+$section Getting Started Using CppAD$$
+$index getstarted$$
+$index simple, example$$
+$index example, simple$$
+$index start, using CppAD$$
 
-Select this link to view specifications for $xref/Poly/$$:
+$head Description$$
+Use CppAD to compute the derivative of the function
+$latex f : \R \rightarrow \R$$ defined by 
+$latex \[
+	f(z) = a_0 + a_1 z^1 + \cdots + a_{k-1} z^{k-1}
+\] $$
+where $italic a$$ is a vector of length $italic k$$.
 
-$comment This file is in the Example subdirectory$$ 
-$code
-$verbatim%GetStarted/GetStarted.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-$$
+$head Poly$$
+The routine $code Poly$$ defined below (in the empty namespace)
+is intended to be simple to understand.
+A better version $xref/Poly/$$ is distributed as part of the
+CppAD include library.
 
-$end
-*/
-// BEGIN PROGRAM
 
-// standard input output library
-# include <iostream>
+$head Source Code$$
+$codep */
+# include <iostream>      // standard input output library
+# include <vector>        // standard vector
+# include <CppAD/CppAD.h> // CppAD package
 
-// directory where CppAD/CppAD.h is stored must be searched by compiler
-# include <CppAD/CppAD.h>
+namespace { // begin definition of Poly(a, z)
+	template <class Type>
+	Type Poly(const std::vector<Type> &a, const Type &z)
+	{	size_t k  = a.size();
+		Type sum  = 0.;
+		Type powz = 1.;
+		size_t i;
+		for(i = 0; i < k; i++)
+		{	sum  += a[i] * powz;
+			powz *= z;
+		}
+		return sum;
+	}
+}
+int main(void)             // begin main program
+{	using CppAD::AD;   // so we can use AD in place of CppAD::AD
+	using std::vector; // so we can use vector in place of std::vector
+	size_t n = 1;      // number of independent variables (domain dim)
+	size_t m = 1;      // number of dependent variables (range dim)
+	size_t k = 5;      // number of coefficients in poly for f(z)
 
-int main(void)
-{
-	// make CppAD routines visible without CppAD:: infront of names
-	using namespace CppAD;
-
-	// degree of the polynomial that we will differentiate
-	size_t deg = 4;
-
-	// vector that will hold polynomial coefficients for p(z)
-	CppADvector< AD<double> > A(deg + 1);  // AD<double> elements
-	CppADvector<double>       a(deg + 1);  //    double  elements
-
-	// set the polynomial coefficients
-	A[0] = 1.;
-	size_t k;
-	for(k = 1; k <= deg; k++)
-		A[k] = a[k] = 1.;
+	// polynomial coefficients for f(z)
+	vector< AD<double> > A(k);  // as AD<double> elements
+	vector<double>       a(k);  // as double     elements
+	size_t i;
+	for(i = 0; i < k; i++)
+		A[i] = a[i] = 1.;   // value of the coefficients
 
 	// independent variables
-	CppADvector< AD<double> > Z(1); // one independent variable
-	Z[0]     = 3.;                  // value of independent variable
-	Independent(Z);                 // declare independent variable
+	vector< AD<double> > Z(n); // first create a vector for, then 
+	Z[0] = 3.;                 // set the value of, and then
+	CppAD::Independent(Z);     // declare the independent variables
 
-	// dependent variables 
-	CppADvector< AD<double> > P(1); // one dependent variable
-	P[0]     = Poly(0, A, Z[0]);    // value of polynomial at Z[0]
+	// first create a vector for the dependent variables
+	vector< AD<double> > P(m);      
 
-	// define f : Z -> P as a function mapping independent to dependent 
-	ADFun<double> f(Z, P);          // ADFun corresponding to polynomial
+	// set the dependent variable using use Poly with Type = AD<double> 
+	P[0] = Poly(A, Z[0]);
 
-	// compute derivative of polynomial
-	CppADvector<double> z(1);  // vector of length f.Domain()
-	CppADvector<double> J(1);  // vector of length f.Range * f.Domain()
-	z[0] = 3.;                 // point at which to compute derivative
-	J    = f.Jacobian(z);      // value of derivative
+	// declare the dependent variables: f : Z -> P 
+	CppAD::ADFun<double> f(Z, P);
 
-	// compare with derivative as computed by Poly
-	std::cout << "Poly  computed derivative = " 
-	          << Poly(1, a, z[0]) << std::endl;
-	std::cout << "CppAD computed derivative = " 
-	          << J[0] << std::endl;
+	// use CppAD to compute derivative of polynomial
+	vector<double> J(m * n);   // an m by n matrix for the Jacobian of f
+	vector<double> z(n);       // argument value to compute Jacobian at
+	z[0] = 3.;                 // placed in z[0]
+	J    = f.Jacobian(z);      // value of Jacobian at z
+
+	// use Poly with Type = double to evaluate polynomial for da
+	vector<double> da(k-1);               // coefficients for derivative 
+	for(i = 0; i < (k-1); i++)
+		da[i] = double(i+1) * a[i+1]; // derivative coefficient
+	double dp = Poly(da, z[0]);           // value of derivative at z[0]
+
+	// print the results
+	std::cout << "f'(z) computed by CppAD = " << J[0] << std::endl;
+	std::cout << "f'(z) computed by Poly   = " << dp << std::endl;
 
 	// return value not significant
 	return 0;
 }
+/* $$
 
-// END PROGRAM
+$head Output$$
+The program above will generate the following output:
+$code
+$verbatim%GetStarted/GetStarted.out%$$
+$$
+
+$end
+*/

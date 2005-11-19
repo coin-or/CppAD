@@ -85,6 +85,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/Exp.h \
 	CppAD/local/ExpOp.h \
 	CppAD/local/ExtendBuffer.h \
+	CppAD/local/ExtendCol.h \
 	CppAD/local/ForOne.h \
 	CppAD/local/ForTwo.h \
 	CppAD/local/ForJacSweep.h \
