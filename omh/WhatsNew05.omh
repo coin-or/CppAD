@@ -82,6 +82,12 @@ assist you in learning about changes between various versions of CppAD.
 $head 11-19$$
 Improve the output messages generated during execution of the 
 $xref/InstallUnix/Configure/configure/$$ command.
+$pre
+
+$$
+Put a try and catch block around all of the uses of
+$code new$$ so that if a memory allocation error occurs, 
+it will generate a $xref/CppADError//CppADUsageError/$$ message.
 
 $head 11-15$$
 Fix a memory leak in both the $xref/ForSparseJac/$$ and

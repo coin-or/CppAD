@@ -260,9 +260,8 @@ template <typename VectorBase>
 VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &v)
 {
 	if( PartialColDim < p )
-	{	if( Partial != CppADNull ) delete [] Partial;
+	{	Partial       = ExtendBuffer(totalNumVar * p, 0, Partial);
 		PartialColDim = p;
-		Partial = new Base[totalNumVar * PartialColDim];
 	}
 
 	// check VectorBase is Simple Vector class with Base type elements

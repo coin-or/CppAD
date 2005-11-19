@@ -166,15 +166,14 @@ void ForJacSweep(
 
 	// initial VecAD sparsity pattern (inefficient because just the indices
 	// of VecSto that corresponds to an array size are used)
-	Pack   *VectorSto;
+	Pack   *VectorSto = CppADNull;
 	i  = Rec->NumVecInd();
 	if( i > 0 )
-	{	VectorSto = new Pack[i * npv];
+	{	VectorSto = ExtendBuffer(i * npv, 0, VectorSto);
 		while(i--)
 		for(j = 0; j < npv; j++)
 			VectorSto[i * npv + j] = 0;
 	}
-	else	VectorSto = CppADNull;
 
 	// check numvar argument
 	CppADUnknownError( Rec->TotNumVar() == numvar );

@@ -201,12 +201,12 @@ size_t ForwardSweep(
 	size_t compareCount = 0;
 
 	// if this is an order zero calculation, initialize vector indices
-	size_t *VectorInd;
-	bool   *VectorSto;
+	size_t *VectorInd = CppADNull;
+	bool   *VectorSto = CppADNull;
 	i = Rec->NumVecInd();
 	if( i > 0 )
-	{	VectorInd = new size_t[i];
-		VectorSto = new bool[i];
+	{	VectorInd = ExtendBuffer(i, 0, VectorInd);
+		VectorSto = ExtendBuffer(i, 0, VectorSto);
 		while(i--)
 		{	VectorInd[i] = Rec->GetVecInd(i);
 			VectorSto[i] = false;

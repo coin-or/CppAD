@@ -422,11 +422,14 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 
 	// recording
 	Rec     = new TapeRec<Base>( AD<Base>::Tape()->Rec );
-	Taylor  = new Base[totalNumVar];
+
+	// buffers
+	Taylor  = CppADNull;
 	Partial = CppADNull;
 	ForJac  = CppADNull;
 	RevJac  = CppADNull;
 	RevHes  = CppADNull;
+	Taylor  = ExtendBuffer(totalNumVar, 0, Taylor);
 
 	// number of elements in u
 	n = u.size();

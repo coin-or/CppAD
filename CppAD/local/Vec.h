@@ -345,9 +345,9 @@ public:
 	// constructor 
 	VecAD(size_t n) : length(n) , id(0)
 	{	CppADUnknownError( *ADTape<Base>::Id() > id );
-		if( length == 0 )
-			data  = CppADNull;
-		else	data  = new Base [length]; 
+		data  = CppADNull;
+		if( length > 0 )
+			data  = ExtendBuffer(length, 0, data);
 	}
 
 	// destructor

@@ -243,7 +243,6 @@ template <typename Base>
 template <typename VectorBase>
 VectorBase ADFun<Base>::Forward(size_t p, const VectorBase &up)
 {	size_t i;
-	size_t j;
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
@@ -260,14 +259,8 @@ VectorBase ADFun<Base>::Forward(size_t p, const VectorBase &up)
 	);  
 	if( TaylorColDim <= p )
 	{	CppADUnknownError(TaylorColDim == p);
+		Taylor       = ExtendCol(p + 1, totalNumVar, p, Taylor);
 		TaylorColDim = p+1;
-		Base *Tmp = new Base[totalNumVar * TaylorColDim];
-		for(i = 0; i < totalNumVar; i++)
-		{	for(j = 0; j < p; j++)
-				Tmp[i * TaylorColDim + j] = Taylor[i * p + j];
-		}
-		delete [] Taylor;
-		Taylor = Tmp;
 	}
 
 	// set the p-th order Taylor coefficients for independent variables

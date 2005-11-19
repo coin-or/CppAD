@@ -254,8 +254,6 @@ $end
 ------------------------------------------------------------------------------
 */
 
-# include <CppAD/local/ExtendBuffer.h>
-
 //  BEGIN CppAD namespace
 namespace CppAD {
 
@@ -498,7 +496,7 @@ inline size_t TapeRec<Base>::PutOp(OpCode op)
 	CppADUnknownError( NumberOp <= LengthOp );
 	if( NumberOp == LengthOp )
 	{	LengthOp  = 2 * LengthOp;
-		ExtendBuffer(LengthOp, NumberOp, Op);
+		Op = ExtendBuffer(LengthOp, NumberOp, Op);
 	}
 	CppADUnknownError( NumberOp < LengthOp );
 	Op[NumberOp++]  = op;
@@ -514,7 +512,7 @@ inline size_t TapeRec<Base>::PutVecInd(size_t vecInd)
 	CppADUnknownError( NumberVecInd <= LengthVecInd );
 	if( NumberVecInd == LengthVecInd )
 	{	LengthVecInd      = 2 * LengthVecInd;
-		ExtendBuffer(LengthVecInd, NumberVecInd, VecInd);
+		VecInd = ExtendBuffer(LengthVecInd, NumberVecInd, VecInd);
 	}
 	CppADUnknownError( NumberVecInd < LengthVecInd );
 	VecInd[NumberVecInd++] = vecInd;
@@ -542,7 +540,7 @@ inline size_t TapeRec<Base>::PutPar(const Base &par)
 	// place a new value in the table
 	if( NumberPar == LengthPar )
 	{	LengthPar    = 2 * LengthPar;
-		ExtendBuffer(LengthPar, NumberPar, Par);
+		Par = ExtendBuffer(LengthPar, NumberPar, Par);
 	}
 	CppADUnknownError( NumberPar < LengthPar );
 	Par[NumberPar++] = par;
@@ -557,7 +555,7 @@ inline void TapeRec<Base>::PutInd(size_t ind0)
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd == LengthInd )
 	{	LengthInd    = 2 * LengthInd;
-		ExtendBuffer(LengthInd, NumberInd, Ind);
+		Ind = ExtendBuffer(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -569,7 +567,7 @@ inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1)
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 1 >= LengthInd )
 	{	LengthInd    = 1 + 2 * LengthInd;
-		ExtendBuffer(LengthInd, NumberInd, Ind);
+		Ind = ExtendBuffer(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 1 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -582,7 +580,7 @@ inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2)
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 2 >= LengthInd )
 	{	LengthInd    = 2 + 2 * LengthInd;
-		ExtendBuffer(LengthInd, NumberInd, Ind);
+		Ind = ExtendBuffer(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 2 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -597,7 +595,7 @@ inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 3 >= LengthInd )
 	{	LengthInd    = 3 + 2 * LengthInd;
-		ExtendBuffer(LengthInd, NumberInd, Ind);
+		Ind = ExtendBuffer(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 3 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -614,7 +612,7 @@ inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 4 >= LengthInd )
 	{	LengthInd    = 4 + 2 * LengthInd;
-		ExtendBuffer(LengthInd, NumberInd, Ind);
+		Ind = ExtendBuffer(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 4 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -632,7 +630,7 @@ inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 5 >= LengthInd )
 	{	LengthInd    = 5 + 2 * LengthInd;
-		ExtendBuffer(LengthInd, NumberInd, Ind);
+		Ind = ExtendBuffer(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 5 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -658,7 +656,7 @@ inline size_t TapeRec<Base>::PutTxt(const char *text)
 
 	if( NumberTxt + n >= LengthTxt )
 	{	LengthTxt    = 2 * LengthTxt + n;
-		ExtendBuffer(LengthTxt, NumberTxt, Txt);
+		Txt = ExtendBuffer(LengthTxt, NumberTxt, Txt);
 	}
 	CppADUnknownError( NumberTxt + n < LengthTxt );
 
