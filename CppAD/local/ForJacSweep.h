@@ -47,6 +47,8 @@ $syntax%void ForJacSweep(
 	size_t                 %npv%,
 	size_t                 %numvar%,
 	const TapeRec<%Base%> *%Rec%,
+	size_t                 %TaylorColDim%,
+	const %Base%          *%Taylor%,
 	%Pack%                *%ForJac%
 )%$$
 $tend
@@ -70,10 +72,18 @@ $head numvar$$
 is the number of rows in the entire sparsity pattern $italic ForJac$$.
 It must also be equal to $syntax%%Rec%->TotNumVar()%$$.
 
-
 $head npv$$
 Is the number of elements of type $italic Pack$$
 (per variable) in the sparsity pattern $italic ForJac$$.
+
+$head TaylorColDim$$
+Is the number of columns currently stored in the matrix $italic Taylor$$.
+
+$head Taylor$$
+For $latex i = 1 , \ldots , numvar$$,
+$syntax%%Taylor%[%i% * %TaylorColDim%]%$$
+is the value of the variable with index $italic i$$.
+
 
 $head On Input$$
 
@@ -140,6 +150,8 @@ void ForJacSweep(
 	size_t                npv,
 	size_t                numvar,
 	const TapeRec<Base>  *Rec,
+	size_t                TaylorColDim,
+	const Base           *Taylor,
 	Pack                 *ForJac
 )
 {
@@ -155,14 +167,19 @@ void ForJacSweep(
 	const Pack       *X;
 	const Pack       *Y;
 
-	// used by CExp operator 
-	const Pack  *trueCase, *falseCase;
-
 	Pack             *Z;
 	Pack           *Tmp;
 
 	size_t            i;
 	size_t            j;
+
+	// used by CExp operator 
+	const Base  *left, *right;
+	const Pack  *trueCase, *falseCase;
+	Pack        *zero = CppADNull;
+	zero = ExtendBuffer(npv, 0, zero);
+	for(j = 0; j < npv; j++)
+		zero[j] = 0;
 
 	// initial VecAD sparsity pattern (inefficient because just the indices
 	// of VecSto that corresponds to an array size are used)
@@ -312,14 +329,26 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 6);
 			CppADUnknownError( ind[1] != 0 );
 
-			trueCase  = ForJac + ind[4] * npv; // if ind[1] & 4 true
-			falseCase = ForJac + ind[5] * npv; // if ind[1] & 8 true
+			if( ind[1] & 1 )
+				left = Taylor + ind[2] * TaylorColDim;
+			else	left = Rec->GetPar(ind[2]);
+			if( ind[1] & 2 )
+				right = Taylor + ind[3] * TaylorColDim;
+			else	right = Rec->GetPar(ind[3]);
+			if( ind[1] & 4 )
+				trueCase = ForJac + ind[4] * npv;
+			else	trueCase = zero;
+			if( ind[1] & 8 )
+				falseCase = ForJac + ind[5] * npv;
+			else	falseCase = zero;
 			for(j = 0; j < npv; j++)
-			{	if( ind[1] & 4 )
-					Z[j] = trueCase[j];
-				else	Z[j] = 0;
-				if( ind[1] & 8 )
-					Z[j] |= falseCase[j];
+			{	Z[j] = CondExpTemplate(
+					CompareOp( ind[0] ),
+					*left,
+					*right,
+					trueCase[j],
+					falseCase[j]
+				);
 			}
 			break;
 			// ---------------------------------------------------
@@ -674,6 +703,8 @@ void ForJacSweep(
 
 	if( VectorSto != CppADNull )
 		delete [] VectorSto;
+	if( zero != CppADNull )
+		delete [] zero;
 
 	return;
 }

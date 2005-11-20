@@ -47,6 +47,8 @@ $syntax%void RevJacSweep(
 	size_t                 %npv%,
 	size_t                 %numvar%,
 	const TapeRec<%Base%> *%Rec%,
+	size_t                 %TaylorColDim%,
+	const %Base%          *%Taylor%,
 	%Pack%                *%RevJac%
 )%$$
 $tend
@@ -74,6 +76,14 @@ It must also be equal to $syntax%%Rec%->TotNumVar()%$$.
 $head npv$$
 Is the number of elements of type $italic Pack$$
 (per variable) in the sparsity pattern $italic RevJac$$.
+ 
+$head TaylorColDim$$
+Is the number of columns currently stored in the matrix $italic Taylor$$.
+
+$head Taylor$$
+For $latex i = 1 , \ldots , numvar$$,
+$syntax%%Taylor%[%i% * %TaylorColDim%]%$$
+is the value of the variable with index $italic i$$.
 
 $head On Input$$
 
@@ -119,6 +129,8 @@ void RevJacSweep(
 	size_t                npv,
 	size_t                numvar,
 	const TapeRec<Base>  *Rec,
+	size_t                TaylorColDim,
+	Base                 *Taylor,
 	Pack                 *RevJac
 )
 {
@@ -134,12 +146,13 @@ void RevJacSweep(
 	Pack             *Y;
 	const Pack       *Z;
 
-	// used by CExp operator 
-	Pack      *trueCase;
-	Pack     *falseCase;
-
 	size_t            i;
 	size_t            j;
+
+	// used by CExp operator 
+	const Base  *left, *right;
+	Pack        *trueCase, *falseCase;
+	Pack         zero(0);
 
 	// initial VecAD sparsity pattern (inefficient because just the index
 	// corresponding to size is used for all elements in a VecAD array)
@@ -183,7 +196,7 @@ void RevJacSweep(
 		// sparsity for z corresponding to this op
 		Z      = RevJac + i_var * npv;
 
-# if CppADForJacSweepTrace
+# if CppADRevJacSweepTrace
 		printOp(
 			std::cout, 
 			Rec,
@@ -294,13 +307,35 @@ void RevJacSweep(
 			CppADUnknownError( n_ind == 6);
 			CppADUnknownError( ind[1] != 0 );
 
-			trueCase  = RevJac + ind[4] * npv; // if ind[1] & 4 true
-			falseCase = RevJac + ind[5] * npv; // if ind[1] & 8 true
-			for(j = 0; j < npv; j++)
-			{	if( ind[1] & 4 )
-					trueCase[j] |= Z[j];
-				if( ind[1] & 8 )
-					falseCase[j] |= Z[j];
+			if( ind[1] & 1 )
+				left = Taylor + ind[2] * TaylorColDim;
+			else	left = Rec->GetPar(ind[2]);
+			if( ind[1] & 2 )
+				right = Taylor + ind[3] * TaylorColDim;
+			else	right = Rec->GetPar(ind[3]);
+			if( ind[1] & 4 )
+			{	trueCase = RevJac + ind[4] * npv;
+				for(j = 0; j < npv; j++)
+				{	trueCase[j] |= CondExpTemplate(
+						CompareOp( ind[0] ),
+						*left,
+						*right,
+						Z[j],
+						zero
+					);
+				}
+			}
+			if( ind[1] & 8 )
+			{	falseCase = RevJac + ind[5] * npv;
+				for(j = 0; j < npv; j++)
+				{	falseCase[j] |= CondExpTemplate(
+						CompareOp( ind[0] ),
+						*left,
+						*right,
+						zero,
+						Z[j]
+					);
+				}
 			}
 			break;
 			// ---------------------------------------------------

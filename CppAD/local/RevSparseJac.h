@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin RevSparseJac$$
 $spell
+	xk
 	Py 
 	Px
 	Jacobian
@@ -53,8 +54,10 @@ $latex F : B^n \rightarrow B^m$$ defined by the object $italic F$$,
 a linear function $latex Y : B^m \rightarrow B^p$$, and a
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$
 $latex Py$$ for the Jacobian of $latex Y$$,
-$code RevSparseJac$$ returns a sparsity pattern for the Jacobian of
-$latex Y \circ F : B^n \rightarrow B^p$$. 
+$code RevSparseJac$$ returns a sparsity pattern for the Jacobian 
+$latex \[
+	J = Y^{(1)} F^{(1)} ( x^{(0)} )
+\] $$
 
 $head F$$
 The object $italic F$$ has prototype
@@ -68,12 +71,24 @@ $xref/ADFun/Domain/domain/$$ space for $italic F$$, and
 $latex m$$ is the dimension of the 
 $xref/ADFun/Range/range/$$ space for $italic F$$.
 
+$head x0$$
+The value $latex x^{(0)} \in B^n$$ is the value of $italic xk$$
+in the previous call to 
+$syntax%
+	%F%.Forward(%k%, %xk%)
+%$$
+where $latex k = 0$$.
+If there was no previous call with $latex k = 0$$,
+$latex x^{(0)}$$ is the value of the independent variables
+when $italic F$$ was constructed as an 
+$xref/ADFun/$$ object.
+
 $head p$$
 The argument $italic p$$ has prototype
 $syntax%
 	size_t %p%
 %$$
-It specifies the number of functions components we are computing the 
+It specifies the number of components we are computing the 
 sparsity pattern with respect to.
 Note that the memory required for the calculation is proportional 
 to $latex p$$ times the total number of variables on the tape.
@@ -86,8 +101,8 @@ $syntax%
 	const %VectorBool% &%Py%
 %$$
 and is a vector with size $latex p * m$$.
-A sparsity pattern for the Jacobian
-$latex Y^{(1}) : B^m \rightarrow B^p$$ is given by
+A sparsity pattern for the matrix
+$latex Y^{(1}) \in B^{p \times m}$$ is given by
 $latex \[
 	Py_{i,j} = Py [ i * m + j ]
 \] $$
@@ -100,7 +115,10 @@ $syntax%
 %$$
 and is a vector with size $latex p * n$$.
 A sparsity pattern for the Jacobian
-$latex (Y \circ F)^{(1)} : B^n \rightarrow B^{p \times n}$$ is given by
+$latex \[
+	J = Y^{(1)} F^{(1)} ( x^{(0)} )
+\] $$
+is given by
 $latex \[
 	Py_{i,j} = Py [ i * n + j ]
 \] $$
@@ -129,7 +147,8 @@ $pre
 $$
 In the case defined above, 
 the corresponding value for $italic Px$$ is a 
-sparsity pattern for the Jacobian $italic F^{(1)} (x)$$.
+sparsity pattern for the Jacobian 
+$latex J = F^{(1)} ( x^{(0)} )$$.
 
 
 
@@ -208,7 +227,7 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 	}
 
 	// evaluate the sparsity patterns
-	RevJacSweep(npv, totalNumVar, Rec, RevJac);
+	RevJacSweep(npv, totalNumVar, Rec, TaylorColDim, Taylor, RevJac);
 
 	// return values corresponding to dependent variables
 	VectorBool Px(p * n);

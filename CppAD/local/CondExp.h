@@ -162,98 +162,70 @@ namespace CppAD {
 
 // ------------ CondExpOp(cop, left, right, trueCase, falseCase) --------------
 
+template <class CompareType, class ResultType>
+inline ResultType CondExpTemplate( 
+	enum  CompareOp            cop ,
+	const CompareType        &left ,
+	const CompareType       &right , 
+	const ResultType     &trueCase , 
+	const ResultType    &falseCase )
+{	ResultType returnValue;
+	switch( cop )
+	{
+		case CompareLt:
+		if( left < right )
+			returnValue = trueCase;
+		else	returnValue = falseCase;
+		break;
+
+		case CompareLe:
+		if( left <= right )
+			returnValue = trueCase;
+		else	returnValue = falseCase;
+		break;
+
+		case CompareEq:
+		if( left == right )
+			returnValue = trueCase;
+		else	returnValue = falseCase;
+		break;
+
+		case CompareGe:
+		if( left >= right )
+			returnValue = trueCase;
+		else	returnValue = falseCase;
+		break;
+
+		case CompareGt:
+		if( left > right )
+			returnValue = trueCase;
+		else	returnValue = falseCase;
+		break;
+
+		default:
+		CppADUnknownError(0);
+		returnValue = trueCase;
+	}
+	return returnValue;
+}
+
 inline float CondExpOp( 
 	enum CompareOp     cop ,
 	const float      &left ,
 	const float     &right , 
 	const float  &trueCase , 
 	const float &falseCase )
-{	float returnValue;
-	switch( cop )
-	{
-		case CompareLt:
-		if( left < right )
-			returnValue = trueCase;
-		else	returnValue = falseCase;
-		break;
-
-		case CompareLe:
-		if( left <= right )
-			returnValue = trueCase;
-		else	returnValue = falseCase;
-		break;
-
-		case CompareEq:
-		if( left == right )
-			returnValue = trueCase;
-		else	returnValue = falseCase;
-		break;
-
-		case CompareGe:
-		if( left >= right )
-			returnValue = trueCase;
-		else	returnValue = falseCase;
-		break;
-
-		case CompareGt:
-		if( left > right )
-			returnValue = trueCase;
-		else	returnValue = falseCase;
-		break;
-
-		default:
-		CppADUnknownError(0);
-		returnValue = trueCase;
-	}
-	return returnValue;
+{	return CondExpTemplate(cop, left, right, trueCase, falseCase);
 }
 
 inline double CondExpOp( 
-	enum CompareOp     cop  ,
-	const double     &left  , 
+	enum CompareOp     cop ,
+	const double      &left ,
 	const double     &right , 
-	const double &trueCase  , 
+	const double  &trueCase , 
 	const double &falseCase )
-{	double returnValue;
-	switch( cop )
-	{
-		case CompareLt:
-		if( left < right )
-			returnValue = trueCase;
-		else	returnValue = falseCase;
-		break;
-
-		case CompareLe:
-		if( left <= right )
-			returnValue = trueCase;
-		else	returnValue = falseCase;
-		break;
-
-		case CompareEq:
-		if( left == right )
-			returnValue = trueCase;
-		else	returnValue = falseCase;
-		break;
-
-		case CompareGe:
-		if( left >= right )
-			returnValue = trueCase;
-		else	returnValue = falseCase;
-		break;
-
-		case CompareGt:
-		if( left > right )
-			returnValue = trueCase;
-		else	returnValue = falseCase;
-		break;
-
-		default:
-		CppADUnknownError(0);
-		returnValue = trueCase;
-	}
-	return returnValue;
+{	return CondExpTemplate(cop, left, right, trueCase, falseCase);
 }
-
 
 inline std::complex<float> CondExpOp(
 	enum CompareOp             cop       ,
@@ -281,8 +253,6 @@ inline std::complex<double> CondExpOp(
 	);
 	return std::complex<double>(0);
 }
-
-
 
 template <class Base>
 inline AD<Base> CondExpOp(

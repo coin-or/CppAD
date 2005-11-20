@@ -115,7 +115,7 @@ int main(void)             // begin main program
 
 	// print the results
 	std::cout << "f'(z) computed by CppAD = " << J[0] << std::endl;
-	std::cout << "f'(z) computed by Poly   = " << dp << std::endl;
+	std::cout << "f'(z) computed by Poly  = " << dp << std::endl;
 
 	// return value not significant
 	return 0;

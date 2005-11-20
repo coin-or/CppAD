@@ -141,6 +141,34 @@ bool CondExpAD(void)
 		ok &= (sum == dx[j]);
 	}
 
+	// forward mode computation of sparsity pattern
+	CppADvector<bool> Px(n * n);
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			Px[i * n + j] = false;
+		Px[i * n + i] = true;
+	}
+	CppADvector<bool> Py(m * n);
+	Py = f.ForSparseJac(n, Px);
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < n; j++)
+			ok &= ( Py[i * n + j] == (J[i * n + j] == 1.) );
+	}
+
+	// reverse mode computation of sparsity pattern
+	Py.resize(m * m);
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < m; j++)
+			Py[i * m + j] = false;
+		Py[i * m + i] = true;
+	}
+	Px.resize(m * n);
+	Px = f.RevSparseJac(m, Py);
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < n; j++)
+			ok &= ( Px[i * n + j] == (J[i * n + j] == 1.) );
+	}
+
 	return ok;
 }
 // END PROGRAM

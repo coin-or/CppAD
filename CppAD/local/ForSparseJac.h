@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin ForSparseJac$$
 $spell
+	xk
 	Py 
 	Px
 	Jacobian
@@ -52,8 +53,10 @@ $latex F : B^n \rightarrow B^m$$ defined by the object $italic F$$,
 a linear function $latex X : B^q \rightarrow B^n$$, and a 
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
 $latex Px$$ for the Jacobian of $latex X$$,
-$code ForSparseJac$$ returns a sparsity pattern for the Jacobian of
-$latex F \circ X : B^q \rightarrow B^m$$. 
+$code ForSparseJac$$ returns a sparsity pattern for the Jacobian 
+$latex \[
+	J = F^{(1)} ( x^{(0)} ) X^{(1)}
+\] $$
 
 $head F$$
 The object $italic F$$ has prototype
@@ -67,13 +70,26 @@ $xref/ADFun/Domain/domain/$$ space for $italic F$$, and
 $latex m$$ is the dimension of the 
 $xref/ADFun/Range/range/$$ space for $italic F$$.
 
+$head x0$$
+The value $latex x^{(0)} \in B^n$$ is the value of $italic xk$$
+in the previous call to 
+$syntax%
+	%F%.Forward(%k%, %xk%)
+%$$
+where $latex k = 0$$.
+If there was no previous call with $latex k = 0$$,
+$latex x^{(0)}$$ is the value of the independent variables
+when $italic F$$ was constructed as an 
+$xref/ADFun/$$ object.
+	
+
 $head q$$
 The argument $italic q$$ has prototype
 $syntax%
 	size_t %q%
 %$$
-It specifies the number of components we are computing the 
-sparsity pattern with respect to.
+It specifies the number of columns of $latex J$$ we are computing the 
+sparsity pattern with for.
 Note that the memory required for the calculation is proportional 
 to $latex q$$ times the total number of variables on the tape.
 Thus it may be desireable to break the sparsity calculation into 
@@ -85,8 +101,8 @@ $syntax%
 	const %VectorBool% &%Px%
 %$$
 and is a vector with size $latex n * q$$.
-A sparsity pattern for the Jacobian
-$latex X^{(1)} : B^q \rightarrow B^{n \times q}$$ is given by
+A sparsity pattern for the matrix
+$latex X^{(1)} \in B^{n \times q}$$ is given by
 $latex \[
 	Px_{i,j} = Px [ i * q + j ]
 \] $$
@@ -98,8 +114,11 @@ $syntax%
 	%VectorBool% %Py%
 %$$
 and is a vector with size $latex m * q$$.
-A sparsity pattern for the Jacobian
-$latex (F \circ X)^{(1)} : B^q \rightarrow B^{m \times q}$$ is given by
+A sparsity pattern for the matrix
+$latex \[
+	J = F^{(1)} ( x^{(0)} ) X^{(1)}
+\] $$
+is given by $latex Py$$ where
 $latex \[
 	Py_{i,j} = Py [ i * q + j ]
 \] $$
@@ -110,6 +129,10 @@ The type $italic VectorBool$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
+In order to save memory, 
+you may want to use a class that packs multiple elements into one
+memory location; for example,
+$xref/CppAD_vector/vectorBool/vectorBool/$$.
 
 $head Entire Sparsity Pattern$$
 Suppose that $latex q = n$$ and the function 
@@ -128,7 +151,8 @@ $pre
 $$
 In the case defined above, 
 the corresponding value for $italic Py$$ is a 
-sparsity pattern for the Jacobian $italic F^{(1)} (x)$$.
+sparsity pattern for the Jacobian 
+$latex J = F^{(1)} ( x^{(0)} )$$.
 
 $head Example$$
 $children%
@@ -205,7 +229,7 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
 	}
 
 	// evaluate the sparsity patterns
-	ForJacSweep(npv, totalNumVar, Rec, ForJac);
+	ForJacSweep(npv, totalNumVar, Rec, TaylorColDim, Taylor, ForJac);
 
 	// return values corresponding to dependent variables
 	VectorBool Py(m * q);

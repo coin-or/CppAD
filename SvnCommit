@@ -1,24 +1,28 @@
 # SvnCommit: this file.
 # WhatsNew05.omh: users view of the changes.
-# Makefile.am: add ExtendCol.h (forgot in previous commit).
-# GetStarted.cpp: complete overhaul of this example.
-# TestMore/Makefile.am: include Poly.
-# TestMore.cpp: include Poly.
-# TestMore.vcproj: include Poly.
-# Poly.cpp: old GetStarted example.
-# Example.omh: remove BEGIN SHORT COPYRIGHT.
-# ExampleList.omh: add GetStarted.cpp.
-# Build: include --with-GetStarted in Build all.
+# CondExp.h: fold multiple cases into CondExpTemplate.
+# RevJacSweep.h: add Taylor to argument list and make result more efficient.
+# ForJacSweep.h: add Taylor to argument list and make result more efficient.
+# ForSparseJac.h: change user specification and pass Taylor to ForJacSweep.
+# RevSparseJac.h: change user specification and pass Taylor to ForJacSweep.
+# glossary.omh: define sparsity pattern in terms of matrix (not function).
+# CondExpAD.cpp: extend tests to include sparsity pattern results.
+# GetStarted.cpp: correct output spacing.
+# ForSparseJac.cpp: change to check for more efficient result.
+# RevSparseJac.cpp: change to check for more efficient result.
+# CondExpAD.cpp: add sparsity pattern check.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
 	omh/WhatsNew05.omh \
-	omh/ExampleList.omh \
-	omh/Example.omh \
-	TestMore/Poly.cpp \
-	TestMore/TestMore.cpp \
-	TestMore/TestMore.vcproj \
-	TestMore/Makefile.am \
+	CppAD/local/ForJacSweep.h \
+	CppAD/local/CondExp.h \
+	CppAD/local/RevJacSweep.h \
+	CppAD/local/ForSparseJac.h \
+	CppAD/local/RevSparseJac.h \
+	omh/glossary.omh \
+	TestMore/CondExpAD.cpp \
 	GetStarted/GetStarted.cpp \
-	Makefile.am \
-	Build
+	TestMore/ForSparseJac.cpp \
+	TestMore/RevSparseJac.cpp \
+	TestMore/CondExpAD.cpp

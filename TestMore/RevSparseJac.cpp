@@ -110,12 +110,12 @@ bool RevSparseJac(void)
 	index++;
 	Y[index] = CondExpLt(X[0], X[1], X[0], X[1]);
 	Check[index * n + 0] = true;
-	Check[index * n + 1] = true;
+	Check[index * n + 1] = false;
 	Check[index * n + 2] = false;
 	index++;
 	Y[index] = CondExpLt(X[0], X[1], AD<double>(3.), X[1]);
 	Check[index * n + 0] = false;
-	Check[index * n + 1] = true;
+	Check[index * n + 1] = false;
 	Check[index * n + 2] = false;
 	index++;
 
