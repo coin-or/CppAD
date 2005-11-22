@@ -580,41 +580,26 @@ void RevJacSweep(
 			// -------------------------------------------------
 
 			case StppOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
-
 			break;
 			// -------------------------------------------------
 
 			case StpvOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
-
-			// update sparsity for entire vector
-			Y = RevJac + ind[2] * npv;
-			for(j = 0; j < npv; j++)
-			{	Y[j] |= Z[j];
-				VectorSto[ j + (ind[0] - 1) * npv] |= Z[j];
-			}
 			break;
 			// -------------------------------------------------
 
 			case StvpOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
-
 			break;
 			// -------------------------------------------------
 
 			case StvvOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
-
-			Y    = RevJac + ind[2] * npv;
-			for(j = 0; j < npv; j++)
-			{	Y[j] |= Z[j];
-				VectorSto[ j + (ind[0] - 1) * npv] |= Z[j];
-			}
 			break;
 			// -------------------------------------------------
 

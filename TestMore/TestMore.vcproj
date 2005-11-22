@@ -703,6 +703,9 @@
 				RelativePath=".\Value.cpp">
 			</File>
 			<File
+				RelativePath=".\VecAD.cpp">
+			</File>
+			<File
 				RelativePath="VecADPar.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

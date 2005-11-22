@@ -453,9 +453,10 @@ void ReverseSweep(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 3 );
 			CppADUnknownError( ind[2] < i_var );
-
-			pY     = Partial + ind[2] * K;
-			pY[d] += pZ[d];
+			if( ind[2] > 0 )
+			{	pY     = Partial + ind[2] * K;
+				pY[d] += pZ[d];
+			}
 			break;
 			// -------------------------------------------------
 
@@ -463,9 +464,10 @@ void ReverseSweep(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 3 );
 			CppADUnknownError( ind[2] < i_var );
-
-			pY     = Partial + ind[2] * K;
-			pY[d] += pZ[d];
+			if( ind[2] > 0 )
+			{	pY     = Partial + ind[2] * K;
+				pY[d] += pZ[d];
+			}
 			break;
 			// -------------------------------------------------
 
@@ -597,34 +599,28 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case StppOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
 			break;
 			// --------------------------------------------------
 
 			case StpvOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
 			CppADUnknownError( ind[2] < i_var );
-
-			pY     = Partial + ind[2] * K;
-			pY[d] += pZ[d];
 			break;
 			// -------------------------------------------------
 
 			case StvpOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
 			break;
 			// -------------------------------------------------
 
 			case StvvOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
 			CppADUnknownError( ind[2] < i_var );
-			
-			pY     = Partial + ind[2] * K;
-			pY[d] += pZ[d];
 			break;
 			// --------------------------------------------------
 

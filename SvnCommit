@@ -1,28 +1,41 @@
 # SvnCommit: this file.
 # WhatsNew05.omh: users view of the changes.
-# CondExp.h: fold multiple cases into CondExpTemplate.
-# RevJacSweep.h: add Taylor to argument list and make result more efficient.
-# ForJacSweep.h: add Taylor to argument list and make result more efficient.
-# ForSparseJac.h: change user specification and pass Taylor to ForJacSweep.
-# RevSparseJac.h: change user specification and pass Taylor to ForJacSweep.
-# glossary.omh: define sparsity pattern in terms of matrix (not function).
-# CondExpAD.cpp: extend tests to include sparsity pattern results.
-# GetStarted.cpp: correct output spacing.
-# ForSparseJac.cpp: change to check for more efficient result.
-# RevSparseJac.cpp: change to check for more efficient result.
-# CondExpAD.cpp: add sparsity pattern check.
+# ADTape.h: remove resulting variable from RecordStore argument list.
+# ForwardSweep.h: remove variable computations in St[vp][vp] operator,
+# fix bug in Ld[vp] derivative computations.
+# ReverseSweep.h: remove variable computations in St[vp][vp] operator,
+# fix bug in Ld[vp] derivative computations.
+# ForJacSweep.h: remove variable computations in St[vp][vp] operator.
+# RevJacSweep.h: remove variable computations in St[vp][vp] operator.
+# Vec.h: make VecADelement assignment operator return void.
+# Operator.h: change number of variables for St[vp][vp] from one to zero,
+# improve the printOp function used during tracing.
+# LuVecADOk.cpp: fix a comment.
+# OneTest: change boost include directory to /usr/include/boost-1_33,
+# delete previous TestOne.exe if it exists.
+# Vec.cpp: use VecAD in a meaning full application (linear interpolation).
+# VecAD.cpp: old VecAD example is now just a test.
+# TestMore.cpp: add VecAD to list.
+# TestMore.vcproj: add VecAD to list.
+# Makefile.am: add VecAD to list.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
+svn add TestMore/VecAD.cpp
 svn commit --file svn.log \
 	SvnCommit \
 	omh/WhatsNew05.omh \
+	CppAD/local/ADTape.h \
+	CppAD/local/ForwardSweep.h \
 	CppAD/local/ForJacSweep.h \
-	CppAD/local/CondExp.h \
+	CppAD/local/Vec.h \
+	CppAD/local/ReverseSweep.h \
+	CppAD/local/Operator.h \
 	CppAD/local/RevJacSweep.h \
-	CppAD/local/ForSparseJac.h \
-	CppAD/local/RevSparseJac.h \
-	omh/glossary.omh \
-	TestMore/CondExpAD.cpp \
-	GetStarted/GetStarted.cpp \
-	TestMore/ForSparseJac.cpp \
-	TestMore/RevSparseJac.cpp \
-	TestMore/CondExpAD.cpp
+	Example/LuVecADOk.cpp \
+	Example/OneTest \
+	TestMore/OneTest \
+	Example/Vec.cpp \
+	Example/OneTest \
+	TestMore/VecAD.cpp \
+	TestMore/TestMore.cpp \
+	TestMore/Makefile.am \
+	TestMore/TestMore.vcproj

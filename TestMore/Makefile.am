@@ -70,5 +70,6 @@ TestMore_SOURCES  = TestMore.cpp \
 	SubEq.cpp \
 	SubZero.cpp \
 	Value.cpp \
+	VecAD.cpp \
 	VecADPar.cpp \
 	VecUnary.cpp 

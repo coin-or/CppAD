@@ -79,6 +79,12 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-21$$
+A much better $xref/Vec.cpp//example/$$ for using $xref/VecAD/$$
+vectors has been provided. In addition, a bug
+in the computation of derivatives using $code VecAD$$ vectors
+has been fixed. 
+
 $head 11-20$$
 The sparsity pattern routines
 $xref/ForSparseJac/$$ and $xref/RevSparseJac/$$
@@ -86,6 +92,12 @@ have been modified so that they are relative
 to the Jacobian at a single argument value.
 This enables us to return more efficient 
 $xref/glossary/Sparsity Pattern/sparsity patterns/$$.
+$pre
+
+$$
+An extra $xref/VecAD/Exceptions/exception/$$ has been
+added to the use of $xref/VecAD/$$ elements.
+This makes $code VecAD$$ some what more efficient.
 
 $head 11-19$$
 Improve the output messages generated during execution of the 

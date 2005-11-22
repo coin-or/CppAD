@@ -45,122 +45,131 @@ $section Vectors That Record Indexing Operations$$
 
 $table 
 $bold Syntax$$ $cnext 
-$syntax%VecAD<%Base%> %v%( size_t %n% )%$$
-$rnext $cnext
-$syntax%%Type% %v%[ size_t %i% ]%$$
-$rnext $cnext
-$syntax%%Type% %v%[ AD<%Base%> &%x% ]%$$
-$rnext $cnext
-$rnext 
-$bold See Also$$ $cnext $xref/Discrete/$$
+$syntax%VecAD<%Base%> %V%(%n%)%$$
 $tend
+
+$index VecAD$$
+$index tape, index$$
+$index record, index$$
+$index index, record$$
 
 $fend 20$$
 
 $head Description$$
-Each element of a 
-$syntax%VecAD<%Base%>%$$ 
-object has the properties of an 
-$syntax%AD<%Base%>%$$ 
-object with the exception that the computed assignments
-$xref%CompEq%%+= , -= , *= , /=%$$ 
-are not allowed with these elements.
-$pre
-
-$$
-The class $syntax%VecAD<%Base%>%$$ tapes its indexing
-and these operations are transferred to the corresponding
+The class $syntax%VecAD<%Base%>%$$ tapes its indexing operations; i.e.,
+these operations are transferred to the corresponding
 $xref/ADFun/$$ object $italic f$$.
 The indices are evaluated each time
 $xref/Forward//f.Forward/$$ is used to evaluate the zero order Taylor
 coefficients.
-$pre
 
-$$
-If $italic Vector$$ is 
+$head Speed$$
+If $italic Vector$$ is a
 $xref/SimpleVector/$$ template class, 
 the class $syntax%%Vector%< AD<%Base%> >%$$ 
 has elements with type $syntax%AD<%Base%>%$$ 
 and is faster and uses less memory than
 $syntax%VecAD<%Base%>%$$ 
-because it does not tape its indexing operations.
+(because it does not tape its indexing operations).
 
 $head Constructor$$
-$mindex VecAD construct$$
-The syntax
+If $italic n$$ has type $code size_t$$,
 $syntax%
-	VecAD<%Base%> %v%(%n%)
+	VecAD<%Base%> %V%(%n%)
 %$$
-creates an $code VecAD$$ object $italic v$$ with 
+creates an $code VecAD$$ object $italic V$$ with 
 $italic n$$ elements.
-The initial value of the elements is unspecified.
+The initial value of the elements of $italic v$$ is unspecified.
 
 $head Size$$
 The syntax
 $syntax%
-	%v%.size()
+	%V%.size()
 %$$
-returns the number of elements in the vector $italic v$$.
+returns the number of elements in the vector $italic V$$.
 
-$head Element Access$$
-The syntax
+$head Size_t Indexing$$
+If $italic i$$ has type $code size_t$$,
 $syntax%
-	%v%[ %i% ]
-	%v%[ %x% ]
+	%V%[ %i% ]
 %$$
-returns the element of $italic v$$ with index $italic i$$
-and 
-$syntax%floor(%x%)%$$ 
-respectively.
-We use 
-$syntax%floor(%x%)%$$ 
-to denote the greatest integer less than or equal $italic x$$.
-If $italic x$$ is a complex type, the index is
-$syntax%floor(real(%x%))%$$ is used for the indexing operation.
+returns a $italic Base$$ object equal to the value
+of the $th i$$ element of $italic V$$.
+This operation can only done while the tape is in the
+$xref/glossary/Tape State/Empty state/$$.
 $pre
 
 $$
-The $code size_t$$ indexing form
+If $italic i$$ has type $code size_t$$
+and $italic x$$ has type $italic Base$$,
 $syntax%
-	%v%[ %i% ]
+	%V%[ %i% ] = %x%
 %$$
-can only be used when the tape is in the
+assigns the $th i$$ element of $italic V$$
+the have value $italic x$$.
+This operation can only done while the tape is in the
 $xref/glossary/Tape State/Empty state/$$.
+$pre
+
+$$
+The value of $italic i$$ must be greater than or equal zero
+and less than the number of elements in $italic V$$.
+
+
+$head AD<Base> Indexing$$
+If $italic I$$ has type $syntax%AD<%Base%>%$$,
+$syntax%
+	%V%[ %I% ]
+%$$
+returns the element of $italic V$$,
+with index $syntax%floor(%I%)%$$,
+in a form that acts like a $syntax%AD<%Base%>%$$
+(see $xref/VecAD/Exceptions/exceptions/$$ below).
+Here $syntax%floor(%I%)%$$ is
+the greatest integer less than or equal $italic I$$.
+If $italic I$$ is a complex type, 
+the floor of the real part is used for the indexing operation.
+$pre
+
+$$
+If $italic I$$ has type $syntax%AD<%Base%>%$$
+and $italic x$$ has type $italic Base$$,
+$syntax%
+	%V%[%I%] = %x%
+%$$
+assigns the value of $italic x$$ to the 
+corresponding element of $italic V$$.
+The return value of this assignment is $code void$$;
+i.e., it can not be used in further multiple assignments.
+$pre
+
+$$
+If $italic I$$ has type $syntax%AD<%Base%>%$$
+and $italic X$$ has type $syntax%AD<%Base%>%$$,
+$syntax%
+	%V%[%I%] = %X%
+%$$
+assigns the value of $italic X$$ to the 
+corresponding element of $italic V$$.
+The return value of this assignment is $code void$$;
+i.e., it can not be used in further multiple assignments.
+$pre
+
+$$
+The value of $syntax%floor(%I%)%$$ must be greater than or equal zero
+and less than the number of elements in $italic V$$.
+$pre
+
+$$
 If the tape is in the Recording state,
-the dependence of the value of
-$syntax%%v%[%x%]%$$ 
-on $italic x$$ is recorded.
-On the other hand,
-the derivative of
-$syntax%%v%[%x%]%$$ 
-with respect to $italic x$$
+this operation is recorded; i.e.,
+if $italic I$$ depends on the independent variables,
+$syntax%%V%[%I%]%$$ also depends on the independent variables.
+On the other hand, the derivative of
+$syntax%%V%[%I%]%$$ with respect to $italic I$$
 is computed by CppAD as identically zero.
 This is similar to the 
 $xref/Discrete/$$ functions.
-$pre
-
-$$
-The value of $italic x$$ (and $italic i$$) must be greater than or equal zero
-and less than the number of elements in $italic v$$.
-$pre
-
-$$
-The return $italic Type$$ is unspecified except for the fact that
-it is derived from
-$syntax%AD<%Base%>%$$ and inherits all the properties of that type
-(with the exception that the
-$xref%CompEq%%+= , -= , *= , /=%$$ 
-are not allowed with these elements.)
-
-
-$subhead Assignment Operations$$
-The syntax
-$syntax%
-	%v%[%i%] = %y%
-	%v%[%x%] = %y%
-%$$
-assigns the value of $italic y$$ to the corresponding element of $italic v$$
-where $italic y$$ has type $italic Base$$ or $syntax%AD<%Base%>%$$.
 
 $head Example$$
 $children%
@@ -170,6 +179,34 @@ The file
 $xref/Vec.cpp/$$
 contains an example and a test of this function.   
 It returns true if it succeeds and false otherwise.
+
+$head Exceptions$$
+Each element of a $syntax%VecAD<%Base%>%$$ 
+object has the all the properties of an 
+$syntax%AD<%Base%>%$$  with the following exceptions:
+
+$list number$$
+Elements of a $syntax%VecAD<%Base%>%$$ object 
+cannot be used
+with the computed assignments operators $xref%CompEq%%+= , -= , *= , /=%$$.
+For example, if $italic v$$ is a 
+$syntax%VecAD<%Base%>%$$ 
+object, the following syntax is not valid:
+$syntax%
+	%v%[%x%] += %y%;
+%$$
+
+$lnext
+Assignment to 
+an element of a $syntax%VecAD<%Base%>%$$ object 
+returns a void value.
+For example, if $italic v$$ is a 
+$syntax%VecAD<%Base%>%$$ 
+object, the following syntax is not valid:
+$syntax%
+	%x% = %v%[%y%] = %z%;
+%$$
+$lend
 
 $head Inefficient$$
 $index inefficient, VecAD$$
@@ -199,13 +236,15 @@ to the file $code LuVecADOk.log$$.
 $lnext
 In the $code Example$$ directory execute the commands
 $codep
-	wc -l LuVecADOk.log
-	grep "op= Ld[vp]" LuVecADOk.log | wc -l
+	grep "op="           LuVecADOk.log | wc -l
+	grep "op=Ld[vp]"     LuVecADOk.log | wc -l
+	grep "op=St[vp][vp]" LuVecADOk.log | wc -l
 $$
-The first command will give a rough idea of how many operations
-there are in total (1018).
-The second command will give a rough idea how many are 
-correspond to accessing an element of a $code VecAD$$ array (348).
+The first command counts the number of operators in the tracing,
+the second counts the number of VecAD load operations,
+and the third counts the number of VecAD store operations.
+(For CppAD version 05-11-20 these counts were 956, 348, and 118
+respectively.)
 $lend
 
 $end
@@ -214,21 +253,21 @@ $end
 
 # define CppADVecADComputedAssignment(op, name)                         \
 VecADelem& operator op (const VecADelem<Base> &right)                   \
-{	CppADUsageError(                                            \
+{	CppADUsageError(                                                \
 		0,                                                      \
 		"Cannot use a ADVec element on left side of" name       \
 	);                                                              \
 	return *this;                                                   \
 }                                                                       \
 VecADelem& operator op (const AD<Base> &right)                          \
-{	CppADUsageError(                                            \
+{	CppADUsageError(                                                \
 		0,                                                      \
 		"Cannot use a ADVec element on left side of" name       \
 	);                                                              \
 	return *this;                                                   \
 }                                                                       \
 VecADelem& operator op (const Base &right)                              \
-{	CppADUsageError(                                            \
+{	CppADUsageError(                                                \
 		0,                                                      \
 		"Cannot use a ADVec element on left side of" name       \
 	);                                                              \
@@ -255,9 +294,9 @@ public:
 	{ }
 
 	// assignment operators
-	inline AD<Base> operator = (const VecADelem<Base> &right);
-	AD<Base> operator = (const AD<Base> &right);
-	AD<Base> operator = (const Base     &right);
+	inline void operator = (const VecADelem<Base> &right);
+	void operator = (const AD<Base> &right);
+	void operator = (const Base     &right);
 
 	// computed assignments
 	CppADVecADComputedAssignment( += , " += " )
@@ -423,11 +462,12 @@ private:
 
 
 template <class Base>
-AD<Base> VecADelem<Base>::operator=(const AD<Base> &y)
-{	AD<Base> result;
-	
+void VecADelem<Base>::operator=(const AD<Base> &y)
+{
 	if( Parameter(y) )
-		return *this = y.value;
+	{	*this = y.value;
+		return;
+	}
 
 	CppADUnknownError( AD<Base>::Tape()->State() == Recording );
 
@@ -435,36 +475,30 @@ AD<Base> VecADelem<Base>::operator=(const AD<Base> &y)
 	CppADUnknownError( i < vec->length );
 
 	// assign value both in the element and the original array
-	*(vec->data + i) = result.value = y.value;
+	*(vec->data + i) = y.value;
 
 	// record the setting of this array element
 	CppADUnknownError( vec->id == *ADTape<Base>::Id() );
 	CppADUnknownError( vec->offset > 0 );
 	if( Parameter(x) ) AD<Base>::Tape()->RecordStoreOp(
-			StpvOp, result, vec->offset, i, y.taddr );
+			StpvOp, vec->offset, i, y.taddr );
 	else	AD<Base>::Tape()->RecordStoreOp(
-			StvvOp, result, vec->offset, x.taddr, y.taddr );
-
-	return result;
+			StvvOp, vec->offset, x.taddr, y.taddr );
 }
 
 template <class Base>
-AD<Base> VecADelem<Base>::operator=(const Base &y)
-{	AD<Base> result;
-
+void VecADelem<Base>::operator=(const Base &y)
+{ 
 	size_t y_taddr;
 
 	size_t i = static_cast<size_t>( Integer(x) );
 	CppADUnknownError( i < vec->length );
 
 	// assign value both in the element and the original array
-	*(vec->data + i) = result.value = y;
+	*(vec->data + i) = y;
 
 	if( AD<Base>::Tape()->State() == Empty )
-	{	CppADUnknownError( Parameter(result) );
-
-		return result;
-	}
+		return;
 
 	// place a copy of y in the tape
 	y_taddr = AD<Base>::Tape()->Rec.PutPar(y);
@@ -473,17 +507,15 @@ AD<Base> VecADelem<Base>::operator=(const Base &y)
 	CppADUnknownError( vec->id == *ADTape<Base>::Id() );
 	CppADUnknownError( vec->offset > 0 );
 	if( Parameter(x) ) AD<Base>::Tape()->RecordStoreOp(
-			StppOp, result, vec->offset, i, y_taddr );
+			StppOp, vec->offset, i, y_taddr );
 	else	AD<Base>::Tape()->RecordStoreOp(
-			StvpOp, result, vec->offset, x.taddr, y_taddr );
-
-	return result;
+			StvpOp, vec->offset, x.taddr, y_taddr );
 }
 
 // fold this case into those above
 template <class Base>
-inline AD<Base> VecADelem<Base>::operator=(const VecADelem<Base> &y)
-{	return *this = y.ADBase(); }
+inline void VecADelem<Base>::operator=(const VecADelem<Base> &y)
+{	*this = y.ADBase(); }
 
 template <class Base>
 inline std::ostream& operator << (std::ostream &os, const VecADelem<Base> &e)

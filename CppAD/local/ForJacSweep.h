@@ -600,47 +600,26 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case StppOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
-
-			// sparsity of vector does not change in this case
-			for(j = 0; j < npv; j++)
-				Z[j] = 0;
 			break;
 			// -------------------------------------------------
 
 			case StpvOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
-
-			// update sparsity for entire vector
-			Y = ForJac + ind[2] * npv;
-			for(j = 0; j < npv; j++)
-			{	Z[j] = Y[j];
-				VectorSto[ j + (ind[0] - 1) * npv] |= Y[j];
-			}
 			break;
 			// -------------------------------------------------
 
 			case StvpOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
-
-			// sparsity of vector does not change in this case
-			for(j = 0; j < npv; j++)
-				Z[j] = 0;
 			break;
 			// -------------------------------------------------
 
 			case StvvOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
-
-			Y    = ForJac + ind[2] * npv;
-			for(j = 0; j < npv; j++)
-			{	Z[j] = Y[j];
-				VectorSto[ j + (ind[0] - 1) * npv] |= Y[j];
-			}
 			break;
 			// -------------------------------------------------
 

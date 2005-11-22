@@ -197,7 +197,6 @@ The procedure call
 $syntax%
 	void %Tape%.RecordStoreOp(
 		OpCode      %op%,
-		AD<%Base%> &%z%,
 		size_t    %offset%,
 		size_t    %x_taddr%,
 		size_t    %y_taddr%
@@ -258,14 +257,6 @@ $code StvvOp$$
 	$cnext location of the taddr as a variable in the tape  
 $tend
 $syntax%
-
-%z%
-%$$
-is modified so that it corresponds to the new tape record.
-Upon return from $code RecordStoreOp$$, 
-$italic z$$ is in the list of variables and
-$syntax%%z%.taddr%$$ 
-is the taddr in the tape for this $italic op$$ operator. 
 
 $subhead Op(Variable, Variable)$$
 The procedure call 
@@ -583,7 +574,6 @@ private:
 	// store ADVec element 
 	void RecordStoreOp( 
 		OpCode         op,
-		AD<Base>       &z, 
 		size_t     offset,
 		size_t    x_taddr,
 		size_t    y_taddr
@@ -734,14 +724,11 @@ void ADTape<Base>::RecordLoadOp(
 template  <class Base>
 void ADTape<Base>::RecordStoreOp(
 	OpCode         op,
-	AD<Base>       &z,
 	size_t     offset,
 	size_t    x_taddr,
 	size_t    y_taddr
 )
 {
-	size_t z_taddr;
-
 	CppADUnknownError( 
 		(op == StppOp) | 
 		(op == StvpOp) | 
@@ -751,18 +738,14 @@ void ADTape<Base>::RecordStoreOp(
 	CppADUnknownError( state == Recording );
 	CppADUnknownError( y_taddr != 0 );
 	CppADUnknownError( NumInd(op) == 3 );
+	CppADUnknownError( NumVar(op) == 0 );
 
 
-	// Make z correspond to a next variable in tape
-	z_taddr = Rec.PutOp(op);
-	z.id    = *Id();
-	z.taddr = z_taddr;
+	// Put operator in the tape
+	Rec.PutOp(op);
 
 	// Ind values for this instruction
 	Rec.PutInd(offset, x_taddr, y_taddr);
-
-	// check that z is a dependent variable
-	CppADUnknownError( Variable(z) );
 }
 
 

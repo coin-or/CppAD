@@ -61,7 +61,7 @@ bool LuVecADOk(void)
 		1., 0., .5  // (3,3) is third  pivot
 	};
 	double a2[] = {
-		1., 2., 1., // (2,2) is second pivot
+		1., 2., 1., // (1,2) is second pivot
 		3., 0., 0., // (2,1) is first  pivot
 		1., 0., .5  // (3,3) is third  pivot
 	};

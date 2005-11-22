@@ -26,6 +26,10 @@ then
 	echo "and extra is extra options for g++ command"
 	exit
 fi
+if [ -e TestOne.exe ]
+then
+	rm TestOne.exe
+fi
 sed < Example.cpp > TestOne.cpp \
 	-e '/ok *\&= *Run( /d' \
 	-e '/^	RunDouble/d' \
@@ -34,11 +38,11 @@ sed < Example.cpp > TestOne.cpp \
 #
 echo "g++ TestOne.cpp $1.cpp $2  -o TestOne.exe  \\"
 echo "	-g -Wall -ansi -pedantic-errors -std=c++98 \\"
-echo "	-I.. -I$HOME/boost_1_32_0 -L../lib \\"
+echo "	-I.. -I/usr/include/boost-1_33 -L../lib \\"
 echo "	-lCppAD" 
 g++ TestOne.cpp $1.cpp $2  -o TestOne.exe  \
 	-g -Wall -ansi -pedantic-errors -std=c++98 \
-	-I.. -I$HOME/boost_1_32_0 -L../lib \
+	-I.. -I/usr/include/boost-1_33 -L../lib \
 	-lCppAD 
 #
 echo "./TestOne.exe"

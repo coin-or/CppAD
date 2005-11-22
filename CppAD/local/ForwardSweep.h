@@ -201,20 +201,20 @@ size_t ForwardSweep(
 	size_t compareCount = 0;
 
 	// if this is an order zero calculation, initialize vector indices
-	size_t *VectorInd = CppADNull;
-	bool   *VectorSto = CppADNull;
+	size_t *VectorInd = CppADNull;  // address for each element
+	bool   *VectorVar = CppADNull;  // is element a variable
 	i = Rec->NumVecInd();
 	if( i > 0 )
 	{	VectorInd = ExtendBuffer(i, 0, VectorInd);
-		VectorSto = ExtendBuffer(i, 0, VectorSto);
+		VectorVar = ExtendBuffer(i, 0, VectorVar);
 		while(i--)
 		{	VectorInd[i] = Rec->GetVecInd(i);
-			VectorSto[i] = false;
+			VectorVar[i] = false;
 		}
 	}
 	else
 	{	VectorInd = CppADNull;
-		VectorSto = CppADNull;
+		VectorVar = CppADNull;
 	}
 
 
@@ -534,7 +534,7 @@ size_t ForwardSweep(
 			CppADUnknownError( ind[0] > 0 );
 			CppADUnknownError( ind[0] < Rec->NumVecInd() );
 			CppADUnknownError( VectorInd != CppADNull );
-			CppADUnknownError( VectorSto != CppADNull );
+			CppADUnknownError( VectorVar != CppADNull );
 
 			if( d == 0 )
 			{	i   = ind[1];
@@ -545,10 +545,13 @@ size_t ForwardSweep(
 					i + ind[0] < Rec->NumVecInd() 
 				);
 
-				if( VectorSto[ i + ind[0] ] )
+				if( VectorVar[ i + ind[0] ] )
 				{	i   = VectorInd[ i + ind[0] ];
 					Rec->ReplaceInd(i_ind + 2, i);
 					CppADUnknownError(i > 0 );
+					CppADUnknownError( i < i_var );
+					Y     = Taylor + i * J;
+					Z[d]  = Y[d];
 				}
 				else
 				{	i   = VectorInd[ i + ind[0] ];
@@ -557,11 +560,14 @@ size_t ForwardSweep(
 					i    = 0;
 				}
 			}
-			else	i = ind[2];
-			if( i > 0 )
-			{	CppADUnknownError( i < i_var );
-				Y     = Taylor + i * J;
-				Z[d]  = Y[d];
+			else
+			{	i = ind[2];
+				if( i > 0 )
+				{	CppADUnknownError( i < i_var );
+					Y     = Taylor + i * J;
+					Z[d]  = Y[d];
+				}
+				else	Z[d]  = Base(0);
 			}
 			break;
 			// -------------------------------------------------
@@ -573,7 +579,7 @@ size_t ForwardSweep(
 			CppADUnknownError( ind[0] > 0 );
 			CppADUnknownError( ind[0] < Rec->NumVecInd() );
 			CppADUnknownError( VectorInd != CppADNull );
-			CppADUnknownError( VectorSto != CppADNull );
+			CppADUnknownError( VectorVar != CppADNull );
 
 			if( d == 0 )
 			{
@@ -588,10 +594,13 @@ size_t ForwardSweep(
 					i + ind[0] < Rec->NumVecInd() 
 				);
 
-				if( VectorSto[ i + ind[0] ] )
+				if( VectorVar[ i + ind[0] ] )
 				{	i   = VectorInd[ i + ind[0] ];
 					Rec->ReplaceInd(i_ind + 2, i);
 					CppADUnknownError(i > 0 );
+					CppADUnknownError( i < i_var );
+					Y     = Taylor + i * J;
+					Z[d]  = Y[d];
 				}
 				else
 				{	i   = VectorInd[ i + ind[0] ];
@@ -600,11 +609,14 @@ size_t ForwardSweep(
 					i    = 0;
 				}
 			}
-			else	i = ind[2];
-			if( i > 0 )
-			{	CppADUnknownError( i < i_var );
-				Y     = Taylor + i * J;
-				Z[d]  = Y[d];
+			else
+			{	i = ind[2];
+				if( i > 0 )
+				{	CppADUnknownError( i < i_var );
+					Y     = Taylor + i * J;
+					Z[d]  = Y[d];
+				}
+				else	Z[d]  = Base(0);
 			}
 			break;
 			// -------------------------------------------------
@@ -736,12 +748,12 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case StppOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
 
 			if( d == 0 )
 			{	CppADUnknownError( VectorInd != CppADNull );
-				CppADUnknownError( VectorSto != CppADNull );
+				CppADUnknownError( VectorVar != CppADNull );
 				CppADUnknownError( ind[0] < Rec->NumVecInd() );
 
 				i   = ind[1];
@@ -749,22 +761,21 @@ size_t ForwardSweep(
 				CppADUnknownError( 
 					i + ind[0] < Rec->NumVecInd() 
 				);
-				VectorInd[ i + ind[0] ] = i_var;
-				VectorSto[ i + ind[0] ] = true;
+				VectorInd[ i + ind[0] ] = ind[2];
+				VectorVar[ i + ind[0] ] = false;
 
 				Z[d] = *( Rec->GetPar( ind[2] ) );
 			}
-			else	Z[d] = Base(0);
 			break;
 			// -------------------------------------------------
 
 			case StpvOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
 
 			if( d == 0 )
 			{	CppADUnknownError( VectorInd != CppADNull );
-				CppADUnknownError( VectorSto != CppADNull );
+				CppADUnknownError( VectorVar != CppADNull );
 				CppADUnknownError( ind[0] < Rec->NumVecInd() );
 				CppADUnknownError( ind[2] < i_var );
 
@@ -773,21 +784,19 @@ size_t ForwardSweep(
 				CppADUnknownError( 
 					i + ind[0] < Rec->NumVecInd() 
 				);
-				VectorInd[ i + ind[0] ] = i_var;
-				VectorSto[ i + ind[0] ] = true;
+				VectorInd[ i + ind[0] ] = ind[2];
+				VectorVar[ i + ind[0] ] = true;
 			}
-			Y    = Taylor + ind[2] * J;
-			Z[d] = Y[d];
 			break;
 			// -------------------------------------------------
 
 			case StvpOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
 
 			if( d == 0 )
 			{	CppADUnknownError( VectorInd != CppADNull );
-				CppADUnknownError( VectorSto != CppADNull );
+				CppADUnknownError( VectorVar != CppADNull );
 				CppADUnknownError( ind[0] < Rec->NumVecInd() );
 				CppADUnknownError( ind[1] < i_var );
 
@@ -801,22 +810,21 @@ size_t ForwardSweep(
 				CppADUnknownError( 
 					i + ind[0] < Rec->NumVecInd() 
 				);
-				VectorInd[ i + ind[0] ] = i_var;
-				VectorSto[ i + ind[0] ] = true;
+				VectorInd[ i + ind[0] ] = ind[2];
+				VectorVar[ i + ind[0] ] = false;
 
 				Z[d] = *( Rec->GetPar( ind[2] ) );
 			}
-			else	Z[d] = Base(0);
 			break;
 			// -------------------------------------------------
 
 			case StvvOp:
-			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_var == 0);
 			CppADUnknownError( n_ind == 3 );
 
 			if( d == 0 )
 			{	CppADUnknownError( VectorInd != CppADNull );
-				CppADUnknownError( VectorSto != CppADNull );
+				CppADUnknownError( VectorVar != CppADNull );
 				CppADUnknownError( ind[0] < Rec->NumVecInd() );
 				CppADUnknownError( ind[1] < i_var );
 				CppADUnknownError( ind[2] < i_var );
@@ -831,11 +839,9 @@ size_t ForwardSweep(
 				CppADUnknownError( 
 					i + ind[0] < Rec->NumVecInd() 
 				);
-				VectorInd[ i + ind[0] ] = i_var;
-				VectorSto[ i + ind[0] ] = true;
+				VectorInd[ i + ind[0] ] = ind[2];
+				VectorVar[ i + ind[0] ] = true;
 			}
-			Y    = Taylor + ind[2] * J;
-			Z[d] = Y[d];
 			break;
 			// -------------------------------------------------
 
@@ -896,8 +902,8 @@ size_t ForwardSweep(
 	CppADUnknownError( (i_var + n_var) == Rec->TotNumVar() );
 	if( VectorInd != CppADNull )
 		delete [] VectorInd;
-	if( VectorSto != CppADNull )
-		delete [] VectorSto;
+	if( VectorVar != CppADNull )
+		delete [] VectorVar;
 
 	return compareCount;
 }
