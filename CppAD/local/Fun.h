@@ -91,7 +91,8 @@ The vector $italic Y$$ has prototype
 $syntax%
 	const %VectorADBase% &%Y%
 %$$
-The length of $italic Y$$ is the number of dependent variables
+The length of $italic Y$$, must be greater than zero,
+and is the number of dependent variables
 (dimension of the range space for the $syntax%ADFun<%Base%>%$$ object).
 
 $head Size$$
@@ -388,10 +389,14 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 
 	CppADUsageError(
 		AD<Base>::Tape()->state == Recording,
-		"Can not create an ADFun because "
+		"Can not create an ADFun object because "
 		" tape is not currently recording."
 	);
-
+	CppADUsageError(
+		z.size() > 0,
+		"ADFun constructor second argument vector Y has zero size"
+	); 
+	CppADUnknownError( u.size() > 0 );
 
 	// set parameter flag and
 	// create a copy of z where parameters are in the tape

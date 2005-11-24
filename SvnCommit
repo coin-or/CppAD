@@ -1,41 +1,28 @@
 # SvnCommit: this file.
 # WhatsNew05.omh: users view of the changes.
-# ADTape.h: remove resulting variable from RecordStore argument list.
-# ForwardSweep.h: remove variable computations in St[vp][vp] operator,
-# fix bug in Ld[vp] derivative computations.
-# ReverseSweep.h: remove variable computations in St[vp][vp] operator,
-# fix bug in Ld[vp] derivative computations.
-# ForJacSweep.h: remove variable computations in St[vp][vp] operator.
-# RevJacSweep.h: remove variable computations in St[vp][vp] operator.
-# Vec.h: make VecADelement assignment operator return void.
-# Operator.h: change number of variables for St[vp][vp] from one to zero,
-# improve the printOp function used during tracing.
-# LuVecADOk.cpp: fix a comment.
-# OneTest: change boost include directory to /usr/include/boost-1_33,
-# delete previous TestOne.exe if it exists.
-# Vec.cpp: use VecAD in a meaning full application (linear interpolation).
-# VecAD.cpp: old VecAD example is now just a test.
-# TestMore.cpp: add VecAD to list.
-# TestMore.vcproj: add VecAD to list.
-# Makefile.am: add VecAD to list.
+# ADTape.h: correct unknown error check (paramters can have index 0).
+# Operator.h: correct tracing of LdpOp operation.
+# Independent.h: change argument u -> X and make zero independent vars an error.
+# Fun.h: make zero dependent variables an error.
+# OneTest: script for running one Speed test.
+# Speed.cpp: comment out testing LuVecAD (bug when used with g++ -O2).
+# LuSolve.cpp: check for and avoid no dependent variables case.
+# Faq.omh: change contact point the CppAD mailing list.
+# WishList.omh: put changing syntax for VecAD on whish list. 
+# Makefile.am: add CleanCppAD to distribution.
+# CleanCppAD: add copyright message.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-svn add TestMore/VecAD.cpp
 svn commit --file svn.log \
 	SvnCommit \
-	omh/WhatsNew05.omh \
 	CppAD/local/ADTape.h \
-	CppAD/local/ForwardSweep.h \
-	CppAD/local/ForJacSweep.h \
-	CppAD/local/Vec.h \
-	CppAD/local/ReverseSweep.h \
 	CppAD/local/Operator.h \
-	CppAD/local/RevJacSweep.h \
-	Example/LuVecADOk.cpp \
-	Example/OneTest \
-	TestMore/OneTest \
-	Example/Vec.cpp \
-	Example/OneTest \
-	TestMore/VecAD.cpp \
-	TestMore/TestMore.cpp \
-	TestMore/Makefile.am \
-	TestMore/TestMore.vcproj
+	CppAD/local/Independent.h \
+	CppAD/local/Fun.h \
+	Speed/OneTest \
+	Speed/Speed.cpp \
+	Speed/LuSolve.cpp \
+	omh/Faq.omh  \
+	omh/WhatsNew05.omh \
+	omh/WishList.omh \
+	CleanCppAD \
+	Makefile.am

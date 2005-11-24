@@ -17,12 +17,30 @@ structure for a function for the Jacobian of a vector valued function
 and for the Hessian of a scalar valued function.
 
 $head VecAD$$
-The $code VecAD$$ vector type is currently 
-$xref/VecAD/Inefficient/inefficient/$$ because they require
-a lot of conversion from a $code VecAD$$ element to a normal
-CppAD variable.
-It would be good for CppAD to have a more efficient implementation
-of this vector type.
+Returning a void from $xref/VecAD/$$ assignment
+made it more efficient.
+There are still some problems with it because elements 
+uses pointers back to the original vector and optimizing
+compilers can reorder operations so that the vector
+is destroyed before the pointer is used.
+One way to fix this is to change the syntax for $code VecAD$$ operations
+to use
+$syntax%
+	%X%.set(%index%, %value%)
+%$$
+for assignment operations.
+One could still use
+$syntax%
+	%X%[%index%]%
+%$$
+for accessing operations but perhaps it would be better to use
+$syntax%
+	%X%.get(%index%)
+%$$
+to emphasize the fact that you can not assign an element using
+$syntax%
+	%X%[%index%]% = %y%
+%$$
 
 
 $head Multiple Tapes With Same Base Type$$

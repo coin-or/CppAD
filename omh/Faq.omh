@@ -22,8 +22,6 @@ $begin Faq$$
 $escape !$$
 $spell
 	whatsnew
-	bradbell
-	seanet
 	sqrt
 	cmath
 	Namespace
@@ -143,8 +141,11 @@ $pre
 $$
 Yes. The $xref/StdMathLib/$$ section contains
 a list of the intrinsic functions included so far.
-Contact 
-$href%mailto:bradbell@seanet.com%bradbell@seanet.com%$$
+Contact the mailing list 
+$href%
+	http://list.coin-or.org/mailman/listinfo/cppad%
+	cppad@list.coin-or.org
+%$$
 if you need a standard math function that is has not yet been included.
 
 

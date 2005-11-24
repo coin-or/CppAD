@@ -88,7 +88,9 @@ int main()
 	SpeedTest(HesOde,                5, -1, 1);
 
 	SpeedTest(LuSolve,               5, -1, 1);
+# if 0
 	SpeedTest(LuVecAD,               5, -1, 1);
+# endif
 
 	return 0;
 }

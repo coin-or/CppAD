@@ -79,11 +79,38 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 11-21$$
+$head 11-23$$
+The speed test of $xref/LuVecAD/$$ has been commented out
+because it sometimes generates a segmentation fault.
+Here is an explanation:
+$pre
+
+$$
+If $italic X$$ is a $syntax%AD<%Base%>%$$ object,
+$italic y$$ is a $italic Base$$ object,
+$syntax%%X%[%y%]%$$ uses pointer from the element
+back to the original vector.
+Optimizing compilers might reorder operations so that
+the vector is destroyed before the object is used.
+This can be avoided by changing the syntax for $xref/VecAD/$$ objects
+to use $code set$$ and $code get$$ member functions.
+
+
+$head 11-22$$
 A much better $xref/Vec.cpp//example/$$ for using $xref/VecAD/$$
 vectors has been provided. In addition, a bug
 in the computation of derivatives using $code VecAD$$ vectors
 has been fixed. 
+$pre
+
+$$
+CppAD now checks that the domain dimension during
+$xref/Independent/$$ and 
+the range dimension during $xref/ADFun/$$
+(provided that $code -DNDEBUG$$ is not defined).
+If either of these is zero, 
+the $xref/CppADError//CppADUsageError/$$ macro is invoked.
+
 
 $head 11-20$$
 The sparsity pattern routines

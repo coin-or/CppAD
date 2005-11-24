@@ -199,6 +199,7 @@ EXTRA_DIST = \
 	CheckIncludeFile \
 	CheckIncludeOmh \
 	CheckIncludeDef \
+	CleanCppAD \
 	CppAD.tex \
 	Developer \
 	Developer.omh \

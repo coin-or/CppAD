@@ -41,7 +41,7 @@ $section Declare Independent Variables and Start Recording$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%Independent(%u%)%$$
+$syntax%Independent(%X%)%$$
 $tend
 
 $fend 20$$
@@ -58,12 +58,13 @@ $xref/SimpleVector/Elements of Specified Type/elements of type AD<Base>/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head u$$
-The vector $italic u$$ has prototype
+$head X$$
+The vector $italic X$$ has prototype
 $syntax%
-	%VectorADBase% &%u%
+	%VectorADBase% &%X%
 %$$
-The length of $italic u$$ is the number of independent variables
+The length of $italic X$$, must be greater than zero,
+and is the number of independent variables
 (dimension of the domain space for the $xref/ADFun/$$ object)
 
 
@@ -83,12 +84,12 @@ $xref/glossary/Parameter/parameters/$$; i.e.,
 they do not dependent on the independent variables.
 For example, after the code sequence
 $syntax%
-	%v% = %u%;
-	Independent(%u%);
+	%v% = %X%;
+	Independent(%X%);
 %$$
 all of the elements of the vector $italic v$$ are parameters.
 Hence their partial derivatives with respect to each of the 
-elements of $italic u$$ are identically zero.
+elements of $italic X$$ are identically zero.
 
 $head Variables$$
 $index variables$$
@@ -99,11 +100,11 @@ of one of the independent variables.
 For example, after the code sequence
 $syntax%
 	Independent(%v%);
-	%v% = %u%;
+	%v% = %X%;
 %$$
 all of the elements of the vector $italic v$$ are variables.
-In fact, the partial of $syntax%%v%[%i%]%$$ with respect to
-$syntax%%u%[%i%]%$$ is one.
+In fact, the partial of $syntax%%v%[%j%]%$$ with respect to
+$syntax%%X%[%j%]%$$ is one.
 
 
 $end
@@ -123,8 +124,11 @@ void ADTape<Base>::Independent(VectorADBase &u)
 
 	CppADUsageError(
 		State() == Empty ,
-		"Independent with vector argument:\n"
-		"can only be used when tape is empty"
+		"Independent can only be used when tape is empty"
+	);
+	CppADUsageError(
+		u.size() > 0,
+		"Indepdendent: the argument vector X has zero size"
 	);
 	CppADUnknownError( Rec.NumOp() == 0 );
 	CppADUnknownError( Rec.TotNumVar() == 0 );

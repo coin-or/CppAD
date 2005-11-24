@@ -55,6 +55,8 @@ std::string LuSolve(size_t size, size_t repeat)
 
 	size_t n = size;
 	size_t m = size - 1;
+	if( m == 0 )
+		m = 2;
 
 	CppADvector<ADdouble>   A       (n * n);
 	CppADvector<ADdouble>   CopyA   (n * n);
@@ -133,6 +135,8 @@ std::string LuVecAD(size_t size, size_t repeat)
 
 	size_t n = size;
 	size_t m = size - 1;
+	if( m = 0 )
+		m = 2;
 
 	CppADvector<ADdouble>     A         (n * n);
 	CppADvector<ADdouble>     CopyResult(n * m);

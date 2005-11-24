@@ -483,7 +483,7 @@ void printOp(
 		case LdpOp:
 		CppADUnknownError( NumInd(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
-		printOpField(os, "  p=", *(Rec->GetPar(ind[2])), ncol);
+		printOpField(os, "  p=", *(Rec->GetPar(ind[1])), ncol);
 		break;
 
 		case LdvOp:

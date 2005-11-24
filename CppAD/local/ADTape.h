@@ -736,10 +736,10 @@ void ADTape<Base>::RecordStoreOp(
 		(op == StvvOp) 
 	);
 	CppADUnknownError( state == Recording );
-	CppADUnknownError( y_taddr != 0 );
 	CppADUnknownError( NumInd(op) == 3 );
 	CppADUnknownError( NumVar(op) == 0 );
-
+	CppADUnknownError( (op==StppOp) | (op==StpvOp) | (x_taddr!=0) );
+	CppADUnknownError( (op==StppOp) | (op==StvpOp) | (y_taddr!=0) );
 
 	// Put operator in the tape
 	Rec.PutOp(op);
