@@ -156,21 +156,6 @@ $end
 # include "LuVecAD.h"
 # include <CppAD/CppAD.h>
 
-namespace {
-	double GeqZero(const double &x)
-	{	if( x >= 0. )
-			return 1.;
-		else	return 0.;
-	}
-	double EqZero(const double &x)
-	{	if( x == 0. )
-			return 1.;
-		else	return 0.;
-	}
-}
-CppADCreateDiscrete(double, EqZero)
-CppADCreateDiscrete(double, GeqZero)
-
 // BEGIN CppAD namespace
 namespace CppAD {
 

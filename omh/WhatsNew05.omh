@@ -79,6 +79,33 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-01$$
+The speed test of $xref/LuVecAD/$$ has been reinstated.
+It appears that there is some sort of bug in the gcc compiler with
+the -O2 option whereby the following member function 
+$codep
+	static ADTape<Base> *Tape(void)
+	{	static ADTape<Base> tape;
+		return &tape;
+	}
+$$
+(in $code CppAD/local/AD.h$$)
+would sometimes return a null value (during $xref/VecAD/$$ operations).
+A speed improvement in 
+$code CppAD/local/ExtendBuffer.h$$ seems to prevent 
+this problem.
+This fix is not well understood; i.e., we should watch to see
+if this problem reoccurs.
+$pre
+
+$$
+The source code for
+$xref/LuVecADOk.cpp/$$ was mistakenly used for
+$xref/LuSolveSpeed.cpp/$$.
+This has been fixed.
+
+
+
 $head 11-23$$
 The speed test of $xref/LuVecAD/$$ has been commented out
 because it sometimes generates a segmentation fault.

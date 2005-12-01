@@ -89,7 +89,7 @@ and its first $italic ncopy$$ elements contain the information
 that was in $italic oldbuf$$.
 
 $head Errors$$
-If the memory cannot be allocated, 
+If $code NDEBUG$$ is not defined and the memory cannot be allocated, 
 $code CppADUsageError$$ is used to generate
 a message stating that there was not sufficient memory.
 
@@ -106,6 +106,9 @@ Type * ExtendBuffer(size_t newlen, size_t ncopy, Type * oldbuf)
 	CppADUnknownError( ncopy == 0 || oldbuf != CppADNull );
 
 	Type *newbuf = CppADNull;
+# ifdef NDEBUG
+	newbuf = new Type[newlen];
+# else
 	try
 	{	newbuf = new Type[newlen];
 	}
@@ -113,6 +116,7 @@ Type * ExtendBuffer(size_t newlen, size_t ncopy, Type * oldbuf)
 	{	CppADUsageError(0, "cannot allocate sufficient memory");
 		abort();
 	}
+# endif
 	size_t i = ncopy;
 	while(i)
 	{	--i;

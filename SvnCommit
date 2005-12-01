@@ -1,28 +1,14 @@
 # SvnCommit: this file.
 # WhatsNew05.omh: users view of the changes.
-# ADTape.h: correct unknown error check (paramters can have index 0).
-# Operator.h: correct tracing of LdpOp operation.
-# Independent.h: change argument u -> X and make zero independent vars an error.
-# Fun.h: make zero dependent variables an error.
-# OneTest: script for running one Speed test.
-# Speed.cpp: comment out testing LuVecAD (bug when used with g++ -O2).
-# LuSolve.cpp: check for and avoid no dependent variables case.
-# Faq.omh: change contact point the CppAD mailing list.
-# WishList.omh: put changing syntax for VecAD on whish list. 
-# Makefile.am: add CleanCppAD to distribution.
-# CleanCppAD: add copyright message.
+# ExtendBuffer: optimize out try-catch pair when NDEBUG is defined.
+# Speed.cpp: reinstate LuVecAD test case.
+# LuVecAD.cpp: remove code that is no longer being used.
+# LuSolve.cpp: correct verbatim reference to same file.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/ADTape.h \
-	CppAD/local/Operator.h \
-	CppAD/local/Independent.h \
-	CppAD/local/Fun.h \
-	Speed/OneTest \
+	omh/WhatsNew05.omh \
+	CppAD/local/ExtendBuffer.h \
 	Speed/Speed.cpp \
 	Speed/LuSolve.cpp \
-	omh/Faq.omh  \
-	omh/WhatsNew05.omh \
-	omh/WishList.omh \
-	CleanCppAD \
-	Makefile.am
+	Example/LuVecAD.cpp
