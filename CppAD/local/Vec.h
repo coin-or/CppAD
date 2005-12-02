@@ -171,6 +171,13 @@ is computed by CppAD as identically zero.
 This is similar to the 
 $xref/Discrete/$$ functions.
 
+$head Simple Vector$$
+The vector template class $code VecAD$$ does not have all the properties
+necessary for a $xref/SimpleVector/$$ template class and 
+hence can not be used as such.
+For example, a $syntax%VecAD<%Base%>%$$ object can not be the argument to the 
+$xref/Independent/$$ function.
+
 $head Example$$
 $children%
 	Example/Vec.cpp

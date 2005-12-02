@@ -79,6 +79,12 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-02$$
+The $xref/ForSparseJac/$$ forward mode sparsity patterns that involve
+$xref/VecAD/$$ calculations were made more efficient 
+(fewer true entries).
+
+
 $head 12-01$$
 The speed test of $xref/LuVecAD/$$ has been reinstated.
 It appears that there is some sort of bug in the gcc compiler with

@@ -170,7 +170,6 @@ void ForJacSweep(
 	Pack             *Z;
 	Pack           *Tmp;
 
-	size_t            i;
 	size_t            j;
 
 	// used by CExp operator 
@@ -181,16 +180,6 @@ void ForJacSweep(
 	for(j = 0; j < npv; j++)
 		zero[j] = 0;
 
-	// initial VecAD sparsity pattern (inefficient because just the indices
-	// of VecSto that corresponds to an array size are used)
-	Pack   *VectorSto = CppADNull;
-	i  = Rec->NumVecInd();
-	if( i > 0 )
-	{	VectorSto = ExtendBuffer(i * npv, 0, VectorSto);
-		while(i--)
-		for(j = 0; j < npv; j++)
-			VectorSto[i * npv + j] = 0;
-	}
 
 	// check numvar argument
 	CppADUnknownError( Rec->TotNumVar() == numvar );
@@ -460,11 +449,17 @@ void ForJacSweep(
 			
 			CppADUnknownError( ind[0] > 0 );
 			CppADUnknownError( ind[0] < Rec->NumVecInd() );
-			CppADUnknownError( VectorSto != CppADNull );
 
-			// use sparsity for entire vector for this value
-			for(j = 0; j < npv; j++)
-				Z[j] = VectorSto[ j + (ind[0] - 1) * npv ];
+			// ind[2] is variable corresponding to this load
+			if( ind[2] > 0 )
+			{	X = ForJac + ind[2] * npv;
+				for(j = 0; j < npv; j++)
+					Z[j] = X[j];
+			}
+			else
+			{	for(j = 0; j < npv; j++)
+					Z[j] = 0;
+			}
 			break;
 			// -------------------------------------------------
 
@@ -474,11 +469,18 @@ void ForJacSweep(
 			
 			CppADUnknownError( ind[0] > 0 );
 			CppADUnknownError( ind[0] < Rec->NumVecInd() );
-			CppADUnknownError( VectorSto != CppADNull );
 
-			// use sparsity for entire vector for this value
-			for(j = 0; j < npv; j++)
-				Z[j] = VectorSto[ j + (ind[0] - 1) * npv ];
+
+			// ind[2] is variable corresponding to this load
+			if( ind[2] > 0 )
+			{	X = ForJac + ind[2] * npv;
+				for(j = 0; j < npv; j++)
+					Z[j] = X[j];
+			}
+			else
+			{	for(j = 0; j < npv; j++)
+					Z[j] = 0;
+			}
 			break;
 			// -------------------------------------------------
 
@@ -680,8 +682,6 @@ void ForJacSweep(
 # endif
 	CppADUnknownError( (i_var + n_var) == Rec->TotNumVar() );
 
-	if( VectorSto != CppADNull )
-		delete [] VectorSto;
 	if( zero != CppADNull )
 		delete [] zero;
 

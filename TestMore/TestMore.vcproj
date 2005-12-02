@@ -600,6 +600,9 @@
 				RelativePath=".\SinCos.cpp">
 			</File>
 			<File
+				RelativePath=".\SparseVecAD.cpp">
+			</File>
+			<File
 				RelativePath="Sqrt.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

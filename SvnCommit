@@ -1,14 +1,20 @@
 # SvnCommit: this file.
 # WhatsNew05.omh: users view of the changes.
-# ExtendBuffer: optimize out try-catch pair when NDEBUG is defined.
-# Speed.cpp: reinstate LuVecAD test case.
-# LuVecAD.cpp: remove code that is no longer being used.
-# LuSolve.cpp: correct verbatim reference to same file.
+# ForJacSweep.h: make sparsity pattern more efficient (less true values).
+# Vec.h: document fact that VecAD is not a Simple Vector template class.
+# SparseVecAD.cpp: test VecAD with forward mode Jacobian sparsity.
+# TestMore.cpp: add SparseVecAD.cpp.
+# Makefile.am: add SparseVecAD.cpp.
+# TestMore.vcproj: add SparseVecAD.cpp.
+svn add TestMore/SparseVecAD.cpp
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
 	omh/WhatsNew05.omh \
-	CppAD/local/ExtendBuffer.h \
-	Speed/Speed.cpp \
-	Speed/LuSolve.cpp \
-	Example/LuVecAD.cpp
+	CppAD/local/ForJacSweep.h \
+	CppAD/local/Vec.h \
+	omh/WhatsNew05.omh \
+	TestMore/SparseVecAD.cpp \
+	TestMore/TestMore.cpp \
+	TestMore/Makefile.am \
+	TestMore/TestMore.vcproj

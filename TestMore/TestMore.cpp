@@ -59,6 +59,7 @@ extern bool Rosen34(void);
 extern bool Runge45(void);
 extern bool SimpleVector(void);
 extern bool SinCos(void);
+extern bool SparseVecAD(void);
 extern bool Sqrt(void);
 extern bool Sub(void);
 extern bool SubEq(void);
@@ -117,6 +118,7 @@ int main(void)
 	ok &= Run( Runge45,         "Runge45"        );
 	ok &= Run( SimpleVector,    "SimpleVector"   );
 	ok &= Run( SinCos,          "SinCos"         );
+	ok &= Run( SparseVecAD,     "SparseVecAD"    );
 	ok &= Run( Sqrt,            "Sqrt"           );
 	ok &= Run( Sub,             "Sub"            );
 	ok &= Run( SubEq,           "SubEq"          );

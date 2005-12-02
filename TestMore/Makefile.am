@@ -65,6 +65,7 @@ TestMore_SOURCES  = TestMore.cpp \
 	RevSparseJac.cpp \
 	SimpleVector.cpp \
 	SinCos.cpp \
+	SparseVecAD.cpp \
 	Sqrt.cpp \
 	Sub.cpp \
 	SubEq.cpp \
