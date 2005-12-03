@@ -1,20 +1,11 @@
 # SvnCommit: this file.
 # WhatsNew05.omh: users view of the changes.
-# ForJacSweep.h: make sparsity pattern more efficient (less true values).
-# Vec.h: document fact that VecAD is not a Simple Vector template class.
+# RevJacSweep.h: bug fix and sparsity pattern more efficient (less true values).
 # SparseVecAD.cpp: test VecAD with forward mode Jacobian sparsity.
-# TestMore.cpp: add SparseVecAD.cpp.
-# Makefile.am: add SparseVecAD.cpp.
-# TestMore.vcproj: add SparseVecAD.cpp.
-svn add TestMore/SparseVecAD.cpp
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
 	omh/WhatsNew05.omh \
 	CppAD/local/ForJacSweep.h \
-	CppAD/local/Vec.h \
 	omh/WhatsNew05.omh \
-	TestMore/SparseVecAD.cpp \
-	TestMore/TestMore.cpp \
-	TestMore/Makefile.am \
-	TestMore/TestMore.vcproj
+	TestMore/SparseVecAD.cpp 

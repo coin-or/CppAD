@@ -79,9 +79,17 @@ This section contains a list of the changes to CppAD during 2005
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-03$$
+There was a bug in the $xref/RevSparseJac/$$ 
+reverse mode sparsity patterns when used with $xref/VecAD/$$ calculations.
+This bug was fixed and the calculations were made more efficient 
+(fewer true entries).
+
+
 $head 12-02$$
-The $xref/ForSparseJac/$$ forward mode sparsity patterns that involve
-$xref/VecAD/$$ calculations were made more efficient 
+There was a bug in the $xref/ForSparseJac/$$ 
+forward mode sparsity patterns when used with $xref/VecAD/$$ calculations.
+This bug was fixed and the calculations were made more efficient 
 (fewer true entries).
 
 

@@ -24,26 +24,25 @@ bool SparseVecAD(void)
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 2; 
+	size_t n = 3; 
 
-	// dimension of the range space
-	size_t m = 2;
+	size_t i, j;
 
 	// independent variable vector 
 	CppADvector< AD<double> > X(n);
-	X[0] = 0; 
+	for(j = 0; j < n; j++)
+		X[j] = AD<double>(j); 
 	Independent(X);
 
 	// dependent variable vector
-	CppADvector< AD<double> > Y(m);
+	CppADvector< AD<double> > Y(n);
 
 	// check results vector
-	CppADvector< bool >  Check(m * n);
+	CppADvector< bool >  Check(n * n);
 
 	// VecAD equal to X
 	VecAD<double> Z(n);
 	AD<double> J;
-	size_t     j;
 	for(j = 0; j < n; j++)
 	{	J    = AD<double>(j);
 		Z[J] = X[j];
@@ -51,34 +50,44 @@ bool SparseVecAD(void)
 
 	// compute dependent variables values
 	AD<double> P = 1;
-	size_t i;
+	J = AD<double>(0);
 	for(j = 0; j < n; j++)
-	{	J    = AD<double>(j);
-		P    = P * Z[J];
+	{	P    = P * Z[J];
 		Y[j] = P;
-		for(i = 0; i < m; i++)
+		for(i = 0; i < n; i++)
 			Check[ i * n + j ] = (j <= i);
+		J = J + X[1];  // X[1] is equal to one
 	}
 	
 	// create function object F : X -> Y
 	ADFun<double> F(X, Y);
 
 	// dependency matrix for the identity function W(x) = x
-	CppADvector< bool > Px(n * n);
+	CppADvector< bool > Identity(n * n);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
-			Px[ i * n + j ] = false;
-		Px[ i * n + i ] = true;
+			Identity[ i * n + j ] = false;
+		Identity[ i * n + i ] = true;
 	}
 
-	// evaluate the dependency matrix for F(X(x))
-	CppADvector< bool > Py(m * n);
-	Py = F.ForSparseJac(n, Px);
+	// evaluate the dependency matrix for F(Identity(x))
+	CppADvector< bool > Py(n * n);
+	Py = F.ForSparseJac(n, Identity);
 
 	// check values
-	for(i = 0; i < m; i++)
+	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Py[i * n + j] == Check[i * n + j]);
+	}	
+
+	// evaluate the dependency matrix for Identity(F(x))
+	CppADvector< bool > Px(n * n);
+	Px = F.RevSparseJac(n, Identity);
+
+	// check values
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			ok &= (Px[i * n + j] == Check[i * n + j]);
 	}	
 
 	return ok;
