@@ -80,15 +80,16 @@ or parameter.
 $head Sparsity Pattern$$
 $index sparsity, pattern$$
 $index pattern, sparsity$$
-Given a function a matrix 
+$index efficient, sparsity$$
+Given a matrix 
 $latex A \in B^{p \times q}$$.
 a boolean valued $latex p \times q$$ matrix $latex P$$ is a 
 sparsity pattern for $latex A$$ if 
 for $latex i = 1, \ldots , p$$ and $latex j = 1 , \ldots q$$,
 $latex \[
-[ P_{i,j} = {\rm false} ]
+A_{i,j} \neq 0  
 \; \Rightarrow \; 
-[ A_{i,j} (x) = 0  , {\rm \; for \; all \;} x \in B^n ]
+P_{i,j} = {\rm true}
 \] $$
 Given two sparsity patterns $latex P$$ and $italic Q$$ 
 for a matrix $italic A$$, we say that $italic P$$ is more efficient than
