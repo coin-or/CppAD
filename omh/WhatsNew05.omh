@@ -84,6 +84,11 @@ There was a bug in the $xref/RevSparseJac/$$
 reverse mode sparsity patterns when used with $xref/VecAD/$$ calculations.
 This bug was fixed and the calculations were made more efficient 
 (fewer true entries).
+$pre
+
+$$
+The $xref/RevSparseHes/$$ reverse mode Hessian sparsity calculation
+has been added.
 
 
 $head 12-02$$

@@ -195,7 +195,8 @@ $contents%
 	Example/CompareChange.cpp%
 	omh/MulTape.omh%
 	CppAD/local/ForSparseJac.h%
-	CppAD/local/RevSparseJac.h
+	CppAD/local/RevSparseJac.h%
+	CppAD/local/RevSparseHes.h
 %$$
 
 $end
@@ -238,13 +239,17 @@ public:
 	template <typename VectorBase>
 	VectorBase Reverse(size_t p, const VectorBase &v);
 
-	// forward mode sparsity sweep
+	// forward mode Jacobian sparsity 
 	template <typename VectorBase>
-	VectorBase ForSparseJac(size_t q, const VectorBase &Dx);
+	VectorBase ForSparseJac(size_t q, const VectorBase &Px);
 
-	// reverse mode sparsity sweep
+	// reverse mode Jacobian sparsity 
 	template <typename VectorBase>
-	VectorBase RevSparseJac(size_t q, const VectorBase &Dx);
+	VectorBase RevSparseJac(size_t q, const VectorBase &Py);
+
+	// reverse mode Hessian sparsity 
+	template <typename VectorBase>
+	VectorBase RevSparseHes(size_t q, const VectorBase &Py);
 
 	// size of this function object
 	size_t Size(void) const
@@ -504,8 +509,10 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 # include <CppAD/local/Reverse.h>
 # include <CppAD/local/ForJacSweep.h>
 # include <CppAD/local/RevJacSweep.h>
+# include <CppAD/local/RevHesSweep.h>
 # include <CppAD/local/ForSparseJac.h>
 # include <CppAD/local/RevSparseJac.h>
+# include <CppAD/local/RevSparseHes.h>
 //
 // driver routines
 # include <CppAD/local/Jacobian.h>

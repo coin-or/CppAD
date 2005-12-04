@@ -1,11 +1,29 @@
 # SvnCommit: this file.
 # WhatsNew05.omh: users view of the changes.
-# RevJacSweep.h: bug fix and sparsity pattern more efficient (less true values).
-# SparseVecAD.cpp: test VecAD with forward mode Jacobian sparsity.
+# RevSparseHes.h: reverse mode Hessian sparsity calculation.
+# RevHesSweep.h: reverse mode Hessian user interface and documentaiton.
+# Operator.h: add documentation for second template parameter in printOp.
+# Fun.h: add RevSparseHes member function.
+# Example.cpp: add RevSparseHes test / example.
+# Example.vcproj: add RevSparseHes test / example.
+# Makefile.am: add RevSparseHes include file.
+# Example/Makefile.am: add RevSparseHes test / example.
+# RevJacSweep.h: forgot to include this file in previous commit.
+# RevSparseHes.cpp: example and test of RevSparseHess.
+svn add CppAD/local/RevSparseHes.h
+svn add CppAD/local/RevHesSweep.h
+svn add Example/RevSparseHes.cpp 
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
 	omh/WhatsNew05.omh \
-	CppAD/local/ForJacSweep.h \
-	omh/WhatsNew05.omh \
-	TestMore/SparseVecAD.cpp 
+	CppAD/local/RevSparseHes.h \
+	CppAD/local/RevHesSweep.h \
+	CppAD/local/Operator.h \
+	CppAD/local/Fun.h \
+	Example/RevSparseHes.cpp \
+	Example/Example.cpp \
+	Example/Example.vcproj \
+	Example/Makefile.am \
+	CppAD/local/RevJacSweep.h \
+	Makefile.am

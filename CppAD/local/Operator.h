@@ -160,12 +160,20 @@ $syntax%void printOp(
 	OpCode                 %op%     ,
 	const size_t          *%ind%    , 
 	size_t                 %nfz%    ,
-	const  %Base%           *%fz%     ,
+	const  %Value%        *%fz%     ,
 	size_t                 %nrz%    ,
-	const  %Base%           *%rz%     )%$$
+	const  %Value%        *%rz%     )%$$
 $tend
 
 $fend 25$$
+
+$head Base$$
+Determines the type of tape we are printing from.
+
+$head Value$$
+Determines the type of the values that we are printing
+(expected to be either $italic Base$$ or $italic Pack$$ where
+$italic Pack$$ is the type used to pace sparsity patterns).
 
 $head os$$
 is the output stream that the information is printed on.
@@ -185,22 +193,22 @@ is the vector of indices for this operation
 (must have  $syntax%NumInd(%op%)%$$ elements).
 
 $head nfz$$
-is the number of forward calculated Taylor coefficients 
+is the number of forward calculated values of type $italic Value$$
 that correspond to this operation
 (ignored if $syntax%NumVar(%op%) == 0%$$).
 
 $head fz$$
-points to the first forward calculated Taylor coefficient 
+points to the first forward calculated value
 that correspond to this operation
 (ignored if $syntax%NumVar(%op%) == 0%$$).
 
 $head nrz$$
-is the number of reverse calculated Taylor coefficient derivatives
+is the number of reverse calculated values of type $italic Value$$
 that correspond to this operation
 (ignored if $syntax%NumVar(%op%) == 0%$$).
 
 $head rz$$
-points to the first reverse calculated Taylor coefficient derivative
+points to the first reverse calculated value
 that correspond to this operation
 (ignored if $syntax%NumVar(%op%) == 0%$$).
 

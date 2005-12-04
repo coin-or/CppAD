@@ -108,6 +108,7 @@ extern bool Pow(void);
 extern bool PowInt(void);
 extern bool Reverse(void);
 extern bool RevOne(void);
+extern bool RevSparseHes(void);
 extern bool RevSparseJac(void);
 extern bool RevTwo(void);
 extern bool RombergMul(void);
@@ -220,7 +221,8 @@ int main(void)
 	ok &= Run( PowInt,            "PowInt"           );
 	ok &= Run( Reverse,           "Reverse"          );
 	ok &= Run( RevOne,            "RevOne"           );
-	ok &= Run( RevSparseJac,      "SparseJac"        );
+	ok &= Run( RevSparseHes,      "RevSparseHes"     );
+	ok &= Run( RevSparseJac,      "RevSparseJac"     );
 	ok &= Run( RevTwo,            "RevTwo"           );
 	ok &= Run( RombergMul,        "RombergMul"       );
 	ok &= Run( RombergOne,        "RombergOne"       );

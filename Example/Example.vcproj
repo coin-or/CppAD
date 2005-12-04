@@ -1202,6 +1202,9 @@
 				RelativePath=".\RevOne.cpp">
 			</File>
 			<File
+				RelativePath=".\RevSparseHes.cpp">
+			</File>
+			<File
 				RelativePath=".\RevSparseJac.cpp">
 			</File>
 			<File
