@@ -42,8 +42,13 @@ then
 	#
 	mkdir Doc
 	cd    Doc
-	omhelp ../Doc.omh -xml -debug > ../RunOMhelp.log
-	omhelp ../Doc.omh  -debug
+	omhelp ../Doc.omh > ../RunOMhelp.log \
+		-l http://www.coin-or.org/CppAD/ \
+		-xml \
+		-debug
+	omhelp ../Doc.omh  \
+                -l http://www.coin-or.org/CppAD/ \
+		-debug
 	cd ..
 fi
 grep "Latex error"                 RunOMhelp.log

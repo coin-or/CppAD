@@ -90,6 +90,17 @@ To be more specific,
 if $italic x$$ is a $code std::vector<bool>$$ object
 and $italic i$$ has type $code size_t$$,
 $syntax%%x%[%i%]%$$ does not have type $code bool$$.
+$pre
+
+$$
+Add a Home icon,
+that links to the
+$href%
+	http://www.coin-or.org/CppAD/%
+	CppAD home page
+%$$,
+to the top left of the navigation frame
+(left frame) for each documentation section.
 
 $head 12-05$$
 The $xref/RevSparseHes/$$ reverse mode Hessian sparsity calculation
