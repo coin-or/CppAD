@@ -78,21 +78,8 @@ $tref WhatsNew04$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
-The dates below correspond to local time for when the change was checked
-into the 
-$href%
-	http://projects.coin-or.org/CppAD/browser%
-	subversion repository
-%$$.
-There can be a lag of up to two days from, local time
-when a change is checked in, to the date when it becomes part of
-the 
-$xref/InstallUnix/Download Current Version/unix/$$
-or
-$xref/InstallUnix/Download Current Version/windows/$$
-current version.
 
-$head 12-04$$
+$head 12-05$$
 The $xref/RevSparseHes/$$ reverse mode Hessian sparsity calculation
 has been added.
 $pre
@@ -101,6 +88,22 @@ $$
 The definition of a $xref/glossary/Sparsity Pattern/sparsity pattern/$$
 has been corrected to properly correspond to the more efficient form
 mentioned under $xref/WhatsNew05/11-20/$$ below.
+$pre
+
+$$
+The dates in this file used to correspond to 
+local time for when the change was checked
+into the 
+$href%
+	http://projects.coin-or.org/CppAD/browser%
+	subversion repository
+%$$.
+From now on the dates in this file will correspond to the first
+version of CppAD where the change appears; i.e., the date in the
+$xref/InstallUnix/Download Current Version/unix/$$
+and
+$xref/InstallWindows/Download Current Version/windows/$$
+download file names $syntax%CppAD-%yy%-%mm%-%dd%$$.
 
 
 $head 12-03$$
