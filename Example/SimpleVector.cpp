@@ -39,11 +39,12 @@ $end
 --------------------------------------------------------------------------
 */
 // BEGIN PROGRAM
-# include <iostream>               // std::cout and std::endl
+# include <iostream>                   // std::cout and std::endl
 
-# include <vector>                 // std::vector
-# include <valarray>               // std::valarray
-# include <CppAD/CppAD_vector.h>   // CppAD::vector
+# include <vector>                     // std::vector
+# include <valarray>                   // std::valarray
+# include <CppAD/CppAD_vector.h>       // CppAD::vector
+# include <CppAD/CheckSimpleVector.h>  // CppAD::CheckSimpleVector
 namespace {
 	template <typename Vector>
 	bool Ok(void)
@@ -79,9 +80,19 @@ namespace {
 bool SimpleVector (void)
 {	bool ok = true;
 
+	// use routine above to check these cases
 	ok &= Ok< std::vector<double> >();
+	ok &= Ok< std::vector<bool> >();
 	ok &= Ok< std::valarray<float> >();
 	ok &= Ok< CppAD::vector<int> >();
+	ok &= Ok< CppAD::vector<bool> >();
+
+	// use CheckSimpleVector for more extensive testing
+	CppAD::CheckSimpleVector<double, std::vector<double>  >();
+	CppAD::CheckSimpleVector<bool,   std::vector<bool>    >();
+	CppAD::CheckSimpleVector<float,  std::valarray<float> >();
+	CppAD::CheckSimpleVector<int,    CppAD::vector<int>   >();
+	CppAD::CheckSimpleVector<bool,   CppAD::vector<bool>  >();
 
 	return ok;
 }

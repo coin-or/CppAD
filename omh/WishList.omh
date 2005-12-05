@@ -11,37 +11,14 @@ $index wish list$$
 $index new, features$$
 $index features, new$$
 
-$head Sparsity Structure$$
-Some users have requested that CppAD be able to compute the sparsity 
-structure for a function for the Jacobian of a vector valued function
-and for the Hessian of a scalar valued function.
-
-$head VecAD$$
-Returning a void from $xref/VecAD/$$ assignment
-made it more efficient.
-There are still some problems with it because elements 
-uses pointers back to the original vector and optimizing
-compilers can reorder operations so that the vector
-is destroyed before the pointer is used.
-One way to fix this is to change the syntax for $code VecAD$$ operations
-to use
-$syntax%
-	%X%.set(%index%, %value%)
-%$$
-for assignment operations.
-One could still use
-$syntax%
-	%X%[%index%]%
-%$$
-for accessing operations but perhaps it would be better to use
-$syntax%
-	%X%.get(%index%)
-%$$
-to emphasize the fact that you can not assign an element using
-$syntax%
-	%X%[%index%]% = %y%
-%$$
-
+$head Error Recovery$$
+There is a problem with redefining the CppAD error in
+$xref/CppADError/$$.
+If one uses two different definitions of the macros,
+some of the class objects in CppAD would depend on the definition
+and only one version of the definition would be linked.
+It would be nice to add default routine for handling errors
+that the could be switched dynamically during program execution.
 
 $head Multiple Tapes With Same Base Type$$
 $index multiple, tape$$

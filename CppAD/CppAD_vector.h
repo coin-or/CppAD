@@ -64,7 +64,7 @@ CppAD include files.
 $head Assignment$$
 $index assignment, CppAD vector$$
 If $italic x$$ and $italic y$$ are 
-$syntax%CppAD::vector<%Type%>%$$ objects,
+$syntax%CppAD::vector<%Scalar%>%$$ objects,
 $syntax%
 	%y% = %x%
 %$$
@@ -92,7 +92,7 @@ $syntax%
 $head Element Access$$
 $index [], CppAD vector$$
 $index vector, [] CppAD$$
-If $italic x$$ is a $syntax%CppAD::vector<%Type%>%$$ object
+If $italic x$$ is a $syntax%CppAD::vector<%Scalar%>%$$ object
 and $code i$$ has type $code size_t$$,
 $syntax%
 	%x%[%i%]
@@ -100,6 +100,11 @@ $syntax%
 has all the properties listed for a
 $xref/SimpleVector/Element Access/simple vector element access/$$
 plus the following:
+$pre
+
+$$
+The object $syntax%%x%[%i%]%$$ has type $italic Scalar$$
+(is not possibly a different type that can be converted to $italic Scalar$$).
 $pre
 
 $$
@@ -111,18 +116,18 @@ to generate an appropriate error report.
 $head Push Back$$
 $index push, CppAD vector$$
 $index vector, CppAD push back$$
-If $italic x$$ is a $syntax%CppAD::vector<%Type%>%$$ object
+If $italic x$$ is a $syntax%CppAD::vector<%Scalar%>%$$ object
 with size equal to $italic n$$ and
-$italic t$$ has type $italic Type$$,
+$italic t$$ has type $italic Scalar$$,
 $syntax%
 	%x%.push_back(%t%)
 %$$
 extends the vector $italic x$$ so that its new size is $italic n$$ plus one
 and $syntax%%x%[%n%]%$$ is equal to $italic t$$
-(in the sense of the $italic Type$$ assignment operator).
+(in the sense of the $italic Scalar$$ assignment operator).
 
 $head Output$$
-If $italic x$$ is a $syntax%CppAD::vector<%Type%>%$$ object
+If $italic x$$ is a $syntax%CppAD::vector<%Scalar%>%$$ object
 and $italic os$$ is an $code std::ostream$$,
 and the operation
 $syntax%
@@ -135,7 +140,7 @@ $code {$$ character,
 they are separated by $code ,$$ characters,
 and they are enclosed at the end by $code }$$ character.
 It is assumed by this operation that if $italic e$$
-is an object with type $italic Type$$,
+is an object with type $italic Scalar$$,
 $syntax%
 	%os% << %e%
 %$$
@@ -147,14 +152,15 @@ $head vectorBool$$
 $index vectorBool$$
 The file $code <CppAD/CppAD_vector.h>$$ also defines the class
 $code CppAD::vectorBool$$.
-This has the same specifications as $code CppAD::vector<bool>$$ except
-that $code vectorBool$$ conserves on memory
-(on the other hand, $code vectorBool$$ is expected to be faster
-than $code vectorBool$$).
-Another exception is the output operator for $code vectorBool$$
-which is specified below:
+This has the same specifications as $code CppAD::vector<bool>$$ 
+with the following exceptions
 
-$subhead Output$$
+$list number $$
+The class $code vectorBool$$ conserves on memory
+(on the other hand, $code CppAD::vector<bool>$$ is expected to be faster
+than $code vectorBool$$).
+
+$lnext
 The $code CppAD::vectorBool$$ output operator
 prints each boolean value as 
 a $code 0$$ for false,
@@ -162,6 +168,25 @@ a $code 1$$ for true,
 and does not print any other output; i.e.,
 the vector is written a long sequence of zeros and ones with no
 surrounding $code {$$, $code }$$ and with no separating commas or spaces. 
+
+$lnext
+If $italic x$$ has type $code vectorBool$$
+and $italic i$$ has type $code size_t$$,
+the element access value $syntax%%x%[%i%]%$$ has an unspecified type
+(referred to here as $italic elementType$$)
+that can be implicitly converted to $code bool$$.
+The return value of the assignment operator
+$syntax%
+	%x%[%i%] = %y%
+%$$
+also has type $italic elementType$$. Thus, if $italic z$$
+has type $code bool$$, the syntax
+$syntax%
+	%z% = %x%[%i%] = %y%
+%$$
+is valid.
+
+$lend
 
 $head Example$$
 $children%

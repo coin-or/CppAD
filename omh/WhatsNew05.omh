@@ -79,6 +79,18 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-06$$
+The specifications for a $xref/SimpleVector/$$ template class
+were extended so that the return type of an element access is
+not necessarily the same as the type of the elements.
+This enables us to include $code std::vector<bool>$$
+which packs multiple elements into a single storage location
+and returns a special type on element access (not the same as $code bool$$).
+To be more specific,
+if $italic x$$ is a $code std::vector<bool>$$ object
+and $italic i$$ has type $code size_t$$,
+$syntax%%x%[%i%]%$$ does not have type $code bool$$.
+
 $head 12-05$$
 The $xref/RevSparseHes/$$ reverse mode Hessian sparsity calculation
 has been added.
@@ -250,7 +262,7 @@ $head 11-01$$
 Add forward mode $xref/ForSparseJac//Jacobian sparsity/$$ calculation.
 
 $head 10-20$$
-Add $xref/WishList/Sparsity Structure/sparsity structure/$$ to 
+Add $xref/glossary/Sparsity Pattern/sparsity patterns/$$ to 
 the whish list.
 
 $head 10-18$$

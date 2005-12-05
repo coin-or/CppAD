@@ -129,6 +129,10 @@ The type $italic VectorBool$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
+In order to save memory, 
+you may want to use a class that packs multiple elements into one
+storage location; for example,
+$xref/CppAD_vector/vectorBool/vectorBool/$$.
 
 $head Entire Sparsity Pattern$$
 Suppose that $latex p = m$$ and the function 

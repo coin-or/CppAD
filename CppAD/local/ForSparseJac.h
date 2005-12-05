@@ -131,7 +131,7 @@ The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 In order to save memory, 
 you may want to use a class that packs multiple elements into one
-memory location; for example,
+storage location; for example,
 $xref/CppAD_vector/vectorBool/vectorBool/$$.
 
 $head Entire Sparsity Pattern$$

@@ -90,7 +90,8 @@ bool vectorBool(void)
 	for(i = 0; i < 100; i++)
 		ok &= ( x[i] == ((i % 3) != 0) );
 
-	// check Simple Vector specifications
+	// is that boolvector is
+	// a simple vector class with elements of type bool
 	CppAD::CheckSimpleVector< bool, vectorBool >();
 
 	return ok;
