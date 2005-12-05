@@ -1,8 +1,14 @@
 # SvnCommit: this file.
-# WhatsNew05.omh: mention possible time lag between changes and release. 
 # glossary.omh: fix definition of sparsity pattern. 
+# RevSparseHes.cpp: more extensive testing of RevSparseHes.
+# TestMore.cpp: add RevSparseHes.cpp.
+# TestMore.vcproj: add RevSparseHes.cpp.
+# Makefile.am: add RevSparseHes.cpp.
+svn add TestMore/RevSparseHes.cpp
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	omh/WhatsNew05.omh \
-	omh/glossary.omh
+	TestMore/RevSparseHes.cpp \
+	TestMore/TestMore.cpp \
+	TestMore/TestMore.vcproj \
+	TestMore/Makefile.am
