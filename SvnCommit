@@ -1,13 +1,30 @@
-# Change the definition of a Simple Vector to include more cases.
+# Split LuFactor into LuFactor and LuRatio
 # 
 # SvnCommit: this file.
 # WhatsNew05.omh: changes from uses point of view.
-# ADTape.h: fix developer documenation error.
-# CheckSimpleVector.h: test element assingment before vector assignment.
+# LuRatio.h: split ratio case out from LuFactor.h.
+# UserAD.h: include LuRatio.h here.
+# LuFactor.h: remove ratio case from here.
+# LuRatio.cpp: move LuFactorRatio.cpp here.
+# ExampleList.omh: move LuFactorRatio to LuRatio.
+# LuFactorRatio.cpp: old name for this test case.
+# Example.vcproj: move LuFactorRatio to LuRatio.
+# SimpleVector.cpp: avoid Microsoft compiler warning messages.
+# Example/Makefile.am: move LuFactorRatio to LuRatio.
+# Example.cpp: move LuFactorRatio to LuRatio.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
 	omh/WhatsNew05.omh \
-	CppAD/local/ADTape.h \
-	CppAD/CheckSimpleVector.h \
-	Example/CheckSimpleVector.cpp
+	CppAD/local/UserAD.h \
+	CppAD/local/LuRatio.h \
+	CppAD/LuFactor.h \
+	omh/WishList.omh \
+	omh/ExampleList.omh \
+	Example/LuFactorRatio.cpp \
+	Example/Example.vcproj \
+	Example/SimpleVector.cpp \
+	Example/LuRatio.cpp \
+	Example/Example.cpp \
+	Example/Makefile.am \
+	Makefile.am 

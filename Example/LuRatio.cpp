@@ -17,20 +17,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin LuFactorRatio.cpp$$
+$begin LuRatio.cpp$$
 $spell
 	Geq
 	Cpp
 	Lu
 $$
 
-$section LuFactorRatio: Example and Test$$
+$section LuRatio: Example and Test$$
 
-$index example, LuFactor ratio$$
-$index test, LuFactor ratio$$
+$index example, LuRatio$$
+$index test, LuRatio$$
 
 $code
-$verbatim%Example/LuFactorRatio.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/LuRatio.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -40,6 +40,8 @@ $end
 # include <cstdlib>               // for rand function
 # include <cassert>
 # include <CppAD/CppAD.h>
+
+namespace { // Begin empty namespace
 
 CppAD::ADFun<double> *NewFactor(
 	size_t                     n ,
@@ -64,7 +66,7 @@ CppAD::ADFun<double> *NewFactor(
 	Independent(X);
 	for(k = 0; k < n*n; k++)
 		LU[k] = X[k];
-	CppAD::LuFactor(ip, jp, LU, Ratio);
+	CppAD::LuRatio(ip, jp, LU, Ratio);
 	for(k = 0; k < n*n; k++)
 		Y[k] = LU[k];
 	Y[n*n] = Ratio;
@@ -140,7 +142,10 @@ bool CheckLuFactor(
 	}
 	return ok;
 }
-bool LuFactorRatio(void)
+
+} // end Empty namespace
+
+bool LuRatio(void)
 {	bool  ok = true;
 
 	size_t  n = 2; // number rows in A 

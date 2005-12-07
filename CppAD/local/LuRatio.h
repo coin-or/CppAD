@@ -1,7 +1,6 @@
-# ifndef CppADLuFactorIncluded
-# define CppADLuFactorIncluded
+# ifndef CppADLuRatioIncluded
+# define CppADLuRatioIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -19,51 +18,42 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
-$begin LuFactor$$
-$escape #$$
+$begin LuRatio$$
 $spell
+	xk
 	Cpp
-	Geq
 	Lu
 	bool
 	const
 	ip
 	jp
-	namespace
 	std
-	typename
+	ADvector
 $$
 
-$index LuFactor$$
+$index LuRatio$$
 $index linear, Lu factor equation$$
 $index equation, Lu factor$$
 $index determinant, Lu factor$$
 $index solve, Lu factor$$
 
-$section LU Factorization of A Square Matrix$$
-
-$pre
-$$
+$section LU Factorization of A Square Matrix and Stability Calculation$$
 
 $table
-$bold Syntax$$ $cnext $code# include <CppAD/LuFactor.h>$$
-$rnext $cnext 
-$syntax%%sign% = LuFactor(%ip%, %jp%, %LU%)%$$
+$bold Syntax$$ $cnext
+$syntax%%sign% = LuRatio(%ip%, %jp%, %LU%, %ratio%)%$$
 $tend
 
-$fend 25$$
+$fend 20$$
 
 $head Description$$
 Computes an LU factorization of the matrix $italic A$$ 
 where $italic A$$ is a square matrix.
-
-$head Include$$
-The file $code CppAD/LuFactor.h$$ is included by $code CppAD/CppAD.h$$
-but it can also be included separately with out the rest of 
-the $code CppAD$$ routines.
+A measure of the numerical stability called $italic ratio$$ is calculated.
+This ratio is useful when the results of $code LuRatio$$ are
+used as part of an $xref/ADFun/$$ object.
 
 $head Matrix Storage$$
 All matrices are stored in row major order.
@@ -112,7 +102,7 @@ the order of the columns in the permuted matrix.
 $head LU$$
 The argument $italic LU$$ has the prototype
 $syntax%
-	%FloatVector% &%LU%
+	%ADvector% &%LU%
 %$$
 and the size of $italic LU$$ must equal $latex n * n$$
 (see description of $xref/LuFactor/FloatVector/FloatVector/$$ below).
@@ -167,165 +157,80 @@ $syntax%
 %sign% * %LU%[%ip%[0], %jp%[0]] * %...% * %LU%[%ip%[%n%-1], %jp%[%n%-1]] 
 %$$
 
+$head ratio$$
+The argument $italic ratio$$ has prototype
+$syntax%
+        AD<%Base%> &%ratio%
+%$$
+On input, the value of $italic ratio$$ does not matter.
+On output it is a measure of how good the choice of pivots is.
+For $latex p = 0 , \ldots , n-1$$, 
+the $th p$$ pivot element is the element of maximum absolute value of a 
+$latex (n-p) \times (n-p)$$ sub-matrix.
+The ratio of each element of sub-matrix divided by the pivot element
+is computed.
+The return value of $italic ratio$$ is the maximum absolute value of
+such ratios over with respect to all elements and all the pivots.
+
+$subhead Purpose$$
+Suppose that the execution of a call to $code LuRatio$$ 
+is recorded in the $syntax%ADFun<%Base%>%$$ object $italic F$$.
+Then a call to $xref/Forward/$$ of the form
+$syntax%
+	%F%.Forward(%k%, %xk%)
+%$$
+with $italic k$$ equal to zero will revaluate this Lu factorization
+with the same pivots and a new value for $italic A$$.
+In this case, the resulting $italic ratio$$ may not be one.
+If $italic ratio$$ is too large (the meaning of too large is up to you), 
+the current pivots do not yield a stable LU factorization of $italic A$$.
+A better choice for the pivots (for this value of $italic A$$)
+will be made if you recreate the $code ADFun$$ object
+starting with the $xref/Independent/$$ variable values
+that correspond to the vector $italic xk$$.
+
 $head SizeVector$$
 The type $italic SizeVector$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type size_t/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head FloatVector$$
+$head ADvector$$
 The type $italic FloatVector$$ must be a 
 $xref/SimpleVector//simple vector class/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head Float$$
-This notation is used to denote the type corresponding
-to the elements of a $italic FloatVector$$.
-The type $italic Float$$ must satisfy the conditions
-for a $xref/NumericType/$$ type.
-The routine $xref/CheckNumericType/$$ will generate an error message
-if this is not the case.
-In addition, the following operations must be defined for any pair
-of $italic Float$$ objects $italic x$$ and $italic y$$:
+$head Base$$
+This type is determined by the argument $italic ratio$$
+which has type $syntax%AD<%Base%>%$$.
+The elements of an $italic ADvector$$ must also have type
+$syntax%AD<%Base%>%$$.
+The type $italic Base$$ must be $code float$$, $code double$$,
+or an $code AD$$ type built on $code float$$ or $code double$$.
+For example, $code AD< AD<double> >$$ is an $code AD$$ type built on
+$code double$$.
 
-$table
-$bold Operation$$ $cnext $bold Description$$  $rnext
-$syntax%log(%x%)%$$ $cnext
-	returns the logarithm of $italic x$$ as a $italic Float$$ object
-$tend
 
-$head AbsGeq$$
-Including the file $code LuFactor.h$$ defines the template function 
-$syntax%
-	template <typename %Float%>
-	bool AbsGeq<%Float%>(const %Float% &%x%, const %Float% &%y%)
-%$$
-in the $code CppAD$$ namespace.
-This function returns true if the absolute value of 
-$italic x$$ is greater than or equal the absolute value of $italic y$$. 
-It is used by $code LuFactor$$ to choose the pivot elements.
-This template function definition uses the operator 
-$code <=$$ to obtain the absolute value for $italic Float$$ objects. 
-If this operator is not defined for your use of $italic Float$$,
-you will need to specialize this template so that it works for your
-use of $code LuFactor$$.
-$pre
-
-$$
-Complex numbers do not have the operation $code <=$$ defined.
-The specializations
-$syntax%
-bool AbsGeq< std::complex<float> > 
-	(const std::complex<float> &%x%, const std::complex<float> &%y%)
-bool AbsGeq< std::complex<double> > 
-	(const std::complex<double> &%x%, const std::complex<double> &%y%)
-%$$ 
-are define by including $code LuFactor.h$$
-These return true if the sum of the square of the real and imaginary parts
-of $italic x$$ is greater than or equal the 
-sum of the square of the real and imaginary parts of $italic y$$. 
-
-$children%
-	Example/LuFactor.cpp
-%$$
 $head Example$$
-The file 
-$xref/LuFactor.cpp/$$
-contains an example and test of using $code LuFactor$$ by itself.
+$children%
+	Example/LuRatio.cpp
+%$$
+The file $xref/LuRatio.cpp/$$
+contains an example and test of using $code LuRatio$$.
 It returns true if it succeeds and false otherwise.
-$pre
-
-$$
-The file $xref/LuSolve.h/$$ provides a useful example usage of 
-$code LuFactor$$ with $code LuInvert$$.
 
 $end
 --------------------------------------------------------------------------
-$begin LuFactor.h$$
-$spell
-	CondExpGt
-	Cpp
-	Geq
-	Lu
-	bool
-	const
-	emax
-	endif
-	etmp
-	ifdef
-	imag
-	imax
-	indx
-	inline
-	ip
-	jmax
-	jp
-	namespace
-	std
-	typedef
-	typename
-	xabs
-	xsq
-	yabs
-	ysq
-$$
-
-$section LuFactor Source Code$$
-
-$index LuFactor, source$$
-$index source, LuFactor$$
-$index matrix, LuFactor source$$
-
-$codep */
-# include <complex>
-# include <vector>
-
-# ifdef _MSC_VER
-// Fix for problem with MSC standard math functions name space location
-# include <CppAD/CppAD.h>  
-# endif
-
-# include <CppAD/CppADError.h>
-# include <CppAD/CheckSimpleVector.h>
-# include <CppAD/CheckNumericType.h>
-
+*/
 namespace CppAD { // BEGIN CppAD namespace
 
-// AbsGeq
-template <typename Float>
-inline bool AbsGeq(const Float &x, const Float &y)
-{	Float xabs = x;
-	if( xabs <= Float(0) )
-		xabs = - xabs;
-	Float yabs = y;
-	if( yabs <= Float(0) )
-		yabs = - yabs;
-	return xabs >= yabs;
-}
-inline bool AbsGeq(
-	const std::complex<double> &x, 
-	const std::complex<double> &y)
-{	double xsq = x.real() * x.real() + x.imag() * x.imag();
-	double ysq = y.real() * y.real() + y.imag() * y.imag();
-
-	return xsq >= ysq;
-}
-inline bool AbsGeq(
-	const std::complex<float> &x, 
-	const std::complex<float> &y)
-{	float xsq = x.real() * x.real() + x.imag() * x.imag();
-	float ysq = y.real() * y.real() + y.imag() * y.imag();
-
-	return xsq >= ysq;
-}
-
-// Lines that are different from code in CppAD/local/LuRatio.h end with //
-template <class SizeVector, class FloatVector>                          //
-int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
+// Lines different from the code in CppAD/LuFactor.h end with               //
+template <class SizeVector, class ADvector, class Base>                     //
+int LuRatio(SizeVector &ip, SizeVector &jp, ADvector &LU, AD<Base> &ratio) //
 {	
-	// type of the elements of LU                                   //
-	typedef typename FloatVector::value_type Float;                 //
+	typedef ADvector FloatVector;                                       //
+	typedef AD<Base>       Float;                                       //
 
 	// check numeric type specifications
 	CheckNumericType<Float>();
@@ -363,6 +268,8 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 	}
 	// initialize the sign of the permutation
 	sign = 1;
+	// initialize the ratio                                             //
+	ratio = Float(1);                                                   //
 	// ---------------------------------------------------------
 
 	// Reduce the matrix P to L * U using n pivots
@@ -386,6 +293,13 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 				}
 			}
 		}
+		for(i = p; i < n; i++)                                       //
+		{	for(j = p; j < n; j++)                               //
+			{	etmp  = abs(LU[ ip[i] * n + jp[j] ] / emax); //
+				ratio =                                      //
+				CondExpGt(etmp, ratio, etmp, ratio);         //
+			}                                                    //
+		}                                                            //
 		CppADUsageError( 
 			(imax < n) & (jmax < n) ,
 			"AbsGeq must return true when second argument is zero"
@@ -435,9 +349,5 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 	return sign;
 }
 } // END CppAD namespace 
-/* $$
-$end
-------------------------------------------------------------------------------
-*/
 
 # endif

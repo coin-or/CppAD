@@ -61,7 +61,8 @@ $childtable%
 	CppAD/local/CondExp.h%
 	CppAD/local/Discrete.h%
 	CppAD/local/BoolFun.h%
-	CppAD/local/Vec.h
+	CppAD/local/Vec.h%
+	CppAD/local/LuRatio.h
 %$$
 
 $end
@@ -83,5 +84,6 @@ $end
 # include <CppAD/local/StdMathLib.h>   // standard math library functions
 # include <CppAD/local/Discrete.h>     // user defined discrete functions
 # include <CppAD/local/BoolFun.h>      // user defined boolean valued functions
+# include <CppAD/local/LuRatio.h>      // special LuFactor for use with AD types
 
 # endif

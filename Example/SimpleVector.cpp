@@ -82,16 +82,19 @@ bool SimpleVector (void)
 
 	// use routine above to check these cases
 	ok &= Ok< std::vector<double> >();
-	ok &= Ok< std::vector<bool> >();
 	ok &= Ok< std::valarray<float> >();
 	ok &= Ok< CppAD::vector<int> >();
+# ifndef _MSC_VER
+	// Avoid Microsoft following compiler warning:  'size_t' : 
+	// forcing value to bool 'true' or 'false' (performance warning) 
+	ok &= Ok< std::vector<bool> >();
 	ok &= Ok< CppAD::vector<bool> >();
-
+# endif
 	// use CheckSimpleVector for more extensive testing
 	CppAD::CheckSimpleVector<double, std::vector<double>  >();
-	CppAD::CheckSimpleVector<bool,   std::vector<bool>    >();
 	CppAD::CheckSimpleVector<float,  std::valarray<float> >();
 	CppAD::CheckSimpleVector<int,    CppAD::vector<int>   >();
+	CppAD::CheckSimpleVector<bool,   std::vector<bool>    >();
 	CppAD::CheckSimpleVector<bool,   CppAD::vector<bool>  >();
 
 	return ok;

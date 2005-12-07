@@ -1,5 +1,6 @@
 $begin WishList$$
 $spell
+	CondExp
 	Jacobian
 	Vec
 	Cpp
@@ -10,6 +11,12 @@ $section The CppAD Wish List$$
 $index wish list$$
 $index new, features$$
 $index features, new$$
+
+$head CondExp$$
+Extend the conditional expressions $xref/CondExp/$$ so that they are 
+valid for complex types by comparing absolute values.
+In addition, use this change to extend $xref/LuRatio/$$ so 
+that it works with complex AD types.
 
 $head Error Recovery$$
 There is a problem with redefining the CppAD error in

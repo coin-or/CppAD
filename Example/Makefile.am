@@ -85,8 +85,8 @@ Example_SOURCES   = \
 	Log.cpp \
 	Log10.cpp \
 	LuFactor.cpp \
-	LuFactorRatio.cpp \
 	LuInvert.cpp \
+	LuRatio.cpp \
 	LuSolve.cpp \
 	LuVecAD.cpp \
 	LuVecAD.h \

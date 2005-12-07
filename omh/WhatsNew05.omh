@@ -79,6 +79,12 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-08$$
+Split out $xref/LuFactor/$$ with the $italic ratio$$ argument
+to a separate function called $xref/LuRatio/$$.
+This needed to be done because $xref/LuRatio/$$ is more restrictive
+and should not be part of the general template $xref/library/$$.
+
 $head 12-07$$
 Improve $xref/CheckSimpleVector/$$ so that it tests element assignment.
 Change $xref/CheckSimpleVector.cpp/$$ so that it provides
@@ -253,8 +259,9 @@ the $xref/LuSolve/$$ function.
 $pre
 
 $$
-Add the optional $xref/LuFactor/ratio/ratio/$$ argument to the
+Add the optional $italic ratio$$ argument to the
 $xref/LuFactor/$$ routine.
+(This has since been moved to a separate routine called $xref/LuRatio/$$.)
 
 $head 11-07$$
 Remove some blank lines from the example files listed
