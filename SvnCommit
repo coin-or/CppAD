@@ -1,26 +1,13 @@
 # Change the definition of a Simple Vector to include more cases.
 # 
 # SvnCommit: this file.
-# WhatsNew05.omh: changes from uses point of view
-# RevSparseHes.h: mention using vectorBool to conserve on memory.
-# ForSparseJac.h: slight edit to documentation.
-# RevSparseJac.h: mention using vectorBool to conserve on memory.
-# CppAD_vector.h: use Scalar instead of Type (similar to SimpleVector.omh) 
-#                 and add extra info about element access.
-# SimpleVector.omh: expand the set of simple vector classes.
-# vectorBool.cpp: improve comments.
-# SimpleVector.cpp: more extensive testing
-# WishList.omh: remove sparsity and VecAD entries (which are done) and add
-#               an entry for error reporting.
+# WhatsNew05.omh: changes from uses point of view.
+# ADTape.h: fix developer documenation error.
+# CheckSimpleVector.h: test element assingment before vector assignment.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/RevSparseHes.h \
-	CppAD/local/ForSparseJac.h \
-	CppAD/local/RevSparseJac.h \
-	CppAD/CppAD_vector.h \
 	omh/WhatsNew05.omh \
-	omh/WishList.omh \
-	omh/SimpleVector.omh \
-	Example/vectorBool.cpp \
-	Example/SimpleVector.cpp
+	CppAD/local/ADTape.h \
+	CppAD/CheckSimpleVector.h \
+	Example/CheckSimpleVector.cpp

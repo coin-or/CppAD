@@ -42,6 +42,26 @@ $end
 # define CppADMyVectorOmit 0
 
 // -------------------------------------------------------------------------
+
+// example class used for non-constant elements (different from Scalar)
+template <class Scalar>
+class MyElement {
+private:
+	Scalar *element;
+public:
+	// element constructor
+	MyElement(Scalar *e)
+	{	element = e; }
+	// an example element assignment that returns void
+	void operator = (const Scalar &s)
+	{	*element = s; }
+	// conversion to Scalar
+	operator Scalar() const
+	{	return *element; }
+}; 
+	 
+
+// example simple vector class 
 template <class Scalar>
 class MyVector {
 private:
@@ -112,8 +132,8 @@ public:
 # endif
 # if CppADMyVectorOmit != 8
 	// non-constant element access
-	Scalar & operator[](size_t i)
-	{	return data[i]; }
+	MyElement<Scalar> operator[](size_t i)
+	{	return data + i; }
 # endif
 # if CppADMyVectorOmit != 9
 	// constant element access

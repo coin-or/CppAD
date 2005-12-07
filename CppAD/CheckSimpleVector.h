@@ -128,6 +128,13 @@ namespace CppAD {
 		// check sizing constructor
 		Vector s(1);
 
+		// check element assignment
+		s[0] = Scalar(1);
+		CppADUsageError(
+			s[0] == Scalar(1),
+			"element assignment failed"
+		);
+
 		// check copy constructor
 		s[0] = Scalar(0);
 		const Vector c(s);

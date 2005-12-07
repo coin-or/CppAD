@@ -256,7 +256,6 @@ $code StpvOp$$
 $code StvvOp$$ 
 	$cnext location of the taddr as a variable in the tape  
 $tend
-$syntax%
 
 $subhead Op(Variable, Variable)$$
 The procedure call 

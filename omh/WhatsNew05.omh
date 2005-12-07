@@ -79,6 +79,14 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-07$$
+Improve $xref/CheckSimpleVector/$$ so that it tests element assignment.
+Change $xref/CheckSimpleVector.cpp/$$ so that it provides
+and example and test of a case where a simple vector returns a type
+different from the element type and the element assignment returns 
+$code void$$.
+
+
 $head 12-06$$
 The specifications for a $xref/SimpleVector/$$ template class
 were extended so that the return type of an element access is
