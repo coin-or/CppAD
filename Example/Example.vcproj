@@ -775,6 +775,9 @@
 				RelativePath=".\Integer.cpp">
 			</File>
 			<File
+				RelativePath=".\Interface2C.cpp">
+			</File>
+			<File
 				RelativePath="JacLuDet.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

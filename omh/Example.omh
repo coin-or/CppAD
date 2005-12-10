@@ -30,14 +30,18 @@ $spell
 	Example Example
 $$
 
-$section General Purpose Examples$$
+$section Examples$$
+$index example$$
 
 
 $head Introduction$$
-Each CppAD operation,
-for example $xref/Add/$$,
-has its own specific example.
-The examples listed here are not connected to a specific operation.
+This section organizes the information related to the CppAD examples.
+Each CppAD operation has its own specific example,
+for example $xref/Add.cpp/$$ is an example for $xref/Add/$$.
+Some of the examples are of a more general nature
+(not connected of a specific feature of CppAD).
+In addition, there are some utility functions that are used
+by the examples.
 
 $head Running Examples$$
 The 
@@ -52,7 +56,6 @@ the examples.
 
 
 $contents%
-	GetStarted/GetStarted.cpp%
 	omh/ExampleList.omh%
 	CppAD/local/CppADvector.h
 %$$

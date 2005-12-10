@@ -79,6 +79,7 @@ Example_SOURCES   = \
 	Hessian.cpp \
 	HesTimesDir.cpp \
 	Integer.cpp \
+	Interface2C.cpp\
 	JacLuDet.cpp \
 	JacMinorDet.cpp \
 	Jacobian.cpp \

@@ -18,22 +18,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 
-$begin Realistic$$
+$begin General$$
 $spell
 	Cpp
 $$
 
-$mindex real example application$$
-$section Examples Using CppAD in a Realistic Application$$
+$index example, general$$
+$index general, example$$
+$index realistic, example$$
+
+$section General Examples$$ 
+
+$head Description$$
+Most of the examples in CppAD are part of the documentation
+for a specific feature; for example, $xref/Add.cpp/$$ is an 
+example using the $xref/Add//addition operator/$$.
+The examples list in this section are of a more general nature.
 
 $childtable%
-	Example/ComplexPoly.cpp%
+	GetStarted/GetStarted.cpp%
+	Example/Interface2C.cpp%
 	Example/JacMinorDet.cpp%
 	Example/JacLuDet.cpp%
 	Example/HesMinorDet.cpp%
 	Example/HesLuDet.cpp%
 	Example/OdeStiff.cpp%
-	Example/OdeTaylor.cpp
+	Example/OdeTaylor.cpp%
+	Example/ComplexPoly.cpp
 %$$
 
 $end
@@ -109,6 +120,7 @@ $rref HesMinorDet.cpp$$
 $rref HesTimesDir.cpp$$
 $rref Hessian.cpp$$
 $rref Integer.cpp$$
+$rref Interface2C.cpp$$
 $rref JacLuDet.cpp$$
 $rref JacMinorDet.cpp$$
 $rref Jacobian.cpp$$

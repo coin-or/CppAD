@@ -81,6 +81,7 @@ extern bool HesMinorDet(void);
 extern bool Hessian(void);
 extern bool HesTimesDir(void);
 extern bool Integer(void);
+extern bool Interface2C(void);
 extern bool JacLuDet(void);
 extern bool JacMinorDet(void);
 extern bool Jacobian(void);
@@ -194,6 +195,7 @@ int main(void)
 	ok &= Run( Hessian,           "Hessian"          );
 	ok &= Run( HesTimesDir,       "HesTimesDir"      );
 	ok &= Run( Integer,           "Integer"          );
+	ok &= Run( Interface2C,       "Interface2C"      );
 	ok &= Run( JacLuDet,          "JacLuDet"         );
 	ok &= Run( JacMinorDet,       "JacMinorDet"      );
 	ok &= Run( Jacobian,          "Jacobian"         );

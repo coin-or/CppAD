@@ -1,29 +1,22 @@
-# Group routines that extend the useful domain for an ADFun object.
+# Add example of C callable routine that computes derivatives.
 # 
 # SvnCommit: this file.
 # WhatsNew05.omh: changes from uses point of view.
-# Doc.omh: add ExtendDomain to list of OMhelp includes.
-# ExtendDomain.h: file that groups the routines.
-# UserAD.h: move some routiens from here to ExtendDomain.h.
-# LuRatio.h: fix some documentation errors.
-# AD.h: move CondExp.h include from here to ExtendDomain.h.
-# Fun.h: improve documentation on CompareChange.
-# CppAD.h: move VecAD.h include from here to ExtendDomain.h.
-# Makefile.am: add ExtendDomain.h to distribution.
-# SimpleVector.omh: correct a code font word that should be italic.
-# WishList.omh: put removing the object library in wish list.
-svn add CppAD/local/ExtendDomain.h
+# Example.omh: move GetStarted from here to ExampleList.omh.
+# ExampleList.omh: add Interface2C and GetStarted to general examples.
+# Interface2C.cpp: new example using CppAD with C.
+# Makefile.am: add Interface2C.cpp.
+# Example.cpp: add Interface2C.cpp.
+# Example.vcproj: add Interface2C.cpp.
+svn add Example/Interface2C.cpp
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	omh/WhatsNew05.omh \
-	Doc.omh \
-	CppAD/local/ExtendDomain.h \
-	CppAD/local/UserAD.h \
-	CppAD/local/LuRatio.h \
-	CppAD/local/AD.h \
-	CppAD/local/Fun.h \
-	CppAD/CppAD.h \
-	Makefile.am \
-	omh/SimpleVector.omh \
-	omh/WishList.omh
+	omh/ExampleList.omh \
+	omh/Example.omh \
+	Example/Interface2C.cpp \
+	Example/Example.vcproj \
+	Example/Example.cpp \
+	Example/Makefile.am \
+	omh/WhatsNew05.omh 
+

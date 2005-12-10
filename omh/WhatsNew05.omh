@@ -79,9 +79,15 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+
 $head 12-11$$
 Group routines that extend the domain for which an $xref/ADFun/$$
 object is useful (see $xref/ExtendDomain/$$).
+$pre
+
+$$
+Add an example of a C callable routine that computes
+derivatives using CppAD (see $xref/Interface2C.cpp/$$).
 
 $head 12-08$$
 Split out $xref/LuFactor/$$ with the $italic ratio$$ argument
