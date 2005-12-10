@@ -1,30 +1,29 @@
-# Split LuFactor into LuFactor and LuRatio
+# Group routines that extend the useful domain for an ADFun object.
 # 
 # SvnCommit: this file.
 # WhatsNew05.omh: changes from uses point of view.
-# LuRatio.h: split ratio case out from LuFactor.h.
-# UserAD.h: include LuRatio.h here.
-# LuFactor.h: remove ratio case from here.
-# LuRatio.cpp: move LuFactorRatio.cpp here.
-# ExampleList.omh: move LuFactorRatio to LuRatio.
-# LuFactorRatio.cpp: old name for this test case.
-# Example.vcproj: move LuFactorRatio to LuRatio.
-# SimpleVector.cpp: avoid Microsoft compiler warning messages.
-# Example/Makefile.am: move LuFactorRatio to LuRatio.
-# Example.cpp: move LuFactorRatio to LuRatio.
+# Doc.omh: add ExtendDomain to list of OMhelp includes.
+# ExtendDomain.h: file that groups the routines.
+# UserAD.h: move some routiens from here to ExtendDomain.h.
+# LuRatio.h: fix some documentation errors.
+# AD.h: move CondExp.h include from here to ExtendDomain.h.
+# Fun.h: improve documentation on CompareChange.
+# CppAD.h: move VecAD.h include from here to ExtendDomain.h.
+# Makefile.am: add ExtendDomain.h to distribution.
+# SimpleVector.omh: correct a code font word that should be italic.
+# WishList.omh: put removing the object library in wish list.
+svn add CppAD/local/ExtendDomain.h
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
 	omh/WhatsNew05.omh \
+	Doc.omh \
+	CppAD/local/ExtendDomain.h \
 	CppAD/local/UserAD.h \
 	CppAD/local/LuRatio.h \
-	CppAD/LuFactor.h \
-	omh/WishList.omh \
-	omh/ExampleList.omh \
-	Example/LuFactorRatio.cpp \
-	Example/Example.vcproj \
-	Example/SimpleVector.cpp \
-	Example/LuRatio.cpp \
-	Example/Example.cpp \
-	Example/Makefile.am \
-	Makefile.am 
+	CppAD/local/AD.h \
+	CppAD/local/Fun.h \
+	CppAD/CppAD.h \
+	Makefile.am \
+	omh/SimpleVector.omh \
+	omh/WishList.omh

@@ -184,7 +184,7 @@ $subhead Using Value$$
 If $italic elementType$$ is not the same as $italic Scalar$$,
 the conversion operator
 $syntax%
-	static_cast<Scalar>(%x%[%i%])%
+	static_cast<%Scalar%>(%x%[%i%])%
 %$$
 is used implicitly when $syntax%%x%[%i%]%$$ is used in an expression
 with values of type $italic Scalar$$.

@@ -242,7 +242,6 @@ private:
 # include <CppAD/local/Ordered.h>
 # include <CppAD/local/Identical.h>
 # include <CppAD/local/Integer.h>
-# include <CppAD/local/CondExp.h>
 
 # undef CppADCompareFriend
 # undef CppADAssignMember

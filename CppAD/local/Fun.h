@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin ADFun$$
 $spell 
+	xk
 	Ind
 	bool
 	Taylor
@@ -172,12 +173,17 @@ $syntax%
 %$$
 return the number of 
 $syntax%AD<%Base%>%$$ $xref/Compare//comparison/$$ 
-operations corresponding to
-the previous zero order $xref/Forward/$$ that have a different result from
+operations,
+corresponding to the previous call to $xref/Forward/$$ 
+$syntax%
+	%F%.Forward(%k%, %xk%)
+%$$
+where $italic k$$ was equal to zero,
+that have a different result from
 when $italic F$$ was created by taping an algorithm.
 When it is non-zero, some comparison operator results are different.
 This can be used to detect when $italic F$$
-no longer represents the algorithm that was taped.
+no exactly represents the algorithm that was taped.
 
 $head Example$$
 The files

@@ -5,12 +5,29 @@ $spell
 	Vec
 	Cpp
 	Atan
+	CppADlib
 $$
 
 $section The CppAD Wish List$$
 $index wish list$$
 $index new, features$$
 $index features, new$$
+
+$head Object Library$$
+Most of CppAD is an include file library,
+only the routines 
+$xref/SpeedTest/$$,
+$xref/NearEqual/$$,
+and
+$xref/erf/$$
+are in the object library $code CppADlib.a$$.
+If we convert these routines to include file libraries,
+it will make the $xref/Install/$$ simpler and avoid the issue of 
+compiling the object library both for optimization and debugging; see
+$href%
+	http://list.coin-or.org/pipermail/cppad/2005-November/000012.html
+%$$
+
 
 $head CondExp$$
 Extend the conditional expressions $xref/CondExp/$$ so that they are 

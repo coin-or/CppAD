@@ -105,7 +105,7 @@ $syntax%
 	%ADvector% &%LU%
 %$$
 and the size of $italic LU$$ must equal $latex n * n$$
-(see description of $xref/LuFactor/FloatVector/FloatVector/$$ below).
+(see description of $xref/LuRatio/ADvector/ADvector/$$ below).
 
 $subhead A$$
 We define $italic A$$ as the matrix corresponding to the input 
@@ -195,21 +195,20 @@ $xref/SimpleVector/Elements of Specified Type/elements of type size_t/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head ADvector$$
-The type $italic FloatVector$$ must be a 
-$xref/SimpleVector//simple vector class/$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
-if this is not the case.
-
 $head Base$$
 This type is determined by the argument $italic ratio$$
 which has type $syntax%AD<%Base%>%$$.
-The elements of an $italic ADvector$$ must also have type
-$syntax%AD<%Base%>%$$.
 The type $italic Base$$ must be $code float$$, $code double$$,
 or an $code AD$$ type built on $code float$$ or $code double$$.
 For example, $code AD< AD<double> >$$ is an $code AD$$ type built on
 $code double$$.
+
+$head ADvector$$
+The type $italic ADvector$$ must be a 
+$xref/SimpleVector//simple vector class/$$ with elements of type
+$syntax%AD<%Base%>%$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
 
 
 $head Example$$
