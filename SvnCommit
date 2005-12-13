@@ -1,34 +1,11 @@
-# Make erf a template function instead of a library function.
+# should have been done in previous commit
 # 
 # SvnCommit: this file.
 # ErrFun.cpp: moved to CppAD/local/Erf.h.
-# Erf.h: replaced by a modified ErrFun.cpp that applies to more cases.
-# StdMathLib.h: move ErrFun.cpp to Erf.h.
-# Poly.h: fix font used for size_t in documentation.
-# Build: correct comment about Build configure and Build configure test cases.
-# Makefile.am: remove ErrFun.cpp.
-# glossary.omh: add definition of an AD sequence.
-# WhatsNew05.omh: changes from uses point of view.
-# Erf.cpp: add evaluation of erf for AD< AD<double> > case to tests.
-# Interface2C.cpp: fix spelling error and improve comments on choice of small.
-#
-# CppAD/local/Erf.h is a modified version of lib/ErrFun.cpp (used for testing)
-mv         CppAD/local/Erf.h    CppAD/local/Erf.new
-svn remove CppAD/local/Erf.h
-svn move   lib/ErrFun.cpp       CppAD/local/Erf.h
-mv         CppAD/local/Erf.new  CppAD/local/Erf.h
-#
+# Erf.h: modified ErrFun.cpp that applies to more cases.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/StdMathLib.h \
 	CppAD/local/Erf.h \
-	CppAD/Poly.h \
-	Build \
-	lib/ErrFun.cpp \
-	lib/Makefile.am \
-	omh/glossary.omh \
-	omh/WhatsNew05.omh \
-	Example/Erf.cpp \
-	Example/Interface2C.cpp
+	lib/ErrFun.cpp 
 

@@ -1,4 +1,6 @@
-// BEGIN SHORT COPYRIGHT
+# ifndef CppADErfIncluded
+# define CppADErfIncluded
+
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -16,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -30,9 +31,7 @@ $$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%double erf(const double &%x%)%$$
-$rnext $cnext
-$syntax%AD<double> erf(const AD<double> &%x%)%$$
+$syntax%%y% = erf(%x%)%$$
 $tend
 
 $fend 20$$
@@ -42,6 +41,25 @@ Returns the value of the error function which is defined by
 $latex \[
 {\rm erf} (x) = \frac{2}{ \sqrt{\pi} } \int_0^x \exp( - t * t ) {\bf d} t
 \] $$
+
+$head x$$
+The argument $italic x$$ has prototype
+$syntax%
+	const AD<%Base%> &%x%
+%$$
+It specifies the argument at which to evaluate the error function.
+
+$head y$$
+The return value $italic y$$ has prototype
+$syntax%
+	AD<%Base%> %y%
+%$$
+It is set to the value of the error function at $italic x$$.
+
+$head Base$$
+The type $italic Base$$ must be $code float$$, $code double$$,
+or in the $xref/glossary/AD Sequence/AD sequence/$$ above
+$code float$$ or $code double$$.
 
 
 $head Sequence of Operations$$
@@ -176,15 +194,16 @@ $end
 // BEGIN CppAD namespace
 namespace CppAD {   
 
-template <class Type>
-Type Erf(const Type &x)
+template <class Base>
+AD<Base> erf(const AD<Base> &x)
 {	using CppAD::exp;
+	typedef AD<Base> Type;
 
-	static const double
-		tiny	    = 1e-300,
-		one =  1.00000000000000000000e+00,
+	static const Type
+		tiny =  1e-300,
+		one  =  1.00000000000000000000e+00,
 			
-		erx =  8.45062911510467529297e-01,
+		erx  =  8.45062911510467529297e-01,
 		/*
 		 * Coefficients for approximation to  erf on [0,0.84375]
 		 */
@@ -282,7 +301,7 @@ Type Erf(const Type &x)
 		ra5+s*(ra6+s*ra7))))));
 	S=one+s*(sa1+s*(sa2+s*(sa3+s*(sa4+s*(
 		sa5+s*(sa6+s*(sa7+s*sa8)))))));
-	r  =  exp(-0.5625) * exp(-ax*ax+R/S);
+	r  =  exp(Type(-0.5625)) * exp(-ax*ax+R/S);
 	value = one-r/ax;
 
 	// erf(|x|) when |x| <= 1 / 0.35
@@ -293,7 +312,7 @@ Type Erf(const Type &x)
 		rb5+s*rb6)))));
 	S=one+s*(sb1+s*(sb2+s*(sb3+s*(sb4+s*(
 		sb5+s*(sb6+s*sb7))))));
-	r  =  exp(-0.5625) * exp(-ax*ax+R/S);
+	r  =  exp(Type(-0.5625)) * exp(-ax*ax+R/S);
 	value = one-r/ax;
 
 	// erf(|x|) when |x| <= 6
@@ -310,13 +329,6 @@ Type Erf(const Type &x)
 	return CondExpGe(x, zero, Gt0, -Gt0);
 }
 
-
-double erf(const double &x)
-{	return Erf<double>(x); }
-
-AD<double> erf(const AD<double> &x)
-{	return Erf< AD<double> >(x); }
-
-
-
 } // END CppAD namespace
+
+# endif
