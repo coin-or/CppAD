@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew05$$
 $spell
+	Erf
+	CppADlib
 	logdet
 	valarray
 	Jacobian
@@ -78,6 +80,13 @@ $tref WhatsNew04$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-14$$
+Extend $xref/erf/$$ to cover more cases and convert it
+from a function in $code lib/CppADlib.a$$
+to a template function in $code CppAD/local/Erf.h$$.
+This is one step along the way of removing
+the entire $code CppADlib.a$$ library.
 
 
 $head 12-11$$

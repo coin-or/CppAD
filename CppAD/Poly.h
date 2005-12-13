@@ -72,7 +72,7 @@ and is set equal to $latex P^{(k)} (z)$$
 (see the description of $xref/Poly/Type/Type/$$ below).
 
 $head k$$
-The argument $italic k$$ has type $italic size_t$$
+The argument $italic k$$ has type $code size_t$$
 and specifies the order of the derivative.
 
 $head a$$

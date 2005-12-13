@@ -32,6 +32,14 @@ $$
 
 $section Glossary$$
 
+$head AD Sequence$$
+$index sequence, AD$$
+If $italic Base$$ is a type, the AD sequence above $italic Base$$ 
+is the following sequence of types:
+$syntax%
+	AD<%Base%> %,% AD< AD<%Base%> > %,% AD< AD< AD<%Base%> > > %,% %...%
+%$$
+
 $head Base Function$$
 If $italic Base$$ is a C++ class,
 a function $latex f$$ is referred to as a $italic Base$$ function

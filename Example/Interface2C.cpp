@@ -72,7 +72,7 @@ Float sumGauss(const Float &x, const CppAD::vector<Float> &a)
 	return y;
 }
 /*
-Create a C function interface that computes bothe
+Create a C function interface that computes both
 	y = sum_{i=1}^n a[3*i] exp( (x - a[3*i+1])^2 / a[3*i+2])^2 )
 and its derivative with respect to the parameter vector a.
 */
@@ -164,8 +164,8 @@ bool Interface2C(void)
 	{	// local variables
 		float small, ai, yp, ym, dy_da;
 
-		// float has about 7 digits of precision, so choose small
-		// to be about half that number of digits. 
+		// We assume that the type float has at least 7 digits of 
+		// precision, so we choose small to be about pow(10., -7./2.).
 		small  = (float) 3e-4;
 
 		// value of this component of a

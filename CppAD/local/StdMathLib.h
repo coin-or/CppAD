@@ -39,7 +39,7 @@ $children%
 	CppAD/local/Atan2.h%
 	CppAD/local/Cos.h%
 	CppAD/local/Cosh.h%
-	lib/ErrFun.cpp%
+	CppAD/local/Erf.h%
 	CppAD/local/Exp.h%
 	CppAD/local/Log.h%
 	CppAD/local/Log10.h%
@@ -77,7 +77,6 @@ $end
 # include <CppAD/local/Atan2.h>
 # include <CppAD/local/Cos.h>
 # include <CppAD/local/Cosh.h>
-# include <CppAD/local/Erf.h>
 # include <CppAD/local/Exp.h>
 # include <CppAD/local/Log.h>
 # include <CppAD/local/Log10.h>
@@ -85,6 +84,9 @@ $end
 # include <CppAD/local/Sin.h>
 # include <CppAD/local/Sinh.h>
 # include <CppAD/local/Sqrt.h>
+
+// put erf here because it depends on exp
+# include <CppAD/local/Erf.h>
 
 
 # endif

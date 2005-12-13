@@ -39,7 +39,6 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include <cmath>
 
 bool Erf(void)
 {	bool ok = true;
@@ -74,11 +73,18 @@ bool Erf(void)
 	int i;
 	for(i = -30; i <= 30; i++)
 	{	x[0] = i / 4.;
-		Erf.Forward(0, x);	
-		double derf = factor * exp( - x[0] * x[0] );
-		dy = Erf.Forward(1, dx);
+		y    = Erf.Forward(0, x);	
 
-		ok &= NearEqual(derf, dy[0], 1e-10, 1e-10);
+		// check derivative
+		double derf = factor * exp( - x[0] * x[0] );
+		dy          = Erf.Forward(1, dx);
+		ok         &= NearEqual(derf, dy[0], 1e-10, 1e-10);
+
+		// test using erf with AD< AD<double> >
+		AD< AD<double> > X0 = x[0];
+		AD< AD<double> > Y0 = erf(X0);
+
+		ok &= ( y[0] == Value( Value(Y0) ) );
 	}
 	return ok;
 }
