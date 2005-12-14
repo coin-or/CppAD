@@ -91,6 +91,29 @@ $code CppAD/NearEqual.h$$ and
 $code CppAD/local/NearEqualExt.h$$.
 This is another step along the way of removing
 the entire $code CppADlib.a$$ library.
+$pre
+
+$$
+The change on $xref/WhatsNew05/12-14/12-14/$$ broke the 
+Microsoft project files $code Example/Example.sln$$
+and $code TestMore/TestMore.sln$$ used during CppAD
+$xref/InstallWindows//installation on Windows/$$.
+This has been fixed.
+$pre
+
+$$
+Move $code lib/SpeedTest.cpp$$ to $code CppAD/SpeedTest.h$$.
+This was the last change necessary in order to remove the CppAD library,
+so remove all commands related to building and linking $code CppADlib.a$$.
+The corresponding entry has been removed from the $xref/WishList/$$.
+$pre
+
+$$
+One of the entries in the $xref/WishList/$$ corresponded to the
+$xref/Integer/$$ function. 
+It has also been removed (because it is already implemented).
+
+
 
 $head 12-14$$
 Extend $xref/erf/$$ to cover more cases while converting it

@@ -13,22 +13,6 @@ $index wish list$$
 $index new, features$$
 $index features, new$$
 
-$head Object Library$$
-Most of CppAD is an include file library,
-only the routines 
-$xref/SpeedTest/$$,
-$xref/NearEqual/$$,
-and
-$xref/erf/$$
-are in the object library $code CppADlib.a$$.
-If we convert these routines to include file libraries,
-it will make the $xref/Install/$$ simpler and avoid the issue of 
-compiling the object library both for optimization and debugging; see
-$href%
-	http://list.coin-or.org/pipermail/cppad/2005-November/000012.html
-%$$
-
-
 $head CondExp$$
 Extend the conditional expressions $xref/CondExp/$$ so that they are 
 valid for complex types by comparing real parts.
@@ -61,14 +45,6 @@ $$
 One application of this is where each of the tapes is on a different
 processor in a shared memory multiple processor application.
 
-
-$head Integer Function$$
-$index int, of CppAD<Base>$$
-It would be useful for $code AD$$ types to have a function that behaves 
-like the coercion from $code double$$ to $code int$$.
-This function would have a derivative that is identically zero; i.e.,
-the resulting integer value would be fixed and not change with the
-$code AD$$ argument.
 
 $head Atan2$$
 $index atan2$$
