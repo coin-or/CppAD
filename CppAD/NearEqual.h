@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin NearEqual$$
 $spell
+	sqrt
 	cout
 	endl
 	Microsoft
@@ -106,7 +107,6 @@ condition (defined above) is satisfied, the return value is true.
 Otherwise, the return value is false.
 
 $head Type$$
-$list number$$
 The type $italic Type$$ must be a
 $xref/NumericType/$$.
 The routine $xref/CheckNumericType/$$ will generate

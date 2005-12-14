@@ -31,7 +31,7 @@ $index library, numerical C++ template$$
 $section The CppAD General Purpose Library$$
 
 $children%
-	lib/NearEqual.cpp%
+	CppAD/NearEqual.h%
 	lib/SpeedTest.cpp%
 	omh/NumericType.omh%
 	CppAD/CheckNumericType.h%

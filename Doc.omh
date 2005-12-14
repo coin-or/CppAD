@@ -42,7 +42,7 @@ $index CppAD, version$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: CppAD-05-12-10
+A Package for Differentiation of C++ Algorithms: CppAD-05-12-14
 $$ 
 
 $table
@@ -138,19 +138,18 @@ There are many other
 $xref/Example//examples/$$.
 
 $head Base Type Requirements$$
-$index require, base type$$
-$index type, base require$$
-$index base, type require$$
+$index require, Base$$
+$index type, Base require$$
+$index Base, require$$
 
 The currently allowable base types are:
 $code float$$,
 $code double$$,
 $code std::complex<float>$$,
-$code std::complex<double>$$.
-In addition, if $italic Base$$ is a valid base type,
-$syntax%AD<%Base%>%$$ is also an allowable base type.
-For example
-$code AD< AD<double> >$$ is a valid type.
+$code std::complex<double>$$, 
+or any type in the 
+$xref/glossary/AD Sequence/AD sequence/$$ above
+one of these types.
 
 $head Syntax$$
 

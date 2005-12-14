@@ -1,86 +1,19 @@
-# Move NearEqual from CppADlib.a to template function
-# and make it more general while doing so.
+# Should have been in previous commit.
 # 
 # SvnCommit: this file.
-# WhatsNew05.omh: users view of the changes.
-# NearEqualExt.h: move from Example to CppAD/local and make more general.
-# UserAD.h: add NearEqualExt to this list.
-# Declare.h: nolonger need to declare NearEqual a friend of AD.
-# AD.h: nolonger need to declare NearEqual a friend of AD.
-# CondExp.h: use AD sequence definition in glossary.
-# LuRatio.h: use AD sequence definition in glossary.
-# NearEqual.h: library template version of NearEqual.
-# Makefile.am: add CppAD/local/NearEqualExt.h.
-# lib/Makefile.am: remove NearEqual.cpp from source for library.
-# WishList.omh: use real parts for CondExp with complex types.
-# ExampleList.omh: move NearEqualExt.h from here to UserAD.h, 
-#                  add NearEqualExt to list. 
-# NearEqualExt.cpp: examples for NearEqualExt.
-#
-# *.cpp: remove include of NearEqualExt.h (automatically part of CppAD.h),
-#        also remove some unecessary comments from these files.
-#
-svn remove lib/NearEqual.cpp
-svn remove Example/NearEqualExt.h
-svn add    CppAD/local/NearEqualExt.h
-svn add    Example/NearEqualExt.cpp
+# WhatsNew05.omh: users view of changes.
+# Doc.omh: use AD sequence glossary entry to describe Base type requirements.
+# NearEqual.h: correct OMhelp spelling error.
+# NearEqual.cpp: delete (moved to CppAD/NearEqual.h).
+# library.omh: use NearEqual.h instead of NearEqual.cpp.
+# Example.vcproj: remove NearEqual.cpp and ErrFun.cpp.
+# TestMore.vcproj: remove NearEqual.cpp and ErrFun.cpp.
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	omh/WhatsNew05.omh \
-	CppAD/local/NearEqualExt.h \
-	CppAD/local/UserAD.h \
-	CppAD/local/Declare.h \
-	CppAD/local/CondExp.h \
-	CppAD/local/LuRatio.h \
-	CppAD/local/AD.h \
+	Doc.omh \
 	CppAD/NearEqual.h \
-	lib/Makefile.am \
-	Makefile.am \
-	omh/WishList.omh \
-	omh/ExampleList.omh \
-	Example/NearEqualExt.cpp \
-	Example/NearEqualExt.h \
-	\
-	Fadbad/DetLu.cpp \
-	Adolc/DetLu.cpp \
-	Example/OdeTaylor.cpp \
-	Example/Pow.cpp \
-	Example/Jacobian.cpp \
-	Example/HesLuDet.cpp \
-	Example/Atan2.cpp \
-	Example/DetByLu.cpp \
-	Example/Vec.cpp \
-	Example/Div.cpp \
-	Example/Add.cpp \
-	Example/Sqrt.cpp \
-	Example/Asin.cpp \
-	Example/JacLuDet.cpp \
-	Example/DivEq.cpp \
+	lib/NearEqual.cpp \
+	omh/library.omh 
 	Example/Example.vcproj \
-	Example/LuVecADOk.cpp \
-	Example/AddEq.cpp \
-	Example/SubEq.cpp \
-	Example/MulEq.cpp \
-	Example/Hessian.cpp \
-	Example/Example.cpp \
-	Example/Exp.cpp \
-	Example/PowInt.cpp \
-	Example/Log.cpp \
-	Example/Log10.cpp \
-	Example/Atan.cpp \
-	Example/Acos.cpp \
-	Example/Makefile.am \
-	Example/Sub.cpp \
-	Example/Mul.cpp \
-	TestMore/DivEq.cpp \
-	TestMore/VecAD.cpp \
-	TestMore/DivZeroOne.cpp \
-	TestMore/Runge45.cpp \
-	TestMore/Exp.cpp \
-	TestMore/Log.cpp \
-	TestMore/Div.cpp \
-	TestMore/Atan.cpp \
-	TestMore/Sqrt.cpp \
-	TestMore/VecUnary.cpp \
-	TestMore/Rosen34.cpp 
+	TestMore/TestMore.vcproj
