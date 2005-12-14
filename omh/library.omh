@@ -32,7 +32,7 @@ $section The CppAD General Purpose Library$$
 
 $children%
 	CppAD/NearEqual.h%
-	lib/SpeedTest.cpp%
+	CppAD/SpeedTest.h%
 	omh/NumericType.omh%
 	CppAD/CheckNumericType.h%
 	omh/SimpleVector.omh%
