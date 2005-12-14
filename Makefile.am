@@ -175,6 +175,13 @@ else
 PRINTFOR =
 endif
 #
+# Did user specify --with-SpeedExample
+if CppAD_SPEEDEXAMPLE
+SPEEDEXAMPLE = SpeedExample
+else
+SPEEDEXAMPLE =
+endif
+#
 # Did user specify a value for ADOLC_DIR in configure command line
 if CppAD_ADOLC
 ADOLC = Adolc
@@ -190,12 +197,12 @@ FADBAD =
 endif
 #
 SUBDIRS = \
-	lib \
 	$(ADOLC) \
 	$(EXAMPLE) \
 	$(FADBAD) \
 	$(GETSTARTED) \
 	$(PRINTFOR) \
+	$(SPEEDEXAMPLE) \
 	$(SPEED) \
 	$(TESTMORE) 
 #

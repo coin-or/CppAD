@@ -34,8 +34,8 @@ endif
 Example_CXXFLAGS = -g $(CPP_ERROR_WARN)
 Speed_CXXFLAGS   = -O2 -DNDEBUG $(CPP_ERROR_WARN)
 #
-LDADD            = -ladolc -lCppAD
-AM_LDFLAGS       = -L$(ADOLC_DIR)/lib -L$(top_builddir)/lib
+LDADD            = -ladolc 
+AM_LDFLAGS       = -L$(ADOLC_DIR)/lib 
 #
 # cancel the -DHAVE_CONGIF_H flag so adolc does not try to use it
 DEFS             =

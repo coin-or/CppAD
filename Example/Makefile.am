@@ -31,9 +31,6 @@ endif
 #
 AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #
-LDADD             = -lCppAD
-AM_LDFLAGS        = -L$(top_builddir)/lib
-#
 Example_SOURCES   = \
 	Example.cpp \
 	Abs.cpp \

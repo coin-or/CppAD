@@ -28,9 +28,6 @@ else
 AM_CPPFLAGS      = -I. -I$(top_builddir) -I$(FADBAD_DIR) 
 endif
 #
-LDADD             = -lCppAD
-AM_LDFLAGS        = -L$(top_builddir)/lib
-#
 # Fadbad will not survive some of the error and warning flags that could be
 # in CPP_ERROR_WARN, so do not use them
 Example_CXXFLAGS = -g -Wno-deprecated  

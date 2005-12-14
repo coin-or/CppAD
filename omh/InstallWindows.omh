@@ -69,8 +69,8 @@ just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
 Otherwise,
 download the archive
 $href%
-	http://www.coin-or.org/Tarballs/CppAD-05-09-26.zip%
-	CppAD-05-09-26.zip
+	http://www.coin-or.org/Tarballs/CppAD-05-12-14.zip%
+	CppAD-05-12-14.zip
 %$$
 
 $head Extraction$$
@@ -80,10 +80,10 @@ $href%
 	WinZip
 %$$
 or some other program to decompress the archive
-$code CppAD-05-09-26.zip$$.
+$code CppAD-05-12-14.zip$$.
 This will create the distribution directory 
 $syntax%
-	cppad-05-09-26
+	cppad-05-12-14
 %$$
 All the command sequences below assume that you start in this
 distribution directory.
@@ -114,7 +114,7 @@ $codep
 	GetStarted
 $$
 
-$head Extensive Examples and Testing$$
+$head Examples and Testing$$
 Using Microsoft Visual C++,
 open the workspace $code Example/Example.sln$$ in Visual Studio.
 Then select $code Build | Build Example.exe$$.
@@ -132,6 +132,16 @@ Then in a Dos box, execute the following commands
 $codep
 	cd PrintFor\Debug
 	PrintFor
+$$
+
+$head Speed Test Example$$
+Using Microsoft Visual C++,
+open the workspace $code SpeedExample/SpeedExample.sln$$ in Visual Studio.
+Then select $code Build | Build SpeedExample.exe$$.
+Then in a Dos box, execute the following commands
+$codep
+	cd SpeedExample\Debug
+	SpeedExample
 $$
 
 $head More Correctness Testing$$

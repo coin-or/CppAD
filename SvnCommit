@@ -1,19 +1,42 @@
-# Should have been in previous commit.
+# Remove CppADlib.a (so user need not worry about object library).
 # 
+# SpeedExample: move lib/SpeedTestExample to SpeedExample/SpeedExample.cpp.
 # SvnCommit: this file.
-# WhatsNew05.omh: users view of changes.
-# Doc.omh: use AD sequence glossary entry to describe Base type requirements.
-# NearEqual.h: correct OMhelp spelling error.
-# NearEqual.cpp: delete (moved to CppAD/NearEqual.h).
-# library.omh: use NearEqual.h instead of NearEqual.cpp.
-# Example.vcproj: remove NearEqual.cpp and ErrFun.cpp.
-# TestMore.vcproj: remove NearEqual.cpp and ErrFun.cpp.
+# SpeedTest.h: move lib/SpeedTest.cpp to CppAD/SpeedTest.h.
+# Build: include SpeedExample in --with option list.
+# */Makefile.am: no longer need the -L.. and -lCppAD loader options.
+# configure.ac: remove lib directory and add SpeedExample directory and option.
+# SpeedTest.cpp: move to CppAD/SpeedTest.h (and modify).
+# lib/Makefile.am: no longer needed.
+# InstallUnix.omh: add SpeedExample configure option.
+# library.omh: change SpeedTest.cpp to SpeedTest.h.
+# InstallWindows.omh: add discussion for building SpeedExample. 
+# Makefile.am: remove lib directory and add SpeedExample directory and option.
+# -----------------------------------------------
+# svn add    SpeedExample/Makefile.am
+# svn add    SpeedExample/SpeedExampe.* (.cpp, .sln, .vcproj)
+# svn remove CppAD/SpeedTest.h
+# svn remove lib/Makefile.am
+# svn remove lib
+# -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	Doc.omh \
-	CppAD/NearEqual.h \
-	lib/NearEqual.cpp \
-	omh/library.omh 
-	Example/Example.vcproj \
-	TestMore/TestMore.vcproj
+	CppAD/SpeedTest.h \
+	Build \
+	Speed/Makefile.am \
+	Fadbad/Makefile.am \
+	configure.ac \
+	lib/SpeedTest.cpp \
+	lib/Makefile.am \
+	lib/SpeedTestExample.cpp \
+	Adolc/Makefile.am \
+	omh/InstallUnix.omh \
+	omh/library.omh \
+	omh/WhatsNew05.omh \
+	omh/InstallWindows.omh \
+	Example/Makefile.am \
+	TestMore/Makefile.am \
+	PrintFor/Makefile.am \
+	Makefile.am  \
+	lib

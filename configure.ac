@@ -22,7 +22,7 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 
 dnl   package   version           bug-report
-AC_INIT(CppAD, 05-11-19, bradbell@seanet.com)
+AC_INIT(CppAD, 05-12-14, bradbell@seanet.com)
 
 AC_MSG_NOTICE([******** Begin Checking Command Line arguments ***************])
 
@@ -75,6 +75,16 @@ AC_ARG_WITH(PrintFor,
 )
 AM_CONDITIONAL(CppAD_PRINTFOR, test "$PrintFor" = "yes" )
 AC_MSG_RESULT( [$PrintFor] )
+
+dnl Are we building the SpeedExample directory --------------------------------
+AC_MSG_CHECKING( [--with-SpeedExample] )
+AC_ARG_WITH(SpeedExample, 
+	AC_HELP_STRING( [--with-SpeedExample], [default is no] ),
+	[SpeedExample="yes"],
+	[SpeedExample="no"]
+)
+AM_CONDITIONAL(CppAD_SPEEDEXAMPLE, test "$SpeedExample" = "yes" )
+AC_MSG_RESULT( [$SpeedExample] )
 
 dnl Are we including profiling -------------------------------------------
 AC_MSG_CHECKING( [--with-profiling] )
@@ -201,7 +211,7 @@ AC_CONFIG_FILES([
 	Fadbad/Makefile 
 	GetStarted/Makefile 
 	PrintFor/Makefile
-	lib/Makefile
+	SpeedExample/Makefile
 	Speed/Makefile 
 	TestMore/Makefile 
 ])

@@ -61,21 +61,21 @@ $section Unix Installation and Testing$$
 $head Download Current Version$$
 Download the file
 $href%
-	http://www.coin-or.org/Tarballs/CppAD-05-10-19.tar.gz%
-	CppAD-05-10-19.tar.gz
+	http://www.coin-or.org/Tarballs/CppAD-05-12-14.tar.gz%
+	CppAD-05-12-14.tar.gz
 %$$
 
 $head Extraction$$
 Use the command
 $codep
-	tar -xvzf CppAD-05-10-19.tar.gz
+	tar -xvzf CppAD-05-12-14.tar.gz
 $$
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-05-10-19
+	cppad-05-12-14
 %$$
-Note that $code 05-10-19$$ is the version number for CppAD.
+Note that $code 05-12-14$$ is the version number for CppAD.
 All of the commands below are to be executed starting from this
 directory.
 
@@ -95,12 +95,13 @@ $head Configure$$
 Enter the directory created by the extraction and execute the command:
 $syntax%
 	./configure                            \
-	--prefix=%PrefixDir%                   \
+	--prefix=%PrefixDir%                     \
 	--with-GetStarted                      \
 	--with-Example                         \
 	--with-TestMore                        \
 	--with-Speed                           \
 	--with-PrintFor                        \
+	--with-SpeedExample                    \
 	--with-profiling                       \
 	--with-stdvector                       \  
 	POSTFIX_DIR=%PostfixDir%                 \
@@ -124,17 +125,13 @@ will install in
 $syntax%
 	@HOME/include/CppAD
 %$$
-and the CppAD library is
-$syntax%
-	@HOME/lib/libCppAD.a
-%$$
 If you want to install elsewhere, you will have to use this option.
 $pre
 
 $$
 As an example of using just the $code --prefix$$ option,
-if you have permission to write into the directories 
-$code /usr/local/include$$ and $code /usr/local/lib$$,
+if you have permission to write into the directory 
+$code /usr/local/include$$ 
 $codep
 	./configure --prefix=/usr/local
 $$ 
@@ -142,20 +139,7 @@ will set up for installing the CppAD include files in the directory
 $syntax%
 	/usr/local/include/CppAD
 %$$
-and the CppAD library will be
-$syntax%
-	/usr/local/lib/libCppAD.a
-%$$
 This is the standard location for such files on many systems.
-$pre
-
-$$
-If the resulting location is not a standard place for includes and libraries, 
-you will need the compiler switches
-$syntax%
-	-I %Prefix%/include -L %Prefix%/lib
-%$$
-on the command line when you compile and link your programs with CppAD.
 $pre
 
 $$
@@ -167,10 +151,6 @@ $$
 will set up for installing the CppAD include files in the directory
 $syntax%
 	/usr/include/test/CppAD
-%$$
-and the CppAD library will be
-$syntax%
-	/usr/lib/test/libCppAD.a
 %$$
 
 $head --with-GetStarted$$
@@ -216,6 +196,15 @@ Once the $code make$$ command
 has been executed, you can run this example by executing the command 
 $codep
 	PrintFor/PrintFor
+$$
+
+$head --with-SpeedExample$$
+If the command line argument $code --with-SpeedExample$$ is specified,
+the $xref/SpeedExample.cpp/$$ example will be built.
+Once the $code make$$ command 
+has been executed, you can run this example by executing the command 
+$codep
+	SpeedExample/SpeedExample
 $$
 
 $head --with-profiling$$

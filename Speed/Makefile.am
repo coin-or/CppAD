@@ -34,7 +34,6 @@ AM_CPPFLAGS      = $(BOOST_INCLUDE) -I. -I$(top_builddir) -DNDEBUG
 # Speed
 #
 noinst_PROGRAMS  = Speed
-Speed_LDADD      =  -L$(top_builddir)/lib -lCppAD
 Speed_CXXFLAGS   = -O2 $(CPP_ERROR_WARN)
 Speed_SOURCES    = \
 	Speed.cpp \
@@ -50,6 +49,5 @@ if CppAD_PROFILING
 noinst_PROGRAMS  += Speed_p
 Speed_p_CXXFLAGS = -O2 -pg $(CPP_ERROR_WARN)
 Speed_p_LDFLAGS  = -pg 
-Speed_p_LDADD    = -L$(top_builddir)/lib -lCppAD_p
 Speed_p_SOURCES  = $(Speed_SOURCES)
 endif

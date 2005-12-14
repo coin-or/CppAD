@@ -135,6 +135,7 @@ then
 		TEST="$TEST --with-TestMore"
 		TEST="$TEST --with-Speed"
 		TEST="$TEST --with-PrintFor"
+		TEST="$TEST --with-SpeedExample"
 		TEST="$TEST --with-profiling"
 		if [ -e $ADOLC_DIR/include/adolc ]
 		then

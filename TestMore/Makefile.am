@@ -31,9 +31,6 @@ else
 AM_CPPFLAGS       = -I. -I$(top_builddir) 
 endif
 #
-LDADD             = -lCppAD
-AM_LDFLAGS        = -L$(top_builddir)/lib
-#
 AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #
 TestMore_SOURCES  = TestMore.cpp \
