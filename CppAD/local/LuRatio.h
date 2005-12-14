@@ -198,10 +198,10 @@ if this is not the case.
 $head Base$$
 This type is determined by the argument $italic ratio$$
 which has type $syntax%AD<%Base%>%$$.
-The type $italic Base$$ must be $code float$$, $code double$$,
-or an $code AD$$ type built on $code float$$ or $code double$$.
-For example, $code AD< AD<double> >$$ is an $code AD$$ type built on
-$code double$$.
+The type $italic Base$$ must be
+$code float$$, $code double$$, or in the 
+$xref/glossary/AD Sequence/AD sequence/$$
+above $code float$$ or $code double$$.
 
 $head ADvector$$
 The type $italic ADvector$$ must be a 

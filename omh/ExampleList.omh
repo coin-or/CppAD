@@ -59,7 +59,6 @@ $section Utility Routines used by CppAD Examples$$
 
 $childtable%
 	Example/Example.cpp%
-	Example/NearEqualExt.h%
 	Example/DetOfMinor.h%
 	Example/DetByMinor.h%
 	Example/DetByLu.h%
@@ -135,6 +134,7 @@ $rref Mul.cpp$$
 $rref MulEq.cpp$$
 $rref Multape.cpp$$
 $rref Near_Equal.cpp$$
+$rref NearEqualExt.cpp$$
 $rref OdeErrControl.cpp$$
 $rref OdeTaylor.cpp$$
 $rref Output.cpp$$

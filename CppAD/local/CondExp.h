@@ -83,9 +83,9 @@ We use $italic Type$$ for the type of
 $italic left$$, $italic right$$, $italic trueCase$$, and $italic falseCase$$
 (which must all have the same type). 
 This type must be
-$code float$$, $code double$$
-or $syntax%AD<%Base%>%$$ where $italic Base$$ is a valid
-type for conditional expressions.
+$code float$$, $code double$$, or in the 
+$xref/glossary/AD Sequence/AD sequence/$$
+above $code float$$ or $code double$$.
 
 $head Op$$
 In the syntax above, $italic Op$$ represents one of the following

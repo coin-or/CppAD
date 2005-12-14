@@ -37,7 +37,7 @@ endif
 mylib_LIBRARIES       = libCppAD.a 
 libCppAD_a_CPPFLAGS   = -I. -I$(top_builddir) $(BoostInclude)
 libCppAD_a_CXXFLAGS   = -g $(CPP_ERROR_WARN)
-libCppAD_a_SOURCES    = NearEqual.cpp SpeedTest.cpp 
+libCppAD_a_SOURCES    = SpeedTest.cpp 
 #
 # libCppAD_p
 #
@@ -45,7 +45,7 @@ if CppAD_PROFILING
 mylib_LIBRARIES      += libCppAD_p.a 
 libCppAD_p_a_CPPFLAGS = -I. -I$(top_builddir) $(BoostInclude) -DNDEBUG
 libCppAD_p_a_CXXFLAGS = -pg -g $(CPP_ERROR_WARN)
-libCppAD_p_a_SOURCES  = NearEqual.cpp SpeedTest.cpp 
+libCppAD_p_a_SOURCES  = SpeedTest.cpp 
 endif
 #
 # SpeedTestExample

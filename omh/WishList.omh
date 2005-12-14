@@ -31,7 +31,7 @@ $href%
 
 $head CondExp$$
 Extend the conditional expressions $xref/CondExp/$$ so that they are 
-valid for complex types by comparing absolute values.
+valid for complex types by comparing real parts.
 In addition, use this change to extend $xref/LuRatio/$$ so 
 that it works with complex AD types.
 

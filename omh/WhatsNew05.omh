@@ -81,8 +81,19 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-15$$
+Extend $xref/NearEqual/$$ and $xref/NearEqualExt/$$
+to cover more cases while converting them from,
+a library function in $code lib/CppADlib.a$$ 
+and an utility in $code Example/NearEqualExt.h$$,
+to a template functions in 
+$code CppAD/NearEqual.h$$ and
+$code CppAD/local/NearEqualExt.h$$.
+This is another step along the way of removing
+the entire $code CppADlib.a$$ library.
+
 $head 12-14$$
-Extend $xref/erf/$$ to cover more cases and convert it
+Extend $xref/erf/$$ to cover more cases while converting it
 from a function in $code lib/CppADlib.a$$
 to a template function in $code CppAD/local/Erf.h$$.
 This is one step along the way of removing

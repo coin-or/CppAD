@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin DivEq.cpp$$
@@ -30,7 +28,6 @@ $index computed, /= example$$
 $index assign, /= example$$
 $index divide, /= example$$
 
-$comment This file is in the Example subdirectory$$
 $code
 $verbatim%Example/DivEq.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -40,7 +37,6 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "NearEqualExt.h"
 # include <cmath>
 
 bool DivEq(void)

@@ -41,7 +41,6 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "NearEqualExt.h"
 # include <cmath>
 
 // create the discrete function AD<double> Floor(const AD<double> &X) 

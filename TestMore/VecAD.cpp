@@ -22,7 +22,6 @@ Old Example now only used for validation testing
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include <Example/NearEqualExt.h>
 
 bool VecAD(void)
 {	bool ok = true;

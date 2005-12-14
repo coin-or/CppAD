@@ -114,6 +114,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/Pow.h \
 	CppAD/local/PrintFor.h \
 	CppAD/local/LuRatio.h \
+	CppAD/local/NearEqualExt.h \
 	CppAD/local/Reverse.h \
 	CppAD/local/RevHesSweep.h \
 	CppAD/local/RevJacSweep.h \

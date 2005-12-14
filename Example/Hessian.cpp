@@ -36,7 +36,6 @@ $end
 */
 // BEGIN PROGRAM
 # include <CppAD/CppAD.h>
-# include "NearEqualExt.h"
 namespace { // Begin empty namespace
 template <typename VectorDouble> // vector class, elements of type double
 bool HessianCases()

@@ -96,6 +96,7 @@ extern bool Mul(void);
 extern bool MulEq(void);
 extern bool MulTape(void);
 extern bool Near_Equal(void);
+extern bool NearEqualExt(void);
 extern bool NumericType(void);
 extern bool OdeErrControl(void);
 extern bool OdeErrMaxabs(void);
@@ -210,6 +211,7 @@ int main(void)
 	ok &= Run( MulEq,             "MulEq"            );
 	ok &= Run( MulTape,           "MulTape"          );
 	ok &= Run( Near_Equal,        "Near_Equal"       );
+	ok &= Run( NearEqualExt,      "NearEqualExt"     );
 	ok &= Run( NumericType,       "NumericType"      );
 	ok &= Run( OdeErrControl,     "OdeErrControl"    );
 	ok &= Run( OdeErrMaxabs,      "OdeErrMaxabs"     );

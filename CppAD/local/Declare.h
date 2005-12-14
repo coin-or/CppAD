@@ -59,19 +59,6 @@ namespace CppAD {
 	template <class Base> 
 	bool IdenticalEqual (const AD<Base> &u, const AD<Base> &v);
 	
-	// NearEqual
-	template <class Base> bool NearEqual (
-		const AD<Base> &x, const AD<Base> &y, double r, double a );
-	
-	template <class Base> bool NearEqual (
-		const Base &x, const AD<Base> &y, double r, double a );
-	
-	template <class Base> bool NearEqual (
-		const AD<Base> &x, const Base &y, double r, double a );
-	
-	template <class Base> void PrintFor (
-		const char *text, const AD<Base> &x);
-
 	// PrintFor
 	template <class Base>
 	void PrintFor(const char *text, const AD<Base> &x);

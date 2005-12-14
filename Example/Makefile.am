@@ -96,7 +96,7 @@ Example_SOURCES   = \
 	MulEq.cpp \
 	MulTape.cpp \
 	Near_Equal.cpp \
-	NearEqualExt.h \
+	NearEqualExt.cpp \
 	NumericType.cpp \
 	OdeErrControl.cpp \
 	OdeErrMaxabs.cpp \

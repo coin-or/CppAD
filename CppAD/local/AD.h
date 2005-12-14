@@ -115,14 +115,6 @@ class AD {
 	friend void PrintFor <Base>
 		(const char *text, const AD<Base> &x);
 
-	// CppAD/Example/NearEqualExt.h
-	friend bool NearEqual <Base> (
-		const AD<Base> &x, const AD<Base> &y, double r, double a);
-	friend bool NearEqual <Base> (
-		const Base &x, const AD<Base> &y, double r, double a);
-	friend bool NearEqual <Base> (
-		const AD<Base> &x, const Base &y, double r, double a);
-
 public:
 	// type of value
 	typedef Base value_type;
