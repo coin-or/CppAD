@@ -38,12 +38,10 @@ sed < Example.cpp > TestOne.cpp \
 #
 echo "g++ TestOne.cpp $1.cpp $2  -o TestOne.exe  \\"
 echo "	-g -Wall -ansi -pedantic-errors -std=c++98 \\"
-echo "	-I.. -I/usr/include/boost-1_33 -L../lib \\"
-echo "	-lCppAD" 
+echo "	-I.. -I/usr/include/boost-1_33"
 g++ TestOne.cpp $1.cpp $2  -o TestOne.exe  \
 	-g -Wall -ansi -pedantic-errors -std=c++98 \
-	-I.. -I/usr/include/boost-1_33 -L../lib \
-	-lCppAD 
+	-I.. -I/usr/include/boost-1_33 
 #
 echo "./TestOne.exe"
 ./TestOne.exe

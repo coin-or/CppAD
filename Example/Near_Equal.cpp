@@ -58,8 +58,8 @@ bool Near_Equal(void)
 	// double 
 	double x    = 1.00000;
 	double y    = 1.00001;
-	double a    =  .00005;
-	double r    =  .00005;
+	double a    =  .00003;
+	double r    =  .00003;
 	double zero = 0.; 
 	double inf  = 1. / zero;
 	double nan  = 0. / zero;
@@ -68,13 +68,14 @@ bool Near_Equal(void)
 	ok &= NearEqual(x, y, r, zero);
 	ok &= NearEqual(x, y, r, a);
 
+	ok &= ! NearEqual(x, y, r / 10., a / 10.);
 	ok &= ! NearEqual(inf, inf, r, a);
 	ok &= ! NearEqual(-inf, -inf, r, a);
 	ok &= ! NearEqual(nan, nan, r, a);
 
 	// complex 
-	Complex X(x, 2. * x);
-	Complex Y(y, 2. * y);
+	Complex X(x, x / 2.);
+	Complex Y(y, y / 2.);
 	Complex Inf(inf, zero);
 	Complex Nan(zero, nan);
 
@@ -82,6 +83,7 @@ bool Near_Equal(void)
 	ok &= NearEqual(X, Y, r, zero);
 	ok &= NearEqual(X, Y, r, a);
 
+	ok &= ! NearEqual(X, Y, r / 10., a / 10.);
 	ok &= ! NearEqual(Inf, Inf, r, a);
 	ok &= ! NearEqual(-Inf, -inf, r, a);
 	ok &= ! NearEqual(Nan, Nan, r, a);
