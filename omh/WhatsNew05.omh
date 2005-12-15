@@ -81,6 +81,22 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-16$$
+The $xref/NearEqual/$$ function documentation for the relative error case
+was changed to 
+$syntax%
+	| %x% - %y% | <= r * ( |%x%| + |%y%| )
+%$$
+so that there is no problem with division by zero when
+$italic x$$ and $italic y$$ are zero
+(the code was changed to that form also).
+The $code std::abs$$ function replaced the 
+direct computation of the complex norms 
+(for the complex case in $code NearEqual$$).
+In addition, more extensive testing was done in $xref/Near_Equal.cpp/$$.
+
+
+
 $head 12-15$$
 Extend $xref/NearEqual/$$ and $xref/NearEqualExt/$$
 to cover more cases while converting them from,

@@ -81,7 +81,7 @@ $syntax%
 It must be greater than or equal to zero.
 The relative error condition is defined as:
 $latex \[
-	\frac{ | x - y | } { |x| + |y| } \leq r
+	| x - y | \leq r ( |x| + |y| ) 
 \] $$
 
 $head a$$
@@ -118,10 +118,6 @@ $bold Operation$$     $cnext
 	$bold Description$$ $rnext
 $syntax%%a% <= %b%$$  $cnext 
 	less that or equal operator (returns a $code bool$$ object)
-$rnext 
-$syntax%sqrt(%a%)%$$  $cnext
-	square root 
-	(not needed if $italic x$$ and $italic y$$ have type $italic Type$$).
 $tend
 
 $head Include Files$$
@@ -217,7 +213,7 @@ bool NearEqual(const Type &x, const Type &y, const Type &r, const Type &a)
 	if( ad <= a )
 		return true;
 
-	if( ad / (ax + ay) <= r )
+	if( ad <= r * (ax + ay) )
 		return true;
 
 	return false;
@@ -248,18 +244,15 @@ bool NearEqual(
 	if( ! isfinite(zero, zero, y.real(), y.imag()) )
 		return false;
 
-	if( x == y )
-		return true;
-
 	std::complex<Type> d = x - y;
 
-	Type ad = sqrt( d.real() * d.real() + d.imag() * d.imag() );
+	Type ad = std::abs(d);
 	if( ad <= a )
 		return true;
 
-	Type ax = sqrt( x.real() * x.real() + x.imag() * x.imag() );
-	Type ay = sqrt( y.real() * y.real() + y.imag() * y.imag() );
-	if( ad / (ax + ay) <= r )
+	Type ax = std::abs(x);
+	Type ay = std::abs(y);
+	if( ad <= r * (ax + ay) )
 		return true;
 
 	return false;
