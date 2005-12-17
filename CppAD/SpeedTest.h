@@ -178,12 +178,12 @@ inline void SpeedTestNdigit(size_t value, size_t &ndigit, size_t &pow10)
 	}
 }
 
-// implemented as a template so that can include in multiple link modules
-template <class Int>
-void SpeedTest( 
+// implemented as an inline so that can include in multiple link modules
+// with this same file
+inline void SpeedTest( 
 	std::string Test(size_t size, size_t repeat),
 	size_t first,
-	Int    inc,
+	int    inc,
 	size_t last
 )
 {
