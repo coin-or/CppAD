@@ -35,9 +35,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <CppAD/SpeedTest.h>
 # include <CppAD/CppAD_vector.h>
 
-# include <CppAD/CppADError.h>
 # include <CppAD/CheckSimpleVector.h>
 # include <CppAD/CheckNumericType.h>
+# include <CppAD/TrackNewDel.h>
+# include <CppAD/CppADError.h>
 // --------------------------------------------------------------------------
 // System routines that can be used by rest of CppAD with out including 
 

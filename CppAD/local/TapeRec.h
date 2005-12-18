@@ -281,10 +281,10 @@ public:
 		NumberTxt      = 0;
 		LengthTxt      = 10;
 
+		Op  = CppADTrackNewVec(LengthOp, Op);
 		try {
 			Ind = new size_t[LengthOp];
 			VecInd = new size_t[LengthVecInd];
-			Op  = new OpCode[LengthOp];
 			Par = new Base[LengthPar];
 			Txt = new char[LengthTxt];
 		}
@@ -329,7 +329,7 @@ public:
 		try {
 			if( LengthOp == 0 )
 				Op = CppADNull;
-			else	Op = new OpCode[LengthOp];
+			else	Op = CppADTrackNewVec(LengthOp, Op);
 			if( LengthVecInd == 0 )
 				VecInd = CppADNull;
 			else	VecInd = new size_t[LengthVecInd];
@@ -373,7 +373,7 @@ public:
 	// destructor
 	~TapeRec(void)
 	{	if( LengthOp > 0 )
-			delete [] Op;
+			CppADTrackDelVec(Op);
 		if( LengthVecInd > 0 )
 			delete [] VecInd; 
 		if( LengthInd > 0 )
@@ -496,7 +496,7 @@ inline size_t TapeRec<Base>::PutOp(OpCode op)
 	CppADUnknownError( NumberOp <= LengthOp );
 	if( NumberOp == LengthOp )
 	{	LengthOp  = 2 * LengthOp;
-		Op = ExtendBuffer(LengthOp, NumberOp, Op);
+		Op = CppADTrackExtend(LengthOp, NumberOp, Op);
 	}
 	CppADUnknownError( NumberOp < LengthOp );
 	Op[NumberOp++]  = op;

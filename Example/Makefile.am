@@ -120,6 +120,7 @@ Example_SOURCES   = \
 	Sqrt.cpp \
 	Sub.cpp \
 	SubEq.cpp \
+	TrackNewDel.cpp \
 	UnaryMinus.cpp \
 	UnaryPlus.cpp \
 	Value.cpp \

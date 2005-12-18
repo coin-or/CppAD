@@ -31,6 +31,8 @@ endif
 #
 nobase_myinclude_HEADERS =  \
 	CppAD/config.h \
+	CppAD/CheckNumericType.h \
+	CppAD/CheckSimpleVector.h \
 	CppAD/CppAD.h \
 	CppAD/CppADError.h \
 	CppAD/CppAD_vector.h \
@@ -47,8 +49,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/Rosen34.h \
 	CppAD/Runge45.h \
 	CppAD/SpeedTest.h \
-	CppAD/CheckNumericType.h \
-	CppAD/CheckSimpleVector.h \
+	CppAD/TrackNewDel.h \
 	CppAD/local/AD.h \
 	CppAD/local/ADTape.h \
 	CppAD/local/Abs.h \

@@ -194,8 +194,11 @@ public:
 
 	// There is only one tape so construct it here
 	static ADTape<Base> *Tape(void)
-	{	static ADTape<Base> tape;
-		return &tape;
+	{	// If we return &tape, instead of creating and returning ptr,
+		// there seems to be a bug in g++ with -O2 option.
+		static ADTape<Base> tape;
+		static ADTape<Base> *ptr = &tape;
+		return ptr;
 	}
 
 	// Make this object correspond to a new variable on the tape

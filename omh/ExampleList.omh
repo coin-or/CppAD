@@ -155,6 +155,7 @@ $rref Sinh.cpp$$
 $rref Sqrt.cpp$$
 $rref Sub.cpp$$
 $rref SubEq.cpp$$
+$rref TrackNewDel.cpp$$
 $rref UnaryMinus.cpp$$
 $rref UnaryPlus.cpp$$
 $rref Value.cpp$$

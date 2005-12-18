@@ -1,16 +1,33 @@
-# Some improvements to NearEqual.
+# Add utility for tracking use of new and delete
 # 
 # SvnCommit: this file.
-# NearEqual.h: express terms with multiply instead of divide.
+# TrackNewDel.h: souce code for the new utility.
+# TapeRec.h: test example use in CppAD source.
+# CppAD.h: include TrackNewDel.h.
+# AD.h: work around what appears to be a bug in g++.
+# library.omh: include TrackNewDel documentation. 
 # WhatsNew05.omh: users view of changes.
-# Near_Equal.cpp: more extensive testing.
-# OneTest: no longer needs to (or can) link with -lCppAD.
+# WishList.omh: add entry about memory allocation.
+# ExampleList.omh: add entry for TrackNewDel.
+# TrackNewDel.cpp: example and test for new utility.
+# Example.cpp: add TrackNewDel to list.
+# Makefile.am: add TrackNewDel to list.
+# Example/Makefile.am: add TrackNewDel to list.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
+svn add CppAD/TrackNewDel.h
+svn add Example/TrackNewDel.cpp
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/NearEqual.h \
-	omh/WhatsNew05.omh
-	Example/Near_Equal.cpp \
-	Example/OneTest \
-	TestMore/OneTest
+	CppAD/TrackNewDel.h \
+	CppAD/local/TapeRec.h \
+	CppAD/CppAD.h \
+ 	CppAD/local/AD.h \
+	omh/library.omh \
+	omh/WhatsNew05.omh \
+	omh/WishList.omh \
+	omh/ExampleList.omh \
+	Example/TrackNewDel.cpp \
+	Example/Example.cpp \
+	Example/Makefile.am \
+	Makefile.am

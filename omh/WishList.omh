@@ -28,6 +28,13 @@ and only one version of the definition would be linked.
 It would be nice to add default routine for handling errors
 that the could be switched dynamically during program execution.
 
+$head Memory$$
+Currently the tape buffers associated with each $xref/AD/$$ type
+grow and the corresponding memory is not freed until the 
+program terminates. 
+This can be inefficient for large program and hence should be changed.
+
+
 $head Multiple Tapes With Same Base Type$$
 $index multiple, tape$$
 $index tape, multiple$$

@@ -123,6 +123,7 @@ extern bool Sinh(void);
 extern bool Sqrt(void);
 extern bool Sub(void);
 extern bool SubEq(void);
+extern bool TrackNewDel(void);
 extern bool UnaryMinus(void);
 extern bool UnaryPlus(void);
 extern bool Value(void);
@@ -238,6 +239,7 @@ int main(void)
 	ok &= Run( Sqrt,              "Sqrt"             );
 	ok &= Run( Sub,               "Sub"              );
 	ok &= Run( SubEq,             "SubEq"            );
+	ok &= Run( TrackNewDel,       "TrackNewDel"      );
 	ok &= Run( UnaryMinus,        "UnaryMinus"       );
 	ok &= Run( UnaryPlus,         "UnaryPlus"        );
 	ok &= Run( Value,             "Value"            );

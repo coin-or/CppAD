@@ -37,7 +37,6 @@ $children%
 	CppAD/CheckNumericType.h%
 	omh/SimpleVector.omh%
 	CppAD/CheckSimpleVector.h%
-	CppAD/CppAD_vector.h%
 	omh/LuDetAndSolve.omh%
 	omh/Polynomial.omh%
 	CppAD/RombergOne.h%
@@ -46,7 +45,9 @@ $children%
 	CppAD/Rosen34.h%
 	CppAD/OdeErrControl.h%
 	CppAD/OdeGear.h%
-	CppAD/OdeGearControl.h
+	CppAD/OdeGearControl.h%
+	CppAD/CppAD_vector.h%
+	CppAD/TrackNewDel.h
 %$$
 
 $head Some Testing Utilities$$
@@ -86,10 +87,11 @@ $rref OdeGear$$
 $rref OdeGearControl$$
 $tend
 
-$head CppAD Support Template Classes$$
+$head CppAD Support Template Library$$
 The classes listed are used to support CppAD calculations:
 $table
 $rref CppAD_vector$$
+$rref TrackNewDel$$
 $tend
 
 $end
