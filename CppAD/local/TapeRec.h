@@ -267,35 +267,25 @@ public:
 		TotalNumberVar = 0;
 
 		NumberOp       = 0;
-		LengthOp       = 10;
+		LengthOp       = 0;
+		Op             = CppADNull;
 
 		NumberVecInd   = 0;
-		LengthVecInd   = 10;
+		LengthVecInd   = 0;
+		VecInd         = CppADNull;
 
 		NumberInd      = 0;
-		LengthInd      = 10;
+		LengthInd      = 0;
+		Ind            = CppADNull;
 
 		NumberPar      = 0;
-		LengthPar      = 10;
+		LengthPar      = 0;
+		Par            = CppADNull;
 
 		NumberTxt      = 0;
-		LengthTxt      = 10;
+		LengthTxt      = 0;
+		Txt            = CppADNull;
 
-		Op  = CppADTrackNewVec(LengthOp, Op);
-		try {
-			Ind = new size_t[LengthOp];
-			VecInd = new size_t[LengthVecInd];
-			Par = new Base[LengthPar];
-			Txt = new char[LengthTxt];
-		}
-		catch (...) {
-			CppADUsageError(
-				0,
-				"Cannot allocate a small amount of memory "
-				"for the initial tape"
-			);
-			abort();
-		}
 	}
 
 	// constructor from another recording
@@ -326,30 +316,21 @@ public:
 		LengthTxt       = Other.NumberTxt;
 
 		// Allocate the memory
-		try {
-			if( LengthOp == 0 )
-				Op = CppADNull;
-			else	Op = CppADTrackNewVec(LengthOp, Op);
-			if( LengthVecInd == 0 )
-				VecInd = CppADNull;
-			else	VecInd = new size_t[LengthVecInd];
-			if( LengthInd == 0 )
-				Ind = CppADNull;
-			else	Ind = new size_t[LengthInd];
-			if( LengthPar == 0 )
-				Par = CppADNull;
-			else	Par = new Base[LengthPar];
-			if( LengthTxt == 0 )
-				Txt = CppADNull;
-			else	Txt = new char[LengthTxt];
-		}
-		catch(...)
-		{	CppADUsageError(
-			0,
-			"Cannot obtain necessary memory for current recording"
-			);
-			abort();
-		}
+		if( LengthOp == 0 )
+			Op = CppADNull;
+		else	Op = CppADTrackNewVec(LengthOp,      Op);
+		if( LengthVecInd == 0 )
+			VecInd = CppADNull;
+		else	VecInd = CppADTrackNewVec(LengthVecInd, VecInd);
+		if( LengthInd == 0 )
+			Ind = CppADNull;
+		else	Ind = CppADTrackNewVec(LengthInd,       Ind);
+		if( LengthPar == 0 )
+			Par = CppADNull;
+		else	Par = CppADTrackNewVec(LengthPar,       Par);
+		if( LengthTxt == 0 )
+			Txt = CppADNull;
+		else	Txt = CppADTrackNewVec(LengthTxt,       Txt);
 
 		// Copy the data
 		i = NumberOp;
@@ -367,7 +348,6 @@ public:
 		i = NumberTxt;
 		while(i--)
 			Txt[i] = Other.Txt[i];
-
 	}
 
 	// destructor
@@ -375,13 +355,13 @@ public:
 	{	if( LengthOp > 0 )
 			CppADTrackDelVec(Op);
 		if( LengthVecInd > 0 )
-			delete [] VecInd; 
+			CppADTrackDelVec(VecInd);
 		if( LengthInd > 0 )
-			delete [] Ind; 
+			CppADTrackDelVec(Ind);
 		if( LengthPar > 0 )
-			delete [] Par;
+			CppADTrackDelVec(Par);
 		if( LengthTxt > 0 )
-			delete [] Txt;
+			CppADTrackDelVec(Txt);
 	}
 
 	// erase all information in recording
@@ -492,10 +472,9 @@ template <class Base>
 inline size_t TapeRec<Base>::PutOp(OpCode op)
 {	size_t varIndex = TotalNumberVar;
 	
-	CppADUnknownError( LengthOp > 0 );
 	CppADUnknownError( NumberOp <= LengthOp );
 	if( NumberOp == LengthOp )
-	{	LengthOp  = 2 * LengthOp;
+	{	LengthOp = 2 * LengthOp + 8;
 		Op = CppADTrackExtend(LengthOp, NumberOp, Op);
 	}
 	CppADUnknownError( NumberOp < LengthOp );
@@ -508,11 +487,10 @@ inline size_t TapeRec<Base>::PutOp(OpCode op)
 template <class Base>
 inline size_t TapeRec<Base>::PutVecInd(size_t vecInd)
 {	
-	CppADUnknownError( LengthVecInd > 0 );
 	CppADUnknownError( NumberVecInd <= LengthVecInd );
 	if( NumberVecInd == LengthVecInd )
-	{	LengthVecInd      = 2 * LengthVecInd;
-		VecInd = ExtendBuffer(LengthVecInd, NumberVecInd, VecInd);
+	{	LengthVecInd = 2 * LengthVecInd + 8;
+		VecInd = CppADTrackExtend(LengthVecInd, NumberVecInd, VecInd);
 	}
 	CppADUnknownError( NumberVecInd < LengthVecInd );
 	VecInd[NumberVecInd++] = vecInd;
@@ -524,7 +502,6 @@ template <class Base>
 inline size_t TapeRec<Base>::PutPar(const Base &par)
 {	size_t i;
 	
-	CppADUnknownError( LengthPar > 0 );
 	CppADUnknownError( NumberPar <= LengthPar );
 	
 	// check last three values to see if same one came up
@@ -539,8 +516,8 @@ inline size_t TapeRec<Base>::PutPar(const Base &par)
 	
 	// place a new value in the table
 	if( NumberPar == LengthPar )
-	{	LengthPar    = 2 * LengthPar;
-		Par = ExtendBuffer(LengthPar, NumberPar, Par);
+	{	LengthPar = 2 * LengthPar + 8;
+		Par = CppADTrackExtend(LengthPar, NumberPar, Par);
 	}
 	CppADUnknownError( NumberPar < LengthPar );
 	Par[NumberPar++] = par;
@@ -551,11 +528,10 @@ inline size_t TapeRec<Base>::PutPar(const Base &par)
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0)
 { 
-	CppADUnknownError( LengthInd > 0 );
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd == LengthInd )
-	{	LengthInd    = 2 * LengthInd;
-		Ind = ExtendBuffer(LengthInd, NumberInd, Ind);
+	{	LengthInd = 2 * LengthInd + 8;
+		Ind = CppADTrackExtend(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -563,11 +539,10 @@ inline void TapeRec<Base>::PutInd(size_t ind0)
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1)
 { 
-	CppADUnknownError( LengthInd > 0 );
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 1 >= LengthInd )
-	{	LengthInd    = 1 + 2 * LengthInd;
-		Ind = ExtendBuffer(LengthInd, NumberInd, Ind);
+	{	LengthInd = 2 * LengthInd + 8;
+		Ind = CppADTrackExtend(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 1 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -576,11 +551,10 @@ inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1)
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2)
 { 
-	CppADUnknownError( LengthInd > 0 );
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 2 >= LengthInd )
-	{	LengthInd    = 2 + 2 * LengthInd;
-		Ind = ExtendBuffer(LengthInd, NumberInd, Ind);
+	{	LengthInd = 2 * LengthInd + 8;
+		Ind = CppADTrackExtend(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 2 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -591,11 +565,10 @@ template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
 	size_t ind3)
 { 
-	CppADUnknownError( LengthInd > 0 );
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 3 >= LengthInd )
-	{	LengthInd    = 3 + 2 * LengthInd;
-		Ind = ExtendBuffer(LengthInd, NumberInd, Ind);
+	{	LengthInd = 2 * LengthInd + 8;
+		Ind = CppADTrackExtend(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 3 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -608,11 +581,10 @@ template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
 	size_t ind3, size_t ind4)
 { 
-	CppADUnknownError( LengthInd > 0 );
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 4 >= LengthInd )
-	{	LengthInd    = 4 + 2 * LengthInd;
-		Ind = ExtendBuffer(LengthInd, NumberInd, Ind);
+	{	LengthInd = 2 * LengthInd + 8;
+		Ind = CppADTrackExtend(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 4 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -626,11 +598,10 @@ template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2, 
 	size_t ind3, size_t ind4, size_t ind5)
 { 
-	CppADUnknownError( LengthInd > 0 );
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 5 >= LengthInd )
-	{	LengthInd    = 5 + 2 * LengthInd;
-		Ind = ExtendBuffer(LengthInd, NumberInd, Ind);
+	{	LengthInd = 2 * LengthInd + 8;
+		Ind = CppADTrackExtend(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 5 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -651,12 +622,11 @@ inline size_t TapeRec<Base>::PutTxt(const char *text)
 		CppADUnknownError( n < 1000 ); // should check limit in PrintFor
 	n++;
 
-	CppADUnknownError( LengthTxt > 0 );
 	CppADUnknownError( NumberTxt <= LengthTxt );
 
 	if( NumberTxt + n >= LengthTxt )
-	{	LengthTxt    = 2 * LengthTxt + n;
-		Txt = ExtendBuffer(LengthTxt, NumberTxt, Txt);
+	{	LengthTxt  = 2 * LengthTxt + n + 8;
+		Txt = CppADTrackExtend(LengthTxt, NumberTxt, Txt);
 	}
 	CppADUnknownError( NumberTxt + n < LengthTxt );
 

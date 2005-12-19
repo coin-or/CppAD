@@ -149,12 +149,7 @@ $head TrackExtend$$
 $index TrackExtend$$
 This routine is used to 
 allocate a new vector (using $code TrackNewVec$$),
-copy data from an old vector to the new vector,
-and then free the old vector (using $code TrackDelVec$$).
-The old vector pointed to by $italic oldptr$$
-must have been allocated using $code TrackNewVec$$ or $code TrackExtend$$.
-In addition, the vector pointed to by $italic oldptr$$ 
-must be have at least $italic ncopy$$ elements.
+and copy $italic ncopy$$ elements from the old vector to the new vector.
 The preprocessor macro call
 $syntax%
 	CppADTrackExtend(%newlen%, %ncopy%, %oldptr%)
@@ -163,6 +158,11 @@ expands to
 $syntax%
 	CppAD::TrackExtend(__FILE__, __LINE__, %newlen%, %ncopy%, %oldptr%)
 %$$
+If $italic ncopy$$ is greater than zero, $italic oldptr$$ 
+must have been allocated using $code TrackNewVec$$ or $code TrackExtend$$.
+In this case, the vector pointed to by $italic oldptr$$ 
+must be have at least $italic ncopy$$ elements
+and it will be freed (using $code TrackDelVec$$).
 
 $head TrackCount$$
 $index TrackCount$$
@@ -401,7 +401,8 @@ Type *TrackExtend(
 	}
 
 	// delete the old vector 
-	TrackDelVec(file, line, oldptr);
+	if( ncopy > 0 )
+		TrackDelVec(file, line, oldptr);
 
 	return newptr;
 }

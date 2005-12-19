@@ -1,33 +1,11 @@
-# Add utility for tracking use of new and delete
+# Convert all the items in a TapeRec structure to use TrackNewDel.
 # 
 # SvnCommit: this file.
-# TrackNewDel.h: souce code for the new utility.
+# TrackNewDel.h: make ncopy = 0 a special case where oldptr not freed.
 # TapeRec.h: test example use in CppAD source.
-# CppAD.h: include TrackNewDel.h.
-# AD.h: work around what appears to be a bug in g++.
-# library.omh: include TrackNewDel documentation. 
-# WhatsNew05.omh: users view of changes.
-# WishList.omh: add entry about memory allocation.
-# ExampleList.omh: add entry for TrackNewDel.
-# TrackNewDel.cpp: example and test for new utility.
-# Example.cpp: add TrackNewDel to list.
-# Makefile.am: add TrackNewDel to list.
-# Example/Makefile.am: add TrackNewDel to list.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-svn add CppAD/TrackNewDel.h
-svn add Example/TrackNewDel.cpp
 svn commit --file svn.log \
 	SvnCommit \
 	CppAD/TrackNewDel.h \
-	CppAD/local/TapeRec.h \
-	CppAD/CppAD.h \
- 	CppAD/local/AD.h \
-	omh/library.omh \
-	omh/WhatsNew05.omh \
-	omh/WishList.omh \
-	omh/ExampleList.omh \
-	Example/TrackNewDel.cpp \
-	Example/Example.cpp \
-	Example/Makefile.am \
-	Makefile.am
+	CppAD/local/TapeRec.h
