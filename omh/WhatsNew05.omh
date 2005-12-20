@@ -82,6 +82,20 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-20$$
+Buffers that are used to store the tape information corresponding to 
+the $syntax%AD<%Base%>%$$ type are now freed when the corresponding
+$xref/ADFun/$$ object is constructed.
+This reduces memory requirements and actually had better results
+with the $xref/Speed/$$ tests
+(see $xref/WishList/Memory/Wish List Memory/$$).
+$pre
+
+$$
+The $xref/Speed/$$ test program now outputs the version of CppAD
+at the top (to help when comparing output between different versions).
+
+
 $head 12-19$$
 The $xref/TrackNewDel/$$ routines were added for track memory allocation
 and deletion with $code new[]$$ and $code delete[]$$.

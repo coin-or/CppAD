@@ -69,11 +69,11 @@ $index TapeRec, Erase$$
 $index Erase, TapeRec$$
 The syntax 
 $syntax%
-	void %Rec%.Erase(void)
+	void %Rec%.Erase()
 %$$
 erases the contents of $italic Rec$$.
-The buffers used to store information are not erased
-and can be used for a new recording.
+The buffers used to store the tape information are returned
+to the system (so as to conserve on memory).
 
 $head Put$$
 $index TapeRec, Put$$
@@ -366,12 +366,30 @@ public:
 
 	// erase all information in recording
 	void Erase(void)
-	{	TotalNumberVar  = 0;
+	{	
+		TotalNumberVar  = 0;
 		NumberOp        = 0;
 		NumberVecInd    = 0;
 		NumberInd       = 0;
 		NumberPar       = 0;
 		NumberTxt       = 0;
+
+		if( LengthOp > 0 )
+			CppADTrackDelVec(Op);
+		if( LengthVecInd > 0 )
+			CppADTrackDelVec(VecInd);
+		if( LengthInd > 0 )
+			CppADTrackDelVec(Ind);
+		if( LengthPar > 0 )
+			CppADTrackDelVec(Par);
+		if( LengthTxt > 0 )
+			CppADTrackDelVec(Txt);
+
+		LengthOp        = 0;
+		LengthVecInd    = 0;
+		LengthInd       = 0;
+		LengthPar       = 0;
+		LengthTxt       = 0;
 	}
 
 	// add information to recording

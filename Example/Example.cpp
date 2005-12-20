@@ -135,18 +135,25 @@ extern bool Vec(void);
 # include <vector>
 # include <valarray>
 
-// function that runs one test
-bool Run(bool TestOk(void), const char *name)
-{	bool ok = true;
-	using namespace std;
-
-	ok &= TestOk();
-
-	if( ok )
-		std::cout << "Ok:    " << name << std::endl;
-	else	std::cout << "Error: " << name << std::endl;
-
-	return ok;
+namespace {
+	// function that runs one test
+	bool Run(bool TestOk(void), const char *name)
+	{	bool ok = true;
+		using namespace std;
+	
+		ok &= TestOk();
+	
+		if( ok )
+			std::cout << "Ok:    " << name << std::endl;
+		else	std::cout << "Error: " << name << std::endl;
+	
+		return ok;
+	}
+	// check for memory leak in previous calculations
+	bool TrackCount(void)
+	{	bool ok = (CppADTrackCount() == 0);
+		return ok;
+	}
 }
 
 // main program that runs all the tests
@@ -244,6 +251,9 @@ int main(void)
 	ok &= Run( UnaryPlus,         "UnaryPlus"        );
 	ok &= Run( Value,             "Value"            );
 	ok &= Run( Vec,               "Vec"              );
+
+	// check for memory leak in previous calculations
+	ok &= Run( TrackCount,        "TrackCount"       );
 
 	cout << endl << endl;
 	if( ok )

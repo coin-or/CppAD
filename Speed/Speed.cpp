@@ -68,6 +68,7 @@ std::string LuVecAD           (size_t size, size_t repeat);
 
 int main()
 {	using CppAD::SpeedTest;
+	std::cout << PACKAGE_STRING << " Speed Test " << std::endl;
 
 	SpeedTest(doubleDetMinor,        5, -1, 1);
 	SpeedTest(ADdoubleDetMinor,      5, -1, 1);

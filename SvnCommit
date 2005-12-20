@@ -1,11 +1,15 @@
-# Convert all the items in a TapeRec structure to use TrackNewDel.
+# Take one step in reducing memory usage (free tape buffers when not necessary)
 # 
 # SvnCommit: this file.
-# TrackNewDel.h: make ncopy = 0 a special case where oldptr not freed.
-# TapeRec.h: test example use in CppAD source.
+# TapeRec.h: free bufferes when erasing TapeRec objects.
+# Speed.cpp: print the version of CppAD at the top.
+# WhatsNew05.omh: users view of the changes.
+# Example.cpp: check for TrackCount memory leak at end.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/TrackNewDel.h \
-	CppAD/local/TapeRec.h
+	CppAD/local/TapeRec.h \
+	Speed/Speed.cpp \
+	omh/WhatsNew05.omh \
+	Example/Example.cpp
