@@ -226,8 +226,6 @@ public:
 	~ADFun(void)
 	{	delete Rec;
 		delete [] Taylor;
-		if( Partial != CppADNull )
-			delete [] Partial;
 		if( ForJac != CppADNull )
 			delete [] ForJac;
 		if( RevJac != CppADNull )
@@ -284,7 +282,7 @@ public:
 
 	// amount of memory for each variable
 	size_t Memory(void) const
-	{	size_t pervar  = (TaylorColDim + PartialColDim) * sizeof(Base)
+	{	size_t pervar  = TaylorColDim * sizeof(Base)
 		+ (ForJacColDim + RevJacColDim + RevHesColDim)  * sizeof(Pack);
 		size_t total   = totalNumVar * pervar + Rec->Memory();
 		return total;
@@ -331,6 +329,9 @@ public:
 		const VectorSize_t &J );
 
 private:
+	// maximum amount of memory required for this function object
+	size_t memoryMax;
+
 	// debug checking number of comparision operations that changed
 	size_t compareChange;
 
@@ -342,9 +343,6 @@ private:
 
 	// number of columns currently allocated for Taylor array
 	size_t TaylorColDim;
-
-	// number of columns currently allocated for Partial array
-	size_t PartialColDim;
 
 	// number of columns currently allocated for ForJac array
 	size_t ForJacColDim;
@@ -372,9 +370,6 @@ private:
 
 	// results of the forward mode calculations
 	Base *Taylor;
-
-	// results of the reverse mode calculations
-	Base *Partial;
 
 	// results of the forward mode Jacobian sparsity calculations
 	Pack *ForJac;
@@ -428,9 +423,9 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	totalNumVar = AD<Base>::Tape()->Rec.TotNumVar();
 
 	// current order and row dimensions
+	memoryMax     = 0;
 	order         = 0;
 	TaylorColDim  = 1;
-	PartialColDim = 0;
 	ForJacColDim  = 0;
 	ForJacBitDim  = 0;
 	RevJacColDim  = 0;
@@ -441,7 +436,6 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 
 	// buffers
 	Taylor  = CppADNull;
-	Partial = CppADNull;
 	ForJac  = CppADNull;
 	RevJac  = CppADNull;
 	RevHes  = CppADNull;

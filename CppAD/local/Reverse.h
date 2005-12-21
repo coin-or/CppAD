@@ -251,25 +251,27 @@ calculation described above.
 $end
 -----------------------------------------------------------------------------
 */
+# include <algorithm>
 
 // BEGIN CppAD namespace
 namespace CppAD {
 
 template <typename Base>
 template <typename VectorBase>
-VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &v)
+VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 {
-	if( PartialColDim < p )
-	{	Partial       = ExtendBuffer(totalNumVar * p, 0, Partial);
-		PartialColDim = p;
-	}
+	Base *Partial = CppADNull;
+	Partial       = CppADTrackNewVec(totalNumVar * p, Partial);
+
+	// update maximum memory requirement
+	memoryMax = std::max(memoryMax, Memory() + totalNumVar * p);
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
 
 	CppADUsageError(
-		v.size() == depvar.size(),
-		"Argument v to Reverse does not have length equal to\n"
+		w.size() == depvar.size(),
+		"Argument w to Reverse does not have length equal to\n"
 		"the dimension of the range for the corresponding ADFun."
 	);
 	CppADUsageError(
@@ -287,19 +289,19 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &v)
 	size_t j;
 	for(i = 0; i < totalNumVar; i++)
 		for(j = 0; j < p; j++)
-			Partial[i * PartialColDim + j] = Base(0);
+			Partial[i * p + j] = Base(0);
 
 	// set the dependent variable direction
 	// (use += because two dependent variables can point to same location)
 	size_t n = depvar.size();
 	for(i = 0; i < n; i++)
 	{	CppADUnknownError( depvar[i] < totalNumVar );
-		Partial[depvar[i] * PartialColDim + p - 1] += v[i];
+		Partial[depvar[i] * p + p - 1] += w[i];
 	}
 
 	// evaluate the derivatives
 	ReverseSweep(p - 1, totalNumVar, Rec, 
-		TaylorColDim, Taylor, PartialColDim, Partial);
+		TaylorColDim, Taylor, p, Partial);
 
 	// return the derivative values
 	size_t m = indvar.size();
@@ -313,8 +315,11 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &v)
 		// partial of y^{(j)} w.r.t. u^{(0)} is equal to 				// partial of y^{(p-1)} w.r.t. u^{(p - 1 - j)}
 		for(j = 0; j < p; j++)
 			value[i * p + j ] = 
-				Partial[indvar[i] * PartialColDim + p - 1 - j];
+				Partial[indvar[i] * p + p - 1 - j];
 	}
+
+	// done with the Partial array
+	CppADTrackDelVec(Partial);
 
 	return value;
 }

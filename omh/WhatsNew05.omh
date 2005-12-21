@@ -82,6 +82,11 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-22$$
+The buffer that is used to do 
+$xref/Reverse/$$ mode calculations is now freed directly after use.
+This reduces the memory requirements attached to an $xref/ADFun/$$ object.
+
 $head 12-20$$
 Buffers that are used to store the tape information corresponding to 
 the $syntax%AD<%Base%>%$$ type are now freed when the corresponding
@@ -117,7 +122,7 @@ $head 12-16$$
 The $xref/NearEqual/$$ function documentation for the relative error case
 was changed to 
 $syntax%
-	| %x% - %y% | <= r * ( |%x%| + |%y%| )
+	| %x% - %y% | <= %r% * ( |%x%| + |%y%| )
 %$$
 so that there is no problem with division by zero when
 $italic x$$ and $italic y$$ are zero

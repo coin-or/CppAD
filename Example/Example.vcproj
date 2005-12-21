@@ -1326,6 +1326,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\TrackNewDel.cpp">
+			</File>
+			<File
 				RelativePath=".\UnaryMinus.cpp">
 			</File>
 			<File

@@ -1,15 +1,15 @@
-# Take one step in reducing memory usage (free tape buffers when not necessary)
+# Another step in reducing memory usage (free Reverse calculation buffers)
 # 
 # SvnCommit: this file.
-# TapeRec.h: free bufferes when erasing TapeRec objects.
-# Speed.cpp: print the version of CppAD at the top.
 # WhatsNew05.omh: users view of the changes.
-# Example.cpp: check for TrackCount memory leak at end.
+# Example.vcproj: add TrackNewDel.cpp (forgotten in eariler commit).
+# Reverse.h: allocate and free Partial with each call and change v to w.
+# Fun.h: remove Partial from object data and add memoryMax.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/TapeRec.h \
-	Speed/Speed.cpp \
 	omh/WhatsNew05.omh \
-	Example/Example.cpp
+	Example/Example.vcproj \
+	CppAD/local/Reverse.h \
+	CppAD/local/Fun.h 
