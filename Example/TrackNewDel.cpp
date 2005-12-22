@@ -46,7 +46,7 @@ bool TrackNewDel(void)
 	size_t count = CppADTrackCount();
 
 	// allocate an array of lenght 5
-	double *ptr;
+	double *ptr = 0;
 	size_t  newlen = 5;
 	ptr = CppADTrackNewVec(newlen, ptr);
 

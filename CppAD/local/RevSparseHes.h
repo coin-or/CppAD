@@ -190,6 +190,7 @@ It returns true if it succeeds and false otherwise.
 $end
 -----------------------------------------------------------------------------
 */
+# include <algorithm>
 
 // BEGIN CppAD namespace
 namespace CppAD {
@@ -239,10 +240,13 @@ VectorBool ADFun<Base>::RevSparseHes(
 	}
 
 	// array that will hold packed reverse Hessain values
-	if( RevHesColDim < npv )
-	{	RevHes = ExtendBuffer(totalNumVar * npv, 0, RevHes);	
-		RevHesColDim = npv;
-	}
+	Pack *RevHes = CppADNull;
+	RevHes       = CppADTrackNewVec(totalNumVar * npv, RevHes);	
+
+	// update maximum memory requirement
+	memoryMax = std::max( memoryMax, 
+		Memory() + totalNumVar * npv * sizeof(Pack)
+	);
 
 	// initialize entire RevHes and RevJac matrix to false
 	for(i = 0; i < totalNumVar; i++)
@@ -257,7 +261,6 @@ VectorBool ADFun<Base>::RevSparseHes(
 			RevJac[ depvar[i] ] = ~0;
 		}
 	}
-
 
 	// comput the reverse mode Jacobian sparsity
 	RevJacSweep(1, totalNumVar, Rec, TaylorColDim, Taylor, RevJac);
@@ -287,6 +290,9 @@ VectorBool ADFun<Base>::RevSparseHes(
 			Pxx[ i * n + j ] = (mask != 0);
 		}
 	}
+
+	// free memory used for the calculation
+	CppADTrackDelVec(RevHes);
 
 	return Pxx;
 }

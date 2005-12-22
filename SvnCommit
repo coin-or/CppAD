@@ -1,16 +1,11 @@
-# Another step in reducing memory usage (free Reverse calculation buffers)
+# missing from previous commit (remove RevSparseHes buffers after use).
 # 
 # SvnCommit: this file.
-# WhatsNew05.omh: users view of the changes.
-# Example.vcproj: add TrackNewDel.cpp (forgotten in eariler commit).
-# Reverse.h: correct calculation of maxMemory.
 # RevSparseHes.h: allocate and free RevHes with each use.
-# Fun.h: remove RevHes from object data. 
+# TrackNewDel: initialize ptr to avoid warning on MS compiler.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	omh/WhatsNew05.omh \
-	Example/Example.vcproj \
-	CppAD/local/Reverse.h \
-	CppAD/local/Fun.h 
+	CppAD/local/RevSparseHes.h \
+	Example/TrackNewDel.cpp
