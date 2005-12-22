@@ -3,8 +3,9 @@
 # SvnCommit: this file.
 # WhatsNew05.omh: users view of the changes.
 # Example.vcproj: add TrackNewDel.cpp (forgotten in eariler commit).
-# Reverse.h: allocate and free Partial with each call and change v to w.
-# Fun.h: remove Partial from object data and add memoryMax.
+# Reverse.h: correct calculation of maxMemory.
+# RevSparseHes.h: allocate and free RevHes with each use.
+# Fun.h: remove RevHes from object data. 
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \

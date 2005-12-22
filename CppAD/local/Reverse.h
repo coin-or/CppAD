@@ -264,7 +264,9 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 	Partial       = CppADTrackNewVec(totalNumVar * p, Partial);
 
 	// update maximum memory requirement
-	memoryMax = std::max(memoryMax, Memory() + totalNumVar * p);
+	memoryMax = std::max( memoryMax, 
+		Memory() + totalNumVar * p * sizeof(Base)
+	);
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();

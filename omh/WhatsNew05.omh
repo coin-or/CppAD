@@ -82,9 +82,22 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 12-22$$
+$head 12-23$$
 The buffer that is used to do 
-$xref/Reverse/$$ mode calculations is now freed directly after use.
+$xref/RevSparseHes/$$ 
+calculations is now freed directly after use.
+$pre
+
+$$
+The $xref/TrackNewDel.cpp/$$ example was missing from the Windows install 
+$xref/InstallWindows/Examples and Testing/examples and testing/$$
+project file. 
+This has been fixed.
+
+$head 12-22$$
+The buffer that is are used to do 
+$xref/Reverse/$$ mode
+calculations is now freed directly after use.
 This reduces the memory requirements attached to an $xref/ADFun/$$ object.
 
 $head 12-20$$

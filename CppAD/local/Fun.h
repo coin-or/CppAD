@@ -230,9 +230,6 @@ public:
 			delete [] ForJac;
 		if( RevJac != CppADNull )
 			delete [] RevJac;
-		if( RevHes != CppADNull )
-			delete [] RevHes;
-
 	}
 
 	// forward mode sweep
@@ -283,7 +280,7 @@ public:
 	// amount of memory for each variable
 	size_t Memory(void) const
 	{	size_t pervar  = TaylorColDim * sizeof(Base)
-		+ (ForJacColDim + RevJacColDim + RevHesColDim)  * sizeof(Pack);
+		+ (ForJacColDim + RevJacColDim)  * sizeof(Pack);
 		size_t total   = totalNumVar * pervar + Rec->Memory();
 		return total;
 	}
@@ -350,9 +347,6 @@ private:
 	// number of columns currently allocated for RevJac array
 	size_t RevJacColDim;
 
-	// number of columns currently allocated for RevHes array
-	size_t RevHesColDim;
-
 	// number of rows (variables) in the recording (Rec)
 	size_t totalNumVar;
 
@@ -376,9 +370,6 @@ private:
 
 	// results of the reverse mode Jacobian sparsity calculations
 	Pack *RevJac;
-
-	// results of the reverse mode Hessian sparsity calculations
-	Pack *RevHes;
 };
 // ---------------------------------------------------------------------------
 
@@ -429,7 +420,6 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	ForJacColDim  = 0;
 	ForJacBitDim  = 0;
 	RevJacColDim  = 0;
-	RevHesColDim  = 0;
 
 	// recording
 	Rec     = new TapeRec<Base>( AD<Base>::Tape()->Rec );
@@ -438,7 +428,6 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	Taylor  = CppADNull;
 	ForJac  = CppADNull;
 	RevJac  = CppADNull;
-	RevHes  = CppADNull;
 	Taylor  = ExtendBuffer(totalNumVar, 0, Taylor);
 
 	// number of elements in u
