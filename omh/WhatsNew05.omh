@@ -83,9 +83,9 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 12-23$$
-The buffer that is used to do 
-$xref/RevSparseHes/$$ 
-calculations is now freed directly after use.
+The buffers that are used to do 
+$xref/RevSparseJac/$$ and  $xref/RevSparseHes/$$ 
+calculations are now freed directly after use.
 $pre
 
 $$
