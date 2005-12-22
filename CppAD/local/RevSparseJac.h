@@ -205,10 +205,13 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 	size_t npv = 1 + (p - 1) / sizeof(Pack);
 
 	// array that will hold packed values
-	if( RevJacColDim < npv )
-	{	RevJac       = ExtendBuffer(totalNumVar * npv, 0, RevJac);
-		RevJacColDim = npv;
-	}
+	Pack *RevJac = CppADNull;
+	RevJac       = CppADTrackNewVec(totalNumVar * npv, RevJac);
+
+	// update maximum memory requirement
+	memoryMax = std::max( memoryMax, 
+		Memory() + totalNumVar * npv * sizeof(Pack)
+	);
 
 	// initialize entire RevJac matrix as false
 	for(i = 0; i < totalNumVar; i++)
@@ -249,6 +252,9 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 			Px[ i * n + j ] = (mask != 0);
 		}
 	}
+
+	// done with buffer
+	CppADTrackDelVec(RevJac);
 
 	return Px;
 }

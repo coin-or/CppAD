@@ -156,8 +156,8 @@ The operation
 $syntax%
 	size_t %F%.Memory(void) const
 %$$
-returns the number of memory units ($code sizeof$$) required to store
-the operations and derivative information currently stored in $italic F$$.
+returns the number of memory units ($code sizeof$$) required for the
+information currently stored in $italic F$$.
 This memory is returned to the system when the destructor for 
 $italic F$$ is called.
 
@@ -228,8 +228,6 @@ public:
 		delete [] Taylor;
 		if( ForJac != CppADNull )
 			delete [] ForJac;
-		if( RevJac != CppADNull )
-			delete [] RevJac;
 	}
 
 	// forward mode sweep
@@ -280,7 +278,7 @@ public:
 	// amount of memory for each variable
 	size_t Memory(void) const
 	{	size_t pervar  = TaylorColDim * sizeof(Base)
-		+ (ForJacColDim + RevJacColDim)  * sizeof(Pack);
+		+ ForJacColDim * sizeof(Pack);
 		size_t total   = totalNumVar * pervar + Rec->Memory();
 		return total;
 	}
@@ -344,9 +342,6 @@ private:
 	// number of columns currently allocated for ForJac array
 	size_t ForJacColDim;
 
-	// number of columns currently allocated for RevJac array
-	size_t RevJacColDim;
-
 	// number of rows (variables) in the recording (Rec)
 	size_t totalNumVar;
 
@@ -367,9 +362,6 @@ private:
 
 	// results of the forward mode Jacobian sparsity calculations
 	Pack *ForJac;
-
-	// results of the reverse mode Jacobian sparsity calculations
-	Pack *RevJac;
 };
 // ---------------------------------------------------------------------------
 
@@ -419,7 +411,6 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	TaylorColDim  = 1;
 	ForJacColDim  = 0;
 	ForJacBitDim  = 0;
-	RevJacColDim  = 0;
 
 	// recording
 	Rec     = new TapeRec<Base>( AD<Base>::Tape()->Rec );
@@ -427,7 +418,6 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	// buffers
 	Taylor  = CppADNull;
 	ForJac  = CppADNull;
-	RevJac  = CppADNull;
 	Taylor  = ExtendBuffer(totalNumVar, 0, Taylor);
 
 	// number of elements in u

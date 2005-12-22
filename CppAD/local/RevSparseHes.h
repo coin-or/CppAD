@@ -234,10 +234,8 @@ VectorBool ADFun<Base>::RevSparseHes(
 	CppADUnknownError( npv <= ForJacColDim );
 
 	// array that will hold packed reverse Jacobian values
-	if( RevJacColDim < 1 )
-	{	RevJac = ExtendBuffer(totalNumVar * 1, 0, RevJac);	
-		RevJacColDim = 1;
-	}
+	Pack *RevJac = CppADNull;
+	RevJac       = CppADTrackNewVec(totalNumVar, RevJac);	
 
 	// array that will hold packed reverse Hessain values
 	Pack *RevHes = CppADNull;
@@ -245,7 +243,7 @@ VectorBool ADFun<Base>::RevSparseHes(
 
 	// update maximum memory requirement
 	memoryMax = std::max( memoryMax, 
-		Memory() + totalNumVar * npv * sizeof(Pack)
+		Memory() + totalNumVar * (npv + 1) * sizeof(Pack)
 	);
 
 	// initialize entire RevHes and RevJac matrix to false
@@ -292,6 +290,7 @@ VectorBool ADFun<Base>::RevSparseHes(
 	}
 
 	// free memory used for the calculation
+	CppADTrackDelVec(RevJac);
 	CppADTrackDelVec(RevHes);
 
 	return Pxx;

@@ -1,11 +1,14 @@
-# missing from previous commit (remove RevSparseHes buffers after use).
+# Remove RevSparseJac buffers after use.
 # 
 # SvnCommit: this file.
-# RevSparseHes.h: allocate and free RevHes with each use.
-# TrackNewDel: initialize ptr to avoid warning on MS compiler.
+# RevSparseHes.h: allocate and free RevJac with each use.
+# Fun.h: remove RevJac and RevJacColDim.
+# RevSparseJac.h: allocate and free RevJac with each use.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
 	CppAD/local/RevSparseHes.h \
-	Example/TrackNewDel.cpp
+	CppAD/local/RevSparseHes.h \
+	CppAD/local/Fun.h \
+	CppAD/local/RevSparseJac.h
