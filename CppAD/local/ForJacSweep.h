@@ -175,11 +175,10 @@ void ForJacSweep(
 	// used by CExp operator 
 	const Base  *left, *right;
 	const Pack  *trueCase, *falseCase;
-	Pack        *zero = CppADNull;
-	zero = ExtendBuffer(npv, 0, zero);
+	Pack  *zero = CppADNull;
+	zero        = CppADTrackNewVec(npv, zero);
 	for(j = 0; j < npv; j++)
 		zero[j] = 0;
-
 
 	// check numvar argument
 	CppADUnknownError( Rec->TotNumVar() == numvar );
@@ -682,8 +681,8 @@ void ForJacSweep(
 # endif
 	CppADUnknownError( (i_var + n_var) == Rec->TotNumVar() );
 
-	if( zero != CppADNull )
-		delete [] zero;
+	// free vector of zeros
+	CppADTrackDelVec(zero);
 
 	return;
 }

@@ -257,9 +257,27 @@ VectorBase ADFun<Base>::Forward(size_t p, const VectorBase &up)
 		"The Taylor coefficient currently stored\n"
 		"in this ADFun has order less than p-1."
 	);  
+
+	// check if we need more columns in Taylor
 	if( TaylorColDim <= p )
-	{	CppADUnknownError(TaylorColDim == p);
-		Taylor       = ExtendCol(p + 1, totalNumVar, p, Taylor);
+	{	// Allocate new matrix will suffucient column dimension
+		size_t p1       = p + 1;
+		size_t newlen   = p1 * totalNumVar;
+		Base *newptr    = CppADNull;
+		newptr          = CppADTrackNewVec(newlen, newptr);
+
+		// copy the old data into the new matrix
+		size_t j;
+		for(i = 0; i < totalNumVar; i++)
+		{	for(j = 0; j < p; j++)
+			{	newptr[i * p1 + j]  = Taylor[i * p + j];
+			}
+		}
+		// free the old memory
+		CppADTrackDelVec(Taylor);
+
+		// use the new pointer
+		Taylor       = newptr;
 		TaylorColDim = p+1;
 	}
 

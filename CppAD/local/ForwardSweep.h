@@ -205,16 +205,12 @@ size_t ForwardSweep(
 	bool   *VectorVar = CppADNull;  // is element a variable
 	i = Rec->NumVecInd();
 	if( i > 0 )
-	{	VectorInd = ExtendBuffer(i, 0, VectorInd);
-		VectorVar = ExtendBuffer(i, 0, VectorVar);
+	{	VectorInd = CppADTrackNewVec(i, VectorInd);
+		VectorVar = CppADTrackNewVec(i, VectorVar);
 		while(i--)
 		{	VectorInd[i] = Rec->GetVecInd(i);
 			VectorVar[i] = false;
 		}
-	}
-	else
-	{	VectorInd = CppADNull;
-		VectorVar = CppADNull;
 	}
 
 
@@ -901,9 +897,9 @@ size_t ForwardSweep(
 # endif
 	CppADUnknownError( (i_var + n_var) == Rec->TotNumVar() );
 	if( VectorInd != CppADNull )
-		delete [] VectorInd;
+		CppADTrackDelVec(VectorInd);
 	if( VectorVar != CppADNull )
-		delete [] VectorVar;
+		CppADTrackDelVec(VectorVar);
 
 	return compareCount;
 }

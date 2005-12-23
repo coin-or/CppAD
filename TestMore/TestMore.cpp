@@ -70,18 +70,25 @@ extern bool VecAD(void);
 extern bool VecADPar(void);
 extern bool VecUnary(void);
 
-// function that runs one test
-bool Run(bool TestOk(void), const char *name)
-{	bool ok = true;
-	using namespace std;
-
-	ok &= TestOk();
-
-	if( ok )
-		std::cout << "Ok:    " << name << std::endl;
-	else	std::cout << "Error: " << name << std::endl;
-
-	return ok;
+namespace {
+	// function that runs one test
+	bool Run(bool TestOk(void), const char *name)
+	{	bool ok = true;
+		using namespace std;
+	
+		ok &= TestOk();
+	
+		if( ok )
+			std::cout << "Ok:    " << name << std::endl;
+		else	std::cout << "Error: " << name << std::endl;
+	
+		return ok;
+	}
+	// check for memory leak in previous calculations
+	bool TrackCount(void)
+	{	bool ok = (CppADTrackCount() == 0);
+		return ok;
+	}
 }
 
 // main program that runs all the tests
@@ -129,6 +136,9 @@ int main(void)
 	ok &= Run( VecAD,           "VecAD"          );
 	ok &= Run( VecADPar,        "VecADPar"       );
 	ok &= Run( VecUnary,        "VecUnary"       );
+
+	// check for memory leak during previous calculations
+	ok &= Run( TrackCount,      "TrackCount"     );
 
 	cout << endl << endl;
 	if( ok )

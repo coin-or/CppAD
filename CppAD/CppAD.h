@@ -62,10 +62,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // Declare classes and fucntions that are used before defined
 # include <CppAD/local/Declare.h>
 
-// Memory allocations routines with error checking
-# include <CppAD/local/ExtendBuffer.h>
-# include <CppAD/local/ExtendCol.h>
-
 // ---------------------------------------------------------------------------
 // files containing only implementation details
 

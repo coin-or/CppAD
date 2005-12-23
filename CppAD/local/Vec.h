@@ -393,13 +393,13 @@ public:
 	{	CppADUnknownError( *ADTape<Base>::Id() > id );
 		data  = CppADNull;
 		if( length > 0 )
-			data  = ExtendBuffer(length, 0, data);
+			data  = CppADTrackNewVec(length, data);
 	}
 
 	// destructor
 	~VecAD(void)
 	{	if( data != CppADNull )
-			delete [] data; 
+			CppADTrackDelVec(data); 
 	}
 
 	// size

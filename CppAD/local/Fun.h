@@ -225,9 +225,9 @@ public:
 	// destructor
 	~ADFun(void)
 	{	delete Rec;
-		delete [] Taylor;
+		CppADTrackDelVec(Taylor);
 		if( ForJac != CppADNull )
-			delete [] ForJac;
+			CppADTrackDelVec(ForJac);
 	}
 
 	// forward mode sweep
@@ -418,7 +418,7 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	// buffers
 	Taylor  = CppADNull;
 	ForJac  = CppADNull;
-	Taylor  = ExtendBuffer(totalNumVar, 0, Taylor);
+	Taylor  = CppADTrackNewVec(totalNumVar, Taylor);
 
 	// number of elements in u
 	n = u.size();

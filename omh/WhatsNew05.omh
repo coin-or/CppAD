@@ -82,6 +82,10 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-24$$
+Fix a memory leak that could occur during the $xref/ForSparseJac/$$ 
+calculations.
+
 $head 12-23$$
 The buffers that are used to do 
 $xref/RevSparseJac/$$ and  $xref/RevSparseHes/$$ 

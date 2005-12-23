@@ -203,7 +203,9 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
 
 	// array that will hold packed values
 	if( ForJacColDim < npv )
-	{	ForJac       = ExtendBuffer(totalNumVar * npv, 0, ForJac);
+	{	if( ForJacColDim > 0 )
+			CppADTrackDelVec(ForJac);
+		ForJac       = CppADTrackNewVec(totalNumVar * npv, ForJac);
 		ForJacColDim = npv;
 	}
 

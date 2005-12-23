@@ -1,14 +1,35 @@
-# Remove RevSparseJac buffers after use.
+# Convert more memory allocation to use TrackNewDel (checks for memory leaks).
 # 
 # SvnCommit: this file.
-# RevSparseHes.h: allocate and free RevJac with each use.
-# Fun.h: remove RevJac and RevJacColDim.
-# RevSparseJac.h: allocate and free RevJac with each use.
+# WhatsNew05.omh: users view of changes.
+# ForJacSweep.h: convert ExtendBuffer & delete to TrackNewVec & TrackDelVec.
+# ForwardSweep.h: convert ExtendBuffer & delete to TrackNewVec & TrackDelVec.
+# Vec.h: convert ExtendBuffer & delete to TrackNewVec & TrackDelVec.
+# ExtendCol.h: no longer needed
+# ExtendBuffer.h: no longer needed
+# Forward.h: replace ExtendCol by inline code (this is only place it was used).
+# Fun.h: convert ExtendBuffer & delete to TrackNewVec & TrackDelVec.
+# ForSparseJac.h: fix memory leak & convert to using TrackNewVec & TrackDelVec.
+# CppAD.h: remove ExtendBuffer.h and ExtendCol.h.
+# Developer.omh: remove ExtendBuffer.h and ExtendCol.h.
+# Makefile.am: remove ExtendBuffer.h and ExtendCol.h.
+# TestMore.cpp: check for memory leak at end of sequence of tests.
 # -----------------------------------------------
+svn delete CppAD/local/ExtendCol.h
+svn delete CppAD/local/ExtendBuffer.h
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/RevSparseHes.h \
-	CppAD/local/RevSparseHes.h \
+	CppAD/local/ForJacSweep.h \
+	CppAD/local/ForwardSweep.h \
+	CppAD/local/Vec.h \
+	CppAD/local/ExtendCol.h \
+	CppAD/local/ExtendBuffer.h \
 	CppAD/local/Fun.h \
-	CppAD/local/RevSparseJac.h
+	CppAD/local/Forward.h \
+	CppAD/local/ForSparseJac.h \
+	CppAD/CppAD.h \
+	omh/WhatsNew05.omh \
+	TestMore/TestMore.cpp \
+	Developer.omh \
+	Makefile.am 
