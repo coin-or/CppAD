@@ -54,6 +54,7 @@ $index CppAD, install windows$$
 $section Windows Installation and Testing$$
 
 $head Download Current Version$$
+$index download, windows$$
 If you are using 
 $href%
 	http://www.cygwin.com%
@@ -69,8 +70,8 @@ just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
 Otherwise,
 download the archive
 $href%
-	http://www.coin-or.org/Tarballs/CppAD-05-12-14.zip%
-	CppAD-05-12-14.zip
+	http://www.coin-or.org/Tarballs/CppAD-05-12-24.zip%
+	CppAD-05-12-24.zip
 %$$
 
 $head Extraction$$
@@ -80,10 +81,10 @@ $href%
 	WinZip
 %$$
 or some other program to decompress the archive
-$code CppAD-05-12-14.zip$$.
+$code CppAD-05-12-24.zip$$.
 This will create the distribution directory 
 $syntax%
-	cppad-05-12-14
+	cppad-05-12-24
 %$$
 All the command sequences below assume that you start in this
 distribution directory.
@@ -105,6 +106,7 @@ The $code Developer$$ sub-directory of the distribution directory
 contains developer documentation for CppAD. 
 
 $head Getting Started$$
+$index GetStarted, windows$$
 Using Microsoft Visual C++,
 open the workspace $code GetStarted/GetStarted.sln$$
 in Visual Studio and then select $code Build | Build GetStarted.exe$$.
@@ -115,6 +117,8 @@ $codep
 $$
 
 $head Examples and Testing$$
+$index example, windows$$
+$index test, windows$$
 Using Microsoft Visual C++,
 open the workspace $code Example/Example.sln$$ in Visual Studio.
 Then select $code Build | Build Example.exe$$.
@@ -124,7 +128,32 @@ $codep
 	Example
 $$
 
-$head Printing During Forward Mode Example and Testing$$
+$head More Correctness Testing$$
+$index test more, windows$$
+Using Microsoft Visual C++,
+open the workspace $code TestMore/TestMore.sln$$
+in Visual Studio and then select $code Build | Build TestMore.exe$$.
+Then in a Dos box, execute the following commands
+$codep
+	cd TestMore\Debug
+	TestMore
+$$
+
+$head Speed Testing$$
+$index speed, windows test$$
+$index test, windows speed$$
+Using Microsoft Visual C++,
+open the workspace $code Speed/Speed.sln$$
+in Visual Studio and then select $code Build | Build Speed.exe$$.
+Then in a Dos box, execute the following commands
+$codep
+	cd Speed\Release
+	Speed
+$$
+
+$head Printing During Forward Mode$$
+$index print, forward mode$$
+$index forward, print$$
 Using Microsoft Visual C++,
 open the workspace $code PrintFor/PrintFor.sln$$ in Visual Studio.
 Then select $code Build | Build PrintFor.exe$$.
@@ -135,6 +164,8 @@ $codep
 $$
 
 $head Speed Test Example$$
+$index SpeedTest, windows example$$
+$index example, windows SpeedTest$$
 Using Microsoft Visual C++,
 open the workspace $code SpeedExample/SpeedExample.sln$$ in Visual Studio.
 Then select $code Build | Build SpeedExample.exe$$.
@@ -142,27 +173,6 @@ Then in a Dos box, execute the following commands
 $codep
 	cd SpeedExample\Debug
 	SpeedExample
-$$
-
-$head More Correctness Testing$$
-Using Microsoft Visual C++,
-open the workspace $code TestMore/TestMore.sln$$
-in Visual Studio and then select $code Build | Build TestMore.exe$$.
-Then in a Dos box, execute the following commands
-$codep
-	cd TestMore\Debug
-	TestMore
-$$
-
-
-$head Speed Testing$$
-Using Microsoft Visual C++,
-open the workspace $code Speed/Speed.sln$$
-in Visual Studio and then select $code Build | Build Speed.exe$$.
-Then in a Dos box, execute the following commands
-$codep
-	cd Speed\Release
-	Speed
 $$
 
 $end

@@ -52,30 +52,32 @@ $spell
 	aclocal
 $$
 
-$index free, unix install$$
 $index CppAD, unix install$$
+$index unix, CppAD install$$
+$index free, unix install$$
 $index install, unix CppAD$$
 
 $section Unix Installation and Testing$$
 
 $head Download Current Version$$
+$index download, unix$$
 Download the file
 $href%
-	http://www.coin-or.org/Tarballs/CppAD-05-12-14.tar.gz%
-	CppAD-05-12-14.tar.gz
+	http://www.coin-or.org/Tarballs/CppAD-05-12-24.tar.gz%
+	CppAD-05-12-24.tar.gz
 %$$
 
 $head Extraction$$
 Use the command
 $codep
-	tar -xvzf CppAD-05-12-14.tar.gz
+	tar -xvzf CppAD-05-12-24.tar.gz
 $$
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-05-12-14
+	cppad-05-12-24
 %$$
-Note that $code 05-12-14$$ is the version number for CppAD.
+Note that $code 05-12-24$$ is the version number for CppAD.
 All of the commands below are to be executed starting from this
 directory.
 
@@ -92,6 +94,7 @@ The $code Developer$$ sub-directory of the distribution directory
 contains developer documentation for CppAD. 
 
 $head Configure$$
+$index configure$$
 Enter the directory created by the extraction and execute the command:
 $syntax%
 	./configure                            \
@@ -154,6 +157,7 @@ $syntax%
 %$$
 
 $head --with-GetStarted$$
+$index GetStarted, unix$$
 If the command line argument $code --with-GetStarted$$ is specified,
 the $xref/GetStarted.cpp/$$ example will be built.
 Once the $code make$$ command 
@@ -163,6 +167,8 @@ $codep
 $$
 
 $head --with-Example$$
+$index example, unix$$
+$index test, unix$$
 If the command line argument $code --with-Example$$ is specified,
 an extensive set of examples and correctness tests will be compiled by the
 $xref/InstallUnix/make/make/$$ command. Once the $code make$$ command 
@@ -172,6 +178,7 @@ $codep
 $$
 
 $head --with-TestMore$$
+$index test more, unix$$
 If the command line argument $code --with-TestMore$$ is specified,
 another extensive set of correctness tests will be compiled by the
 $xref/InstallUnix/make/make/$$ command. Once the $code make$$ command 
@@ -181,6 +188,8 @@ $codep
 $$
 
 $head --with-Speed$$
+$index test, unix speed$$
+$index speed, unix test$$
 If the command line argument $code --with-Speed$$ is specified,
 a set of speed tests will be compiled by the
 $xref/InstallUnix/make/make/$$ command. Once the $code make$$ command 
@@ -190,6 +199,8 @@ $codep
 $$
 
 $head --with-PrintFor$$
+$index print, forward mode$$
+$index forward, print$$
 If the command line argument $code --with-PrintFor$$ is specified,
 the $xref/PrintFor.cpp/$$ example will be built.
 Once the $code make$$ command 
@@ -199,6 +210,8 @@ $codep
 $$
 
 $head --with-SpeedExample$$
+$index SpeedTest, unix example$$
+$index example, unix SpeedTest$$
 If the command line argument $code --with-SpeedExample$$ is specified,
 the $xref/SpeedExample.cpp/$$ example will be built.
 Once the $code make$$ command 
@@ -208,6 +221,7 @@ $codep
 $$
 
 $head --with-profiling$$
+$index profile, unix$$
 If the command line argument $code --with-profiling$$ is specified,
 in addition to the argument $code --with-Speed$$,
 a program called $code Speed/Speed_p$$ is generated.
@@ -223,6 +237,7 @@ you may have to replace $code Speed_p$$ by $code Speed_p.exe$$
 in the command above.
 
 $head --with-stdvector$$
+$index std::vector, unix$$
 The template class 
 $xref/CppADvector/$$ is used for extensive examples and testing of CppAD.
 If the command line argument $code --with-stdvector$$ is specified,
@@ -233,6 +248,7 @@ $$
 (In this case $italic BoostDir$$ must not also be specified.)
 
 $head AdolcDir$$
+$index Adolc, unix$$
 If you have 
 $href%
 	http://www.math.tu-dresden.de/~adol-c/%
@@ -274,6 +290,7 @@ if $code d:/ADOLC19$$ is the proper directory,
 $code /cygdrive/d/ADOLC19$$ should be used for $italic AdolcDir$$.
 
 $head FadbadDir$$
+$index Fadbad, unix$$
 If you have
 $href%
 	http://www.imm.dtu.dk/fadbad.html/%
@@ -298,6 +315,7 @@ $syntax%
 will run both the speed and correctness tests for this comparison.
 
 $head BoostDir$$
+$index boost, unix$$
 The template class 
 $xref/CppADvector/$$ is used for extensive examples and testing of CppAD.
 The default definition for $code CppADvector$$ is
@@ -321,6 +339,8 @@ If $italic BoostDir$$ is present, the argument $code --with-stdvector$$
 must not be present.
 
 $head CppErrorsAndWarnings$$
+$index compile, unix flags$$
+$index flags, unix compile$$
 If the command line argument $italic CppErrorsAndWarnings$$ is present,
 it specifies compiler error and warning flags. 
 For example,

@@ -22,9 +22,24 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 
 dnl   package   version           bug-report
-AC_INIT(CppAD, 05-12-14, bradbell@seanet.com)
+AC_INIT(CppAD, 05-12-24, bradbell@seanet.com)
+
+dnl Set the default install prefix to the installers home directory
+AC_PREFIX_DEFAULT(${HOME})
 
 AC_MSG_NOTICE([******** Begin Checking Command Line arguments ***************])
+
+dnl the prefix directory corresponding to CppAD -------------------------
+dnl The following seems to work but NONE is not in autoconf specifications
+dnl AC_MSG_CHECKING( [prefix] )
+dnl if test "x$prefix" = "NONE" ; then
+dnl 	AC_MSG_RESULT( [$HOME] )
+dnl else
+dnl 	AC_MSG_RESULT( [$prefix] )
+dnl fi
+AC_MSG_CHECKING( [--prefix] )
+AC_MSG_RESULT( [your choice can't be reported here (autoconf limitation)] )
+
 
 dnl Are we building the GetStarted directory -----------------------------
 AC_MSG_CHECKING( [--with-GetStarted] )
@@ -172,9 +187,6 @@ if test "$stdvector$BOOST_DIR" = "no" ; then
 else 
 	AC_DEFINE(CppAD_CPPADVECTOR, 0, [is CppADvector == CppAD::vector])
 fi
-
-dnl Set the default install prefix to the installers home directory
-AC_PREFIX_DEFAULT(${HOME})
 
 dnl Run any macros required for proper operation of generated Makefiles
 dnl nostdinc: Do not define standard include directories in generated Makefiles
