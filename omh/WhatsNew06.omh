@@ -16,23 +16,35 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
-$begin Appendix$$
+$begin WhatsNew06$$
 $spell
+	CppAD
+	sed
+	gprof
 $$
 
-$section Appendix$$
+$section Changes and Additions to CppAD$$
 
-$childtable%
-	omh/Theory.omh%
-	omh/Speed.omh%
-	omh/Adolc.omh%
-	omh/Fadbad.omh%
-	omh/glossary.omh%
-	omh/Bib.omh%
-	omh/Bugs.omh%
-	omh/WishList.omh%
-	omh/WhatsNew06.omh
+$children%
+	omh/WhatsNew05.omh%
+	omh/WhatsNew04.omh%
+	omh/WhatsNew03.omh
 %$$
 
-$end
+$head Introduction$$
+This section contains a list of the changes to CppAD during 2005
+(in reverse order by date).
+Changes and additions to CppAD during previous years can be found in
+$table
+$tref WhatsNew03$$ $rnext
+$tref WhatsNew04$$ $rnext
+$tref WhatsNew05$$ 
+$tend
+The purpose of these sections is to
+assist you in learning about changes between various versions of CppAD.
 
+$head 01-01$$
+Add the sed script $code Speed/gprof.sed$$ to aid in the display of the
+$xref/InstallUnix/--with-profiling/--with-profiling/$$ output.
+
+$end

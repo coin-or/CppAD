@@ -1,9 +1,8 @@
 # ifndef CppADMulIncluded
 # define CppADMulIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -113,48 +111,56 @@ AD<Base> AD<Base>::operator *(const AD<Base> &right) const
 
 	result.value  = value * right.value;
 
-	if( Tape()->State() == Recording )
-	{	if( Parameter(*this) )
-		{	if( Variable(right) )
-			{	if( ! IdenticalZero(value)  )
-				{	if( IdenticalOne(value) )
-					{	// z = 1 * right
-						result.MakeVariable(
-							right.taddr
-						);
-					}
-					else	Tape()->RecordOp(
-							MulpvOp, 
-							result, 
-							value, 
-							right.taddr
-					);
-				}
-			}
-		}
-		else if( Parameter(right) )
-		{	if( ! IdenticalZero(right) )
-			{	if( IdenticalOne(right.value) )
-				{	// z = left * 1
-					result.MakeVariable(	
-						taddr
-					);
-				}
-				else	Tape()->RecordOp(
-						MulvpOp, 
-						result, 
-						taddr, 
-						right.value
-				);
-			}
-		}
-		else	Tape()->RecordOp(
+	if( Variable(*this) )
+	{	if( Variable(right) )
+		{	// result = variable * variable
+			Tape()->RecordOp(
 				MulvvOp, 
 				result, 
 				taddr, 
 				right.taddr
-		);
+			);
+		}
+		else if( IdenticalZero(right.value) )
+		{	// result = variable * 0
+		}
+		else if( IdenticalOne(right.value) )
+		{	// result = variable * 1
+			result.MakeVariable(	
+				taddr
+			);
+		}
+		else
+		{	// result = variable * parameter
+			Tape()->RecordOp(
+				MulvpOp, 
+				result, 
+				taddr, 
+				right.value
+			);
+		}
 	}
+	else if( Variable(right) )
+	{	if( IdenticalZero(value)  )
+		{	// result = 0 * variable
+		}
+		else if( IdenticalOne(value) )
+		{	// result = 1 * variable
+			result.MakeVariable(
+				right.taddr
+			);
+		}
+		else
+		{	// result = parameter * variable
+			Tape()->RecordOp(
+				MulpvOp, 
+				result, 
+				value, 
+				right.taddr
+			);
+		}
+	}
+
 	return result;
 }
 

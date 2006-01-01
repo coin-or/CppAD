@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -65,36 +65,7 @@ $spell
 	atan
 $$
 
-$section Changes and Additions to CppAD$$
-
-$children%
-	omh/WhatsNew04.omh%
-	omh/WhatsNew03.omh
-%$$
-
-$head Introduction$$
-This section contains a list of the changes to CppAD during 2005
-(in reverse order by date).
-Changes and additions to CppAD during previous years can be found in
-$table
-$tref WhatsNew03$$ $rnext
-$tref WhatsNew04$$ 
-$tend
-The purpose of these sections is to
-assist you in learning about changes between various versions of CppAD.
-
-$head 12-25$$
-Add more indexing commands to the 
-$xref/InstallUnix/$$ and $xref/InstallWindows/$$ sections.
-This makes it easier to find information such has how to profile 
-your program (by searching for $code profile$$ in the index or search window).
-$pre
-
-$$
-Add a comment about not being able to determine value of $code prefix$$
-during execution of the 
-$xref/InstallUnix/Configure/configure/$$ script
-(this is a limitation of $code autoconf$$).
+$section Changes and Additions to CppAD During 2005$$
 
 $head 12-24$$
 Fix a memory leak that could occur during the $xref/ForSparseJac/$$ 

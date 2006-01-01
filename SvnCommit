@@ -1,15 +1,25 @@
-# Minor improvements
+# Minor improvements and change of year
 # 
 # SvnCommit: this file.
-# WhatsNew05.omh: users view of changes.
-# configure.ac: include message about prefix.
-# InstallUnix.omh: add more index entries.
-# InstallWindows.omh: change order and add more index entries.
+# WhatsNew05.omh: terminate changes during 2005.
+# WhatsNew06.omh: start changes during 2006.
+# InstallUnix.omh: document gprof.sed script.
+# Mul.h: simplify logic (easier to read source code).
+# Operator.h: fix lables (left and right were switched in trace).
+# gprof.sed: sed script to make profiling output easier to read.
+# Makefile.am: add gprof.sed to distribution.
+# Appendix.omh: change WhatsNew child from 05 to 06.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
+svn add Speed/gprof.sed
+svn add omh/WhatsNew06.omh
 svn commit --file svn.log \
 	SvnCommit \
 	omh/WhatsNew05.omh \
-	configure.ac \
-	omh/InstallWindows.omh \
-	omh/InstallUnix.omh
+	omh/WhatsNew06.omh \
+	omh/InstallUnix.omh \
+	CppAD/local/Mul.h \
+	CppAD/local/Operator.h \
+	Speed/gprof.sed \
+	Speed/Makefile.am \
+	omh/Appendix.omh
