@@ -107,7 +107,7 @@ template <class Base>
 AD<Base> AD<Base>::operator *(const AD<Base> &right) const
 {
 	AD<Base> result;
-	CppADUnknownError( result.id == 0 );
+	CppADUnknownError( Parameter(result) );
 
 	result.value  = value * right.value;
 

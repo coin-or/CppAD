@@ -1,9 +1,8 @@
 # ifndef CppADSubIncluded
 # define CppADSubIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -106,31 +104,35 @@ template <class Base>
 AD<Base> AD<Base>::operator -(const AD<Base> &right) const
 {
 	AD<Base> result;
-	CppADUnknownError( result.id == 0 );
+	CppADUnknownError( Parameter(result) );
 
 	result.value  = value - right.value;
 
-	if( Tape()->State() == Recording )
-	{	if( Parameter(*this) )
-		{	if( Variable(right) )
-			{	Tape()->RecordOp(SubpvOp, 
-					result, value, right.taddr
-				);
-			}
-		}
-		else if( Parameter(right) )
-		{	if( IdenticalZero(right.value) )
-			{	// z = left - 0
-				result.MakeVariable(taddr);
-			}
-			else	Tape()->RecordOp(SubvpOp, 
-					result, taddr, right.value
+	if( Variable(*this) )
+	{	if( Variable(right) )
+		{	// result = variable - variable
+			Tape()->RecordOp(SubvvOp, 
+				result, taddr, right.taddr
 			);
 		}
-		else	Tape()->RecordOp(SubvvOp, 
-				result, taddr, right.taddr
+		else if( IdenticalZero(right.value) )
+		{	// result = variable - 0
+			result.MakeVariable(taddr);
+		}
+		else
+		{	// result = variable - parameter
+			Tape()->RecordOp(SubvpOp, 
+				result, taddr, right.value
+			);
+		}
+	}
+	else if( Variable(right) )
+	{	// result = parameter - variable
+		Tape()->RecordOp(SubpvOp, 
+			result, value, right.taddr
 		);
 	}
+
 	return result;
 }
 

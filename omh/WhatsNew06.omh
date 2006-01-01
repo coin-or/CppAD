@@ -43,8 +43,14 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 01-01$$
+$head 01-02$$
 Add the sed script $code Speed/gprof.sed$$ to aid in the display of the
 $xref/InstallUnix/--with-profiling/--with-profiling/$$ output.
+$pre
+
+$$
+Make the folloiwng source code files easier to understand:
+$code Add.h$$, $code Sub.h$$, $code Mul.h$$, $code Div.h$$
+(in the directory $code CppAD/local$$).
 
 $end
