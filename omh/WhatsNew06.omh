@@ -21,6 +21,8 @@ $spell
 	CppAD
 	sed
 	gprof
+	Mul.h
+	Div.h
 $$
 
 $section Changes and Additions to CppAD$$
@@ -49,7 +51,7 @@ $xref/InstallUnix/--with-profiling/--with-profiling/$$ output.
 $pre
 
 $$
-Make the folloiwng source code files easier to understand:
+Make the following source code files easier to understand:
 $code Add.h$$, $code Sub.h$$, $code Mul.h$$, $code Div.h$$
 (in the directory $code CppAD/local$$).
 
