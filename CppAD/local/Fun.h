@@ -2,7 +2,7 @@
 # define CppADFunIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -367,10 +367,11 @@ private:
 
 template <typename Base>
 template <typename VectorADBase>
-ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
-{	size_t   n = z.size();
-	size_t   i;
-	size_t   z_taddr;
+ADFun<Base>::ADFun(const VectorADBase &x, const VectorADBase &y)
+{	size_t   n = x.size();
+	size_t   m = y.size();
+	size_t   i, j;
+	size_t   y_taddr;
 	OpCode   op;
 
 	// check VectorADBase is Simple Vector class with AD<Base> elements
@@ -382,24 +383,24 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 		" tape is not currently recording."
 	);
 	CppADUsageError(
-		z.size() > 0,
+		y.size() > 0,
 		"ADFun constructor second argument vector Y has zero size"
 	); 
-	CppADUnknownError( u.size() > 0 );
+	CppADUnknownError( x.size() > 0 );
 
 	// set parameter flag and
 	// create a copy of z where parameters are in the tape
 	CppADUnknownError( NumInd(ParOp) == 1 );
-	parameter.resize(n);
-	VectorADBase z_copy(n);
-	for(i = 0; i < n; i++)
-	{	z_copy[i].value = z[i].value;
-		z_taddr         = z[i].taddr;
-		parameter[i]    = CppAD::Parameter(z[i]);
+	parameter.resize(m);
+	VectorADBase y_copy(m);
+	for(i = 0; i < m; i++)
+	{	y_copy[i].value = y[i].value;
+		y_taddr         = y[i].taddr;
+		parameter[i]    = CppAD::Parameter(y[i]);
 		if( parameter[i] )
-			z_taddr = AD<Base>::Tape()->RecordParOp( z[i].value );
+			y_taddr = AD<Base>::Tape()->RecordParOp( y[i].value );
 
-		z_copy[i].MakeVariable( z_taddr );
+		y_copy[i].MakeVariable( y_taddr );
 	}
 
 	// total number of varables in this recording 
@@ -420,8 +421,7 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	ForJac  = CppADNull;
 	Taylor  = CppADTrackNewVec(totalNumVar, Taylor);
 
-	// number of elements in u
-	n = u.size();
+	// number of elements in x
 	CppADUsageError(
 		n < totalNumVar,
 		"independent variables vector has changed"
@@ -429,23 +429,23 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 
 	// set initial independent variable values
 	indvar.resize(n);
-	for(i = 0; i < n; i++)
+	for(j = 0; j < n; j++)
 	{	
 		CppADUsageError( 
-			u[i].taddr == i+1,
+			x[j].taddr == j+1,
 			"independent variable vector has changed"
 		);
-		// i+1 is both the operator and independent variable taddr
-		op = Rec->GetOp(i+1);
+		// j+1 is both the operator and independent variable taddr
+		op = Rec->GetOp(j+1);
 		CppADUsageError(
 			op == InvOp,
 			"independent variable vector has changed"
 		);
-		indvar[i]   = i+1;
-		Taylor[i+1] = u[i].value;
+		indvar[j]   = j+1;
+		Taylor[j+1] = x[j].value;
 	}
 
-	// avoid the special case where there is nothing past
+	// check for the special case where there is nothing past
 	// the independent variable records
 	if( n + 1 < Rec->NumOp() )
 	{	op = Rec->GetOp(n+1);
@@ -456,23 +456,23 @@ ADFun<Base>::ADFun(const VectorADBase &u, const VectorADBase &z)
 	}
 
 	// dep
-	n = z_copy.size();
-	depvar.resize(n);
-	for(i = 0; i < n; i++)
-	{	z_taddr  = z_copy[i].taddr;
-		CppADUnknownError( z_taddr > 0 );
-		CppADUnknownError( z_taddr < totalNumVar );
-		depvar[i] = z_taddr;
+	depvar.resize(m);
+	for(i = 0; i < m; i++)
+	{	y_taddr  = y_copy[i].taddr;
+		CppADUnknownError( y_taddr > 0 );
+		CppADUnknownError( y_taddr < totalNumVar );
+		depvar[i] = y_taddr;
 	}
 
 	// use independent variable values to fill in values for others
-	compareChange = ForwardSweep(false, 0, totalNumVar, Rec, TaylorColDim, Taylor);
+	compareChange = ForwardSweep(
+		false, 0, totalNumVar, Rec, TaylorColDim, Taylor
+	);
 	CppADUnknownError( compareChange == 0 );
 
 	// check the dependent variable values
-	n = z.size();
-	for(i = 0; i < n; i++)
-		CppADUnknownError( Taylor[depvar[i]] == z[i].value );
+	for(i = 0; i < m; i++)
+		CppADUnknownError( Taylor[depvar[i]] == y[i].value );
 
 	// We are now done with the AD<Base> tape so erase it
 	AD<Base>::Tape()->Erase();
