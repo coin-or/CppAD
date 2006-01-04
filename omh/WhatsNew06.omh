@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew06$$
 $spell
+	Hes
+	Jac
 	CppAD
 	sed
 	gprof
@@ -54,5 +56,16 @@ $$
 Make the following source code files easier to understand:
 $code Add.h$$, $code Sub.h$$, $code Mul.h$$, $code Div.h$$
 (in the directory $code CppAD/local$$).
+
+$head 01-05$$
+Make the following source code files easier to understand:
+$code RevSparseHes.h$$,
+$code Reverse.h$$,
+$code Fun.h$$,
+$code Forward.h$$,
+$code ForSparseJac.h$$,
+$code RevSparseJac.h$$
+(in the directory $code CppAD/local$$).
+
 
 $end
