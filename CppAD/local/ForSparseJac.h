@@ -2,7 +2,7 @@
 # define CppADForSparseJacIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -184,8 +184,8 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
 	CheckSimpleVector<bool, VectorBool>();
 
 	// range and domain dimensions for F
-	size_t m = depvar.size();
-	size_t n = indvar.size();
+	size_t m = dep_taddr.size();
+	size_t n = ind_taddr.size();
 
 	CppADUsageError(
 		q > 0,
@@ -212,13 +212,13 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
 	// set values corresponding to independent variables
 	Pack mask;
 	for(i = 0; i < n; i++)
-	{	CppADUnknownError( indvar[i] < totalNumVar );
-		// indvar[i] is operator taddr for i-th independent variable
-		CppADUnknownError( Rec->GetOp( indvar[i] ) == InvOp );
+	{	CppADUnknownError( ind_taddr[i] < totalNumVar );
+		// ind_taddr[i] is operator taddr for i-th independent variable
+		CppADUnknownError( Rec->GetOp( ind_taddr[i] ) == InvOp );
 
 		// initialize all bits as zero
 		for(k = 0; k < npv; k++)
-			ForJac[ indvar[i] * npv + k ] = 0;
+			ForJac[ ind_taddr[i] * npv + k ] = 0;
 
 		// set bits that are true
 		for(j = 0; j < q; j++) 
@@ -226,7 +226,7 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
 			p    = j - k * sizeof(Pack);
 			mask = Pack(1) << p;
 			if( Px[ i * q + j ] )
-				ForJac[ indvar[i] * npv + k ] |= mask;
+				ForJac[ ind_taddr[i] * npv + k ] |= mask;
 		}
 	}
 
@@ -236,14 +236,14 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &Px)
 	// return values corresponding to dependent variables
 	VectorBool Py(m * q);
 	for(i = 0; i < m; i++)
-	{	CppADUnknownError( depvar[i] < totalNumVar );
+	{	CppADUnknownError( dep_taddr[i] < totalNumVar );
 
 		// set bits 
 		for(j = 0; j < q; j++) 
 		{	k     = j / sizeof(Pack);
 			p     = j - k * sizeof(Pack);
 			mask  = Pack(1) << p;
-			mask &=	ForJac[ depvar[i] * npv + k ];
+			mask &=	ForJac[ dep_taddr[i] * npv + k ];
 			Py[ i * q + j ] = (mask != 0);
 		}
 	}

@@ -28,8 +28,8 @@ $spell
 	sizeof
 	const
 	std
-	indvar
-	depvar
+	ind_taddr
+	dep_taddr
 $$
 
 $spell
@@ -260,19 +260,19 @@ public:
 
 	// number of independent variables
 	size_t Domain(void) const
-	{	return indvar.size(); }
+	{	return ind_taddr.size(); }
 
 	// number of dependent variables
 	size_t Range(void) const
-	{	return depvar.size(); }
+	{	return dep_taddr.size(); }
 
 	// is variable a parameter
 	bool Parameter(size_t i)
 	{	CppADUsageError(
-			i < depvar.size(),
+			i < dep_taddr.size(),
 			"Argument to Parameter is >= dimension of range space"
 		);
-		return parameter[i]; 
+		return dep_parameter[i]; 
 	}
 
 	// amount of memory for each variable
@@ -345,14 +345,12 @@ private:
 	// number of rows (variables) in the recording (Rec)
 	size_t totalNumVar;
 
-	// row indices for the independent variables
-	CppAD::vector<size_t> indvar;
+	// tape address for the independent variables
+	CppAD::vector<size_t> ind_taddr;
 
-	// row indices for the dependent variables
-	CppAD::vector<size_t> depvar;
-
-	// which of the dependent variables are parameters 
-	CppAD::vector<bool> parameter;
+	// tape address and parameter flag for the dependent variables
+	CppAD::vector<size_t> dep_taddr;
+	CppAD::vector<bool>   dep_parameter;
 
 	// the operations corresponding to this function
 	TapeRec<Base> *Rec;
@@ -388,47 +386,53 @@ ADFun<Base>::ADFun(const VectorADBase &x, const VectorADBase &y)
 	); 
 	CppADUnknownError( x.size() > 0 );
 
-	// set parameter flag and
-	// create a copy of z where parameters are in the tape
+	// set total number of variables in tape, parameter flag, 
+	// make a tape copy of dependent variables that are parameters, 
+	// and store tape address for each dependent variable
 	CppADUnknownError( NumInd(ParOp) == 1 );
-	parameter.resize(m);
-	VectorADBase y_copy(m);
+	dep_parameter.resize(m);
+	dep_taddr.resize(m);
+	totalNumVar = AD<Base>::Tape()->Rec.TotNumVar();
 	for(i = 0; i < m; i++)
-	{	y_copy[i].value = y[i].value;
-		y_taddr         = y[i].taddr;
-		parameter[i]    = CppAD::Parameter(y[i]);
-		if( parameter[i] )
-			y_taddr = AD<Base>::Tape()->RecordParOp( y[i].value );
+	{	dep_parameter[i] = CppAD::Parameter(y[i]);
+		if( dep_parameter[i] )
+		{	y_taddr = AD<Base>::Tape()->RecordParOp( y[i].value );
+			totalNumVar++;
+		}
+		else	y_taddr = y[i].taddr;
 
-		y_copy[i].MakeVariable( y_taddr );
+		CppADUnknownError( y_taddr > 0 );
+		CppADUnknownError( y_taddr < totalNumVar );
+		dep_taddr[i] = y_taddr;
 	}
 
+	// now that each dependent variable has a place in the tape,
+	// we can make a copy for this function and erase the tape.
+	Rec = new TapeRec<Base>( AD<Base>::Tape()->Rec );
+	AD<Base>::Tape()->Erase();
+
 	// total number of varables in this recording 
-	totalNumVar = AD<Base>::Tape()->Rec.TotNumVar();
+	CppADUnknownError( totalNumVar == Rec->TotNumVar() );
 
 	// current order and row dimensions
 	memoryMax     = 0;
 	order         = 0;
-	TaylorColDim  = 1;
 	ForJacColDim  = 0;
 	ForJacBitDim  = 0;
-
-	// recording
-	Rec     = new TapeRec<Base>( AD<Base>::Tape()->Rec );
+	TaylorColDim  = 1;
 
 	// buffers
 	Taylor  = CppADNull;
 	ForJac  = CppADNull;
+	Taylor  = CppADNull;
 	Taylor  = CppADTrackNewVec(totalNumVar, Taylor);
 
-	// number of elements in x
+	// set tape address and initial value for independent variables
+	ind_taddr.resize(n);
 	CppADUsageError(
 		n < totalNumVar,
 		"independent variables vector has changed"
 	);
-
-	// set initial independent variable values
-	indvar.resize(n);
 	for(j = 0; j < n; j++)
 	{	
 		CppADUsageError( 
@@ -441,27 +445,8 @@ ADFun<Base>::ADFun(const VectorADBase &x, const VectorADBase &y)
 			op == InvOp,
 			"independent variable vector has changed"
 		);
-		indvar[j]   = j+1;
-		Taylor[j+1] = x[j].value;
-	}
-
-	// check for the special case where there is nothing past
-	// the independent variable records
-	if( n + 1 < Rec->NumOp() )
-	{	op = Rec->GetOp(n+1);
-		CppADUsageError(
-			op != InvOp,
-			"independent variable vector has changed"
-		);
-	}
-
-	// dep
-	depvar.resize(m);
-	for(i = 0; i < m; i++)
-	{	y_taddr  = y_copy[i].taddr;
-		CppADUnknownError( y_taddr > 0 );
-		CppADUnknownError( y_taddr < totalNumVar );
-		depvar[i] = y_taddr;
+		ind_taddr[j] = x[j].taddr;
+		Taylor[j+1]  = x[j].value;
 	}
 
 	// use independent variable values to fill in values for others
@@ -472,10 +457,7 @@ ADFun<Base>::ADFun(const VectorADBase &x, const VectorADBase &y)
 
 	// check the dependent variable values
 	for(i = 0; i < m; i++)
-		CppADUnknownError( Taylor[depvar[i]] == y[i].value );
-
-	// We are now done with the AD<Base> tape so erase it
-	AD<Base>::Tape()->Erase();
+		CppADUnknownError( Taylor[dep_taddr[i]] == y[i].value );
 }
 
 } // END CppAD namespace

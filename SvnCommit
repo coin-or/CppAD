@@ -1,13 +1,13 @@
-# Simplify souce code for Add.h, Sub.h and Div.h to be like Mul.h
+# Merge in changes from CppAD/branches/FunAD 
 # 
-# SvnCommit: this file.
-# WhatsNew06.omh: users view of changes.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 svn commit --file svn.log \
 	SvnCommit \
-	omh/WhatsNew06.omh \
-	CppAD/local/Add.h \
-	CppAD/local/Sub.h \
-	CppAD/local/Mul.h \
-	CppAD/local/Div.h 
+	SvnMerge  \
+	CppAD/local/RevSparseHes.h \
+	CppAD/local/Reverse.h \
+	CppAD/local/Fun.h \
+	CppAD/local/Forward.h \
+	CppAD/local/ForSparseJac.h \
+	CppAD/local/RevSparseJac.h 

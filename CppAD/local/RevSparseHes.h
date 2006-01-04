@@ -2,7 +2,7 @@
 # define CppADRevSparseHesIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -211,8 +211,8 @@ VectorBool ADFun<Base>::RevSparseHes(
 	CheckSimpleVector<bool, VectorBool>();
 
 	// range and domain dimensions for F
-	size_t m = depvar.size();
-	size_t n = indvar.size();
+	size_t m = dep_taddr.size();
+	size_t n = ind_taddr.size();
 
 	CppADUsageError(
 		q > 0,
@@ -253,10 +253,10 @@ VectorBool ADFun<Base>::RevSparseHes(
 			RevHes[ i * npv + k ] = 0;
 	}
 	for(i = 0; i < m; i++)
-	{	CppADUnknownError( depvar[i] < totalNumVar );
+	{	CppADUnknownError( dep_taddr[i] < totalNumVar );
 		if( Py[i] )
 		{	// set all the bits to true
-			RevJac[ depvar[i] ] = ~0;
+			RevJac[ dep_taddr[i] ] = ~0;
 		}
 	}
 
@@ -274,17 +274,17 @@ VectorBool ADFun<Base>::RevSparseHes(
 
 	// j is index corresponding to reverse mode martial
 	for(j = 0; j < n; j++)
-	{	CppADUnknownError( indvar[j] < totalNumVar );
+	{	CppADUnknownError( ind_taddr[j] < totalNumVar );
 
-		// indvar[j] is operator taddr for j-th independent variable
-		CppADUnknownError( Rec->GetOp( indvar[j] ) == InvOp );
+		// ind_taddr[j] is operator taddr for j-th independent variable
+		CppADUnknownError( Rec->GetOp( ind_taddr[j] ) == InvOp );
 
 		// i is index corresponding to forward mode partial
 		for(i = 0; i < q; i++) 
 		{	k     = i / sizeof(Pack);
 			p     = i - k * sizeof(Pack);
 			mask  = Pack(1) << p;
-			mask &=	RevHes[ indvar[j] * npv + k ];
+			mask &=	RevHes[ ind_taddr[j] * npv + k ];
 			Pxx[ i * n + j ] = (mask != 0);
 		}
 	}

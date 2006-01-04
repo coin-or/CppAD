@@ -2,7 +2,7 @@
 # define CppADRevSparseJacIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -186,8 +186,8 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 	CheckSimpleVector<bool, VectorBool>();
 
 	// range and domain dimensions for F
-	size_t m = depvar.size();
-	size_t n = indvar.size();
+	size_t m = dep_taddr.size();
+	size_t n = ind_taddr.size();
 
 	CppADUsageError(
 		p > 0,
@@ -221,7 +221,7 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 	// set values corresponding to dependent variables
 	Pack mask;
 	for(j = 0; j < m; j++)
-	{	CppADUnknownError( depvar[j] < totalNumVar );
+	{	CppADUnknownError( dep_taddr[j] < totalNumVar );
 
 		// set bits that are true
 		for(i = 0; i < p; i++) 
@@ -229,7 +229,7 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 			q    = i - k * sizeof(Pack);
 			mask = Pack(1) << q;
 			if( Py[ i * m + j ] )
-				RevJac[ depvar[j] * npv + k ] |= mask;
+				RevJac[ dep_taddr[j] * npv + k ] |= mask;
 		}
 	}
 
@@ -239,16 +239,16 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 	// return values corresponding to dependent variables
 	VectorBool Px(p * n);
 	for(j = 0; j < n; j++)
-	{	CppADUnknownError( indvar[j] < totalNumVar );
-		// indvar[j] is operator taddr for j-th independent variable
-		CppADUnknownError( Rec->GetOp( indvar[j] ) == InvOp );
+	{	CppADUnknownError( ind_taddr[j] < totalNumVar );
+		// ind_taddr[j] is operator taddr for j-th independent variable
+		CppADUnknownError( Rec->GetOp( ind_taddr[j] ) == InvOp );
 
 		// set bits 
 		for(i = 0; i < p; i++) 
 		{	k     = i / sizeof(Pack);
 			q     = i - k * sizeof(Pack);
 			mask  = Pack(1) << q;
-			mask &=	RevJac[ indvar[j] * npv + k ];
+			mask &=	RevJac[ ind_taddr[j] * npv + k ];
 			Px[ i * n + j ] = (mask != 0);
 		}
 	}

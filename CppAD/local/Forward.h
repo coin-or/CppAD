@@ -2,7 +2,7 @@
 # define CppADForwardIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -242,13 +242,20 @@ namespace CppAD {
 template <typename Base>
 template <typename VectorBase>
 VectorBase ADFun<Base>::Forward(size_t p, const VectorBase &up)
-{	size_t i;
+{	// temporary indices
+	size_t i, j;
+
+	// number of independent variables
+	size_t n = ind_taddr.size();
+
+	// number of dependent variables
+	size_t m = dep_taddr.size();
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
 
 	CppADUsageError(
-		up.size() == indvar.size(),
+		up.size() == n,
 		"Second argument to Forward does not have length equal to\n"
 		"the dimension of the domain for the corresponding ADFun."
 	);
@@ -267,7 +274,6 @@ VectorBase ADFun<Base>::Forward(size_t p, const VectorBase &up)
 		newptr          = CppADTrackNewVec(newlen, newptr);
 
 		// copy the old data into the new matrix
-		size_t j;
 		for(i = 0; i < totalNumVar; i++)
 		{	for(j = 0; j < p; j++)
 			{	newptr[i * p1 + j]  = Taylor[i * p + j];
@@ -282,24 +288,26 @@ VectorBase ADFun<Base>::Forward(size_t p, const VectorBase &up)
 	}
 
 	// set the p-th order Taylor coefficients for independent variables
-	size_t m = indvar.size();
-	for(i = 0; i < m; i++)
-	{	CppADUnknownError( indvar[i] < totalNumVar );
-		// indvar[i] is operator taddr for i-th independent variable
-		CppADUnknownError( Rec->GetOp( indvar[i] ) == InvOp );
-		// It is also variable taddr for i-th independent variable
-		Taylor[indvar[i] * TaylorColDim + p] = up[i];
+	for(j = 0; j < n; j++)
+	{	CppADUnknownError( ind_taddr[j] < totalNumVar );
+
+		// ind_taddr[j] is operator taddr for j-th independent variable
+		CppADUnknownError( Rec->GetOp( ind_taddr[j] ) == InvOp );
+
+		// It is also variable taddr for j-th independent variable
+		Taylor[ind_taddr[j] * TaylorColDim + p] = up[j];
 	}
 
 	// evaluate the derivatives
-	compareChange = ForwardSweep(true, p, totalNumVar, Rec, TaylorColDim, Taylor);
+	compareChange = ForwardSweep(
+		true, p, totalNumVar, Rec, TaylorColDim, Taylor
+	);
 
 	// return the p-th order Taylor coefficients for dependent variables
-	size_t n = depvar.size();
-	VectorBase vp(n);
-	for(i = 0; i < n; i++)
-	{	CppADUnknownError( depvar[i] < totalNumVar );
-		vp[i] = Taylor[depvar[i] * TaylorColDim + p];
+	VectorBase vp(m);
+	for(i = 0; i < m; i++)
+	{	CppADUnknownError( dep_taddr[i] < totalNumVar );
+		vp[i] = Taylor[dep_taddr[i] * TaylorColDim + p];
 	}
 
 	// order of the Taylor coefficient matrix currently in this ADFun
