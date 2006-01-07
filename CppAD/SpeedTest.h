@@ -134,11 +134,9 @@ in the context of the standard $code <ctime>$$ definitions.
 
 $head Errors$$
 If one of the restrictions above is violated,
-the error reporting macro 
-$xref/CppADError/Description/CppADUsageError/CppADUsageError/1/$$
-is used to report the error.
+the error reporting handler is used to report the error.
 You can redefine this action using the instructions in
-$xref/CppADError/$$
+$xref/ErrorHandler/$$
 
 $head Example$$
 $children%
@@ -161,7 +159,7 @@ $end
 # include <iomanip>
 
 // For an unknown reason, cannot move other includes (using Sun's CC compiler)
-# include <CppAD/CppADError.h>
+# include <CppAD/local/CppADError.h>
 # include <CppAD/SpeedTest.h>
 
 namespace CppAD { // BEGIN CppAD namespace

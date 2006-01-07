@@ -381,7 +381,7 @@ $end
 --------------------------------------------------------------------------
 */
 
-# include <CppAD/CppADError.h>
+# include <CppAD/local/CppADError.h>
 # include <CppAD/CheckSimpleVector.h>
 
 namespace CppAD { // Begin CppAD namespace

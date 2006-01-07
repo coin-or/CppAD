@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 $begin library$$
 $spell
 	CppAD
+	namespace
 $$
 
 $index numerical, C++ template library$$
@@ -31,6 +32,7 @@ $index library, numerical C++ template$$
 $section The CppAD General Purpose Library$$
 
 $children%
+	CppAD/ErrorHandler.h%
 	CppAD/NearEqual.h%
 	CppAD/SpeedTest.h%
 	omh/NumericType.omh%
@@ -49,6 +51,13 @@ $children%
 	CppAD/CppAD_vector.h%
 	CppAD/TrackNewDel.h
 %$$
+
+$head Error Handler$$
+All of the routines in the CppAD namespace use the following 
+general purpose error handler:
+$table
+$rref ErrorHandler$$
+$tend
 
 $head Some Testing Utilities$$
 The routines listed below are general purpose numerical testing routines:

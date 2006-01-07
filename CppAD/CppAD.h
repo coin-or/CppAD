@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <CppAD/CheckSimpleVector.h>
 # include <CppAD/CheckNumericType.h>
 # include <CppAD/TrackNewDel.h>
-# include <CppAD/CppADError.h>
+# include <CppAD/local/CppADError.h>
 // --------------------------------------------------------------------------
 // System routines that can be used by rest of CppAD with out including 
 

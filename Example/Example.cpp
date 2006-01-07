@@ -69,6 +69,7 @@ extern bool Div(void);
 extern bool DivEq(void);
 extern bool Eq(void);
 extern bool Erf(void);
+extern bool ErrorHandler(void);
 extern bool Exp(void);
 extern bool ForOne(void);
 extern bool ForTwo(void);
@@ -192,6 +193,7 @@ int main(void)
 	ok &= Run( DivEq,             "DivEq"            );
 	ok &= Run( Eq,                "Eq"               );
 	ok &= Run( Erf,               "Erf"              );
+	ok &= Run( ErrorHandler,      "ErrorHandler"     );
 	ok &= Run( Exp,               "Exp"              );
 	ok &= Run( ForOne,            "ForOne"           );
 	ok &= Run( ForTwo,            "ForTwo"           );

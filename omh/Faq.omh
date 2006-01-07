@@ -103,7 +103,7 @@ $xref/ADFun/$$ template class.
 $head Exceptions$$
 $index test, exception$$
 $index exception, test$$
-$index CppADError$$
+$index ErrorHandler$$
 Why, in all the examples, do you pass back a boolean variable instead
 of throwing an exception ?
 $pre
@@ -113,8 +113,8 @@ The examples are also used to test the correctness of CppAD
 and to check your installation.
 For these two uses, it is helpful to run all the tests
 and to know which ones failed.
-The actual code in CppAD uses the $xref/CppADError/$$ utility
-to signal an exception.
+The actual code in CppAD uses the $xref/ErrorHandler/$$ utility
+to signal exceptions.
 Specifications are given redefining this action.
 
 $head Independent Variables$$
@@ -250,7 +250,7 @@ and with the preprocessor symbol $code NDEBUG$$ defined.
 (The $xref/Speed/$$ tests do this.)
 Note that defining $code NDEBUG$$
 will turn off all of the error checking and reporting that
-is done using the default definitions in $xref/CppADError/$$. 
+is done using $xref/ErrorHandler/$$. 
 
 $head Tape Storage: Disk or Memory$$
 $index storage, tape$$

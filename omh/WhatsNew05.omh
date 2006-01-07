@@ -322,7 +322,7 @@ $xref/Independent/$$ and
 the range dimension during $xref/ADFun/$$
 (provided that $code -DNDEBUG$$ is not defined).
 If either of these is zero, 
-the $xref/CppADError//CppADUsageError/$$ macro is invoked.
+the $code CppADUsageError$$ macro is invoked.
 
 
 $head 11-20$$
@@ -347,7 +347,7 @@ $pre
 $$
 Put a try and catch block around all of the uses of
 $code new$$ so that if a memory allocation error occurs, 
-it will generate a $xref/CppADError//CppADUsageError/$$ message.
+it will generate a $code CppADUsageError/$$ message.
 $pre
 
 $$
@@ -525,8 +525,8 @@ $pre
 
 $$
 The documentation for 
-$xref/CppADError/Replacing Defaults/replacing defaults/$$
-in $xref/CppADError/$$ has been improved.
+replacing defaults
+in CppAD error macros has been improved.
 
 $head 08-24$$
 Changed $code Romberg$$ to $xref/RombergOne/$$ and added $xref/RombergMul/$$.

@@ -13,22 +13,20 @@ $index wish list$$
 $index new, features$$
 $index features, new$$
 
+$head Atan2$$
+$index atan2$$
+The $xref/Atan2//atan2/$$ function could be made faster by adding
+a special operator for it.
+
 $head CondExp$$
+$index CondExp$$
 Extend the conditional expressions $xref/CondExp/$$ so that they are 
 valid for complex types by comparing real parts.
 In addition, use this change to extend $xref/LuRatio/$$ so 
 that it works with complex AD types.
 
-$head Error Recovery$$
-There is a problem with redefining the CppAD error in
-$xref/CppADError/$$.
-If one uses two different definitions of the macros,
-some of the class objects in CppAD would depend on the definition
-and only one version of the definition would be linked.
-It would be nice to add default routine for handling errors
-that the could be switched dynamically during program execution.
-
 $head Memory$$
+$index memory$$
 Currently the tape buffers associated with each $xref/AD/$$ type
 grow and the corresponding memory is not freed until the 
 program terminates. 
@@ -51,11 +49,5 @@ $codep
 $$
 One application of this is where each of the tapes is on a different
 processor in a shared memory multiple processor application.
-
-
-$head Atan2$$
-$index atan2$$
-The $xref/Atan2//atan2/$$ function could be made faster by adding
-a special operator for it.
 
 $end

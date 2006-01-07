@@ -157,7 +157,7 @@ $end
 */
 
 # include <complex>
-# include <CppAD/CppADError.h>
+# include <CppAD/local/CppADError.h>
 # include <CppAD/CheckNumericType.h>
 
 namespace CppAD { // Begin CppAD namespace

@@ -286,7 +286,7 @@ $codep */
 # include <CppAD/CppAD.h>  
 # endif
 
-# include <CppAD/CppADError.h>
+# include <CppAD/local/CppADError.h>
 # include <CppAD/CheckSimpleVector.h>
 # include <CppAD/CheckNumericType.h>
 

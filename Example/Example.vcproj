@@ -614,6 +614,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\ErrorHandler.cpp">
+			</File>
+			<File
 				RelativePath="Example.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

@@ -153,7 +153,7 @@ $end
 */
 
 # include <CppAD/CheckNumericType.h>
-# include <CppAD/CppADError.h>
+# include <CppAD/local/CppADError.h>
 # include <CppAD/CppAD_vector.h>
 
 namespace CppAD { // BEGIN CppAD namespace

@@ -115,7 +115,7 @@ This routine is used to start the tracking of memory allocation
 using $code new[]$$.
 The value of $italic oldptr$$ does not matter for this case.
 If $code NDEBUG$$ is not defined and the memory cannot be allocated,
-$xref/CppADError//CppADUsageError/$$ is used to generate a message
+$xref/ErrorHandler/$$ is used to generate a message
 stating that there was not sufficient memory.
 The preprocessor macro call
 $syntax%
@@ -135,7 +135,7 @@ If $code NDEBUG$$ is not defined, $code TrackDelete$$ check that
 $italic oldptr$$ was allocated by $code TrackNew$$ or $code TrackExtend$$
 and has not yet been freed.
 If this is not the case,
-$xref/CppADError//CppADUsageError/$$ is used to generate an error message.
+$xref/ErrorHandler/$$ is used to generate an error message.
 The preprocessor macro call
 $syntax%
 	CppADTrackDelVec(%oldptr%)
@@ -196,7 +196,7 @@ It returns true, if it succeeds, and false otherwise.
 $end
 ------------------------------------------------------------------------------
 */
-# include <CppAD/CppADError.h>
+# include <CppAD/local/CppADError.h>
 # include <sstream>
 # include <string>
 

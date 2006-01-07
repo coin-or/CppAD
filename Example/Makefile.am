@@ -64,6 +64,7 @@ Example_SOURCES   = \
 	DivEq.cpp \
 	Eq.cpp \
 	Erf.cpp \
+	ErrorHandler.cpp \
 	Exp.cpp \
 	ForOne.cpp \
 	ForTwo.cpp \

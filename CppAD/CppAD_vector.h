@@ -78,7 +78,7 @@ The $code CppAD::vector$$ template class will check that
 the size of $italic x$$ is equal to the size of $italic y$$
 before doing the assignment.
 If the sizes are not equal, $code CppAD::vector$$ will use
-$xref/CppADError/Description/CppADUsageError/CppADUsageError/1/$$
+$xref/ErrorHandler/$$
 to generate an appropriate error report.
 $pre
 
@@ -110,7 +110,7 @@ $pre
 $$
 If $italic i$$ is not less than the size of the $italic x$$,
 $code CppAD::vector$$ will use
-$xref/CppADError/Description/CppADUsageError/CppADUsageError/1/$$
+$xref/ErrorHandler/$$
 to generate an appropriate error report.
 
 $head Push Back$$
@@ -221,7 +221,7 @@ $end
 # include <cstddef>
 # include <iostream>
 # include <limits>
-# include <CppAD/CppADError.h>
+# include <CppAD/local/CppADError.h>
 
 # ifndef CppADNull
 # define CppADNull 0

@@ -74,7 +74,7 @@ assist you in learning about changes between various versions.
 
 
 $head 12-11$$
-The documentation for $xref/CppADError/$$ was improved.
+The documentation for the CppAD error macros was improved.
 The package title in $xref/CppAD/$$ was changed.
 The documentation for $xref/CppAD_vector//CppAD::vector/$$ 
 was improved and the corresponding source code 
@@ -356,7 +356,7 @@ $href%
 
 $head 08-27$$
 The error messages printed by the default version of 
-$xref/CppADError/$$ had $code YY-MM-DD$$ in place of the 
+the CppAD error macros had $code YY-MM-DD$$ in place of the 
 date for the current version.
 This has been fixed.
 $pre
@@ -418,7 +418,7 @@ cases for the $xref/NearEqual/$$ routine arguments
 has been moved to the general purpose $xref/library/$$.
 
 $head 07-03$$
-The CppAD $xref/CppADError//error reporting/$$ names
+The CppAD error macros names
 $code CppADExternalAssert$$ and $code CppADInternalAssert$$
 were changed to
 $code CppADUsageError$$ and $code CppADUnknownError$$.
@@ -1006,7 +1006,7 @@ The user defined unary functions were not
 computed correctly.
 $lend
 
-The specifications for the usage and unknown $xref/CppADError/$$
+The specifications for the usage and unknown CppAD error macros
 were modified so that they could be used with out side effects.
 
 $head 01-28$$

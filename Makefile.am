@@ -34,8 +34,8 @@ nobase_myinclude_HEADERS =  \
 	CppAD/CheckNumericType.h \
 	CppAD/CheckSimpleVector.h \
 	CppAD/CppAD.h \
-	CppAD/CppADError.h \
 	CppAD/CppAD_vector.h \
+	CppAD/ErrorHandler.h \
 	CppAD/LuFactor.h \
 	CppAD/LuInvert.h \
 	CppAD/LuSolve.h \
@@ -73,6 +73,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/Copy.h \
 	CppAD/local/Cos.h \
 	CppAD/local/Cosh.h \
+	CppAD/local/CppADError.h \
 	CppAD/local/CppADvector.h \
 	CppAD/local/Declare.h \
 	CppAD/local/Default.h \
