@@ -18,6 +18,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew06$$
 $spell
+	usr
+	aclocal
+	automake
+	autoconf
+	user
+	underquoted
 	Hes
 	Jac
 	CppAD
@@ -46,6 +52,25 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-08$$
+The aclocal program is part of the automake and autoconf system.
+It often generates warnings of the form:
+$syntax%
+	/usr/share/aclocal/%...%: warning: underquoted definition of
+	%...%
+%$$
+The shell script file $code FixAclocal$$,
+which attempts to fix these warnings,
+was added to the distribution.
+
+$head 01-07$$
+Change CppAD error handler from using the macros defined in
+$code CppAD/CppADError.h$$ to using a class defined in 
+$xref%ErrorHandler%%CppAD/ErrorHandler.h%$$.
+The macros $code CppADUnknownError$$ and $code CppADUsageError$$
+have been depreciated (they are temporarily still available in the 
+file $code CppAD/local/CppADError.h$$).
 
 $head 01-02$$
 Add the sed script $code Speed/gprof.sed$$ to aid in the display of the
