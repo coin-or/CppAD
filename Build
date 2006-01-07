@@ -77,8 +77,7 @@ then
 		rm configure
 	fi
 	echo "---------------------------------------------------------"
-	echo "Warning: aclocal generates warnings on some systems. See"
-	echo "http://lists.freedesktop.org/pipermail/xserver/2004-April/001198.html"
+	echo "If aclocal generates error messages, try running ./FixAclocal"
 	echo "aclocal"
 	aclocal
 	echo "---------------------------------------------------------"

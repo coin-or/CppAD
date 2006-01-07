@@ -1,57 +1,14 @@
-# Change error handler replacement to be at execution instead of compile
+# Fix warning messages generated while running aclocal.
 # 
-# Doc.omh: remove referce to CppADError.h.
-#
-# ErrorHandler.h: library routine for handeling error messaging replacement.
-#
-# CppAD/*.h: change CppAD/CppADError.h -> CppAD/local/CppADError.h:
-# TrackNewDel.h: change documentation from CppADError to ErrorHandler.
-# CppAD_vector.h: change documentation from CppADError to ErrorHandler.
-# COPYING: change 05 to 06 in copyright message.
-# Faq.omh: change documentation from CppADError to ErrorHandler.
-# library.omh: add ErrorHandler to library.
-# WhatsNew04.omh: remove cross references to CppADError.
-# WhatsNew05.omh: remove cross references to CppADError.
-# WishList.omh: remove error reporting entry and put Atan2 in alphabetic order.
-# Example.cpp: add ErrorHandler example.
-# Example.vcproj: add ErrorHandler example.
-# Example/Makefile.am: add ErrorHandler example.
-# Developer.omh: add CppADError macros to developer documentation.
-# Makefile.am: add ErrorHandler.h and move CppADError.h to CppAD/local. 
+# SvnCommit: this file.
+# Build: mention running FixAclocal durring Build script.
+# FixAclocal: new script file.
+# Makefile.am: add FixAclocal to distribtuion.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-# svn delete CppAD/CppADError.h
-# svn add    CppAD/local/CppADError.h
-# svn add    Example/ErrorHandler.cpp
-# svn add CppAD/ErrorHandler.h
+svn add FixAclocal
 svn commit --file svn.log \
 	SvnCommit \
-	Doc.omh \
-	CppAD/ErrorHandler.h \
-	CppAD/Runge45.h \
-	CppAD/LuSolve.h \
-	CppAD/Rosen34.h \
-	CppAD/RombergOne.h \
-	CppAD/SpeedTest.h \
-	CppAD/CppADError.h \
-	CppAD/TrackNewDel.h \
-	CppAD/local/CppADError.h \
-	CppAD/OdeGear.h \
-	CppAD/LuInvert.h \
-	CppAD/CppAD_vector.h \
-	CppAD/NearEqual.h \
-	CppAD/LuFactor.h \
-	CppAD/OdeErrControl.h \
-	CppAD/CppAD.h \
-	COPYING \
-	omh/Faq.omh \
-	omh/library.omh \
-	omh/WhatsNew04.omh \
-	omh/WhatsNew05.omh \
-	omh/WishList.omh \
-	Example/ErrorHandler.cpp \
-	Example/Example.cpp \
-	Example/Example.vcproj \
-	Example/Makefile.am \
-	Developer.omh \
+	Build \
+	FixAclocal \
 	Makefile.am

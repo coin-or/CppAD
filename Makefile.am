@@ -218,6 +218,7 @@ EXTRA_DIST = \
 	Doc \
 	Doc.omh \
 	Example/OneTest \
+	FixAclocal \
 	FixMakefile \
 	omh \
 	RunOMhelp \
