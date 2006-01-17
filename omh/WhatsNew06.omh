@@ -53,7 +53,15 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-18$$
+Improve the definition for 
+$xref/glossary/Parameter/parameters/$$ and
+$xref/glossary/Variable/variables/$$.
+Remove unnecessary reference to parameter and variable
+in  documentation for $xref/Independent/$$.
+
 $head 01-08$$
+$index aclocal$$
 The aclocal program is part of the automake and autoconf system.
 It often generates warnings of the form:
 $syntax%

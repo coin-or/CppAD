@@ -1,14 +1,18 @@
-# Fix warning messages generated while running aclocal.
+# Improve glossary definition of variable and parameter.
 # 
 # SvnCommit: this file.
-# Build: mention running FixAclocal durring Build script.
-# FixAclocal: new script file.
-# Makefile.am: add FixAclocal to distribtuion.
+# WhatsNew06.omh: users view of changes.
+# Parameter.h: split Parameter and Variable into separate sections.
+# Independent.h: remove definition of parameter and variable, change source
+#                code to use same argument name as documentation. 
+# Build: fix a minor error in "Build all unix" help message.
+# glossary.omh:  improved definitions are in this file.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-svn add FixAclocal
 svn commit --file svn.log \
 	SvnCommit \
+	omh/WhatsNew06.omh \
+	CppAD/local/Parameter.h \
+	CppAD/local/Independent.h \
 	Build \
-	FixAclocal \
-	Makefile.am
+	omh/glossary.omh

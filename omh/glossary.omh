@@ -70,20 +70,20 @@ the $xref/Independent/$$ function call
 that starts recording operations on the corresponding tape.
 
 $head Parameter$$
-All $italic Base$$ objects are always parameters.
-An $syntax%AD<%Base%>%$$ object is currently a parameter if
-it is not currently a variable.
+All $italic Base$$ objects are parameters.
 All $syntax%AD<%Base%>%$$ objects are currently parameters
 when the tape is in the Empty state.
-An $syntax%AD<%Base%>%$$ object $italic x$$ is 
-currently a parameter if and only if
-$xref/Parameter//Parameter(x)/$$ is true.
+An $syntax%AD<%Base%>%$$ object $italic u$$ is currently a parameter if
+its value does not depend on the value of the
+current $xref/Independent/$$ variables.
+If $italic u$$ is a parameter, the function 
+$xref/Parameter//Parameter(u)/$$ returns true
+and $xref/Variable//Variable(u)/$$ returns false.
 $pre
 
 $$
 Note that we often drop the word currently and 
-just refer to an $syntax%AD<%Base%>%$$ object as a variable
-or parameter.
+just refer to an $syntax%AD<%Base%>%$$ object as a parameter.
 
 $head Sparsity Pattern$$
 $index sparsity, pattern$$
@@ -155,29 +155,29 @@ converges to zero and $latex t$$ goes to zero.
 
 
 $head Variable$$
-An $syntax%AD<%Base%>%$$ object is currently a variable if
+An $syntax%AD<%Base%>%$$ object $italic u$$ is currently a variable if
 the corresponding tape is in the Recording state
 and the current value of an $syntax%AD<%Base%>%$$ object 
 depends on the value of at least one of the 
 $xref/glossary/Independent Variable/independent/$$ variables.
-An $syntax%AD<%Base%>%$$ object $italic x$$ is currently
-a variable if and only if
-$xref/Parameter//Parameter(x)/$$ is currently false.
+If $italic u$$ is a variable,
+$xref/Variable//Variable(u)/$$ returns true and 
+$xref/Parameter//Parameter(u)/$$ returns false. 
 For example,
 directly after the code sequence
 $syntax%
-	Independent(%u%);
-	AD<double> %x% = %u%[0];
+	Independent(%x%);
+	AD<double> %u% = %x%[0];
 %$$
-the $syntax%AD<double>%$$ object $italic x$$ is currently a variable.
+the $syntax%AD<double>%$$ object $italic u$$ is currently a variable.
 Directly after the code sequence
 $syntax%
-	Independent(%u%);
-	AD<double> %x% = %u%[0];
-	%x% = 5;
+	Independent(%x%);
+	AD<double> %u% = %x%[0];
+	%u% = 5;
 %$$
-$italic x$$  is currently not a variable 
-(it is currently a $xref/glossary/Parameter/parameter/$$).
+$italic u$$  is currently a $xref/glossary/Parameter/parameter/$$
+(not a variable).
 $pre
 
 $$

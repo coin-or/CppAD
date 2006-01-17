@@ -346,4 +346,4 @@ echo "with the exception that \"configue\" will be excluded."
 echo
 echo "Build all unix"
 echo "This command will execute all the options in the order above"
-echo "with the exception that \"configue\" and \"dos\" will be excluded."
+echo "with the exception that \"configue test\" and \"dos\" will be excluded."

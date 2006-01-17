@@ -41,14 +41,15 @@ $section Declare Independent Variables and Start Recording$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%Independent(%X%)%$$
+$syntax%Independent(%x%)%$$
 $tend
 
 $fend 20$$
 
-$head Description$$
-Calling the $code Independent$$ 
-starts the recording of $syntax%AD<%Base%>%$$ operations.
+$head Purpose$$
+Calling $code Independent$$ 
+starts the recording of $syntax%AD<%Base%>%$$ operations
+with $italic x$$ being the independent variable vector.
 This is the first step in defining a CppAD differentiable function object
 ($xref/ADFun/$$ object).
 
@@ -58,12 +59,12 @@ $xref/SimpleVector/Elements of Specified Type/elements of type AD<Base>/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head X$$
-The vector $italic X$$ has prototype
+$head x$$
+The vector $italic x$$ has prototype
 $syntax%
-	%VectorADBase% &%X%
+	%VectorADBase% &%x%
 %$$
-The length of $italic X$$, must be greater than zero,
+The length of $italic x$$, must be greater than zero,
 and is the number of independent variables
 (dimension of the domain space for the $xref/ADFun/$$ object)
 
@@ -76,37 +77,6 @@ that records $syntax%AD<%Base%>%$$ operations is in the
 Empty $xref/glossary/Tape State/state/$$.
 After this operation, the tape will be in the Recording state.
 
-$head Parameters$$
-$index parameter$$
-Directly before $code Independent$$ is called, 
-all other $syntax%AD<%Base%>%$$ objects are 
-$xref/glossary/Parameter/parameters/$$; i.e.,
-they do not dependent on the independent variables.
-For example, after the code sequence
-$syntax%
-	%v% = %X%;
-	Independent(%X%);
-%$$
-all of the elements of the vector $italic v$$ are parameters.
-Hence their partial derivatives with respect to each of the 
-elements of $italic X$$ are identically zero.
-
-$head Variables$$
-$index variables$$
-An $syntax%AD<%Base%>%$$ object is a 
-$xref/glossary/Variable/variable/$$
-if and only if its value depends on the value
-of one of the independent variables.
-For example, after the code sequence
-$syntax%
-	Independent(%v%);
-	%v% = %X%;
-%$$
-all of the elements of the vector $italic v$$ are variables.
-In fact, the partial of $syntax%%v%[%j%]%$$ with respect to
-$syntax%%X%[%j%]%$$ is one.
-
-
 $end
 -----------------------------------------------------------------------------
 */
@@ -117,7 +87,7 @@ namespace CppAD {
 
 template <typename Base>
 template <typename VectorADBase>
-void ADTape<Base>::Independent(VectorADBase &u)
+void ADTape<Base>::Independent(VectorADBase &x)
 {
 	// check VectorADBase is Simple Vector class with AD<Base> elements
 	CheckSimpleVector< AD<Base>, VectorADBase>();
@@ -126,9 +96,11 @@ void ADTape<Base>::Independent(VectorADBase &u)
 		State() == Empty ,
 		"Independent can only be used when tape is empty"
 	);
+	// dimension of the domain space
+	size_t n = x.size();
 	CppADUsageError(
-		u.size() > 0,
-		"Indepdendent: the argument vector X has zero size"
+		n > 0,
+		"Indepdendent: the argument vector x has zero size"
 	);
 	CppADUnknownError( Rec.NumOp() == 0 );
 	CppADUnknownError( Rec.TotNumVar() == 0 );
@@ -141,9 +113,9 @@ void ADTape<Base>::Independent(VectorADBase &u)
 
 	// place each of the independent variables in the tape
 	size_t i;
-	for(i = 0; i < u.size(); i++)
-	{	RecordInvOp(u[i]);
-		CppADUnknownError( u[i].taddr == i+1 );
+	for(i = 0; i < n; i++)
+	{	RecordInvOp(x[i]);
+		CppADUnknownError( x[i].taddr == i+1 );
 	}
 
 	// done specifying all of the independent variables
@@ -152,9 +124,9 @@ void ADTape<Base>::Independent(VectorADBase &u)
 }
 
 template <typename VectorADBase>
-inline void Independent(VectorADBase &u)
+inline void Independent(VectorADBase &x)
 {	typedef typename VectorADBase::value_type ADBase;
-	ADBase::Tape()->Independent(u); 
+	ADBase::Tape()->Independent(x); 
 }
 
 

@@ -25,41 +25,70 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin Parameter$$
 $spell
-	Cpp
-	Dvector
-	bool
 	const
-	var
+	bool
 $$
 
 $index Parameter$$
-$index Variable$$
 $section Is This AD Object a Parameter$$
 
 $table
-$bold Prototype$$ $cnext
-$syntax%bool Parameter(const AD<%Base%> &%u%)%$$
-$rnext $cnext
-$syntax%bool Variable(const AD<%Base%> &%u%)%$$
+$bold Syntax$$ $cnext $syntax%%b% = Parameter(%u%)%$$
 $tend
 
-$head Parameter$$
-The syntax
+$fend 20$$
+
+$head Purpose$$
+Determine if $italic u$$ is a 
+$xref/glossary/Parameter/parameter/$$.
+
+$head u$$
+The argument $italic u$$ has prototype
 $syntax%
-	Parameter(%u%) 
+	const AD<%Base%> &%u%
 %$$
-returns true if $italic u$$ is a
-$xref/glossary/Parameter/parameter/$$ and false otherwise.
 
-
-$head Variable$$
-The syntax
+$head b$$
+The return value $italic b$$ has prototype
 $syntax%
-	Variable(%u%) 
+	bool %b%
 %$$
-returns true if $italic u$$ is a
-$xref/glossary/Variable/variable/$$ and false otherwise.
+It is true if and only if $italic x$$ is a parameter.
 
+$end
+-----------------------------------------------------------------------------
+
+$begin Variable$$
+$spell
+	const
+	bool
+$$
+
+$index Variable$$
+$section Is This AD Object a Variable$$
+
+$table
+$bold Syntax$$ $cnext $syntax%%b% = Variable(%u%)%$$
+$tend
+
+$fend 20$$
+
+$head Purpose$$
+Determine if $italic u$$ is a 
+$xref/glossary/Variable/variable/$$.
+
+$head u$$
+The argument $italic u$$ has prototype
+$syntax%
+	const AD<%Base%> &%u%
+%$$
+
+$head b$$
+The return value $italic b$$ has prototype
+$syntax%
+	bool %b%
+%$$
+It is true if and only if $italic x$$ is a variable.
 
 $end
 -----------------------------------------------------------------------------
