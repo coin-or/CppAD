@@ -1,18 +1,27 @@
-# Improve glossary definition of variable and parameter.
+# Add batch editing to SvnCommit
 # 
 # SvnCommit: this file.
-# WhatsNew06.omh: users view of changes.
-# Parameter.h: split Parameter and Variable into separate sections.
-# Independent.h: remove definition of parameter and variable, change source
-#                code to use same argument name as documentation. 
-# Build: fix a minor error in "Build all unix" help message.
-# glossary.omh:  improved definitions are in this file.
+# SvnCommit.sed: edits to be made with each commit.
+# WhatsNew06.omh: users view of the changes.
+# WishList.omh: add software guidlines.
+# CleanCppAD: remove htm directories.
 # -----------------------------------------------
+list="\
+	omh/WhatsNew06.omh\
+	omh/WishList.omh\
+	CleanCppAD\
+"
+for file in $list
+do
+	sed -f SvnCommit.sed < $file > junk
+	echo $file
+	diff $file junk
+	mv $file ~/trash 
+	mv junk $file
+done
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
+svn add SvnCommit.sed
 svn commit --file svn.log \
 	SvnCommit \
-	omh/WhatsNew06.omh \
-	CppAD/local/Parameter.h \
-	CppAD/local/Independent.h \
-	Build \
-	omh/glossary.omh
+	SvnCommit.sed \
+	$list

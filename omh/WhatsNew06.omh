@@ -53,6 +53,11 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-20$$
+Add 
+$xref/WishList/Software Guidelines/software guidelines/$$
+to the wish list.
+
 $head 01-18$$
 Improve the definition for 
 $xref/glossary/Parameter/parameters/$$ and

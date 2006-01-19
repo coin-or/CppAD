@@ -1,5 +1,8 @@
 $begin WishList$$
 $spell
+	xml
+	hpp
+	xmguidlinesl
 	CondExp
 	Jacobian
 	Vec
@@ -25,6 +28,17 @@ valid for complex types by comparing real parts.
 In addition, use this change to extend $xref/LuRatio/$$ so 
 that it works with complex AD types.
 
+$head Exceptions$$
+When the function
+$xref/Independent/$$ is called,  
+the resulting $syntax%AD<%Base%>%$$ 
+$xref/glossary/Tape State/tape state/$$ is $code Recording$$.
+If an exception occurs before the call to the corresponding
+$xref/ADFun/$$ constructor, the tape will stuck in the $code Recording$$ state.
+Thus, there should be a way to abort the current
+$syntax%AD<%Base%>%$$ recording.
+
+
 $head Memory$$
 $index memory$$
 Currently the tape buffers associated with each $xref/AD/$$ type
@@ -49,5 +63,36 @@ $codep
 $$
 One application of this is where each of the tapes is on a different
 processor in a shared memory multiple processor application.
+
+$head Software Guidelines$$
+The following is a list of some software guidelines taken from
+$href%http://www.boost.org/more/lib_guide.htm#Guidelines%boost%$$.
+These guidelines are not implemented in the current CppAD source code,
+but perhaps they should be:
+
+$list number$$
+File and directory names should only contain lowercase letters,
+numbers underscores and possibly one period.
+The leading character must be alphabetic.
+
+$lnext
+C++ header files should have the $code .hpp$$ extension.
+
+$lnext
+Names (except as noted below) 
+should be all lowercase, with words separated by underscores.
+For example, acronyms should be treated as ordinary names 
+(xml_parser instead of XML_parser).
+
+$lnext
+Template parameter names should begin with an uppercase letter.
+
+$lnext
+Macro names (gasp!) names should use all uppercase.
+
+$lnext
+Use spaces rather than tabs.  
+
+$lend
 
 $end
