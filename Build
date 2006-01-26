@@ -20,7 +20,7 @@
 # Bash script for building the CppAD distribution.
 #
 # Default values used for arguments to configure during this script.
-# These defaults my be development system dependent and can be changed.
+# These defaults are development system dependent and can be changed.
 ADOLC_DIR=$HOME/adolc_base
 FADBAD_DIR=$HOME
 BOOST_DIR=/usr/include/boost-1_33
