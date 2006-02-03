@@ -1,9 +1,8 @@
 # ifndef CppADRosen34Included
 # define CppADRosen34Included
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Rosen34$$
@@ -302,47 +300,48 @@ Vector Rosen34(
 	// check simple vector class specifications
 	CheckSimpleVector<Scalar, Vector>();
 
-	// Parameters for Shampine's Rosenbrock Method
-	static CppAD::vector<Scalar> 
-		a(3), b(2 * 2), ct(4), cg(3 * 3), d3(3), d4(4);
-
-	static bool initialized(false);
-	if( ! initialized )
-	{	initialized = true;
-
-		a[0]  = Scalar(0);
-		a[1]  = Scalar(1);
-		a[2]  = Scalar(3)   / Scalar(5);
-		
-		b[0]  = Scalar(1);
-		b[1]  = Scalar(0);
-		b[2]  = Scalar(24)  / Scalar(25);
-		b[3]  = Scalar(3)   / Scalar(25);
-		
-		ct[0] = Scalar(1)   / Scalar(2);
-		ct[1] = - Scalar(3) / Scalar(2);
-		ct[2] = Scalar(121) / Scalar(50);
-		ct[3] = Scalar(29)  / Scalar(250);
-
-		cg[0] = - Scalar(4);
-		cg[1] = Scalar(0);
-		cg[2] = Scalar(0);
-		cg[3] = Scalar(186) / Scalar(25);
-		cg[4] = Scalar(6)   / Scalar(5);
-		cg[5] = Scalar(0);
-		cg[6] = - Scalar(56) / Scalar(125);
-		cg[7] = - Scalar(27) / Scalar(125);
-		cg[8] = - Scalar(1)  / Scalar(5);
-
-		d3[0] = Scalar(97) / Scalar(108);
-		d3[1] = Scalar(11) / Scalar(72);
-		d3[2] = Scalar(25) / Scalar(216);
-
-		d4[0] = Scalar(19)  / Scalar(18);
-		d4[1] = Scalar(1)   / Scalar(4);
-		d4[2] = Scalar(25)  / Scalar(216);
-		d4[3] = Scalar(125) / Scalar(216);
-	}
+	// Parameters for Shampine's Rosenbrock method
+	// are static to avoid recalculation on each call and 
+	// do not use Vector to avoid possible memory leak
+	static Scalar a[3] = {
+		Scalar(0),
+		Scalar(1),
+		Scalar(3)   / Scalar(5)
+	};
+	static Scalar b[2 * 2] = {
+		Scalar(1),
+		Scalar(0),
+		Scalar(24)  / Scalar(25),
+		Scalar(3)   / Scalar(25)
+	};
+	static Scalar ct[4] = {
+		Scalar(1)   / Scalar(2),
+		- Scalar(3) / Scalar(2),
+		Scalar(121) / Scalar(50),
+		Scalar(29)  / Scalar(250)
+	};
+	static Scalar cg[3 * 3] = {
+		- Scalar(4),
+		Scalar(0),
+		Scalar(0),
+		Scalar(186) / Scalar(25),
+		Scalar(6)   / Scalar(5),
+		Scalar(0),
+		- Scalar(56) / Scalar(125),
+		- Scalar(27) / Scalar(125),
+		- Scalar(1)  / Scalar(5)
+	};
+	static Scalar d3[3] = {
+		Scalar(97) / Scalar(108),
+		Scalar(11) / Scalar(72),
+		Scalar(25) / Scalar(216)
+	};
+	static Scalar d4[4] = {
+		Scalar(19)  / Scalar(18),
+		Scalar(1)   / Scalar(4),
+		Scalar(25)  / Scalar(216),
+		Scalar(125) / Scalar(216)
+	};
 	CppADUsageError(
 		M >= 1,
 		"Error in Rosen34: the number of steps is less than one"

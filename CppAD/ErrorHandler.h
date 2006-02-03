@@ -129,6 +129,7 @@ $end
 
 # include <iostream>
 # include <CppAD/config.h>
+# include <cassert>
 
 namespace CppAD { // BEGIN CppAD namespace
 

@@ -1,9 +1,8 @@
 # ifndef CppADCppAD_vectorIncluded
 # define CppADCppAD_vectorIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin CppAD_vector$$
@@ -113,9 +111,9 @@ $code CppAD::vector$$ will use
 $xref/ErrorHandler/$$
 to generate an appropriate error report.
 
-$head Push Back$$
-$index push, CppAD vector$$
-$index vector, CppAD push back$$
+$head push_back$$
+$index push_back, CppAD vector$$
+$index vector, CppAD push_back$$
 If $italic x$$ is a $syntax%CppAD::vector<%Scalar%>%$$ object
 with size equal to $italic n$$ and
 $italic t$$ has type $italic Scalar$$,
@@ -222,6 +220,7 @@ $end
 # include <iostream>
 # include <limits>
 # include <CppAD/local/CppADError.h>
+# include <CppAD/TrackNewDel.h>
 
 # ifndef CppADNull
 # define CppADNull 0
@@ -230,23 +229,6 @@ $end
 namespace CppAD { //  BEGIN CppAD namespace
 
 // ------------------ CppAD::vector<Type> ----------------------------------
-
-# ifdef NDEBUG
-# define CppADvectorAllocate(data, Type, capacity)                         \
-	data = new Type[capacity];
-# else
-# define CppADvectorAllocate(data, Type, capacity)                         \
-	{	try                                                        \
-		{	data = new Type[capacity];                         \
-		}                                                          \
-		catch (...)                                                \
-		{	CppADUsageError(0,                                 \
-			"CppAD::vector: cannot allocate enough memory"     \
-			);	                                           \
-		}                                                          \
-	}
-# endif
-
 
 template <class Type>
 class vector {
@@ -265,21 +247,23 @@ public:
 	inline vector(size_t n) : capacity(n), length(n)
 	{	if( length == 0 )
 			data = CppADNull;
-		else	CppADvectorAllocate(data, Type, capacity);
+		else	data = CppADTrackNewVec(capacity, data);
 	}
 	// copy constructor
 	inline vector(const vector &x) : capacity(x.length), length(x.length)
 	{	size_t i;
 		if( length == 0 )
 			data = CppADNull;
-		else	CppADvectorAllocate(data, Type, capacity);
+		else	data = CppADTrackNewVec(capacity, data);
 
 		for(i = 0; i < length; i++)
 			data[i] = x.data[i];
 	}
 	// destructor
 	~vector(void)
-	{	delete [] data; }
+	{	if( data != CppADNull )
+			CppADTrackDelVec(data); 
+	}
 
 	// size function
 	inline size_t size(void) const
@@ -290,12 +274,12 @@ public:
 	{	length = n;
 		if( capacity >= n )
 			return;
-		if( capacity > 0 )
-			delete [] data;
+		if( data != CppADNull  )
+			CppADTrackDelVec(data);
 		capacity = n;
 		if( capacity == 0 )
 			data = CppADNull;
-		else	CppADvectorAllocate(data, Type, capacity);
+		else	data = CppADTrackNewVec(capacity, data);
 	}
 	// assignment operator
 	inline vector & operator=(const vector &x)
@@ -329,18 +313,10 @@ public:
 	{	CppADUnknownError( length <= capacity );
 		if( length == capacity )
 		{	// allocate more capacity
-			Type *tmp;
 			if( capacity == 0 )
 				capacity = 2;
 			else	capacity = 2 * length;
-
-			CppADvectorAllocate(tmp, Type, capacity);
-
-			size_t i;
-			for(i = 0; i < length; i++)
-				tmp[i] = data[i];
-			delete [] data;
-			data = tmp;
+			data = CppADTrackExtend(capacity, length, data);
 		}
 		data[length++] = x;
 	}
@@ -367,23 +343,6 @@ inline std::ostream& operator << (
 /*
 --------------------------- vectorBool -------------------------------------
 */
-# undef  CppADvectorAllocate
-# ifdef NDEBUG
-# define CppADvectorAllocate(data, UnitType, nunit)                        \
-	data = new UnitType[nunit]; 
-# else
-# define CppADvectorAllocate(data, UnitType, nunit)                        \
-	{	try                                                        \
-		{	data = new UnitType[nunit];                        \
-		}                                                          \
-		catch (...)                                                \
-		{	CppADUsageError(0,                                 \
-			"CppAD::vectorBool: cannot allocate enough memory" \
-			);	                                           \
-		}                                                          \
-	}
-# endif
-
 class vectorBoolElement {
 	typedef size_t UnitType;
 private:
@@ -419,15 +378,16 @@ public:
 	typedef bool value_type;
 
 	// default constructor
-	inline vectorBool(void) : nunit(0), length(0) , data(CppADNull)
+	inline vectorBool(void) : nunit(0), length(0), data(CppADNull)
 	{ }
 	// constructor with a specified size
 	inline vectorBool(size_t n) : nunit(0), length(0), data(CppADNull)
-	{	if( n != 0 )
+	{	if( n == 0 )
+			data = CppADNull;
+		else 
 		{	nunit    = (n - 1) / BitPerUnit + 1;
 			length   = n;
-
-			CppADvectorAllocate(data, UnitType, nunit);
+			data     = CppADTrackNewVec(nunit, data);
 		}
 	}
 	// copy constructor
@@ -436,14 +396,16 @@ public:
 	{	size_t i;
 		if( nunit == 0 )
 			data = CppADNull;
-		else	CppADvectorAllocate(data, UnitType, nunit);
+		else	data = CppADTrackNewVec(nunit, data);
 
 		for(i = 0; i < nunit; i++)
 			data[i] = v.data[i];
 	}
 	// destructor
 	~vectorBool(void)
-	{	delete [] data; }
+	{	if( data != CppADNull )
+			CppADTrackDelVec(data);
+	}
 
 	// size function
 	inline size_t size(void) const
@@ -454,13 +416,13 @@ public:
 	{	length = n;
 		if( nunit * BitPerUnit >= n )
 			return;
-		if( nunit > 0 )
-			delete [] data;
+		if( data != CppADNull )
+			CppADTrackDelVec(data);
 		if( n == 0 )
 			data = CppADNull;
 		else
 		{	nunit    = (n - 1) / BitPerUnit + 1;
-			CppADvectorAllocate(data, UnitType, nunit);
+			data     = CppADTrackNewVec(nunit, data);
 		}
 	}
 	// assignment operator
@@ -508,15 +470,8 @@ public:
 		CppADUnknownError( length <= nunit * BitPerUnit );
 		if( length == nunit * BitPerUnit )
 		{	// allocate another unit
-			UnitType *tmp;
+			data = CppADTrackExtend(nunit+1, nunit, data);
 			nunit++;
-
-			CppADvectorAllocate(tmp, UnitType, nunit);
-
-			for(i = 0; i < nunit; i++)
-				tmp[i] = data[i];
-			delete [] data;
-			data = tmp;
 		}
 		i    = length / BitPerUnit;
 		j    = length - i * BitPerUnit;
@@ -539,8 +494,6 @@ inline std::ostream& operator << (
 		os << v[i++]; 
 	return os;
 }
-
-# undef  CppADvectorAllocate
 
 } // END CppAD namespace
 

@@ -98,7 +98,7 @@ where $syntax%%yy%-%mm%-%dd%$$ is the year, month, and date
 corresponding to this version of CppAD.
 $codep */
 
-# include <assert.h>
+# include <cassert>
 # include <iostream>
 # include <CppAD/config.h>
 # include <CppAD/ErrorHandler.h>

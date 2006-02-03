@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -150,11 +150,6 @@ namespace {
 	
 		return ok;
 	}
-	// check for memory leak in previous calculations
-	bool TrackCount(void)
-	{	bool ok = (CppADTrackCount() == 0);
-		return ok;
-	}
 }
 
 // main program that runs all the tests
@@ -255,7 +250,10 @@ int main(void)
 	ok &= Run( Vec,               "Vec"              );
 
 	// check for memory leak in previous calculations
-	ok &= Run( TrackCount,        "TrackCount"       );
+	if( CppADTrackCount() != 0 )
+	{	ok = false;
+		cout << "Error: memroy leak detected" << endl;
+	}
 
 	cout << endl << endl;
 	if( ok )

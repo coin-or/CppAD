@@ -620,7 +620,7 @@ which computes the $xref/erf/$$ function,
 have been fixed.
 
 $head 07-11$$
-The $xref/CppAD_vector/Push Back/push_back/$$ function has 
+The $xref/CppAD_vector/push_back/push_back/$$ function has 
 been added to the $code CppAD::vector$$ template class.
 $pre
 

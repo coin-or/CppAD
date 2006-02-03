@@ -1,15 +1,23 @@
-# Add batch editing to SvnCommit
+# Fix a read past end of memory in CppAD_vector
 # 
-# SvnCommit: this file.
-# SvnCommit.sed: edits to be made with each commit.
-# WhatsNew06.omh: users view of the changes.
-# WishList.omh: add software guidlines.
-# CleanCppAD: remove htm directories.
+# Runge45.h: use plain vectors for statics to avoid memory leak detection.
+# Rosen34.h: use plain vectors for statics to avoid memory leak detection.
+# CppADError.h: change <assert.h> to <cassert>.
+# CppAD_vector.h: use TrackNewDel for memory allocation.
+# ErrorHandler.h: change <assert.h> to <cassert>.
+# WhatsNew05.omh: change cross reference from "Push Back" to push_back.
+# WhatsNew06.omh: users view of changes.
+# Example.cpp: change memory leak detection so included by Example/OneTest.
 # -----------------------------------------------
 list="\
-	omh/WhatsNew06.omh\
-	omh/WishList.omh\
-	CleanCppAD\
+	CppAD/Runge45.h \
+	CppAD/Rosen34.h \
+	CppAD/local/CppADError.h \
+	CppAD/CppAD_vector.h \
+	CppAD/ErrorHandler.h \
+	omh/WhatsNew06.omh \
+	omh/WhatsNew05.omh \
+	Example/Example.cpp \
 "
 for file in $list
 do

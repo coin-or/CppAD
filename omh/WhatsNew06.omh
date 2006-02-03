@@ -53,6 +53,20 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-04$$
+There was a read memory access past the end of an array in
+$xref/CppAD_vector/push_back/CppAD::vector::push_back/$$.
+This has been fixed and in addition
+$xref/TrackNewDel/$$ is now used to do and check the allocation in 
+$code CppAD::vector$$.
+$pre
+
+$$
+The routines $xref/Runge45/$$ and $xref/Rosen34/$$
+had static vectors to avoid recalculation on each call.
+These have been changed to be plain vectors to avoid memory
+leak detection by $xref/TrackNewDel/TrackCount/TrackCount/$$.
+
 $head 01-20$$
 Add 
 $xref/WishList/Software Guidelines/software guidelines/$$

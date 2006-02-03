@@ -1,9 +1,8 @@
 # ifndef CppADRunge45Included
 # define CppADRunge45Included
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Runge45$$
@@ -260,64 +258,65 @@ Vector Runge45(
 	// check simple vector class specifications
 	CheckSimpleVector<Scalar, Vector>();
 
-	// Cash-Karp Parameters for Embedded Runge-Kutta Method
-	static Vector a(6), b(5 * 5), c4(6), c5(6);
+	// Cash-Karp parameters for embedded Runge-Kutta method
+	// are static to avoid recalculation on each call and 
+	// do not use Vector to avoid possible memory leak
+	static Scalar a[6] = {
+		Scalar(0),
+		Scalar(1) / Scalar(5),
+		Scalar(3) / Scalar(10),
+		Scalar(3) / Scalar(5),
+		Scalar(1),
+		Scalar(7) / Scalar(8)
+	};
+	static Scalar b[5 * 5] = {
+		Scalar(1) / Scalar(5),
+		Scalar(0),
+		Scalar(0),
+		Scalar(0),
+		Scalar(0),
+		
+		Scalar(3) / Scalar(40),
+		Scalar(9) / Scalar(40),
+		Scalar(0),
+		Scalar(0),
+		Scalar(0),
+		
+		Scalar(3) / Scalar(10),
+		-Scalar(9) / Scalar(10),
+		Scalar(6) / Scalar(5),
+		Scalar(0),
+		Scalar(0),
+		
+		-Scalar(11) / Scalar(54),
+		Scalar(5) / Scalar(2),
+		-Scalar(70) / Scalar(27),
+		Scalar(35) / Scalar(27),
+		Scalar(0),
+		
+		Scalar(1631) / Scalar(55296),
+		Scalar(175) / Scalar(512),
+		Scalar(575) / Scalar(13824),
+		Scalar(44275) / Scalar(110592),
+		Scalar(253) / Scalar(4096)
+	};
+	static Scalar c4[6] = {
+		Scalar(2825) / Scalar(27648),
+		Scalar(0),
+		Scalar(18575) / Scalar(48384),
+		Scalar(13525) / Scalar(55296),
+		Scalar(277) / Scalar(14336),
+		Scalar(1) / Scalar(4),
+	};
+	static Scalar c5[6] = {
+		Scalar(37) / Scalar(378),
+		Scalar(0),
+		Scalar(250) / Scalar(621),
+		Scalar(125) / Scalar(594),
+		Scalar(0),
+		Scalar(512) / Scalar(1771)
+	};
 
-	static bool initialized(false);
-	if( ! initialized )
-	{	initialized = true;
-
-		a[0]  = Scalar(0);
-		a[1]  = Scalar(1) / Scalar(5);
-		a[2]  = Scalar(3) / Scalar(10);
-		a[3]  = Scalar(3) / Scalar(5);
-		a[4]  = Scalar(1);
-		a[5]  = Scalar(7) / Scalar(8);
-		
-		b[0]  = Scalar(1) / Scalar(5);
-		b[1]  = Scalar(0);
-		b[2]  = Scalar(0);
-		b[3]  = Scalar(0);
-		b[4]  = Scalar(0);
-		
-		b[5]  = Scalar(3) / Scalar(40);
-		b[6]  = Scalar(9) / Scalar(40);
-		b[7]  = Scalar(0);
-		b[8]  = Scalar(0);
-		b[9]  = Scalar(0);
-		
-		b[10] = Scalar(3) / Scalar(10);
-		b[11] = -Scalar(9) / Scalar(10);
-		b[12] = Scalar(6) / Scalar(5);
-		b[13] = Scalar(0);
-		b[14] = Scalar(0);
-		
-		b[15] = -Scalar(11) / Scalar(54);
-		b[16] = Scalar(5) / Scalar(2);
-		b[17] = -Scalar(70) / Scalar(27);
-		b[18] = Scalar(35) / Scalar(27);
-		b[19] = Scalar(0);
-		
-		b[20] = Scalar(1631) / Scalar(55296);
-		b[21] = Scalar(175) / Scalar(512);
-		b[22] = Scalar(575) / Scalar(13824);
-		b[23] = Scalar(44275) / Scalar(110592);
-		b[24] = Scalar(253) / Scalar(4096);
-		
-		c4[0] = Scalar(2825) / Scalar(27648);
-		c4[1] = Scalar(0);
-		c4[2] = Scalar(18575) / Scalar(48384);
-		c4[3] = Scalar(13525) / Scalar(55296);
-		c4[4] = Scalar(277) / Scalar(14336);
-		c4[5] = Scalar(1) / Scalar(4);
-		
-		c5[0] = Scalar(37) / Scalar(378);
-		c5[1] = Scalar(0);
-		c5[2] = Scalar(250) / Scalar(621);
-		c5[3] = Scalar(125) / Scalar(594);
-		c5[4] = Scalar(0);
-		c5[5] = Scalar(512) / Scalar(1771);
-	}
 	CppADUsageError(
 		M >= 1,
 		"Error in Runge45: the number of steps is less than one"
