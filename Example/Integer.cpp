@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Integer.cpp$$
@@ -25,13 +23,12 @@ $spell
 	cstddef
 $$
 
-$section Conversion to Base Type: Example and Test$$
+$section Convert From AD to Integer: Example and Test$$
+
 $index Integer$$
-$index base type, value$$
 $index example, Integer$$
 $index test, Integer$$
 
-$comment This file is in the Example subdirectory$$ 
 $code
 $verbatim%Example/Integer.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -44,37 +41,38 @@ $end
 
 bool Integer(void)
 {	bool ok = true;
-
-	using namespace CppAD;
+	using CppAD::AD;
+	using CppAD::Integer;
 
 	// independent variable vector
-	CppADvector< AD<double> > X(2);
-	X[0] = 3.5;
-	X[1] = 4.5;
+	size_t n = 2;
+	CppADvector< AD<double> > x(n);
+	x[0] = 3.5;
+	x[1] = 4.5;
 
 	// check integer before recording
-	ok &= (Integer(X[0]) == 3);
-	ok &= (Integer(X[1]) == 4);
+	ok &= (Integer(x[0]) == 3);
+	ok &= (Integer(x[1]) == 4);
 
-	Independent(X);
+	// start recording
+	CppAD::Independent(x);
 
 	// check integer during recording
-	ok &= (Integer(X[0]) == 3);
-	ok &= (Integer(X[1]) == 4);
+	ok &= (Integer(x[0]) == 3);
+	ok &= (Integer(x[1]) == 4);
 
 	// dependent variable vector 
-	CppADvector< AD<double> > Y(1);
-	Y[0] = - X[1];
+	size_t m = 1;
+	CppADvector< AD<double> > y(m);
+	y[0] = - x[1];
 
-	// create f: X -> Y and vectors used for derivative calculations
-	ADFun<double> f(X, Y);
-	CppADvector<double> v( f.Domain() );
-	CppADvector<double> w( f.Range() );
+	// create f: x -> y and stop recording
+	CppAD::ADFun<double> f(x, y);
 
 	// check integer after recording
-	ok &= (Integer(X[0]) == 3.);
-	ok &= (Integer(X[1]) == 4.);
-	ok &= (Integer(Y[0]) == -4.);
+	ok &= (Integer(x[0]) ==  3.);
+	ok &= (Integer(x[1]) ==  4.);
+	ok &= (Integer(y[0]) == -4.);
 
 	return ok;
 }

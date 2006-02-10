@@ -1,5 +1,7 @@
 # Changs to be made at each commit
 #
+/BEGIN SHORT COPYRIGHT/d
+/END SHORT COPYRIGHT/d
 #
 /$comment This file is in the Example subdirectory$\$/d
 #

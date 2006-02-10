@@ -1,39 +1,37 @@
 # Improve documentation and examples.
 #
-# Value.h: major documentation improvements.
-# Default.h: minor change to title and indexing.
-# CopyBase.h: minor change to title, indexing and headings.
-# CopyAD.h: minor change to title, indexing and headings.
-# SvnCommit.sed: use comments to separate operations.
-# Build: change error to warning in comment about aclocal.
-# glossary.omh: improve the definition of Tape State.
-# WhatsNew06.omh: users view of the changes.
-# CopyAD.cpp: major changes to make easier to read.
-# Value.cpp: major changes to make easier to read.
-# Default.cpp: do not use entire CppAD namespace in example.
+# SvnCommit: do not change SvnCommit, SvnCommit.sed, *.vcproj.
+# Value.h: minor change in documentation.
+# Integer.h: separate syntax from prototypes.   
+# SvnCommit.sed: replace commands lost when this file edited itself.
+# glossary.omh: make edits lost when SvnCommit.sed changed.
+# Value.cpp: make edits lost when SvnCommit.sed changed.
+# Default.cpp: make edits lost when SvnCommit.sed changed.
+# Integer.cpp: major changes to make example easier to read.
 # -----------------------------------------------
 list="\
+	SvnCommit \
 	CppAD/local/Value.h \
-	CppAD/local/Default.h \
-	CppAD/local/CopyBase.h \
-	CppAD/local/CopyAD.h \
+	CppAD/local/Integer.h
 	SvnCommit.sed \
-	Build \
-	omh/glossary.omh
-	omh/WhatsNew06.omh \
-	Example/CopyAD.cpp \
+	omh/glossary.omh \
 	Example/Value.cpp \
 	Example/Default.cpp \
+	Example/Integer.cpp \
 "
 for file in $list
 do
-	sed -f SvnCommit.sed < $file > junk
-	echo $file
-	diff $file junk
-	mv $file ~/trash 
-	mv junk $file
+	ext=`echo $file | sed -e "s/.*\././"`
+	if [ $file != "SvnCommit"      ] && \
+	   [ $file != "SvnCommit.sed"  ] && \
+	   [ $ext != ".vcproj"         ]
+	then
+		sed -f SvnCommit.sed < $file > junk
+		echo $file
+		diff $file junk
+		mv $file ~/trash 
+		mv junk $file
+	fi
 done
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-svn commit --file svn.log \
-	SvnCommit \
-	$list
+svn commit --file svn.log $list

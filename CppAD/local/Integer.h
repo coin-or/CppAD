@@ -1,9 +1,8 @@
 # ifndef CppADIntegerIncluded
 # define CppADIntegerIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 ------------------------------------------------------------------------------
@@ -32,48 +30,59 @@ $spell
 	bool
 $$
 
-$index Integer, convert to$$
-$index convert, to integer$$
+$index Integer$$
 
-$section Convert a Value to an Integer$$
+$index AD, convert to integer$$
+$index convert, AD to integer$$
+
+$section Convert From AD to Integer$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%Integer(%x%)%$$
+$syntax%%i% = Integer(%x%)%$$
 $tend
 
 $fend 20$$
 
-$head Description$$
-This function returns a static cast of $italic x$$ to an integer.
+$head Purpose$$
+Converts from an AD type to the corresponding integer value.
 
 $head x$$
 The argument $italic x$$ has prototype
 $syntax%
 	const %Type% &%x%
 %$$
-where $italic Type$$ is either $syntax%AD<%Base%>%$$,
+where $italic Type$$ is of the form $syntax%AD<%Base%>%$$ or
+it is one of the following types:
 $code float$$, 
 $code double$$, 
 $code complex<float>$$, or
 $code complex<double>$$.
 
-$head Built In$$
+$head i$$
+The return value $italic i$$ has prototype
+$syntax%
+	int %i%
+%$$
+
+$subhead Real Types$$
 If $italic Type$$ is $code float$$ or $code double$$,
 the fractional part is dropped to form the integer value; i.e.
 $table
-$bold Case$$        $cnext $bold Comparison$$           $rnext
-$syntax%%x% >= 0%$$ $cnext $syntax%Integer(%x%) <= %x%$$ $rnext
-$syntax%%x% <= 0%$$ $cnext $syntax%Integer(%x%) >= %x%$$ 
+$bold Case$$          $cnext $bold Comparison$$           $rnext
+$syntax%%x% >= 0  %$$ $cnext $syntax%%i% <= %x%$$ $rnext
+$syntax%%x% <= 0  %$$ $cnext $syntax%%i% >= %x%$$ 
 $tend
+
+$subhead Complex Types$$
 If $italic Type$$ is 
 $code complex<float>$$, or $code complex<double>$$,
 $syntax%
-	Integer(%x%) == Integer(%x%.real())
+	%i% == Integer(%x%.real())
 %$$
 
 
-$head AD Types$$
+$subhead AD Types$$
 If $italic Type$$ is $syntax%AD%<%Base%>%$$,
 $italic Base$$ must support the $code Integer$$ function and
 the conversion has the same meaning as for $italic Base$$.

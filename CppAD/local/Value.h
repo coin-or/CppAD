@@ -42,8 +42,8 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-Returns the 
-$xref/glossary/Base Type/base type/$$ value corresponding to $italic x$$.
+Converts from and AD type to the corresponding
+$xref/glossary/Base Type/base type/$$.
 
 $head x$$
 The argument $italic x$$ has prototype
