@@ -28,11 +28,11 @@ $spell
 	const
 $$
 
-$index AD, copy constructor$$
-$index copy, AD constructor$$
-$index constructor, copy AD$$
+$index AD, copy construct$$
+$index copy, AD construct$$
+$index construct, copy AD$$
 
-$section Creating A Copy of an AD Variable$$
+$section AD Copy Constructor$$
 
 $table
 $bold Syntax$$ $cnext 
@@ -43,7 +43,7 @@ $tend
 
 $fend 20$$
 
-$head Description$$
+$head Purpose$$
 Creates a new object $italic y$$ with the same value as $italic x$$.
 The object $italic y$$ also has the same dependence on the 
 $xref/glossary/Independent Variable/independent variables/$$ as $italic x$$.

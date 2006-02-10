@@ -29,11 +29,11 @@ $spell
 	const
 $$
 
-$section Construct an AD Object From a Base Type Object$$
+$section AD From Base Type Constructor$$
 
 $index construct, AD from Base$$
-$index Base, convert to AD$$
-$index convert, Base to AD$$
+$index Base, construct AD from$$
+$index AD, construct from Base$$
 
 $table 
 $bold Syntax$$ $cnext
@@ -44,7 +44,7 @@ $tend
 
 $fend 20$$
 
-$head Description$$
+$head Purpose$$
 Constructs an $syntax%AD<%Base%>%$$ object from an object of
 type $italic Base$$. 
 Directly after this construction, the object $italic x$$ is

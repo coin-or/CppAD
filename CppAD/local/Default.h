@@ -26,8 +26,9 @@ $begin Default$$
 $spell
 $$
 
-$section The Default AD Constructor$$
+$section AD Default Constructor$$
 
+$index AD, default construct$$
 $index construct, default$$
 $index default, constructor$$
 

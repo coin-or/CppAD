@@ -1,6 +1,6 @@
 // BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -26,10 +26,10 @@ $$
 
 $section Default AD Constructor: Example and Test$$
 
-$index construct, default$$
-$index default, construct$$
-$index example, default constructor$$
-$index test, default constructor$$
+$index AD, default construct$$
+$index construct, , AD default$$
+$index example, default AD construct$$
+$index test, default AD construct$$
 
 
 $code
@@ -44,10 +44,9 @@ $end
 
 bool Default(void)
 {	bool ok = true;
+	using CppAD::AD;
 
-	using namespace CppAD;
-
-	// default constructor
+	// default AD constructor
 	AD<double> x, y;
 
 	// check that they are parameters

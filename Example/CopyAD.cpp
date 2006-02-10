@@ -23,6 +23,7 @@ $spell
 $$
 
 $section AD Copy Constructor: Example and Test$$
+
 $index copy, AD object$$
 $index example, copy AD object$$
 $index test, copy AD object$$
@@ -42,15 +43,16 @@ bool CopyAD(void)
 	using CppAD::AD;  // so can use AD in place of CppAD::AD
 
 	// independent variable vector
-	CppADvector< AD<double> > X(1);
-	X[0]     = 2.;
-	CppAD::Independent(X);
+	size_t n = 1;
+	CppADvector< AD<double> > x(n);
+	x[0]     = 2.;
+	CppAD::Independent(x);
 
 	// create an AD<double> that does not depend on x
 	AD<double> b = 3.;   
 
 	// use copy constructor 
-	AD<double> u(X[0]);    
+	AD<double> u(x[0]);    
 	AD<double> v = b;
 
 	// check which are parameters
@@ -58,22 +60,23 @@ bool CopyAD(void)
 	ok &= Parameter(v);
 
 	// dependent variable vector
-	CppADvector< AD<double> > Y(2);
-	Y[0]  = u;
-	Y[1]  = v;
+	size_t m = 2;
+	CppADvector< AD<double> > y(m);
+	y[0]  = u;
+	y[1]  = v;
 
-	// create f: X -> Y and vectors used for derivative calculations
-	CppAD::ADFun<double> f(X, Y);
-	CppADvector<double> dx( f.Domain() );
-	CppADvector<double> dy( f.Range() );
+	// create f: x -> y and vectors used for derivative calculations
+	CppAD::ADFun<double> f(x, y);
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
  
  	// check parameters flags
  	ok &= ! f.Parameter(0);
  	ok &=   f.Parameter(1);
 
 	// check function values
-	ok &= ( Y[0] == 2. );
-	ok &= ( Y[1] == 3. );
+	ok &= ( y[0] == 2. );
+	ok &= ( y[1] == 3. );
 
 	// forward computation of partials w.r.t. x[0]
 	dx[0] = 1.;

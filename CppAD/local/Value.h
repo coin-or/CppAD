@@ -1,9 +1,8 @@
 # ifndef CppADValueIncluded
 # define CppADValueIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Value$$
@@ -28,26 +26,41 @@ $spell
 	const
 $$
 
-$mindex base type value$$
-$section Base Type Value$$
+$index Value$$
+
+$index Base, from AD$$
+$index AD, convert to Base$$
+$index convert, AD to Base$$
+
+$section Convert From AD to its Base Type$$
 
 $table
-$bold Syntax$$ 
-$cnext 
-$syntax%inline %Base% Value(const AD<%Base%> &%x%)%$$
+$bold Syntax$$ $cnext 
+$syntax%%b% = Value(%x%)%$$
 $tend
 
 $fend 20$$
 
-$head Description$$
+$head Purpose$$
 Returns the 
 $xref/glossary/Base Type/base type/$$ value corresponding to $italic x$$.
-This function can be used to return the value 
-(as apposed a derivative) of a variable
-that has been recorded by the tape.
-It cannot be called while the tape is in the Recording
-$xref/glossary/Tape State/state/$$.
 
+$head x$$
+The argument $italic x$$ has prototype
+$syntax%
+	const AD<%Base%> &%x%
+%$$
+
+$head b$$
+The return value $italic b$$ has prototype
+$syntax%
+	%Base% %b%
+%$$
+
+$head Restrictions$$
+This function cannot be called while the tape that records
+$syntax%AD<%Base%>%$$ is in the Recording
+$xref/glossary/Tape State/state/$$.
 
 $head Example$$
 $children%

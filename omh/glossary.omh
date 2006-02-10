@@ -1,6 +1,6 @@
 // BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -117,8 +117,8 @@ $$
 The tape is initially in the $code Empty$$ state.
 It is in the recording state after each call to 
 $xref/Independent/$$ with a $syntax%AD<%Base%>%$$ argument.
-It is in the $code Empty$$ state after each call to
-$xref/ADFun//ADFun<Base>/$$.
+It is in the $code Empty$$ state after the corresponding call to the
+$xref/ADFun//ADFun<Base>/$$ constructor.
 
 
 $subhead Empty$$

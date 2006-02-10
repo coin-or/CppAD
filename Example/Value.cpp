@@ -1,6 +1,6 @@
 // BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -25,13 +25,13 @@ $spell
 	cstddef
 $$
 
-$section Conversion to Base Type: Example and Test$$
+$section Convert From AD to its Base Type: Example and Test$$
+
 $index Value$$
-$index base type, value$$
 $index example, Value$$
 $index test, Value$$
+$index record, example$$
 
-$comment This file is in the Example subdirectory$$ 
 $code
 $verbatim%Example/Value.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -44,37 +44,36 @@ $end
 
 bool Value(void)
 {	bool ok = true;
-
-	using namespace CppAD;
+	using CppAD::AD;
+	using CppAD::Value;
 
 	// independent variable vector
-	CppADvector< AD<double> > X(2);
-	X[0] = 3.;
-	X[1] = 4.;
+	size_t n = 2;
+	CppADvector< AD<double> > x(n);
+	x[0] = 3.;
+	x[1] = 4.;
 
 	// check value before recording
-	ok &= (Value(X[0]) == 3.);
-	ok &= (Value(X[1]) == 4.);
+	ok &= (Value(x[0]) == 3.);
+	ok &= (Value(x[1]) == 4.);
 
 	// start recording
-
-	Independent(X);
-
+	CppAD::Independent(x);
 	// cannot call Value here (tape is recording)
 
 	// dependent variable vector 
-	CppADvector< AD<double> > Y(1);
-	Y[0] = - X[1];
+	size_t m = 1;
+	CppADvector< AD<double> > y(m);
+	y[0] = - x[1];
 
-	// create f: X -> Y and vectors used for derivative calculations
-	ADFun<double> f(X, Y);
-	CppADvector<double> v( f.Domain() );
-	CppADvector<double> w( f.Range() );
+	// create f: x -> y 
+	CppAD::ADFun<double> f(x, y);
+	// can call Value here (tape is no longer recording)
 
 	// check value after recording
-	ok &= (Value(X[0]) == 3.);
-	ok &= (Value(X[1]) == 4.);
-	ok &= (Value(Y[0]) == -4.);
+	ok &= (Value(x[0]) ==  3.);
+	ok &= (Value(x[1]) ==  4.);
+	ok &= (Value(y[0]) == -4.);
 
 	return ok;
 }

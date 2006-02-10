@@ -1,51 +1,29 @@
-# Change names: Copy -> CopyAD and FromBase -> CopyBase.
+# Improve documentation and examples.
 #
-# CopyBase.h: version of FromBase.h with name change (and improve doc).
-# CopyBase.cpp: version of FromBase.cpp with name change (and improve).
-# CopyAD.h: version of Copy.h with name change (and improve doc).
-# CopyAD.cpp: version of Copy.h with name change (and improve).
-# UserAD.h: name change listed above for file names.
-# Default.h: minor improvement to doc.
-# CppADError.h: correct error in developer doc.
-# Fun.h: improvement in error messages (taken from admap branch).
-# NearEqualExt.h: fix syntax in doc.
-# WhatsNew03.omh: name change listed above.
-# WhatsNew05.omh: name change listed above.
+# Value.h: major documentation improvements.
+# Default.h: minor change to title and indexing.
+# CopyBase.h: minor change to title, indexing and headings.
+# CopyAD.h: minor change to title, indexing and headings.
+# SvnCommit.sed: use comments to separate operations.
+# Build: change error to warning in comment about aclocal.
+# glossary.omh: improve the definition of Tape State.
 # WhatsNew06.omh: users view of the changes.
-# ExampleList.omh: name change listed above.
-# Example.vcproj: name change listed above.
-# Example.cpp: name change listed above.
-# Example/Makefile.am: name change listed above.
-# Copy.cpp: move test from Example to TestMore
-# TestMore.cpp: execute old Copy and FromBase tests here.
-# TestMore.vcproj: execute old Copy and FromBase tests here.
-# TestMore/Makefile.am: include old Copy and FromBase tests here.
-# Makefile.am: name change listed above.
-# 
-# SvnMerge: use dry run to see what was different in admap branch.
+# CopyAD.cpp: major changes to make easier to read.
+# Value.cpp: major changes to make easier to read.
+# Default.cpp: do not use entire CppAD namespace in example.
 # -----------------------------------------------
 list="\
-	SvnMerge \
+	CppAD/local/Value.h \
+	CppAD/local/Default.h \
 	CppAD/local/CopyBase.h \
 	CppAD/local/CopyAD.h \
-	CppAD/local/UserAD.h \
-	CppAD/local/Default.h \
-	CppAD/local/CppADError.h \
-	CppAD/local/Fun.h \
-	CppAD/local/NearEqualExt.h \
-	omh/WhatsNew03.omh \
-	omh/WhatsNew05.omh \
+	SvnCommit.sed \
+	Build \
+	omh/glossary.omh
 	omh/WhatsNew06.omh \
-	omh/ExampleList.omh \
-	Example/CopyBase.cpp \
 	Example/CopyAD.cpp \
-	Example/Example.cpp \
-	Example/Makefile.am \
-	TestMore/FromBase.cpp \
-	TestMore/Copy.cpp \
-	TestMore/TestMore.cpp \
-	TestMore/Makefile.am \
-	Makefile.am \
+	Example/Value.cpp \
+	Example/Default.cpp \
 "
 for file in $list
 do
@@ -56,22 +34,6 @@ do
 	mv junk $file
 done
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-svn delete Example/Copy.cpp
-svn add    TestMore/Copy.cpp
-svn add    Example/CopyAD.cpp
-svn delete CppAD/local/Copy.h
-svn add    CppAD/local/CopyAD.h
-svn delete Example/FromBase.cpp
-svn add    TestMore/FromBase.cpp
-svn add    Example/CopyBase.cpp
-svn delete CppAD/local/FromBase.h
-svn add    CppAD/local/CopyBase.h
 svn commit --file svn.log \
 	SvnCommit \
-	CppAD/local/Copy.h \
-	CppAD/local/FromBase.h \
-	Example/FromBase.cpp \
-	Example/Copy.cpp \
-	Example/Example.vcproj \
-	TestMore/TestMore.vcproj \
 	$list
