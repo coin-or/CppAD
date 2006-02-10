@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 // system include files used for I/O
 # include <cstddef>
@@ -39,6 +37,7 @@ extern bool Compare(void);
 extern bool CompareChange(void);
 extern bool CondExp(void);
 extern bool CondExpAD(void);
+extern bool Copy(void);
 extern bool Div(void);
 extern bool DivEq(void);
 extern bool DivZeroOne(void);
@@ -46,6 +45,7 @@ extern bool Exp(void);
 extern bool ForHess(void);
 extern bool ForSparseJac(void);
 extern bool Forward(void);
+extern bool FromBase(void);
 extern bool Log(void);
 extern bool Mul(void);
 extern bool MulEq(void);
@@ -106,6 +106,7 @@ int main(void)
 	ok &= Run( CompareChange,   "CompareChange"  );
 	ok &= Run( CondExp,         "CondExp"        );
 	ok &= Run( CondExpAD,       "CondExpAD"      );
+	ok &= Run( Copy,            "Copy"           );
 	ok &= Run( Div,             "Div"            );
 	ok &= Run( DivEq,           "DivEq"          );
 	ok &= Run( DivZeroOne,      "DivZeroOne"     );
@@ -113,6 +114,7 @@ int main(void)
 	ok &= Run( ForHess,         "ForHess"        );
 	ok &= Run( ForSparseJac,    "ForSparseJac"   );
 	ok &= Run( Forward,         "Forward"        );
+	ok &= Run( FromBase,        "FromBase"       );
 	ok &= Run( Log,             "Log"            );
 	ok &= Run( Mul,             "Mul"            );
 	ok &= Run( MulEq,           "MulEq"          );

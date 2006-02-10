@@ -1,9 +1,8 @@
 # ifndef CppADUserADIncluded
 # define CppADUserADIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 /*
 ---------------------------------------------------------------------------
 
@@ -45,8 +43,8 @@ that are available for objects in this template class.
 
 $childtable%
 	CppAD/local/Default.h%
-	CppAD/local/FromBase.h%
-	CppAD/local/Copy.h%
+	CppAD/local/CopyBase.h%
+	CppAD/local/CopyAD.h%
 	CppAD/local/Value.h%
 	CppAD/local/Integer.h%
 	CppAD/local/UnaryPlus.h%
@@ -67,8 +65,8 @@ $end
 */
 
 # include <CppAD/local/Default.h>      // default constructor
-# include <CppAD/local/FromBase.h>     // construction from base type
-# include <CppAD/local/Copy.h>         // copy constructor
+# include <CppAD/local/CopyBase.h>     // construction from base type
+# include <CppAD/local/CopyAD.h>       // copy constructor
 # include <CppAD/local/Value.h>        // base type value
 # include <CppAD/local/UnaryPlus.h>    // the unary plus operator
 # include <CppAD/local/UnaryMinus.h>   // the unary minus operator

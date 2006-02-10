@@ -1,9 +1,8 @@
-# ifndef CppADFromBaseIncluded
-# define CppADFromBaseIncluded
+# ifndef CppADCopyADIncluded
+# define CppADCopyADIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,75 +18,78 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 ------------------------------------------------------------------------------
 
-$begin FromBase$$
+$begin CopyAD$$
 $spell
-	const
 	Var
 	const
 $$
 
-$section Construct An AD Object From its Base Type$$
+$index AD, copy constructor$$
+$index copy, AD constructor$$
+$index constructor, copy AD$$
 
-$index construct, from base type$$
-$index base, construct AD from$$
-$index convert, from base to AD type$$
+$section Creating A Copy of an AD Variable$$
 
-$table 
-$bold Syntax$$ $cnext
-$syntax%AD<%Base%> %x%(%t%)%$$
+$table
+$bold Syntax$$ $cnext 
+$syntax%AD<%Base%> %y%(%x%)%$$ 
+$rnext $cnext
+$syntax%AD<%Base%> %y% = %x%$$ 
 $tend
 
 $fend 20$$
 
 $head Description$$
-Constructs an $syntax%AD<%Base%>%$$ object from an object of
-type $italic Base$$. 
-Directly after this construction, the object $italic x$$ is
-a $xref/glossary/Parameter/parameter/$$.
+Creates a new object $italic y$$ with the same value as $italic x$$.
+The object $italic y$$ also has the same dependence on the 
+$xref/glossary/Independent Variable/independent variables/$$ as $italic x$$.
+($italic y$$ is a 
+$xref/glossary/Variable/variable/$$ if and only if $italic x$$ is a variable).
 
-$head t$$
-The argument $italic t$$ has prototype
+$head x$$
+The argument $italic x$$ has prototype
 $syntax%
-	const %T% &%t%
-%$$
-where $italic T$$ is either $italic Base$$,
-or is any is any type that can be converted to $italic Base$$;
-i.e., the syntax
-$syntax%
-	%Base%(%t%)
-%$$
-is valid.
+	const AD<%Base%> &x
+%$$ 
+
 
 $head Example$$
 $children%
-	Example/FromBase.cpp
+	Example/CopyAD.cpp
 %$$
 The file
-$xref/FromBase.cpp/$$
+$xref/CopyAD.cpp/$$
 contains an example and a test of this operation.
 It returns true if it succeeds and false otherwise.
 
 $end
 ------------------------------------------------------------------------------
 */
+
+// copy constructor for AD<Base>
+
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-// conversion from Base to AD<Base>
 template <class Base>
-inline AD<Base>::AD(const Base &b) : value(b), id(0)
-{ }	
+inline AD<Base>::AD(const AD &x) 
+{
+	// check that all AD objects are parameters while tape is empty
+	CppADUnknownError(
+		Parameter(x) | (Tape()->State() != Empty)
+	);
 
-// conversion form other types to AD<Base>
-template <class Base>
-template <class T>
-inline AD<Base>::AD(const T &t) : value(Base(t)), id(0)
-{ }
+	value   = x.value;
+	id      = x.id;
+	taddr   = x.taddr;
+
+	return;
+}
+
 
 } // END CppAD namespace
 

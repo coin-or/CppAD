@@ -16,26 +16,25 @@ echo "DryRun = $DryRun"
 cd ..
 #
 # Name of the directory that will receive the changes
-ToDirectory=branches/admap
+ToDirectory=trunk
 #
 # Name of the directory where the changes have been committed
-FromDirectory=trunk
+FromDirectory=branches/admap
 #
-# Version of the repository corresponding to just before changes
+# Version of the repository corresponding to FromDirectory just before changes
 Start=270
 # 
-# Version of the repository corresponding the end of the changes
-End=274
+# Version of the repository corresponding to FromDirecrtory after the changes
+End=279
 #
 # echo the svn merge command
 echo "cd  .."
-echo "svn merge > SvnMerge.out $DryRun \\"
-echo "	http://www.coin-or.org/svn/CppAD/$FromDirectory@$End \\"
-echo "	http://www.coin-or.org/svn/CppAD/$FromDirectory@$Start \\"
+echo "svn merge $DryRun > SvnMerge.out -r $Start:$End   \\"
+echo "	http://www.coin-or.org/svn/CppAD/$FromDirectory \\"
 echo "	$ToDirectory"
 #
 # execute the svn merge command
-svn merge $DryRun > SvnMerge.out -r $Start:$End    \
+svn merge $DryRun > SvnMerge.out -r $Start:$End              \
 	http://www.coin-or.org/svn/CppAD/$FromDirectory      \
 	$ToDirectory
 #

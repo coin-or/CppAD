@@ -1,6 +1,5 @@
-# BEGIN SHORT COPYRIGHT
 # ---------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # ---------------------------------------------------------------------------
-# END SHORT COPYRIGHT
 #
 # automake input file
 #
@@ -70,7 +68,8 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/CompEq.h \
 	CppAD/local/Compare.h \
 	CppAD/local/CondExp.h \
-	CppAD/local/Copy.h \
+	CppAD/local/CopyAD.h \
+	CppAD/local/CopyBase.h \
 	CppAD/local/Cos.h \
 	CppAD/local/Cosh.h \
 	CppAD/local/CppADError.h \
@@ -93,7 +92,6 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/ForSparseJac.h \
 	CppAD/local/Forward.h \
 	CppAD/local/ForwardSweep.h \
-	CppAD/local/FromBase.h \
 	CppAD/local/Fun.h \
 	CppAD/local/Hessian.h \
 	CppAD/local/Identical.h \

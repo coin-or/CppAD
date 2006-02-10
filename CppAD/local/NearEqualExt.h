@@ -2,7 +2,7 @@
 # define CppADNearEqualExtIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -36,8 +36,7 @@ $section Extend NearEqual to Mix AD and Base Types$$
 $index NearEqual$$
 
 $table
-$bold Syntax$$ 
-$rnext $cnext
+$bold Syntax$$ $cnext
 $syntax%%b% = NearEqual(%x%, %y%, %r%, %a%)%$$
 $tend
 

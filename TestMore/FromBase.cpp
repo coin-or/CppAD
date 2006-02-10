@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,29 +15,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
+
 
 /*
-$begin FromBase.cpp$$
-$spell
-	Cpp
-$$
-
-$section AD Constructor From Base Type: Example and Test$$
-
-$index construct, from base type$$
-$index base, convert to AD$$
-$index example, construct from base$$
-$index test, construct from base$$
-
-$code
-$verbatim%Example/FromBase.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-$$
-
-$end
+Old FromBase example now used just for valiadation testing
 */
-// BEGIN PROGRAM
-
 # include <CppAD/CppAD.h>
 
 bool FromBase(void)

@@ -702,9 +702,9 @@ is no longer supported by CppAD.
 $pre
 
 $$
-The $xref/FromBase/$$ section was split into the $xref/Default//default/$$ 
+The $xref/CopyBase/$$ section was split into the $xref/Default//default/$$ 
 constructor and the 
-$xref/FromBase//construction for the base type/$$.
+$xref/CopyBase//construction for the base type/$$.
 The construction from base type has been
 extended to include any type that is convertible to the base type.
 As a special case, this provides the previous wish list item of

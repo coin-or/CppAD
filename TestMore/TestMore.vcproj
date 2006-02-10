@@ -282,6 +282,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Copy.cpp">
+			</File>
+			<File
 				RelativePath="Div.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -403,6 +406,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\FromBase.cpp">
 			</File>
 			<File
 				RelativePath="Log.cpp">

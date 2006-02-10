@@ -78,7 +78,8 @@ The vector $italic X$$ has prototype
 $syntax%
 	const %VectorADBase% &%X%
 %$$
-The length of $italic X$$ is the number of independent variables
+The length of $italic X$$, must be greater than zero,
+and is the number of independent variables
 (dimension of the domain space for the $syntax%ADFun<%Base%>%$$ object).
 The current recording of $syntax%AD<%Base%>%$$ operations
 must have started recording with the call 
@@ -384,12 +385,15 @@ ADFun<Base>::ADFun(const VectorADBase &x, const VectorADBase &y)
 		y.size() > 0,
 		"ADFun constructor second argument vector Y has zero size"
 	); 
-	CppADUnknownError( x.size() > 0 );
+	CppADUsageError(
+		x.size() > 0,
+		"ADFun constructor first argument vector X has zero size"
+	); 
 
 	// set total number of variables in tape, parameter flag, 
 	// make a tape copy of dependent variables that are parameters, 
 	// and store tape address for each dependent variable
-	CppADUnknownError( NumInd(ParOp) == 1 );
+	CppADUnknownError( NumVar(ParOp) == 1 );
 	dep_parameter.resize(m);
 	dep_taddr.resize(m);
 	totalNumVar = AD<Base>::Tape()->Rec.TotNumVar();
@@ -456,8 +460,11 @@ ADFun<Base>::ADFun(const VectorADBase &x, const VectorADBase &y)
 	CppADUnknownError( compareChange == 0 );
 
 	// check the dependent variable values
-	for(i = 0; i < m; i++)
-		CppADUnknownError( Taylor[dep_taddr[i]] == y[i].value );
+	for(i = 0; i < m; i++) CppADUsageError(
+		Taylor[dep_taddr[i]] == y[i].value,
+		"independent variable not equal its tape evaluation"
+		", it may be nan"
+	);
 }
 
 } // END CppAD namespace

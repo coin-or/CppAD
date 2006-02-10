@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -92,7 +92,8 @@ $rref Compare.cpp$$
 $rref CompareChange.cpp$$
 $rref ComplexPoly.cpp$$
 $rref CondExp.cpp$$
-$rref Copy.cpp$$
+$rref CopyAD.cpp$$
+$rref CopyBase.cpp$$
 $rref Cos.cpp$$
 $rref Cosh.cpp$$
 $rref CppAD_vector.cpp$$
@@ -111,7 +112,6 @@ $rref ForOne.cpp$$
 $rref ForTwo.cpp$$
 $rref Forward.cpp$$
 $rref ForSparseJac.cpp$$
-$rref FromBase.cpp$$
 $rref Fun.cpp$$
 $rref GetStarted.cpp$$
 $rref HesLuDet.cpp$$
