@@ -1,5 +1,5 @@
-# ifndef CppADOperatorIncluded
-# define CppADOperatorIncluded
+# ifndef CppADOpCodeIncluded
+# define CppADOpCodeIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
