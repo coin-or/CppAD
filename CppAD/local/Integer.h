@@ -39,7 +39,7 @@ $section Convert From AD to Integer$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%%i% = Integer(%x%)%$$
+$syntax% %i% = Integer(%x%)%$$
 $tend
 
 $fend 20$$

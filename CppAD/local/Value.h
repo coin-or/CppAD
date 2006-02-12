@@ -36,7 +36,7 @@ $section Convert From AD to its Base Type$$
 
 $table
 $bold Syntax$$ $cnext 
-$syntax%%b% = Value(%x%)%$$
+$syntax% %b% = Value(%x%)%$$
 $tend
 
 $fend 20$$

@@ -37,9 +37,9 @@ $index AD, construct from Base$$
 
 $table 
 $bold Syntax$$ $cnext
-$syntax%AD<%Base%> %x%(%b%)%$$
+$syntax% AD<%Base%> %x%(%b%)%$$
 $rnext $cnext
-$syntax%AD<%Base%> %x% = %b%$$
+$syntax% AD<%Base%> %x% = %b%$$
 $tend
 
 $fend 20$$

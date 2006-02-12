@@ -36,9 +36,9 @@ $section AD Copy Constructor$$
 
 $table
 $bold Syntax$$ $cnext 
-$syntax%AD<%Base%> %y%(%x%)%$$ 
+$syntax% AD<%Base%> %y%(%x%)%$$ 
 $rnext $cnext
-$syntax%AD<%Base%> %y% = %x%$$ 
+$syntax% AD<%Base%> %y% = %x%$$ 
 $tend
 
 $fend 20$$

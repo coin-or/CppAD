@@ -34,7 +34,7 @@ $index default, constructor$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%AD<%Base%> %x%;%$$ 
+$syntax% AD<%Base%> %x%;%$$ 
 $tend
 
 $fend 20$$
