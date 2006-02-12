@@ -51,7 +51,7 @@ $contents%
 	CppAD/local/Define.h%
 	CppAD/local/Ordered.h%
 	CppAD/local/Identical.h%
-	CppAD/local/Operator.h%
+	CppAD/local/OpCode.h%
 	CppAD/local/TapeRec.h%
 	CppAD/local/ADTape.h%
 	CppAD/local/BoolFunLink.h%

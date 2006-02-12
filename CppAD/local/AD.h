@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // END SHORT COPYRIGHT
 
 // define the template classes that are used by the AD template class
-# include <CppAD/local/Operator.h>
+# include <CppAD/local/OpCode.h>
 # include <CppAD/local/TapeRec.h>
 # include <CppAD/local/ADTape.h>
 
