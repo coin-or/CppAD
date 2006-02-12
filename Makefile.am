@@ -105,7 +105,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/MulEq.h \
 	CppAD/local/MulOp.h \
 	CppAD/local/Op.h \
-	CppAD/local/Operator.h \
+	CppAD/local/OpCode.h \
 	CppAD/local/Ordered.h \
 	CppAD/local/Output.h \
 	CppAD/local/Parameter.h \
