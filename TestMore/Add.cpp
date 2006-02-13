@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,15 +15,16 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
-Old Add example now used just for valiadation testing
+Two old Add examples now used just for valiadation testing
 */
 
 # include <CppAD/CppAD.h>
 
-bool Add(void)
+namespace { // BEGIN empty namespace
+
+bool AddTestOne(void)
 {	bool ok = true;
 
 	using namespace CppAD;
@@ -75,5 +75,71 @@ bool Add(void)
 	ok &= ( r[2 * s + 1] == 0. );  // d^2 z / (ds ds)
 	ok &= ( r[2 * t + 1] == 0. );  // d^2 z / (ds dt)
 
+	return ok;
+}
+
+bool AddTestTwo(void)
+{	bool ok = true;
+
+	using namespace CppAD;
+
+	// independent variable vector
+	double u0 = .5;
+	CppADvector< AD<double> > U(1);
+	U[0]      = u0; 
+	Independent(U);
+
+	AD<double> a = U[0] + 1.; // AD<double> + double
+	AD<double> b = a  + 2;    // AD<double> + int
+	AD<double> c = 3. + b;    // double     + AD<double> 
+	AD<double> d = 4  + c;    // int        + AD<double> 
+
+	// dependent variable vector 
+	CppADvector< AD<double> > Z(1);
+	Z[0] = d + U[0];          // AD<double> + AD<double> 
+
+	// create f: U -> Z and vectors used for derivative calculations
+	ADFun<double> f(U, Z); 
+	CppADvector<double> v(1);
+	CppADvector<double> w(1);
+
+	// check value 
+	ok &= NearEqual(Z[0] , 2 * u0 + 10,  1e-10 , 1e-10);
+
+	// forward computation of partials w.r.t. u
+	size_t j;
+	size_t p     = 5;
+	double jfac  = 1.;
+	double value = 2.;
+	v[0]         = 1.;
+	for(j = 1; j < p; j++)
+	{	jfac *= j;
+		w     = f.Forward(j, v);	
+		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
+		v[0]  = 0.;
+		value = 0.;
+	}
+
+	// reverse computation of partials of Taylor coefficients
+	CppADvector<double> r(p); 
+	w[0]  = 1.;
+	r     = f.Reverse(p, w);
+	jfac  = 1.;
+	value = 2.;
+	for(j = 0; j < p; j++)
+	{	ok &= NearEqual(jfac*r[j], value, 1e-10 , 1e-10); // d^jz/du^j
+		jfac *= (j + 1);
+		value = 0.;
+	}
+
+	return ok;
+}
+
+} // END empty namespace
+
+bool Add(void)
+{	bool ok = true;
+	ok &= AddTestOne();
+	ok &= AddTestTwo(); 
 	return ok;
 }

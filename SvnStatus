@@ -17,7 +17,8 @@ sed                                                           \
 	-e '/^[?].*Makefile$/d'                               \
 	-e '/^[?].*Debug$/d'                                  \
 	-e '/^[?].*junk$/d'                                   \
-	-e '/^[?].*junk.[1-9]$/d'                             \
+	-e '/^[?].*junk.[0-9]$/d'                             \
+	-e '/^[?].*junk.[0-9][0-9]$/d'                        \
 	-e '/^[?].*stamp-h1$/d'                               \
 	-e '/^[?].*config.h$/d'                               \
 	-e '/^[?] *configure$/d'                              \

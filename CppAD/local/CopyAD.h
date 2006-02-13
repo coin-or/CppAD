@@ -70,8 +70,6 @@ $end
 ------------------------------------------------------------------------------
 */
 
-// copy constructor for AD<Base>
-
 //  BEGIN CppAD namespace
 namespace CppAD {
 

@@ -49,8 +49,7 @@ $tend
 $fend 20$$
 
 $head Description$$
-This constructs a function object corresponding to a
-$xref/glossary/Base Function/Base function/$$
+This constructs a function object corresponding to
 $latex F : B^n \rightarrow B^m$$
 where $italic B$$ is the space corresponding to objects of type $italic Base$$,
 $italic n$$ is the size of $italic X$$,

@@ -1,60 +1,32 @@
-# Combine UnaryPlus, UnaryMinus, BinaryOp and CompEq in Arithmetric.
+# Improve documentation and example for Add.
 #
-# Arithmetic.h: grouping or unary +,-, binary +,-,*,/ and +=, -=, *=, /=
-# Vec.h: remove cross reference to CompEq.
-# BianryOp.h: these operators moved to Arithmetic.h.
-# UserAD.h: group UnaryPlus, UnaryMinus, BinaryOp and CompEq in Arithmetric.
-# UnaryPlus.h: general documentation improvement.
-# Eq.h: general documentation improvement.
-# SubEq.h: remove cross reference to CompEq.
-# MulEq.h: remove cross reference to CompEq.
-# CompEq.h: these operators moved to Arithmetic.h.
-# AD.h: moved include of Integer.h to UserAD.h.
-# UserAD.h: regrouping of operators and include of Integer.h.
-# UnaryMinus.h: general documentation improvement.
-# Div.h: remove cross reference to BinaryOp.
-# Add.h: remove cross reference to BinaryOp.
-# Sub.h: remove cross reference to BinaryOp.
-# Mul.h: remove cross reference to BinaryOp.
-# DivEq.h: remove cross reference to CompEq.
-# AddEq.h: remove cross reference to CompEq.
-# Compare.h: change cross reference from BinaryOp to Arithmetic.
-# WhatsNew03.omh: change cross reference from BinaryOp to Arithmetic.
-# WhatsNew04.omh: change cross reference from BinaryOp to Arithmetic.
-# WhatsNew06.omh: users view of the changes
-# UnaryPlus.cpp: use x (indpedent) y (dependent) and other uniform notation.
-# UnaryMinus.cpp: use x (indpedent) y (dependent) and other uniform notation.
-# Eq.cpp: use x (indpedent) y (dependent) and other uniform notation.
-# Makefile.am: remove BinaryOp.h, CompEq.h and add Arithmetic.h.
+# SvnCommit: the shell script that execute the commit.
+# Eq.h: minor improvements to documentation.
+# CopyBase.h: minor improvements to documentation.
+# CopyAD.h: remove a comment (obvious from documenation above).
+# UnaryMinus.h: minor improvements to documentation.
+# Fun.h: remove reference to glossary Base Function entry.
+# Add.h: major changes to documentation.
+# SvnStatus: remove files of the form junk.xx from report where xx are digits.
+# glossary.omh: change definition of Base Function to only scalar case.
+# WhatsNew06.omh: users view of the changes.
+# Example/Add.cpp: major changes to example.
+# TestMore/Add.cpp: include old example in this file.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 list="\
 	SvnCommit
-	CppAD/local/Arithmetic.h
-	CppAD/local/Vec.h
-	CppAD/local/BinaryOp.h
-	CppAD/local/UserAD.h
-	CppAD/local/UnaryPlus.h
 	CppAD/local/Eq.h
-	CppAD/local/SubEq.h
-	CppAD/local/MulEq.h
-	CppAD/local/CompEq.h
-	CppAD/local/AD.h
+	CppAD/local/CopyBase.h
+	CppAD/local/CopyAD.h
 	CppAD/local/UnaryMinus.h
-	CppAD/local/Div.h
+	CppAD/local/Fun.h
 	CppAD/local/Add.h
-	CppAD/local/Sub.h
-	CppAD/local/Mul.h
-	CppAD/local/DivEq.h
-	CppAD/local/AddEq.h
-	CppAD/local/Compare.h
-	omh/WhatsNew03.omh
-	omh/WhatsNew04.omh
+	SvnStatus
+	omh/glossary.omh
 	omh/WhatsNew06.omh
-	Example/UnaryPlus.cpp
-	Example/UnaryMinus.cpp
-	Example/Eq.cpp
-	Makefile.am
+	Example/Add.cpp
+	TestMore/Add.cpp
 "
 for file in $list
 do

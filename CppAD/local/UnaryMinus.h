@@ -44,8 +44,8 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-Performs the unary minus operation
-(the result $italic y$$ is equal to the negative of the operand $italic x$$).
+Computes the negative of $italic y$$ where
+$code -$$ has the same interpretation as for the $italic Base$$ type.
 
 $head x$$
 The operand $italic x$$ has prototype

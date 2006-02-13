@@ -55,9 +55,9 @@ The argument $italic b$$ has prototype
 $syntax%
 	const %Type% &%b%
 %$$
-where $italic Type$$ is either $italic Base$$,
+where $italic Type$$ is $italic Base$$,
 or is any is any type that can be converted to $italic Base$$;
-i.e., the syntax
+i.e., any type for which the syntax 
 $syntax%
 	%Base%(%b%)
 %$$

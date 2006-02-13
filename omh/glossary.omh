@@ -39,10 +39,10 @@ $syntax%
 %$$
 
 $head Base Function$$
-If $italic Base$$ is a C++ class,
-a function $latex f$$ is referred to as a $italic Base$$ function
-if its domain and range are finite dimensional vector with components in the
-space represented by $italic Base$$; i.e. $latex f : B^n \rightarrow B^m$$.
+A function $latex f : B \rightarrow B$$ 
+is referred to as a $italic Base$$ function,
+if $italic Base$$ is a C++ type that represent elements of
+the domain and range space of $italic f$$; i.e. elements of $latex B$$.
 
 $head Base Type$$
 If $italic x$$ is an $syntax%AD<%Base%>%$$ object,

@@ -53,11 +53,12 @@ $xref/glossary/Independent Variable/independent variables/$$ as $italic x$$
 $xref/glossary/Variable/variable/$$ if and only if $italic x$$ is a variable).
 
 $head x$$
-The operand $italic x$$ has one of the following two prototypes
+The operand $italic x$$ has prototype
 $syntax%
-	const %Base%     &%x%
-	const AD<%Base%> &%x%
+	const %Type%     &%x%
 %$$
+where $italic Type$$ is $syntax%const AD<%Base%>%$$,
+$italic Base$$ or any type that can be implicitly converted to $italic Base$$.
 
 $head y$$
 The operand $italic y$$ has the following prototype
@@ -96,8 +97,6 @@ $end
 
 //  BEGIN CppAD namespace
 namespace CppAD {
-
-// assume Autodiff.h has already been included
 
 template <class Base>
 inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
