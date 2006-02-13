@@ -1,9 +1,8 @@
 # ifndef CppADUnaryPlusIncluded
 # define CppADUnaryPlusIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin UnaryPlus$$
@@ -27,47 +25,45 @@ $spell
 	Var
 	const
 	inline
-	Add
 $$
 
-$index unary, minus$$
-$index negative, operator$$
-$index -, unary$$
-$index operator, unary minus$$
+$index unary, AD plus operator$$
+$index AD, unary plus operator$$
+$index plus, AD unary operator$$
+$index +, AD unary operator$$
 
-$section The Unary Plus Operator$$
+$section AD Unary Plus Operator$$
 
 $table
 $bold Syntax$$ 
 $cnext 
-$syntax%inline AD<%Base%> operator - ( const AD<%Base%> &%right% ) const%$$
+$syntax% %y% = + %x%$$
 $tend
 
 $fend 20$$
 
-$head Description$$
-The operation
+$head Purpose$$
+Performs the unary plus operation
+(the result $italic y$$ is equal to the operand $italic x$$).
+
+$head x$$
+The operand $italic x$$ has prototype
 $syntax%
-	- %right%
+	const AD<%Base%> &%x%
 %$$
-returns the additive inverse of $italic right$$.
-The operand $italic right$$ is not changed by this operation.
-If the operand is a variable,
-the result is a 
-$xref/glossary/Variable/variable/$$.
+
+$head y$$
+The result $italic y$$ has prototype
+$syntax%
+	AD<%Base%> %y%
+%$$
+It is equal to the operand $italic x$$.
 
 $head Assumptions$$
-
-If the negation (unary $code -$$) operator is used with an 
-$syntax%AD<%Base%>%$$ object,
-it must also be defined for 
-the base type $italic Base$$.
-
-In addition,
-if $latex f$$ is a 
+If $latex f$$ is a 
 $xref/glossary/Base Function/Base function/$$,
 $latex \[
-	\D{[ - f(x) ]}{x} = - \D{f(x)}{x}
+	\D{[ + f(x) ]}{x} = \D{f(x)}{x}
 \] $$
 
 

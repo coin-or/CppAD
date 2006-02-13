@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin UnaryPlus.cpp$$
@@ -25,12 +23,12 @@ $spell
 	cstddef
 $$
 
-$section Unary Plus Operator: Example and Test$$
-$index negative$$
-$index example, negative$$
-$index test, negative$$
+$section AD Unary Plus Operator: Example and Test$$
 
-$comment This file is in the Example subdirectory$$ 
+$index unary plus, example$$
+$index example, unary plus$$
+$index test, unary plus$$
+
 $code
 $verbatim%Example/UnaryPlus.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -43,42 +41,39 @@ $end
 
 bool UnaryPlus(void)
 {	bool ok = true;
+	using CppAD::AD;
 
-	using namespace CppAD;
 
-	size_t n = 1; // number of independent variables
-	size_t m = 1; // number of dependent variables
-
-	// independent variable vector
-	CppADvector< AD<double> > X(n);
-	double x0 = 3.;
-	X[0]      = x0;
-	Independent(X);
+	// declare independent variable vector and start tape recording
+	size_t n = 1;
+	CppADvector< AD<double> > x(n);
+	x[0]      = 3.;
+	Independent(x);
 
 	// dependent variable vector 
-	CppADvector< AD<double> > Y(m);
-	Y[0] = + X[0];
+	size_t m = 1;
+	CppADvector< AD<double> > y(m);
+	y[0] = + x[0];
 
-	// create f: X -> Y and vectors used for derivative calculations
-	ADFun<double> f(X, Y);
-	CppADvector<double> dx(n);
-	CppADvector<double> dy(m);
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(x, y);
 
 	// check values
-	ok &= ( Y[0] == +x0 );
+	ok &= ( y[0] == 3. );
 
 	// forward computation of partials w.r.t. x[0]
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
 	size_t p = 1;
 	dx[0]    = 1.;
 	dy       = f.Forward(p, dx);
-	ok      &= ( dy[0] == +1. );   // dy[0] / dx[0]
+	ok      &= ( dy[0] == 1. );   // dy[0] / dx[0]
 
-	// reverse computation of dertivative of y
-	CppADvector<double> r(n * p);
+	// reverse computation of dertivative of y[0]
 	CppADvector<double> w(m);
 	w[0] = 1.;
-	r    = f.Reverse(p, w);
-	ok &= ( r[0] == +1. );   // dy[0] / dx[0]
+	dx   = f.Reverse(p, w);
+	ok &= ( dx[0] == 1. );       // dy[0] / dx[0]
 	 
 	return ok;
 }

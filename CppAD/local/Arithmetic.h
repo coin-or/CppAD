@@ -1,9 +1,8 @@
-# ifndef CppADCompEqIncluded
-# define CppADCompEqIncluded
+# ifndef CppADArithmeticIncluded
+# define CppADArithmeticIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,49 +18,50 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
-$begin CompEq$$
+$begin Arithmetic$$
 $spell
 	Op
 	const
 $$
 
-$index computed, assignment operator$$
-$index assignment, computed operator$$
-$index operator, computed assignment$$
+$index operator, AD arithmetic$$
+$index AD, arithmetic operator$$
+$index arithmetic, AD operator$$
 
-$section Computed Assignment Operators$$
+$index computed, AD assignment$$
+$index assignment, AD computed$$
+$index AD, computed assignment$$
 
-$head Definition$$
-An operator $syntax%%Op%=%$$ is a base type computed assignment operator
-if for each pair of $italic Base$$ objects $italic x$$ and $italic y$$,
-$syntax%
-	%x% %Op%= %y%
-%$$ 
-is defined has the same effect at
-$syntax%
-	%x% = %x% %Op% %y%
-%$$
-For example, if $italic Base$$ is $code double$$,
-$code +=$$ is a base type computed assignment operator,
-but $code ==$$ is not. 
+$section AD Arithmetic Operators and Computed Assignments$$
 
-$contents%
+$childtable%
+	CppAD/local/UnaryPlus.h%
+	CppAD/local/UnaryMinus.h%
+	CppAD/local/Add.h%
 	CppAD/local/AddEq.h%
+	CppAD/local/Sub.h%
 	CppAD/local/SubEq.h%
+	CppAD/local/Mul.h%
 	CppAD/local/MulEq.h%
+	CppAD/local/Div.h%
 	CppAD/local/DivEq.h
 %$$
 
--------------------------------------------------------------------------------
 $end
+-------------------------------------------------------------------------------
 */
+# include <CppAD/local/UnaryPlus.h>
+# include <CppAD/local/UnaryMinus.h>
+# include <CppAD/local/Add.h>
 # include <CppAD/local/AddEq.h>
+# include <CppAD/local/Sub.h>
 # include <CppAD/local/SubEq.h>
+# include <CppAD/local/Mul.h>
 # include <CppAD/local/MulEq.h>
+# include <CppAD/local/Div.h>
 # include <CppAD/local/DivEq.h>
 
 # endif

@@ -47,12 +47,9 @@ $childtable%
 	CppAD/local/CopyAD.h%
 	CppAD/local/Value.h%
 	CppAD/local/Integer.h%
-	CppAD/local/UnaryPlus.h%
-	CppAD/local/UnaryMinus.h%
-	CppAD/local/BinaryOp.h%
-	CppAD/local/CompEq.h%
-	CppAD/local/Compare.h%
 	CppAD/local/Eq.h%
+	CppAD/local/Arithmetic.h%
+	CppAD/local/Compare.h%
 	CppAD/local/Output.h%
 	CppAD/local/PrintFor.h%
 	CppAD/local/StdMathLib.h%
@@ -68,12 +65,10 @@ $end
 # include <CppAD/local/CopyBase.h>     // construction from base type
 # include <CppAD/local/CopyAD.h>       // copy constructor
 # include <CppAD/local/Value.h>        // base type value
-# include <CppAD/local/UnaryPlus.h>    // the unary plus operator
-# include <CppAD/local/UnaryMinus.h>   // the unary minus operator
-# include <CppAD/local/BinaryOp.h>     // base type Binary operators
-# include <CppAD/local/CompEq.h>       // computed assignment operators
-# include <CppAD/local/Compare.h>      // Logical Binary operators
+# include <CppAD/local/Integer.h>      // base type value
 # include <CppAD/local/Eq.h>           // assignment operator
+# include <CppAD/local/Arithmetic.h>   // arithmetic operators
+# include <CppAD/local/Compare.h>      // Logical Binary operators
 # include <CppAD/local/Output.h>       // output AD to a stream
 # include <CppAD/local/PrintFor.h>     // print during forward mode
 # include <CppAD/local/StdMathLib.h>   // standard math library functions

@@ -69,8 +69,7 @@ $xref/glossary/Variable/variable/$$.
 $head Assumptions$$
 If the $code -$$ operator is used with an 
 $syntax%AD<%Base%>%$$ object,
-it must be a
-$xref/BinaryOp//Base type binary operator/$$
+it must be defined
 for the base type $italic Base$$.
 
 In addition,

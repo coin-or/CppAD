@@ -1,9 +1,8 @@
 # ifndef CppADEqIncluded
 # define CppADEqIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -30,31 +28,58 @@ $spell
 	inline
 $$
 
-$mindex assignment operator =$$
-$section The AD Assignment Operator$$
+$index =, AD$$
+$index AD, =$$
+
+$index AD, assignment operator$$
+$index operator, AD assignment$$
+$index assignment, AD operator$$
+
+$section AD Assignment Operator$$
 
 $table
-$bold Syntax$$ 
-$cnext 
-$syntax%inline AD<%Base%>& AD<%Base%>::operator=(const AD<%Base%> &%right%)%$$
-$rnext $cnext 
-$syntax%inline AD<%Base%>& AD<%Base%>::operator=(const %Base% &%right%)%$$
+$bold Syntax$$ $cnext 
+$syntax% %y% = %x%$$
 $tend
 
 $fend 20$$
 
 
-$head Description$$
-Assigns the left operand
-to have the same value as $italic x$$.
-If $italic x$$ is a 
-$xref/glossary/Parameter/parameter/$$ then 
-the left operand is a parameter after the assignment.
-Otherwise,
-the left operand is a 
-$xref/glossary/Variable/variable/$$
-after the assignment.
+$head Purpose$$
+Assigns a new value to the AD object $italic y$$.
+The object $italic y$$ will have the same dependence on the 
+$xref/glossary/Independent Variable/independent variables/$$ as $italic x$$
+($italic y$$ is a 
+$xref/glossary/Variable/variable/$$ if and only if $italic x$$ is a variable).
 
+$head x$$
+The operand $italic x$$ has one of the following two prototypes
+$syntax%
+	const %Base%     &%x%
+	const AD<%Base%> &%x%
+%$$
+
+$head y$$
+The operand $italic y$$ has the following prototype
+$syntax%
+	AD<%Base%> &%y%
+%$$
+
+$head Multiple Assignments$$
+$index assignment, multiple$$
+$index multiple, assignment$$
+It is possible to use the result of this assignment operator 
+in multiple assignment.
+For example, if the operand $italic z$$ has the following prototype
+$syntax%
+	AD<%Base%> &%z%
+%$$
+then the syntax
+$syntax%
+	%z% = %y% = %x%
+%$$
+will assign the value of $italic x$$ to $italic z$$ 
+(as well as to $italic y$$).
 
 $head Example$$
 $children%

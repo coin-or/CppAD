@@ -2,7 +2,7 @@
 # define CppADVecIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -195,7 +195,11 @@ $syntax%AD<%Base%>%$$  with the following exceptions:
 $list number$$
 Elements of a $syntax%VecAD<%Base%>%$$ object 
 cannot be used
-with the computed assignments operators $xref%CompEq%%+= , -= , *= , /=%$$.
+with the computed assignments operators 
+$code +=$$, 
+$code -=$$, 
+$code *=$$, or
+$code /=$$.
 For example, if $italic v$$ is a 
 $syntax%VecAD<%Base%>%$$ 
 object, the following syntax is not valid:

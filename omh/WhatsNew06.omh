@@ -54,6 +54,15 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-13$$
+Combine the old binary operator and computed assignment documentation
+into $xref/Arithmetic/$$ documentation.
+$pre
+
+$$
+The documentation and examples have been improved for the following sections:
+$xref/Eq/$$, $xref/UnaryPlus/$$, $xref UnaryMinus$$.
+
 $head 02-11$$
 The documentation and examples have been improved for the following sections:
 $xref/Default/$$, $xref/CopyBase/$$, $xref/CopyAD/$$, and

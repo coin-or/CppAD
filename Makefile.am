@@ -57,15 +57,14 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/Add.h \
 	CppAD/local/AddEq.h \
 	CppAD/local/AddOp.h \
+	CppAD/local/Arithmetic.h \
 	CppAD/local/Asin.h \
 	CppAD/local/AsinOp.h \
 	CppAD/local/Atan.h \
 	CppAD/local/Atan2.h \
 	CppAD/local/AtanOp.h \
-	CppAD/local/BinaryOp.h \
 	CppAD/local/BoolFun.h \
 	CppAD/local/BoolFunLink.h \
-	CppAD/local/CompEq.h \
 	CppAD/local/Compare.h \
 	CppAD/local/CondExp.h \
 	CppAD/local/CopyAD.h \

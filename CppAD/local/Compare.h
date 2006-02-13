@@ -2,7 +2,7 @@
 # define CppADCompareIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -84,7 +84,7 @@ $syntax%
 For example,
 $code <$$ is a $code double$$ comparison operator
 but $code +$$ is not a $code double$$ comparison operator
-(see $xref/BinaryOp//Base type binary operator/$$).
+(see $xref/Arithmetic//AD arithmetic operators/$$).
 
 $head Assumptions$$
 If one of the $italic Op$$ operators listed above

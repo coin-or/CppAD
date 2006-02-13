@@ -307,8 +307,7 @@ $syntax%
 	%z% = %zero% * %x%
 %$$
 The 
-$xref/BinaryOp//binary operators/$$ and 
-$xref/CompEq//computed assignment operators/$$ were
+$xref/Arithmetic//arithmetic operators/$$ were 
 all checked to make sure they did not add to the tape
 in these special cases.
 The total record count for the program in the Example directory
@@ -612,10 +611,8 @@ $head 08-07$$
 Because the change to the multiplication operator had such
 a large positive effect,
 all of the
-$xref/BinaryOp//binary operators/$$
-and 
-$xref/CompEq//computed assignment/$$
-operators were modified to reduce the amount of information
+$xref/Arithmetic//arithmetic operators/$$
+were modified to reduce the amount of information
 in the tape (where possible).
 
 $head 08-06$$
@@ -679,7 +676,7 @@ template class for output to streams.
 
 $head 08-01$$
 The 
-$xref/CompEq//computed assignment/$$ operators were added
+$xref/Arithmetic//computed assignment/$$ operators were added
 to the $code AD$$ template class.
 $pre
 

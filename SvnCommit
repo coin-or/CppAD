@@ -1,11 +1,60 @@
-# Move Operator.h to OpCode.h
+# Combine UnaryPlus, UnaryMinus, BinaryOp and CompEq in Arithmetric.
 #
+# Arithmetic.h: grouping or unary +,-, binary +,-,*,/ and +=, -=, *=, /=
+# Vec.h: remove cross reference to CompEq.
+# BianryOp.h: these operators moved to Arithmetic.h.
+# UserAD.h: group UnaryPlus, UnaryMinus, BinaryOp and CompEq in Arithmetric.
+# UnaryPlus.h: general documentation improvement.
+# Eq.h: general documentation improvement.
+# SubEq.h: remove cross reference to CompEq.
+# MulEq.h: remove cross reference to CompEq.
+# CompEq.h: these operators moved to Arithmetic.h.
+# AD.h: moved include of Integer.h to UserAD.h.
+# UserAD.h: regrouping of operators and include of Integer.h.
+# UnaryMinus.h: general documentation improvement.
+# Div.h: remove cross reference to BinaryOp.
+# Add.h: remove cross reference to BinaryOp.
+# Sub.h: remove cross reference to BinaryOp.
+# Mul.h: remove cross reference to BinaryOp.
+# DivEq.h: remove cross reference to CompEq.
+# AddEq.h: remove cross reference to CompEq.
+# Compare.h: change cross reference from BinaryOp to Arithmetic.
+# WhatsNew03.omh: change cross reference from BinaryOp to Arithmetic.
+# WhatsNew04.omh: change cross reference from BinaryOp to Arithmetic.
+# WhatsNew06.omh: users view of the changes
+# UnaryPlus.cpp: use x (indpedent) y (dependent) and other uniform notation.
+# UnaryMinus.cpp: use x (indpedent) y (dependent) and other uniform notation.
+# Eq.cpp: use x (indpedent) y (dependent) and other uniform notation.
+# Makefile.am: remove BinaryOp.h, CompEq.h and add Arithmetic.h.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 list="\
 	SvnCommit
-	CppAD/local/OpCode.h 
-	CppAD/local/Operator.h 
+	CppAD/local/Arithmetic.h
+	CppAD/local/Vec.h
+	CppAD/local/BinaryOp.h
+	CppAD/local/UserAD.h
+	CppAD/local/UnaryPlus.h
+	CppAD/local/Eq.h
+	CppAD/local/SubEq.h
+	CppAD/local/MulEq.h
+	CppAD/local/CompEq.h
+	CppAD/local/AD.h
+	CppAD/local/UnaryMinus.h
+	CppAD/local/Div.h
+	CppAD/local/Add.h
+	CppAD/local/Sub.h
+	CppAD/local/Mul.h
+	CppAD/local/DivEq.h
+	CppAD/local/AddEq.h
+	CppAD/local/Compare.h
+	omh/WhatsNew03.omh
+	omh/WhatsNew04.omh
+	omh/WhatsNew06.omh
+	Example/UnaryPlus.cpp
+	Example/UnaryMinus.cpp
+	Example/Eq.cpp
+	Makefile.am
 "
 for file in $list
 do
@@ -29,7 +78,8 @@ do
 done
 if [ "$response" = "c" ]
 then
-	svn delete CppAD/local/Operator.h
-	svn add    CppAD/local/OpCode.h
+	svn delete CppAD/local/BinaryOp.h
+	svn delete CppAD/local/CompEq.h
+	svn add    CppAD/local/Arithmetic.h
 	svn commit --file svn.log $list
 fi

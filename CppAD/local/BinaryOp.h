@@ -1,9 +1,8 @@
-# ifndef CppADBinaryOpIncluded
-# define CppADBinaryOpIncluded
+# ifndef CppADCopyBaseIncluded
+# define CppADCopyBaseIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,46 +18,77 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
--------------------------------------------------------------------------------
-$begin BinaryOp$$
+------------------------------------------------------------------------------
+
+$begin CopyBase$$
 $spell
-	Op
+	const
+	Var
 	const
 $$
 
-$index operator, base binary$$
-$index binary, base operator$$
-$index base, binary operator$$
+$section AD From Base Type Constructor$$
 
-$section Base Type Binary Operators$$
+$index construct, AD from Base$$
+$index Base, construct AD from$$
+$index AD, construct from Base$$
 
-$head Definition$$
-An operator $italic Op$$ is a base type binary operator
-if for each pair of $italic Base$$ objects $italic x$$ and $italic y$$,
+$table 
+$bold Syntax$$ $cnext
+$syntax% AD<%Base%> %x%(%b%)%$$
+$rnext $cnext
+$syntax% AD<%Base%> %x% = %b%$$
+$tend
+
+$fend 20$$
+
+$head Purpose$$
+Constructs an $syntax%AD<%Base%>%$$ object from an object of
+type $italic Base$$. 
+Directly after this construction, the object $italic x$$ is
+a $xref/glossary/Parameter/parameter/$$.
+
+$head b$$
+The argument $italic b$$ has prototype
 $syntax%
-	%x% %Op% %y%
-%$$ is defined and returns a $italic Base$$ object.
-For example, if $italic Base$$ is $code double$$,
-$code +$$ is a base type binary operator
-but $code ==$$ is not
-(see $xref/Compare/Definition/comparison operator/$$).
-
-$contents%
-	CppAD/local/Add.h%
-	CppAD/local/Sub.h%
-	CppAD/local/Mul.h%
-	CppAD/local/Div.h
+	const %Type% &%b%
 %$$
+where $italic Type$$ is either $italic Base$$,
+or is any is any type that can be converted to $italic Base$$;
+i.e., the syntax
+$syntax%
+	%Base%(%b%)
+%$$
+is valid.
+
+$head Example$$
+$children%
+	Example/CopyBase.cpp
+%$$
+The file
+$xref/CopyBase.cpp/$$
+contains an example and a test of this operation.
+It returns true if it succeeds and false otherwise.
 
 $end
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 */
-# include <CppAD/local/Add.h>
-# include <CppAD/local/Sub.h>
-# include <CppAD/local/Mul.h>
-# include <CppAD/local/Div.h>
+//  BEGIN CppAD namespace
+namespace CppAD {
+
+// conversion from Base to AD<Base>
+template <class Base>
+inline AD<Base>::AD(const Base &b) : value(b), id(0)
+{ }	
+
+// conversion form other types to AD<Base>
+template <class Base>
+template <class T>
+inline AD<Base>::AD(const T &t) : value(Base(t)), id(0)
+{ }
+
+} // END CppAD namespace
 
 # endif

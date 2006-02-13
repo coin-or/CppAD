@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Eq.cpp$$
@@ -26,11 +24,11 @@ $spell
 $$
 
 $section AD Assignment Operator: Example and Test$$
-$index assign$$
-$index example, assign$$
-$index test, assign$$
 
-$comment This file is in the Example subdirectory$$ 
+$index assignment, AD$$
+$index example, AD assignment$$
+$index test, AD assignment$$
+
 $code
 $verbatim%Example/Eq.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -43,66 +41,58 @@ $end
 
 bool Eq(void)
 {	bool ok = true;
+	using CppAD::AD;
 
-	using namespace CppAD;
-
-	// independent variable vector, indices, values, and declaration
-	CppADvector< AD<double> > U(2);
-	size_t s = 0;
-	size_t t = 1;
-	U[s]     = 5.;     // AD<double> = double
-	U[t]     = U[s];   // AD<double> = AD<double>
-	Independent(U);
+	// declare independent variable vector and start tape recording
+	size_t n = 2;
+	CppADvector< AD<double> > x(n);
+	x[0]     = 5.;     // AD<double> = double
+	x[1]     = x[0];   // AD<double> = AD<double>
+	CppAD::Independent(x);
 	
-	// dependent variable vector and indices
-	CppADvector< AD<double> > Z(3);
-	size_t x = 0;
-	size_t y = 1;
-	size_t z = 2;
+	// dependent variable vector 
+	size_t m = 3;
+	CppADvector< AD<double> > y(m);
 
-	// assign the dependent variable equal to an expression
-	// and use the value returned by assignment (for another assignment)
-	Z[x] = Z[y] = U[t] + 1.;  
+	// assign an AD object equal to an expression and 
+	// use the value returned by the assignment (for another assignment)
+	y[0] = y[1] = x[1] + 1.;  
 
-	// assign the dependent variable equal to an independent variable
+	// assign and AD object equal to an independent variable
 	// (choose the first independent variable to check a special case)
-	Z[z] = U[s];  
+	y[2] = x[0];  
 
-	// check parameter flag
-	ok &= ! Parameter(Z[x]);
-	ok &= ! Parameter(Z[y]);
-	ok &= ! Parameter(Z[z]);
+	// check that all the resulting components of y depend on x
+	ok &= Variable(y[0]);  // y[0] = x[1] + 1
+	ok &= Variable(y[1]);  // y[1] = x[1] + 1
+	ok &= Variable(y[2]);  // y[2] = x[0]
 
-	// construct f : U -> Z and vectors for derivative calculations
-	ADFun<double> f(U, Z);
-	CppADvector<double> v( f.Domain() ); 
-	CppADvector<double> w( f.Range() ); 
-
-	// check parameter flag
-	ok &= ! f.Parameter(x);
-	ok &= ! f.Parameter(y);
-	ok &= ! f.Parameter(z);
+	// construct f : x -> y and stop the tape recording
+	CppAD::ADFun<double> f(x, y);
 
 	// check variable values
-	ok &= (   Z[x] == 6.);
-	ok &= (   Z[y] == 6.);
-	ok &= (   Z[z] == 5.);
+	ok &= ( y[0] == 6.);
+	ok &= ( y[1] == 6.);
+	ok &= ( y[2] == 5.);
 
-	// compute partials w.r.t t
-	v[s] = 0.;
-	v[t] = 1.;
-	w    = f.Forward(1, v);
-	ok &= (w[x] == 1.);  // dx/dt
-	ok &= (w[y] == 1.);  // dy/dt
-	ok &= (w[z] == 0.);  // dz/dt
+	// compute partials w.r.t x[1]
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
+	dx[0] = 0.;
+	dx[1] = 1.;
+	dy   = f.Forward(1, dx);
+	ok  &= (dy[0] == 1.);  // dy[0] / dx[1]
+	ok  &= (dy[1] == 1.);  // dy[1] / dx[1]
+	ok  &= (dy[2] == 0.);  // dy[2] / dx[1]
 
-	// compute partials of z
-	w[x] = 0.;
-	w[y] = 0.;
-	w[z] = 1.;
-	v    = f.Reverse(1,w);
-	ok &= (v[s] == 1.);  // dz/ds
-	ok &= (v[t] == 0.);  // dz/dt
+	// compute the derivative y[2]
+	CppADvector<double> w(m);
+	w[0] = 0.;
+	w[1] = 0.;
+	w[2] = 1.;
+	dx   = f.Reverse(1, w);
+	ok  &= (dx[0] == 1.);  // dy[2] / dx[0]
+	ok  &= (dx[1] == 0.);  // dy[2] / dx[1]
 
 	return ok;
 }
