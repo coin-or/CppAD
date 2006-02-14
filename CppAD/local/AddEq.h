@@ -29,58 +29,63 @@ $spell
 	Eq
 $$
 
-$index +=$$
-$index computed, +=$$
-$index assign, +=$$
-$index plus, +=$$
-$index add, +=$$
+$index computed, assignment AD add$$
+$index AD, computed assignment add$$
+$index assignment, computed AD add$$
+$index add, AD computed assignment$$
+$index +=, AD computed assignment$$
 
-$section The AD Addition Computed Assignment Operator$$
+$section AD Computed Assignment Addition Operator$$
 
 $table
 $bold Syntax$$ 
 $cnext 
-$syntax%%left% += %right%$$
+$syntax% %y% += %x%$$
 $tend
 
 $fend 20$$
 
-$head Description$$
-Suppose that $italic left$$ is an
-$syntax%AD<%Base%>%$$ object, 
-and $italic right$$ is an $code int$$, $italic Base$$
-or $syntax%AD<%Base%>%$$ object.
-In this case
+$head Purpose$$
+Computes the sum of $italic x$$ and $italic y$$ and places the result in 
+$italic y$$ where $italic y$$ is a $syntax%AD<%Base%>%$$ object.
+
+$head x$$
+The operand $italic x$$ has prototype
 $syntax%
-	%left% += %right%
+        const %Type% &%x%
 %$$
-returns an
-$syntax%AD<%Base%>%$$ object
-where $code +=$$ has the same interpretation as
-for the $italic Base$$ type.
-In addition, this must be the same as
+where $italic Type$$ is $syntax%AD<%Base%>%$$, $italic Base$$, or $code int$$.
+
+$head y$$
+This operation is a member function of $italic y$$
+which has the following type
 $syntax%
-	%left% = %left% + %right%
+        AD<%Base%> %y%
 %$$
 
-
-$head Operands$$
-Note the value of the left operand is changed
-and the value of the right remains unchanged.
-If the left or right operand is a variable,
-the object $italic left$$ becomes a 
-$xref/glossary/Variable/variable/$$
-after the assignment.
+$head Result$$
+The result of this assignment
+can be used as a reference to the $italic y$$.
+For example, if the operand $italic z$$ has the following prototype
+$syntax%
+	AD<%Base%> %z%
+%$$
+then the syntax
+$syntax%
+	%z% = %y% += %x%
+%$$
+will assign the value of 
+$syntax%%y% + %x%$$ to $italic z$$ 
+(as well as to $italic y$$).
 
 $head Assumptions$$
 If the $code +=$$ operator is used with an 
 $syntax%AD<%Base%>%$$ object,
 it must be defined
-for the base type $italic Base$$.
+for the type $italic Base$$.
 In addition,
 if $latex f$$ and $latex g$$ are 
 $xref/glossary/Base Function/Base functions/$$
-with the same range dimension,
 $latex \[
 	\D{[ f(x) + g(x) ]}{x} = \D{f(x)}{x} + \D{g(x)}{x}
 \] $$
@@ -101,9 +106,6 @@ $end
 */
 //  BEGIN CppAD namespace
 namespace CppAD {
-
-// Computed Assignment Addition operators: 
-// assume CppAD.h has already been included
 
 template <class Base>
 AD<Base>& AD<Base>::operator += (const AD<Base> &right)
@@ -137,6 +139,9 @@ AD<Base>& AD<Base>::operator += (const AD<Base> &right)
 	}
 	return *this;
 }
+
+// int, Base, and VecADelem<Base> cases are folded in using 
+// CppADAssignMember(+=) in the file AD.h
 
 } // END CppAD namespace
 

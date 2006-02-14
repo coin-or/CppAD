@@ -53,7 +53,7 @@ $syntax%
 %$$
 
 $head y$$
-The result $italic y$$ has prototype
+The result $italic y$$ has type
 $syntax%
 	AD<%Base%> %y%
 %$$

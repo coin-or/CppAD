@@ -54,9 +54,11 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-15$$
+The $xref/AddEq/$$ documentation and examples have been improved. 
+
 $head 02-14$$
-The documentation and examples have been improved for the following sections:
-$xref/Add/$$.
+The $xref/Add/$$ documentation and examples have been improved. 
 
 
 $head 02-13$$

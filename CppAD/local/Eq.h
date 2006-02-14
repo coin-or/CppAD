@@ -61,19 +61,20 @@ where $italic Type$$ is $syntax%const AD<%Base%>%$$,
 $italic Base$$ or any type that can be implicitly converted to $italic Base$$.
 
 $head y$$
-The operand $italic y$$ has the following prototype
+This operation is a member function of $italic y$$ 
+which has the following type
 $syntax%
-	AD<%Base%> &%y%
+	AD<%Base%> %y%
 %$$
 
-$head Multiple Assignments$$
+$head Result$$
 $index assignment, multiple$$
 $index multiple, assignment$$
-It is possible to use the result of this assignment operator 
-in multiple assignment.
-For example, if the operand $italic z$$ has the following prototype
+The result of this assignment 
+can be used as a reference to $italic y$$.
+For example, if $italic z$$ has the following type
 $syntax%
-	AD<%Base%> &%z%
+	AD<%Base%> %z%
 %$$
 then the syntax
 $syntax%

@@ -1,32 +1,26 @@
-# Improve documentation and example for Add.
+# Improve documentation and example for AddEq.
 #
 # SvnCommit: the shell script that execute the commit.
-# Eq.h: minor improvements to documentation.
-# CopyBase.h: minor improvements to documentation.
-# CopyAD.h: remove a comment (obvious from documenation above).
-# UnaryMinus.h: minor improvements to documentation.
-# Fun.h: remove reference to glossary Base Function entry.
-# Add.h: major changes to documentation.
-# SvnStatus: remove files of the form junk.xx from report where xx are digits.
-# glossary.omh: change definition of Base Function to only scalar case.
-# WhatsNew06.omh: users view of the changes.
-# Example/Add.cpp: major changes to example.
-# TestMore/Add.cpp: include old example in this file.
+# UnaryPlus.h: edit discussion of result of assignment operation.
+# UnaryPlus.h: edit discussion of result of operation.
+# Eq.h: edit discussion of result of operation.
+# UnaryMinus.h: edit discussion of result of operation.
+# Add.h: edit discussion of result of operation.
+# AddEq.h: major change to documentation.
+# Example/AddEq.cpp: major change to example.
+# TestMore/AddEq.cpp: add old Example/AddEq.cpp to this test.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 list="\
 	SvnCommit
+	CppAD/local/UnaryPlus.h
 	CppAD/local/Eq.h
-	CppAD/local/CopyBase.h
-	CppAD/local/CopyAD.h
 	CppAD/local/UnaryMinus.h
-	CppAD/local/Fun.h
 	CppAD/local/Add.h
-	SvnStatus
-	omh/glossary.omh
+	CppAD/local/AddEq.h
 	omh/WhatsNew06.omh
-	Example/Add.cpp
-	TestMore/Add.cpp
+	Example/AddEq.cpp
+	TestMore/AddEq.cpp
 "
 for file in $list
 do
@@ -50,8 +44,5 @@ do
 done
 if [ "$response" = "c" ]
 then
-	svn delete CppAD/local/BinaryOp.h
-	svn delete CppAD/local/CompEq.h
-	svn add    CppAD/local/Arithmetic.h
 	svn commit --file svn.log $list
 fi

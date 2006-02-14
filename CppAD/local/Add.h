@@ -45,8 +45,8 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-Computes the sum of $italic x$$ and $italic y$$ 
-one of the operands is a $syntax%AD<%Base%>%$$ object and
+Computes the sum of $italic x$$ plus $italic y$$ 
+where one of the operands is a $syntax%AD<%Base%>%$$ object and
 $code +$$ has the same interpretation as for the $italic Base$$ type.
 
 $head x$$
@@ -64,9 +64,9 @@ $syntax%
 where $italic Type$$ is $syntax%AD<%Base%>%$$, $italic Base$$, or $code int$$.
 
 $head z$$
-The result $italic z$$ has prototype
+The result $italic z$$ has type
 $syntax%
-	const AD<%Base%> &%z%
+	const AD<%Base%> %z%
 %$$
 
 $head Assumptions$$
@@ -94,8 +94,6 @@ $end
 */
 //  BEGIN CppAD namespace
 namespace CppAD {
-
-// Addition operators: assume CppAD.h has already been included
 
 template <class Base>
 AD<Base> AD<Base>::operator +(const AD<Base> &right) const
