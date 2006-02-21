@@ -54,6 +54,17 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-21$$
+There was a bug $xref/RevTwo/$$ that was not detected by the
+$xref/RevTwo.cpp/$$ test. This bug was reported by
+$href%
+	http://list.coin-or.org/pipermail/cppad/2006-February/000020.html%
+	Kasper Kristensen
+%$$
+A test was added $code TestMore/RevTwo.cpp$$ that detects this problem
+and the problem has been fixed.
+
+
 $head 02-15$$
 The $xref/AddEq/$$ documentation and examples have been improved. 
 

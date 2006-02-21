@@ -2,7 +2,7 @@
 # define CppADRevTwoIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -190,7 +190,7 @@ VectorBase ADFun<Base>::RevTwo(
 	// place to hold the results of a reverse calculation
 	VectorBase r(m * 2);
 
-	// determine which forward directions need to be computed
+	// check the indices in I and J
 	for(l = 0; l < L; l++)
 	{	i = I[l];
 		CppADUsageError(
@@ -202,12 +202,13 @@ VectorBase ADFun<Base>::RevTwo(
 		j < m,
 		"RevTwo: an element of J not less than domain dimension for F"
 		);
-		c[j] = true;
 	}
 
 	// loop over all forward directions that need to be computed
-	for(j = 0; j < L; j++) if( c[j] )
-	{	// execute a forward mode for this component direction	
+	for(j = 0; j < m; j++) if( ! c[j] )
+	{	c[j] = true;
+
+		// execute a forward mode for this component direction	
 		u[j] = Base(1);
 		Forward(1, u);
 		u[j] = Base(0);
