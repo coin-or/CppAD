@@ -1,26 +1,18 @@
-# Improve documentation and example for AddEq.
+# Improve documentation and example for AD Subtraction operator.
 #
-# SvnCommit: the shell script that execute the commit.
-# UnaryPlus.h: edit discussion of result of assignment operation.
-# UnaryPlus.h: edit discussion of result of operation.
-# Eq.h: edit discussion of result of operation.
-# UnaryMinus.h: edit discussion of result of operation.
-# Add.h: edit discussion of result of operation.
-# AddEq.h: major change to documentation.
-# Example/AddEq.cpp: major change to example.
-# TestMore/AddEq.cpp: add old Example/AddEq.cpp to this test.
+# SvnCommit: the shell script that executed this commit.
+# Sub.h: major changes to documentation.
+# Add.cpp: add an index entry.
+# Example/Sub.cpp: major changes to example.
+# TestMore/Sub.cpp: include old example in this file.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 list="\
 	SvnCommit
-	CppAD/local/UnaryPlus.h
-	CppAD/local/Eq.h
-	CppAD/local/UnaryMinus.h
-	CppAD/local/Add.h
-	CppAD/local/AddEq.h
-	omh/WhatsNew06.omh
-	Example/AddEq.cpp
-	TestMore/AddEq.cpp
+	CppAD/local/Sub.h
+	Example/Add.cpp
+	Example/Sub.cpp
+	TestMore/Sub.cpp
 "
 for file in $list
 do
@@ -28,7 +20,7 @@ do
 	ext=`echo $file | sed -e "s/.*\././"`
 	if [ $file != "SvnCommit"      ] && \
 	   [ $file != "SvnCommit.sed"  ] && \
-	   [ $ext != ".vcproj"         ]
+	   [ $ext != ".vcproj"         ] && \
 	   [ $ext != ".vim"            ]
 	then
 		echo "cp $file junk.$count"

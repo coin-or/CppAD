@@ -23,6 +23,7 @@ $section AD Binary Addition: Example and Test$$
 
 $index +, AD example$$
 $index add, AD example$$
+$index plus, AD example$$
 $index example, AD add$$
 $index test, AD add$$
 
