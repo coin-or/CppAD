@@ -2,7 +2,7 @@
 # define CppADRevTwoIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -151,15 +151,15 @@ VectorBase ADFun<Base>::RevTwo(
 	size_t k;
 	size_t l;
 
-	size_t m = Domain();
-	size_t n = Range();
+	size_t n = Domain();
+	size_t m = Range();
 	size_t L = I.size();
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
 
 	CppADUsageError(
-		x.size() == m,
+		x.size() == n,
 		"RevTwo: Length of x not equal domain dimension for F"
 	); 
 	CppADUsageError(
@@ -170,63 +170,63 @@ VectorBase ADFun<Base>::RevTwo(
 	Forward(0, x);
 
 	// dimension the return value
-	VectorBase S(m * L);
+	VectorBase dF(n * L);
 
 	// boolean flag for which forward components are computed
-	VectorSize_t c(m);
-	for(j = 0; j < m; j++)
+	VectorSize_t c(n);
+	for(j = 0; j < n; j++)
 		c[j] = false;
 
 	// direction vector in argument space
-	VectorBase u(m);
-	for(j = 0; j < m; j++)
-		u[j] = Base(0);
+	VectorBase dx(n);
+	for(j = 0; j < n; j++)
+		dx[j] = Base(0);
 
 	// direction vector in range space
-	VectorBase v(n);
-	for(i = 0; i < n; i++)
-		v[i] = Base(0);
+	VectorBase w(m);
+	for(i = 0; i < m; i++)
+		w[i] = Base(0);
 
 	// place to hold the results of a reverse calculation
-	VectorBase r(m * 2);
+	VectorBase r(n * 2);
 
 	// check the indices in I and J
 	for(l = 0; l < L; l++)
 	{	i = I[l];
 		CppADUsageError(
-		i < n,
+		i < m,
 		"RevTwo: an eleemnt of I not less than range diemnsion for F"
 		);
 		j = J[l];
 		CppADUsageError(
-		j < m,
+		j < n,
 		"RevTwo: an element of J not less than domain dimension for F"
 		);
 	}
 
 	// loop over all forward directions that need to be computed
-	for(j = 0; j < m; j++) if( ! c[j] )
+	for(j = 0; j < n; j++) if( ! c[j] )
 	{	c[j] = true;
 
 		// execute a forward mode for this component direction	
-		u[j] = Base(1);
-		Forward(1, u);
-		u[j] = Base(0);
+		dx[j] = Base(1);
+		Forward(1, dx);
+		dx[j] = Base(0);
 
 		// loop over all reverse computations that use this forward
 		for(l = 0; l < L; l++) if( J[l] == j )
 		{	i = I[l];
 			// execute a reverse in this component direction
-			v[i] = Base(1);
-			r = Reverse(2, v);
-			v[i] = Base(0);
+			w[i] = Base(1);
+			r = Reverse(2, w);
+			w[i] = Base(0);
 
 			// place the reverse result in return value
-			for(k = 0; k < m; k++)
-				S[k * L + l] = r[k * 2 + 1];
+			for(k = 0; k < n; k++)
+				dF[k * L + l] = r[k * 2 + 1];
 		}
 	}
-	return S;
+	return dF;
 }
 
 } // END CppAD namespace
