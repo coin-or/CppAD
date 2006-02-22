@@ -25,66 +25,60 @@ $begin Mul$$
 $spell
 	Var
 	const
-	Mul
+	Add
 $$
 
+$index binary, AD multiply operator$$
+$index AD, binary multiply operator$$
+$index operator, AD binary multiply$$
+$index multiply, AD binary operator$$
+$index *, AD binary operator$$
 
-$index binary, multiply$$
-$index multiply, binary$$
-
-$index binary, *$$
-$index *, binary$$
-
-$section The AD Binary Multiplication Operator$$
+$section AD Binary Multiplication Operator$$
 
 $table
 $bold Syntax$$ 
 $cnext 
-$syntax%%left% * %right%$$
+$syntax% %z% = %x% * %y%$$
 $tend
 
 $fend 20$$
 
-$head Description$$
-Suppose that either $italic left$$ or $italic right$$ is an
-$syntax%AD<%Base%>%$$ object, 
-and the other operand is an $code int$$, $italic Base$$
-or $syntax%AD<%Base%>%$$ object.
-In this case
-$syntax%
-	%left% * %right%
-%$$
-returns an
-$syntax%AD<%Base%>%$$ object
-where $code *$$ has the same interpretation as
-for the $italic Base$$ type.
+$head Purpose$$
+Computes the product of $italic x$$ times $italic y$$ 
+where one of the operands is a $syntax%AD<%Base%>%$$ object and
+$code *$$ has the same interpretation as for the $italic Base$$ type.
 
-$head Operands$$
-Note the value of the left and right operands are not changed
-by this operation.
-If one of the operands has value zero and is a
-$xref/glossary/Parameter/parameter/$$ or a $italic Base$$ operand,
-the result is a parameter.
-Otherwise,
-if the left or right operand is a variable,
-the result is a 
-$xref/glossary/Variable/variable/$$.
+$head x$$
+The operand $italic x$$ has prototype
+$syntax%
+	const %Type% &%x%
+%$$
+where $italic Type$$ is $syntax%AD<%Base%>%$$, $italic Base$$, or $code int$$.
+
+$head y$$
+The operand $italic y$$ has prototype
+$syntax%
+	const %Type% &%y%
+%$$
+where $italic Type$$ is $syntax%AD<%Base%>%$$, $italic Base$$, or $code int$$.
+
+$head z$$
+The result $italic z$$ has type
+$syntax%
+	const AD<%Base%> %z%
+%$$
 
 $head Assumptions$$
-
 If the $code *$$ operator is used with an 
 $syntax%AD<%Base%>%$$ object,
-it must be defined
-for the base type $italic Base$$.
-
+it must be defined for the type $italic Base$$.
 In addition,
 if $latex f$$ and $latex g$$ are 
 $xref/glossary/Base Function/Base functions/$$
-with the same range dimension,
 $latex \[
-	\D{[ f(x) * g(x) ]}{x} = g(x)*\D{f(x)}{x} + f(x)*\D{g(x)}{x}
+	\D{[ f(x) * g(x) ]}{x} = g(x) * \D{f(x)}{x} + f(x) * \D{g(x)}{x}
 \] $$
-
 
 $head Example$$
 $children%
@@ -101,7 +95,6 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-// Multiplication operators: assume CppAD.h has already been included
 template <class Base>
 AD<Base> AD<Base>::operator *(const AD<Base> &right) const
 {
@@ -163,6 +156,7 @@ AD<Base> AD<Base>::operator *(const AD<Base> &right) const
 	return result;
 }
 
+// convert other cases to the case above
 CppADFoldBinaryOperator(AD<Base>, *)
 
 

@@ -54,7 +54,14 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-22$$
+The $xref/Mul/$$ documentation and examples have been improved. 
+
 $head 02-21$$
+The $xref/Sub/$$ documentation and examples have been improved. 
+$pre
+
+$$
 There was a bug $xref/RevTwo/$$ that was not detected by the
 $xref/RevTwo.cpp/$$ test. This bug was reported by
 $href%
