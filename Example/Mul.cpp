@@ -33,7 +33,6 @@ $$
 $end
 */
 // BEGIN PROGRAM
-
 # include <CppAD/CppAD.h>
 
 bool Mul(void)
