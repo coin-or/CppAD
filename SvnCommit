@@ -1,22 +1,23 @@
-# Improve documentation and example for AD computed subtraction operator.
+# Improve documentation and example for AD computed division operator
+# (also reorder Arithmetic section).
 #
 # SvnCommit: the shell script that executed this commit.
 # WhatsNew06.omh: users view of these changes.
-# MulEq.h: major changes to documentation.
-# AddEq.cpp: minor white space change.
-# SubEq.cpp: minor white space change.
-# Example/MulEq.cpp: major changes to example.
-# TestMore/MulEq.cpp: include old example in this file.
+# Arithmetic.h: change order of subsections and includes.
+# MulEq.h: change -= to *= in one of the comments.
+# DivEq.h: major changes to documentation.
+# Example/DivEq.cpp: major changes to example.
+# TestMore/DivEq.cpp: include old example in this file.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 list="\
 	SvnCommit
 	omh/WhatsNew06.omh
+	CppAD/local/Arithmetic.h
 	CppAD/local/MulEq.h
-	Example/AddEq.cpp
-	Example/SubEq.cpp
-	Example/MulEq.cpp
-	TestMore/MulEq.cpp
+	CppAD/local/DivEq.h
+	Example/DivEq.cpp
+	TestMore/DivEq.cpp
 "
 for file in $list
 do

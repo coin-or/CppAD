@@ -56,7 +56,7 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 02-24$$
 The documentation and examples have been improved for the following sections:
-$xref/Div/$$, $xref/SubEq/$$, and $xref/MulEq/$$. 
+$xref/Div/$$, $xref/SubEq/$$, $xref/MulEq/$$, and $xref/DivEq/$$. 
 
 $head 02-23$$
 The $xref/Mul/$$ documentation and examples have been improved. 

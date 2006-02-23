@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,14 +19,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin DivEq.cpp$$
 
-$section Division Computed Assignment: Example and Test$$
+$section AD Computed Assignment Division: Example and Test$$
 
-$index example, /=$$
-$index /=, example$$
+$index /=, AD example$$
+$index computed, AD assignment divide example$$
+$index assignment, AD computed divide example$$
+$index example, AD computed assignment divide$$
+$index test, AD computed assignment divide$$
 
 $index computed, /= example$$
 $index assign, /= example$$
-$index divide, /= example$$
+$index plus, /= example$$
+$index add, /= example$$
 
 $code
 $verbatim%Example/DivEq.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -35,61 +39,49 @@ $$
 $end
 */
 // BEGIN PROGRAM
-
 # include <CppAD/CppAD.h>
-# include <cmath>
 
 bool DivEq(void)
 {	bool ok = true;
+	using CppAD::AD;
+	using CppAD::NearEqual;
 
-	using namespace CppAD;
-
-	// independent variable vector
-	double u0 = .5;
-	CppADvector< AD<double> > U(1);
-	U[0]      = u0; 
-	Independent(U);
+	// declare independent variables and start tape recording
+	size_t  n = 1;
+	double x0 = .5;
+	CppADvector< AD<double> > x(n);
+	x[0]      = x0; 
+	CppAD::Independent(x);
 
 	// dependent variable vector 
-	CppADvector< AD<double> > Z(1);
-	Z[0] = U[0] * U[0]; // initial value
-	Z[0] /= 2;          // AD<double> /= int
-	Z[0] /= 4.;         // AD<double> /= double
-	Z[0] /= U[0];       // AD<double> /= AD<double> 
+	size_t m = 2;
+	CppADvector< AD<double> > y(m);
+	y[0] = x[0] * x[0];  // initial value
+	y[0] /= 2;           // AD<double> /= int
+	y[0] /= 4.;          // AD<double> /= double
+	y[1] = y[0] /= x[0]; // use the result of a computed assignment
 
-	// create f: U -> Z and vectors used for derivative calculations
-	ADFun<double> f(U, Z); 
-	CppADvector<double> v(1);
-	CppADvector<double> w(1);
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(x, y); 
 
 	// check value 
-	ok &= NearEqual(Z[0] , u0*u0/(2*4*u0),  1e-10 , 1e-10);
+	ok &= NearEqual(y[0] , x0*x0/(2.*4.*x0),  1e-10 , 1e-10);
+	ok &= NearEqual(y[1] ,             y[0],  1e-10 , 1e-10);
 
-	// forward computation of partials w.r.t. u
-	size_t j;
-	size_t p     = 5;
-	double jfac  = 1.;
-	double value = 1./8.;
-	v[0]         = 1.;
-	for(j = 1; j < p; j++)
-	{	jfac *= j;
-		w     = f.Forward(j, v);	
-		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
-		v[0]  = 0.;
-		value = 0.;
-	}
+	// forward computation of partials w.r.t. x[0]
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
+	dx[0] = 1.;
+	dy    = f.Forward(1, dx);
+	ok   &= NearEqual(dy[0], 1./8., 1e-10, 1e-10);
+	ok   &= NearEqual(dy[1], 1./8., 1e-10, 1e-10);
 
-	// reverse computation of partials of Taylor coefficients
-	CppADvector<double> r(p); 
+	// reverse computation of derivative of y[0]
+	CppADvector<double> w(m);
 	w[0]  = 1.;
-	r     = f.Reverse(p, w);
-	jfac  = 1.;
-	value = 1./8.;
-	for(j = 0; j < p; j++)
-	{	ok &= NearEqual(jfac*r[j], value, 1e-10 , 1e-10); // d^jz/du^j
-		jfac *= (j + 1);
-		value = 0.;
-	}
+	w[1]  = 0.;
+	dx    = f.Reverse(1, w);
+	ok   &= NearEqual(dx[0], 1./8., 1e-10, 1e-10);
 
 	return ok;
 }

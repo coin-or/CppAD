@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,10 +19,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 Old DivEq example now used just for valiadation testing
 */
-
 # include <CppAD/CppAD.h>
 
-bool DivEq(void)
+namespace { // BEGIN empty namespace
+
+bool DivEqTestOne(void)
 {	bool ok = true;
 
 	using namespace CppAD;
@@ -88,5 +89,69 @@ bool DivEq(void)
 	ok &= NearEqual(r[2 * t + 1]                 // d^2 x / (dt dt)
 		, 2. * U[s] / (U[t] * U[t] * U[t])  , 1e-10 , 1e-10 );
 
+	return ok;
+}
+
+bool DivEqTestTwo(void)
+{	bool ok = true;
+
+	using namespace CppAD;
+
+	// independent variable vector
+	double u0 = .5;
+	CppADvector< AD<double> > U(1);
+	U[0]      = u0; 
+	Independent(U);
+
+	// dependent variable vector 
+	CppADvector< AD<double> > Z(1);
+	Z[0] = U[0] * U[0]; // initial value
+	Z[0] /= 2;          // AD<double> /= int
+	Z[0] /= 4.;         // AD<double> /= double
+	Z[0] /= U[0];       // AD<double> /= AD<double> 
+
+	// create f: U -> Z and vectors used for derivative calculations
+	ADFun<double> f(U, Z); 
+	CppADvector<double> v(1);
+	CppADvector<double> w(1);
+
+	// check value 
+	ok &= NearEqual(Z[0] , u0*u0/(2*4*u0),  1e-10 , 1e-10);
+
+	// forward computation of partials w.r.t. u
+	size_t j;
+	size_t p     = 5;
+	double jfac  = 1.;
+	double value = 1./8.;
+	v[0]         = 1.;
+	for(j = 1; j < p; j++)
+	{	jfac *= j;
+		w     = f.Forward(j, v);	
+		ok &= NearEqual(jfac*w[0], value, 1e-10 , 1e-10); // d^jz/du^j
+		v[0]  = 0.;
+		value = 0.;
+	}
+
+	// reverse computation of partials of Taylor coefficients
+	CppADvector<double> r(p); 
+	w[0]  = 1.;
+	r     = f.Reverse(p, w);
+	jfac  = 1.;
+	value = 1./8.;
+	for(j = 0; j < p; j++)
+	{	ok &= NearEqual(jfac*r[j], value, 1e-10 , 1e-10); // d^jz/du^j
+		jfac *= (j + 1);
+		value = 0.;
+	}
+
+	return ok;
+}
+
+} // END empty namespace
+
+bool DivEq(void)
+{	bool ok = true;
+	ok &= DivEqTestOne();
+	ok &= DivEqTestTwo(); 
 	return ok;
 }

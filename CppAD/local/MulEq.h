@@ -149,7 +149,7 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 }
 
 // int, Base, and VecADelem<Base> cases are folded in using
-// CppADAssignMember(-=) in the file AD.h
+// CppADAssignMember(*=) in the file AD.h
 
 } // END CppAD namespace
 

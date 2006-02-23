@@ -41,12 +41,12 @@ $childtable%
 	CppAD/local/UnaryPlus.h%
 	CppAD/local/UnaryMinus.h%
 	CppAD/local/Add.h%
-	CppAD/local/AddEq.h%
 	CppAD/local/Sub.h%
-	CppAD/local/SubEq.h%
 	CppAD/local/Mul.h%
-	CppAD/local/MulEq.h%
 	CppAD/local/Div.h%
+	CppAD/local/AddEq.h%
+	CppAD/local/SubEq.h%
+	CppAD/local/MulEq.h%
 	CppAD/local/DivEq.h
 %$$
 
@@ -56,12 +56,12 @@ $end
 # include <CppAD/local/UnaryPlus.h>
 # include <CppAD/local/UnaryMinus.h>
 # include <CppAD/local/Add.h>
-# include <CppAD/local/AddEq.h>
 # include <CppAD/local/Sub.h>
-# include <CppAD/local/SubEq.h>
 # include <CppAD/local/Mul.h>
-# include <CppAD/local/MulEq.h>
 # include <CppAD/local/Div.h>
+# include <CppAD/local/AddEq.h>
+# include <CppAD/local/SubEq.h>
+# include <CppAD/local/MulEq.h>
 # include <CppAD/local/DivEq.h>
 
 # endif
