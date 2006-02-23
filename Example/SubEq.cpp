@@ -39,7 +39,6 @@ $$
 $end
 */
 // BEGIN PROGRAM
-
 # include <CppAD/CppAD.h>
 
 bool SubEq(void)

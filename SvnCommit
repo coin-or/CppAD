@@ -2,21 +2,21 @@
 #
 # SvnCommit: the shell script that executed this commit.
 # WhatsNew06.omh: users view of these changes.
-# AddEq.h: minor changes to improve automatic conversion to other cases.
-# SubEq.h: major changes to documentation.
-# AddEq.cpp: minor changes to improve automatic conversion to other cases.
-# Example/SubEq.cpp: major changes to example.
-# TestMore/SubEq.cpp: include old example in this file.
+# MulEq.h: major changes to documentation.
+# AddEq.cpp: minor white space change.
+# SubEq.cpp: minor white space change.
+# Example/MulEq.cpp: major changes to example.
+# TestMore/MulEq.cpp: include old example in this file.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 list="\
 	SvnCommit
 	omh/WhatsNew06.omh
-	CppAD/local/SubEq.h
-	CppAD/local/AddEq.h
+	CppAD/local/MulEq.h
 	Example/AddEq.cpp
 	Example/SubEq.cpp
-	TestMore/SubEq.cpp
+	Example/MulEq.cpp
+	TestMore/MulEq.cpp
 "
 for file in $list
 do
