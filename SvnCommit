@@ -1,18 +1,17 @@
-# Improve documentation and example for AD Subtraction operator.
+# Improve documentation and example for AD multiplication operator.
 #
 # SvnCommit: the shell script that executed this commit.
-# Sub.h: major changes to documentation.
-# Add.cpp: add an index entry.
-# Example/Sub.cpp: major changes to example.
-# TestMore/Sub.cpp: include old example in this file.
+# WhatsNew06.omh: users view of these changes and those in previous commit.
+# Mul.h: major changes to documentation.
+# Example/Mul.cpp: major changes to example.
+# TestMore/Mul.cpp: include old example in this file.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 list="\
-	SvnCommit
-	CppAD/local/Sub.h
-	Example/Add.cpp
-	Example/Sub.cpp
-	TestMore/Sub.cpp
+	CppAD/local/Mul.h
+	omh/WhatsNew06.omh
+	Example/Mul.cpp
+	TestMore/Mul.cpp
 "
 for file in $list
 do
