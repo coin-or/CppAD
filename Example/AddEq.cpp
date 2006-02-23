@@ -66,8 +66,8 @@ bool AddEq(void)
 	CppAD::ADFun<double> f(x, y); 
 
 	// check value 
-	ok &= NearEqual(y[0] , x0+2+4+x0,  1e-10 , 1e-10);
-	ok &= NearEqual(y[1] ,      y[0],  1e-10 , 1e-10);
+	ok &= NearEqual(y[0] , x0+2.+4.+x0,  1e-10 , 1e-10);
+	ok &= NearEqual(y[1] ,        y[0],  1e-10 , 1e-10);
 
 	// forward computation of partials w.r.t. x[0]
 	CppADvector<double> dx(n);

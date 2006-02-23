@@ -46,7 +46,8 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-Computes the sum of $italic x$$ and $italic y$$ and places the result in 
+Computes the sum of $italic x$$ plus $italic y$$ 
+and places the result in 
 $italic y$$ where $italic y$$ is a $syntax%AD<%Base%>%$$ object.
 
 $head x$$
@@ -65,7 +66,7 @@ $syntax%
 
 $head Result$$
 The result of this assignment
-can be used as a reference to the $italic y$$.
+can be used as a reference to $italic y$$.
 For example, if the operand $italic z$$ has the following prototype
 $syntax%
 	AD<%Base%> %z%

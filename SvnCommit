@@ -1,17 +1,22 @@
-# Improve documentation and example for AD multiplication operator.
+# Improve documentation and example for AD computed subtraction operator.
 #
 # SvnCommit: the shell script that executed this commit.
-# WhatsNew06.omh: users view of these changes and those in previous commit.
-# Mul.h: major changes to documentation.
-# Example/Mul.cpp: major changes to example.
-# TestMore/Mul.cpp: include old example in this file.
+# WhatsNew06.omh: users view of these changes.
+# AddEq.h: minor changes to improve automatic conversion to other cases.
+# SubEq.h: major changes to documentation.
+# AddEq.cpp: minor changes to improve automatic conversion to other cases.
+# Example/SubEq.cpp: major changes to example.
+# TestMore/SubEq.cpp: include old example in this file.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 list="\
-	CppAD/local/Mul.h
+	SvnCommit
 	omh/WhatsNew06.omh
-	Example/Mul.cpp
-	TestMore/Mul.cpp
+	CppAD/local/SubEq.h
+	CppAD/local/AddEq.h
+	Example/AddEq.cpp
+	Example/SubEq.cpp
+	TestMore/SubEq.cpp
 "
 for file in $list
 do
