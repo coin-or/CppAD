@@ -29,62 +29,66 @@ $spell
 	inline
 $$
 
-$mindex comparison operator$$
-$index <$$
-$index <=$$
-$index >$$
-$index >=$$
-$index ==$$
-$index !=$$
+$index binary, AD compare operator$$
+$index AD, binary compare operator$$
+$index compare, AD binary operator$$
+$index operator, AD binary compare$$
 
-$section The AD Comparison Operators$$
+$index <, AD operator$$
+$index <=, AD operator$$
+$index >, AD operator$$
+$index >=, AD operator$$
+$index ==, AD operator$$
+$index !=, AD operator$$
+
+$section The AD Binary Comparison Operators$$
 
 
 $table
 $bold Syntax$$ 
 $cnext 
-$syntax%%left% %Op% %right%$$
+$syntax% %b% = %x% %Op% %y%$$
 $tend
 
 $fend 20$$
 
-$head Description$$
-Suppose that either $italic left$$ or $italic right$$ is an
-$syntax%AD<%Base%>%$$ object, 
-and the other operand is an $code int$$, $italic Base$$
-or $syntax%AD<%Base%>%$$ object.
-In this case
-$syntax%
-	%left% %Op% %right%
-%$$
-returns a $code bool$$ value (true or false)
-where $italic Op$$ is any of the following operators:
-$table
-$italic Op$$ $cnext $bold True Case$$ 
-$rnext
-$code <$$    $cnext $italic left$$ is less than $italic right$$ 
-$rnext
-$code <=$$   $cnext $italic left$$ is less than or equal $italic right$$ 
-$rnext
-$code >$$    $cnext $italic left$$ is greater than $italic right$$ 
-$rnext
-$code >=$$   $cnext $italic left$$ is greater than or equal $italic right$$ 
-$rnext
-$code ==$$   $cnext $italic left$$ is equal to $italic right$$ 
-$rnext
-$code !=$$   $cnext $italic left$$ is not equal to $italic right$$ 
-$tend
+$head Purpose$$
+Compares two operands where one of the operands is an
+$syntax%AD<%Base%>%$$ object
+and the comparison has the same interpretation as for 
+the $italic Base$$ type.
 
-$head Definition$$
-An operator $italic Op$$ is a $italic Base$$ comparison operator
-if for each pair of $italic Base$$ objects $italic x$$ and $italic y$$,
+$head Op$$
+The operator $italic Op$$ is one of the following:
+$table
+$bold Op$$ $pre $$  $cnext $bold Meaning$$                           $rnext
+$code <$$   $cnext is $italic x$$ less than $italic y$$              $rnext
+$code <=$$  $cnext is $italic x$$ less than or equal $italic y$$     $rnext
+$code >$$   $cnext is $italic x$$ greater than $italic y$$           $rnext
+$code >=$$  $cnext is $italic x$$ greater than or equal $italic y$$  $rnext
+$code ==$$  $cnext is $italic x$$ equal to $italic y$$               $rnext
+$code !=$$  $cnext is $italic x$$ not equal to $italic y$$
+$tend
+ 
+$head x$$
+The operand $italic x$$ has prototype
 $syntax%
-	%x% %Op% %y%
-%$$ is defined and returns a $code bool$$ value.
-For example,
-$code <$$ is a $code double$$ comparison operator
-but $code +$$ is not a $code double$$ comparison operator
-(see $xref/Arithmetic//AD arithmetic operators/$$).
+	const %Type% &%x%
+%$$
+where $italic Type$$ is $syntax%AD<%Base%>%$$, $italic Base$$, or $code int$$.
+
+$head y$$
+The operand $italic y$$ has prototype
+$syntax%
+	const %Type% &%y%
+%$$
+where $italic Type$$ is $syntax%AD<%Base%>%$$, $italic Base$$, or $code int$$.
+
+$head b$$
+The result $italic b$$ has type
+$syntax%
+	bool %b%
+%$$
 
 $head Assumptions$$
 If one of the $italic Op$$ operators listed above
@@ -178,6 +182,7 @@ inline bool AD<Base>::operator < (const AD<Base> &right) const
 }
 # endif
 
+// convert other cases into the case above
 CppADFoldBinaryOperator(bool, <)
 
 // -------------------------------- <= -------------------------
@@ -203,6 +208,7 @@ inline bool AD<Base>::operator <= (const AD<Base> &right) const
 }
 # endif
 
+// convert other cases into the case above
 CppADFoldBinaryOperator(bool, <=)
 
 
@@ -229,6 +235,7 @@ inline bool AD<Base>::operator > (const AD<Base> &right) const
 }
 # endif
 
+// convert other cases into the case above
 CppADFoldBinaryOperator(bool, >)
 
 // -------------------------------- >= -------------------------
@@ -254,6 +261,7 @@ inline bool AD<Base>::operator >= (const AD<Base> &right) const
 }
 # endif
 
+// convert other cases into the case above
 CppADFoldBinaryOperator(bool, >=)
 
 
@@ -280,6 +288,7 @@ inline bool AD<Base>::operator == (const AD<Base> &right) const
 }
 # endif
 
+// convert other cases into the case above
 CppADFoldBinaryOperator(bool, ==)
 
 // -------------------------------- != -------------------------
@@ -305,6 +314,7 @@ inline bool AD<Base>::operator != (const AD<Base> &right) const
 }
 # endif
 
+// convert other cases into the case above
 CppADFoldBinaryOperator(bool, !=)
 
 } // END CppAD namespace

@@ -54,15 +54,18 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-25$$
+The $xref/Compare/$$ documentation and example have been improved. 
+
 $head 02-24$$
 The documentation and examples have been improved for the following sections:
 $xref/Div/$$, $xref/SubEq/$$, $xref/MulEq/$$, and $xref/DivEq/$$. 
 
 $head 02-23$$
-The $xref/Mul/$$ documentation and examples have been improved. 
+The $xref/Mul/$$ documentation and example have been improved. 
 
 $head 02-21$$
-The $xref/Sub/$$ documentation and examples have been improved. 
+The $xref/Sub/$$ documentation and example have been improved. 
 $pre
 
 $$
@@ -77,10 +80,10 @@ and the problem has been fixed.
 
 
 $head 02-15$$
-The $xref/AddEq/$$ documentation and examples have been improved. 
+The $xref/AddEq/$$ documentation and example have been improved. 
 
 $head 02-14$$
-The $xref/Add/$$ documentation and examples have been improved. 
+The $xref/Add/$$ documentation and example have been improved. 
 
 
 $head 02-13$$

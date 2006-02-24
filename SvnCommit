@@ -1,23 +1,18 @@
-# Improve documentation and example for AD computed division operator
-# (also reorder Arithmetic section).
+# Improve documentation and example for AD binary comparision operators.
 #
 # SvnCommit: the shell script that executed this commit.
 # WhatsNew06.omh: users view of these changes.
-# Arithmetic.h: change order of subsections and includes.
-# MulEq.h: change -= to *= in one of the comments.
-# DivEq.h: major changes to documentation.
-# Example/DivEq.cpp: major changes to example.
-# TestMore/DivEq.cpp: include old example in this file.
+# Compare.h: major changes to documentation.
+# Example/Compare.cpp: use comparisions in if statements.
+# TestMore/Compare.cpp: test all operators all cases.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-list="\
+list="
 	SvnCommit
+	CppAD/local/Compare.h
 	omh/WhatsNew06.omh
-	CppAD/local/Arithmetic.h
-	CppAD/local/MulEq.h
-	CppAD/local/DivEq.h
-	Example/DivEq.cpp
-	TestMore/DivEq.cpp
+	Example/Compare.cpp
+	TestMore/Compare.cpp
 "
 for file in $list
 do

@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Compare.cpp$$
@@ -24,12 +22,19 @@ $spell
 	Cpp
 $$
 
-$section AD Comparison Operators: Example and Test$$
-$index compare$$
-$index example, compare$$
-$index test, compare$$
+$section AD Binary Comparison Operators: Example and Test$$
 
-$comment This file is in the Example subdirectory$$ 
+$index compare, AD example$$
+$index example, AD compare$$
+$index test, AD compare$$
+
+$index <, example$$
+$index <=, example$$
+$index >, example$$
+$index >=, example$$
+$index ==, example$$
+$index !=, example$$
+
 $code
 $verbatim%Example/Compare.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -37,57 +42,74 @@ $$
 $end
 */
 // BEGIN PROGRAM
-
 # include <CppAD/CppAD.h>
 
 bool Compare(void)
 {	bool ok = true;
+	using CppAD::AD;
+	using CppAD::NearEqual;
 
-	using namespace CppAD;
+	// declare independent variables and start tape recording
+	size_t n  = 2;
+	double x0 = 0.5;
+	double x1 = 1.5;
+	CppADvector< AD<double> > x(n);
+	x[0]      = x0; 
+	x[1]      = x1; 
+	CppAD::Independent(x);
 
-	AD<double> x = 3.;
-	AD<double> y = 4.;
-	AD<double> z = 4.;
+	// some binary comparision operations
+	AD<double> p;
+	if( x[0] < x[1] )
+		p = x[0];   // values in x choose this case
+	else	p = x[1];
+	if( x[0] <= x[1] )
+		p *= x[0];  // values in x choose this case
+	else	p *= x[1];
+	if( x[0] >  x[1] )
+		p *= x[0]; 
+	else	p *= x[1];  // values in x choose this case
+	if( x[0] >= x[1] )
+		p *= x[0]; 
+	else	p *= x[1];  // values in x choose this case
+	if( x[0] == x[1] )
+		p *= x[0]; 
+	else	p *= x[1];  // values in x choose this case
+	if( x[0] != x[1] )
+		p *= x[0];  // values in x choose this case
+	else	p *= x[1]; 
 
-	// AD<double> <op> AD<double>
-	ok &= (y >  x);   
-	ok &= (y >= x);   
-	ok &= (x <  y);   
-	ok &= (x <= y);   
-	ok &= (x != y);   
-	ok &= (z == y);   
+	// dependent variable vector 
+	size_t m = 1;
+	CppADvector< AD<double> > y(m);
+	y[0] = p;
 
-	// double <op> AD<double>
-	ok &= (3.5 >  x);   
-	ok &= (3.5 >= x);   
-	ok &= (3.5 <  y);   
-	ok &= (3.5 <= y);   
-	ok &= (3.5 != y);   
-	ok &= (4.  == y);   
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(x, y); 
 
-	// int <op> AD<double>
-	ok &= (4 >  x);   
-	ok &= (3 >= x);   
-	ok &= (3 <  y);   
-	ok &= (3 <= y);   
-	ok &= (3 != y);   
-	ok &= (4 == y);   
+	// check value 
+	ok &= NearEqual(y[0] , x0*x0*x1*x1*x1*x0,  1e-10 , 1e-10);
 
-	// AD<double> <op> double
-	ok &= (x <  3.5);   
-	ok &= (x <= 3.5);   
-	ok &= (y >  3.5);   
-	ok &= (y >= 3.5);   
-	ok &= (y != 3.5);   
-	ok &= (y == 4.);   
+	// forward computation of partials w.r.t. x[0]
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
+	dx[0] = 1.;
+	dx[1] = 0.;
+	dy    = f.Forward(1, dx);
+	ok   &= NearEqual(dy[0], 3.*x0*x0*x1*x1*x1, 1e-10, 1e-10);
 
-	// AD<double> <op> int
-	ok &= (x <  4);   
-	ok &= (x <= 3);   
-	ok &= (y >  3);   
-	ok &= (y >= 3);   
-	ok &= (y != 3);   
-	ok &= (y == 4);   
+	// forward computation of partials w.r.t. x[1]
+	dx[0] = 0.;
+	dx[1] = 1.;
+	dy    = f.Forward(1, dx);
+	ok   &= NearEqual(dy[0], 3.*x0*x0*x1*x1*x0, 1e-10, 1e-10);
+
+	// reverse computation of derivative of y[0]
+	CppADvector<double> w(m);
+	w[0]  = 1.;
+	dx    = f.Reverse(1, w);
+	ok   &= NearEqual(dx[0], 3.*x0*x0*x1*x1*x1, 1e-10, 1e-10);
+	ok   &= NearEqual(dx[1], 3.*x0*x0*x1*x1*x0, 1e-10, 1e-10);
 
 	return ok;
 }
