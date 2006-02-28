@@ -56,7 +56,7 @@ $tend
 
 $fend 20$$
 
-$head Description$$
+$head Purpose$$
 Solves the linear equation
 $latex \[
 	Matrix * Result = Rhs
@@ -68,14 +68,20 @@ $pre
 
 $$
 The routine $xref/LuSolve/$$ uses an arbitrary vector type,
-instead of $code VecAD$$,
+instead of $xref/VecAD/$$,
 to hold its elements.
-Thus it is faster to execute and compute derivatives
-but corresponding $xref/ADFun/$$ objects have a fixed
-set of pivoting operations.
 The pivoting operations for a $code ADFun$$ object
 corresponding to an $code LuVecAD$$ solution
 will change to be optimal for the matrix being factored.
+$pre
+
+$$
+It is often the case that
+$code LuSolve$$ is faster than $code LuVecAD$$ when $code LuSolve$$
+uses a simple vector class with 
+$xref/SimpleVector/Elements of Specified Type/elements of type double/$$,
+but the corresponding $xref/ADFun/$$ objects have a fixed
+set of pivoting operations.
 
 $head Storage Convention$$
 The matrices stored in row major order.
@@ -85,9 +91,9 @@ $latex i$$ is between zero and $latex  n-1$$,
 and $latex j$$ is between zero and $latex m-1$$,
 $latex \[
 
-	A_{i,j} = A[ i * M + j ]
+	A_{i,j} = A[ i * m + j ]
 \] $$
-(The length of $latex A$$ must be equal to $latex  n * M $$.)
+(The length of $latex A$$ must be equal to $latex  n * m $$.)
 
 $head n$$
 is the number of rows in 
