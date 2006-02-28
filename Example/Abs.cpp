@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Abs.cpp$$
@@ -24,12 +22,12 @@ $spell
 	abs
 $$
 
-$section The Absolute Value Function: Example and Test$$
-$index abs$$
+$section AD Absolute Value Function: Example and Test$$
+
+$index abs, example$$
 $index example, abs$$
 $index test, abs$$
 
-$comment This file is in the Example subdirectory$$
 $code
 $verbatim%Example/Abs.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -39,67 +37,66 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include <cmath>
 
 bool Abs(void)
 {	bool ok = true;
 
 	using CppAD::abs;
-	using namespace CppAD;
+	using CppAD::AD;
+	using CppAD::NearEqual;
 
-	// independent variable vector, indices, values, and declaration
-	CppADvector< AD<double> > U(1);
-	size_t s = 0;
-	U[s]     = 0.;
-	Independent(U);
+	// declare independent variables and start tape recording
+	size_t n = 1;
+	CppADvector< AD<double> > x(n);
+	x[0]     = 0.;
+	CppAD::Independent(x);
 
-	// dependent variable vector, indices, and values
-	CppADvector< AD<double> > Z(3);
-	size_t x = 0;
-	size_t y = 1;
-	size_t z = 2;
-	Z[x]     = abs(U[s] - 1.);
-	Z[y]     = abs(U[s]);
-	Z[z]     = abs(U[s] + 1.);
+	// dependent variable vector
+	size_t m = 3;
+	CppADvector< AD<double> > y(3);
+	y[0]     = abs(x[0] - 1.);
+	y[1]     = abs(x[0]);
+	y[2]     = abs(x[0] + 1.);
 
-	// define f : U -> Z and vectors for derivative calculations
-	ADFun<double> f(U, Z);
-	CppADvector<double> v( f.Domain() );
-	CppADvector<double> w( f.Range() );
+	// define f : x -> y and stop tape recording
+	CppAD::ADFun<double> f(x, y);
 
 	// check values
-	ok &= (Z[x] == abs(-1.));
-	ok &= (Z[y] == abs(0.));
-	ok &= (Z[z] == abs(1.));
+	ok &= (y[0] == 1.);
+	ok &= (y[1] == 0.);
+	ok &= (y[2] == 1.);
 
-	// forward computation of partials w.r.t. s in positive s direction
-	v[s] = 1.;
-	w    = f.Forward(1, v);
-	ok  &= (w[x] == -v[s]);
-	ok  &= (w[y] == v[s]);
-	ok  &= (w[z] == v[s]);
+	// forward computation of partials w.r.t. a positive x[0] direction
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
+	dx[0] = 1.;
+	dy    = f.Forward(1, dx);
+	ok  &= (dy[0] == - dx[0]);
+	ok  &= (dy[1] == + dx[0]);
+	ok  &= (dy[2] == + dx[0]);
 
-	// forward computation of partials w.r.t. s in negative s direction
-	v[s] = -1.;
-	w    = f.Forward(1, v);
-	ok  &= (w[x] == -v[s]);
-	ok  &= (w[y] == -v[s]);
-	ok  &= (w[z] == v[s]);
+	// forward computation of partials w.r.t. a negative x[0] direction
+	dx[0] = -1.;
+	dy    = f.Forward(1, dx);
+	ok  &= (dy[0] == - dx[0]);
+	ok  &= (dy[1] == - dx[0]);
+	ok  &= (dy[2] == + dx[0]);
 
-	// reverse computation of derivative of x 
-	w[x] = 1.; w[y] = 0.; w[z] = 0.;
-	v    = f.Reverse(1, w);
-	ok  &= (v[s] == -1.);
+	// reverse computation of derivative of y[0] 
+	CppADvector<double> w(m);
+	w[0] = 1.; w[1] = 0.; w[2] = 0.;
+	dx   = f.Reverse(1, w);
+	ok  &= (dx[0] == -1.);
 
-	// reverse computation of derivative of y 
-	w[x] = 0.; w[y] = 1.; w[z] = 0.;
-	v    = f.Reverse(1, w);
-	ok  &= (v[s] == 0.);
+	// reverse computation of derivative of y[1] 
+	w[0] = 0.; w[1] = 1.; w[2] = 0.;
+	dx   = f.Reverse(1, w);
+	ok  &= (dx[0] == 0.);
 
-	// reverse computation of derivative of z 
-	w[x] = 0.; w[y] = 0.; w[z] = 1.;
-	v    = f.Reverse(1, w);
-	ok  &= (v[s] == 1.);
+	// reverse computation of derivative of y[2] 
+	w[0] = 0.; w[1] = 0.; w[2] = 1.;
+	dx   = f.Reverse(1, w);
+	ok  &= (dx[0] == 1.);
 
 	return ok;
 }

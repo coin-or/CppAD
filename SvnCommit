@@ -1,20 +1,18 @@
-# Improve documentation and example for AD Output operator <<.
+# Improve documentation and example for AD Abs function. 
 #
 # SvnCommit: the shell script that executed this commit.
+# UserAD.h: move PrintFor to the end of this file.
+# Abs.h: major changes to the documentaiton.
 # WhatsNew06.omh: users view of these changes.
-# Compare.h: minor change to documentation.
-# Output.h: major changes to documentation.
-# SvnCommit.sed: add another edit on commit.
-# Example/Output.cpp: major changes to example and test.
+# Abs.cpp: major changes.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 list="
 	SvnCommit
-	CppAD/local/Output.h
-	CppAD/local/Compare.h
-	SvnCommit.sed
+	CppAD/local/UserAD.h
+	CppAD/local/Abs.h
 	omh/WhatsNew06.omh
-	Example/Output.cpp
+	Example/Abs.cpp
 "
 for file in $list
 do

@@ -1,9 +1,8 @@
 # ifndef CppADAbsIncluded
 # define CppADAbsIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -31,51 +29,63 @@ $spell
 	abs
 $$
 
-$index absolute, value$$
-$index value, absolute$$
-$index abs$$
+$index absolute, AD value$$
+$index value, AD absolute$$
+$index abs, AD$$
 
-$section The Absolute Value Function$$
+$section The AD Absolute Value Function$$
 
 $table
-$bold Syntax$$ 
-$cnext 
-$syntax%AD<%Base%> abs (const AD<%Base%> &%x%)%$$
+$bold Syntax$$ $cnext 
+$syntax% %y% = abs(%x%)%$$
 $tend
 
 $fend 20$$
 
-$head Description$$
+$head Purpose$$
 Returns an
 $syntax%AD<%Base%>%$$ object that is equal to
 $syntax%
 	abs(%x%)
 %$$
 where $code abs$$ has the same interpretation as
-for the corresponding $xref/glossary/Base Type/base type/$$.
+for the $italic Base$$ type.
+
+$head x$$
+The argument $italic x$$ has prototype
+$syntax%
+	const AD<%Base%> &%x%
+%$$
+
+$head y$$
+The result $italic y$$ has prototype
+$syntax%
+	AD<%Base%> %y%
+%$$
 
 
-$head Base Type Requirement$$
+
+$head Base$$ 
 A definition for the $code abs$$ function
 is automatically included (in the $code CppAD$$ namespace)
-for the following 
-$xref/glossary/Base Type/base types/$$:
-$code float$$, $code double$$ and the $code AD$$ types
-built upon these base types.
+for the types 
+$code float$$, $code double$$ and the 
+$xref/glossary/AD Sequence/AD sequence/$$ of types that
+above these types; for example;
+$code AD<double>$$.
 
-$head Derivative Assumption$$
-The derivative of $code abs$$ is computed using the formula
+$head Derivative$$
+The first order derivative of $code abs$$ is computed using the formula
 $latex \[
 \D{[ {\rm abs} [x(t)] ]}{t} = 
 \left\{ \begin{array}{ll} 
 	x^{(1)} (t)   & {\rm if} \; x(t) > 0 \\
 	x^{(1)} (t)   & {\rm if} \; x(t) = 0 \; {\rm and} \; x'(t) > 0 \\
 	0             & {\rm if} \; x(t) = 0 \; {\rm and} \; x'(t) = 0 \\
-	- x^{(1)} (t) & {\rm if} \; x(t) = 0 \; {\rm and} \; x'(t) > 0 \\
+	- x^{(1)} (t) & {\rm if} \; x(t) = 0 \; {\rm and} \; x'(t) < 0 \\
 	- x^{(1)} (t) & {\rm if} \; x(t) < 0 
 \end{array} \right.
 \] $$
-
 
 
 $head Example$$
@@ -84,7 +94,7 @@ $children%
 %$$
 The file
 $xref/Abs.cpp/$$
-contains an example and a test of this function.   
+contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 
 $end

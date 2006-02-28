@@ -51,10 +51,10 @@ $childtable%
 	CppAD/local/Arithmetic.h%
 	CppAD/local/Compare.h%
 	CppAD/local/Output.h%
-	CppAD/local/PrintFor.h%
 	CppAD/local/StdMathLib.h%
 	CppAD/local/BoolFun.h%
-	CppAD/local/NearEqualExt.h
+	CppAD/local/NearEqualExt.h%
+	CppAD/local/PrintFor.h
 %$$
 
 $end
@@ -70,9 +70,9 @@ $end
 # include <CppAD/local/Arithmetic.h>   // arithmetic operators
 # include <CppAD/local/Compare.h>      // Logical Binary operators
 # include <CppAD/local/Output.h>       // output AD to a stream
-# include <CppAD/local/PrintFor.h>     // print during forward mode
 # include <CppAD/local/StdMathLib.h>   // standard math library functions
 # include <CppAD/local/BoolFun.h>      // user defined boolean valued functions
 # include <CppAD/local/NearEqualExt.h> // mix AD and base in NearEqual
+# include <CppAD/local/PrintFor.h>     // print during forward mode
 
 # endif
