@@ -54,8 +54,8 @@ $fend 20$$
 
 $head Purpose$$
 Compares two operands where one of the operands is an
-$syntax%AD<%Base%>%$$ object
-and the comparison has the same interpretation as for 
+$syntax%AD<%Base%>%$$ object.
+The comparison has the same interpretation as for 
 the $italic Base$$ type.
 
 $head Op$$
@@ -102,7 +102,7 @@ $children%
 %$$
 The file
 $xref/Compare.cpp/$$
-contains an example and a test of these operations.
+contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 
 $end

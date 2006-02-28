@@ -1,18 +1,20 @@
-# Improve documentation and example for AD binary comparision operators.
+# Improve documentation and example for AD Output operator <<.
 #
 # SvnCommit: the shell script that executed this commit.
 # WhatsNew06.omh: users view of these changes.
-# Compare.h: major changes to documentation.
-# Example/Compare.cpp: use comparisions in if statements.
-# TestMore/Compare.cpp: test all operators all cases.
+# Compare.h: minor change to documentation.
+# Output.h: major changes to documentation.
+# SvnCommit.sed: add another edit on commit.
+# Example/Output.cpp: major changes to example and test.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 list="
 	SvnCommit
+	CppAD/local/Output.h
 	CppAD/local/Compare.h
+	SvnCommit.sed
 	omh/WhatsNew06.omh
-	Example/Compare.cpp
-	TestMore/Compare.cpp
+	Example/Output.cpp
 "
 for file in $list
 do

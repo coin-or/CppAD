@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Output.cpp$$
@@ -25,13 +23,13 @@ $spell
 	cstddef
 $$
 
-$mindex output test example$$
-$section The Output Operator for AD Objects: Example and Test$$
-$index output$$
-$index example, output$$
-$index test, output$$
+$section AD Output Operator: Example and Test$$
 
-$comment This file is in the Example subdirectory$$ 
+$index <<, AD example$$
+$index output, AD example$$
+$index example, AD output$$
+$index test, AD output$$
+
 $code
 $verbatim%Example/Output.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -42,32 +40,45 @@ $end
 
 # include <CppAD/CppAD.h>
 
-# include <sstream>
-# include <string>
+# include <sstream>  // std::ostringstream
+# include <string>   // std::string
+# include <iomanip>  // std::setprecision, setw, setfill, right
+
+namespace {
+	template <class S>
+	void set_ostream(S &os)
+	{	os 
+		<< std::setprecision(4) // 4 digits of precision
+		<< std::setw(6)         // 6 characters per field
+		<< std::setfill(' ')    // fill with spaces
+		<< std::right;          // adjust value to the right
+	}
+}
 
 bool Output(void)
-{	using namespace CppAD;
-	using namespace std;
+{	bool ok = true;
 
-	bool ok = true;
-	string str;
-	size_t n;
+	// This output stream is an ostringstream for testing purposes.
+	// You can use << with other types of streams; i.e., std::cout.
+	std::ostringstream stream;
 
-	ostringstream buf;
+	// some AD<double> values
+	CppAD::AD<double>  pi = 4. * atan(1.); // 3.1415926536
+	CppAD::AD<double>   e = exp(1.);       // 2.7182818285
 
-	AD<double>    s = 1.;
-	VecAD<double> T(2);
-	T[s] = 2.;
+	// ouput the first value
+	set_ostream(stream);
+	stream << pi;
 
-	buf << s;
-	buf << T[s];
-	str = buf.str();
-	n   = str.size();
+	// ouput the second value
+	set_ostream(stream); 
+	stream << e;
 
-	ok &= (n == 2);
-	ok &= (str[0] == '1');
-	ok &= (str[1] == '2');
+	// convert output from stream to string
+	std::string str = stream.str();
 
+	// check the output
+	ok      &= (str == " 3.142 2.718");
 
 	return ok;
 }

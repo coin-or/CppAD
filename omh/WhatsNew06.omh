@@ -54,6 +54,10 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-28$$
+The $xref/Output/$$ documentation and example have been improved. 
+Minor improvements were also made to the $xref/LuVecAD/$$ documentation.
+
 $head 02-25$$
 The $xref/Compare/$$ documentation and example have been improved. 
 
