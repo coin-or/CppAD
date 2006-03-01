@@ -118,24 +118,6 @@ $end
 # define CppADNull     0
 # endif
 
-# ifdef _MSC_VER
-
-# define CppADStandardMathFun(Name)                                       \
-                                                                          \
-	inline float Name(float x)                                        \
-	{	return ::Name(x); }                                       \
-                                                                          \
-	inline std::complex<float> Name(std::complex<float> x)            \
-	{	return std::Name(x); }                                    \
-                                                                          \
-	inline double Name(double x)                                      \
-	{	return ::Name(x); }                                       \
-                                                                          \
-	inline std::complex<double> Name(std::complex<double> x)          \
-	{	return std::Name(x); }
-
-# else
-
 # define CppADStandardMathFun(Name)                                       \
                                                                           \
 	inline float Name(float x)                                        \
@@ -150,27 +132,6 @@ $end
 	inline std::complex<double> Name(std::complex<double> x)          \
 	{	return std::Name(x); }
 
-# endif
-
-# ifdef _MSC_VER
-
-# define CppADStandardMathBinaryFun(Name)                                 \
-                                                                          \
-	inline float Name(float x, float y)                               \
-	{	return ::Name(x, y); }                                    \
-                                                                          \
-	inline std::complex<float> Name(                                  \
-		std::complex<float> x, std::complex<float> y)             \
-	{	return std::Name(x, y); }                                 \
-                                                                          \
-	inline double Name(double x, double y)                            \
-	{	return ::Name(x, y); }                                    \
-                                                                          \
-	inline std::complex<double> Name(                                 \
-		std::complex<double> x, std::complex<double> y)           \
-	{	return std::Name(x, y); }
-
-# else
 
 # define CppADStandardMathBinaryFun(Name)                                 \
                                                                           \
@@ -188,7 +149,6 @@ $end
 		std::complex<double> x, std::complex<double> y)           \
 	{	return std::Name(x, y); }
 
-# endif
 
 # define CppADFoldBinaryOperator(Type, Op)                             \
 /* ----------------------------------------------------------------*/  \
