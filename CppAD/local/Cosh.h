@@ -1,9 +1,8 @@
 # ifndef CppADCoshIncluded
 # define CppADCoshIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -81,45 +79,20 @@ $children%
 %$$
 The file
 $xref/Cosh.cpp/$$
-contains an example and a test of this function.   
+contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
 */
 
-//  BEGIN CppAD namespace
 namespace CppAD {
 
-CppADStandardMathFun(cosh)
+	// define for float, double, std::complex<float>, std::complex<double>
+	CppADStandardMathUnaryBaseAll(cosh)
 
-template <class Base>
-AD<Base> AD<Base>::Cosh (void) const
-{	using CppAD::cosh;
-
-	AD<Base> result;
-	CppADUnknownError( result.id == 0 );
-
-	result.value   = cosh(value);
-
-	if(	(Tape()->State() == Recording) & Variable(*this) ) 
-	{
-		// add this operation to the tape
-		Tape()->RecordOp(CoshOp, result, taddr);
-
-	}
-
-	return result;
+	// define for AD types
+	CppADStandardMathUnaryTemplate(cosh, CoshOp)
 }
-
-template <class Base>
-inline AD<Base> cosh(const AD<Base> &x)
-{	return x.Cosh(); }
-
-template <class Base>
-inline AD<Base> cosh(const VecADelem<Base> &x)
-{	return cosh( x.ADBase() ); }
-
-} // END CppAD namespace
 
 # endif 

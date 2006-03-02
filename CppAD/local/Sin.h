@@ -1,9 +1,8 @@
 # ifndef CppADSinIncluded
 # define CppADSinIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -81,46 +79,20 @@ $children%
 %$$
 The file
 $xref/Sin.cpp/$$
-contains an example and a test of this function.   
+contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
 */
 
-//  BEGIN CppAD namespace
 namespace CppAD {
 
-CppADStandardMathFun(sin)
+	// define for float, double, std::complex<float>, std::complex<double>
+	CppADStandardMathUnaryBaseAll(sin)
 
-
-template <class Base>
-AD<Base> AD<Base>::Sin (void) const
-{	using CppAD::sin;
-
-	AD<Base> result;
-	CppADUnknownError( result.id == 0 );
-
-	result.value   = sin(value);
-
-	if(	(Tape()->State() == Recording) & Variable(*this) ) 
-	{
-		// add this operation to the tape
-		Tape()->RecordOp(SinOp, result, taddr);
-
-	}
-
-	return result;
+	// define for AD types
+	CppADStandardMathUnaryTemplate(sin, SinOp)
 }
-
-template <class Base>
-inline AD<Base> sin(const AD<Base> &x)
-{	return x.Sin(); }
-
-template <class Base>
-inline AD<Base> sin(const VecADelem<Base> &x)
-{	return sin( x.ADBase() ); }
-
-} // END CppAD namespace
 
 # endif 

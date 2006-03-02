@@ -2,7 +2,7 @@
 # define CppADUndefIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -23,7 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 # undef CppADNull
 # undef CppADBinaryFriend
-# undef CppADStandardMathFun
+# undef CppADStandardMathUnaryBaseAll
+# undef CppADStandardMathUnaryBaseHalf
 # undef CppADStandardMathBinaryFun
 
 # endif

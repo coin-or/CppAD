@@ -164,16 +164,16 @@ public:
 
 	// interface so these functions need not be friends
 	inline AD Abs(void) const;
-	inline AD Log(void) const;
-	inline AD Exp(void) const;
-	inline AD Cos(void) const;
-	inline AD Cosh(void) const;
-	inline AD Sin(void) const;
-	inline AD Sinh(void) const;
-	inline AD Atan(void) const;
-	inline AD Sqrt(void) const;
-	inline AD Asin(void) const;
-	inline AD Acos(void) const;
+	inline AD acos(void) const;
+	inline AD asin(void) const;
+	inline AD atan(void) const;
+	inline AD cos(void) const;
+	inline AD cosh(void) const;
+	inline AD exp(void) const;
+	inline AD log(void) const;
+	inline AD sin(void) const;
+	inline AD sinh(void) const;
+	inline AD sqrt(void) const;
 
 	/*
 	Functions declared public so can be accessed by user through

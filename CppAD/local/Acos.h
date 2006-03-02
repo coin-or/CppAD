@@ -1,9 +1,8 @@
 # ifndef CppADAcosIncluded
 # define CppADAcosIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -82,72 +80,20 @@ $children%
 %$$
 The file
 $xref/Acos.cpp/$$
-contains an example and a test of this function.   
+contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
 */
 
-//  BEGIN CppAD namespace
 namespace CppAD {
 
+	// define for float, double
+	CppADStandardMathUnaryBaseHalf(acos)
 
-# ifdef _MSC_VER
-	inline float acos(float x)
-	{	return ::acos(x); }
-	inline double acos(double x)
-	{	return ::acos(x); }
-# else
-	inline float acos(float x)
-	{	return std::acos(x); }
-	inline double acos(double x)
-	{	return std::acos(x); }
-# endif
-
-inline std::complex<float> acos(std::complex<float> x)
-{	CppADUsageError(
-		0,
-		"Attempt to use acos with complex argument"
-	);
-	return x;
+	// define for AD types
+	CppADStandardMathUnaryTemplate(acos, AcosOp)
 }
-inline std::complex<double> acos(std::complex<double> x)
-{	CppADUsageError(
-		0,
-		"Attempt to use acos with complex argument"
-	);
-	return x;
-}
-
-
-template <class Base>
-AD<Base> AD<Base>::Acos (void) const
-{	using CppAD::acos;
-
-	AD<Base> result;
-	CppADUnknownError( result.id == 0 );
-
-	result.value   = acos(value);
-
-	if(	(Tape()->State() == Recording) & Variable(*this) ) 
-	{
-		// add this operation to the tape
-		Tape()->RecordOp(AcosOp, result, taddr);
-
-	}
-
-	return result;
-}
-
-template <class Base>
-inline AD<Base> acos(const AD<Base> &x)
-{	return x.Acos(); }
-
-template <class Base>
-inline AD<Base> acos(const VecADelem<Base> &x)
-{	return acos( x.ADBase() ); }
-
-} // END CppAD namespace
 
 # endif 

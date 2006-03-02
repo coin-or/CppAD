@@ -1,9 +1,8 @@
 # ifndef CppADAsinIncluded
 # define CppADAsinIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -82,71 +80,20 @@ $children%
 %$$
 The file
 $xref/Asin.cpp/$$
-contains an example and a test of this function.   
+contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
 */
 
-//  BEGIN CppAD namespace
 namespace CppAD {
 
+	// define for float, double
+	CppADStandardMathUnaryBaseHalf(asin)
 
-# ifdef _MSC_VER
-	inline float asin(float x)
-	{	return ::asin(x); }
-	inline double asin(double x)
-	{	return ::asin(x); }
-# else
-	inline float asin(float x)
-	{	return std::asin(x); }
-	inline double asin(double x)
-	{	return std::asin(x); }
-# endif
-
-inline std::complex<float> asin(std::complex<float> x)
-{	CppADUsageError(
-		0,
-		"Attempt to use asin with complex argument"
-	);
-	return x;
+	// define for AD types
+	CppADStandardMathUnaryTemplate(asin, AsinOp)
 }
-inline std::complex<double> asin(std::complex<double> x)
-{	CppADUsageError(
-		0,
-		"Attempt to use asin with complex argument"
-	);
-	return x;
-}
-
-
-template <class Base>
-AD<Base> AD<Base>::Asin (void) const
-{	using CppAD::asin;
-
-	AD<Base> result;
-	CppADUnknownError( result.id == 0 );
-
-	result.value   = asin(value);
-
-	if(	(Tape()->State() == Recording) & Variable(*this) ) 
-	{
-		// add this operation to the tape
-		Tape()->RecordOp(AsinOp, result, taddr);
-	}
-
-	return result;
-}
-
-template <class Base>
-inline AD<Base> asin(const AD<Base> &x)
-{	return x.Asin(); }
-
-template <class Base>
-inline AD<Base> asin(const VecADelem<Base> &x)
-{	return asin( x.ADBase() ); }
-
-} // END CppAD namespace
 
 # endif 

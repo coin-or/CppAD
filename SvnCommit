@@ -1,18 +1,22 @@
-# Improve documentation and example for AD Abs function. 
+# Use macros to reduce (simplify) standard math functions source code.
 #
-# SvnCommit: the shell script that executed this commit.
-# UserAD.h: move PrintFor to the end of this file.
-# Abs.h: major changes to the documentaiton.
-# WhatsNew06.omh: users view of these changes.
-# Abs.cpp: major changes.
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 list="
 	SvnCommit
-	CppAD/local/UserAD.h
-	CppAD/local/Abs.h
-	omh/WhatsNew06.omh
-	Example/Abs.cpp
+	CppAD/local/Exp.h
+	CppAD/local/Sinh.h
+	CppAD/local/Sqrt.h
+	CppAD/local/Define.h
+	CppAD/local/Undef.h
+	CppAD/local/AD.h
+	CppAD/local/Log.h
+	CppAD/local/Atan.h
+	CppAD/local/Cos.h
+	CppAD/local/Acos.h
+	CppAD/local/Sin.h
+	CppAD/local/Asin.h
+	CppAD/local/Cosh.h
 "
 for file in $list
 do

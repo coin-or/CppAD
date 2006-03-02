@@ -1,9 +1,8 @@
 # ifndef CppADAtanIncluded
 # define CppADAtanIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -80,70 +78,20 @@ $children%
 %$$
 The file
 $xref/Atan.cpp/$$
-contains an example and a test of this function.   
+contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
 */
 
-//  BEGIN CppAD namespace
 namespace CppAD {
 
-# ifdef _MSC_VER
-	inline float atan(float x)
-	{	return ::atan(x); }
-	inline double atan(double x)
-	{	return ::atan(x); }
-# else
-	inline float atan(float x)
-	{	return std::atan(x); }
-	inline double atan(double x)
-	{	return std::atan(x); }
-# endif
+	// define for float, double
+	CppADStandardMathUnaryBaseHalf(atan)
 
-inline std::complex<float> atan(std::complex<float> x)
-{	CppADUsageError(
-		0,
-		"Attempt to use atan with complex argument"
-	);
-	return x;
+	// define for AD types
+	CppADStandardMathUnaryTemplate(atan, AtanOp)
 }
-inline std::complex<double> atan(std::complex<double> x)
-{	CppADUsageError(
-		0,
-		"Attempt to use atan with complex argument"
-	);
-	return x;
-}
-
-
-template <class Base>
-AD<Base> AD<Base>::Atan (void) const
-{	using CppAD::atan;
-
-	AD<Base> result;
-	CppADUnknownError( result.id == 0 );
-
-	result.value   = atan(value);
-
-	if(	(Tape()->State() == Recording) & Variable(*this) ) 
-	{
-		// add this operation to the tape
-		Tape()->RecordOp(AtanOp, result, taddr);
-	}
-
-	return result;
-}
-
-template <class Base>
-inline AD<Base> atan(const AD<Base> &x)
-{	return x.Atan(); }
-
-template <class Base>
-inline AD<Base> atan(const VecADelem<Base> &x)
-{	return atan( x.ADBase() ); }
-
-} // END CppAD namespace
 
 # endif 
