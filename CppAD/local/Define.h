@@ -118,62 +118,6 @@ $end
 # define CppADNull     0
 # endif
 
-# define CppADStandardMathUnaryBaseAll(Name)                                  \
-                                                                          \
-	inline float Name(float x)                                        \
-	{	return std::Name(x); }                                    \
-                                                                          \
-	inline double Name(double x)                                      \
-	{	return std::Name(x); }                                    \
-                                                                          \
-	inline std::complex<float> Name(std::complex<float> x)            \
-	{	return std::Name(x); }                                    \
-                                                                          \
-	inline std::complex<double> Name(std::complex<double> x)          \
-	{	return std::Name(x); }
-
-# define CppADStandardMathUnaryBaseHalf(Name)                                 \
-                                                                          \
-	inline float Name(float x)                                        \
-	{	return std::Name(x); }                                    \
-                                                                          \
-	inline double Name(double x)                                      \
-	{	return std::Name(x); }                                    \
-                                                                          \
-	inline std::complex<float> Name(std::complex<float> x)            \
-	{	CppADUsageError(                                          \
-			0,                                                \
-			#Name ": attempt to use with complex argument"    \
-		)                                                         \
-		return x;                                                 \
-	}                                                                 \
-                                                                          \
-	inline std::complex<double> Name(std::complex<double> x)          \
-	{	CppADUsageError(                                          \
-			0,                                                \
-			#Name ": attempt to use with complex argument"    \
-		)                                                         \
-		return x;                                                 \
-	}
-
-# define CppADStandardMathUnaryTemplate(Name, Op)                         \
-	template <class Base>                                             \
-	inline AD<Base> AD<Base>::Name (void) const                       \
-        {	using CppAD::Name;                                        \
-		AD<Base> result;                                          \
-		CppADUnknownError( result.id == 0 );                      \
-		result.value = Name(value);                               \
-		if( (Tape()->State() == Recording) & Variable(*this) )    \
-			Tape()->RecordOp(Op, result, taddr);              \
-		return result;                                            \
-	}                                                                 \
-	template <class Base>                                             \
-	inline AD<Base> Name(const AD<Base> &x)                           \
-	{	return x.Name(); }                                        \
-	template <class Base>                                             \
-	inline AD<Base> Name(const VecADelem<Base> &x)                    \
-	{	return Name( x.ADBase() ); }
-
 
 # define CppADStandardMathBinaryFun(Name)                                 \
                                                                           \

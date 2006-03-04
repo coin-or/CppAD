@@ -52,15 +52,12 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/ADTape.h \
 	CppAD/local/Abs.h \
 	CppAD/local/AbsOp.h \
-	CppAD/local/Acos.h \
 	CppAD/local/AcosOp.h \
 	CppAD/local/Add.h \
 	CppAD/local/AddEq.h \
 	CppAD/local/AddOp.h \
 	CppAD/local/Arithmetic.h \
-	CppAD/local/Asin.h \
 	CppAD/local/AsinOp.h \
-	CppAD/local/Atan.h \
 	CppAD/local/Atan2.h \
 	CppAD/local/AtanOp.h \
 	CppAD/local/BoolFun.h \
@@ -69,8 +66,6 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/CondExp.h \
 	CppAD/local/CopyAD.h \
 	CppAD/local/CopyBase.h \
-	CppAD/local/Cos.h \
-	CppAD/local/Cosh.h \
 	CppAD/local/CppADError.h \
 	CppAD/local/CppADvector.h \
 	CppAD/local/Declare.h \
@@ -82,7 +77,6 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/DivOp.h \
 	CppAD/local/Eq.h \
 	CppAD/local/Erf.h \
-	CppAD/local/Exp.h \
 	CppAD/local/ExpOp.h \
 	CppAD/local/ExtendDomain.h \
 	CppAD/local/ForOne.h \
@@ -97,8 +91,6 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/Independent.h \
 	CppAD/local/Integer.h \
 	CppAD/local/Jacobian.h \
-	CppAD/local/Log.h \
-	CppAD/local/Log10.h \
 	CppAD/local/LogOp.h \
 	CppAD/local/Mul.h \
 	CppAD/local/MulEq.h \
@@ -120,12 +112,10 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/RevSparseHes.h \
 	CppAD/local/RevTwo.h \
 	CppAD/local/ReverseSweep.h \
-	CppAD/local/Sin.h \
-	CppAD/local/Sinh.h \
 	CppAD/local/SinCos.h \
-	CppAD/local/Sqrt.h \
 	CppAD/local/SqrtOp.h \
-	CppAD/local/StdMathLib.h \
+	CppAD/local/StdMathBinary.h \
+	CppAD/local/StdMathUnary.h \
 	CppAD/local/Sub.h \
 	CppAD/local/SubEq.h \
 	CppAD/local/SubOp.h \

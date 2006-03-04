@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew05$$
 $spell
+	acos
+	asin
 	autoconf
 	ptr
 	Erf
@@ -558,14 +560,14 @@ The $xref/Value.cpp/$$ example has been improved and the old example
 has been moved into the $code TestMore$$ directory.
 
 $head 08-13$$
-The standard math functions $xref/sinh//sinh/$$ and $xref/cosh//cosh/$$ have
-been added. 
+The $xref/StdMathUnary//AD standard math unary functions/$$
+$code sinh$$, and $code cosh$$ have been added. 
 In addition, more correctness testing 
 (
 $xref/InstallUnix/--with-TestMore/unix/$$ , 
 $xref/InstallWindows/More Correctness Testing/windows/$$ 
 )
-has been added for the $xref/Sin//sin/$$ and $xref/cos//cos/$$ functions.
+has been added for the $code sin$$ and $code cos$$ functions.
 $pre
 
 $$
@@ -586,8 +588,9 @@ one need not create as many temporaries to do comparisons with.
 The old $code CondExp$$ function has been deprecated.
 
 $head 07-21$$
-Remove unnecessary no-op that was left in tape for the following cases:
-$xref/acos/$$, $xref/asin/$$, $xref/atan/$$, and $xref/cos/$$.
+Remove unnecessary no-op that was left in tape for the 
+$xref/StdMathUnary//AD standard math unary functions/$$
+$code acos$$, $code asin$$, $code atan$$, $code cos$$.
 $pre
 
 $$

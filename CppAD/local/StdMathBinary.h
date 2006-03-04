@@ -1,5 +1,5 @@
-# ifndef CppADUndefIncluded
-# define CppADUndefIncluded
+# ifndef CppADStdMathBinaryIncluded
+# define CppADStdMathBinaryIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
@@ -19,10 +19,34 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
-// Undo definitions in Define.h 
+/*
+$begin StdMathBinary$$
+$spell
+	atan
+$$
 
-# undef CppADNull
-# undef CppADBinaryFriend
-# undef CppADStandardMathBinaryFun
+$index atan2, AD$$
+
+$index standard, AD math binary$$
+$index math, AD binary$$
+$index binary, AD math$$
+
+$section The AD Standard Math Binary Functions$$
+
+$children%
+	CppAD/local/Atan2.h%
+	CppAD/local/Pow.h
+%$$
+$table
+$rref atan2$$
+$rref  pow$$
+$tend
+	
+
+$end
+*/
+
+# include <CppAD/local/Atan2.h>
+# include <CppAD/local/Pow.h>
 
 # endif

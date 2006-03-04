@@ -1,9 +1,8 @@
 # ifndef CppADPowIncluded
 # define CppADPowIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -55,14 +53,15 @@ $latex \[
 \] $$
 If $italic y$$ is an $code int$$, the calculation is performed using
 repeated multiplications.
-Otherwise the $xref/log/$$ of $italic y$$ must be defined.
+Otherwise $latex \log(y)$$ must be defined.
 (for example, if $italic y$$ is zero, its log is not defined).
 
 
 $head Assumptions$$
 If $italic y$$ is not an $code int$$,
 the derivative assumptions for the 
-$xref/Log//log/$$ and $xref/Exp//exp/$$ functions must hold.
+$xref/StdMathUnary//unary functions/$$
+$code log$$ and $code exp$$ must hold.
 
 $head Standard Base Types$$
 A definition for the $code pow$$ function

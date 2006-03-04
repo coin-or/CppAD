@@ -1,24 +1,55 @@
-# Use macros to reduce (simplify) standard math functions source code.
+# Improve doc and simplify implementation for AD standard math unary functions.
+#
+# SvnCommit: file that preformed this commit.
+# StdMathBinary.h: AD standard math binary functions.
+# StdMathUnary.h: AD standard math unary functions (doc and implement here).
+# UserAD.h: split standard math functions into subsections.
+# Define.h: move unary function macros into StdMathUnary.h.
+# Undef.h: no longer need to undefine unary function macros here.
+# Pow.h: cross references changed (with new documentation structure).
+# Faq.omh: cross references changed (with new documentation structure).
+# WhatsNew03.omh: cross references changed (with new documentation structure).
+# WhatsNew04.omh: cross references changed (with new documentation structure).
+# WhatsNew05.omh: cross references changed (with new documentation structure).
+#
+# No need the following files (standard math unary functions):
+# Acos.h, Asin.h, Atan.h, Cos.h, Cosh.h, Exp.h, Log.h, Log10.h, Sin.h, 
+# Sinh.h, Sqrt.h
 #
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
-list="
+add_list="
+	CppAD/local/StdMathBinary.h
+	CppAD/local/StdMathUnary.h
+"
+change_list="
 	SvnCommit
-	CppAD/local/Exp.h
-	CppAD/local/Sinh.h
-	CppAD/local/Sqrt.h
+	CppAD/local/UserAD.h
 	CppAD/local/Define.h
 	CppAD/local/Undef.h
-	CppAD/local/AD.h
-	CppAD/local/Log.h
+	CppAD/local/Pow.h
+	omh/Faq.omh
+	omh/WhatsNew03.omh
+	omh/WhatsNew04.omh
+	omh/WhatsNew05.omh
+	Makefile.am
+"
+delete_list="
+	CppAD/local/StdMathLib.h
+	CppAD/local/Acos.h
+	CppAD/local/Asin.h
 	CppAD/local/Atan.h
 	CppAD/local/Cos.h
-	CppAD/local/Acos.h
-	CppAD/local/Sin.h
-	CppAD/local/Asin.h
 	CppAD/local/Cosh.h
+	CppAD/local/Exp.h
+	CppAD/local/Log.h
+	CppAD/local/Log10.h
+	CppAD/local/Sin.h
+	CppAD/local/Sinh.h
+	CppAD/local/Sqrt.h
 "
-for file in $list
+count=0
+for file in $add_list $change_list
 do
 	count=`expr $count + 1`
 	ext=`echo $file | sed -e "s/.*\././"`
@@ -27,11 +58,20 @@ do
 	   [ $ext != ".vcproj"         ] && \
 	   [ $ext != ".vim"            ]
 	then
+		# automatic edits and backups
 		echo "cp $file junk.$count"
 		cp $file junk.$count
 		sed -f SvnCommit.sed < junk.$count > $file
 		diff junk.$count $file
 	fi
+done
+for file in $add_list
+do
+	echo "svn add $file ?"
+done
+for file in $delete_list
+do
+	echo "svn delete $file ?"
 done
 response=""
 while [ "$response" != "c" ] && [ "$response" != "a" ]
@@ -40,5 +80,29 @@ do
 done
 if [ "$response" = "c" ]
 then
-	svn commit --file svn.log $list
+	for file in $add_list
+	do
+		svn add $file
+	done
+	for file in $delete_list
+	do
+		svn delete $file
+	done
+	svn commit --file svn.log $add_list $change_list $delete_list
+else
+	count=0
+	for file in $add_list $change_list
+	do
+		count=`expr $count + 1`
+		ext=`echo $file | sed -e "s/.*\././"`
+		if [ $file != "SvnCommit"      ] && \
+	   	[ $file != "SvnCommit.sed"  ] && \
+	   	[ $ext != ".vcproj"         ] && \
+	   	[ $ext != ".vim"            ]
+		then
+			# undo the automatic edits
+			echo "mv junk.$count $file"
+			mv junk.$count $file
+		fi
+	done
 fi

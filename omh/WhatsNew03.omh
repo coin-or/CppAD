@@ -272,7 +272,7 @@ tape only supports partial derivatives.
 
 $head 10-14$$
 The $code sqrt$$ function was added to the 
-$xref/StdMathLib//standard math library functions/$$.
+$xref/StdMathUnary//AD standard math unary functions/$$.
 In addition, a definition of the power function for the
 $xref/Pow/Standard Base Types/standard base types/$$ was automatically 
 included in the $code CppAD$$ namespace.
@@ -285,7 +285,7 @@ $xref/glossary/Tape State/Empty/empty state/1/$$
 
 $head 10-10$$
 The $code atan$$ function was added to the 
-$xref/StdMathLib//standard math library functions/$$.
+$xref/StdMathUnary//AD standard math unary functions/$$.
 
 $head 10-06$$
 In the notation below, $italic zero$$ and $italic one$$
@@ -324,7 +324,7 @@ functions were removed.
 %$$
 suggested a very nice way to keep the unary functions.)
 Another significant change was made to the user interface during this procedure,
-the $xref/StdMathLib//standard math library functions/$$
+the standard math library functions
 are now part of the CppAD distribution and not defined by the user.
 $pre
 
@@ -490,8 +490,7 @@ $xref/UnaryMinus//unary minus/$$ operator was added to the AD operations.
 
 
 $head 08-19$$
-The 
-$xref/StdMathLib/$$
+The standard math function
 examples were extended to include the complex case.
 $pre
 
@@ -753,7 +752,8 @@ together with their derivatives.
 For example, the standard math functions such as
 $xref/Exp.cpp//exp/$$
 are good candidates for such definitions.
-(This feature has been replaced by $xref/StdMathLib/$$.)
+(This feature has been replaced by and the standard math functions
+are now part of the AD types, see $xref/AD/$$.) 
 $pre
 
 $$
