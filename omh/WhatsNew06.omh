@@ -54,6 +54,19 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-07$$
+The $code tan$$ function has been added to CppAD.
+$pre
+
+$$
+The examples $xref/Acos.cpp/$$, $xref/Asin.cpp/$$ and 
+$xref/Atan.cpp/$$ have been improved.
+
+$head 03-05$$
+The AD standard math unary functions documentation
+has been grouped together with improved documentation
+in $xref/StdMathUnary/$$.
+
 $head 02-28$$
 The $xref/Output/$$ and $xref/Abs/$$
 documentation and example have been improved. 

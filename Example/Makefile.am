@@ -120,6 +120,7 @@ Example_SOURCES   = \
 	Sinh.cpp \
 	Sqrt.cpp \
 	Sub.cpp \
+	Tan.cpp \
 	SubEq.cpp \
 	TrackNewDel.cpp \
 	UnaryMinus.cpp \

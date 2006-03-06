@@ -1295,6 +1295,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Tan.cpp">
+			</File>
+			<File
 				RelativePath=".\TrackNewDel.cpp">
 			</File>
 			<File

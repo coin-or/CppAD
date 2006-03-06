@@ -139,6 +139,9 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
+				RelativePath=".\Acos.cpp">
+			</File>
+			<File
 				RelativePath="Add.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -197,6 +200,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Asin.cpp">
 			</File>
 			<File
 				RelativePath="Atan.cpp">

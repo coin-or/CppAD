@@ -1,52 +1,48 @@
-# Improve doc and simplify implementation for AD standard math unary functions.
+# Improve examples for AD standard math unary functions.
 #
 # SvnCommit: file that preformed this commit.
-# StdMathBinary.h: AD standard math binary functions.
-# StdMathUnary.h: AD standard math unary functions (doc and implement here).
-# UserAD.h: split standard math functions into subsections.
-# Define.h: move unary function macros into StdMathUnary.h.
-# Undef.h: no longer need to undefine unary function macros here.
-# Pow.h: cross references changed (with new documentation structure).
-# Faq.omh: cross references changed (with new documentation structure).
-# WhatsNew03.omh: cross references changed (with new documentation structure).
-# WhatsNew04.omh: cross references changed (with new documentation structure).
-# WhatsNew05.omh: cross references changed (with new documentation structure).
 #
-# No need the following files (standard math unary functions):
-# Acos.h, Asin.h, Atan.h, Cos.h, Cosh.h, Exp.h, Log.h, Log10.h, Sin.h, 
+# StdMathUnary.h: added the tan(x) function.
+# WhatsNew06.omh: users view of changes.
+# ExampleList.omh: add Tan.cpp example.
+# Asin.cpp: move Example/Asin.cpp to TestMore/Asin.cpp and create new Asin.cpp.
+# Example.vcproj: add Tan.cpp example.
+# Example.cpp: add Tan.cpp example.
+# Atan.cpp: move Example/Atan.cpp into TestMore/Atan.cpp and create Asin.cpp.
+# Acos.cpp: move Example/Acos.cpp to TestMore/Acos.cpp and create new Acos.cpp.
+# Example/Makefile.am: add Tan.cpp example.
+# TestMore.cpp: add new tests (moved here from example directory).
+# TestMore.vcproj: add new tests (moved here from example directory).
+# TestMore/Makefile.am: add new tests (moved here from example directory).
+#
+# Example files:
+# Cos.h, Cosh.h, Exp.h, Log.h, Log10.h, Sin.h, 
 # Sinh.h, Sqrt.h
 #
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 add_list="
-	CppAD/local/StdMathBinary.h
-	CppAD/local/StdMathUnary.h
+	Example/Tan.cpp
+	TestMore/Acos.cpp
+	TestMore/Asin.cpp
 "
 change_list="
 	SvnCommit
-	CppAD/local/UserAD.h
-	CppAD/local/Define.h
-	CppAD/local/Undef.h
-	CppAD/local/Pow.h
-	omh/Faq.omh
-	omh/WhatsNew03.omh
-	omh/WhatsNew04.omh
-	omh/WhatsNew05.omh
-	Makefile.am
+	CppAD/local/StdMathUnary.h
+	omh/WhatsNew06.omh
+	omh/ExampleList.omh
+	Example/Asin.cpp
+	Example/Example.vcproj
+	Example/Example.cpp
+	Example/Atan.cpp
+	Example/Acos.cpp
+	Example/Makefile.am
+	TestMore/TestMore.cpp
+	TestMore/Atan.cpp
+	TestMore/TestMore.vcproj
+	TestMore/Makefile.am
 "
 delete_list="
-	CppAD/local/StdMathLib.h
-	CppAD/local/Acos.h
-	CppAD/local/Asin.h
-	CppAD/local/Atan.h
-	CppAD/local/Cos.h
-	CppAD/local/Cosh.h
-	CppAD/local/Exp.h
-	CppAD/local/Log.h
-	CppAD/local/Log10.h
-	CppAD/local/Sin.h
-	CppAD/local/Sinh.h
-	CppAD/local/Sqrt.h
 "
 count=0
 for file in $add_list $change_list

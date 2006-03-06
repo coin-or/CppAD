@@ -32,6 +32,8 @@ endif
 AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #
 TestMore_SOURCES  = TestMore.cpp \
+	Acos.cpp \
+	Asin.cpp \
 	Add.cpp \
 	AddEq.cpp \
 	AddZero.cpp \

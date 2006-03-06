@@ -50,6 +50,7 @@ $index log10, AD$$
 $index sin, AD$$
 $index sinh, AD$$
 $index sqrt, AD$$
+$index tan, AD$$
 
 $section The AD Standard Math Unary Functions$$
 
@@ -131,7 +132,10 @@ $code sinh$$
 	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
 $code sqrt$$  
 	$cnext square root function
-	$cnext yes $cnext yes $cnext yes $cnext yes 
+	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
+$code tan$$  
+	$cnext square root function
+	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
 $tend
 
 
@@ -150,7 +154,8 @@ $children%
 	Example/Log10.cpp%
 	Example/Sin.cpp%
 	Example/Sinh.cpp%
-	Example/Sqrt.cpp
+	Example/Sqrt.cpp%
+	Example/Tan.cpp
 %$$
 $table
 $rref Acos.cpp$$
@@ -164,6 +169,7 @@ $rref Log10.cpp$$
 $rref Sin.cpp$$
 $rref Sinh.cpp$$
 $rref Sqrt.cpp$$
+$rref Tan.cpp$$
 $tend
 
 
@@ -256,6 +262,15 @@ $subhead sqrt$$
 $latex \[
 \begin{array}{lcr}
         \D{[ {\rm sqrt} (x) ]}{x} & = & \frac{1}{2 {\rm sqrt} (x) }
+\end{array}
+\] $$
+
+$subhead tan$$
+This function is special in that it's derivatives are calculated
+using the relation
+$latex \[
+\begin{array}{lcr}
+        \tan (x) & = & \sin(x) / \cos(x)
 \end{array}
 \] $$
 
@@ -367,6 +382,10 @@ namespace CppAD {
         CppADStandardMathUnaryBaseAll(sqrt)
         CppADStandardMathUnaryTemplate(sqrt, SqrtOp)
 	
+        // tan
+	template <class Type>
+	inline Type tan(const Type &x)
+	{	return CppAD::sin(x) / CppAD::cos(x); }
 }
 
 # undef CppADStandardMathUnaryBaseAll
