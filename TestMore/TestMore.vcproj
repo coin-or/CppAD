@@ -604,6 +604,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Sin.cpp">
+			</File>
+			<File
 				RelativePath=".\SinCos.cpp">
 			</File>
 			<File

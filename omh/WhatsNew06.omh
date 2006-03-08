@@ -59,8 +59,11 @@ The examples
 $xref/Cos.cpp/$$, 
 $xref/Cosh.cpp/$$, 
 $xref/Exp.cpp/$$, 
-$xref/Log.cpp/$$, and
-$xref/Log10.cpp/$$
+$xref/Log.cpp/$$, 
+$xref/Log10.cpp/$$,
+$xref/Sin.cpp/$$,
+$xref/Sinh.cpp/$$,
+$xref/Sqrt.cpp/$$
 have been improved.
 
 $head 03-07$$

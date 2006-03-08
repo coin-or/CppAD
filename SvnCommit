@@ -1,27 +1,28 @@
-# Improve AD log example.
+# Improve AD standard math unary function examples.
 #
 # SvnCommit: file that preformed this commit.
 # WhatsNew06.omh: user's view of change.
-# TestMore.cpp: add Log10.cpp.
-# TestMore.vcproj: add Log10.cpp.
-# Makefile.am: add Log10.cpp.
-# Log.cpp: make Example/Log.cpp part of TestMore/Log.cpp, new Example/Log.cpp
-# Log10.cpp: move Example/Log10.cpp to TestMore/Log10.cpp, new Example/Log10.cpp
+# TestMore.cpp: add Sin.cpp, Sinh.cpp.
+# TestMore.vcproj: add Sin.cpp, Sinh.cpp.
+# Makefile.am: add Sin.cpp, Sinh.cpp.
+# Sin.cpp: move Example/Sin.cpp to TestMore/Sin.cpp, new Example/Sin.cpp
+# Sinh.cpp: move Example/Sinh.cpp to TestMore/Sinh.cpp, new Example/Sinh.cpp
+# Sqrt.cpp: include Example/Sqrt.cpp in TestMore/Sqrt.cpp, new Example/Sqrt.cpp
 #
 add_list="
-	TestMore/Log10.cpp
+	TestMore/Sinh.cpp
+	TestMore/Sin.cpp
 "
 change_list="
 	SvnCommit
 	omh/WhatsNew06.omh
-	Example/Log.cpp
-	Example/Log10.cpp
+	Example/Sinh.cpp
+	Example/Sqrt.cpp
+	Example/Sin.cpp
 	TestMore/TestMore.cpp
-	TestMore/Log.cpp
 	TestMore/TestMore.vcproj
-	TestMore/Cos.cpp
 	TestMore/Makefile.am
-	TestMore/Cosh.cpp
+	TestMore/Sqrt.cpp
 "
 delete_list="
 "
