@@ -443,6 +443,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Log10.cpp">
+			</File>
+			<File
 				RelativePath="Mul.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

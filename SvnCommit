@@ -1,34 +1,34 @@
-# Improve AD cos, cosh, and exp examples.
+# Improve AD log example.
 #
 # SvnCommit: file that preformed this commit.
 # WhatsNew06.omh: user's view of change.
-# Tan.cpp: use CppAD::tan in place of tan.
-# Cos.cpp: move Example/Cos.cpp to TestMore/Cos.cpp, create new Example/Cos.cpp
-# Cosh.cpp: move Example/Cos.cpp to TestMore/Cos.cpp, create new Example/Cos.cpp
-# Exp.cpp: make Example/Exp.cpp part of TestMore/Exp.cpp, new Example/Cos.cpp
-# TestMore.cpp: add Cos.cpp and Cosh.cpp to list.
-# TestMore.vcproj: add Cos.cpp and Cosh.cpp to list.
+# TestMore.cpp: add Log10.cpp.
+# TestMore.vcproj: add Log10.cpp.
+# Makefile.am: add Log10.cpp.
+# Log.cpp: make Example/Log.cpp part of TestMore/Log.cpp, new Example/Log.cpp
+# Log10.cpp: move Example/Log10.cpp to TestMore/Log10.cpp, new Example/Log10.cpp
 #
-# -----------------------------------------------
-sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 add_list="
-	TestMore/Cos.cpp
-	TestMore/Cosh.cpp
+	TestMore/Log10.cpp
 "
 change_list="
 	SvnCommit
 	omh/WhatsNew06.omh
-	Example/Tan.cpp
-	Example/Cos.cpp
-	Example/Cosh.cpp
-	Example/Exp.cpp
-	TestMore/Exp.cpp
+	Example/Log.cpp
+	Example/Log10.cpp
 	TestMore/TestMore.cpp
+	TestMore/Log.cpp
 	TestMore/TestMore.vcproj
+	TestMore/Cos.cpp
 	TestMore/Makefile.am
+	TestMore/Cosh.cpp
 "
 delete_list="
 "
+#----------------------------------------------------------------------
+# Edit section above for individual cases, section below stays the same
+#----------------------------------------------------------------------
+sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 count=0
 for file in $add_list $change_list
 do

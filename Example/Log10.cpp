@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -18,11 +18,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 $begin Log10.cpp$$
+$spell
+	log
+$$
 
-$section The Base 10 Logarithm Function: Example and Test$$
-$index log$$
-$index example, log$$
-$index test, log$$
+$section The AD log10 Function: Example and Test$$
+
+$index log10, AD example$$
+$index example, AD log10$$
+$index test, AD log10$$
 
 $code
 $verbatim%Example/Log10.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -37,44 +41,43 @@ $end
 bool Log10(void)
 {	bool ok = true;
 
-	using CppAD::log10;
-	using CppAD::log;
-	using namespace CppAD;
+	using CppAD::AD;
+	using CppAD::NearEqual;
 
-	// independent variable vector, indices, values, and declaration
-	CppADvector< AD<double> > U(1);
-	size_t s = 0;
-	U[s]     = 10.;
-	Independent(U);
+	// declare independent variables and start tape recording
+	size_t n  = 1;
+	double x0 = 0.5;
+	CppADvector< AD<double> > x(n);
+	x[0]      = x0;
+	CppAD::Independent(x);
 
-	// dependent variable vector, indices, and values
-	CppADvector< AD<double> > Z(2);
-	size_t x = 0;
-	size_t y = 1;
-	Z[x]     = log10(U[s]);
-	Z[y]     = log10(Z[x]);
+	// ten raised to the x0 power
+	AD<double> ten = 10.;
+	AD<double> pow_10_x0 = CppAD::pow(ten, x[0]); 
 
-	// define f : U -> Z and vectors for derivative calculations
-	ADFun<double> f(U, Z);
-	CppADvector<double> v( f.Domain() );
-	CppADvector<double> w( f.Range() );
+	// dependent variable vector 
+	size_t m = 1;
+	CppADvector< AD<double> > y(m);
+	y[0] = CppAD::log10(pow_10_x0);
 
-	// check values
-	ok &= NearEqual(Z[x] , 1.,  1e-10 , 1e-10);
-	ok &= NearEqual(Z[y] , 0.,  1e-10 , 1e-10);
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(x, y); 
 
-	// forward computation of partials w.r.t. s
-	double l10 = log(10.);
-	v[s] = 1.;
-	w    = f.Forward(1, v);
-	ok &= NearEqual(w[x], 1./(U[s]*l10)         , 1e-10 , 1e-10); // dx/ds
-	ok &= NearEqual(w[y], 1./(U[s]*Z[x]*l10*l10), 1e-10 , 1e-10); // dy/ds
+	// check value 
+	ok &= NearEqual(y[0] , x0,  1e-10 , 1e-10);
 
-	// reverse computation of partials of y
-	w[x] = 0.;
-	w[y] = 1.;
-	v    = f.Reverse(1,w);
-	ok &= NearEqual(v[s], 1./(U[s]*Z[x]*l10*l10), 1e-10 , 1e-10); // dy/ds
+	// forward computation of first partial w.r.t. x[0]
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
+	dx[0] = 1.;
+	dy    = f.Forward(1, dx);
+	ok   &= NearEqual(dy[0], 1., 1e-10, 1e-10);
+
+	// reverse computation of derivative of y[0]
+	CppADvector<double> w(m);
+	w[0]  = 1.;
+	dx    = f.Reverse(1, w);
+	ok   &= NearEqual(dx[0], 1., 1e-10, 1e-10);
 
 	return ok;
 }

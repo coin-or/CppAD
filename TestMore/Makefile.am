@@ -54,6 +54,7 @@ TestMore_SOURCES  = TestMore.cpp \
 	Forward.cpp \
 	FromBase.cpp \
 	Log.cpp \
+	Log10.cpp \
 	Mul.cpp \
 	MulEq.cpp \
 	MulZeroOne.cpp \

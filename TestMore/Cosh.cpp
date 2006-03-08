@@ -17,24 +17,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin Cosh.cpp$$
-$spell
-$$
-
-$section The Hyperbolic Cosine Function: Example and Test$$
-
-$index cosh$$
-$index example, cosh$$
-$index test, cosh$$
-
-$code
-$verbatim%Example/Cosh.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-$$
-
-$end
+Old example now just used for validation testing.
 */
-// BEGIN PROGRAM
-
 # include <CppAD/CppAD.h>
 
 bool Cosh(void)
@@ -101,5 +85,3 @@ bool Cosh(void)
 
 	return ok;
 }
-
-// END PROGRAM

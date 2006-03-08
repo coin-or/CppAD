@@ -19,8 +19,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 Old example now just used for validation testing
 */
-// BEGIN PROGRAM
-
 # include <CppAD/CppAD.h>
 
 bool Cos(void)
@@ -95,5 +93,3 @@ bool Cos(void)
 
 	return ok;
 }
-
-// END PROGRAM

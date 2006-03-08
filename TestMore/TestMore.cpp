@@ -51,6 +51,7 @@ extern bool ForSparseJac(void);
 extern bool Forward(void);
 extern bool FromBase(void);
 extern bool Log(void);
+extern bool Log10(void);
 extern bool Mul(void);
 extern bool MulEq(void);
 extern bool MulZeroOne(void);
@@ -125,6 +126,7 @@ int main(void)
 	ok &= Run( Forward,         "Forward"        );
 	ok &= Run( FromBase,        "FromBase"       );
 	ok &= Run( Log,             "Log"            );
+	ok &= Run( Log10,           "Log10"          );
 	ok &= Run( Mul,             "Mul"            );
 	ok &= Run( MulEq,           "MulEq"          );
 	ok &= Run( MulZeroOne,      "MulZeroOne"     );

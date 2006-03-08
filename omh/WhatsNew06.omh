@@ -55,7 +55,12 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 03-09$$
-The examples $xref/Cos.cpp/$$, $xref/Cosh.cpp/$$ and $xref/Exp.cpp/$$
+The examples 
+$xref/Cos.cpp/$$, 
+$xref/Cosh.cpp/$$, 
+$xref/Exp.cpp/$$, 
+$xref/Log.cpp/$$, and
+$xref/Log10.cpp/$$
 have been improved.
 
 $head 03-07$$
