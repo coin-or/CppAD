@@ -43,6 +43,8 @@ TestMore_SOURCES  = TestMore.cpp \
 	CondExp.cpp \
 	CondExpAD.cpp \
 	Copy.cpp \
+	Cos.cpp \
+	Cosh.cpp \
 	Div.cpp \
 	DivEq.cpp \
 	DivZeroOne.cpp \

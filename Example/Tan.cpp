@@ -56,7 +56,7 @@ bool Tan(void)
 	// dependent variable vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
-	y[0] = tan(x[0]);
+	y[0] = CppAD::tan(x[0]);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 

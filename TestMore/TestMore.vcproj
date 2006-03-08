@@ -291,6 +291,12 @@
 				RelativePath=".\Copy.cpp">
 			</File>
 			<File
+				RelativePath=".\Cos.cpp">
+			</File>
+			<File
+				RelativePath=".\Cosh.cpp">
+			</File>
+			<File
 				RelativePath="Div.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

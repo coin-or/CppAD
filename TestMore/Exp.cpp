@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -17,13 +17,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-Old exp example now used just for validation testing
+Two old exp example now used just for validation testing.
 */
 # include <CppAD/CppAD.h>
 
 # include <cmath>
 
-bool Exp(void)
+namespace { // BEGIN empty namespace
+
+bool ExpTestOne(void)
 {	bool ok = true;
 
 	using CppAD::exp;
@@ -87,5 +89,62 @@ bool Exp(void)
 		1e-10 
 	); 
 
+	return ok;
+}
+bool ExpTestTwo(void)
+{	bool ok = true;
+
+	using CppAD::exp;
+	using namespace CppAD;
+
+	// independent variable vector
+	CppADvector< AD<double> > U(1);
+	U[0]     = 1.;
+	Independent(U);
+
+	// dependent variable vector 
+	CppADvector< AD<double> > Z(1);
+	Z[0] = exp(U[0]); 
+
+	// create f: U -> Z and vectors used for derivative calculations
+	ADFun<double> f(U, Z); 
+	CppADvector<double> v(1);
+	CppADvector<double> w(1);
+
+	// check value 
+	double exp_u = exp( Value(U[0]) );
+	ok &= NearEqual(exp_u, Value(Z[0]),  1e-10 , 1e-10);
+
+	// forward computation of partials w.r.t. u
+	size_t j;
+	size_t p     = 5;
+	double jfac  = 1.;
+	v[0]         = 1.;
+	for(j = 1; j < p; j++)
+	{	w     = f.Forward(j, v);	
+		jfac *= j;
+		ok &= NearEqual(jfac*w[0], exp_u, 1e-10 , 1e-10); // d^jz/du^j
+		v[0]  = 0.;
+	}
+
+	// reverse computation of partials of Taylor coefficients
+	CppADvector<double> r(p); 
+	w[0]  = 1.;
+	r     = f.Reverse(p, w);
+	jfac  = 1.;
+	for(j = 0; j < p; j++)
+	{	ok &= NearEqual(jfac*r[j], exp_u, 1e-10 , 1e-10); // d^jz/du^j
+		jfac *= (j + 1);
+	}
+
+	return ok;
+}
+
+} // END empty namespace
+
+bool Exp(void)
+{	bool ok = true;
+	ok &= ExpTestOne();
+	ok &= ExpTestTwo(); 
 	return ok;
 }

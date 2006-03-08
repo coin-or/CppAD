@@ -1,44 +1,29 @@
-# Improve examples for AD standard math unary functions.
+# Improve AD cos, cosh, and exp examples.
 #
 # SvnCommit: file that preformed this commit.
-#
-# StdMathUnary.h: added the tan(x) function.
-# WhatsNew06.omh: users view of changes.
-# ExampleList.omh: add Tan.cpp example.
-# Asin.cpp: move Example/Asin.cpp to TestMore/Asin.cpp and create new Asin.cpp.
-# Example.vcproj: add Tan.cpp example.
-# Example.cpp: add Tan.cpp example.
-# Atan.cpp: move Example/Atan.cpp into TestMore/Atan.cpp and create Asin.cpp.
-# Acos.cpp: move Example/Acos.cpp to TestMore/Acos.cpp and create new Acos.cpp.
-# Example/Makefile.am: add Tan.cpp example.
-# TestMore.cpp: add new tests (moved here from example directory).
-# TestMore.vcproj: add new tests (moved here from example directory).
-# TestMore/Makefile.am: add new tests (moved here from example directory).
-#
-# Example files:
-# Cos.h, Cosh.h, Exp.h, Log.h, Log10.h, Sin.h, 
-# Sinh.h, Sqrt.h
+# WhatsNew06.omh: user's view of change.
+# Tan.cpp: use CppAD::tan in place of tan.
+# Cos.cpp: move Example/Cos.cpp to TestMore/Cos.cpp, create new Example/Cos.cpp
+# Cosh.cpp: move Example/Cos.cpp to TestMore/Cos.cpp, create new Example/Cos.cpp
+# Exp.cpp: make Example/Exp.cpp part of TestMore/Exp.cpp, new Example/Cos.cpp
+# TestMore.cpp: add Cos.cpp and Cosh.cpp to list.
+# TestMore.vcproj: add Cos.cpp and Cosh.cpp to list.
 #
 # -----------------------------------------------
 sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
 add_list="
-	Example/Tan.cpp
-	TestMore/Acos.cpp
-	TestMore/Asin.cpp
+	TestMore/Cos.cpp
+	TestMore/Cosh.cpp
 "
 change_list="
 	SvnCommit
-	CppAD/local/StdMathUnary.h
 	omh/WhatsNew06.omh
-	omh/ExampleList.omh
-	Example/Asin.cpp
-	Example/Example.vcproj
-	Example/Example.cpp
-	Example/Atan.cpp
-	Example/Acos.cpp
-	Example/Makefile.am
+	Example/Tan.cpp
+	Example/Cos.cpp
+	Example/Cosh.cpp
+	Example/Exp.cpp
+	TestMore/Exp.cpp
 	TestMore/TestMore.cpp
-	TestMore/Atan.cpp
 	TestMore/TestMore.vcproj
 	TestMore/Makefile.am
 "

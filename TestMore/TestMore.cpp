@@ -40,6 +40,8 @@ extern bool CompareChange(void);
 extern bool CondExp(void);
 extern bool CondExpAD(void);
 extern bool Copy(void);
+extern bool Cos(void);
+extern bool Cosh(void);
 extern bool Div(void);
 extern bool DivEq(void);
 extern bool DivZeroOne(void);
@@ -112,6 +114,8 @@ int main(void)
 	ok &= Run( CondExp,         "CondExp"        );
 	ok &= Run( CondExpAD,       "CondExpAD"      );
 	ok &= Run( Copy,            "Copy"           );
+	ok &= Run( Cos,             "Cos"            );
+	ok &= Run( Cosh,            "Cosh"           );
 	ok &= Run( Div,             "Div"            );
 	ok &= Run( DivEq,           "DivEq"          );
 	ok &= Run( DivZeroOne,      "DivZeroOne"     );
