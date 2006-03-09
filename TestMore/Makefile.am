@@ -38,6 +38,7 @@ TestMore_SOURCES  = TestMore.cpp \
 	AddEq.cpp \
 	AddZero.cpp \
 	Atan.cpp \
+	Atan2.cpp \
 	Compare.cpp \
 	CompareChange.cpp \
 	CondExp.cpp \

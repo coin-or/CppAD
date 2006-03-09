@@ -1,5 +1,5 @@
-# ifndef CppADStdMathBinaryIncluded
-# define CppADStdMathBinaryIncluded
+# ifndef CppADMathOtherIncluded
+# define CppADMathOtherIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
@@ -20,25 +20,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin StdMathBinary$$
+$begin MathOther$$
 $spell
 	atan
 $$
 
 $index atan2, AD$$
 
-$index standard, AD math binary$$
-$index math, AD binary$$
-$index binary, AD math$$
+$index other, AD math$$
+$index math, AD other$$
 
-$section The AD Standard Math Binary Functions$$
+$section The Other AD Math Functions$$
 
 $children%
+	CppAD/local/abs.h%
 	CppAD/local/Atan2.h%
+	CppAD/local/erf.h%
 	CppAD/local/Pow.h
 %$$
 $table
+$rref abs$$
 $rref atan2$$
+$rref erf$$
 $rref  pow$$
 $tend
 	
@@ -46,7 +49,9 @@ $tend
 $end
 */
 
+# include <CppAD/local/abs.h>
 # include <CppAD/local/Atan2.h>
+# include <CppAD/local/erf.h>
 # include <CppAD/local/Pow.h>
 
 # endif

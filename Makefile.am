@@ -103,6 +103,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/Pow.h \
 	CppAD/local/PrintFor.h \
 	CppAD/local/LuRatio.h \
+	CppAD/local/MathOther.h \
 	CppAD/local/NearEqualExt.h \
 	CppAD/local/Reverse.h \
 	CppAD/local/RevHesSweep.h \
@@ -114,7 +115,6 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/ReverseSweep.h \
 	CppAD/local/SinCos.h \
 	CppAD/local/SqrtOp.h \
-	CppAD/local/StdMathBinary.h \
 	CppAD/local/StdMathUnary.h \
 	CppAD/local/Sub.h \
 	CppAD/local/SubEq.h \

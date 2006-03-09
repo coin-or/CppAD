@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin abs$$
 $spell
+	Taylor
 	Cpp
 	namespace
 	const
@@ -32,6 +33,8 @@ $$
 $index absolute, AD value$$
 $index value, AD absolute$$
 $index abs, AD$$
+$index directional, derivative for abs$$
+$index derivative, directional for abs$$
 
 $section The AD Absolute Value Function$$
 
@@ -75,15 +78,46 @@ above these types; for example;
 $code AD<double>$$.
 
 $head Derivative$$
-The first order derivative of $code abs$$ is computed using the formula
+The derivative of the absolute value function is one for 
+$latex x > 0$$ and minus one for $latex x < 0$$.
+The subtitle issue is 
+how to compute directional derivatives
+what $latex x = 0$$.
+$pre
+
+$$
+The function corresponding to the argument $italic x$$ 
+and the result $italic y$$ are represented
+by their Taylor coefficients; i.e.,
 $latex \[
-\D{[ {\rm abs} [x(t)] ]}{t} = 
+\begin{array}{rcl}
+	X(t) & = & x^{(0)} (t) + x^{(1)} t + \cdots + x^{(p)} t^p
+	\\
+	Y(t) & = & y^{(0)} (t) + y^{(1)} t + \cdots + y^{(p)} t^p
+\end{array}
+\] $$
+Note that $latex x^{(0)} = X(0)$$ is the value of $italic x$$ and
+$latex y^{(0)} = Y(0)$$ is the value of $italic y$$.
+In the equations above, the order $latex p$$ is specified
+by a call to $xref/Forward/$$ or $xref/Reverse/$$ as follows:
+$syntax%
+	%f%.Forward(%p%, %dx%)
+	%f%.Reverse(%p%+1, %w%)
+%$$
+If all of the Taylor coefficients of $latex X(t)$$ are zero,
+we define $latex k = p$$.
+Otherwise, we define $latex k$$ to be the minimal index such that 
+$latex x^{(k)} \neq 0$$.
+Note that if $latex x \neq 0$$, $latex k = 0$$.
+The Taylor coefficient representation of $latex Y(t)$$
+(and hence it's derivatives) are computed as
+$latex \[
+y^{(\ell)}
+=
 \left\{ \begin{array}{ll} 
-	x^{(1)} (t)   & {\rm if} \; x(t) > 0 \\
-	x^{(1)} (t)   & {\rm if} \; x(t) = 0 \; {\rm and} \; x'(t) > 0 \\
-	0             & {\rm if} \; x(t) = 0 \; {\rm and} \; x'(t) = 0 \\
-	- x^{(1)} (t) & {\rm if} \; x(t) = 0 \; {\rm and} \; x'(t) < 0 \\
-	- x^{(1)} (t) & {\rm if} \; x(t) < 0 
+	 x^{(\ell)}   & {\rm if} \; x^{(k)} > 0         \\
+	 0                    & {\rm if} \; x^{(k)} = 0 \\
+	- x^{(\ell)}  & {\rm if} \; x^{(k)} < 0
 \end{array} \right.
 \] $$
 

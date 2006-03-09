@@ -225,6 +225,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Atan2.cpp">
+			</File>
+			<File
 				RelativePath="Compare.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -608,6 +611,9 @@
 			</File>
 			<File
 				RelativePath=".\SinCos.cpp">
+			</File>
+			<File
+				RelativePath=".\Sinh.cpp">
 			</File>
 			<File
 				RelativePath=".\SparseVecAD.cpp">

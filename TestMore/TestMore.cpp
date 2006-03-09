@@ -35,6 +35,7 @@ extern bool AddEq(void);
 extern bool AddZero(void);
 extern bool Asin(void);
 extern bool Atan(void);
+extern bool Atan2(void);
 extern bool Compare(void);
 extern bool CompareChange(void);
 extern bool CondExp(void);
@@ -112,6 +113,7 @@ int main(void)
 	ok &= Run( AddZero,         "AddZero"        );
 	ok &= Run( Asin,            "Asin"           );
 	ok &= Run( Atan,            "Atan"           );
+	ok &= Run( Atan2,           "Atan2"          );
 	ok &= Run( Compare,         "Compare"        );
 	ok &= Run( CompareChange,   "CompareChange"  );
 	ok &= Run( CondExp,         "CondExp"        );

@@ -27,6 +27,8 @@ $section AD Absolute Value Function: Example and Test$$
 $index abs, example$$
 $index example, abs$$
 $index test, abs$$
+$index derivative, directional example$$
+$index directional, derivative example$$
 
 $code
 $verbatim%Example/Abs.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -54,9 +56,9 @@ bool Abs(void)
 	// dependent variable vector
 	size_t m = 3;
 	CppADvector< AD<double> > y(3);
-	y[0]     = abs(x[0] - 1.);
-	y[1]     = abs(x[0]);
-	y[2]     = abs(x[0] + 1.);
+	y[0]     = CppAD::abs(x[0] - 1.);
+	y[1]     = CppAD::abs(x[0]);
+	y[2]     = CppAD::abs(x[0] + 1.);
 
 	// define f : x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y);
@@ -67,35 +69,37 @@ bool Abs(void)
 	ok &= (y[2] == 1.);
 
 	// forward computation of partials w.r.t. a positive x[0] direction
+	size_t p = 1;
 	CppADvector<double> dx(n);
 	CppADvector<double> dy(m);
 	dx[0] = 1.;
-	dy    = f.Forward(1, dx);
+	dy    = f.Forward(p, dx);
 	ok  &= (dy[0] == - dx[0]);
 	ok  &= (dy[1] == + dx[0]);
 	ok  &= (dy[2] == + dx[0]);
 
 	// forward computation of partials w.r.t. a negative x[0] direction
 	dx[0] = -1.;
-	dy    = f.Forward(1, dx);
+	dy    = f.Forward(p, dx);
 	ok  &= (dy[0] == - dx[0]);
 	ok  &= (dy[1] == - dx[0]);
 	ok  &= (dy[2] == + dx[0]);
 
 	// reverse computation of derivative of y[0] 
+	p    = 0;
 	CppADvector<double> w(m);
 	w[0] = 1.; w[1] = 0.; w[2] = 0.;
-	dx   = f.Reverse(1, w);
+	dx   = f.Reverse(p+1, w);
 	ok  &= (dx[0] == -1.);
 
 	// reverse computation of derivative of y[1] 
 	w[0] = 0.; w[1] = 1.; w[2] = 0.;
-	dx   = f.Reverse(1, w);
+	dx   = f.Reverse(p+1, w);
 	ok  &= (dx[0] == 0.);
 
 	// reverse computation of derivative of y[2] 
 	w[0] = 0.; w[1] = 0.; w[2] = 1.;
-	dx   = f.Reverse(1, w);
+	dx   = f.Reverse(p+1, w);
 	ok  &= (dx[0] == 1.);
 
 	return ok;

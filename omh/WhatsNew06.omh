@@ -54,6 +54,16 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-10$$
+The math functions that are not under $xref/StdMathUnary/$$ have
+been grouped under $xref/MathOther/$$.
+$pre
+
+$$
+The documentation and examples have been improved for the 
+following functions:
+$xref/abs/$$, $xref/atan2/$$.
+
 $head 03-09$$
 The examples 
 $xref/Cos.cpp/$$, 

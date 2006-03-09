@@ -1,30 +1,38 @@
-# Improve AD standard math unary function examples.
+# Improve AD abs, atan2 documentation and examples.
 #
 # SvnCommit: file that preformed this commit.
 # WhatsNew06.omh: user's view of change.
-# TestMore.cpp: add Sin.cpp, Sinh.cpp.
-# TestMore.vcproj: add Sin.cpp, Sinh.cpp.
-# Makefile.am: add Sin.cpp, Sinh.cpp.
-# Sin.cpp: move Example/Sin.cpp to TestMore/Sin.cpp, new Example/Sin.cpp
-# Sinh.cpp: move Example/Sinh.cpp to TestMore/Sinh.cpp, new Example/Sinh.cpp
-# Sqrt.cpp: include Example/Sqrt.cpp in TestMore/Sqrt.cpp, new Example/Sqrt.cpp
-#
+# MathOther.h: grouping of math functions not in StdMathUnary.h.
+# Atan2.h: improve documentation.
+# UserAD.h: use MathOther for math functions not in StdMathUnary.h.
+# Abs.h: improve documentation.
+# Faq.omh: change references to MathOther.
+# Abs.cpp: minor improvements to example.
+# Atan2.cpp: move Example/Atan2.cpp TestMore/Atan2.cpp, new Example/Atan2.cpp 
+# TestMore.cpp: add Atan2.cpp.
+# TestMore.vcproj: add Atan2.cpp.
+# TestMore/Makefile.am: add Atan2.cpp.
+# Makefile.am: remove StdMathBinary.h and add MathOther.h.
 add_list="
-	TestMore/Sinh.cpp
-	TestMore/Sin.cpp
+	CppAD/local/MathOther.h
+	TestMore/Atan2.cpp
 "
 change_list="
 	SvnCommit
+	CppAD/local/Atan2.h
+	CppAD/local/UserAD.h
+	CppAD/local/Abs.h
+	omh/Faq.omh
 	omh/WhatsNew06.omh
-	Example/Sinh.cpp
-	Example/Sqrt.cpp
-	Example/Sin.cpp
+	Example/Abs.cpp
+	Example/Atan2.cpp
 	TestMore/TestMore.cpp
 	TestMore/TestMore.vcproj
 	TestMore/Makefile.am
-	TestMore/Sqrt.cpp
+	Makefile.am
 "
 delete_list="
+	CppAD/local/StdMathBinary.h
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

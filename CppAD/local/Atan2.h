@@ -1,9 +1,8 @@
 # ifndef CppADAtan2Included
 # define CppADAtan2Included
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,48 +18,64 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
 $begin atan2$$
 $spell
-	std
-	Cpp
-	namespace
-	Arctangent
-	inline
+	atan
 	const
-	atan2
 $$
 
-$index tan, inverse$$
-$index inverse, tan$$
-$index atan2$$
+$index tan, AD inverse$$
+$index inverse, AD tan$$
+$index atan2, AD$$
 
-$section The Two Argument Inverse Tangent Function$$
+$section The AD Two Argument Inverse Tangent Function$$
 
 $table
-$bold Syntax$$ 
-$cnext 
-$syntax%inline AD<%Base%> atan2 (const AD<%Base%> &%x%)%$$
+$bold Syntax$$ $cnext 
+$syntax%%theta% = atan2(%y%, %x%$$
 $tend
 
 $fend 20$$
 
-$head Description$$
-Returns an
-$syntax%AD<%Base%>%$$ value $latex \theta$$ 
-such that $latex - \pi \leq \theta$$ and $latex \theta \leq \pi$$ and
+$head Purpose$$
+Determines an angle $latex \theta \in [ - \pi , + \pi ]$$
+such that 
 $latex \[
 \begin{array}{rcl}
 	\sin ( \theta )  & = & y / \sqrt{ x^2 + y^2 }  \\
 	\cos ( \theta )  & = & x  / \sqrt{ x^2 + y^2 }
 \end{array}
 \] $$
-The type $italic Base$$ must support 
-$xref/CondExp/Type/conditional expressions/$$; 
-for example, $italic Base$$ can be $code float$$ or $code double$$.
+
+$head y$$
+The argument $italic y$$ has prototype
+$syntax%
+	const AD<%Base%> &%y%
+%$$ 
+
+$head x$$
+The argument $italic x$$ has prototype
+$syntax%
+	const AD<%Base%> &%x%
+%$$ 
+
+$head theta$$
+The result $italic theta$$ has prototype
+$syntax%
+	AD<%Base%> %theta%
+%$$
+
+$head Base$$
+The type $italic Base$$ must support the use of conditional expressions
+$xref/CondExp/$$.
+To be specific,
+$italic Base$$ can be $code float$$, $code double$$,
+any type in the 
+$xref/glossary/AD Sequence/AD sequence/$$ above $code float$$, or
+any type in the AD sequence above $code double$$. 
 
 $head Example$$
 $children%
@@ -68,7 +83,7 @@ $children%
 %$$
 The file
 $xref/Atan2.cpp/$$
-contains an example and a test of this function.   
+contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 
 $end
@@ -79,8 +94,7 @@ $end
 namespace CppAD {
 
 template <class Base>
-AD<Base> atan2 (
-	const AD<Base> &y, const AD<Base> &x)
+AD<Base> atan2 (const AD<Base> &y, const AD<Base> &x)
 {	AD<Base> alpha;
 	AD<Base> beta;
 	AD<Base> theta;
@@ -111,18 +125,15 @@ AD<Base> atan2 (
 }
 
 template <class Base>
-inline AD<Base> atan2 (
-	const VecADelem<Base> &y, const AD<Base> &x)
+inline AD<Base> atan2 (const VecADelem<Base> &y, const AD<Base> &x)
 {	return atan2( y.ADBase() , x ); }
 
 template <class Base>
-inline AD<Base> atan2 (
-	const AD<Base> &y, const VecADelem<Base> &x)
+inline AD<Base> atan2 (const AD<Base> &y, const VecADelem<Base> &x)
 {	return atan2( y , x.ADBase() ); }
 
 template <class Base>
-inline AD<Base> atan2 (
-	const VecADelem<Base> &y, const VecADelem<Base> &x)
+inline AD<Base> atan2 (const VecADelem<Base> &y, const VecADelem<Base> &x)
 {	return atan2( y.ADBase() , x.ADBase() ); }
 
 } // END CppAD namespace
