@@ -2,7 +2,7 @@
 # define CppADErfIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ $fend 20$$
 $head Description$$
 Returns the value of the error function which is defined by
 $latex \[
-{\rm erf} (x) = \frac{2}{ \sqrt{\pi} } \int_0^x \exp( - t * t ) {\bf d} t
+{\rm erf} (x) = \frac{2}{ \sqrt{\pi} } \int_0^x \exp( - t * t ) \; {\bf d} t
 \] $$
 
 $head x$$
@@ -57,9 +57,13 @@ $syntax%
 It is set to the value of the error function at $italic x$$.
 
 $head Base$$
-The type $italic Base$$ must be $code float$$, $code double$$,
-or in the $xref/glossary/AD Sequence/AD sequence/$$ above
-$code float$$ or $code double$$.
+The type $italic Base$$ must support the use of conditional expressions
+$xref/CondExp/$$.
+To be specific,
+$italic Base$$ can be $code float$$, $code double$$,
+any type in the 
+$xref/glossary/AD Sequence/AD sequence/$$ above $code float$$, or
+any type in the AD sequence above $code double$$. 
 
 
 $head Sequence of Operations$$
@@ -75,7 +79,7 @@ $children%
 %$$
 The file
 $xref/Erf.cpp/$$
-contains an example and a test of this function.   
+contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 
 $end

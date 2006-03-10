@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin Compare$$
 $spell
+	cos
 	Op
 	bool
 	const
@@ -58,6 +59,7 @@ $syntax%AD<%Base%>%$$ object.
 The comparison has the same interpretation as for 
 the $italic Base$$ type.
 
+
 $head Op$$
 The operator $italic Op$$ is one of the following:
 $table
@@ -89,6 +91,18 @@ The result $italic b$$ has type
 $syntax%
 	bool %b%
 %$$
+If the 
+$xref/glossary/Tape State/tape state/$$
+corresponding to $syntax%AD<%Base%>%$$ operations is $code Recording$$,
+only the operations corresponding to the resulting value of $italic b$$ are
+recorded. For example, if $italic b$$ is true and the subsequent code is
+$syntax%
+	if( %b% )
+		%y% = cos(%x%);
+	else	%y% = sin(%x%); 
+%$$
+only the assignment $syntax%%y% = cos(%x%)%$$ is recorded on the tape.
+You would need to use $xref/CondExp/$$ to get both cases recorded.
 
 $head Assumptions$$
 If one of the $italic Op$$ operators listed above

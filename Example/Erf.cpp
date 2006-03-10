@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,20 +15,20 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Erf.cpp$$
 $spell
+	tan
 	erf
 $$
 
-$section The Error Function: Example and Test$$
-$index erf$$
-$index example, erf$$
-$index test, erf$$
+$section The AD erf Function: Example and Test$$
 
-$comment This file is in the Example subdirectory$$
+$index erf, AD example$$
+$index example, AD erf$$
+$index test, AD erf$$
+
 $code
 $verbatim%Example/Erf.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -39,53 +38,53 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
+# include <cmath>
 
 bool Erf(void)
 {	bool ok = true;
-	using namespace CppAD;
-	using CppAD::atan;
-	using CppAD::exp;
-	using CppAD::sqrt;
 
-	// Construct function object corresponding to erf
-	CppADvector< AD<double> > X(1);
-	CppADvector< AD<double> > Y(1);
-	X[0] = 0.;
-	Independent(X);
-	Y[0] = erf(X[0]);
-	ADFun<double> Erf(X, Y);
+	using CppAD::AD;
+	using CppAD::NearEqual;
 
-	// vectors to use with function object
-	CppADvector<double> x(1);
-	CppADvector<double> y(1);
-	CppADvector<double> dx(1);
-	CppADvector<double> dy(1);
+	// declare independent variables and start tape recording
+	size_t n  = 1;
+	double x0 = 0.5;
+	CppADvector< AD<double> > x(n);
+	x[0]      = x0;
+	CppAD::Independent(x);
 
-	// check value at zero
-	x[0]  = 0.;
-	y = Erf.Forward(0, x);	
-	ok &= NearEqual(0., y[0], 1e-10, 1e-10);
+	// a temporary value
 
-	// check the derivative of error function
-	dx[0]         = 1.;
-	double pi     = 4. * atan(1.);
-	double factor = 2. / sqrt( pi );
-	int i;
-	for(i = -30; i <= 30; i++)
-	{	x[0] = i / 4.;
-		y    = Erf.Forward(0, x);	
+	// dependent variable vector 
+	size_t m = 1;
+	CppADvector< AD<double> > y(m);
+	y[0] = CppAD::erf(x[0]);
 
-		// check derivative
-		double derf = factor * exp( - x[0] * x[0] );
-		dy          = Erf.Forward(1, dx);
-		ok         &= NearEqual(derf, dy[0], 1e-10, 1e-10);
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(x, y); 
 
-		// test using erf with AD< AD<double> >
-		AD< AD<double> > X0 = x[0];
-		AD< AD<double> > Y0 = erf(X0);
+	// check value 
+	double erf_x0 = 0.5205;
+	ok &= NearEqual(y[0] , erf_x0,  1e-4 , 1e-4);
 
-		ok &= ( y[0] == Value( Value(Y0) ) );
-	}
+	// value of derivative of erf at x0
+	double pi     = 4. * std::atan(1.);
+	double factor = 2. / sqrt(pi);
+	double check  = factor * std::exp(-x0 * x0);
+
+	// forward computation of first partial w.r.t. x[0]
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
+	dx[0] = 1.;
+	dy    = f.Forward(1, dx);
+	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
+
+	// reverse computation of derivative of y[0]
+	CppADvector<double> w(m);
+	w[0]  = 1.;
+	dx    = f.Reverse(1, w);
+	ok   &= NearEqual(dx[0], check, 1e-10, 1e-10);
+
 	return ok;
 }
 

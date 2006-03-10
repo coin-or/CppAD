@@ -360,6 +360,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Erf.cpp">
+			</File>
+			<File
 				RelativePath="Exp.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

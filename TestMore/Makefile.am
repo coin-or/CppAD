@@ -49,6 +49,7 @@ TestMore_SOURCES  = TestMore.cpp \
 	Div.cpp \
 	DivEq.cpp \
 	DivZeroOne.cpp \
+	Erf.cpp \
 	Exp.cpp \
 	ForHess.cpp \
 	ForSparseJac.cpp \

@@ -46,6 +46,7 @@ extern bool Cosh(void);
 extern bool Div(void);
 extern bool DivEq(void);
 extern bool DivZeroOne(void);
+extern bool Erf(void);
 extern bool Exp(void);
 extern bool ForHess(void);
 extern bool ForSparseJac(void);
@@ -124,6 +125,7 @@ int main(void)
 	ok &= Run( Div,             "Div"            );
 	ok &= Run( DivEq,           "DivEq"          );
 	ok &= Run( DivZeroOne,      "DivZeroOne"     );
+	ok &= Run( Erf,             "Erf"            );
 	ok &= Run( Exp,             "Exp"            );
 	ok &= Run( ForHess,         "ForHess"        );
 	ok &= Run( ForSparseJac,    "ForSparseJac"   );
