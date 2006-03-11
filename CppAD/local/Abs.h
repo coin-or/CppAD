@@ -73,8 +73,8 @@ A definition for the $code abs$$ function
 is automatically included (in the $code CppAD$$ namespace)
 for the types 
 $code float$$, $code double$$ and the 
-$xref/glossary/AD Sequence/AD sequence/$$ of types that
-above these types; for example;
+$xref/glossary/AD Type Sequence/AD type sequences/$$
+above $code float$$ or $code double$$; for example;
 $code AD<double>$$.
 
 $head Derivative$$

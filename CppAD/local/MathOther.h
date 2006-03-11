@@ -33,9 +33,9 @@ $index math, AD other$$
 $section The Other AD Math Functions$$
 
 $children%
-	CppAD/local/abs.h%
+	CppAD/local/Abs.h%
 	CppAD/local/Atan2.h%
-	CppAD/local/erf.h%
+	CppAD/local/Erf.h%
 	CppAD/local/Pow.h
 %$$
 $table
@@ -49,9 +49,9 @@ $tend
 $end
 */
 
-# include <CppAD/local/abs.h>
+# include <CppAD/local/Abs.h>
 # include <CppAD/local/Atan2.h>
-# include <CppAD/local/erf.h>
+# include <CppAD/local/Erf.h>
 # include <CppAD/local/Pow.h>
 
 # endif

@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew06$$
 $spell
+	Cygwin
 	messaging
 	usr
 	aclocal
@@ -53,6 +54,20 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-11$$
+The file $code CppAD/local/MathOther.h$$ had a file name case error 
+that prevented the documentation from building and tests from running 
+(except under Cygwin which is not really case sensitive).
+This has been fixed.
+$pre
+
+$$
+The term $xref/glossary/AD Operation Sequence/AD operation sequence/$$
+has been defined. 
+It will be used to improve the user's understanding of exactly
+how an $xref/ADFun/$$ object is related to the C++ algorithm.
+
 
 $head 03-10$$
 The math functions that are not under $xref/StdMathUnary/$$ have

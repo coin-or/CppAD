@@ -1,23 +1,31 @@
-# Improve AD erf example.
+# Fix MathOther.h mistake (previous version did not build).
+# Make some glossary definition changes.
 #
 # SvnCommit: file that preformed this commit.
-# Erf.h: minor improvement to documentation
-# Compare.h: discuss using compare operations and sequence of operations.
-# Erf.cpp: move Example/Erf.cpp to TestMore/Erf.cpp, new Example/Erf.cpp
-# TestMore.cpp: include Erf.cpp.
-# TestMore.vcproj: include Erf.cpp.
-# Makefile.am: include Erf.cpp.
+# CheckIncludeFile: remove references to lib subdirectory (no longer exists).
+# Doc.omh: change glossary AD Sequence to AD Type Sequence.
+# Atan2.h: change glossary AD Sequence to AD Type Sequence.
+# CondExp.h: change glossary AD Sequence to AD Type Sequence.
+# Erf.h: change glossary AD Sequence to AD Type Sequence.
+# LuRatio.h: change glossary AD Sequence to AD Type Sequence.
+# MathOther.h: fix file name case(abs.h->Abs.h, erf.h->Erf.h).
+# Abs.h: change glossary AD Sequence to AD Type Sequence.
+# glossary.omh: define AD Operation Sequence.
+# WhatsNew06.omh: users view of the changes.
 add_list="
-	TestMore/Erf.cpp
 "
 change_list="
 	SvnCommit
+	CheckIncludeFile
+	Doc.omh
+	CppAD/local/Atan2.h
+	CppAD/local/CondExp.h
 	CppAD/local/Erf.h
-	CppAD/local/Compare.h
-	Example/Erf.cpp
-	TestMore/TestMore.cpp
-	TestMore/TestMore.vcproj
-	TestMore/Makefile.am
+	CppAD/local/LuRatio.h
+	CppAD/local/MathOther.h
+	CppAD/local/Abs.h
+	omh/glossary.omh
+	omh/WhatsNew06.omh
 "
 delete_list="
 "
@@ -30,10 +38,13 @@ for file in $add_list $change_list
 do
 	count=`expr $count + 1`
 	ext=`echo $file | sed -e "s/.*\././"`
-	if [ $file != "SvnCommit"      ] && \
-	   [ $file != "SvnCommit.sed"  ] && \
-	   [ $ext != ".vcproj"         ] && \
-	   [ $ext != ".vim"            ]
+	if \
+	[ $file != "CheckIncludeFile"  ] && \
+	[ $file != "CheckIncludeOmh"   ] && \
+	[ $file != "SvnCommit"         ] && \
+	[ $file != "SvnCommit.sed"     ] && \
+	[ $ext  != ".vcproj"           ] && \
+	[ $ext  != ".vim"              ]
 	then
 		# automatic edits and backups
 		echo "cp $file junk.$count"
@@ -72,10 +83,13 @@ else
 	do
 		count=`expr $count + 1`
 		ext=`echo $file | sed -e "s/.*\././"`
-		if [ $file != "SvnCommit"      ] && \
-	   	[ $file != "SvnCommit.sed"  ] && \
-	   	[ $ext != ".vcproj"         ] && \
-	   	[ $ext != ".vim"            ]
+		if \
+		[ $file != "CheckIncludeFile"  ] && \
+	   	[ $file != "CheckIncludeOmh"   ] && \
+	   	[ $file != "SvnCommit"         ] && \
+	   	[ $file != "SvnCommit.sed"     ] && \
+	   	[ $ext  != ".vcproj"           ] && \
+	   	[ $ext  != ".vim"              ]
 		then
 			# undo the automatic edits
 			echo "mv junk.$count $file"

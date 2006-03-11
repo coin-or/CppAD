@@ -3,7 +3,6 @@ echo "-----------------------------------------------------"
 grep '^# *include *<CppAD/' \
 	CppAD/*.h \
 	CppAD/local/*.h \
-	lib/*.cpp \
 	Example/*.cpp \
 	Example/*.h \
 	Adolc/*.cpp \

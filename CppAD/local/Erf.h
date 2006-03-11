@@ -61,9 +61,9 @@ The type $italic Base$$ must support the use of conditional expressions
 $xref/CondExp/$$.
 To be specific,
 $italic Base$$ can be $code float$$, $code double$$,
-any type in the 
-$xref/glossary/AD Sequence/AD sequence/$$ above $code float$$, or
-any type in the AD sequence above $code double$$. 
+or any type in the 
+$xref/glossary/AD Type Sequence/AD type sequences/$$ above 
+$code float$$ or $code double$$.
 
 
 $head Sequence of Operations$$

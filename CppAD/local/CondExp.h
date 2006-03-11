@@ -1,9 +1,8 @@
 # ifndef CppADCondExpIncluded
 # define CppADCondExpIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 -------------------------------------------------------------------------------
@@ -84,7 +82,7 @@ $italic left$$, $italic right$$, $italic trueCase$$, and $italic falseCase$$
 (which must all have the same type). 
 This type must be
 $code float$$, $code double$$, or in the 
-$xref/glossary/AD Sequence/AD sequence/$$
+$xref/glossary/AD Type Sequence/AD type sequences/$$
 above $code float$$ or $code double$$.
 
 $head Op$$
@@ -148,7 +146,7 @@ $children%
 %$$
 The file
 $xref/CondExp.cpp/$$
-contains an example and a test of this function.   
+contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 The Error function routine $code lib/ErrFun.cpp$$ provides an example
 using conditional expressions in a more complex setting.

@@ -2,7 +2,7 @@
 # define CppADLuRatioIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -199,8 +199,8 @@ $head Base$$
 This type is determined by the argument $italic ratio$$
 which has type $syntax%AD<%Base%>%$$.
 The type $italic Base$$ must be
-$code float$$, $code double$$, or in the 
-$xref/glossary/AD Sequence/AD sequence/$$
+$code float$$, $code double$$, or any type in the
+$xref/glossary/AD Type Sequence/AD type sequences/$$
 above $code float$$ or $code double$$.
 
 $head ADvector$$
