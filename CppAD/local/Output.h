@@ -73,6 +73,13 @@ $syntax%
 will output the value corresponding to $italic x$$
 followed by the value corresponding to $italic y$$. 
 
+$head Taping$$
+The result of this operation is not an AD object
+so the operation is not recorded as part of any
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$
+(even if the tape corresponding to $italic x$$
+is in the Recording $xref/glossary/Tape State/state/$$). 
+
 $head Example$$
 $children%
 	Example/Output.cpp

@@ -35,7 +35,7 @@ $section The AD Two Argument Inverse Tangent Function$$
 
 $table
 $bold Syntax$$ $cnext 
-$syntax%%theta% = atan2(%y%, %x%$$
+$syntax%%theta% = atan2(%y%, %x%)%$$
 $tend
 
 $fend 20$$

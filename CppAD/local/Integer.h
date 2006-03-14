@@ -87,13 +87,20 @@ If $italic Type$$ is $syntax%AD%<%Base%>%$$,
 $italic Base$$ must support the $code Integer$$ function and
 the conversion has the same meaning as for $italic Base$$.
 
+$head Taping$$
+The result of this operation is not an AD object
+so the operation is not recorded as part of any
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$
+(even if an $italic Type$$ is an AD type and the corresponding tape 
+$xref/glossary/Tape State/state/$$ is Recording).
+
 $head Example$$
 $children%
 	Example/Integer.cpp
 %$$
 The file
 $xref/Integer.cpp/$$
-contains an example and a test of this operation.
+contains an example and test of this operation.
 
 $end 
 ------------------------------------------------------------------------------

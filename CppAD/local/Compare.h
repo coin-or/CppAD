@@ -91,18 +91,30 @@ The result $italic b$$ has type
 $syntax%
 	bool %b%
 %$$
-If the 
-$xref/glossary/Tape State/tape state/$$
-corresponding to $syntax%AD<%Base%>%$$ operations is $code Recording$$,
-only the operations corresponding to the resulting value of $italic b$$ are
-recorded. For example, if $italic b$$ is true and the subsequent code is
+
+$head Taping$$
+The result of this operation is not an AD object
+so the operation is not recorded as part of any
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$
+(even if the tape corresponding to $italic x$$ or $italic y$$ 
+is in the Recording $xref/glossary/Tape State/state/$$).
+For example, suppose 
+$italic x$$ and $italic y$$ are $syntax%AD<%Base%>%$$ objects,
+the tape corresponding to $syntax%AD<%Base%>%$$ is recording,
+$italic b$$ is true,
+and the subsequent code is
 $syntax%
 	if( %b% )
 		%y% = cos(%x%);
 	else	%y% = sin(%x%); 
 %$$
 only the assignment $syntax%%y% = cos(%x%)%$$ is recorded on the tape.
-You would need to use $xref/CondExp/$$ to get both cases recorded.
+The $xref/ADFun/CompareChange/CompareChange/$$ function can yield
+some information about changes in comparison operation results.
+You can use $xref/CondExp/$$ to obtain comparison operations
+that depends on the 
+$xref/glossary/Independent Variable/independent variable/$$ 
+values with out re-taping the AD sequence of operations.
 
 $head Assumptions$$
 If one of the $italic Op$$ operators listed above
