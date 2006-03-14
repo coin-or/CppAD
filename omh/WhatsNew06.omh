@@ -55,6 +55,10 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-15$$
+Improve the 
+$xref/CppAD/Introduction/introduction/$$ to CppAD.
+
 $head 03-11$$
 The file $code CppAD/local/MathOther.h$$ had a file name case error 
 that prevented the documentation from building and tests from running 

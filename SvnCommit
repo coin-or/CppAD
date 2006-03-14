@@ -1,30 +1,13 @@
-# Fix MathOther.h mistake (previous version did not build).
-# Make some glossary definition changes.
-#
 # SvnCommit: file that preformed this commit.
-# CheckIncludeFile: remove references to lib subdirectory (no longer exists).
-# Doc.omh: change glossary AD Sequence to AD Type Sequence.
-# Atan2.h: change glossary AD Sequence to AD Type Sequence.
-# CondExp.h: change glossary AD Sequence to AD Type Sequence.
-# Erf.h: change glossary AD Sequence to AD Type Sequence.
-# LuRatio.h: change glossary AD Sequence to AD Type Sequence.
-# MathOther.h: fix file name case(abs.h->Abs.h, erf.h->Erf.h).
-# Abs.h: change glossary AD Sequence to AD Type Sequence.
-# glossary.omh: define AD Operation Sequence.
+# Doc.omh: improve introduction to CppAD.
+# WhatsNew04.omh: change a cross reference (due to new heading in Doc.omh).
 # WhatsNew06.omh: users view of the changes.
 add_list="
 "
 change_list="
 	SvnCommit
-	CheckIncludeFile
 	Doc.omh
-	CppAD/local/Atan2.h
-	CppAD/local/CondExp.h
-	CppAD/local/Erf.h
-	CppAD/local/LuRatio.h
-	CppAD/local/MathOther.h
-	CppAD/local/Abs.h
-	omh/glossary.omh
+	omh/WhatsNew04.omh
 	omh/WhatsNew06.omh
 "
 delete_list="

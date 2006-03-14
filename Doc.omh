@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 $begin CppAD$$
 
 $spell
+	namespaces
 	std
 	templated
 	const
@@ -33,14 +34,15 @@ $spell
 	initializes
 $$
 
-$index algorithm, differentiation$$
-$index differentiation, algorithm$$
+$index AD$$,
+$index algorithmic differentiation$$
+$index automatic differentiation$$
 $index C++, algorithm derivative$$
-$index CppAD, version$$
+$index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: CppAD-06-03-10
+A Package for Differentiation of C++ Algorithms: CppAD-06-03-14
 $$ 
 
 $table
@@ -62,60 +64,51 @@ Given a C++ algorithm that computes function values,
 CppAD generates an algorithm that computes its derivative values.
 
 $list number$$
-Uses operator overloading to compute derivatives of algorithms defined in C++
-(see $xref/WhatsNew05/$$ for a list of recent changes).
+$href%http://www.coin-or.org/CppAD/%CppAD%$$
+uses operator overloading to compute derivatives of algorithms defined in C++.
+It is distributed under the $xref/License//GNU General Public License/$$
+by the $href%http://www.coin-or.org/foundation.html%COIN-OR Foundation%$$.
+Installation procedures are provided for both
+$xref/InstallUnix//Unix/$$ and $xref/InstallWindows//MS Windows/$$
+operating systems.
+Extensive user and developer documentation is included.
+
 $lnext
-A Taped sequence of operations are stored as a 
-$xref/ADFun//differentiable function object/$$ which
-can be evaluated with different argument values.
+An $xref/glossary/AD Operation Sequence/AD operation sequence/$$
+is stored as an 
+$xref/ADFun//AD function object/$$ 
+which can evaluate function values and derivatives.
+Arbitrary order 
+$xref/Forward//forward/$$ and $xref/Reverse//reverse/$$
+mode derivative calculations
+can be preformed on the operation sequence.
+Logical comparisons can be included in an operation sequence
+using AD $xref/CondExp//conditional expressions/$$.
+Evaluation of user defined unary 
+$xref/Discrete//discrete functions/$$ can also be included
+in the sequence of operations; i.e.,
+functions that depend on the
+$xref/glossary/Independent Variable/independent variables/$$
+but which have identically zero derivatives
+(e.g., a step function).
+Derivatives of functions that are defined in terms of other derivatives
+can be computed used multiple tapes
+(see $xref/MulTape/$$ for a simple example
+and $xref/OdeTaylor.cpp//$$ for a more realistic example).
+
 $lnext
-Valid for multiple base types; for example,
-$code double$$, 
-$code complex$$,
-$code complex<double>$$, and
-$code AD<double>$$
-(see $xref/CppAD/Base Type Requirements/base type requirements/$$).
-$lnext
-Arbitrary order Forward and Reverse mode calculation of derivatives.
-$lnext
-Allows for replacement of $xref/CppADvector//CppADvector/$$ 
+Includes a C++ $xref/library/$$ that is useful
+for general operator overloaded numerical method.
+Allows for replacement of the
+$xref/CppADvector//CppADvector/$$ 
 template vector class which is used for extensive testing; 
-for example, you can use the
+for example, you can do your testing with the
 $href%http://www.boost.org/libs/numeric/ublas/doc/index.htm%uBlas%$$ 
 template vector class.
+
 $lnext
-Includes the templated ODE solvers 
-$xref/Runge45/$$, 
-$xref/Rosen34/$$, and $xref/OdeErrControl/$$,
-which can be used to 
-differentiate solutions of ordinary differential equations
-(see also $xref/OdeGear/$$ and $xref/OdeGearControl/$$). 
-$lnext
-Includes a templated $xref/LuSolve//LU/$$ solver that can be used to 
-differentiate determinants and solutions of linear equations. 
-$lnext
-Derivatives of functions that use other derivatives
-can be computed by taping the derivative computation; for example,
-see  $xref/MulTape/$$ for a simple example,
-and $xref/OdeTaylor.cpp//$$ for a more realistic example.
-$lnext
-Taped evaluation of user defined unary 
-$xref/Discrete//discrete functions/$$; i.e.,
-functions with identically zero derivatives.
-$lnext
-Taped evaluation of
-$xref/CondExp//conditional expressions/$$.
-$lnext
-User defined unary and binary
-$xref/BoolFun//boolean valued functions/$$
-as well as the normal
-$xref/Compare//comparison/$$ operators.
-$lnext
-Includes make files for Unix systems and 
-project files for Microsoft systems.
-$lnext
-Distributed under the Gnu public $xref/License/$$ with extensive
-user and developer documentation.
+See $xref/WhatsNew06/$$ for a list of recent extensions and bug fixes.
+
 $lend
 
 You can find out about other algorithmic differentiation tools
@@ -127,7 +120,7 @@ $href%
 	Andreas Griewank's home page
 %$$.
 
-$subhead Example$$
+$head Example$$
 The file
 $xref/GetStarted.cpp/$$
 contains an example and test of using CppAD to compute
@@ -149,30 +142,48 @@ or any type in the
 $xref/glossary/AD Type Sequence/AD type sequences/$$ above
 these types.
 
-$head Syntax$$
 
-$subhead include CppAD.h$$
-$cindex include CppAD$$
-This include directive will define the template class
-$syntax%CppAD::AD<%Base%>%$$ 
-for the rest of the current compilation unit.
+$head Include File$$
+$index include, CppAD.h$$
+$index CppAD.h, include$$
+The following include directive
+$syntax%
+	# include CppAD/CppAD.h
+%$$
+includes the CppAD package for the rest of the current compilation unit.
+
+$head Preprocessor Symbols$$
 All the preprocessor symbols used by CppAD begin with $code CppAD$$.
 For example, 
 the preprocessor symbol $code CppADIncluded$$ is used to determine
 if $code CppAD.h$$ has already been included.
 As another example,  
 the preprocessor symbol $xref/CppADvector/$$ determines which
-$xref/SimpleVector/$$ template class is used by CppAD.
+$xref/SimpleVector/$$ template class is extensively tested with CppAD.
 
-$subhead using namespace CppAD$$
-$cindex CppAD namespace$$
-If you use this compiler command,
-you will not need to place $code CppAD::$$ in front of
-$syntax%AD<%Base%>%$$ 
-each time you use this template class.
-The documentation for this template class is all relative to 
-the $code CppAD$$ namespace. 
-
+$head Namespace$$
+$index CppAD, namespace$$
+$index namespace, CppAD$$
+All of the functions and objects defined by CppAD are in the
+$code CppAD$$ namespace; for example, you can access the $xref/AD/$$ types as 
+$syntax%
+	size_t n = 2;
+	CppAD::vector< CppAD::AD<%Base%> > %x%(%n%)
+%$$ 
+You can abbreviate access to one object or function a $code using$$ 
+command of the form
+$syntax%
+	using CppAD::AD
+	CppAD::vector< AD<%Base%> > %x%(%n%)
+%$$ 
+You can abbreviate access to all CppAD objects and functions 
+with a command of the form
+$syntax%
+	using namespace CppAD
+	vector< AD<%Base%> > %x%(%n%)
+%$$ 
+If you include other namespaces in a similar manner,
+this can cause naming conflicts.
 
 
 $childtable%

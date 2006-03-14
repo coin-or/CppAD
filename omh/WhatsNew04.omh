@@ -161,7 +161,7 @@ $pre
 
 $$
 The specifications for 
-$xref/CppAD/Syntax/include CppAD.h/include CppAD.h/1/$$
+$xref/CppAD/Preprocessor Symbols/preprocessor symbols/$$
 state that all the CppAD preprocessor symbols
 begin with $code CppAD$$ 
 (so they do not conflict with other packages).
