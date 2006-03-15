@@ -1,22 +1,45 @@
-# For sections below AD, mention in docs which operations are not taped.
+# Improve documentation and example for pow function.
 #
 # SvnCommit: file that preformed this commit.
+# PowInt.h: move integer pow case to library and make more general.
+# Atan2.h: include definitions for float and double in CppAD namespace.
+# Define.h: remove standard math definitions which were no longer used.
+# Erf.h: improve documentaiton.
+# StdMathUnary.h: change complex to std::complex in documentation.
+# Pow.h: improve documentation and move integer case to library.
+# CppAD.h: add PowInt.h to list of includes.
+# WhatsNew03.omh: correct a cross reference.
 # WhatsNew06.omh: users view of the changes.
-# Atan2.h: fix missing parenthesis in documentation syntax.
-# Value.h: mention that this operation is not taped.
-# Output.h: mention that this operation is not taped.
-# Integer.h: mention that this operation is not taped.
-# Compare.h: mention that these operations are not taped.
+# library.omh: add PowInt to library.
+# Pow.cpp: move Example/Pow.cpp -> TestMore/Pow.cpp, new Example/Pow.cpp.
+# PowInt.cpp: Example/PowInt.cpp->TestMore/PowInt.cpp, new Example/PowInt.cpp.
+# TestMore.cpp: include Pow.cpp and PowInt.cpp.
+# TestMore.vcproj: include Pow.cpp and PowInt.cpp.
+# TestMore/Makefile.am: include Pow.cpp and PowInt.cpp.
+# Makefile.am: add PowInt.h to distribution.
+#
 add_list="
+	CppAD/PowInt.h
+	TestMore/Pow.cpp
+	TestMore/PowInt.cpp
 "
 change_list="
 	SvnCommit
-	omh/WhatsNew06.omh
 	CppAD/local/Atan2.h
-	CppAD/local/Value.h
-	CppAD/local/Output.h
-	CppAD/local/Integer.h
-	CppAD/local/Compare.h
+	CppAD/local/Define.h
+	CppAD/local/Erf.h
+	CppAD/local/StdMathUnary.h
+	CppAD/local/Pow.h
+	CppAD/CppAD.h
+	omh/WhatsNew03.omh
+	omh/WhatsNew06.omh
+	omh/library.omh
+	Example/Pow.cpp
+	Example/PowInt.cpp
+	TestMore/TestMore.cpp
+	TestMore/TestMore.vcproj
+	TestMore/Makefile.am
+	Makefile.am
 "
 delete_list="
 "

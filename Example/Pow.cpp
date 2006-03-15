@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -18,11 +18,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 $begin Pow.cpp$$
+$spell
+$$
 
-$section The Power Function: Example and Test$$
-$index pow$$
-$index example, pow$$
-$index test, pow$$
+$section The AD Power Function: Example and Test$$
+
+$index pow, AD example$$
+$index example, AD pow$$
+$index test, AD pow$$
 
 $code
 $verbatim%Example/Pow.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -38,89 +41,54 @@ $end
 bool Pow(void)
 {	bool ok = true;
 
-	using CppAD::pow;
-	using CppAD::exp;
-	using namespace CppAD;
+	using CppAD::AD;
+	using CppAD::NearEqual;
 
+	// declare independent variables and start tape recording
+	size_t n  = 2;
+	double x0 = 0.5;
+	double x1 = 2.;
+	CppADvector< AD<double> > x(n);
+	x[0]      = x0;
+	x[1]      = x1;
+	CppAD::Independent(x);
 
-	// independent variable vector, indices, values, and declaration
-	CppADvector< AD<double> > U(2);
-	size_t s = 0;
-	size_t t = 1;
-	U[s]     = 2.;
-	U[t]     = 3.;
-	Independent(U);
+	// dependent variable vector 
+	size_t m = 1;
+	CppADvector< AD<double> > y(m);
+	y[0] = CppAD::pow(x[0], x[1]);
 
-	// dependent variable vector and indices
-	CppADvector< AD<double> > Z(2);
-	size_t x = 0;
-	size_t y = 1;
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(x, y); 
 
+	// check value 
+	double check = std::pow(x0, x1);
+	ok &= NearEqual(y[0] , check,  1e-10 , 1e-10);
 
-	// dependent variable values
-	AD<double> u = exp(U[s]);        // u = exp(s)
-	Z[x]         = pow(u, U[t]);     // x = exp(s * t)
-	Z[y]         = pow(Z[x], u);     // y = exp( s * t * exp(s) )
+	// forward computation of first partial w.r.t. x[0]
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
+	dx[0] = 1.;
+	dx[1] = 0.;
+	dy    = f.Forward(1, dx);
+	check = x1 * std::pow(x0, x1-1.);
+	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
 
-	// create f: U -> Z and vectors used for derivative calculations
-	ADFun<double> f(U, Z);
-	CppADvector<double> v( f.Domain() );
-	CppADvector<double> w( f.Range() );
+	// forward computation of first partial w.r.t. x[1]
+	dx[0] = 0.;
+	dx[1] = 1.;
+	dy    = f.Forward(1, dx);
+	check = std::log(x0) * std::pow(x0, x1);
+	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
 
-	/*
-	u_s  (s, t) = u
-	u_t  (s, t) = 0
-	y_s  (s, t) = (1 + s) t * u * y
-	y_t  (s, t) = s * u * y
-	y_st (s, t) = ( u + s * u ) * y
-                    + ( t * u + s * t * u ) * s * u * y
-	*/
-
-	// check values
-	ok &= NearEqual(Z[x] , exp(2. * 3.),              1e-10 , 1e-10);
-	ok &= NearEqual(Z[y] , exp( 2. * 3. * exp(2.) ),  1e-10 , 1e-10);
-
-	// forward computation of partials w.r.t. s
-	v[s] = 1.;
-	v[t] = 0.;
-	w = f.Forward(1, v);
-	ok &= ( w[x] == U[t] * Z[x] );                   // dx/ds
-	ok &= ( w[y] == (1. + U[s]) * U[t] * u * Z[y] ); // dy/ds
-
-	// forward computation of partials w.r.t. t
-	v[s] = 0.;
-	v[t] = 1.;
-	w = f.Forward(1, v);
-	ok &= ( w[y] == U[s] * u * Z[y] );               // dy/dt
-
-	// forward computation of second Taylor coefficient w.r.t. t 
-	v[t] = 1.;
-	w    = f.Forward(1, v);
-	v[t] = 0.;
-	CppADvector<double> f_tt = f.Forward(2, v);
-
-	// forward computation of second Taylor coefficient w.r.t. s 
-	v[s] = 1.;
-	w    = f.Forward(1, v);
-	v[s] = 0.;
-	CppADvector<double> f_ss = f.Forward(2, v);
-
-	// second Taylor coefficient w.r.t. direction r = (s,t) 
-	v[s] = 1.;
-	v[t] = 1.;
-	w    = f.Forward(1, v);
-	v[s] = 0.;
-	v[t] = 0.;
-	CppADvector<double> f_rr = f.Forward(2, v);
-
-	// check second order partial of y
-	ok &= NearEqual(
-		f_rr[y] - f_ss[y] - f_tt[y], 
-		(1. + U[s]) * u * Z[y] + 
-			(1. + U[s]) * U[t] * u * U[s] * u * Z[y],
-		1e-10 ,
-		1e-10 
-	); 
+	// reverse computation of derivative of y[0]
+	CppADvector<double> w(m);
+	w[0]  = 1.;
+	dx    = f.Reverse(1, w);
+	check = x1 * std::pow(x0, x1-1.);
+	ok   &= NearEqual(dx[0], check, 1e-10, 1e-10);
+	check = std::log(x0) * std::pow(x0, x1);
+	ok   &= NearEqual(dx[1], check, 1e-10, 1e-10);
 
 	return ok;
 }

@@ -63,6 +63,8 @@ TestMore_SOURCES  = TestMore.cpp \
 	Neg.cpp \
 	OdeErrControl.cpp \
 	Poly.cpp \
+	Pow.cpp \
+	PowInt.cpp \
 	Rosen34.cpp \
 	Runge45.cpp \
 	Reverse.cpp \

@@ -23,6 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin atan2$$
 $spell
+	CppAD
+	namespace
+	std
 	atan
 	const
 $$
@@ -77,6 +80,12 @@ or any type in the
 $xref/glossary/AD Type Sequence/AD type sequences/$$ 
 above $code float$$ or $code double$$.
 
+$head Standard Types$$
+A definition for the $code atan2$$ function is automatically included
+in the CppAD namespace for the case where both $italic x$$
+and $italic y$$ have the following standard types
+$code float$$ and $code double$$.
+
 $head Example$$
 $children%
 	Example/Atan2.cpp
@@ -92,6 +101,12 @@ $end
 
 //  BEGIN CppAD namespace
 namespace CppAD {
+
+inline float atan2(float x, float y)
+{	return std::atan2(x, y); }
+
+inline double atan2(double x, double y)
+{	return std::atan2(x, y); }
 
 template <class Base>
 AD<Base> atan2 (const AD<Base> &y, const AD<Base> &x)

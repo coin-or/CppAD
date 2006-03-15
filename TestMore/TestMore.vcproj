@@ -521,6 +521,12 @@
 				RelativePath=".\Poly.cpp">
 			</File>
 			<File
+				RelativePath=".\Pow.cpp">
+			</File>
+			<File
+				RelativePath=".\PowInt.cpp">
+			</File>
+			<File
 				RelativePath="Reverse.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

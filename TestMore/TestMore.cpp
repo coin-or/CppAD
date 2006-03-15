@@ -60,6 +60,8 @@ extern bool MulZeroOne(void);
 extern bool Neg(void);
 extern bool OdeErrControl(void);
 extern bool Poly(void);
+extern bool Pow(void);
+extern bool PowInt(void);
 extern bool Reverse(void);
 extern bool RevSparseHes(void);
 extern bool RevSparseJac(void);
@@ -139,6 +141,8 @@ int main(void)
 	ok &= Run( Neg,             "Neg"            );
 	ok &= Run( OdeErrControl,   "OdeErrControl"  );
 	ok &= Run( Poly,            "Poly"           );
+	ok &= Run( Pow,             "Pow"            );
+	ok &= Run( PowInt,          "PowInt"         );
 	ok &= Run( Reverse,         "Reverse"        );
 	ok &= Run( RevSparseHes,    "RevSparseHes"   );
 	ok &= Run( RevSparseJac,    "RevSparseJac"   );

@@ -41,40 +41,6 @@ The preprocessor symbol $code CppADNull$$ is used for a null pointer.
 If it is not yet defined,
 it is defined when $code CppAD/local/Define.h$$ is included is included.
 
-$head CppADStandardMathFun$$
-The macro call
-$syntax%
-	CppADStandardMathFun(%Name%)
-%$$
-defines an inline function in the
-current namespace that is a link to the corresponding
-standard mathematical functions
-$syntax%
-	float           %Name%(float x)
-	double          %Name%(double x)
-	complex<float>  %Name%(std::complex<float> x)
-	complex<double> %Name%(std::complex<double> x)
-%$$
-Note that you should not place a semi-colon directly after the use
-of this macro.
-
-$head CppADStandardMathBinaryFun$$
-The macro call
-$syntax%
-	CppADStandardMathBinaryFun(%Name%)
-%$$
-defines an inline function in the
-current namespace that is a link to the corresponding
-standard mathematical functions
-$syntax%
-	float           %Name%(float x, float y)
-	double          %Name%(double x, double y)
-	complex<float>  %Name%(std::complex<float> x, std::complex<float> y)
-	complex<double> %Name%(std::complex<double> x, std::complex<double> y)
-%$$
-Note that you should not place a semi-colon directly after the use
-of this macro.
-
 $head CppADFoldBinaryOperator$$
 The syntax
 $syntax%
@@ -117,23 +83,6 @@ $end
 # ifndef CppADNull
 # define CppADNull     0
 # endif
-
-
-# define CppADStandardMathBinaryFun(Name)                                 \
-                                                                          \
-	inline float Name(float x, float y)                               \
-	{	return std::Name(x, y); }                                 \
-                                                                          \
-	inline std::complex<float> Name(                                  \
-		std::complex<float> x, std::complex<float> y)             \
-	{	return std::Name(x, y); }                                 \
-                                                                          \
-	inline double Name(double x, double y)                            \
-	{	return std::Name(x, y); }                                 \
-                                                                          \
-	inline std::complex<double> Name(                                 \
-		std::complex<double> x, std::complex<double> y)           \
-	{	return std::Name(x, y); }
 
 
 # define CppADFoldBinaryOperator(Type, Op)                             \

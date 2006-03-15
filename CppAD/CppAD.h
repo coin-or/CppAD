@@ -2,7 +2,7 @@
 # define CppADCppADIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation Copyright (C) 2003-04 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // CppAD general purpose library routines (can be included separately)
 
+# include <CppAD/PowInt.h>
 # include <CppAD/LuSolve.h>
 # include <CppAD/NearEqual.h>
 # include <CppAD/Runge45.h>

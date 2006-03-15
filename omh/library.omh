@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 $begin library$$
 $spell
@@ -33,14 +31,18 @@ $section The CppAD General Purpose Library$$
 
 $children%
 	CppAD/ErrorHandler.h%
+
 	CppAD/NearEqual.h%
 	CppAD/SpeedTest.h%
+
 	omh/NumericType.omh%
 	CppAD/CheckNumericType.h%
 	omh/SimpleVector.omh%
 	CppAD/CheckSimpleVector.h%
-	omh/LuDetAndSolve.omh%
+
+	CppAD/PowInt.h%
 	omh/Polynomial.omh%
+	omh/LuDetAndSolve.omh%
 	CppAD/RombergOne.h%
 	CppAD/RombergMul.h%
 	CppAD/Runge45.h%
@@ -48,6 +50,7 @@ $children%
 	CppAD/OdeErrControl.h%
 	CppAD/OdeGear.h%
 	CppAD/OdeGearControl.h%
+
 	CppAD/CppAD_vector.h%
 	CppAD/TrackNewDel.h
 %$$
@@ -85,8 +88,9 @@ written with the floating point type A C++ template parameter.
 This enables them to be used with algorithmic differentiation types,
 as well as for other purposes. 
 $table
-$rref LuDetAndSolve$$
+$rref PowInt$$
 $rref Polynomial$$
+$rref LuDetAndSolve$$
 $rref RombergOne$$
 $rref RombergMul$$
 $rref Runge45$$

@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -18,11 +18,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 $begin PowInt.cpp$$
+$spell
+	tan
+	atan
+$$
 
-$section Integer Powers: Example and Test$$
-$index pow$$
-$index example, pow$$
-$index test, pow$$
+$section The Integer Power Function: Example and Test$$
+
+$index pow, int$$
+$index example, pow int$$
+$index test, pow int$$
 
 $code
 $verbatim%Example/PowInt.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -38,44 +43,54 @@ $end
 bool PowInt(void)
 {	bool ok = true;
 
-	using CppAD::pow;
-	using CppAD::exp;
-	using CppAD::log;
-	using namespace CppAD;
+	using CppAD::AD;
+	using CppAD::NearEqual;
 
+	// declare independent variables and start tape recording
+	size_t n  = 1;
+	double x0 = 0.5;
+	CppADvector< AD<double> > x(n);
+	x[0]      = x0;
+	CppAD::Independent(x);
 
-	// independent variable vector, indices, values, and declaration
-	CppADvector< AD<double> > U(1);
-	U[0]     = 2.;
-	Independent(U);
+	// dependent variable vector 
+	size_t m = 7;
+	CppADvector< AD<double> > y(m);
+	int i;
+	for(i = 0; i < int(m); i++) 
+		y[i] = CppAD::pow(x[0], i - 3);
 
-	// dependent variable vector and indices
-	CppADvector< AD<double> > Z(2);
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(x, y); 
 
-	// dependent variable values
-	Z[0]         = pow(U[0], 5);     // x = u^5
-	Z[1]         = pow(U[0], -5);    // y = u^{-5}
+	// check value 
+	double check;
+	for(i = 0; i < int(m); i++) 
+	{	check = std::pow(x0, double(i - 3));
+		ok &= NearEqual(y[i] , check,  1e-10 , 1e-10);
+	}
 
-	// create f: U -> Z and vectors used for derivative calculations
-	ADFun<double> f(U, Z);
-	CppADvector<double> v( f.Domain() );
-	CppADvector<double> w( f.Range() );
+	// forward computation of first partial w.r.t. x[0]
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
+	dx[0] = 1.;
+	dy    = f.Forward(1, dx);
+	for(i = 0; i < int(m); i++) 
+	{	check = double(i-3) * std::pow(x0, double(i - 4));
+		ok &= NearEqual(dy[i] , check,  1e-10 , 1e-10);
+	}
 
-	/*
-	x_u = 5 * u^4
-	y_u = - 5 * u^{-6}
-	*/
-
-	// check function values values
-	double u = Value(U[0]);
-	ok &= NearEqual(Z[0] , exp( log(u) * 5.),              1e-10 , 1e-10);
-	ok &= NearEqual(Z[1] , exp( - log(u) * 5.),            1e-10 , 1e-10);
-
-	// forward computation of partials 
-	v[0] = 1.;
-	w = f.Forward(1, v);
-	ok &= NearEqual(w[0] , 5. * exp( log(u) * 4.),         1e-10 , 1e-10);
-	ok &= NearEqual(w[1] , - 5. * exp( - log(u) * 6.),     1e-10 , 1e-10);
+	// reverse computation of derivative of y[i]
+	CppADvector<double> w(m);
+	for(i = 0; i < int(m); i++) 
+		w[i] = 0.;
+	for(i = 0; i < int(m); i++) 
+	{	w[i] = 1.;	
+		dx    = f.Reverse(1, w);
+		check = double(i-3) * std::pow(x0, double(i - 4));
+		ok &= NearEqual(dx[0] , check,  1e-10 , 1e-10);
+		w[i] = 0.;	
+	}
 
 	return ok;
 }

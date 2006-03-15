@@ -23,108 +23,106 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin pow$$
 $spell
-	Cpp
+	std
 	namespace
-	exp
-	inline
+	CppAD
 	const
-	pow
 $$
 
-$index pow$$
-$index exponent$$
-$section The Power Function$$
+$index pow, AD$$
+$index exponent, AD function$$
+
+$section The AD Power Function$$
 
 $table
-$bold Syntax$$ 
-$cnext 
-$syntax%inline AD<%Base%> pow (const AD<%Base%> &%x%, const AD<%Type%> &%y%)%$$
-$rnext $cnext
-$syntax%inline AD<%Base%> pow (const AD<%Base%> &%x%, int %y%)%$$
+$bold Syntax$$ $cnext 
+$syntax%%z% = pow(%x%, %y%)%$$
 $tend
 
 $fend 20$$
 
-$head Description$$
-Returns an
-$syntax%AD<%Base%>%$$ object specified by
+$head Purpose$$
+Determines the value of the power function which is defined by
 $latex \[
 	{\rm pow} (x, y) = x^y
-\] $$
-If $italic y$$ is an $code int$$, the calculation is performed using
-repeated multiplications.
-Otherwise $latex \log(y)$$ must be defined.
-(for example, if $italic y$$ is zero, its log is not defined).
+\] $$.
 
+$head x$$
+The argument $italic x$$ has prototype
+$syntax%
+	const AD<%Base%> &%x%
+%$$ 
 
-$head Assumptions$$
-If $italic y$$ is not an $code int$$,
-the derivative assumptions for the 
-$xref/StdMathUnary//unary functions/$$
-$code log$$ and $code exp$$ must hold.
+$head y$$
+The argument $italic y$$ has prototype
+$syntax%
+	const AD<%Base%> &%y%
+%$$ 
+(see $xref/PowInt/$$ for the case where $italic y$$ is an $code int$$).
 
-$head Standard Base Types$$
-A definition for the $code pow$$ function
-is automatically included (in the $code CppAD$$ namespace)
-for the following 
-$xref/glossary/Base Type/base types/$$:
-$code float$$, $code double$$, $code complex<float>$$, 
-and $code complex<double>$$.
+$head z$$
+The result $italic z$$ has prototype
+$syntax%
+	AD<%Base%> %z%
+%$$
 
+$head Standard Types$$
+A definition for the $code pow$$ function is automatically included
+in the CppAD namespace for the case where both $italic x$$
+and $italic y$$ have the following standard types:
+$code float$$, $code double$$, 
+$code std::complex<float>$$, and
+$code std::complex<double>$$.
 
 $head Example$$
 $children%
-	Example/PowInt.cpp%
 	Example/Pow.cpp
 %$$
 The file
-$xref/PowInt.cpp/$$
-contains an example and test of this function for the case
-where $italic y$$ is an $code int$$.   
-The file
 $xref/Pow.cpp/$$
-contains an example and test of this function for the case
-where $italic y$$ is not an $code int$$.   
-Both tests return true if they succeed and false otherwise.
+contains an example and test of this function.   
+It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
 */
 
-namespace CppAD {
+namespace CppAD { // BEGIN CppAD namespace
 
-CppADStandardMathBinaryFun(pow)
+inline float pow(float x, float y)
+{	return std::pow(x, y); }
 
-	template <class Base>
-	inline AD<Base> pow (const AD<Base> &x, const AD<Base> &y)
-	{	using CppAD::exp;
-		using CppAD::log;
+inline double pow(double x, double y)
+{	return std::pow(x, y); }
 
-		return exp( y * log(x) );
-	}
+inline std::complex<float> 
+pow(std::complex<float> x, std::complex<float> y)
+{	return std::pow(x, y); }
 
-	template <class Base>
-	inline AD<Base> pow (const AD<Base> &x, int n)
-	{	AD<Base> p(1);
-		int n2 = n / 2;
-	
-		if( n == 0 )
-			return p;
-		if( n < 0 )
-			return p / pow(x, -n);
-		if( n == 1 )
-			return x;
+inline std::complex<double> 
+pow(std::complex<double> x, std::complex<double> y)
+{	return std::pow(x, y); }
 
-		// p = (x^2)^(n/2)
-		p = pow( x * x , n2 );
+template <class Base>
+inline AD<Base> pow (const AD<Base> &x, const AD<Base> &y)
+{	using CppAD::exp;
+	using CppAD::log;
 
-		// n is even case
-		if( n % 2 == 0 )
-			return p;
-
-		// n is odd case
-		return p * x;
-	}
+	return exp( y * log(x) );
 }
+
+template <class Base>
+inline AD<Base> pow (const VecADelem<Base> &y, const AD<Base> &x)
+{	return pow( y.ADBase() , x ); }
+
+template <class Base>
+inline AD<Base> pow (const AD<Base> &y, const VecADelem<Base> &x)
+{	return pow( y , x.ADBase() ); }
+
+template <class Base>
+inline AD<Base> pow (const VecADelem<Base> &y, const VecADelem<Base> &x)
+{	return pow( y.ADBase() , x.ADBase() ); }
+
+} // END CppAD namespace
 
 # endif 

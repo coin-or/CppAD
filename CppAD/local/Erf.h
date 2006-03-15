@@ -23,11 +23,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin erf$$
 
-$section Error Function$$
+$section The AD Error Function$$
 $spell
 	erf
 	const
 $$
+
+$index erf, AD function$$
+$index error, AD function$$
+$index function, AD error$$
 
 $table
 $bold Syntax$$ $cnext
@@ -47,14 +51,12 @@ The argument $italic x$$ has prototype
 $syntax%
 	const AD<%Base%> &%x%
 %$$
-It specifies the argument at which to evaluate the error function.
 
 $head y$$
-The return value $italic y$$ has prototype
+The result $italic y$$ has prototype
 $syntax%
 	AD<%Base%> %y%
 %$$
-It is set to the value of the error function at $italic x$$.
 
 $head Base$$
 The type $italic Base$$ must support the use of conditional expressions
@@ -65,13 +67,6 @@ or any type in the
 $xref/glossary/AD Type Sequence/AD type sequences/$$ above 
 $code float$$ or $code double$$.
 
-
-$head Sequence of Operations$$
-All of the conditional branches in this implementation use
-the $xref/CondExp/$$ function.
-Hence the sequence of operations
-does not depend on the value of $italic x$$; i.e., 
-you do not have to record this function for different argument values.
 
 $head Example$$
 $children%

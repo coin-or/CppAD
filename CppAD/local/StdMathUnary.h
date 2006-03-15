@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin StdMathUnary$$
 $spell
+	std
 	atan
 	const
 	acos
@@ -97,8 +98,8 @@ $bold fun$$
 	$cnext $bold Meaning$$
 	$cnext $code float$$ 
 	$cnext $code double$$
-	$cnext $code complex<float>$$ 
-	$cnext $code complex<double>$$
+	$cnext $code std::complex<float>$$ 
+	$cnext $code std::complex<double>$$
 $rnext
 $code acos$$  
 	$cnext inverse cosine function

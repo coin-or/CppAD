@@ -42,6 +42,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/OdeGear.h \
 	CppAD/OdeGearControl.h \
 	CppAD/Poly.h \
+	CppAD/PowInt.h \
 	CppAD/RombergOne.h \
 	CppAD/RombergMul.h \
 	CppAD/Rosen34.h \
