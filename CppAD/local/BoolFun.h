@@ -1,9 +1,8 @@
 # ifndef CppADBoolFunIncluded
 # define CppADBoolFunIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,90 +18,93 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin BoolFun$$
 $spell
-	inline
+	namespace
 	bool
-	Cpp
+	CppAD
 	const
-	compliation
 $$
 
-$index bool, function$$
-$index function, bool$$
+$index bool, AD function$$
+$index function, AD bool$$
+$index unary, AD bool$$
+$index binary, AD bool$$
 
-$section Defining Boolean Functions with AD Arguments$$
+$section AD Boolean Functions$$
 
 $table
 $bold Syntax$$
-$cnext $syntax%CppADCreateUnaryBool(%Base%, %FunName%)%$$ 
+$cnext $syntax%CppADCreateUnaryBool(%Base%, %UnaryName%)%$$ 
 $rnext
-$cnext $syntax%AD<%Base%> %FunName%(const AD<%Base%> &%x%)%$$
+$cnext $syntax%CppADCreateBinaryBool(%Base%, %BinaryName%)%$$ 
 $rnext
-$cnext $syntax%CppADCreateBinaryBool(%Base%, %FunName%)%$$ 
+$cnext $syntax%%b% = %UnaryName%(%x%)%$$
 $rnext
-$cnext $syntax%AD<%Base%> %FunName%(
-	const AD<%Base%> &%x%, const AD<%Base%> &%y%)%$$
+$cnext $syntax%%b% = %BinaryName%(%x%, %y%)%$$
 $tend
-
 
 $fend 20$$
 
-$head CppADCreateUnaryBool$$
+$head Purpose$$
+Create a boolean valued function of with
+$syntax%AD<%Base%>%$$ arguments from a boolean valued function
+with $italic Base$$ arguments.
+
+$head Prototypes$$
+The variables above and below have the following prototypes
+$syntax%
+	bool  %%          %b%
+	const %Base%     &%u%
+	const %Base%     &%v%
+	const AD<%Base%> &%x%
+	const AD<%Base%> &%y%
+%$$
+
+$head Unary Functions$$
+Given a function called $italic UnaryName$$ with syntax
+$syntax%
+	%b% = %UnaryName%(%u%)
+%$$
 The preprocessor macro invocation
 $syntax%
-	CppADCreateUnaryBool(%Base%, %FunName%)
+	CppADCreateUnaryBool(%Base%, %UnaryName%)
 %$$ 
-creates a function with the following prototype:
+can be with in a namespace but must be outside of any routine.
+It defines a function with the following syntax
 $syntax%
-
-inline bool %FunName%(const AD<%Base%> &%ad%)
+	%b% = %UnaryName%(%x%)
 %$$
 This enables one to define arbitrary
 boolean valued functions with one AD argument.
-The value $italic FunName$$ must correspond to a 
-function with the prototype
+The value returned for the argument $italic x$$
+is the value return for the argument $italic u$$
+where $italic u$$ is the $italic Base$$ value corresponding to $italic x$$.
+
+$head Binary Functions$$
+Given a function called $italic BinaryName$$ with syntax
 $syntax%
-
-bool %FunName%(const %Base% &%base%)
+	%b% = %BinaryName%(%u%, %v%)
 %$$
-The value returned for the argument $italic ad$$
-is the value return for the argument $italic base$$
-where $italic base$$ is the base type value of the argument $italic ad$$.
-
-$head CppADCreateBinaryBool$$
 The preprocessor macro invocation
 $syntax%
-	CppADCreateBinaryBool(%Base%, %FunName%)
+	CppADCreateBinaryBool(%Base%, %BinaryName%)
 %$$ 
-creates a function with the following prototype:
+can be with in a namespace but must be outside of any routine.
+It defines a function with the following syntax
 $syntax%
-
-inline bool %FunName%(const AD<%Base%> &%ad_x%, const AD<%Base%> &%ad_y%)
+	%b% = %BinaryName%(%x%, %y%)
 %$$
 This enables one to define arbitrary
 boolean valued functions with two AD arguments.
-The value $italic FunName$$ must correspond to a 
-function with the prototype
-$syntax%
-
-bool %FunName%(const %Base% &%base_x%, const %Base% &%base_y%)
-%$$
-The value returned by the call
-$syntax%
-	%FunName%(%ad_x%, %ad_y%)
-%$$,
-is equal to the value returned by the call
-$syntax%
-	%FunName%(%base_x%, %base_y%)
-%$$,
-where $italic base_x$$ and $italic base_y$$
-are the base type values corresponding to 
-$italic ad_x$$ and $italic ad_y$$.
-
+The value returned for the argument pair 
+$syntax%(%x%, %y%)%$$
+is the value return for the argument pair
+$syntax%(%u%, %v%)%$$
+where $italic u$$ is the $italic Base$$ value corresponding to $italic x$$ and
+$italic v$$ is the $italic Base$$ value corresponding to $italic y$$.
 
 $head Example$$
 $children%
@@ -110,7 +112,7 @@ $children%
 %$$
 The file
 $xref/BoolFun.cpp/$$
-contains an example and a test of these operations.
+contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 
 $end

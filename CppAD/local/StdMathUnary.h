@@ -53,7 +53,7 @@ $index sinh, AD$$
 $index sqrt, AD$$
 $index tan, AD$$
 
-$section The AD Standard Math Unary Functions$$
+$section AD Standard Math Unary Functions$$
 
 $table
 $bold Syntax$$ $cnext 

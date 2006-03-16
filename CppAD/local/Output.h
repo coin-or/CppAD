@@ -34,7 +34,7 @@ $index output, AD$$
 $index stream, AD output$$
 $index write, AD$$
 
-$section The AD Output Stream Operator$$ 
+$section AD Output Stream Operator$$ 
 
 $table
 $bold Syntax$$ $cnext

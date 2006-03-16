@@ -67,6 +67,10 @@ $$
 The copies of the $code atan2$$ function were included
 in the CppAD namespace for the 
 $xref/Atan2/Standard Types/standard types/$$.
+$pre
+
+$$
+Improve the documentation and example for $xref/BoolFun/$$.
 
 $head 03-15$$
 Improve the 

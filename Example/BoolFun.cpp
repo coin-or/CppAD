@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin BoolFun.cpp$$
@@ -26,14 +24,11 @@ $spell
 	Cpp
 $$
 
-$section Defining Boolean Functions with AD Arguments: Example and Test$$
-$mindex IsReal AbsGeq$$
-$index complex, boolean$$
-$index computed, add$$
-$index example, boolean$$
-$index test, boolean$$
+$section AD Boolean Functions: Example and Test$$
 
-$comment This file is in the Example subdirectory$$ 
+$index example, AD bool$$
+$index test, AD bool$$
+
 $code
 $verbatim%Example/BoolFun.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -45,27 +40,32 @@ $end
 # include <CppAD/CppAD.h>
 # include <complex>
 
+
 // define abbreviation for double precision complex 
 typedef std::complex<double> Complex;
 
-namespace { // place these functions in the empty namespace
-
-	// create Complex and AD<Complex> versions of IsReal
+namespace {
+	// a unary bool function with Complex argument
 	static bool IsReal(const Complex &x)
 	{	return x.imag() == 0.; }
-	CppADCreateUnaryBool(Complex, IsReal)
 
-
-	// create Complex and AD<Complex> versions of AbsGeq
+	// a binary bool function with Complex arguments
 	static bool AbsGeq(const Complex &x, const Complex &y)
 	{	double axsq = x.real() * x.real() + x.imag() * x.imag();
 		double aysq = y.real() * y.real() + y.imag() * y.imag();
 
 		return axsq >= aysq;
 	}
-	CppADCreateBinaryBool(Complex, AbsGeq)
-}
 
+	// Create version of IsReal with AD<Complex> argument
+	// inside of namespace and outside of any other function.
+	CppADCreateUnaryBool(Complex, IsReal)
+
+	// Create version of AbsGeq with AD<Complex> arguments
+	// inside of namespace and outside of any other function.
+	CppADCreateBinaryBool(Complex, AbsGeq)
+
+}
 bool BoolFun(void)
 {	bool ok = true;
 

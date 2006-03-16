@@ -42,7 +42,7 @@ $index >=, AD operator$$
 $index ==, AD operator$$
 $index !=, AD operator$$
 
-$section The AD Binary Comparison Operators$$
+$section AD Binary Comparison Operators$$
 
 
 $table

@@ -30,7 +30,7 @@ $index atan2, AD$$
 $index other, AD math$$
 $index math, AD other$$
 
-$section The Other AD Math Functions$$
+$section Other AD Math Functions$$
 
 $children%
 	CppAD/local/Abs.h%
