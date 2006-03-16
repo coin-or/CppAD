@@ -1,24 +1,29 @@
-# Improve documentation and example for AD Boolean functions.
+# Improve documentation and example for extension of NearEqual to AD cases.
 #
 # SvnCommit: file that preformed this commit.
+# Declare.h: forward declare NearEqual so it can be a friend of AD class.
+# AD.h: declare NearEqual to be a friend.
+# NearEqualExt.h: Improve documentation and extend functionality.
 # WhatsNew06.omh: users view of changes.
-# Output.h: minor edit of section title.
-# BoolFun.h: improve documentation for AD Boolean functions.
-# StdMathUnary.h: minor edit of section title.
-# MathOther.h: minor edit of section title.
-# Compare.h: minor edit of section title.
-# BoolFun.cpp: improve example for AD Boolean functions.
+# NearEqualExt.cpp: move old Example into TestMore and make a new Example.
+# TestMore.cpp: add NearEqualExt.cpp.
+# TestMore.vcproj: add NearEqualExt.cpp.
+# Makefile.am: add NearEqualExt.cpp.
+#
 add_list="
+	TestMore/NearEqualExt.cpp
 "
 change_list="
 	SvnCommit
 	omh/WhatsNew06.omh
-	CppAD/local/Output.h
-	CppAD/local/BoolFun.h
-	CppAD/local/StdMathUnary.h
-	CppAD/local/MathOther.h
-	CppAD/local/Compare.h
-	Example/BoolFun.cpp
+	CppAD/local/Declare.h
+	CppAD/local/AD.h
+	CppAD/local/NearEqualExt.h
+	omh/WhatsNew06.omh
+	Example/NearEqualExt.cpp
+	TestMore/TestMore.cpp
+	TestMore/TestMore.vcproj
+	TestMore/Makefile.am
 "
 delete_list="
 "

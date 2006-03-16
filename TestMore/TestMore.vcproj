@@ -512,6 +512,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\NearEqualExt.cpp">
+			</File>
+			<File
 				RelativePath=".\Neg.cpp">
 			</File>
 			<File

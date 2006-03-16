@@ -17,25 +17,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin NearEqualExt.cpp$$
-$spell
-	cpp
-	abs
-o	Microsoft
-$$
-
-$section Compare AD with Base Objects: Example and Test$$
-$index NearEqualExt, example$$
-$index example, NearEqualExt$$
-$index test, NearEqualExt$$
-
-$code
-$verbatim%Example/NearEqualExt.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-$$
-
-$end
+Old example now just used for validation testing
 */
-// BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
 # include <complex>
@@ -51,30 +34,42 @@ bool NearEqualExt(void)
 	double a    =  .00005;
 	double r    =  .00005;
 	double zero = 0.; 
+	double inf  = 1. / zero;
+	double nan  = 0. / zero;
 
 	// AD<double> 
-	AD<double> ax(x);
-	AD<double> ay(y);
+	AD<double> X(x);
+	AD<double> Y(y);
+	AD<double> Inf(inf);
+	AD<double> Nan(nan);
 
-	ok &= NearEqual(ax, ay, zero, a);
-	ok &= NearEqual(ax, y,  r, zero);
-	ok &= NearEqual(x, ay,  r,    a);
+	ok &= NearEqual(X, Y, zero, a);
+	ok &= NearEqual(X, y, zero, a);
+	ok &= NearEqual(x, Y, zero, a);
 
-	// std::complex<double> 
-	AD<double> cx(x);
-	AD<double> cy(y);
+	ok &= ! NearEqual(X, Y, zero, a/25.);
+	ok &= ! NearEqual(X, y, zero, a/25.);
+	ok &= ! NearEqual(x, Y, zero, a/25.);
 
-	// AD< std::complex<double> > 
-	AD<double> acx(x);
-	AD<double> acy(y);
+	ok &= NearEqual(X, Y, r, zero);
+	ok &= NearEqual(X, y, r, zero);
+	ok &= NearEqual(x, Y, r, zero);
 
-	ok &= NearEqual(acx, acy, zero, a);
-	ok &= NearEqual(acx,  cy, r, zero);
-	ok &= NearEqual(acx,   y, r,    a);
-	ok &= NearEqual( cx, acy, r,    a);
-	ok &= NearEqual(  x, acy, r,    a);
+	ok &= ! NearEqual(X, Y, r/25., zero);
+	ok &= ! NearEqual(X, y, r/25., zero);
+	ok &= ! NearEqual(x, Y, r/25., zero);
+
+	ok &= ! NearEqual(Inf, Inf, r, a);
+	ok &= ! NearEqual(Inf, inf, r, a);
+	ok &= ! NearEqual(inf, Inf, r, a);
+
+	ok &= ! NearEqual(-Inf, -Inf, r, a);
+	ok &= ! NearEqual(-Inf, -inf, r, a);
+	ok &= ! NearEqual(-inf, -Inf, r, a);
+
+	ok &= ! NearEqual(Nan, Nan, r, a);
+	ok &= ! NearEqual(Nan, nan, r, a);
+	ok &= ! NearEqual(nan, Nan, r, a);
 
 	return ok;
 }
-
-// END PROGRAM

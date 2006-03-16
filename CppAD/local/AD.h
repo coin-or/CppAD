@@ -69,6 +69,7 @@ namespace CppAD {
 
 template <class Base>
 class AD {
+	// one argument functions
 	friend bool GreaterThanZero <Base> 
 		(const AD<Base> &u);
 	friend bool LessThanZero  <Base> 
@@ -90,9 +91,21 @@ class AD {
 	friend int  Integer       <Base> 
 		(const AD<Base> &u);
 
+	// IdenticalEqual function
 	friend bool IdenticalEqual <Base> 
 		(const AD<Base> &u, const AD<Base> &v);
 
+	// NearEqual function
+	friend bool NearEqual <Base> (
+	const AD<Base> &x, const AD<Base> &y, const Base &r, const Base &a);
+
+	friend bool NearEqual <Base> (
+	const Base &x, const AD<Base> &y, const Base &r, const Base &a);
+
+	friend bool NearEqual <Base> (
+	const AD<Base> &x, const Base &y, const Base &r, const Base &a);
+
+	// CondExp function
 	friend AD<Base> CondExpOp  <Base> (
 		enum CompareOp  cop       ,
 		const AD<Base> &left      , 
@@ -101,13 +114,14 @@ class AD {
 		const AD<Base> &falseCase 
 	);
 
+	// classes
 	friend class ADTape<Base>;
 	friend class ADDiscrete<Base>;
 	friend class ADFun<Base>;
 	friend class VecAD<Base>;
 	friend class VecADelem<Base>;
 
-	// output
+	// output operations
 	friend std::ostream& operator << <Base>
 		(std::ostream &os, const AD<Base> &x);
 	friend void PrintFor <Base>

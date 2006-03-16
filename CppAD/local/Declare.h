@@ -1,9 +1,8 @@
 # ifndef CppADDeclareIncluded
 # define CppADDeclareIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithm Differentiation Copyright (C) 2003-04 Bradley M. Bell
+CppAD: C++ Algorithm Differentiation Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 namespace CppAD {
 	// classes
@@ -42,6 +40,16 @@ namespace CppAD {
 	template <class Base> bool LessThanOrZero    (const AD<Base> &u);
 	template <class Base> bool GreaterThanZero   (const AD<Base> &u);
 	template <class Base> bool GreaterThanOrZero (const AD<Base> &u);
+
+	// NearEqual
+	template <class Base> bool NearEqual(
+	const AD<Base> &x, const AD<Base> &y, const Base &r, const Base &a);
+
+	template <class Base> bool NearEqual(
+	const Base &x, const AD<Base> &y, const Base &r, const Base &a);
+
+	template <class Base> bool NearEqual(
+	const AD<Base> &x, const Base &y, const Base &r, const Base &a);
 	
 	// CondExp
 	enum CompareOp 

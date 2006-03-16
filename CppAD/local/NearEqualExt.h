@@ -31,46 +31,48 @@ $spell
 	bool
 $$
 
-$section Extend NearEqual to Mix AD and Base Types$$
+$section Compare AD and Base Objects for Nearly Equal$$
 
-$index NearEqual$$
+$index NearEqual, AD with Base$$
 
 $table
 $bold Syntax$$ $cnext
 $syntax%%b% = NearEqual(%x%, %y%, %r%, %a%)%$$
 $tend
 
-$fend 30$$
+$fend 20$$
 
-$head Description$$
-Returns true,
-if $italic x$$ and $italic y$$ are nearly equal,
-and false otherwise.
-This extends the routine
-$xref/NearEqual/$$ to include cases that mix AD types
-with more basic types.
+$head Purpose$$
+The routine $xref/NearEqual/$$ determines if two objects of
+the same type are nearly.
+This routine is extended to the case where one object can have type
+$italic Type$$ while the other can have type
+$syntax%AD<%Type%>%$$ or
+$syntax%AD< std::complex<%Type%> >%$$.
 
 $head x$$
 The arguments $italic x$$ 
 has one of the following possible prototypes:
 $syntax%
-	const %Base%                     &%x%
-	const AD<%Base%>                 &%x%
+	const %Type%                     &%x%
+	const AD<%Type%>                 &%x%
+	const AD< std::complex<%Type%> > &%x%
 %$$
 
 $head y$$
 The arguments $italic y$$ 
 has one of the following possible prototypes:
 $syntax%
-	const %Base%                     &%y%
-	const AD<%Base%>                 &%y%
+	const %Type%                     &%y%
+	const AD<%Type%>                 &%y%
+	const AD< std::complex<%Type%> > &%x%
 %$$
 
 
 $head r$$
 The relative error criteria $italic r$$ has prototype
 $syntax%
-	const %Base% &%r%
+	const %Type% &%r%
 %$$
 It must be greater than or equal to zero.
 The relative error condition is defined as:
@@ -81,7 +83,7 @@ $latex \[
 $head a$$
 The absolute error criteria $italic a$$ has prototype
 $syntax%
-	const %Base% &%a%
+	const %Type% &%a%
 %$$
 It must be greater than or equal to zero.
 The absolute error condition is defined as:
@@ -100,13 +102,13 @@ Otherwise, if either the relative or absolute error
 condition (defined above) is satisfied, the return value is true.
 Otherwise, the return value is false.
 
-$head Base$$
-The type $italic Base$$ must be a
+$head Type$$
+The type $italic Type$$ must be a
 $xref/NumericType/$$.
 The routine $xref/CheckNumericType/$$ will generate
 an error message if this is not the case.
-In addition, the following operations must be defined objects
-$italic a$$ and $italic b$$ of type $italic Base$$:
+If $italic a$$ and $italic b$$ have type $italic Type$$,
+the following operation must be defined 
 $table
 $bold Operation$$     $cnext 
 	$bold Description$$ $rnext
@@ -128,27 +130,52 @@ $end
 // BEGIN CppAD namespace
 namespace CppAD {
 // ------------------------------------------------------------------------
-// fold into all same type case in <CppAD/NearEqual.h>
 
-
+// fold into base type and then use <CppAD/NearEqual.h>
 template <class Base>
 inline bool NearEqual(
-	const AD<Base> &x, const AD<Base> &y, const Base &r, const Base &a)
-{	return NearEqual(x, y, AD<Base>(r), AD<Base>(a) );
+const AD<Base> &x, const AD<Base> &y, const Base &r, const Base &a)
+{	return NearEqual(x.value, y.value, r, a);
 }
 
 template <class Base>
 inline bool NearEqual(
-	const Base &x, const AD<Base> &y, const Base &r, const Base &a)
-{	return NearEqual(AD<Base>(x), y, AD<Base>(r), AD<Base>(a) );
+const Base &x, const AD<Base> &y, const Base &r, const Base &a)
+{	return NearEqual(x, y.value, r, a);
 }
 
 template <class Base>
 inline bool NearEqual(
-	const AD<Base> &x, const Base &y, const Base &r, const Base &a)
-{	return NearEqual(x, AD<Base>(y), AD<Base>(r), AD<Base>(a) );
+const AD<Base> &x, const Base &y, const Base &r, const Base &a)
+{	return NearEqual(x.value, y, r, a);
 }
 
+// fold into AD type and then use cases above
+template <class Base>
+inline bool NearEqual(const VecADelem<Base> &x, const VecADelem<Base> &y, 
+	const Base &r, const Base &a)
+{	return NearEqual(x.ADBase(), y.ADBase(), r, a);
+}
+template <class Base>
+inline bool NearEqual(const VecADelem<Base> &x, const AD<Base> &y, 
+	const Base &r, const Base &a)
+{	return NearEqual(x.ADBase(), y, r, a);
+}
+template <class Base>
+inline bool NearEqual(const VecADelem<Base> &x, const Base &y, 
+	const Base &r, const Base &a)
+{	return NearEqual(x.ADBase(), y, r, a);
+}
+template <class Base>
+inline bool NearEqual(const AD<Base> &x, const VecADelem<Base> &y, 
+	const Base &r, const Base &a)
+{	return NearEqual(x, y.ADBase(), r, a);
+}
+template <class Base>
+inline bool NearEqual(const Base &x, const VecADelem<Base> &y, 
+	const Base &r, const Base &a)
+{	return NearEqual(x, y.ADBase(), r, a);
+}
 
 } // END CppAD namespace
 

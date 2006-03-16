@@ -57,6 +57,12 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-17$$
+The documentation and examples have been improved for the 
+following functions:
+$xref/BoolFun/$$, and
+$xref/NearEqualExt/$$.
+
 $head 03-16$$
 Improve the documentation and example for the $xref/pow/$$ function.
 This includes splitting out and generalizing the integer case 
@@ -67,10 +73,6 @@ $$
 The copies of the $code atan2$$ function were included
 in the CppAD namespace for the 
 $xref/Atan2/Standard Types/standard types/$$.
-$pre
-
-$$
-Improve the documentation and example for $xref/BoolFun/$$.
 
 $head 03-15$$
 Improve the 

@@ -60,6 +60,7 @@ TestMore_SOURCES  = TestMore.cpp \
 	Mul.cpp \
 	MulEq.cpp \
 	MulZeroOne.cpp \
+	NearEqualExt.cpp \
 	Neg.cpp \
 	OdeErrControl.cpp \
 	Poly.cpp \

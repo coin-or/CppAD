@@ -57,6 +57,7 @@ extern bool Log10(void);
 extern bool Mul(void);
 extern bool MulEq(void);
 extern bool MulZeroOne(void);
+extern bool NearEqualExt(void);
 extern bool Neg(void);
 extern bool OdeErrControl(void);
 extern bool Poly(void);
@@ -138,6 +139,7 @@ int main(void)
 	ok &= Run( Mul,             "Mul"            );
 	ok &= Run( MulEq,           "MulEq"          );
 	ok &= Run( MulZeroOne,      "MulZeroOne"     );
+	ok &= Run( NearEqualExt,    "NearEqualExt"   );
 	ok &= Run( Neg,             "Neg"            );
 	ok &= Run( OdeErrControl,   "OdeErrControl"  );
 	ok &= Run( Poly,            "Poly"           );
