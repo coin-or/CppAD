@@ -1,9 +1,8 @@
 # ifndef CppADPrintForIncluded
 # define CppADPrintForIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin PrintFor$$
@@ -32,32 +30,62 @@ $$
 $index print, forward$$
 $index forward, print$$
 
-$section Printing Values During Forward Mode Calculations$$ 
+$section Printing AD Values During Forward Mode$$ 
 
 $table
 $bold Syntax$$ $cnext
-$syntax%void PrintFor(const char *%text%, const AD<%Base%> &%x%)%$$
+$syntax%PrintFor(%text%, %u%)%$$
 $tend
 
 $fend 20$$
 
-$head Description$$
-This form of printing values is delayed until 
-$xref/Forward//$$ mode is called with order equal to zero; 
-i.e., when the value of the independent variables is changed.
+$head Purpose$$
+The AD object $italic u$$ may be an value in the
+$xref/glossary/AD Operation Sequence/operation sequence/$$
+that is transferred to an $xref/ADFun/$$ object $italic f$$ with prototype
+$syntax%
+	ADFun<%Base%> %f%
+%$$
+This object can be evaluated using $xref/Forward/$$ mode zero; i.e.,
+$syntax%
+	%f%.Forward(0, %x%)
+%$$
+with values for the
+$xref/glossary/Independent Variable/independent variables/$$
+(specified by the vector $italic x$$)
+that are different from when the operation sequence was recorded.
+The routine $code PrintFor$$ requests a printing of the value of $italic u$$ 
+that corresponds to $italic x$$
+when $syntax%%f%.Forward(0, %x%)%$$ is executed. 
+
+$head text$$
+The argument $italic text$$ has prototype
+$syntax%
+	const char *%text%
+%$$
+The corresponding text is written to $code std::cout$$ before the 
+value of $italic u$$ that corresponds to the independent variable values.
+
+$head u$$
+The argument $italic u$$ has prototype
+$syntax%
+	const AD<%Base%> &%u%
+%$$
+The value of $italic u$$ that corresponds to $italic x$$
+is written to $code std::cout$$ during the execution of 
+$syntax%
+	%f%.Forward(0, %x%)
+%$$
+
+$head Discussion$$
 This is can be helpful for understanding why tape evaluations
 have trouble, for example, if the result of a tape calculation
 is the IEEE code for not a number $code Nan$$.
-The text specified by $italic text$$, 
-followed by the value specified by $italic x$$,
-are is printed to $code std::cout$$. 
-$pre
 
-$$
+$head Alternative$$
 The $xref/Output/$$ section describes the normal 
 printing of values; i.e., printing when the corresponding
 code is executed.
-
 
 $head Example$$
 $children%
@@ -65,7 +93,7 @@ $children%
 %$$
 The program
 $xref/PrintFor.cpp/$$
-is an example and a test of this operation.
+is an example and test of this operation.
 The output of this program
 states the conditions for passing and failing the test.
 
@@ -73,17 +101,16 @@ $end
 ------------------------------------------------------------------------------
 */
 
-namespace CppAD { // Begin CppAD namespace
-
-template <class Base>
-void PrintFor(const char *text, const AD<Base> &x)
-{ 	if( AD<Base>::Tape()->State() == Recording )
-	{	if( Parameter(x) )
-			AD<Base>::Tape()->RecordPripOp(text, x.value);
-		else	AD<Base>::Tape()->RecordPrivOp(text, x.taddr);
+namespace CppAD { 
+	template <class Base>
+	void PrintFor(const char *text, const AD<Base> &u)
+	{ 	if( AD<Base>::Tape()->State() == Recording )
+		{	if( Parameter(u) )
+				AD<Base>::Tape()->RecordPripOp(text, u.value);
+			else	AD<Base>::Tape()->RecordPrivOp(text, u.taddr);
+		}
 	}
-}
 
-} // END CppAD namespace
+}
 
 # endif

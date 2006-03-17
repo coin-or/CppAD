@@ -1,29 +1,16 @@
-# Improve documentation and example for extension of NearEqual to AD cases.
+# Improve documentation and example for printing during forward mode.
 #
 # SvnCommit: file that preformed this commit.
-# Declare.h: forward declare NearEqual so it can be a friend of AD class.
-# AD.h: declare NearEqual to be a friend.
-# NearEqualExt.h: Improve documentation and extend functionality.
+# PrintFor.h: improve documentation.
 # WhatsNew06.omh: users view of changes.
-# NearEqualExt.cpp: move old Example into TestMore and make a new Example.
-# TestMore.cpp: add NearEqualExt.cpp.
-# TestMore.vcproj: add NearEqualExt.cpp.
-# Makefile.am: add NearEqualExt.cpp.
-#
+# PrintFor.cpp: improve example (and convert from dos to unix format).
 add_list="
-	TestMore/NearEqualExt.cpp
 "
 change_list="
 	SvnCommit
+	CppAD/local/PrintFor.h
 	omh/WhatsNew06.omh
-	CppAD/local/Declare.h
-	CppAD/local/AD.h
-	CppAD/local/NearEqualExt.h
-	omh/WhatsNew06.omh
-	Example/NearEqualExt.cpp
-	TestMore/TestMore.cpp
-	TestMore/TestMore.vcproj
-	TestMore/Makefile.am
+	PrintFor/PrintFor.cpp
 "
 delete_list="
 "

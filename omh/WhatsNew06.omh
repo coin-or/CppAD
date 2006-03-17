@@ -57,6 +57,9 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-18$$
+The documentation and example for $xref/PrintFor/$$ have been improved.
+
 $head 03-17$$
 The documentation and examples have been improved for the 
 following functions:
