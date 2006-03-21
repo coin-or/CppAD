@@ -26,55 +26,36 @@ $spell
 	Cpp
 $$
 
-$section Using AD<Base> Class Objects$$
+$section Using The AD Template Class$$
 
-$index AD<Base>, using$$
+$index AD, template class$$
 
-$head Description$$
-The template class
-$syntax%AD<%Base%>%$$ 
+$head Purpose$$
+The AD template class ($syntax%AD<%Base%>%$$ class)
 is defined by including 
 the file $xref/CppAD//CppAD.h/$$.
-The purpose of this class is to record 
-$syntax%AD<%Base%>%$$ operations on a corresponding tape 
-so that derivatives can be calculated.
+The purpose of this template class is to record an
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$
+for evaluation of the corresponding function and its derivatives.
 The sections listed below describe the methods
 that are available for objects in this template class.
 
 $childtable%
-	CppAD/local/Default.h%
-	CppAD/local/CopyBase.h%
-	CppAD/local/CopyAD.h%
-	CppAD/local/Value.h%
-	CppAD/local/Integer.h%
+	CppAD/local/Constructor.h%
 	CppAD/local/Eq.h%
-	CppAD/local/Arithmetic.h%
-	CppAD/local/Compare.h%
-	CppAD/local/Output.h%
-	CppAD/local/StdMathUnary.h%
-	CppAD/local/MathOther.h%
-	CppAD/local/BoolFun.h%
-	CppAD/local/NearEqualExt.h%
-	CppAD/local/PrintFor.h
+	CppAD/local/Convert.h%
+	CppAD/local/ADValued.h%
+	CppAD/local/BoolValued.h
 %$$
 
 $end
 ---------------------------------------------------------------------------
 */
 
-# include <CppAD/local/Default.h>      // default constructor
-# include <CppAD/local/CopyBase.h>     // construction from base type
-# include <CppAD/local/CopyAD.h>       // copy constructor
-# include <CppAD/local/Value.h>        // base type value
-# include <CppAD/local/Integer.h>      // base type value
-# include <CppAD/local/Eq.h>           // assignment operator
-# include <CppAD/local/Arithmetic.h>   // arithmetic operators
-# include <CppAD/local/Compare.h>      // Logical Binary operators
-# include <CppAD/local/Output.h>       // output AD to a stream
-# include <CppAD/local/StdMathUnary.h> // standard math unary functions
-# include <CppAD/local/MathOther.h>    // other math functions
-# include <CppAD/local/BoolFun.h>      // user defined boolean valued functions
-# include <CppAD/local/NearEqualExt.h> // mix AD and base in NearEqual
-# include <CppAD/local/PrintFor.h>     // print during forward mode
+# include <CppAD/local/Constructor.h>
+# include <CppAD/local/Eq.h>
+# include <CppAD/local/Convert.h>
+# include <CppAD/local/ADValued.h>
+# include <CppAD/local/BoolValued.h>
 
 # endif

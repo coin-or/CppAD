@@ -51,6 +51,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/TrackNewDel.h \
 	CppAD/local/AD.h \
 	CppAD/local/ADTape.h \
+	CppAD/local/ADValued.h \
 	CppAD/local/Abs.h \
 	CppAD/local/AbsOp.h \
 	CppAD/local/AcosOp.h \
@@ -63,8 +64,11 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/AtanOp.h \
 	CppAD/local/BoolFun.h \
 	CppAD/local/BoolFunLink.h \
+	CppAD/local/BoolValued.h \
 	CppAD/local/Compare.h \
 	CppAD/local/CondExp.h \
+	CppAD/local/Constructor.h \
+	CppAD/local/Convert.h \
 	CppAD/local/CopyAD.h \
 	CppAD/local/CopyBase.h \
 	CppAD/local/CppADError.h \

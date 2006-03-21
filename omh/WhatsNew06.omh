@@ -57,8 +57,14 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-22$$
+The documentation sections under $xref/AD/$$ 
+have been organized into a new set of sub-groups.
+
 $head 03-18$$
 The documentation and example for $xref/PrintFor/$$ have been improved.
+The sections below $xref/AD/$$ 
+in the documentation have been organized into subgroups.
 
 $head 03-17$$
 The documentation and examples have been improved for the 

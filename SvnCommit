@@ -1,16 +1,24 @@
 # Improve documentation and example for printing during forward mode.
 #
 # SvnCommit: file that preformed this commit.
-# PrintFor.h: improve documentation.
+# BoolValued.h: group the Boolean valued operations below this section.
+# ADValued.h: group the AD valued operations below this section.
+# Convert.h: group the conversion operations below this section.
+# Constructor.h: group the AD constructors below this seciton.
+# UserAD.h: reference new subgroups.
 # WhatsNew06.omh: users view of changes.
-# PrintFor.cpp: improve example (and convert from dos to unix format).
 add_list="
+	CppAD/local/BoolValued.h
+	CppAD/local/ADValued.h
+	CppAD/local/Convert.h
+	CppAD/local/Constructor.h
 "
 change_list="
 	SvnCommit
-	CppAD/local/PrintFor.h
 	omh/WhatsNew06.omh
-	PrintFor/PrintFor.cpp
+	CppAD/local/UserAD.h
+	omh/WhatsNew06.omh
+	Makefile.am
 "
 delete_list="
 "
