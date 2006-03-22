@@ -99,8 +99,7 @@ $end
 -------------------------------------------------------------------------------
 */
 
-//  BEGIN CppAD namespace
-namespace CppAD {
+namespace CppAD { // BEGIN CppAD namespace
 
 inline float atan2(float x, float y)
 {	return std::atan2(x, y); }
@@ -108,6 +107,8 @@ inline float atan2(float x, float y)
 inline double atan2(double x, double y)
 {	return std::atan2(x, y); }
 
+// The code below is used as an example by the CondExp documentation.
+// BEGIN CondExp
 template <class Base>
 AD<Base> atan2 (const AD<Base> &y, const AD<Base> &x)
 {	AD<Base> alpha;
@@ -126,18 +127,19 @@ AD<Base> atan2 (const AD<Base> &y, const AD<Base> &x)
 	// else	theta = pi2 - atan(ax / ay);
 	alpha = atan(ay / ax);
 	beta  = pi2 - atan(ax / ay);
-	theta = CondExpGt(ax, ay, alpha, beta); 
+	theta = CondExpGt(ax, ay, alpha, beta);         // use of CondExp
 
 	// if( x <= 0 )
 	// 	theta = pi - theta;
-	theta = CondExpLe(x, zero, pi - theta, theta);
+	theta = CondExpLe(x, zero, pi - theta, theta);  // use of CondExp
 	
 	// if( y <= 0 )
 	// 	theta = - theta;
-	theta = CondExpLe(y, zero, -theta, theta);
+	theta = CondExpLe(y, zero, -theta, theta);      // use of CondExp
 
 	return theta;
 }
+// END CondExp 
 
 template <class Base>
 inline AD<Base> atan2 (const VecADelem<Base> &y, const AD<Base> &x)

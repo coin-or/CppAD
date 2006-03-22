@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin CondExp$$
 $spell
+	Atan2
 	CondExp
 	Taylor
 	std
@@ -43,23 +44,27 @@ $$
 $index conditional, expression$$
 $index expression, conditional$$
 $index assign, conditional$$
-$section The Conditional Expression Function$$
+
+$section The AD Conditional Expressions$$
 
 $table
 $bold Syntax$$ $cnext 
-$syntax%CondExp%Op%(%left%, %right%, %trueCase%, %falseCase%)%$$
+$syntax%%result% = CondExp%Op%(%left%, %right%, %trueCase%, %falseCase%)%$$
 $tend
 
 $fend 20$$
 
-$head Description$$
-Returns a $italic Type$$ object $italic returnValue$$ that is given by
+$head Purpose$$
+Record, 
+as part of an $xref/glossary/AD Operation Sequence/AD operation sequence/$$,
+a the conditional result of the form 
 $syntax%
 	if( %left% %op% %right% )
-		%returnValue% = %trueCase%
-	else	%returnValue% = %falseCase%
+		%result% = %trueCase%
+	else	%result% = %falseCase%
 %$$
-where $italic op$$ and $italic Op$$ have the following correspondence: 
+The notation $italic Op$$ and $italic op$$ 
+above have the following correspondence: 
 $table
 $italic Op$$ 
 	$pre  $$ $cnext $code Lt$$
@@ -75,6 +80,14 @@ $italic op$$
 	$cnext $code >=$$
 	$cnext $code >$$
 $tend
+If $italic f$$ is the $xref/ADFun/$$ object corresponding to the
+AD operation sequence,
+the choice in an AD conditional expression is made each time
+$xref/Forward//f.Forward/$$ is used to evaluate the zero order Taylor
+coefficients with new values for the 
+$xref/glossary/Independent Variable/independent variables/$$.
+This is in contrast to the $xref/Compare//AD comparison operators/$$
+which are boolean valued and not included in the AD operation sequence. 
 
 $head Type$$
 We use $italic Type$$ for the type of
@@ -89,7 +102,7 @@ $head Op$$
 In the syntax above, $italic Op$$ represents one of the following
 two characters: $code Lt$$, $code Le$$, $code Eq$$, $code Ge$$, $code Gt$$. 
 As in the table above,
-$italic Op$$ determines which comparison operator $italic op$$.
+$italic Op$$ determines the comparison operator $italic op$$.
  
 $head left$$
 The argument $italic left$$ has prototype
@@ -119,15 +132,12 @@ $syntax%
 %$$
 It specifies the return value if the result of the comparison is false.
 
+$head result$$
+The $italic result$$ has prototype
+$syntax%
+	%Type% &%falseCase%
+%$$
 
-$head Motivation$$
-The choice in a conditional expression is made each time
-$xref/Forward//f.Forward/$$ is used to evaluate the zero order Taylor
-coefficients.
-This enables one to extend the range of independent variable values
-for which an $xref/ADFun/$$ object is a valid representation
-of the corresponding algorithm.
-(See $xref/Discrete/$$ for another type of taped evaluation). 
 
 $head CondExp$$
 Previous versions of CppAD used 
@@ -141,6 +151,8 @@ $syntax%
 Use of $code CondExp$$ is deprecated, but continues to be supported.
 
 $head Example$$
+
+$head Test$$
 $children%
 	Example/CondExp.cpp
 %$$
@@ -148,13 +160,19 @@ The file
 $xref/CondExp.cpp/$$
 contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
-The Error function routine $code lib/ErrFun.cpp$$ provides an example
-using conditional expressions in a more complex setting.
+
+$head Atan2$$
+The following implementation of the
+AD $xref/atan2/$$ function is a more complex
+example of using conditional expressions:
+$code
+$verbatim%CppAD/local/Atan2.h%0%BEGIN CondExp%// END CondExp%$$
+$$
+
 
 $end
 -------------------------------------------------------------------------------
 */
-
 //  BEGIN CppAD namespace
 namespace CppAD {
 

@@ -1,24 +1,21 @@
-# Improve documentation and example for printing during forward mode.
+# Move CondExp from ExtendDomain to AD/ADValued
 #
-# SvnCommit: file that preformed this commit.
-# BoolValued.h: group the Boolean valued operations below this section.
-# ADValued.h: group the AD valued operations below this section.
-# Convert.h: group the conversion operations below this section.
-# Constructor.h: group the AD constructors below this seciton.
-# UserAD.h: reference new subgroups.
-# WhatsNew06.omh: users view of changes.
+# SvnCommit: file that made this commit.
+# Atan2.h: modify comments so can include as an example in CondExp.
+# CondExp.h: improve documentation.
+# ADValued.h: move CondExp to here.
+# ExtendDomain.h: move CondExp from here.
+# WhatsNew06.omh: users view of the changes.
+# 
 add_list="
-	CppAD/local/BoolValued.h
-	CppAD/local/ADValued.h
-	CppAD/local/Convert.h
-	CppAD/local/Constructor.h
 "
 change_list="
 	SvnCommit
+	CppAD/local/Atan2.h
+	CppAD/local/CondExp.h
+	CppAD/local/ADValued.h
+	CppAD/local/ExtendDomain.h
 	omh/WhatsNew06.omh
-	CppAD/local/UserAD.h
-	omh/WhatsNew06.omh
-	Makefile.am
 "
 delete_list="
 "

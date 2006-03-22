@@ -32,12 +32,14 @@ $section AD Valued Operations and Functions$$
 $children%
 	CppAD/local/Arithmetic.h%
 	CppAD/local/StdMathUnary.h%
-	CppAD/local/MathOther.h
+	CppAD/local/MathOther.h%
+	CppAD/local/CondExp.h
 %$$
 $table
 $rref Arithmetic$$
 $rref StdMathUnary$$
 $rref MathOther$$
+$rref CondExp$$
 $tend
 	
 
@@ -47,5 +49,6 @@ $end
 # include <CppAD/local/Arithmetic.h>
 # include <CppAD/local/StdMathUnary.h>
 # include <CppAD/local/MathOther.h>
+# include <CppAD/local/CondExp.h>
 
 # endif

@@ -57,6 +57,10 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-23$$
+Move $xref/CondExp/$$ from $xref/ExtendDomain/$$ to $xref/ADValued/$$
+and improve its documentation.
+
 $head 03-22$$
 The documentation sections under $xref/AD/$$ 
 have been organized into a new set of sub-groups.
