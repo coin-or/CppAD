@@ -1,9 +1,8 @@
 # ifndef CppADDiscreteIncluded
 # define CppADDiscreteIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,11 +18,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin Discrete$$
 $spell
+	namespace
 	std
 	Eq
 	Cpp
@@ -32,97 +31,70 @@ $spell
 	Geq
 $$
 
-$section User Defined Discrete Functions$$
+$section Discrete AD Functions$$
 
 $table
 $bold Syntax$$
 $cnext $syntax%CppADCreateDiscrete(%Base%, %FunName%)%$$ 
 $rnext
-$cnext $syntax%AD<%Base%> %FunName%(const AD<%Base%> &%w%)%$$
-$rnext
-$bold See Also$$
-$cnext $xref/VecAD/$$
+$cnext $syntax%%y% = %FunName%(%x%)%$$
 $tend
-
 
 $fend 20$$
 
-$head Description$$
-The results of the $xref/Compare/$$ operations are boolean values
-and hence are not recorded in the corresponding $xref/ADFun/$$ object.
-One can record the results of simulated logical operations
-using the discrete functions described here.
+$head Purpose$$
+Record the evaluation of a discrete function as part
+of an $xref/glossary/AD Operation Sequence/AD operation sequence/$$.
+The value of a discrete function can depend on the
+$xref/glossary/Independent Variable/independent variables/$$,
+but its derivative is identically zero.
+For example, suppose that the integer part of $italic x$$ is the 
+index into an array of values. 
 
-$head Definition$$
+$head Prototypes$$
+The variables above and below have the following prototypes
+$syntax%
+	const %Base%     &%u%
+	%Base%            %v%
+	const AD<%Base%> &%x%
+	AD<%Base%>        %y%
+%$$
+
+$head CppADCreateDiscrete$$
 The preprocessor macro invocation
 $syntax%
 	CppADCreateDiscrete(%Base%, %FunName%)
 %$$ 
-creates a function with the following prototype
+can be with in a namespace but must be outside of any routine.
+It defines a function with the following syntax
 $syntax%
-	inline AD<%Base%> %FunName%(const AD<%Base%> &%w%)
+	%y% = %FunName%(%x%)
 %$$
-This function will compute its values using a user provided function
-with the following prototype
+This function will compute its values using a user defined function
+with the following syntax
 $syntax%
-	%Base% %FunName%(const %Base% &%w%)
+	%v% = %FunName%(%u%)
 %$$
 
 $head Derivatives$$
-An $xref/ADFun/$$ object will compute the value of a discrete function
-using the user provided version.
-All the derivatives of a discrete function are treated as zero.
-
-$head Conditional Assignment$$
-$index conditional assign$$
-$index assign, conditional$$
-The conditional expression function $xref/CondExp/$$
-is the preferred way to do conditional assignments.
-Unfortunately, this requires that the $code >$$ operator be 
-defined for the base type.
-If $code >$$ is not defined for the base type, you can 
-use the following construction to obtain conditional assignments:
-$pre
-
-$$
-Suppose that 
-$italic w$$,
-$italic x$$,
-$italic y$$, and $italic z$$ are $code AD< std::complex<double> >$$ variables
-and our computations contain a statement of the form
-$codep
-	if( w == 0. )
-		z = x;
-	else	z = y;
-$$
-The corresponding $xref/ADFun/$$ would only contain the
-assignment that is executed. 
-Further suppose that the function
-$syntax%
-	double EqZero(const double &%w%)
-%$$
-returns one if $latex w = 0$$ and zero otherwise and we use the command
-$syntax%
-	CppADCreateDiscrete( std::complex<double> , EqZero)
-%$$
-If we replace the computations above by
-$codep
-	z = EqZero(w) * x + (1. - EqZero(w)) * y
-$$
-the value of $italic z$$ will be the same as in the previous computations.
-Furthermore the corresponding $code ADFun$$ will record 
-this conditional assignment.
-(Note that while the value of $code EqZero(w)$$ depends on $code w$$,
-all of its derivatives are treated as being zero.)
+During a zero order $xref/Forward//Forward/$$ operation,
+an $xref/ADFun/$$ object will compute the value of a discrete function
+using the user provided $italic Base$$ version of the routine.
+All the derivatives of a discrete function will be evaluated as zero.
 
 $head Example$$
 $children%
-	Example/Discrete.cpp
+	Example/Discrete.cpp%
+	Example/Piecewise.cpp
 %$$
 The file
 $xref/Discrete.cpp/$$
-contains an example and a test of using discrete functions.   
+contains an example and test of using discrete functions.   
 It returns true if it succeeds and false otherwise.
+The file
+$xref/Piecewise.cpp/$$
+contains an example and test that uses discrete
+functions for piecewise linear interpolation.
 
 
 $end

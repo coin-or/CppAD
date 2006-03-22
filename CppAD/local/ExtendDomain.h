@@ -33,7 +33,6 @@ in an $code ADFun$$ object
 the $code ADFun$$ object is useful).
 
 $contents%
-	CppAD/local/Discrete.h%
 	CppAD/local/Vec.h%
 	CppAD/local/LuRatio.h
 %$$
@@ -41,7 +40,6 @@ $contents%
 $end
 */
 
-# include <CppAD/local/Discrete.h>
 # include <CppAD/local/Vec.h>
 # include <CppAD/local/LuRatio.h>
 

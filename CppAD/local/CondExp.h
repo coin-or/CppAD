@@ -45,7 +45,7 @@ $index conditional, expression$$
 $index expression, conditional$$
 $index assign, conditional$$
 
-$section The AD Conditional Expressions$$
+$section AD Conditional Expressions$$
 
 $table
 $bold Syntax$$ $cnext 

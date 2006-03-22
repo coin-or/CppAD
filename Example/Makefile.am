@@ -103,6 +103,7 @@ Example_SOURCES   = \
 	OdeStiff.cpp \
 	OdeTaylor.cpp \
 	Output.cpp \
+	Piecewise.cpp \
 	Poly.cpp \
 	Pow.cpp \
 	PowInt.cpp \

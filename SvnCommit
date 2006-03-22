@@ -1,21 +1,35 @@
-# Move CondExp from ExtendDomain to AD/ADValued
+# Improve documentation and examples for Discrete
 #
 # SvnCommit: file that made this commit.
-# Atan2.h: modify comments so can include as an example in CondExp.
-# CondExp.h: improve documentation.
-# ADValued.h: move CondExp to here.
-# ExtendDomain.h: move CondExp from here.
+# CondExp.h: minor change to section heading.
+# ADValued.h: move Discrete here from ExtendDomain.
+# Discrete.h: major changes to documentation.
+# ExtendDomain.h: move Discrete from here to ADValued.h.
 # WhatsNew06.omh: users view of the changes.
+# ExampleList.omh: add Piecewise.cpp to list of all examples.
+# Piecewise.cpp: example using Discrete for piecewise linear interpolation.
+# CondExp.cpp: improve example for CondExp.
+# Discrete.cpp: improve example for Discrete.
+# Example.vcproj: add Piecewise.cpp.
+# Example.cpp: add Piecewise.cpp.
+# Makefile.am: add Piecewise.cpp.
 # 
 add_list="
+	Example/Piecewise.cpp
 "
 change_list="
 	SvnCommit
-	CppAD/local/Atan2.h
 	CppAD/local/CondExp.h
 	CppAD/local/ADValued.h
+	CppAD/local/Discrete.h
 	CppAD/local/ExtendDomain.h
 	omh/WhatsNew06.omh
+	omh/ExampleList.omh
+	Example/CondExp.cpp
+	Example/Discrete.cpp
+	Example/Example.vcproj
+	Example/Example.cpp
+	Example/Makefile.am
 "
 delete_list="
 "

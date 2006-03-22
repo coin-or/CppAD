@@ -1071,6 +1071,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Piecewise.cpp">
+			</File>
+			<File
 				RelativePath="Poly.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

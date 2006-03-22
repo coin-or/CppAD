@@ -106,6 +106,7 @@ extern bool OdeGearControl(void);
 extern bool OdeStiff(void);
 extern bool OdeTaylor(void);
 extern bool Output(void);
+extern bool Piecewise(void);
 extern bool Poly(void);
 extern bool Pow(void);
 extern bool PowInt(void);
@@ -226,6 +227,7 @@ int main(void)
 	ok &= Run( OdeStiff,          "OdeStiff"         );
 	ok &= Run( OdeTaylor,         "OdeTaylor"        );
 	ok &= Run( Output,            "Output"           );
+	ok &= Run( Piecewise,         "Piecewise"        );
 	ok &= Run( Pow,               "Poly"             );
 	ok &= Run( Pow,               "Pow"              );
 	ok &= Run( PowInt,            "PowInt"           );

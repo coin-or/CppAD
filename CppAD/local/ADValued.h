@@ -33,13 +33,15 @@ $children%
 	CppAD/local/Arithmetic.h%
 	CppAD/local/StdMathUnary.h%
 	CppAD/local/MathOther.h%
-	CppAD/local/CondExp.h
+	CppAD/local/CondExp.h%
+	CppAD/local/Discrete.h
 %$$
 $table
 $rref Arithmetic$$
 $rref StdMathUnary$$
 $rref MathOther$$
 $rref CondExp$$
+$rref Discrete$$
 $tend
 	
 
@@ -50,5 +52,6 @@ $end
 # include <CppAD/local/StdMathUnary.h>
 # include <CppAD/local/MathOther.h>
 # include <CppAD/local/CondExp.h>
+# include <CppAD/local/Discrete.h>
 
 # endif

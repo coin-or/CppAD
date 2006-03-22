@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin CondExp.cpp$$
@@ -27,6 +25,7 @@ $spell
 $$
 
 $section Conditional Expressions: Example and Test$$
+
 $index CondExp$$
 $index example, CondExp$$
 $index test, CondExp$$
@@ -34,7 +33,7 @@ $index test, CondExp$$
 $head Description$$
 Use $code CondExp$$ to compute
 $latex \[
-	f(x) = \sum_{i=0}^{m-1} \log( | x_i | )
+	f(x) = \sum_{j=0}^{m-1} \log( | x_j | )
 \] $$
 and its derivative at various argument values
 with out having to re-tape; i.e.,
@@ -58,91 +57,92 @@ namespace {
 bool CondExp(void)
 {	bool ok = true;
 
-	using namespace CppAD;
-	using CppAD::log;
+	using CppAD::AD;
+	using CppAD::NearEqual;
+	using CppAD::log; 
 	using CppAD::abs;
 
-	// number of independent variables
-	size_t m = 5;
+	// declare independent variables and start tape recording
+	size_t n = 5;
+	CppADvector< AD<double> > X(n);
+	size_t j;
+	for(j = 0; j < n; j++)
+		X[j] = 1.;
+	CppAD::Independent(X);
 
-	// independent variable vector
-	CppADvector< AD<double> > X(m);
-	size_t i;
-	for(i = 0; i < m; i++)
-		X[i] = 1.;
-	Independent(X);
-
-	// Sum with respect to i of log of absolute value of X[i]
-	// sould be - infinity if any of the X[i] are zero
+	// sum with respect to j of log of absolute value of X[j]
+	// sould be - infinity if any of the X[j] are zero
 	AD<double> MinusInfinity = - Infinity(0.);
 	AD<double> Sum           = 0.;
 	AD<double> Zero(0);
-	for(i = 0; i < m; i++)
-	{	// if X[i] > 0
-		Sum += CondExpGt(X[i], Zero, log(X[i]),     Zero);
+	for(j = 0; j < n; j++)
+	{	// if X[j] > 0
+		Sum += CppAD::CondExpGt(X[j], Zero, log(X[j]),     Zero);
 
-		// if X[i] < 0
-		Sum += CondExpLt(X[i], Zero, log(-X[i]),    Zero);
+		// if X[j] < 0
+		Sum += CppAD::CondExpLt(X[j], Zero, log(-X[j]),    Zero);
 
-		// if X[i] == 0
-		Sum += CondExpEq(X[i], Zero, MinusInfinity, Zero);
+		// if X[j] == 0
+		Sum += CppAD::CondExpEq(X[j], Zero, MinusInfinity, Zero);
 	}
 
 	// dependent variable vector 
-	CppADvector< AD<double> > Y(1);
+	size_t m = 1;
+	CppADvector< AD<double> > Y(m);
 	Y[0] = Sum;
 
-	// create f: X -> Y and vectors used for derivative calculations
-	ADFun<double> f(X, Y);
-	CppADvector<double> x( f.Domain() );
-	CppADvector<double> w( f.Range() );
+	// create f: X -> Y and stop tape recording
+	CppAD::ADFun<double> f(X, Y);
 
-	CppADvector<double> dx( f.Domain() );
-	CppADvector<double> dw( f.Range() );
+	// vectors for arguments to the function object f
+	CppADvector<double> x(n);   // argument values
+	CppADvector<double> y(m);   // function values 
+	CppADvector<double> w(m);   // function weights 
+	CppADvector<double> dx(n);  // differentials in x space
 
-	// a case where all components > 0.
-	double sum  = 0.;
-	double sign = 1.;
-	for(i = 0; i < m; i++)
+	// a case where abs( x[j] ) > 0 for all j
+	double check  = 0.;
+	double sign   = 1.;
+	for(j = 0; j < n; j++)
 	{	sign *= -1.;
-		x[i] = sign * double(i + 1); 
-		sum += log( abs( x[i] ) );
+		x[j] = sign * double(j + 1); 
+		check += log( abs( x[j] ) );
 	}
 
 	// function value 
-	w   = f.Forward(0, x);
-	ok &= ( w[0] == sum );
+	y  = f.Forward(0, x);
+	ok &= ( y[0] == check );
 
-	// derivative value
-	dw[0] = 1.;
-	dx    = f.Reverse(1, dw);
-	for(i = 0; i < m; i++)
-	{	if( x[i] > 0. )
-			ok &= NearEqual(dx[i], 1./abs( x[i] ), 1e-10, 1e-10); 
-		else	ok &= NearEqual(dx[i], -1./abs( x[i] ), 1e-10, 1e-10); 
+	// compute derivative of y[0]
+	w[0] = 1.;
+	dx   = f.Reverse(1, w);
+	for(j = 0; j < n; j++)
+	{	if( x[j] > 0. )
+			ok &= NearEqual(dx[j], 1./abs( x[j] ), 1e-10, 1e-10); 
+		else	ok &= NearEqual(dx[j], -1./abs( x[j] ), 1e-10, 1e-10); 
 	}
 
-	// a case where a component is equal to zero
+	// a case where x[0] is equal to zero
 	sign = 1.;
-	for(i = 0; i < m; i++)
+	for(j = 0; j < n; j++)
 	{	sign *= -1.;
-		x[i] = sign * double(i); 
+		x[j] = sign * double(j); 
 	}
 
 	// function value 
-	w   = f.Forward(0, x);
-	ok &= ( w[0] == -Infinity(0.) );
+	y   = f.Forward(0, x);
+	ok &= ( y[0] == -Infinity(0.) );
 
-	// derivative value
-	dw[0] = 1.;
-	dx    = f.Reverse(1, dw);
-	for(i = 0; i < m; i++)
-	{	if( x[i] > 0. )
-			ok &= NearEqual(dx[i], 1./abs( x[i] ), 1e-10, 1e-10); 
-		else if( x[i] < 0. )
-			ok &= NearEqual(dx[i], -1./abs( x[i] ), 1e-10, 1e-10); 
+	// compute derivative of y[0]
+	w[0] = 1.;
+	dx   = f.Reverse(1, w);
+	for(j = 0; j < n; j++)
+	{	if( x[j] > 0. )
+			ok &= NearEqual(dx[j], 1./abs( x[j] ), 1e-10, 1e-10); 
+		else if( x[j] < 0. )
+			ok &= NearEqual(dx[j], -1./abs( x[j] ), 1e-10, 1e-10); 
 		else
-		{	// in this case computing dx[i] ends up multiplying 
+		{	// in this case computing dx[j] ends up multiplying 
 			// -infinity * zero and hence results in Nan
 		}
 	}

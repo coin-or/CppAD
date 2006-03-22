@@ -138,6 +138,7 @@ $rref NearEqualExt.cpp$$
 $rref OdeErrControl.cpp$$
 $rref OdeTaylor.cpp$$
 $rref Output.cpp$$
+$rref Piecewise.cpp$$
 $rref Poly.cpp$$
 $rref Pow.cpp$$
 $rref PowInt.cpp$$
