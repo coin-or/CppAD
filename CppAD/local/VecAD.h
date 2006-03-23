@@ -184,7 +184,7 @@ $children%
 %$$
 The file
 $xref/Vec.cpp/$$
-contains an example and a test of this function.   
+contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 
 $head Exceptions$$

@@ -182,7 +182,7 @@ the entire $code CppADlib.a$$ library.
 
 $head 12-11$$
 Group routines that extend the domain for which an $xref/ADFun/$$
-object is useful (see $xref/ExtendDomain/$$).
+object is useful into the ExtendDomain section.
 $pre
 
 $$
