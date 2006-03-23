@@ -83,7 +83,6 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/Eq.h \
 	CppAD/local/Erf.h \
 	CppAD/local/ExpOp.h \
-	CppAD/local/ExtendDomain.h \
 	CppAD/local/ForOne.h \
 	CppAD/local/ForTwo.h \
 	CppAD/local/ForJacSweep.h \
@@ -128,9 +127,9 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/UserAD.h \
 	CppAD/local/UnaryMinus.h \
 	CppAD/local/UnaryPlus.h \
+	CppAD/local/VecAD.h \
 	CppAD/local/Undef.h \
-	CppAD/local/Value.h \
-	CppAD/local/Vec.h
+	CppAD/local/Value.h 
 #
 # Did user specify --with-Example
 if CppAD_GETSTARTED

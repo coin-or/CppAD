@@ -71,10 +71,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // files containing user interface documentation
 
-# include <CppAD/local/Op.h>           // executes taped operations
-# include <CppAD/local/Fun.h>          // differentiable function objects
-# include <CppAD/local/UserAD.h>       // AD class methods available to the user
-# include <CppAD/local/ExtendDomain.h> // extend useful domain of an ADFun
+# include <CppAD/local/Op.h>      // executes taped operations
+# include <CppAD/local/UserAD.h>  // AD class methods available to the user
+# include <CppAD/local/Fun.h>     // differentiable function objects
 
 // undo definitions in Define.h
 # include <CppAD/local/Undef.h>   

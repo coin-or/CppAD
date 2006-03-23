@@ -42,10 +42,11 @@ that are available for objects in this template class.
 
 $childtable%
 	CppAD/local/Constructor.h%
-	CppAD/local/Eq.h%
 	CppAD/local/Convert.h%
 	CppAD/local/ADValued.h%
-	CppAD/local/BoolValued.h
+	CppAD/local/BoolValued.h%
+	CppAD/local/VecAD.h%
+	CppAD/local/LuRatio.h
 %$$
 
 $end
@@ -53,9 +54,10 @@ $end
 */
 
 # include <CppAD/local/Constructor.h>
-# include <CppAD/local/Eq.h>
 # include <CppAD/local/Convert.h>
 # include <CppAD/local/ADValued.h>
 # include <CppAD/local/BoolValued.h>
+# include <CppAD/local/VecAD.h>
+# include <CppAD/local/LuRatio.h>
 
 # endif

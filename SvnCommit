@@ -1,37 +1,30 @@
-# Improve documentation and examples for Discrete
+# Move VecAD and LuRatio documentation from ExtendDomain to UserAD.
 #
 # SvnCommit: file that made this commit.
-# CondExp.h: minor change to section heading.
-# ADValued.h: move Discrete here from ExtendDomain.
-# Discrete.h: major changes to documentation.
-# ExtendDomain.h: move Discrete from here to ADValued.h.
-# WhatsNew06.omh: users view of the changes.
-# ExampleList.omh: add Piecewise.cpp to list of all examples.
-# Piecewise.cpp: example using Discrete for piecewise linear interpolation.
-# CondExp.cpp: improve example for CondExp.
-# Discrete.cpp: improve example for Discrete.
-# Example.vcproj: add Piecewise.cpp.
-# Example.cpp: add Piecewise.cpp.
-# Makefile.am: add Piecewise.cpp.
+# Doc.omh: remove ExtendedDomain.h.
+# VecAD.h: move CppAD/local/Vec.h to CppAD/local/VecAD.h.
+# Vec.h: move CppAD/local/Vec.h to CppAD/local/VecAD.h.
+# UserAD.h: add VecAD.h and LuRatio from ExtendDomain to here.
+# ADValued.h: move Eq.h from UserAD.h to here.
+# ExtendDomain.h: delete because no longer used.
+# CppAD.h: remove ExtendDomain.h and switch order of Fun.h, UserAD.h.
+# WhatsNew06.omh: users view of the changes (and a spelling correction).
+# Makefile.am: change Vec.h to VecAD.h and remove ExtendDomain.h.
 # 
+# VecAD.h has already been added and Vec.h alread deleted.
 add_list="
-	Example/Piecewise.cpp
 "
 change_list="
 	SvnCommit
-	CppAD/local/CondExp.h
+	Doc.omh
+	CppAD/local/UserAD.h
 	CppAD/local/ADValued.h
-	CppAD/local/Discrete.h
-	CppAD/local/ExtendDomain.h
+	CppAD/CppAD.h
 	omh/WhatsNew06.omh
-	omh/ExampleList.omh
-	Example/CondExp.cpp
-	Example/Discrete.cpp
-	Example/Example.vcproj
-	Example/Example.cpp
-	Example/Makefile.am
+	Makefile.am
 "
 delete_list="
+	CppAD/local/ExtendDomain.h
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

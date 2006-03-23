@@ -57,10 +57,14 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-24$$
+Move $xref/VecAD/$$ and $xref/LuRatio/$$ from the old ExtendDomain section
+to $xref/AD/$$.
+
 $head 03-23$$
-Improve documentaiton and examples for
+Improve documentation and examples for
 $xref/CondExp/$$ and $xref/Discrete/$$.
-Move both of these sections from $xref/ExtendDomain/$$ to $xref/ADValued/$$.
+Move both of these sections from ExtendDomain to $xref/ADValued/$$.
 
 $head 03-22$$
 The documentation sections under $xref/AD/$$ 
