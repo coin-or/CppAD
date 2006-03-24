@@ -22,7 +22,7 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 
 dnl   package   version           bug-report
-AC_INIT(CppAD, 05-12-24, bradbell@seanet.com)
+AC_INIT(CppAD, 06-03-24, bradbell@seanet.com)
 
 dnl Set the default install prefix to the installers home directory
 AC_PREFIX_DEFAULT(${HOME})
