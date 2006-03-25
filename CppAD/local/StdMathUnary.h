@@ -332,7 +332,7 @@ $end
 	inline AD<Base> Name(const AD<Base> &x)                           \
 	{	return x.Name(); }                                        \
 	template <class Base>                                             \
-	inline AD<Base> Name(const VecADelem<Base> &x)                    \
+	inline AD<Base> Name(const VecAD_reference<Base> &x)              \
 	{	return Name( x.ADBase() ); }
 
 //  BEGIN CppAD namespace

@@ -259,21 +259,21 @@ $end
 */
 
 # define CppADVecADComputedAssignment(op, name)                         \
-VecADelem& operator op (const VecADelem<Base> &right)                   \
+VecAD_reference& operator op (const VecAD_reference<Base> &right)       \
 {	CppADUsageError(                                                \
 		0,                                                      \
 		"Cannot use a ADVec element on left side of" name       \
 	);                                                              \
 	return *this;                                                   \
 }                                                                       \
-VecADelem& operator op (const AD<Base> &right)                          \
+VecAD_reference& operator op (const AD<Base> &right)                    \
 {	CppADUsageError(                                                \
 		0,                                                      \
 		"Cannot use a ADVec element on left side of" name       \
 	);                                                              \
 	return *this;                                                   \
 }                                                                       \
-VecADelem& operator op (const Base &right)                              \
+VecAD_reference& operator op (const Base &right)                        \
 {	CppADUsageError(                                                \
 		0,                                                      \
 		"Cannot use a ADVec element on left side of" name       \
@@ -287,21 +287,21 @@ namespace CppAD {
 
 // Element of VecAD
 template <class Base>
-class VecADelem {
+class VecAD_reference {
 	friend class VecAD<Base>;
 	friend class ADTape<Base>;
 
 	// output
 	friend std::ostream& operator << <Base>
-		(std::ostream &os, const VecADelem<Base> &e);
+		(std::ostream &os, const VecAD_reference<Base> &e);
  
 public:
-	VecADelem(VecAD<Base> *v, const AD<Base> &x_) 
+	VecAD_reference(VecAD<Base> *v, const AD<Base> &x_) 
 		: vec( v ) , x(x_)
 	{ }
 
 	// assignment operators
-	inline void operator = (const VecADelem<Base> &right);
+	inline void operator = (const VecAD_reference<Base> &right);
 	void operator = (const AD<Base> &right);
 	void operator = (const Base     &right);
 
@@ -377,13 +377,14 @@ class VecAD {
 	friend std::ostream& operator << <Base>
 		(std::ostream &os, const VecAD<Base> &vec);
 	friend std::ostream& operator << <Base>
-	(std::ostream &os, const VecADelem<Base> &e);
+	(std::ostream &os, const VecAD_reference<Base> &e);
  
 
 	friend class ADTape<Base>;
-	friend class VecADelem<Base>;
+	friend class VecAD_reference<Base>;
 public:
-	typedef VecADelem<Base> reference;
+	// declare the user's view of this type here
+	typedef VecAD_reference<Base> reference;
 
 	// default constructor
 	VecAD(void) : length(0) , data(CppADNull)
@@ -423,7 +424,7 @@ public:
 	}
 
 	// taped elemement access
-	VecADelem<Base> operator[](const AD<Base> &x) 
+	VecAD_reference<Base> operator[](const AD<Base> &x) 
 	{
 		CppADUnknownError( 
 			( id != *ADTape<Base>::Id() )
@@ -440,7 +441,7 @@ public:
 
 		// if no need to track indexing operation, return now
 		if( (AD<Base>::Tape()->State() != Recording) )
-			return VecADelem<Base>(this, 0);
+			return VecAD_reference<Base>(this, 0);
 
 		if( id != *ADTape<Base>::Id() )
 		{	// must place a copy of vector in tape
@@ -454,7 +455,7 @@ public:
 			id = *ADTape<Base>::Id();
 		}
 
-		return VecADelem<Base>(this, x); 
+		return VecAD_reference<Base>(this, x); 
 	}
 
 private:
@@ -470,7 +471,7 @@ private:
 
 
 template <class Base>
-void VecADelem<Base>::operator=(const AD<Base> &y)
+void VecAD_reference<Base>::operator=(const AD<Base> &y)
 {
 	if( Parameter(y) )
 	{	*this = y.value;
@@ -495,7 +496,7 @@ void VecADelem<Base>::operator=(const AD<Base> &y)
 }
 
 template <class Base>
-void VecADelem<Base>::operator=(const Base &y)
+void VecAD_reference<Base>::operator=(const Base &y)
 { 
 	size_t y_taddr;
 
@@ -522,11 +523,12 @@ void VecADelem<Base>::operator=(const Base &y)
 
 // fold this case into those above
 template <class Base>
-inline void VecADelem<Base>::operator=(const VecADelem<Base> &y)
+inline void VecAD_reference<Base>::operator=(const VecAD_reference<Base> &y)
 {	*this = y.ADBase(); }
 
 template <class Base>
-inline std::ostream& operator << (std::ostream &os, const VecADelem<Base> &e)
+inline std::ostream& operator << 
+(std::ostream &os, const VecAD_reference<Base> &e)
 {	size_t i = static_cast<size_t>( Integer(e.x) );
 	CppADUnknownError( i < e.vec->length );
 

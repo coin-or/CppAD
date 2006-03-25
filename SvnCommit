@@ -1,36 +1,31 @@
-# Improve VecAD documentation and example
+# Change VecADelem to VecAD_reference
 #
 # SvnCommit: file that preformed this commit operation.
-# VecAD.h: improve documentaiton and add VecAD<Base>::reference typedef.
-# WhatsNew04.omh: fix some cross references that changed.
-# WhatsNew05.omh: fix some cross references that changed.
 # WhatsNew06.omh: users view of these changes.
-# ExampleList.omh: change Vec.cpp to VecAD.cpp.
-# Example/VecAD.cpp: new VecAD example and test. 
-# Vec.cpp: add old VecAD example into TestMore/VecAD.cpp.
-# Example.vcproj: change Vec.cpp to VecAD.cpp.
-# Piecewise.cpp: correct assert cases.
-# Example.cpp: change Vec.cpp to VecAD.cpp.
-# Makefile.am: change Vec.cpp to VecAD.cpp.
-# TestMore/VecAD.cpp: add old VecAD example.
+#
 add_list="
-	Example/VecAD.cpp
 "
 change_list="
 	SvnCommit
-	CppAD/local/VecAD.h
-	omh/WhatsNew04.omh
-	omh/WhatsNew05.omh
 	omh/WhatsNew06.omh
-	omh/ExampleList.omh
-	Example/Example.vcproj
-	Example/Piecewise.cpp
-	Example/Example.cpp
-	Example/Makefile.am
-	TestMore/VecAD.cpp
+	CppAD/local/ADTape.h
+	CppAD/local/Atan2.h
+	CppAD/local/Define.h
+	CppAD/local/Declare.h
+	CppAD/local/UnaryPlus.h
+	CppAD/local/SubEq.h
+	CppAD/local/MulEq.h
+	CppAD/local/AD.h
+	CppAD/local/UnaryMinus.h
+	CppAD/local/StdMathUnary.h
+	CppAD/local/NearEqualExt.h
+	CppAD/local/Pow.h
+	CppAD/local/Abs.h
+	CppAD/local/DivEq.h
+	CppAD/local/AddEq.h
+	CppAD/local/VecAD.h
 "
 delete_list="
-	Example/Vec.cpp
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

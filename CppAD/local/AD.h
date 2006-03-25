@@ -47,7 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	{	return *this Op AD(right); }                  \
 	inline AD& operator Op (const Base &right)            \
 	{	return *this Op AD(right); }                  \
-	inline AD& operator Op (const VecADelem<Base> &right) \
+	inline AD& operator Op (const VecAD_reference<Base> &right) \
 	{	return *this Op right.ADBase(); }
 
 // use this marco for binary operators 
@@ -55,14 +55,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	inline AD operator Op (const AD &right) const;             \
 	inline AD operator Op (int right) const;                   \
 	inline AD operator Op (const Base &right) const;           \
-	inline AD operator Op (const VecADelem<Base> &right) const;
+	inline AD operator Op (const VecAD_reference<Base> &right) const;
 
 // use this marco for comparison operators 
 # define CppADCompareMember(Op)                                      \
 	inline bool operator Op (const AD &right) const;             \
 	inline bool operator Op (int right) const;                   \
 	inline bool operator Op (const Base &right) const;           \
-	inline bool operator Op (const VecADelem<Base> &right) const;
+	inline bool operator Op (const VecAD_reference<Base> &right) const;
 
 //  BEGIN CppAD namespace
 namespace CppAD {
@@ -119,7 +119,7 @@ class AD {
 	friend class ADDiscrete<Base>;
 	friend class ADFun<Base>;
 	friend class VecAD<Base>;
-	friend class VecADelem<Base>;
+	friend class VecAD_reference<Base>;
 
 	// output operations
 	friend std::ostream& operator << <Base>

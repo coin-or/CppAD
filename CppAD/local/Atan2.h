@@ -142,15 +142,16 @@ AD<Base> atan2 (const AD<Base> &y, const AD<Base> &x)
 // END CondExp 
 
 template <class Base>
-inline AD<Base> atan2 (const VecADelem<Base> &y, const AD<Base> &x)
+inline AD<Base> atan2 (const VecAD_reference<Base> &y, const AD<Base> &x)
 {	return atan2( y.ADBase() , x ); }
 
 template <class Base>
-inline AD<Base> atan2 (const AD<Base> &y, const VecADelem<Base> &x)
+inline AD<Base> atan2 (const AD<Base> &y, const VecAD_reference<Base> &x)
 {	return atan2( y , x.ADBase() ); }
 
 template <class Base>
-inline AD<Base> atan2 (const VecADelem<Base> &y, const VecADelem<Base> &x)
+inline AD<Base> atan2 
+(const VecAD_reference<Base> &y, const VecAD_reference<Base> &x)
 {	return atan2( y.ADBase() , x.ADBase() ); }
 
 } // END CppAD namespace

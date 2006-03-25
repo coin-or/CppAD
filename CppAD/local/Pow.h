@@ -112,15 +112,16 @@ inline AD<Base> pow (const AD<Base> &x, const AD<Base> &y)
 }
 
 template <class Base>
-inline AD<Base> pow (const VecADelem<Base> &y, const AD<Base> &x)
+inline AD<Base> pow (const VecAD_reference<Base> &y, const AD<Base> &x)
 {	return pow( y.ADBase() , x ); }
 
 template <class Base>
-inline AD<Base> pow (const AD<Base> &y, const VecADelem<Base> &x)
+inline AD<Base> pow (const AD<Base> &y, const VecAD_reference<Base> &x)
 {	return pow( y , x.ADBase() ); }
 
 template <class Base>
-inline AD<Base> pow (const VecADelem<Base> &y, const VecADelem<Base> &x)
+inline AD<Base> pow 
+(const VecAD_reference<Base> &y, const VecAD_reference<Base> &x)
 {	return pow( y.ADBase() , x.ADBase() ); }
 
 } // END CppAD namespace

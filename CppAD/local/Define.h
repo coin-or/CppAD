@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 $begin Define$$ $comment CppAD Developer Documentation$$
 $spell
 	Microsoft
-	VecADelem
+	VecAD_reference
 	Cpp
 	inline
 	namespace
@@ -54,18 +54,18 @@ which has the result type $italic Type$$ and the
 following argument types:
 $syntax%
 	%left%                    %right%
-	-----------------         -----------------
-	AD<%Base%>                VecADelem<%Base%>
-	VecADelem<%Base%>         AD<%Base%>
-	VecADelem<%Base%>         VecADelem<%Base%>
+	-----------------------   -----------------
+	AD<%Base%>                VecAD_reference<%Base%>
+	VecAD_reference<%Base%>   AD<%Base%>
+	VecAD_reference<%Base%>   VecAD_reference<%Base%>
 	%Base%                    AD<%Base%>
-	%Base%                    VecADelem<%Base%>
+	%Base%                    VecAD_reference<%Base%>
 	AD<%Base%>                %Base%
-	VecADelem<%Base%>         %Base%
+	VecAD_reference<%Base%>   %Base%
 	int                       AD<%Base%>
-	int                       VecADelem<%Base%>
+	int                       VecAD_reference<%Base%>
 	AD<%Base%>                int
-	VecADelem<%Base%>         int
+	VecAD_reference<%Base%>   int
 %$$
 In the case where the left operand has type $syntax%AD<%Base%>%$$,
 it defines a member function.
@@ -87,20 +87,21 @@ $end
 
 # define CppADFoldBinaryOperator(Type, Op)                             \
 /* ----------------------------------------------------------------*/  \
-/* Operations with VecADelem<Base> and AD<Base> only*/                 \
+/* Operations with VecAD_reference<Base> and AD<Base> only*/           \
 template <class Base>                                                  \
                                                                        \
-inline Type AD<Base>::operator Op (const VecADelem<Base> &right) const \
+inline Type AD<Base>::operator Op                                      \
+(const VecAD_reference<Base> &right) const                             \
 {	return *this Op right.ADBase(); }                              \
                                                                        \
 template <class Base>                                                  \
 inline Type operator Op                                                \
-	(const VecADelem<Base> &left, const VecADelem<Base> &right)    \
+(const VecAD_reference<Base> &left, const VecAD_reference<Base> &right)\
 {	return left.ADBase() Op right.ADBase(); }                      \
                                                                        \
 template <class Base>                                                  \
 inline Type operator Op                                                \
-	(const VecADelem<Base> &left, const AD<Base> &right)           \
+	(const VecAD_reference<Base> &left, const AD<Base> &right)     \
 {	return left.ADBase() Op right; }                               \
 /* ----------------------------------------------------------------*/  \
 /* Operations Base */                                                  \
@@ -112,7 +113,7 @@ inline Type operator Op                                                \
                                                                        \
 template <class Base>                                                  \
 inline Type operator Op                                                \
-	(const Base &left, const VecADelem<Base> &right)               \
+	(const Base &left, const VecAD_reference<Base> &right)         \
 {	return AD<Base>(left) Op right.ADBase(); }                     \
                                                                        \
 template <class Base>                                                  \
@@ -121,7 +122,7 @@ inline Type AD<Base>::operator Op (const Base &right)  const           \
                                                                        \
 template <class Base>                                                  \
 inline Type operator Op                                                \
-	(const VecADelem<Base> &left, const Base &right)               \
+	(const VecAD_reference<Base> &left, const Base &right)         \
 {	return left.ADBase() Op AD<Base>(right); }                     \
                                                                        \
 /* ----------------------------------------------------------------*/  \
@@ -134,7 +135,7 @@ inline Type operator Op                                                \
                                                                        \
 template <class Base>                                                  \
 inline Type operator Op                                                \
-	(int left, const VecADelem<Base> &right)                       \
+	(int left, const VecAD_reference<Base> &right)                 \
 {	return AD<Base>(left) Op right.ADBase(); }                     \
                                                                        \
 template <class Base>                                                  \
@@ -143,7 +144,7 @@ inline Type AD<Base>::operator Op (int right) const                    \
                                                                        \
 template <class Base>                                                  \
 inline Type operator Op                                                \
-	(const VecADelem<Base> &left, int right)                       \
+	(const VecAD_reference<Base> &left, int right)                 \
 {	return left.ADBase() Op AD<Base>(right); }
 
 # endif

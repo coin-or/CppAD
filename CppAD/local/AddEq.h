@@ -99,7 +99,7 @@ $children%
 %$$
 The file
 $xref/AddEq.cpp/$$
-contains an example and a test of these operations.
+contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 
 $end
@@ -141,7 +141,7 @@ AD<Base>& AD<Base>::operator += (const AD<Base> &right)
 	return *this;
 }
 
-// int, Base, and VecADelem<Base> cases are folded in using 
+// int, Base, and VecAD_reference<Base> cases are folded in using 
 // CppADAssignMember(+=) in the file AD.h
 
 } // END CppAD namespace

@@ -200,7 +200,7 @@ inline AD<Base> abs(const AD<Base> &x)
 {	return x.Abs(); }
 
 template <class Base>
-inline AD<Base> abs(const VecADelem<Base> &x)
+inline AD<Base> abs(const VecAD_reference<Base> &x)
 {	return abs( x.ADBase() ); }
 
 } // END CppAD namespace

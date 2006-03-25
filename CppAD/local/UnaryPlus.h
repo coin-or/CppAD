@@ -74,7 +74,7 @@ $children%
 %$$
 The file
 $xref/UnaryPlus.cpp/$$
-contains an example and a test of this operation.
+contains an example and test of this operation.
 
 $end
 -------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ inline AD<Base> AD<Base>::operator + (void) const
 
 
 template <class Base>
-inline AD<Base> operator + (VecADelem<Base> const &right) 
+inline AD<Base> operator + (const VecAD_reference<Base> &right) 
 {	return right.ADBase(); }
 
 }

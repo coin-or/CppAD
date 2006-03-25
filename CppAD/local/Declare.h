@@ -26,7 +26,7 @@ namespace CppAD {
 	template <class Base> class ADTape;
 	template <class Base> class VecAD;
 	template <class Base> class TapeRec;
-	template <class Base> class VecADelem;
+	template <class Base> class VecAD_reference;
 	template <class Base> class ADDiscrete;
 	
 	// Boolean functions of one AD<Base> argument
@@ -78,7 +78,7 @@ namespace CppAD {
 	template <class Base> std::ostream&
 	operator << (std::ostream &os, const AD<Base> &x);
 	template <class Base> std::ostream&
-	operator << (std::ostream &os, const VecADelem<Base> &e);
+	operator << (std::ostream &os, const VecAD_reference<Base> &e);
 	template <class Base> std::ostream&
 	operator << (std::ostream &os, const VecAD<Base> &vec);
 }
