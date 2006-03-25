@@ -312,7 +312,7 @@ to use $code set$$ and $code get$$ member functions.
 
 
 $head 11-22$$
-A much better $xref/Vec.cpp//example/$$ for using $xref/VecAD/$$
+A much better $xref/VecAD.cpp//example/$$ for using $xref/VecAD/$$
 vectors has been provided. In addition, a bug
 in the computation of derivatives using $code VecAD$$ vectors
 has been fixed. 
@@ -337,7 +337,7 @@ $xref/glossary/Sparsity Pattern/sparsity patterns/$$.
 $pre
 
 $$
-An extra $xref/VecAD/Exceptions/exception/$$ has been
+An extra $xref/VecAD/VecAD<Base>::reference/Exceptions/exception/1/$$ has been
 added to the use of $xref/VecAD/$$ elements.
 This makes $code VecAD$$ some what more efficient.
 
@@ -604,7 +604,7 @@ $pre
 
 $$
 A discussion of 
-$xref/VecAD/Inefficient/VecAD inefficiency/$$ was added
+$xref/VecAD/Speed and Memory/VecAD speed and memory/$$ was added
 as well as an entry in the 
 $xref/WishList/$$ to make it more efficient.
 

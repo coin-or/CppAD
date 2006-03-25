@@ -127,4 +127,4 @@ Example_SOURCES   = \
 	UnaryMinus.cpp \
 	UnaryPlus.cpp \
 	Value.cpp \
-	Vec.cpp 
+	VecAD.cpp 

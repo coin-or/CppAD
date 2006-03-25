@@ -713,8 +713,9 @@ $pre
 $$
 The $xref/VecAD/$$ objects are not being handled correctly by the 
 $xref/Reverse/$$ function.
-The $xref/Vec.cpp/$$ test was extended to demonstrate the problem
-and the problem was fixed.
+The $code VecAD$$ test was extended to demonstrate the problem
+and the problem was fixed
+(it is now part of $code TestMore/VecAD$$).
 
 $head 04-08$$
 The example $xref/LuVecADOk.cpp/$$ 

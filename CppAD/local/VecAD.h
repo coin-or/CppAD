@@ -1,5 +1,5 @@
-# ifndef CppADVecIncluded
-# define CppADVecIncluded
+# ifndef CppADVecADIncluded
+# define CppADVecADIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
@@ -35,193 +35,189 @@ $spell
 	Cpp
 $$
 
-$index vector, record index$$
-$index record, index$$
-$index tape, index$$
-$index index, record$$
+$index VecAD$$
+$index vector, AD index$$
+$index record, AD index$$
+$index tape, AD index$$
+$index index, AD record$$
 
-$section Vectors That Record Indexing Operations$$
+$section AD Vectors that Record Index Operations$$
 
 
 $table 
 $bold Syntax$$ $cnext 
-$syntax%VecAD<%Base%> %V%(%n%)%$$
+$syntax%VecAD<%Base%> %v%(%n%)%$$
+$rnext $cnext 
+$syntax%%v%.size()%$$
+$rnext $cnext 
+$syntax%%b% = %v%[%i%]%$$
+$rnext $cnext 
+$syntax%%y% = %v%[%x%]%$$
 $tend
-
-$index VecAD$$
-$index tape, index$$
-$index record, index$$
-$index index, record$$
 
 $fend 20$$
 
-$head Description$$
-The class $syntax%VecAD<%Base%>%$$ tapes its indexing operations; i.e.,
-these operations are transferred to the corresponding
-$xref/ADFun/$$ object $italic f$$.
-The indices are evaluated each time
-$xref/Forward//f.Forward/$$ is used to evaluate the zero order Taylor
-coefficients.
+$head Purpose$$
+If the tape for $syntax%AD<%Base%>%$$ operations is in the
+$xref/glossary/Tape State/Recording State/$$,
+the indexing operation
+$syntax%
+	%y% = %v%[%x%]
+%$$
+is included in the
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$ and 
+transferred to the corresponding $xref/ADFun/$$ object $italic f$$.
+Such an index can change each time
+zero order $xref/Forward//f.Forward/$$ is used; i.e.,
+$italic f$$ is evaluated with new value for the 
+$xref/glossary/Independent Variable/independent variables/$$. 
+Note that the value of $italic y$$ depends on the value of $italic x$$
+in a discrete fashion and CppAD computes its partial derivative with 
+respect to $italic x$$ as zero.
 
-$head Speed$$
-If $italic Vector$$ is a
+$head Alternatives$$
+If only the values in the vector, 
+and not the indices, 
+depend on the independent variables,
+the class $syntax%%Vector%< AD<%Base%> >%$$ is much more efficient for
+storing AD values where $italic Vector$$ is any
 $xref/SimpleVector/$$ template class, 
-the class $syntax%%Vector%< AD<%Base%> >%$$ 
-has elements with type $syntax%AD<%Base%>%$$ 
-and is faster and uses less memory than
-$syntax%VecAD<%Base%>%$$ 
-(because it does not tape its indexing operations).
+If only the indices, 
+and not the values in the vector,
+depend on the independent variables,
+The $xref/Discrete/$$ functions are a much more efficient
+way to represent these vectors.
 
-$head Constructor$$
-If $italic n$$ has type $code size_t$$,
-$syntax%
-	VecAD<%Base%> %V%(%n%)
-%$$
-creates an $code VecAD$$ object $italic V$$ with 
-$italic n$$ elements.
-The initial value of the elements of $italic v$$ is unspecified.
+$head VecAD<Base>::reference$$
+$index VecAD<Base>::reference$$
+The result $italic y$$ has type
+$syntax%VecAD<%Base%>::reference%$$ which is
+very much like the $syntax%AD<%Base%>%$$ type with some notable exceptions:
 
-$head Size$$
-The syntax
-$syntax%
-	%V%.size()
-%$$
-returns the number of elements in the vector $italic V$$.
-
-$head Size_t Indexing$$
-If $italic i$$ has type $code size_t$$,
-$syntax%
-	%V%[ %i% ]
-%$$
-returns a $italic Base$$ object equal to the value
-of the $th i$$ element of $italic V$$.
-This operation can only done while the tape is in the
-$xref/glossary/Tape State/Empty state/$$.
-$pre
-
-$$
-If $italic i$$ has type $code size_t$$
-and $italic x$$ has type $italic Base$$,
-$syntax%
-	%V%[ %i% ] = %x%
-%$$
-assigns the $th i$$ element of $italic V$$
-the have value $italic x$$.
-This operation can only done while the tape is in the
-$xref/glossary/Tape State/Empty state/$$.
-$pre
-
-$$
-The value of $italic i$$ must be greater than or equal zero
-and less than the number of elements in $italic V$$.
-
-
-$head AD<Base> Indexing$$
-If $italic I$$ has type $syntax%AD<%Base%>%$$,
-$syntax%
-	%V%[ %I% ]
-%$$
-returns the element of $italic V$$,
-with index $syntax%floor(%I%)%$$,
-in a form that acts like a $syntax%AD<%Base%>%$$
-(see $xref/VecAD/Exceptions/exceptions/$$ below).
-Here $syntax%floor(%I%)%$$ is
-the greatest integer less than or equal $italic I$$.
-If $italic I$$ is a complex type, 
-the floor of the real part is used for the indexing operation.
-$pre
-
-$$
-If $italic I$$ has type $syntax%AD<%Base%>%$$
-and $italic x$$ has type $italic Base$$,
-$syntax%
-	%V%[%I%] = %x%
-%$$
-assigns the value of $italic x$$ to the 
-corresponding element of $italic V$$.
-The return value of this assignment is $code void$$;
-i.e., it can not be used in further multiple assignments.
-$pre
-
-$$
-If $italic I$$ has type $syntax%AD<%Base%>%$$
-and $italic X$$ has type $syntax%AD<%Base%>%$$,
-$syntax%
-	%V%[%I%] = %X%
-%$$
-assigns the value of $italic X$$ to the 
-corresponding element of $italic V$$.
-The return value of this assignment is $code void$$;
-i.e., it can not be used in further multiple assignments.
-$pre
-
-$$
-The value of $syntax%floor(%I%)%$$ must be greater than or equal zero
-and less than the number of elements in $italic V$$.
-$pre
-
-$$
-If the tape is in the Recording state,
-this operation is recorded; i.e.,
-if $italic I$$ depends on the independent variables,
-$syntax%%V%[%I%]%$$ also depends on the independent variables.
-On the other hand, the derivative of
-$syntax%%V%[%I%]%$$ with respect to $italic I$$
-is computed by CppAD as identically zero.
-This is similar to the 
-$xref/Discrete/$$ functions.
-
-$head Simple Vector$$
-The vector template class $code VecAD$$ does not have all the properties
-necessary for a $xref/SimpleVector/$$ template class and 
-hence can not be used as such.
-For example, a $syntax%VecAD<%Base%>%$$ object can not be the argument to the 
-$xref/Independent/$$ function.
-
-$head Example$$
-$children%
-	Example/Vec.cpp
-%$$
-The file
-$xref/Vec.cpp/$$
-contains an example and test of this function.   
-It returns true if it succeeds and false otherwise.
-
-$head Exceptions$$
-Each element of a $syntax%VecAD<%Base%>%$$ 
-object has the all the properties of an 
-$syntax%AD<%Base%>%$$  with the following exceptions:
-
+$subhead Exceptions$$
 $list number$$
-Elements of a $syntax%VecAD<%Base%>%$$ object 
-cannot be used
+It cannot be used
 with the computed assignments operators 
 $code +=$$, 
 $code -=$$, 
 $code *=$$, or
 $code /=$$.
-For example, if $italic v$$ is a 
-$syntax%VecAD<%Base%>%$$ 
-object, the following syntax is not valid:
+For example, if $italic z$$ is a $syntax%AD<%Base%>%$$ object, 
+the following syntax is not valid:
 $syntax%
-	%v%[%x%] += %y%;
+	%v%[%x%] += %z%;
 %$$
 
 $lnext
-Assignment to 
-an element of a $syntax%VecAD<%Base%>%$$ object 
-returns a void value.
-For example, if $italic v$$ is a 
-$syntax%VecAD<%Base%>%$$ 
-object, the following syntax is not valid:
+Assignment to $italic y$$ returns a $code void$$.
+For example, if $italic z$$ and $italic u$$ are $syntax%AD<%Base%>%$$ objects, 
+the following syntax is not valid:
 $syntax%
-	%x% = %v%[%y%] = %z%;
+	%z% = %v%[%x%] = %u%;
 %$$
 $lend
 
-$head Inefficient$$
-$index inefficient, VecAD$$
-$index efficient, VecAD$$
+$head n$$
+The argument $italic n$$ has prototype
+$syntax%
+	size_t %n%
+%$$
+
+$head v$$
+The syntax 
+$syntax%
+	VecAD<%Base%> %v%(%n%)
+%$$
+creates an $code VecAD$$ object $italic v$$ with 
+$italic n$$ elements.
+The initial value of the elements of $italic v$$ is unspecified.
+
+$head size$$
+The syntax
+$syntax%
+	%v%.size()
+%$$
+returns the number of elements in the vector $italic v$$;
+i.e., the value of $italic n$$ when it was constructed.
+
+$head i$$
+The operand $italic i$$ has prototype
+$syntax%
+	size_t %i%
+%$$
+It must be greater than or equal zero
+and less than $italic n$$; i.e., less than
+the number of elements in $italic v$$. 
+
+$head b$$
+The result $italic b$$ has prototype
+$syntax%
+	%Base% &%b%
+%$$
+and is a reference to the $th i$$ element in the vector $italic v$$.
+This syntax is only valid if the
+tape that records $syntax%AD<%Base%>%$$ operations is in the
+$xref/glossary/Tape State/Empty state/$$.
+Because it is a reference, it can be used to change the element value;
+for example,
+$syntax%
+	%v%[%i%] = %c%
+%$$
+is valid where $italic c$$ is a $italic Base$$ object.
+As a reference, it is no longer valid once the
+destructor for $italic v$$ is called; for example,
+when $italic v$$ falls out of scope.
+
+$head x$$
+The argument $italic x$$ has prototype
+$syntax%
+	const AD<%Base%> &%x%
+%$$
+The value of $italic x$$ must be greater than or equal zero
+and less than $italic n$$; i.e., less than
+the number of elements in $italic v$$. 
+
+$head y$$
+The result $italic y$$ has prototype
+$syntax%
+	VecAD<%Base%>::reference %y%
+%$$
+This object $italic y$$ has an AD type and its 
+operations are recorded as part of the same
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$ as
+for $syntax%AD<%Base%>%$$ objects.
+It acts as a reference to the 
+element with index $latex {\rm floor} (x)$$ in the vector $italic v$$
+($latex {\rm floor} (x)$$ is 
+the greatest integer less than or equal $italic x$$).
+Because it is a reference, it can be used to change the element value;
+for example,
+$syntax%
+	%v%[%x%] = %z%
+%$$
+is valid where $italic z$$ is an
+$syntax%VecAD<%Base%>::reference%$$ object.
+As a reference, it is no longer valid once the
+destructor for $italic v$$ is called; for example,
+when $italic v$$ falls out of scope.
+
+$head Example$$
+$children%
+	Example/VecAD.cpp
+%$$
+The file
+$xref/VecAD.cpp/$$
+contains an example and test using $code VecAD$$ vectors.
+It returns true if it succeeds and false otherwise.
+
+
+$head Speed and Memory$$
+If $italic Vector$$ is a
+$xref/SimpleVector/$$ template class, 
+the class $syntax%%Vector%< AD<%Base%> >%$$ 
+has elements with type $syntax%AD<%Base%>%$$ 
+and is faster and uses less memory than
+$syntax%VecAD<%Base%>%$$.
 The $xref/VecAD/$$ vector type is inefficient because every
 time an element of a vector is accessed, a new CppAD 
 $xref/glossary/Variable/variable/$$ is created on the tape
@@ -239,7 +235,7 @@ $$
 $lnext
 In the $code Example$$ directory, execute the command
 $codep
-	OneTest LuVecADOk "LuVecAD.cpp -DNDEBUG" > LuVecADOk.log
+	./OneTest LuVecADOk "LuVecAD.cpp -DNDEBUG" > LuVecADOk.log
 $$
 This will write a trace of all the forward tape operations,
 for the test case $xref/LuVecADOk.cpp/$$,
@@ -377,8 +373,7 @@ private:
 // VecAD
 template <class Base>
 class VecAD {
-
-	// output
+	// friends
 	friend std::ostream& operator << <Base>
 		(std::ostream &os, const VecAD<Base> &vec);
 	friend std::ostream& operator << <Base>
@@ -388,6 +383,8 @@ class VecAD {
 	friend class ADTape<Base>;
 	friend class VecADelem<Base>;
 public:
+	typedef VecADelem<Base> reference;
+
 	// default constructor
 	VecAD(void) : length(0) , data(CppADNull)
 	{ }
@@ -426,7 +423,7 @@ public:
 	}
 
 	// taped elemement access
-	VecADelem<Base> operator[](AD<Base> &x) 
+	VecADelem<Base> operator[](const AD<Base> &x) 
 	{
 		CppADUnknownError( 
 			( id != *ADTape<Base>::Id() )

@@ -1,30 +1,36 @@
-# Move VecAD and LuRatio documentation from ExtendDomain to UserAD.
+# Improve VecAD documentation and example
 #
-# SvnCommit: file that made this commit.
-# Doc.omh: remove ExtendedDomain.h.
-# VecAD.h: move CppAD/local/Vec.h to CppAD/local/VecAD.h.
-# Vec.h: move CppAD/local/Vec.h to CppAD/local/VecAD.h.
-# UserAD.h: add VecAD.h and LuRatio from ExtendDomain to here.
-# ADValued.h: move Eq.h from UserAD.h to here.
-# ExtendDomain.h: delete because no longer used.
-# CppAD.h: remove ExtendDomain.h and switch order of Fun.h, UserAD.h.
-# WhatsNew06.omh: users view of the changes (and a spelling correction).
-# Makefile.am: change Vec.h to VecAD.h and remove ExtendDomain.h.
-# 
-# VecAD.h has already been added and Vec.h alread deleted.
+# SvnCommit: file that preformed this commit operation.
+# VecAD.h: improve documentaiton and add VecAD<Base>::reference typedef.
+# WhatsNew04.omh: fix some cross references that changed.
+# WhatsNew05.omh: fix some cross references that changed.
+# WhatsNew06.omh: users view of these changes.
+# ExampleList.omh: change Vec.cpp to VecAD.cpp.
+# Example/VecAD.cpp: new VecAD example and test. 
+# Vec.cpp: add old VecAD example into TestMore/VecAD.cpp.
+# Example.vcproj: change Vec.cpp to VecAD.cpp.
+# Piecewise.cpp: correct assert cases.
+# Example.cpp: change Vec.cpp to VecAD.cpp.
+# Makefile.am: change Vec.cpp to VecAD.cpp.
+# TestMore/VecAD.cpp: add old VecAD example.
 add_list="
+	Example/VecAD.cpp
 "
 change_list="
 	SvnCommit
-	Doc.omh
-	CppAD/local/UserAD.h
-	CppAD/local/ADValued.h
-	CppAD/CppAD.h
+	CppAD/local/VecAD.h
+	omh/WhatsNew04.omh
+	omh/WhatsNew05.omh
 	omh/WhatsNew06.omh
-	Makefile.am
+	omh/ExampleList.omh
+	Example/Example.vcproj
+	Example/Piecewise.cpp
+	Example/Example.cpp
+	Example/Makefile.am
+	TestMore/VecAD.cpp
 "
 delete_list="
-	CppAD/local/ExtendDomain.h
+	Example/Vec.cpp
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

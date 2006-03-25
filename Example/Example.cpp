@@ -130,7 +130,7 @@ extern bool TrackNewDel(void);
 extern bool UnaryMinus(void);
 extern bool UnaryPlus(void);
 extern bool Value(void);
-extern bool Vec(void);
+extern bool VecAD(void);
 
 // templated tests in example directory
 
@@ -251,7 +251,7 @@ int main(void)
 	ok &= Run( UnaryMinus,        "UnaryMinus"       );
 	ok &= Run( UnaryPlus,         "UnaryPlus"        );
 	ok &= Run( Value,             "Value"            );
-	ok &= Run( Vec,               "Vec"              );
+	ok &= Run( VecAD,             "VecAD"            );
 
 	// check for memory leak in previous calculations
 	if( CppADTrackCount() != 0 )

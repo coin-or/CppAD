@@ -59,10 +59,10 @@ namespace {
 		static size_t j = 0;
 		while ( x < ArgumentValue[j] && j > 0 )
 			j--;
-		while ( x > ArgumentValue[j+1] && j < TableLength - 1)
+		while ( x > ArgumentValue[j+1] && j < TableLength - 2)
 			j++;
-
-		assert( j > 0 && j < TableLength - 1 );
+		// assert conditions that must be true given logic above
+		assert( j >= 0 && j < TableLength - 1 );
 		return j;
 	}
 
