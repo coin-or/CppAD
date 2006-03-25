@@ -96,7 +96,18 @@ very much like the $syntax%AD<%Base%>%$$ type with some notable exceptions:
 
 $subhead Exceptions$$
 $list number$$
-It cannot be used
+The object $italic y$$ cannot be used with the
+$xref/Value/$$ function to compute the corresponding $italic Base$$ value.
+This function can only be use while the corresponding tape is in the 
+$xref/glossary/Tape State/Empty state/$$.  
+In this case, the syntax
+$syntax%
+	v[%i%]
+%$$
+should be used to compute the corresponding $italic Base$$ value.
+
+$lnext
+The object $italic y$$ cannot be used
 with the computed assignments operators 
 $code +=$$, 
 $code -=$$, 

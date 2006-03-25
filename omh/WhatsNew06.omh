@@ -64,6 +64,10 @@ its element type from
 $syntax%VecADelem<%Base%>%$$ to $syntax%VecAD_reference<%Base%>%$$  
 (so that it looks more like
 $xref/VecAD/VecAD<Base>::reference/VecAD<Base>::reference/$$).
+$pre
+
+$$
+Mention the $xref/VecAD/$$ case in the $xref/Value/$$ documentation.
 
 
 $head 03-24$$

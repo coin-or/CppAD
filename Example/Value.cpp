@@ -73,6 +73,12 @@ bool Value(void)
 	ok &= (Value(x[1]) ==  4.);
 	ok &= (Value(y[0]) == -4.);
 
+	// for VecAD<double> use size_t indexing to convert to double 
+	CppAD::VecAD<double> v(1);
+	v[0] = 4.;
+	double v0 = v[0];
+	ok &= (v0 == 4.);
+
 	return ok;
 }
 // END PROGRAM
