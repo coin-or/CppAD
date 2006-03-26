@@ -62,17 +62,17 @@ bool Output(void)
 	// You can use << with other types of streams; i.e., std::cout.
 	std::ostringstream stream;
 
-	// some AD<double> values
+	// ouput an AD<double> object
 	CppAD::AD<double>  pi = 4. * atan(1.); // 3.1415926536
-	CppAD::AD<double>   e = exp(1.);       // 2.7182818285
-
-	// ouput the first value
 	set_ostream(stream);
 	stream << pi;
 
-	// ouput the second value
+	// ouput a VecAD<double>::reference object
+	CppAD::VecAD<double> v(1);
+	CppAD::AD<double> zero(0);
+	v[zero]   = exp(1.);       // 2.7182818285
 	set_ostream(stream); 
-	stream << e;
+	stream << v[zero];
 
 	// convert output from stream to string
 	std::string str = stream.str();

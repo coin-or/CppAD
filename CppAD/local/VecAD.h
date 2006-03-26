@@ -302,10 +302,6 @@ class VecAD_reference {
 	friend class VecAD<Base>;
 	friend class ADTape<Base>;
 
-	// output
-	friend std::ostream& operator << <Base>
-		(std::ostream &os, const VecAD_reference<Base> &e);
- 
 public:
 	VecAD_reference(VecAD<Base> *v, const AD<Base> &x_) 
 		: vec( v ) , x(x_)
@@ -387,9 +383,6 @@ class VecAD {
 	// friends
 	friend std::ostream& operator << <Base>
 		(std::ostream &os, const VecAD<Base> &vec);
-	friend std::ostream& operator << <Base>
-	(std::ostream &os, const VecAD_reference<Base> &e);
- 
 
 	friend class ADTape<Base>;
 	friend class VecAD_reference<Base>;
@@ -536,15 +529,6 @@ void VecAD_reference<Base>::operator=(const Base &y)
 template <class Base>
 inline void VecAD_reference<Base>::operator=(const VecAD_reference<Base> &y)
 {	*this = y.ADBase(); }
-
-template <class Base>
-inline std::ostream& operator << 
-(std::ostream &os, const VecAD_reference<Base> &e)
-{	size_t i = static_cast<size_t>( Integer(e.x) );
-	CppADUnknownError( i < e.vec->length );
-
- 	return os << *(e.vec->data + i); 
-}
 
 template <class Base>
 inline std::ostream& operator << (std::ostream &os, const VecAD<Base> &v)

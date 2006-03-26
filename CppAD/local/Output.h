@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin Output$$
 $spell
+	VecAD
 	inline
 	std
 	ostream
@@ -44,8 +45,7 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-Writes the $italic Base$$ value,
-corresponding to the $syntax%AD<%Base%>%$$ object $italic x$$,
+Writes the $italic Base$$ value, corresponding to $italic x$$,
 to the output stream $italic os$$.
 
 $head os$$
@@ -55,9 +55,10 @@ $syntax%
 %$$
 
 $head x$$
-The operand $italic x$$ has prototype
+The operand $italic x$$ has one of the following prototypes
 $syntax%
-	const AD<%Base%> &%x%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
 %$$
 
 $head Result$$
@@ -93,12 +94,16 @@ $end
 ------------------------------------------------------------------------------
 */
 
-namespace CppAD { // Begin CppAD namespace
+namespace CppAD { 
+	template <class Base>
+	inline std::ostream& operator << (std::ostream &os, const AD<Base> &x)
+	{ 	return (os << x.value); }
 
-template <class Base>
-inline std::ostream& operator << (std::ostream &os, const AD<Base> &x)
-{ 	return (os << x.value); }
+	template <class Base>
+	inline std::ostream& operator << 
+	(std::ostream &os, const VecAD_reference<Base> &x)
+	{ 	return (os << x.ADBase()); }
 
-} // END CppAD namespace
+}
 
 # endif

@@ -67,7 +67,8 @@ $xref/VecAD/reference/VecAD<Base>::reference/$$).
 $pre
 
 $$
-Mention the $xref/VecAD/$$ case in the $xref/Value/$$ documentation.
+Mention the $xref/VecAD/$$ case in the 
+$xref/Value/$$ and $xref/Output/$$ documentation.
 Extend $xref/Integer/$$ to include the
 $xref/VecAD/reference/VecAD<Base>::reference/$$ case.
 

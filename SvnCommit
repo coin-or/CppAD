@@ -1,20 +1,18 @@
-# Extend Integer to include VecAD<Base>::reference case.
+# Mention VecAD<Base>::reference case in Output documentaiton.
 #
 # SvnCommit: file that preformed this commit operation.
-# Integer.h: extend to include VecAD<Base>::reference case.
-# WhatsNew05.omh: modify VecAD<Base>::reference cross reference.
+# Ouptut.h: mention VecAD<Base>::reference case in documentation.
 # WhatsNew06.omh: users view of these changes.
-# VecAD.h: change heading from VecAD<Base>::reference to reference.
-# Integer.cpp: include test of VecAD<Base>::reference case.
+# VecAD.h: move VecAD<Base>::reference output code to Ouptut.h
+# Output.cpp: include test of VecAD<Base>::reference case.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/Integer.h
-	omh/WhatsNew05.omh
-	omh/WhatsNew06.omh
+	CppAD/local/Output.h
 	CppAD/local/VecAD.h
-	Example/Integer.cpp
+	omh/WhatsNew06.omh
+	Example/Output.cpp
 "
 delete_list="
 "
