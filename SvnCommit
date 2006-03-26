@@ -1,22 +1,15 @@
-# Improve doc and extend AD assignment operator. 
+# Remove unecessary if qualifier in computed assingments 
+# (Parameter is always true and Variable false when tape is empty).
 #
 # SvnCommit: file that preformed this commit operation.
-# UserAD.h: move Eq.h from ADValued to here.
-# Eq.h: correct list of possible right hand sides.
-# ADValued.h: move Eq.h from here to UserAD.h.
-# VecAD.h: include VecAD<Base>::reference = int case.
-# WhatsNew06.omh: users view of these changes.
-# Eq.cpp: include test of VecAD<Base>::reference case.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/UserAD.h
-	CppAD/local/Eq.h
-	CppAD/local/ADValued.h
-	CppAD/local/VecAD.h
-	omh/WhatsNew06.omh
-	Example/Eq.cpp
+	CppAD/local/AddEq.h
+	CppAD/local/SubEq.h
+	CppAD/local/MulEq.h
+	CppAD/local/DivEq.h
 "
 delete_list="
 "

@@ -115,25 +115,23 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 	left   = value;
 	value -= right.value;
 
-	if( Tape()->State() == Recording )
-	{	if( Parameter(*this) )
-		{	if( Variable(right) )
-			{	Tape()->RecordOp(SubpvOp, 
-					*this, left, right.taddr
-				);
-			}
+	if( Parameter(*this) )
+	{	if( Variable(right) )
+		{	Tape()->RecordOp(SubpvOp, 
+				*this, left, right.taddr
+			);
 		}
-		else if( Parameter(right) )
-		{	if( ! IdenticalZero(right) )
-			{	Tape()->RecordOp(SubvpOp, 
-					*this, taddr, right.value
-				);
-			}
-		}
-		else	Tape()->RecordOp(SubvvOp, 
-				*this, taddr, right.taddr
-		);
 	}
+	else if( Parameter(right) )
+	{	if( ! IdenticalZero(right) )
+		{	Tape()->RecordOp(SubvpOp, 
+				*this, taddr, right.value
+			);
+		}
+	}
+	else	Tape()->RecordOp(SubvvOp, 
+			*this, taddr, right.taddr
+	);
 	return *this;
 }
 
