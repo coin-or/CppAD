@@ -1,15 +1,11 @@
-# Remove unecessary if qualifier in computed assingments 
-# (Parameter is always true and Variable false when tape is empty).
+# Extend and improve the exceptions in VecAD documentation.
 #
 # SvnCommit: file that preformed this commit operation.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/AddEq.h
-	CppAD/local/SubEq.h
-	CppAD/local/MulEq.h
-	CppAD/local/DivEq.h
+	CppAD/local/VecAD.h
 "
 delete_list="
 "

@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin VecAD$$
 $spell
+	CondExpGt
 	grep
 	Ld
 	vp
@@ -109,24 +110,33 @@ should be used to compute the corresponding $italic Base$$ value.
 
 $lnext
 The object $italic y$$ cannot be used
-with the computed assignments operators 
+with the $xref/Arithmetic//computed assignments operators/$$ 
 $code +=$$, 
 $code -=$$, 
 $code *=$$, or
 $code /=$$.
-For example, if $italic z$$ is a $syntax%AD<%Base%>%$$ object, 
-the following syntax is not valid:
+For example, the following syntax is not valid:
 $syntax%
 	%v%[%x%] += %z%;
 %$$
+no matter what the types of $italic z$$.
 
 $lnext
-Assignment to $italic y$$ returns a $code void$$.
-For example, if $italic z$$ and $italic u$$ are $syntax%AD<%Base%>%$$ objects, 
-the following syntax is not valid:
+$xref/Eq//Assignment/$$ to $italic y$$ returns a $code void$$.
+For example, the following syntax is not valid:
 $syntax%
 	%z% = %v%[%x%] = %u%;
 %$$
+no matter what the types of $italic z$$, and $italic u$$.
+
+$lnext
+The $xref/CondExp/$$ functions do not accept 
+$syntax%VecAD<%Base%>::reference%$$ arguments; i.e.,
+the following syntax is not valid:
+$syntax%
+	CondExpGt(%y%, %z%, %u%, %v%)
+%$$
+no matter what the types of $italic z$$, $italic u$$, and $italic v$$.
 $lend
 
 $head n$$
