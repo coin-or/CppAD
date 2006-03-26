@@ -61,6 +61,12 @@ bool Integer(void)
 	ok &= (Integer(x[0]) == 3);
 	ok &= (Integer(x[1]) == 4);
 
+	// check integer for VecAD element
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero] = 2;
+	ok &= (Integer(v[zero]) == 2);
+
 	// dependent variable vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);

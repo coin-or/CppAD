@@ -337,7 +337,7 @@ $xref/glossary/Sparsity Pattern/sparsity patterns/$$.
 $pre
 
 $$
-An extra $xref/VecAD/VecAD<Base>::reference/Exceptions/exception/1/$$ has been
+An extra $xref/VecAD/reference/Exceptions/exception/1/$$ has been
 added to the use of $xref/VecAD/$$ elements.
 This makes $code VecAD$$ some what more efficient.
 

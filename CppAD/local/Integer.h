@@ -23,6 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------------
 $begin Integer$$
 $spell
+	std
+	VecAD
 	CppAD
 	namespace
 	inline
@@ -47,43 +49,44 @@ $fend 20$$
 $head Purpose$$
 Converts from an AD type to the corresponding integer value.
 
-$head x$$
-The argument $italic x$$ has prototype
-$syntax%
-	const %Type% &%x%
-%$$
-where $italic Type$$ is of the form $syntax%AD<%Base%>%$$ or
-it is one of the following types:
-$code float$$, 
-$code double$$, 
-$code complex<float>$$, or
-$code complex<double>$$.
-
 $head i$$
-The return value $italic i$$ has prototype
+The result $italic i$$ has prototype
 $syntax%
 	int %i%
 %$$
 
+$head x$$
+
 $subhead Real Types$$
-If $italic Type$$ is $code float$$ or $code double$$,
-the fractional part is dropped to form the integer value; i.e.
-$table
-$bold Case$$          $cnext $bold Comparison$$           $rnext
-$syntax%%x% >= 0  %$$ $cnext $syntax%%i% <= %x%$$ $rnext
-$syntax%%x% <= 0  %$$ $cnext $syntax%%i% >= %x%$$ 
-$tend
+If the argument $italic x$$ has either of the following prototypes:
+$syntax%
+	const float                %%  &%x%
+	const double               %%  &%x%
+%$$
+the fractional part is dropped to form the integer value.
+For example, if $italic x$$ is 1.5, $italic i$$ is 1.
+In general, if $latex x \geq 0$$, $italic i$$ is the 
+greatest integer less than or equal $italic x$$.
+If $latex x \leq 0$$, $italic i$$ is the 
+smallest integer greater than or equal $italic x$$.
 
 $subhead Complex Types$$
-If $italic Type$$ is 
-$code complex<float>$$, or $code complex<double>$$,
+If the argument $italic x$$ has either of the following prototypes:
 $syntax%
-	%i% == Integer(%x%.real())
+	const std::complex<float>  %%  &%x%
+	const std::complex<double> %%  &%x%
+%$$
+The result $italic i$$ is given by
+$syntax%
+	%i% = Integer(%x%.real())
 %$$
 
-
 $subhead AD Types$$
-If $italic Type$$ is $syntax%AD%<%Base%>%$$,
+If the argument $italic x$$ has either of the following prototypes:
+$syntax%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
+%$$
 $italic Base$$ must support the $code Integer$$ function and
 the conversion has the same meaning as for $italic Base$$.
 
@@ -91,7 +94,7 @@ $head Taping$$
 The result of this operation is not an AD object
 so the operation is not recorded as part of any
 $xref/glossary/AD Operation Sequence/AD operation sequence/$$
-(even if an $italic Type$$ is an AD type and the corresponding tape 
+(even if $italic x$$ is an AD object and the corresponding tape 
 $xref/glossary/Tape State/state/$$ is Recording).
 
 $head Example$$
@@ -109,10 +112,6 @@ $end
 
 namespace CppAD {
 
-	template <class Base>
-	inline int Integer(const AD<Base> &x)
-	{	return Integer(x.value); }
-
 	inline int Integer(const float &x)
 	{	return static_cast<int>(x); }
 
@@ -125,6 +124,13 @@ namespace CppAD {
 	inline int Integer(const std::complex<double> &x)
 	{	return static_cast<int>( x.real() ); }
 
+	template <class Base>
+	inline int Integer(const AD<Base> &x)
+	{	return Integer(x.value); }
+
+	template <class Base>
+	inline int Integer(const VecAD_reference<Base> &x)
+	{	return Integer( x.ADBase() ); }
 }
 # endif
 

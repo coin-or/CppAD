@@ -1,16 +1,20 @@
-# Include Value function in list of VecAD<Base>::reference exceptions.
+# Extend Integer to include VecAD<Base>::reference case.
 #
 # SvnCommit: file that preformed this commit operation.
+# Integer.h: extend to include VecAD<Base>::reference case.
+# WhatsNew05.omh: modify VecAD<Base>::reference cross reference.
 # WhatsNew06.omh: users view of these changes.
-# VecAD.h: mention the value funciton as an exception.
-# VecAD.cpp: example use of integer index to obtain VecAD value.
+# VecAD.h: change heading from VecAD<Base>::reference to reference.
+# Integer.cpp: include test of VecAD<Base>::reference case.
 add_list="
 "
 change_list="
 	SvnCommit
+	CppAD/local/Integer.h
+	omh/WhatsNew05.omh
 	omh/WhatsNew06.omh
 	CppAD/local/VecAD.h
-	Example/Value.cpp
+	Example/Integer.cpp
 "
 delete_list="
 "
