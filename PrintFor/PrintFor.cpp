@@ -49,19 +49,20 @@ int main(void)
 	X[1] = 1.;
 	Independent(X);
 
-	// a parameter (does not depend on independent variables)
-	AD<double> P = 5.;
+	// print a VecAD<double>::reference object
+	VecAD<double> V(1);
+	AD<double> Zero(0);
+	V[Zero] = X[0];
+	PrintFor("x[0] = ", V[Zero]); 
 
 	// dependent variable vector 
 	size_t m = 1;
 	CppADvector< AD<double> > Y(m);
-	Y[0] = X[0] + X[1];
+	Y[0] = V[Zero] + X[1];
 
-	// print the value of y during zero order forward mode
-	PrintFor(  "x[0] + x[1] = ", Y[0]); 
-
-	// print a new line and then value of p during forward mode
-	PrintFor("\np           = ", P); 
+	// First print a newline to separate this from previous output,
+	// then print an AD<double> object.
+	PrintFor(  "\nx[0] + x[1] = ", Y[0]); 
 
 	// define f: x -> y and stop tape recording
 	ADFun<double> f(X, Y); 
@@ -71,8 +72,8 @@ int main(void)
 	x[0] = 1.;
 	x[1] = 1.;
 
+	cout << "x[0] = 1" << endl; 
 	cout << "x[0] + x[1] = 2" << endl; 
-	cout << "p           = 5" << endl; 
 	cout << "This test pases if the two lines above repate below:" << endl;
 	f.Forward(0, x);	
 
