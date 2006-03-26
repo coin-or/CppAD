@@ -30,7 +30,6 @@ $index function, AD valued$$
 $section AD Valued Operations and Functions$$
 
 $childtable%
-	CppAD/local/Eq.h%
 	CppAD/local/Arithmetic.h%
 	CppAD/local/StdMathUnary.h%
 	CppAD/local/MathOther.h%
@@ -41,7 +40,6 @@ $childtable%
 $end
 */
 
-# include <CppAD/local/Eq.h>
 # include <CppAD/local/Arithmetic.h>
 # include <CppAD/local/StdMathUnary.h>
 # include <CppAD/local/MathOther.h>

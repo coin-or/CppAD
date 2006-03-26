@@ -90,6 +90,7 @@ way to represent these vectors.
 
 $head reference$$
 $index VecAD<Base>::reference$$
+$index reference, VecAD<Base>$$
 The result $italic y$$ has type
 $syntax%VecAD<%Base%>::reference%$$ which is
 very much like the $syntax%AD<%Base%>%$$ type with some notable exceptions:
@@ -193,7 +194,7 @@ The result $italic y$$ has prototype
 $syntax%
 	VecAD<%Base%>::reference %y%
 %$$
-This object $italic y$$ has an AD type and its 
+The object $italic y$$ has an AD type and its 
 operations are recorded as part of the same
 $xref/glossary/AD Operation Sequence/AD operation sequence/$$ as
 for $syntax%AD<%Base%>%$$ objects.
@@ -223,12 +224,6 @@ It returns true if it succeeds and false otherwise.
 
 
 $head Speed and Memory$$
-If $italic Vector$$ is a
-$xref/SimpleVector/$$ template class, 
-the class $syntax%%Vector%< AD<%Base%> >%$$ 
-has elements with type $syntax%AD<%Base%>%$$ 
-and is faster and uses less memory than
-$syntax%VecAD<%Base%>%$$.
 The $xref/VecAD/$$ vector type is inefficient because every
 time an element of a vector is accessed, a new CppAD 
 $xref/glossary/Variable/variable/$$ is created on the tape
@@ -311,6 +306,7 @@ public:
 	inline void operator = (const VecAD_reference<Base> &right);
 	void operator = (const AD<Base> &right);
 	void operator = (const Base     &right);
+	void operator = (int             right);
 
 	// computed assignments
 	CppADVecADComputedAssignment( += , " += " )
@@ -525,10 +521,15 @@ void VecAD_reference<Base>::operator=(const Base &y)
 			StvpOp, vec->offset, x.taddr, y_taddr );
 }
 
-// fold this case into those above
+// fold this case into AD<Base> case above
 template <class Base>
 inline void VecAD_reference<Base>::operator=(const VecAD_reference<Base> &y)
 {	*this = y.ADBase(); }
+
+// fold this case into Base case above
+template <class Base>
+inline void VecAD_reference<Base>::operator=(int y)
+{	*this = Base(y); }
 
 template <class Base>
 inline std::ostream& operator << (std::ostream &os, const VecAD<Base> &v)

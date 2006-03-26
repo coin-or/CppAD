@@ -1,16 +1,22 @@
-# Extend PrintFor to include VecAD<Base>::reference case.
+# Improve doc and extend AD assignment operator. 
 #
 # SvnCommit: file that preformed this commit operation.
-# PrintFor.h: extend to include VecAD<Base>::reference case.
+# UserAD.h: move Eq.h from ADValued to here.
+# Eq.h: correct list of possible right hand sides.
+# ADValued.h: move Eq.h from here to UserAD.h.
+# VecAD.h: include VecAD<Base>::reference = int case.
 # WhatsNew06.omh: users view of these changes.
-# PrintFor.cpp: include test of VecAD<Base>::reference case.
+# Eq.cpp: include test of VecAD<Base>::reference case.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/PrintFor.h
+	CppAD/local/UserAD.h
+	CppAD/local/Eq.h
+	CppAD/local/ADValued.h
+	CppAD/local/VecAD.h
 	omh/WhatsNew06.omh
-	PrintFor/PrintFor.cpp
+	Example/Eq.cpp
 "
 delete_list="
 "

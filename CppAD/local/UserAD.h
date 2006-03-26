@@ -43,6 +43,7 @@ that are available for objects in this template class.
 $childtable%
 	CppAD/local/Constructor.h%
 	CppAD/local/Convert.h%
+	CppAD/local/Eq.h%
 	CppAD/local/ADValued.h%
 	CppAD/local/BoolValued.h%
 	CppAD/local/VecAD.h%
@@ -55,6 +56,7 @@ $end
 
 # include <CppAD/local/Constructor.h>
 # include <CppAD/local/Convert.h>
+# include <CppAD/local/Eq.h>
 # include <CppAD/local/ADValued.h>
 # include <CppAD/local/BoolValued.h>
 # include <CppAD/local/VecAD.h>

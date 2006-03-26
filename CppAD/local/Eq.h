@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin Eq$$
 $spell
+	Vec
 	Var
 	const
 	inline
@@ -53,24 +54,29 @@ $xref/glossary/Independent Variable/independent variables/$$ as $italic x$$
 $xref/glossary/Variable/variable/$$ if and only if $italic x$$ is a variable).
 
 $head x$$
-The operand $italic x$$ has prototype
+The operand $italic x$$ has one of the following prototypes
 $syntax%
-	const %Type%     &%x%
+	const int %%                   &%x%
+	const %Base%                   &%x%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
 %$$
-where $italic Type$$ is $syntax%const AD<%Base%>%$$,
-$italic Base$$ or any type that can be implicitly converted to $italic Base$$.
 
 $head y$$
-This operation is a member function of $italic y$$ 
-which has the following type
+This operation is a member function for $italic y$$ 
+which has the one of the following prototypes
 $syntax%
-	AD<%Base%> %y%
+	AD<%Base%>               %y%
+	VecAD<%Base%>::reference %y%
 %$$
 
 $head Result$$
+
+$subhead AD<Base>$$
 $index assignment, multiple$$
 $index multiple, assignment$$
-The result of this assignment 
+If $italic y$$ has type $syntax%AD<%Base%>%$$,
+the result of this assignment 
 can be used as a reference to $italic y$$.
 For example, if $italic z$$ has the following type
 $syntax%
@@ -83,21 +89,28 @@ $syntax%
 will assign the value of $italic x$$ to $italic z$$ 
 (as well as to $italic y$$).
 
+$subhead VecAD<Base>::reference$$
+If $italic y$$ has type $syntax%VecAD<%Base%>::reference%$$,
+this assignment has a $code void$$ result.
+For example, the following syntax is not valid:
+$syntax%
+	%z% = %y% = %x%
+%$$
+
 $head Example$$
 $children%
 	Example/Eq.cpp
 %$$
 The file
 $xref/Eq.cpp/$$
-contains an example and a test of these operations.
+contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
 */
 
-//  BEGIN CppAD namespace
-namespace CppAD {
+namespace CppAD { //  BEGIN CppAD namespace
 
 template <class Base>
 inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
@@ -116,6 +129,5 @@ inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
 
 
 } // END CppAD namespace
-
 
 # endif

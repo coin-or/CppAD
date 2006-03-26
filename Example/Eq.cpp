@@ -54,11 +54,11 @@ bool Eq(void)
 	size_t m = 3;
 	CppADvector< AD<double> > y(m);
 
-	// assign an AD object equal to an expression and 
+	// assign an AD<Base> object equal to an expression and 
 	// use the value returned by the assignment (for another assignment)
 	y[0] = y[1] = x[1] + 1.;  
 
-	// assign and AD object equal to an independent variable
+	// assign an AD<Base> object equal to an independent variable
 	// (choose the first independent variable to check a special case)
 	y[2] = x[0];  
 
@@ -93,6 +93,12 @@ bool Eq(void)
 	dx   = f.Reverse(1, w);
 	ok  &= (dx[0] == 1.);  // dy[2] / dx[0]
 	ok  &= (dx[1] == 0.);  // dy[2] / dx[1]
+
+	// assign a VecAD<Base>::reference
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero] = 5.;
+	ok     &= (v[0] == 5.);
 
 	return ok;
 }
