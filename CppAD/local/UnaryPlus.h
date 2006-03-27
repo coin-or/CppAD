@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin UnaryPlus$$
 $spell
-	Var
+	Vec
 	const
 	inline
 $$
@@ -46,10 +46,12 @@ $head Purpose$$
 Performs the unary plus operation
 (the result $italic y$$ is equal to the operand $italic x$$).
 
+
 $head x$$
-The operand $italic x$$ has prototype
+The operand $italic x$$ has one of the following prototypes
 $syntax%
-	const AD<%Base%> &%x%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
 %$$
 
 $head y$$
@@ -59,7 +61,12 @@ $syntax%
 %$$
 It is equal to the operand $italic x$$.
 
-$head Assumptions$$
+$head Taping$$
+The result of this operation is an AD object,
+hence the operation can be recorded as part of a corresponding
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$.
+
+$head Derivative$$
 If $latex f$$ is a 
 $xref/glossary/Base Function/Base function/$$,
 $latex \[

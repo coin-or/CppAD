@@ -58,6 +58,12 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-28$$
+Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case in 
+$xref/UnaryMinus/$$ and
+$xref/UnaryPlus/$$ 
+documentation and examples.
+
 $head 03-27$$
 Extend and improve the 
 $xref/VecAD/reference/Exceptions/VecAD exceptions/1/$$.

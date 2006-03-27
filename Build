@@ -312,6 +312,17 @@ then
 		exit
 	fi
 fi
+if [ "$1" = "test" ] || [ "$1" = "all" ]
+then
+	tar -xvzf CppAD-$AcDate.tar.gz
+	cd cppad-$AcDate
+	./Build configure test
+	make
+	if [ "$1" != "all" ]
+	then
+		exit
+	fi
+fi
 if [ "$1" = "all" ]
 then
 	exit
@@ -335,6 +346,7 @@ echo "compile         compile all of the tests"
 echo "omhelp          build all the documentation"
 echo "dist            create the distribution files CppAD.*.tar.gz"
 echo "dos             create the distribution files CppAD.*.zip"
+echo "test            unpack the unix distribution and compiles its tests"
 echo
 echo "Build all"
 echo "This command will execute all the options in the order above"

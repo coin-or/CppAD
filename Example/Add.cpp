@@ -82,8 +82,8 @@ bool Add(void)
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
 	v[zero] = x[0] + 1.;
-	v[zero] = v[zero] + 2.;
-	ok     &= (v[0] == b);
+	AD<double> result = v[zero] + 2.;
+	ok     &= (result == b);
 
 	return ok;
 }

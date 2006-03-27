@@ -74,6 +74,13 @@ bool UnaryMinus(void)
 	w[0] = 1.;
 	dx   = f.Reverse(p, w);
 	ok &= ( dx[0] == -1. );       // dy[0] / dx[0]
+
+	// use a VecAD<Base>::reference object with unary minus
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero] = x[0];
+	AD<double> result = - v[zero];
+	ok     &= (result == y[0]);
 	 
 	return ok;
 }

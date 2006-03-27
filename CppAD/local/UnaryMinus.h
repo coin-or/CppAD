@@ -22,14 +22,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin UnaryMinus$$
 $spell
-	Var
+	Vec
 	const
 	inline
 $$
 
 $index unary, AD minus operator$$
 $index AD, unary minus operator$$
-$index minus, AD unary operator$$
 $index minus, AD unary operator$$
 $index -, AD unary operator$$
 
@@ -44,13 +43,13 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-Computes the negative of $italic y$$ where
-$code -$$ has the same interpretation as for the $italic Base$$ type.
+Computes the negative of $italic x$$.
 
 $head x$$
-The operand $italic x$$ has prototype
+The operand $italic x$$ has one of the following prototypes
 $syntax%
-	const AD<%Base%> &%x%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
 %$$
 
 $head y$$
@@ -60,20 +59,17 @@ $syntax%
 %$$
 It is equal to the negative of the operand $italic x$$.
 
-$head Assumptions$$
-If the negation unary minus operator is used with an 
-$syntax%AD<%Base%>%$$ object,
-it must also be defined for 
-the base type $italic Base$$.
+$head Taping$$
+The result of this operation is an AD object,
+hence the operation can be recorded as part of a corresponding
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$.
 
-In addition,
-if $latex f$$ is a 
+$head Derivative$$
+If $latex f$$ is a 
 $xref/glossary/Base Function/Base function/$$,
 $latex \[
 	\D{[ - f(x) ]}{x} = - \D{f(x)}{x}
 \] $$
-
-
 
 $head Example$$
 $children%

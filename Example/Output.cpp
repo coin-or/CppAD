@@ -70,7 +70,7 @@ bool Output(void)
 	// ouput a VecAD<double>::reference object
 	CppAD::VecAD<double> v(1);
 	CppAD::AD<double> zero(0);
-	v[zero]   = exp(1.);       // 2.7182818285
+	v[zero]   = exp(1.);                  // 2.7182818285
 	set_ostream(stream); 
 	stream << v[zero];
 
