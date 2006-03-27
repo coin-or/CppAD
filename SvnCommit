@@ -1,26 +1,32 @@
-# Add VecAD<Base>::reference to Unary (Minus & Plus) documentaiton and example.
+# Add VecAD<Base>::reference to -, *, / binary operations.
 #
 # SvnCommit: file that preformed this commit operation.
-# UnaryPlus.h: add VecAD<Base>::reference do documentation.
-# UnaryMinus.h: add VecAD<Base>::reference do documentation.
-# Build: add compiling the tests to list of Build options.
+# UnaryMinus.h: add Base requirment.
+# Div.h: add VecAD<Base>::reference to documentation.
+# Add.h: add Base requirment.
+# Sub.h: add VecAD<Base>::reference to documentation.
+# Mul.h: add VecAD<Base>::reference to documentation.
+# glossary.omh: add definition of an AD object.
 # WhatsNew06.omh: users view of changes (and of previous changes).
-# Output.cpp: reduce number of VecAD<Base>::reference operations in example.
-# UnaryPlus.cpp: add VecAD<Base>::reference case to example.
-# UnaryMinus.cpp: add VecAD<Base>::reference case to example.
-# Add: reduce number of VecAD<Base>::reference operations in example.
+# Div.cpp: include VecAD<Base>::reference case.
+# Add.cpp: improve VecAD<Base>::reference case.
+# Sub.cpp: include VecAD<Base>::reference case.
+# Mul.cpp: include VecAD<Base>::reference case.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/UnaryPlus.h
 	CppAD/local/UnaryMinus.h
-	Build
+	CppAD/local/Div.h
+	CppAD/local/Add.h
+	CppAD/local/Sub.h
+	CppAD/local/Mul.h
+	omh/glossary.omh
 	omh/WhatsNew06.omh
-	Example/Output.cpp
-	Example/UnaryPlus.cpp
-	Example/UnaryMinus.cpp
+	Example/Div.cpp
 	Example/Add.cpp
+	Example/Sub.cpp
+	Example/Mul.cpp
 "
 delete_list="
 "

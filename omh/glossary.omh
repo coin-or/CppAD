@@ -33,27 +33,27 @@ $$
 $section Glossary$$
 
 $head AD Operation Sequence$$
-All operations that have an AD result 
-(either of type $syntax%AD<%Base%>%$$ or $syntax%VecAD<%Base%>::reference%$$)
-are recorded on the corresponding tape 
-(provided that the corresponding  
-$xref/glossary/Tape State/tape state/$$ is $code Recording$$).
+An operation becomes part of an AD operation sequence if
+its result is an 
+$xref/glossary/AD Object/AD object/$$ and
+the corresponding  
+$xref/glossary/Tape State/tape state/$$ is $code Recording$$.
 For example, if both $italic x$$ and $italic y$$
 have type $syntax%AD<double>%$$, the 
 $xref/Add/$$ operation
 $syntax%
 	%x% + %y%
 %$$
-has a result of type $syntax%AD<double>%$$.
+result is an AD object.
 Thus this operation becomes part of the relation between
 the independent and 
 $xref/glossary/Dependent Variable/dependent variables/$$ 
 in the corresponding $xref/ADFun/$$ object.
-On the other hand, the $xref/Compare/$$ operation
+On the other hand, the result of the $xref/Compare/$$ operation
 $syntax%
 	%x% < %y%
 %$$
-has a result of type $code bool$$ (which is not an AD type).
+has type $code bool$$ and is not an AD object.
 If one executes the following code
 $syntax%
 	if( %x% < %y% )
@@ -64,6 +64,11 @@ The choice may depend on the value of the independent
 variables when the code is executed,
 but only the choice that is executed is recorded and transferred to the
 corresponding $code ADFun$$ object.
+
+$head AD Object$$
+An object is called an AD object it its type is 
+either $syntax%AD<%Base%>%$$ or $syntax%VecAD<%Base%>::reference%$$
+for some $italic Base$$ type.
 
 $head AD Type Sequence$$
 $index sequence, AD Type$$

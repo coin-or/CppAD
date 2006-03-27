@@ -45,6 +45,10 @@ $fend 20$$
 $head Purpose$$
 Computes the negative of $italic x$$.
 
+$head Base$$
+The operation in the syntax above must be supported for the case where
+the operand is a $code const$$ $italic Base$$ object.
+
 $head x$$
 The operand $italic x$$ has one of the following prototypes
 $syntax%

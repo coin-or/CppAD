@@ -81,8 +81,8 @@ bool Add(void)
 	// use a VecAD<Base>::reference object with addition
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
-	v[zero] = x[0] + 1.;
-	AD<double> result = v[zero] + 2.;
+	v[zero] = a;
+	AD<double> result = v[zero] + 2;
 	ok     &= (result == b);
 
 	return ok;

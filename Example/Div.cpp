@@ -58,7 +58,7 @@ bool Div(void)
 	// dependent variable vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
-	y[0] = x[0] * x[0] / d;   // AD<double> / AD<double>
+	y[0] = (x[0] * x[0]) / d;   // AD<double> / AD<double>
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
@@ -78,6 +78,13 @@ bool Div(void)
 	w[0]  = 1.;
 	dx    = f.Reverse(1, w);
 	ok   &= NearEqual(dx[0], 3.*2.*1./4., 1e-10, 1e-10);
+
+	// use a VecAD<Base>::reference object with division
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero] = d;
+	AD<double> result = (x[0] * x[0]) / v[zero];
+	ok     &= (result == y[0]);
 
 	return ok;
 }

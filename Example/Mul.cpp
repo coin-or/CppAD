@@ -77,6 +77,13 @@ bool Mul(void)
 	dx    = f.Reverse(1, w);
 	ok   &= NearEqual(dx[0], (4.*3.*2.*1.)*2.*x0, 1e-10 , 1e-10); 
 
+	// use a VecAD<Base>::reference object with multiplication
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero] = c;
+	AD<double> result = 4 * v[zero];
+	ok     &= (result == d);
+
 	return ok;
 }
 

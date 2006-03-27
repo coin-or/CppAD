@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin Sub$$
 $spell
-	Var
+	Vec
 	const
 	Add
 $$
@@ -46,22 +46,31 @@ $fend 20$$
 
 $head Purpose$$
 Computes the difference of $italic x$$ minus $italic y$$ 
-where one of the operands is a $syntax%AD<%Base%>%$$ object and
-$code -$$ has the same interpretation as for the $italic Base$$ type.
+where one of the two operands has type
+$syntax%AD<%Base%>%$$ or
+$syntax%VecAD<%Base%>::reference%$$.
+
+$head Base$$
+The operation in the syntax above must be supported for the case where
+the operands are $code const$$ $italic Base$$ objects.
 
 $head x$$
-The operand $italic x$$ has prototype
+The operand $italic x$$ has one of the following prototypes
 $syntax%
-	const %Type% &%x%
+	const int %%                   &%x%
+	const %Base%                   &%x%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
 %$$
-where $italic Type$$ is $syntax%AD<%Base%>%$$, $italic Base$$, or $code int$$.
 
 $head y$$
-The operand $italic y$$ has prototype
+The operand $italic y$$ has one of the following prototypes
 $syntax%
-	const %Type% &%y%
+	const int %%                   &%y%
+	const %Base%                   &%y%
+	const AD<%Base%>               &%y%
+	const VecAD<%Base%>::reference &%y%
 %$$
-where $italic Type$$ is $syntax%AD<%Base%>%$$, $italic Base$$, or $code int$$.
 
 $head z$$
 The result $italic z$$ has type
@@ -69,12 +78,13 @@ $syntax%
 	const AD<%Base%> %z%
 %$$
 
-$head Assumptions$$
-If the $code -$$ operator is used with an 
-$syntax%AD<%Base%>%$$ object,
-it must be defined for the type $italic Base$$.
-In addition,
-if $latex f$$ and $latex g$$ are 
+$head Taping$$
+The result of this operation is an AD object,
+hence the operation can be recorded as part of a corresponding
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$.
+
+$head Derivative$$
+If $latex f$$ and $latex g$$ are 
 $xref/glossary/Base Function/Base functions/$$
 $latex \[
 	\D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
@@ -86,7 +96,7 @@ $children%
 %$$
 The file
 $xref/Sub.cpp/$$
-contains an example and a test of these operations.
+contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 
 $end

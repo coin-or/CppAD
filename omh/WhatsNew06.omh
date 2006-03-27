@@ -60,8 +60,11 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 03-28$$
 Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case in 
-$xref/UnaryMinus/$$ and
-$xref/UnaryPlus/$$ 
+$xref/UnaryPlus/$$,
+$xref/UnaryMinus/$$,
+$xref/Sub/$$,
+$xref/Mul/$$, and
+$xref/Div/$$
 documentation and examples.
 
 $head 03-27$$

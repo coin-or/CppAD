@@ -77,6 +77,13 @@ bool Sub(void)
 	dx    = f.Reverse(1, w);
 	ok   &= NearEqual(dx[0], -1., 1e-10, 1e-10);
 
+	// use a VecAD<Base>::reference object with subtraction
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero] = b;
+	AD<double> result = 3. - v[zero];
+	ok     &= (result == c);
+
 	return ok;
 }
 
