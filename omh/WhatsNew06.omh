@@ -63,9 +63,14 @@ Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case in
 $xref/UnaryPlus/$$,
 $xref/UnaryMinus/$$,
 $xref/Sub/$$,
-$xref/Mul/$$, and
-$xref/Div/$$
+$xref/Mul/$$,
+$xref/Div/$$,
+$xref/AddEq/$$,
+$xref/SubEq/$$,
+$xref/MulEq/$$,
+$xref/DivEq/$$
 documentation and examples.
+
 
 $head 03-27$$
 Extend and improve the 

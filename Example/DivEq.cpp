@@ -83,6 +83,14 @@ bool DivEq(void)
 	dx    = f.Reverse(1, w);
 	ok   &= NearEqual(dx[0], 1./8., 1e-10, 1e-10);
 
+	// use a VecAD<Base>::reference object with computed division
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	AD<double> result = 2;
+	v[zero] = 1;
+	result /= v[zero];
+	ok     &= (result == 2);
+
 	return ok;
 }
 

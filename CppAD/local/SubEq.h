@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin SubEq$$
 $spell
-	Var
+	Vec
 	const
 	Add
 	Eq
@@ -51,11 +51,14 @@ and places the result in
 $italic y$$ where $italic y$$ is a $syntax%AD<%Base%>%$$ object.
 
 $head x$$
-The operand $italic x$$ has prototype
+The operand $italic x$$ has one of the following prototypes
 $syntax%
-        const %Type% &%x%
+	const int %%                   &%x%
+	const %Base%                   &%x%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
 %$$
-where $italic Type$$ is $syntax%AD<%Base%>%$$, $italic Base$$, or $code int$$.
+
 
 $head y$$
 This operation is a member function of $italic y$$
@@ -79,18 +82,17 @@ will assign the value of
 $syntax%%y% - %x%$$ to $italic z$$ 
 (as well as to $italic y$$).
 
-$head Assumptions$$
-If the $code -=$$ operator is used with an 
-$syntax%AD<%Base%>%$$ object,
-it must be defined
-for the type $italic Base$$.
-In addition,
-if $latex f$$ and $latex g$$ are 
+$head Taping$$
+The result of this operation is an AD object,
+hence the operation can be recorded as part of a corresponding
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$.
+
+$head Derivative$$
+If $latex f$$ and $latex g$$ are 
 $xref/glossary/Base Function/Base functions/$$
 $latex \[
 	\D{[ f(x) - g(x) ]}{x} = \D{f(x)}{x} - \D{g(x)}{x}
 \] $$
-
 
 
 $head Example$$

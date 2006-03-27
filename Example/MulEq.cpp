@@ -83,6 +83,14 @@ bool MulEq(void)
 	dx    = f.Reverse(1, w);
 	ok   &= NearEqual(dx[0], 8.*2.*x0, 1e-10, 1e-10);
 
+	// use a VecAD<Base>::reference object with computed multiplication
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	AD<double> result = 1;
+	v[zero] = 2;
+	result *= v[zero];
+	ok     &= (result == 2);
+
 	return ok;
 }
 

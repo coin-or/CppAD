@@ -51,10 +51,6 @@ where one of the two operands has type
 $syntax%AD<%Base%>%$$ or
 $syntax%VecAD<%Base%>::reference%$$.
 
-$head Base$$
-The operation in the syntax above must be supported for the case where
-the operands are $code const$$ $italic Base$$ objects.
-
 $head x$$
 The operand $italic x$$ has one of the following prototypes
 $syntax%

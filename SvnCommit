@@ -1,32 +1,36 @@
-# Add VecAD<Base>::reference to -, *, / binary operations.
+# mention VecAD<Base>::reference in computed assingment doc and examples.
 #
 # SvnCommit: file that preformed this commit operation.
-# UnaryMinus.h: add Base requirment.
-# Div.h: add VecAD<Base>::reference to documentation.
-# Add.h: add Base requirment.
-# Sub.h: add VecAD<Base>::reference to documentation.
-# Mul.h: add VecAD<Base>::reference to documentation.
-# glossary.omh: add definition of an AD object.
-# WhatsNew06.omh: users view of changes (and of previous changes).
-# Div.cpp: include VecAD<Base>::reference case.
-# Add.cpp: improve VecAD<Base>::reference case.
-# Sub.cpp: include VecAD<Base>::reference case.
-# Mul.cpp: include VecAD<Base>::reference case.
+# SubEq.h: mention VecAD<Base>::reference case.
+# MulEq.h: mention VecAD<Base>::reference case.
+# Div.h: remove Base assumptions (not useful here).
+# Add.h: remove Base assumptions (not useful here).
+# Sub.h: remove Base assumptions (not useful here).
+# Mul.h: remove Base assumptions (not useful here).
+# DivEq.h: mention VecAD<Base>::reference case.
+# AddEq.h: mention VecAD<Base>::reference case.
+# WhatsNew06.omh: users view of changes.
+# DivEq.cpp: add VecAD<Base>::reference example.
+# AddEq.cpp: add VecAD<Base>::reference example.
+# SubEq.cpp: add VecAD<Base>::reference example.
+# MulEq.cpp: add VecAD<Base>::reference example.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/UnaryMinus.h
+	CppAD/local/SubEq.h
+	CppAD/local/MulEq.h
 	CppAD/local/Div.h
 	CppAD/local/Add.h
 	CppAD/local/Sub.h
 	CppAD/local/Mul.h
-	omh/glossary.omh
+	CppAD/local/DivEq.h
+	CppAD/local/AddEq.h
 	omh/WhatsNew06.omh
-	Example/Div.cpp
-	Example/Add.cpp
-	Example/Sub.cpp
-	Example/Mul.cpp
+	Example/DivEq.cpp
+	Example/AddEq.cpp
+	Example/SubEq.cpp
+	Example/MulEq.cpp
 "
 delete_list="
 "
