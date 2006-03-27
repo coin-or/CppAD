@@ -78,6 +78,13 @@ bool Add(void)
 	dx    = f.Reverse(1, w);
 	ok   &= NearEqual(dx[0], 2., 1e-10, 1e-10);
 
+	// use a VecAD<Base>::reference object with addition
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero] = x[0] + 1.;
+	v[zero] = v[zero] + 2.;
+	ok     &= (v[0] == b);
+
 	return ok;
 }
 

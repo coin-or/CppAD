@@ -58,6 +58,17 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-27$$
+Extend and improve the 
+$xref/VecAD/reference/Exceptions/VecAD exceptions/1/$$.
+$pre
+
+$$
+Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case 
+and generally improve 
+$xref/Add/$$ documentation and examples.
+
+
 $head 03-26$$
 Improve documentation and examples for $xref/VecAD/$$ and change
 its element type from 

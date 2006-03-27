@@ -131,8 +131,8 @@ no matter what the types of $italic z$$, and $italic u$$.
 
 $lnext
 The $xref/CondExp/$$ functions do not accept 
-$syntax%VecAD<%Base%>::reference%$$ arguments; i.e.,
-the following syntax is not valid:
+$syntax%VecAD<%Base%>::reference%$$ arguments.
+For example, the following syntax is not valid:
 $syntax%
 	CondExpGt(%y%, %z%, %u%, %v%)
 %$$

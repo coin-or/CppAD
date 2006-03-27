@@ -1,11 +1,22 @@
-# Extend and improve the exceptions in VecAD documentation.
+# Add VecAD<Base>::reference to Add documentaiton and example.
 #
 # SvnCommit: file that preformed this commit operation.
+# Eq.h: add mention of taping.
+# Add.h: add mention of VecAD<Base>::reference case.
+# VecAD.h: add CondExp to list of exceptions.
+# glossary.omh: include VecAD<Base>::reference in AD operation sequence def.
+# Add.cpp: include VecAD<Base>::reference in example.
+# WhatsNew06.omh: users view of changes (and of previous changes).
 add_list="
 "
 change_list="
 	SvnCommit
+	CppAD/local/Eq.h
+	CppAD/local/Add.h
 	CppAD/local/VecAD.h
+	omh/glossary.omh
+	omh/WhatsNew06.omh
+	Example/Add.cpp
 "
 delete_list="
 "

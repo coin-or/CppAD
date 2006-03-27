@@ -19,6 +19,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 $begin glossary$$
 $aindex head subhead$$
 $spell
+	Vec
 	cos
 	bool
 	Op
@@ -33,6 +34,7 @@ $section Glossary$$
 
 $head AD Operation Sequence$$
 All operations that have an AD result 
+(either of type $syntax%AD<%Base%>%$$ or $syntax%VecAD<%Base%>::reference%$$)
 are recorded on the corresponding tape 
 (provided that the corresponding  
 $xref/glossary/Tape State/tape state/$$ is $code Recording$$).
