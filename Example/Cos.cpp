@@ -78,6 +78,14 @@ bool Cos(void)
 	dx    = f.Reverse(1, w);
 	ok   &= NearEqual(dx[0], check, 1e-10, 1e-10);
 
+	// use a VecAD<Base>::reference object with cos
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero]           = x0;
+	AD<double> result = CppAD::cos(v[zero]);
+	check = std::cos(x0);
+	ok   &= NearEqual(result, check, 1e-10, 1e-10);
+
 	return ok;
 }
 

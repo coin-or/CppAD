@@ -77,6 +77,14 @@ bool Cosh(void)
 	dx    = f.Reverse(1, w);
 	ok   &= NearEqual(dx[0], check, 1e-10, 1e-10);
 
+	// use a VecAD<Base>::reference object with cosh
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero]           = x0;
+	AD<double> result = CppAD::cosh(v[zero]);
+	check = std::cosh(x0);
+	ok   &= NearEqual(result, check, 1e-10, 1e-10);
+
 	return ok;
 }
 

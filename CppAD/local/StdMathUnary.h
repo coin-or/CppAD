@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin StdMathUnary$$
 $spell
+	Vec
 	std
 	atan
 	const
@@ -63,18 +64,15 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-Returns an
-$syntax%AD<%Base%>%$$ object that is equal to
-$syntax%
-	%fun%(%x%)
-%$$
-where $italic fun$$ has the same interpretation as for the
-$italic Base$$ type. 
+Evaluates the one argument standard math function 
+$italic fun$$ where its argument is an 
+$xref/glossary/AD Object/AD object/$$.
 
 $head x$$
-The argument $italic x$$ has prototype
+The argument $italic x$$ has one of the following prototypes
 $syntax%
-	const AD<%Base%> &%x%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
 %$$
 
 $head y$$
@@ -84,14 +82,11 @@ $syntax%
 %$$
 
 $head fun$$ 
-A definition of $italic fun$$ for a $syntax%AD<%Base%>%$$ argument
-(for each of the cases listed below)
-is automatically included in the $code CppAD$$ namespace.
-This definition depends on the function $italic fun$$ being
-defined for a $italic Base$$ argument.
-Each "yes" below corresponds to a function $italic fun$$
-and an argument type $italic Base$$ for which a definition is also included
-in the $code CppAD$$ namespace.
+A definition of $italic fun$$ for each of the argument types
+list below is included in the $code CppAD$$ namespace.
+This definition extends to the 
+$xref/glossary/AD Type Sequence/AD type sequence/$$
+above each of the types list below.
 
 $table
 $bold fun$$   
@@ -324,7 +319,7 @@ $end
 		AD<Base> result;                                          \
 		CppADUnknownError( result.id == 0 );                      \
 		result.value = Name(value);                               \
-		if( (Tape()->State() == Recording) & Variable(*this) )    \
+		if( Variable(*this) )                                     \
 			Tape()->RecordOp(Op, result, taddr);              \
 		return result;                                            \
 	}                                                                 \
@@ -367,9 +362,12 @@ namespace CppAD {
         CppADStandardMathUnaryTemplate(log, LogOp)
 
         // log10
-	template <class Type>
-	inline Type log10(const Type &x)
-	{	return CppAD::log(x) / CppAD::log( Type(10) ); }
+	template <class Base>
+	inline AD<Base> log10(const AD<Base> &x)
+	{	return CppAD::log(x) / CppAD::log( Base(10) ); }
+	template <class Base>
+	inline AD<Base> log10(const VecAD_reference<Base> &x)
+	{	return CppAD::log(x.ADBase()) / CppAD::log( Base(10) ); }
 
         // sin
         CppADStandardMathUnaryBaseAll(sin)
@@ -384,9 +382,12 @@ namespace CppAD {
         CppADStandardMathUnaryTemplate(sqrt, SqrtOp)
 	
         // tan
-	template <class Type>
-	inline Type tan(const Type &x)
+	template <class Base>
+	inline AD<Base> tan(const AD<Base> &x)
 	{	return CppAD::sin(x) / CppAD::cos(x); }
+	template <class Base>
+	inline AD<Base> tan(const VecAD_reference<Base> &x)
+	{	return CppAD::sin(x.ADBase()) / CppAD::cos(x.ADBase()); }
 }
 
 # undef CppADStandardMathUnaryBaseAll

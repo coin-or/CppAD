@@ -78,6 +78,14 @@ bool Sin(void)
 	dx    = f.Reverse(1, w);
 	ok   &= NearEqual(dx[0], check, 1e-10, 1e-10);
 
+	// use a VecAD<Base>::reference object with sin
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero]           = x0;
+	AD<double> result = CppAD::sin(v[zero]);
+	check = std::sin(x0);
+	ok   &= NearEqual(result, check, 1e-10, 1e-10);
+
 	return ok;
 }
 
