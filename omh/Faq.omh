@@ -19,6 +19,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 $begin Faq$$
 $escape !$$
 $spell
+	faq
+	std
 	whatsnew
 	sqrt
 	cmath
@@ -106,7 +108,7 @@ $syntax%
 %$$
 Some functions are real differentiable than are not complex differentiable
 (for example, the $xref/abs/Complex Types/complex abs function/$$).
-If you have to differentiate such fucntions, you should use
+If you have to differentiate such functions, you should use
 $syntax%
 	std::complex< AD<%Base% >
 %$$
@@ -132,7 +134,7 @@ For these two uses, it is helpful to run all the tests
 and to know which ones failed.
 The actual code in CppAD uses the $xref/ErrorHandler/$$ utility
 to signal exceptions.
-Specifications are given redefining this action.
+Specifications for redefining this action are provided.
 
 $head Independent Variables$$
 $index independent variable$$
