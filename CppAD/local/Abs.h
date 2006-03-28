@@ -51,6 +51,16 @@ Evaluates the absolute value function where its argument is an
 $xref/glossary/AD Object/AD object/$$.
 
 
+$head Base$$ 
+A definition of $code abs$$ for arguments of type
+$code float$$ and $code double$$ 
+is included in the $code CppAD$$ namespace
+(the corresponding results has the same type as the arguments).
+The type $italic Base$$ can be any type in the 
+$xref/glossary/AD Type Sequence/AD type sequence/$$
+above $code float$$ or $code double$$.
+
+
 $head x$$
 The argument $italic x$$ has one of the following prototypes
 $syntax%

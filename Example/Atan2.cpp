@@ -80,6 +80,15 @@ bool Atan2(void)
 	dx    = f.Reverse(1, w);
 	ok   &= NearEqual(dx[0], 1., 1e-10, 1e-10);
 
+	// use a VecAD<Base>::reference object with atan2
+	CppAD::VecAD<double> v(2);
+	AD<double> zero(0);
+	AD<double> one(1);
+	v[zero]           = sin_of_x0;
+	v[one]            = cos_of_x0;
+	AD<double> result = CppAD::atan2(v[zero], v[one]);
+	ok               &= NearEqual(result, x0, 1e-10, 1e-10);
+
 	return ok;
 }
 

@@ -451,7 +451,7 @@ public:
 
 		// if no need to track indexing operation, return now
 		if( (AD<Base>::Tape()->State() != Recording) )
-			return VecAD_reference<Base>(this, 0);
+			return VecAD_reference<Base>(this, x);
 
 		if( id != *ADTape<Base>::Id() )
 		{	// must place a copy of vector in tape

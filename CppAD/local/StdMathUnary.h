@@ -88,8 +88,9 @@ $xref/glossary/AD Operation Sequence/AD operation sequence/$$.
 
 $head fun$$ 
 A definition of $italic fun$$ for each of the argument types
-list below is included in the $code CppAD$$ namespace.
-This definition extends to the 
+list below is included in the $code CppAD$$ namespace
+(the corresponding result has the same type as the argument).
+These definitions extend to the 
 $xref/glossary/AD Type Sequence/AD type sequence/$$
 above each of the types list below.
 

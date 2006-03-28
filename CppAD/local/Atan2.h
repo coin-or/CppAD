@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin atan2$$
 $spell
+	Vec
 	CppAD
 	namespace
 	std
@@ -34,7 +35,7 @@ $index tan, AD inverse$$
 $index inverse, AD tan$$
 $index atan2, AD$$
 
-$section The AD Two Argument Inverse Tangent Function$$
+$section AD Two Argument Inverse Tangent Function$$
 
 $table
 $bold Syntax$$ $cnext 
@@ -49,20 +50,32 @@ such that
 $latex \[
 \begin{array}{rcl}
 	\sin ( \theta )  & = & y / \sqrt{ x^2 + y^2 }  \\
-	\cos ( \theta )  & = & x  / \sqrt{ x^2 + y^2 }
+	\cos ( \theta )  & = & x / \sqrt{ x^2 + y^2 }
 \end{array}
 \] $$
 
+$head Base$$ 
+A definition of $code atan2$$,
+for the case where both arguments are $code float$$ 
+or both arguments are $code double$$, 
+is included in the $code CppAD$$ namespace
+(the corresponding results has the same type as the arguments).
+The type $italic Base$$ can be any type in the 
+$xref/glossary/AD Type Sequence/AD type sequence/$$
+above $code float$$ or $code double$$.
+
 $head y$$
-The argument $italic y$$ has prototype
+The argument $italic y$$ has one of the following prototypes
 $syntax%
-	const AD<%Base%> &%y%
+	const AD<%Base%>               &%y%
+	const VecAD<%Base%>::reference &%y%
 %$$ 
 
 $head x$$
-The argument $italic x$$ has prototype
+The argument $italic x$$ has one of the following prototypes
 $syntax%
-	const AD<%Base%> &%x%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
 %$$ 
 
 $head theta$$
@@ -71,20 +84,10 @@ $syntax%
 	AD<%Base%> %theta%
 %$$
 
-$head Base$$
-The type $italic Base$$ must support the use of conditional expressions
-$xref/CondExp/$$.
-To be specific,
-$italic Base$$ can be $code float$$, $code double$$,
-or any type in the 
-$xref/glossary/AD Type Sequence/AD type sequences/$$ 
-above $code float$$ or $code double$$.
-
-$head Standard Types$$
-A definition for the $code atan2$$ function is automatically included
-in the CppAD namespace for the case where both $italic x$$
-and $italic y$$ have the following standard types
-$code float$$ and $code double$$.
+$head Taping$$
+The result of this operation is an AD object,
+hence the operation can be recorded as part of a corresponding
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$.
 
 $head Example$$
 $children%

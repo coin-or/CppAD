@@ -65,9 +65,15 @@ $xref/Abs/$$.
 $pre
 
 $$
-In addition, fix a bug derivative computation for $syntax%abs(%x%)%$$
+Fix a bug derivative computation for $syntax%abs(%x%)%$$
 when $italic x$$ had type $syntax%AD< AD<double> >%$$ and $italic x$$
 had value zero.
+$pre
+
+$$
+Fix a bug using non-zero AD indices for $xref/VecAD/$$ vectors
+while the tape is in the 
+$xref/glossary/Tape State/Empty/empty state/1/$$.
 
 $head 03-28$$
 Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case in 
@@ -149,7 +155,8 @@ $pre
 $$
 The copies of the $code atan2$$ function were included
 in the CppAD namespace for the 
-$xref/Atan2/Standard Types/standard types/$$.
+$xref/Atan2/Base/Base types/$$ 
+$code float$$ and $code double$$.
 
 $head 03-15$$
 Improve the 
