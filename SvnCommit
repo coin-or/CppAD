@@ -1,26 +1,28 @@
-# mention VecAD<Base>::reference in StdMathUnary documentaion and examples.
+# mention VecAD<Base>::reference in Abs documentaion and examples.
 #
 # SvnCommit: file that made this commit.
-# StdMathUnary.h: mention VecAD<Base>::reference and fix log10, tan.
-# *.cpp: include VecAD<Base>::reference cases in examples.
-#
+# StdMathUnary.h: mention taping of these functions.
+# CppAD/local/Abs.h: In addition to list above, fix bug in AD<AD<Base>> case.
+# Faq.omh: add discussion of complex types to Faq.
+# WhatsNew06.omh: user's view of changes.
+# Example/Abs.cpp: add VecAD<Base>::reference case.
+# TestMore/Abs.cpp: check for the bug (see above) in previous version of Add.h.
+# TestMore.cpp: add Add.cpp to list of tests.
+# TestMore.vcproj: add Add.cpp to list of tests.
+# Makefile.am: add Add.cpp to list of tests.
 add_list="
+	TestMore/Abs.cpp
 "
 change_list="
 	SvnCommit
 	CppAD/local/StdMathUnary.h
-	Example/Sinh.cpp
-	Example/Tan.cpp
-	Example/Cos.cpp
-	Example/Sqrt.cpp
-	Example/Asin.cpp
-	Example/Cosh.cpp
-	Example/Exp.cpp
-	Example/Log.cpp
-	Example/Log10.cpp
-	Example/Atan.cpp
-	Example/Acos.cpp
-	Example/Sin.cpp
+	CppAD/local/Abs.h
+	omh/Faq.omh
+	omh/WhatsNew06.omh
+	Example/Abs.cpp
+	TestMore/TestMore.cpp
+	TestMore/TestMore.vcproj
+	TestMore/Makefile.am
 "
 delete_list="
 "

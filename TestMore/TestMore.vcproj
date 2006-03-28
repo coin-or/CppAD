@@ -139,6 +139,9 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
+				RelativePath=".\Abs.cpp">
+			</File>
+			<File
 				RelativePath=".\Acos.cpp">
 			</File>
 			<File

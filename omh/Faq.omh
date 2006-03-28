@@ -97,6 +97,25 @@ you will get an error message stating that
 $code CompareChange$$ is not a member of the
 $xref/ADFun/$$ template class.
 
+$head Complex Types$$
+$index complex, faq$$
+Which of the following complex types is better:
+$syntax%
+	AD< std::complex<%Base%> >
+	std::complex< AD<%Base%> >
+%$$
+Some functions are real differentiable than are not complex differentiable
+(for example, the $xref/abs/Complex Types/complex abs function/$$).
+If you have to differentiate such fucntions, you should use
+$syntax%
+	std::complex< AD<%Base% >
+%$$
+If you are sure that you will not need to take any real partials
+of complex valued function, it is more efficient to use
+$syntax%
+	AD< std::complex<%Base%> >
+%$$
+
 
 $head Exceptions$$
 $index test, exception$$

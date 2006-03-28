@@ -56,9 +56,9 @@ bool Abs(void)
 	// dependent variable vector
 	size_t m = 3;
 	CppADvector< AD<double> > y(3);
-	y[0]     = CppAD::abs(x[0] - 1.);
-	y[1]     = CppAD::abs(x[0]);
-	y[2]     = CppAD::abs(x[0] + 1.);
+	y[0]     = abs(x[0] - 1.);
+	y[1]     = abs(x[0]);
+	y[2]     = abs(x[0] + 1.);
 
 	// define f : x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y);
@@ -101,6 +101,13 @@ bool Abs(void)
 	w[0] = 0.; w[1] = 0.; w[2] = 1.;
 	dx   = f.Reverse(p+1, w);
 	ok  &= (dx[0] == 1.);
+
+	// use a VecAD<Base>::reference object with abs
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero]           = -1;
+	AD<double> result = abs(v[zero]);
+	ok   &= NearEqual(result, 1., 1e-10, 1e-10);
 
 	return ok;
 }

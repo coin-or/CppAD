@@ -30,11 +30,9 @@ $spell
 	abs
 $$
 
+$index abs, AD$$
 $index absolute, AD value$$
 $index value, AD absolute$$
-$index abs, AD$$
-$index directional, derivative for abs$$
-$index derivative, directional for abs$$
 
 $section The AD Absolute Value Function$$
 
@@ -46,19 +44,20 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-Returns an
-$syntax%AD<%Base%>%$$ object that is equal to
-$syntax%
-	abs(%x%)
-%$$
-where $code abs$$ has the same interpretation as
-for the $italic Base$$ type.
+Evaluates the absolute value function where its argument is an
+$xref/glossary/AD Object/AD object/$$.
+
 
 $head x$$
-The argument $italic x$$ has prototype
+The argument $italic x$$ has one of the following prototypes
 $syntax%
-	const AD<%Base%> &%x%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
 %$$
+where $italic Base$$ is $code float$$, $code double$$ or in the 
+$xref/glossary/AD Type Sequence/AD type sequences/$$
+above $code float$$ or $code double$$; for example,
+$code AD<double>$$.
 
 $head y$$
 The result $italic y$$ has prototype
@@ -67,21 +66,24 @@ $syntax%
 %$$
 
 
+$head Taping$$
+The result of this operation is an AD object,
+hence the operation can be recorded as part of a corresponding
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$.
 
-$head Base$$ 
-A definition for the $code abs$$ function
-is automatically included (in the $code CppAD$$ namespace)
-for the types 
-$code float$$, $code double$$ and the 
-$xref/glossary/AD Type Sequence/AD type sequences/$$
-above $code float$$ or $code double$$; for example;
-$code AD<double>$$.
+$head Complex Types$$
+The function $code abs$$ is not defined for the AD type sequences
+above $code std::complex<float>$$ or $code std::complex<double>$$
+because the complex $code abs$$ function is not complex differentiable
+(see $xref/Faq/Complex Types/complex types faq/$$).
 
-$head Derivative$$
+$head Directional Derivative$$
+$index directional, derivative abs$$
+$index derivative, directional abs$$
 The derivative of the absolute value function is one for 
 $latex x > 0$$ and minus one for $latex x < 0$$.
 The subtitle issue is 
-how to compute directional derivatives
+how to compute its directional derivative
 what $latex x = 0$$.
 $pre
 
@@ -139,25 +141,21 @@ $end
 namespace CppAD {
 
 inline float abs(float x)
-{	if( x > 0. )
-		return x;
-	else if( x < 0. )
-		return -x;
-	return 0.;
+{	if( x < 0. )
+		return - x;
+	return x;
 }
 
 inline double abs(double x)
-{	if( x > 0. )
-		return x;
-	else if( x < 0. )
-		return -x;
-	return 0.;
+{	if( x < 0. )
+		return - x;
+	return x;
 }
 
 inline std::complex<float>  abs(std::complex<float> x)
 {	CppADUsageError(
 		0,
-		"Attempt to use std::complex<float> as an ordered type"
+		"CppAD::abs: attempt to use with std::complex<float> argument"
 	);
 	return false;
 }
@@ -165,7 +163,7 @@ inline std::complex<float>  abs(std::complex<float> x)
 inline std::complex<double>  abs(std::complex<double> x)
 {	CppADUsageError(
 		0,
-		"Attempt to use std::complex<double> as an ordered type"
+		"CppAD::abs: attempt to use with std::complex<float> argument"
 	);
 	return false;
 }
@@ -178,20 +176,12 @@ AD<Base> AD<Base>::Abs (void) const
 	AD<Base> result;
 	CppADUnknownError( result.id == 0 );
 
-	if( GreaterThanZero(value) )
-		result.value = value;
-	else if( LessThanZero (value) )
-		result.value = - value;
-	else	result.value = Base(0);
-		
-
-	if(	(Tape()->State() == Recording) & Variable(*this) ) 
-	{
-		// add this operation to the tape
+	result.value = abs(value);
+	if( Variable(*this) ) 
+	{	// add this operation to the tape
 		Tape()->RecordOp(AbsOp, result, taddr);
 
 	}
-
 	return result;
 }
 

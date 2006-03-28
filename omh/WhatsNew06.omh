@@ -58,8 +58,20 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-29$$
+Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case in 
+documentation and examples for
+$xref/Abs/$$.
+$pre
+
+$$
+In addition, fix a bug derivative computation for $syntax%abs(%x%)%$$
+when $italic x$$ had type $syntax%AD< AD<double> >%$$ and $italic x$$
+had value zero.
+
 $head 03-28$$
 Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case in 
+documentation and examples for
 $xref/UnaryPlus/$$,
 $xref/UnaryMinus/$$,
 $xref/Sub/$$,
@@ -68,8 +80,8 @@ $xref/Div/$$,
 $xref/AddEq/$$,
 $xref/SubEq/$$,
 $xref/MulEq/$$,
-$xref/DivEq/$$
-documentation and examples.
+$xref/DivEq/$$, and 
+$xref/StdMathUnary/$$
 
 
 $head 03-27$$

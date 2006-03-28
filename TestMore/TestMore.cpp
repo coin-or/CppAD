@@ -29,6 +29,7 @@ typedef CppAD::AD<double>     ADdouble;
 typedef CppAD::AD<ADdouble>   ADDdouble;
 
 // various examples / tests
+extern bool Abs(void);
 extern bool Acos(void);
 extern bool Add(void);
 extern bool AddEq(void);
@@ -111,6 +112,7 @@ int main(void)
 
 	// This comment is used by OneTest 
 
+	ok &= Run( Abs,             "Abs"            );
 	ok &= Run( Acos,            "Acos"           );
 	ok &= Run( Add,             "Add"            );
 	ok &= Run( AddEq,           "AddEq"          );

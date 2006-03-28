@@ -81,6 +81,11 @@ $syntax%
 	AD<%Base%> %y%
 %$$
 
+$head Taping$$
+The result of this operation is an AD object,
+hence the operation can be recorded as part of a corresponding
+$xref/glossary/AD Operation Sequence/AD operation sequence/$$.
+
 $head fun$$ 
 A definition of $italic fun$$ for each of the argument types
 list below is included in the $code CppAD$$ namespace.
