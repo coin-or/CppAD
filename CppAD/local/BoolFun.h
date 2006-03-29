@@ -106,6 +106,12 @@ $syntax%(%u%, %v%)%$$
 where $italic u$$ is the $italic Base$$ value corresponding to $italic x$$ and
 $italic v$$ is the $italic Base$$ value corresponding to $italic y$$.
 
+$head Taping$$
+The result of this operation is a $code bool$$ value
+(not an AD object).
+Hence the operation can not be recorded as part of an 
+$xref/AD/AD Operation Sequence/AD operation sequence/$$.
+
 $head Example$$
 $children%
 	Example/BoolFun.cpp

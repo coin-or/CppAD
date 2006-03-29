@@ -79,6 +79,11 @@ $code std::complex<double>$$.
 For these cases, 
 the result has the same type as the arguments.
 
+$head Taping$$
+The result of this operation is an AD object,
+hence the operation can be recorded as part of a corresponding
+$xref/AD/AD Operation Sequence/AD operation sequence/$$.
+
 $head Example$$
 $children%
 	Example/Pow.cpp

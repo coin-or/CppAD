@@ -71,6 +71,11 @@ $syntax%
 	AD<%Base%> %y%
 %$$
 
+$head Taping$$
+The result of this operation is an AD object,
+hence the operation can be recorded as part of a corresponding
+$xref/AD/AD Operation Sequence/AD operation sequence/$$.
+
 $head Example$$
 $children%
 	Example/Erf.cpp

@@ -94,7 +94,7 @@ $syntax%
 
 $head Taping$$
 The result of this operation is a $code bool$$ value
-(not an an AD object).
+(not an AD object).
 Hence the operation can not be recorded as part of any
 $xref/AD/AD Operation Sequence/AD operation sequence/$$.
 For example, suppose 

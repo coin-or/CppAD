@@ -89,12 +89,15 @@ depend on the independent variables,
 The $xref/Discrete/$$ functions are a much more efficient
 way to represent these vectors.
 
-$head reference$$
+$head VecAD<Base>::reference$$
 $index VecAD<Base>::reference$$
 $index reference, VecAD<Base>$$
 The result $italic y$$ has type
-$syntax%VecAD<%Base%>::reference%$$ which is
-very much like the $syntax%AD<%Base%>%$$ type with some notable exceptions:
+$syntax%
+	VecAD<%Base%>::reference
+%$$ 
+which is very much like the $syntax%AD<%Base%>%$$ type 
+with some notable exceptions:
 
 $subhead Exceptions$$
 $list number$$

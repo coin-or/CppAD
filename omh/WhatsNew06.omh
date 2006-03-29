@@ -71,10 +71,21 @@ $pre
 $$
 Improve the definition of
 $xref/glossary/Tape State/tape state/$$.
+$pre
+
+$$
+Add mention of taping to 
+$xerf/Erf/$$, $xref/BoolFun/$$, $xref/NearEqualExt/$$,and $xref/Pow/$$.
+$pre
+
+$$
+Change the definition for
+$xref/VecAD/VecAD<Base>::reference/VecAD<Base>::reference/$$
+so that it stands out of the text better.
 
 
 $head 03-29$$
-Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case in 
+Mention the $xref/VecAD/VecAD<Base>::reference/VecAD<Base>::reference/$$ case in 
 documentation and examples for
 $xref/abs/$$, $xref/atan2/$$, $xref/erf/$$, and $xref/pow/$$.
 $pre
@@ -96,7 +107,7 @@ Extend $xref/erf/$$ to include $code float$$, $code double$$,
 and $syntax%VecAD<%Base%>::reference%$$.
 
 $head 03-28$$
-Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case in 
+Mention the $xref/VecAD/VecAD<Base>::reference/VecAD<Base>::reference/$$ case in 
 documentation and examples for
 $xref/UnaryPlus/$$,
 $xref/UnaryMinus/$$,
@@ -112,11 +123,11 @@ $xref/StdMathUnary/$$
 
 $head 03-27$$
 Extend and improve the 
-$xref/VecAD/reference/Exceptions/VecAD exceptions/1/$$.
+$xref/VecAD/VecAD<Base>::reference/Exceptions/VecAD exceptions/1/$$.
 $pre
 
 $$
-Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case 
+Mention the $xref/VecAD/VecAD<Base>::reference/VecAD<Base>::reference/$$ case 
 and generally improve 
 $xref/Add/$$ documentation and examples.
 
@@ -126,11 +137,11 @@ Improve documentation and examples for $xref/VecAD/$$ and change
 its element type from 
 $syntax%VecADelem<%Base%>%$$ to $syntax%VecAD_reference<%Base%>%$$  
 (so that it looks more like
-$xref/VecAD/reference/VecAD<Base>::reference/$$).
+$xref/VecAD/VecAD<Base>::reference/VecAD<Base>::reference/$$).
 $pre
 
 $$
-Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case 
+Mention the $xref/VecAD/VecAD<Base>::reference/VecAD<Base>::reference/$$ case 
 and generally improve 
 $xref/Value/$$, $xref/Output/$$ and $xref/Eq/$$ documentation
 and examples.
@@ -138,7 +149,7 @@ $pre
 
 $$
 Extend $xref/Integer/$$ and $xref/PrintFor/$$ to include the
-$xref/VecAD/reference/VecAD<Base>::reference/$$ case
+$xref/VecAD/VecAD<Base>::reference/VecAD<Base>::reference/$$ case
 (and mention in documentation and examples).
 
 

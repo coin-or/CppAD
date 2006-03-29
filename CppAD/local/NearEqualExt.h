@@ -116,6 +116,12 @@ $syntax%%a% <= %b%$$  $cnext
 	less that or equal operator (returns a $code bool$$ object)
 $tend
 
+$head Taping$$
+The result of this operation is a $code bool$$ value
+(not an AD object).
+Hence the operation can not be recorded as part of an 
+$xref/AD/AD Operation Sequence/AD operation sequence/$$.
+
 $head Example$$
 $children%
 	Example/NearEqualExt.cpp
