@@ -93,7 +93,7 @@ the conversion has the same meaning as for $italic Base$$.
 $head Taping$$
 The result of this operation is not an AD object
 so the operation is not recorded as part of any
-$xref/glossary/AD Operation Sequence/AD operation sequence/$$
+$xref/AD/AD Operation Sequence/AD operation sequence/$$
 (even if $italic x$$ is an AD object and the corresponding tape 
 $xref/glossary/Tape State/state/$$ is Recording).
 

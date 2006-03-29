@@ -44,7 +44,7 @@ $fend 20$$
 
 $head Purpose$$
 Record the evaluation of a discrete function as part
-of an $xref/glossary/AD Operation Sequence/AD operation sequence/$$.
+of an $xref/AD/AD Operation Sequence/AD operation sequence/$$.
 The value of a discrete function can depend on the
 $xref/glossary/Independent Variable/independent variables/$$,
 but its derivative is identically zero.

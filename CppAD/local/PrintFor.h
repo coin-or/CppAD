@@ -44,7 +44,7 @@ $fend 20$$
 
 $head Purpose$$
 The current value of an AD object $italic y$$ may be part of an 
-$xref/glossary/AD Operation Sequence/operation sequence/$$
+$xref/AD/AD Operation Sequence/operation sequence/$$
 that is transferred to an $xref/ADFun/$$ object $italic f$$.
 This $code ADFun$$ object can be evaluated at different values for the
 $xref/glossary/Independent Variable/independent variables/$$.

@@ -43,6 +43,8 @@ $section LU Factorization of A Square Matrix and Stability Calculation$$
 
 $table
 $bold Syntax$$ $cnext
+$code# include <CppAD/CppAD.h>$$
+$rnext $cnext
 $syntax%%sign% = LuRatio(%ip%, %jp%, %LU%, %ratio%)%$$
 $tend
 
@@ -54,6 +56,10 @@ where $italic A$$ is a square matrix.
 A measure of the numerical stability called $italic ratio$$ is calculated.
 This ratio is useful when the results of $code LuRatio$$ are
 used as part of an $xref/ADFun/$$ object.
+
+$head Include$$
+This routine is designed to be used with AD objects and
+requires the $code CppAD/CppAD.h$$ file to be included.
 
 $head Matrix Storage$$
 All matrices are stored in row major order.

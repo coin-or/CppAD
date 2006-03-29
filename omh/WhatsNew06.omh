@@ -58,6 +58,21 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-30$$
+Move the $xref/LuRatio/$$ section below $xref/LuDetAndSolve/$$. 
+$pre
+
+$$
+Move the definition of an 
+$xref/AD/AD Operation Sequence/AD operation sequence/$$ 
+from the glossary to the $xref/AD/$$ section.
+$pre
+
+$$
+Improve the definition of
+$xref/glossary/Tape State/tape state/$$.
+
+
 $head 03-29$$
 Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case in 
 documentation and examples for
@@ -175,7 +190,7 @@ This has been fixed.
 $pre
 
 $$
-The term $xref/glossary/AD Operation Sequence/AD operation sequence/$$
+The term $xref/AD/AD Operation Sequence/AD operation sequence/$$
 has been defined. 
 It will be used to improve the user's understanding of exactly
 how an $xref/ADFun/$$ object is related to the C++ algorithm.

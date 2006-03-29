@@ -101,7 +101,7 @@ $syntax%
 $head Taping$$
 The result of this operation is an AD object,
 hence the operation can be recorded as part of a corresponding
-$xref/glossary/AD Operation Sequence/AD operation sequence/$$.
+$xref/AD/AD Operation Sequence/AD operation sequence/$$.
 
 
 $head Example$$

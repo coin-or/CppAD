@@ -66,7 +66,7 @@ $syntax%
 	%y% = %v%[%x%]
 %$$
 is included in the
-$xref/glossary/AD Operation Sequence/AD operation sequence/$$ and 
+$xref/AD/AD Operation Sequence/AD operation sequence/$$ and 
 transferred to the corresponding $xref/ADFun/$$ object $italic f$$.
 Such an index can change each time
 zero order $xref/Forward//f.Forward/$$ is used; i.e.,
@@ -206,7 +206,7 @@ $syntax%
 %$$
 The object $italic y$$ has an AD type and its 
 operations are recorded as part of the same
-$xref/glossary/AD Operation Sequence/AD operation sequence/$$ as
+$xref/AD/AD Operation Sequence/AD operation sequence/$$ as
 for $syntax%AD<%Base%>%$$ objects.
 It acts as a reference to the 
 element with index $latex {\rm floor} (x)$$ in the vector $italic v$$

@@ -23,22 +23,63 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin AD$$
 $spell
+	bool
+	cos
 	Cpp
 $$
 
-$section Using The AD Template Class$$
+$section AD Class Objects$$
 
-$index AD, template class$$
+$index AD, object$$
 
 $head Purpose$$
-The AD template class ($syntax%AD<%Base%>%$$ class)
-is defined by including 
-the file $xref/CppAD//CppAD.h/$$.
-The purpose of this template class is to record an
-$xref/glossary/AD Operation Sequence/AD operation sequence/$$
-for evaluation of the corresponding function and its derivatives.
-The sections listed below describe the methods
-that are available for objects in this template class.
+The sections listed below describe the operations 
+that are available to 
+$xref/glossary/AD Object/AD objects/$$.
+The corresponding
+$xref/AD/AD Operation Sequence/AD operation sequence/$$
+can be
+$xref/glossary/Tape State/Recording/recorded/1/$$
+and then transferred to an $xref/ADFun/$$ object.
+The ADFun object can be used to
+evaluate the function and derivatives corresponding to the
+AD sequence of operations.
+
+$head AD Operation Sequence$$
+The sections listed below define the available AD operations. 
+An AD operation becomes part of an AD operation sequence,
+if its result is an
+$xref/glossary/AD Object/AD object/$$ 
+and the corresponding  
+$xref/glossary/Tape State/Recording/tape state is Recording/1/$$.
+For example, if both $italic x$$ and $italic y$$
+have type $syntax%AD<double>%$$, the 
+$xref/Add/$$ operation
+$syntax%
+	%x% + %y%
+%$$
+is defined as part $xref/ADValued/$$ section and its
+result is an AD object.
+Thus,
+if the corresponding tape is recording,
+this operation becomes part of the AD operation sequence
+that is stored and transferred to the corresponding $xref/ADFun/$$ object.
+In contrast, the result of the $xref/Compare/$$ operation
+$syntax%
+	%x% < %y%
+%$$
+is defined as part of the $xref/BoolValued/$$ section but 
+has type $code bool$$ and hence is not an AD object.
+If one executes the following code
+$syntax%
+	if( %x% < %y% )
+		%y% = cos(%x%);
+	else	%y% = sin(%x%); 
+%$$
+The choice may depend on the value of the 
+$xref/glossary/Independent Variable/independent variables/$$
+but only the choice made while the tape is recording
+is transferred to the corresponding $code ADFun$$ object.
 
 $childtable%
 	CppAD/local/Constructor.h%
@@ -46,8 +87,7 @@ $childtable%
 	CppAD/local/Eq.h%
 	CppAD/local/ADValued.h%
 	CppAD/local/BoolValued.h%
-	CppAD/local/VecAD.h%
-	CppAD/local/LuRatio.h
+	CppAD/local/VecAD.h
 %$$
 
 $end

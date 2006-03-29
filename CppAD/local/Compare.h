@@ -93,11 +93,10 @@ $syntax%
 %$$
 
 $head Taping$$
-The result of this operation is not an AD object
-so the operation is not recorded as part of any
-$xref/glossary/AD Operation Sequence/AD operation sequence/$$
-(even if the tape corresponding to $italic x$$ or $italic y$$ 
-is in the Recording $xref/glossary/Tape State/state/$$).
+The result of this operation is a $code bool$$ value
+(not an an AD object).
+Hence the operation can not be recorded as part of any
+$xref/AD/AD Operation Sequence/AD operation sequence/$$.
 For example, suppose 
 $italic x$$ and $italic y$$ are $syntax%AD<%Base%>%$$ objects,
 the tape corresponding to $syntax%AD<%Base%>%$$ is recording,

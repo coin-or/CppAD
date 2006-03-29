@@ -56,7 +56,7 @@ $fend 20$$
 
 $head Purpose$$
 Record, 
-as part of an $xref/glossary/AD Operation Sequence/AD operation sequence/$$,
+as part of an $xref/AD/AD Operation Sequence/AD operation sequence/$$,
 a the conditional result of the form 
 $syntax%
 	if( %left% %op% %right% )

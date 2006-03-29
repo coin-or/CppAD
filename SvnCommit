@@ -1,16 +1,49 @@
-# mention VecAD<Base>::reference in pow documentaion and examples.
 #
 # SvnCommit: file that made this commit.
-# Pow.h: mention VecAD<Base>::reference case.
-# WhatsNew06.omh: user's view of changes.
-# Pow.cpp: include VecAD<Base>::reference and double cases.
+# Doc.omh: minor edit (in addition).
+# UserAD.h: move definition of AD operation sequence here & remove LuRatio.
+# LuRatio.h: mention need to include all of CppAD/CppAD.h.
+# LuDetAndSolve.omh: move LuRatio into this section.
+# glossary.omh: remove AD Operation Sequence and improve Tape State.
+# WhatsNew06.omh: users view of changes.
+#
+# Following files only changed the cross reference for AD operation sequence:
+# PrintFor.h, Atan2.h, Value.h, Output.h, CondExp.h, UnaryPlus.h, 
+# Eq.h, SubEq.h, MulEq.h, UnaryMinus.h, Div.h, StdMathUnary.h, Add.h, 
+# Sub.h, Mul.h, Integer.h, Discrete.h, Abs.h, DivEq.h, AddEq.h, VecAD.h,
+# Compare.h, 
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/Pow.h
+	Doc.omh
+	CppAD/local/PrintFor.h
+	CppAD/local/Atan2.h
+	CppAD/local/Value.h
+	CppAD/local/UserAD.h
+	CppAD/local/Output.h
+	CppAD/local/CondExp.h
+	CppAD/local/UnaryPlus.h
+	CppAD/local/Eq.h
+	CppAD/local/SubEq.h
+	CppAD/local/LuRatio.h
+	CppAD/local/MulEq.h
+	CppAD/local/UnaryMinus.h
+	CppAD/local/Div.h
+	CppAD/local/StdMathUnary.h
+	CppAD/local/Add.h
+	CppAD/local/Sub.h
+	CppAD/local/Mul.h
+	CppAD/local/Integer.h
+	CppAD/local/Discrete.h
+	CppAD/local/Abs.h
+	CppAD/local/DivEq.h
+	CppAD/local/AddEq.h
+	CppAD/local/VecAD.h
+	CppAD/local/Compare.h
+	omh/LuDetAndSolve.omh
+	omh/glossary.omh
 	omh/WhatsNew06.omh
-	Example/Pow.cpp
 "
 delete_list="
 "

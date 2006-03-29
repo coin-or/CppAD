@@ -32,39 +32,6 @@ $$
 
 $section Glossary$$
 
-$head AD Operation Sequence$$
-An operation becomes part of an AD operation sequence if
-its result is an 
-$xref/glossary/AD Object/AD object/$$ and
-the corresponding  
-$xref/glossary/Tape State/tape state/$$ is $code Recording$$.
-For example, if both $italic x$$ and $italic y$$
-have type $syntax%AD<double>%$$, the 
-$xref/Add/$$ operation
-$syntax%
-	%x% + %y%
-%$$
-result is an AD object.
-Thus this operation becomes part of the relation between
-the independent and 
-$xref/glossary/Dependent Variable/dependent variables/$$ 
-in the corresponding $xref/ADFun/$$ object.
-On the other hand, the result of the $xref/Compare/$$ operation
-$syntax%
-	%x% < %y%
-%$$
-has type $code bool$$ and is not an AD object.
-If one executes the following code
-$syntax%
-	if( %x% < %y% )
-		%y% = cos(%x%);
-	else	%y% = sin(%x%); 
-%$$
-The choice may depend on the value of the independent
-variables when the code is executed,
-but only the choice that is executed is recorded and transferred to the
-corresponding $code ADFun$$ object.
-
 $head AD Object$$
 An object is called an AD object it its type is 
 either $syntax%AD<%Base%>%$$ or $syntax%VecAD<%Base%>::reference%$$
@@ -144,10 +111,10 @@ for a matrix $italic A$$, we say that $italic P$$ is more efficient than
 $italic Q$$ if $italic P$$ has fewer true elements than $italic Q$$.
  
 $head Tape State$$
-For each class $italic Base$$,
-the tape that records 
-$syntax%AD<%Base%>%$$ 
-operations has two possible states:
+For each $italic Base$$ class,
+the tape that record the corresponding
+$xref/AD/AD Operation Sequence/AD operation sequence/$$
+has two possible states:
 $codep
 	enum TapeState {
 		Empty,
@@ -155,8 +122,9 @@ $codep
 	}
 $$
 The tape is initially in the $code Empty$$ state.
-It is in the recording state after each call to 
-$xref/Independent/$$ with a $syntax%AD<%Base%>%$$ argument.
+It is in the $code Recording$$ state after a call to 
+$xref/Independent/$$ with an argument vector containing 
+$syntax%AD<%Base%>%$$ elements.
 It is in the $code Empty$$ state after the corresponding call to the
 $xref/ADFun//ADFun<Base>/$$ constructor.
 

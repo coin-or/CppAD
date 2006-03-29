@@ -42,7 +42,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: CppAD-06-03-24
+A Package for Differentiation of C++ Algorithms: CppAD-06-03-29
 $$ 
 
 $table
@@ -74,7 +74,7 @@ operating systems.
 Extensive user and developer documentation is included.
 
 $lnext
-An $xref/glossary/AD Operation Sequence/AD operation sequence/$$
+An $xref/AD/AD Operation Sequence/AD operation sequence/$$
 is stored as an 
 $xref/ADFun//AD function object/$$ 
 which can evaluate function values and derivatives.
@@ -92,7 +92,7 @@ $xref/glossary/Independent Variable/independent variables/$$
 but which have identically zero derivatives
 (e.g., a step function).
 Derivatives of functions that are defined in terms of other derivatives
-can be computed used multiple tapes
+can be computed using multiple tapes
 (see $xref/MulTape/$$ for a simple example
 and $xref/OdeTaylor.cpp//$$ for a more realistic example).
 

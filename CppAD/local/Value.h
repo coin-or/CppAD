@@ -60,7 +60,7 @@ $syntax%
 $head Taping$$
 The result of this operation is not an $syntax%AD<%Base%>%$$ object
 so the operation is not recorded as part of the corresponding 
-$xref/glossary/AD Operation Sequence/AD operation sequence/$$
+$xref/AD/AD Operation Sequence/AD operation sequence/$$
 (even if the current $xref/glossary/Tape State/state/$$ is Recording).
 In order to make sure this is understood,
 the $code Value$$ function cannot be called while the tape that records
