@@ -1,22 +1,18 @@
-# mention VecAD<Base>::reference in Atan2 documentaion and examples.
+# mention VecAD<Base>::reference in Erf documentaion and examples.
 #
 # SvnCommit: file that made this commit.
-# Atan2.h: mention VecAD<Base>::reference case and float, double cases.
-# StdMathUnary.h: improve mention of float and double cases.
-# Abs.h: improve mention of float and double cases.
-# VecAD.h: fix AD indexing when tape is not recording (bug).
+# Erf.h: extend to float, double, and VecAD<Base>::reference cases.
+# Abs.h: return proper value types in complex error cases.
 # WhatsNew06.omh: user's view of changes.
-# Atan2.cpp: include VecAD<Base>::reference case.
+# Erf.cpp: include VecAD<Base>::reference and double cases.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/Atan2.h
-	CppAD/local/StdMathUnary.h
+	CppAD/local/Erf.h
 	CppAD/local/Abs.h
-	CppAD/local/VecAD.h
 	omh/WhatsNew06.omh
-	Example/Atan2.cpp
+	Example/Erf.cpp
 "
 delete_list="
 "

@@ -85,6 +85,16 @@ bool Erf(void)
 	dx    = f.Reverse(1, w);
 	ok   &= NearEqual(dx[0], check, 1e-10, 1e-10);
 
+	// use a VecAD<Base>::reference object with erf
+	CppAD::VecAD<double> v(1);
+	AD<double> zero(0);
+	v[zero]           = x0;
+	AD<double> result = CppAD::erf(v[zero]);
+	ok   &= NearEqual(result, y[0], 1e-10, 1e-10);
+
+	// use a double with erf
+	ok   &= NearEqual(CppAD::erf(x0), y[0], 1e-10, 1e-10);
+
 	return ok;
 }
 

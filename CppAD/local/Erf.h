@@ -25,6 +25,9 @@ $begin erf$$
 
 $section The AD Error Function$$
 $spell
+	Cpp
+	namespace
+	Vec
 	erf
 	const
 $$
@@ -46,10 +49,20 @@ $latex \[
 {\rm erf} (x) = \frac{2}{ \sqrt{\pi} } \int_0^x \exp( - t * t ) \; {\bf d} t
 \] $$
 
+$head Base$$ 
+A definition of $code erf$$ for arguments of type
+$code float$$ and $code double$$ 
+is included in the $code CppAD$$ namespace
+(the corresponding results has the same type as the arguments).
+The type $italic Base$$ can be any type in the 
+$xref/glossary/AD Type Sequence/AD type sequence/$$
+above $code float$$ or $code double$$.
+
 $head x$$
 The argument $italic x$$ has prototype
 $syntax%
-	const AD<%Base%> &%x%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
 %$$
 
 $head y$$
@@ -57,16 +70,6 @@ The result $italic y$$ has prototype
 $syntax%
 	AD<%Base%> %y%
 %$$
-
-$head Base$$
-The type $italic Base$$ must support the use of conditional expressions
-$xref/CondExp/$$.
-To be specific,
-$italic Base$$ can be $code float$$, $code double$$,
-or any type in the 
-$xref/glossary/AD Type Sequence/AD type sequences/$$ above 
-$code float$$ or $code double$$.
-
 
 $head Example$$
 $children%
@@ -193,10 +196,9 @@ $end
 // BEGIN CppAD namespace
 namespace CppAD {   
 
-template <class Base>
-AD<Base> erf(const AD<Base> &x)
+template <class Type>
+Type erf_template(const Type &x)
 {	using CppAD::exp;
-	typedef AD<Base> Type;
 
 	static const Type
 		tiny =  1e-300,
@@ -327,6 +329,37 @@ AD<Base> erf(const AD<Base> &x)
 	// so must switch sign in case where x < 0
 	return CondExpGe(x, zero, Gt0, -Gt0);
 }
+
+inline float erf(float x)
+{	return erf_template(x); }
+
+inline double erf(double x)
+{	return erf_template(x); }
+
+inline std::complex<float>  erf(std::complex<float> x)
+{	CppADUsageError(
+		0,
+		"CppAD::erf: attempt to use with std::complex<float> argument"
+	);
+	return std::complex<float>(0);
+}
+
+inline std::complex<double>  erf(std::complex<double> x)
+{	CppADUsageError(
+		0,
+		"CppAD::erf: attempt to use with std::complex<double> argument"
+	);
+	return std::complex<double>(0);
+}
+
+template <class Base>
+inline AD<Base> erf(const AD<Base> &x)
+{	return erf_template(x); }
+
+template <class Base>
+inline AD<Base> erf(const VecAD_reference<Base> &x)
+{	return erf_template( x.ADBase() ); }
+
 
 } // END CppAD namespace
 

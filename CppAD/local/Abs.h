@@ -37,7 +37,7 @@ $index abs, AD$$
 $index absolute, AD value$$
 $index value, AD absolute$$
 
-$section The AD Absolute Value Function$$
+$section AD Absolute Value Function$$
 
 $table
 $bold Syntax$$ $cnext 
@@ -170,7 +170,7 @@ inline std::complex<float>  abs(std::complex<float> x)
 		0,
 		"CppAD::abs: attempt to use with std::complex<float> argument"
 	);
-	return false;
+	return std::complex<float>(0);
 }
 
 inline std::complex<double>  abs(std::complex<double> x)
@@ -178,7 +178,7 @@ inline std::complex<double>  abs(std::complex<double> x)
 		0,
 		"CppAD::abs: attempt to use with std::complex<float> argument"
 	);
-	return false;
+	return std::complex<double>(0);
 }
 
 

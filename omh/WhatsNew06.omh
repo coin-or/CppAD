@@ -61,7 +61,7 @@ assist you in learning about changes between various versions of CppAD.
 $head 03-29$$
 Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case in 
 documentation and examples for
-$xref/Abs/$$.
+$xref/abs/$$, $xref/atan2/$$, and $xref/erf/$$.
 $pre
 
 $$
@@ -74,6 +74,11 @@ $$
 Fix a bug using non-zero AD indices for $xref/VecAD/$$ vectors
 while the tape is in the 
 $xref/glossary/Tape State/Empty/empty state/1/$$.
+$pre
+
+$$
+Extend $xref/erf/$$ to include $code float$$, $code double$$,
+and $syntax%VecAD<%Base%>::reference%$$.
 
 $head 03-28$$
 Mention the $xref/VecAD/reference/VecAD<Base>::reference/$$ case in 
