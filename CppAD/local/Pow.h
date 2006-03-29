@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -------------------------------------------------------------------------------
 $begin pow$$
 $spell
+	Vec
 	std
 	namespace
 	CppAD
@@ -48,15 +49,17 @@ $latex \[
 \] $$.
 
 $head x$$
-The argument $italic x$$ has prototype
+The argument $italic x$$ has one of the following prototypes
 $syntax%
-	const AD<%Base%> &%x%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
 %$$ 
 
 $head y$$
-The argument $italic y$$ has prototype
+The argument $italic y$$ has one of the following prototypes
 $syntax%
-	const AD<%Base%> &%y%
+	const AD<%Base%>               &%x%
+	const VecAD<%Base%>::reference &%x%
 %$$ 
 (see $xref/PowInt/$$ for the case where $italic y$$ is an $code int$$).
 
@@ -67,12 +70,14 @@ $syntax%
 %$$
 
 $head Standard Types$$
-A definition for the $code pow$$ function is automatically included
+A definition for the $code pow$$ function is included
 in the CppAD namespace for the case where both $italic x$$
-and $italic y$$ have the following standard types:
+and $italic y$$ have the same type and that type is
 $code float$$, $code double$$, 
-$code std::complex<float>$$, and
+$code std::complex<float>$$, or
 $code std::complex<double>$$.
+For these cases, 
+the result has the same type as the arguments.
 
 $head Example$$
 $children%

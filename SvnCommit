@@ -1,18 +1,16 @@
-# mention VecAD<Base>::reference in Erf documentaion and examples.
+# mention VecAD<Base>::reference in pow documentaion and examples.
 #
 # SvnCommit: file that made this commit.
-# Erf.h: extend to float, double, and VecAD<Base>::reference cases.
-# Abs.h: return proper value types in complex error cases.
+# Pow.h: mention VecAD<Base>::reference case.
 # WhatsNew06.omh: user's view of changes.
-# Erf.cpp: include VecAD<Base>::reference and double cases.
+# Pow.cpp: include VecAD<Base>::reference and double cases.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/Erf.h
-	CppAD/local/Abs.h
+	CppAD/local/Pow.h
 	omh/WhatsNew06.omh
-	Example/Erf.cpp
+	Example/Pow.cpp
 "
 delete_list="
 "

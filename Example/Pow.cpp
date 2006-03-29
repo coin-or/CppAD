@@ -90,6 +90,15 @@ bool Pow(void)
 	check = std::log(x0) * std::pow(x0, x1);
 	ok   &= NearEqual(dx[1], check, 1e-10, 1e-10);
 
+	// use a VecAD<Base>::reference object with pow
+	CppAD::VecAD<double> v(2);
+	AD<double> zero(0);
+	AD<double> one(1);
+	v[zero]           = x[0];
+	v[one]            = x[1];
+	AD<double> result = CppAD::pow(v[zero], v[one]);
+	ok               &= NearEqual(result, y[0], 1e-10, 1e-10);
+
 	return ok;
 }
 
