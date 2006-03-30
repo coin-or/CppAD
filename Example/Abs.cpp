@@ -55,7 +55,7 @@ bool Abs(void)
 
 	// dependent variable vector
 	size_t m = 3;
-	CppADvector< AD<double> > y(3);
+	CppADvector< AD<double> > y(m);
 	y[0]     = abs(x[0] - 1.);
 	y[1]     = abs(x[0]);
 	y[2]     = abs(x[0] + 1.);

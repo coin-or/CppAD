@@ -100,6 +100,5 @@ $end
 # include <CppAD/local/ADValued.h>
 # include <CppAD/local/BoolValued.h>
 # include <CppAD/local/VecAD.h>
-# include <CppAD/local/LuRatio.h>
 
 # endif

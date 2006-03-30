@@ -721,6 +721,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Independent.cpp">
+			</File>
+			<File
 				RelativePath=".\Integer.cpp">
 			</File>
 			<File
@@ -1069,6 +1072,9 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\ParVar.cpp">
 			</File>
 			<File
 				RelativePath=".\Piecewise.cpp">

@@ -1,9 +1,8 @@
 # ifndef CppADIndependentIncluded
 # define CppADIndependentIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 /*
 ---------------------------------------------------------------------------
 
@@ -33,8 +31,8 @@ $spell
 $$
 
 $index Independent$$
-$index start, tape$$
-$index tape, start$$
+$index start, recording$$
+$index recording, start$$
 $index variable, independent$$
 
 $section Declare Independent Variables and Start Recording$$
@@ -47,15 +45,18 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-Calling $code Independent$$ 
-starts the recording of $syntax%AD<%Base%>%$$ operations
-with $italic x$$ being the independent variable vector.
-This is the first step in defining a CppAD differentiable function object
-($xref/ADFun/$$ object).
+Calling $code Independent$$ starts the recording 
+$syntax%AD<%Base%>%$$ operations
+with $italic x$$ as the vector of independent variables.
+Once the 
+$xref/AD/AD Operation Sequence/AD operation sequence/$$ is completed,
+it is transferred to a function object by calling the
+$xref/ADFun/$$ constructor $syntax%ADFun<%Base%>%$$.  
 
 $head VectorADBase$$
 The type $italic VectorADBase$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type AD<Base>/$$.
+$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+$syntax%AD<%Base%>%$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
@@ -65,17 +66,26 @@ $syntax%
 	%VectorADBase% &%x%
 %$$
 The length of $italic x$$, must be greater than zero,
-and is the number of independent variables
-(dimension of the domain space for the $xref/ADFun/$$ object)
+and is the number of independent variables for this
+AD operation sequence.
 
 
 $head Tape State$$
 $index state, tape$$
 $index tape, state$$
-The operation can only be done while the tape 
-that records $syntax%AD<%Base%>%$$ operations is in the 
-Empty $xref/glossary/Tape State/state/$$.
+The tape that records $syntax%AD<%Base%>%$$ operations must be 
+in the $xref/glossary/Tape State/Empty/empty state/1/$$ when
+$code Independent$$ is called.
 After this operation, the tape will be in the Recording state.
+
+$head Example$$
+$children%
+	Example/Independent.cpp
+%$$
+The file
+$xref/Independent.cpp/$$
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
 
 $end
 -----------------------------------------------------------------------------

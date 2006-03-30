@@ -118,6 +118,7 @@ $rref HesLuDet.cpp$$
 $rref HesMinorDet.cpp$$
 $rref HesTimesDir.cpp$$
 $rref Hessian.cpp$$
+$rref Independent.cpp$$
 $rref Integer.cpp$$
 $rref Interface2C.cpp$$
 $rref JacLuDet.cpp$$
@@ -138,6 +139,7 @@ $rref NearEqualExt.cpp$$
 $rref OdeErrControl.cpp$$
 $rref OdeTaylor.cpp$$
 $rref Output.cpp$$
+$rref ParVar.cpp$$
 $rref Piecewise.cpp$$
 $rref Poly.cpp$$
 $rref Pow.cpp$$

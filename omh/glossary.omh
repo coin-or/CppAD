@@ -84,8 +84,8 @@ An $syntax%AD<%Base%>%$$ object $italic u$$ is currently a parameter if
 its value does not depend on the value of the
 current $xref/Independent/$$ variables.
 If $italic u$$ is a parameter, the function 
-$xref/Parameter//Parameter(u)/$$ returns true
-and $xref/Variable//Variable(u)/$$ returns false.
+$xref/ParVar//Parameter(u)/$$ returns true
+and $xref/ParVar//Variable(u)/$$ returns false.
 $pre
 
 $$
@@ -169,8 +169,8 @@ and the current value of an $syntax%AD<%Base%>%$$ object
 depends on the value of at least one of the 
 $xref/glossary/Independent Variable/independent/$$ variables.
 If $italic u$$ is a variable,
-$xref/Variable//Variable(u)/$$ returns true and 
-$xref/Parameter//Parameter(u)/$$ returns false. 
+$xref/ParVar//Variable(u)/$$ returns true and 
+$xref/ParVar//Parameter(u)/$$ returns false. 
 For example,
 directly after the code sequence
 $syntax%

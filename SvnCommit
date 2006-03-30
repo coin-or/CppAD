@@ -1,25 +1,52 @@
+# Improve documentation and add tests for Parameter, Variable, Independent.
+#
 # SvnCommit: file that made this commit.
-# VecAD.h: change the heading reference to VecAD<Base>::refernece.
-# Compare.h: fix repeated word error.
-# WhatsNew05.omh: change cross reference to VecAD<Base>::reference.
-# WhatsNew06.omh: users view of the changes (and change in WhatsNew05).
-# 
-# The following file just add comment about taping and AD operaiton sequence:
-# Erf.h, BoolFun.h, NearEqualExt.h, Pow.h, 
+# BoolValued.h: move Parameter and Variable fucntions into this section.
+# UserAD.h: move include of LuRatio.h from here to CppAD/CppAD.h.
+# Independent: improve documentation.
+# Fun.h: move Parameter and Variable from here to BoolValued.h.
+# VecAD.h: add Parameter, Variable, and Independent in list of exceptions.
+# CppAD.h: move include of LuRatio.h from UserAD.h to here.
+# WhatsNew03.omh: group Parameter and Variable cross reference to ParVar.
+# glossary.omh: group Parameter and Variable cross reference to ParVar.
+# WhatsNew05.omh: group Parameter and Variable cross reference to ParVar.
+# WhatsNew06.omh: users view of the changes.
+# ExampleList.omh: add ParVar.cpp and Independent.cpp.
+# Abs.cpp: use m for dimension of dependent variable vector.
+# Example.vcproj: add ParVar.cpp and Independent.cpp.
+# Example.cpp: add ParVar.cpp and Independent.cpp.
+# Example/Makefile.am: add ParVar.cpp and Independent.cpp.
+# Makefile.am: add ParVar.h to distribution list.
 add_list="
+	CppAD/local/ParVar.h
+	Example/ParVar.cpp
+	Example/Independent.cpp
 "
 change_list="
 	SvnCommit
-	CppAD/local/Erf.h
-	CppAD/local/BoolFun.h
-	CppAD/local/NearEqualExt.h
-	CppAD/local/Pow.h
+	Doc.omh
+	CppAD/local/BoolValued.h
+	CppAD/local/UserAD.h
+	CppAD/local/Independent.h
+	CppAD/local/Fun.h
 	CppAD/local/VecAD.h
-	CppAD/local/Compare.h
+	CppAD/CppAD.h
+	configure.ac
+	omh/InstallUnix.omh
+	omh/WhatsNew03.omh
+	omh/glossary.omh
 	omh/WhatsNew05.omh
 	omh/WhatsNew06.omh
+	omh/InstallWindows.omh
+	omh/ExampleList.omh
+	Example/Abs.cpp
+	Example/Example.vcproj
+	Example/Example.cpp
+	Example/Makefile.am
+	Makefile.am
 "
 delete_list="
+	CppAD/local/Parameter.h
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

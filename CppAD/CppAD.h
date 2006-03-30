@@ -75,6 +75,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <CppAD/local/UserAD.h>  // AD class methods available to the user
 # include <CppAD/local/Fun.h>     // differentiable function objects
 
+// ---------------------------------------------------------------------------
+// library routines that require the rest of CppAD
+# include <CppAD/local/LuRatio.h>
+
 // undo definitions in Define.h
 # include <CppAD/local/Undef.h>   
 

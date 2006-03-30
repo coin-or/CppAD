@@ -376,7 +376,7 @@ $code State$$,
 $code Order$$,
 $code Required$$,
 $code Dependent$$, and
-$xref/Parameter/$$.
+$xref/ParVar//Parameter/$$.
 
 $head 09-20$$
 The functions $code Grad$$ and $code Hess$$ were

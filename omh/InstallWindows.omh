@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 $begin InstallWindows$$
 $dollar @$$
@@ -70,8 +68,8 @@ just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
 Otherwise,
 download the archive
 $href%
-	http://www.coin-or.org/Tarballs/CppAD-06-03-24.zip%
-	CppAD-06-03-24.zip
+	http://www.coin-or.org/Tarballs/CppAD-06-03-30.zip%
+	CppAD-06-03-30.zip
 %$$
 
 $head Extraction$$
@@ -81,10 +79,10 @@ $href%
 	WinZip
 %$$
 or some other program to decompress the archive
-$code CppAD-06-03-24.zip$$.
+$code CppAD-06-03-30.zip$$.
 This will create the distribution directory 
 $syntax%
-	cppad-06-03-24
+	cppad-06-03-30
 %$$
 All the command sequences below assume that you start in this
 distribution directory.

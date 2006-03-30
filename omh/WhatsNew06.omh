@@ -58,6 +58,15 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-31$$
+Add examples for the $xref/ParVar//Parameter, Variable/$$ and
+$xref/Independent/$$ functions.
+$pre
+
+$$
+Move the $xref/ParVar//Parameter and Variable/$$ functions from
+the $xref/ADFun/$$ seciton to the $xref/AD/$$ section.
+
 $head 03-30$$
 Move the $xref/LuRatio/$$ section below $xref/LuDetAndSolve/$$. 
 $pre

@@ -76,6 +76,7 @@ Example_SOURCES   = \
 	HesMinorDet.cpp \
 	Hessian.cpp \
 	HesTimesDir.cpp \
+	Independent.cpp \
 	Integer.cpp \
 	Interface2C.cpp\
 	JacLuDet.cpp \
@@ -103,6 +104,7 @@ Example_SOURCES   = \
 	OdeStiff.cpp \
 	OdeTaylor.cpp \
 	Output.cpp \
+	ParVar.cpp \
 	Piecewise.cpp \
 	Poly.cpp \
 	Pow.cpp \

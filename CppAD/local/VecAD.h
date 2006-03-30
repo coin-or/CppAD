@@ -140,6 +140,16 @@ $syntax%
 	CondExpGt(%y%, %z%, %u%, %v%)
 %$$
 no matter what the types of $italic z$$, $italic u$$, and $italic v$$.
+
+$lnext
+The $xref/ParVar//Parameter and Variable/$$ functions cannot be used with
+$syntax%VecAD<%Base%>::reference%$$ arguments.
+
+$lnext
+The vectors passed to $xref/Independent/$$ must have elements
+of type $syntax%AD<%Base%>%$$; i.e., $xref/VecAD/$$ vectors
+cannot be passed to $code Independent$$.
+
 $lend
 
 $head n$$

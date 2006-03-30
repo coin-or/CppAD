@@ -33,12 +33,14 @@ $section Bool Valued Operations and Functions with AD Arguments$$
 $children%
 	CppAD/local/Compare.h%
 	CppAD/local/NearEqualExt.h%
-	CppAD/local/BoolFun.h
+	CppAD/local/BoolFun.h%
+	CppAD/local/ParVar.h
 %$$
 $table
 $rref Compare$$
 $rref NearEqualExt$$
 $rref BoolFun$$
+$rref ParVar$$
 $tend
 	
 
@@ -48,5 +50,6 @@ $end
 # include <CppAD/local/Compare.h>
 # include <CppAD/local/NearEqualExt.h>
 # include <CppAD/local/BoolFun.h>
+# include <CppAD/local/ParVar.h>
 
 # endif

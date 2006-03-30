@@ -192,7 +192,6 @@ contain examples and tests of these operations.
 They return true if they succeed and false otherwise.
 
 $contents%
-	CppAD/local/Parameter.h%
 	CppAD/local/Independent.h%
 	omh/Drivers.omh%
 	CppAD/local/Forward.h%
@@ -468,7 +467,6 @@ ADFun<Base>::ADFun(const VectorADBase &x, const VectorADBase &y)
 
 } // END CppAD namespace
 
-# include <CppAD/local/Parameter.h>
 # include <CppAD/local/Independent.h>
 # include <CppAD/local/ForwardSweep.h>
 # include <CppAD/local/ReverseSweep.h>

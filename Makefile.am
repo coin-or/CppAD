@@ -103,7 +103,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/OpCode.h \
 	CppAD/local/Ordered.h \
 	CppAD/local/Output.h \
-	CppAD/local/Parameter.h \
+	CppAD/local/ParVar.h \
 	CppAD/local/Pow.h \
 	CppAD/local/PrintFor.h \
 	CppAD/local/LuRatio.h \

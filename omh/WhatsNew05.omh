@@ -801,7 +801,8 @@ and improve its documentation.
 $pre
 
 $$
-Correct the syntax for the $xref/Parameter/$$ and $code Variable$$ functions.
+Correct the syntax for the $xref/ParVar//Parameter and Variable/$$ 
+functions.
 
 
 $head 05-16$$
@@ -863,7 +864,7 @@ this list is no longer necessary (a tape id number is used in its place)
 $pre
 
 $$
-During the process above, the function $xref/Parameter//Variable/$$ was added.
+During the process above, the function $xref/ParVar//Variable/$$ was added.
 
 
 $head 04-20$$
