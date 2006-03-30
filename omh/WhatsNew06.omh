@@ -65,7 +65,14 @@ $pre
 
 $$
 Move the $xref/ParVar//Parameter and Variable/$$ functions from
-the $xref/ADFun/$$ seciton to the $xref/AD/$$ section.
+the $xref/ADFun/$$ section to the $xref/AD/$$ section.
+$pre
+
+$$
+In the examples for the $xref/AD/$$ sections,
+refer to the range space vector instead of the dependent variable vector
+because some of the components may not be 
+$xref/glossary/Variable/variables/$$.
 
 $head 03-30$$
 Move the $xref/LuRatio/$$ section below $xref/LuDetAndSolve/$$. 

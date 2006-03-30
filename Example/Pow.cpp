@@ -44,16 +44,18 @@ bool Pow(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
-	// declare independent variables and start tape recording
+	// domain space vector
 	size_t n  = 2;
 	double x0 = 0.5;
 	double x1 = 2.;
 	CppADvector< AD<double> > x(n);
 	x[0]      = x0;
 	x[1]      = x1;
+
+	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// dependent variable vector 
+	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
 	y[0] = CppAD::pow(x[0], x[1]);

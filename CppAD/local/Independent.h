@@ -53,22 +53,23 @@ $xref/AD/AD Operation Sequence/AD operation sequence/$$ is completed,
 it is transferred to a function object by calling the
 $xref/ADFun/$$ constructor $syntax%ADFun<%Base%>%$$.  
 
+$head x$$
+The vector $italic x$$ has prototype
+$syntax%
+	%VectorADBase% &%x%
+%$$
+(see the specifications for the class $italic VectorADBase$$ below).
+The size of the vector $italic x$$, must be greater than zero,
+and is the number of independent variables for this
+AD operation sequence.
+
+
 $head VectorADBase$$
 The type $italic VectorADBase$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type/$$
 $syntax%AD<%Base%>%$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
-
-$head x$$
-The vector $italic x$$ has prototype
-$syntax%
-	%VectorADBase% &%x%
-%$$
-The length of $italic x$$, must be greater than zero,
-and is the number of independent variables for this
-AD operation sequence.
-
 
 $head Tape State$$
 $index state, tape$$

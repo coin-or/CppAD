@@ -63,14 +63,16 @@ bool Discrete(void)
 {	bool ok = true;
 	using CppAD::AD;
 
-	// declare independent variable vector and start recording
+	// domain space vector
 	size_t n = 2;
 	CppADvector< AD<double> > X(n);
 	X[0] = 2.;
 	X[1] = 3.;
+
+	// declare independent variables and start tape recording
 	CppAD::Independent(X);
 
-	// dependent variable vector
+	// range space vector
 	size_t m = 1;
 	CppADvector< AD<double> > Y(m);
 	Y[0] = X[1] * TableLookup( X[0] );

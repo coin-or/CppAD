@@ -93,10 +93,12 @@ bool Piecewise(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
-	// declare independent variable vector and start recording
+	// domain space vector
 	size_t n = 1;
 	CppADvector< AD<double> > X(n);
 	X[0] = .4 * ArgumentValue[1] + .6 * ArgumentValue[2];
+
+	// declare independent variables and start tape recording
 	CppAD::Independent(X);
 
 	// evaluate piecewise linear interpolant at X[0]
@@ -105,7 +107,7 @@ bool Piecewise(void)
 	AD<double> S = Slope(X[0]);
 	AD<double> I = F + (X[0] - A) * S;
 
-	// dependent variable vector
+	// range space vector
 	size_t m = 1;
 	CppADvector< AD<double> > Y(m);
 	Y[0] = I;

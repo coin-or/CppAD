@@ -98,11 +98,13 @@ bool VecAD(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
-	// declare independent variables and start tape recording
+	// domain space vector
 	size_t n = 4;
 	CppADvector< AD<double> > X(n);
 	X[0] = 2.; X[1] = 0.;  // 2 * identity matrix (rmax in Solve will be 0)
 	X[2] = 0.; X[3] = 2.; 
+
+	// declare independent variables and start tape recording
 	CppAD::Independent(X);
 
 	// define the vector b
@@ -110,7 +112,7 @@ bool VecAD(void)
 	B[0] = 0.;
 	B[1] = 1.;
 
-	// dependent variable vector solves X * Y = b
+	// range space vector solves X * Y = b
 	size_t m = 2;
 	CppADvector< AD<double> > Y(m);
 	Y = Solve(X, B);

@@ -28,7 +28,7 @@ $spell
 	Cpp
 $$
 
-$section AD Class Objects$$
+$section AD Objects$$
 
 $index AD, object$$
 
@@ -36,11 +36,11 @@ $head Purpose$$
 The sections listed below describe the operations 
 that are available to 
 $xref/glossary/AD Object/AD objects/$$.
-The corresponding
-$xref/AD/AD Operation Sequence/AD operation sequence/$$
-can be
-$xref/glossary/Tape State/Recording/recorded/1/$$
-and then transferred to an $xref/ADFun/$$ object.
+These objects are used to
+$xref/glossary/Tape State/Recording/record/1/$$
+an $xref/AD/AD Operation Sequence/AD operation sequence/$$.
+An AD operations sequence can
+then be transferred to an $xref/ADFun/$$ object.
 The ADFun object can be used to
 evaluate the function and derivatives corresponding to the
 AD sequence of operations.

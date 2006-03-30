@@ -62,12 +62,14 @@ bool CondExp(void)
 	using CppAD::log; 
 	using CppAD::abs;
 
-	// declare independent variables and start tape recording
+	// domain space vector
 	size_t n = 5;
 	CppADvector< AD<double> > X(n);
 	size_t j;
 	for(j = 0; j < n; j++)
 		X[j] = 1.;
+
+	// declare independent variables and start tape recording
 	CppAD::Independent(X);
 
 	// sum with respect to j of log of absolute value of X[j]
@@ -86,7 +88,7 @@ bool CondExp(void)
 		Sum += CppAD::CondExpEq(X[j], Zero, MinusInfinity, Zero);
 	}
 
-	// dependent variable vector 
+	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > Y(m);
 	Y[0] = Sum;

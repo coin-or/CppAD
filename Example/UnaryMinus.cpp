@@ -44,13 +44,15 @@ bool UnaryMinus(void)
 	using CppAD::AD;
 
 
-	// declare independent variable vector and start tape recording
+	// domain space vector
 	size_t n = 1;
 	CppADvector< AD<double> > x(n);
 	x[0]      = 3.;
-	Independent(x);
 
-	// dependent variable vector 
+	// declare independent variables and start tape recording
+	CppAD::Independent(x);
+
+	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
 	y[0] = - x[0];

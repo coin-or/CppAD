@@ -44,7 +44,7 @@ bool Integer(void)
 	using CppAD::AD;
 	using CppAD::Integer;
 
-	// independent variable vector
+	// domain space vector
 	size_t n = 2;
 	CppADvector< AD<double> > x(n);
 	x[0] = 3.5;
@@ -55,6 +55,8 @@ bool Integer(void)
 	ok &= (Integer(x[1]) == 4);
 
 	// start recording
+
+	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
 	// check integer during recording
@@ -67,7 +69,7 @@ bool Integer(void)
 	v[zero] = 2;
 	ok &= (Integer(v[zero]) == 2);
 
-	// dependent variable vector 
+	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
 	y[0] = - x[1];

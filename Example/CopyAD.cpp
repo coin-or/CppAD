@@ -42,10 +42,12 @@ bool CopyAD(void)
 {	bool ok = true;   // initialize test result flag
 	using CppAD::AD;  // so can use AD in place of CppAD::AD
 
-	// independent variable vector
+	// domain space vector
 	size_t n = 1;
 	CppADvector< AD<double> > x(n);
 	x[0]     = 2.;
+
+	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
 	// create an AD<double> that does not depend on x
@@ -59,7 +61,7 @@ bool CopyAD(void)
 	ok &= Variable(u);
 	ok &= Parameter(v);
 
-	// dependent variable vector
+	// range space vector
 	size_t m = 2;
 	CppADvector< AD<double> > y(m);
 	y[0]  = u;

@@ -42,11 +42,13 @@ bool Div(void)
 	using CppAD::NearEqual;
 
 
-	// declare independent variables and start tape recording
+	// domain space vector
 	size_t n  = 1;
 	double x0 = 0.5;
 	CppADvector< AD<double> > x(n);
 	x[0]      = x0;
+
+	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
 	// some binary division operations
@@ -55,7 +57,7 @@ bool Div(void)
 	AD<double> c = 3. / b;    // double     / AD<double> 
 	AD<double> d = 4  / c;    // int        / AD<double> 
 
-	// dependent variable vector 
+	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
 	y[0] = (x[0] * x[0]) / d;   // AD<double> / AD<double>

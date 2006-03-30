@@ -45,18 +45,20 @@ bool Atan2(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
-	// declare independent variables and start tape recording
+	// domain space vector
 	size_t n  = 1;
 	double x0 = 0.5;
 	CppADvector< AD<double> > x(n);
 	x[0]      = x0;
+
+	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
 	// a temporary value
 	AD<double> sin_of_x0 = CppAD::sin(x[0]);
 	AD<double> cos_of_x0 = CppAD::cos(x[0]);
 
-	// dependent variable vector 
+	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
 	y[0] = CppAD::atan2(sin_of_x0, cos_of_x0);

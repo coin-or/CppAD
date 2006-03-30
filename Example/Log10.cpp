@@ -44,18 +44,20 @@ bool Log10(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
-	// declare independent variables and start tape recording
+	// domain space vector
 	size_t n  = 1;
 	double x0 = 0.5;
 	CppADvector< AD<double> > x(n);
 	x[0]      = x0;
+
+	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
 	// ten raised to the x0 power
 	AD<double> ten = 10.;
 	AD<double> pow_10_x0 = CppAD::pow(ten, x[0]); 
 
-	// dependent variable vector 
+	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
 	y[0] = CppAD::log10(pow_10_x0);

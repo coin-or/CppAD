@@ -47,13 +47,15 @@ bool Abs(void)
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
-	// declare independent variables and start tape recording
+	// domain space vector
 	size_t n = 1;
 	CppADvector< AD<double> > x(n);
 	x[0]     = 0.;
+
+	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// dependent variable vector
+	// range space vector
 	size_t m = 3;
 	CppADvector< AD<double> > y(m);
 	y[0]     = abs(x[0] - 1.);

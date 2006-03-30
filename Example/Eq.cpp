@@ -43,14 +43,16 @@ bool Eq(void)
 {	bool ok = true;
 	using CppAD::AD;
 
-	// declare independent variable vector and start tape recording
+	// domain space vector
 	size_t n = 2;
 	CppADvector< AD<double> > x(n);
 	x[0]     = 5.;     // AD<double> = double
 	x[1]     = x[0];   // AD<double> = AD<double>
+
+	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 	
-	// dependent variable vector 
+	// range space vector 
 	size_t m = 3;
 	CppADvector< AD<double> > y(m);
 
