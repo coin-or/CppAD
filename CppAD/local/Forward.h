@@ -121,7 +121,7 @@ if this is not the case.
 
 $head Order$$
 The function call
-$xref/ADFun/Order/F.Order()/$$ returns the highest order of the 
+$xref/FunDeprecated/Order/F.Order()/$$ returns the highest order of the 
 Taylor coefficients currently stored in $italic F$$.
 This must be greater than or equal to $latex p-1$$ when
 $syntax%%F%.Forward(%p%, %xp%)%$$ is called.
@@ -229,7 +229,7 @@ $children%
 %$$
 The file
 $xref/Forward.cpp/$$
-contains an example and a test of this operation.
+contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
 $end

@@ -62,6 +62,17 @@ $head 04-01$$
 Move the $xref/FunConstruct//ADFun Constructor/$$ to its own separate 
 section, improve its documentation, and use $xref/Independent.cpp/$$ 
 for its example.
+$pre
+
+$$
+The following member functions of $xref/ADFun/$$ have been 
+$xref/FunDeprecated//deprecated/$$:
+$code Order$$, $code Memory$$.
+$pre
+
+$$
+The wish list entry for $xref/WishList/Memory/memory/$$ usage
+has been updated.
 
 $head 03-31$$
 Add examples for the $xref/ParVar//Parameter, Variable/$$ and

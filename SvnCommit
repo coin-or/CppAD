@@ -1,22 +1,22 @@
-# Move ADFun constructor to to a separate section.
+# Deprecate the ADFun member functions Order and Memory.
 #
 # SvnCommit: file that made this commit.
-# Independent.h: change link to ADFun constructor.
-# FunConstruct.h: extract from Fun.h, improve documentation, link example.
-# Fun.h: extracted constructor and improved documentation.
+# Reverse.h: change link to Order and Memory functions.
+# Fun.h: remove Order and Memory functions.
+# Forward.h: change link to Order function.
+# FunDeprecated.omh: move Order and Memory here.
 # WhatsNew06.omh: users view of the changes.
-# Independent.cpp: add ADFun Constructor to example title.
-# Makefile.am: add FunConstructor.h to distribution.
+# WishList.omh: update Memory entry.
 add_list="
-	CppAD/local/FunConstruct.h
+	omh/FunDeprecated.omh
 "
 change_list="
 	SvnCommit
-	CppAD/local/Independent.h
+	CppAD/local/Reverse.h
 	CppAD/local/Fun.h
+	CppAD/local/Forward.h
 	omh/WhatsNew06.omh
-	Example/Independent.cpp
-	Makefile.am
+	omh/WishList.omh
 "
 delete_list="
 "

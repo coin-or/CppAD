@@ -41,10 +41,11 @@ $syntax%AD<%Base%>%$$ recording.
 
 $head Memory$$
 $index memory$$
-Currently the tape buffers associated with each $xref/AD/$$ type
-grow and the corresponding memory is not freed until the 
-program terminates. 
-This can be inefficient for large program and hence should be changed.
+In the future, we would like to be able to erase the function
+values so that $xref/ADFun/$$ objects use less memory. 
+We may even want to erase the AD operation sequence so that
+$xref/ADFun/$$ objects use even less memory and can be used 
+for a subsequent AD operation sequence.
 
 
 $head Multiple Tapes With Same Base Type$$
@@ -67,7 +68,7 @@ processor in a shared memory multiple processor application.
 $head Software Guidelines$$
 The following is a list of some software guidelines taken from
 $href%http://www.boost.org/more/lib_guide.htm#Guidelines%boost%$$.
-These guidelines are not implemented in the current CppAD source code,
+These guidelines are not followed by the current CppAD source code,
 but perhaps they should be:
 
 $list number$$

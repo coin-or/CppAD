@@ -39,16 +39,24 @@ $section ADFun Objects$$
 
 $index ADFun, object$$
 
-$table
-$bold Syntax$$ $cnext 
-$syntax%ADFun<%Base%> %F%(%X%, %Y%)%$$
-$tend
-
-$fend 20$$
+$head Purpose$$
+An $syntax%ADFun<%Base%>%$$ object contains an
+$syntax%AD<%Base%>%$$ 
+$xref/AD/AD Operation Sequence/operation sequence/$$.
+This operation sequence represents a function
+$latex \[
+	f : B^n \rightarrow B^m
+\] $$
+where $latex B$$ is the space corresponding to objects of type $italic Base$$.
+The ADFun object can be used to evaluate the function
+and its derivatives of arbitrary order.
 
 $head F$$
-See $xref/FunConstruct/$$ for a description of the
-constructor for $italic F$$.
+The object $italic F$$ below has prototype
+$syntax%
+	const ADFun<%Base%> %F%
+%$$
+(see $syntax%ADFun<%Base%>%$$ $xref/FunConstruct//constructor/$$).
 
 $head Size$$
 $index Size, ADFun$$
@@ -58,18 +66,6 @@ $syntax%
 %$$
 returns the total number of variables
 that are used to calculate the function $italic F$$.
-
-$head Order$$
-$index Order, ADFun$$
-The function 
-$syntax%
-	size_t %F%.Order(void) const
-%$$
-returns the order of the previous forward operation
-using the function $italic F$$.
-This is the highest order of the 
-$xref/glossary/Taylor Coefficient/Taylor coefficients/$$
-that are currently stored in $italic F$$.
 
 $head Domain$$
 $index Domain, ADFun$$
@@ -103,17 +99,6 @@ is less than $syntax%%F%.Range()%$$.
 If a component of the range of $italic F$$ is a parameter, 
 it does not depend on any of the components in the domain of $italic F$$; 
 i.e., all of its partial derivatives are zero.
-
-$head Memory$$
-$index Memory, ADFun$$
-The operation
-$syntax%
-	size_t %F%.Memory(void) const
-%$$
-returns the number of memory units ($code sizeof$$) required for the
-information currently stored in $italic F$$.
-This memory is returned to the system when the destructor for 
-$italic F$$ is called.
 
 $head CompareChange$$
 $index Compare, tape operator$$
@@ -156,7 +141,8 @@ $contents%
 	omh/MulTape.omh%
 	CppAD/local/ForSparseJac.h%
 	CppAD/local/RevSparseJac.h%
-	CppAD/local/RevSparseHes.h
+	CppAD/local/RevSparseHes.h%
+	omh/FunDeprecated.omh
 %$$
 
 $end
@@ -208,7 +194,7 @@ public:
 	size_t Size(void) const
 	{	return totalNumVar; }
 
-	// order of this function object
+	// order of this function object (Deprecated)
 	size_t Order(void) const
 	{	return order; }
 
@@ -229,7 +215,7 @@ public:
 		return dep_parameter[i]; 
 	}
 
-	// amount of memory for each variable
+	// amount of memory for each variable (Deprecated)
 	size_t Memory(void) const
 	{	size_t pervar  = TaylorColDim * sizeof(Base)
 		+ ForJacColDim * sizeof(Pack);

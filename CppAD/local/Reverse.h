@@ -131,7 +131,7 @@ in the definition of $latex W$$ above.
 
 $head Order$$
 The function call
-$xref/ADFun/Order/F.Order()/$$ returns the highest order of the 
+$xref/FunDeprecated/Order/F.Order()/$$ returns the highest order of the 
 Taylor coefficients currently stored in $italic F$$.
 This must be greater than or equal to $latex p-1$$ when
 $syntax%%F%.Forward(%p%, %xp%)%$$ is called.
@@ -144,7 +144,7 @@ a large amount of memory proportional to the
 $xref/ADFun/Size/size/$$ of $italic F$$ times $italic p$$
 is allocated for this calculation.
 You can use the 
-$xref/ADFun/Memory/F.Memory()/$$ function to determine
+$xref/FunDeprecated/Memory/F.Memory()/$$ function to determine
 how much memory is required.
 
 $head dw$$

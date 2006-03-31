@@ -1,0 +1,71 @@
+$begin FunDeprecated$$
+$spell 
+	CppAD
+	const
+	Taylor
+	sizeof
+$$
+
+$section ADFun Object Deprecated Member Functions$$
+
+$index ADFun, Size$$
+$index Size, ADFun$$
+
+$index ADFun, Order$$
+$index Order, ADFun$$
+
+$index ADFun, Memory$$
+$index Memory, ADFun$$
+
+$table
+$bold Syntax$$ $cnext 
+$syntax%%o% = %f%.Order()%$$
+$rnext $cnext
+$syntax%%m% = %f%.Memory()%$$
+$tend
+
+$fend 20$$
+
+$head Purpose$$
+The $syntax%ADFun<%Base%>%$$ functions documented here have been deprecated;
+i.e., they are no longer approved of and may be removed from some future
+version of CppAD.
+
+$head Order$$
+The result $italic o$$ has prototype 
+$syntax%
+	size_t %o%
+%$$
+and is the order of the previous forward operation
+using the function $italic f$$.
+This is the highest order of the 
+$xref/glossary/Taylor Coefficient/Taylor coefficients/$$
+that are currently stored in $italic f$$.
+
+$subhead Deprecated$$
+Zero order corresponds to function values being stored in $italic f$$.
+In the future, we would like to be able to erase the function
+values so that $italic f$$ uses less memory. 
+In this case, the return value of $code Order$$ would not make sense.
+
+
+$head Memory$$
+The result 
+$syntax%
+	size_t %m%
+%$$
+and is the number of memory units ($code sizeof$$) required for the
+information currently stored in $italic f$$.
+This memory is returned to the system when the destructor for 
+$italic f$$ is called.
+
+$subhead Deprecated$$
+It used to be the case that an ADFun object just kept increasing its
+buffers to the maximum size necessary during its lifetime.
+It would then return the buffers to the system when its destructor
+was called.
+This is no longer the case, an ADFun object now returns memory
+when it no longer needs the values stored in that memory.
+Thus the $code Memory$$ function is no longer well defined.
+
+$end
