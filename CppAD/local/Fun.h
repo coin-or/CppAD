@@ -35,11 +35,9 @@ $$
 $spell
 $$
 
-$section Constructing an ADFun Object From The Tape$$
+$section ADFun Objects$$
 
-$index constructor,  ADFun$$
-$index ADFun, constructor$$
-$index tape, convert to ADFun$$
+$index ADFun, object$$
 
 $table
 $bold Syntax$$ $cnext 
@@ -48,53 +46,9 @@ $tend
 
 $fend 20$$
 
-$head Description$$
-This constructs a function object corresponding to
-$latex F : B^n \rightarrow B^m$$
-where $italic B$$ is the space corresponding to objects of type $italic Base$$,
-$italic n$$ is the size of $italic X$$,
-and $italic m$$ is the size of $italic Y$$.
-The $syntax%AD<%Base%>%$$ operations that 
-map from the elements of $italic X$$
-to the elements of $italic Y$$
-define the function.
-
-$head Tape State$$
-The tape that records $syntax%AD<%Base%>%$$ operations
-must be in the Recording $xref/glossary/Tape State/state/$$
-when this constructed is called.
-The tape that records $syntax%AD<%Base%>%$$ operations
-will be in the Empty state after this constructor is called.
-
-$head VectorADBase$$
-The type $italic VectorADBase$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type AD<Base>/$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
-if this is not the case.
-
-$head X$$
-The vector $italic X$$ has prototype
-$syntax%
-	const %VectorADBase% &%X%
-%$$
-The length of $italic X$$, must be greater than zero,
-and is the number of independent variables
-(dimension of the domain space for the $syntax%ADFun<%Base%>%$$ object).
-The current recording of $syntax%AD<%Base%>%$$ operations
-must have started recording with the call 
-$xref/Independent//Independent(X)/$$.
-In addition, none of the element of $italic X$$
-may change value between the call to $code Independent$$
-and the $code ADFun$$ constructor.
-
-$head Y$$
-The vector $italic Y$$ has prototype
-$syntax%
-	const %VectorADBase% &%Y%
-%$$
-The length of $italic Y$$, must be greater than zero,
-and is the number of dependent variables
-(dimension of the range space for the $syntax%ADFun<%Base%>%$$ object).
+$head F$$
+See $xref/FunConstruct/$$ for a description of the
+constructor for $italic F$$.
 
 $head Size$$
 $index Size, ADFun$$
@@ -193,6 +147,7 @@ They return true if they succeed and false otherwise.
 
 $contents%
 	CppAD/local/Independent.h%
+	CppAD/local/FunConstruct.h%
 	omh/Drivers.omh%
 	CppAD/local/Forward.h%
 	CppAD/local/Reverse.h%
@@ -362,112 +317,10 @@ private:
 };
 // ---------------------------------------------------------------------------
 
-template <typename Base>
-template <typename VectorADBase>
-ADFun<Base>::ADFun(const VectorADBase &x, const VectorADBase &y)
-{	size_t   n = x.size();
-	size_t   m = y.size();
-	size_t   i, j;
-	size_t   y_taddr;
-	OpCode   op;
-
-	// check VectorADBase is Simple Vector class with AD<Base> elements
-	CheckSimpleVector< AD<Base>, VectorADBase>();
-
-	CppADUsageError(
-		AD<Base>::Tape()->state == Recording,
-		"Can not create an ADFun object because "
-		" tape is not currently recording."
-	);
-	CppADUsageError(
-		y.size() > 0,
-		"ADFun constructor second argument vector Y has zero size"
-	); 
-	CppADUsageError(
-		x.size() > 0,
-		"ADFun constructor first argument vector X has zero size"
-	); 
-
-	// set total number of variables in tape, parameter flag, 
-	// make a tape copy of dependent variables that are parameters, 
-	// and store tape address for each dependent variable
-	CppADUnknownError( NumVar(ParOp) == 1 );
-	dep_parameter.resize(m);
-	dep_taddr.resize(m);
-	totalNumVar = AD<Base>::Tape()->Rec.TotNumVar();
-	for(i = 0; i < m; i++)
-	{	dep_parameter[i] = CppAD::Parameter(y[i]);
-		if( dep_parameter[i] )
-		{	y_taddr = AD<Base>::Tape()->RecordParOp( y[i].value );
-			totalNumVar++;
-		}
-		else	y_taddr = y[i].taddr;
-
-		CppADUnknownError( y_taddr > 0 );
-		CppADUnknownError( y_taddr < totalNumVar );
-		dep_taddr[i] = y_taddr;
-	}
-
-	// now that each dependent variable has a place in the tape,
-	// we can make a copy for this function and erase the tape.
-	Rec = new TapeRec<Base>( AD<Base>::Tape()->Rec );
-	AD<Base>::Tape()->Erase();
-
-	// total number of varables in this recording 
-	CppADUnknownError( totalNumVar == Rec->TotNumVar() );
-
-	// current order and row dimensions
-	memoryMax     = 0;
-	order         = 0;
-	ForJacColDim  = 0;
-	ForJacBitDim  = 0;
-	TaylorColDim  = 1;
-
-	// buffers
-	Taylor  = CppADNull;
-	ForJac  = CppADNull;
-	Taylor  = CppADNull;
-	Taylor  = CppADTrackNewVec(totalNumVar, Taylor);
-
-	// set tape address and initial value for independent variables
-	ind_taddr.resize(n);
-	CppADUsageError(
-		n < totalNumVar,
-		"independent variables vector has changed"
-	);
-	for(j = 0; j < n; j++)
-	{	
-		CppADUsageError( 
-			x[j].taddr == j+1,
-			"independent variable vector has changed"
-		);
-		// j+1 is both the operator and independent variable taddr
-		op = Rec->GetOp(j+1);
-		CppADUsageError(
-			op == InvOp,
-			"independent variable vector has changed"
-		);
-		ind_taddr[j] = x[j].taddr;
-		Taylor[j+1]  = x[j].value;
-	}
-
-	// use independent variable values to fill in values for others
-	compareChange = ForwardSweep(
-		false, 0, totalNumVar, Rec, TaylorColDim, Taylor
-	);
-	CppADUnknownError( compareChange == 0 );
-
-	// check the dependent variable values
-	for(i = 0; i < m; i++) CppADUsageError(
-		Taylor[dep_taddr[i]] == y[i].value,
-		"independent variable not equal its tape evaluation"
-		", it may be nan"
-	);
-}
-
 } // END CppAD namespace
 
 # include <CppAD/local/Independent.h>
+# include <CppAD/local/FunConstruct.h>
 # include <CppAD/local/ForwardSweep.h>
 # include <CppAD/local/ReverseSweep.h>
 # include <CppAD/local/Forward.h>

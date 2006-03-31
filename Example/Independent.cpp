@@ -19,7 +19,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin Independent.cpp$$
 
-$section Independent: Example and Test$$
+$comment ! NOTE the title states that this example is used two places !$$
+$section Independent and ADFun Constructor: Example and Test$$
 
 $index Independent, example$$
 $index example, Independent$$

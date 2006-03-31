@@ -58,6 +58,11 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-01$$
+Move the $xref/FunConstruct//ADFun Constructor/$$ to its own separate 
+section, improve its documentation, and use $xref/Independent.cpp/$$ 
+for its example.
+
 $head 03-31$$
 Add examples for the $xref/ParVar//Parameter, Variable/$$ and
 $xref/Independent/$$ functions.

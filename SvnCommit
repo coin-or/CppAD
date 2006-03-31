@@ -1,51 +1,22 @@
-# *.cpp: for all the AD seciton examples, use "range space vector" in place of 
-# "dependent variable vector" because some components may not be varaibles.
+# Move ADFun constructor to to a separate section.
 #
 # SvnCommit: file that made this commit.
-# UserAD.h: minor improvement to Purpose.
-# Independent.h: move definition of VectorADBase after its use.
+# Independent.h: change link to ADFun constructor.
+# FunConstruct.h: extract from Fun.h, improve documentation, link example.
+# Fun.h: extracted constructor and improved documentation.
 # WhatsNew06.omh: users view of the changes.
+# Independent.cpp: add ADFun Constructor to example title.
+# Makefile.am: add FunConstructor.h to distribution.
 add_list="
+	CppAD/local/FunConstruct.h
 "
 change_list="
 	SvnCommit
-	CppAD/local/UserAD.h
 	CppAD/local/Independent.h
+	CppAD/local/Fun.h
 	omh/WhatsNew06.omh
-	Example/CondExp.cpp
-	Example/UnaryPlus.cpp
-	Example/Abs.cpp
-	Example/Pow.cpp
-	Example/Erf.cpp
-	Example/Sinh.cpp
-	Example/Atan2.cpp
-	Example/UnaryMinus.cpp
-	Example/Div.cpp
-	Example/Tan.cpp
-	Example/Cos.cpp
-	Example/Add.cpp
-	Example/Sqrt.cpp
-	Example/Asin.cpp
-	Example/Cosh.cpp
-	Example/Discrete.cpp
-	Example/Eq.cpp
-	Example/DivEq.cpp
-	Example/Piecewise.cpp
-	Example/AddEq.cpp
-	Example/CopyAD.cpp
-	Example/SubEq.cpp
-	Example/VecAD.cpp
-	Example/MulEq.cpp
-	Example/Exp.cpp
-	Example/Value.cpp
-	Example/Log.cpp
-	Example/Log10.cpp
-	Example/Atan.cpp
-	Example/Acos.cpp
-	Example/Sin.cpp
-	Example/Sub.cpp
-	Example/Mul.cpp
-	Example/Integer.cpp
+	Example/Independent.cpp
+	Makefile.am
 "
 delete_list="
 "

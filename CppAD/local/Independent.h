@@ -51,7 +51,7 @@ with $italic x$$ as the vector of independent variables.
 Once the 
 $xref/AD/AD Operation Sequence/AD operation sequence/$$ is completed,
 it is transferred to a function object by calling the
-$xref/ADFun/$$ constructor $syntax%ADFun<%Base%>%$$.  
+$syntax%ADFun<%Base%>%$$ $xref/FunConstruct//constructor/$$. 
 
 $head x$$
 The vector $italic x$$ has prototype
