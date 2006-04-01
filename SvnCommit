@@ -1,52 +1,19 @@
-# Group ADFun member functions that evalute function and derivative values.
+# Add missing copyright message from following files:
+# Bugs.omh, CompareChange.omh, WishList.omh, FunDeprecated.
 #
 # SvnCommit: file that made this commit.
-# Doc.omh: change file name from Fun.h to ADFun.h.
-# ADFun.h: move Fun.h source code here (reorganize documentation).
-# FunEval.h: group the ADFun evalaution routines here (from Fun.h).
-# Fun.h: move source code to ADFun.h (reorganize documentation).  
-# Compare.h: modify links to CompareChange.
-# OdeErrControl.h: include OdeErrMaxabs.cpp example.
-# CppAD.h: change incldude from Fun.h to ADFun.h.
-# CompareChange.omh: separate and improve this documentation.
-# Faq.omh: modify links to CompareChange.
-# WhatsNew04.omh: modify links to CompareChange.
-# WhatsNew05.omh: remove link to Fun.cpp.
-# WhatsNew06.omh: users view of the changes.
-# ExampleList.omh: remove Fun.cpp and include some missing examples.
-# OdeErrMaxabs.cpp: fix a documentation spelling error.
-# Fun.cpp: remove this example.
-# Example.vcproj: remove Fun.cpp.
-# Example.cpp: remove Fun.cpp.
-# Independent.cpp: demonstate with multiple simple vector cases.
-# Example/Makefile.am: remove Fun.cpp.
-# Makefile.am: remove Fun.h and add ADFun.h, FunEval.h.
+# WhatsNew06.omh: comments missing from previous commit.
 add_list="
-	CppAD/local/ADFun.h
-	CppAD/local/FunEval.h
-	omh/CompareChange.omh
 "
 change_list="
 	SvnCommit
-	Doc.omh
-	CppAD/local/Compare.h
-	CppAD/OdeErrControl.h
-	CppAD/CppAD.h
-	omh/Faq.omh
-	omh/WhatsNew04.omh
-	omh/WhatsNew05.omh
+	omh/Bugs.omh
+	omh/CompareChange.omh
 	omh/WhatsNew06.omh
-	omh/ExampleList.omh
-	Example/OdeErrMaxabs.cpp
-	Example/Example.vcproj
-	Example/Example.cpp
-	Example/Independent.cpp
-	Example/Makefile.am
-	Makefile.am
+	omh/WishList.omh
+	omh/FunDeprecated.omh
 "
 delete_list="
-	Example/Fun.cpp
-	CppAD/local/Fun.h
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

@@ -68,6 +68,17 @@ $pre
 $$
 The $xref/CompareChange/$$ function documentation was improved
 and moved to a separate section.
+$pre
+
+$$
+Group the documentation for the $xref/ADFun/$$ member functions that
+$xref/FunEval//evaluate functions and derivative values/$$.
+$pre
+
+$$
+Remove the old $code Fun.cpp$$ example and extend
+$xref/Independent.cpp/$$ so that it demonstrates using different
+choices for the $xref/SimpleVector/$$ type.
 
 $head 04-01$$
 Move the $xref/FunConstruct//ADFun Constructor/$$ to its own separate 
