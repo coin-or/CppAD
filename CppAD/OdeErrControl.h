@@ -2,7 +2,7 @@
 # define CppADOdeErrControlIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -347,12 +347,15 @@ if this is not the case.
 
 $head Example$$
 $children%
-	Example/OdeErrControl.cpp
+	Example/OdeErrControl.cpp%
+	Example/OdeErrMaxabs.cpp
 %$$
-The file
+The files
 $xref/OdeErrControl.cpp/$$
-contains an example and test a test of using this routine.
-It returns true if it succeeds and false otherwise.
+and
+$xref/OdeErrMaxabs.cpp/$$
+contain examples and tests of using this routine.
+They return true if they succeed and false otherwise.
 
 $head Theory$$
 Let $latex e(s)$$ be the error as a function of the

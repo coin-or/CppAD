@@ -73,7 +73,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 # include <CppAD/local/Op.h>      // executes taped operations
 # include <CppAD/local/UserAD.h>  // AD class methods available to the user
-# include <CppAD/local/Fun.h>     // differentiable function objects
+# include <CppAD/local/ADFun.h>   // ADFun objects
 
 // ---------------------------------------------------------------------------
 // library routines that require the rest of CppAD

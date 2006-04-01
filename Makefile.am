@@ -50,6 +50,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/SpeedTest.h \
 	CppAD/TrackNewDel.h \
 	CppAD/local/AD.h \
+	CppAD/local/ADFun.h \
 	CppAD/local/ADTape.h \
 	CppAD/local/ADValued.h \
 	CppAD/local/Abs.h \
@@ -89,8 +90,8 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/ForSparseJac.h \
 	CppAD/local/Forward.h \
 	CppAD/local/ForwardSweep.h \
-	CppAD/local/Fun.h \
 	CppAD/local/FunConstruct.h \
+	CppAD/local/FunEval.h \
 	CppAD/local/Hessian.h \
 	CppAD/local/Identical.h \
 	CppAD/local/Independent.h \

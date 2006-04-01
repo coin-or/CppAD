@@ -93,7 +93,7 @@ $head CompareChange$$
 $index CompareChange$$
 $index NDEBUG$$
 If you attempt to use the 
-$xref/ADFun/CompareChange/CompareChange/$$
+$xref/CompareChange/$$
 function when $code NDEBUG$$ is true,
 you will get an error message stating that
 $code CompareChange$$ is not a member of the

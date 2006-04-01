@@ -51,56 +51,13 @@ where $latex B$$ is the space corresponding to objects of type $italic Base$$.
 The ADFun object can be used to evaluate the function
 and its derivatives of arbitrary order.
 
-$head F$$
-The object $italic F$$ below has prototype
-$syntax%
-	const ADFun<%Base%> %F%
-%$$
-(see $syntax%ADFun<%Base%>%$$ $xref/FunConstruct//constructor/$$).
-
-$head CompareChange$$
-$index Compare, tape operator$$
-$index tape, compare operator$$
-$index operator, compare tape$$
-If $code NDEBUG$$ is defined,
-this function does not exist.
-Otherwise, the operation
-$syntax%
-	size_t %F%.CompareChange(void) const
-%$$
-return the number of 
-$syntax%AD<%Base%>%$$ $xref/Compare//comparison/$$ 
-operations,
-corresponding to the previous call to $xref/Forward/$$ 
-$syntax%
-	%F%.Forward(%k%, %xk%)
-%$$
-where $italic k$$ was equal to zero,
-that have a different result from
-when $italic F$$ was created by taping an algorithm.
-When it is non-zero, some comparison operator results are different.
-This can be used to detect when $italic F$$
-no exactly represents the algorithm that was taped.
-
-$head Example$$
-The files
-$xref/Fun.cpp/$$ and $xref/CompareChange.cpp/$$
-contain examples and tests of these operations.
-They return true if they succeed and false otherwise.
-
-$contents%
+$childtable%
 	CppAD/local/Independent.h%
 	CppAD/local/FunConstruct.h%
 	omh/SeqProperty.omh%
+	CppAD/local/FunEval.h%
 	omh/Drivers.omh%
-	CppAD/local/Forward.h%
-	CppAD/local/Reverse.h%
-	Example/Fun.cpp%
-	Example/CompareChange.cpp%
 	omh/MulTape.omh%
-	CppAD/local/ForSparseJac.h%
-	CppAD/local/RevSparseJac.h%
-	CppAD/local/RevSparseHes.h%
 	omh/FunDeprecated.omh
 %$$
 
@@ -264,19 +221,19 @@ private:
 
 } // END CppAD namespace
 
-# include <CppAD/local/Independent.h>
-# include <CppAD/local/FunConstruct.h>
+// non-user interfaces
 # include <CppAD/local/ForwardSweep.h>
 # include <CppAD/local/ReverseSweep.h>
-# include <CppAD/local/Forward.h>
-# include <CppAD/local/Reverse.h>
 # include <CppAD/local/ForJacSweep.h>
 # include <CppAD/local/RevJacSweep.h>
 # include <CppAD/local/RevHesSweep.h>
-# include <CppAD/local/ForSparseJac.h>
-# include <CppAD/local/RevSparseJac.h>
-# include <CppAD/local/RevSparseHes.h>
-//
+
+
+// user interfaces
+# include <CppAD/local/Independent.h>
+# include <CppAD/local/FunConstruct.h>
+# include <CppAD/local/FunEval.h>
+
 // driver routines
 # include <CppAD/local/Jacobian.h>
 # include <CppAD/local/Hessian.h>

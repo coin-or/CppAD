@@ -108,7 +108,7 @@ $syntax%
 	else	%y% = sin(%x%); 
 %$$
 only the assignment $syntax%%y% = cos(%x%)%$$ is recorded on the tape.
-The $xref/ADFun/CompareChange/CompareChange/$$ function can yield
+The $xref/CompareChange/$$ function can yield
 some information about changes in comparison operation results.
 You can use $xref/CondExp/$$ to obtain comparison operations
 that depends on the 

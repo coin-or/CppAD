@@ -1,40 +1,52 @@
-# Group ADFun member functions that return AD operation sequence properties.
+# Group ADFun member functions that evalute function and derivative values.
 #
 # SvnCommit: file that made this commit.
-# RevSparseHes.h: fix cross reference links.
-# Reverse.h: fix cross reference links.
-# Fun.h: remove Domain, Range, Parameter, and Size from this section.
-# FunConstuct.h: use F for function corresponding to ADFun object f.
-# Forward.h: fix cross reference links.
-# ForSparseJac.h: fix cross reference links.
-# RevSparseJac.h: fix cross reference links.
-# Faq.omh: fix cross reference links.
-# WhatsNew04.omh: fix cross reference links.
+# Doc.omh: change file name from Fun.h to ADFun.h.
+# ADFun.h: move Fun.h source code here (reorganize documentation).
+# FunEval.h: group the ADFun evalaution routines here (from Fun.h).
+# Fun.h: move source code to ADFun.h (reorganize documentation).  
+# Compare.h: modify links to CompareChange.
+# OdeErrControl.h: include OdeErrMaxabs.cpp example.
+# CppAD.h: change incldude from Fun.h to ADFun.h.
+# CompareChange.omh: separate and improve this documentation.
+# Faq.omh: modify links to CompareChange.
+# WhatsNew04.omh: modify links to CompareChange.
+# WhatsNew05.omh: remove link to Fun.cpp.
 # WhatsNew06.omh: users view of the changes.
-# Example.vcproj: add SeqProperty.cpp to list of examples.
-# Example.cpp: add SeqProperty.cpp to list of examples.
-# Makefile.am: add SeqProperty.cpp to list of examples.
+# ExampleList.omh: remove Fun.cpp and include some missing examples.
+# OdeErrMaxabs.cpp: fix a documentation spelling error.
+# Fun.cpp: remove this example.
+# Example.vcproj: remove Fun.cpp.
+# Example.cpp: remove Fun.cpp.
+# Independent.cpp: demonstate with multiple simple vector cases.
+# Example/Makefile.am: remove Fun.cpp.
+# Makefile.am: remove Fun.h and add ADFun.h, FunEval.h.
 add_list="
-	omh/SeqProperty.omh
-	Example/SeqProperty.cpp
+	CppAD/local/ADFun.h
+	CppAD/local/FunEval.h
+	omh/CompareChange.omh
 "
 change_list="
 	SvnCommit
-	CppAD/local/RevSparseHes.h
-	CppAD/local/Reverse.h
-	CppAD/local/Fun.h
-	CppAD/local/FunConstruct.h
-	CppAD/local/Forward.h
-	CppAD/local/ForSparseJac.h
-	CppAD/local/RevSparseJac.h
+	Doc.omh
+	CppAD/local/Compare.h
+	CppAD/OdeErrControl.h
+	CppAD/CppAD.h
 	omh/Faq.omh
 	omh/WhatsNew04.omh
+	omh/WhatsNew05.omh
 	omh/WhatsNew06.omh
+	omh/ExampleList.omh
+	Example/OdeErrMaxabs.cpp
 	Example/Example.vcproj
 	Example/Example.cpp
+	Example/Independent.cpp
 	Example/Makefile.am
+	Makefile.am
 "
 delete_list="
+	Example/Fun.cpp
+	CppAD/local/Fun.h
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

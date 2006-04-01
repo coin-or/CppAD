@@ -63,6 +63,11 @@ The member functions of $xref/ADFun/$$ that return properties of
 $xref/AD/AD Operation Sequence/AD operation sequence/$$
 have been grouped into the $xref/SeqProperty/$$ section.
 In addition, the $xref/SeqProperty.cpp/$$ example has been added.
+$pre
+
+$$
+The $xref/CompareChange/$$ function documentation was improved
+and moved to a separate section.
 
 $head 04-01$$
 Move the $xref/FunConstruct//ADFun Constructor/$$ to its own separate 

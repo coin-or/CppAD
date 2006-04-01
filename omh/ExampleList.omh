@@ -87,6 +87,7 @@ $rref Asin.cpp$$
 $rref Atan.cpp$$
 $rref Atan2.cpp$$
 $rref BoolFun.cpp$$
+$rref CheckNumericType.cpp$$
 $rref CheckSimpleVector.cpp$$
 $rref Compare.cpp$$
 $rref CompareChange.cpp$$
@@ -106,13 +107,13 @@ $rref Div.cpp$$
 $rref DivEq.cpp$$
 $rref Eq.cpp$$
 $rref Erf.cpp$$
+$rref ErrorHandler.cpp$$
 $rref Example.cpp$$
 $rref Exp.cpp$$
 $rref ForOne.cpp$$
 $rref ForTwo.cpp$$
 $rref Forward.cpp$$
 $rref ForSparseJac.cpp$$
-$rref Fun.cpp$$
 $rref GetStarted.cpp$$
 $rref HesLuDet.cpp$$
 $rref HesMinorDet.cpp$$
@@ -134,9 +135,14 @@ $rref LuVecADOk.cpp$$
 $rref Mul.cpp$$
 $rref MulEq.cpp$$
 $rref Multape.cpp$$
-$rref Near_Equal.cpp$$
 $rref NearEqualExt.cpp$$
+$rref Near_Equal.cpp$$
+$rref NumericType.cpp$$
 $rref OdeErrControl.cpp$$
+$rref OdeErrMaxabs.cpp$$
+$rref OdeGear.cpp$$
+$rref OdeGearControl.cpp$$
+$rref OdeStiff.cpp$$
 $rref OdeTaylor.cpp$$
 $rref Output.cpp$$
 $rref ParVar.cpp$$
@@ -145,13 +151,15 @@ $rref Poly.cpp$$
 $rref Pow.cpp$$
 $rref PowInt.cpp$$
 $rref RevOne.cpp$$
+$rref RevSparseHes.cpp$$
+$rref RevSparseJac.cpp$$
 $rref RevTwo.cpp$$
 $rref Reverse.cpp$$
-$rref RevSparseJac.cpp$$
-$rref RombergOne.cpp$$
 $rref RombergMul.cpp$$
+$rref RombergOne.cpp$$
 $rref Rosen34.cpp$$
 $rref Runge45.cpp$$
+$rref SeqProperty.cpp$$
 $rref SimpleVector.cpp$$
 $rref Sin.cpp$$
 $rref Sinh.cpp$$
@@ -164,6 +172,7 @@ $rref UnaryMinus.cpp$$
 $rref UnaryPlus.cpp$$
 $rref Value.cpp$$
 $rref VecAD.cpp$$
+$rref vectorBool.cpp$$
 $tend
 
 $end

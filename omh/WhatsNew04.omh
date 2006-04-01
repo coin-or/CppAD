@@ -124,7 +124,7 @@ all $syntax%AD<%Base%>%$$
 $xref/Compare//comparison/$$ operations are checked during
 $xref/Forward/yp/Zero Order/zero order/1/$$ forward mode calculations.
 The 
-$xref/ADFun/CompareChange/CompareChange/$$ function
+$xref/CompareChange/$$ function
 returns the number of comparison operations that have changed.
 
 $head 11-10$$

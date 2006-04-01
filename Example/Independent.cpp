@@ -35,28 +35,35 @@ $end
 // BEGIN PROGRAM
 # include <CppAD/CppAD.h>
 
-bool Independent(void)
+namespace { // --------------------------------------------------------
+// define the template function Test<VectorAD>(void) in empty namespace
+template <class VectorAD>
+bool Test(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	
-	size_t  n  = 2;                  // number of independent variables
-	CppADvector< AD<double> > X(n);  // vector for independent variables
-	X[0] = 0.;                       // independent variable values
-	X[1] = 1.;                       // while tape is recording
-	// declare independent variables, start recording AD operation sequence
+
+	// domain space vector
+	size_t  n  = 2;
+	VectorAD X(n);  // VectorAD is the template parameter in call to Test
+	X[0] = 0.;
+	X[1] = 1.;
+
+	// declare independent variables and start recording 
+	// use the template parameter VectorAD for the vector type
 	CppAD::Independent(X);
 
 	AD<double> a = X[0] + X[1];      // first AD operation
 	AD<double> b = X[0] * X[1];      // second AD operation
 
-	// declare dependent variables and stop recroding AD operations
+	// range space vector
 	size_t m = 2;
-	CppADvector< AD<double> > Y(m);
+	VectorAD Y(m);  // VectorAD is the template paraemter in call to Test
 	Y[0] = a;
 	Y[1] = b;
 
 	// create f: X -> Y and stop tape recording
+	// use the template parameter VectorAD for the vector type
 	CppAD::ADFun<double> f(X, Y); 
 
 	// check value 
@@ -88,6 +95,20 @@ bool Independent(void)
 	ok &= NearEqual(dy[0] ,   1.,  1e-10 , 1e-10);
 	ok &= NearEqual(dy[1] , x[0],  1e-10 , 1e-10);
 
+	return ok;
+}
+} // End of empty namespace -------------------------------------------
+
+# include <vector>
+# include <valarray>
+bool Independent(void)
+{	bool ok = true;
+	typedef CppAD::AD<double> ADdouble;
+	// Run with VectorAD equal to three different cases
+	// all of which are Simple Vectors with elements of type AD<double>.
+	ok &= Test< CppAD::vector  <ADdouble> >();
+	ok &= Test< std::vector    <ADdouble> >();
+	ok &= Test< std::valarray  <ADdouble> >();
 	return ok;
 }
 

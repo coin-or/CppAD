@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,12 +15,12 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin OdeErrMaxabs.cpp$$
 $spell
 	Runge
+	Maxabs
 $$
 
 $section OdeErrControl: Example and Test Using Maxabs Argument$$
@@ -51,7 +50,6 @@ Note that $latex X_1 (0)$$ is zero an if $latex w_0 t$$ is large,
 $latex X_0 (t)$$ is near zero.
 This example tests OdeErrControl using the $italic maxabs$$ argument.
 
-$comment This file is in the Example subdirectory$$ 
 $code
 $verbatim%Example/OdeErrMaxabs.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
