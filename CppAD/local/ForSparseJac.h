@@ -66,9 +66,9 @@ $syntax%
 It defines a function
 $latex F : B^n \rightarrow B^m$$,
 where $latex n$$ is the dimension of the 
-$xref/ADFun/Domain/domain/$$ space for $italic F$$, and
+$xref/SeqProperty/Domain/domain/$$ space for $italic F$$, and
 $latex m$$ is the dimension of the 
-$xref/ADFun/Range/range/$$ space for $italic F$$.
+$xref/SeqProperty/Range/range/$$ space for $italic F$$.
 
 $head x0$$
 The value $latex x^{(0)} \in B^n$$ is the value of $italic xk$$
@@ -160,7 +160,7 @@ $children%
 %$$
 The file
 $xref/ForSparseJac.cpp/$$
-contains an example and a test of this operation.
+contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
 $end

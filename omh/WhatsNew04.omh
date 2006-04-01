@@ -854,7 +854,7 @@ have been added to the $code CppAD/Test$$ directory.
 $pre
 
 $$
-The $xref/ADFun/Parameter/f.Parameter()/$$ function was added so that
+The $xref/SeqProperty/Parameter/f.Parameter()/$$ function was added so that
 one can count how many components of the range space depend
 on the value of the domain space components. 
 This helps when deciding whether to use forward or reverse mode.
@@ -868,7 +868,7 @@ when executing $xref/Forward/$$ and $xref/Reverse/$$ calculations.
 $pre
 
 $$
-The $xref/Independent/$$ and $xref/ADFun/Parameter/Parameter/$$ functions
+The $xref/Independent/$$ and $xref/SeqProperty/Parameter/Parameter/$$ functions
 were moved below $xref/ADFun/$$ in the documentation.
 
 

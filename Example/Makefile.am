@@ -118,6 +118,7 @@ Example_SOURCES   = \
 	RombergOne.cpp \
 	Rosen34.cpp \
 	Runge45.cpp \
+	SeqProperty.cpp \
 	SimpleVector.cpp \
 	Sin.cpp \
 	Sinh.cpp \

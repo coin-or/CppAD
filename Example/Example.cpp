@@ -121,6 +121,7 @@ extern bool RombergMul(void);
 extern bool RombergOne(void);
 extern bool Rosen34(void);
 extern bool Runge45(void);
+extern bool SeqProperty(void);
 extern bool SimpleVector(void);
 extern bool Sin(void);
 extern bool Sinh(void);
@@ -244,6 +245,7 @@ int main(void)
 	ok &= Run( RombergOne,        "RombergOne"       );
 	ok &= Run( Rosen34,           "Rosen34"          );
 	ok &= Run( Runge45,           "Runge45"          );
+	ok &= Run( SeqProperty,       "SeqProperty"      );
 	ok &= Run( SimpleVector,      "SimpleVector"     );
 	ok &= Run( Sin,               "Sin"              );
 	ok &= Run( Sinh,              "Sinh"             );

@@ -45,9 +45,9 @@ $head Purpose$$
 Constructs an $syntax%ADFun<%Base%>%$$ object 
 corresponding to the current $syntax%AD<%Base%>%$$
 $xref/AD/AD Operation Sequence/operation sequence/$$.
-The operation sequence defines a mapping
+The operation sequence defines an ADFun function 
 $latex \[
-	f : B^n \rightarrow B^m
+	F : B^n \rightarrow B^m
 \] $$
 where $latex B$$ is the space corresponding to objects of type $italic Base$$,
 $italic n$$ is the size of the domain vector $italic x$$,

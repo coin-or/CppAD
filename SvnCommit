@@ -1,22 +1,38 @@
-# Deprecate the ADFun member functions Order and Memory.
+# Group ADFun member functions that return AD operation sequence properties.
 #
 # SvnCommit: file that made this commit.
-# Reverse.h: change link to Order and Memory functions.
-# Fun.h: remove Order and Memory functions.
-# Forward.h: change link to Order function.
-# FunDeprecated.omh: move Order and Memory here.
+# RevSparseHes.h: fix cross reference links.
+# Reverse.h: fix cross reference links.
+# Fun.h: remove Domain, Range, Parameter, and Size from this section.
+# FunConstuct.h: use F for function corresponding to ADFun object f.
+# Forward.h: fix cross reference links.
+# ForSparseJac.h: fix cross reference links.
+# RevSparseJac.h: fix cross reference links.
+# Faq.omh: fix cross reference links.
+# WhatsNew04.omh: fix cross reference links.
 # WhatsNew06.omh: users view of the changes.
-# WishList.omh: update Memory entry.
+# Example.vcproj: add SeqProperty.cpp to list of examples.
+# Example.cpp: add SeqProperty.cpp to list of examples.
+# Makefile.am: add SeqProperty.cpp to list of examples.
 add_list="
-	omh/FunDeprecated.omh
+	omh/SeqProperty.omh
+	Example/SeqProperty.cpp
 "
 change_list="
 	SvnCommit
+	CppAD/local/RevSparseHes.h
 	CppAD/local/Reverse.h
 	CppAD/local/Fun.h
+	CppAD/local/FunConstruct.h
 	CppAD/local/Forward.h
+	CppAD/local/ForSparseJac.h
+	CppAD/local/RevSparseJac.h
+	omh/Faq.omh
+	omh/WhatsNew04.omh
 	omh/WhatsNew06.omh
-	omh/WishList.omh
+	Example/Example.vcproj
+	Example/Example.cpp
+	Example/Makefile.am
 "
 delete_list="
 "

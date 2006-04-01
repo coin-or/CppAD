@@ -81,9 +81,9 @@ $syntax%
 It defines a function
 $latex F : B^n \rightarrow B^m$$,
 where $latex n$$ is the dimension of the 
-$xref/ADFun/Domain/domain/$$ space for $italic F$$, and
+$xref/SeqProperty/Domain/domain/$$ space for $italic F$$, and
 $latex m$$ is the dimension of the 
-$xref/ADFun/Range/range/$$ space for $italic F$$.
+$xref/SeqProperty/Range/range/$$ space for $italic F$$.
 
 $head X$$
 The function
@@ -141,7 +141,7 @@ $head Memory$$
 If the function $syntax%%F%.Reverse%$$ has never been called 
 with as large a value for $italic p$$,
 a large amount of memory proportional to the 
-$xref/ADFun/Size/size/$$ of $italic F$$ times $italic p$$
+$xref/SeqProperty/Size/size/$$ of $italic F$$ times $italic p$$
 is allocated for this calculation.
 You can use the 
 $xref/FunDeprecated/Memory/F.Memory()/$$ function to determine

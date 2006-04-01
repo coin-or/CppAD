@@ -58,48 +58,6 @@ $syntax%
 %$$
 (see $syntax%ADFun<%Base%>%$$ $xref/FunConstruct//constructor/$$).
 
-$head Size$$
-$index Size, ADFun$$
-The operation 
-$syntax%
-	size_t %F%.Size(void) const
-%$$
-returns the total number of variables
-that are used to calculate the function $italic F$$.
-
-$head Domain$$
-$index Domain, ADFun$$
-The function
-$syntax%
-	size_t %F%.Domain(void) const
-%$$
-returns the dimension of the domain space; i.e., the length of the
-vector $italic X$$ in the constructor for $italic F$$.
-
-$head Range$$
-$index Range, ADFun$$
-The function
-$syntax%
-	size_t %F%.Range(void) const
-%$$
-returns the dimension of the range space; i.e., the length of the
-vector $italic Y$$ in the constructor for $italic F$$.
-
-$head Parameter$$
-$index Parameter, ADFun$$
-The function
-$syntax%
-	bool %F%.Parameter(size_t i) const
-%$$
-returns true if the range space component of $italic F$$ 
-with index $italic i$$ corresponds to a
-$xref/glossary/Parameter/parameter/$$ 
-where $italic i$$
-is less than $syntax%%F%.Range()%$$.
-If a component of the range of $italic F$$ is a parameter, 
-it does not depend on any of the components in the domain of $italic F$$; 
-i.e., all of its partial derivatives are zero.
-
 $head CompareChange$$
 $index Compare, tape operator$$
 $index tape, compare operator$$
@@ -133,6 +91,7 @@ They return true if they succeed and false otherwise.
 $contents%
 	CppAD/local/Independent.h%
 	CppAD/local/FunConstruct.h%
+	omh/SeqProperty.omh%
 	omh/Drivers.omh%
 	CppAD/local/Forward.h%
 	CppAD/local/Reverse.h%

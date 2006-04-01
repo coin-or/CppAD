@@ -202,7 +202,7 @@ Each call to $xref/Reverse/$$ computes the derivative of one
 range direction with respect to all the domain directions.
 The times required for (speed of) 
 calls $code Forward$$ and $code Reverse$$ are about equal.  
-The $xref/ADFun/Parameter/Parameter/$$ 
+The $xref/SeqProperty/Parameter/Parameter/$$ 
 function can be used to quickly determine that 
 some range directions have derivative zero.
 

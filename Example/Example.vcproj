@@ -1201,6 +1201,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\SeqProperty.cpp">
+			</File>
+			<File
 				RelativePath="SimpleVector.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

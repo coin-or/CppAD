@@ -1,0 +1,118 @@
+$begin SeqProperty$$
+$spell 
+	const
+	bool
+$$
+
+$section ADFun Sequence Properties$$
+
+$index ADFun, Domain$$
+$index Domain, ADFun$$
+
+$index ADFun, Range$$
+$index Range, ADFun$$
+
+$index ADFun, Parameter$$
+$index Parameter, ADFun$$
+
+$index ADFun, Size$$
+$index Size, ADFun$$
+
+$table
+$bold Syntax$$ $cnext 
+$syntax%%n% = %f%.Domain()%$$
+$rnext $cnext
+$syntax%%m% = %f%.Range()%$$
+$rnext $cnext
+$syntax%%p% = %f%.Parameter(%i%)%$$
+$rnext $cnext
+$syntax%%s% = %f%.Size(%i%)%$$
+$tend
+
+$fend 20$$
+
+
+$head Purpose$$
+The operations above return properties of the
+$xref/AD/AD Operation Sequence/AD operation sequence/$$
+stored in the ADFun object $italic f$$. 
+We use the notation 
+$latex \[
+	F : B^n \rightarrow B^m
+\] $$
+for the function corresponding to the AD operation sequence 
+stored in $italic f$$.
+
+$head f$$
+The object $italic f$$ has prototype
+$syntax%
+	const ADFun<%Base%> %f%
+%$$
+(see $syntax%ADFun<%Base%>%$$ $xref/FunConstruct//constructor/$$).
+
+$head Domain$$
+The result $italic n$$ has prototype
+$syntax%
+	size_t %n%
+%$$
+and is the dimension of the domain space for the function $latex F$$.
+This is the same as the number of 
+$xref/glossary/Independent Variable/independent variables/$$
+in the operation sequence.
+It is also the length of the vector
+$xref/FunConstruct/x/x/$$ in the $xref/FunConstruct//constructor/$$ for 
+$italic f$$.
+
+
+$head Range$$
+The result $italic m$$ has prototype
+$syntax%
+	size_t %m%
+%$$
+and is the dimension of the range space for the function $latex F$$.
+This is determined by the length of the vector
+$xref/FunConstruct/y/y/$$ in the $xref/FunConstruct//constructor/$$ for 
+$italic f$$.
+
+$head Parameter$$
+The argument $italic i$$ has prototype
+$syntax%
+	size_t %i%
+%$$
+and $latex 0 \leq i < m$$.
+The result $italic p$$ has prototype
+$syntax%
+	bool %p%
+%$$
+It is true if the $th i$$ component of range space for $latex F$$
+corresponds to a
+$xref/glossary/Parameter/parameter/$$ in the operation sequence.
+In this case,
+the $th i$$ component of $latex F$$ is constant and
+$latex \[
+	\D{F_i}{x_j} (x) = 0
+\] $$
+for $latex j = 0 , \ldots , n-1$$ and all $latex x \in B^n$$.
+
+$head Size$$
+The result $italic s$$ has prototype
+$syntax%
+	size_t %s%
+%$$
+and is the number of variables in the operation sequence plus the following:
+one for a phantom variable with tape address zero,
+one for each component of the domain that is a parameter.
+The amount of work and memory necessary for computing function values
+and derivatives using $italic f$$ is roughly proportional to $italic s$$.
+
+$head Example$$
+$children%
+	Example/SeqProperty.cpp
+%$$
+The file
+$xref/SeqProperty.cpp/$$ 
+contains an example and test of these operations.
+It returns true if it succeeds and false otherwise.
+
+
+$end
