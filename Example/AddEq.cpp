@@ -79,11 +79,12 @@ bool AddEq(void)
 	ok   &= NearEqual(dy[1], 2., 1e-10, 1e-10);
 
 	// reverse computation of derivative of y[0]
-	CppADvector<double> w(m);
+	CppADvector<double>  w(m);
+	CppADvector<double> dw(n);
 	w[0]  = 1.;
 	w[1]  = 0.;
-	dx    = f.Reverse(1, w);
-	ok   &= NearEqual(dx[0], 2., 1e-10, 1e-10);
+	dw    = f.Reverse(1, w);
+	ok   &= NearEqual(dw[0], 2., 1e-10, 1e-10);
 
 	// use a VecAD<Base>::reference object with computed addition
 	CppAD::VecAD<double> v(1);

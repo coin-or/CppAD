@@ -100,7 +100,7 @@ bool CondExp(void)
 	CppADvector<double> x(n);   // argument values
 	CppADvector<double> y(m);   // function values 
 	CppADvector<double> w(m);   // function weights 
-	CppADvector<double> dx(n);  // differentials in x space
+	CppADvector<double> dw(n);  // derivative of weighted function
 
 	// a case where abs( x[j] ) > 0 for all j
 	double check  = 0.;
@@ -117,11 +117,11 @@ bool CondExp(void)
 
 	// compute derivative of y[0]
 	w[0] = 1.;
-	dx   = f.Reverse(1, w);
+	dw   = f.Reverse(1, w);
 	for(j = 0; j < n; j++)
 	{	if( x[j] > 0. )
-			ok &= NearEqual(dx[j], 1./abs( x[j] ), 1e-10, 1e-10); 
-		else	ok &= NearEqual(dx[j], -1./abs( x[j] ), 1e-10, 1e-10); 
+			ok &= NearEqual(dw[j], 1./abs( x[j] ), 1e-10, 1e-10); 
+		else	ok &= NearEqual(dw[j], -1./abs( x[j] ), 1e-10, 1e-10); 
 	}
 
 	// a case where x[0] is equal to zero
@@ -137,14 +137,14 @@ bool CondExp(void)
 
 	// compute derivative of y[0]
 	w[0] = 1.;
-	dx   = f.Reverse(1, w);
+	dw   = f.Reverse(1, w);
 	for(j = 0; j < n; j++)
 	{	if( x[j] > 0. )
-			ok &= NearEqual(dx[j], 1./abs( x[j] ), 1e-10, 1e-10); 
+			ok &= NearEqual(dw[j], 1./abs( x[j] ), 1e-10, 1e-10); 
 		else if( x[j] < 0. )
-			ok &= NearEqual(dx[j], -1./abs( x[j] ), 1e-10, 1e-10); 
+			ok &= NearEqual(dw[j], -1./abs( x[j] ), 1e-10, 1e-10); 
 		else
-		{	// in this case computing dx[j] ends up multiplying 
+		{	// in this case computing dw[j] ends up multiplying 
 			// -infinity * zero and hence results in Nan
 		}
 	}

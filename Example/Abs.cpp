@@ -89,20 +89,21 @@ bool Abs(void)
 
 	// reverse computation of derivative of y[0] 
 	p    = 0;
-	CppADvector<double> w(m);
+	CppADvector<double>  w(m);
+	CppADvector<double> dw(n);
 	w[0] = 1.; w[1] = 0.; w[2] = 0.;
-	dx   = f.Reverse(p+1, w);
-	ok  &= (dx[0] == -1.);
+	dw   = f.Reverse(p+1, w);
+	ok  &= (dw[0] == -1.);
 
 	// reverse computation of derivative of y[1] 
 	w[0] = 0.; w[1] = 1.; w[2] = 0.;
-	dx   = f.Reverse(p+1, w);
-	ok  &= (dx[0] == 0.);
+	dw   = f.Reverse(p+1, w);
+	ok  &= (dw[0] == 0.);
 
 	// reverse computation of derivative of y[2] 
 	w[0] = 0.; w[1] = 0.; w[2] = 1.;
-	dx   = f.Reverse(p+1, w);
-	ok  &= (dx[0] == 1.);
+	dw   = f.Reverse(p+1, w);
+	ok  &= (dw[0] == 1.);
 
 	// use a VecAD<Base>::reference object with abs
 	CppAD::VecAD<double> v(1);

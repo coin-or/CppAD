@@ -84,7 +84,7 @@ bool Discrete(void)
 	CppADvector<double> x(n);   // argument values
 	CppADvector<double> y(m);   // function values 
 	CppADvector<double> w(m);   // function weights 
-	CppADvector<double> dx(n);  // differentials in x space
+	CppADvector<double> dw(n);  // derivative of weighted function
 
 	// check function value
 	x[0] = Value(X[0]);
@@ -100,9 +100,9 @@ bool Discrete(void)
 
 	// evaluate derivaitve of y[0] 
 	w[0] = 1.;
-	dx   = f.Reverse(1, w);
-	ok   &= dx[0] == 0.;
-	ok   &= dx[1] == TableLookup(x[0]);
+	dw   = f.Reverse(1, w);
+	ok   &= dw[0] == 0.;
+	ok   &= dw[1] == TableLookup(x[0]);
 
 	return ok;
 }

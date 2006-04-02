@@ -84,13 +84,14 @@ bool Pow(void)
 	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
 
 	// reverse computation of derivative of y[0]
-	CppADvector<double> w(m);
+	CppADvector<double>  w(m);
+	CppADvector<double> dw(n);
 	w[0]  = 1.;
-	dx    = f.Reverse(1, w);
+	dw    = f.Reverse(1, w);
 	check = x1 * std::pow(x0, x1-1.);
-	ok   &= NearEqual(dx[0], check, 1e-10, 1e-10);
+	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);
 	check = std::log(x0) * std::pow(x0, x1);
-	ok   &= NearEqual(dx[1], check, 1e-10, 1e-10);
+	ok   &= NearEqual(dw[1], check, 1e-10, 1e-10);
 
 	// use a VecAD<Base>::reference object with pow
 	CppAD::VecAD<double> v(2);

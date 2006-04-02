@@ -72,10 +72,11 @@ bool UnaryMinus(void)
 	ok      &= ( dy[0] == -1. );   // dy[0] / dx[0]
 
 	// reverse computation of dertivative of y[0]
-	CppADvector<double> w(m);
+	CppADvector<double>  w(m);
+	CppADvector<double> dw(n);
 	w[0] = 1.;
-	dx   = f.Reverse(p, w);
-	ok &= ( dx[0] == -1. );       // dy[0] / dx[0]
+	dw   = f.Reverse(p, w);
+	ok &= ( dw[0] == -1. );       // dy[0] / dx[0]
 
 	// use a VecAD<Base>::reference object with unary minus
 	CppAD::VecAD<double> v(1);

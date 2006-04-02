@@ -81,14 +81,15 @@ bool PowInt(void)
 	}
 
 	// reverse computation of derivative of y[i]
-	CppADvector<double> w(m);
+	CppADvector<double>  w(m);
+	CppADvector<double> dw(n);
 	for(i = 0; i < int(m); i++) 
 		w[i] = 0.;
 	for(i = 0; i < int(m); i++) 
 	{	w[i] = 1.;	
-		dx    = f.Reverse(1, w);
+		dw    = f.Reverse(1, w);
 		check = double(i-3) * std::pow(x0, double(i - 4));
-		ok &= NearEqual(dx[0] , check,  1e-10 , 1e-10);
+		ok &= NearEqual(dw[0] , check,  1e-10 , 1e-10);
 		w[i] = 0.;	
 	}
 

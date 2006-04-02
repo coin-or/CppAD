@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew06$$
 $spell
+	const
+	dw
 	VecADelem
 	atan
 	namespace
@@ -73,6 +75,11 @@ $$
 The $xref/Reverse/$$ member function is now declared,
 and documented as, $code const$$; i.e.,
 it does not effect the state of the ADFun object.
+$pre
+
+$$
+Change the examples that use $xref/Reverse/$$ to use the same
+return value notation as the documentation; i.e., $code dw$$.
 
 $head 04-02$$
 The member functions of $xref/ADFun/$$ that return properties of

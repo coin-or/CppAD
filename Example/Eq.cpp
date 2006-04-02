@@ -88,13 +88,14 @@ bool Eq(void)
 	ok  &= (dy[2] == 0.);  // dy[2] / dx[1]
 
 	// compute the derivative y[2]
-	CppADvector<double> w(m);
+	CppADvector<double>  w(m);
+	CppADvector<double> dw(n);
 	w[0] = 0.;
 	w[1] = 0.;
 	w[2] = 1.;
-	dx   = f.Reverse(1, w);
-	ok  &= (dx[0] == 1.);  // dy[2] / dx[0]
-	ok  &= (dx[1] == 0.);  // dy[2] / dx[1]
+	dw   = f.Reverse(1, w);
+	ok  &= (dw[0] == 1.);  // dy[2] / dx[0]
+	ok  &= (dw[1] == 0.);  // dy[2] / dx[1]
 
 	// assign a VecAD<Base>::reference
 	CppAD::VecAD<double> v(1);

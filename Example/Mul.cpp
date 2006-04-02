@@ -74,10 +74,11 @@ bool Mul(void)
 	ok   &= NearEqual(dy[0], (4.*3.*2.*1.)*2.*x0, 1e-10 , 1e-10); 
 
 	// reverse computation of derivative of y[0]
-	CppADvector<double> w(m); 
+	CppADvector<double>  w(m);
+	CppADvector<double> dw(n); 
 	w[0]  = 1.;
-	dx    = f.Reverse(1, w);
-	ok   &= NearEqual(dx[0], (4.*3.*2.*1.)*2.*x0, 1e-10 , 1e-10); 
+	dw    = f.Reverse(1, w);
+	ok   &= NearEqual(dw[0], (4.*3.*2.*1.)*2.*x0, 1e-10 , 1e-10); 
 
 	// use a VecAD<Base>::reference object with multiplication
 	CppAD::VecAD<double> v(1);

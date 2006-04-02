@@ -1,22 +1,44 @@
-# Make the Reverse member function const.
+# Use dw for return value from Reverse in examples (as in documentaiton):
 #
 # SvnCommit: file that made this commit.
-# ReverseSparseHes.h: comment out memoryMax calculation.
-# Reverse.h: make const and comment out memoryMax calculation.
-# ADFun.h: make Reverse const and comment out memoryMax member data.
-# FunConstruct.h: comment out memoryMax initialization.
-# RevSparseJac.h: make const and comment out memoryMax calculation.
 # WhatsNew06.omh: users view of changes.
+# Exmaple/*.cpp: change Reverse return value to dw.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/RevSparseHes.h
-	CppAD/local/Reverse.h
-	CppAD/local/ADFun.h
-	CppAD/local/FunConstruct.h
-	CppAD/local/RevSparseJac.h
 	omh/WhatsNew06.omh
+	Example/CondExp.cpp
+	Example/UnaryPlus.cpp
+	Example/Pow.cpp
+	Example/Abs.cpp
+	Example/Erf.cpp
+	Example/Sinh.cpp
+	Example/Atan2.cpp
+	Example/UnaryMinus.cpp
+	Example/Tan.cpp
+	Example/Div.cpp
+	Example/Cos.cpp
+	Example/Add.cpp
+	Example/Sqrt.cpp
+	Example/Asin.cpp
+	Example/Cosh.cpp
+	Example/Discrete.cpp
+	Example/Eq.cpp
+	Example/DivEq.cpp
+	Example/AddEq.cpp
+	Example/SubEq.cpp
+	Example/MulEq.cpp
+	Example/Compare.cpp
+	Example/Exp.cpp
+	Example/PowInt.cpp
+	Example/Log.cpp
+	Example/Log10.cpp
+	Example/Atan.cpp
+	Example/Acos.cpp
+	Example/Sin.cpp
+	Example/Sub.cpp
+	Example/Mul.cpp
 "
 delete_list="
 "
