@@ -1,36 +1,22 @@
-# Create separate sections for the zero and first order Forward mode case.
-#
-# Reverse.h: deprecate Size and change order to taylor_size.
-# ADFun.h: deprecate Size and change order to taylor_size.
-# Independent.h: change VectorADBase to VectorAD.
-# FunConstruct.h: VectorADBase->VectorAD, def Domain&Range, order->taylor_per
-# Forward.h: move doc to Forward.omh, (changes in FunConstruct.h).
-# SeqProperty.h: change Size to var_size.
-# Faq.omh: change reference for Forward zero order.
-# WhatsNew04.omh: change reference for Forward zero order.
-# WhatsNew06.omh: users view of the changes.
-# FunDeprecate.omh: deprecate the Size functions.
-# Example/Forward.cpp: simplify and make notation more like documentation.
-# TestMore/Forward.cpp: include old Forward.cpp in this test.
+# Make the Reverse member function const.
 #
 # SvnCommit: file that made this commit.
+# ReverseSparseHes.h: comment out memoryMax calculation.
+# Reverse.h: make const and comment out memoryMax calculation.
+# ADFun.h: make Reverse const and comment out memoryMax member data.
+# FunConstruct.h: comment out memoryMax initialization.
+# RevSparseJac.h: make const and comment out memoryMax calculation.
+# WhatsNew06.omh: users view of changes.
 add_list="
-	omh/Forward.omh
 "
 change_list="
 	SvnCommit
+	CppAD/local/RevSparseHes.h
 	CppAD/local/Reverse.h
 	CppAD/local/ADFun.h
-	CppAD/local/Independent.h
 	CppAD/local/FunConstruct.h
-	CppAD/local/Forward.h
-	omh/SeqProperty.omh
-	omh/Faq.omh
-	omh/WhatsNew04.omh
+	CppAD/local/RevSparseJac.h
 	omh/WhatsNew06.omh
-	omh/FunDeprecated.omh
-	Example/Forward.cpp
-	TestMore/Forward.cpp
 "
 delete_list="
 "

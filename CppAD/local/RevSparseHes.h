@@ -242,9 +242,9 @@ VectorBool ADFun<Base>::RevSparseHes(
 	RevHes       = CppADTrackNewVec(totalNumVar * npv, RevHes);	
 
 	// update maximum memory requirement
-	memoryMax = std::max( memoryMax, 
-		Memory() + totalNumVar * (npv + 1) * sizeof(Pack)
-	);
+	// memoryMax = std::max( memoryMax, 
+	// 	Memory() + totalNumVar * (npv + 1) * sizeof(Pack)
+	// );
 
 	// initialize entire RevHes and RevJac matrix to false
 	for(i = 0; i < totalNumVar; i++)

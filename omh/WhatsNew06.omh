@@ -67,6 +67,12 @@ $pre
 $$
 The ADFun $xref/FunDeprecated/Size/Size/$$ member function
 has been deprecated (use $xref/taylor_size/$$ instead).
+$pre
+
+$$
+The $xref/Reverse/$$ member function is now declared,
+and documented as, $code const$$; i.e.,
+it does not effect the state of the ADFun object.
 
 $head 04-02$$
 The member functions of $xref/ADFun/$$ that return properties of

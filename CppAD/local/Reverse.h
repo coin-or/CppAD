@@ -76,7 +76,7 @@ $latex \[
 $head F$$
 The object $italic F$$ has prototype
 $syntax%
-	ADFun<%Base%> %F%
+	const ADFun<%Base%> %F%
 %$$
 It defines a function
 $latex F : B^n \rightarrow B^m$$,
@@ -258,7 +258,7 @@ namespace CppAD {
 
 template <typename Base>
 template <typename VectorBase>
-VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
+VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) const
 {	// temporary indices
 	size_t i, j, k;
 
@@ -272,9 +272,9 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 	Partial       = CppADTrackNewVec(totalNumVar * p, Partial);
 
 	// update maximum memory requirement
-	memoryMax = std::max( memoryMax, 
-		Memory() + totalNumVar * p * sizeof(Base)
-	);
+	// memoryMax = std::max( memoryMax, 
+	// 	Memory() + totalNumVar * p * sizeof(Base)
+	// );
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();

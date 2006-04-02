@@ -92,7 +92,7 @@ public:
 
 	// reverse mode sweep
 	template <typename VectorBase>
-	VectorBase Reverse(size_t p, const VectorBase &v);
+	VectorBase Reverse(size_t p, const VectorBase &v) const;
 
 	// forward mode Jacobian sparsity 
 	template <typename VectorBase>
@@ -185,7 +185,7 @@ public:
 
 private:
 	// maximum amount of memory required for this function object
-	size_t memoryMax;
+	// mutable size_t memoryMax;
 
 	// debug checking number of comparision operations that changed
 	size_t compareChange;

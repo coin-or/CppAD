@@ -209,9 +209,9 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 	RevJac       = CppADTrackNewVec(totalNumVar * npv, RevJac);
 
 	// update maximum memory requirement
-	memoryMax = std::max( memoryMax, 
-		Memory() + totalNumVar * npv * sizeof(Pack)
-	);
+	// memoryMax = std::max( memoryMax, 
+	// 	Memory() + totalNumVar * npv * sizeof(Pack)
+	// );
 
 	// initialize entire RevJac matrix as false
 	for(i = 0; i < totalNumVar; i++)

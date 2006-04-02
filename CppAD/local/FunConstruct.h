@@ -173,7 +173,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	CppADUnknownError( totalNumVar == Rec->TotNumVar() );
 
 	// initial row and column dimensions
-	memoryMax     = 0;
+	// memoryMax  = 0;
 	taylor_per_var= 1;
 	ForJacColDim  = 0;
 	ForJacBitDim  = 0;
