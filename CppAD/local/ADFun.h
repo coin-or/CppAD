@@ -106,13 +106,17 @@ public:
 	template <typename VectorBase>
 	VectorBase RevSparseHes(size_t q, const VectorBase &Py);
 
-	// size of this function object
-	size_t Size(void) const
+	// number of variables in opertion sequence
+	size_t var_size(void) const
+	{	return totalNumVar; }
+	size_t Size(void) const       // (Deprecated)
 	{	return totalNumVar; }
 
-	// order of this function object (Deprecated)
-	size_t Order(void) const
-	{	return order; }
+	// number of Taylor coefficients currently stored (per variable)
+	size_t taylor_size(void) const
+	{	return taylor_per_var; } 
+	size_t Order(void) const      // (Deprecated)
+	{	return taylor_per_var - 1; }
 
 	// number of independent variables
 	size_t Domain(void) const
@@ -186,8 +190,8 @@ private:
 	// debug checking number of comparision operations that changed
 	size_t compareChange;
 
-	// order of the informaiton currently stored in Taylor array
-	size_t order;
+	// number of Taylor coefficieint per variable (currently stored)
+	size_t taylor_per_var;
 
 	// number of bits currently calculated per row of the ForJac array
 	size_t ForJacBitDim; 

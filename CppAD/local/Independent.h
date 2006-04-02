@@ -56,16 +56,16 @@ $syntax%ADFun<%Base%>%$$ $xref/FunConstruct//constructor/$$.
 $head x$$
 The vector $italic x$$ has prototype
 $syntax%
-	%VectorADBase% &%x%
+	%VectorAD% &%x%
 %$$
-(see the specifications for the class $italic VectorADBase$$ below).
+(see $italic VectorAD$$ below).
 The size of the vector $italic x$$, must be greater than zero,
 and is the number of independent variables for this
 AD operation sequence.
 
 
-$head VectorADBase$$
-The type $italic VectorADBase$$ must be a $xref/SimpleVector/$$ class with
+$head VectorAD$$
+The type $italic VectorAD$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type/$$
 $syntax%AD<%Base%>%$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
@@ -97,11 +97,11 @@ namespace CppAD {
 // ---------------------------------------------------------------------------
 
 template <typename Base>
-template <typename VectorADBase>
-void ADTape<Base>::Independent(VectorADBase &x)
+template <typename VectorAD>
+void ADTape<Base>::Independent(VectorAD &x)
 {
-	// check VectorADBase is Simple Vector class with AD<Base> elements
-	CheckSimpleVector< AD<Base>, VectorADBase>();
+	// check VectorAD is Simple Vector class with AD<Base> elements
+	CheckSimpleVector< AD<Base>, VectorAD>();
 
 	CppADUsageError(
 		State() == Empty ,
@@ -134,9 +134,9 @@ void ADTape<Base>::Independent(VectorADBase &x)
 
 }
 
-template <typename VectorADBase>
-inline void Independent(VectorADBase &x)
-{	typedef typename VectorADBase::value_type ADBase;
+template <typename VectorAD>
+inline void Independent(VectorAD &x)
+{	typedef typename VectorAD::value_type ADBase;
 	ADBase::Tape()->Independent(x); 
 }
 

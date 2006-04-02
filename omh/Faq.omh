@@ -146,8 +146,7 @@ for the independent variables ?
 $pre
 
 $$
-Yes (see $xref/ADFun/$$ and 
-$xref/Forward/yp/Zero Order/zero order/1/$$ in forward mode.)
+Yes (see $xref/ForwardZero/$$). 
 
 $head Math Functions$$
 $index math, functions$$

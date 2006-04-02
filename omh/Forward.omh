@@ -1,0 +1,501 @@
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+
+$begin ForwardZero$$
+$spell
+	const
+	Taylor
+	dy
+	Jacobian
+$$
+
+$index Forward, order zero$$
+$index zero, order Forward$$
+$index order, zero Forward$$
+
+$section Zero Order Forward Mode: Function Values$$
+
+$table
+$bold Syntax$$ $cnext
+$syntax%%y% = %f%.Forward(0, %x%)%$$
+$tend
+
+$fend 20$$
+
+
+$head Purpose$$
+The $syntax%AD<%Base%>%$$ 
+$xref/AD/AD Operation Sequence/operation sequence/$$
+stored in $italic f$$ defines a function
+$latex F : B^n \rightarrow B^m $$
+where $italic B$$ is the space corresponding to object of type $italic Base$$.
+The result of this operation is
+$latex \[
+	y = F(x)
+\] $$. 
+
+$head f$$
+The object $italic f$$ has prototype
+$syntax%
+	ADFun<%Base%> %f%
+%$$
+Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$.
+After this call one
+$xref/glossary/Taylor Coefficient/Taylor coefficient/$$
+(for each of the variables in the operation sequence)
+is stored in the object $italic f$$.
+
+$head x$$
+The argument $italic x$$ has prototype
+$syntax%
+	const %Vector% &%x%
+%$$
+(see $xref/ForwardZero/Vector/Vector/$$ below)
+and its size 
+must be equal the dimension of the
+$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+
+$head y$$
+The result $italic y$$ has prototype
+$syntax%
+	const %Vector% &%y%
+%$$
+(see $xref/ForwardZero/Vector/Vector/$$ below)
+and its value is $latex F(x)$$.
+The size of $italic y$$ 
+is equal the dimension of the
+$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+
+$head Vector$$
+The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+$italic Base$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
+
+$head Example$$
+The file
+$xref/Forward.cpp/$$
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+$end
+// -------------------------------------------------------------------------
+
+$begin ForwardOne$$
+$spell
+	dy
+	Jacobian
+	Taylor
+	const
+$$
+
+$section First Order Forward Mode: Derivative Values$$
+
+$index Forward, order one$$
+$index one, order Forward$$
+$index order, one Forward$$
+
+
+$table
+$bold Syntax$$ $cnext
+$syntax%%dy% = %f%.Forward(1, %dx%)%$$
+$tend
+
+$fend 20$$
+
+$head Purpose$$
+The $syntax%AD<%Base%>%$$ 
+$xref/AD/AD Operation Sequence/operation sequence/$$
+stored in $italic f$$ defines a function
+$latex F : B^n \rightarrow B^m $$
+where $italic B$$ is the space corresponding to object of type $italic Base$$.
+The result of this operation is
+$latex \[
+	dy = F^{(1)} (x) * dx
+\] $$
+where $latex F^{(1)} (x)$$ is the Jacobian of $latex F$$ 
+evaluated at $latex x$$.
+
+$head f$$
+The object $italic f$$ has prototype
+$syntax%
+	ADFun<%Base%> %f%
+%$$
+Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$.
+After this call two
+$xref/glossary/Taylor Coefficient/Taylor coefficients/$$
+(for each of the variables in the operation sequence)
+are stored in the object $italic f$$.
+
+$head x$$
+The vector $italic x$$ in expression for $italic dy$$ above
+corresponds to the previous call to $xref/ForwardZero/$$
+using this ADFun object $italic f$$; i.e.,
+$syntax%
+	%f%.Forward(0, %x%)
+%$$
+If there is no previous call with the first argument zero,
+the value of the $xref/Independent//independent/$$ variables 
+during the recording of the AD sequence of operations is used
+for $italic x$$.
+
+$head dx$$
+The argument $italic dx$$ has prototype
+$syntax%
+	const %Vector% &%x%
+%$$
+(see $xref/ForwardOne/Vector/Vector/$$ below)
+and its size 
+must be equal the dimension of the
+$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+
+$head dy$$
+The result $italic dy$$ has prototype
+$syntax%
+	const %Vector% &%dy%
+%$$
+(see $xref/ForwardOne/Vector/Vector/$$ below)
+and its value is $latex F^{(1)} (x) * dx$$.
+The size of $italic dy$$ 
+is equal the dimension of the
+$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+
+$head Vector$$
+The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+$italic Base$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
+
+$head Example$$
+The file
+$xref/Forward.cpp/$$
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+$end
+
+// -------------------------------------------------------------------------
+$begin ForwardAny$$
+$spell
+	xk
+	xp
+	yp
+	Ind
+	vp
+	uj
+	Taylor
+	const
+	dy
+$$
+
+$section Any Order Forward Mode$$ 
+
+$index forward, mode$$
+$index mode, forward$$
+$index derivative, forward mode$$
+$index calculate, forward mode$$
+
+$table
+$bold Syntax$$ $cnext
+$syntax%%y_p% = %f%.Forward(%p%, %x_p% )%$$
+$rnext $cnext
+$tend
+
+$fend 20$$
+
+$head Purpose$$
+The $syntax%AD<%Base%>%$$ 
+$xref/AD/AD Operation Sequence/operation sequence/$$
+stored in $italic f$$ defines a function
+$latex F : B^n \rightarrow B^m $$
+where $italic B$$ is the space corresponding to object of type $italic Base$$.
+Given a function $latex X : B \rightarrow B^n$$,
+defined by its 
+$xref/glossary/Taylor Coefficient/Taylor coefficients/$$,
+forward mode computes the Taylor coefficients for the function 
+$latex \[
+	Y (t) = F [ X(t) ]
+\] $$.
+
+$subhead Function Values$$
+If you are using forward mode to compute values for $latex F(x)$$,
+$xref/ForwardZero/$$ is simpler to understand
+than this explanation of the general case.
+
+$subhead Derivative Values$$
+If you are using forward mode to compute values for $latex F^{(1)} (x) * dx$$,
+$xref/ForwardOne/$$ is simpler to understand
+than this explanation of the general case.
+
+$head X(t)$$
+The function
+$latex X : B \rightarrow B^n$$ is defined,
+a sequence of Taylor coefficients $latex x^{(k)} \in B^n$$,
+by
+$latex \[
+	X(t) = x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p 
+\] $$ 
+For $latex k = 0, \ldots , p$$,
+the vector $latex x^{(k)}$$ above is defined as the value of 
+$italic x_k$$ in the previous call (counting this call) of the form
+$syntax%
+	%f%.Forward(%k%, %x_k%)
+%$$ 
+If there is no previous call with $latex k = 0$$,
+$latex x^{(0)}$$ is the value of the independent variables when the 
+corresponding 
+$xref/AD/AD Operation Sequence/AD operation sequence/$$ was recorded.
+Note that 
+$latex x^{(k)}$$ is related to the $th k$$ derivative of $latex X(t)$$ by
+$latex \[
+	x^{(k)} = \frac{1}{k !} X^{(k)} (0) 
+\] $$
+
+$head Y(t)$$
+The function
+$latex Y : B \rightarrow B^m$$ is defined by
+$latex Y(t) = F[ X(t) ] $$.
+We use $latex y^{(k)} \in B^m$$ 
+to denote the $th k$$ order Taylor coefficient of $latex Y(t)$$; i.e.,
+$latex \[
+	Y(t) = y^{(0)} + y^{(1)} * t + \cdots, + y^{(p)} * t^p + o( t^p ) 
+\] $$ 
+where $latex o( t^p ) * t^{-p} \rightarrow 0$$ 
+as $latex t \rightarrow 0$$.
+Note that $latex y^{(k)}$$ is related to 
+the $th k$$ derivative of $latex Y(t)$$ by
+$latex \[
+	y^{(k)} = \frac{1}{k !} Y^{(k)} (0) 
+\] $$
+
+
+$head f$$
+The $xref/ADFun/$$ object $italic f$$ has prototype
+$syntax%
+	ADFun<%Base%> %f%
+%$$
+Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$.
+After this call $latex p + 1$$
+$xref/glossary/Taylor Coefficient/Taylor coefficients/$$
+(for each of the variables in the operation sequence)
+are stored in the object $italic f$$.
+
+$head p$$
+The argument $italic p$$ has prototype
+$syntax%
+	size_t %p%
+%$$
+and specifies the order of the Taylor coefficients to be calculated.
+There must be at least $latex p$$ Taylor coefficients of lower
+order stored in $italic f$$ when $code Forward$$ is called
+(see $xref/taylor_size/$$).
+
+$head x_p$$
+The argument $italic x_p$$ has prototype
+$syntax%
+	const %Vector% &%x_p%
+%$$
+(see $xref/ForwardAny/Vector/Vector/$$ below)
+and its size 
+must be equal the dimension of the
+$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+The $th p$$ order Taylor coefficient for $latex X(t)$$ 
+is defined by this value; i.e., $latex x^{(p)} = x\_p$$.
+(The lower order Taylor coefficients for $latex X(t)$$ are
+defined by previous calls to $code Forward$$.)
+
+$head y_p$$
+The return value $italic y_p$$ has prototype
+$syntax%
+	%Vector% %y_p%
+%$$
+(see $xref/ForwardAny/Vector/Vector/$$ below)
+and its value is 
+The $th p$$ order Taylor coefficient for $latex Y(t)$$; i.e.,
+$latex y^{(p)} = y\_p$$. 
+The size of $italic y_p$$ 
+is equal the dimension of the
+$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+
+$head Vector$$
+The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+$italic Base$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
+
+$head Zero Order$$
+In the case where $latex p = 0$$,
+the result $italic y_p$$ is given by
+$latex \[
+\begin{array}{rcl}
+y^{(0)} & = & (F \circ X) ( 0 ) \\
+	& = & F[ x^{(0)} ]
+\end{array}
+\] $$
+The agrees with the simplification where
+$latex p$$, 
+$latex x^{(0)}$$, and 
+$latex y^{(0)}$$ above are replaced by
+$code 0$$, 
+$italic x$$, and 
+$italic y$$ 
+in $xref/ForwardZero/$$.
+
+$head First Order$$
+In the case where $latex p = 1$$,
+the result $italic y_p$$ is given by
+$latex \[
+\begin{array}{rcl}
+y^{(1)} & = & (F \circ X)^{(1)} ( 0 ) \\
+	& = & F^{(1)} [ X(0) ] *  X^{(1)} (0) \\
+	& = & F^{(1)} ( x^{(0)} ) *  x^{(1)}
+\end{array}
+\] $$
+The agrees with the simplification where 
+$latex p$$, 
+$latex x^{(0)}$$, 
+$latex x^{(1)}$$, and 
+$latex y^{(1)}$$ above are replaced by
+$code 1$$, 
+$italic x$$, 
+$italic dx$$, and 
+$italic dy$$ 
+in $xref/ForwardOne/$$.
+$pre
+
+$$
+Note that if $latex x^{(1)}$$ is the $th j$$ 
+$xref/glossary/Elementary Vector/elementary vector/$$
+$latex \[
+y^{(1)} = \D{F}{x_j} ( x^{(0)} ) 
+\] $$
+
+$head Second Order$$
+In the case where $latex p = 2$$,
+the $th i$$ element of 
+the result $italic y_p$$ is given by
+$latex \[
+\begin{array}{rcl}
+y_i^{(2)} 
+& = & \frac{1}{2} (F_i \circ X)^{(2)} ( 0 ) 
+\\
+& = & \frac{1}{2} \left[ F_i^{(1)} [ X(0) ] * X^{(2)} (0) 
+  + X^{(1)} (0)^T * F_i^{(2)} [ X(0) ] * X^{(1)} (0) \right]
+\\
+& = & \frac{1}{2}  \left[
+	F_i^{(1)} ( x^{(0)} ) * x^{(2)}
+	+
+	( x^{(1)} )^T * F_i^{(2)} ( x^{(0)} ) * x^{(1)}
+\right  ]
+\end{array}
+\] $$
+Note that if $latex x^{(1)}$$ is the $th j$$ 
+$xref/glossary/Elementary Vector/elementary vector/$$
+and $latex x^{(2)}$$ is zero,
+$latex \[
+\begin{array}{rcl}
+	\DD{F_i}{x_j}{x_j} ( x^{(0)} ) = 2 y_i^{(2)} 
+\end{array}
+\] $$
+If $latex x^{(1)}$$ is the sum of the $th j$$ and $th l$$ 
+$xref/glossary/Elementary Vector/elementary vectors/$$
+and $latex x^{(2)}$$ is zero,
+$latex \[
+\begin{array}{rcl}
+	y_i^{(2)} 
+	& = & \frac{1}{2} \left[
+		\DD{F_i}{x_j}{x_j} ( x^{(0)} )
+		+
+		\DD{F_i}{x_j}{x_\ell} ( x^{(0)} )
+		+
+		\DD{F_i}{x_\ell}{x_j} ( x^{(0)} )
+		+
+		\DD{F_i}{x_\ell}{x_\ell} ( x^{(0)} )
+	\right]
+	\\
+	\DD{F_i}{x_\ell}{x_j} ( x^{(0)} )
+	& = & 
+	y_i^{(2)} 
+	-
+	\frac{1}{2} \DD{F_i}{x_j}{x_j} ( x^{(0)} )
+	-
+	\frac{1}{2} \DD{F_i}{x_\ell}{x_\ell} ( x^{(0)} )
+\end{array} 
+\] $$
+
+$head Example$$
+The file
+$xref/Forward.cpp/$$
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+$end
+-----------------------------------------------------------------------------
+$begin taylor_size$$
+$spell
+	Taylor
+	const
+$$
+
+$section Number Taylor Coefficients Per Variable$$
+
+$table
+$bold Syntax$$ $cnext
+$syntax%%t% = %f%.taylor_size()%$$
+$tend
+
+$fend 20$$
+
+$head Purpose$$
+Forward mode stores Taylor coefficients for all the variables in the 
+$syntax%AD<%Base%>%$$ 
+$xref/AD/AD Operation Sequence/operation sequence/$$
+corresponding to $italic f$$.
+The result $italic t$$ is the number of Taylor coefficients
+per variable.
+
+$head f$$
+The object $italic f$$ has prototype
+$syntax%
+	const ADFun<%Base%> %f%
+%$$
+
+$head t$$
+The result $italic t$$ has prototype
+$syntax%
+	size_t %t%
+%$$
+an is the number of Taylor coefficients, 
+per variable in the AD operation sequence,
+currently stored in the ADFun object $italic f$$.
+The value $latex t = p + 1$$ where 
+$italic p$$ is the value in the previous call of the form
+$syntax%
+	%f%.Forward(%p%, %x_p%)
+%$$
+
+$head Example$$
+The file
+$xref/Forward.cpp/$$
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+$end

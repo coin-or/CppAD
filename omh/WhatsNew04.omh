@@ -122,7 +122,7 @@ $head 11-12$$
 If $code NDEBUG$$ is not defined during compile time,
 all $syntax%AD<%Base%>%$$ 
 $xref/Compare//comparison/$$ operations are checked during
-$xref/Forward/yp/Zero Order/zero order/1/$$ forward mode calculations.
+$xref/ForwardZero//zero order/$$ forward mode calculations.
 The 
 $xref/CompareChange/$$ function
 returns the number of comparison operations that have changed.

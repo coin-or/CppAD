@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -35,73 +35,67 @@ $end
 */
 // BEGIN PROGRAM
 # include <CppAD/CppAD.h>
-namespace { // Begin empty namespace
-template <typename VectorDouble> // vector class, elements of type double
-bool ForwardCases(void)
+
+namespace { // ------------------------------------------------
+// define the template function Test<Vector> in empty namespace
+template <class Vector> 
+bool Test(void)
 {	bool ok = true;
+	using CppAD::AD;
+	using CppAD::NearEqual;
 
-	using namespace CppAD;
-
-	// independent variable vector 
-	CppADvector< AD<double> > X(2);
+	// domain space vector
+	size_t n = 2;
+	CppADvector< AD<double> > X(n);
 	X[0] = 0.; 
 	X[1] = 1.;
-	Independent(X);
 
-	// compute product of elements in X
-	CppADvector< AD<double> > Y(1);
+	// declare independent variables and starting recording
+	CppAD::Independent(X);
+
+	// range space vector
+	size_t m = 1;
+	CppADvector< AD<double> > Y(m);
 	Y[0] = X[0] * X[0] * X[1];
 
-	// create function object F : X -> Y
-	ADFun<double> F(X, Y);
+	// create f: X -> Y and stop tape recording
+	CppAD::ADFun<double> f(X, Y);
 
-	// use zero order to evaluate F[ (3, 4) ] 
-	VectorDouble x0( F.Domain() );
-	VectorDouble y0( F.Range() );
-	x0[0]    = 3.;
-	x0[1]    = 4.;
-	y0       = F.Forward(0, x0);
-	ok      &= NearEqual(y0[0] , x0[0]*x0[0]*x0[1], 1e-10, 1e-10);
+	// initially, the variable values during taping are stored in f
+	ok &= f.taylor_size() == 1;
 
-	// evaluate derivative of F in X[0] direction
-	VectorDouble x1( F.Domain() );
-	VectorDouble y1( F.Range() );
-	x1[0]    = 1.;
-	x1[1]    = 0.;
-	y1       = F.Forward(1, x1);
-	ok      &= NearEqual(y1[0] , 2.*x0[0]*x0[1], 1e-10, 1e-10);
+	// zero order forward mode
+	// use the template parameter Vector to the vector type
+	Vector x(n);
+	Vector y(m);
+	x[0] = 3.;
+	x[1] = 4.;
+	y    = f.Forward(0, x);
+	ok  &= NearEqual(y[0] , x[0]*x[0]*x[1], 1e-10, 1e-10);
+	ok  &= f.taylor_size() == 1;
 
-	// evaluate second derivative of F in X[0] direction
-	VectorDouble x2( F.Domain() );
-	VectorDouble y2( F.Range() );
-	x2[0]       = 0.;
-	x2[1]       = 0.;
-	y2          = F.Forward(2, x2);
-	double F_00 = 2. * y2[0];
-	ok         &= NearEqual(F_00, 2.*x0[1], 1e-10, 1e-10);
+	// first order forward mode
+	// X(t)           = x + dx * t
+	// Y(t) = F[X(t)] = y + dy * t + o(t)
+	Vector dx(n);
+	Vector dy(m);
+	dx[0] = 1.;
+	dx[1] = 0.;
+	dy    = f.Forward(1, dx); // partial F w.r.t. x[0]
+	ok   &= NearEqual(dy[0] , 2.*x[0]*x[1], 1e-10, 1e-10);
+	ok   &= f.taylor_size() == 2;
 
-	// evalute derivative of F in X[1] direction
-	x1[0]    = 0.;
-	x1[1]    = 1.;
-	y1       = F.Forward(1, x1);
-	ok      &= NearEqual(y1[0] , x0[0]*x0[0], 1e-10, 1e-10);
-
-	// evaluate second derivative of F in X[1] direction
-	y2          = F.Forward(2, x2);
-	double F_11 = 2. * y2[0];
-	ok         &= NearEqual(F_11, 0., 1e-10, 1e-10);
-
-	// evalute derivative of F in X[0] + X[1] direction
-	x1[0]    = 1.;
-	x1[1]    = 1.;
-	y1       = F.Forward(1, x1);
-	ok      &= NearEqual(y1[0], 2.*x0[0]*x0[1] + x0[0]*x0[0], 1e-10, 1e-10);
-
-	// use second derivative of F in X[0] direction to
-	// compute second partial of F w.r.t X[1] w.r.t X[2]
-	y2          = F.Forward(2, x2);
-	double F_01 = y2[0] - F_00 / 2. - F_11 / 2.;
-	ok         &= NearEqual(F_01 , 2.*x0[0], 1e-10, 1e-10);
+	// second order forward mode
+	// X(t) =           x + dx * t + ddx * t^2
+	// Y(t) = F[X(t)] = y + dy * t + ddy * t^2 + o(t^3)
+	Vector ddx(n);
+	Vector ddy(m);
+	ddx[0]      = 0.;
+	ddx[1]      = 0.;
+	ddy         = f.Forward(2, ddx);
+	double F_00 = 2. * ddy[0]; // second partial F w.r.t. x[0], x[0]
+	ok         &= NearEqual(F_00, 2.*x[1], 1e-10, 1e-10);
+	ok         &= f.taylor_size() == 3;
 
 	return ok;
 }
@@ -110,9 +104,11 @@ bool ForwardCases(void)
 # include <valarray>
 bool Forward(void)
 {	bool ok = true;
-	ok &= ForwardCases< CppAD::vector  <double> >();
-	ok &= ForwardCases< std::vector    <double> >();
-	ok &= ForwardCases< std::valarray  <double> >();
+	// Run with Vector equal to three different cases
+	// all of which are Simple Vectors with elements of type double.
+	ok &= Test< CppAD::vector  <double> >();
+	ok &= Test< std::vector    <double> >();
+	ok &= Test< std::valarray  <double> >();
 	return ok;
 }
 // END PROGRAM

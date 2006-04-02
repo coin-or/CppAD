@@ -66,12 +66,11 @@ after this constructor is called.
 $head x$$
 The vector $italic x$$ has prototype
 $syntax%
-	const %VectorADBase% &%x%
+	const %VectorAD% &%x%
 %$$
-(see the specifications for the class $italic VectorADBase$$ below).
-The size of $italic x$$ must be greater than zero
-and is the dimension of the domain space for $italic f$$.
-This vector must also be the 
+(see $xref/FunConstruct//VectorAD/$$ below).
+The length of $italic x$$ must be greater than zero
+and it must be the 
 $xref/Independent//independent variable vector/$$ corresponding to
 the current $syntax%AD<%Base%>%$$ operation sequence; i.e.,
 the current recording must have started with
@@ -82,17 +81,25 @@ In addition, none of the element of $italic x$$
 can be assigned a new value between the call to $xref/Independent/$$
 and the $syntax%ADFun<%Base%>%$$ constructor call.
 
+$subhead Domain Space$$
+The size of $italic x$$ is referred to as $latex n$$ above and the
+domain space is $latex B^n$$.
+
 $head y$$
 The vector $italic y$$ has prototype
 $syntax%
-	const %VectorADBase% &%y%
+	const %VectorAD% &%y%
 %$$
-(see the specifications for the class $italic VectorADBase$$ below).
+(see $xref/FunConstruct//VectorAD/$$ below).
 The length of $italic y$$ must be greater than zero
 and is the dimension of the range space for $italic f$$.
 
-$head VectorADBase$$
-The type $italic VectorADBase$$ must be a $xref/SimpleVector/$$ class with
+$subhead Range Space$$
+The size of $italic y$$ is referred to as $latex m$$ above and the
+domain space is $latex B^m$$.
+
+$head VectorAD$$
+The type $italic VectorAD$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type/$$
 $syntax%AD<%Base%>%$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
@@ -112,16 +119,16 @@ $end
 namespace CppAD {
 
 template <typename Base>
-template <typename VectorADBase>
-ADFun<Base>::ADFun(const VectorADBase &x, const VectorADBase &y)
+template <typename VectorAD>
+ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 {	size_t   n = x.size();
 	size_t   m = y.size();
 	size_t   i, j;
 	size_t   y_taddr;
 	OpCode   op;
 
-	// check VectorADBase is Simple Vector class with AD<Base> elements
-	CheckSimpleVector< AD<Base>, VectorADBase>();
+	// check VectorAD is Simple Vector class with AD<Base> elements
+	CheckSimpleVector< AD<Base>, VectorAD>();
 
 	CppADUsageError(
 		AD<Base>::Tape()->state == Recording,
@@ -165,9 +172,9 @@ ADFun<Base>::ADFun(const VectorADBase &x, const VectorADBase &y)
 	// total number of varables in this recording 
 	CppADUnknownError( totalNumVar == Rec->TotNumVar() );
 
-	// current order and row dimensions
+	// initial row and column dimensions
 	memoryMax     = 0;
-	order         = 0;
+	taylor_per_var= 1;
 	ForJacColDim  = 0;
 	ForJacBitDim  = 0;
 	TaylorColDim  = 1;

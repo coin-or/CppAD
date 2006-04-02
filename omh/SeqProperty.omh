@@ -2,6 +2,7 @@ $begin SeqProperty$$
 $spell 
 	const
 	bool
+	var
 $$
 
 $section ADFun Sequence Properties$$
@@ -15,8 +16,8 @@ $index Range, ADFun$$
 $index ADFun, Parameter$$
 $index Parameter, ADFun$$
 
-$index ADFun, Size$$
-$index Size, ADFun$$
+$index ADFun, var_size$$
+$index var_size, ADFun$$
 
 $table
 $bold Syntax$$ $cnext 
@@ -26,7 +27,7 @@ $syntax%%m% = %f%.Range()%$$
 $rnext $cnext
 $syntax%%p% = %f%.Parameter(%i%)%$$
 $rnext $cnext
-$syntax%%s% = %f%.Size(%i%)%$$
+$syntax%%v% = %f%.var_size()%$$
 $tend
 
 $fend 20$$
@@ -94,16 +95,16 @@ $latex \[
 \] $$
 for $latex j = 0 , \ldots , n-1$$ and all $latex x \in B^n$$.
 
-$head Size$$
-The result $italic s$$ has prototype
+$head var_size$$
+The result $italic v$$ has prototype
 $syntax%
-	size_t %s%
+	size_t %v%
 %$$
 and is the number of variables in the operation sequence plus the following:
 one for a phantom variable with tape address zero,
 one for each component of the domain that is a parameter.
 The amount of work and memory necessary for computing function values
-and derivatives using $italic f$$ is roughly proportional to $italic s$$.
+and derivatives using $italic f$$ is roughly proportional to $italic v$$.
 
 $head Example$$
 $children%

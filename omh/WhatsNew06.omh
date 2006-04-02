@@ -58,6 +58,16 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-03$$
+Create separate sections for the 
+$xref/ForwardZero//zero/$$ and $xref/ForwardOne/$$ first order case
+of $xref/Forward/$$ mode.
+$pre
+
+$$
+The ADFun $xref/FunDeprecated/Size/Size/$$ member function
+has been deprecated (use $xref/taylor_size/$$ instead).
+
 $head 04-02$$
 The member functions of $xref/ADFun/$$ that return properties of
 $xref/AD/AD Operation Sequence/AD operation sequence/$$

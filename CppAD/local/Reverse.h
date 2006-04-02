@@ -141,7 +141,7 @@ $head Memory$$
 If the function $syntax%%F%.Reverse%$$ has never been called 
 with as large a value for $italic p$$,
 a large amount of memory proportional to the 
-$xref/SeqProperty/Size/size/$$ of $italic F$$ times $italic p$$
+$xref/FunDeprecated/Size/size/$$ of $italic F$$ times $italic p$$
 is allocated for this calculation.
 You can use the 
 $xref/FunDeprecated/Memory/F.Memory()/$$ function to determine
@@ -289,9 +289,9 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 		"The first argument to Reverse must be greater than zero."
 	);  
 	CppADUsageError(
-		order >= p-1,
-		"Must first use Forward to compute (p-1)-th order Taylor\n"
-		"coefficient matrix for this ADFun function."
+		taylor_per_var >= p,
+		"Less that p Taylor coefficients are currently stored"
+		" in this ADFun object."
 	);  
 
 	// initialize entire Partial matrix to zero

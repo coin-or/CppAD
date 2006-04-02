@@ -21,6 +21,7 @@ $spell
 	const
 	Taylor
 	sizeof
+	var
 $$
 
 $section ADFun Object Deprecated Member Functions$$
@@ -39,6 +40,8 @@ $bold Syntax$$ $cnext
 $syntax%%o% = %f%.Order()%$$
 $rnext $cnext
 $syntax%%m% = %f%.Memory()%$$
+$rnext $cnext
+$syntax%%s% = %f%.Size()%$$
 $tend
 
 $fend 20$$
@@ -64,6 +67,10 @@ Zero order corresponds to function values being stored in $italic f$$.
 In the future, we would like to be able to erase the function
 values so that $italic f$$ uses less memory. 
 In this case, the return value of $code Order$$ would not make sense.
+Use $xref/taylor_size/$$ to obtain 
+the number of Taylor coefficients currently stored
+in the ADFun object $italic f$$ 
+(which is equal to the order plus one).
 
 
 $head Memory$$
@@ -84,5 +91,23 @@ was called.
 This is no longer the case, an ADFun object now returns memory
 when it no longer needs the values stored in that memory.
 Thus the $code Memory$$ function is no longer well defined.
+
+$head Size$$
+The result $italic s$$ has prototype
+$syntax%
+	size_t %s%
+%$$
+and is the number of variables in the operation sequence plus the following:
+one for a phantom variable with tape address zero,
+one for each component of the domain that is a parameter.
+The amount of work and memory necessary for computing function values
+and derivatives using $italic f$$ is roughly proportional to $italic s$$.
+
+$subhead Deprecated$$
+There are other sizes attached to an ADFun object, for example,
+the number of operations in the sequence.
+In order to avoid confusion with these other sizes,
+use $xref/SeqProperty/var_size/var_size/$$ to obtain 
+the number of variables in the operation sequence.
 
 $end
