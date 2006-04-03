@@ -60,6 +60,10 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-04$$
+The documentation and examples for $xref/Reverse/$$ were 
+improved and split into $xref/ReverseOne/$$ and $xref/ReverseAny/$$.
+
 $head 04-03$$
 Create separate sections for the 
 $xref/ForwardZero//zero/$$ and $xref/ForwardOne/$$ first order case

@@ -108,7 +108,8 @@ Example_SOURCES   = \
 	Poly.cpp \
 	Pow.cpp \
 	PowInt.cpp \
-	Reverse.cpp \
+	ReverseAny.cpp \
+	ReverseOne.cpp \
 	RevOne.cpp \
 	RevSparseHes.cpp \
 	RevSparseJac.cpp \

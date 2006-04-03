@@ -246,9 +246,8 @@ than this explanation of the general case.
 
 $head X(t)$$
 The function
-$latex X : B \rightarrow B^n$$ is defined,
-a sequence of Taylor coefficients $latex x^{(k)} \in B^n$$,
-by
+$latex X : B \rightarrow B^n$$ is defined using
+a sequence of Taylor coefficients $latex x^{(k)} \in B^n$$:
 $latex \[
 	X(t) = x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p 
 \] $$ 
@@ -486,11 +485,16 @@ $syntax%
 an is the number of Taylor coefficients, 
 per variable in the AD operation sequence,
 currently stored in the ADFun object $italic f$$.
-The value $latex t = p + 1$$ where 
+The value $italic t$$ is determined by 
+$latex t = p + 1$$ where 
 $italic p$$ is the value in the previous call of the form
 $syntax%
 	%f%.Forward(%p%, %x_p%)
 %$$
+If there was no previous call to forward, $latex t = 1$$
+and the Taylor coefficients are determined by the value of the
+$xref/glossary/Independent Variable/independent variables/$$ 
+when the AD operation sequence was recorded.
 
 $head Example$$
 The file

@@ -1,46 +1,37 @@
-# Use dw for return value from Reverse in examples (as in documentaiton):
+# Separate first order Reverse mode and generally improve Reverse documentaion.
 #
 # SvnCommit: file that made this commit.
+# Reverse.h: move documenation to Reverse.omh.
+# Reverse.omh: move and improve Reverse documentation here.
+# Forward.omh: minor improvements.
+# WhatsNew05.omh: remove cross reference to Forward.cpp.
 # WhatsNew06.omh: users view of changes.
-# Exmaple/*.cpp: change Reverse return value to dw.
+# ExampleList.omh: remove Reverse.cpp and add ReverseOne.cpp, ReverseAny.cpp.
+# Forward.cpp: change Test to ForwardCases.
+# Example.vcproj: remove Reverse.cpp and add ReverseOne.cpp, ReverseAny.cpp.
+# Example.cpp: remove Reverse.cpp and add ReverseOne.cpp, ReverseAny.cpp.
+# HesTimesDir.cpp: change notation to better match documentaiton.
+# Makefile.am: remove Reverse.cpp and add ReverseOne.cpp, ReverseAny.cpp.
 add_list="
+	omh/Reverse.omh
+	Example/ReverseOne.cpp
+	Example/ReverseAny.cpp
 "
 change_list="
 	SvnCommit
+	CppAD/local/Reverse.h
+	omh/Forward.omh
+	omh/WhatsNew05.omh
 	omh/WhatsNew06.omh
-	Example/CondExp.cpp
-	Example/UnaryPlus.cpp
-	Example/Pow.cpp
-	Example/Abs.cpp
-	Example/Erf.cpp
-	Example/Sinh.cpp
-	Example/Atan2.cpp
-	Example/UnaryMinus.cpp
-	Example/Tan.cpp
-	Example/Div.cpp
-	Example/Cos.cpp
-	Example/Add.cpp
-	Example/Sqrt.cpp
-	Example/Asin.cpp
-	Example/Cosh.cpp
-	Example/Discrete.cpp
-	Example/Eq.cpp
-	Example/DivEq.cpp
-	Example/AddEq.cpp
-	Example/SubEq.cpp
-	Example/MulEq.cpp
-	Example/Compare.cpp
-	Example/Exp.cpp
-	Example/PowInt.cpp
-	Example/Log.cpp
-	Example/Log10.cpp
-	Example/Atan.cpp
-	Example/Acos.cpp
-	Example/Sin.cpp
-	Example/Sub.cpp
-	Example/Mul.cpp
+	omh/ExampleList.omh
+	Example/Forward.cpp
+	Example/Example.vcproj
+	Example/Example.cpp
+	Example/HesTimesDir.cpp
+	Example/Makefile.am
 "
 delete_list="
+	Example/Reverse.cpp
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

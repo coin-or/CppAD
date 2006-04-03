@@ -1137,7 +1137,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Reverse.cpp">
+				RelativePath=".\ReverseAny.cpp">
+			</File>
+			<File
+				RelativePath=".\ReverseOne.cpp">
 			</File>
 			<File
 				RelativePath=".\RevOne.cpp">

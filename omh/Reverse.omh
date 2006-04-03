@@ -1,0 +1,331 @@
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+
+$begin ReverseOne$$
+
+$section First Order Reverse Mode: Derivative Values$$
+$spell 
+	const
+	dw
+$$
+
+$table
+$bold Syntax$$ $cnext
+$syntax%%dw% = %f%.Reverse(1, %w%)%$$
+$tend
+
+$fend 20$$
+
+$head Purpose$$
+The $syntax%AD<%Base%>%$$ 
+$xref/AD/AD Operation Sequence/operation sequence/$$
+stored in $italic f$$ defines a function
+$latex F : B^n \rightarrow B^m $$
+where $italic B$$ is the space corresponding to object of type $italic Base$$.
+The function $latex W : B^n \rightarrow B$$ is defined by
+$latex \[
+	W(x) = w_0 * F_0 ( x ) + \cdots + w_{m-1} * F_{m-1} (x)
+\] $$ 
+The result of this operation is the derivative 
+$latex dw = W^{(1)} (x)$$; i.e.,
+$latex \[
+	dw = w_0 * F_0^{(1)} ( x ) + \cdots + w_{m-1} * F_{m-1}^{(1)} (x)
+\] $$
+Note that if $latex w$$ is the $th i$$ 
+$xref/glossary/Elementary Vector/elementary vector/$$,
+$latex dw = F_i^{(1)} (x)$$.
+
+$head f$$
+The object $italic f$$ has prototype
+$syntax%
+	const ADFun<%Base%> %f%
+%$$
+
+$head x$$
+The vector $italic x$$ in expression for $italic dw$$ above
+corresponds to the previous call to $xref/ForwardZero/$$
+using this ADFun object $italic f$$; i.e.,
+$syntax%
+	%f%.Forward(0, %x%)
+%$$
+If there is no previous call with the first argument zero,
+the value of the $xref/Independent//independent/$$ variables 
+during the recording of the AD sequence of operations is used
+for $italic x$$.
+
+$head w$$
+The argument $italic w$$ has prototype
+$syntax%
+	const %Vector% &%x%
+%$$
+(see $xref/ForwardOne/Vector/Vector/$$ below)
+and its size 
+must be equal the dimension of the
+$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+
+$head dw$$
+The result $italic dw$$ has prototype
+$syntax%
+	const %Vector% &%dw%
+%$$
+(see $xref/ForwardOne/Vector/Vector/$$ below)
+and its value is the derivative $latex W^{(1)} (x)$$.
+The size of $italic dw$$ 
+is equal the dimension of the
+$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+
+$head Vector$$
+The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+$italic Base$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
+
+$head Example$$
+$children%
+	Example/ReverseOne.cpp
+%$$
+The file
+$xref/ReverseOne.cpp/$$
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
+
+$end
+-----------------------------------------------------------------------
+
+$begin ReverseAny$$
+$spell
+	typename
+	xk
+	xp
+	dw
+	Ind
+	uj
+	std
+	arg
+	const
+	Taylor
+$$
+
+$section Any Order Reverse Mode$$ 
+
+
+$index reverse, mode$$
+$index mode, reverse$$
+$index derivative, reverse mode$$
+$index calculate, reverse mode$$
+
+$table
+$bold Syntax$$ $cnext
+$syntax%%dw% = %f%.Reverse(%p%, %w%)%$$
+$tend
+
+$fend 20$$
+
+$head Purpose$$
+The $syntax%AD<%Base%>%$$ 
+$xref/AD/AD Operation Sequence/operation sequence/$$
+stored in $italic f$$ defines a function
+$latex F : B^n \rightarrow B^m $$
+where $italic B$$ is the space corresponding to object of type $italic Base$$.
+Reverse mode computes the derivative of the $xref/Forward/$$ mode
+$xref/glossary/Taylor Coefficient/Taylor coefficients/$$
+with respect to the domain variable $latex x$$.
+
+
+$head X(t, x)$$
+The function
+$latex X : B \times B^n \rightarrow B^n$$ is defined using
+a sequence of Taylor coefficients $latex x^{(k)} \in B^n$$:
+$latex \[
+	X ( t , x ) = x + x^{(0)} + x^{(1)} * t + \cdots + x^{(p)} * t^p 
+\] $$ 
+For $latex k = 0, \ldots , p$$,
+the vector $latex x^{(k)}$$ above is defined as the value of 
+$italic x_k$$ in the previous call (counting this call) of the form
+$syntax%
+	%f%.Forward(%k%, %x_k%)
+%$$ 
+If there is no previous call with $latex k = 0$$,
+$latex x^{(0)}$$ is the value of the independent variables when the 
+corresponding 
+$xref/AD/AD Operation Sequence/AD operation sequence/$$ was recorded.
+Note that for $latex k = 0 , \ldots , p-1$$,
+$latex x^{(k)}$$ is related to the $th k$$ partial of $latex X(t, x)$$ 
+with respect to $latex t$$ by
+$latex \[
+	x^{(k)} = \frac{1}{k !} \Dpow{k}{t} X(0, 0) 
+\] $$
+
+$head W(t, x)$$
+The function
+$latex W : B \times B^n \rightarrow B$$ is defined by
+$latex \[
+	W(t,x) = w_1 * F_1 [ X(t,x) ] + \cdots + w_{m-1} * F_{m-1} [ X(t, x) ]
+\]$$
+We use $latex W^{(k)} : B^n \rightarrow B^m$$ to denote the
+$th k$$ order Taylor coefficient of $latex W(t, x)$$ with 
+respect to $latex t$$; i.e.,
+$latex \[
+	W(t, x) = W^{(0)} (x) + W^{(1)} (x) * t 
+	        + \cdots + W^{(p-1)} (x) * t^{p-1}
+	        + o ( t^{p-1} )
+\] $$
+where 
+$latex o ( t^{p-1} ) * t^{1-p} \rightarrow 0$$ as $latex t \rightarrow 0$$.
+Note that for $latex k = 0 , \ldots , p-1$$,
+$latex W^{(k)} (t, x)$$ is related to the $th k$$ partial of $latex W(t, x)$$ 
+with respect to $latex t$$ by
+$latex \[
+	W^{(k)} (t, x) = \frac{1}{k !} \Dpow{k}{t} W(0, 0) 
+\] $$
+
+$head f$$
+The object $italic f$$ has prototype
+$syntax%
+	const ADFun<%Base%> %f%
+%$$
+
+$head p$$
+The argument $italic p$$ has prototype
+$syntax%
+	size_t %p%
+%$$
+and specifies the number of Taylor coefficients to be differentiated.
+There must be at least $latex p$$ Taylor coefficients 
+currently stored in $italic f$$ when $code Reverse$$ is called
+(see $xref/taylor_size/$$).
+
+$head w$$
+The argument $italic w$$ has prototype
+$syntax%
+	const %Vector% &%w%
+%$$
+(see $xref/ReverseAny/Vector/Vector/$$ below).
+It specifies the weighting vector
+in the definition of $latex W(t, x)$$ above.
+
+
+$head dw$$
+The return value $italic dw$$ has prototype
+$syntax%
+	%Vector% %dw%
+%$$
+(see $xref/ReverseAny/Vector/Vector/$$ below).
+It is a vector with size $latex n \times p$$.
+For $latex j = 0, \ldots, n-1$$ and $latex k = 0 , \ldots , p-1$$
+$latex \[
+	dw[ j * p + k ] = \D{ W^{(k)} }{ x_j } (0, 0) 
+\] $$
+
+$head Vector$$
+The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+$italic Base$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
+
+$head First Order$$
+If $latex p = 1$$,
+the result $italic dw$$ is given by
+$latex \[
+\begin{array}{rcl}
+\D{ W^{(0)} (t, x) }{ x } (0, 0) 
+& = & 
+\sum_{i=0}^{m-1} w_i * \D{ F_i [ X(t, x) ] }{ x } (0, 0)
+\\
+& = &
+\sum_{i=0}^{m-1} w_i * 
+	\D{ F_i }{ x } ( x^{(0)} ) * \D{ X(t, x) }{ x } (0,  0)
+= 
+\sum_{i=0}^{m-1} w_i * 
+	\D{ F_i }{ x } ( x^{(0)} ) 
+\end{array}
+\] $$
+This agrees with the simplification 
+where $italic W(0, x)$$ is replaced by $latex W(x)$$ in $xref/ReverseOne/$$.
+$pre
+
+$$
+It follows from the definitions above that 
+the function $latex W^{(0)} (t, x)$$ 
+does not depend on the value of $italic p$$
+(in general $latex W^{(k)} (t, x)$$ does not depend on $italic p$$).
+Thus, in the general case ($italic p$$ not necessarily one)
+for $latex j = 0 , \ldots , n - 1$$
+$latex \[
+dw[ j * p + 0 ] = 
+                = \D{ W^{(0)} }{ x_j } (0, 0) 
+                = \sum_{i=0}^{m-1} w_i * \D{ F_i }{ x_j } ( x^{(0)} ) 
+\] $$
+
+
+
+$head Hessian Times Direction$$
+Suppose  $latex p = 2$$,
+and $latex w$$ is the $th i$$ elementary vector. 
+It follows that for $latex j = 0, \ldots, n-1$$
+$latex \[
+\begin{array}{rcl}
+dw[ j * 2 + 0 ] 
+& = & \D{ F_i }{ x_j } ( x^{(0)} )
+\\
+dw[ j * 2 + 1 ] 
+& = & \D{ W^{(1)} }{ x_j } ( 0, 0 )  
+  = \left[ \D{ }{ x_j } \D{ W(t, x) }{t} \right]_{(0,0)} 
+  = \left\{ \D{ }{ x_j } \D{ F_i [ X(t, x) ] }{t} \right\}_{(0,0)} 
+\\
+& = & \left\{ \D{ }{ x_j } \left[
+		F_i^{(1)} ( x + x^{(0)} ) * x^{(1)} 
+       \right] \right\}_0 
+\\
+& = &   
+\sum_{\ell=0}^{n-1} \left[ 
+	\D{ }{ x_j } \D { F_i }{ x_\ell } ( x + x^{(0)} ) 
+\right]_0 * x_\ell^{(1)}
+\\
+& = &
+\sum_{\ell=0}^{n-1}
+\DD{F_i}{ x_j }{ x_\ell } ( x^{(0)} ) * x_\ell^{(1)}
+=
+[ F_i^{(2)} ( x^{(0)} ) * x^{(1)} ]_j
+\end{array}
+\] $$
+Thus the vector $latex ( dw[1], dw[3], \ldots , dw[ n * p - 1 ] )$$
+is equal to the Hessian of $latex F_i (x)$$ times the direction
+$latex x^{(1)}$$.
+In the special case where 
+$latex x^{(1)}$$ is the $th l$$
+$xref/glossary/Elementary Vector/elementary vector/$$,
+$latex \[
+dw[ j * 2 + 1 ] = \DD{F_i}{ x_j }{ x_\ell } ( x^{(0)} )
+\] $$
+
+$head Example$$
+$children%
+	Example/ReverseAny.cpp%
+	Example/HesTimesDir.cpp
+%$$
+The files
+$xref/ReverseAny.cpp/$$
+and
+$xref/HesTimesDir.cpp/$$
+contain a examples and tests of reverse mode calculations.
+They return true if they succeed and false otherwise.
+
+$end

@@ -386,14 +386,16 @@ $code CppAD::vector$$ were folded into the standard example and tests
 format for the following cases:
 $xref/RevTwo.cpp/$$,
 $xref/RevOne.cpp/$$,
-$xref/Reverse.cpp/$$,
+$code Reverse.cpp$$,
 $xref/Hessian.cpp/$$,
 $xref/Jacobian.cpp/$$,
 $xref/Forward.cpp/$$,
 $xref/ForTwo.cpp/$$,
 $xref/ForOne.cpp/$$,
 $code Fun.cpp$$
-($code Fun.cpp$$ has since been replaced by $xref/Independent.cpp/$$).
+($code Fun.cpp$$ has since been replaced by $xref/Independent.cpp/$$,
+$code Reverse.cpp$$ has since been replaced by 
+$xref/ReverseOne.cpp/$$ and $xref/ReverseAny.cpp/$$).
 
 $head 11-01$$
 Add forward mode $xref/ForSparseJac//Jacobian sparsity/$$ calculation.

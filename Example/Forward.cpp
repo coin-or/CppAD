@@ -36,10 +36,10 @@ $end
 // BEGIN PROGRAM
 # include <CppAD/CppAD.h>
 
-namespace { // ------------------------------------------------
-// define the template function Test<Vector> in empty namespace
+namespace { // --------------------------------------------------------
+// define the template function ForwardCases<Vector> in empty namespace
 template <class Vector> 
-bool Test(void)
+bool ForwardCases(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
@@ -65,7 +65,7 @@ bool Test(void)
 	ok &= f.taylor_size() == 1;
 
 	// zero order forward mode
-	// use the template parameter Vector to the vector type
+	// use the template parameter Vector for the vector type
 	Vector x(n);
 	Vector y(m);
 	x[0] = 3.;
@@ -106,9 +106,9 @@ bool Forward(void)
 {	bool ok = true;
 	// Run with Vector equal to three different cases
 	// all of which are Simple Vectors with elements of type double.
-	ok &= Test< CppAD::vector  <double> >();
-	ok &= Test< std::vector    <double> >();
-	ok &= Test< std::valarray  <double> >();
+	ok &= ForwardCases< CppAD::vector  <double> >();
+	ok &= ForwardCases< std::vector    <double> >();
+	ok &= ForwardCases< std::valarray  <double> >();
 	return ok;
 }
 // END PROGRAM

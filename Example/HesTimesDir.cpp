@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin HesTimesDir.cpp$$
@@ -27,7 +25,6 @@ $section Hessian Times Direction: Example and Test$$
 $index Hessian, times direction$$
 $index direction, times Hessian$$
 
-$comment This file is in the Example subdirectory$$
 $code
 $verbatim%Example/HesTimesDir.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -36,14 +33,14 @@ $end
 */
 // BEGIN PROGRAM
 // Example and test of computing the Hessian times a direction; i.e.,
-// given f:R^n -> R and a direction x1 in R^n, we compute f''(x) * x1
+// given F : R^n -> R and a direction dx in R^n, we compute F''(x) * dx
 
 # include <CppAD/CppAD.h>
 
 namespace { // put this function in the empty namespace
-	// f(x) = |x|^2 = x[0]^2 + ... + x[n-1]^2
+	// F(x) = |x|^2 = x[0]^2 + ... + x[n-1]^2
 	template <class Type>
-	Type f(CppADvector<Type> &x)
+	Type F(CppADvector<Type> &x)
 	{	Type sum = 0;
 		size_t i = x.size();
 		while(i--)
@@ -54,48 +51,46 @@ namespace { // put this function in the empty namespace
 
 bool HesTimesDir() 
 {	bool ok = true;                   // initialize test result
-	using namespace CppAD;            // so do not need CppAD::
+	size_t j;                         // a domain variable variable
 
-	size_t n = 5;                     // dimension for example
-	size_t j;                         // a temporary index variable
+	using CppAD::AD;
+	using CppAD::NearEqual;
 
-	CppADvector<double>        x(n);
+	// domain space vector
+	size_t n = 5; 
 	CppADvector< AD<double> >  X(n);
-
-	// value of the independent variables
 	for(j = 0; j < n; j++)
-		X[j] = x[j] = double(j);  // x[j] = j
+		X[j] = AD<double>(j); 
 
-	// declare independent variables
-	Independent(X);
+	// declare independent variables and start recording
+	CppAD::Independent(X);
 
-	// compute function
-	CppADvector< AD<double> > F(1);    // scalar valued fucntion
-	F[0] = f(X);                       // has only one component
+	// range space vector
+	size_t m = 1;
+	CppADvector< AD<double> > Y(m);
+	Y[0] = F(X);
 
-	// declare the AD function object
-	ADFun<double> Fun(X, F);
+	// create f : X -> Y and stop recording
+	CppAD::ADFun<double> f(X, Y);
 
-	// compute y1(x) = f'(x) * x1
-	size_t p = 1;               // order of the forward operation
-	CppADvector<double> x1(n);  // direction vector for forward operation
+	// choose a direction dx and compute dy(x) = F'(x) * dx
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
 	for(j = 0; j < n; j++)
-		x1[j] = double(n - j);
-	CppADvector<double> y1(1);
-	y1 = Fun.Forward(p, x1);
+		dx[j] = double(n - j);
+	dy = f.Forward(1, dx);
 
-	// compute y1'(x) = f''(x) * x1
-	p = 2;                         // order of derivative being calculated
-	CppADvector<double> w(1);      // weighting vector reverse mode
+	// compute ddw = F''(x) * dx
+	CppADvector<double> w(m);
+	CppADvector<double> ddw(2 * n);
 	w[0] = 1.;
-	CppADvector<double> dw(n * p); // return value from reverse
-	dw = Fun.Reverse(p, w);
+	ddw  = f.Reverse(2, w);
 	
-	// f(x)        = x[0]^2 + x[1]^2 + ... + x[n-1]^2
-	// f''(x)      = 2 * I
-	// f''(x) * x1 = 2 * x1
+	// F(x)        = x[0]^2 + x[1]^2 + ... + x[n-1]^2
+	// F''(x)      = 2 * Identity_Matrix
+	// F''(x) * dx = 2 * dx
 	for(j = 0; j < n; j++)
-		ok &= NearEqual(dw[j * p + 1], 2.*x1[j], 1e-10, 1e-10);
+		ok &= NearEqual(ddw[j * 2 + 1], 2.*dx[j], 1e-10, 1e-10);
 
 	return ok;
 }
