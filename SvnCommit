@@ -1,37 +1,30 @@
-# Separate first order Reverse mode and generally improve Reverse documentaion.
+# Improve documentation and example for CompareChange.
 #
 # SvnCommit: file that made this commit.
-# Reverse.h: move documenation to Reverse.omh.
-# Reverse.omh: move and improve Reverse documentation here.
-# Forward.omh: minor improvements.
-# WhatsNew05.omh: remove cross reference to Forward.cpp.
+# FunEval.h: remove include of CompareChange.omh.
+# Forward.omh: move here and improve CompareChange documentation.
 # WhatsNew06.omh: users view of changes.
-# ExampleList.omh: remove Reverse.cpp and add ReverseOne.cpp, ReverseAny.cpp.
-# Forward.cpp: change Test to ForwardCases.
-# Example.vcproj: remove Reverse.cpp and add ReverseOne.cpp, ReverseAny.cpp.
-# Example.cpp: remove Reverse.cpp and add ReverseOne.cpp, ReverseAny.cpp.
-# HesTimesDir.cpp: change notation to better match documentaiton.
-# Makefile.am: remove Reverse.cpp and add ReverseOne.cpp, ReverseAny.cpp.
+# Abs.cpp: use same comment as other examples for ADFun constructor.
+# ParVar.cpp: use same comment as other examples for ADFun constructor.
+# Discrete.cpp: use same comment as other examples for ADFun constructor.
+# Piecewise.cpp: use same comment as other examples for ADFun constructor.
+# CompareChange.cpp: improve this example.
 add_list="
-	omh/Reverse.omh
-	Example/ReverseOne.cpp
-	Example/ReverseAny.cpp
 "
 change_list="
 	SvnCommit
-	CppAD/local/Reverse.h
+	CppAD/local/FunEval.h
 	omh/Forward.omh
-	omh/WhatsNew05.omh
 	omh/WhatsNew06.omh
-	omh/ExampleList.omh
-	Example/Forward.cpp
-	Example/Example.vcproj
-	Example/Example.cpp
-	Example/HesTimesDir.cpp
-	Example/Makefile.am
+	Example/Abs.cpp
+	Example/ParVar.cpp
+	Example/SeqProperty.cpp
+	Example/Discrete.cpp
+	Example/Piecewise.cpp
+	Example/CompareChange.cpp
 "
 delete_list="
-	Example/Reverse.cpp
+	omh/CompareChange.omh
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

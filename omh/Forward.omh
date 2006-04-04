@@ -48,6 +48,9 @@ The result of this operation is
 $latex \[
 	y = F(x)
 \] $$. 
+(See the $xref/CompareChange/Discussion/CompareChange discussion/$$ for
+possible differences between $latex F(x)$$ and the algorithm that defined
+the operation sequence.)
 
 $head f$$
 The object $italic f$$ has prototype
@@ -95,8 +98,7 @@ contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
 $end
-// -------------------------------------------------------------------------
-
+---------------------------------------------------------------------------
 $begin ForwardOne$$
 $spell
 	dy
@@ -190,8 +192,7 @@ contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
 $end
-
-// -------------------------------------------------------------------------
+--------------------------------------------------------------------------
 $begin ForwardAny$$
 $spell
 	xk
@@ -501,5 +502,94 @@ The file
 $xref/Forward.cpp/$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
+
+$end
+-----------------------------------------------------------------------------
+$begin CompareChange$$
+$spell 
+	const
+$$
+
+$section Comparison Changes During Zero Order Forward Mode$$
+
+$index ADFun, CompareChange$$
+$index CompareChange, ADFun$$
+$index zero, order forward$$
+$index forward, zero order$$
+
+$table
+$bold Syntax$$ $cnext
+$syntax%%c% = %f%.CompareChange()%$$
+$tend
+
+$fend 20$$
+
+$head Purpose$$
+An $syntax%ADFun<%Base%>%$$ object contains an
+$syntax%AD<%Base%>%$$ 
+$xref/AD/AD Operation Sequence/operation sequence/$$.
+This operation sequence represents a function
+$latex \[
+	F : B^n \rightarrow B^m
+\] $$
+where $latex B$$ is the space corresponding to objects of type $italic Base$$.
+This function may be not agree with the algorithm that was taped to create 
+the operation sequence because of changes in AD
+$xref/Compare//comparison/$$ results.
+The $code CompareChange$$ function can be used to detect these changes.
+
+$head f$$
+The object $italic f$$ has prototype
+$syntax%
+	const ADFun<%Base%> %f%
+%$$
+
+$head c$$
+The result $italic c$$ has prototype
+$syntax%
+	size_t %c%
+%$$
+It is the number of 
+$syntax%AD<%Base%>%$$ $xref/Compare//comparison/$$ 
+operations,
+corresponding to the previous call to $xref/Forward/$$ 
+$syntax%
+	%F%.Forward(0, %x%)
+%$$
+that have a different result from
+when $italic F$$ was created by taping an algorithm.
+
+$head Discussion$$
+If $italic c$$ is not zero, 
+the boolean values resulting from some of the 
+$xref/Compare//comparison operations/$$ corresponding to $italic x$$
+are different from when the 
+$xref/AD/AD Operation Sequence/operation sequence/$$ was created.
+In this case, you may want to record the algorithm with the
+$xref/glossary/Independent Variable/independent variables/$$ 
+equal to the values in $italic x$$ 
+(so AD operation sequence properly represents the algorithm
+for this value of independent variables).
+On the other hand, re-taping the AD operation sequence usually takes 
+significantly more time than evaluation using $xref/ForwardZero/$$.
+In many cases one knows that,
+even though the comparison operations have changed, 
+this does not significantly change the resulting function
+and it is not worth recording a new AD operation sequence. 
+
+$head Restrictions$$
+$index NDEBUG, CompareChange$$
+Computation of this function requires extra operations in the tape.
+If $code NDEBUG$$ is defined,
+these operations are not included in the tape and
+
+$head Example$$
+$children%
+	Example/CompareChange.cpp
+%$$
+The file
+$xref/CompareChange.cpp/$$
+contains an example and test of this operation.
+They return true if they succeed and false otherwise.
 
 $end

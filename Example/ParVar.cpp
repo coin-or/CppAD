@@ -63,7 +63,7 @@ bool ParVar(void)
 	y[1] = abs(x[0]);
 	ok  &= Variable(y[1]);     // y[1] does depends on x[0] 
 
-	// define f : x -> y and stop tape recording
+	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y);
 
 	// check that now all AD<double> objects are parameters

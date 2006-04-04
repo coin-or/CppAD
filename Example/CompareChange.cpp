@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin CompareChange.cpp$$
@@ -25,11 +23,11 @@ $spell
 $$
 
 $section CompareChange Function: Example and Test$$
+
 $index compare, change$$
 $index example, CompareChange$$
 $index test, CompareChange$$
 
-$comment This file is in the Example subdirectory$$ 
 $code
 $verbatim%Example/CompareChange.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -44,7 +42,7 @@ namespace { // put this function in the empty namespace
 	template <typename Type>
 	Type Minimum(const Type &x, const Type &y)
 	{	// Use a comparision to compute the min(x, y)
-		// (Note that CondExp would never require retaping). 
+		// (note that CondExp would never require retaping). 
 		if( x < y )  
 			return x;
 		return y;
@@ -53,63 +51,63 @@ namespace { // put this function in the empty namespace
 
 bool CompareChange(void)
 {	bool ok = true;
-	using namespace CppAD;
+	using CppAD::AD;
+	using CppAD::ADFun;
+	using CppAD::Independent;
 
-	// create independent variables
-	CppADvector< AD<double> > X(2);
+	// domain space vector
+	size_t n = 2;
+	CppADvector< AD<double> > X(n);
 	X[0] = 3.;
 	X[1] = 4.;
-	Independent(X);
 
-	// create dependent variables
-	CppADvector< AD<double> > Y(1);
+	// declare independent variables and start tape recording
+	CppAD::Independent(X);
+
+	// range space vector
+	size_t m = 1;
+	CppADvector< AD<double> > Y(m);
 	Y[0] = Minimum(X[0], X[1]);
 
-	// F : X -> Y (use pointer so can delete and retape)
-	ADFun<double> *F;
-	F = new ADFun<double>(X, Y);
+	// create f: x -> y and stop tape recording
+	// use a pointer so that we can retape
+	ADFun<double> *f;
+	f = new ADFun<double>(X, Y);
 
-	// new function argument where conditional has the same result
-	CppADvector<double> x(2);
+	// evaluate zero mode Forward where conditional has the same result
+	// note that f->CompareChange is not defined when NDEBUG is true
+	CppADvector<double> x(n);
+	CppADvector<double> y(m);
 	x[0] = 3.5;
 	x[1] = 4.;  
+	y    = f->Forward(0, x);
+	ok  &= (y[0] == x[0]);
+	ok  &= (y[0] == Minimum(x[0], x[1]));
+	ok  &= (f->CompareChange() == 0);
 
-	// evaluate the function at new argument
-	CppADvector<double> y(1);
-	y = F->Forward(0, x);
-
-	// Note that the result of the comparision has not changed.
-	// Also note that F->CompareChange is not defined when NDEBUG is true
-	ok &= (y[0] == x[0]);
-	ok &= (F->CompareChange() == 0);
-
-	// evaluate the function at new argument
-	// where conditional has a different result
+	// evaluate zero mode Forward where conditional has different result
 	x[0] = 4.;
 	x[1] = 3.;
-	y = F->Forward(0, x);
- 
-	// Note that y[0] is no longer the minimum element in x (the result
-	// of the comparision has changed). 
-	ok &= (y[0] == x[0]);
-	ok &= (F->CompareChange() == 1); 
+	y    = f->Forward(0, x);
+	ok  &= (y[0] == x[0]);
+	ok  &= (y[0] != Minimum(x[0], x[1]));
+	ok  &= (f->CompareChange() == 1); 
 
-	// retape the same calculation at new argument values
+	// re-tape to obtain the new AD operation sequence
+	delete f;    // free memory corresponding to previous new
 	X[0] = 4.;
 	X[1] = 3.;
 	Independent(X);
 	Y[0] = Minimum(X[0], X[1]);
-	delete F; // free memory corresponding to previous new
-	F    = new ADFun<double>(X, Y);
+	f    = new ADFun<double>(X, Y);
 
 	// evaluate the function at new argument values
-	x[0] = 4.;
-	x[1] = 3.;
-	y = F->Forward(0, x);
-	ok &= (y[0] == x[1]);
-	ok &= (F->CompareChange() == 0); 
+	y    = f->Forward(0, x);
+	ok  &= (y[0] == x[1]);
+	ok  &= (y[0] == Minimum(x[0], x[1]));
+	ok  &= (f->CompareChange() == 0); 
 
-	delete F; // free memory corresponding to previous new
+	delete f;   // free memory corresponding to previous new
 	return ok;
 }
 

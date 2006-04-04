@@ -77,7 +77,7 @@ bool Discrete(void)
 	CppADvector< AD<double> > Y(m);
 	Y[0] = X[1] * TableLookup( X[0] );
 
-	// define f: X -> Y and stop tape recording
+	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
 
 	// vectors for arguments to the fucntion object f

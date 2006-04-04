@@ -34,8 +34,7 @@ $childtable%
 	CppAD/local/Reverse.h%
 	CppAD/local/ForSparseJac.h%
 	CppAD/local/RevSparseJac.h%
-	CppAD/local/RevSparseHes.h%
-	omh/CompareChange.omh
+	CppAD/local/RevSparseHes.h
 %$$
 
 $end

@@ -79,7 +79,7 @@ bool SeqProperty(void)
 	y[1]   = u;           // use same variable as x[0]
 	y[2]   = w;           // use same variable as w
 
-	// define f : x -> y and stop tape recording
+	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
 
 	// check Domain, Range and Parameter

@@ -112,7 +112,7 @@ bool Piecewise(void)
 	CppADvector< AD<double> > Y(m);
 	Y[0] = I;
 
-	// define f: X -> Y and stop tape recording
+	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
 
 	// vectors for arguments to the fucntion object f
