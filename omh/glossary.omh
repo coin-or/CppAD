@@ -32,6 +32,18 @@ $$
 
 $section Glossary$$
 
+$head AD Function$$
+Given an $xref/ADFun/$$ object $italic f$$
+there is a corresponding
+$syntax%AD<%Base%>%$$
+$xref/AD/AD Operation Sequence/operation sequence/$$.
+This operation sequence
+defines a function 
+$latex F : B^n \rightarrow B^m $$
+where $italic B$$ is the space corresponding to objects of type $italic Base$$.
+We refer to $latex F$$ as the AD function corresponding to 
+the operation sequence and to the object $italic f$$.
+
 $head AD Object$$
 An object is called an AD object it its type is 
 either $syntax%AD<%Base%>%$$ or $syntax%VecAD<%Base%>::reference%$$
@@ -97,10 +109,10 @@ $index sparsity, pattern$$
 $index pattern, sparsity$$
 $index efficient, sparsity$$
 Given a matrix 
-$latex A \in B^{p \times q}$$.
-a boolean valued $latex p \times q$$ matrix $latex P$$ is a 
+$latex A \in B^{n \times m}$$,
+a boolean valued $latex m \times n$$ matrix $latex P$$ is a 
 sparsity pattern for $latex A$$ if 
-for $latex i = 1, \ldots , p$$ and $latex j = 1 , \ldots q$$,
+for $latex i = 0, \ldots , m-1$$ and $latex j = 0 , \ldots n-1$$,
 $latex \[
 A_{i,j} \neq 0  
 \; \Rightarrow \; 

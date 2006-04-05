@@ -32,11 +32,8 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-The $syntax%AD<%Base%>%$$ 
-$xref/AD/AD Operation Sequence/operation sequence/$$
-stored in $italic f$$ defines a function
-$latex F : B^n \rightarrow B^m $$
-where $italic B$$ is the space corresponding to object of type $italic Base$$.
+We use $italic F$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 The function $latex W : B^n \rightarrow B$$ is defined by
 $latex \[
 	W(x) = w_0 * F_0 ( x ) + \cdots + w_{m-1} * F_{m-1} (x)
@@ -138,11 +135,8 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-The $syntax%AD<%Base%>%$$ 
-$xref/AD/AD Operation Sequence/operation sequence/$$
-stored in $italic f$$ defines a function
-$latex F : B^n \rightarrow B^m $$
-where $italic B$$ is the space corresponding to object of type $italic Base$$.
+We use $italic F$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 Reverse mode computes the derivative of the $xref/Forward/$$ mode
 $xref/glossary/Taylor Coefficient/Taylor coefficients/$$
 with respect to the domain variable $latex x$$.

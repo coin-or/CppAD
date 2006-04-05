@@ -39,15 +39,12 @@ $fend 20$$
 
 
 $head Purpose$$
-The $syntax%AD<%Base%>%$$ 
-$xref/AD/AD Operation Sequence/operation sequence/$$
-stored in $italic f$$ defines a function
-$latex F : B^n \rightarrow B^m $$
-where $italic B$$ is the space corresponding to object of type $italic Base$$.
-The result of this operation is
+We use $italic F$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+The result of the syntax above is
 $latex \[
 	y = F(x)
-\] $$. 
+\] $$
 (See the $xref/CompareChange/Discussion/CompareChange discussion/$$ for
 possible differences between $latex F(x)$$ and the algorithm that defined
 the operation sequence.)
@@ -122,12 +119,9 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-The $syntax%AD<%Base%>%$$ 
-$xref/AD/AD Operation Sequence/operation sequence/$$
-stored in $italic f$$ defines a function
-$latex F : B^n \rightarrow B^m $$
-where $italic B$$ is the space corresponding to object of type $italic Base$$.
-The result of this operation is
+We use $italic F$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+The result of the syntax above is
 $latex \[
 	dy = F^{(1)} (x) * dx
 \] $$
@@ -222,11 +216,8 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-The $syntax%AD<%Base%>%$$ 
-$xref/AD/AD Operation Sequence/operation sequence/$$
-stored in $italic f$$ defines a function
-$latex F : B^n \rightarrow B^m $$
-where $italic B$$ is the space corresponding to object of type $italic Base$$.
+We use $italic F$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 Given a function $latex X : B \rightarrow B^n$$,
 defined by its 
 $xref/glossary/Taylor Coefficient/Taylor coefficients/$$,
@@ -525,16 +516,12 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-An $syntax%ADFun<%Base%>%$$ object contains an
-$syntax%AD<%Base%>%$$ 
-$xref/AD/AD Operation Sequence/operation sequence/$$.
-This operation sequence represents a function
-$latex \[
-	F : B^n \rightarrow B^m
-\] $$
-where $latex B$$ is the space corresponding to objects of type $italic Base$$.
-This function may be not agree with the algorithm that was taped to create 
-the operation sequence because of changes in AD
+We use $italic F$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+This function may be not agree with the algorithm that was used
+to create the corresponding
+$xref/AD/AD Operation Sequence/AD operation sequence/$$
+because of changes in AD
 $xref/Compare//comparison/$$ results.
 The $code CompareChange$$ function can be used to detect these changes.
 
@@ -554,7 +541,7 @@ $syntax%AD<%Base%>%$$ $xref/Compare//comparison/$$
 operations,
 corresponding to the previous call to $xref/Forward/$$ 
 $syntax%
-	%F%.Forward(0, %x%)
+	%f%.Forward(0, %x%)
 %$$
 that have a different result from
 when $italic F$$ was created by taping an algorithm.

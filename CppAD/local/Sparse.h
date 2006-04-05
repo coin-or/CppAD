@@ -1,5 +1,5 @@
-# ifndef CppADFunEvalIncluded
-# define CppADFunEvalIncluded
+# ifndef CppADSparseIncluded
+# define CppADSparseIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
@@ -20,19 +20,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 /*
-$begin FunEval$$
+$begin Sparse$$
 $spell
 $$
 
-$index evaluate, ADFun$$
-$index ADFun, evaluate$$
+$index sparsity, pattern$$
+$index pattern, sparsity$$
 
-$section Evaluate ADFun Functions, Derivatives, and Sparsity Patterns$$
+$section Calculating Sparsity Patterns$$
 
 $childtable%
-	CppAD/local/Forward.h%
-	CppAD/local/Reverse.h%
-	CppAD/local/Sparse.h
+	CppAD/local/ForSparseJac.h%
+	CppAD/local/RevSparseJac.h%
+	CppAD/local/RevSparseHes.h
 %$$
 
 $end

@@ -37,12 +37,8 @@ $head Purpose$$
 The operations above return properties of the
 $xref/AD/AD Operation Sequence/AD operation sequence/$$
 stored in the ADFun object $italic f$$. 
-We use the notation 
-$latex \[
-	F : B^n \rightarrow B^m
-\] $$
-for the function corresponding to the AD operation sequence 
-stored in $italic f$$.
+We use $italic F$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 
 $head f$$
 The object $italic f$$ has prototype

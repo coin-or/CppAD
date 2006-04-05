@@ -42,10 +42,16 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-Constructs an $syntax%ADFun<%Base%>%$$ object 
-corresponding to the current $syntax%AD<%Base%>%$$
-$xref/AD/AD Operation Sequence/operation sequence/$$.
-The operation sequence defines an ADFun function 
+The 
+$syntax%AD<%Base%>%$$
+$xref/AD/AD Operation Sequence/operation sequence/$$ 
+corresponding to $italic f$$ is 
+the operation sequence that occurred since the previous 
+$xref/Independent//Independent(x)/$$
+where $italic x$$ was a 
+vector with elements of type $syntax%AD<%Base%>%$$.
+The operation sequence defines an 
+$xref/glossary/AD Function/AD function/$$
 $latex \[
 	F : B^n \rightarrow B^m
 \] $$

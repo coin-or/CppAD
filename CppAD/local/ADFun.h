@@ -38,18 +38,14 @@ $$
 $section ADFun Objects$$
 
 $index ADFun, object$$
+$index object, ADFun$$
 
 $head Purpose$$
-An $syntax%ADFun<%Base%>%$$ object contains an
-$syntax%AD<%Base%>%$$ 
-$xref/AD/AD Operation Sequence/operation sequence/$$.
-This operation sequence represents a function
-$latex \[
-	f : B^n \rightarrow B^m
-\] $$
-where $latex B$$ is the space corresponding to objects of type $italic Base$$.
-The ADFun object can be used to evaluate the function
-and its derivatives of arbitrary order.
+An $syntax%AD<%Base%>%$$ 
+$xref/AD/AD Operation Sequence/operation sequence/$$
+is stored in an $code ADFun$$ object by its $xref/FunConstruct/$$.
+The $code ADFun$$ object can then be used to calculate function values,
+derivative values, and other values related to the corresponding function.
 
 $childtable%
 	CppAD/local/Independent.h%

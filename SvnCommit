@@ -1,30 +1,28 @@
-# Improve documentation and example for CompareChange.
+# Put connection between AFun object and AD function in glossary.
 #
 # SvnCommit: file that made this commit.
-# FunEval.h: remove include of CompareChange.omh.
-# Forward.omh: move here and improve CompareChange documentation.
-# WhatsNew06.omh: users view of changes.
-# Abs.cpp: use same comment as other examples for ADFun constructor.
-# ParVar.cpp: use same comment as other examples for ADFun constructor.
-# Discrete.cpp: use same comment as other examples for ADFun constructor.
-# Piecewise.cpp: use same comment as other examples for ADFun constructor.
-# CompareChange.cpp: improve this example.
+# ADFun.h: improve discussion of connection to AD operation sequence.
+# FunConstruct.h: improve discussion of connection to AD operation sequence.
+# FunEval.h: move sparse routines to one subgroup.
+# SeqProperty.omh: link to AD function definition in glossary.
+# Reverse.omh: link to AD function definition in glossary.
+# glossary.omh: add AD function definition.
+# Forward.omh: link to AD function definition in glossary.
+# 
 add_list="
+	CppAD/local/Sparse.h
 "
 change_list="
 	SvnCommit
+	CppAD/local/ADFun.h
+	CppAD/local/FunConstruct.h
 	CppAD/local/FunEval.h
+	omh/SeqProperty.omh
+	omh/Reverse.omh
+	omh/glossary.omh
 	omh/Forward.omh
-	omh/WhatsNew06.omh
-	Example/Abs.cpp
-	Example/ParVar.cpp
-	Example/SeqProperty.cpp
-	Example/Discrete.cpp
-	Example/Piecewise.cpp
-	Example/CompareChange.cpp
 "
 delete_list="
-	omh/CompareChange.omh
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same
