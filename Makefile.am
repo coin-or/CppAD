@@ -120,6 +120,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/RevTwo.h \
 	CppAD/local/ReverseSweep.h \
 	CppAD/local/SinCos.h \
+	CppAD/local/Sparse.h \
 	CppAD/local/SqrtOp.h \
 	CppAD/local/StdMathUnary.h \
 	CppAD/local/Sub.h \
