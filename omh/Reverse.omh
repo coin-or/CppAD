@@ -32,7 +32,7 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-We use $italic F$$ to denote the
+We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 The function $latex W : B^n \rightarrow B$$ is defined by
 $latex \[
@@ -135,7 +135,7 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-We use $italic F$$ to denote the
+We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 Reverse mode computes the derivative of the $xref/Forward/$$ mode
 $xref/glossary/Taylor Coefficient/Taylor coefficients/$$

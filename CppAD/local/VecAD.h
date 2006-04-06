@@ -150,6 +150,14 @@ The vectors passed to $xref/Independent/$$ must have elements
 of type $syntax%AD<%Base%>%$$; i.e., $xref/VecAD/$$ vectors
 cannot be passed to $code Independent$$.
 
+$lnext
+If one uses this type in a 
+$xref/AD/AD Operation Sequence/AD operation sequence/$$,
+$xref/glossary/Sparsity Pattern/sparsity pattern/$$ calculations
+($xref/Sparse/$$)
+are only valid for the current independent variable values,
+instead of valid for all independent variables.
+
 $lend
 
 $head n$$

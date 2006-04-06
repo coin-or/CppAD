@@ -60,7 +60,16 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 04-05$$
+$head 04-06$$
+The $xref/ForSparseJac/$$ sparsity results are now valid for 
+all independent variable values
+(if the AD operation sequence does no use any 
+$syntax%VecAD<%Base%>%$$ operands).
+In addition, the $code ForSparseJac$$ documentation and examples
+were improved.
+
+
+$head 04-06$$
 The documentation and example for $xref/CompareChange/$$ were
 improved and moved to be part of the $xref/Forward/$$ section.
 

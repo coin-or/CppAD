@@ -102,6 +102,10 @@ public:
 	template <typename VectorBase>
 	VectorBase RevSparseHes(size_t q, const VectorBase &Py);
 
+	// does this AD operation sequence use VecAD<Base>::reference operands
+	bool useVecAD(void) const
+	{	return Rec->NumVecInd() > 0; }
+
 	// number of variables in opertion sequence
 	size_t var_size(void) const
 	{	return totalNumVar; }

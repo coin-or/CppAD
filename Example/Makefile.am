@@ -18,7 +18,7 @@
 # automake input file
 #
 # Microsoft project files
-EXTRA_DIST        = Example.sln Example.vcproj
+EXTRA_DIST        = Example.sln Example.vcproj OneTest
 #
 noinst_PROGRAMS   = Example 
 #

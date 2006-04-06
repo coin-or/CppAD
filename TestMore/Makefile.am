@@ -18,7 +18,7 @@
 # automake input file
 #
 # Microsoft project files
-EXTRA_DIST        = TestMore.sln TestMore.vcproj
+EXTRA_DIST        = TestMore.sln TestMore.vcproj OneTest
 #
 noinst_PROGRAMS   = TestMore
 #

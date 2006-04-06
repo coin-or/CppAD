@@ -3,6 +3,7 @@ $spell
 	const
 	bool
 	var
+	VecAD
 $$
 
 $section ADFun Sequence Properties$$
@@ -16,6 +17,10 @@ $index Range, ADFun$$
 $index ADFun, Parameter$$
 $index Parameter, ADFun$$
 
+
+$index ADFun, useVecAD$$
+$index useVecAD, ADFun$$
+
 $index ADFun, var_size$$
 $index var_size, ADFun$$
 
@@ -26,6 +31,8 @@ $rnext $cnext
 $syntax%%m% = %f%.Range()%$$
 $rnext $cnext
 $syntax%%p% = %f%.Parameter(%i%)%$$
+$rnext $cnext
+$syntax%%u% = %f%.useVecAD()%$$
 $rnext $cnext
 $syntax%%v% = %f%.var_size()%$$
 $tend
@@ -90,6 +97,17 @@ $latex \[
 	\D{F_i}{x_j} (x) = 0
 \] $$
 for $latex j = 0 , \ldots , n-1$$ and all $latex x \in B^n$$.
+
+$head useVecAD$$
+The result $italic u$$ has prototype
+$syntax%
+	bool %u%
+%$$
+If it is true, the
+$xref/AD/AD Operation Sequence/AD operation sequence/$$
+stored in $italic f$$ contains 
+$xref/VecAD/VecAD<Base>::reference/$$ operands.
+Otherwise $italic u$$ is false.
 
 $head var_size$$
 The result $italic v$$ has prototype

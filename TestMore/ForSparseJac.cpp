@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -101,7 +101,7 @@ bool ForSparseJac(void)
 	CheckFun(sinh);
 	CheckFun(sqrt);
 
-	// conditional expression
+	// conditional expression (value of comparision does not matter)
 	Y[index] = CondExpLt(X[0], X[1], X[0], AD<double>(2.));
 	Check[index * n + 0] = true;
 	Check[index * n + 1] = false;
@@ -109,12 +109,12 @@ bool ForSparseJac(void)
 	index++;
 	Y[index] = CondExpLt(X[0], X[1], X[0], X[1]);
 	Check[index * n + 0] = true;
-	Check[index * n + 1] = false;
+	Check[index * n + 1] = true;
 	Check[index * n + 2] = false;
 	index++;
 	Y[index] = CondExpLt(X[0], X[1], AD<double>(3.), X[1]);
 	Check[index * n + 0] = false;
-	Check[index * n + 1] = false;
+	Check[index * n + 1] = true;
 	Check[index * n + 2] = false;
 	index++;
 

@@ -2,7 +2,7 @@
 # define CppADForJacSweepIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -173,7 +173,6 @@ void ForJacSweep(
 	size_t            j;
 
 	// used by CExp operator 
-	const Base  *left, *right;
 	const Pack  *trueCase, *falseCase;
 	Pack  *zero = CppADNull;
 	zero        = CppADTrackNewVec(npv, zero);
@@ -317,27 +316,15 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 6);
 			CppADUnknownError( ind[1] != 0 );
 
-			if( ind[1] & 1 )
-				left = Taylor + ind[2] * TaylorColDim;
-			else	left = Rec->GetPar(ind[2]);
-			if( ind[1] & 2 )
-				right = Taylor + ind[3] * TaylorColDim;
-			else	right = Rec->GetPar(ind[3]);
 			if( ind[1] & 4 )
 				trueCase = ForJac + ind[4] * npv;
 			else	trueCase = zero;
 			if( ind[1] & 8 )
 				falseCase = ForJac + ind[5] * npv;
 			else	falseCase = zero;
+			// transfer both possible dependencies
 			for(j = 0; j < npv; j++)
-			{	Z[j] = CondExpTemplate(
-					CompareOp( ind[0] ),
-					*left,
-					*right,
-					trueCase[j],
-					falseCase[j]
-				);
-			}
+				Z[j] = trueCase[j] | falseCase[j];
 			break;
 			// ---------------------------------------------------
 

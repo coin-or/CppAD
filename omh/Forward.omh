@@ -216,7 +216,7 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-We use $italic F$$ to denote the
+We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 Given a function $latex X : B \rightarrow B^n$$,
 defined by its 
