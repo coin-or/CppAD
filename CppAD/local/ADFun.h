@@ -96,7 +96,7 @@ public:
 
 	// reverse mode Jacobian sparsity 
 	template <typename VectorBase>
-	VectorBase RevSparseJac(size_t q, const VectorBase &Py);
+	VectorBase RevSparseJac(size_t q, const VectorBase &Py) const;
 
 	// reverse mode Hessian sparsity 
 	template <typename VectorBase>

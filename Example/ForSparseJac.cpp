@@ -41,8 +41,8 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-namespace { // ------------------------------------------------------------
-// defint he template function ForSparseJacCases<Vector> in empty namespace
+namespace { // -------------------------------------------------------------
+// define the template function ForSparseJacCases<Vector> in empty namespace
 template <typename Vector> 
 bool ForSparseJacCases(void)
 {	bool ok = true;

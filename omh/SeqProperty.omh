@@ -109,7 +109,7 @@ stored in $italic f$$ contains
 $xref/VecAD/VecAD<Base>::reference/$$ operands.
 Otherwise $italic u$$ is false.
 
-$head var_size$$
+$head size_var$$
 The result $italic v$$ has prototype
 $syntax%
 	size_t %v%

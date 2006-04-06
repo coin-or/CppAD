@@ -107,7 +107,7 @@ $subhead Deprecated$$
 There are other sizes attached to an ADFun object, for example,
 the number of operations in the sequence.
 In order to avoid confusion with these other sizes,
-use $xref/SeqProperty/var_size/var_size/$$ to obtain 
+use $xref/SeqProperty/size_var/size_var/$$ to obtain 
 the number of variables in the operation sequence.
 
 $end

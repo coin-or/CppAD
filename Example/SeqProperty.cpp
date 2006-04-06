@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 $begin SeqProperty.cpp$$
 $spell
 	abs
+	var
 $$
 
 $section ADFun Sequence Properties: Example and Test$$

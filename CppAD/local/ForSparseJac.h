@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin ForSparseJac$$
 $spell
-	xk
+	var
 	Jacobian
 	Jac
 	const
@@ -31,7 +31,7 @@ $spell
 	VecAD
 $$
 
-$section Forward Mode Jacobian Sparsity Pattern$$ 
+$section Jacobian Sparsity Pattern: Forward Mode$$ 
 
 $index ForSparseJac$$
 $index forward, sparsity Jacobian$$
@@ -47,7 +47,7 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-We use $italic F$$ to denote the
+We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 For a fixed $latex n \times q$$ matrix $latex R$$,
 the Jacobian of $latex F[ x + R * u ]$$
@@ -72,11 +72,14 @@ is stored in the object $italic f$$.
 
 
 $head x$$
-If no $xref/VecAD/VecAD<Base>::reference/$$ objects are in the
+If no $xref/VecAD/$$ objects are by the
 $xref/AD/AD Operation Sequence/AD operation sequence/$$ 
 stored in $italic f$$,
 the sparsity pattern is valid for all values $latex x \in B^n$$.
-If $xref/SeqProperty/useVecAD/f.useVecAD()/$$ is true,
+$pre
+
+$$
+If $xref/SeqProperty/use_VecAD/f.useVecAD/$$ is true,
 the sparsity patter is only valid for the value of $italic x$$
 in the previous $xref/ForwardZero//zero order forward mode/$$ call
 $syntax%
@@ -96,7 +99,8 @@ $syntax%
 It specifies the number of columns in the Jacobian $latex J(x)$$. 
 Note that the memory required for the calculation is proportional 
 to $latex q$$ times the total number of variables 
-in the AD operation sequence corresponding to $italic f$$.
+in the AD operation sequence corresponding to $italic f$$
+($xref/SeqProperty/size_var/f.size_var/$$).
 Smaller values for $italic q$$ can be used to
 break the sparsity calculation 
 into groups that do not require to much memory. 
@@ -111,7 +115,7 @@ and its size is $latex n * q$$.
 It specifies a 
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
 for the matrix $italic R$$ as follows:
-for $latex i = 1 , \ldots , n$$ and $latex j = 1 , \ldots , q$$.
+for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , q-1$$.
 $latex \[
 	R_{i,j} \neq 0 ; \Rightarrow \; r [ i * q + j ] = {\rm true}
 \] $$
@@ -127,8 +131,8 @@ It specifies a
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
 for the matrix $latex J(x)$$ as follows:
 for $latex x \in B^n$$,
-for $latex i = 1 , \ldots , m$$,
-and $latex j = 1 , \ldots , q$$.
+for $latex i = 0 , \ldots , m-1$$,
+and $latex j = 0 , \ldots , q-1$$
 $latex \[
 	J(x)_{i,j} \neq 0 ; \Rightarrow \; s [ i * q + j ] = {\rm true}
 \] $$
@@ -142,10 +146,6 @@ In order to save memory,
 you may want to use a class that packs multiple elements into one
 storage location; for example,
 $xref/CppAD_vector/vectorBool/vectorBool/$$.
-
-$head Restrictions$$
-The AD operations sequence corresponding to $latex f$$ cannot have any 
-$xref/VecAD/VecAD<Base>::reference/VecAD<Base>::reference/$$ operands.
 
 $head Entire Sparsity Pattern$$
 Suppose that $latex q = n$$ and
@@ -161,8 +161,7 @@ is an efficient sparsity pattern for the Jacobian of $latex X$$;
 i.e., the choice for $italic r$$ has as few true values as possible.
 In this case, 
 the corresponding value for $italic s$$ is a 
-sparsity pattern for the Jacobian $latex J(x) = F^{(1)} ( x )$$
-(valid for all values of $latex x \in B^n$$.
+sparsity pattern for the Jacobian $latex J(x) = F^{(1)} ( x )$$.
 
 $head Example$$
 $children%

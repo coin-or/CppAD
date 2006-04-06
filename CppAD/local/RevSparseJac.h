@@ -22,9 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin RevSparseJac$$
 $spell
-	xk
-	Py 
-	Px
+	VecAD
+	var
 	Jacobian
 	Jac
 	const
@@ -33,99 +32,108 @@ $spell
 	proportional
 $$
 
-$section Reverse Mode Jacobian Sparsity Pattern$$ 
+$section Jacobian Sparsity Pattern: Reverse Mode$$ 
 
+$index RevSparseJac$$
 $index reverse, sparse Jacobian$$
 $index sparse, reverse Jacobian$$
 $index pattern, reverse Jacobian$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%%Px% = %F%.RevSparseJac(%p%, %Py%)%$$
+$syntax%%r% = %F%.RevSparseJac(%p%, %s%)%$$
 $rnext $cnext
 $tend
 
 $fend 20$$
 
-
-$head Description$$
-Given the function 
-$latex F : B^n \rightarrow B^m$$ defined by the object $italic F$$,
-a linear function $latex Y : B^m \rightarrow B^p$$, and a
-$xref/glossary/Sparsity Pattern/sparsity pattern/$$
-$latex Py$$ for the Jacobian of $latex Y$$,
-$code RevSparseJac$$ returns a sparsity pattern for the Jacobian 
+$head Purpose$$
+We use $latex F : B^n \rightarrow B^m$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+For a fixed $latex p \times m$$ matrix $latex S$$,
+the Jacobian of $latex S * F( x )$$
+with respect to $latex x$$ is
 $latex \[
-	J = Y^{(1)} F^{(1)} ( x^{(0)} )
+	J(x) = S * F^{(1)} ( x )
 \] $$
+Given a
+$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+for $latex S$$,
+$code ForSparseJac$$ returns a sparsity pattern for the $latex J(x)$$.
 
-$head F$$
-The object $italic F$$ has prototype
+$head f$$
+The object $italic f$$ has prototype
 $syntax%
-	ADFun<%Base%> %F%
+	const ADFun<%Base%> %f%
 %$$
-It defines a function
-$latex F : B^n \rightarrow B^m$$,
-where $latex n$$ is the dimension of the 
-$xref/SeqProperty/Domain/domain/$$ space for $italic F$$, and
-$latex m$$ is the dimension of the 
-$xref/SeqProperty/Range/range/$$ space for $italic F$$.
 
-$head x0$$
-The value $latex x^{(0)} \in B^n$$ is the value of $italic xk$$
-in the previous call to 
+$head x$$
+If no $xref/VecAD/$$ objects are by the
+$xref/AD/AD Operation Sequence/AD operation sequence/$$ 
+stored in $italic f$$,
+the sparsity pattern is valid for all values $latex x \in B^n$$.
+$pre
+
+$$
+If $xref/SeqProperty/use_VecAD/f.use_VecAD/$$ is true,
+the sparsity patter is only valid for the value of $italic x$$
+in the previous $xref/ForwardZero//zero order forward mode/$$ call
 $syntax%
-	%F%.Forward(%k%, %xk%)
+	%f%.Forward(0, %x%)
 %$$
-where $latex k = 0$$.
-If there was no previous call with $latex k = 0$$,
-$latex x^{(0)}$$ is the value of the independent variables
-when $italic F$$ was constructed as an 
-$xref/ADFun/$$ object.
+If there is no previous zero order forward mode call using $italic f$$,
+the value of the $xref/Independent//independent/$$ variables 
+during the recording of the AD sequence of operations is used
+for $italic x$$.
 
 $head p$$
 The argument $italic p$$ has prototype
 $syntax%
 	size_t %p%
 %$$
-It specifies the number of components we are computing the 
-sparsity pattern with respect to.
+It specifies the number of rows in the Jacobian $latex J(x)$$. 
 Note that the memory required for the calculation is proportional 
-to $latex p$$ times the total number of variables on the tape.
-Thus it may be desireable to break the sparsity calculation into 
-groups that do not require to much memory. 
+to $latex p$$ times the total number of variables 
+in the AD operation sequence corresponding to $italic f$$
+($xref/SeqProperty/size_var/f.size_var/$$).
+Smaller values for $italic p$$ can be used to
+break the sparsity calculation 
+into groups that do not require to much memory. 
 
-$head Py$$
-The argument $italic Py$$ has prototype
+$head s$$
+The argument $italic s$$ has prototype
 $syntax%
-	const %VectorBool% &%Py%
+	const %Vector% &%s%
 %$$
-and is a vector with size $latex p * m$$.
-A sparsity pattern for the matrix
-$latex Y^{(1}) \in B^{p \times m}$$ is given by
+(see $xref/ForSparseJac/Vector/Vector/$$ below)
+and its size is $latex p * m$$.
+It specifies a 
+$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+for the matrix $italic S$$ as follows:
+for $latex i = 0 , \ldots , p-1$$ and $latex j = 0 , \ldots , m-1$$.
 $latex \[
-	Py_{i,j} = Py [ i * m + j ]
+	R_{i,j} \neq 0 ; \Rightarrow \; r [ i * q + j ] = {\rm true}
 \] $$
-for $latex i = 1 , \ldots , p$$ and $latex j = 1 , \ldots , m$$.
 
-$head Px$$
-The return value $italic Px$$ has prototype
+$head r$$
+The return value $italic r$$ has prototype
 $syntax%
-	%VectorBool% %Px%
+	%Vector% %r%
 %$$
-and is a vector with size $latex p * n$$.
-A sparsity pattern for the Jacobian
+(see $xref/ForSparseJac/Vector/Vector/$$ below)
+and its size is $latex p * n$$.
+It specifies a 
+$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+for the matrix $latex J(x)$$ as follows:
+for $latex x \in B^n$$,
+for $latex i = 0 , \ldots , p-1$$,
+and $latex j = 0 , \ldots , n-1$$
 $latex \[
-	J = Y^{(1)} F^{(1)} ( x^{(0)} )
+	J(x)_{i,j} \neq 0 ; \Rightarrow \; r [ i * n + j ] = {\rm true}
 \] $$
-is given by
-$latex \[
-	Py_{i,j} = Py [ i * n + j ]
-\] $$
-for $latex i = 1 , \ldots , p$$ and $latex j = 1 , \ldots , n$$.
 
-$head VectorBool$$
-The type $italic VectorBool$$ must be a $xref/SimpleVector/$$ class with
+$head Vector$$
+The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
@@ -134,26 +142,22 @@ you may want to use a class that packs multiple elements into one
 storage location; for example,
 $xref/CppAD_vector/vectorBool/vectorBool/$$.
 
+
 $head Entire Sparsity Pattern$$
-Suppose that $latex p = m$$ and the function 
-$latex Y : B^m \rightarrow B^p$$ is the identity; i.e., $latex Y(y) = y$$.
+Suppose that $latex p = m$$ and
+$latex S$$ is the $latex m \times m$$ identity matrix,
 If follows that 
 $latex \[
-Py [ i * m + j ] = \left\{ \begin{array}{ll}
+s [ i * q + j ] = \left\{ \begin{array}{ll}
 	{\rm true}  & {\rm if} \; i = j \\
 	{\rm flase} & {\rm otherwise}
 \end{array} \right. 
 \] $$
-is an efficient sparsity pattern for the Jacobian of $latex X$$; 
-i.e., the choice for $italic Py$$ has as few true values as possible.
-$pre
-
-$$
-In the case defined above, 
-the corresponding value for $italic Px$$ is a 
-sparsity pattern for the Jacobian 
-$latex J = F^{(1)} ( x^{(0)} )$$.
-
+is an efficient sparsity pattern for the Jacobian of $latex S$$;
+i.e., the choice for $italic s$$ has as few true values as possible.
+In this case, 
+the corresponding value for $italic r$$ is a 
+sparsity pattern for the Jacobian $latex J(x) = F^{(1)} ( x )$$.
 
 
 $head Example$$
@@ -173,8 +177,8 @@ $end
 namespace CppAD {
 
 template <class Base>
-template <class VectorBool>
-VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
+template <class Vector>
+Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 {
 	// type used to pack bits (must support standard bit operations)
 	typedef size_t Pack;
@@ -182,8 +186,8 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 	// temporary indices
 	size_t i, j, k, q;
 
-	// check VectorBool is Simple Vector class with bool elements
-	CheckSimpleVector<bool, VectorBool>();
+	// check Vector is Simple Vector class with bool elements
+	CheckSimpleVector<bool, Vector>();
 
 	// range and domain dimensions for F
 	size_t m = dep_taddr.size();
@@ -195,8 +199,8 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 	);
 
 	CppADUsageError(
-		Py.size() == p * m,
-		"RevSparseJac: Py (second argument) length is not equal to\n"
+		s.size() == p * m,
+		"RevSparseJac: s (second argument) length is not equal to\n"
 		"p (first argument) times range dimension for ADFun object."
 	);
 
@@ -228,7 +232,7 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 		{	k    = i / sizeof(Pack);
 			q    = i - k * sizeof(Pack);
 			mask = Pack(1) << q;
-			if( Py[ i * m + j ] )
+			if( s[ i * m + j ] )
 				RevJac[ dep_taddr[j] * npv + k ] |= mask;
 		}
 	}
@@ -237,7 +241,7 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 	RevJacSweep(npv, totalNumVar, Rec, TaylorColDim, Taylor, RevJac);
 
 	// return values corresponding to dependent variables
-	VectorBool Px(p * n);
+	Vector r(p * n);
 	for(j = 0; j < n; j++)
 	{	CppADUnknownError( ind_taddr[j] < totalNumVar );
 		// ind_taddr[j] is operator taddr for j-th independent variable
@@ -249,14 +253,14 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &Py)
 			q     = i - k * sizeof(Pack);
 			mask  = Pack(1) << q;
 			mask &=	RevJac[ ind_taddr[j] * npv + k ];
-			Px[ i * n + j ] = (mask != 0);
+			r[ i * n + j ] = (mask != 0);
 		}
 	}
 
 	// done with buffer
 	CppADTrackDelVec(RevJac);
 
-	return Px;
+	return r;
 }
 
 } // END CppAD namespace
