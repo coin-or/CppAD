@@ -151,8 +151,9 @@ bool CondExpAD(void)
 	CppADvector<bool> Py(m * n);
 	Py = f.ForSparseJac(n, Px);
 	for(i = 0; i < m; i++)
-	{	for(j = 0; j < n; j++)
-			ok &= ( Py[i * n + j] == (J[i * n + j] == 1.) );
+	{	ok &= Py[ i * n + 0 ] == false;
+		ok &= Py[ i * n + 1 ] == true;
+		ok &= Py[ i * n + 2 ] == true;
 	}
 
 	// reverse mode computation of sparsity pattern
