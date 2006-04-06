@@ -112,7 +112,7 @@ $xref/glossary/Sparsity Pattern/sparsity pattern/$$
 for the matrix $italic S$$ as follows:
 for $latex i = 0 , \ldots , p-1$$ and $latex j = 0 , \ldots , m-1$$.
 $latex \[
-	R_{i,j} \neq 0 ; \Rightarrow \; r [ i * q + j ] = {\rm true}
+	S_{i,j} \neq 0 ; \Rightarrow \; s [ i * m + j ] = {\rm true}
 \] $$
 
 $head r$$

@@ -1,28 +1,22 @@
-# Change var_size to size_var and add use_VecAD example.
+# Improve documentaiton and example for RevSparseHes.
 #
 # SvnCommit: file that made this commit.
-# ADFun.h: make RevSparseJac const.
-# ForSparseJac.h: minor edits and corrections do documentation.
-# RevSparseJac.h: major changes to documentation and extend specification.
-# SeqProperty.omh: change var_size to size_var.
-# WhatsNew06.omh: users view of the changes.
-# FunDeprecated.omh: change var_size to size_var.
-# SeqProperty.cpp: add an OMhelp spelling entry.
-# ForSparseJac.cpp: minor edits.
-# RevSparseJac.cpp: change to use notaiton in new documentation.
+# RevSparseHes.h: improve documentation and use same notation in code.
+# ADFun.h: change RevSparseHes to const.
+# ForSparseJac.h: minor edit in doc.
+# RevSparseJac.h: fix used of worng variable name in doc.
+# WhatsNew06.omh: users view of changes.
+# RevSparseHes.cpp: change to better match documentation and other examples.
 add_list="
 "
 change_list="
 	SvnCommit
+	CppAD/local/RevSparseHes.h
 	CppAD/local/ADFun.h
 	CppAD/local/ForSparseJac.h
 	CppAD/local/RevSparseJac.h
-	omh/SeqProperty.omh
 	omh/WhatsNew06.omh
-	omh/FunDeprecated.omh
-	Example/SeqProperty.cpp
-	Example/ForSparseJac.cpp
-	Example/RevSparseJac.cpp
+	Example/RevSparseHes.cpp
 "
 delete_list="
 "

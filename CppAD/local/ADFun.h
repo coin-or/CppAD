@@ -100,7 +100,7 @@ public:
 
 	// reverse mode Hessian sparsity 
 	template <typename VectorBase>
-	VectorBase RevSparseHes(size_t q, const VectorBase &Py);
+	VectorBase RevSparseHes(size_t q, const VectorBase &Py) const;
 
 	// does this AD operation sequence use VecAD<Base>::reference operands
 	bool use_VecAD(void) const

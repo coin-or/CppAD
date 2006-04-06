@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -27,11 +27,11 @@ $spell
 $$
 
 $section Reverse Mode Hessian Sparsity: Example and Test$$
+
 $index RevSparseHes$$
-$index example, reverse Hessian sparsity$$
-$index example, Hessian  reverse sparsity$$
-$index test, reverse Hessian sparsity$$
-$index test, Hessian reverse sparsity$$
+$index example, sparsity Hessian$$
+$index test, sparsity Hessian$$
+$index sparsity, Hessian$$
 
 $code
 $verbatim%Example/RevSparseHes.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -42,96 +42,94 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include <vector>
-# include <valarray>
-
-
-namespace { // Begin empty namespace
-template <typename VectorBool> // vector class, elements of type bool
+namespace { // -------------------------------------------------------------
+// define the template function RevSparseHesCases<Vector> in empty namespace
+template <typename Vector> // vector class, elements of type bool
 bool RevSparseHesCases(void)
 {	bool ok = true;
-	using namespace CppAD;
+	using CppAD::AD;
 
-	// dimension of the domain space
+	// domain space vector
 	size_t n = 3; 
-
-	// dimension of the range space
-	size_t m = 2;
-
-	// independent variable vector 
 	CppADvector< AD<double> > X(n);
 	X[0] = 0.; 
 	X[1] = 1.;
 	X[2] = 2.;
-	Independent(X);
 
-	// compute product of elements in X
+	// declare independent variables and start recording
+	CppAD::Independent(X);
+
+	// range space vector
+	size_t m = 2;
 	CppADvector< AD<double> > Y(m);
 	Y[0] = sin( X[2] );
 	Y[1] = X[0] * X[1];
 
-	// create function object F : X -> Y
-	ADFun<double> F(X, Y);
+	// create f: X -> Y and stop tape recording
+	CppAD::ADFun<double> f(X, Y);
 
-	// sparsity pattern for the identity function U(x) = x
-	VectorBool Px(n * n);
+	// sparsity pattern for the identity matrix
+	Vector r(n * n);
 	size_t i, j;
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
-			Px[ i * n + j ] = false;
-		Px[ i * n + i ] = true;
+			r[ i * n + j ] = false;
+		r[ i * n + i ] = true;
 	}
 
-	// compute sparsity pattern for Jacobian of F(U(x))
-	F.ForSparseJac(n, Px);
+	// compute sparsity pattern for J(x) = F^{(1)} (x)
+	f.ForSparseJac(n, r);
 
-	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
-	VectorBool Py(m);
+	// compute sparsity pattern for H(x) = F_0^{(2)} (x)
+	Vector s(m);
 	for(i = 0; i < m; i++)
-		Py[i] = false;
-	Py[0] = true;
-	VectorBool Pxx(n * n);
-	Pxx = F.RevSparseHes(n, Py);
+		s[i] = false;
+	s[0] = true;
+	Vector h(n * n);
+	h    = f.RevSparseHes(n, s);
 
 	// check values
-	ok &= (Pxx[ 0 * n + 0 ] == false);  // second partial w.r.t X[0], X[0]
-	ok &= (Pxx[ 0 * n + 1 ] == false);  // second partial w.r.t X[0], X[1]
-	ok &= (Pxx[ 0 * n + 2 ] == false);  // second partial w.r.t X[0], X[2]
+	ok &= (h[ 0 * n + 0 ] == false);  // second partial w.r.t X[0], X[0]
+	ok &= (h[ 0 * n + 1 ] == false);  // second partial w.r.t X[0], X[1]
+	ok &= (h[ 0 * n + 2 ] == false);  // second partial w.r.t X[0], X[2]
 
-	ok &= (Pxx[ 1 * n + 0 ] == false);  // second partial w.r.t X[1], X[0]
-	ok &= (Pxx[ 1 * n + 1 ] == false);  // second partial w.r.t X[1], X[1]
-	ok &= (Pxx[ 1 * n + 2 ] == false);  // second partial w.r.t X[1], X[2]
+	ok &= (h[ 1 * n + 0 ] == false);  // second partial w.r.t X[1], X[0]
+	ok &= (h[ 1 * n + 1 ] == false);  // second partial w.r.t X[1], X[1]
+	ok &= (h[ 1 * n + 2 ] == false);  // second partial w.r.t X[1], X[2]
 
-	ok &= (Pxx[ 2 * n + 0 ] == false);  // second partial w.r.t X[2], X[0]
-	ok &= (Pxx[ 2 * n + 1 ] == false);  // second partial w.r.t X[2], X[1]
-	ok &= (Pxx[ 2 * n + 2 ] == true);   // second partial w.r.t X[2], X[2]
+	ok &= (h[ 2 * n + 0 ] == false);  // second partial w.r.t X[2], X[0]
+	ok &= (h[ 2 * n + 1 ] == false);  // second partial w.r.t X[2], X[1]
+	ok &= (h[ 2 * n + 2 ] == true);   // second partial w.r.t X[2], X[2]
 
-	// compute sparsity pattern for Hessian of F_1 ( U(x) ) 
+	// compute sparsity pattern for H(x) = F_1^{(2)} (x)
 	for(i = 0; i < m; i++)
-		Py[i] = false;
-	Py[1] = true;
-	Pxx = F.RevSparseHes(n, Py);
+		s[i] = false;
+	s[1] = true;
+	h    = f.RevSparseHes(n, s);
 
 	// check values
-	ok &= (Pxx[ 0 * n + 0 ] == false);  // second partial w.r.t X[0], X[0]
-	ok &= (Pxx[ 0 * n + 1 ] == true);   // second partial w.r.t X[0], X[1]
-	ok &= (Pxx[ 0 * n + 2 ] == false);  // second partial w.r.t X[0], X[2]
+	ok &= (h[ 0 * n + 0 ] == false);  // second partial w.r.t X[0], X[0]
+	ok &= (h[ 0 * n + 1 ] == true);   // second partial w.r.t X[0], X[1]
+	ok &= (h[ 0 * n + 2 ] == false);  // second partial w.r.t X[0], X[2]
 
-	ok &= (Pxx[ 1 * n + 0 ] == true);   // second partial w.r.t X[1], X[0]
-	ok &= (Pxx[ 1 * n + 1 ] == false);  // second partial w.r.t X[1], X[1]
-	ok &= (Pxx[ 1 * n + 2 ] == false);  // second partial w.r.t X[1], X[2]
+	ok &= (h[ 1 * n + 0 ] == true);   // second partial w.r.t X[1], X[0]
+	ok &= (h[ 1 * n + 1 ] == false);  // second partial w.r.t X[1], X[1]
+	ok &= (h[ 1 * n + 2 ] == false);  // second partial w.r.t X[1], X[2]
 
-	ok &= (Pxx[ 2 * n + 0 ] == false);  // second partial w.r.t X[2], X[0]
-	ok &= (Pxx[ 2 * n + 1 ] == false);  // second partial w.r.t X[2], X[1]
-	ok &= (Pxx[ 2 * n + 2 ] == false);  // second partial w.r.t X[2], X[2]
+	ok &= (h[ 2 * n + 0 ] == false);  // second partial w.r.t X[2], X[0]
+	ok &= (h[ 2 * n + 1 ] == false);  // second partial w.r.t X[2], X[1]
+	ok &= (h[ 2 * n + 2 ] == false);  // second partial w.r.t X[2], X[2]
 
 	return ok;
 }
 } // End empty namespace
 
+# include <vector>
+# include <valarray>
 bool RevSparseHes(void)
 {	bool ok = true;
-
+	// Run with Vector equal to four different cases
+	// all of which are Simple Vectors with elements of type bool.
 	ok &= RevSparseHesCases< CppAD::vector  <bool> >();
 	ok &= RevSparseHesCases< CppAD::vectorBool     >();
 	ok &= RevSparseHesCases< std::vector    <bool> >(); 

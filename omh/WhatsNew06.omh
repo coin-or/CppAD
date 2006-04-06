@@ -62,12 +62,13 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 04-06$$
-The $xref/ForSparseJac/$$ and $xref/RevSparseJac/$$
+The $xref/ForSparseJac/$$, $xref/RevSparseJac/$$, $xref/RevSparseHes/$$
 sparsity results are now valid for 
 all independent variable values
 (if the AD operation sequence does no use any 
 $syntax%VecAD<%Base%>%$$ operands).
-In addition, the $code ForSparseJac$$ and $xref/RevSparseJac/$$
+In addition, the 
+$code ForSparseJac$$, $xref/RevSparseJac/$$ and $xref/RevSparseHes/$$
 documentation and examples were improved.
 $pre
 

@@ -157,7 +157,7 @@ r [ i * q + j ] = \left\{ \begin{array}{ll}
 	{\rm flase} & {\rm otherwise}
 \end{array} \right. 
 \] $$
-is an efficient sparsity pattern for the Jacobian of $latex X$$; 
+is an efficient sparsity pattern for $latex R$$; 
 i.e., the choice for $italic r$$ has as few true values as possible.
 In this case, 
 the corresponding value for $italic s$$ is a 

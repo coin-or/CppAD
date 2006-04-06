@@ -22,9 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin RevSparseHes$$
 $spell
-	Py 
-	Px
-	Pxx
+	VecAD
 	Jacobian
 	Jac
 	Hessian
@@ -33,110 +31,126 @@ $spell
 	Bool
 	Dep
 	proportional
+	var
 $$
 
-$section Reverse Mode Hessian Sparsity Pattern$$ 
+$section Hessian Sparsity Pattern: Reverse Mode$$ 
 
+$index RevSparseHes$$
 $index reverse, sparse Hessian$$
 $index sparse, reverse Hessian$$
 $index pattern, reverse Hessian$$
 
 $table
 $bold Syntax$$ $cnext
-$syntax%%Pxx% = %F%.RevSparseHes(%q%, %Py%)%$$
+$syntax%%h% = %f%.RevSparseHes(%q%, %s%)%$$
 $rnext $cnext
 $tend
 
 $fend 20$$
 
+$head Purpose$$
+We use $latex F : B^n \rightarrow B^m$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+For a fixed $latex n \times q$$ matrix $latex R$$
+and a fixed $latex m \times 1$$ matrix $latex S$$,
+the second partial of $latex S * F[ x + R * u ]$$
+with respect to $latex u$$ at $latex u = 0$$ and with respect to x
+$latex \[
+	H(x)  =  R^T * (S * F)^{(2)} ( x )
+\] $$
+where $latex (S * F)^{(2)} (x)$$ is the Hessian of the scalar
+valued function $latex S * F (x)$$.
+Given a
+$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+for $latex R$$ and $latex S$$,
+$code RevSparseHes$$ returns a sparsity pattern for the $latex H(x)$$.
 
-$head Description$$
-Given the function 
-$latex F : B^n \rightarrow B^m$$ defined by the object $italic F$$,
-a linear function $latex X : B^q \rightarrow B^n$$, 
-a linear function $latex Y : B^m \rightarrow B$$, a
-$xref/glossary/Sparsity Pattern/sparsity pattern/$$
-$latex Px$$ for the Jacobian of $latex X$$,
-and a sparsity pattern $latex Py$$ for the Jacobian of $latex Y$$, 
-$code RevSparseHes$$ returns a sparsity pattern for the Hessian of
-$latex (Y \circ F \circ X) : B^q \rightarrow B$$. 
-
-$head F$$
-The object $italic F$$ has prototype
+$head f$$
+The object $italic f$$ has prototype
 $syntax%
-	ADFun<%Base%> %F%
+	const ADFun<%Base%> %f%
 %$$
-It defines a function
-$latex F : B^n \rightarrow B^m$$,
-where $latex n$$ is the dimension of the 
-$xref/SeqProperty/Domain/domain/$$ space for $italic F$$, and
-$latex m$$ is the dimension of the 
-$xref/SeqProperty/Range/range/$$ space for $italic F$$.
+
+$head x$$
+If no $xref/VecAD/$$ objects are by the
+$xref/AD/AD Operation Sequence/AD operation sequence/$$ 
+stored in $italic f$$,
+the sparsity pattern is valid for all values $latex x \in B^n$$.
+$pre
+
+$$
+If $xref/SeqProperty/use_VecAD/f.use_VecAD/$$ is true,
+the sparsity patter is only valid for the value of $italic x$$
+in the previous $xref/ForwardZero//zero order forward mode/$$ call
+$syntax%
+	%f%.Forward(0, %x%)
+%$$
+If there is no previous zero order forward mode call using $italic f$$,
+the value of the $xref/Independent//independent/$$ variables 
+during the recording of the AD sequence of operations is used
+for $italic x$$.
 
 $head q$$
 The argument $italic q$$ has prototype
 $syntax%
 	size_t %q%
 %$$
-It specifies the number of argument components we are computing the 
-sparsity pattern with respect to.
-It must be the same value as in the previous call to
+It specifies the number of columns in the Jacobian $latex J(x)$$. 
+It must be the same value as in the previous $xref/ForSparseJac/$$ call 
 $syntax%
-	%F%.ForSparseJac(%q%, %Px%)
+	%f%.ForSparseJac(%q%, %r%)
 %$$
-Note that the memory required for the calculation is proportional 
-to $latex q$$ times the total number of variables on the tape.
-Thus it may be desireable to break the sparsity calculation into 
-groups that do not require to much memory. 
+Note that the memory required for the calculation is proportional
+to $latex q$$ times the total number of variables
+in the AD operation sequence corresponding to $italic f$$
+($xref/SeqProperty/size_var/f.size_var/$$).
 
-$head Px$$
-We use $italic Px$$ to denote its value in the previous call of the form
+$head r$$
+The argument $italic r$$ in the previous call
 $syntax%
-	%F%.ForSparseJac(%q%, %Px%)
+	%f%.ForSparseJac(%q%, %r%)
 %$$
-A sparsity pattern for the Jacobian of
-$latex X^{(1}) : B^q \rightarrow B^{n \times q}$$ is given by
+is a sparsity pattern for the matrix $latex R$$ above; i.e.,
+for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , q-1$$.
 $latex \[
-	Px_{i,j} = Px [ i * n + j ]
+	R_{i,j} \neq 0 ; \Rightarrow \; r [ i * q + j ] = {\rm true}
 \] $$
-for $latex i = 1 , \ldots , n$$ and $latex j = 1 , \ldots , q$$.
 
-$head Py$$
-The argument value $italic Py$$ has prototype
+$head s$$
+The argument $italic s$$ has prototype
 $syntax%
-	const %VectorBool% %Py%
+	const %Vector% &%s%
 %$$
-and is a vector with size $latex m$$.
-A sparsity pattern for the Jacobian of
-$latex Y^{(1)} : B^m \rightarrow B$$ is given by
+(see $xref/ForSparseJac/Vector/Vector/$$ below)
+and its size is $latex m$$.
+It specifies a 
+$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+for the matrix $italic S$$ as follows:
+for $latex j = 0 , \ldots , m-1$$.
 $latex \[
-	Py_{0,j} = Py [ j ]
+	S_{0,j} \neq 0 ; \Rightarrow \; s [ j ] = {\rm true}
 \] $$
-for $latex j = 1 , \ldots , m$$.
 
-$head Pxx$$
-The return value $italic Pxx$$ has prototype
+$head t$$
+The result $italic h$$ has prototype
 $syntax%
-	%VectorBool% &%Pxx%
+	%Vector% &%h%
 %$$
-and is a vector with size $latex n * q$$.
-It is a sparsity pattern for the function
-$latex H : B^q \rightarrow B^{q \times n}$$
-defined by
+(see $xref/ForSparseJac/Vector/Vector/$$ below)
+and its size is $latex q * n$$,
+It specifies a 
+$xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
+for the matrix $latex H(x)$$ as follows:
+for $latex x \in B^n$$,
+for $latex i = 0 , \ldots , q-1$$,
+and $latex j = 0 , \ldots , n-1$$
 $latex \[
-H(u) = \frac{d}{d u} \frac{d}{d x}  Y \{ F[ x + X(u) ] \}
+	H(x)_{i,j} \neq 0 ; \Rightarrow \; h [ i * n + j ] = {\rm true}
 \] $$
-is given by
-$latex \[
-	Pxx_{i,j} = Px [ i * n + j ]
-\] $$
-for $latex i = 1 , \ldots , q$$ and $latex j = 1 , \ldots , n$$.
-(Note that in the definition of $latex H$$ 
-rows correspond to the derivatives with respect to $latex u \in B^q$$ 
-and the columns correspond to derivatives with respect to $latex x \in B^n$$.)
 
-$head VectorBool$$
-The type $italic VectorBool$$ must be a $xref/SimpleVector/$$ class with
+$head Vector$$
+The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
@@ -146,36 +160,29 @@ storage location; for example,
 $xref/CppAD_vector/vectorBool/vectorBool/$$.
 
 $head Entire Sparsity Pattern$$
-If $latex q = n$$ and the function 
-$latex X : B^q \rightarrow B^n$$ is the identity; i.e., $latex X(x) = x$$.
+Suppose that $latex q = n$$ and
+$latex R$$ is the $latex n \times n$$ identity matrix,
 If follows that 
 $latex \[
-Px [ i * q + j ] = \left\{ \begin{array}{ll}
+r [ i * q + j ] = \left\{ \begin{array}{ll}
 	{\rm true}  & {\rm if} \; i = j \\
-	{\rm flase} & {\rm otherwise}
+	{\rm false} & {\rm otherwise}
 \end{array} \right. 
 \] $$
-is an efficient sparsity pattern for the Jacobian of $latex X$$; 
-i.e., the choice for $italic Px$$ has as few true values as possible.
-$pre
-
-$$
-Further suppose that the function $latex Y : B^m \rightarrow B$$
-is just the value of the $th k$$ component of $latex Y$$; i.e.,
-$latex Y(y) = y_k$$.
+is an efficient sparsity pattern for $latex R$$; 
+i.e., the choice for $italic r$$ has as few true values as possible.
+Further suppose that the $latex S$$ is the $th k$$
+$xref/glossary/Elementary Vector/elementary vector/$$
 If follows that 
 $latex \[
-Py [ j ] = \left\{ \begin{array}{ll}
+s [ j ] = \left\{ \begin{array}{ll}
 	{\rm true}  & {\rm if} \; j = k \\
-	{\rm flase} & {\rm otherwise}
+	{\rm false} & {\rm otherwise}
 \end{array} \right. 
 \] $$
-is an efficient sparsity pattern for the Jacobian of $latex Y$$. 
-$pre
-
-$$
+is an efficient sparsity pattern for $latex S$$. 
 In the case defined above,
-the corresponding value for $italic Pxx$$ is a 
+the result $italic h$$ corresponds to a
 sparsity pattern for the Hessian $latex F_k^{(2)} (x)$$.
 
 $head Example$$
@@ -196,10 +203,8 @@ $end
 namespace CppAD {
 
 template <class Base>
-template <class VectorBool>
-VectorBool ADFun<Base>::RevSparseHes(
-	size_t            q  , 
-	const VectorBool &Py )
+template <class Vector>
+Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 {
 	// type used to pack bits (must support standard bit operations)
 	typedef size_t Pack;
@@ -207,8 +212,8 @@ VectorBool ADFun<Base>::RevSparseHes(
 	// temporary indices
 	size_t i, j, k, p;
 
-	// check VectorBool is Simple Vector class with bool elements
-	CheckSimpleVector<bool, VectorBool>();
+	// check Vector is Simple Vector class with bool elements
+	CheckSimpleVector<bool, Vector>();
 
 	// range and domain dimensions for F
 	size_t m = dep_taddr.size();
@@ -224,8 +229,8 @@ VectorBool ADFun<Base>::RevSparseHes(
 		" in the previous call to ForSparseJac with this ADFun object."
 	);
 	CppADUsageError(
-		Py.size() == m,
-		"RevSparseHes: Py (third argument) length is not equal to\n"
+		s.size() == m,
+		"RevSparseHes: s (third argument) length is not equal to\n"
 		"range dimension for ADFun object."
 	);
 	
@@ -254,7 +259,7 @@ VectorBool ADFun<Base>::RevSparseHes(
 	}
 	for(i = 0; i < m; i++)
 	{	CppADUnknownError( dep_taddr[i] < totalNumVar );
-		if( Py[i] )
+		if( s[i] )
 		{	// set all the bits to true
 			RevJac[ dep_taddr[i] ] = ~0;
 		}
@@ -270,7 +275,7 @@ VectorBool ADFun<Base>::RevSparseHes(
 
 	// return values corresponding to independent variables
 	Pack mask;
-	VectorBool Pxx(n * q);
+	Vector h(n * q);
 
 	// j is index corresponding to reverse mode martial
 	for(j = 0; j < n; j++)
@@ -285,7 +290,7 @@ VectorBool ADFun<Base>::RevSparseHes(
 			p     = i - k * sizeof(Pack);
 			mask  = Pack(1) << p;
 			mask &=	RevHes[ ind_taddr[j] * npv + k ];
-			Pxx[ i * n + j ] = (mask != 0);
+			h[ i * n + j ] = (mask != 0);
 		}
 	}
 
@@ -293,7 +298,7 @@ VectorBool ADFun<Base>::RevSparseHes(
 	CppADTrackDelVec(RevJac);
 	CppADTrackDelVec(RevHes);
 
-	return Pxx;
+	return h;
 }
 
 } // END CppAD namespace
