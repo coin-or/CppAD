@@ -1,35 +1,18 @@
-# Change ForSparseJac so results are valid for all independent variable values.
+# Change var_size to size_var and add use_VecAD example.
 #
 # SvnCommit: file that made this commit.
-# ForJacSweep.h: change CondExp to be valid for all ind var values.
-# ADFun.h: add the useVecAD member function.
-# Erf.h: use static cast to avoid warnings from MS compiler.
-# ForSparseJac.h: improve documentaiton and change specification.
-# VecAD.h: list sparsity under exceptions for using VecAD.
-# SeqProperty.omh: document useVecAD member function.
-# Reverse.omh: include B^n -> B^m in description of F.
-# Forward.omh: include B^n -> B^m in description of F.
+# ADFun.h: change useVecAD to use_VecAD and var_size to size_var.
+# SeqProperty.omh: change useVecAD to use_VecAD and var_size to size_var.
 # WhatsNew06.omh: users view of the changes.
-# Example/ForSparseJac.cpp: make more like new documentaiton and other examples.
-# Example/Makefile.am: add OneTest to distribution.
-# TestMore/Makefile.am: add OneTest to distribution.
+# SeqProperty.cpp: change var_size to size_var and add use_VecAD example.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/ForJacSweep.h
 	CppAD/local/ADFun.h
-	CppAD/local/Erf.h
-	CppAD/local/ForSparseJac.h
-	CppAD/local/VecAD.h
 	omh/SeqProperty.omh
-	omh/Reverse.omh
-	omh/Forward.omh
 	omh/WhatsNew06.omh
-	Example/ForSparseJac.cpp
-	Example/Makefile.am
-	TestMore/ForSparseJac.cpp
-	TestMore/Makefile.am
+	Example/SeqProperty.cpp
 "
 delete_list="
 "

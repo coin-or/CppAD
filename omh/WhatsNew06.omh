@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew06$$
 $spell
+	var
 	const
 	dw
 	VecADelem
@@ -67,9 +68,21 @@ all independent variable values
 $syntax%VecAD<%Base%>%$$ operands).
 In addition, the $code ForSparseJac$$ documentation and examples
 were improved.
+$pre
+
+$$
+The $xref/SeqProperty/use_VecAD/useVecAD/$$ 
+member function was added to $xref/ADFun/$$ objects.
+$pre
+
+$$
+The $xref/SeqProperty/var_size/var_size/$$ member function was changed to 
+$code size_var$$
+(this is not backward compatible, but $code var_size$$ was just added on 
+$xref/WhatsNew06/04-03/04-03/$$).
 
 
-$head 04-06$$
+$head 04-05$$
 The documentation and example for $xref/CompareChange/$$ were
 improved and moved to be part of the $xref/Forward/$$ section.
 

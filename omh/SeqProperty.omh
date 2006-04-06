@@ -18,8 +18,8 @@ $index ADFun, Parameter$$
 $index Parameter, ADFun$$
 
 
-$index ADFun, useVecAD$$
-$index useVecAD, ADFun$$
+$index ADFun, use_VecAD$$
+$index use_VecAD, ADFun$$
 
 $index ADFun, var_size$$
 $index var_size, ADFun$$
@@ -32,7 +32,7 @@ $syntax%%m% = %f%.Range()%$$
 $rnext $cnext
 $syntax%%p% = %f%.Parameter(%i%)%$$
 $rnext $cnext
-$syntax%%u% = %f%.useVecAD()%$$
+$syntax%%u% = %f%.use_VecAD()%$$
 $rnext $cnext
 $syntax%%v% = %f%.var_size()%$$
 $tend
@@ -98,7 +98,7 @@ $latex \[
 \] $$
 for $latex j = 0 , \ldots , n-1$$ and all $latex x \in B^n$$.
 
-$head useVecAD$$
+$head use_VecAD$$
 The result $italic u$$ has prototype
 $syntax%
 	bool %u%

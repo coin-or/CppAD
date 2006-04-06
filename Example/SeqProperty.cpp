@@ -27,17 +27,17 @@ $section ADFun Sequence Properties: Example and Test$$
 $index Domain, ADFun$$
 $index Range, ADFun$$
 $index Parameter, ADFun$$
-$index Size, ADFun$$
+$index size_var, ADFun$$
 
 $index example, Domain$$
 $index example, Range$$
 $index example, Parameter$$
-$index example, Size$$
+$index example, size_var$$
 
 $index test, Domain$$
 $index test, Range$$
 $index test, Parameter$$
-$index test, Size$$
+$index test, size_var$$
 
 $code
 $verbatim%Example/SeqProperty.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -82,12 +82,13 @@ bool SeqProperty(void)
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
 
-	// check Domain, Range and Parameter
+	// check Domain, Range, Parameter, use_VecAD
 	ok &= f.Domain()     == n;
 	ok &= f.Range()      == m;
 	ok &= f.Parameter(0) == true;
 	ok &= f.Parameter(1) == false;
 	ok &= f.Parameter(2) == false;
+	ok &= f.use_VecAD()  == false;
 
 	// add one for each range component that is a parameter
 	size_t i;
@@ -95,7 +96,7 @@ bool SeqProperty(void)
 		if( f.Parameter(i) ) nvar++;
 
 	// number of variables corresponding to the sequence
-	ok &= f.Size()       == nvar;
+	ok &= f.size_var()   == nvar;
 
 	return ok;
 }
