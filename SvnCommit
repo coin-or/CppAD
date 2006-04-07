@@ -1,22 +1,20 @@
-# Improve documentaiton and example for RevSparseHes.
+# Improve sparsity efficiency when use_VecAD is true.
 #
 # SvnCommit: file that made this commit.
-# RevSparseHes.h: improve documentation and use same notation in code.
-# ADFun.h: change RevSparseHes to const.
-# ForSparseJac.h: minor edit in doc.
-# RevSparseJac.h: fix used of worng variable name in doc.
+# ForJacSweep.h: if use_VecAD, only need true case in CondExp dependency.
+# Copy.h: add static cast VecAD<Base>::reference -> AD<Base>.
+# AD.h: add static cast VecAD<Base>::reference -> AD<Base>.
 # WhatsNew06.omh: users view of changes.
-# RevSparseHes.cpp: change to better match documentation and other examples.
+# CondExpAD.cpp: include old test for the local sparsity CondExp calculation.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/RevSparseHes.h
-	CppAD/local/ADFun.h
-	CppAD/local/ForSparseJac.h
-	CppAD/local/RevSparseJac.h
+	CppAD/local/ForJacSweep.h
+	CppAD/local/CopyAD.h
+	CppAD/local/AD.h
 	omh/WhatsNew06.omh
-	Example/RevSparseHes.cpp
+	TestMore/CondExpAD.cpp
 "
 delete_list="
 "

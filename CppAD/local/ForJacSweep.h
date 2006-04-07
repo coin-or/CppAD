@@ -173,12 +173,14 @@ void ForJacSweep(
 	size_t            j;
 
 	// used by CExp operator 
+	bool use_VecAD = Rec->NumVecInd() > 0;
+	const Base  *left, *right;
 	const Pack  *trueCase, *falseCase;
 	Pack  *zero = CppADNull;
 	zero        = CppADTrackNewVec(npv, zero);
 	for(j = 0; j < npv; j++)
 		zero[j] = 0;
-
+	
 	// check numvar argument
 	CppADUnknownError( Rec->TotNumVar() == numvar );
 
@@ -322,9 +324,30 @@ void ForJacSweep(
 			if( ind[1] & 8 )
 				falseCase = ForJac + ind[5] * npv;
 			else	falseCase = zero;
-			// transfer both possible dependencies
-			for(j = 0; j < npv; j++)
-				Z[j] = trueCase[j] | falseCase[j];
+			if( ! use_VecAD )
+			{	// result valid for all independent var values
+				for(j = 0; j < npv; j++)
+					Z[j] = trueCase[j] | falseCase[j];
+			}
+			else
+			{	// result only valid for current values
+				if( ind[1] & 1 )
+					left = Taylor + ind[2] * TaylorColDim;
+				else	left = Rec->GetPar(ind[2]);
+				if( ind[1] & 2 )
+					right = Taylor + ind[3] * TaylorColDim;
+				else	right = Rec->GetPar(ind[3]);
+				for(j = 0; j < npv; j++)
+				{	Z[j] = CondExpTemplate(
+						CompareOp( ind[0] ),
+						*left,
+						*right,
+						trueCase[j],
+						falseCase[j]
+					);
+				}
+			}
+			break;
 			break;
 			// ---------------------------------------------------
 

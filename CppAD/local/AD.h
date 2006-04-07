@@ -154,6 +154,9 @@ public:
 	// copy constructor 
 	inline AD(const AD &x);
 
+	// contructor from VecAD<Base>::reference
+	inline AD(const VecAD_reference<Base> &x);
+
 	// construction from some other type
 	template <class T>
 	inline AD(const T &t);

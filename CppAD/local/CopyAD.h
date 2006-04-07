@@ -63,7 +63,7 @@ $children%
 %$$
 The file
 $xref/CopyAD.cpp/$$
-contains an example and a test of this operation.
+contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
 $end
@@ -87,6 +87,10 @@ inline AD<Base>::AD(const AD &x)
 
 	return;
 }
+
+template <class Base>
+inline AD<Base>::AD(const VecAD_reference<Base> &x)
+{	*this = x.ADBase(); }
 
 
 } // END CppAD namespace

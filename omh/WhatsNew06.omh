@@ -61,6 +61,31 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-08$$
+In the case where $xref/SeqProperty/use_VecAD/use_VecAD/$$ is true,
+the $xref/ForSparseJac/$$ calculation in only for the current
+independent variable values.
+In this case, the sparsity pattern can be (and has been) 
+made more efficient; i.e., fewer true values 
+(because it only applies to the current $xref/ForwardZero/$$).
+$pre
+
+$$
+The conversion from 
+$xref/VecAD/VecAD<Base>::reference/VecAD<Base>::reference/$$
+to $xref/AD/$$ gave a compile error (this has been fixed).
+Code example for this fix
+$codep
+	VecAD<double> V(1);
+	AD<double> zero = 0;
+	V[zero] = 1.;
+	static_cast< AD<double> > ( V[zero] );
+$$
+
+
+
+
+
 $head 04-06$$
 The $xref/ForSparseJac/$$, $xref/RevSparseJac/$$, $xref/RevSparseHes/$$
 sparsity results are now valid for 
