@@ -81,6 +81,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/Div.h \
 	CppAD/local/DivEq.h \
 	CppAD/local/DivOp.h \
+	CppAD/local/Drivers.h \
 	CppAD/local/Eq.h \
 	CppAD/local/Erf.h \
 	CppAD/local/ExpOp.h \

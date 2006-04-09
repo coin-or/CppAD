@@ -52,7 +52,7 @@ $childtable%
 	CppAD/local/FunConstruct.h%
 	omh/SeqProperty.omh%
 	CppAD/local/FunEval.h%
-	omh/Drivers.omh%
+	CppAD/local/Drivers.h%
 	omh/MulTape.omh%
 	omh/FunDeprecated.omh
 %$$
@@ -239,11 +239,6 @@ private:
 # include <CppAD/local/FunEval.h>
 
 // driver routines
-# include <CppAD/local/Jacobian.h>
-# include <CppAD/local/Hessian.h>
-# include <CppAD/local/ForOne.h>
-# include <CppAD/local/RevOne.h>
-# include <CppAD/local/ForTwo.h>
-# include <CppAD/local/RevTwo.h>
+# include <CppAD/local/Drivers.h>
 
 # endif

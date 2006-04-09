@@ -1,6 +1,8 @@
-// BEGIN SHORT COPYRIGHT
+# ifndef CppADDriversIncluded
+# define CppADDriversIncluded
+
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,8 +18,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
+/*
 $begin Drivers$$
 $spell
 $$
@@ -30,7 +32,7 @@ $index driver, easy$$
 $section First and Second Derivatives: Easy Drivers$$
 
 
-$contents%
+$childtable%
 	CppAD/local/Jacobian.h%
 	CppAD/local/ForOne.h%
 	CppAD/local/RevOne.h%
@@ -40,3 +42,12 @@ $contents%
 %$$
 
 $end
+*/
+# include <CppAD/local/Jacobian.h>
+# include <CppAD/local/ForOne.h>
+# include <CppAD/local/RevOne.h>
+# include <CppAD/local/Hessian.h>
+# include <CppAD/local/ForTwo.h>
+# include <CppAD/local/RevTwo.h>
+ 
+# endif

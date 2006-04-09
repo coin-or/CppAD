@@ -13,18 +13,20 @@ sed                                                           \
 	-e '/^[?].*\.deps$/d'                                 \
 	-e '/^[?].*\.a$/d'                                    \
 	-e '/^[?].*\.log$/d'                                  \
-	-e '/^[?].*TestOne.cpp$/d'                            \
-	-e '/^[?].*Makefile$/d'                               \
-	-e '/^[?].*Debug$/d'                                  \
-	-e '/^[?].*junk$/d'                                   \
-	-e '/^[?].*junk.[0-9]$/d'                             \
-	-e '/^[?].*junk.[0-9][0-9]$/d'                        \
-	-e '/^[?].*stamp-h1$/d'                               \
-	-e '/^[?].*config.h$/d'                               \
+	-e '/^[?].*\.stackdump$/d'                            \
+	-e '/^[?].*\/TestOne.cpp$/d'                          \
+	-e '/^[?].*\/Debug$/d'                                \
+	-e '/^[?].*\/config.h$/d'                             \
+	-e '/^[?].*\/stamp-h1$/d'                             \
+	-e '/^[?].*\/Makefile$/d'                             \
+	-e '/^[?] *Makefile$/d'                               \
+	-e '/^[?].*\/junk$/d'                                 \
+	-e '/^[?] *junk$/d'                                   \
+	-e '/^[?].*\/junk\.[0-9a-zA-Z]*$/d'                   \
+	-e '/^[?] *junk\.[0-9a-zA-Z]*$/d'                     \
 	-e '/^[?] *configure$/d'                              \
 	-e '/^[?] *Developer$/d'                              \
 	-e '/^[?] *config.status$/d'                          \
-	-e '/^[?].*.exe.stackdump$/d'                         \
 	-e '/^[?] *Doc$/d'                                    \
 	-e '/^[?] *aclocal.m4$/d'                             \
 	-e '/^[?] *cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/d' 

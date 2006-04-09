@@ -1,22 +1,22 @@
-# Improve sparsity efficiency when use_VecAD is true.
+# Move Driver.omh to Driver.h (so includes for doc and program are the same).
 #
 # SvnCommit: file that made this commit.
-# ForJacSweep.h: if use_VecAD, only need true case in CondExp dependency.
-# Copy.h: add static cast VecAD<Base>::reference -> AD<Base>.
-# AD.h: add static cast VecAD<Base>::reference -> AD<Base>.
-# WhatsNew06.omh: users view of changes.
-# CondExpAD.cpp: include old test for the local sparsity CondExp calculation.
+# Driver.h: new file containing derivative calculation drivers.
+# ADFun.h: change Driver.omh to Driver.h and use it for all driver includes.
+# SvnStatus: better removal of temporary files from status list.
+# Driver.omh: old file containing derivative calculation driver documentaiton.
+# Makefile.am: add Driver.h to distribution.
 add_list="
+	CppAD/local/Drivers.h
 "
 change_list="
 	SvnCommit
-	CppAD/local/ForJacSweep.h
-	CppAD/local/CopyAD.h
-	CppAD/local/AD.h
-	omh/WhatsNew06.omh
-	TestMore/CondExpAD.cpp
+	CppAD/local/ADFun.h
+	SvnStatus
+	Makefile.am
 "
 delete_list="
+	omh/Drivers.omh
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same
