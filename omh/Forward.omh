@@ -39,7 +39,7 @@ $fend 20$$
 
 
 $head Purpose$$
-We use $italic F$$ to denote the
+We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 The result of the syntax above is
 $latex \[
@@ -67,7 +67,7 @@ $syntax%
 %$$
 (see $xref/ForwardZero/Vector/Vector/$$ below)
 and its size 
-must be equal the dimension of the
+must be equal to $italic n$$, the dimension of the
 $xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
 
 $head y$$
@@ -78,7 +78,7 @@ $syntax%
 (see $xref/ForwardZero/Vector/Vector/$$ below)
 and its value is $latex F(x)$$.
 The size of $italic y$$ 
-is equal the dimension of the
+is equal to $italic m$$, the dimension of the
 $xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
 
 $head Vector$$
@@ -119,7 +119,7 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-We use $italic F$$ to denote the
+We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 The result of the syntax above is
 $latex \[
@@ -158,7 +158,7 @@ $syntax%
 %$$
 (see $xref/ForwardOne/Vector/Vector/$$ below)
 and its size 
-must be equal the dimension of the
+must be equal to $italic n$$, the dimension of the
 $xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
 
 $head dy$$
@@ -169,7 +169,7 @@ $syntax%
 (see $xref/ForwardOne/Vector/Vector/$$ below)
 and its value is $latex F^{(1)} (x) * dx$$.
 The size of $italic dy$$ 
-is equal the dimension of the
+is equal to $italic m$$, the dimension of the
 $xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
 
 $head Vector$$
@@ -305,7 +305,7 @@ $syntax%
 %$$
 (see $xref/ForwardAny/Vector/Vector/$$ below)
 and its size 
-must be equal the dimension of the
+must be equal to $italic n$$, the dimension of the
 $xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
 The $th p$$ order Taylor coefficient for $latex X(t)$$ 
 is defined by this value; i.e., $latex x^{(p)} = x\_p$$.
@@ -322,7 +322,7 @@ and its value is
 The $th p$$ order Taylor coefficient for $latex Y(t)$$; i.e.,
 $latex y^{(p)} = y\_p$$. 
 The size of $italic y_p$$ 
-is equal the dimension of the
+is equal to $italic m$$, the dimension of the
 $xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
 
 $head Vector$$
@@ -516,7 +516,7 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-We use $italic F$$ to denote the
+We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 This function may be not agree with the algorithm that was used
 to create the corresponding

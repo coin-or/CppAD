@@ -70,9 +70,9 @@ The argument $italic w$$ has prototype
 $syntax%
 	const %Vector% &%x%
 %$$
-(see $xref/ForwardOne/Vector/Vector/$$ below)
+(see $xref/ReverseOne/Vector/Vector/$$ below)
 and its size 
-must be equal the dimension of the
+must be equal to $italic m$$, the dimension of the
 $xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
 
 $head dw$$
@@ -80,10 +80,10 @@ The result $italic dw$$ has prototype
 $syntax%
 	const %Vector% &%dw%
 %$$
-(see $xref/ForwardOne/Vector/Vector/$$ below)
+(see $xref/ReverseOne/Vector/Vector/$$ below)
 and its value is the derivative $latex W^{(1)} (x)$$.
 The size of $italic dw$$ 
-is equal the dimension of the
+is equal to $italic n$$, the dimension of the
 $xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
 
 $head Vector$$
@@ -205,13 +205,17 @@ There must be at least $latex p$$ Taylor coefficients
 currently stored in $italic f$$ when $code Reverse$$ is called
 (see $xref/taylor_size/$$).
 
+
 $head w$$
 The argument $italic w$$ has prototype
 $syntax%
-	const %Vector% &%w%
+	const %Vector% &%x%
 %$$
-(see $xref/ReverseAny/Vector/Vector/$$ below).
-It specifies the weighting vector
+(see $xref/ReverseAny/Vector/Vector/$$ below)
+and its size 
+must be equal to $italic m$$, the dimension of the
+$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+It specifies the weighting vector $italic w$$
 in the definition of $latex W(t, x)$$ above.
 
 

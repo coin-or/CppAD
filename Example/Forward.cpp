@@ -35,7 +35,6 @@ $end
 */
 // BEGIN PROGRAM
 # include <CppAD/CppAD.h>
-
 namespace { // --------------------------------------------------------
 // define the template function ForwardCases<Vector> in empty namespace
 template <class Vector> 

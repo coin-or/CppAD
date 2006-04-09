@@ -1,22 +1,28 @@
-# Move Driver.omh to Driver.h (so includes for doc and program are the same).
+# Improve documentation and example for Jacobian.
 #
 # SvnCommit: file that made this commit.
-# Driver.h: new file containing derivative calculation drivers.
-# ADFun.h: change Driver.omh to Driver.h and use it for all driver includes.
-# SvnStatus: better removal of temporary files from status list.
-# Driver.omh: old file containing derivative calculation driver documentaiton.
-# Makefile.am: add Driver.h to distribution.
+# Jacobian.h: improve documentaiton and make code match notaiton.
+# Build: return valid exit status also check OMhelps exits status.
+# Reverse.omh: use both n (m) and domain (range) space dimension in doc.
+# Forward.omh: use both n (m) and domain (range) space dimension in doc.
+# Jacobian.cpp: use same notation as in new documentaiton.
+# Forward.cpp: remove one line of unecessary white space.
+# RunOMhelp: use exit status of OMhelp to control flow and exit status.
+# diffToday: use svn cat because faster than svn update.
 add_list="
-	CppAD/local/Drivers.h
 "
 change_list="
 	SvnCommit
-	CppAD/local/ADFun.h
-	SvnStatus
-	Makefile.am
+	CppAD/local/Jacobian.h
+	Build
+	omh/Reverse.omh
+	omh/Forward.omh
+	Example/Jacobian.cpp
+	Example/Forward.cpp
+	RunOMhelp
+	diffToday
 "
 delete_list="
-	omh/Drivers.omh
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

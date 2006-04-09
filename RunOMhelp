@@ -1,6 +1,5 @@
-# BEGIN SHORT COPYRIGHT
 # ---------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # ---------------------------------------------------------------------------
-# END SHORT COPYRIGHT
 #
 if [ "$1" != "Doc" ] && [ "$1" != "Developer" ]
 then
@@ -30,7 +28,11 @@ then
 	echo "Building developer documentation"
 	mkdir Developer
 	cd    Developer
-	omhelp ../Developer.omh -xml -debug > ../RunOMhelp.log
+	if ! omhelp ../Developer.omh -xml -debug > ../RunOMhelp.log
+	then
+		echo "OMhelp could not build developer documentation."
+		exit 1
+	fi
 	omhelp ../Developer.omh -debug
 	cd ..
 fi
@@ -42,18 +44,17 @@ then
 	#
 	mkdir Doc
 	cd    Doc
-	omhelp ../Doc.omh > ../RunOMhelp.log \
+	if ! omhelp ../Doc.omh > ../RunOMhelp.log \
 		-l http://www.coin-or.org/CppAD/ \
 		-xml \
 		-debug
+	then
+		echo "OMhelp could not build user documentation."
+		exit 1
+	fi
 	omhelp ../Doc.omh  \
                 -l http://www.coin-or.org/CppAD/ \
 		-debug
 	cd ..
 fi
-grep "Latex error"                 RunOMhelp.log
-grep "Spelling error:"             RunOMhelp.log
-grep "Cross reference error"       RunOMhelp.log
-grep "OMhelp error in file"        RunOMhelp.log
-grep "Error occurred in or before" RunOMhelp.log
-grep "Cross reference destination defined at line" RunOMhelp.log
+exit 0

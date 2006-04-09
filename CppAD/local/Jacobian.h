@@ -2,7 +2,7 @@
 # define CppADJacobianIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin Jacobian$$
 $spell
+	dy
 	typename
 	Taylor
 	Jacobian
@@ -37,82 +38,85 @@ $index derivative, first easy$$
 
 $section Jacobian: Easy Driver$$
 
-
 $table
 $bold Syntax$$
-$syntax%%J% = %F%.Jacobian(%x%)%$$
+$syntax%%dy% = %f%.Jacobian(%x%)%$$
 $tend
 
-$fend 25$$
+$fend 20$$
 
-$head Description$$
-Given an $xref/ADFun//ADFun<Base>/$$ object $latex F : B^n \rightarrow B^m$$,
-this routine returns the Jacobian of $italic F$$ at the point 
-$italic x$$; i.e.,
+$head Purpose$$
+We use $latex F : B^n \rightarrow B^m$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+The syntax above sets $italic dy$$ to the
+Jacobian of $italic F$$ evaluated at $italic x$$; i.e.,
 $latex \[
-	J = F^{(1)} (x)
+	dy = F^{(1)} (x)
 \] $$
+(See the $xref/CompareChange/Discussion/CompareChange discussion/$$ for
+possible differences between $latex F(x)$$ and the algorithm that defined
+the operation sequence.)
 
-$head F$$
-The object $italic F$$ has prototype
+$head f$$
+The object $italic f$$ has prototype
 $syntax%
-	ADFun<%Base%> %F%
+	ADFun<%Base%> %f%
 %$$
-
-$head VectorBase$$
-The type $italic VectorBase$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type Base/$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
-if this is not the case.
+Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$
+(see $xref/Jacobian/Forward/Forward/$$ below).
 
 $head x$$
-The vector $italic x$$ has prototype
+The argument $italic x$$ has prototype
 $syntax%
-	const %VectorBase% &%x%
+	const %Vector% &%x%
 %$$
-It must have length $italic m$$ and specifies
+(see $xref/ForwardZero/Vector/Vector/$$ below)
+and its size 
+must be equal to $italic n$$, the dimension of the
+$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+It specifies
 that point at which to evaluate the Jacobian.
 
-$head J$$
-The vector $italic J$$ has prototype
+$head dy$$
+The result $italic dy$$ has prototype
 $syntax%
-	%VectorBase% %J%
+	const %Vector% &%dy%
 %$$
-It must have length $syntax%%m% * %n%$$.
-After the assignment to $italic J$$, 
-for $latex i = 0 , \ldots , m - 1 $$ and $latex j = 0 , \ldots , n - 1$$
+(see $xref/ForwardZero/Vector/Vector/$$ below)
+and its value is $latex F^{(1)} (x)$$.
+The size of $italic dy$$ 
+is equal to $latex n * m$$; i.e., the product of the
+$xref/FunConstruct/x/Domain Space/domain/1/$$
+and
+$xref/FunConstruct/y/Range Space/range/1/$$
+dimensions for $italic f$$.
+For $latex i = 0 , \ldots , m - 1 $$ 
+and $latex j = 0 , \ldots , n - 1$$
 $latex \[.
 	J[ i * n + j ] = \D{ F_i }{ x_j } ( x )
 \] $$
 
 
+$head Vector$$
+The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+$italic Base$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
+
 $head Forward$$
-The object $italic F$$ stores information related to previous
-calls to $syntax%%F%.Forward%$$.
-After this operation,
-the previous calls to $xref/Forward/$$ are undefined
-with the exception of the zero order call which has the form
-$syntax%
-	%F%.Forward(0, %x%)
-%$$.
+After each call to $xref/Forward/$$,
+the object $italic f$$ contains the corresponding 
+$xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
+After $code Jacobian$$,
+the previous calls to $xref/Forward/$$ are undefined.
 
 $head Examples$$
 $children%
 	Example/Jacobian.cpp
 %$$
 The routine 
-$xref/Jacobian.cpp//Jacobian/$$ is both an example and a test.
-It returns $code true$$, if it succeeds and $code false$$ otherwise.
-
-
-$subhead Determinant Using Expansion by Minors$$
-The routine 
-$xref/JacMinorDet.cpp//DerMinorDet/$$ is both an example and a test.
-It returns $code true$$, if it succeeds and $code false$$ otherwise.
-
-$subhead Determinant Using Lu Factorization$$
-The routine 
-$xref/JacLuDet.cpp//DerLuDet/$$ is both an example and a test.
+$xref/Jacobian.cpp//Jacobian/$$ is both an example and test.
 It returns $code true$$, if it succeeds and $code false$$ otherwise.
 
 $end
@@ -122,23 +126,23 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-template <typename Base, typename VectorBase>
-void JacobianFor(ADFun<Base> &f, const VectorBase &x, VectorBase &J)
+template <typename Base, typename Vector>
+void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &dy)
 {	size_t i;
 	size_t j;
 
 	size_t m = f.Domain();
 	size_t n = f.Range();
 
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
+	// check Vector is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, Vector>();
 
-	CppADUnknownError( x.size() == f.Domain() );
-	CppADUnknownError( J.size() == f.Range() * f.Domain() );
+	CppADUnknownError( x.size()  == f.Domain() );
+	CppADUnknownError( dy.size() == f.Range() * f.Domain() );
 
 	// argument and result for forward mode calculations
-	VectorBase u(m);
-	VectorBase v(n);
+	Vector u(m);
+	Vector v(n);
 
 	// initialize all the components
 	for(j = 0; j < m; j++)
@@ -157,23 +161,23 @@ void JacobianFor(ADFun<Base> &f, const VectorBase &x, VectorBase &J)
 
 		// return the result
 		for(i = 0; i < n; i++)
-			J[ i * m + j ] = v[i];
+			dy[ i * m + j ] = v[i];
 	}
 }
-template <typename Base, typename VectorBase>
-void JacobianRev(ADFun<Base> &f, const VectorBase &x, VectorBase &J)
+template <typename Base, typename Vector>
+void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &dy)
 {	size_t i;
 	size_t j;
 
 	size_t m = f.Domain();
 	size_t n = f.Range();
 
-	CppADUnknownError( x.size() == f.Domain() );
-	CppADUnknownError( J.size() == f.Range() * f.Domain() );
+	CppADUnknownError( x.size()  == f.Domain() );
+	CppADUnknownError( dy.size() == f.Range() * f.Domain() );
 
 	// argument and result for reverse mode calculations
-	VectorBase u(m);
-	VectorBase v(n);
+	Vector u(m);
+	Vector v(n);
 
 	// initialize all the components
 	for(i = 0; i < n; i++)
@@ -184,7 +188,7 @@ void JacobianRev(ADFun<Base> &f, const VectorBase &x, VectorBase &J)
 	{	if( f.Parameter(i) )
 		{	// return zero for this component of f
 			for(j = 0; j < m; j++)
-				J[ i * m + j ] = Base(0);
+				dy[ i * m + j ] = Base(0);
 		}
 		else
 		{ 
@@ -199,14 +203,14 @@ void JacobianRev(ADFun<Base> &f, const VectorBase &x, VectorBase &J)
 
 			// return the result
 			for(j = 0; j < m; j++)
-				J[ i * m + j ] = u[j];
+				dy[ i * m + j ] = u[j];
 		}
 	}
 }
 
 template <typename Base>
-template <typename VectorBase>
-VectorBase ADFun<Base>::Jacobian(const VectorBase &x)
+template <typename Vector>
+Vector ADFun<Base>::Jacobian(const Vector &x)
 {	size_t i;
 	size_t m = Domain();
 	size_t n = Range();
@@ -230,12 +234,12 @@ VectorBase ADFun<Base>::Jacobian(const VectorBase &x)
 	}
 
 	// choose the method with the least work
-	VectorBase J( n * m );
+	Vector dy( n * m );
 	if( workForward <= workReverse )
-		JacobianFor(*this, x, J);
-	else	JacobianRev(*this, x, J);
+		JacobianFor(*this, x, dy);
+	else	JacobianRev(*this, x, dy);
 
-	return J;
+	return dy;
 }
 
 } // END CppAD namespace
