@@ -71,7 +71,7 @@ bool JacobianCases()
 	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
 
-	// new values for independent variables
+	// new value for the independent variable vector
 	Vector x(n);
 	x[0] = 2.;
 	x[1] = 1.;

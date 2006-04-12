@@ -185,8 +185,8 @@ fi
 #
 if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
 then
-	echo "RunOMhelp Developer"
-	if ! ./RunOMhelp Developer
+	echo "RunOMhelp Dev"
+	if ! ./RunOMhelp Dev
 	then
 		exit 1
 	fi
@@ -283,7 +283,7 @@ then
 		done
 	done
 	for dir in \
-		Developer \
+		Dev \
 		Doc 
 	do
 		for file in \

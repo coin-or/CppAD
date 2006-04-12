@@ -61,6 +61,12 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-12$$
+Documentation and example for $xref/ForOne/$$ was improved.
+
+$head 04-09$$
+Documentation and example for $xref/Jacobian/$$ was improved.
+
 $head 04-08$$
 In the case where $xref/SeqProperty/use_VecAD/use_VecAD/$$ is true,
 the $xref/ForSparseJac/$$ calculation in only for the current

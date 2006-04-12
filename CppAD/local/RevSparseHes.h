@@ -122,7 +122,7 @@ The argument $italic s$$ has prototype
 $syntax%
 	const %Vector% &%s%
 %$$
-(see $xref/ForSparseJac/Vector/Vector/$$ below)
+(see $xref/RevSparseHes/Vector/Vector/$$ below)
 and its size is $latex m$$.
 It specifies a 
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
@@ -137,7 +137,7 @@ The result $italic h$$ has prototype
 $syntax%
 	%Vector% &%h%
 %$$
-(see $xref/ForSparseJac/Vector/Vector/$$ below)
+(see $xref/RevSparseHes/Vector/Vector/$$ below)
 and its size is $latex q * n$$,
 It specifies a 
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 

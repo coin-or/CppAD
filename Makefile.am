@@ -208,8 +208,8 @@ EXTRA_DIST = \
 	CheckIncludeDef \
 	CleanCppAD \
 	CppAD.tex \
-	Developer \
-	Developer.omh \
+	Dev \
+	Dev.omh \
 	Doc \
 	Doc.omh \
 	Example/OneTest \

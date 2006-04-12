@@ -30,13 +30,12 @@ $spell
 	const
 $$
 
-$index Jacobian$$
-$index easy, first derivative driver$$
-$index first, derivative easy driver$$
-$index driver, easy first derivative$$
-$index derivative, first easy$$
+$index Jacobian, driver$$
+$index first, derivative$$
+$index driver, derivative$$
+$index derivative, driver$$
 
-$section Jacobian: Easy Driver$$
+$section Jacobian: Driver Routine$$
 
 $table
 $bold Syntax$$
@@ -70,7 +69,7 @@ The argument $italic x$$ has prototype
 $syntax%
 	const %Vector% &%x%
 %$$
-(see $xref/ForwardZero/Vector/Vector/$$ below)
+(see $xref/Jacobian/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
 $xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
@@ -82,7 +81,7 @@ The result $italic dy$$ has prototype
 $syntax%
 	const %Vector% &%dy%
 %$$
-(see $xref/ForwardZero/Vector/Vector/$$ below)
+(see $xref/Jacobian/Vector/Vector/$$ below)
 and its value is $latex F^{(1)} (x)$$.
 The size of $italic dy$$ 
 is equal to $latex n * m$$; i.e., the product of the
@@ -111,7 +110,7 @@ $xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
 After $code Jacobian$$,
 the previous calls to $xref/Forward/$$ are undefined.
 
-$head Examples$$
+$head Example$$
 $children%
 	Example/Jacobian.cpp
 %$$

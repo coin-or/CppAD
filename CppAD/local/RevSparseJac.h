@@ -59,7 +59,7 @@ $latex \[
 Given a
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
 for $latex S$$,
-$code ForSparseJac$$ returns a sparsity pattern for the $latex J(x)$$.
+$code RevSparseJac$$ returns a sparsity pattern for the $latex J(x)$$.
 
 $head f$$
 The object $italic f$$ has prototype
@@ -105,7 +105,7 @@ The argument $italic s$$ has prototype
 $syntax%
 	const %Vector% &%s%
 %$$
-(see $xref/ForSparseJac/Vector/Vector/$$ below)
+(see $xref/RevSparseJac/Vector/Vector/$$ below)
 and its size is $latex p * m$$.
 It specifies a 
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
@@ -120,7 +120,7 @@ The return value $italic r$$ has prototype
 $syntax%
 	%Vector% %r%
 %$$
-(see $xref/ForSparseJac/Vector/Vector/$$ below)
+(see $xref/RevSparseJac/Vector/Vector/$$ below)
 and its size is $latex p * n$$.
 It specifies a 
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 

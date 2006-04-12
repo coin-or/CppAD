@@ -35,7 +35,7 @@ then
 	\( -name 'cppad-*'        \) -or \
         \( -name 'Debug'          \) -or \
         \( -name '.deps'          \) -or \
-	\( -name 'Developer'      \) -or \
+	\( -name 'Dev'            \) -or \
 	\( -name 'Doc'            \) -or \
 	\( -name 'htm'            \) -or \
 	\( -name 'junk'           \) -or \
@@ -81,7 +81,7 @@ else
 	\( -name 'cppad-*'        \) -or \
         \( -name 'Debug'          \) -or \
         \( -name '.deps'          \) -or \
-	\( -name 'Developer'      \) -or \
+	\( -name 'Dev'            \) -or \
 	\( -name 'Doc'            \) -or \
 	\( -name 'htm'            \) -or \
 	\( -name 'junk'           \) -or \

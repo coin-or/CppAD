@@ -25,7 +25,7 @@ sed                                                           \
 	-e '/^[?].*\/junk\.[0-9a-zA-Z]*$/d'                   \
 	-e '/^[?] *junk\.[0-9a-zA-Z]*$/d'                     \
 	-e '/^[?] *configure$/d'                              \
-	-e '/^[?] *Developer$/d'                              \
+	-e '/^[?] *Dev$/d'                                    \
 	-e '/^[?] *config.status$/d'                          \
 	-e '/^[?] *Doc$/d'                                    \
 	-e '/^[?] *aclocal.m4$/d'                             \
