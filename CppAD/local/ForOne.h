@@ -84,8 +84,10 @@ The argument $italic j$$ has prototype
 $syntax%
 	size_t %j%
 %$$
-It is the component for which we are computing the partial
-derivatives, $latex 0 \leq j  < n$$.
+an is less than $italic n$$,
+$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+It specifies the component of $italic F$$ 
+for which we are computing the partial derivative.
 
 $head dy$$
 The result $italic dy$$ has prototype

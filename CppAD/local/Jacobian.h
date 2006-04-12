@@ -32,8 +32,7 @@ $$
 
 $index Jacobian, driver$$
 $index first, derivative$$
-$index driver, derivative$$
-$index derivative, driver$$
+$index driver, Jacobian$$
 
 $section Jacobian: Driver Routine$$
 
@@ -52,9 +51,6 @@ Jacobian of $italic F$$ evaluated at $italic x$$; i.e.,
 $latex \[
 	dy = F^{(1)} (x)
 \] $$
-(See the $xref/CompareChange/Discussion/CompareChange discussion/$$ for
-possible differences between $latex F(x)$$ and the algorithm that defined
-the operation sequence.)
 
 $head f$$
 The object $italic f$$ has prototype
@@ -82,9 +78,7 @@ $syntax%
 	const %Vector% &%dy%
 %$$
 (see $xref/Jacobian/Vector/Vector/$$ below)
-and its value is $latex F^{(1)} (x)$$.
-The size of $italic dy$$ 
-is equal to $latex n * m$$; i.e., the product of the
+and its size is $latex m * n$$; i.e., the product of the
 $xref/FunConstruct/x/Domain Space/domain/1/$$
 and
 $xref/FunConstruct/y/Range Space/range/1/$$
@@ -92,7 +86,7 @@ dimensions for $italic f$$.
 For $latex i = 0 , \ldots , m - 1 $$ 
 and $latex j = 0 , \ldots , n - 1$$
 $latex \[.
-	J[ i * n + j ] = \D{ F_i }{ x_j } ( x )
+	dy[ i * n + j ] = \D{ F_i }{ x_j } ( x )
 \] $$
 
 

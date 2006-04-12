@@ -1,18 +1,22 @@
-# Improve documentation and example for RevOne.
+# Improve Hessian documentation and example.
 #
 # SvnCommit: file that made this commit.
-# ForOne.h: minor edits.
-# RevOne.h: improve documentation and extend notation changes to code.
-# ForOne.cpp: minor edits.
-# RevOne.cpp: use notation in documentation and make similar to other examples.
+# Hessian.h: improve documentation and extend notation into code.
+# Jacobian.h: minor edits and one correction (H->dy) to documentation.
+# ForOne.h: minor edits to documentation. 
+# glossary.omh: in AD Fucntion add cross reference to CompareChange.
+# WhatsNew06.omh: user's view of the changes.
+# Hessian.cpp: make notaiton like documentaiton and rest like other examples.
 add_list="
 "
 change_list="
 	SvnCommit
+	CppAD/local/Hessian.h
+	CppAD/local/Jacobian.h
 	CppAD/local/ForOne.h
-	CppAD/local/RevOne.h
-	Example/ForOne.cpp
-	Example/RevOne.cpp
+	omh/glossary.omh
+	omh/WhatsNew06.omh
+	Example/Hessian.cpp
 "
 delete_list="
 "

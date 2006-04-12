@@ -2,7 +2,7 @@
 # define CppADHessianIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,52 +22,53 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin Hessian$$
 $spell
+	ddy
 	typename
 	Taylor
-	Jacobian
 	HesLuDet
 	const
 $$
 
-$index Hessian$$
-$index easy, Hessian$$
+$index Hessian, driver$$
+$index second, derivative$$
 $index driver, Hessian$$
 
-$section Hessian of One Component: Easy Driver$$
+$section Hessian: Easy Driver$$
 
 $table
 $bold Syntax$$
-$syntax%%H% = %F%.Hessian(%x%, %i%)%$$
+$syntax%%ddy% = %f%.Hessian(%x%, %i%)%$$
 $tend
 
-$fend 25$$
+$fend 20$$
 
-$head Description$$
-Given an $xref/ADFun//ADFun<Base>/$$ object $latex F : B^n \rightarrow B^m$$,
-this routine returns the Hessian of $latex F_i$$ at the point 
-$italic x$$; i.e.,
+$head Purpose$$
+We use $latex F : B^n \rightarrow B^m$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+The syntax above sets $italic ddy$$ to the
+Hessian of $italic F_i$$ evaluated at $italic x$$; i.e.,
 $latex \[
-	H = F_i^{(2)} (x)
+	ddy = F^{(2)} (x)
 \] $$
 
-$head F$$
-The object $italic F$$ has prototype
+$head f$$
+The object $italic f$$ has prototype
 $syntax%
-	ADFun<%Base%> %F%
+	ADFun<%Base%> %f%
 %$$
-
-$head VectorBase$$
-The type $italic VectorBase$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type Base/$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
-if this is not the case.
+Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$
+(see $xref/Hessian/Forward/Forward/$$ below).
 
 $head x$$
-The vector $italic x$$ has prototype
+The argument $italic x$$ has prototype
 $syntax%
-	const %VectorBase% &%x%
+	const %Vector% &%x%
 %$$
-It must have length $italic n$$ and specifies
+(see $xref/Hessian/Vector/Vector/$$ below)
+and its size 
+must be equal to $italic n$$, the dimension of the
+$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+It specifies
 that point at which to evaluate the Hessian.
 
 $head i$$
@@ -75,51 +76,46 @@ The index $italic i$$ has prototype
 $syntax%
 	size_t %i%
 %$$
-It must be between zero and $latex m-1$$
-and specifies the component of $italic F$$
+and is less than $italic m$$, the dimension of the
+$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+It specifies the component of $italic F$$
 for which we are evaluating the Hessian.
 
-$head H$$
-The vector $italic H$$ has prototype
+$head ddy$$
+The result $italic ddy$$ has prototype
 $syntax%
-	%VectorBase% %H%
+	%Vector% %ddy%
 %$$
-It must have length $syntax%%n% * %n%$$.
-After the assignment to $italic H$$, 
-for $latex j = 0 , \ldots , n - 1 $$ and $latex \ell = 0 , \ldots , n - 1$$
+(see $xref/Hessian/Vector/Vector/$$ below)
+and its size is $latex n * n$$.
+For $latex j = 0 , \ldots , n - 1 $$ 
+and $latex \ell = 0 , \ldots , n - 1$$
 $latex \[
-	H[ j * m + \ell ] = \DD{ F_i }{ x_j }{ x_\ell } ( x )
+	ddy [ j * n + \ell ] = \DD{ F_i }{ x_j }{ x_\ell } ( x )
 \] $$
 
+$head Vector$$
+The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+$italic Base$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
 
 $head Forward$$
-The object $italic F$$ stores information related to previous
-calls to $syntax%%F%.Forward%$$.
-After this operation,
-the previous calls to $xref/Forward/$$ are undefined
-with the exception of the zero order call which has the form
-$syntax%
-	%F%.Forward(0, %x%)
-%$$.
+After each call to $xref/Forward/$$,
+the object $italic f$$ contains the corresponding 
+$xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
+After $code Hessian$$,
+the previous calls to $xref/Forward/$$ are undefined.
 
-$head Examples$$
+$head Example$$
 $children%
 	Example/Hessian.cpp
 %$$
 The routine 
-$xref/Hessian.cpp//Hessian/$$ is both an example and a test.
+$xref/Hessian.cpp//Hessian/$$ is both an example and test.
 It returns $code true$$, if it succeeds and $code false$$ otherwise.
 
-
-$subhead Determinant Using Expansion by Minors$$
-The routine 
-$xref/HesMinorDet.cpp//HesMinorDet/$$ is both an example and a test.
-It returns $code true$$, if it succeeds and $code false$$ otherwise.
-
-$subhead Determinant Using Lu Factorization$$
-The routine 
-$xref/HesLuDet.cpp//HesLuDet/$$ is both an example and a test.
-It returns $code true$$, if it succeeds and $code false$$ otherwise.
 
 $end
 -----------------------------------------------------------------------------
@@ -129,63 +125,63 @@ $end
 namespace CppAD {
 
 template <typename Base>
-template <typename VectorBase>
-VectorBase ADFun<Base>::Hessian(const VectorBase &x, size_t i)
+template <typename Vector>
+Vector ADFun<Base>::Hessian(const Vector &x, size_t i)
 {	size_t j;
 	size_t k;
 	size_t l;
 
-	size_t m = Domain();
-	size_t n = Range();
+	size_t n = Domain();
+	size_t m = Range();
 
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
+	// check Vector is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, Vector>();
 
 	CppADUsageError(
-		x.size() == m,
-		"Hessian: length of x not equal domain dimension for F"
+		x.size() == n,
+		"Hessian: length of x not equal domain dimension for f"
 	); 
 	CppADUsageError(
-		i < n,
-		"Hessian: index i is not less than range dimension for F"
+		i < m,
+		"Hessian: index i is not less than range dimension for f"
 	);
 
 	// point at which we are evaluating the Hessian
 	Forward(0, x);
 
 	// define the return value
-	VectorBase H(m * m);
+	Vector ddy(n * n);
 
 	// direction vector for calls to forward
-	VectorBase u(m);
-	for(j = 0; j < m; j++)
+	Vector u(n);
+	for(j = 0; j < n; j++)
 		u[j] = Base(0);
 
 	// direction vector for calls to reverse
-	VectorBase v(n);
-	for(l = 0; l < n; l++)
-		v[l] = Base(0);
-	v[i] = Base(1);
+	Vector w(m);
+	for(l = 0; l < m; l++)
+		w[l] = Base(0);
+	w[i] = Base(1);
 
 	// location for return values from Reverse
-	VectorBase r(m * 2);
+	Vector ddw(n * 2);
 
 	// loop over forward direstions
-	for(j = 0; j < m; j++)
+	for(j = 0; j < n; j++)
 	{	// evaluate partials of entire function w.r.t. j-th coordinate
 		u[j] = Base(1);
 		Forward(1, u);
 		u[j] = Base(0);
 
 		// evaluate derivative of partial corresponding to F_i
-		r = Reverse(2, v);
+		ddw = Reverse(2, w);
 
 		// return desired components
-		for(k = 0; k < m; k++)
-			H[k * m + j] = r[k * 2 + 1];
+		for(k = 0; k < n; k++)
+			ddy[k * n + j] = ddw[k * 2 + 1];
 	}
 		
-	return H;
+	return ddy;
 }
 
 } // END CppAD namespace
