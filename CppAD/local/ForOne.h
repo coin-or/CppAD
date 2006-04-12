@@ -65,7 +65,7 @@ $syntax%
 	ADFun<%Base%> %f%
 %$$
 Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$
-(see $xref/Jacobian/Forward/Forward/$$ below).
+(see $xref/ForOne/Forward/Forward/$$ below).
 
 $head x$$
 The argument $italic x$$ has prototype
@@ -93,12 +93,11 @@ $syntax%
 	const %Vector% &%dy%
 %$$
 (see $xref/ForOne/Vector/Vector/$$ below)
-and its value is the partial of $latex F$$ with respect to
-$latex x_j$$ evaluated at $italic x$$.
-The size of $italic dy$$ 
-is equal to $latex m$$, the dimension of the
+and its size is $latex m$$, the dimension of the
 $xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
-For $latex i = 0 , \ldots , m - 1$$
+The value of $italic dy$$ is the partial of $latex F$$ with respect to
+$latex x_j$$ evaluated at $italic x$$; i.e.,
+for $latex i = 0 , \ldots , m - 1$$
 $latex \[.
 	dy[i] = \D{ F_i }{ x_j } ( x )
 \] $$
@@ -146,11 +145,11 @@ Vector ADFun<Base>::ForOne(const Vector &x, size_t j)
 
 	CppADUsageError(
 		x.size() == n,
-		"ForOne: Length of x not equal domain dimension for F"
+		"ForOne: Length of x not equal domain dimension for f"
 	); 
 	CppADUsageError(
 		j < n,
-		"ForOne: the index j is not less than domain dimension for F"
+		"ForOne: the index j is not less than domain dimension for f"
 	);
 
 	// point at which we are evaluating the second partials

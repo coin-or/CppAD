@@ -1,44 +1,20 @@
-# Improve documentation and example for ForOne.
+# Improve documentation and example for RevOne.
 #
 # SvnCommit: file that made this commit.
-# Dev.omh: move Developer.omh here.
-# RevSparseHes.h: fix cross reference to current section.
-# Jacobian.h: fix cross reference to current section (and other minor edits).
-# ForOne.h: major changes to doc and make code agree with new notation.
-# RevSparseJac.h: fix cross reference to current section.
-# Build: Change Developer directory to Dev directory.
-# SvnStatus: Change Developer directory to Dev directory.
-# InstallUnix.omh: Change Developer directory to Dev directory.
-# WhatsNew06.omh: user's view of the changes.
-# InstallWindows.omh: Change Developer directory to Dev directory.
-# CleanCppAD: Change Developer directory to Dev directory.
-# Jacobian.cpp: minor edit.
-# ForOne.cpp: make like other examples and ForOne documentation.
-# Developer.omh: move from here to Dev.omh.
-# RunOmhelp: use new features of OMhelp to better report warning, errors.
-# Makefile: Change Developer directory to Dev directory.
+# ForOne.h: minor edits.
+# RevOne.h: improve documentation and extend notation changes to code.
+# ForOne.cpp: minor edits.
+# RevOne.cpp: use notation in documentation and make similar to other examples.
 add_list="
-	Dev.omh
 "
 change_list="
 	SvnCommit
-	CppAD/local/RevSparseHes.h
-	CppAD/local/Jacobian.h
 	CppAD/local/ForOne.h
-	CppAD/local/RevSparseJac.h
-	Build
-	SvnStatus
-	omh/InstallUnix.omh
-	omh/WhatsNew06.omh
-	omh/InstallWindows.omh
-	CleanCppAD
-	Example/Jacobian.cpp
+	CppAD/local/RevOne.h
 	Example/ForOne.cpp
-	RunOMhelp
-	Makefile.am
+	Example/RevOne.cpp
 "
 delete_list="
-	Developer.omh
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

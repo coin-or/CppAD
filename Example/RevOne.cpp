@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,10 +22,9 @@ $spell
 	Cpp
 $$
 
-$section Derivative of One Range Component: Example and Test$$
+$section First Order Derivative Driver: Example and Test$$
 
-$index derivative, one component$$
-$index one, component derivative$$
+$index derivative, example$$
 $index example, derivative$$
 $index test, derivative$$
 
@@ -37,59 +36,56 @@ $end
 */
 // BEGIN PROGRAM
 # include <CppAD/CppAD.h>
-namespace { // Begin empty namespace
-template <typename VectorDouble> // vector class, elements of type double
+namespace { // -------------------------------------------------------
+// define the template function RevOneCases<Vector> in empty namespace
+template <typename Vector>
 bool RevOneCases()
 {	bool ok = true;
-
-	using namespace CppAD;
-
+	using CppAD::AD;
+	using CppAD::NearEqual;
 	using CppAD::exp;
 	using CppAD::sin;
 	using CppAD::cos;
 
+	// domain space vector
 	size_t n = 2;
-	size_t m = 3;
-
-	// independent and dependent variable vectors
 	CppADvector< AD<double> >  X(n);
-	CppADvector< AD<double> >  Y(m);
-
-	// value of the independent variable
 	X[0] = 1.;
 	X[1] = 2.;
 
-	// set the independent variables
-	Independent(X);
+	// declare independent variables and starting recording
+	CppAD::Independent(X);
 
-	// comupute the dependent variable values
+	// range space vector
+	size_t m = 3;
+	CppADvector< AD<double> >  Y(m);
 	Y[0] = X[0] * exp( X[1] );
 	Y[1] = X[0] * sin( X[1] );
 	Y[2] = X[0] * cos( X[1] );
 
-	// create the function object F : X -> Y
-	ADFun<double> F(X, Y);
+	// create f: X -> Y and stop tape recording
+	CppAD::ADFun<double> f(X, Y);
 
-	// argument value
-	VectorDouble x(n);
+	// new value for the independent variable vector
+	Vector x(n);
 	x[0] = 2.;
 	x[1] = 1.;
 
-	// compute and check derivative of Y[0] w.r.t X[0], X[1]
-	VectorDouble dF(n);
-	dF  = F.RevOne(x, 0);
-	ok &=  NearEqual( dF[0],      exp(x[1]), 1e-10, 1e-10 );
-	ok &=  NearEqual( dF[1], x[0]*exp(x[1]), 1e-10, 1e-10 );
+	// compute and check derivative of y[0] 
+	Vector dw(n);
+	dw  = f.RevOne(x, 0);
+	ok &= NearEqual(dw[0],      exp(x[1]), 1e-10, 1e-10 ); // w.r.t x[0]
+	ok &= NearEqual(dw[1], x[0]*exp(x[1]), 1e-10, 1e-10 ); // w.r.t x[1]
 
-	// compute and check derivative of Y[1] w.r.t X[0], X[1]
-	dF  = F.RevOne(x, 1);
-	ok &=  NearEqual( dF[0],      sin(x[1]), 1e-10, 1e-10 );
-	ok &=  NearEqual( dF[1], x[0]*cos(x[1]), 1e-10, 1e-10 );
+	// compute and check derivative of y[1] 
+	dw  = f.RevOne(x, 1);
+	ok &= NearEqual(dw[0],      sin(x[1]), 1e-10, 1e-10 );
+	ok &= NearEqual(dw[1], x[0]*cos(x[1]), 1e-10, 1e-10 );
 
-	// compute and check derivative of Y[2] w.r.t X[0], X[1]
-	dF  = F.RevOne(x, 2);
-	ok &=  NearEqual( dF[0],        cos(x[1]), 1e-10, 1e-10 );
-	ok &=  NearEqual( dF[1], - x[0]*sin(x[1]), 1e-10, 1e-10 );
+	// compute and check derivative of y[2] 
+	dw  = f.RevOne(x, 2);
+	ok &= NearEqual(dw[0],        cos(x[1]), 1e-10, 1e-10 );
+	ok &= NearEqual(dw[1], - x[0]*sin(x[1]), 1e-10, 1e-10 );
 
 	return ok;
 }
@@ -98,6 +94,8 @@ bool RevOneCases()
 # include <valarray>
 bool RevOne(void)
 {	bool ok = true;
+	// Run with Vector equal to three different cases
+	// all of which are Simple Vectors with elements of type double.
 	ok &= RevOneCases< CppAD::vector  <double> >();
 	ok &= RevOneCases< std::vector    <double> >();
 	ok &= RevOneCases< std::valarray  <double> >();

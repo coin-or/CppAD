@@ -2,7 +2,7 @@
 # define CppADRevOneIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,91 +22,107 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin RevOne$$
 $spell
+	dw
 	Taylor
 	const
 $$
 
 
+$index derivative, first order driver$$
+$index first, order derivative driver$$
+$index driver, first order derivative$$
+
 $index easy, derivative$$
 $index driver, easy derivative$$
 $index derivative, easy$$
 
-$section Derivative of One Range Component: Reverse Mode Easy Driver$$
+$section First Order Derivative: Driver Routine$$
 
 $table
 $bold Syntax$$
-$syntax%%dF% = %F%.RevOne(%x%, %i%)%$$
+$syntax%%dw% = %f%.RevOne(%x%, %i%)%$$
 $tend
 
-$fend 25$$
+$fend 20$$
 
-$head Description$$
-Given an $xref/ADFun//ADFun<Base>/$$ object 
-$latex F : B^n \rightarrow B^m$$,
-this routine computes the partial derivatives
+$head Purpose$$
+We use $latex F : B^n \rightarrow B^m$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+The syntax above sets $italic dw$$ to the
+derivative of $latex F_i$$ with respect to $latex x$$; i.e.,
 $latex \[
-F_i^{(1)} (x) = \left[ 
+dw =
+F_i^{(1)} (x) 
+= \left[ 
 	\D{ F_i }{ x_0 } (x) , \cdots , \D{ F_i }{ x_{n-1} } (x) 
 \right]
 \] $$
 
-$head F$$
-The object $italic F$$ has prototype
+$head f$$
+The object $italic f$$ has prototype
 $syntax%
-	ADFun<%Base%> %F%
+	ADFun<%Base%> %f%
 %$$
-
-$head VectorBase$$
-The type $italic VectorBase$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type Base/$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
-if this is not the case.
+Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$
+(see $xref/RevOne/Forward/Forward/$$ below).
 
 $head x$$
-The vector $italic x$$ has prototype
+The argument $italic x$$ has prototype
 $syntax%
-	const %VectorBase% &%x%
+	const %Vector% &%x%
 %$$
-It must have length $italic n$$ and specifies
-that point at which to evaluate the partial derivatives.
+(see $xref/RevOne/Vector/Vector/$$ below)
+and its size 
+must be equal to $italic n$$, the dimension of the
+$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+It specifies
+that point at which to evaluate the derivative.
 
 $head i$$
 The index $italic i$$ has prototype
 $syntax%
 	size_t %i%
 %$$
+and is less than $latex m$$, the dimension of the
+$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
 It specifies the
-component of $italic F$$ that we are computing the 
-derivative of, $latex i  < m$$.
+component of $latex F$$ that we are computing the derivative of.
 
-$head dF$$
-The vector $italic dF$$ has prototype
+$head dw$$
+The result $italic dw$$ has prototype
 $syntax%
-	%VectorBase% %dF%
+	%Vector% %dw%
 %$$
-and must have length $syntax%%n%$$.
-After the assignment to $italic dF$$, 
+(see $xref/RevOne/Vector/Vector/$$ below)
+and its size is $italic n$$, the dimension of the
+$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+The value of $italic dw$$ is the derivative of $latex F_i$$ 
+evaluated at $italic x$$; i.e.,
 for $latex j = 0 , \ldots , n - 1 $$ 
 $latex \[.
-	dF[ j ] = \D{ F_i }{ x_j } ( x )
+	dw[ j ] = \D{ F_i }{ x_j } ( x )
 \] $$
 
-$head Forward$$
-The object $italic F$$ stores information related to previous
-calls to $syntax%%F%.Forward%$$.
-After this operation,
-the previous calls to $xref/Forward/$$ are undefined
-with the exception of the zero order call which has the form
-$syntax%
-	%F%.Forward(0, %x%)
-%$$.
+$head Vector$$
+The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+$italic Base$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
 
-$head Examples$$
+$head Forward$$
+After each call to $xref/Forward/$$,
+the object $italic f$$ contains the corresponding 
+$xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
+After $code RevOne$$,
+the previous calls to $xref/Forward/$$ are undefined.
+
+$head Example$$
 $children%
 	Example/RevOne.cpp
 %$$
 The routine 
-$xref/RevOne.cpp//RevOne/$$ is both an example and a test.
+$xref/RevOne.cpp//RevOne/$$ is both an example and test.
 It returns $code true$$, if it succeeds and $code false$$ otherwise.
 
 $end
@@ -117,43 +133,41 @@ $end
 namespace CppAD {
 
 template <typename Base>
-template <typename VectorBase>
-VectorBase ADFun<Base>::RevOne(
-	const VectorBase   &x ,
-	size_t              i )
+template <typename Vector>
+Vector ADFun<Base>::RevOne(const Vector  &x, size_t i)
 {	size_t i1;
 
 	size_t n = Domain();
 	size_t m = Range();
 
-	// check VectorBase is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, VectorBase>();
+	// check Vector is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, Vector>();
 
 	CppADUsageError(
 		x.size() == n,
-		"RevOne: Length of x not equal domain dimension for F"
+		"RevOne: Length of x not equal domain dimension for f"
 	); 
 	CppADUsageError(
 		i < m,
-		"RevOne: the index i is not less than range dimension for F"
+		"RevOne: the index i is not less than range dimension for f"
 	);
 
-	// point at which we are evaluating the second partials
+	// point at which we are evaluating the derivative
 	Forward(0, x);
 
 	// component which are are taking the derivative of
-	VectorBase w(m);
+	Vector w(m);
 	for(i1 = 0; i1 < m; i1++)
 		w[i1] = 0.;
-	w[i] = 1.;
+	w[i] = Base(1);
 
 	// dimension the return value
-	VectorBase dF(n);
+	Vector dw(n);
 
 	// compute the return value
-	dF = Reverse(1, w);
+	dw = Reverse(1, w);
 
-	return dF;
+	return dw;
 }
 
 } // END CppAD namespace

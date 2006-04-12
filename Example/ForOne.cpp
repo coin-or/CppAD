@@ -71,18 +71,18 @@ bool ForOneCases()
 	x[0] = 2.;
 	x[1] = 1.;
 
-	// compute partial of F w.r.t x[0]
+	// compute partial of y w.r.t x[0]
 	Vector dy(m);
 	dy  = f.ForOne(x, 0);
-	ok &=  NearEqual( dy[0], exp(x[1]), 1e-10, 1e-10 );
-	ok &=  NearEqual( dy[1], sin(x[1]), 1e-10, 1e-10 );
-	ok &=  NearEqual( dy[2], cos(x[1]), 1e-10, 1e-10 );
+	ok &= NearEqual( dy[0], exp(x[1]), 1e-10, 1e-10 ); // for y[0]
+	ok &= NearEqual( dy[1], sin(x[1]), 1e-10, 1e-10 ); // for y[1]
+	ok &= NearEqual( dy[2], cos(x[1]), 1e-10, 1e-10 ); // for y[2]
 
 	// compute partial of F w.r.t x[1]
 	dy  = f.ForOne(x, 1);
-	ok &=  NearEqual( dy[0],  x[0]*exp(x[1]), 1e-10, 1e-10 );
-	ok &=  NearEqual( dy[1],  x[0]*cos(x[1]), 1e-10, 1e-10 );
-	ok &=  NearEqual( dy[2], -x[0]*sin(x[1]), 1e-10, 1e-10 );
+	ok &= NearEqual( dy[0],  x[0]*exp(x[1]), 1e-10, 1e-10 );
+	ok &= NearEqual( dy[1],  x[0]*cos(x[1]), 1e-10, 1e-10 );
+	ok &= NearEqual( dy[2], -x[0]*sin(x[1]), 1e-10, 1e-10 );
 
 	return ok;
 }
