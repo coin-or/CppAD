@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -29,7 +29,6 @@ $index partial, second$$
 $index example, second partial$$
 $index test, second partial$$
 
-$comment This file is in the Example subdirectory$$ 
 $code
 $verbatim%Example/RevTwo.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -38,70 +37,65 @@ $end
 */
 // BEGIN PROGRAM
 # include <CppAD/CppAD.h>
-namespace { // Begin empty namespace
-template <typename VectorDouble> // vector class, elements of type double
+namespace { // -----------------------------------------------------
+// define the template function in empty namespace
+// bool RevTwoCases<VectorBase, VectorSize_t>(void)
+template <class VectorBase, class VectorSize_t> 
 bool RevTwoCases()
 {	bool ok = true;
-
-	using namespace CppAD;
-
+	using CppAD::AD;
+	using CppAD::NearEqual;
 	using CppAD::exp;
 	using CppAD::sin;
 	using CppAD::cos;
 
+	// domain space vector
 	size_t n = 2;
-	size_t m = 3;
-
-	// independent and dependent variable vectors
 	CppADvector< AD<double> >  X(n);
-	CppADvector< AD<double> >  Y(m);
-
-	// value of the independent variable
 	X[0] = 1.;
 	X[1] = 2.;
 
-	// set the independent variables
-	Independent(X);
+	// declare independent variables and starting recording
+	CppAD::Independent(X);
 
-	// comupute the dependent variable values
+	// a calculation between the domain and range values
 	AD<double> Square = X[0] * X[0];
+
+	// range space vector
+	size_t m = 3;
+	CppADvector< AD<double> >  Y(m);
 	Y[0] = Square * exp( X[1] );
 	Y[1] = Square * sin( X[1] );
 	Y[2] = Square * cos( X[1] );
 
-	// create the function object F : X -> Y
-	ADFun<double> F(X, Y);
+	// create f: X -> Y and stop tape recording
+	CppAD::ADFun<double> f(X, Y);
 
-	// argument value
-	VectorDouble x(n);
+	// new value for the independent variable vector
+	VectorBase x(n);
 	x[0] = 2.;
 	x[1] = 1.;
 
-	// set up call to F.RevTwo
-	size_t L = 2;
-	VectorDouble dF(n * L);
-	CppADvector<size_t> I(2);
-	CppADvector<size_t> J(2);
-	I[0] = 0; J[0] = 0; // request partials F_0 w.r.t x[0] and x[k]
-	I[1] = 1; J[1] = 1; // request partials F_1 w.r.t x[1] and x[k]
-	dF = F.RevTwo(x, I, J);
+	// set i and j to compute specific second partials of y
+	size_t p = 2;
+	VectorSize_t i(p);
+	VectorSize_t j(p);
+	i[0] = 0; j[0] = 0; // for partials y[0] w.r.t x[0] and x[k]
+	i[1] = 1; j[1] = 1; // for partials y[1] w.r.t x[1] and x[k]
 
-	/*
-	derivative of F is
-	[ 2 * x[0] * exp(x[1]) ,  x[0] * x[0] * exp(x[1]) ]
-	[ 2 * x[0] * sin(x[1]) ,  x[0] * x[0] * cos(x[1]) ]
-	[ 2 * x[0] * cos(x[1]) , -x[0] * x[0] * sin(x[1]) ]
-	*/
+	// compute the second partials
+	VectorBase ddw(n * p);
+	ddw = f.RevTwo(x, i, j);
 
-	// partials of F_0 w.r.t x[0] is 2 * x[0] * exp(x[1])
-	// check partials of F_0 w.r.t x[0] and x[k] for k = 0, 1 
-	ok &=  NearEqual(      2.*exp(x[1]), dF[0*L+0], 1e-10, 1e-10 );
-	ok &=  NearEqual( 2.*x[0]*exp(x[1]), dF[1*L+0], 1e-10, 1e-10 );
+	// partials of y[0] w.r.t x[0] is 2 * x[0] * exp(x[1])
+	// check partials of y[0] w.r.t x[0] and x[k] for k = 0, 1 
+	ok &=  NearEqual(      2.*exp(x[1]), ddw[0*p+0], 1e-10, 1e-10 );
+	ok &=  NearEqual( 2.*x[0]*exp(x[1]), ddw[1*p+0], 1e-10, 1e-10 );
 
-	// partials of F_1 w.r.t x[1] is x[0] * x[0] * cos(x[1])
+	// partials of y[1] w.r.t x[1] is x[0] * x[0] * cos(x[1])
 	// check partials of F_1 w.r.t x[1] and x[k] for k = 0, 1 
-	ok &=  NearEqual(    2.*x[0]*cos(x[1]), dF[0*L+1], 1e-10, 1e-10 );
-	ok &=  NearEqual( -x[0]*x[0]*sin(x[1]), dF[1*L+1], 1e-10, 1e-10 );
+	ok &=  NearEqual(    2.*x[0]*cos(x[1]), ddw[0*p+1], 1e-10, 1e-10 );
+	ok &=  NearEqual( -x[0]*x[0]*sin(x[1]), ddw[1*p+1], 1e-10, 1e-10 );
 
 	return ok;
 }
@@ -110,9 +104,17 @@ bool RevTwoCases()
 # include <valarray>
 bool RevTwo(void)
 {	bool ok = true;
-	ok &= RevTwoCases< CppAD::vector  <double> >();
-	ok &= RevTwoCases< std::vector    <double> >();
-	ok &= RevTwoCases< std::valarray  <double> >();
+        // Run with VectorBase equal to three different cases
+        // all of which are Simple Vectors with elements of type double.
+	ok &= RevTwoCases< CppAD::vector <double>, std::vector<size_t> >();
+	ok &= RevTwoCases< std::vector   <double>, std::vector<size_t> >();
+	ok &= RevTwoCases< std::valarray <double>, std::vector<size_t> >();
+
+        // Run with VectorSize_t equal to two other cases
+        // which are Simple Vectors with elements of type size_t.
+	ok &= RevTwoCases< std::vector <double>, CppAD::vector<size_t> >();
+	ok &= RevTwoCases< std::vector <double>, std::valarray<size_t> >();
+
 	return ok;
 }
 // END PROGRAM

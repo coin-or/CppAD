@@ -38,7 +38,7 @@ $index driver, easy partial$$
 $index partial, easy$$
 
 
-$section Reverse Mode Second Partial Derivative Driver$$
+$section Forward Mode Second Partial Derivative Driver$$
 
 $table
 $bold Syntax$$
@@ -109,7 +109,7 @@ $syntax%
 	%VectorBase% %ddy%
 %$$
 (see $xref/ForTwo/VectorBase/VectorBase/$$ below)
-and its size is $latex n * p$$.
+and its size is $latex m * p$$.
 It contains the requested partial derivatives; to be specific,
 for $latex i = 0 , \ldots , m - 1 $$ 
 and $latex \ell = 0 , \ldots , p - 1$$
@@ -172,13 +172,16 @@ VectorBase ADFun<Base>::ForTwo(
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
 
+	// check VectorSize_t is Simple Vector class with size_t elements
+	CheckSimpleVector<size_t, VectorSize_t>();
+
 	CppADUsageError(
 		x.size() == n,
-		"ForTwo: Length of x not equal domain dimension for F"
+		"ForTwo: Length of x not equal domain dimension for f."
 	); 
 	CppADUsageError(
 		j.size() == k.size(),
-		"ForTwo: Lenght of the j and k vectors are not equal"
+		"ForTwo: Lenght of the j and k vectors are not equal."
 	);
 	// point at which we are evaluating the second partials
 	Forward(0, x);
@@ -207,18 +210,19 @@ VectorBase ADFun<Base>::ForTwo(
 	// compute the diagonal coefficients that are needed
 	for(l = 0; l < p; l++)
 	{	j1 = j[l];
-		CppADUsageError(
-		j1 < n,
-		"ForTwo: an element of j not less than domain dimension for F"
-		);
 		k1 = k[l];
 		CppADUsageError(
-		k1 < n,
-		"ForTwo: an element of k not less than domain dimension for F"
+		j1 < n,
+		"ForTwo: an element of j not less than domain dimension for f."
 		);
-		size_t p;
-		for(p = 0; p < 2; p++)
-		{	if( ! c[j1] )
+		CppADUsageError(
+		k1 < n,
+		"ForTwo: an element of k not less than domain dimension for f."
+		);
+		size_t count = 2;
+		while(count)
+		{	count--;
+			if( ! c[j1] )
 			{	// diagonal term in j1 direction
 				c[j1]  = true;
 				dx[j1] = Base(1);

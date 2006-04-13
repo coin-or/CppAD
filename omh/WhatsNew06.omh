@@ -62,8 +62,11 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 04-14$$
-The Documentation and examples for $xref/ForTwo/$$
-were improved.
+Documentation and examples were improved for the following routines:
+$xref/ForTwo/$$,
+$xref/RevTwo/$$.
+In addition, the computation in $code RevTwo$$ was made more efficient
+(it used to possibly calculate some first order partials that were not used).
 
 $head 04-13$$
 Documentation and examples were improved for the following routines:
