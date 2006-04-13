@@ -2,7 +2,7 @@
 # define CppADForTwoIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,43 +22,102 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin ForTwo$$
 $spell
+	ddy
 	typename
 	Taylor
 	const
 $$
 
 
-$index easy, second derivative$$
-$index second, derivative easy$$
-$index driver, easy second derivative$$
-$index derivative, second easy$$
+$index partial, second order driver$$
+$index second, order partial driver$$
+$index driver, second order partial$$
 
-$section Subset of Second Partial Derivatives: Forward Mode Easy Driver$$
+$index easy, partial$$
+$index driver, easy partial$$
+$index partial, easy$$
+
+
+$section Reverse Mode Second Partial Derivative Driver$$
 
 $table
 $bold Syntax$$
-$syntax%%dF% = %F%.ForTwo(%x%, %J%, %K%)%$$
+$syntax%%ddy% = %f%.ForTwo(%x%, %j%, %k%)%$$
 $tend
 
-$fend 25$$
+$fend 20$$
 
-$head Description$$
-Given an $xref/ADFun//ADFun<Base>/$$ object 
-$latex F : B^n \rightarrow B^m$$,
-this routine computes a subset of
-the second order partial derivatives of the form
+$head Purpose$$
+We use $latex F : B^n \rightarrow B^m$$ to denote the
+$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+The syntax above sets 
 $latex \[
-	\DD{ F_i }{ x_j } { x_k } (x)
+	ddy [ i * p + \ell ]
+	=
+	\DD{ F_i }{ x_{j[ \ell ]} }{ x_{k[ \ell ]} } (x) 
 \] $$
-where $italic i$$ ranges over all possible values
-and specific values are chosen for 
-$italic x$$, $italic j$$ and $italic k$$. 
+for $latex i = 0 , \ldots , m-1$$
+and $latex \ell = 0 , \ldots , p$$,
+where $latex p$$ is the size of the vectors $italic j$$ and $italic k$$.
 
-$head F$$
-The object $italic F$$ has prototype
+$head f$$
+The object $italic f$$ has prototype
 $syntax%
-	ADFun<%Base%> %F%
+	ADFun<%Base%> %f%
 %$$
+Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$
+(see $xref/ForTwo/ForTwo Uses Forward/ForTwo Uses Forward/$$ below).
+
+$head x$$
+The argument $italic x$$ has prototype
+$syntax%
+	const %VectorBase% &%x%
+%$$
+(see $xref/ForTwo/VectorBase/VectorBase/$$ below)
+and its size 
+must be equal to $italic n$$, the dimension of the
+$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+It specifies
+that point at which to evaluate the partial derivatives listed above.
+
+$head j$$
+The argument $italic j$$ has prototype
+$syntax%
+	const %VectorSize_t% &%j%
+%$$
+(see $xref/ForTwo/VectorSize_t/VectorSize_t/$$ below)
+We use $italic p$$ to denote the size of the vector $italic j$$.
+All of the indices in $italic j$$ 
+must be less than $italic n$$; i.e.,
+for $latex \ell = 0 , \ldots , p-1$$, $latex j[ \ell ]  < n$$.
+
+$head k$$
+The argument $italic k$$ has prototype
+$syntax%
+	const %VectorSize_t% &%k%
+%$$
+(see $xref/ForTwo/VectorSize_t/VectorSize_t/$$ below)
+and its size must be equal to $italic p$$,
+the size of the vector $italic j$$.
+All of the indices in $italic k$$ 
+must be less than $italic n$$; i.e.,
+for $latex \ell = 0 , \ldots , p-1$$, $latex k[ \ell ]  < n$$.
+
+$head ddy$$
+The result $italic ddy$$ has prototype
+$syntax%
+	%VectorBase% %ddy%
+%$$
+(see $xref/ForTwo/VectorBase/VectorBase/$$ below)
+and its size is $latex n * p$$.
+It contains the requested partial derivatives; to be specific,
+for $latex i = 0 , \ldots , m - 1 $$ 
+and $latex \ell = 0 , \ldots , p - 1$$
+$latex \[
+	ddy [ i * p + \ell ]
+	=
+	\DD{ F_i }{ x_{j[ \ell ]} }{ x_{k[ \ell ]} } (x) 
+\] $$
 
 $head VectorBase$$
 The type $italic VectorBase$$ must be a $xref/SimpleVector/$$ class with
@@ -67,71 +126,25 @@ The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
 $head VectorSize_t$$
-The type $italic VectorSize_t$$ must have all the operations
-specified by 
-$syntax%
-	%SimpleVector%<size_t>
-%$$
-where $italic SimpleVector$$ is a 
-$xref/SimpleVector//Simple Vector/$$ template class. 
-Note that the type $code size_t$$ must be equal to
-$syntax%%VectorSize_t%::value_type%$$.
+The type $italic VectorSize_t$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type size_t/$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
 
-$head x$$
-The vector $italic x$$ has prototype
-$syntax%
-	const %VectorBase% &%x% 
-%$$
-It must have length $italic n$$ and specifies
-that point at which to evaluate the partial derivatives.
+$head ForTwo Uses Forward$$
+After each call to $xref/Forward/$$,
+the object $italic f$$ contains the corresponding 
+$xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
+After $code ForTwo$$,
+the previous calls to $xref/Forward/$$ are undefined.
 
-$head J$$
-The vector $italic J$$ has prototype
-$syntax%
-	const %VectorSize_t% &%J%
-%$$
-We use $latex L$$ to denote the length of the vector $italic J$$.
-For $latex \ell = 0 , \ldots , L-1$$, $latex J[ \ell ]  < n$$.
-
-$head K$$
-The vector $italic K$$ has prototype
-$syntax%
-	const %VectorSize_t% &%K%
-%$$
-It must have length $italic L$$ and 
-for $latex \ell = 0 , \ldots , L-1$$,
-$latex K[ \ell ]  < n$$.
-
-$head dF$$
-The vector $italic dF$$ has prototype
-$syntax%
-	%VectorBase% %dF% 
-%$$
-It must have length $syntax%%m% * %L%$$.
-After the assignment to $italic dF$$, 
-for $latex i = 0 , \ldots , m - 1 $$ and $latex \ell = 0 , \ldots , L - 1$$
-$latex \[.
-	dF[ i * L +  \ell  ] = \DD{ F_i }{ x_j }{ x_k } ( x )
-\] $$
-where $latex j = J[ \ell ]$$ and $latex k = K[ \ell ]$$.
-
-
-$head Forward$$
-The object $italic F$$ stores information related to previous
-calls to $syntax%%F%.Forward%$$.
-After this operation,
-the previous calls to $xref/Forward/$$ are undefined
-with the exception of the zero order call which has the form
-$syntax%
-	%F%.Forward(0, %x%)
-%$$.
 
 $head Examples$$
 $children%
 	Example/ForTwo.cpp
 %$$
 The routine 
-$xref/ForTwo.cpp//ForTwo/$$ is both an example and a test.
+$xref/ForTwo.cpp//ForTwo/$$ is both an example and test.
 It returns $code true$$, if it succeeds and $code false$$ otherwise.
 
 $end
@@ -145,104 +158,106 @@ template <typename Base>
 template <typename VectorBase, typename VectorSize_t>
 VectorBase ADFun<Base>::ForTwo(
 	const VectorBase   &x, 
-	const VectorSize_t &J,
-	const VectorSize_t &K)
+	const VectorSize_t &j,
+	const VectorSize_t &k)
 {	size_t i;
-	size_t j;
-	size_t k;
+	size_t j1;
+	size_t k1;
 	size_t l;
 
-	size_t m = Domain();
-	size_t n = Range();
-	size_t L = J.size();
+	size_t n = Domain();
+	size_t m = Range();
+	size_t p = j.size();
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
 
 	CppADUsageError(
-		x.size() == m,
+		x.size() == n,
 		"ForTwo: Length of x not equal domain dimension for F"
 	); 
 	CppADUsageError(
-		J.size() == K.size(),
-		"ForTwo: Lenght of the J and K vectors are not equal"
+		j.size() == k.size(),
+		"ForTwo: Lenght of the j and k vectors are not equal"
 	);
 	// point at which we are evaluating the second partials
 	Forward(0, x);
 
 
 	// dimension the return value
-	VectorBase S(n * L);
+	VectorBase ddy(m * p);
 
-	// space to hold diagonal Taylor coefficients
-	VectorBase D(n * m);
+	// allocate memory to hold all possible diagonal Taylor coefficients
+	// (for large sparse cases, this is not efficient)
+	VectorBase D(m * n);
 
 	// boolean flag for which diagonal coefficients are computed
-	CppAD::vector<bool> c(m);
-	for(j = 0; j < m; j++)
-		c[j] = false;
+	CppAD::vector<bool> c(n);
+	for(j1 = 0; j1 < n; j1++)
+		c[j1] = false;
 
 	// direction vector in argument space
-	VectorBase u(m);
-	for(j = 0; j < m; j++)
-		u[j] = Base(0);
+	VectorBase dx(n);
+	for(j1 = 0; j1 < n; j1++)
+		dx[j1] = Base(0);
 
 	// result vector in range space
-	VectorBase v(n);
+	VectorBase dy(m);
 
 	// compute the diagonal coefficients that are needed
-	for(l = 0; l < L; l++)
-	{	j = J[l];
+	for(l = 0; l < p; l++)
+	{	j1 = j[l];
 		CppADUsageError(
-		j < m,
-		"ForTwo: an element of J not less than domain dimension for F"
+		j1 < n,
+		"ForTwo: an element of j not less than domain dimension for F"
 		);
-		k = K[l];
+		k1 = k[l];
 		CppADUsageError(
-		k < m,
-		"ForTwo: an element of K not less than domain dimension for F"
+		k1 < n,
+		"ForTwo: an element of k not less than domain dimension for F"
 		);
 		size_t p;
 		for(p = 0; p < 2; p++)
-		{	if( ! c[j] )
-			{	c[j] = true;
-				u[j] = Base(1);
-				Forward(1, u);
-				u[j] = Base(0);
-				v = Forward(2, u);
-				for(i = 0; i < n; i++)
-					D[i * m + j ] = v[i];
+		{	if( ! c[j1] )
+			{	// diagonal term in j1 direction
+				c[j1]  = true;
+				dx[j1] = Base(1);
+				Forward(1, dx);
+
+				dx[j1] = Base(0);
+				dy     = Forward(2, dx);
+				for(i = 0; i < m; i++)
+					D[i * n + j1 ] = dy[i];
 			} 
-			j = k;
+			j1 = k1;
 		}
 	}
 	// compute all the requested cross partials
-	for(l = 0; l < L; l++)
-	{	j = J[l];
-		k = K[l];
-		if( j == k )
-		{	for(i = 0; i < n; i++)
-				S[i * L + l] = Base(2) * D[i * m + j];
+	for(l = 0; l < p; l++)
+	{	j1 = j[l];
+		k1 = k[l];
+		if( j1 == k1 )
+		{	for(i = 0; i < m; i++)
+				ddy[i * p + l] = Base(2) * D[i * n + j1];
 		}
 		else
 		{
-			u[j] = Base(1);
-			u[k] = Base(1);
+			// cross term in j1 and k1 directions
+			dx[j1] = Base(1);
+			dx[k1] = Base(1);
+			Forward(1, dx);
 
-			// cross term in j and k directions
-			Forward(1, u);
-			u[j] = Base(0);
-			u[k] = Base(0);
-			v = Forward(2, u);
+			dx[j1] = Base(0);
+			dx[k1] = Base(0);
+			dy = Forward(2, dx);
 
 			// place result in return value
-			for(i = 0; i < n; i++)
-				S[i * L + l] = v[i] - D[i*m+j] - D[i*m+k];
+			for(i = 0; i < m; i++)
+				ddy[i * p + l] = dy[i] - D[i*n+j1] - D[i*n+k1];
 
 		}
 	}
-
-	return S;
+	return ddy;
 }
 
 } // END CppAD namespace

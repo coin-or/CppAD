@@ -77,21 +77,21 @@ bool JacobianCases()
 	x[1] = 1.;
 
 	// compute the derivative at this x
-	Vector dy( m * n );
-	dy = f.Jacobian(x);
+	Vector jac( m * n );
+	jac = f.Jacobian(x);
 
 	/*
 	F'(x) = [ 2 * x[0] * exp(x[1]) ,  x[0] * x[0] * exp(x[1]) ]
 	        [ 2 * x[0] * sin(x[1]) ,  x[0] * x[0] * cos(x[1]) ]
 	        [ 2 * x[0] * cos(x[1]) , -x[0] * x[0] * sin(x[i]) ]
 	*/
-	ok &=  NearEqual( 2.*x[0]*exp(x[1]), dy[0*n+0], 1e-10, 1e-10 );
-	ok &=  NearEqual( 2.*x[0]*sin(x[1]), dy[1*n+0], 1e-10, 1e-10 );
-	ok &=  NearEqual( 2.*x[0]*cos(x[1]), dy[2*n+0], 1e-10, 1e-10 );
+	ok &=  NearEqual( 2.*x[0]*exp(x[1]), jac[0*n+0], 1e-10, 1e-10 );
+	ok &=  NearEqual( 2.*x[0]*sin(x[1]), jac[1*n+0], 1e-10, 1e-10 );
+	ok &=  NearEqual( 2.*x[0]*cos(x[1]), jac[2*n+0], 1e-10, 1e-10 );
 
-	ok &=  NearEqual( x[0] * x[0] *exp(x[1]), dy[0*n+1], 1e-10, 1e-10 );
-	ok &=  NearEqual( x[0] * x[0] *cos(x[1]), dy[1*n+1], 1e-10, 1e-10 );
-	ok &=  NearEqual(-x[0] * x[0] *sin(x[1]), dy[2*n+1], 1e-10, 1e-10 );
+	ok &=  NearEqual( x[0] * x[0] *exp(x[1]), jac[0*n+1], 1e-10, 1e-10 );
+	ok &=  NearEqual( x[0] * x[0] *cos(x[1]), jac[1*n+1], 1e-10, 1e-10 );
+	ok &=  NearEqual(-x[0] * x[0] *sin(x[1]), jac[2*n+1], 1e-10, 1e-10 );
 
 	return ok;
 }

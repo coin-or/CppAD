@@ -77,8 +77,8 @@ bool HessianCases()
 	x[1] = 1.;
 
 	// second derivative of y[1] 
-	Vector ddy( n * n );
-	ddy = f.Hessian(x, 1);
+	Vector hes( n * n );
+	hes = f.Hessian(x, 1);
 	/*
 	F_1       = x[0] * x[0] * sin(x[1])
 
@@ -87,10 +87,10 @@ bool HessianCases()
 	F_1^{(2)} = [        2 * sin(x[1]) ,      2 * x[0] * cos(x[1]) ]
 	            [ 2 * x[0] * cos(x[1]) , - x[0] * x[0] * sin(x[1]) ]
 	*/
-	ok &=  NearEqual(          2.*sin(x[1]), ddy[0*n+0], 1e-10, 1e-10 );
-	ok &=  NearEqual(     2.*x[0]*cos(x[1]), ddy[0*n+1], 1e-10, 1e-10 );
-	ok &=  NearEqual(     2.*x[0]*cos(x[1]), ddy[1*n+0], 1e-10, 1e-10 );
-	ok &=  NearEqual( - x[0]*x[0]*sin(x[1]), ddy[1*n+1], 1e-10, 1e-10 );
+	ok &=  NearEqual(          2.*sin(x[1]), hes[0*n+0], 1e-10, 1e-10 );
+	ok &=  NearEqual(     2.*x[0]*cos(x[1]), hes[0*n+1], 1e-10, 1e-10 );
+	ok &=  NearEqual(     2.*x[0]*cos(x[1]), hes[1*n+0], 1e-10, 1e-10 );
+	ok &=  NearEqual( - x[0]*x[0]*sin(x[1]), hes[1*n+1], 1e-10, 1e-10 );
 
 	return ok;
 }

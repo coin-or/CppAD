@@ -64,7 +64,7 @@ $syntax%
 	ADFun<%Base%> %f%
 %$$
 Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$
-(see $xref/RevOne/Forward/Forward/$$ below).
+(see $xref/RevOne/RevOne Uses Forward/RevOne Uses Forward/$$ below).
 
 $head x$$
 The argument $italic x$$ has prototype
@@ -110,7 +110,7 @@ $italic Base$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head Forward$$
+$head RevOne Uses Forward$$
 After each call to $xref/Forward/$$,
 the object $italic f$$ contains the corresponding 
 $xref/glossary/Taylor Coefficient/Taylor coefficients/$$.

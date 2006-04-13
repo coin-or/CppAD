@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin Jacobian$$
 $spell
-	dy
+	jac
 	typename
 	Taylor
 	Jacobian
@@ -38,7 +38,7 @@ $section Jacobian: Driver Routine$$
 
 $table
 $bold Syntax$$
-$syntax%%dy% = %f%.Jacobian(%x%)%$$
+$syntax%%jac% = %f%.Jacobian(%x%)%$$
 $tend
 
 $fend 20$$
@@ -46,10 +46,10 @@ $fend 20$$
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
-The syntax above sets $italic dy$$ to the
+The syntax above sets $italic jac$$ to the
 Jacobian of $italic F$$ evaluated at $italic x$$; i.e.,
 $latex \[
-	dy = F^{(1)} (x)
+	jac = F^{(1)} (x)
 \] $$
 
 $head f$$
@@ -58,7 +58,7 @@ $syntax%
 	ADFun<%Base%> %f%
 %$$
 Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$
-(see $xref/Jacobian/Forward/Forward/$$ below).
+(see $xref/Jacobian/Jacobian Uses Forward/Jacobian uses Forward/$$ below).
 
 $head x$$
 The argument $italic x$$ has prototype
@@ -72,10 +72,10 @@ $xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
 It specifies
 that point at which to evaluate the Jacobian.
 
-$head dy$$
-The result $italic dy$$ has prototype
+$head jac$$
+The result $italic jac$$ has prototype
 $syntax%
-	const %Vector% &%dy%
+	const %Vector% &%jac%
 %$$
 (see $xref/Jacobian/Vector/Vector/$$ below)
 and its size is $latex m * n$$; i.e., the product of the
@@ -86,7 +86,7 @@ dimensions for $italic f$$.
 For $latex i = 0 , \ldots , m - 1 $$ 
 and $latex j = 0 , \ldots , n - 1$$
 $latex \[.
-	dy[ i * n + j ] = \D{ F_i }{ x_j } ( x )
+	jac[ i * n + j ] = \D{ F_i }{ x_j } ( x )
 \] $$
 
 
@@ -97,7 +97,7 @@ $italic Base$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head Forward$$
+$head Jacobian Uses Forward$$
 After each call to $xref/Forward/$$,
 the object $italic f$$ contains the corresponding 
 $xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
@@ -120,7 +120,7 @@ $end
 namespace CppAD {
 
 template <typename Base, typename Vector>
-void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &dy)
+void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &jac)
 {	size_t i;
 	size_t j;
 
@@ -130,8 +130,8 @@ void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &dy)
 	// check Vector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, Vector>();
 
-	CppADUnknownError( x.size()  == f.Domain() );
-	CppADUnknownError( dy.size() == f.Range() * f.Domain() );
+	CppADUnknownError( x.size()   == f.Domain() );
+	CppADUnknownError( jac.size() == f.Range() * f.Domain() );
 
 	// argument and result for forward mode calculations
 	Vector u(m);
@@ -154,19 +154,19 @@ void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &dy)
 
 		// return the result
 		for(i = 0; i < n; i++)
-			dy[ i * m + j ] = v[i];
+			jac[ i * m + j ] = v[i];
 	}
 }
 template <typename Base, typename Vector>
-void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &dy)
+void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &jac)
 {	size_t i;
 	size_t j;
 
 	size_t m = f.Domain();
 	size_t n = f.Range();
 
-	CppADUnknownError( x.size()  == f.Domain() );
-	CppADUnknownError( dy.size() == f.Range() * f.Domain() );
+	CppADUnknownError( x.size()   == f.Domain() );
+	CppADUnknownError( jac.size() == f.Range() * f.Domain() );
 
 	// argument and result for reverse mode calculations
 	Vector u(m);
@@ -181,7 +181,7 @@ void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &dy)
 	{	if( f.Parameter(i) )
 		{	// return zero for this component of f
 			for(j = 0; j < m; j++)
-				dy[ i * m + j ] = Base(0);
+				jac[ i * m + j ] = Base(0);
 		}
 		else
 		{ 
@@ -196,7 +196,7 @@ void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &dy)
 
 			// return the result
 			for(j = 0; j < m; j++)
-				dy[ i * m + j ] = u[j];
+				jac[ i * m + j ] = u[j];
 		}
 	}
 }
@@ -227,12 +227,12 @@ Vector ADFun<Base>::Jacobian(const Vector &x)
 	}
 
 	// choose the method with the least work
-	Vector dy( n * m );
+	Vector jac( n * m );
 	if( workForward <= workReverse )
-		JacobianFor(*this, x, dy);
-	else	JacobianRev(*this, x, dy);
+		JacobianFor(*this, x, jac);
+	else	JacobianRev(*this, x, jac);
 
-	return dy;
+	return jac;
 }
 
 } // END CppAD namespace

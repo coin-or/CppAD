@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin Hessian$$
 $spell
-	ddy
+	hes
 	typename
 	Taylor
 	HesLuDet
@@ -37,7 +37,7 @@ $section Hessian: Easy Driver$$
 
 $table
 $bold Syntax$$
-$syntax%%ddy% = %f%.Hessian(%x%, %i%)%$$
+$syntax%%hes% = %f%.Hessian(%x%, %i%)%$$
 $tend
 
 $fend 20$$
@@ -45,10 +45,10 @@ $fend 20$$
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
-The syntax above sets $italic ddy$$ to the
+The syntax above sets $italic hes$$ to the
 Hessian of $italic F_i$$ evaluated at $italic x$$; i.e.,
 $latex \[
-	ddy = F^{(2)} (x)
+	hes = F^{(2)} (x)
 \] $$
 
 $head f$$
@@ -57,7 +57,7 @@ $syntax%
 	ADFun<%Base%> %f%
 %$$
 Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$
-(see $xref/Hessian/Forward/Forward/$$ below).
+(see $xref/Hessian/Hessian Uses Forward/Hessian Uses Forward/$$ below).
 
 $head x$$
 The argument $italic x$$ has prototype
@@ -81,17 +81,17 @@ $xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
 It specifies the component of $italic F$$
 for which we are evaluating the Hessian.
 
-$head ddy$$
-The result $italic ddy$$ has prototype
+$head hes$$
+The result $italic hes$$ has prototype
 $syntax%
-	%Vector% %ddy%
+	%Vector% %hes%
 %$$
 (see $xref/Hessian/Vector/Vector/$$ below)
 and its size is $latex n * n$$.
 For $latex j = 0 , \ldots , n - 1 $$ 
 and $latex \ell = 0 , \ldots , n - 1$$
 $latex \[
-	ddy [ j * n + \ell ] = \DD{ F_i }{ x_j }{ x_\ell } ( x )
+	hes [ j * n + \ell ] = \DD{ F_i }{ x_j }{ x_\ell } ( x )
 \] $$
 
 $head Vector$$
@@ -101,7 +101,7 @@ $italic Base$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head Forward$$
+$head Hessian Uses Forward$$
 After each call to $xref/Forward/$$,
 the object $italic f$$ contains the corresponding 
 $xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
@@ -150,7 +150,7 @@ Vector ADFun<Base>::Hessian(const Vector &x, size_t i)
 	Forward(0, x);
 
 	// define the return value
-	Vector ddy(n * n);
+	Vector hes(n * n);
 
 	// direction vector for calls to forward
 	Vector u(n);
@@ -178,10 +178,10 @@ Vector ADFun<Base>::Hessian(const Vector &x, size_t i)
 
 		// return desired components
 		for(k = 0; k < n; k++)
-			ddy[k * n + j] = ddw[k * 2 + 1];
+			hes[k * n + j] = ddw[k * 2 + 1];
 	}
 		
-	return ddy;
+	return hes;
 }
 
 } // END CppAD namespace

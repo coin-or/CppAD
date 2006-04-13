@@ -61,6 +61,10 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-14$$
+The Documentation and examples for $xref/ForTwo/$$
+were improved.
+
 $head 04-13$$
 Documentation and examples were improved for the following routines:
 $xref/Jacobian/$$,

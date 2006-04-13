@@ -1,21 +1,29 @@
-# Improve Hessian documentation and example.
+# Improve ForTwo documentation and example, change Driver return value names.
 #
 # SvnCommit: file that made this commit.
-# Hessian.h: improve documentation and extend notation into code.
-# Jacobian.h: minor edits and one correction (H->dy) to documentation.
-# ForOne.h: minor edits to documentation. 
-# glossary.omh: in AD Fucntion add cross reference to CompareChange.
+# Hessian.h: change return value name from ddy to hes.
+# Jacobian.h: change return value name from dy to jac.
+# ForTwo.h: general improvement of documentation and use same notation in code.
+# ForOne.h: change Forward header to ForOne Uses Forward.
+# RevOne.h: change Forward header to RevOne Uses Forward.
 # WhatsNew06.omh: user's view of the changes.
-# Hessian.cpp: make notaiton like documentaiton and rest like other examples.
+# Jacobian.cpp: change return value name from dy to jac.
+# ForTwo.cpp: make notation agree with new documentation and other examples. 
+# Forward.cpp: use x_2 and y_2 for second order Taylor coefficients.
+# Hessian.cpp: change return value name from ddy to hes.
 add_list="
 "
 change_list="
 	SvnCommit
 	CppAD/local/Hessian.h
 	CppAD/local/Jacobian.h
+	CppAD/local/ForTwo.h
 	CppAD/local/ForOne.h
-	omh/glossary.omh
+	CppAD/local/RevOne.h
 	omh/WhatsNew06.omh
+	Example/Jacobian.cpp
+	Example/ForTwo.cpp
+	Example/Forward.cpp
 	Example/Hessian.cpp
 "
 delete_list="

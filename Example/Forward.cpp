@@ -63,7 +63,7 @@ bool ForwardCases(void)
 	// initially, the variable values during taping are stored in f
 	ok &= f.taylor_size() == 1;
 
-	// zero order forward mode
+	// zero order forward mode using notaiton in ForwardZero
 	// use the template parameter Vector for the vector type
 	Vector x(n);
 	Vector y(m);
@@ -73,7 +73,7 @@ bool ForwardCases(void)
 	ok  &= NearEqual(y[0] , x[0]*x[0]*x[1], 1e-10, 1e-10);
 	ok  &= f.taylor_size() == 1;
 
-	// first order forward mode
+	// first order forward mode using notation in ForwardOne
 	// X(t)           = x + dx * t
 	// Y(t) = F[X(t)] = y + dy * t + o(t)
 	Vector dx(n);
@@ -84,15 +84,15 @@ bool ForwardCases(void)
 	ok   &= NearEqual(dy[0] , 2.*x[0]*x[1], 1e-10, 1e-10);
 	ok   &= f.taylor_size() == 2;
 
-	// second order forward mode
-	// X(t) =           x + dx * t + ddx * t^2
-	// Y(t) = F[X(t)] = y + dy * t + ddy * t^2 + o(t^3)
-	Vector ddx(n);
-	Vector ddy(m);
-	ddx[0]      = 0.;
-	ddx[1]      = 0.;
-	ddy         = f.Forward(2, ddx);
-	double F_00 = 2. * ddy[0]; // second partial F w.r.t. x[0], x[0]
+	// second order forward mode using notaiton in ForwardAny
+	// X(t) =           x + dx * t + x_2 * t^2
+	// Y(t) = F[X(t)] = y + dy * t + y_2 * t^2 + o(t^3)
+	Vector x_2(n);
+	Vector y_2(m);
+	x_2[0]      = 0.;
+	x_2[1]      = 0.;
+	y_2         = f.Forward(2, x_2);
+	double F_00 = 2. * y_2[0]; // second partial F w.r.t. x[0], x[0]
 	ok         &= NearEqual(F_00, 2.*x[1], 1e-10, 1e-10);
 	ok         &= f.taylor_size() == 3;
 
