@@ -44,7 +44,8 @@ $childtable%
 	Example/HesLuDet.cpp%
 	Example/OdeStiff.cpp%
 	Example/OdeTaylor.cpp%
-	Example/ComplexPoly.cpp
+	Example/ComplexPoly.cpp%
+	omh/MulTape.omh
 %$$
 
 $end
