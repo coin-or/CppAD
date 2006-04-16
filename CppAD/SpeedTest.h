@@ -2,7 +2,7 @@
 # define CppADSpeedTestIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -79,36 +79,61 @@ but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 
 $head Test$$
-The argument $italic Test$$ is a function such that
+The $code SpeedTest$$ argument $italic Test$$ is a function with the syntax
 $syntax%
-	%Test%(%size%, %repeat%)
+	%name% = %Test%(%size%, %repeat%)
 %$$
-repeats a test for a specified size and number of times
-and then returns a name for the test as a string.
-The arguments $italic size$$ and $italic repeat$$ 
-(to $italic Test$$) have type $code size_t$$.
-Only one name is reported per call to $code SpeedTest$$
-and it is the return value from the a call to $italic Test$$ 
-where $italic size$$ is equal to $italic first$$ and
-the value of $italic repeat$$ is not specified.
-If the name returned by $italic Test$$
-is the empty string, 
-the name of the test is not reported by $code SpeedTest$$.
 
+$subhead size$$
+The $italic Test$$ argument $italic size$$ has prototype
+$syntax%
+	size_t %size%
+%$$
+It specifies the size for this test.
+
+$subhead repeat$$
+The $italic Test$$ argument $italic repeat$$ has prototype
+$syntax%
+	size_t %repeat%
+%$$
+It specifies the number of times to repeat the test.
+
+$subhead name$$
+The $italic Test$$ result $italic name$$ has prototype
+$syntax%
+	std::string %name%
+%$$
+The results for this test are reported on $code std::cout$$
+with $italic name$$ as an identifier for the test.
+It is assumed that,
+for the duration of this call to $code SpeedTest$$,
+$italic Test$$ will always return 
+the same value for $italic name$$.
+If $italic name$$ is the empty string, 
+no test name is reported by $code SpeedTest$$.
 
 $head first$$
-The argument $italic first$$ has type $code size_t$$ and
-specifies the size of the first test problem reported by this call to 
+The $code SpeedTest$$ argument $italic first$$ has prototype
+$syntax%
+	size_t %first%
+%$$
+It specifies the size of the first test problem reported by this call to 
 $code SpeedTest$$.
 	
 $head last$$
-The argument $italic last$$ has type $code size_t$$ and
-specifies the size of the last test problem reported by this call to 
+The $code SpeedTest$$ argument $italic last$$ has prototype
+$syntax%
+	size_t %last%
+%$$
+It specifies the size of the last test problem reported by this call to 
 $code SpeedTest$$.
 
 $head inc$$
-The argument $italic inc$$ has type $code int$$ and
-specifies the increment between problem sizes; i.e.,
+The $code SpeedTest$$ argument $italic inc$$ has prototype
+$syntax%
+	int %inc%
+%$$
+It specifies the increment between problem sizes; i.e.,
 all values of $italic size$$ in calls to $italic Test$$ are given by
 $syntax%
 	%size% = %first% + %j% * %inc%
@@ -134,7 +159,7 @@ in the context of the standard $code <ctime>$$ definitions.
 
 $head Errors$$
 If one of the restrictions above is violated,
-the error reporting handler is used to report the error.
+the CppAD error handler is used to report the error.
 You can redefine this action using the instructions in
 $xref/ErrorHandler/$$
 

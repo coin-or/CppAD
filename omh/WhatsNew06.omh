@@ -61,6 +61,13 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-17$$
+The documentation for $xref/SpeedTest/$$ was improved.
+
+$head 04-15$$
+The $xref/MulTape/$$ example was moved from $xref/ADFun/$$ to $xref/General/$$.
+The documentation for $xref/SpeedTest/$$ was improved.
+
 $head 04-14$$
 Documentation and examples were improved for the following routines:
 $xref/ForTwo/$$,

@@ -1,18 +1,17 @@
-# Improve RevTwo documentation, example and efficiency.
+# Improve SpeedTest documentation.
 #
 # SvnCommit: file that made this commit.
-# ForTwo.h: minor improvement and fix section title.
-# RevTwo.h: improve documentation, example and efficiency.
+# SpeedTest.h: improve documentaiton.
+# SpeedTest.cpp: no need to include <string>.
 # WhatsNew06.omh: user's view of the changes.
 # RevTwo.cpp: change notaiton to agree with new doc, test more cases.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/ForTwo.h
-	CppAD/local/RevTwo.h
+	CppAD/SpeedTest.h
+	SpeedExample/SpeedExample.cpp
 	omh/WhatsNew06.omh
-	Example/RevTwo.cpp
 "
 delete_list="
 "
