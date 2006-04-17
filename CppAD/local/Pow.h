@@ -79,10 +79,11 @@ $code std::complex<double>$$.
 For these cases, 
 the result has the same type as the arguments.
 
-$head Taping$$
-The result of this operation is an AD object,
-hence the operation can be recorded as part of a corresponding
-$xref/AD/AD Operation Sequence/AD operation sequence/$$.
+$head Operation Sequence$$
+The AD of $italic Base$$
+operation sequence used to calculate $italic z$$ is
+$xref/glossary/Operation/Independent/independent/1/$$
+of $italic x$$ and $italic y$$.
 
 $head Example$$
 $children%

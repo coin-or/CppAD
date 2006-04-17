@@ -72,8 +72,9 @@ is stored in the object $italic f$$.
 
 
 $head x$$
-If no $xref/VecAD/$$ objects are by the
-$xref/AD/AD Operation Sequence/AD operation sequence/$$ 
+If no $xref/VecAD/$$ objects are used by the
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$ 
 stored in $italic f$$,
 the sparsity pattern is valid for all values $latex x \in B^n$$.
 $pre

@@ -71,10 +71,11 @@ $syntax%
 	AD<%Base%> %y%
 %$$
 
-$head Taping$$
-The result of this operation is an AD object,
-hence the operation can be recorded as part of a corresponding
-$xref/AD/AD Operation Sequence/AD operation sequence/$$.
+$head Operation Sequence$$
+The AD of $italic Base$$
+operation sequence used to calculate $italic y$$ is
+$xref/glossary/Operation/Independent/independent/1/$$
+of $italic x$$.
 
 $head Example$$
 $children%

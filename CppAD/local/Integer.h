@@ -90,12 +90,13 @@ $syntax%
 $italic Base$$ must support the $code Integer$$ function and
 the conversion has the same meaning as for $italic Base$$.
 
-$head Taping$$
-The result of this operation is not an AD object
-so the operation is not recorded as part of any
-$xref/AD/AD Operation Sequence/AD operation sequence/$$
-(even if $italic x$$ is an AD object and the corresponding tape 
-$xref/glossary/Tape State/state/$$ is Recording).
+$head Operation Sequence$$
+The result of this operation is not an
+$xref/glossary/AD of Base/AD of/$$ $italic Base$$ object.
+Thus it will not be recorded as part of the current
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
+(even if the current $xref/glossary/Tape State/tape state/$$ is Recording).
 
 $head Example$$
 $children%

@@ -35,8 +35,7 @@ $section Glossary$$
 $head AD Function$$
 Given an $xref/ADFun/$$ object $italic f$$
 there is a corresponding
-$syntax%AD<%Base%>%$$
-$xref/AD/AD Operation Sequence/operation sequence/$$.
+AD of $italic Base$$ $xref/glossary/Operation/Sequence/operation sequence/1/$$.
 This operation sequence
 defines a function 
 $latex F : B^n \rightarrow B^m $$
@@ -47,9 +46,10 @@ the operation sequence and to the object $italic f$$.
 possible differences between $latex F(x)$$ and the algorithm that defined
 the operation sequence.)
 
-$head AD Object$$
-An object is called an AD object it its type is 
-either $syntax%AD<%Base%>%$$ or $syntax%VecAD<%Base%>::reference%$$
+$head AD of Base$$
+An object is called an AD of $italic Base$$ object its type is 
+either $syntax%AD<%Base%>%$$ (see $xref/Constructor/$$)
+or $syntax%VecAD<%Base%>::reference%$$ (see $xref/VecAD/$$)
 for some $italic Base$$ type.
 
 $head AD Type Sequence$$
@@ -100,9 +100,11 @@ more basic operations.
 
 $subhead Sequence$$
 A sequence of atomic $italic Type$$ operations 
-ss called the $italic Type$$ operation sequence.
-We sometimes use the abbreviated notation AD operation sequence for
-an $syntax%AD<%Base%>%$$ operation sequence.
+is called a $italic Type$$ operation sequence.
+A sequence of atomic $xref/glossary/AD of Base/AD of Base/$$ operations
+is referred to as an AD of $italic Base$$ operation sequence.
+The abbreviated notation AD operation sequence is often used
+when it is not necessary to specify the base type.
 
 $subhead Dependent$$
 Suppose that $italic x$$ and $italic y$$ are $italic Type$$ objects and
@@ -118,7 +120,7 @@ $syntax%
 	else	%y% = sin(%x%); 
 %$$
 the choice above depends on the value of $italic x$$ and $italic y$$
-and the two choices result in a different AD operation sequence.
+and the two choices result in a different $italic Type$$ operation sequence.
 In this case, we say that the $italic Type$$ operation sequence depends
 on $italic x$$ and $italic y$$.
 
@@ -172,8 +174,8 @@ $italic Q$$ if $italic P$$ has fewer true elements than $italic Q$$.
  
 $head Tape State$$
 For each $italic Base$$ class,
-the tape that record the corresponding
-$xref/AD/AD Operation Sequence/AD operation sequence/$$
+the tape that record the corresponding 
+AD of $italic Base$$ $xref/glossary/Operation/Sequence/operation sequence/1/$$
 has two possible states:
 $codep
 	enum TapeState {

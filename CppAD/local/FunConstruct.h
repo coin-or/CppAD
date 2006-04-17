@@ -43,8 +43,8 @@ $fend 20$$
 
 $head Purpose$$
 The 
-$syntax%AD<%Base%>%$$
-$xref/AD/AD Operation Sequence/operation sequence/$$ 
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$ 
 corresponding to $italic f$$ is 
 the operation sequence that occurred since the previous 
 $xref/Independent//Independent(x)/$$
@@ -60,7 +60,7 @@ $italic n$$ is the size of the domain vector $italic x$$,
 and $italic m$$ is the size of range vector $italic y$$.
 
 $head Tape State$$
-The tape that records $syntax%AD<%Base%>%$$ operations
+The tape that records $xref/glossary/AD of Base/AD of/$$ $italic Base$$ operations
 must be in the 
 $xref/glossary/Tape State/Recording/recording state/1/$$
 when this constructor is called.

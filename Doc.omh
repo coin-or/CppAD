@@ -42,7 +42,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: CppAD-06-04-01
+A Package for Differentiation of C++ Algorithms: CppAD-06-04-16
 $$ 
 
 $table
@@ -74,7 +74,8 @@ operating systems.
 Extensive user and developer documentation is included.
 
 $lnext
-An $xref/AD/AD Operation Sequence/AD operation sequence/$$
+An AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
 is stored as an 
 $xref/ADFun//AD function object/$$ 
 which can evaluate function values and derivatives.

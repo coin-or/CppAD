@@ -59,14 +59,15 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-If the tape for $syntax%AD<%Base%>%$$ operations is in the
+If the tape for $xref/glossary/AD of Base/AD of/$$ $italic Base$$ operations is in the
 $xref/glossary/Tape State/Recording State/$$,
 the indexing operation
 $syntax%
 	%y% = %v%[%x%]
 %$$
 is included in the
-$xref/AD/AD Operation Sequence/AD operation sequence/$$ and 
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$ and 
 transferred to the corresponding $xref/ADFun/$$ object $italic f$$.
 Such an index can change each time
 zero order $xref/Forward//f.Forward/$$ is used; i.e.,
@@ -152,7 +153,8 @@ cannot be passed to $code Independent$$.
 
 $lnext
 If one uses this type in a 
-$xref/AD/AD Operation Sequence/AD operation sequence/$$,
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$,
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ calculations
 ($xref/Sparse/$$)
 are only valid for the current independent variable values,
@@ -199,7 +201,7 @@ $syntax%
 %$$
 and is a reference to the $th i$$ element in the vector $italic v$$.
 This syntax is only valid if the
-tape that records $syntax%AD<%Base%>%$$ operations is in the
+tape that records $xref/glossary/AD of Base/AD of/$$ $italic Base$$ operations is in the
 $xref/glossary/Tape State/Empty state/$$.
 Because it is a reference, it can be used to change the element value;
 for example,
@@ -227,7 +229,8 @@ $syntax%
 %$$
 The object $italic y$$ has an AD type and its 
 operations are recorded as part of the same
-$xref/AD/AD Operation Sequence/AD operation sequence/$$ as
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$ as
 for $syntax%AD<%Base%>%$$ objects.
 It acts as a reference to the 
 element with index $latex {\rm floor} (x)$$ in the vector $italic v$$

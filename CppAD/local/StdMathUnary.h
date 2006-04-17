@@ -66,7 +66,7 @@ $fend 20$$
 $head Purpose$$
 Evaluates the one argument standard math function 
 $italic fun$$ where its argument is an 
-$xref/glossary/AD Object/AD object/$$.
+$xref/glossary/AD of Base/AD of/$$ $italic Base$$ object.
 
 $head x$$
 The argument $italic x$$ has one of the following prototypes
@@ -81,10 +81,15 @@ $syntax%
 	AD<%Base%> %y%
 %$$
 
-$head Taping$$
-The result of this operation is an AD object,
-hence the operation can be recorded as part of a corresponding
-$xref/AD/AD Operation Sequence/AD operation sequence/$$.
+
+$head Operation Sequence$$
+Most of these functions are AD of $italic Base$$
+$xref/glossary/Operation/Atomic/atomic operations/1/$$.
+In all cases,
+The AD of $italic Base$$
+operation sequence used to calculate $italic y$$ is 
+$xref/glossary/Operation/Independent/independent/1/$$
+of $italic x$$.
 
 $head fun$$ 
 A definition of $italic fun$$ for each of the argument types

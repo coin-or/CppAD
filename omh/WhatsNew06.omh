@@ -61,6 +61,13 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-18$$
+The new definitions for 
+$xref/glossary/AD of Base/AD of Base/$$
+and
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
+have been used throughout the documentation.
+
 $head 04-17$$
 The documentation for $xref/SpeedTest/$$ and $xref/Poly/$$ was improved.
 $pre
@@ -69,6 +76,12 @@ $$
 Definitions were added for an atomic $xref/glossary/Operation/operation/$$
 and for an operation sequence being
 dependent and independent of the values of specific operands.
+$pre
+
+$$
+The definition of AD sequence of operations was made abstract
+and moved to the glossary as
+$xref/glossary/Operation/Sequence/Type operation sequence/1/$$.
 
 $head 04-15$$
 The $xref/MulTape/$$ example was moved from $xref/ADFun/$$ to $xref/General/$$.
@@ -168,7 +181,8 @@ return value notation as the documentation; i.e., $code dw$$.
 
 $head 04-02$$
 The member functions of $xref/ADFun/$$ that return properties of
-$xref/AD/AD Operation Sequence/AD operation sequence/$$
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
 have been grouped into the $xref/SeqProperty/$$ section.
 In addition, the $xref/SeqProperty.cpp/$$ example has been added.
 $pre
@@ -226,7 +240,8 @@ $pre
 
 $$
 Move the definition of an 
-$xref/AD/AD Operation Sequence/AD operation sequence/$$ 
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$ 
 from the glossary to the $xref/AD/$$ section.
 $pre
 
@@ -363,7 +378,8 @@ This has been fixed.
 $pre
 
 $$
-The term $xref/AD/AD Operation Sequence/AD operation sequence/$$
+The term AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
 has been defined. 
 It will be used to improve the user's understanding of exactly
 how an $xref/ADFun/$$ object is related to the C++ algorithm.

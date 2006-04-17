@@ -75,10 +75,12 @@ $syntax%
 	const AD<%Base%> %z%
 %$$
 
-$head Taping$$
-The result of this operation is an AD object,
-hence the operation can be recorded as part of a corresponding
-$xref/AD/AD Operation Sequence/AD operation sequence/$$.
+$head Operation Sequence$$
+This is an AD of $italic Base$$
+$xref/glossary/Operation/Atomic/atomic operation/1/$$
+and hence is part of the current
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$.
 
 $head Derivative$$
 If $latex f$$ and $latex g$$ are 

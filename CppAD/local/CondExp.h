@@ -56,7 +56,8 @@ $fend 20$$
 
 $head Purpose$$
 Record, 
-as part of an $xref/AD/AD Operation Sequence/AD operation sequence/$$,
+as part of an AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$,
 a the conditional result of the form 
 $syntax%
 	if( %left% %op% %right% )
@@ -149,6 +150,14 @@ $syntax%
 	CondExpGt(%flag%, %Type%(0), %trueCase%, %falseCase%)
 %$$
 Use of $code CondExp$$ is deprecated, but continues to be supported.
+
+$head Operation Sequence$$
+This is an AD of $italic Base$$
+$xref/glossary/Operation/Atomic/atomic operation/1/$$
+and hence is part of the current
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+
 
 $head Example$$
 

@@ -158,7 +158,8 @@ $syntax%
 If there is no previous call with $latex k = 0$$,
 $latex x^{(0)}$$ is the value of the independent variables when the 
 corresponding 
-$xref/AD/AD Operation Sequence/AD operation sequence/$$ was recorded.
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$ was recorded.
 Note that for $latex k = 0 , \ldots , p-1$$,
 $latex x^{(k)}$$ is related to the $th k$$ partial of $latex X(t, x)$$ 
 with respect to $latex t$$ by

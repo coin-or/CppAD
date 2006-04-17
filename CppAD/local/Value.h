@@ -57,15 +57,16 @@ $syntax%
 	%Base% %b%
 %$$
 
-$head Taping$$
-The result of this operation is not an $syntax%AD<%Base%>%$$ object
-so the operation is not recorded as part of the corresponding 
-$xref/AD/AD Operation Sequence/AD operation sequence/$$
-(even if the current $xref/glossary/Tape State/state/$$ is Recording).
+$head Operation Sequence$$
+The result of this operation is not an 
+$xref/glossary/AD of Base/AD of/$$ $italic Base$$ object.
+Thus it will not be recorded as part of the current
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
+(even if the current $xref/glossary/Tape State/tape state/$$ is Recording).
 In order to make sure this is understood,
 the $code Value$$ function cannot be called while the tape that records
-$syntax%AD<%Base%>%$$ operations is in the Recording
-$xref/glossary/Tape State/state/$$.
+$syntax%AD<%Base%>%$$ operations is in the Recording state.
 
 $head Example$$
 $children%

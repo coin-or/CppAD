@@ -46,10 +46,11 @@ $fend 20$$
 
 $head Purpose$$
 Calling $code Independent$$ starts the recording 
-$syntax%AD<%Base%>%$$ operations
+$xref/glossary/AD of Base/AD of/$$ $italic Base$$ operations
 with $italic x$$ as the vector of independent variables.
 Once the 
-$xref/AD/AD Operation Sequence/AD operation sequence/$$ is completed,
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$ is completed,
 it is transferred to a function object by calling the
 $syntax%ADFun<%Base%>%$$ $xref/FunConstruct//constructor/$$. 
 
@@ -74,7 +75,7 @@ if this is not the case.
 $head Tape State$$
 $index state, tape$$
 $index tape, state$$
-The tape that records $syntax%AD<%Base%>%$$ operations must be 
+The tape that records $xref/glossary/AD of Base/AD of/$$ $italic Base$$ operations must be 
 in the $xref/glossary/Tape State/Empty/empty state/1/$$ when
 $code Independent$$ is called.
 After this operation, the tape will be in the Recording state.

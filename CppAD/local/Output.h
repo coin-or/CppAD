@@ -74,12 +74,13 @@ $syntax%
 will output the value corresponding to $italic x$$
 followed by the value corresponding to $italic y$$. 
 
-$head Taping$$
-The result of this operation is not an AD object
-so the operation is not recorded as part of any
-$xref/AD/AD Operation Sequence/AD operation sequence/$$
-(even if the tape corresponding to $italic x$$
-is in the Recording $xref/glossary/Tape State/state/$$). 
+$head Operation Sequence$$
+The result of this operation is not an
+$xref/glossary/AD of Base/AD of/$$ $italic Base$$ object.
+Thus it will not be recorded as part of the current
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
+(even if the current $xref/glossary/Tape State/tape state/$$ is Recording).
 
 $head Example$$
 $children%

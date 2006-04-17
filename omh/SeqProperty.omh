@@ -42,7 +42,8 @@ $fend 20$$
 
 $head Purpose$$
 The operations above return properties of the
-$xref/AD/AD Operation Sequence/AD operation sequence/$$
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
 stored in the ADFun object $italic f$$. 
 We use $italic F$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
@@ -104,7 +105,8 @@ $syntax%
 	bool %u%
 %$$
 If it is true, the
-$xref/AD/AD Operation Sequence/AD operation sequence/$$
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
 stored in $italic f$$ contains 
 $xref/VecAD/VecAD<Base>::reference/$$ operands.
 Otherwise $italic u$$ is false.

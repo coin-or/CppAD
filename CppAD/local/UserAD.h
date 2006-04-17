@@ -34,52 +34,15 @@ $index AD, object$$
 
 $head Purpose$$
 The sections listed below describe the operations 
-that are available to 
-$xref/glossary/AD Object/AD objects/$$.
+that are available to $xref/glossary/AD of Base/AD of Base/$$ objects.
 These objects are used to
 $xref/glossary/Tape State/Recording/record/1/$$
-an $xref/AD/AD Operation Sequence/AD operation sequence/$$.
-An AD operations sequence can
-then be transferred to an $xref/ADFun/$$ object.
-The ADFun object can be used to
-evaluate the function and derivatives corresponding to the
-AD sequence of operations.
-
-$head AD Operation Sequence$$
-The sections listed below define the available AD operations. 
-An AD operation becomes part of an AD operation sequence,
-if its result is an
-$xref/glossary/AD Object/AD object/$$ 
-and the corresponding  
-$xref/glossary/Tape State/Recording/tape state is Recording/1/$$.
-For example, if both $italic x$$ and $italic y$$
-have type $syntax%AD<double>%$$, the 
-$xref/Add/$$ operation
-$syntax%
-	%x% + %y%
-%$$
-is defined as part $xref/ADValued/$$ section and its
-result is an AD object.
-Thus,
-if the corresponding tape is recording,
-this operation becomes part of the AD operation sequence
-that is stored and transferred to the corresponding $xref/ADFun/$$ object.
-In contrast, the result of the $xref/Compare/$$ operation
-$syntax%
-	%x% < %y%
-%$$
-is defined as part of the $xref/BoolValued/$$ section but 
-has type $code bool$$ and hence is not an AD object.
-If one executes the following code
-$syntax%
-	if( %x% < %y% )
-		%y% = cos(%x%);
-	else	%y% = sin(%x%); 
-%$$
-The choice may depend on the value of the 
-$xref/glossary/Independent Variable/independent variables/$$
-but only the choice made while the tape is recording
-is transferred to the corresponding $code ADFun$$ object.
+an AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+This operation sequence can
+be transferred to an $xref/ADFun/$$ object where it
+can be used to evaluate the corresponding 
+function and derivative values.
 
 $childtable%
 	CppAD/local/Constructor.h%

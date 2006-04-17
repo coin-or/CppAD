@@ -43,10 +43,12 @@ $tend
 $fend 20$$
 
 $head Purpose$$
-The current value of an AD object $italic y$$ may be part of an 
-$xref/AD/AD Operation Sequence/operation sequence/$$
+The current value of an $syntax%AD<%Base%>%$$ 
+object $italic y$$ is the result of an AD of $italic Base$$ operation.
+This operation may be part of the 
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
 that is transferred to an $xref/ADFun/$$ object $italic f$$.
-This $code ADFun$$ object can be evaluated at different values for the
+The $code ADFun$$ object can be evaluated at different values for the
 $xref/glossary/Independent Variable/independent variables/$$.
 This may result in a corresponding value for $italic y$$ 
 that is different from when the operation sequence was recorded.

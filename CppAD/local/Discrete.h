@@ -44,7 +44,8 @@ $fend 20$$
 
 $head Purpose$$
 Record the evaluation of a discrete function as part
-of an $xref/AD/AD Operation Sequence/AD operation sequence/$$.
+of an AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$.
 The value of a discrete function can depend on the
 $xref/glossary/Independent Variable/independent variables/$$,
 but its derivative is identically zero.
@@ -75,6 +76,14 @@ with the following syntax
 $syntax%
 	%v% = %FunName%(%u%)
 %$$
+
+$head Operation Sequence$$
+This is an AD of $italic Base$$
+$xref/glossary/Operation/Atomic/atomic operation/1/$$
+and hence is part of the current
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+
 
 $head Derivatives$$
 During a zero order $xref/Forward//Forward/$$ operation,

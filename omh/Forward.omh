@@ -252,7 +252,8 @@ $syntax%
 If there is no previous call with $latex k = 0$$,
 $latex x^{(0)}$$ is the value of the independent variables when the 
 corresponding 
-$xref/AD/AD Operation Sequence/AD operation sequence/$$ was recorded.
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$ was recorded.
 Note that 
 $latex x^{(k)}$$ is related to the $th k$$ derivative of $latex X(t)$$ by
 $latex \[
@@ -457,8 +458,8 @@ $fend 20$$
 
 $head Purpose$$
 Forward mode stores Taylor coefficients for all the variables in the 
-$syntax%AD<%Base%>%$$ 
-$xref/AD/AD Operation Sequence/operation sequence/$$
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
 corresponding to $italic f$$.
 The result $italic t$$ is the number of Taylor coefficients
 per variable.
@@ -520,7 +521,8 @@ We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 This function may be not agree with the algorithm that was used
 to create the corresponding
-$xref/AD/AD Operation Sequence/AD operation sequence/$$
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
 because of changes in AD
 $xref/Compare//comparison/$$ results.
 The $code CompareChange$$ function can be used to detect these changes.
@@ -551,7 +553,8 @@ If $italic c$$ is not zero,
 the boolean values resulting from some of the 
 $xref/Compare//comparison operations/$$ corresponding to $italic x$$
 are different from when the 
-$xref/AD/AD Operation Sequence/operation sequence/$$ was created.
+AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$ was created.
 In this case, you may want to record the algorithm with the
 $xref/glossary/Independent Variable/independent variables/$$ 
 equal to the values in $italic x$$ 
