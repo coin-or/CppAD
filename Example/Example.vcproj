@@ -655,6 +655,9 @@
 				RelativePath=".\Forward.cpp">
 			</File>
 			<File
+				RelativePath=".\FunCheck.cpp">
+			</File>
+			<File
 				RelativePath="HesLuDet.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

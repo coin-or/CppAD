@@ -71,6 +71,7 @@ Example_SOURCES   = \
 	ForTwo.cpp \
 	Forward.cpp \
 	ForSparseJac.cpp \
+	FunCheck.cpp \
 	HesLuDet.cpp \
 	HesMinorDet.cpp \
 	Hessian.cpp \

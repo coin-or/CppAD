@@ -1,69 +1,35 @@
-# Abstract operation seqeunce definition to arbitrary type.
-#
 # SvnCommit: file that made this commit.
+# ADFun.h: add FunCheck.h to list.
+# Jacobian.h: remove const from result prototype in doc (mistake).
+# ForOne.h: remove const from result prototype in doc (mistake).
+# Reverse.omh: remove const from result prototype in doc (mistake).
+# glossary.omh: use e^j for j-th elementary vector.
+# Forward.omh: remove const from result prototype in doc (mistake).
+# ExampleList.omh: add FunCheck.cpp to list.
+# Example.vcproj: add FunCheck.cpp to list.
+# Example.cpp: add FunCheck.cpp to list.
+# Example/Makefile.am: add FunCheck.cpp to list.
+# Makefile.am: add FunCheck.h to list.
 #
-# Change AD<Base> to cross refernece to AD of Base in glossary:
-# Independent.h, StdMathUnary.h, VecAD.h
-#
-# Change form used for cross reference to definition of AD operation seqeunce:
-# Doc.omh, RevSparseHes.h, ADFun.h, CondExp.h, Independent.h, FunConstruct.h
-# Discrete.h, ForSparseJac.h, VecAD.h, RevSparseJac.h, SeqProperty.h
-# Reverse.omh, Forward.omh, WhatsNew06.omh
-#
-# Add Operation Sequence heading to documentaiton (replacing Taping):
-# ParVar.h, Atan2.h, Value.h, Output.h, CondExp.h, UnaryPlus.h, Eq.h, Erf.h
-# SubEq.h, MulEq.h, BoolFun.h, UnaryMinus.h, Div.h, StdMathUnary.h, Add.h,
-# Sub.h, Mul.h, Integer.h, NearEqualExt.h, Discrete.h, Pow.h, Abs.h, DivEq.h
-# AddEq.h, Compare.h
-#
-# PrintFor.h: improve discussion of purpose.
-# UserAD.h: move definition of AD operation sequence to glossary.
-# glossary.omh: improve definitions.
 # WhatsNew06.omh: user's view of changes.
 add_list="
+	CppAD/local/FunCheck.h
+	Example/FunCheck.cpp
 "
 change_list="
-SvnCommit
-	Doc.omh
-	CppAD/local/ParVar.h
-	CppAD/local/PrintFor.h
-	CppAD/local/Atan2.h
-	CppAD/local/RevSparseHes.h
-	CppAD/local/Value.h
-	CppAD/local/UserAD.h
+	SvnCommit
 	CppAD/local/ADFun.h
-	CppAD/local/Output.h
-	CppAD/local/CondExp.h
-	CppAD/local/UnaryPlus.h
-	CppAD/local/Eq.h
-	CppAD/local/Erf.h
-	CppAD/local/SubEq.h
-	CppAD/local/MulEq.h
-	CppAD/local/Independent.h
-	CppAD/local/BoolFun.h
-	CppAD/local/UnaryMinus.h
-	CppAD/local/Div.h
-	CppAD/local/StdMathUnary.h
-	CppAD/local/Add.h
-	CppAD/local/Sub.h
-	CppAD/local/Mul.h
-	CppAD/local/Integer.h
-	CppAD/local/FunConstruct.h
-	CppAD/local/NearEqualExt.h
-	CppAD/local/Discrete.h
-	CppAD/local/Pow.h
-	CppAD/local/Abs.h
-	CppAD/local/DivEq.h
-	CppAD/local/AddEq.h
-	CppAD/local/ForSparseJac.h
-	CppAD/local/VecAD.h
-	CppAD/local/Compare.h
-	CppAD/local/RevSparseJac.h
-	omh/SeqProperty.omh
+	CppAD/local/Jacobian.h
+	CppAD/local/ForOne.h
 	omh/Reverse.omh
 	omh/glossary.omh
-	omh/Forward.omh
 	omh/WhatsNew06.omh
+	omh/Forward.omh
+	omh/ExampleList.omh
+	Example/Example.vcproj
+	Example/Example.cpp
+	Example/Makefile.am
+	Makefile.am
 "
 delete_list="
 "

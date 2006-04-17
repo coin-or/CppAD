@@ -78,7 +78,7 @@ $xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
 $head dw$$
 The result $italic dw$$ has prototype
 $syntax%
-	const %Vector% &%dw%
+	%Vector% %dw%
 %$$
 (see $xref/ReverseOne/Vector/Vector/$$ below)
 and its value is the derivative $latex W^{(1)} (x)$$.

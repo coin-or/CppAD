@@ -73,7 +73,7 @@ $xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
 $head y$$
 The result $italic y$$ has prototype
 $syntax%
-	const %Vector% &%y%
+	%Vector% %y%
 %$$
 (see $xref/ForwardZero/Vector/Vector/$$ below)
 and its value is $latex F(x)$$.
@@ -164,7 +164,7 @@ $xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
 $head dy$$
 The result $italic dy$$ has prototype
 $syntax%
-	const %Vector% &%dy%
+	%Vector% %dy%
 %$$
 (see $xref/ForwardOne/Vector/Vector/$$ below)
 and its value is $latex F^{(1)} (x) * dx$$.

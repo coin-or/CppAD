@@ -75,7 +75,7 @@ that point at which to evaluate the Jacobian.
 $head jac$$
 The result $italic jac$$ has prototype
 $syntax%
-	const %Vector% &%jac%
+	%Vector% %jac%
 %$$
 (see $xref/Jacobian/Vector/Vector/$$ below)
 and its size is $latex m * n$$; i.e., the product of the

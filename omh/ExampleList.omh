@@ -115,6 +115,7 @@ $rref ForOne.cpp$$
 $rref ForTwo.cpp$$
 $rref Forward.cpp$$
 $rref ForSparseJac.cpp$$
+$rref FunCheck.cpp$$
 $rref GetStarted.cpp$$
 $rref HesLuDet.cpp$$
 $rref HesMinorDet.cpp$$

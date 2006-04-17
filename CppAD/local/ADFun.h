@@ -53,6 +53,7 @@ $childtable%
 	omh/SeqProperty.omh%
 	CppAD/local/FunEval.h%
 	CppAD/local/Drivers.h%
+	CppAD/local/FunCheck.h%
 	omh/FunDeprecated.omh
 %$$
 
@@ -236,8 +237,7 @@ private:
 # include <CppAD/local/Independent.h>
 # include <CppAD/local/FunConstruct.h>
 # include <CppAD/local/FunEval.h>
-
-// driver routines
 # include <CppAD/local/Drivers.h>
+# include <CppAD/local/FunCheck.h>
 
 # endif

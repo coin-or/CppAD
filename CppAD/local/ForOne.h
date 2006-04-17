@@ -92,7 +92,7 @@ for which we are computing the partial derivative.
 $head dy$$
 The result $italic dy$$ has prototype
 $syntax%
-	const %Vector% &%dy%
+	%Vector% %dy%
 %$$
 (see $xref/ForOne/Vector/Vector/$$ below)
 and its size is $latex m$$, the dimension of the

@@ -77,9 +77,9 @@ An $syntax%AD<%Base%>%$$ object is a dependent variable
 if it is a variable and is not an independent variable.
 
 $head Elementary Vector$$
-The $th j$$ elementary vector $latex u \in B^m$$ is defined by
+The $th j$$ elementary vector $latex e^j \in B^m$$ is defined by
 $latex \[
-u_i = \left\{ \begin{array}{ll}
+e_i^j = \left\{ \begin{array}{ll}
 	1 & {\rm if} \; i = j \\
 	0 & {\rm otherwise}
 \end{array} \right.

@@ -91,6 +91,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/ForSparseJac.h \
 	CppAD/local/Forward.h \
 	CppAD/local/ForwardSweep.h \
+	CppAD/local/FunCheck.h \
 	CppAD/local/FunConstruct.h \
 	CppAD/local/FunEval.h \
 	CppAD/local/Hessian.h \

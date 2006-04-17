@@ -67,6 +67,12 @@ $xref/glossary/AD of Base/AD of Base/$$
 and
 $xref/glossary/Operation/Sequence/operation sequence/1/$$
 have been used throughout the documentation.
+$pre
+
+$$
+Add the $xref/FunCheck/$$ section for checking that a sequence of
+operations is as intended. 
+
 
 $head 04-17$$
 The documentation for $xref/SpeedTest/$$ and $xref/Poly/$$ was improved.
