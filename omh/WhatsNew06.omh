@@ -62,7 +62,13 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 04-17$$
-The documentation for $xref/SpeedTest/$$ was improved.
+The documentation for $xref/SpeedTest/$$ and $xref/Poly/$$ was improved.
+$pre
+
+$$
+Definitions were added for an atomic $xref/glossary/Operation/operation/$$
+and for an operation sequence being
+dependent and independent of the values of specific operands.
 
 $head 04-15$$
 The $xref/MulTape/$$ example was moved from $xref/ADFun/$$ to $xref/General/$$.

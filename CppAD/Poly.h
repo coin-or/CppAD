@@ -1,9 +1,8 @@
 # ifndef CppADPolyIncluded
 # define CppADPolyIncluded
 
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -19,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 /*
 $begin Poly$$
 $spell
@@ -52,11 +50,9 @@ $fend 25$$
 
 $head Description$$
 Computes the $th k$$ derivative of the polynomial 
-$latex P(z)$$ where
 $latex \[
 	P(z) = a_0 + a_1 z^1 + \cdots + a_d z^d
 \] $$
-and $italic a$$ is a vector of length $italic d+1$$.
 If $italic k$$ is equal to zero, the return value is $latex P(z)$$.
 
 $head Include$$
@@ -66,21 +62,19 @@ the $code CppAD$$ routines.
 Including this file defines
 $code Poly$$ within the $code CppAD$$ namespace.
 
-$head p$$
-The return value $italic p$$ is a $italic Type$$ object
-and is set equal to $latex P^{(k)} (z)$$
-(see the description of $xref/Poly/Type/Type/$$ below).
-
 $head k$$
-The argument $italic k$$ has type $code size_t$$
-and specifies the order of the derivative.
+The argument $italic k$$ has prototype
+$syntax%
+	size_t %k%
+%$$
+It specifies the order of the derivative to calculate.
 
 $head a$$
 The argument $italic a$$ has prototype
 $syntax%
 	const %Vector% &%a%
 %$$
-(see description of $xref/Poly/Vector/Vector/$$ below).
+(see $xref/Poly/Vector/Vector/$$ below).
 It specifies the vector corresponding to the polynomial $latex P(z)$$.
 
 $head z$$
@@ -88,11 +82,27 @@ The argument $italic z$$ has prototype
 $syntax%
 	const %Type% &%z%
 %$$
-(see description of $italic Type$$ below).
+(see $italic Type$$ below).
 It specifies the point at which to evaluate the polynomial
 
+$head p$$
+The result $italic p$$  has prototype
+$syntax%
+	%Type% %p%
+%$$
+(see $xref/Poly/Type/Type/$$ below)
+and it is equal to the $th k$$ derivative of $latex P(z)$$; i.e., 
+$latex \[
+p = \frac{k !}{0 !} a_k 
+  + \frac{(k+1) !}{1 !} a_{k+1} z^1 
+  + \ldots
+  + \frac{d !}{(d - k) !} a_d z^{d - k}
+\]
+$$
+If $latex k > d$$, $syntax%%p% = %Type%(0)%$$.
 
 $head Type$$
+The type $italic Type$$ is determined by the argument $italic z$$.
 It is assumed that
 multiplication and addition of $italic Type$$ objects
 are commutative.
@@ -113,13 +123,17 @@ $tend
 
 
 $head Vector$$
-The type $italic Vector$$ must have all the operations
-specified by 
-$syntax%
-	%SimpleVector%<%Type%>%
-%$$
-where $italic SimpleVector$$ is a 
-$xref/SimpleVector//Simple Vector/$$ template class. 
+The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+$italic Type$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
+
+$head Operation Sequence$$
+The $italic Type$$ operation sequence used to calculate $italic p$$ is 
+$xref/glossary/Operation/Independent/independent/1/$$
+of $italic z$$ and the elements of $italic a$$.
+
 
 $head Example$$
 $children%
@@ -133,21 +147,7 @@ It returns true if it succeeds and false otherwise.
 
 $end
 ------------------------------------------------------------------------------
-$begin Poly.h$$
-
-$section Poly Source Code$$
-$spell
-	cstddef
-	namespace
-	CppAD
-	const
-	da
-$$
-
-$index source, Poly$$
-$index Poly, source$$
-
-$codep */
+*/
 # include <cstddef>  // used to defined size_t
 namespace CppAD {    // BEGIN CppAD namespace
 
@@ -155,6 +155,9 @@ template <class Type, class Vector>
 Type Poly(size_t k, const Vector &a, const Type &z)
 {	size_t i;
 	size_t d = a.size() - 1;
+
+	// check Vector is Simple Vector class with Type elements
+	CheckSimpleVector<Type, Vector>();
 
 	// case where derivative order greater than degree of polynomial
 	if( k > d )
@@ -186,9 +189,5 @@ Type Poly(size_t k, const Vector &a, const Type &z)
 	return sum;
 }
 } // END CppAD namespace
-/* $$
-$end
----------------------------------------------------------------------------
-*/
 
 # endif

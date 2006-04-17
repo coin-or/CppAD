@@ -99,6 +99,11 @@ $syntax%%a% / %b%$$
 	$cnext $italic Type$$
 $tend
 
+$head Operation Sequence$$
+The $italic Type$$ operation sequence used to calculate $italic y$$ is 
+$xref/glossary/Operation/Independent/independent/1/$$
+of $italic x$$.
+
 
 $head Example$$
 $children%

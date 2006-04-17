@@ -41,7 +41,7 @@ $children%
 	CppAD/CheckSimpleVector.h%
 
 	CppAD/PowInt.h%
-	omh/Polynomial.omh%
+	CppAD/Poly.h%
 	omh/LuDetAndSolve.omh%
 	CppAD/RombergOne.h%
 	CppAD/RombergMul.h%
@@ -89,7 +89,7 @@ This enables them to be used with algorithmic differentiation types,
 as well as for other purposes. 
 $table
 $rref PowInt$$
-$rref Polynomial$$
+$rref Poly$$
 $rref LuDetAndSolve$$
 $rref RombergOne$$
 $rref RombergMul$$

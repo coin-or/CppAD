@@ -1,19 +1,34 @@
-# Improve SpeedTest documentation.
+# Improve Poly documentation.
 #
 # SvnCommit: file that made this commit.
-# SpeedTest.h: improve documentaiton.
-# SpeedTest.cpp: no need to include <string>.
+# SpeedTest.h: change Description heading to Purpose.
+# CheckNumericType.h: change Description heading to Purpose.
+# CheckSimpleVector.h: change Description heading to Purpose.
+# NearEqual.h: change Description heading to Purpose.
+# PowInt.h: add operation sequence independence to description.
+# Poly.h: improve documentation.
+# glossary: add definition of Type operation seqeunce and sub definitions.
+# library.omh: remove Poly.h source code from documentation.
 # WhatsNew06.omh: user's view of the changes.
-# RevTwo.cpp: change notaiton to agree with new doc, test more cases.
+# TheoryExamList.omh: remove reference to Poly.h source code.
+# Polynomial.omh: no longer needed to contain Poly.h source code.
 add_list="
 "
 change_list="
 	SvnCommit
 	CppAD/SpeedTest.h
-	SpeedExample/SpeedExample.cpp
+	CppAD/CheckNumericType.h
+	CppAD/CheckSimpleVector.h
+	CppAD/NearEqual.h
+	CppAD/PowInt.h
+	CppAD/Poly.h
+	omh/glossary.omh
+	omh/library.omh
 	omh/WhatsNew06.omh
+	omh/TheoryExamList.omh
 "
 delete_list="
+	omh/Polynomial.omh
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

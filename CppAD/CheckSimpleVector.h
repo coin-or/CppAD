@@ -2,7 +2,7 @@
 # define CppADCheckSimpleVectorIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -40,7 +40,7 @@ $tend
 
 $fend 20$$
 
-$head Description$$
+$head Purpose$$
 The syntax 
 $syntax%
 	CheckSimpleVector<%Scalar%, %Vector%>()
@@ -74,7 +74,7 @@ $children%
 	Example/CheckSimpleVector.cpp
 %$$
 The file $xref/CheckSimpleVector.cpp/$$
-contains an example and a test of this function where $italic S$$
+contains an example and test of this function where $italic S$$
 is the same as $italic T$$.
 It returns true, if it succeeds an false otherwise.
 The comments in this example suggest a way to change the example

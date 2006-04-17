@@ -49,7 +49,7 @@ $tend
 
 $fend 20$$
 
-$head Description$$
+$head Purpose$$
 The $code SpeedTest$$ function executes a speed test
 for various sized problems
 and reports the results on standard output; i.e. $code std::cout$$.

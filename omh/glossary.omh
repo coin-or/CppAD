@@ -91,6 +91,51 @@ The set of independent variables are specified by
 the $xref/Independent/$$ function call
 that starts recording operations on the corresponding tape.
 
+$head Operation$$
+
+$subhead Atomic$$
+An atomic $italic Type$$ operation is an operation that
+has a $italic Type$$ result and is not made up of other
+more basic operations.
+
+$subhead Sequence$$
+A sequence of atomic $italic Type$$ operations 
+ss called the $italic Type$$ operation sequence.
+We sometimes use the abbreviated notation AD operation sequence for
+an $syntax%AD<%Base%>%$$ operation sequence.
+
+$subhead Dependent$$
+Suppose that $italic x$$ and $italic y$$ are $italic Type$$ objects and
+the result of 
+$syntax%
+	%x% < %y%
+%$$
+has type $code bool$$ (where $italic Type$$ is not the same as $code bool$$).
+If one executes the following code
+$syntax%
+	if( %x% < %y% )
+		%y% = cos(%x%);
+	else	%y% = sin(%x%); 
+%$$
+the choice above depends on the value of $italic x$$ and $italic y$$
+and the two choices result in a different AD operation sequence.
+In this case, we say that the $italic Type$$ operation sequence depends
+on $italic x$$ and $italic y$$.
+
+$subhead Independent$$
+Suppose that $italic i$$ and $italic n$$ are $code size_t$$ objects,
+and $syntax%%x%[%i%]%$$, $italic y$$ are $italic Type$$ objects,
+where $italic Type$$ is different from $code size_t$$.
+The $italic Type$$ sequence of operations corresponding to
+$syntax%
+	%y% = %Type%(0);
+	for(%i% = 0; %i% < %n%; %i%++)
+		%y% += %x%[%i%];
+%$$
+does not depend on the value of $italic x$$ or $italic y$$.
+In this case, we say that the $italic Type$$ operation sequence 
+is independent of $italic y$$ and the elements of $italic x$$.
+
 $head Parameter$$
 All $italic Base$$ objects are parameters.
 All $syntax%AD<%Base%>%$$ objects are currently parameters
