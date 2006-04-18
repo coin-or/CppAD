@@ -21,13 +21,16 @@ $spell
 	abs
 $$
 
-$section Check Derivatives using Central Differences: Example and Test$$
+$section ADFun Check and Re-Tape: Example and Test$$
 
 $index FunCheck, example$$
 $index example, FunCheck$$
 $index test, FunCheck$$
 $index derivative, check$$
 $index check, derivative$$
+$index re-tape, example$$
+$index example, re-tape$$
+$index test, re-tape$$
 
 $code
 $verbatim%Example/FunCheck.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -66,6 +69,7 @@ template <class Vector, class ADVector>
 bool FunCheckCases(void)
 {	bool ok = true;
 	using CppAD::AD;
+	using CppAD::ADFun;
 
 	// domain space vector
 	size_t n = 2;
@@ -85,7 +89,9 @@ bool FunCheckCases(void)
 	Y = G(X);
 
 	// create f: X -> Y and stop tape recording
-	CppAD::ADFun<double> f(X, Y);
+	// use a pointer so we can re-tape
+	ADFun<double> *f;
+	f = new ADFun<double>(X, Y);
 
 	// create function object to use with double
 	Fun<double, Vector> g(n);
@@ -98,14 +104,26 @@ bool FunCheckCases(void)
 		x[j] = Value(X[j]);
 	double r = 1e-10; 
 	double a = 1e-10;
-	ok      &= FunCheck(f, g, x, a, r);
+	ok      &= FunCheck(*f, g, x, a, r);
 
 	// function values should not agree when the independent variable
 	// values are the negative of values during recording
 	for(j = 0; j < n; j++)
 		x[j] = - Value(X[j]);
-	ok      &= ! FunCheck(f, g, x, a, r);
+	ok      &= ! FunCheck(*f, g, x, a, r);
 
+	// re-tape to obtain the new AD of double operation sequence
+	delete f;   // free memory corresponding to previous new
+	for(j = 0; j < n; j++)
+		X[j] = x[j];
+	CppAD::Independent(X);
+	Y = G(X);
+	f = new ADFun<double>(X, Y);
+
+	// function values should agree now
+	ok      &= FunCheck(*f, g, x, a, r);
+
+	delete f;   // free memory corresponding to previous new
 	return ok;
 }
 } // End empty namespace 

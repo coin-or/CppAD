@@ -1,35 +1,23 @@
-# SvnCommit: file that made this commit.
-# ADFun.h: add FunCheck.h to list.
-# Jacobian.h: remove const from result prototype in doc (mistake).
-# ForOne.h: remove const from result prototype in doc (mistake).
-# Reverse.omh: remove const from result prototype in doc (mistake).
-# glossary.omh: use e^j for j-th elementary vector.
-# Forward.omh: remove const from result prototype in doc (mistake).
-# ExampleList.omh: add FunCheck.cpp to list.
-# Example.vcproj: add FunCheck.cpp to list.
-# Example.cpp: add FunCheck.cpp to list.
-# Example/Makefile.am: add FunCheck.cpp to list.
-# Makefile.am: add FunCheck.h to list.
+# Add discussion to FunCheck documentation.
 #
+# SvnCommit: file that made this commit.
+# FunCheck.h: add discussion and See Also to CompareChange.
+# glossary.h: change cross reference from CompareChange to FunCheck discussion.
+# Forward.h: change cross reference from CompareChange to FunCheck discussion.
+# WishList.omh: add Operation Sequence entry.
+# FunCheck.cpp: add re-taping to example and indexing re-taping.
+# CompareChange.cpp: indexing re-taping.
 # WhatsNew06.omh: user's view of changes.
 add_list="
-	CppAD/local/FunCheck.h
-	Example/FunCheck.cpp
 "
 change_list="
 	SvnCommit
-	CppAD/local/ADFun.h
-	CppAD/local/Jacobian.h
-	CppAD/local/ForOne.h
-	omh/Reverse.omh
+	CppAD/local/FunCheck.h
 	omh/glossary.omh
-	omh/WhatsNew06.omh
 	omh/Forward.omh
-	omh/ExampleList.omh
-	Example/Example.vcproj
-	Example/Example.cpp
-	Example/Makefile.am
-	Makefile.am
+	omh/WishList.omh
+	Example/FunCheck.cpp
+	Example/CompareChange.cpp
 "
 delete_list="
 "

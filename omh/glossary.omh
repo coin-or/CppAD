@@ -42,7 +42,7 @@ $latex F : B^n \rightarrow B^m $$
 where $italic B$$ is the space corresponding to objects of type $italic Base$$.
 We refer to $latex F$$ as the AD function corresponding to 
 the operation sequence and to the object $italic f$$.
-(See the $xref/CompareChange/Discussion/CompareChange discussion/$$ for
+(See the $xref/FunCheck/Discussion/FunCheck discussion/$$ for
 possible differences between $latex F(x)$$ and the algorithm that defined
 the operation sequence.)
 

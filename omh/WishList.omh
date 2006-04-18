@@ -51,7 +51,8 @@ $xref/Independent/$$ is called,
 the resulting $syntax%AD<%Base%>%$$ 
 $xref/glossary/Tape State/tape state/$$ is $code Recording$$.
 If an exception occurs before the call to the corresponding
-$xref/ADFun/$$ constructor, the tape will stuck in the $code Recording$$ state.
+$xref/ADFun/$$ constructor, the tape will be stuck 
+in the $code Recording$$ state.
 Thus, there should be a way to abort the current
 $syntax%AD<%Base%>%$$ recording.
 
@@ -81,6 +82,15 @@ $codep
 $$
 One application of this is where each of the tapes is on a different
 processor in a shared memory multiple processor application.
+
+$head Operation Sequence$$
+It is possible to detect if the 
+AD of $italic Base$$ 
+$xref/glossary/Operation/Sequence/operation sequence/1/$$ 
+does not depend on any of the
+$xref/glossary/Independent Variable/independent variable/$$ values.
+This could be returned as an extra
+$xref/SeqProperty/$$.
 
 $head Software Guidelines$$
 The following is a list of some software guidelines taken from

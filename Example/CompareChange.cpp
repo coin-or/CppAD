@@ -22,11 +22,14 @@ $spell
 	Cpp
 $$
 
-$section CompareChange Function: Example and Test$$
+$section CompareChange and Re-Tape: Example and Test$$
 
 $index compare, change$$
 $index example, CompareChange$$
 $index test, CompareChange$$
+$index re-tape, example$$
+$index example, re-tape$$
+$index test, re-tape$$
 
 $code
 $verbatim%Example/CompareChange.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -70,7 +73,7 @@ bool CompareChange(void)
 	Y[0] = Minimum(X[0], X[1]);
 
 	// create f: x -> y and stop tape recording
-	// use a pointer so that we can retape
+	// use a pointer so that we can re-tape
 	ADFun<double> *f;
 	f = new ADFun<double>(X, Y);
 

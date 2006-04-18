@@ -45,7 +45,7 @@ The result of the syntax above is
 $latex \[
 	y = F(x)
 \] $$
-(See the $xref/CompareChange/Discussion/CompareChange discussion/$$ for
+(See the $xref/FunCheck/Discussion/FunCheck discussion/$$ for
 possible differences between $latex F(x)$$ and the algorithm that defined
 the operation sequence.)
 
@@ -512,6 +512,9 @@ $index forward, zero order$$
 $table
 $bold Syntax$$ $cnext
 $syntax%%c% = %f%.CompareChange()%$$
+$rnext
+$bold See Also$$ $cnext
+$xref/FunCheck/$$
 $tend
 
 $fend 20$$
@@ -555,17 +558,15 @@ $xref/Compare//comparison operations/$$ corresponding to $italic x$$
 are different from when the 
 AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$ was created.
-In this case, you may want to record the algorithm with the
+In this case, you may want to re-tape the algorithm with the
 $xref/glossary/Independent Variable/independent variables/$$ 
 equal to the values in $italic x$$ 
 (so AD operation sequence properly represents the algorithm
 for this value of independent variables).
 On the other hand, re-taping the AD operation sequence usually takes 
 significantly more time than evaluation using $xref/ForwardZero/$$.
-In many cases one knows that,
-even though the comparison operations have changed, 
-this does not significantly change the resulting function
-and it is not worth recording a new AD operation sequence. 
+If the functions values have not changed (see $xref/FunCheck/$$)
+it may not be worth re-taping a new AD operation sequence. 
 
 $head Restrictions$$
 $index NDEBUG, CompareChange$$

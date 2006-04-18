@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin FunCheck$$
 $spell
+	exp
 	bool
 	const
 	Taylor
@@ -36,6 +37,9 @@ $section Check an ADFun Sequence of Operations$$
 $table
 $bold Syntax$$ $cnext
 $syntax%%ok% = FunCheck(%f%, %g%, %x%, %r%, %a%)%$$
+$rnext
+$bold See Also$$ $cnext 
+$xref/CompareChange/$$
 $tend
 
 $fend 20$$
@@ -152,6 +156,31 @@ the object $italic f$$ contains the corresponding
 $xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
 After $code FunCheck$$,
 the previous calls to $xref/Forward/$$ are undefined.
+
+$head Discussion$$
+Suppose that the algorithm corresponding to $italic g$$ contains
+$syntax%
+	if( %x% >= 0 )
+		%y% = exp(%x%)
+	else	%y% = exp(-%x%)
+%$$ 
+where $italic x$$ and $italic y$$ are $syntax%AD<double>%$$ objects.
+It follows that the 
+AD of $code double$$ $xref/glossary/Operation/Sequence/operation sequence/1/$$
+depends on the value of $italic x$$.
+If the sequence of operations stored in $italic f$$ corresponds to 
+$italic g$$ with $latex x \geq 0$$, 
+the function values computed using $italic f$$ when $latex x < 0$$
+will not agree with the function values computed by $latex g$$.
+This is because the operation sequence corresponding to $italic g$$ changed
+(and hence the object $italic f$$ does not represent the function
+$latex G$$ for this value of $italic x$$).
+In this case, you probably want to re-tape the calculations
+performed by $italic g$$ with the
+$xref/glossary/Independent Variable/independent variables/$$ 
+equal to the values in $italic x$$ 
+(so AD operation sequence properly represents the algorithm
+for this value of independent variables).
 
 
 $head Example$$
