@@ -57,7 +57,7 @@ then
 	then
 		grep "^OMhelp Error:" ../OMhelp.Dev.log
 		echo "OMhelp could not build user documentation."
-		echo "See the complete error message in OMhelp.Doc.log"
+		echo "See the complete error message in OMhelp.Doc.log."
 		exit 1
 	fi
 	omhelp ../Doc.omh  \

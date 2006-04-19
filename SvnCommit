@@ -1,23 +1,14 @@
-# Add discussion to FunCheck documentation.
-#
 # SvnCommit: file that made this commit.
-# FunCheck.h: add discussion and See Also to CompareChange.
-# glossary.h: change cross reference from CompareChange to FunCheck discussion.
-# Forward.h: change cross reference from CompareChange to FunCheck discussion.
-# WishList.omh: add Operation Sequence entry.
-# FunCheck.cpp: add re-taping to example and indexing re-taping.
-# CompareChange.cpp: indexing re-taping.
-# WhatsNew06.omh: user's view of changes.
+# Poly.h: add comment of dependency on length of vector.
+# WhatsNew06.omh: missing from previous commit.
+# RunOMhelp: add period at end of sentence.
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/FunCheck.h
-	omh/glossary.omh
-	omh/Forward.omh
-	omh/WishList.omh
-	Example/FunCheck.cpp
-	Example/CompareChange.cpp
+	CppAD/Poly.h
+	omh/WhatsNew06.omh
+	RunOMhelp
 "
 delete_list="
 "

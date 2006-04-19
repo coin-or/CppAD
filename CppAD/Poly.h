@@ -132,7 +132,8 @@ if this is not the case.
 $head Operation Sequence$$
 The $italic Type$$ operation sequence used to calculate $italic p$$ is 
 $xref/glossary/Operation/Independent/independent/1/$$
-of $italic z$$ and the elements of $italic a$$.
+of $italic z$$ and the elements of $italic a$$
+(it does depend on the size of the vector $italic a$$).
 
 
 $head Example$$

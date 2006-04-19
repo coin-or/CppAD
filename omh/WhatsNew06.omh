@@ -61,6 +61,15 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-19$$
+A discussion was added near the end of the $xref/FunCheck/$$ documentation.
+And the cross references to the $xref/CompareChange/$$ discussion
+were changed to the FunCheck discussion.
+$pre
+
+$$
+An operation sequence entry was added to the $xref/WishList/$$.
+
 $head 04-18$$
 The new definitions for 
 $xref/glossary/AD of Base/AD of Base/$$
