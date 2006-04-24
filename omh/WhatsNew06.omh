@@ -61,6 +61,9 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-25$$
+Add an $xref/Introduction/$$ section to the documentation.
+
 $head 04-19$$
 A discussion was added near the end of the $xref/FunCheck/$$ documentation.
 And the cross references to the $xref/CompareChange/$$ discussion

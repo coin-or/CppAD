@@ -1,0 +1,137 @@
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+$begin ExpApxFor$$
+$spell
+	ExpApxFor
+$$
+
+$section An Example Forward Mode Sweep$$
+
+$index ExpApx, forward sweep$$
+$index example, forward sweep$$
+$index forward, sweep$$
+$index sweep, forward$$
+
+$head Mathematical Form$$
+Suppose that we use the algorithm $xref/ExpApx.hpp/$$
+to compute $latex ExpApx(x, e)$$ 
+with $latex x$$ is equal to .5
+and $latex e$$ is equal to .2. 
+For this case, our approximation of the exponential function,
+and the partial derivative of the approximation, 
+are given by 
+$latex \[
+\begin{array}{rclll}
+ExpApx (x, e) & = &   1 + x + x^2 / 2  
+	& =   1 + .5 + .25 / 2 
+	& =   1.625
+\\
+\partial_x ExpApx (x, e) & = &   1 + x 
+	& =   1 + .5 
+	& =   1.5
+\end{array}
+\] $$
+
+$head Forward Example$$
+Forward mode uses the 
+$xref/ExpApxSeq/Operation Sequence/ExpApx operation sequence/$$
+in its original order to compute the partial derivative
+of all the dependent variables with respect to one independent variable. 
+The operation sequence depends on $italic e$$,
+but given the operation sequence,
+the atomic operations do not depend on $italic e$$.
+Thus, the partial derivative with respect to $italic e$$,
+of any of the variables in the operation sequence,
+is zero.
+We also note that the partial derivatives,
+with respect to $latex x$$, are zero for the following symbols:
+$latex \[
+	r_0 , s_0 , k_0 , k_1 , k_2 
+\] $$
+One forward mode sweep calculates the partial derivative 
+with respect to $italic x$$
+(of all the variables)
+as follows:
+$center
+$table
+$bold Operation$$ 
+	$cnext $pre  $$ $cnext $bold Value $$
+	$cnext $pre  $$ $cnext $bold Partial$$
+	$cnext $pre  $$ $cnext $bold Value$$
+$rnext
+$latex a_0 = x $$
+	$cnext $cnext = 0.5
+	$cnext $cnext $latex \partial_x x  $$
+	$cnext $cnext = 1
+$rnext
+$latex q_1  = r_0 * a_0  $$
+	$cnext $cnext = 0.5
+	$cnext $cnext $latex \partial_x r_0  * a_0 + r_0 * \partial_x a_0$$
+	$cnext $cnext = 1
+$rnext
+$latex r_1  = q_1 / k_0  $$
+	$cnext $cnext = 0.5
+	$cnext $cnext $latex \partial_x q_1 / k_0 $$
+	$cnext $cnext = 1
+$rnext
+$latex s_1  = s_0 + r_1  $$
+	$cnext $cnext = 1.5
+	$cnext $cnext $latex \partial_x s_0 + \partial_x r_1 $$
+	$cnext $cnext = 1
+$rnext
+$latex q_2 =  r_1 * a_0 $$
+	$cnext $cnext = 0.25
+	$cnext $cnext $latex \partial_x r_1  * a_0 + r_1 * \partial_x a_0 $$
+	$cnext $cnext = 1
+$rnext
+$latex r_2 = q_2 / k_1 $$
+	$cnext $cnext = 0.125
+	$cnext $cnext $latex \partial_x q_2 / k_1 $$
+	$cnext $cnext = 0.5
+$rnext
+$latex s_2   = s_1 + r_2 $$
+	$cnext $cnext = 1.625
+	$cnext $cnext $latex  \partial_x s_1 + \partial_x r_2 $$
+	$cnext $cnext = 1.5
+$tend
+$$
+Thus forward mode returns
+1.5 as the derivative of the return value of the algorithm
+for this case.
+
+$children%
+	Introduction/ExpApxFor.cpp
+%$$
+$head Trace$$
+$index trace, forward sweep$$
+$index forward, sweep trace$$
+$index forward, trace sweep$$
+The file $xref/ExpApxFor.cpp/$$ contains a program that
+traces this forward mode sweep.
+It starts by using $xref/ExpApxSeq/$$ to set the 
+global value corresponding to each symbol.
+
+
+$head ExpApxFor.out$$
+The following trace 
+is generated when the program in $xref/ExpApxFor.cpp/$$ is run:
+$code
+$verbatim%Introduction/ExpApxFor.out%$$
+$$
+
+$end

@@ -1,0 +1,100 @@
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+$begin Introduction$$
+$spell
+	Griewank
+	Andreas
+$$
+
+
+$index introduction, AD$$
+$index AD, introduction$$
+$index Algorithmic Differentiation, introduction$$
+$index Automatic Differentiation, introduction$$
+
+$section An Introduction by Example to Algorithmic Differentiation$$
+
+
+$head Preface$$
+$index preface$$
+Algorithmic Differentiation 
+(often referred to as Automatic Differentiation or just AD)
+uses the software representation 
+of a function to obtain an efficient method for calculating its derivatives.
+These derivatives can be of arbitrary order and are analytic in nature 
+(do not have any truncation error).
+A forward mode sweep computes 
+the partial derivative of all the dependent variables with respect
+to one independent variable. 
+A reverse mode sweep computes 
+the derivative of one dependent variables with respect
+to all the independent variables.
+The number of floating point operations for either of these sweeps
+is a small multiple of the number required to evaluate the original function. 
+Thus, you can evaluate the derivative of a scalar valued function 
+with respect to thousands of variables in a small multiple of the
+work to evaluate the original function.
+In addition,
+AD automatically takes advantage of the
+speed of your algorithmic representation of a function.
+For example,
+if you calculate a determinant using LU factorization,
+AD will use the LU representation for
+the derivative of the determinant
+(which is faster than using the definition of the determinant).
+$pre
+
+$$
+
+$head Purpose$$
+This is an introduction by example
+to Algorithmic Differentiation.
+Its purpose is to aid in understand what AD calculates,
+how the calculations are preformed,
+and the amount of computation and memory required 
+for a forward or reverse sweep.
+We define an algorithm
+that approximates the exponential function.
+We then write out 
+the floating point operation sequence 
+that corresponds to a specific input to the algorithm. 
+We then use the operation sequence, and a forward mode sweep,
+to calculate a derivative of the corresponding function.
+This is followed by calculation of the same derivative using
+a reverse mode sweep.
+
+$head Reference$$
+An in-depth review of AD theory and methods can be found in 
+the book
+$italic 
+Evaluating Derivatives:
+Principles and Techniques of Algorithmic Differentiation
+$$,
+Andreas Griewank,
+SIAM Frontiers in Applied Mathematics, 
+2000.
+
+$childtable%
+	omh/ExpApx.omh%
+	omh/ExpApxSeq.omh%
+	omh/ExpApxFor.omh%
+	omh/ExpApxRev.omh%
+	Introduction/ExpApxAD.cpp
+%$$
+
+$end

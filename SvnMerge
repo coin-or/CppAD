@@ -19,13 +19,13 @@ cd ..
 ToDirectory=trunk
 #
 # Name of the directory where the changes have been committed
-FromDirectory=branches/admap
+FromDirectory=branches/intro
 #
 # Version of the repository corresponding to FromDirectory just before changes
-Start=270
+Start=394
 # 
 # Version of the repository corresponding to FromDirecrtory after the changes
-End=279
+End=405
 #
 # echo the svn merge command
 echo "cd  .."

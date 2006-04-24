@@ -143,6 +143,13 @@ else
 GETSTARTED =
 endif
 #
+# Did user specify --with-Introduction
+if CppAD_INTRODUCTION
+INTRODUCTION = Introduction
+else
+INTRODUCTION =
+endif
+#
 # Did user specify --with-Example
 if CppAD_EXAMPLE
 EXAMPLE = Example
@@ -195,6 +202,7 @@ endif
 SUBDIRS = \
 	$(ADOLC) \
 	$(EXAMPLE) \
+	$(INTRODUCTION) \
 	$(FADBAD) \
 	$(GETSTARTED) \
 	$(PRINTFOR) \

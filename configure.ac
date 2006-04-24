@@ -20,7 +20,7 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 
 dnl   package   version           bug-report
-AC_INIT(CppAD, 06-03-30, bradbell@seanet.com)
+AC_INIT(CppAD, 06-04-24, bradbell@seanet.com)
 
 dnl Set the default install prefix to the installers home directory
 AC_PREFIX_DEFAULT(${HOME})
@@ -48,6 +48,16 @@ AC_ARG_WITH(GetStarted,
 )
 AM_CONDITIONAL(CppAD_GETSTARTED, test "$GetStarted" = "yes" )
 AC_MSG_RESULT( [$GetStarted] )
+
+dnl Are we building the Introduction directory ---------------------------
+AC_MSG_CHECKING( [--with-Introduction] )
+AC_ARG_WITH(Introduction, 
+	AC_HELP_STRING( [--with-Introduction], [default is no] ),
+	[Introduction="yes"],
+	[Introduction="no"]
+)
+AM_CONDITIONAL(CppAD_INTRODUCTION, test "$Introduction" = "yes" )
+AC_MSG_RESULT( [$Introduction] )
 
 dnl Are we building the Example directory --------------------------------
 AC_MSG_CHECKING( [--with-Example] )
@@ -220,6 +230,7 @@ AC_CONFIG_FILES([
 	Example/Makefile 
 	Fadbad/Makefile 
 	GetStarted/Makefile 
+	Introduction/Makefile
 	PrintFor/Makefile
 	SpeedExample/Makefile
 	Speed/Makefile 

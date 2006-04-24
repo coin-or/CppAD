@@ -1,0 +1,169 @@
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+/*
+$begin ExpApx$$
+$spell
+	hpp
+	Apx
+	cpp
+	const
+	exp
+	bool
+$$
+
+$section An Example Exponential Approximation$$
+
+$index ExpApx$$
+$index example, algorithm$$
+$index algorithm, example$$
+$index exp, example$$
+
+$table
+$bold Syntax$$    $cnext
+$syntax%# include "ExpApx.hpp"%$$
+$rnext $cnext
+$syntax%%y% = ExpApx(%x%, %e%)%$$
+$tend
+
+$fend 20$$
+
+$head Purpose$$
+This is an example algorithm that is used to demonstrate 
+Algorithmic Differentiation. 
+
+
+$head Mathematical Form$$
+The exponential function can be defined by
+$latex \[
+	\exp (x) = 1 + x^1 / 1 ! + x^2 / 2 ! + \cdots 
+\] $$
+We define $latex k ( \varepsilon )  $$ as the smallest
+non-negative integer such that $latex \varepsilon \geq x^k / k !$$; i.e.,
+$latex \[
+k( \varepsilon ) = \min \{ k \in {\rm Z}_+ \; | \; \varepsilon \geq x^k / k ! \}
+\] $$
+The mathematical form for our approximation of the exponential function is
+$latex \[
+\begin{array}{rcl}
+ExpApx(x , \varepsilon ) & = & \left\{
+\begin{array}{ll}
+\frac{1}{ ExpApx(-x , \varepsilon ) } 
+	& {\rm if} \; x < 0 
+\\
+1 + x^1 / 1 ! + \cdots + x^{k( \varepsilon)} / k( \varepsilon ) !
+	& {\rm otherwise}
+\end{array}
+\right.
+\end{array}
+\] $$
+
+
+$head x$$
+The argument $italic x$$ has prototype
+$syntax%
+	const %Type% &%x%
+%$$
+(see $italic Type$$ below)
+It specifies the point at which to evaluate the 
+approximation for the exponential function.
+
+$head e$$
+The argument $italic e$$ has prototype
+$syntax%
+	const %Type% &%e%
+%$$
+It specifies the accuracy with which
+to approximate the exponential function value; i.e.,
+it is the value of $latex \varepsilon$$ in the 
+exponential function approximation defined above.
+
+$head y$$
+The result $italic y$$ has prototype
+$syntax%
+	%Type% %y%
+%$$
+It is the value of the exponential function 
+approximation defined above.
+
+$head Type$$
+If $italic u$$ and $italic v$$ are $italic Type$$ objects and $italic i$$
+is an $code int$$: 
+
+$table
+$bold Operation$$  $cnext $bold Result Type$$ $cnext $bold Description$$
+$rnext
+$syntax%%Type%(%i%)%$$ 
+	$cnext $italic Type$$
+	$cnext object with value equal to $italic i$$ 
+$rnext
+$syntax%%u% > %v%$$
+	$cnext $code bool$$
+	$cnext true,
+	if $italic u$$ greater than $italic v$$, an false otherwise
+$rnext
+$syntax%%u% = %v%$$
+	$cnext 
+	$cnext new value of $italic u$$ is value of $italic v$$
+$rnext
+$syntax%%u% * %v%$$
+	$cnext $italic Type$$
+	$cnext results in the value of $latex u * v$$
+$rnext
+$syntax%%u% / %v%$$
+	$cnext $italic Type$$
+	$cnext result has the value of $latex u / v$$
+$rnext
+$syntax%%u% + %v%$$
+	$cnext $italic Type$$
+	$cnext result has the value of $latex u + v$$
+$rnext
+$syntax%-%u%$$
+	$cnext $italic Type$$
+	$cnext result has the value of $latex - u$$
+$tend
+
+$children%
+	Introduction/ExpApx.hpp
+%$$
+
+$head Implementation$$
+The file $xref/ExpApx.hpp/$$
+contains a C++ implementation of this function.
+
+$head Example$$
+The following program $code ExpApxMain.cpp$$ 
+and corresponding output  $code ExpMain.out$$
+are in the $code Introduction$$ directory. 
+The program computes and prints the return value of
+$code ExpApx$$ for the case where $italic Type$$ is double,
+$italic x$$ is .5
+and $italic e$$ is .2:
+
+$subhead ExpApxMain.cpp$$
+$code
+$verbatim%Introduction/ExpApxMain.cpp%0%// BEGIN PROGRAM%$$
+$$
+
+$subhead ExpApxMain.out$$
+$code
+$verbatim%Introduction/ExpApxMain.out%$$
+$$
+
+
+$end
+*/

@@ -68,9 +68,9 @@ then
 	fi
 fi
 #
-# aclocal
+# automake
 #
-if [ "$1" = "aclocal" ] || [ "$1" = "all" ]
+if [ "$1" = "automake" ] || [ "$1" = "all" ]
 then
 	if [ -e configure ]
 	then
@@ -82,33 +82,8 @@ then
 	aclocal
 	echo "---------------------------------------------------------"
 	#
-	if [ "$1" != "all" ]
-	then
-		exit 0
-	fi
-fi  
-#
-# autoheader
-#
-if [ "$1" = "autoheader" ] || [ "$1" = "all" ]
-then
 	echo "autoheader"
 	autoheader
-	#
-	if [ "$1" != "all" ]
-	then
-		exit 0
-	fi
-fi
-#
-# automake
-#
-if [ "$1" = "automake" ] || [ "$1" = "all" ]
-then
-	if [ -e configure ]
-	then
-		rm configure
-	fi
 	#
 	echo "autoconf"
 	autoconf
@@ -127,7 +102,7 @@ fi
 if [ "$1" = "configure" ] || [ "$1" = "all" ]
 then
 	#
-	TEST="--with-GetStarted"
+	TEST="--with-GetStarted --with-Introduction"
 	if [ "$2" == "test" ]
 	then
 		TEST="$TEST --with-Example"
@@ -168,9 +143,9 @@ then
 	fi
 fi
 #
-# compile
+# make
 #
-if [ "$1" = "compile" ] || [ "$1" = "all" ]
+if [ "$1" = "make" ] || [ "$1" = "all" ]
 then
 	echo "make"
 	make
@@ -343,12 +318,10 @@ fi
 echo "option"
 echo "------"
 echo "version         update configure.ac and Doc.omh version number"
-echo "aclocal         create aclocal.m4 file"
-echo "autoheader      create a CppAD/config.h.in file"
-echo "automake        run autoconf and automake to create configure script"
-echo "configure       excludes all the --with-* options"
+echo "automake        run aclocal,autoheader,autoconf,automake -> configure"
+echo "configure       excludes --with-* except GetStarted and Introduction"
 echo "configure test  includes all the possible options except PREFIX_DIR"
-echo "compile         compile all of the tests"
+echo "make            use make to build all of the requested targets"
 echo "omhelp          build all the documentation"
 echo "dist            create the distribution files CppAD.*.tar.gz"
 echo "dos             create the distribution files CppAD.*.zip"
