@@ -114,24 +114,13 @@ Thus forward mode returns
 1.5 as the derivative of the return value of the algorithm
 for this case.
 
+
 $children%
 	Introduction/ExpApxFor.cpp
 %$$
-$head Trace$$
-$index trace, forward sweep$$
-$index forward, sweep trace$$
-$index forward, trace sweep$$
-The file $xref/ExpApxFor.cpp/$$ contains a program that
-traces this forward mode sweep.
-It starts by using $xref/ExpApxSeq/$$ to set the 
-global value corresponding to each symbol.
-
-
-$head ExpApxFor.out$$
-The following trace 
-is generated when the program in $xref/ExpApxFor.cpp/$$ is run:
-$code
-$verbatim%Introduction/ExpApxFor.out%$$
-$$
+$head Verification$$
+The file $xref/ExpApxFor.cpp/$$ contains a routine 
+which verifies the values computed above.
+It returns true for success and false for failure.
 
 $end

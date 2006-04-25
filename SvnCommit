@@ -1,20 +1,48 @@
-# Delete polynomial example from Theory section (replace by Introduction).
+# Convert Introduction programs to subroutines that verify values.
 #
 # SvnCommit: file that preformed this commit plus changes from intro branch.
-# TheoryExamList.omh: old polynomial example subsections.
-# TheoryExam.omh: old polynomial example section.
-# Theory.omh: no longer include TheoryExam.omh.
+# Introduction.vcproj: Visual studio project file.
+# ExpApx.cpp: example and test of ExpApx.
+# Introduciton.cpp: driver routine for all he tests in Introduction.
+# Introduction.sln: Visual studio project file.
+# ExpApxSeq.cpp: change into an automated test.
+# ExpApxRev.cpp: change into an automated test.
+# ExpApxSeqMain.cpp: old test driver (replaced by Introduction.cpp)
+# Makefile.am: combine all cases into one program.
+# ExpApxAD.cpp: change into an automated test.
+# ExpApxMain.cpp: old test driver (replaced by Introduction.cpp)
+# ExpApxFor.cpp: change into an automated test.
+# ExpApx.omh: link to automated test instead of test and driver.
+# ExpApxFor.omh: link to automated test instead of test and driver.
+# ExpApxSeq.omh: link to automated test instead of test and driver.
+# Introduction.omh: add Introduction.cpp to list.
+# ExpApxRev.omh: link to automated test instead of test and driver.
 # WhatsNew.omh: user's view of the changes.
+# Example.cpp: remove dead code (no longer used).
+# TestMore.cpp: improve check for memory leak.
 add_list="
+	Introduction/ExpApx.cpp
+	Introduction/Introduction.cpp
 "
 change_list="
 	SvnCommit
+	Introduction/ExpApxSeq.cpp
+	Introduction/ExpApxRev.cpp
+	Introduction/Makefile.am
+	Introduction/ExpApxAD.cpp
+	Introduction/ExpApxFor.cpp
+	omh/ExpApx.omh
+	omh/ExpApxFor.omh
+	omh/ExpApxSeq.omh
+	omh/Introduction.omh
+	omh/ExpApxRev.omh
 	omh/WhatsNew06.omh
-	omh/Theory.omh
+	Example/Example.cpp
+	TestMore/TestMore.cpp
 "
 delete_list="
-	omh/TheoryExamList.omh
-	omh/TheoryExam.omh
+	Introduction/ExpApxSeqMain.cpp
+	Introduction/ExpApxMain.cpp
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same

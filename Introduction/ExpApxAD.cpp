@@ -18,32 +18,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin ExpApxAD.cpp$$
 $spell
+	cmath
+	fabs
+	bool
 	ExpApxAD
-	cout
 	du
 	dv
 	dw
 	endl
 	hpp
 	http
-	iostream
 	org
 	std
 	www
 	CppAD
 $$
 
-$section Computing ExpApx Derivatives with CppAD$$.
+$section ExpApx: Computing Derivatives with CppAD$$.
 
-$head Source Code$$
 $codep */
 
-# include <iostream>         // C++ standard input/output
+# include <cmath>            // for fabs
 # include <vector>           // standard vector
 # include <CppAD/CppAD.h>    // http://www.coin-or.org/CppAD/ 
 # include "ExpApx.hpp"       // our example exponential function approximation
-int main(void)
-{	using CppAD::AD;
+bool ExpApxAD(void)
+{	bool ok = true;
+	using CppAD::AD;
 
 	// domain space vector
 	size_t n = 2;
@@ -73,26 +74,21 @@ int main(void)
 	du[0] = 1.;
 	du[1] = 0.;
 	dv    = f.Forward(1, du);
-	std::cout << "Forward mode: partial ExpApx(x, e) w.r.t x is " 
-	          << dv[0] << std::endl;
-	
+	double check = 1.5;     // partial of ExpApx(x, e) with respect to x
+	ok   &= fabs(check - dv[0]) <=  1e-10;
 
 	// reverse mode sweep that derivative
 	std::vector<double>  w(m);
 	std::vector<double> dw(n);
 	w[0] = 1.;
 	dw   = f.Reverse(1, w);
-	std::cout << "Reverse mode: partial ExpApx(x, e) w.r.t x is " 
-                  << dw[0] << std::endl;
-	std::cout << "Reverse mode: partial ExpApx(x, e) w.r.t e is " 
-                  << dw[1] << std::endl;
+	check = 1.5;           // partial of ExpApx(x, e) with respect to x
+	ok   &= fabs(check - dw[0]) <=  1e-10;
+	check = 0.;            // partial of ExpApx(x, e) with respect to e
+	ok   &= fabs(check - dw[1]) <=  1e-10;
+
+	return ok;
 }
 /* $$
-
-$head Program Output$$
-$code
-$verbatim%Introduction/ExpApxAD.out%$$
-$$
-
 $end
 */

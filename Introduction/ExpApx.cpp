@@ -15,11 +15,31 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
+/*
+$begin ExpApx.cpp$$
+$spell
+	ExpApx
+$$
+
+$section ExpApx: Example and Test$$
+
+$index ExpApx, introduction$$
+$index introduction, ExpApx$$
+
+$code
+$verbatim%Introduction/ExpApx.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$$
+
+$end
+*/
 // BEGIN PROGRAM
-# include <iostream>
-# include "ExpApx.hpp"
-int main(void)
-{	double x = .5, e = .2;
-	std::cout << "ExpApx(x, e) = " << ExpApx(x, e) << std::endl;
-	return 0;
+# include <cmath>             // for fabs function
+# include "ExpApx.hpp"        // definition of ExpApx algorithm
+bool ExpApx(void)
+{	double x     = .5;
+	double e     = .2;
+	double check = 1 + .5 + .125; // include 1 and only 1 term less than e
+	bool   ok    = std::fabs( ExpApx(x, e) - check ) <= 1e-10; 
+	return ok;
 }
+// END PROGRAM

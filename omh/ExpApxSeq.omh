@@ -159,31 +159,10 @@ there is a different symbol corresponding to the assignment.
 $children%
 	Introduction/ExpApxSeq.cpp
 %$$
-$head Trace$$
-$index trace, operation sequence$$
-$index operation, sequence trace$$
-$index sequence, operation trace$$
-The file $xref/ExpApxSeq.cpp/$$ contains the routine $code ExpApxSeq$$ 
-which traces this operation sequence 
-and writes its output to a file called 
-$code ExpSeqExample.out$$
-(both these files are in the $code Introduction$$ directory).
-
-$head ExpApxSeqMain.cpp$$
-The following program 
-executes the routine above with 
-$latex x$$ is equal to .5 and $latex e$$ is equal to .2:
-$code
-$verbatim%Introduction/ExpApxSeqMain.cpp%0%// BEGIN PROGRAM%$$
-$$
-
-
-$head ExpApxSeq.out$$
-The following trace
-is generated when the program in $xref/ExpApxSeq.cpp/$$ is run:
-$code
-$verbatim%Introduction/ExpApxSeq.out%$$
-$$
+$head Verification$$
+The file $xref/ExpApxSeq.cpp/$$ contains a routine 
+which verifies the values computed above.
+It returns true for success and false for failure.
 
 $end
 */

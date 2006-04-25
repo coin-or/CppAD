@@ -22,8 +22,8 @@ $spell
 	Cpp
 $$
 
-$section Program That Runs the CppAD Example Suite$$
-$mindex program run all example test$$
+$section Program That Runs all the CppAD Example$$
+$index example, run all$$
 
 $code
 $verbatim%Example/Example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -34,7 +34,6 @@ $end
 // BEGIN PROGRAM
 
 // system include files used for I/O
-# include <cstddef>
 # include <iostream>
 
 // CppAD include file
@@ -135,12 +134,6 @@ extern bool UnaryMinus(void);
 extern bool UnaryPlus(void);
 extern bool Value(void);
 extern bool VecAD(void);
-
-// templated tests in example directory
-
-// standard array template classes used by tests
-# include <vector>
-# include <valarray>
 
 namespace {
 	// function that runs one test

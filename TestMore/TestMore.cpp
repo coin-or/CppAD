@@ -17,16 +17,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
 // system include files used for I/O
-# include <cstddef>
 # include <iostream>
 
 // AD<Type> template class definition
 # include <CppAD/CppAD.h>
-
-# include <complex>
-
-typedef CppAD::AD<double>     ADdouble;
-typedef CppAD::AD<ADdouble>   ADDdouble;
 
 // various examples / tests
 extern bool Abs(void);
@@ -167,8 +161,12 @@ int main(void)
 	ok &= Run( VecADPar,        "VecADPar"       );
 	ok &= Run( VecUnary,        "VecUnary"       );
 
-	// check for memory leak during previous calculations
-	ok &= Run( TrackCount,      "TrackCount"     );
+
+	// check for memory leak in previous calculations
+	if( CppADTrackCount() != 0 )
+	{	ok = false;
+		cout << "Error: memroy leak detected" << endl;
+	}
 
 	cout << endl << endl;
 	if( ok )

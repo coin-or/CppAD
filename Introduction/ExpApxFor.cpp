@@ -18,53 +18,52 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin ExpApxFor.cpp$$
 $spell
-	namespace
-	ExpApxFor
-	const
-	vname
-	vindex
-	iostream
-	cout
 	std
-	endl
 	vars
+	ExpApxFor
+	cmath
+	fabs
+	bool
 $$
 
-$section An Example Forward Mode Trace$$
+$section ExpApx Forward Mode Verification$$
 $codep */
 
-# include <iostream>                        // C++ standard input/output
-extern void ExpApxSeq(double x, double e);  // prototype for ExpApxSeq
+# include <cmath>                           // for fabs function
+extern bool ExpApxSeq(void);                // prototype for ExpApxSeq
 extern double a[1], q[3], r[3], s[3], k[3]; // global vars set by ExpApxSeq
-namespace { // empty namespace
-	void Print(const char *vname, size_t vindex, double v_x )
-	{	std::cout << vname << vindex << "_x = " << v_x;
-		std::cout << std::endl;
-	}
-}
-int main(void)
-{	double a_x[1], q_x[3], r_x[3], s_x[3];
+bool ExpApxFor(void)
+{	bool ok = true;
+	double a_x[1], q_x[3], r_x[3], s_x[3];
 
-	// compute the global variables 
-	double x = .5, e = .1;
-	ExpApxSeq(x, e);
+	// make sure global variables have been computed by ExpApxSeq
+	ok &= ExpApxSeq();
 
-	// begin forward mode
+	// initial r and s values are parameters
 	r_x[0] = s_x[0] = 0.;
-	a_x[0] = 1.;
-	Print("a", 0, a_x[0]);
-	size_t j;
-	for(j = 1; j <= 2; j++) 
-	{	q_x[j] = r_x[j-1] * a[0] + r[j-1] * a_x[0];  // q = r * a
-		Print("q", j, q_x[j]);
 
-		r_x[j] = q_x[j] / k[j-1];                    // r = q / k
-		Print("r", j, r_x[j]);
+	a_x[0] = 1.;                                         // a = x
+	ok    &= std::fabs( a_x[0] - 1. ) <= 1e-10;
 
-		s_x[j]     = s_x[j-1] + r_x[j];              // s = s + r
-		Print("s", j, s_x[j]);
-	}
-	return 0;
+	q_x[1] = r_x[0] * a[0] + r[0] * a_x[0];              // q = r * a
+	ok    &= std::fabs( q_x[1] - 1. ) <= 1e-10;
+
+	r_x[1] = q_x[1] / k[0];                              // r = q / k
+	ok    &= std::fabs( r_x[1] - 1. ) <= 1e-10;
+
+	s_x[1] = s_x[0] + r_x[1];                           // s = s + r
+	ok    &= std::fabs( r_x[1] - 1. ) <= 1e-10;
+
+	q_x[2] = r_x[1] * a[0] + r[1] * a_x[0];              // q = r * a
+	ok    &= std::fabs( q_x[2] - 1. ) <= 1e-10;
+
+	r_x[2] = q_x[2] / k[1];                              // r = q / k
+	ok    &= std::fabs( r_x[2] - 0.5 ) <= 1e-10;
+
+	s_x[2] = s_x[1] + r_x[2];                           // s = s + r
+	ok    &= std::fabs( s_x[2] - 1.5 ) <= 1e-10;
+
+	return ok;
 }
 /* $$
 $end

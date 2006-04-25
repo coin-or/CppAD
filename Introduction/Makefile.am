@@ -17,48 +17,24 @@
 # ---------------------------------------------------------------------------
 # automake input file
 #
-noinst_PROGRAMS    = \
-	ExpApxMain \
-	ExpApxSeqMain \
-	ExpApxFor \
-	ExpApxRev \
-	ExpApxAD
+# Microsoft project files
+EXTRA_DIST        = Introduction.sln Introduction.vcproj 
 #
-noinst_DATA        = \
-	ExpApxMain.out \
-	ExpApxSeq.out \
-	ExpApxFor.out \
-	ExpApxRev.out \
-	ExpApxAD.out
+noinst_PROGRAMS   = Introduction 
 #
 if CppAD_BOOSTVECTOR
 AM_CPPFLAGS       = -I$(BOOST_DIR) \
-                    -I. -I$(top_builddir)
+                    -I. -I$(top_builddir) 
 else
 AM_CPPFLAGS       = -I. -I$(top_builddir)
 endif
 #
-AM_CXXFLAGS = -g $(CPP_ERROR_WARN)
+AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #
-EXTRA_DIST = ExpApx.hpp
-#
-ExpApxMain_SOURCES = ExpApxMain.cpp 
-ExpApxSeqMain_SOURCES = ExpApxSeqMain.cpp ExpApxSeq.cpp
-ExpApxFor_SOURCES = ExpApxFor.cpp ExpApxSeq.cpp
-ExpApxRev_SOURCES = ExpApxRev.cpp ExpApxSeq.cpp
-ExpApxAD_SOURCES = ExpApxAD.cpp 
-#
-ExpApxMain.out: ExpApxMain$(EXEEXT)
-	./ExpApxMain > ExpApxMain.out
-#
-ExpApxSeq.out: ExpApxSeqMain$(EXEEXT)
-	./ExpApxSeqMain > ExpApxSeq.out
-#
-ExpApxFor.out: ExpApxFor$(EXEEXT)
-	./ExpApxFor > ExpApxFor.out
-#
-ExpApxRev.out: ExpApxRev$(EXEEXT)
-	./ExpApxRev > ExpApxRev.out
-#
-ExpApxAD.out: ExpApxAD$(EXEEXT)
-	./ExpApxAD > ExpApxAD.out
+Introduction_SOURCES   = \
+	Introduction.cpp \
+	ExpApx.cpp  \
+	ExpApxAD.cpp \
+	ExpApxFor.cpp \
+	ExpApxSeq.cpp \
+	ExpApxRev.cpp

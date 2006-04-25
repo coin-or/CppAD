@@ -18,47 +18,36 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin ExpApxRev.cpp$$
 $spell
-	namespace
+	cstddef
+	cmath
 	vars
-	ExpApx
-	const
-	fname
-	findex
-	vname
-	vindex
+	ir
 	iq
 	ir
-	cpp
-	iostream
-	cout
-	std
-	endl
 	ia
 	df
+	ExpApxRev
+	bool
+	std
+	fabs
 $$
 
-$section An Example Reverse Mode Trace$$
+$section ExpApx Reverse Mode Verification$$
 $codep */
-# include <iostream>                        // C++ standard input/output
-extern void ExpApxSeq(double x, double e);  // prototype for ExpApxSeq
+# include <cstddef>                         // for size_t
+# include <cmath>                           // for fabs function
+extern bool ExpApxSeq(void);                // prototype for ExpApxSeq
 extern double a[1], q[3], r[3], s[3], k[3]; // global vars set by ExpApxSeq
-namespace { // empty namespace
-	void Print(const char *fname, size_t findex, 
-	           const char *vname, size_t vindex, double f_v )
-	{	std::cout << fname << findex << "_" 
-		          << vname << vindex << " = " << f_v;
-		std::cout << std::endl;
-	}
-}
-int main(void)
-{	// ordering of arguments is: 
+bool ExpApxRev(void)
+{	bool ok = true;
+
+	// ordering of arguments is: 
 	// a0, q0, q1, q2, r0, r1, r2, s0, s1, s2 
 	// corresponding index offsets for each of the parameters
 	size_t ia = 0, iq = ia+1, ir = iq+3, is = ir+3;
 
-	// compute the global variables 
-	double x = .5, e = .1;
-	ExpApxSeq(x, e);
+	// make sure global variables have been computed by ExpApxSeq
+	ok &= ExpApxSeq();
 
 	// initial all partial derivatives as zero
 	double df[10];
@@ -68,26 +57,37 @@ int main(void)
 
 	// f0
 	df[is+2] = 1.;
-	Print("f", 0, "s", 2, df[is + 2]);
+	ok &= std::fabs( df[is+2] - 1. ) <= 1e-10;    // f0_s2
 
-	for(j = 2; j >= 1; j--) 
-	{	// remove s_j = s_{j-1} + r_j from f_{6-3*j} to get f_{7-3*j}
-		df[is + j-1] += df[is + j];
-		df[ir + j]   += df[is + j];
-		Print("f", 7-3*j, "s", j-1, df[is + j-1]);
-		Print("f", 7-3*j, "r", j,   df[ir + j]);
+	// remove s2 = s1 + r2 from f0 to get f1
+	df[is+1] += df[is+2];
+	df[ir+2] += df[is+2];
+	ok &= std::fabs( df[is+1] - 1. ) <= 1e-10;    // f1_s1
+	ok &= std::fabs( df[ir+2] - 1. ) <= 1e-10;    // f1_r2
 
-		// remove r_j = q_j / k_{j-1} from f_{7-3*j} to get f_{8-3*j}
-		df[iq + j]   += df[ir + j] / k[j-1];
-		Print("f", 8-3*j, "q", j,   df[iq + j]);
+	// remove r2 = q2 / k1 from f1 to get f2
+	df[iq+2] += df[ir+2] / k[1];
+	ok &= std::fabs( df[iq+2] - 0.5 ) <= 1e-10;   // f2_q2
 
-		// remove q_j = r_{j-1} * a_0 from f_{8-3*j} to get f_{9-3*j}
-		df[ir + j-1] += df[iq + j] * a[0];
-		df[ia + 0]   += df[iq + j] * r[j-1];
-		Print("f", 9-3*j, "r", j-1, df[ir + j-1]);
-		Print("f", 9-3*j, "a", 0,   df[ia + 0]);
-	}
-	return 0;
+	// remove q2 = r1 * a0 from f2 to get f3
+	df[ir+1] += df[iq+2] * a[0];
+	df[ia+0] += r[1] * df[iq+2];
+	ok &= std::fabs( df[ir+1] - 0.25 ) <= 1e-10;  // f3_r1
+	ok &= std::fabs( df[ia+0] - 0.25 ) <= 1e-10;  // f3_a0
+
+	// remove s1 = s0 + r1 from f3 to get f4
+	df[ir+1] += df[is+1];
+	ok &= std::fabs( df[ir+1] - 1.25 ) <= 1e-10;  // f4_r1
+
+	// remove r1 = q1 / k0 from f4 to get f5
+	df[iq+1] += df[ir+1] / k[0];
+	ok &= std::fabs( df[iq+1] - 1.25 ) <= 1e-10;  // f5_q1
+
+	// remove q1 = r0 * a0 from f5 to get f6
+	df[ia+0] += r[0] * df[iq+1];
+	ok &= std::fabs( df[ia+0] - 1.5 ) <= 1e-10;   // f6_a0
+
+	return ok;
 }
 /* $$
 $end

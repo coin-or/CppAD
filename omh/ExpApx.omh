@@ -138,7 +138,8 @@ $syntax%-%u%$$
 $tend
 
 $children%
-	Introduction/ExpApx.hpp
+	Introduction/ExpApx.hpp%
+	Introduction/ExpApx.cpp
 %$$
 
 $head Implementation$$
@@ -146,23 +147,9 @@ The file $xref/ExpApx.hpp/$$
 contains a C++ implementation of this function.
 
 $head Example$$
-The following program $code ExpApxMain.cpp$$ 
-and corresponding output  $code ExpMain.out$$
-are in the $code Introduction$$ directory. 
-The program computes and prints the return value of
-$code ExpApx$$ for the case where $italic Type$$ is double,
-$italic x$$ is .5
-and $italic e$$ is .2:
-
-$subhead ExpApxMain.cpp$$
-$code
-$verbatim%Introduction/ExpApxMain.cpp%0%// BEGIN PROGRAM%$$
-$$
-
-$subhead ExpApxMain.out$$
-$code
-$verbatim%Introduction/ExpApxMain.out%$$
-$$
+The file $xref/ExpApx.cpp/$$ 
+contains an example and test of this implementation.
+It returns true for success and false for failure.
 
 
 $end

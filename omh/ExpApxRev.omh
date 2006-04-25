@@ -263,34 +263,15 @@ $latex x$$ of $latex ExpApx(x, .2)$$ at the point $latex x = 0.5$$.
 We also note that both reverse and forward mode give the 
 same result for this partial derivative.
 
+
 $children%
 	Introduction/ExpApxRev.cpp
 %$$
-$head Trace$$
-$index trace, reverse sweep$$
-$index reverse, sweep trace$$
-$index reverse, trace sweep$$
-The file $xref/ExpApxRev.cpp/$$ contains a program that
-traces this reverse mode sweep.
-It starts by using $xref/ExpApxSeq/$$ to set the 
-global value corresponding to each symbol.
-This program begins by printing
-the non-zero partial derivative of $latex f_0$$; i.e.,
-its derivative with respect to $latex s_3$$.
-For $latex j > 0$$,
-it only prints the partial derivatives of
+$head Verification$$
+The file $xref/ExpApxFor.cpp/$$ contains a routine 
+which verifies the values computed above.
+It returns true for success and false for failure.
+It only tests the partial derivatives of
 $latex f_j$$ that are different from those of $latex f_{j-1}$$.
-It includes the partial derivative of
-$latex s_3$$ with respect to the parameters
-$latex s_0$$, and $latex r_0$$.
-This was not included in the above in order
-to simplify the presentation.
-
-$head ExpApxRev.out$$
-The following trace 
-is generated when the program in $xref/ExpApxRev.cpp/$$ is run:
-$code
-$verbatim%Introduction/ExpApxRev.out%$$
-$$
 
 $end

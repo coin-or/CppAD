@@ -94,7 +94,8 @@ $childtable%
 	omh/ExpApxSeq.omh%
 	omh/ExpApxFor.omh%
 	omh/ExpApxRev.omh%
-	Introduction/ExpApxAD.cpp
+	Introduction/ExpApxAD.cpp%
+	Introduction/Introduction.cpp
 %$$
 
 $end

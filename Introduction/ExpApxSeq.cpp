@@ -18,54 +18,51 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin ExpApxSeq.cpp$$
 $spell
-	namespace
-	Apx
-	fstream
-	ofstream
-	iostream
 	std
-	cout
-	endl
-	Exp
-	const
-	vname
-	vindex
+	ExpApxSeq
+	cmath
+	bool
+	fabs
 $$
-$section An Example Operation Sequence Trace$$
+$section ExpApx: Operation Sequence Verification$$
 $codep */
 
-# include <fstream>                  // used to write ExpApxSeq.out
+# include <cmath>                    // for fabs function
 double a[1], q[3], r[3], s[3], k[3]; // global variables set by ExpApxSeq
-namespace { // empty namespace
-	void Print(std::ofstream &file, 
-	           const char *vname, size_t vindex, double v)
-	{	file << vname << vindex << " = " << v;
-		file << std::endl;
-	}
-}
-void ExpApxSeq(double x, double e)
-{	r[0] = s[0] = k[0] = 1.;                   // r = s = k = Type(1);
+bool ExpApxSeq(void)
+{	bool  ok = true;
+	double x = .5;
 
-	// open the output file
-	std::ofstream file( "ExpApxSeq.out" );
+	r[0] = s[0] = k[0] = 1.;                   // r = s = k = Type(1);
 
 	a[0] = x;                                  // a = x;
-	Print(file, "a", 0, a[0]);
+	ok  &= std::fabs( a[0] - 0.5) < 1e-10;
 
-	size_t j;
-	for(j = 1; j <= 2; j++) 
-	{	q[j] = r[j-1] * a[0];              // q  = a * r;
-		Print(file, "q", j, q[j]);
+	q[1] = r[0] * a[0];                        // q  = a * r;
+	ok  &= std::fabs( q[1] - 0.5) < 1e-10;
 
-		r[j] = q[j] / k[j-1];              // r  = q / k;
-		Print(file, "r", j, r[j]);
+	r[1] = q[1] / k[0];                        // r  = q / k;
+	ok  &= std::fabs( r[1] - 0.5) < 1e-10;
 
-		s[j]     = s[j-1] + r[j];          // s  = s + r;
-		Print(file, "s", j, s[j]);
+	s[1] = s[0] + r[1];                        // s  = s + r;
+	ok  &= std::fabs( s[1] - 1.5) < 1e-10;
 
-		k[j]     = k[j-1] + 1.;            // k  = k + Type(1);
-		Print(file, "k", j, k[j]);
-	}
+	k[1] = k[0] + 1.;                          // k  = k + Type(1);
+	ok  &= std::fabs( k[1] - 2.0) < 1e-10;
+
+	q[2] = r[1] * a[0];                        // q  = a * r;
+	ok  &= std::fabs( q[2] - 0.25) < 1e-10;
+
+	r[2] = q[2] / k[1];                        // r  = q / k;
+	ok  &= std::fabs( r[2] - 0.125) < 1e-10;
+
+	s[2] = s[1] + r[2];                        // s  = s + r;
+	ok  &= std::fabs( s[2] - 1.625) < 1e-10;
+
+	k[2] = k[1] + 1.;                          // k  = k + Type(1);
+	ok  &= std::fabs( k[2] - 3.0) < 1e-10;
+
+	return ok;
 }
 /* $$
 $end

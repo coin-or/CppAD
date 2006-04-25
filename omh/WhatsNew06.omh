@@ -61,6 +61,11 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-26$$
+The programs in $xref/Introduction/$$ have been converted to automated
+test that return true or false with the driver program 
+$xref/Introduction.cpp/$$.
+
 $head 04-25$$
 Add an $xref/Introduction/$$ section to the documentation
 (replaces old example that was part of the $xref/Theory/$$ section).
