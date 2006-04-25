@@ -49,12 +49,15 @@ We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 We use $latex G : B^n \rightarrow B^m$$ to denote the
 function corresponding to the C++ function object $italic g$$.
-This routine checks that,
-at the independent variable values specified by $italic x$$,
-the AD of $italic Base$$ 
+This routine check if
+$latex \[
+	F(x) = G(x)
+\]$$
+If $latex F(x) \neq G(x)$$, the
 $xref/glossary/Operation/Sequence/operation sequence/1/$$
-corresponding to $italic f$$ properly represents the algorithm used
-by $italic g$$ to calculate values for $latex G$$.
+corresponding to $italic f$$ does not represents the algorithm used
+by $italic g$$ to calculate values for $latex G$$
+(see $xref/FunCheck/Discussion/Discussion/$$ below).
 
 $head f$$
 The $code FunCheck$$ argument $italic f$$ has prototype
@@ -104,9 +107,8 @@ $syntax%
 and its size 
 must be equal to $italic n$$, the dimension of the
 $xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
-This specifies that point at which to compare the derivative
-calculated using $italic f$$ with the central difference approximation
-for the derivative of $latex G$$.
+This specifies that point at which to compare the values
+calculated by $italic f$$ and $italic G$$. 
 
 $head r$$
 The $code FunCheck$$ argument $italic r$$ has prototype
@@ -114,7 +116,7 @@ $syntax%
 	const %Base% &%r%
 %$$
 It specifies the relative error the element by element
-comparison of the derivatives of $latex F$$ and $italic G$$.
+comparison of the value of $latex F(x)$$ and $latex G(x)$$.
 
 $head a$$
 The $code FunCheck$$ argument $italic a$$ has prototype
@@ -122,7 +124,7 @@ $syntax%
 	const %Base% &%a%
 %$$
 It specifies the absolute error the element by element
-comparison of the derivative of $latex F(x)$$ with $italic D$$.
+comparison of the value of $latex F(x)$$ and $latex G(x)$$.
 
 $head ok$$
 The $code FunCheck$$ result $italic ok$$ has prototype
