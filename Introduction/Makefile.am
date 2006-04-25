@@ -34,6 +34,7 @@ AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 Introduction_SOURCES   = \
 	Introduction.cpp \
 	ExpApx.cpp  \
+	ExpApx.hpp \
 	ExpApxAD.cpp \
 	ExpApxFor.cpp \
 	ExpApxSeq.cpp \
