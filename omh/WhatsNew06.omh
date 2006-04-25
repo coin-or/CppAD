@@ -62,7 +62,8 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 04-25$$
-Add an $xref/Introduction/$$ section to the documentation.
+Add an $xref/Introduction/$$ section to the documentation
+(replaces old example that was part of the $xref/Theory/$$ section).
 
 $head 04-19$$
 A discussion was added near the end of the $xref/FunCheck/$$ documentation.

@@ -1,35 +1,20 @@
-# Merge intro branch into trunk.
+# Delete polynomial example from Theory section (replace by Introduction).
 #
 # SvnCommit: file that preformed this commit plus changes from intro branch.
-# SvnMerge: command file that preformed the merge from intro branch to trunk.
+# TheoryExamList.omh: old polynomial example subsections.
+# TheoryExam.omh: old polynomial example section.
+# Theory.omh: no longer include TheoryExam.omh.
 # WhatsNew.omh: user's view of the changes.
 add_list="
 "
 change_list="
 	SvnCommit
-	SvnMerge
 	omh/WhatsNew06.omh
-	Introduction
-	Introduction/ExpApxSeq.cpp
-	Introduction/ExpApxRev.cpp
-	Introduction/ExpApxSeqMain.cpp
-	Introduction/Makefile.am
-	Introduction/ExpApx.hpp
-	Introduction/ExpApxAD.cpp
-	Introduction/ExpApxMain.cpp
-	Introduction/ExpApxFor.cpp
-	Doc.omh
-	Build
-	configure.ac
-	omh/ExpApx.omh
-	omh/ExpApxFor.omh
-	omh/ExpApxSeq.omh
-	omh/Introduction.omh
-	omh/ExpApxRev.omh
-	RunOMhelp
-	Makefile.am
+	omh/Theory.omh
 "
 delete_list="
+	omh/TheoryExamList.omh
+	omh/TheoryExam.omh
 "
 #----------------------------------------------------------------------
 # Edit section above for individual cases, section below stays the same
