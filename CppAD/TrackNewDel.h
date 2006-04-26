@@ -2,7 +2,7 @@
 # define CppADTrackNewDelIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -190,7 +190,7 @@ $children%
 	Example/TrackNewDel.cpp
 %$$
 The file $xref/TrackNewDel.cpp/$$
-contains an example and a test of these functions.
+contains an example and test of these functions.
 It returns true, if it succeeds, and false otherwise.
 
 $end
@@ -225,7 +225,7 @@ class TrackElement {
 	
 public:
 	std::string   file;   // corresponding file name
-	size_t        line;   // corresponding line number
+	int           line;   // corresponding line number
 	void          *ptr;   // value returned by TrackNew
 	TrackElement *next;   // next element in linked list
 
@@ -234,7 +234,7 @@ public:
 	: file(""), line(0), ptr(CppADNull), next(CppADNull)
 	{ }
 	
-	TrackElement(const char *f, size_t l, void *p)
+	TrackElement(const char *f, int l, void *p)
 	: file(f), line(l), ptr(p), next(CppADNull)
 	{	CppADUnknownError( p != CppADNull);
 	}

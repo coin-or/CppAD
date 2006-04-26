@@ -63,21 +63,21 @@ $head Download Current Version$$
 $index download, unix$$
 Download the file
 $href%
-	http://www.coin-or.org/Tarballs/CppAD-06-04-11.tar.gz%
-	CppAD-06-04-11.tar.gz
+	http://www.coin-or.org/Tarballs/CppAD-06-04-26.tar.gz%
+	CppAD-06-04-26.tar.gz
 %$$
 
 $head Extraction$$
 Use the command
 $codep
-	tar -xvzf CppAD-06-04-11.tar.gz
+	tar -xvzf CppAD-06-04-26.tar.gz
 $$
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-06-04-11
+	cppad-06-04-26
 %$$
-Note that $code 06-04-11$$ is the version number for CppAD.
+Note that $code 06-04-26$$ is the version number for CppAD.
 All of the commands below are to be executed starting from this
 directory.
 
@@ -100,6 +100,7 @@ $syntax%
 	./configure                            \
 	--prefix=%PrefixDir%                     \
 	--with-GetStarted                      \
+	--with-Introduction                    \
 	--with-Example                         \
 	--with-TestMore                        \
 	--with-Speed                           \
@@ -166,12 +167,24 @@ $codep
 	GetStarted/GetStarted
 $$
 
+$head --with-Introduction$$
+$index Introduction, unix$$
+If the command line argument $code --with-Introduction$$ is specified,
+the $xref/Introduction.cpp/$$ program
+(verifies calculations in the $xref/Introduction/$$) will be built.
+Once the $code make$$ command
+has been executed, you can run these examples by executing the command
+$codep
+	Introduction/Introduction
+$$
+
 $head --with-Example$$
 $index example, unix$$
 $index test, unix$$
 If the command line argument $code --with-Example$$ is specified,
-an extensive set of examples and correctness tests will be compiled by the
-$xref/InstallUnix/make/make/$$ command. Once the $code make$$ command 
+the $xref/Example.cpp/$$ program 
+(an extensive set of examples and correctness tests) will be built.
+Once the $code make$$ command 
 has been executed, you can run these examples by executing the command 
 $codep
 	Example/Example
@@ -191,8 +204,9 @@ $head --with-Speed$$
 $index test, unix speed$$
 $index speed, unix test$$
 If the command line argument $code --with-Speed$$ is specified,
-a set of speed tests will be compiled by the
-$xref/InstallUnix/make/make/$$ command. Once the $code make$$ command 
+the $xref/Speed.cpp/$$ program
+(a set of speed tests) will built.
+Once the $code make$$ command 
 has been executed, you can run these speed tests by executing the command 
 $codep
 	Speed/Speed
@@ -376,6 +390,7 @@ will compile all of the examples and tests.
 An extensive set of examples and tests can be run as described under
 the headings
 $xref/InstallUnix/--with-GetStarted/--with-GetStarted/$$,
+$xref/InstallUnix/--with-Introduction/--with-Introduction/$$,
 $xref/InstallUnix/--with-Example/--with-Example/$$,
 $xref/InstallUnix/--with-TestMore/--with-TestMore/$$,
 $xref/InstallUnix/--with-Speed/--with-Speed/$$,

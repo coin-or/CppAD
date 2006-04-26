@@ -271,7 +271,12 @@ inline void SpeedTest(
 			cout << name << endl;
 
 		if( first != last )
-		{	std::cout << "size = "  << size;
+		{
+# ifdef _MSC_VER        // convert to integer to avoid warning in this case
+			std::cout << "size = "  << int(size);
+# else
+			std::cout << "size = "  << size;
+# endif
 			SpeedTestNdigit(size, ndigit, pow10);
 			while( ndigit < maxSizeDigit )
 			{	cout << " ";
@@ -286,8 +291,11 @@ inline void SpeedTest(
 		{
 			pow10 /= 10;
 			digit  = rate / pow10;
- 			cout << digit;
-
+# ifdef _MSC_VER        // convert to integer to avoid warning in this case
+			std::cout << int(digit);
+# else
+			std::cout << digit;
+# endif
 			rate    = rate % pow10;
 			ndigit -= 1;
 

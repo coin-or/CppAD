@@ -1,16 +1,24 @@
-# Missing from previous commit.
+# Extra things connected to adding Introduciton section.
 #
 # SvnCommit: file that preformed this commit.
-# Makefile.am: ExpApx.hpp is needed in distribution.
-# Build: missing Introduction from conversion to dos format.
+# SpeedTest.h: a Microsoft compiler special case to warning.
+# TrackNewDel.h: make data structure more consistent (and avoid warning).
+# LuFactor.h: remove a Microsoft compiler special case (needed with version 6).
+# Build: remove --with-Introduction from default build.
+# Speed.vcproj: remove reference to ../lib/SpeedTest.cpp (no longer used).
+# InstallUnix.omh: add --with-Introduction to install documentation.
+# InstallWindows.omh: add Introduction to install documentation.
 add_list="
-	Introduction/Introduction.vcproj
-	Introduction/Introduction.sln
 "
 change_list="
 	SvnCommit
+	CppAD/SpeedTest.h
+	CppAD/TrackNewDel.h
+	CppAD/LuFactor.h
 	Build
-	Introduction/Makefile.am
+	Speed/Speed.vcproj
+	omh/InstallUnix.omh
+	omh/InstallWindows.omh
 "
 delete_list="
 "

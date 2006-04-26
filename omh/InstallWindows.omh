@@ -69,8 +69,8 @@ just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
 Otherwise,
 download the archive
 $href%
-	http://www.coin-or.org/Tarballs/CppAD-06-04-11.zip%
-	CppAD-06-04-11.zip
+	http://www.coin-or.org/Tarballs/CppAD-06-04-26.zip%
+	CppAD-06-04-26.zip
 %$$
 
 $head Extraction$$
@@ -80,10 +80,10 @@ $href%
 	WinZip
 %$$
 or some other program to decompress the archive
-$code CppAD-06-04-11.zip$$.
+$code CppAD-06-04-26.zip$$.
 This will create the distribution directory 
 $syntax%
-	cppad-06-04-11
+	cppad-06-04-26
 %$$
 All the command sequences below assume that you start in this
 distribution directory.
@@ -106,6 +106,7 @@ contains developer documentation for CppAD.
 
 $head Getting Started$$
 $index GetStarted, windows$$
+The following steps will build the $xref/GetStarted.cpp/$$ example.
 Using Microsoft Visual C++,
 open the workspace $code GetStarted/GetStarted.sln$$
 in Visual Studio and then select $code Build | Build GetStarted.exe$$.
@@ -115,9 +116,24 @@ $codep
 	GetStarted
 $$
 
+$head Introduction$$
+$index introduction, windows$$
+The following steps will build the routines that verify the calculations
+in the $xref/Introduction/$$ section.
+Using Microsoft Visual C++,
+open the workspace $code Introduction/Introduction.sln$$ in Visual Studio.
+Then select $code Build | Build Introduction.exe$$.
+Then in a Dos box, execute the following commands
+$codep
+	cd Introduction\Debug
+	Introduction
+$$
+
 $head Examples and Testing$$
 $index example, windows$$
 $index test, windows$$
+The following steps will build an extensive set of examples
+and correctness tests.
 Using Microsoft Visual C++,
 open the workspace $code Example/Example.sln$$ in Visual Studio.
 Then select $code Build | Build Example.exe$$.

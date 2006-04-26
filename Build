@@ -102,9 +102,10 @@ fi
 if [ "$1" = "configure" ] || [ "$1" = "all" ]
 then
 	#
-	TEST="--with-GetStarted --with-Introduction"
+	TEST="--with-GetStarted"
 	if [ "$2" == "test" ]
 	then
+		TEST="$TEST --with-Introduction"
 		TEST="$TEST --with-Example"
 		TEST="$TEST --with-TestMore"
 		TEST="$TEST --with-Speed"
