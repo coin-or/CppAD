@@ -300,6 +300,14 @@ then
 	cd cppad-$AcDate
 	./Build configure test
 	make
+	echo "creating Test.log"
+	Example/Example           >  Test.log
+	TestMore/TestMore         >> Test.log
+	Introduction/Introduction >> Test.log
+	Fadbad/Example            >> Test.log
+	Adolc/Example             >> Test.log
+	RunOMhelp Doc
+	cat OMhelp.Doc.log        >> Test.log
 	if [ "$1" != "all" ]
 	then
 		exit 0

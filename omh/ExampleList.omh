@@ -36,7 +36,6 @@ example using the $xref/Add//addition operator/$$.
 The examples list in this section are of a more general nature.
 
 $childtable%
-	GetStarted/GetStarted.cpp%
 	Example/Interface2C.cpp%
 	Example/JacMinorDet.cpp%
 	Example/JacLuDet.cpp%
