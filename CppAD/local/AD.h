@@ -19,6 +19,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 
+// simple AD operations that must be defined for AD as well as base class
+# include <CppAD/local/Ordered.h>
+# include <CppAD/local/Identical.h>
+
 // define the template classes that are used by the AD template class
 # include <CppAD/local/OpCode.h>
 # include <CppAD/local/TapeRec.h>
@@ -249,8 +253,6 @@ private:
 } // END CppAD namespace
 
 // operations that expect the AD template class to be defined
-# include <CppAD/local/Ordered.h>
-# include <CppAD/local/Identical.h>
 
 # undef CppADCompareFriend
 # undef CppADAssignMember

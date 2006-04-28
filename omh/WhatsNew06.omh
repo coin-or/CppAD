@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew06$$
 $spell
+	gcc
 	var
 	const
 	dw
@@ -60,6 +61,19 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 04-29$$
+Change all of the example and test driver programs so that they return
+error codes; i.e., zero for no error and one for an error.
+$pre
+
+$$
+Add more discussion and a reference for the 
+$xref/Bugs/gcc 3.4.4 -O2/gcc 3.4.4 -O2/$$ bug.
+
+$head 04-28$$
+Improve the $xref/GetStarted.cpp/$$ example and move
+it so that it is visible at the too level of the documentation.
 
 $head 04-26$$
 The programs in $xref/Introduction/$$ have been converted to automated

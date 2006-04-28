@@ -72,12 +72,10 @@ int main(void)
 	ok &= Run( ExpApxFor,     "ExpApxFor"    );
 	ok &= Run( ExpApxSeq,     "ExpApxSeq"    );
 	ok &= Run( ExpApxRev,     "ExpApxRev"    );
-
-	cout << endl << endl;
 	if( ok )
 		cout << "All the tests passed." << endl;
 	else	cout << "At least one test failed." << endl;
 
-	return 0;
+	return static_cast<int>( ! ok );
 }
 // END PROGRAM

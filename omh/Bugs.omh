@@ -18,6 +18,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin Bugs$$
 $spell
+	adolc
+	uninitialized
+	stl
+	usr
+	Dir
 	CppAD
 	Gcc
 	Cygwin
@@ -29,11 +34,14 @@ $index bugs, using CppAD$$
 $index problem, using CppAD$$
 
 
-$head Gcc Version 3.4.4$$
+
+$head gcc 3.4.4 -O2$$
 $index gcc 3.4.4, bug$$
 $index bug, gcc 3.4.4$$
 There appears to be a problem with gcc version 3.4.4 
 under Cygwin using the compiler option $code -O2$$.
+
+$subhead Example$$
 If you are running gcc 3.4.4, try using the 
 $xref/installUnix/Configure/configure/$$ option
 $codep
@@ -44,5 +52,28 @@ you will get warnings that do not make sense when executing the
 $code make$$ command in the $code Example$$ sub-directory.
 In addition, the $code Example/Example$$ program will generate a
 segmentation fault.
+
+$subhead Adolc$$
+If you are running gcc 3.4.4, try using the
+$xref/installUnix/Configure/configure/$$ options
+$syntax%
+	./configure \
+		ADOLC_DIR=%AdolcDir% \
+		CPP_ERROR_WARN="-Wall" \
+		BOOST_DIR=%BoostDir%
+%$$
+the following warning occurs during the $code make$$ command: 
+$codep
+/usr/lib/gcc/i686-pc-cygwin/3.4.4/include/c++/bits/stl_uninitialized.h:82: 
+warning: '__cur' might be used uninitialized in this function
+$$
+This appears to be the same problem discussed in 
+$pre
+	$$
+$href%http://www.cygwin.com/ml/cygwin-apps/2005-06/msg00159.html%$$
+$pre
+$$
+and its follow up messages.
+
 
 $end

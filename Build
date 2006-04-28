@@ -33,6 +33,7 @@ AcDate=`grep "^ *AC_INIT(" configure.ac | \
 #
 if [ "$1" = "version" ] || [ "$1" = "all" ]
 then
+	echo "Build version"
 	#
 	# Today's date in yy-mm-dd decimal digit format with leading zeros
 	Today=`date +%g-%m-%d`
@@ -72,6 +73,8 @@ fi
 #
 if [ "$1" = "automake" ] || [ "$1" = "all" ]
 then
+	echo "Build automake"
+	#
 	if [ -e configure ]
 	then
 		rm configure
@@ -101,9 +104,15 @@ fi
 #
 if [ "$1" = "configure" ] || [ "$1" = "all" ]
 then
+	if [ "$2" = "test" ]
+	then
+		echo "Build configure test"
+	else
+		echo "Build configure"
+	fi
 	#
 	TEST="--with-GetStarted"
-	if [ "$2" == "test" ]
+	if [ "$2" = "test" ]
 	then
 		TEST="$TEST --with-Introduction"
 		TEST="$TEST --with-Example"
@@ -148,6 +157,8 @@ fi
 #
 if [ "$1" = "make" ] || [ "$1" = "all" ]
 then
+	echo "Build make"
+	#
 	echo "make"
 	make
 	#
@@ -161,6 +172,8 @@ fi
 #
 if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
 then
+	echo "Build omhelp"
+	#
 	echo "RunOMhelp Dev"
 	if ! ./RunOMhelp Dev
 	then
@@ -183,6 +196,7 @@ fi
 #
 if [ "$1" = "dist" ] || [ "$1" = "all" ]
 then
+	echo "Build dist"
 	#
 	if [ -e cppad-$AcDate ]
 	then
@@ -220,6 +234,7 @@ then
 fi
 if [ "$1" = "dos" ] || ( [ "$1" = "all" ] && [ "$2" != "unix" ] )
 then
+	echo "Build dos"
 	#
 	if [ -e cppad-$AcDate ]
 	then
@@ -294,8 +309,10 @@ then
 		exit 0
 	fi
 fi
-if [ "$1" = "test" ] || [ "$1" = "all" ]
+if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "unix" ] )
 then
+	echo "Build test"
+	#
 	tar -xvzf CppAD-$AcDate.tar.gz
 	cd cppad-$AcDate
 	./Build configure test
@@ -338,11 +355,7 @@ echo "test            unpack the unix distribution and compiles its tests"
 echo
 echo "Build all"
 echo "This command will execute all the options in the order above"
-echo "with the exception that \"configue test\" will be excluded."
-echo
-echo "Build all test"
-echo "This command will execute all the options in the order above"
-echo "with the exception that \"configue\" will be excluded."
+echo "with the exception that \"configue test\" and \"test\" will be excluded."
 echo
 echo "Build all unix"
 echo "This command will execute all the options in the order above"

@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin ExampleFadbad.cpp$$
@@ -66,13 +64,11 @@ int main(void)
 
 	ok &= Run(DetMinor,          "DetMinor"   );
 	ok &= Run(DetLu,             "DetLu"      );
-
-	cout << endl << endl;
 	if( ok )
 		cout << "All the tests passed." << endl;
 	else	cout << "At least one test failed." << endl;
 
-	return 0;
+	return static_cast<int>( ! ok );
 }
 
 // END PROGRAM

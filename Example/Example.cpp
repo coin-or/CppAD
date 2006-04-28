@@ -259,12 +259,10 @@ int main(void)
 	{	ok = false;
 		cout << "Error: memroy leak detected" << endl;
 	}
-
-	cout << endl << endl;
 	if( ok )
 		cout << "All the tests passed." << endl;
 	else	cout << "At least one test failed." << endl;
 
-	return 0;
+	return static_cast<int>( ! ok );
 }
 // END PROGRAM
