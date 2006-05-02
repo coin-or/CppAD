@@ -2,28 +2,17 @@
 # change all test programs return an error code so can be checked for failure.
 #
 # SvnCommit: file that preformed this commit.
-# Introduction.cpp: return error code.
-# AD.h: reorder includes to fix IdentialEqual underined in ADTape (on Fedora).
-# Build: echo Build option for each option and do remove test from Build all.
-# */Example.cpp: return error code.
-# Adolc.cpp: return error code.
-# Bugs.omh: improve discussion of gcc 3.4.4 -O2 bug.
+# Op.h: include StdMathUnary.h before declaring the unary operators.
+# Identical.h: declare Base operation before AD<Base> operation.
 # WhatsNew06.omh: user's view of the changes.
-# TestMore.cpp: return error code.
 #
 add_list="
 "
 change_list="
 	SvnCommit
-	Introduction/Introduction.cpp
-	CppAD/local/AD.h
-	Build
-	Fadbad/Example.cpp
-	Adolc/Example.cpp
-	omh/Bugs.omh
+	CppAD/local/Op.h
+	CppAD/local/Identical.h
 	omh/WhatsNew06.omh
-	Example/Example.cpp
-	TestMore/TestMore.cpp
 "
 delete_list="
 "

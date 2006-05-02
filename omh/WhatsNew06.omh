@@ -62,6 +62,12 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-02$$
+The g++ (GCC) 4.1.0 (Red Hat 4.1.0-3) compiler reported an error
+because certain functions were used before being defined
+(version 3.4.4 did not complain about this).
+This has been fixed.
+
 $head 04-29$$
 Change all of the example and test driver programs so that they return
 error codes; i.e., zero for no error and one for an error.

@@ -2,7 +2,7 @@
 # define CppADIdenticalIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -147,10 +147,6 @@ $end
 
 namespace CppAD {
 	// Parameter -------------------------------------------
-	template <class Base>
-	inline bool IdenticalPar(const AD<Base> &x)
-	{	return Parameter(x) && IdenticalPar(x.value); }
-
 	inline bool IdenticalPar(const float &x)
 	{	return true; }
 
@@ -163,11 +159,11 @@ namespace CppAD {
 	inline bool IdenticalPar(const std::complex<double> &x)
 	{	return true; }
 
-	// Zero -----------------------------------------------
 	template <class Base>
-	inline bool IdenticalZero(const AD<Base> &x)
-	{	return Parameter(x) && IdenticalZero(x.value); }
+	inline bool IdenticalPar(const AD<Base> &x)
+	{	return Parameter(x) && IdenticalPar(x.value); }
 
+	// Zero -----------------------------------------------
 	inline bool IdenticalZero(const float &x)
 	{	return (x == 0.); }
 
@@ -180,11 +176,11 @@ namespace CppAD {
 	inline bool IdenticalZero(const std::complex<double> &x)
 	{	return (x == std::complex<double>(0., 0.) ); }
 
-	// One -----------------------------------------------
 	template <class Base>
-	inline bool IdenticalOne(const AD<Base> &x)
-	{	return Parameter(x) && IdenticalOne(x.value); }
+	inline bool IdenticalZero(const AD<Base> &x)
+	{	return Parameter(x) && IdenticalZero(x.value); }
 
+	// One -----------------------------------------------
 	inline bool IdenticalOne(const float &x)
 	{	return (x == 1.); }
 
@@ -197,14 +193,11 @@ namespace CppAD {
 	inline bool IdenticalOne(const std::complex<double> &x)
 	{	return (x == std::complex<double>(1., 0.) ); }
 
-	// Equal -----------------------------------------------
 	template <class Base>
-	inline bool IdenticalEqual(const AD<Base> &x, const AD<Base> &y)
-	{	bool parameter;
-		parameter = ( Parameter(x) & Parameter(y) );
-		return parameter  && IdenticalEqual(x.value, y.value); 
-	}
+	inline bool IdenticalOne(const AD<Base> &x)
+	{	return Parameter(x) && IdenticalOne(x.value); }
 
+	// Equal -----------------------------------------------
 	inline bool IdenticalEqual(const float &x, const float &y)
 	{	return (x == y); }
 	inline bool IdenticalEqual(
@@ -216,6 +209,13 @@ namespace CppAD {
 	inline bool IdenticalEqual(
 		const std::complex<double> &x, const std::complex<double> &y)
 	{	return (x == y); }
+
+	template <class Base>
+	inline bool IdenticalEqual(const AD<Base> &x, const AD<Base> &y)
+	{	bool parameter;
+		parameter = ( Parameter(x) & Parameter(y) );
+		return parameter  && IdenticalEqual(x.value, y.value); 
+	}
 }
 
 # endif
