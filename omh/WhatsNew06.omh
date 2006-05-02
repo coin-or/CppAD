@@ -62,7 +62,7 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 05-02$$
+$head 05-03$$
 The g++ (GCC) 4.1.0 (Red Hat 4.1.0-3) compiler reported an error
 because certain functions were used before being defined
 (version 3.4.4 did not complain about this).
