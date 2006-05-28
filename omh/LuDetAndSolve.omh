@@ -32,8 +32,7 @@ $section Compute Determinants and Solve Equations by LU Factorization$$
 $childtable%
 	CppAD/LuSolve.h%
 	CppAD/LuFactor.h%
-	CppAD/LuInvert.h%
-	CppAD/local/LuRatio.h
+	CppAD/LuInvert.h
 %$$
 
 $end

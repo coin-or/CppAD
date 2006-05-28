@@ -1,18 +1,36 @@
-# Remove correctness tests from Build all (included by mistake) and
-# change all test programs return an error code so can be checked for failure.
+# Add BenderQuad to library
 #
 # SvnCommit: file that preformed this commit.
-# Op.h: include StdMathUnary.h before declaring the unary operators.
-# Identical.h: declare Base operation before AD<Base> operation.
 # WhatsNew06.omh: user's view of the changes.
 #
+# BenderQuad.h: routine for computing Hessian of Bender's reduced objective.
+# CppAD_vector.h: add specifications for resize(0) case.
+# CppAD.h: include BenderQuad.h.
+# LuDetAndSolve.omh: move LuRatio.h to different section of library.
+# library.omh: group BenderQuad and LuRatio togeather.
+# ExampleList.omh: add BenderQuad example to list. 
+# BenderQuad.cpp: example and test for BenderQuad.
+# Example.vcproj: add BenderQuad to list. 
+# Example.cpp: add BenderQuad to list. 
+# Example/Makefile.am: add BenderQuad to list. 
+# Makefile.am: add BenderQuad.h to list.
 add_list="
+	CppAD/local/BenderQuad.h
+	Example/BenderQuad.cpp
 "
 change_list="
 	SvnCommit
-	CppAD/local/Op.h
-	CppAD/local/Identical.h
+	CppAD/CppAD_vector.h
+	CppAD/CppAD.h
+	omh/LuDetAndSolve.omh
+	omh/library.omh
 	omh/WhatsNew06.omh
+	omh/WishList.omh
+	omh/ExampleList.omh
+	Example/Example.vcproj
+	Example/Example.cpp
+	Example/Makefile.am
+	Makefile.am
 "
 delete_list="
 "

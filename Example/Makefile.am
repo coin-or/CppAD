@@ -40,6 +40,7 @@ Example_SOURCES   = \
 	Asin.cpp \
 	Atan.cpp \
 	Atan2.cpp \
+	BenderQuad.cpp \
 	BoolFun.cpp \
 	vectorBool.cpp \
 	CheckNumericType.cpp \

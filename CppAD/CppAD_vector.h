@@ -145,6 +145,11 @@ $syntax%
 will output the value $italic e$$ to the standard
 output stream $italic os$$.
 
+$head resize$$
+If the $code resize$$ member function is called with argument
+value zero, all memory allocated for the vector will be freed.
+The can be useful when using very large vectors
+and when checking for memory leaks (and there are global vectors).
 
 $head vectorBool$$
 $index vectorBool$$
@@ -272,7 +277,7 @@ public:
 	// resize function
 	inline void resize(size_t n)
 	{	length = n;
-		if( capacity >= n )
+		if( (capacity >= n) & (n > 0)  )
 			return;
 		if( data != CppADNull  )
 			CppADTrackDelVec(data);
@@ -414,12 +419,14 @@ public:
 	// resize function
 	inline void resize(size_t n)
 	{	length = n;
-		if( nunit * BitPerUnit >= n )
+		if( (nunit * BitPerUnit >= n) & (n > 0) )
 			return;
 		if( data != CppADNull )
 			CppADTrackDelVec(data);
 		if( n == 0 )
+		{	nunit = 0;
 			data = CppADNull;
+		}
 		else
 		{	nunit    = (n - 1) / BitPerUnit + 1;
 			data     = CppADTrackNewVec(nunit, data);

@@ -51,6 +51,9 @@ $children%
 	CppAD/OdeGear.h%
 	CppAD/OdeGearControl.h%
 
+	CppAD/local/BenderQuad.h%
+	CppAD/local/LuRatio.h%
+
 	CppAD/CppAD_vector.h%
 	CppAD/TrackNewDel.h
 %$$
@@ -98,6 +101,14 @@ $rref Rosen34$$
 $rref OdeErrControl$$
 $rref OdeGear$$
 $rref OdeGearControl$$
+$tend
+
+$head Numerical AD Library$$
+The routines listed below are numerical routines that are specially
+designed to work with CppAD in particular.
+$table
+$rref BenderQuad$$
+$rref LuRatio$$
 $tend
 
 $head CppAD Support Template Library$$

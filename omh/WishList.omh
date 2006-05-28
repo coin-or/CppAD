@@ -123,4 +123,10 @@ Use spaces rather than tabs.
 
 $lend
 
+$head Syntax$$
+Change syntax from a table to paragraph format.
+This way there is one frame per page and the syntax can
+be cross referenced.
+See $xref/BenderQuad/$$ for an example of this format.
+
 $end

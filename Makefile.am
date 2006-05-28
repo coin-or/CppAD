@@ -63,6 +63,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/AsinOp.h \
 	CppAD/local/Atan2.h \
 	CppAD/local/AtanOp.h \
+	CppAD/local/BenderQuad.h \
 	CppAD/local/BoolFun.h \
 	CppAD/local/BoolFunLink.h \
 	CppAD/local/BoolValued.h \

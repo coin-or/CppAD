@@ -78,6 +78,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // ---------------------------------------------------------------------------
 // library routines that require the rest of CppAD
 # include <CppAD/local/LuRatio.h>
+# include <CppAD/local/BenderQuad.h>
 
 // undo definitions in Define.h
 # include <CppAD/local/Undef.h>   
