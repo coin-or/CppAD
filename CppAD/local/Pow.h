@@ -35,12 +35,9 @@ $index exponent, AD function$$
 
 $section The AD Power Function$$
 
-$table
-$bold Syntax$$ $cnext 
+$head Syntax$$
 $syntax%%z% = pow(%x%, %y%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 Determines the value of the power function which is defined by

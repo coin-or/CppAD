@@ -34,12 +34,9 @@ $index construct, ADFun$$
 $index tape, stop recording$$
 $index recording, stop tape$$
 
-$table
-$bold Syntax$$ $cnext 
+$head Syntax$$
 $syntax%ADFun<%Base%> %f%(%x%, %y%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 The 

@@ -24,20 +24,21 @@ $index use_VecAD, ADFun$$
 $index ADFun, var_size$$
 $index var_size, ADFun$$
 
-$table
-$bold Syntax$$ $cnext 
+$head Syntax$$
 $syntax%%n% = %f%.Domain()%$$
-$rnext $cnext
+$pre
+$$
 $syntax%%m% = %f%.Range()%$$
-$rnext $cnext
+$pre
+$$
 $syntax%%p% = %f%.Parameter(%i%)%$$
-$rnext $cnext
+$pre
+$$
 $syntax%%u% = %f%.use_VecAD()%$$
-$rnext $cnext
+$pre
+$$
 $syntax%%v% = %f%.var_size()%$$
-$tend
 
-$fend 20$$
 
 
 $head Purpose$$

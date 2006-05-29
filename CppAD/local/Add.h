@@ -37,13 +37,10 @@ $index +, AD binary operator$$
 
 $section AD Binary Addition Operator$$
 
-$table
-$bold Syntax$$ 
-$cnext 
-$syntax% %z% = %x% + %y%$$
-$tend
+$head Syntax$$
 
-$fend 20$$
+$syntax%%z% = %x% + %y%$$
+
 
 $head Purpose$$
 Computes the sum of $italic x$$ plus $italic y$$ 

@@ -34,14 +34,12 @@ $index replace, error handler$$
 $index assert, error handler$$
 $index exception, error handler$$
 
-$table
-$bold Syntax$$ $cnext
-$syntax%ErrorHandler %info%(%handler%)%$$  
-$rnext $cnext
+$head Syntax$$
+$syntax%ErrorHandler %info%(%handler%)%$$
+$pre
+$$
 $syntax%ErrorHandler::Call(%known%, %line%, %file%, %exp%, %msg%)%$$
-$tend
 
-$fend 20$$
 
 $head Constructor$$
 When you construct a $code ErrorHandler$$ object,

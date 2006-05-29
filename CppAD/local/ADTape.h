@@ -53,12 +53,9 @@ $$
 
 $section ADTape: The CppAD Tape$$
 
-$table
-$bold Syntax$$ $cnext 
+$head Syntax$$
 $syntax%ADTape<%Base%> %Tape%$$
-$tend
 
-$fend 20$$
 
 $head Description$$
 For each $italic Base$$ that is used in connection with

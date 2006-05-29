@@ -33,14 +33,12 @@ $$
 
 $section Discrete AD Functions$$
 
-$table
-$bold Syntax$$
-$cnext $syntax%CppADCreateDiscrete(%Base%, %FunName%)%$$ 
-$rnext
-$cnext $syntax%%y% = %FunName%(%x%)%$$
-$tend
+$head Syntax$$
+$syntax%CppADCreateDiscrete(%Base%, %FunName%)%$$
+$pre
+$$
+$syntax%%y% = %FunName%(%x%)%$$
 
-$fend 20$$
 
 $head Purpose$$
 Record the evaluation of a discrete function as part

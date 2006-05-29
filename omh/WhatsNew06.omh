@@ -63,6 +63,16 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-29$$
+Change statement of command syntax to 
+be in the same browser frame as the command documentation
+(for all the commands with a syntax statement). 
+Now when a user links to a specific heading in
+a command's documentation,
+the syntax for that command is automatically included.
+Before the user needed to 
+follow another link to see to the command syntax.
+
 $head 05-27$$
 Added $xref/BenderQuad/$$ for computing the Hessian of 
 Bender's reduced objective function.

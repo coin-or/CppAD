@@ -33,12 +33,9 @@ $aindex head$$
 
 $section CppAD Developer Documentation$$
 
-$table
-$bold Syntax$$
-$cnext $syntax%AD<%Base%> %x%$$
-$tend
+$head Syntax$$
+$syntax%AD<%Base%> %x%$$
 
-$fend 20$$
 
 $head Description$$
 This is the documentation for the implementation details for CppAD.

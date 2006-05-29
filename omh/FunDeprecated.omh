@@ -35,16 +35,15 @@ $index Order, ADFun$$
 $index ADFun, Memory$$
 $index Memory, ADFun$$
 
-$table
-$bold Syntax$$ $cnext 
+$head Syntax$$
 $syntax%%o% = %f%.Order()%$$
-$rnext $cnext
+$pre
+$$
 $syntax%%m% = %f%.Memory()%$$
-$rnext $cnext
+$pre
+$$
 $syntax%%s% = %f%.Size()%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 The $syntax%ADFun<%Base%>%$$ functions documented here have been deprecated;

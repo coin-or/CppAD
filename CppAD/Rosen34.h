@@ -48,16 +48,15 @@ $index equation, differential$$
  
 $section A 3rd and 4th Order Rosenbrock ODE Solver$$
 
-$table
-$bold Syntax$$ 
-$cnext $code # include <CppAD/Rosen34.h>$$
-$rnext $cnext
+$head Syntax$$
+$code # include <CppAD/Rosen34.h>$$
+$pre
+$$
 $syntax%%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%)%$$
-$rnext $cnext
+$pre
+$$
 $syntax%%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%, %e%)%$$
-$tend
 
-$fend 25$$
 
 $head Description$$
 This is the embedded 3rd and 4th order Rosenbrock ODE solver 

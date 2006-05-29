@@ -46,13 +46,11 @@ $section LU Factorization of A Square Matrix$$
 $pre
 $$
 
-$table
-$bold Syntax$$ $cnext $code# include <CppAD/LuFactor.h>$$
-$rnext $cnext 
+$head Syntax$$ $code# include <CppAD/LuFactor.h>$$
+$pre
+$$
 $syntax%%sign% = LuFactor(%ip%, %jp%, %LU%)%$$
-$tend
 
-$fend 25$$
 
 $head Description$$
 Computes an LU factorization of the matrix $italic A$$ 

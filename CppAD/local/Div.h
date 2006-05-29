@@ -36,13 +36,10 @@ $index /, AD binary operator$$
 
 $section AD Binary Division Operator$$
 
-$table
-$bold Syntax$$ 
-$cnext 
-$syntax% %z% = %x% / %y%$$
-$tend
+$head Syntax$$
 
-$fend 20$$
+$syntax%%z% = %x% / %y%$$
+
 
 $head Purpose$$
 Computes the quotient of $italic x$$ divided by $italic y$$ 

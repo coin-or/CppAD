@@ -40,12 +40,9 @@ $index partial, easy$$
 
 $section Reverse Mode Second Partial Derivative Driver$$
 
-$table
-$bold Syntax$$
+$head Syntax$$
 $syntax%%ddw% = %f%.RevTwo(%x%, %i%, %j%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the

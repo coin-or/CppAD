@@ -35,18 +35,18 @@ $index binary, AD bool$$
 
 $section AD Boolean Functions$$
 
-$table
-$bold Syntax$$
-$cnext $syntax%CppADCreateUnaryBool(%Base%, %UnaryName%)%$$ 
-$rnext
-$cnext $syntax%CppADCreateBinaryBool(%Base%, %BinaryName%)%$$ 
-$rnext
-$cnext $syntax%%b% = %UnaryName%(%x%)%$$
-$rnext
-$cnext $syntax%%b% = %BinaryName%(%x%, %y%)%$$
-$tend
+$head Syntax$$
+$syntax%CppADCreateUnaryBool(%Base%, %UnaryName%)%$$
+$pre
+$$
+$syntax%CppADCreateBinaryBool(%Base%, %BinaryName%)%$$
+$pre
+$$
+$syntax%%b% = %UnaryName%(%x%)%$$
+$pre
+$$
+$syntax%%b% = %BinaryName%(%x%, %y%)%$$
 
-$fend 20$$
 
 $head Purpose$$
 Create a boolean valued function of with

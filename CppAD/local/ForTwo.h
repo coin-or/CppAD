@@ -40,12 +40,9 @@ $index partial, easy$$
 
 $section Forward Mode Second Partial Derivative Driver$$
 
-$table
-$bold Syntax$$
+$head Syntax$$
 $syntax%%ddy% = %f%.ForTwo(%x%, %j%, %k%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the

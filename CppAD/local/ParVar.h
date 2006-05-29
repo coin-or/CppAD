@@ -31,14 +31,12 @@ $index Parameter$$
 $index Variable$$
 $section Is an AD Object a Parameter or Variable$$
 
-$table
-$bold Syntax$$ $cnext 
+$head Syntax$$
 $syntax%%b% = Parameter(%x%)%$$
-$rnext $cnext 
+$pre
+$$
 $syntax%%b% = Variable(%x%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 Determine if $italic x$$ is a 

@@ -31,14 +31,12 @@ $index vector, simple check$$
 $index check, simple vector$$
 $index concept, check simple vector$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $code # include <CppAD/CheckSimpleVector.h>$$
-$rnext $cnext
+$pre
+$$
 $syntax%CheckSimpleVector<%Scalar%, %Vector%>()%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 The syntax 

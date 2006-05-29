@@ -39,12 +39,9 @@ $index convert, AD to integer$$
 
 $section Convert From AD to Integer$$
 
-$table
-$bold Syntax$$ $cnext
-$syntax% %i% = Integer(%x%)%$$
-$tend
+$head Syntax$$
+$syntax%%i% = Integer(%x%)%$$
 
-$fend 20$$
 
 $head Purpose$$
 Converts from an AD type to the corresponding integer value.

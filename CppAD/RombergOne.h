@@ -2,7 +2,7 @@
 # define CppADRombergOneIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -32,14 +32,12 @@ $section One DimensionalRomberg Integration$$
 $index integrate, Romberg$$
 $index Romberg, Integrate$$
 
-$table
-$bold Syntax$$
-$cnext $code # include <CppAD/RombergOne.h>$$ 
-$rnext $cnext
+$head Syntax$$
+$code # include <CppAD/RombergOne.h>$$
+$pre
+$$
 $syntax%%r% = RombergOne(%F%, %a%, %b%, %n%, %e%)%$$
-$tend
 
-$fend 20$$
 
 $head Description$$
 Returns the Romberg integration estimate

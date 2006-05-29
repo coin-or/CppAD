@@ -41,19 +41,16 @@ $index forward, Jacobian sparsity$$
 $index pattern, forward Jacobian$$
 $index bit pattern, Jacobian$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%void ForJacSweep(
-	size_t                 %npv%,
-	size_t                 %numvar%,
+	size_t %npv%,
+	size_t %numvar%,
 	const TapeRec<%Base%> *%Rec%,
-	size_t                 %TaylorColDim%,
-	const %Base%          *%Taylor%,
-	%Pack%                *%ForJac%
+	size_t %TaylorColDim%,
+	const %Base% *%Taylor%,
+	%Pack% *%ForJac%
 )%$$
-$tend
 
-$fend 20$$
 
 $head Rec$$
 The information stored in $italic Rec$$

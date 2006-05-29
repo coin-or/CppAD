@@ -44,16 +44,15 @@ $index equation, differential$$
  
 $section An Embedded 4th and 5th Order Runge-Kutta ODE Solver$$
 
-$table
-$bold Syntax$$ 
-$cnext $code # include <CppAD/Runge45.h>$$
-$rnext $cnext
+$head Syntax$$
+$code # include <CppAD/Runge45.h>$$
+$pre
+$$
 $syntax%%xf% = Runge45(%F%, %M%, %ti%, %tf%, %xi%)%$$
-$rnext $cnext
+$pre
+$$
 $syntax%%xf% = Runge45(%F%, %M%, %ti%, %tf%, %xi%, %e%)%$$
-$tend
 
-$fend 25$$
 
 $head Description$$
 This is the Cash-Karp embedded 4th and 5th order Runge-Kutta ODE solver 

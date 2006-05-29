@@ -36,12 +36,9 @@ $index erf, AD function$$
 $index error, AD function$$
 $index function, AD error$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%y% = erf(%x%)%$$
-$tend
 
-$fend 20$$
 
 $head Description$$
 Returns the value of the error function which is defined by

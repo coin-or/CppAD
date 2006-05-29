@@ -36,13 +36,10 @@ $index *, AD binary operator$$
 
 $section AD Binary Multiplication Operator$$
 
-$table
-$bold Syntax$$ 
-$cnext 
-$syntax% %z% = %x% * %y%$$
-$tend
+$head Syntax$$
 
-$fend 20$$
+$syntax%%z% = %x% * %y%$$
+
 
 $head Purpose$$
 Computes the product of $italic x$$ times $italic y$$ 

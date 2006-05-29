@@ -33,14 +33,12 @@ $index forward, mode print$$
 
 $section Printing AD Values During Forward Mode$$ 
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%PrintFor(%text%, %y%)%$$
-$rnext $cnext
+$pre
+$$
 $syntax%%f%.Forward(0, %x%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 The current value of an $syntax%AD<%Base%>%$$ 

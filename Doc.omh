@@ -42,16 +42,15 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: CppAD-06-04-27
+A Package for Differentiation of C++ Algorithms: CppAD-06-05-29
 $$ 
 
-$table
-$bold Syntax$$
-$cnext $syntax%# include "CppAD.h"%$$ $rnext
-$cnext $syntax%using namespace CppAD;%$$ $rnext
-$tend
+$head Syntax$$
+$syntax%# include "CppAD.h"%$$ $pre
+$$
+$syntax%using namespace CppAD;%$$ $pre
+$$
 
-$fend 20$$
 
 $head Introduction$$
 $index introduction$$

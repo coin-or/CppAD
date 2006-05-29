@@ -33,14 +33,12 @@ $index example, algorithm$$
 $index algorithm, example$$
 $index exp, example$$
 
-$table
-$bold Syntax$$    $cnext
+$head Syntax$$
 $syntax%# include "ExpApx.hpp"%$$
-$rnext $cnext
+$pre
+$$
 $syntax%%y% = ExpApx(%x%, %e%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 This is an example algorithm that is used to demonstrate 

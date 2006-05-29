@@ -39,15 +39,13 @@ $index test, speed$$
 
 $section Run One Speed Test$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$code # include <CppAD/SpeedTest.h>$$
-$rnext $cnext
-$syntax%SpeedTest(%Test%, %first%, %inc%, %last%)%$$
-$tend
+$head Syntax$$
 
-$fend 20$$
+$code # include <CppAD/SpeedTest.h>$$
+$pre
+$$
+$syntax%SpeedTest(%Test%, %first%, %inc%, %last%)%$$
+
 
 $head Purpose$$
 The $code SpeedTest$$ function executes a speed test

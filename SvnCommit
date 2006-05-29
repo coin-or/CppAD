@@ -1,36 +1,110 @@
-# Add BenderQuad to library
+# Change command syntax to be a header in same frame
+# (This change was the same for lots of files).
 #
 # SvnCommit: file that preformed this commit.
 # WhatsNew06.omh: user's view of the changes.
+# WishList.omh: remove the syntax entry that requested this change.
 #
-# BenderQuad.h: routine for computing Hessian of Bender's reduced objective.
-# CppAD_vector.h: add specifications for resize(0) case.
-# CppAD.h: include BenderQuad.h.
-# LuDetAndSolve.omh: move LuRatio.h to different section of library.
-# library.omh: group BenderQuad and LuRatio togeather.
-# ExampleList.omh: add BenderQuad example to list. 
-# BenderQuad.cpp: example and test for BenderQuad.
-# Example.vcproj: add BenderQuad to list. 
-# Example.cpp: add BenderQuad to list. 
-# Example/Makefile.am: add BenderQuad to list. 
-# Makefile.am: add BenderQuad.h to list.
 add_list="
-	CppAD/local/BenderQuad.h
-	Example/BenderQuad.cpp
 "
 change_list="
 	SvnCommit
-	CppAD/CppAD_vector.h
-	CppAD/CppAD.h
-	omh/LuDetAndSolve.omh
-	omh/library.omh
 	omh/WhatsNew06.omh
 	omh/WishList.omh
-	omh/ExampleList.omh
-	Example/Example.vcproj
-	Example/Example.cpp
-	Example/Makefile.am
-	Makefile.am
+	CppAD/CheckNumericType.h 
+	CppAD/CheckSimpleVector.h 
+	CppAD/CppAD_vector.h 
+	CppAD/ErrorHandler.h 
+	CppAD/LuFactor.h 
+	CppAD/LuInvert.h 
+	CppAD/LuSolve.h 
+	CppAD/NearEqual.h 
+	CppAD/OdeErrControl.h 
+	CppAD/OdeGear.h 
+	CppAD/OdeGearControl.h 
+	CppAD/Poly.h 
+	CppAD/PowInt.h 
+	CppAD/RombergMul.h 
+	CppAD/RombergOne.h 
+	CppAD/Rosen34.h 
+	CppAD/Runge45.h 
+	CppAD/SpeedTest.h 
+	CppAD/TrackNewDel.h 
+	CppAD/local/ADTape.h 
+	CppAD/local/Abs.h 
+	CppAD/local/AbsOp.h 
+	CppAD/local/AcosOp.h 
+	CppAD/local/Add.h 
+	CppAD/local/AddEq.h 
+	CppAD/local/AddOp.h 
+	CppAD/local/AsinOp.h 
+	CppAD/local/Atan2.h 
+	CppAD/local/AtanOp.h 
+	CppAD/local/BoolFun.h 
+	CppAD/local/Compare.h 
+	CppAD/local/CondExp.h 
+	CppAD/local/CopyAD.h 
+	CppAD/local/CopyBase.h 
+	CppAD/local/CppADError.h 
+	CppAD/local/CppADvector.h 
+	CppAD/local/Default.h 
+	CppAD/local/Discrete.h 
+	CppAD/local/Div.h 
+	CppAD/local/DivEq.h 
+	CppAD/local/DivOp.h 
+	CppAD/local/Eq.h 
+	CppAD/local/Erf.h 
+	CppAD/local/ExpOp.h 
+	CppAD/local/ForJacSweep.h 
+	CppAD/local/ForOne.h 
+	CppAD/local/ForSparseJac.h 
+	CppAD/local/ForTwo.h 
+	CppAD/local/ForwardSweep.h 
+	CppAD/local/FunCheck.h 
+	CppAD/local/FunConstruct.h 
+	CppAD/local/Hessian.h 
+	CppAD/local/Identical.h 
+	CppAD/local/Independent.h 
+	CppAD/local/Integer.h 
+	CppAD/local/Jacobian.h 
+	CppAD/local/LogOp.h 
+	CppAD/local/LuRatio.h 
+	CppAD/local/Mul.h 
+	CppAD/local/MulEq.h 
+	CppAD/local/MulOp.h 
+	CppAD/local/NearEqualExt.h 
+	CppAD/local/OpCode.h 
+	CppAD/local/Ordered.h 
+	CppAD/local/Output.h 
+	CppAD/local/ParVar.h 
+	CppAD/local/Pow.h 
+	CppAD/local/PrintFor.h 
+	CppAD/local/RevHesSweep.h 
+	CppAD/local/RevJacSweep.h 
+	CppAD/local/RevOne.h 
+	CppAD/local/RevSparseHes.h 
+	CppAD/local/RevSparseJac.h 
+	CppAD/local/RevTwo.h 
+	CppAD/local/ReverseSweep.h 
+	CppAD/local/SinCos.h 
+	CppAD/local/SqrtOp.h 
+	CppAD/local/StdMathUnary.h 
+	CppAD/local/Sub.h 
+	CppAD/local/SubEq.h 
+	CppAD/local/SubOp.h 
+	CppAD/local/TapeRec.h 
+	CppAD/local/UnaryMinus.h 
+	CppAD/local/UnaryPlus.h 
+	CppAD/local/Value.h 
+	CppAD/local/VecAD.h 
+	Dev.omh 
+	Doc.omh 
+	Example/LuVecAD.cpp 
+	omh/ExpApx.omh 
+	omh/Forward.omh 
+	omh/FunDeprecated.omh 
+	omh/Reverse.omh 
+	omh/SeqProperty.omh  
 "
 delete_list="
 "

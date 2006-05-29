@@ -2,7 +2,7 @@
 # define CppADRevHesSweepIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -40,21 +40,18 @@ $index reverse, Hessian sparsity$$
 $index pattern, reverse Hessian$$
 $index bit pattern, Hessian$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%void RevHesSweep(
-	size_t                 %npv%,
-	size_t                 %numvar%,
+	size_t %npv%,
+	size_t %numvar%,
 	const TapeRec<%Base%> *%Rec%,
-	size_t                 %TaylorColDim%,
-	const %Base%          *%Taylor%,
-	const %Pack%          *%ForJac%,
-	const %Pack%          *%RevJac%,
-	%Pack%                *%RevHes%
+	size_t %TaylorColDim%,
+	const %Base% *%Taylor%,
+	const %Pack% *%ForJac%,
+	const %Pack% *%RevJac%,
+	%Pack% *%RevHes%
 )%$$
-$tend
 
-$fend 20$$
 
 $head Rec$$
 The information stored in $italic Rec$$

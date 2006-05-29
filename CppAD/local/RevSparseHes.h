@@ -41,13 +41,11 @@ $index reverse, sparse Hessian$$
 $index sparse, reverse Hessian$$
 $index pattern, reverse Hessian$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%h% = %f%.RevSparseHes(%q%, %s%)%$$
-$rnext $cnext
-$tend
+$pre
+$$
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the

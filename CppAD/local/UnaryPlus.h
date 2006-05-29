@@ -34,13 +34,10 @@ $index +, AD unary operator$$
 
 $section AD Unary Plus Operator$$
 
-$table
-$bold Syntax$$ 
-$cnext 
-$syntax% %y% = + %x%$$
-$tend
+$head Syntax$$
 
-$fend 20$$
+$syntax%%y% = + %x%$$
+
 
 $head Purpose$$
 Performs the unary plus operation

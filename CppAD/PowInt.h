@@ -34,14 +34,12 @@ $index integer, pow$$
 
 $section The Integer Power Function$$
 
-$table
-$bold Syntax$$ $cnext 
+$head Syntax$$
 $code # include <CppAD/PowInt.h>$$
-$rnext $cnext
+$pre
+$$
 $syntax%%y% = pow(%x%, %n%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 Determines the value of the power function 

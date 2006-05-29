@@ -39,12 +39,9 @@ $index partial, easy$$
 
 $section First Order Partial Derivative: Driver Routine$$
 
-$table
-$bold Syntax$$
+$head Syntax$$
 $syntax%%dy% = %f%.ForOne(%x%, %j%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the

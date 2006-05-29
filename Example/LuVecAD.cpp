@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 /*
 $begin LuVecAD$$
@@ -43,18 +41,15 @@ $section Lu Factor and Solve with Recorded Pivoting$$
 $pre
 $$
 
-$table
-$bold Syntax$$ $cnext 
-$syntax%int LuVecAD( 
-	size_t         %n%, 
-	size_t         %m%, 
-	VecAD<%double%> &%Matrix%, 
-	VecAD<%double%> &%Rhs%, 
-	VecAD<%double%> &%Result%, 
-	AD<%double%>  &%logdet%)%$$
-$tend
+$head Syntax$$
+$syntax%int LuVecAD(
+	size_t %n%,
+	size_t %m%,
+	VecAD<%double%> &%Matrix%,
+	VecAD<%double%> &%Rhs%,
+	VecAD<%double%> &%Result%,
+	AD<%double%> &%logdet%)%$$
 
-$fend 20$$
 
 $head Purpose$$
 Solves the linear equation
@@ -151,7 +146,7 @@ $children%
 %$$
 The file
 $xref/LuVecADOk.cpp/$$
-contains an example and a test of $code LuVecAD$$.
+contains an example and test of $code LuVecAD$$.
 It returns true if it succeeds and false otherwise.
 
 

@@ -2,7 +2,7 @@
 # define CppADReverseSweepIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -37,20 +37,17 @@ $$
 $section Reverse Mode Computation of Derivatives of Taylor Coefficients$$
 $mindex ReverseSweep derivative Taylor coefficient$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%void ReverseSweep(
-	size_t                 %d%,
-	size_t                 %numvar%,
+	size_t %d%,
+	size_t %numvar%,
 	const TapeRec<%Base%> *%Rec%,
-	size_t                 %J%,
-	const Base            *%Taylor%,
-	size_t                 %K%,
-	Base                  *%Partial%
+	size_t %J%,
+	const Base *%Taylor%,
+	size_t %K%,
+	Base *%Partial%
 )%$$
-$tend
 
-$fend 20$$
 
 
 $head Rec$$

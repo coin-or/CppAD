@@ -40,12 +40,9 @@ $index template, CppAD vector class$$
 
 $section The CppAD::vector Template Class$$
 
-$table 
-$bold Syntax$$ $cnext
-$code # include <CppAD/CppAD_vector.h>$$ 
-$tend
+$head Syntax$$
+$code # include <CppAD/CppAD_vector.h>$$
 
-$fend 25$$
 
 
 $head Description$$

@@ -32,12 +32,9 @@ $index AD, default construct$$
 $index construct, default$$
 $index default, constructor$$
 
-$table
-$bold Syntax$$ $cnext
-$syntax% AD<%Base%> %x%;%$$ 
-$tend
+$head Syntax$$
+$syntax%AD<%Base%> %x%;%$$
 
-$fend 20$$
 
 $head Purpose$$
 Constructs an AD object with an unspecified value.
@@ -51,7 +48,7 @@ $children%
 %$$
 The file
 $xref/Default.cpp/$$
-contains an example and a test of this operation.
+contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
 $end

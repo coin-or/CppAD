@@ -36,12 +36,9 @@ $index driver, Jacobian$$
 
 $section Jacobian: Driver Routine$$
 
-$table
-$bold Syntax$$
+$head Syntax$$
 $syntax%%jac% = %f%.Jacobian(%x%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the

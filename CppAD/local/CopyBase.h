@@ -35,14 +35,12 @@ $index construct, AD from Base$$
 $index Base, construct AD from$$
 $index AD, construct from Base$$
 
-$table 
-$bold Syntax$$ $cnext
-$syntax% AD<%Base%> %x%(%b%)%$$
-$rnext $cnext
-$syntax% AD<%Base%> %x% = %b%$$
-$tend
+$head Syntax$$
+$syntax%AD<%Base%> %x%(%b%)%$$
+$pre
+$$
+$syntax%AD<%Base%> %x% = %b%$$
 
-$fend 20$$
 
 $head Purpose$$
 Constructs an $syntax%AD<%Base%>%$$ object from an object of
@@ -69,7 +67,7 @@ $children%
 %$$
 The file
 $xref/CopyBase.cpp/$$
-contains an example and a test of this operation.
+contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
 $end

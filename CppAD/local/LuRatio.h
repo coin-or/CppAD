@@ -41,14 +41,12 @@ $index solve, Lu factor$$
 
 $section LU Factorization of A Square Matrix and Stability Calculation$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $code# include <CppAD/CppAD.h>$$
-$rnext $cnext
+$pre
+$$
 $syntax%%sign% = LuRatio(%ip%, %jp%, %LU%, %ratio%)%$$
-$tend
 
-$fend 20$$
 
 $head Description$$
 Computes an LU factorization of the matrix $italic A$$ 

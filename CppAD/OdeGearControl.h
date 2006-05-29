@@ -2,7 +2,7 @@
 # define CppADOdeGearControlIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -50,15 +50,13 @@ $index equation, Ode Gear control$$
  
 $section An Error Controller for Gear's Ode Solvers$$
 
-$table
-$bold Syntax$$ 
-$cnext $code # include <CppAD/OdeGearControl.h>$$
-$rnext $cnext
-$syntax%%xf% = OdeGearControl(%F%, %M%, %ti%, %tf%, %xi%, 
+$head Syntax$$
+$code # include <CppAD/OdeGearControl.h>$$
+$pre
+$$
+$syntax%%xf% = OdeGearControl(%F%, %M%, %ti%, %tf%, %xi%,
 	%smin%, %smax%, %sini%, %eabs%, %erel%, %ef% , %maxabs%, %nstep% )%$$
-$tend
 
-$fend 20$$
 
 $head Description$$
 Let $latex \R$$ denote the real numbers

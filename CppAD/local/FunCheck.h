@@ -34,15 +34,13 @@ $index ADFun, check$$
 
 $section Check an ADFun Sequence of Operations$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%ok% = FunCheck(%f%, %g%, %x%, %r%, %a%)%$$
-$rnext
-$bold See Also$$ $cnext 
+$pre
+$$
+$bold See Also$$
 $xref/CompareChange/$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the

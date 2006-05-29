@@ -35,12 +35,9 @@ $index driver, Hessian$$
 
 $section Hessian: Easy Driver$$
 
-$table
-$bold Syntax$$
+$head Syntax$$
 $syntax%%hes% = %f%.Hessian(%x%, %i%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the

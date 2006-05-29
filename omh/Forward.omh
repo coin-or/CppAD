@@ -30,12 +30,9 @@ $index order, zero Forward$$
 
 $section Zero Order Forward Mode: Function Values$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%y% = %f%.Forward(0, %x%)%$$
-$tend
 
-$fend 20$$
 
 
 $head Purpose$$
@@ -111,12 +108,9 @@ $index one, order Forward$$
 $index order, one Forward$$
 
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%dy% = %f%.Forward(1, %dx%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
@@ -207,13 +201,11 @@ $index mode, forward$$
 $index derivative, forward mode$$
 $index calculate, forward mode$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%y_p% = %f%.Forward(%p%, %x_p% )%$$
-$rnext $cnext
-$tend
+$pre
+$$
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
@@ -449,12 +441,9 @@ $$
 
 $section Number Taylor Coefficients Per Variable$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%t% = %f%.taylor_size()%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 Forward mode stores Taylor coefficients for all the variables in the 
@@ -509,15 +498,13 @@ $index CompareChange, ADFun$$
 $index zero, order forward$$
 $index forward, zero order$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%c% = %f%.CompareChange()%$$
-$rnext
-$bold See Also$$ $cnext
+$pre
+$$
+$bold See Also$$
 $xref/FunCheck/$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the

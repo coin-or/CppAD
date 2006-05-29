@@ -42,15 +42,13 @@ $index relative, difference$$
 $index difference, absolute$$
 $index difference, relative$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$code # include <CppAD/NearEqual.h>$$
-$rnext $cnext
-$syntax%%b% = NearEqual(%x%, %y%, %r%, %a%)%$$
-$tend
+$head Syntax$$
 
-$fend 30$$
+$code # include <CppAD/NearEqual.h>$$
+$pre
+$$
+$syntax%%b% = NearEqual(%x%, %y%, %r%, %a%)%$$
+
 
 $head Purpose$$
 Returns true,

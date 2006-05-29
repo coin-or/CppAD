@@ -2,7 +2,7 @@
 # define CppADForwardSweepIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -46,19 +46,16 @@ $index derivative, forward$$
 $index Taylor coefficient, forward$$
 
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%size_t ForwardSweep(
-	bool                   %print%,
-	size_t                 %d%,
-	size_t                 %numvar%,
-	TapeRec<%Base%>       *%Rec%,
-	size_t                 %J%,
-	Base                  *%Taylor%,
+	bool %print%,
+	size_t %d%,
+	size_t %numvar%,
+	TapeRec<%Base%> *%Rec%,
+	size_t %J%,
+	Base *%Taylor%,
 )%$$
-$tend
 
-$fend 20$$
 
 $head Return Value$$
 The return value is equal to the number of

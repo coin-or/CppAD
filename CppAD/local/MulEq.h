@@ -37,13 +37,10 @@ $index *=, AD computed assignment$$
 
 $section AD Computed Assignment Multiplication Operator$$
 
-$table
-$bold Syntax$$ 
-$cnext 
-$syntax% %y% *= %x%$$
-$tend
+$head Syntax$$
 
-$fend 20$$
+$syntax%%y% *= %x%$$
+
 
 $head Purpose$$
 Computes the product of $italic x$$ times $italic y$$ 

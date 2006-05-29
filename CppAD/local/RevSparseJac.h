@@ -39,13 +39,11 @@ $index reverse, sparse Jacobian$$
 $index sparse, reverse Jacobian$$
 $index pattern, reverse Jacobian$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%r% = %F%.RevSparseJac(%p%, %s%)%$$
-$rnext $cnext
-$tend
+$pre
+$$
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the

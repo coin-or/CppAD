@@ -34,14 +34,12 @@ $index construct, copy AD$$
 
 $section AD Copy Constructor$$
 
-$table
-$bold Syntax$$ $cnext 
-$syntax% AD<%Base%> %y%(%x%)%$$ 
-$rnext $cnext
-$syntax% AD<%Base%> %y% = %x%$$ 
-$tend
+$head Syntax$$
+$syntax%AD<%Base%> %y%(%x%)%$$
+$pre
+$$
+$syntax%AD<%Base%> %y% = %x%$$
 
-$fend 20$$
 
 $head Purpose$$
 Creates a new object $italic y$$ with the same value as $italic x$$.

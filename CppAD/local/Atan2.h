@@ -37,12 +37,9 @@ $index atan2, AD$$
 
 $section AD Two Argument Inverse Tangent Function$$
 
-$table
-$bold Syntax$$ $cnext 
+$head Syntax$$
 $syntax%%theta% = atan2(%y%, %x%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 Determines an angle $latex \theta \in [ - \pi , + \pi ]$$

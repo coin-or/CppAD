@@ -35,12 +35,9 @@ $section Compare AD and Base Objects for Nearly Equal$$
 
 $index NearEqual, AD with Base$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%b% = NearEqual(%x%, %y%, %r%, %a%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 The routine $xref/NearEqual/$$ determines if two objects of

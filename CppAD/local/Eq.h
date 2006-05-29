@@ -38,12 +38,9 @@ $index assignment, AD operator$$
 
 $section AD Assignment Operator$$
 
-$table
-$bold Syntax$$ $cnext 
-$syntax% %y% = %x%$$
-$tend
+$head Syntax$$
+$syntax%%y% = %x%$$
 
-$fend 20$$
 
 
 $head Purpose$$

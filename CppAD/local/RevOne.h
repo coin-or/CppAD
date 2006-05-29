@@ -38,12 +38,9 @@ $index derivative, easy$$
 
 $section First Order Derivative: Driver Routine$$
 
-$table
-$bold Syntax$$
+$head Syntax$$
 $syntax%%dw% = %f%.RevOne(%x%, %i%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the

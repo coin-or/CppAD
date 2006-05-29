@@ -34,12 +34,9 @@ $index convert, AD to Base$$
 
 $section Convert From AD to its Base Type$$
 
-$table
-$bold Syntax$$ $cnext 
-$syntax% %b% = Value(%x%)%$$
-$tend
+$head Syntax$$
+$syntax%%b% = Value(%x%)%$$
 
-$fend 20$$
 
 $head Purpose$$
 Converts from and AD type to the corresponding

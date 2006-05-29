@@ -36,18 +36,18 @@ $index delete, track$$
 $index track, new and delete$$
 $index memory, track$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%newptr% = TrackNewVec(%file%, %line%, %newlen%, %oldptr%)%$$
-$rnext $cnext
+$pre
+$$
 $syntax%TrackDelVec(%file%, %line%, %oldptr%)%$$
-$rnext $cnext
+$pre
+$$
 $syntax%%newptr% = TrackExtend(%file%, %line%, %newlen%, %ncopy%, %oldptr%)%$$
-$rnext $cnext
+$pre
+$$
 $syntax%%count% = TrackCount(%file%, %line%)%$$
-$tend
 
-$fend 25$$
 
 $head Purpose$$
 These routines 

@@ -37,13 +37,10 @@ $index +=, AD computed assignment$$
 
 $section AD Computed Assignment Addition Operator$$
 
-$table
-$bold Syntax$$ 
-$cnext 
-$syntax% %y% += %x%$$
-$tend
+$head Syntax$$
 
-$fend 20$$
+$syntax%%y% += %x%$$
+
 
 $head Purpose$$
 Computes the sum of $italic x$$ plus $italic y$$ 

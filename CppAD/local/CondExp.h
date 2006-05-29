@@ -47,12 +47,9 @@ $index assign, conditional$$
 
 $section AD Conditional Expressions$$
 
-$table
-$bold Syntax$$ $cnext 
+$head Syntax$$
 $syntax%%result% = CondExp%Op%(%left%, %right%, %trueCase%, %falseCase%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 Record, 

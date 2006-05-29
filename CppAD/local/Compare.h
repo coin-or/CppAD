@@ -45,13 +45,10 @@ $index !=, AD operator$$
 $section AD Binary Comparison Operators$$
 
 
-$table
-$bold Syntax$$ 
-$cnext 
-$syntax% %b% = %x% %Op% %y%$$
-$tend
+$head Syntax$$
 
-$fend 20$$
+$syntax%%b% = %x% %Op% %y%$$
+
 
 $head Purpose$$
 Compares two operands where one of the operands is an

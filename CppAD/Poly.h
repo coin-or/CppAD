@@ -39,14 +39,12 @@ $index template, polynomial derivative$$
 
 $section Evaluate a Polynomial or its Derivative$$
 
-$table 
-$bold Syntax$$
-$cnext $code # include <CppAD/Poly.h>$$
-$rnext $cnext 
+$head Syntax$$
+$code # include <CppAD/Poly.h>$$
+$pre
+$$
 $syntax%%p% = Poly(%k%, %a%, %z%)%$$
-$tend
 
-$fend 25$$
 
 $head Description$$
 Computes the $th k$$ derivative of the polynomial 

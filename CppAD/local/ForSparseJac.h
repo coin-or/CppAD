@@ -38,13 +38,11 @@ $index forward, sparsity Jacobian$$
 $index sparsity, forward Jacobian$$
 $index pattern, forward Jacobian$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%s% = %f%.ForSparseJac(%q%, %r%)%$$
-$rnext $cnext
-$tend
+$pre
+$$
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the

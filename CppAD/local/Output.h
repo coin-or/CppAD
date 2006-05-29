@@ -37,12 +37,9 @@ $index write, AD$$
 
 $section AD Output Stream Operator$$ 
 
-$table
-$bold Syntax$$ $cnext
-$syntax% %os% << %x%$$
-$tend
+$head Syntax$$
+$syntax%%os% << %x%$$
 
-$fend 20$$
 
 $head Purpose$$
 Writes the $italic Base$$ value, corresponding to $italic x$$,

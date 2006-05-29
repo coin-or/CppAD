@@ -72,12 +72,10 @@ $$
 $mindex tape operator$$
 $section The Tape Operator Codes$$
 
-$table
-$bold Syntax$$ 
-$cnext $syntax%OpCode%  %op%$$   $rnext
-$tend
+$head Syntax$$
+$syntax%OpCode% %op%$$ $pre
+$$
 
-$fend 20$$
 
 $head Description$$
 The value $italic op$$ is one of the following enum type values:
@@ -151,21 +149,18 @@ $index operator, print$$
 $index trace, tape operation$$
 $section Print the Information Corresponding to One Tape Operation$$
 
-$table
-$bold Syntax$$ $cnext 
+$head Syntax$$
 $syntax%void printOp(
-	std::ostream          &%os%     , 
-	const TapeRec<%Base%>   *%Rec%    ,   
-	size_t                 %i_var%  , 
-	OpCode                 %op%     ,
-	const size_t          *%ind%    , 
-	size_t                 %nfz%    ,
-	const  %Value%        *%fz%     ,
-	size_t                 %nrz%    ,
-	const  %Value%        *%rz%     )%$$
-$tend
+	std::ostream &%os% ,
+	const TapeRec<%Base%> *%Rec% ,
+	size_t %i_var% ,
+	OpCode %op% ,
+	const size_t *%ind% ,
+	size_t %nfz% ,
+	const %Value% *%fz% ,
+	size_t %nrz% ,
+	const %Value% *%rz% )%$$
 
-$fend 25$$
 
 $head Base$$
 Determines the type of tape we are printing from.
@@ -223,12 +218,9 @@ $$
 $index NumInd$$
 $section Number of Ind field Values Corresponding to an Op Code$$
 
-$table
-$bold Syntax$$
-$cnext $syntax%size_t NumInd(OpCode %op%)%$$
-$tend
+$head Syntax$$
+$syntax%size_t NumInd(OpCode %op%)%$$
 
-$fend 25$$
 
 $head Description$$
 The syntax
@@ -248,12 +240,9 @@ $$
 $index NumVar$$
 $section Number of Variables Corresponding to an Op Code$$
 
-$table
-$bold Syntax$$
-$cnext $syntax%size_t NumVar(OpCode %op%)%$$
-$tend
+$head Syntax$$
+$syntax%size_t NumVar(OpCode %op%)%$$
 
-$fend 25$$
 
 $head Description$$
 The syntax

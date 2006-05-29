@@ -54,15 +54,13 @@ $index equation, ODE error control$$
  
 $section An Error Controller for ODE Solvers$$
 
-$table
-$bold Syntax$$ 
-$cnext $code # include <CppAD/OdeErrControl.h>$$
-$rnext $cnext
-$syntax%%xf% = OdeErrControl(%method%, %ti%, %tf%, %xi%, 
+$head Syntax$$
+$code # include <CppAD/OdeErrControl.h>$$
+$pre
+$$
+$syntax%%xf% = OdeErrControl(%method%, %ti%, %tf%, %xi%,
 	%smin%, %smax%, %scur%, %eabs%, %erel%, %ef% , %maxabs%, %nstep% )%$$
-$tend
 
-$fend 20$$
 
 $head Description$$
 Let $latex \R$$ denote the real numbers

@@ -2,7 +2,7 @@
 # define CppADTapeRecIncluded
 
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -38,14 +38,12 @@ $index tape, record$$
 $index record, tape$$
 $index TapeRec$$
 
-$table
-$bold Syntax$$ $cnext 
+$head Syntax$$
 $syntax%TapeRec<%Base%> %Rec%$$
-$rnext $cnext
+$pre
+$$
 $syntax%TapeRec<%Base%> %Rec%(const TapeRec<%Base%> &%Other%)%$$
-$tend
 
-$fend 20$$
 
 $head Default Constructors$$
 The default constructor 

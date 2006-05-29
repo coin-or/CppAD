@@ -24,12 +24,9 @@ $spell
 	dw
 $$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%dw% = %f%.Reverse(1, %w%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
@@ -127,12 +124,9 @@ $index mode, reverse$$
 $index derivative, reverse mode$$
 $index calculate, reverse mode$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%%dw% = %f%.Reverse(%p%, %w%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the

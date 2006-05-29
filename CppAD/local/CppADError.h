@@ -50,14 +50,13 @@ $index macro, error assert$$
 
 $section CppAD Error Detection and Reporting$$
 
-$table
-$bold Syntax$$
-$cnext $code # include <CppAD/CppADError.h>$$          $rnext
-$cnext $syntax%CppADUnknownError(%exp%)%$$             $rnext
-$cnext $syntax%CppADUsageError(%exp%, %msg%)%$$ 
-$tend
+$head Syntax$$
+$code # include <CppAD/CppADError.h>$$ $pre
+$$
+$syntax%CppADUnknownError(%exp%)%$$ $pre
+$$
+$syntax%CppADUsageError(%exp%, %msg%)%$$
 
-$fend 25$$
 
 $head Description$$
 These macros defined in the file $code CppAD/local/CppADError.h$$

@@ -56,12 +56,9 @@ $index tan, AD$$
 
 $section AD Standard Math Unary Functions$$
 
-$table
-$bold Syntax$$ $cnext 
-$syntax% %y% = %fun%(%x%)%$$
-$tend
+$head Syntax$$
+$syntax%%y% = %fun%(%x%)%$$
 
-$fend 20$$
 
 $head Purpose$$
 Evaluates the one argument standard math function 

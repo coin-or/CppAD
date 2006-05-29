@@ -30,14 +30,12 @@ $index numeric, check$$
 $index check, numeric$$
 $index concept, check numeric$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $code # include <CppAD/CheckNumericType.h>$$
-$rnext $cnext
+$pre
+$$
 $syntax%CheckNumericType<%NumericType%>()%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 The syntax 

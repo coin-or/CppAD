@@ -45,18 +45,18 @@ $index index, AD record$$
 $section AD Vectors that Record Index Operations$$
 
 
-$table 
-$bold Syntax$$ $cnext 
+$head Syntax$$
 $syntax%VecAD<%Base%> %v%(%n%)%$$
-$rnext $cnext 
+$pre
+$$
 $syntax%%v%.size()%$$
-$rnext $cnext 
+$pre
+$$
 $syntax%%b% = %v%[%i%]%$$
-$rnext $cnext 
+$pre
+$$
 $syntax%%y% = %v%[%x%]%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 If the tape for $xref/glossary/AD of Base/AD of/$$ $italic Base$$ operations is in the

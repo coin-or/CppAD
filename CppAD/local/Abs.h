@@ -39,12 +39,9 @@ $index value, AD absolute$$
 
 $section AD Absolute Value Function$$
 
-$table
-$bold Syntax$$ $cnext 
-$syntax% %y% = abs(%x%)%$$
-$tend
+$head Syntax$$
+$syntax%%y% = abs(%x%)%$$
 
-$fend 20$$
 
 $head Purpose$$
 Evaluates the absolute value function where its argument is an

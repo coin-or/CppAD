@@ -37,12 +37,9 @@ $index variable, independent$$
 
 $section Declare Independent Variables and Start Recording$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%Independent(%x%)%$$
-$tend
 
-$fend 20$$
 
 $head Purpose$$
 Calling $code Independent$$ starts the recording 
