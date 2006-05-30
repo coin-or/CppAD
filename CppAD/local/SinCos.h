@@ -44,12 +44,10 @@ $index ForSinCos$$
 
 $section Forward Mode Trigonometric and Hyperbolic Sine and Cosine$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void For%Type%SinCos(size_t %d%, 
+$head Syntax$$
+
+$syntax%inline void For%Type%SinCos(size_t %d%,
 	%Base% *%s%, %Base% *%c%, const %Base% *%x%)%$$
-$tend
 
 $head Description$$
 Computes the $italic d$$ order Taylor coefficient for $latex S$$
@@ -121,13 +119,11 @@ $index RevSinCos$$
 
 $section Reverse Mode Sine and Cosine Functions$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void Rev%Type%SinCos(size_t %d%, 
-	const %Base%  *%s%, const %Base%  *%c%, const %Base%  *%x%,
-	      %Base% *%ps%,       %Base% *%pc%,       %Base% *%px%)%$$
-$tend
+$head Syntax$$
+
+$syntax%inline void Rev%Type%SinCos(size_t %d%,
+	const %Base% *%s%, const %Base% *%c%, const %Base% *%x%,
+	 %Base% *%ps%, %Base% *%pc%, %Base% *%px%)%$$
 
 $head Description$$
 We are given the partial derivatives for a function

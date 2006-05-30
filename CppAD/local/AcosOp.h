@@ -36,12 +36,10 @@ $index ForAcosOp$$
 
 $section Forward Mode Acos Function$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void ForAcosOp(size_t %d%, 
+$head Syntax$$
+
+$syntax%inline void ForAcosOp(size_t %d%,
 	%Base% *%z%, %Base% *%b%, const %Base% *%x%)%$$
-$tend
 
 $head Description$$
 Computes the $italic d$$ order Taylor coefficient for 
@@ -97,13 +95,11 @@ $index RevAcosOp$$
 
 $section Reverse Mode Acos Function$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void RevAcosOp(size_t %d%, 
-	const %Base%  *%z%, const %Base%  *%b%, const %Base%  *%x%,
-	      %Base% *%pz%,       %Base% *%pb%,       %Base% *%px%)%$$
-$tend
+$head Syntax$$
+
+$syntax%inline void RevAcosOp(size_t %d%,
+	const %Base% *%z%, const %Base% *%b%, const %Base% *%x%,
+	 %Base% *%pz%, %Base% *%pb%, %Base% *%px%)%$$
 
 $head Description$$
 We are given the partial derivatives for a function

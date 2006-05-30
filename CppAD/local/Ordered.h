@@ -33,10 +33,8 @@ $index GreaterThanZero$$
 $index positive$$
 $section Check if a Value is Greater Than Zero$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%inline bool GreaterThanZero(const %Type% &%x%)%$$
-$tend
 
 $head Description$$
 If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
@@ -62,10 +60,8 @@ $index GreaterThanOrZero$$
 $index positive$$
 $section Check if a Value is Greater Than Or Equal Zero$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%inline bool GreaterThanZero(const %Type% &%x%)%$$
-$tend
 
 $head Description$$
 If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
@@ -91,10 +87,8 @@ $index LessThanZero$$
 $index negative$$
 $section Check if a Value is Less Than Zero$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%inline bool LessThanZero(const %Type% &%x%)%$$
-$tend
 
 $head Description$$
 If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
@@ -120,10 +114,8 @@ $index LessThanOrZero$$
 $index negative$$
 $section Check if a Value is Less Than Or Equal Zero$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%inline bool LessThanOrZero(const %Type% &%x%)%$$
-$tend
 
 $head Description$$
 If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,

@@ -105,18 +105,18 @@ $index operator, add reverse$$
 $index RevAdd$$
 $section Reverse Mode Addition Operator$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void RevAddvvOp(size_t %d%, 
+$head Syntax$$
+
+$syntax%inline void RevAddvvOp(size_t %d%,
 	const %Base% *%pz%, %Base% *%px%, %Base% *%py%)%$$
-$rnext $cnext
+$pre
+$$
 $syntax%inline void RevAddpvOp(size_t %d%,
 	const %Base% *%pz%, %Base% *%px%)%$$
-$rnext $cnext
+$pre
+$$
 $syntax%inline void RevAddvpOp(size_t %d%,
 	const %Base% *%pz%, %Base% *%py%)%$$
-$tend
 
 $head Description$$
 We are given the partial derivatives for a function

@@ -109,21 +109,21 @@ $index RevMul$$
 
 $section Reverse Mode Multiplication Operator$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void RevMulvvOp(size_t %d%, 
-	const %Base%  *%z%, const %Base% *%x%, const %Base% *%y%,
-	const %Base% *%pz%, %Base%      *%px%, %Base%      *%py%)%$$
-$rnext $cnext
-$syntax%inline void RevMulpvOp(size_t %d%, 
-	const %Base%  *%z%, const %Base% *%p%, const %Base% *%y%,
+$head Syntax$$
+
+$syntax%inline void RevMulvvOp(size_t %d%,
+	const %Base% *%z%, const %Base% *%x%, const %Base% *%y%,
+	const %Base% *%pz%, %Base% *%px%, %Base% *%py%)%$$
+$pre
+$$
+$syntax%inline void RevMulpvOp(size_t %d%,
+	const %Base% *%z%, const %Base% *%p%, const %Base% *%y%,
 	const %Base% *%pz%, %Base% *%py%)%$$
-$rnext $cnext
-$syntax%inline void RevMulvpOp(size_t %d%, 
-	const %Base%  *%z%, const %Base% *%x%, const %Base% *%p%,
+$pre
+$$
+$syntax%inline void RevMulvpOp(size_t %d%,
+	const %Base% *%z%, const %Base% *%x%, const %Base% *%p%,
 	const %Base% *%pz%, %Base% *%px%)%$$
-$tend
 
 $head Description$$
 We are given the partial derivatives for a function

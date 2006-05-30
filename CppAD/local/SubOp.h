@@ -101,18 +101,16 @@ $$
 $mindex RevSubvvOp reverse minus subtract$$
 $section Reverse Mode Subtraction Operator$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void RevSubvvOp(size_t %d%, 
+$head Syntax$$
+
+$syntax%inline void RevSubvvOp(size_t %d%,
 	const %Base% *%pz%, %Base% *%px%, %Base% *%py%)%$$
-$cnext
-$syntax%inline void RevSubpvOp(size_t %d%, 
+
+$syntax%inline void RevSubpvOp(size_t %d%,
 	const %Base% *%pz%, %Base% *%py%)%$$
-$cnext
-$syntax%inline void RevSubvpOp(size_t %d%, 
+
+$syntax%inline void RevSubvpOp(size_t %d%,
 	const %Base% *%pz%, %Base% *%px%)%$$
-$tend
 
 $head Description$$
 We are given the partial derivatives for a function

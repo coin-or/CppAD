@@ -35,12 +35,10 @@ $index ForAtanOp$$
 
 $section Forward Mode Atan Function$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void ForAtanOp(size_t %d%, 
+$head Syntax$$
+
+$syntax%inline void ForAtanOp(size_t %d%,
 	%Base% *%z%, %Base% *%b%, const %Base% *%x%)%$$
-$tend
 
 $head Description$$
 Computes the $italic d$$ order Taylor coefficient for 
@@ -96,13 +94,11 @@ $index RevAtanOp$$
 
 $section Reverse Mode Atan Function$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void RevAtanOp(size_t %d%, 
-	const %Base%  *%z%, const %Base%  *%b%, const %Base%  *%x%,
-	      %Base% *%pz%,       %Base% *%pb%,       %Base% *%px%)%$$
-$tend
+$head Syntax$$
+
+$syntax%inline void RevAtanOp(size_t %d%,
+	const %Base% *%z%, const %Base% *%b%, const %Base% *%x%,
+	 %Base% *%pz%, %Base% *%pb%, %Base% *%px%)%$$
 
 $head Description$$
 We are given the partial derivatives for a function

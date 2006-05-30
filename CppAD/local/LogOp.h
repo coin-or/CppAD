@@ -36,12 +36,10 @@ $index ForLogOp$$
 
 $section Forward Mode Logarithm Function$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void ForLogOp(size_t %d%, 
+$head Syntax$$
+
+$syntax%inline void ForLogOp(size_t %d%,
 	%Base% *%z%, const %Base% *%x%)%$$
-$tend
 
 $head Description$$
 Computes the $italic d$$ order Taylor coefficient for $latex Z$$ where
@@ -83,13 +81,11 @@ $index RevLogOp$$
 
 $section Reverse Mode Logarithm Function$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void RevLogOp(size_t %d%, 
-	const %Base%  *%z%, const %Base%  *%x%,
-	      %Base% *%pz%,       %Base% *%px%)%$$
-$tend
+$head Syntax$$
+
+$syntax%inline void RevLogOp(size_t %d%,
+	const %Base% *%z%, const %Base% *%x%,
+	 %Base% *%pz%, %Base% *%px%)%$$
 
 $head Description$$
 We are given the partial derivatives for a function

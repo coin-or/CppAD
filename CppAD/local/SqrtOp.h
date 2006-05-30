@@ -35,12 +35,10 @@ $index ForSqrtOp$$
 
 $section Forward Mode Square Root Function$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void ForSqrtOp(size_t %d%, 
+$head Syntax$$
+
+$syntax%inline void ForSqrtOp(size_t %d%,
 	%Base% *%z%, const %Base% *%x%)%$$
-$tend
 
 $head Description$$
 Computes the $italic d$$ order Taylor coefficient for $latex Z$$ where
@@ -81,13 +79,11 @@ $index ForSqrtOp$$
 
 $section Reverse Mode Square Root Function$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void RevSqrtOp(size_t %d%, 
-	const %Base%  *%z%, const %Base%  *%x%,
-	      %Base% *%pz%,       %Base% *%px%)%$$
-$tend
+$head Syntax$$
+
+$syntax%inline void RevSqrtOp(size_t %d%,
+	const %Base% *%z%, const %Base% *%x%,
+	 %Base% *%pz%, %Base% *%px%)%$$
 
 $head Description$$
 We are given the partial derivatives for a function

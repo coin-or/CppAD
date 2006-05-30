@@ -33,10 +33,8 @@ $index parameter, identical$$
 
 $section Check if a Value is Identically a Parameter$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%inline bool IdenticalPar(const %Type% &%x%)%$$
-$tend
 
 $head Description$$
 If $italic x$$ is not of type $syntax%AD<%Base%>%$$,
@@ -62,10 +60,8 @@ $index zero, identical$$
 
 $section Check if a Value is Identically Zero$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%inline bool IdenticalZero(const %Type% &%x%)%$$
-$tend
 
 $head Description$$
 If $italic x$$ is not of type $syntax%AD<%Base%>%$$,
@@ -94,10 +90,8 @@ $index one, identical$$
 
 $section Check if a Value is Identically One$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%inline bool IdenticalOne(const %Type% &%x%)%$$
-$tend
 
 $head Description$$
 If $italic x$$ is not of type $syntax%AD<%Base%>%$$,
@@ -124,10 +118,8 @@ $index equal, identical$$
 
 $section Check if a Value is Identically Equal Another$$
 
-$table
-$bold Syntax$$ $cnext
+$head Syntax$$
 $syntax%inline bool IdenticalEqual(const %Type% &%x%, const %Type%)%$$
-$tend
 
 $head Description$$
 If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,

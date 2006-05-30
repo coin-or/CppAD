@@ -35,12 +35,10 @@ $index ForAbsOp$$
 
 $section Forward Mode Absolute Value Function$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void ForAbsOp(size_t %d%, 
+$head Syntax$$
+
+$syntax%inline void ForAbsOp(size_t %d%,
 	%Base% *%z%, const %Base% *%x%)%$$
-$tend
 
 $head Description$$
 Computes the $italic d$$ order Taylor coefficient for $latex Z$$ where
@@ -81,13 +79,11 @@ $index RevAbsOp$$
 
 $section Reverse Mode Absolute Value Function$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void RevAbsOp(size_t %d%, 
-	const %Base%  *%z%, const %Base%  *%x%,
-	      %Base% *%pz%,       %Base% *%px%)%$$
-$tend
+$head Syntax$$
+
+$syntax%inline void RevAbsOp(size_t %d%,
+	const %Base% *%z%, const %Base% *%x%,
+	 %Base% *%pz%, %Base% *%px%)%$$
 
 $head Description$$
 We are given the partial derivatives for a function

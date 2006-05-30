@@ -108,21 +108,21 @@ $index ForDiv$$
 
 $section Reverse Mode Division Operator$$
 
-$table
-$bold Syntax$$ 
-$cnext
-$syntax%inline void RevDivvvOp(size_t %d%, 
+$head Syntax$$
+
+$syntax%inline void RevDivvvOp(size_t %d%,
 	const %Base% *%z%, const %Base% *%x%, const %Base% *%y%,
-	%Base%      *%pz%, %Base%      *%px%, %Base%      *%py%)%$$
-$rnext $cnext
-$syntax%inline void RevDivpvOp(size_t %d%, 
-	const %Base%  *%z%, const %Base% *%p%, const %Base% *%y%,
-	%Base%      *%pz%, %Base%      *%py%)%$$
-$rnext $cnext
-$syntax%inline void RevDivvpOp(size_t %d%, 
-	const %Base%  *%z%, const %Base% *%x%, const %Base% *%p%,
+	%Base% *%pz%, %Base% *%px%, %Base% *%py%)%$$
+$pre
+$$
+$syntax%inline void RevDivpvOp(size_t %d%,
+	const %Base% *%z%, const %Base% *%p%, const %Base% *%y%,
+	%Base% *%pz%, %Base% *%py%)%$$
+$pre
+$$
+$syntax%inline void RevDivvpOp(size_t %d%,
+	const %Base% *%z%, const %Base% *%x%, const %Base% *%p%,
 	const %Base% *%pz%, %Base% *%px%)%$$
-$tend
 
 $head Description$$
 We are given the partial derivatives for a function
