@@ -1,26 +1,19 @@
-# Finish changing command syntax to be a header in same frame
-# (Some of the developer documentation was not included)
+# Change in user interface to BenderQuad.cpp
 #
 # SvnCommit: file that preformed this commit.
+# WhatsNew06.omh: user's view of the changes.
+# WishList.omh: add Vector Element Type entry.
+# BenderQuad.h: change interface and documentation.
+# BenderQuad.cpp: change test / example to use new interface.
 #
 add_list="
 "
 change_list="
 	SvnCommit
-	CppAD/local/AsinOp.h
-	CppAD/local/ExpOp.h
-	CppAD/local/SinCos.h
-	CppAD/local/LogOp.h
-	CppAD/local/AtanOp.h
-	CppAD/local/AcosOp.h
-	CppAD/local/SubOp.h
-	CppAD/local/MulOp.h
-	CppAD/local/AbsOp.h
-	CppAD/local/Ordered.h
-	CppAD/local/Identical.h
-	CppAD/local/DivOp.h
-	CppAD/local/AddOp.h
-	CppAD/local/SqrtOp.h
+	omh/WhatsNew06.omh
+	omh/WishList.omh
+	CppAD/local/BenderQuad.h
+	Example/BenderQuad.cpp
 "
 delete_list="
 "

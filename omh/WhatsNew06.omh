@@ -63,6 +63,12 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-31$$
+The interface to $xref/BenderQuad/$$ has been changed.
+Now all the function evaluation routines 
+are member functions of one class object.
+This makes it easy for them to share common data.
+
 $head 05-29$$
 Change statement of command syntax to 
 be in the same browser frame as the command documentation

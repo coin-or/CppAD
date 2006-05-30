@@ -123,4 +123,10 @@ Use spaces rather than tabs.
 
 $lend
 
+$head Vector Element Type$$
+Change cross references from 
+$xref/SimpleVector/Elements of Specified Type/elements of a specified type/$$
+to
+$xref/SimpleVector/Value Type/value_type/$$.
+
 $end

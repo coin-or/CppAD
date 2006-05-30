@@ -39,7 +39,7 @@ $section Computing Jacobian and Hessian of Bender's Reduced Objective$$
 $head Syntax$$
 $syntax%%
 %# include <CppAD/CppAD.h>
-BenderQuad(%x%, %y%, %F%, %Fy%, %Newton%, %g%, %gx%, %gxx%)%$$  
+BenderQuad(%x%, %y%, %fun%, %g%, %gx%, %gxx%)%$$  
 
 $head Purpose$$
 We are given the optimization problem
@@ -93,30 +93,27 @@ $latex \[
 \end{array}
 \] $$
 
-$head F$$
-The argument $italic F$$ supports the syntax
-$syntax%
-	%f% = %F%(%x%, %y%)
-%$$
-(The type of $italic F$$ is unspecified; i.e., it is a C++ function object.)
+$head fun$$
+The $code BenderQuad$$ object $italic fun$$ 
+must support the following operations:
 
-$subhead x$$
-The $italic F$$ argument $italic x$$ has prototype
+$subhead fun.f$$
+The $code BenderQuad$$ argument $italic fun$$ supports the syntax
+$syntax%
+	%f% = %fun%.f(%x%, %y%)
+%$$
+The $syntax%%fun%.f%$$ argument $italic x$$ has prototype
 $syntax%
         const %ADvector% &%x%
 %$$
 (see $xref/BenderQuad/ADvector/ADvector/$$ below)
 and its size must be equal to $italic n$$.
-
-$subhead y$$
-The $italic F$$ argument $italic y$$ has prototype
+The $syntax%%fun%.f%$$ argument $italic y$$ has prototype
 $syntax%
         const %ADvector% &%y%
 %$$
 and its size must be equal to $italic m$$.
-
-$subhead f$$
-The $italic F$$ return value $italic f$$ has prototype
+The $syntax%%fun%.f%$$ result $italic f$$ has prototype
 $syntax%
 	%ADvector% %f%
 %$$
@@ -126,70 +123,52 @@ $latex \[
 	f = F(x, y)
 \] $$.
 
-
-$head Fy$$
-The argument $italic Fy$$ supports the syntax
+$subhead fun.fy$$
+The $code BenderQuad$$ argument $italic fun$$ supports the syntax
 $syntax%
-	%fy% = %Fy%(%x%, %y%)
+	%fy% = %fun%.fy(%x%, %y%)
 %$$
-(The type of $italic Fy$$ is unspecified; i.e., it is a C++ function object.)
-
-$subhead x$$
-The $italic Fy$$ argument $italic x$$ has prototype
+The $syntax%%fun%.fy%$$ argument $italic x$$ has prototype
 $syntax%
         const %ADvector% &%x%
 %$$
 and its size must be equal to $italic n$$.
-
-$subhead y$$
-The $italic Fy$$ argument $italic y$$ has prototype
+The $syntax%%fun%.fy%$$ argument $italic y$$ has prototype
 $syntax%
         const %ADvector% &%y%
 %$$
 and its size must be equal to $italic m$$.
-
-$subhead fy$$
-The $italic Fy$$ return value $italic fy$$ has prototype
+The $syntax%%fun%.fy%$$ result $italic fy$$ has prototype
 $syntax%
 	%ADvector% %fy%
 %$$
+and its size must be equal to $italic m$$.
 The value of $italic fy$$ is
 $latex \[
 	fy = \partial_y F(x, y)
 \] $$.
 
-
-$head Newton$$
-The argument $italic Newton$$ supports the syntax
+$subhead fun.dy$$
+The $code BenderQuad$$ argument $italic fun$$ supports the syntax
 $syntax%
-	%dy% = %Newton%(%x%, %y%, %fy%)
+	%dy% = %fun%.dy(%x%, %y%, %fy%)
 %$$
-(The type of $italic Newton$$ is unspecified; 
-i.e., it is a C++ function object.)
-
-$subhead x$$
-The $italic Newton$$ argument $italic x$$ has prototype
+The $syntax%%fun%.dy%$$ argument $italic x$$ has prototype
 $syntax%
         const %ADvector% &%x%
 %$$
 and its size must be equal to $italic n$$.
-
-$subhead y$$
-The $italic Newton$$ argument $italic y$$ has prototype
+The $syntax%%fun%.dy%$$ argument $italic y$$ has prototype
 $syntax%
         const %ADvector% &%y%
 %$$
 and its size must be equal to $italic m$$.
-
-$subhead fy$$
-The $italic Newton$$ argument $italic fy$$ has prototype
+The $syntax%%fun%.dy%$$ argument $italic fy$$ has prototype
 $syntax%
         const %ADvector% &%fy%
 %$$
 and its size must be equal to $italic m$$.
-
-$subhead dy$$
-The $italic Newton$$ return value $italic dy$$ has prototype
+The $syntax%%fun%.dy%$$ result $italic dy$$ has prototype
 $syntax%
 	%ADvector% %dy%
 %$$
@@ -291,13 +270,11 @@ $end
 
 namespace CppAD { // BEGIN CppAD namespace
 
-template <class Vector, class F_type, class Fy_type, class Newton_type>
+template <class Vector, class Fun>
 void BenderQuad(
 	const Vector   &x     , 
 	const Vector   &y     , 
-	F_type          F     , 
-	Fy_type         Fy    , 
-	Newton_type     Newton,
+	Fun             fun   , 
 	Vector         &g     ,
 	Vector         &gx    ,
 	Vector         &gxx   )
@@ -342,11 +319,11 @@ void BenderQuad(
 
 	// evaluate fy = the partial of F(x, y) w.r.t y as a function of x
 	ADvector fy(m);
-	fy = Fy(vx, py);
+	fy = fun.fy(vx, py);
 
 	// evaluate dy (x) = Newton step as a function of x through fy only
 	ADvector dy(m);
-	dy = Newton(px, py, fy);
+	dy = fun.dy(px, py, fy);
 
 	// variable version of y
 	ADvector vy(m);
@@ -355,7 +332,7 @@ void BenderQuad(
 
 	// evaluate G~ (x) = F [ x , y + dy(x) ] 
 	ADvector gtilde(1);
-	gtilde = F(vx, vy);
+	gtilde = fun.f(vx, vy);
 
 	// AD function object that corresponds to G~ (x)
 	ADFun<Base> Gtilde(vx, gtilde); 

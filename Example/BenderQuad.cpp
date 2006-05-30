@@ -77,22 +77,21 @@ $end
 # include <CppAD/CppAD.h>
 
 namespace {
-	// make one copy of t and z visible in all the functions below
-	CppADvector<double> t;
-	CppADvector<double> z;
 
-	class F_type {
+	template <class Type>
+	class Fun {
+	typedef CppADvector<double> vector;
+	typedef CppADvector<Type>   Vector;
+	private:
+		vector t; // measurement times
+		vector z; // measurement values
 	public:
 		// constructor
-		F_type(void)
+		Fun(const vector &t_, const vector &z_)
 		{ }
-		// f = F(x, y)
-		template <class Vector>
-		Vector operator()(const Vector &x, const Vector &y)
-		{	// determine type of vector elements
-        		typedef typename Vector::value_type Type;	
-
-			size_t i;
+		// Fun.f(x, y) = F(x, y)
+		Vector f(const Vector &x, const Vector &y)
+		{	size_t i;
 			size_t N = z.size();
 
 			Vector f(1);
@@ -105,20 +104,9 @@ namespace {
 			}
 			return f;
 		}
-
-	};
-	class Fy_type {
-	public:
-		// constructor
-		Fy_type(void)
-		{ }
-		// fy = F_y (x, y)
-		template <class Vector>
-		Vector operator()(const Vector &x, const Vector &y)
-		{	// determine type of vector elements
-        		typedef typename Vector::value_type Type;	
-
-			size_t i;
+		// Fun.fy(x, y) = F_y (x, y)
+		Vector fy(const Vector &x, const Vector &y)
+		{	size_t i;
 			size_t N = z.size();
 
 			Vector fy(1);
@@ -129,25 +117,14 @@ namespace {
 			{	residual = y[0] * sin( x[0] * t[i] ) - z[i];
 				fy[0]   += residual * sin( x[0] * t[i] );
 			}
-
 			return fy;
 		}
-	};
-	class Newton_type {
-	public:
-		// constructor
-		Newton_type(void)
-		{ }
-		// dy = - F_yy (x, y)^{-1} * fy
-		template <class Vector>
-		Vector operator()(
+		// Fun.dy(x, y, fy) = - F_yy (x, y)^{-1} * fy
+		Vector dy(
 			const Vector &x , 
 			const Vector &y , 
 			const Vector &fy)
-		{	// determine type of vector elements
-        		typedef typename Vector::value_type Type;	
-
-			size_t i;
+		{	size_t i;
 			size_t N = z.size();
 
 			Vector dy(1);
@@ -160,19 +137,9 @@ namespace {
 
 			return dy;
 		}
-	};
-	class Y_type {
-	public:
-		// constructor
-		Y_type(void)
-		{ }
-		// y = Y(x) 
-		template <class Vector>
-		Vector operator()(const Vector &x )
-		{	// determine type of vector elements
-        		typedef typename Vector::value_type Type;	
-
-			size_t i;
+		// Fun.Y(x) = Y(x)  (only used for testing results)
+		Vector Y(const Vector &x )
+		{	size_t i;
 			size_t N = z.size();
 
 			Vector y(1);
@@ -210,30 +177,30 @@ bool BenderQuad(void)
 
 	// t and z vectors
 	size_t N = 10;
-	t.resize(N);
-	z.resize(N);
+	CppADvector<double> t(N);
+	CppADvector<double> z(N);
 	for(i = 0; i < N; i++)
 	{	t[i] = double(i) / double(N);       // time or measurement
 		z[i] = y[0] * sin( x[0] * t[i] );   // data without noise
 	}
 
-	// construct the function objects
-	F_type      F;
-	Fy_type     Fy;
-	Newton_type Newton;
+	// construct the function evaluation object for call to BenderQuad
+	Fun< AD<double> > fun(z, t);
+
+	// construct the function evaluation object for testing result
+	Fun<double>       fun_test(z, t);       
 
 	// evaluate the G(x), G'(x) and G''(x)
 	CppADvector<double> g(1), gx(n), gxx(n * n);
-	BenderQuad(x, y, F, Fy, Newton, g, gx, gxx);
+	BenderQuad(x, y, fun, g, gx, gxx);
 
 	// Evaluate G(x) at nearby points
-	Y_type      Y;
 	double              step(1e-5);
-	CppADvector<double> g0 = F(x, Y(x) );
+	CppADvector<double> g0 = fun_test.f(x, fun_test.Y(x) );
 	x[0] = x[0] + 1. * step;
-	CppADvector<double> gp = F(x, Y(x) );
+	CppADvector<double> gp = fun_test.f(x, fun_test.Y(x) );
 	x[0] = x[0] - 2. * step;
-	CppADvector<double> gm = F(x, Y(x) );
+	CppADvector<double> gm = fun_test.f(x, fun_test.Y(x) );
 
 	// check function value
 	double check = g0[0];
@@ -245,10 +212,6 @@ bool BenderQuad(void)
 
 	check        = (gp[0] - 2. * g0[0] + gm[0]) / (step * step);
 	ok          &= NearEqual(check, gxx[0], 1e-10, 1e-10);
-
-	// resize global vectors to zero to avoid memory leak report
-	t.resize(0);
-	z.resize(0);
 
 	return ok;
 }
