@@ -1,19 +1,15 @@
-# Change in user interface to BenderQuad.cpp
+# Fix unitialized pointer warning.
 #
 # SvnCommit: file that preformed this commit.
 # WhatsNew06.omh: user's view of the changes.
-# WishList.omh: add Vector Element Type entry.
-# BenderQuad.h: change interface and documentation.
-# BenderQuad.cpp: change test / example to use new interface.
+# TrackNewDel.h: fix in this file.
 #
 add_list="
 "
 change_list="
 	SvnCommit
 	omh/WhatsNew06.omh
-	omh/WishList.omh
-	CppAD/local/BenderQuad.h
-	Example/BenderQuad.cpp
+	CppAD/TrackNewDel.h
 "
 delete_list="
 "

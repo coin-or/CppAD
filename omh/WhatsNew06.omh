@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew06$$
 $spell
+	uninitialized
+	Tautschnig
 	resize
 	gcc
 	var
@@ -62,6 +64,13 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 06-02$$
+Newer versions of the gcc compiler generated a warning for possible
+use of an uninitialized pointer.
+This was found by Michael Tautschnig and his fix has been
+included in the CppAD distribution.
+
 
 $head 05-31$$
 The interface to $xref/BenderQuad/$$ has been changed.
