@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew06$$
 $spell
+	fy
 	uninitialized
 	Tautschnig
 	resize
@@ -64,6 +65,13 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 06-05$$
+Change $xref/BenderQuad/$$ 
+$latex F_y (x, y)$$ to $latex H(x,y)$$ so applies in a more
+general setting.
+This was another change to the $code BenderQuad$$ interface,
+$syntax%%fun%.fy%$$ was changed to $syntax%%fun%.h%$$.
 
 $head 06-02$$
 Newer versions of the gcc compiler generated a warning for possible

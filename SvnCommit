@@ -1,15 +1,17 @@
-# Fix unitialized pointer warning.
+# Change BenderQuad notaiton so has more general usage.
 #
 # SvnCommit: file that preformed this commit.
 # WhatsNew06.omh: user's view of the changes.
-# TrackNewDel.h: fix in this file.
+# BenderQuad.h: change F_y (x,y) to H(x,y).
+# BenderQuad.cpp: change F_y (x,y) to H(x,y).
 #
 add_list="
 "
 change_list="
 	SvnCommit
 	omh/WhatsNew06.omh
-	CppAD/TrackNewDel.h
+	CppAD/local/BenderQuad.h
+	Example/BenderQuad.cpp
 "
 delete_list="
 "

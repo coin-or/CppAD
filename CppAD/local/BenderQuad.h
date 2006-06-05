@@ -48,24 +48,26 @@ $latex \[
 	{\rm minimize} & F(x, y) & {\rm w.r.t.} \; (x, y) \in \R^n \times \R^m
 \end{array}
 \] $$
-together with a routine that can relative quickly minimize
-with respect to $latex y$$; i.e., that can evaluate
+that is convex with respect to $latex y$$.
+In addition, we are given a set of equations $latex H(x, y)$$
+such that 
 $latex \[
-	Y(x) = {\rm argmin} \; F(x , y) \; {\rm w.r.t.} \; y \in \R^m
+	H[ x , Y(x) ] = 0 \;\; \Rightarrow \;\; F_y [ x , Y(x) ] = 0
+\] $$
+(In fact, it is often the case that $latex H(x, y) = F_y (x, y)$$.)
+Furthermore, it is easy to calculate a Newton step for these equations; i.e.,
+$latex \[
+	dy = - [ \partial_y H(x, y)]^{-1} H(x, y)
 \] $$
 The purpose of this routine is to compute the 
 value, Jacobian, and Hessian of the reduced objective function
 $latex \[
-	G(x) = {\rm min} \; F(x, y) \; {\rm w.r.t.} \;  y \in \R^m
+	G(x) = F[ x , Y(x) ]
 \] $$
 Note that if only the value and Jacobian are needed, they can be
 computed more quickly using the relations
 $latex \[
-\begin{array}{rcl}
-	G(x)        & = & F [ x , Y (x) ]
-	\\
-	G^{(1)} (x) & = & \partial_x F [x, Y(x) ]
-\end{array}
+	G^{(1)} (x) = \partial_x F [x, Y(x) ]
 \] $$ 
 
 $head x$$
@@ -123,35 +125,35 @@ $latex \[
 	f = F(x, y)
 \] $$.
 
-$subhead fun.fy$$
+$subhead fun.h$$
 The $code BenderQuad$$ argument $italic fun$$ supports the syntax
 $syntax%
-	%fy% = %fun%.fy(%x%, %y%)
+	%h% = %fun%.h(%x%, %y%)
 %$$
-The $syntax%%fun%.fy%$$ argument $italic x$$ has prototype
+The $syntax%%fun%.h%$$ argument $italic x$$ has prototype
 $syntax%
         const %ADvector% &%x%
 %$$
 and its size must be equal to $italic n$$.
-The $syntax%%fun%.fy%$$ argument $italic y$$ has prototype
+The $syntax%%fun%.h%$$ argument $italic y$$ has prototype
 $syntax%
         const %ADvector% &%y%
 %$$
 and its size must be equal to $italic m$$.
-The $syntax%%fun%.fy%$$ result $italic fy$$ has prototype
+The $syntax%%fun%.h%$$ result $italic h$$ has prototype
 $syntax%
-	%ADvector% %fy%
+	%ADvector% %h%
 %$$
 and its size must be equal to $italic m$$.
-The value of $italic fy$$ is
+The value of $italic h$$ is
 $latex \[
-	fy = \partial_y F(x, y)
+	h = H(x, y)
 \] $$.
 
 $subhead fun.dy$$
 The $code BenderQuad$$ argument $italic fun$$ supports the syntax
 $syntax%
-	%dy% = %fun%.dy(%x%, %y%, %fy%)
+	%dy% = %fun%.dy(%x%, %y%, %h%)
 %$$
 The $syntax%%fun%.dy%$$ argument $italic x$$ has prototype
 $syntax%
@@ -163,9 +165,9 @@ $syntax%
         const %ADvector% &%y%
 %$$
 and its size must be equal to $italic m$$.
-The $syntax%%fun%.dy%$$ argument $italic fy$$ has prototype
+The $syntax%%fun%.dy%$$ argument $italic h$$ has prototype
 $syntax%
-        const %ADvector% &%fy%
+        const %ADvector% &%h%
 %$$
 and its size must be equal to $italic m$$.
 The $syntax%%fun%.dy%$$ result $italic dy$$ has prototype
@@ -175,15 +177,14 @@ $syntax%
 and its size must be equal to $italic m$$.
 The return value $italic dy$$ is given by
 $latex \[
-	dy = - [ \partial_y \partial_y F (x , y) ]^{-1} fy
+	dy = - [ \partial_y H (x , y) ]^{-1} h
 \] $$
-Note that if $italic fy$$ is equal to the gradient of
-$latex F(x, y)$$ with respect to $latex y$$,
+Note that if $italic h$$ is equal to $latex H(x, y)$$,
 $latex dy$$ is the Newton step for finding a zero
-of the gradient of $latex F(x, y)$$ with respect to $latex y$$;
+of $latex H(x, y)$$ with respect to $latex y$$;
 i.e., 
 $latex y + dy$$ is an approximate solution for the equation
-$latex \partial_y F (x, y + dy) = 0$$. 
+$latex H (x, y + dy) = 0$$. 
 
 $head g$$
 The argument $italic g$$ has prototype
@@ -317,13 +318,13 @@ void BenderQuad(
 	for(j = 0; j < m; j++)
 		py[j] = y[j];
 
-	// evaluate fy = the partial of F(x, y) w.r.t y as a function of x
-	ADvector fy(m);
-	fy = fun.fy(vx, py);
+	// evaluate h = H(x, y) 
+	ADvector h(m);
+	h = fun.h(vx, py);
 
-	// evaluate dy (x) = Newton step as a function of x through fy only
+	// evaluate dy (x) = Newton step as a function of x through h only
 	ADvector dy(m);
-	dy = fun.dy(px, py, fy);
+	dy = fun.dy(px, py, h);
 
 	// variable version of y
 	ADvector vy(m);

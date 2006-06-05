@@ -104,8 +104,8 @@ namespace {
 			}
 			return f;
 		}
-		// Fun.fy(x, y) = F_y (x, y)
-		Vector fy(const Vector &x, const Vector &y)
+		// Fun.h(x, y) = H(x, y) = F_y (x, y)
+		Vector h(const Vector &x, const Vector &y)
 		{	size_t i;
 			size_t N = z.size();
 
@@ -119,11 +119,12 @@ namespace {
 			}
 			return fy;
 		}
-		// Fun.dy(x, y, fy) = - F_yy (x, y)^{-1} * fy
+		// Fun.dy(x, y, h) = - H_y (x,y)^{-1} * h 
+		//                 = - F_yy (x, y)^{-1} * h
 		Vector dy(
 			const Vector &x , 
 			const Vector &y , 
-			const Vector &fy)
+			const Vector &h )
 		{	size_t i;
 			size_t N = z.size();
 
@@ -133,7 +134,7 @@ namespace {
 			for(i = 0; i < N; i++)
 			{	fyy += sin( x[0] * t[i] ) * sin( x[0] * t[i] );
 			}
-			dy[0] = - fy[0] / fyy;
+			dy[0] = - h[0] / fyy;
 
 			return dy;
 		}
