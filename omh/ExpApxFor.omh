@@ -29,7 +29,7 @@ $index sweep, forward$$
 
 $head Mathematical Form$$
 Suppose that we use the algorithm $xref/ExpApx.hpp/$$
-to compute $latex ExpApx(x, e)$$ 
+to compute $latex {\rm ExpApx} (x, e)$$ 
 with $latex x$$ is equal to .5
 and $latex e$$ is equal to .2. 
 For this case, our approximation of the exponential function,
@@ -37,11 +37,11 @@ and the partial derivative of the approximation,
 are given by 
 $latex \[
 \begin{array}{rclll}
-ExpApx (x, e) & = &   1 + x + x^2 / 2  
+{\rm ExpApx} (x, e) & = &   1 + x + x^2 / 2  
 	& =   1 + .5 + .25 / 2 
 	& =   1.625
 \\
-\partial_x ExpApx (x, e) & = &   1 + x 
+\partial_x {\rm ExpApx} (x, e) & = &   1 + x 
 	& =   1 + .5 
 	& =   1.5
 \end{array}
@@ -76,37 +76,44 @@ $bold Operation$$
 $rnext
 $latex a_0 = x $$
 	$cnext $cnext = 0.5
-	$cnext $cnext $latex \partial_x x  $$
+	$cnext $cnext 
+	$latex \partial_x a_0 = \partial_x x  $$
 	$cnext $cnext = 1
 $rnext
 $latex q_1  = r_0 * a_0  $$
 	$cnext $cnext = 0.5
-	$cnext $cnext $latex \partial_x r_0  * a_0 + r_0 * \partial_x a_0$$
+	$cnext $cnext 
+	$latex \partial_x q_1 = \partial_x r_0  * a_0 + r_0 * \partial_x a_0$$
 	$cnext $cnext = 1
 $rnext
 $latex r_1  = q_1 / k_0  $$
 	$cnext $cnext = 0.5
-	$cnext $cnext $latex \partial_x q_1 / k_0 $$
+	$cnext $cnext 
+	$latex \partial_x r_1 = \partial_x q_1 / k_0 $$
 	$cnext $cnext = 1
 $rnext
 $latex s_1  = s_0 + r_1  $$
 	$cnext $cnext = 1.5
-	$cnext $cnext $latex \partial_x s_0 + \partial_x r_1 $$
+	$cnext $cnext 
+	$latex \partial_x s_1 = \partial_x s_0 + \partial_x r_1 $$
 	$cnext $cnext = 1
 $rnext
 $latex q_2 =  r_1 * a_0 $$
 	$cnext $cnext = 0.25
-	$cnext $cnext $latex \partial_x r_1  * a_0 + r_1 * \partial_x a_0 $$
+	$cnext $cnext 
+	$latex \partial_x q_2 = \partial_x r_1  * a_0 + r_1 * \partial_x a_0 $$
 	$cnext $cnext = 1
 $rnext
 $latex r_2 = q_2 / k_1 $$
 	$cnext $cnext = 0.125
-	$cnext $cnext $latex \partial_x q_2 / k_1 $$
+	$cnext $cnext 
+	$latex \partial_x r_2 = \partial_x q_2 / k_1 $$
 	$cnext $cnext = 0.5
 $rnext
 $latex s_2   = s_1 + r_2 $$
 	$cnext $cnext = 1.625
-	$cnext $cnext $latex  \partial_x s_1 + \partial_x r_2 $$
+	$cnext $cnext 
+	$latex  \partial_x s_2 = \partial_x s_1 + \partial_x r_2 $$
 	$cnext $cnext = 1.5
 $tend
 $$

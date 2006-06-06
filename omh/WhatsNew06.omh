@@ -66,6 +66,15 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-07$$
+Some major changes were made to the notation in
+$xref/GetStarted.cpp/$$ (to make it easier to start using CppAD).
+$pre
+
+$$
+In the $xref/Introduction/$$ example,
+$latex ExpApx$$ was changed to $latex {\rm ExpApx}$$.
+
 $head 06-05$$
 Change $xref/BenderQuad/$$ 
 $latex F_y (x, y)$$ to $latex H(x,y)$$ so applies in a more

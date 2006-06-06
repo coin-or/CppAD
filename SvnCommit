@@ -1,17 +1,21 @@
-# Change BenderQuad notaiton so has more general usage.
+# Improvements to GetStarted and Introduction.
 #
 # SvnCommit: file that preformed this commit.
 # WhatsNew06.omh: user's view of the changes.
-# BenderQuad.h: change F_y (x,y) to H(x,y).
-# BenderQuad.cpp: change F_y (x,y) to H(x,y).
+# ExpApx.omh:  change ExpApx to {\rm ExpApx}.
+# ExpApxFor.omh:  change ExpApx to {\rm ExpApx} and include more Partial info.
+# ExpApxSeq.omh:  change ExpApx to {\rm ExpApx}.
+# GetStarted.cpp: major changes.
 #
 add_list="
 "
 change_list="
 	SvnCommit
 	omh/WhatsNew06.omh
-	CppAD/local/BenderQuad.h
-	Example/BenderQuad.cpp
+	omh/ExpApx.omh
+	omh/ExpApxFor.omh
+	omh/ExpApxSeq.omh
+	GetStarted/GetStarted.cpp
 "
 delete_list="
 "

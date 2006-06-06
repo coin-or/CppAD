@@ -58,9 +58,9 @@ k( \varepsilon ) = \min \{ k \in {\rm Z}_+ \; | \; \varepsilon \geq x^k / k ! \}
 The mathematical form for our approximation of the exponential function is
 $latex \[
 \begin{array}{rcl}
-ExpApx(x , \varepsilon ) & = & \left\{
+{\rm ExpApx} (x , \varepsilon ) & = & \left\{
 \begin{array}{ll}
-\frac{1}{ ExpApx(-x , \varepsilon ) } 
+\frac{1}{ {\rm ExpApx} (-x , \varepsilon ) } 
 	& {\rm if} \; x < 0 
 \\
 1 + x^1 / 1 ! + \cdots + x^{k( \varepsilon)} / k( \varepsilon ) !

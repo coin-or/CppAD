@@ -43,12 +43,12 @@ we drop it and just refer to the operation sequence.
 
 $head Mathematical Form$$
 Suppose that we use the algorithm $xref/ExpApx.hpp/$$
-to compute $latex ExpApx(x, e)$$ 
+to compute $latex {\rm ExpApx} (x, e)$$ 
 with $latex x$$ is equal to .5
 and $latex e$$ is equal to .2. 
 For this case, our approximation of the exponential function is
 $latex \[
-ExpApx (x, e) =   1 + x + x^2 / 2 
+{\rm ExpApx} (x, e) =   1 + x + x^2 / 2 
 =   1 + .5 + .25 / 2 
 =   1.625
 \] $$
