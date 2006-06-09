@@ -294,6 +294,10 @@ void BenderQuad(
 
 	// check the size of gx and gxx
 	CppADUsageError(
+		g.size() == 1,
+		"BenderQuad: size of the vector g is not equal to 1"
+	);
+	CppADUsageError(
 		gx.size() == n,
 		"BenderQuad: size of the vector gx is not equal to n"
 	);

@@ -66,6 +66,10 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-09$$
+Add a size check (size one) for the 
+$xref/BenderQuad/g/function value argument, g/$$ in $code BenderQuad$$.
+
 $head 06-07$$
 Some major changes were made to the notation in
 $xref/GetStarted.cpp/$$ (to make it easier to start using CppAD).
