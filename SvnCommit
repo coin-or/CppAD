@@ -1,8 +1,4 @@
-# Check size of function return matrix in BenderQuad.
-#
-# SvnCommit: file that preformed this commit.
-# WhatsNew06.omh: user's view of the changes.
-# BenderQuad.h: the change was here.
+# Merge BenderQuad changes from ADFun Branch
 #
 add_list="
 "
@@ -10,6 +6,7 @@ change_list="
 	SvnCommit
 	omh/WhatsNew06.omh
 	CppAD/local/BenderQuad.h
+	Example/BenderQuad.cpp
 "
 delete_list="
 "

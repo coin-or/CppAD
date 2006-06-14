@@ -73,7 +73,7 @@ $latex \[
 $head x$$
 The $code BenderQuad$$ argument $italic x$$ has prototype
 $syntax%
-        const %Vector% &%x%
+	const %Vector% &%x%
 %$$
 (see $xref/BenderQuad/Vector/Vector/$$ below)
 and its size must be equal to $italic n$$.
@@ -84,7 +84,7 @@ the reduced objective function and its derivatives.
 $head y$$
 The $code BenderQuad$$ argument $italic y$$ has prototype
 $syntax%
-        const %Vector% &%y%
+	const %Vector% &%y%
 %$$
 and its size must be equal to $italic m$$.
 It must be equal to $latex Y(x)$$; i.e., 
@@ -97,7 +97,11 @@ $latex \[
 
 $head fun$$
 The $code BenderQuad$$ object $italic fun$$ 
-must support the following operations:
+must support the member functions listed below.
+The tape corresponding to AD of $italic Base$$ operations will
+be in the $xref/glossary/Tape State/Recording/Recording state/1/$$
+when these member functions are called and it should still be recording
+when they return.
 
 $subhead fun.f$$
 The $code BenderQuad$$ argument $italic fun$$ supports the syntax
@@ -106,13 +110,13 @@ $syntax%
 %$$
 The $syntax%%fun%.f%$$ argument $italic x$$ has prototype
 $syntax%
-        const %ADvector% &%x%
+	const %ADvector% &%x%
 %$$
 (see $xref/BenderQuad/ADvector/ADvector/$$ below)
 and its size must be equal to $italic n$$.
 The $syntax%%fun%.f%$$ argument $italic y$$ has prototype
 $syntax%
-        const %ADvector% &%y%
+	const %ADvector% &%y%
 %$$
 and its size must be equal to $italic m$$.
 The $syntax%%fun%.f%$$ result $italic f$$ has prototype
@@ -132,12 +136,12 @@ $syntax%
 %$$
 The $syntax%%fun%.h%$$ argument $italic x$$ has prototype
 $syntax%
-        const %ADvector% &%x%
+	const %ADvector% &%x%
 %$$
 and its size must be equal to $italic n$$.
 The $syntax%%fun%.h%$$ argument $italic y$$ has prototype
 $syntax%
-        const %ADvector% &%y%
+	const %Vector% &%y%
 %$$
 and its size must be equal to $italic m$$.
 The $syntax%%fun%.h%$$ result $italic h$$ has prototype
@@ -157,17 +161,17 @@ $syntax%
 %$$
 The $syntax%%fun%.dy%$$ argument $italic x$$ has prototype
 $syntax%
-        const %ADvector% &%x%
+	const %Vector% &%x%
 %$$
 and its size must be equal to $italic n$$.
 The $syntax%%fun%.dy%$$ argument $italic y$$ has prototype
 $syntax%
-        const %ADvector% &%y%
+	const %Vector% &%y%
 %$$
 and its size must be equal to $italic m$$.
 The $syntax%%fun%.dy%$$ argument $italic h$$ has prototype
 $syntax%
-        const %ADvector% &%h%
+	const %ADvector% &%h%
 %$$
 and its size must be equal to $italic m$$.
 The $syntax%%fun%.dy%$$ result $italic dy$$ has prototype
@@ -309,26 +313,21 @@ void BenderQuad(
 	// some temporary indices
 	size_t i, j;
 
-	// parameter and variable versions x
-	ADvector px(n), vx(n);
+	// variable versions x
+	ADvector vx(n);
 	for(j = 0; j < n; j++)
-		vx[j] = px[j] = x[j];
+		vx[j] = x[j];
 	
 	// declare the independent variables
 	Independent(vx);
 
-	// parameter version of y
-	ADvector py(m);
-	for(j = 0; j < m; j++)
-		py[j] = y[j];
-
 	// evaluate h = H(x, y) 
 	ADvector h(m);
-	h = fun.h(vx, py);
+	h = fun.h(vx, y);
 
 	// evaluate dy (x) = Newton step as a function of x through h only
 	ADvector dy(m);
-	dy = fun.dy(px, py, h);
+	dy = fun.dy(x, y, h);
 
 	// variable version of y
 	ADvector vy(m);

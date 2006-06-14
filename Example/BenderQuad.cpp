@@ -105,7 +105,7 @@ namespace {
 			return f;
 		}
 		// Fun.h(x, y) = H(x, y) = F_y (x, y)
-		Vector h(const Vector &x, const Vector &y)
+		Vector h(const Vector &x, const vector &y)
 		{	size_t i;
 			size_t N = z.size();
 
@@ -122,8 +122,8 @@ namespace {
 		// Fun.dy(x, y, h) = - H_y (x,y)^{-1} * h 
 		//                 = - F_yy (x, y)^{-1} * h
 		Vector dy(
-			const Vector &x , 
-			const Vector &y , 
+			const vector &x , 
+			const vector &y , 
 			const Vector &h )
 		{	size_t i;
 			size_t N = z.size();
@@ -139,13 +139,13 @@ namespace {
 			return dy;
 		}
 		// Fun.Y(x) = Y(x)  (only used for testing results)
-		Vector Y(const Vector &x )
+		vector Y(const vector &x )
 		{	size_t i;
 			size_t N = z.size();
 
 			Vector y(1);
-			Type num = Type(0);
-			Type den = Type(0);
+			double num = 0.;
+			double den = 0.;
 
 			for(i = 0; i < N; i++)
 			{	num += z[i] * sin( x[0] * t[i] );

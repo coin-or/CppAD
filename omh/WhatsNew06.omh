@@ -66,6 +66,12 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-15$$
+Change $xref/BenderQuad/$$ to use $syntax%%Base%$$ instead of 
+$syntax%AD<%Base%>%$$ where every possible.
+This allows for more calculations to be done in the base type; i.e.,
+is more efficient.
+
 $head 06-09$$
 Add a size check (size one) for the 
 $xref/BenderQuad/g/function value argument, g/$$ in $code BenderQuad$$.
