@@ -32,14 +32,14 @@ $index Base, from AD$$
 $index AD, convert to Base$$
 $index convert, AD to Base$$
 
-$section Convert From AD to its Base Type$$
+$section Convert From an AD Type to its Base Type$$
 
 $head Syntax$$
 $syntax%%b% = Value(%x%)%$$
 
 
 $head Purpose$$
-Converts from and AD type to the corresponding
+Converts from an AD type to the corresponding
 $xref/glossary/Base Type/base type/$$.
 
 $head x$$
@@ -56,14 +56,20 @@ $syntax%
 
 $head Operation Sequence$$
 The result of this operation is not an 
-$xref/glossary/AD of Base/AD of/$$ $italic Base$$ object.
+$xref/glossary/AD of Base/AD of Base/$$ object.
 Thus it will not be recorded as part of the current
 AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$
 (even if the current $xref/glossary/Tape State/tape state/$$ is Recording).
-In order to make sure this is understood,
-the $code Value$$ function cannot be called while the tape that records
-$syntax%AD<%Base%>%$$ operations is in the Recording state.
+
+$head Restriction$$
+If the argument $italic x$$ is a 
+$xref/glossary/Variable/variable/$$ its dependency information 
+would not be included in the $code Value$$ result (see above).
+For this reason,
+the argument $italic x$$ must be a $xref/glossary/Parameter/parameter/$$; i.e.,
+it cannot depend on the current
+$xref/glossary/Independent Variable/independent variables/$$.
 
 $head Example$$
 $children%
@@ -85,8 +91,8 @@ inline Base Value(const AD<Base> &x)
 {	Base result;
 
 	CppADUsageError(
-		AD<Base>::Tape()->State() != Recording,
-		"cannot use Value while the tape is recording"
+		Parameter(x) ,
+		"Value: argument is a variable (not a parameter)" 
 	);
 		
 

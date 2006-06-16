@@ -34,6 +34,7 @@ then
 	\( -name 'config.status'  \) -or \
 	\( -name 'cppad-*'        \) -or \
         \( -name 'Debug'          \) -or \
+        \( -name 'Release'        \) -or \
         \( -name '.deps'          \) -or \
 	\( -name 'Dev'            \) -or \
 	\( -name 'Doc'            \) -or \

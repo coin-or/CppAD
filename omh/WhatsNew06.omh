@@ -66,6 +66,23 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-17$$
+The location where the distribution files are stored has changed
+and this broke the Download Current Version links for the
+$xref/InstallUnix/Download Current Version/Unix/$$ and 
+$xref/InstallWindows/Download Current Version/Windows/$$ installation.
+This has been fixed.
+$pre
+
+$$
+The compiling instructions for the $xref/Speed/$$ routines have been improved.
+$pre
+
+$$
+The $xref/Value/$$ function has been extended to allow for 
+$xref/glossary/Parameter/parameter/$$ arguments even if the corresponding
+$xref/glossary/Tape State/tape state/$$ for is Recording.
+
 $head 06-15$$
 Change $xref/BenderQuad/$$ to use $syntax%%Base%$$ instead of 
 $syntax%AD<%Base%>%$$ where every possible.

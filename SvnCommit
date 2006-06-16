@@ -1,24 +1,49 @@
-# Merge BenderQuad changes from ADFun Branch
+# Extend Value function, fix download directory, improve utility scripts
+#
+# SvnCommit: add the copy_branch option to this utility.
+# SvnMerge: forgot to include this in commit that created ADFun branch. 
+# Value.h: extend this function to any parameter.
+# Speed.vcproj: add /O2 option for release version.
+# SvnStatus: do not include Release directory in status output.
+# InstallUnix.omh: change directory where distribution file is stored. 
+# Speed.omh: improve Speed build instructions.
+# InstallWindows.omh: change directory where distribution file is stored. 
+# Value.cpp: test new feature and improve comments.
 #
 add_list="
 "
 change_list="
 	SvnCommit
+	SvnMerge
+	CppAD/local/Value.h
+	Speed/Speed.vcproj
+	SvnStatus
+	omh/InstallUnix.omh
+	omh/Speed.omh
 	omh/WhatsNew06.omh
-	CppAD/local/BenderQuad.h
-	Example/BenderQuad.cpp
+	omh/InstallWindows.omh
+	CleanCppAD
+	Example/Value.cpp
 "
 delete_list="
 "
-#----------------------------------------------------------------------
-# Edit section above for individual cases, section below stays the same
-# Do not use add_list to add directories; use the following instead:
-#	svn add --non-recursive dir
-#	svn commit directory -m "adding directory dir" dir
-# where dir is replaced by the name of the directory. 
-# Then use add_list to add the files within that directory.
-#----------------------------------------------------------------------
-sed -e "/^[^#]/d" -e "s/^[#] *//" < SvnCommit > svn.log
+copy_branch="ADFun" # branch directory, use copy_branch="" for not copying
+## ----------------------------------------------------------------------
+##  Edit section above for individual cases, section below stays the same
+##  Do not use add_list to add directories; use the following instead:
+## 	svn add --non-recursive dir
+## 	svn commit directory -m "adding directory dir" dir
+##  where dir is replaced by the name of the directory. 
+##  Then use add_list to add the files within that directory.
+## ----------------------------------------------------------------------
+if [ "$copy_branch" != "" ]
+then
+	if [ ! -d ../branches/$copy_branch/.svn ]
+	then
+		echo "../branches/$copy_branch/.svn is not a directory"
+	fi
+fi
+sed -e "/^[^#]/d" -e "/^##/d" -e "s/^[#] *//" < SvnCommit > svn.log
 count=0
 for file in $add_list $change_list
 do
@@ -43,28 +68,34 @@ done
 for file in $add_list
 do
 	echo "svn add $file ?"
+	if [ "$copy_branch" != "" ]
+	then
+		echo "svn add ../branches/$copy_branch/$file ?"
+	fi
+done
+for file in $change_list
+do
+	if [ "$copy_branch" != "" ]
+	then
+		echo "cp $file ../branches/$copy_branch/$file ?"
+	fi
 done
 for file in $delete_list
 do
 	echo "svn delete $file ?"
+	if [ "$copy_branch" != "" ]
+	then
+		echo "svn delete ../branches/$copy_branch/$file ?"
+	fi
 done
 response=""
 while [ "$response" != "c" ] && [ "$response" != "a" ]
 do
 	read -p "continue [c] or abort [a] ? " response
 done
-if [ "$response" = "c" ]
+if [ "$response" = "a" ]
 then
-	for file in $add_list
-	do
-		svn add $file
-	done
-	for file in $delete_list
-	do
-		svn delete $file
-	done
-	svn commit --file svn.log $add_list $change_list $delete_list
-else
+	echo "aborting commit"
 	count=0
 	for file in $add_list $change_list
 	do
@@ -84,4 +115,41 @@ else
 			mv junk.$count $file
 		fi
 	done
+	exit
 fi
+echo "continuing commit"
+#
+for file in $add_list
+do
+	svn add $file
+done
+for file in $delete_list
+do
+	svn delete $file
+done
+copy_list=""
+if [ "$copy_branch" != "" ]
+then
+	for file in $add_list
+	do
+		target="../branches/$copy_branch/$file"
+		cp $file $target
+		svn add $target
+		copy_list="$copy_list $target"
+	done
+	for file in $change_list
+	do
+		target="../branches/$copy_branch/$file"
+		echo "cp $file $target"
+		cp $file $target
+		copy_list="$copy_list $target"
+	done
+	for file in $delete_list
+	do
+		svn delete $target
+		target="../branches/$copy_branch/$file"
+		copy_list="$copy_list $target"
+	done
+	
+fi
+svn commit --file svn.log $add_list $change_list $delete_list $copy_list

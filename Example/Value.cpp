@@ -55,31 +55,25 @@ bool Value(void)
 	ok &= (Value(x[0]) == 3.);
 	ok &= (Value(x[1]) == 4.);
 
-	// start recording
-
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
-	// cannot call Value here (tape is recording)
 
 	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
 	y[0] = - x[1];
 
-	// create f: x -> y 
-	CppAD::ADFun<double> f(x, y);
-	// can call Value here (tape is no longer recording)
+	// cannot call Value(x[j]) or Value(y[0]) here (currently variables)
+	AD<double> p = 5.;        // p is a parameter (does not depend on x)
+	ok &= (Value(p) == 5.);
 
-	// check value after recording
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(x, y);
+
+	// can call Value(x[j]) or Value(y[0]) here (currently parameters)
 	ok &= (Value(x[0]) ==  3.);
 	ok &= (Value(x[1]) ==  4.);
 	ok &= (Value(y[0]) == -4.);
-
-	// for VecAD<double> use size_t indexing to convert to double 
-	CppAD::VecAD<double> v(1);
-	v[0] = 4.;
-	double v0 = v[0];
-	ok &= (v0 == 4.);
 
 	return ok;
 }

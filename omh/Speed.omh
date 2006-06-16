@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-// END SHORT COPYRIGHT
 
 $begin Speed$$
 $spell
@@ -27,33 +25,38 @@ $spell
 	Workspace
 	dsw
 	exe
+	sln
 $$
 
 $mindex speed test$$
 $section Routines That Speed Test CppAD$$
 
-$head Description$$
-These examples are in the directory $code CppAD/Speed$$.
+$head Purpose$$
+CppAD has a set of speed tests that are used to determine if 
+certain changes improve its execution speed.
+This section explains how you can run these tests on your computer.
 
 
 $head Unix$$
 In a unix operating system (or in a Cygwin shell on an Microsoft system),
-you can compile link and run the list of examples and 
-verification tests with the following commands:
+you must first configure CppAD to run its speed tests.
+To do this, run the install
+$xref/InstallUnix/Configure/configure/$$ command with the
+$code --with-Speed$$ command line option included.
+You can then compile link and run the speed 
+tests with the following commands (relative to the distribution directory):
 $codep
-	cd CppAD/Speed
+	cd Speed
 	make 
-	Speed
+	./Speed
 $$
 
 $head Windows$$
-In Microsoft Visual Studio.
-$codep
-	File | Open Workspace | CppAD\Speed\Speed.dsw
-	Build | Set Active Configuration | Speed - Win32 Release
-	Build | Speed.exe
-$$
-
+In Microsoft Visual Studio open the project file 
+$code Speed/Speed.sln$$
+(relative to the distribution directory).
+Then set the configuration to the $code Release$$ version.
+Then select $code Build | Speed$$.
 
 $contents%
 	Speed/Speed.cpp%

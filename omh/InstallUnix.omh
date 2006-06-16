@@ -63,21 +63,21 @@ $head Download Current Version$$
 $index download, unix$$
 Download the file
 $href%
-	http://www.coin-or.org/Tarballs/CppAD-06-04-26.tar.gz%
-	CppAD-06-04-26.tar.gz
+	http://www.coin-or.org/Tarballs/CppAD/CppAD-06-06-16.tar.gz%
+	CppAD-06-06-16.tar.gz
 %$$
 
 $head Extraction$$
 Use the command
 $codep
-	tar -xvzf CppAD-06-04-26.tar.gz
+	tar -xvzf CppAD-06-06-16.tar.gz
 $$
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-06-04-26
+	cppad-06-06-16
 %$$
-Note that $code 06-04-26$$ is the version number for CppAD.
+Note that $code 06-06-16$$ is the version number for CppAD.
 All of the commands below are to be executed starting from this
 directory.
 
