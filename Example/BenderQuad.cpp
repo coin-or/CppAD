@@ -77,24 +77,23 @@ $end
 # include <CppAD/CppAD.h>
 
 namespace {
-
-	template <class Type>
+	template <class Type>   // Type can be either double or AD<double>
 	class Fun {
-	typedef CppADvector<double> vector;
-	typedef CppADvector<Type>   Vector;
+	typedef CppADvector<double> BAvector;
+	typedef CppADvector<Type>   ADvector;
 	private:
-		vector t; // measurement times
-		vector z; // measurement values
+		BAvector t; // measurement times
+		BAvector z; // measurement values
 	public:
 		// constructor
-		Fun(const vector &t_, const vector &z_)
+		Fun(const BAvector &t_, const BAvector &z_)
 		{ }
 		// Fun.f(x, y) = F(x, y)
-		Vector f(const Vector &x, const Vector &y)
+		ADvector f(const ADvector &x, const ADvector &y)
 		{	size_t i;
 			size_t N = z.size();
 
-			Vector f(1);
+			ADvector f(1);
 			f[0] = Type(0);
 
 			Type residual;
@@ -105,11 +104,11 @@ namespace {
 			return f;
 		}
 		// Fun.h(x, y) = H(x, y) = F_y (x, y)
-		Vector h(const Vector &x, const vector &y)
+		ADvector h(const ADvector &x, const BAvector &y)
 		{	size_t i;
 			size_t N = z.size();
 
-			Vector fy(1);
+			ADvector fy(1);
 			fy[0] = Type(0);
 
 			Type residual;
@@ -121,14 +120,14 @@ namespace {
 		}
 		// Fun.dy(x, y, h) = - H_y (x,y)^{-1} * h 
 		//                 = - F_yy (x, y)^{-1} * h
-		Vector dy(
-			const vector &x , 
-			const vector &y , 
-			const Vector &h )
+		ADvector dy(
+			const BAvector &x , 
+			const BAvector &y , 
+			const ADvector &h )
 		{	size_t i;
 			size_t N = z.size();
 
-			Vector dy(1);
+			ADvector dy(1);
 			Type fyy = Type(0);
 
 			for(i = 0; i < N; i++)
@@ -139,11 +138,11 @@ namespace {
 			return dy;
 		}
 		// Fun.Y(x) = Y(x)  (only used for testing results)
-		vector Y(const vector &x )
+		BAvector Y(const BAvector &x )
 		{	size_t i;
 			size_t N = z.size();
 
-			Vector y(1);
+			BAvector y(1);
 			double num = 0.;
 			double den = 0.;
 
@@ -185,10 +184,10 @@ bool BenderQuad(void)
 		z[i] = y[0] * sin( x[0] * t[i] );   // data without noise
 	}
 
-	// construct the function evaluation object for call to BenderQuad
+	// construct the function object with Type = AD<double>
 	Fun< AD<double> > fun(z, t);
 
-	// construct the function evaluation object for testing result
+	// construct the function object with Type = double
 	Fun<double>       fun_test(z, t);       
 
 	// evaluate the G(x), G'(x) and G''(x)

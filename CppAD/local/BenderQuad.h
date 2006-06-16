@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin BenderQuad$$
 $spell
+	BAvector
 	gx
 	gxx
 	CppAD
@@ -73,9 +74,9 @@ $latex \[
 $head x$$
 The $code BenderQuad$$ argument $italic x$$ has prototype
 $syntax%
-	const %Vector% &%x%
+	const %BAvector% &%x%
 %$$
-(see $xref/BenderQuad/Vector/Vector/$$ below)
+(see $xref/BenderQuad/BAvector/BAvector/$$ below)
 and its size must be equal to $italic n$$.
 It specifies the point at which we evaluating 
 the reduced objective function and its derivatives.
@@ -84,7 +85,7 @@ the reduced objective function and its derivatives.
 $head y$$
 The $code BenderQuad$$ argument $italic y$$ has prototype
 $syntax%
-	const %Vector% &%y%
+	const %BAvector% &%y%
 %$$
 and its size must be equal to $italic m$$.
 It must be equal to $latex Y(x)$$; i.e., 
@@ -141,7 +142,7 @@ $syntax%
 and its size must be equal to $italic n$$.
 The $syntax%%fun%.h%$$ argument $italic y$$ has prototype
 $syntax%
-	const %Vector% &%y%
+	const %BAvector% &%y%
 %$$
 and its size must be equal to $italic m$$.
 The $syntax%%fun%.h%$$ result $italic h$$ has prototype
@@ -161,12 +162,12 @@ $syntax%
 %$$
 The $syntax%%fun%.dy%$$ argument $italic x$$ has prototype
 $syntax%
-	const %Vector% &%x%
+	const %BAvector% &%x%
 %$$
 and its size must be equal to $italic n$$.
 The $syntax%%fun%.dy%$$ argument $italic y$$ has prototype
 $syntax%
-	const %Vector% &%y%
+	const %BAvector% &%y%
 %$$
 and its size must be equal to $italic m$$.
 The $syntax%%fun%.dy%$$ argument $italic h$$ has prototype
@@ -193,7 +194,7 @@ $latex H (x, y + dy) = 0$$.
 $head g$$
 The argument $italic g$$ has prototype
 $syntax%
-	%Vector% &%g%
+	%BAvector% &%g%
 %$$
 and has size one.
 The input value of its element does not matter.
@@ -206,7 +207,7 @@ $latex \[
 $head gx$$
 The argument $italic gx$$ has prototype
 $syntax%
-	%Vector% &%gx%
+	%BAvector% &%gx%
 %$$
 and has size $latex n $$.
 The input values of its elements do not matter.
@@ -220,7 +221,7 @@ $latex \[
 $head gxx$$
 The argument $italic gx$$ has prototype
 $syntax%
-	%Vector% &%gxx%
+	%BAvector% &%gxx%
 %$$
 and has size $latex n \times n$$.
 The input values of its elements do not matter.
@@ -232,12 +233,13 @@ $latex \[
 	gxx[ i * n + j ] = G^{(2)} (x)_{i,j}
 \] $$
 
-$head Vector$$
-The type $italic Vector$$ must be a 
+$head BAvector$$
+The type $italic BAvector$$ must be a 
 $xref/SimpleVector/$$ class. 
-We use $italic Base$$ to refer to the type of the elements of $italic Vector$$; i.e.,
+We use $italic Base$$ to refer to the type of the elements of 
+$italic BAvector$$; i.e.,
 $syntax%
-	%Vector%::value_type
+	%BAvector%::value_type
 %$$
 
 $head ADvector$$
@@ -245,11 +247,11 @@ The type $italic ADvector$$ must be a
 $xref/SimpleVector/$$ class with elements of type 
 $syntax%AD<%Base%>%$$; i.e.,
 $syntax%
-	%ADVector%::value_type
+	%ADvector%::value_type
 %$$
 must be the same type as
 $syntax%
-	AD< %Vector%::value_type >
+	AD< %BAvector%::value_type >
 %$$.
 
 $head Tape State$$
@@ -275,19 +277,19 @@ $end
 
 namespace CppAD { // BEGIN CppAD namespace
 
-template <class Vector, class Fun>
+template <class BAvector, class Fun>
 void BenderQuad(
-	const Vector   &x     , 
-	const Vector   &y     , 
-	Fun             fun   , 
-	Vector         &g     ,
-	Vector         &gx    ,
-	Vector         &gxx   )
+	const BAvector   &x     , 
+	const BAvector   &y     , 
+	Fun               fun   , 
+	BAvector         &g     ,
+	BAvector         &gx    ,
+	BAvector         &gxx   )
 {	// determine the base type
-	typedef typename Vector::value_type Base;
+	typedef typename BAvector::value_type Base;
 
-	// check that Vector is a SimpleVector class
-	CheckSimpleVector<Base, Vector>();
+	// check that BAvector is a SimpleVector class
+	CheckSimpleVector<Base, BAvector>();
 
 	// declare the ADvector type
 	typedef CppADvector< AD<Base> > ADvector;
@@ -345,12 +347,12 @@ void BenderQuad(
 	g[0] = Value( gtilde[0] );
 
 	// initial forward direction vector as zero
-	Vector dx(n);
+	BAvector dx(n);
 	for(j = 0; j < n; j++)
 		dx[j] = Base(0);
 
 	// weight, first and second order derivative values
-	Vector dg(1), w(1), ddw(2 * n);
+	BAvector dg(1), w(1), ddw(2 * n);
 	w[0] = 1.;
 
 	// Jacobian and Hessian of G(x) is equal Jacobian and Hessian of Gtilde

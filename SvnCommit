@@ -1,33 +1,20 @@
-# Extend Value function, fix download directory, improve utility scripts
+# Improve BenderQuad documentaiton
 #
-# SvnCommit: add the copy_branch option to this utility.
-# SvnMerge: forgot to include this in commit that created ADFun branch. 
-# Value.h: extend this function to any parameter.
-# Speed.vcproj: add /O2 option for release version.
-# SvnStatus: do not include Release directory in status output.
-# InstallUnix.omh: change directory where distribution file is stored. 
-# Speed.omh: improve Speed build instructions.
-# InstallWindows.omh: change directory where distribution file is stored. 
-# Value.cpp: test new feature and improve comments.
-#
+# SvnCommit: file that made this commit.
+# BenderQuad.h: change Vector to BAvector.
+# WhatsNew06.omh: users view of changes.
+# BenderQuad.cpp: use notation closer to documentation in BenderQuad.h.
 add_list="
 "
 change_list="
 	SvnCommit
-	SvnMerge
-	CppAD/local/Value.h
-	Speed/Speed.vcproj
-	SvnStatus
-	omh/InstallUnix.omh
-	omh/Speed.omh
+	CppAD/local/BenderQuad.h
 	omh/WhatsNew06.omh
-	omh/InstallWindows.omh
-	CleanCppAD
-	Example/Value.cpp
+	Example/BenderQuad.cpp
 "
 delete_list="
 "
-copy_branch="ADFun" # branch directory, use copy_branch="" for not copying
+copy_branch="" # branch directory, use copy_branch="" for not copying
 ## ----------------------------------------------------------------------
 ##  Edit section above for individual cases, section below stays the same
 ##  Do not use add_list to add directories; use the following instead:
