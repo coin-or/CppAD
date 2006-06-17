@@ -40,8 +40,6 @@ $end
 
 # include <CppAD/local/Forward.h>
 # include <CppAD/local/Reverse.h>
-# include <CppAD/local/ForSparseJac.h>
-# include <CppAD/local/RevSparseJac.h>
-# include <CppAD/local/RevSparseHes.h>
+# include <CppAD/local/Sparse.h>
 
 # endif

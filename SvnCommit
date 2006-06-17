@@ -1,28 +1,50 @@
-# Improve BenderQuad documentaiton
+# ----------------------------------------------------------------------
+# Define your subversion commit by editing the definition of 
+# log_entry, add_list, change_list, delete_list and copy_branch below.
 #
-# SvnCommit: file that made this commit.
-# BenderQuad.h: change Vector to BAvector.
-# WhatsNew06.omh: users view of changes.
-# BenderQuad.cpp: use notation closer to documentation in BenderQuad.h.
+# log_entry
+# The contents of this variable will be used as the log entry for the commit.
+#
+# add_list
+# List of files that will be added to the repository during this commit.
+# Do not use add_list to add directories; use the following instead:
+# 	svn add --non-recursive dir
+# 	svn commit directory -m "adding directory dir" dir
+# where dir is replaced by the name of the directory. 
+# Then use add_list to add the files within that directory.
+#
+# change_list
+# List of files that are currently in repository and change during this commit.
+#
+# delete_list
+# List of files that will be deleted from the repository during this commit.
+#
+log_entry="
+Fixes so CheckInclude<*> script works for <*> equal File, Def, and Omh.
+
+SvnCommit: improve comments and make log entry a script variable.
+CheckIncludeOmh: add */*.hpp as possible file to be checked.
+ADFun.h: fix define to CppAD<name>Included where <name> is ADFun.
+Sparse.h: fix include commands to be just those also below in documentation.
+FunEval.h: remove individual includes and replace by Sparse.h.
+"
+#
 add_list="
 "
+#
 change_list="
 	SvnCommit
-	CppAD/local/BenderQuad.h
-	omh/WhatsNew06.omh
-	Example/BenderQuad.cpp
+	CheckIncludeOmh
+	CppAD/local/ADFun.h
+	CppAD/local/Sparse.h
+	CppAD/local/FunEval.h
 "
+#
 delete_list="
 "
+#
 copy_branch="" # branch directory, use copy_branch="" for not copying
-## ----------------------------------------------------------------------
-##  Edit section above for individual cases, section below stays the same
-##  Do not use add_list to add directories; use the following instead:
-## 	svn add --non-recursive dir
-## 	svn commit directory -m "adding directory dir" dir
-##  where dir is replaced by the name of the directory. 
-##  Then use add_list to add the files within that directory.
-## ----------------------------------------------------------------------
+# ----------------------------------------------------------------------
 if [ "$copy_branch" != "" ]
 then
 	if [ ! -d ../branches/$copy_branch/.svn ]
@@ -30,7 +52,7 @@ then
 		echo "../branches/$copy_branch/.svn is not a directory"
 	fi
 fi
-sed -e "/^[^#]/d" -e "/^##/d" -e "s/^[#] *//" < SvnCommit > svn.log
+echo "$log_entry" > SvnCommit.log
 count=0
 for file in $add_list $change_list
 do
@@ -75,6 +97,7 @@ do
 		echo "svn delete ../branches/$copy_branch/$file ?"
 	fi
 done
+cat SvnCommit.log
 response=""
 while [ "$response" != "c" ] && [ "$response" != "a" ]
 do
@@ -139,4 +162,4 @@ then
 	done
 	
 fi
-svn commit --file svn.log $add_list $change_list $delete_list $copy_list
+svn commit --file SvnCommit.log $add_list $change_list $delete_list $copy_list
