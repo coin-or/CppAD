@@ -19,6 +19,12 @@
 # delete_list
 # List of files that will be deleted from the repository during this commit.
 #
+# copy_branch
+# You may specify up one other branch (not the trunk and currently in memory) 
+# that should receive a copy of all that changes that you are making with this 
+# commit. If copy_branch is empty; i.e., copy_branch="", the changes will not
+# be copied (and commited) into another branch.
+#
 log_entry="
 Fixes so CheckInclude<*> script works for <*> equal File, Def, and Omh.
 
