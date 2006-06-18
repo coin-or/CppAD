@@ -222,7 +222,7 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	for(i = 0; i < n; i++)
 	{	CppADUnknownError( ind_taddr[i] < totalNumVar );
 		// ind_taddr[i] is operator taddr for i-th independent variable
-		CppADUnknownError( Rec->GetOp( ind_taddr[i] ) == InvOp );
+		CppADUnknownError( Rec.GetOp( ind_taddr[i] ) == InvOp );
 
 		// initialize all bits as zero
 		for(k = 0; k < npv; k++)
@@ -239,7 +239,7 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	}
 
 	// evaluate the sparsity patterns
-	ForJacSweep(npv, totalNumVar, Rec, TaylorColDim, Taylor, ForJac);
+	ForJacSweep(npv, totalNumVar, &Rec, TaylorColDim, Taylor, ForJac);
 
 	// return values corresponding to dependent variables
 	Vector s(m * q);

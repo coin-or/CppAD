@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -71,7 +71,7 @@ CppAD::ADFun<double> *NewFactor(
 		Y[k] = LU[k];
 	Y[n*n] = Ratio;
 
-	// use a function pointer so can redefine it
+	// use a function pointer so can return ADFun object
 	ADFun<double> *FunPtr = new ADFun<double>(X, Y);
 
 	// check value of ratio during recording

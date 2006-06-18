@@ -57,15 +57,6 @@ Thus, there should be a way to abort the current
 $syntax%AD<%Base%>%$$ recording.
 
 
-$head Memory$$
-$index memory$$
-In the future, we would like to be able to erase the function
-values so that $xref/ADFun/$$ objects use less memory. 
-We may even want to erase the AD operation sequence so that
-$xref/ADFun/$$ objects use even less memory and can be used 
-for a subsequent AD operation sequence.
-
-
 $head Multiple Tapes With Same Base Type$$
 $index multiple, tape$$
 $index tape, multiple$$

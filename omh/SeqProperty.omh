@@ -46,8 +46,8 @@ The operations above return properties of the
 AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$
 stored in the ADFun object $italic f$$. 
-We use $italic F$$ to denote the
-$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+(If there is no operation sequence stored in $italic f$$,
+$code size_var$$ returns zero.)
 
 $head f$$
 The object $italic f$$ has prototype
@@ -61,24 +61,26 @@ The result $italic n$$ has prototype
 $syntax%
 	size_t %n%
 %$$
-and is the dimension of the domain space for the function $latex F$$.
-This is the same as the number of 
-$xref/glossary/Independent Variable/independent variables/$$
-in the operation sequence.
-It is also the length of the vector
-$xref/FunConstruct/x/x/$$ in the $xref/FunConstruct//constructor/$$ for 
-$italic f$$.
-
+and is the dimension of the domain space corresponding to $italic f$$.
+This is equal to the size of the vector $italic x$$ in the previous operation
+$syntax%
+	%f%(%x%, %y%)
+%$$
+which stored the operation sequence currently in $italic f$$
+(see $xref/FunOpSeq/$$). 
 
 $head Range$$
 The result $italic m$$ has prototype
 $syntax%
 	size_t %m%
 %$$
-and is the dimension of the range space for the function $latex F$$.
-This is determined by the length of the vector
-$xref/FunConstruct/y/y/$$ in the $xref/FunConstruct//constructor/$$ for 
-$italic f$$.
+and is the dimension of the range space corresponding to $italic f$$.
+This is equal to the size of the vector $italic y$$ in the previous operation
+$syntax%
+	%f%(%x%, %y%)
+%$$
+which stored the operation sequence currently in $italic f$$
+(see $xref/FunOpSeq/$$). 
 
 $head Parameter$$
 The argument $italic i$$ has prototype
@@ -122,6 +124,12 @@ one for a phantom variable with tape address zero,
 one for each component of the domain that is a parameter.
 The amount of work and memory necessary for computing function values
 and derivatives using $italic f$$ is roughly proportional to $italic v$$.
+$pre
+
+$$
+If there is no operation sequence stored in $italic f$$,
+$code size_var$$ returns zero
+(see $xref/FunConstruct/Default Constructor/default constructor/$$).
 
 $head Example$$
 $children%

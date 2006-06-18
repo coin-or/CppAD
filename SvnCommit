@@ -25,25 +25,53 @@
 # commit. If copy_branch is empty; i.e., copy_branch="", the changes will not
 # be copied (and commited) into another branch.
 #
-log_entry="
-Fixes so CheckInclude<*> script works for <*> equal File, Def, and Omh.
+log_entry="Merge in most recent version of branches/ADFun.
 
-SvnCommit: improve comments and make log entry a script variable.
-CheckIncludeOmh: add */*.hpp as possible file to be checked.
-ADFun.h: fix define to CppAD<name>Included where <name> is ADFun.
-Sparse.h: fix include commands to be just those also below in documentation.
-FunEval.h: remove individual includes and replace by Sparse.h.
+SvnCommit: file that made this commit.
+WhatsNew06.omh: comments about overall goal.
+WhatsNew05.omh: remove reference to old wish list entry.
+WishList.omh: remove memory entry.
 "
-#
+# 
 add_list="
 "
 #
 change_list="
 	SvnCommit
-	CheckIncludeOmh
+	SvnMerge
+	CppAD/TrackNewDel.h
+	CppAD/local/Hessian.h
+	CppAD/local/RevSparseHes.h
+	CppAD/local/Reverse.h
+	CppAD/local/TapeRec.h
 	CppAD/local/ADFun.h
-	CppAD/local/Sparse.h
-	CppAD/local/FunEval.h
+	CppAD/local/Jacobian.h
+	CppAD/local/CapTaylor.h
+	CppAD/local/FunOpSeq.h
+	CppAD/local/ForTwo.h
+	CppAD/local/RevTwo.h
+	CppAD/local/ForOne.h
+	CppAD/local/FunConstruct.h
+	CppAD/local/RevOne.h
+	CppAD/local/Forward.h
+	CppAD/local/ForSparseJac.h
+	CppAD/local/FunCheck.h
+	CppAD/local/RevSparseJac.h
+	omh/SeqProperty.omh
+	omh/Reverse.omh
+	omh/FunConstruct.omh
+	omh/Forward.omh
+	omh/WhatsNew05.omh
+	omh/WhatsNew06.omh
+	omh/WishList.omh
+	omh/FunDeprecated.omh
+	Example/TrackNewDel.cpp
+	Example/Forward.cpp
+	Example/LuRatio.cpp
+	Example/FunCheck.cpp
+	Example/Independent.cpp
+	Example/CompareChange.cpp
+	Makefile.am
 "
 #
 delete_list="
@@ -58,7 +86,8 @@ then
 		echo "../branches/$copy_branch/.svn is not a directory"
 	fi
 fi
-echo "$log_entry" > SvnCommit.log
+this_branch=`pwd | sed -e "s|.*/CppAD/||"`
+echo "$this_branch: $log_entry" > SvnCommit.log
 count=0
 for file in $add_list $change_list
 do
@@ -103,6 +132,7 @@ do
 		echo "svn delete ../branches/$copy_branch/$file ?"
 	fi
 done
+echo "-------------------------------------------------------------"
 cat SvnCommit.log
 response=""
 while [ "$response" != "c" ] && [ "$response" != "a" ]

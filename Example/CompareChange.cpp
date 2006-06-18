@@ -73,44 +73,42 @@ bool CompareChange(void)
 	Y[0] = Minimum(X[0], X[1]);
 
 	// create f: x -> y and stop tape recording
-	// use a pointer so that we can re-tape
-	ADFun<double> *f;
-	f = new ADFun<double>(X, Y);
+	ADFun<double> f(X, Y);
 
 	// evaluate zero mode Forward where conditional has the same result
-	// note that f->CompareChange is not defined when NDEBUG is true
+	// note that f.CompareChange is not defined when NDEBUG is true
 	CppADvector<double> x(n);
 	CppADvector<double> y(m);
 	x[0] = 3.5;
 	x[1] = 4.;  
-	y    = f->Forward(0, x);
+	y    = f.Forward(0, x);
 	ok  &= (y[0] == x[0]);
 	ok  &= (y[0] == Minimum(x[0], x[1]));
-	ok  &= (f->CompareChange() == 0);
+	ok  &= (f.CompareChange() == 0);
 
 	// evaluate zero mode Forward where conditional has different result
 	x[0] = 4.;
 	x[1] = 3.;
-	y    = f->Forward(0, x);
+	y    = f.Forward(0, x);
 	ok  &= (y[0] == x[0]);
 	ok  &= (y[0] != Minimum(x[0], x[1]));
-	ok  &= (f->CompareChange() == 1); 
+	ok  &= (f.CompareChange() == 1); 
 
 	// re-tape to obtain the new AD operation sequence
-	delete f;    // free memory corresponding to previous new
 	X[0] = 4.;
 	X[1] = 3.;
 	Independent(X);
 	Y[0] = Minimum(X[0], X[1]);
-	f    = new ADFun<double>(X, Y);
+
+	// stop tape and store result in f
+	f(X, Y);
 
 	// evaluate the function at new argument values
-	y    = f->Forward(0, x);
+	y    = f.Forward(0, x);
 	ok  &= (y[0] == x[1]);
 	ok  &= (y[0] == Minimum(x[0], x[1]));
-	ok  &= (f->CompareChange() == 0); 
+	ok  &= (f.CompareChange() == 0); 
 
-	delete f;   // free memory corresponding to previous new
 	return ok;
 }
 

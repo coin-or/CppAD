@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew06$$
 $spell
+	taylor
 	BAvector
 	fy
 	uninitialized
@@ -66,6 +67,37 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$comment ----------------------------------------------------------- $$
+$head 06-19$$
+The changes listed under 06-17 and 06-18 were made in the branches/ADFun branch 
+of the CppAD subversion repository. They did not get merged into the trunk
+and become part of the distribution until 06-19. This accomplished the 
+following goal, which was removed from the $xref/WishList/$$:
+$pre
+
+$$
+"We would like to be able to erase the function
+values so that $xref/ADFun/$$ objects use less memory. 
+We may even want to erase the AD operation sequence so that
+$xref/ADFun/$$ objects use even less memory and can be used 
+for a subsequent AD operation sequence."
+
+$subhead 06-17$$
+Added $xref/capacity_taylor/$$ which can be used to control
+the amount of memory used to store $xref/Forward/$$ results.
+Also $xref/FunDeprecated//deprecated/$$ $code taylor_size$$, and defined 
+$xref/size_taylor/$$ in its place.
+
+$subhead 06-18$$
+Added the $xref/FunConstruct//ADFun default constructor/$$
+and the ability to
+$xref/FunOpSeq//store a new operation sequence/$$ 
+in an $code ADFun$$ object with out having to use 
+$code ADFun$$ pointers together with $code new$$
+and $code delete$$.
+
+$comment ----------------------------------------------------------- $$
 
 $head 06-17$$
 The location where the distribution files are stored has changed
@@ -297,7 +329,7 @@ $pre
 
 $$
 The ADFun $xref/FunDeprecated/Size/Size/$$ member function
-has been deprecated (use $xref/taylor_size/$$ instead).
+has been deprecated (use $xref/size_taylor/$$ instead).
 $pre
 
 $$
@@ -346,8 +378,10 @@ $code Order$$, $code Memory$$.
 $pre
 
 $$
-The wish list entry for $xref/WishList/Memory/memory/$$ usage
-has been updated.
+The wish list entry for Memory usage
+was updated on 04-01. 
+The request was implemented on $xref/WhatsNew06/06-19/06-19/$$
+and the entry was removed from the wish list.
 
 $head 03-31$$
 Add examples for the $xref/ParVar//Parameter, Variable/$$ and

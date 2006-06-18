@@ -286,9 +286,34 @@ public:
 
 	}
 
-	// constructor from another recording
-	TapeRec(const TapeRec &Other)
+	// destructor
+	~TapeRec(void)
+	{	if( LengthOp > 0 )
+			CppADTrackDelVec(Op);
+		if( LengthVecInd > 0 )
+			CppADTrackDelVec(VecInd);
+		if( LengthInd > 0 )
+			CppADTrackDelVec(Ind);
+		if( LengthPar > 0 )
+			CppADTrackDelVec(Par);
+		if( LengthTxt > 0 )
+			CppADTrackDelVec(Txt);
+	}
+
+	// assignment from another recording
+	void operator=(const TapeRec &Other)
 	{	size_t i;
+
+		if( LengthOp > 0 )
+			CppADTrackDelVec(Op);
+		if( LengthVecInd > 0 )
+			CppADTrackDelVec(VecInd);
+		if( LengthInd > 0 )
+			CppADTrackDelVec(Ind);
+		if( LengthPar > 0 )
+			CppADTrackDelVec(Par);
+		if( LengthTxt > 0 )
+			CppADTrackDelVec(Txt);
 
 		// Var
 		TotalNumberVar  = Other.TotalNumberVar;
@@ -346,20 +371,6 @@ public:
 		i = NumberTxt;
 		while(i--)
 			Txt[i] = Other.Txt[i];
-	}
-
-	// destructor
-	~TapeRec(void)
-	{	if( LengthOp > 0 )
-			CppADTrackDelVec(Op);
-		if( LengthVecInd > 0 )
-			CppADTrackDelVec(VecInd);
-		if( LengthInd > 0 )
-			CppADTrackDelVec(Ind);
-		if( LengthPar > 0 )
-			CppADTrackDelVec(Par);
-		if( LengthTxt > 0 )
-			CppADTrackDelVec(Txt);
 	}
 
 	// erase all information in recording

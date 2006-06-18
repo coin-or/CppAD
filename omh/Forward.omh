@@ -52,10 +52,11 @@ $syntax%
 	ADFun<%Base%> %f%
 %$$
 Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$.
-After this call one
-$xref/glossary/Taylor Coefficient/Taylor coefficient/$$
-(for each of the variables in the operation sequence)
-is stored in the object $italic f$$.
+After this call to $code Forward$$, the value returned by
+$syntax%
+	%f%.size_taylor()
+%$$
+will be equal to one (see $xref/size_taylor/$$).
 
 $head x$$
 The argument $italic x$$ has prototype
@@ -65,7 +66,7 @@ $syntax%
 (see $xref/ForwardZero/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
 
 $head y$$
 The result $italic y$$ has prototype
@@ -76,7 +77,7 @@ $syntax%
 and its value is $latex F(x)$$.
 The size of $italic y$$ 
 is equal to $italic m$$, the dimension of the
-$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+$xref/SeqProperty/Range/range/$$ space for $italic f$$.
 
 $head Vector$$
 The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
@@ -128,10 +129,12 @@ $syntax%
 	ADFun<%Base%> %f%
 %$$
 Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$.
-After this call two
-$xref/glossary/Taylor Coefficient/Taylor coefficients/$$
-(for each of the variables in the operation sequence)
-are stored in the object $italic f$$.
+Before this call to $code Forward$$, the value returned by
+$syntax%
+	%f%.size_taylor()
+%$$
+must be greater than or equal one.
+After this call it will be will be two (see $xref/size_taylor/$$).
 
 $head x$$
 The vector $italic x$$ in expression for $italic dy$$ above
@@ -153,7 +156,7 @@ $syntax%
 (see $xref/ForwardOne/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
 
 $head dy$$
 The result $italic dy$$ has prototype
@@ -164,7 +167,7 @@ $syntax%
 and its value is $latex F^{(1)} (x) * dx$$.
 The size of $italic dy$$ 
 is equal to $italic m$$, the dimension of the
-$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+$xref/SeqProperty/Range/range/$$ space for $italic f$$.
 
 $head Vector$$
 The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
@@ -276,10 +279,12 @@ $syntax%
 	ADFun<%Base%> %f%
 %$$
 Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$.
-After this call $latex p + 1$$
-$xref/glossary/Taylor Coefficient/Taylor coefficients/$$
-(for each of the variables in the operation sequence)
-are stored in the object $italic f$$.
+Before this call to $code Forward$$, the value returned by
+$syntax%
+	%f%.size_taylor()
+%$$
+must be greater than or equal $latex p$$.
+After this call it will be will be $latex p+1$$ (see $xref/size_taylor/$$).
 
 $head p$$
 The argument $italic p$$ has prototype
@@ -287,9 +292,6 @@ $syntax%
 	size_t %p%
 %$$
 and specifies the order of the Taylor coefficients to be calculated.
-There must be at least $latex p$$ Taylor coefficients of lower
-order stored in $italic f$$ when $code Forward$$ is called
-(see $xref/taylor_size/$$).
 
 $head x_p$$
 The argument $italic x_p$$ has prototype
@@ -299,7 +301,7 @@ $syntax%
 (see $xref/ForwardAny/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
 The $th p$$ order Taylor coefficient for $latex X(t)$$ 
 is defined by this value; i.e., $latex x^{(p)} = x\_p$$.
 (The lower order Taylor coefficients for $latex X(t)$$ are
@@ -316,7 +318,7 @@ The $th p$$ order Taylor coefficient for $latex Y(t)$$; i.e.,
 $latex y^{(p)} = y\_p$$. 
 The size of $italic y_p$$ 
 is equal to $italic m$$, the dimension of the
-$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+$xref/SeqProperty/Range/range/$$ space for $italic f$$.
 
 $head Vector$$
 The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
@@ -433,25 +435,28 @@ It returns true if it succeeds and false otherwise.
 
 $end
 -----------------------------------------------------------------------------
-$begin taylor_size$$
+$begin size_taylor$$
 $spell
+	var
 	Taylor
 	const
 $$
 
-$section Number Taylor Coefficients Per Variable$$
+$section Number Taylor Coefficients, Per Variable, Currently Stored$$
 
 $head Syntax$$
-$syntax%%t% = %f%.taylor_size()%$$
+$syntax%%s% = %f%.size_taylor()%$$
 
 
 $head Purpose$$
-Forward mode stores Taylor coefficients for all the variables in the 
-AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$
-corresponding to $italic f$$.
-The result $italic t$$ is the number of Taylor coefficients
-per variable.
+Determine the number of Taylor coefficients, per variable,
+currently calculated and stored in the ADFun object $italic f$$. 
+See the discussion under 
+$xref/size_taylor/Constructor/Constructor/$$,
+$xref/size_taylor/Forward/Forward/$$, and
+$xref/size_taylor/capacity_taylor/capacity_taylor/$$
+for a description of when this value can change.
+
 
 $head f$$
 The object $italic f$$ has prototype
@@ -459,24 +464,54 @@ $syntax%
 	const ADFun<%Base%> %f%
 %$$
 
-$head t$$
-The result $italic t$$ has prototype
+$head s$$
+The result $italic s$$ has prototype
 $syntax%
-	size_t %t%
+	size_t %s%
 %$$
-an is the number of Taylor coefficients, 
+and is the number of Taylor coefficients, 
 per variable in the AD operation sequence,
-currently stored in the ADFun object $italic f$$.
-The value $italic t$$ is determined by 
-$latex t = p + 1$$ where 
-$italic p$$ is the value in the previous call of the form
+currently calculated and stored in the ADFun object $italic f$$.
+
+$head Constructor$$
+Directly after the $xref/FunConstruct/$$ syntax
 $syntax%
-	%f%.Forward(%p%, %x_p%)
+	ADFun<%Base%> %f%(%x%, %y%)
 %$$
-If there was no previous call to forward, $latex t = 1$$
-and the Taylor coefficients are determined by the value of the
-$xref/glossary/Independent Variable/independent variables/$$ 
-when the AD operation sequence was recorded.
+the value of $italic s$$ returned by $code size_taylor$$ is one.
+This is because
+there is an implicit call to $code Forward$$ that computes
+the zero order Taylor coefficients during this constructor.
+
+$head Forward$$
+After a call to $xref/ForwardAny//Forward/$$ with the syntax
+$syntax%
+        %f%.Forward(%p%, %x_p%)
+%$$
+the value of $italic s$$ returned by $code size_taylor$$ 
+would be $latex p + 1$$.
+The call to $code Forward$$ above
+uses the lower order Taylor coefficients to compute and store 
+the $th p$$ order Taylor coefficients for all
+the variables in the operation sequence corresponding to $italic f$$.
+Thus there are $latex p + 1$$ (order zero through $italic p$$)
+Taylor coefficients per variable.
+(You can determine the number of variables in the operation sequence
+using the $xref/SeqProperty/size_var/size_var/$$ function.)
+
+$head capacity_taylor$$
+If the number of Taylor coefficients
+currently stored in $italic f$$ is less than or equal $italic c$$, 
+a call to $xref/capacity_taylor/$$ with the syntax
+$syntax%
+	%f%.capacity_taylor(%c%)
+%$$
+does not affect the value $italic s$$ returned by $code size_taylor$$.
+Otherwise,
+the value $italic s$$ returned by $code size_taylor$$
+is equal to $italic c$$
+(only Taylor coefficients of order zero through $latex c-1$$ 
+have been retained).
 
 $head Example$$
 The file

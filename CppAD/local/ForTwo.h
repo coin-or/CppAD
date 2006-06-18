@@ -73,7 +73,7 @@ $syntax%
 (see $xref/ForTwo/VectorBase/VectorBase/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
 It specifies
 that point at which to evaluate the partial derivatives listed above.
 

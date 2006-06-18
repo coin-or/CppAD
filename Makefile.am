@@ -67,6 +67,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/BoolFun.h \
 	CppAD/local/BoolFunLink.h \
 	CppAD/local/BoolValued.h \
+	CppAD/local/CapTaylor.h \
 	CppAD/local/Compare.h \
 	CppAD/local/CondExp.h \
 	CppAD/local/Constructor.h \
@@ -93,8 +94,8 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/Forward.h \
 	CppAD/local/ForwardSweep.h \
 	CppAD/local/FunCheck.h \
-	CppAD/local/FunConstruct.h \
 	CppAD/local/FunEval.h \
+	CppAD/local/FunOpSeq.h \
 	CppAD/local/Hessian.h \
 	CppAD/local/Identical.h \
 	CppAD/local/Independent.h \

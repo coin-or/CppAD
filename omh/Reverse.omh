@@ -20,6 +20,7 @@ $begin ReverseOne$$
 
 $section First Order Reverse Mode: Derivative Values$$
 $spell 
+	taylor
 	const
 	dw
 $$
@@ -49,6 +50,11 @@ The object $italic f$$ has prototype
 $syntax%
 	const ADFun<%Base%> %f%
 %$$
+Before this call to $code Forward$$, the value returned by
+$syntax%
+	%f%.size_taylor()
+%$$
+must be greater than or equal one (see $xref/size_taylor/$$).
 
 $head x$$
 The vector $italic x$$ in expression for $italic dw$$ above
@@ -70,7 +76,7 @@ $syntax%
 (see $xref/ReverseOne/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic m$$, the dimension of the
-$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+$xref/SeqProperty/Range/range/$$ space for $italic f$$.
 
 $head dw$$
 The result $italic dw$$ has prototype
@@ -81,7 +87,7 @@ $syntax%
 and its value is the derivative $latex W^{(1)} (x)$$.
 The size of $italic dw$$ 
 is equal to $italic n$$, the dimension of the
-$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
 
 $head Vector$$
 The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
@@ -189,6 +195,12 @@ The object $italic f$$ has prototype
 $syntax%
 	const ADFun<%Base%> %f%
 %$$
+Before this call to $code Forward$$, the value returned by
+$syntax%
+	%f%.size_taylor()
+%$$
+must be greater than or equal $italic p$$
+(see $xref/size_taylor/$$).
 
 $head p$$
 The argument $italic p$$ has prototype
@@ -196,9 +208,6 @@ $syntax%
 	size_t %p%
 %$$
 and specifies the number of Taylor coefficients to be differentiated.
-There must be at least $latex p$$ Taylor coefficients 
-currently stored in $italic f$$ when $code Reverse$$ is called
-(see $xref/taylor_size/$$).
 
 
 $head w$$
@@ -209,7 +218,7 @@ $syntax%
 (see $xref/ReverseAny/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic m$$, the dimension of the
-$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+$xref/SeqProperty/Range/range/$$ space for $italic f$$.
 It specifies the weighting vector $italic w$$
 in the definition of $latex W(t, x)$$ above.
 

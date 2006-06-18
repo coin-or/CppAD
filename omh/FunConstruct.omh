@@ -1,0 +1,99 @@
+/* -----------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+------------------------------------------------------------------------ */
+
+$begin FunConstruct$$
+$spell 
+	var
+	ADvector
+	const
+$$
+
+$spell
+$$
+
+$section Construct an ADFun Object and Stop Recording$$
+
+$index ADFun, construct$$
+$index construct, ADFun$$
+$index tape, stop recording$$
+$index recording, stop tape$$
+
+$head Syntax$$
+$syntax%ADFun<%Base%> %f%
+%$$
+$syntax%ADFun<%Base%> %f%(%x%, %y%)
+%$$
+
+
+$head Purpose$$
+The $syntax%AD<%Base%>%$$ object $italic f$$ can 
+store an AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+It can then be used to calculate derivatives of the corresponding
+$xref/glossary/AD Function/AD function/$$
+$latex \[
+	F : B^n \rightarrow B^m
+\] $$
+where $latex B$$ is the space corresponding to objects of type $italic Base$$.
+
+$head Default Constructor$$
+The default constructor 
+$syntax%
+	ADFun<%Base%> %f%
+%$$
+creates an 
+$syntax%AD<%Base%>%$$ object with no corresponding operation sequence; i.e.,
+$syntax%
+	%f%.size_var()
+%$$
+returns the value zero (see $xref/SeqProperty/size_var/size_var/$$).
+
+$head Sequence Constructor$$
+The sequence constructor 
+$syntax%
+	ADFun<%Base%> %f%(%x%, %y%)
+%$$
+creates the $syntax%AD<%Base%>%$$ object $italic f$$,
+stops the recording of AD of $italic Base$$ operations,
+then stores the corresponding operation sequence in the object $italic f$$.
+This is equivalent to first creating $italic f$$ with the default constructor
+$syntax%
+	ADFun<%Base%> %f%;
+%$$
+and then using the syntax
+$syntax%
+	%f%(%x%, %y%);
+%$$
+to store the operation sequence in $italic f$$ (see $xref/FunOpSeq/$$).
+
+
+$head Example$$
+
+$subhead Sequence Constructor$$
+The file
+$xref/Independent.cpp/$$ 
+contains an example and test of the sequence constructor.
+It returns true if it succeeds and false otherwise.
+
+$subhead Default Constructor$$
+The file
+$xref/FunCheck.cpp/$$ 
+contains an example and test using the default constructor.
+It returns true if it succeeds and false otherwise.
+
+$end

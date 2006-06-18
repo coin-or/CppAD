@@ -96,8 +96,7 @@ Buffers that are used to store the tape information corresponding to
 the $syntax%AD<%Base%>%$$ type are now freed when the corresponding
 $xref/ADFun/$$ object is constructed.
 This reduces memory requirements and actually had better results
-with the $xref/Speed/$$ tests
-(see $xref/WishList/Memory/Wish List Memory/$$).
+with the $xref/Speed/$$ tests.
 $pre
 
 $$

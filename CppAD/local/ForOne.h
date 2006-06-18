@@ -72,7 +72,7 @@ $syntax%
 (see $xref/ForOne/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
 It specifies
 that point at which to evaluate the partial derivative.
 
@@ -82,7 +82,7 @@ $syntax%
 	size_t %j%
 %$$
 an is less than $italic n$$,
-$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
 It specifies the component of $italic F$$ 
 for which we are computing the partial derivative.
 
@@ -93,7 +93,7 @@ $syntax%
 %$$
 (see $xref/ForOne/Vector/Vector/$$ below)
 and its size is $latex m$$, the dimension of the
-$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+$xref/SeqProperty/Range/range/$$ space for $italic f$$.
 The value of $italic dy$$ is the partial of $latex F$$ with respect to
 $latex x_j$$ evaluated at $italic x$$; i.e.,
 for $latex i = 0 , \ldots , m - 1$$

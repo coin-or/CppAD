@@ -85,7 +85,7 @@ $syntax%
 (see $xref/FunCheck/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
 
 $head y$$
 The $italic g$$ result $italic y$$ has prototype
@@ -95,7 +95,7 @@ $syntax%
 and its value is $latex G(x)$$.
 The size of $italic y$$ 
 is equal to $italic m$$, the dimension of the
-$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+$xref/SeqProperty/Range/range/$$ space for $italic f$$.
 
 $head x$$
 The $code FunCheck$$ argument $italic x$$ has prototype
@@ -104,7 +104,7 @@ $syntax%
 %$$
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
 This specifies that point at which to compare the values
 calculated by $italic f$$ and $italic G$$. 
 

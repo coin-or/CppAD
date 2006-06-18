@@ -35,6 +35,9 @@ $index Order, ADFun$$
 $index ADFun, Memory$$
 $index Memory, ADFun$$
 
+$index ADFun, taylor_size$$
+$index taylor_size, ADFun$$
+
 $head Syntax$$
 $syntax%%o% = %f%.Order()%$$
 $pre
@@ -43,6 +46,9 @@ $syntax%%m% = %f%.Memory()%$$
 $pre
 $$
 $syntax%%s% = %f%.Size()%$$
+$pre
+$$
+$syntax%%t% = %f%.taylor_size()%$$
 
 
 $head Purpose$$
@@ -66,7 +72,7 @@ Zero order corresponds to function values being stored in $italic f$$.
 In the future, we would like to be able to erase the function
 values so that $italic f$$ uses less memory. 
 In this case, the return value of $code Order$$ would not make sense.
-Use $xref/taylor_size/$$ to obtain 
+Use $xref/size_taylor/$$ to obtain 
 the number of Taylor coefficients currently stored
 in the ADFun object $italic f$$ 
 (which is equal to the order plus one).
@@ -108,5 +114,24 @@ the number of operations in the sequence.
 In order to avoid confusion with these other sizes,
 use $xref/SeqProperty/size_var/size_var/$$ to obtain 
 the number of variables in the operation sequence.
+
+$head taylor_size$$
+The result $italic t$$ has prototype
+$syntax%
+	size_t %t%
+%$$
+and is the number of Taylor coefficients, 
+per variable in the AD operation sequence,
+currently calculated and stored in the ADFun object $italic f$$.
+
+$subhead Deprecated$$
+For the purpose of uniform naming,
+this function has been replaced by $xref/size_taylor/$$.
+
+$head Example$$
+The file
+$xref/Forward.cpp/$$
+contains an example and test of this operation.
+It returns true if it succeeds and false otherwise.
 
 $end

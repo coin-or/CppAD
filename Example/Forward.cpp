@@ -60,8 +60,13 @@ bool ForwardCases(void)
 	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
 
+	// The highest order Forward mode calculation below is is second order.
+	// This corresponds to three Taylor coefficients per variable 
+	// (zero, first, and second order).
+	f.capacity_taylor(3);  // pre-allocate memory for speed of execution
+
 	// initially, the variable values during taping are stored in f
-	ok &= f.taylor_size() == 1;
+	ok &= f.size_taylor() == 1;
 
 	// zero order forward mode using notaiton in ForwardZero
 	// use the template parameter Vector for the vector type
@@ -71,7 +76,7 @@ bool ForwardCases(void)
 	x[1] = 4.;
 	y    = f.Forward(0, x);
 	ok  &= NearEqual(y[0] , x[0]*x[0]*x[1], 1e-10, 1e-10);
-	ok  &= f.taylor_size() == 1;
+	ok  &= f.size_taylor() == 1;
 
 	// first order forward mode using notation in ForwardOne
 	// X(t)           = x + dx * t
@@ -82,7 +87,7 @@ bool ForwardCases(void)
 	dx[1] = 0.;
 	dy    = f.Forward(1, dx); // partial F w.r.t. x[0]
 	ok   &= NearEqual(dy[0] , 2.*x[0]*x[1], 1e-10, 1e-10);
-	ok   &= f.taylor_size() == 2;
+	ok   &= f.size_taylor() == 2;
 
 	// second order forward mode using notaiton in ForwardAny
 	// X(t) =           x + dx * t + x_2 * t^2
@@ -94,7 +99,15 @@ bool ForwardCases(void)
 	y_2         = f.Forward(2, x_2);
 	double F_00 = 2. * y_2[0]; // second partial F w.r.t. x[0], x[0]
 	ok         &= NearEqual(F_00, 2.*x[1], 1e-10, 1e-10);
-	ok         &= f.taylor_size() == 3;
+	ok         &= f.size_taylor() == 3;
+
+	// suppose we no longer need second order Taylor coefficients
+	f.capacity_taylor(2);
+	ok &= f.size_taylor() == 2;
+
+	// actually we no longer need any Taylor coefficients
+	f.capacity_taylor(0);
+	ok &= f.size_taylor() == 0;
 
 	return ok;
 }

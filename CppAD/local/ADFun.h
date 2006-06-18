@@ -49,7 +49,8 @@ derivative values, and other values related to the corresponding function.
 
 $childtable%
 	CppAD/local/Independent.h%
-	CppAD/local/FunConstruct.h%
+	omh/FunConstruct.omh%
+	CppAD/local/FunOpSeq.h%
 	omh/SeqProperty.omh%
 	CppAD/local/FunEval.h%
 	CppAD/local/Drivers.h%
@@ -70,17 +71,29 @@ class ADFun {
 	typedef size_t Pack;
 
 public:
+	// default constructor
+	ADFun(void) 
+	: totalNumVar(0), Taylor(CppADNull), ForJac(CppADNull)
+	{ }
+
 	// constructor
-	template <typename VectorADBase>
-	ADFun(const VectorADBase &u, const VectorADBase &z);
+	template <typename ADvector>
+	ADFun(const ADvector &x, const ADvector &y)
+	: totalNumVar(0), Taylor(CppADNull), ForJac(CppADNull)
+	{	(*this)(x, y);
+	}
 
 	// destructor
 	~ADFun(void)
-	{	delete Rec;
-		CppADTrackDelVec(Taylor);
+	{	if( Taylor != CppADNull )
+			CppADTrackDelVec(Taylor);
 		if( ForJac != CppADNull )
 			CppADTrackDelVec(ForJac);
 	}
+
+	// assign a new operation sequence
+	template <typename ADvector>
+	void operator()(const ADvector &x, const ADvector &y);
 
 	// forward mode sweep
 	template <typename VectorBase>
@@ -104,19 +117,18 @@ public:
 
 	// does this AD operation sequence use VecAD<Base>::reference operands
 	bool use_VecAD(void) const
-	{	return Rec->NumVecInd() > 0; }
+	{	return Rec.NumVecInd() > 0; }
 
 	// number of variables in opertion sequence
 	size_t size_var(void) const
 	{	return totalNumVar; }
-	size_t Size(void) const       // (Deprecated)
-	{	return totalNumVar; }
 
-	// number of Taylor coefficients currently stored (per variable)
-	size_t taylor_size(void) const
+	// number of Taylor coefficients currently calculated (per variable)
+	size_t size_taylor(void) const
 	{	return taylor_per_var; } 
-	size_t Order(void) const      // (Deprecated)
-	{	return taylor_per_var - 1; }
+
+	// set number of coefficients currently allocated (per variable)
+	void capacity_taylor(size_t per_var);   
 
 	// number of independent variables
 	size_t Domain(void) const
@@ -133,14 +145,6 @@ public:
 			"Argument to Parameter is >= dimension of range space"
 		);
 		return dep_parameter[i]; 
-	}
-
-	// amount of memory for each variable (Deprecated)
-	size_t Memory(void) const
-	{	size_t pervar  = TaylorColDim * sizeof(Base)
-		+ ForJacColDim * sizeof(Pack);
-		size_t total   = totalNumVar * pervar + Rec->Memory();
-		return total;
 	}
 
 # ifndef NDEBUG
@@ -183,6 +187,28 @@ public:
 		const VectorSize_t &I ,
 		const VectorSize_t &J );
 
+	// ------------------- Deprecated -----------------------------
+
+	// number of variables in opertion sequence
+	size_t Size(void) const
+	{	return totalNumVar; }
+
+	// number of Taylor coefficients currently stored (per variable)
+	size_t Order(void) const
+	{	return taylor_per_var - 1; }
+
+	// amount of memory for each variable 
+	size_t Memory(void) const
+	{	size_t pervar  = TaylorColDim * sizeof(Base)
+		+ ForJacColDim * sizeof(Pack);
+		size_t total   = totalNumVar * pervar + Rec.Memory();
+		return total;
+	}
+
+	// number of Taylor coefficients currently calculated (per variable)
+	size_t taylor_size(void) const
+	{	return taylor_per_var; } 
+	// ------------------------------------------------------------
 private:
 	// maximum amount of memory required for this function object
 	// mutable size_t memoryMax;
@@ -213,7 +239,7 @@ private:
 	CppAD::vector<bool>   dep_parameter;
 
 	// the operations corresponding to this function
-	TapeRec<Base> *Rec;
+	TapeRec<Base> Rec;
 
 	// results of the forward mode calculations
 	Base *Taylor;
@@ -235,7 +261,7 @@ private:
 
 // user interfaces
 # include <CppAD/local/Independent.h>
-# include <CppAD/local/FunConstruct.h>
+# include <CppAD/local/FunOpSeq.h>
 # include <CppAD/local/FunEval.h>
 # include <CppAD/local/Drivers.h>
 # include <CppAD/local/FunCheck.h>

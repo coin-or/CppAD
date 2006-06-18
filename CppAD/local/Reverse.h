@@ -100,7 +100,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) const
 
 	// evaluate the derivatives
 	ReverseSweep(
-		p - 1, totalNumVar, Rec, TaylorColDim, Taylor, p, Partial
+		p - 1, totalNumVar, &Rec, TaylorColDim, Taylor, p, Partial
 	);
 
 	// return the derivative values
@@ -109,7 +109,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) const
 	{	CppADUnknownError( ind_taddr[j] < totalNumVar );
 
 		// independent variable taddr equals its operator taddr 
-		CppADUnknownError( Rec->GetOp( ind_taddr[j] ) == InvOp );
+		CppADUnknownError( Rec.GetOp( ind_taddr[j] ) == InvOp );
 
 		// by the Reverse Identity Theorem 
 		// partial of y^{(k)} w.r.t. u^{(0)} is equal to

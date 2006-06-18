@@ -71,7 +71,7 @@ $syntax%
 (see $xref/RevOne/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
 It specifies
 that point at which to evaluate the derivative.
 
@@ -81,7 +81,7 @@ $syntax%
 	size_t %i%
 %$$
 and is less than $latex m$$, the dimension of the
-$xref/FunConstruct/y/Range Space/range space/1/$$ for $italic f$$.
+$xref/SeqProperty/Range/range/$$ space for $italic f$$.
 It specifies the
 component of $latex F$$ that we are computing the derivative of.
 
@@ -92,7 +92,7 @@ $syntax%
 %$$
 (see $xref/RevOne/Vector/Vector/$$ below)
 and its size is $italic n$$, the dimension of the
-$xref/FunConstruct/x/Domain Space/domain space/1/$$ for $italic f$$.
+$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
 The value of $italic dw$$ is the derivative of $latex F_i$$ 
 evaluated at $italic x$$; i.e.,
 for $latex j = 0 , \ldots , n - 1 $$ 

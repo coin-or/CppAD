@@ -26,12 +26,16 @@ $section Forward Mode$$
 
 $childtable%
 	omh/Forward.omh%
+	CppAD/local/CapTaylor.h%
 	Example/Forward.cpp
 %$$
 
 $end
 -----------------------------------------------------------------------------
 */
+
+// documened after Forward but included here so easy to see
+# include <CppAD/local/CapTaylor.h>
 
 // BEGIN CppAD namespace
 namespace CppAD {
@@ -62,34 +66,17 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 		"in this ADFun object is less than p."
 	);  
 
-	// check if we need more columns in Taylor
+	// check if the Taylor matrix needs more columns
 	if( TaylorColDim <= p )
-	{	// Allocate new matrix will suffucient column dimension
-		size_t p1       = p + 1;
-		size_t newlen   = p1 * totalNumVar;
-		Base *newptr    = CppADNull;
-		newptr          = CppADTrackNewVec(newlen, newptr);
-
-		// copy the old data into the new matrix
-		for(i = 0; i < totalNumVar; i++)
-		{	for(j = 0; j < p; j++)
-			{	newptr[i * p1 + j]  = Taylor[i * p + j];
-			}
-		}
-		// free the old memory
-		CppADTrackDelVec(Taylor);
-
-		// use the new pointer
-		Taylor       = newptr;
-		TaylorColDim = p+1;
-	}
+		capacity_taylor(p + 1);
+	CppADUnknownError( TaylorColDim > p );
 
 	// set the p-th order Taylor coefficients for independent variables
 	for(j = 0; j < n; j++)
 	{	CppADUnknownError( ind_taddr[j] < totalNumVar );
 
 		// ind_taddr[j] is operator taddr for j-th independent variable
-		CppADUnknownError( Rec->GetOp( ind_taddr[j] ) == InvOp );
+		CppADUnknownError( Rec.GetOp( ind_taddr[j] ) == InvOp );
 
 		// It is also variable taddr for j-th independent variable
 		Taylor[ind_taddr[j] * TaylorColDim + p] = up[j];
@@ -97,7 +84,7 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 
 	// evaluate the derivatives
 	compareChange = ForwardSweep(
-		true, p, totalNumVar, Rec, TaylorColDim, Taylor
+		true, p, totalNumVar, &Rec, TaylorColDim, Taylor
 	);
 
 	// return the p-th order Taylor coefficients for dependent variables
@@ -114,6 +101,6 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 }
 
 } // END CppAD namespace
-	
+
 
 # endif

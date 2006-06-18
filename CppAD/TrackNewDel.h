@@ -304,7 +304,7 @@ Type *TrackNewVec(
 	Type       *oldptr  )
 {
 	// try to allocate the new memrory
-	Type *newptr = 0;
+	Type *newptr = CppADNull;
 	try
 	{	newptr = new Type[len];
 	}
