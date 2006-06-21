@@ -1,3 +1,6 @@
+# ifndef CppADFunConstructIncluded
+# define CppADFunConstructIncluded
+
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -15,9 +18,10 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
-
+/*
 $begin FunConstruct$$
 $spell 
+	Taylor
 	var
 	ADvector
 	const
@@ -70,17 +74,26 @@ $syntax%
 %$$
 creates the $syntax%AD<%Base%>%$$ object $italic f$$,
 stops the recording of AD of $italic Base$$ operations,
-then stores the corresponding operation sequence in the object $italic f$$.
+stores the corresponding operation sequence in the object $italic f$$.
+It then stores the first order Taylor coefficients 
+(corresponding to the value of $italic x$$) in $italic f$$.
 This is equivalent to first creating $italic f$$ with the default constructor
 $syntax%
 	ADFun<%Base%> %f%;
 %$$
-and then using the syntax
+Then stopping the tape and storing the operation sequence 
 $syntax%
 	%f%(%x%, %y%);
 %$$
-to store the operation sequence in $italic f$$ (see $xref/FunOpSeq/$$).
-
+(see $xref/FunOpSeq/$$).
+Then calculating the first order Taylor coefficients for all 
+the variables in the operation sequence with
+$syntax%
+	%f%.Forward(%p%, %x_p%)
+%$$
+with $italic p$$ equal to zero and the elements of $italic x_p$$
+equal to the corresponding elements of $italic x$$
+(see $xref/Forward/$$).
 
 $head Example$$
 
@@ -97,3 +110,45 @@ contains an example and test using the default constructor.
 It returns true if it succeeds and false otherwise.
 
 $end
+*/
+
+
+// BEGIN CppAD namespace
+namespace CppAD {
+
+template <typename Base>
+template <typename VectorAD>
+ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
+: totalNumVar(0), Taylor(CppADNull), ForJac(CppADNull)
+{	(*this) (x, y);
+	size_t i, j, m, n;
+
+	// allocate memory for one zero order Taylor coefficient
+	taylor_per_var= 1;
+	TaylorColDim  = 1;
+	Taylor        = CppADTrackNewVec(totalNumVar, Taylor);
+
+	// set zero order coefficients corresponding to indpendent variables
+	n = ind_taddr.size();
+	for(j = 0; j < n; j++)
+	{	Taylor[ ind_taddr[j] ]  = x[j].value;
+	}
+
+	// use independent variable values to fill in values for others
+	compareChange = ForwardSweep(
+		false, 0, totalNumVar, &Rec, TaylorColDim, Taylor
+	);
+	CppADUnknownError( compareChange == 0 );
+
+	// check the dependent variable values
+	m = dep_taddr.size();
+	for(i = 0; i < m; i++) CppADUsageError(
+		Taylor[dep_taddr[i]] == y[i].value,
+		"independent variable not equal its tape evaluation"
+		", it may be nan"
+	);
+}
+
+} // END CppAD namespace
+
+# endif

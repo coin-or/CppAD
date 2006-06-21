@@ -94,6 +94,7 @@ bool FunCheckCases(void)
 
 	// stop tape and store operation sequence in f : X -> Y
 	f(X, Y);
+	ok &= (f.size_taylor() == 0);
 
 	// create function object to use with double
 	Fun<double, Vector> g(n);

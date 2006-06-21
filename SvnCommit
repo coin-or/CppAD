@@ -25,56 +25,34 @@
 # commit. If copy_branch is empty; i.e., copy_branch="", the changes will not
 # be copied (and commited) into another branch.
 #
-log_entry="Merge in most recent version of branches/ADFun.
+log_entry="Do not execute zero order forward mode when Op sequence changes
 
 SvnCommit: file that made this commit.
-WhatsNew06.omh: comments about overall goal.
-WhatsNew05.omh: remove reference to old wish list entry.
-WishList.omh: remove memory entry.
+WhatsNew06.omh: users view of the changes.
+ADFun.h: properly handle new case where Taylor may be null.
+CapTaylor.h: properly handle new case where Taylor may be null.
+FunOpSeq.h: remove zero order forward mode execution.
+FunConstruct.h: separate documentation and forward call from FunOpSeq case.
+FunConstruct.omh: move to FunConstruct.h (and modify).
+Makefile.am: include FunConstruct.h in distribution.
 "
 # 
 add_list="
+	CppAD/local/FunConstruct.h
 "
 #
 change_list="
 	SvnCommit
-	SvnMerge
-	CppAD/TrackNewDel.h
-	CppAD/local/Hessian.h
-	CppAD/local/RevSparseHes.h
-	CppAD/local/Reverse.h
-	CppAD/local/TapeRec.h
+	omh/WhatsNew06.omh
 	CppAD/local/ADFun.h
-	CppAD/local/Jacobian.h
 	CppAD/local/CapTaylor.h
 	CppAD/local/FunOpSeq.h
-	CppAD/local/ForTwo.h
-	CppAD/local/RevTwo.h
-	CppAD/local/ForOne.h
-	CppAD/local/FunConstruct.h
-	CppAD/local/RevOne.h
-	CppAD/local/Forward.h
-	CppAD/local/ForSparseJac.h
-	CppAD/local/FunCheck.h
-	CppAD/local/RevSparseJac.h
-	omh/SeqProperty.omh
-	omh/Reverse.omh
-	omh/FunConstruct.omh
-	omh/Forward.omh
-	omh/WhatsNew05.omh
-	omh/WhatsNew06.omh
-	omh/WishList.omh
-	omh/FunDeprecated.omh
-	Example/TrackNewDel.cpp
-	Example/Forward.cpp
-	Example/LuRatio.cpp
 	Example/FunCheck.cpp
-	Example/Independent.cpp
-	Example/CompareChange.cpp
 	Makefile.am
 "
 #
 delete_list="
+	omh/FunConstruct.omh
 "
 #
 copy_branch="" # branch directory, use copy_branch="" for not copying

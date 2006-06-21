@@ -49,7 +49,7 @@ derivative values, and other values related to the corresponding function.
 
 $childtable%
 	CppAD/local/Independent.h%
-	omh/FunConstruct.omh%
+	CppAD/local/FunConstruct.h%
 	CppAD/local/FunOpSeq.h%
 	omh/SeqProperty.omh%
 	CppAD/local/FunEval.h%
@@ -76,12 +76,9 @@ public:
 	: totalNumVar(0), Taylor(CppADNull), ForJac(CppADNull)
 	{ }
 
-	// constructor
+	// sequence constructor
 	template <typename ADvector>
-	ADFun(const ADvector &x, const ADvector &y)
-	: totalNumVar(0), Taylor(CppADNull), ForJac(CppADNull)
-	{	(*this)(x, y);
-	}
+	ADFun(const ADvector &x, const ADvector &y);
 
 	// destructor
 	~ADFun(void)
@@ -262,6 +259,7 @@ private:
 // user interfaces
 # include <CppAD/local/Independent.h>
 # include <CppAD/local/FunOpSeq.h>
+# include <CppAD/local/FunConstruct.h>
 # include <CppAD/local/FunEval.h>
 # include <CppAD/local/Drivers.h>
 # include <CppAD/local/FunCheck.h>

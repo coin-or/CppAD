@@ -95,6 +95,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/ForwardSweep.h \
 	CppAD/local/FunCheck.h \
 	CppAD/local/FunEval.h \
+	CppAD/local/FunConstruct.h \
 	CppAD/local/FunOpSeq.h \
 	CppAD/local/Hessian.h \
 	CppAD/local/Identical.h \

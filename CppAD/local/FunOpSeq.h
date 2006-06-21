@@ -37,6 +37,9 @@ $index sequence, operation store$$
 $index recording, stop$$
 $index tape, stop recording$$
 
+$head Warning$$ 
+This operation is a state of flux and it will probably change.
+
 $head Syntax$$
 $syntax%%f%(%x%, %y%)%$$
 
@@ -119,16 +122,12 @@ The tape will be in the $xref/glossary/Tape State/Empty/empty state/1/$$
 after this operation is preformed.
 
 $head Forward$$
-This operation preforms an implicit call to 
+No $xref/Forward/$$ calculation is preformed during this operation.
+Thus, directly after this operation,
 $syntax%
-	%f%.Forward(0, %x_p%)
+	%f%.size_taylor()
 %$$ 
-(see $xref/ForwardZero/$$) 
-with the elements of $italic x_p$$ equal to 
-the corresponding elements of $italic x$$; i.e.,
-the zero order Taylor coefficients corresponding to 
-the value of $italic x$$ are also stored $italic f$$
-(see $xref/size_taylor/$$ and $xref/capacity_taylor/$$). 
+is zero (see $xref/size_taylor/$$).
 
 $head Example$$
 The file
@@ -205,25 +204,24 @@ void ADFun<Base>::operator()(const ADvector &x, const ADvector &y)
 		CppADTrackDelVec(ForJac);
 
 	// initialize buffers
-	Taylor  = CppADTrackNewVec(totalNumVar, Taylor);
+	Taylor  = CppADNull;
 	ForJac  = CppADNull;
 
 	// initial row and column dimensions
 	// memoryMax  = 0;
-	taylor_per_var= 1;
+	taylor_per_var= 0;
 	ForJacColDim  = 0;
 	ForJacBitDim  = 0;
-	TaylorColDim  = 1;
+	TaylorColDim  = 0;
 
-	// set tape address and initial value for independent variables
+	// set tape address 
 	ind_taddr.resize(n);
 	CppADUsageError(
 		n < totalNumVar,
 		"independent variables vector has changed"
 	);
 	for(j = 0; j < n; j++)
-	{	
-		CppADUsageError( 
+	{	CppADUsageError( 
 			x[j].taddr == j+1,
 			"independent variable vector has changed"
 		);
@@ -234,21 +232,7 @@ void ADFun<Base>::operator()(const ADvector &x, const ADvector &y)
 			"independent variable vector has changed"
 		);
 		ind_taddr[j] = x[j].taddr;
-		Taylor[j+1]  = x[j].value;
 	}
-
-	// use independent variable values to fill in values for others
-	compareChange = ForwardSweep(
-		false, 0, totalNumVar, &Rec, TaylorColDim, Taylor
-	);
-	CppADUnknownError( compareChange == 0 );
-
-	// check the dependent variable values
-	for(i = 0; i < m; i++) CppADUsageError(
-		Taylor[dep_taddr[i]] == y[i].value,
-		"independent variable not equal its tape evaluation"
-		", it may be nan"
-	);
 
 	// used to determine if there is an operation sequence in *this
 	CppADUnknownError( totalNumVar > 0 );

@@ -137,13 +137,15 @@ void ADFun<Base>::capacity_taylor(size_t c)
 	p = std::min(taylor_per_var, c);
 
 	// copy the old data into the new matrix
-	for(i = 0; i < totalNumVar; i++)
-	{	for(j = 0; j < p; j++)
+	CppADUnknownError( taylor_per_var == 0 | (Taylor != CppADNull) );
+	for(j = 0; j < p; j++)
+	{	for(i = 0; i < totalNumVar; i++)
 		{	newptr[i * c + j]  = Taylor[i * TaylorColDim + j];
 		}
 	}
 	// free the old memory
-	CppADTrackDelVec(Taylor);
+	if( Taylor != CppADNull )
+		CppADTrackDelVec(Taylor);
 
 	// use the new pointer
 	Taylor         = newptr;
