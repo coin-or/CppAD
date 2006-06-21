@@ -68,6 +68,16 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-22$$
+The $xref/ADFun/$$ operation
+$syntax%%f%(%x%, %y%)%$$ no longer executes a zero order
+$xref/Forward/$$ operation when a new operation sequence is stored in 
+$italic f$$.
+In addition, the syntax for this operation has been changes to
+$syntax%%f%.Dependent(%y%)%$$ (see $xref/Dependent/$$).
+ 
+and will probably change.
+
 $comment ----------------------------------------------------------- $$
 $head 06-19$$
 The changes listed under 06-17 and 06-18 were made in the branches/ADFun branch 
@@ -92,7 +102,7 @@ $xref/size_taylor/$$ in its place.
 $subhead 06-18$$
 Added the $xref/FunConstruct//ADFun default constructor/$$
 and the ability to
-$xref/FunOpSeq//store a new operation sequence/$$ 
+$xref/Dependent//store a new operation sequence/$$ 
 in an $code ADFun$$ object with out having to use 
 $code ADFun$$ pointers together with $code new$$
 and $code delete$$.

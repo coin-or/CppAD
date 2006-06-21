@@ -101,7 +101,7 @@ bool CompareChange(void)
 	Y[0] = Minimum(X[0], X[1]);
 
 	// stop tape and store result in f
-	f(X, Y);
+	f.Dependent(Y);
 
 	// evaluate the function at new argument values
 	y    = f.Forward(0, x);

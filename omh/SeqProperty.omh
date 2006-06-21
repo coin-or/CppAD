@@ -62,12 +62,13 @@ $syntax%
 	size_t %n%
 %$$
 and is the dimension of the domain space corresponding to $italic f$$.
-This is equal to the size of the vector $italic x$$ in the previous operation
+This is equal to the size of the vector $italic x$$ in the call
 $syntax%
-	%f%(%x%, %y%)
+	Independent(%x%)
 %$$
-which stored the operation sequence currently in $italic f$$
-(see $xref/FunOpSeq/$$). 
+that starting recording the operation sequence 
+currently stored in $italic f$$
+(see $xref/FunConstruct/$$ and $xref/Dependent/$$). 
 
 $head Range$$
 The result $italic m$$ has prototype
@@ -75,12 +76,16 @@ $syntax%
 	size_t %m%
 %$$
 and is the dimension of the range space corresponding to $italic f$$.
-This is equal to the size of the vector $italic y$$ in the previous operation
+This is equal to the size of the vector $italic y$$ in syntax
 $syntax%
-	%f%(%x%, %y%)
+	ADFun<%Base> %f%(%x%, %y%)
 %$$
-which stored the operation sequence currently in $italic f$$
-(see $xref/FunOpSeq/$$). 
+or
+$syntax%
+	%f%.Dependent(%y%)
+%$$
+depending on which stored the operation sequence currently in $italic f$$
+(see $xref/FunConstruct/$$ and $xref/Dependent/$$). 
 
 $head Parameter$$
 The argument $italic i$$ has prototype

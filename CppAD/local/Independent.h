@@ -121,15 +121,15 @@ void ADTape<Base>::Independent(VectorAD &x)
 	CppADUnknownError( NumInd(NonOp) == 0 );
 
 	// place each of the independent variables in the tape
-	size_t i;
-	for(i = 0; i < n; i++)
-	{	RecordInvOp(x[i]);
-		CppADUnknownError( x[i].taddr == i+1 );
+	size_t j;
+	for(j = 0; j < n; j++)
+	{	RecordInvOp(x[j]);
+		CppADUnknownError( x[j].taddr == j+1 );
 	}
 
 	// done specifying all of the independent variables
-	state = Recording;
-
+	state            = Recording;
+	size_independent = n;
 }
 
 template <typename VectorAD>

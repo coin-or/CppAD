@@ -83,9 +83,9 @@ $syntax%
 %$$
 Then stopping the tape and storing the operation sequence 
 $syntax%
-	%f%(%x%, %y%);
+	%f%.Dependent(%y%);
 %$$
-(see $xref/FunOpSeq/$$).
+(see $xref/Dependent/$$).
 Then calculating the first order Taylor coefficients for all 
 the variables in the operation sequence with
 $syntax%
@@ -120,8 +120,10 @@ template <typename Base>
 template <typename VectorAD>
 ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 : totalNumVar(0), Taylor(CppADNull), ForJac(CppADNull)
-{	(*this) (x, y);
-	size_t i, j, m, n;
+{	size_t i, j, m, n;
+
+	// stop the tape and store the operation sequence
+	Dependent(y);
 
 	// allocate memory for one zero order Taylor coefficient
 	taylor_per_var= 1;

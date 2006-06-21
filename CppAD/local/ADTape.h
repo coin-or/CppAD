@@ -519,8 +519,9 @@ public:
 
 private:
 	// private data
-	TapeState            state;
-	TapeRec<Base>          Rec;
+	TapeState                 state;
+	size_t         size_independent;
+	TapeRec<Base>               Rec;
 
 	/*
 	Private functions

@@ -16,8 +16,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 /*
-! WARNING: This file is used as an example by omh/FunConstruct.omh and
-by CppAD/local/FunOpSeq.h.
+! WARNING: This file is used as an example by FunConstruct and Dependent
 
 $begin FunCheck.cpp$$
 $spell
@@ -30,8 +29,13 @@ $index FunCheck, example$$
 $index example, FunCheck$$
 $index test, FunCheck$$
 
-$index ADFun, default constructor$$
-$index operation, store new sequence$$
+$index ADFun, example$$
+$index example, ADFun$$
+$index test, ADFun$$
+
+$index Dependent, example$$
+$index example, Dependent$$
+$index test, Dependent$$
 
 $code
 $verbatim%Example/FunCheck.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -71,8 +75,9 @@ bool FunCheckCases(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::ADFun;
+	using CppAD::Independent;
 
-	// default constructor
+	// use the ADFun default constructor
 	ADFun<double> f;
 
 	// domain space vector
@@ -82,7 +87,7 @@ bool FunCheckCases(void)
 	X[1] = 1.;
 
 	// declare independent variables and starting recording
-	CppAD::Independent(X);
+	Independent(X);
 
 	// create function object to use with AD<double>
 	Fun< AD<double>, ADVector > G(n);
@@ -93,8 +98,8 @@ bool FunCheckCases(void)
 	Y = G(X);
 
 	// stop tape and store operation sequence in f : X -> Y
-	f(X, Y);
-	ok &= (f.size_taylor() == 0);
+	f.Dependent(Y);
+	ok &= (f.size_taylor() == 0);  // no implicit forward operation
 
 	// create function object to use with double
 	Fun<double, Vector> g(n);
@@ -118,11 +123,12 @@ bool FunCheckCases(void)
 	// re-tape to obtain the new AD of double operation sequence
 	for(j = 0; j < n; j++)
 		X[j] = x[j];
-	CppAD::Independent(X);
+	Independent(X);
 	Y = G(X);
 
 	// stop tape and store operation sequence in f : X -> Y
-	f(X, Y);
+	f.Dependent(Y);
+	ok &= (f.size_taylor() == 0);  // no implicit forward with this x
 
 	// function values should agree now
 	ok      &= FunCheck(f, g, x, a, r);

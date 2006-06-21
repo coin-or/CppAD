@@ -1,5 +1,5 @@
-# ifndef CppADFunOpSeqIncluded
-# define CppADFunOpSeqIncluded
+# ifndef CppADDependentIncluded
+# define CppADDependentIncluded
 
 /* -----------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
@@ -19,7 +19,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ------------------------------------------------------------------------ */
 /*
-$begin FunOpSeq$$
+$begin Dependent$$
 $spell 
 	Taylor
 	ADvector
@@ -36,28 +36,26 @@ $index operation, sequence store$$
 $index sequence, operation store$$
 $index recording, stop$$
 $index tape, stop recording$$
-
-$head Warning$$ 
-This operation is a state of flux and it will probably change.
+$index Dependent$$
 
 $head Syntax$$
-$syntax%%f%(%x%, %y%)%$$
+$syntax%%f%.Dependent(%y%)%$$
 
 $head Purpose$$
-Stop recording and store the AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$ 
-that was started by the previous 
-$xref/Independent//Independent(x)/$$
-where $italic x$$ was a 
-vector with elements of type $syntax%AD<%Base%>%$$.
+Stop recording and the AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
+and store the new operation sequence in $italic f$$.
 The operation sequence defines an 
 $xref/glossary/AD Function/AD function/$$
 $latex \[
 	F : B^n \rightarrow B^m
 \] $$
-where $latex B$$ is the space corresponding to objects of type $italic Base$$,
-$italic n$$ is the size of the domain vector $italic x$$,
-and $italic m$$ is the size of range vector $italic y$$.
+where $latex B$$ is the space corresponding to objects of type $italic Base$$.
+The value $latex n$$ is the dimension of the 
+$xref/SeqProperty/Domain/domain/$$ space for the operation sequence.
+The value $latex m$$ is the dimension of the 
+$xref/SeqProperty/Range/range/$$ space for the operation sequence
+(which is determined by the size of $italic y$$).
 
 $head f$$
 The object $italic f$$ has prototype
@@ -69,28 +67,6 @@ it becomes the operation sequence corresponding to $italic f$$.
 If a previous operation sequence was stored in $italic f$$,
 it is deleted. 
 
-$head x$$
-The vector $italic x$$ has prototype
-$syntax%
-	const %ADvector% &%x%
-%$$
-(see $xref/FunConstruct//ADvector/$$ below).
-The length of $italic x$$ must be greater than zero
-and it must be the 
-$xref/Independent//independent variable vector/$$ corresponding to
-the current $syntax%AD<%Base%>%$$ operation sequence; i.e.,
-the current recording must have started with
-$syntax%
-	Independent(%x%)
-%$$
-In addition, none of the element of $italic x$$
-can be assigned a new value between the call to $xref/Independent/$$
-and the $syntax%ADFun<%Base%>%$$ constructor call.
-
-$subhead Domain Space$$
-The size of $italic x$$ is referred to as $latex n$$ above and the
-domain space is $latex B^n$$.
-
 $head y$$
 The vector $italic y$$ has prototype
 $syntax%
@@ -99,10 +75,6 @@ $syntax%
 (see $xref/FunConstruct//ADvector/$$ below).
 The length of $italic y$$ must be greater than zero
 and is the dimension of the range space for $italic f$$.
-
-$subhead Range Space$$
-The size of $italic y$$ is referred to as $latex m$$ above and the
-domain space is $latex B^m$$.
 
 $head ADvector$$
 The type $italic ADvector$$ must be a $xref/SimpleVector/$$ class with
@@ -145,12 +117,11 @@ namespace CppAD {
 
 template <typename Base>
 template <typename ADvector>
-void ADFun<Base>::operator()(const ADvector &x, const ADvector &y)
-{	size_t   n = x.size();
-	size_t   m = y.size();
+void ADFun<Base>::Dependent(const ADvector &y)
+{	size_t   m = y.size();
+	size_t   n = AD<Base>::Tape()->size_independent;
 	size_t   i, j;
 	size_t   y_taddr;
-	OpCode   op;
 
 	// check ADvector is Simple Vector class with AD<Base> elements
 	CheckSimpleVector< AD<Base>, ADvector>();
@@ -162,11 +133,7 @@ void ADFun<Base>::operator()(const ADvector &x, const ADvector &y)
 	);
 	CppADUsageError(
 		y.size() > 0,
-		"ADFun operation sequence second argument y has zero size"
-	); 
-	CppADUsageError(
-		x.size() > 0,
-		"ADFun operation sequence first argument x has zero size"
+		"ADFun operation sequence dependent variable size is zero size"
 	); 
 
 	// set total number of variables in tape, parameter flag, 
@@ -197,6 +164,9 @@ void ADFun<Base>::operator()(const ADvector &x, const ADvector &y)
 	// total number of varables in this recording 
 	CppADUnknownError( totalNumVar == Rec.TotNumVar() );
 
+	// used to determine if there is an operation sequence in *this
+	CppADUnknownError( totalNumVar > 0 );
+
 	// free old buffers
 	if( Taylor != CppADNull )
 		CppADTrackDelVec(Taylor);
@@ -216,26 +186,14 @@ void ADFun<Base>::operator()(const ADvector &x, const ADvector &y)
 
 	// set tape address 
 	ind_taddr.resize(n);
-	CppADUsageError(
-		n < totalNumVar,
-		"independent variables vector has changed"
+	CppADUnknownError(
+		n < totalNumVar
 	);
 	for(j = 0; j < n; j++)
-	{	CppADUsageError( 
-			x[j].taddr == j+1,
-			"independent variable vector has changed"
-		);
-		// j+1 is both the operator and independent variable taddr
-		op = Rec.GetOp(j+1);
-		CppADUsageError(
-			op == InvOp,
-			"independent variable vector has changed"
-		);
-		ind_taddr[j] = x[j].taddr;
+	{	CppADUnknownError( Rec.GetOp(j+1) == InvOp );
+		ind_taddr[j] = j+1;
 	}
 
-	// used to determine if there is an operation sequence in *this
-	CppADUnknownError( totalNumVar > 0 );
 }
 
 } // END CppAD namespace

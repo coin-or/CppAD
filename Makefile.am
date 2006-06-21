@@ -79,6 +79,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/Declare.h \
 	CppAD/local/Default.h \
 	CppAD/local/Define.h \
+	CppAD/local/Dependent.h \
 	CppAD/local/Discrete.h \
 	CppAD/local/Div.h \
 	CppAD/local/DivEq.h \
@@ -96,7 +97,6 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/FunCheck.h \
 	CppAD/local/FunEval.h \
 	CppAD/local/FunConstruct.h \
-	CppAD/local/FunOpSeq.h \
 	CppAD/local/Hessian.h \
 	CppAD/local/Identical.h \
 	CppAD/local/Independent.h \

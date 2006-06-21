@@ -50,7 +50,7 @@ derivative values, and other values related to the corresponding function.
 $childtable%
 	CppAD/local/Independent.h%
 	CppAD/local/FunConstruct.h%
-	CppAD/local/FunOpSeq.h%
+	CppAD/local/Dependent.h%
 	omh/SeqProperty.omh%
 	CppAD/local/FunEval.h%
 	CppAD/local/Drivers.h%
@@ -90,7 +90,7 @@ public:
 
 	// assign a new operation sequence
 	template <typename ADvector>
-	void operator()(const ADvector &x, const ADvector &y);
+	void Dependent(const ADvector &y);
 
 	// forward mode sweep
 	template <typename VectorBase>
@@ -258,7 +258,7 @@ private:
 
 // user interfaces
 # include <CppAD/local/Independent.h>
-# include <CppAD/local/FunOpSeq.h>
+# include <CppAD/local/Dependent.h>
 # include <CppAD/local/FunConstruct.h>
 # include <CppAD/local/FunEval.h>
 # include <CppAD/local/Drivers.h>
