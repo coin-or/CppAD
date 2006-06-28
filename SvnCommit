@@ -25,34 +25,38 @@
 # commit. If copy_branch is empty; i.e., copy_branch="", the changes will not
 # be copied (and commited) into another branch.
 #
-log_entry="Do not execute zero order forward mode when Op sequence changes
+log_entry="For an ADFun f, Change f(x,y) to f.Dependent(y).
 
 SvnCommit: file that made this commit.
+ADTape.h: add size_independent to private data for use by Dependent.
+ADFun.h: changes includes of FunSeqOp.h to Dependent.h.
+Independent.h: set value of size_independent in ADTape.
+FunConstruct.h: change references from f(x,y) to Dependent(y).
+SeqProperty.omh: change references from f(x,y) to Dependent(y).
 WhatsNew06.omh: users view of the changes.
-ADFun.h: properly handle new case where Taylor may be null.
-CapTaylor.h: properly handle new case where Taylor may be null.
-FunOpSeq.h: remove zero order forward mode execution.
-FunConstruct.h: separate documentation and forward call from FunOpSeq case.
-FunConstruct.omh: move to FunConstruct.h (and modify).
-Makefile.am: include FunConstruct.h in distribution.
+FunCheck.cpp: change references from f(x,y) to Dependent(y).
+CompareChange.cpp: change references from f(x,y) to Dependent(y).
+Makefile.am: remove FunOpSeq.h and add Dependent.h to distribution.
 "
 # 
 add_list="
-	CppAD/local/FunConstruct.h
+	CppAD/local/Dependent.h
 "
 #
 change_list="
-	SvnCommit
-	omh/WhatsNew06.omh
+	CppAD/local/ADTape.h
 	CppAD/local/ADFun.h
-	CppAD/local/CapTaylor.h
-	CppAD/local/FunOpSeq.h
+	CppAD/local/Independent.h
+	CppAD/local/FunConstruct.h
+	omh/SeqProperty.omh
+	omh/WhatsNew06.omh
 	Example/FunCheck.cpp
+	Example/CompareChange.cpp
 	Makefile.am
 "
 #
 delete_list="
-	omh/FunConstruct.omh
+	CppAD/local/FunOpSeq.h
 "
 #
 copy_branch="" # branch directory, use copy_branch="" for not copying
