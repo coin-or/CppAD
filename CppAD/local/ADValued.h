@@ -40,10 +40,13 @@ $childtable%
 $end
 */
 
+// include MathOther.h after CondExp.h because some MathOther.h routines use 
+// CondExp.h and CondExp.h is not sufficently declared in Declare.h
+
 # include <CppAD/local/Arithmetic.h>
 # include <CppAD/local/StdMathUnary.h>
-# include <CppAD/local/MathOther.h>
 # include <CppAD/local/CondExp.h>
+# include <CppAD/local/MathOther.h>
 # include <CppAD/local/Discrete.h>
 
 # endif
