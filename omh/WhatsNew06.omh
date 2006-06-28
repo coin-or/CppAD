@@ -70,8 +70,8 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 06-29$$
-Newer versions of the gcc compiler generated an error for using
-$xref/erf/$$ using $xref/CondExp/$$ before it was defined.
+Newer versions of the gcc compiler generated an error because 
+$xref/erf/$$ was using $xref/CondExp/$$ before it was defined.
 This was found by Kasper Kristensen and his fix has been
 included in the CppAD distribution.
 
