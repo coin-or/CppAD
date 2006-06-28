@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew06$$
 $spell
+	Kasper Kristensen
 	taylor
 	BAvector
 	fy
@@ -68,15 +69,19 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-29$$
+Newer versions of the gcc compiler generated an error for using
+$xref/erf/$$ using $xref/CondExp/$$ before it was defined.
+This was found by Kasper Kristensen and his fix has been
+included in the CppAD distribution.
+
 $head 06-22$$
 The $xref/ADFun/$$ operation
 $syntax%%f%(%x%, %y%)%$$ no longer executes a zero order
 $xref/Forward/$$ operation when a new operation sequence is stored in 
 $italic f$$.
-In addition, the syntax for this operation has been changes to
+In addition, the syntax for this operation was changed to
 $syntax%%f%.Dependent(%y%)%$$ (see $xref/Dependent/$$).
- 
-and will probably change.
 
 $comment ----------------------------------------------------------- $$
 $head 06-19$$
