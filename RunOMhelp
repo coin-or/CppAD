@@ -28,14 +28,14 @@ then
 	echo "Building developer documentation"
 	mkdir Dev
 	cd    Dev
-	if ! omhelp ../Dev.omh -xml -debug > ../OMhelp.Dev.log
+	if ! omhelp ../Dev.omh -noframe -xml -debug > ../OMhelp.Dev.log
 	then
 		grep "^OMhelp Error:" ../OMhelp.Dev.log
 		echo "OMhelp could not build developer documentation."
 		echo "See the complete error message in OMhelp.Dev.log"
 		exit 1
 	fi
-	omhelp ../Dev.omh -debug
+	omhelp ../Dev.omh -noframe -debug
 	cd ..
 	if grep "^OMhelp Warning:" OMhelp.Dev.log
 	then
@@ -52,6 +52,7 @@ then
 	cd    Doc
 	if ! omhelp ../Doc.omh > ../OMhelp.Doc.log \
 		-l http://www.coin-or.org/CppAD/ \
+		-noframe \
 		-xml \
 		-debug
 	then
@@ -62,6 +63,7 @@ then
 	fi
 	omhelp ../Doc.omh  \
                 -l http://www.coin-or.org/CppAD/ \
+		-noframe \
 		-debug
 	cd ..
 	if grep "^OMhelp Warning:" OMhelp.Doc.log
