@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*
 $begin ExpApx$$
 $spell
+	omhelp-%yy%-%mm%-%dd%
 	hpp
 	Apx
 	cpp
@@ -43,7 +44,6 @@ $syntax%%y% = ExpApx(%x%, %e%)%$$
 $head Purpose$$
 This is an example algorithm that is used to demonstrate 
 Algorithmic Differentiation. 
-
 
 $head Mathematical Form$$
 The exponential function can be defined by
@@ -71,12 +71,24 @@ $latex \[
 \] $$
 
 
+$head include$$
+The include command in the syntax is relative to 
+$syntax%
+	omhelp-%yy%-%mm%-%dd%/Introduction
+%$$
+where $syntax%omhelp-%yy%-%mm%-%dd%$$ is the distribution directory
+created during the extraction step of a 
+$cref/Unix/InstallUnix/Extraction/$$ or 
+$cref/Window/InstallWindows/Extraction/$$ 
+installation of CppAD.
+
+
 $head x$$
 The argument $italic x$$ has prototype
 $syntax%
 	const %Type% &%x%
 %$$
-(see $italic Type$$ below)
+(see $italic Type$$ below).
 It specifies the point at which to evaluate the 
 approximation for the exponential function.
 
@@ -115,24 +127,24 @@ $syntax%%u% > %v%$$
 	if $italic u$$ greater than $italic v$$, an false otherwise
 $rnext
 $syntax%%u% = %v%$$
-	$cnext 
-	$cnext new value of $italic u$$ is value of $italic v$$
+	$cnext $italic Type$$ 
+	$cnext new $italic u$$ (and result) is value of $italic v$$
 $rnext
 $syntax%%u% * %v%$$
 	$cnext $italic Type$$
-	$cnext results in the value of $latex u * v$$
+	$cnext result is value of $latex u * v$$
 $rnext
 $syntax%%u% / %v%$$
 	$cnext $italic Type$$
-	$cnext result has the value of $latex u / v$$
+	$cnext result is value of $latex u / v$$
 $rnext
 $syntax%%u% + %v%$$
 	$cnext $italic Type$$
-	$cnext result has the value of $latex u + v$$
+	$cnext result is value of $latex u + v$$
 $rnext
 $syntax%-%u%$$
 	$cnext $italic Type$$
-	$cnext result has the value of $latex - u$$
+	$cnext result is value of $latex - u$$
 $tend
 
 $children%
