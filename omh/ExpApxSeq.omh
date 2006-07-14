@@ -30,7 +30,7 @@ $index example, operation sequence$$
 $index operation, sequence$$
 $index sequence, operation$$
 
-$head Definition$$
+$head Operation Sequence$$
 An atomic $italic Type$$ operation is an operation
 that has a $italic Type$$ result and is not made up of 
 other more basic operations.
@@ -68,7 +68,7 @@ as operation sequence parameters.
 We refer to other symbols as operation sequence variables. 
 
 
-$head Operation Sequence$$
+$head Example Operation Sequence$$
 In the table below, 
 the C++ source code is listed on the left,
 the corresponding symbol is in the next column,

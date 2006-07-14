@@ -69,6 +69,11 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-14$$
+Make some improvements were made to the $cref/Introduction/$$, 
+$cref/ExpApx.hpp/$$ and $cref/ExpApxRev/$$ sections.
+
+
 $head 07-12$$
 Use a drop down menu for the navigation links, instead of a separate frame
 for the navigation links, for each section in the documentation.

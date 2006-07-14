@@ -25,11 +25,14 @@
 # commit. If copy_branch is empty; i.e., copy_branch="", the changes will not
 # be copied (and commited) into another branch.
 # ----------------------------------------------------------------------
-log_entry="Use the -noframe option in RunOMhelp
+log_entry="Make some improvements for DIMACS workshop presentaiton
 
 SvnCommit: file that made this commit.
 WhatsNew06.omh: users view of the changes.
-RunOMhelp.omh: add -noframe option to command line
+ExpApx.hpp: add comments to code section.
+Introduction.omh: break text up using more headings and subheadings.
+ExpApxSeq.omh: minor heading changes.
+ExpApxRev.omh: use ration notation for partial derivatives.
 "
 # 
 add_list="
@@ -37,8 +40,11 @@ add_list="
 #
 change_list="
 	SvnCommit
-	RunOMhelp
 	omh/WhatsNew06.omh
+	Introduction/ExpApx.hpp
+	omh/Introduction.omh
+	omh/ExpApxSeq.omh
+	omh/ExpApxRev.omh
 "
 #
 delete_list="
