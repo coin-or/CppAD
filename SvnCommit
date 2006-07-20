@@ -25,14 +25,12 @@
 # commit. If copy_branch is empty; i.e., copy_branch="", the changes will not
 # be copied (and commited) into another branch.
 # ----------------------------------------------------------------------
-log_entry="Make some improvements for DIMACS workshop presentaiton
+log_entry="Fix minor errors found during DIMACS workshop demonstrations
 
 SvnCommit: file that made this commit.
 WhatsNew06.omh: users view of the changes.
-ExpApx.hpp: add comments to code section.
-Introduction.omh: break text up using more headings and subheadings.
-ExpApxSeq.omh: minor heading changes.
-ExpApxRev.omh: use ration notation for partial derivatives.
+TrackNewDel.h: fix warning (argument should be const).
+Build: put ./ in path for RunOMhelp and conditional Adolc and Fadbad.
 "
 # 
 add_list="
@@ -41,10 +39,8 @@ add_list="
 change_list="
 	SvnCommit
 	omh/WhatsNew06.omh
-	Introduction/ExpApx.hpp
-	omh/Introduction.omh
-	omh/ExpApxSeq.omh
-	omh/ExpApxRev.omh
+	CppAD/TrackNewDel.h
+	Build
 "
 #
 delete_list="
@@ -171,4 +167,4 @@ then
 	done
 	
 fi
-svn commit --file SvnCommit.log $add_list $change_list $delete_list $copy_list
+svn commit --username bradbell --file SvnCommit.log $add_list $change_list $delete_list $copy_list

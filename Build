@@ -321,9 +321,15 @@ then
 	Example/Example           >  Test.log
 	TestMore/TestMore         >> Test.log
 	Introduction/Introduction >> Test.log
-	Fadbad/Example            >> Test.log
-	Adolc/Example             >> Test.log
-	RunOMhelp Doc
+	if [ -e $ADOLC_DIR/include/adolc ]
+	then
+		Adolc/Example     >> Test.log
+	fi
+	if [ -e $FADBAD_DIR/FADBAD++ ]
+	then
+		Fadbad/Example    >> Test.log
+	fi
+	./RunOMhelp Doc
 	cat OMhelp.Doc.log        >> Test.log
 	if [ "$1" != "all" ]
 	then

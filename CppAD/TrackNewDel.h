@@ -267,7 +267,7 @@ inline void TrackError(
 	const char *routine,
 	const char *file,
 	int         line,
-	char       *msg )
+	const char *msg )
 {
 	std::ostringstream buf;
 	buf << routine
