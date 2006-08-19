@@ -20,17 +20,20 @@
 # List of files that will be deleted from the repository during this commit.
 #
 # copy_branch
-# You may specify up one other branch (not the trunk and currently in memory) 
-# that should receive a copy of all that changes that you are making with this 
-# commit. If copy_branch is empty; i.e., copy_branch="", the changes will not
-# be copied (and commited) into another branch.
+# You may specify up one other branch that should receive a copy of all that 
+# changes that you are making with this commit. 
+# This other branch cannot be the trunk and you must have a copy of it
+# on your local machine. If copy_branch is empty; i.e., copy_branch="", 
+# the changes will not be copied (and commited) into another branch.
 # ----------------------------------------------------------------------
-log_entry="Fix minor errors found during DIMACS workshop demonstrations
+log_entry="Fix some conflicts between CppAD and valgrind
 
 SvnCommit: file that made this commit.
 WhatsNew06.omh: users view of the changes.
-TrackNewDel.h: fix warning (argument should be const).
-Build: put ./ in path for RunOMhelp and conditional Adolc and Fadbad.
+CopyAD.h: use default copy constructor for AD types.
+AD.h: use default copy constructor for AD types.
+VecAD.h: initialize vector data to zero.
+Eq.h: fix check that was before data initialization.
 "
 # 
 add_list="
@@ -39,8 +42,10 @@ add_list="
 change_list="
 	SvnCommit
 	omh/WhatsNew06.omh
-	CppAD/TrackNewDel.h
-	Build
+	CppAD/local/CopyAD.h
+	CppAD/local/AD.h
+	CppAD/local/VecAD.h
+	CppAD/local/Eq.h
 "
 #
 delete_list="

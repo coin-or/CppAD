@@ -429,7 +429,16 @@ public:
 	{	CppADUnknownError( *ADTape<Base>::Id() > id );
 		data  = CppADNull;
 		if( length > 0 )
+		{	size_t i;
+			Base zero(0);
 			data  = CppADTrackNewVec(length, data);
+
+			// Initialize data to zero so all have same value.
+			// This uses less memory and avoids a valgrind error
+			// during TapeRec<Base>::PutPar 
+			for(i = 0; i < length; i++)
+				data[i] = zero;
+		}
 	}
 
 	// destructor

@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 $begin WhatsNew06$$
 $spell
+	valgrind memcheck
 	Kasper Kristensen
 	taylor
 	BAvector
@@ -68,6 +69,16 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 08-17$$
+Some error message occurred while executing
+$codep
+	valgrind --tool=memcheck Example/Example
+	valgrind --tool=memcheck TestMore/TestMore
+
+$$
+These were not really bugs, but they have been fixed to avoid
+this conflict between CppAD and $href%http://valgrind.org/%valgrind%$$.
 
 $head 07-14$$
 Make some improvements were made to the $cref/Introduction/$$, 

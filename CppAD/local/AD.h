@@ -155,8 +155,8 @@ public:
 	// construction from base type
 	inline AD(const Base &b);
 
-	// copy constructor 
-	inline AD(const AD &x);
+	// use default copy constructor
+	// inline AD(const AD &x);
 
 	// contructor from VecAD<Base>::reference
 	inline AD(const VecAD_reference<Base> &x);

@@ -118,15 +118,14 @@ namespace CppAD { //  BEGIN CppAD namespace
 
 template <class Base>
 inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
-{
+{	value   = right.value;
+	id      = right.id;
+	taddr   = right.taddr;
+
 	// check that all variables are parameters while tape is empty
 	CppADUnknownError(
 		Parameter(*this) | (Tape()->State() != Empty)
 	);
-
-	value   = right.value;
-	id      = right.id;
-	taddr   = right.taddr;
 
 	return *this;
 }

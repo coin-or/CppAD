@@ -71,20 +71,18 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
+# if 0
+// use default copy constructor because it may be optimized better by compiler
 template <class Base>
 inline AD<Base>::AD(const AD &x) 
 {
-	// check that all AD objects are parameters while tape is empty
-	CppADUnknownError(
-		Parameter(x) | (Tape()->State() != Empty)
-	);
-
 	value   = x.value;
 	id      = x.id;
 	taddr   = x.taddr;
 
 	return;
 }
+# endif
 
 template <class Base>
 inline AD<Base>::AD(const VecAD_reference<Base> &x)
