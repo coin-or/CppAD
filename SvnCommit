@@ -26,14 +26,10 @@
 # on your local machine. If copy_branch is empty; i.e., copy_branch="", 
 # the changes will not be copied (and commited) into another branch.
 # ----------------------------------------------------------------------
-log_entry="Fix some conflicts between CppAD and valgrind
-
-SvnCommit: file that made this commit.
-WhatsNew06.omh: users view of the changes.
-CopyAD.h: use default copy constructor for AD types.
-AD.h: use default copy constructor for AD types.
-VecAD.h: initialize vector data to zero.
-Eq.h: fix check that was before data initialization.
+log_entry="Remove spaces after ( and before ) in configure.ac.
+Leading spaces are always ignored but trailing spaces in the macro call
+	AC_CONFIG_SRCDIR( CppAD/CppAD.h )
+were causing problems on some systems.
 "
 # 
 add_list="
@@ -41,11 +37,7 @@ add_list="
 #
 change_list="
 	SvnCommit
-	omh/WhatsNew06.omh
-	CppAD/local/CopyAD.h
-	CppAD/local/AD.h
-	CppAD/local/VecAD.h
-	CppAD/local/Eq.h
+	configure.ac
 "
 #
 delete_list="
