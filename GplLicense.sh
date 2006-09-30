@@ -119,6 +119,18 @@ sed < Makefile.am > cppad-$version/Makefile.am \
 sed < omh/license.omh > cppad-$version/omh/license.omh \
 	-e 's/$verbatim%cpl1.0.txt%$\$/$verbatim%gpl2.txt%$$/'
 #
+# Make sure that dates in certain files are older than the files converted 
+# and make sure they are in a certain time order.
+echo "GplLicense: ensuring certain time order in file dates"
+touch cppad-$version/aclocal.m4
+sleep 2
+touch cppad-$version/CppAD/config.h.in
+sleep 2
+touch cppad-$version/Makefile.in
+touch cppad-$version/*/Makefile.in
+sleep 2
+touch cppad-$version/configure
+#
 # create *.gpl.tgz file
 echo "tar -czf cppad-$version.gpl.tgz cppad-$version"
 tar -czf cppad-$version.gpl.tgz cppad-$version

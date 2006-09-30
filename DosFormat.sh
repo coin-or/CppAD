@@ -94,6 +94,19 @@ do
 			chmod +x cppad-$version/$file
 		fi
 	done
+	#
+	# Make sure that dates in certain files are older than the 
+	# files converted and make sure they are in a certain time order.
+	echo "DosFormat: ensuring proper time order in file dates"
+	touch cppad-$version/aclocal.m4
+	sleep 2
+	touch cppad-$version/CppAD/config.h.in
+	sleep 2
+	touch cppad-$version/Makefile.in
+	touch cppad-$version/*/Makefile.in
+	sleep 2
+	touch cppad-$version/configure
+	#
 	echo "zip -q -r cppad-$version.$license.zip cppad-$version"
 	zip -q -r cppad-$version.$license.zip cppad-$version
 	#

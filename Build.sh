@@ -101,7 +101,7 @@ fi
 #
 if [ "$1" = "configure" ] || [ "$1" = "all" ]
 then
-	if [ "$2" = "test" ]
+	if [ "$1" = "configure" ] && [ "$2" == "test" ]
 	then
 		echo "Build.sh configure test"
 	else
@@ -109,7 +109,7 @@ then
 	fi
 	#
 	TEST="--with-GetStarted"
-	if [ "$2" = "test" ]
+	if [ "$1" = "configure" ] && [ "$2" == "test" ]
 	then
 		TEST="$TEST --with-Introduction"
 		TEST="$TEST --with-Example"
@@ -249,8 +249,20 @@ then
 		fi
 	fi
 	#
-	echo "tar -xzf cppad-$version.cpl.tgz"
-	tar -xzf cppad-$version.cpl.tgz
+	if [ -e "cppad-$version.cpl.tgz" ]
+	then
+		dir="."
+	else
+		if [ -e "Doc/cppad-$version.cpl.tgz" ]
+		then
+			dir="Doc"
+		else
+			echo "cannot find cppad-$version.cpl.tgz"
+			exit 1
+		fi
+	fi
+	echo "tar -xzf $dir/cppad-$version.cpl.tgz"
+	tar -xzf $dir/cppad-$version.cpl.tgz
 	#
 	wd=`pwd`
 	cd cppad-$version
@@ -268,8 +280,13 @@ then
 	then
 		exit 0
 	fi
+	# None of the "test" cases get past this point
+	if [ "$2" = "test" ]
+	then
+		exit 0
+	fi
 fi
-if [ "$1" = "gpl+dos" ] || ( [ "$1" = "all" ]  && [ "$1" != "test" ] )
+if [ "$1" = "gpl+dos" ] || [ "$1" = "all" ]
 then
 	# create GPL licensed version
 	echo "GplLicense.sh"
@@ -288,7 +305,7 @@ then
 		exit 0
 	fi
 fi
-if [ "$1" = "move" ] || ( [ "$1" = "all" ]  && [ "$1" != "test" ] )
+if [ "$1" = "move" ] || [ "$1" = "all" ] 
 then
 	# copy tarballs into Doc directory
 	list="
@@ -341,6 +358,6 @@ echo "exception that \"configue test\" and \"test\" will be excluded."
 echo
 echo "Build.sh all test"
 echo "This command will execute all the options in the order above"
-echo "with the exception of \"gpl+dos\" and \"move\"."
+echo "with the exception of \"configure test\", \"gpl+dos\" and \"move\"."
 #
 exit 1

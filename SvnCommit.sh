@@ -38,11 +38,13 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Missing from previous commit.
+log_entry="Fixes related to dual license version.
 
 SvnCommit.sh: file that make this commit.
-Build: link to Build.sh.
-COPYING: CPL version of file.
+GplLicense.sh: fix file dates so automake does not run during configure.
+DosFormat.sh: fix file dates so automake does not run during configure.
+diffToday.sh: fix mistakes in date format during compares.
+Build.sh: fix some mistakes in the 'Build.sh all test' case.
 "
 # 
 add_list="
@@ -50,8 +52,10 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	Build
-	COPYING
+	GplLicense.sh
+	DosFormat.sh
+	diffToday.sh
+	Build.sh
 "
 #
 delete_list="

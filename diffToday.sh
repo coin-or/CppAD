@@ -14,7 +14,7 @@
 # difference that with local version of file
 #
 # year, month, and date
-yy_mm_dd=`date +g-%m-%d`
+yy_mm_dd=`date +%g-%m-%d`
 #
 if [ ! -e "$1" ]
 then
@@ -22,6 +22,7 @@ then
 	exit
 fi
 svn cat $1 | sed > $1.tmp \
+	-e "s/, 20[0-9][0-9]-[0-9][0-9]-[0-9][0-9] *,/, 20$yy_mm_dd,/" \
 	-e "s/, [0-9][0-9]-[0-9][0-9]-[0-9][0-9] *,/, $yy_mm_dd,/" \
 	-e "s/cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/cppad-$yy_mm_dd/g"
 #
