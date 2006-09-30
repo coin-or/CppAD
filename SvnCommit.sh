@@ -38,14 +38,11 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Put tarballs in Doc directory.
+log_entry="Missing from previous commit.
 
 SvnCommit.sh: file that make this commit.
-WhatsNew06.omh: user's view of the changes.
-configure.ac: remove trailing spaces in macro calls (move here from trunk r518).
-InstallUnix.omh: change tarball referece to current directory.
-InstallWindows.omh: change tarball reference to current directory.
-Build.sh: change name and location of tarballs.
+Build: link to Build.sh.
+COPYING: CPL version of file.
 "
 # 
 add_list="
@@ -53,11 +50,8 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	omh/WhatsNew06.omh
-	configure.ac
-	omh/InstallUnix.omh
-	omh/InstallWindows.omh
-	Build.sh
+	Build
+	COPYING
 "
 #
 delete_list="
