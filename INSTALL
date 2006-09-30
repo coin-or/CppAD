@@ -1,6 +1,14 @@
-For Installation instructions see
-	Doc/install.htm
+The OMhelp source code for install instructions for this version of CppAD
+are in the files:
+	omh/InstallWindows.omh
+	omh/InstallUnix.omh
 
-If your borwser supports XHTML + MATHML, see 
+If you used a tarball or zip file for this distribution, the HTML and XML 
+versions of the install instructions for this version are in the files:
+	Doc/install.htm
 	Doc/install.xml
 
+The HTML and XML versions of the install instructions for the version
+corresponding to the current date (minus at most one day) are in the files:
+	http://www.coin-or.org/CppAD/Doc/install.htm
+	http://www.coin-or.org/CppAD/Doc/install.xml

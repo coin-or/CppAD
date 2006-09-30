@@ -1,46 +1,12 @@
-$begin Readme$$
-$spell
-	CppAD
-	Readme
-	seanet
-	bradbell
-$$
+CppAD is available with both the CPL and GPL licenses.
 
-$section CppAD Readme File$$
-
-
-$head Project Name$$
-CppAD 
-
-$head Brief Description$$
-C++ Algorithmic Differentiation (AD) by operator overloading. 
-
-$head Intended Use$$
-Obtain the derivatives of a function defined by C++ source code.
-
-$head Project Manager$$
-The current project manager for CppAD is Brad Bell. 
-He can be reached at $code bradbell$$ at $code seanet.com$$.
-
-$head Project Web Page$$
-The current project web page is
-$href%
-	http://www.seanet.com/~bradbell/CppAD/cppad.htm
-%$$
-
-$head Support$$
-Questions, bug reports, and requests for new features
-should be directed to the project manager.
-
-$head Required Software$$
-A C++ compiler.
-
-$head Revision History$$
-See
-$href%
-	http://www.seanet.com/~bradbell/CppAD/whatsnew05.htm
-%$$
-
-
-
-$end
+File        Description
+==========  ===========
+AUTHORS     Statement of authorship and copyright.
+COPYING     Statement of user license to use software.
+ChangeLog   Pointer to log of recent changes.
+INSTALL     Pointer to installation instructions.
+NEWS        Pointer to log of recent changes.
+README      This file
+cpl1.0.txt  A copy of the CPL license.
+gpl2.txt    A copy of the GPL license.

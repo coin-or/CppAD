@@ -1,23 +1,17 @@
-/* -----------------------------------------------------------------------
-CppAD: C++ Algorithm Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
------------------------------------------------------------------------- */
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
 
 $begin WhatsNew06$$
 $spell
+	hpp
 	valgrind memcheck
 	Kasper Kristensen
 	taylor
@@ -70,6 +64,28 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-30$$ 
+These changes were grouped together because it took a while for Coin-Or
+to review the dual licensing version and because it was not possible to 
+get the nightly build changed:
+$list number$$
+Change shell scripts to use *.sh extension.
+$lnext
+Two versions, one with CPL and other with GPL license.
+$lnext
+Change subversion version of CppAD from GPL to CPL copyright.
+$lnext
+Change all files in CppAD/local to use lower case and *.hpp extension.
+$lnext
+CppAD_vector.h was generating a warning on version 4 of gcc.
+This have been fixed.
+$lnext
+Change the preprocessor $code # define$$ commands
+in $code CppAD/local/*.hpp$$ to use upper case names.
+$lnext
+Add the $cref/StackMachine.cpp/$$ example.
+$lend
+
 $head 08-17$$
 Some error message occurred while executing
 $codep
@@ -83,7 +99,6 @@ this conflict between CppAD and $href%http://valgrind.org/%valgrind%$$.
 $head 07-14$$
 Make some improvements were made to the $cref/Introduction/$$, 
 $cref/ExpApx.hpp/$$ and $cref/ExpApxRev/$$ sections.
-
 
 $head 07-12$$
 Use a drop down menu for the navigation links, instead of a separate frame

@@ -1,20 +1,13 @@
-# ---------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
-# 
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-# ---------------------------------------------------------------------------
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Common Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
 #
 # automake input file
 #
@@ -49,95 +42,95 @@ nobase_myinclude_HEADERS =  \
 	CppAD/Runge45.h \
 	CppAD/SpeedTest.h \
 	CppAD/TrackNewDel.h \
-	CppAD/local/AD.h \
-	CppAD/local/ADFun.h \
-	CppAD/local/ADTape.h \
-	CppAD/local/ADValued.h \
-	CppAD/local/Abs.h \
-	CppAD/local/AbsOp.h \
-	CppAD/local/AcosOp.h \
-	CppAD/local/Add.h \
-	CppAD/local/AddEq.h \
-	CppAD/local/AddOp.h \
-	CppAD/local/Arithmetic.h \
-	CppAD/local/AsinOp.h \
-	CppAD/local/Atan2.h \
-	CppAD/local/AtanOp.h \
-	CppAD/local/BenderQuad.h \
-	CppAD/local/BoolFun.h \
-	CppAD/local/BoolFunLink.h \
-	CppAD/local/BoolValued.h \
-	CppAD/local/CapTaylor.h \
-	CppAD/local/Compare.h \
-	CppAD/local/CondExp.h \
-	CppAD/local/Constructor.h \
-	CppAD/local/Convert.h \
-	CppAD/local/CopyAD.h \
-	CppAD/local/CopyBase.h \
-	CppAD/local/CppADError.h \
-	CppAD/local/CppADvector.h \
-	CppAD/local/Declare.h \
-	CppAD/local/Default.h \
-	CppAD/local/Define.h \
-	CppAD/local/Dependent.h \
-	CppAD/local/Discrete.h \
-	CppAD/local/Div.h \
-	CppAD/local/DivEq.h \
-	CppAD/local/DivOp.h \
-	CppAD/local/Drivers.h \
-	CppAD/local/Eq.h \
-	CppAD/local/Erf.h \
-	CppAD/local/ExpOp.h \
-	CppAD/local/ForOne.h \
-	CppAD/local/ForTwo.h \
-	CppAD/local/ForJacSweep.h \
-	CppAD/local/ForSparseJac.h \
-	CppAD/local/Forward.h \
-	CppAD/local/ForwardSweep.h \
-	CppAD/local/FunCheck.h \
-	CppAD/local/FunEval.h \
-	CppAD/local/FunConstruct.h \
-	CppAD/local/Hessian.h \
-	CppAD/local/Identical.h \
-	CppAD/local/Independent.h \
-	CppAD/local/Integer.h \
-	CppAD/local/Jacobian.h \
-	CppAD/local/LogOp.h \
-	CppAD/local/Mul.h \
-	CppAD/local/MulEq.h \
-	CppAD/local/MulOp.h \
-	CppAD/local/Op.h \
-	CppAD/local/OpCode.h \
-	CppAD/local/Ordered.h \
-	CppAD/local/Output.h \
-	CppAD/local/ParVar.h \
-	CppAD/local/Pow.h \
-	CppAD/local/PrintFor.h \
-	CppAD/local/LuRatio.h \
-	CppAD/local/MathOther.h \
-	CppAD/local/NearEqualExt.h \
-	CppAD/local/Reverse.h \
-	CppAD/local/RevHesSweep.h \
-	CppAD/local/RevJacSweep.h \
-	CppAD/local/RevOne.h \
-	CppAD/local/RevSparseJac.h \
-	CppAD/local/RevSparseHes.h \
-	CppAD/local/RevTwo.h \
-	CppAD/local/ReverseSweep.h \
-	CppAD/local/SinCos.h \
-	CppAD/local/Sparse.h \
-	CppAD/local/SqrtOp.h \
-	CppAD/local/StdMathUnary.h \
-	CppAD/local/Sub.h \
-	CppAD/local/SubEq.h \
-	CppAD/local/SubOp.h \
-	CppAD/local/TapeRec.h \
-	CppAD/local/UserAD.h \
-	CppAD/local/UnaryMinus.h \
-	CppAD/local/UnaryPlus.h \
-	CppAD/local/VecAD.h \
-	CppAD/local/Undef.h \
-	CppAD/local/Value.h 
+	CppAD/local/ad.hpp \
+	CppAD/local/ad_fun.hpp \
+	CppAD/local/ad_tape.hpp \
+	CppAD/local/ad_valued.hpp \
+	CppAD/local/abs.hpp \
+	CppAD/local/abs_op.hpp \
+	CppAD/local/acos_op.hpp \
+	CppAD/local/add.hpp \
+	CppAD/local/add_eq.hpp \
+	CppAD/local/add_op.hpp \
+	CppAD/local/arithmetic.hpp \
+	CppAD/local/asin_op.hpp \
+	CppAD/local/atan2.hpp \
+	CppAD/local/atan_op.hpp \
+	CppAD/local/bender_quad.hpp \
+	CppAD/local/bool_fun.hpp \
+	CppAD/local/bool_fun_link.hpp \
+	CppAD/local/bool_valued.hpp \
+	CppAD/local/cap_taylor.hpp \
+	CppAD/local/compare.hpp \
+	CppAD/local/cond_exp.hpp \
+	CppAD/local/constructor.hpp \
+	CppAD/local/convert.hpp \
+	CppAD/local/copy_ad.hpp \
+	CppAD/local/copy_base.hpp \
+	CppAD/local/cppad_error.hpp \
+	CppAD/local/cppad_vector.hpp \
+	CppAD/local/declare.hpp \
+	CppAD/local/default.hpp \
+	CppAD/local/define.hpp \
+	CppAD/local/dependent.hpp \
+	CppAD/local/discrete.hpp \
+	CppAD/local/div.hpp \
+	CppAD/local/div_eq.hpp \
+	CppAD/local/div_op.hpp \
+	CppAD/local/drivers.hpp \
+	CppAD/local/eq.hpp \
+	CppAD/local/erf.hpp \
+	CppAD/local/exp_op.hpp \
+	CppAD/local/for_one.hpp \
+	CppAD/local/for_two.hpp \
+	CppAD/local/for_jac_sweep.hpp \
+	CppAD/local/for_sparse_jac.hpp \
+	CppAD/local/forward.hpp \
+	CppAD/local/forward_sweep.hpp \
+	CppAD/local/fun_check.hpp \
+	CppAD/local/fun_eval.hpp \
+	CppAD/local/fun_construct.hpp \
+	CppAD/local/hessian.hpp \
+	CppAD/local/identical.hpp \
+	CppAD/local/independent.hpp \
+	CppAD/local/integer.hpp \
+	CppAD/local/jacobian.hpp \
+	CppAD/local/log_op.hpp \
+	CppAD/local/mul.hpp \
+	CppAD/local/mul_eq.hpp \
+	CppAD/local/mul_op.hpp \
+	CppAD/local/op.hpp \
+	CppAD/local/op_code.hpp \
+	CppAD/local/ordered.hpp \
+	CppAD/local/output.hpp \
+	CppAD/local/par_var.hpp \
+	CppAD/local/pow.hpp \
+	CppAD/local/print_for.hpp \
+	CppAD/local/lu_ratio.hpp \
+	CppAD/local/math_other.hpp \
+	CppAD/local/near_equal_ext.hpp \
+	CppAD/local/reverse.hpp \
+	CppAD/local/rev_hes_sweep.hpp \
+	CppAD/local/rev_jac_sweep.hpp \
+	CppAD/local/rev_one.hpp \
+	CppAD/local/rev_sparse_jac.hpp \
+	CppAD/local/rev_sparse_hes.hpp \
+	CppAD/local/rev_two.hpp \
+	CppAD/local/reverse_sweep.hpp \
+	CppAD/local/sin_cos.hpp \
+	CppAD/local/sparse.hpp \
+	CppAD/local/sqrt_op.hpp \
+	CppAD/local/std_math_unary.hpp \
+	CppAD/local/sub.hpp \
+	CppAD/local/sub_eq.hpp \
+	CppAD/local/sub_op.hpp \
+	CppAD/local/tape_rec.hpp \
+	CppAD/local/user_ad.hpp \
+	CppAD/local/unary_minus.hpp \
+	CppAD/local/unary_plus.hpp \
+	CppAD/local/vec_ad.hpp \
+	CppAD/local/undef.hpp \
+	CppAD/local/value.hpp 
 #
 # Did user specify --with-Example
 if CppAD_GETSTARTED
@@ -214,21 +207,22 @@ SUBDIRS = \
 	$(TESTMORE) 
 #
 EXTRA_DIST = \
-	Build \
-	CheckIncludeFile \
-	CheckIncludeOmh \
-	CheckIncludeDef \
-	CleanCppAD \
+	Build.sh \
+	CheckIncludeFile.sh \
+	CheckIncludeOmh.sh \
+	CheckIncludeDef.sh \
+	CleanCppAD.sh \
 	CppAD.tex \
+	cpl1.0.txt \
 	Dev \
 	Dev.omh \
 	Doc \
 	Doc.omh \
 	Example/OneTest \
-	FixAclocal \
-	FixMakefile \
+	FixAclocal.sh \
+	FixMakefile.sh \
 	omh \
-	RunOMhelp \
+	RunOMhelp.sh \
 	UWCopy040507.html
 #
 dist-hook:

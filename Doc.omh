@@ -1,23 +1,17 @@
-/* -----------------------------------------------------------------------
+/* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
------------------------------------------------------------------------- */
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
 $begin CppAD$$
 
 $spell
+	cppad
 	namespaces
 	std
 	templated
@@ -42,7 +36,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: CppAD-06-05-29
+A Package for Differentiation of C++ Algorithms: cppad-06-09-29
 $$ 
 
 $head Syntax$$
@@ -153,7 +147,11 @@ $syntax%
 includes the CppAD package for the rest of the current compilation unit.
 
 $head Preprocessor Symbols$$
-All the preprocessor symbols used by CppAD begin with $code CppAD$$.
+$index symbol, preprocessor CppAD$$
+$index preprocessor, symbol CppAD$$
+$index CppAD, preprocessor symbol$$
+All the preprocessor symbols used by CppAD begin with eight
+$code CppAD$$ or $code CPPAD_$$.
 For example, 
 the preprocessor symbol $code CppADIncluded$$ is used to determine
 if $code CppAD.h$$ has already been included.
@@ -192,8 +190,8 @@ $childtable%
 	omh/Install.omh%
 	GetStarted/GetStarted.cpp%
 	omh/Introduction.omh%
-	CppAD/local/UserAD.h%
-	CppAD/local/ADFun.h%
+	CppAD/local/user_ad.hpp%
+	CppAD/local/ad_fun.hpp%
 	omh/library.omh%
 	omh/Example.omh%
 	omh/Appendix.omh

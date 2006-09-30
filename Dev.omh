@@ -1,20 +1,13 @@
-/* -----------------------------------------------------------------------
+/* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
------------------------------------------------------------------------- */
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
 /*
 $begin CppAD$$
 $spell
@@ -45,19 +38,19 @@ CppAD user, are documented in $href%../Doc/CppAD.xml%$$.
 $contents%
 	omh/Distribute.omh%
 	omh/NewFeature.omh%
-	CppAD/local/Define.h%
-	CppAD/local/Ordered.h%
-	CppAD/local/Identical.h%
-	CppAD/local/OpCode.h%
-	CppAD/local/TapeRec.h%
-	CppAD/local/ADTape.h%
-	CppAD/local/BoolFunLink.h%
-	CppAD/local/Op.h%
-	CppAD/local/ForwardSweep.h%
-	CppAD/local/ReverseSweep.h%
-	CppAD/local/ForJacSweep.h%
-	CppAD/local/RevJacSweep.h%
-	CppAD/local/CppADError.h
+	CppAD/local/define.hpp%
+	CppAD/local/ordered.hpp%
+	CppAD/local/identical.hpp%
+	CppAD/local/op_code.hpp%
+	CppAD/local/tape_rec.hpp%
+	CppAD/local/ad_tape.hpp%
+	CppAD/local/bool_fun_link.hpp%
+	CppAD/local/op.hpp%
+	CppAD/local/forward_sweep.hpp%
+	CppAD/local/reverse_sweep.hpp%
+	CppAD/local/for_jac_sweep.hpp%
+	CppAD/local/rev_jac_sweep.hpp%
+	CppAD/local/cppad_error.hpp
 %$$
 
 

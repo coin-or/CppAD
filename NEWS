@@ -1,2 +1,12 @@
-See Doc/whatsnew05.htm
-or  Doc/whatsnew05.xml
+The OMhelp source code news for this version of CppAD is in the file:
+	omh/WhatsNew06.omh
+
+If you used a tarball or zip file for this distribution, the HTML and XML 
+versions of the news for this version of CppAD are in the files:
+	Doc/whatsnew06.htm
+	Doc/whatsnew06.xml
+
+The HTML and XML versions of the news for the version of CppAD
+corresponding to the current date (minus at most one day) are in the files:
+	http://www.coin-or.org/CppAD/Doc/whatsnew06.htm
+	http://www.coin-or.org/CppAD/Doc/whatsnew06.xml
