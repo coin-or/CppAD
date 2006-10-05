@@ -1,5 +1,12 @@
 #! /bin/bash
 #
+if [ "$1" == "go-for-it" ]
+then
+	test_mode="no"
+else
+	test_mode="yes"
+fi
+#
 directory="omh"
 extension="omh"
 #
@@ -17,6 +24,8 @@ then
 	rm file2lower.out
 fi
 echo "file2lower.sh: creating file2lower.sed and file2lower.mv"
+echo "#! /bin/bash"                                           >> file2lower.mv
+echo "# move $director/*.$ext file names to lower case names" >> file2lower.mv
 for old in $directory/*.$extension
 do
 	new=`echo "$old" | sed \
@@ -30,6 +39,13 @@ do
 	d='$'
 	echo "s|$d\(.\)ref\\(.\\)$old_name|$d\1ref\\2$new_name|g" >> file2lower.sed
 done
+chmod +x file2lower.mv
+if [ $test_mode = "yes" ]
+then 
+	echo "file2lower.sh: NOT executing ./file2lower.mv"
+else
+	echo "file2lower.sh: YES executing ./file2lower.mv"
+fi
 #
 # list of directories to edit with the sed script
 dir_list="
@@ -67,9 +83,15 @@ do
 			sed -f file2lower.sed < $file > file2lower.tmp
 			if ! diff $file file2lower.tmp > /dev/null
 			then
-				echo $file
 				echo "$file"                 >> file2lower.out
 				diff $file file2lower.tmp    >> file2lower.out
+if [ $test_mode = "yes" ]
+then 
+	echo "file2lower.sh: NOT changing $file"
+else
+	echo "file2lower.sh: changing $file"
+	mv file2lower.tmp $file
+fi
 			fi
 		done
 	done
