@@ -57,6 +57,7 @@ Example_SOURCES   = \
 	Div.cpp \
 	DivEq.cpp \
 	Eq.cpp \
+	EqualOpSeq.cpp \
 	Erf.cpp \
 	ErrorHandler.cpp \
 	Exp.cpp \

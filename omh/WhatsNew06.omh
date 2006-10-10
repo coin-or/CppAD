@@ -65,7 +65,7 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 10-11$$
+$head 10-10$$
 Add the $cref/Var2Par/$$ function so it is possible
 to obtain the $cref/Value/$$ of a variable.
 Move the $code Discrete.cpp$$ example to $cref/TapeIndex.cpp/$$.

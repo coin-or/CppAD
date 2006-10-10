@@ -563,6 +563,9 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\EqualOpSeq.cpp">
+			</File>
+			<File
 				RelativePath="Erf.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

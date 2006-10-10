@@ -61,6 +61,7 @@ extern bool DetOfMinor(void);
 extern bool Div(void);
 extern bool DivEq(void);
 extern bool Eq(void);
+extern bool EqualOpSeq(void);
 extern bool Erf(void);
 extern bool ErrorHandler(void);
 extern bool Exp(void);
@@ -183,6 +184,7 @@ int main(void)
 	ok &= Run( Div,               "Div"              );
 	ok &= Run( DivEq,             "DivEq"            );
 	ok &= Run( Eq,                "Eq"               );
+	ok &= Run( EqualOpSeq,        "EqualOpSeq"       );
 	ok &= Run( Erf,               "Erf"              );
 	ok &= Run( ErrorHandler,      "ErrorHandler"     );
 	ok &= Run( Exp,               "Exp"              );

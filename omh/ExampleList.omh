@@ -100,6 +100,7 @@ $rref DetOfMinor.cpp$$
 $rref Div.cpp$$
 $rref DivEq.cpp$$
 $rref Eq.cpp$$
+$rref EqualOpSeq.cpp$$
 $rref Erf.cpp$$
 $rref ErrorHandler.cpp$$
 $rref Example.cpp$$

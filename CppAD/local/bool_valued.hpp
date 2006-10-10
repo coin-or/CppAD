@@ -27,13 +27,15 @@ $children%
 	CppAD/local/compare.hpp%
 	CppAD/local/near_equal_ext.hpp%
 	CppAD/local/bool_fun.hpp%
-	CppAD/local/par_var.hpp
+	CppAD/local/par_var.hpp%
+	CppAD/local/equal_op_seq.hpp
 %$$
 $table
 $rref Compare$$
 $rref NearEqualExt$$
 $rref BoolFun$$
 $rref ParVar$$
+$rref EqualOpSeq$$
 $tend
 	
 
@@ -44,5 +46,6 @@ $end
 # include <CppAD/local/near_equal_ext.hpp>
 # include <CppAD/local/bool_fun.hpp>
 # include <CppAD/local/par_var.hpp>
+# include <CppAD/local/equal_op_seq.hpp>
 
 # endif

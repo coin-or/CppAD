@@ -21,6 +21,7 @@ $spell
 	const
 $$
 
+$index Var2Par$$
 $index variable, convert to parameter$$
 $index parameter, convert from variable$$
 $index value, obtain during taping$$

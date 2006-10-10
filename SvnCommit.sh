@@ -38,51 +38,42 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add the Var2Par function and move Discrete.cpp to TapeIndex.cpp
+log_entry="missing from previous commit: par2var.hpp. In addition, add the EqualOpSeq function.
 
 SvnCommit.sh: file that make this commit.
 WhatsNew06.omh: user's view of the changes.
-var2par.hpp: file defining new function. 
-convert.hpp: file that includes var2par.hpp.
-ad.hpp: make Var2Par<Base> a friend of AD<Base>.
-declare.hpp: forward declaration of Var2Par.
-discrete.hpp: change Discrete.cpp to TapeIndex.cpp.
-ExampleList.omh: move Discrete.cpp to TapeIndex.cpp and add Var2Par.cpp.
-TapeIndex.cpp: move Discrete.cpp to TapeIndex.cpp.
-Var2Par.cpp: example for new function.
-Discrete.cpp: move Discrete.cpp to TapeIndex.cpp.
-Example.vcproj: move Discrete->TapeIndex and add Var2Par & StackMachine.
-StachMachine.cpp: fix warnings with MS compiler.
-Example.cpp: move Discrete.cpp to TapeIndex.cpp and add Var2Par.cpp.
-Makefile.am: move Discrete.cpp to TapeIndex.cpp and add Var2Par.cpp.
-CheckIncludeOmh.sh: fix spelling error in message.
-CheckIncludeFile.sh: fix spelling error in message.
+equal_op_seq.hpp: implementation of new fucntion.
+bool_valued.hpp: include the EqualOpSeq here.
+ad.hpp: declare EqualOpSeq a friend.
+delcare.hpp: forward declaration of EqualOpSeq.
+var2par.hpp: add missing index entry under Var2Par.
+Faq.omh: add Base Type restrictions.
+ExampleList.omh: add EqualOpSeq.cpp.
+Example.cpp: add EqualOpSeq.cpp.
+Example.vcproj: add EqualOpSeq.cpp.
+Makefile.am: add par2var.hpp and EqualOpSeq.cpp.
 "
 # 
 add_list="
-	CppAD/local/var2par.hpp
-	Example/TapeIndex.cpp
-	Example/Var2Par.cpp
+	CppAD/local/equal_op_seq.hpp
+	Example/EqualOpSeq.cpp
 "
 #
 change_list="
 	SvnCommit.sh
 	omh/WhatsNew06.omh
-	CppAD/local/convert.hpp
+	CppAD/local/bool_valued.hpp
 	CppAD/local/ad.hpp
 	CppAD/local/declare.hpp
-	CppAD/local/discrete.hpp
+	CppAD/local/var2par.hpp
+	omh/Faq.omh
 	omh/ExampleList.omh
 	Example/Example.vcproj
-	Example/StackMachine.cpp
 	Example/Example.cpp
 	Example/Makefile.am
-	CheckIncludeFile.sh
-	CheckIncludeOmh.sh
 "
 #
 delete_list="
-	Example/Discrete.cpp
 "
 #
 copy_branch="" 

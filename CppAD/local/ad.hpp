@@ -78,6 +78,10 @@ class AD {
 	friend bool IdenticalEqual <Base> 
 		(const AD<Base> &u, const AD<Base> &v);
 
+	// EqualOpSeq function
+	friend bool EqualOpSeq <Base> 
+		(const AD<Base> &u, const AD<Base> &v);
+
 	// NearEqual function
 	friend bool NearEqual <Base> (
 	const AD<Base> &x, const AD<Base> &y, const Base &r, const Base &a);

@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin Faq$$
 $escape !$$
 $spell
+	cppad@list.coin-or.org
 	faq
 	std
 	whatsnew
@@ -49,6 +50,17 @@ Thus in the first case, $italic y$$ is a vector of
 $xref/glossary/Variable/variables/$$
 and in the second case it is a vector of
 $xref/glossary/Parameter/parameters/$$.
+
+$head Base Type Restrictions$$
+The currently supported $italic Base$$ types
+for the template class $syntax%AD<%Base%>%$$ are
+$code float$$, $code std::complex<float>$$, $code double$$, 
+and $code std::complex<double>$$. 
+In addition, $italic Base$$ can be any type in the 
+$cref/AD type sequence/glossary/AD Type Sequence/$$ above
+any of these types.
+If a user has need of some other base type, contact the CppAD mailing list
+$code cppad@list.coin-or.org$$.
 
 $head Bugs$$
 $index bugs, reporting$$

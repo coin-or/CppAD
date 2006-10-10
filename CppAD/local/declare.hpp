@@ -61,6 +61,10 @@ namespace CppAD {
 	template <class Base> 
 	bool IdenticalEqual (const AD<Base> &u, const AD<Base> &v);
 	
+	// EqualOpSeq
+	template <class Base> 
+	bool EqualOpSeq (const AD<Base> &u, const AD<Base> &v);
+	
 	// PrintFor
 	template <class Base>
 	void PrintFor(const char *text, const AD<Base> &x);
