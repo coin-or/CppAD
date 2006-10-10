@@ -79,6 +79,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/div_op.hpp \
 	CppAD/local/drivers.hpp \
 	CppAD/local/eq.hpp \
+	CppAD/local/equal_op_seq.hpp \
 	CppAD/local/erf.hpp \
 	CppAD/local/exp_op.hpp \
 	CppAD/local/for_one.hpp \
@@ -130,7 +131,8 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/unary_plus.hpp \
 	CppAD/local/vec_ad.hpp \
 	CppAD/local/undef.hpp \
-	CppAD/local/value.hpp 
+	CppAD/local/value.hpp \
+	CppAD/local/var2par.hpp 
 #
 # Did user specify --with-Example
 if CppAD_GETSTARTED
