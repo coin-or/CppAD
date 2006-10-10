@@ -10,16 +10,16 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Discrete.cpp$$
+$begin TapeIndex.cpp$$
 
-$section Discrete AD Functions: Example and Test$$
+$section Taping Array Index Operation: Example and Test$$
 
-$index discrete$$
-$index example, discrete$$
-$index test, discrete$$
+$index array, tape index operation$$
+$index index, tape array operation$$
+$index tape, array index operation$$
 
 $code
-$verbatim%Example/Discrete.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%Example/TapeIndex.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -28,39 +28,37 @@ $end
 # include <CppAD/CppAD.h>
 
 namespace {
-	double TableLookup(const double &x)
-	{	static double Table[] = {
+	double Array(const double &index)
+	{	static double array[] = {
 			5.,
 			4.,
 			3.,
 			2.,
 			1.
 		};
-		static size_t number = sizeof(Table) / sizeof(Table[0]);
-		size_t i;
-		if( x < 0. )
-			return Table[0];
+		static size_t number = sizeof(array) / sizeof(array[0]);
+		if( index < 0. )
+			return array[0];
 
-		i = static_cast<size_t>(x);
+		size_t i = static_cast<size_t>(index);
 		if( i >= number )
-			return Table[number-1];
+			return array[number-1];
 
-		return Table[i];
+		return array[i];
 	}
 	// in empty namespace and outside any other routine
-	CppADCreateDiscrete(double, TableLookup)
+	CppADCreateDiscrete(double, Array)
 }
 
-
-bool Discrete(void)
+bool TapeIndex(void)
 {	bool ok = true;
 	using CppAD::AD;
 
 	// domain space vector
 	size_t n = 2;
 	CppADvector< AD<double> > X(n);
-	X[0] = 2.;
-	X[1] = 3.;
+	X[0] = 2.;   // array index value
+	X[1] = 3.;   // multiplier of array index value
 
 	// declare independent variables and start tape recording
 	CppAD::Independent(X);
@@ -68,7 +66,7 @@ bool Discrete(void)
 	// range space vector
 	size_t m = 1;
 	CppADvector< AD<double> > Y(m);
-	Y[0] = X[1] * TableLookup( X[0] );
+	Y[0] = X[1] * Array( X[0] );
 
 	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
@@ -83,19 +81,19 @@ bool Discrete(void)
 	x[0] = Value(X[0]);
 	x[1] = Value(X[1]);
 	y[0] = Value(Y[0]);
-	ok  &= y[0] == x[1] * TableLookup(x[0]);
+	ok  &= y[0] == x[1] * Array(x[0]);
 
 	// evaluate f where x has different values
-	x[0] = x[0] + 1.;
-	x[1] = x[1] + 1.;
+	x[0] = x[0] + 1.;  // new array index value
+	x[1] = x[1] + 1.;  // new multiplier value
 	y    = f.Forward(0, x);
-	ok  &= y[0] == x[1] * TableLookup(x[0]);
+	ok  &= y[0] == x[1] * Array(x[0]);
 
 	// evaluate derivaitve of y[0] 
 	w[0] = 1.;
 	dw   = f.Reverse(1, w);
-	ok   &= dw[0] == 0.;
-	ok   &= dw[1] == TableLookup(x[0]);
+	ok   &= dw[0] == 0.;              // partial w.r.t array index
+	ok   &= dw[1] == Array(x[0]);     // partial w.r.t multiplier
 
 	return ok;
 }

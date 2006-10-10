@@ -58,7 +58,6 @@ extern bool Default(void);
 extern bool DetByLu(void);
 extern bool DetByMinor(void);
 extern bool DetOfMinor(void);
-extern bool Discrete(void);
 extern bool Div(void);
 extern bool DivEq(void);
 extern bool Eq(void);
@@ -124,10 +123,12 @@ extern bool StackMachine(void);
 extern bool Sub(void);
 extern bool SubEq(void);
 extern bool Tan(void);
+extern bool TapeIndex(void);
 extern bool TrackNewDel(void);
 extern bool UnaryMinus(void);
 extern bool UnaryPlus(void);
 extern bool Value(void);
+extern bool Var2Par(void);
 extern bool VecAD(void);
 
 namespace {
@@ -179,7 +180,6 @@ int main(void)
 	ok &= Run( DetByLu,           "DetByLu"          );
 	ok &= Run( DetByMinor,        "DetByMinor"       );
 	ok &= Run( DetOfMinor,        "DetOfMinor"       );
-	ok &= Run( Discrete,          "Discrete"         );
 	ok &= Run( Div,               "Div"              );
 	ok &= Run( DivEq,             "DivEq"            );
 	ok &= Run( Eq,                "Eq"               );
@@ -245,10 +245,12 @@ int main(void)
 	ok &= Run( Sub,               "Sub"              );
 	ok &= Run( SubEq,             "SubEq"            );
 	ok &= Run( Tan,               "Tan"              );
+	ok &= Run( TapeIndex,         "TapeIndex"        );
 	ok &= Run( TrackNewDel,       "TrackNewDel"      );
 	ok &= Run( UnaryMinus,        "UnaryMinus"       );
 	ok &= Run( UnaryPlus,         "UnaryPlus"        );
 	ok &= Run( Value,             "Value"            );
+	ok &= Run( Var2Par,           "Var2Par"          );
 	ok &= Run( VecAD,             "VecAD"            );
 
 	// check for memory leak in previous calculations

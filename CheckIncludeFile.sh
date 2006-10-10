@@ -10,7 +10,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-echo "Checking difference between C++ include directivers and file names."
+echo "Checking difference between C++ include directives and file names."
 echo "-------------------------------------------------------------------"
 grep '^# *include *<CppAD/' \
 	CppAD/*.h \

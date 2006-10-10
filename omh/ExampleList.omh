@@ -97,7 +97,6 @@ $rref Default.cpp$$
 $rref DetByLu.cpp$$
 $rref DetByMinor.cpp$$
 $rref DetOfMinor.cpp$$
-$rref Discrete.cpp$$
 $rref Div.cpp$$
 $rref DivEq.cpp$$
 $rref Eq.cpp$$
@@ -165,10 +164,12 @@ $rref StackMachine.cpp$$
 $rref Sub.cpp$$
 $rref SubEq.cpp$$
 $rref Tan.cpp$$
+$rref TapeIndex.cpp$$
 $rref TrackNewDel.cpp$$
 $rref UnaryMinus.cpp$$
 $rref UnaryPlus.cpp$$
 $rref Value.cpp$$
+$rref Var2Par.cpp$$
 $rref VecAD.cpp$$
 $rref vectorBool.cpp$$
 $tend

@@ -71,6 +71,8 @@ class AD {
 		(const AD<Base> &u);
 	friend int  Integer       <Base> 
 		(const AD<Base> &u);
+	friend AD Var2Par         <Base>
+		(const AD<Base> &u);
 
 	// IdenticalEqual function
 	friend bool IdenticalEqual <Base> 

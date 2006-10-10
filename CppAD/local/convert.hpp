@@ -26,13 +26,15 @@ $children%
 	CppAD/local/value.hpp%
 	CppAD/local/integer.hpp%
 	CppAD/local/output.hpp%
-	CppAD/local/print_for.hpp
+	CppAD/local/print_for.hpp%
+	CppAD/local/var2par.hpp
 %$$
 $table
 $rref Value$$
 $rref Integer$$
 $rref Output$$
 $rref PrintFor$$
+$rref Var2Par$$
 $tend
 	
 
@@ -43,5 +45,6 @@ $end
 # include <CppAD/local/integer.hpp>
 # include <CppAD/local/output.hpp>
 # include <CppAD/local/print_for.hpp>
+# include <CppAD/local/var2par.hpp>
 
 # endif

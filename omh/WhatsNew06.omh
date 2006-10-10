@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	Microsoft
 	hpp
 	valgrind memcheck
 	Kasper Kristensen
@@ -63,6 +64,15 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-11$$
+Add the $cref/Var2Par/$$ function so it is possible
+to obtain the $cref/Value/$$ of a variable.
+Move the $code Discrete.cpp$$ example to $cref/TapeIndex.cpp/$$.
+Fix the Microsoft project file so that the Windows install
+$cref/examples and testing/InstallWindows/Examples and Testing/$$
+works properly
+(it was missing the $cref/StackMachine.cpp/$$ example). 
 
 $head 09-30$$ 
 These changes were grouped together because it took a while for Coin-Or

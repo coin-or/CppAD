@@ -84,13 +84,13 @@ All the derivatives of a discrete function will be evaluated as zero.
 
 $head Example$$
 $children%
-	Example/Discrete.cpp%
+	Example/TapeIndex.cpp%
 	Example/Piecewise.cpp
 %$$
 The file
-$xref/Discrete.cpp/$$
-contains an example and test of using discrete functions.   
-It returns true if it succeeds and false otherwise.
+$xref/TapeIndex.cpp/$$
+contains an example and test that uses a discrete function 
+to vary an array index during $cref/Forward/$$ mode calculations.
 The file
 $xref/Piecewise.cpp/$$
 contains an example and test that uses discrete

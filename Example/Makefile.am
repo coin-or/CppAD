@@ -54,7 +54,6 @@ Example_SOURCES   = \
 	DetByMinor.h \
 	DetOfMinor.cpp \
 	DetOfMinor.h \
-	Discrete.cpp \
 	Div.cpp \
 	DivEq.cpp \
 	Eq.cpp \
@@ -122,8 +121,10 @@ Example_SOURCES   = \
 	Sub.cpp \
 	SubEq.cpp \
 	Tan.cpp \
+	TapeIndex.cpp \
 	TrackNewDel.cpp \
 	UnaryMinus.cpp \
 	UnaryPlus.cpp \
 	Value.cpp \
+	Var2Par.cpp \
 	VecAD.cpp 

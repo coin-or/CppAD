@@ -38,27 +38,51 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Fixes related to dual license version.
+log_entry="Add the Var2Par function and move Discrete.cpp to TapeIndex.cpp
 
 SvnCommit.sh: file that make this commit.
-GplLicense.sh: fix file dates so automake does not run during configure.
-DosFormat.sh: fix file dates so automake does not run during configure.
-diffToday.sh: fix mistakes in date format during compares.
-Build.sh: fix some mistakes in the 'Build.sh all test' case.
+WhatsNew06.omh: user's view of the changes.
+var2par.hpp: file defining new function. 
+convert.hpp: file that includes var2par.hpp.
+ad.hpp: make Var2Par<Base> a friend of AD<Base>.
+declare.hpp: forward declaration of Var2Par.
+discrete.hpp: change Discrete.cpp to TapeIndex.cpp.
+ExampleList.omh: move Discrete.cpp to TapeIndex.cpp and add Var2Par.cpp.
+TapeIndex.cpp: move Discrete.cpp to TapeIndex.cpp.
+Var2Par.cpp: example for new function.
+Discrete.cpp: move Discrete.cpp to TapeIndex.cpp.
+Example.vcproj: move Discrete->TapeIndex and add Var2Par & StackMachine.
+StachMachine.cpp: fix warnings with MS compiler.
+Example.cpp: move Discrete.cpp to TapeIndex.cpp and add Var2Par.cpp.
+Makefile.am: move Discrete.cpp to TapeIndex.cpp and add Var2Par.cpp.
+CheckIncludeOmh.sh: fix spelling error in message.
+CheckIncludeFile.sh: fix spelling error in message.
 "
 # 
 add_list="
+	CppAD/local/var2par.hpp
+	Example/TapeIndex.cpp
+	Example/Var2Par.cpp
 "
 #
 change_list="
 	SvnCommit.sh
-	GplLicense.sh
-	DosFormat.sh
-	diffToday.sh
-	Build.sh
+	omh/WhatsNew06.omh
+	CppAD/local/convert.hpp
+	CppAD/local/ad.hpp
+	CppAD/local/declare.hpp
+	CppAD/local/discrete.hpp
+	omh/ExampleList.omh
+	Example/Example.vcproj
+	Example/StackMachine.cpp
+	Example/Example.cpp
+	Example/Makefile.am
+	CheckIncludeFile.sh
+	CheckIncludeOmh.sh
 "
 #
 delete_list="
+	Example/Discrete.cpp
 "
 #
 copy_branch="" 

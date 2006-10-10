@@ -40,17 +40,17 @@ namespace {
 
 bool is_number( const std::string &s )
 {	char ch = s[0];
-	bool number = strchr("0123456789.", ch);
+	bool number = (strchr("0123456789.", ch) != 0);
 	return number;
 }
 bool is_binary( const std::string &s )
 {	char ch = s[0];
-	bool binary = strchr("+-*/.", ch);
+	bool binary = (strchr("+-*/.", ch) != 0);
 	return binary;
 }
 bool is_variable( const std::string &s )
 {	char ch = s[0];
-	bool variable = 'a' <= ch & ch <= 'z';
+	bool variable = ('a' <= ch) & (ch <= 'z');
 	return variable;
 }
 

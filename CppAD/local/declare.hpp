@@ -33,6 +33,7 @@ namespace CppAD {
 	template <class Base> bool LessThanOrZero    (const AD<Base> &u);
 	template <class Base> bool GreaterThanZero   (const AD<Base> &u);
 	template <class Base> bool GreaterThanOrZero (const AD<Base> &u);
+	template <class Base> AD<Base> Var2Par       (const AD<Base> &u);
 
 	// NearEqual
 	template <class Base> bool NearEqual(
