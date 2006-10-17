@@ -6,7 +6,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
-                    Common Public License Version 1.0.
+                    GNU General Public License Version 2.
 
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
@@ -425,6 +425,7 @@ Vector OdeErrControl(
 	Scalar zero(0);
 	Scalar one(1);
 	Scalar two(2);
+	Scalar three(3);
 	Scalar m1(m-1);
 	Scalar ta = ti;
 	for(i = 0; i < n; i++)
@@ -451,7 +452,7 @@ Vector OdeErrControl(
 			step = smin;
 
 		// check if near the end
-		if( tf <= ta + 1.5 * step )
+		if( tf <= ta + step * three / two )
 			tb = tf;
 		else	tb = ta + step;
 
@@ -474,7 +475,7 @@ Vector OdeErrControl(
 					lambda = root;
 			}
 		}
-		if( one <= lambda || step <= 1.5 * smin)
+		if( one <= lambda || step <= smin * three / two )
 		{	// this step is within error limits or 
 			// close to the minimum size
 			ta = tb;

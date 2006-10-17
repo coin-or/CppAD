@@ -65,6 +65,11 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-16$$
+Fix bug when using $cref OdeErrControl$$ with the type
+$code AD< AD<double> >$$.
+
+
 $head 10-10$$
 Add the $cref/Var2Par/$$ function so it is possible
 to obtain the $cref/Value/$$ of a variable.

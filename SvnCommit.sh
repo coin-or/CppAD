@@ -38,39 +38,24 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="missing from previous commit: par2var.hpp. In addition, add the EqualOpSeq function.
+log_entry="fix bug when using OdeErrControl with type AD< AD<double> >
 
 SvnCommit.sh: file that make this commit.
 WhatsNew06.omh: user's view of the changes.
-equal_op_seq.hpp: implementation of new fucntion.
-bool_valued.hpp: include the EqualOpSeq here.
-ad.hpp: declare EqualOpSeq a friend.
-delcare.hpp: forward declaration of EqualOpSeq.
-var2par.hpp: add missing index entry under Var2Par.
-Faq.omh: add Base Type restrictions.
-ExampleList.omh: add EqualOpSeq.cpp.
-Example.cpp: add EqualOpSeq.cpp.
-Example.vcproj: add EqualOpSeq.cpp.
-Makefile.am: add par2var.hpp and EqualOpSeq.cpp.
+OdeErrControl.h: implement fix.
+configure.ac: change bug report address to cppad@list.coin-or.org.
+ExpApx.omh: fix references from omhelp to cppad package.
 "
 # 
 add_list="
-	CppAD/local/equal_op_seq.hpp
-	Example/EqualOpSeq.cpp
 "
 #
 change_list="
 	SvnCommit.sh
 	omh/WhatsNew06.omh
-	CppAD/local/bool_valued.hpp
-	CppAD/local/ad.hpp
-	CppAD/local/declare.hpp
-	CppAD/local/var2par.hpp
-	omh/Faq.omh
-	omh/ExampleList.omh
-	Example/Example.vcproj
-	Example/Example.cpp
-	Example/Makefile.am
+	CppAD/OdeErrControl.h
+	configure.ac
+	omh/ExpApx.omh
 "
 #
 delete_list="
