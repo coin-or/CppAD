@@ -119,6 +119,7 @@ $end
 */
 
 # include <iostream>
+# include <CppAD/local/preprocessor.hpp>
 # include <CppAD/config.h>
 # include <cassert>
 
@@ -186,5 +187,8 @@ private:
 
 } // END CppAD namespace
 
+
+// undo preprocessor symbols that do not begin with CppAD or CPPAD_
+# include <CppAD/local/preprocessor.hpp>
 
 # endif

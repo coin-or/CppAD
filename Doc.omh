@@ -36,7 +36,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-06-09-29
+A Package for Differentiation of C++ Algorithms: cppad-06-10-18
 $$ 
 
 $head Syntax$$
@@ -151,13 +151,7 @@ $index symbol, preprocessor CppAD$$
 $index preprocessor, symbol CppAD$$
 $index CppAD, preprocessor symbol$$
 All the preprocessor symbols used by CppAD begin with eight
-$code CppAD$$ or $code CPPAD_$$.
-For example, 
-the preprocessor symbol $code CppADIncluded$$ is used to determine
-if $code CppAD.h$$ has already been included.
-As another example,  
-the preprocessor symbol $xref/CppADvector/$$ determines which
-$xref/SimpleVector/$$ template class is extensively tested with CppAD.
+$code CppAD$$ or $code CPPAD_$$; see $cref preprocessor$$.
 
 $head Namespace$$
 $index CppAD, namespace$$

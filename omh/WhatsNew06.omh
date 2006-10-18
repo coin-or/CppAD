@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	config.h
 	Microsoft
 	hpp
 	valgrind memcheck
@@ -64,6 +65,16 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-18$$
+Document and fix possible conflicts for 
+$cref/preprocessor/$$ symbols
+that do not begin with $code CppAD$$ or $code CPPAD_$$.
+$pre
+
+$$
+Include a default value for the file $code CppAD/config.h$$
+in the subversion repository.
 
 $head 10-16$$
 Fix bug when using $cref OdeErrControl$$ with the type

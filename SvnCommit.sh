@@ -38,24 +38,33 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="fix bug when using OdeErrControl with type AD< AD<double> >
+log_entry="Document and fix possible preprocessor conflicts.
 
 SvnCommit.sh: file that make this commit.
 WhatsNew06.omh: user's view of the changes.
-OdeErrControl.h: implement fix.
-configure.ac: change bug report address to cppad@list.coin-or.org.
-ExpApx.omh: fix references from omhelp to cppad package.
+config.h: add default file to subversion repository.
+preprecessor.hpp: discuss symboles (without CPPAD_).
+ErrorHandler.h: undef symbols (without CPPAD_) defined by config.h
+CppAD.h: undef symbols (without CPPAD_) defined by config.h
+Doc.omh: reference new processor section.
+Appendix.omh: include new preprocessor section.
+Status.sh: do not delete config.h and do delete install-sh.
+Makefile.am: include new preprocessor section.
 "
 # 
 add_list="
+	CppAD/config.h
+	CppAD/local/preprocessor.hpp
 "
 #
 change_list="
 	SvnCommit.sh
 	omh/WhatsNew06.omh
-	CppAD/OdeErrControl.h
-	configure.ac
-	omh/ExpApx.omh
+	CppAD/ErrorHandler.h
+	CppAD/CppAD.h
+	Doc.omh
+	omh/Appendix.omh
+	SvnStatus.sh
 "
 #
 delete_list="

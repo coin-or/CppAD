@@ -28,9 +28,9 @@ sed                                                           \
 	-e '/^[?].*\/TestOne.cpp$/d'                          \
 	-e '/^[?].*\/Debug$/d'                                \
 	-e '/^[?].*\/Release$/d'                              \
-	-e '/^[?].*\/config.h$/d'                             \
 	-e '/^[?].*\/stamp-h1$/d'                             \
 	-e '/^[?].*\/Makefile$/d'                             \
+	-e '/^[?] *install-sh$/d'                             \
 	-e '/^[?] *Makefile$/d'                               \
 	-e '/^[?].*\/junk$/d'                                 \
 	-e '/^[?] *junk$/d'                                   \
