@@ -106,6 +106,7 @@ nobase_myinclude_HEADERS =  \
 	CppAD/local/output.hpp \
 	CppAD/local/par_var.hpp \
 	CppAD/local/pow.hpp \
+	CppAD/local/preprocessor.hpp \
 	CppAD/local/print_for.hpp \
 	CppAD/local/lu_ratio.hpp \
 	CppAD/local/math_other.hpp \

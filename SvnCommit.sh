@@ -38,33 +38,22 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Document and fix possible preprocessor conflicts.
+log_entry="Missing from previous commit.
 
 SvnCommit.sh: file that make this commit.
 WhatsNew06.omh: user's view of the changes.
-config.h: add default file to subversion repository.
-preprecessor.hpp: discuss symboles (without CPPAD_).
-ErrorHandler.h: undef symbols (without CPPAD_) defined by config.h
-CppAD.h: undef symbols (without CPPAD_) defined by config.h
-Doc.omh: reference new processor section.
-Appendix.omh: include new preprocessor section.
-Status.sh: do not delete config.h and do delete install-sh.
 Makefile.am: include new preprocessor section.
+ErrorHandler.h: proper interaction with CppAD.h.
 "
 # 
 add_list="
-	CppAD/config.h
-	CppAD/local/preprocessor.hpp
 "
 #
 change_list="
 	SvnCommit.sh
 	omh/WhatsNew06.omh
+	Makefile.am
 	CppAD/ErrorHandler.h
-	CppAD/CppAD.h
-	Doc.omh
-	omh/Appendix.omh
-	SvnStatus.sh
 "
 #
 delete_list="

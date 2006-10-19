@@ -119,7 +119,12 @@ $end
 */
 
 # include <iostream>
+
+// undo preprocessor symbols that config.h needs to define
+# ifndef CppADCppADIncluded
 # include <CppAD/local/preprocessor.hpp>
+# endif
+
 # include <CppAD/config.h>
 # include <cassert>
 
@@ -188,7 +193,10 @@ private:
 } // END CppAD namespace
 
 
+
 // undo preprocessor symbols that do not begin with CppAD or CPPAD_
+# ifndef CppADCppADIncluded
 # include <CppAD/local/preprocessor.hpp>
+# endif
 
 # endif
