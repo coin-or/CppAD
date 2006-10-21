@@ -31,6 +31,9 @@ then
 	# yy is year in century, mm is month in year, dd is day in month.
 	yy_mm_dd=`date +%g-%m-%d`
 	#
+	# change Autoconf version to today
+	version=$yy_mm_dd
+	#
 	# configure.ac
 	sed configure.ac > configure.ac.tmp \
 	-e "s/(CppAD, [0-9][0-9]-[0-9][0-9]-[0-9][0-9] *,/(CppAD, $yy_mm_dd,/"
@@ -43,8 +46,13 @@ then
 	diff AUTHORS    AUTHORS.tmp
 	mv   AUTHORS.tmp AUTHORS 
 	#
-	# change Autoconf version to today
-	version=$yy_mm_dd
+	# update CppAD/config.h
+	# even though gets overwritten when configure runs.
+	sed CppAD/config.h > CppAD/config.tmp \
+	-e "s/\"[0-9][0-9]-[0-9][0-9]-[0-9][0-9]\"/\"$yy_mm_dd\"/" \
+	-e "s/ [0-9][0-9]-[0-9][0-9]-[0-9][0-9]\"/ $yy_mm_dd\"/"
+	diff CppAD/config.h   CppAD/config.tmp
+	mv   CppAD/config.tmp CppAD/config.h
 	#
 	for name in Doc.omh omh/InstallUnix.omh omh/InstallWindows.omh
 	do
@@ -346,7 +354,7 @@ echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
 echo "configure      excludes --with-* except GetStarted and Introduction"
 echo "configure test includes all the possible options except PREFIX_DIR"
 echo "make           use make to build all of the requested targets"
-echo "doc            build all the documentation in Doc directory"
+echo "omhelp         build all the documentation in Doc & Dev directories"
 echo "dist           create the distribution file cppad-version.cpl.tgz"
 echo "test           unpack *.cpl.tgz, compile, run tests, result in Test.log"
 echo "gpl+dos        create ./*.gpl.tgz, ./*.gpl.zip, and ./*.cpl.zip"

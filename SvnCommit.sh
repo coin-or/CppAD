@@ -38,12 +38,12 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Missing from previous commit.
+log_entry="automatically update date in CppAD/config.h
 
 SvnCommit.sh: file that make this commit.
-WhatsNew06.omh: user's view of the changes.
-Makefile.am: include new preprocessor section.
-ErrorHandler.h: proper interaction with CppAD.h.
+file2lower.sh: automated script from aborted branch (save for future attempt).
+diffToday.sh: extend so it works with CppAD/config.h.
+Build.sh: automaticaly update date in CppAD/config.h.
 "
 # 
 add_list="
@@ -51,9 +51,9 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	omh/WhatsNew06.omh
-	Makefile.am
-	CppAD/ErrorHandler.h
+	file2lower.sh
+	diffToday.sh
+	Build.sh
 "
 #
 delete_list="
