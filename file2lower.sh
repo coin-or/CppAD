@@ -30,7 +30,8 @@ for old in $directory/*.$extension
 do
 	new=`echo "$old" | sed \
 		-e "s/\([a-z]\)\([A-Z]\)\([a-z]\)/\1_\2\3/g" \
-		-e "s/\([a-z]\)\([0-9]\)/\1_\2/g" | tr [A-Z] [a-z]
+		-e "s/\([a-z]\)\([0-9]\)/\1_\2/g" \
+		-e "s|/\([A-z][a-z]*\)\.|/\1_.|" | tr [A-Z] [a-z]
 	`
 	echo "mv $old $new" >> file2lower.mv
 	#
@@ -44,7 +45,8 @@ if [ $test_mode = "yes" ]
 then 
 	echo "file2lower.sh: NOT executing ./file2lower.mv"
 else
-	echo "file2lower.sh: YES executing ./file2lower.mv"
+	echo "./file2lower.mv"
+	./file2lower.mv
 fi
 #
 # list of directories to edit with the sed script
