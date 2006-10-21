@@ -38,7 +38,8 @@ do
 	old_name=`echo $old | sed -e "s|.*/||" -e "s|\.$extension||"`
 	new_name=`echo $new | sed -e "s|.*/||" -e "s|\.$extension||"`
 	d='$'
-	echo "s|$d\(.\)ref\\(.\\)$old_name\([^a-zA-Z0-9_]\)|$d\1ref\\2$new_name\\3|g" >> file2lower.sed
+	echo "s@\([/|%]\)$old_name\([/|%]\)@\1$new_name\2@g" >> file2lower.sed
+	echo "s@\([/|%]\)$old_name\.omh@\1$new_name.omh@g"   >> file2lower.sed
 done
 chmod +x file2lower.mv
 if [ $test_mode = "yes" ]
