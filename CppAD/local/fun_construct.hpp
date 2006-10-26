@@ -89,23 +89,28 @@ stops the recording of AD of $italic Base$$ operations,
 stores the corresponding operation sequence in the object $italic f$$.
 It then stores the first order Taylor coefficients 
 (corresponding to the value of $italic x$$) in $italic f$$.
-This is equivalent to first creating $italic f$$ with the default constructor
+This is equivalent to the following steps using the default constructor:
+$list number$$
+Create $italic f$$ with the default constructor
 $syntax%
 	ADFun<%Base%> %f%;
 %$$
-Then stopping the tape and storing the operation sequence 
+$lnext
+Stop the tape and storing the operation sequence using
 $syntax%
 	%f%.Dependent(%y%);
 %$$
 (see $xref/Dependent/$$).
-Then calculating the first order Taylor coefficients for all 
-the variables in the operation sequence with
+$lnext
+Calculating the first order Taylor coefficients for all 
+the variables in the operation sequence using
 $syntax%
 	%f%.Forward(%p%, %x_p%)
 %$$
 with $italic p$$ equal to zero and the elements of $italic x_p$$
 equal to the corresponding elements of $italic x$$
 (see $xref/Forward/$$).
+$lend
 
 $head Example$$
 
@@ -116,10 +121,12 @@ contains an example and test of the sequence constructor.
 It returns true if it succeeds and false otherwise.
 
 $subhead Default Constructor$$
-The file
+The files
 $xref/FunCheck.cpp/$$ 
-contains an example and test using the default constructor.
-It returns true if it succeeds and false otherwise.
+and
+$xref/HesLagrangian.cpp/$$
+contain an examples and tests using the default constructor.
+They return true if they succeed and false otherwise.
 
 $end
 */
@@ -145,7 +152,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	// set zero order coefficients corresponding to indpendent variables
 	n = ind_taddr.size();
 	CppADUsageError(
-		n = x.size(),
+		n == x.size(),
 		"ADFun<Base>: independent variable vector has changed"
 	);
 	for(j = 0; j < n; j++)

@@ -38,34 +38,24 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add Hessian of an optimization Lagragian example.
+log_entry="Change HesLagrangian example to use default ADFun constructor.
 
 SvnCommit.sh: file that make this commit.
 WhatsNew06.omh: user's view of the changes.
-hessian.hpp: include HesLagrangian.cpp example.
-fun_construct.hpp: check for change in independent vector and improve doc.
-Speed.cpp: redefine PACKAGE_STRING.
-ExampleList.omh: add HesLagrangian.cpp to list.
-HesLagrangiang.cpp: new example.
-Example.cpp: add HesLagrangiang.cpp.
-Example.vcproj: add HesLagrangiang.cpp.
-Makefile.am: add HesLagrangiang.cpp.
+fun_construct.hpp: improve documentation and fix bug in CppADUsageError call.
+CppAD/config.h: update package version.
+HesLagrangian.cpp: use default ADFun constructor.
 "
 # 
 add_list="
-	Example/HesLagrangian.cpp
 "
 #
 change_list="
 	SvnCommit.sh
 	omh/WhatsNew06.omh
-	CppAD/local/hessian.hpp
 	CppAD/local/fun_construct.hpp
-	Speed/Speed.cpp
-	omh/ExampleList.omh
-	Example/Example.vcproj
-	Example/Example.cpp
-	Example/Makefile.am
+	CppAD/config.h
+	Example/HesLagrangian.cpp
 "
 #
 delete_list="

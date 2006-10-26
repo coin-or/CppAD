@@ -66,6 +66,12 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-26$$
+Change $cref/HesLagrangian.cpp/$$ example so that it modifies
+the independent variable vector between the call to 
+$cref/Independent/$$ and the $syntax%ADFun<%Base%>%$$
+$cref/constructor/FunConstruct/$$.
+
 $head 10-25$$
 A $cref/subversion install procedure/InstallSubversion/$$ was
 added to the documentation.

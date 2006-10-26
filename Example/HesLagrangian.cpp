@@ -16,11 +16,14 @@ $spell
 	HesLagrangian
 $$
 
-$section Hessian of Lagrangian: Example and Test$$
+$comment ! NOTE the title states that this example is used two places !$$
+$section Hessian of Lagrangian and  ADFun Default Constructor: Example and Test$$
 
 $index HesLagrangian$$
 $index example, Hessian of Lagrangian$$
 $index test, Hessian of Lagrangian$$
+$index example, ADFun default constructor$$
+$index test, ADFun default constructor$$
 
 $code
 $verbatim%Example/HesLagrangian.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -35,24 +38,26 @@ $end
 
 namespace {
 	CppAD::AD<double> Lagragian(
-		const CppADvector< CppAD::AD<double> > &x  ,
-		const CppADvector< CppAD::AD<double> > &y  ,  
-		const CppAD::AD<double>                &z  )
+		const CppAD::vector< CppAD::AD<double> > &xyz )
 	{	using CppAD::AD;
 	
-		assert( x.size() == 3 );
-		assert( y.size() == 2 );
+		assert( xyz.size() == 6 );
+		AD<double> x0 = xyz[0];
+		AD<double> x1 = xyz[1];
+		AD<double> x2 = xyz[2];
+		AD<double> y0 = xyz[3];
+		AD<double> y1 = xyz[4];
+		AD<double> z  = xyz[5];
 	
 		// compute objective function
-		AD<double> f = x[0] * x[0];
+		AD<double> f = x0 * x0;
 	
 		// compute constraint functions
-		CppADvector< AD<double> > h(2);
-		h[0] = 1. + 2.*x[1] + 3.*x[2];
-		h[1] = log( x[0] * x[2] );
+		AD<double> h0 = 1. + 2.*x1 + 3.*x2;
+		AD<double> h1 = log( x0 * x2 );
 	
 		// compute the Lagragian
-		AD<double> L = y[0] * h[0] + y[1] * h[1] + z * f;
+		AD<double> L = y0 * h0 + y1 * h1 + z * f;
 	
 		return L;
 	
@@ -63,51 +68,56 @@ bool HesLagrangian()
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	using CppAD::vector;
+
+	// double values corresponding to XYZ vector
+	double x0, x1, x2, y0, y1, z;
 
 	// domain space vector
 	size_t n = 3;
-	CppADvector< AD<double> >  X(n);
-	X[0] = 0.5;
-	X[1] = 1000.;
-	X[2] = 1.0;
+	vector< AD<double> >  XYZ(n);
+	XYZ[0] = x0 = 0.5;
+	XYZ[1] = x1 = 1000.;
+	XYZ[2] = x2 = 1.0;
 
-	// Lagragian multipliers
-	CppADvector< AD<double> > Y(2);
-	Y[0] = 1.;
-	Y[1] = 1.;
-	AD<double> Z = 1.;
+	// declare X as independent variable vector and start recording
+	CppAD::Independent(XYZ);
 
-	// declare independent variables and starting recording
-	CppAD::Independent(X);
+	// add the Lagragian multipliers to XYZ
+	// (note that this modifies the vector XYZ)
+	XYZ.push_back(y0);
+	XYZ.push_back(y1);
+	XYZ.push_back(z);
 
 	// range space vector
 	size_t m = 1;
-	CppADvector< AD<double> >  L(m);
-	L[0] = Lagragian(X, Y, Z);
+	vector< AD<double> >  L(m);
+	L[0] = Lagragian(XYZ);
 
 	// create F: X -> L and stop tape recording
-	CppAD::ADFun<double> F(X, L);
+	// We cannot use the ADFun sequence constructor because XYZ has
+	// changed between the call to Independent and here.
+	CppAD::ADFun<double> F;
+	F.Dependent(L);
 
 	// independent variable vector
-	CppADvector<double> x(n);
-	x[0] = 0.5;
-	x[1] = 1000.;
-	x[2] = 1.0;
+	vector<double> x(n);
+	x[0] = x0;
+	x[1] = x1;
+	x[2] = x2;
 
 	// second derivative of L[0] 
-	CppADvector<double> hes( n * n );
+	vector<double> hes( n * n );
 	hes = F.Hessian(x, 0);
 	/*
-	L  =    z * x[0] * x[0]
-           + y[0] * (1 + 2*x[1] + 3*x[2])
-           + y[1] * log( x[0] * x[2] )
+	L  =    z * x0 * x0 + y0 * (1 + 2*x1 + 3*x2) + y1 * log( x0 * x2 )
 
-	L_0 = 2 * z * x[0] + y[1] / x[0]
-	L_1 = y[0] * 2 
-	L_2 = y[0] * 3 + y[1] / x[2] 
+	L_0 = 2 * z * x0 + y1 / x0
+	L_1 = y0 * 2 
+	L_2 = y0 * 3 + y1 / x2 
 	*/
-	// L_00 = 2 * z - y[1] / ( x[0] * x[0] )
-	double check = 2. * Value(Z) - Value(Y[1]) / (x[0] * x[0]);
+	// L_00 = 2 * z - y1 / ( x0 * x0 )
+	double check = 2. * z - y1 / (x0 * x0);
 	ok &= NearEqual(hes[0 * n + 0], check, 1e-10, 1e-10); 
 
 	// L_01 = L_10 = 0
@@ -126,8 +136,8 @@ bool HesLagrangian()
 	ok &= NearEqual(hes[1 * n + 2], check, 1e-10, 1e-10);
 	ok &= NearEqual(hes[2 * n + 1], check, 1e-10, 1e-10);
 
-	// L_22 = - y[1] / (x[2] * x[2])
-	check = - Value(Y[1]) / (x[2] * x[2]);
+	// L_22 = - y1 / (x2 * x2)
+	check = - y1 / (x2 * x2);
 	ok &= NearEqual(hes[2 * n + 2], check, 1e-10, 1e-10);
 
 	return ok;
