@@ -38,22 +38,26 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="automatically update date in CppAD/config.h
+log_entry="Add subversion install procedure.
 
 SvnCommit.sh: file that make this commit.
-file2lower.sh: automated script from aborted branch (save for future attempt).
-diffToday.sh: extend so it works with CppAD/config.h.
-Build.sh: automaticaly update date in CppAD/config.h.
+WhatsNew06.omh: user's view of the changes.
+config.h: change version number.
+COPYING: copy of license in the CppAD subdirectory.
+InstallSubversion.omh: new install procedure.
+Install.omh: include InstallSubversion.omh.
 "
 # 
 add_list="
+	omh/InstallSubversion.omh
 "
 #
 change_list="
 	SvnCommit.sh
-	file2lower.sh
-	diffToday.sh
-	Build.sh
+	omh/WhatsNew06.omh
+	CppAD/config.h
+	CppAD/COPYING
+	omh/Install.omh
 "
 #
 delete_list="

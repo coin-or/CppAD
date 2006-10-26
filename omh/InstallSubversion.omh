@@ -1,0 +1,60 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin InstallSubversion$$
+$dollar @$$
+$spell
+	usr
+	http://www.coin-or.org/svn/CppAD
+	dir
+$$
+
+$index CppAD, subversion install$$
+$index subversion, CppAD install$$
+$index install, subversion CppAD$$
+
+$section Using Subversion to Install CppAD$$
+
+$head Limitations$$
+This CppAD install procedure has the following limitations:
+$list number$$
+The $href%http://subversion.tigris.org/%subversion%$$ 
+program must be installed on your system.
+$lnext
+No examples are included during this install procedure.
+$lnext
+No documentation is included by this install procedure.
+$lnext
+No testing is done during this install procedure.
+$lnext
+Only the 
+$href%http://www.opensource.org/licenses/cpl1.0.php%CPL licensed%$$
+version of CppAD can be obtained by this install procedure.
+$lend
+
+$head CppAD Install Directory$$
+For this procedure, you choose one directory where CppAD
+will both be distributed and installed.
+If you have write permission in the directory 
+$code /usr/local/include/CppAD$$,
+it is the standard choice for the CppAD install directory. 
+Otherwise
+$code @HOME/include/CppAD$$ 
+is a good choice for the CppAD install directory.
+
+$head Current Version$$
+To obtain current version of CppAD, execute the following commands
+where $italic dir$$ is the CppAD install directory
+$syntax%
+	svn checkout   http://www.coin-or.org/svn/CppAD/trunk/CppAD %dir%
+%$$
+
+$end

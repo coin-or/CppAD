@@ -21,6 +21,7 @@ $index test$$
 $section CppAD Download, Test, and Installation Instructions$$
 
 $contents%
+	omh/InstallSubversion.omh%
 	omh/InstallUnix.omh%
 	omh/InstallWindows.omh
 %$$

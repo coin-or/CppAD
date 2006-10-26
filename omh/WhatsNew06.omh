@@ -66,6 +66,10 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-25$$
+A $cref/subversion install procedure/InstallSubversion/$$ was
+added to the documentation.
+
 $head 10-18$$
 Document and fix possible conflicts for 
 $cref/preprocessor/$$ symbols
