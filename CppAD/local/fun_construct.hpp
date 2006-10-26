@@ -48,6 +48,25 @@ $latex \[
 \] $$
 where $latex B$$ is the space corresponding to objects of type $italic Base$$.
 
+$head x$$
+If the argument $italic x$$ is present,
+it must be the vector argument in the previous call to
+$cref/Independent/$$.
+Neither its size, or any of its values, are allowed to change
+between calling
+$syntax%
+	Independent(%x%)
+%$$
+and 
+$syntax%
+	ADFun<%Base%> %f%(%x%, %y%)
+%$$.
+
+$head y$$
+The sequence of operations that map $italic x$$
+to $italic y$$ are stored in the AD function object $italic f$$.
+
+
 $head Default Constructor$$
 The default constructor 
 $syntax%
@@ -125,8 +144,17 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 
 	// set zero order coefficients corresponding to indpendent variables
 	n = ind_taddr.size();
+	CppADUsageError(
+		n = x.size(),
+		"ADFun<Base>: independent variable vector has changed"
+	);
 	for(j = 0; j < n; j++)
-	{	Taylor[ ind_taddr[j] ]  = x[j].value;
+	{	CppADUnknownError( ind_taddr[j] == (j+1) );
+		CppADUsageError(
+			x[j].taddr == (j+1),
+			"ADFun<Base>: independent variable vector has changed"
+		);
+		Taylor[ ind_taddr[j] ]  = x[j].value;
 	}
 
 	// use independent variable values to fill in values for others

@@ -38,26 +38,34 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add subversion install procedure.
+log_entry="Add Hessian of an optimization Lagragian example.
 
 SvnCommit.sh: file that make this commit.
 WhatsNew06.omh: user's view of the changes.
-config.h: change version number.
-COPYING: copy of license in the CppAD subdirectory.
-InstallSubversion.omh: new install procedure.
-Install.omh: include InstallSubversion.omh.
+hessian.hpp: include HesLagrangian.cpp example.
+fun_construct.hpp: check for change in independent vector and improve doc.
+Speed.cpp: redefine PACKAGE_STRING.
+ExampleList.omh: add HesLagrangian.cpp to list.
+HesLagrangiang.cpp: new example.
+Example.cpp: add HesLagrangiang.cpp.
+Example.vcproj: add HesLagrangiang.cpp.
+Makefile.am: add HesLagrangiang.cpp.
 "
 # 
 add_list="
-	omh/InstallSubversion.omh
+	Example/HesLagrangian.cpp
 "
 #
 change_list="
 	SvnCommit.sh
 	omh/WhatsNew06.omh
-	CppAD/config.h
-	CppAD/COPYING
-	omh/Install.omh
+	CppAD/local/hessian.hpp
+	CppAD/local/fun_construct.hpp
+	Speed/Speed.cpp
+	omh/ExampleList.omh
+	Example/Example.vcproj
+	Example/Example.cpp
+	Example/Makefile.am
 "
 #
 delete_list="

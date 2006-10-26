@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 /*
 $begin Speed.cpp$$
 $spell
@@ -33,6 +31,9 @@ $end
 # include <cstddef>
 # include <iostream>
 # include <complex>
+
+// redefine PACKAGE_STRING after undef in CppAD.h
+# include <CppAD/config.h>
 
 // For an unknown reason, cannot move other includes (using Sun's CC compiler)
 

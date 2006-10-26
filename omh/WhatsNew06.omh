@@ -69,6 +69,18 @@ assist you in learning about changes between various versions of CppAD.
 $head 10-25$$
 A $cref/subversion install procedure/InstallSubversion/$$ was
 added to the documentation.
+$pre
+
+$$
+Fix definition of preprocessor symbol
+$code PACKAGE_STRING$$ in $code Speed/Speed.cpp$$ 
+(broken by change on 10-18).
+$pre
+
+$$
+Added the example 
+$cref/HesLagrangian.cpp/$$ which computes the Hessian
+of a Lagrangian.
 
 $head 10-18$$
 Document and fix possible conflicts for 

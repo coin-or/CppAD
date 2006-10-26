@@ -100,11 +100,14 @@ the previous calls to $xref/Forward/$$ are undefined.
 
 $head Example$$
 $children%
-	Example/Hessian.cpp
+	Example/Hessian.cpp%
+	Example/HesLagrangian.cpp
 %$$
-The routine 
-$xref/Hessian.cpp//Hessian/$$ is both an example and test.
-It returns $code true$$, if it succeeds and $code false$$ otherwise.
+The routines 
+$cref/Hessian.cpp/$$ and
+$cref/HesLagrangian.cpp/$$
+are examples and tests of $code Hessian$$.
+They return $code true$$, if they succeed and $code false$$ otherwise.
 
 
 $end

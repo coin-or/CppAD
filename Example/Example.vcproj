@@ -644,6 +644,9 @@
 				RelativePath=".\FunCheck.cpp">
 			</File>
 			<File
+				RelativePath=".\HesLagrangian.cpp">
+			</File>
+			<File
 				RelativePath="HesLuDet.cpp">
 				<FileConfiguration
 					Name="Release|Win32">

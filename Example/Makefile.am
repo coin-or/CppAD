@@ -66,6 +66,7 @@ Example_SOURCES   = \
 	Forward.cpp \
 	ForSparseJac.cpp \
 	FunCheck.cpp \
+	HesLagrangian.cpp \
 	HesLuDet.cpp \
 	HesMinorDet.cpp \
 	Hessian.cpp \
