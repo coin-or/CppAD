@@ -38,13 +38,12 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Change HesLagrangian example to use default ADFun constructor.
+log_entry="Change HesLagrangian example have two methods of computing Hessian.
 
 SvnCommit.sh: file that make this commit.
 WhatsNew06.omh: user's view of the changes.
-fun_construct.hpp: improve documentation and fix bug in CppADUsageError call.
 CppAD/config.h: update package version.
-HesLagrangian.cpp: use default ADFun constructor.
+HesLagrangian.cpp: new example that computes Hessian two ways.
 "
 # 
 add_list="
@@ -53,7 +52,6 @@ add_list="
 change_list="
 	SvnCommit.sh
 	omh/WhatsNew06.omh
-	CppAD/local/fun_construct.hpp
 	CppAD/config.h
 	Example/HesLagrangian.cpp
 "

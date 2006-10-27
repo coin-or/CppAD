@@ -66,6 +66,11 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-27$$
+Change $cref/HesLagrangian.cpp/$$ example so that it computes the 
+Lagrangian two ways. One is simpler and the other can be used
+to avoid re-taping operation sequence.
+
 $head 10-26$$
 Change $cref/HesLagrangian.cpp/$$ example so that it modifies
 the independent variable vector between the call to 
