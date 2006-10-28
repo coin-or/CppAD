@@ -66,6 +66,15 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-28$$
+The copyright message in the script files
+$code Example/OneTest$$ and $code TestMore/OneTest$$ were GPL
+(in the CPL distribution).
+This has been fixed by moving them to
+$code Example/OneTest.sh$$ and $code TestMore/OneTest.sh$$ so that
+the distribution automatically edits the copyright message.
+
+
 $head 10-27$$
 Change $cref/HesLagrangian.cpp/$$ example so that it computes the 
 Lagrangian two ways. One is simpler and the other can be used

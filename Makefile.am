@@ -221,7 +221,6 @@ EXTRA_DIST = \
 	Dev.omh \
 	Doc \
 	Doc.omh \
-	Example/OneTest \
 	FixAclocal.sh \
 	FixMakefile.sh \
 	omh \
