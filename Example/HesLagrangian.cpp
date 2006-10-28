@@ -135,21 +135,26 @@ namespace {
 		vector< AD<double> >  L(m);
 		L[0] = Lagragian(XYZ);
 
-		// create F: X -> L and stop tape recording
+		// create K: X -> L and stop tape recording
 		// We cannot use the ADFun sequence constructor because XYZ has
 		// changed between the call to Independent and here.
-		CppAD::ADFun<double> F;
-		F.Dependent(L);
+		CppAD::ADFun<double> K;
+		K.Dependent(L);
 
-		// independent variable vector
+		// Operation sequence corresponding to K does depends on 
+		// value of y0, y1, and z. Must redo calculations above when 
+		// y0, y1, or z changes.
+
+		// declare independent variable vector and Hessian
 		vector<double> x(n);
+		vector<double> H( n * n );
+
+		// point at which we are computing the Hessian
+		// (must redo calculations below each time x changes)
 		x[0] = x0;
 		x[1] = x1;
 		x[2] = x2;
-
-		// second derivative of L[0] 
-		vector<double> H( n * n );
-		H = F.Hessian(x, 0);
+		H = K.Hessian(x, 0);
 
 		// check this Hessian calculation
 		return CheckHessian(H, x0, x1, x2, y0, y1, z); 
@@ -180,26 +185,29 @@ namespace {
 		CppAD::ADFun<double> K;
 		K.Dependent(FG);
 
-		// independent variable vector
-		vector<double> x(n);
-		x[0] = x0;
-		x[1] = x1;
-		x[2] = x2;
-
-		// compute Hessian at this value of x
-		K.Forward(0, x);
-
-		// Place to store the Hessian of the Lagragian 
-		vector<double> H( n * n );
+		// Operation sequence corresponding to K does not depend on 
+		// value of x0, x1, x2, y0, y1, or z. 
 
 		// forward and reverse mode arguments and results 
+		vector<double> x(n);
+		vector<double> H( n * n );
 		vector<double>  dx(n);
 		vector<double>   w(m);
 		vector<double>  dw(2*n);
+
+		// compute Hessian at this value of x
+		// (must redo calculations below each time x changes)
+		x[0] = x0;
+		x[1] = x1;
+		x[2] = x2;
+		K.Forward(0, x);
+
 		// set weights to Lagrange multiplier values
+		// (must redo calculations below each time y0, y1, or z changes)
 		w[0] = z;
 		w[1] = y0;
 		w[2] = y1;
+
 		// initialize dx as zero
 		size_t i, j;
 		for(i = 0; i < n; i++)
@@ -213,6 +221,7 @@ namespace {
 				H[ i * n + j ] = dw[ j * 2 + 1 ];
 			dx[i] = 0.;             // dx is zero vector
 		}
+
 		// check this Hessian calculation
 		return CheckHessian(H, x0, x1, x2, y0, y1, z); 
 	}
