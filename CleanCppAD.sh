@@ -22,7 +22,6 @@ then
 	\( -name 'aclocal.m4'     \) -or \
 	\( -name 'autom4te.cache' \) -or \
 	\( -name 'configure'      \) -or \
-	\( -name 'config.h'       \) -or \
 	\( -name 'config.h.in'    \) -or \
 	\( -name 'config.status'  \) -or \
 	\( -name 'cppad-*'        \) -or \
@@ -69,7 +68,6 @@ else
 	\( -name 'aclocal.m4'     \) -or \
 	\( -name 'autom4te.cache' \) -or \
 	\( -name 'configure'      \) -or \
-	\( -name 'config.h'       \) -or \
 	\( -name 'config.h.in'    \) -or \
 	\( -name 'config.status'  \) -or \
 	\( -name 'cppad-*'        \) -or \
