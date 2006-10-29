@@ -32,7 +32,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include "AllocVec.h"
+# include "adolc/alloc_vec.hpp"
 
 namespace {
 	void ForwardDifference(int length, int *v)

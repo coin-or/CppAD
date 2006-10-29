@@ -30,7 +30,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include "AllocMat.h"
+# include "adolc/alloc_mat.hpp"
 
 namespace {
 	void RowSum(int nr, int nc, int **M)

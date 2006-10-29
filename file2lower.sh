@@ -6,8 +6,8 @@ then
 	exit 1
 fi
 mode="$1"
-directory="omh"
-extension="omh"
+directory="adolc"
+extension="h"
 #
 # map a set of file names to lower case
 if [ -e file2lower.mv ]
@@ -32,6 +32,10 @@ do
 		-e "s/\([a-z]\)\([0-9]\)/\1_\2/g" \
 		-e "s|/\([A-z][a-z]*\)\.|/\1_.|" | tr [A-Z] [a-z]
 	`
+	if [ "$extension" = "h" ]
+	then
+		new=`echo $new | sed -e "s/_*\.h/.hpp/"`
+	fi
 	if [ "$mode" == "svn" ]
 	then
 		echo "svn move $old $new" >> file2lower.mv
@@ -39,8 +43,10 @@ do
 		echo "mv $old $new"       >> file2lower.mv
 	fi
 	old=`echo $old | sed -e 's|/|[\\\\/]|'`
-	#
 	echo "s@$old@$new@g"  >> file2lower.sed
+	#
+	old=`echo $old | sed -e 's|.*\]||'`
+	echo "s@\"$old@\"$new@g"  >> file2lower.sed
 done
 chmod +x file2lower.mv
 if [ "$mode" = "test" ]
