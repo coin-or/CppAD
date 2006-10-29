@@ -194,13 +194,13 @@ and $latex z^{(j+1)}$$.
 $subhead Recursion Formula for Specific Cases$$
 
 $children%
-	omh\ExpForward.omh%
-	omh\LogForward.omh%
-	omh\SqrtForward.omh%
-	omh\SinCosForward.omh%
-	omh\AtanForward.omh%
-	omh\AsinForward.omh%
-	omh\AcosForward.omh
+	omh/exp_forward.omh%
+	omh/log_forward.omh%
+	omh/sqrt_forward.omh%
+	omh/sin_cos_forward.omh%
+	omh/atan_forward.omh%
+	omh/asin_forward.omh%
+	omh/acos_forward.omh
 %$$
 
 $table

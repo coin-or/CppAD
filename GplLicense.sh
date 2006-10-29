@@ -67,7 +67,7 @@ list=`find . \
 	\( -name '*.am'  \) -or \
 	\( -name '*.ac'  \) -or \
 	\( -name '*.ac'  \) -or \
-	\( -name '*.sh' \) -or \
+	\( -name '*.sh'  \) -or \
 	\( -name '*.cpp' \) -or \
 	\( -name '*.h'   \) -or \
 	\( -name '*.hpp' \) -or \
@@ -115,8 +115,8 @@ mv GplLicense.tmp cppad-$version/COPYING
 rm cppad-$version/cpl1.0.txt
 cp gpl2.txt cppad-$version/gpl2.txt
 sed < Makefile.am > cppad-$version/Makefile.am \
-	-e 's/cpl1.0.txt/gpl.txt/'
-sed < omh/license.omh > cppad-$version/omh/license.omh \
+	-e 's/cpl1.0.txt/gpl2.txt/'
+sed < omh/license_.omh > cppad-$version/omh/license_.omh \
 	-e 's/$verbatim%cpl1.0.txt%$\$/$verbatim%gpl2.txt%$$/'
 #
 # Make sure that dates in certain files are older than the files converted 

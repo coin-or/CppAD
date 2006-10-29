@@ -44,11 +44,11 @@ $childtable%
 	CppAD/local/independent.hpp%
 	CppAD/local/fun_construct.hpp%
 	CppAD/local/dependent.hpp%
-	omh/SeqProperty.omh%
+	omh/seq_property.omh%
 	CppAD/local/fun_eval.hpp%
 	CppAD/local/drivers.hpp%
 	CppAD/local/fun_check.hpp%
-	omh/FunDeprecated.omh
+	omh/fun_deprecated.omh
 %$$
 
 $end

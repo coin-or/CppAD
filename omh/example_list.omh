@@ -38,7 +38,7 @@ $childtable%
 	Example/OdeTaylor.cpp%
 	Example/StackMachine.cpp%
 	Example/ComplexPoly.cpp%
-	omh/MulTape.omh
+	omh/mul_tape.omh
 %$$
 
 $end

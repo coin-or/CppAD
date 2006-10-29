@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	omh
 	config.h
 	Microsoft
 	hpp
@@ -49,9 +50,9 @@ $$
 $section Changes and Additions to CppAD$$
 
 $children%
-	omh/WhatsNew05.omh%
-	omh/WhatsNew04.omh%
-	omh/WhatsNew03.omh
+	omh/whats_new_05.omh%
+	omh/whats_new_04.omh%
+	omh/whats_new_03.omh
 %$$
 
 $head Introduction$$
@@ -65,6 +66,10 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-29$$
+Change all the file in the $code omh$$ directory to 
+use lower case names.
 
 $head 10-28$$
 The copyright message in the script files

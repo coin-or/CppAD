@@ -9,24 +9,13 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin Appendix$$
-$spell
-$$
+$begin Theory$$
 
-$section Appendix$$
+$section The Theory of Derivative Calculations$$
 
-$childtable%
-	CppAD/local/preprocessor.hpp%
-	omh/Theory.omh%
-	omh/Speed.omh%
-	omh/Adolc.omh%
-	omh/Fadbad.omh%
-	omh/glossary.omh%
-	omh/Bib.omh%
-	omh/Bugs.omh%
-	omh/WishList.omh%
-	omh/WhatsNew06.omh
-%$$
+$contents%
+	omh/forward_theory.omh%
+	omh/reverse_theory.omh%
+	omh/reverse_identity.omh%$$
 
 $end
-

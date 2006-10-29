@@ -1,12 +1,11 @@
 #! /bin/bash
 #
-if [ "$1" == "go-for-it" ]
+if [ "$1" != "test" ] && [ "$1" != "local" ] && [ "$1" != "svn" ]
 then
-	test_mode="no"
-else
-	test_mode="yes"
+	echo "file2lower.sh: (test|local|svn)"
+	exit 1
 fi
-#
+mode="$1"
 directory="omh"
 extension="omh"
 #
@@ -33,13 +32,18 @@ do
 		-e "s/\([a-z]\)\([0-9]\)/\1_\2/g" \
 		-e "s|/\([A-z][a-z]*\)\.|/\1_.|" | tr [A-Z] [a-z]
 	`
-	echo "mv $old $new" >> file2lower.mv
+	if [ "$mode" == "svn" ]
+	then
+		echo "svn move $old $new" >> file2lower.mv
+	else
+		echo "mv $old $new"       >> file2lower.mv
+	fi
 	old=`echo $old | sed -e 's|/|[\\\\/]|'`
 	#
 	echo "s@$old@$new@g"  >> file2lower.sed
 done
 chmod +x file2lower.mv
-if [ $test_mode = "yes" ]
+if [ "$mode" = "test" ]
 then 
 	echo "file2lower.sh: NOT executing ./file2lower.mv"
 else
@@ -85,7 +89,7 @@ do
 			then
 				echo "$file"                 >> file2lower.out
 				diff $file file2lower.tmp    >> file2lower.out
-if [ $test_mode = "yes" ]
+if [ $mode = "test" ]
 then 
 	echo "file2lower.sh: NOT changing $file"
 else

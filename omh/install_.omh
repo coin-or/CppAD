@@ -9,13 +9,21 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin Theory$$
+$begin Install$$
+$dollar @$$
+$spell
+	CppAD
+$$
 
-$section The Theory of Derivative Calculations$$
+$index install$$
+$index test$$
 
-$contents/
-	omh\ForwardTheory.omh/
-	omh\ReverseTheory.omh/
-	omh\ReverseIdentity.omh/$$
+$section CppAD Download, Test, and Installation Instructions$$
+
+$contents%
+	omh/install_subversion.omh%
+	omh/install_unix.omh%
+	omh/install_windows.omh
+%$$
 
 $end

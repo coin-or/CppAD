@@ -171,13 +171,13 @@ $latex \[
 
 
 $children%
-	omh\ExpReverse.omh%
-	omh\LogReverse.omh%
-	omh\SqrtReverse.omh%
-	omh\SinCosReverse.omh%
-	omh\AtanReverse.omh%
-	omh\AsinReverse.omh%
-	omh\AcosReverse.omh
+	omh/exp_reverse.omh%
+	omh/log_reverse.omh%
+	omh/sqrt_reverse.omh%
+	omh/sin_cos_reverse.omh%
+	omh/atan_reverse.omh%
+	omh/asin_reverse.omh%
+	omh/acos_reverse.omh
 %$$
 
 $table

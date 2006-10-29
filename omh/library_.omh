@@ -28,14 +28,14 @@ $children%
 	CppAD/NearEqual.h%
 	CppAD/SpeedTest.h%
 
-	omh/NumericType.omh%
+	omh/numeric_type.omh%
 	CppAD/CheckNumericType.h%
-	omh/SimpleVector.omh%
+	omh/simple_vector.omh%
 	CppAD/CheckSimpleVector.h%
 
 	CppAD/PowInt.h%
 	CppAD/Poly.h%
-	omh/LuDetAndSolve.omh%
+	omh/lu_det_and_solve.omh%
 	CppAD/RombergOne.h%
 	CppAD/RombergMul.h%
 	CppAD/Runge45.h%

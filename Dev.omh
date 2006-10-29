@@ -36,8 +36,8 @@ Routines and data structures that are visible to the
 CppAD user, are documented in $href%../Doc/CppAD.xml%$$.
 
 $contents%
-	omh/Distribute.omh%
-	omh/NewFeature.omh%
+	omh/distribute_.omh%
+	omh/new_feature.omh%
 	CppAD/local/define.hpp%
 	CppAD/local/ordered.hpp%
 	CppAD/local/identical.hpp%

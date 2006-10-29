@@ -9,21 +9,24 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin Install$$
-$dollar @$$
+$begin Appendix$$
 $spell
-	CppAD
 $$
 
-$index install$$
-$index test$$
+$section Appendix$$
 
-$section CppAD Download, Test, and Installation Instructions$$
-
-$contents%
-	omh/InstallSubversion.omh%
-	omh/InstallUnix.omh%
-	omh/InstallWindows.omh
+$childtable%
+	CppAD/local/preprocessor.hpp%
+	omh/theory_.omh%
+	omh/speed_.omh%
+	omh/adolc_.omh%
+	omh/fadbad_.omh%
+	omh/glossary_.omh%
+	omh/bib_.omh%
+	omh/bugs_.omh%
+	omh/wish_list.omh%
+	omh/whats_new_06.omh
 %$$
 
 $end
+

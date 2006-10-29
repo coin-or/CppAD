@@ -47,5 +47,5 @@ sed                                                           \
 ./diffToday.sh AUTHORS
 ./diffToday.sh Doc.omh
 ./diffToday.sh configure.ac
-./diffToday.sh omh/InstallUnix.omh
-./diffToday.sh omh/InstallWindows.omh
+./diffToday.sh omh/install_unix.omh
+./diffToday.sh omh/install_windows.omh

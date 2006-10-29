@@ -36,7 +36,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-06-10-18
+A Package for Differentiation of C++ Algorithms: cppad-06-10-29
 $$ 
 
 $head Syntax$$
@@ -179,16 +179,16 @@ this can cause naming conflicts.
 
 
 $childtable%
-	omh/license.omh%
-	omh/Faq.omh%
-	omh/Install.omh%
+	omh/license_.omh%
+	omh/faq_.omh%
+	omh/install_.omh%
 	GetStarted/GetStarted.cpp%
-	omh/Introduction.omh%
+	omh/introduction_.omh%
 	CppAD/local/user_ad.hpp%
 	CppAD/local/ad_fun.hpp%
-	omh/library.omh%
-	omh/Example.omh%
-	omh/Appendix.omh
+	omh/library_.omh%
+	omh/example_.omh%
+	omh/appendix_.omh
 %$$
 
 $include CppAD.tex$$ 
