@@ -17,13 +17,13 @@ $section Appendix$$
 
 $childtable%
 	CppAD/local/preprocessor.hpp%
-	omh/theory_.omh%
-	omh/speed_.omh%
-	omh/adolc_.omh%
-	omh/fadbad_.omh%
-	omh/glossary_.omh%
-	omh/bib_.omh%
-	omh/bugs_.omh%
+	omh/theory.omh%
+	omh/speed.omh%
+	omh/adolc.omh%
+	omh/fadbad.omh%
+	omh/glossary.omh%
+	omh/bib.omh%
+	omh/bugs.omh%
 	omh/wish_list.omh%
 	omh/whats_new_06.omh
 %$$

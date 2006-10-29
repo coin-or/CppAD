@@ -116,7 +116,7 @@ rm cppad-$version/cpl1.0.txt
 cp gpl2.txt cppad-$version/gpl2.txt
 sed < Makefile.am > cppad-$version/Makefile.am \
 	-e 's/cpl1.0.txt/gpl2.txt/'
-sed < omh/license_.omh > cppad-$version/omh/license_.omh \
+sed < omh/license.omh > cppad-$version/omh/license.omh \
 	-e 's/$verbatim%cpl1.0.txt%$\$/$verbatim%gpl2.txt%$$/'
 #
 # Make sure that dates in certain files are older than the files converted 

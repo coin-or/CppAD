@@ -54,7 +54,7 @@ then
 	diff CppAD/config.h   CppAD/config.tmp
 	mv   CppAD/config.tmp CppAD/config.h
 	#
-	for name in Doc.omh omh/InstallUnix.omh omh/InstallWindows.omh
+	for name in Doc.omh omh/install_unix.omh omh/install_windows.omh
 	do
 		sed $name > $name.tmp \
 		-e "s/cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/cppad-$yy_mm_dd/g"

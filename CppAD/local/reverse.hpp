@@ -30,7 +30,7 @@ $$
 $section Reverse Mode$$ 
 
 $childtable%
-	omh/reverse_.omh
+	omh/reverse.omh
 %$$
 
 $end

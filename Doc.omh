@@ -179,16 +179,16 @@ this can cause naming conflicts.
 
 
 $childtable%
-	omh/license_.omh%
-	omh/faq_.omh%
-	omh/install_.omh%
+	omh/license.omh%
+	omh/faq.omh%
+	omh/install.omh%
 	GetStarted/GetStarted.cpp%
-	omh/introduction_.omh%
+	omh/introduction.omh%
 	CppAD/local/user_ad.hpp%
 	CppAD/local/ad_fun.hpp%
-	omh/library_.omh%
-	omh/example_.omh%
-	omh/appendix_.omh
+	omh/library.omh%
+	omh/example.omh%
+	omh/appendix.omh
 %$$
 
 $include CppAD.tex$$ 
