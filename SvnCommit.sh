@@ -38,18 +38,12 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move OneTest to OneTest.sh and fix its copyright message GPL-CPL.
+log_entry="Fix license message in GPL version of Makefile.am
 
 SvnCommit.sh: file that make this commit.
-WhatsNew06.omh: user's view of the changes.
-config.h: current version number.
-Makefile.am: move inclusion of OneTest.sh into sub-directory Makefile.am
-Example/OneTest: move Example/OneTest to Example/OneTest.sh
-Example/OneTest.sh: fix copyright message
-Example/Makefile.am: include OneTest.sh in distribution 
-TestMore/OneTest: move TestMore/OneTest to TestMore/OneTest.sh
-TestMore/OneTest.sh: fix copyright message
-TestMore/Makefile.am: include OneTest.sh in distribution 
+whats_new_06.omh: user's view of the changes.
+GplLicense.sh: fix overwrite of previous edits. 
+CheckIncludeDef.sh: ErrorHandle.h is speical because uses CppADCppADIncluded.
 "
 # 
 add_list="
@@ -57,15 +51,9 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	omh/WhatsNew06.omh
-	CppAD/config.h
-	Example/OneTest
-	Example/OneTest.sh
-	Example/Makefile.am
-	Makefile.am
-	TestMore/OneTest
-	TestMore/OneTest.sh
-	TestMore/Makefile.am
+	omh/whats_new_06.omh
+	GplLicense.sh
+	CheckIncludeDef.sh
 "
 #
 delete_list="

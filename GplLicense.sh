@@ -114,10 +114,13 @@ mv GplLicense.tmp cppad-$version/COPYING
 # change the file cpl1.0.txt to the file gpl2.txt
 rm cppad-$version/cpl1.0.txt
 cp gpl2.txt cppad-$version/gpl2.txt
-sed < Makefile.am > cppad-$version/Makefile.am \
+sed < cppad-$version/Makefile.am > GplLicense.tmp \
 	-e 's/cpl1.0.txt/gpl2.txt/'
-sed < omh/license.omh > cppad-$version/omh/license.omh \
+mv GplLicense.tmp cppad-$version/Makefile.am
+#
+sed < cppad-$version/omh/license.omh > GplLicense.tmp \
 	-e 's/$verbatim%cpl1.0.txt%$\$/$verbatim%gpl2.txt%$$/'
+mv GplLicense.tmp cppad-$version/omh/license.omh
 #
 # Make sure that dates in certain files are older than the files converted 
 # and make sure they are in a certain time order.

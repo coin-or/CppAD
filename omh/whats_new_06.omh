@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	Makefile
 	omh
 	config.h
 	Microsoft
@@ -70,6 +71,11 @@ assist you in learning about changes between various versions of CppAD.
 $head 10-29$$
 Change all the file in the $code omh$$ directory to 
 use lower case names.
+$pre
+
+$$
+The file $code Makefile.am$$ in the distribution directory had the
+CPL copyright message in the GPL version. This has been fixed.
 
 $head 10-28$$
 The copyright message in the script files
