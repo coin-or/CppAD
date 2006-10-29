@@ -1,3 +1,4 @@
+// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -8,27 +9,27 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+// END SHORT COPYRIGHT
 /*
-$begin DetLuAdolc.cpp$$
+$begin DetMinorAdolc.cpp$$
 $spell
-	adolc_
-	Lu
+	adolc
 	Cpp
 $$
 
-$section Adolc & CppAD Gradient of Determinant by Lu Factorization$$
+$section Adolc & CppAD Gradient of Determinant by Minors$$
+
 
 $index Adolc, speed$$
 $index speed, Adolc$$
 $index determinant, Adolc$$
 $index Adolc, determinant$$
-$index Lu factor, Adolc$$
-$index Adolc, Lu factor$$
-
+$index Minors, Adolc expand$$
+$index Adolc, Minor expand$$
 
 $comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%adolc_/DetLu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%adolc/DetMinor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -36,12 +37,12 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "../Example/DetByLu.h"
+# include "../Example/DetByMinor.h"
 
 # include <adolc/adouble.h>
 # include <adolc/interfaces.h>
 
-void DetLuCp(size_t size, size_t repeat, CppADvector<double> &u)
+void DetMinorCp(size_t size, size_t repeat, CppADvector<double> &u)
 {
 	using namespace CppAD;
 
@@ -53,7 +54,7 @@ void DetLuCp(size_t size, size_t repeat, CppADvector<double> &u)
 	// Do this set up once so not significant in timing test
 
 	// object for computing determinant
-	DetByLu< AD<double> > Det(size);
+	DetByMinor< AD<double> > Det(size);
 
 	CppADvector< AD<double> >            detA(1);
 	CppADvector< AD<double> >   A( size * size );
@@ -84,7 +85,7 @@ void DetLuCp(size_t size, size_t repeat, CppADvector<double> &u)
 	}
 }
 
-void DetLuAd(size_t size, size_t repeat, double *u)
+void DetMinorAd(size_t size, size_t repeat, double *u)
 {
 	size_t i;
 	size_t j;
@@ -95,7 +96,7 @@ void DetLuAd(size_t size, size_t repeat, double *u)
 	// Do this set up once so not significant in timing test
 
 	// object for computing determinant
-	CppAD::DetByLu<adouble> Det(size);
+	CppAD::DetByMinor<adouble> Det(size);
 
 	adouble                           detA;
 	CppADvector<adouble>  A( size * size );
@@ -110,7 +111,7 @@ void DetLuAd(size_t size, size_t repeat, double *u)
 	double v[1];
 	v[0] = 1.;
 
-	// tag, keep, and order flags
+	// tag and keep flags
 	int tag  = 1;
 	int keep = 1;
 	int d    = 0; 
@@ -138,39 +139,40 @@ void DetLuAd(size_t size, size_t repeat, double *u)
 	}
 }
 
-bool DetLu(void)
+bool DetMinor(void)
 {	bool ok = true;
 
 	size_t size   = 4;
 	size_t repeat = 1;
 
-	double *uAd = new double[size * size];
+	double *uAd = new double [size * size];
 	CppADvector<double> uCp(size * size);
 
-	DetLuCp(size, repeat, uCp);
-	DetLuAd(size, repeat, uAd);
+	DetMinorCp(size, repeat, uCp);
+	DetMinorAd(size, repeat, uAd);
 
 
 	size_t i;
 	for(i = 0; i < size * size; i++)
-		ok &= CppAD::NearEqual(uCp[i], uAd[i], 1e-12, 1e-12);
+		ok &= uCp[i] == uAd[i];
 
 	delete [] uAd;
 	return ok;
 }
-std::string DetLuCp(size_t size, size_t repeat)
+std::string DetMinorCp(size_t size, size_t repeat)
 {	CppADvector<double> u(size * size);
 
-	DetLuCp(size, repeat, u);
-	return "CppAD: gradient of Determinant by Lu Factorization";
+	DetMinorCp(size, repeat, u);
+	return "CppAD: gradient of Determinant by Minors";
 }
-std::string DetLuAd(size_t size, size_t repeat)
-{	double *u = new double[size * size];
+std::string DetMinorAd(size_t size, size_t repeat)
+{
+	double *u = new double [size * size];
 
-	DetLuAd(size, repeat, u);
+	DetMinorAd(size, repeat, u);
 
 	delete [] u;
-	return "Adolc: gradient of Determinant by Lu Factorization";
+	return "Adolc: gradient of Determinant by Minors";
 }
 
 // END PROGRAM

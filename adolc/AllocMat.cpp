@@ -23,7 +23,7 @@ $mindex AllocMat test example$$
 $section Example and Test of AllocMat Template Class$$
 
 $code
-$verbatim%adolc_/AllocMat.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%adolc/AllocMat.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

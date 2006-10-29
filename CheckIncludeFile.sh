@@ -17,7 +17,7 @@ grep '^# *include *<CppAD/' \
 	CppAD/local/*.hpp \
 	Example/*.cpp \
 	Example/*.h \
-	adolc_/*.cpp \
+	adolc/*.cpp \
 	Fadbad/*.cpp \
 	TestMore/*.cpp \
 	Speed/*.cpp |\
@@ -39,7 +39,7 @@ sort -u > junk.2
 diff junk.1 junk.2
 #
 grep '^# *include *"\.\./Example' \
-	adolc_/*.cpp    \
+	adolc/*.cpp    \
 	Fadbad/*.cpp   \
 	TestMore/*.cpp \
 	Speed/*.cpp    | \

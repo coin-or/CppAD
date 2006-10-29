@@ -217,7 +217,7 @@ dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
 	Makefile
-	adolc_/Makefile 
+	adolc/Makefile 
 	Example/Makefile 
 	Fadbad/Makefile 
 	GetStarted/Makefile 

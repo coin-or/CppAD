@@ -25,7 +25,7 @@ $section Example and Test of AllocVec Template Class$$
 
 $comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%adolc_/AllocVec.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%adolc/AllocVec.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

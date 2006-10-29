@@ -186,7 +186,7 @@ endif
 #
 # Did user specify a value for ADOLC_DIR in configure command line
 if CppAD_ADOLC
-ADOLC = adolc_
+ADOLC = adolc
 else
 ADOLC = 
 endif
