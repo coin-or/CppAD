@@ -91,6 +91,10 @@ then
 else
 	echo "file2lower.sh: changing $file"
 	mv file2lower.tmp $file
+	if [ "$ext" = "sh" ]
+	then
+		chmod +x $file
+	fi
 fi
 			fi
 		done
