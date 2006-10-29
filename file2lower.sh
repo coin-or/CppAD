@@ -36,9 +36,7 @@ do
 	echo "mv $old $new" >> file2lower.mv
 	old=`echo $old | sed -e 's|/|[\\\\/]|'`
 	#
-	dollar='$'
-	echo "s@\([/|% 	]\)$old\([/|%]\)@\1$new\2@g"  >> file2lower.sed
-	echo "s@\([/|% 	]\)$old$dollar@\1$new@g"      >> file2lower.sed
+	echo "s@$old@$new@g"  >> file2lower.sed
 done
 chmod +x file2lower.mv
 if [ $test_mode = "yes" ]
