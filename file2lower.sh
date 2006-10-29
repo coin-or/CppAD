@@ -1,7 +1,5 @@
 #! /bin/bash
 #
-echo "Next try we try this, only change file names, not cross reference tags"
-exit 1
 if [ "$1" == "go-for-it" ]
 then
 	test_mode="no"
@@ -36,13 +34,11 @@ do
 		-e "s|/\([A-z][a-z]*\)\.|/\1_.|" | tr [A-Z] [a-z]
 	`
 	echo "mv $old $new" >> file2lower.mv
+	old=`echo $old | sed -e 's|/|[\\\\/]|'`
 	#
-	old_name=`echo $old | sed -e "s|.*/||" -e "s|\.$extension||"`
-	new_name=`echo $new | sed -e "s|.*/||" -e "s|\.$extension||"`
-	d='$'
-	echo "s@\$begin $old_name\\\$@\$begin $new_name\$@"   >> file2lower.sed
-	echo "s@\([/|%]\)$old_name\([/|%]\)@\1$new_name\2@g"  >> file2lower.sed
-	echo "s@\([ /|%\]\)$old_name\.omh@\1$new_name.omh@g"  >> file2lower.sed
+	dollar='$'
+	echo "s@\([/|% 	]\)$old\([/|%]\)@\1$new\2@g"  >> file2lower.sed
+	echo "s@\([/|% 	]\)$old$dollar@\1$new@g"      >> file2lower.sed
 done
 chmod +x file2lower.mv
 if [ $test_mode = "yes" ]
