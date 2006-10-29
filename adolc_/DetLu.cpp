@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin DetLuAdolc.cpp$$
 $spell
-	Adolc
+	adolc_
 	Lu
 	Cpp
 $$
@@ -28,7 +28,7 @@ $index Adolc, Lu factor$$
 
 $comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%Adolc/DetLu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%adolc_/DetLu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

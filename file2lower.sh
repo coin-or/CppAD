@@ -54,7 +54,7 @@ fi
 # list of directories to edit with the sed script
 dir_list="
 	.
-	Adolc
+	adolc_
 	CppAD
 	CppAD/local
 	Example

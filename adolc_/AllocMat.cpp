@@ -12,59 +12,59 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // END SHORT COPYRIGHT
 
 /*
-$begin AllocVec.cpp$$
+$begin AllocMat.cpp$$
 $spell
-	Vec
 	Alloc
 	Cpp
 	cstddef
 $$
 
-$mindex AllocVec test example$$
-$section Example and Test of AllocVec Template Class$$
+$mindex AllocMat test example$$
+$section Example and Test of AllocMat Template Class$$
 
-$comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%Adolc/AllocVec.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%adolc_/AllocMat.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 // BEGIN PROGRAM
 
-# include "AllocVec.h"
+# include "AllocMat.h"
 
 namespace {
-	void ForwardDifference(int length, int *v)
+	void RowSum(int nr, int nc, int **M)
 	{
 		int  i;
-		for(i = 0; i < length-1; i++)
-			v[i] = v[i+1] - v[i];	
-		v[length-1] = 0;
+		int  j;
+		for(i = 1; i < nr; i++)
+			for(j = 0; j < nc; j++)
+				M[i][j] += M[i-1][j];
 
 		return;
 	}
 }
 
-bool AllocVecTest(void)
+bool AllocMatTest(void)
 {
 	bool ok = true;
+	int i;
+	int j;
 
 	// create an integer vector of length 4
-	CppAD::AllocVec<int> v(4);
+	CppAD::AllocMat<int> M(4, 4);
 
-	// use the element access operator both as a reference and value
-	v[0]  = 0;
-	int i;
-	for(i = 1; i < 4; i++)
-		v[i] = i + v[i-1];
+	// assign values to the elements 
+	for(i = 0; i < 4; i++)
+		for(j = 0; j < 4; j++)
+			M[i][j] = i + j;
 
-	// make implicit us of the conversion (int *) v
-	ForwardDifference(4, v);
+	// make implicit us of the conversion (int **) M
+	RowSum(4, 4, M);
 
-	// check the results of the forward difference operation
-	for(i = 0; i < 3; i++)
-		ok &= (i+1) == v[i];
+	// check the results of the row sumation
+	for(j = 0; j < 4; j++)
+		ok &= M[3][j] == 4 * j + 6;
 
 	// return the result of the test
 	return ok;

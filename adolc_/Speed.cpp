@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin SpeedAdolc.cpp$$
 $spell
-	Adolc
+	adolc_
 	Cpp
 $$
 
@@ -22,7 +22,7 @@ $section Run All The Adolc Speed Comparison Tests$$
 
 $comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%Adolc/Speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%adolc_/Speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

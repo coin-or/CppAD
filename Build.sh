@@ -281,7 +281,7 @@ then
 	TestMore/TestMore         >> ../Test.log
 	Introduction/Introduction >> ../Test.log
 	Fadbad/Example            >> ../Test.log
-	Adolc/Example             >> ../Test.log
+	adolc_/Example             >> ../Test.log
 	RunOMhelp.sh Doc
 	cat OMhelp.Doc.log        >> ../Test.log
 	if [ "$1" != "all" ]

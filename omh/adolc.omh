@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin Adolc$$
 $spell
-	Adolc
+	adolc_
 	Makefile
 	Cygwin
 	CppAD
@@ -30,7 +30,7 @@ $head Description$$
 These examples and speed tests are used to compare
 $href%
 	http://www.math.tu-dresden.de/~adol-c/%
-	Adolc
+	adolc_
 %$$
 with CppAD.
 They are located in the directory $code CppAD/Adolc$$.
@@ -62,10 +62,10 @@ $$
 
 
 $contents%
-	Adolc/Speed.cpp%
-	Adolc/Example.cpp%
-	Adolc/DetMinor.cpp%
-	Adolc/DetLu.cpp
+	adolc_/Speed.cpp%
+	adolc_/Example.cpp%
+	adolc_/DetMinor.cpp%
+	adolc_/DetLu.cpp
 %$$
 
 $end

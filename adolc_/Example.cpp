@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin ExampleAdolc.cpp$$
 $spell
-	Adolc
+	adolc_
 	Cpp
 $$
 
@@ -21,7 +21,7 @@ $section Compare Adolc and CppAD Results$$
 
 $comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%Adolc/Example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%adolc_/Example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
