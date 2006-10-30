@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -9,11 +8,10 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 /*
 $begin SpeedFadbad.cpp$$
 $spell
-	fadbad_
+	fadbad
 	Cpp
 $$
 
@@ -22,7 +20,7 @@ $section Run All The Fadbad Speed Comparison Tests$$
 
 $comment This file is in the Fadbad subdirectory$$ 
 $code
-$verbatim%fadbad_/Speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%fadbad/Speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

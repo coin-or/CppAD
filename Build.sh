@@ -280,7 +280,7 @@ then
 	Example/Example           >  ../Test.log
 	TestMore/TestMore         >> ../Test.log
 	Introduction/Introduction >> ../Test.log
-	fadbad_/Example            >> ../Test.log
+	fadbad/Example            >> ../Test.log
 	adolc/Example             >> ../Test.log
 	RunOMhelp.sh Doc
 	cat OMhelp.Doc.log        >> ../Test.log

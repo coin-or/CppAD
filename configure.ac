@@ -219,7 +219,7 @@ AC_CONFIG_FILES([
 	Makefile
 	adolc/Makefile 
 	Example/Makefile 
-	fadbad_/Makefile 
+	fadbad/Makefile 
 	GetStarted/Makefile 
 	Introduction/Makefile
 	PrintFor/Makefile

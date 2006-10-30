@@ -193,7 +193,7 @@ endif
 #
 # Did user specify a value for FADBAD_DIR in configure command line
 if CppAD_FADBAD
-FADBAD = fadbad_
+FADBAD = fadbad
 else
 FADBAD = 
 endif

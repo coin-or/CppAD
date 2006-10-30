@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin ExampleFadbad.cpp$$
 $spell
-	fadbad_
+	fadbad
 	Cpp
 $$
 
@@ -21,7 +21,7 @@ $section Compare Fadbad and CppAD Results$$
 
 $comment This file is in the Fadbad subdirectory$$ 
 $code
-$verbatim%fadbad_/Example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%fadbad/Example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

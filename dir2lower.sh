@@ -7,7 +7,7 @@ list="
 	Makefile.am
 	configure.ac
 	omh/fadbad.omh
-	fadbad_/*.cpp
+	fadbad/*.cpp
 "
 dollar='$'
 for file in $list 
@@ -15,8 +15,8 @@ do
 	echo $file
 	svn revert $file
 	sed < $file > dir2lower.tmp \
-		-e 's|Fadbad/|fadbad_/|g' \
-		-e 's|\([= 	][= 	]*\)Fadbad[ 	]*$|\1fadbad_|'
+		-e 's|fadbad_\([\/]\)|fadbad\1|g' \
+		-e 's|\([= 	\/][= 	\/]*\)fadbad_[ 	]*$|\1fadbad|'
 	diff $file dir2lower.tmp
 	mv dir2lower.tmp $file
 	ext=`echo $file | sed -e 's|.*\.||'`

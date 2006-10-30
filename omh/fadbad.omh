@@ -29,7 +29,7 @@ $head Description$$
 These examples and speed tests are used to compare
 $href%
 	http://www.imm.dtu.dk/fadbad.html/%
-	fadbad_
+	fadbad
 %$$
 with CppAD.
 They are located in the directory $code CppAD/fadbad_$$.
@@ -41,7 +41,7 @@ In a unix operating system (or in a Cygwin shell on an Microsoft system),
 you can compile link and run this list examples and 
 results comparison between Fadbad and CppAD using the following commands:
 $codep
-	cd CppAD/fadbad_
+	cd CppAD/fadbad
 	make  example
 	example
 $$
@@ -53,7 +53,7 @@ you can compile link and run the list of speed
 comparisons between CppAD and Fadbad
 using the following commands:
 $codep
-	cd CppAD/fadbad_
+	cd CppAD/fadbad
 	make  speed
 	speed
 $$
@@ -61,10 +61,10 @@ $$
 
 
 $contents%
-	fadbad_/Speed.cpp%
-	fadbad_/Example.cpp%
-	fadbad_/DetMinor.cpp%
-	fadbad_/DetLu.cpp
+	fadbad/Speed.cpp%
+	fadbad/Example.cpp%
+	fadbad/DetMinor.cpp%
+	fadbad/DetLu.cpp
 %$$
 
 $end

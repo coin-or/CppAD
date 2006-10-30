@@ -18,7 +18,7 @@ grep '^# *include *<CppAD/' \
 	Example/*.cpp \
 	Example/*.h \
 	adolc/*.cpp \
-	fadbad_/*.cpp \
+	fadbad/*.cpp \
 	TestMore/*.cpp \
 	Speed/*.cpp |\
 sed -e 's%[^<]*<%%' \
@@ -40,7 +40,7 @@ diff junk.1 junk.2
 #
 grep '^# *include *"\.\./Example' \
 	adolc/*.cpp    \
-	fadbad_/*.cpp   \
+	fadbad/*.cpp   \
 	TestMore/*.cpp \
 	Speed/*.cpp    | \
 sed -e 's%^[^"]*"\.\./%%' \
