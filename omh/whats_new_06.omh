@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	Adolc
 	Makefile
 	omh
 	config.h
@@ -69,6 +70,11 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 10-29$$
+Move the $code Adolc$$ directory to $code adolc$$
+and change all its files to use lower case names.
+$pre
+
+$$
 Change all the file in the $code omh$$ directory to 
 use lower case names.
 $pre

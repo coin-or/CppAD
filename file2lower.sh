@@ -7,7 +7,7 @@ then
 fi
 mode="$1"
 directory="adolc"
-extension="h"
+extension="cpp"
 #
 # map a set of file names to lower case
 if [ -e file2lower.mv ]
@@ -46,7 +46,8 @@ do
 	echo "s@$old@$new@g"  >> file2lower.sed
 	#
 	old=`echo $old | sed -e 's|.*\]||'`
-	echo "s@\"$old@\"$new@g"  >> file2lower.sed
+	new=`echo $new | sed -e 's|.*/||'`
+	echo "s@\\([ 	\"]\\)$old@\\1$new@g"  >> file2lower.sed
 done
 chmod +x file2lower.mv
 if [ "$mode" = "test" ]
