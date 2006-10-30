@@ -275,7 +275,7 @@ $index Adolc, unix$$
 If you have 
 $href%
 	http://www.math.tu-dresden.de/~adol-c/%
-	ADOLC
+	Adolc
 %$$
 installed on your system, you can 
 specify a value for $italic AdolcDir$$ in the 
@@ -288,11 +288,11 @@ is a valid way to reference $code adouble.h$$.
 In this case,
 after you execute the $xref/InstallUnix/make/make/$$ command,
 you can compare the correctness 
-and speed of your version of CppAD with version 1.9 of Adolc.
+and speed of your version of CppAD with Adolc.
 The commands
 $syntax%
-	Adolc/Example
-	Adolc/Speed
+	adolc/example
+	adolc/speed
 %$$
 will run both the speed and correctness tests for this comparison.
 $pre
@@ -302,15 +302,15 @@ If you are using Cygwin,
 you will have to add to following lines to the file
 $code .profile$$ in your home directory:
 $syntax%
-	PATH=%AdolcDir%/bin:@PATH
+	PATH=%AdolcDir%/bin:@{PATH}
 	export PATH
 %$$
 in order for Adolc to run properly.
 If $italic AdolcDir$$ begins with a disk specification,
 you must use the Cygwin format for the disk specification.
 For example, 
-if $code d:/ADOLC19$$ is the proper directory,
-$code /cygdrive/d/ADOLC19$$ should be used for $italic AdolcDir$$.
+if $code d:/adolc_base$$ is the proper directory,
+$code /cygdrive/d/adolc_base$$ should be used for $italic AdolcDir$$.
 
 $head FadbadDir$$
 $index Fadbad, unix$$
