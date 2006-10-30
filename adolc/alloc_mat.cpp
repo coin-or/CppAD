@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // END SHORT COPYRIGHT
 
 /*
-$begin AllocMat.cpp$$
+$begin alloc_mat.cpp$$
 $spell
 	Alloc
 	Cpp
@@ -23,7 +23,7 @@ $mindex AllocMat test example$$
 $section Example and Test of AllocMat Template Class$$
 
 $code
-$verbatim%adolc/AllocMat.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%adolc/alloc_mat.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

@@ -12,20 +12,20 @@
 # END SHORT COPYRIGHT
 # automake input file
 #
-noinst_PROGRAMS  = Example Speed 
+noinst_PROGRAMS  = example speed 
 #
 if CppAD_BOOSTVECTOR
-Example_CPPFLAGS = -I$(BOOST_DIR) \
+example_CPPFLAGS = -I$(BOOST_DIR) \
                    -I. -I$(top_builddir) -I$(ADOLC_DIR)/include 
-Speed_CPPFLAGS   = -I$(BOOST_DIR) \
+speed_CPPFLAGS   = -I$(BOOST_DIR) \
                    -I. -I$(top_builddir) -I$(ADOLC_DIR)/include 
 else
-Example_CPPFLAGS = -I. -I$(top_builddir) -I$(ADOLC_DIR)/include 
-Speed_CPPFLAGS   = -I. -I$(top_builddir) -I$(ADOLC_DIR)/include 
+example_CPPFLAGS = -I. -I$(top_builddir) -I$(ADOLC_DIR)/include 
+speed_CPPFLAGS   = -I. -I$(top_builddir) -I$(ADOLC_DIR)/include 
 endif
 #
-Example_CXXFLAGS = -g $(CPP_ERROR_WARN)
-Speed_CXXFLAGS   = -O2 -DNDEBUG $(CPP_ERROR_WARN)
+example_CXXFLAGS = -g $(CPP_ERROR_WARN)
+speed_CXXFLAGS   = -O2 -DNDEBUG $(CPP_ERROR_WARN)
 #
 LDADD            = -ladolc 
 AM_LDFLAGS       = -L$(ADOLC_DIR)/lib 
@@ -33,14 +33,14 @@ AM_LDFLAGS       = -L$(ADOLC_DIR)/lib
 # cancel the -DHAVE_CONGIF_H flag so adolc does not try to use it
 DEFS             =
 #
-Example_SOURCES  = Example.cpp \
-	AllocMat.cpp \
+example_SOURCES  = example_.cpp \
+	alloc_mat.cpp \
 	AllocMat.h \
-	AllocVec.cpp \
+	alloc_vec.cpp \
 	AllocVec.h \
-	DetLu.cpp \
-	DetMinor.cpp 
+	det_lu.cpp \
+	det_minor.cpp 
 #
-Speed_SOURCES    = Speed.cpp \
-	DetLu.cpp \
-	DetMinor.cpp 
+speed_SOURCES    = speed_.cpp \
+	det_lu.cpp \
+	det_minor.cpp 

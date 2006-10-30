@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // END SHORT COPYRIGHT
 
 /*
-$begin AllocVec.cpp$$
+$begin alloc_vec.cpp$$
 $spell
 	Vec
 	Alloc
@@ -25,7 +25,7 @@ $section Example and Test of AllocVec Template Class$$
 
 $comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%adolc/AllocVec.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%adolc/alloc_vec.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

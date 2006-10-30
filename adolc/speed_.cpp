@@ -22,7 +22,7 @@ $section Run All The Adolc Speed Comparison Tests$$
 
 $comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%adolc/Speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%adolc/speed_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

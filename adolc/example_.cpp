@@ -21,7 +21,7 @@ $section Compare Adolc and CppAD Results$$
 
 $comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%adolc/Example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%adolc/example_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

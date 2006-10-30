@@ -29,7 +29,7 @@ $index Adolc, Minor expand$$
 
 $comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%adolc/DetMinor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%adolc/det_minor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
