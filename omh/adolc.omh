@@ -62,8 +62,8 @@ $$
 
 
 $contents%
-	adolc/speed_.cpp%
-	adolc/example_.cpp%
+	adolc/speed.cpp%
+	adolc/example.cpp%
 	adolc/det_minor.cpp%
 	adolc/det_lu.cpp
 %$$

@@ -33,14 +33,14 @@ AM_LDFLAGS       = -L$(ADOLC_DIR)/lib
 # cancel the -DHAVE_CONGIF_H flag so adolc does not try to use it
 DEFS             =
 #
-example_SOURCES  = example_.cpp \
+example_SOURCES  = example.cpp \
 	alloc_mat.cpp \
-	AllocMat.h \
+	alloc_mat.hpp \
 	alloc_vec.cpp \
-	AllocVec.h \
+	alloc_vec.hpp \
 	det_lu.cpp \
 	det_minor.cpp 
 #
-speed_SOURCES    = speed_.cpp \
+speed_SOURCES    = speed.cpp \
 	det_lu.cpp \
 	det_minor.cpp 
