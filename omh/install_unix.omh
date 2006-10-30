@@ -59,21 +59,21 @@ $index download, unix$$
 Download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-06-10-29.cpl.tgz%$$
+$href%cppad-06-10-30.cpl.tgz%$$
 
 $subhead GPL License$$
-$href%cppad-06-10-29.gpl.tgz%$$
+$href%cppad-06-10-30.gpl.tgz%$$
 
 $head Extraction$$
 Use the command
 $syntax%
-	tar -xvzf cppad-06-10-29.%license%.tgz
+	tar -xvzf cppad-06-10-30.%license%.tgz
 %$$
 (where $italic license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-06-10-29
+	cppad-06-10-30
 %$$
 Note that $code 06-08-20$$ is the version number for CppAD.
 All of the commands below are to be executed starting from this
@@ -317,7 +317,7 @@ $index Fadbad, unix$$
 If you have
 $href%
 	http://www.imm.dtu.dk/fadbad.html/%
-	FADBAD++
+	Fadbad
 %$$
 installed on your system, you can 
 specify a value for $italic FadbadDir$$.
@@ -329,11 +329,11 @@ is a valid reference to $code badiff.h$$.
 In this case,
 after you execute the $xref/InstallUnix/make/make/$$ command,
 you can compare the correctness 
-and speed of your version of CppAD with FADBAD.
+and speed of your version of CppAD with Fadbad.
 The commands
 $syntax%
-	Fadbad/Example
-	Fadbad/Speed
+	fadbad_/example
+	fadbad_/speed
 %$$
 will run both the speed and correctness tests for this comparison.
 

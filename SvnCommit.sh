@@ -38,12 +38,21 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Fix license message in GPL version of Makefile.am
+log_entry="Move Fadbad to fadbad_ (remove underbar next time)
 
 SvnCommit.sh: file that make this commit.
-whats_new_06.omh: user's view of the changes.
-GplLicense.sh: fix overwrite of previous edits. 
-CheckIncludeDef.sh: ErrorHandle.h is speical because uses CppADCppADIncluded.
+config.h: update package version number.
+file2lower.sh: change Fadbad to fadbad_.
+Fadbad: delete all files in this directory.
+fadbad_: add all file in this directory.
+configure.ac: change Fadbad to fadbad_.
+dir2lower.sh: file that did the conversion.
+fadbad.omh: change Fadbad to fadbad_ and Example, Speed to lower case.
+adolc.omh: change Adolc, Example, and Speed to lower case (where should be).
+install_unix.omh: change Fadbad to fadbad_ and Example, Speed to lower case.
+CheckIncludeFile.sh: change Fadbad to fadbad_.
+Build.sh: change Fadbad to fadbad_.
+Makefile.am: change Fadbad to fadbad_.
 "
 # 
 add_list="
@@ -51,9 +60,18 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	omh/whats_new_06.omh
-	GplLicense.sh
-	CheckIncludeDef.sh
+	CppAD/config.h
+	file2lower.sh
+	Fadbad
+	fadbad_
+	configure.ac
+	dir2lower.sh
+	omh/fadbad.omh
+	omh/adolc.omh
+	omh/install_unix.omh
+	CheckIncludeFile.sh
+	Build.sh
+	Makefile.am
 "
 #
 delete_list="

@@ -65,7 +65,7 @@ dir_list="
 	CppAD
 	CppAD/local
 	Example
-	Fadbad
+	fadbad_
 	GetStarted
 	Introduction
 	omh

@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 $begin Adolc$$
 $spell
@@ -33,7 +31,7 @@ $href%
 	adolc
 %$$
 with CppAD.
-They are located in the directory $code CppAD/Adolc$$.
+They are located in the directory $code CppAD/adolc$$.
 Note that they can only be run under Unix 
 (or Cygwin on Microsoft windows).
 
@@ -42,9 +40,9 @@ In a unix operating system (or in a Cygwin shell on an Microsoft system),
 you can compile link and run this list examples and 
 results comparison between Adolc and CppAD using the following commands:
 $codep
-	cd CppAD/Adolc
-	make  Example
-	Example
+	cd CppAD/adolc
+	make  example
+	example
 $$
 
 
@@ -54,9 +52,9 @@ you can compile link and run the list of speed
 comparisons between CppAD and Adolc
 using the following commands:
 $codep
-	cd CppAD/Adolc
-	make  Speed
-	Speed
+	cd CppAD/adolc
+	make  speed
+	speed
 $$
 
 

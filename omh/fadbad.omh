@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 $begin Fadbad$$
 $spell
@@ -22,7 +20,8 @@ $spell
 	Speed Speed
 $$
 
-$mindex Fadbad compare$$
+$index Fadbad, compare$$
+$index compare, Fadbad$$
 $section Routines for Comparing CppAD with Fadbad$$
 
 
@@ -30,10 +29,10 @@ $head Description$$
 These examples and speed tests are used to compare
 $href%
 	http://www.imm.dtu.dk/fadbad.html/%
-	Fadbad
+	fadbad_
 %$$
 with CppAD.
-They are located in the directory $code CppAD/Fadbad$$.
+They are located in the directory $code CppAD/fadbad_$$.
 Note that they can only be run under Unix 
 (or Cygwin on Microsoft windows).
 
@@ -42,9 +41,9 @@ In a unix operating system (or in a Cygwin shell on an Microsoft system),
 you can compile link and run this list examples and 
 results comparison between Fadbad and CppAD using the following commands:
 $codep
-	cd CppAD/Fadbad
-	make  Example
-	Example
+	cd CppAD/fadbad_
+	make  example
+	example
 $$
 
 
@@ -54,18 +53,18 @@ you can compile link and run the list of speed
 comparisons between CppAD and Fadbad
 using the following commands:
 $codep
-	cd CppAD/Fadbad
-	make  Speed
-	Speed
+	cd CppAD/fadbad_
+	make  speed
+	speed
 $$
 
 
 
 $contents%
-	Fadbad/Speed.cpp%
-	Fadbad/Example.cpp%
-	Fadbad/DetMinor.cpp%
-	Fadbad/DetLu.cpp
+	fadbad_/Speed.cpp%
+	fadbad_/Example.cpp%
+	fadbad_/DetMinor.cpp%
+	fadbad_/DetLu.cpp
 %$$
 
 $end

@@ -12,7 +12,7 @@
 # END SHORT COPYRIGHT
 # automake input file
 #
-noinst_PROGRAMS  = Example Speed 
+noinst_PROGRAMS  = example speed 
 #
 if CppAD_BOOSTVECTOR
 AM_CPPFLAGS      = -I$(BOOST_DIR) \
@@ -23,15 +23,15 @@ endif
 #
 # Fadbad will not survive some of the error and warning flags that could be
 # in CPP_ERROR_WARN, so do not use them
-Example_CXXFLAGS = -g -Wno-deprecated  
-Speed_CXXFLAGS   = -O2 -DNDEBUG -Wno-deprecated  
+example_CXXFLAGS = -g -Wno-deprecated  
+speed_CXXFLAGS   = -O2 -DNDEBUG -Wno-deprecated  
 #
-Example_SOURCES  = \
+example_SOURCES  = \
 	Example.cpp \
 	DetLu.cpp \
 	DetMinor.cpp 
 #
-Speed_SOURCES    = \
-	Speed.cpp \
+speed_SOURCES    = \
+	speed.cpp \
 	DetLu.cpp \
 	DetMinor.cpp 

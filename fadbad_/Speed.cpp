@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin SpeedFadbad.cpp$$
 $spell
-	Fadbad
+	fadbad_
 	Cpp
 $$
 
@@ -22,7 +22,7 @@ $section Run All The Fadbad Speed Comparison Tests$$
 
 $comment This file is in the Fadbad subdirectory$$ 
 $code
-$verbatim%Fadbad/Speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%fadbad_/Speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
