@@ -20,7 +20,7 @@ $section Run All The Fadbad Speed Comparison Tests$$
 
 $comment This file is in the Fadbad subdirectory$$ 
 $code
-$verbatim%fadbad/Speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%fadbad/speed_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

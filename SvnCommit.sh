@@ -38,19 +38,9 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move fadbad to fadbad (underbar no longer needed)
+log_entry="Move fadbad/*.cpp to lower case names 
 
 SvnCommit.sh: file that make this commit.
-file2lower.sh: change Fadbad to fadbad.
-fadbad_: delete all files in this directory.
-fadbad: copy of files that were in fadbad_ directory.
-configure.ac: change fadbad_ to fadbad.
-dir2lower.sh: file that did this conversion.
-fadbad.omh: change fadbad_ to fadbad.
-CheckIncludeFile.sh: change fadbad_ to fadbad.
-Speed.cpp: change fadbad_ to fadbad.
-Build.sh: change Fadbad to fadbad_.
-Makefile.am: change Fadbad to fadbad_.
 "
 # 
 add_list="
@@ -58,16 +48,8 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	file2lower.sh
-	fadbad_
 	fadbad
-	configure.ac
-	dir2lower.sh
 	omh/fadbad.omh
-	CheckIncludeFile.sh
-	fadbad/Speed.cpp
-	Build.sh
-	Makefile.am
 "
 #
 delete_list="

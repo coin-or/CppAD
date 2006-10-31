@@ -28,7 +28,7 @@ $index Fadbad, Lu factor$$
 
 $comment This file is in the Fadbad subdirectory$$ 
 $code
-$verbatim%fadbad/DetLu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%fadbad/det_lu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

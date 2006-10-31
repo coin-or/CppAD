@@ -28,7 +28,7 @@ $index Fadbad, Minor expand$$
 
 $comment This file is in the Fadbad subdirectory$$ 
 $code
-$verbatim%fadbad/DetMinor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%fadbad/det_minor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

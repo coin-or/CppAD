@@ -27,11 +27,11 @@ example_CXXFLAGS = -g -Wno-deprecated
 speed_CXXFLAGS   = -O2 -DNDEBUG -Wno-deprecated  
 #
 example_SOURCES  = \
-	Example.cpp \
-	DetLu.cpp \
-	DetMinor.cpp 
+	example_.cpp \
+	det_lu.cpp \
+	det_minor.cpp 
 #
 speed_SOURCES    = \
-	speed.cpp \
-	DetLu.cpp \
-	DetMinor.cpp 
+	speed_.cpp \
+	det_lu.cpp \
+	det_minor.cpp 
