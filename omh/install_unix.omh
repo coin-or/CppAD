@@ -332,8 +332,8 @@ you can compare the correctness
 and speed of your version of CppAD with Fadbad.
 The commands
 $syntax%
-	fadbad_/example
-	fadbad_/speed
+	fadbad/example
+	fadbad/speed
 %$$
 will run both the speed and correctness tests for this comparison.
 
