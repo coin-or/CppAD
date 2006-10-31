@@ -61,8 +61,8 @@ $$
 
 
 $contents%
-	fadbad/speed_.cpp%
-	fadbad/example_.cpp%
+	fadbad/speed.cpp%
+	fadbad/example.cpp%
 	fadbad/det_minor.cpp%
 	fadbad/det_lu.cpp
 %$$

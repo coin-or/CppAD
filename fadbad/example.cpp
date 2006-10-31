@@ -21,7 +21,7 @@ $section Compare Fadbad and CppAD Results$$
 
 $comment This file is in the Fadbad subdirectory$$ 
 $code
-$verbatim%fadbad/example_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%fadbad/example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

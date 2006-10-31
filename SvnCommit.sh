@@ -38,9 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move fadbad/*.cpp to lower case names 
-
-SvnCommit.sh: file that make this commit.
+log_entry="Remove underbar from end of file names in fadbad/*_.cpp
 "
 # 
 add_list="
