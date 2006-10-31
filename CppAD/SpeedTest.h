@@ -156,7 +156,7 @@ $xref/ErrorHandler/$$
 
 $head Example$$
 $children%
-	speed_example/SpeedExample.cpp
+	speed_example/speed_example.cpp
 %$$
 The section $xref/SpeedExample.cpp/$$ contains an example usage
 of $code SpeedTest$$.

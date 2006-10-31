@@ -229,7 +229,7 @@ the $xref/SpeedExample.cpp/$$ example will be built.
 Once the $code make$$ command 
 has been executed, you can run this example by executing the command 
 $codep
-	speed_example/SpeedExample
+	speed_example/speed_example
 $$
 
 $head --with-profiling$$

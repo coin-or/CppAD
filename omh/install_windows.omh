@@ -103,10 +103,9 @@ The following steps will build the $xref/GetStarted.cpp/$$ example.
 Using Microsoft Visual C++,
 open the workspace $code GetStarted/GetStarted.sln$$
 in Visual Studio and then select $code Build | Build GetStarted.exe$$.
-Then in a Dos box, execute the following commands
+Then in a Dos box, execute the following command
 $codep
-	cd GetStarted\Debug
-	GetStarted
+	GetStarted\Debug\GetStarted
 $$
 
 $head Introduction$$
@@ -116,10 +115,9 @@ in the $xref/Introduction/$$ section.
 Using Microsoft Visual C++,
 open the workspace $code Introduction/Introduction.sln$$ in Visual Studio.
 Then select $code Build | Build Introduction.exe$$.
-Then in a Dos box, execute the following commands
+Then in a Dos box, execute the following command
 $codep
-	cd Introduction\Debug
-	Introduction
+	Introduction\Debug\Introduction
 $$
 
 $head Examples and Testing$$
@@ -130,10 +128,9 @@ and correctness tests.
 Using Microsoft Visual C++,
 open the workspace $code Example/Example.sln$$ in Visual Studio.
 Then select $code Build | Build Example.exe$$.
-Then in a Dos box, execute the following commands
+Then in a Dos box, execute the following command
 $codep
-	cd Example\Debug
-	Example
+	Example\Debug\Example
 $$
 
 $head More Correctness Testing$$
@@ -141,10 +138,9 @@ $index test more, windows$$
 Using Microsoft Visual C++,
 open the workspace $code TestMore/TestMore.sln$$
 in Visual Studio and then select $code Build | Build TestMore.exe$$.
-Then in a Dos box, execute the following commands
+Then in a Dos box, execute the following command
 $codep
-	cd TestMore\Debug
-	TestMore
+	TestMore\Debug\TestMore
 $$
 
 $head Speed Testing$$
@@ -155,8 +151,7 @@ open the workspace $code Speed/Speed.sln$$
 in Visual Studio and then select $code Build | Build Speed.exe$$.
 Then in a Dos box, execute the following commands
 $codep
-	cd Speed\Release
-	Speed
+	Speed\Release\Speed
 $$
 
 $head Printing During Forward Mode$$
@@ -167,20 +162,18 @@ open the workspace $code PrintFor/PrintFor.sln$$ in Visual Studio.
 Then select $code Build | Build PrintFor.exe$$.
 Then in a Dos box, execute the following commands
 $codep
-	cd PrintFor\Debug
-	PrintFor
+	PrintFor\Debug\PrintFor
 $$
 
 $head Speed Test Example$$
 $index SpeedTest, windows example$$
 $index example, windows SpeedTest$$
 Using Microsoft Visual C++,
-open the workspace $code speed_example/SpeedExample.sln$$ in Visual Studio.
-Then select $code Build | Build SpeedExample.exe$$.
+open the workspace $code speed_example/speed_example.sln$$ in Visual Studio.
+Then select $code Build | Build speed_example.exe$$.
 Then in a Dos box, execute the following commands
 $codep
-	cd speed_example\Debug
-	SpeedExample
+	speed_example\debug\speed_example
 $$
 
 $end

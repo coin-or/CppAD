@@ -1,4 +1,3 @@
-# BEGIN SHORT COPYRIGHT
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 #
@@ -9,14 +8,13 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# END SHORT COPYRIGHT
 # automake input file
 #
 # Microsoft project files
-EXTRA_DIST = SpeedExample.sln SpeedExample.vcproj
+EXTRA_DIST = speed_example.sln speed_example.vcproj
 #
-noinst_PROGRAMS       = SpeedExample
+noinst_PROGRAMS       = speed_example
 #
 AM_CPPFLAGS           = -I. -I$(top_builddir)
 AM_CXXFLAGS           = -g $(CPP_ERROR_WARN)
-SpeedExample_SOURCES  = SpeedExample.cpp 
+speed_example_SOURCES = speed_example.cpp 
