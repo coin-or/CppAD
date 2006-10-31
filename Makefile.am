@@ -179,7 +179,7 @@ endif
 #
 # Did user specify --with-SpeedExample
 if CppAD_SPEEDEXAMPLE
-SPEEDEXAMPLE = SpeedExample
+SPEEDEXAMPLE = speed_example
 else
 SPEEDEXAMPLE =
 endif

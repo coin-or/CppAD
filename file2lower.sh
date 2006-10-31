@@ -71,7 +71,7 @@ dir_list="
 	omh
 	PrintFor
 	Speed
-	SpeedExample
+	speed_example
 	TestMore
 "
 # list of extensions to edit with the sed script

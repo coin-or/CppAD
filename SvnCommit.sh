@@ -38,7 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Remove underbar from end of file names in fadbad/*_.cpp
+log_entry="Move SpeedExample directory to speed_example
 "
 # 
 add_list="
@@ -46,8 +46,16 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	fadbad
-	omh/fadbad.omh
+	SpeedExample
+	speed_example
+	file2lower.sh
+	CppAD/SpeedTest.h
+	CppAD/config.h
+	dir2lower.sh
+	omh/install_unix.omh
+	omh/install_windows.omh
+	Makefile.am
+	configure.ac
 "
 #
 delete_list="
