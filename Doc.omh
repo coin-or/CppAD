@@ -36,7 +36,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-06-10-29
+A Package for Differentiation of C++ Algorithms: cppad-06-11-01
 $$ 
 
 $head Syntax$$
@@ -59,8 +59,12 @@ CppAD generates an algorithm that computes its derivative values.
 $list number$$
 $href%http://www.coin-or.org/CppAD/%CppAD%$$
 uses operator overloading to compute derivatives of algorithms defined in C++.
-It is distributed under the $xref/License//GNU General Public License/$$
-by the $href%http://www.coin-or.org/foundation.html%COIN-OR Foundation%$$.
+It is distributed by the 
+$href%http://www.coin-or.org/foundation.html%COIN-OR Foundation%$$
+with the Common Public License 
+$href%http://www.opensource.org/licenses/cpl1.0.php%CPL%$$
+or the GNU General Public License
+$href%http://www.opensource.org/licenses/gpl-license.php%GPL%$$.
 Installation procedures are provided for both
 $xref/InstallUnix//Unix/$$ and $xref/InstallWindows//MS Windows/$$
 operating systems.
