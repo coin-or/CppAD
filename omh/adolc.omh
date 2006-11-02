@@ -62,6 +62,8 @@ $$
 $contents%
 	adolc/speed.cpp%
 	adolc/example.cpp%
+	adolc/alloc_vec.hpp%
+	adolc/alloc_mat.hpp%
 	adolc/det_minor.cpp%
 	adolc/det_lu.cpp
 %$$

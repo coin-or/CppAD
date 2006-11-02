@@ -69,6 +69,16 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-02$$
+The $code print_for$$ directory was referenced as $code PrintFor$$
+in the root CppAD $code Makefile.am$$ this has been fixed.
+$pre
+
+$$
+The documentation for the $cref/Adolc/$$ helper routines
+$cref/AllocVec/$$  and $cref/AllocMat/$$ were not being included.
+This has been fixed.
+
 $head 11-01$$
 Move the $code PrintFor$$ directory to $code print_for$$
 and change all its files to use lower case names. 

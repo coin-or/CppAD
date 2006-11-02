@@ -172,7 +172,7 @@ endif
 #
 # Did user specify --with-PrintFor
 if CppAD_PRINTFOR
-PRINTFOR = PrintFor
+PRINTFOR = print_for
 else
 PRINTFOR =
 endif

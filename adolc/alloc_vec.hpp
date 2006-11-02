@@ -1,7 +1,6 @@
-# ifndef CppADAllocVecIncluded
-# define CppADAllocVecIncluded
+# ifndef CPPAD_ALLOC_VEC_INCLUDED
+# define CPPAD_ALLOC_VEC_INCLUDED
 
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -12,7 +11,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 /*
 $begin AllocVec$$
 $spell
@@ -22,46 +20,55 @@ $$
 
 $section Vector Allocation Routine$$
 
-$table 
-$bold Syntax$$
-$cnext $syntax%AllocVec<%Type%> %v%(int %length%)%$$
-$rnext
-$cnext $syntax%%Type%& %v%[int %i%]%$$
-$rnext
-$cnext $syntax%(%Type%*) %v%$$
-$tend
-
-$fend 25$$
+$head Syntax$$
+$syntax%AllocVec<%Type%> %v%(%length%)%$$
+$pre
+$$
+$syntax%%v%[%i%]%$$
+$pre
+$$
+$syntax%(%Type%*) %v%$$
 
 $head Description$$
 The $code AllocVec$$ template class 
 can be used to allocate and automatically free vectors
 with an arbitrary type.
-$syntax%
 
-AllocVec<%Type%> %v%(int %length%)
-%$$
-This syntax allocates memory for a vector of the specified
-length and with elements of the specified type. The argument
-$italic length$$ must be greater than or equal to zero.
+$head Constructor$$
+The syntax
 $syntax%
-
-%Type%& %v%[int %i%]
+	AllocVec<%Type%> %v%(%length%)
 %$$
-This syntax returns a reference to the $th i$$ element in 
+allocates memory for a vector of the specified
+length and with elements of the specified type.
+The argument $italic length$$ has prototype
+$syntax%
+	int %length%
+%$$
+and must be greater than or equal to zero
+
+$head Element Access$$
+The syntax
+$syntax%
+	%v%[%i%]
+%$$
+returns a reference to the $th i$$ element in 
 the vector $italic v$$.
 The value $italic i$$ must be between zero and $syntax%%length%-1%$$
 where $italic length$$ is the value in the constructor for $italic v$$.
-$syntax%
+If it is not with in these bounds, a standard assert is generated.
 
-(%Type%*) %v%
+$head Pointer Access$$
+The syntax
+$syntax%
+	(%Type%*) %v%
 %$$
-This syntax returns a copy of the pointer to the 
-memory where the $italic length$$ elements of $italic v$$ are stored
-where $italic length$$ is the value in the constructor for $italic v$$.
+returns a pointer to the memory where the $italic length$$ 
+elements of $italic v$$ are stored.
+($italic length$$ is the value in the constructor for $italic v$$).
 
 $children%
-	Adolc/AllocVec.cpp
+	adolc/alloc_vec.cpp
 %$$
 
 $head Example$$

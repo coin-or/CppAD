@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -9,17 +8,18 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
-$begin alloc_mat.cpp$$
+$begin AllocMat.cpp$$
 $spell
+	Adolc
 	Alloc
 	Cpp
 	cstddef
 $$
 
-$mindex AllocMat test example$$
+$index Adolc, AllocMat$$
+$index AllocMat, adolc$$
 $section Example and Test of AllocMat Template Class$$
 
 $code

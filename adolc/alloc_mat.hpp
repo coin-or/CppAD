@@ -1,7 +1,6 @@
-# ifndef CppADAllocMatIncluded
-# define CppADAllocMatIncluded
+# ifndef CppAD_ALLOC_MAT_INCLUDED
+# define CppAD_ALLOC_MAT_INCLUDED
 
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -12,7 +11,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 /*
 $begin AllocMat$$
 $spell
@@ -24,48 +22,65 @@ $$
 
 $section Matrix Allocation Routine$$
 
-$table 
-$bold Syntax$$
-$cnext $syntax%AllocMat<%Type%> %M%(int %nr%, int %nc%)%$$
-$rnext
-$cnext $syntax%%Type%* %M%[int %i%]%$$
-$rnext
-$cnext $syntax%(%Type%**) %M%$$
-$tend
+$head Syntax$$
+$syntax%AllocMat<%Type%> %M%(%nr%, %nc%)%$$
+$pre
+$$
+$syntax%%p% = %M%[%i%]%$$
+$pre
+$$
+$syntax%(%Type%**) %M%$$
 
-$fend 25$$
 
 $head Description$$
 The $code AllocMat$$ template class 
 can be used to allocate and automatically free matrices
 with an arbitrary type.
-$syntax%
 
-AllocMat<%Type%> %M%(int %nr%, int %nc%)
-%$$
-This syntax allocates memory for an $italic nr$$
-by $italic nc$$ matrix 
-with elements of the specified type. The arguments
-$italic nr$$ and $italic nc$$ must be greater than or equal to zero.
+$head Constructor$$
 $syntax%
-
-%Type%* %M%[int %i%]
+	AllocMat<%Type%> %M%(%nr%, %nc%)
 %$$
-This syntax returns the $th i$$ row of the matrix $italic M$$.
-The value $italic i$$ must be between zero and $syntax%%nr%-1%$$
-where $italic nr$$ is the value in the constructor for $italic M$$.
+allocates memory for an $italic nr$$ by $italic nc$$ matrix 
+with elements of the specified type. 
+The arguments $italic nr$$ and $italic nc$$ have prototype
 $syntax%
-
-(%Type%**) %M%
+	int %nr%
+	int %nc%
 %$$
-This syntax returns a vector of length $italic nr$$
+and must be greater than or equal to zero.
+
+$head Row Access$$
+The syntax
+$syntax%
+	%p% = %M%[%i%]
+%$$
+returns a point to the $th i$$ row of the matrix $italic M$$.
+The argument $italic i$$ has prototype
+$syntax%
+	int %i%
+%$$
+and must have value $italic i$$ must be between zero and $syntax%%nr%-1%$$
+where $italic nr$$ is the value in the constructor for $italic M$$
+(or else a standard assert is generated).
+The return value has prototype
+$syntax%
+	%Type% *%p%
+%$$
+ 
+$head Matrix Access$$
+The syntax
+$syntax%
+	(%Type%**) %M%
+%$$
+returns a vector of length $italic nr$$
 each element of which points to a vector of length $italic nc$$ where
 the elements of the matrix $italic M$$ are stored.
 Here the values $italic nr$$ and $italic nc$$ are those
 used in the constructor for $italic M$$.
 
 $children%
-	Adolc/AllocMat.cpp
+	adolc/alloc_mat.cpp
 %$$
 
 $head Example$$

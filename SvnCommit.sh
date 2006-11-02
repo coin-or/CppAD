@@ -38,7 +38,19 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move PrintFor to print_for and change to lower case file names
+log_entry="Missing change to Makefile.am in previous commit.
+
+SvnCommit.sh: file that made this commit
+whats_new_06.omh: user's view of changes.
+alloc_mat.hpp: major improvement to documentation.
+speed.cpp: improve indexing.
+alloc_vec.cpp: improve indexing.
+alloc_mat.cpp: improve indexing.
+example.cpp: improve indexing.
+alloc_vec.hpp: major improvements to documentation.
+config.h: new version number.
+adolc.omh: include alloc_vec and alloc_mat in documentaiton.
+Makefile.am: The important fix, change PrintFor to print_for, is here.
 "
 # 
 add_list="
@@ -46,14 +58,16 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	CppAD/local/print_for.hpp
-	CppAD/config.h
-	configure.ac
-	omh/install_unix.omh
-	omh/install_windows.omh
 	omh/whats_new_06.omh
-	print_for
-	PrintFor
+	adolc/alloc_mat.hpp
+	adolc/speed.cpp
+	adolc/alloc_vec.cpp
+	adolc/alloc_mat.cpp
+	adolc/example.cpp
+	adolc/alloc_vec.hpp
+	CppAD/config.h
+	omh/adolc.omh
+	Makefile.am
 "
 #
 delete_list="

@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 /*
 $begin SpeedAdolc.cpp$$
 $spell
@@ -17,7 +15,9 @@ $spell
 	Cpp
 $$
 
-$mindex run all Adolc speed test$$
+$index Adolc, speed$$
+$index speed, Adolc$$
+
 $section Run All The Adolc Speed Comparison Tests$$
 
 $comment This file is in the Adolc subdirectory$$ 

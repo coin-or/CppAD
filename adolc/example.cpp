@@ -17,6 +17,8 @@ $spell
 $$
 
 $index Adolc, compare$$
+$index compare, Adolc$$
+
 $section Compare Adolc and CppAD Results$$
 
 $comment This file is in the Adolc subdirectory$$ 
