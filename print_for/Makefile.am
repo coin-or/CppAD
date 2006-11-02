@@ -13,9 +13,9 @@
 # automake input file
 #
 # Microsoft project files
-EXTRA_DIST        = PrintFor.sln PrintFor.vcproj
+EXTRA_DIST        = print_for.sln print_for.vcproj
 #
-noinst_PROGRAMS   = PrintFor
+noinst_PROGRAMS   = print_for
 #
 if CppAD_BOOSTVECTOR
 AM_CPPFLAGS       = -I$(BOOST_DIR) \
@@ -26,4 +26,4 @@ endif
 #
 AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #
-PrintFor_SOURCES = PrintFor.cpp
+print_for_SOURCES = print_for.cpp

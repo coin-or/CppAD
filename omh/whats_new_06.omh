@@ -69,6 +69,14 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-01$$
+Move the $code PrintFor$$ directory to $code print_for$$
+and change all its files to use lower case names. 
+
+$head 10-31$$
+Move the $code SpeedExample$$ directory to $code speed_example$$
+and change all its files to use lower case names. 
+
 $head 10-29$$
 Move the $code Adolc$$ directory to $code adolc$$
 and change all its files to use lower case names.

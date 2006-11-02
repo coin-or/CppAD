@@ -18,9 +18,8 @@ $index forward, mode print$$
 $index example, print forward mode$$
 $index print, example forward mode$$
 
-$comment This file is in the PrintFor subdirectory$$
 $code
-$verbatim%PrintFor/PrintFor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%print_for/print_for.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

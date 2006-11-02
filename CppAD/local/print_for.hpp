@@ -85,7 +85,7 @@ code is executed.
 
 $head Example$$
 $children%
-	PrintFor/PrintFor.cpp
+	print_for/print_for.cpp
 %$$
 The program
 $xref/PrintFor.cpp/$$

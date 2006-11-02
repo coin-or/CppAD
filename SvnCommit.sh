@@ -38,7 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move SpeedExample directory to speed_example
+log_entry="Move PrintFor to print_for and change to lower case file names
 "
 # 
 add_list="
@@ -46,16 +46,14 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	SpeedExample
-	speed_example
-	file2lower.sh
-	CppAD/SpeedTest.h
+	CppAD/local/print_for.hpp
 	CppAD/config.h
-	dir2lower.sh
+	configure.ac
 	omh/install_unix.omh
 	omh/install_windows.omh
-	Makefile.am
-	configure.ac
+	omh/whats_new_06.omh
+	print_for
+	PrintFor
 "
 #
 delete_list="
