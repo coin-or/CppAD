@@ -14,10 +14,10 @@
 # automake input file
 #
 # Microsoft project files
-EXTRA_DIST          = GetStarted.sln GetStarted.vcproj
+EXTRA_DIST          = get_started.sln get_started.vcproj
 #
-noinst_PROGRAMS     = GetStarted 
-noinst_DATA         = GetStarted.out
+noinst_PROGRAMS     = get_started 
+noinst_DATA         = get_started.out
 #
 if CppAD_BOOSTVECTOR
 AM_CPPFLAGS         = -I$(BOOST_DIR) \
@@ -28,7 +28,7 @@ endif
 #
 AM_CXXFLAGS         = -g $(CPP_ERROR_WARN)
 #
-GetStarted_SOURCES  = GetStarted.cpp
+get_started_SOURCES = get_started.cpp
 
-GetStarted.out : GetStarted$(EXEEXT)
-	./GetStarted > GetStarted.out
+get_started.out : get_started$(EXEEXT)
+	./get_started > get_started.out
