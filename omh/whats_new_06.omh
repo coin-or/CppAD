@@ -78,6 +78,11 @@ $$
 The documentation for the $cref/Adolc/$$ helper routines
 $cref/AllocVec/$$  and $cref/AllocMat/$$ were not being included.
 This has been fixed.
+$pre
+
+$$
+Move the $code GetStarted$$ directory to $code get_started$$
+and change all its files to use lower case names. 
 
 $head 11-01$$
 Move the $code PrintFor$$ directory to $code print_for$$

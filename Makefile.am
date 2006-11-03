@@ -137,7 +137,7 @@ nobase_myinclude_HEADERS =  \
 #
 # Did user specify --with-Example
 if CppAD_GETSTARTED
-GETSTARTED = GetStarted
+GETSTARTED = get_started
 else
 GETSTARTED =
 endif

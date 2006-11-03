@@ -38,19 +38,15 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Missing change to Makefile.am in previous commit.
+log_entry="Move GetStarted to get_started and change file names to lower case.
 
 SvnCommit.sh: file that made this commit
 whats_new_06.omh: user's view of changes.
-alloc_mat.hpp: major improvement to documentation.
-speed.cpp: improve indexing.
-alloc_vec.cpp: improve indexing.
-alloc_mat.cpp: improve indexing.
-example.cpp: improve indexing.
-alloc_vec.hpp: major improvements to documentation.
-config.h: new version number.
-adolc.omh: include alloc_vec and alloc_mat in documentaiton.
-Makefile.am: The important fix, change PrintFor to print_for, is here.
+config.h: update version number.
+configure.ac: change GetStarted to get_started (when referring to file).
+install_unix.omh: change GetStarted to get_started (when referring to file).
+install_windows.omh: change GetStarted to get_started (when referring to file).
+Makefile.am: change GetStarted to get_started (when referring to file).
 "
 # 
 add_list="
@@ -59,14 +55,10 @@ add_list="
 change_list="
 	SvnCommit.sh
 	omh/whats_new_06.omh
-	adolc/alloc_mat.hpp
-	adolc/speed.cpp
-	adolc/alloc_vec.cpp
-	adolc/alloc_mat.cpp
-	adolc/example.cpp
-	adolc/alloc_vec.hpp
 	CppAD/config.h
-	omh/adolc.omh
+	configure.ac
+	omh/install_unix.omh
+	omh/install_windows.omh
 	Makefile.am
 "
 #
