@@ -135,7 +135,7 @@ int main(void)
 $head Output$$
 The program above will generate the following output:
 $code
-$verbatim%GetStarted/GetStarted.out%$$
+$verbatim%get_started/get_started.out%$$
 $$
 $end
 */
