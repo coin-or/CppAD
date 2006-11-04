@@ -70,7 +70,7 @@ dir_list="
 	Introduction
 	omh
 	PrintFor
-	speed_
+	speed
 	speed_example
 	TestMore
 "

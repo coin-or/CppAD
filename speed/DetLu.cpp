@@ -24,7 +24,7 @@ $section Determinant by Lu Factor and Solve: Speed Test$$
 
 $comment This file is in the Speed subdirectory$$ 
 $code
-$verbatim%speed_/DetLu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/DetLu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

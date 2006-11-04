@@ -38,7 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move Speed directory to speed_.
+log_entry="Move speed_ directory to speed.
 
 SvnCommit.sh: file that made this commit.
 "
@@ -49,14 +49,13 @@ add_list="
 change_list="
 	SvnCommit.sh
 	file2lower.sh
-	Speed
 	configure.ac
-	dir2lower.sh
 	omh/speed.omh
 	omh/install_unix.omh
 	omh/install_windows.omh
 	CheckIncludeFile.sh
 	speed_
+	speed
 "
 #
 delete_list="

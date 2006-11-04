@@ -23,7 +23,7 @@ $index Lu, speed$$
 $index speed, Lu$$
 
 $code
-$verbatim%speed_/LuSolve.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/LuSolve.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

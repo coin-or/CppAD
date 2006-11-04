@@ -224,7 +224,7 @@ AC_CONFIG_FILES([
 	Introduction/Makefile
 	print_for/Makefile
 	speed_example/Makefile
-	speed_/Makefile 
+	speed/Makefile 
 	TestMore/Makefile 
 ])
 

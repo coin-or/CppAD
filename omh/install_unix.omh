@@ -207,7 +207,7 @@ the $xref/Speed.cpp/$$ program
 Once the $code make$$ command 
 has been executed, you can run these speed tests by executing the command 
 $codep
-	speed_/Speed
+	speed/Speed
 $$
 
 $head --with-PrintFor$$
@@ -237,11 +237,11 @@ $index profile, unix$$
 CppAD profile files that aid profiling with the GNU C++ compiler.
 If the command line argument $code --with-profiling$$ is specified
 (in addition to the argument $code --with-Speed$$)
-a program called $code speed_/Speed_p$$ is generated.
+a program called $code speed/Speed_p$$ is generated.
 In this case, the following commands will profile the speed tests:
 $codep
-	speed_/Speed_p
-	gprof -b speed_/Speed_p
+	speed/Speed_p
+	gprof -b speed/Speed_p
 $$ 
 If you are using a windows operating system with Cygwin or MinGW, 
 you may have to replace $code Speed_p$$ by $code Speed_p.exe$$
@@ -256,7 +256,7 @@ This can make the $code gprof$$ output hard to read
 You can remove the template parameters and argument types from the 
 routine names by executing the following command
 $codep
-	gprof -b speed_/Speed_p | sed -f speed_/gprof.sed
+	gprof -b speed/Speed_p | sed -f speed/gprof.sed
 $$
 
 $head --with-stdvector$$
