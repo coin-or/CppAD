@@ -38,15 +38,17 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move GetStarted to get_started and change file names to lower case.
+log_entry="Missing from previous commit.
 
-SvnCommit.sh: file that made this commit
-whats_new_06.omh: user's view of changes.
-config.h: update version number.
-configure.ac: change GetStarted to get_started (when referring to file).
-install_unix.omh: change GetStarted to get_started (when referring to file).
-install_windows.omh: change GetStarted to get_started (when referring to file).
-Makefile.am: change GetStarted to get_started (when referring to file).
+SvnCommit.sh: file that made this commit.
+whats_new_06.omh: user's view of the changes.
+config.h: undate current version for subversion method of distribution.
+print_for.cpp: include output in documentaiton (and correct spelling errors).
+get_started.cpp: include output in documentaiton.
+Makefile.am: remove unecessary reference to BOOST_DIR.
+Build.sh: put omhelp before make and remove GetStarted from default build.
+speed_example.cpp: minor edit to text before output.
+example_list.omh: include PrintFor.cpp and SpeedExample.cpp in list.
 "
 # 
 add_list="
@@ -56,10 +58,12 @@ change_list="
 	SvnCommit.sh
 	omh/whats_new_06.omh
 	CppAD/config.h
-	configure.ac
-	omh/install_unix.omh
-	omh/install_windows.omh
-	Makefile.am
+	print_for/print_for.cpp
+	get_started/get_started.cpp
+	get_started/Makefile.am
+	Build.sh
+	speed_example/speed_example.cpp
+	omh/example_list.omh
 "
 #
 delete_list="

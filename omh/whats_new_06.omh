@@ -69,6 +69,16 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-04$$
+Put text written to standard output in the documentation for the
+$cref/GetStarted.cpp/GetStarted.cpp/Output/$$ and 
+$cref/PrintFor.cpp/PrintFor.cpp/Output/$$ examples.
+(Now documentation can be built from a subversion checkout with out
+needing to execute automake.)
+The $code PrintFor.cpp$$ and 
+$cref/SpeedExample.cpp/$$ examples were missing in $cref/ListAllExamples/$$
+(which has been fixed). 
+
 $head 11-02$$
 The $code print_for$$ directory was referenced as $code PrintFor$$
 in the root CppAD $code Makefile.am$$ this has been fixed.

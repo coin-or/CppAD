@@ -1,4 +1,3 @@
-# BEGIN SHORT COPYRIGHT
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 #
@@ -9,7 +8,6 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# END SHORT COPYRIGHT
 #
 # automake input file
 #
@@ -17,18 +15,8 @@
 EXTRA_DIST          = get_started.sln get_started.vcproj
 #
 noinst_PROGRAMS     = get_started 
-noinst_DATA         = get_started.out
 #
-if CppAD_BOOSTVECTOR
-AM_CPPFLAGS         = -I$(BOOST_DIR) \
-                      -I. -I$(top_builddir) 
-else
 AM_CPPFLAGS         = -I. -I$(top_builddir) 
-endif
-#
 AM_CXXFLAGS         = -g $(CPP_ERROR_WARN)
 #
 get_started_SOURCES = get_started.cpp
-
-get_started.out : get_started$(EXEEXT)
-	./get_started > get_started.out

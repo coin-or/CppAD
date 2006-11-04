@@ -65,7 +65,7 @@ A general purpose polynomial evaluation routine is documented and
 distributed with CppAD (see $xref/Poly/$$).
 
 
-$head Source Code$$
+$head Program$$
 $codep */
 #include <iostream>      // standard input/output 
 #include <vector>        // standard vector
@@ -133,9 +133,9 @@ int main(void)
 }
 /* $$
 $head Output$$
-The program above will generate the following output:
-$code
-$verbatim%get_started/get_started.out%$$
+Executing the program above will generate the following output:
+$codep
+	y'(3) computed by CppAD = 142
 $$
 $end
 */

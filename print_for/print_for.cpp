@@ -11,6 +11,15 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 $begin PrintFor.cpp$$
+$spell
+	std::cout
+	CppADvector
+	endl
+	namespace
+	newline
+	\nx
+	VecAD
+$$
 
 $section Printing During Forward Mode: Example and Test$$
 
@@ -18,14 +27,8 @@ $index forward, mode print$$
 $index example, print forward mode$$
 $index print, example forward mode$$
 
-$code
-$verbatim%print_for/print_for.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-$$
-
-$end
-*/
-// BEGIN PROGRAM
-
+$head Program$$
+$codep */
 # include <CppAD/CppAD.h>
 
 int main(void)
@@ -66,7 +69,7 @@ int main(void)
 
 	cout << "x[0] = 1" << endl; 
 	cout << "x[0] + x[1] = 2" << endl; 
-	cout << "This test pases if the two lines above repate below:" << endl;
+	cout << "Test passes if two lines above repeat below:" << endl;
 	f.Forward(0, x);	
 
 	// print a new line after output
@@ -74,5 +77,16 @@ int main(void)
 
 	return 0;
 }
+/* $$
 
-// END PROGRAM
+$head Output$$
+Executing the program above generates the following output:
+$codep
+	x[0] = 1
+	x[0] + x[1] = 2
+	Test passes if two lines above repeat below:
+	x[0] = 1
+	x[0] + x[1] = 2
+$$
+$end
+*/

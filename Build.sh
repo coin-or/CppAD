@@ -74,6 +74,30 @@ then
 	fi
 fi
 #
+# omhelp
+#
+if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
+then
+	echo "Build.sh omhelp"
+	#
+	echo "RunOMhelp.sh Dev"
+	if ! ./RunOMhelp.sh Dev
+	then
+		exit 1
+	fi
+	#
+	echo "RunOMhelp.sh Doc"
+	if ! ./RunOMhelp.sh Doc
+	then
+		exit 1
+	fi
+	#
+	if [ "$1" != "all" ]
+	then
+		exit 0
+	fi
+fi
+#
 # automake
 #
 if [ "$1" = "automake" ] || [ "$1" = "all" ]
@@ -116,16 +140,19 @@ then
 		echo "Build.sh configure"
 	fi
 	#
-	TEST="--with-GetStarted"
+	TEST=""
 	if [ "$1" = "configure" ] && [ "$2" == "test" ]
 	then
-		TEST="$TEST --with-Introduction"
-		TEST="$TEST --with-Example"
-		TEST="$TEST --with-TestMore"
-		TEST="$TEST --with-Speed"
-		TEST="$TEST --with-PrintFor"
-		TEST="$TEST --with-SpeedExample"
-		TEST="$TEST --with-profiling"
+		TEST="
+			--with-GetStarted
+			--with-Introduction
+			--with-Example
+			--with-TestMore
+			--with-Speed
+			--with-PrintFor
+			--with-SpeedExample
+			--with-profiling
+		"
 		if [ -e $ADOLC_DIR/include/adolc ]
 		then
 			TEST="$TEST ADOLC_DIR=$ADOLC_DIR"
@@ -166,30 +193,6 @@ then
 	#
 	echo "make"
 	make
-	#
-	if [ "$1" != "all" ]
-	then
-		exit 0
-	fi
-fi
-#
-# omhelp
-#
-if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
-then
-	echo "Build.sh omhelp"
-	#
-	echo "RunOMhelp.sh Dev"
-	if ! ./RunOMhelp.sh Dev
-	then
-		exit 1
-	fi
-	#
-	echo "RunOMhelp.sh Doc"
-	if ! ./RunOMhelp.sh Doc
-	then
-		exit 1
-	fi
 	#
 	if [ "$1" != "all" ]
 	then
@@ -350,11 +353,11 @@ fi
 echo "option"
 echo "------"
 echo "version        update configure.ac and Doc.omh version number"
+echo "omhelp         build all the documentation in Doc & Dev directories"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
 echo "configure      excludes --with-* except GetStarted and Introduction"
 echo "configure test includes all the possible options except PREFIX_DIR"
 echo "make           use make to build all of the requested targets"
-echo "omhelp         build all the documentation in Doc & Dev directories"
 echo "dist           create the distribution file cppad-version.cpl.tgz"
 echo "test           unpack *.cpl.tgz, compile, run tests, result in Test.log"
 echo "gpl+dos        create ./*.gpl.tgz, ./*.gpl.zip, and ./*.cpl.zip"

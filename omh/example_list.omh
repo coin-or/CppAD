@@ -147,6 +147,7 @@ $rref Piecewise.cpp$$
 $rref Poly.cpp$$
 $rref Pow.cpp$$
 $rref PowInt.cpp$$
+$rref PrintFor.cpp$$
 $rref RevOne.cpp$$
 $rref RevSparseHes.cpp$$
 $rref RevSparseJac.cpp$$
@@ -161,6 +162,7 @@ $rref SeqProperty.cpp$$
 $rref SimpleVector.cpp$$
 $rref Sin.cpp$$
 $rref Sinh.cpp$$
+$rref SpeedExample.cpp$$
 $rref Sqrt.cpp$$
 $rref StackMachine.cpp$$
 $rref Sub.cpp$$

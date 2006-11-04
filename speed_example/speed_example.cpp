@@ -65,8 +65,8 @@ int main(void)
 /* $$
 
 $head Output$$
-Executing of the program above resulted in the following
-output (the rates will be different on your system):
+Executing of the program above generated the following output 
+(the rates will be different for each particular system):
 $codep
 	double: c[*] = a[*] + b[*]
 	size = 10  rate = 14,122,236
