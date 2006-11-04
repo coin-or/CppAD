@@ -21,7 +21,7 @@ list="
 dollar='$'
 for file in $list 
 do
-if [ ! -d "$file" ]
+if [ ! -d "$file" ] && [ "$file" != "$new/Makefile.am" ]
 then
 	echo $file
 	svn revert $file

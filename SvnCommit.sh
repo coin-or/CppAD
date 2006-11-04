@@ -38,17 +38,9 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Missing from previous commit.
+log_entry="Move Speed directory to speed_.
 
 SvnCommit.sh: file that made this commit.
-whats_new_06.omh: user's view of the changes.
-config.h: undate current version for subversion method of distribution.
-print_for.cpp: include output in documentaiton (and correct spelling errors).
-get_started.cpp: include output in documentaiton.
-Makefile.am: remove unecessary reference to BOOST_DIR.
-Build.sh: put omhelp before make and remove GetStarted from default build.
-speed_example.cpp: minor edit to text before output.
-example_list.omh: include PrintFor.cpp and SpeedExample.cpp in list.
 "
 # 
 add_list="
@@ -56,14 +48,15 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	omh/whats_new_06.omh
-	CppAD/config.h
-	print_for/print_for.cpp
-	get_started/get_started.cpp
-	get_started/Makefile.am
-	Build.sh
-	speed_example/speed_example.cpp
-	omh/example_list.omh
+	file2lower.sh
+	Speed
+	configure.ac
+	dir2lower.sh
+	omh/speed.omh
+	omh/install_unix.omh
+	omh/install_windows.omh
+	CheckIncludeFile.sh
+	speed_
 "
 #
 delete_list="
@@ -83,6 +76,8 @@ echo "$this_branch: $log_entry" > SvnCommit.log
 count=0
 for file in $add_list $change_list
 do
+if [ ! -d $file ] 
+then
 	count=`expr $count + 1`
 	ext=`echo $file | sed -e "s/.*\././"`
 	if \
@@ -100,6 +95,7 @@ do
 		sed -f SvnCommit.sed < junk.$count > $file
 		diff junk.$count $file
 	fi
+fi
 done
 for file in $add_list
 do

@@ -59,21 +59,21 @@ $index download, unix$$
 Download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-06-11-03.cpl.tgz%$$
+$href%cppad-06-11-04.cpl.tgz%$$
 
 $subhead GPL License$$
-$href%cppad-06-11-03.gpl.tgz%$$
+$href%cppad-06-11-04.gpl.tgz%$$
 
 $head Extraction$$
 Use the command
 $syntax%
-	tar -xvzf cppad-06-11-03.%license%.tgz
+	tar -xvzf cppad-06-11-04.%license%.tgz
 %$$
 (where $italic license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-06-11-03
+	cppad-06-11-04
 %$$
 Note that $code 06-08-20$$ is the version number for CppAD.
 All of the commands below are to be executed starting from this
@@ -207,7 +207,7 @@ the $xref/Speed.cpp/$$ program
 Once the $code make$$ command 
 has been executed, you can run these speed tests by executing the command 
 $codep
-	Speed/Speed
+	speed_/Speed
 $$
 
 $head --with-PrintFor$$
@@ -237,11 +237,11 @@ $index profile, unix$$
 CppAD profile files that aid profiling with the GNU C++ compiler.
 If the command line argument $code --with-profiling$$ is specified
 (in addition to the argument $code --with-Speed$$)
-a program called $code Speed/Speed_p$$ is generated.
+a program called $code speed_/Speed_p$$ is generated.
 In this case, the following commands will profile the speed tests:
 $codep
-	Speed/Speed_p
-	gprof -b Speed/Speed_p
+	speed_/Speed_p
+	gprof -b speed_/Speed_p
 $$ 
 If you are using a windows operating system with Cygwin or MinGW, 
 you may have to replace $code Speed_p$$ by $code Speed_p.exe$$
@@ -256,7 +256,7 @@ This can make the $code gprof$$ output hard to read
 You can remove the template parameters and argument types from the 
 routine names by executing the following command
 $codep
-	gprof -b Speed/Speed_p | sed -f Speed/gprof.sed
+	gprof -b speed_/Speed_p | sed -f speed_/gprof.sed
 $$
 
 $head --with-stdvector$$

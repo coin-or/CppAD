@@ -39,24 +39,24 @@ $code --with-Speed$$ command line option included.
 You can then compile link and run the speed 
 tests with the following commands (relative to the distribution directory):
 $codep
-	cd Speed
+	cd speed_
 	make 
-	./Speed
+	./speed_
 $$
 
 $head Windows$$
 In Microsoft Visual Studio open the project file 
-$code Speed/Speed.sln$$
+$code speed_/Speed.sln$$
 (relative to the distribution directory).
 Then set the configuration to the $code Release$$ version.
 Then select $code Build | Speed$$.
 
 $contents%
-	Speed/Speed.cpp%
-	Speed/DetMinor.cpp%
-	Speed/DetLu.cpp%
-	Speed/Ode.cpp%
-	Speed/LuSolve.cpp
+	speed_/Speed.cpp%
+	speed_/DetMinor.cpp%
+	speed_/DetLu.cpp%
+	speed_/Ode.cpp%
+	speed_/LuSolve.cpp
 %$$
 
 $end
