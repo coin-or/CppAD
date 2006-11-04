@@ -6,7 +6,7 @@ then
 	exit 1
 fi
 mode="$1"
-directory="adolc"
+directory="speed"
 extension="cpp"
 #
 # map a set of file names to lower case
@@ -61,18 +61,10 @@ fi
 # list of directories to edit with the sed script
 dir_list="
 	.
-	adolc
 	CppAD
 	CppAD/local
-	Example
-	fadbad
-	GetStarted
-	Introduction
 	omh
-	PrintFor
-	speed
-	speed_example
-	TestMore
+	$directory
 "
 # list of extensions to edit with the sed script
 ext_list="
