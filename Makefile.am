@@ -158,7 +158,7 @@ endif
 #
 # Did user specify --with-TestMore
 if CppAD_TESTMORE
-TESTMORE = TestMore
+TESTMORE = test_more
 else
 TESTMORE =
 endif
