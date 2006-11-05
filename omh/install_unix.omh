@@ -195,7 +195,7 @@ another extensive set of correctness tests will be compiled by the
 $xref/InstallUnix/make/make/$$ command. Once the $code make$$ command 
 has been executed, you can run these tests by executing the command 
 $codep
-	TestMore/TestMore
+	test_more/TestMore
 $$
 
 $head --with-Speed$$

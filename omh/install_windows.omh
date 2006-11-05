@@ -136,11 +136,11 @@ $$
 $head More Correctness Testing$$
 $index test more, windows$$
 Using Microsoft Visual C++,
-open the workspace $code TestMore/TestMore.sln$$
+open the workspace $code test_more/TestMore.sln$$
 in Visual Studio and then select $code Build | Build TestMore.exe$$.
 Then in a Dos box, execute the following command
 $codep
-	TestMore\Debug\TestMore
+	test_more\Debug\TestMore
 $$
 
 $head Speed Testing$$

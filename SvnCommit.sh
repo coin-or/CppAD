@@ -38,18 +38,14 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Remove references to Size and Memory deprecated functions.
+log_entry="Move TestMore directory to test_more.
 
 SvnCommit.sh: file that made this commit.
-whats_new_06.omh: user's view of changes.
-config.h: update version number.
-install_unix.omh: correct some references Speed -> speed.
-install_windos.omh: change some references Debug -> debug.
-seq_property.omh: correct some references var_size -> size_var.
-det_minor.cpp: remove references to f.Size() and f.Memory().
-ode.cpp: remove references to f.Size() and f.Memory().
-lu_solve.cpp: remove references to f.Size() and f.Memory().
-det_lu.cpp: remove references to f.Size() and f.Memory().
+configure.ac: change TestMore to test_more.
+dir2lower.sh: untested improvement to automatic conversion.
+install_unix.omh: change TestMore to test_more.
+install_windows.omh: change TestMore to test_more.
+CheckIncludeFile.sh: change TestMore to test_more.
 "
 # 
 add_list="
@@ -57,15 +53,13 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	omh/whats_new_06.omh
-	CppAD/config.h
+	configure.ac
+	dir2lower.sh
 	omh/install_unix.omh
 	omh/install_windows.omh
-	omh/seq_property.omh
-	speed/det_minor.cpp
-	speed/ode.cpp
-	speed/lu_solve.cpp
-	speed/det_lu.cpp
+	CheckIncludeFile.sh
+	TestMore
+	test_more
 "
 #
 delete_list="

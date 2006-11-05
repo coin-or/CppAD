@@ -23,22 +23,21 @@ for file in $list
 do
 if [ ! -d "$file" ] && [ "$file" != "$new/Makefile.am" ]
 then
-	echo $file
-	svn revert $file
-	sed < $file > dir2lower.tmp \
-		-e "s|\([^-]\)$old\([\/]\)|\1$new\2|g" \
-		-e "s|^$old\([\/]\)|$new\1|g" \
-		-e "s|\([= 	\/][= 	\/]*\)$old[ 	]*$|\1$new|"
-	diff $file dir2lower.tmp
-	mv dir2lower.tmp $file
 	ext=`echo $file | sed -e 's|.*\.||'`
-	if [ "$ext" = "sh" ]
+	if [ "$ext" != "sln" ] && [ "$ext" != "vcproj" ]
 	then
-		chmod +x $file
-	fi
-	if [ "$ext" = "sln" ] || [ "$ext" = "vcproj" ]
-	then
-		unix2dos $file
+		echo $file
+		svn revert $file
+		sed < $file > dir2lower.tmp \
+			-e "s|\([^-]\)$old\([\/]\)|\1$new\2|g" \
+			-e "s|^$old\([\/]\)|$new\1|g" \
+			-e "s|\([= 	\/][= 	\/]*\)$old[ 	]*$|\1$new|"
+		diff $file dir2lower.tmp
+		mv dir2lower.tmp $file
+		if [ "$ext" = "sh" ]
+		then
+			chmod +x $file
+		fi
 	fi
 fi
 done
