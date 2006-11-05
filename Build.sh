@@ -118,10 +118,16 @@ then
 	autoheader
 	#
 	echo "autoconf"
-	autoconf
+	if ! autoconf
+	then
+		exit 1
+	fi
 	#
 	echo "automake -add-missing"
-	automake --add-missing
+	if ! automake --add-missing
+	then
+		exit 1
+	fi
 	#
 	if [ "$1" != "all" ]
 	then
@@ -192,7 +198,10 @@ then
 	echo "Build.sh make"
 	#
 	echo "make"
-	make
+	if ! make
+	then
+		exit 1
+	fi
 	#
 	if [ "$1" != "all" ]
 	then
@@ -225,7 +234,10 @@ then
 	done
 	#
 	echo "make dist"
-	make dist
+	if ! make dist
+	then
+		exit 1
+	fi
 	#
 	if [ ! -e cppad-$version.tar.gz ]
 	then
