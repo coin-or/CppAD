@@ -21,27 +21,27 @@
 # Run one of the tests
 if [ "$1" = "" ]
 then
-	echo "OneTest testname files"
+	echo "one_test.sh testname files"
 	echo "where testname is the name of the test function run by Speed"
-	echo "and files are the *.cpp file with extensions"
+	echo "and files are the *.cpp file including it's extension."
 	exit
 fi
 if [ -e TestOne.exe ]
 then
 	rm TestOne.exe
 fi
-sed < Speed.cpp > TestOne.cpp \
+sed < speed_.cpp > test_one.cpp \
 	-e '/SpeedTest(/d' \
 	-e "s/.*OneTest.*/	SpeedTest($1, 5, -1, 1);/"  
 #
-echo "g++ TestOne.cpp $2 -o TestOne.exe  \\"
+echo "g++ test_one.cpp $2 -o test_one.exe  \\"
 echo "	-DNDEBUG -Wall -ansi -pedantic-errors -std=c++98 \\"
 echo "	-I.. -I/usr/include/boost-1_33 -L../lib \\"
 echo "	-lCppAD" 
-g++ TestOne.cpp $2  -o TestOne.exe  \
+g++ test_one.cpp $2  -o test_one.exe  \
 	-DNDEBUG -Wall -ansi -pedantic-errors -std=c++98 \
 	-I.. -I/usr/include/boost-1_33 -L../lib \
 	-lCppAD 
 #
-echo "./TestOne.exe"
-./TestOne.exe
+echo "./test_one.exe"
+./test_one.exe

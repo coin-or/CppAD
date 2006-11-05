@@ -11,19 +11,20 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 // END SHORT COPYRIGHT
 /*
-$begin DetMinorSpeed.cpp$$
+$begin DetLuSpeed.cpp$$
 $spell
+	Lu
 	Cpp
 $$
 
-$section Determinant Using Expansion by Minors: Speed Test$$
-$index speed, determinant by minors$$
-$index determinant, minors speed$$
-
+$index speed, Lu determinant$$
+$index determinant, Lu speed$$
+$index Lu, determinant speed$$
+$section Determinant by Lu Factor and Solve: Speed Test$$
 
 $comment This file is in the Speed subdirectory$$ 
 $code
-$verbatim%speed/DetLu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/det_lu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -31,33 +32,33 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "../Example/DetByMinor.h"
+# include "../Example/DetByLu.h"
 
 # include <sstream>
 # include <string>
 
-std::string doubleDetMinor(size_t size, size_t repeat)
+std::string doubleDetLu(size_t size, size_t repeat)
 {	size_t i;
 	size_t j;
 
 	using namespace std;
 	using namespace CppAD;
 
-	CppADvector<double> A( size * size );
+	CppADvector<double> a( size * size );
 
 	for( i = 0; i < size; i++)
 		for(j = 0; j < size; j++)
-			A[i + j * size] = double ( i / (double) (j + 1.) );
+			a[i + j * size] = double ( i / (double) (j + 1.) );
 
-	DetByMinor<double> DetDouble(size);
+	DetByLu<double> Det(size);
 
 	while(repeat--)
-		DetDouble(A);
+		Det(a);
 
-	return "double: DetMinor";
+	return "double: Determinant by Lu Factorization";
 }
 
-std::string ADdoubleDetMinor(size_t size, size_t repeat)
+std::string ADdoubleDetLu(size_t size, size_t repeat)
 {	size_t i;
 	size_t j;
 
@@ -70,15 +71,16 @@ std::string ADdoubleDetMinor(size_t size, size_t repeat)
 		for(j = 0; j < size; j++)
 			A[i + j * size] =  AD<double>( i / (double) (j + 1.) );
 
-	DetByMinor< AD<double> > DetADdouble(size);
+	DetByLu< AD<double> > Det(size);
 
 	while(repeat--)
-		DetADdouble(A);
+		Det(A);
 
-	return "ADdouble: DetMinor";
+	return "AD<double>: Determinant by Lu Factorization";
 }
 
-std::string TapeDetMinor(size_t size, size_t repeat)
+
+std::string TapeDetLu(size_t size, size_t repeat)
 {	size_t i;
 	size_t j;
 
@@ -92,10 +94,13 @@ std::string TapeDetMinor(size_t size, size_t repeat)
 	CppADvector< AD<double> > D(1);
 
 	for( i = 0; i < size; i++)
-		for(j = 0; j < size; j++)
-			A[i + j * size] = a[i] = double( i / (double) (j + 1.));
+	{	for(j = 0; j < size; j++)
+		{	A[i + j * size] = a[i + j * size] 
+			                = double( i / (double) (j + 1.));
+		}
+	}
 
-	DetByMinor< AD<double> > DetADdouble(size);
+	DetByLu< AD<double> > Det(size);
 
 	size_t memory = 0;
 	size_t length = 0;
@@ -104,24 +109,24 @@ std::string TapeDetMinor(size_t size, size_t repeat)
 		Independent(A);
 
 		// tape the evaluation
-		D[0] = DetADdouble(A);
+		D[0] = Det(A);
 
 		// create f : A -> D
 		ADFun<double> f(A, D);
 
-		// save for later return
+		// save so can return
 		length = f.Size();
 		memory = f.Memory();
 	}
 
 	ostringstream buf;
-	buf << "Tape of Expansion by Minors Determinant: Length = "
+	buf << "Tape of Determinate by Lu Factorization: Length = "
 	    << length << ", Memory = " << memory;
 
 	return buf.str();
 }
 
-std::string JacDetMinor(size_t size, size_t repeat)
+std::string JacDetLu(size_t size, size_t repeat)
 {	size_t i;
 	size_t j;
 
@@ -135,10 +140,13 @@ std::string JacDetMinor(size_t size, size_t repeat)
 	CppADvector< AD<double> > D(1);
 
 	for( i = 0; i < size; i++)
-		for(j = 0; j < size; j++)
-			A[i + j * size] = a[i] = double( i / (double) (j + 1.));
+	{	for(j = 0; j < size; j++)
+		{	A[i + j * size] = a[i + j * size] 
+			                = double( i / (double) (j + 1.));
+		}
+	}
 
-	DetByMinor< AD<double> > DetADdouble(size);
+	DetByLu< AD<double> > Det(size);
 
 	size_t memory = 0;
 	size_t length = 0;
@@ -147,7 +155,7 @@ std::string JacDetMinor(size_t size, size_t repeat)
 		Independent(A);
 
 		// tape the evaluation
-		D[0] = DetADdouble(A);
+		D[0] = Det(A);
 
 		// create f : A -> D
 		ADFun<double> f(A, D);
@@ -155,19 +163,19 @@ std::string JacDetMinor(size_t size, size_t repeat)
 		// evaluate the Jacobian of f
 		J = f.Jacobian(a);
 
-		// save for later return
+		// save so can return
 		length = f.Size();
 		memory = f.Memory();
 	}
 
 	ostringstream buf;
-	buf << "Jacobian of Expansion by Minors Determinant: Length = "
+	buf << "Jacobian of Determinate by Lu Factorization: Length = "
 	    << length << ", Memory = " << memory;
 
 	return buf.str();
 }
 
-std::string HesDetMinor(size_t size, size_t repeat)
+std::string HesDetLu(size_t size, size_t repeat)
 {	size_t i;
 	size_t j;
 
@@ -181,10 +189,13 @@ std::string HesDetMinor(size_t size, size_t repeat)
 	CppADvector< AD<double> > D(1);
 
 	for( i = 0; i < size; i++)
-		for(j = 0; j < size; j++)
-			A[i + j * size] = a[i] = double( i / (double) (j + 1.));
+	{	for(j = 0; j < size; j++)
+		{	A[i + j * size] = a[i + j * size] 
+			                = double( i / (double) (j + 1.));
+		}
+	}
 
-	DetByMinor< AD<double> > DetADdouble(size);
+	DetByLu< AD<double> > Det(size);
 
 	size_t memory = 0;
 	size_t length = 0;
@@ -193,7 +204,7 @@ std::string HesDetMinor(size_t size, size_t repeat)
 		Independent(A);
 
 		// tape the evaluation
-		D[0] = DetADdouble(A);
+		D[0] = Det(A);
 
 		// create f : A -> D
 		ADFun<double> f(A, D);
@@ -201,13 +212,13 @@ std::string HesDetMinor(size_t size, size_t repeat)
 		// evaluate the Hessian of f
 		H = f.Hessian(a, 0);
 
-		// save for later return
+		// save so can return
 		length = f.Size();
 		memory = f.Memory();
 	}
 
 	ostringstream buf;
-	buf << "Hessian of Expansion by Minors Determinant: Length = "
+	buf << "Hessian of Determinate by Lu Factorization: Length = "
 	    << length << ", Memory = " << memory;
 
 	return buf.str();

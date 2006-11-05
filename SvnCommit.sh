@@ -38,7 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move speed_ directory to speed.
+log_entry="Move speed directory to files to lower case.
 
 SvnCommit.sh: file that made this commit.
 "
@@ -48,13 +48,9 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	file2lower.sh
-	configure.ac
 	omh/speed.omh
 	omh/install_unix.omh
 	omh/install_windows.omh
-	CheckIncludeFile.sh
-	speed_
 	speed
 "
 #

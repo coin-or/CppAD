@@ -147,7 +147,7 @@ $head Speed Testing$$
 $index speed, windows test$$
 $index test, windows speed$$
 Using Microsoft Visual C++,
-open the workspace $code speed/Speed.sln$$
+open the workspace $code speed/speed_.sln$$
 in Visual Studio and then select $code Build | Build Speed.exe$$.
 Then in a Dos box, execute the following commands
 $codep
