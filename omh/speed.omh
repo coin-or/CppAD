@@ -52,10 +52,10 @@ Then set the configuration to the $code Release$$ version.
 Then select $code Build | Speed$$.
 
 $contents%
-	speed/speed_.cpp%
+	speed/speed.cpp%
 	speed/det_minor.cpp%
 	speed/det_lu.cpp%
-	speed/ode_.cpp%
+	speed/ode.cpp%
 	speed/lu_solve.cpp
 %$$
 

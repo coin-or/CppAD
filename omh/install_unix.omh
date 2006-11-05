@@ -207,7 +207,7 @@ the $xref/Speed.cpp/$$ program
 Once the $code make$$ command 
 has been executed, you can run these speed tests by executing the command 
 $codep
-	speed/speed_
+	speed/speed
 $$
 
 $head --with-PrintFor$$

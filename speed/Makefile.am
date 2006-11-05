@@ -13,7 +13,7 @@
 # automake input file
 #
 # Microsoft project files
-EXTRA_DIST      = speed_.sln speed_.vcproj gprof.sed
+EXTRA_DIST      = speed.sln speed.vcproj gprof.sed
 #
 #
 if CppAD_BOOSTVECTOR
@@ -24,23 +24,23 @@ endif
 #
 AM_CPPFLAGS      = $(BOOST_INCLUDE) -I. -I$(top_builddir) -DNDEBUG
 #
-# Speed
+# speed
 #
-noinst_PROGRAMS  = Speed
-Speed_CXXFLAGS   = -O2 $(CPP_ERROR_WARN)
-Speed_SOURCES    = \
-	speed_.cpp \
+noinst_PROGRAMS  = speed
+speed_CXXFLAGS   = -O2 $(CPP_ERROR_WARN)
+speed_SOURCES    = \
+	speed.cpp \
 	det_lu.cpp \
 	det_minor.cpp \
 	lu_solve.cpp \
-	ode_.cpp \
+	ode.cpp \
 	../Example/LuVecAD.cpp
 #
-# Speed_p
+# speed_p
 #
 if CppAD_PROFILING
-noinst_PROGRAMS  += Speed_p
-Speed_p_CXXFLAGS = -O2 -pg $(CPP_ERROR_WARN)
-Speed_p_LDFLAGS  = -pg 
-Speed_p_SOURCES  = $(Speed_SOURCES)
+noinst_PROGRAMS  += speed_p
+speed_p_CXXFLAGS = -O2 -pg $(CPP_ERROR_WARN)
+speed_p_LDFLAGS  = -pg 
+speed_p_SOURCES  = $(speed_SOURCES)
 endif

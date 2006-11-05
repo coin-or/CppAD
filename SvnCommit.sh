@@ -38,11 +38,13 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move speed/OneTest to speed/one_test.sh.
+log_entry="Change speed/_*.cpp to speed/*.cpp.
 
 SvnCommit.sh: file that made this commit.
-one_test.sh: change file name.
-speed_.cpp: add comment line needed by one_test.sh.
+install_unix.omh: change speed_ to speed.
+install_windows.omh: change speed_ to speed.
+CheckIncludeOmh.sh: *.out files no longer part of omhelp input files.
+Makefile.am: change Speed to speed (missing speed_ in previous commit).
 "
 # 
 add_list="
@@ -50,8 +52,12 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	speed/one_test.sh
-	speed/speed_.cpp
+	omh/speed.omh
+	omh/install_unix.omh
+	omh/install_windows.omh
+	CheckIncludeOmh.sh
+	speed
+	Makefile.am
 "
 #
 delete_list="

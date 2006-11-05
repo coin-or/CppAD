@@ -36,7 +36,7 @@ sed < junk.1 > junk.2 \
 	-e 's/^[ 	]*//' \
 	-e 's|\\|/|g'
 #
-ls cpl1.0.txt *.omh */*.out */*.omh */*.h */*.cpp CppAD/local/*.hpp  \
+ls cpl1.0.txt *.omh */*.omh */*.h */*.cpp CppAD/local/*.hpp  \
 	*/*.hpp > junk.3
 #
 for file in `cat junk.2`

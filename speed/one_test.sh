@@ -28,7 +28,7 @@ if [ -e TestOne.exe ]
 then
 	rm TestOne.exe
 fi
-sed < speed_.cpp > test_one.cpp \
+sed < speed.cpp > test_one.cpp \
 -e '/SpeedTest(/d' \
 -e "s/.*This line used by one_test.sh.*/	SpeedTest($1, 5, -1, 1);/"  
 #

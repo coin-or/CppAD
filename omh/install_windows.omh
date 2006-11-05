@@ -147,11 +147,11 @@ $head Speed Testing$$
 $index speed, windows test$$
 $index test, windows speed$$
 Using Microsoft Visual C++,
-open the workspace $code speed/speed_.sln$$
+open the workspace $code speed/speed.sln$$
 in Visual Studio and then select $code Build | Build Speed.exe$$.
 Then in a Dos box, execute the following commands
 $codep
-	speed\Release\Speed
+	speed\Release\speed
 $$
 
 $head Printing During Forward Mode$$

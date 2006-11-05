@@ -165,7 +165,7 @@ endif
 #
 # Did user specify --with-Speed
 if CppAD_SPEED
-SPEED = Speed
+SPEED = speed
 else
 SPEED =
 endif
