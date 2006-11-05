@@ -38,9 +38,11 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move speed directory to files to lower case.
+log_entry="Move speed/OneTest to speed/one_test.sh.
 
 SvnCommit.sh: file that made this commit.
+one_test.sh: change file name.
+speed_.cpp: add comment line needed by one_test.sh.
 "
 # 
 add_list="
@@ -48,10 +50,8 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	omh/speed.omh
-	omh/install_unix.omh
-	omh/install_windows.omh
-	speed
+	speed/one_test.sh
+	speed/speed_.cpp
 "
 #
 delete_list="

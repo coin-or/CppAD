@@ -1,6 +1,5 @@
-# BEGIN SHORT COPYRIGHT
 # ---------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-05 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -16,7 +15,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # ---------------------------------------------------------------------------
-# END SHORT COPYRIGHT
 #
 # Run one of the tests
 if [ "$1" = "" ]
@@ -31,17 +29,15 @@ then
 	rm TestOne.exe
 fi
 sed < speed_.cpp > test_one.cpp \
-	-e '/SpeedTest(/d' \
-	-e "s/.*OneTest.*/	SpeedTest($1, 5, -1, 1);/"  
+-e '/SpeedTest(/d' \
+-e "s/.*This line used by one_test.sh.*/	SpeedTest($1, 5, -1, 1);/"  
 #
 echo "g++ test_one.cpp $2 -o test_one.exe  \\"
 echo "	-DNDEBUG -Wall -ansi -pedantic-errors -std=c++98 \\"
-echo "	-I.. -I/usr/include/boost-1_33 -L../lib \\"
-echo "	-lCppAD" 
+echo "	-I.. -I/usr/include/boost-1_33"
 g++ test_one.cpp $2  -o test_one.exe  \
 	-DNDEBUG -Wall -ansi -pedantic-errors -std=c++98 \
-	-I.. -I/usr/include/boost-1_33 -L../lib \
-	-lCppAD 
+	-I.. -I/usr/include/boost-1_33 
 #
 echo "./test_one.exe"
 ./test_one.exe

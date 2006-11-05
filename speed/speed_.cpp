@@ -64,6 +64,8 @@ int main()
 {	using CppAD::SpeedTest;
 	std::cout << PACKAGE_STRING << " Speed Test " << std::endl;
 
+	// This line used by one_test.sh
+
 	SpeedTest(doubleDetMinor,        5, -1, 1);
 	SpeedTest(ADdoubleDetMinor,      5, -1, 1);
 	SpeedTest(TapeDetMinor,          5, -1, 1);
