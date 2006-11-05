@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 $begin OdeSpeed.cpp$$
@@ -107,7 +105,6 @@ std::string doubleOde(size_t size, size_t repeat)
 		// solve differential equation
 		x1 = Runge45(fun, nstep, t0, t1, x0);
 	}
-
 	return "double: Ode";
 }
 
@@ -146,7 +143,6 @@ std::string ADdoubleOde(size_t size, size_t repeat)
 		// solve differential equation
 		x1 = Runge45(fun, nstep, t0, t1, x0);
 	}
-
 	return "ADdouble: Ode";
 }
 
@@ -200,12 +196,7 @@ std::string TapeOde(size_t size, size_t repeat)
 		memory = f.Memory();
 		length = f.Size();
 	}
-
-	std::ostringstream buf;
-	buf << "Tape of ODE w.r.t. parameter vector: Length = ";;
-	buf << length << ", Memory = " << memory;
-
-	return buf.str();
+	return "Tape of ODE w.r.t. parameter vector";
 }
 
 std::string JacOde(size_t size, size_t repeat)
@@ -263,12 +254,7 @@ std::string JacOde(size_t size, size_t repeat)
 		memory = f.Memory();
 		length = f.Size();
 	}
-
-	std::ostringstream buf;
-	buf << "Jacobian of ODE w.r.t. parameter vector: Length = ";;
-	buf << length << ", Memory = " << memory;
-
-	return buf.str();
+	return "Jacobian of ODE w.r.t. parameter vector";
 }
 
 std::string HesOde(size_t size, size_t repeat)
@@ -328,12 +314,7 @@ std::string HesOde(size_t size, size_t repeat)
 		memory = f.Memory();
 		length = f.Size();
 	}
-
-	std::ostringstream buf;
-	buf << "Hessian of ODE w.r.t. parameter vector: Length = ";
-	buf << length << ", Memory = " << memory;
-
-	return buf.str();
+	return "Hessian of ODE w.r.t. parameter vector";
 }
 
 

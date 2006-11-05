@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 /*
 $begin DetMinorSpeed.cpp$$
 $spell
@@ -113,12 +111,7 @@ std::string TapeDetMinor(size_t size, size_t repeat)
 		length = f.Size();
 		memory = f.Memory();
 	}
-
-	ostringstream buf;
-	buf << "Tape of Expansion by Minors Determinant: Length = "
-	    << length << ", Memory = " << memory;
-
-	return buf.str();
+	return "Tape of Expansion by Minors Determinant";
 }
 
 std::string JacDetMinor(size_t size, size_t repeat)
@@ -159,12 +152,7 @@ std::string JacDetMinor(size_t size, size_t repeat)
 		length = f.Size();
 		memory = f.Memory();
 	}
-
-	ostringstream buf;
-	buf << "Jacobian of Expansion by Minors Determinant: Length = "
-	    << length << ", Memory = " << memory;
-
-	return buf.str();
+	return "Jacobian of Expansion by Minors Determinant";
 }
 
 std::string HesDetMinor(size_t size, size_t repeat)
@@ -205,12 +193,7 @@ std::string HesDetMinor(size_t size, size_t repeat)
 		length = f.Size();
 		memory = f.Memory();
 	}
-
-	ostringstream buf;
-	buf << "Hessian of Expansion by Minors Determinant: Length = "
-	    << length << ", Memory = " << memory;
-
-	return buf.str();
+	return "Hessian of Expansion by Minors Determinant";
 }
 
 // END PROGRAM

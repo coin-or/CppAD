@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 /*
 $begin DetLuSpeed.cpp$$
 $spell
@@ -118,12 +116,7 @@ std::string TapeDetLu(size_t size, size_t repeat)
 		length = f.Size();
 		memory = f.Memory();
 	}
-
-	ostringstream buf;
-	buf << "Tape of Determinate by Lu Factorization: Length = "
-	    << length << ", Memory = " << memory;
-
-	return buf.str();
+	return "Tape of Determinate by Lu Factorization";
 }
 
 std::string JacDetLu(size_t size, size_t repeat)
@@ -167,12 +160,7 @@ std::string JacDetLu(size_t size, size_t repeat)
 		length = f.Size();
 		memory = f.Memory();
 	}
-
-	ostringstream buf;
-	buf << "Jacobian of Determinate by Lu Factorization: Length = "
-	    << length << ", Memory = " << memory;
-
-	return buf.str();
+	return "Jacobian of Determinate by Lu Factorization";
 }
 
 std::string HesDetLu(size_t size, size_t repeat)
@@ -216,12 +204,7 @@ std::string HesDetLu(size_t size, size_t repeat)
 		length = f.Size();
 		memory = f.Memory();
 	}
-
-	ostringstream buf;
-	buf << "Hessian of Determinate by Lu Factorization: Length = "
-	    << length << ", Memory = " << memory;
-
-	return buf.str();
+	return "Hessian of Determinate by Lu Factorization";
 }
 
 // END PROGRAM

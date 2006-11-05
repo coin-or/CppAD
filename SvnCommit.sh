@@ -38,13 +38,18 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Change speed/_*.cpp to speed/*.cpp.
+log_entry="Remove references to Size and Memory deprecated functions.
 
 SvnCommit.sh: file that made this commit.
-install_unix.omh: change speed_ to speed.
-install_windows.omh: change speed_ to speed.
-CheckIncludeOmh.sh: *.out files no longer part of omhelp input files.
-Makefile.am: change Speed to speed (missing speed_ in previous commit).
+whats_new_06.omh: user's view of changes.
+config.h: update version number.
+install_unix.omh: correct some references Speed -> speed.
+install_windos.omh: change some references Debug -> debug.
+seq_property.omh: correct some references var_size -> size_var.
+det_minor.cpp: remove references to f.Size() and f.Memory().
+ode.cpp: remove references to f.Size() and f.Memory().
+lu_solve.cpp: remove references to f.Size() and f.Memory().
+det_lu.cpp: remove references to f.Size() and f.Memory().
 "
 # 
 add_list="
@@ -52,12 +57,15 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	omh/speed.omh
+	omh/whats_new_06.omh
+	CppAD/config.h
 	omh/install_unix.omh
 	omh/install_windows.omh
-	CheckIncludeOmh.sh
-	speed
-	Makefile.am
+	omh/seq_property.omh
+	speed/det_minor.cpp
+	speed/ode.cpp
+	speed/lu_solve.cpp
+	speed/det_lu.cpp
 "
 #
 delete_list="

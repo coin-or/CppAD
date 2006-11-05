@@ -109,12 +109,7 @@ std::string LuSolve(size_t size, size_t repeat)
 		length = f.Size();
 		memory = f.Memory();
 	}
-
-	ostringstream buf;
-	buf << "Solve Linear equations with retaping: Length = "
-	    << length << ", Memory = " << memory;
-	
-	return buf.str();
+	return "Solve Linear equations with retaping";
 }
 
 std::string LuVecAD(size_t size, size_t repeat)
@@ -196,12 +191,7 @@ std::string LuVecAD(size_t size, size_t repeat)
 		// solve a * Rhs = result
  		result = f.Forward(0, a);
 	}
-
-	ostringstream buf;
-	buf << "Solve Linear equations with out retaping: Length = "
-	    << f.Size() << ", Memory = " << f.Memory();
-	
-	return buf.str();
+	return "Solve Linear equations with out retaping";
 }
 
 // END PROGRAM

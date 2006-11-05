@@ -69,6 +69,16 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-05$$
+Remove references in the $cref/Speed/$$ tests to the 
+$code Memory$$ and $code Size$$ functions because they
+have been $cref/deprecated/FunDeprecated/$$.
+$pre
+
+$$
+Correct some references to $code var_size$$ that should have been
+$cref/size_var/SeqProperty/size_var/$$.
+
 $head 11-04$$
 Put text written to standard output in the documentation for the
 $cref/GetStarted.cpp/GetStarted.cpp/Output/$$ and 
@@ -78,6 +88,11 @@ needing to execute automake.)
 The $code PrintFor.cpp$$ and 
 $cref/SpeedExample.cpp/$$ examples were missing in $cref/ListAllExamples/$$
 (which has been fixed). 
+$pre
+
+$$
+Move the $code Speed$$ directory to $code speed$$
+and change all its files to use lower case names. 
 
 $head 11-02$$
 The $code print_for$$ directory was referenced as $code PrintFor$$

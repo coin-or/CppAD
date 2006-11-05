@@ -32,8 +32,8 @@ $index Parameter, ADFun$$
 $index ADFun, use_VecAD$$
 $index use_VecAD, ADFun$$
 
-$index ADFun, var_size$$
-$index var_size, ADFun$$
+$index ADFun, size_var$$
+$index size_var, ADFun$$
 
 $head Syntax$$
 $syntax%%n% = %f%.Domain()%$$
@@ -48,7 +48,7 @@ $$
 $syntax%%u% = %f%.use_VecAD()%$$
 $pre
 $$
-$syntax%%v% = %f%.var_size()%$$
+$syntax%%v% = %f%.size_var()%$$
 
 
 
