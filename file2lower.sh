@@ -6,10 +6,8 @@ then
 	exit 1
 fi
 mode="$1"
-directory="speed"
+directory="test_more"
 extension="cpp"
-#
-# list of directories to edit with the sed script
 dir_list="
 	.
 	CppAD
@@ -35,7 +33,10 @@ echo "# move $director/*.$ext file names to lower case names" >> file2lower.mv
 for old in $directory/*.$extension
 do
 	new=`echo "$old" | sed \
-		-e "s/\([a-z]\)\([A-Z]\)\([a-z]\)/\1_\2\3/g" \
+		-e "s/AD/Ad/g" \
+		-e "s/\([a-z]\)\([A-Z]\)\([a-z]\)/\1_\2\3/" \
+		-e "s/\([a-z]\)\([A-Z]\)\([a-z]\)/\1_\2\3/" \
+		-e "s/\([a-z]\)\([A-Z]\)\([a-z]\)/\1_\2\3/" \
 		-e "s/\([a-z]\)\([0-9]\)/\1_\2/g" \
 		-e "s|/\([A-z][a-z]*\)\.|/\1_.|" | tr [A-Z] [a-z]
 	`
