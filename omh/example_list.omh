@@ -29,15 +29,15 @@ example using the $xref/Add//addition operator/$$.
 The examples list in this section are of a more general nature.
 
 $childtable%
-	example_/Interface2C.cpp%
-	example_/JacMinorDet.cpp%
-	example_/JacLuDet.cpp%
-	example_/HesMinorDet.cpp%
-	example_/HesLuDet.cpp%
-	example_/OdeStiff.cpp%
-	example_/OdeTaylor.cpp%
-	example_/StackMachine.cpp%
-	example_/ComplexPoly.cpp%
+	example/Interface2C.cpp%
+	example/JacMinorDet.cpp%
+	example/JacLuDet.cpp%
+	example/HesMinorDet.cpp%
+	example/HesLuDet.cpp%
+	example/OdeStiff.cpp%
+	example/OdeTaylor.cpp%
+	example/StackMachine.cpp%
+	example/ComplexPoly.cpp%
 	omh/mul_tape.omh
 %$$
 
@@ -52,11 +52,11 @@ $$
 $section Utility Routines used by CppAD Examples$$
 
 $childtable%
-	example_/Example.cpp%
-	example_/DetOfMinor.h%
-	example_/DetByMinor.h%
-	example_/DetByLu.h%
-	example_/LuVecAD.cpp
+	example/Example.cpp%
+	example/DetOfMinor.h%
+	example/DetByMinor.h%
+	example/DetByLu.h%
+	example/LuVecAD.cpp
 %$$ 
 
 $end

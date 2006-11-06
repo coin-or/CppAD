@@ -30,7 +30,7 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "../example_/DetByLu.h"
+# include "../example/DetByLu.h"
 
 # include <sstream>
 # include <string>

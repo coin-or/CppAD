@@ -185,7 +185,7 @@ the $xref/Example.cpp/$$ program
 Once the $code make$$ command 
 has been executed, you can run these examples by executing the command 
 $codep
-	example_/example_
+	example/example
 $$
 
 $head --with-TestMore$$

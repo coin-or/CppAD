@@ -125,11 +125,11 @@ returns the $code bool$$ value true if $italic x$$ is less than
 $italic y$$ and false otherwise.
 
 $children%
-	example_/RombergOne.cpp
+	example/RombergOne.cpp
 %$$
 $head Example$$
 $comment%
-	example_/RombergOne.cpp
+	example/RombergOne.cpp
 %$$
 The file
 $xref/RombergOne.cpp/$$

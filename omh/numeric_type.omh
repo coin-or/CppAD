@@ -115,7 +115,7 @@ $tend
 
 $head Example$$
 $children%
-	example_/NumericType.cpp
+	example/NumericType.cpp
 %$$
 The file
 $xref/NumericType.cpp/$$

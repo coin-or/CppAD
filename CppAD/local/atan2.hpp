@@ -82,7 +82,7 @@ of $italic x$$ and $italic y$$.
 
 $head Example$$
 $children%
-	example_/Atan2.cpp
+	example/Atan2.cpp
 %$$
 The file
 $xref/Atan2.cpp/$$

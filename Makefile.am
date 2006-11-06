@@ -151,7 +151,7 @@ endif
 #
 # Did user specify --with-Example
 if CppAD_EXAMPLE
-EXAMPLE = example_
+EXAMPLE = example
 else
 EXAMPLE =
 endif

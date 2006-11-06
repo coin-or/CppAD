@@ -138,10 +138,10 @@ CPL copyright message in the GPL version. This has been fixed.
 
 $head 10-28$$
 The copyright message in the script files
-$code example_/OneTest$$ and $code TestMore/OneTest$$ were GPL
+$code example/OneTest$$ and $code TestMore/OneTest$$ were GPL
 (in the CPL distribution).
 This has been fixed by moving them to
-$code example_/OneTest.sh$$ and $code TestMore/OneTest.sh$$ so that
+$code example/OneTest.sh$$ and $code TestMore/OneTest.sh$$ so that
 the distribution automatically edits the copyright message.
 
 
@@ -221,7 +221,7 @@ $lend
 $head 08-17$$
 Some error message occurred while executing
 $codep
-	valgrind --tool=memcheck example_/example_
+	valgrind --tool=memcheck example/example
 	valgrind --tool=memcheck TestMore/TestMore
 
 $$

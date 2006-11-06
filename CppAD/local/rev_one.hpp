@@ -109,7 +109,7 @@ the previous calls to $xref/Forward/$$ are undefined.
 
 $head Example$$
 $children%
-	example_/RevOne.cpp
+	example/RevOne.cpp
 %$$
 The routine 
 $xref/RevOne.cpp//RevOne/$$ is both an example and test.

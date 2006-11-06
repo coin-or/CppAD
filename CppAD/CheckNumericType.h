@@ -48,7 +48,7 @@ if the CppAD include files.
 
 $head Example$$
 $children%
-	example_/CheckNumericType.cpp
+	example/CheckNumericType.cpp
 %$$
 The file $xref/CheckNumericType.cpp/$$
 contains an example and test of this function. 

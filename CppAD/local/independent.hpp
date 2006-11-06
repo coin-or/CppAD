@@ -72,7 +72,7 @@ After this operation, the tape will be in the Recording state.
 
 $head Example$$
 $children%
-	example_/Independent.cpp
+	example/Independent.cpp
 %$$
 The file
 $xref/Independent.cpp/$$

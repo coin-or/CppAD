@@ -90,7 +90,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example_/DivEq.cpp
+	example/DivEq.cpp
 %$$
 The file
 $xref/DivEq.cpp/$$

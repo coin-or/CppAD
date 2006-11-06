@@ -84,8 +84,8 @@ All the derivatives of a discrete function will be evaluated as zero.
 
 $head Example$$
 $children%
-	example_/TapeIndex.cpp%
-	example_/Piecewise.cpp
+	example/TapeIndex.cpp%
+	example/Piecewise.cpp
 %$$
 The file
 $xref/TapeIndex.cpp/$$

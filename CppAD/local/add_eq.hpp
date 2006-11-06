@@ -88,7 +88,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example_/AddEq.cpp
+	example/AddEq.cpp
 %$$
 The file
 $xref/AddEq.cpp/$$

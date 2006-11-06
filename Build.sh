@@ -310,7 +310,7 @@ then
 		exit 1
 	fi
 	echo "creating $wd/Test.log"
-	example_/Example           >  ../Test.log
+	example/Example           >  ../Test.log
 	test_more/TestMore        >> ../Test.log
 	Introduction/Introduction >> ../Test.log
 	fadbad/Example            >> ../Test.log

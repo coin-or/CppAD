@@ -141,7 +141,7 @@ output value solves the matrix equation $syntax%%A% * %X% = %B%$$.
 
 
 $children%
-	example_/LuInvert.cpp
+	example/LuInvert.cpp
 %$$
 $head Example$$
 The file $xref/LuSolve.h/$$ is a good example usage of 

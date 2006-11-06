@@ -242,7 +242,7 @@ when $italic v$$ falls out of scope.
 
 $head Example$$
 $children%
-	example_/VecAD.cpp
+	example/VecAD.cpp
 %$$
 The file
 $xref/VecAD.cpp/$$

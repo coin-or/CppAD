@@ -218,7 +218,7 @@ dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
 	Makefile
 	adolc/Makefile 
-	example_/Makefile 
+	example/Makefile 
 	fadbad/Makefile 
 	get_started/Makefile 
 	Introduction/Makefile

@@ -29,7 +29,7 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "../example_/DetByMinor.h"
+# include "../example/DetByMinor.h"
 
 # include <sstream>
 # include <string>

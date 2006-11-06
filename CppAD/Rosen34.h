@@ -241,7 +241,7 @@ if this is not the case.
 
 $head Example$$
 $children%
-	example_/Rosen34.cpp
+	example/Rosen34.cpp
 %$$
 The file
 $xref/Rosen34.cpp/$$

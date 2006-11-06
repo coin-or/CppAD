@@ -20,7 +20,7 @@ $section Forward Mode$$
 $childtable%
 	omh/forward.omh%
 	CppAD/local/cap_taylor.hpp%
-	example_/Forward.cpp
+	example/Forward.cpp
 %$$
 
 $end

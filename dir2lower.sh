@@ -1,7 +1,7 @@
 #! /bin/bash
 # file that moves a directory to a lower case name version
-old="Example"
-new="example_"
+old="example_"
+new="example"
 list="
 	Build.sh
 	CheckIncludeFile.sh

@@ -38,10 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move Example to example_ and change corresponding referneces.
-
-dir2lower.sh: script that did the move and edited references.
-Build.sh: better error checking.
+log_entry="Move example_ to example and change corresponding referneces.
 "
 # 
 add_list="

@@ -157,7 +157,7 @@ sparsity pattern for the Jacobian $latex J(x) = F^{(1)} ( x )$$.
 
 $head Example$$
 $children%
-	example_/ForSparseJac.cpp
+	example/ForSparseJac.cpp
 %$$
 The file
 $xref/ForSparseJac.cpp/$$

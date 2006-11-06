@@ -66,7 +66,7 @@ $xref/glossary/Independent Variable/independent variables/$$.
 
 $head Example$$
 $children%
-	example_/Value.cpp
+	example/Value.cpp
 %$$
 The file
 $xref/Value.cpp/$$

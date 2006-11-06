@@ -149,7 +149,7 @@ $code size_var$$ returns zero
 
 $head Example$$
 $children%
-	example_/SeqProperty.cpp
+	example/SeqProperty.cpp
 %$$
 The file
 $xref/SeqProperty.cpp/$$ 

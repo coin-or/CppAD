@@ -60,7 +60,7 @@ $xref/glossary/Operation/Sequence/operation sequence/1/$$
 
 $head Example$$
 $children%
-	example_/ParVar.cpp
+	example/ParVar.cpp
 %$$
 The file
 $xref/ParVar.cpp/$$

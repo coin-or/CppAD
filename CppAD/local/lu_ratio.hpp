@@ -210,7 +210,7 @@ if this is not the case.
 
 $head Example$$
 $children%
-	example_/LuRatio.cpp
+	example/LuRatio.cpp
 %$$
 The file $xref/LuRatio.cpp/$$
 contains an example and test of using $code LuRatio$$.

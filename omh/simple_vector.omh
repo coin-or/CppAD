@@ -199,7 +199,7 @@ would not be valid.
 
 $head Example$$
 $children%
-	example_/SimpleVector.cpp
+	example/SimpleVector.cpp
 %$$
 The file
 $xref/SimpleVector.cpp/$$
