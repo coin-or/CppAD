@@ -293,7 +293,7 @@ then
 	make
 	echo "creating $wd/Test.log"
 	Example/Example           >  ../Test.log
-	TestMore/TestMore         >> ../Test.log
+	test_more/TestMore        >> ../Test.log
 	Introduction/Introduction >> ../Test.log
 	fadbad/Example            >> ../Test.log
 	adolc/Example             >> ../Test.log
