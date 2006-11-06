@@ -38,14 +38,10 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="In test_more, move *_.cpp to *.cpp.
+log_entry="Move Example to example_ and change corresponding referneces.
 
-SvnCommit.sh: file that made this commit.
-whats_new_06.omh: user's view of the changes.
-config.h: update version number.
-install_unix.omh: change TestMore to test_more.
-install_windows.omh: change TestMore to test_more.
-test_more: directory where the move occurred.
+dir2lower.sh: script that did the move and edited references.
+Build.sh: better error checking.
 "
 # 
 add_list="
@@ -53,11 +49,16 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	omh/whats_new_06.omh
-	CppAD/config.h
-	omh/install_unix.omh
-	omh/install_windows.omh
-	test_more
+	CppAD
+	configure.ac
+	dir2lower.sh
+	omh
+	example_
+	Example
+	speed
+	fadbad
+	Build.sh
+	Makefile.am
 "
 #
 delete_list="

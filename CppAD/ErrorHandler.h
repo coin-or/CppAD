@@ -107,7 +107,7 @@ It reports the meaning of the error from the C++ programmers point of view.
 
 $head Example$$
 $children%
-	Example/ErrorHandler.cpp
+	example_/ErrorHandler.cpp
 %$$
 The file
 $xref/ErrorHandler.cpp/$$

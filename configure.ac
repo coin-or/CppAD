@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 06-11-05, cppad@list.coin-or.org)
+AC_INIT(CppAD, 06-11-06, cppad@list.coin-or.org)
 
 dnl Set the default install prefix to the installers home directory
 AC_PREFIX_DEFAULT(${HOME})
@@ -218,7 +218,7 @@ dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
 	Makefile
 	adolc/Makefile 
-	Example/Makefile 
+	example_/Makefile 
 	fadbad/Makefile 
 	get_started/Makefile 
 	Introduction/Makefile

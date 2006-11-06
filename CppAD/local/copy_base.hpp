@@ -56,7 +56,7 @@ is valid.
 
 $head Example$$
 $children%
-	Example/CopyBase.cpp
+	example_/CopyBase.cpp
 %$$
 The file
 $xref/CopyBase.cpp/$$

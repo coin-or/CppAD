@@ -126,11 +126,11 @@ $index test, windows$$
 The following steps will build an extensive set of examples
 and correctness tests.
 Using Microsoft Visual C++,
-open the workspace $code Example/Example.sln$$ in Visual Studio.
+open the workspace $code example_/Example.sln$$ in Visual Studio.
 Then select $code Build | Build Example.exe$$.
 Then in a Dos box, execute the following command
 $codep
-	Example\Debug\Example
+	example_\Debug\example_
 $$
 
 $head More Correctness Testing$$

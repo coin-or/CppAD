@@ -183,8 +183,8 @@ $lend
 
 $head Example$$
 $children%
-	Example/CppAD_vector.cpp%
-	Example/vectorBool.cpp
+	example_/CppAD_vector.cpp%
+	example_/vectorBool.cpp
 %$$
 The files
 $xref/CppAD_vector.cpp/$$ and

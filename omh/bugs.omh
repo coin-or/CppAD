@@ -43,7 +43,7 @@ $$
 If the $code -O2$$ compiler option is a problem for your compiler,
 you will get warnings that do not make sense when executing the 
 $code make$$ command in the $code Example$$ sub-directory.
-In addition, the $code Example/Example$$ program will generate a
+In addition, the $code example_/Example$$ program will generate a
 segmentation fault.
 
 $subhead Adolc$$

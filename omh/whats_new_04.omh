@@ -129,7 +129,7 @@ were added.
 
 $head 11-04$$
 The Microsoft Visual Studio
-project file $code Example/Example.dsp/$$ was missing some
+project file $code example_/Example.dsp/$$ was missing some
 new examples that needed to be linked in
 (see $xref/InstallWindows/$$).
 This has been fixed.
@@ -399,8 +399,8 @@ works for any type of vector (not just $code CppADvector$$).
 
 
 $head 07-08$$
-The file $code CppAD/Example/NearEqual.h$$ has been moved
-to $code CppAD/Example/NearEqualExt.h$$ because it contains
+The file $code CppAD/example_/NearEqual.h$$ has been moved
+to $code CppAD/example_/NearEqualExt.h$$ because it contains
 extensions of the $xref/NearEqual/$$ routine to $code AD$$ types. 
 
 $head 07-07$$
@@ -518,7 +518,7 @@ For example, $latex \sin(x)$$ instead of $latex sin(x)$$.
 
 $head 05-26$$
 In the documentation for $xref/Poly/$$,
-the reference to $code Example/Poly.h$$ 
+the reference to $code example_/Poly.h$$ 
 was corrected to $code CppAD/library/Poly.h$$.
 $pre
 
@@ -821,7 +821,7 @@ $pre
 
 $$
 Documentation errors in $xref/ForTwo/$$ and $xref/Reverse/$$ were fixed.
-The $xref/Example/$$ documentation was reorganized.
+The $xref/example_/$$ documentation was reorganized.
 
 
 $head 03-06$$
@@ -831,7 +831,7 @@ $pre
 
 $$
 Split all of the "example" and "test" index entries that come from
-$syntax%CppAD/Example/%*%.cpp%$$
+$syntax%CppAD/example_/%*%.cpp%$$
 into sorted subheadings.
 
 $head 03-05$$
@@ -882,7 +882,7 @@ $head 02-28$$
 A set of routines for comparing CppAD with 
 $xref/ADOLC/$$ has been added to the distribution.
 In addition, documentation for compiling and linking the
-$xref/Example//Examples/$$ and $xref/Speed//Speed Tests/$$
+$xref/example_//Examples/$$ and $xref/Speed//Speed Tests/$$
 has been added.
 
 $head 02-21$$
@@ -945,7 +945,7 @@ This has been fixed.
 $pre
 
 $$
-The Microsoft project file $code Example\Example.dsp$$
+The Microsoft project file $code example_\Example.dsp$$
 was out of date. This has been fixed.
 $pre
 

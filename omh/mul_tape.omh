@@ -128,7 +128,7 @@ the derivatives of the outer function.
 
 
 $children%
-	Example/MulTape.cpp
+	example_/MulTape.cpp
 %$$
 
 $head Example$$

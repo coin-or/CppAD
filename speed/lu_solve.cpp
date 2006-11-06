@@ -32,7 +32,7 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "../Example/LuVecAD.h"
+# include "../example_/LuVecAD.h"
 
 # include <sstream>
 # include <string>

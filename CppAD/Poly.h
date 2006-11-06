@@ -129,7 +129,7 @@ of $italic z$$ and the elements of $italic a$$
 
 $head Example$$
 $children%
-	Example/Poly.cpp
+	example_/Poly.cpp
 %$$
 The file
 $xref/Poly.cpp/$$

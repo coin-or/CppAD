@@ -109,7 +109,7 @@ $xref/glossary/Operation/Sequence/operation sequence/1/$$
 
 $head Example$$
 $children%
-	Example/BoolFun.cpp
+	example_/BoolFun.cpp
 %$$
 The file
 $xref/BoolFun.cpp/$$

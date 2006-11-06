@@ -111,11 +111,17 @@ then
 	echo "---------------------------------------------------------"
 	echo "If aclocal generates warning messages, run ./FixAclocal.sh"
 	echo "aclocal"
-	aclocal
+	if ! aclocal
+	then
+		exit 1
+	fi
 	echo "---------------------------------------------------------"
 	#
 	echo "autoheader"
-	autoheader
+	if ! autoheader
+	then
+		exit 1
+	fi
 	#
 	echo "autoconf"
 	if ! autoconf
@@ -177,9 +183,12 @@ then
 	echo "  $TEST   \\"
 	echo "	CPP_ERROR_WARN=\"-Wall -ansi -pedantic-errors -std=c++98\""
 	#
-	./configure \
+	if ! ./configure \
 		$TEST   \
 		CPP_ERROR_WARN="-Wall -ansi -pedantic-errors -std=c++98"
+	then
+		exit 1
+	fi
 	#
 	# Fix Makefile for what appears to be a bug in gzip under cygwin
 	echo "FixMakefile.sh"
@@ -285,14 +294,23 @@ then
 		fi
 	fi
 	echo "tar -xzf $dir/cppad-$version.cpl.tgz"
-	tar -xzf $dir/cppad-$version.cpl.tgz
+	if ! tar -xzf $dir/cppad-$version.cpl.tgz
+	then
+		exit 1
+	fi
 	#
 	wd=`pwd`
 	cd cppad-$version
-	./Build.sh configure test
-	make
+	if ! ./Build.sh configure test
+	then
+		exit 1
+	fi
+	if ! make
+	then
+		exit 1
+	fi
 	echo "creating $wd/Test.log"
-	Example/Example           >  ../Test.log
+	example_/Example           >  ../Test.log
 	test_more/TestMore        >> ../Test.log
 	Introduction/Introduction >> ../Test.log
 	fadbad/Example            >> ../Test.log

@@ -41,7 +41,7 @@ $code CppAD/local/CppADvector.h$$
 
 
 $head Introduction$$
-Many of the CppAD $xref/Example//examples/$$ and tests use 
+Many of the CppAD $xref/example_//examples/$$ and tests use 
 the $code CppADvector$$ template class to pass information.
 The default definition for this template class is
 $xref/CppAD_vector//CppAD::vector/$$

@@ -88,7 +88,7 @@ $latex \[
 
 $head Example$$
 $children%
-	Example/MulEq.cpp
+	example_/MulEq.cpp
 %$$
 The file
 $xref/MulEq.cpp/$$

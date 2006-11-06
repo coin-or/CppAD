@@ -81,7 +81,7 @@ $latex \[
 
 $head Example$$
 $children%
-	Example/Div.cpp
+	example_/Div.cpp
 %$$
 The file
 $xref/Div.cpp/$$

@@ -216,7 +216,7 @@ of $italic x$$ is greater than or equal the
 sum of the square of the real and imaginary parts of $italic y$$. 
 
 $children%
-	Example/LuFactor.cpp
+	example_/LuFactor.cpp
 %$$
 $head Example$$
 The file 

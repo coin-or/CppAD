@@ -50,7 +50,7 @@ $syntax%
 
 $head Example$$
 $children%
-	Example/CopyAD.cpp
+	example_/CopyAD.cpp
 %$$
 The file
 $xref/CopyAD.cpp/$$

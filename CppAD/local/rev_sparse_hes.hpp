@@ -179,7 +179,7 @@ sparsity pattern for the Hessian $latex F_k^{(2)} (x)$$.
 
 $head Example$$
 $children%
-	Example/RevSparseHes.cpp
+	example_/RevSparseHes.cpp
 %$$
 The file
 $xref/RevSparseHes.cpp/$$

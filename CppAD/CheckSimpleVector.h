@@ -62,7 +62,7 @@ if the CppAD include files.
 
 $head Example$$
 $children%
-	Example/CheckSimpleVector.cpp
+	example_/CheckSimpleVector.cpp
 %$$
 The file $xref/CheckSimpleVector.cpp/$$
 contains an example and test of this function where $italic S$$

@@ -33,22 +33,22 @@ $list number$$
 Add the new file $syntax%%Name%.h%$$ to the cvs repository.
 
 $lnext
-Add a test file called $syntax%Example/%Name%.cpp%$$ that check 
+Add a test file called $syntax%example_/%Name%.cpp%$$ that check 
 for correct results (and run the test to make sure it works).
 
 $lnext
-Add the new file $syntax%Example/%Name%.cpp%$$ to the cvs repository.
+Add the new file $syntax%example_/%Name%.cpp%$$ to the cvs repository.
 
 $lnext
-Add a call to the new test in the file $code Example/Example.cpp$$.
+Add a call to the new test in the file $code example_/Example.cpp$$.
 
 $lnext
 Add the file $syntax%%Name%.cpp%$$ to the list of 
-$code Example_SOURCES$$ in the file $code Example/Makefile.am$$.
+$code Example_SOURCES$$ in the file $code example_/Makefile.am$$.
 
 $lnext
 Add the file $syntax%%Name%.cpp%$$ to the list of source files
-corresponding to the Microsoft C++ project file $code Example/Example.dsp$$.
+corresponding to the Microsoft C++ project file $code example_/Example.dsp$$.
 
 $lnext
 Add the file $syntax%%Name%.h%$$ to the list of 

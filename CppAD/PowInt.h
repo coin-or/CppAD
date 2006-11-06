@@ -98,7 +98,7 @@ of $italic x$$.
 
 $head Example$$
 $children%
-	Example/PowInt.cpp
+	example_/PowInt.cpp
 %$$
 The file
 $xref/PowInt.cpp/$$

@@ -203,7 +203,7 @@ if this is not the case.
 
 $head Example$$
 $children%
-	Example/Runge45.cpp
+	example_/Runge45.cpp
 %$$
 The file
 $xref/Runge45.cpp/$$

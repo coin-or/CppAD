@@ -82,7 +82,7 @@ the distribution passed this test.
 $lnext
 Execute the command
 $codep
-	Example/Example
+	example_/example_
 $$
 If the result at the end is
 $code

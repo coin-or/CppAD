@@ -134,7 +134,7 @@ $head 12-15$$
 Extend $xref/NearEqual/$$ and $xref/NearEqualExt/$$
 to cover more cases while converting them from,
 a library function in $code lib/CppADlib.a$$ 
-and an utility in $code Example/NearEqualExt.h$$,
+and an utility in $code example_/NearEqualExt.h$$,
 to a template functions in 
 $code CppAD/NearEqual.h$$ and
 $code CppAD/local/NearEqualExt.h$$.
@@ -144,7 +144,7 @@ $pre
 
 $$
 The change on $xref/WhatsNew05/12-14/12-14/$$ broke the 
-Microsoft project files $code Example/Example.sln$$
+Microsoft project files $code example_/Example.sln$$
 and $code TestMore/TestMore.sln$$ used during CppAD
 $xref/InstallWindows//installation on Windows/$$.
 This has been fixed.
@@ -467,7 +467,7 @@ reorganized.
 
 $head 09-20$$
 The Microsoft compiler project files 
-$code Example/Example.vcproj$$ and $code TestMore/TestMore.vcproj$$ 
+$code example_/Example.vcproj$$ and $code TestMore/TestMore.vcproj$$ 
 were not up to date.
 This has been fixed.
 In addition, the example $xref/NumericType.cpp/$$ has been added.
@@ -541,7 +541,7 @@ where the argument types are template parameters
 (for use with AD types).
 
 $head 08-15$$
-The Microsoft project files $code Example/Example.vcproj$$ and 
+The Microsoft project files $code example_/Example.vcproj$$ and 
 $code TestMore/TestMore.vcproj$$ were missing some necessary routines.
 In addition, $code Speed/Speed.vcproj$$ was generating a warning.
 This has been fixed. 
@@ -624,7 +624,7 @@ $pre
 
 $$
 It appears that the $code TestMore/Runge45.cpp$$ file was missing 
-an include of $code Example/NearEqualExt.h$$. This has been fixed.
+an include of $code example_/NearEqualExt.h$$. This has been fixed.
 
 $head 07-08$$
 The documentation for $xref/Forward/$$ and $xref/Reverse/$$ has been 

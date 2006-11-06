@@ -141,18 +141,18 @@ The following files
 contain examples and tests of these functions.   
 Each test returns true if it succeeds and false otherwise.
 $children%
-	Example/Acos.cpp%
-	Example/Asin.cpp%
-	Example/Atan.cpp%
-	Example/Cos.cpp%
-	Example/Cosh.cpp%
-	Example/Exp.cpp%
-	Example/Log.cpp%
-	Example/Log10.cpp%
-	Example/Sin.cpp%
-	Example/Sinh.cpp%
-	Example/Sqrt.cpp%
-	Example/Tan.cpp
+	example_/Acos.cpp%
+	example_/Asin.cpp%
+	example_/Atan.cpp%
+	example_/Cos.cpp%
+	example_/Cosh.cpp%
+	example_/Exp.cpp%
+	example_/Log.cpp%
+	example_/Log10.cpp%
+	example_/Sin.cpp%
+	example_/Sinh.cpp%
+	example_/Sqrt.cpp%
+	example_/Tan.cpp
 %$$
 $table
 $rref Acos.cpp$$
