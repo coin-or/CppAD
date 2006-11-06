@@ -21,7 +21,7 @@ if [ -e TestOne.exe ]
 then
 	rm TestOne.exe
 fi
-sed < TestMore.cpp > TestOne.cpp \
+sed < test_more.cpp > TestOne.cpp \
 	-e '/ok *\&= *Run( /d' \
 	-e "s/.*OneTest.*/	ok \&= Run( $1, \"$1\");/"  
 #
