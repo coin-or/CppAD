@@ -24,9 +24,9 @@ then
 	echo "and files are the *.cpp file including it's extension."
 	exit
 fi
-if [ -e TestOne.exe ]
+if [ -e test_one.exe ]
 then
-	rm TestOne.exe
+	rm test_one.exe
 fi
 sed < speed.cpp > test_one.cpp \
 -e '/SpeedTest(/d' \
