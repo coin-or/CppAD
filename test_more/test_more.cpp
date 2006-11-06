@@ -97,7 +97,7 @@ int main(void)
 {	bool ok = true;
 	using namespace std;
 
-	// This comment is used by OneTest 
+	// This line is used by one_test.sh 
 
 	ok &= Run( Abs,             "Abs"            );
 	ok &= Run( Acos,            "Acos"           );

@@ -62,10 +62,10 @@ just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
 Otherwise, download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-06-11-05.cpl.zip%$$
+$href%cppad-06-11-06.cpl.zip%$$
 
 $subhead GPL License$$
-$href%cppad-06-11-05.gpl.zip%$$
+$href%cppad-06-11-06.gpl.zip%$$
 
 $head Extraction$$
 Use 
@@ -76,7 +76,7 @@ $href%
 or some other program to decompress the archive.
 This will create the distribution directory 
 $syntax%
-	cppad-06-11-05
+	cppad-06-11-06
 %$$
 All the command sequences below assume that you start in this
 distribution directory.
@@ -136,11 +136,11 @@ $$
 $head More Correctness Testing$$
 $index test more, windows$$
 Using Microsoft Visual C++,
-open the workspace $code test_more/TestMore.sln$$
-in Visual Studio and then select $code Build | Build TestMore.exe$$.
+open the workspace $code test_more/test_more.sln$$
+in Visual Studio and then select $code Build | Build test_more.exe$$.
 Then in a Dos box, execute the following command
 $codep
-	test_more\Debug\TestMore
+	test_more\debug\test_more
 $$
 
 $head Speed Testing$$

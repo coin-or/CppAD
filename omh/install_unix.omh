@@ -59,21 +59,21 @@ $index download, unix$$
 Download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-06-11-05.cpl.tgz%$$
+$href%cppad-06-11-06.cpl.tgz%$$
 
 $subhead GPL License$$
-$href%cppad-06-11-05.gpl.tgz%$$
+$href%cppad-06-11-06.gpl.tgz%$$
 
 $head Extraction$$
 Use the command
 $syntax%
-	tar -xvzf cppad-06-11-05.%license%.tgz
+	tar -xvzf cppad-06-11-06.%license%.tgz
 %$$
 (where $italic license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-06-11-05
+	cppad-06-11-06
 %$$
 Note that $code 06-08-20$$ is the version number for CppAD.
 All of the commands below are to be executed starting from this
@@ -195,7 +195,7 @@ another extensive set of correctness tests will be compiled by the
 $xref/InstallUnix/make/make/$$ command. Once the $code make$$ command 
 has been executed, you can run these tests by executing the command 
 $codep
-	test_more/TestMore
+	test_more/test_more
 $$
 
 $head --with-Speed$$

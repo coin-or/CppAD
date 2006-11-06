@@ -11,9 +11,9 @@
 # automake input file
 #
 # Microsoft project files
-EXTRA_DIST        = TestMore.sln TestMore.vcproj OneTest.sh
+EXTRA_DIST        = test_more.sln test_more.vcproj one_test.sh
 #
-noinst_PROGRAMS   = TestMore
+noinst_PROGRAMS   = test_more
 #
 if CppAD_BOOSTVECTOR
 AM_CPPFLAGS       = -I$(BOOST_DIR) \
@@ -24,58 +24,58 @@ endif
 #
 AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #
-TestMore_SOURCES  = test_more.cpp \
-	abs_.cpp \
-	acos_.cpp \
-	asin_.cpp \
-	add_.cpp \
+test_more_SOURCES  = test_more.cpp \
+	abs.cpp \
+	acos.cpp \
+	asin.cpp \
+	add.cpp \
 	add_eq.cpp \
 	add_zero.cpp \
-	atan_.cpp \
+	atan.cpp \
 	atan_2.cpp \
-	compare_.cpp \
+	compare.cpp \
 	compare_change.cpp \
 	cond_exp.cpp \
 	cond_exp_ad.cpp \
-	copy_.cpp \
-	cos_.cpp \
-	cosh_.cpp \
-	div_.cpp \
+	copy.cpp \
+	cos.cpp \
+	cosh.cpp \
+	div.cpp \
 	div_eq.cpp \
 	div_zero_one.cpp \
-	erf_.cpp \
-	exp_.cpp \
+	erf.cpp \
+	exp.cpp \
 	for_hess.cpp \
 	for_sparse_jac.cpp \
-	forward_.cpp \
+	forward.cpp \
 	from_base.cpp \
-	log_.cpp \
+	log.cpp \
 	log_10.cpp \
-	mul_.cpp \
+	mul.cpp \
 	mul_eq.cpp \
 	mul_zero_one.cpp \
 	near_equal_ext.cpp \
-	neg_.cpp \
+	neg.cpp \
 	ode_err_control.cpp \
-	poly_.cpp \
-	pow_.cpp \
+	poly.cpp \
+	pow.cpp \
 	pow_int.cpp \
 	rosen_34.cpp \
 	runge_45.cpp \
-	reverse_.cpp \
+	reverse.cpp \
 	rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp \
 	rev_two.cpp \
 	simple_vector.cpp \
-	sin_.cpp \
+	sin.cpp \
 	sin_cos.cpp \
-	sinh_.cpp \
+	sinh.cpp \
 	sparse_vec_ad.cpp \
-	sqrt_.cpp \
-	sub_.cpp \
+	sqrt.cpp \
+	sub.cpp \
 	sub_eq.cpp \
 	sub_zero.cpp \
-	value_.cpp \
+	value.cpp \
 	vec_ad.cpp \
 	vec_ad_par.cpp \
 	vec_unary.cpp 

@@ -38,14 +38,14 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move TestMore directory to test_more.
+log_entry="In test_more, move *_.cpp to *.cpp.
 
 SvnCommit.sh: file that made this commit.
-configure.ac: change TestMore to test_more.
-dir2lower.sh: untested improvement to automatic conversion.
+whats_new_06.omh: user's view of the changes.
+config.h: update version number.
 install_unix.omh: change TestMore to test_more.
 install_windows.omh: change TestMore to test_more.
-CheckIncludeFile.sh: change TestMore to test_more.
+test_more: directory where the move occurred.
 "
 # 
 add_list="
@@ -53,12 +53,10 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	configure.ac
-	dir2lower.sh
+	omh/whats_new_06.omh
+	CppAD/config.h
 	omh/install_unix.omh
 	omh/install_windows.omh
-	CheckIncludeFile.sh
-	TestMore
 	test_more
 "
 #

@@ -12,25 +12,26 @@
 # Run one of the tests
 if [ "$1" = "" ]
 then
-	echo "OneTest test [extra]"
-	echo "where test and is a *.cpp file name without extension"
+	echo "usage: one_test.sh file function [extra]"
+	echo "file is the *.cpp file name with extension"
+	echo "function is the name of the function being tested"
 	echo "and extra is extra options for g++ command"
 	exit
 fi
-if [ -e TestOne.exe ]
+if [ -e test_one.exe ]
 then
-	rm TestOne.exe
+	rm test_one.exe
 fi
-sed < test_more.cpp > TestOne.cpp \
-	-e '/ok *\&= *Run( /d' \
-	-e "s/.*OneTest.*/	ok \&= Run( $1, \"$1\");/"  
+sed < test_more.cpp > test_one.cpp \
+-e '/ok *\&= *Run( /d' \
+-e "s/.*This line is used by one_test.sh.*/	ok \&= Run( $2, \"$2\");/"  
 #
-echo "g++ TestOne.cpp $1.cpp $2  -o TestOne.exe  \\"
+echo "g++ test_one.cpp $1 $3  -o test_one.exe  \\"
 echo "  -g -Wall -ansi -pedantic-errors -std=c++98 \\"
 echo "  -I.. -I/usr/include/boost-1_33"
-g++ TestOne.cpp $1.cpp $2  -o TestOne.exe  \
+g++ test_one.cpp $1 $3  -o test_one.exe  \
         -g -Wall -ansi -pedantic-errors -std=c++98 \
         -I.. -I/usr/include/boost-1_33 
 #
-echo "./TestOne.exe"
-./TestOne.exe
+echo "./test_one.exe"
+./test_one.exe
