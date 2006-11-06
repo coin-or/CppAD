@@ -9,6 +9,13 @@ mode="$1"
 directory="speed"
 extension="cpp"
 #
+# list of directories to edit with the sed script
+dir_list="
+	.
+	CppAD
+	$directory
+"
+#
 # map a set of file names to lower case
 if [ -e file2lower.mv ]
 then
@@ -57,15 +64,6 @@ else
 	echo "./file2lower.mv"
 	./file2lower.mv
 fi
-#
-# list of directories to edit with the sed script
-dir_list="
-	.
-	CppAD
-	CppAD/local
-	omh
-	$directory
-"
 # list of extensions to edit with the sed script
 ext_list="
 	sh
