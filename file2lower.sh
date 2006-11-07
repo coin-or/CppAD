@@ -6,12 +6,17 @@ then
 	exit 1
 fi
 mode="$1"
-directory="test_more"
+directory="example"
 extension="cpp"
 dir_list="
 	.
+	fadbad
+	adolc
+	speed
+	omh
 	CppAD
-	$directory
+	CppAD/local
+	example
 "
 #
 # map a set of file names to lower case
@@ -56,6 +61,9 @@ do
 	old=`echo $old | sed -e 's|.*\]||'`
 	new=`echo $new | sed -e 's|.*/||'`
 	echo "s@\\([ 	\"]\\)$old@\\1$new@g"  >> file2lower.sed
+	#
+	echo "s@\$begin *$new@\$begin $old@"   >> file2lower.sed
+	echo "s@ref\\(.\\)$new@ref\\1$old@"    >> file2lower.sed
 done
 chmod +x file2lower.mv
 if [ "$mode" = "test" ]
