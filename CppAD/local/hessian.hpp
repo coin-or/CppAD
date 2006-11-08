@@ -100,7 +100,7 @@ the previous calls to $xref/Forward/$$ are undefined.
 
 $head Example$$
 $children%
-	example/hessian_.cpp%
+	example/hessian.cpp%
 	example/hes_lagrangian.cpp
 %$$
 The routines 

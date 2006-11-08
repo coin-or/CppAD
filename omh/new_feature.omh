@@ -40,7 +40,7 @@ $lnext
 Add the new file $syntax%example/%Name%.cpp%$$ to the cvs repository.
 
 $lnext
-Add a call to the new test in the file $code example/example_.cpp$$.
+Add a call to the new test in the file $code example/example.cpp$$.
 
 $lnext
 Add the file $syntax%%Name%.cpp%$$ to the list of 

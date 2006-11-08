@@ -131,7 +131,7 @@ y^{(\ell)}
 
 $head Example$$
 $children%
-	example/abs_.cpp
+	example/abs.cpp
 %$$
 The file
 $xref/Abs.cpp/$$

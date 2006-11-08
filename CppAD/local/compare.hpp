@@ -118,7 +118,7 @@ $italic Base$$.
 
 $head Example$$
 $children%
-	example/compare_.cpp
+	example/compare.cpp
 %$$
 The file
 $xref/Compare.cpp/$$

@@ -96,7 +96,7 @@ $xref/glossary/Operation/Sequence/operation sequence/1/$$.
 
 $head Example$$
 $children%
-	example/eq_.cpp
+	example/eq.cpp
 %$$
 The file
 $xref/Eq.cpp/$$

@@ -81,7 +81,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/add_.cpp
+	example/add.cpp
 %$$
 The file
 $xref/Add.cpp/$$

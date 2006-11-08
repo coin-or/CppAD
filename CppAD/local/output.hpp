@@ -74,7 +74,7 @@ $xref/glossary/Operation/Sequence/operation sequence/1/$$
 
 $head Example$$
 $children%
-	example/output_.cpp
+	example/output.cpp
 %$$
 The file
 $xref/Output.cpp/$$

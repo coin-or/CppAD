@@ -52,7 +52,7 @@ $$
 $section Utility Routines used by CppAD Examples$$
 
 $childtable%
-	example/example_.cpp%
+	example/example.cpp%
 	example/DetOfMinor.h%
 	example/DetByMinor.h%
 	example/DetByLu.h%
