@@ -17,6 +17,14 @@ ADOLC_DIR=$HOME/adolc_base
 FADBAD_DIR=$HOME
 BOOST_DIR=/usr/include/boost-1_33
 #
+if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
+then
+	if [ -e Test.log ]
+	then
+		rm Test.log
+	fi
+fi
+#
 # date currently in configure.ac
 version=`grep "^ *AC_INIT(" configure.ac | \
 	sed -e "s/.*, *\([0-9][0-9]-[0-9][0-9]-[0-9][0-9]\) *,.*/\1/"`
@@ -309,23 +317,38 @@ then
 	then
 		exit 1
 	fi
-	echo "creating $wd/Test.log"
-	example/Example           >  ../Test.log
-	test_more/TestMore        >> ../Test.log
-	Introduction/Introduction >> ../Test.log
-	fadbad/Example            >> ../Test.log
-	adolc/Example             >> ../Test.log
-	RunOMhelp.sh Doc
+	ok="yes"
+	list="
+		example/example
+		test_more/test_more
+		Introduction/Introduction
+		fadbad/example
+		adolc/example
+	"
+	for program in $list
+	do
+		echo "running $program"
+		echo "$program"   >> ../Test.log
+		if ! ./$program   >> ../Test.log
+		then
+			ok="no"
+		fi
+	done
+	if ! ./RunOMhelp.sh Doc
+	then
+		ok="no"
+	fi
 	cat OMhelp.Doc.log        >> ../Test.log
-	if [ "$1" != "all" ]
+	#
+	# None of the cases get past this point
+	cd ..
+	dir=`pwd`
+	echo "Check the file $dir/Test.log for errors and warnings."
+	if [ "$ok" = "no" ]
 	then
-		exit 0
+		exit 1
 	fi
-	# None of the "test" cases get past this point
-	if [ "$2" = "test" ]
-	then
-		exit 0
-	fi
+	exit 0
 fi
 if [ "$1" = "gpl+dos" ] || [ "$1" = "all" ]
 then
