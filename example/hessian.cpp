@@ -23,7 +23,7 @@ $index example, Hessian$$
 $index test, Hessian$$
 
 $code
-$verbatim%example/hessian_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/hessian.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

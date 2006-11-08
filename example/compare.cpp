@@ -29,7 +29,7 @@ $index ==, example$$
 $index !=, example$$
 
 $code
-$verbatim%example/compare_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/compare.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

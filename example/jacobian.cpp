@@ -23,7 +23,7 @@ $index example, Jacobian$$
 $index test, Jacobian$$
 
 $code
-$verbatim%example/jacobian_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/jacobian.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

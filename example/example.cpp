@@ -19,7 +19,7 @@ $section Program That Runs all the CppAD Example$$
 $index example, run all$$
 
 $code
-$verbatim%example/example_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

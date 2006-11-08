@@ -24,7 +24,7 @@ $index test, default AD construct$$
 
 
 $code
-$verbatim%example/default_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/default.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

@@ -10,20 +10,18 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Erf.cpp$$
+$begin Cosh.cpp$$
 $spell
-	tan
-	erf
 $$
 
-$section The AD erf Function: Example and Test$$
+$section The AD cosh Function: Example and Test$$
 
-$index erf, AD example$$
-$index example, AD erf$$
-$index test, AD erf$$
+$index cosh, AD example$$
+$index example, AD cosh$$
+$index test, AD cosh$$
 
 $code
-$verbatim%example/erf_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/cosh.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -33,7 +31,7 @@ $end
 # include <CppAD/CppAD.h>
 # include <cmath>
 
-bool Erf(void)
+bool Cosh(void)
 {	bool ok = true;
 
 	using CppAD::AD;
@@ -48,30 +46,24 @@ bool Erf(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// a temporary value
-
 	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
-	y[0] = CppAD::erf(x[0]);
+	y[0] = CppAD::cosh(x[0]);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
 
 	// check value 
-	double erf_x0 = 0.5205;
-	ok &= NearEqual(y[0] , erf_x0,  1e-4 , 1e-4);
-
-	// value of derivative of erf at x0
-	double pi     = 4. * std::atan(1.);
-	double factor = 2. / sqrt(pi);
-	double check  = factor * std::exp(-x0 * x0);
+	double check = std::cosh(x0);
+	ok &= NearEqual(y[0] , check,  1e-10 , 1e-10);
 
 	// forward computation of first partial w.r.t. x[0]
 	CppADvector<double> dx(n);
 	CppADvector<double> dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
+	check = std::sinh(x0);
 	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
 
 	// reverse computation of derivative of y[0]
@@ -81,15 +73,13 @@ bool Erf(void)
 	dw    = f.Reverse(1, w);
 	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);
 
-	// use a VecAD<Base>::reference object with erf
+	// use a VecAD<Base>::reference object with cosh
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
 	v[zero]           = x0;
-	AD<double> result = CppAD::erf(v[zero]);
-	ok   &= NearEqual(result, y[0], 1e-10, 1e-10);
-
-	// use a double with erf
-	ok   &= NearEqual(CppAD::erf(x0), y[0], 1e-10, 1e-10);
+	AD<double> result = CppAD::cosh(v[zero]);
+	check = std::cosh(x0);
+	ok   &= NearEqual(result, check, 1e-10, 1e-10);
 
 	return ok;
 }

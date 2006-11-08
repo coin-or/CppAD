@@ -19,7 +19,7 @@ $index linear, piecewise interpolate$$
 $index interpolate, piecewise linear$$
 
 $code
-$verbatim%example/piecewise_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/piecewise.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

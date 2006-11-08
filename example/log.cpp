@@ -10,27 +10,31 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Add.cpp$$
+$begin Log.cpp$$
+$spell
+	exp
+	log
+$$
 
-$section AD Binary Addition: Example and Test$$
+$section The AD log Function: Example and Test$$
 
-$index +, AD example$$
-$index add, AD example$$
-$index plus, AD example$$
-$index example, AD add$$
-$index test, AD add$$
+$index log, AD example$$
+$index example, AD log$$
+$index test, AD log$$
 
 $code
-$verbatim%example/add_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/log.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 // BEGIN PROGRAM
+
 # include <CppAD/CppAD.h>
 
-bool Add(void)
+bool Log(void)
 {	bool ok = true;
+
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
@@ -38,48 +42,45 @@ bool Add(void)
 	size_t n  = 1;
 	double x0 = 0.5;
 	CppADvector< AD<double> > x(n);
-	x[0]      = x0; 
+	x[0]      = x0;
 
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// some binary addition operations
-	AD<double> a = x[0] + 1.; // AD<double> + double
-	AD<double> b = a    + 2;  // AD<double> + int
-	AD<double> c = 3.   + b;  // double     + AD<double> 
-	AD<double> d = 4    + c;  // int        + AD<double> 
+	// a temporary value
+	AD<double> exp_of_x0 = CppAD::exp(x[0]);
 
 	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
-	y[0] = d + x[0];          // AD<double> + AD<double> 
+	y[0] = CppAD::log(exp_of_x0);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
 
 	// check value 
-	ok &= NearEqual(y[0] , 2. * x0 + 10,  1e-10 , 1e-10);
+	ok &= NearEqual(y[0] , x0,  1e-10 , 1e-10);
 
-	// forward computation of partials w.r.t. x[0]
+	// forward computation of first partial w.r.t. x[0]
 	CppADvector<double> dx(n);
 	CppADvector<double> dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0], 2., 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0], 1., 1e-10, 1e-10);
 
 	// reverse computation of derivative of y[0]
 	CppADvector<double>  w(m);
 	CppADvector<double> dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
-	ok   &= NearEqual(dw[0], 2., 1e-10, 1e-10);
+	ok   &= NearEqual(dw[0], 1., 1e-10, 1e-10);
 
-	// use a VecAD<Base>::reference object with addition
+	// use a VecAD<Base>::reference object with log
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
-	v[zero] = a;
-	AD<double> result = v[zero] + 2;
-	ok     &= (result == b);
+	v[zero]           = exp_of_x0;
+	AD<double> result = CppAD::log(v[zero]);
+	ok   &= NearEqual(result, x0, 1e-10, 1e-10);
 
 	return ok;
 }

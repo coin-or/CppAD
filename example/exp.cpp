@@ -10,20 +10,19 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Asin.cpp$$
+$begin Exp.cpp$$
 $spell
-	sin
-	asin
+	exp
 $$
 
-$section The AD asin Function: Example and Test$$
+$section The AD exp Function: Example and Test$$
 
-$index asin, AD example$$
-$index example, AD asin$$
-$index test, AD asin$$
+$index exp, AD example$$
+$index example, AD exp$$
+$index test, AD exp$$
 
 $code
-$verbatim%example/asin_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/exp.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -31,8 +30,9 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
+# include <cmath>
 
-bool Asin(void)
+bool Exp(void)
 {	bool ok = true;
 
 	using CppAD::AD;
@@ -47,40 +47,39 @@ bool Asin(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
-	// a temporary value
-	AD<double> sin_of_x0 = CppAD::sin(x[0]);
-
 	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
-	y[0] = CppAD::asin(sin_of_x0);
+	y[0] = CppAD::exp(x[0]);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
 
 	// check value 
-	ok &= NearEqual(y[0] , x0,  1e-10 , 1e-10);
+	double check = std::exp(x0);
+	ok &= NearEqual(y[0] , check,  1e-10 , 1e-10);
 
 	// forward computation of first partial w.r.t. x[0]
 	CppADvector<double> dx(n);
 	CppADvector<double> dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0], 1., 1e-10, 1e-10);
+	check = std::exp(x0);
+	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
 
 	// reverse computation of derivative of y[0]
 	CppADvector<double>  w(m);
 	CppADvector<double> dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
-	ok   &= NearEqual(dw[0], 1., 1e-10, 1e-10);
+	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);
 
-	// use a VecAD<Base>::reference object with asin
+	// use a VecAD<Base>::reference object with exp
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
-	v[zero] = sin_of_x0;
-	AD<double> result = CppAD::asin(v[zero]);
-	ok     &= NearEqual(result, x0, 1e-10, 1e-10);
+	v[zero]           = x0;
+	AD<double> result = CppAD::exp(v[zero]);
+	ok   &= NearEqual(result, check, 1e-10, 1e-10);
 
 	return ok;
 }

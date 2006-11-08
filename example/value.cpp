@@ -24,7 +24,7 @@ $index test, Value$$
 $index record, example$$
 
 $code
-$verbatim%example/value_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/value.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

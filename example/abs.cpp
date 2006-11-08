@@ -24,7 +24,7 @@ $index derivative, directional example$$
 $index directional, derivative example$$
 
 $code
-$verbatim%example/abs_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/abs.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

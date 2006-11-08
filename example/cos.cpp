@@ -10,19 +10,19 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Sqrt.cpp$$
+$begin Cos.cpp$$
 $spell
-	sqrt
+	cos
 $$
 
-$section The AD sqrt Function: Example and Test$$
+$section The AD cos Function: Example and Test$$
 
-$index sqrt, AD example$$
-$index example, AD sqrt$$
-$index test, AD sqrt$$
+$index cos, AD example$$
+$index example, AD cos$$
+$index test, AD cos$$
 
 $code
-$verbatim%example/sqrt_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/cos.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -32,7 +32,7 @@ $end
 # include <CppAD/CppAD.h>
 # include <cmath>
 
-bool Sqrt(void)
+bool Cos(void)
 {	bool ok = true;
 
 	using CppAD::AD;
@@ -50,13 +50,13 @@ bool Sqrt(void)
 	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
-	y[0] = CppAD::sqrt(x[0]);
+	y[0] = CppAD::cos(x[0]);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
 
 	// check value 
-	double check = std::sqrt(x0);
+	double check = std::cos(x0);
 	ok &= NearEqual(y[0] , check,  1e-10 , 1e-10);
 
 	// forward computation of first partial w.r.t. x[0]
@@ -64,7 +64,7 @@ bool Sqrt(void)
 	CppADvector<double> dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	check = 1. / (2. * std::sqrt(x0) );
+	check = - std::sin(x0);
 	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
 
 	// reverse computation of derivative of y[0]
@@ -74,12 +74,12 @@ bool Sqrt(void)
 	dw    = f.Reverse(1, w);
 	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);
 
-	// use a VecAD<Base>::reference object with sqrt
+	// use a VecAD<Base>::reference object with cos
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
 	v[zero]           = x0;
-	AD<double> result = CppAD::sqrt(v[zero]);
-	check = std::sqrt(x0);
+	AD<double> result = CppAD::cos(v[zero]);
+	check = std::cos(x0);
 	ok   &= NearEqual(result, check, 1e-10, 1e-10);
 
 	return ok;

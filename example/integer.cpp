@@ -23,7 +23,7 @@ $index example, Integer$$
 $index test, Integer$$
 
 $code
-$verbatim%example/integer_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/integer.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

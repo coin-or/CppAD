@@ -22,7 +22,7 @@ $index test, polynomial$$
 
 $comment This file is in the Example subdirectory$$
 $code
-$verbatim%example/poly_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/poly.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

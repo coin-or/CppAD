@@ -21,7 +21,7 @@ $index example, Forward$$
 $index test, Forward$$
 
 $code
-$verbatim%example/forward_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/forward.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

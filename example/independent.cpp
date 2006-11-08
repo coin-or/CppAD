@@ -21,7 +21,7 @@ $index example, Independent$$
 $index test, Independent$$
 
 $code
-$verbatim%example/independent_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/independent.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

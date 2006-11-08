@@ -10,19 +10,19 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Sin.cpp$$
+$begin Sinh.cpp$$
 $spell
-	sin
+	sinh
 $$
 
-$section The AD sin Function: Example and Test$$
+$section The AD sinh Function: Example and Test$$
 
-$index sin, AD example$$
-$index example, AD sin$$
-$index test, AD sin$$
+$index sinh, AD example$$
+$index example, AD sinh$$
+$index test, AD sinh$$
 
 $code
-$verbatim%example/sin_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/sinh.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -32,7 +32,7 @@ $end
 # include <CppAD/CppAD.h>
 # include <cmath>
 
-bool Sin(void)
+bool Sinh(void)
 {	bool ok = true;
 
 	using CppAD::AD;
@@ -50,13 +50,13 @@ bool Sin(void)
 	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
-	y[0] = CppAD::sin(x[0]);
+	y[0] = CppAD::sinh(x[0]);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
 
 	// check value 
-	double check = std::sin(x0);
+	double check = std::sinh(x0);
 	ok &= NearEqual(y[0] , check,  1e-10 , 1e-10);
 
 	// forward computation of first partial w.r.t. x[0]
@@ -64,7 +64,7 @@ bool Sin(void)
 	CppADvector<double> dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	check = std::cos(x0);
+	check = std::cosh(x0);
 	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
 
 	// reverse computation of derivative of y[0]
@@ -74,12 +74,12 @@ bool Sin(void)
 	dw    = f.Reverse(1, w);
 	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);
 
-	// use a VecAD<Base>::reference object with sin
+	// use a VecAD<Base>::reference object with sinh
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
 	v[zero]           = x0;
-	AD<double> result = CppAD::sin(v[zero]);
-	check = std::sin(x0);
+	AD<double> result = CppAD::sinh(v[zero]);
+	check = std::sinh(x0);
 	ok   &= NearEqual(result, check, 1e-10, 1e-10);
 
 	return ok;

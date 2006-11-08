@@ -24,7 +24,7 @@ $index example, AD output$$
 $index test, AD output$$
 
 $code
-$verbatim%example/output_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/output.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

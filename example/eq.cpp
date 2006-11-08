@@ -23,7 +23,7 @@ $index example, AD assignment$$
 $index test, AD assignment$$
 
 $code
-$verbatim%example/eq_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/eq.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

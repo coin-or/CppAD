@@ -10,20 +10,20 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Acos.cpp$$
+$begin Erf.cpp$$
 $spell
-	cos
-	acos
+	tan
+	erf
 $$
 
-$section The AD acos Function: Example and Test$$
+$section The AD erf Function: Example and Test$$
 
-$index acos, AD example$$
-$index example, AD acos$$
-$index test, AD acos$$
+$index erf, AD example$$
+$index example, AD erf$$
+$index test, AD erf$$
 
 $code
-$verbatim%example/acos_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/erf.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -31,8 +31,9 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
+# include <cmath>
 
-bool Acos(void)
+bool Erf(void)
 {	bool ok = true;
 
 	using CppAD::AD;
@@ -48,39 +49,47 @@ bool Acos(void)
 	CppAD::Independent(x);
 
 	// a temporary value
-	AD<double> cos_of_x0 = CppAD::cos(x[0]);
 
 	// range space vector 
 	size_t m = 1;
 	CppADvector< AD<double> > y(m);
-	y[0] = CppAD::acos(cos_of_x0);
+	y[0] = CppAD::erf(x[0]);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
 
 	// check value 
-	ok &= NearEqual(y[0] , x0,  1e-10 , 1e-10);
+	double erf_x0 = 0.5205;
+	ok &= NearEqual(y[0] , erf_x0,  1e-4 , 1e-4);
+
+	// value of derivative of erf at x0
+	double pi     = 4. * std::atan(1.);
+	double factor = 2. / sqrt(pi);
+	double check  = factor * std::exp(-x0 * x0);
 
 	// forward computation of first partial w.r.t. x[0]
 	CppADvector<double> dx(n);
 	CppADvector<double> dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0], 1., 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
 
 	// reverse computation of derivative of y[0]
 	CppADvector<double>  w(m);
 	CppADvector<double> dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
-	ok   &= NearEqual(dw[0], 1., 1e-10, 1e-10);
+	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);
 
-	// use a VecAD<Base>::reference object with acos
+	// use a VecAD<Base>::reference object with erf
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
-	v[zero] = cos_of_x0;
-	AD<double> result = CppAD::acos(v[zero]);
-	ok     &= NearEqual(result, x0, 1e-10, 1e-10);
+	v[zero]           = x0;
+	AD<double> result = CppAD::erf(v[zero]);
+	ok   &= NearEqual(result, y[0], 1e-10, 1e-10);
+
+	// use a double with erf
+	ok   &= NearEqual(CppAD::erf(x0), y[0], 1e-10, 1e-10);
 
 	return ok;
 }

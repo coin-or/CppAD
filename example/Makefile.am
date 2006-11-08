@@ -25,59 +25,59 @@ endif
 AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #
 Example_SOURCES   = \
-	example_.cpp \
-	abs_.cpp \
-	acos_.cpp \
-	add_.cpp \
+	example.cpp \
+	abs.cpp \
+	acos.cpp \
+	add.cpp \
 	add_eq.cpp \
-	asin_.cpp \
-	atan_.cpp \
+	asin.cpp \
+	atan.cpp \
 	atan_2.cpp \
 	bender_quad.cpp \
 	bool_fun.cpp \
 	vector_bool.cpp \
 	check_numeric_type.cpp \
 	check_simple_vector.cpp \
-	compare_.cpp \
+	compare.cpp \
 	compare_change.cpp \
 	complex_poly.cpp \
 	cond_exp.cpp \
 	copy_ad.cpp \
 	copy_base.cpp \
-	cos_.cpp \
-	cosh_.cpp \
+	cos.cpp \
+	cosh.cpp \
 	cpp_ad_vector.cpp \
-	default_.cpp \
+	default.cpp \
 	det_by_lu.cpp \
 	DetByLu.h \
 	det_by_minor.cpp \
 	DetByMinor.h \
 	det_of_minor.cpp \
 	DetOfMinor.h \
-	div_.cpp \
+	div.cpp \
 	div_eq.cpp \
-	eq_.cpp \
+	eq.cpp \
 	equal_op_seq.cpp \
-	erf_.cpp \
+	erf.cpp \
 	error_handler.cpp \
-	exp_.cpp \
+	exp.cpp \
 	for_one.cpp \
 	for_two.cpp \
-	forward_.cpp \
+	forward.cpp \
 	for_sparse_jac.cpp \
 	fun_check.cpp \
 	hes_lagrangian.cpp \
 	hes_lu_det.cpp \
 	hes_minor_det.cpp \
-	hessian_.cpp \
+	hessian.cpp \
 	hes_times_dir.cpp \
-	independent_.cpp \
-	integer_.cpp \
+	independent.cpp \
+	integer.cpp \
 	interface_2c.cpp\
 	jac_lu_det.cpp \
 	jac_minor_det.cpp \
-	jacobian_.cpp \
-	log_.cpp \
+	jacobian.cpp \
+	log.cpp \
 	log_10.cpp \
 	lu_factor.cpp \
 	lu_invert.cpp \
@@ -86,7 +86,7 @@ Example_SOURCES   = \
 	lu_vec_ad.cpp \
 	LuVecAD.h \
 	lu_vec_ad_ok.cpp \
-	mul_.cpp \
+	mul.cpp \
 	mul_eq.cpp \
 	mul_tape.cpp \
 	near_equal.cpp \
@@ -98,11 +98,11 @@ Example_SOURCES   = \
 	ode_gear_control.cpp\
 	ode_stiff.cpp \
 	ode_taylor.cpp \
-	output_.cpp \
+	output.cpp \
 	par_var.cpp \
-	piecewise_.cpp \
-	poly_.cpp \
-	pow_.cpp \
+	piecewise.cpp \
+	poly.cpp \
+	pow.cpp \
 	pow_int.cpp \
 	reverse_any.cpp \
 	reverse_one.cpp \
@@ -116,17 +116,17 @@ Example_SOURCES   = \
 	runge_45.cpp \
 	seq_property.cpp \
 	simple_vector.cpp \
-	sin_.cpp \
-	sinh_.cpp \
-	sqrt_.cpp \
+	sin.cpp \
+	sinh.cpp \
+	sqrt.cpp \
 	stack_machine.cpp \
-	sub_.cpp \
+	sub.cpp \
 	sub_eq.cpp \
-	tan_.cpp \
+	tan.cpp \
 	tape_index.cpp \
 	track_new_del.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
-	value_.cpp \
+	value.cpp \
 	var_2par.cpp \
 	vec_ad.cpp 
