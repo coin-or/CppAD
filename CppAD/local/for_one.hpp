@@ -111,7 +111,7 @@ the previous calls to $xref/Forward/$$ are undefined.
 
 $head Example$$
 $children%
-	example/ForOne.cpp
+	example/for_one.cpp
 %$$
 The routine 
 $xref/ForOne.cpp//ForOne/$$ is both an example and test.

@@ -153,7 +153,7 @@ $head Example$$
 
 $head Test$$
 $children%
-	example/CondExp.cpp
+	example/cond_exp.cpp
 %$$
 The file
 $xref/CondExp.cpp/$$

@@ -91,7 +91,7 @@ if this is not the case.
 
 $head Example$$
 $children%
-	example/ReverseOne.cpp
+	example/reverse_one.cpp
 %$$
 The file
 $xref/ReverseOne.cpp/$$
@@ -313,8 +313,8 @@ dw[ j * 2 + 1 ] = \DD{F_i}{ x_j }{ x_\ell } ( x^{(0)} )
 
 $head Example$$
 $children%
-	example/ReverseAny.cpp%
-	example/HesTimesDir.cpp
+	example/reverse_any.cpp%
+	example/hes_times_dir.cpp
 %$$
 The files
 $xref/ReverseAny.cpp/$$

@@ -256,7 +256,7 @@ It will be in the empty state when $code BenderQuad$$ returns.
 
 $head Example$$
 $children%
-	example/BenderQuad.cpp
+	example/bender_quad.cpp
 %$$
 The file
 $xref/BenderQuad.cpp/$$

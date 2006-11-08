@@ -77,7 +77,7 @@ of $italic x$$ and $italic y$$.
 
 $head Example$$
 $children%
-	example/Pow.cpp
+	example/pow_.cpp
 %$$
 The file
 $xref/Pow.cpp/$$

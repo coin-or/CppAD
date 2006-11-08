@@ -116,7 +116,7 @@ $xref/glossary/Operation/Sequence/operation sequence/1/$$
 
 $head Example$$
 $children%
-	example/NearEqualExt.cpp
+	example/near_equal_ext.cpp
 %$$
 The file $xref/NearEqualExt.cpp/$$ contains an example
 and test of this extension of $xref/NearEqual/$$.

@@ -37,7 +37,7 @@ the object is a $xref/glossary/Parameter/parameter/$$.
 
 $head Example$$
 $children%
-	example/Default.cpp
+	example/default_.cpp
 %$$
 The file
 $xref/Default.cpp/$$

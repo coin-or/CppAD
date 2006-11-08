@@ -80,7 +80,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/Mul.cpp
+	example/mul_.cpp
 %$$
 The file
 $xref/Mul.cpp/$$

@@ -131,7 +131,7 @@ the previous calls to $xref/Forward/$$ are undefined.
 
 $head Examples$$
 $children%
-	example/ForTwo.cpp
+	example/for_two.cpp
 %$$
 The routine 
 $xref/ForTwo.cpp//ForTwo/$$ is both an example and test.

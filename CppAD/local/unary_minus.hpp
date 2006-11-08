@@ -69,7 +69,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/UnaryMinus.cpp
+	example/unary_minus.cpp
 %$$
 The file
 $xref/UnaryMinus.cpp/$$

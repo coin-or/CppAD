@@ -242,7 +242,7 @@ when $italic v$$ falls out of scope.
 
 $head Example$$
 $children%
-	example/VecAD.cpp
+	example/vec_ad.cpp
 %$$
 The file
 $xref/VecAD.cpp/$$
@@ -268,7 +268,7 @@ $$
 $lnext
 In the $code Example$$ directory, execute the command
 $codep
-	./OneTest LuVecADOk "LuVecAD.cpp -DNDEBUG" > LuVecADOk.log
+	./OneTest LuVecADOk "lu_vec_ad.cpp -DNDEBUG" > LuVecADOk.log
 $$
 This will write a trace of all the forward tape operations,
 for the test case $xref/LuVecADOk.cpp/$$,

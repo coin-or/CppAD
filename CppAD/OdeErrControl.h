@@ -338,8 +338,8 @@ if this is not the case.
 
 $head Example$$
 $children%
-	example/OdeErrControl.cpp%
-	example/OdeErrMaxabs.cpp
+	example/ode_err_control.cpp%
+	example/ode_err_maxabs.cpp
 %$$
 The files
 $xref/OdeErrControl.cpp/$$

@@ -69,7 +69,7 @@ of $italic x$$.
 
 $head Example$$
 $children%
-	example/Erf.cpp
+	example/erf_.cpp
 %$$
 The file
 $xref/Erf.cpp/$$

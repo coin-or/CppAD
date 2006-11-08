@@ -150,11 +150,11 @@ if this is not the case.
 
 
 $children%
-	example/RombergMul.cpp
+	example/romberg_mul.cpp
 %$$
 $head Example$$
 $comment%
-	example/RombergMul.cpp
+	example/romberg_mul.cpp
 %$$
 The file
 $xref/RombergMul.cpp/$$

@@ -80,7 +80,7 @@ $latex \[
 
 $head Example$$
 $children%
-	example/Sub.cpp
+	example/sub_.cpp
 %$$
 The file
 $xref/Sub.cpp/$$

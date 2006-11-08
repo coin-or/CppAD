@@ -96,7 +96,7 @@ the previous calls to $xref/Forward/$$ are undefined.
 
 $head Example$$
 $children%
-	example/Jacobian.cpp
+	example/jacobian_.cpp
 %$$
 The routine 
 $xref/Jacobian.cpp//Jacobian/$$ is both an example and test.

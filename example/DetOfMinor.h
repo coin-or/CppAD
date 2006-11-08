@@ -112,7 +112,7 @@ The vector $italic c$$ is modified during the computation, but it is restored
 to its original value before the return.
 
 $children%
-	example/DetOfMinor.cpp
+	example/det_of_minor.cpp
 %$$
 
 $head Example$$

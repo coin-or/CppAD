@@ -67,7 +67,7 @@ $syntax%
 returns the determinant of $italic A$$ using expansion by minors.
 
 $children%
-	example/DetByLu.cpp
+	example/det_by_lu.cpp
 %$$
 
 $head Complex Types$$

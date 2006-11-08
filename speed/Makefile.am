@@ -34,7 +34,7 @@ speed_SOURCES    = \
 	det_minor.cpp \
 	lu_solve.cpp \
 	ode.cpp \
-	../example/LuVecAD.cpp
+	../example/lu_vec_ad.cpp
 #
 # speed_p
 #

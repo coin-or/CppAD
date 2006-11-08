@@ -25,14 +25,14 @@ $index example, NearEqual$$
 $index test, NearEqual$$
 
 $head File Name$$
-This file is called $code Near_Equal.cpp$$ instead of 
+This file is called $code near_equal.cpp$$ instead of 
 $code NearEqual.cpp$$
 to avoid a name conflict with $code ../lib/NearEqual.cpp$$
 in the corresponding Microsoft project file.
 
 $comment This file is in the Example subdirectory$$
 $code
-$verbatim%example/Near_Equal.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/near_equal.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

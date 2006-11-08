@@ -225,7 +225,7 @@ and it is not $code std::complex<float>$$ or $code std::complex<double>$$,
 see the documentation for $code AbsGeq$$ in $xref/LuFactor/AbsGeq/LuFactor/$$. 
 
 $children%
-	example/LuSolve.cpp
+	example/lu_solve.cpp
 %$$
 $head Example$$
 The file 

@@ -207,7 +207,7 @@ if this is not the case.
 
 $head Example$$
 $children%
-	example/OdeGear.cpp
+	example/ode_gear.cpp
 %$$
 The file
 $xref/OdeGear.cpp/$$

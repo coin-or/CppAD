@@ -90,7 +90,7 @@ $xref/glossary/Operation/Sequence/operation sequence/1/$$
 
 $head Example$$
 $children%
-	example/Integer.cpp
+	example/integer_.cpp
 %$$
 The file
 $xref/Integer.cpp/$$

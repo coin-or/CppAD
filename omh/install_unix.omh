@@ -59,21 +59,21 @@ $index download, unix$$
 Download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-06-11-06.cpl.tgz%$$
+$href%cppad-06-11-08.cpl.tgz%$$
 
 $subhead GPL License$$
-$href%cppad-06-11-06.gpl.tgz%$$
+$href%cppad-06-11-08.gpl.tgz%$$
 
 $head Extraction$$
 Use the command
 $syntax%
-	tar -xvzf cppad-06-11-06.%license%.tgz
+	tar -xvzf cppad-06-11-08.%license%.tgz
 %$$
 (where $italic license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-06-11-06
+	cppad-06-11-08
 %$$
 Note that $code 06-08-20$$ is the version number for CppAD.
 All of the commands below are to be executed starting from this

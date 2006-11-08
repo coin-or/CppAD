@@ -57,7 +57,7 @@ $syntax%
 returns the determinant of $italic A$$ using expansion by minors.
 
 $children%
-	example/DetByMinor.cpp
+	example/det_by_minor.cpp
 %$$
 
 

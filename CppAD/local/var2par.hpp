@@ -56,7 +56,7 @@ The return value $italic y$$ will be a parameter.
 
 $head Example$$
 $children%
-	example/Var2Par.cpp
+	example/var_2par.cpp
 %$$
 The file
 $xref/Var2Par.cpp/$$

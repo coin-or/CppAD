@@ -118,7 +118,7 @@ the $code CppAD$$ routines.
 
 $head Example$$
 $children%
-	example/Near_Equal.cpp
+	example/near_equal.cpp
 %$$
 The file $xref/Near_Equal.cpp/$$ contains an example
 and test of $code NearEqual$$.

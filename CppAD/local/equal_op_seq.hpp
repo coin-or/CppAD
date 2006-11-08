@@ -88,7 +88,7 @@ $lend
 
 $head Example$$
 $children%
-	example/EqualOpSeq.cpp
+	example/equal_op_seq.cpp
 %$$
 The file
 $xref/EqualOpSeq.cpp/$$

@@ -180,7 +180,7 @@ $syntax%
 
 $head Example$$
 $children%
-	example/TrackNewDel.cpp
+	example/track_new_del.cpp
 %$$
 The file $xref/TrackNewDel.cpp/$$
 contains an example and test of these functions.

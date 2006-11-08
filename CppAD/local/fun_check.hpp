@@ -178,7 +178,7 @@ for this value of independent variables).
 
 $head Example$$
 $children%
-	example/FunCheck.cpp
+	example/fun_check.cpp
 %$$
 The file
 $xref/FunCheck.cpp/$$

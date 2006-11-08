@@ -108,9 +108,9 @@ The following examples were skipped because
 they document the functions that access $italic TapeName$$:
 $code DefFun.cpp$$,
 $code For.cpp$$,
-$code ForTwo.cpp$$,
+$code for_two.cpp$$,
 $code Rev.cpp$$, and
-$code RevTwo.cpp$$.
+$code rev_two.cpp$$.
 
 $head 12-05$$
 There was a bug in 
