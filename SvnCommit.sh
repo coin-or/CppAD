@@ -38,7 +38,12 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move example_ to example and change corresponding referneces.
+log_entry="Do not include distribution subdirectory in comparisions.
+
+SvnCommit.sh: file that made this commit.
+CheckIncludeFile.sh: check that C++ include command file name case is correct.
+CheckIncludeDef.sh: check that C++ ifndef names match file names.
+CheckIncludeOmh.sh: check that OMhelp include command file name case is correct.
 "
 # 
 add_list="
@@ -46,16 +51,9 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	CppAD
-	configure.ac
-	dir2lower.sh
-	omh
-	example_
-	Example
-	speed
-	fadbad
-	Build.sh
-	Makefile.am
+	CheckIncludeFile.sh
+	CheckIncludeDef.sh
+	CheckIncludeOmh.sh
 "
 #
 delete_list="
