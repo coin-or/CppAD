@@ -279,6 +279,11 @@ fi
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
 then
 	#
+	# Start Test.log with include file checks
+	CheckIncludeDef.sh   > Test.log
+	CheckIncludeFile.sh >> Test.log
+	CheckIncludeOmh.sh  >> Test.log
+	#
 	if [ -e cppad-$version ]
 	then
 		echo "rm -f -r cppad-$version"
@@ -307,7 +312,6 @@ then
 		exit 1
 	fi
 	#
-	wd=`pwd`
 	cd cppad-$version
 	if ! ./Build.sh configure test
 	then
