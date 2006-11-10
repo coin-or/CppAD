@@ -49,11 +49,11 @@ Example_SOURCES   = \
 	cpp_ad_vector.cpp \
 	default.cpp \
 	det_by_lu.cpp \
-	DetByLu.h \
+	det_by_lu.hpp \
 	det_by_minor.cpp \
-	DetByMinor.h \
+	det_by_minor.hpp \
 	det_of_minor.cpp \
-	DetOfMinor.h \
+	det_of_minor.hpp \
 	div.cpp \
 	div_eq.cpp \
 	eq.cpp \
@@ -84,7 +84,7 @@ Example_SOURCES   = \
 	lu_ratio.cpp \
 	lu_solve.cpp \
 	lu_vec_ad.cpp \
-	LuVecAD.h \
+	lu_vec_ad.hpp \
 	lu_vec_ad_ok.cpp \
 	mul.cpp \
 	mul_eq.cpp \

@@ -38,12 +38,10 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Do not include distribution subdirectory in comparisions.
+log_entry="convert file names example/*.h to example/*.hpp and lower case.
 
 SvnCommit.sh: file that made this commit.
-CheckIncludeFile.sh: check that C++ include command file name case is correct.
-CheckIncludeDef.sh: check that C++ ifndef names match file names.
-CheckIncludeOmh.sh: check that OMhelp include command file name case is correct.
+config.h: update package verision.
 "
 # 
 add_list="
@@ -51,9 +49,16 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	CheckIncludeFile.sh
+	CppAD/config.h
+	Build.sh
 	CheckIncludeDef.sh
-	CheckIncludeOmh.sh
+	CheckIncludeFile.sh
+	adolc
+	example
+	adolc
+	omh/example_list.omh
+	speed
+	fadbad
 "
 #
 delete_list="

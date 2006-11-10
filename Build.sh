@@ -279,11 +279,6 @@ fi
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
 then
 	#
-	# Start Test.log with include file checks
-	CheckIncludeDef.sh   > Test.log
-	CheckIncludeFile.sh >> Test.log
-	CheckIncludeOmh.sh  >> Test.log
-	#
 	if [ -e cppad-$version ]
 	then
 		echo "rm -f -r cppad-$version"
@@ -306,6 +301,13 @@ then
 			exit 1
 		fi
 	fi
+	#
+	# Start Test.log with include file checks
+	# (must do this before extracting copy of distribution directory).
+	CheckIncludeDef.sh   > Test.log
+	CheckIncludeFile.sh >> Test.log
+	CheckIncludeOmh.sh  >> Test.log
+	#
 	echo "tar -xzf $dir/cppad-$version.cpl.tgz"
 	if ! tar -xzf $dir/cppad-$version.cpl.tgz
 	then

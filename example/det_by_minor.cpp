@@ -32,7 +32,7 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "DetByMinor.h"
+# include "det_by_minor.hpp"
 
 bool DetByMinor()
 {	bool ok = true;

@@ -37,7 +37,7 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "../Example/DetByMinor.h"
+# include "../example/det_by_minor.hpp"
 
 # include <adolc/adouble.h>
 # include <adolc/interfaces.h>

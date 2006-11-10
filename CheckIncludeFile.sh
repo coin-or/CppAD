@@ -21,8 +21,8 @@ echo "-------------------------------------------------------------------"
 grep '^# *include *<CppAD/' \
 	CppAD/*.h \
 	CppAD/local/*.hpp \
-	Example/*.cpp \
-	Example/*.h \
+	example/*.cpp \
+	example/*.hpp \
 	adolc/*.cpp \
 	fadbad/*.cpp \
 	test_more/*.cpp \
@@ -36,15 +36,15 @@ sort -u > junk.2
 diff junk.1 junk.2
 #
 grep '^# *include *"' \
-	Example/*.cpp | \
-sed -e 's%^[^"]*"%Example/%' \
+	example/*.cpp | \
+sed -e 's%^[^"]*"%example/%' \
     -e 's%".*$%%' | \
 sort -u > junk.1
-ls	Example/*.h |\
+ls	example/*.hpp |\
 sort -u > junk.2
 diff junk.1 junk.2
 #
-grep '^# *include *"\.\./Example' \
+grep '^# *include *"\.\./example' \
 	adolc/*.cpp    \
 	fadbad/*.cpp   \
 	test_more/*.cpp \
@@ -52,7 +52,7 @@ grep '^# *include *"\.\./Example' \
 sed -e 's%^[^"]*"\.\./%%' \
     -e 's%".*$%%' | \
 sort -u > junk.1
-ls	Example/*.h |\
+ls	example/*.hpp |\
 sort -u > junk.2
 cat junk.1 junk.2 | sort -u > junk.3
 diff -b junk.2 junk.3

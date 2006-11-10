@@ -35,7 +35,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include "../example/DetByLu.h"
+# include "../example/det_by_lu.hpp"
 
 # include <iostream.h>
 # include <Fadbad++/badiff.h>

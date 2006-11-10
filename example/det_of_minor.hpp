@@ -1,5 +1,5 @@
-# ifndef CppADDetOfMinorIncluded
-# define CppADDetOfMinorIncluded
+# ifndef CPPAD_DET_OF_MINOR_INCLUDED
+# define CPPAD_DET_OF_MINOR_INCLUDED
 
 // BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin DetOfMinor$$
 $spell
+	hpp
 	std
 	Det
 	const
@@ -29,7 +30,7 @@ $section Compute the Determinant of a Minor$$
 
 $table
 $bold Syntax$$
-$cnext $syntax%# include "example/DetOfMinor.h"%$$ 
+$cnext $syntax%# include "example/det_of_minor.hpp"%$$ 
 $rnext
 $cnext $syntax%%Type% DetOfMinor( 
 	const CppADvector<%Type%> &%A%, 
@@ -44,7 +45,7 @@ $fend 20$$
 $head Inclusion$$
 The template function $code DetOfMinor$$ is defined in the $code CppAD$$
 namespace by including 
-the file $code example/DetOfMinor.h$$.
+the file $code example/det_of_minor.hpp$$.
 It is only intended for example and testing purposes, 
 so it is not automatically included by
 $xref/CppAD//CppAD.h/$$.
@@ -118,7 +119,7 @@ $children%
 $head Example$$
 The file
 $xref/DetOfMinor.cpp/$$ 
-contains an example and a test of $code DetOfMinor.h$$.
+contains an example and a test of $code det_of_minor.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
@@ -144,12 +145,12 @@ $section Compute the Determinant of a Minor: Source Code$$
 
 $comment This file is in the Example subdirectory$$
 $code
-# ifndef CppADDetOfMinorIncluded
+# ifndef CPPAD_DET_OF_MINOR_INCLUDED
 $pre
 $$
-# define CppADDetOfMinorIncluded
+# define CPPAD_DET_OF_MINOR_INCLUDED
 
-$verbatim%example/DetOfMinor.h%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/det_of_minor.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 
 # endif
 $$

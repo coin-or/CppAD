@@ -1,5 +1,5 @@
-# ifndef CppADDetByLuIncluded
-# define CppADDetByLuIncluded
+# ifndef CPPAD_DET_BY_LU_INCLUDED 
+# define CPPAD_DET_BY_LU_INCLUDED 
 
 // BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin DetByLu$$
 $spell
+	hpp
 	Leq
 	Geq
 	typedef
@@ -33,7 +34,7 @@ $index factor, Lu determinant$$
 
 $table
 $bold Syntax$$
-$rnext $cnext $syntax%# include "example/DetByLu.h"%$$
+$rnext $cnext $syntax%# include "example/det_by_lu.hpp"%$$
 $rnext $cnext $syntax%DetByLu<%Type%> %Det%(size_t %n%)%$$
 $rnext $cnext $syntax%%Type% %Det%(CppADvector<%Type%> &%A%)%$$
 $rnext $cnext $syntax%typedef std::complex<double>     Complex;%$$
@@ -45,7 +46,7 @@ $fend 25$$
 $head Inclusion$$
 The template class $code DetByLu$$ is defined in the $code CppAD$$
 namespace by including 
-the file $code example/DetByLu.h$$.
+the file $code example/det_by_lu.hpp$$.
 It is only intended for example and testing purposes, 
 so it is not automatically included by
 $xref/CppAD//CppAD.h/$$.
@@ -85,7 +86,7 @@ types.
 $head Example$$
 The file
 $xref/DetByLu.cpp/$$ 
-contains an example and a test of $code DetByLu.h$$.
+contains an example and a test of $code det_by_lu.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
@@ -114,12 +115,12 @@ $index factor, Lu complex$$
 
 $comment This file is in the Example subdirectory$$
 $code
-# ifndef CppADDetByLuIncluded
+# ifndef CPPAD_DET_BY_LU_INCLUDED
 $pre
 $$
-# define CppADDetByLuIncluded
+# define CPPAD_DET_BY_LU_INCLUDED
 
-$verbatim%example/DetByLu.h%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/det_by_lu.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 
 # endif
 $$

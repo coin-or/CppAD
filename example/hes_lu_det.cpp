@@ -32,7 +32,7 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "DetByLu.h"
+# include "det_by_lu.hpp"
 
 bool HesLuDet()
 {	bool ok = true;

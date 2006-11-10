@@ -33,8 +33,8 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "LuVecAD.h"
-# include "DetByMinor.h"
+# include "lu_vec_ad.hpp"
+# include "det_by_minor.hpp"
 
 bool LuVecADOk(void)
 {	bool  ok = true;

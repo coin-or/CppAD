@@ -20,7 +20,7 @@ echo "-----------------------------------------------------"
 #
 grep '^# *ifndef *CppAD[a-zA-Z]*Included$' \
 	CppAD/*.h \
-	Example/*.h \
+	example/*.hpp \
 	| sed -e '/ErrorHandler.h:.*# ifndef CppADCppADIncluded/d' \
 	| sort -u > junk.1
 sed -e 's|\([^.]*\)\.h:.*|\1|' -e 's|^.*/||' < junk.1 > junk.2
@@ -29,7 +29,7 @@ diff junk.2 junk.3
 #
 grep '^# *define *CppAD[a-zA-Z]*Included$' \
 	CppAD/*.h \
-	Example/*.h \
+	example/*.hpp \
 	| sort -u > junk.1
 sed -e 's|\([^.]*\)\.h:.*|\1|' -e 's|^.*/||' < junk.1 > junk.2
 sed -e 's|.*# *define *CppAD\([a-zA-Z]*\)Included$|\1|' < junk.1 > junk.3

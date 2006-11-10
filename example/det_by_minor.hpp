@@ -1,5 +1,5 @@
-# ifndef CppADDetByMinorIncluded
-# define CppADDetByMinorIncluded
+# ifndef CPPAD_DET_BY_MINOR_INCLUDED
+# define CPPAD_DET_BY_MINOR_INCLUDED
 
 // BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin DetByMinor$$
 $spell
+	hpp
 	Det
 	CppADvector
 	namespace
@@ -25,7 +26,7 @@ $section Determinant Using Expansion by Minors$$
 
 $table
 $bold Syntax$$
-$rnext $cnext $syntax%# include "example/DetByMinor.h"%$$
+$rnext $cnext $syntax%# include "example/det_by_minor.hpp"%$$
 $rnext $cnext $syntax%DetByMinor<%Type%> %Det%(size_t %n%)%$$
 $rnext $cnext $syntax%%Type% %Det%(CppADvector<%Type%> &%A%)%$$
 $tend
@@ -35,7 +36,7 @@ $fend 25$$
 $head Inclusion$$
 The template function $code DetByMinor$$ is defined in the $code CppAD$$
 namespace by including 
-the file $code example/DetByMinor.h$$.
+the file $code example/det_by_minor.hpp$$.
 It is only intended for example and testing purposes, 
 so it is not automatically included by
 $xref/CppAD//CppAD.h/$$.
@@ -64,7 +65,7 @@ $children%
 $head Example$$
 The file
 $xref/DetByMinor.cpp/$$ 
-contains an example and a test of $code DetByMinor.h$$.
+contains an example and a test of $code det_by_minor.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
@@ -90,12 +91,12 @@ $section Determinant using Expansion by Minors: Source Code$$
 
 $comment This file is in the Example subdirectory$$
 $code
-# ifndef CppADDetByMinorIncluded
+# ifndef CPPAD_DET_BY_MINOR_INCLUDED
 $pre
 $$
-# define CppADDetByMinorIncluded
+# define CPPAD_DET_BY_MINOR_INCLUDED
 
-$verbatim%example/DetByMinor.h%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/det_by_minor.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 
 # endif
 $$
@@ -107,7 +108,7 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "DetOfMinor.h"
+# include "det_of_minor.hpp"
 
 // BEGIN CppAD namespace
 namespace CppAD {

@@ -34,7 +34,7 @@ $end
 // BEGIN PROGRAM
 
 # include <CppAD/CppAD.h>
-# include "DetByMinor.h"
+# include "det_by_minor.hpp"
 # include <complex>
 
 typedef std::complex<double>   Complex;
