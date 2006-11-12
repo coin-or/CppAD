@@ -29,6 +29,9 @@ $end
 // system include files used for I/O
 # include <iostream>
 
+// C style asserts
+# include <cassert>
+
 // CppAD include file
 # include <CppAD/CppAD.h>
 
@@ -135,6 +138,8 @@ extern bool VecAD(void);
 
 namespace {
 	// function that runs one test
+	static size_t Run_ok_count    = 0;
+	static size_t Run_error_count = 0;
 	bool Run(bool TestOk(void), const char *name)
 	{	bool ok = true;
 		using namespace std;
@@ -142,8 +147,13 @@ namespace {
 		ok &= TestOk();
 	
 		if( ok )
-			std::cout << "Ok:    " << name << std::endl;
-		else	std::cout << "Error: " << name << std::endl;
+		{	std::cout << "Ok:    " << name << std::endl;
+			Run_ok_count++;
+		}
+		else
+		{	std::cout << "Error: " << name << std::endl;
+			Run_error_count++;
+		}
 	
 		return ok;
 	}
@@ -154,7 +164,7 @@ int main(void)
 {	bool ok = true;
 	using namespace std;
 
-	// This comment is used by OneTest 
+	// This line is used by one_test.sh
 
 	// external compiled tests
 	ok &= Run( Abs,               "Abs"              );
@@ -259,12 +269,12 @@ int main(void)
 
 	// check for memory leak in previous calculations
 	if( CppADTrackCount() != 0 )
-	{	ok = false;
 		cout << "Error: memroy leak detected" << endl;
-	}
+
+	assert( ok || (Run_error_count > 0) );
 	if( ok )
-		cout << "All the tests passed." << endl;
-	else	cout << "At least one test failed." << endl;
+		cout << "All " << Run_ok_count << " tests passed." << endl;
+	else	cout << Run_error_count << " tests failed." << endl;
 
 	return static_cast<int>( ! ok );
 }

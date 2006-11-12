@@ -69,6 +69,21 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-12$$
+The 
+$cref/example/InstallUnix/--with-Example/$$ and 
+$cref/test_more/InstallUnix/--with-TestMore/$$ 
+programs were
+changed to print out the number of tests that passed or failed instead
+of just "All the tests passed" or "At least one of the tests failed".
+$pre
+
+$$
+The windows project files for 
+$cref/examples and testing/InstallWindows/Examples and Testing/$$
+should have been changes to use lower case file names on
+as part of the 11-08 change below. This has been fixed.
+
 $head 11-08$$
 Move the $code Example$$ directory to $code example$$
 and change all its files to use lower case names. 

@@ -22,7 +22,7 @@ if [ -e test_one.exe ]
 then
 	rm test_one.exe
 fi
-sed < test_more.cpp > test_one.cpp \
+sed < example.cpp > test_one.cpp \
 -e '/ok *\&= *Run( /d' \
 -e "s/.*This line is used by one_test.sh.*/	ok \&= Run( $2, \"$2\");/"  
 #

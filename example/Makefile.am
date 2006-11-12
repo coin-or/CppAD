@@ -11,9 +11,9 @@
 # automake input file
 #
 # Microsoft project files
-EXTRA_DIST        = Example.sln Example.vcproj OneTest.sh
+EXTRA_DIST        = example.sln example.vcproj one_test.sh
 #
-noinst_PROGRAMS   = Example 
+noinst_PROGRAMS   = example 
 #
 if CppAD_BOOSTVECTOR
 AM_CPPFLAGS       = -I$(BOOST_DIR) \
@@ -24,7 +24,7 @@ endif
 #
 AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #
-Example_SOURCES   = \
+example_SOURCES   = \
 	example.cpp \
 	abs.cpp \
 	acos.cpp \

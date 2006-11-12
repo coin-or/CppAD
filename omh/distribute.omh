@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 $begin Distribute$$ 
 $spell
@@ -85,9 +83,9 @@ $codep
 	example/example
 $$
 If the result at the end is
-$code
-	All the tests passed.
-$$
+$syntax%
+	All %n% tests passed.
+%$$
 then the distribution passed this test.
 
 $lnext
@@ -96,9 +94,9 @@ $codep
 	TestMore/TestMore
 $$
 If the result at the end is
-$code
-	All the tests passed.
-$$
+$syntax%
+	All %n% tests passed.
+%$$
 then the distribution passed this test.
 
 $lnext

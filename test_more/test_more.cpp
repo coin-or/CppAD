@@ -73,6 +73,8 @@ extern bool VecUnary(void);
 
 namespace {
 	// function that runs one test
+	static size_t Run_ok_count    = 0;
+	static size_t Run_error_count = 0;
 	bool Run(bool TestOk(void), const char *name)
 	{	bool ok = true;
 		using namespace std;
@@ -80,14 +82,14 @@ namespace {
 		ok &= TestOk();
 	
 		if( ok )
-			std::cout << "Ok:    " << name << std::endl;
-		else	std::cout << "Error: " << name << std::endl;
+		{	std::cout << "Ok:    " << name << std::endl;
+			Run_ok_count++;
+		}
+		else
+		{	std::cout << "Error: " << name << std::endl;
+			Run_error_count++;
+		}
 	
-		return ok;
-	}
-	// check for memory leak in previous calculations
-	bool TrackCount(void)
-	{	bool ok = (CppADTrackCount() == 0);
 		return ok;
 	}
 }
@@ -160,9 +162,11 @@ int main(void)
 	{	ok = false;
 		cout << "Error: memroy leak detected" << endl;
 	}
+
+	assert( ok || (Run_error_count > 0) );
 	if( ok )
-		cout << "All the tests passed." << endl;
-	else	cout << "At least one test failed." << endl;
+		cout << "All " << Run_ok_count << " tests passed." << endl;
+	else	cout << Run_error_count << " tests failed." << endl;
 
 	return static_cast<int>( ! ok );
 }

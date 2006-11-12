@@ -38,27 +38,38 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="convert file names example/*.h to example/*.hpp and lower case.
+log_entry="improve example.cpp, test_more.cpp (and fix example.sln & .vcproj)
 
-SvnCommit.sh: file that made this commit.
+SvnCommit.sh: file that made this commit (make sure *.sh files are executable).
 config.h: update package verision.
+example/one_test.sh: move here from OneTest.sh.
+OneTest.sh: move to one_test.sh.
+Makefile.am: change OneTest.sh to one_test.sh and Example to example.
+example.cpp: report the actual number of tests that pass or fail.
+test_more.cpp: report the actual number of tests that pass or fail.
+test_more/one_test.sh: return exit code.
+whats_new_06.omh: user's view of the changes.
+distribute.omh: change message that example and test_more report.
+example.sln: change names referenced in this project file to lower case.
+example.vcproj: change names referenced in this project file to lower case.
 "
 # 
 add_list="
+	example/example.sln
+	example/example.vcproj
 "
 #
 change_list="
 	SvnCommit.sh
 	CppAD/config.h
-	Build.sh
-	CheckIncludeDef.sh
-	CheckIncludeFile.sh
-	adolc
-	example
-	adolc
-	omh/example_list.omh
-	speed
-	fadbad
+	example/one_test.sh
+	example/OneTest.sh
+	example/Makefile.am
+	example/example.cpp
+	test_more/test_more.cpp
+	test_more/one_test.sh
+	omh/whats_new_06.omh
+	omh/distribute.omh
 "
 #
 delete_list="
@@ -96,6 +107,10 @@ then
 		cp $file junk.$count
 		sed -f SvnCommit.sed < junk.$count > $file
 		diff junk.$count $file
+		if [ "$ext" == ".sh" ]
+		then
+			chmod +x $file
+		fi
 	fi
 fi
 done
@@ -149,9 +164,13 @@ then
 			# undo the automatic edits
 			echo "mv junk.$count $file"
 			mv junk.$count $file
+			if [ "$ext" == ".sh" ]
+			then
+				chmod +x $file
+			fi
 		fi
 	done
-	exit
+	exit 
 fi
 echo "continuing commit"
 #
