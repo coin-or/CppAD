@@ -36,7 +36,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-06-11-03
+A Package for Differentiation of C++ Algorithms: cppad-06-11-12
 $$ 
 
 $head Syntax$$
@@ -110,13 +110,10 @@ See $xref/WhatsNew06/$$ for a list of recent extensions and bug fixes.
 $lend
 
 You can find out about other algorithmic differentiation tools
-and about algorithmic differentiation in general at the web site
-$href%http://www.autodiff.org%$$
-or at
-$href%
-	http://www.math.tu-dresden.de/wir/staff/griewank/%
-	Andreas Griewank's home page
-%$$.
+and about algorithmic differentiation in general at the following web sites:
+$href%http://www.autodiff.org%$$,
+$href%http://www.autodiff.com%$$,
+$href%http://www.math.hu-berlin.de/~griewank/%Andreas Griewank%$$.
 
 $head Example$$
 The file
