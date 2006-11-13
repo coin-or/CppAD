@@ -38,10 +38,18 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="missing from previous commit.
+log_entry="still fixing previous commit.
 
 SvnCommit.sh: file that made this commit. 
-config.h: update version number.
+config.h: update package version
+introduction_.cpp: move to introduction.cpp.
+introduction.cpp: move here from introduction_.cpp
+Makefile.am: introduction_ -> introduction & temporary remove project MS files.
+exp_apx_for.omh: fix missing conversions to lower case.
+exp_apx_seq.omh: fix missing conversions to lower case.
+exp_apx_rev.omh: fix missing conversions to lower case.
+exp_apx.omh: fix missing conversions to lower case.
+introduction.omh: fix missing conversions to lower case.
 "
 # 
 add_list="
@@ -50,7 +58,14 @@ add_list="
 change_list="
 	SvnCommit.sh
 	CppAD/config.h
-	introduction
+	introduction/introduction_.cpp
+	introduction/introduction.cpp
+	introduction/Makefile.am
+	omh/exp_apx_for.omh
+	omh/exp_apx_seq.omh
+	omh/exp_apx_rev.omh
+	omh/exp_apx.omh
+	omh/introduction.omh
 "
 #
 delete_list="

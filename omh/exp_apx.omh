@@ -139,8 +139,8 @@ $syntax%-%u%$$
 $tend
 
 $children%
-	introduction/ExpApx.hpp%
-	introduction/ExpApx.cpp
+	introduction/exp_apx.hpp%
+	introduction/exp_apx.cpp
 %$$
 
 $head Implementation$$
