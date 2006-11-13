@@ -38,9 +38,10 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="move introduction_ to introduction
+log_entry="move introduction/* files to lower case names.
 
 SvnCommit.sh: file that made this commit. 
+config.h: update version number.
 "
 # 
 add_list="
@@ -48,16 +49,8 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
+	CppAD/config.h
 	introduction
-	introduction_
-	configure.ac
-	omh/exp_apx_for.omh
-	omh/exp_apx_seq.omh
-	omh/exp_apx_rev.omh
-	omh/exp_apx.omh
-	omh/introduction.omh
-	Build.sh
-	Makefile.am
 "
 #
 delete_list="

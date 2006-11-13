@@ -27,7 +27,7 @@ $end
 */
 // BEGIN PROGRAM
 # include <cmath>             // for fabs function
-# include "ExpApx.hpp"        // definition of ExpApx algorithm
+# include "exp_apx.hpp"        // definition of ExpApx algorithm
 bool ExpApx(void)
 {	double x     = .5;
 	double e     = .2;
