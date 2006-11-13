@@ -62,10 +62,10 @@ just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
 Otherwise, download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-06-11-08.cpl.zip%$$
+$href%cppad-06-11-13.cpl.zip%$$
 
 $subhead GPL License$$
-$href%cppad-06-11-08.gpl.zip%$$
+$href%cppad-06-11-13.gpl.zip%$$
 
 $head Extraction$$
 Use 
@@ -76,7 +76,7 @@ $href%
 or some other program to decompress the archive.
 This will create the distribution directory 
 $syntax%
-	cppad-06-11-08
+	cppad-06-11-13
 %$$
 All the command sequences below assume that you start in this
 distribution directory.
@@ -113,11 +113,11 @@ $index introduction, windows$$
 The following steps will build the routines that verify the calculations
 in the $xref/Introduction/$$ section.
 Using Microsoft Visual C++,
-open the workspace $code Introduction/Introduction.sln$$ in Visual Studio.
-Then select $code Build | Build Introduction.exe$$.
+open the workspace $code introduction/introduction.sln$$ in Visual Studio.
+Then select $code Build | Build introduction.exe$$.
 Then in a Dos box, execute the following command
 $codep
-	Introduction\Debug\Introduction
+	introduction\debug\introduction
 $$
 
 $head Examples and Testing$$

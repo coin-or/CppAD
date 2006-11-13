@@ -38,34 +38,27 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="still fixing previous commit.
+log_entry="last step in fixing previous commits this morning.
 
 SvnCommit.sh: file that made this commit. 
-config.h: update package version
-introduction_.cpp: move to introduction.cpp.
-introduction.cpp: move here from introduction_.cpp
-Makefile.am: introduction_ -> introduction & temporary remove project MS files.
-exp_apx_for.omh: fix missing conversions to lower case.
-exp_apx_seq.omh: fix missing conversions to lower case.
-exp_apx_rev.omh: fix missing conversions to lower case.
-exp_apx.omh: fix missing conversions to lower case.
-introduction.omh: fix missing conversions to lower case.
+introduction.vcproj: new project file with lower case names.
+introduction.sln: new project file with lower case names.
+Makefile.am: include project files in distribution.
+install_unix.omh: change introduction files names to lower case.
+install_windows.omh: change introduction files names to lower case.
 "
 # 
 add_list="
+	introduction/introduction.vcproj
+	introduction/introduction.sln
 "
 #
 change_list="
 	SvnCommit.sh
 	CppAD/config.h
-	introduction/introduction_.cpp
-	introduction/introduction.cpp
 	introduction/Makefile.am
-	omh/exp_apx_for.omh
-	omh/exp_apx_seq.omh
-	omh/exp_apx_rev.omh
-	omh/exp_apx.omh
-	omh/introduction.omh
+	omh/install_unix.omh
+	omh/install_windows.omh
 "
 #
 delete_list="

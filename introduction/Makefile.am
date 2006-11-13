@@ -11,7 +11,7 @@
 # automake input file
 #
 # Microsoft project files
-EXTRA_DIST        = # introduction.sln introduction.vcproj 
+EXTRA_DIST        = introduction.sln introduction.vcproj 
 #
 noinst_PROGRAMS   = introduction 
 #
