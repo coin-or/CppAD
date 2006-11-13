@@ -25,10 +25,10 @@ endif
 AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #
 Introduction_SOURCES   = \
-	Introduction.cpp \
-	ExpApx.cpp  \
+	introduction_.cpp \
+	exp_apx.cpp  \
 	exp_apx.hpp \
-	ExpApxAD.cpp \
-	ExpApxFor.cpp \
-	ExpApxSeq.cpp \
-	ExpApxRev.cpp
+	exp_apx_ad.cpp \
+	exp_apx_for.cpp \
+	exp_apx_seq.cpp \
+	exp_apx_rev.cpp

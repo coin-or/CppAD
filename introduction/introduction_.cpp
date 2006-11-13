@@ -19,7 +19,7 @@ $section Run the CppAD Introduction Routines$$
 $index example, run all$$
 
 $code
-$verbatim%introduction/Introduction.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%introduction/introduction_.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

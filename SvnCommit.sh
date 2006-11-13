@@ -38,7 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="move introduction/* files to lower case names.
+log_entry="missing from previous commit.
 
 SvnCommit.sh: file that made this commit. 
 config.h: update version number.
