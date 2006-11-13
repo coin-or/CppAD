@@ -102,8 +102,8 @@ $childtable%
 	omh/exp_apx_seq.omh%
 	omh/exp_apx_for.omh%
 	omh/exp_apx_rev.omh%
-	introduction_/ExpApxAD.cpp%
-	introduction_/Introduction.cpp
+	introduction/ExpApxAD.cpp%
+	introduction/Introduction.cpp
 %$$
 
 $end

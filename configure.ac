@@ -221,7 +221,7 @@ AC_CONFIG_FILES([
 	example/Makefile 
 	fadbad/Makefile 
 	get_started/Makefile 
-	introduction_/Makefile
+	introduction/Makefile
 	print_for/Makefile
 	speed_example/Makefile
 	speed/Makefile 

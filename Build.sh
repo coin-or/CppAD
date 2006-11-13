@@ -327,7 +327,7 @@ then
 	list="
 		example/example
 		test_more/test_more
-		introduction_/Introduction
+		introduction/Introduction
 		fadbad/example
 		adolc/example
 	"

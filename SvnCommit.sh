@@ -38,7 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="move Introduction to introduction_
+log_entry="move introduction_ to introduction
 
 SvnCommit.sh: file that made this commit. 
 "
@@ -48,7 +48,7 @@ add_list="
 #
 change_list="
 	SvnCommit.sh
-	Introduction
+	introduction
 	introduction_
 	configure.ac
 	omh/exp_apx_for.omh

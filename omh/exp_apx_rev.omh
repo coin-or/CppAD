@@ -256,7 +256,7 @@ same result for this partial derivative.
 
 
 $children%
-	introduction_/ExpApxRev.cpp
+	introduction/ExpApxRev.cpp
 %$$
 $head Verification$$
 The file $xref/ExpApxFor.cpp/$$ contains a routine 
