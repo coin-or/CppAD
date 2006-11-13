@@ -150,7 +150,7 @@ Note that each time a $italic Type$$ object is assigned a value
 there is a different symbol corresponding to the assignment.
 
 $children%
-	Introduction/ExpApxSeq.cpp
+	introduction_/ExpApxSeq.cpp
 %$$
 $head Verification$$
 The file $xref/ExpApxSeq.cpp/$$ contains a routine 

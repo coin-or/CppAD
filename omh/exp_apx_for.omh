@@ -116,7 +116,7 @@ for this case.
 
 
 $children%
-	Introduction/ExpApxFor.cpp
+	introduction_/ExpApxFor.cpp
 %$$
 $head Verification$$
 The file $xref/ExpApxFor.cpp/$$ contains a routine 

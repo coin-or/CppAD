@@ -20,7 +20,7 @@ $index ExpApx, introduction$$
 $index introduction, ExpApx$$
 
 $code
-$verbatim%Introduction/ExpApx.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%introduction_/ExpApx.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

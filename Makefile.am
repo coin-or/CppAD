@@ -144,7 +144,7 @@ endif
 #
 # Did user specify --with-Introduction
 if CppAD_INTRODUCTION
-INTRODUCTION = Introduction
+INTRODUCTION = introduction_
 else
 INTRODUCTION =
 endif

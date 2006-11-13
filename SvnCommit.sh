@@ -38,38 +38,26 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="improve example.cpp, test_more.cpp (and fix example.sln & .vcproj)
+log_entry="move Introduction to introduction_
 
-SvnCommit.sh: file that made this commit (make sure *.sh files are executable).
-config.h: update package verision.
-example/one_test.sh: move here from OneTest.sh.
-OneTest.sh: move to one_test.sh.
-Makefile.am: change OneTest.sh to one_test.sh and Example to example.
-example.cpp: report the actual number of tests that pass or fail.
-test_more.cpp: report the actual number of tests that pass or fail.
-test_more/one_test.sh: return exit code.
-whats_new_06.omh: user's view of the changes.
-distribute.omh: change message that example and test_more report.
-example.sln: change names referenced in this project file to lower case.
-example.vcproj: change names referenced in this project file to lower case.
+SvnCommit.sh: file that made this commit. 
 "
 # 
 add_list="
-	example/example.sln
-	example/example.vcproj
 "
 #
 change_list="
 	SvnCommit.sh
-	CppAD/config.h
-	example/one_test.sh
-	example/OneTest.sh
-	example/Makefile.am
-	example/example.cpp
-	test_more/test_more.cpp
-	test_more/one_test.sh
-	omh/whats_new_06.omh
-	omh/distribute.omh
+	Introduction
+	introduction_
+	configure.ac
+	omh/exp_apx_for.omh
+	omh/exp_apx_seq.omh
+	omh/exp_apx_rev.omh
+	omh/exp_apx.omh
+	omh/introduction.omh
+	Build.sh
+	Makefile.am
 "
 #
 delete_list="
