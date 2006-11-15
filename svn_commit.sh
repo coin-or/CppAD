@@ -38,27 +38,32 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="last step in fixing previous commits this morning.
+log_entry="change trunk/*.sh to lower case file names.
 
 SvnCommit.sh: file that made this commit. 
-introduction.vcproj: new project file with lower case names.
-introduction.sln: new project file with lower case names.
-Makefile.am: include project files in distribution.
-install_unix.omh: change introduction files names to lower case.
-install_windows.omh: change introduction files names to lower case.
+Build: call build_.sh instead of Build.sh
 "
 # 
 add_list="
-	introduction/introduction.vcproj
-	introduction/introduction.sln
 "
 #
 change_list="
-	SvnCommit.sh
-	CppAD/config.h
-	introduction/Makefile.am
-	omh/install_unix.omh
-	omh/install_windows.omh
+Build
+BatchCommit.sh        batch_commit.sh
+Build.sh              build_.sh
+CheckIncludeDef.sh    check_include_def.sh
+CheckIncludeFile.sh   check_include_file.sh
+CheckIncludeOmh.sh    check_include_omh.sh
+CleanCppAD.sh         clean_cpp_ad.sh
+DosFormat.sh          dos_format.sh
+FixAclocal.sh         fix_aclocal.sh
+FixMakefile.sh        fix_makefile.sh
+GplLicense.sh         gpl_license.sh
+RunOMhelp.sh          run_omhelp.sh
+SvnCommit.sh          svn_commit.sh
+SvnMerge.sh           svn_merge.sh
+SvnStatus.sh          svn_status.sh
+diffToday.sh          diff_today.sh
 "
 #
 delete_list="

@@ -13,7 +13,7 @@
 if [ -e cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9] ]
 then
 	dir=`ls -d cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]`
-	echo "CheckIncludeOmh.sh: must first remove the $dir directory"
+	echo "check_include_omh.sh: must first remove the $dir directory"
 	exit 1
 fi
 echo "Checking difference between OMhelp include directives and file names."

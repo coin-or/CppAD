@@ -12,7 +12,7 @@
 if [ -e cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9] ]
 then
 	dir=`ls -d cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]`
-	echo "CheckIncludeDef.sh: must first remove the $dir directory"
+	echo "check_include_def.sh: must first remove the $dir directory"
 	exit 1
 fi
 echo "Differences between include file names and directives"

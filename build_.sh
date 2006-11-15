@@ -33,7 +33,7 @@ version=`grep "^ *AC_INIT(" configure.ac | \
 #
 if [ "$1" = "version" ] || [ "$1" = "all" ]
 then
-	echo "Build.sh version"
+	echo "build_.sh version"
 	#
 	# Today's date in yy-mm-dd decimal digit format where 
 	# yy is year in century, mm is month in year, dd is day in month.
@@ -86,16 +86,16 @@ fi
 #
 if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
 then
-	echo "Build.sh omhelp"
+	echo "build_.sh omhelp"
 	#
-	echo "RunOMhelp.sh Dev"
-	if ! ./RunOMhelp.sh Dev
+	echo "run_omhelp.sh Dev"
+	if ! ./run_omhelp.sh Dev
 	then
 		exit 1
 	fi
 	#
-	echo "RunOMhelp.sh Doc"
-	if ! ./RunOMhelp.sh Doc
+	echo "run_omhelp.sh Doc"
+	if ! ./run_omhelp.sh Doc
 	then
 		exit 1
 	fi
@@ -110,14 +110,14 @@ fi
 #
 if [ "$1" = "automake" ] || [ "$1" = "all" ]
 then
-	echo "Build.sh automake"
+	echo "build_.sh automake"
 	#
 	if [ -e configure ]
 	then
 		rm configure
 	fi
 	echo "---------------------------------------------------------"
-	echo "If aclocal generates warning messages, run ./FixAclocal.sh"
+	echo "If aclocal generates warning messages, run ./fix_aclocal.sh"
 	echo "aclocal"
 	if ! aclocal
 	then
@@ -155,9 +155,9 @@ if [ "$1" = "configure" ] || [ "$1" = "all" ]
 then
 	if [ "$1" = "configure" ] && [ "$2" == "test" ]
 	then
-		echo "Build.sh configure test"
+		echo "build_.sh configure test"
 	else
-		echo "Build.sh configure"
+		echo "build_.sh configure"
 	fi
 	#
 	TEST=""
@@ -199,8 +199,8 @@ then
 	fi
 	#
 	# Fix Makefile for what appears to be a bug in gzip under cygwin
-	echo "FixMakefile.sh"
-	./FixMakefile.sh
+	echo "fix_makefile.sh"
+	./fix_makefile.sh
 	#
 	if [ "$1" != "all" ]
 	then
@@ -212,7 +212,7 @@ fi
 #
 if [ "$1" = "make" ] || [ "$1" = "all" ]
 then
-	echo "Build.sh make"
+	echo "build_.sh make"
 	#
 	echo "make"
 	if ! make
@@ -230,7 +230,7 @@ fi
 #
 if [ "$1" = "dist" ] || [ "$1" = "all" ]
 then
-	echo "Build.sh dist"
+	echo "build_.sh dist"
 	#
 	if [ -e cppad-$version ]
 	then
@@ -304,9 +304,9 @@ then
 	#
 	# Start Test.log with include file checks
 	# (must do this before extracting copy of distribution directory).
-	CheckIncludeDef.sh   > Test.log
-	CheckIncludeFile.sh >> Test.log
-	CheckIncludeOmh.sh  >> Test.log
+	check_include_def.sh   > Test.log
+	check_include_file.sh >> Test.log
+	check_include_omh.sh  >> Test.log
 	#
 	echo "tar -xzf $dir/cppad-$version.cpl.tgz"
 	if ! tar -xzf $dir/cppad-$version.cpl.tgz
@@ -315,7 +315,7 @@ then
 	fi
 	#
 	cd cppad-$version
-	if ! ./Build.sh configure test
+	if ! ./build_.sh configure test
 	then
 		exit 1
 	fi
@@ -340,7 +340,7 @@ then
 			ok="no"
 		fi
 	done
-	if ! ./RunOMhelp.sh Doc
+	if ! ./run_omhelp.sh Doc
 	then
 		ok="no"
 	fi
@@ -359,13 +359,13 @@ fi
 if [ "$1" = "gpl+dos" ] || [ "$1" = "all" ]
 then
 	# create GPL licensed version
-	echo "GplLicense.sh"
-	if ! ./GplLicense.sh
+	echo "gpl_license.sh"
+	if ! ./gpl_license.sh
 	then
 		exit 1
 	fi
-	echo "./DosFormat.sh"
-	if ! ./DosFormat.sh
+	echo "./dos_format.sh"
+	if ! ./dos_format.sh
 	then
 		exit 1
 	fi
@@ -405,7 +405,7 @@ fi
 #
 if [ "$1" = "" ]
 then
-	echo "usage: Build.sh option (where valid options are listed below)" 
+	echo "usage: build_.sh option (where valid options are listed below)" 
 else
 	echo "$1 is not a valid option (valid options are listed below)"
 fi
@@ -422,11 +422,11 @@ echo "test           unpack *.cpl.tgz, compile, run tests, result in Test.log"
 echo "gpl+dos        create ./*.gpl.tgz, ./*.gpl.zip, and ./*.cpl.zip"
 echo "move           move ./*.tgz and ./*.zip to Doc directory"
 echo
-echo "Build.sh all"
+echo "build_.sh all"
 echo "This command will execute all the options in the order above with the"
 echo "exception that \"configue test\" and \"test\" will be excluded."
 echo
-echo "Build.sh all test"
+echo "build_.sh all test"
 echo "This command will execute all the options in the order above"
 echo "with the exception of \"configure test\", \"gpl+dos\" and \"move\"."
 #
