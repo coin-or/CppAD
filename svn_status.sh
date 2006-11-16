@@ -46,7 +46,7 @@ sed                                                           \
 #
 # Add differences for automatically updated files
 ./diff_today.sh AUTHORS
-./diff_today.sh doc_.omh
+./diff_today.sh doc.omh
 ./diff_today.sh configure.ac
 ./diff_today.sh omh/install_unix.omh
 ./diff_today.sh omh/install_windows.omh
