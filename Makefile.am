@@ -210,7 +210,7 @@ SUBDIRS = \
 	$(TESTMORE) 
 #
 EXTRA_DIST = \
-	build_.sh \
+	build.sh \
 	check_include_file.sh \
 	check_include_omh.sh \
 	check_include_def.sh \
@@ -218,9 +218,9 @@ EXTRA_DIST = \
 	CppAD.tex \
 	cpl1.0.txt \
 	dev \
-	dev_.omh \
+	dev.omh \
 	Doc \
-	doc_.omh \
+	doc.omh \
 	fix_aclocal.sh \
 	fix_makefile.sh \
 	omh \

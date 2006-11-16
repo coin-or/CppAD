@@ -38,32 +38,28 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="change trunk/*.sh to lower case file names.
+log_entry="move *_.* to *.*
 
-SvnCommit.sh: file that made this commit. 
-Build: call build_.sh instead of Build.sh
+svn_commit.sh: file that made this commit. 
+build_.sh: move to build.sh.
+build.sh: move from build_.sh.
+Makefile.am: change doc_, dev_, build_, to doc, dev, build.
+run_omhelp.sh: change doc_, dev_, build_, to doc, dev, build.
+doc.omh: move from doc_.omh.
+doc_.omh: move to doc.omh
+dev.omh: move from dev_.omh.
+dev_.omh: move to dev.omh
+Build: change build_.sh to build.sh.
 "
 # 
 add_list="
 "
 #
 change_list="
-Build
-BatchCommit.sh        batch_commit.sh
-Build.sh              build_.sh
-CheckIncludeDef.sh    check_include_def.sh
-CheckIncludeFile.sh   check_include_file.sh
-CheckIncludeOmh.sh    check_include_omh.sh
-CleanCppAD.sh         clean_cpp_ad.sh
-DosFormat.sh          dos_format.sh
-FixAclocal.sh         fix_aclocal.sh
-FixMakefile.sh        fix_makefile.sh
-GplLicense.sh         gpl_license.sh
-RunOMhelp.sh          run_omhelp.sh
-SvnCommit.sh          svn_commit.sh
-SvnMerge.sh           svn_merge.sh
-SvnStatus.sh          svn_status.sh
-diffToday.sh          diff_today.sh
+	svn_commit.sh
+	build_.sh
+	build.sh
+	Makefile.am
 "
 #
 delete_list="

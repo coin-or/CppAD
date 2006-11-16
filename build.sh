@@ -33,7 +33,7 @@ version=`grep "^ *AC_INIT(" configure.ac | \
 #
 if [ "$1" = "version" ] || [ "$1" = "all" ]
 then
-	echo "build_.sh version"
+	echo "build.sh version"
 	#
 	# Today's date in yy-mm-dd decimal digit format where 
 	# yy is year in century, mm is month in year, dd is day in month.
@@ -62,7 +62,7 @@ then
 	diff CppAD/config.h   CppAD/config.tmp
 	mv   CppAD/config.tmp CppAD/config.h
 	#
-	for name in doc_.omh omh/install_unix.omh omh/install_windows.omh
+	for name in doc.omh omh/install_unix.omh omh/install_windows.omh
 	do
 		sed $name > $name.tmp \
 		-e "s/cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/cppad-$yy_mm_dd/g"
@@ -86,7 +86,7 @@ fi
 #
 if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
 then
-	echo "build_.sh omhelp"
+	echo "build.sh omhelp"
 	#
 	echo "run_omhelp.sh dev"
 	if ! ./run_omhelp.sh dev
@@ -110,7 +110,7 @@ fi
 #
 if [ "$1" = "automake" ] || [ "$1" = "all" ]
 then
-	echo "build_.sh automake"
+	echo "build.sh automake"
 	#
 	if [ -e configure ]
 	then
@@ -155,9 +155,9 @@ if [ "$1" = "configure" ] || [ "$1" = "all" ]
 then
 	if [ "$1" = "configure" ] && [ "$2" == "test" ]
 	then
-		echo "build_.sh configure test"
+		echo "build.sh configure test"
 	else
-		echo "build_.sh configure"
+		echo "build.sh configure"
 	fi
 	#
 	TEST=""
@@ -212,7 +212,7 @@ fi
 #
 if [ "$1" = "make" ] || [ "$1" = "all" ]
 then
-	echo "build_.sh make"
+	echo "build.sh make"
 	#
 	echo "make"
 	if ! make
@@ -230,7 +230,7 @@ fi
 #
 if [ "$1" = "dist" ] || [ "$1" = "all" ]
 then
-	echo "build_.sh dist"
+	echo "build.sh dist"
 	#
 	if [ -e cppad-$version ]
 	then
@@ -315,7 +315,7 @@ then
 	fi
 	#
 	cd cppad-$version
-	if ! ./build_.sh configure test
+	if ! ./build.sh configure test
 	then
 		exit 1
 	fi
@@ -405,13 +405,13 @@ fi
 #
 if [ "$1" = "" ]
 then
-	echo "usage: build_.sh option (where valid options are listed below)" 
+	echo "usage: build.sh option (where valid options are listed below)" 
 else
 	echo "$1 is not a valid option (valid options are listed below)"
 fi
 echo "option"
 echo "------"
-echo "version        update configure.ac and doc_.omh version number"
+echo "version        update configure.ac and doc.omh version number"
 echo "omhelp         build all the documentation in Doc & dev directories"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
 echo "configure      excludes --with-* except GetStarted and Introduction"
@@ -422,11 +422,11 @@ echo "test           unpack *.cpl.tgz, compile, run tests, result in Test.log"
 echo "gpl+dos        create ./*.gpl.tgz, ./*.gpl.zip, and ./*.cpl.zip"
 echo "move           move ./*.tgz and ./*.zip to Doc directory"
 echo
-echo "build_.sh all"
+echo "build.sh all"
 echo "This command will execute all the options in the order above with the"
 echo "exception that \"configue test\" and \"test\" will be excluded."
 echo
-echo "build_.sh all test"
+echo "build.sh all test"
 echo "This command will execute all the options in the order above"
 echo "with the exception of \"configure test\", \"gpl+dos\" and \"move\"."
 #
