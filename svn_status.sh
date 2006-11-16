@@ -38,7 +38,7 @@ sed                                                           \
 	-e '/^[?].*\/junk\.[0-9a-zA-Z]*$/d'                   \
 	-e '/^[?] *junk\.[0-9a-zA-Z]*$/d'                     \
 	-e '/^[?] *configure$/d'                              \
-	-e '/^[?] *Dev$/d'                                    \
+	-e '/^[?] *dev$/d'                                    \
 	-e '/^[?] *config.status$/d'                          \
 	-e '/^[?] *Doc$/d'                                    \
 	-e '/^[?] *aclocal.m4$/d'                             \
@@ -46,7 +46,7 @@ sed                                                           \
 #
 # Add differences for automatically updated files
 ./diff_today.sh AUTHORS
-./diff_today.sh Doc.omh
+./diff_today.sh doc_.omh
 ./diff_today.sh configure.ac
 ./diff_today.sh omh/install_unix.omh
 ./diff_today.sh omh/install_windows.omh

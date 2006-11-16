@@ -9,33 +9,33 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-if [ "$1" != "Doc" ] && [ "$1" != "Dev" ]
+if [ "$1" != "doc" ] && [ "$1" != "dev" ]
 then
-	echo "RunOMhelp target: where target is Doc or Dev"
+	echo "run_omhelp.sh target: where target is doc or dev"
 	exit
 fi
-if [ "$1" = Dev ]
+if [ "$1" = dev ]
 then
-	rm -r -f Dev
+	rm -r -f dev
 	#
 	echo "Building developer documentation"
-	mkdir Dev
-	cd    Dev
-	if ! omhelp ../Dev.omh -noframe -xml -debug > ../OMhelp.Dev.log
+	mkdir dev
+	cd    dev
+	if ! omhelp ../dev_.omh -noframe -xml -debug > ../omhelp_dev.log
 	then
-		grep "^OMhelp Error:" ../OMhelp.Dev.log
+		grep "^OMhelp Error:" ../omhelp_dev.log
 		echo "OMhelp could not build developer documentation."
-		echo "See the complete error message in OMhelp.Dev.log"
+		echo "See the complete error message in omhelp_dev.log"
 		exit 1
 	fi
-	omhelp ../Dev.omh -noframe -debug
+	omhelp ../dev_.omh -noframe -debug
 	cd ..
-	if grep "^OMhelp Warning:" OMhelp.Dev.log
+	if grep "^OMhelp Warning:" omhelp_dev.log
 	then
-		echo "See the complete warning messages in OMhelp.Dev.log."
+		echo "See the complete warning messages in omhelp_dev.log."
 	fi
 fi
-if [ "$1" = Doc ]
+if [ "$1" = doc ]
 then
 	#
 	rm -r -f Doc
@@ -43,25 +43,25 @@ then
 	#
 	mkdir Doc
 	cd    Doc
-	if ! omhelp ../Doc.omh > ../OMhelp.Doc.log \
+	if ! omhelp ../doc_.omh > ../omhelp_doc.log \
 		-l http://www.coin-or.org/CppAD/ \
 		-noframe \
 		-xml \
 		-debug
 	then
-		grep "^OMhelp Error:" ../OMhelp.Doc.log
+		grep "^OMhelp Error:" ../omhelp_doc.log
 		echo "OMhelp could not build user documentation."
-		echo "See the complete error message in OMhelp.Doc.log."
+		echo "See the complete error message in omhelp_doc.log."
 		exit 1
 	fi
-	omhelp ../Doc.omh  \
+	omhelp ../doc_.omh  \
                 -l http://www.coin-or.org/CppAD/ \
 		-noframe \
 		-debug
 	cd ..
-	if grep "^OMhelp Warning:" OMhelp.Doc.log
+	if grep "^OMhelp Warning:" omhelp_doc.log
 	then
-		echo "See the complete warning messages in OMhelp.Doc.log."
+		echo "See the complete warning messages in omhelp_doc.log."
 	fi
 fi
 exit 0

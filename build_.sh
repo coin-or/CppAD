@@ -62,7 +62,7 @@ then
 	diff CppAD/config.h   CppAD/config.tmp
 	mv   CppAD/config.tmp CppAD/config.h
 	#
-	for name in Doc.omh omh/install_unix.omh omh/install_windows.omh
+	for name in doc_.omh omh/install_unix.omh omh/install_windows.omh
 	do
 		sed $name > $name.tmp \
 		-e "s/cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/cppad-$yy_mm_dd/g"
@@ -88,14 +88,14 @@ if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
 then
 	echo "build_.sh omhelp"
 	#
-	echo "run_omhelp.sh Dev"
-	if ! ./run_omhelp.sh Dev
+	echo "run_omhelp.sh dev"
+	if ! ./run_omhelp.sh dev
 	then
 		exit 1
 	fi
 	#
-	echo "run_omhelp.sh Doc"
-	if ! ./run_omhelp.sh Doc
+	echo "run_omhelp.sh doc"
+	if ! ./run_omhelp.sh doc
 	then
 		exit 1
 	fi
@@ -340,11 +340,11 @@ then
 			ok="no"
 		fi
 	done
-	if ! ./run_omhelp.sh Doc
+	if ! ./run_omhelp.sh doc
 	then
 		ok="no"
 	fi
-	cat OMhelp.Doc.log        >> ../Test.log
+	cat omhelp_doc.log        >> ../Test.log
 	#
 	# None of the cases get past this point
 	cd ..
@@ -411,8 +411,8 @@ else
 fi
 echo "option"
 echo "------"
-echo "version        update configure.ac and Doc.omh version number"
-echo "omhelp         build all the documentation in Doc & Dev directories"
+echo "version        update configure.ac and doc_.omh version number"
+echo "omhelp         build all the documentation in Doc & dev directories"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
 echo "configure      excludes --with-* except GetStarted and Introduction"
 echo "configure test includes all the possible options except PREFIX_DIR"

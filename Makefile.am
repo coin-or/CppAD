@@ -217,10 +217,10 @@ EXTRA_DIST = \
 	clean_cpp_ad.sh \
 	CppAD.tex \
 	cpl1.0.txt \
-	Dev \
-	Dev.omh \
+	dev \
+	dev_.omh \
 	Doc \
-	Doc.omh \
+	doc_.omh \
 	fix_aclocal.sh \
 	fix_makefile.sh \
 	omh \
