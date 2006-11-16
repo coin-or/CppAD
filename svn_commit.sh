@@ -83,11 +83,10 @@ echo "$this_branch: $log_entry" > SvnCommit.log
 count=0
 for file in $add_list $change_list
 do
-if [ ! -d $file ] 
-then
 	count=`expr $count + 1`
 	ext=`echo $file | sed -e "s/.*\././"`
 	if \
+	[ -f $file                     ] && \
 	[ $file != "CheckIncludeFile"  ] && \
 	[ $file != "CheckIncludeOmh"   ] && \
 	[ $file != "SvnCommit"         ] && \
@@ -106,7 +105,6 @@ then
 			chmod +x $file
 		fi
 	fi
-fi
 done
 for file in $add_list
 do
@@ -147,6 +145,7 @@ then
 		count=`expr $count + 1`
 		ext=`echo $file | sed -e "s/.*\././"`
 		if \
+		[ -f $file                     ] && \
 		[ $file != "CheckIncludeFile"  ] && \
 	   	[ $file != "CheckIncludeOmh"   ] && \
 	   	[ $file != "SvnCommit"         ] && \
