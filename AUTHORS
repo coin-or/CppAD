@@ -1,7 +1,7 @@
              Statement of CppAD Authorship and Copyright
              ===========================================
 
-To date, 2006-09-29, Bradley M. Bell is the sole author of CppAD.
+To date, 2006-11-16, Bradley M. Bell is the sole author of CppAD.
 While Bradley M. Bell worked for the University of Washington during
 the development of CppAD, the following are also true:
 
@@ -15,5 +15,5 @@ he worked on CppAD.
 University of Washington.
 
 Thus, in accordance with Section 2 of the University of Washington's copyright 
-policy (see the file UWCopy040507.html in this directory) Bradley M. Bell is 
+policy (see the file uw_copy_040507.html in this directory) Bradley M. Bell is 
 the copyright holder for CppAD.

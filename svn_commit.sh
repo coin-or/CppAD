@@ -41,15 +41,15 @@
 log_entry="move *_.* to *.*
 
 svn_commit.sh: file that made this commit. 
-build_.sh: move to build.sh.
-build.sh: move from build_.sh.
-Makefile.am: change doc_, dev_, build_, to doc, dev, build.
-run_omhelp.sh: change doc_, dev_, build_, to doc, dev, build.
-doc.omh: move from doc_.omh.
-doc_.omh: move to doc.omh
-dev.omh: move from dev_.omh.
-dev_.omh: move to dev.omh
-Build: change build_.sh to build.sh.
+AUTHORS: change UWCopy040507.html to uw_copy_040507.html.
+SvnMerge: delete (use svn_merge.sh instead).
+SvnLog: move to svn_log.sh.
+UWCopy040507.html: move to uw_copy_040507.html.
+svn_log.sh: move here from.
+CppAD.tex: move contents into doc.omh.
+doc.omh: move contents of CppAD.tex into here.
+uw_copy_040507.html: more here from UWCopy040507.html.
+Makefile.am: change UWCopy040507.html to uw_copy_040507.html, delete CppAD.tex.
 "
 # 
 add_list="
@@ -57,8 +57,14 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	build_.sh
-	build.sh
+	AUTHORS
+	SvnMerge
+	SvnLog
+	UWCopy040507.html
+	svn_log.sh
+	CppAD.tex
+	doc.omh
+	uw_copy_040507.html
 	Makefile.am
 "
 #

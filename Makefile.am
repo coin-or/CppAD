@@ -215,7 +215,6 @@ EXTRA_DIST = \
 	check_include_omh.sh \
 	check_include_def.sh \
 	clean_cpp_ad.sh \
-	CppAD.tex \
 	cpl1.0.txt \
 	dev \
 	dev.omh \
@@ -225,7 +224,7 @@ EXTRA_DIST = \
 	fix_makefile.sh \
 	omh \
 	run_omhelp.sh \
-	UWCopy040507.html
+	uw_copy_040507.html
 #
 dist-hook:
 	rm -rf `find $(distdir)/omh -name .svn`

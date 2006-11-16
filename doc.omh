@@ -9,7 +9,14 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin CppAD$$
-
+$latex
+	% Latex macros used by CppAD documentation:
+	\newcommand{\R}{ {\bf R} }
+	\newcommand{\C}{ {\bf C} }
+	\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+	\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+	\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial {#2}^{#1}} }
+$$
 $spell
 	cppad
 	namespaces
@@ -191,7 +198,5 @@ $childtable%
 	omh/example.omh%
 	omh/appendix.omh
 %$$
-
-$include CppAD.tex$$ 
 
 $end
