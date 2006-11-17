@@ -20,7 +20,7 @@ $section ODE Solver: Speed Test$$
 
 $comment This file is in the Speed subdirectory$$ 
 $code
-$verbatim%speed/ode.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed_cppad/ode.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

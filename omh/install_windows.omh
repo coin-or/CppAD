@@ -62,10 +62,10 @@ just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
 Otherwise, download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-06-11-13.cpl.zip%$$
+$href%cppad-06-11-17.cpl.zip%$$
 
 $subhead GPL License$$
-$href%cppad-06-11-13.gpl.zip%$$
+$href%cppad-06-11-17.gpl.zip%$$
 
 $head Extraction$$
 Use 
@@ -76,7 +76,7 @@ $href%
 or some other program to decompress the archive.
 This will create the distribution directory 
 $syntax%
-	cppad-06-11-13
+	cppad-06-11-17
 %$$
 All the command sequences below assume that you start in this
 distribution directory.
@@ -144,14 +144,15 @@ $codep
 $$
 
 $head Speed Testing$$
-$index speed, windows test$$
-$index test, windows speed$$
+$index speed, test cppad$$
+$index test, cppad speed$$
+$index cppad, speed test$$
 Using Microsoft Visual C++,
 open the workspace $code speed/speed.sln$$
 in Visual Studio and then select $code Build | Build speed.exe$$.
 Then in a Dos box, execute the following commands
 $codep
-	speed\Release\speed
+	speed_cppad\release\speed
 $$
 
 $head Printing During Forward Mode$$

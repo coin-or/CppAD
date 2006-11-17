@@ -38,14 +38,10 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="more conversion to lower case names. 
+log_entry="move directory speed->speed_cppad (& delete MS speed project files).
 
 svn_commit.sh: file that made this commit. 
-run_omhelp.sh: change Doc to doc.
-INSTALL: convert Doc to doc.
-build.sh: convert Doc to doc and Test.log to build_test.log.
-Build: move doc to Doc (after build is complete) 
-check_include_file.sh: remove message that is nolonger needed.
+config.h: update package version.
 "
 # 
 add_list="
@@ -53,10 +49,14 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	run_omhelp.sh
-	INSTALL
-	build.sh
-	Build
+	CppAD/config.h
+	configure.ac
+	Makefile.am
+	speed
+	speed_cppad
+	omh/speed.omh
+	omh/install_unix.omh
+	omh/install_windows.omh
 "
 #
 delete_list="

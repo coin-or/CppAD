@@ -165,9 +165,9 @@ endif
 #
 # Did user specify --with-Speed
 if CppAD_SPEED
-SPEED = speed
+SPEEDCPPAD = speed_cppad
 else
-SPEED =
+SPEEDCPPAD =
 endif
 #
 # Did user specify --with-PrintFor
@@ -206,7 +206,7 @@ SUBDIRS = \
 	$(GETSTARTED) \
 	$(PRINTFOR) \
 	$(SPEEDEXAMPLE) \
-	$(SPEED) \
+	$(SPEEDCPPAD) \
 	$(TESTMORE) 
 #
 EXTRA_DIST = \
