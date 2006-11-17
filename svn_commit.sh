@@ -38,18 +38,14 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="move *_.* to *.*
+log_entry="more conversion to lower case names. 
 
 svn_commit.sh: file that made this commit. 
-AUTHORS: change UWCopy040507.html to uw_copy_040507.html.
-SvnMerge: delete (use svn_merge.sh instead).
-SvnLog: move to svn_log.sh.
-UWCopy040507.html: move to uw_copy_040507.html.
-svn_log.sh: move here from.
-CppAD.tex: move contents into doc.omh.
-doc.omh: move contents of CppAD.tex into here.
-uw_copy_040507.html: more here from UWCopy040507.html.
-Makefile.am: change UWCopy040507.html to uw_copy_040507.html, delete CppAD.tex.
+run_omhelp.sh: change Doc to doc.
+INSTALL: convert Doc to doc.
+build.sh: convert Doc to doc and Test.log to build_test.log.
+Build: move doc to Doc (after build is complete) 
+check_include_file.sh: remove message that is nolonger needed.
 "
 # 
 add_list="
@@ -57,15 +53,10 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	AUTHORS
-	SvnMerge
-	SvnLog
-	UWCopy040507.html
-	svn_log.sh
-	CppAD.tex
-	doc.omh
-	uw_copy_040507.html
-	Makefile.am
+	run_omhelp.sh
+	INSTALL
+	build.sh
+	Build
 "
 #
 delete_list="

@@ -19,9 +19,9 @@ BOOST_DIR=/usr/include/boost-1_33
 #
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
 then
-	if [ -e Test.log ]
+	if [ -e build_test.log ]
 	then
-		rm Test.log
+		rm build_test.log
 	fi
 fi
 #
@@ -293,20 +293,20 @@ then
 	then
 		dir="."
 	else
-		if [ -e "Doc/cppad-$version.cpl.tgz" ]
+		if [ -e "doc/cppad-$version.cpl.tgz" ]
 		then
-			dir="Doc"
+			dir="doc"
 		else
 			echo "cannot find cppad-$version.cpl.tgz"
 			exit 1
 		fi
 	fi
 	#
-	# Start Test.log with include file checks
+	# Start build_test.log with include file checks
 	# (must do this before extracting copy of distribution directory).
-	check_include_def.sh   > Test.log
-	check_include_file.sh >> Test.log
-	check_include_omh.sh  >> Test.log
+	check_include_def.sh   > build_test.log
+	check_include_file.sh >> build_test.log
+	check_include_omh.sh  >> build_test.log
 	#
 	echo "tar -xzf $dir/cppad-$version.cpl.tgz"
 	if ! tar -xzf $dir/cppad-$version.cpl.tgz
@@ -334,8 +334,8 @@ then
 	for program in $list
 	do
 		echo "running $program"
-		echo "$program"   >> ../Test.log
-		if ! ./$program   >> ../Test.log
+		echo "$program"   >> ../build_test.log
+		if ! ./$program   >> ../build_test.log
 		then
 			ok="no"
 		fi
@@ -344,12 +344,12 @@ then
 	then
 		ok="no"
 	fi
-	cat omhelp_doc.log        >> ../Test.log
+	cat omhelp_doc.log        >> ../build_test.log
 	#
 	# None of the cases get past this point
 	cd ..
 	dir=`pwd`
-	echo "Check the file $dir/Test.log for errors and warnings."
+	echo "Check the file $dir/build_test.log for errors and warnings."
 	if [ "$ok" = "no" ]
 	then
 		exit 1
@@ -377,7 +377,7 @@ then
 fi
 if [ "$1" = "move" ] || [ "$1" = "all" ] 
 then
-	# copy tarballs into Doc directory
+	# copy tarballs into doc directory
 	list="
 		cppad-$version.cpl.tgz
 		cppad-$version.gpl.tgz
@@ -386,10 +386,10 @@ then
 	"
 	for file in $list
 	do
-		echo "mv $file Doc/$file"
-		if ! mv $file Doc/$file
+		echo "mv $file doc/$file"
+		if ! mv $file doc/$file
 		then
-			echo "cannot move $file to Doc/$file"
+			echo "cannot move $file to doc/$file"
 			exit 1
 		fi
 	done
@@ -412,15 +412,15 @@ fi
 echo "option"
 echo "------"
 echo "version        update configure.ac and doc.omh version number"
-echo "omhelp         build all the documentation in Doc & dev directories"
+echo "omhelp         build all the documentation in doc & dev directories"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
 echo "configure      excludes --with-* except GetStarted and Introduction"
 echo "configure test includes all the possible options except PREFIX_DIR"
 echo "make           use make to build all of the requested targets"
 echo "dist           create the distribution file cppad-version.cpl.tgz"
-echo "test           unpack *.cpl.tgz, compile, run tests, result in Test.log"
+echo "test           unpack *.cpl.tgz, compile, tests, result in build_test.log"
 echo "gpl+dos        create ./*.gpl.tgz, ./*.gpl.zip, and ./*.cpl.zip"
-echo "move           move ./*.tgz and ./*.zip to Doc directory"
+echo "move           move ./*.tgz and ./*.zip to doc directory"
 echo
 echo "build.sh all"
 echo "This command will execute all the options in the order above with the"

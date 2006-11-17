@@ -1,3 +1,9 @@
 #! /bin/bash
+# Old build file name (link to new build routine)
 dir=`pwd`
 $dir/build.sh $*
+#
+# move documentation to old directory for right place on web
+# (do in a way that works on Cygwin)
+mv doc doc_
+mv doc_ Doc

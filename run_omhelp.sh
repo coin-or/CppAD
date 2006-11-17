@@ -38,11 +38,11 @@ fi
 if [ "$1" = doc ]
 then
 	#
-	rm -r -f Doc
+	rm -r -f doc
 	echo "Building user documentation"
 	#
-	mkdir Doc
-	cd    Doc
+	mkdir doc
+	cd    doc
 	if ! omhelp ../doc.omh > ../omhelp_doc.log \
 		-l http://www.coin-or.org/CppAD/ \
 		-noframe \
