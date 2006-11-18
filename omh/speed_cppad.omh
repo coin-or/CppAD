@@ -9,7 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin Speed$$
+$begin speed_cppad$$
 $spell
 	cppad
 	CppAD
@@ -44,7 +44,7 @@ tests with the following commands (relative to the distribution directory):
 $codep
 	cd speed_cppad
 	make 
-	./speed
+	./speed_cppad
 $$
 
 $head Windows$$
@@ -52,10 +52,10 @@ In Microsoft Visual Studio open the project file
 $code speed/speed_.sln$$
 (relative to the distribution directory).
 Then set the configuration to the $code Release$$ version.
-Then select $code Build | Speed$$.
+Then select $code Build | speed_cppad$$.
 
 $contents%
-	speed_cppad/speed.cpp%
+	speed_cppad/speed_cppad.cpp%
 	speed_cppad/det_minor.cpp%
 	speed_cppad/det_lu.cpp%
 	speed_cppad/ode.cpp%

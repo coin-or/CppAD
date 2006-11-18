@@ -787,7 +787,7 @@ $head 03-17$$
 Change the return type for $xref/SpeedTest/$$ from $code const char *$$
 to $code std::string$$.
 The memory required for the largest test cases was added to the
-$xref/Speed/$$ tests output.
+$xref/speed_cppad/$$ tests output.
 
 $head 03-15$$
 The comparison between ADOLC and CppAD for
@@ -882,7 +882,7 @@ $head 02-28$$
 A set of routines for comparing CppAD with 
 $xref/ADOLC/$$ has been added to the distribution.
 In addition, documentation for compiling and linking the
-$xref/example//Examples/$$ and $xref/Speed//Speed Tests/$$
+$xref/example//Examples/$$ and $xref/speed_cppad//Speed Tests/$$
 has been added.
 
 $head 02-21$$

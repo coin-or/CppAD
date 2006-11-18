@@ -268,7 +268,7 @@ $pre
 $$
 You should compile your code with optimization, without debugging,
 and with the preprocessor symbol $code NDEBUG$$ defined.
-(The $xref/Speed/$$ tests do this.)
+(The $xref/speed_cppad/$$ tests do this.)
 Note that defining $code NDEBUG$$
 will turn off all of the error checking and reporting that
 is done using $xref/ErrorHandler/$$. 

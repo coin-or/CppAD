@@ -1,4 +1,3 @@
-# BEGIN SHORT COPYRIGHT
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 #
@@ -9,11 +8,10 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# END SHORT COPYRIGHT
 # automake input file
 #
 # Microsoft project files
-EXTRA_DIST      = speed.sln speed.vcproj gprof.sed
+EXTRA_DIST      = speed_cppad.sln speed_cppad.vcproj gprof.sed
 #
 #
 if CppAD_BOOSTVECTOR
@@ -26,21 +24,21 @@ AM_CPPFLAGS      = $(BOOST_INCLUDE) -I. -I$(top_builddir) -DNDEBUG
 #
 # speed
 #
-noinst_PROGRAMS  = speed
-speed_CXXFLAGS   = -O2 $(CPP_ERROR_WARN)
-speed_SOURCES    = \
-	speed.cpp \
+noinst_PROGRAMS  = speed_cppad
+speed_cppad_CXXFLAGS   = -O2 $(CPP_ERROR_WARN)
+speed_cppad_SOURCES    = \
+	speed_cppad.cpp \
 	det_lu.cpp \
 	det_minor.cpp \
 	lu_solve.cpp \
 	ode.cpp \
 	../example/lu_vec_ad.cpp
 #
-# speed_p
+# speed_cppad_p
 #
 if CppAD_PROFILING
-noinst_PROGRAMS  += speed_p
-speed_p_CXXFLAGS = -O2 -pg $(CPP_ERROR_WARN)
-speed_p_LDFLAGS  = -pg 
-speed_p_SOURCES  = $(speed_SOURCES)
+noinst_PROGRAMS  += speed_cppad_p
+speed_cppad_p_CXXFLAGS = -O2 -pg $(CPP_ERROR_WARN)
+speed_cppad_p_LDFLAGS  = -pg 
+speed_cppad_p_SOURCES  = $(speed_cppad_SOURCES)
 endif

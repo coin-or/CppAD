@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="speed"
-	ProjectGUID="{DC43F0D2-C431-4D65-A689-F0C4520E45FE}"
+	Name="speed_cppad"
+	ProjectGUID="{8C5AF503-4ED7-4DF4-B445-F97643AC3C72}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -32,10 +32,10 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/speed.exe"
+				OutputFile="$(OutDir)/speed_cppad.exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="$(OutDir)/speed.pdb"
+				ProgramDatabaseFile="$(OutDir)/speed_cppad.pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
@@ -77,7 +77,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/speed.exe"
+				OutputFile="$(OutDir)/speed_cppad.exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="TRUE"
 				SubSystem="1"
@@ -123,13 +123,13 @@
 				RelativePath=".\lu_solve.cpp">
 			</File>
 			<File
-				RelativePath="..\Example\LuVecAD.cpp">
+				RelativePath="..\example\lu_vec_ad.cpp">
 			</File>
 			<File
 				RelativePath=".\ode.cpp">
 			</File>
 			<File
-				RelativePath=".\speed.cpp">
+				RelativePath=".\speed_cppad.cpp">
 			</File>
 		</Filter>
 		<Filter

@@ -652,7 +652,7 @@ The
 $xref/LuSolve/$$ example was added to show how
 on can differentiate linear algebra calculations.
 In addition, it was used to add another set of 
-$xref/Speed//speed tests/$$.
+$xref/speed_cppad//speed tests/$$.
 $pre
 
 $$
@@ -674,7 +674,7 @@ $pre
 
 $$
 The name of the $code Speed/SpeedTest$$ program was changed to
-$xref%Speed%%Speed/Speed%$$.
+$xref%speed_cppad%%Speed/Speed%$$.
 In addition, $code Speed/SpeedRun$$ was changed to
 $code Speed/SpeedTest$$.
 

@@ -89,11 +89,11 @@ Buffers that are used to store the tape information corresponding to
 the $syntax%AD<%Base%>%$$ type are now freed when the corresponding
 $xref/ADFun/$$ object is constructed.
 This reduces memory requirements and actually had better results
-with the $xref/Speed/$$ tests.
+with the $xref/speed_cppad/$$ tests.
 $pre
 
 $$
-The $xref/Speed/$$ test program now outputs the version of CppAD
+The $xref/speed_cppad/$$ test program now outputs the version of CppAD
 at the top (to help when comparing output between different versions).
 
 

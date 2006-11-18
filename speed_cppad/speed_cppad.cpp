@@ -19,7 +19,7 @@ $section Run All The Speed Tests$$
 
 $comment This file is in the Speed subdirectory$$ 
 $code
-$verbatim%speed_cppad/speed.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed_cppad/speed_cppad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

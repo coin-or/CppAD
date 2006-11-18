@@ -38,28 +38,48 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="move directory speed->speed_cppad (& delete MS speed project files).
+log_entry="move speed.cpp->speed_cppad.cpp 
 
 svn_commit.sh: file that made this commit. 
-config.h: update package version.
+Runge45.h: fix warning from MS compiler.
+speed_cppad.sln: new project file.
+speed_cppad.vcproj: new project file.
+speed.cpp: move to speed_cppad.cpp.
+speed_cppad.cpp: move from speed.cpp.
+Makefile.am: change speed to speed_cppad.
+speed.omh: move to speed_cppad.omh.
+speed_cppad.omh: move from speed.omh.
+whats_new_*.omh: change cross refernece Speed to speed_cppad.
+faq.omh: change cross refernece Speed to speed_cppad.
+appendix.omh: change speed to speed_cppad.
+speed.vcproj: old project file.
+speed.sln: old project file.
 "
 # 
 add_list="
+	speed_cppad/speed_cppad.sln
+	speed_cppad/speed_cppad.vcproj
 "
 #
 change_list="
 	svn_commit.sh
-	CppAD/config.h
-	configure.ac
-	Makefile.am
-	speed
-	speed_cppad
+	CppAD/Runge45.h
+	speed_cppad/speed.cpp
+	speed_cppad/speed_cppad.cpp
+	speed_cppad/Makefile.am
 	omh/speed.omh
-	omh/install_unix.omh
-	omh/install_windows.omh
+	omh/speed_cppad.omh
+	omh/whats_new_03.omh
+	omh/whats_new_04.omh
+	omh/whats_new_05.omh
+	omh/whats_new_06.omh
+	omh/faq.omh
+	omh/appendix.omh
 "
 #
 delete_list="
+	speed_cppad/speed.vcproj
+	speed_cppad/speed.sln
 "
 #
 copy_branch="" 

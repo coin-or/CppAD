@@ -332,7 +332,8 @@ Vector Runge45(
 	xf = xi;           // initialize solution
 	for(m = 0; m < M; m++)
 	{	// time at beginning of this interval
-		Scalar t = ti * ((M - m) / ns) + tf * (m / ns);
+		// (convert to int to avoid MS compiler warning)
+		Scalar t = ti * (int(M - m) / ns) + tf * (int(m) / ns);
 
 		// loop over integration steps
 		x4 = x5 = xf;   // start x4 and x5 at same point for each step

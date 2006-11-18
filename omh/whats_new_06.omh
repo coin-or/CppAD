@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	cppad
 	Adolc
 	Makefile
 	omh
@@ -94,7 +95,7 @@ and change all its files to use lower case names.
 
 
 $head 11-05$$
-Remove references in the $cref/Speed/$$ tests to the 
+Remove references in the $cref/speed_cppad/$$ tests to the 
 $code Memory$$ and $code Size$$ functions because they
 have been $cref/deprecated/FunDeprecated/$$.
 $pre
@@ -138,7 +139,7 @@ Move the $code PrintFor$$ directory to $code print_for$$
 and change all its files to use lower case names. 
 
 $head 10-31$$
-Move the $code SpeedExample$$ directory to $code speed_example$$
+Move the $code SpeedExample$$ directory to $code speed_cppad_example$$
 and change all its files to use lower case names. 
 
 $head 10-29$$
@@ -309,7 +310,7 @@ This has been fixed.
 $pre
 
 $$
-The compiling instructions for the $xref/Speed/$$ routines have been improved.
+The compiling instructions for the $xref/speed_cppad/$$ routines have been improved.
 $pre
 
 $$
