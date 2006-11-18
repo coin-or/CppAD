@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	Det
 	cppad
 	Adolc
 	Makefile
@@ -69,6 +70,16 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-18$$
+The example routine that computes determinants using expansion
+by minors $code DetOfMinor$$ was changed to $cref/det_of_minor/$$,
+in preparation for
+more formal speed comparisons with other packages.
+To be specific, its documentation was improved,
+its dependence on the rest of CppAD was removed
+(it no longer includes $cref/CppAD.h/CppAD/$$).
+
 
 $head 11-12$$
 The 
