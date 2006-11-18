@@ -755,7 +755,7 @@ $xref/Install//installation/$$ was released.
 
 $head 07-18$$
 Computing the determinant of a minor of a matrix
-$xref/DetOfMinor/$$
+$xref/det_of_minor/$$
 was documented as a realistic example using CppAD. 
 
 

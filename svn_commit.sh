@@ -38,48 +38,35 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="move speed.cpp->speed_cppad.cpp 
+log_entry="improve det_of_minor in prepation for speed_compare directory.
 
 svn_commit.sh: file that made this commit. 
-Runge45.h: fix warning from MS compiler.
-speed_cppad.sln: new project file.
-speed_cppad.vcproj: new project file.
-speed.cpp: move to speed_cppad.cpp.
-speed_cppad.cpp: move from speed.cpp.
-Makefile.am: change speed to speed_cppad.
-speed.omh: move to speed_cppad.omh.
-speed_cppad.omh: move from speed.omh.
-whats_new_*.omh: change cross refernece Speed to speed_cppad.
-faq.omh: change cross refernece Speed to speed_cppad.
-appendix.omh: change speed to speed_cppad.
-speed.vcproj: old project file.
-speed.sln: old project file.
+config.h: update package version.
+det_by_minor.hpp: change DetOfMinor to det_of_minor.
+det_of_minor.hpp: improve documentation and simplify useage.
+det_of_minor.cpp: improve comments and match new usage.
+example.cpp: change DetOfMinor to det_of_minor.
+example_list.omh: change DetOfMinor to det_of_minor.
+whats_new_03.omh: change DetOfMinor to det_of_minor.
+check_include_file.sh: change speed to speed_cppad (fix error).
 "
 # 
 add_list="
-	speed_cppad/speed_cppad.sln
-	speed_cppad/speed_cppad.vcproj
 "
 #
 change_list="
 	svn_commit.sh
-	CppAD/Runge45.h
-	speed_cppad/speed.cpp
-	speed_cppad/speed_cppad.cpp
-	speed_cppad/Makefile.am
-	omh/speed.omh
-	omh/speed_cppad.omh
+	CppAD/config.h
+	example/det_by_minor.hpp
+	example/det_of_minor.hpp
+	example/det_of_minor.cpp
+	example/example.cpp
+	omh/example_list.omh
 	omh/whats_new_03.omh
-	omh/whats_new_04.omh
-	omh/whats_new_05.omh
-	omh/whats_new_06.omh
-	omh/faq.omh
-	omh/appendix.omh
+	check_include_file.sh
 "
 #
 delete_list="
-	speed_cppad/speed.vcproj
-	speed_cppad/speed.sln
 "
 #
 copy_branch="" 

@@ -1,7 +1,6 @@
 # ifndef CPPAD_DET_BY_MINOR_INCLUDED
 # define CPPAD_DET_BY_MINOR_INCLUDED
 
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -12,7 +11,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 /*
 $begin DetByMinor$$
 $spell
@@ -65,7 +63,7 @@ $children%
 $head Example$$
 The file
 $xref/DetByMinor.cpp/$$ 
-contains an example and a test of $code det_by_minor.hpp$$.
+contains an example and test of $code det_by_minor.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
@@ -89,7 +87,6 @@ $index DetByMinor$$
 $mindex determinant minor matrix$$
 $section Determinant using Expansion by Minors: Source Code$$
 
-$comment This file is in the Example subdirectory$$
 $code
 # ifndef CPPAD_DET_BY_MINOR_INCLUDED
 $pre
@@ -116,30 +113,34 @@ namespace CppAD {
 template <class Type>
 class DetByMinor {
 public:
-	DetByMinor(size_t m_) : m(m_) , r(m_ + 1) , c(m_ + 1)
+	DetByMinor(size_t m) : m_(m) , r_(m + 1) , c_(m + 1), a_(m * m)
 	{
 		size_t i;
 
 		// values for r and c that correspond to entire matrix
-		for( i = 0; i < m; i++)
-		{	r[i] = i+1;
-			c[i] = i+1;
+		for(i = 0; i < m; i++)
+		{	r_[i] = i+1;
+			c_[i] = i+1;
 		}
-		r[m] = 0;
-		c[m] = 0;
+		r_[m] = 0;
+		c_[m] = 0;
 	}
 
 	inline Type operator()(const CppADvector<Type> &x) const
-	{
-		return DetOfMinor(x, m, m, r, c); 
+	{	size_t i = m_ * m_;
+		while(i--)
+			a_[i] = x[i];
+		return det_of_minor(a_, m_, m_, r_, c_); 
 	}
 
 private:
-	size_t              m;
+	size_t              m_;
 
-	// mutable because DetOfMinor modifies and restores these 
-	mutable CppADvector<size_t> r;
-	mutable CppADvector<size_t> c;
+	// made mutable because modified and then restored
+	mutable std::vector<size_t> r_;
+	mutable std::vector<size_t> c_;
+	// make mutable because its value does not matter
+	mutable std::vector<Type>   a_;
 };
 
 } // END CppAD namespace

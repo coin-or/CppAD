@@ -26,7 +26,7 @@ grep '^# *include *<CppAD/' \
 	adolc/*.cpp \
 	fadbad/*.cpp \
 	test_more/*.cpp \
-	speed/*.cpp |\
+	speed_cppad/*.cpp |\
 sed -e 's%[^<]*<%%' \
     -e 's%>.*$%%' | \
 sort -u > junk.1
@@ -48,7 +48,7 @@ grep '^# *include *"\.\./example' \
 	adolc/*.cpp    \
 	fadbad/*.cpp   \
 	test_more/*.cpp \
-	speed/*.cpp    | \
+	speed_cppad/*.cpp    | \
 sed -e 's%^[^"]*"\.\./%%' \
     -e 's%".*$%%' | \
 sort -u > junk.1

@@ -60,7 +60,7 @@ extern bool CppAD_vector(void);
 extern bool Default(void);
 extern bool DetByLu(void);
 extern bool DetByMinor(void);
-extern bool DetOfMinor(void);
+extern bool det_of_minor(void);
 extern bool Div(void);
 extern bool DivEq(void);
 extern bool Eq(void);
@@ -191,7 +191,7 @@ int main(void)
 	ok &= Run( Default,           "Default"          );
 	ok &= Run( DetByLu,           "DetByLu"          );
 	ok &= Run( DetByMinor,        "DetByMinor"       );
-	ok &= Run( DetOfMinor,        "DetOfMinor"       );
+	ok &= Run( det_of_minor,      "det_of_minor"     );
 	ok &= Run( Div,               "Div"              );
 	ok &= Run( DivEq,             "DivEq"            );
 	ok &= Run( Eq,                "Eq"               );

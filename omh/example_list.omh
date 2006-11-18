@@ -96,7 +96,7 @@ $rref CppAD_vector.cpp$$
 $rref Default.cpp$$
 $rref DetByLu.cpp$$
 $rref DetByMinor.cpp$$
-$rref DetOfMinor.cpp$$
+$rref det_of_minor.cpp$$
 $rref Div.cpp$$
 $rref DivEq.cpp$$
 $rref Eq.cpp$$
