@@ -71,6 +71,15 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-28$$
+The $cref/installation/Install/$$ download files were not being built
+because $code Makefile.am$$ referenced $code Doc$$ when it should have
+referenced $code doc$$. This has been fixed.
+
+$head 11-23$$
+A $cref/version numbering/WishList/Version Numbering/$$ entry was added to the
+$cref/WishList/$$.
+
 $head 11-18$$
 The example routine that computes determinants using expansion
 by minors $code DetOfMinor$$ was changed to $cref/det_of_minor/$$,

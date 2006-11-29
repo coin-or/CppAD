@@ -38,17 +38,12 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="improve det_of_minor in prepation for speed_compare directory.
+log_entry="suggest change version numbering in wish list.
 
 svn_commit.sh: file that made this commit. 
-config.h: update package version.
-det_by_minor.hpp: change DetOfMinor to det_of_minor.
-det_of_minor.hpp: improve documentation and simplify useage.
-det_of_minor.cpp: improve comments and match new usage.
-example.cpp: change DetOfMinor to det_of_minor.
-example_list.omh: change DetOfMinor to det_of_minor.
-whats_new_03.omh: change DetOfMinor to det_of_minor.
-check_include_file.sh: change speed to speed_cppad (fix error).
+omh/wish_list.omh: file containing the suggestion.
+omh/whats_new_06.omh: mention the new entry.
+Makefile.am: file reference to Doc that should have been doc
 "
 # 
 add_list="
@@ -56,14 +51,9 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	CppAD/config.h
-	example/det_by_minor.hpp
-	example/det_of_minor.hpp
-	example/det_of_minor.cpp
-	example/example.cpp
-	omh/example_list.omh
-	omh/whats_new_03.omh
-	check_include_file.sh
+	omh/wish_list.omh
+	omh/whats_new_06.omh
+	Makefile.am
 "
 #
 delete_list="

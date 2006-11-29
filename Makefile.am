@@ -218,7 +218,7 @@ EXTRA_DIST = \
 	cpl1.0.txt \
 	dev \
 	dev.omh \
-	Doc \
+	doc \
 	doc.omh \
 	fix_aclocal.sh \
 	fix_makefile.sh \
