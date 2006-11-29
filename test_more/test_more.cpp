@@ -55,6 +55,7 @@ extern bool Reverse(void);
 extern bool RevSparseHes(void);
 extern bool RevSparseJac(void);
 extern bool RevTwo(void);
+extern bool RombergOne(void);
 extern bool Rosen34(void);
 extern bool Runge45(void);
 extern bool SimpleVector(void);
@@ -140,6 +141,7 @@ int main(void)
 	ok &= Run( RevSparseHes,    "RevSparseHes"   );
 	ok &= Run( RevSparseJac,    "RevSparseJac"   );
 	ok &= Run( RevTwo,          "RevTwo"         );
+	ok &= Run( RombergOne,      "RombergOne"     );
 	ok &= Run( Rosen34,         "Rosen34"        );
 	ok &= Run( Runge45,         "Runge45"        );
 	ok &= Run( SimpleVector,    "SimpleVector"   );

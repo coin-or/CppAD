@@ -38,22 +38,30 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="suggest change version numbering in wish list.
+log_entry="fix problem using RombergOne with AD<double>.
 
 svn_commit.sh: file that made this commit. 
-omh/wish_list.omh: file containing the suggestion.
 omh/whats_new_06.omh: mention the new entry.
-Makefile.am: file reference to Doc that should have been doc
+romberg_one.cpp: new tests that demonstrates old problem (now fixed).
+RombergOne.h: fix mixing size_t and Floating type in operations.
+config.h: update version.
+test_more.cpp: add RombergOne test.
+test_more.vcproj: add RombergOne test.
+Makefile.am: add RombergOne test.
 "
 # 
 add_list="
+	test_more/romberg_one.cpp
 "
 #
 change_list="
 	svn_commit.sh
-	omh/wish_list.omh
 	omh/whats_new_06.omh
-	Makefile.am
+	CppAD/RombergOne.h
+	CppAD/config.h
+	test_more/test_more.cpp
+	test_more/test_more.vcproj
+	test_more/Makefile.am
 "
 #
 delete_list="

@@ -158,10 +158,13 @@ Float RombergOne(
 	size_t         p ,
 	Float         &e )
 {
-	size_t i, k;
+	// there must be a conversion from in to any Numeric type.
+	int ipow2 = 1;
+	int k;
+
+	size_t i;
 	Float pow2, sum, x; 
 
-	size_t ipow2 = 1;
 	Float  zero  = Float(0);
 	Float  two   = Float(2);
 
@@ -182,7 +185,7 @@ Float RombergOne(
 		sum    = zero;
 		for(k = 1; k < ipow2; k += 2)
 		{	// start = a + (b-a)/pow2, increment = 2*(b-a)/pow2
-			x    = ( (pow2 - k) * a + k * b ) / pow2;
+			x    = ( (pow2 - Float(k)) * a + k * b ) / pow2;
 			sum  = sum + F(x);
 		}
 		// combine function evaluations in sum with those in T[i-1]

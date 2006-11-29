@@ -60,6 +60,7 @@ test_more_SOURCES  = test_more.cpp \
 	poly.cpp \
 	pow.cpp \
 	pow_int.cpp \
+	romberg_one.cpp \
 	rosen_34.cpp \
 	runge_45.cpp \
 	reverse.cpp \

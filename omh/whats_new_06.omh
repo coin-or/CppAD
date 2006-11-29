@@ -71,6 +71,10 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-29$$
+There was a problem using $cref/RombergOne/$$ with floating point
+types other than $code double$$. This has been fixed.
+
 $head 11-28$$
 The $cref/installation/Install/$$ download files were not being built
 because $code Makefile.am$$ referenced $code Doc$$ when it should have

@@ -231,6 +231,9 @@
 				RelativePath=".\reverse.cpp">
 			</File>
 			<File
+				RelativePath=".\romberg_one.cpp">
+			</File>
+			<File
 				RelativePath=".\rosen_34.cpp">
 			</File>
 			<File
