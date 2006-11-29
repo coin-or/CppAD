@@ -125,7 +125,7 @@ $end
 ------------------------------------------------------------------------------
 */
 
-# define CppADReverseSweepTrace 0
+# define CPPAD_REVERSE_SWEEP_TRACE 1
 
 // BEGIN CppAD namespace
 namespace CppAD {
@@ -199,7 +199,7 @@ void ReverseSweep(
 		pZ  = Partial + i_var * K;
 
 		// rest of informaiton depends on the case
-# if CppADReverseSweepTrace
+# if CPPAD_REVERSE_SWEEP_TRACE
 		n_ind = NumInd(op);
 		printOp(
 			std::cout, 
@@ -650,7 +650,7 @@ void ReverseSweep(
 			CppADUnknownError(0);
 		}
 	}
-# if CppADReverseSweepTrace
+# if CPPAD_REVERSE_SWEEP_TRACE
 	std::cout << std::endl;
 # endif
 	CppADUnknownError( i_op == 1 );
@@ -660,6 +660,6 @@ void ReverseSweep(
 
 } // END CppAD namespace
 
-# undef CppADReverseSweepTrace
+# undef CPPAD_REVERSE_SWEEP_TRACE
 
 # endif
