@@ -125,7 +125,7 @@ $end
 ------------------------------------------------------------------------------
 */
 
-# define CPPAD_REVERSE_SWEEP_TRACE 1
+# define CPPAD_REVERSE_SWEEP_TRACE 0
 
 // BEGIN CppAD namespace
 namespace CppAD {
