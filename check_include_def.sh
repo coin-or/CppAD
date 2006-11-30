@@ -9,9 +9,9 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ -e cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9] ]
+if [ -e cppad-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9] ]
 then
-	dir=`ls -d cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]`
+	dir=`ls -d cppad-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]`
 	echo "check_include_def.sh: must first remove the $dir directory"
 	exit 1
 fi

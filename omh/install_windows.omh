@@ -62,10 +62,10 @@ just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
 Otherwise, download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-06-11-17.cpl.zip%$$
+$href%cppad-20061130.cpl.zip%$$
 
 $subhead GPL License$$
-$href%cppad-06-11-17.gpl.zip%$$
+$href%cppad-20061130.gpl.zip%$$
 
 $head Extraction$$
 Use 
@@ -76,7 +76,7 @@ $href%
 or some other program to decompress the archive.
 This will create the distribution directory 
 $syntax%
-	cppad-06-11-17
+	cppad-20061130
 %$$
 All the command sequences below assume that you start in this
 distribution directory.

@@ -142,29 +142,4 @@ $xref/SimpleVector/Elements of Specified Type/elements of a specified type/$$
 to
 $xref/SimpleVector/Value Type/value_type/$$.
 
-$head Version Numbering$$
-$index version, CppAD package$$
-$index number, CppAD package$$
-$index package, CppAD version$$
-It appears that for package with cygwin and other systems,
-the package version number should not have a dash in it.
-For example, see
-$href%
-	http://cygwin.com/setup.html#naming%
-	cygwin package file naming
-%$$
-or, to quote the
-$href%
-	http://www.rpm.org/max-rpm/ch-rpm-file-format.html%
-	rpm file naming convention
-%$$
-$italic
-The only restriction placed on the version is that 
-it cannot contain a dash "-".
-$$
-As per the acceptable package naming conventions for cygwin, 
-CppAD version numbering should be changed from
-$syntax%%yy%-%mm%-%dd%$$ format to $italic yyyymmdd$$; i.e.
-$code cppad-06-11-23$$ would become $code cppad-20061123$$.
-
 $end

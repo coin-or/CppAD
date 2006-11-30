@@ -27,7 +27,7 @@ fi
 #
 # date currently in configure.ac
 version=`grep "^ *AC_INIT(" configure.ac | \
-	sed -e "s/.*, *\([0-9][0-9]-[0-9][0-9]-[0-9][0-9]\) *,.*/\1/"`
+	sed -e "s/.*, *\([0-9]\{8\}\) *,.*/\1/"`
 #
 # version
 #
@@ -37,35 +37,36 @@ then
 	#
 	# Today's date in yy-mm-dd decimal digit format where 
 	# yy is year in century, mm is month in year, dd is day in month.
-	yy_mm_dd=`date +%g-%m-%d`
+	yyyymmdd=`date +%G%m%d`
+	yyyy_mm_dd=`date +%G-%m-%d`
 	#
 	# change Autoconf version to today
-	version=$yy_mm_dd
+	version=$yyyymmdd
 	#
 	# configure.ac
 	sed configure.ac > configure.ac.tmp \
-	-e "s/(CppAD, [0-9][0-9]-[0-9][0-9]-[0-9][0-9] *,/(CppAD, $yy_mm_dd,/"
+	-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/"
 	diff configure.ac  configure.ac.tmp
 	mv   configure.ac.tmp configure.ac
 	#
 	# AUTHORS
 	sed AUTHORS > AUTHORS.tmp \
-	-e "s/, 20[0-9][0-9]-[0-9][0-9]-[0-9][0-9] *,/, 20$yy_mm_dd,/"
+	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
 	diff AUTHORS    AUTHORS.tmp
 	mv   AUTHORS.tmp AUTHORS 
 	#
-	# update CppAD/config.h
-	# even though gets overwritten when configure runs.
+	# For installs without configure, update CppAD/config.h
+	# (gets overwritten when configure runs).
 	sed CppAD/config.h > CppAD/config.tmp \
-	-e "s/\"[0-9][0-9]-[0-9][0-9]-[0-9][0-9]\"/\"$yy_mm_dd\"/" \
-	-e "s/ [0-9][0-9]-[0-9][0-9]-[0-9][0-9]\"/ $yy_mm_dd\"/"
+	-e "s/\"[0-9]\{8\}\"/\"$yyyymmdd\"/" \
+	-e "s/ [0-9]\{8\}\"/ $yyyymmdd\"/"
 	diff CppAD/config.h   CppAD/config.tmp
 	mv   CppAD/config.tmp CppAD/config.h
 	#
 	for name in doc.omh omh/install_unix.omh omh/install_windows.omh
 	do
 		sed $name > $name.tmp \
-		-e "s/cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/cppad-$yy_mm_dd/g"
+		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
 		diff $name $name.tmp
 		mv   $name.tmp $name
 	done

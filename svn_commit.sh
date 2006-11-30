@@ -38,11 +38,24 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="minor corrections related to lower case file names.
+log_entry="Change version from yy-mm-dd format to yyyymmdd format.
 
-svn_commit.sh: change sed edit exclusion to all shell script files.
-SvnCommit.sed: old name of sed edit script.
-svn_commit.sed: new name of sed edit script.
+svn_commit.sh: file that made this commit.
+diff_today.sh: search for and replace the new version format.
+AUTHORS: update date (special case because in yyyy-mm-dd format).
+config.h: use yyyymmdd format.
+check_include_file.sh: check for new version number in directory name.
+check_include_omh.sh: check for new version number in directory name.
+gpl_license.sh: extract new version format from configure.ac.
+configure.ac: use yyyymmdd format.
+dos_format.sh: extract new version format from configure.ac.
+check_include_def.sh: check for new version number in directory name.
+build.sh: search for and replace the new version format.
+install_unix.omh: use yyyymmdd format.
+install_windows.omh: use yyyymmdd format.
+whats_new_06.omh: user's view of the changes.
+wish_list.omh: remove version numbering item.
+doc.omh: use yyyymmdd format.
 "
 # 
 add_list="
@@ -50,8 +63,21 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	SvnCommit.sed
-	svn_commit.sed
+	diff_today.sh
+	AUTHORS
+	CppAD/config.h
+	check_include_file.sh
+	check_include_omh.sh
+	gpl_license.sh
+	configure.ac
+	dos_format.sh
+	check_include_def.sh
+	build.sh
+	omh/install_unix.omh
+	omh/install_windows.omh
+	omh/whats_new_06.omh
+	omh/wish_list.omh
+	doc.omh
 "
 #
 delete_list="

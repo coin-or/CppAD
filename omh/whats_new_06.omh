@@ -71,6 +71,28 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-30$$
+Cygwin packages, and other system packages,
+should not have a dash in the version number.
+See
+$href%
+	http://cygwin.com/setup.html#naming%
+	cygwin package file naming
+%$$
+or, to quote the
+$href%
+	http://www.rpm.org/max-rpm/ch-rpm-file-format.html%
+	rpm file naming convention
+%$$
+$italic
+The only restriction placed on the version is that 
+it cannot contain a dash "-".
+$$
+As per the acceptable package naming conventions for cygwin, 
+CppAD version numbering has be changed from
+$syntax%%yy%-%mm%-%dd%$$ format to $italic yyyymmdd$$; i.e.
+$code cppad-06-11-30$$ was changed to $code cppad-20061130$$.
+
 $head 11-29$$
 There was a problem using $cref/RombergOne/$$ with floating point
 types other than $code double$$. This has been fixed.
