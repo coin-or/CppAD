@@ -38,30 +38,20 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="fix problem using RombergOne with AD<double>.
+log_entry="minor corrections related to lower case file names.
 
-svn_commit.sh: file that made this commit. 
-omh/whats_new_06.omh: mention the new entry.
-romberg_one.cpp: new tests that demonstrates old problem (now fixed).
-RombergOne.h: fix mixing size_t and Floating type in operations.
-config.h: update version.
-test_more.cpp: add RombergOne test.
-test_more.vcproj: add RombergOne test.
-Makefile.am: add RombergOne test.
+svn_commit.sh: change sed edit exclusion to all shell script files.
+SvnCommit.sed: old name of sed edit script.
+svn_commit.sed: new name of sed edit script.
 "
 # 
 add_list="
-	test_more/romberg_one.cpp
 "
 #
 change_list="
 	svn_commit.sh
-	omh/whats_new_06.omh
-	CppAD/RombergOne.h
-	CppAD/config.h
-	test_more/test_more.cpp
-	test_more/test_more.vcproj
-	test_more/Makefile.am
+	SvnCommit.sed
+	svn_commit.sed
 "
 #
 delete_list="
@@ -77,26 +67,24 @@ then
 	fi
 fi
 this_branch=`pwd | sed -e "s|.*/CppAD/||"`
-echo "$this_branch: $log_entry" > SvnCommit.log
+echo "$this_branch: $log_entry" > svn_commit.log
 count=0
 for file in $add_list $change_list
 do
 	count=`expr $count + 1`
 	ext=`echo $file | sed -e "s/.*\././"`
 	if \
-	[ -f $file                     ] && \
-	[ $file != "CheckIncludeFile"  ] && \
-	[ $file != "CheckIncludeOmh"   ] && \
-	[ $file != "SvnCommit"         ] && \
-	[ $file != "SvnCommit.sed"     ] && \
-	[ $ext  != ".vcproj"           ] && \
-	[ $ext  != ".sln"              ] && \
-	[ $ext  != ".vim"              ]
+	[ -f $file            ] && \
+	[ $ext  != ".sh"      ] && \
+	[ $ext  != ".sed"     ] && \
+	[ $ext  != ".vcproj"  ] && \
+	[ $ext  != ".sln"     ] && \
+	[ $ext  != ".vim"     ]
 	then
 		# automatic edits and backups
 		echo "cp $file junk.$count"
 		cp $file junk.$count
-		sed -f SvnCommit.sed < junk.$count > $file
+		sed -f svn_commit.sed < junk.$count > $file
 		diff junk.$count $file
 		if [ "$ext" == ".sh" ]
 		then
@@ -128,7 +116,7 @@ do
 	fi
 done
 echo "-------------------------------------------------------------"
-cat SvnCommit.log
+cat svn_commit.log
 response=""
 while [ "$response" != "c" ] && [ "$response" != "a" ]
 do
@@ -143,14 +131,12 @@ then
 		count=`expr $count + 1`
 		ext=`echo $file | sed -e "s/.*\././"`
 		if \
-		[ -f $file                     ] && \
-		[ $file != "CheckIncludeFile"  ] && \
-	   	[ $file != "CheckIncludeOmh"   ] && \
-	   	[ $file != "SvnCommit"         ] && \
-	   	[ $file != "SvnCommit.sed"     ] && \
-	   	[ $ext  != ".vcproj"           ] && \
-		[ $ext  != ".sln"              ] && \
-	   	[ $ext  != ".vim"              ]
+		[ -f $file            ] && \
+		[ $ext  != ".sh"      ] && \
+		[ $ext  != ".sed"     ] && \
+		[ $ext  != ".vcproj"  ] && \
+		[ $ext  != ".sln"     ] && \
+		[ $ext  != ".vim"     ]
 		then
 			# undo the automatic edits
 			echo "mv junk.$count $file"
@@ -198,4 +184,4 @@ then
 	done
 	
 fi
-svn commit --username bradbell --file SvnCommit.log $add_list $change_list $delete_list $copy_list
+svn commit --username bradbell --file svn_commit.log $add_list $change_list $delete_list $copy_list
