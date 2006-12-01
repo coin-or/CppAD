@@ -11,6 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	yyyymmdd
+	yy-mm-dd
 	Det
 	cppad
 	Adolc
@@ -103,8 +105,8 @@ because $code Makefile.am$$ referenced $code Doc$$ when it should have
 referenced $code doc$$. This has been fixed.
 
 $head 11-23$$
-A $cref/version numbering/WishList/Version Numbering/$$ entry was added to the
-$cref/WishList/$$.
+A Version Numbering entry was added to the
+$cref/WishList/$$ (this was completed on $cref/11-30/WhatsNew06/11-30/$$).
 
 $head 11-18$$
 The example routine that computes determinants using expansion
