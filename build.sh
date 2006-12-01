@@ -320,10 +320,12 @@ then
 	then
 		exit 1
 	fi
-	if ! make
+	if ! make            2>  make_error.log
 	then
+		cat make_error.log
 		exit 1
 	fi
+	cat make_error.log   >> ../build_test.log
 	ok="yes"
 	list="
 		example/example

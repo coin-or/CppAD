@@ -38,13 +38,13 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Change some Doc references to doc and Dev to dev.
+log_entry="fix some warnings.
 
 svn_commit.sh: file that made this commit.
-svn_status.sh: delete entries in doc directory and dev directories.
-clean_cpp_ad.sh: delete entries in doc directory and dev directories.
-install_unix.omh: change Doc->doc and Dev->dev.
-install_windows.omh: change Doc->doc and Dev->dev.
+RomvergOne.h: remove comparision of int with size_t.
+config.h: update version number.
+build.sh: include compilation warings in build_test.log.
+whats_new_06.omh: user's view of these and recent previous changes.
 "
 # 
 add_list="
@@ -52,10 +52,10 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	svn_status.sh
-	clean_cpp_ad.sh
-	omh/install_unix.omh
-	omh/install_windows.omh
+	CppAD/RombergOne.h
+	CppAD/config.h
+	build.sh 
+	omh/whats_new_06.omh
 "
 #
 delete_list="

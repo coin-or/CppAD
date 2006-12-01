@@ -158,11 +158,8 @@ Float RombergOne(
 	size_t         p ,
 	Float         &e )
 {
-	// there must be a conversion from in to any Numeric type.
-	int ipow2 = 1;
-	int k;
-
-	size_t i;
+	size_t ipow2 = 1;
+	size_t k, i;
 	Float pow2, sum, x; 
 
 	Float  zero  = Float(0);
@@ -181,11 +178,12 @@ Float RombergOne(
 	r[0]  = ( F(a) + F(b) ) * (b - a) / two; 
 	for(i = 1; i < n; i++)
 	{	ipow2 *= 2;
-		pow2   = Float(ipow2);
+		// there must be a conversion from int to any numeric type
+		pow2   = Float(int(ipow2)); 
 		sum    = zero;
 		for(k = 1; k < ipow2; k += 2)
 		{	// start = a + (b-a)/pow2, increment = 2*(b-a)/pow2
-			x    = ( (pow2 - Float(k)) * a + k * b ) / pow2;
+			x    = ( (pow2 - Float(int(k))) * a + k * b ) / pow2;
 			sum  = sum + F(x);
 		}
 		// combine function evaluations in sum with those in T[i-1]
@@ -199,7 +197,7 @@ Float RombergOne(
 	{	// compute estimate accurate to O[ step^(2*(i+1)) ]
 		// put resutls in r[n-1], r[n-2], ... , r[n-i+1]
 		ipow4    *= 4;
-		pow4      = Float(ipow4);
+		pow4      = Float(int(ipow4));
 		pow4minus = Float(ipow4-1);
 		for(k = n-1; k > i; k--)
 			r[k] = ( pow4 * r[k] - r[k-1] ) / pow4minus;

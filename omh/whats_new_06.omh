@@ -73,6 +73,15 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-01$$
+All of the $code Makefile.am$$ and $code Makefile$$ files were changed
+to lower case; i.e., $code makefile.am$$ and $code makefile$$.
+$pre
+
+$$
+Fix compiler warning while compiling $code CppAD/RombergOne/$$
+(mistake occurred during $cref/11-20/WhatsNew06/11-29/$$ change).
+
 $head 11-30$$
 Cygwin packages, and other system packages,
 should not have a dash in the version number.
