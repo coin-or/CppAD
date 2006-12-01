@@ -80,15 +80,15 @@ All of the commands below are to be executed starting from this
 directory.
 
 $head User Documentation$$
-The $code Doc$$ sub-directory of the distribution directory
+The $code doc$$ sub-directory of the distribution directory
 contains user documentation for CppAD.
-The files $syntax%Doc/%*%.htm%$$ are in HTML format.
+The files $syntax%doc/%*%.htm%$$ are in HTML format.
 If your browser supports XHTML+MATHML format,
 an easier to read copy is available in the files
-$syntax%Doc/%*%.xml%$$.
+$syntax%doc/%*%.xml%$$.
 
 $head Developer Documentation$$
-The $code Dev$$ sub-directory of the distribution directory
+The $code dev$$ sub-directory of the distribution directory
 contains developer documentation for CppAD. 
 
 $head Configure$$

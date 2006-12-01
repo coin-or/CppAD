@@ -28,8 +28,9 @@ then
         \( -name 'Debug'          \) -or \
         \( -name 'Release'        \) -or \
         \( -name '.deps'          \) -or \
-	\( -name 'Dev'            \) -or \
+	\( -name 'dev'            \) -or \
 	\( -name 'Doc'            \) -or \
+	\( -name 'doc'            \) -or \
 	\( -name 'htm'            \) -or \
 	\( -name 'junk'           \) -or \
 	\( -name 'junk?'          \) -or \

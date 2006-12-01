@@ -86,15 +86,15 @@ for the rest of the install.
 Otherwise, continue with the steps below:
 
 $head User Documentation$$
-The $code Doc$$ sub-directory of the distribution directory
+The $code doc$$ sub-directory of the distribution directory
 contains user documentation for CppAD.
-The files $syntax%Doc/%*%.htm%$$ are in HTML format.
+The files $syntax%doc/%*%.htm%$$ are in HTML format.
 If your browser supports XHTML+MATHML format,
 an easier to read copy is available in the files
-$syntax%Doc/%*%.xml%$$.
+$syntax%doc/%*%.xml%$$.
 
 $head Developer Documentation$$
-The $code Dev$$ sub-directory of the distribution directory
+The $code dev$$ sub-directory of the distribution directory
 contains developer documentation for CppAD. 
 
 $head Getting Started$$
