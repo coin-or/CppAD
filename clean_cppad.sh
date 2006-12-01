@@ -35,8 +35,8 @@ then
 	\( -name 'junk'           \) -or \
 	\( -name 'junk?'          \) -or \
 	\( -name 'junk.*'         \) -or \
-	\( -name 'Makefile'       \) -or \
-	\( -name 'Makefile.in'    \) -or \
+	\( -name 'makefile'       \) -or \
+	\( -name 'makefile.in'    \) -or \
         \( -name 'Release'        \) -or \
         \( -name 'stamp-h1'       \) -or \
 	\( -name 'temp'           \) -or \
@@ -80,8 +80,8 @@ else
 	\( -name 'junk'           \) -or \
 	\( -name 'junk?'          \) -or \
 	\( -name 'junk.*'         \) -or \
-	\( -name 'Makefile'       \) -or \
-	\( -name 'Makefile.in'    \) -or \
+	\( -name 'makefile'       \) -or \
+	\( -name 'makefile.in'    \) -or \
         \( -name 'Release'        \) -or \
         \( -name 'stamp-h1'       \) -or \
 	\( -name 'temp'           \) -or \

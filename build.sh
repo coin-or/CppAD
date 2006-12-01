@@ -199,7 +199,7 @@ then
 		exit 1
 	fi
 	#
-	# Fix Makefile for what appears to be a bug in gzip under cygwin
+	# Fix makefile for what appears to be a bug in gzip under cygwin
 	echo "fix_makefile.sh"
 	./fix_makefile.sh
 	#

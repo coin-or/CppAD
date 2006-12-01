@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20061130, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20061201, cppad@list.coin-or.org)
 
 dnl Set the default install prefix to the installers home directory
 AC_PREFIX_DEFAULT(${HOME})
@@ -187,8 +187,8 @@ else
 	AC_DEFINE(CppAD_CPPADVECTOR, 0, [is CppADvector == CppAD::vector])
 fi
 
-dnl Run any macros required for proper operation of generated Makefiles
-dnl nostdinc: Do not define standard include directories in generated Makefiles
+dnl Run any macros required for proper operation of generated makefiles
+dnl nostdinc: Do not define standard include directories in generated makefiles
 AM_INIT_AUTOMAKE(nostdinc)
 
 dnl Determine if ranlib is present and where it is if present (set RANLIB)
@@ -216,16 +216,16 @@ AC_C_INLINE
 dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will 
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
-	Makefile
-	adolc/Makefile 
-	example/Makefile 
-	fadbad/Makefile 
-	get_started/Makefile 
-	introduction/Makefile
-	print_for/Makefile
-	speed_example/Makefile
-	speed_cppad/Makefile 
-	test_more/Makefile 
+	makefile
+	adolc/makefile 
+	example/makefile 
+	fadbad/makefile 
+	get_started/makefile 
+	introduction/makefile
+	print_for/makefile
+	speed_example/makefile
+	speed_cppad/makefile 
+	test_more/makefile 
 ])
 
 

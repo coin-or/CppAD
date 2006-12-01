@@ -102,8 +102,8 @@ do
 	sleep 2
 	touch cppad-$version/CppAD/config.h.in
 	sleep 2
-	touch cppad-$version/Makefile.in
-	touch cppad-$version/*/Makefile.in
+	touch cppad-$version/makefile.in
+	touch cppad-$version/*/makefile.in
 	sleep 2
 	touch cppad-$version/configure
 	#

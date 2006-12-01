@@ -114,9 +114,9 @@ mv GplLicense.tmp cppad-$version/COPYING
 # change the file cpl1.0.txt to the file gpl2.txt
 rm cppad-$version/cpl1.0.txt
 cp gpl2.txt cppad-$version/gpl2.txt
-sed < cppad-$version/Makefile.am > GplLicense.tmp \
+sed < cppad-$version/makefile.am > GplLicense.tmp \
 	-e 's/cpl1.0.txt/gpl2.txt/'
-mv GplLicense.tmp cppad-$version/Makefile.am
+mv GplLicense.tmp cppad-$version/makefile.am
 #
 sed < cppad-$version/omh/license.omh > GplLicense.tmp \
 	-e 's/$verbatim%cpl1.0.txt%$\$/$verbatim%gpl2.txt%$$/'
@@ -129,8 +129,8 @@ touch cppad-$version/aclocal.m4
 sleep 2
 touch cppad-$version/CppAD/config.h.in
 sleep 2
-touch cppad-$version/Makefile.in
-touch cppad-$version/*/Makefile.in
+touch cppad-$version/makefile.in
+touch cppad-$version/*/makefile.in
 sleep 2
 touch cppad-$version/configure
 #

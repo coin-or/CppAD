@@ -214,7 +214,7 @@ EXTRA_DIST = \
 	check_include_file.sh \
 	check_include_omh.sh \
 	check_include_def.sh \
-	clean_cpp_ad.sh \
+	clean_cppad.sh \
 	cpl1.0.txt \
 	dev \
 	dev.omh \
