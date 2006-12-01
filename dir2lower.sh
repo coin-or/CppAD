@@ -6,7 +6,7 @@ list="
 	Build.sh
 	CheckIncludeFile.sh
 	file2lower.sh
-	Makefile.am
+	makefile.am
 	configure.ac
 	fadbad/*
 	adolc/*
@@ -28,7 +28,7 @@ fi
 dollar='$'
 for file in $list 
 do
-if [ ! -d "$file" ] && [ "$file" != "$new/Makefile.am" ]
+if [ ! -d "$file" ] && [ "$file" != "$new/makefile.am" ]
 then
 	ext=`echo $file | sed -e 's|.*\.||'`
 	if [ "$ext" != "sln" ] && [ "$ext" != "vcproj" ]

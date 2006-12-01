@@ -12,6 +12,6 @@
 #
 sed \
 -e 's/tardir=$(distdir) && $(am__tar) | GZIP=$(GZIP_ENV) gzip -c >$(distdir).tar.gz/tar -cvf $(distdir).tar $(distdir) ; gzip -f $(GZIP_ENV) $(distdir).tar/'\
-	< makefile  > Makefile.new
-diff makefile     Makefile.new
-mv   makefile.new Makefile
+	< makefile  > makefile.new
+diff makefile     makefile.new
+mv   makefile.new makefile

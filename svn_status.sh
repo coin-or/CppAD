@@ -30,9 +30,9 @@ sed                                                           \
 	-e '/^[?].*\/Debug$/d'                                \
 	-e '/^[?].*\/Release$/d'                              \
 	-e '/^[?].*\/stamp-h1$/d'                             \
-	-e '/^[?].*\/Makefile$/d'                             \
+	-e '/^[?].*\/makefile$/d'                             \
 	-e '/^[?] *install-sh$/d'                             \
-	-e '/^[?] *Makefile$/d'                               \
+	-e '/^[?] *makefile$/d'                               \
 	-e '/^[?].*\/junk$/d'                                 \
 	-e '/^[?] *junk$/d'                                   \
 	-e '/^[?].*\/junk\.[0-9a-zA-Z]*$/d'                   \
