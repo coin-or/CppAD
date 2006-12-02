@@ -47,6 +47,8 @@ $section Windows Download, Test, and Installation$$
 
 $head Download Current Version$$
 $index download, windows$$
+Note that $code 20061202$$ is the 
+year, month, and date corresponding to the current version of CppAD.
 If you are using 
 $href%
 	http://www.cygwin.com%
@@ -62,10 +64,10 @@ just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
 Otherwise, download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-20061130.cpl.zip%$$
+$href%cppad-20061202.cpl.zip%$$
 
 $subhead GPL License$$
-$href%cppad-20061130.gpl.zip%$$
+$href%cppad-20061202.gpl.zip%$$
 
 $head Extraction$$
 Use 
@@ -76,7 +78,7 @@ $href%
 or some other program to decompress the archive.
 This will create the distribution directory 
 $syntax%
-	cppad-20061130
+	cppad-20061202
 %$$
 All the command sequences below assume that you start in this
 distribution directory.

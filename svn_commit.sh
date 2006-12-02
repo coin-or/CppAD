@@ -38,13 +38,13 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="fix some warnings.
+log_entry="Improve versioning documentation.
 
 svn_commit.sh: file that made this commit.
-RomvergOne.h: remove comparision of int with size_t.
-config.h: update version number.
-build.sh: include compilation warings in build_test.log.
-whats_new_06.omh: user's view of these and recent previous changes.
+build.sh: include an automatic update of version number that was missed.
+install_unix.omh: state current version number at beginning.
+install_windows.omh: state current version number at beginning.
+whats_new_06.omh: fix a spelling error, user's view of changes.
 "
 # 
 add_list="
@@ -52,9 +52,9 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	CppAD/RombergOne.h
-	CppAD/config.h
 	build.sh 
+	omh/install_unix.omh
+	omh/install_windows.omh
 	omh/whats_new_06.omh
 "
 #

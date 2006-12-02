@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	Romberg
 	yyyymmdd
 	yy-mm-dd
 	Det
@@ -72,6 +73,12 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-02$$
+Put explanation of version numbering in the 
+$cref/unix/InstallUnix/Download Current Version/$$ and
+$cref/windows/InstallWindows/Download Current Version/$$
+download instructions.
 
 $head 12-01$$
 All of the $code Makefile.am$$ and $code Makefile$$ files were changed

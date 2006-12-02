@@ -66,7 +66,8 @@ then
 	for name in doc.omh omh/install_unix.omh omh/install_windows.omh
 	do
 		sed $name > $name.tmp \
-		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
+			-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
+			-e "s/ [0-9]\{8\}\\\$\\\$/ $yyyymmdd\$\$/"
 		diff $name $name.tmp
 		mv   $name.tmp $name
 	done
