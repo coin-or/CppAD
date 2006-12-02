@@ -19,7 +19,7 @@ fi
 echo "Checking difference between C++ include directives and file names."
 echo "-------------------------------------------------------------------"
 grep '^# *include *<CppAD/' \
-	CppAD/*.h \
+	CppAD/*.hpp \
 	CppAD/local/*.hpp \
 	example/*.cpp \
 	example/*.hpp \
@@ -30,7 +30,8 @@ grep '^# *include *<CppAD/' \
 sed -e 's%[^<]*<%%' \
     -e 's%>.*$%%' | \
 sort -u > junk.1
-ls	CppAD/*.h \
+ls	CppAD/config.h \
+	CppAD/*.hpp \
 	CppAD/local/*.hpp | \
 sort -u > junk.2
 diff junk.1 junk.2
@@ -59,4 +60,3 @@ diff -b junk.2 junk.3
 #
 echo "-------------------------------------------------------------------"
 echo "Nothing should be between the two dashed lines above"
-echo "If CppAD/config.h appears, run Build all and try again"
