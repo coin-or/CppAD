@@ -19,7 +19,6 @@ $index speed, determinant by minors$$
 $index determinant, minors speed$$
 
 
-$comment This file is in the Speed subdirectory$$ 
 $code
 $verbatim%speed_cppad/det_lu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$

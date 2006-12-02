@@ -20,7 +20,6 @@ $index determinant, Lu speed$$
 $index Lu, determinant speed$$
 $section Determinant by Lu Factor and Solve: Speed Test$$
 
-$comment This file is in the Speed subdirectory$$ 
 $code
 $verbatim%speed_cppad/det_lu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$

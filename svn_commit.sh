@@ -38,13 +38,11 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Improve versioning documentation.
+log_entry="Fix a typo in speed_cppad.omh.
 
 svn_commit.sh: file that made this commit.
-build.sh: include an automatic update of version number that was missed.
-install_unix.omh: state current version number at beginning.
-install_windows.omh: state current version number at beginning.
-whats_new_06.omh: fix a spelling error, user's view of changes.
+whats_new_06.omh: user's view of changes.
+speed_cppad/*.cpp: remove an out of date and unecessary comment.
 "
 # 
 add_list="
@@ -52,9 +50,11 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	build.sh 
-	omh/install_unix.omh
-	omh/install_windows.omh
+	speed_cppad/det_minor.cpp
+	speed_cppad/ode.cpp
+	speed_cppad/speed_cppad.cpp
+	speed_cppad/det_lu.cpp
+	omh/speed_cppad.omh
 	omh/whats_new_06.omh
 "
 #

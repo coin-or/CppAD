@@ -49,7 +49,7 @@ $$
 
 $head Windows$$
 In Microsoft Visual Studio open the project file 
-$code speed/speed_.sln$$
+$code cppad_speed/speed_speed.sln$$
 (relative to the distribution directory).
 Then set the configuration to the $code Release$$ version.
 Then select $code Build | speed_cppad$$.

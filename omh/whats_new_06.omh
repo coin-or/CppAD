@@ -79,6 +79,11 @@ Put explanation of version numbering in the
 $cref/unix/InstallUnix/Download Current Version/$$ and
 $cref/windows/InstallWindows/Download Current Version/$$
 download instructions.
+$pre
+
+$$
+Correct some file name references under the Windows heading in
+$cref/speed_cppad/$$.
 
 $head 12-01$$
 All of the $code Makefile.am$$ and $code Makefile$$ files were changed

@@ -17,7 +17,6 @@ $$
 $mindex run all speed test$$
 $section Run All The Speed Tests$$
 
-$comment This file is in the Speed subdirectory$$ 
 $code
 $verbatim%speed_cppad/speed_cppad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
