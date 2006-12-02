@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Test the use of VecADelem with unary operators
 */
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 
 bool VecUnary(void)

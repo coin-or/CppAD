@@ -16,7 +16,7 @@ Old Value example now used just for valiadation testing
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 bool Value(void)
 {	bool ok = true;

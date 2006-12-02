@@ -31,7 +31,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 # include <sstream>  // std::ostringstream
 # include <string>   // std::string

@@ -35,7 +35,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 # include "../example/det_by_lu.hpp"
 
 # include <adolc/adouble.h>

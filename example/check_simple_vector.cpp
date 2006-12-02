@@ -25,8 +25,8 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD_vector.h>
-# include <CppAD/CheckSimpleVector.h>
+# include <CppAD/vector.hpp>
+# include <CppAD/check_simple_vector.hpp>
 # include <iostream>
 
 

@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin BenderQuad$$
 $spell
+	cppad.hpp
 	BAvector
 	gx
 	gxx
@@ -32,7 +33,7 @@ $section Computing Jacobian and Hessian of Bender's Reduced Objective$$
 
 $head Syntax$$
 $syntax%%
-%# include <CppAD/CppAD.h>
+%# include <CppAD/cppad.hpp>
 BenderQuad(%x%, %y%, %fun%, %g%, %gx%, %gxx%)%$$  
 
 $head Purpose$$

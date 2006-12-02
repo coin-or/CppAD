@@ -30,7 +30,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 bool Atan2(void)
 {	bool ok = true;

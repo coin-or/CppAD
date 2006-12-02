@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 /*
 $begin DetMinorAdolc.cpp$$
 $spell
@@ -36,7 +34,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 # include "../example/det_by_minor.hpp"
 
 # include <adolc/adouble.h>

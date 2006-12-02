@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------------
 $begin CppADError$$
 $spell
+	cppad.hpp
 	cassert
 	cppad
 	yy
@@ -94,7 +95,7 @@ $codep */
 # include <cassert>
 # include <iostream>
 # include <CppAD/config.h>
-# include <CppAD/ErrorHandler.h>
+# include <CppAD/error_handler.hpp>
 
 # ifdef NDEBUG
 # define CppADUsageError(exp, text)  // do nothing

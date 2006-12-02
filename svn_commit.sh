@@ -38,11 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Fix a typo in speed_cppad.omh.
-
-svn_commit.sh: file that made this commit.
-whats_new_06.omh: user's view of changes.
-speed_cppad/*.cpp: remove an out of date and unecessary comment.
+log_entry="Change CppAD/*.h to lower case names and .hpp extension. 
 "
 # 
 add_list="
@@ -50,12 +46,27 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	speed_cppad/det_minor.cpp
-	speed_cppad/ode.cpp
-	speed_cppad/speed_cppad.cpp
-	speed_cppad/det_lu.cpp
-	omh/speed_cppad.omh
-	omh/whats_new_06.omh
+	adolc/det_minor.cpp
+	adolc/speed.cpp
+	adolc/example.cpp
+	adolc/det_lu.cpp
+	file2lower.sh
+	AUTHORS
+	CppAD
+	example
+	gpl_license.sh
+	test_more
+	print_for/print_for.cpp
+	configure.ac
+	speed_cppad
+	check_include_def.sh
+	makefile.am
+	introduction/exp_apx_ad.cpp
+	omh
+	doc.omh
+	fadbad
+	get_started/get_started.cpp
+	speed_example/speed_example.cpp
 "
 #
 delete_list="

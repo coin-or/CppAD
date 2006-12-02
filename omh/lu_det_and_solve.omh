@@ -23,9 +23,9 @@ $index equation, linear$$
 $section Compute Determinants and Solve Equations by LU Factorization$$
 
 $childtable%
-	CppAD/LuSolve.h%
-	CppAD/LuFactor.h%
-	CppAD/LuInvert.h
+	CppAD/lu_solve.hpp%
+	CppAD/lu_factor.hpp%
+	CppAD/lu_invert.hpp
 %$$
 
 $end

@@ -18,6 +18,7 @@ $latex
 	\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial {#2}^{#1}} }
 $$
 $spell
+	cppad.hpp
 	cppad
 	namespaces
 	std
@@ -43,11 +44,11 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-20061130
+A Package for Differentiation of C++ Algorithms: cppad-20061202
 $$ 
 
 $head Syntax$$
-$syntax%# include "CppAD.h"%$$ $pre
+$syntax%# include "cppad.hpp"%$$ $pre
 $$
 $syntax%using namespace CppAD;%$$ $pre
 $$
@@ -146,11 +147,11 @@ these types.
 
 
 $head Include File$$
-$index include, CppAD.h$$
-$index CppAD.h, include$$
+$index include, cppad.hpp$$
+$index cppad.hpp, include$$
 The following include directive
 $syntax%
-	# include CppAD/CppAD.h
+	# include CppAD/cppad.hpp
 %$$
 includes the CppAD package for the rest of the current compilation unit.
 

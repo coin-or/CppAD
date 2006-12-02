@@ -18,22 +18,7 @@ fi
 echo "Differences between include file names and directives"
 echo "-----------------------------------------------------"
 #
-grep '^# *ifndef *CppAD[a-zA-Z]*Included$' \
-	CppAD/*.h \
-	example/*.hpp \
-	| sed -e '/ErrorHandler.h:.*# ifndef CppADCppADIncluded/d' \
-	| sort -u > junk.1
-sed -e 's|\([^.]*\)\.h:.*|\1|' -e 's|^.*/||' < junk.1 > junk.2
-sed -e 's|.*# *ifndef *CppAD\([a-zA-Z]*\)Included$|\1|' < junk.1 > junk.3
-diff junk.2 junk.3
-#
-grep '^# *define *CppAD[a-zA-Z]*Included$' \
-	CppAD/*.h \
-	example/*.hpp \
-	| sort -u > junk.1
-sed -e 's|\([^.]*\)\.h:.*|\1|' -e 's|^.*/||' < junk.1 > junk.2
-sed -e 's|.*# *define *CppAD\([a-zA-Z]*\)Included$|\1|' < junk.1 > junk.3
-diff junk.2 junk.3
+grep '^# *ifndef *CppAD[a-zA-Z]*Included$' CppAD/*.hpp example/*.hpp 
 # --------------------------------------------------------------------------
 grep '^# *ifndef *CPPAD_[a-zA-Z_]*_INCLUDED$' \
 	CppAD/local/*.hpp \

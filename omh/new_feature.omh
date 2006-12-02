@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin NewFeature$$
 $spell
+	cppad.hpp
 	CppAD
 	Makefile
 	Microsoft
@@ -58,7 +59,7 @@ $lnext
 Add the new feature to the OMhelp documentation tree.
 
 $lnext
-Add the new feature the CppAD/CppAD.h include tree.
+Add the new feature the CppAD/cppad.hpp include tree.
 
 $lnext
 Mention the new feature in the WhatsNew file for the current year.

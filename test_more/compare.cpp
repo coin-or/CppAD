@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 Check comparison operators between AD< AD<Base> > and Base, int
 */
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 namespace { 
 	template <class Type>

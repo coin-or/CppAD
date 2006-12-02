@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew03$$
 $spell
+	cppad.hpp
 	Hess
 	Taylor
 	Def
@@ -177,7 +178,7 @@ $$
 The $xref/LuSolve/$$ utility is now part of the distribution
 and not just an example; i.e.,
 it is automatically included by 
-$code CppAD.h$$.
+$code cppad.hpp$$.
 
 
 $head 11-15$$
@@ -252,7 +253,7 @@ functions.
 
 $head 10-21$$
 All the $code CppAD$$ include files,
-except $code CppAD.h$$ were moved into an $code include$$ subdirectory.
+except $code cppad.hpp$$ were moved into an $code include$$ subdirectory.
 
 
 

@@ -37,7 +37,7 @@ and
 	x[n-1](t) = exp(2 * w[0]) * w[1] * (t-t0)^2 / 2
 */
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 # include <iostream>
 # include <cassert>

@@ -27,7 +27,7 @@ $$
 $end
 */
 // BEGIN PROGRAM
-# include <CppAD/CppAD.h>  // CppAD utilities
+# include <CppAD/cppad.hpp>  // CppAD utilities
 # include <cassert>        // assert macro
 
 namespace { // Begin empty namespace

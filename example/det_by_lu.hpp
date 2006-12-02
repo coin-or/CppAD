@@ -131,7 +131,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 # include <complex>
 
 typedef std::complex<double>     Complex;

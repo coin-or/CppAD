@@ -48,7 +48,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>        // For automatic differentiation
+# include <CppAD/cppad.hpp>        // For automatic differentiation
 
 namespace {
 	class Fun {

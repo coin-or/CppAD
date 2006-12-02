@@ -959,7 +959,7 @@ was added to the distribution.
 $head 01-07$$
 Change CppAD error handler from using the macros defined in
 $code CppAD/CppADError.h$$ to using a class defined in 
-$xref%ErrorHandler%%CppAD/ErrorHandler.h%$$.
+$xref%ErrorHandler%%CppAD/error_handler.hpp%$$.
 The macros $code CppADUnknownError$$ and $code CppADUsageError$$
 have been depreciated (they are temporarily still available in the 
 file $code CppAD/local/CppADError.h$$).

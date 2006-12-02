@@ -33,8 +33,8 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD_vector.h>
-# include <CppAD/CheckSimpleVector.h>
+# include <CppAD/vector.hpp>
+# include <CppAD/check_simple_vector.hpp>
 # include <sstream> // sstream and string are used to test output operation
 # include <string>
 

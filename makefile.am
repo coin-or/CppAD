@@ -21,27 +21,47 @@ myincludedir = $(includedir)
 endif
 #
 nobase_myinclude_HEADERS =  \
-	CppAD/config.h \
-	CppAD/CheckNumericType.h \
-	CppAD/CheckSimpleVector.h \
-	CppAD/CppAD.h \
-	CppAD/CppAD_vector.h \
-	CppAD/ErrorHandler.h \
-	CppAD/LuFactor.h \
-	CppAD/LuInvert.h \
-	CppAD/LuSolve.h \
-	CppAD/NearEqual.h \
-	CppAD/OdeErrControl.h \
-	CppAD/OdeGear.h \
-	CppAD/OdeGearControl.h \
-	CppAD/Poly.h \
-	CppAD/PowInt.h \
+	CppAD/TrackNewDel.h \
+	CppAD/SpeedTest.h \
+	CppAD/Runge45.h \
+	CppAD/Rosen34.h \
 	CppAD/RombergOne.h \
 	CppAD/RombergMul.h \
-	CppAD/Rosen34.h \
-	CppAD/Runge45.h \
-	CppAD/SpeedTest.h \
-	CppAD/TrackNewDel.h \
+	CppAD/PowInt.h \
+	CppAD/Poly.h \
+	CppAD/OdeGearControl.h \
+	CppAD/OdeGear.h \
+	CppAD/OdeErrControl.h \
+	CppAD/NearEqual.h \
+	CppAD/LuSolve.h \
+	CppAD/LuInvert.h \
+	CppAD/LuFactor.h \
+	CppAD/ErrorHandler.h \
+	CppAD/CppAD_vector.h \
+	CppAD/CppAD.h \
+	CppAD/CheckSimpleVector.h \
+	CppAD/CheckNumericType.h \
+	CppAD/config.h \
+	CppAD/check_numeric_type.hpp \
+	CppAD/check_simple_vector.hpp \
+	CppAD/cppad.hpp \
+	CppAD/vector.hpp \
+	CppAD/error_handler.hpp \
+	CppAD/lu_factor.hpp \
+	CppAD/lu_invert.hpp \
+	CppAD/lu_solve.hpp \
+	CppAD/near_equal.hpp \
+	CppAD/ode_err_control.hpp \
+	CppAD/ode_gear.hpp \
+	CppAD/ode_gear_control.hpp \
+	CppAD/poly.hpp \
+	CppAD/pow_int.hpp \
+	CppAD/romberg_one.hpp \
+	CppAD/romberg_mul.hpp \
+	CppAD/rosen_34.hpp \
+	CppAD/runge_45.hpp \
+	CppAD/speed_test.hpp \
+	CppAD/track_new_del.hpp \
 	CppAD/local/ad.hpp \
 	CppAD/local/ad_fun.hpp \
 	CppAD/local/ad_tape.hpp \

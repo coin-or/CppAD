@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Old Reverse example now used just for valiadation testing
 */
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 bool Reverse(void)
 {	bool ok = true;

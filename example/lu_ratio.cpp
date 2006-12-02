@@ -32,7 +32,7 @@ $end
 // BEGIN PROGRAM
 # include <cstdlib>               // for rand function
 # include <cassert>
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 namespace { // Begin empty namespace
 

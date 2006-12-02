@@ -35,9 +35,9 @@ $end
 
 // BEGIN PROGRAM
 # include <cstdlib>               // for rand function
-# include <CppAD/LuInvert.h>      // for CppAD::LuInvert
-# include <CppAD/NearEqual.h>     // for CppAD::NearEqual
-# include <CppAD/CppAD_vector.h>  // for CppAD::vector
+# include <CppAD/lu_invert.hpp>      // for CppAD::LuInvert
+# include <CppAD/near_equal.hpp>     // for CppAD::NearEqual
+# include <CppAD/vector.hpp>  // for CppAD::vector
 
 bool LuInvert(void)
 {	bool  ok = true;

@@ -69,7 +69,6 @@ list=`find . \
 	\( -name '*.ac'  \) -or \
 	\( -name '*.sh'  \) -or \
 	\( -name '*.cpp' \) -or \
-	\( -name '*.h'   \) -or \
 	\( -name '*.hpp' \) -or \
 	\( -name '*.omh' \)`
 #

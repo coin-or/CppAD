@@ -23,32 +23,32 @@ $index library, numerical C++ template$$
 $section The CppAD General Purpose Library$$
 
 $children%
-	CppAD/ErrorHandler.h%
+	CppAD/error_handler.hpp%
 
-	CppAD/NearEqual.h%
-	CppAD/SpeedTest.h%
+	CppAD/near_equal.hpp%
+	CppAD/speed_test.hpp%
 
 	omh/numeric_type.omh%
-	CppAD/CheckNumericType.h%
+	CppAD/check_numeric_type.hpp%
 	omh/simple_vector.omh%
-	CppAD/CheckSimpleVector.h%
+	CppAD/check_simple_vector.hpp%
 
-	CppAD/PowInt.h%
-	CppAD/Poly.h%
+	CppAD/pow_int.hpp%
+	CppAD/poly.hpp%
 	omh/lu_det_and_solve.omh%
-	CppAD/RombergOne.h%
-	CppAD/RombergMul.h%
-	CppAD/Runge45.h%
-	CppAD/Rosen34.h%
-	CppAD/OdeErrControl.h%
-	CppAD/OdeGear.h%
-	CppAD/OdeGearControl.h%
+	CppAD/romberg_one.hpp%
+	CppAD/romberg_mul.hpp%
+	CppAD/runge_45.hpp%
+	CppAD/rosen_34.hpp%
+	CppAD/ode_err_control.hpp%
+	CppAD/ode_gear.hpp%
+	CppAD/ode_gear_control.hpp%
 
 	CppAD/local/bender_quad.hpp%
 	CppAD/local/lu_ratio.hpp%
 
-	CppAD/CppAD_vector.h%
-	CppAD/TrackNewDel.h
+	CppAD/vector.hpp%
+	CppAD/track_new_del.hpp
 %$$
 
 $head Error Handler$$

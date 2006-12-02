@@ -29,7 +29,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/ErrorHandler.h>
+# include <CppAD/error_handler.hpp>
 # include <cstring>
 
 namespace {

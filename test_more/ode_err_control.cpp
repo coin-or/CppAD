@@ -18,10 +18,10 @@ Test relative error with zero initial conditions.
 // BEGIN PROGRAM
 
 # include <cstddef>                 // for size_t
-# include <CppAD/OdeErrControl.h>   // CppAD::OdeErrControl
-# include <CppAD/NearEqual.h>       // CppAD::NearEqual
-# include <CppAD/CppAD_vector.h>    // CppAD::vector
-# include <CppAD/Runge45.h>         // CppAD::Runge45
+# include <CppAD/ode_err_control.hpp>   // CppAD::OdeErrControl
+# include <CppAD/near_equal.hpp>       // CppAD::NearEqual
+# include <CppAD/vector.hpp>    // CppAD::vector
+# include <CppAD/runge_45.hpp>         // CppAD::Runge45
 
 namespace {
 	// --------------------------------------------------------------

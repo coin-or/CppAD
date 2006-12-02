@@ -28,7 +28,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 # include <cmath>
 
 bool Cosh(void)

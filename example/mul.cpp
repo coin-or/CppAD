@@ -26,7 +26,7 @@ $$
 $end
 */
 // BEGIN PROGRAM
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 bool Mul(void)
 {	bool ok = true;

@@ -37,9 +37,9 @@ $end
 
 // BEGIN PROGRAM
 
-# include <CppAD/LuSolve.h>       // for CppAD::LuSolve
-# include <CppAD/NearEqual.h>     // for CppAD::NearEqual
-# include <CppAD/CppAD_vector.h>  // for CppAD::vector
+# include <CppAD/lu_solve.hpp>       // for CppAD::LuSolve
+# include <CppAD/near_equal.hpp>     // for CppAD::NearEqual
+# include <CppAD/vector.hpp>  // for CppAD::vector
 # include <complex>               // for std::complex
 
 typedef std::complex<double> Complex;    // define the Complex type

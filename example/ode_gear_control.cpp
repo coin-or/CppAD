@@ -49,8 +49,8 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
-# include <CppAD/OdeGearControl.h>   // CppAD::OdeGearControl
+# include <CppAD/cppad.hpp>
+# include <CppAD/ode_gear_control.hpp>   // CppAD::OdeGearControl
 
 namespace {
 	// --------------------------------------------------------------

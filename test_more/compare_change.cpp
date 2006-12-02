@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Old CompareChange example and test, now just used for validation testing
 */
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 bool CompareChange(void)
 {	bool ok = true;

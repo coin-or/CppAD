@@ -31,9 +31,9 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/RombergOne.h>
-# include <CppAD/CppAD_vector.h>
-# include <CppAD/NearEqual.h>
+# include <CppAD/romberg_one.hpp>
+# include <CppAD/vector.hpp>
+# include <CppAD/near_equal.hpp>
 
 namespace {
 	class Fun {

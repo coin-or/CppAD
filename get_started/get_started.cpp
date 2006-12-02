@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin GetStarted.cpp$$
 $spell
+	cppad.hpp
       http://www.coin-or.org/CppAD/
       getstarted
       namespace
@@ -69,7 +70,7 @@ $head Program$$
 $codep */
 #include <iostream>      // standard input/output 
 #include <vector>        // standard vector
-#include <CppAD/CppAD.h> // the CppAD package http://www.coin-or.org/CppAD/
+#include <CppAD/cppad.hpp> // the CppAD package http://www.coin-or.org/CppAD/
 
 namespace { 
       // define y(x) = Poly(a, x) in the empty namespace

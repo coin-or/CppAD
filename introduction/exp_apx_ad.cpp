@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin ExpApxAD.cpp$$
 $spell
+	cppad.hpp
 	cmath
 	fabs
 	bool
@@ -33,7 +34,7 @@ $codep */
 
 # include <cmath>            // for fabs
 # include <vector>           // standard vector
-# include <CppAD/CppAD.h>    // http://www.coin-or.org/CppAD/ 
+# include <CppAD/cppad.hpp>    // http://www.coin-or.org/CppAD/ 
 # include "exp_apx.hpp"       // our example exponential function approximation
 bool ExpApxAD(void)
 {	bool ok = true;

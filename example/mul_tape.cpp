@@ -45,7 +45,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 namespace { // put this function in the empty namespace
 	// f(x) = |x|^2 = x[0]^2 + ... + x[n-1]^2

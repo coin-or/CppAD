@@ -16,7 +16,7 @@ old example and test now only used for testing
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 bool Neg(void)
 {	bool ok = true;

@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 Two old exp example now used just for validation testing.
 */
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 # include <cmath>
 

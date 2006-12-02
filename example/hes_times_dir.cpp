@@ -28,7 +28,7 @@ $end
 // Example and test of computing the Hessian times a direction; i.e.,
 // given F : R^n -> R and a direction dx in R^n, we compute F''(x) * dx
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 namespace { // put this function in the empty namespace
 	// F(x) = |x|^2 = x[0]^2 + ... + x[n-1]^2

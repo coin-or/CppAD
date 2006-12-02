@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Test the use of the parameters in VecAD element assignments
 */
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 typedef CppAD::AD<double>      ADdouble;
 typedef CppAD::AD< ADdouble > ADDdouble;

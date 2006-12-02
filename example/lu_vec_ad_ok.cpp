@@ -32,7 +32,7 @@ $end
 
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 # include "lu_vec_ad.hpp"
 # include "det_by_minor.hpp"
 

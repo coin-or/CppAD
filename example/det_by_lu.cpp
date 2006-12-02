@@ -29,7 +29,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 # include "det_by_lu.hpp"
 
 bool DetByLu()

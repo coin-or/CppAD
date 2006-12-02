@@ -36,8 +36,8 @@ $end
 
 # include <vector>                     // std::vector
 # include <valarray>                   // std::valarray
-# include <CppAD/CppAD_vector.h>       // CppAD::vector
-# include <CppAD/CheckSimpleVector.h>  // CppAD::CheckSimpleVector
+# include <CppAD/vector.hpp>       // CppAD::vector
+# include <CppAD/check_simple_vector.hpp>  // CppAD::CheckSimpleVector
 namespace {
 	template <typename Vector>
 	bool Ok(void)

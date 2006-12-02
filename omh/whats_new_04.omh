@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew04$$
 $spell
+	cppad.hpp
 	deps
 	executables
 	Runge
@@ -69,7 +70,7 @@ The documentation for the CppAD error macros was improved.
 The package title in $xref/CppAD/$$ was changed.
 The documentation for $xref/CppAD_vector//CppAD::vector/$$ 
 was improved and the corresponding source code 
-$code CppAD/CppAD_vector.h$$ was included.
+$code CppAD/vector.hpp$$ was included.
 
 $head 12-09$$
 The $xref/LuSolve/$$ and $code OdeRunge$$ source code
@@ -236,7 +237,7 @@ to the $xref/InstallUnix//unix installation/$$ instructions.
 
 $head 09-29$$
 The include files for the $xref/library/$$ are now included
-by the root file $code CppAD/CppAD.h$$. 
+by the root file $code CppAD/cppad.hpp$$. 
 They can still be included individually with out the rest of
 the CppAD package.
 
@@ -593,11 +594,11 @@ you must specify that $code /usr/local$$ be searched by the compiler.
 Note that if $code /usr/local/CppAD/$$ is no longer searched,
 you will have to change 
 $codep
-	# include "CppAD.h"
+	# include "cppad.hpp"
 $$
 to 
 $codep
-	# include "CppAD/CppAD.h"
+	# include "CppAD/cppad.hpp"
 $$.
 $pre
 

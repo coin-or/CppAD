@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin SpeedExample.cpp$$
 $spell
+	cppad.hpp
 	Microsoft
 	namespace
 	std
@@ -30,7 +31,7 @@ $section Example Use of SpeedTest$$
 
 $head Program$$
 $codep */
-# include <CppAD/SpeedTest.h>
+# include <CppAD/speed_test.hpp>
 
 std::string Test(size_t size, size_t repeat)
 {	// initialization section

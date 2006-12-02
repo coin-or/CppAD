@@ -104,7 +104,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 # include "det_of_minor.hpp"
 
 // BEGIN CppAD namespace

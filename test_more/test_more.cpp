@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <iostream>
 
 // AD<Type> template class definition
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 // various examples / tests
 extern bool Abs(void);

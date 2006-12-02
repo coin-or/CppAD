@@ -27,7 +27,7 @@ $$
 $end
 */
 // BEGIN PROGRAM
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 namespace { // ----------------------------------------------------------
 // define the template function ReverseOneCases<Vector> in empty namespace
 template <typename Vector> 

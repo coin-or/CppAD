@@ -25,7 +25,7 @@ $$
 $end
 */
 // BEGIN PROGRAM
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 # include <cassert>
 # include <cmath>
 

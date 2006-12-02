@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Test of directional derivative in AD< AD< double > > case.
 */
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 
 bool Abs(void)

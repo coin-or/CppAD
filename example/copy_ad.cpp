@@ -29,7 +29,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/CppAD.h>
+# include <CppAD/cppad.hpp>
 
 bool CopyAD(void)
 {	bool ok = true;   // initialize test result flag

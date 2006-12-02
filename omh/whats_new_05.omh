@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew05$$
 $spell
+	cppad.hpp
 	acos
 	asin
 	autoconf
@@ -136,7 +137,7 @@ to cover more cases while converting them from,
 a library function in $code lib/CppADlib.a$$ 
 and an utility in $code example/NearEqualExt.h$$,
 to a template functions in 
-$code CppAD/NearEqual.h$$ and
+$code CppAD/near_equal.hpp$$ and
 $code CppAD/local/NearEqualExt.h$$.
 This is another step along the way of removing
 the entire $code CppADlib.a$$ library.
@@ -151,7 +152,7 @@ This has been fixed.
 $pre
 
 $$
-Move $code lib/SpeedTest.cpp$$ to $code CppAD/SpeedTest.h$$.
+Move $code lib/SpeedTest.cpp$$ to $code CppAD/speed_test.hpp$$.
 This was the last change necessary in order to remove the CppAD library,
 so remove all commands related to building and linking $code CppADlib.a$$.
 The corresponding entry has been removed from the $xref/WishList/$$.
@@ -446,7 +447,7 @@ $code CppAD::vector<bool>$$ case.
 A test for the $code push_back$$ member function as well as a
 $xref/CheckSimpleVector/$$ test has been added to $xref/CppAD_vector.cpp/$$.
 The source code for this template vector class,
-$code CppAD/CppAD_vector.h$$,
+$code CppAD/vector.hpp$$,
 has been removed from the documentation.
 
 

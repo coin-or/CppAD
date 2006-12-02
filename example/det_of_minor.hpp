@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin det_of_minor$$
 $spell
+	cppad.hpp
 	hpp
 	std
 	Det
@@ -37,7 +38,7 @@ $syntax%%d% = det_of_minor(%a%, %m%, %n%, %r%, %c%)%$$
 $head Include File$$
 The template function $code det_of_minor$$ 
 is not automatically defined by $cref/CppAD.h/CppAD/$$
-(nor does it include $code CppAD.h$$).
+(nor does it include $code cppad.hpp$$).
 It is defined in the $code CppAD$$ namespace by including the file 
 $syntax%
 	example/det_of_minor.hpp
@@ -214,6 +215,7 @@ $end
 ---------------------------------------------------------------------------
 $begin det_of_minor.hpp$$
 $spell
+	cppad.hpp
 	hpp
 	Cpp
 	ifndef

@@ -6,17 +6,22 @@ then
 	exit 1
 fi
 mode="$1"
-directory="example"
-extension="cpp"
+directory="CppAD"
+extension="h"
 dir_list="
 	.
-	fadbad
 	adolc
-	speed
-	omh
 	CppAD
 	CppAD/local
 	example
+	fadbad
+	get_started
+	introduction
+	omh
+	print_for
+	speed_cppad
+	speed_example
+	test_more
 "
 #
 # map a set of file names to lower case
@@ -37,6 +42,8 @@ echo "#! /bin/bash"                                           >> file2lower.mv
 echo "# move $director/*.$ext file names to lower case names" >> file2lower.mv
 for old in $directory/*.$extension
 do
+if [ $old != "CppAD/config.h" ]
+then
 	new=`echo "$old" | sed \
 		-e "s/AD/Ad/g" \
 		-e "s/\([a-z]\)\([A-Z]\)\([a-z]\)/\1_\2\3/" \
@@ -45,25 +52,52 @@ do
 		-e "s/\([a-z]\)\([0-9]\)/\1_\2/g" \
 		-e "s|/\([A-z][a-z]*\)\.|/\1_.|" | tr [A-Z] [a-z]
 	`
+	new=`echo "$new" | sed -e "s|cpp_ad/|CppAD/|" -e "s/cpp_ad/cppad/g"`
 	if [ "$extension" = "h" ]
 	then
 		new=`echo $new | sed -e "s/_*\.h/.hpp/"`
 	fi
+	# avoid ifndef conflict with CppAD/local/cppad_vector.hpp
+	if [ "$new" = CppAD/cppad_vector.hpp ]
+	then
+		new="CppAD/vector.hpp"
+	fi
+	#
 	if [ "$mode" == "svn" ]
 	then
-		echo "svn move $old $new" >> file2lower.mv
+		echo "svn copy $old $new" >> file2lower.mv
 	else
 		echo "mv $old $new"       >> file2lower.mv
 	fi
-	old=`echo $old | sed -e 's|/|[\\\\/]|'`
-	echo "s@$old@$new@g"  >> file2lower.sed
+	# split old file name from directory and extension
+	ext=`echo $old | sed -e "s|.*\.||"`
+	old=`echo $old | sed -e "s|.*/||" -e "s|\..*||"`
 	#
-	old=`echo $old | sed -e 's|.*\]||'`
-	new=`echo $new | sed -e 's|.*/||'`
-	echo "s@\\([ 	\"]\\)$old@\\1$new@g"  >> file2lower.sed
+	D="$directory"
+	echo "s@$D[\\/]$old\\.$ext@$new@g"  >> file2lower.sed
 	#
-	echo "s@\$begin *$new@\$begin $old@"   >> file2lower.sed
-	echo "s@ref\\(.\\)$new@ref\\1$old@"    >> file2lower.sed
+	# remove directory from new
+	new=`echo $new | sed -e "s|.*/||"`
+	#
+	echo "s@\\([ 	\"]\\)$old\\.$ext@\\1$new@g"  >> file2lower.sed
+	#
+	echo "s@\$begin *$new@\$begin $old.$ext@"   >> file2lower.sed
+	echo "s@ref\\(.\\)$new@ref\\1$old.$ext@"    >> file2lower.sed
+	#
+	# new in upper case and without extension
+	new_up=`echo $new | sed -e "s|\..*||" | tr [a-z] [A-Z]`
+	#
+	echo "s@CppAD${old}Included@CPPAD_${new_up}_INCLUDED@" \
+		>> file2lower.sed
+	#
+	if [ "$directory" = "CppAD" ] && [ "$extension" = "h" ]
+	then
+echo "s@nobase_myinclude_HEADERS = *\\\\@&\n\tCppAD/$old.h \\\\@" \
+	>> file2lower.sed
+echo "echo \"# include \\\"CppAD/$new\\\"\" > CppAD/$old.h" \
+	>> file2lower.mv
+	fi
+fi
 done
 chmod +x file2lower.mv
 if [ "$mode" = "test" ]
@@ -110,3 +144,37 @@ fi
 		done
 	done
 done
+if [ "$extension" = "h" ]
+then
+	list=`ls $directory/*.h $directory/*.hpp 2> /dev/null`
+	list="
+		$list
+		doc.omh
+		get_started/get_started.cpp
+		introduction/exp_apx_ad.cpp
+		print_for/print_for.cpp
+		CppAD/local/bender_quad.hpp
+		CppAD/local/lu_ratio.hpp
+		omh/whats_new_05.omh
+		omh/whats_new_04.omh
+		omh/whats_new_03.omh
+		speed_example/speed_example.cpp
+		example/det_of_minor.hpp
+	"
+	for file in $list
+	do
+		sed -e 's/$spell/&\n\tcppad.hpp/' < $file > file2lower.tmp
+		if ! diff $file file2lower.tmp > /dev/null
+		then
+			echo "$file"                 >> file2lower.out
+			diff $file file2lower.tmp    >> file2lower.out
+			if [ $mode = "test" ]
+			then 
+				echo "file2lower.sh: NOT changing $file"
+			else
+				echo "file2lower.sh: changing $file"
+				mv file2lower.tmp $file
+			fi
+		fi
+	done
+fi
