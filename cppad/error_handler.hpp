@@ -123,10 +123,10 @@ $end
 
 // undo preprocessor symbols that config.h needs to define
 # ifndef CPPAD_CPPAD_INCLUDED
-# include <CppAD/local/preprocessor.hpp>
+# include <cppad/local/preprocessor.hpp>
 # endif
 
-# include <CppAD/config.h>
+# include <cppad/config.h>
 # include <cassert>
 
 namespace CppAD { // BEGIN CppAD namespace
@@ -197,7 +197,7 @@ private:
 
 // undo preprocessor symbols that do not begin with CppAD or CPPAD_
 # ifndef CPPAD_CPPAD_INCLUDED
-# include <CppAD/local/preprocessor.hpp>
+# include <cppad/local/preprocessor.hpp>
 # endif
 
 # endif

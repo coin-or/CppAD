@@ -14,8 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 */
 // BEGIN PROGRAM
 
-// directory where CppAD/cppad.hpp is stored must be searched by compiler
-# include <CppAD/cppad.hpp>
+// directory where cppad/cppad.hpp is stored must be searched by compiler
+# include <cppad/cppad.hpp>
 
 bool Poly(void)
 {	bool ok = true;

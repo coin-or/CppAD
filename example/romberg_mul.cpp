@@ -31,9 +31,9 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/romberg_mul.hpp>
-# include <CppAD/vector.hpp>
-# include <CppAD/near_equal.hpp>
+# include <cppad/romberg_mul.hpp>
+# include <cppad/vector.hpp>
+# include <cppad/near_equal.hpp>
 
 
 namespace {

@@ -39,7 +39,7 @@ $index equation, differential$$
 $section An Embedded 4th and 5th Order Runge-Kutta ODE Solver$$
 
 $head Syntax$$
-$code # include <CppAD/runge_45.hpp>$$
+$code # include <cppad/runge_45.hpp>$$
 $pre
 $$
 $syntax%%xf% = Runge45(%F%, %M%, %ti%, %tf%, %xi%)%$$
@@ -69,7 +69,7 @@ are stiff, an implicit method may be better
 (perhaps $xref/Rosen34/$$.)
 
 $head Include$$
-The file $code CppAD/runge_45.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/runge_45.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
@@ -213,15 +213,15 @@ It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The source code for this routine is in the file
-$code CppAD/runge_45.hpp$$.
+$code cppad/runge_45.hpp$$.
 
 $end
 --------------------------------------------------------------------------
 */
 # include <cstddef>
-# include <CppAD/local/cppad_error.hpp>
-# include <CppAD/check_simple_vector.hpp>
-# include <CppAD/check_numeric_type.hpp>
+# include <cppad/local/cppad_error.hpp>
+# include <cppad/check_simple_vector.hpp>
+# include <cppad/check_numeric_type.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 

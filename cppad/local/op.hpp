@@ -18,37 +18,37 @@ $begin Op$$
 $section Compute Values and Derivatives for Taped Operations$$
 
 $childtable%
-	CppAD/local/abs_op.hpp%
-	CppAD/local/add_op.hpp%
-	CppAD/local/acos_op.hpp%
-	CppAD/local/asin_op.hpp%
-	CppAD/local/atan_op.hpp%
-	CppAD/local/div_op.hpp%
-	CppAD/local/exp_op.hpp%
-	CppAD/local/log_op.hpp%
-	CppAD/local/mul_op.hpp%
-	CppAD/local/sin_cos.hpp%
-	CppAD/local/sqrt_op.hpp%
-	CppAD/local/sub_op.hpp
+	cppad/local/abs_op.hpp%
+	cppad/local/add_op.hpp%
+	cppad/local/acos_op.hpp%
+	cppad/local/asin_op.hpp%
+	cppad/local/atan_op.hpp%
+	cppad/local/div_op.hpp%
+	cppad/local/exp_op.hpp%
+	cppad/local/log_op.hpp%
+	cppad/local/mul_op.hpp%
+	cppad/local/sin_cos.hpp%
+	cppad/local/sqrt_op.hpp%
+	cppad/local/sub_op.hpp
 %$$
 
 $end
 */
 
 
-# include <CppAD/local/std_math_unary.hpp>
-# include <CppAD/local/abs_op.hpp>
-# include <CppAD/local/add_op.hpp>
-# include <CppAD/local/asin_op.hpp>
-# include <CppAD/local/acos_op.hpp>
-# include <CppAD/local/atan_op.hpp>
-# include <CppAD/local/div_op.hpp>
-# include <CppAD/local/exp_op.hpp>
-# include <CppAD/local/log_op.hpp>
-# include <CppAD/local/mul_op.hpp>
-# include <CppAD/local/sin_cos.hpp>
-# include <CppAD/local/sqrt_op.hpp>
-# include <CppAD/local/sub_op.hpp>
+# include <cppad/local/std_math_unary.hpp>
+# include <cppad/local/abs_op.hpp>
+# include <cppad/local/add_op.hpp>
+# include <cppad/local/asin_op.hpp>
+# include <cppad/local/acos_op.hpp>
+# include <cppad/local/atan_op.hpp>
+# include <cppad/local/div_op.hpp>
+# include <cppad/local/exp_op.hpp>
+# include <cppad/local/log_op.hpp>
+# include <cppad/local/mul_op.hpp>
+# include <cppad/local/sin_cos.hpp>
+# include <cppad/local/sqrt_op.hpp>
+# include <cppad/local/sub_op.hpp>
 
 
 # endif

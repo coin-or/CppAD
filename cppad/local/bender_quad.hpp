@@ -33,7 +33,7 @@ $section Computing Jacobian and Hessian of Bender's Reduced Objective$$
 
 $head Syntax$$
 $syntax%%
-%# include <CppAD/cppad.hpp>
+%# include <cppad/cppad.hpp>
 BenderQuad(%x%, %y%, %fun%, %g%, %gx%, %gxx%)%$$  
 
 $head Purpose$$

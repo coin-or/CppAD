@@ -45,7 +45,7 @@ $index equation, Ode Gear control$$
 $section An Error Controller for Gear's Ode Solvers$$
 
 $head Syntax$$
-$code # include <CppAD/ode_gear_control.hpp>$$
+$code # include <cppad/ode_gear_control.hpp>$$
 $pre
 $$
 $syntax%%xf% = OdeGearControl(%F%, %M%, %ti%, %tf%, %xi%,
@@ -68,7 +68,7 @@ used by either of these methods in order to be as fast as possible
 and still with in a requested error bound.
 
 $head Include$$
-The file $code CppAD/ode_gear_control.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/ode_gear_control.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
@@ -350,13 +350,13 @@ than or equal to one, the step of size $latex s$$ is ok.
 
 $head Source Code$$
 The source code for this routine is in the file
-$code CppAD/ode_gear_control.hpp$$.
+$code cppad/ode_gear_control.hpp$$.
 
 $end
 --------------------------------------------------------------------------
 */
 
-# include <CppAD/ode_gear.hpp>
+# include <cppad/ode_gear.hpp>
 
 namespace CppAD { // Begin CppAD namespace
 

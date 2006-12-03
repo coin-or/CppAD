@@ -29,7 +29,7 @@ $index multi, dimensional Romberg integration$$
 $index dimension, multi Romberg integration$$
 
 $head Syntax$$
-$code # include <CppAD/romberg_mul.hpp>$$
+$code # include <cppad/romberg_mul.hpp>$$
 $pre
 $$
 $syntax%RombergMul<%Fun%, %SizeVector%, %FloatVector%, %m%> %R%$$
@@ -52,7 +52,7 @@ O \left[ ( b[i] - a[i] ) / 2^{n[i]-1} \right]^{2(p[i]+1)}
 \] $$
 
 $head Include$$
-The file $code CppAD/romberg_mul.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/romberg_mul.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
@@ -164,14 +164,14 @@ It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The source code for this routine is in the file
-$code CppAD/romberg_mul.hpp$$.
+$code cppad/romberg_mul.hpp$$.
 
 $end
 */
 
-# include <CppAD/romberg_one.hpp>
-# include <CppAD/check_numeric_type.hpp>
-# include <CppAD/check_simple_vector.hpp>
+# include <cppad/romberg_one.hpp>
+# include <cppad/check_numeric_type.hpp>
+# include <cppad/check_simple_vector.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 

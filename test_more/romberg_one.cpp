@@ -29,7 +29,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 namespace {
 	class Fun {

@@ -33,7 +33,7 @@ $end
 # include <cassert>
 
 // CppAD include file
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 // external complied tests
 extern bool Abs(void);

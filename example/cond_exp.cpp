@@ -40,7 +40,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 namespace {
 	double Infinity(double zero)

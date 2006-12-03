@@ -31,7 +31,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 # include "det_by_lu.hpp"
 
 bool HesLuDet()

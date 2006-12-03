@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin CppADvector$$
 $spell
+	cppad.hpp
 	hpp
 	CppADvector
 	std
@@ -36,7 +37,7 @@ $syntax%CppADvector<%Scalar%>%$$
 $pre
 $$
 $bold File$$
-$code CppAD/local/CppADvector.h$$
+$code cppad/local/CppADvector.h$$
 
 
 
@@ -45,7 +46,7 @@ Many of the CppAD $xref/example//examples/$$ and tests use
 the $code CppADvector$$ template class to pass information.
 The default definition for this template class is
 $xref/CppAD_vector//CppAD::vector/$$
-(see the file $code CppAD/local/CppADvector.h$$).
+(see the file $code cppad/local/CppADvector.h$$).
 
 $head CppAD::vector$$
 The default for the preprocessor symbol $code CppADvector$$

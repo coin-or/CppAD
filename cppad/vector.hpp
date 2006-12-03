@@ -35,18 +35,18 @@ $index template, CppAD vector class$$
 $section The CppAD::vector Template Class$$
 
 $head Syntax$$
-$code # include <CppAD/vector.hpp>$$
+$code # include <cppad/vector.hpp>$$
 
 
 
 $head Description$$
-The include file $code CppAD/vector.hpp$$ defines the
+The include file $code cppad/vector.hpp$$ defines the
 vector template class $code CppAD::vector$$.
 This is a $xref/SimpleVector/$$ template class and in addition
 it has the features listed below:
 
 $head Include$$
-The file $code CppAD/vector.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/vector.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of the 
 CppAD include files.
 
@@ -144,7 +144,7 @@ and when checking for memory leaks (and there are global vectors).
 
 $head vectorBool$$
 $index vectorBool$$
-The file $code <CppAD/vector.hpp>$$ also defines the class
+The file $code <cppad/vector.hpp>$$ also defines the class
 $code CppAD::vectorBool$$.
 This has the same specifications as $code CppAD::vector<bool>$$ 
 with the following exceptions
@@ -215,8 +215,8 @@ $end
 # include <cstddef>
 # include <iostream>
 # include <limits>
-# include <CppAD/local/cppad_error.hpp>
-# include <CppAD/track_new_del.hpp>
+# include <cppad/local/cppad_error.hpp>
+# include <cppad/track_new_del.hpp>
 
 # ifndef CppADNull
 # define CppADNull 0

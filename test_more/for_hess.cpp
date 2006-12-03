@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Old ForHess example now used just for valiadation testing
 */
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 
 bool ForHess(void)

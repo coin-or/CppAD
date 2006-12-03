@@ -25,8 +25,8 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/check_numeric_type.hpp>
-# include <CppAD/near_equal.hpp>
+# include <cppad/check_numeric_type.hpp>
+# include <cppad/near_equal.hpp>
 
 
 // Chosing a value between 1 and 10 selects a numeric class properity to be 

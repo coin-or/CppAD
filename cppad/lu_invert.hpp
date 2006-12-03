@@ -36,7 +36,7 @@ $section Invert an LU Factored Equation$$
 $pre
 $$
 
-$head Syntax$$ $code# include <CppAD/lu_invert.hpp>$$
+$head Syntax$$ $code# include <cppad/lu_invert.hpp>$$
 $pre
 $$
 $syntax%LuInvert(%ip%, %jp%, %LU%, %X%)%$$
@@ -47,7 +47,7 @@ Solves the matrix equation $syntax%%A% * %X% = %B%$$
 using an LU factorization computed by $xref/LuFactor/$$.
 
 $head Include$$
-The file $code CppAD/lu_invert.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/lu_invert.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
@@ -181,9 +181,9 @@ $index matrix, LuInvert source$$
 
 $codep */
 
-# include <CppAD/local/cppad_error.hpp>
-# include <CppAD/check_simple_vector.hpp>
-# include <CppAD/check_numeric_type.hpp>
+# include <cppad/local/cppad_error.hpp>
+# include <cppad/check_simple_vector.hpp>
+# include <cppad/check_numeric_type.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 

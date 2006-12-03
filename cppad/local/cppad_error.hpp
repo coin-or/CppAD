@@ -45,7 +45,7 @@ $index macro, error assert$$
 $section CppAD Error Detection and Reporting$$
 
 $head Syntax$$
-$code # include <CppAD/CppADError.h>$$ $pre
+$code # include <cppad/CppADError.h>$$ $pre
 $$
 $syntax%CppADUnknownError(%exp%)%$$ $pre
 $$
@@ -53,7 +53,7 @@ $syntax%CppADUsageError(%exp%, %msg%)%$$
 
 
 $head Description$$
-These macros defined in the file $code CppAD/local/CppADError.h$$
+These macros defined in the file $code cppad/local/CppADError.h$$
 are used to support two types of error detection and reporting:
 
 $subhead CppADUsageError$$
@@ -94,8 +94,8 @@ $codep */
 
 # include <cassert>
 # include <iostream>
-# include <CppAD/config.h>
-# include <CppAD/error_handler.hpp>
+# include <cppad/config.h>
+# include <cppad/error_handler.hpp>
 
 # ifdef NDEBUG
 # define CppADUsageError(exp, text)  // do nothing

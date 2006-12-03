@@ -34,7 +34,7 @@ $codep */
 
 # include <cmath>            // for fabs
 # include <vector>           // standard vector
-# include <CppAD/cppad.hpp>    // http://www.coin-or.org/CppAD/ 
+# include <cppad/cppad.hpp>    // http://www.coin-or.org/CppAD/ 
 # include "exp_apx.hpp"       // our example exponential function approximation
 bool ExpApxAD(void)
 {	bool ok = true;

@@ -49,7 +49,7 @@ $index equation, ODE error control$$
 $section An Error Controller for ODE Solvers$$
 
 $head Syntax$$
-$code # include <CppAD/ode_err_control.hpp>$$
+$code # include <cppad/ode_err_control.hpp>$$
 $pre
 $$
 $syntax%%xf% = OdeErrControl(%method%, %ti%, %tf%, %xi%,
@@ -72,7 +72,7 @@ used by either of these methods in order to be as fast as possible
 and still with in a requested error bound.
 
 $head Include$$
-The file $code CppAD/ode_err_control.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/ode_err_control.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
@@ -370,14 +370,14 @@ than or equal to one, the step of size $latex s$$ is ok.
 
 $head Source Code$$
 The source code for this routine is in the file
-$code CppAD/ode_err_control.hpp$$.
+$code cppad/ode_err_control.hpp$$.
 
 $end
 --------------------------------------------------------------------------
 */
 
-# include <CppAD/local/cppad_error.hpp>
-# include <CppAD/check_simple_vector.hpp>
+# include <cppad/local/cppad_error.hpp>
+# include <cppad/check_simple_vector.hpp>
 
 namespace CppAD { // Begin CppAD namespace
 

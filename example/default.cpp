@@ -31,7 +31,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 bool Default(void)
 {	bool ok = true;

@@ -129,7 +129,7 @@ $end
 namespace CppAD {
 // ------------------------------------------------------------------------
 
-// fold into base type and then use <CppAD/near_equal.hpp>
+// fold into base type and then use <cppad/near_equal.hpp>
 template <class Base>
 inline bool NearEqual(
 const AD<Base> &x, const AD<Base> &y, const Base &r, const Base &a)

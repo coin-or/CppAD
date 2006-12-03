@@ -41,13 +41,13 @@ The $code ADFun$$ object can then be used to calculate function values,
 derivative values, and other values related to the corresponding function.
 
 $childtable%
-	CppAD/local/independent.hpp%
-	CppAD/local/fun_construct.hpp%
-	CppAD/local/dependent.hpp%
+	cppad/local/independent.hpp%
+	cppad/local/fun_construct.hpp%
+	cppad/local/dependent.hpp%
 	omh/seq_property.omh%
-	CppAD/local/fun_eval.hpp%
-	CppAD/local/drivers.hpp%
-	CppAD/local/fun_check.hpp%
+	cppad/local/fun_eval.hpp%
+	cppad/local/drivers.hpp%
+	cppad/local/fun_check.hpp%
 	omh/fun_deprecated.omh
 %$$
 
@@ -242,19 +242,19 @@ private:
 } // END CppAD namespace
 
 // non-user interfaces
-# include <CppAD/local/forward_sweep.hpp>
-# include <CppAD/local/reverse_sweep.hpp>
-# include <CppAD/local/for_jac_sweep.hpp>
-# include <CppAD/local/rev_jac_sweep.hpp>
-# include <CppAD/local/rev_hes_sweep.hpp>
+# include <cppad/local/forward_sweep.hpp>
+# include <cppad/local/reverse_sweep.hpp>
+# include <cppad/local/for_jac_sweep.hpp>
+# include <cppad/local/rev_jac_sweep.hpp>
+# include <cppad/local/rev_hes_sweep.hpp>
 
 
 // user interfaces
-# include <CppAD/local/independent.hpp>
-# include <CppAD/local/dependent.hpp>
-# include <CppAD/local/fun_construct.hpp>
-# include <CppAD/local/fun_eval.hpp>
-# include <CppAD/local/drivers.hpp>
-# include <CppAD/local/fun_check.hpp>
+# include <cppad/local/independent.hpp>
+# include <cppad/local/dependent.hpp>
+# include <cppad/local/fun_construct.hpp>
+# include <cppad/local/fun_eval.hpp>
+# include <cppad/local/drivers.hpp>
+# include <cppad/local/fun_check.hpp>
 
 # endif

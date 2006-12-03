@@ -30,7 +30,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 bool UnaryPlus(void)
 {	bool ok = true;

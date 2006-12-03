@@ -1,7 +1,5 @@
 #! /bin/bash
 #
-mv CppAD cppad_
-mv cppad_ cppad
 dir_list="
 	.
 	adolc

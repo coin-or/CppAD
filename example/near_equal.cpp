@@ -39,7 +39,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/near_equal.hpp>
+# include <cppad/near_equal.hpp>
 
 # include <complex>
 

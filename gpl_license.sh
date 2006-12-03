@@ -126,7 +126,7 @@ mv GplLicense.tmp cppad-$version/omh/license.omh
 echo "GplLicense: ensuring certain time order in file dates"
 touch cppad-$version/aclocal.m4
 sleep 2
-touch cppad-$version/CppAD/config.h.in
+touch cppad-$version/cppad/config.h.in
 sleep 2
 touch cppad-$version/makefile.in
 touch cppad-$version/*/makefile.in

@@ -33,7 +33,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 # include "det_by_minor.hpp"
 # include <complex>
 

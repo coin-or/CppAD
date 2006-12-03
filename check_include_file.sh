@@ -18,9 +18,9 @@ then
 fi
 echo "Checking difference between C++ include directives and file names."
 echo "-------------------------------------------------------------------"
-grep '^# *include *<CppAD/' \
-	CppAD/*.hpp \
-	CppAD/local/*.hpp \
+grep '^# *include *<cppad/' \
+	cppad/*.hpp \
+	cppad/local/*.hpp \
 	example/*.cpp \
 	example/*.hpp \
 	adolc/*.cpp \
@@ -30,9 +30,9 @@ grep '^# *include *<CppAD/' \
 sed -e 's%[^<]*<%%' \
     -e 's%>.*$%%' | \
 sort -u > junk.1
-ls	CppAD/config.h \
-	CppAD/*.hpp \
-	CppAD/local/*.hpp | \
+ls	cppad/config.h \
+	cppad/*.hpp \
+	cppad/local/*.hpp | \
 sort -u > junk.2
 diff junk.1 junk.2
 #

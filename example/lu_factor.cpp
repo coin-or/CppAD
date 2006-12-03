@@ -34,9 +34,9 @@ $end
 
 // BEGIN PROGRAM
 # include <cstdlib>               // for rand function
-# include <CppAD/lu_factor.hpp>      // for CppAD::LuFactor
-# include <CppAD/near_equal.hpp>     // for CppAD::NearEqual
-# include <CppAD/vector.hpp>  // for CppAD::vector
+# include <cppad/lu_factor.hpp>      // for CppAD::LuFactor
+# include <cppad/near_equal.hpp>     // for CppAD::NearEqual
+# include <cppad/vector.hpp>  // for CppAD::vector
 
 bool LuFactor(void)
 {	bool  ok = true;

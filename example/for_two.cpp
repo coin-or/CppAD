@@ -29,7 +29,7 @@ $$
 $end
 */
 // BEGIN PROGRAM
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 namespace { // -----------------------------------------------------
 // define the template function in empty namespace
 // bool ForTwoCases<VectorBase, VectorSize_t>(void)

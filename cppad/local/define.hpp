@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin Define$$ $comment CppAD Developer Documentation$$
 $spell
+	cppad.hpp
 	Microsoft
 	VecAD_reference
 	Cpp
@@ -32,7 +33,7 @@ $section Macros Used by CppAD Implementation$$
 $head CppADNull$$
 The preprocessor symbol $code CppADNull$$ is used for a null pointer. 
 If it is not yet defined,
-it is defined when $code CppAD/local/Define.h$$ is included is included.
+it is defined when $code cppad/local/Define.h$$ is included is included.
 
 $head CppADFoldBinaryOperator$$
 The syntax

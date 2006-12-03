@@ -14,7 +14,7 @@ Old examples now only used for validation testing
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 # include <cmath>
 
 

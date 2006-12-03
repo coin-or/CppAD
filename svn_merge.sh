@@ -12,7 +12,7 @@ echo "DryRun = $DryRun"
 # script to help in execution of svn merge command
 #
 # Change into the directory corresponding to the entire repository; i.e.,
-# http://www.coin-or.org/svn/CppAD/ 
+# http://www.coin-or.org/svn/cppad/ 
 cd ..
 #
 # Name of the directory that will receive the changes
@@ -30,12 +30,12 @@ End=529
 # echo the svn merge command
 echo "cd  .."
 echo "svn merge $DryRun -r $Start:$End                    \\"
-echo "	  http://www.coin-or.org/svn/CppAD/$FromDirectory \\"
+echo "	  http://www.coin-or.org/svn/cppad/$FromDirectory \\"
 echo "	  $ToDirectory"
 #
 # execute the svn merge command
 svn merge $DryRun -r $Start:$End                         \
-    http://www.coin-or.org/svn/CppAD/$FromDirectory      \
+    http://www.coin-or.org/svn/cppad/$FromDirectory      \
     $ToDirectory 
 #
 # put comment here so have newline at end of command above

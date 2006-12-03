@@ -29,7 +29,7 @@ $index integer, pow$$
 $section The Integer Power Function$$
 
 $head Syntax$$
-$code # include <CppAD/pow_int.hpp>$$
+$code # include <cppad/pow_int.hpp>$$
 $pre
 $$
 $syntax%%y% = pow(%x%, %n%)%$$
@@ -43,7 +43,7 @@ $latex \[
 for integer exponents $italic n$$.
 
 $head Include$$
-The file $code CppAD/pow_int.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/pow_int.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 Including this file defines

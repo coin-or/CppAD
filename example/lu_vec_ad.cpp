@@ -148,7 +148,7 @@ $end
 */
 
 # include "lu_vec_ad.hpp"
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 // BEGIN CppAD namespace
 namespace CppAD {

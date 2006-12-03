@@ -14,7 +14,7 @@ Old OdeImplicit example now used just for valiadation testing of Rosen34
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 # include <iostream>
 # include <cassert>

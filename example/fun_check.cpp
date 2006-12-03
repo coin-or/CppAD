@@ -37,7 +37,7 @@ $$
 $end
 */
 // BEGIN PROGRAM
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 namespace { // -----------------------------------------------------------
 // define the template function object Fun<Type,Vector> in empty namespace

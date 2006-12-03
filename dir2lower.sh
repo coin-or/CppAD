@@ -12,8 +12,8 @@ list="
 	adolc/*
 	speed/*
 	omh/*
-	CppAD/*
-	CppAD/local/*
+	cppad/*
+	cppad/local/*
 	$new/*
 "
 #

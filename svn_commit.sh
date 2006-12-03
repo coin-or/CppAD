@@ -38,7 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Change CppAD/*.h to lower case names and .hpp extension. 
+log_entry="next step of CppAD -> cppad (files edited by cppad_2_lower.sh). 
 "
 # 
 add_list="
@@ -46,27 +46,34 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	adolc/det_minor.cpp
-	adolc/speed.cpp
-	adolc/example.cpp
-	adolc/det_lu.cpp
-	file2lower.sh
 	AUTHORS
-	CppAD
-	example
-	gpl_license.sh
-	test_more
-	print_for/print_for.cpp
-	configure.ac
-	speed_cppad
+	adolc
+	build.sh
 	check_include_def.sh
-	makefile.am
-	introduction/exp_apx_ad.cpp
-	omh
+	check_include_file.sh
+	check_include_omh.sh
+	configure.ac
+	cppad
+	cppad_2_lower.sh
+	dev.omh
+	dir2lower.sh
 	doc.omh
+	dos_format.sh
+	example
 	fadbad
-	get_started/get_started.cpp
-	speed_example/speed_example.cpp
+	file2lower.sh
+	get_started
+	gpl_license.sh
+	introduction
+	makefile.am
+	omh
+	print_for
+	speed_cppad
+	speed_example
+	svn_commit.sh
+	svn_log.sh
+	svn_merge.sh
+	test_more
 "
 #
 delete_list="
@@ -81,7 +88,7 @@ then
 		echo "../branches/$copy_branch/.svn is not a directory"
 	fi
 fi
-this_branch=`pwd | sed -e "s|.*/CppAD/||"`
+this_branch=`pwd | sed -e "s|.*/cppad/||"`
 echo "$this_branch: $log_entry" > svn_commit.log
 count=0
 for file in $add_list $change_list

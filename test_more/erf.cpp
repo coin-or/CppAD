@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Old example now just used for validation testing
 */
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 bool Erf(void)
 {	bool ok = true;

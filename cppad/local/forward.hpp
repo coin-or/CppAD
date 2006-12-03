@@ -19,7 +19,7 @@ $section Forward Mode$$
 
 $childtable%
 	omh/forward.omh%
-	CppAD/local/cap_taylor.hpp%
+	cppad/local/cap_taylor.hpp%
 	example/forward.cpp
 %$$
 
@@ -28,7 +28,7 @@ $end
 */
 
 // documened after Forward but included here so easy to see
-# include <CppAD/local/cap_taylor.hpp>
+# include <cppad/local/cap_taylor.hpp>
 
 // BEGIN CppAD namespace
 namespace CppAD {

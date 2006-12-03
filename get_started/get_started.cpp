@@ -70,7 +70,7 @@ $head Program$$
 $codep */
 #include <iostream>      // standard input/output 
 #include <vector>        // standard vector
-#include <CppAD/cppad.hpp> // the CppAD package http://www.coin-or.org/CppAD/
+#include <cppad/cppad.hpp> // the CppAD package http://www.coin-or.org/CppAD/
 
 namespace { 
       // define y(x) = Poly(a, x) in the empty namespace

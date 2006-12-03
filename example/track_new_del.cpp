@@ -30,7 +30,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/track_new_del.hpp>
+# include <cppad/track_new_del.hpp>
 
 bool TrackNewDel(void)
 {	bool ok = true;

@@ -27,7 +27,7 @@ $$
 $end
 */
 // BEGIN PROGRAM
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 namespace { // --------------------------------------------------------
 // define the template function Test<VectorAD>(void) in empty namespace

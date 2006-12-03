@@ -37,7 +37,7 @@ $syntax%%d% = det_of_minor(%a%, %m%, %n%, %r%, %c%)%$$
 
 $head Include File$$
 The template function $code det_of_minor$$ 
-is not automatically defined by $cref/CppAD.h/CppAD/$$
+is not automatically defined by $cref/CppAD.h/cppad/$$
 (nor does it include $code cppad.hpp$$).
 It is defined in the $code CppAD$$ namespace by including the file 
 $syntax%

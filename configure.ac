@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20061202, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20061203, cppad@list.coin-or.org)
 
 dnl Set the default install prefix to the installers home directory
 AC_PREFIX_DEFAULT(${HOME})
@@ -200,11 +200,11 @@ AC_PROG_CXX
 dnl No default setting for compiler flags
 AC_SUBST(CXXFLAGS, "")
 
-dnl Have configure check source directory to see if CppAD/CppAD.h is there
-AC_CONFIG_SRCDIR(CppAD/CppAD.h)
+dnl Have configure check source directory to see if cppad/CppAD.h is there
+AC_CONFIG_SRCDIR(cppad/CppAD.h)
 
 dnl Use config.h instead of make file command line arguments
-AC_CONFIG_HEADER(CppAD/config.h)
+AC_CONFIG_HEADER(cppad/config.h)
 
 dnl AC_PROG_CP outputs CPP as command to run C preprocessor
 AC_PROG_CPP

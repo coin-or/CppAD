@@ -16,7 +16,7 @@ $$
 $section Appendix$$
 
 $childtable%
-	CppAD/local/preprocessor.hpp%
+	cppad/local/preprocessor.hpp%
 	omh/theory.omh%
 	omh/speed_cppad.omh%
 	omh/adolc.omh%

@@ -25,14 +25,14 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 # include <cstddef>
 # include <iostream>
 # include <complex>
 
 // redefine PACKAGE_STRING after undef in cppad.hpp
-# include <CppAD/config.h>
+# include <cppad/config.h>
 
 // For an unknown reason, cannot move other includes (using Sun's CC compiler)
 

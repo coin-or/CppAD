@@ -67,7 +67,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 namespace {
 	template <class Type>   // Type can be either double or AD<double>

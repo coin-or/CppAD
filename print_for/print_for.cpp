@@ -30,7 +30,7 @@ $index print, example forward mode$$
 
 $head Program$$
 $codep */
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 int main(void)
 {

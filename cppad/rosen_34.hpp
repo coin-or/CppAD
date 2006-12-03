@@ -43,7 +43,7 @@ $index equation, differential$$
 $section A 3rd and 4th Order Rosenbrock ODE Solver$$
 
 $head Syntax$$
-$code # include <CppAD/rosen_34.hpp>$$
+$code # include <cppad/rosen_34.hpp>$$
 $pre
 $$
 $syntax%%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%)%$$
@@ -79,7 +79,7 @@ If your set of  ordinary differential equations are not stiff
 an explicit method may be better (perhaps $xref/Runge45/$$.)
 
 $head Include$$
-The file $code CppAD/rosen_34.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/rosen_34.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
@@ -251,19 +251,19 @@ It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The source code for this routine is in the file
-$code CppAD/rosen_34.hpp$$.
+$code cppad/rosen_34.hpp$$.
 
 $end
 --------------------------------------------------------------------------
 */
 
 # include <cstddef>
-# include <CppAD/local/cppad_error.hpp>
-# include <CppAD/check_simple_vector.hpp>
-# include <CppAD/check_numeric_type.hpp>
-# include <CppAD/vector.hpp>
-# include <CppAD/lu_factor.hpp>
-# include <CppAD/lu_invert.hpp>
+# include <cppad/local/cppad_error.hpp>
+# include <cppad/check_simple_vector.hpp>
+# include <cppad/check_numeric_type.hpp>
+# include <cppad/vector.hpp>
+# include <cppad/lu_factor.hpp>
+# include <cppad/lu_invert.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 

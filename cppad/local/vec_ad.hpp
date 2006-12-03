@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin VecAD$$
 $spell
+	cppad.hpp
 	CondExpGt
 	grep
 	Ld
@@ -260,7 +261,7 @@ $xref/glossary/Parameter/parameters/$$).
 The effect of this can be seen by executing the following steps:
 
 $list number$$
-In the file $code CppAD/local/ForwardSweep.h$$,
+In the file $code cppad/local/ForwardSweep.h$$,
 change the definition of $code CppADForwardSweepTrace$$ to
 $codep
 	# define CppADForwardSweepTrace 1

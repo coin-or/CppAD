@@ -55,13 +55,13 @@ then
 	diff AUTHORS    AUTHORS.tmp
 	mv   AUTHORS.tmp AUTHORS 
 	#
-	# For installs without configure, update CppAD/config.h
+	# For installs without configure, update cppad/config.h
 	# (gets overwritten when configure runs).
-	sed CppAD/config.h > CppAD/config.tmp \
+	sed cppad/config.h > cppad/config.tmp \
 	-e "s/\"[0-9]\{8\}\"/\"$yyyymmdd\"/" \
 	-e "s/ [0-9]\{8\}\"/ $yyyymmdd\"/"
-	diff CppAD/config.h   CppAD/config.tmp
-	mv   CppAD/config.tmp CppAD/config.h
+	diff cppad/config.h   cppad/config.tmp
+	mv   cppad/config.tmp cppad/config.h
 	#
 	for name in doc.omh omh/install_unix.omh omh/install_windows.omh
 	do

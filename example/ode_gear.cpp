@@ -48,8 +48,8 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/ode_gear.hpp>
-# include <CppAD/cppad.hpp>        // For automatic differentiation
+# include <cppad/ode_gear.hpp>
+# include <cppad/cppad.hpp>        // For automatic differentiation
 
 namespace {
 	class Fun {

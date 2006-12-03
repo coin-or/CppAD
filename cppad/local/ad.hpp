@@ -13,13 +13,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 // simple AD operations that must be defined for AD as well as base class
-# include <CppAD/local/ordered.hpp>
-# include <CppAD/local/identical.hpp>
+# include <cppad/local/ordered.hpp>
+# include <cppad/local/identical.hpp>
 
 // define the template classes that are used by the AD template class
-# include <CppAD/local/op_code.hpp>
-# include <CppAD/local/tape_rec.hpp>
-# include <CppAD/local/ad_tape.hpp>
+# include <cppad/local/op_code.hpp>
+# include <cppad/local/tape_rec.hpp>
+# include <cppad/local/ad_tape.hpp>
 
 // use this marco for assignment and computed assignment
 # define CPPAD_ASSIGN_MEMBER(Op)                              \

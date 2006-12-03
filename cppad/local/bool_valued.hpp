@@ -24,11 +24,11 @@ $index function, AD Bool valued$$
 $section Bool Valued Operations and Functions with AD Arguments$$
 
 $children%
-	CppAD/local/compare.hpp%
-	CppAD/local/near_equal_ext.hpp%
-	CppAD/local/bool_fun.hpp%
-	CppAD/local/par_var.hpp%
-	CppAD/local/equal_op_seq.hpp
+	cppad/local/compare.hpp%
+	cppad/local/near_equal_ext.hpp%
+	cppad/local/bool_fun.hpp%
+	cppad/local/par_var.hpp%
+	cppad/local/equal_op_seq.hpp
 %$$
 $table
 $rref Compare$$
@@ -42,10 +42,10 @@ $tend
 $end
 */
 
-# include <CppAD/local/compare.hpp>
-# include <CppAD/local/near_equal_ext.hpp>
-# include <CppAD/local/bool_fun.hpp>
-# include <CppAD/local/par_var.hpp>
-# include <CppAD/local/equal_op_seq.hpp>
+# include <cppad/local/compare.hpp>
+# include <cppad/local/near_equal_ext.hpp>
+# include <cppad/local/bool_fun.hpp>
+# include <cppad/local/par_var.hpp>
+# include <cppad/local/equal_op_seq.hpp>
 
 # endif

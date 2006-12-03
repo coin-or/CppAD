@@ -16,7 +16,7 @@ Comprehensive test built on 08/07 for new user interface to CondExp
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 bool CondExp_pvvv(void)
 {	bool ok = true;

@@ -32,7 +32,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 namespace { // put this function in the empty namespace
 	template <typename Type>

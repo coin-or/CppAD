@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin Adolc$$
 $spell
+	cppad.hpp
 	adolc
 	Makefile
 	Cygwin
@@ -31,7 +32,7 @@ $href%
 	adolc
 %$$
 with CppAD.
-They are located in the directory $code CppAD/adolc$$.
+They are located in the directory $code cppad/adolc$$.
 Note that they can only be run under Unix 
 (or Cygwin on Microsoft windows).
 
@@ -40,7 +41,7 @@ In a unix operating system (or in a Cygwin shell on an Microsoft system),
 you can compile link and run this list examples and 
 results comparison between Adolc and CppAD using the following commands:
 $codep
-	cd CppAD/adolc
+	cd cppad/adolc
 	make  example
 	example
 $$
@@ -52,7 +53,7 @@ you can compile link and run the list of speed
 comparisons between CppAD and Adolc
 using the following commands:
 $codep
-	cd CppAD/adolc
+	cd cppad/adolc
 	make  speed
 	speed
 $$

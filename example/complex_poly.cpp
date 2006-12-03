@@ -34,7 +34,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 # include <complex>
 
 // define abbreviation for doubler precision complex

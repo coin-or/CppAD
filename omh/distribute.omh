@@ -28,7 +28,7 @@ $section Building and Testing a Distribution$$
 
 $head Creating Distribution Files$$
 $list number$$
-Change into the $code CppAD/trunk$$ directory.
+Change into the $code cppad/trunk$$ directory.
 
 $lnext
 Execute the command

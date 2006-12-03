@@ -32,7 +32,7 @@ $$
 $end
 */
 // BEGIN PROGRAM
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 bool DivEq(void)
 {	bool ok = true;

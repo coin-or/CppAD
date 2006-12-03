@@ -33,7 +33,7 @@ $end
 # include <cassert>
 # include <stack>
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 namespace { 
 // Begin empty namespace ------------------------------------------------

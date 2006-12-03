@@ -52,7 +52,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp> 
+# include <cppad/cppad.hpp> 
 
 // To print the comparision, change the 0 to 1 on the next line.
 # define CppADOdeStiffPrint 0

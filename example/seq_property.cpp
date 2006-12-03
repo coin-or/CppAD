@@ -41,7 +41,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 bool SeqProperty(void)
 {	bool ok = true;

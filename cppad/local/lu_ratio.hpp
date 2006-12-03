@@ -36,7 +36,7 @@ $index solve, Lu factor$$
 $section LU Factorization of A Square Matrix and Stability Calculation$$
 
 $head Syntax$$
-$code# include <CppAD/cppad.hpp>$$
+$code# include <cppad/cppad.hpp>$$
 $pre
 $$
 $syntax%%sign% = LuRatio(%ip%, %jp%, %LU%, %ratio%)%$$
@@ -51,7 +51,7 @@ used as part of an $xref/ADFun/$$ object.
 
 $head Include$$
 This routine is designed to be used with AD objects and
-requires the $code CppAD/cppad.hpp$$ file to be included.
+requires the $code cppad/cppad.hpp$$ file to be included.
 
 $head Matrix Storage$$
 All matrices are stored in row major order.
@@ -222,7 +222,7 @@ $end
 */
 namespace CppAD { // BEGIN CppAD namespace
 
-// Lines different from the code in CppAD/lu_factor.hpp end with               //
+// Lines different from the code in cppad/lu_factor.hpp end with               //
 template <class SizeVector, class ADvector, class Base>                     //
 int LuRatio(SizeVector &ip, SizeVector &jp, ADvector &LU, AD<Base> &ratio) //
 {	

@@ -27,7 +27,7 @@ $index integrate, Romberg$$
 $index Romberg, Integrate$$
 
 $head Syntax$$
-$code # include <CppAD/romberg_one.hpp>$$
+$code # include <cppad/romberg_one.hpp>$$
 $pre
 $$
 $syntax%%r% = RombergOne(%F%, %a%, %b%, %n%, %e%)%$$
@@ -41,7 +41,7 @@ r = \int_a^b F(x) {\bf d} x + O \left[ (b - a) / 2^{n-1} \right]^{2(p+1)}
 \] $$
 
 $head Include$$
-The file $code CppAD/romberg_one.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/romberg_one.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
@@ -139,14 +139,14 @@ It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The source code for this routine is in the file
-$code CppAD/romberg_one.hpp$$.
+$code cppad/romberg_one.hpp$$.
 
 $end
 */
 
-# include <CppAD/check_numeric_type.hpp>
-# include <CppAD/local/cppad_error.hpp>
-# include <CppAD/vector.hpp>
+# include <cppad/check_numeric_type.hpp>
+# include <cppad/local/cppad_error.hpp>
+# include <cppad/vector.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 

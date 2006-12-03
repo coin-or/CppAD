@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Old example and test now just used for validation testing.
 */
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 # include <cmath>
 
 bool Atan2(void)

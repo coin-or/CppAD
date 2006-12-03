@@ -26,7 +26,7 @@ $index check, simple vector$$
 $index concept, check simple vector$$
 
 $head Syntax$$
-$code # include <CppAD/check_simple_vector.hpp>$$
+$code # include <cppad/check_simple_vector.hpp>$$
 $pre
 $$
 $syntax%CheckSimpleVector<%Scalar%, %Vector%>()%$$
@@ -57,7 +57,7 @@ $italic i$$ equals $italic j$$.
 
 
 $head Include$$
-The file $code CppAD/check_simple_vector.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/check_simple_vector.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest
 if the CppAD include files.
 

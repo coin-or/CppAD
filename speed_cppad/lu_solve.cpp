@@ -31,7 +31,7 @@ $end
 
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 # include "../example/lu_vec_ad.hpp"
 
 # include <sstream>

@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Two old log examples now used just for validation testing
 */
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 namespace { // BEGIN empty namespace
 

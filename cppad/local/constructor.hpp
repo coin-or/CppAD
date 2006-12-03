@@ -23,9 +23,9 @@ $index AD, constructor$$
 $section AD Constructors$$
 
 $children%
-	CppAD/local/default.hpp%
-	CppAD/local/copy_base.hpp%
-	CppAD/local/copy_ad.hpp
+	cppad/local/default.hpp%
+	cppad/local/copy_base.hpp%
+	cppad/local/copy_ad.hpp
 %$$
 $table
 $rref Default$$
@@ -37,8 +37,8 @@ $tend
 $end
 */
 
-# include <CppAD/local/default.hpp>
-# include <CppAD/local/copy_base.hpp>
-# include <CppAD/local/copy_ad.hpp>
+# include <cppad/local/default.hpp>
+# include <cppad/local/copy_base.hpp>
+# include <cppad/local/copy_ad.hpp>
 
 # endif

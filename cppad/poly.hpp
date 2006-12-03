@@ -34,7 +34,7 @@ $index template, polynomial derivative$$
 $section Evaluate a Polynomial or its Derivative$$
 
 $head Syntax$$
-$code # include <CppAD/poly.hpp>$$
+$code # include <cppad/poly.hpp>$$
 $pre
 $$
 $syntax%%p% = Poly(%k%, %a%, %z%)%$$
@@ -48,7 +48,7 @@ $latex \[
 If $italic k$$ is equal to zero, the return value is $latex P(z)$$.
 
 $head Include$$
-The file $code CppAD/poly.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/poly.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 Including this file defines

@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 // END SHORT COPYRIGHT
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 namespace CppAD {
 	extern CppAD::AD<double> LuVecAD(

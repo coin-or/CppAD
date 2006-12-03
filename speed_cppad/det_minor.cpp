@@ -27,7 +27,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 # include "../example/det_by_minor.hpp"
 
 # include <sstream>

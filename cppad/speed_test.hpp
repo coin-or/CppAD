@@ -35,7 +35,7 @@ $section Run One Speed Test$$
 
 $head Syntax$$
 
-$code # include <CppAD/speed_test.hpp>$$
+$code # include <cppad/speed_test.hpp>$$
 $pre
 $$
 $syntax%SpeedTest(%Test%, %first%, %inc%, %last%)%$$
@@ -66,7 +66,7 @@ repeat the section of the test that we wish to time.
 $head Include$$
 The file $code speed_test.hpp$$ contains the 
 $code SpeedTest$$ function.
-This file is included by $code CppAD/cppad.hpp$$
+This file is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
@@ -176,8 +176,8 @@ $end
 # include <iomanip>
 
 // For an unknown reason, cannot move other includes (using Sun's CC compiler)
-# include <CppAD/local/cppad_error.hpp>
-# include <CppAD/speed_test.hpp>
+# include <cppad/local/cppad_error.hpp>
+# include <cppad/speed_test.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 

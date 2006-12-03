@@ -59,7 +59,7 @@ $lnext
 Add the new feature to the OMhelp documentation tree.
 
 $lnext
-Add the new feature the CppAD/cppad.hpp include tree.
+Add the new feature the cppad/cppad.hpp include tree.
 
 $lnext
 Mention the new feature in the WhatsNew file for the current year.

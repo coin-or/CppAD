@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Test of CondExp with AD< AD< Base > > types
 */
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 typedef CppAD::AD< double >     ADdouble;
 typedef CppAD::AD< ADdouble > ADADdouble;

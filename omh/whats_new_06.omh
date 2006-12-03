@@ -91,7 +91,7 @@ to lower case; i.e., $code makefile.am$$ and $code makefile$$.
 $pre
 
 $$
-Fix compiler warning while compiling $code CppAD/RombergOne/$$
+Fix compiler warning while compiling $code cppad/RombergOne/$$
 (mistake occurred during $cref/11-20/WhatsNew06/11-29/$$ change).
 
 $head 11-30$$
@@ -136,7 +136,7 @@ in preparation for
 more formal speed comparisons with other packages.
 To be specific, its documentation was improved,
 its dependence on the rest of CppAD was removed
-(it no longer includes $cref/CppAD.h/CppAD/$$).
+(it no longer includes $cref/CppAD.h/cppad/$$).
 
 
 $head 11-12$$
@@ -268,7 +268,7 @@ that do not begin with $code CppAD$$ or $code CPPAD_$$.
 $pre
 
 $$
-Include a default value for the file $code CppAD/config.h$$
+Include a default value for the file $code cppad/config.h$$
 in the subversion repository.
 
 $head 10-16$$
@@ -296,13 +296,13 @@ Two versions, one with CPL and other with GPL license.
 $lnext
 Change subversion version of CppAD from GPL to CPL copyright.
 $lnext
-Change all files in CppAD/local to use lower case and *.hpp extension.
+Change all files in cppad/local to use lower case and *.hpp extension.
 $lnext
 CppAD_vector.h was generating a warning on version 4 of gcc.
 This have been fixed.
 $lnext
 Change the preprocessor $code # define$$ commands
-in $code CppAD/local/*.hpp$$ to use upper case names.
+in $code cppad/local/*.hpp$$ to use upper case names.
 $lnext
 Add the $cref/StackMachine.cpp/$$ example.
 $lend
@@ -804,10 +804,10 @@ $code float$$ and $code double$$.
 
 $head 03-15$$
 Improve the 
-$xref/CppAD/Introduction/introduction/$$ to CppAD.
+$xref/cppad/Introduction/introduction/$$ to CppAD.
 
 $head 03-11$$
-The file $code CppAD/local/MathOther.h$$ had a file name case error 
+The file $code cppad/local/MathOther.h$$ had a file name case error 
 that prevented the documentation from building and tests from running 
 (except under Cygwin which is not really case sensitive).
 This has been fixed.
@@ -958,11 +958,11 @@ was added to the distribution.
 
 $head 01-07$$
 Change CppAD error handler from using the macros defined in
-$code CppAD/CppADError.h$$ to using a class defined in 
-$xref%ErrorHandler%%CppAD/error_handler.hpp%$$.
+$code cppad/CppADError.h$$ to using a class defined in 
+$xref%ErrorHandler%%cppad/error_handler.hpp%$$.
 The macros $code CppADUnknownError$$ and $code CppADUsageError$$
 have been depreciated (they are temporarily still available in the 
-file $code CppAD/local/CppADError.h$$).
+file $code cppad/local/CppADError.h$$).
 
 $head 01-02$$
 Add the sed script $code Speed/gprof.sed$$ to aid in the display of the
@@ -972,7 +972,7 @@ $pre
 $$
 Make the following source code files easier to understand:
 $code Add.h$$, $code Sub.h$$, $code Mul.h$$, $code Div.h$$
-(in the directory $code CppAD/local$$).
+(in the directory $code cppad/local$$).
 
 $head 01-05$$
 Make the following source code files easier to understand:
@@ -982,7 +982,7 @@ $code Fun.h$$,
 $code Forward.h$$,
 $code ForSparseJac.h$$,
 $code RevSparseJac.h$$
-(in the directory $code CppAD/local$$).
+(in the directory $code cppad/local$$).
 
 
 $end

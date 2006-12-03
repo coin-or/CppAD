@@ -12,7 +12,7 @@ dir_list="
 	.
 	adolc
 	CppAD
-	CppAD/local
+	cppad/local
 	example
 	fadbad
 	get_started
@@ -42,7 +42,7 @@ echo "#! /bin/bash"                                           >> file2lower.mv
 echo "# move $director/*.$ext file names to lower case names" >> file2lower.mv
 for old in $directory/*.$extension
 do
-if [ $old != "CppAD/config.h" ]
+if [ $old != "cppad/config.h" ]
 then
 	new=`echo "$old" | sed \
 		-e "s/AD/Ad/g" \
@@ -52,15 +52,15 @@ then
 		-e "s/\([a-z]\)\([0-9]\)/\1_\2/g" \
 		-e "s|/\([A-z][a-z]*\)\.|/\1_.|" | tr [A-Z] [a-z]
 	`
-	new=`echo "$new" | sed -e "s|cpp_ad/|CppAD/|" -e "s/cpp_ad/cppad/g"`
+	new=`echo "$new" | sed -e "s|cpp_ad/|cppad/|" -e "s/cpp_ad/cppad/g"`
 	if [ "$extension" = "h" ]
 	then
 		new=`echo $new | sed -e "s/_*\.h/.hpp/"`
 	fi
-	# avoid ifndef conflict with CppAD/local/cppad_vector.hpp
-	if [ "$new" = CppAD/cppad_vector.hpp ]
+	# avoid ifndef conflict with cppad/local/cppad_vector.hpp
+	if [ "$new" = cppad/cppad_vector.hpp ]
 	then
-		new="CppAD/vector.hpp"
+		new="cppad/vector.hpp"
 	fi
 	#
 	if [ "$mode" == "svn" ]
@@ -94,7 +94,7 @@ then
 	then
 echo "s@nobase_myinclude_HEADERS = *\\\\@&\n\tCppAD/$old.h \\\\@" \
 	>> file2lower.sed
-echo "echo \"# include \\\"CppAD/$new\\\"\" > CppAD/$old.h" \
+echo "echo \"# include \\\"cppad/$new\\\"\" > cppad/$old.h" \
 	>> file2lower.mv
 	fi
 fi
@@ -153,8 +153,8 @@ then
 		get_started/get_started.cpp
 		introduction/exp_apx_ad.cpp
 		print_for/print_for.cpp
-		CppAD/local/bender_quad.hpp
-		CppAD/local/lu_ratio.hpp
+		cppad/local/bender_quad.hpp
+		cppad/local/lu_ratio.hpp
 		omh/whats_new_05.omh
 		omh/whats_new_04.omh
 		omh/whats_new_03.omh

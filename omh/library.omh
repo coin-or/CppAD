@@ -23,32 +23,32 @@ $index library, numerical C++ template$$
 $section The CppAD General Purpose Library$$
 
 $children%
-	CppAD/error_handler.hpp%
+	cppad/error_handler.hpp%
 
-	CppAD/near_equal.hpp%
-	CppAD/speed_test.hpp%
+	cppad/near_equal.hpp%
+	cppad/speed_test.hpp%
 
 	omh/numeric_type.omh%
-	CppAD/check_numeric_type.hpp%
+	cppad/check_numeric_type.hpp%
 	omh/simple_vector.omh%
-	CppAD/check_simple_vector.hpp%
+	cppad/check_simple_vector.hpp%
 
-	CppAD/pow_int.hpp%
-	CppAD/poly.hpp%
+	cppad/pow_int.hpp%
+	cppad/poly.hpp%
 	omh/lu_det_and_solve.omh%
-	CppAD/romberg_one.hpp%
-	CppAD/romberg_mul.hpp%
-	CppAD/runge_45.hpp%
-	CppAD/rosen_34.hpp%
-	CppAD/ode_err_control.hpp%
-	CppAD/ode_gear.hpp%
-	CppAD/ode_gear_control.hpp%
+	cppad/romberg_one.hpp%
+	cppad/romberg_mul.hpp%
+	cppad/runge_45.hpp%
+	cppad/rosen_34.hpp%
+	cppad/ode_err_control.hpp%
+	cppad/ode_gear.hpp%
+	cppad/ode_gear_control.hpp%
 
-	CppAD/local/bender_quad.hpp%
-	CppAD/local/lu_ratio.hpp%
+	cppad/local/bender_quad.hpp%
+	cppad/local/lu_ratio.hpp%
 
-	CppAD/vector.hpp%
-	CppAD/track_new_del.hpp
+	cppad/vector.hpp%
+	cppad/track_new_del.hpp
 %$$
 
 $head Error Handler$$

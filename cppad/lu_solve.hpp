@@ -43,7 +43,7 @@ $section Compute Determinant and Solve Linear Equations$$
 $pre
 $$
 
-$head Syntax$$ $code# include <CppAD/lu_solve.hpp>$$
+$head Syntax$$ $code# include <cppad/lu_solve.hpp>$$
 $pre
 $$
 $syntax%%signdet% = LuSolve(%n%, %m%, %A%, %B%, %X%, %logdet%)%$$
@@ -63,7 +63,7 @@ $italic n$$ by $italic m$$ matrix, and
 $italic B$$ is an $latex n x m$$ matrix.
 
 $head Include$$
-The file $code CppAD/lu_solve.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/lu_solve.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
@@ -275,14 +275,14 @@ $codep */
 
 # ifdef _MSC_VER
 // Fix for problem with MSC standard math functions name space location
-# include <CppAD/cppad.hpp>  
+# include <cppad/cppad.hpp>  
 # endif
 
-# include <CppAD/local/cppad_error.hpp>
-# include <CppAD/check_simple_vector.hpp>
-# include <CppAD/check_numeric_type.hpp>
-# include <CppAD/lu_factor.hpp>
-# include <CppAD/lu_invert.hpp>
+# include <cppad/local/cppad_error.hpp>
+# include <cppad/check_simple_vector.hpp>
+# include <cppad/check_numeric_type.hpp>
+# include <cppad/lu_factor.hpp>
+# include <cppad/lu_invert.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 

@@ -32,7 +32,7 @@ $$
 $end
 */
 // BEGIN PROGRAM
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 bool MulEq(void)
 {	bool ok = true;

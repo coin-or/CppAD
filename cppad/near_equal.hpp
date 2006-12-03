@@ -38,7 +38,7 @@ $index difference, relative$$
 
 $head Syntax$$
 
-$code # include <CppAD/near_equal.hpp>$$
+$code # include <cppad/near_equal.hpp>$$
 $pre
 $$
 $syntax%%b% = NearEqual(%x%, %y%, %r%, %a%)%$$
@@ -113,7 +113,7 @@ $syntax%%a% <= %b%$$  $cnext
 $tend
 
 $head Include Files$$
-The file $code CppAD/near_equal.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/near_equal.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
@@ -149,8 +149,8 @@ $end
 */
 
 # include <complex>
-# include <CppAD/local/cppad_error.hpp>
-# include <CppAD/check_numeric_type.hpp>
+# include <cppad/local/cppad_error.hpp>
+# include <cppad/check_numeric_type.hpp>
 
 namespace CppAD { // Begin CppAD namespace
 

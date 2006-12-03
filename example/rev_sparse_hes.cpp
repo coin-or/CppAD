@@ -34,7 +34,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 namespace { // -------------------------------------------------------------
 // define the template function RevSparseHesCases<Vector> in empty namespace
 template <typename Vector> // vector class, elements of type bool

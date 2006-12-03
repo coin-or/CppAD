@@ -31,7 +31,7 @@ $section Example Use of SpeedTest$$
 
 $head Program$$
 $codep */
-# include <CppAD/speed_test.hpp>
+# include <cppad/speed_test.hpp>
 
 std::string Test(size_t size, size_t repeat)
 {	// initialization section

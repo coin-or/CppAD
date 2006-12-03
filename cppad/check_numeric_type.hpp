@@ -25,7 +25,7 @@ $index check, numeric$$
 $index concept, check numeric$$
 
 $head Syntax$$
-$code # include <CppAD/check_numeric_type.hpp>$$
+$code # include <cppad/check_numeric_type.hpp>$$
 $pre
 $$
 $syntax%CheckNumericType<%NumericType%>()%$$
@@ -43,7 +43,7 @@ If a requirement is not satisfied,
 a an error message makes it clear what condition is not satisfied.
 
 $head Include$$
-The file $code CppAD/check_numeric_type.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/check_numeric_type.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest
 if the CppAD include files.
 

@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin Fadbad$$
 $spell
+	cppad.hpp
 	Fadbad
 	Makefile
 	Cygwin
@@ -32,7 +33,7 @@ $href%
 	fadbad
 %$$
 with CppAD.
-They are located in the directory $code CppAD/fadbad_$$.
+They are located in the directory $code cppad/fadbad_$$.
 Note that they can only be run under Unix 
 (or Cygwin on Microsoft windows).
 
@@ -41,7 +42,7 @@ In a unix operating system (or in a Cygwin shell on an Microsoft system),
 you can compile link and run this list examples and 
 results comparison between Fadbad and CppAD using the following commands:
 $codep
-	cd CppAD/fadbad
+	cd cppad/fadbad
 	make  example
 	example
 $$
@@ -53,7 +54,7 @@ you can compile link and run the list of speed
 comparisons between CppAD and Fadbad
 using the following commands:
 $codep
-	cd CppAD/fadbad
+	cd cppad/fadbad
 	make  speed
 	speed
 $$

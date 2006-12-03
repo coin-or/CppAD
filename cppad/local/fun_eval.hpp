@@ -23,16 +23,16 @@ $index ADFun, evaluate$$
 $section Evaluate ADFun Functions, Derivatives, and Sparsity Patterns$$
 
 $childtable%
-	CppAD/local/forward.hpp%
-	CppAD/local/reverse.hpp%
-	CppAD/local/sparse.hpp
+	cppad/local/forward.hpp%
+	cppad/local/reverse.hpp%
+	cppad/local/sparse.hpp
 %$$
 
 $end
 */
 
-# include <CppAD/local/forward.hpp>
-# include <CppAD/local/reverse.hpp>
-# include <CppAD/local/sparse.hpp>
+# include <cppad/local/forward.hpp>
+# include <cppad/local/reverse.hpp>
+# include <cppad/local/sparse.hpp>
 
 # endif

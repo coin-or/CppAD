@@ -18,9 +18,9 @@ fi
 echo "Differences between include file names and directives"
 echo "-----------------------------------------------------"
 #
-grep '^# *ifndef *CppAD[a-zA-Z]*Included$' CppAD/*.hpp example/*.hpp 
+grep '^# *ifndef *CppAD[a-zA-Z]*Included$' cppad/*.hpp example/*.hpp 
 # --------------------------------------------------------------------------
-grep '^# *ifndef *CPPAD_[a-zA-Z_]*_INCLUDED$' CppAD/*.hpp \
+grep '^# *ifndef *CPPAD_[a-zA-Z_]*_INCLUDED$' cppad/*.hpp \
 	| sed -e '/error_handler.hpp:.*CPPAD_CPPAD_INCLUDED/d' \
 	| sort -u > junk.1
  
@@ -29,7 +29,7 @@ sed -e 's|\([^.]*\)\.hpp:.*|\1|' -e 's|^.*/||' < junk.1 \
 sed -e 's|.*# *ifndef *CPPAD_\([a-zA-Z_]*\)_INCLUDED$|\1|' < junk.1 > junk.3
 diff junk.2 junk.3
 #
-grep '^# *define *CPPAD_[a-zA-Z_]*_INCLUDED$' CppAD/local/*.hpp \
+grep '^# *define *CPPAD_[a-zA-Z_]*_INCLUDED$' cppad/local/*.hpp \
  	| sort -u > junk.1
 sed -e 's|\([^.]*\)\.hpp:.*|\1|' -e 's|^.*/||' < junk.1 \
 	| tr [a-zA-Z] [A-Za-z] > junk.2

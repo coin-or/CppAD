@@ -49,9 +49,9 @@ $end
 // BEGIN PROGRAM
 
 # include <cstddef>              // for size_t
-# include <CppAD/runge_45.hpp>      // for CppAD::Runge45
-# include <CppAD/near_equal.hpp>    // for CppAD::NearEqual
-# include <CppAD/vector.hpp> // for CppAD::vector
+# include <cppad/runge_45.hpp>      // for CppAD::Runge45
+# include <cppad/near_equal.hpp>    // for CppAD::NearEqual
+# include <cppad/vector.hpp> // for CppAD::vector
 
 namespace {
 	class Fun {

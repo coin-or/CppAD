@@ -40,7 +40,7 @@ $section LU Factorization of A Square Matrix$$
 $pre
 $$
 
-$head Syntax$$ $code# include <CppAD/lu_factor.hpp>$$
+$head Syntax$$ $code# include <cppad/lu_factor.hpp>$$
 $pre
 $$
 $syntax%%sign% = LuFactor(%ip%, %jp%, %LU%)%$$
@@ -51,7 +51,7 @@ Computes an LU factorization of the matrix $italic A$$
 where $italic A$$ is a square matrix.
 
 $head Include$$
-The file $code CppAD/lu_factor.hpp$$ is included by $code CppAD/cppad.hpp$$
+The file $code cppad/lu_factor.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
@@ -277,9 +277,9 @@ $codep */
 # include <complex>
 # include <vector>
 
-# include <CppAD/local/cppad_error.hpp>
-# include <CppAD/check_simple_vector.hpp>
-# include <CppAD/check_numeric_type.hpp>
+# include <cppad/local/cppad_error.hpp>
+# include <cppad/check_simple_vector.hpp>
+# include <cppad/check_numeric_type.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 
@@ -311,7 +311,7 @@ inline bool AbsGeq(
 	return xsq >= ysq;
 }
 
-// Lines that are different from code in CppAD/local/lu_ratio.hpp end with //
+// Lines that are different from code in cppad/local/lu_ratio.hpp end with //
 template <class SizeVector, class FloatVector>                          //
 int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 {	

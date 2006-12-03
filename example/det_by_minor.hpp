@@ -37,7 +37,7 @@ namespace by including
 the file $code example/det_by_minor.hpp$$.
 It is only intended for example and testing purposes, 
 so it is not automatically included by
-$xref/CppAD//CppAD.h/$$.
+$xref/cppad//CppAD.h/$$.
 
 $head Constructor$$
 The syntax
@@ -104,7 +104,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 # include "det_of_minor.hpp"
 
 // BEGIN CppAD namespace

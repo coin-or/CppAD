@@ -35,7 +35,7 @@ $$
 $end
 */
 // BEGIN PROGRAM
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 bool Compare(void)
 {	bool ok = true;

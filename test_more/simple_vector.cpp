@@ -26,8 +26,8 @@ Old simple vector example now used just for validation testing
 // # include <valarray>
 // # define MySimpleVector std::valarray
 
-// Assuming CppAD (http://www.seanet.com/~bradbell/CppAD) is installed
-# include <CppAD/vector.hpp>
+// Assuming CppAD (http://www.seanet.com/~bradbell/cppad) is installed
+# include <cppad/vector.hpp>
 # define MySimpleVector CppAD::vector
 
 // Assuming Boost (http://www.boost.org) is installed

@@ -187,7 +187,7 @@ $end
 
 
 # include <cmath>
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 // BEGIN CppAD namespace
 namespace CppAD {   

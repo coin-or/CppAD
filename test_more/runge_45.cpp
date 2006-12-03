@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 Old OdeRunge example now used just for valiadation testing of Runge45
 */
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 # include <iostream>
 # include <cassert>
 

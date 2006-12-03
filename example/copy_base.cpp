@@ -30,7 +30,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 
 bool CopyBase(void)
 {	bool ok = true;    // initialize test result flag

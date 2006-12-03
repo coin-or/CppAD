@@ -30,7 +30,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <CppAD/cppad.hpp>
+# include <cppad/cppad.hpp>
 # include <cmath>
 
 bool Tan(void)

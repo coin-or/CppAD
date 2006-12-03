@@ -137,8 +137,8 @@ to cover more cases while converting them from,
 a library function in $code lib/CppADlib.a$$ 
 and an utility in $code example/NearEqualExt.h$$,
 to a template functions in 
-$code CppAD/near_equal.hpp$$ and
-$code CppAD/local/NearEqualExt.h$$.
+$code cppad/near_equal.hpp$$ and
+$code cppad/local/NearEqualExt.h$$.
 This is another step along the way of removing
 the entire $code CppADlib.a$$ library.
 $pre
@@ -152,7 +152,7 @@ This has been fixed.
 $pre
 
 $$
-Move $code lib/SpeedTest.cpp$$ to $code CppAD/speed_test.hpp$$.
+Move $code lib/SpeedTest.cpp$$ to $code cppad/speed_test.hpp$$.
 This was the last change necessary in order to remove the CppAD library,
 so remove all commands related to building and linking $code CppADlib.a$$.
 The corresponding entry has been removed from the $xref/WishList/$$.
@@ -168,7 +168,7 @@ It has also been removed (because it is already implemented).
 $head 12-14$$
 Extend $xref/erf/$$ to cover more cases while converting it
 from a function in $code lib/CppADlib.a$$
-to a template function in $code CppAD/local/Erf.h$$.
+to a template function in $code cppad/local/Erf.h$$.
 This is one step along the way of removing
 the entire $code CppADlib.a$$ library.
 
@@ -270,10 +270,10 @@ $codep
 		return &tape;
 	}
 $$
-(in $code CppAD/local/AD.h$$)
+(in $code cppad/local/AD.h$$)
 would sometimes return a null value (during $xref/VecAD/$$ operations).
 A speed improvement in 
-$code CppAD/local/ExtendBuffer.h$$ seems to prevent 
+$code cppad/local/ExtendBuffer.h$$ seems to prevent 
 this problem.
 This fix is not well understood; i.e., we should watch to see
 if this problem reoccurs.
@@ -447,7 +447,7 @@ $code CppAD::vector<bool>$$ case.
 A test for the $code push_back$$ member function as well as a
 $xref/CheckSimpleVector/$$ test has been added to $xref/CppAD_vector.cpp/$$.
 The source code for this template vector class,
-$code CppAD/vector.hpp$$,
+$code cppad/vector.hpp$$,
 has been removed from the documentation.
 
 
@@ -591,7 +591,7 @@ $pre
 
 $$
 Improve the index entries in the documentation that corresponds
-to the $code CppAD/local$$ directory source code.
+to the $code cppad/local$$ directory source code.
 
 $head 07-19$$
 The $xref/WishList/$$ and $xref/Bugs/$$ information
@@ -680,7 +680,7 @@ $pre
 
 $$
 The previous distribution (version 05-07-02) was missing the file
-$code CppAD/local/Default.h$$.
+$code cppad/local/Default.h$$.
 This has been fixed.
 
 $head 07-03$$
@@ -869,7 +869,7 @@ the speed tests.
 
 $head 04-19$$
 Remove an extra (not necessary) 
-semi-colon from the file $code CppAD/local/Operator.h$$.
+semi-colon from the file $code cppad/local/Operator.h$$.
 
 $head 03-26$$
 The new routine $xref/OdeErrControl/$$ does

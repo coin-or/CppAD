@@ -44,7 +44,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-20061202
+A Package for Differentiation of C++ Algorithms: cppad-20061203
 $$ 
 
 $head Syntax$$
@@ -151,7 +151,7 @@ $index include, cppad.hpp$$
 $index cppad.hpp, include$$
 The following include directive
 $syntax%
-	# include CppAD/cppad.hpp
+	# include cppad/cppad.hpp
 %$$
 includes the CppAD package for the rest of the current compilation unit.
 
@@ -193,8 +193,8 @@ $childtable%
 	omh/install.omh%
 	get_started/get_started.cpp%
 	omh/introduction.omh%
-	CppAD/local/user_ad.hpp%
-	CppAD/local/ad_fun.hpp%
+	cppad/local/user_ad.hpp%
+	cppad/local/ad_fun.hpp%
 	omh/library.omh%
 	omh/example.omh%
 	omh/appendix.omh

@@ -165,7 +165,7 @@ The following implementation of the
 AD $xref/atan2/$$ function is a more complex
 example of using conditional expressions:
 $code
-$verbatim%CppAD/local/atan2.hpp%0%BEGIN CondExp%// END CondExp%$$
+$verbatim%cppad/local/atan2.hpp%0%BEGIN CondExp%// END CondExp%$$
 $$
 
 
