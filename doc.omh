@@ -48,10 +48,7 @@ A Package for Differentiation of C++ Algorithms: cppad-20061203
 $$ 
 
 $head Syntax$$
-$syntax%# include "cppad.hpp"%$$ $pre
-$$
-$syntax%using namespace CppAD;%$$ $pre
-$$
+$code # include <cppad/cppad.hpp>$$
 
 
 $head Introduction$$
@@ -151,7 +148,7 @@ $index include, cppad.hpp$$
 $index cppad.hpp, include$$
 The following include directive
 $syntax%
-	# include cppad/cppad.hpp
+	# include <cppad/cppad.hpp>
 %$$
 includes the CppAD package for the rest of the current compilation unit.
 
