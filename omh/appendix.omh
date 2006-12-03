@@ -25,6 +25,7 @@ $childtable%
 	omh/bib.omh%
 	omh/bugs.omh%
 	omh/wish_list.omh%
+	omh/include_deprecated.omh%
 	omh/whats_new_06.omh
 %$$
 

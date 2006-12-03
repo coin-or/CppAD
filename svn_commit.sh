@@ -38,42 +38,27 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="next step of CppAD -> cppad (files edited by cppad_2_lower.sh). 
+log_entry="Last step of CppAD -> cppad (files that needed to be hand edited).
+
+svn_commit.sh: file that made this commit.
+include_deprecated.omh: list of include commands that should no longer be used.
+whats_new_06.omh: user's view of the changes.
+wish_list.omh: remove lower case file names and *.hpp entries.
+appendix.omh: include include_deprecated.omh in documentation tree.
+doc.omh: fix include file reference and remove namespace command.
+track_new_del.hpp: add missing include command to syntax.
 "
 # 
 add_list="
+	omh/include_deprecated.omh
+	omh/whats_new_06.omh
+	omh/wish_list.omh
+	omh/appendix.omh
+	cppad/track_new_del.hpp
 "
 #
 change_list="
 	svn_commit.sh
-	AUTHORS
-	adolc
-	build.sh
-	check_include_def.sh
-	check_include_file.sh
-	check_include_omh.sh
-	configure.ac
-	cppad
-	cppad_2_lower.sh
-	dev.omh
-	dir2lower.sh
-	doc.omh
-	dos_format.sh
-	example
-	fadbad
-	file2lower.sh
-	get_started
-	gpl_license.sh
-	introduction
-	makefile.am
-	omh
-	print_for
-	speed_cppad
-	speed_example
-	svn_commit.sh
-	svn_log.sh
-	svn_merge.sh
-	test_more
 "
 #
 delete_list="

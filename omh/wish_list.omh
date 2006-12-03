@@ -99,19 +99,6 @@ These guidelines are not followed by the current CppAD source code,
 but perhaps they should be:
 
 $list number$$
-File and directory names should only contain lowercase letters,
-numbers underscores and possibly one period.
-The leading character must be alphabetic.
-(This was done,  as a test case, 
-in the filename branch for the cppad/local directory at the end of 2006-08.)
-
-
-$lnext
-C++ header files should have the $code .hpp$$ extension.
-(This was done,  as a test case, 
-in the filename branch for the cppad/local directory at the end of 2006-08.)
-
-$lnext
 Names (except as noted below) 
 should be all lowercase, with words separated by underscores.
 For example, acronyms should be treated as ordinary names 

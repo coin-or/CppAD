@@ -74,6 +74,23 @@ $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-03$$
+The include file directory $code CppAD$$ was changed to be all 
+lower case; i.e., $code cppad$$.
+If you are using a Unix system, see $cref/include_deprecated/$$.
+This completes the following $cref/WishList/$$ items (which were removed):
+
+$list number$$
+File and directory names should only contain lowercase letters,
+numbers underscores and possibly one period.
+The leading character must be alphabetic.
+
+$lnext
+C++ header files should have the $code .hpp$$ extension.
+
+$lend
+ 
+
 $head 12-02$$
 Put explanation of version numbering in the 
 $cref/unix/InstallUnix/Download Current Version/$$ and

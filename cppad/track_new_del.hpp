@@ -31,6 +31,8 @@ $index track, new and delete$$
 $index memory, track$$
 
 $head Syntax$$
+$syntax%# include <cppad/track_new_del.hpp>
+%$$
 $syntax%%newptr% = TrackNewVec(%file%, %line%, %newlen%, %oldptr%)%$$
 $pre
 $$
@@ -47,6 +49,13 @@ $head Purpose$$
 These routines 
 aid in the use of $code new[]$$ and  $code delete[]$$
 during the execution of a C++ program.
+
+$head Include$$
+The file $code cppad/track_new_del.hpp$$ is included by 
+$code cppad/cppad.hpp$$
+but it can also be included separately with out the rest of the 
+CppAD include files.
+
 
 $head file$$
 The argument $italic file$$ has prototype
