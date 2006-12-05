@@ -137,7 +137,7 @@ Contains an example for getting started using CppAD.
 DOC/(introduction.xml or introduction.htm):
 Contains an introduction by example to Algorithmic Differentiation.
 
-DOC/(whatsnew06.xml or whatsnew06.htm):
+DOC/(whats_new.xml or whats_new.htm):
 Contains a list of changes and additions to CppAD in reverse order by date.
 
 DOC/(installunix.xml or installunix.htm):

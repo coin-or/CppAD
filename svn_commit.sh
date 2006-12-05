@@ -38,34 +38,32 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add configure --with-Documentation and remove POSTFIX_DIR.
+log_entry="Create a fixed whats_new section above the section for each year.
 
-svn_status.sh: all cygwin packaging directory to list to be ignored.
 svn_commit.sh: file that made this commit.
-configure.ac: add --with-Documentation and remove POSTFIX_DIR and print prefix.
-build.sh: add --with-Documentation to test case.
-makefile.am: add --with-Documentation and remove POSTFIX_DIR.
-omh/include_deprecated.omh: change cross reference to PrefixDir.
-install_unix.omh: add --with-Documentation and remove POSTFIX_DIR.
-whats_new_05.omh: change cross reference to PostfixDir.
-config.h: update version number.
-clean_cppad.sh: all cygwin packaging directory to list to be deleted.
+NEWS: reference whats_new instead of a section that changes each year.
+whats_new.omh: new section that contains all the other whats new sections.
+whats_new_06.omh: change to just be for 2006 and not include other sections.
+appendix.omh: change to inlude whats_new.omh instead of whats_new_06.omh.
+doc.omh: use whats_new instead of WhatsNew06.
+ChangeLog.omh: use whats_new instead of WhatsNew06.
+cygwin_package.sh: use whats_new instead of WhatsNew06.
+README: add extra information about documentation.
 "
 # 
 add_list="
+	omh/whats_new.omh
 "
 #
 change_list="
-	svn_status.sh
 	svn_commit.sh
-	configure.ac
-	build.sh
-	makefile.am
-	omh/include_deprecated.omh
-	omh/install_unix.omh
-	omh/whats_new_05.omh
-	cppad/config.h
-	clean_cppad.sh
+	NEWS
+	omh/whats_new_06.omh
+	omh/appendix.omh
+	doc.omh
+	ChangeLog
+	README
+	cygwin_package.sh
 "
 #
 delete_list="

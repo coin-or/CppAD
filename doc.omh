@@ -110,7 +110,7 @@ $href%http://www.boost.org/libs/numeric/ublas/doc/index.htm%uBlas%$$
 template vector class.
 
 $lnext
-See $xref/WhatsNew06/$$ for a list of recent extensions and bug fixes.
+See $xref/whats_new/$$ for a list of recent extensions and bug fixes.
 
 $lend
 

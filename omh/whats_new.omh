@@ -9,25 +9,24 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin Appendix$$
+$begin whats_new$$
 $spell
+	CppAD
 $$
 
-$section Appendix$$
+$section Changes and Additions to CppAD$$
+
+$head Introduction$$
+The sections listed below contain a list of the changes to CppAD 
+in reverse order by date.
+The purpose of these sections is to
+assist you in learning about changes between various versions of CppAD.
 
 $childtable%
-	cppad/local/preprocessor.hpp%
-	omh/theory.omh%
-	omh/speed_cppad.omh%
-	omh/adolc.omh%
-	omh/fadbad.omh%
-	omh/glossary.omh%
-	omh/bib.omh%
-	omh/bugs.omh%
-	omh/wish_list.omh%
-	omh/include_deprecated.omh%
-	omh/whats_new.omh
+	omh/whats_new_06.omh%
+	omh/whats_new_05.omh%
+	omh/whats_new_04.omh%
+	omh/whats_new_03.omh
 %$$
 
 $end
-

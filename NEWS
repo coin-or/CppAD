@@ -1,12 +1,14 @@
-The OMhelp source code news for this version of CppAD is in the file:
-	omh/WhatsNew06.omh
+The OMhelp source code summary of recent changes for this version of 
+CppAD is in the file:
+	omh/whats_new.omh
+This file references a separate file for each year of changes.
 
 If you used a tarball or zip file for this distribution, the HTML and XML 
-versions of the news for this version of CppAD are in the files:
-	Doc/whatsnew06.htm
-	Doc/whatsnew06.xml
+summary of recent changes for this version of CppAD are in the files:
+	doc/whats_new.htm
+	doc/whats_new.xml
 
-The HTML and XML versions of the news for the version of CppAD
+The HTML and XML summary of recent changes news for the version of CppAD
 corresponding to the current date (minus at most one day) are in the files:
-	http://www.coin-or.org/CppAD/Doc/whatsnew06.htm
-	http://www.coin-or.org/CppAD/Doc/whatsnew06.xml
+	http://www.coin-or.org/CppAD/Doc/whats_new.htm
+	http://www.coin-or.org/CppAD/Doc/whats_new.xml

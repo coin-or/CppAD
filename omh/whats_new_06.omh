@@ -55,24 +55,13 @@ $spell
 	Div.h
 $$
 
-$section Changes and Additions to CppAD$$
+$section Changes and Additions to CppAD During 2006$$
 
-$children%
-	omh/whats_new_05.omh%
-	omh/whats_new_04.omh%
-	omh/whats_new_03.omh
-%$$
 
 $head Introduction$$
 This section contains a list of the changes to CppAD during 2006
 (in reverse order by date).
-Changes and additions to CppAD during previous years can be found in
-$table
-$tref WhatsNew03$$ $rnext
-$tref WhatsNew04$$ $rnext
-$tref WhatsNew05$$ 
-$tend
-The purpose of these sections is to
+The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 12-05$$
@@ -80,6 +69,12 @@ Add the unix installation
 $cref/--with-Documentation/InstallUnix/--with-Documentation/$$ option
 and remove the 
 $cref/PostfixDir/InstallUnix/PostfixDir/$$ option.
+$pre
+
+$$
+Create a fixed 
+$cref/whats_new/$$ section above the section for each particular year.
+Also improve the CppAD distribution $code README$$ file.
 
 
 $head 12-03$$
