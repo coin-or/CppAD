@@ -11,11 +11,13 @@
 # -----------------------------------------------------------------------------
 # experimental script for cygwin packaging of CppAD 
 #
-# release number
-release="1"
-# extract the version number from configure.ac file
+# version and release number
+#
 version=`grep "^ *AC_INIT(" configure.ac | \
         sed -e "s/.*, *\([0-9]\{8\}\) *,.*/\1/"`
+release="1"
+#
+# Make cygwin_package directory
 #
 if [ -e cygwin_package ]
 then
@@ -26,7 +28,8 @@ then
 	fi
 fi
 #
-# extract the gpl version 
+# extract the gpl version of the distribution 
+#
 file="doc/cppad-$version.gpl.tgz"
 if [ ! -e $file ]
 then
@@ -48,7 +51,8 @@ then
         exit 1
 fi
 #
-# make a copy of distribution in cygwin_package sub-directory
+# make a copy of the distribution in the cygwin_package sub-directory
+#
 echo "mkdir cygwin_package"
 mkdir cygwin_package
 echo "cp -r cppad-$version cygwin_package/cppad-$version"
@@ -57,7 +61,7 @@ then
 	exit 1
 fi
 #
-# work in the cygwin_package subdirectory
+# change into the cygwin_package sub-directory and stay there
 #
 echo "cd cygwin_package"
 if ! cd cygwin_package
@@ -66,6 +70,7 @@ then
 fi
 #
 # Create the setup.hint file ----------------------------------------------
+#
 cat > setup.hint << EOF
 sdesc: "C++ algorithmic differentiation by operator overloading"
 ldesc: "C++ algorithmic differentiation by operator overloading.
@@ -77,42 +82,19 @@ category: Math
 requires: gcc-g++
 EOF
 #
-# Create the binary distribution ------------------------------------------
+# Create the source distribution ------------------------------------------
 #
-# create the usr/include/cppad directory
-echo "mkdir usr/include"
-mkdir usr
-mkdir usr/include
-#
-echo "cp -r cppad-$version-$release/cppad usr/include/cppad"
-if ! cp -r cppad-$version-$release/cppad usr/include/cppad
-then
-	exit 1
-fi
-#
-# create the usr/share/doc/cppad-$version-$release directory
-echo "mkdir usr/share/doc"
-mkdir usr/share
-mkdir usr/share/doc
-#
-echo "cp -r cppad-$version-$release/doc usr/share/doc/cppad-$version-$release"
-if ! cp -r cppad-$version-$release/doc usr/share/doc/cppad-$version-$release
-then
-	exit 1
-fi
-#
-# create the usr/share/doc/Cygwin/cppad-$version-$release.README
-mkdir "usr/share/doc/Cygwin"
-mkdir usr/share/doc/Cygwin
+# Create the cygwin README file
 #
 bin_doc="/usr/share/doc/cppad-$version-$release"
 src_doc="/usr/src/cppad-$version-$release/doc"
 web_doc="http://www.coin-or.org/CppAD/Doc"
-readme_file="usr/share/doc/Cygwin/cppad-$version-$release.README"
+readme_file="cppad-$version-$release/README"
 #
-echo "usr/share/doc/Cygwin/cppad-$version-$release.README"
+echo "create: $readme_file"
+#
 cat > $readme_file << EOF
-CppAD version $version release $release README file.
+CppAD for cygwin, version $version release $release README file.
 
 DOC
 We use DOC below for the directory that contains the CppAD documentation.
@@ -145,26 +127,10 @@ Contains documentation for the configure options which can be used to build
 the examples and tests for CppAD (using the source distribution). 
 EOF
 #
-# create the bz2 file containing the binary distribution
-echo "tar -cf cppad-$version-$release.tar usr"
-if ! tar -cf cppad-$version-$release.tar usr
-then
-	exit 1
-fi
-echo "bzip2 -z -f cppad-$version-$release.tar"
-if ! bzip2 -z -f cppad-$version-$release.tar 
-then
-	exit 1
-fi
-#
-# Create the source distribution ------------------------------------------
+# create the cppad-$version-$release/CYGWIN-PATCHES sub-directory
 #
 echo "mkdir cppad-$version-$release/CYGWIN-PATCHES"
 if ! mkdir cppad-$version-$release/CYGWIN-PATCHES
-then
-	exit 1
-fi
-if ! cp $readme_file cppad-$version-$release/README 
 then
 	exit 1
 fi
@@ -176,9 +142,13 @@ if ! cp $readme_file cppad-$version-$release/CYGWIN-PATCHES/setup.hint
 then
 	exit 1
 fi
+#
+# create the cppad-$version.patch file
+#
 diff -N -r -u -p ../cppad-$version cppad-$version > cppad-$version.patch 
 #
-# create the bz2 file containing the binary distribution
+# create cppad-$version-$release-src.tar.bz2
+#
 echo "tar -cf cppad-$version-$release-src.tar cppad-$version-$release"
 if ! tar -cf cppad-$version-$release-src.tar cppad-$version-$release
 then
@@ -190,4 +160,56 @@ then
 	exit 1
 fi
 #
+# Create the binary distribution ------------------------------------------
+#
+# create the usr/include/cppad directory
+#
+echo "mkdir usr/include"
+mkdir usr
+mkdir usr/include
+#
+echo "cp -r cppad-$version-$release/cppad usr/include/cppad"
+if ! cp -r cppad-$version-$release/cppad usr/include/cppad
+then
+	exit 1
+fi
+chmod -R 644 usr/include/cppad
+#
+# create the usr/share/doc/cppad-$version-$release directory
+#
+echo "mkdir usr/share/doc"
+mkdir usr/share
+mkdir usr/share/doc
+#
+echo "cp -r cppad-$version-$release/doc usr/share/doc/cppad-$version-$release"
+if ! cp -r cppad-$version-$release/doc usr/share/doc/cppad-$version-$release
+then
+	exit 1
+fi
+chmod -R 644 usr/share/doc/cppad-$version-$release
+#
+# create the usr/share/doc/Cygwin/cppad-$version-$release.README
+#
+mkdir "usr/share/doc/Cygwin"
+mkdir usr/share/doc/Cygwin
+if ! cp $readme_file usr/share/doc/Cygwin/cppad-$version-$release.README
+then
+	exit 1
+fi
+#
+# create cppad-$version-$release.tar.bz2
+#
+echo "tar -cf cppad-$version-$release.tar usr"
+if ! tar -cf cppad-$version-$release.tar usr
+then
+	exit 1
+fi
+echo "bzip2 -z -f cppad-$version-$release.tar"
+if ! bzip2 -z -f cppad-$version-$release.tar 
+then
+	exit 1
+fi
+#
+# Done with out error
+# 
 exit 0
