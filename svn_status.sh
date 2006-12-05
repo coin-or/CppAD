@@ -44,7 +44,8 @@ sed                                                           \
 	-e '/^[?] *doc$/d'                                    \
 	-e '/^[?] *dev$/d'                                    \
 	-e '/^[?] *aclocal.m4$/d'                             \
-	-e '/^[?] *cppad-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/d' 
+	-e '/cygwin_package$/d'                               \
+	-e '/^[?] *cppad-[0-9]\{8\}$/d' 
 #
 # Add differences for automatically updated files
 ./diff_today.sh AUTHORS

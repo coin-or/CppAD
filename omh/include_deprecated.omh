@@ -56,7 +56,7 @@ $syntax%
 	sudo ln -s cppad CppAD
 %$$
 where 
-$cref/PrefixDir/InstallUnix/PrefixDir and PostfixDir/$$
+$cref/PrefixDir/InstallUnix/PrefixDir/$$
 is the prefix directory corresponding to your
 $cref/Unix installation/InstallUnix/$$.
 This will link form the deprecated commands

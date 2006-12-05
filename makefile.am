@@ -14,11 +14,13 @@
 # Note that config.h is needed by VC++; i.e., for users that do not run
 # the configure script but rather use the project files 
 #
-if CppAD_POSTFIX
-myincludedir = $(includedir)/$(POSTFIX_DIR)
-else
+# if CppAD_POSTFIX
+# myincludedir = $(includedir)/$(POSTFIX_DIR)
+# else
+# myincludedir = $(includedir)
+# endif
 myincludedir = $(includedir)
-endif
+#
 #
 nobase_myinclude_HEADERS =  \
 	cppad/TrackNewDel.h \
@@ -248,3 +250,14 @@ EXTRA_DIST = \
 #
 dist-hook:
 	rm -rf `find $(distdir)/omh -name .svn`
+#
+if CppAD_DOCUMENTATION
+docdir     = $(datadir)/doc
+progdocdir = $(docdir)/$(PACKAGE)-$(VERSION)
+install-data-hook:
+	if [ ! -e $(docdir) ] ; then mkdir $(docdir) ; fi
+	if [ ! -e $(progdocdir) ] ; then mkdir $(progdocdir) ; fi
+	cp -r $(top_builddir)/doc/* $(progdocdir)
+	chmod 644 $(progdocdir)/* 
+endif
+#

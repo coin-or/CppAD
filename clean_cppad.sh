@@ -25,9 +25,10 @@ then
 	\( -name 'config.h.in'    \) -or \
 	\( -name 'config.status'  \) -or \
 	\( -name 'cppad-*'        \) -or \
-        \( -name 'Debug'          \) -or \
-        \( -name 'Release'        \) -or \
-        \( -name '.deps'          \) -or \
+	\( -name 'cygwin_package' \) -or \
+	\( -name 'Debug'          \) -or \
+	\( -name 'Release'        \) -or \
+	\( -name '.deps'          \) -or \
 	\( -name 'dev'            \) -or \
 	\( -name 'Doc'            \) -or \
 	\( -name 'doc'            \) -or \
@@ -37,8 +38,8 @@ then
 	\( -name 'junk.*'         \) -or \
 	\( -name 'makefile'       \) -or \
 	\( -name 'makefile.in'    \) -or \
-        \( -name 'Release'        \) -or \
-        \( -name 'stamp-h1'       \) -or \
+	\( -name 'Release'        \) -or \
+	\( -name 'stamp-h1'       \) -or \
 	\( -name 'temp'           \) -or \
 	\( -name 'temp?'          \) -or \
 	\( -name 'temp.*'         \) -or \
@@ -72,8 +73,9 @@ else
 	\( -name 'config.h.in'    \) -or \
 	\( -name 'config.status'  \) -or \
 	\( -name 'cppad-*'        \) -or \
-        \( -name 'Debug'          \) -or \
-        \( -name '.deps'          \) -or \
+	\( -name 'cygwin_package' \) -or \
+	\( -name 'Debug'          \) -or \
+	\( -name '.deps'          \) -or \
 	\( -name 'Dev'            \) -or \
 	\( -name 'Doc'            \) -or \
 	\( -name 'htm'            \) -or \
@@ -82,8 +84,8 @@ else
 	\( -name 'junk.*'         \) -or \
 	\( -name 'makefile'       \) -or \
 	\( -name 'makefile.in'    \) -or \
-        \( -name 'Release'        \) -or \
-        \( -name 'stamp-h1'       \) -or \
+	\( -name 'Release'        \) -or \
+	\( -name 'stamp-h1'       \) -or \
 	\( -name 'temp'           \) -or \
 	\( -name 'temp?'          \) -or \
 	\( -name 'temp.*'         \) -or \

@@ -166,6 +166,7 @@ then
 	if [ "$1" = "configure" ] && [ "$2" == "test" ]
 	then
 		TEST="
+			--with-Documentation
 			--with-GetStarted
 			--with-Introduction
 			--with-Example

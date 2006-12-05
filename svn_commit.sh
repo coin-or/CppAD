@@ -38,27 +38,34 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Last step of CppAD -> cppad (files that needed to be hand edited).
+log_entry="Add configure --with-Documentation and remove POSTFIX_DIR.
 
+svn_status.sh: all cygwin packaging directory to list to be ignored.
 svn_commit.sh: file that made this commit.
-include_deprecated.omh: list of include commands that should no longer be used.
-whats_new_06.omh: user's view of the changes.
-wish_list.omh: remove lower case file names and *.hpp entries.
-appendix.omh: include include_deprecated.omh in documentation tree.
-doc.omh: fix include file reference and remove namespace command.
-track_new_del.hpp: add missing include command to syntax.
+configure.ac: add --with-Documentation and remove POSTFIX_DIR and print prefix.
+build.sh: add --with-Documentation to test case.
+makefile.am: add --with-Documentation and remove POSTFIX_DIR.
+omh/include_deprecated.omh: change cross reference to PrefixDir.
+install_unix.omh: add --with-Documentation and remove POSTFIX_DIR.
+whats_new_05.omh: change cross reference to PostfixDir.
+config.h: update version number.
+clean_cppad.sh: all cygwin packaging directory to list to be deleted.
 "
 # 
 add_list="
-	omh/include_deprecated.omh
-	omh/whats_new_06.omh
-	omh/wish_list.omh
-	omh/appendix.omh
-	cppad/track_new_del.hpp
 "
 #
 change_list="
+	svn_status.sh
 	svn_commit.sh
+	configure.ac
+	build.sh
+	makefile.am
+	omh/include_deprecated.omh
+	omh/install_unix.omh
+	omh/whats_new_05.omh
+	cppad/config.h
+	clean_cppad.sh
 "
 #
 delete_list="

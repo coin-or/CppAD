@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew05$$
 $spell
+	Dir
 	cppad.hpp
 	acos
 	asin
@@ -452,8 +453,10 @@ has been removed from the documentation.
 
 
 $head 09-27$$
-Add the $xref/InstallUnix/PrefixDir and PostfixDir/POSTFIX_DIR/$$
-option to the $code configure$$ command line.
+Add the 
+$cref/PrefixDir/InstallUnix/PrefixDir/$$ and 
+$cref/PostfixDir/InstallUnix/PostfixDir/$$ 
+options to the $code configure$$ command line.
 This gives the user more control over the location where CppAD is installed.
 
 $head 09-24$$

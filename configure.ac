@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20061203, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20061205, cppad@list.coin-or.org)
 
 dnl Set the default install prefix to the installers home directory
 AC_PREFIX_DEFAULT(${HOME})
@@ -20,14 +20,22 @@ AC_MSG_NOTICE([******** Begin Checking Command Line arguments ***************])
 
 dnl the prefix directory corresponding to CppAD -------------------------
 dnl The following seems to work but NONE is not in autoconf specifications
-dnl AC_MSG_CHECKING([prefix])
-dnl if test "x$prefix" = "NONE" ; then
-dnl 	AC_MSG_RESULT([$HOME])
-dnl else
-dnl 	AC_MSG_RESULT([$prefix])
-dnl fi
 AC_MSG_CHECKING([--prefix])
-AC_MSG_RESULT([your choice can't be reported here (autoconf limitation)])
+if test "$prefix" = "NONE" ; then
+	AC_MSG_RESULT([$HOME])
+else
+	AC_MSG_RESULT([$prefix])
+fi
+
+dnl Are we installing the documentation -----------------------------------
+AC_MSG_CHECKING([--with-Documentation])
+AC_ARG_WITH(Documentation, 
+	AC_HELP_STRING([--with-Documentation], [default is no]),
+	[Documentation="yes"],
+	[Documentation="no"]
+)
+AM_CONDITIONAL(CppAD_DOCUMENTATION, test "$Documentation" = "yes")
+AC_MSG_RESULT([$Documentation])
 
 
 dnl Are we building the GetStarted directory -----------------------------
@@ -125,13 +133,16 @@ fi
 AC_MSG_RESULT([$stdvector])
 
 dnl The postfix directiory corresponding to this installation of CppAD --
-AC_MSG_CHECKING([POSTFIX_DIR])
-AC_SUBST(POSTFIX_DIR)
-AM_CONDITIONAL(CppAD_POSTFIX, test "$POSTFIX_DIR" != "")
+dnl AC_MSG_CHECKING([POSTFIX_DIR])
+dnl AC_SUBST(POSTFIX_DIR)
+dnl AM_CONDITIONAL(CppAD_POSTFIX, test "$POSTFIX_DIR" != "")
+dnl if test "$POSTFIX_DIR" != "" ; then
+dnl 	AC_MSG_RESULT([$POSTFIX_DIR])
+dnl else
+dnl 	AC_MSG_RESULT([no])
+dnl fi
 if test "$POSTFIX_DIR" != "" ; then
-	AC_MSG_RESULT([$POSTFIX_DIR])
-else
-	AC_MSG_RESULT([no])
+    AC_MSG_ERROR([The POSTFIX_DIR configure option is no longer available])
 fi
 
 dnl The prefix corresponding to the installation of Adolc ---------------
