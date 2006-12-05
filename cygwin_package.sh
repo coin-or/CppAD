@@ -127,6 +127,10 @@ Contains documentation for the configure options which can be used to build
 the examples and tests for CppAD (using the source distribution). 
 EOF
 #
+# create the cppad-$version.patch file
+#
+diff -N -r -u -p ../cppad-$version cppad-$version > cppad-$version.patch 
+#
 # create the cppad-$version-$release/CYGWIN-PATCHES sub-directory
 #
 echo "mkdir cppad-$version-$release/CYGWIN-PATCHES"
@@ -138,14 +142,14 @@ if ! cp $readme_file cppad-$version-$release/CYGWIN-PATCHES/cppad.README
 then
 	exit 1
 fi
-if ! cp $readme_file cppad-$version-$release/CYGWIN-PATCHES/setup.hint
+if ! cp setup.hint cppad-$version-$release/CYGWIN-PATCHES
 then
 	exit 1
 fi
-#
-# create the cppad-$version.patch file
-#
-diff -N -r -u -p ../cppad-$version cppad-$version > cppad-$version.patch 
+if ! cp cppad-$version.patch cppad-$version-$release/CYGWIN-PATCHES
+then
+	exit 1
+fi
 #
 # create cppad-$version-$release-src.tar.bz2
 #
@@ -173,7 +177,10 @@ if ! cp -r cppad-$version-$release/cppad usr/include/cppad
 then
 	exit 1
 fi
-chmod -R 644 usr/include/cppad
+chmod 644 usr/include/cppad/*.hpp
+chmod 644 usr/include/cppad/local/*.hpp
+chmod 755 usr/include/cppad
+chmod 755 usr/include/cppad/local
 #
 # create the usr/share/doc/cppad-$version-$release directory
 #
@@ -186,12 +193,18 @@ if ! cp -r cppad-$version-$release/doc usr/share/doc/cppad-$version-$release
 then
 	exit 1
 fi
-chmod -R 644 usr/share/doc/cppad-$version-$release
+chmod 644 usr/share/doc/cppad-$version-$release/*
+chmod 755 usr/share/doc/cppad-$version-$release/
 #
 # create the usr/share/doc/Cygwin/cppad-$version-$release.README
 #
 mkdir "usr/share/doc/Cygwin"
-mkdir usr/share/doc/Cygwin
+if [ -d usr/share/doc/Cygwin ]
+then
+	echo "for an unknown reason, usr/share/doc/Cygwin already exists."
+else
+	mkdir usr/share/doc/Cygwin
+fi
 if ! cp $readme_file usr/share/doc/Cygwin/cppad-$version-$release.README
 then
 	exit 1
@@ -210,6 +223,21 @@ then
 	exit 1
 fi
 #
-# Done with out error
+# Clean up
 # 
+if ! rm -r cppad-$version-$release
+then
+	exit 1
+fi
+if ! rm -r usr
+then
+	exit 1
+fi
+if ! rm cppad-$version.patch
+then
+	exit 1
+fi
+#
+# Done
+#
 exit 0
