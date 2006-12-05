@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	Dir
 	Romberg
 	yyyymmdd
 	yy-mm-dd
@@ -73,6 +74,13 @@ $tref WhatsNew05$$
 $tend
 The purpose of these sections is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-05$$
+Add the unix installation
+$cref/--with-Documentation/InstallUnix/--with-Documentation/$$ option
+and remove the 
+$cref/PostfixDir/InstallUnix/PostfixDir/$$ option.
+
 
 $head 12-03$$
 The include file directory $code CppAD$$ was changed to be all 
