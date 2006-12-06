@@ -23,11 +23,9 @@ then
 	exit
 fi
 svn cat $1 | sed > $1.tmp \
+	-e "s/\([, \"]\)20[0-9]\{6\}\([, \"\$]\)/\1$yyyymmdd\2/"  \
 	-e "s/, 20[0-9][0-9]-[0-9][0-9]-[0-9][0-9] *,/, $yyyy_mm_dd,/" \
-	-e "s/, [0-9]\{8\} *,/, $yyyymmdd,/" \
-	-e "s/ [0-9]\{8\}\"/ $yyyymmdd\"/" \
-	-e "s/\"[0-9]\{8\}\"/\"$yyyymmdd\"/" \
-	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
+	-e "s/cppad-20[0-9]\{6\}/cppad-$yyyymmdd/g"
 #
 echo "diff $1-local $1-subversion"
 diff          $1      $1.tmp
