@@ -64,6 +64,11 @@ This section contains a list of the changes to CppAD during 2006
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-07$$
+Fix bug in the 
+$cref/subversion installation/InstallSubversion/$$ instructions; see 
+$href%http://list.coin-or.org/pipermail/cppad/2006q4/000076.html%bug report%$$.
+
 $head 12-05$$
 Add the unix installation
 $cref/--with-Documentation/InstallUnix/--with-Documentation/$$ option

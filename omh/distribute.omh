@@ -11,13 +11,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin Distribute$$ 
 $spell
+	cppad-yyyymmdd.gpl.tgz
 	cd
 	Fadbad
 	CppADpackage
 	gz
 	xvzf
 	sys
-	cppad-yy-mm-dd
 	Adolc
 	Dir
 	Fadbad
@@ -28,85 +28,30 @@ $section Building and Testing a Distribution$$
 
 $head Creating Distribution Files$$
 $list number$$
-Change into the $code cppad/trunk$$ directory.
+Change into the $code CppAD/trunk$$ directory.
 
 $lnext
 Execute the command
 $codep
-	 ./Build all
+	 ./build.sh all
 $$
 This will create the distribution files
 $syntax%
-	CppAD-%yy%-%mm%-%dd%.tar.gz
-	CppAD-%yy%-%mm%-%dd%.zip
+	cppad-%yyyymmdd%.gpl.tgz
+	cppad-%yyyymmdd%.cpl.tgz
+	cppad-%yyyymmdd%.gpl.zip
+	cppad-%yyyymmdd%.cpl.zip
 %$$
-where $syntax%%yy%-%mm%-%dd%$$ is the current date.
+where $syntax%%yyyymmdd%$$ is the current date.
 $lend
 
 $head Testing Distribution$$
-$list number$$
 Execute the command 
 $syntax%
-	tar -xvzf CppAD-%yy%-%mm%-%dd%.tar.gz
+	./build.sh all test
 %$$
+This will create the file $code build_test.log$$.
+If any errors occur, they will be noted in this file.
 
-$lnext
-Execute the command
-$syntax%
-	cd cppad-%yy%-%mm%-%dd%
-%$$
-
-$lnext
-Execute the command
-$syntax%
-	Build configure test
-%$$
-
-$lnext
-Execute the command
-$codep
-	make
-$$
-If no compiler errors occur, the distribution passed this test.
-
-$lnext
-Execute the command
-$codep
-	GetStarted/GetStarted
-$$
-If the result of the two methods are equal,
-the distribution passed this test.
-
-$lnext
-Execute the command
-$codep
-	example/example
-$$
-If the result at the end is
-$syntax%
-	All %n% tests passed.
-%$$
-then the distribution passed this test.
-
-$lnext
-Execute the command
-$codep
-	TestMore/TestMore
-$$
-If the result at the end is
-$syntax%
-	All %n% tests passed.
-%$$
-then the distribution passed this test.
-
-$lnext
-Execute the command
-$codep
-	PrintFor/PrintFor
-$$
-If the result of the two methods are equal,
-the distribution passed this test.
-
-$lend
 
 $end

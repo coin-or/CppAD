@@ -38,15 +38,12 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Improve cygwin packaging.
+log_entry="Fix bug in subversion installation instructions.
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: user's view of changes.
-cygwin_package.sh: improve readme, run configure on new configure.ac, test src.
-configure.ac: special comments for cygwin version.
-build.sh: add missing - in command echo.
-config.h: new version number.
-README: add mention of mailing list.
+install_subversion.omh: correct subversion path.
+distribute.omh: fix out of date developer instructions.
 "
 # 
 add_list="
@@ -55,11 +52,8 @@ add_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	cygwin_package.sh
-	configure.ac
-	build.sh
-	cppad/config.h
-	README
+	omh/install_subversion.omh
+	omh/distribute.omh
 "
 #
 delete_list="
