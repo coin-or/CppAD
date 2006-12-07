@@ -361,16 +361,39 @@ if ! g++ get_started.cpp -o get_started.exe
 then
 	exit 1
 fi
-echo "The program get_started should result in the output"
-echo "y'(3) computed by CppAD = 142."
-echo "./get_started"
-./get_started
-echo "cd .."
-if ! cd ..
+echo "./get_started > get_started.out"
+./get_started       > get_started.out
+echo "y'(3) computed by CppAD = 142"  > get_started.chk
+if ! diff get_started.out get_started.chk
 then
+	echo "error in get_started output"
 	exit 1
 fi
+file_list="
+	cppad
+	getstarted.cpp
+	introduction
+	whats_new
+	installunix
+"
+ext_list="
+	htm
+	xml
+"
+for file in $file_list 
+do
+	for ext in $ext_list
+	do
+		full_name=/usr/share/doc/cppad-$version/$file.$ext
+		if [ ! -e "$full_name" ]
+		then
+			echo "cannot find $full_name"
+			exit 1
+		fi
+	done
+done 
 #
 # Done
 #
+echo "cygwin_package.sh: passed all its tests"
 exit 0
