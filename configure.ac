@@ -11,10 +11,13 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20061205, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20061206, cppad@list.coin-or.org)
 
 dnl Set the default install prefix to the installers home directory
+dnl cygwin begin delete:
 AC_PREFIX_DEFAULT(${HOME})
+dnl cygwin end delete:
+dnl cygwin replace: AC_PREFIX_DEFAULT(/usr)
 
 AC_MSG_NOTICE([******** Begin Checking Command Line arguments ***************])
 
@@ -28,6 +31,7 @@ else
 fi
 
 dnl Are we installing the documentation -----------------------------------
+dnl cygwin begin delete:
 AC_MSG_CHECKING([--with-Documentation])
 AC_ARG_WITH(Documentation, 
 	AC_HELP_STRING([--with-Documentation], [default is no]),
@@ -36,6 +40,8 @@ AC_ARG_WITH(Documentation,
 )
 AM_CONDITIONAL(CppAD_DOCUMENTATION, test "$Documentation" = "yes")
 AC_MSG_RESULT([$Documentation])
+dnl cygwin end delete:
+dnl cygwin replace: AM_CONDITIONAL(CppAD_DOCUMENTATION, test "yes" = "yes")
 
 
 dnl Are we building the GetStarted directory -----------------------------

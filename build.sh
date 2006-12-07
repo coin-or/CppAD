@@ -139,7 +139,7 @@ then
 		exit 1
 	fi
 	#
-	echo "automake -add-missing"
+	echo "automake --add-missing"
 	if ! automake --add-missing
 	then
 		exit 1

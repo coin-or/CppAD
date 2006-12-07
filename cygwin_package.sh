@@ -55,7 +55,7 @@ fi
 #
 echo "mkdir cygwin_package"
 mkdir cygwin_package
-echo "cp -r cppad-$version cygwin_package/cppad-$version"
+echo "cp -r cppad-$version cygwin_package/cppad-$version-$release"
 if ! cp -r cppad-$version cygwin_package/cppad-$version-$release
 then
 	exit 1
@@ -94,38 +94,91 @@ readme_file="cppad-$version-$release/README"
 echo "create: $readme_file"
 #
 cat > $readme_file << EOF
-CppAD for cygwin, version $version release $release README file.
+CppAD for cygwin version number $version release number $release.
+
+http://www.coin-or.org/CppAD
+This is the CppAD home page.
+
+cppad@list.coin-or.org
+This mailing list is used for CppAD discussion and bug reporting. You must
+first join the mailing list using its general information page
+        http://list.coin-or.org/mailman/listinfo/CppAD
+(this avoids having spam on the mailing list).
 
 DOC
-We use DOC below for the directory that contains the CppAD documentation.
+We use DOC below for the directories that contains the CppAD documentation.
 Binary distribution this version, DOC = $bin_doc
 Source distribution this version, DOC = $src_doc
 Web based most recent version,    DOC = $web_doc
 
-DOC/*.htm:
+DOC/*.htm
 Files in the DOC directory with with the .htm extension
-represent mathematics using LaTex, for example see DOC/poly.htm.
+represent mathematics using LaTex; for example see DOC/poly.htm.
 
-DOC/*.xml:
+DOC/*.xml
 Files in the DOC directory with with the .xml extension
-represent mathematics using LaTex, for example see DOC/poly.xml.
+represent mathematics using LaTex; for example see DOC/poly.xml.
 
-DOC/(cppad.xml or cppad.htm):
+DOC/(cppad.xml or cppad.htm)
 Is the top (root) of the documentation tree for CppAD.
 
-DOC/(getstarted.cpp.xml or getstarted.cpp.htm):
+DOC/(getstarted.cpp.xml or getstarted.cpp.htm)
 Contains an example for getting started using CppAD.
 
-DOC/(introduction.xml or introduction.htm):
+DOC/(introduction.xml or introduction.htm)
 Contains an introduction by example to Algorithmic Differentiation.
 
-DOC/(whats_new.xml or whats_new.htm):
+DOC/(whats_new.xml or whats_new.htm)
 Contains a list of changes and additions to CppAD in reverse order by date.
 
-DOC/(installunix.xml or installunix.htm):
+DOC/(installunix.xml or installunix.htm)
 Contains documentation for the configure options which can be used to build
 the examples and tests for CppAD (using the source distribution). 
 EOF
+#
+# change configure.ac 
+#
+echo "Begin: modify configure.ac and files that depend on it."
+echo "sed < cppad-$version-$release/configure.ac > configure.ac \\"
+echo "	-e '/dnl cygwin begin delete:/,/dnl cygwin end delete:/d' \\"
+echo "	-e 's/dnl cygwin replace: *//'"
+#
+if ! sed < cppad-$version-$release/configure.ac > configure.ac \
+	-e '/dnl cygwin begin delete:/,/dnl cygwin end delete:/d' \
+	-e 's/dnl cygwin replace: *//'
+then
+	exit 1
+fi
+#
+if ! mv configure.ac cppad-$version-$release/configure.ac
+then
+	exit 1
+fi
+if ! cd cppad-$version-$release
+then 
+	exit 1
+fi
+if ! aclocal
+then
+	exit 1
+fi
+if ! autoheader
+then
+	exit 1
+fi
+if ! autoconf
+then
+	exit 1
+fi
+if ! automake --add-missing
+then
+	exit 1
+fi
+if ! cd ..
+then
+	exit 1
+fi
+echo "End: modify configure.ac and files that depend on it."
 #
 # create the cppad-$version.patch file
 #
@@ -198,12 +251,10 @@ chmod 755 usr/share/doc/cppad-$version-$release/
 #
 # create the usr/share/doc/Cygwin/cppad-$version-$release.README
 #
-mkdir "usr/share/doc/Cygwin"
-if [ -d usr/share/doc/Cygwin ]
+echo "mkdir usr/share/doc/Cygwin"
+if ! mkdir usr/share/doc/Cygwin
 then
-	echo "for an unknown reason, usr/share/doc/Cygwin already exists."
-else
-	mkdir usr/share/doc/Cygwin
+	exit
 fi
 if ! cp $readme_file usr/share/doc/Cygwin/cppad-$version-$release.README
 then
@@ -223,17 +274,99 @@ then
 	exit 1
 fi
 #
-# Clean up
+# Clean up ------------------------------------------------------------------
 # 
+echo "rm -r cppad-$version-$release"
 if ! rm -r cppad-$version-$release
 then
 	exit 1
 fi
+echo "rm -r usr"
 if ! rm -r usr
 then
 	exit 1
 fi
+echo "rm cppad-$version.patch"
 if ! rm cppad-$version.patch
+then
+	exit 1
+fi
+#
+# Test source install --------------------------------------------------------
+#
+echo "Begin: test if source install"
+if [ -e /usr/include/cppad ]
+then
+	echo "rm -r /usr/include/cppad"
+	if ! rm -r /usr/include/cppad
+	then
+		exit 1
+	fi
+fi
+if [ -e /usr/share/doc/cppad-* ]
+then
+	echo "rm -rf /usr/share/doc/cppad-*"
+	if ! rm -rf /usr/share/doc/cppad-*
+	then
+		exit 1
+	fi
+fi
+mkdir test_src
+echo "cd test_src"
+if ! cd test_src
+then
+	exit 1
+fi
+echo "cp ../cppad-$version-$release-src.tar.bz2 ."
+if ! cp ../cppad-$version-$release-src.tar.bz2 .
+then
+	exit 1
+fi
+echo "bunzip2 cppad-$version-$release-src.tar.bz2"
+if ! bunzip2 cppad-$version-$release-src.tar.bz2
+then
+	exit 1
+fi
+echo "tar -xf cppad-$version-$release-src.tar"
+if ! tar -xf cppad-$version-$release-src.tar
+then
+	exit 1
+fi
+echo "cd cppad-$version-$release"
+if ! cd cppad-$version-$release
+then
+	exit 1
+fi
+echo "./configure"
+if ! ./configure
+then
+	exit 1
+fi
+echo "make install"
+if ! make install
+then
+	exit 1
+fi
+echo "cd .."
+if ! cd ..
+then 
+	exit 1
+fi
+echo "cp ../../get_started/get_started.cpp ."
+if ! cp ../../get_started/get_started.cpp .
+then
+	exit 1
+fi
+if ! g++ get_started.cpp -o get_started.exe
+then
+	exit 1
+fi
+echo "The program get_started should result in the output"
+echo "y'(3) computed by CppAD = 142."
+echo "./get_started"
+./get_started
+echo "cd .."
+if ! cd ..
 then
 	exit 1
 fi

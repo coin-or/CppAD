@@ -38,32 +38,28 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Create a fixed whats_new section above the section for each year.
+log_entry="Improve cygwin packaging.
 
 svn_commit.sh: file that made this commit.
-NEWS: reference whats_new instead of a section that changes each year.
-whats_new.omh: new section that contains all the other whats new sections.
-whats_new_06.omh: change to just be for 2006 and not include other sections.
-appendix.omh: change to inlude whats_new.omh instead of whats_new_06.omh.
-doc.omh: use whats_new instead of WhatsNew06.
-ChangeLog.omh: use whats_new instead of WhatsNew06.
-cygwin_package.sh: use whats_new instead of WhatsNew06.
-README: add extra information about documentation.
+whats_new_06.omh: user's view of changes.
+cygwin_package.sh: improve readme, run configure on new configure.ac, test src.
+configure.ac: special comments for cygwin version.
+build.sh: add missing - in command echo.
+config.h: new version number.
+README: add mention of mailing list.
 "
 # 
 add_list="
-	omh/whats_new.omh
 "
 #
 change_list="
 	svn_commit.sh
-	NEWS
 	omh/whats_new_06.omh
-	omh/appendix.omh
-	doc.omh
-	ChangeLog
-	README
 	cygwin_package.sh
+	configure.ac
+	build.sh
+	cppad/config.h
+	README
 "
 #
 delete_list="
