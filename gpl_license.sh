@@ -70,6 +70,7 @@ list=`find . \
 	\( -name '*.sh'  \) -or \
 	\( -name '*.cpp' \) -or \
 	\( -name '*.hpp' \) -or \
+	\( -name '*.in'  \) -or \
 	\( -name '*.omh' \)`
 #
 # change back up to original directory (to be safe)
@@ -86,15 +87,27 @@ do
 
 	mv GplLicense.tmp cppad-$version/$file
 	#
+	err="no"
 	if ! grep "GNU General Public License Version 2" \
 		cppad-$version/$file > /dev/null
 	then
-		name=`echo $file | sed -e 's|.*/||'`
-		if [ "$name" != "config.h" ] 
+		err="yes"
+		# Check for special case where automatically generated files
+		# do not have any license statement.
+		ext=`echo $file | sed -e 's|.*\.||'`
+		if [ "$ext" = "in" ] 
 		then
-	echo "GplLicense: can not change cppad-$version/$file license" 
-	exit 1
+			if ! grep "Common Public License" \
+				cppad-$version/$file > /dev/null
+			then
+				err="no"
+			fi
 		fi
+	fi
+	if [ "$err" = "yes" ]
+	then
+		echo "GplLicense: cannot change cppad-$version/$file license" 
+		exit 1
 	fi
 	if [ "$ext" = ".sh" ]
 	then
@@ -116,6 +129,9 @@ cp gpl2.txt cppad-$version/gpl2.txt
 sed < cppad-$version/makefile.am > GplLicense.tmp \
 	-e 's/cpl1.0.txt/gpl2.txt/'
 mv GplLicense.tmp cppad-$version/makefile.am
+sed < cppad-$version/makefile.in > GplLicense.tmp \
+	-e 's/cpl1.0.txt/gpl2.txt/'
+mv GplLicense.tmp cppad-$version/makefile.in
 #
 sed < cppad-$version/omh/license.omh > GplLicense.tmp \
 	-e 's/$verbatim%cpl1.0.txt%$\$/$verbatim%gpl2.txt%$$/'

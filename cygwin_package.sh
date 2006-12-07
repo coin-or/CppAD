@@ -72,6 +72,14 @@ fi
 # Create the setup.hint file ----------------------------------------------
 #
 cat > setup.hint << EOF
+# To test the source or binary distribution, copy the source distribution file
+#	cppad-$version-$release/get_started/get_started.cpp
+# to a temporary directory and execute the commands
+#	g++ get_started.cpp -o get_started.exe
+#	./get_started
+# the resulting output should be
+#	y'(3) computed by CppAD = 142
+#
 sdesc: "C++ algorithmic differentiation by operator overloading"
 ldesc: "C++ algorithmic differentiation by operator overloading.
 Forward and reverse mode as well as derivatives of arbitrary order 
@@ -174,6 +182,12 @@ if ! automake --add-missing
 then
 	exit 1
 fi
+# directory created by commands above and not in distribution
+echo "rm -r autom4te.cache"
+if ! rm -r autom4te.cache
+then
+	exit 1
+fi
 if ! cd ..
 then
 	exit 1
@@ -182,7 +196,8 @@ echo "End: modify configure.ac and files that depend on it."
 #
 # create the cppad-$version.patch file
 #
-diff -N -r -u -p ../cppad-$version cppad-$version > cppad-$version.patch 
+diff -N -r -u -p \
+	../cppad-$version cppad-$version-$release > cppad-$version.patch 
 #
 # create the cppad-$version-$release/CYGWIN-PATCHES sub-directory
 #
@@ -235,19 +250,19 @@ chmod 644 usr/include/cppad/local/*.hpp
 chmod 755 usr/include/cppad
 chmod 755 usr/include/cppad/local
 #
-# create the usr/share/doc/cppad-$version-$release directory
+# create the usr/share/doc/cppad-$version directory
 #
 echo "mkdir usr/share/doc"
 mkdir usr/share
 mkdir usr/share/doc
 #
-echo "cp -r cppad-$version-$release/doc usr/share/doc/cppad-$version-$release"
-if ! cp -r cppad-$version-$release/doc usr/share/doc/cppad-$version-$release
+echo "cp -r cppad-$version-$release/doc usr/share/doc/cppad-$version"
+if ! cp -r cppad-$version-$release/doc usr/share/doc/cppad-$version
 then
 	exit 1
 fi
-chmod 644 usr/share/doc/cppad-$version-$release/*
-chmod 755 usr/share/doc/cppad-$version-$release/
+chmod 644 usr/share/doc/cppad-$version/*
+chmod 755 usr/share/doc/cppad-$version
 #
 # create the usr/share/doc/Cygwin/cppad-$version-$release.README
 #
@@ -270,24 +285,6 @@ then
 fi
 echo "bzip2 -z -f cppad-$version-$release.tar"
 if ! bzip2 -z -f cppad-$version-$release.tar 
-then
-	exit 1
-fi
-#
-# Clean up ------------------------------------------------------------------
-# 
-echo "rm -r cppad-$version-$release"
-if ! rm -r cppad-$version-$release
-then
-	exit 1
-fi
-echo "rm -r usr"
-if ! rm -r usr
-then
-	exit 1
-fi
-echo "rm cppad-$version.patch"
-if ! rm cppad-$version.patch
 then
 	exit 1
 fi
@@ -347,13 +344,13 @@ if ! make install
 then
 	exit 1
 fi
-echo "cd .."
-if ! cd ..
+echo "cd ../.."
+if ! cd ../..
 then 
 	exit 1
 fi
-echo "cp ../../get_started/get_started.cpp ."
-if ! cp ../../get_started/get_started.cpp .
+echo "cp test_src/cppad-$version-$release/get_started/get_started.cpp ."
+if ! cp test_src/cppad-$version-$release/get_started/get_started.cpp .
 then
 	exit 1
 fi
@@ -392,6 +389,131 @@ do
 		fi
 	done
 done 
+echo "End: test if source install"
+#
+# Test binary install --------------------------------------------------------
+#
+echo "Begin: test if binary install"
+if [ -e /usr/include/cppad ]
+then
+	echo "rm -r /usr/include/cppad"
+	if ! rm -r /usr/include/cppad
+	then
+		exit 1
+	fi
+fi
+if [ -e /usr/share/doc/cppad-* ]
+then
+	echo "rm -rf /usr/share/doc/cppad-*"
+	if ! rm -rf /usr/share/doc/cppad-*
+	then
+		exit 1
+	fi
+fi
+mkdir test_bin
+echo "cd test_bin"
+if ! cd test_bin
+then
+	exit 1
+fi
+echo "cp ../cppad-$version-$release.tar.bz2 ."
+if ! cp ../cppad-$version-$release.tar.bz2 .
+then
+	exit 1
+fi
+echo "bunzip2 cppad-$version-$release.tar.bz2"
+if ! bunzip2 cppad-$version-$release.tar.bz2
+then
+	exit 1
+fi
+echo "tar -xf cppad-$version-$release.tar"
+if ! tar -xf cppad-$version-$release.tar
+then
+	exit 1
+fi
+echo "cp -r usr/include/cppad /usr/include/cppad"
+if ! cp -r usr/include/cppad /usr/include/cppad
+then
+	exit 1
+fi
+echo "cp -r usr/share/doc/cppad-$version /usr/share/doc/cppad-$version"
+if ! cp -r usr/share/doc/cppad-$version /usr/share/doc/cppad-$version
+then
+	exit 1
+fi
+echo "cd .."
+if ! cd ..
+then
+	exit 1
+fi
+if ! rm get_started.exe
+then
+	exit 1
+fi
+if ! g++ get_started.cpp -o get_started.exe
+then
+	exit 1
+fi
+echo "./get_started > get_started.out"
+./get_started       > get_started.out
+echo "y'(3) computed by CppAD = 142"  > get_started.chk
+if ! diff get_started.out get_started.chk
+then
+	echo "error in get_started output"
+	exit 1
+fi
+file_list="
+	cppad
+	getstarted.cpp
+	introduction
+	whats_new
+	installunix
+"
+ext_list="
+	htm
+	xml
+"
+for file in $file_list 
+do
+	for ext in $ext_list
+	do
+		full_name=/usr/share/doc/cppad-$version/$file.$ext
+		if [ ! -e "$full_name" ]
+		then
+			echo "cannot find $full_name"
+			exit 1
+		fi
+	done
+done 
+echo "End: test if binary install"
+#
+# Clean up ------------------------------------------------------------------
+# 
+echo "cd .."
+if ! cd ..
+then
+	exit 1
+fi
+list="
+	cppad-$version-$release
+	usr
+	cppad-$version.patch
+	test_src
+	test_bin
+"
+for dir in $list
+do
+	echo "rm -r cygwin_package/$file"
+	if ! rm -r cygwin_package/$file
+	then
+		exit 1
+	fi
+done
+echo "rm cygwin_package/get_started.*"
+if ! rm cygwin_package/get_started.*
+then
+	exit 1
+fi
 #
 # Done
 #

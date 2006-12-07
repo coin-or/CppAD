@@ -38,12 +38,13 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Fix bug in subversion installation instructions.
+log_entry="Fix license statement in automatically generated makefile's
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: user's view of changes.
-install_subversion.omh: correct subversion path.
-distribute.omh: fix out of date developer instructions.
+makefile.am: remove BEGIN and END comments.
+cygwin_package.sh: only clean up if all tests pass, test instructions.
+gpl_license.sh: fix license statement in makefile.in and */makefile.in.
 "
 # 
 add_list="
@@ -52,8 +53,9 @@ add_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	omh/install_subversion.omh
-	omh/distribute.omh
+	adolc/makefile.am
+	cygwin_package.sh
+	gpl_license.sh
 "
 #
 delete_list="
