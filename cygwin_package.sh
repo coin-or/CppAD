@@ -503,8 +503,8 @@ list="
 "
 for dir in $list
 do
-	echo "rm -r cygwin_package/$file"
-	if ! rm -r cygwin_package/$file
+	echo "rm -r cygwin_package/$dir"
+	if ! rm -r cygwin_package/$dir
 	then
 		exit 1
 	fi
