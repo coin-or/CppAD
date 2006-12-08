@@ -80,14 +80,20 @@ cat > setup.hint << EOF
 # the resulting output should be
 #	y'(3) computed by CppAD = 142
 #
-sdesc: "C++ algorithmic differentiation by operator overloading"
-ldesc: "C++ algorithmic differentiation by operator overloading.
-Forward and reverse mode as well as derivatives of arbitrary order 
-are supported. See the home page below for more details:
-   http://http://www.coin-or.org/CppAD/" 
-category: Math
 # Requires a standard compliant C++ compiler; e.g., gcc-g++.
 requires: gcc-g++
+#
+category: Math
+#
+sdesc: "C++ algorithmic differentiation by operator overloading"
+#
+ldesc: "C++ algorithmic differentiation by operator overloading.
+Forward and reverse mode as well as derivatives of arbitrary order 
+are supported. See the documentation for this version
+    ( /usr/share/doc/cppad-$version-$release/cppad.htm )
+or the CppAD home page 
+    ( http://http://www.coin-or.org/CppAD/ )
+for more details."
 EOF
 #
 # Create the source distribution ------------------------------------------
@@ -115,9 +121,10 @@ first join the mailing list using its general information page
 
 DOC
 We use DOC below for the directories that contains the CppAD documentation.
-Binary distribution this version, DOC = $bin_doc
-Source distribution this version, DOC = $src_doc
-Web based most recent version,    DOC = $web_doc
+Source distribution this version,        DOC = cppad-$version-$release/doc
+Binary this version (post install),      DOC = $bin_doc
+Source this version (post install),      DOC = $src_doc
+We documentation of most recent version, DOC = $web_doc
 
 DOC/*.htm
 Files in the DOC directory with with the .htm extension
