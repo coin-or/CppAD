@@ -24,22 +24,21 @@ then
 	fi
 fi
 #
-# determine the most recent version in current directory
+# determine the most recent version in the Download directory
 #
-if [ ! -e cppad-*.gpl.tgz ]
-then
-	if ! cp doc/cppad-*.gpl.tgz .
-	then
-		exit 1
-	fi
-fi
-version=`ls cppad-*.gpl.tgz | 
-	sed -n -e 's/cppad-//' -e 's/.gpl.tgz//' -e '$,$p'`
+version=`ls /cygdrive/c/Download/cppad-20*.gpl.tgz | 
+	sed -n -e 's|.*/||' -e 's|cppad-||' -e 's|.gpl.tgz||' -e '$,$p'`
 release="1"
+if [ ! -e "/cygdrive/c/Download/cppad-$version.gpl.tgz" ]
+then
+	echo "Error determining the version number, cannot find"
+	echo "/cygdrive/c/Download/cppad-$version.gpl.tgz"
+	exit 1
+fi
 #
 # extract the gpl version of the distribution 
 #
-file="cppad-$version.gpl.tgz"
+file="/cygdrive/c/Download/cppad-$version.gpl.tgz"
 if [ ! -e $file ]
 then
 	exit 1
