@@ -10,13 +10,26 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin CppAD$$
 $latex
-	% Latex macros used by CppAD documentation:
+	% Latex macros defined for all the CppAD documentation:
 	\newcommand{\R}{ {\bf R} }
 	\newcommand{\C}{ {\bf C} }
 	\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 	\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
 	\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial {#2}^{#1}} }
 $$
+$comment default navigate command for all of CppAD documentation$$
+$navigate%
+	Across%Index%
+	Prev%Prev%
+	Next%Next%
+	Up%Up%
+	Down_up_4%_up_4%
+	Down_up_3%_up_3%
+	Down_up_2%_up_2%
+	Down_up_1%_up_1%
+	Down_up_0%_up_0%
+	Current%Headings
+%$$
 $spell
 	cppad.hpp
 	cppad
@@ -44,7 +57,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-20061203
+A Package for Differentiation of C++ Algorithms: cppad-20061209
 $$ 
 
 $head Syntax$$
