@@ -13,11 +13,7 @@
 #
 # version and release number
 #
-version=`grep "^ *AC_INIT(" configure.ac | \
-        sed -e "s/.*, *\([0-9]\{8\}\) *,.*/\1/"`
-release="1"
-#
-# Make cygwin_package directory
+# begin fresh cygwin_package directory
 #
 if [ -e cygwin_package ]
 then
@@ -28,12 +24,24 @@ then
 	fi
 fi
 #
+# determine the most recent version in current directory
+#
+if [ ! -e cppad-*.gpl.tgz ]
+then
+	if ! cp doc/cppad-*.gpl.tgz .
+	then
+		exit 1
+	fi
+fi
+version=`ls cppad-*.gpl.tgz | 
+	sed -n -e 's/cppad-//' -e 's/.gpl.tgz//' -e '$,$p'`
+release="1"
+#
 # extract the gpl version of the distribution 
 #
-file="doc/cppad-$version.gpl.tgz"
+file="cppad-$version.gpl.tgz"
 if [ ! -e $file ]
 then
-	echo "Must first use ./build.sh to create $file."
 	exit 1
 fi
 if [ -e cppad-$version ]
@@ -121,10 +129,10 @@ first join the mailing list using its general information page
 
 DOC
 We use DOC below for the directories that contains the CppAD documentation.
-Source distribution this version,        DOC = cppad-$version-$release/doc
-Binary this version (post install),      DOC = $bin_doc
-Source this version (post install),      DOC = $src_doc
-We documentation of most recent version, DOC = $web_doc
+Source distribution this version,         DOC = cppad-$version-$release/doc
+Binary this version (post install),       DOC = $bin_doc
+Source this version (post install),       DOC = $src_doc
+The documentation of most recent version, DOC = $web_doc
 
 DOC/*.htm
 Files in the DOC directory with with the .htm extension
