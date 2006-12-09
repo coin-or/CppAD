@@ -20,9 +20,9 @@ $$
 $comment default navigate command for all of CppAD documentation$$
 $navigate%
 	Across%Index%
+	Up%Up%
 	Prev%Prev%
 	Next%Next%
-	Up%Up%
 	Down_up_4%_up_4%
 	Down_up_3%_up_3%
 	Down_up_2%_up_2%

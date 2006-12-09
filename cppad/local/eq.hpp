@@ -46,7 +46,7 @@ $xref/glossary/Variable/variable/$$ if and only if $italic x$$ is a variable).
 $head x$$
 The operand $italic x$$ has one of the following prototypes
 $syntax%
-	const int %%                   &%x%
+	int       %%                    %x%
 	const %Base%                   &%x%
 	const AD<%Base%>               &%x%
 	const VecAD<%Base%>::reference &%x%
@@ -125,5 +125,8 @@ inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
 
 
 } // END CppAD namespace
+
+// int, Base, and VecAD_reference<Base> cases are folded in using
+// CPPAD_ASSIGN_MEMBER(=) in the file AD.h
 
 # endif

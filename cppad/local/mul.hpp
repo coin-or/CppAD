@@ -43,7 +43,7 @@ $syntax%VecAD<%Base%>::reference%$$.
 $head x$$
 The operand $italic x$$ has one of the following prototypes
 $syntax%
-	const int %%                   &%x%
+	int       %%                    %x%
 	const %Base%                   &%x%
 	const AD<%Base%>               &%x%
 	const VecAD<%Base%>::reference &%x%
@@ -52,7 +52,7 @@ $syntax%
 $head y$$
 The operand $italic y$$ has one of the following prototypes
 $syntax%
-	const int %%                   &%y%
+	int       %%                    %y%
 	const %Base%                   &%y%
 	const AD<%Base%>               &%y%
 	const VecAD<%Base%>::reference &%y%

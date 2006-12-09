@@ -64,6 +64,16 @@ This section contains a list of the changes to CppAD during 2006
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-09$$
+A $cref/speed/WishList/Speed/$$ item was added to the wish list.
+$pre
+
+$$
+The prototype for $code int$$ arguments in binary operations
+(for example $cref/Add/$$) was documented as
+$syntax const int &$$ but was actually just plain $code int$$.
+This has been fixed.
+
 $head 12-07$$
 Fix bug in the 
 $cref/subversion installation/InstallSubversion/$$ instructions; see 

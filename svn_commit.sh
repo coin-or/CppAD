@@ -38,13 +38,17 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Fix license statement in automatically generated makefile's
+log_entry="Correct binary operator prototye from 'const int &' to 'int'.
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: user's view of changes.
 makefile.am: remove BEGIN and END comments.
-cygwin_package.sh: only clean up if all tests pass, test instructions.
-gpl_license.sh: fix license statement in makefile.in and */makefile.in.
+eq.cpp: include int case in testing of assignment operator.
+wish_list.omh: add speed testing entry to wish list.
+doc.omh: change navigate command.
+
+Other Files:
+change 'const int &' to 'int' and CppADAssignMember to CPPAD_ASSIGN_MEMBER
 "
 # 
 add_list="
@@ -53,9 +57,18 @@ add_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	adolc/makefile.am
-	cygwin_package.sh
-	gpl_license.sh
+	example/eq.cpp
+	omh/wish_list.omh
+	cppad/local/add_eq.hpp
+	cppad/local/div.hpp
+	cppad/local/add.hpp
+	cppad/local/eq.hpp
+	cppad/local/sub_eq.hpp
+	cppad/local/mul_eq.hpp
+	cppad/local/div_eq.hpp
+	cppad/local/sub.hpp
+	cppad/local/mul.hpp
+	doc.omh
 "
 #
 delete_list="

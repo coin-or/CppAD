@@ -43,7 +43,7 @@ $italic y$$ where $italic y$$ is a $syntax%AD<%Base%>%$$ object.
 $head x$$
 The operand $italic x$$ has one of the following prototypes
 $syntax%
-	const int %%                   &%x%
+	int       %%                    %x%
 	const %Base%                   &%x%
 	const AD<%Base%>               &%x%
 	const VecAD<%Base%>::reference &%x%
@@ -140,7 +140,7 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 }
 
 // int, Base, and VecAD_reference<Base> cases are folded in using
-// CppADAssignMember(*=) in the file AD.h
+// CPPAD_ASSIGN_MEMBER(*=) in the file AD.h
 
 } // END CppAD namespace
 
