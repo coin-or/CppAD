@@ -12,7 +12,7 @@
 # Run one of the tests
 if [ "$1" = "" ]
 then
-	echo "usage: one_test.sh file function [extra]"
+	echo "usage: test_one.sh file function [extra]"
 	echo "file is the *.cpp file name with extension"
 	echo "function is the name of the function being tested"
 	echo "and extra is extra options for g++ command"
@@ -22,9 +22,9 @@ if [ -e test_one.exe ]
 then
 	rm test_one.exe
 fi
-sed < example.cpp > test_one.cpp \
+sed < test_more.cpp > test_one.cpp \
 -e '/ok *\&= *Run( /d' \
--e "s/.*This line is used by one_test.sh.*/	ok \&= Run( $2, \"$2\");/"  
+-e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $2, \"$2\");/"  
 #
 echo "g++ test_one.cpp $1 $3  -o test_one.exe  \\"
 echo "  -g -Wall -ansi -pedantic-errors -std=c++98 \\"

@@ -38,19 +38,9 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Finish implementing pow(x,y) for x < 0 and y integer.
+log_entry="move one_test.sh to test_one.sh
 
-svn_commit.sh: file that made this commit.
-pow_int.cpp: use negative value for x in example and chanage PowInt to pow_int.
-example.cpp: change PowInt function to pow_int.
-makefile.am: remove pow_int.hpp (replaced by extension of pow.hpp).
-pow_int.hpp: remove pow_int.hpp (replaced by extension of pow.hpp).
-include_deprecated.omh: include PowInt.h documentation here.
-example_list.omh: change PowInt to pow_int.
-library.omh: remove pow_int from list of library functions.
-pow.hpp: extend rest of int cases and add pow_int.cpp test as an example usage.
-PowInt.h: copy to here from old pow_int.hpp function.
-cppad.hpp: remove include of pow_int.hpp.
+svn_commit.sh: fix creating of the this_branch variable.
 "
 # 
 add_list="
@@ -58,19 +48,13 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	example/pow_int.cpp
-	example/example.cpp
-	makefile.am
-	omh/include_deprecated.omh
-	omh/example_list.omh
-	omh/library.omh
-	cppad/local/pow.hpp
-	cppad/PowInt.h
-	cppad/cppad.hpp
+	example/test_one.sh
+	example/one_test.sh
+	test_more/one_test.sh
+	test_more/test_one.sh
 "
 #
 delete_list="
-	cppad/pow_int.hpp
 "
 #
 copy_branch="" 
@@ -82,7 +66,7 @@ then
 		echo "../branches/$copy_branch/.svn is not a directory"
 	fi
 fi
-this_branch=`pwd | sed -e "s|.*/cppad/||"`
+this_branch=`pwd | sed -e "s|.*/CppAD/||"`
 echo "$this_branch: $log_entry" > svn_commit.log
 count=0
 for file in $add_list $change_list
