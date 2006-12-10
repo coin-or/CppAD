@@ -62,6 +62,10 @@ $cref/Unix installation/InstallUnix/$$.
 This will link form the deprecated commands
 to the commands that should be used:
 
+$children%
+	cppad/PowInt.h
+%$$
+
 $table
 $bold Deprecated$$         $pre  $$ $cnext $bold Should Use$$   
 	$pre  $$ $cnext $bold Documentation$$
@@ -119,7 +123,7 @@ CppAD/Poly.h               $pre  $$ $cnext cppad/poly.hpp
 	$pre  $$ $cnext $cref/Poly/$$
 $rnext
 
-CppAD/PowInt.h             $pre  $$ $cnext cppad/pow_int.hpp
+CppAD/PowInt.h             $pre  $$ (removed)
 	$pre  $$ $cnext $cref/PowInt/$$
 $rnext
 

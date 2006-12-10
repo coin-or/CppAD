@@ -38,11 +38,19 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Fix bug in pow function so it works in more special cases.
+log_entry="Finish implementing pow(x,y) for x < 0 and y integer.
 
 svn_commit.sh: file that made this commit.
-omh/whats_new_06.omh: user's view of the changes.
-test_more/pow.cpp: full testing of x < 0 and y integer in pow(x, y).
+pow_int.cpp: use negative value for x in example and chanage PowInt to pow_int.
+example.cpp: change PowInt function to pow_int.
+makefile.am: remove pow_int.hpp (replaced by extension of pow.hpp).
+pow_int.hpp: remove pow_int.hpp (replaced by extension of pow.hpp).
+include_deprecated.omh: include PowInt.h documentation here.
+example_list.omh: change PowInt to pow_int.
+library.omh: remove pow_int from list of library functions.
+pow.hpp: extend rest of int cases and add pow_int.cpp test as an example usage.
+PowInt.h: copy to here from old pow_int.hpp function.
+cppad.hpp: remove include of pow_int.hpp.
 "
 # 
 add_list="
@@ -50,11 +58,19 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	test_more/pow.cpp
-	omh/whats_new_06.omh
+	example/pow_int.cpp
+	example/example.cpp
+	makefile.am
+	omh/include_deprecated.omh
+	omh/example_list.omh
+	omh/library.omh
+	cppad/local/pow.hpp
+	cppad/PowInt.h
+	cppad/cppad.hpp
 "
 #
 delete_list="
+	cppad/pow_int.hpp
 "
 #
 copy_branch="" 

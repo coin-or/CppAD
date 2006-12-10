@@ -15,7 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // ---------------------------------------------------------------------------
 // CppAD general purpose library routines (can be included separately)
 
-# include <cppad/pow_int.hpp>
 # include <cppad/lu_solve.hpp>
 # include <cppad/near_equal.hpp>
 # include <cppad/runge_45.hpp>

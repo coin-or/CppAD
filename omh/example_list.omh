@@ -146,7 +146,7 @@ $rref ParVar.cpp$$
 $rref Piecewise.cpp$$
 $rref Poly.cpp$$
 $rref Pow.cpp$$
-$rref PowInt.cpp$$
+$rref pow_int.cpp$$
 $rref PrintFor.cpp$$
 $rref RevOne.cpp$$
 $rref RevSparseHes.cpp$$

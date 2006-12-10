@@ -10,13 +10,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin PowInt.cpp$$
+$begin pow_int.cpp$$
 $spell
 	tan
 	atan
 $$
 
-$section The Integer Power Function: Example and Test$$
+$section The Pow Integer Exponent: Example and Test$$
 
 $index pow, int$$
 $index example, pow int$$
@@ -33,7 +33,7 @@ $end
 # include <cppad/cppad.hpp>
 # include <cmath>
 
-bool PowInt(void)
+bool pow_int(void)
 {	bool ok = true;
 
 	using CppAD::AD;
@@ -41,7 +41,7 @@ bool PowInt(void)
 
 	// declare independent variables and start tape recording
 	size_t n  = 1;
-	double x0 = 0.5;
+	double x0 = -0.5;
 	CppADvector< AD<double> > x(n);
 	x[0]      = x0;
 	CppAD::Independent(x);

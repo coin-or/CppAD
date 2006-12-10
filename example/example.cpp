@@ -108,7 +108,7 @@ extern bool ParVar(void);
 extern bool Piecewise(void);
 extern bool Poly(void);
 extern bool Pow(void);
-extern bool PowInt(void);
+extern bool pow_int(void);
 extern bool ReverseAny(void);
 extern bool ReverseOne(void);
 extern bool RevOne(void);
@@ -239,7 +239,7 @@ int main(void)
 	ok &= Run( Piecewise,         "Piecewise"        );
 	ok &= Run( Pow,               "Poly"             );
 	ok &= Run( Pow,               "Pow"              );
-	ok &= Run( PowInt,            "PowInt"           );
+	ok &= Run( pow_int,           "pow_int"          );
 	ok &= Run( ReverseAny,        "ReverseAny"       );
 	ok &= Run( ReverseOne,        "ReverseOne"       );
 	ok &= Run( RevOne,            "RevOne"           );

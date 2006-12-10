@@ -53,6 +53,7 @@ $syntax%
 $head y$$
 The argument $italic y$$ has one of the following prototypes
 $syntax%
+	int   %%                        %y%
 	const %Base%                   &%y%
 	const AD<%Base%>               &%y%
 	const VecAD<%Base%>::reference &%y%
@@ -83,12 +84,13 @@ $xref/glossary/Operation/Sequence/operation sequence/1/$$.
 
 $head Example$$
 $children%
-	example/pow.cpp
+	example/pow.cpp%
+	example/pow_int.cpp
 %$$
-The file
-$xref/Pow.cpp/$$
-contains an example and test of this function.   
-It returns true if it succeeds and false otherwise.
+The files
+$xref/Pow.cpp/$$, $cref/pow_int.cpp/$$
+contain an examples and tests of this function.   
+They returns true if they succeed and false otherwise.
 
 $end
 -------------------------------------------------------------------------------
@@ -172,24 +174,22 @@ template <class Base> AD<Base>
 pow(const AD<Base> &x, const Base &y)
 {	return pow(x, AD<Base>(y)); }
 
+// Flod operations with int
 template <class Base> AD<Base> pow
 (int x, const VecAD_reference<Base> &y)
 {	return pow(AD<Base>(x), y.ADBase()); }
 
 template <class Base> AD<Base> pow
-(int x, const AD<Base> &y)
-{	return pow(AD<Base>(x), y); }
-
-# if 0
-// cases that are handled by the PowInt function
-template <class Base> AD<Base> pow
 (const VecAD_reference<Base> &x, int y)
 {	return pow(x.ADBase(), AD<Base>(y)); }
 
 template <class Base> AD<Base> pow
+(int x, const AD<Base> &y)
+{	return pow(AD<Base>(x), y); }
+
+template <class Base> AD<Base> pow
 (const AD<Base> &x, int y)
 {	return pow(x, AD<Base>(y)); }
-# endif
 
 } // END CppAD namespace
 

@@ -33,7 +33,6 @@ $children%
 	omh/simple_vector.omh%
 	cppad/check_simple_vector.hpp%
 
-	cppad/pow_int.hpp%
 	cppad/poly.hpp%
 	omh/lu_det_and_solve.omh%
 	cppad/romberg_one.hpp%
