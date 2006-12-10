@@ -38,14 +38,11 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Make zero order forward sweep Pow identical to Base type case
-(fixes a test failure in previous commit).
+log_entry="Fix bug in pow function so it works in more special cases.
 
 svn_commit.sh: file that made this commit.
-test_more/pow.cpp: move current example to this file.
-build.sh: automatically remove previous test distribution directory.
-forward_sweep.hpp: initialize all pointers as zero (avoid warnings).
-reverse_sweep.hpp: initialize all pointers as zero (avoid warnings).
+test_more/pow.cpp: more special cases (including some with x < 0).
+forward_sweep.hpp: fix bug in previous version (X was undefined). 
 "
 # 
 add_list="
@@ -56,7 +53,6 @@ change_list="
 	test_more/pow.cpp
 	build.sh
 	cppad/local/forward_sweep.hpp
-	cppad/local/reverse_sweep.hpp
 "
 #
 delete_list="

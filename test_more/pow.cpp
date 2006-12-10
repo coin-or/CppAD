@@ -183,11 +183,120 @@ bool PowTestTwo(void)
 	return ok;
 }
 
+bool PowTestThree(void)
+{	bool ok = true;
+
+	using CppAD::AD;
+	using CppAD::NearEqual;
+
+	// domain space vector
+	size_t n  = 1;
+	CppADvector< AD<double> > x(n);
+	x[0]      = 2.;
+
+	// declare independent variables and start tape recording
+	CppAD::Independent(x);
+
+	// range space vector 
+	size_t m = 4;
+	CppADvector< AD<double> > y(m);
+
+	// some special cases
+	y[0] = pow(x[0], 0.);
+	y[1] = pow(0., x[0]);
+	y[2] = pow(x[0], 1.);
+	y[3] = pow(1., x[0]);
+
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(x, y); 
+
+	// check function values
+	ok  &= (Value(y[0]) == 1.);
+	ok  &= (Value(y[1]) == 0.);
+	ok  &= (Value(y[2]) == Value(x[0]));
+	ok  &= (Value(y[3]) == 1.);
+
+	// forward computation of first partial w.r.t. x
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
+	dx[0] = 1.;
+	dy    = f.Forward(1, dx);
+	ok   &= (dy[0] == 0.);
+	ok   &= (dy[1] == 0.);
+	ok   &= NearEqual(dy[2], 1., 1e-10, 1e-10);
+	ok   &= (dy[3] == 0.);
+
+	// reverse mode computation of derivative of y[0] + y[1]
+	CppADvector<double>  w(m);
+	CppADvector<double> dw(n);
+	w[0] = 1.;
+	w[1] = 1.;
+	w[2] = 1.;
+	w[3] = 1.;
+	dw   = f.Reverse(1, w);
+	ok  &= NearEqual(dw[0], 1., 1e-10, 1e-10);
+
+	return ok;	
+}
+
+bool PowTestFour(void)
+{	bool ok = true;
+
+	using CppAD::AD;
+	using CppAD::NearEqual;
+
+	// domain space vector
+	size_t n  = 1;
+	CppADvector< AD<double> > x(n);
+	x[0]      = -2.;
+
+	// declare independent variables and start tape recording
+	CppAD::Independent(x);
+
+	// range space vector 
+	size_t m = 3;
+	CppADvector< AD<double> > y(m);
+
+	// some special cases (skip zero raised to a negative power)
+	y[0] = pow(x[0], 0.);
+	y[1] = pow(x[0], 1.);
+	y[2] = pow(1., x[0]);
+
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(x, y); 
+
+	ok  &= (Value(y[0]) == 1.);
+	ok  &= (Value(y[1]) == Value(x[0]));
+	ok  &= (Value(y[2]) == 1.);
+
+	// forward computation of first partial w.r.t. x
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
+	dx[0] = 1.;
+	dy    = f.Forward(1, dx);
+	ok   &= (dy[0] == 0.);
+	ok   &= NearEqual(dy[1], 1., 1e-10, 1e-10);
+	ok   &= (dy[2] == 0.);
+
+	// reverse mode computation of derivative of y[0] + y[1] + y[2]
+	CppADvector<double>  w(m);
+	CppADvector<double> dw(n);
+	w[0] = 1.;
+	w[1] = 1.;
+	w[2] = 1.;
+	dw   = f.Reverse(1, w);
+	ok  &= NearEqual(dw[0], 1., 1e-10, 1e-10);
+
+	return ok;	
+}
+
 } // END empty namespace
  
 bool Pow(void)
 {	bool ok = true;
 	ok     &= PowTestOne();
 	ok     &= PowTestTwo();
+	ok     &= PowTestThree();
+	ok     &= PowTestFour();
 	return ok;
 }

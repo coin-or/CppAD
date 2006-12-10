@@ -699,8 +699,9 @@ size_t ForwardSweep(
 			W = U + J;
 
 			// u = log(x)
+			X = Rec->GetPar(ind[0]);
 			if( d == 0 )
-				U[d] = log( *(Rec->GetPar(ind[0])) );
+				U[d] = log(X[d]);
 			else	U[d] = Base(0);
 
 			// w = u * y
