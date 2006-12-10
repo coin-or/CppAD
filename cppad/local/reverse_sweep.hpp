@@ -149,24 +149,24 @@ void ReverseSweep(
 	size_t        n_ind;
 
 	const size_t   *ind;
-	const Base       *P;
-	const Base       *Z;
-	const Base       *Y;
-	const Base       *X;
-	const Base       *W;
-	const Base       *U;
+	const Base       *P = 0;
+	const Base       *Z = 0;
+	const Base       *Y = 0;
+	const Base       *X = 0;
+	const Base       *W = 0;
+	const Base       *U = 0;
 
-	Base            *pZ;
-	Base            *pY;
-	Base            *pX;
-	Base            *pW;
-	Base            *pU;
+	Base            *pZ = 0;
+	Base            *pY = 0;
+	Base            *pX = 0;
+	Base            *pW = 0;
+	Base            *pU = 0;
 
 	// used by CExp operator 
-	Base        *trueCase;
-	Base        *falseCase;
-	const Base  *left;
-	const Base  *right;
+	Base        *trueCase  = 0;
+	Base        *falseCase = 0;
+	const Base  *left      = 0;
+	const Base  *right     = 0;
 	const Base   zero = Base(0);
 
 	// check numvar argument

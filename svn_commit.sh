@@ -38,20 +38,14 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Preparation for handeling negative bases in power function.
+log_entry="Make zero order forward sweep Pow identical to Base type case
+(fixes a test failure in previous commit).
 
 svn_commit.sh: file that made this commit.
-whats_new_06.omh: user's view of the changes.
-pow.cpp: improve example.
-ad_tape.hpp: make pow a friend of the ADTape class.
-ad.hpp: make pow a friend of the AD class.
-declare.hpp: forward declaration of the pow function.
-op_code.hpp: add three new tape operations: Powvp, Powpv, Powvv.
-forward_sweep.hpp: implement forward mode for the Pow tape operations.
-pow.hpp: use the new atomic operation instead of exp(log(x) * y).
-reverse_sweep.hpp: implement forward mode for the Pow tape operations.
-config.h: update version number.
-pow_int.hpp: reference the general pow fucntion in the int case documentation.
+test_more/pow.cpp: move current example to this file.
+build.sh: automatically remove previous test distribution directory.
+forward_sweep.hpp: initialize all pointers as zero (avoid warnings).
+reverse_sweep.hpp: initialize all pointers as zero (avoid warnings).
 "
 # 
 add_list="
@@ -59,17 +53,10 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	omh/whats_new_06.omh
-	example/pow.cpp
-	cppad/local/ad_tape.hpp
-	cppad/local/ad.hpp
-	cppad/local/declare.hpp
-	cppad/local/op_code.hpp
+	test_more/pow.cpp
+	build.sh
 	cppad/local/forward_sweep.hpp
-	cppad/local/pow.hpp
 	cppad/local/reverse_sweep.hpp
-	cppad/config.h
-	cppad/pow_int.hpp
 "
 #
 delete_list="

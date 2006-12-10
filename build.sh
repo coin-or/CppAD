@@ -17,17 +17,22 @@ ADOLC_DIR=$HOME/adolc_base
 FADBAD_DIR=$HOME
 BOOST_DIR=/usr/include/boost-1_33
 #
+#
+# date currently in configure.ac
+version=`grep "^ *AC_INIT(" configure.ac | \
+	sed -e "s/.*, *\([0-9]\{8\}\) *,.*/\1/"`
+#
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
 then
 	if [ -e build_test.log ]
 	then
 		rm build_test.log
 	fi
+	if [ -e cppad-$version ]
+	then
+		rm -r cppad-$version
+	fi
 fi
-#
-# date currently in configure.ac
-version=`grep "^ *AC_INIT(" configure.ac | \
-	sed -e "s/.*, *\([0-9]\{8\}\) *,.*/\1/"`
 #
 # version
 #

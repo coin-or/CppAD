@@ -169,9 +169,9 @@ size_t ForwardSweep(
 	size_t        n_ind;
 
 	const size_t   *ind;
-	const Base       *P;
-	const Base       *X;
-	const Base       *Y;
+	const Base       *P = 0;
+	const Base       *X = 0;
+	const Base       *Y = 0;
 
 	// used by CExp operator (left and right also used by Com operator)
 	const Base  *left, *right, *trueCase, *falseCase;
@@ -180,9 +180,9 @@ size_t ForwardSweep(
 	// used by Com operator
 	bool result;
 
-	Base             *Z;
-	Base             *W;
-	Base             *U;
+	Base             *Z = 0;
+	Base             *W = 0;
+	Base             *U = 0;
 
 	size_t            i;
 	size_t          len;
@@ -684,7 +684,10 @@ size_t ForwardSweep(
 			ForMulvpOp(d, W, U, Y);
 
 			// z = exp(w)
-			ForExpOp(d, Z, W);
+			// zero order case exactly same as Base type operation
+			if( d == 0 )
+				Z[0] = pow(X[0], Y[0]);
+			else	ForExpOp(d, Z, W);
 
 			break;
 			// -------------------------------------------------
@@ -705,7 +708,10 @@ size_t ForwardSweep(
 			ForMulpvOp(d, W, U, Y);
 
 			// z = exp(w)
-			ForExpOp(d, Z, W);
+			// zero order case exactly same as Base type operation
+			if( d == 0 )
+				Z[0] = pow(X[0], Y[0]);
+			else	ForExpOp(d, Z, W);
 
 			break;
 			// -------------------------------------------------
@@ -725,7 +731,10 @@ size_t ForwardSweep(
 			ForMulvvOp(d, W, U, Y);
 
 			// z = exp(w)
-			ForExpOp(d, Z, W);
+			// zero order case exactly same as Base type operation
+			if( d == 0 )
+				Z[0] = pow(X[0], Y[0]);
+			else	ForExpOp(d, Z, W);
 
 			break;
 			// -------------------------------------------------
