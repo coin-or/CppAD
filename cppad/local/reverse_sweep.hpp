@@ -153,12 +153,12 @@ void ReverseSweep(
 	const Base       *Z;
 	const Base       *Y;
 	const Base       *X;
-	const Base     *Tmp;
+	const Base     *W;
 
 	Base            *pZ;
 	Base            *pY;
 	Base            *pX;
-	Base          *pTmp;
+	Base          *pW;
 
 	// used by CExp operator 
 	Base        *trueCase;
@@ -268,12 +268,12 @@ void ReverseSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( i_var < numvar - 1 );
 
-			// use Tmp for data stored in second record
-			Tmp  = Taylor  + (i_var+1) * J;
-			pTmp = Partial + (i_var+1) * K;
+			// use W for data stored in second record
+			W  = Taylor  + (i_var+1) * J;
+			pW = Partial + (i_var+1) * K;
 			X    = Taylor  + ind[0] * J;
 			pX   = Partial + ind[0] * K;
-			RevAcosOp(d, Z, Tmp, X, pZ, pTmp, pX);
+			RevAcosOp(d, Z, W, X, pZ, pW, pX);
 			break;
 			// --------------------------------------------------
 
@@ -285,12 +285,12 @@ void ReverseSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( i_var < numvar - 1 );
 
-			// use Tmp for data stored in second record
-			Tmp  = Taylor  + (i_var+1) * J;
-			pTmp = Partial + (i_var+1) * K;
+			// use W for data stored in second record
+			W  = Taylor  + (i_var+1) * J;
+			pW = Partial + (i_var+1) * K;
 			X    = Taylor  + ind[0] * J;
 			pX   = Partial + ind[0] * K;
-			RevAsinOp(d, Z, Tmp, X, pZ, pTmp, pX);
+			RevAsinOp(d, Z, W, X, pZ, pW, pX);
 			break;
 			// --------------------------------------------------
 
@@ -302,12 +302,12 @@ void ReverseSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( i_var < numvar - 1 );
 
-			// use Tmp for data stored in second record
-			Tmp  = Taylor  + (i_var+1) * J;
-			pTmp = Partial + (i_var+1) * K;
+			// use W for data stored in second record
+			W  = Taylor  + (i_var+1) * J;
+			pW = Partial + (i_var+1) * K;
 			X    = Taylor  + ind[0] * J;
 			pX   = Partial + ind[0] * K;
-			RevAtanOp(d, Z, Tmp, X, pZ, pTmp, pX);
+			RevAtanOp(d, Z, W, X, pZ, pW, pX);
 			break;
 			// -------------------------------------------------
 
@@ -359,12 +359,12 @@ void ReverseSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( i_var < numvar - 1 );
 
-			// use Tmp for data stored in second record
-			Tmp  = Taylor  + (i_var+1) * J;
-			pTmp = Partial + (i_var+1) * K;
+			// use W for data stored in second record
+			W  = Taylor  + (i_var+1) * J;
+			pW = Partial + (i_var+1) * K;
 			X    = Taylor  + ind[0] * J;
 			pX   = Partial + ind[0] * K;
-			RevTrigSinCos(d, Tmp, Z, X, pTmp, pZ, pX);
+			RevTrigSinCos(d, W, Z, X, pW, pZ, pX);
 			break;
 			// --------------------------------------------------
 
@@ -376,12 +376,12 @@ void ReverseSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( i_var < numvar - 1 );
 
-			// use Tmp for data stored in second record
-			Tmp  = Taylor  + (i_var+1) * J;
-			pTmp = Partial + (i_var+1) * K;
+			// use W for data stored in second record
+			W  = Taylor  + (i_var+1) * J;
+			pW = Partial + (i_var+1) * K;
 			X    = Taylor  + ind[0] * J;
 			pX   = Partial + ind[0] * K;
-			RevHypSinCos(d, Tmp, Z, X, pTmp, pZ, pX);
+			RevHypSinCos(d, W, Z, X, pW, pZ, pX);
 			break;
 			// --------------------------------------------------
 
@@ -551,12 +551,12 @@ void ReverseSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( i_var < numvar - 1 );
 
-			// use Tmp for data stored in cosine slot record
-			Tmp  = Taylor  + (i_var+1) * J;
-			pTmp = Partial + (i_var+1) * K;
+			// use W for data stored in cosine slot record
+			W  = Taylor  + (i_var+1) * J;
+			pW = Partial + (i_var+1) * K;
 			X    = Taylor  + ind[0] * J;
 			pX   = Partial + ind[0] * K;
-			RevTrigSinCos(d, Z, Tmp, X, pZ, pTmp, pX);
+			RevTrigSinCos(d, Z, W, X, pZ, pW, pX);
 			break;
 			// -------------------------------------------------
 
@@ -568,12 +568,12 @@ void ReverseSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( i_var < numvar - 1 );
 
-			// use Tmp for data stored in cosine slot record
-			Tmp  = Taylor  + (i_var+1) * J;
-			pTmp = Partial + (i_var+1) * K;
+			// use W for data stored in cosine slot record
+			W  = Taylor  + (i_var+1) * J;
+			pW = Partial + (i_var+1) * K;
 			X    = Taylor  + ind[0] * J;
 			pX   = Partial + ind[0] * K;
-			RevHypSinCos(d, Z, Tmp, X, pZ, pTmp, pX);
+			RevHypSinCos(d, Z, W, X, pZ, pW, pX);
 			break;
 			// --------------------------------------------------
 

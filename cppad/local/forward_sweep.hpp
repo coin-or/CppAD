@@ -181,7 +181,7 @@ size_t ForwardSweep(
 	bool result;
 
 	Base             *Z;
-	Base           *Tmp;
+	Base           *W;
 
 	size_t            i;
 	size_t          len;
@@ -295,10 +295,10 @@ size_t ForwardSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in variable record
-			Tmp = Taylor + (i_var+1) * J;
+			// use W for data stored in variable record
+			W = Taylor + (i_var+1) * J;
 			X   = Taylor + ind[0] * J;
-			ForAcosOp(d, Z, Tmp, X);
+			ForAcosOp(d, Z, W, X);
 			break;
 			// -------------------------------------------------
 
@@ -310,10 +310,10 @@ size_t ForwardSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in variable record
-			Tmp = Taylor + (i_var+1) * J;
+			// use W for data stored in variable record
+			W = Taylor + (i_var+1) * J;
 			X   = Taylor + ind[0] * J;
-			ForAsinOp(d, Z, Tmp, X);
+			ForAsinOp(d, Z, W, X);
 			break;
 			// -------------------------------------------------
 
@@ -325,10 +325,10 @@ size_t ForwardSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in variable record
-			Tmp = Taylor + (i_var+1) * J;
+			// use W for data stored in variable record
+			W = Taylor + (i_var+1) * J;
 			X   = Taylor + ind[0] * J;
-			ForAtanOp(d, Z, Tmp, X);
+			ForAtanOp(d, Z, W, X);
 			break;
 			// -------------------------------------------------
 
@@ -428,10 +428,10 @@ size_t ForwardSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in variable record
-			Tmp = Taylor + (i_var+1) * J;
+			// use W for data stored in variable record
+			W = Taylor + (i_var+1) * J;
 			X   = Taylor + ind[0] * J;
-			ForTrigSinCos(d, Tmp, Z, X);
+			ForTrigSinCos(d, W, Z, X);
 			break;
 			// ---------------------------------------------------
 
@@ -443,10 +443,10 @@ size_t ForwardSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in variable record
-			Tmp = Taylor + (i_var+1) * J;
+			// use W for data stored in variable record
+			W = Taylor + (i_var+1) * J;
 			X   = Taylor + ind[0] * J;
-			ForHypSinCos(d, Tmp, Z, X);
+			ForHypSinCos(d, W, Z, X);
 			break;
 			// -------------------------------------------------
 
@@ -701,10 +701,10 @@ size_t ForwardSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in second variable
-			Tmp = Taylor + (i_var+1) * J;
+			// use W for data stored in second variable
+			W = Taylor + (i_var+1) * J;
 			X   = Taylor + ind[0] * J;
-			ForTrigSinCos(d, Z, Tmp, X);
+			ForTrigSinCos(d, Z, W, X);
 			break;
 			// -------------------------------------------------
 
@@ -716,10 +716,10 @@ size_t ForwardSweep(
 			CppADUnknownError( n_var == 2);
 			CppADUnknownError( (i_var+1) < numvar  );
 
-			// use Tmp for data stored in second variable
-			Tmp = Taylor + (i_var+1) * J;
+			// use W for data stored in second variable
+			W = Taylor + (i_var+1) * J;
 			X   = Taylor + ind[0] * J;
-			ForHypSinCos(d, Z, Tmp, X);
+			ForHypSinCos(d, Z, W, X);
 			break;
 			// -------------------------------------------------
 
