@@ -247,27 +247,32 @@ bool PowTestFour(void)
 
 	// domain space vector
 	size_t n  = 1;
+	double x0 = -2;
 	CppADvector< AD<double> > x(n);
-	x[0]      = -2.;
+	x[0]      = x0;
 
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
 	// range space vector 
-	size_t m = 3;
+	size_t m = 5;
 	CppADvector< AD<double> > y(m);
 
 	// some special cases (skip zero raised to a negative power)
-	y[0] = pow(x[0], 0.);
-	y[1] = pow(x[0], 1.);
-	y[2] = pow(1., x[0]);
+	y[0] = pow(1., x[0]);
+	size_t i;
+	for(i = 1; i < m; i++) 
+		y[i] = pow(x[0], double(i-1));
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
 
 	ok  &= (Value(y[0]) == 1.);
-	ok  &= (Value(y[1]) == Value(x[0]));
-	ok  &= (Value(y[2]) == 1.);
+	double check;
+	for(i = 1; i < m; i++)
+	{	check = std::pow(x0, double(i-1));
+		ok   &= NearEqual(y[i], check, 1e-10, 1e-10);
+	}
 
 	// forward computation of first partial w.r.t. x
 	CppADvector<double> dx(n);
@@ -275,17 +280,22 @@ bool PowTestFour(void)
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 	ok   &= (dy[0] == 0.);
-	ok   &= NearEqual(dy[1], 1., 1e-10, 1e-10);
-	ok   &= (dy[2] == 0.);
+	double sum = 0;
+	for(i = 1; i < m; i++)
+	{	if( i == 1 )
+			check = 0.;
+		else	check = double(i-1) * std::pow(x0, double(i-2));
+		ok   &= NearEqual(dy[i], check, 1e-10, 1e-10);
+		sum  += check;
+	}
 
-	// reverse mode computation of derivative of y[0] + y[1] + y[2]
+	// reverse mode computation of derivative of y[0] + .. y[m-1];
 	CppADvector<double>  w(m);
 	CppADvector<double> dw(n);
-	w[0] = 1.;
-	w[1] = 1.;
-	w[2] = 1.;
+	for(i = 0; i < m; i++)
+		w[i] = 1.;
 	dw   = f.Reverse(1, w);
-	ok  &= NearEqual(dw[0], 1., 1e-10, 1e-10);
+	ok  &= NearEqual(dw[0], sum, 1e-10, 1e-10);
 
 	return ok;	
 }

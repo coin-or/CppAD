@@ -41,8 +41,8 @@
 log_entry="Fix bug in pow function so it works in more special cases.
 
 svn_commit.sh: file that made this commit.
-test_more/pow.cpp: more special cases (including some with x < 0).
-forward_sweep.hpp: fix bug in previous version (X was undefined). 
+omh/whats_new_06.omh: user's view of the changes.
+test_more/pow.cpp: full testing of x < 0 and y integer in pow(x, y).
 "
 # 
 add_list="
@@ -51,8 +51,7 @@ add_list="
 change_list="
 	svn_commit.sh
 	test_more/pow.cpp
-	build.sh
-	cppad/local/forward_sweep.hpp
+	omh/whats_new_06.omh
 "
 #
 delete_list="

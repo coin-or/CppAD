@@ -67,10 +67,16 @@ assist you in learning about changes between various versions of CppAD.
 $head 12-10$$
 The $cref/pow/$$ function was changed to be a an $syntax%AD<%Base%>%$$
 $cref/atomic/glossary/Operation/Atomic/$$ operation.
-In addition, the $cref/pow/$$ documentation was improved
+The $cref/pow/$$ documentation was improved
 and the $cref/Pow.cpp/$$ example was changed to 
 test more cases and to use the same variable
 names as in the documentation.
+In addition, this function was extended so 
+$syntax%
+	%z% = pow(%x%, %y%)
+%$$
+computes correct function values and derivatives when $latex x < 0$$ and
+$latex y$$ is integer valued (it used to return not a number in this case).
 
 $head 12-09$$
 A $cref/speed/WishList/Speed/$$ item was added to the wish list.
