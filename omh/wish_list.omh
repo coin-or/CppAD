@@ -84,16 +84,6 @@ $xref/glossary/Independent Variable/independent variable/$$ values.
 This could be returned as an extra
 $xref/SeqProperty/$$.
 
-$head Pow$$
-$index pow$$
-In the case where $italic y$$ is an integer, one should be able to compute 
-$cref/pow(x,y)/pow/$$ even if $italic x$$ is negative.
-Currently, the this function returns a $code nan$$ if 
-$italic x$$ is negative because it uses
-$syntax%
-	pow(%x%, %y%) = exp( log(%x%) * %y% )
-%$$
-
 $head Software Guidelines$$
 The following is a list of some software guidelines taken from
 $href%http://www.boost.org/more/lib_guide.htm#Guidelines%boost%$$.

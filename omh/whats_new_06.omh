@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	exp
 	Dir
 	Romberg
 	yyyymmdd
@@ -67,16 +68,17 @@ assist you in learning about changes between various versions of CppAD.
 $head 12-10$$
 The $cref/pow/$$ function was changed to be a an $syntax%AD<%Base%>%$$
 $cref/atomic/glossary/Operation/Atomic/$$ operation.
+This function used to return a $code nan$$ if 
+$italic x$$ is negative because it was implemented as
+$syntax%
+	pow(%x%, %y%) = exp( log(%x%) * %y% )
+%$$
+This has been fixed so that the function and its derivatives are now
+calculated properly when $italic x$$ is less than zero. 
 The $cref/pow/$$ documentation was improved
 and the $cref/Pow.cpp/$$ example was changed to 
 test more cases and to use the same variable
 names as in the documentation.
-In addition, this function was extended so 
-$syntax%
-	%z% = pow(%x%, %y%)
-%$$
-computes correct function values and derivatives when $latex x < 0$$ and
-$latex y$$ is integer valued (it used to return not a number in this case).
 
 $head 12-09$$
 A $cref/speed/WishList/Speed/$$ item was added to the wish list.

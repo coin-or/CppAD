@@ -38,9 +38,12 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="move one_test.sh to test_one.sh
+log_entry="remove pow wish list entry.
 
-svn_commit.sh: fix creating of the this_branch variable.
+svn_commit.sh: file that made this commit.
+wish_list.omh: remove pow entry.
+whats_new_06.omh: improve comments about pow fucntion.
+clean_cppad.sh: do not delete any entries of the form */.svn/* .
 "
 # 
 add_list="
@@ -48,10 +51,9 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	example/test_one.sh
-	example/one_test.sh
-	test_more/one_test.sh
-	test_more/test_one.sh
+	omh/whats_new_06.omh
+	omh/wish_list.omh
+	clean_cppad.sh
 "
 #
 delete_list="
