@@ -477,10 +477,15 @@ class ADTape {
 	friend class VecAD<Base>;
 	friend class VecAD_reference<Base>;
 
+	//
 	// functions
+	//
+
+	// PrintFor
 	friend void PrintFor <Base>
 		(const char *text, const AD<Base> &x);
 
+	// CondExpOp
 	friend AD<Base> CondExpOp <Base> (
 		enum CompareOp  cop          ,
 		const AD<Base> &left         , 
@@ -489,8 +494,14 @@ class ADTape {
 		const AD<Base> &falseCase 
 	);
 
+	// pow
+	friend AD<Base> pow <Base>
+		(const AD<Base> &x, const AD<Base> &y);
+
+	// Parameter
 	friend bool Parameter     <Base> 
 		(const AD<Base> &u);
+	// Variable
 	friend bool Variable      <Base> 
 		(const AD<Base> &u);
 

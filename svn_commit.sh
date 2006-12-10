@@ -38,17 +38,20 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Correct binary operator prototye from 'const int &' to 'int'.
+log_entry="Preparation for handeling negative bases in power function.
 
 svn_commit.sh: file that made this commit.
-whats_new_06.omh: user's view of changes.
-makefile.am: remove BEGIN and END comments.
-eq.cpp: include int case in testing of assignment operator.
-wish_list.omh: add speed testing entry to wish list.
-doc.omh: change navigate command.
-
-Other Files:
-change 'const int &' to 'int' and CppADAssignMember to CPPAD_ASSIGN_MEMBER
+whats_new_06.omh: user's view of the changes.
+pow.cpp: improve example.
+ad_tape.hpp: make pow a friend of the ADTape class.
+ad.hpp: make pow a friend of the AD class.
+declare.hpp: forward declaration of the pow function.
+op_code.hpp: add three new tape operations: Powvp, Powpv, Powvv.
+forward_sweep.hpp: implement forward mode for the Pow tape operations.
+pow.hpp: use the new atomic operation instead of exp(log(x) * y).
+reverse_sweep.hpp: implement forward mode for the Pow tape operations.
+config.h: update version number.
+pow_int.hpp: reference the general pow fucntion in the int case documentation.
 "
 # 
 add_list="
@@ -57,18 +60,16 @@ add_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	example/eq.cpp
-	omh/wish_list.omh
-	cppad/local/add_eq.hpp
-	cppad/local/div.hpp
-	cppad/local/add.hpp
-	cppad/local/eq.hpp
-	cppad/local/sub_eq.hpp
-	cppad/local/mul_eq.hpp
-	cppad/local/div_eq.hpp
-	cppad/local/sub.hpp
-	cppad/local/mul.hpp
-	doc.omh
+	example/pow.cpp
+	cppad/local/ad_tape.hpp
+	cppad/local/ad.hpp
+	cppad/local/declare.hpp
+	cppad/local/op_code.hpp
+	cppad/local/forward_sweep.hpp
+	cppad/local/pow.hpp
+	cppad/local/reverse_sweep.hpp
+	cppad/config.h
+	cppad/pow_int.hpp
 "
 #
 delete_list="

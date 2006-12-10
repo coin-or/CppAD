@@ -181,7 +181,8 @@ size_t ForwardSweep(
 	bool result;
 
 	Base             *Z;
-	Base           *W;
+	Base             *W;
+	Base             *U;
 
 	size_t            i;
 	size_t          len;
@@ -665,6 +666,67 @@ size_t ForwardSweep(
 			if( d == 0 )
 				Z[d] = *P;
 			else	Z[d] = Base(0); 
+			break;
+			// -------------------------------------------------
+
+			case PowvpOp:
+			CppADUnknownError( n_var == 3);
+			CppADUnknownError( n_ind == 2 );
+			U = Z + J;
+			W = U + J;
+
+			// u = log(x)
+			X = Taylor + ind[0] * J;
+			ForLogOp(d, U, X);
+
+			// w = u * y
+			Y = Rec->GetPar( ind[1] );
+			ForMulvpOp(d, W, U, Y);
+
+			// z = exp(w)
+			ForExpOp(d, Z, W);
+
+			break;
+			// -------------------------------------------------
+
+			case PowpvOp:
+			CppADUnknownError( n_var == 3);
+			CppADUnknownError( n_ind == 2 );
+			U = Z + J;
+			W = U + J;
+
+			// u = log(x)
+			if( d == 0 )
+				U[d] = log( *(Rec->GetPar(ind[0])) );
+			else	U[d] = Base(0);
+
+			// w = u * y
+			Y   = Taylor + ind[1] * J;
+			ForMulpvOp(d, W, U, Y);
+
+			// z = exp(w)
+			ForExpOp(d, Z, W);
+
+			break;
+			// -------------------------------------------------
+
+			case PowvvOp:
+			CppADUnknownError( n_var == 3);
+			CppADUnknownError( n_ind == 2 );
+			U = Z + J;
+			W = U + J;
+
+			// u = log(x)
+			X = Taylor + ind[0] * J;
+			ForLogOp(d, U, X);
+
+			// w = u * y
+			Y   = Taylor + ind[1] * J;
+			ForMulvvOp(d, W, U, Y);
+
+			// z = exp(w)
+			ForExpOp(d, Z, W);
+
 			break;
 			// -------------------------------------------------
 

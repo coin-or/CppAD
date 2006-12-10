@@ -72,6 +72,10 @@ namespace CppAD {
 	// Value
 	template <class Base> Base Value(const AD<Base> &x);
 
+	// Pow function
+	template <class Base> AD<Base> pow
+		(const AD<Base> &x, const AD<Base> &y);
+
 	// output operator
 	template <class Base> std::ostream&
 	operator << (std::ostream &os, const AD<Base> &x);

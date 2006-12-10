@@ -29,6 +29,9 @@ $spell
 	Divvp
 	Divvv
 	namespace
+	Powvp
+	Powpv
+	Powvv
 	Prip
 	Priv
 	CExp
@@ -103,6 +106,9 @@ namespace CppAD {
 		MulvvOp,  //      variable   * variable
 		NonOp,    //                             space holder
 		ParOp,    //      parameter
+		PowvpOp,  //  pow(variable,    parameter)
+		PowpvOp,  //  pow(parameter,   variable)
+		PowvvOp,  //  pow(variable,    variable)
 		PripOp,   //      text         parameter
 		PrivOp,   //      text         parameter
 		SinOp,    //  sin(variable)
@@ -281,6 +287,9 @@ const size_t NumIndTable[] = {
 	2, // MulvpOp
 	0, // NonOp
 	1, // ParOp
+	2, // PowvpOp
+	2, // PowpvOp
+	2, // PowvvOp
 	2, // PripOp
 	2, // PrivOp
 	1, // SinOp
@@ -332,6 +341,9 @@ const size_t NumVarTable[] = {
 	1, // MulvpOp
 	1, // NonOp
 	1, // ParOp
+	3, // PowvpOp
+	3, // PowpvOp
+	3, // PowvvOp
 	0, // PripOp
 	1, // PrivOp
 	2, // SinOp
@@ -437,6 +449,9 @@ void printOp(
 		"Mulvv" ,
 		"Non"   ,
 		"Par"   ,
+		"Powvp" ,
+		"Powpv" ,
+		"Powvv" ,
 		"Prip"  ,
 		"Priv"  ,
 		"Sin"   ,
@@ -513,6 +528,7 @@ void printOp(
 		case AddvvOp:
 		case DivvvOp:
 		case MulvvOp:
+		case PowvvOp:
 		case SubvvOp:
 		CppADUnknownError( NumInd(op) == 2 );
 		printOpField(os, " vl=", ind[0], ncol);
@@ -522,6 +538,7 @@ void printOp(
 		case AddpvOp:
 		case SubpvOp:
 		case MulpvOp:
+		case PowpvOp:
 		case DivpvOp:
 		CppADUnknownError( NumInd(op) == 2 );
 		printOpField(os, " pl=", *(Rec->GetPar(ind[0])), ncol);
@@ -531,6 +548,7 @@ void printOp(
 		case AddvpOp:
 		case DivvpOp:
 		case MulvpOp:
+		case PowvpOp:
 		case SubvpOp:
 		CppADUnknownError( NumInd(op) == 2 );
 		printOpField(os, " vl=", ind[0], ncol);

@@ -64,6 +64,14 @@ This section contains a list of the changes to CppAD during 2006
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-10$$
+The $cref/pow/$$ function was changed to be a an $syntax%AD<%Base%>%$$
+$cref/atomic/glossary/Operation/Atomic/$$ operation.
+In addition, the $cref/pow/$$ documentation was improved
+and the $cref/Pow.cpp/$$ example was changed to 
+test more cases and to use the same variable
+names as in the documentation.
+
 $head 12-09$$
 A $cref/speed/WishList/Speed/$$ item was added to the wish list.
 $pre

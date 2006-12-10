@@ -40,7 +40,10 @@ Determines the value of the power function
 $latex \[
 	{\rm pow} (x, n) = x^n
 \] $$
-for integer exponents $italic n$$.
+for integer exponents $italic n$$ 
+using multiplication and possibly division to compute the value.
+The other CppAD $cref/pow/$$ function uses logarithms and exponentiation to 
+compute the same value.
 
 $head Include$$
 The file $code cppad/pow_int.hpp$$ is included by $code cppad/cppad.hpp$$

@@ -153,12 +153,14 @@ void ReverseSweep(
 	const Base       *Z;
 	const Base       *Y;
 	const Base       *X;
-	const Base     *W;
+	const Base       *W;
+	const Base       *U;
 
 	Base            *pZ;
 	Base            *pY;
 	Base            *pX;
-	Base          *pW;
+	Base            *pW;
+	Base            *pU;
 
 	// used by CExp operator 
 	Base        *trueCase;
@@ -525,6 +527,75 @@ void ReverseSweep(
 			case ParOp:
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 1 );
+			break;
+			// --------------------------------------------------
+
+			case PowvpOp:
+			CppADUnknownError( n_var == 3);
+			CppADUnknownError( n_ind == 2 );
+			U  = Z  + J;
+			pU = pZ + K;
+			W  = U  + J;
+			pW = pU + K;
+
+			// Z = exp(w)
+			RevExpOp(d, Z, W, pZ, pW);
+
+			// w = u * y
+			Y  = Rec->GetPar( ind[1] );
+			RevMulvpOp(d, W, U, Y, pW, pU);
+
+			// u = log(x)
+			X  = Taylor  + ind[0] * J;
+			pX = Partial + ind[0] * K;
+			RevLogOp(d, U, X, pU, pX);
+
+			break;
+			// -------------------------------------------------
+
+			case PowpvOp:
+			CppADUnknownError( n_var == 3);
+			CppADUnknownError( n_ind == 2 );
+			U  = Z  + J;
+			pU = pZ + K;
+			W  = U  + J;
+			pW = pU + K;
+
+			// Z = exp(w)
+			RevExpOp(d, Z, W, pZ, pW);
+
+			// w = u * y
+			Y  = Taylor  + ind[1] * J;
+			pY = Partial + ind[1] * K;
+			RevMulpvOp(d, W, U, Y, pW, pY);
+
+			// u = log(x)
+			// x is a parameter
+
+			break;
+			// -------------------------------------------------
+
+			case PowvvOp:
+			CppADUnknownError( n_var == 3);
+			CppADUnknownError( n_ind == 2 );
+			U  = Z  + J;
+			pU = pZ + K;
+			W  = U  + J;
+			pW = pU + K;
+
+			// Z = exp(w)
+			RevExpOp(d, Z, W, pZ, pW);
+
+			// w = u * y
+			Y  = Taylor  + ind[1] * J;
+			pY = Partial + ind[1] * K;
+			RevMulvvOp(d, W, U, Y, pW, pU, pY);
+
+			// u = log(x)
+			X  = Taylor  + ind[0] * J;
+			pX = Partial + ind[0] * K;
+			RevLogOp(d, U, X, pU, pX);
+
 			break;
 
 			// --------------------------------------------------

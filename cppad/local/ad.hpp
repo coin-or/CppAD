@@ -74,6 +74,10 @@ class AD {
 	friend AD Var2Par         <Base>
 		(const AD<Base> &u);
 
+	// power function
+	friend AD pow <Base>
+		(const AD<Base> &x, const AD<Base> &y);
+
 	// IdenticalEqual function
 	friend bool IdenticalEqual <Base> 
 		(const AD<Base> &u, const AD<Base> &v);
