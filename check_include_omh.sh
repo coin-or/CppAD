@@ -10,19 +10,34 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-if [ -e cppad-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9] ]
-then
-	dir=`ls -d cppad-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]`
-	echo "check_include_omh.sh: must first remove the $dir directory"
-	exit 1
-fi
 echo "Checking difference between OMhelp include directives and file names."
 echo "----------------------------------------------------------------------"
 if [ -e junk.1 ]
 then
 	rm junk.1
 fi
-for file in *.omh */*.omh */*.h */*.cpp cppad/local/*.hpp */*.hpp
+list="
+	cpl1.0.txt
+	doc.omh
+	dev.omh
+	cppad/PowInt.h
+	adolc/*.cpp
+	adolc/*.hpp
+	cppad/*.hpp
+	cppad/local/*.hpp
+	example/*.cpp
+	example/*.hpp
+	fadbad/*.cpp
+	get_started/*.cpp
+	introduction/*.cpp
+	introduction/*.hpp
+	print_for/*.cpp
+	speed_cppad/*.cpp
+	speed/*.hpp
+	speed/example/*.cpp
+	omh/*.omh
+"
+for file in $list
 do
 	# assume $childtable, ... , $verbatim use % for delimiter
 	sed -n < $file >> junk.1 \
@@ -42,8 +57,7 @@ sed < junk.1 > junk.2 \
 	-e 's/^[ 	]*//' \
 	-e 's|\\|/|g'
 #
-ls cpl1.0.txt *.omh */*.omh */*.h */*.cpp cppad/local/*.hpp  \
-	*/*.hpp > junk.3
+ls $list > junk.3
 #
 for file in `cat junk.2`
 do

@@ -10,12 +10,6 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-if [ -e cppad-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9] ]
-then
-	dir=`ls -d cppad-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]`
-	echo "check_include_file.sh: must first remove the $dir directory"
-	exit 1
-fi
 echo "Checking difference between C++ include directives and file names."
 echo "-------------------------------------------------------------------"
 grep '^# *include *<cppad/' \
@@ -26,37 +20,26 @@ grep '^# *include *<cppad/' \
 	adolc/*.cpp \
 	fadbad/*.cpp \
 	test_more/*.cpp \
-	speed_cppad/*.cpp |\
-sed -e 's%[^<]*<%%' \
-    -e 's%>.*$%%' | \
-sort -u > junk.1
+	speed_cppad/*.cpp  > junk.1
+#
+grep '^# *include *<speed/' \
+	cppad/*.hpp \
+	cppad/local/*.hpp \
+	example/*.cpp \
+	example/*.hpp \
+	adolc/*.cpp \
+	fadbad/*.cpp \
+	test_more/*.cpp \
+	speed/*.hpp \
+	speed/example/*.cpp  >> junk.1
+#
+cat junk.1 | sed -e 's%[^<]*<%%'  -e 's%>.*$%%' | sort -u > junk.2
 ls	cppad/config.h \
 	cppad/*.hpp \
-	cppad/local/*.hpp | \
-sort -u > junk.2
-diff junk.1 junk.2
-#
-grep '^# *include *"' \
-	example/*.cpp | \
-sed -e 's%^[^"]*"%example/%' \
-    -e 's%".*$%%' | \
-sort -u > junk.1
-ls	example/*.hpp |\
-sort -u > junk.2
-diff junk.1 junk.2
-#
-grep '^# *include *"\.\./example' \
-	adolc/*.cpp    \
-	fadbad/*.cpp   \
-	test_more/*.cpp \
-	speed_cppad/*.cpp    | \
-sed -e 's%^[^"]*"\.\./%%' \
-    -e 's%".*$%%' | \
-sort -u > junk.1
-ls	example/*.hpp |\
-sort -u > junk.2
-cat junk.1 junk.2 | sort -u > junk.3
-diff -b junk.2 junk.3
+	cppad/local/*.hpp \
+	speed/*.hpp \
+	| sort -u > junk.3 
+diff junk.2 junk.3
 #
 echo "-------------------------------------------------------------------"
 echo "Nothing should be between the two dashed lines above"

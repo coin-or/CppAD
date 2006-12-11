@@ -38,65 +38,26 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Begin speed directory an start with speed/example.
-Most of these changes are a direct consequence of the following moves:
-	example/det_by_lu.hpp    -> speed/det_by_lu.hpp
-	example/det_by_minor.hpp -> speed/det_by_minor.hpp
-	example/det_of_minor.hpp -> speed/det_of_minor.hpp
-	example/det_by_lu.cpp    -> speed/example/det_by_lu.cpp
-	example/det_by_minor.cpp -> speed/example/det_by_minor.cpp
-	example/det_of_minor.cpp -> speed/example/det_of_minor.cpp
-	
+log_entry="Add MS project files and delete old speed_example directroy.
 
 svn_commit.sh: file that made this commit.
-whats_new_06.omh: improve comments about pow fucntion.
-check_simple_vector.hpp: fix missing include of cppad/local/cppad_error.hpp.
-configure.ac: remove speed_example and add speed/example makefiles.
-makefile.am: change speed_example to speed/example.
-install_unix.omh: change speed_example to speed/example.
-install_windows.omh: change speed_example to speed/example.
-speed_test.hpp: add a new speed test routine to the library.
-config.h: update version number.
+example.sln: new MS project file.
+example.vcproj: new MS project file.
+speed_example: delete old directory (replaced by speed/example).
+check_include_*.sh: update these files to work with new locations.
 "
 # 
 add_list="
-	speed/makefile.am
-	speed/example/speed_test.cpp
-	speed/example/makefile.am
-	speed/example/example.cpp
+	speed/example/example.sln
+	speed/example/example.vcproj
 "
 #
 change_list="
 	svn_commit.sh
-	cppad/check_simple_vector.hpp
-	adolc/det_minor.cpp
-	adolc/det_lu.cpp
-	example/det_by_lu.cpp
-	example/lu_vec_ad_ok.cpp
-	example/det_by_minor.hpp
-	example/makefile.am
-	example/det_of_minor.hpp
-	example/hes_lu_det.cpp
-	example/jac_minor_det.cpp
-	example/det_by_minor.cpp
-	example/det_by_lu.hpp
-	example/hes_minor_det.cpp
-	example/jac_lu_det.cpp
-	example/det_of_minor.cpp
-	example/example.cpp
-	configure.ac
-	speed_cppad/det_minor.cpp
-	speed_cppad/det_lu.cpp
-	makefile.am
-	omh/install_unix.omh
-	omh/install_windows.omh
-	omh/example_list.omh
-	omh/whats_new_06.omh
-	cppad/speed_test.hpp
-	cppad/config.h
-	speed
-	fadbad/det_minor.cpp
-	fadbad/det_lu.cpp
+	speed_example
+	check_include_file.sh
+	check_include_def.sh
+	check_include_omh.sh
 "
 #
 delete_list="
