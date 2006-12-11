@@ -11,7 +11,7 @@
 # automake input file
 #
 # Microsoft project files
-EXTRA_DIST        = example.sln example.vcproj one_test.sh
+EXTRA_DIST        = example.sln example.vcproj test_one.sh
 #
 noinst_PROGRAMS   = example 
 #
