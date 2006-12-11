@@ -47,7 +47,7 @@ $section Windows Download, Test, and Installation$$
 
 $head Download Current Version$$
 $index download, windows$$
-Note that $code 20061203$$ is the 
+Note that $code 20061211$$ is the 
 year, month, and date corresponding to the current version of CppAD.
 If you are using 
 $href%
@@ -64,10 +64,10 @@ just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
 Otherwise, download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-20061203.cpl.zip%$$
+$href%cppad-20061211.cpl.zip%$$
 
 $subhead GPL License$$
-$href%cppad-20061203.gpl.zip%$$
+$href%cppad-20061211.gpl.zip%$$
 
 $head Extraction$$
 Use 
@@ -78,7 +78,7 @@ $href%
 or some other program to decompress the archive.
 This will create the distribution directory 
 $syntax%
-	cppad-20061203
+	cppad-20061211
 %$$
 All the command sequences below assume that you start in this
 distribution directory.
@@ -172,11 +172,11 @@ $head Speed Test Example$$
 $index SpeedTest, windows example$$
 $index example, windows SpeedTest$$
 Using Microsoft Visual C++,
-open the workspace $code speed_example/speed_example.sln$$ in Visual Studio.
-Then select $code Build | Build speed_example.exe$$.
+open the workspace $code speed/example/example.sln$$ in Visual Studio.
+Then select $code Build | Build example.exe$$.
 Then in a Dos box, execute the following commands
 $codep
-	speed_example\debug\speed_example
+	speed\example\debug\example
 $$
 
 $end

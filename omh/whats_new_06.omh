@@ -65,6 +65,22 @@ This section contains a list of the changes to CppAD during 2006
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-11$$
+Started the $cref/speed wish list item/WishList/Speed/$$ by 
+creating the $code speed/example$$ directory and moving the relevant
+examples from 
+$syntax%example/%*%.cpp%$$ and 
+$syntax%speed_example/%*%.cpp%$$ to
+$syntax%speed/example/%*%.cpp%$$.
+In addition, the relevant include files have been moved from
+$syntax%example/%*%.hpp%$$ to 
+$syntax%speed/%*%.hpp%$$.
+$pre
+
+$$
+A new $cref/speed_test/$$ routine was added to the library.
+
+
 $head 12-10$$
 The $cref/pow/$$ function was changed to be a an $syntax%AD<%Base%>%$$
 $cref/atomic/glossary/Operation/Atomic/$$ operation.
@@ -237,7 +253,7 @@ $cref/PrintFor.cpp/PrintFor.cpp/Output/$$ examples.
 (Now documentation can be built from a subversion checkout with out
 needing to execute automake.)
 The $code PrintFor.cpp$$ and 
-$cref/SpeedExample.cpp/$$ examples were missing in $cref/ListAllExamples/$$
+$cref/speedtest.cpp/$$ examples were missing in $cref/ListAllExamples/$$
 (which has been fixed). 
 $pre
 

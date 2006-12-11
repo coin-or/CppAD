@@ -14,15 +14,7 @@
 # Note that config.h is needed by VC++; i.e., for users that do not run
 # the configure script but rather use the project files 
 #
-# if CppAD_POSTFIX
-# myincludedir = $(includedir)/$(POSTFIX_DIR)
-# else
-# myincludedir = $(includedir)
-# endif
-myincludedir = $(includedir)
-#
-#
-nobase_myinclude_HEADERS =  \
+nobase_include_HEADERS =  \
 	cppad/TrackNewDel.h \
 	cppad/SpeedTest.h \
 	cppad/Runge45.h \
@@ -154,7 +146,11 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/vec_ad.hpp \
 	cppad/local/undef.hpp \
 	cppad/local/value.hpp \
-	cppad/local/var2par.hpp 
+	cppad/local/var2par.hpp \
+	speed/det_by_lu.hpp \
+	speed/det_by_minor.hpp \
+	speed/det_of_minor.hpp
+#
 #
 # Did user specify --with-Example
 if CppAD_GETSTARTED
@@ -200,7 +196,7 @@ endif
 #
 # Did user specify --with-SpeedExample
 if CppAD_SPEEDEXAMPLE
-SPEEDEXAMPLE = speed_example
+SPEEDEXAMPLE = speed/example
 else
 SPEEDEXAMPLE =
 endif

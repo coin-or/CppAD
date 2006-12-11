@@ -38,22 +38,65 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="remove pow wish list entry.
+log_entry="Begin speed directory an start with speed/example.
+Most of these changes are a direct consequence of the following moves:
+	example/det_by_lu.hpp    -> speed/det_by_lu.hpp
+	example/det_by_minor.hpp -> speed/det_by_minor.hpp
+	example/det_of_minor.hpp -> speed/det_of_minor.hpp
+	example/det_by_lu.cpp    -> speed/example/det_by_lu.cpp
+	example/det_by_minor.cpp -> speed/example/det_by_minor.cpp
+	example/det_of_minor.cpp -> speed/example/det_of_minor.cpp
+	
 
 svn_commit.sh: file that made this commit.
-wish_list.omh: remove pow entry.
 whats_new_06.omh: improve comments about pow fucntion.
-clean_cppad.sh: do not delete any entries of the form */.svn/* .
+check_simple_vector.hpp: fix missing include of cppad/local/cppad_error.hpp.
+configure.ac: remove speed_example and add speed/example makefiles.
+makefile.am: change speed_example to speed/example.
+install_unix.omh: change speed_example to speed/example.
+install_windows.omh: change speed_example to speed/example.
+speed_test.hpp: add a new speed test routine to the library.
+config.h: update version number.
 "
 # 
 add_list="
+	speed/makefile.am
+	speed/example/speed_test.cpp
+	speed/example/makefile.am
+	speed/example/example.cpp
 "
 #
 change_list="
 	svn_commit.sh
+	cppad/check_simple_vector.hpp
+	adolc/det_minor.cpp
+	adolc/det_lu.cpp
+	example/det_by_lu.cpp
+	example/lu_vec_ad_ok.cpp
+	example/det_by_minor.hpp
+	example/makefile.am
+	example/det_of_minor.hpp
+	example/hes_lu_det.cpp
+	example/jac_minor_det.cpp
+	example/det_by_minor.cpp
+	example/det_by_lu.hpp
+	example/hes_minor_det.cpp
+	example/jac_lu_det.cpp
+	example/det_of_minor.cpp
+	example/example.cpp
+	configure.ac
+	speed_cppad/det_minor.cpp
+	speed_cppad/det_lu.cpp
+	makefile.am
+	omh/install_unix.omh
+	omh/install_windows.omh
+	omh/example_list.omh
 	omh/whats_new_06.omh
-	omh/wish_list.omh
-	clean_cppad.sh
+	cppad/speed_test.hpp
+	cppad/config.h
+	speed
+	fadbad/det_minor.cpp
+	fadbad/det_lu.cpp
 "
 #
 delete_list="

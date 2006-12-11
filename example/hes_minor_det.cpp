@@ -1,4 +1,3 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 $begin HesMinorDet.cpp$$
@@ -24,7 +22,6 @@ $index test, gradient$$
 $index example, minors expansion$$
 $index test, minors expansion$$
 
-$comment This file is in the Example subdirectory$$ 
 $code
 $verbatim%example/hes_minor_det.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -34,7 +31,7 @@ $end
 // BEGIN PROGRAM
 
 # include <cppad/cppad.hpp>
-# include "det_by_minor.hpp"
+# include <speed/det_by_minor.hpp>
 # include <complex>
 
 typedef std::complex<double>   Complex;

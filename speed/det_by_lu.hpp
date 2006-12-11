@@ -34,7 +34,7 @@ $index factor, Lu determinant$$
 
 $table
 $bold Syntax$$
-$rnext $cnext $syntax%# include "example/det_by_lu.hpp"%$$
+$rnext $cnext $syntax%# include "speed/det_by_lu.hpp"%$$
 $rnext $cnext $syntax%DetByLu<%Type%> %Det%(size_t %n%)%$$
 $rnext $cnext $syntax%%Type% %Det%(CppADvector<%Type%> &%A%)%$$
 $rnext $cnext $syntax%typedef std::complex<double>     Complex;%$$
@@ -46,7 +46,7 @@ $fend 25$$
 $head Inclusion$$
 The template class $code DetByLu$$ is defined in the $code CppAD$$
 namespace by including 
-the file $code example/det_by_lu.hpp$$.
+the file $code speed/det_by_lu.hpp$$.
 It is only intended for example and testing purposes, 
 so it is not automatically included by
 $xref/cppad//CppAD.h/$$.
@@ -68,7 +68,7 @@ $syntax%
 returns the determinant of $italic A$$ using expansion by minors.
 
 $children%
-	example/det_by_lu.cpp
+	speed/example/det_by_lu.cpp
 %$$
 
 $head Complex Types$$
@@ -120,7 +120,7 @@ $pre
 $$
 # define CPPAD_DET_BY_LU_INCLUDED
 
-$verbatim%example/det_by_lu.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/det_by_lu.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 
 # endif
 $$

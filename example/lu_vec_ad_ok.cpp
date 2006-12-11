@@ -34,7 +34,7 @@ $end
 
 # include <cppad/cppad.hpp>
 # include "lu_vec_ad.hpp"
-# include "det_by_minor.hpp"
+# include <speed/det_by_minor.hpp>
 
 bool LuVecADOk(void)
 {	bool  ok = true;

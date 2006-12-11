@@ -48,12 +48,6 @@ example_SOURCES   = \
 	cosh.cpp \
 	cpp_ad_vector.cpp \
 	default.cpp \
-	det_by_lu.cpp \
-	det_by_lu.hpp \
-	det_by_minor.cpp \
-	det_by_minor.hpp \
-	det_of_minor.cpp \
-	det_of_minor.hpp \
 	div.cpp \
 	div_eq.cpp \
 	eq.cpp \

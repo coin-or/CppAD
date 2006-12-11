@@ -53,9 +53,10 @@ $section Utility Routines used by CppAD Examples$$
 
 $childtable%
 	example/example.cpp%
-	example/det_of_minor.hpp%
-	example/det_by_minor.hpp%
-	example/det_by_lu.hpp%
+	speed/example/example.cpp%
+	speed/det_of_minor.hpp%
+	speed/det_by_minor.hpp%
+	speed/det_by_lu.hpp%
 	example/lu_vec_ad.cpp
 %$$ 
 
@@ -162,7 +163,8 @@ $rref SeqProperty.cpp$$
 $rref SimpleVector.cpp$$
 $rref Sin.cpp$$
 $rref Sinh.cpp$$
-$rref SpeedExample.cpp$$
+$rref speed_test.cpp$$
+$rref speedtest.cpp$$
 $rref Sqrt.cpp$$
 $rref StackMachine.cpp$$
 $rref Sub.cpp$$

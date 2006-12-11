@@ -35,7 +35,7 @@ $end
 // BEGIN PROGRAM
 
 # include <cppad/cppad.hpp>
-# include "../example/det_by_minor.hpp"
+# include <speed/det_by_minor.hpp>
 
 # include <adolc/adouble.h>
 # include <adolc/interfaces.h>

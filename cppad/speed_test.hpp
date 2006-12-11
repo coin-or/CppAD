@@ -13,6 +13,180 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
+$begin speed_test$$
+$spell
+	vec
+	cppad.hpp
+	Microsoft
+	namespace
+	std
+	const
+	cout
+	ctime
+	ifdef
+	const
+	endif
+	cpp
+$$
+
+$index speed_test$$
+$index test, speed$$
+
+$section Run One Speed Test and Return Results$$
+
+$head Syntax$$
+$code # include <speed/speed_test.hpp>$$
+$pre
+$$
+$syntax%%rate_vec% = speed_test(%test%, %size_vec%, %time_min%)%$$
+
+$head Purpose$$
+The $code speed_test$$ function executes a speed test
+for various sized problems
+and reports the rate of execution.
+
+$head Motivation$$
+It is important to separate small calculation units
+and test them individually.
+This way individual changes can be tested in the context of the
+routine that they are in.
+On many machines, accurate timing of a very short execution 
+sequences is not possible.
+In addition,
+there may be set up and tear down time for a test that
+we do not really want included in the timing.
+For this reason $code speed_test$$
+automatically determines how many times to 
+repeat the section of the test that we wish to time.
+
+
+$head Include$$
+The file $code cppad/speed_test.hpp$$ defines the 
+$code speed_test$$ function.
+This file is included by $code cppad/cppad.hpp$$
+and it can also be included separately with out the rest of 
+the $code CppAD$$ routines.
+
+$head Vector$$
+We use $italic Vector$$ to denote a 
+$cref/simple vector class/SimpleVector/$$ with elements
+of type $code size_t$$.
+
+$head test$$
+The $code speed_test$$ argument $italic test$$ is a function with the syntax
+$syntax%
+	%test%(%size%, %repeat%)
+%$$
+and its return value is $code void$$.
+
+$subhead size$$
+The $italic test$$ argument $italic size$$ has prototype
+$syntax%
+	size_t %size%
+%$$
+It specifies the size for this test.
+
+$subhead repeat$$
+The $italic test$$ argument $italic repeat$$ has prototype
+$syntax%
+	size_t %repeat%
+%$$
+It specifies the number of times to repeat the test.
+
+$head size_vec$$
+The $code speed_test$$ argument $italic size_vec$$ has prototype
+$syntax%
+	const %Vector% &%size_vec%
+%$$
+This vector determines the size for each of the tests problems.
+
+$head time_min$$
+The argument $italic time_min$$ has prototype
+$syntax%
+	double %time_min%
+%$$
+It specifies the minimum amount of time in seconds
+that the $italic test$$ routine should take.
+The $italic repeat$$ argument to $italic test$$ is increased
+until this amount of execution time is reached.
+
+$head rate_vec$$
+The return value $italic rate_vec$$ has prototype
+$syntax%
+	%Vector% &%rate_vec%
+%$$ 
+We use $latex n$$ to denote its size which is the same as
+the vector $italic size_vec$$.
+For $latex i = 0 , \ldots , n-1$$,
+$syntax%
+	%rate_vec%[%i%]
+%$$
+is the ratio of $italic repeat$$ divided by execution time in seconds
+for the problem with size $syntax%%size_vec%[%i%]%$$.
+The execution time is measured by the difference in
+$codep
+	(double) clock() / (double) CLOCKS_PER_SEC
+$$
+in the context of the standard $code <ctime>$$ definitions.
+
+$head Example$$
+$children%
+	speed/example/speed_test.cpp
+%$$
+The section $xref/speed_test.cpp/$$ contains an example and test
+of $code speed_test$$.
+
+$end
+-----------------------------------------------------------------------
+*/
+
+# include <cstddef>
+# include <ctime>
+# include <cmath>
+
+// For an unknown reason, cannot move other includes (using Sun's CC compiler)
+# include <cppad/speed_test.hpp>
+# include <cppad/check_simple_vector.hpp>
+
+namespace CppAD { // BEGIN CppAD namespace
+
+inline double speed_test_second(void)
+{	return (double) clock() / (double) CLOCKS_PER_SEC;
+}
+
+// implemented as an inline so that can include in multiple link modules
+// with this same file
+template <class Vector>
+inline Vector speed_test( 
+	void test(size_t size, size_t repeat),
+	Vector size_vec                      ,
+	double time_min                      )
+{
+	// check that size_vec is a simple vector with size_t elements
+	CheckSimpleVector<size_t, Vector>();
+
+	size_t   n = size_vec.size();
+	Vector rate_vec(n);
+	size_t i;
+	for(i = 0; i < n; i++)
+	{	size_t size   = size_vec[i];
+		size_t repeat = 1;
+		double s0     = speed_test_second();
+		double s1     = speed_test_second();
+		while( s1 - s0 < time_min )
+		{	repeat = 2 * repeat;
+			s0     = speed_test_second();
+			test(size, repeat);
+			s1     = speed_test_second();
+		}
+		rate_vec[i] = (size_t)(.5 + repeat / (s1 - s0));
+	}
+	return rate_vec;
+}
+
+} // END CppAD namespace
+
+/*
 $begin SpeedTest$$
 $spell
 	cppad.hpp
@@ -31,7 +205,7 @@ $$
 $index SpeedTest$$
 $index test, speed$$
 
-$section Run One Speed Test$$
+$section Run One Speed Test and Print Results$$
 
 $head Syntax$$
 
@@ -48,7 +222,7 @@ and reports the results on standard output; i.e. $code std::cout$$.
 The size of each test problem is included in its report
 (unless $italic first$$ is equal to $italic last$$).
 
-$head Repeat Factor$$
+$head Motivation$$
 It is important to separate small calculation units
 and test them individually.
 This way individual changes can be tested in the context of the
@@ -157,9 +331,9 @@ $xref/ErrorHandler/$$
 
 $head Example$$
 $children%
-	speed_example/speed_example.cpp
+	speed/example/speedtest.cpp
 %$$
-The section $xref/SpeedExample.cpp/$$ contains an example usage
+The section $xref/speedtest.cpp/$$ contains an example usage
 of $code SpeedTest$$.
 
 $end
@@ -168,22 +342,13 @@ $end
 // BEGIN PROGRAM
 
 
-# include <cstddef>
-# include <ctime>
-# include <cmath>
 # include <string>
 # include <iostream>
 # include <iomanip>
-
-// For an unknown reason, cannot move other includes (using Sun's CC compiler)
 # include <cppad/local/cppad_error.hpp>
-# include <cppad/speed_test.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 
-inline double SpeedTestSecond(void)
-{	return (double) clock() / (double) CLOCKS_PER_SEC;
-}
 inline void SpeedTestNdigit(size_t value, size_t &ndigit, size_t &pow10)
 {	pow10 = 10;
 	ndigit       = 1;
@@ -248,13 +413,13 @@ inline void SpeedTest(
 	while(  (inc > 0 && size <= last) || (inc < 0 && size >= last) )
 	{
 		repeat = 1;
-		s0     = SpeedTestSecond();
-		s1     = SpeedTestSecond();
+		s0     = speed_test_second();
+		s1     = speed_test_second();
 		while( s1 - s0 < 1. )
 		{	repeat = 2 * repeat;
-			s0     = SpeedTestSecond();
+			s0     = speed_test_second();
 			name   = Test(size, repeat);
-			s1     = SpeedTestSecond();
+			s1     = speed_test_second();
 		}
 		rate = (size_t)(.5 + repeat / (s1 - s0));
 		

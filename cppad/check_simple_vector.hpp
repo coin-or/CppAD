@@ -76,7 +76,7 @@ $end
 ---------------------------------------------------------------------------
 */
 
-
+# include <cppad/local/cppad_error.hpp>
 
 namespace CppAD {
 

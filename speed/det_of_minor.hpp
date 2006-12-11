@@ -31,7 +31,7 @@ $index minor, matrix determinant$$
 $section Compute the Determinant of a Minor$$
 
 $head Syntax$$
-$syntax%# include "example/det_of_minor.hpp"
+$syntax%# include "speed/det_of_minor.hpp"
 %$$ 
 $syntax%%d% = det_of_minor(%a%, %m%, %n%, %r%, %c%)%$$ 
 
@@ -41,7 +41,7 @@ is not automatically defined by $cref/CppAD.h/cppad/$$
 (nor does it include $code cppad.hpp$$).
 It is defined in the $code CppAD$$ namespace by including the file 
 $syntax%
-	example/det_of_minor.hpp
+	speed/det_of_minor.hpp
 %$$
 
 $head Purpose$$
@@ -196,7 +196,7 @@ $syntax%%x% * %y%$$
 $tend
 
 $children%
-	example/det_of_minor.cpp
+	speed/example/det_of_minor.cpp
 %$$
 
 $head Example$$
@@ -233,7 +233,7 @@ $pre
 $$
 # define CPPAD_DET_OF_MINOR_INCLUDED
 
-$verbatim%example/det_of_minor.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/det_of_minor.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 
 # endif
 $$

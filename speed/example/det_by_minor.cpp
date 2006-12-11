@@ -1,3 +1,4 @@
+// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -8,21 +9,22 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+// END SHORT COPYRIGHT
 
 /*
-$begin DetByLu.cpp$$
+$begin DetByMinor.cpp$$
 $spell
 	Cpp
-	Lu
 $$
 
-$section Determinant Using Lu Factorization: Example and Test$$
+$section Determinant Using Expansion by Minors: Example and Test$$
 $index determinant, by minors$$
 $index example, determinant by minors$$
 $index test, determinant by minors$$
 
+$comment This file is in the Example subdirectory$$ 
 $code
-$verbatim%example/det_by_lu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/example/det_by_minor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -30,16 +32,16 @@ $end
 // BEGIN PROGRAM
 
 # include <cppad/cppad.hpp>
-# include "det_by_lu.hpp"
+# include <speed/det_by_minor.hpp>
 
-bool DetByLu()
+bool DetByMinor()
 {	bool ok = true;
 
 	// dimension of the matrix
 	size_t n = 3;
 
 	// construct the determinat object
-	CppAD::DetByLu<double> Det(n);
+	CppAD::DetByMinor<double> Det(n);
 
 	double  a[] = {
 		1., 2., 3.,  // a[0] a[1] a[2]
@@ -60,7 +62,7 @@ bool DetByLu()
 	      - a[1]*(a[3]*a[8] - a[5]*a[6])
 	      + a[2]*(a[3]*a[7] - a[4]*a[6]);
 
-	ok = CppAD::NearEqual(det, check, 1e-10, 1e-10);
+	ok = det == check;
 
 	return ok;
 }

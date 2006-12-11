@@ -32,7 +32,7 @@ $end
 // BEGIN PROGRAM
 
 # include <cppad/cppad.hpp>
-# include "det_by_lu.hpp"
+# include <speed/det_by_lu.hpp>
 
 bool JacLuDet()
 {	bool ok = true;

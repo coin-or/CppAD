@@ -24,7 +24,7 @@ $section Determinant Using Expansion by Minors$$
 
 $table
 $bold Syntax$$
-$rnext $cnext $syntax%# include "example/det_by_minor.hpp"%$$
+$rnext $cnext $syntax%# include "speed/det_by_minor.hpp"%$$
 $rnext $cnext $syntax%DetByMinor<%Type%> %Det%(size_t %n%)%$$
 $rnext $cnext $syntax%%Type% %Det%(CppADvector<%Type%> &%A%)%$$
 $tend
@@ -34,7 +34,7 @@ $fend 25$$
 $head Inclusion$$
 The template function $code DetByMinor$$ is defined in the $code CppAD$$
 namespace by including 
-the file $code example/det_by_minor.hpp$$.
+the file $code speed/det_by_minor.hpp$$.
 It is only intended for example and testing purposes, 
 so it is not automatically included by
 $xref/cppad//CppAD.h/$$.
@@ -56,7 +56,7 @@ $syntax%
 returns the determinant of $italic A$$ using expansion by minors.
 
 $children%
-	example/det_by_minor.cpp
+	speed/example/det_by_minor.cpp
 %$$
 
 
@@ -93,7 +93,7 @@ $pre
 $$
 # define CPPAD_DET_BY_MINOR_INCLUDED
 
-$verbatim%example/det_by_minor.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/det_by_minor.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 
 # endif
 $$
@@ -105,7 +105,7 @@ $end
 // BEGIN PROGRAM
 
 # include <cppad/cppad.hpp>
-# include "det_of_minor.hpp"
+# include <speed/det_of_minor.hpp>
 
 // BEGIN CppAD namespace
 namespace CppAD {

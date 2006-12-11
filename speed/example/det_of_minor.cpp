@@ -23,7 +23,7 @@ $index example, det_of_minor$$
 $index test, det_of_minor$$
 
 $code
-$verbatim%example/det_of_minor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/example/det_of_minor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -31,7 +31,7 @@ $end
 // BEGIN PROGRAM
 # include <vector>
 # include <cstddef>
-# include "det_of_minor.hpp"
+# include <speed/det_of_minor.hpp>
 
 bool det_of_minor()
 {	bool   ok = true;
