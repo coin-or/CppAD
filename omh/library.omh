@@ -61,6 +61,7 @@ $head Some Testing Utilities$$
 The routines listed below are general purpose numerical testing routines:
 $table
 $rref NearEqual$$
+$rref speed_test$$
 $rref SpeedTest$$
 $tend
 
