@@ -25,14 +25,14 @@ $section Example and Test of AllocVec Template Class$$
 
 $comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%adolc/alloc_vec.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/adolc/alloc_vec.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 // BEGIN PROGRAM
 
-# include "adolc/alloc_vec.hpp"
+# include <speed/adolc/alloc_vec.hpp>
 
 namespace {
 	void ForwardDifference(int length, int *v)

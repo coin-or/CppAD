@@ -38,26 +38,41 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add MS project files and delete old speed_example directroy.
+log_entry="move adolc to speed/adolc and fadbad to speed/fadbad. This is the
+next step in improving the organization of the speed testing.
 
 svn_commit.sh: file that made this commit.
-example.sln: new MS project file.
-example.vcproj: new MS project file.
-speed_example: delete old directory (replaced by speed/example).
-check_include_*.sh: update these files to work with new locations.
+whats_new_06.omh: user's view of the changes.
+config.h: update version number.
+
+Change adolc and fadbad to speed/adolc and speed/fadbad in the following files
+check_include_file.sh, 
+check_include_omh.sh, 
+configure.ac, 
+build.sh
+makefile.am, 
+omh/fadbad.omh, 
+omh/adolc.omh, 
+speed/*
 "
 # 
 add_list="
-	speed/example/example.sln
-	speed/example/example.vcproj
 "
 #
 change_list="
 	svn_commit.sh
-	speed_example
+	omh/whats_new_06.omh
+	adolc
 	check_include_file.sh
-	check_include_def.sh
 	check_include_omh.sh
+	configure.ac
+	build.sh
+	makefile.am
+	omh/fadbad.omh
+	omh/adolc.omh
+	cppad/config.h
+	speed
+	fadbad
 "
 #
 delete_list="

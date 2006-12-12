@@ -10,18 +10,20 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin ExampleFadbad.cpp$$
+$begin ExampleAdolc.cpp$$
 $spell
-	fadbad
+	adolc
 	Cpp
 $$
 
-$index Fadbad, compare results$$
-$section Compare Fadbad and CppAD Results$$
+$index Adolc, compare$$
+$index compare, Adolc$$
 
-$comment This file is in the Fadbad subdirectory$$ 
+$section Compare Adolc and CppAD Results$$
+
+$comment This file is in the Adolc subdirectory$$ 
 $code
-$verbatim%fadbad/example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/adolc/example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -47,6 +49,8 @@ namespace {
 }
 
 // various test routines
+extern bool AllocMatTest(void);
+extern bool AllocVecTest(void);
 extern bool DetMinor(void);
 extern bool DetLu(void);
 
@@ -55,8 +59,11 @@ int main(void)
 {	bool ok = true;
 	using namespace std;
 
+	ok &= Run(AllocMatTest,      "AllocMat"   );
+	ok &= Run(AllocVecTest,      "AllocVec"   );
 	ok &= Run(DetMinor,          "DetMinor"   );
 	ok &= Run(DetLu,             "DetLu"      );
+	
 	if( ok )
 		cout << "All the tests passed." << endl;
 	else	cout << "At least one test failed." << endl;

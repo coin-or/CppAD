@@ -338,8 +338,8 @@ then
 		example/example
 		test_more/test_more
 		introduction/Introduction
-		fadbad/example
-		adolc/example
+		speed/fadbad/example
+		speed/adolc/example
 	"
 	for program in $list
 	do
@@ -348,6 +348,11 @@ then
 		if ! ./$program   >> ../build_test.log
 		then
 			ok="no"
+		fi
+		if [ "$program" != "adolc/example" ]
+		then
+			# add a new line between program outputs
+			echo ""  >> ../build_test.log
 		fi
 	done
 	if ! ./run_omhelp.sh doc

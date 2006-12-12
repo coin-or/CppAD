@@ -9,37 +9,38 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin DetMinorFadbad.cpp$$
+$begin DetLuFadbad.cpp$$
 $spell
 	fadbad
+	Lu
 	Cpp
 $$
 
-$section Fadbad & CppAD Gradient of Determinant by Minors$$
+$section Fadbad & CppAD Gradient of Determinant by Lu Factorization$$
 
 $index Fadbad, speed$$
 $index speed, Fadbad$$
 $index determinant, Fadbad$$
 $index Fadbad, determinant$$
-$index Minor, Fadbad expand$$
-$index Fadbad, Minor expand$$
+$index Lu factor, Fadbad$$
+$index Fadbad, Lu factor$$
+
 
 $comment This file is in the Fadbad subdirectory$$ 
 $code
-$verbatim%fadbad/det_minor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/fadbad/det_lu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 // BEGIN PROGRAM
 
-# include <cppad/cppad.hpp>
-# include <speed/det_by_minor.hpp>
+# include <speed/det_by_lu.hpp>
 
 # include <iostream.h>
 # include <Fadbad++/badiff.h>
 
-void DetMinorCp(size_t size, size_t repeat, CppADvector<double> &u)
+void DetLuCp(size_t size, size_t repeat, CppADvector<double> &u)
 {
 	using namespace CppAD;
 
@@ -51,7 +52,7 @@ void DetMinorCp(size_t size, size_t repeat, CppADvector<double> &u)
 	// Do this set up once so not significant in timing test
 
 	// object for computing determinant
-	DetByMinor< AD<double> > Det(size);
+	DetByLu< AD<double> > Det(size);
 
 	CppADvector< AD<double> >            detA(1);
 	CppADvector< AD<double> >   A( size * size );
@@ -82,7 +83,7 @@ void DetMinorCp(size_t size, size_t repeat, CppADvector<double> &u)
 	}
 }
 
-void DetMinorFa(size_t size, size_t repeat, CppADvector<double> &u)
+void DetLuFa(size_t size, size_t repeat, double *u)
 {
 	size_t i;
 	size_t j;
@@ -93,7 +94,7 @@ void DetMinorFa(size_t size, size_t repeat, CppADvector<double> &u)
 	// Do this set up once so not significant in timing test
 
 	// object for computing determinant
-	CppAD::DetByMinor< B<double> > Det(size);
+	CppAD::DetByLu< B<double> > Det(size);
 
 	B<double>                             detA;
 	CppADvector< B<double> >  A( size * size );
@@ -110,8 +111,7 @@ void DetMinorFa(size_t size, size_t repeat, CppADvector<double> &u)
 	// ------------------------------------------------------
 
 	while(repeat--)
-	{
-		// set independent variable values
+	{	// set independent variable values
 		for(i = 0; i < length; i++)
 			A[i] = a[i];
 
@@ -119,44 +119,46 @@ void DetMinorFa(size_t size, size_t repeat, CppADvector<double> &u)
 		detA = Det(A);
 
 		// create function object f : A -> detA
-		detA.diff(0, 1); // only one dependent variable (index is 0)
+		detA.diff(0, 1); // only one dependent variable (index 0)
 
 		// evalute and return gradient using reverse mode
 		for(i = 0; i < length; i++)
-			u[i] = A[i].d(0);  // derivative of detA w.r.t a[i]
+			u[i] = A[i].d(0); // derivative of detA w.r.t a[i]
 	}
 }
 
-bool DetMinor(void)
+bool DetLu(void)
 {	bool ok = true;
 
-	size_t size   = 4;
+	size_t size   = 2;
 	size_t repeat = 1;
 
-	CppADvector<double> uFa(size * size);
+	double *uFa = new double[size * size];
 	CppADvector<double> uCp(size * size);
 
-	DetMinorCp(size, repeat, uCp);
-	DetMinorFa(size, repeat, uFa);
-
+	DetLuCp(size, repeat, uCp);
+	DetLuFa(size, repeat, uFa);
 
 	size_t i;
 	for(i = 0; i < size * size; i++)
-		ok &= uCp[i] == uFa[i];
+		ok &= CppAD::NearEqual(uCp[i], uFa[i], 1e-12, 1e-12);
 
+	delete [] uFa;
 	return ok;
 }
-std::string DetMinorCp(size_t size, size_t repeat)
+std::string DetLuCp(size_t size, size_t repeat)
 {	CppADvector<double> u(size * size);
 
-	DetMinorCp(size, repeat, u);
-	return "CppAD: gradient of Determinant by Minors";
+	DetLuCp(size, repeat, u);
+	return "CppAD: gradient of Determinant by Lu Factorization";
 }
-std::string DetMinorFa(size_t size, size_t repeat)
-{	CppADvector<double> u(size * size);
+std::string DetLuFa(size_t size, size_t repeat)
+{	double *u = new double[size * size];
 
-	DetMinorFa(size, repeat, u);
-	return "Fadbad: gradient of Determinant by Minors";
+	DetLuFa(size, repeat, u);
+
+	delete [] u;
+	return "Fadbad: gradient of Determinant by Lu Factorization";
 }
 
 // END PROGRAM

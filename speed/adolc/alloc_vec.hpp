@@ -68,7 +68,7 @@ elements of $italic v$$ are stored.
 ($italic length$$ is the value in the constructor for $italic v$$).
 
 $children%
-	adolc/alloc_vec.cpp
+	speed/adolc/alloc_vec.cpp
 %$$
 
 $head Example$$

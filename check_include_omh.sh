@@ -21,20 +21,20 @@ list="
 	doc.omh
 	dev.omh
 	cppad/PowInt.h
-	adolc/*.cpp
-	adolc/*.hpp
 	cppad/*.hpp
 	cppad/local/*.hpp
 	example/*.cpp
 	example/*.hpp
-	fadbad/*.cpp
 	get_started/*.cpp
 	introduction/*.cpp
 	introduction/*.hpp
 	print_for/*.cpp
 	speed_cppad/*.cpp
 	speed/*.hpp
+	speed/adolc/*.cpp
+	speed/adolc/*.hpp
 	speed/example/*.cpp
+	speed/fadbad/*.cpp
 	omh/*.omh
 "
 for file in $list

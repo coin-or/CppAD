@@ -80,7 +80,7 @@ Here the values $italic nr$$ and $italic nc$$ are those
 used in the constructor for $italic M$$.
 
 $children%
-	adolc/alloc_mat.cpp
+	speed/adolc/alloc_mat.cpp
 %$$
 
 $head Example$$

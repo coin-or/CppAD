@@ -17,8 +17,8 @@ grep '^# *include *<cppad/' \
 	cppad/local/*.hpp \
 	example/*.cpp \
 	example/*.hpp \
-	adolc/*.cpp \
-	fadbad/*.cpp \
+	speed/adolc/*.cpp \
+	speed/fadbad/*.cpp \
 	test_more/*.cpp \
 	speed_cppad/*.cpp  > junk.1
 #
@@ -27,8 +27,9 @@ grep '^# *include *<speed/' \
 	cppad/local/*.hpp \
 	example/*.cpp \
 	example/*.hpp \
-	adolc/*.cpp \
-	fadbad/*.cpp \
+	speed/adolc/*.cpp \
+	speed/adolc/*.hpp \
+	speed/fadbad/*.cpp \
 	test_more/*.cpp \
 	speed/*.hpp \
 	speed/example/*.cpp  >> junk.1
@@ -38,6 +39,7 @@ ls	cppad/config.h \
 	cppad/*.hpp \
 	cppad/local/*.hpp \
 	speed/*.hpp \
+	speed/adolc/*.hpp \
 	| sort -u > junk.3 
 diff junk.2 junk.3
 #

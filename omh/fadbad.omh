@@ -42,7 +42,7 @@ In a unix operating system (or in a Cygwin shell on an Microsoft system),
 you can compile link and run this list examples and 
 results comparison between Fadbad and CppAD using the following commands:
 $codep
-	cd cppad/fadbad
+	cd speed/fadbad
 	make  example
 	example
 $$
@@ -54,7 +54,7 @@ you can compile link and run the list of speed
 comparisons between CppAD and Fadbad
 using the following commands:
 $codep
-	cd cppad/fadbad
+	cd speed/fadbad
 	make  speed
 	speed
 $$
@@ -62,10 +62,10 @@ $$
 
 
 $contents%
-	fadbad/speed.cpp%
-	fadbad/example.cpp%
-	fadbad/det_minor.cpp%
-	fadbad/det_lu.cpp
+	speed/fadbad/speed.cpp%
+	speed/fadbad/example.cpp%
+	speed/fadbad/det_minor.cpp%
+	speed/fadbad/det_lu.cpp
 %$$
 
 $end

@@ -23,14 +23,14 @@ $index AllocMat, adolc$$
 $section Example and Test of AllocMat Template Class$$
 
 $code
-$verbatim%adolc/alloc_mat.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/adolc/alloc_mat.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 // BEGIN PROGRAM
 
-# include "adolc/alloc_mat.hpp"
+# include <speed/adolc/alloc_mat.hpp>
 
 namespace {
 	void RowSum(int nr, int nc, int **M)

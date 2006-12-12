@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	fadbad
 	exp
 	Dir
 	Romberg
@@ -64,6 +65,11 @@ This section contains a list of the changes to CppAD during 2006
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-12$$
+Started the $cref/speed wish list item/WishList/Speed/$$ by 
+move the $code adolc$$ director to $code speed/adolc$$ and
+$code fadbad$$ to $code speed/fadbad$$.
 
 $head 12-11$$
 Started the $cref/speed wish list item/WishList/Speed/$$ by 

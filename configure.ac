@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20061211, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20061212, cppad@list.coin-or.org)
 
 dnl Set the default install prefix to the installers home directory
 dnl cygwin begin delete:
@@ -234,14 +234,14 @@ dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
 	makefile
-	adolc/makefile 
 	example/makefile 
-	fadbad/makefile 
 	get_started/makefile 
 	introduction/makefile
 	print_for/makefile
 	speed_cppad/makefile 
+	speed/adolc/makefile
 	speed/example/makefile
+	speed/fadbad/makefile
 	test_more/makefile 
 ])
 

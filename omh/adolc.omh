@@ -32,7 +32,7 @@ $href%
 	adolc
 %$$
 with CppAD.
-They are located in the directory $code cppad/adolc$$.
+They are located in the directory $code speed/adolc$$.
 Note that they can only be run under Unix 
 (or Cygwin on Microsoft windows).
 
@@ -41,8 +41,8 @@ In a unix operating system (or in a Cygwin shell on an Microsoft system),
 you can compile link and run this list examples and 
 results comparison between Adolc and CppAD using the following commands:
 $codep
-	cd cppad/adolc
-	make  example
+	cd speed/adolc
+	make example
 	example
 $$
 
@@ -53,7 +53,7 @@ you can compile link and run the list of speed
 comparisons between CppAD and Adolc
 using the following commands:
 $codep
-	cd cppad/adolc
+	cd speed/adolc
 	make  speed
 	speed
 $$
@@ -61,12 +61,12 @@ $$
 
 
 $contents%
-	adolc/speed.cpp%
-	adolc/example.cpp%
-	adolc/alloc_vec.hpp%
-	adolc/alloc_mat.hpp%
-	adolc/det_minor.cpp%
-	adolc/det_lu.cpp
+	speed/adolc/speed.cpp%
+	speed/adolc/example.cpp%
+	speed/adolc/alloc_vec.hpp%
+	speed/adolc/alloc_mat.hpp%
+	speed/adolc/det_minor.cpp%
+	speed/adolc/det_lu.cpp
 %$$
 
 $end
