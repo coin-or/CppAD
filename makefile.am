@@ -149,6 +149,7 @@ nobase_include_HEADERS =  \
 	cppad/local/var2par.hpp \
 	speed/det_by_lu.hpp \
 	speed/det_by_minor.hpp \
+	speed/det_grad_33.hpp \
 	speed/det_of_minor.hpp
 #
 #
