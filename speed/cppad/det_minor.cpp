@@ -9,26 +9,26 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin speed_cppad_det_lu.cpp$$
+$begin speed_cppad_det_minor.cpp$$
 $spell
 	Lu
 	Cpp
 $$
 
-$section Speed CppAD Gradient: Determinant Using Lu Factorization$$
+$section Speed of CppAD Gradient: Determinant Using Expansion by Minors$$
 
-$index cppad, speed lu$$
-$index speed, cppad lu$$
-$index lu, speed cppad$$
+$index cppad, speed minor$$
+$index speed, cppad minor$$
+$index minor, speed cppad$$
 
-$head compute_det_lu$$
-$index compute_det_lu$$
+$head compute_det_minor$$
+$index compute_det_minor$$
 Routine that computes the gradient of determinant using CppAD:
 $codep */
 # include <cppad/cppad.hpp>
-# include <speed/det_by_lu.hpp>
+# include <speed/det_by_minor.hpp>
 
-void compute_det_lu(
+void compute_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
 	const CppADvector<double> &matrix   ,
@@ -39,7 +39,7 @@ void compute_det_lu(
 	using CppAD::AD;
 
 	// object for computing determinant
-	CppAD::DetByLu< AD<double> > Det(size);
+	CppAD::DetByMinor< AD<double> > Det(size);
 
 	CppADvector< AD<double> >            detA(1);
 	CppADvector< AD<double> >   A( size * size );
@@ -70,13 +70,13 @@ void compute_det_lu(
 }
 /* $$
 
-$head correct_det_lu$$
-$index correct_det_lu$$
-Routine that tests the correctness of the result computed by compute_det_lu:
+$head correct_det_minor$$
+$index correct_det_minor$$
+Routine that tests the correctness of the result computed by compute_det_minor:
 $codep */
 # include <speed/det_grad_33.hpp>
 
-bool correct_det_lu(void)
+bool correct_det_minor(void)
 {	size_t size   = 3;
 	size_t repeat = 1;
 	CppADvector<double> matrix(size * size);
@@ -86,19 +86,19 @@ bool correct_det_lu(void)
 		matrix[i] = rand() / double(RAND_MAX);
 
 	CppADvector<double> result(size * size);
-	compute_det_lu(size, repeat, matrix, result);
+	compute_det_minor(size, repeat, matrix, result);
 
 	bool ok = det_grad_33(matrix, result);
 	return ok;
 }
 /* $$
 
-$head speed_det_lu$$
-$index speed_det_lu$$
-Rountine that links compute_det_lu to $cref/speed_test/$$:
+$head speed_det_minor$$
+$index speed_det_minor$$
+Rountine that links compute_det_minor to $cref/speed_test/$$:
 
 $codep */
-void speed_det_lu(size_t size, size_t repeat)
+void speed_det_minor(size_t size, size_t repeat)
 {	CppADvector<double> matrix(size * size);
 	CppADvector<double> result(size * size);
 	size_t i;
@@ -107,7 +107,7 @@ void speed_det_lu(size_t size, size_t repeat)
 	for(i = 0; i < size * size; i++)
 		matrix[i] = rand() / double(RAND_MAX);
 
-	compute_det_lu(size, repeat, matrix, result);
+	compute_det_minor(size, repeat, matrix, result);
 	
 	return;
 }

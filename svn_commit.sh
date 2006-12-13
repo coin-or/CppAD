@@ -38,28 +38,23 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="create det_grad_33 testing routine for use by all speed tests.
+log_entry="add speed/cppad/det_minor case.
 
 svn_commit.sh: file that made this commit.
-config.h: update version number.
-build.sh: run speed/cppad/run as a special case.
-det_grad_33.hpp: test gradient of determinant for 3 by 3 matrices.
-example.sh: use speed/cppad/run example instead.
-speed.sh: use speed/cppad/run speed instead.
-det_lu.cpp: use det_grad_33.
-makefile.am: include det_grad_33.hpp in distribution.
+run.cpp: add det_minor case.
+makefile.am: add det_minor.cpp.
+det_minor.cpp: test determinant by minors.
+det_lu.cpp: improve wording in documentation.
 "
 #
 add_list="
-	speed/det_grad_33.hpp
+	speed/cppad/det_minor.cpp
 "
 #
 change_list="
 	svn_commit.sh
-	cppad/config.h
-	build.sh
-	speed/cppad/example.sh
-	speed/cppad/speed.sh
+	speed/cppad/run.cpp
+	speed/cppad/makefile.am
 	speed/cppad/det_lu.cpp
 "
 delete_list="

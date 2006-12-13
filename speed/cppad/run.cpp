@@ -32,7 +32,10 @@ $end
 # include <cppad/cppad.hpp>
 
 extern bool correct_det_lu(void);
+extern bool correct_det_minor(void);
+
 extern void speed_det_lu(size_t size, size_t repeat);
+extern void speed_det_minor(size_t size, size_t repeat);
 
 namespace {
 
@@ -87,7 +90,8 @@ int main(int argc, char *argv[])
 	}
 	if( example )
 	{
-		ok &= Run_correct(correct_det_lu,  "det_lu");
+		ok &= Run_correct(correct_det_lu,           "det_lu"       );
+		ok &= Run_correct(correct_det_minor,        "det_minor"    );
 
 		assert( ok || (Run_error_count > 0) );
 		if( ok )
@@ -103,13 +107,20 @@ int main(int argc, char *argv[])
 		}
 		return static_cast<int>( ! ok );
 	}
+
+	// speed test arguments
 	double time_min = 1.;
 	size_t n_size   = 4;
 	CppAD::vector<size_t> size_vec(n_size);
 	size_t i;
 	for(i = 0; i < n_size; i++) 
 		size_vec[i] = 2 * i + 1;
+
+	// run the speed tests
 	Run_speed(speed_det_lu, size_vec, time_min, "det_lu");
+	Run_speed(speed_det_lu, size_vec, time_min, "det_minor");
+
+	return 0;
 }
 
 // END PROGRAM
