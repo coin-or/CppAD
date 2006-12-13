@@ -198,7 +198,7 @@ $xref/glossary/Base Type/base type/$$ of an AD class.
 
 $head 11-14$$
 An 
-$xref/OdeSpeed.cpp//ode speed test/$$ was added
+$code speed_cppad/OdeSpeed.cpp/$$ test was added
 and some changes were made to the 
 ODE interface in order to make it faster.
 The most significant change was in the specifications for

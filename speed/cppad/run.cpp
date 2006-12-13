@@ -10,9 +10,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin speed_cppad.cpp$$
+$begin speed_cppad_run$$
 $spell
-	Cpp
+	cppad
+	CppAD
 $$
 
 $index cppad, speed test$$
@@ -22,7 +23,7 @@ $index test, cppad speed$$
 $section Run the CppAD Speed Tests$$
 
 $code
-$verbatim%speed/adolc/example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%speed/cppad/run.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

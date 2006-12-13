@@ -41,21 +41,26 @@
 log_entry="add speed/cppad/det_minor case.
 
 svn_commit.sh: file that made this commit.
-run.cpp: add det_minor case.
-makefile.am: add det_minor.cpp.
-det_minor.cpp: test determinant by minors.
-det_lu.cpp: improve wording in documentation.
+install_unix.omh: change instructions for running CppAD speed tests.
+whats_new_?.omh: remove cross references to old speed_cppad/? files.
+speed_cppad.omh: documentation for speed/cppad/? instead of speed_cppad/?.
+det_minor.cpp: fix spelling error.
+run.cpp: fix verbatim file reference.
 "
 #
 add_list="
-	speed/cppad/det_minor.cpp
 "
 #
 change_list="
 	svn_commit.sh
+	omh/install_unix.omh
+	omh/whats_new_03.omh
+	omh/whats_new_04.omh
+	omh/whats_new_05.omh
+	omh/whats_new_06.omh
+	omh/speed_cppad.omh
+	speed/cppad/det_minor.cpp
 	speed/cppad/run.cpp
-	speed/cppad/makefile.am
-	speed/cppad/det_lu.cpp
 "
 delete_list="
 "

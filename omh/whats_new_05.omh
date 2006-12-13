@@ -283,7 +283,7 @@ $pre
 $$
 The source code for
 $xref/LuVecADOk.cpp/$$ was mistakenly used for
-$xref/LuSolveSpeed.cpp/$$.
+$code speed_cppad/LuSolveSpeed.cpp$$.
 This has been fixed.
 
 

@@ -11,8 +11,15 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_cppad_det_minor.cpp$$
 $spell
+	cppad
 	Lu
-	Cpp
+	CppAD
+	det
+	hpp
+	const
+	CppADvector
+	bool
+	srand
 $$
 
 $section Speed of CppAD Gradient: Determinant Using Expansion by Minors$$
@@ -63,7 +70,7 @@ void compute_det_minor(
 		// create function object f : A -> detA
 		CppAD::ADFun<double> f(A, detA);
 
-		// evalute and return gradient using reverse mode
+		// evaluate and return gradient using reverse mode
 		gradient = f.Reverse(1, w);
 	}
 	return;
@@ -95,7 +102,7 @@ bool correct_det_minor(void)
 
 $head speed_det_minor$$
 $index speed_det_minor$$
-Rountine that links compute_det_minor to $cref/speed_test/$$:
+Routine that links compute_det_minor to $cref/speed_test/$$:
 
 $codep */
 void speed_det_minor(size_t size, size_t repeat)

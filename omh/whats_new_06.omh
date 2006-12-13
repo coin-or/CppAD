@@ -66,6 +66,12 @@ This section contains a list of the changes to CppAD during 2006
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-13$$
+Next step for the $cref/speed wish list item/WishList/Speed/$$:
+remove $code speed_cppad$$ from the documentation and replace it by
+$code speed/cppad$$, see $cref/speed_cppad/$$ for the new CppAD speed
+test routines.
+
 $head 12-12$$
 Started the $cref/speed wish list item/WishList/Speed/$$ by 
 move the $code adolc$$ director to $code speed/adolc$$ and

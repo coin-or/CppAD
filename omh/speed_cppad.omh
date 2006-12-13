@@ -25,41 +25,50 @@ $$
 $index speed, test cppad$$
 $index test, cppad speed$$
 $index cppad, speed test$$
+
 $section Routines That Speed Test CppAD$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to determine if 
-certain changes improve its execution speed.
+certain changes improve its execution speed
+(and to compare CppAD with other AD packages).
 This section explains how you can run these tests on your computer.
 
-
-$head Unix$$
-In a unix operating system (or in a Cygwin shell on an Microsoft system),
-you must first configure CppAD to run its speed tests.
-To do this, run the install
-$xref/InstallUnix/Configure/configure/$$ command with the
-$code --with-Speed$$ command line option included.
-You can then compile link and run the speed 
-tests with the following commands (relative to the distribution directory):
-$codep
-	cd speed_cppad
-	make 
-	./speed_cppad
-$$
-
 $head Windows$$
-In Microsoft Visual Studio open the project file 
-$code cppad_speed/speed_speed.sln$$
-(relative to the distribution directory).
-Then set the configuration to the $code Release$$ version.
-Then select $code Build | speed_cppad$$.
+These routines have not been compiled or tested under Windows,
+except for the case where one is using 
+$href%
+	http://www.cygwin.com%
+	Cygwin
+%$$
+or,
+$href%
+	http://www.mingw.org%
+	MinGW with MSYS
+%$$.
+
+$head Speed$$
+To run these tests, you must include the
+$code --with-Speed$$ command line option during the
+$cref/install configure/InstallUnix/Configure/$$ command. 
+You can then compile link and run the CppAD speed tests 
+with the following commands (relative to the distribution directory):
+$codep
+	cd speed/cppad
+	make 
+	./run example
+$$
+This will check that the speed tests have been built correctly.
+You can then run the command
+$codep
+	./run speed
+$$
+to see the results of the speed tests.
 
 $contents%
-	speed_cppad/speed_cppad.cpp%
-	speed_cppad/det_minor.cpp%
-	speed_cppad/det_lu.cpp%
-	speed_cppad/ode.cpp%
-	speed_cppad/lu_solve.cpp
+	speed/cppad/run.cpp%
+	speed/cppad/det_minor.cpp%
+	speed_cppad/det_lu.cpp
 %$$
 
 $end

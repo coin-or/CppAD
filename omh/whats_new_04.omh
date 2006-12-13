@@ -212,7 +212,7 @@ $head 10-06$$
 The test 
 $code TapeDetLu$$ was added to $xref/DetLuSpeed.cpp/$$
 and 
-$code TapeDetMinor$$ was added to $xref/DetMinorSpeed.cpp/$$.
+$code TapeDetMinor$$ was added to $code speed_cppad/DetMinorSpeed.cpp$$.
 These tests just tape the calculations without computing any derivatives.
 Using this, and the other tests, one can to separate the taping time 
 from the derivative calculation time.
@@ -701,7 +701,7 @@ This has been fixed.
 $head 04-09$$
 Adding special operators for using parameters to index $code VecAD$$ objects
 increased the speed and reduced the memory requirements (by about 20%) for 
-the $xref/VecAD/$$ case in the $xref/LuSolveSpeed.cpp/$$ test.
+the $xref/VecAD/$$ case in the $code speed_cppad/LuSolveSpeed.cpp/$$ test.
 $pre
 
 $$
@@ -718,7 +718,7 @@ during the solution of linear equations with out having to retape.
 $pre
 
 $$
-The speed test $xref/LuSolveSpeed.cpp/$$ has been added.
+The speed test $code speed_cppad/LuSolveSpeed.cpp/$$ has been added.
 It shows that the initial implementation of $xref/VecAD/$$ is slow
 (and uses a lot of memory.) 
 In fact, 
