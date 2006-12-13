@@ -22,19 +22,19 @@ $$
 
 $section Determinant Using Expansion by Minors$$
 
-$table
-$bold Syntax$$
-$rnext $cnext $syntax%# include "speed/det_by_minor.hpp"%$$
-$rnext $cnext $syntax%DetByMinor<%Type%> %Det%(size_t %n%)%$$
-$rnext $cnext $syntax%%Type% %Det%(CppADvector<%Type%> &%A%)%$$
-$tend
-
-$fend 25$$
+$head Syntax$$
+$syntax%# include <speed/det_by_minor.hpp>
+%$$
+$syntax%DetByMinor<%Type%> %Det%(size_t %n%)
+%$$
+$syntax%%Type% %Det%(CppADvector<%Type%> &%A%)
+%$$
 
 $head Inclusion$$
 The template function $code DetByMinor$$ is defined in the $code CppAD$$
 namespace by including 
-the file $code speed/det_by_minor.hpp$$.
+the file $code speed/det_by_minor.hpp$$
+(relative to the CppAD distribution directory).
 It is only intended for example and testing purposes, 
 so it is not automatically included by
 $xref/cppad//CppAD.h/$$.

@@ -238,8 +238,9 @@ AC_CONFIG_FILES([
 	get_started/makefile 
 	introduction/makefile
 	print_for/makefile
-	speed_cppad/makefile 
 	speed/adolc/makefile
+	speed/cppad/makefile 
+	speed_cppad/makefile
 	speed/example/makefile
 	speed/fadbad/makefile
 	test_more/makefile 

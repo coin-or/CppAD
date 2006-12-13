@@ -1,7 +1,6 @@
 # ifndef CPPAD_DET_BY_LU_INCLUDED 
 # define CPPAD_DET_BY_LU_INCLUDED 
 
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
 
@@ -12,7 +11,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 /*
 $begin DetByLu$$
 $spell
@@ -32,21 +30,25 @@ $index determinant, Lu factor$$
 $index Lu factor, determinant$$
 $index factor, Lu determinant$$
 
-$table
-$bold Syntax$$
-$rnext $cnext $syntax%# include "speed/det_by_lu.hpp"%$$
-$rnext $cnext $syntax%DetByLu<%Type%> %Det%(size_t %n%)%$$
-$rnext $cnext $syntax%%Type% %Det%(CppADvector<%Type%> &%A%)%$$
-$rnext $cnext $syntax%typedef std::complex<double>     Complex;%$$
-$rnext $cnext $syntax%typedef CppAD::AD<Complex>     ADComplex;%$$
-$tend
+$head Syntax$$
+$syntax%# include <speed/det_by_lu.hpp>
+%$$
+$syntax%DetByLu<%Type%> %Det%(size_t %n%)
+%$$
+$syntax%%Type% %Det%(CppADvector<%Type%> &%A%)
+%$$
+$syntax%typedef std::complex<double>     Complex;
+%$$
+$syntax%typedef CppAD::AD<Complex>     ADComplex;
+%$$
 
 $fend 25$$
 
 $head Inclusion$$
 The template class $code DetByLu$$ is defined in the $code CppAD$$
 namespace by including 
-the file $code speed/det_by_lu.hpp$$.
+the file $code speed/det_by_lu.hpp$$ 
+(relative to the CppAD distribution directory).
 It is only intended for example and testing purposes, 
 so it is not automatically included by
 $xref/cppad//CppAD.h/$$.
@@ -83,10 +85,13 @@ $code LeqZero$$ and $code AbsGeq$$ so they can be used
 by $xref/LuSolve/$$ with the $code Complex$$ and $code ADComplex$$
 types.
 
+$head Restrictions$$
+This routine assumes that the matrix $italic A$$ is not singular.
+
 $head Example$$
 The file
 $xref/DetByLu.cpp/$$ 
-contains an example and a test of $code det_by_lu.hpp$$.
+contains an example and test of $code det_by_lu.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
@@ -113,7 +118,6 @@ $index complex, Lu factor$$
 $index Lu factor, complex$$
 $index factor, Lu complex$$
 
-$comment This file is in the Example subdirectory$$
 $code
 # ifndef CPPAD_DET_BY_LU_INCLUDED
 $pre
@@ -167,6 +171,12 @@ public:
 		// comput log determinant
 		signdet = CppAD::LuSolve(
 			n, m, A, B, X, logdet);
+
+		// make sure the martix is not singular
+		CppADUsageError( 
+			signdet != 0,
+			"DetByLu: matrix is singular"
+		);
 
 		// convert to determinant
 		det     = Type( signdet ) * exp( logdet ); 

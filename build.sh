@@ -30,7 +30,7 @@ then
 	fi
 	if [ -e cppad-$version ]
 	then
-		rm -r cppad-$version
+		rm -rf cppad-$version
 	fi
 fi
 #
@@ -338,8 +338,9 @@ then
 		example/example
 		test_more/test_more
 		introduction/Introduction
-		speed/fadbad/example
 		speed/adolc/example
+		speed/cppad/example.sh 
+		speed/fadbad/example
 	"
 	for program in $list
 	do
@@ -349,7 +350,7 @@ then
 		then
 			ok="no"
 		fi
-		if [ "$program" != "adolc/example" ]
+		if [ "$program" != "fadbad/example" ]
 		then
 			# add a new line between program outputs
 			echo ""  >> ../build_test.log

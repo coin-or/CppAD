@@ -38,43 +38,32 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="move adolc to speed/adolc and fadbad to speed/fadbad. This is the
-next step in improving the organization of the speed testing.
+log_entry="create speed/cppad directory (eventually replace speed_cppad).
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: user's view of the changes.
-config.h: update version number.
-
-Change adolc and fadbad to speed/adolc and speed/fadbad in the following files
-check_include_file.sh, 
-check_include_omh.sh, 
-configure.ac, 
-build.sh
-makefile.am, 
-omh/fadbad.omh, 
-omh/adolc.omh, 
-speed/*
-"
-# 
-add_list="
+svn_commit.sed: remove omhelp comment about directory where file is located.
+example/example.cpp: using specific items instead of entire namespace.
+configure.ac: add speed/cppad/makefile.
+build.sh: add speed/cppad/example.sh to list of correctness tests.
+makefile.am: add speed/cppad/makefile.
+det_by_minor.hpp: clean up syntax in documentation.
+det_of_minor.hpp: update Inclusion heading.
+det_by_lu.hpp: clean up syntax in documentation.
 "
 #
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	adolc
-	check_include_file.sh
-	check_include_omh.sh
+	svn_commit.sed
+	example/example.cpp
 	configure.ac
 	build.sh
 	makefile.am
-	omh/fadbad.omh
-	omh/adolc.omh
-	cppad/config.h
-	speed
-	fadbad
+	speed/det_by_minor.hpp
+	speed/det_of_minor.hpp
+	speed/det_by_lu.hpp
 "
-#
 delete_list="
 "
 #

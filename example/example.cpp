@@ -139,10 +139,7 @@ namespace {
 	static size_t Run_error_count = 0;
 	bool Run(bool TestOk(void), const char *name)
 	{	bool ok = true;
-		using namespace std;
-	
 		ok &= TestOk();
-	
 		if( ok )
 		{	std::cout << "Ok:    " << name << std::endl;
 			Run_ok_count++;
@@ -151,7 +148,6 @@ namespace {
 		{	std::cout << "Error: " << name << std::endl;
 			Run_error_count++;
 		}
-	
 		return ok;
 	}
 }
@@ -159,7 +155,6 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {	bool ok = true;
-	using namespace std;
 
 	// This line is used by one_test.sh
 
@@ -261,10 +256,11 @@ int main(void)
 	ok &= Run( Var2Par,           "Var2Par"          );
 	ok &= Run( VecAD,             "VecAD"            );
 
-	// check for memory leak in previous calculations
+	// check for errors
+	using std::cout;
+	using std::endl;
 	if( CppADTrackCount() != 0 )
 		cout << "Error: memroy leak detected" << endl;
-
 	assert( ok || (Run_error_count > 0) );
 	if( ok )
 		cout << "All " << Run_ok_count << " tests passed." << endl;

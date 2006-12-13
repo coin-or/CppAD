@@ -31,18 +31,19 @@ $index minor, matrix determinant$$
 $section Compute the Determinant of a Minor$$
 
 $head Syntax$$
-$syntax%# include "speed/det_of_minor.hpp"
+$syntax%# include <speed/det_of_minor.hpp>
 %$$ 
 $syntax%%d% = det_of_minor(%a%, %m%, %n%, %r%, %c%)%$$ 
 
-$head Include File$$
-The template function $code det_of_minor$$ 
-is not automatically defined by $cref/CppAD.h/cppad/$$
-(nor does it include $code cppad.hpp$$).
-It is defined in the $code CppAD$$ namespace by including the file 
-$syntax%
-	speed/det_of_minor.hpp
-%$$
+
+$head Inclusion$$
+The template function $code det_of_minor$$ is defined in the $code CppAD$$
+namespace by including 
+the file $code speed/det_of_minor.hpp$$ 
+(relative to the CppAD distribution directory).
+It is only intended for example and testing purposes, 
+so it is not automatically included by
+$xref/cppad//CppAD.h/$$.
 
 $head Purpose$$
 This template function

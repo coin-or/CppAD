@@ -181,8 +181,10 @@ TESTMORE =
 endif
 #
 # Did user specify --with-Speed
+#
 if CppAD_SPEED
-SPEEDCPPAD = speed_cppad
+# keep speed_cppad directory for the time being (at least until move profiling)
+SPEEDCPPAD = speed_cppad speed/cppad
 else
 SPEEDCPPAD =
 endif
