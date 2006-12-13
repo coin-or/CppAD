@@ -27,6 +27,7 @@ Routine that computes the gradient of determinant using CppAD:
 $codep */
 # include <cppad/cppad.hpp>
 # include <speed/det_by_lu.hpp>
+# include <speed/det_grad_33.hpp>
 # include <cstdlib>
 
 void compute_det_lu(
@@ -76,11 +77,8 @@ $index correct_det_lu$$
 Routine that tests the correctness of the result computed by compute_det_lu:
 $codep */
 bool correct_det_lu(void)
-{	bool ok = true;
-
-	size_t size   = 3;
+{	size_t size   = 3;
 	size_t repeat = 1;
-
 	CppADvector<double> matrix(size * size);
 	size_t i;
 	srand(1);
@@ -90,23 +88,7 @@ bool correct_det_lu(void)
 	CppADvector<double> result(size * size);
 	compute_det_lu(size, repeat, matrix, result);
 
-	// use expansion by minors to compute the derivative by hand
-	CppADvector<double> check(size * size);
-	check[0] = + ( matrix[4] * matrix[8] - matrix[5] * matrix[7] );
-	check[1] = - ( matrix[3] * matrix[8] - matrix[5] * matrix[6] );
-	check[2] = + ( matrix[3] * matrix[7] - matrix[4] * matrix[6] );
-	//
-	check[3] = - ( matrix[1] * matrix[8] - matrix[2] * matrix[7] );
-	check[4] = + ( matrix[0] * matrix[8] - matrix[2] * matrix[6] );
-	check[5] = - ( matrix[0] * matrix[7] - matrix[1] * matrix[6] );
-	//
-	check[6] = + ( matrix[1] * matrix[5] - matrix[2] * matrix[4] );
-	check[7] = - ( matrix[0] * matrix[5] - matrix[2] * matrix[3] );
-	check[8] = + ( matrix[0] * matrix[4] - matrix[1] * matrix[3] ); 
-	//
-	for(i = 0; i < size * size; i++)
-		ok &= CppAD::NearEqual(check[i], result[i], 1e-10, 1e-10);
-	
+	bool ok = det_grad_33(matrix, result);
 	return ok;
 }
 /* $$

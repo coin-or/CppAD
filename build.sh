@@ -339,7 +339,6 @@ then
 		test_more/test_more
 		introduction/Introduction
 		speed/adolc/example
-		speed/cppad/example.sh 
 		speed/fadbad/example
 	"
 	for program in $list
@@ -350,12 +349,15 @@ then
 		then
 			ok="no"
 		fi
-		if [ "$program" != "fadbad/example" ]
-		then
-			# add a new line between program outputs
-			echo ""  >> ../build_test.log
-		fi
+		# add a new line between program outputs
+		echo ""  >> ../build_test.log
 	done
+	echo "running speed/cppad/run example"
+	echo "./speed/cppad/run example" >> ../build_test.log
+	if ! ./speed/cppad/run example  >> ../build_test.log
+	then
+		ok="no"
+	fi
 	if ! ./run_omhelp.sh doc
 	then
 		ok="no"

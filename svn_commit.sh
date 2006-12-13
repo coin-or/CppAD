@@ -38,31 +38,29 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="create speed/cppad directory (eventually replace speed_cppad).
+log_entry="create det_grad_33 testing routine for use by all speed tests.
 
 svn_commit.sh: file that made this commit.
-whats_new_06.omh: user's view of the changes.
-svn_commit.sed: remove omhelp comment about directory where file is located.
-example/example.cpp: using specific items instead of entire namespace.
-configure.ac: add speed/cppad/makefile.
-build.sh: add speed/cppad/example.sh to list of correctness tests.
-makefile.am: add speed/cppad/makefile.
-det_by_minor.hpp: clean up syntax in documentation.
-det_of_minor.hpp: update Inclusion heading.
-det_by_lu.hpp: clean up syntax in documentation.
+config.h: update version number.
+build.sh: run speed/cppad/run as a special case.
+det_grad_33.hpp: test gradient of determinant for 3 by 3 matrices.
+example.sh: use speed/cppad/run example instead.
+speed.sh: use speed/cppad/run speed instead.
+det_lu.cpp: use det_grad_33.
+makefile.am: include det_grad_33.hpp in distribution.
+"
+#
+add_list="
+	speed/det_grad_33.hpp
 "
 #
 change_list="
 	svn_commit.sh
-	omh/whats_new_06.omh
-	svn_commit.sed
-	example/example.cpp
-	configure.ac
+	cppad/config.h
 	build.sh
-	makefile.am
-	speed/det_by_minor.hpp
-	speed/det_of_minor.hpp
-	speed/det_by_lu.hpp
+	speed/cppad/example.sh
+	speed/cppad/speed.sh
+	speed/cppad/det_lu.cpp
 "
 delete_list="
 "
