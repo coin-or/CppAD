@@ -18,6 +18,7 @@ grep '^# *include *<cppad/' \
 	example/*.cpp \
 	example/*.hpp \
 	speed/adolc/*.cpp \
+	speed/cppad/*.cpp \
 	speed/fadbad/*.cpp \
 	test_more/*.cpp \
 	speed_cppad/*.cpp  > junk.1
@@ -29,6 +30,7 @@ grep '^# *include *<speed/' \
 	example/*.hpp \
 	speed/adolc/*.cpp \
 	speed/adolc/*.hpp \
+	speed/cppad/*.cpp \
 	speed/fadbad/*.cpp \
 	test_more/*.cpp \
 	speed/*.hpp \

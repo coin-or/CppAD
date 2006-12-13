@@ -33,6 +33,7 @@ list="
 	speed/*.hpp
 	speed/adolc/*.cpp
 	speed/adolc/*.hpp
+	speed/cppad/*.cpp
 	speed/example/*.cpp
 	speed/fadbad/*.cpp
 	omh/*.omh
