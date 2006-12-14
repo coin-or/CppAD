@@ -38,34 +38,34 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="move speed testing main program to speed directory.
+log_entry="template the vector type in DetByMinor class.
 
 svn_commit.sh: file that made this commit.
-svn_status.sh: remove unecessary output.
-build.sh: improve echo during configure test case.
-speed.omh: new section at the top of the speed testing sub-tree.
-speed_cppad.omh: remove main program from cppad specific sections.
-appendix.omh: change reference to top of speed testing sub-tree.
-config.h: update version number.
-main.cpp: move here from speed/cppad/run.cpp.
-run.cpp: move from here to speed/main.cpp
-makefile.am: change reference to main.cpp and change name of output program.
+det_by_minor.hpp: routine that changed its interface.
+det_lu.cpp: minor change to title.
+
+
+Add vector type template parameter to constructor:
+lu_vec_ad_ok.cpp, 
+jac_minor_det.cpp,
+hes_minor_det.cpp,
+*/det_minor.cpp,
 "
-#
+
 add_list="
-	omh/speed.omh
 "
 #
 change_list="
 	svn_commit.sh
-	svn_status.sh
-	build.sh
-	omh/speed_cppad.omh
-	omh/appendix.omh
-	cppad/config.h
-	speed/main.cpp
-	speed/cppad/run.cpp
-	speed/cppad/makefile.am
+	example/lu_vec_ad_ok.cpp
+	example/jac_minor_det.cpp
+	example/hes_minor_det.cpp
+	speed/adolc/det_minor.cpp
+	speed/cppad/det_minor.cpp
+	speed/fadbad/det_minor.cpp
+	speed/cppad/det_lu.cpp
+	speed/det_by_minor.hpp
+	
 "
 delete_list="
 "

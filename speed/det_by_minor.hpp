@@ -25,13 +25,13 @@ $section Determinant Using Expansion by Minors$$
 $head Syntax$$
 $syntax%# include <speed/det_by_minor.hpp>
 %$$
-$syntax%DetByMinor<%Type%> %Det%(size_t %n%)
+$syntax%DetByMinor<%Scalar%, %Vector%> %det%(%size%)
 %$$
-$syntax%%Type% %Det%(CppADvector<%Type%> &%A%)
+$syntax%%d% = %det%(%matrix%)
 %$$
 
 $head Inclusion$$
-The template function $code DetByMinor$$ is defined in the $code CppAD$$
+The template class $code DetByMinor$$ is defined in the $code CppAD$$
 namespace by including 
 the file $code speed/det_by_minor.hpp$$
 (relative to the CppAD distribution directory).
@@ -42,18 +42,49 @@ $xref/cppad//CppAD.h/$$.
 $head Constructor$$
 The syntax
 $syntax%
-	DetByMinor<%Type%> %Det%(size_t %n%)
+	DetByMinor<%Scalar%> %det%(%n%)
 %$$
-constructs the object $italic Det$$ which can be used for 
+constructs the object $italic det$$ which can be used for 
 evaluating the determinant of $italic n$$ by $italic n$$ matrices
 using expansion by minors.
 
-$head Evaluation$$
+$head Scalar$$
+The type $italic Scalar$$ can be any
+$cref/NumericType/$$
+
+$head n$$
+The argument $italic n$$ has prototype
+$syntax%
+	size_t %n%
+%$$
+
+$head det$$
 The syntax
 $syntax%
-	%Type% %Det%(CppADvector<%Type%> &%A%)
+	%d% = %det%(%matrix%)
 %$$
-returns the determinant of $italic A$$ using expansion by minors.
+returns the determinant of $italic matrix$$ using expansion by minors.
+The argument $italic matrix$$ has prototype
+$syntax%
+	const %Vector% &%matrix%
+%$$
+It must be a $italic Vector$$ with length $latex n * n$$ and with
+elements of type $italic Scalar$$.
+The return value $italic d$$ has prototype
+$syntax%
+	%Scalar% %d%
+%$$
+
+$head Vector$$
+If $italic y$$ is a $italic Vector$$ object, 
+it must support the syntax
+$syntax%
+	%y%[%i%]
+%$$
+where $italic i$$ has type $code size_t$$ with value less than $latex n * n$$.
+This must return a $italic Scalar$$ value curresponding the the $th i$$
+element of the vector $italic y$$.
+This is the only requirement of the type $italic Vector$$.
 
 $children%
 	speed/example/det_by_minor.cpp
@@ -110,7 +141,7 @@ $end
 // BEGIN CppAD namespace
 namespace CppAD {
 
-template <class Type>
+template <class Scalar, class Vector>
 class DetByMinor {
 public:
 	DetByMinor(size_t m) : m_(m) , r_(m + 1) , c_(m + 1), a_(m * m)
@@ -126,7 +157,7 @@ public:
 		c_[m] = 0;
 	}
 
-	inline Type operator()(const CppADvector<Type> &x) const
+	inline Scalar operator()(const Vector &x) const
 	{	size_t i = m_ * m_;
 		while(i--)
 			a_[i] = x[i];
@@ -140,7 +171,7 @@ private:
 	mutable std::vector<size_t> r_;
 	mutable std::vector<size_t> c_;
 	// make mutable because its value does not matter
-	mutable std::vector<Type>   a_;
+	mutable std::vector<Scalar> a_;
 };
 
 } // END CppAD namespace

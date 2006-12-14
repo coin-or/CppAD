@@ -15,7 +15,7 @@ $spell
 	Cpp
 $$
 
-$section Speed CppAD Gradient: Determinant Using Lu Factorization$$
+$section CppAD Speed: Gradient of Determinant Using Lu Factorization$$
 
 $index cppad, speed lu$$
 $index speed, cppad lu$$

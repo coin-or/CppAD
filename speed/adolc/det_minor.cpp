@@ -25,7 +25,6 @@ $index Adolc, determinant$$
 $index Minors, Adolc expand$$
 $index Adolc, Minor expand$$
 
-$comment This file is in the Adolc subdirectory$$ 
 $code
 $verbatim%speed/adolc/det_minor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -52,7 +51,7 @@ void DetMinorCp(size_t size, size_t repeat, CppADvector<double> &u)
 	// Do this set up once so not significant in timing test
 
 	// object for computing determinant
-	DetByMinor< AD<double> > Det(size);
+	DetByMinor< AD<double> , CppADvector< AD<double> > > Det(size);
 
 	CppADvector< AD<double> >            detA(1);
 	CppADvector< AD<double> >   A( size * size );
@@ -94,7 +93,7 @@ void DetMinorAd(size_t size, size_t repeat, double *u)
 	// Do this set up once so not significant in timing test
 
 	// object for computing determinant
-	CppAD::DetByMinor<adouble> Det(size);
+	CppAD::DetByMinor<adouble, CppADvector<adouble> > Det(size);
 
 	adouble                           detA;
 	CppADvector<adouble>  A( size * size );

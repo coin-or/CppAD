@@ -24,7 +24,6 @@ $index Fadbad, determinant$$
 $index Minor, Fadbad expand$$
 $index Fadbad, Minor expand$$
 
-$comment This file is in the Fadbad subdirectory$$ 
 $code
 $verbatim%speed/fadbad/det_minor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -51,7 +50,7 @@ void DetMinorCp(size_t size, size_t repeat, CppADvector<double> &u)
 	// Do this set up once so not significant in timing test
 
 	// object for computing determinant
-	DetByMinor< AD<double> > Det(size);
+	DetByMinor< AD<double> ,  CppADvector< AD<double> > > Det(size);
 
 	CppADvector< AD<double> >            detA(1);
 	CppADvector< AD<double> >   A( size * size );
@@ -93,7 +92,7 @@ void DetMinorFa(size_t size, size_t repeat, CppADvector<double> &u)
 	// Do this set up once so not significant in timing test
 
 	// object for computing determinant
-	CppAD::DetByMinor< B<double> > Det(size);
+	CppAD::DetByMinor< B<double> , CppADvector< B<double> > > Det(size);
 
 	B<double>                             detA;
 	CppADvector< B<double> >  A( size * size );

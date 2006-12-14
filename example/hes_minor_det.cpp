@@ -34,8 +34,9 @@ $end
 # include <speed/det_by_minor.hpp>
 # include <complex>
 
-typedef std::complex<double>   Complex;
-typedef CppAD::AD<Complex>   ADComplex;
+typedef std::complex<double>     Complex;
+typedef CppAD::AD<Complex>       ADComplex;
+typedef CppADvector<ADComplex>   ADVector;
 
 // ----------------------------------------------------------------------------
 
@@ -47,7 +48,7 @@ bool HesMinorDet()
 	size_t n = 2;
 
 	// object for computing determinants
-	DetByMinor<ADComplex> Det(n);
+	DetByMinor<ADComplex, ADVector> Det(n);
 
 	// independent and dependent variable vectors
 	CppADvector<ADComplex>  X(n * n);

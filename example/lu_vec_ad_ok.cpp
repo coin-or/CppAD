@@ -41,6 +41,7 @@ bool LuVecADOk(void)
 
 	using namespace CppAD;
 	typedef AD<double> ADdouble;
+	typedef CppADvector<ADdouble> ADVector;
 
 	size_t              n = 3;
 	size_t              m = 2;
@@ -67,7 +68,7 @@ bool LuVecADOk(void)
 	ADdouble            signdet;
 
 	// routine for checking determinants using expansion by minors
-	DetByMinor<ADdouble> Det(n);
+	DetByMinor<ADdouble, ADVector> Det(n);
 
 	// matrix we are computing the determinant of
 	CppADvector<ADdouble> A(n * n);

@@ -22,7 +22,7 @@ $spell
 	srand
 $$
 
-$section Speed of CppAD Gradient: Determinant Using Expansion by Minors$$
+$section CppAD Speed: Gradient of Determinant Using Expansion by Minors$$
 
 $index cppad, speed minor$$
 $index speed, cppad minor$$
@@ -44,12 +44,14 @@ void compute_det_minor(
 	// -----------------------------------------------------
 	// setup
 	using CppAD::AD;
+	typedef AD<double>            Scalar;
+	typedef CppAD::vector<Scalar> Vector;
 
 	// object for computing determinant
-	CppAD::DetByMinor< AD<double> > Det(size);
+	CppAD::DetByMinor<Scalar, Vector> Det(size);
 
-	CppADvector< AD<double> >            detA(1);
-	CppADvector< AD<double> >   A( size * size );
+	Vector            detA(1);
+	Vector   A( size * size );
 	size_t i;
 	for( i = 0; i < size * size; i++)
 		A[i] = matrix[i];
