@@ -38,29 +38,34 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="add speed/cppad/det_minor case.
+log_entry="move speed testing main program to speed directory.
 
 svn_commit.sh: file that made this commit.
-install_unix.omh: change instructions for running CppAD speed tests.
-whats_new_?.omh: remove cross references to old speed_cppad/? files.
-speed_cppad.omh: documentation for speed/cppad/? instead of speed_cppad/?.
-det_minor.cpp: fix spelling error.
-run.cpp: fix verbatim file reference.
+svn_status.sh: remove unecessary output.
+build.sh: improve echo during configure test case.
+speed.omh: new section at the top of the speed testing sub-tree.
+speed_cppad.omh: remove main program from cppad specific sections.
+appendix.omh: change reference to top of speed testing sub-tree.
+config.h: update version number.
+main.cpp: move here from speed/cppad/run.cpp.
+run.cpp: move from here to speed/main.cpp
+makefile.am: change reference to main.cpp and change name of output program.
 "
 #
 add_list="
+	omh/speed.omh
 "
 #
 change_list="
 	svn_commit.sh
-	omh/install_unix.omh
-	omh/whats_new_03.omh
-	omh/whats_new_04.omh
-	omh/whats_new_05.omh
-	omh/whats_new_06.omh
+	svn_status.sh
+	build.sh
 	omh/speed_cppad.omh
-	speed/cppad/det_minor.cpp
+	omh/appendix.omh
+	cppad/config.h
+	speed/main.cpp
 	speed/cppad/run.cpp
+	speed/cppad/makefile.am
 "
 delete_list="
 "

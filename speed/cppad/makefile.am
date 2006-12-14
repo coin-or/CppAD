@@ -11,7 +11,7 @@
 #
 # automake input file
 #
-noinst_PROGRAMS  = run 
+noinst_PROGRAMS  = cppad 
 #
 if CppAD_BOOSTVECTOR
 AM_CPPFLAGS   = -I$(BOOST_DIR) -I$(top_builddir) 
@@ -21,7 +21,7 @@ endif
 #
 AM_CXXFLAGS   = -O2 -DNDEBUG $(CPP_ERROR_WARN)
 #
-run_SOURCES = \
-	run.cpp \
+cppad_SOURCES = \
+	../main.cpp \
 	det_lu.cpp  \
 	det_minor.cpp 

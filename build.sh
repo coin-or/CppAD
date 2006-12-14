@@ -179,28 +179,30 @@ then
 			--with-Speed
 			--with-PrintFor
 			--with-SpeedExample
-			--with-profiling
-		"
+			--with-profiling"
 		if [ -e $ADOLC_DIR/include/adolc ]
 		then
-			TEST="$TEST ADOLC_DIR=$ADOLC_DIR"
+			TEST="$TEST 
+				ADOLC_DIR=$ADOLC_DIR"
 		fi
 		if [ -e $FADBAD_DIR/FADBAD++ ]
 		then
-			TEST="$TEST FADBAD_DIR=$FADBAD_DIR"
+			TEST="$TEST 
+				FADBAD_DIR=$FADBAD_DIR"
 		fi
 		if [ -e $BOOST_DIR/boost ]
 		then
-			TEST="$TEST BOOST_DIR=$BOOST_DIR"
+			TEST="$TEST 
+				BOOST_DIR=$BOOST_DIR"
 		fi
 	fi
+	TEST=`echo $TEST | sed -e 's|\t\t*| |g'`
 	#
 	echo "configure \\"
-	echo "  $TEST   \\"
+	echo "$TEST" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
 	echo "	CPP_ERROR_WARN=\"-Wall -ansi -pedantic-errors -std=c++98\""
 	#
-	if ! ./configure \
-		$TEST   \
+	if ! ./configure $TEST \
 		CPP_ERROR_WARN="-Wall -ansi -pedantic-errors -std=c++98"
 	then
 		exit 1
@@ -352,9 +354,9 @@ then
 		# add a new line between program outputs
 		echo ""  >> ../build_test.log
 	done
-	echo "running speed/cppad/run example"
-	echo "./speed/cppad/run example" >> ../build_test.log
-	if ! ./speed/cppad/run example  >> ../build_test.log
+	echo "running speed/cppad/cppad correct"
+	echo "./speed/cppad/cppad correct" >> ../build_test.log
+	if ! ./speed/cppad/cppad correct   >> ../build_test.log
 	then
 		ok="no"
 	fi

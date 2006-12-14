@@ -18,7 +18,7 @@ $section Appendix$$
 $childtable%
 	cppad/local/preprocessor.hpp%
 	omh/theory.omh%
-	omh/speed_cppad.omh%
+	omh/speed.omh%
 	omh/adolc.omh%
 	omh/fadbad.omh%
 	omh/glossary.omh%
