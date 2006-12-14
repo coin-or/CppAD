@@ -41,14 +41,15 @@ bool DetByMinor()
 	size_t n = 3;
 
 	// construct the determinat object
-	CppAD::DetByMinor<double> Det(n);
+	typedef CppADvector<double> Vector;
+	CppAD::DetByMinor<double, Vector> Det(n);
 
 	double  a[] = {
 		1., 2., 3.,  // a[0] a[1] a[2]
 		3., 2., 1.,  // a[3] a[4] a[5]
 		2., 1., 2.   // a[6] a[7] a[8]
 	};
-	CppADvector<double> A(9);
+	Vector A(9);
 	size_t i;
 	for(i = 0; i < 9; i++)
 		A[i] = a[i];

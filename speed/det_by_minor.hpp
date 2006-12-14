@@ -14,6 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin DetByMinor$$
 $spell
+	typedef
+	const
 	hpp
 	Det
 	CppADvector
@@ -82,7 +84,7 @@ $syntax%
 	%y%[%i%]
 %$$
 where $italic i$$ has type $code size_t$$ with value less than $latex n * n$$.
-This must return a $italic Scalar$$ value curresponding the the $th i$$
+This must return a $italic Scalar$$ value corresponding the $th i$$
 element of the vector $italic y$$.
 This is the only requirement of the type $italic Vector$$.
 
