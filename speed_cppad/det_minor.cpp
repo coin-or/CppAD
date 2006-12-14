@@ -46,7 +46,7 @@ std::string doubleDetMinor(size_t size, size_t repeat)
 		for(j = 0; j < size; j++)
 			A[i + j * size] = double ( i / (double) (j + 1.) );
 
-	DetByMinor<double> DetDouble(size);
+	DetByMinor<double, CppADvector<double> > DetDouble(size);
 
 	while(repeat--)
 		DetDouble(A);
@@ -67,7 +67,7 @@ std::string ADdoubleDetMinor(size_t size, size_t repeat)
 		for(j = 0; j < size; j++)
 			A[i + j * size] =  AD<double>( i / (double) (j + 1.) );
 
-	DetByMinor< AD<double> > DetADdouble(size);
+	DetByMinor< AD<double>,  CppADvector< AD<double> > > DetADdouble(size);
 
 	while(repeat--)
 		DetADdouble(A);
@@ -92,7 +92,7 @@ std::string TapeDetMinor(size_t size, size_t repeat)
 		for(j = 0; j < size; j++)
 			A[i + j * size] = a[i] = double( i / (double) (j + 1.));
 
-	DetByMinor< AD<double> > DetADdouble(size);
+	DetByMinor< AD<double>,  CppADvector< AD<double> > > DetADdouble(size);
 
 	size_t memory = 0;
 	size_t length = 0;
@@ -130,7 +130,7 @@ std::string JacDetMinor(size_t size, size_t repeat)
 		for(j = 0; j < size; j++)
 			A[i + j * size] = a[i] = double( i / (double) (j + 1.));
 
-	DetByMinor< AD<double> > DetADdouble(size);
+	DetByMinor< AD<double>,  CppADvector< AD<double> > > DetADdouble(size);
 
 	size_t memory = 0;
 	size_t length = 0;
@@ -171,7 +171,7 @@ std::string HesDetMinor(size_t size, size_t repeat)
 		for(j = 0; j < size; j++)
 			A[i + j * size] = a[i] = double( i / (double) (j + 1.));
 
-	DetByMinor< AD<double> > DetADdouble(size);
+	DetByMinor< AD<double>,  CppADvector< AD<double> > > DetADdouble(size);
 
 	size_t memory = 0;
 	size_t length = 0;
