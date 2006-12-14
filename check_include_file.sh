@@ -17,6 +17,7 @@ grep '^# *include *<cppad/' \
 	cppad/local/*.hpp \
 	example/*.cpp \
 	example/*.hpp \
+	speed/*.cpp \
 	speed/adolc/*.cpp \
 	speed/cppad/*.cpp \
 	speed/fadbad/*.cpp \
@@ -28,6 +29,7 @@ grep '^# *include *<speed/' \
 	cppad/local/*.hpp \
 	example/*.cpp \
 	example/*.hpp \
+	speed/*.cpp \
 	speed/adolc/*.cpp \
 	speed/adolc/*.hpp \
 	speed/cppad/*.cpp \
