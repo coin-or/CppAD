@@ -212,13 +212,8 @@ $index cppad, speed test$$
 If the command line argument $code --with-Speed$$ is specified,
 the $code speed/cppad/speed_cppad_run/$$ program
 (a set of CppAD speed tests) will built.
-Once the $code make$$ command 
-has been executed, 
-you can run these speed tests by executing the command 
-$syntax%
-	speed/cppad/cppad %option%
-%$$
-which is documented in $cref/speed_main/$$.
+After you execute the $xref/InstallUnix/make/make/$$ command,
+you can compile and run the $cref/speed_cppad/$$ tests.
 
 $head --with-PrintFor$$
 $index print, forward mode$$
@@ -320,14 +315,7 @@ $syntax%
 is a valid way to reference $code adouble.h$$.
 In this case,
 after you execute the $xref/InstallUnix/make/make/$$ command,
-you can compare the correctness 
-and speed of your version of CppAD with Adolc.
-The commands
-$syntax%
-	adolc/example
-	adolc/speed
-%$$
-will run both the speed and correctness tests for this comparison.
+you can compile and run the $cref/speed_adolc/$$ tests.
 $pre
 
 $$
@@ -361,14 +349,7 @@ $syntax%
 is a valid reference to $code badiff.h$$.
 In this case,
 after you execute the $xref/InstallUnix/make/make/$$ command,
-you can compare the correctness 
-and speed of your version of CppAD with Fadbad.
-The commands
-$syntax%
-	fadbad/example
-	fadbad/speed
-%$$
-will run both the speed and correctness tests for this comparison.
+you can compile and run the $cref/speed_fadbad/$$ tests.
 
 $head BoostDir$$
 $index boost, unix$$

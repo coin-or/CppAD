@@ -38,27 +38,19 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Improve speed/main.cpp usage and documentation.
+log_entry="Make speed documentation more uniform and better linked.
 
 svn_commit.sh: file that made this commit.
-install_unix.omh: correct profiling documentaiton.
-profile/makefile.am: set the PROFILE flag used by main.cpp.
-fadbad/makefile.am: set the PROFILE flag used by main.cpp.
-adolc/makefile.am: set the PROFILE flag used by main.cpp.
-main.cpp: improve usage & documentation, remove source (except prototypes).
-cppad/makefile.am: set the PROFILE flag used by main.cpp.
 "
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
+	omh/speed_adolc.omh
+	omh/speed_cppad.omh
+	omh/speed_fadbad.omh
 	omh/install_unix.omh
-	speed/profile/makefile.am
-	speed/fadbad/makefile.am
-	speed/adolc/makefile.am
-	speed/main.cpp
-	speed/cppad/makefile.am
 "
 delete_list="
 "

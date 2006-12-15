@@ -55,9 +55,10 @@ $$
 This will check that the speed tests have been built correctly.
 You can run the command
 $codep
-	speed/adolc/adolc speed
+	speed/adolc/adolc all
 $$
-to see the results of the speed tests.
+to see the results of all the speed tests.
+See $cref/speed_main/$$ for more options.
 
 $contents%
 	speed/adolc/det_minor.cpp%
