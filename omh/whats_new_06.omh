@@ -67,19 +67,38 @@ This section contains a list of the changes to CppAD during 2006
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-15$$
+The wish list item
+to simplify and better organize the speed tests been completed:
+$table
+$cref|speed/|speed|$$
+	$cnext template functions that are speed tested  $rnext
+$code speed/example$$
+	$cnext example usage of speed template functions $rnext
+$cref|speed/adolc|speed_adolc|$$
+	$cnext Adolc drivers for the template functions  $rnext
+$cref|speed/cppad|speed_cppad|$$
+	$cnext CppAD drivers for the template functions  $rnext
+$cref|speed/fadbad|speed_fadbad|$$
+	$cnext Fadbad drivers for the template functions $rnext
+$cref|speed/profile|InstallUnix|--with-profiling|$$
+	$cnext profiling version of CppAD drivers        
+$tend
+
+
 $head 12-13$$
-Next step for the $cref/speed wish list item/WishList/Speed/$$:
+Next step for the speed wish list item:
 remove $code speed_cppad$$ from the documentation and replace it by
 $code speed/cppad$$, see $cref/speed_cppad/$$ for the new CppAD speed
 test routines.
 
 $head 12-12$$
-Started the $cref/speed wish list item/WishList/Speed/$$ by 
+Started the speed wish list item by 
 move the $code adolc$$ director to $code speed/adolc$$ and
 $code fadbad$$ to $code speed/fadbad$$.
 
 $head 12-11$$
-Started the $cref/speed wish list item/WishList/Speed/$$ by 
+Started the speed wish list item by 
 creating the $code speed/example$$ directory and moving the relevant
 examples from 
 $syntax%example/%*%.cpp%$$ and 
@@ -110,7 +129,7 @@ test more cases and to use the same variable
 names as in the documentation.
 
 $head 12-09$$
-A $cref/speed/WishList/Speed/$$ item was added to the wish list.
+A speed wish list item was added to the wish list.
 $pre
 
 $$

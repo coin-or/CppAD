@@ -11,8 +11,15 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_det_lu.cpp$$
 $spell
+	typedef
 	Lu
-	Cpp
+	CppADvector
+	cppad
+	det
+	hpp
+	const
+	srand
+	bool
 $$
 
 $section CppAD Speed: Gradient of Determinant Using Lu Factorization$$
@@ -65,7 +72,7 @@ void compute_det_lu(
 		// create function object f : A -> detA
 		CppAD::ADFun<double> f(A, detA);
 
-		// evalute and return gradient using reverse mode
+		// evaluate and return gradient using reverse mode
 		gradient = f.Reverse(1, w);
 	}
 	return;
@@ -97,8 +104,7 @@ bool correct_det_lu(void)
 
 $head speed_det_lu$$
 $index speed_det_lu$$
-Rountine that links compute_det_lu to $cref/speed_test/$$:
-
+Routine that links compute_det_lu to $cref/speed_test/$$:
 $codep */
 void speed_det_lu(size_t size, size_t repeat)
 {	CppADvector<double> matrix(size * size);

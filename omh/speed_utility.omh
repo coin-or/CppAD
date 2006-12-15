@@ -1,0 +1,15 @@
+$begin speed_utility$$
+
+$section The speed Testing Utilities and Main Program$$
+
+$index speed, utility$$
+$index utility, speed$$
+
+$contents%
+	speed/main.cpp%
+	speed/det_of_minor.hpp%
+	speed/det_by_minor.hpp%
+	speed/det_by_lu.hpp
+%$$
+
+$end

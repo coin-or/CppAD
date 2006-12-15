@@ -34,7 +34,7 @@ certain changes improve its execution speed
 This section explains how you can run these tests on your computer.
 
 $contents%
-	speed/main.cpp%
+	omh/speed_utility.omh%
 	omh/speed_adolc.omh%
 	omh/speed_cppad.omh%
 	omh/speed_fadbad.omh

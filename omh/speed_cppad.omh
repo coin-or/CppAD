@@ -66,7 +66,7 @@ to see the results of the speed tests.
 
 $contents%
 	speed/cppad/det_minor.cpp%
-	speed_cppad/det_lu.cpp
+	speed/cppad/det_lu.cpp
 %$$
 
 $end

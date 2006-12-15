@@ -38,59 +38,37 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Change name and improve templating in det_by_lu, det_by_minor.
+log_entry="Create speed/profile directory and compelete speed wish list item.
 
 svn_commit.sh: file that made this commit.
-check_include_file.sh: remove referenes to speed/adolc/?.hpp.
-
-Change DetByMinor->det_by_minor and move Vector template parameter to where 
-it can be inferred:
-det_by_lu.hpp,
-det_by_minor.hpp.
-
-Change DetByMinor->det_by_minor and remove constructor Vector parameter. 
-det_by_lu.cpp,
-det_by_minor.cpp.
-
-Remove Vector template parameter and change name in constuctor:
-lu_vec_ad_ok.cpp,
-hes_lu_det.cpp,
-jac_minor_det.cpp,
-hes_minor_det.cpp,
-jac_lu_det.cpp,
-det_minor.cpp,
-det_lu.cpp,
-det_minor.cpp,
-det_lu.cpp,
-det_minor.cpp,
-det_lu.cpp,
-det_minor.cpp,
-det_lu.cpp,
-example.cpp.
+makefile.am: replace speed_cppad/makefile by speed/profile/makefile.
+speed_utility.omh: organize speed utilities under this section.
+speed.omh: include speed_utility section.
+install_unix.omh: new profiling instructions.
+example_list.omh: move speed utilities from here.
+whats_new_04.omh: fix broken cross references to DetByMinor and DetByLu.
+whats_new_06.omh: users view of the changes.
+wish_list.omh: remove speed item.
+gprof.sed: copy here from speed_cppad/gprof.sed.
+profile/makefile.am: make file for profiling speed/cppad.
+configure.ac: replace speed_cppad/makefile by speed/profile/makefile.
+speed_cppad.omh: correct speed_cppad to speed/cppad.
 "
 add_list="
+	omh/speed_utility.omh
 "
 #
 change_list="
 	svn_commit.sh
-	check_include_file.sh
-	example/lu_vec_ad_ok.cpp
-	example/hes_lu_det.cpp
-	example/jac_minor_det.cpp
-	example/hes_minor_det.cpp
-	example/jac_lu_det.cpp
-	speed_cppad/det_minor.cpp
-	speed_cppad/det_lu.cpp
-	speed/det_by_minor.hpp
-	speed/fadbad/det_minor.cpp
-	speed/fadbad/det_lu.cpp
-	speed/adolc/det_minor.cpp
-	speed/adolc/det_lu.cpp
-	speed/cppad/det_minor.cpp
-	speed/cppad/det_lu.cpp
-	speed/example/det_by_lu.cpp
-	speed/example/det_by_minor.cpp
-	speed/example/example.cpp
+	makefile.am
+	omh/speed.omh
+	omh/example_list.omh
+	omh/whats_new_04.omh
+	omh/whats_new_06.omh
+	omh/wish_list.omh
+	speed
+	configure.ac
+	omh/speed_cppad.omh
 "
 delete_list="
 "

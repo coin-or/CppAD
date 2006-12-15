@@ -210,7 +210,7 @@ $code int$$ operands.
 
 $head 10-06$$
 The test 
-$code TapeDetLu$$ was added to $xref/DetLuSpeed.cpp/$$
+$code TapeDetLu$$ was added to $code speed_cppad/DetLuSpeed.cpp$$
 and 
 $code TapeDetMinor$$ was added to $code speed_cppad/DetMinorSpeed.cpp$$.
 These tests just tape the calculations without computing any derivatives.
@@ -805,7 +805,7 @@ These discrete functions add the capability of conditional expressions
 being included in an $xref/ADFun/$$ object.
 
 $head 03-11$$
-The classes $xref/DetByMinor/$$ and $xref/DetByLu/$$ were added
+The classes $xref/det_by_minor/$$ and $xref/det_by_lu/$$ were added
 and used these to simplify the 
 examples that compute determinants.
 

@@ -54,9 +54,6 @@ $section Utility Routines used by CppAD Examples$$
 $childtable%
 	example/example.cpp%
 	speed/example/example.cpp%
-	speed/det_of_minor.hpp%
-	speed/det_by_minor.hpp%
-	speed/det_by_lu.hpp%
 	example/lu_vec_ad.cpp
 %$$ 
 
@@ -95,8 +92,8 @@ $rref Cos.cpp$$
 $rref Cosh.cpp$$
 $rref CppAD_vector.cpp$$
 $rref Default.cpp$$
-$rref DetByLu.cpp$$
-$rref DetByMinor.cpp$$
+$rref det_by_lu.cpp$$
+$rref det_by_minor.cpp$$
 $rref det_of_minor.cpp$$
 $rref Div.cpp$$
 $rref DivEq.cpp$$

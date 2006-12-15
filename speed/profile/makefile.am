@@ -1,0 +1,30 @@
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Common Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+#
+# automake input file
+#
+EXTRA_DIST       = gprof.sed
+#
+noinst_PROGRAMS  = profile 
+#
+if CppAD_BOOSTVECTOR
+AM_CPPFLAGS   = -I$(BOOST_DIR) -I$(top_builddir) 
+else
+AM_CPPFLAGS   = -I$(top_builddir) 
+endif
+#
+AM_CXXFLAGS   = -pg -O2 $(CPP_ERROR_WARN)
+AM_LDFLAGS    = -pg
+#
+profile_SOURCES = \
+	../main.cpp \
+	../cppad/det_lu.cpp  \
+	../cppad/det_minor.cpp 

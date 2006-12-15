@@ -115,17 +115,6 @@ Use spaces rather than tabs.
 
 $lend
 
-$head Speed$$
-Reorganize the speed comparisons to have the following directory structure:
-$table
-speed/         $cnext template functions that are speed tested  $rnext
-speed/cppad    $cnext CppAD drivers for the template functions  $rnext
-speed/example  $cnext example usage of SpeedTest                $rnext
-speed/adolc    $cnext Adolc drivers for the template functions  $rnext
-speed/fadbad   $cnext Fadbad drivers for the template functions $rnext
-speed/profile  $cnext profiling version of CppAD drivers        
-$tend
-
 $head Vector Element Type$$
 Change cross references from 
 $xref/SimpleVector/Elements of Specified Type/elements of a specified type/$$
