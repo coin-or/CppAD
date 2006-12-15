@@ -12,7 +12,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin DetByLu$$
+$begin det_by_lu$$
 $spell
 	lu
 	hpp
@@ -29,13 +29,13 @@ $section Determinant Using Expansion by Lu Factorization$$
 $head Syntax$$
 $syntax%# include <speed/det_by_lu.hpp>
 %$$
-$syntax%DetByLu<%Scalar%, %Vector%> %det%(%n%)
+$syntax%det_by_lu<%Scalar%> %det%(%n%)
 %$$
 $syntax%%d% = %det%(%matrix%)
 %$$
 
 $head Inclusion$$
-The template class $code DetByLu$$ is defined in the $code CppAD$$
+The template class $code det_by_lu$$ is defined in the $code CppAD$$
 namespace by including 
 the file $code speed/det_by_lu.hpp$$
 (relative to the CppAD distribution directory).
@@ -46,7 +46,7 @@ $xref/cppad//CppAD.h/$$.
 $head Constructor$$
 The syntax
 $syntax%
-	DetByLu<%Scalar%, %Vector%> %det%(%n%)
+	det_by_lu<%Scalar%> %det%(%n%)
 %$$
 constructs the object $italic det$$ which can be used for 
 evaluating the determinant of $italic n$$ by $italic n$$ matrices
@@ -97,7 +97,7 @@ $children%
 
 $head Example$$
 The file
-$xref/DetByLu.cpp/$$ 
+$xref/det_by_lu.cpp/$$ 
 contains an example and test of $code det_by_lu.hpp$$.
 It returns true if it succeeds and false otherwise.
 
@@ -156,12 +156,13 @@ namespace CppAD {
 CppADCreateUnaryBool(Complex,  LeqZero )
 CppADCreateBinaryBool(Complex, AbsGeq )
 
-template <class Scalar, class Vector>
-class DetByLu {
+template <class Scalar>
+class det_by_lu {
 public:
-	DetByLu(size_t n_) : m(0), n(n_), A(n_ * n_)
+	det_by_lu(size_t n_) : m(0), n(n_), A(n_ * n_)
 	{	}
 
+	template <class Vector>
 	inline Scalar operator()(const Vector &x)
 	{
 		using CppAD::exp;
@@ -182,7 +183,7 @@ public:
 		// make sure the martix is not singular
 		CppADUsageError( 
 			signdet != 0,
-			"DetByLu: matrix is singular"
+			"det_by_lu: matrix is singular"
 		);
 
 		// convert to determinant
