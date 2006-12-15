@@ -19,7 +19,7 @@ else
 AM_CPPFLAGS   = -I$(top_builddir) -I$(ADOLC_DIR)/include 
 endif
 #
-AM_CXXFLAGS   = -O2 -DNDEBUG $(CPP_ERROR_WARN)
+AM_CXXFLAGS   = -O2 -DNDEBUG $(CPP_ERROR_WARN) -DADOLC
 #
 LDADD            = -ladolc
 AM_LDFLAGS       = -L$(ADOLC_DIR)/lib

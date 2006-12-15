@@ -21,7 +21,7 @@ else
 AM_CPPFLAGS   = -I$(top_builddir) 
 endif
 #
-AM_CXXFLAGS   = -pg -O2 $(CPP_ERROR_WARN)
+AM_CXXFLAGS   = -pg -O2 $(CPP_ERROR_WARN) -DPROFILE
 AM_LDFLAGS    = -pg
 #
 profile_SOURCES = \

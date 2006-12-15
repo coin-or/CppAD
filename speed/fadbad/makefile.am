@@ -19,7 +19,7 @@ else
 AM_CPPFLAGS   = -I$(top_builddir) -I$(FADBAD_DIR)
 endif
 #
-AM_CXXFLAGS   = -O2 -DNDEBUG -O2 -DNDEBUG -Wno-deprecated
+AM_CXXFLAGS   = -O2 -DNDEBUG -O2 -DNDEBUG -Wno-deprecated -DFADBAD
 #
 fadbad_SOURCES = \
 	../main.cpp \

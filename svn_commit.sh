@@ -38,37 +38,27 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Create speed/profile directory and compelete speed wish list item.
+log_entry="Improve speed/main.cpp usage and documentation.
 
 svn_commit.sh: file that made this commit.
-makefile.am: replace speed_cppad/makefile by speed/profile/makefile.
-speed_utility.omh: organize speed utilities under this section.
-speed.omh: include speed_utility section.
-install_unix.omh: new profiling instructions.
-example_list.omh: move speed utilities from here.
-whats_new_04.omh: fix broken cross references to DetByMinor and DetByLu.
-whats_new_06.omh: users view of the changes.
-wish_list.omh: remove speed item.
-gprof.sed: copy here from speed_cppad/gprof.sed.
-profile/makefile.am: make file for profiling speed/cppad.
-configure.ac: replace speed_cppad/makefile by speed/profile/makefile.
-speed_cppad.omh: correct speed_cppad to speed/cppad.
+install_unix.omh: correct profiling documentaiton.
+profile/makefile.am: set the PROFILE flag used by main.cpp.
+fadbad/makefile.am: set the PROFILE flag used by main.cpp.
+adolc/makefile.am: set the PROFILE flag used by main.cpp.
+main.cpp: improve usage & documentation, remove source (except prototypes).
+cppad/makefile.am: set the PROFILE flag used by main.cpp.
 "
 add_list="
-	omh/speed_utility.omh
 "
 #
 change_list="
 	svn_commit.sh
-	makefile.am
-	omh/speed.omh
-	omh/example_list.omh
-	omh/whats_new_04.omh
-	omh/whats_new_06.omh
-	omh/wish_list.omh
-	speed
-	configure.ac
-	omh/speed_cppad.omh
+	omh/install_unix.omh
+	speed/profile/makefile.am
+	speed/fadbad/makefile.am
+	speed/adolc/makefile.am
+	speed/main.cpp
+	speed/cppad/makefile.am
 "
 delete_list="
 "

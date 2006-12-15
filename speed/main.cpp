@@ -38,44 +38,97 @@ $index cppad, speed test$$
 $index speed, test cppad$$
 $index test, cppad speed$$
 
-$section Run All the Speed Tests$$
+$section Speed Test Main Program$$
 
 $head Syntax$$
-$syntax%speed/%name%/%name% correct
-%$$
-$syntax%speed/%name%/%name% speed
+$syntax%speed/%package%/%package% %option%
 %$$
 
 $head Purpose$$
-This main program combines the
-functions corresponding to each speed test $italic case$$
-into a single program called $italic name$$.
+A version of this program runs the correctness tests
+or the speed tests for one AD package identified by $italic package$$.
 
-$head name$$
-The file $code speed/speed.cpp$$ is the main routine that can 
-is linked with a different set of speed tests to create the 
-following programs:
-$code speed/adolc/adolc$$, 
-$code speed/cppad/cppad$$, and 
-$code speed/fadbad/fadbad$$.
+$head package$$
+The value
+$italic package$$ specifies the AD package that is used for the speed tests 
+and is one of the following packages:
+$code adolc$$, $code cppad$$, $code fadbad$$, $code profile$$.
+In the special case where $italic package$$ is $code profile$$,
+the CppAD package is compiled and run with profiling to determine
+where it is spending most of its time.
+
+$head option$$
+It the argument $italic option$$ specifies which test to run
+and has the following possible values:
+$code correct$$,
+$code all$$,
+$code det_minor$$,
+$code det_lu$$.
 
 $head correct$$
-If the text $code correct$$ is specified on the program command line,
-the main routine runs the correctness tests and reports the results
-on standard output.
+If $italic option$$ is equal to $code correct$$,
+all of the correctness tests are run.
 
-$head speed$$
-If the text $code speed$$ is specified on the program command line,
-the main routine runs the speed tests and reports the results
-on standard output.
+$head all$$
+If $italic option$$ is equal to $code all$$,
+all of the speed tests are run.
 
-$codep */
+$head det_lu$$
+If $italic option$$ is equal to $code det_lu$$ the speed test for computing the
+gradient of the determinant using LU factorization tests is run.
+The argument $italic size$$ to the routine $code speed_det_lu$$
+(see the prototypes below) is the number of rows and columns in the matrix.
 
+$head det_minor$$
+If $italic option$$ is equal to $code det_minor$$ the speed test for 
+computing the gradient of the determinant using expansion by minors is run.
+The argument $italic size$$ to the routine $code speed_det_minor$$
+(see the prototypes below) is the number of rows and columns in the matrix.
+
+$head Correctness Results$$
+An output line is generated for each correctness test
+stating of the test passed or failed.
+
+$head Speed Results$$
+For each speed test, corresponds to three lines of output.
+The name of the test is printed on the first line,
+the vector of problem sizes are printed on the next line,
+and the rates corresponding to the different problem sizes are
+printed on the third line.
+The rate is the number of times that the calculation was repeated
+per second
+The rate is the number of times per second that the calculation was repeated.
+
+$head Prototypes$$
+Each of the AD packages provides links to this main program 
+through external routines with the following prototypes:
+$code
+$verbatim%speed/main.cpp%5%// BEGIN PROTOTYPE%// END PROTOTYPE%1%$$
+$$
+
+$end 
+*/
+
+# include <cassert>
 # include <cstddef>
 # include <iostream>
 # include <cppad/vector.hpp>
 # include <cppad/speed_test.hpp>
 
+# ifdef ADOLC
+# define AD_PACKAGE "adolc"
+# endif
+# ifdef CPPAD
+# define AD_PACKAGE "cppad"
+# endif
+# ifdef FADBAD
+# define AD_PACKAGE "fadbad"
+# endif
+# ifdef PROFILE
+# define AD_PACKAGE "profile"
+# endif
+
+// BEGIN PROTOTYPE
 // external routines that are used for correctness testing
 extern bool    correct_det_lu(void);
 extern bool correct_det_minor(void);
@@ -83,6 +136,7 @@ extern bool correct_det_minor(void);
 // external routines that are used for speed testing
 extern void    speed_det_lu(size_t size, size_t repeat);
 extern void speed_det_minor(size_t size, size_t repeat);
+// END PROTOTYPE
 
 namespace {
 	// function that runs one correctness case
@@ -118,24 +172,60 @@ namespace {
 		return;
 	}
 }
+
 // main program that runs all the tests
 int main(int argc, char *argv[])
 {	bool ok = true;
 	using std::cout;
 	using std::endl;
+	using std::cerr;
 
-	if( argc != 2 )
-	{	std::cerr << "usage: run (correct|speed)" << std::endl;
+	char *option[]= {
+		"correct",
+		"all",
+		"det_lu",
+		"det_minor"
+	};
+	const size_t n_option  = sizeof(option) / sizeof(option[0]);
+	const size_t option_correct   = 0;
+	const size_t option_all       = 1;
+	const size_t option_det_lu    = 2;
+	const size_t option_det_minor = 3;
+	assert( n_option == option_det_minor+1 );
+
+	// use preprocessor symbol defined in makefile
+	char *ad_package = AD_PACKAGE;
+
+	size_t match = n_option;
+	size_t i;
+	if( argc == 2 )
+	{	for(i = 0; i < n_option; i++)
+			if( strcmp(option[i], argv[1]) == 0 )
+				match = i;
+	}
+	if( match == n_option  )
+	{	cerr << "usage: " << ad_package << " option" << endl;
+		cerr << "where option is one of the following:" << endl;
+		for(i = 0; i < n_option; i++)
+		{	cerr << option[i];
+			if( i == n_option - 1 )
+				cerr << ".";
+			else	cerr << ", ";
+		}
+		cerr << endl;
 		return 1;
 	}
-	bool correct = strcmp(argv[1], "correct") == 0;
-	bool speed   = strcmp(argv[1], "speed") == 0;
-	if( ! (correct || speed) )
-	{	std::cerr << "usage: run (correct|speed)" << std::endl;
-		return 1;
-	}
-	if( correct )
-	{	// run the correctness tests
+
+	// arguments needed for speed tests
+	double time_min = 1.;
+	size_t n_size   = 4;
+	CppAD::vector<size_t> size_vec(n_size);
+	for(i = 0; i < n_size; i++) 
+		size_vec[i] = 2 * i + 1;
+
+	switch(match)
+	{	case option_correct:
+		// run all the correctness tests
 		ok &= Run_correct(correct_det_lu,           "det_lu"       );
 		ok &= Run_correct(correct_det_minor,        "det_minor"    );
 
@@ -149,23 +239,29 @@ int main(int argc, char *argv[])
 		{	cout	<< Run_error_count 
 				<< " correctness tests failed." << endl;
 		}
-		return static_cast<int>( ! ok );
+		break;
+		// ---------------------------------------------------------
+
+		case option_all:
+		// run all the speed tests 
+		Run_speed(speed_det_lu,    size_vec, time_min, "det_lu");
+		Run_speed(speed_det_minor, size_vec, time_min, "det_minor");
+		ok = true;
+		break;
+		// ---------------------------------------------------------
+
+		case option_det_lu:
+		Run_speed(speed_det_lu,    size_vec, time_min, "det_lu");
+		break;
+		// ---------------------------------------------------------
+
+		case option_det_minor:
+		Run_speed(speed_det_minor, size_vec, time_min, "det_minor");
+		break;
+		// ---------------------------------------------------------
+		
+		default:
+		assert(0);
 	}
-
-	// speed test arguments
-	double time_min = 1.;
-	size_t n_size   = 4;
-	CppAD::vector<size_t> size_vec(n_size);
-	size_t i;
-	for(i = 0; i < n_size; i++) 
-		size_vec[i] = 2 * i + 1;
-
-	// run the speed tests
-	Run_speed(speed_det_lu,    size_vec, time_min, "det_lu");
-	Run_speed(speed_det_minor, size_vec, time_min, "det_minor");
-
-	return 0;
+	return static_cast<int>( ! ok );
 }
-/* $$
-$end
-*/
