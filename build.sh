@@ -340,7 +340,6 @@ then
 		example/example
 		test_more/test_more
 		introduction/Introduction
-		speed/fadbad/example
 	"
 	for program in $list
 	do
@@ -356,6 +355,7 @@ then
 	list="
 		adolc
 		cppad
+		fadbad
 	"
 	for name in $list
 	do

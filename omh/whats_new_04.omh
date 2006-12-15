@@ -646,9 +646,8 @@ default $xref/CppADvector/$$ template class.
 $pre
 
 $$
-A $xref/FADBAD/$$ correctness and speed comparison with CppAD
+A FADBAD correctness and speed comparison with CppAD
 was added.
-
 
 $head 04-25$$
 Factor out common sub-expressions in order to make

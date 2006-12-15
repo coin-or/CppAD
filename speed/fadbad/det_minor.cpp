@@ -9,153 +9,130 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin DetMinorFadbad.cpp$$
+$begin fadbad_det_minor.cpp$$
 $spell
-	fadbad
-	Cpp
+	Fadbad
+	Lu
+	det
+	badiff.hpp
+	const
+	typedef
+	diff
+	bool
+	CppAD
+	srand
 $$
 
-$section Fadbad & CppAD Gradient of Determinant by Minors$$
+$section Fadbad Speed: Gradient of Determinant Using Lu Factorization$$
 
-$index Fadbad, speed$$
-$index speed, Fadbad$$
-$index determinant, Fadbad$$
-$index Fadbad, determinant$$
-$index Minor, Fadbad expand$$
-$index Fadbad, Minor expand$$
+$index fadbad, speed minor$$
+$index speed, fadbad minor$$
+$index minor, speed fadbad$$
 
-$code
-$verbatim%speed/fadbad/det_minor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-$$
-
-$end
-*/
-// BEGIN PROGRAM
-
-# include <cppad/cppad.hpp>
+$head compute_det_minor$$
+$index compute_det_minor$$
+Routine that computes the gradient of determinant using Fadbad:
+$codep */
+# include <Fadbad++/badiff.h>
 # include <speed/det_by_minor.hpp>
 
-# include <iostream.h>
-# include <Fadbad++/badiff.h>
-
-void DetMinorCp(size_t size, size_t repeat, CppADvector<double> &u)
+void compute_det_minor(
+	size_t                     size     , 
+	size_t                     repeat   , 
+	const double*              matrix   ,
+	double*                    gradient )
 {
-	using namespace CppAD;
-
-	size_t i;
-	size_t j;
-
-
 	// -----------------------------------------------------
-	// Do this set up once so not significant in timing test
+	// setup
+	using CppAD::AD;
 
 	// object for computing determinant
-	DetByMinor< AD<double> ,  CppADvector< AD<double> > > Det(size);
-
-	CppADvector< AD<double> >            detA(1);
-	CppADvector< AD<double> >   A( size * size );
-	for( i = 0; i < size; i++)
-	{	A[ i ] = 1.;
-		for(j = 1; j < size; j++)
-			A[i + j * size] = double(i) * A[ i + (j-1) * size ];
-	}
-	
-	// vectors for reverse mode input 
-	CppADvector<double> v(1);
-	v[0] = 1.;
-
-	// ------------------------------------------------------
-
-	while(repeat--)
-	{	// declare independent variables
-		Independent(A);
-
-		// compute the determinant
-		detA[0] = Det(A);
-
-		// create function object f : A -> detA
-		ADFun<double> f(A, detA);
-
-		// evalute and return gradient using reverse mode
-		u = f.Reverse(1, v);
-	}
-}
-
-void DetMinorFa(size_t size, size_t repeat, CppADvector<double> &u)
-{
-	size_t i;
-	size_t j;
-
-	double  deta;
-
-	// -----------------------------------------------------
-	// Do this set up once so not significant in timing test
-
-	// object for computing determinant
-	CppAD::DetByMinor< B<double> , CppADvector< B<double> > > Det(size);
-
-	B<double>                             detA;
-	CppADvector< B<double> >  A( size * size );
-	CppADvector<double>       a( size * size );
-	for( i = 0; i < size; i++)
-	{	a[ i ] = 1.;
-		for(j = 1; j < size; j++)
-			a[i + j * size] = double(i) * a[ i + (j-1) * size ];
-	}
+	typedef B<double>              Scalar; 
+	typedef Scalar*                Vector; 
+	CppAD::DetByMinor<Scalar, Vector> Det(size);
 
 	// number of elements in A
-	size_t  length = size * size;
+	size_t length = size * size;
 
+	// AD value of the determinant
+	Scalar   detA;
+
+	// AD version of matrix 
+	Vector   A = new Scalar[length];
+	
+	size_t i;
 	// ------------------------------------------------------
 
 	while(repeat--)
 	{
 		// set independent variable values
 		for(i = 0; i < length; i++)
-			A[i] = a[i];
+			A[i] = matrix[i];
 
 		// compute the determinant
 		detA = Det(A);
 
 		// create function object f : A -> detA
-		detA.diff(0, 1); // only one dependent variable (index is 0)
+		detA.diff(0, 1);  // only one dependent variable (index 0)
 
-		// evalute and return gradient using reverse mode
-		for(i = 0; i < length; i++)
-			u[i] = A[i].d(0);  // derivative of detA w.r.t a[i]
+		// evaluate and return gradient using reverse mode
+		for(i =0; i < length; i++)
+			gradient[i] = A[i].d(0); // partial detA w.r.t A[i]
 	}
+	// ---------------------------------------------------------
+	// tear down
+	delete [] A;
+
+	return;
 }
+/* $$
 
-bool DetMinor(void)
-{	bool ok = true;
+$head correct_det_minor$$
+$index correct_det_minor$$
+Routine that tests the correctness of the result computed by compute_det_minor:
+$codep */
+# include <speed/det_grad_33.hpp>
 
-	size_t size   = 4;
+bool correct_det_minor(void)
+{	size_t size   = 3;
 	size_t repeat = 1;
-
-	CppADvector<double> uFa(size * size);
-	CppADvector<double> uCp(size * size);
-
-	DetMinorCp(size, repeat, uCp);
-	DetMinorFa(size, repeat, uFa);
-
-
+	double *matrix   = new double[size * size];
+	double *gradient = new double[size * size];
 	size_t i;
+	srand(1);
 	for(i = 0; i < size * size; i++)
-		ok &= uCp[i] == uFa[i];
+		matrix[i] = rand() / double(RAND_MAX);
 
+	compute_det_minor(size, repeat, matrix, gradient);
+
+	bool ok = CppAD::det_grad_33(matrix, gradient);
+
+	delete [] gradient;
+	delete [] matrix;
 	return ok;
 }
-std::string DetMinorCp(size_t size, size_t repeat)
-{	CppADvector<double> u(size * size);
+/* $$
 
-	DetMinorCp(size, repeat, u);
-	return "CppAD: gradient of Determinant by Minors";
+$head speed_det_minor$$
+$index speed_det_minor$$
+Routine that links compute_det_minor to $cref/speed_test/$$:
+
+$codep */
+void speed_det_minor(size_t size, size_t repeat)
+{	double *matrix   = new double[size * size];
+	double *gradient = new double[size * size];
+	size_t i;
+
+	srand(1); // initialize random number generator
+	for(i = 0; i < size * size; i++)
+		matrix[i] = rand() / double(RAND_MAX);
+
+	compute_det_minor(size, repeat, matrix, gradient);
+	
+	delete [] gradient;
+	delete [] matrix;
+	return;
 }
-std::string DetMinorFa(size_t size, size_t repeat)
-{	CppADvector<double> u(size * size);
-
-	DetMinorFa(size, repeat, u);
-	return "Fadbad: gradient of Determinant by Minors";
-}
-
-// END PROGRAM
+/* $$
+$end
+*/

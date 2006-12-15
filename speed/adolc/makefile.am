@@ -29,5 +29,5 @@ DEFS          =
 #
 adolc_SOURCES = \
 	../main.cpp \
-	det_lu.cpp \ 
-	det_minor.cpp 
+	det_lu.cpp \
+	det_minor.cpp

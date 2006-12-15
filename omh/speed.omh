@@ -36,7 +36,8 @@ This section explains how you can run these tests on your computer.
 $contents%
 	speed/main.cpp%
 	omh/speed_adolc.omh%
-	omh/speed_cppad.omh
+	omh/speed_cppad.omh%
+	omh/speed_fadbad.omh
 %$$
 
 $end

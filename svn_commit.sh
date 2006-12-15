@@ -38,69 +38,43 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="template the vector type in DetByLu class.
+log_entry="Make fadbad speed test a modified copy of adolc speed test.
 
 svn_commit.sh: file that made this commit.
-check_include_omh.sh: add speed/?.cpp files to check list.
-whats_new_04.omh: remove cross references to deleted Adolc sections.
-appendix.omh: move adolc speed sections below speed.omh.
-config.h: update package version.
-cppad/det_minor.cpp: change result to gradient (same as in compute_det_minor).
-cppad/det_lu.cpp: change result to gradient (same as in compute_det_minor).
-
-Make adolc speed test a modified copy of cppad speed test.
-build.sh,
-speed.omh,
-adolc.omh,
-adolc/det_minor.cpp,
-speed_adolc.omh,
-alloc_vec.cpp,
-makefile.am,
-adolc/det_lu.cpp.
-
-Add vector type template parameter to constructor:
-hes_lu_det.cpp,
-jac_lu_det.cpp,
-speed_cppad/det_lu.cpp,
-det_by_minor.hpp,
-?/det_lu.cpp,
-det_by_lu.cpp,
-det_by_lu.hpp.
+build.sh: group fadbad correctness test with other speed correct tests.
+speed_fadbad.omh: modified copy of speed_adolc.omh.
+speed.omh: move fadbad speed tests below here.
+whats_new_04.omh: remove cross references to deleted Fadbad sections.
+appendix.omh: move fadbad speed sections below speed.omh.
+det_minor.cpp: modified copy of adolc or cppad speed test.
+speed.cpp: now an option to speed/fadbad/fadbad program.
+fadbad/makefile.am: modified version of speed/cppad/makefile.am.
+example.cpp: now an option to speed/fadbad/fadbad program.
+det_lu.cpp: modified copy of adolc or cppad speed test.
+cppad/makefile.am: remove trailing white space after backslash.
+adolc/det_lu.cpp: better seperation of tear down from computation.
+check_include_omh.sh: remove speed/adolc/?.hpp files from set.
 "
 add_list="
-	omh/speed_adolc.omh
+	omh/speed_fadbad.omh
 "
 #
 change_list="
 	svn_commit.sh
-	example/hes_lu_det.cpp
-	example/jac_lu_det.cpp
-	check_include_omh.sh
-	speed_cppad/det_lu.cpp
 	build.sh
 	omh/speed.omh
 	omh/whats_new_04.omh
-	omh/whats_new_06.omh
 	omh/appendix.omh
-	cppad/config.h
-	speed/det_by_minor.hpp
+	speed/fadbad/det_minor.cpp
+	speed/fadbad/makefile.am
 	speed/fadbad/det_lu.cpp
-	speed/adolc/det_minor.cpp
 	speed/adolc/makefile.am
 	speed/adolc/det_lu.cpp
-	speed/cppad/det_minor.cpp
-	speed/cppad/det_lu.cpp
-	speed/example/det_by_lu.cpp
-	speed/det_by_lu.hpp
 "
 delete_list="
-	omh/adolc.omh
-	speed/adolc/alloc_mat.hpp
-	speed/adolc/speed.cpp
-	speed/adolc/alloc_vec.cpp
-	speed/adolc/alloc_mat.cpp
-	speed/adolc/example.cpp
-	speed/adolc/alloc_vec.hpp
+	omh/fadbad.omh
+	speed/fadbad/speed.cpp
+	speed/fadbad/example.cpp
 "
 #
 copy_branch="" 

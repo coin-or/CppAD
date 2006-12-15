@@ -77,7 +77,6 @@ void compute_det_lu(
 	double f;
 
 	// ------------------------------------------------------
-
 	while(repeat--)
 	{	// declare independent variables
 		trace_on(tag, keep);
@@ -94,7 +93,7 @@ void compute_det_lu(
 		// evaluate and return gradient using reverse mode
 		reverse(tag, 1, length, d, v, gradient);
 	}
-
+	// ------------------------------------------------------
 	// tear down
 	delete [] A;
 
