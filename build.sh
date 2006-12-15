@@ -340,7 +340,6 @@ then
 		example/example
 		test_more/test_more
 		introduction/Introduction
-		speed/adolc/example
 		speed/fadbad/example
 	"
 	for program in $list
@@ -354,12 +353,21 @@ then
 		# add a new line between program outputs
 		echo ""  >> ../build_test.log
 	done
-	echo "running speed/cppad/cppad correct"
-	echo "./speed/cppad/cppad correct" >> ../build_test.log
-	if ! ./speed/cppad/cppad correct   >> ../build_test.log
-	then
-		ok="no"
-	fi
+	list="
+		adolc
+		cppad
+	"
+	for name in $list
+	do
+		echo "running speed/$name/$name correct"
+		echo "./speed/$name/$name correct" >> ../build_test.log
+		if ! ./speed/$name/$name correct   >> ../build_test.log
+		then
+			ok="no"
+		fi
+		# add a new line between program outputs
+		echo ""  >> ../build_test.log
+	done
 	if ! ./run_omhelp.sh doc
 	then
 		ok="no"

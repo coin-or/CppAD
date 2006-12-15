@@ -9,7 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin speed_cppad_det_lu.cpp$$
+$begin cppad_det_lu.cpp$$
 $spell
 	Lu
 	Cpp
@@ -39,10 +39,12 @@ void compute_det_lu(
 	using CppAD::AD;
 
 	// object for computing determinant
-	CppAD::DetByLu< AD<double> > Det(size);
+	typedef AD<double>          Scalar; 
+	typedef CppADvector<Scalar> Vector; 
+	CppAD::DetByLu<Scalar, Vector> Det(size);
 
-	CppADvector< AD<double> >            detA(1);
-	CppADvector< AD<double> >   A( size * size );
+	Vector            detA(1);
+	Vector   A( size * size );
 	size_t i;
 	for( i = 0; i < size * size; i++)
 		A[i] = matrix[i];
@@ -85,10 +87,10 @@ bool correct_det_lu(void)
 	for(i = 0; i < size * size; i++)
 		matrix[i] = rand() / double(RAND_MAX);
 
-	CppADvector<double> result(size * size);
-	compute_det_lu(size, repeat, matrix, result);
+	CppADvector<double> gradient(size * size);
+	compute_det_lu(size, repeat, matrix, gradient);
 
-	bool ok = det_grad_33(matrix, result);
+	bool ok = det_grad_33(matrix, gradient);
 	return ok;
 }
 /* $$
@@ -100,14 +102,14 @@ Rountine that links compute_det_lu to $cref/speed_test/$$:
 $codep */
 void speed_det_lu(size_t size, size_t repeat)
 {	CppADvector<double> matrix(size * size);
-	CppADvector<double> result(size * size);
+	CppADvector<double> gradient(size * size);
 	size_t i;
 
 	srand(1); // initialize random number generator
 	for(i = 0; i < size * size; i++)
 		matrix[i] = rand() / double(RAND_MAX);
 
-	compute_det_lu(size, repeat, matrix, result);
+	compute_det_lu(size, repeat, matrix, gradient);
 	
 	return;
 }

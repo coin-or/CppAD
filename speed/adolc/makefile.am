@@ -11,35 +11,23 @@
 #
 # automake input file
 #
-noinst_PROGRAMS  = example speed 
+noinst_PROGRAMS  = adolc 
 #
 if CppAD_BOOSTVECTOR
-example_CPPFLAGS = -I$(BOOST_DIR) \
-                   -I. -I$(top_builddir) -I$(ADOLC_DIR)/include 
-speed_CPPFLAGS   = -I$(BOOST_DIR) \
-                   -I. -I$(top_builddir) -I$(ADOLC_DIR)/include 
+AM_CPPFLAGS   = -I$(BOOST_DIR) -I$(top_builddir) -I$(ADOLC_DIR)/include
 else
-example_CPPFLAGS = -I. -I$(top_builddir) -I$(ADOLC_DIR)/include 
-speed_CPPFLAGS   = -I. -I$(top_builddir) -I$(ADOLC_DIR)/include 
+AM_CPPFLAGS   = -I$(top_builddir) -I$(ADOLC_DIR)/include 
 endif
 #
-example_CXXFLAGS = -g $(CPP_ERROR_WARN)
-speed_CXXFLAGS   = -O2 -DNDEBUG $(CPP_ERROR_WARN)
+AM_CXXFLAGS   = -O2 -DNDEBUG $(CPP_ERROR_WARN)
 #
-LDADD            = -ladolc 
-AM_LDFLAGS       = -L$(ADOLC_DIR)/lib 
+LDADD            = -ladolc
+AM_LDFLAGS       = -L$(ADOLC_DIR)/lib
 #
-# cancel the -DHAVE_CONGIF_H flag so adolc does not try to use it
-DEFS             =
+# cancel the -DHAVE_CONFIG_H flag so adolc does not try to use it
+DEFS          =
 #
-example_SOURCES  = example.cpp \
-	alloc_mat.cpp \
-	alloc_mat.hpp \
-	alloc_vec.cpp \
-	alloc_vec.hpp \
-	det_lu.cpp \
-	det_minor.cpp 
-#
-speed_SOURCES    = speed.cpp \
-	det_lu.cpp \
+adolc_SOURCES = \
+	../main.cpp \
+	det_lu.cpp \ 
 	det_minor.cpp 

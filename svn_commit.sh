@@ -38,36 +38,69 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="template the vector type in DetByMinor class.
+log_entry="template the vector type in DetByLu class.
 
 svn_commit.sh: file that made this commit.
-det_by_minor.hpp: routine that changed its interface.
-det_lu.cpp: minor change to title.
+check_include_omh.sh: add speed/?.cpp files to check list.
+whats_new_04.omh: remove cross references to deleted Adolc sections.
+appendix.omh: move adolc speed sections below speed.omh.
+config.h: update package version.
+cppad/det_minor.cpp: change result to gradient (same as in compute_det_minor).
+cppad/det_lu.cpp: change result to gradient (same as in compute_det_minor).
 
+Make adolc speed test a modified copy of cppad speed test.
+build.sh,
+speed.omh,
+adolc.omh,
+adolc/det_minor.cpp,
+speed_adolc.omh,
+alloc_vec.cpp,
+makefile.am,
+adolc/det_lu.cpp.
 
 Add vector type template parameter to constructor:
-lu_vec_ad_ok.cpp, 
-jac_minor_det.cpp,
-hes_minor_det.cpp,
-*/det_minor.cpp,
+hes_lu_det.cpp,
+jac_lu_det.cpp,
+speed_cppad/det_lu.cpp,
+det_by_minor.hpp,
+?/det_lu.cpp,
+det_by_lu.cpp,
+det_by_lu.hpp.
 "
-
 add_list="
+	omh/speed_adolc.omh
 "
 #
 change_list="
 	svn_commit.sh
-	example/lu_vec_ad_ok.cpp
-	example/jac_minor_det.cpp
-	example/hes_minor_det.cpp
-	speed/adolc/det_minor.cpp
-	speed/cppad/det_minor.cpp
-	speed/fadbad/det_minor.cpp
-	speed/cppad/det_lu.cpp
+	example/hes_lu_det.cpp
+	example/jac_lu_det.cpp
+	check_include_omh.sh
+	speed_cppad/det_lu.cpp
+	build.sh
+	omh/speed.omh
+	omh/whats_new_04.omh
+	omh/whats_new_06.omh
+	omh/appendix.omh
+	cppad/config.h
 	speed/det_by_minor.hpp
-	
+	speed/fadbad/det_lu.cpp
+	speed/adolc/det_minor.cpp
+	speed/adolc/makefile.am
+	speed/adolc/det_lu.cpp
+	speed/cppad/det_minor.cpp
+	speed/cppad/det_lu.cpp
+	speed/example/det_by_lu.cpp
+	speed/det_by_lu.hpp
 "
 delete_list="
+	omh/adolc.omh
+	speed/adolc/alloc_mat.hpp
+	speed/adolc/speed.cpp
+	speed/adolc/alloc_vec.cpp
+	speed/adolc/alloc_mat.cpp
+	speed/adolc/example.cpp
+	speed/adolc/alloc_vec.hpp
 "
 #
 copy_branch="" 

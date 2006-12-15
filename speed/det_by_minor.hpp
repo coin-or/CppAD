@@ -27,7 +27,7 @@ $section Determinant Using Expansion by Minors$$
 $head Syntax$$
 $syntax%# include <speed/det_by_minor.hpp>
 %$$
-$syntax%DetByMinor<%Scalar%, %Vector%> %det%(%size%)
+$syntax%DetByMinor<%Scalar%, %Vector%> %det%(%n%)
 %$$
 $syntax%%d% = %det%(%matrix%)
 %$$
@@ -44,7 +44,7 @@ $xref/cppad//CppAD.h/$$.
 $head Constructor$$
 The syntax
 $syntax%
-	DetByMinor<%Scalar%> %det%(%n%)
+	DetByMinor<%Scalar%, %Vector%> %det%(%n%)
 %$$
 constructs the object $italic det$$ which can be used for 
 evaluating the determinant of $italic n$$ by $italic n$$ matrices
@@ -101,13 +101,13 @@ It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The file
-$xref/DetByMinor.h/$$ 
+$xref/det_by_minor.hpp/$$ 
 contains the source for this template function.
 
 
 $end
 ---------------------------------------------------------------------------
-$begin DetByMinor.h$$
+$begin det_by_minor.hpp$$
 $spell
 	Cpp
 	ifndef

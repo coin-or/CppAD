@@ -1,0 +1,67 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin speed_adolc$$
+$spell
+	AdolcDir
+	CppAD
+	Cygwin
+$$
+
+$index speed, test adolc$$
+$index test, adolc speed$$
+$index adolc, speed test$$
+
+$section Running the Adolc Speed Tests$$
+
+$head Purpose$$
+CppAD has a set of speed tests that are used to compare
+Adolc with other AD packages.
+This section explains how you can run these tests on your computer.
+
+$head Windows$$
+These routines have not been compiled or tested under Windows,
+except for the case where one is using 
+$href%
+	http://www.cygwin.com%
+	Cygwin
+%$$
+or,
+$href%
+	http://www.mingw.org%
+	MinGW with MSYS
+%$$.
+
+$head AdolcDir$$
+To run these tests, you must include the $code configure$$ command line option
+$syntax%
+	ADOLC_DIR=%AdolcDir%
+%$$
+during $cref/installation/InstallUnix/AdolcDir/$$.
+After the Unix install $cref/make/InstallUnix/make/$$ command, 
+you can then run the Adolc speed tests 
+with the following commands (relative to the distribution directory):
+$codep
+	speed/adolc/adolc correct
+$$
+This will check that the speed tests have been built correctly.
+You can run the command
+$codep
+	speed/adolc/adolc speed
+$$
+to see the results of the speed tests.
+
+$contents%
+	speed/adolc/det_minor.cpp%
+	speed/adolc/det_lu.cpp
+%$$
+
+$end

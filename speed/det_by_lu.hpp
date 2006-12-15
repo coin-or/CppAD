@@ -1,5 +1,5 @@
-# ifndef CPPAD_DET_BY_LU_INCLUDED 
-# define CPPAD_DET_BY_LU_INCLUDED 
+# ifndef CPPAD_DET_BY_LU_INCLUDED
+# define CPPAD_DET_BY_LU_INCLUDED
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
@@ -14,40 +14,30 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin DetByLu$$
 $spell
+	lu
 	hpp
-	Leq
-	Geq
 	typedef
-	std
-	Lu
+	const
+	hpp
 	Det
 	CppADvector
 	namespace
 $$
 
-$section Determinant Using Lu Factorization$$
-$index determinant, Lu factor$$
-$index Lu factor, determinant$$
-$index factor, Lu determinant$$
+$section Determinant Using Expansion by Lu Factorization$$
 
 $head Syntax$$
 $syntax%# include <speed/det_by_lu.hpp>
 %$$
-$syntax%DetByLu<%Type%> %Det%(size_t %n%)
+$syntax%DetByLu<%Scalar%, %Vector%> %det%(%n%)
 %$$
-$syntax%%Type% %Det%(CppADvector<%Type%> &%A%)
+$syntax%%d% = %det%(%matrix%)
 %$$
-$syntax%typedef std::complex<double>     Complex;
-%$$
-$syntax%typedef CppAD::AD<Complex>     ADComplex;
-%$$
-
-$fend 25$$
 
 $head Inclusion$$
 The template class $code DetByLu$$ is defined in the $code CppAD$$
 namespace by including 
-the file $code speed/det_by_lu.hpp$$ 
+the file $code speed/det_by_lu.hpp$$
 (relative to the CppAD distribution directory).
 It is only intended for example and testing purposes, 
 so it is not automatically included by
@@ -56,37 +46,54 @@ $xref/cppad//CppAD.h/$$.
 $head Constructor$$
 The syntax
 $syntax%
-	DetByLu<%Type%> %Det%(size_t %n%)
+	DetByLu<%Scalar%, %Vector%> %det%(%n%)
 %$$
-constructs the object $italic Det$$ which can be used for 
+constructs the object $italic det$$ which can be used for 
 evaluating the determinant of $italic n$$ by $italic n$$ matrices
-using Lu factorization.
+using LU factorization.
 
-$head Evaluation$$
+$head Scalar$$
+The type $italic Scalar$$ can be any
+$cref/NumericType/$$
+
+$head n$$
+The argument $italic n$$ has prototype
+$syntax%
+	size_t %n%
+%$$
+
+$head det$$
 The syntax
 $syntax%
-	%Type% %Det%(CppADvector<%Type%> &%A%)
+	%d% = %det%(%matrix%)
 %$$
-returns the determinant of $italic A$$ using expansion by minors.
+returns the determinant of $italic matrix$$ using LU factorization.
+The argument $italic matrix$$ has prototype
+$syntax%
+	const %Vector% &%matrix%
+%$$
+It must be a $italic Vector$$ with length $latex n * n$$ and with
+elements of type $italic Scalar$$.
+The return value $italic d$$ has prototype
+$syntax%
+	%Scalar% %d%
+%$$
+
+$head Vector$$
+If $italic y$$ is a $italic Vector$$ object, 
+it must support the syntax
+$syntax%
+	%y%[%i%]
+%$$
+where $italic i$$ has type $code size_t$$ with value less than $latex n * n$$.
+This must return a $italic Scalar$$ value corresponding the $th i$$
+element of the vector $italic y$$.
+This is the only requirement of the type $italic Vector$$.
 
 $children%
 	speed/example/det_by_lu.cpp
 %$$
 
-$head Complex Types$$
-The complex data types $code Complex$$ and $code ADComplex$$
-are defined by
-$syntax%
-	typedef std::complex<double>     Complex;
-	typedef CppAD::AD<Complex>     ADComplex;
-%$$
-These are used to specialize the template functions
-$code LeqZero$$ and $code AbsGeq$$ so they can be used
-by $xref/LuSolve/$$ with the $code Complex$$ and $code ADComplex$$
-types.
-
-$head Restrictions$$
-This routine assumes that the matrix $italic A$$ is not singular.
 
 $head Example$$
 The file
@@ -96,15 +103,16 @@ It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The file
-$xref/DetByLu.h/$$ 
+$xref/det_by_lu.hpp/$$ 
 contains the source for this template function.
 
 
 $end
 ---------------------------------------------------------------------------
-$begin DetByLu.h$$
+$begin det_by_lu.hpp$$
 $spell
-	Lu
+	lu
+	hpp
 	Cpp
 	ifndef
 	endif
@@ -112,11 +120,10 @@ $spell
 	const
 $$
 
-$index DetByLu$$
-$section Determinant using Lu Factorization: Source Code$$
-$index complex, Lu factor$$
-$index Lu factor, complex$$
-$index factor, Lu complex$$
+$index det_by_lu.hpp$$
+$index determinant, lu$$
+
+$section Determinant using Expansion by Lu Factorization: Source Code$$
 
 $code
 # ifndef CPPAD_DET_BY_LU_INCLUDED
@@ -149,18 +156,18 @@ namespace CppAD {
 CppADCreateUnaryBool(Complex,  LeqZero )
 CppADCreateBinaryBool(Complex, AbsGeq )
 
-template <class Type>
+template <class Scalar, class Vector>
 class DetByLu {
 public:
 	DetByLu(size_t n_) : m(0), n(n_), A(n_ * n_)
 	{	}
 
-	inline Type operator()(const CppADvector<Type> &x)
+	inline Scalar operator()(const Vector &x)
 	{
 		using CppAD::exp;
 
-		Type         logdet;
-		Type         det;
+		Scalar         logdet;
+		Scalar         det;
 		int          signdet;
 		size_t       i;
 
@@ -179,7 +186,7 @@ public:
 		);
 
 		// convert to determinant
-		det     = Type( signdet ) * exp( logdet ); 
+		det     = Scalar( signdet ) * exp( logdet ); 
 
 		// FADBAD requires tempories to be set to constants
 		for(i = 0; i < n * n; i++)
@@ -190,9 +197,9 @@ public:
 private:
 	const size_t m;
 	const size_t n;
-	CppADvector<Type> A;
-	CppADvector<Type> B;
-	CppADvector<Type> X;
+	CppADvector<Scalar> A;
+	CppADvector<Scalar> B;
+	CppADvector<Scalar> X;
 };
 
 

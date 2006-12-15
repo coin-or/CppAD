@@ -9,112 +9,72 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin DetMinorAdolc.cpp$$
+$begin adolc_det_minor.cpp$$
 $spell
+	adouble
+	CppAD
+	typedef
 	adolc
-	Cpp
+	Lu
+	Adolc
+	det
+	hpp
+	const
+	bool
+	srand
 $$
 
-$section Adolc & CppAD Gradient of Determinant by Minors$$
+$section Adolc Speed: Gradient of Determinant Using Expansion by Minors$$
 
+$index adolc, speed minor$$
+$index speed, adolc minor$$
+$index minor, speed adolc$$
 
-$index Adolc, speed$$
-$index speed, Adolc$$
-$index determinant, Adolc$$
-$index Adolc, determinant$$
-$index Minors, Adolc expand$$
-$index Adolc, Minor expand$$
-
-$code
-$verbatim%speed/adolc/det_minor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-$$
-
-$end
-*/
-// BEGIN PROGRAM
-
-# include <cppad/cppad.hpp>
+$head compute_det_minor$$
+$index compute_det_minor$$
+Routine that computes the gradient of determinant using Adolc:
+$codep */
 # include <speed/det_by_minor.hpp>
+# include <speed/det_grad_33.hpp>
 
 # include <adolc/adouble.h>
 # include <adolc/interfaces.h>
 
-void DetMinorCp(size_t size, size_t repeat, CppADvector<double> &u)
+void compute_det_minor(
+	size_t                     size     , 
+	size_t                     repeat   , 
+	const double*              matrix   ,
+	double*                    gradient )
 {
-	using namespace CppAD;
-
-	size_t i;
-	size_t j;
-
-
 	// -----------------------------------------------------
-	// Do this set up once so not significant in timing test
+	// setup
+	typedef adouble  Scalar;
+	typedef Scalar*  Vector;
+	size_t i;
 
 	// object for computing determinant
-	DetByMinor< AD<double> , CppADvector< AD<double> > > Det(size);
+	CppAD::DetByMinor<Scalar, Vector> Det(size);
 
-	CppADvector< AD<double> >            detA(1);
-	CppADvector< AD<double> >   A( size * size );
-	for( i = 0; i < size; i++)
-	{	A[ i ] = 1.;
-		for(j = 1; j < size; j++)
-			A[i + j * size] = double(i) * A[ i + (j-1) * size ];
-	}
+	// number of elements in the matrix
+	size_t length = size * size;
+
+	// value of determinant
+	Scalar   detA;
+
+	// adouble version of matrix
+	Vector   A = new Scalar[length];
 	
-	// vectors for reverse mode input 
-	CppADvector<double> v(1);
-	v[0] = 1.;
-
-	// ------------------------------------------------------
-
-	while(repeat--)
-	{	// declare independent variables
-		Independent(A);
-
-		// compute the determinant
-		detA[0] = Det(A);
-
-		// create function object f : A -> detA
-		ADFun<double> f(A, detA);
-
-		// evalute and return gradient using reverse mode
-		u = f.Reverse(1, v);
-	}
-}
-
-void DetMinorAd(size_t size, size_t repeat, double *u)
-{
-	size_t i;
-	size_t j;
-
-	double  deta;
-
-	// -----------------------------------------------------
-	// Do this set up once so not significant in timing test
-
-	// object for computing determinant
-	CppAD::DetByMinor<adouble, CppADvector<adouble> > Det(size);
-
-	adouble                           detA;
-	CppADvector<adouble>  A( size * size );
-	CppADvector<double>   a( size * size );
-	for( i = 0; i < size; i++)
-	{	a[ i ] = 1.;
-		for(j = 1; j < size; j++)
-			a[i + j * size] = double(i) * a[ i + (j-1) * size ];
-	}
-
-	// vectors for reverse mode input 
+	// vectors of reverse mode weights 
 	double v[1];
 	v[0] = 1.;
 
 	// tag and keep flags
 	int tag  = 1;
 	int keep = 1;
-	int d    = 0; 
+	int d    = 0;
 
-	// number of elements in A
-	size_t  length = size * size;
+	// function value
+	double f;
 
 	// ------------------------------------------------------
 
@@ -122,54 +82,74 @@ void DetMinorAd(size_t size, size_t repeat, double *u)
 	{	// declare independent variables
 		trace_on(tag, keep);
 		for(i = 0; i < length; i++)
-			A[i] <<= a[i];
+			A[i] <<= matrix[i];
 
 		// compute the determinant
 		detA = Det(A);
 
 		// create function object f : A -> detA
-		detA >>= deta;
+		detA >>= f;
 		trace_off();
 
-		// evalute and return gradient using reverse mode
-		reverse(tag, 1, length, d, v, u);
+		// evaluate and return gradient using reverse mode
+		reverse(tag, 1, length, d, v, gradient);
 	}
+
+	// tear down
+	delete [] A;
+
+	return;
 }
+/* $$
 
-bool DetMinor(void)
-{	bool ok = true;
+$head correct_det_minor$$
+$index correct_det_minor$$
+Routine that tests the correctness of the result computed by compute_det_minor:
+$codep */
+# include <speed/det_grad_33.hpp>
 
-	size_t size   = 4;
+bool correct_det_minor(void)
+{	size_t size   = 3;
 	size_t repeat = 1;
 
-	double *uAd = new double [size * size];
-	CppADvector<double> uCp(size * size);
-
-	DetMinorCp(size, repeat, uCp);
-	DetMinorAd(size, repeat, uAd);
-
+	double *matrix   = new double[size * size];
+	double *gradient = new double[size * size];
 
 	size_t i;
+	srand(1);
 	for(i = 0; i < size * size; i++)
-		ok &= uCp[i] == uAd[i];
+		matrix[i] = rand() / double(RAND_MAX);
 
-	delete [] uAd;
+	compute_det_minor(size, repeat, matrix, gradient);
+
+	bool ok = CppAD::det_grad_33(matrix, gradient);
+
+	delete [] gradient;
+	delete [] matrix;
 	return ok;
 }
-std::string DetMinorCp(size_t size, size_t repeat)
-{	CppADvector<double> u(size * size);
+/* $$
 
-	DetMinorCp(size, repeat, u);
-	return "CppAD: gradient of Determinant by Minors";
+$head speed_det_minor$$
+$index speed_det_minor$$
+Routine that links compute_det_minor to $cref/speed_test/$$:
+
+$codep */
+void speed_det_minor(size_t size, size_t repeat)
+{	double *matrix   = new double[size * size];
+	double *gradient = new double[size * size];
+	size_t i;
+
+	srand(1); // initialize random number generator
+	for(i = 0; i < size * size; i++)
+		matrix[i] = rand() / double(RAND_MAX);
+
+	compute_det_minor(size, repeat, matrix, gradient);
+	
+	delete [] gradient;
+	delete [] matrix;
+	return;
 }
-std::string DetMinorAd(size_t size, size_t repeat)
-{
-	double *u = new double [size * size];
-
-	DetMinorAd(size, repeat, u);
-
-	delete [] u;
-	return "Adolc: gradient of Determinant by Minors";
-}
-
-// END PROGRAM
+/* $$
+$end
+*/

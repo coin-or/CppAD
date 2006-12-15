@@ -44,7 +44,7 @@ bool HesLuDet()
 	size_t n = 2;
 
 	// object for computing determinants
-	DetByLu< AD<Complex> > Det(n);
+	DetByLu< AD<Complex>, CppADvector< AD<Complex> > > Det(n);
 
 	// independent and dependent variable vectors
 	CppADvector< AD<Complex> >  X(n * n);

@@ -26,7 +26,6 @@ $index Lu factor, Fadbad$$
 $index Fadbad, Lu factor$$
 
 
-$comment This file is in the Fadbad subdirectory$$ 
 $code
 $verbatim%speed/fadbad/det_lu.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -52,7 +51,7 @@ void DetLuCp(size_t size, size_t repeat, CppADvector<double> &u)
 	// Do this set up once so not significant in timing test
 
 	// object for computing determinant
-	DetByLu< AD<double> > Det(size);
+	DetByLu< AD<double>, CppADvector< AD<double> > > Det(size);
 
 	CppADvector< AD<double> >            detA(1);
 	CppADvector< AD<double> >   A( size * size );
@@ -94,7 +93,7 @@ void DetLuFa(size_t size, size_t repeat, double *u)
 	// Do this set up once so not significant in timing test
 
 	// object for computing determinant
-	CppAD::DetByLu< B<double> > Det(size);
+	CppAD::DetByLu< B<double>, CppADvector< B<double> > > Det(size);
 
 	B<double>                             detA;
 	CppADvector< B<double> >  A( size * size );

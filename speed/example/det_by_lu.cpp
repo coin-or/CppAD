@@ -39,7 +39,7 @@ bool DetByLu()
 	size_t n = 3;
 
 	// construct the determinat object
-	CppAD::DetByLu<double> Det(n);
+	CppAD::DetByLu<double, CppADvector<double> > Det(n);
 
 	double  a[] = {
 		1., 2., 3.,  // a[0] a[1] a[2]

@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	Alloc
 	fadbad
 	exp
 	Dir
@@ -279,8 +280,8 @@ in the root CppAD $code Makefile.am$$ this has been fixed.
 $pre
 
 $$
-The documentation for the $cref/Adolc/$$ helper routines
-$cref/AllocVec/$$  and $cref/AllocMat/$$ were not being included.
+The documentation for the Adolc helper routines
+$code AllocVec$$  and $code AllocMat$$ were not being included.
 This has been fixed.
 $pre
 

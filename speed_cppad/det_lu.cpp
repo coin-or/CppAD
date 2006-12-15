@@ -47,7 +47,7 @@ std::string doubleDetLu(size_t size, size_t repeat)
 		for(j = 0; j < size; j++)
 			a[i + j * size] = double ( i / (double) (j + 1.) );
 
-	DetByLu<double> Det(size);
+	DetByLu<double, CppADvector<double> > Det(size);
 
 	while(repeat--)
 		Det(a);
@@ -68,7 +68,7 @@ std::string ADdoubleDetLu(size_t size, size_t repeat)
 		for(j = 0; j < size; j++)
 			A[i + j * size] =  AD<double>( i / (double) (j + 1.) );
 
-	DetByLu< AD<double> > Det(size);
+	DetByLu< AD<double>,  CppADvector< AD<double> > > Det(size);
 
 	while(repeat--)
 		Det(A);
@@ -97,7 +97,7 @@ std::string TapeDetLu(size_t size, size_t repeat)
 		}
 	}
 
-	DetByLu< AD<double> > Det(size);
+	DetByLu< AD<double>,  CppADvector< AD<double> > > Det(size);
 
 	size_t memory = 0;
 	size_t length = 0;
@@ -138,7 +138,7 @@ std::string JacDetLu(size_t size, size_t repeat)
 		}
 	}
 
-	DetByLu< AD<double> > Det(size);
+	DetByLu< AD<double>,  CppADvector< AD<double> > > Det(size);
 
 	size_t memory = 0;
 	size_t length = 0;
@@ -182,7 +182,7 @@ std::string HesDetLu(size_t size, size_t repeat)
 		}
 	}
 
-	DetByLu< AD<double> > Det(size);
+	DetByLu< AD<double>,  CppADvector< AD<double> > > Det(size);
 
 	size_t memory = 0;
 	size_t length = 0;

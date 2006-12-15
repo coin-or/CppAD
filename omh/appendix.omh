@@ -19,7 +19,6 @@ $childtable%
 	cppad/local/preprocessor.hpp%
 	omh/theory.omh%
 	omh/speed.omh%
-	omh/adolc.omh%
 	omh/fadbad.omh%
 	omh/glossary.omh%
 	omh/bib.omh%

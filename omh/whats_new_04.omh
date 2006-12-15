@@ -792,7 +792,7 @@ $xref/speed_cppad/$$ tests output.
 
 $head 03-15$$
 The comparison between ADOLC and CppAD for
-the $xref/DetLuADOLC.cpp//DetLu/$$ example was returning an error
+the $code DetLuADOLC.cpp/$$ example was returning an error
 (because it was checking for exact equality of calculated derivatives
 instead of nearly equal).
 This has been fixed.
@@ -867,21 +867,21 @@ were moved below $xref/ADFun/$$ in the documentation.
 
 
 $head 03-01$$
-The $xref/DetLuADOLC.cpp//DetLu/$$ case was added to the ADOLC
+The DetLuADOLC.cpp, DetLu case was added to the ADOLC
 comparison tests.
 
 $head 02-29$$
 Under certain optimization flag values, 
 and on certain systems,
 an error was reported by the
-$xref/ExampleADOLC.cpp//ADOLC correctness comparison/$$.
+ADOLC correctness comparison.
 It turned out that CppAD was not initializing a particular index 
 when debugging was turned off. This has been fixed.
 
 
 $head 02-28$$
 A set of routines for comparing CppAD with 
-$xref/ADOLC/$$ has been added to the distribution.
+ADOLC has been added to the distribution.
 In addition, documentation for compiling and linking the
 $xref/example//Examples/$$ and $xref/speed_cppad//Speed Tests/$$
 has been added.

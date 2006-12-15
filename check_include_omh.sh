@@ -31,6 +31,7 @@ list="
 	print_for/*.cpp
 	speed_cppad/*.cpp
 	speed/*.hpp
+	speed/*.cpp
 	speed/adolc/*.cpp
 	speed/adolc/*.hpp
 	speed/cppad/*.cpp

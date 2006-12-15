@@ -22,11 +22,10 @@ $spell
 	sln
 $$
 
-$index speed, test cppad$$
-$index test, cppad speed$$
-$index cppad, speed test$$
+$index speed, test$$
+$index test, speed$$
 
-$section Routines That Speed Test CppAD$$
+$section Speed Test Routines$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to determine if 
@@ -36,6 +35,7 @@ This section explains how you can run these tests on your computer.
 
 $contents%
 	speed/main.cpp%
+	omh/speed_adolc.omh%
 	omh/speed_cppad.omh
 %$$
 
