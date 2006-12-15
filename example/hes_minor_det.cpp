@@ -48,7 +48,7 @@ bool HesMinorDet()
 	size_t n = 2;
 
 	// object for computing determinants
-	DetByMinor<ADComplex, ADVector> Det(n);
+	det_by_minor<ADComplex> Det(n);
 
 	// independent and dependent variable vectors
 	CppADvector<ADComplex>  X(n * n);

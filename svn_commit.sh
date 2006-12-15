@@ -38,21 +38,59 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="minor changes to script files.
+log_entry="Change name and improve templating in det_by_lu, det_by_minor.
 
 svn_commit.sh: file that made this commit.
-svn_status.sh: remove adolc and test_one.cpp temporary files.
-clean_cppad.sh: remove redundant matches.
-adolc_usrparms.sh: script for changing adolc buffer sizes.
+check_include_file.sh: remove referenes to speed/adolc/?.hpp.
+
+Change DetByMinor->det_by_minor and move Vector template parameter to where 
+it can be inferred:
+det_by_lu.hpp,
+det_by_minor.hpp.
+
+Change DetByMinor->det_by_minor and remove constructor Vector parameter. 
+det_by_lu.cpp,
+det_by_minor.cpp.
+
+Remove Vector template parameter and change name in constuctor:
+lu_vec_ad_ok.cpp,
+hes_lu_det.cpp,
+jac_minor_det.cpp,
+hes_minor_det.cpp,
+jac_lu_det.cpp,
+det_minor.cpp,
+det_lu.cpp,
+det_minor.cpp,
+det_lu.cpp,
+det_minor.cpp,
+det_lu.cpp,
+det_minor.cpp,
+det_lu.cpp,
+example.cpp.
 "
 add_list="
-	speed/adolc/adolc_usrparms.sh
 "
 #
 change_list="
 	svn_commit.sh
-	svn_status.sh
-	clean_cppad.sh
+	check_include_file.sh
+	example/lu_vec_ad_ok.cpp
+	example/hes_lu_det.cpp
+	example/jac_minor_det.cpp
+	example/hes_minor_det.cpp
+	example/jac_lu_det.cpp
+	speed_cppad/det_minor.cpp
+	speed_cppad/det_lu.cpp
+	speed/det_by_minor.hpp
+	speed/fadbad/det_minor.cpp
+	speed/fadbad/det_lu.cpp
+	speed/adolc/det_minor.cpp
+	speed/adolc/det_lu.cpp
+	speed/cppad/det_minor.cpp
+	speed/cppad/det_lu.cpp
+	speed/example/det_by_lu.cpp
+	speed/example/det_by_minor.cpp
+	speed/example/example.cpp
 "
 delete_list="
 "

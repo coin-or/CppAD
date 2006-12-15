@@ -12,7 +12,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin DetByMinor$$
+$begin det_by_minor$$
 $spell
 	typedef
 	const
@@ -27,13 +27,13 @@ $section Determinant Using Expansion by Minors$$
 $head Syntax$$
 $syntax%# include <speed/det_by_minor.hpp>
 %$$
-$syntax%DetByMinor<%Scalar%, %Vector%> %det%(%n%)
+$syntax%det_by_minor<%Scalar%> %det%(%n%)
 %$$
 $syntax%%d% = %det%(%matrix%)
 %$$
 
 $head Inclusion$$
-The template class $code DetByMinor$$ is defined in the $code CppAD$$
+The template class $code det_by_minor$$ is defined in the $code CppAD$$
 namespace by including 
 the file $code speed/det_by_minor.hpp$$
 (relative to the CppAD distribution directory).
@@ -44,7 +44,7 @@ $xref/cppad//CppAD.h/$$.
 $head Constructor$$
 The syntax
 $syntax%
-	DetByMinor<%Scalar%, %Vector%> %det%(%n%)
+	det_by_minor<%Scalar%> %det%(%n%)
 %$$
 constructs the object $italic det$$ which can be used for 
 evaluating the determinant of $italic n$$ by $italic n$$ matrices
@@ -95,7 +95,7 @@ $children%
 
 $head Example$$
 The file
-$xref/DetByMinor.cpp/$$ 
+$xref/det_by_minor.cpp/$$ 
 contains an example and test of $code det_by_minor.hpp$$.
 It returns true if it succeeds and false otherwise.
 
@@ -116,7 +116,7 @@ $spell
 	const
 $$
 
-$index DetByMinor$$
+$index det_by_minor$$
 $mindex determinant minor matrix$$
 $section Determinant using Expansion by Minors: Source Code$$
 
@@ -143,10 +143,10 @@ $end
 // BEGIN CppAD namespace
 namespace CppAD {
 
-template <class Scalar, class Vector>
-class DetByMinor {
+template <class Scalar>
+class det_by_minor {
 public:
-	DetByMinor(size_t m) : m_(m) , r_(m + 1) , c_(m + 1), a_(m * m)
+	det_by_minor(size_t m) : m_(m) , r_(m + 1) , c_(m + 1), a_(m * m)
 	{
 		size_t i;
 
@@ -159,6 +159,7 @@ public:
 		c_[m] = 0;
 	}
 
+	template <class Vector>
 	inline Scalar operator()(const Vector &x) const
 	{	size_t i = m_ * m_;
 		while(i--)

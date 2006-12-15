@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin DetByLu.cpp$$
+$begin det_by_lu.cpp$$
 $spell
 	Cpp
 	Lu
@@ -32,14 +32,14 @@ $end
 # include <cppad/cppad.hpp>
 # include <speed/det_by_lu.hpp>
 
-bool DetByLu()
+bool det_by_lu()
 {	bool ok = true;
 
 	// dimension of the matrix
 	size_t n = 3;
 
 	// construct the determinat object
-	CppAD::DetByLu<double, CppADvector<double> > Det(n);
+	CppAD::det_by_lu<double> Det(n);
 
 	double  a[] = {
 		1., 2., 3.,  // a[0] a[1] a[2]

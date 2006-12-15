@@ -49,7 +49,7 @@ void compute_det_minor(
 	typedef CppAD::vector<Scalar> Vector;
 
 	// object for computing determinant
-	CppAD::DetByMinor<Scalar, Vector> Det(size);
+	CppAD::det_by_minor<Scalar> Det(size);
 
 	Vector            detA(1);
 	Vector   A( size * size );

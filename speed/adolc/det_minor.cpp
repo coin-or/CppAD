@@ -53,7 +53,7 @@ void compute_det_minor(
 	size_t i;
 
 	// object for computing determinant
-	CppAD::DetByMinor<Scalar, Vector> Det(size);
+	CppAD::det_by_minor<Scalar> Det(size);
 
 	// number of elements in the matrix
 	size_t length = size * size;

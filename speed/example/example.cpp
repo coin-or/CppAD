@@ -33,8 +33,8 @@ $end
 
 // various example routines
 extern bool det_of_minor(void);
-extern bool DetByLu(void);
-extern bool DetByMinor(void);
+extern bool det_by_lu(void);
+extern bool det_by_minor(void);
 extern bool speed_test(void);
 
 namespace {
@@ -66,8 +66,8 @@ int main(void)
 	using namespace std;
 
 	ok &= Run(det_of_minor,          "det_of_minor"   );
-	ok &= Run(DetByMinor,            "DetByMinor"     );
-	ok &= Run(DetByLu,               "DetByLu"        );
+	ok &= Run(det_by_minor,            "det_by_minor"     );
+	ok &= Run(det_by_lu,               "det_by_lu"        );
 	ok &= Run(speed_test,            "speed_test"     );
 
 	// check for memory leak in previous calculations

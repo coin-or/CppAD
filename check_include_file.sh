@@ -31,7 +31,6 @@ grep '^# *include *<speed/' \
 	example/*.hpp \
 	speed/*.cpp \
 	speed/adolc/*.cpp \
-	speed/adolc/*.hpp \
 	speed/cppad/*.cpp \
 	speed/fadbad/*.cpp \
 	test_more/*.cpp \
@@ -43,7 +42,6 @@ ls	cppad/config.h \
 	cppad/*.hpp \
 	cppad/local/*.hpp \
 	speed/*.hpp \
-	speed/adolc/*.hpp \
 	| sort -u > junk.3 
 diff junk.2 junk.3
 #

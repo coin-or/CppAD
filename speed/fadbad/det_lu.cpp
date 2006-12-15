@@ -47,9 +47,9 @@ void compute_det_lu(
 	using CppAD::AD;
 
 	// object for computing determinant
-	typedef B<double>              Scalar; 
-	typedef Scalar*                Vector; 
-	CppAD::DetByLu<Scalar, Vector> Det(size);
+	typedef B<double>        Scalar; 
+	typedef Scalar*          Vector; 
+	CppAD::det_by_lu<Scalar> Det(size);
 
 	// number of elements in A
 	size_t length = size * size;

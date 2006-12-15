@@ -53,7 +53,7 @@ void compute_det_lu(
 	size_t i;
 
 	// object for computing determinant
-	CppAD::DetByLu<Scalar, Vector> Det(size);
+	CppAD::det_by_lu<Scalar> Det(size);
 
 	// number of elements in the matrix
 	size_t length = size * size;

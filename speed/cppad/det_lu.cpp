@@ -41,7 +41,7 @@ void compute_det_lu(
 	// object for computing determinant
 	typedef AD<double>          Scalar; 
 	typedef CppADvector<Scalar> Vector; 
-	CppAD::DetByLu<Scalar, Vector> Det(size);
+	CppAD::det_by_lu<Scalar>    Det(size);
 
 	Vector            detA(1);
 	Vector   A( size * size );

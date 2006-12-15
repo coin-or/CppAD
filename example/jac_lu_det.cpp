@@ -42,7 +42,7 @@ bool JacLuDet()
 	size_t n = 2;
 
 	// object for computing determinants
-	DetByLu<ADComplex, CppADvector<ADComplex> > Det(n);
+	det_by_lu<ADComplex> Det(n);
 
 	// independent and dependent variable vectors
 	CppADvector<ADComplex>  X(n * n);
