@@ -26,11 +26,12 @@ sed                                                           \
 	-e '/^[?].*\.a$/d'                                    \
 	-e '/^[?].*\.log$/d'                                  \
 	-e '/^[?].*\.stackdump$/d'                            \
-	-e '/^[?].*\/TestOne.cpp$/d'                          \
+	-e '/^[?].*\/test_one.cpp$/d'                         \
 	-e '/^[?].*\/Debug$/d'                                \
 	-e '/^[?].*\/Release$/d'                              \
 	-e '/^[?].*\/stamp-h1$/d'                             \
 	-e '/^[?].*\/makefile$/d'                             \
+	-e '/^[?].*\/_adolc-*/d'                              \
 	-e '/^[?] *install-sh$/d'                             \
 	-e '/^[?] *makefile$/d'                               \
 	-e '/^[?].*\/junk$/d'                                 \

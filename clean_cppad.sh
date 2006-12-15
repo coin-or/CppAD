@@ -15,8 +15,6 @@ list=`find .                             \
 	\( -name '_adolc-*'       \) -or \
 	\( -name '_adolc-*'       \) -or \
 	\( -name '_adolc-*'       \) -or \
-	\( -name '*_tape.[0-9]'   \) -or \
-	\( -name '*_tape[0-9]'    \) -or \
 	\( -name 'aclocal.m4'     \) -or \
 	\( -name 'autom4te.cache' \) -or \
 	\( -name 'configure'      \) -or \

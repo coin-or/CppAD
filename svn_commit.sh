@@ -38,43 +38,23 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Make fadbad speed test a modified copy of adolc speed test.
+log_entry="minor changes to script files.
 
 svn_commit.sh: file that made this commit.
-build.sh: group fadbad correctness test with other speed correct tests.
-speed_fadbad.omh: modified copy of speed_adolc.omh.
-speed.omh: move fadbad speed tests below here.
-whats_new_04.omh: remove cross references to deleted Fadbad sections.
-appendix.omh: move fadbad speed sections below speed.omh.
-det_minor.cpp: modified copy of adolc or cppad speed test.
-speed.cpp: now an option to speed/fadbad/fadbad program.
-fadbad/makefile.am: modified version of speed/cppad/makefile.am.
-example.cpp: now an option to speed/fadbad/fadbad program.
-det_lu.cpp: modified copy of adolc or cppad speed test.
-cppad/makefile.am: remove trailing white space after backslash.
-adolc/det_lu.cpp: better seperation of tear down from computation.
-check_include_omh.sh: remove speed/adolc/?.hpp files from set.
+svn_status.sh: remove adolc and test_one.cpp temporary files.
+clean_cppad.sh: remove redundant matches.
+adolc_usrparms.sh: script for changing adolc buffer sizes.
 "
 add_list="
-	omh/speed_fadbad.omh
+	speed/adolc/adolc_usrparms.sh
 "
 #
 change_list="
 	svn_commit.sh
-	build.sh
-	omh/speed.omh
-	omh/whats_new_04.omh
-	omh/appendix.omh
-	speed/fadbad/det_minor.cpp
-	speed/fadbad/makefile.am
-	speed/fadbad/det_lu.cpp
-	speed/adolc/makefile.am
-	speed/adolc/det_lu.cpp
+	svn_status.sh
+	clean_cppad.sh
 "
 delete_list="
-	omh/fadbad.omh
-	speed/fadbad/speed.cpp
-	speed/fadbad/example.cpp
 "
 #
 copy_branch="" 
