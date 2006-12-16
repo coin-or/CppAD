@@ -10,8 +10,8 @@ The second usage show how the usrparms.h file would be modified.
 The third usage actually modifies the file.
 
 <dir>: 
-prefix directory corresponding to Adolc; i.e., the file adouble.h is in
-	<dir>/include/adolc/usrparms.h
+The distribution directory corresponding to adolc; e.g., adolc-1.10.2. 
+The file where the buffer sizes are specified is <dir>/adolc/usrparms.h.
 
 BUFSIZE: 
 Buffer size for tapes.
@@ -30,7 +30,7 @@ then
 	echo "$message"
 	exit 1
 fi
-file="$1/include/adolc/usrparms.h"
+file="$1/adolc/usrparms.h"
 if [ ! -e $file ]
 then
 	echo "adolc_usrparms.sh: cannot find the file $file"
@@ -43,9 +43,9 @@ then
 	grep "^#define T*BUFSIZE" < $file  
 	exit 0
 fi
-prev="// Previous value: "
-cmd_one="s|^#define BUFSIZE\( *\)\([0-9]*\).*|$prev &\n#define BUFSIZE\1$2|"
-cmd_two="s|^#define TBUFSIZE\( *\)\([0-9]*\).*|$prev &\n#define TBUFSIZE\1$3|"
+same="/* Previous: \1\2 */ \3\n#define"
+cmd_one="s|^\(#define BUFSIZE *\)\([0-9]*\)\(.*\)|$same BUFSIZE    $2|"
+cmd_two="s|^\(#define TBUFSIZE *\)\([0-9]*\)\(.*\)|$same TBUFSIZE   $3|"
 if [ "$4" == "show" ]
 then
 	sed < $file > adolc_usrparms.tmp \
@@ -59,6 +59,10 @@ then
 		-e "$cmd_one" -e "$cmd_two"
 	diff $file adolc_usrparms.tmp
 	mv adolc_usrparms.tmp $file
+	echo "Execute the following commands for the change to take effect:"
+	echo "cd $1"
+	echo "make"
+	echo "make install"
 	exit 0
 fi
 echo "$message"

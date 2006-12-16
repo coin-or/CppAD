@@ -30,8 +30,39 @@ $section Speed Test Routines$$
 $head Purpose$$
 CppAD has a set of speed tests that are used to determine if 
 certain changes improve its execution speed
-(and to compare CppAD with other AD packages).
+and to compare the C++ AD packages 
+$href%
+        http://www.math.tu-dresden.de/~adol-c/%
+        Adolc
+%$$,
+$href%
+	http://www.coin-or.org/CppAD/%
+	CppAD
+%$$,
+and 
+$href%
+        http://www.imm.dtu.dk/fadbad.html/%
+        Fadbad
+%$$.
 This section explains how you can run these tests on your computer.
+
+$head Windows$$
+$index windows, speed test$$
+$index test, speed windows$$
+$index speed, test windows$$
+The speed test routines have not yet been compiled or tested using
+the MS Windows C++ compiler.
+Under Windows, you can use
+$href%
+        http://www.cygwin.com%
+        Cygwin
+%$$
+or,
+$href%
+        http://www.mingw.org%
+        MinGW with MSYS
+%$$
+to run these speed tests.
 
 $contents%
 	omh/speed_utility.omh%

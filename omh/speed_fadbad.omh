@@ -20,25 +20,13 @@ $index speed, test fadbad$$
 $index test, fadbad speed$$
 $index fadbad, speed test$$
 
-$section Running the Fadbad Speed Tests$$
+$section The Fadbad Speed Tests$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to compare
 Fadbad with other AD packages.
-This section explains how you can run these tests on your computer.
-
-$head Windows$$
-These routines have not been compiled or tested under Windows,
-except for the case where one is using 
-$href%
-	http://www.cygwin.com%
-	Cygwin
-%$$
-or,
-$href%
-	http://www.mingw.org%
-	MinGW with MSYS
-%$$.
+This section links to the source code the Fadbad speed tests
+(any suggestions to make the Fadbad results faster are welcome).
 
 $head FadbadDir$$
 To run these tests, you must include the $code configure$$ command line option

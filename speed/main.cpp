@@ -95,8 +95,6 @@ The name of the test is printed on the first line,
 the vector of problem sizes are printed on the next line,
 and the rates corresponding to the different problem sizes are
 printed on the third line.
-The rate is the number of times that the calculation was repeated
-per second
 The rate is the number of times per second that the calculation was repeated.
 
 $head Prototypes$$

@@ -38,19 +38,29 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Make speed documentation more uniform and better linked.
+log_entry="Minor improvements to speed documentation.
 
 svn_commit.sh: file that made this commit.
+speed.omh: links to Adolc, CppAD, and Fadbad home pages, text about Windows.
+speed_adolc.omh: better title and purpose, remove Windows text.
+speed_utility.omh: better title.
+speed_cppad.omh: better title and purpose, remove Windows text.
+speed_fadbad.omh: better title and purpose, remove Windows text.
+adolc_usrparms.sh: modify distribution directory and reinstall instructions.
+speed/main.cpp: fix repeated sentence.
 "
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
+	omh/speed.omh
 	omh/speed_adolc.omh
+	omh/speed_utility.omh
 	omh/speed_cppad.omh
 	omh/speed_fadbad.omh
-	omh/install_unix.omh
+	speed/adolc/adolc_usrparms.sh
+	speed/main.cpp
 "
 delete_list="
 "
