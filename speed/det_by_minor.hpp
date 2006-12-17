@@ -24,6 +24,11 @@ $$
 
 $section Determinant Using Expansion by Minors$$
 
+$index determinant, minor expansion$$
+$index minor, expansion determinant$$
+$index expansion, minor determinant$$
+
+
 $head Syntax$$
 $syntax%# include <speed/det_by_minor.hpp>
 %$$
@@ -84,7 +89,7 @@ $syntax%
 	%y%[%i%]
 %$$
 where $italic i$$ has type $code size_t$$ with value less than $latex n * n$$.
-This must return a $italic Scalar$$ value corresponding the $th i$$
+This must return a $italic Scalar$$ value corresponding to the $th i$$
 element of the vector $italic y$$.
 This is the only requirement of the type $italic Vector$$.
 
@@ -116,9 +121,10 @@ $spell
 	const
 $$
 
-$index det_by_minor$$
-$mindex determinant minor matrix$$
-$section Determinant using Expansion by Minors: Source Code$$
+$index det_by_minor, source$$
+$index source, det_by_minor$$
+
+$section Source: Determinant using Expansion by Minors$$
 
 $code
 # ifndef CPPAD_DET_BY_MINOR_INCLUDED

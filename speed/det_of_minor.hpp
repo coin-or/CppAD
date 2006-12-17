@@ -28,7 +28,7 @@ $index determinant, matrix minor$$
 $index matrix, minor determinant$$
 $index minor, matrix determinant$$
 
-$section Compute the Determinant of a Minor$$
+$section Determinant of a Minor$$
 
 $head Syntax$$
 $syntax%# include <speed/det_of_minor.hpp>
@@ -225,8 +225,10 @@ $spell
 	const
 $$
 
-$index det_of_minor.hpp$$
-$section Compute the Determinant of a Minor: Source Code$$
+$index det_of_minor.hpp, source$$
+$index source, det_of_minor$$
+
+$section Source: Determinant of a Minor$$
 
 $code
 # ifndef CPPAD_DET_OF_MINOR_INCLUDED

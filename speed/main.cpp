@@ -52,7 +52,10 @@ $head package$$
 The value
 $italic package$$ specifies the AD package that is used for the speed tests 
 and is one of the following packages:
-$code adolc$$, $code cppad$$, $code fadbad$$, $code profile$$.
+$cref/adolc/speed_adolc/$$,
+$cref/cppad/speed_cppad/$$, 
+$cref/fadbad/speed_fadbad/$$, 
+$cref/profile/InstallUnix/--with-profiling/$$.
 In the special case where $italic package$$ is $code profile$$,
 the CppAD package is compiled and run with profiling to determine
 where it is spending most of its time.

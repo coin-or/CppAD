@@ -12,9 +12,21 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin det_grad_33_check$$
+$begin det_grad_33$$
+$spell
+	det
+	CppAD.hpp
+	namespace
+	const
+	bool
+$$
 
 $section Check Gradient of Determinant of 3 by 3 matrix$$ 
+
+$index det_grad_33$$
+$index determinant, check correct$$
+$index correct, determinant check$$
+$index check, determinant correct$$
 
 $head Syntax$$
 $syntax%%ok% = det_grad_33(%x%, %g%)%$$
@@ -60,7 +72,7 @@ $syntax%
 	%y%[%i%]
 %$$
 where $italic i$$ has type $code size_t$$ with value less than 9.
-This must return a $code double$$ value curresponding the the $th i$$
+This must return a $code double$$ value corresponding to the $th i$$
 element of the vector $italic y$$.
 This is the only requirement of the type $italic Vector$$.
 
@@ -73,8 +85,39 @@ It is true, if the gradient $italic g$$
 passes the test and false otherwise.
 
 $head Source Code$$
-$codep */
+The file 
+$cref/det_grad_33.hpp/$$
+constraints the source code for this template function.
 
+$end
+------------------------------------------------------------------------------
+$begin det_grad_33.hpp$$
+$spell
+	det
+	ifndef
+	endif
+$$
+
+$index det_grad_33, source$$
+$index source, det_grad_33$$
+
+$section Source: Check Gradient of Determinant of 3 by 3 matrix$$
+
+$code
+# ifndef CPPAD_DET_GRAD_33_INCLUDED 
+$pre
+$$
+# define CPPAD_DET_GRAD_33_INCLUDED 
+
+$verbatim%speed/det_grad_33.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+
+# endif
+$$
+
+$end
+------------------------------------------------------------------------------
+*/
+// BEGIN PROGRAM
 namespace CppAD {
 template <class Vector>
 	bool det_grad_33(const Vector &x, const Vector &g)
@@ -101,8 +144,5 @@ template <class Vector>
 		return ok;
 	}
 }
-/* $$
-$end
-*/
-
+// END PROGRAM
 # endif

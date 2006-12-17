@@ -26,6 +26,11 @@ $$
 
 $section Determinant Using Expansion by Lu Factorization$$
 
+$index det_by_lu$$
+$index determinant, lu factor$$
+$index lu, factor determinant$$
+$index factor, lu determinant$$
+
 $head Syntax$$
 $syntax%# include <speed/det_by_lu.hpp>
 %$$
@@ -86,7 +91,7 @@ $syntax%
 	%y%[%i%]
 %$$
 where $italic i$$ has type $code size_t$$ with value less than $latex n * n$$.
-This must return a $italic Scalar$$ value corresponding the $th i$$
+This must return a $italic Scalar$$ value corresponding to the $th i$$
 element of the vector $italic y$$.
 This is the only requirement of the type $italic Vector$$.
 
@@ -120,10 +125,10 @@ $spell
 	const
 $$
 
-$index det_by_lu.hpp$$
-$index determinant, lu$$
+$index det_by_lu.hpp, source$$
+$index source, det_by_lu.hpp$$
 
-$section Determinant using Expansion by Lu Factorization: Source Code$$
+$section Source: Determinant using Expansion by Lu Factorization$$
 
 $code
 # ifndef CPPAD_DET_BY_LU_INCLUDED

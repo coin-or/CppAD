@@ -38,29 +38,29 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Minor improvements to speed documentation.
+log_entry="Minor improvements to speed testing documentation.
 
 svn_commit.sh: file that made this commit.
-speed.omh: links to Adolc, CppAD, and Fadbad home pages, text about Windows.
-speed_adolc.omh: better title and purpose, remove Windows text.
-speed_utility.omh: better title.
-speed_cppad.omh: better title and purpose, remove Windows text.
-speed_fadbad.omh: better title and purpose, remove Windows text.
-adolc_usrparms.sh: modify distribution directory and reinstall instructions.
-speed/main.cpp: fix repeated sentence.
+whats_new_06.omh: user's view of the changes.
+speed_utility.omh: using childtable to displace subsections, add det_grad_det.
+det_by_minor.hpp: improve indexing and titles.
+det_grad_33.hpp: change to have same format as other speed sections.
+main.cpp: add cross reference for each of the package name options.
+det_of_minor.hpp: improve indexing and titles.
+det_by_lu.hpp: improve indexing and titles.
 "
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
-	omh/speed.omh
-	omh/speed_adolc.omh
+	omh/whats_new_06.omh
 	omh/speed_utility.omh
-	omh/speed_cppad.omh
-	omh/speed_fadbad.omh
-	speed/adolc/adolc_usrparms.sh
+	speed/det_by_minor.hpp
+	speed/det_grad_33.hpp
 	speed/main.cpp
+	speed/det_of_minor.hpp
+	speed/det_by_lu.hpp
 "
 delete_list="
 "

@@ -1,12 +1,13 @@
 $begin speed_utility$$
 
-$section The Speed Testing Main Program and Utilities$$
+$section Speed Testing: Main Program and Utilities$$
 
 $index speed, utility$$
 $index utility, speed$$
 
-$contents%
+$childtable%
 	speed/main.cpp%
+	speed/det_grad_33.hpp%
 	speed/det_of_minor.hpp%
 	speed/det_by_minor.hpp%
 	speed/det_by_lu.hpp
