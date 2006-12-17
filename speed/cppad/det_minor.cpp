@@ -30,6 +30,12 @@ $index cppad, speed minor$$
 $index speed, cppad minor$$
 $index minor, speed cppad$$
 
+$head Operation Sequence$$
+Note that the expansion by minors 
+$cref/operation sequence/glossary/Operation/Sequence/$$
+does not depend on the matrix being factored.
+Hence we use the same $cref/ADFun/$$ object for all the matrices.
+
 $head compute_det_minor$$
 $index compute_det_minor$$
 Routine that computes the gradient of determinant using CppAD:
@@ -66,23 +72,31 @@ void compute_det_minor(
 	CppADvector<double> w(1);
 	w[0] = 1.;
 
+	// temporary index
 	size_t i;
-	// ------------------------------------------------------
 
+	// operation sequence for expansion by minors does not 
+	// depend on the matrix, so we can record it as part of the setup
+	CppAD::uniform_01(length, matrix);
+	for( i = 0; i < size * size; i++)
+		A[i] = matrix[i];
+
+	// declare independent variables
+	Independent(A);
+
+	// compute the determinant
+	detA[0] = Det(A);
+
+	// create function object f : A -> detA
+	CppAD::ADFun<double> f(A, detA);
+
+	// ------------------------------------------------------
 	while(repeat--)
 	{	// get the next matrix
 		CppAD::uniform_01(length, matrix);
-		for( i = 0; i < size * size; i++)
-			A[i] = matrix[i];
 
-		// declare independent variables
-		Independent(A);
-
-		// compute the determinant
-		detA[0] = Det(A);
-
-		// create function object f : A -> detA
-		CppAD::ADFun<double> f(A, detA);
+		// evaluate the determinant at the new matrix value
+		f.Forward(0, matrix);
 
 		// evaluate and return gradient using reverse mode
 		gradient = f.Reverse(1, w);

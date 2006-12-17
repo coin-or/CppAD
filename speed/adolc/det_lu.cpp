@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_det_lu.cpp$$
 $spell
+	fos
 	adouble
 	CppAD
 	typedef
@@ -29,6 +30,12 @@ $section Adolc Speed: Gradient of Determinant Using Expansion by Minors$$
 $index adolc, speed lu$$
 $index speed, adolc lu$$
 $index lu, speed adolc$$
+
+$head Operation Sequence$$
+Note that the Lu factorization
+$cref/operation sequence/glossary/Operation/Sequence/$$
+depends on the matrix being factored.
+Hence we use a different tape recording for each matrix.
 
 $head compute_det_lu$$
 $index compute_det_lu$$
@@ -71,7 +78,6 @@ void compute_det_lu(
 	// tag and keep flags
 	int tag  = 1;
 	int keep = 1;
-	int d    = 0;
 
 	// function value
 	double f;
@@ -96,7 +102,7 @@ void compute_det_lu(
 		trace_off();
 
 		// evaluate and return gradient using reverse mode
-		reverse(tag, 1, length, d, v, gradient);
+		fos_reverse(tag, 1, length, v, gradient);
 	}
 	// ------------------------------------------------------
 	// tear down

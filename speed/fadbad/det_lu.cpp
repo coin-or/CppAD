@@ -29,6 +29,13 @@ $index fadbad, speed lu$$
 $index speed, fadbad lu$$
 $index lu, speed fadbad$$
 
+
+$head Operation Sequence$$
+Note that the Lu factorization
+$cref/operation sequence/glossary/Operation/Sequence/$$
+depends on the matrix being factored.
+Hence we use a different DAG for each matrix.
+
 $head compute_det_lu$$
 $index compute_det_lu$$
 Routine that computes the gradient of determinant using Fadbad:

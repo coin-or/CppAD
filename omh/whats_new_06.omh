@@ -86,6 +86,12 @@ $pre
 $$
 Change some references from the deprecated name $code CppAD.h$$ to 
 new name $code cppad.hpp$$.
+$pre
+
+$$
+Change $cref/adolc_det_minor.cpp/$$ and $cref/cppad_det_minor.cpp/$$
+to tape once and reuse operation sequence for each repeated 
+matrix in the test.
 
 $head 12-15$$
 The wish list item

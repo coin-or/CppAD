@@ -23,11 +23,18 @@ $spell
 	srand
 $$
 
-$section Fadbad Speed: Gradient of Determinant Using Lu Factorization$$
+$section Fadbad Speed: Gradient of Determinant Using Expansion by Minors$$
 
 $index fadbad, speed minor$$
 $index speed, fadbad minor$$
 $index minor, speed fadbad$$
+
+$head Operation Sequence$$
+Note that the expansion by minors 
+$cref/operation sequence/glossary/Operation/Sequence/$$
+does not depend on the matrix being factored.
+Yet there does not seem to be a way to reuse the DAG to
+compute the derivatives for other matrix values.
 
 $head compute_det_minor$$
 $index compute_det_minor$$

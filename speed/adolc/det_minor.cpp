@@ -11,6 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_det_minor.cpp$$
 $spell
+	zos
+	fos
 	adouble
 	CppAD
 	typedef
@@ -29,6 +31,12 @@ $section Adolc Speed: Gradient of Determinant Using Expansion by Minors$$
 $index adolc, speed minor$$
 $index speed, adolc minor$$
 $index minor, speed adolc$$
+
+$head Operation Sequence$$
+Note that the expansion by minors 
+$cref/operation sequence/glossary/Operation/Sequence/$$
+does not depend on the matrix being factored.
+Hence we use the same tape recording for all the matrices.
 
 $head compute_det_minor$$
 $index compute_det_minor$$
@@ -71,33 +79,40 @@ void compute_det_minor(
 	// tag and keep flags
 	int tag  = 1;
 	int keep = 1;
-	int d    = 0;
 
 	// function value
 	double f;
 
 	// temporary index
 	size_t i;
+
+	// operation sequence for expansion by minors does not 
+	// depend on matrix, so we can record it as par of the setup
+	CppAD::uniform_01(length, matrix);
+
+	// declare independent variables
+	trace_on(tag, keep);
+	for(i = 0; i < length; i++)
+		A[i] <<= matrix[i];
+
+	// compute the determinant
+	detA = Det(A);
+
+	// create function object f : A -> detA
+	detA >>= f;
+	trace_off();
+
 	// ------------------------------------------------------
 
 	while(repeat--)
-       {       // get the next matrix
-               CppAD::uniform_01(length, matrix);
-	
-		// declare independent variables
-		trace_on(tag, keep);
-		for(i = 0; i < length; i++)
-			A[i] <<= matrix[i];
+	{	// get the next matrix
+		CppAD::uniform_01(length, matrix);
 
-		// compute the determinant
-		detA = Det(A);
-
-		// create function object f : A -> detA
-		detA >>= f;
-		trace_off();
+		// evaluate the determinant at the new matrix value
+		zos_forward(tag, 1, length, keep, matrix, &f); 
 
 		// evaluate and return gradient using reverse mode
-		reverse(tag, 1, length, d, v, gradient);
+		fos_reverse(tag, 1, length, v, gradient);
 	}
 
 	// tear down

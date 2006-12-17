@@ -42,17 +42,10 @@ log_entry="Change speed tests to include repeat specifications.
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: user's view of the changes.
-speed_utility.omh: include the speed test random number simulator.
-config.h: update version number.
-uniform_01.hpp: speed test random number simulator.
-det_by_minor.hpp: Change CppAD.h -> cppad.hpp.
-?/det_minor.cpp: new random matrix each time through repeat loop.
-?/det_lu.cpp: new random matrix each time through repeat loop.
-det_grad_33.hpp: Change CppAD.h -> cppad.hpp and add include to syntax.
-main.cpp: Add specifications for new matrix on each repeat.
-det_of_minor.hpp: Change CppAD.h -> cppad.hpp.
-det_by_lu.hpp: use FADBAD define for operation only needed in Fadbad case.
-makefile.am: add speed/uniform.hpp to distribution.
+?/det_lu.cpp: add comment about operation sequence.
+fadbad/det_minor.cpp: add comment about operation sequence.
+adolc/det_minor.cpp: only tape once.
+cppad/det_minor.cpp: only tape one.
 "
 add_list="
 	speed/uniform_01.hpp
@@ -61,20 +54,12 @@ add_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	omh/speed_utility.omh
-	cppad/config.h
-	speed/det_by_minor.hpp
 	speed/fadbad/det_minor.cpp
 	speed/fadbad/det_lu.cpp
 	speed/adolc/det_minor.cpp
 	speed/adolc/det_lu.cpp
-	speed/det_grad_33.hpp
-	speed/main.cpp
 	speed/cppad/det_minor.cpp
 	speed/cppad/det_lu.cpp
-	speed/det_of_minor.hpp
-	speed/det_by_lu.hpp
-	makefile.am
 "
 delete_list="
 "
