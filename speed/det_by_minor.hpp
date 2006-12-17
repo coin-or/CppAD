@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin det_by_minor$$
 $spell
+	cppad
 	typedef
 	const
 	hpp
@@ -44,7 +45,7 @@ the file $code speed/det_by_minor.hpp$$
 (relative to the CppAD distribution directory).
 It is only intended for example and testing purposes, 
 so it is not automatically included by
-$xref/cppad//CppAD.h/$$.
+$cref/cppad.hpp/cppad/$$.
 
 $head Constructor$$
 The syntax

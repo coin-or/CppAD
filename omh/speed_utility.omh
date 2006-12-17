@@ -7,6 +7,7 @@ $index utility, speed$$
 
 $childtable%
 	speed/main.cpp%
+	speed/uniform_01.hpp%
 	speed/det_grad_33.hpp%
 	speed/det_of_minor.hpp%
 	speed/det_by_minor.hpp%

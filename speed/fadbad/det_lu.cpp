@@ -35,11 +35,12 @@ Routine that computes the gradient of determinant using Fadbad:
 $codep */
 # include <Fadbad++/badiff.h>
 # include <speed/det_by_lu.hpp>
+# include <speed/uniform_01.hpp>
 
 void compute_det_lu(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	const double*              matrix   ,
+	double*                    matrix   ,
 	double*                    gradient )
 {
 	// -----------------------------------------------------
@@ -49,6 +50,8 @@ void compute_det_lu(
 	// object for computing determinant
 	typedef B<double>        Scalar; 
 	typedef Scalar*          Vector; 
+
+	// object for computing determinant
 	CppAD::det_by_lu<Scalar> Det(size);
 
 	// number of elements in A
@@ -60,11 +63,14 @@ void compute_det_lu(
 	// AD version of matrix 
 	Vector   A = new Scalar[length];
 	
+	// temporary index
 	size_t i;
 	// ------------------------------------------------------
 
 	while(repeat--)
-	{
+       {	// get the next matrix
+		CppAD::uniform_01(length, matrix);
+
 		// set independent variable values
 		for(i = 0; i < length; i++)
 			A[i] = matrix[i];
@@ -98,10 +104,6 @@ bool correct_det_lu(void)
 	size_t repeat = 1;
 	double *matrix   = new double[size * size];
 	double *gradient = new double[size * size];
-	size_t i;
-	srand(1);
-	for(i = 0; i < size * size; i++)
-		matrix[i] = rand() / double(RAND_MAX);
 
 	compute_det_lu(size, repeat, matrix, gradient);
 
@@ -121,11 +123,6 @@ $codep */
 void speed_det_lu(size_t size, size_t repeat)
 {	double *matrix   = new double[size * size];
 	double *gradient = new double[size * size];
-	size_t i;
-
-	srand(1); // initialize random number generator
-	for(i = 0; i < size * size; i++)
-		matrix[i] = rand() / double(RAND_MAX);
 
 	compute_det_lu(size, repeat, matrix, gradient);
 	

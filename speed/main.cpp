@@ -78,17 +78,37 @@ all of the speed tests are run.
 
 $head det_lu$$
 If $italic option$$ is equal to $code det_lu$$,
-the speed test for computing the
+the speed test for the
 gradient of the determinant using LU factorization tests is run.
-The argument $italic size$$ to the routine $code speed_det_lu$$
-(see the prototypes below) is the number of rows and columns in the matrix.
+Each package defines a version of this speed test with the prototype
+$syntax%
+	void speed_det_lu(size_t %size%, size_t %repeat%)
+%$$
+The argument $italic size$$
+is the number of rows and columns in the matrix.
+The argument $italic repeat$$ is the number of different matrices
+that the gradient is computed for.
 
 $head det_minor$$
 If $italic option$$ is equal to $code det_minor$$,
 the speed test for 
 computing the gradient of the determinant using expansion by minors is run.
-The argument $italic size$$ to the routine $code speed_det_minor$$
-(see the prototypes below) is the number of rows and columns in the matrix.
+Each package defines a version of this speed test with the prototype
+$syntax%
+	void speed_det_minor(size_t %size%, size_t %repeat%)
+%$$
+The argument $italic size$$
+is the number of rows and columns in the matrix.
+The argument $italic repeat$$ is the number of different matrices
+that the gradient is computed for.
+
+$head uniform_01$$
+The random number simulator $cref/uniform_01/$$ is initialized with
+$syntax%
+	uniform_01(%seed%)
+%$$
+before any of the speed testing routines (listed above) are called
+by this speed testing main program.
 
 $head Correctness Results$$
 An output line is generated for each correctness test
@@ -102,13 +122,6 @@ and the rates corresponding to the different problem sizes are
 printed on the third line.
 The rate is the number of times per second that the calculation was repeated.
 
-$head Prototypes$$
-Each of the AD packages provides links to this main program 
-through external routines with the following prototypes:
-$code
-$verbatim%speed/main.cpp%5%// BEGIN PROTOTYPE%// END PROTOTYPE%1%$$
-$$
-
 $end 
 */
 
@@ -117,6 +130,7 @@ $end
 # include <iostream>
 # include <cppad/vector.hpp>
 # include <cppad/speed_test.hpp>
+# include <speed/uniform_01.hpp>
 
 # ifdef ADOLC
 # define AD_PACKAGE "adolc"
@@ -131,7 +145,6 @@ $end
 # define AD_PACKAGE "profile"
 # endif
 
-// BEGIN PROTOTYPE
 // external routines that are used for correctness testing
 extern bool    correct_det_lu(void);
 extern bool correct_det_minor(void);
@@ -139,7 +152,6 @@ extern bool correct_det_minor(void);
 // external routines that are used for speed testing
 extern void    speed_det_lu(size_t size, size_t repeat);
 extern void speed_det_minor(size_t size, size_t repeat);
-// END PROTOTYPE
 
 namespace {
 	// function that runs one correctness case
@@ -218,6 +230,9 @@ int main(int argc, char *argv[])
 		cerr << endl;
 		return 1;
 	}
+
+	// initialize the random number simulator
+	CppAD::uniform_01(1);
 
 	// arguments needed for speed tests
 	double time_min = 1.;

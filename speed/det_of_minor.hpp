@@ -43,7 +43,7 @@ the file $code speed/det_of_minor.hpp$$
 (relative to the CppAD distribution directory).
 It is only intended for example and testing purposes, 
 so it is not automatically included by
-$xref/cppad//CppAD.h/$$.
+$cref/cppad.hpp/cppad/$$.
 
 $head Purpose$$
 This template function

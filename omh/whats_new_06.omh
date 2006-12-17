@@ -56,6 +56,7 @@ $spell
 	gprof
 	Mul.h
 	Div.h
+	det_lu
 $$
 
 $section Changes and Additions to CppAD During 2006$$
@@ -72,6 +73,19 @@ The speed test $cref/det_grad_33/$$ was missing its documentation
 (this has been fixed).
 In addition, the titles and indexing for the speed test documentation
 has been improved.
+$pre
+
+$$
+Add to the specifications that each repeated test corresponds to a 
+different matrix in
+$cref/det_lu/speed_main/det_lu/$$ and
+$cref/det_minor/speed_main/det_minor/$$.
+In addition, modify all the speed tests so that they abide by this rule.
+$pre
+
+$$
+Change some references from the deprecated name $code CppAD.h$$ to 
+new name $code cppad.hpp$$.
 
 $head 12-15$$
 The wish list item

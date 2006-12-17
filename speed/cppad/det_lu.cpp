@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_det_lu.cpp$$
 $spell
+	vector Vector
 	typedef
 	Lu
 	CppADvector
@@ -34,36 +35,46 @@ Routine that computes the gradient of determinant using CppAD:
 $codep */
 # include <cppad/cppad.hpp>
 # include <speed/det_by_lu.hpp>
+# include <speed/uniform_01.hpp>
 
 void compute_det_lu(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	const CppADvector<double> &matrix   ,
+	CppADvector<double>       &matrix   ,
 	CppADvector<double>       &gradient )
 {
 	// -----------------------------------------------------
 	// setup
 	using CppAD::AD;
-
-	// object for computing determinant
 	typedef AD<double>          Scalar; 
 	typedef CppADvector<Scalar> Vector; 
+
+	// object for computing determinant
 	CppAD::det_by_lu<Scalar>    Det(size);
 
-	Vector            detA(1);
+	// number of elements in matrix
+	size_t length = size * size;
+
+	// domain space vector
 	Vector   A( size * size );
-	size_t i;
-	for( i = 0; i < size * size; i++)
-		A[i] = matrix[i];
+
+	// range space vector
+	Vector            detA(1);
 	
 	// vectors of reverse mode weights 
 	CppADvector<double> w(1);
 	w[0] = 1.;
 
+	size_t i;
 	// ------------------------------------------------------
 
 	while(repeat--)
-	{	// declare independent variables
+	{	// get the next matrix
+		CppAD::uniform_01(length, matrix);
+		for( i = 0; i < size * size; i++)
+			A[i] = matrix[i];
+
+		// declare independent variables
 		Independent(A);
 
 		// compute the determinant
@@ -89,12 +100,8 @@ bool correct_det_lu(void)
 {	size_t size   = 3;
 	size_t repeat = 1;
 	CppADvector<double> matrix(size * size);
-	size_t i;
-	srand(1);
-	for(i = 0; i < size * size; i++)
-		matrix[i] = rand() / double(RAND_MAX);
-
 	CppADvector<double> gradient(size * size);
+
 	compute_det_lu(size, repeat, matrix, gradient);
 
 	bool ok = det_grad_33(matrix, gradient);
@@ -109,11 +116,6 @@ $codep */
 void speed_det_lu(size_t size, size_t repeat)
 {	CppADvector<double> matrix(size * size);
 	CppADvector<double> gradient(size * size);
-	size_t i;
-
-	srand(1); // initialize random number generator
-	for(i = 0; i < size * size; i++)
-		matrix[i] = rand() / double(RAND_MAX);
 
 	compute_det_lu(size, repeat, matrix, gradient);
 	

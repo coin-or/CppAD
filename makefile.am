@@ -150,7 +150,8 @@ nobase_include_HEADERS =  \
 	speed/det_by_lu.hpp \
 	speed/det_by_minor.hpp \
 	speed/det_grad_33.hpp \
-	speed/det_of_minor.hpp
+	speed/det_of_minor.hpp \
+	speed/uniform_01.hpp
 #
 #
 # Did user specify --with-Example

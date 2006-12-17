@@ -36,6 +36,7 @@ Routine that computes the gradient of determinant using Adolc:
 $codep */
 # include <speed/det_by_minor.hpp>
 # include <speed/det_grad_33.hpp>
+# include <speed/uniform_01.hpp>
 
 # include <adolc/adouble.h>
 # include <adolc/interfaces.h>
@@ -43,14 +44,13 @@ $codep */
 void compute_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	const double*              matrix   ,
+	double*                    matrix   ,
 	double*                    gradient )
 {
 	// -----------------------------------------------------
 	// setup
 	typedef adouble  Scalar;
 	typedef Scalar*  Vector;
-	size_t i;
 
 	// object for computing determinant
 	CppAD::det_by_minor<Scalar> Det(size);
@@ -76,10 +76,15 @@ void compute_det_minor(
 	// function value
 	double f;
 
+	// temporary index
+	size_t i;
 	// ------------------------------------------------------
 
 	while(repeat--)
-	{	// declare independent variables
+       {       // get the next matrix
+               CppAD::uniform_01(length, matrix);
+	
+		// declare independent variables
 		trace_on(tag, keep);
 		for(i = 0; i < length; i++)
 			A[i] <<= matrix[i];
@@ -115,11 +120,6 @@ bool correct_det_minor(void)
 	double *matrix   = new double[size * size];
 	double *gradient = new double[size * size];
 
-	size_t i;
-	srand(1);
-	for(i = 0; i < size * size; i++)
-		matrix[i] = rand() / double(RAND_MAX);
-
 	compute_det_minor(size, repeat, matrix, gradient);
 
 	bool ok = CppAD::det_grad_33(matrix, gradient);
@@ -138,11 +138,6 @@ $codep */
 void speed_det_minor(size_t size, size_t repeat)
 {	double *matrix   = new double[size * size];
 	double *gradient = new double[size * size];
-	size_t i;
-
-	srand(1); // initialize random number generator
-	for(i = 0; i < size * size; i++)
-		matrix[i] = rand() / double(RAND_MAX);
 
 	compute_det_minor(size, repeat, matrix, gradient);
 	

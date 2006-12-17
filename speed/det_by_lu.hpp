@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin det_by_lu$$
 $spell
+	cppad
 	lu
 	hpp
 	typedef
@@ -46,7 +47,7 @@ the file $code speed/det_by_lu.hpp$$
 (relative to the CppAD distribution directory).
 It is only intended for example and testing purposes, 
 so it is not automatically included by
-$xref/cppad//CppAD.h/$$.
+$cref/cppad.hpp/cppad/$$.
 
 $head Constructor$$
 The syntax
@@ -194,9 +195,11 @@ public:
 		// convert to determinant
 		det     = Scalar( signdet ) * exp( logdet ); 
 
-		// FADBAD requires tempories to be set to constants
+# ifdef FADBAD
+		// Fadbad requires tempories to be set to constants
 		for(i = 0; i < n * n; i++)
 			A[i] = 0;
+# endif
 
 		return det;
 	}

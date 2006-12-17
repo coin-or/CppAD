@@ -14,8 +14,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin det_grad_33$$
 $spell
+	CppAD
 	det
-	CppAD.hpp
+	cppad.hpp
 	namespace
 	const
 	bool
@@ -29,6 +30,8 @@ $index correct, determinant check$$
 $index check, determinant correct$$
 
 $head Syntax$$
+$syntax%# include <speed/det_grad_33.hpp>
+%$$
 $syntax%%ok% = det_grad_33(%x%, %g%)%$$
 
 $head Purpose$$
@@ -42,7 +45,7 @@ the file $code speed/det_grad_33.hpp$$
 (relative to the CppAD distribution directory).
 It is only intended for example and testing purposes, 
 so it is not automatically included by
-$xref/cppad//CppAD.h/$$.
+$cref/cppad.hpp/cppad/$$.
 
 $head x$$
 The argument $italic x$$ has prototype
