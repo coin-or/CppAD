@@ -77,13 +77,15 @@ If $italic option$$ is equal to $code all$$,
 all of the speed tests are run.
 
 $head det_lu$$
-If $italic option$$ is equal to $code det_lu$$ the speed test for computing the
+If $italic option$$ is equal to $code det_lu$$,
+the speed test for computing the
 gradient of the determinant using LU factorization tests is run.
 The argument $italic size$$ to the routine $code speed_det_lu$$
 (see the prototypes below) is the number of rows and columns in the matrix.
 
 $head det_minor$$
-If $italic option$$ is equal to $code det_minor$$ the speed test for 
+If $italic option$$ is equal to $code det_minor$$,
+the speed test for 
 computing the gradient of the determinant using expansion by minors is run.
 The argument $italic size$$ to the routine $code speed_det_minor$$
 (see the prototypes below) is the number of rows and columns in the matrix.
