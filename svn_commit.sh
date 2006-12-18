@@ -38,28 +38,40 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Change speed tests to include repeat specifications.
+log_entry="Add the second derivative of a polynomial to timing tests.
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: user's view of the changes.
-?/det_lu.cpp: add comment about operation sequence.
-fadbad/det_minor.cpp: add comment about operation sequence.
-adolc/det_minor.cpp: only tape once.
-cppad/det_minor.cpp: only tape one.
+build.sh: test that the profile executable runs correctly.
+speed_adolc.omh: add adolc/poly.cpp to list of tests.
+speed_cppad.omh: add cppad/poly.cpp to list of tests.
+speed_fadbad.omh: add fadbad/poly.cpp to list of tests.
+poly.hpp: correct a missing include statement.
+?/makefile.am: add poly.cpp to list of source files.
+?/poly.cpp: new test for each of the three cases: adolc, cppad, fadbad.
+det_minor.cpp: minor edit to comments.
+main.cpp: add poly to list of speed tests.
 "
 add_list="
-	speed/uniform_01.hpp
+	speed/fadbad/poly.cpp
+	speed/adolc/poly.cpp
+	speed/cppad/poly.cpp
 "
 #
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	speed/fadbad/det_minor.cpp
-	speed/fadbad/det_lu.cpp
+	build.sh
+	omh/speed_adolc.omh
+	omh/speed_cppad.omh
+	omh/speed_fadbad.omh
+	cppad/poly.hpp
+	speed/profile/makefile.am
+	speed/fadbad/makefile.am
 	speed/adolc/det_minor.cpp
-	speed/adolc/det_lu.cpp
-	speed/cppad/det_minor.cpp
-	speed/cppad/det_lu.cpp
+	speed/adolc/makefile.am
+	speed/main.cpp
+	speed/cppad/makefile.am
 "
 delete_list="
 "

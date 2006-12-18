@@ -103,7 +103,6 @@ void compute_det_minor(
 	trace_off();
 
 	// ------------------------------------------------------
-
 	while(repeat--)
 	{	// get the next matrix
 		CppAD::uniform_01(length, matrix);
@@ -114,7 +113,7 @@ void compute_det_minor(
 		// evaluate and return gradient using reverse mode
 		fos_reverse(tag, 1, length, v, gradient);
 	}
-
+	// ------------------------------------------------------
 	// tear down
 	delete [] A;
 

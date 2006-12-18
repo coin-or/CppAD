@@ -24,4 +24,5 @@ AM_CXXFLAGS   = -O2 -DNDEBUG -O2 -DNDEBUG -Wno-deprecated -DFADBAD
 fadbad_SOURCES = \
 	../main.cpp \
 	det_lu.cpp  \
-	det_minor.cpp 
+	det_minor.cpp  \
+	poly.cpp

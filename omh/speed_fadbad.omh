@@ -50,7 +50,8 @@ See $cref/speed_main/$$ for more options.
 
 $contents%
 	speed/fadbad/det_minor.cpp%
-	speed/fadbad/det_lu.cpp
+	speed/fadbad/det_lu.cpp%
+	speed/fadbad/poly.cpp
 %$$
 
 $end

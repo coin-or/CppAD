@@ -56,7 +56,8 @@ See $cref/speed_main/$$ for more options.
 
 $contents%
 	speed/cppad/det_minor.cpp%
-	speed/cppad/det_lu.cpp
+	speed/cppad/det_lu.cpp%
+	speed/cppad/poly.cpp
 %$$
 
 $end

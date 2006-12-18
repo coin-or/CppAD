@@ -92,6 +92,12 @@ $$
 Change $cref/adolc_det_minor.cpp/$$ and $cref/cppad_det_minor.cpp/$$
 to tape once and reuse operation sequence for each repeated 
 matrix in the test.
+$pre
+
+$$
+Add the $cref/poly/speed_main/poly/$$ speed test for all three packages.
+In addition, correct a missing include in $cref/poly/$$ routine.
+
 
 $head 12-15$$
 The wish list item

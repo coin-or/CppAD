@@ -27,4 +27,5 @@ AM_LDFLAGS    = -pg
 profile_SOURCES = \
 	../main.cpp \
 	../cppad/det_lu.cpp  \
-	../cppad/det_minor.cpp 
+	../cppad/det_minor.cpp  \
+	../cppad/poly.cpp

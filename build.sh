@@ -356,6 +356,7 @@ then
 		adolc
 		cppad
 		fadbad
+		profile
 	"
 	for name in $list
 	do

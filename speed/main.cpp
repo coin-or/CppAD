@@ -77,6 +77,10 @@ If $italic option$$ is equal to $code all$$,
 all of the speed tests are run.
 
 $head det_lu$$
+$index det_lu, correct$$
+$index det_lu, speed$$
+$index speed, det_lu$$
+$index correct, det_lu$$
 If $italic option$$ is equal to $code det_lu$$,
 the speed test for the
 gradient of the determinant using LU factorization tests is run.
@@ -88,8 +92,17 @@ The argument $italic size$$
 is the number of rows and columns in the matrix.
 The argument $italic repeat$$ is the number of different matrices
 that the gradient is computed for.
+In addition, a test that $code speed_det_lu$$ works correctly
+is defined with the prototype
+$syntax%
+	bool correct_det_lu(void)
+%$$
 
 $head det_minor$$
+$index det_minor, correct$$
+$index det_minor, speed$$
+$index speed, det_minor$$
+$index correct, det_minor$$
 If $italic option$$ is equal to $code det_minor$$,
 the speed test for 
 computing the gradient of the determinant using expansion by minors is run.
@@ -101,8 +114,36 @@ The argument $italic size$$
 is the number of rows and columns in the matrix.
 The argument $italic repeat$$ is the number of different matrices
 that the gradient is computed for.
+In addition, a test that $code speed_det_minor$$ works correctly
+is defined with the prototype
+$syntax%
+	bool correct_det_minor(void)
+%$$
+
+$head poly$$
+$index poly, correct$$
+$index poly, speed$$
+$index speed, poly$$
+$index correct, poly$$
+If $italic option$$ is equal to $code poly$$,
+the speed test for computing the second derivative of a polynomial is run.
+Each package defined a version for this speed test with the prototype
+$syntax%
+	void speed_poly(size_t %size%, size_t %repeat%)
+%$$
+The argument $italic size$$ is the order of the polynomial
+(the number of coefficients in the polynomial).
+The argument $italic repeat$$ is the number of different argument
+values that the polynomial will be differentiated at.
+In addition, a test that $code speed_poly$$ works correctly
+is defined with the prototype
+$syntax%
+	bool correct_poly(void)
+%$$
+
 
 $head uniform_01$$
+$index uniform_01$$
 The random number simulator $cref/uniform_01/$$ is initialized with
 $syntax%
 	uniform_01(%seed%)
@@ -148,10 +189,12 @@ $end
 // external routines that are used for correctness testing
 extern bool    correct_det_lu(void);
 extern bool correct_det_minor(void);
+extern bool      correct_poly(void);
 
 // external routines that are used for speed testing
 extern void    speed_det_lu(size_t size, size_t repeat);
 extern void speed_det_minor(size_t size, size_t repeat);
+extern void      speed_poly(size_t size, size_t repeat);
 
 namespace {
 	// function that runs one correctness case
@@ -174,9 +217,9 @@ namespace {
 	void Run_speed(
 		void speed_case(size_t size, size_t repeat) , 
 		CppAD::vector<size_t>              size_vec ,
-		double                             time_min ,
 		std::string                       case_name )
-	{	using std::cout;
+	{	double time_min = 1.;
+		using std::cout;
 		using std::endl;
 		CppAD::vector<size_t> rate_vec( size_vec.size() );
 
@@ -199,14 +242,16 @@ int main(int argc, char *argv[])
 		"correct",
 		"all",
 		"det_lu",
-		"det_minor"
+		"det_minor",
+		"poly"
 	};
 	const size_t n_option  = sizeof(option) / sizeof(option[0]);
 	const size_t option_correct   = 0;
 	const size_t option_all       = 1;
 	const size_t option_det_lu    = 2;
 	const size_t option_det_minor = 3;
-	assert( n_option == option_det_minor+1 );
+	const size_t option_poly      = 4;
+	assert( n_option == option_poly+1 );
 
 	// use preprocessor symbol defined in makefile
 	char *ad_package = AD_PACKAGE;
@@ -235,17 +280,22 @@ int main(int argc, char *argv[])
 	CppAD::uniform_01(1);
 
 	// arguments needed for speed tests
-	double time_min = 1.;
 	size_t n_size   = 4;
-	CppAD::vector<size_t> size_vec(n_size);
+	CppAD::vector<size_t> size_det_lu(n_size);
+	CppAD::vector<size_t> size_det_minor(n_size);
+	CppAD::vector<size_t> size_poly(n_size);
 	for(i = 0; i < n_size; i++) 
-		size_vec[i] = 2 * i + 1;
+	{	size_det_lu[i]    = 2 * i + 1;
+		size_det_minor[i] = 2 * i + 1;
+		size_poly[i]      = (i+3) * (i+3);
+	}
 
 	switch(match)
 	{	case option_correct:
 		// run all the correctness tests
 		ok &= Run_correct(correct_det_lu,           "det_lu"       );
 		ok &= Run_correct(correct_det_minor,        "det_minor"    );
+		ok &= Run_correct(correct_poly,             "poly"         );
 
 		// summarize results
 		assert( ok || (Run_error_count > 0) );
@@ -262,19 +312,25 @@ int main(int argc, char *argv[])
 
 		case option_all:
 		// run all the speed tests 
-		Run_speed(speed_det_lu,    size_vec, time_min, "det_lu");
-		Run_speed(speed_det_minor, size_vec, time_min, "det_minor");
+		Run_speed(speed_det_lu,    size_det_lu,    "det_lu");
+		Run_speed(speed_det_minor, size_det_minor, "det_minor");
+		Run_speed(speed_poly,      size_poly,      "det_poly");
 		ok = true;
 		break;
 		// ---------------------------------------------------------
 
 		case option_det_lu:
-		Run_speed(speed_det_lu,    size_vec, time_min, "det_lu");
+		Run_speed(speed_det_lu,    size_det_lu,    "det_lu");
 		break;
 		// ---------------------------------------------------------
 
 		case option_det_minor:
-		Run_speed(speed_det_minor, size_vec, time_min, "det_minor");
+		Run_speed(speed_det_minor, size_det_minor, "det_minor");
+		break;
+		// ---------------------------------------------------------
+
+		case option_poly:
+		Run_speed(speed_poly,      size_poly,      "poly");
 		break;
 		// ---------------------------------------------------------
 		

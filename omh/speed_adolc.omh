@@ -50,7 +50,8 @@ See $cref/speed_main/$$ for more options.
 
 $contents%
 	speed/adolc/det_minor.cpp%
-	speed/adolc/det_lu.cpp
+	speed/adolc/det_lu.cpp%
+	speed/adolc/poly.cpp
 %$$
 
 $end
