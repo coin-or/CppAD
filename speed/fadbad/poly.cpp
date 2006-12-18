@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin fadbad_poly.cpp$$
 $spell
+	std
 	cpp
 	tadiff
 	std
@@ -31,7 +32,7 @@ $spell
 	bool
 $$
 
-$section CppAD Speed: Second Derivative of a Polynomial$$
+$section Fadbad Speed: Second Derivative of a Polynomial$$
 
 $index fadbad, speed polynomial$$
 $index speed, fadbad polynomial$$
@@ -46,7 +47,7 @@ compute derivatives for other values of z.
 
 $head compute_poly$$
 $index compute_poly$$
-Routine that computes the second derivative of a polynomial using CppAD:
+Routine that computes the second derivative of a polynomial using Fadbad:
 $codep */
 # include <vector>
 # include <speed/uniform_01.hpp>
@@ -63,18 +64,17 @@ void compute_poly(
 {
 	// -----------------------------------------------------
 	// setup
+	size_t i;     // temporary index     
+	T<double>  Z; // domain space AD value
+	T<double>  P; // range space AD value
 
 	// choose the polynomial coefficients
 	CppAD::uniform_01(size, a);
 
 	// AD copy of the polynomial coefficients
 	std::vector< T<double> > A(size);
-	int i;
-	for(i = 0; i < int(size); i++)
+	for(i = 0; i < size; i++)
 		A[i] = a[i];
-
-	// domain and range space AD values
-	T<double>    Z, P;
 
 	// ------------------------------------------------------
 	while(repeat--)
@@ -82,22 +82,23 @@ void compute_poly(
 		CppAD::uniform_01(1, z);
 
 		// independent variable value
-		Z = z[0];
-
-		// Taylor-expand w.r.t. z (dz / dz = 1)
-		Z[1] = 1;
+		Z    = z[0]; // argument value
+		Z[1] = 1;    // argument first order Taylor coefficient
 
 		// AD computation of the dependent variable
 		P = CppAD::Poly(0, A, Z);
 
-		// Taylor-expand to degree two
+		// Taylor-expand P to degree two
 		P.eval(2);
 
 		// second derivative is twice second order Taylor coefficient
 		ddp[0] = 2. * P[2];
+
+		// Free DAG corresponding to P does not seem to improve speed.
+		// Probably because it gets freed the next time P is assigned.
+		// P.reset();
 	}
 	// ------------------------------------------------------
-
 	return;
 }
 /* $$

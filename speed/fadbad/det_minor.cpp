@@ -11,15 +11,15 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin fadbad_det_minor.cpp$$
 $spell
+	std
 	Fadbad
-	Lu
 	det
 	badiff.hpp
 	const
+	CppAD
 	typedef
 	diff
 	bool
-	CppAD
 	srand
 $$
 
@@ -29,17 +29,19 @@ $index fadbad, speed minor$$
 $index speed, fadbad minor$$
 $index minor, speed fadbad$$
 
+
 $head Operation Sequence$$
-Note that the expansion by minors 
+Note that the expansion by minors
 $cref/operation sequence/glossary/Operation/Sequence/$$
-does not depend on the matrix being factored.
+does not depends on the matrix being factored.
 Yet there does not seem to be a way to reuse the DAG to
-compute the derivatives for other matrix values.
+compute derivatives for multiple matrices.
 
 $head compute_det_minor$$
 $index compute_det_minor$$
 Routine that computes the gradient of determinant using Fadbad:
 $codep */
+# include <vector>
 # include <Fadbad++/badiff.h>
 # include <speed/det_by_minor.hpp>
 # include <speed/uniform_01.hpp>
@@ -47,53 +49,43 @@ $codep */
 void compute_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	double*                    matrix   ,
-	double*                    gradient )
+	std::vector<double>       &matrix   ,
+	std::vector<double>       &gradient )
 {
 	// -----------------------------------------------------
 	// setup
-	using CppAD::AD;
-	typedef B<double>  ADScalar; 
-	typedef ADScalar*  ADVector; 
 
 	// object for computing determinant
+	typedef B<double>             ADScalar; 
+	typedef std::vector<ADScalar> ADVector; 
 	CppAD::det_by_minor<ADScalar> Det(size);
 
-	// number of elements in A
-	size_t length = size * size;
-
-	// AD value of the determinant
-	ADScalar   detA;
-
-	// AD version of matrix 
-	ADVector   A = new ADScalar[length];
+	size_t i;                // temporary index
+	size_t m = 1;            // number of dependent variables
+	size_t n = size * size;  // number of independent variables
+	ADScalar   detA;         // AD value of the determinant
+	ADVector   A(n);         // AD version of matrix 
 	
-	// temporary index
-	size_t i;
 	// ------------------------------------------------------
-
 	while(repeat--)
-	{	// get the next matrix
-		CppAD::uniform_01(length, matrix);
+       {	// get the next matrix
+		CppAD::uniform_01(n, matrix);
 
 		// set independent variable values
-		for(i = 0; i < length; i++)
+		for(i = 0; i < n; i++)
 			A[i] = matrix[i];
 
 		// compute the determinant
 		detA = Det(A);
 
 		// create function object f : A -> detA
-		detA.diff(0, 1);  // only one dependent variable (index 0)
+		detA.diff(0, m);  // index 0 of m dependent variables
 
 		// evaluate and return gradient using reverse mode
-		for(i =0; i < length; i++)
+		for(i =0; i < n; i++)
 			gradient[i] = A[i].d(0); // partial detA w.r.t A[i]
 	}
 	// ---------------------------------------------------------
-	// tear down
-	delete [] A;
-
 	return;
 }
 /* $$
@@ -107,15 +99,13 @@ $codep */
 bool correct_det_minor(void)
 {	size_t size   = 3;
 	size_t repeat = 1;
-	double *matrix   = new double[size * size];
-	double *gradient = new double[size * size];
+	std::vector<double> matrix(size * size);
+	std::vector<double> gradient(size * size);
 
 	compute_det_minor(size, repeat, matrix, gradient);
 
 	bool ok = CppAD::det_grad_33(matrix, gradient);
 
-	delete [] gradient;
-	delete [] matrix;
 	return ok;
 }
 /* $$
@@ -126,13 +116,11 @@ Routine that links compute_det_minor to $cref/speed_test/$$:
 
 $codep */
 void speed_det_minor(size_t size, size_t repeat)
-{	double *matrix   = new double[size * size];
-	double *gradient = new double[size * size];
+{	std::vector<double> matrix(size * size);
+	std::vector<double> gradient(size * size);
 
 	compute_det_minor(size, repeat, matrix, gradient);
 	
-	delete [] gradient;
-	delete [] matrix;
 	return;
 }
 /* $$

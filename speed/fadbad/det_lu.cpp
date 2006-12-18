@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin fadbad_det_lu.cpp$$
 $spell
+	std
 	Lu
 	Fadbad
 	det
@@ -40,6 +41,7 @@ $head compute_det_lu$$
 $index compute_det_lu$$
 Routine that computes the gradient of determinant using Fadbad:
 $codep */
+# include <vector>
 # include <Fadbad++/badiff.h>
 # include <speed/det_by_lu.hpp>
 # include <speed/uniform_01.hpp>
@@ -47,55 +49,43 @@ $codep */
 void compute_det_lu(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	double*                    matrix   ,
-	double*                    gradient )
+	std::vector<double>       &matrix   ,
+	std::vector<double>       &gradient )
 {
 	// -----------------------------------------------------
 	// setup
-	using CppAD::AD;
 
 	// object for computing determinant
-	typedef B<double>        ADScalar; 
-	typedef ADScalar*        ADVector; 
+	typedef B<double>             ADScalar; 
+	typedef std::vector<ADScalar> ADVector; 
+	CppAD::det_by_lu<ADScalar>    Det(size);
 
-	// object for computing determinant
-	CppAD::det_by_lu<ADScalar> Det(size);
-
-	// number of elements in A
-	size_t length = size * size;
-
-	// AD value of the determinant
-	ADScalar   detA;
-
-	// AD version of matrix 
-	ADVector   A = new ADScalar[length];
+	size_t i;                // temporary index
+	size_t m = 1;            // number of dependent variables
+	size_t n = size * size;  // number of independent variables
+	ADScalar   detA;         // AD value of the determinant
+	ADVector   A(n);         // AD version of matrix 
 	
-	// temporary index
-	size_t i;
 	// ------------------------------------------------------
-
 	while(repeat--)
        {	// get the next matrix
-		CppAD::uniform_01(length, matrix);
+		CppAD::uniform_01(n, matrix);
 
 		// set independent variable values
-		for(i = 0; i < length; i++)
+		for(i = 0; i < n; i++)
 			A[i] = matrix[i];
 
 		// compute the determinant
 		detA = Det(A);
 
 		// create function object f : A -> detA
-		detA.diff(0, 1);  // only one dependent variable (index 0)
+		detA.diff(0, m);  // index 0 of m dependent variables
 
 		// evaluate and return gradient using reverse mode
-		for(i =0; i < length; i++)
+		for(i =0; i < n; i++)
 			gradient[i] = A[i].d(0); // partial detA w.r.t A[i]
 	}
 	// ---------------------------------------------------------
-	// tear down
-	delete [] A;
-
 	return;
 }
 /* $$
@@ -109,15 +99,13 @@ $codep */
 bool correct_det_lu(void)
 {	size_t size   = 3;
 	size_t repeat = 1;
-	double *matrix   = new double[size * size];
-	double *gradient = new double[size * size];
+	std::vector<double> matrix(size * size);
+	std::vector<double> gradient(size * size);
 
 	compute_det_lu(size, repeat, matrix, gradient);
 
 	bool ok = CppAD::det_grad_33(matrix, gradient);
 
-	delete [] gradient;
-	delete [] matrix;
 	return ok;
 }
 /* $$
@@ -128,13 +116,11 @@ Routine that links compute_det_lu to $cref/speed_test/$$:
 
 $codep */
 void speed_det_lu(size_t size, size_t repeat)
-{	double *matrix   = new double[size * size];
-	double *gradient = new double[size * size];
+{	std::vector<double> matrix(size * size);
+	std::vector<double> gradient(size * size);
 
 	compute_det_lu(size, repeat, matrix, gradient);
 	
-	delete [] gradient;
-	delete [] matrix;
 	return;
 }
 /* $$

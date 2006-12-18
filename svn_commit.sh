@@ -38,20 +38,18 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Improve adolc speed tests comments and readability.
+log_entry="Improve fadbad speed tests comments and readability.
 
 svn_commit.sh: file that made this commit.
-config.h: update version number.
 "
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
-	cppad/config.h
-	speed/adolc/det_minor.cpp
-	speed/adolc/poly.cpp
-	speed/adolc/det_lu.cpp
+	speed/fadbad/det_minor.cpp
+	speed/fadbad/poly.cpp
+	speed/fadbad/det_lu.cpp
 "
 delete_list="
 "
