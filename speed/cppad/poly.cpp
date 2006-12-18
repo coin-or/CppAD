@@ -11,8 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_poly.cpp$$
 $spell
-	dd
-	ADscalar
+	ddp
+	ADScalar
 	dz
 	ddz
 	Taylor
@@ -52,25 +52,25 @@ void compute_poly(
 	size_t                     repeat   , 
 	CppADvector<double>       &a        ,  // coefficients of polynomial
 	CppADvector<double>       &z        ,  // polynomial argument value
-	CppADvector<double>       &dd_poly  )  // second derivative w.r.t z  
+	CppADvector<double>       &ddp      )  // second derivative w.r.t z  
 {
 	// -----------------------------------------------------
 	// setup
 	using CppAD::AD;
-	typedef AD<double>            ADscalar; 
-	typedef CppADvector<ADscalar> ADvector; 
+	typedef AD<double>            ADScalar; 
+	typedef CppADvector<ADScalar> ADVector; 
 
 	// choose the polynomial coefficients
 	CppAD::uniform_01(size, a);
 
 	// AD copy of the polynomial coefficients
-	ADvector A(size);
+	ADVector A(size);
 	size_t i;
 	for(i = 0; i < size; i++)
 		A[i] = a[i];
 
 	// domain and range space AD vectors
-	ADvector   Z(1), P(1);
+	ADVector   Z(1), P(1);
 
 	// forward mode argument differential and second differential
 	CppADvector<double> dz(1), ddz(1);
@@ -97,14 +97,14 @@ void compute_poly(
 		CppAD::uniform_01(1, z);
 
 		// evaluate the polynomial at the new argument value
-		dd_poly = f.Forward(0, z);
+		ddp = f.Forward(0, z);
 
 		// evaluate first order Taylor coefficient
-		dd_poly = f.Forward(1, dz);
+		ddp = f.Forward(1, dz);
 
 		// second derivative is twice second order Taylor coefficient
-		dd_poly     = f.Forward(2, ddz);
-		dd_poly[0] *= 2.;
+		ddp     = f.Forward(2, ddz);
+		ddp[0] *= 2.;
 
 	}
 	return;
@@ -118,13 +118,13 @@ $codep */
 bool correct_poly(void)
 {	size_t size   = 10;
 	size_t repeat = 1;
-	CppADvector<double> a(size), z(1), dd_poly(1);
+	CppADvector<double> a(size), z(1), ddp(1);
 
-	compute_poly(size, repeat, a, z, dd_poly);
+	compute_poly(size, repeat, a, z, ddp);
 
 	// use direct evaluation by Poly to check AD evaluation
 	double check = CppAD::Poly(2, a, z[0]);
-	bool ok = CppAD::NearEqual(check, dd_poly[0], 1e-10, 1e-10);
+	bool ok = CppAD::NearEqual(check, ddp[0], 1e-10, 1e-10);
 	
 	return ok;
 }
@@ -137,9 +137,9 @@ Routine that links compute_poly to $cref/speed_test/$$:
 $codep */
 void speed_poly(size_t size, size_t repeat)
 {
-	CppADvector<double> a(size), z(1), dd_poly(1);
+	CppADvector<double> a(size), z(1), ddp(1);
 
-	compute_poly(size, repeat, a, z, dd_poly);
+	compute_poly(size, repeat, a, z, ddp);
 	
 	return;
 }

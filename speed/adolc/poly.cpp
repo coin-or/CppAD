@@ -14,7 +14,7 @@ $spell
 	hos
 	Taylor
 	std
-	dd
+	ddp
 	cppad
 	adouble
 	std
@@ -60,7 +60,7 @@ void compute_poly(
 	size_t                     repeat   , 
 	std::vector<double>       &a        ,  // coefficients of polynomial
 	std::vector<double>       &z        ,  // polynomial argument value
-	std::vector<double>       &dd_poly  )  // second derivative w.r.t z  
+	std::vector<double>       &ddp      )  // second derivative w.r.t z  
 {
 	// -----------------------------------------------------
 	// setup
@@ -126,7 +126,7 @@ void compute_poly(
 		hos_forward(tag, m, n, d, keep, x0, x, y0, y);
 
 		// second derivative is twice second order Taylor coefficient
-		dd_poly[0] = 2. * y[0][1];
+		ddp[0] = 2. * y[0][1];
 	}
 	// ------------------------------------------------------
 	// tear down
@@ -150,13 +150,13 @@ $codep */
 bool correct_poly(void)
 {	size_t size   = 10;
 	size_t repeat = 1;
-	std::vector<double>  a(size), z(1), dd_poly(1);
+	std::vector<double>  a(size), z(1), ddp(1);
 
-	compute_poly(size, repeat, a, z, dd_poly);
+	compute_poly(size, repeat, a, z, ddp);
 
 	// use direct evaluation by Poly to check AD evaluation
 	double check = CppAD::Poly(2, a, z[0]);
-	bool ok = CppAD::NearEqual(check, dd_poly[0], 1e-10, 1e-10);
+	bool ok = CppAD::NearEqual(check, ddp[0], 1e-10, 1e-10);
 	
 	return ok;
 }
@@ -168,9 +168,9 @@ Routine that links compute_poly to $cref/speed_test/$$:
 
 $codep */
 void speed_poly(size_t size, size_t repeat)
-{	std::vector<double>  a(size), z(1), dd_poly(1);
+{	std::vector<double>  a(size), z(1), ddp(1);
 
-	compute_poly(size, repeat, a, z, dd_poly);
+	compute_poly(size, repeat, a, z, ddp);
 	
 	return;
 }

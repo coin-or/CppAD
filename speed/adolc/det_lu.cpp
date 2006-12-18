@@ -56,20 +56,20 @@ void compute_det_lu(
 {
 	// -----------------------------------------------------
 	// setup
-	typedef adouble  Scalar;
-	typedef Scalar*  Vector;
+	typedef adouble    ADScalar;
+	typedef ADScalar*  ADVector;
 
 	// object for computing determinant
-	CppAD::det_by_lu<Scalar> Det(size);
+	CppAD::det_by_lu<ADScalar> Det(size);
 
 	// number of elements in the matrix
 	size_t length = size * size;
 
 	// value of determinant
-	Scalar   detA;
+	ADScalar   detA;
 
 	// adouble version of matrix
-	Vector   A = new Scalar[length];
+	ADVector   A = new ADScalar[length];
 	
 	// vectors of reverse mode weights 
 	double v[1];

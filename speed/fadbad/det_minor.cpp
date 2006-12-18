@@ -53,20 +53,20 @@ void compute_det_minor(
 	// -----------------------------------------------------
 	// setup
 	using CppAD::AD;
-	typedef B<double>           Scalar; 
-	typedef Scalar*             Vector; 
+	typedef B<double>  ADScalar; 
+	typedef ADScalar*  ADVector; 
 
 	// object for computing determinant
-	CppAD::det_by_minor<Scalar> Det(size);
+	CppAD::det_by_minor<ADScalar> Det(size);
 
 	// number of elements in A
 	size_t length = size * size;
 
 	// AD value of the determinant
-	Scalar   detA;
+	ADScalar   detA;
 
 	// AD version of matrix 
-	Vector   A = new Scalar[length];
+	ADVector   A = new ADScalar[length];
 	
 	// temporary index
 	size_t i;

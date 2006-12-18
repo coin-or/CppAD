@@ -52,20 +52,20 @@ void compute_det_lu(
 	// -----------------------------------------------------
 	// setup
 	using CppAD::AD;
-	typedef AD<double>          Scalar; 
-	typedef CppADvector<Scalar> Vector; 
+	typedef AD<double>          ADScalar; 
+	typedef CppADvector<ADScalar> ADVector; 
 
 	// object for computing determinant
-	CppAD::det_by_lu<Scalar>    Det(size);
+	CppAD::det_by_lu<ADScalar>    Det(size);
 
 	// number of elements in matrix
 	size_t length = size * size;
 
 	// domain space vector
-	Vector   A( size * size );
+	ADVector   A( size * size );
 
 	// range space vector
-	Vector            detA(1);
+	ADVector            detA(1);
 	
 	// vectors of reverse mode weights 
 	CppADvector<double> w(1);
