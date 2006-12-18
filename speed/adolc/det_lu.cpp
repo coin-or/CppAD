@@ -58,40 +58,33 @@ void compute_det_lu(
 	// setup
 	typedef adouble    ADScalar;
 	typedef ADScalar*  ADVector;
+	int tag  = 0;         // tape identifier
+	int keep = 1;         // keep forward mode results in buffer
+	int m    = 1;         // number of dependent variables
+	int n    = size*size; // number of independent variables
+	double f;             // function value
+	int i;                // temporary index
 
 	// object for computing determinant
 	CppAD::det_by_lu<ADScalar> Det(size);
 
-	// number of elements in the matrix
-	size_t length = size * size;
-
-	// value of determinant
+	// AD value of determinant
 	ADScalar   detA;
 
-	// adouble version of matrix
-	ADVector   A = new ADScalar[length];
+	// AD version of matrix
+	ADVector   A = new ADScalar[n];
 	
 	// vectors of reverse mode weights 
-	double v[1];
-	v[0] = 1.;
-
-	// tag and keep flags
-	int tag  = 1;
-	int keep = 1;
-
-	// function value
-	double f;
-
-	// temporary index
-	size_t i;
+	double *u = new double [m];
+	u[0] = 1.;
 	// ------------------------------------------------------
 	while(repeat--)
 	{	// get the next matrix
-		CppAD::uniform_01(length, matrix);
+		CppAD::uniform_01(n, matrix);
 
 		// declare independent variables
 		trace_on(tag, keep);
-		for(i = 0; i < length; i++)
+		for(i = 0; i < n; i++)
 			A[i] <<= matrix[i];
 
 		// compute the determinant
@@ -102,11 +95,12 @@ void compute_det_lu(
 		trace_off();
 
 		// evaluate and return gradient using reverse mode
-		fos_reverse(tag, 1, length, v, gradient);
+		fos_reverse(tag, m, n, u, gradient);
 	}
 	// ------------------------------------------------------
 	// tear down
 	delete [] A;
+	delete [] u;
 
 	return;
 }
