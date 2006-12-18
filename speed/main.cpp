@@ -314,7 +314,7 @@ int main(int argc, char *argv[])
 		// run all the speed tests 
 		Run_speed(speed_det_lu,    size_det_lu,    "det_lu");
 		Run_speed(speed_det_minor, size_det_minor, "det_minor");
-		Run_speed(speed_poly,      size_poly,      "det_poly");
+		Run_speed(speed_poly,      size_poly,      "poly");
 		ok = true;
 		break;
 		// ---------------------------------------------------------

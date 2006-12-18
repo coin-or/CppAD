@@ -38,7 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Improve cppad speed tests comments and readability.
+log_entry="whats new for previous 3 commits and minor correction to main.cpp.
 
 svn_commit.sh: file that made this commit.
 "
@@ -47,9 +47,8 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	speed/cppad/det_minor.cpp
-	speed/cppad/poly.cpp
-	speed/cppad/det_lu.cpp
+	omh/whats_new_06.omh
+	speed/main.cpp
 "
 delete_list="
 "

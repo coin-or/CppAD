@@ -68,6 +68,14 @@ This section contains a list of the changes to CppAD during 2006
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-18$$
+Make the $cref/speed/$$ source code easier to read.
+$pre
+
+$$
+Change the speed test output name $code det_poly$$ to $code poly$$
+(as it should have been).
+
 $head 12-17$$
 The speed test $cref/det_grad_33/$$ was missing its documentation
 (this has been fixed).
