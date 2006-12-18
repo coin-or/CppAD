@@ -38,7 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Improve fadbad speed tests comments and readability.
+log_entry="Improve cppad speed tests comments and readability.
 
 svn_commit.sh: file that made this commit.
 "
@@ -47,9 +47,9 @@ add_list="
 #
 change_list="
 	svn_commit.sh
-	speed/fadbad/det_minor.cpp
-	speed/fadbad/poly.cpp
-	speed/fadbad/det_lu.cpp
+	speed/cppad/det_minor.cpp
+	speed/cppad/poly.cpp
+	speed/cppad/det_lu.cpp
 "
 delete_list="
 "

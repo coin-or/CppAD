@@ -52,39 +52,31 @@ void compute_det_minor(
 {
 	// -----------------------------------------------------
 	// setup
-	using CppAD::AD;
-	typedef AD<double>            ADScalar; 
-	typedef CppADvector<ADScalar> ADVector; 
 
 	// object for computing determinant
-	CppAD::det_by_minor<ADScalar>    Det(size);
+	typedef CppAD::AD<double>     ADScalar; 
+	typedef CppADvector<ADScalar> ADVector; 
+	CppAD::det_by_minor<ADScalar> Det(size);
 
-	// number of elements in matrix
-	size_t length = size * size;
-
-	// domain space vector
-	ADVector   A( size * size );
-
-	// range space vector
-	ADVector   detA(1);
+	size_t i;               // temporary index
+	size_t m = 1;           // number of dependent variables
+	size_t n = size * size; // number of independent variables
+	ADVector   A(n);        // AD domain space vector
+	ADVector   detA(m);     // AD range space vector
 	
 	// vectors of reverse mode weights 
 	CppADvector<double> w(1);
 	w[0] = 1.;
 
-	// temporary index
-	size_t i;
-
-	// operation sequence for expansion by minors does not 
-	// depend on the matrix, so we can record it as part of the setup
-	CppAD::uniform_01(length, matrix);
+	// choose a matrix
+	CppAD::uniform_01(n, matrix);
 	for( i = 0; i < size * size; i++)
 		A[i] = matrix[i];
 
 	// declare independent variables
 	Independent(A);
 
-	// compute the determinant
+	// AD computation of the determinant
 	detA[0] = Det(A);
 
 	// create function object f : A -> detA
@@ -93,7 +85,7 @@ void compute_det_minor(
 	// ------------------------------------------------------
 	while(repeat--)
 	{	// get the next matrix
-		CppAD::uniform_01(length, matrix);
+		CppAD::uniform_01(n, matrix);
 
 		// evaluate the determinant at the new matrix value
 		f.Forward(0, matrix);

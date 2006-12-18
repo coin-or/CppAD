@@ -51,39 +51,32 @@ void compute_det_lu(
 {
 	// -----------------------------------------------------
 	// setup
-	using CppAD::AD;
-	typedef AD<double>          ADScalar; 
+	typedef CppAD::AD<double>     ADScalar; 
 	typedef CppADvector<ADScalar> ADVector; 
+	CppAD::det_by_lu<ADScalar> Det(size);
 
-	// object for computing determinant
-	CppAD::det_by_lu<ADScalar>    Det(size);
-
-	// number of elements in matrix
-	size_t length = size * size;
-
-	// domain space vector
-	ADVector   A( size * size );
-
-	// range space vector
-	ADVector            detA(1);
+	size_t i;               // temporary index
+	size_t m = 1;           // number of dependent variables
+	size_t n = size * size; // number of independent variables
+	ADVector   A(n);        // AD domain space vector
+	ADVector   detA(m);     // AD range space vector
 	
 	// vectors of reverse mode weights 
 	CppADvector<double> w(1);
 	w[0] = 1.;
 
-	size_t i;
 	// ------------------------------------------------------
 
 	while(repeat--)
 	{	// get the next matrix
-		CppAD::uniform_01(length, matrix);
-		for( i = 0; i < size * size; i++)
+		CppAD::uniform_01(n, matrix);
+		for( i = 0; i < n; i++)
 			A[i] = matrix[i];
 
 		// declare independent variables
 		Independent(A);
 
-		// compute the determinant
+		// AD computation of the determinant
 		detA[0] = Det(A);
 
 		// create function object f : A -> detA

@@ -56,29 +56,29 @@ void compute_poly(
 {
 	// -----------------------------------------------------
 	// setup
-	using CppAD::AD;
-	typedef AD<double>            ADScalar; 
+	typedef CppAD::AD<double>     ADScalar; 
 	typedef CppADvector<ADScalar> ADVector; 
+
+	size_t i;      // temporary index
+	size_t m = 1;  // number of dependent variables
+	size_t n = 1;  // number of independent variables
+	ADVector Z(n); // AD domain space vector
+	ADVector P(m); // AD range space vector
 
 	// choose the polynomial coefficients
 	CppAD::uniform_01(size, a);
 
 	// AD copy of the polynomial coefficients
 	ADVector A(size);
-	size_t i;
 	for(i = 0; i < size; i++)
 		A[i] = a[i];
 
-	// domain and range space AD vectors
-	ADVector   Z(1), P(1);
-
-	// forward mode argument differential and second differential
+	// forward mode first and second differentials
 	CppADvector<double> dz(1), ddz(1);
 	dz[0]  = 1.;
 	ddz[0] = 0.;
 
-	// operation sequence for polynomial evaluation does not 
-	// depend on the value of z, so we can record it as part of the setup
+	// choose an argument value
 	CppAD::uniform_01(1, z);
 	Z[0] = z[0];
 
