@@ -64,31 +64,26 @@ void compute_poly(
 {
 	// -----------------------------------------------------
 	// setup
+	int tag  = 0;  // tape identifier
+	int keep = 1;  // keep forward mode results in buffer
+	int m    = 1;  // number of dependent variables
+	int n    = 1;  // number of independent variables
+	int d    = 2;  // order of the derivative
+	double f;      // function value
+	int i;         // temporary index
 
-	// choose the polynomial coefficients
+	// choose a vector of polynomial coefficients
 	CppAD::uniform_01(size, a);
 
 	// AD copy of the polynomial coefficients
 	std::vector<adouble> A(size);
-	int i;
 	for(i = 0; i < int(size); i++)
 		A[i] = a[i];
 
 	// domain and range space AD values
-	adouble   Z, P;
+	adouble Z, P;
 
-	// tag, keep, number dependent, independent variables, der order
-	int tag  = 1;
-	int keep = 1;
-	int m    = 1;
-	int n    = 1;
-	int d    = 2;
-
-	// function value
-	double f;
-
-	// operation sequence for polynomial evaluation does not 
-	// depend on the value of z, so we can record it as part of the setup
+	// choose an argument value
 	CppAD::uniform_01(1, z);
 
 	// declare independent variables
@@ -112,9 +107,9 @@ void compute_poly(
 	for(i = 0; i < m; i++)
 		y[i] = new double [d];
 
-	// taylor coefficients for x
-	x[0][0] = 1.;
-	x[0][1] = 0.;
+	// Taylor coefficient for argument
+	x[0][0] = 1.;  // first order
+	x[0][1] = 0.;  // second order
 	
 	// ------------------------------------------------------
 	while(repeat--)

@@ -38,25 +38,20 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Minor change of names in speed tests:
-dd_poly -> ddp, Scalar  -> ADScalar, and Vectro  -> ADVector
+log_entry="Improve adolc speed tests comments and readability.
 
 svn_commit.sh: file that made this commit.
+config.h: update version number.
 "
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
-	speed/fadbad/det_minor.cpp
-	speed/fadbad/poly.cpp
-	speed/fadbad/det_lu.cpp
+	cppad/config.h
 	speed/adolc/det_minor.cpp
 	speed/adolc/poly.cpp
 	speed/adolc/det_lu.cpp
-	speed/cppad/det_minor.cpp
-	speed/cppad/poly.cpp
-	speed/cppad/det_lu.cpp
 "
 delete_list="
 "

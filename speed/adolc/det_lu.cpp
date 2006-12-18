@@ -56,8 +56,6 @@ void compute_det_lu(
 {
 	// -----------------------------------------------------
 	// setup
-	typedef adouble    ADScalar;
-	typedef ADScalar*  ADVector;
 	int tag  = 0;         // tape identifier
 	int keep = 1;         // keep forward mode results in buffer
 	int m    = 1;         // number of dependent variables
@@ -66,6 +64,8 @@ void compute_det_lu(
 	int i;                // temporary index
 
 	// object for computing determinant
+	typedef adouble    ADScalar;
+	typedef ADScalar*  ADVector;
 	CppAD::det_by_lu<ADScalar> Det(size);
 
 	// AD value of determinant
@@ -87,7 +87,7 @@ void compute_det_lu(
 		for(i = 0; i < n; i++)
 			A[i] <<= matrix[i];
 
-		// compute the determinant
+		// AD computation of the determinant
 		detA = Det(A);
 
 		// create function object f : A -> detA
@@ -99,8 +99,8 @@ void compute_det_lu(
 	}
 	// ------------------------------------------------------
 	// tear down
-	delete [] A;
 	delete [] u;
+	delete [] A;
 
 	return;
 }
