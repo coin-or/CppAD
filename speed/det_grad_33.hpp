@@ -87,35 +87,14 @@ $syntax%
 It is true, if the gradient $italic g$$ 
 passes the test and false otherwise.
 
+$children%
+	omh/det_grad_33_hpp.omh
+%$$
+
 $head Source Code$$
 The file 
 $cref/det_grad_33.hpp/$$
 constraints the source code for this template function.
-
-$end
-------------------------------------------------------------------------------
-$begin det_grad_33.hpp$$
-$spell
-	det
-	ifndef
-	endif
-$$
-
-$index det_grad_33, source$$
-$index source, det_grad_33$$
-
-$section Source: Check Gradient of Determinant of 3 by 3 matrix$$
-
-$code
-# ifndef CPPAD_DET_GRAD_33_INCLUDED 
-$pre
-$$
-# define CPPAD_DET_GRAD_33_INCLUDED 
-
-$verbatim%speed/det_grad_33.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-
-# endif
-$$
 
 $end
 ------------------------------------------------------------------------------

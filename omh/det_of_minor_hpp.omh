@@ -1,0 +1,24 @@
+$begin det_of_minor.hpp$$
+$spell
+	det_of_minor
+	ifndef
+	endif
+$$
+
+$section Source: det_of_minor$$
+
+$index det_of_minor, source$$
+$index source, det_of_minor$$
+
+$code
+# ifndef CPPAD_DET_OF_MINOR_INCLUDED 
+$pre
+$$
+# define CPPAD_DET_OF_MINOR_INCLUDED
+
+$verbatim%speed/det_of_minor.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
+
+# endif
+$$
+
+$end

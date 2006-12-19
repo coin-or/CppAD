@@ -72,6 +72,11 @@ $head 12-19$$
 Reorganize so that the source code is below the corresponding routine
 in the documentation tree (instead of at the same level) for the 
 following routines:
+$cref/det_by_minor/$$,
+$cref/det_grad_33/$$,
+$cref/uniform_01/$$,
+$cref/det_of_minor/$$,
+$cref/det_by_lu/$$,
 $cref/LuInvert/$$,
 $cref/LuFactor/$$,
 $cref/LuSolve/$$.
@@ -81,6 +86,11 @@ $$
 Separate the specifications for the source in
 $cref/speed_utility/$$ and add cross reference to the following routine
 specification and implementations:
+$cref/det_by_minor/$$,
+$cref/det_grad_33/$$,
+$cref/uniform_01/$$,
+$cref/det_of_minor/$$,
+$cref/det_by_lu/$$,
 $cref/LuInvert/$$,
 $cref/LuFactor/$$,
 $cref/LuSolve/$$.

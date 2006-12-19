@@ -1,0 +1,24 @@
+$begin det_by_lu.hpp$$
+$spell
+	det_by_lu
+	ifndef
+	endif
+$$
+
+$section Source: det_by_lu$$
+
+$index det_by_lu, source$$
+$index source, det_by_lu$$
+
+$code
+# ifndef CPPAD_DET_BY_LU_INCLUDED 
+$pre
+$$
+# define CPPAD_DET_BY_LU_INCLUDED
+
+$verbatim%speed/det_by_lu.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
+
+# endif
+$$
+
+$end

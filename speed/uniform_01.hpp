@@ -75,6 +75,10 @@ where $italic i$$ has type $code size_t$$ with value less than
 or equal $latex n-1$$.
 This is the only requirement of the type $italic Vector$$.
 
+$children%
+	omh/uniform_01_hpp.omh
+%$$
+
 $head Source Code$$
 The file 
 $cref/uniform_01.hpp/$$
@@ -82,34 +86,8 @@ constraints the source code for this template function.
 
 $end
 ------------------------------------------------------------------------------
-$begin uniform_01.hpp$$
-$spell
-	det
-	ifndef
-	endif
-$$
-
-$index uniform_01, source$$
-$index source, uniform_01$$
-
-$section Source: Simulate a [0,1] Uniform Random Variate$$ 
-
-$code
-# ifndef CPPAD_UNIFORM_01_INCLUDED 
-$pre
-$$
-# define CPPAD_UNIFORM_01_INCLUDED 
-
-$verbatim%speed/uniform_01.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-
-# endif
-$$
-
-$end
-------------------------------------------------------------------------------
 */
 // BEGIN PROGRAM
-
 # include <cstdlib>
 
 namespace CppAD {

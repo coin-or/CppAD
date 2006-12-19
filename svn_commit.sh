@@ -38,35 +38,34 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="reorgainize so source code in below LuFactor in documentation tree.
+log_entry="reorgainize so source code in below specifications in doc tree.
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: users view of the changes.
-lu_invert_hpp.omh: omhelp file that verbatim includes source for lu_invert.hpp.
-lu_solve_hpp.omh: omhelp file that verbatim includes source for lu_solve.hpp.
-lu_factor_hpp.omh: omhelp file that verbatim includes source for lu_factor.hpp.
-speed_utility.omh: separate specifications from source and include new files.
-config.h: update version number.
-lu_invert.hpp: include source code section below this section in documentation.
-lu_factor.hpp: include source code section below this section in documentation.
-lu_solve.hpp: include source code section below this section in documentation.
-clean_cppad.sh: remove some more files that are not soruce code.
+speed_utility.omh: alphabetical order.
+det_by_minor.hpp: source code below specifications.
+det_grad_33.hpp:  source code below specifications.
+uniform_01.hpp:  source code below specifications.
+det_of_minor.hpp:  source code below specifications.
+det_by_lu.hpp.hpp:  source code below specifications.
 "
 add_list="
-	omh/lu_invert_hpp.omh
-	omh/lu_solve_hpp.omh
-	omh/lu_factor_hpp.omh
+	omh/uniform_01_hpp.omh
+	omh/det_by_minor_hpp.omh
+	omh/det_grad_33_hpp.omh
+	omh/det_of_minor_hpp.omh
+	omh/det_by_lu_hpp.omh
 "
 #
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
 	omh/speed_utility.omh
-	cppad/config.h
-	cppad/lu_invert.hpp
-	cppad/lu_factor.hpp
-	cppad/lu_solve.hpp
-	clean_cppad.sh
+	speed/det_by_minor.hpp
+	speed/det_grad_33.hpp
+	speed/uniform_01.hpp
+	speed/det_of_minor.hpp
+	speed/det_by_lu.hpp
 "
 delete_list="
 "

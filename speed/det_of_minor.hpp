@@ -197,7 +197,8 @@ $syntax%%x% * %y%$$
 $tend
 
 $children%
-	speed/example/det_of_minor.cpp
+	speed/example/det_of_minor.cpp%
+	omh/det_of_minor_hpp.omh
 %$$
 
 $head Example$$
@@ -214,38 +215,8 @@ contains the source for this template function.
 
 $end
 ---------------------------------------------------------------------------
-$begin det_of_minor.hpp$$
-$spell
-	cppad.hpp
-	hpp
-	Cpp
-	ifndef
-	endif
-	Det
-	const
-$$
-
-$index det_of_minor.hpp, source$$
-$index source, det_of_minor$$
-
-$section Source: Determinant of a Minor$$
-
-$code
-# ifndef CPPAD_DET_OF_MINOR_INCLUDED
-$pre
-$$
-# define CPPAD_DET_OF_MINOR_INCLUDED
-
-$verbatim%speed/det_of_minor.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-
-# endif
-$$
-
-$end
----------------------------------------------------------------------------
 */
 // BEGIN PROGRAM
-
 namespace CppAD { // BEGIN CppAD namespace
 template <class Scalar>
 Scalar det_of_minor(
@@ -315,6 +286,5 @@ Scalar det_of_minor(
 	return detM;
 }
 } // END CppAD namespace
-
 // END PROGRAM
 # endif

@@ -1,0 +1,24 @@
+$begin uniform_01.hpp$$
+$spell
+	uniform_01
+	ifndef
+	endif
+$$
+
+$section Source: uniform_01$$
+
+$index uniform_01, source$$
+$index source, uniform_01$$
+
+$code
+# ifndef CPPAD_UNIFORM_01_INCLUDED 
+$pre
+$$
+# define CPPAD_UNIFORM_01_INCLUDED
+
+$verbatim%speed/uniform_01.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
+
+# endif
+$$
+
+$end

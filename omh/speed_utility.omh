@@ -21,10 +21,10 @@ $tend
 
 $head Speed Utility Routines$$
 $table
+$rref det_by_lu$$
+$rref det_by_minor$$
 $rref det_grad_33$$
 $rref det_of_minor$$
-$rref det_by_minor$$
-$rref det_by_lu$$
 $rref uniform_01$$
 $tend 
 
@@ -37,10 +37,10 @@ $tend
 
 $head Source Code$$
 $table
+$rref det_by_lu.hpp$$
+$rref det_by_minor.hpp$$
 $rref det_grad_33.hpp$$
 $rref det_of_minor.hpp$$
-$rref det_by_minor.hpp$$
-$rref det_by_lu.hpp$$
 $rref lu_factor.hpp$$
 $rref lu_invert.hpp$$
 $rref lu_solve.hpp$$

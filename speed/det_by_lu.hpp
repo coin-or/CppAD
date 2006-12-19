@@ -97,7 +97,8 @@ element of the vector $italic y$$.
 This is the only requirement of the type $italic Vector$$.
 
 $children%
-	speed/example/det_by_lu.cpp
+	speed/example/det_by_lu.cpp%
+	omh/det_by_lu_hpp.omh
 %$$
 
 
@@ -109,56 +110,24 @@ It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The file
-$xref/det_by_lu.hpp/$$ 
+$cref/det_by_lu.hpp/$$ 
 contains the source for this template function.
 
 
 $end
 ---------------------------------------------------------------------------
-$begin det_by_lu.hpp$$
-$spell
-	lu
-	hpp
-	Cpp
-	ifndef
-	endif
-	Det
-	const
-$$
-
-$index det_by_lu.hpp, source$$
-$index source, det_by_lu.hpp$$
-
-$section Source: Determinant using Expansion by Lu Factorization$$
-
-$code
-# ifndef CPPAD_DET_BY_LU_INCLUDED
-$pre
-$$
-# define CPPAD_DET_BY_LU_INCLUDED
-
-$verbatim%speed/det_by_lu.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-
-# endif
-$$
-
-$end
----------------------------------------------------------------------------
-
 */
 // BEGIN PROGRAM
-
 # include <cppad/cppad.hpp>
 # include <complex>
-
-typedef std::complex<double>     Complex;
-typedef CppAD::AD<Complex>     ADComplex;
-
 
 // BEGIN CppAD namespace
 namespace CppAD {
 
-// specializatgion of LeqZero and AbsGeq for ADComplex case
+// The AD complex case is used by examples by not used by speed tests 
+// Must define a specializatgion of LeqZero,AbsGeq for the ADComplex case
+typedef std::complex<double>     Complex;
+typedef CppAD::AD<Complex>     ADComplex;
 CppADCreateUnaryBool(Complex,  LeqZero )
 CppADCreateBinaryBool(Complex, AbsGeq )
 
@@ -210,9 +179,6 @@ private:
 	CppADvector<Scalar> B;
 	CppADvector<Scalar> X;
 };
-
-
 } // END CppAD namespace
-
 // END PROGRAM
 # endif

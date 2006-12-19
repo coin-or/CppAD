@@ -95,7 +95,8 @@ element of the vector $italic y$$.
 This is the only requirement of the type $italic Vector$$.
 
 $children%
-	speed/example/det_by_minor.cpp
+	speed/example/det_by_minor.cpp%
+	omh/det_by_minor_hpp.omh
 %$$
 
 
@@ -113,37 +114,8 @@ contains the source for this template function.
 
 $end
 ---------------------------------------------------------------------------
-$begin det_by_minor.hpp$$
-$spell
-	Cpp
-	ifndef
-	endif
-	Det
-	const
-$$
-
-$index det_by_minor, source$$
-$index source, det_by_minor$$
-
-$section Source: Determinant using Expansion by Minors$$
-
-$code
-# ifndef CPPAD_DET_BY_MINOR_INCLUDED
-$pre
-$$
-# define CPPAD_DET_BY_MINOR_INCLUDED
-
-$verbatim%speed/det_by_minor.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-
-# endif
-$$
-
-$end
----------------------------------------------------------------------------
-
 */
 // BEGIN PROGRAM
-
 # include <cppad/cppad.hpp>
 # include <speed/det_of_minor.hpp>
 
@@ -185,6 +157,5 @@ private:
 };
 
 } // END CppAD namespace
-
 // END PROGRAM
 # endif
