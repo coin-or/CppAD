@@ -1,0 +1,24 @@
+$begin lu_solve.hpp$$
+$spell
+	Lu
+	ifndef
+	endif
+$$
+
+$section Source: LuSolve$$
+
+$index LuSolve, source$$
+$index source, LuSolve$$
+
+$code
+# ifndef CPPAD_LU_SOLVE_INCLUDED 
+$pre
+$$
+# define CPPAD_LU_SOLVE_INCLUDED
+
+$verbatim%cppad/lu_solve.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
+
+# endif
+$$
+
+$end

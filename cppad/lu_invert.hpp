@@ -142,45 +142,25 @@ output value solves the matrix equation $syntax%%A% * %X% = %B%$$.
 
 
 $children%
-	example/lu_invert.cpp
+	example/lu_invert.cpp%
+	omh/lu_invert_hpp.omh
 %$$
 $head Example$$
-The file $xref/LuSolve.h/$$ is a good example usage of 
+The file $xref/lu_solve.hpp/$$ is a good example usage of 
 $code LuFactor$$ with $code LuInvert$$.
 The file 
 $xref/LuInvert.cpp/$$
 contains an example and test of using $code LuInvert$$ by itself.
 It returns true if it succeeds and false otherwise.
 
+$head Source$$
+The file $cref/lu_invert.hpp/$$ contains the
+current source code that implements these specifications.
+
 $end
 --------------------------------------------------------------------------
-$begin LuInvert.h$$
-$spell
-	cppad.hpp
-	Cpp
-	Lu
-	const
-	etmp
-	ip
-	jp
-	namespace
-	typedef
-	typename
-$$
-
-$section LuInvert Source Code$$
-$spell
-	cppad.hpp
-	cppad
-	hpp
-$$
-
-$index LuInvert, source$$
-$index source, LuInvert$$
-$index matrix, LuInvert source$$
-
-$codep */
-
+*/
+// BEGIN PROGRAM
 # include <cppad/local/cppad_error.hpp>
 # include <cppad/check_simple_vector.hpp>
 # include <cppad/check_numeric_type.hpp>
@@ -258,9 +238,5 @@ void LuInvert(
 	return;
 }
 } // END CppAD namespace 
-/* $$
-$end
-------------------------------------------------------------------------------
-*/
-
+// END PROGRAM
 # endif

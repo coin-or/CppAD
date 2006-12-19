@@ -5,7 +5,7 @@ $section Speed Testing: Main Program and Utilities$$
 $index speed, utility$$
 $index utility, speed$$
 
-$childtable%
+$children%
 	speed/main.cpp%
 	speed/uniform_01.hpp%
 	speed/det_grad_33.hpp%
@@ -13,5 +13,39 @@ $childtable%
 	speed/det_by_minor.hpp%
 	speed/det_by_lu.hpp
 %$$
+
+$head Speed Main Program$$
+$table
+$rref speed_main$$
+$tend
+
+$head Speed Utility Routines$$
+$table
+$rref det_grad_33$$
+$rref det_of_minor$$
+$rref det_by_minor$$
+$rref det_by_lu$$
+$rref uniform_01$$
+$tend 
+
+$head Library Routines$$
+$table
+$rref LuFactor$$
+$rref LuInvert$$
+$rref LuSolve$$
+$tend
+
+$head Source Code$$
+$table
+$rref det_grad_33.hpp$$
+$rref det_of_minor.hpp$$
+$rref det_by_minor.hpp$$
+$rref det_by_lu.hpp$$
+$rref lu_factor.hpp$$
+$rref lu_invert.hpp$$
+$rref lu_solve.hpp$$
+$rref uniform_01.hpp$$
+$tend
+
 
 $end

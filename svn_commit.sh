@@ -38,17 +38,35 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="whats new for previous 3 commits and minor correction to main.cpp.
+log_entry="reorgainize so source code in below LuFactor in documentation tree.
 
 svn_commit.sh: file that made this commit.
+whats_new_06.omh: users view of the changes.
+lu_invert_hpp.omh: omhelp file that verbatim includes source for lu_invert.hpp.
+lu_solve_hpp.omh: omhelp file that verbatim includes source for lu_solve.hpp.
+lu_factor_hpp.omh: omhelp file that verbatim includes source for lu_factor.hpp.
+speed_utility.omh: separate specifications from source and include new files.
+config.h: update version number.
+lu_invert.hpp: include source code section below this section in documentation.
+lu_factor.hpp: include source code section below this section in documentation.
+lu_solve.hpp: include source code section below this section in documentation.
+clean_cppad.sh: remove some more files that are not soruce code.
 "
 add_list="
+	omh/lu_invert_hpp.omh
+	omh/lu_solve_hpp.omh
+	omh/lu_factor_hpp.omh
 "
 #
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	speed/main.cpp
+	omh/speed_utility.omh
+	cppad/config.h
+	cppad/lu_invert.hpp
+	cppad/lu_factor.hpp
+	cppad/lu_solve.hpp
+	clean_cppad.sh
 "
 delete_list="
 "

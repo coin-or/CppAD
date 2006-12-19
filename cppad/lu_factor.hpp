@@ -217,7 +217,8 @@ of $italic x$$ is greater than or equal the
 sum of the square of the real and imaginary parts of $italic y$$. 
 
 $children%
-	example/lu_factor.cpp
+	example/lu_factor.cpp%
+	omh/lu_factor_hpp.omh
 %$$
 $head Example$$
 The file 
@@ -227,53 +228,18 @@ It returns true if it succeeds and false otherwise.
 $pre
 
 $$
-The file $xref/LuSolve.h/$$ provides a useful example usage of 
+The file $xref/lu_solve.hpp/$$ provides a useful example usage of 
 $code LuFactor$$ with $code LuInvert$$.
+
+$head Source$$
+The file $cref/lu_factor.hpp/$$ contains the 
+current source code that implements these specifications.
 
 $end
 --------------------------------------------------------------------------
-$begin LuFactor.h$$
-$spell
-	cppad.hpp
-	CondExpGt
-	Cpp
-	Geq
-	Lu
-	bool
-	const
-	emax
-	endif
-	etmp
-	ifdef
-	imag
-	imax
-	indx
-	inline
-	ip
-	jmax
-	jp
-	namespace
-	std
-	typedef
-	typename
-	xabs
-	xsq
-	yabs
-	ysq
-$$
+*/
+// BEGIN PROGRAM
 
-$section LuFactor Source Code$$
-$spell
-	cppad.hpp
-	cppad
-	hpp
-$$
-
-$index LuFactor, source$$
-$index source, LuFactor$$
-$index matrix, LuFactor source$$
-
-$codep */
 # include <complex>
 # include <vector>
 
@@ -426,9 +392,5 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 	return sign;
 }
 } // END CppAD namespace 
-/* $$
-$end
-------------------------------------------------------------------------------
-*/
-
+// END PROGRAM
 # endif

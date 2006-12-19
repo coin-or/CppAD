@@ -1,0 +1,24 @@
+$begin lu_invert.hpp$$
+$spell
+	Lu
+	ifndef
+	endif
+$$
+
+$section Source: LuInvert$$
+
+$index LuInvert, source$$
+$index source, LuInvert$$
+
+$code
+# ifndef CPPAD_LU_INVERT_INCLUDED 
+$pre
+$$
+# define CPPAD_LU_INVERT_INCLUDED
+
+$verbatim%cppad/lu_invert.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
+
+# endif
+$$
+
+$end

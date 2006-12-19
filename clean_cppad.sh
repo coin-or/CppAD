@@ -25,6 +25,7 @@ list=`find .                             \
 	\( -name 'Debug'          \) -or \
 	\( -name 'Release'        \) -or \
 	\( -name '.deps'          \) -or \
+	\( -name 'depcomp'        \) -or \
 	\( -name 'dev'            \) -or \
 	\( -name 'Doc'            \) -or \
 	\( -name 'doc'            \) -or \
@@ -32,8 +33,10 @@ list=`find .                             \
 	\( -name 'junk'           \) -or \
 	\( -name 'junk?'          \) -or \
 	\( -name 'junk.*'         \) -or \
+	\( -name 'install-sh'     \) -or \
 	\( -name 'makefile'       \) -or \
 	\( -name 'makefile.in'    \) -or \
+	\( -name 'missing'        \) -or \
 	\( -name 'Release'        \) -or \
 	\( -name 'stamp-h1'       \) -or \
 	\( -name 'temp'           \) -or \

@@ -1,0 +1,24 @@
+$begin lu_factor.hpp$$
+$spell
+	Lu
+	ifndef
+	endif
+$$
+
+$section Source: LuFactor$$
+
+$index LuFactor, source$$
+$index source, LuFactor$$
+
+$code
+# ifndef CPPAD_LU_FACTOR_INCLUDED 
+$pre
+$$
+# define CPPAD_LU_FACTOR_INCLUDED
+
+$verbatim%cppad/lu_factor.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
+
+# endif
+$$
+
+$end

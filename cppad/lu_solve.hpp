@@ -226,7 +226,8 @@ and it is not $code std::complex<float>$$ or $code std::complex<double>$$,
 see the documentation for $code AbsGeq$$ in $xref/LuFactor/AbsGeq/LuFactor/$$. 
 
 $children%
-	example/lu_solve.cpp
+	example/lu_solve.cpp%
+	omh/lu_solve_hpp.omh
 %$$
 $head Example$$
 The file 
@@ -234,42 +235,14 @@ $xref/LuSolve.cpp/$$
 contains an example and test of using this routine.
 It returns true if it succeeds and false otherwise.
 
+$head Source$$
+The file $cref/lu_solve.hpp/$$ contains the
+current source code that implements these specifications.
+
 $end
 --------------------------------------------------------------------------
-$begin LuSolve.h$$
-$spell
-	cppad.hpp
-	Cpp
-	Leq
-	Lu
-	bool
-	const
-	endif
-	ifdef
-	inline
-	ip
-	jp
-	logdet
-	namespace
-	signdet
-	std
-	typename
-$$
-
-$section LuSolve Source Code$$
-$spell
-	cppad.hpp
-	cppad
-	hpp
-$$
-
-$index source, LuSolve$$
-$index LuSolve, source code$$
-$index determinant, source code$$
-$index linear, equation source code$$
-$index matrix, factor source$$
-
-$codep */
+*/
+// BEGIN PROGRAM
 # include <complex>
 # include <vector>
 
@@ -375,9 +348,5 @@ int LuSolve(
 	return signdet;
 }
 } // END CppAD namespace 
-/* $$
-$end
-------------------------------------------------------------------------------
-*/
-
+// END PROGRAM
 # endif

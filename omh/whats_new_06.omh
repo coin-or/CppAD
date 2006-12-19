@@ -68,6 +68,24 @@ This section contains a list of the changes to CppAD during 2006
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-19$$
+Reorganize so that the source code is below the corresponding routine
+in the documentation tree (instead of at the same level) for the 
+following routines:
+$cref/LuInvert/$$,
+$cref/LuFactor/$$,
+$cref/LuSolve/$$.
+$pre
+
+$$
+Separate the specifications for the source in
+$cref/speed_utility/$$ and add cross reference to the following routine
+specification and implementations:
+$cref/LuInvert/$$,
+$cref/LuFactor/$$,
+$cref/LuSolve/$$.
+
+
 $head 12-18$$
 Make the $cref/speed/$$ source code easier to read.
 $pre
