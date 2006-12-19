@@ -34,6 +34,7 @@ sed                                                           \
 	-e '/^[?].*\/_adolc-*/d'                              \
 	-e '/^[?] *install-sh$/d'                             \
 	-e '/^[?] *makefile$/d'                               \
+	-e '/^[?] *missing$/d'                                \
 	-e '/^[?].*\/junk$/d'                                 \
 	-e '/^[?] *junk$/d'                                   \
 	-e '/^[?].*\/junk\.[0-9a-zA-Z]*$/d'                   \
