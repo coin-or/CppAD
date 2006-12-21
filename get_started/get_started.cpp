@@ -27,7 +27,7 @@ $spell
       cout
 $$
 
-$section Getting Started Using CppAD$$
+$section A Simple Program Using CppAD to Compute Derivatives$$
 $index getstarted$$
 $index simple, example$$
 $index example, simple$$

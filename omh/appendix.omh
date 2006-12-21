@@ -16,15 +16,16 @@ $$
 $section Appendix$$
 
 $childtable%
-	cppad/local/preprocessor.hpp%
-	omh/theory.omh%
+	omh/faq.omh%
 	omh/speed.omh%
+	omh/theory.omh%
 	omh/glossary.omh%
 	omh/bib.omh%
 	omh/bugs.omh%
 	omh/wish_list.omh%
+	omh/whats_new.omh%
 	omh/include_deprecated.omh%
-	omh/whats_new.omh
+	omh/license.omh
 %$$
 
 $end

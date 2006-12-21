@@ -71,6 +71,14 @@ assist you in learning about changes between various versions of CppAD.
 $head 12-21$$
 Add the $cref/source code for Poly/poly.hpp/$$ to the documentation
 and include $cref/Poly/$$ in the in the $cref/speed_utility/$$ section.
+$pre
+
+$$
+The $cref/GetStarted.cpp/$$ section has been moved
+into the $cref/Introduction/$$.
+In addition some sections has switched position beteen
+the top level $cref/CppAD/$$ and the $cref/Appendix/$$.
+
 
 $head 12-19$$
 Reorganize so that the source code is below the corresponding routine

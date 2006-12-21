@@ -38,25 +38,30 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Include Poly source in documentation because used in speed tests.
+log_entry="Reorganize some of the documentation.
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: users view of the changes.
-svn_status.sh: remove depcomp (an automatically generated file).
-poly_hpp.omh: source code for poly.hpp.
-speed_utility.omh: add Poly to list of library routines.
-poly.hpp: include source code below in documentaiton.
+introduction.cpp: change title to be correct with GetStarted in introduction.
+appendix.omh: move faq into this section and change order slightly.
+introduction.omh: change output to include GetStarted.
+preprocessor.hpp: correct wording (there was no previous example).
+config.h: update version number.
+get_started.cpp: Improve title in context of introcution.
+doc.omh: move preprocessor.hpp to this section.
 "
 add_list="
-	omh/poly_hpp.omh
 "
 #
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	svn_status.sh
-	omh/speed_utility.omh
-	cppad/poly.hpp
+	introduction/introduction.cpp
+	omh/appendix.omh
+	omh/introduction.omh
+	cppad/local/preprocessor.hpp
+	cppad/config.h
+	get_started/get_started.cpp
 "
 delete_list="
 "

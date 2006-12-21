@@ -32,7 +32,7 @@ All of the preprocessor symbols used by CppAD begin either with
 $code CppAD$$ or with $code CPPAD_$$.
 
 $head Example$$
-As another example,
+For example,
 the preprocessor symbol $xref/CppADvector/$$ determines which
 $xref/SimpleVector/$$ template class is extensively used 
 by the tests in the $code Example$$ and $code TestMore$$ directories.

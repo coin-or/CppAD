@@ -15,7 +15,7 @@ $spell
 	Cpp
 $$
 
-$section Run the CppAD Introduction Routines$$
+$section Run and Check All The Exponential Approximation Routines$$
 $index example, run all$$
 
 $code
