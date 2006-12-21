@@ -33,6 +33,7 @@ $table
 $rref LuFactor$$
 $rref LuInvert$$
 $rref LuSolve$$
+$rref Poly$$
 $tend
 
 $head Source Code$$
@@ -44,6 +45,7 @@ $rref det_of_minor.hpp$$
 $rref lu_factor.hpp$$
 $rref lu_invert.hpp$$
 $rref lu_solve.hpp$$
+$rref poly.hpp$$
 $rref uniform_01.hpp$$
 $tend
 

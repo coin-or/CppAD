@@ -1,0 +1,24 @@
+$begin poly.hpp$$
+$spell
+	Lu
+	ifndef
+	endif
+$$
+
+$section Source: Poly$$
+
+$index Poly, source$$
+$index source, Poly$$
+
+$code
+# ifndef CPPAD_POLY_INCLUDED 
+$pre
+$$
+# define CPPAD_POLY_INCLUDED
+
+$verbatim%cppad/poly.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
+
+# endif
+$$
+
+$end

@@ -128,19 +128,25 @@ of $italic z$$ and the elements of $italic a$$
 (it does depend on the size of the vector $italic a$$).
 
 
-$head Example$$
 $children%
-	example/poly.cpp
+	example/poly.cpp%
+	omh/poly_hpp.omh
 %$$
+
+$head Example$$
 The file
 $xref/Poly.cpp/$$
 contains an example and test of this routine.
 It returns true if it succeeds and false otherwise.
 
+$head Source$$
+The file $cref/poly.hpp/$$ contains the 
+current source code that implements these specifications.
 
 $end
 ------------------------------------------------------------------------------
 */
+// BEGIN PROGRAM
 # include <cstddef>  // used to defined size_t
 # include <cppad/check_simple_vector.hpp>
 
@@ -184,5 +190,5 @@ Type Poly(size_t k, const Vector &a, const Type &z)
 	return sum;
 }
 } // END CppAD namespace
-
+// END PROGRAM
 # endif

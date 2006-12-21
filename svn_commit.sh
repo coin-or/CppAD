@@ -38,34 +38,25 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="reorgainize so source code in below specifications in doc tree.
+log_entry="Include Poly source in documentation because used in speed tests.
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: users view of the changes.
-speed_utility.omh: alphabetical order.
-det_by_minor.hpp: source code below specifications.
-det_grad_33.hpp:  source code below specifications.
-uniform_01.hpp:  source code below specifications.
-det_of_minor.hpp:  source code below specifications.
-det_by_lu.hpp.hpp:  source code below specifications.
+svn_status.sh: remove depcomp (an automatically generated file).
+poly_hpp.omh: source code for poly.hpp.
+speed_utility.omh: add Poly to list of library routines.
+poly.hpp: include source code below in documentaiton.
 "
 add_list="
-	omh/uniform_01_hpp.omh
-	omh/det_by_minor_hpp.omh
-	omh/det_grad_33_hpp.omh
-	omh/det_of_minor_hpp.omh
-	omh/det_by_lu_hpp.omh
+	omh/poly_hpp.omh
 "
 #
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
+	svn_status.sh
 	omh/speed_utility.omh
-	speed/det_by_minor.hpp
-	speed/det_grad_33.hpp
-	speed/uniform_01.hpp
-	speed/det_of_minor.hpp
-	speed/det_by_lu.hpp
+	cppad/poly.hpp
 "
 delete_list="
 "
