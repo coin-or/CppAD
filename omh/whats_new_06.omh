@@ -76,7 +76,7 @@ $pre
 $$
 The $cref/GetStarted.cpp/$$ section has been moved
 into the $cref/Introduction/$$.
-In addition some sections has switched position beteen
+In addition some sections has switched position between
 the top level $cref/CppAD/$$ and the $cref/Appendix/$$.
 
 
