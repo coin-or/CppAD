@@ -38,17 +38,11 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Reorganize some of the documentation.
+log_entry="Add exercises to GetStarted.cpp.
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: users view of the changes.
-introduction.cpp: change title to be correct with GetStarted in introduction.
-appendix.omh: move faq into this section and change order slightly.
-introduction.omh: change output to include GetStarted.
-preprocessor.hpp: correct wording (there was no previous example).
-config.h: update version number.
-get_started.cpp: Improve title in context of introcution.
-doc.omh: move preprocessor.hpp to this section.
+get_started.cpp: change y(x) to f(x) and add exercises.
 "
 add_list="
 "
@@ -56,11 +50,6 @@ add_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	introduction/introduction.cpp
-	omh/appendix.omh
-	omh/introduction.omh
-	cppad/local/preprocessor.hpp
-	cppad/config.h
 	get_started/get_started.cpp
 "
 delete_list="

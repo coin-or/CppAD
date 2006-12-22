@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin GetStarted.cpp$$
 $spell
-	cppad.hpp
+      cppad.hpp
       http://www.coin-or.org/CppAD/
       getstarted
       namespace
@@ -38,16 +38,16 @@ Demonstrate the use of CppAD by computing the derivative
 of a simple example function.
 
 $head Function$$
-The example function $latex y : \R \rightarrow \R$$ is defined by 
+The example function $latex f : \R \rightarrow \R$$ is defined by 
 $latex \[
-      y(x) = a_0 + a_1 * x^1 + \cdots + a_{k-1} * x^{k-1}
+      f(x) = a_0 + a_1 * x^1 + \cdots + a_{k-1} * x^{k-1}
 \] $$
 where $italic a$$ is a fixed vector of length $italic k$$.
 
 $head Derivative$$
-The derivative of $latex y(x)$$ is given by
+The derivative of $latex f(x)$$ is given by
 $latex \[
-      y'(x) = a_1 + 2 * a_2 * x +  \cdots + (k-1) * a_{k-1} * x^{k-2} 
+      f' (x) = a_1 + 2 * a_2 * x +  \cdots + (k-1) * a_{k-1} * x^{k-2} 
 \] $$
 
 $head Value$$
@@ -57,13 +57,27 @@ $latex a = (1, 1, 1, 1, 1)$$, and
 $latex x = 3$$.
 If follows that 
 $latex \[
-      y'( 3 ) = 1 + 2 * 3 + 3 * 3^2 + 4 * 3^3 = 142
+      f' ( 3 ) = 1 + 2 * 3 + 3 * 3^2 + 4 * 3^3 = 142
 \] $$
 
 $head Poly$$
 The routine $code Poly$$ is defined below for this particular application.
 A general purpose polynomial evaluation routine is documented and
 distributed with CppAD (see $xref/Poly/$$).
+
+$head Exercises$$
+Modify the program below to accomplish the following tasks
+using CppAD:
+$list number$$
+Compute and print the derivative of $latex f(x) = 1 + x + x^2 + x^3 + x^4$$
+at the point $latex x = 2$$. 
+$lnext
+Compute and print the derivative of $latex f(x) = 1 + x + x^2 / 2$$
+at the point $latex x = .5$$.
+$lnext
+Compute and print the derivative of $latex f(x) = \exp (x) - 1 - x - x^2 / 2$$
+at the point $latex x = .5$$.
+$lend
 
 
 $head Program$$
@@ -122,7 +136,7 @@ int main(void)
       jac  = f.Jacobian(x);      // Jacobian for operation sequence
 
       // print the results
-      std::cout << "y'(3) computed by CppAD = " << jac[0] << std::endl;
+      std::cout << "f'(3) computed by CppAD = " << jac[0] << std::endl;
 
       // check if the derivative is correct
       int error_code;
@@ -136,7 +150,7 @@ int main(void)
 $head Output$$
 Executing the program above will generate the following output:
 $codep
-	y'(3) computed by CppAD = 142
+	f'(3) computed by CppAD = 142
 $$
 $end
 */
