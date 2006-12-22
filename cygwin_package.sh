@@ -28,6 +28,10 @@ fi
 #
 version=`ls /cygdrive/c/Download/cppad-20*.gpl.tgz | 
 	sed -n -e 's|.*/||' -e 's|cppad-||' -e 's|.gpl.tgz||' -e '$,$p'`
+if [ "$version" != 20061208 ]
+then
+        echo "change all occurances of y'(3) to f'(3)"
+fi
 release="1"
 if [ ! -e "/cygdrive/c/Download/cppad-$version.gpl.tgz" ]
 then
