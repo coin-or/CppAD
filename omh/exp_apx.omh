@@ -43,10 +43,11 @@ The exponential function can be defined by
 $latex \[
 	\exp (x) = 1 + x^1 / 1 ! + x^2 / 2 ! + \cdots 
 \] $$
-We define $latex k ( \varepsilon )  $$ as the smallest
+We define $latex k ( x, \varepsilon )  $$ as the smallest
 non-negative integer such that $latex \varepsilon \geq x^k / k !$$; i.e.,
 $latex \[
-k( \varepsilon ) = \min \{ k \in {\rm Z}_+ \; | \; \varepsilon \geq x^k / k ! \}
+k( x, \varepsilon ) = 
+	\min \{ k \in {\rm Z}_+ \; | \; \varepsilon \geq x^k / k ! \}
 \] $$
 The mathematical form for our approximation of the exponential function is
 $latex \[
@@ -56,7 +57,7 @@ $latex \[
 \frac{1}{ {\rm ExpApx} (-x , \varepsilon ) } 
 	& {\rm if} \; x < 0 
 \\
-1 + x^1 / 1 ! + \cdots + x^{k( \varepsilon)} / k( \varepsilon ) !
+1 + x^1 / 1 ! + \cdots + x^{k( x, \varepsilon)} / k( x, \varepsilon ) !
 	& {\rm otherwise}
 \end{array}
 \right.
@@ -142,6 +143,29 @@ $children%
 	introduction/exp_apx/exp_apx.hpp%
 	introduction/exp_apx/exp_apx.cpp
 %$$
+
+$head Exercises$$
+$list number$$
+Using the definition of $latex k( x, \varepsilon )$$ above,
+what is the value of 
+$latex k(.5, 1)$$, $latex k(.5, .1)$$, and $latex k(.5, .01)$$ ?
+$lnext
+Suppose that we make the following call to $code ExpApx$$:
+$codep
+	double x = 1.;
+	double e = .01;
+	double y = ExpApx(x, e);
+$$
+What is the value assigned to 
+$code q$$, $code r$$, $code s$$, and $code k$$
+the first time through the $code while$$ loop in $cref/ExpApx.hpp/$$ ?
+$lnext
+Continuing the previous exercise, 
+what is the value assigned to 
+$code q$$, $code r$$, $code s$$, and $code k$$
+the second time through the $code while$$ loop in $cref/ExpApx.hpp/$$ ?
+$lend
+
 
 $head Implementation$$
 The file $xref/ExpApx.hpp/$$
