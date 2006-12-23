@@ -1,5 +1,5 @@
-# ifndef CppADExpApxIncluded
-# define CppADExpApxIncluded
+# ifndef CPPAD_EXP_APX_INCLUDED
+# define CPPAD_EXP_APX_INCLUDED
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
@@ -12,7 +12,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin ExpApx.hpp$$
+$begin exp_apx.hpp$$
 $spell
 	ExpApx
 	const

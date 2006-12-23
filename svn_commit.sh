@@ -38,42 +38,19 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="move exp_apx routines to subdirectory of introduction.
+log_entry="change ExpApx.hpp omhelp section to exp_apx.hpp.
 
-configure.ac: combine get_started and exp_apx into --with-Introduction.
-build.sh: combine get_started and exp_apx into --with-Introduction.
-makefile.am: combine get_started and exp_apx into --with-Introduction.
-introduction/?.cpp: move to introduction/exp_apx/?.cpp
-introduction/makefile.am: move to introduction/exp_apx/makefile.am
-exp_apx?.omh: change introduction to introduciton/exp_apx.
-install_unix.omh: combine get_started and exp_apx into --with-Introduction.
-install_windows.omh: move introduciton program to introduction/exp_apx.
 "
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
-	configure.ac
-	build.sh
-	makefile.am
-	introduction/exp_apx_rev.cpp
-	introduction/introduction.cpp
-	introduction/exp_apx
-	introduction/exp_apx.cpp
-	introduction/exp_apx_ad.cpp
-	introduction/makefile.am
-	introduction/exp_apx.hpp
-	introduction/exp_apx_for.cpp
-	introduction/exp_apx_seq.cpp
-	omh/exp_apx_rev.omh
+	introduction/exp_apx/exp_apx.hpp
 	omh/exp_apx.omh
 	omh/exp_apx_for.omh
 	omh/exp_apx_seq.omh
 	omh/whats_new_06.omh
-	omh/introduction.omh
-	omh/install_unix.omh
-	omh/install_windows.omh
 "
 delete_list="
 "

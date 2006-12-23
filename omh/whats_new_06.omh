@@ -519,7 +519,7 @@ this conflict between CppAD and $href%http://valgrind.org/%valgrind%$$.
 
 $head 07-14$$
 Make some improvements were made to the $cref/Introduction/$$, 
-$cref/ExpApx.hpp/$$ and $cref/ExpApxRev/$$ sections.
+$cref/exp_apx.hpp/$$ and $cref/ExpApxRev/$$ sections.
 
 $head 07-12$$
 Use a drop down menu for the navigation links, instead of a separate frame

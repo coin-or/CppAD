@@ -21,7 +21,7 @@ $index forward, sweep$$
 $index sweep, forward$$
 
 $head Mathematical Form$$
-Suppose that we use the algorithm $xref/ExpApx.hpp/$$
+Suppose that we use the algorithm $xref/exp_apx.hpp/$$
 to compute $latex {\rm ExpApx} (x, e)$$ 
 with $latex x$$ is equal to .5
 and $latex e$$ is equal to .2. 

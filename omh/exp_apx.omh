@@ -28,7 +28,7 @@ $index algorithm, example$$
 $index exp, example$$
 
 $head Syntax$$
-$syntax%# include "ExpApx.hpp"%$$
+$syntax%# include "exp_apx.hpp"%$$
 $pre
 $$
 $syntax%%y% = ExpApx(%x%, %e%)%$$
@@ -158,17 +158,17 @@ $codep
 $$
 What is the value assigned to 
 $code q$$, $code r$$, $code s$$, and $code k$$
-the first time through the $code while$$ loop in $cref/ExpApx.hpp/$$ ?
+the first time through the $code while$$ loop in $cref/exp_apx.hpp/$$ ?
 $lnext
 Continuing the previous exercise, 
 what is the value assigned to 
 $code q$$, $code r$$, $code s$$, and $code k$$
-the second time through the $code while$$ loop in $cref/ExpApx.hpp/$$ ?
+the second time through the $code while$$ loop in $cref/exp_apx.hpp/$$ ?
 $lend
 
 
 $head Implementation$$
-The file $xref/ExpApx.hpp/$$
+The file $xref/exp_apx.hpp/$$
 contains a C++ implementation of this function.
 
 $head Example$$
