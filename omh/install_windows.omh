@@ -47,7 +47,7 @@ $section Windows Download, Test, and Installation$$
 
 $head Download Current Version$$
 $index download, windows$$
-Note that $code 20061211$$ is the 
+Note that $code 20061223$$ is the 
 year, month, and date corresponding to the current version of CppAD.
 If you are using 
 $href%
@@ -64,10 +64,10 @@ just follow all of the $xref/InstallUnix//Unix installation/$$ steps.
 Otherwise, download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-20061211.cpl.zip%$$
+$href%cppad-20061223.cpl.zip%$$
 
 $subhead GPL License$$
-$href%cppad-20061211.gpl.zip%$$
+$href%cppad-20061223.gpl.zip%$$
 
 $head Extraction$$
 Use 
@@ -78,7 +78,7 @@ $href%
 or some other program to decompress the archive.
 This will create the distribution directory 
 $syntax%
-	cppad-20061211
+	cppad-20061223
 %$$
 All the command sequences below assume that you start in this
 distribution directory.
@@ -101,13 +101,13 @@ contains developer documentation for CppAD.
 
 $head Getting Started$$
 $index GetStarted, windows$$
-The following steps will build the $xref/GetStarted.cpp/$$ example.
+The following steps will build the $xref/get_started.cpp/$$ example.
 Using Microsoft Visual C++,
 open the workspace $code get_started/get_started.sln$$
 in Visual Studio and then select $code Build | Build get_started.exe$$.
 Then in a Dos box, execute the following command
 $codep
-	get_started\debug\get_started
+	introduction\get_started\debug\get_started
 $$
 
 $head Introduction$$

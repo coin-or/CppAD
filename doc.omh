@@ -57,7 +57,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-20061221
+A Package for Differentiation of C++ Algorithms: cppad-20061223
 $$ 
 
 $head Syntax$$
@@ -135,7 +135,7 @@ $href%http://www.math.hu-berlin.de/~griewank/%Andreas Griewank%$$.
 
 $head Example$$
 The file
-$xref/GetStarted.cpp/$$
+$xref/get_started.cpp/$$
 contains an example and test of using CppAD to compute
 the derivative of a polynomial.
 There are many other 
