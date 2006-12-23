@@ -38,11 +38,20 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add exercises to GetStarted.cpp.
+log_entry="move get_started to introduction/get_started
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: users view of the changes.
-get_started.cpp: change y(x) to f(x) and add exercises.
+build.sh: test get_started.
+makefile.am: move get_started -> introduction/get_started.
+example_list.omh: change GetStarted -> get_started.
+whats_new_0?.omh: change GetStarted -> get_started.
+introduction.omh: move get_started here.
+get_started.cpp: move to introduction directory.
+doc.omh: change GetStarted -> get_started.
+configure.ac: move get_started into introduction directory.
+install_unix.omh: change GetStarted -> get_started.
+install_windows.omh: change GetStarted -> get_started.
 "
 add_list="
 "
@@ -50,7 +59,17 @@ add_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	get_started/get_started.cpp
+	build.sh
+	makefile.am
+	introduction/get_started
+	omh/example_list.omh
+	omh/whats_new_03.omh
+	omh/whats_new_04.omh
+	omh/whats_new_05.omh
+	omh/whats_new_06.omh
+	omh/introduction.omh
+	cppad/config.h
+	get_started
 "
 delete_list="
 "

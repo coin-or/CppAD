@@ -347,7 +347,7 @@ it will generate a $code CppADUsageError/$$ message.
 $pre
 
 $$
-The $xref/GetStarted.cpp/$$ example has been simplified
+The $xref/get_started.cpp/$$ example has been simplified
 so that it is easier to understand.
 
 $head 11-15$$
@@ -421,7 +421,7 @@ so that $code CppAD::vector<bool>$$ does not pack one bit per value
 $head 10-12$$
 Change the 
 $xref/InstallUnix/Configure/configure/$$ script so that compilation of the
-$xref/GetStarted.cpp/$$ and $xref/PrintFor.cpp/$$ examples are optional.
+$xref/get_started.cpp/$$ and $xref/PrintFor.cpp/$$ examples are optional.
 $pre
 
 $$

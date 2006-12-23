@@ -108,7 +108,7 @@ SIAM Frontiers in Applied Mathematics,
 2000.
 
 $childtable%
-	get_started/get_started.cpp%
+	introduction/get_started/get_started.cpp%
 	omh/exp_apx.omh%
 	omh/exp_apx_seq.omh%
 	omh/exp_apx_for.omh%

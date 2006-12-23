@@ -122,7 +122,7 @@ $xref/CompareChange/$$ function
 returns the number of comparison operations that have changed.
 
 $head 11-10$$
-The $xref/GetStarted.cpp/$$ example was changed to use the 
+The $xref/get_started.cpp/$$ example was changed to use the 
 $xref/Jacobian/$$ driver.
 In addition, more $xref/_index//index/$$ entries,
 that point to the $xref/Drivers//easy to use drivers/$$, 
@@ -376,7 +376,7 @@ This automates the building of the make files for the
 $xref/Install//installation/$$ and is the standard
 way to distribute open source software.
 This caused some organizational changes,
-for example, the $xref/GetStarted.cpp//GetStarted/$$ example now 
+for example, the $xref/get_started.cpp//GetStarted/$$ example now 
 has its own directory and
 the distribution directory is named
 $syntax%

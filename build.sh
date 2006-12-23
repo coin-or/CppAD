@@ -337,9 +337,10 @@ then
 	cat make_error.log   >> ../build_test.log
 	ok="yes"
 	list="
+		introduction/get_started/get_started
+		introduction/introduction
 		example/example
 		test_more/test_more
-		introduction/Introduction
 	"
 	for program in $list
 	do

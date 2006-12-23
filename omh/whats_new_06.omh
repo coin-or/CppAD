@@ -68,15 +68,18 @@ This section contains a list of the changes to CppAD during 2006
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-22$$
+Move $cref/get_started.cpp/$$ below the $cref/introduction/$$ directory.
+
 $head 12-21$$
 Add the $cref/source code for Poly/poly.hpp/$$ to the documentation
 and include $cref/Poly/$$ in the in the $cref/speed_utility/$$ section.
 $pre
 
 $$
-The $cref/GetStarted.cpp/$$ section has been moved
+The $cref/get_started.cpp/$$ section has been moved
 into the $cref/Introduction/$$ and 
-$cref/exercises/GetStarted.cpp/Exercises/$$ were added to that section.
+$cref/exercises/get_started.cpp/Exercises/$$ were added to that section.
 In addition some sections has switched position between
 the top level $cref/CppAD/$$ and the $cref/Appendix/$$.
 
@@ -361,7 +364,7 @@ $cref/size_var/SeqProperty/size_var/$$.
 
 $head 11-04$$
 Put text written to standard output in the documentation for the
-$cref/GetStarted.cpp/GetStarted.cpp/Output/$$ and 
+$cref/get_started.cpp/get_started.cpp/Output/$$ and 
 $cref/PrintFor.cpp/PrintFor.cpp/Output/$$ examples.
 (Now documentation can be built from a subversion checkout with out
 needing to execute automake.)
@@ -592,7 +595,7 @@ $xref/BenderQuad/g/function value argument, g/$$ in $code BenderQuad$$.
 
 $head 06-07$$
 Some major changes were made to the notation in
-$xref/GetStarted.cpp/$$ (to make it easier to start using CppAD).
+$xref/get_started.cpp/$$ (to make it easier to start using CppAD).
 $pre
 
 $$
@@ -654,7 +657,7 @@ Add more discussion and a reference for the
 $xref/Bugs/gcc 3.4.4 -O2/gcc 3.4.4 -O2/$$ bug.
 
 $head 04-28$$
-Improve the $xref/GetStarted.cpp/$$ example and move
+Improve the $xref/get_started.cpp/$$ example and move
 it so that it is visible at the too level of the documentation.
 
 $head 04-26$$
