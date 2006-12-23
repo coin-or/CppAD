@@ -154,16 +154,11 @@ nobase_include_HEADERS =  \
 	speed/uniform_01.hpp
 #
 #
-# Did user specify --with-Example
-if CppAD_GETSTARTED
-GETSTARTED = introduction/get_started
-else
-GETSTARTED =
-endif
-#
 # Did user specify --with-Introduction
 if CppAD_INTRODUCTION
-INTRODUCTION = introduction
+INTRODUCTION = \
+	introduction/get_started \
+	introduction/exp_apx
 else
 INTRODUCTION =
 endif
@@ -230,7 +225,6 @@ SUBDIRS = \
 	$(EXAMPLE) \
 	$(INTRODUCTION) \
 	$(FADBAD) \
-	$(GETSTARTED) \
 	$(PRINTFOR) \
 	$(PROFILE) \
 	$(SPEEDEXAMPLE) \

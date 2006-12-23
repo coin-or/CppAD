@@ -10,16 +10,19 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Introduction.cpp$$
+$begin exp_apx_main.cpp$$
 $spell
 	Cpp
+	exp_apx
 $$
 
-$section Run and Check All The Exponential Approximation Routines$$
-$index example, run all$$
+$section Check Result for Exponential Approximation Routines$$
+$index exp_apx, main test$$
+$index run, exp_apx test$$
+$index test, exp_apx main$$
 
 $code
-$verbatim%introduction/introduction.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%introduction/exp_apx/main.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

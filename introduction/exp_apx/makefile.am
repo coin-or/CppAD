@@ -11,9 +11,9 @@
 # automake input file
 #
 # Microsoft project files
-EXTRA_DIST        = introduction.sln introduction.vcproj 
+EXTRA_DIST        = exp_apx.sln exp_apx.vcproj 
 #
-noinst_PROGRAMS   = introduction 
+noinst_PROGRAMS   = exp_apx 
 #
 if CppAD_BOOSTVECTOR
 AM_CPPFLAGS       = -I$(BOOST_DIR) \
@@ -24,8 +24,8 @@ endif
 #
 AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #
-introduction_SOURCES   = \
-	introduction.cpp \
+exp_apx_SOURCES   = \
+	main.cpp \
 	exp_apx.cpp  \
 	exp_apx.hpp \
 	exp_apx_ad.cpp \

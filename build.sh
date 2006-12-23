@@ -172,7 +172,6 @@ then
 	then
 		TEST="
 			--with-Documentation
-			--with-GetStarted
 			--with-Introduction
 			--with-Example
 			--with-TestMore
@@ -338,7 +337,7 @@ then
 	ok="yes"
 	list="
 		introduction/get_started/get_started
-		introduction/introduction
+		introduction/exp_apx/exp_apx
 		example/example
 		test_more/test_more
 	"
@@ -382,8 +381,10 @@ then
 	echo "Check the file $dir/build_test.log for errors and warnings."
 	if [ "$ok" = "no" ]
 	then
+		echo "Error: One of the test programs failed to execute."
 		exit 1
 	fi
+	echo "All of the test programs executed."
 	exit 0
 fi
 if [ "$1" = "gpl+dos" ] || [ "$1" = "all" ]
@@ -444,7 +445,7 @@ echo "------"
 echo "version        update configure.ac and doc.omh version number"
 echo "omhelp         build all the documentation in doc & dev directories"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
-echo "configure      excludes --with-* except GetStarted and Introduction"
+echo "configure      excludes --with-*"
 echo "configure test includes all the possible options except PREFIX_DIR"
 echo "make           use make to build all of the requested targets"
 echo "dist           create the distribution file cppad-version.cpl.tgz"

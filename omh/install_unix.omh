@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin InstallUnix$$
 $dollar @$$
 $spell
+	exp_apx
 	tgz
 	gpl
 	Dev
@@ -33,7 +34,6 @@ $spell
 	Dir
 	xvzf
 	gz
-	GetStarted
 	workspace
 	Makefile
 	exe
@@ -99,7 +99,6 @@ $syntax%
 	./configure                            \
 	--prefix=%PrefixDir%                     \
 	--with-Documentation                   \
-	--with-GetStarted                      \
 	--with-Introduction                    \
 	--with-Example                         \
 	--with-TestMore                        \
@@ -162,9 +161,14 @@ $syntax%
 %$$
 
 
-$head --with-GetStarted$$
+$head --with-Introduction$$
+$index introduction, unix$$
+$index unix, introduction$$
+
+$subhead get_started$$
 $index get_started, unix$$
-If the command line argument $code --with-GetStarted$$ is specified,
+$index unix, get_started$$
+If the command line argument $code --with-Introduction$$ is specified,
 the $xref/get_started.cpp/$$ example will be built.
 Once the $code make$$ command 
 has been executed, you can run this example by executing the command 
@@ -172,15 +176,17 @@ $codep
 	introduction/get_started/get_started
 $$
 
-$head --with-Introduction$$
-$index introduction, unix$$
+$subhead exp_apx$$
+$index exp_apx, unix$$
+$index unix, exp_apx$$
 If the command line argument $code --with-Introduction$$ is specified,
-the $xref/Introduction.cpp/$$ program
-(verifies calculations in the $xref/Introduction/$$) will be built.
+the $cref/exp_apx_main.cpp/$$ program
+(verifies calculations in the $cref/Introduction/$$ $code exp_apx$$ example) 
+will be built.
 Once the $code make$$ command
 has been executed, you can run these examples by executing the command
 $codep
-	introduction/introduction
+	introduction/exp_apx/exp_apx
 $$
 
 $head --with-Example$$
@@ -401,7 +407,6 @@ $$
 will compile all of the examples and tests.  
 An extensive set of examples and tests can be run as described under
 the headings
-$xref/InstallUnix/--with-GetStarted/--with-GetStarted/$$,
 $xref/InstallUnix/--with-Introduction/--with-Introduction/$$,
 $xref/InstallUnix/--with-Example/--with-Example/$$,
 $xref/InstallUnix/--with-TestMore/--with-TestMore/$$,

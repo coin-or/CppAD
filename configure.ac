@@ -44,16 +44,6 @@ dnl cygwin end delete:
 dnl cygwin replace: AM_CONDITIONAL(CppAD_DOCUMENTATION, test "yes" = "yes")
 
 
-dnl Are we building the GetStarted directory -----------------------------
-AC_MSG_CHECKING([--with-GetStarted])
-AC_ARG_WITH(GetStarted, 
-	AC_HELP_STRING([--with-GetStarted], [default is no]),
-	[GetStarted="yes"],
-	[GetStarted="no"]
-)
-AM_CONDITIONAL(CppAD_GETSTARTED, test "$GetStarted" = "yes")
-AC_MSG_RESULT([$GetStarted])
-
 dnl Are we building the Introduction directory ---------------------------
 AC_MSG_CHECKING([--with-Introduction])
 AC_ARG_WITH(Introduction, 
@@ -236,7 +226,7 @@ AC_CONFIG_FILES([
 	makefile
 	example/makefile 
 	introduction/get_started/makefile 
-	introduction/makefile
+	introduction/exp_apx/makefile
 	print_for/makefile
 	speed/adolc/makefile
 	speed/cppad/makefile 

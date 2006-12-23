@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin WhatsNew06$$
 $spell
+	exp_apx
 	Alloc
 	fadbad
 	exp
@@ -70,6 +71,16 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 12-22$$
 Move $cref/get_started.cpp/$$ below the $cref/introduction/$$ directory.
+$pre
+
+$$
+Move the exponential example to the subdirectory
+$code introduction/exp_apx$$ and change the
+$cref/--with-Introduction/InstallUnix/--with-Introduction/$$ 
+unix configure option
+to build both the $cref/get_started.cpp/$$ and $cref/exp_apx_main.cpp/$$
+example programs.
+(The $code --with-GetStarted$$ configure command line option has been removed.)
 
 $head 12-21$$
 Add the $cref/source code for Poly/poly.hpp/$$ to the documentation
@@ -663,7 +674,7 @@ it so that it is visible at the too level of the documentation.
 $head 04-26$$
 The programs in $xref/Introduction/$$ have been converted to automated
 test that return true or false with the driver program 
-$xref/Introduction.cpp/$$.
+$cref/Introduction/exp_apx_main.cpp/$$.
 
 $head 04-25$$
 Add an $xref/Introduction/$$ section to the documentation

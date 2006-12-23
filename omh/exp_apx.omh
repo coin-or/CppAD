@@ -67,7 +67,7 @@ $latex \[
 $head include$$
 The include command in the syntax is relative to 
 $syntax%
-	cppad-%yy%-%mm%-%dd%/introduction
+	cppad-%yy%-%mm%-%dd%/introduction/exp_apx
 %$$
 where $syntax%cppad-%yy%-%mm%-%dd%$$ is the distribution directory
 created during the beginning steps of the
@@ -139,8 +139,8 @@ $syntax%-%u%$$
 $tend
 
 $children%
-	introduction/exp_apx.hpp%
-	introduction/exp_apx.cpp
+	introduction/exp_apx/exp_apx.hpp%
+	introduction/exp_apx/exp_apx.cpp
 %$$
 
 $head Implementation$$
