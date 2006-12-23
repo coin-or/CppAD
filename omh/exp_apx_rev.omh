@@ -8,14 +8,14 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-$begin ExpApxRev$$
+$begin exp_apx_rev$$
 $spell
-	ExpApxRev
+	exp_apx_rev
 $$
 
 $section An Example Reverse Mode Sweep$$
 
-$index ExpApx, reverse sweep$$
+$index exp_apx, reverse sweep$$
 $index example, reverse sweep$$
 $index reverse, sweep$$
 $index sweep, reverse$$
@@ -23,14 +23,14 @@ $index sweep, reverse$$
 
 $head Reverse Example$$
 Reverse mode uses the
-$xref/ExpApxSeq/Operation Sequence/ExpApx operation sequence/$$
+$xref/exp_apx_seq/Operation Sequence/exp_apx operation sequence/$$
 in reverse order to compute the entire derivative of
 one dependent variable with respect to all of the independent variables.
 The symbols
 $latex \[
 	s_0, r_0, k_0, k_1, k_2, k_3
 \] $$
-are  operation sequence $xref/ExpApxSeq/Parameter/parameters/$$.
+are  operation sequence $xref/exp_apx_seq/Parameter/parameters/$$.
 Hence they are not included in our function definitions below.
 In addition, the operation sequence depends on $italic e$$
 but the individual operations do not.
@@ -99,7 +99,7 @@ r_2 & =   & q_2 / k_1
 \end{array}
 \] $$
 Note that $latex k_1 = 2 $$ is an operation sequence 
-$xref/ExpApxSeq/Parameter/parameter/$$ 
+$xref/exp_apx_seq/Parameter/parameter/$$ 
 so we have not included it an argument to the function $latex r_2 $$.
 It follows that 
 $latex \[
@@ -168,7 +168,7 @@ s_1  & = &  s_0 + r_1
 \end{array}
 \] $$
 Note that $latex s_0 $$ is a 
-$xref/ExpApxSeq/Parameter/parameter/$$ 
+$xref/exp_apx_seq/Parameter/parameter/$$ 
 so we have not included as an argument to the function $latex s_1 $$.
 It follows that
 $latex \[
@@ -203,7 +203,7 @@ r_1 & =  & q_1 / k_0
 \end{array}
 \] $$
 Note that $latex k_0 = 1 $$ is a 
-$xref/ExpApxSeq/Parameter/parameter/$$ 
+$xref/exp_apx_seq/Parameter/parameter/$$ 
 so we have not included as an argument to the function $latex r_1 $$.
 It follows that 
 $latex \[
@@ -234,7 +234,7 @@ q_1 & = & r_0 * a_0
 \end{array}
 \] $$
 Note that $latex r_0 = 1 $$ is a 
-$xref/ExpApxSeq/Parameter/parameter/$$ 
+$xref/exp_apx_seq/Parameter/parameter/$$ 
 so we have not included as an argument to the function $latex q_1 $$.
 It follows that 
 $latex \[
@@ -249,7 +249,7 @@ Note that,
 for the argument value $latex x = 0.5$$,
 $latex a_0$$ is equal to $latex x$$ and  
 $latex \[
-\D{f_6}{a_0} = \D{ {\rm ExpApx} (x, .2) }{x} 
+\D{f_6}{a_0} = \D{ {\rm exp\_apx} (x, .2) }{x} 
 \] $$
 We also note that both reverse and forward mode give the 
 same result for this partial derivative.
@@ -259,7 +259,7 @@ $children%
 	introduction/exp_apx/exp_apx_rev.cpp
 %$$
 $head Verification$$
-The file $xref/ExpApxFor.cpp/$$ contains a routine 
+The file $xref/exp_apx_for.cpp/$$ contains a routine 
 which verifies the values computed above.
 It returns true for success and false for failure.
 It only tests the partial derivatives of

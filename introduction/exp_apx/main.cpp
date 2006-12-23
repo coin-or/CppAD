@@ -33,11 +33,11 @@ $end
 # include <iostream>
 
 // external complied tests
-extern bool ExpApx(void);
-extern bool ExpApxAD(void);
-extern bool ExpApxFor(void);
-extern bool ExpApxSeq(void);
-extern bool ExpApxRev(void);
+extern bool exp_apx(void);
+extern bool exp_apx_ad(void);
+extern bool exp_apx_for(void);
+extern bool exp_apx_seq(void);
+extern bool exp_apx_rev(void);
 
 namespace {
 	// function that runs one test
@@ -63,11 +63,11 @@ int main(void)
 	// This comment is used by OneTest 
 
 	// external compiled tests
-	ok &= Run( ExpApx,        "ExpApx"       );
-	ok &= Run( ExpApxAD,      "ExpApxAD"     );
-	ok &= Run( ExpApxFor,     "ExpApxFor"    );
-	ok &= Run( ExpApxSeq,     "ExpApxSeq"    );
-	ok &= Run( ExpApxRev,     "ExpApxRev"    );
+	ok &= Run( exp_apx,        "exp_apx"       );
+	ok &= Run( exp_apx_ad,      "exp_apx_ad"     );
+	ok &= Run( exp_apx_for,     "exp_apx_for"    );
+	ok &= Run( exp_apx_seq,     "exp_apx_seq"    );
+	ok &= Run( exp_apx_rev,     "exp_apx_rev"    );
 	if( ok )
 		cout << "All the tests passed." << endl;
 	else	cout << "At least one test failed." << endl;

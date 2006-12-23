@@ -9,13 +9,13 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin ExpApxAD.cpp$$
+$begin exp_apx_ad.cpp$$
 $spell
 	cppad.hpp
 	cmath
 	fabs
 	bool
-	ExpApxAD
+	exp_apx_ad
 	du
 	dv
 	dw
@@ -28,7 +28,7 @@ $spell
 	CppAD
 $$
 
-$section ExpApx: Computing Derivatives with CppAD$$.
+$section exp_apx: Computing Derivatives with CppAD$$.
 
 $codep */
 
@@ -36,7 +36,7 @@ $codep */
 # include <vector>           // standard vector
 # include <cppad/cppad.hpp>    // http://www.coin-or.org/CppAD/ 
 # include "exp_apx.hpp"       // our example exponential function approximation
-bool ExpApxAD(void)
+bool exp_apx_ad(void)
 {	bool ok = true;
 	using CppAD::AD;
 
@@ -52,7 +52,7 @@ bool ExpApxAD(void)
 	// evaluate our exponential approximation
 	AD<double> x   = U[0];
 	AD<double> e   = U[1];
-	AD<double> apx = ExpApx(x, e);  
+	AD<double> apx = exp_apx(x, e);  
 
 	// range space vector
 	size_t m = 1;
@@ -68,7 +68,7 @@ bool ExpApxAD(void)
 	du[0] = 1.;
 	du[1] = 0.;
 	dv    = f.Forward(1, du);
-	double check = 1.5;     // partial of ExpApx(x, e) with respect to x
+	double check = 1.5;     // partial of exp_apx(x, e) with respect to x
 	ok   &= fabs(check - dv[0]) <=  1e-10;
 
 	// reverse mode sweep that derivative
@@ -76,9 +76,9 @@ bool ExpApxAD(void)
 	std::vector<double> dw(n);
 	w[0] = 1.;
 	dw   = f.Reverse(1, w);
-	check = 1.5;           // partial of ExpApx(x, e) with respect to x
+	check = 1.5;           // partial of exp_apx(x, e) with respect to x
 	ok   &= fabs(check - dw[0]) <=  1e-10;
-	check = 0.;            // partial of ExpApx(x, e) with respect to e
+	check = 0.;            // partial of exp_apx(x, e) with respect to e
 	ok   &= fabs(check - dw[1]) <=  1e-10;
 
 	return ok;

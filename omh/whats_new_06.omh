@@ -519,7 +519,7 @@ this conflict between CppAD and $href%http://valgrind.org/%valgrind%$$.
 
 $head 07-14$$
 Make some improvements were made to the $cref/Introduction/$$, 
-$cref/exp_apx.hpp/$$ and $cref/ExpApxRev/$$ sections.
+$cref/exp_apx.hpp/$$ and $cref/exp_apx_rev/$$ sections.
 
 $head 07-12$$
 Use a drop down menu for the navigation links, instead of a separate frame
@@ -611,7 +611,7 @@ $pre
 
 $$
 In the $xref/Introduction/$$ example,
-$latex ExpApx$$ was changed to $latex {\rm ExpApx}$$.
+$latex exp_apx$$ was changed to $latex {\rm exp\_apx}$$.
 
 $head 06-05$$
 Change $xref/BenderQuad/$$ 

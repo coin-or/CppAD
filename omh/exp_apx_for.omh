@@ -8,21 +8,21 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-$begin ExpApxFor$$
+$begin exp_apx_for$$
 $spell
-	ExpApxFor
+	exp_apx_for
 $$
 
 $section An Example Forward Mode Sweep$$
 
-$index ExpApx, forward sweep$$
+$index exp_apx, forward sweep$$
 $index example, forward sweep$$
 $index forward, sweep$$
 $index sweep, forward$$
 
 $head Mathematical Form$$
 Suppose that we use the algorithm $xref/exp_apx.hpp/$$
-to compute $latex {\rm ExpApx} (x, e)$$ 
+to compute $latex {\rm exp\_apx} (x, e)$$ 
 with $latex x$$ is equal to .5
 and $latex e$$ is equal to .2. 
 For this case, our approximation of the exponential function,
@@ -30,11 +30,11 @@ and the partial derivative of the approximation,
 are given by 
 $latex \[
 \begin{array}{rclll}
-{\rm ExpApx} (x, e) & = &   1 + x + x^2 / 2  
+{\rm exp\_apx} (x, e) & = &   1 + x + x^2 / 2  
 	& =   1 + .5 + .25 / 2 
 	& =   1.625
 \\
-\partial_x {\rm ExpApx} (x, e) & = &   1 + x 
+\partial_x {\rm exp\_apx} (x, e) & = &   1 + x 
 	& =   1 + .5 
 	& =   1.5
 \end{array}
@@ -42,7 +42,7 @@ $latex \[
 
 $head Forward Example$$
 Forward mode uses the 
-$xref/ExpApxSeq/Operation Sequence/ExpApx operation sequence/$$
+$xref/exp_apx_seq/Operation Sequence/exp_apx operation sequence/$$
 in its original order to compute the partial derivative
 of all the dependent variables with respect to one independent variable. 
 The operation sequence depends on $italic e$$,
@@ -119,7 +119,7 @@ $children%
 	introduction/exp_apx/exp_apx_for.cpp
 %$$
 $head Verification$$
-The file $xref/ExpApxFor.cpp/$$ contains a routine 
+The file $xref/exp_apx_for.cpp/$$ contains a routine 
 which verifies the values computed above.
 It returns true for success and false for failure.
 

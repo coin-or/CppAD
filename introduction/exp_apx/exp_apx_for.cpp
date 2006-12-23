@@ -9,28 +9,28 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin ExpApxFor.cpp$$
+$begin exp_apx_for.cpp$$
 $spell
 	std
 	vars
-	ExpApxFor
+	exp_apx_for
 	cmath
 	fabs
 	bool
 $$
 
-$section ExpApx Forward Mode Verification$$
+$section exp_apx Forward Mode Verification$$
 $codep */
 
 # include <cmath>                           // for fabs function
-extern bool ExpApxSeq(void);                // prototype for ExpApxSeq
-extern double a[1], q[3], r[3], s[3], k[3]; // global vars set by ExpApxSeq
-bool ExpApxFor(void)
+extern bool exp_apx_seq(void);                // prototype for exp_apx_seq
+extern double a[1], q[3], r[3], s[3], k[3]; // global vars set by exp_apx_seq
+bool exp_apx_for(void)
 {	bool ok = true;
 	double a_x[1], q_x[3], r_x[3], s_x[3];
 
-	// make sure global variables have been computed by ExpApxSeq
-	ok &= ExpApxSeq();
+	// make sure global variables have been computed by exp_apx_seq
+	ok &= exp_apx_seq();
 
 	// initial r and s values are parameters
 	r_x[0] = s_x[0] = 0.;

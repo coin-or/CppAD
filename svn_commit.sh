@@ -38,7 +38,7 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="change ExpApx.hpp omhelp section to exp_apx.hpp.
+log_entry="change ExpApx to exp_apx throughout introduction.
 
 "
 add_list="
@@ -46,11 +46,19 @@ add_list="
 #
 change_list="
 	svn_commit.sh
+	introduction/exp_apx/exp_apx_rev.cpp
+	introduction/exp_apx/exp_apx.cpp
+	introduction/exp_apx/main.cpp
+	introduction/exp_apx/exp_apx_ad.cpp
 	introduction/exp_apx/exp_apx.hpp
+	introduction/exp_apx/exp_apx_for.cpp
+	introduction/exp_apx/exp_apx_seq.cpp
+	omh/exp_apx_rev.omh
 	omh/exp_apx.omh
 	omh/exp_apx_for.omh
 	omh/exp_apx_seq.omh
 	omh/whats_new_06.omh
+	omh/introduction.omh
 "
 delete_list="
 "

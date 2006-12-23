@@ -9,7 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin ExpApxRev.cpp$$
+$begin exp_apx_rev.cpp$$
 $spell
 	cstddef
 	cmath
@@ -19,19 +19,19 @@ $spell
 	ir
 	ia
 	df
-	ExpApxRev
+	exp_apx_rev
 	bool
 	std
 	fabs
 $$
 
-$section ExpApx Reverse Mode Verification$$
+$section exp_apx Reverse Mode Verification$$
 $codep */
 # include <cstddef>                         // for size_t
 # include <cmath>                           // for fabs function
-extern bool ExpApxSeq(void);                // prototype for ExpApxSeq
-extern double a[1], q[3], r[3], s[3], k[3]; // global vars set by ExpApxSeq
-bool ExpApxRev(void)
+extern bool exp_apx_seq(void);                // prototype for exp_apx_seq
+extern double a[1], q[3], r[3], s[3], k[3]; // global vars set by exp_apx_seq
+bool exp_apx_rev(void)
 {	bool ok = true;
 
 	// ordering of arguments is: 
@@ -39,8 +39,8 @@ bool ExpApxRev(void)
 	// corresponding index offsets for each of the parameters
 	size_t ia = 0, iq = ia+1, ir = iq+3, is = ir+3;
 
-	// make sure global variables have been computed by ExpApxSeq
-	ok &= ExpApxSeq();
+	// make sure global variables have been computed by exp_apx_seq
+	ok &= exp_apx_seq();
 
 	// initial all partial derivatives as zero
 	double df[10];

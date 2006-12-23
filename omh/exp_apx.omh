@@ -9,7 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin ExpApx$$
+$begin exp_apx$$
 $spell
 	cppad-%yy%-%mm%-%dd%
 	hpp
@@ -22,7 +22,7 @@ $$
 
 $section An Example Exponential Approximation$$
 
-$index ExpApx$$
+$index exp_apx$$
 $index example, algorithm$$
 $index algorithm, example$$
 $index exp, example$$
@@ -31,7 +31,7 @@ $head Syntax$$
 $syntax%# include "exp_apx.hpp"%$$
 $pre
 $$
-$syntax%%y% = ExpApx(%x%, %e%)%$$
+$syntax%%y% = exp_apx(%x%, %e%)%$$
 
 
 $head Purpose$$
@@ -52,9 +52,9 @@ k( x, \varepsilon ) =
 The mathematical form for our approximation of the exponential function is
 $latex \[
 \begin{array}{rcl}
-{\rm ExpApx} (x , \varepsilon ) & = & \left\{
+{\rm exp\_apx} (x , \varepsilon ) & = & \left\{
 \begin{array}{ll}
-\frac{1}{ {\rm ExpApx} (-x , \varepsilon ) } 
+\frac{1}{ {\rm exp\_apx} (-x , \varepsilon ) } 
 	& {\rm if} \; x < 0 
 \\
 1 + x^1 / 1 ! + \cdots + x^{k( x, \varepsilon)} / k( x, \varepsilon ) !
@@ -150,11 +150,11 @@ Using the definition of $latex k( x, \varepsilon )$$ above,
 what is the value of 
 $latex k(.5, 1)$$, $latex k(.5, .1)$$, and $latex k(.5, .01)$$ ?
 $lnext
-Suppose that we make the following call to $code ExpApx$$:
+Suppose that we make the following call to $code exp_apx$$:
 $codep
 	double x = 1.;
 	double e = .01;
-	double y = ExpApx(x, e);
+	double y = exp_apx(x, e);
 $$
 What is the value assigned to 
 $code q$$, $code r$$, $code s$$, and $code k$$
@@ -172,7 +172,7 @@ The file $xref/exp_apx.hpp/$$
 contains a C++ implementation of this function.
 
 $head Example$$
-The file $xref/ExpApx.cpp/$$ 
+The file $xref/exp_apx.cpp/$$ 
 contains an example and test of this implementation.
 It returns true for success and false for failure.
 

@@ -9,20 +9,20 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin ExpApxSeq.cpp$$
+$begin exp_apx_seq.cpp$$
 $spell
 	std
-	ExpApxSeq
+	exp_apx_seq
 	cmath
 	bool
 	fabs
 $$
-$section ExpApx: Operation Sequence Verification$$
+$section exp_apx: Operation Sequence Verification$$
 $codep */
 
 # include <cmath>                    // for fabs function
-double a[1], q[3], r[3], s[3], k[3]; // global variables set by ExpApxSeq
-bool ExpApxSeq(void)
+double a[1], q[3], r[3], s[3], k[3]; // global variables set by exp_apx_seq
+bool exp_apx_seq(void)
 {	bool  ok = true;
 	double x = .5;
 

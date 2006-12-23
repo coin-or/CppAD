@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin exp_apx.hpp$$
 $spell
-	ExpApx
+	exp_apx
 	const
 	Exp
 $$
@@ -22,7 +22,7 @@ $$
 $section An Example Exponential Approximation Source Code$$
 $codep */
 template <class Type>
-Type ExpApx(const Type &x, const Type &e)
+Type exp_apx(const Type &x, const Type &e)
 {	Type a, q, r, s, k;           // declare local variables
 	r = s = k = Type(1);          // initialize as equal to one
 	a = x;                        // a = |x|
