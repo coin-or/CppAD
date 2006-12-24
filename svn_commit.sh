@@ -38,21 +38,23 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add exercises to and general improvement of the exp_apx_for.
+log_entry="Add exercises to and general improvement of the exp_apx_rev.
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: user's view of changes.
-exp_apx_for.omh: edit as commented above.
-exp_apx_seq.omh: edits that support changes to exp_apx_for.omh.
+exp_apx_rev.omh: edit as commented above.
+exp_apx_for.omh: edits that support changes to exp_apx_rev.omh.
+exp_apx_seq.omh: edits that support changes to exp_apx_rev.omh.
 "
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
+	omh/whats_new_06.omh
 	omh/exp_apx_for.omh
 	omh/exp_apx_seq.omh
-	omh/whats_new_06.omh
+	omh/exp_apx_rev.omh
 "
 delete_list="
 "

@@ -132,26 +132,32 @@ It returns true for success and false for failure.
 $head Exercises$$
 $list number$$
 Suppose that $latex x = .1$$,
-what is the result of a zero and first order forward mode sweep for 
+what are the results of a zero and first order forward mode sweep for 
 the operation sequence above; 
 i.e., what are the corresponding values for
 $latex \[
-\begin{array}{l}
+\begin{array}{c}
 	r_0, s_0, k_0, a_0, q_1, r_1, s_1, k_1, q_2, r_2, s_2
 	\\
 	\partial_x r_0, 
-	\partial s_0, 
-	\partial k_0, 
-	\partial a_0, 
-	\partial q_1, 
-	\partial r_1, 
-	\partial s_1, 
-	\partial k_1, 
-	\partial q_2, 
-	\partial r_2, 
-	\partial s_2
+	\partial_x s_0, 
+	\partial_x k_0, 
+	\partial_x a_0, 
+	\partial_x q_1, 
+	\partial_x r_1, 
+	\partial_x s_1, 
+	\partial_x k_1, 
+	\partial_x q_2, 
+	\partial_x r_2, 
+	\partial_x s_2
 \end{array}
 \]$$
+$lnext
+Create a modified version of $cref/exp_apx_for.cpp/$$ that verifies 
+the derivative values from the previous exercise.
+Also create and run a main program that reports the result
+of calling the modified version of
+$cref/exp_apx_for.cpp/$$.
 $lnext
 Suppose that $latex x = .1$$ and $latex e = .2$$,
 what is the operation sequence corresponding to 

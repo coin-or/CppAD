@@ -69,11 +69,15 @@ This section contains a list of the changes to CppAD during 2006
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-24$$
+Add Exercises to the following sections:
+$cref/exp_apx_rev/$$.
+
 $head 12-23$$
 Add Exercises to the following sections:
 $cref/get_started.cpp/$$,
 $cref/exp_apx/$$, 
-$cref/exp_apx_seq/$$,
+$cref/exp_apx_seq/$$, and
 $cref/exp_apx_for/$$.
 
 $head 12-22$$
