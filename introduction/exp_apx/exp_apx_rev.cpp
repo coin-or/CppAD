@@ -29,7 +29,7 @@ $section exp_apx Reverse Mode Verification$$
 $codep */
 # include <cstddef>                         // for size_t
 # include <cmath>                           // for fabs function
-extern bool exp_apx_seq(void);                // prototype for exp_apx_seq
+extern bool exp_apx_seq(void);              // prototype for exp_apx_seq
 extern double a[1], q[3], r[3], s[3], k[3]; // global vars set by exp_apx_seq
 bool exp_apx_rev(void)
 {	bool ok = true;

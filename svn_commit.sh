@@ -38,13 +38,20 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add exercises to and general improvement of the exp_apx_rev.
+log_entry="Move exp_apx_ad to exp_apx_cppad and add exercises.
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: user's view of changes.
-exp_apx_rev.omh: edit as commented above.
-exp_apx_for.omh: edits that support changes to exp_apx_rev.omh.
-exp_apx_seq.omh: edits that support changes to exp_apx_rev.omh.
+exp_apx_rev.cpp: align comments.
+exp_apx.cpp: align comments.
+main.cpp: add correctness counter and move exp_apx_ad to exp_apx_cppad.
+exp_apx_ad.cpp: move exp_apx_ad to exp_apx_cppad.
+makefile.am: move exp_apx_ad to exp_apx_cppad.
+exp_apx_for.cpp: align comments.
+exp_apx_cppad.cpp: move exp_apx_ad to exp_apx_cppad and add exercises.
+introduction.omh: move exp_apx_ad to exp_apx_cppad.
+config.h: update version number.
+AUTHORS: update date.
 "
 add_list="
 "
@@ -52,9 +59,16 @@ add_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	omh/exp_apx_for.omh
-	omh/exp_apx_seq.omh
-	omh/exp_apx_rev.omh
+	introduction/exp_apx/exp_apx_rev.cpp
+	introduction/exp_apx/exp_apx.cpp
+	introduction/exp_apx/main.cpp
+	introduction/exp_apx/exp_apx_ad.cpp
+	introduction/exp_apx/exp_apx_for.cpp
+	introduction/exp_apx/makefile.am
+	introduction/exp_apx/exp_apx_cppad.cpp
+	omh/introduction.omh
+	cppad/config.h
+	AUTHORS
 "
 delete_list="
 "

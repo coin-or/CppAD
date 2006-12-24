@@ -113,7 +113,7 @@ $childtable%
 	omh/exp_apx_seq.omh%
 	omh/exp_apx_for.omh%
 	omh/exp_apx_rev.omh%
-	introduction/exp_apx/exp_apx_ad.cpp%
+	introduction/exp_apx/exp_apx_cppad.cpp%
 	introduction/exp_apx/main.cpp
 %$$
 

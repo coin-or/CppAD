@@ -28,7 +28,7 @@ exp_apx_SOURCES   = \
 	main.cpp \
 	exp_apx.cpp  \
 	exp_apx.hpp \
-	exp_apx_ad.cpp \
+	exp_apx_cppad.cpp \
 	exp_apx_for.cpp \
 	exp_apx_seq.cpp \
 	exp_apx_rev.cpp

@@ -16,7 +16,8 @@ $spell
 	exp_apx
 $$
 
-$section Check Result for Exponential Approximation Routines$$
+$section exp_apx: Report All the Test Routine Results$$
+
 $index exp_apx, main test$$
 $index run, exp_apx test$$
 $index test, exp_apx main$$
@@ -34,23 +35,26 @@ $end
 
 // external complied tests
 extern bool exp_apx(void);
-extern bool exp_apx_ad(void);
+extern bool exp_apx_cppad(void);
 extern bool exp_apx_for(void);
 extern bool exp_apx_seq(void);
 extern bool exp_apx_rev(void);
 
 namespace {
 	// function that runs one test
+	static size_t Run_ok_count    = 0;
+	static size_t Run_error_count = 0;
 	bool Run(bool TestOk(void), const char *name)
 	{	bool ok = true;
-		using namespace std;
-	
 		ok &= TestOk();
-	
 		if( ok )
-			std::cout << "Ok:    " << name << std::endl;
-		else	std::cout << "Error: " << name << std::endl;
-	
+		{	std::cout << "Ok:    " << name << std::endl;
+			Run_ok_count++;
+		}
+		else
+		{	std::cout << "Error: " << name << std::endl;
+			Run_error_count++;
+		}
 		return ok;
 	}
 }
@@ -63,14 +67,14 @@ int main(void)
 	// This comment is used by OneTest 
 
 	// external compiled tests
-	ok &= Run( exp_apx,        "exp_apx"       );
-	ok &= Run( exp_apx_ad,      "exp_apx_ad"     );
+	ok &= Run( exp_apx,         "exp_apx"        );
+	ok &= Run( exp_apx_cppad,   "exp_apx_cppad"  );
 	ok &= Run( exp_apx_for,     "exp_apx_for"    );
 	ok &= Run( exp_apx_seq,     "exp_apx_seq"    );
 	ok &= Run( exp_apx_rev,     "exp_apx_rev"    );
 	if( ok )
-		cout << "All the tests passed." << endl;
-	else	cout << "At least one test failed." << endl;
+		cout << "All " << Run_ok_count << " tests passed." << endl;
+	else	cout << Run_error_count << " tests failed." << endl;
 
 	return static_cast<int>( ! ok );
 }

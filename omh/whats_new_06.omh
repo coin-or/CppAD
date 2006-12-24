@@ -70,11 +70,13 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 12-24$$
-Add Exercises to the following sections:
-$cref/exp_apx_rev/$$.
+Move $code exp_apx_ad$$ to $code exp_apx_cppad$$ and
+add exercises to the following sections:
+$cref/exp_apx_rev/$$,
+$cref/exp_apx_cppad/$$.
 
 $head 12-23$$
-Add Exercises to the following sections:
+Add exercises to the following sections:
 $cref/get_started.cpp/$$,
 $cref/exp_apx/$$, 
 $cref/exp_apx_seq/$$, and
