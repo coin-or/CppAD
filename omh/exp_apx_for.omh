@@ -13,21 +13,20 @@ $spell
 	exp_apx_for
 $$
 
-$section An Example Forward Mode Sweep$$
+$section exp_apx: First Order Forward Mode$$
 
-$index exp_apx, forward sweep$$
-$index example, forward sweep$$
-$index forward, sweep$$
-$index sweep, forward$$
+$index first, order forward$$
+$index order, first forward$$
+$index forward, first order$$
 
 $head Mathematical Form$$
 Suppose that we use the algorithm $xref/exp_apx.hpp/$$
 to compute $latex {\rm exp\_apx} (x, e)$$ 
 with $latex x$$ is equal to .5
 and $latex e$$ is equal to .2. 
-For this case, our approximation of the exponential function,
-and the partial derivative of the approximation, 
-are given by 
+For this case, the 
+$cref/exp_apx operation sequence/exp_apx_seq/Trace/Operation Sequence/$$
+corresponds to the following function and partial derivative:
 $latex \[
 \begin{array}{rclll}
 {\rm exp\_apx} (x, e) & = &   1 + x + x^2 / 2  
@@ -40,32 +39,39 @@ $latex \[
 \end{array}
 \] $$
 
-$head Forward Example$$
-Forward mode uses the 
-$cref/exp_apx operation sequence/exp_apx_seq/Trace/Operation Sequence/$$
-in its original order to compute the partial derivative
+$head First Order Forward$$
+First order forward mode uses the 
+$cref/operation sequence/exp_apx_seq/Trace/Operation Sequence/$$
+and zero order forward sweep
+$cref/values/exp_apx_seq/Trace/Zero Order Forward Value/$$
+to compute the first order partial derivative
 of all the dependent variables with respect to one independent variable. 
-The operation sequence depends on $italic e$$,
-but given the operation sequence,
-the atomic operations do not depend on $italic e$$.
+The computations are done in the same order as those in the 
+original algorithm.
+$pre
+
+$$
+The $code exp_apx$$ operation sequence depends on $italic e$$,
+but for a given the operation sequence,
+the values computed do not depend on $italic e$$.
 Thus, the partial derivative with respect to $italic e$$,
 of any of the variables in the operation sequence,
 is zero.
-We also note that the partial derivatives,
-with respect to $latex x$$, are zero for the following symbols:
+We also note that the partial derivatives
+with respect to $latex x$$ are zero for the following symbols:
 $latex \[
 	r_0 , s_0 , k_0 , k_1 , k_2 
 \] $$
-One forward mode sweep calculates the partial derivative 
+A first order forward mode sweep calculates the partial derivative 
 with respect to $italic x$$
 (of all the variables)
 as follows:
 $center
 $table
 $bold Operation$$ 
-	$cnext $pre  $$ $cnext $bold Value $$
+	$cnext $pre  $$ $cnext $bold Order 0 Value$$
 	$cnext $pre  $$ $cnext $bold Partial$$
-	$cnext $pre  $$ $cnext $bold Value$$
+	$cnext $pre  $$ $cnext $bold Order 1 Value$$
 $rnext
 $latex a_0 = x $$
 	$cnext $cnext = 0.5
@@ -122,5 +128,36 @@ $head Verification$$
 The file $xref/exp_apx_for.cpp/$$ contains a routine 
 which verifies the values computed above.
 It returns true for success and false for failure.
+
+$head Exercises$$
+$list number$$
+Suppose that $latex x = .1$$,
+what is the result of a zero and first order forward mode sweep for 
+the operation sequence above; 
+i.e., what are the corresponding values for
+$latex \[
+\begin{array}{l}
+	r_0, s_0, k_0, a_0, q_1, r_1, s_1, k_1, q_2, r_2, s_2
+	\\
+	\partial_x r_0, 
+	\partial s_0, 
+	\partial k_0, 
+	\partial a_0, 
+	\partial q_1, 
+	\partial r_1, 
+	\partial s_1, 
+	\partial k_1, 
+	\partial q_2, 
+	\partial r_2, 
+	\partial s_2
+\end{array}
+\]$$
+$lnext
+Suppose that $latex x = .1$$ and $latex e = .2$$,
+what is the operation sequence corresponding to 
+$syntax%
+	exp_apx(%x%, %e%)
+%$$
+$lend
 
 $end

@@ -38,23 +38,21 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add exercises to the exp_apx_seq section.
+log_entry="Add exercises to and general improvement of the exp_apx_for.
 
 svn_commit.sh: file that made this commit.
-exp_apx_seq.cpp: new title (zero order forward mode).
-exp_apx_rev.omh: change cross reference to operation sequence.
-exp_apx_for.omh: change cross reference to operation sequence.
-exp_apx_seq.omh: mention forward sweep and add exercises.
+whats_new_06.omh: user's view of changes.
+exp_apx_for.omh: edit as commented above.
+exp_apx_seq.omh: edits that support changes to exp_apx_for.omh.
 "
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
-	introduction/exp_apx/exp_apx_seq.cpp
-	omh/exp_apx_rev.omh
 	omh/exp_apx_for.omh
 	omh/exp_apx_seq.omh
+	omh/whats_new_06.omh
 "
 delete_list="
 "

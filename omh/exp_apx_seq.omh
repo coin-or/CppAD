@@ -16,12 +16,16 @@ $spell
 	bool
 $$
 
-$section exp_apx: Operation Sequence$$
+$section exp_apx: Operation Sequence and Zero Order Forward Mode$$
+
 $index exp_apx, operation sequence$$
 $index example, operation sequence$$
 $index operation, sequence example$$
 $index sequence, example operation$$
 
+$index zero, order forward$$
+$index order, zero forward$$
+$index forward, zero order$$
 
 $head Definition$$
 An atomic $italic Type$$ operation is an operation
@@ -89,9 +93,6 @@ have results of type
 $code bool$$ and hence are not part of the operation sequence.
 
 $subhead Zero Order Forward Value$$
-$index zero, order forward$$
-$index order, zero forward$$
-$index forward, zero order$$
 The value of the symbol corresponding to each atomic operation is listed
 in the right column of the table below.
 This is referred to as the zero order forward mode value because
@@ -185,21 +186,22 @@ The file $xref/exp_apx_seq.cpp/$$ contains a routine
 which verifies the values computed above.
 It returns true for success and false for failure.
 
-$head Exercise$$
+$head Exercises$$
 $list number$$
 Suppose that $latex x = .1$$,
-what is the result of a forward mode sweep for the operation sequence above; 
+what is the result of a zero order forward mode sweep for 
+the operation sequence above; 
 i.e., what are the corresponding values for
 $latex \[
 	r_0, s_0, k_0, a_0, q_1, r_1, s_1, k_1, q_2, r_2, s_2
 \]$$
 $lnext
-Create a modifies version of the routine
-$cref/exp_apx_seq/$$ that verifies the values you obtained
+Create a modifies version of 
+$cref/exp_apx_seq.cpp/$$ that verifies the values you obtained
 for the previous problem.
 $lnext
 Create a main program that reports the result of calling the modified version 
-of $cref/exp_apx_seq/$$ in the previous problem.
+of $cref/exp_apx_seq.cpp/$$ in the previous problem.
 $lend
 
 
