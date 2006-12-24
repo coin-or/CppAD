@@ -42,7 +42,7 @@ $latex \[
 
 $head Forward Example$$
 Forward mode uses the 
-$xref/exp_apx_seq/Operation Sequence/exp_apx operation sequence/$$
+$cref/exp_apx operation sequence/exp_apx_seq/Trace/Operation Sequence/$$
 in its original order to compute the partial derivative
 of all the dependent variables with respect to one independent variable. 
 The operation sequence depends on $italic e$$,

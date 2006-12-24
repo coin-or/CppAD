@@ -17,11 +17,11 @@ $spell
 	bool
 	fabs
 $$
-$section exp_apx: Operation Sequence Verification$$
+$section Source: exp_apx Zero Order Forward Sweep$$
 $codep */
 
 # include <cmath>                    // for fabs function
-double a[1], q[3], r[3], s[3], k[3]; // global variables set by exp_apx_seq
+double a[1], q[3], r[3], s[3], k[3]; // global variables set by call
 bool exp_apx_seq(void)
 {	bool  ok = true;
 	double x = .5;

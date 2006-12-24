@@ -16,14 +16,14 @@ $spell
 	bool
 $$
 
-$section An Example Operation Sequence$$
-
+$section exp_apx: Operation Sequence$$
 $index exp_apx, operation sequence$$
 $index example, operation sequence$$
-$index operation, sequence$$
-$index sequence, operation$$
+$index operation, sequence example$$
+$index sequence, example operation$$
 
-$head Operation Sequence$$
+
+$head Definition$$
 An atomic $italic Type$$ operation is an operation
 that has a $italic Type$$ result and is not made up of 
 other more basic operations.
@@ -34,7 +34,7 @@ there is a corresponding $italic Type$$ operation sequence for each type.
 If $italic Type$$ is clear from the context, 
 we drop it and just refer to the operation sequence.
 
-$head Mathematical Form$$
+$head Corresponding Function$$
 Suppose that we use the algorithm $xref/exp_apx.hpp/$$
 to compute $latex {\rm exp\_apx} (x, e)$$ 
 with $latex x$$ is equal to .5
@@ -47,7 +47,13 @@ $latex \[
 \] $$
 
 
-$head Parameter$$
+$head Notation$$
+We use the symbol $latex v_j$$ for the value assigned
+to the object $latex v$$ in the $th j$$ execution of 
+the $code while$$ loop in the algorithm defined by 
+$cref/exp_apx.hpp/$$.
+We use $latex v_0$$ for values that are assigned before
+the $code while$$ loop.
 The initialization section always sets
 $latex r_0$$,
 $latex s_0$$,
@@ -56,24 +62,43 @@ $latex k_0$$ equal to one.
 Hence the $italic Type$$ values 
 $latex r_0$$, $latex s_0$$ and $latex k_0$$ do not
 depend on the input variables $italic x$$ or $italic e$$.
+
+$head Parameter$$
 We refer to symbols that do not depend on the input variables
 as operation sequence parameters.
+
+$head Variable$$
 We refer to other symbols as operation sequence variables. 
 
+$head Trace$$
+We consider the case where $cref/exp_apx.hpp/$$ is executed with
+$latex x = .5$$ and $latex e = .2$$.
+In the table below we trace the execution of 
+$cref/exp_apx.hpp/$$.
 
-$head Example Operation Sequence$$
-In the table below, 
-the C++ source code is listed on the left,
-the corresponding symbol is in the next column,
-the atomic operation is in the next column,
-and the resulting value of the symbol when 
-$latex x = .5$$ and $latex e = .2$$ is listed on the right.
+$subhead Source Code$$
+The C++ source code corresponding to each atomic operation is listed 
+in the left column of the table below.
+
+$subhead Operation Sequence$$
+The mathematical function corresponding to each atomic operation is listed 
+in the center column of the table below.
 Note that the comparisons
 $code r > e$$ and $code  Type(0) > x $$
 have results of type
 $code bool$$ and hence are not part of the operation sequence.
-We use the symbol $latex v_j$$ for the value assigned
-to the object $latex v$$ in the $th j$$ execution of loop in the algorithm.
+
+$subhead Zero Order Forward Value$$
+$index zero, order forward$$
+$index order, zero forward$$
+$index forward, zero order$$
+The value of the symbol corresponding to each atomic operation is listed
+in the right column of the table below.
+This is referred to as the zero order forward mode value because
+zero order corresponds to function values and
+the computations are done in the same order as the original algorithm.
+
+$subhead Table$$
 $center
 $table
 $bold Code$$ 
@@ -117,6 +142,8 @@ $code k  = k + Type(1)$$
 	$cnext $cnext = 3        
 $tend
 $$
+
+$head Return  Value$$
 The return value of the algorithm for this case is
 $latex s_2$$ which is equal to 1.625.
 
@@ -129,7 +156,8 @@ $codep
 	while(r > e)
 $$
 This in turn would result in a different operation sequence.
-Thus the operation sequence above only correspond to the our algorithm
+Thus the operation sequence above only corresponds to 
+$cref/exp_apx.hpp/$$
 for values of $latex x$$ and $latex e$$ within a certain range.
 Note that there is a neighborhood
 of $latex x = 0.5$$ for which the comparisons would have the 
@@ -156,6 +184,24 @@ $head Verification$$
 The file $xref/exp_apx_seq.cpp/$$ contains a routine 
 which verifies the values computed above.
 It returns true for success and false for failure.
+
+$head Exercise$$
+$list number$$
+Suppose that $latex x = .1$$,
+what is the result of a forward mode sweep for the operation sequence above; 
+i.e., what are the corresponding values for
+$latex \[
+	r_0, s_0, k_0, a_0, q_1, r_1, s_1, k_1, q_2, r_2, s_2
+\]$$
+$lnext
+Create a modifies version of the routine
+$cref/exp_apx_seq/$$ that verifies the values you obtained
+for the previous problem.
+$lnext
+Create a main program that reports the result of calling the modified version 
+of $cref/exp_apx_seq/$$ in the previous problem.
+$lend
+
 
 $end
 */

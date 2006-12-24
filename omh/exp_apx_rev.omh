@@ -23,7 +23,7 @@ $index sweep, reverse$$
 
 $head Reverse Example$$
 Reverse mode uses the
-$xref/exp_apx_seq/Operation Sequence/exp_apx operation sequence/$$
+$cref/exp_apx operation sequence/exp_apx_seq/Trace/Operation Sequence/$$
 in reverse order to compute the entire derivative of
 one dependent variable with respect to all of the independent variables.
 The symbols
