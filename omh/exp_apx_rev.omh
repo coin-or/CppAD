@@ -21,9 +21,9 @@ $index reverse, first order$$
 
 $head First Order Reverse$$
 First order reverse mode uses the 
-$cref/operation sequence/exp_apx_seq/Trace/Operation Sequence/$$
-and zero order forward sweep
-$cref/values/exp_apx_seq/Trace/Zero Order Forward Value/$$
+$cref/operation sequence/exp_apx_seq/Trace/Operation/$$
+and zero order forward sweep values
+$cref/value_0/exp_apx_seq/Trace/Value_0/$$
 to compute the first order derivative
 of one dependent variables with respect to all the independent variables. 
 The computations are done in the reverse order of the original algorithm.
@@ -41,7 +41,7 @@ Thus,
 all of the partial derivatives with respect to $italic e$$ are zero.
 Hence it also is left out of our function definitions below.
 
-$head f_0 $$
+$head f_0$$
 In reverse mode we choose one dependent variable and
 compute its derivative with respect to all the independent variables.
 For our example, we chose the value returned by $cref/exp_apx.hpp/$$
@@ -50,26 +50,36 @@ We begin with the function $latex f_0 $$ where $latex s_2$$
 is both an argument and the value of the function; i.e.,
 $latex \[
 \begin{array}{rcl}
-f_0 ( a_0 , q_1 , r_1 , s_1 , q_2 , r_2 , s_2 ) & = & s_2 
+f_0 ( x, a_0 , q_1 , r_1 , s_1 , q_2 , r_2 , s_2 ) & = & s_2 
 \\
 \D{f_0}{s_2} & = & 1
 \end{array}
 \] $$
 All the other partial derivatives of $latex f_0 $$ are zero.
 
-$head f_1 $$
+$head Index 9:$$
+Reverse mode starts with the last operation in the sequence.
+For the case in question, this is the operation with index 9,
+$latex \[
+	k_2 = k_1 + 1 
+\] $$
+Because $latex k_2$$ is a 
+$cref/parameter/exp_apx_seq/Parameter/$$, 
+we do not need to include it in this reverse mode representation.
+
+$head Index 8: f_1$$
+The next operation has index 8, 
+$latex \[
+	s_2 =   s_1 + r_2  
+\] $$
 We define the function 
-$latex f_1 ( a_0 , q_1 , r_1 , s_1 , q_2 , r_2 ) $$
+$latex f_1 ( x, a_0 , q_1 , r_1 , s_1 , q_2 , r_2 ) $$
 as equal to $latex f_0 $$
 except that $latex s_2 $$ is eliminated using 
-its functional representation in the operation sequence i.e.
+this operation; i.e.
 $latex \[
-\begin{array}{rcl}
-s_2 & =   & s_1 + r_2  
-\\
-f_1 &  =  &
-f_0 [ a_0 , q_1 , r_1 , s_1 , q_2 , r_2 , s_2 ( s_1, r_2 ) ]
-\end{array}
+f_1  = 
+f_0 [ x, a_0 , q_1 , r_1 , s_1 , q_2 , r_2 , s_2 ( s_1, r_2 ) ]
 \] $$
 It follows that 
 $latex \[
@@ -87,23 +97,22 @@ $latex \[
 \] $$
 All the other partial derivatives of $latex f_1 $$ are zero.
 
-$head f_2 $$
-We define the function 
-$latex f_2 ( a_0 , q_1 , r_1 , s_1 , q_2 ) $$
-as equal to $latex f_1 $$
-except that $latex r_2 $$ is eliminated using 
-its functional representation in the operation sequence i.e.
+$head Index 7: f_2$$
+The next operation has index 7, 
 $latex \[
-\begin{array}{rcl}
-r_2 & =   & q_2 / k_1  
-\\
-f_2 &  =  &
-f_1 [ a_0 , q_1 , r_1 , s_1 , q_2 , r_2 ( q_2 ) ]
-\end{array}
+	r_2 =   q_2 / k_1  
 \] $$
-Note that $latex k_1 = 2 $$ is an operation sequence 
+We define the function 
+$latex f_2 ( x, a_0 , q_1 , r_1 , s_1 , q_2 ) $$
+as equal to $latex f_1 $$
+except that $latex r_2 $$ is eliminated using this operation; i.e.,
+$latex \[
+f_2 = 
+f_1 [ x, a_0 , q_1 , r_1 , s_1 , q_2 , r_2 ( q_2 ) ]
+\] $$
+Note that $latex k_1 = 2$$ is an operation sequence 
 $xref/exp_apx_seq/Parameter/parameter/$$ 
-so we have not included it an argument to the function $latex r_2 $$.
+so we have not included it an argument to the function $latex r_2$$.
 It follows that 
 $latex \[
 \begin{array}{rcll}
@@ -119,25 +128,26 @@ $latex \[
 \] $$
 All the other partial derivatives of $latex f_2 $$ are zero.
 
-$head f_3 $$
-We define the function 
-$latex f_3 ( a_0 , q_1 , r_1 , s_1 ) $$
-as equal to $latex f_2 $$
-except that $latex q_2 $$ is eliminated using 
-its functional representation in the operation sequence i.e.
+$head Index 6: f_3$$
+The next operation has index 6,
 $latex \[
-\begin{array}{rcl}
-q_2  & = & r_1 * a_0
-\\
-f_3 &  =  &
-f_2 [ a_0 , q_1 , r_1 , s_1 , q_2 (r_1, a_0 )  ]
-\end{array}
+	q_2  = r_1 * a_0
+\] $$
+We define the function 
+$latex f_3 ( x, a_0 , q_1 , r_1 , s_1 ) $$
+as equal to $latex f_2 $$
+except that $latex q_2 $$ is eliminated using this operation; i.e.,
+$latex \[
+f_3 = 
+f_2 [ x, a_0 , q_1 , r_1 , s_1 , q_2 (r_1, a_0 )  ]
 \] $$
 Given the independent variable values and the operation sequence,
 $latex r_1 =  0.5 $$ and $latex a_0 = 0.5 $$.
 It follows that 
 $latex \[
 \begin{array}{rcll}
+\D{f_3}{x} & = & \D{f_2}{x}  & = 0
+\\
 \D{f_3}{a_0} 
 & = & \D{f_2}{a_0} + 
 	\D{f_2}{q_2} * \D{q_2}{a_0} 
@@ -156,19 +166,27 @@ $latex \[
 \end{array}
 \] $$
 
-$head f_4 $$
-We define the function 
-$latex f_4 ( a_0 , q_1 , r_1 ) $$
-as equal to $latex f_3 $$
-except that $latex s_1 $$ is eliminated using 
-its functional representation in the operation sequence i.e.
+$head Index 5:$$
+The next operation has index 5,
 $latex \[
-\begin{array}{rcl}
-s_1  & = &  s_0 + r_1 
-\\
-f_4 &  =  &
-f_3 [ a_0 , q_1 , r_1 , s_1 (r_1 ) ]
-\end{array}
+	k_1 = k_0 + 1 
+\] $$
+Because $latex k_1$$ is a 
+$cref/parameter/exp_apx_seq/Parameter/$$, 
+we do not need to include it in this reverse mode representation.
+
+$head Index 4: f_4$$
+The next operation has index 4,
+$latex \[
+	s_1  = s_0 + r_1 
+\] $$
+We define the function 
+$latex f_4 ( x, a_0 , q_1 , r_1 ) $$
+as equal to $latex f_3 $$
+except that $latex s_1 $$ is eliminated using this operation; i.e.,
+$latex \[
+f_4 = 
+f_3 [ x, a_0 , q_1 , r_1 , s_1 (r_1 ) ]
 \] $$
 Note that $latex s_0 $$ is a 
 $xref/exp_apx_seq/Parameter/parameter/$$ 
@@ -176,6 +194,8 @@ so we have not included as an argument to the function $latex s_1 $$.
 It follows that
 $latex \[
 \begin{array}{rcll}
+\D{f_4}{x} & = & \D{f_3}{x}  & = 0
+\\
 \D{f_4}{a_0} 
 & = & \D{f_3}{a_0}
 & =  0.25
@@ -191,19 +211,18 @@ $latex \[
 \end{array}
 \] $$
 
-$head f_5 $$
-We define the function 
-$latex f_5 ( a_0 , q_1 ) $$
-as equal to $latex f_4 $$
-except that $latex r_1 $$ is eliminated using 
-its functional representation in the operation sequence i.e.
+$head Index 3: f_5$$
+The next operation has index 3,
 $latex \[
-\begin{array}{rcl}
-r_1 & =  & q_1 / k_0 
-\\
-f_5 &  =  &
-f_4 [ a_0 , q_1 , r_1 ( q_1 )]
-\end{array}
+	r_1 =  q_1 / k_0 
+\] $$
+We define the function 
+$latex f_5 ( x, a_0 , q_1 ) $$
+as equal to $latex f_4 $$
+except that $latex r_1 $$ is eliminated using this operation; i.e.,
+$latex \[
+f_5 = 
+f_4 [ x, a_0 , q_1 , r_1 ( q_1 )]
 \] $$
 Note that $latex k_0 = 1 $$ is a 
 $xref/exp_apx_seq/Parameter/parameter/$$ 
@@ -211,6 +230,8 @@ so we have not included as an argument to the function $latex r_1 $$.
 It follows that 
 $latex \[
 \begin{array}{rcll}
+\D{f_5}{x} & = & \D{f_4}{x}  & = 0
+\\
 \D{f_5}{q_1} 
 & = & \D{f_4}{q_1} + 
 	\D{f_4}{r_1} * \D{r_1}{q_1}
@@ -222,19 +243,18 @@ $latex \[
 \end{array}
 \] $$
 
-$head f_6 $$
-We define the function 
-$latex f_6 ( a_0 ) $$
-as equal to $latex f_5 $$
-except that $latex q_1 $$ is eliminated using 
-its functional representation in the operation sequence i.e.
+$head Index 2: f_6$$
+The next operation has index 2,
 $latex \[
-\begin{array}{rcl}
-q_1 & = & r_0 * a_0
-\\
-f_6 &  =  &
-f_5 [ a_0 , q_1 ( a_0 ) ]
-\end{array}
+	q_1 = r_0 * a_0
+\] $$
+We define the function 
+$latex f_6 ( x, a_0 ) $$
+as equal to $latex f_5 $$
+except that $latex q_1 $$ is eliminated using this operation; i.e.,
+$latex \[
+f_6 =
+f_5 [ x, a_0 , q_1 ( a_0 ) ]
 \] $$
 Note that $latex r_0 = 1 $$ is a 
 $xref/exp_apx_seq/Parameter/parameter/$$ 
@@ -242,17 +262,44 @@ so we have not included as an argument to the function $latex q_1 $$.
 It follows that 
 $latex \[
 \begin{array}{rcll}
+\D{f_6}{x} & = & \D{f_5}{x}  & = 0
+\\
 \D{f_6}{a_0} 
 & = & \D{f_5}{a_0} + 
 	\D{f_5}{q_1} * \D{q_1}{a_0}
 & =  1.5
 \end{array}
 \] $$
+
+$head Index 1: f_7$$
+The next operation has index 1,
+$latex \[
+	a_0 = x
+\] $$
+$latex f_7 ( x ) $$
+as equal to $latex f_6 $$
+except that $latex a_0 $$ is eliminated using this operation; i.e.,
+$latex \[
+f_7 =
+f_6 [ x, a_0 ( x ) ]
+\] $$
+It follows that 
+$latex \[
+\begin{array}{rcll}
+\D{f_7}{x} 
+& = & \D{f_6}{x} + 
+	\D{f_6}{a_0} * \D{a_0}{x}
+& = 1.5
+\end{array}
+\] $$
 Note that,
 for the argument value $latex x = 0.5$$,
-$latex a_0$$ is equal to $latex x$$ and  
 $latex \[
-\D{f_6}{a_0} = \D{ {\rm exp\_apx} (x, .2) }{x} 
+\begin{array}{rcl}
+f_7 (x)    & = & {\rm exp\_apx} (x, .2)
+\\
+\D{f_7}{x} & = & \D{ {\rm exp\_apx} (x, .2) }{x} = 1.5
+\end{array}
 \] $$
 We also note that both reverse and forward mode give the 
 same result for this partial derivative.
@@ -283,17 +330,22 @@ $latex \[
 	\D{f_1}{r_2},
 	\D{f_2}{q_2},
 	\D{f_2}{s_1},
+	\D{f_3}{x},
 	\D{f_3}{a_0},
 	\D{f_3}{q_1},
 	\D{f_3}{r_1},
 	\D{f_3}{s_1},
 	\\
+	\D{f_4}{x},
 	\D{f_4}{a_0},
 	\D{f_4}{q_1},
 	\D{f_4}{r_1},
+	\D{f_5}{x},
 	\D{f_5}{q_1},
 	\D{f_5}{a_0},
+	\D{f_6}{x}
 	\D{f_6}{a_0}
+	\D{f_7}{x}
 \end{array}
 \] $$
 $lnext

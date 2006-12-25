@@ -25,7 +25,7 @@ to compute $latex {\rm exp\_apx} (x, e)$$
 with $latex x$$ is equal to .5
 and $latex e$$ is equal to .2. 
 For this case, the 
-$cref/exp_apx operation sequence/exp_apx_seq/Trace/Operation Sequence/$$
+$cref/exp_apx operation sequence/exp_apx_seq/Trace/Operation/$$
 corresponds to the following function and partial derivative:
 $latex \[
 \begin{array}{rclll}
@@ -38,86 +38,135 @@ $latex \[
 	& =   1.5
 \end{array}
 \] $$
+An algorithmic differentiation package
+does not operate on the mathematical form 
+but rather on a corresponding operation sequence.
 
-$head First Order Forward$$
-First order forward mode uses the 
-$cref/operation sequence/exp_apx_seq/Trace/Operation Sequence/$$
-and zero order forward sweep
-$cref/values/exp_apx_seq/Trace/Zero Order Forward Value/$$
-to compute the first order partial derivative
+$head Trace$$
+We consider the case where $cref/exp_apx.hpp/$$ is executed with
+$latex x = .5$$ and $latex e = .2$$.
+The corresponding 
+$cref/operation sequence/exp_apx_seq/Trace/Operation/$$
+and zero order forward sweep values
+$cref/value_0/exp_apx_seq/Trace/Value_0/$$
+are inputs that are need by a first order sweep.
+A first order sweep 
+computes the first order partial derivative
 of all the dependent variables with respect to one independent variable. 
-The computations are done in the same order as those in the 
-original algorithm.
-$pre
-
-$$
 The $code exp_apx$$ operation sequence depends on $italic e$$,
 but for a given the operation sequence,
 the values computed do not depend on $italic e$$.
 Thus, the partial derivative with respect to $italic e$$,
 of any of the variables in the operation sequence,
 is zero.
-We also note that the partial derivatives
+
+$subhead Parameters$$
+We note that the partial derivatives
 with respect to $latex x$$ are zero for the following symbols:
 $latex \[
 	r_0 , s_0 , k_0 , k_1 , k_2 
 \] $$
-A first order forward mode sweep calculates the partial derivative 
-with respect to $italic x$$
-(of all the variables)
-as follows:
+
+$subhead Index$$
+The Index column contains the index in the operation sequence
+of the corresponding atomic operation. 
+A Forward sweep starts with the first operation 
+and ends with the last.
+
+$subhead Operation$$
+The Operation column contains the 
+mathematical function corresponding to each atomic operation in the sequence.
+
+$subhead Value_0$$
+The Value_0 column contains the function value
+(zero order forward sweep value)
+corresponding to each atomic operation in the sequence.
+
+$subhead Partial$$
+The Partial column contains the
+mathematical function corresponding to the partial derivative
+with respect to $latex x$$ for each operation in the sequence.
+
+$subhead Value_1$$
+The Value_1 column contains the partial derivative value
+(first order forward sweep value)
+corresponding to each atomic operation in the sequence.
+
+
+$subhead Table$$
+
 $center
 $table
-$bold Operation$$ 
-	$cnext $pre  $$ $cnext $bold Order 0 Value$$
+$bold Index$$
+	$cnext $pre  $$ $cnext $bold Operation$$ 
+	$cnext $pre  $$ $cnext $bold Value_0$$
 	$cnext $pre  $$ $cnext $bold Partial$$
-	$cnext $pre  $$ $cnext $bold Order 1 Value$$
+	$cnext $pre  $$ $cnext $bold Value_1$$
 $rnext
-$latex a_0 = x $$
+1
+	$cnext $pre  $$ $cnext $latex a_0 = x $$
 	$cnext $cnext = 0.5
 	$cnext $cnext 
 	$latex \partial_x a_0 = \partial_x x  $$
 	$cnext $cnext = 1
 $rnext
-$latex q_1  = r_0 * a_0  $$
+2
+	$cnext $pre  $$ $cnext $latex q_1  = r_0 * a_0  $$
 	$cnext $cnext = 0.5
 	$cnext $cnext 
 	$latex \partial_x q_1 = \partial_x r_0  * a_0 + r_0 * \partial_x a_0$$
 	$cnext $cnext = 1
 $rnext
-$latex r_1  = q_1 / k_0  $$
+3
+	$cnext $pre  $$ $cnext $latex r_1  = q_1 / k_0  $$
 	$cnext $cnext = 0.5
 	$cnext $cnext 
 	$latex \partial_x r_1 = \partial_x q_1 / k_0 $$
 	$cnext $cnext = 1
 $rnext
-$latex s_1  = s_0 + r_1  $$
+4
+	$cnext $pre  $$ $cnext $latex s_1  = s_0 + r_1  $$
 	$cnext $cnext = 1.5
 	$cnext $cnext 
 	$latex \partial_x s_1 = \partial_x s_0 + \partial_x r_1 $$
 	$cnext $cnext = 1
 $rnext
-$latex q_2 =  r_1 * a_0 $$
+5	$cnext $pre $$  $cnext $latex k_1 = k_0 + 1$$
+	$cnext $cnext = 2
+	$cnext $cnext
+	$latex \partial_x k_1 = \partial_x k_0 $$
+	$cnext $cnext = 0
+$rnext
+6
+	$cnext $pre  $$ $cnext $latex q_2 =  r_1 * a_0 $$
 	$cnext $cnext = 0.25
 	$cnext $cnext 
 	$latex \partial_x q_2 = \partial_x r_1  * a_0 + r_1 * \partial_x a_0 $$
 	$cnext $cnext = 1
 $rnext
-$latex r_2 = q_2 / k_1 $$
+7
+	$cnext $pre  $$ $cnext $latex r_2 = q_2 / k_1 $$
 	$cnext $cnext = 0.125
 	$cnext $cnext 
 	$latex \partial_x r_2 = \partial_x q_2 / k_1 $$
 	$cnext $cnext = 0.5
 $rnext
-$latex s_2   = s_1 + r_2 $$
+8
+	$cnext $pre  $$ $cnext $latex s_2   = s_1 + r_2 $$
 	$cnext $cnext = 1.625
 	$cnext $cnext 
 	$latex  \partial_x s_2 = \partial_x s_1 + \partial_x r_2 $$
 	$cnext $cnext = 1.5
+$rnext
+9	$cnext $pre $$  $cnext $latex k_2 = k_1 + 1$$
+	$cnext $cnext = 3
+	$cnext $cnext
+	$latex \partial_x k_2 = \partial_x k_1 $$
+	$cnext $cnext = 0
 $tend
 $$
 Thus forward mode returns
-1.5 as the derivative of the return value of the algorithm
+1.5 as the derivative of the return value $latex s_2$$ 
 for this case.
 
 

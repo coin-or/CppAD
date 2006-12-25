@@ -73,7 +73,14 @@ $head 12-24$$
 Move $code exp_apx_ad$$ to $code exp_apx_cppad$$ and
 add exercises to the following sections:
 $cref/exp_apx_rev/$$,
-$cref/exp_apx_cppad/$$.
+$cref/exp_apx_cppad.cpp/$$.
+$pre
+
+$$
+Add operation sequence indices to help track operations in
+$cref/exp_apx_seq/$$,
+$cref/exp_apx_for/$$,
+$cref/exp_apx_rev/$$.
 
 $head 12-23$$
 Add exercises to the following sections:

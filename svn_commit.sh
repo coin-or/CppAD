@@ -38,20 +38,13 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Move exp_apx_ad to exp_apx_cppad and add exercises.
+log_entry="Add indices to identify operations in the sequence.
 
 svn_commit.sh: file that made this commit.
 whats_new_06.omh: user's view of changes.
-exp_apx_rev.cpp: align comments.
-exp_apx.cpp: align comments.
-main.cpp: add correctness counter and move exp_apx_ad to exp_apx_cppad.
-exp_apx_ad.cpp: move exp_apx_ad to exp_apx_cppad.
-makefile.am: move exp_apx_ad to exp_apx_cppad.
-exp_apx_for.cpp: align comments.
-exp_apx_cppad.cpp: move exp_apx_ad to exp_apx_cppad and add exercises.
-introduction.omh: move exp_apx_ad to exp_apx_cppad.
-config.h: update version number.
-AUTHORS: update date.
+exp_apx_rev.omh: add indices and include all operations in sequence.
+exp_apx_for.omh: add indices, use Value_0, Value_1 notation.
+exp_apx_seq.omh: add indices, use Value_0 notation.
 "
 add_list="
 "
@@ -59,16 +52,9 @@ add_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_06.omh
-	introduction/exp_apx/exp_apx_rev.cpp
-	introduction/exp_apx/exp_apx.cpp
-	introduction/exp_apx/main.cpp
-	introduction/exp_apx/exp_apx_ad.cpp
-	introduction/exp_apx/exp_apx_for.cpp
-	introduction/exp_apx/makefile.am
-	introduction/exp_apx/exp_apx_cppad.cpp
-	omh/introduction.omh
-	cppad/config.h
-	AUTHORS
+	omh/exp_apx_rev.omh
+	omh/exp_apx_for.omh
+	omh/exp_apx_seq.omh
 "
 delete_list="
 "

@@ -49,7 +49,9 @@ $latex \[
 =   1 + .5 + .25 / 2 
 =   1.625
 \] $$
-
+An algorithmic differentiation package
+does not operate on the mathematical form
+but rather on a corresponding operation sequence. 
 
 $head Notation$$
 We use the symbol $latex v_j$$ for the value assigned
@@ -77,68 +79,87 @@ We refer to other symbols as operation sequence variables.
 $head Trace$$
 We consider the case where $cref/exp_apx.hpp/$$ is executed with
 $latex x = .5$$ and $latex e = .2$$.
-In the table below we trace the execution of 
-$cref/exp_apx.hpp/$$.
-
-$subhead Source Code$$
-The C++ source code corresponding to each atomic operation is listed 
-in the left column of the table below.
-
-$subhead Operation Sequence$$
-The mathematical function corresponding to each atomic operation is listed 
-in the center column of the table below.
+The table below contains a trace of the corresponding operation sequence
+and zero order forward sweep values.
 Note that the comparisons
 $code r > e$$ and $code  Type(0) > x $$
 have results of type
-$code bool$$ and hence are not part of the operation sequence.
+$code bool$$ and hence are not part of the $italic Type$$ operation sequence.
 
-$subhead Zero Order Forward Value$$
-The value of the symbol corresponding to each atomic operation is listed
-in the right column of the table below.
-This is referred to as the zero order forward mode value because
-zero order corresponds to function values and
-the computations are done in the same order as the original algorithm.
+$subhead Index$$
+The Index column contains the index in the operation sequence
+of the corresponding atomic operation. 
+A Forward sweep starts with the first operation 
+and ends with the last.
+
+$subhead Code$$
+The Code column contains the C++ source code corresponding 
+to the corresponding atomic operation in the sequence. 
+
+$subhead Operation$$
+The Operation column contains the 
+mathematical function corresponding to each atomic operation in the sequence.
+
+$subhead Value_0$$
+The Value_0 column contains the function value
+corresponding to each atomic operation in the sequence.
+These are referred to as the zero order forward mode values.
+They are referred to as forward mode because
+the computations are done in the same order as the original algorithm; i.e,
+in order of increasing index.
+They are referred to as zero order because function values
+correspond to derivatives of order zero.
 
 $subhead Table$$
 $center
 $table
-$bold Code$$ 
+$bold Index$$
+	$cnext $pre  $$ $cnext $bold Code$$ 
 	$cnext $pre  $$ $cnext $bold Operation$$
-	$cnext $pre  $$ $cnext $bold Value$$
-	$rnext
-$code a = x$$
+	$cnext $pre  $$ $cnext $bold Value_0$$
+$rnext
+1
+	$cnext $pre  $$ $cnext $code a = x$$
 	$cnext $cnext $latex a_0 = x $$ 
 	$cnext $cnext = 0.5      
 $rnext
-$code q  = a * r$$
+2
+	$cnext $pre  $$ $cnext $code q  = a * r$$
 	$cnext $cnext $latex q_1 = r_0 * a_0 $$ 
 	$cnext $cnext = 0.5      
 $rnext
-$code r  = q / k$$
+3
+	$cnext $pre  $$ $cnext $code r  = q / k$$
 	$cnext $cnext $latex r_1 = q_1 / k_0 $$ 
 	$cnext $cnext = 0.5      
 $rnext
-$code s  = s + r$$
+4
+	$cnext $pre  $$ $cnext $code s  = s + r$$
 	$cnext $cnext $latex s_1 = s_0 + r_1 $$ 
 	$cnext $cnext = 1.5      
 $rnext
-$code k  = k + Type(1)$$
+5
+	$cnext $pre  $$ $cnext $code k  = k + Type(1)$$
 	$cnext $cnext $latex k_1 = k_0 + 1 $$ 
 	$cnext $cnext = 2        
 $rnext
-$code q  = a * r$$
+6
+	$cnext $pre  $$ $cnext $code q  = a * r$$
 	$cnext $cnext $latex q_2 = r_1 * a_0 $$ 
 	$cnext $cnext = 0.25     
 $rnext
-$code r  = q / k$$
+7
+	$cnext $pre  $$ $cnext $code r  = q / k$$
 	$cnext $cnext $latex r_2 = q_2 / k_1 $$ 
 	$cnext $cnext = 0.125    
 $rnext
-$code s  = s + r$$
+8
+	$cnext $pre  $$ $cnext $code s  = s + r$$
 	$cnext $cnext $latex s_2 = s_1 + r_2 $$ 
 	$cnext $cnext = 1.625    
 $rnext
-$code k  = k + Type(1)$$
+9
+	$cnext $pre  $$ $cnext $code k  = k + Type(1)$$
 	$cnext $cnext $latex k_2 = k_1 + 1 $$ 
 	$cnext $cnext = 3        
 $tend
@@ -189,7 +210,7 @@ It returns true for success and false for failure.
 $head Exercises$$
 $list number$$
 Suppose that $latex x = .1$$,
-what is the result of a zero order forward mode sweep for 
+what is the result of a zero order forward sweep for 
 the operation sequence above; 
 i.e., what are the corresponding values for
 $latex \[
