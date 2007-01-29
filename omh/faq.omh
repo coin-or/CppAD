@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -76,7 +76,7 @@ If this does not solve your problem, continue
 to the next step.
 $lnext
 The second step is to check the 
-$xref/WhatsNew05//whatsnew/$$ messages from the date 
+$cref/whats_new/$$ messages from the date 
 of the release that you are using to the current date.
 If the bug has been mentioned and fixed,
 then $xref/install/$$ the current version of CppAD.

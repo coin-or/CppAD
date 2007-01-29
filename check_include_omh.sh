@@ -25,9 +25,9 @@ list="
 	cppad/local/*.hpp
 	example/*.cpp
 	example/*.hpp
-	get_started/*.cpp
-	introduction/*.cpp
-	introduction/*.hpp
+	introduction/get_started/*.cpp
+	introduction/exp_apx/*.cpp
+	introduction/exp_apx/*.hpp
 	print_for/*.cpp
 	speed_cppad/*.cpp
 	speed/*.hpp

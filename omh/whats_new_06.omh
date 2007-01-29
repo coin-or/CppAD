@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin WhatsNew06$$
+$begin whats_new_06$$
 $spell
 	exp_apx
 	Alloc
@@ -312,7 +312,7 @@ $pre
 
 $$
 Fix compiler warning while compiling $code cppad/RombergOne/$$
-(mistake occurred during $cref/11-20/WhatsNew06/11-29/$$ change).
+(mistake occurred during $cref/11-20/whats_new_06/11-29/$$ change).
 
 $head 11-30$$
 Cygwin packages, and other system packages,
@@ -347,7 +347,7 @@ referenced $code doc$$. This has been fixed.
 
 $head 11-23$$
 A Version Numbering entry was added to the
-$cref/WishList/$$ (this was completed on $cref/11-30/WhatsNew06/11-30/$$).
+$cref/WishList/$$ (this was completed on $cref/11-30/whats_new_06/11-30/$$).
 
 $head 11-18$$
 The example routine that computes determinants using expansion
@@ -801,7 +801,7 @@ $$
 The $code var_size$$ member function was changed to 
 $xref/SeqProperty/size_var/size_var/$$ 
 (this is not backward compatible, but $code var_size$$ was just added on 
-$xref/WhatsNew06/04-03/04-03/$$).
+$xref/whats_new_06/04-03/04-03/$$).
 
 
 $head 04-05$$
@@ -871,7 +871,7 @@ $pre
 $$
 The wish list entry for Memory usage
 was updated on 04-01. 
-The request was implemented on $xref/WhatsNew06/06-19/06-19/$$
+The request was implemented on $xref/whats_new_06/06-19/06-19/$$
 and the entry was removed from the wish list.
 
 $head 03-31$$

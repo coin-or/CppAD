@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin WhatsNew04$$
+$begin whats_new_04$$
 $spell
 	cppad.hpp
 	deps
@@ -88,7 +88,7 @@ make them more in line with the introduction to C++ AD book.
 
 $head 11-17$$
 Changing to Autoconf and Automake on
-$xref/WhatsNew04/08-24/08-24/$$ mistakenly forgot 
+$xref/whats_new_04/08-24/08-24/$$ mistakenly forgot 
 the $code -Wall$$ compiler switch (all warnings).
 This has been added and the corresponding warnings
 have been fixed.
@@ -250,7 +250,7 @@ all uses of greater than and less than comparisons were removed.
 $pre
 
 $$
-The changes on $xref/WhatsNew04/09-21/09-21/$$ did not fix all
+The changes on $xref/whats_new_04/09-21/09-21/$$ did not fix all
 the file date and time problems; i.e., automake was still running
 in response to the $xref/InstallUnix//unix installation/$$ 
 $code make$$ command.
@@ -841,7 +841,7 @@ has been replaced by the $xref/Jacobian/$$ routine which
 computes the derivative of vector valued functions.
 
 $head 03-04$$
-The bug reported on $xref/WhatsNew04/02-17/02-17/$$ was present in all
+The bug reported on $xref/whats_new_04/02-17/02-17/$$ was present in all
 the operators. These have all been fixed and tests for all the operators
 have been added to the $code cppad/Test$$ directory.
 $pre
@@ -891,7 +891,7 @@ there is a restriction on the order of the derivatives that can be calculated.
 This restriction was documented in the user defined unary function
 $xref/Forward/$$
 and $xref/Reverse/$$.
-(These unary functions were removed on $xref/WhatsNew04/03-12/03-12/$$.)
+(These unary functions were removed on $xref/whats_new_04/03-12/03-12/$$.)
 
 $head 02-20$$
 A user interface to arbitrary order 
@@ -915,7 +915,7 @@ The $xref/Theory/$$ section has been completely changed so that
 it corresponds to the arbitrary order calculations.
 (Some of this change was made when the arbitrary forward mode
 interface was added on 
-$xref/WhatsNew04/02-15/04-02-15/$$.
+$xref/whats_new_04/02-15/04-02-15/$$.
 $pre
 
 $$

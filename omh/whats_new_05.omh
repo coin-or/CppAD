@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin WhatsNew05$$
+$begin whats_new_05$$
 $spell
 	Dir
 	cppad.hpp
@@ -104,7 +104,7 @@ The $xref/TrackNewDel/$$ routines were added for track memory allocation
 and deletion with $code new[]$$ and $code delete[]$$.
 This is in preparation for making CppAD more efficient in it's use of
 memory.
-The bug mentioned on $xref/WhatsNew05/12-01/12-01/$$ resurfaced
+The bug mentioned on $xref/whats_new_05/12-01/12-01/$$ resurfaced
 and the corresponding routine was changed as follows:
 $codep
 	static ADTape<Base> *Tape(void)
@@ -145,7 +145,7 @@ the entire $code CppADlib.a$$ library.
 $pre
 
 $$
-The change on $xref/WhatsNew05/12-14/12-14/$$ broke the 
+The change on $xref/whats_new_05/12-14/12-14/$$ broke the 
 Microsoft project files $code example/Example.sln$$
 and $code TestMore/TestMore.sln$$ used during CppAD
 $xref/InstallWindows//installation on Windows/$$.
@@ -228,7 +228,7 @@ $pre
 $$
 The definition of a $xref/glossary/Sparsity Pattern/sparsity pattern/$$
 has been corrected to properly correspond to the more efficient form
-mentioned under $xref/WhatsNew05/11-20/$$ below.
+mentioned under $xref/whats_new_05/11-20/$$ below.
 $pre
 
 $$

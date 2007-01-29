@@ -38,23 +38,32 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add indices to identify operations in the sequence.
+log_entry="Include copyright and format conversion in automated testing.
 
+whats_new_07: user's view of the changes.
 svn_commit.sh: file that made this commit.
-whats_new_06.omh: user's view of changes.
-exp_apx_rev.omh: add indices and include all operations in sequence.
-exp_apx_for.omh: add indices, use Value_0, Value_1 notation.
-exp_apx_seq.omh: add indices, use Value_0 notation.
+svn_commit.sed: change current copyright date from 2006 to 2007.
+check_include_omh.sh: fix location of get_started and exp_apx files.
+build.sh: include copyright and format conversion in automated testing.
+whats_new.omh: add whats_new_07 to list of whats new files.
+whats_new_0?.omh: change WhatsNew0? to whats_new_0?. 
+faq.omh: change reference from current whats new to overall whats new.
 "
 add_list="
+	omh/whats_new_07.omh
 "
 #
 change_list="
 	svn_commit.sh
+	svn_commit.sed
+	check_include_omh.sh
+	build.sh
+	omh/whats_new.omh
+	omh/whats_new_03.omh
+	omh/whats_new_04.omh
+	omh/whats_new_05.omh
 	omh/whats_new_06.omh
-	omh/exp_apx_rev.omh
-	omh/exp_apx_for.omh
-	omh/exp_apx_seq.omh
+	omh/faq.omh
 "
 delete_list="
 "

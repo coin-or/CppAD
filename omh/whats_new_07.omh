@@ -9,25 +9,29 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin whats_new$$
+$begin whats_new_07$$
 $spell
 	CppAD
 $$
 
-$section Changes and Additions to CppAD$$
+$section Changes and Additions to CppAD During 2007$$
+
 
 $head Introduction$$
-The sections listed below contain a list of the changes to CppAD 
-in reverse order by date.
-The purpose of these sections is to
+This section contains a list of the changes to CppAD during 2007
+(in reverse order by date).
+The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$childtable%
-	omh/whats_new_07.omh%
-	omh/whats_new_06.omh%
-	omh/whats_new_05.omh%
-	omh/whats_new_04.omh%
-	omh/whats_new_03.omh
-%$$
+$head 01-29$$
+The copyright message was missing from some of the distribution files
+for some new files added on $cref%06-12-15%whats_new_06%12-15%$$.
+This resulted in the 
+$cref%unix%InstallUnix%Download Current Version%$$
+and
+$cref%windows%InstallWindows%Download Current Version%$$
+download files not existing for a period of time.
+The automated tests have been extended so that this should not happen again.
 
 $end
+

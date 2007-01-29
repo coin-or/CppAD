@@ -14,7 +14,7 @@
 # Default values used for arguments to configure during this script.
 # These defaults are development system dependent and can be changed.
 ADOLC_DIR=$HOME/adolc_base
-FADBAD_DIR=$HOME
+FADBAD_DIR=$HOME/include
 BOOST_DIR=/usr/include/boost-1_33
 #
 #
@@ -385,7 +385,6 @@ then
 		exit 1
 	fi
 	echo "All of the test programs executed."
-	exit 0
 fi
 if [ "$1" = "gpl+dos" ] || [ "$1" = "all" ]
 then
@@ -458,7 +457,7 @@ echo "This command will execute all the options in the order above with the"
 echo "exception that \"configue test\" and \"test\" will be excluded."
 echo
 echo "build.sh all test"
-echo "This command will execute all the options in the order above"
-echo "with the exception of \"configure test\", \"gpl+dos\" and \"move\"."
+echo "This command will execute all the options above in the order"
+echo "with the exception of \"configure test\"  and \"move\"."
 #
 exit 1
