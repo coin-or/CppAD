@@ -38,21 +38,21 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Minor changes.
+log_entry="Fix errors in profiling documentation.
 
 svn_commit.sh: file that made this commit.
-build.sh: add a newline after each test out in build_test.log file.
-ad.hpp: minor optimization to make Tape() faster.
-discrete.hpp: remove unecessary call to Tape()->State().
+whats_new_07.omh: users view of the changes.
+main.cpp: change det_minor and poly problem sizes.
+omh/install_unix.omh: fix and improve profiling documentation.
 " 
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
-	build.sh
-	cppad/local/ad.hpp
-	cppad/local/discrete.hpp
+	omh/whats_new_07.omh
+	speed/main.cpp
+	omh/install_unix.omh
 "
 delete_list="
 "

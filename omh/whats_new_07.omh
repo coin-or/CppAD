@@ -25,6 +25,11 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-02$$
+Fix minor errors and improve
+$cref/profiling/InstallUnix/--with-profiling/$$ documentation.
+Also change the problem sizes used for the $cref/speed/$$ tests.
+
 $head 02-01$$
 There seems to be a bug in the cygwin version of g++ version 3.4.4
 with the -O2 flag whereby some static variables in static member functions 

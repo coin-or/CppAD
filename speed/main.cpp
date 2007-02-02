@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -286,8 +286,8 @@ int main(int argc, char *argv[])
 	CppAD::vector<size_t> size_poly(n_size);
 	for(i = 0; i < n_size; i++) 
 	{	size_det_lu[i]    = 2 * i + 1;
-		size_det_minor[i] = 2 * i + 1;
-		size_poly[i]      = (i+3) * (i+3);
+		size_det_minor[i] = i + 1;
+		size_poly[i]      = 8 * i + 1;
 	}
 
 	switch(match)
