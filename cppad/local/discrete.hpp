@@ -2,7 +2,7 @@
 # define CPPAD_DISCRETE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -126,7 +126,7 @@ public:
 	{	AD<Base> z;
 
 		z.value = f(x.value);
-		if( (AD<Base>::Tape()->State()==Recording) & Variable(x) )
+		if( Variable(x) )
 		{	AD<Base>::Tape()->RecordDisOp(
 				z,
 				x.taddr,

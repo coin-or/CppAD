@@ -316,6 +316,8 @@ then
 	check_include_def.sh   > build_test.log
 	check_include_file.sh >> build_test.log
 	check_include_omh.sh  >> build_test.log
+	# add a new line after last include file check
+	echo ""               >> ../build_test.log
 	#
 	echo "tar -xzf $dir/cppad-$version.cpl.tgz"
 	if ! tar -xzf $dir/cppad-$version.cpl.tgz

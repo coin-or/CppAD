@@ -38,21 +38,21 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Avoid a bug in cygwin g++ version 3.4.4 compiler.
+log_entry="Minor changes.
 
-whats_new_07: user's view of the changes.
 svn_commit.sh: file that made this commit.
-config.h: update package version.
-ad.hpp: avoid cygwin g++ version 3.4.4 -O2 compiler bug.
+build.sh: add a newline after each test out in build_test.log file.
+ad.hpp: minor optimization to make Tape() faster.
+discrete.hpp: remove unecessary call to Tape()->State().
 " 
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
-	omh/whats_new_07.omh
-	cppad/config.h
+	build.sh
 	cppad/local/ad.hpp
+	cppad/local/discrete.hpp
 "
 delete_list="
 "

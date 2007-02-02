@@ -6,7 +6,7 @@ CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
-                    Common Public License Version 1.0.
+                    GNU General Public License Version 2.
 
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
@@ -204,10 +204,11 @@ public:
 		// such that the following does not work:
 		// 	static ADTape<Base> tape;
 		// 	return &tape;
-		static ADTape<Base> *ptr;
-		if( ptr == 0 )
-			ptr = new ADTape<Base>;
-		return ptr;
+		static ADTape<Base> *ptr;          // initially zero
+		if( ptr )                          // if already initialized
+			return ptr;                // just return its value
+
+		return ( ptr = new ADTape<Base> ); // initialize and return
 	}
 
 	// Make this object correspond to a new variable on the tape
