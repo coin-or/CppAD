@@ -38,32 +38,21 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Include copyright and format conversion in automated testing.
+log_entry="Avoid a bug in cygwin g++ version 3.4.4 compiler.
 
 whats_new_07: user's view of the changes.
 svn_commit.sh: file that made this commit.
-svn_commit.sed: change current copyright date from 2006 to 2007.
-check_include_omh.sh: fix location of get_started and exp_apx files.
-build.sh: include copyright and format conversion in automated testing.
-whats_new.omh: add whats_new_07 to list of whats new files.
-whats_new_0?.omh: change WhatsNew0? to whats_new_0?. 
-faq.omh: change reference from current whats new to overall whats new.
-"
+config.h: update package version.
+ad.hpp: avoid cygwin g++ version 3.4.4 -O2 compiler bug.
+" 
 add_list="
-	omh/whats_new_07.omh
 "
 #
 change_list="
 	svn_commit.sh
-	svn_commit.sed
-	check_include_omh.sh
-	build.sh
-	omh/whats_new.omh
-	omh/whats_new_03.omh
-	omh/whats_new_04.omh
-	omh/whats_new_05.omh
-	omh/whats_new_06.omh
-	omh/faq.omh
+	omh/whats_new_07.omh
+	cppad/config.h
+	cppad/local/ad.hpp
 "
 delete_list="
 "

@@ -2,7 +2,7 @@
 # define CPPAD_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -200,10 +200,13 @@ public:
 
 	// There is only one tape so construct it here
 	static ADTape<Base> *Tape(void)
-	{	// If we return &tape, instead of creating and returning ptr,
-		// there seems to be a bug in g++ with -O2 option.
-		static ADTape<Base> tape;
-		static ADTape<Base> *ptr = &tape;
+	{	// There seems to be a bug in g++ 3.4.4 with -O2 option,
+		// such that the following does not work:
+		// 	static ADTape<Base> tape;
+		// 	return &tape;
+		static ADTape<Base> *ptr;
+		if( ptr == 0 )
+			ptr = new ADTape<Base>;
 		return ptr;
 	}
 
