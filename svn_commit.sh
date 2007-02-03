@@ -38,12 +38,11 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Fix errors in profiling documentation.
+log_entry="Remove conflict when using CppAD with valgrind.
 
 svn_commit.sh: file that made this commit.
 whats_new_07.omh: users view of the changes.
-main.cpp: change det_minor and poly problem sizes.
-omh/install_unix.omh: fix and improve profiling documentation.
+ad.hpp: delete pointer to tape on exit.
 " 
 add_list="
 "
@@ -51,8 +50,7 @@ add_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_07.omh
-	speed/main.cpp
-	omh/install_unix.omh
+	cppad/local/ad.hpp
 "
 delete_list="
 "

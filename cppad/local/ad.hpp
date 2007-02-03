@@ -208,7 +208,21 @@ public:
 		if( ptr )                          // if already initialized
 			return ptr;                // just return its value
 
-		return ( ptr = new ADTape<Base> ); // initialize and return
+		ptr = new ADTape<Base>;            // initialize 
+		DeleteTape();                      // make copy of ptr
+		atexit(DeleteTape);                // call again on exit
+		return ptr;
+	}
+
+	// Clean up the ptr in the previous function
+	static void DeleteTape(void)
+	{	static ADTape<Base> *ptr;
+		if( ptr )
+		{	delete ptr; // delete on second call
+			return;     // and we are done
+		}
+		ptr = Tape();       // copy on first call
+		return;
 	}
 
 	// Make this object correspond to a new variable on the tape
