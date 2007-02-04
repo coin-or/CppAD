@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -31,7 +31,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 	Check[index * n + 2] = false;  \
 	index++;
 
-# define CheckFun(Fun)                 \
+# define CheckUnaryFun(Fun)            \
 	Y[index] = Fun(X[0]);          \
 	Check[index * n + 0] = true;   \
 	Check[index * n + 1] = false;  \
@@ -49,6 +49,23 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 	index++;
  
 
+# define CheckBinaryFun(Fun)           \
+	Y[index] = Fun( X[0] , 2.);    \
+	Check[index * n + 0] = true;   \
+	Check[index * n + 1] = false;  \
+	Check[index * n + 2] = false;  \
+	index++;                       \
+	Y[index] = Fun( X[0] , X[1]);  \
+	Check[index * n + 0] = true;   \
+	Check[index * n + 1] = true;   \
+	Check[index * n + 2] = false;  \
+	index++;                       \
+	Y[index] = Fun( 3.   , X[1]);  \
+	Check[index * n + 0] = false;  \
+	Check[index * n + 1] = true;   \
+	Check[index * n + 2] = false;  \
+	index++;
+
 
 bool RevSparseJac(void)
 {	bool ok = true;
@@ -58,7 +75,7 @@ bool RevSparseJac(void)
 	size_t n = 3; 
 
 	// dimension of the range space
-	size_t m = 15 * 3 + 4;
+	size_t m = (4 + 11 + 1) * 3 + 4;
 
 	// independent variable vector 
 	CppADvector< AD<double> > X(n);
@@ -83,17 +100,20 @@ bool RevSparseJac(void)
 	CheckOp(/);
 
 	// 11 unary functions
-	CheckFun(abs);
-	CheckFun(acos);
-	CheckFun(asin);
-	CheckFun(atan);
-	CheckFun(cos);
-	CheckFun(cosh);
-	CheckFun(exp);
-	CheckFun(log);
-	CheckFun(sin);
-	CheckFun(sinh);
-	CheckFun(sqrt);
+	CheckUnaryFun(abs);
+	CheckUnaryFun(acos);
+	CheckUnaryFun(asin);
+	CheckUnaryFun(atan);
+	CheckUnaryFun(cos);
+	CheckUnaryFun(cosh);
+	CheckUnaryFun(exp);
+	CheckUnaryFun(log);
+	CheckUnaryFun(sin);
+	CheckUnaryFun(sinh);
+	CheckUnaryFun(sqrt);
+
+	// 1 binary function
+	CheckBinaryFun(pow);
 
 	// conditional expression
 	Y[index] = CondExpLt(X[0], X[1], X[0], AD<double>(2.));

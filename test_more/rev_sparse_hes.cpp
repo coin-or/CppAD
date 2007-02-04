@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -18,10 +18,10 @@ bool RevSparseHes(void)
 	using namespace CppAD;
 
 	// dimension of the domain space
-	size_t n = 8; 
+	size_t n = 10; 
 
 	// dimension of the range space
-	size_t m = 1;
+	size_t m = 2;
 
 	// temporary indices
 	size_t i, j;
@@ -40,23 +40,31 @@ bool RevSparseHes(void)
 	// accumulate sum here
 	AD<double> sum;
 
-	sum  = X[0] - X[1];
-
+	// variable * variable
 	sum += X[2] * X[3];
 	Check[2 * n + 3] = Check[3 * n + 2] = true;
 
+	// variable / variable
 	sum += X[4] / X[5];
 	Check[4 * n + 5] = Check[5 * n + 4] = Check[5 * n + 5] = true;
 
+	// CondExpLt(variable, variable, variable, variable)
 	sum += CondExpLt(X[1], X[2], sin(X[6]), cos(X[7]) );
 	if( X[1] < X[2] )
 		Check[6 * n + 6] = true;
 	else	Check[7 * n + 7] = true;
 	
+	// pow(variable, variable)
+	sum += pow(X[8], X[9]);
+	Check[8 * n + 8] = Check[8 * n + 9] = true;
+	Check[9 * n + 8] = Check[9 * n + 9] = true;
 
-	// compute product of elements in X
+	// dependent variable vector
 	CppADvector< AD<double> > Y(m);
 	Y[0] = sum;
+
+	// variable - variable
+	Y[1]  = X[0] - X[1];
 
 	// create function object F : X -> Y
 	ADFun<double> F(X, Y);
@@ -74,14 +82,21 @@ bool RevSparseHes(void)
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
 	CppADvector<bool> Py(m);
-	for(i = 0; i < m; i++)
-		Py[i] = false;
 	Py[0] = true;
+	Py[1] = false;
 	CppADvector<bool> Pxx(n * n);
 	Pxx = F.RevSparseHes(n, Py);
 
+	// check values
 	for(j = 0; j < n * n; j++)
 		ok &= (Pxx[j] == Check[j]);
+
+	// compute sparsity pattern for Hessian of F_1 ( U(x) )
+	Py[0] = false;
+	Py[1] = true;
+	Pxx = F.RevSparseHes(n, Py);
+	for(j = 0; j < n * n; j++)
+		ok &= (! Pxx[j]);  // Hessian is identically zero
 
 	return ok;
 }

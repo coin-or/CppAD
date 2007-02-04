@@ -2,7 +2,7 @@
 # define CPPAD_REV_HES_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -547,6 +547,51 @@ void RevHesSweep(
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 1 );
 
+			break;
+			// -------------------------------------------------
+
+			case PowpvOp:
+			CppADUnknownError( n_var == 3 );
+			CppADUnknownError( n_ind == 2 );
+			CppADUnknownError( ind[1] < i_var );
+
+			Yf = ForJac + ind[1] * npv;
+			Yh = RevHes + ind[1] * npv;
+			for(j = 0; j < npv; j++)
+			{	Xh[j] |= Zh[j] | (*Zr & Yf[j]); 
+				Yh[j] |= Zh[j] | (*Zr & Xf[j]); 
+			}
+			break;
+			// -------------------------------------------------
+
+			case PowvpOp:
+			CppADUnknownError( n_var == 3 );
+			CppADUnknownError( n_ind == 2 );
+			CppADUnknownError( ind[0] < i_var );
+
+			Xf = ForJac + ind[0] * npv;
+			Xh = RevHes + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+			{	Xh[j] |= Zh[j] | (*Zr & Xf[j]); 
+				Yh[j] |= Zh[j] | (*Zr & Xf[j]); 
+			}
+			break;
+			// -------------------------------------------------
+
+			case PowvvOp:
+			CppADUnknownError( n_var == 3 );
+			CppADUnknownError( n_ind == 2 );
+			CppADUnknownError( ind[0] < i_var );
+			CppADUnknownError( ind[1] < i_var );
+
+			Xf = ForJac + ind[0] * npv;
+			Xh = RevHes + ind[0] * npv;
+			Yf = ForJac + ind[1] * npv;
+			Yh = RevHes + ind[1] * npv;
+			for(j = 0; j < npv; j++)
+			{	Xh[j] |= Zh[j] | (*Zr & (Xf[j] | Yf[j])); 
+				Yh[j] |= Zh[j] | (*Zr & (Xf[j] | Yf[j])); 
+			}
 			break;
 			// -------------------------------------------------
 

@@ -2,7 +2,7 @@
 # define CPPAD_FORWARD_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -672,6 +672,7 @@ size_t ForwardSweep(
 			case PowvpOp:
 			CppADUnknownError( n_var == 3);
 			CppADUnknownError( n_ind == 2 );
+			CppADUnknownError( ind[0] < i_var);
 			U = Z + J;
 			W = U + J;
 
@@ -695,6 +696,7 @@ size_t ForwardSweep(
 			case PowpvOp:
 			CppADUnknownError( n_var == 3);
 			CppADUnknownError( n_ind == 2 );
+			CppADUnknownError( ind[1] < i_var);
 			U = Z + J;
 			W = U + J;
 
@@ -720,6 +722,8 @@ size_t ForwardSweep(
 			case PowvvOp:
 			CppADUnknownError( n_var == 3);
 			CppADUnknownError( n_ind == 2 );
+			CppADUnknownError( ind[0] < i_var);
+			CppADUnknownError( ind[1] < i_var);
 			U = Z + J;
 			W = U + J;
 

@@ -38,11 +38,17 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Remove conflict when using CppAD with valgrind.
+log_entry="Fix pow function sparsity calculations.
 
 svn_commit.sh: file that made this commit.
 whats_new_07.omh: users view of the changes.
-ad.hpp: delete pointer to tape on exit.
+for_sparse_jac.cpp: test inclusion of Pow operaters in for_jac_sweep.cpp.
+rev_sparse_jac.cpp: test inclusion of Pow operaters in rev_jac_sweep.cpp.
+rev_sparse_hes.cpp: test inclusion of Pow operaters in rev_hes_sweep.cpp.
+for_jac_sweep.hpp: include Pow operators.
+forward_sweep.hpp: add check of index values in Pow operators.
+rev_jac_sweep.hpp: include Pow operators.
+rev_hes_sweep.hpp: include Pow operators.
 " 
 add_list="
 "
@@ -50,7 +56,13 @@ add_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_07.omh
-	cppad/local/ad.hpp
+	test_more/for_sparse_jac.cpp
+	test_more/rev_sparse_jac.cpp
+	test_more/rev_sparse_hes.cpp
+	cppad/local/for_jac_sweep.hpp
+	cppad/local/forward_sweep.hpp
+	cppad/local/rev_jac_sweep.hpp
+	cppad/local/rev_hes_sweep.hpp
 "
 delete_list="
 "

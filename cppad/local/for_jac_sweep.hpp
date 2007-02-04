@@ -2,7 +2,7 @@
 # define CPPAD_FOR_JAC_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -541,6 +541,41 @@ void ForJacSweep(
 			CppADUnknownError( n_ind == 1 );
 			for(j = 0; j < npv; j++)
 				Z[j] = 0;
+			break;
+			// -------------------------------------------------
+
+			case PowvpOp:
+			CppADUnknownError( n_var == 3 );
+			CppADUnknownError( n_ind == 2 );
+			CppADUnknownError( ind[0] < i_var );
+
+			X = ForJac + ind[0] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j];
+			break;
+			// -------------------------------------------------
+
+			case PowpvOp:
+			CppADUnknownError( n_var == 3 );
+			CppADUnknownError( n_ind == 2 );
+			CppADUnknownError( ind[1] < i_var );
+
+			Y = ForJac + ind[1] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = Y[j];
+			break;
+			// -------------------------------------------------
+
+			case PowvvOp:
+			CppADUnknownError( n_var == 3 );
+			CppADUnknownError( n_ind == 2 );
+			CppADUnknownError( ind[0] < i_var );
+			CppADUnknownError( ind[1] < i_var );
+
+			X = ForJac + ind[0] * npv;
+			Y = ForJac + ind[1] * npv;
+			for(j = 0; j < npv; j++)
+				Z[j] = X[j] | Y[j];
 			break;
 			// -------------------------------------------------
 
