@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -38,21 +38,17 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Fix documentation distribution for new version of automake.
+log_entry="Fix svn_commit to change dates in *.sh files.
 
-svn_commit.sh: file that made this commit.
-whats_new_07.omh: users view of the changes.
-cygwin_package.sh: bring cygwin distribution up to date.
-makefile.am: bring up to current version of automake.
+svn_commit.sh: change automatic editing file set.
+cygwin_package.sh: bring copyright up to date.
 " 
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
-	omh/whats_new_07.omh
 	cygwin_package.sh
-	makefile.am
 "
 delete_list="
 "
@@ -74,11 +70,11 @@ do
 	count=`expr $count + 1`
 	ext=`echo $file | sed -e "s/.*\././"`
 	if \
-	[ -f $file            ] && \
-	[ $ext  != ".sh"      ] && \
-	[ $ext  != ".sed"     ] && \
-	[ $ext  != ".vcproj"  ] && \
-	[ $ext  != ".sln"     ] && \
+	[ -f $file            ]      &&   \
+	[ $file != "svn_commit.sh" ] &&   \
+	[ $ext  != ".sed"     ]      &&   \
+	[ $ext  != ".vcproj"  ]      &&   \
+	[ $ext  != ".sln"     ]      &&   \
 	[ $ext  != ".vim"     ]
 	then
 		# automatic edits and backups
