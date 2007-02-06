@@ -28,9 +28,12 @@ fi
 #
 version=`ls /cygdrive/c/Download/cppad-20*.gpl.tgz | 
 	sed -n -e 's|.*/||' -e 's|cppad-||' -e 's|.gpl.tgz||' -e '$,$p'`
-if [ "$version" != 20061208 ]
+if [ "$version" == 20061208 ]
 then
-        echo "change all occurances of y'(3) to f'(3)"
+        echo "change: f'(3) -> y'(3)"
+	echo "change: introduction/get_started -> get_started"
+	echo "change: get_started.cpp.htm -> getstarted.cpp.htm"
+	echo "change: get_started.cpp.xml -> getstarted.cpp.xml"
 fi
 release="1"
 if [ ! -e "/cygdrive/c/Download/cppad-$version.gpl.tgz" ]
@@ -84,12 +87,12 @@ fi
 #
 cat > setup.hint << EOF
 # To test the source or binary distribution, copy the source distribution file
-#	cppad-$version-$release/get_started/get_started.cpp
+#	cppad-$version-$release/introduction/get_started/get_started.cpp
 # to a temporary directory and execute the commands
 #	g++ get_started.cpp -o get_started.exe
 #	./get_started
 # the resulting output should be
-#	y'(3) computed by CppAD = 142
+#	f'(3) computed by CppAD = 142
 #
 # Requires a standard compliant C++ compiler; e.g., gcc-g++.
 requires: gcc-g++
@@ -148,7 +151,7 @@ represent mathematics using LaTex; for example see DOC/poly.xml.
 DOC/(cppad.xml or cppad.htm)
 Is the top (root) of the documentation tree for CppAD.
 
-DOC/(getstarted.cpp.xml or getstarted.cpp.htm)
+DOC/(get_started.cpp.xml or get_started.cpp.htm)
 Contains an example for getting started using CppAD.
 
 DOC/(introduction.xml or introduction.htm)
@@ -367,8 +370,9 @@ if ! cd ../..
 then 
 	exit 1
 fi
-echo "cp test_src/cppad-$version-$release/get_started/get_started.cpp ."
-if ! cp test_src/cppad-$version-$release/get_started/get_started.cpp .
+dir="test_src/cppad-$version-$release/introduction/get_started"
+echo "cp $dir/get_started.cpp ."
+if ! cp $dir/get_started.cpp .
 then
 	exit 1
 fi
@@ -378,7 +382,7 @@ then
 fi
 echo "./get_started > get_started.out"
 ./get_started       > get_started.out
-echo "y'(3) computed by CppAD = 142"  > get_started.chk
+echo "f'(3) computed by CppAD = 142"  > get_started.chk
 if ! diff get_started.out get_started.chk
 then
 	echo "error in get_started output"
@@ -386,7 +390,7 @@ then
 fi
 file_list="
 	cppad
-	getstarted.cpp
+	get_started.cpp
 	introduction
 	whats_new
 	installunix
@@ -474,7 +478,7 @@ then
 fi
 echo "./get_started > get_started.out"
 ./get_started       > get_started.out
-echo "y'(3) computed by CppAD = 142"  > get_started.chk
+echo "f'(3) computed by CppAD = 142"  > get_started.chk
 if ! diff get_started.out get_started.chk
 then
 	echo "error in get_started output"
@@ -482,7 +486,7 @@ then
 fi
 file_list="
 	cppad
-	getstarted.cpp
+	get_started.cpp
 	introduction
 	whats_new
 	installunix

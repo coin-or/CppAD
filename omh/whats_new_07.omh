@@ -25,6 +25,11 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-04$$
+The method for distributing the documentation needed to be
+changed in the top level $code makefile.am$$ in order to
+be compatible with automake version 1.10.
+
 $head 02-03$$
 The change on $cref/02-01/whats_new_07/02-01/$$ had a new, saved as a static
 pointer, with no corresponding delete. 

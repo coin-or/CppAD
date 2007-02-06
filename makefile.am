@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -252,12 +252,12 @@ dist-hook:
 	rm -rf `find $(distdir)/omh -name .svn`
 #
 if CppAD_DOCUMENTATION
-docdir     = $(datadir)/doc
-progdocdir = $(docdir)/$(PACKAGE)-$(VERSION)
+mydocdir     = $(datadir)/doc
+myprogdocdir = $(mydocdir)/$(PACKAGE)-$(VERSION)
 install-data-hook:
-	if [ ! -e $(docdir) ] ; then mkdir $(docdir) ; fi
-	if [ ! -e $(progdocdir) ] ; then mkdir $(progdocdir) ; fi
-	cp -r $(top_builddir)/doc/* $(progdocdir)
-	chmod 644 $(progdocdir)/* 
+	if [ ! -e $(mydocdir) ] ; then mkdir $(mydocdir) ; fi
+	if [ ! -e $(myprogdocdir) ] ; then mkdir $(myprogdocdir) ; fi
+	cp -r $(top_builddir)/doc/* $(myprogdocdir)
+	chmod 644 $(myprogdocdir)/* 
 endif
 #
