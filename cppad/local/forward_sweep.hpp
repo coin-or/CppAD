@@ -454,10 +454,9 @@ size_t ForwardSweep(
 			case DisOp:
 			CppADUnknownError( n_var == 1);
 			CppADUnknownError( n_ind == 2 );
+			CppADUnknownError( ind[0] < i_var );
 			if( d == 0 ) 
-			{	ind    = Rec->GetInd(n_ind, i_ind);
-				CppADUnknownError( ind[0] < i_var );
-				X   = Taylor + ind[0] * J;
+			{	X   = Taylor + ind[0] * J;
 				Z[0] = ADDiscrete<Base>::Eval(ind[1], X[0]);
 			}
 			else	Z[d] = Base(0);
