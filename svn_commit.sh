@@ -38,17 +38,19 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Fix svn_commit to change dates in *.sh files.
+log_entry="Improve BenderQuad documentation.
 
 svn_commit.sh: change automatic editing file set.
-cygwin_package.sh: bring copyright up to date.
+whats_new_07.omh: users view of the changes.
+bender_quad.hpp: improve documentation for BenderQuad.
 " 
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
-	cygwin_package.sh
+	omh/whats_new_07.omh
+	cppad/local/bender_quad.hpp
 "
 delete_list="
 "

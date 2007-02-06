@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -153,22 +153,42 @@ $subhead fun.dy$$
 The $code BenderQuad$$ argument $italic fun$$ supports the syntax
 $syntax%
 	%dy% = %fun%.dy(%x%, %y%, %h%)
+
+%x%
 %$$
 The $syntax%%fun%.dy%$$ argument $italic x$$ has prototype
 $syntax%
 	const %BAvector% &%x%
 %$$
 and its size must be equal to $italic n$$.
+Its value will be exactly equal to the $code BenderQuad$$ argument 
+$italic x$$ and values depending on it can be stored as private objects
+in $italic f$$ and need not be recalculated.
+$syntax%
+
+%y%
+%$$
 The $syntax%%fun%.dy%$$ argument $italic y$$ has prototype
 $syntax%
 	const %BAvector% &%y%
 %$$
 and its size must be equal to $italic m$$.
+Its value will be exactly equal to the $code BenderQuad$$ argument 
+$italic y$$ and values depending on it can be stored as private objects
+in $italic f$$ and need not be recalculated.
+$syntax%
+
+%h%
+%$$
 The $syntax%%fun%.dy%$$ argument $italic h$$ has prototype
 $syntax%
 	const %ADvector% &%h%
 %$$
 and its size must be equal to $italic m$$.
+$syntax%
+
+%dy%
+%$$
 The $syntax%%fun%.dy%$$ result $italic dy$$ has prototype
 $syntax%
 	%ADvector% %dy%
