@@ -744,10 +744,10 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case PripOp:
-			CppADUnknownError( n_var == 0);
+			CppADUnknownError( n_var == 0 );
+			CppADUnknownError( n_ind == 2 );
 			if( print & (d == 0) )
-			{	n_ind  = 2;
-				CppADUnknownError( ind[0] < Rec->NumTxt() );
+			{	CppADUnknownError( ind[0] < Rec->NumTxt() );
 				std::cout << Rec->GetTxt(ind[0]);
 				std::cout << *(Rec->GetPar(ind[1]));
 			}
@@ -756,9 +756,9 @@ size_t ForwardSweep(
 
 			case PrivOp:
 			CppADUnknownError( n_var == 1);
+			CppADUnknownError( n_ind == 2 );
 			if( print & (d == 0) )
-			{	n_ind  = 2;
-				CppADUnknownError( ind[0] < Rec->NumTxt() );
+			{	CppADUnknownError( ind[0] < Rec->NumTxt() );
 				CppADUnknownError( ind[1] < i_var );
 
 				X      = Taylor + ind[1] * J;
