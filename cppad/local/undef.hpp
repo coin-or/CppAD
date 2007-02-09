@@ -2,7 +2,7 @@
 # define CPPAD_UNDEF_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // Undo definitions in Define.h 
 
-# undef CppADNull
+# undef CPPAD_NULL
 # undef CppADBinaryFriend
 # undef CppADStandardMathBinaryFun
 

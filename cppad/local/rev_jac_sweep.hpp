@@ -181,7 +181,7 @@ void RevJacSweep(
 			op, 
 			ind,
 			0, 
-			(Pack *) CppADNull,
+			(Pack *) CPPAD_NULL,
 			npv, 
 			Z 
 		);

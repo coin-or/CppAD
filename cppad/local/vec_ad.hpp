@@ -2,7 +2,7 @@
 # define CPPAD_VEC_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -415,13 +415,13 @@ public:
 	typedef VecAD_reference<Base> reference;
 
 	// default constructor
-	VecAD(void) : length(0) , data(CppADNull)
+	VecAD(void) : length(0) , data(CPPAD_NULL)
 	{ }
 
 	// constructor 
 	VecAD(size_t n) : length(n) , id(0)
 	{	CppADUnknownError( *ADTape<Base>::Id() > id );
-		data  = CppADNull;
+		data  = CPPAD_NULL;
 		if( length > 0 )
 		{	size_t i;
 			Base zero(0);
@@ -437,7 +437,7 @@ public:
 
 	// destructor
 	~VecAD(void)
-	{	if( data != CppADNull )
+	{	if( data != CPPAD_NULL )
 			CppADTrackDelVec(data); 
 	}
 

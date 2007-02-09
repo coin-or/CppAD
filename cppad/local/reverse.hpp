@@ -2,7 +2,7 @@
 # define CPPAD_REVERSE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -53,7 +53,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) const
 	// number of dependent variables
 	size_t m = dep_taddr.size();
 
-	Base *Partial = CppADNull;
+	Base *Partial = CPPAD_NULL;
 	Partial       = CppADTrackNewVec(totalNumVar * p, Partial);
 
 	// update maximum memory requirement

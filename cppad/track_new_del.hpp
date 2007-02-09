@@ -2,7 +2,7 @@
 # define CPPAD_TRACK_NEW_DEL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -205,8 +205,8 @@ $end
 
 # define CppADDebugTrack 0
 
-# ifndef CppADNull
-# define CppADNull	0
+# ifndef CPPAD_NULL
+# define CPPAD_NULL	0
 # endif
 
 # define CppADTrackNewVec(newlen, oldptr) \
@@ -234,12 +234,12 @@ public:
 
 	// default contructor (used to initialize root)
 	TrackElement(void)
-	: file(""), line(0), ptr(CppADNull), next(CppADNull)
+	: file(""), line(0), ptr(CPPAD_NULL), next(CPPAD_NULL)
 	{ }
 	
 	TrackElement(const char *f, int l, void *p)
-	: file(f), line(l), ptr(p), next(CppADNull)
-	{	CppADUnknownError( p != CppADNull);
+	: file(f), line(l), ptr(p), next(CPPAD_NULL)
+	{	CppADUnknownError( p != CPPAD_NULL);
 	}
 
 	// There is only one tracking list and it starts it here
@@ -252,7 +252,7 @@ public:
 	static void Print(void)
 	{	TrackElement *E = Root();
 		std::cout << "Begin Track List" << std::endl;
-		while( E->next != CppADNull )
+		while( E->next != CPPAD_NULL )
 		{	E = E->next;
 			std::cout << "next = " << E->next;
 			std::cout << ", ptr  = " << E->ptr;
@@ -308,7 +308,7 @@ Type *TrackNewVec(
 	Type       * /* oldptr */ )
 {
 	// try to allocate the new memrory
-	Type *newptr = CppADNull;
+	Type *newptr = CPPAD_NULL;
 	try
 	{	newptr = new Type[len];
 	}
@@ -355,13 +355,13 @@ void TrackDelVec(
 	P          = TrackElement::Root();
 	E          = P->next;
 	void *vptr = static_cast<void *>(oldptr);
-	while(E != CppADNull && E->ptr != vptr)
+	while(E != CPPAD_NULL && E->ptr != vptr)
 	{	P = E;
 		E = E->next;
 	}
 
 	// check if pointer was not in list
-	if( E == CppADNull || E->ptr != vptr ) TrackError(
+	if( E == CPPAD_NULL || E->ptr != vptr ) TrackError(
 		"TrackDelVec", file, line, 
 		"Invalid value for the argument oldptr"
 	); 
@@ -416,7 +416,7 @@ inline size_t TrackCount(const char *file, int line)
 {
 	TrackElement *E = TrackElement::Root();
 	size_t count = 0;
-	while( E->next != CppADNull ) 
+	while( E->next != CPPAD_NULL ) 
 	{
 # if CppADTrackDebug
 		std::cout << "Before TrackCount:" << std::endl;

@@ -2,7 +2,7 @@
 # define CPPAD_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -218,8 +218,8 @@ $end
 # include <cppad/local/cppad_error.hpp>
 # include <cppad/track_new_del.hpp>
 
-# ifndef CppADNull
-# define CppADNull 0
+# ifndef CPPAD_NULL
+# define CPPAD_NULL 0
 # endif
 
 namespace CppAD { //  BEGIN CppAD namespace
@@ -237,19 +237,19 @@ public:
 	typedef Type value_type;
 
 	// default constructor
-	inline vector(void) : capacity(0), length(0) , data(CppADNull)
+	inline vector(void) : capacity(0), length(0) , data(CPPAD_NULL)
 	{ }
 	// constructor with a specified size
 	inline vector(size_t n) : capacity(n), length(n)
 	{
-		data = CppADNull;
+		data = CPPAD_NULL;
 		if( length > 0 )
 			data = CppADTrackNewVec(capacity, data);
 	}
 	// copy constructor
 	inline vector(const vector &x) : capacity(x.length), length(x.length)
 	{	size_t i;
-		data = CppADNull;
+		data = CPPAD_NULL;
 		if( length > 0 )
 			data = CppADTrackNewVec(capacity, data);
 
@@ -258,7 +258,7 @@ public:
 	}
 	// destructor
 	~vector(void)
-	{	if( data != CppADNull )
+	{	if( data != CPPAD_NULL )
 			CppADTrackDelVec(data); 
 	}
 
@@ -271,11 +271,11 @@ public:
 	{	length = n;
 		if( (capacity >= n) & (n > 0)  )
 			return;
-		if( data != CppADNull  )
+		if( data != CPPAD_NULL  )
 			CppADTrackDelVec(data);
 		capacity = n;
 		if( capacity == 0 )
-			data = CppADNull;
+			data = CPPAD_NULL;
 		else	data = CppADTrackNewVec(capacity, data);
 	}
 	// assignment operator
@@ -375,12 +375,12 @@ public:
 	typedef bool value_type;
 
 	// default constructor
-	inline vectorBool(void) : nunit(0), length(0), data(CppADNull)
+	inline vectorBool(void) : nunit(0), length(0), data(CPPAD_NULL)
 	{ }
 	// constructor with a specified size
-	inline vectorBool(size_t n) : nunit(0), length(0), data(CppADNull)
+	inline vectorBool(size_t n) : nunit(0), length(0), data(CPPAD_NULL)
 	{	if( n == 0 )
-			data = CppADNull;
+			data = CPPAD_NULL;
 		else 
 		{	nunit    = (n - 1) / BitPerUnit + 1;
 			length   = n;
@@ -392,7 +392,7 @@ public:
 	: nunit(v.nunit), length(v.length)
 	{	size_t i;
 		if( nunit == 0 )
-			data = CppADNull;
+			data = CPPAD_NULL;
 		else	data = CppADTrackNewVec(nunit, data);
 
 		for(i = 0; i < nunit; i++)
@@ -400,7 +400,7 @@ public:
 	}
 	// destructor
 	~vectorBool(void)
-	{	if( data != CppADNull )
+	{	if( data != CPPAD_NULL )
 			CppADTrackDelVec(data);
 	}
 
@@ -413,11 +413,11 @@ public:
 	{	length = n;
 		if( (nunit * BitPerUnit >= n) & (n > 0) )
 			return;
-		if( data != CppADNull )
+		if( data != CPPAD_NULL )
 			CppADTrackDelVec(data);
 		if( n == 0 )
 		{	nunit = 0;
-			data = CppADNull;
+			data = CPPAD_NULL;
 		}
 		else
 		{	nunit    = (n - 1) / BitPerUnit + 1;

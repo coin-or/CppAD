@@ -192,8 +192,8 @@ size_t ForwardSweep(
 	size_t compareCount = 0;
 
 	// if this is an order zero calculation, initialize vector indices
-	size_t *VectorInd = CppADNull;  // address for each element
-	bool   *VectorVar = CppADNull;  // is element a variable
+	size_t *VectorInd = CPPAD_NULL;  // address for each element
+	bool   *VectorVar = CPPAD_NULL;  // is element a variable
 	i = Rec->NumVecInd();
 	if( i > 0 )
 	{	VectorInd = CppADTrackNewVec(i, VectorInd);
@@ -519,8 +519,8 @@ size_t ForwardSweep(
 			
 			CppADUnknownError( ind[0] > 0 );
 			CppADUnknownError( ind[0] < Rec->NumVecInd() );
-			CppADUnknownError( VectorInd != CppADNull );
-			CppADUnknownError( VectorVar != CppADNull );
+			CppADUnknownError( VectorInd != CPPAD_NULL );
+			CppADUnknownError( VectorVar != CPPAD_NULL );
 
 			if( d == 0 )
 			{	i   = ind[1];
@@ -564,8 +564,8 @@ size_t ForwardSweep(
 			
 			CppADUnknownError( ind[0] > 0 );
 			CppADUnknownError( ind[0] < Rec->NumVecInd() );
-			CppADUnknownError( VectorInd != CppADNull );
-			CppADUnknownError( VectorVar != CppADNull );
+			CppADUnknownError( VectorInd != CPPAD_NULL );
+			CppADUnknownError( VectorVar != CPPAD_NULL );
 
 			if( d == 0 )
 			{
@@ -813,8 +813,8 @@ size_t ForwardSweep(
 			CppADUnknownError( n_ind == 3 );
 
 			if( d == 0 )
-			{	CppADUnknownError( VectorInd != CppADNull );
-				CppADUnknownError( VectorVar != CppADNull );
+			{	CppADUnknownError( VectorInd != CPPAD_NULL );
+				CppADUnknownError( VectorVar != CPPAD_NULL );
 				CppADUnknownError( ind[0] < Rec->NumVecInd() );
 
 				i   = ind[1];
@@ -835,8 +835,8 @@ size_t ForwardSweep(
 			CppADUnknownError( n_ind == 3 );
 
 			if( d == 0 )
-			{	CppADUnknownError( VectorInd != CppADNull );
-				CppADUnknownError( VectorVar != CppADNull );
+			{	CppADUnknownError( VectorInd != CPPAD_NULL );
+				CppADUnknownError( VectorVar != CPPAD_NULL );
 				CppADUnknownError( ind[0] < Rec->NumVecInd() );
 				CppADUnknownError( ind[2] < i_var );
 
@@ -856,8 +856,8 @@ size_t ForwardSweep(
 			CppADUnknownError( n_ind == 3 );
 
 			if( d == 0 )
-			{	CppADUnknownError( VectorInd != CppADNull );
-				CppADUnknownError( VectorVar != CppADNull );
+			{	CppADUnknownError( VectorInd != CPPAD_NULL );
+				CppADUnknownError( VectorVar != CPPAD_NULL );
 				CppADUnknownError( ind[0] < Rec->NumVecInd() );
 				CppADUnknownError( ind[1] < i_var );
 
@@ -884,8 +884,8 @@ size_t ForwardSweep(
 			CppADUnknownError( n_ind == 3 );
 
 			if( d == 0 )
-			{	CppADUnknownError( VectorInd != CppADNull );
-				CppADUnknownError( VectorVar != CppADNull );
+			{	CppADUnknownError( VectorInd != CPPAD_NULL );
+				CppADUnknownError( VectorVar != CPPAD_NULL );
 				CppADUnknownError( ind[0] < Rec->NumVecInd() );
 				CppADUnknownError( ind[1] < i_var );
 				CppADUnknownError( ind[2] < i_var );
@@ -953,7 +953,7 @@ size_t ForwardSweep(
 			d + 1, 
 			Z, 
 			0, 
-			(Base *) CppADNull
+			(Base *) CPPAD_NULL
 		);
 	}
 	std::cout << std::endl;
@@ -961,9 +961,9 @@ size_t ForwardSweep(
 	}
 # endif
 	CppADUnknownError( (i_var + n_var) == Rec->TotNumVar() );
-	if( VectorInd != CppADNull )
+	if( VectorInd != CPPAD_NULL )
 		CppADTrackDelVec(VectorInd);
-	if( VectorVar != CppADNull )
+	if( VectorVar != CPPAD_NULL )
 		CppADTrackDelVec(VectorVar);
 
 	return compareCount;

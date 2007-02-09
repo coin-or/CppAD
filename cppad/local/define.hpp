@@ -2,7 +2,7 @@
 # define CPPAD_DEFINE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -30,8 +30,8 @@ $aindex head$$
 $mindex macro definition$$
 $section Macros Used by CppAD Implementation$$ 
 
-$head CppADNull$$
-The preprocessor symbol $code CppADNull$$ is used for a null pointer. 
+$head CPPAD_NULL$$
+The preprocessor symbol $code CPPAD_NULL$$ is used for a null pointer. 
 If it is not yet defined,
 it is defined when $code cppad/local/Define.h$$ is included is included.
 
@@ -74,8 +74,8 @@ for the case where both operands are $syntax%AD<%Base%>%$$ objects.
 $end
 */
 
-# ifndef CppADNull
-# define CppADNull     0
+# ifndef CPPAD_NULL
+# define CPPAD_NULL     0
 # endif
 
 

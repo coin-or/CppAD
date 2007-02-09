@@ -2,7 +2,7 @@
 # define CPPAD_REV_SPARSE_JAC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -201,7 +201,7 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 	size_t npv = 1 + (p - 1) / sizeof(Pack);
 
 	// array that will hold packed values
-	Pack *RevJac = CppADNull;
+	Pack *RevJac = CPPAD_NULL;
 	RevJac       = CppADTrackNewVec(totalNumVar * npv, RevJac);
 
 	// update maximum memory requirement

@@ -2,7 +2,7 @@
 # define CPPAD_CAP_TAYLOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -114,30 +114,30 @@ void ADFun<Base>::capacity_taylor(size_t c)
 		return;
 
 	if( c == 0 )
-	{	if( Taylor != CppADNull )
+	{	if( Taylor != CPPAD_NULL )
 			CppADTrackDelVec(Taylor);
-		Taylor = CppADNull;
+		Taylor = CPPAD_NULL;
 		taylor_per_var = 0;
 		return;
 	}
 	
 	// Allocate new matrix will requested number of columns 
 	size_t newlen   = c * totalNumVar;
-	Base *newptr    = CppADNull;
+	Base *newptr    = CPPAD_NULL;
 	newptr          = CppADTrackNewVec(newlen, newptr);
 
 	// number of columns to copy
 	p = std::min(taylor_per_var, c);
 
 	// copy the old data into the new matrix
-	CppADUnknownError( (taylor_per_var == 0) | (Taylor != CppADNull) );
+	CppADUnknownError( (taylor_per_var == 0) | (Taylor != CPPAD_NULL) );
 	for(j = 0; j < p; j++)
 	{	for(i = 0; i < totalNumVar; i++)
 		{	newptr[i * c + j]  = Taylor[i * TaylorColDim + j];
 		}
 	}
 	// free the old memory
-	if( Taylor != CppADNull )
+	if( Taylor != CPPAD_NULL )
 		CppADTrackDelVec(Taylor);
 
 	// use the new pointer

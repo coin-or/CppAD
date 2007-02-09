@@ -166,7 +166,7 @@ void ForJacSweep(
 	bool use_VecAD = Rec->NumVecInd() > 0;
 	const Base  *left, *right;
 	const Pack  *trueCase, *falseCase;
-	Pack  *zero = CppADNull;
+	Pack  *zero = CPPAD_NULL;
 	zero        = CppADTrackNewVec(npv, zero);
 	for(j = 0; j < npv; j++)
 		zero[j] = 0;
@@ -707,7 +707,7 @@ void ForJacSweep(
 			npv, 
 			Z, 
 			0, 
-			(Pack *) CppADNull
+			(Pack *) CPPAD_NULL
 		);
 	}
 	std::cout << std::endl;

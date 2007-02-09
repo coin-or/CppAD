@@ -38,19 +38,33 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Improve BenderQuad documentation.
+log_entry="The preprocessor macro CppADNull was change to CPPAD_NULL
 
-svn_commit.sh: change automatic editing file set.
-whats_new_07.omh: users view of the changes.
-bender_quad.hpp: improve documentation for BenderQuad.
+svn_commit.sh: detect and abort on bad names in svn_commit.sh.
+wish_list.omh: add member variable name entry to software guidlines.
 " 
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
-	omh/whats_new_07.omh
-	cppad/local/bender_quad.hpp
+	omh/wish_list.omh
+	cppad/local/ad_fun.hpp 
+	cppad/local/cap_taylor.hpp 
+	cppad/local/define.hpp 
+	cppad/local/dependent.hpp 
+	cppad/local/for_jac_sweep.hpp 
+	cppad/local/forward_sweep.hpp 
+	cppad/local/fun_construct.hpp 
+	cppad/local/rev_jac_sweep.hpp 
+	cppad/local/rev_sparse_hes.hpp 
+	cppad/local/rev_sparse_jac.hpp 
+	cppad/local/reverse.hpp 
+	cppad/local/tape_rec.hpp 
+	cppad/local/undef.hpp 
+	cppad/local/vec_ad.hpp 
+	cppad/track_new_del.hpp 
+	cppad/vector.hpp
 "
 delete_list="
 "
@@ -67,6 +81,7 @@ fi
 this_branch=`pwd | sed -e "s|.*/CppAD/||"`
 echo "$this_branch: $log_entry" > svn_commit.log
 count=0
+bad_name=""
 for file in $add_list $change_list
 do
 	count=`expr $count + 1`
@@ -88,6 +103,11 @@ do
 		then
 			chmod +x $file
 		fi
+	fi
+	if [ ! -e $file ]
+	then
+		bad_name="$file"
+		echo "$file is not a file or directory not exist"
 	fi
 done
 for file in $add_list
@@ -116,10 +136,16 @@ done
 echo "-------------------------------------------------------------"
 cat svn_commit.log
 response=""
-while [ "$response" != "c" ] && [ "$response" != "a" ]
-do
-	read -p "continue [c] or abort [a] ? " response
-done
+if [ "$bad_name" != "" ]
+then
+	echo "bad file or directory name: $bad_name"
+	response="a"
+else
+	while [ "$response" != "c" ] && [ "$response" != "a" ]
+	do
+		read -p "continue [c] or abort [a] ? " response
+	done
+fi
 if [ "$response" = "a" ]
 then
 	echo "aborting commit"

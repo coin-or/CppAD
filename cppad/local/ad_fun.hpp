@@ -2,7 +2,7 @@
 # define CPPAD_AD_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -66,7 +66,7 @@ class ADFun {
 public:
 	// default constructor
 	ADFun(void) 
-	: totalNumVar(0), Taylor(CppADNull), ForJac(CppADNull)
+	: totalNumVar(0), Taylor(CPPAD_NULL), ForJac(CPPAD_NULL)
 	{ }
 
 	// sequence constructor
@@ -75,9 +75,9 @@ public:
 
 	// destructor
 	~ADFun(void)
-	{	if( Taylor != CppADNull )
+	{	if( Taylor != CPPAD_NULL )
 			CppADTrackDelVec(Taylor);
-		if( ForJac != CppADNull )
+		if( ForJac != CPPAD_NULL )
 			CppADTrackDelVec(ForJac);
 	}
 

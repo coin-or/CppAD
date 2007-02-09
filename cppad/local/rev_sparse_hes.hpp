@@ -2,7 +2,7 @@
 # define CPPAD_REV_SPARSE_HES_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -231,11 +231,11 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 	CppADUnknownError( npv <= ForJacColDim );
 
 	// array that will hold packed reverse Jacobian values
-	Pack *RevJac = CppADNull;
+	Pack *RevJac = CPPAD_NULL;
 	RevJac       = CppADTrackNewVec(totalNumVar, RevJac);	
 
 	// array that will hold packed reverse Hessain values
-	Pack *RevHes = CppADNull;
+	Pack *RevHes = CPPAD_NULL;
 	RevHes       = CppADTrackNewVec(totalNumVar * npv, RevHes);	
 
 	// update maximum memory requirement

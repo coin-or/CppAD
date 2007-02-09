@@ -2,7 +2,7 @@
 # define CPPAD_TAPE_REC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -259,23 +259,23 @@ public:
 
 		NumberOp       = 0;
 		LengthOp       = 0;
-		Op             = CppADNull;
+		Op             = CPPAD_NULL;
 
 		NumberVecInd   = 0;
 		LengthVecInd   = 0;
-		VecInd         = CppADNull;
+		VecInd         = CPPAD_NULL;
 
 		NumberInd      = 0;
 		LengthInd      = 0;
-		Ind            = CppADNull;
+		Ind            = CPPAD_NULL;
 
 		NumberPar      = 0;
 		LengthPar      = 0;
-		Par            = CppADNull;
+		Par            = CPPAD_NULL;
 
 		NumberTxt      = 0;
 		LengthTxt      = 0;
-		Txt            = CppADNull;
+		Txt            = CPPAD_NULL;
 
 	}
 
@@ -333,19 +333,19 @@ public:
 
 		// Allocate the memory
 		if( LengthOp == 0 )
-			Op = CppADNull;
+			Op = CPPAD_NULL;
 		else	Op = CppADTrackNewVec(LengthOp,      Op);
 		if( LengthVecInd == 0 )
-			VecInd = CppADNull;
+			VecInd = CPPAD_NULL;
 		else	VecInd = CppADTrackNewVec(LengthVecInd, VecInd);
 		if( LengthInd == 0 )
-			Ind = CppADNull;
+			Ind = CPPAD_NULL;
 		else	Ind = CppADTrackNewVec(LengthInd,       Ind);
 		if( LengthPar == 0 )
-			Par = CppADNull;
+			Par = CPPAD_NULL;
 		else	Par = CppADTrackNewVec(LengthPar,       Par);
 		if( LengthTxt == 0 )
-			Txt = CppADNull;
+			Txt = CPPAD_NULL;
 		else	Txt = CppADTrackNewVec(LengthTxt,       Txt);
 
 		// Copy the data

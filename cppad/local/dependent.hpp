@@ -2,7 +2,7 @@
 # define CPPAD_DEPENDENT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -161,14 +161,14 @@ void ADFun<Base>::Dependent(const ADvector &y)
 	CppADUnknownError( totalNumVar > 0 );
 
 	// free old buffers
-	if( Taylor != CppADNull )
+	if( Taylor != CPPAD_NULL )
 		CppADTrackDelVec(Taylor);
-	if( ForJac != CppADNull )
+	if( ForJac != CPPAD_NULL )
 		CppADTrackDelVec(ForJac);
 
 	// initialize buffers
-	Taylor  = CppADNull;
-	ForJac  = CppADNull;
+	Taylor  = CPPAD_NULL;
+	ForJac  = CPPAD_NULL;
 
 	// initial row and column dimensions
 	// memoryMax  = 0;

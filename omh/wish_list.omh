@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -85,6 +85,8 @@ This could be returned as an extra
 $xref/SeqProperty/$$.
 
 $head Software Guidelines$$
+
+$subhead Boost$$
 The following is a list of some software guidelines taken from
 $href%http://www.boost.org/more/lib_guide.htm#Guidelines%boost%$$.
 These guidelines are not followed by the current CppAD source code,
@@ -114,6 +116,9 @@ $lnext
 Use spaces rather than tabs.  
 
 $lend
+
+$subhead Member Variables$$
+Change member variable names so that they all end with an underscore.
 
 $head Vector Element Type$$
 Change cross references from 
