@@ -1,5 +1,5 @@
  test
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -313,9 +313,9 @@ then
 	#
 	# Start build_test.log with include file checks
 	# (must do this before extracting copy of distribution directory).
-	check_include_def.sh   > build_test.log
-	check_include_file.sh >> build_test.log
-	check_include_omh.sh  >> build_test.log
+	./check_include_def.sh   > build_test.log
+	./check_include_file.sh >> build_test.log
+	./check_include_omh.sh  >> build_test.log
 	# add a new line after last include file check
 	echo ""               >> ../build_test.log
 	#

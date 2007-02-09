@@ -2,7 +2,7 @@
 # define CPPAD_COMPARE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -203,7 +203,7 @@ inline bool AD<Base>::operator < (const AD<Base> &right) const
 # endif
 
 // convert other cases into the case above
-CppADFoldBinaryOperator(bool, <)
+CPPAD_FOLD_BINARY_OPERATOR(bool, <)
 
 // -------------------------------- <= -------------------------
 # ifdef NDEBUG
@@ -229,7 +229,7 @@ inline bool AD<Base>::operator <= (const AD<Base> &right) const
 # endif
 
 // convert other cases into the case above
-CppADFoldBinaryOperator(bool, <=)
+CPPAD_FOLD_BINARY_OPERATOR(bool, <=)
 
 
 // -------------------------------- > -------------------------
@@ -256,7 +256,7 @@ inline bool AD<Base>::operator > (const AD<Base> &right) const
 # endif
 
 // convert other cases into the case above
-CppADFoldBinaryOperator(bool, >)
+CPPAD_FOLD_BINARY_OPERATOR(bool, >)
 
 // -------------------------------- >= -------------------------
 # ifdef NDEBUG
@@ -282,7 +282,7 @@ inline bool AD<Base>::operator >= (const AD<Base> &right) const
 # endif
 
 // convert other cases into the case above
-CppADFoldBinaryOperator(bool, >=)
+CPPAD_FOLD_BINARY_OPERATOR(bool, >=)
 
 
 // -------------------------------- == -------------------------
@@ -309,7 +309,7 @@ inline bool AD<Base>::operator == (const AD<Base> &right) const
 # endif
 
 // convert other cases into the case above
-CppADFoldBinaryOperator(bool, ==)
+CPPAD_FOLD_BINARY_OPERATOR(bool, ==)
 
 // -------------------------------- != -------------------------
 # ifdef NDEBUG
@@ -335,7 +335,7 @@ inline bool AD<Base>::operator != (const AD<Base> &right) const
 # endif
 
 // convert other cases into the case above
-CppADFoldBinaryOperator(bool, !=)
+CPPAD_FOLD_BINARY_OPERATOR(bool, !=)
 
 } // END CppAD namespace
 

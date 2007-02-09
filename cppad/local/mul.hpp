@@ -2,7 +2,7 @@
 # define CPPAD_MUL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -155,7 +155,7 @@ AD<Base> AD<Base>::operator *(const AD<Base> &right) const
 }
 
 // convert other cases to the case above
-CppADFoldBinaryOperator(AD<Base>, *)
+CPPAD_FOLD_BINARY_OPERATOR(AD<Base>, *)
 
 
 } // END CppAD namespace

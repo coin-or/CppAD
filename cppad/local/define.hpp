@@ -35,10 +35,10 @@ The preprocessor symbol $code CPPAD_NULL$$ is used for a null pointer.
 If it is not yet defined,
 it is defined when $code cppad/local/Define.h$$ is included is included.
 
-$head CppADFoldBinaryOperator$$
+$head CPPAD_FOLD_BINARY_OPERATOR$$
 The syntax
 $syntax%
-	CppADFoldBinaryOperator(%Type%, %Op%)
+	CPPAD_FOLD_BINARY_OPERATOR(%Type%, %Op%)
 %$$
 defines the operators
 $syntax%
@@ -79,7 +79,7 @@ $end
 # endif
 
 
-# define CppADFoldBinaryOperator(Type, Op)                             \
+# define CPPAD_FOLD_BINARY_OPERATOR(Type, Op)                          \
 /* ----------------------------------------------------------------*/  \
 /* Operations with VecAD_reference<Base> and AD<Base> only*/           \
 template <class Base>                                                  \

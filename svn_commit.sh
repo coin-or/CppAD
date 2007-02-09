@@ -38,33 +38,25 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="The preprocessor macro CppADNull was change to CPPAD_NULL
+log_entry="Change CppADFoldBinaryOperator to all upper case.
 
-svn_commit.sh: detect and abort on bad names in svn_commit.sh.
-wish_list.omh: add member variable name entry to software guidlines.
+svn_commit.sh: file that made this change.
+build.sh: change check_?.sh to ./check_?.sh.
+config.h: update version (corresponding to subversion install).
 " 
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
-	omh/wish_list.omh
-	cppad/local/ad_fun.hpp 
-	cppad/local/cap_taylor.hpp 
-	cppad/local/define.hpp 
-	cppad/local/dependent.hpp 
-	cppad/local/for_jac_sweep.hpp 
-	cppad/local/forward_sweep.hpp 
-	cppad/local/fun_construct.hpp 
-	cppad/local/rev_jac_sweep.hpp 
-	cppad/local/rev_sparse_hes.hpp 
-	cppad/local/rev_sparse_jac.hpp 
-	cppad/local/reverse.hpp 
-	cppad/local/tape_rec.hpp 
-	cppad/local/undef.hpp 
-	cppad/local/vec_ad.hpp 
-	cppad/track_new_del.hpp 
-	cppad/vector.hpp
+	build.sh
+	cppad/config.h
+	cppad/local/div.hpp
+	cppad/local/add.hpp
+	cppad/local/compare.hpp
+	cppad/local/sub.hpp
+	cppad/local/define.hpp
+	cppad/local/mul.hpp
 "
 delete_list="
 "
