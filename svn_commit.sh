@@ -38,25 +38,23 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Change CppADFoldBinaryOperator to all upper case.
+log_entry="Add copyright message to top of some script files.
 
 svn_commit.sh: file that made this change.
-build.sh: change check_?.sh to ./check_?.sh.
-config.h: update version (corresponding to subversion install).
+svn_merge.sh: change repository location form cppad to CppAD. 
+build.sh: correct typo in first line first line.
+svn_log.sh: change repository location form cppad to CppAD. 
+run_omhelp.sh: add missing first line.
 " 
 add_list="
 "
 #
 change_list="
 	svn_commit.sh
+	svn_merge.sh
 	build.sh
-	cppad/config.h
-	cppad/local/div.hpp
-	cppad/local/add.hpp
-	cppad/local/compare.hpp
-	cppad/local/sub.hpp
-	cppad/local/define.hpp
-	cppad/local/mul.hpp
+	svn_log.sh
+	run_omhelp.sh
 "
 delete_list="
 "
