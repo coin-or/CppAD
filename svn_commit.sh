@@ -38,13 +38,10 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add copyright message to top of some script files.
+log_entry="change AD class member variable names to end with _ (underscore)
 
 svn_commit.sh: file that made this change.
-svn_merge.sh: change repository location form cppad to CppAD. 
-build.sh: correct typo in first line first line.
-svn_log.sh: change repository location form cppad to CppAD. 
-run_omhelp.sh: add missing first line.
+svn_merge.sh: changes were merged in from openmp branch.
 " 
 add_list="
 "
@@ -52,9 +49,7 @@ add_list="
 change_list="
 	svn_commit.sh
 	svn_merge.sh
-	build.sh
-	svn_log.sh
-	run_omhelp.sh
+	cppad/local
 "
 delete_list="
 "

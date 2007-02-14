@@ -351,8 +351,8 @@ public:
 		size_t i = static_cast<size_t>( Integer(x) );
 		CppADUnknownError( i < vec->length );
 
-		// value corresponding to this element
-		result.value = *(vec->data + i);
+		// value_ corresponding to this element
+		result.value_ = *(vec->data + i);
 
 		// index corresponding to this element
 		if( AD<Base>::Tape()->State() == Empty )
@@ -376,9 +376,9 @@ public:
 			{	// check if we need to convert x to a variable
 				// note that x is mutable
 				if( Parameter(x) )
-				{	x.id = *ADTape<Base>::Id();
-					x.taddr = 
-					AD<Base>::Tape()->RecordParOp(x.value);
+				{	x.id_ = *ADTape<Base>::Id();
+					x.taddr_ = 
+					AD<Base>::Tape()->RecordParOp(x.value_);
 				}
 	
 				// use variable indexing
@@ -386,10 +386,10 @@ public:
 					LdvOp,
 					result,
 					vec->offset,
-					x.taddr
+					x.taddr_
 				);
 				CppADUnknownError( 
-					x.taddr > 0 && Variable(x)
+					x.taddr_ > 0 && Variable(x)
 				);
 			}
 		}
@@ -497,7 +497,7 @@ public:
 
 private:
 	const  size_t   length; // size of this VecAD vector
-	Base           *data;   // value of elements of this vector 
+	Base           *data;   // value_ of elements of this vector 
 
 	// offset in cumulate vector corresponding to this object
 	size_t offset; 
@@ -511,7 +511,7 @@ template <class Base>
 void VecAD_reference<Base>::operator=(const AD<Base> &y)
 {
 	if( Parameter(y) )
-	{	*this = y.value;
+	{	*this = y.value_;
 		return;
 	}
 
@@ -521,15 +521,15 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
 	CppADUnknownError( i < vec->length );
 
 	// assign value both in the element and the original array
-	*(vec->data + i) = y.value;
+	*(vec->data + i) = y.value_;
 
 	// record the setting of this array element
 	CppADUnknownError( vec->id == *ADTape<Base>::Id() );
 	CppADUnknownError( vec->offset > 0 );
 	if( Parameter(x) ) AD<Base>::Tape()->RecordStoreOp(
-			StpvOp, vec->offset, i, y.taddr );
+			StpvOp, vec->offset, i, y.taddr_ );
 	else	AD<Base>::Tape()->RecordStoreOp(
-			StvvOp, vec->offset, x.taddr, y.taddr );
+			StvvOp, vec->offset, x.taddr_, y.taddr_ );
 }
 
 template <class Base>
@@ -555,7 +555,7 @@ void VecAD_reference<Base>::operator=(const Base &y)
 	if( Parameter(x) ) AD<Base>::Tape()->RecordStoreOp(
 			StppOp, vec->offset, i, y_taddr );
 	else	AD<Base>::Tape()->RecordStoreOp(
-			StvpOp, vec->offset, x.taddr, y_taddr );
+			StvpOp, vec->offset, x.taddr_, y_taddr );
 }
 
 // fold this case into AD<Base> case above

@@ -278,38 +278,38 @@ inline AD<Base> CondExpOp(
 	const AD<Base> &falseCase )
 {
 	AD<Base> returnValue;
-	CppADUnknownError( returnValue.id == 0 );
+	CppADUnknownError( returnValue.id_ == 0 );
 
 	// check first case where do not need to tape
 	if( IdenticalPar(left) & IdenticalPar(right) )
 	{	switch( cop )
 		{
 			case CompareLt:
-			if( left.value < right.value )
+			if( left.value_ < right.value_ )
 				returnValue = trueCase;
 			else	returnValue = falseCase;
 			break;
 
 			case CompareLe:
-			if( left.value <= right.value )
+			if( left.value_ <= right.value_ )
 				returnValue = trueCase;
 			else	returnValue = falseCase;
 			break;
 
 			case CompareEq:
-			if( left.value == right.value )
+			if( left.value_ == right.value_ )
 				returnValue = trueCase;
 			else	returnValue = falseCase;
 			break;
 
 			case CompareGe:
-			if( left.value >= right.value )
+			if( left.value_ >= right.value_ )
 				returnValue = trueCase;
 			else	returnValue = falseCase;
 			break;
 
 			case CompareGt:
-			if( left.value > right.value )
+			if( left.value_ > right.value_ )
 				returnValue = trueCase;
 			else	returnValue = falseCase;
 			break;
@@ -322,8 +322,8 @@ inline AD<Base> CondExpOp(
 	}
 
 	// must use CondExp incase Base is an AD type and recording
-	returnValue.value = CondExpOp(cop, 
-		left.value, right.value, trueCase.value, falseCase.value);
+	returnValue.value_ = CondExpOp(cop, 
+		left.value_, right.value_, trueCase.value_, falseCase.value_);
 
 	// second case where do not need to tape this operation
 	if( AD<Base>::Tape()->State() == Empty ) 
@@ -356,7 +356,7 @@ void ADTape<Base>::RecordCondExp(
 {	size_t   ind0, ind1, ind2, ind3, ind4, ind5;
 	size_t   returnValue_taddr;
 
-	// taddr of this variable
+	// taddr_ of this variable
 	returnValue_taddr = Rec.PutOp(CExpOp);
 
 	// ind[0] = cop
@@ -369,38 +369,38 @@ void ADTape<Base>::RecordCondExp(
 	// Make sure returnValue is in the list of variables and set its taddr
 	if( Parameter(returnValue) )
 		returnValue.MakeVariable( returnValue_taddr );
-	else	returnValue.taddr = returnValue_taddr;
+	else	returnValue.taddr_ = returnValue_taddr;
 
 	// ind[2] = left address
 	if( Parameter(left) )
-		ind2 = Rec.PutPar(left.value);
+		ind2 = Rec.PutPar(left.value_);
 	else
 	{	ind1 += 1;
-		ind2 = left.taddr;	
+		ind2 = left.taddr_;	
 	}
 
 	// ind[3] = right address
 	if( Parameter(right) )
-		ind3 = Rec.PutPar(right.value);
+		ind3 = Rec.PutPar(right.value_);
 	else
 	{	ind1 += 2;
-		ind3 = right.taddr;	
+		ind3 = right.taddr_;	
 	}
 
 	// ind[4] = trueCase address
 	if( Parameter(trueCase) )
-		ind4 = Rec.PutPar(trueCase.value);
+		ind4 = Rec.PutPar(trueCase.value_);
 	else
 	{	ind1 += 4;
-		ind4 = trueCase.taddr;	
+		ind4 = trueCase.taddr_;	
 	}
 
 	// ind[5] =  falseCase address
 	if( Parameter(falseCase) )
-		ind5 = Rec.PutPar(falseCase.value);
+		ind5 = Rec.PutPar(falseCase.value_);
 	else
 	{	ind1 += 8;
-		ind5 = falseCase.taddr;	
+		ind5 = falseCase.taddr_;	
 	}
 
 	CppADUnknownError( NumInd(CExpOp) == 6 );

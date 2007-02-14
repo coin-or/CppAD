@@ -37,7 +37,7 @@ $latex \[
 	{\rm pow} (x, y) = x^y
 \] $$.
 using logarithms and exponentiation to compute the value.
-If $italic y$$ has an integer value,
+If $italic y$$ has an integer value_,
 The other CppAD $cref/pow/PowInt/$$ function can compute the same value 
 using only multiplication and possibly division. 
 
@@ -120,24 +120,24 @@ pow(const AD<Base> &x, const AD<Base> &y)
 	CppADUnknownError( Parameter(p) );
 
 	// base type result
-	p.value  = pow(x.value, y.value);
+	p.value_  = pow(x.value_, y.value_);
 
 	if( Variable(x) )
 	{	if( Variable(y) )
 		{	// result = variable + variable
 			AD<Base>::Tape()-> 
-				RecordOp(PowvvOp, p, x.taddr, y.taddr);
+				RecordOp(PowvvOp, p, x.taddr_, y.taddr_);
 		}
-		// if IdenticalZero(y.value), p = variable^0 = 1
-		else if( ! IdenticalZero(y.value) )
+		// if IdenticalZero(y.value_), p = variable^0 = 1
+		else if( ! IdenticalZero(y.value_) )
 			AD<Base>::Tape()->
-				RecordOp(PowvpOp, p, x.taddr, y.value);
+				RecordOp(PowvpOp, p, x.taddr_, y.value_);
 	}
 	else if( Variable(y) )
-	{	// if IdenticalZero(x.value), p = 0^variable = 0 
-		if( ! IdenticalZero(x.value) )
+	{	// if IdenticalZero(x.value_), p = 0^variable = 0 
+		if( ! IdenticalZero(x.value_) )
 			AD<Base>::Tape()->
-				RecordOp(PowpvOp, p, x.value, y.taddr);
+				RecordOp(PowpvOp, p, x.value_, y.taddr_);
 	}
 
 	return p;

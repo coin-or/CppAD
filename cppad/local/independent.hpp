@@ -117,7 +117,7 @@ void ADTape<Base>::Independent(VectorAD &x)
 	size_t j;
 	for(j = 0; j < n; j++)
 	{	RecordInvOp(x[j]);
-		CppADUnknownError( x[j].taddr == j+1 );
+		CppADUnknownError( x[j].taddr_ == j+1 );
 	}
 
 	// done specifying all of the independent variables

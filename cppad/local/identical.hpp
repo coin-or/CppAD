@@ -35,7 +35,7 @@ this function returns true.
 Otherwise, it returns true if and only if 
 the sequence of values
 $syntax%
-	%x%, %x%.value, %x%.value.value , ...
+	%x%, %x%.value_, %x%.value_.value , ...
 %$$
 are all parameters.
 
@@ -63,7 +63,7 @@ $italic x$$ is equal to zero.
 Otherwise, it returns true if and only if it is equal to zero
 and the sequence of values
 $syntax%
-	%x%, %x%.value, %x%.value.value , ...
+	%x%, %x%.value_, %x%.value_.value , ...
 %$$
 are all parameters.
 
@@ -93,7 +93,7 @@ $italic x$$ is equal to zero.
 Otherwise, it returns true if and only if it is equal to zero
 and the sequence of values
 $syntax%
-	%x%, %x%.value, %x%.value.value , ...
+	%x%, %x%.value_, %x%.value_.value , ...
 %$$
 are all parameters.
 
@@ -118,7 +118,7 @@ $head Description$$
 If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
 $italic x$$ is identically equal $italic y$$ if and only if
 both $italic x$$ and $italic y$$ are parameters
-and $syntax%%x%.value%$$ is identically equal $syntax%%y%.value%$$.
+and $syntax%%x%.value_%$$ is identically equal $syntax%%y%.value_%$$.
 If $italic Type$$ is not $syntax%AD<%Base%>%$$ for some $italic Base$$,
 $italic x$$ is identically equal $italic y$$ if and only if
 $syntax%
@@ -146,7 +146,7 @@ namespace CppAD {
 
 	template <class Base>
 	inline bool IdenticalPar(const AD<Base> &x)
-	{	return Parameter(x) && IdenticalPar(x.value); }
+	{	return Parameter(x) && IdenticalPar(x.value_); }
 
 	// Zero -----------------------------------------------
 	inline bool IdenticalZero(const float &x)
@@ -163,7 +163,7 @@ namespace CppAD {
 
 	template <class Base>
 	inline bool IdenticalZero(const AD<Base> &x)
-	{	return Parameter(x) && IdenticalZero(x.value); }
+	{	return Parameter(x) && IdenticalZero(x.value_); }
 
 	// One -----------------------------------------------
 	inline bool IdenticalOne(const float &x)
@@ -180,7 +180,7 @@ namespace CppAD {
 
 	template <class Base>
 	inline bool IdenticalOne(const AD<Base> &x)
-	{	return Parameter(x) && IdenticalOne(x.value); }
+	{	return Parameter(x) && IdenticalOne(x.value_); }
 
 	// Equal -----------------------------------------------
 	inline bool IdenticalEqual(const float &x, const float &y)
@@ -199,7 +199,7 @@ namespace CppAD {
 	inline bool IdenticalEqual(const AD<Base> &x, const AD<Base> &y)
 	{	bool parameter;
 		parameter = ( Parameter(x) & Parameter(y) );
-		return parameter  && IdenticalEqual(x.value, y.value); 
+		return parameter  && IdenticalEqual(x.value_, y.value_); 
 	}
 }
 

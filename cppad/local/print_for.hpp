@@ -102,8 +102,8 @@ namespace CppAD {
 	void PrintFor(const char *text, const AD<Base> &u)
 	{ 	if( AD<Base>::Tape()->State() == Recording )
 		{	if( Parameter(u) )
-				AD<Base>::Tape()->RecordPripOp(text, u.value);
-			else	AD<Base>::Tape()->RecordPrivOp(text, u.taddr);
+				AD<Base>::Tape()->RecordPripOp(text, u.value_);
+			else	AD<Base>::Tape()->RecordPrivOp(text, u.taddr_);
 		}
 	}
 	template <class Base>

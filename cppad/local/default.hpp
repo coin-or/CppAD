@@ -52,7 +52,7 @@ namespace CppAD {
 
 // default constructor
 template <class Base>
-inline AD<Base>::AD(void) : id(0)
+inline AD<Base>::AD(void) : id_(0)
 { }	
 
 } // END CppAD namespace

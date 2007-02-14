@@ -28,7 +28,7 @@ $$
 
 $index abs, AD$$
 $index absolute, AD value$$
-$index value, AD absolute$$
+$index value_, AD absolute$$
 
 $section AD Absolute Value Function$$
 
@@ -179,12 +179,12 @@ AD<Base> AD<Base>::Abs (void) const
 {	using CppAD::abs;
 
 	AD<Base> result;
-	CppADUnknownError( result.id == 0 );
+	CppADUnknownError( result.id_ == 0 );
 
-	result.value = abs(value);
+	result.value_ = abs(value_);
 	if( Variable(*this) ) 
 	{	// add this operation to the tape
-		Tape()->RecordOp(AbsOp, result, taddr);
+		Tape()->RecordOp(AbsOp, result, taddr_);
 
 	}
 	return result;

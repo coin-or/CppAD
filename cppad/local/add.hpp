@@ -100,35 +100,35 @@ AD<Base> AD<Base>::operator +(const AD<Base> &right) const
 	AD<Base> result;
 	CppADUnknownError( Parameter(result) );
 
-	result.value  = value + right.value;
+	result.value_  = value_ + right.value_;
 
 	if( Variable(*this) )
 	{	if( Variable(right) )
 		{	// result = variable + variable
 			Tape()->RecordOp(AddvvOp, 
-				result, taddr, right.taddr
+				result, taddr_, right.taddr_
 			);
 		}
-		else if( IdenticalZero(right.value) )
+		else if( IdenticalZero(right.value_) )
 		{	// result = variable + 0
-			result.MakeVariable(taddr);
+			result.MakeVariable(taddr_);
 		}
 		else
 		{	// result = variable + parameter
 			Tape()->RecordOp(AddvpOp, 
-				result, taddr, right.value
+				result, taddr_, right.value_
 			);
 		}
 	}
 	else if( Variable(right) )
-	{	if( IdenticalZero(value) )
+	{	if( IdenticalZero(value_) )
 		{	// result = 0 + variable
-			result.MakeVariable(right.taddr);
+			result.MakeVariable(right.taddr_);
 		}
 		else
 		{	// result = parameter + variable
 			Tape()->RecordOp(AddpvOp, 
-				result, value, right.taddr
+				result, value_, right.taddr_
 			);
 		}
 	}

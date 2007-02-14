@@ -121,13 +121,13 @@ namespace CppAD {
 	{	
 		if( Parameter(x) )
 		{	if( Parameter(y) )
-				return EqualOpSeq(x.value, y.value);
+				return EqualOpSeq(x.value_, y.value_);
 			else	return false;
 		}
 		else if( Parameter(y) )
 			return false;
 
-		return (x.taddr == y.taddr);
+		return (x.taddr_ == y.taddr_);
 	}
 		
 }

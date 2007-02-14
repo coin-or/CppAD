@@ -89,7 +89,7 @@ inline Base Value(const AD<Base> &x)
 	);
 		
 
-	result = x.value;
+	result = x.value_;
 
 	return result;
 }

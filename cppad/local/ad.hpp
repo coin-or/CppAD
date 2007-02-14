@@ -120,7 +120,7 @@ class AD {
 
 public:
 	// type of value
-	typedef Base value_type;
+	typedef Base valuetype;
 
 	// comparison operators
 	CPPAD_COMPARE_MEMBER( <  )
@@ -226,32 +226,32 @@ public:
 	}
 
 	// Make this object correspond to a new variable on the tape
-	inline void MakeVariable( size_t taddr_ )
+	inline void MakeVariable( size_t taddr )
 	{	CppADUnknownError( Parameter(*this) ); // currently a parameter
-		CppADUnknownError( taddr_ > 0 );       // make sure valid taddr
+		CppADUnknownError( taddr > 0 );       // make sure valid taddr
 
-		taddr = taddr_;
-		id    = *ADTape<Base>::Id();
+		taddr_ = taddr;
+		id_   = *ADTape<Base>::Id();
 	}
 
 	// Make this object correspond to a parameter
 	inline void MakeParameter( void )
 	{	CppADUnknownError( Variable(*this) ); // currently a variable
-		CppADUnknownError( id == *ADTape<Base>::Id() ); 
+		CppADUnknownError( id_ == *ADTape<Base>::Id() ); 
 
-		id = 0;
+		id_ = 0;
 	}
 
 private:
-	// value corresponding to this object
-	Base value;
+	// value_ corresponding to this object
+	Base value_;
 
-	// taddr in tape for this variable 
-	size_t taddr;
+	// taddr_ in tape for this variable 
+	size_t taddr_;
 
 	// identifier corresponding to taddr
-	// This is a parameter if and only if id != *ADTape<Base>::Id()
-	size_t id;
+	// This is a parameter if and only if id_ != *ADTape<Base>::Id()
+	size_t id_;
 }; 
 // ---------------------------------------------------------------------------
 

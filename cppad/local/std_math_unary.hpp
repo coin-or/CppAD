@@ -318,10 +318,10 @@ $end
 	inline AD<Base> AD<Base>::Name (void) const                       \
         {	using CppAD::Name;                                        \
 		AD<Base> result;                                          \
-		CppADUnknownError( result.id == 0 );                      \
-		result.value = Name(value);                               \
+		CppADUnknownError( result.id_ == 0 );                      \
+		result.value_ = Name(value_);                               \
 		if( Variable(*this) )                                     \
-			Tape()->RecordOp(Op, result, taddr);              \
+			Tape()->RecordOp(Op, result, taddr_);              \
 		return result;                                            \
 	}                                                                 \
 	template <class Base>                                             \

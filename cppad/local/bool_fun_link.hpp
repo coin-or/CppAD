@@ -63,7 +63,7 @@ inline bool AD<Base>::UnaryBool(
 	const AD<Base> &x
 ) 
 {
-	return FunName(x.value);
+	return FunName(x.value_);
 }
 
 template <class Base>
@@ -72,7 +72,7 @@ inline bool AD<Base>::BinaryBool(
 	const AD<Base> &x, const AD<Base> &y
 ) 
 {
-	return FunName(x.value, y.value);
+	return FunName(x.value_, y.value_);
 }
 
 } // END CppAD namespace

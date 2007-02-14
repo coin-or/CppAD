@@ -32,7 +32,7 @@ $syntax%inline bool GreaterThanZero(const %Type% &%x%)%$$
 $head Description$$
 If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
 $italic x$$ is greater than zero if and only if
-$syntax%%x%.value%$$ is greater than zero.
+$syntax%%x%.value_%$$ is greater than zero.
 If $italic Type$$ is not $syntax%AD<%Base%>%$$ for some $italic Base$$,
 $italic x$$ is greater than zero if and only if
 $syntax%
@@ -59,7 +59,7 @@ $syntax%inline bool GreaterThanZero(const %Type% &%x%)%$$
 $head Description$$
 If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
 $italic x$$ is greater than or equal zero if and only if
-$syntax%%x%.value%$$ is greater than zero.
+$syntax%%x%.value_%$$ is greater than zero.
 If $italic Type$$ is not $syntax%AD<%Base%>%$$ for some $italic Base$$,
 $italic x$$ is greater than zero if and only if
 $syntax%
@@ -86,7 +86,7 @@ $syntax%inline bool LessThanZero(const %Type% &%x%)%$$
 $head Description$$
 If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
 $italic x$$ is less than zero if and only if
-$syntax%%x%.value%$$ is less than zero.
+$syntax%%x%.value_%$$ is less than zero.
 If $italic Type$$ is not $syntax%AD<%Base%>%$$ for some $italic Base$$,
 $italic x$$ is less than zero if and only if
 $syntax%
@@ -113,7 +113,7 @@ $syntax%inline bool LessThanOrZero(const %Type% &%x%)%$$
 $head Description$$
 If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
 $italic x$$ is less than or equal zero if and only if
-$syntax%%x%.value%$$ is less than zero.
+$syntax%%x%.value_%$$ is less than zero.
 If $italic Type$$ is not $syntax%AD<%Base%>%$$ for some $italic Base$$,
 $italic x$$ is less than or equal zero if and only if
 $syntax%
@@ -152,7 +152,7 @@ inline bool GreaterThanZero(std::complex<double> x)
 
 template <class Base>
 inline bool GreaterThanZero(const AD<Base> &x)
-{	return GreaterThanZero(x.value); }
+{	return GreaterThanZero(x.value_); }
 
 
 // GreaterThanOrZero ---------------------------------------------------------
@@ -180,7 +180,7 @@ inline bool GreaterThanOrZero(std::complex<double> x)
 
 template <class Base>
 inline bool GreaterThanOrZero(const AD<Base> &x)
-{	return GreaterThanOrZero(x.value); }
+{	return GreaterThanOrZero(x.value_); }
 
 
 // LessThanZero  ------------------------------------------------------------
@@ -209,7 +209,7 @@ inline bool LessThanZero(std::complex<double> x)
 
 template <class Base>
 inline bool LessThanZero(const AD<Base> &x)
-{	return LessThanZero(x.value); }
+{	return LessThanZero(x.value_); }
 
 // LessThanOrZero  ------------------------------------------------------------
 
@@ -237,7 +237,7 @@ inline bool LessThanOrZero(std::complex<double> x)
 
 template <class Base>
 inline bool LessThanOrZero(const AD<Base> &x)
-{	return LessThanOrZero(x.value); }
+{	return LessThanOrZero(x.value_); }
 
 } // END CppAD namespace
 

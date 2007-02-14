@@ -105,36 +105,36 @@ template <class Base>
 AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 {	Base left;
 
-	left   = value;
-	value *= right.value;
+	left   = value_;
+	value_ *= right.value_;
 
 	if( Parameter(*this) )
 	{	if( Variable(right) )
 		{	if( ! IdenticalZero(left) )
 			{	if( IdenticalOne(left) )
 				{	// z = 1 * right
-					MakeVariable(right.taddr);
+					MakeVariable(right.taddr_);
 				}
 				else	Tape()->RecordOp(
 						MulpvOp, 
 						*this, 
 						left, 
-						right.taddr
+						right.taddr_
 				);
 			}
 		}
 	}
 	else if( Parameter(right) )
-	{	if( ! IdenticalOne(right.value) )
-		{	if( IdenticalZero(right.value) )
+	{	if( ! IdenticalOne(right.value_) )
+		{	if( IdenticalZero(right.value_) )
 				MakeParameter();
 			else	Tape()->RecordOp(MulvpOp, 
-					*this, taddr, right.value
+					*this, taddr_, right.value_
 			);
 		}
 	}
 	else	Tape()->RecordOp(MulvvOp, 
-			*this, taddr, right.taddr
+			*this, taddr_, right.taddr_
 	);
 	return *this;
 }

@@ -125,11 +125,11 @@ public:
 	AD<Base> Eval(const AD<Base> &x) const
 	{	AD<Base> z;
 
-		z.value = f(x.value);
+		z.value_ = f(x.value_);
 		if( Variable(x) )
 		{	AD<Base>::Tape()->RecordDisOp(
 				z,
-				x.taddr,
+				x.taddr_,
 				y_taddr
 			);
 		}

@@ -117,7 +117,7 @@ namespace CppAD {
 
 	template <class Base>
 	inline int Integer(const AD<Base> &x)
-	{	return Integer(x.value); }
+	{	return Integer(x.value_); }
 
 	template <class Base>
 	inline int Integer(const VecAD_reference<Base> &x)

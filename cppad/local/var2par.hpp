@@ -24,7 +24,7 @@ $$
 $index Var2Par$$
 $index variable, convert to parameter$$
 $index parameter, convert from variable$$
-$index value, obtain during taping$$
+$index value_, obtain during taping$$
 
 $section Convert an AD Variable to a Parameter$$
 
@@ -72,7 +72,7 @@ namespace CppAD {
 
 template <class Base>
 inline AD<Base> Var2Par(const AD<Base> &x)
-{	AD<Base> y(x.value);
+{	AD<Base> y(x.value_);
 	return y;
 }
 
@@ -80,7 +80,7 @@ inline AD<Base> Var2Par(const AD<Base> &x)
 template <class Base>
 inline AD<Base> Var2Par(const VecAD_reference<Base> &x)
 {	AD<Base> y(x.ADBase()); 
-	y.id = 0;
+	y.id_ = 0;
 }
 
 

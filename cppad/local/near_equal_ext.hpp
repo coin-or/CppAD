@@ -133,19 +133,19 @@ namespace CppAD {
 template <class Base>
 inline bool NearEqual(
 const AD<Base> &x, const AD<Base> &y, const Base &r, const Base &a)
-{	return NearEqual(x.value, y.value, r, a);
+{	return NearEqual(x.value_, y.value_, r, a);
 }
 
 template <class Base>
 inline bool NearEqual(
 const Base &x, const AD<Base> &y, const Base &r, const Base &a)
-{	return NearEqual(x, y.value, r, a);
+{	return NearEqual(x, y.value_, r, a);
 }
 
 template <class Base>
 inline bool NearEqual(
 const AD<Base> &x, const Base &y, const Base &r, const Base &a)
-{	return NearEqual(x.value, y, r, a);
+{	return NearEqual(x.value_, y, r, a);
 }
 
 // fold into AD type and then use cases above

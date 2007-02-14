@@ -106,25 +106,25 @@ template <class Base>
 AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 {	Base left;
 
-	left   = value;
-	value -= right.value;
+	left   = value_;
+	value_ -= right.value_;
 
 	if( Parameter(*this) )
 	{	if( Variable(right) )
 		{	Tape()->RecordOp(SubpvOp, 
-				*this, left, right.taddr
+				*this, left, right.taddr_
 			);
 		}
 	}
 	else if( Parameter(right) )
 	{	if( ! IdenticalZero(right) )
 		{	Tape()->RecordOp(SubvpOp, 
-				*this, taddr, right.value
+				*this, taddr_, right.value_
 			);
 		}
 	}
 	else	Tape()->RecordOp(SubvvOp, 
-			*this, taddr, right.taddr
+			*this, taddr_, right.taddr_
 	);
 	return *this;
 }

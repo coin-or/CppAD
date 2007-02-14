@@ -35,7 +35,7 @@ $syntax%%os% << %x%$$
 
 
 $head Purpose$$
-Writes the $italic Base$$ value, corresponding to $italic x$$,
+Writes the $italic Base$$ value_, corresponding to $italic x$$,
 to the output stream $italic os$$.
 
 $head os$$
@@ -88,7 +88,7 @@ $end
 namespace CppAD { 
 	template <class Base>
 	inline std::ostream& operator << (std::ostream &os, const AD<Base> &x)
-	{ 	return (os << x.value); }
+	{ 	return (os << x.value_); }
 
 	template <class Base>
 	inline std::ostream& operator << 

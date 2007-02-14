@@ -158,10 +158,10 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	for(j = 0; j < n; j++)
 	{	CppADUnknownError( ind_taddr[j] == (j+1) );
 		CppADUsageError(
-			x[j].taddr == (j+1),
+			x[j].taddr_ == (j+1),
 			"ADFun<Base>: independent variable vector has changed"
 		);
-		Taylor[ ind_taddr[j] ]  = x[j].value;
+		Taylor[ ind_taddr[j] ]  = x[j].value_;
 	}
 
 	// use independent variable values to fill in values for others
@@ -173,7 +173,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	// check the dependent variable values
 	m = dep_taddr.size();
 	for(i = 0; i < m; i++) CppADUsageError(
-		Taylor[dep_taddr[i]] == y[i].value,
+		Taylor[dep_taddr[i]] == y[i].value_,
 		"independent variable not equal its tape evaluation"
 		", it may be nan"
 	);

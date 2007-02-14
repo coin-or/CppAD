@@ -71,13 +71,13 @@ namespace CppAD {
 
 // conversion from Base to AD<Base>
 template <class Base>
-inline AD<Base>::AD(const Base &b) : value(b), id(0)
+inline AD<Base>::AD(const Base &b) : value_(b), id_(0)
 { }	
 
 // conversion form other types to AD<Base>
 template <class Base>
 template <class T>
-inline AD<Base>::AD(const T &t) : value(Base(t)), id(0)
+inline AD<Base>::AD(const T &t) : value_(Base(t)), id_(0)
 { }
 
 } // END CppAD namespace
