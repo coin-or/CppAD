@@ -1,8 +1,8 @@
-# ifndef CPPAD_DET_GRAD_33_INCLUDED 
-# define CPPAD_DET_GRAD_33_INCLUDED 
+# ifndef CPPAD_DET_GRAD_33_INCLUDED
+# define CPPAD_DET_GRAD_33_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin det_grad_33$$
 $spell
+	cppad
 	CppAD
 	det
 	cppad.hpp
@@ -30,7 +31,7 @@ $index correct, determinant check$$
 $index check, determinant correct$$
 
 $head Syntax$$
-$syntax%# include <speed/det_grad_33.hpp>
+$syntax%# include <cppad/speed/det_grad_33.hpp>
 %$$
 $syntax%%ok% = det_grad_33(%x%, %g%)%$$
 
@@ -41,7 +42,7 @@ gradient of the determinant of a matrix.
 $head Inclusion$$
 The template function $code det_grad_33$$ is defined in the $code CppAD$$
 namespace by including 
-the file $code speed/det_grad_33.hpp$$ 
+the file $code cppad/speed/det_grad_33.hpp$$ 
 (relative to the CppAD distribution directory).
 It is only intended for example and testing purposes, 
 so it is not automatically included by

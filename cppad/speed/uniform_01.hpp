@@ -1,8 +1,8 @@
-# ifndef CPPAD_UNIFORM_01_INCLUDED 
+# ifndef CPPAD_UNIFORM_01_INCLUDED
 # define CPPAD_UNIFORM_01_INCLUDED 
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,7 +27,7 @@ $index uniform, random vector$$
 $index vector, uniform random$$
 
 $head Syntax$$
-$syntax%# include <speed/uniform_01.hpp>
+$syntax%# include <cppad/speed/uniform_01.hpp>
 %$$
 $syntax%uniform_01(%seed%)
 %$$
@@ -39,7 +39,7 @@ This routine is used to create random values for speed testing purposes.
 $head Inclusion$$
 The template function $code uniform_01$$ is defined in the $code CppAD$$
 namespace by including 
-the file $code speed/uniform_01.hpp$$ 
+the file $code cppad/speed/uniform_01.hpp$$ 
 (relative to the CppAD distribution directory).
 It is only intended for example and testing purposes, 
 so it is not automatically included by

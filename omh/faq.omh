@@ -35,21 +35,18 @@ $index independent$$
 Why does the code sequence
 $syntax%
 	Independent(%u%);
-	%v% = %u%;
+	%v% = %u%[0];
 %$$
 behave differently from the code sequence
 $syntax%
-	%v% = %u%;
+	%v% = %u%[0];
 	Independent(%u%);
 %$$
-While the tape state is 
-$xref/glossary/Tape State/Empty/empty/1/$$,
-the assignment operator just assigns values and does not
-track the dependency of one variable upon another.
-Thus in the first case, $italic y$$ is a vector of 
-$xref/glossary/Variable/variables/$$
-and in the second case it is a vector of
-$xref/glossary/Parameter/parameters/$$.
+Before the call to $cref/Independent/$$,
+$syntax%%u[%0%]%$$ is a $cref/parameter/glossary/Parameter/$$
+and after the call it is a variable.
+Thus in the first case, $italic v$$ is a variable
+and in the second case it is a parameter.
 
 $head Base Type Restrictions$$
 The currently supported $italic Base$$ types
@@ -57,7 +54,7 @@ for the template class $syntax%AD<%Base%>%$$ are
 $code float$$, $code std::complex<float>$$, $code double$$, 
 and $code std::complex<double>$$. 
 In addition, $italic Base$$ can be any type in the 
-$cref/AD type sequence/glossary/AD Type Sequence/$$ above
+$cref/AD levels above/glossary/AD Levels Above Base/$$ 
 any of these types.
 If a user has need of some other base type, contact the CppAD mailing list
 $code cppad@list.coin-or.org$$.

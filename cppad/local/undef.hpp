@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // Undo definitions in Define.h 
 
 # undef CPPAD_NULL
+# undef CPPAD_MAX_NUM_THREADS
 # undef CppADBinaryFriend
 # undef CppADStandardMathBinaryFun
 

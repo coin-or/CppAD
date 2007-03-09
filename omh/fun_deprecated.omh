@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -19,19 +19,10 @@ $$
 
 $section ADFun Object Deprecated Member Functions$$
 
-$index ADFun, Size$$
-$index Size, ADFun$$
-
-$index ADFun, Order$$
-$index Order, ADFun$$
-
-$index ADFun, Memory$$
-$index Memory, ADFun$$
-
-$index ADFun, taylor_size$$
-$index taylor_size, ADFun$$
-
 $head Syntax$$
+$syntax%%f%.Dependent(%y%)%$$
+$pre
+$$
 $syntax%%o% = %f%.Order()%$$
 $pre
 $$
@@ -49,7 +40,32 @@ The $syntax%ADFun<%Base%>%$$ functions documented here have been deprecated;
 i.e., they are no longer approved of and may be removed from some future
 version of CppAD.
 
+$head Dependent$$
+$index ADFun, Dependent$$
+$index Dependent, ADFun$$
+A recording of and AD of $italic Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
+is started by a call of the form
+$syntax%
+	Independent(%x%)
+%$$ 
+If there is only one such recording at the current time,
+you can use $syntax%%f%.Dependent(%y%)%$$ in place of
+$syntax%
+	%f%.Dependent(%x%, %y%)
+%$$
+See $cref/Dependent/$$ for a description of this operation.
+
+$subhead Deprecated$$
+This syntax was deprecated when CppAD was extended to allow
+for more than one $syntax%AD<%Base%>%$$ recording to be
+active at one time. 
+This was necessary to allow for multiple threading applications.
+
+
 $head Order$$
+$index ADFun, Order$$
+$index Order, ADFun$$
 The result $italic o$$ has prototype 
 $syntax%
 	size_t %o%
@@ -72,6 +88,8 @@ in the ADFun object $italic f$$
 
 
 $head Memory$$
+$index ADFun, Memory$$
+$index Memory, ADFun$$
 The result 
 $syntax%
 	size_t %m%
@@ -91,6 +109,8 @@ when it no longer needs the values stored in that memory.
 Thus the $code Memory$$ function is no longer well defined.
 
 $head Size$$
+$index ADFun, Size$$
+$index Size, ADFun$$
 The result $italic s$$ has prototype
 $syntax%
 	size_t %s%
@@ -109,6 +129,8 @@ use $xref/SeqProperty/size_var/size_var/$$ to obtain
 the number of variables in the operation sequence.
 
 $head taylor_size$$
+$index ADFun, taylor_size$$
+$index taylor_size, ADFun$$
 The result $italic t$$ has prototype
 $syntax%
 	size_t %t%

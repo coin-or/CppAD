@@ -11,6 +11,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	gettimeofday
+	ifndef
+	Vec
+	openmp
 	dy
 	automake
 	makefile:wq
@@ -27,6 +31,101 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-28$$
+In the openmp branch (not yet in distribution),
+the condition include commands were missing on some include files; for example
+$codep
+	# ifndef CPPAD_BENDER_QUAD_INCLUDED
+	# define CPPAD_BENDER_QUAD_INCLUDED
+$$
+was missing at the beginning of the $cref/BenderQuad/$$ include file.
+This has been fixed.
+$pre
+
+$$
+The $code speed_test$$ routines $cref/timing/speed_test/Timing/$$ was
+changed to use $code gettimeofday$$ if it is available.
+($code gettimeofday$$ measures wall clock time 
+which is better in a multi-threading environment).
+$pre
+
+$$
+Added the user multi-threading interface
+$cref/omp_max_thread/$$ along with its examples 
+which are distributed in the directory $code openmp$$.
+$pre
+
+$$
+The $syntax%speed/%*%.hpp%$$ files have been moved to
+$syntax%cppad/speed/%*%.hpp%$$ and the corresponding wish list
+item has been removed.
+$pre
+
+$$ 
+The multiple tapes with the same base type wish list item 
+have been removed (it's purpose was multi-threading which
+has been implemented).
+
+
+$head 02-27$$
+In the openmp branch (not yet in distribution),
+The $cref/speed/$$ include files are currently being distributed
+above the $code cppad$$ include directory. 
+A fix this wish list item has been added.
+$pre
+
+$$
+Multiple active tapes required a lot of multi-threading access
+management for the tapes. This was made simpler (and faster)
+by having at most one tape per thread.
+
+
+$head 02-22$$
+In the openmp branch (not yet in distribution),
+the include command in the $cref/speed_test/$$ documentation was
+$codep
+	# include <speed/speed_test.hpp>
+$$
+but it should have been
+$codep
+	# include <cppad/speed_test.hpp>
+$$
+This has been fixed.
+
+$head 02-21$$
+In the openmp branch (not yet in distribution),
+have the $syntax%AD<%Base%>::tape_max_active%$$ user interface change the
+maximum number of active tapes (later removed).
+This needs to be tested in a multi-threading environment to
+be sure that it works there (never did work).
+Then the openmp branch changes can be copied to the trunk.
+
+
+$head 02-17$$
+In the openmp branch (not yet in distribution),
+a entry about $cref/optimizing/WishList/Optimization/$$ the operation
+sequence in an $cref/ADFun/FunConstruct/$$ object was added.
+$pre
+
+$$
+Change the argument syntax for $cref/Dependent/$$ and deprecate the 
+$cref/old Dependent syntax/FunDeprecated/Dependent/$$.
+
+
+$head 02-16$$
+In the openmp branch (not yet in distribution),
+added $syntax%VecAD<%Base%>%$$ as a valid argument type for the
+$cref/Parameter and Variable/ParVar/$$ functions.
+In addition, $cref/size_t indexing/VecAD/size_t Indexing/$$
+is was extended to be allowed during taping so long as the
+VecAD object is a parameter.
+
+
+$head 02-15$$
+In the openmp branch (not yet in distribution),
+fixed the $code example/test_one.sh$$ script 
+(it was using its old name $code one_test$$).
 
 $head 02-06$$
 The $cref BenderQuad$$ documentation was improved by adding the fact

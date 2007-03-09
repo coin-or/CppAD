@@ -2,7 +2,7 @@
 # define CPPAD_EQUAL_OP_SEQ_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,7 +44,7 @@ and only recalculate when a function's arguments change.
 In the case of AD variables, 
 it may be important not only when the argument values are equal,
 but when they are related to the
-$cref/independent variables/glossary/Independent Variable/$$ 
+$cref/independent variables/glossary/Tape/Independent Variable/$$ 
 by the same operation sequence.
 After the assignment
 $syntax%

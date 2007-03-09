@@ -104,7 +104,12 @@ AD<Base> AD<Base>::operator *(const AD<Base> &right) const
 	if( Variable(*this) )
 	{	if( Variable(right) )
 		{	// result = variable * variable
-			Tape()->RecordOp(
+			CppADUsageError(
+				id_ == right.id_,
+				"Multiplying AD objects that are"
+				" variables on different tapes."
+			);
+			tape_this()->RecordOp(
 				MulvvOp, 
 				result, 
 				taddr_, 
@@ -116,13 +121,11 @@ AD<Base> AD<Base>::operator *(const AD<Base> &right) const
 		}
 		else if( IdenticalOne(right.value_) )
 		{	// result = variable * 1
-			result.MakeVariable(	
-				taddr_
-			);
+			result.make_variable(id_, taddr_);
 		}
 		else
 		{	// result = variable * parameter
-			Tape()->RecordOp(
+			tape_this()->RecordOp(
 				MulvpOp, 
 				result, 
 				taddr_, 
@@ -136,13 +139,11 @@ AD<Base> AD<Base>::operator *(const AD<Base> &right) const
 		}
 		else if( IdenticalOne(value_) )
 		{	// result = 1 * variable
-			result.MakeVariable(
-				right.taddr_
-			);
+			result.make_variable(right.id_, right.taddr_);
 		}
 		else
 		{	// result = parameter * variable
-			Tape()->RecordOp(
+			right.tape_this()->RecordOp(
 				MulpvOp, 
 				result, 
 				value_, 

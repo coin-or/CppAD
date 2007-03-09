@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -41,8 +41,8 @@ $index compute_det_minor$$
 Routine that computes the gradient of determinant using CppAD:
 $codep */
 # include <cppad/cppad.hpp>
-# include <speed/det_by_minor.hpp>
-# include <speed/uniform_01.hpp>
+# include <cppad/speed/det_by_minor.hpp>
+# include <cppad/speed/uniform_01.hpp>
 
 void compute_det_minor(
 	size_t                     size     , 
@@ -101,7 +101,7 @@ $head correct_det_minor$$
 $index correct_det_minor$$
 Routine that tests the correctness of the result computed by compute_det_minor:
 $codep */
-# include <speed/det_grad_33.hpp>
+# include <cppad/speed/det_grad_33.hpp>
 
 bool correct_det_minor(void)
 {	size_t size   = 3;

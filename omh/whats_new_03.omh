@@ -219,7 +219,7 @@ $xref/Install/$$ procedure.
 
 $head 11-06$$
 The documentation for 
-$xref/MulTape//taping derivative calculations/$$ was improved
+$xref/mul_level//taping derivative calculations/$$ was improved
 as well as the corresponding example.
 In order to make this simpler,
 the example tape name $code DoubleTape$$ was changed to $code ADdoubleTape$$
@@ -242,7 +242,7 @@ $head 11-02$$
 It is now legal to differentiate a 
 $xref/glossary/Parameter/parameter/$$
 with respect to an
-$xref/glossary/Independent Variable/independent variable/$$
+$cref/independent variable/glossary/Tape/Independent Variable/$$
 (parameter derivatives are always equal to zero).
 This is an extension of the
 $code Reverse$$,
@@ -274,8 +274,7 @@ $pre
 
 $$
 The $xref/Value/$$ function was changed so that it can
-be called when the tape is in the
-$xref/glossary/Tape State/Empty/empty state/1/$$
+be called when the tape is in the Empty state.
 
 $head 10-10$$
 The $code atan$$ function was added to the 
@@ -345,7 +344,7 @@ A process of changing the tape from storing partial derivatives to
 storing operators has been started. 
 This will make the tape smaller and it will enable the computation
 of higher derivatives with out having to tape the tape 
-(see $xref/MulTape/$$).
+(see $xref/mul_level/$$).
 The Add, Subtract, Multiply and Divide operators have been converted.
 The user defined functions are presenting some difficulties,
 so this process has not yet been completed. 
@@ -696,7 +695,7 @@ If the
 $xref/CopyAD/$$ constructor or 
 $xref/Eq//assignment/$$ operator
 used an
-$xref/glossary/Independent Variable/independent variable/$$
+$cref/independent variable/glossary/Tape/Independent Variable/$$
 for its source value,
 the result was also an independent variable.
 This has been fixed so that the result is

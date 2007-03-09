@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -90,7 +90,7 @@ extern bool LuSolve(void);
 extern bool LuVecADOk(void);
 extern bool Mul(void);
 extern bool MulEq(void);
-extern bool MulTape(void);
+extern bool mul_level(void);
 extern bool Near_Equal(void);
 extern bool NearEqualExt(void);
 extern bool NumericType(void);
@@ -156,7 +156,7 @@ namespace {
 int main(void)
 {	bool ok = true;
 
-	// This line is used by one_test.sh
+	// This line is used by test_one.sh
 
 	// external compiled tests
 	ok &= Run( Abs,               "Abs"              );
@@ -213,7 +213,7 @@ int main(void)
 	ok &= Run( LuVecADOk,         "LuVecADOk"        );
 	ok &= Run( Mul,               "Mul"              );
 	ok &= Run( MulEq,             "MulEq"            );
-	ok &= Run( MulTape,           "MulTape"          );
+	ok &= Run( mul_level,         "mul_level"        );
 	ok &= Run( Near_Equal,        "Near_Equal"       );
 	ok &= Run( NearEqualExt,      "NearEqualExt"     );
 	ok &= Run( NumericType,       "NumericType"      );
@@ -259,9 +259,16 @@ int main(void)
 	// check for errors
 	using std::cout;
 	using std::endl;
-	if( CppADTrackCount() != 0 )
-		cout << "Error: memroy leak detected" << endl;
 	assert( ok || (Run_error_count > 0) );
+	if( CppADTrackCount() == 0 )
+	{	Run_ok_count++;
+		cout << "Ok:    " << "No memory leak detected" << endl;
+	}
+	else
+	{	ok = false;
+		Run_error_count++;
+		cout << "Error: " << "memory leak detected" << endl;
+	}
 	if( ok )
 		cout << "All " << Run_ok_count << " tests passed." << endl;
 	else	cout << Run_error_count << " tests failed." << endl;

@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,20 +8,20 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
-$begin MulTape.cpp$$
+$begin mul_level.cpp$$
 $spell
 	abs
 $$
 
 $section Multiple Tapes: Example and Test$$
-$index multiple, tape$$
-$index tape, multiple$$
+$index multiple, AD level$$
+$index level, multiple AD$$
+$index AD, multiple level$$
 
 $head Description$$
-This is an example and test of using multiple levels of taping to compute
+This is an example and test of using multiple levels of AD to compute
 the value
 $latex \[
 	\frac{d}{dx} \left[ f^{(1)} (x) * v \right]
@@ -36,9 +35,8 @@ $latex \[
 \] $$
 
 
-$comment This file is in the Example subdirectory$$
 $code
-$verbatim%example/mul_tape.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/mul_level.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -61,7 +59,7 @@ namespace { // put this function in the empty namespace
 	} 
 }
 
-bool MulTape() 
+bool mul_level() 
 {	bool ok = true;                   // initialize test result
 
 	using namespace CppAD;            // so do not need CppAD::

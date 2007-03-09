@@ -950,7 +950,7 @@ was out of date. This has been fixed.
 $pre
 
 $$
-The example that $xref/MulTape//tapes derivative calculations/$$
+The example that $xref/mul_level//tapes derivative calculations/$$
 has been changed to an application of 
 $xref/OdeTaylor.cpp//Taylor's method/$$ for solving ordinary differential
 equations.

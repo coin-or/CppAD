@@ -1,8 +1,8 @@
-# ifndef CPPAD_DET_BY_LU_INCLUDED
-# define CPPAD_DET_BY_LU_INCLUDED
+# ifndef CPPAD_DET_BY_MINOR_INCLUDED
+# define CPPAD_DET_BY_MINOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,11 +12,9 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin det_by_lu$$
+$begin det_by_minor$$
 $spell
 	cppad
-	lu
-	hpp
 	typedef
 	const
 	hpp
@@ -25,25 +23,25 @@ $spell
 	namespace
 $$
 
-$section Determinant Using Expansion by Lu Factorization$$
+$section Determinant Using Expansion by Minors$$
 
-$index det_by_lu$$
-$index determinant, lu factor$$
-$index lu, factor determinant$$
-$index factor, lu determinant$$
+$index determinant, minor expansion$$
+$index minor, expansion determinant$$
+$index expansion, minor determinant$$
+
 
 $head Syntax$$
-$syntax%# include <speed/det_by_lu.hpp>
+$syntax%# include <cppad/speed/det_by_minor.hpp>
 %$$
-$syntax%det_by_lu<%Scalar%> %det%(%n%)
+$syntax%det_by_minor<%Scalar%> %det%(%n%)
 %$$
 $syntax%%d% = %det%(%matrix%)
 %$$
 
 $head Inclusion$$
-The template class $code det_by_lu$$ is defined in the $code CppAD$$
+The template class $code det_by_minor$$ is defined in the $code CppAD$$
 namespace by including 
-the file $code speed/det_by_lu.hpp$$
+the file $code cppad/speed/det_by_minor.hpp$$
 (relative to the CppAD distribution directory).
 It is only intended for example and testing purposes, 
 so it is not automatically included by
@@ -52,11 +50,11 @@ $cref/cppad.hpp/cppad/$$.
 $head Constructor$$
 The syntax
 $syntax%
-	det_by_lu<%Scalar%> %det%(%n%)
+	det_by_minor<%Scalar%> %det%(%n%)
 %$$
 constructs the object $italic det$$ which can be used for 
 evaluating the determinant of $italic n$$ by $italic n$$ matrices
-using LU factorization.
+using expansion by minors.
 
 $head Scalar$$
 The type $italic Scalar$$ can be any
@@ -73,7 +71,7 @@ The syntax
 $syntax%
 	%d% = %det%(%matrix%)
 %$$
-returns the determinant of $italic matrix$$ using LU factorization.
+returns the determinant of $italic matrix$$ using expansion by minors.
 The argument $italic matrix$$ has prototype
 $syntax%
 	const %Vector% &%matrix%
@@ -97,20 +95,20 @@ element of the vector $italic y$$.
 This is the only requirement of the type $italic Vector$$.
 
 $children%
-	speed/example/det_by_lu.cpp%
-	omh/det_by_lu_hpp.omh
+	speed/example/det_by_minor.cpp%
+	omh/det_by_minor_hpp.omh
 %$$
 
 
 $head Example$$
 The file
-$xref/det_by_lu.cpp/$$ 
-contains an example and test of $code det_by_lu.hpp$$.
+$xref/det_by_minor.cpp/$$ 
+contains an example and test of $code det_by_minor.hpp$$.
 It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The file
-$cref/det_by_lu.hpp/$$ 
+$xref/det_by_minor.hpp/$$ 
 contains the source for this template function.
 
 
@@ -119,66 +117,45 @@ $end
 */
 // BEGIN PROGRAM
 # include <cppad/cppad.hpp>
-# include <complex>
+# include <cppad/speed/det_of_minor.hpp>
 
 // BEGIN CppAD namespace
 namespace CppAD {
 
-// The AD complex case is used by examples by not used by speed tests 
-// Must define a specializatgion of LeqZero,AbsGeq for the ADComplex case
-typedef std::complex<double>     Complex;
-typedef CppAD::AD<Complex>     ADComplex;
-CppADCreateUnaryBool(Complex,  LeqZero )
-CppADCreateBinaryBool(Complex, AbsGeq )
-
 template <class Scalar>
-class det_by_lu {
+class det_by_minor {
 public:
-	det_by_lu(size_t n_) : m(0), n(n_), A(n_ * n_)
-	{	}
+	det_by_minor(size_t m) : m_(m) , r_(m + 1) , c_(m + 1), a_(m * m)
+	{
+		size_t i;
+
+		// values for r and c that correspond to entire matrix
+		for(i = 0; i < m; i++)
+		{	r_[i] = i+1;
+			c_[i] = i+1;
+		}
+		r_[m] = 0;
+		c_[m] = 0;
+	}
 
 	template <class Vector>
-	inline Scalar operator()(const Vector &x)
-	{
-		using CppAD::exp;
-
-		Scalar         logdet;
-		Scalar         det;
-		int          signdet;
-		size_t       i;
-
-		// copy matrix so it is not overwritten
-		for(i = 0; i < n * n; i++)
-			A[i] = x[i];
- 
-		// comput log determinant
-		signdet = CppAD::LuSolve(
-			n, m, A, B, X, logdet);
-
-		// make sure the martix is not singular
-		CppADUsageError( 
-			signdet != 0,
-			"det_by_lu: matrix is singular"
-		);
-
-		// convert to determinant
-		det     = Scalar( signdet ) * exp( logdet ); 
-
-# ifdef FADBAD
-		// Fadbad requires tempories to be set to constants
-		for(i = 0; i < n * n; i++)
-			A[i] = 0;
-# endif
-
-		return det;
+	inline Scalar operator()(const Vector &x) const
+	{	size_t i = m_ * m_;
+		while(i--)
+			a_[i] = x[i];
+		return det_of_minor(a_, m_, m_, r_, c_); 
 	}
+
 private:
-	const size_t m;
-	const size_t n;
-	CppADvector<Scalar> A;
-	CppADvector<Scalar> B;
-	CppADvector<Scalar> X;
+	size_t              m_;
+
+	// made mutable because modified and then restored
+	mutable std::vector<size_t> r_;
+	mutable std::vector<size_t> c_;
+	// make mutable because its value does not matter
+	mutable std::vector<Scalar> a_;
 };
+
 } // END CppAD namespace
 // END PROGRAM
 # endif

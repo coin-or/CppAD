@@ -2,7 +2,7 @@
 # define CPPAD_ABS_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin ForAbsOp$$
+$begin ForAbsOp$$ $comment CppAD Developer Documentation$$
 $spell
 	Abs
 	Taylor
@@ -54,7 +54,7 @@ the function $italic Z$$.
 
 $end
 ------------------------------------------------------------------------------
-$begin RevAbsOp$$
+$begin RevAbsOp$$ $comment CppAD Developer Documentation$$
 $spell
 	Abs
 	Taylor

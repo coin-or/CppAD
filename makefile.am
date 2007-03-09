@@ -110,6 +110,7 @@ nobase_include_HEADERS =  \
 	cppad/local/integer.hpp \
 	cppad/local/jacobian.hpp \
 	cppad/local/log_op.hpp \
+	cppad/local/omp_max_thread.hpp \
 	cppad/local/mul.hpp \
 	cppad/local/mul_eq.hpp \
 	cppad/local/mul_op.hpp \
@@ -139,6 +140,7 @@ nobase_include_HEADERS =  \
 	cppad/local/sub.hpp \
 	cppad/local/sub_eq.hpp \
 	cppad/local/sub_op.hpp \
+	cppad/local/tape_link.hpp \
 	cppad/local/tape_rec.hpp \
 	cppad/local/user_ad.hpp \
 	cppad/local/unary_minus.hpp \
@@ -147,11 +149,11 @@ nobase_include_HEADERS =  \
 	cppad/local/undef.hpp \
 	cppad/local/value.hpp \
 	cppad/local/var2par.hpp \
-	speed/det_by_lu.hpp \
-	speed/det_by_minor.hpp \
-	speed/det_grad_33.hpp \
-	speed/det_of_minor.hpp \
-	speed/uniform_01.hpp
+	cppad/speed/det_by_lu.hpp \
+	cppad/speed/det_by_minor.hpp \
+	cppad/speed/det_grad_33.hpp \
+	cppad/speed/det_of_minor.hpp \
+	cppad/speed/uniform_01.hpp
 #
 #
 # Did user specify --with-Introduction
@@ -245,11 +247,12 @@ EXTRA_DIST = \
 	fix_aclocal.sh \
 	fix_makefile.sh \
 	omh \
+	openmp \
 	run_omhelp.sh \
 	uw_copy_040507.html
 #
 dist-hook:
-	rm -rf `find $(distdir)/omh -name .svn`
+	rm -rf `find $(distdir)/omh $(distdir)/openmp -name .svn`
 #
 if CppAD_DOCUMENTATION
 mydocdir     = $(datadir)/doc

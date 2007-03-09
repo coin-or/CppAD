@@ -104,24 +104,29 @@ AD<Base> AD<Base>::operator -(const AD<Base> &right) const
 	if( Variable(*this) )
 	{	if( Variable(right) )
 		{	// result = variable - variable
-			Tape()->RecordOp(SubvvOp, 
+			CppADUsageError(
+				id_ == right.id_,
+				"Subtracting AD objects that are"
+				" variables on different tapes."
+			);
+			tape_this()->RecordOp(SubvvOp, 
 				result, taddr_, right.taddr_
 			);
 		}
 		else if( IdenticalZero(right.value_) )
 		{	// result = variable - 0
-			result.MakeVariable(taddr_);
+			result.make_variable(id_, taddr_);
 		}
 		else
 		{	// result = variable - parameter
-			Tape()->RecordOp(SubvpOp, 
+			tape_this()->RecordOp(SubvpOp, 
 				result, taddr_, right.value_
 			);
 		}
 	}
 	else if( Variable(right) )
 	{	// result = parameter - variable
-		Tape()->RecordOp(SubpvOp, 
+		right.tape_this()->RecordOp(SubpvOp, 
 			result, value_, right.taddr_
 		);
 	}

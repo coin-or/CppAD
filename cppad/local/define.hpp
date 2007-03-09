@@ -24,6 +24,7 @@ $spell
 	std
 	const
 	Op
+	OpenMp
 $$
 $aindex head$$
 
@@ -33,7 +34,14 @@ $section Macros Used by CppAD Implementation$$
 $head CPPAD_NULL$$
 The preprocessor symbol $code CPPAD_NULL$$ is used for a null pointer. 
 If it is not yet defined,
-it is defined when $code cppad/local/Define.h$$ is included is included.
+it is defined when $code cppad/local/define.hpp/$$ is included.
+
+$head CPPAD_MAX_NUM_THREADS$$
+The preprocessor symbol $code CPPAD_MAX_NUM_THREADS$$ 
+is the maximum number of OpenMp threads that can
+be used with CppAD.
+If it is not yet defined,
+it is defined when $code cppad/local/define.hpp/$$ is included.
 
 $head CPPAD_FOLD_BINARY_OPERATOR$$
 The syntax
@@ -76,6 +84,14 @@ $end
 
 # ifndef CPPAD_NULL
 # define CPPAD_NULL     0
+# endif
+
+# ifndef CPPAD_MAX_NUM_THREADS
+# ifdef _OPENMP
+# define CPPAD_MAX_NUM_THREADS 32
+# else
+# define CPPAD_MAX_NUM_THREADS 1
+# endif
 # endif
 
 

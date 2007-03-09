@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin fadbad_poly.cpp$$
 $spell
 	std
+	cppad
 	cpp
 	tadiff
 	std
@@ -50,7 +51,7 @@ $index compute_poly$$
 Routine that computes the second derivative of a polynomial using Fadbad:
 $codep */
 # include <vector>
-# include <speed/uniform_01.hpp>
+# include <cppad/speed/uniform_01.hpp>
 # include <cppad/poly.hpp>
 # include <cppad/near_equal.hpp>
 # include <Fadbad++/tadiff.h>

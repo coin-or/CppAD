@@ -171,7 +171,7 @@ $end
 # include <iostream>
 # include <cppad/vector.hpp>
 # include <cppad/speed_test.hpp>
-# include <speed/uniform_01.hpp>
+# include <cppad/speed/uniform_01.hpp>
 
 # ifdef ADOLC
 # define AD_PACKAGE "adolc"

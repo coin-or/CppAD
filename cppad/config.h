@@ -1,6 +1,9 @@
 /* cppad/config.h.  Generated from config.h.in by configure.  */
 /* cppad/config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* does system support gettimeofday */
+#define CPPAD_GETTIMEOFDAY 1
+
 /* is CppADvector == boost::numeric::ublas::vector */
 #define CppAD_BOOSTVECTOR 0
 
@@ -20,16 +23,16 @@
 #define PACKAGE_NAME "CppAD"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "CppAD 20070209"
+#define PACKAGE_STRING "CppAD 20070309"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "cppad"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "20070209"
+#define PACKAGE_VERSION "20070309"
 
 /* Version number of package */
-#define VERSION "20070209"
+#define VERSION "20070309"
 
 /* Define to `__inline__' or `__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin fadbad_det_lu.cpp$$
 $spell
+	cppad
 	std
 	Lu
 	Fadbad
@@ -43,8 +44,8 @@ Routine that computes the gradient of determinant using Fadbad:
 $codep */
 # include <vector>
 # include <Fadbad++/badiff.h>
-# include <speed/det_by_lu.hpp>
-# include <speed/uniform_01.hpp>
+# include <cppad/speed/det_by_lu.hpp>
+# include <cppad/speed/uniform_01.hpp>
 
 void compute_det_lu(
 	size_t                     size     , 
@@ -94,7 +95,7 @@ $head correct_det_lu$$
 $index correct_det_lu$$
 Routine that tests the correctness of the result computed by compute_det_lu:
 $codep */
-# include <speed/det_grad_33.hpp>
+# include <cppad/speed/det_grad_33.hpp>
 
 bool correct_det_lu(void)
 {	size_t size   = 3;

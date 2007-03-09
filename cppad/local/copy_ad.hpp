@@ -2,7 +2,7 @@
 # define CPPAD_COPY_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -37,7 +37,8 @@ $syntax%AD<%Base%> %y% = %x%$$
 $head Purpose$$
 Creates a new object $italic y$$ with the same value as $italic x$$.
 The object $italic y$$ also has the same dependence on the 
-$xref/glossary/Independent Variable/independent variables/$$ as $italic x$$.
+$cref/independent variables/glossary/Tape/Independent Variable/$$ 
+as $italic x$$.
 ($italic y$$ is a 
 $xref/glossary/Variable/variable/$$ if and only if $italic x$$ is a variable).
 

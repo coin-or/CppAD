@@ -1,7 +1,7 @@
 # ifndef CPPAD_ERROR_HANDLER_INCLUDED
 # define CPPAD_ERROR_HANDLER_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -121,6 +121,10 @@ $end
 
 # include <iostream>
 
+# ifdef _OPENMP
+# include <omp.h>
+# endif
+
 // undo preprocessor symbols that config.h needs to define
 # ifndef CPPAD_CPPAD_INCLUDED
 # include <cppad/local/preprocessor.hpp>
@@ -169,19 +173,33 @@ private:
 	{	using std::cerr;
 		using std::endl;
 
-		cerr << PACKAGE_STRING;
-		if( known )
-			cerr << " error from a known source:" << endl;
-		else	cerr << " error from an unknown source" << endl;
-		if( msg[0] != '\0' )
-			cerr << msg << endl;
-		cerr << "Error detected by a false result for"   << endl;
-		cerr << "    "     << exp                        << endl;
-		cerr << "at line " << line << " in the file "    << endl;
-		cerr << "    "     << file                       << endl;
+# ifdef _OPENMP
+		int thread_num = omp_get_thread_num();
+# endif
 
-		// terminate program execution
-		assert(0);
+// if OpenMP multi-threading, only run output on master thread
+# ifdef _OPENMP
+# pragma omp master
+# endif
+		{
+			cerr << PACKAGE_STRING;
+			if( known )
+				cerr << " error from a known source:" << endl;
+			else	cerr << " error from unknown source"  << endl;
+			if( msg[0] != '\0' )
+				cerr << msg << endl;
+			cerr << "Error detected by false result for"  << endl;
+			cerr << "    "     << exp                     << endl;
+			cerr << "at line " << line << " in the file " << endl;
+			cerr << "    "     << file                    << endl;
+# ifdef _OPENMP
+			cerr << "OpenMP: thread_num = " << thread_num << endl;
+# endif
+
+			// terminate program execution
+			assert(0);
+		}
+// pragma omp master
 	}
 
 	// current error handler

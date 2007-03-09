@@ -2,7 +2,7 @@
 # define CPPAD_ABS_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -47,7 +47,7 @@ $code float$$ and $code double$$
 is included in the $code CppAD$$ namespace
 (the corresponding results has the same type as the arguments).
 The type $italic Base$$ can be any type in the 
-$xref/glossary/AD Type Sequence/AD type sequence/$$
+$cref/AD levels above/glossary/AD Levels Above Base/$$
 above $code float$$ or $code double$$.
 
 
@@ -58,7 +58,7 @@ $syntax%
 	const VecAD<%Base%>::reference &%x%
 %$$
 where $italic Base$$ is $code float$$, $code double$$ or in the 
-$xref/glossary/AD Type Sequence/AD type sequences/$$
+$cref/AD levels above/glossary/AD Levels Above Base/$$
 above $code float$$ or $code double$$; for example,
 $code AD<double>$$.
 
@@ -184,7 +184,7 @@ AD<Base> AD<Base>::Abs (void) const
 	result.value_ = abs(value_);
 	if( Variable(*this) ) 
 	{	// add this operation to the tape
-		Tape()->RecordOp(AbsOp, result, taddr_);
+		tape_this()->RecordOp(AbsOp, result, taddr_);
 
 	}
 	return result;

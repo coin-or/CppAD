@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -18,11 +18,11 @@ $index utility, speed$$
 
 $children%
 	speed/main.cpp%
-	speed/uniform_01.hpp%
-	speed/det_grad_33.hpp%
-	speed/det_of_minor.hpp%
-	speed/det_by_minor.hpp%
-	speed/det_by_lu.hpp
+	cppad/speed/uniform_01.hpp%
+	cppad/speed/det_grad_33.hpp%
+	cppad/speed/det_of_minor.hpp%
+	cppad/speed/det_by_minor.hpp%
+	cppad/speed/det_by_lu.hpp
 %$$
 
 $head Speed Main Program$$

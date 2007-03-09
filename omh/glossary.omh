@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -25,6 +25,8 @@ $$
 
 $section Glossary$$
 
+
+
 $head AD Function$$
 Given an $xref/ADFun/$$ object $italic f$$
 there is a corresponding
@@ -45,11 +47,11 @@ either $syntax%AD<%Base%>%$$ (see $xref/Constructor/$$)
 or $syntax%VecAD<%Base%>::reference%$$ (see $xref/VecAD/$$)
 for some $italic Base$$ type.
 
-$head AD Type Sequence$$
-$index sequence, AD Type$$
-$index type, AD sequence$$
-$index AD, type sequence$$
-If $italic Base$$ is a type, the AD type sequence above $italic Base$$ 
+$head AD Levels Above Base$$
+$index level, AD$$
+$index AD, level$$
+If $italic Base$$ is a type, 
+the AD levels above $italic Base$$ 
 is the following sequence of types:
 $syntax%
 	AD<%Base%> %,% AD< AD<%Base%> > %,% AD< AD< AD<%Base%> > > %,% %...%
@@ -65,10 +67,6 @@ $head Base Type$$
 If $italic x$$ is an $syntax%AD<%Base%>%$$ object,
 $italic Base$$ is referred to as the base type for $italic x$$.
 
-$head Dependent Variable$$
-An $syntax%AD<%Base%>%$$ object is a dependent variable
-if it is a variable and is not an independent variable.
-
 $head Elementary Vector$$
 The $th j$$ elementary vector $latex e^j \in B^m$$ is defined by
 $latex \[
@@ -78,11 +76,6 @@ e_i^j = \left\{ \begin{array}{ll}
 \end{array} \right.
 \] $$
 
-
-$head Independent Variable$$
-The set of independent variables are specified by
-the $xref/Independent/$$ function call
-that starts recording operations on the corresponding tape.
 
 $head Operation$$
 
@@ -133,19 +126,13 @@ is independent of $italic y$$ and the elements of $italic x$$.
 
 $head Parameter$$
 All $italic Base$$ objects are parameters.
-All $syntax%AD<%Base%>%$$ objects are currently parameters
-when the tape is in the Empty state.
 An $syntax%AD<%Base%>%$$ object $italic u$$ is currently a parameter if
-its value does not depend on the value of the
-current $xref/Independent/$$ variables.
+its value does not depend on the value of 
+an $xref/Independent/$$ variable vector for an
+$cref/active tape/glossary/Tape/Active/$$.
 If $italic u$$ is a parameter, the function 
 $xref/ParVar//Parameter(u)/$$ returns true
 and $xref/ParVar//Variable(u)/$$ returns false.
-$pre
-
-$$
-Note that we often drop the word currently and 
-just refer to an $syntax%AD<%Base%>%$$ object as a parameter.
 
 $head Sparsity Pattern$$
 $index sparsity, pattern$$
@@ -164,40 +151,47 @@ P_{i,j} = {\rm true}
 Given two sparsity patterns $latex P$$ and $italic Q$$ 
 for a matrix $italic A$$, we say that $italic P$$ is more efficient than
 $italic Q$$ if $italic P$$ has fewer true elements than $italic Q$$.
+
+$head Tape$$
+
+$subhead Active$$
+A new tape is created and becomes active 
+after each call of the form (see $cref/Independent/$$)
+$syntax%
+	Independent(%x%)
+%$$
+All operations that depend on the elements of $italic x$$ are
+recorded on this active tape.
+
+$subhead Inactive$$
+The
+$cref/operation sequence/glossary/Operation/Sequence/$$
+stored in a tape must be transferred to a function object using the syntax
+(see $cref/ADFun<Base> f(x, y)/FunConstruct/$$)
+$syntax%
+	ADFun<%Base%> %f%( %x%, %y%)
+%$$
+or using the syntax (see $cref/f.Dependent(x, y)/Dependent/$$)
+$syntax%
+	%f%.Dependent( %x%, %y%)
+%$$
+After such a transfer, the tape becomes inactive.
+
+$subhead Independent Variable$$
+While the tape is active, we refer to the elements of $italic x$$ 
+as the independent variables for the tape.
+When the tape becomes inactive,
+the corresponding objects become 
+$cref/parameters/glossary/Parameter/$$.
+
+$subhead Dependent Variables$$
+While the tape is active, we use the term dependent variables for the tape
+for any objects whose value depends on the independent variables for the tape.
+When the tape becomes inactive,
+the corresponding objects become 
+$cref/parameters/glossary/Parameter/$$.
+
  
-$head Tape State$$
-For each $italic Base$$ class,
-the tape that record the corresponding 
-AD of $italic Base$$ $xref/glossary/Operation/Sequence/operation sequence/1/$$
-has two possible states:
-$codep
-	enum TapeState {
-		Empty,
-		Recording,
-	}
-$$
-The tape is initially in the $code Empty$$ state.
-It is in the $code Recording$$ state after a call to 
-$xref/Independent/$$ with an argument vector containing 
-$syntax%AD<%Base%>%$$ elements.
-It is in the $code Empty$$ state after the corresponding call to the
-$xref/ADFun//ADFun<Base>/$$ constructor.
-
-
-$subhead Empty$$
-The tape is empty 
-(hence all $syntax%AD<%Base%>%$$ objects are parameters).
-The tape is initially in this state and it enters this state whenever a
-$xref/ADFun//ADFun/$$ object is constructed.
-
-$subhead Recording$$
-All of the independent variables have been specified
-and the tape is currently recording the operations that define
-the more variables as $italic Base$$ scalar functions of the
-independent variables.
-The tape enters this state when a
-$xref/Independent/$$ calculation is preformed.
-
 $head Taylor Coefficient$$
 Suppose $latex X : B \rightarrow B^n$$ is a 
 is $latex p$$ times continuously differentiable function
@@ -218,11 +212,9 @@ converges to zero and $latex t$$ goes to zero.
 
 
 $head Variable$$
-An $syntax%AD<%Base%>%$$ object $italic u$$ is currently a variable if
-the corresponding tape is in the Recording state
-and the current value of an $syntax%AD<%Base%>%$$ object 
-depends on the value of at least one of the 
-$xref/glossary/Independent Variable/independent/$$ variables.
+An $syntax%AD<%Base%>%$$ object $italic u$$ is a variable if
+its value depends on an independent variable vector for
+a currently $cref/active tape/glossary/Tape/Active/$$.
 If $italic u$$ is a variable,
 $xref/ParVar//Variable(u)/$$ returns true and 
 $xref/ParVar//Parameter(u)/$$ returns false. 

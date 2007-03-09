@@ -1,10 +1,10 @@
 /* This file may be inclued multiple times so comment out ifndef and define
-# ifndef CPPAD_PREPROCESSOR
-# define CPPAD_PREPROCESSOR
+# ifndef CPPAD_PREPROCESSOR_INCLUDED
+# define CPPAD_PREPROCESSOR_INCLUDED
 */
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -54,3 +54,9 @@ $codep */
 /* $$
 $end
 */
+
+// other preprocessor symbols defined in config.h
+# undef CPPAD_GETTIMEOFDAY
+# undef CppAD_BOOSTVECTOR
+# undef CppAD_CPPADVECTOR
+# undef CppAD_STDVECTOR

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,6 +13,9 @@ $begin InstallSubversion$$
 $dollar @$$
 $spell
 CppAD
+	config.h
+	gettimeofday
+	Microsoft
 	usr
 	https://projects.coin-or.org/svn/CppAD/trunk/cppad
 	http://www.coin-or.org/svn/CppAD/trunk/cppad
@@ -58,5 +61,24 @@ where $italic dir$$ is the CppAD install directory
 $syntax%
 	svn checkout https://projects.coin-or.org/svn/CppAD/trunk/cppad %dir%
 %$$
+
+$head config.h$$
+The file 
+$syntax%
+	%dir%/config.h
+%$$
+contains some system level settings that you may want to change. 
+For example,
+$codep
+	/* does system support gettimeofday */
+	#define CPPAD_GETTIMEOFDAY 0
+$$
+is set this way to make it easy for Microsoft version of CppAD.
+The $cref/configure/InstallUnix/Configure/$$ script usually changes
+this setting to
+$codep
+	#define CPPAD_GETTIMEOFDAY 1
+$$
+
 
 $end

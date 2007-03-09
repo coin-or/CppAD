@@ -2,7 +2,7 @@
 # define CPPAD_LU_RATIO_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -198,7 +198,7 @@ This type is determined by the argument $italic ratio$$
 which has type $syntax%AD<%Base%>%$$.
 The type $italic Base$$ must be
 $code float$$, $code double$$, or any type in the
-$xref/glossary/AD Type Sequence/AD type sequences/$$
+$cref/AD levels above/glossary/AD Levels Above Base/$$
 above $code float$$ or $code double$$.
 
 $head ADvector$$

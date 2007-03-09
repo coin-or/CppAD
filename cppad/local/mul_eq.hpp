@@ -2,7 +2,7 @@
 # define CPPAD_MUL_EQ_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -113,9 +113,9 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 		{	if( ! IdenticalZero(left) )
 			{	if( IdenticalOne(left) )
 				{	// z = 1 * right
-					MakeVariable(right.taddr_);
+					make_variable(right.id_, right.taddr_);
 				}
-				else	Tape()->RecordOp(
+				else	right.tape_this()->RecordOp(
 						MulpvOp, 
 						*this, 
 						left, 
@@ -127,15 +127,22 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 	else if( Parameter(right) )
 	{	if( ! IdenticalOne(right.value_) )
 		{	if( IdenticalZero(right.value_) )
-				MakeParameter();
-			else	Tape()->RecordOp(MulvpOp, 
+				make_parameter();
+			else	tape_this()->RecordOp(MulvpOp, 
 					*this, taddr_, right.value_
 			);
 		}
 	}
-	else	Tape()->RecordOp(MulvvOp, 
+	else
+	{	CppADUsageError(
+			id_ == right.id_,
+			"Multiplying AD objects that are"
+			" variables on different tapes."
+		);
+		tape_this()->RecordOp(MulvvOp, 
 			*this, taddr_, right.taddr_
-	);
+		);
+	}
 	return *this;
 }
 

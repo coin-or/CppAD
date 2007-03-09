@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -15,6 +15,7 @@ echo "-------------------------------------------------------------------"
 grep '^# *include *<cppad/' \
 	cppad/*.hpp \
 	cppad/local/*.hpp \
+	cppad/speed/*.hpp \
 	example/*.cpp \
 	example/*.hpp \
 	speed/*.cpp \
@@ -24,24 +25,11 @@ grep '^# *include *<cppad/' \
 	test_more/*.cpp \
 	speed_cppad/*.cpp  > junk.1
 #
-grep '^# *include *<speed/' \
-	cppad/*.hpp \
-	cppad/local/*.hpp \
-	example/*.cpp \
-	example/*.hpp \
-	speed/*.cpp \
-	speed/adolc/*.cpp \
-	speed/cppad/*.cpp \
-	speed/fadbad/*.cpp \
-	test_more/*.cpp \
-	speed/*.hpp \
-	speed/example/*.cpp  >> junk.1
-#
 cat junk.1 | sed -e 's%[^<]*<%%'  -e 's%>.*$%%' | sort -u > junk.2
 ls	cppad/config.h \
 	cppad/*.hpp \
 	cppad/local/*.hpp \
-	speed/*.hpp \
+	cppad/speed/*.hpp \
 	| sort -u > junk.3 
 diff junk.2 junk.3
 #

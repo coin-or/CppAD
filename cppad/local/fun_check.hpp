@@ -2,7 +2,7 @@
 # define CPPAD_FUN_CHECK_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -170,7 +170,7 @@ This is because the operation sequence corresponding to $italic g$$ changed
 $latex G$$ for this value of $italic x$$).
 In this case, you probably want to re-tape the calculations
 performed by $italic g$$ with the
-$xref/glossary/Independent Variable/independent variables/$$ 
+$cref/independent variables/glossary/Tape/Independent Variable/$$ 
 equal to the values in $italic x$$ 
 (so AD operation sequence properly represents the algorithm
 for this value of independent variables).

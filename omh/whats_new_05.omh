@@ -902,7 +902,7 @@ $code CppADBinaryMember$$, and
 $code CppADFoldBinaryOperator$$ have been removed.
 
 $head 03-04$$
-An new multiple tape example $xref/MulTape/$$ was added.
+An new multiple level of AD example $xref/mul_level/$$ was added.
 
 $head 03-01$$
 An option that specifies error and warning 

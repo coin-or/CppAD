@@ -2,7 +2,7 @@
 # define CPPAD_DECLARE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -21,8 +21,12 @@ namespace CppAD {
 	template <class Base> class TapeRec;
 	template <class Base> class VecAD_reference;
 	template <class Base> class ADDiscrete;
+
+	// functions with one VecAD<Base> argument
+	template <class Base> bool Parameter         (const VecAD<Base> &u);
+	template <class Base> bool Variable          (const VecAD<Base> &u);
 	
-	// Boolean functions of one AD<Base> argument
+	// functions with one AD<Base> argument
 	template <class Base> int  Integer           (const AD<Base> &u);
 	template <class Base> bool Parameter         (const AD<Base> &u);
 	template <class Base> bool Variable          (const AD<Base> &u);

@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,9 +8,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
-$begin MulTape$$
+$begin mul_level$$
 $spell
 	Taylor
 	fout
@@ -22,11 +20,11 @@ $spell
 	Arg
 $$
 
-$index multiple, tape$$
-$index tape, multiple$$
-$index derivative, tape calculation$$
+$index multiple, AD level$$
+$index AD, multiple level$$
+$index level, multiple AD$$
 
-$section Using Multiple Tapes$$
+$section Using Multiple Levels of AD$$
 
 
 $head Background$$
@@ -87,17 +85,25 @@ $syntax%AD<double>%$$ operations.
 $head General Procedure$$
 
 $subhead Start ADBaseTape$$
-The first step is to declare the independent variables using a
-$syntax%CppADvector<double>%$$ argument to the
-$xref/Independent/$$ function.
-This will start recording all
+The first step is to declare the independent variables using
+$syntax%
+	Independent(%x%)
+%$$
+where $italic x$$ is 
+a $cref/SimpleVector/$$ with elements of type $syntax%AD<double>%$$.
+This will start recording a new tape of
 operations performed using $syntax%AD<double>%$$ class objects.
 
 $subhead Start ADDBaseTape$$
-The next step is to declare the independent variables using a
-$syntax%CppADvector< AD< AD<double> > >%$$ argument to the
+The next step is to declare the independent variables using 
+$syntax%
+	Independent(%X%)
+%$$
+where $italic X$$ is 
+a $cref/SimpleVector/$$ with elements of type 
+$syntax%CppADvector< AD< AD<double> > >%$$.
 $code Independent$$ function.
-This will start recording all
+This will start recording a new tape of 
 operations performed using $syntax%AD< AD<double> >%$$ class objects.
 
 $subhead Inner Function Calculations$$
@@ -108,7 +114,7 @@ using $syntax%AD< AD<double> >%$$ class objects.
 $subhead Derivative of Inner Function$$
 The next step is to create the 
 $syntax%ADFun< AD<double> >%$$ function object $italic fin$$.
-This will also stop the recording of
+This will also stop recording of
 operations performed using $syntax%AD< AD<double> >%$$ class objects.
 The $italic fin$$ object can then be used to calculate
 the derivatives needed to compute the outer function.
@@ -128,13 +134,13 @@ the derivatives of the outer function.
 
 
 $children%
-	example/mul_tape.cpp
+	example/mul_level.cpp
 %$$
 
 $head Example$$
 The file
-$xref/MulTape.cpp/$$
-contains an example and a test of this procedure.   
+$xref/mul_level.cpp/$$
+contains an example and test of this procedure.   
 It returns true if it succeeds and false otherwise.
 The file $xref/OdeTaylor.cpp/$$ is a more complex example
 use of multiple tapes.

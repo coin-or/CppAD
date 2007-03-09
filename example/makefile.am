@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -82,7 +82,7 @@ example_SOURCES   = \
 	lu_vec_ad_ok.cpp \
 	mul.cpp \
 	mul_eq.cpp \
-	mul_tape.cpp \
+	mul_level.cpp \
 	near_equal.cpp \
 	near_equal_ext.cpp \
 	numeric_type.cpp \

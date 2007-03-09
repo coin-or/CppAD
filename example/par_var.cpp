@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -37,6 +37,7 @@ bool ParVar(void)
 {	bool ok = true;
 
 	using CppAD::AD;
+	using CppAD::VecAD;
 	using CppAD::Parameter;
 	using CppAD::Variable;
 
@@ -56,6 +57,15 @@ bool ParVar(void)
 	y[1] = abs(x[0]);
 	ok  &= Variable(y[1]);     // y[1] does depends on x[0] 
 
+	// VecAD objects
+	VecAD<double> z(2);
+	z[0] = 0.;
+	z[1] = 1.;
+	ok  &= Parameter(z);      // z does not depend on x[0]
+	z[x[0]] = 2.;
+	ok  &= Variable(z);       // z depends on x[0]
+	
+
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y);
 
@@ -63,6 +73,9 @@ bool ParVar(void)
 	ok &= Parameter(x[0]); ok &= ! Variable(x[0]);
 	ok &= Parameter(y[0]); ok &= ! Variable(y[0]);
 	ok &= Parameter(y[1]); ok &= ! Variable(y[1]);
+
+	// check that the VecAD<double> object is a parameter
+	ok &= Parameter(z);
 
 	return ok;
 }

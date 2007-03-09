@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -29,7 +29,7 @@ $end
 // BEGIN PROGRAM
 
 # include <cppad/cppad.hpp>
-# include <speed/det_by_minor.hpp>
+# include <cppad/speed/det_by_minor.hpp>
 
 bool det_by_minor()
 {	bool ok = true;

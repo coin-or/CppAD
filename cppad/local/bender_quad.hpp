@@ -1,3 +1,6 @@
+# ifndef CPPAD_BENDER_QUAD_INCLUDED
+# define CPPAD_BENDER_QUAD_INCLUDED
+
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
@@ -93,10 +96,10 @@ $latex \[
 $head fun$$
 The $code BenderQuad$$ object $italic fun$$ 
 must support the member functions listed below.
-The tape corresponding to AD of $italic Base$$ operations will
-be in the $xref/glossary/Tape State/Recording/Recording state/1/$$
-when these member functions are called and it should still be recording
-when they return.
+The $syntax%AD<%Base%>%$$ arguments will be variables for
+a tape created by a call to $cref%Independent%$$ from $code BenderQuad$$
+(hence they can not be combined with variables corresponding to a 
+different tape). 
 
 $subhead fun.f$$
 The $code BenderQuad$$ argument $italic fun$$ supports the syntax
@@ -268,12 +271,6 @@ $syntax%
 	AD< %BAvector%::value_type >
 %$$.
 
-$head Tape State$$
-The tape that records $syntax%AD<%Base%>%$$ operations is in the
-empty $xref/glossary/Tape State/state/$$ when $code BenderQuad$$ is called.
-It will be in the empty state when $code BenderQuad$$ returns.
-
-
 
 $head Example$$
 $children%
@@ -389,3 +386,5 @@ void BenderQuad(
 }
 	
 } // END CppAD namespace
+
+# endif

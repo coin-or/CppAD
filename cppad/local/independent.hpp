@@ -2,7 +2,7 @@
 # define CPPAD_INDEPENDENT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -35,14 +35,33 @@ $syntax%Independent(%x%)%$$
 
 
 $head Purpose$$
-Calling $code Independent$$ starts the recording 
-$xref/glossary/AD of Base/AD of/$$ $italic Base$$ operations
+Start a recording the 
+$xref/glossary/AD of Base/AD of Base/$$ operations
 with $italic x$$ as the vector of independent variables.
 Once the 
 AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$ is completed,
-it is transferred to a function object by calling the
-$syntax%ADFun<%Base%>%$$ $xref/FunConstruct//constructor/$$. 
+it must be transferred to a function object; see below.
+
+$head Variables for a Tape$$
+A tape is create by the call 
+$syntax%
+	Independent(%x%)
+%$$
+The corresponding operation sequence is transferred to a function object,
+and the tape is deleted,
+using either (see $cref/ADFun<Base> f(x, y)/FunConstruct/$$)
+$syntax%
+	ADFun<%Base%> %f%( %x%, %y%)
+%$$
+or using (see $cref/f.Dependent(x, y)/Dependent/$$)
+$syntax%
+	%f%.Dependent( %x%, %y%)
+%$$
+Between when the tape is created and when it is destroyed,
+we refer to the elements of $italic x$$, 
+and the values that depend on the elements of $italic x$$,
+as variables for the tape created by the call to $code Independent$$. 
 
 $head x$$
 The vector $italic x$$ has prototype
@@ -54,7 +73,6 @@ The size of the vector $italic x$$, must be greater than zero,
 and is the number of independent variables for this
 AD operation sequence.
 
-
 $head VectorAD$$
 The type $italic VectorAD$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type/$$
@@ -62,13 +80,32 @@ $syntax%AD<%Base%>%$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head Tape State$$
-$index state, tape$$
-$index tape, state$$
-The tape that records $xref/glossary/AD of Base/AD of/$$ $italic Base$$ operations must be 
-in the $xref/glossary/Tape State/Empty/empty state/1/$$ when
-$code Independent$$ is called.
-After this operation, the tape will be in the Recording state.
+$head Memory Leak$$
+A memory leak will result if
+a tape is create by a call to $code Independent$$
+and not deleted by a corresponding call to 
+$syntax%
+	ADFun<%Base%> %f%( %x%, %y%)
+%$$
+or using 
+$syntax%
+	%f%.Dependent( %x%, %y%)
+%$$
+
+$head OpenMP$$
+$index OpenMP, Independent$$
+$index Independent, OpenMP$$
+In the case of multi-threading with OpenMP,
+the call to $code Independent$$
+and the corresponding call to
+$syntax%
+	ADFun<%Base%> %f%( %x%, %y%)
+%$$
+or 
+$syntax%
+	%f%.Dependent( %x%, %y%)
+%$$
+must be preformed by the same thread.
 
 $head Example$$
 $children%
@@ -94,10 +131,6 @@ void ADTape<Base>::Independent(VectorAD &x)
 	// check VectorAD is Simple Vector class with AD<Base> elements
 	CheckSimpleVector< AD<Base>, VectorAD>();
 
-	CppADUsageError(
-		State() == Empty ,
-		"Independent can only be used when tape is empty"
-	);
 	// dimension of the domain space
 	size_t n = x.size();
 	CppADUsageError(
@@ -121,14 +154,21 @@ void ADTape<Base>::Independent(VectorAD &x)
 	}
 
 	// done specifying all of the independent variables
-	state            = Recording;
 	size_independent = n;
 }
 
 template <typename VectorAD>
 inline void Independent(VectorAD &x)
 {	typedef typename VectorAD::value_type ADBase;
-	ADBase::Tape()->Independent(x); 
+	typedef typename ADBase::value_type   Base;
+	CppADUsageError(
+		ADBase::tape_ptr() == CPPAD_NULL,
+		"Independent: cannot create a new tape because"
+		"\na previous tape is still active (for this thread)."
+	);
+	size_t id = ADBase::tape_new();
+
+	ADBase::tape_ptr(id)->Independent(x); 
 }
 
 

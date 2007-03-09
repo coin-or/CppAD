@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -49,6 +49,7 @@ test_more_SOURCES  = test_more.cpp \
 	for_sparse_jac.cpp \
 	forward.cpp \
 	from_base.cpp \
+	fun_check.cpp \
 	log.cpp \
 	log_10.cpp \
 	mul.cpp \

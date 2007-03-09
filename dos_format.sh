@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -37,8 +37,8 @@ do
 	# delete old version of directory (if it exists)
 	if [ -e cppad-$version ]
 	then
-		echo "rm -r cppad-$version"
-		if ! rm -r cppad-$version
+		echo "rm -rf cppad-$version"
+		if ! rm -rf cppad-$version
 		then
 			echo "DosFormat: cannot remove old cppad-$version"
 			exit 1

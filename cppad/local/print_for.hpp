@@ -2,7 +2,7 @@
 # define CPPAD_PRINT_FOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,7 +40,7 @@ This operation may be part of the
 $xref/glossary/Operation/Sequence/operation sequence/1/$$
 that is transferred to an $xref/ADFun/$$ object $italic f$$.
 The $code ADFun$$ object can be evaluated at different values for the
-$xref/glossary/Independent Variable/independent variables/$$.
+$cref/independent variables/glossary/Tape/Independent Variable/$$.
 This may result in a corresponding value for $italic y$$ 
 that is different from when the operation sequence was recorded.
 The routine $code PrintFor$$ requests a printing,
@@ -100,11 +100,16 @@ $end
 namespace CppAD { 
 	template <class Base>
 	void PrintFor(const char *text, const AD<Base> &u)
-	{ 	if( AD<Base>::Tape()->State() == Recording )
-		{	if( Parameter(u) )
-				AD<Base>::Tape()->RecordPripOp(text, u.value_);
-			else	AD<Base>::Tape()->RecordPrivOp(text, u.taddr_);
-		}
+	{	ADTape<Base> *tape = AD<Base>::tape_ptr();
+		CppADUsageError(
+			tape != CPPAD_NULL,
+			"PrintFor: cannot use this function because no tape"
+			"\nis currently active (for this thread)."
+		);
+
+		if( Parameter(u) )
+			tape->RecordPripOp(text, u.value_);
+		else	tape->RecordPrivOp(text, u.taddr_);
 	}
 	template <class Base>
 	void PrintFor(const char *text, const VecAD_reference<Base> &u)

@@ -2,7 +2,7 @@
 # define CPPAD_COND_EXP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -76,7 +76,7 @@ AD operation sequence,
 the choice in an AD conditional expression is made each time
 $xref/Forward//f.Forward/$$ is used to evaluate the zero order Taylor
 coefficients with new values for the 
-$xref/glossary/Independent Variable/independent variables/$$.
+$cref/independent variables/glossary/Tape/Independent Variable/$$.
 This is in contrast to the $xref/Compare//AD comparison operators/$$
 which are boolean valued and not included in the AD operation sequence. 
 
@@ -86,7 +86,7 @@ $italic left$$, $italic right$$, $italic trueCase$$, and $italic falseCase$$
 (which must all have the same type). 
 This type must be
 $code float$$, $code double$$, or in the 
-$xref/glossary/AD Type Sequence/AD type sequences/$$
+$cref/AD levels above/glossary/AD Levels Above Base/$$
 above $code float$$ or $code double$$.
 
 $head Op$$
@@ -325,20 +325,20 @@ inline AD<Base> CondExpOp(
 	returnValue.value_ = CondExpOp(cop, 
 		left.value_, right.value_, trueCase.value_, falseCase.value_);
 
-	// second case where do not need to tape this operation
-	if( AD<Base>::Tape()->State() == Empty ) 
-		return returnValue;
+	ADTape<Base> *tape = CPPAD_NULL;
+	if( Variable(left) )
+		tape = left.tape_this();
+	if( Variable(right) )
+		tape = right.tape_this();
+	if( Variable(trueCase) )
+		tape = trueCase.tape_this();
+	if( Variable(falseCase) )
+		tape = falseCase.tape_this();
 
-	// third case where we do not need to tape this operation
-	if(	Parameter(left)      & 
-		Parameter(right)     & 
-		Parameter(trueCase)  & 
-		Parameter(falseCase) 
-	)	return returnValue;
-	
 	// add this operation to the tape
-	AD<Base>::Tape()-> RecordCondExp(cop, 
-		returnValue, left, right, trueCase, falseCase);
+	if( tape != CPPAD_NULL ) 
+		tape->RecordCondExp(cop, 
+			returnValue, left, right, trueCase, falseCase);
 
 	return returnValue;
 }
@@ -368,7 +368,7 @@ void ADTape<Base>::RecordCondExp(
 
 	// Make sure returnValue is in the list of variables and set its taddr
 	if( Parameter(returnValue) )
-		returnValue.MakeVariable( returnValue_taddr );
+		returnValue.make_variable(id_, returnValue_taddr );
 	else	returnValue.taddr_ = returnValue_taddr;
 
 	// ind[2] = left address

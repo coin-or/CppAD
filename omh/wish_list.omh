@@ -47,31 +47,12 @@ that it works with complex AD types.
 $head Exceptions$$
 When the function
 $xref/Independent/$$ is called,  
-the resulting $syntax%AD<%Base%>%$$ 
-$xref/glossary/Tape State/tape state/$$ is $code Recording$$.
+a new tape is created.
 If an exception occurs before the call to the corresponding
-$xref/ADFun/$$ constructor, the tape will be stuck 
-in the $code Recording$$ state.
-Thus, there should be a way to abort the current
-$syntax%AD<%Base%>%$$ recording.
+$xref/ADFun/$$ constructor or $cref/Dependent/$$, 
+the tape recording will be never stop.
+Thus, there should be a way to abort a tape recording.
 
-
-$head Multiple Tapes With Same Base Type$$
-$index multiple, tape$$
-$index tape, multiple$$
-Some users have expressed an interest in having multiple tapes,
-with the same base type,
-recording at the same time. 
-The idea is something like this:
-$codep
-	Independent(x);    // perhaps in thread 1
-	Independent(y);    // perhaps in thread 2
-	z = x * x;         // operation on tape corresponding to x
-	w = y * y;         // operation on tape corresponding to y
-	a = w * z;         // would generate an error because cannot mix tapes
-$$
-One application of this is where each of the tapes is on a different
-processor in a shared memory multiple processor application.
 
 $head Operation Sequence$$
 $index sequence, operation$$
@@ -80,9 +61,18 @@ It is possible to detect if the
 AD of $italic Base$$ 
 $xref/glossary/Operation/Sequence/operation sequence/1/$$ 
 does not depend on any of the
-$xref/glossary/Independent Variable/independent variable/$$ values.
+$cref/independent variable/glossary/Tape/Independent Variable/$$ values.
 This could be returned as an extra
 $xref/SeqProperty/$$.
+
+$head Optimization$$
+$index optimize, operation sequence$$
+$index tape, optimize$$
+$index sequence, optimize operations$$
+$index operation, optimize sequence$$
+A single $cref/RevSparseJac/$$ sweep could be used to determine
+which parts of the operation sequence in an
+$cref/ADFun/FunConstruct/$$ object can be removed.
 
 $head Software Guidelines$$
 

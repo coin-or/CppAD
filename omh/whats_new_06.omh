@@ -605,7 +605,7 @@ $pre
 $$
 The $xref/Value/$$ function has been extended to allow for 
 $xref/glossary/Parameter/parameter/$$ arguments even if the corresponding
-$xref/glossary/Tape State/tape state/$$ for is Recording.
+tape is in the Recording state.
 $pre
 
 $$
@@ -738,7 +738,8 @@ and moved to the glossary as
 $xref/glossary/Operation/Sequence/Type operation sequence/1/$$.
 
 $head 04-15$$
-The $xref/MulTape/$$ example was moved from $xref/ADFun/$$ to $xref/General/$$.
+The $xref/mul_level/$$ example was moved from 
+$xref/ADFun/$$ to $xref/General/$$.
 The documentation for $xref/SpeedTest/$$ was improved.
 
 $head 04-14$$
@@ -902,8 +903,7 @@ from the glossary to the $xref/AD/$$ section.
 $pre
 
 $$
-Improve the definition of
-$xref/glossary/Tape State/tape state/$$.
+Improve the definition of tape state.
 $pre
 
 $$
@@ -931,8 +931,7 @@ $pre
 
 $$
 Fix a bug using non-zero AD indices for $xref/VecAD/$$ vectors
-while the tape is in the 
-$xref/glossary/Tape State/Empty/empty state/1/$$.
+while the tape is in the empty state.
 $pre
 
 $$

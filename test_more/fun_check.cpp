@@ -9,33 +9,9 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-! WARNING: This file is used as an example by FunConstruct and Dependent
-
-$begin FunCheck.cpp$$
-$spell
-	abs
-$$
-
-$section ADFun Check and Re-Tape: Example and Test$$
-
-$index FunCheck, example$$
-$index example, FunCheck$$
-$index test, FunCheck$$
-
-$index ADFun, example$$
-$index example, ADFun$$
-$index test, ADFun$$
-
-$index Dependent, example$$
-$index example, Dependent$$
-$index test, Dependent$$
-
-$code
-$verbatim%example/fun_check.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-$$
-
-$end
+old example, now just used for testing deprecated syntax f.Dependent(y)
 */
+
 // BEGIN PROGRAM
 # include <cppad/cppad.hpp>
 
@@ -91,7 +67,7 @@ bool FunCheckCases(void)
 	Y = G(X);
 
 	// stop tape and store operation sequence in f : X -> Y
-	f.Dependent(X, Y);
+	f.Dependent(Y);
 	ok &= (f.size_taylor() == 0);  // no implicit forward operation
 
 	// create function object to use with double
@@ -120,7 +96,7 @@ bool FunCheckCases(void)
 	Y = G(X);
 
 	// stop tape and store operation sequence in f : X -> Y
-	f.Dependent(X, Y);
+	f.Dependent(Y);
 	ok &= (f.size_taylor() == 0);  // no implicit forward with this x
 
 	// function values should agree now

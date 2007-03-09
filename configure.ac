@@ -1,5 +1,5 @@
 dnl ---------------------------------------------------------------------------
-dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 dnl
 dnl CppAD is distributed under multiple licenses. This distribution is under
 dnl the terms of the
@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20061223, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20070309, cppad@list.coin-or.org)
 
 dnl Set the default install prefix to the installers home directory
 dnl cygwin begin delete:
@@ -192,6 +192,18 @@ if test "$stdvector$BOOST_DIR" = "no" ; then
 	AC_DEFINE(CppAD_CPPADVECTOR, 1, [is CppADvector == CppAD::vector])
 else 
 	AC_DEFINE(CppAD_CPPADVECTOR, 0, [is CppADvector == CppAD::vector])
+fi
+
+dnl the gettimeofday check automatically generates a yes / no configure msg
+AC_CHECK_FUNC(
+	gettimeofday,
+	[gettimeofday="yes"],
+	[gettimeofday="no"]
+)
+if test "$gettimeofday" = "yes" ; then
+	AC_DEFINE(CPPAD_GETTIMEOFDAY, 1, [does system support gettimeofday])
+else
+	AC_DEFINE(CPPAD_GETTIMEOFDAY, 0, [does system support gettimeofday])
 fi
 
 dnl Run any macros required for proper operation of generated makefiles

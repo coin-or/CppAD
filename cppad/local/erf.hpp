@@ -2,7 +2,7 @@
 # define CPPAD_ERF_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -45,7 +45,7 @@ $code float$$ and $code double$$
 is included in the $code CppAD$$ namespace
 (the corresponding results has the same type as the arguments).
 The type $italic Base$$ can be any type in the 
-$xref/glossary/AD Type Sequence/AD type sequence/$$
+$cref/AD levels above/glossary/AD Levels Above Base/$$
 above $code float$$ or $code double$$.
 
 $head x$$

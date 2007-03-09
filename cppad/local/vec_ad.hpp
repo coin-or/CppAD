@@ -49,24 +49,24 @@ $$
 $syntax%%b% = %v%[%i%]%$$
 $pre
 $$
-$syntax%%y% = %v%[%x%]%$$
+$syntax%%r% = %v%[%x%]%$$
 
 
 $head Purpose$$
-If the tape for $xref/glossary/AD of Base/AD of/$$ $italic Base$$ operations is in the
-$xref/glossary/Tape State/Recording State/$$,
+If either $italic v$$ or $italic x$$ is a 
+$cref/variable/glossary/Variable/$$,
 the indexing operation
 $syntax%
 	%y% = %v%[%x%]
 %$$
-is included in the
+is recorded in the corresponding
 AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$ and 
 transferred to the corresponding $xref/ADFun/$$ object $italic f$$.
 Such an index can change each time
 zero order $xref/Forward//f.Forward/$$ is used; i.e.,
 $italic f$$ is evaluated with new value for the 
-$xref/glossary/Independent Variable/independent variables/$$. 
+$cref/independent variables/glossary/Tape/Independent Variable/$$. 
 Note that the value of $italic y$$ depends on the value of $italic x$$
 in a discrete fashion and CppAD computes its partial derivative with 
 respect to $italic x$$ as zero.
@@ -98,13 +98,11 @@ $subhead Exceptions$$
 $list number$$
 The object $italic y$$ cannot be used with the
 $xref/Value/$$ function to compute the corresponding $italic Base$$ value.
-This function can only be use while the corresponding tape is in the 
-$xref/glossary/Tape State/Empty state/$$.  
-In this case, the syntax
+If $italic v$$ is not a $cref/variable/glossary/Variable/$$
 $syntax%
 	v[%i%]
 %$$
-should be used to compute the corresponding $italic Base$$ value.
+can be used to compute the corresponding $italic Base$$ value.
 
 $lnext
 The object $italic y$$ cannot be used
@@ -138,7 +136,8 @@ no matter what the types of $italic z$$, $italic u$$, and $italic v$$.
 
 $lnext
 The $xref/ParVar//Parameter and Variable/$$ functions cannot be used with
-$syntax%VecAD<%Base%>::reference%$$ arguments.
+$syntax%VecAD<%Base%>::reference%$$ arguments
+(use the entire $syntax%VecAD<%Base%>%$$ vector instead).
 
 $lnext
 The vectors passed to $xref/Independent/$$ must have elements
@@ -156,13 +155,9 @@ instead of valid for all independent variables.
 
 $lend
 
-$head n$$
-The argument $italic n$$ has prototype
-$syntax%
-	size_t %n%
-%$$
+$head Constructor$$
 
-$head v$$
+$subhead v$$
 The syntax 
 $syntax%
 	VecAD<%Base%> %v%(%n%)
@@ -170,6 +165,12 @@ $syntax%
 creates an $code VecAD$$ object $italic v$$ with 
 $italic n$$ elements.
 The initial value of the elements of $italic v$$ is unspecified.
+
+$head n$$
+The argument $italic n$$ has prototype
+$syntax%
+	size_t %n%
+%$$
 
 $head size$$
 The syntax
@@ -179,7 +180,17 @@ $syntax%
 returns the number of elements in the vector $italic v$$;
 i.e., the value of $italic n$$ when it was constructed.
 
-$head i$$
+$head size_t Indexing$$
+We refer to the syntax
+$syntax%
+	%b% = %v%[%i%]
+%$$
+as $code size_t$$ indexing of a $code VecAD$$ object.
+This indexing is only valid if the vector $italic v$$ is a 
+$cref/parameter/ParVar/$$; i.e.,
+it does not depend on the independent variables.
+
+$subhead i$$
 The operand $italic i$$ has prototype
 $syntax%
 	size_t %i%
@@ -188,26 +199,30 @@ It must be greater than or equal zero
 and less than $italic n$$; i.e., less than
 the number of elements in $italic v$$. 
 
-$head b$$
+$subhead b$$
 The result $italic b$$ has prototype
 $syntax%
-	%Base% &%b%
+	%Base% %b%
 %$$
 and is a reference to the $th i$$ element in the vector $italic v$$.
-This syntax is only valid if the
-tape that records $xref/glossary/AD of Base/AD of/$$ $italic Base$$ operations is in the
-$xref/glossary/Tape State/Empty state/$$.
-Because it is a reference, it can be used to change the element value;
+It can be used to change the element value;
 for example,
 $syntax%
 	%v%[%i%] = %c%
 %$$
 is valid where $italic c$$ is a $italic Base$$ object.
-As a reference, it is no longer valid once the
+The reference $italic b$$ is no longer valid once the
 destructor for $italic v$$ is called; for example,
 when $italic v$$ falls out of scope.
 
-$head x$$
+$head AD Indexing$$
+We refer to the syntax
+$syntax%
+	%r% = %v%[%x%]
+%$$
+as AD indexing of a $code VecAD$$ object.
+
+$subhead x$$
 The argument $italic x$$ has prototype
 $syntax%
 	const AD<%Base%> &%x%
@@ -216,12 +231,12 @@ The value of $italic x$$ must be greater than or equal zero
 and less than $italic n$$; i.e., less than
 the number of elements in $italic v$$. 
 
-$head y$$
+$subhead r$$
 The result $italic y$$ has prototype
 $syntax%
-	VecAD<%Base%>::reference %y%
+	VecAD<%Base%>::reference %r%
 %$$
-The object $italic y$$ has an AD type and its 
+The object $italic r$$ has an AD type and its 
 operations are recorded as part of the same
 AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$ as
@@ -237,7 +252,7 @@ $syntax%
 %$$
 is valid where $italic z$$ is an
 $syntax%VecAD<%Base%>::reference%$$ object.
-As a reference, it is no longer valid once the
+As a reference, $italic r$$ is no longer valid once the
 destructor for $italic v$$ is called; for example,
 when $italic v$$ falls out of scope.
 
@@ -322,12 +337,14 @@ namespace CppAD {
 // Element of VecAD
 template <class Base>
 class VecAD_reference {
+	friend bool  Parameter<Base> (const VecAD<Base> &vec);
+	friend bool  Variable<Base>  (const VecAD<Base> &vec);
 	friend class VecAD<Base>;
 	friend class ADTape<Base>;
 
 public:
-	VecAD_reference(VecAD<Base> *v, const AD<Base> &x_) 
-		: vec( v ) , x(x_)
+	VecAD_reference(VecAD<Base> *v, const AD<Base> &x) 
+		: vec_( v ) , x_(x)
 	{ }
 
 	// assignment operators
@@ -348,48 +365,48 @@ public:
 	{	AD<Base> result;
 		CppADUnknownError( Parameter(result) );
 
-		size_t i = static_cast<size_t>( Integer(x) );
-		CppADUnknownError( i < vec->length );
+		size_t i = static_cast<size_t>( Integer(x_) );
+		CppADUnknownError( i < vec_->length_ );
 
 		// value_ corresponding to this element
-		result.value_ = *(vec->data + i);
+		result.value_ = *(vec_->data_ + i);
 
 		// index corresponding to this element
-		if( AD<Base>::Tape()->State() == Empty )
-		{	CppADUnknownError( vec->id != *ADTape<Base>::Id() );
-		}
-		else
-		{	CppADUnknownError( vec->id == *ADTape<Base>::Id() );
-			CppADUnknownError( vec->offset > 0  );
+		if( Variable(*vec_) )
+		{
+			ADTape<Base> *tape = AD<Base>::tape_ptr(vec_->id_);
+			CppADUnknownError( tape != CPPAD_NULL );
+
+			CppADUnknownError( vec_->offset_ > 0  );
 	
-			if( IdenticalPar(x) )
+			if( IdenticalPar(x_) )
 			{	// use parameter indexing
-				AD<Base>::Tape()->RecordLoadOp(
+				tape->RecordLoadOp(
 					LdpOp,
 					result,
-					vec->offset,
+					vec_->offset_,
 					static_cast<size_t>(i)
 				);
-				CppADUnknownError( Parameter(x) );
+				CppADUnknownError( Parameter(x_) );
 			}
 			else
 			{	// check if we need to convert x to a variable
 				// note that x is mutable
-				if( Parameter(x) )
-				{	x.id_ = *ADTape<Base>::Id();
-					x.taddr_ = 
-					AD<Base>::Tape()->RecordParOp(x.value_);
+				if( Parameter(x_) )
+				{	x_.id_ = vec_->id_;
+					x_.taddr_ = 
+					tape->RecordParOp(x_.value_);
 				}
 	
 				// use variable indexing
-				AD<Base>::Tape()->RecordLoadOp(
+				tape->RecordLoadOp(
 					LdvOp,
 					result,
-					vec->offset,
-					x.taddr_
+					vec_->offset_,
+					x_.taddr_
 				);
 				CppADUnknownError( 
-					x.taddr_ > 0 && Variable(x)
+					x_.taddr_ > 0 && Variable(x_)
 				);
 			}
 		}
@@ -397,113 +414,117 @@ public:
 	}
 
 private:
-	VecAD<Base>      *vec;         // pointer to entire vector
-	mutable AD<Base>  x;           // index for this element
+	VecAD<Base>      *vec_;         // pointer to entire vector
+	mutable AD<Base>  x_;           // index for this element
 };
 
 // VecAD
 template <class Base>
 class VecAD {
-	// friends
-	friend std::ostream& operator << <Base>
-		(std::ostream &os, const VecAD<Base> &vec);
-
+	friend bool  Parameter<Base> (const VecAD<Base> &vec);
+	friend bool  Variable<Base>  (const VecAD<Base> &vec);
 	friend class ADTape<Base>;
 	friend class VecAD_reference<Base>;
+
+	friend std::ostream& operator << <Base>
+		(std::ostream &os, const VecAD<Base> &vec_);
 public:
 	// declare the user's view of this type here
 	typedef VecAD_reference<Base> reference;
 
 	// default constructor
-	VecAD(void) : length(0) , data(CPPAD_NULL)
-	{ }
+	VecAD(void) : length_(0) , data_(CPPAD_NULL), offset_(0), id_(0)
+	{ CppADUnknownError( Parameter(*this) ); }
 
 	// constructor 
-	VecAD(size_t n) : length(n) , id(0)
-	{	CppADUnknownError( *ADTape<Base>::Id() > id );
-		data  = CPPAD_NULL;
-		if( length > 0 )
+	VecAD(size_t n) : length_(n), offset_(0), id_(0)
+	{	data_  = CPPAD_NULL;
+		if( length_ > 0 )
 		{	size_t i;
 			Base zero(0);
-			data  = CppADTrackNewVec(length, data);
+			data_  = CppADTrackNewVec(length_, data_);
 
 			// Initialize data to zero so all have same value.
 			// This uses less memory and avoids a valgrind error
 			// during TapeRec<Base>::PutPar 
-			for(i = 0; i < length; i++)
-				data[i] = zero;
+			for(i = 0; i < length_; i++)
+				data_[i] = zero;
 		}
+		CppADUnknownError( Parameter(*this) );
 	}
 
 	// destructor
 	~VecAD(void)
-	{	if( data != CPPAD_NULL )
-			CppADTrackDelVec(data); 
+	{	if( data_ != CPPAD_NULL )
+			CppADTrackDelVec(data_); 
 	}
 
 	// size
 	size_t size(void)
-	{	return length; }
+	{	return length_; }
 
 	// not taped element access
 	Base &operator[](size_t i)
 	{
 		CppADUsageError( 
-			AD<Base>::Tape()->State() == Empty,
-			"VecAD: cannot use size_t indexing while recording"
+			Parameter(*this),
+			"VecAD: cannot use size_t indexing because this"
+			" VecAD vector is a variable."
 		);
 		CppADUsageError(
-			i < length,
+			i < length_,
 			"VecAD: element index is >= vector length"
 		);
 
-		return data[i];
+		return data_[i];
 	}
 
 	// taped elemement access
 	VecAD_reference<Base> operator[](const AD<Base> &x) 
 	{
-		CppADUnknownError( 
-			( id != *ADTape<Base>::Id() )
-			| ( AD<Base>::Tape()->State() == Recording )
-		);
 		CppADUsageError(
 			0 <= Integer(x),
 			"VecAD: element index is < zero"
 		);
 		CppADUsageError(
-			static_cast<size_t>( Integer(x) ) < length,
+			static_cast<size_t>( Integer(x) ) < length_,
 			"VecAD: element index is >= vector length"
 		);
 
 		// if no need to track indexing operation, return now
-		if( (AD<Base>::Tape()->State() != Recording) )
+		if( Parameter(*this) & Parameter(x) )
 			return VecAD_reference<Base>(this, x);
 
-		if( id != *ADTape<Base>::Id() )
-		{	// must place a copy of vector in tape
-			offset = AD<Base>::Tape()->AddVec(length, data);
+		CppADUsageError( 
+			Parameter(*this) | Parameter(x) | (id_ == x.id_),
+			"VecAD: vector and index are variables for"
+			" different tapes."
+		);
 
-			// advance pointer by one so is always nonzero
-			offset++; 
-			CppADUnknownError( offset > 0 );
+		if( Parameter(*this) )
+		{	// must place a copy of vector in tape
+			offset_ = 
+			AD<Base>::tape_ptr(x.id_)->AddVec(length_, data_);
+
+			// advance pointer by one so is always > 0
+			offset_++; 
 
 			// tape id corresponding to this offest
-			id = *ADTape<Base>::Id();
+			id_ = x.id_;
 		}
 
 		return VecAD_reference<Base>(this, x); 
 	}
 
 private:
-	const  size_t   length; // size of this VecAD vector
-	Base           *data;   // value_ of elements of this vector 
+	const  size_t   length_; // size of this VecAD vector
+	Base           *data_;   // value_ of elements of this vector 
 
 	// offset in cumulate vector corresponding to this object
-	size_t offset; 
+	size_t offset_; 
 
 	// tape id corresponding to the offset
-	size_t id;
+	size_t id_;
 };
 
 
@@ -511,25 +532,44 @@ template <class Base>
 void VecAD_reference<Base>::operator=(const AD<Base> &y)
 {
 	if( Parameter(y) )
-	{	*this = y.value_;
+	{	// fold into the Base type assignment
+		*this = y.value_;
 		return;
 	}
 
-	CppADUnknownError( AD<Base>::Tape()->State() == Recording );
+	CppADUsageError( 
+		Parameter(*vec_) | (vec_->id_ == y.id_),
+		"VecAD: vector and new element value are variables"
+		"\nfor different tapes."
+	);
 
-	size_t i = static_cast<size_t>( Integer(x) );
-	CppADUnknownError( i < vec->length );
+	ADTape<Base> *tape = AD<Base>::tape_ptr(y.id_);
+	CppADUnknownError( tape != CPPAD_NULL );
+	if( Parameter(*vec_) )
+	{	// must place a copy of vector in tape
+		vec_->offset_ = tape->AddVec(vec_->length_, vec_->data_);
+
+		// advance pointer by one so is always > 0
+		(vec_->offset_)++; 
+
+		// tape id corresponding to this offest
+		vec_->id_ = y.id_;
+	}
+	CppADUnknownError( Variable(*vec_) );
+
+
+	size_t i = static_cast<size_t>( Integer(x_) );
+	CppADUnknownError( i < vec_->length_ );
 
 	// assign value both in the element and the original array
-	*(vec->data + i) = y.value_;
+	*(vec_->data_ + i) = y.value_;
 
 	// record the setting of this array element
-	CppADUnknownError( vec->id == *ADTape<Base>::Id() );
-	CppADUnknownError( vec->offset > 0 );
-	if( Parameter(x) ) AD<Base>::Tape()->RecordStoreOp(
-			StpvOp, vec->offset, i, y.taddr_ );
-	else	AD<Base>::Tape()->RecordStoreOp(
-			StvvOp, vec->offset, x.taddr_, y.taddr_ );
+	CppADUnknownError( vec_->offset_ > 0 );
+	if( Parameter(x_) ) tape->RecordStoreOp(
+			StpvOp, vec_->offset_, i, y.taddr_ );
+	else	tape->RecordStoreOp(
+			StvvOp, vec_->offset_, x_.taddr_, y.taddr_ );
 }
 
 template <class Base>
@@ -537,25 +577,28 @@ void VecAD_reference<Base>::operator=(const Base &y)
 { 
 	size_t y_taddr;
 
-	size_t i = static_cast<size_t>( Integer(x) );
-	CppADUnknownError( i < vec->length );
+	size_t i = static_cast<size_t>( Integer(x_) );
+	CppADUnknownError( i < vec_->length_ );
 
 	// assign value both in the element and the original array
-	*(vec->data + i) = y;
+	*(vec_->data_ + i) = y;
 
-	if( AD<Base>::Tape()->State() == Empty )
+	// check if this ADVec object is a parameter
+	if( Parameter(*vec_) )
 		return;
 
+	ADTape<Base> *tape = AD<Base>::tape_ptr(vec_->id_);
+	CppADUnknownError( tape != CPPAD_NULL );
+
 	// place a copy of y in the tape
-	y_taddr = AD<Base>::Tape()->Rec.PutPar(y);
+	y_taddr = tape->Rec.PutPar(y);
 
 	// record the setting of this array element
-	CppADUnknownError( vec->id == *ADTape<Base>::Id() );
-	CppADUnknownError( vec->offset > 0 );
-	if( Parameter(x) ) AD<Base>::Tape()->RecordStoreOp(
-			StppOp, vec->offset, i, y_taddr );
-	else	AD<Base>::Tape()->RecordStoreOp(
-			StvpOp, vec->offset, x.taddr_, y_taddr );
+	CppADUnknownError( vec_->offset_ > 0 );
+	if( Parameter(x_) ) tape->RecordStoreOp(
+			StppOp, vec_->offset_, i, y_taddr );
+	else	tape->RecordStoreOp(
+			StvpOp, vec_->offset_, x_.taddr_, y_taddr );
 }
 
 // fold this case into AD<Base> case above
@@ -571,8 +614,8 @@ inline void VecAD_reference<Base>::operator=(int y)
 template <class Base>
 inline std::ostream& operator << (std::ostream &os, const VecAD<Base> &v)
 {
- 	os << "vecAD( length = " << v.length 
-	   << ", offset = "      << v.offset << ")";
+ 	os << "vecAD( length = " << v.length_ 
+	   << ", offset = "      << v.offset_ << ")";
 	return os;
 }
 

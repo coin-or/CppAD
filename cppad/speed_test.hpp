@@ -2,7 +2,7 @@
 # define CPPAD_SPEED_TEST_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_test$$
 $spell
+	gettimeofday
 	vec
 	cppad.hpp
 	Microsoft
@@ -35,7 +36,7 @@ $index test, speed$$
 $section Run One Speed Test and Return Results$$
 
 $head Syntax$$
-$code # include <speed/speed_test.hpp>$$
+$code # include <cppad/speed_test.hpp>$$
 $pre
 $$
 $syntax%%rate_vec% = speed_test(%test%, %size_vec%, %time_min%)%$$
@@ -121,9 +122,14 @@ For $latex i = 0 , \ldots , n-1$$,
 $syntax%
 	%rate_vec%[%i%]
 %$$
-is the ratio of $italic repeat$$ divided by execution time in seconds
+is the ratio of $italic repeat$$ divided by time in seconds
 for the problem with size $syntax%%size_vec%[%i%]%$$.
-The execution time is measured by the difference in
+
+$head Timing$$
+If your system supports the unix $code gettimeofday$$ function,
+it will be used to measure time. 
+Otherwise, 
+time is measured by the difference in
 $codep
 	(double) clock() / (double) CLOCKS_PER_SEC
 $$
@@ -141,17 +147,39 @@ $end
 */
 
 # include <cstddef>
-# include <ctime>
 # include <cmath>
 
-// For an unknown reason, cannot move other includes (using Sun's CC compiler)
-# include <cppad/speed_test.hpp>
 # include <cppad/check_simple_vector.hpp>
+
+// undo preprocessor symbols that config.h needs to define
+# ifndef CPPAD_CPPAD_INCLUDED
+# include <cppad/local/preprocessor.hpp>
+# endif
+
+// use config.h to define CPPAD_GETIMEOFDAY preprocessor symbol
+# include <cppad/config.h>
+
+# if CPPAD_GETTIMEOFDAY
+# include <sys/time.h>
+# else
+# include <ctime>
+# endif
+
+# ifndef CPPAD_NULL
+# define CPPAD_NULL	0
+# endif
 
 namespace CppAD { // BEGIN CppAD namespace
 
 inline double speed_test_second(void)
-{	return (double) clock() / (double) CLOCKS_PER_SEC;
+{
+# if CPPAD_GETTIMEOFDAY
+	struct timeval value;
+	gettimeofday(&value, CPPAD_NULL);
+	return double(value.tv_sec) + double(value.tv_usec) * 1e-6;
+# else
+	return (double) clock() / (double) CLOCKS_PER_SEC;
+# endif
 }
 
 // implemented as an inline so that can include in multiple link modules

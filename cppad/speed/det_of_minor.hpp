@@ -2,7 +2,7 @@
 # define CPPAD_DET_OF_MINOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -31,7 +31,7 @@ $index minor, matrix determinant$$
 $section Determinant of a Minor$$
 
 $head Syntax$$
-$syntax%# include <speed/det_of_minor.hpp>
+$syntax%# include <cppad/speed/det_of_minor.hpp>
 %$$ 
 $syntax%%d% = det_of_minor(%a%, %m%, %n%, %r%, %c%)%$$ 
 
@@ -39,7 +39,7 @@ $syntax%%d% = det_of_minor(%a%, %m%, %n%, %r%, %c%)%$$
 $head Inclusion$$
 The template function $code det_of_minor$$ is defined in the $code CppAD$$
 namespace by including 
-the file $code speed/det_of_minor.hpp$$ 
+the file $code cppad/speed/det_of_minor.hpp$$ 
 (relative to the CppAD distribution directory).
 It is only intended for example and testing purposes, 
 so it is not automatically included by

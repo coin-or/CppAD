@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,6 +40,7 @@ extern bool ForHess(void);
 extern bool ForSparseJac(void);
 extern bool Forward(void);
 extern bool FromBase(void);
+extern bool FunCheck(void);
 extern bool Log(void);
 extern bool Log10(void);
 extern bool Mul(void);
@@ -100,7 +101,7 @@ int main(void)
 {	bool ok = true;
 	using namespace std;
 
-	// This line is used by one_test.sh 
+	// This line is used by test_one.sh 
 
 	ok &= Run( Abs,             "Abs"            );
 	ok &= Run( Acos,            "Acos"           );
@@ -126,6 +127,7 @@ int main(void)
 	ok &= Run( ForSparseJac,    "ForSparseJac"   );
 	ok &= Run( Forward,         "Forward"        );
 	ok &= Run( FromBase,        "FromBase"       );
+	ok &= Run( FunCheck,        "FunCheck"       );
 	ok &= Run( Log,             "Log"            );
 	ok &= Run( Log10,           "Log10"          );
 	ok &= Run( Mul,             "Mul"            );

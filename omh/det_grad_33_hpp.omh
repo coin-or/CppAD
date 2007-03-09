@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,7 +27,7 @@ $pre
 $$
 # define CPPAD_DET_GRAD_33_INCLUDED
 
-$verbatim%speed/det_grad_33.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
+$verbatim%cppad/speed/det_grad_33.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
 
 # endif
 $$

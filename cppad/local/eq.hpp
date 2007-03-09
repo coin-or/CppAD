@@ -2,7 +2,7 @@
 # define CPPAD_EQ_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -39,7 +39,7 @@ $syntax%%y% = %x%$$
 $head Purpose$$
 Assigns a new value to the AD object $italic y$$.
 The object $italic y$$ will have the same dependence on the 
-$xref/glossary/Independent Variable/independent variables/$$ as $italic x$$
+$cref/independent variables/glossary/Tape/Independent Variable/$$ as $italic x$$
 ($italic y$$ is a 
 $xref/glossary/Variable/variable/$$ if and only if $italic x$$ is a variable).
 
@@ -117,7 +117,7 @@ inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
 
 	// check that all variables are parameters while tape is empty
 	CppADUnknownError(
-		Parameter(*this) | (Tape()->State() != Empty)
+		Parameter(*this) || (tape_this() != CPPAD_NULL)
 	);
 
 	return *this;

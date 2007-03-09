@@ -2,7 +2,7 @@
 # define CPPAD_BOOL_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -101,11 +101,10 @@ $italic v$$ is the $italic Base$$ value corresponding to $italic y$$.
 
 $head Operation Sequence$$
 The result of this operation is not an
-$xref/glossary/AD of Base/AD of/$$ $italic Base$$ object.
-Thus it will not be recorded as part of the current
+$xref/glossary/AD of Base/AD of Base/$$ object.
+Thus it will not be recorded as part of an
 AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$
-(even if the current $xref/glossary/Tape State/tape state/$$ is Recording).
+$xref/glossary/Operation/Sequence/operation sequence/1/$$.
 
 $head Example$$
 $children%

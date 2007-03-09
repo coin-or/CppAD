@@ -177,24 +177,6 @@
 				RelativePath=".\default.cpp">
 			</File>
 			<File
-				RelativePath=".\det_by_lu.cpp">
-			</File>
-			<File
-				RelativePath=".\det_by_lu.hpp">
-			</File>
-			<File
-				RelativePath=".\det_by_minor.cpp">
-			</File>
-			<File
-				RelativePath=".\det_by_minor.hpp">
-			</File>
-			<File
-				RelativePath=".\det_of_minor.cpp">
-			</File>
-			<File
-				RelativePath=".\det_of_minor.hpp">
-			</File>
-			<File
 				RelativePath=".\div.cpp">
 			</File>
 			<File
@@ -300,7 +282,7 @@
 				RelativePath=".\mul_eq.cpp">
 			</File>
 			<File
-				RelativePath=".\mul_tape.cpp">
+				RelativePath=".\mul_level.cpp">
 			</File>
 			<File
 				RelativePath=".\near_equal.cpp">

@@ -2,7 +2,7 @@
 # define CPPAD_POW_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -125,18 +125,24 @@ pow(const AD<Base> &x, const AD<Base> &y)
 	if( Variable(x) )
 	{	if( Variable(y) )
 		{	// result = variable + variable
-			AD<Base>::Tape()-> 
-				RecordOp(PowvvOp, p, x.taddr_, y.taddr_);
+			CppADUsageError(
+				x.id_ == y.id_,
+				"pow: arguments are AD objects that are"
+				" variables on different tapes."
+			);
+			x.tape_this()-> 
+				RecordOp(PowvvOp, p, x.taddr_, y.taddr_
+			);
 		}
 		// if IdenticalZero(y.value_), p = variable^0 = 1
 		else if( ! IdenticalZero(y.value_) )
-			AD<Base>::Tape()->
+			x.tape_this()->
 				RecordOp(PowvpOp, p, x.taddr_, y.value_);
 	}
 	else if( Variable(y) )
 	{	// if IdenticalZero(x.value_), p = 0^variable = 0 
 		if( ! IdenticalZero(x.value_) )
-			AD<Base>::Tape()->
+			y.tape_this()->
 				RecordOp(PowpvOp, p, x.value_, y.taddr_);
 	}
 

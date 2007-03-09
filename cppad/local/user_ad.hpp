@@ -2,7 +2,7 @@
 # define CPPAD_USER_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -28,8 +28,7 @@ $index AD, object$$
 $head Purpose$$
 The sections listed below describe the operations 
 that are available to $xref/glossary/AD of Base/AD of Base/$$ objects.
-These objects are used to
-$xref/glossary/Tape State/Recording/record/1/$$
+These objects are used to $cref/tape/glossary/Tape/$$
 an AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$.
 This operation sequence can

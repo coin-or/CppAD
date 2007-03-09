@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -574,7 +574,7 @@ are different from when the
 AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$ was created.
 In this case, you may want to re-tape the algorithm with the
-$xref/glossary/Independent Variable/independent variables/$$ 
+$cref/independent variables/glossary/Tape/Independent Variable/$$ 
 equal to the values in $italic x$$ 
 (so AD operation sequence properly represents the algorithm
 for this value of independent variables).

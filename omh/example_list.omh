@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,7 +38,7 @@ $childtable%
 	example/ode_taylor.cpp%
 	example/stack_machine.cpp%
 	example/complex_poly.cpp%
-	omh/mul_tape.omh
+	omh/mul_level.omh
 %$$
 
 $end
@@ -129,7 +129,8 @@ $rref LuSolve.cpp$$
 $rref LuVecADOk.cpp$$
 $rref Mul.cpp$$
 $rref MulEq.cpp$$
-$rref Multape.cpp$$
+$rref mul_level.cpp$$
+$rref multi_newton.cpp$$
 $rref NearEqualExt.cpp$$
 $rref Near_Equal.cpp$$
 $rref NumericType.cpp$$

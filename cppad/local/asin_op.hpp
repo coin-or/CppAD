@@ -2,7 +2,7 @@
 # define CPPAD_ASIN_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin ForAsinOp$$
+$begin ForAsinOp$$ $comment CppAD Developer Documentation$$
 $spell
 	sqrt
 	asin
@@ -66,7 +66,7 @@ the function $italic B$$.
 
 $end
 ------------------------------------------------------------------------------
-$begin RevAsinOp$$
+$begin RevAsinOp$$ $comment CppAD Developer Documentation$$
 $spell
 	ps
 	Asin

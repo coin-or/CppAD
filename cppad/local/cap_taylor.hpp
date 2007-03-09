@@ -83,11 +83,14 @@ $syntax%
 with $italic c$$ equal to $italic q$$.
 
 $subhead Original State$$
-Originally, when $italic f$$ is constructed,
+If $italic f$$ is $cref/constructed/FunConstruct/$$ with the syntax
+$syntax%
+	ADFun<%Base%> %f%(%x%, %y%)
+%$$,
 there is an implicit call to $code Forward$$ with $italic p$$ equal to zero
 and $italic x_p$$ equal to 
 the value of the
-$xref/glossary/Independent Variable/independent variables/$$ 
+$cref/independent variables/glossary/Tape/Independent Variable/$$ 
 when the AD operation sequence was recorded.
 
 $head Example$$

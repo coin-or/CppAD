@@ -2,7 +2,7 @@
 # define CPPAD_VALUE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -50,10 +50,9 @@ $syntax%
 $head Operation Sequence$$
 The result of this operation is not an 
 $xref/glossary/AD of Base/AD of Base/$$ object.
-Thus it will not be recorded as part of the current
+Thus it will not be recorded as part of an
 AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$
-(even if the current $xref/glossary/Tape State/tape state/$$ is Recording).
+$xref/glossary/Operation/Sequence/operation sequence/1/$$.
 
 $head Restriction$$
 If the argument $italic x$$ is a 
@@ -62,7 +61,7 @@ would not be included in the $code Value$$ result (see above).
 For this reason,
 the argument $italic x$$ must be a $xref/glossary/Parameter/parameter/$$; i.e.,
 it cannot depend on the current
-$xref/glossary/Independent Variable/independent variables/$$.
+$cref/independent variables/glossary/Tape/Independent Variable/$$.
 
 $head Example$$
 $children%

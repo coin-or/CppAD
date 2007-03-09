@@ -50,29 +50,38 @@ namespace CppAD {
 
 template <class Base>
 class AD {
+
+	// template friend functions where template parameter is not bound
+	template <class VectorAD>
+	friend void Independent(VectorAD &x);
+
 	// one argument functions
-	friend bool GreaterThanZero <Base> 
-		(const AD<Base> &u);
-	friend bool LessThanZero  <Base> 
-		(const AD<Base> &u);
-	friend bool LessThanOrZero  <Base> 
-		(const AD<Base> &u);
+	friend bool GreaterThanZero    <Base> 
+		(const AD<Base>    &u);
+	friend bool LessThanZero       <Base> 
+		(const AD<Base>    &u);
+	friend bool LessThanOrZero     <Base> 
+		(const AD<Base>    &u);
 	friend bool GreaterThanOrZero  <Base> 
-		(const AD<Base> &u);
-	friend bool Parameter     <Base> 
-		(const AD<Base> &u);
-	friend bool Variable      <Base> 
-		(const AD<Base> &u);
-	friend bool IdenticalPar  <Base> 
-		(const AD<Base> &u);
-	friend bool IdenticalZero <Base> 
-		(const AD<Base> &u);
-	friend bool IdenticalOne  <Base> 
-		(const AD<Base> &u);
-	friend int  Integer       <Base> 
-		(const AD<Base> &u);
-	friend AD Var2Par         <Base>
-		(const AD<Base> &u);
+		(const AD<Base>    &u);
+	friend bool Parameter          <Base> 
+		(const AD<Base>    &u);
+	friend bool Parameter          <Base>
+		(const VecAD<Base> &u);
+	friend bool Variable           <Base> 
+		(const AD<Base>    &u);
+	friend bool Variable           <Base> 
+		(const VecAD<Base> &u);
+	friend bool IdenticalPar       <Base> 
+		(const AD<Base>    &u);
+	friend bool IdenticalZero      <Base> 
+		(const AD<Base>    &u);
+	friend bool IdenticalOne       <Base> 
+		(const AD<Base>    &u);
+	friend int  Integer            <Base> 
+		(const AD<Base>    &u);
+	friend AD   Var2Par            <Base>
+		(const AD<Base>    &u);
 
 	// power function
 	friend AD pow <Base>
@@ -120,7 +129,7 @@ class AD {
 
 public:
 	// type of value
-	typedef Base valuetype;
+	typedef Base value_type;
 
 	// comparison operators
 	CPPAD_COMPARE_MEMBER( <  )
@@ -183,12 +192,14 @@ public:
 	inline AD sinh(void) const;
 	inline AD sqrt(void) const;
 
-	/*
-	Functions declared public so can be accessed by user through
-	a macro interface not not intended for direct use.
-	Macro interface is documented in BoolFun.h.
-	Developer documentation for these fucntions is in BoolFunLink.h
-	*/
+	// ----------------------------------------------------------
+	// static public member functions
+	static size_t      omp_max_thread(size_t number);
+
+	// These functions declared public so can be accessed by user through
+	// a macro interface and are not intended for direct use.
+	// The macro interface is documented in bool_fun.hpp.
+	// Developer documentation for these fucntions is in  bool_fun_link.hpp
 	static inline bool UnaryBool(
 		bool FunName(const Base &x),
 		const AD<Base> &x
@@ -198,64 +209,53 @@ public:
 		const AD<Base> &x , const AD<Base> &y
 	);
 
-	// There is only one tape so construct it here
-	static ADTape<Base> *Tape(void)
-	{	// There seems to be a bug in g++ 3.4.4 with -O2 option,
-		// such that the following does not work:
-		// 	static ADTape<Base> tape;
-		// 	return &tape;
-		static ADTape<Base> *ptr;          // initially zero
-		if( ptr )                          // if already initialized
-			return ptr;                // just return its value
-
-		ptr = new ADTape<Base>;            // initialize 
-		DeleteTape();                      // make copy of ptr
-		atexit(DeleteTape);                // call again on exit
-		return ptr;
-	}
-
-	// Clean up the ptr in the previous function
-	static void DeleteTape(void)
-	{	static ADTape<Base> *ptr;
-		if( ptr )
-		{	delete ptr; // delete on second call
-			return;     // and we are done
-		}
-		ptr = Tape();       // copy on first call
-		return;
-	}
-
-	// Make this object correspond to a new variable on the tape
-	inline void MakeVariable( size_t taddr )
-	{	CppADUnknownError( Parameter(*this) ); // currently a parameter
-		CppADUnknownError( taddr > 0 );       // make sure valid taddr
-
-		taddr_ = taddr;
-		id_   = *ADTape<Base>::Id();
-	}
-
-	// Make this object correspond to a parameter
-	inline void MakeParameter( void )
-	{	CppADUnknownError( Variable(*this) ); // currently a variable
-		CppADUnknownError( id_ == *ADTape<Base>::Id() ); 
-
-		id_ = 0;
-	}
-
 private:
 	// value_ corresponding to this object
 	Base value_;
 
+	// tape identifier corresponding to taddr
+	// This is a variable if and only if id_ == *id_handle()
+	size_t id_;
+
 	// taddr_ in tape for this variable 
 	size_t taddr_;
+	//
+	// Make this variable a parameter
+	//
+	void make_parameter(void)
+	{	CppADUnknownError( Variable(*this) );  // currently a variable
+		id_ = 0;
+	}
+	//
+	// Make this parameter a new variable 
+	//
+	void make_variable(size_t id,  size_t taddr)
+	{	CppADUnknownError( Parameter(*this) ); // currently a parameter
+		CppADUnknownError( taddr > 0 );        // make sure valid taddr
 
-	// identifier corresponding to taddr
-	// This is a parameter if and only if id_ != *ADTape<Base>::Id()
-	size_t id_;
+		taddr_ = taddr;
+		id_    = id;
+	}
+	// ---------------------------------------------------------------
+	// tape linking functions
+	// 
+	// not static
+	inline ADTape<Base> *tape_this(void) const;
+	//
+	// static 
+	inline static size_t        *id_handle (void);
+	inline static ADTape<Base> **tape_handle(void);
+	static size_t         tape_new(void);
+	static void           tape_delete(size_t id);
+	inline static ADTape<Base>  *tape_ptr(void);
+	inline static ADTape<Base>  *tape_ptr(size_t id);
 }; 
 // ---------------------------------------------------------------------------
 
 } // END CppAD namespace
+
+// tape linking private functions
+# include <cppad/local/tape_link.hpp>
 
 // operations that expect the AD template class to be defined
 

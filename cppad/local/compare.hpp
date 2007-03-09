@@ -84,11 +84,10 @@ $syntax%
 
 $head Operation Sequence$$
 The result of this operation is a $code bool$$ value
-(not an $xref/glossary/AD of Base/AD of/$$ $italic Base$$ object).
-Thus it will not be recorded as part of the current
+(not an $xref/glossary/AD of Base/AD of Base/$$ object).
+Thus it will not be recorded as part of an
 AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$
-(even if the current $xref/glossary/Tape State/tape state/$$ is Recording).
+$xref/glossary/Operation/Sequence/operation sequence/1/$$.
 $pre
 
 $$
@@ -102,12 +101,14 @@ $syntax%
 		%y% = cos(%x%);
 	else	%y% = sin(%x%); 
 %$$
-only the assignment $syntax%%y% = cos(%x%)%$$ is recorded on the tape.
+only the assignment $syntax%%y% = cos(%x%)%$$ is recorded on the tape
+(if $italic x$$ is a $cref/parameter/glossary/Parameter/$$, 
+nothing is recorded).
 The $xref/CompareChange/$$ function can yield
 some information about changes in comparison operation results.
 You can use $xref/CondExp/$$ to obtain comparison operations
 that depends on the 
-$xref/glossary/Independent Variable/independent variable/$$ 
+$cref/independent variable/glossary/Tape/Independent Variable/$$ 
 values with out re-taping the AD sequence of operations.
 
 $head Assumptions$$
@@ -193,10 +194,14 @@ template <class Base>
 inline bool AD<Base>::operator < (const AD<Base> &right) const
 {	bool result =  (value_ < right.value_); 
 
-	if( AD<Base>::Tape()->State() == Empty )
-		return result;
+	ADTape<Base> *tape = CPPAD_NULL;
+	if( Variable(*this) )
+		tape = tape_this();
+	else if ( Variable(right) )
+		tape = right.tape_this();
 
-	AD<Base>::Tape()->RecordCompare(CompareLt, result, *this, right);
+	if( tape != CPPAD_NULL )
+		tape->RecordCompare(CompareLt, result, *this, right);
 
 	return result;
 }
@@ -219,10 +224,14 @@ template <class Base>
 inline bool AD<Base>::operator <= (const AD<Base> &right) const
 { 	bool result =  (value_ <= right.value_); 
 
-	if( AD<Base>::Tape()->State() == Empty )
-		return result;
+	ADTape<Base> *tape = CPPAD_NULL;
+	if( Variable(*this) )
+		tape = tape_this();
+	else if ( Variable(right) )
+		tape = right.tape_this();
 
-	AD<Base>::Tape()->RecordCompare(CompareLe, result, *this, right);
+	if( tape != CPPAD_NULL )
+		tape->RecordCompare(CompareLe, result, *this, right);
 
 	return result;
 }
@@ -246,10 +255,15 @@ template <class Base>
 inline bool AD<Base>::operator > (const AD<Base> &right) const
 {	bool result =  (value_ > right.value_); 
 
-	if( AD<Base>::Tape()->State() == Empty )
-		return result;
+	ADTape<Base> *tape = CPPAD_NULL;
+	if( Variable(*this) )
+		tape = tape_this();
+	else if ( Variable(right) )
+		tape = right.tape_this();
 
-	AD<Base>::Tape()->RecordCompare(CompareGt, result, *this, right);
+	if( tape != CPPAD_NULL )
+		tape->RecordCompare(CompareGt, result, *this, right);
+
 
 	return result;
 }
@@ -272,10 +286,14 @@ template <class Base>
 inline bool AD<Base>::operator >= (const AD<Base> &right) const
 { 	bool result =  (value_ >= right.value_); 
 
-	if( AD<Base>::Tape()->State() == Empty )
-		return result;
+	ADTape<Base> *tape = CPPAD_NULL;
+	if( Variable(*this) )
+		tape = tape_this();
+	else if ( Variable(right) )
+		tape = right.tape_this();
 
-	AD<Base>::Tape()->RecordCompare(CompareGe, result, *this, right);
+	if( tape != CPPAD_NULL )
+		tape->RecordCompare(CompareGe, result, *this, right);
 
 	return result;
 }
@@ -299,10 +317,14 @@ template <class Base>
 inline bool AD<Base>::operator == (const AD<Base> &right) const
 {	bool result =  (value_ == right.value_); 
 
-	if( AD<Base>::Tape()->State() == Empty )
-		return result;
+	ADTape<Base> *tape = CPPAD_NULL;
+	if( Variable(*this) )
+		tape = tape_this();
+	else if ( Variable(right) )
+		tape = right.tape_this();
 
-	AD<Base>::Tape()->RecordCompare(CompareEq, result, *this, right);
+	if( tape != CPPAD_NULL )
+		tape->RecordCompare(CompareEq, result, *this, right);
 
 	return result;
 }
@@ -325,10 +347,14 @@ template <class Base>
 inline bool AD<Base>::operator != (const AD<Base> &right) const
 {	bool result =  (value_ != right.value_);
 
-	if( AD<Base>::Tape()->State() == Empty )
-		return result;
+	ADTape<Base> *tape = CPPAD_NULL;
+	if( Variable(*this) )
+		tape = tape_this();
+	else if ( Variable(right) )
+		tape = right.tape_this();
 
-	AD<Base>::Tape()->RecordCompare(CompareNe, result, *this, right);
+	if( tape != CPPAD_NULL )
+		tape->RecordCompare(CompareNe, result, *this, right);
 
 	return result;
 }
