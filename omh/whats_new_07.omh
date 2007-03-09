@@ -32,9 +32,18 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 07-28$$
-In the openmp branch (not yet in distribution),
-the condition include commands were missing on some include files; for example
+$head 07-09$$
+Included the changes from openmp branch
+so that OpenMP can be used with CppAD,
+see $cref/omp_max_thread/$$.
+The changes
+dated between $cref/02-15/whats_new_07/07-09/02-15/$$ and 07-28 below
+were made in the openmp branch and transferred to the trunk on 07-09.
+
+
+$subhead 07-28$$
+The conditional include commands were missing on some include files; 
+for example
 $codep
 	# ifndef CPPAD_BENDER_QUAD_INCLUDED
 	# define CPPAD_BENDER_QUAD_INCLUDED
@@ -68,8 +77,7 @@ have been removed (it's purpose was multi-threading which
 has been implemented).
 
 
-$head 02-27$$
-In the openmp branch (not yet in distribution),
+$subhead 02-27$$
 The $cref/speed/$$ include files are currently being distributed
 above the $code cppad$$ include directory. 
 A fix this wish list item has been added.
@@ -81,9 +89,8 @@ management for the tapes. This was made simpler (and faster)
 by having at most one tape per thread.
 
 
-$head 02-22$$
-In the openmp branch (not yet in distribution),
-the include command in the $cref/speed_test/$$ documentation was
+$subhead 02-22$$
+The include command in the $cref/speed_test/$$ documentation was
 $codep
 	# include <speed/speed_test.hpp>
 $$
@@ -93,18 +100,8 @@ $codep
 $$
 This has been fixed.
 
-$head 02-21$$
-In the openmp branch (not yet in distribution),
-have the $syntax%AD<%Base%>::tape_max_active%$$ user interface change the
-maximum number of active tapes (later removed).
-This needs to be tested in a multi-threading environment to
-be sure that it works there (never did work).
-Then the openmp branch changes can be copied to the trunk.
-
-
-$head 02-17$$
-In the openmp branch (not yet in distribution),
-a entry about $cref/optimizing/WishList/Optimization/$$ the operation
+$subhead 02-17$$
+An entry about $cref/optimizing/WishList/Optimization/$$ the operation
 sequence in an $cref/ADFun/FunConstruct/$$ object was added.
 $pre
 
@@ -113,18 +110,16 @@ Change the argument syntax for $cref/Dependent/$$ and deprecate the
 $cref/old Dependent syntax/FunDeprecated/Dependent/$$.
 
 
-$head 02-16$$
-In the openmp branch (not yet in distribution),
-added $syntax%VecAD<%Base%>%$$ as a valid argument type for the
+$subhead 02-16$$
+Added $syntax%VecAD<%Base%>%$$ as a valid argument type for the
 $cref/Parameter and Variable/ParVar/$$ functions.
 In addition, $cref/size_t indexing/VecAD/size_t Indexing/$$
 is was extended to be allowed during taping so long as the
 VecAD object is a parameter.
 
 
-$head 02-15$$
-In the openmp branch (not yet in distribution),
-fixed the $code example/test_one.sh$$ script 
+$subhead 02-15$$
+Fixed the $code example/test_one.sh$$ script 
 (it was using its old name $code one_test$$).
 
 $head 02-06$$

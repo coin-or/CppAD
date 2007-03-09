@@ -21,10 +21,6 @@ echo "DryRun = $DryRun"
 #
 # script to help in execution of svn merge command
 #
-# Change into the directory corresponding to the entire repository; i.e.,
-# http://www.coin-or.org/svn/CppAD/ 
-cd ..
-#
 # Name of the directory that will receive the changes
 ToDirectory=trunk
 #
@@ -32,20 +28,36 @@ ToDirectory=trunk
 FromDirectory=branches/openmp
 #
 # Version of the repository corresponding to FromDirectory just before changes
-Start=792
+Start=795
 # 
 # Version of the repository corresponding to FromDirecrtory after the changes
-End=795
+End=863
 #
 # echo the svn merge command
 echo "cd  .."
 echo "svn merge $DryRun -r $Start:$End                    \\"
 echo "	  http://www.coin-or.org/svn/CppAD/$FromDirectory \\"
-echo "	  $ToDirectory"
+echo "	  $ToDirectory                                    \\"
+echo "| tee $ToDirectory/svn_merge.out "
+#
+# Change into the directory corresponding to the entire repository; i.e.,
+# http://www.coin-or.org/svn/CppAD/ 
+cd ..
 #
 # execute the svn merge command
 svn merge $DryRun -r $Start:$End                         \
     http://www.coin-or.org/svn/CppAD/$FromDirectory      \
-    $ToDirectory 
+    $ToDirectory                                         \
+| tee $ToDirectory/svn_merge.out
 #
-# put comment here so have newline at end of command above
+# create commands to go in svn_commit
+#
+echo "create files for use by svn_commit.sh"
+echo "$ToDirectory/svn_merge.move_list"
+grep '^D    ' < $ToDirectory/svn_merge.out \
+	| sed -e 's/^D */\t/' -e "s|$ToDirectory/||" \
+		> $ToDirectory/svn_merge.move_list
+echo "$ToDirectory/svn_merge.change_list"
+grep '^[UA]    ' < $ToDirectory/svn_merge.out \
+	| sed -e 's/^[UA] */\t/'  -e "s|$ToDirectory/||" \
+		> $ToDirectory/svn_merge.change_list
