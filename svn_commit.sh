@@ -42,9 +42,14 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Merge in changes from branches/openmp.
+log_entry="Minor changes.
 
 svn_commit.sh: file that made this commit.
+svn_merge.sh: file that did the merge from branches/openmp.
+config.h: update version number and gettimeofday comments.
+multi_newton.cpp: put _OPENMP around # pragram and update.
+run.sh: update sample output.
+AUTHORS: update author statement.
 " 
 add_list="
 "
@@ -55,25 +60,11 @@ move_list="
 #
 change_list="
 	svn_commit.sh
-	example/rosen_34.cpp
-	example/ode_gear.cpp
-	example/example.cpp
-	configure.ac
-	build.sh
-	omh/whats_new_07.omh
-	cppad/speed_test.hpp
-	cppad/local/par_var.hpp
-	cppad/local/cond_exp.hpp
-	cppad/local/copy_base.hpp
-	cppad/local/ad.hpp
-	cppad/local/vec_ad.hpp
-	cppad/local/default.hpp
-	cppad/local/abs.hpp
-	cppad/local/tape_link.hpp
-	cppad/local/std_math_unary.hpp
-	cppad/track_new_del.hpp
-	openmp/multi_newton.cpp
+	svn_merge.sh
+	cppad/config.h
+	openmp/multi_newton.hpp
 	openmp/run.sh
+	AUTHORS
 "
 #
 copy_branch="" 

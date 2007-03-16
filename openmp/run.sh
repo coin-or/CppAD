@@ -87,10 +87,10 @@
 # The following is the corresponding output
 # $codep
 #	g++ -I.. multi_newton.cpp -o multi_newton  -DNDEBUG -O2
-#	./multi_newton
+#	./multi_newton automatic automatic 10 40 10
 #	_OPENMP is not defined, running in single tread mode
-#	n_grid           = { 20, 40 }
-#	Execution Speed  = { 2729, 1823 }
+#	n_grid           = 40
+#	repeats per sec  = 1804
 #	Correctness Test Passed
 #	rm multi_newton
 # $$	
@@ -104,10 +104,10 @@
 # The following is the corresponding output
 # $codep
 #	g++ -I.. multi_newton.cpp -o multi_newton -fopenmp -DNDEBUG -O2
-#	./multi_newton
+#	./multi_newton automatic automatic 10 40 10
 #	OpenMP: version = 200505, max number of threads = 2
-#	n_grid           = { 20, 40 }
-#	Execution Speed  = { 3791, 2470 }
+#	n_grid           = 40
+#	repeats per sec  = 2615
 #	Correctness Test Passed
 #	rm multi_newton
 # $$	

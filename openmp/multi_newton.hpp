@@ -238,7 +238,9 @@ void multi_newton(
 	}
 	grid[n_grid] = xup;
 
+# ifdef _OPENMP
 # pragma omp parallel for 
+# endif
 	for(i = 0; i < n; i++) 
 	{	one_newton(
 			fcur[i]   ,

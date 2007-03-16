@@ -28,10 +28,10 @@ ToDirectory=trunk
 FromDirectory=branches/openmp
 #
 # Version of the repository corresponding to FromDirectory just before changes
-Start=795
+Start=867
 # 
 # Version of the repository corresponding to FromDirecrtory after the changes
-End=863
+End=874
 #
 # echo the svn merge command
 echo "cd  .."
