@@ -269,9 +269,10 @@ int main(void)
 		Run_error_count++;
 		cout << "Error: " << "memory leak detected" << endl;
 	}
+	// convert int(size_t) to avoid warning on _MSC_VER systems
 	if( ok )
-		cout << "All " << Run_ok_count << " tests passed." << endl;
-	else	cout << Run_error_count << " tests failed." << endl;
+		cout << "All " << int(Run_ok_count) << " tests passed." << endl;
+	else	cout << int(Run_error_count) << " tests failed." << endl;
 
 	return static_cast<int>( ! ok );
 }

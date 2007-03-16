@@ -337,7 +337,7 @@ then
 		exit 1
 	fi
 	cat make_error.log   >> ../build_test.log
-	ok="yes"
+	failed="no"
 	list="
 		introduction/get_started/get_started
 		introduction/exp_apx/exp_apx
@@ -350,7 +350,7 @@ then
 		echo "$program"   >> ../build_test.log
 		if ! ./$program   >> ../build_test.log
 		then
-			ok="no"
+			failed="$program"
 		fi
 		# add a new line between program outputs
 		echo ""  >> ../build_test.log
@@ -367,22 +367,24 @@ then
 		echo "./speed/$name/$name correct" >> ../build_test.log
 		if ! ./speed/$name/$name correct   >> ../build_test.log
 		then
-			ok="no"
+			failed="speed/$name/$name"
 		fi
 		# add a new line between program outputs
 		echo ""  >> ../build_test.log
 	done
-	echo "running openmp/run.sh multi_newton false false"
-	echo "openmp/run.sh multi_newton false false" >> ../build_test.log
-	if !  openmp/run.sh multi_newton false false  >> ../build_test.log
+	echo "running openmp/run.sh automatic automatic false false"
+	echo "openmp/run.sh automatic automatic false false" \
+		>> ../build_test.log
+	if !  openmp/run.sh automatic automatic false false  \
+		>> ../build_test.log
 	then
-		ok="no"
+		failed="openmp/run.sh"
 	fi
-	echo ""                                       >> ../build_test.log
+	echo "" >> ../build_test.log
 	#
 	if ! ./run_omhelp.sh doc
 	then
-		ok="no"
+		failed="run_omhelp.sh"
 	fi
 	cat omhelp_doc.log        >> ../build_test.log
 	#
@@ -390,12 +392,13 @@ then
 	cd ..
 	dir=`pwd`
 	echo "Check the file $dir/build_test.log for errors and warnings."
-	if [ "$ok" = "no" ]
+	if [ "$failed" == "no" ]
 	then
-		echo "Error: One of the test programs failed to execute."
+		echo "All of the test programs executed."
+	else
+		echo "Error: $failed had an execution error."
 		exit 1
 	fi
-	echo "All of the test programs executed."
 fi
 if [ "$1" = "gpl+dos" ] || [ "$1" = "all" ]
 then

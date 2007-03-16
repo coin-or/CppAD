@@ -179,7 +179,7 @@ AD<Base> AD<Base>::Abs (void) const
 {	using CppAD::abs;
 
 	AD<Base> result;
-	CppADUnknownError( result.id_ == 0 );
+	CppADUnknownError( Parameter(result) );
 
 	result.value_ = abs(value_);
 	if( Variable(*this) ) 

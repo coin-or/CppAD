@@ -278,7 +278,7 @@ inline AD<Base> CondExpOp(
 	const AD<Base> &falseCase )
 {
 	AD<Base> returnValue;
-	CppADUnknownError( returnValue.id_ == 0 );
+	CppADUnknownError( Parameter(returnValue) );
 
 	// check first case where do not need to tape
 	if( IdenticalPar(left) & IdenticalPar(right) )

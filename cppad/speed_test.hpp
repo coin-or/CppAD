@@ -159,6 +159,13 @@ $end
 // use config.h to define CPPAD_GETIMEOFDAY preprocessor symbol
 # include <cppad/config.h>
 
+// Microsoft versions to not run autoconf, so CPPAD_GETTIMEOFDAY may not be
+// set to proper value.
+# ifdef _MSC_VER
+# undef  CPPAD_GETTIMEOFDAY
+# define CPPAD_GETTIMEOFDAY 0
+# endif
+
 # if CPPAD_GETTIMEOFDAY
 # include <sys/time.h>
 # else
@@ -457,11 +464,9 @@ inline void SpeedTest(
 
 		if( first != last )
 		{
-# ifdef _MSC_VER        // convert to integer to avoid warning in this case
+			// convert int(size_t) to avoid warning on _MSC_VER sys
 			std::cout << "size = "  << int(size);
-# else
-			std::cout << "size = "  << size;
-# endif
+
 			SpeedTestNdigit(size, ndigit, pow10);
 			while( ndigit < maxSizeDigit )
 			{	cout << " ";
@@ -476,11 +481,10 @@ inline void SpeedTest(
 		{
 			pow10 /= 10;
 			digit  = rate / pow10;
-# ifdef _MSC_VER        // convert to integer to avoid warning in this case
+
+			// convert int(size_t) to avoid warning on _MSC_VER sys
 			std::cout << int(digit);
-# else
-			std::cout << digit;
-# endif
+
 			rate    = rate % pow10;
 			ndigit -= 1;
 

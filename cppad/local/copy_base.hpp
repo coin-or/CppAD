@@ -70,16 +70,16 @@ $end
 namespace CppAD {
 
 // conversion from Base to AD<Base>
-// (if id_ is zero, taddr_ is not used, set anyway to avoid compile warning)
+// (if id_ is 1, taddr_ is not used, set anyway to avoid compile warning)
 template <class Base>
-inline AD<Base>::AD(const Base &b) : value_(b), id_(0), taddr_(0)
+inline AD<Base>::AD(const Base &b) : value_(b), id_(1), taddr_(0)
 { }	
 
 // conversion from other types to AD<Base>
-// (if id_ is zero, taddr_ is not used, set anyway to avoid compile warning)
+// (if id_ is 1, taddr_ is not used, set anyway to avoid compile warning)
 template <class Base>
 template <class T>
-inline AD<Base>::AD(const T &t) : value_(Base(t)), id_(0), taddr_(0)
+inline AD<Base>::AD(const T &t) : value_(Base(t)), id_(1), taddr_(0)
 { }
 
 } // END CppAD namespace

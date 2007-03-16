@@ -2,7 +2,7 @@
 # define CPPAD_DEFAULT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -51,8 +51,9 @@ $end
 namespace CppAD {
 
 // default constructor
+// (if id_ is 1, taddr_ is not used, set anyway to avoid compile warning)
 template <class Base>
-inline AD<Base>::AD(void) : id_(0)
+inline AD<Base>::AD(void) : id_(1), taddr_(0)
 { }	
 
 } // END CppAD namespace

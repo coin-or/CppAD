@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 $begin Rosen34.cpp$$
@@ -39,7 +37,6 @@ X_i '(t)   & = & (i+1) t^i = (i+1) X_{i-1} (t) & {\rm if \;} i > 0
 \] $$
 The example tests Rosen34 using the relations above:
 
-$comment This file is in the Example subdirectory$$ 
 $code
 $verbatim%example/rosen_34.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -69,9 +66,11 @@ namespace {
 			size_t i;
 			for(i = 1; i < n; i++)
 			{	ti *= t;
+				// convert int(size_t) to avoid warning
+				// on _MSC_VER systems
 				if( use_x )
-					f[i] = (i+1) * x[i-1];
-				else	f[i] = (i+1) * ti;
+					f[i] = int(i+1) * x[i-1];
+				else	f[i] = int(i+1) * ti;
 			}
 		}
 

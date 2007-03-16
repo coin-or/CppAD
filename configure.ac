@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20070309, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20070315, cppad@list.coin-or.org)
 
 dnl Set the default install prefix to the installers home directory
 dnl cygwin begin delete:
@@ -201,9 +201,13 @@ AC_CHECK_FUNC(
 	[gettimeofday="no"]
 )
 if test "$gettimeofday" = "yes" ; then
-	AC_DEFINE(CPPAD_GETTIMEOFDAY, 1, [does system support gettimeofday])
+	AC_DEFINE(CPPAD_GETTIMEOFDAY, 1, 
+	[does system support gettimeofday (overidden if _MSC_VER defined)]
+	)
 else
-	AC_DEFINE(CPPAD_GETTIMEOFDAY, 0, [does system support gettimeofday])
+	AC_DEFINE(CPPAD_GETTIMEOFDAY, 0, 
+	[does system support gettimeofday (overidden if _MSC_VER defined)]
+	)
 fi
 
 dnl Run any macros required for proper operation of generated makefiles

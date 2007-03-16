@@ -11,6 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	Microsoft
+	threadprivate
 	gettimeofday
 	ifndef
 	Vec
@@ -21,6 +23,7 @@ $spell
 	CppAD
 	cygwin
 	cppad.hpp
+	config.h
 $$
 
 $section Changes and Additions to CppAD During 2007$$
@@ -31,6 +34,35 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-15$$
+Included the changes from openmp branch
+so that so CppAD does not use the OpenMP $code threadprivate$$ command
+(some systems do not support this command).
+
+$subhead 07-15$$
+Add command line arguments to $cref/multi_newton.cpp/$$, and
+modified $cref/openmp_run.sh/$$ to allow for more flexible testing. 
+
+$subhead 07-14$$
+Fixed some Microsoft compiler warnings by explicitly converting from 
+$code size_t$$ to $code int$$.
+$pre
+
+$$
+In the Microsoft compiler case, the $code cppad/config.h$$ file had 
+the wrong setting of $code GETTIMEOFDAY$$.
+The setting is now overridden (and always false) when the 
+$code _MSC_VER$$ preprocessor symbol is defined.
+$pre
+
+$$
+Some minor changes were made in an effort to speed up the multi-threading case.
+
+$subhead 07-13$$
+Started a new openmp branch and created a version of CppAD 
+that does not use the OpenMP $code threadprivate$$ command
+(not supported on some systems).
 
 $head 07-09$$
 Included the changes from openmp branch

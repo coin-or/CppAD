@@ -302,7 +302,8 @@ public:
 	{	using std::cout;
 		using std::endl;
 		TrackElement *E = Root();
-		cout << "Begin Track List for thread " << thread << endl;
+		// convert int(size_t) to avoid warning on _MSC_VER systems
+		cout << "Begin Track List for thread " << int(thread) << endl;
 		while( E->next != CPPAD_NULL )
 		{	E = E->next;
 			cout << "next = " << E->next;
@@ -311,7 +312,7 @@ public:
 			cout << ", file = " << E->file;
 			cout << endl;
 		}
-		cout << "End Track List for thread " << thread << endl;
+		cout << "End Track List for thread " << int(thread) << endl;
 		cout << endl;
 	}
 }; 

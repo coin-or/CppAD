@@ -11,12 +11,69 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 $begin multi_newton.cpp$$
+$spell
+	CppAD
+	parallelize
+$$
 $index OpenMP, example program$$
 $index example, OpenMP program$$
 $index program, OpenMP example$$
 
 
 $section Multi-Threaded Newton's Method Main Program$$
+
+$head Syntax$$
+$syntax%multi_newton %n_thread% %repeat% %n_zero% %n_grid% %n_sum%$$
+
+$head Purpose$$
+Runs a timing test of the $cref/multi_newton/$$ routine.
+This routine uses Newton's method to determine if there is a zero of a 
+function on each of a set of sub-intervals.
+CppAD is used to calculate the derivatives required by Newton's method.
+OpenMP is used to parallelize the calculation on the different sub-intervals.
+
+$head n_thread$$
+If the argument $italic n_thread$$ is equal to $code automatic$$, 
+dynamic thread adjustment is used.
+Otherwise, $italic n_thread$$ must be a positive number
+specifying the number of OpenMP threads to use.
+
+$head repeat$$
+If the argument $italic repeat$$ is equal to $code automatic$$,
+the number of times to repeat the calculation of the number of zeros
+in total interval is automatically determined.
+In this case, the rate of execution of the total solution is reported.
+$pre
+
+$$
+If the argument $italic repeat$$ is not equal to $italic automatic$$,
+it must be a positive integer.
+In this case $italic repeat$$ determination of the number of times 
+the calculation of the zeros in the total interval is repeated.
+The rate of execution is not reported (it is assumed that the
+program execution time is being calculated some other way).
+
+$head n_zero$$
+The argument $italic n_zero$$ is the actual number of zeros
+that there should be in the test function, $latex \sin(x)$$.
+It must be an integer greater than one.
+The total interval searched  for zeros is 
+$latex [ 0 , (n\_zero - 1) \pi ]$$.
+
+$head n_grid$$
+The argument $italic n_grid$$
+specifies the number of sub-intervals to divide the total interval into.
+It must an integer greater than zero
+(should probably be greater than two times $italic n_zero$$).
+
+$head n_sum$$
+The actual function that is used is 
+$latex \[
+	f(x) = \frac{1}{n\_sum} \sum_{i=1}^{n\_sum} \sin (x)
+\] $$
+where $italic n_sum$$ is a positive integer.
+The larger the value of $italic n_sum$$,
+the more computation is required to calculate the function.
 
 $head Subroutines$$
 $children%
@@ -46,24 +103,26 @@ $end
 
 using CppAD::vector;
 
-# define LENGTH_OF_SUMMATION 10   // larger values make fun(x) take longer
-# define NUMBER_OF_ZEROS     10   // number of zeros of fun(x) in interval
+namespace { // empty namespace
+	size_t n_sum;  // larger values make fun(x) take longer to calculate
+        size_t n_zero; // number of zeros of fun(x) in the total interval
+}
 
 // A slow version of the sine function
 CppAD::AD<double> fun(const CppAD::AD<double> &x)
 {	CppAD::AD<double> sum = 0.;
 	size_t i;
-	for(i = 0; i < LENGTH_OF_SUMMATION; i++)
+	for(i = 0; i < n_sum; i++)
 		sum += sin(x);
 
-	return sum / double(LENGTH_OF_SUMMATION);
+	return sum / double(n_sum);
 }
 
-void test_once(CppAD::vector<double> &xout, size_t size)
-{	double pi      = 4. * std::atan(1.); 
-	size_t n_grid  = size;
+void test_once(CppAD::vector<double> &xout, size_t n_grid)
+{	assert( n_zero > 1 );
+	double pi      = 4. * std::atan(1.); 
 	double xlow    = 0.;
-	double xup     = (NUMBER_OF_ZEROS - 1) * pi;
+	double xup     = (n_zero - 1) * pi;
 	double epsilon = 1e-6;
 	size_t max_itr = 20;
 
@@ -87,60 +146,106 @@ void test_repeat(size_t size, size_t repeat)
 	return;
 }
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	using std::cout;
 	using std::endl;
 	using CppAD::vector;
 
+	char *usage = "multi_newton n_thread n_zero n_grid n_sum repeat";
+	if( argc != 6 )
+	{	std::cerr << usage << endl;
+		exit(1);
+	}
+	argv++;
+
+	// n_thread command line argument
+	int n_thread;
+	if( strcmp(*argv, "automatic") == 0 )
+		n_thread = 0;
+	else	n_thread = std::atoi(*argv);
+	argv++;
+
+	// repeat command line argument
+	size_t repeat;
+	if( strcmp(*argv, "automatic") == 0 )
+		repeat = 0;
+	else
+	{	assert( std::atoi(*argv) > 0 );
+		repeat = std::atoi(*argv);
+	}
+	argv++;
+
+	// n_zero command line argument 
+	assert( std::atoi(*argv) > 1 );
+	n_zero = std::atoi(*argv++);
+
+	// n_grid command line argument
+	assert( std::atoi(*argv) > 0 );
+	size_t n_grid = std::atoi(*argv++);
+       
+	// n_sum command line argument 
+	assert( std::atoi(*argv) > 0 );
+	n_sum = std::atoi(*argv++);
+
 	// minimum time for test (repeat until this much time)
 	double time_min = 1.;
 
-	// minimum size for test (minimum value for n_grid in multi_newton)
-	size_t size_min = 20;
-
 # ifdef _OPENMP
+	if( n_thread > 0 )
+	{	omp_set_dynamic(0);            // off dynamic thread adjust
+		omp_set_num_threads(n_thread); // set the number of threads 
+	}
+	// now determine the maximum number of threads
+	n_thread = omp_get_max_threads();
+	assert( n_thread > 0 );
+	
 	// No tapes are currently active,
-	// so we can set the maximum number of threads
-	int i = omp_get_max_threads();
-	assert( i > 0 );
-	CppAD::AD<double>::omp_max_thread(size_t(i));
+	// so we can inform CppAD of the maximum number of threads
+	CppAD::AD<double>::omp_max_thread(size_t(n_thread));
+
+	// inform the user of the maximum number of threads
 	cout << "OpenMP: version = "         << _OPENMP;
-	cout << ", max number of threads = " << i << endl;
+	cout << ", max number of threads = " << n_thread << endl;
 # else
 	cout << "_OPENMP is not defined, ";
 	cout << "running in single tread mode" << endl;
-	int i;
 # endif
-
-	// sub-block so vectors get deallocated before call to CppADTrackCount
+	// initialize flag
 	bool ok = true;
+
+	// sub-block so xout gets deallocated before call to CppADTrackCount
 	{	// Correctness check
 		vector<double> xout;
-		test_once(xout, size_min);
+		test_once(xout, n_grid);
 		double epsilon = 1e-6;
 		double pi      = 4. * std::atan(1.);
-		ok            &= (xout.size() == NUMBER_OF_ZEROS);
-		i              = 0;
-		while( ok & (i < NUMBER_OF_ZEROS) )
+		ok            &= (xout.size() == n_zero);
+		size_t i       = 0;
+		while( ok & (i < n_zero) )
 		{	ok &= std::fabs( xout[i] - pi * i) <= 2 * epsilon;
 			++i;
 		}
-
-		// size of the test cases
-		vector<size_t> size_vec(2);
-		size_vec[0] = 20;
-		size_vec[1] = 40;
-
-		// run the test cases
-		vector<size_t> rate_vec( size_vec.size() );
-		rate_vec = CppAD::speed_test(test_repeat, size_vec, time_min);
-
-		// results
-		cout << "n_grid           = " << size_vec << endl;
-		cout << "Execution Speed  = " << rate_vec << endl;
 	}
+	if( repeat > 0 )
+	{	// run the calculation the requested number of time
+		test_repeat(n_grid, repeat);
+	}
+	else
+	{	// actually time the calculation	 
 
+		// size of the one test case
+		vector<size_t> size_vec(1);
+		size_vec[0] = n_grid;
+
+		// run the test case
+		vector<size_t> rate_vec =
+		CppAD::speed_test(test_repeat, size_vec, time_min);
+
+		// report results
+		cout << "n_grid           = " << size_vec[0] << endl;
+		cout << "repeats per sec  = " << rate_vec[0] << endl;
+	}
 	// check all the threads for a CppAD memory leak
 	if( CppADTrackCount() != 0 )
 	{	ok = false;

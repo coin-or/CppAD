@@ -433,11 +433,13 @@ public:
 	typedef VecAD_reference<Base> reference;
 
 	// default constructor
-	VecAD(void) : length_(0) , data_(CPPAD_NULL), offset_(0), id_(0)
+	// initialize id_ to one so not a variable
+	VecAD(void) : length_(0) , data_(CPPAD_NULL), offset_(0), id_(1)
 	{ CppADUnknownError( Parameter(*this) ); }
 
 	// constructor 
-	VecAD(size_t n) : length_(n), offset_(0), id_(0)
+	// initialize id_ to one so not a variable
+	VecAD(size_t n) : length_(n), offset_(0), id_(1)
 	{	data_  = CPPAD_NULL;
 		if( length_ > 0 )
 		{	size_t i;

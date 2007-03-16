@@ -11,6 +11,7 @@
 # -----------------------------------------------------------------------------
 # $begin openmp_run.sh$$ $newlinech #$$
 # $spell
+#       automatic automatic
 #	openmp
 #	vec
 #	exe
@@ -24,19 +25,35 @@
 # $index compile, OpenMP example$$
 # $index example, compile OpenMP$$
 #
-# $section Compile and Run an OpenMP example$$
+# $section Compile and Run the OpenMP Test$$
 #
 # $head Syntax$$
-# $syntax%openmp/run.sh %name% %openmp% %optimize%$$
+# $syntax%openmp/run.sh %n_thread% %repeat% %openmp% %optimize%$$
 #
 # $head Purpose$$
-# The script file $code openmp/run.sh$$ compiles and runs one of the openmp
-# example programs.
+# The script file $code openmp/run.sh$$ compiles and runs the openmp
+# test and example program.
 #
-# $head name$$
-# The argument $italic name$$ is the name of the example program.
-# Currently the valid choice for $italic name$$ is 
-# $cref/multi_newton/multi_newton.cpp/$$.
+# $head n_thread$$
+# If the argument $italic n_thread$$ is $code automatic$$,
+# the number of OpenMP threads is automatically determined.
+# Otherwise, this argument specifies the number of threads to use
+# for the test.
+#
+# $head repeat$$
+# If the argument $italic repeat$$ is $code automatic$$,
+# the number of times to repeat the calculation is determined automatically.
+# In this case the timing results are reported as execution speeds in
+# times per second that the set of zeros are calculated.
+# $pre
+#
+# $$
+# If the argument $italic repeat$$ is not $code automatic$$,
+# it must be the a positive integer that specifies the number of times
+# to repeat the calculation.
+# In this case, the total time is represented by the difference in the 
+# unix $code date$$ command between when the program is started and 
+# when it ends.
 #
 # $head openmp$$
 # The argument $italic openmp$$ is either $code true$$ or $code false$$.
@@ -65,7 +82,7 @@
 # The following is an example $code run.sh$$ command 
 # with $italic openmp$$ false and $italic optimize$$ true:
 # $codep
-#	openmp/run.sh multi_newton false true
+#	openmp/run.sh automatic automatic false true
 # $$
 # The following is the corresponding output
 # $codep
@@ -82,7 +99,7 @@
 # The following is an example $code run.sh$$ command 
 # with $italic openmp$$ true and $italic optimize$$ true:
 # $codep
-#	openmp/run.sh multi_newton true true
+#	openmp/run.sh automatic automatic true true
 # $$
 # The following is the corresponding output
 # $codep
@@ -103,46 +120,64 @@ then
 fi
 cd openmp
 #
-for flag in "$2" "$3"
+n_thread="$1"
+repeat="$2"
+openmp="$3"
+optimize="$4"
+for flag in "$openmp" "$optimize"
 do
 	if [ "$flag" != "true"  ] && [ "$flag" != "false" ]
 	then
-		echo "usage: openmp/run.sh name openmp optimize"
-		echo "name     the C++ file name wthout extension,"
-		echo "openmp   true (use openmp) or false (do not use), and"
-		echo "optimize true (optimized compile) or false (debugging)"
+		echo "usage: openmp/run.sh n_thread repeat openmp optimize"
+		echo "n_thread: number of threads to use (or \"automatic\")"
+		echo "repeat:   repeat factor (or \"automatic\")"
+		echo "openmp:   true (use openmp) or false (do not use), and"
+		echo "optimize: true (optimized compile) or false (debugging)"
 		exit 1
 	fi
 done
-if [ "$2" == "true"  ]
+if [ "$openmp" == "true"  ]
 then
 	flags=-fopenmp
 else
 	flags=""
 fi
-if [ "$3" == "true" ]
+if [ "$optimize" == "true" ]
 then
 	flags="$flags -DNDEBUG -O2"
 else
 	flags="$flags -g"
 fi
 #
-echo "g++ -I.. $1.cpp -o $1 $flags"
-g++ -I.. $1.cpp -o $1 $flags
+echo "g++ -I.. multi_newton.cpp -o multi_newton $flags"
+g++ -I.. multi_newton.cpp -o multi_newton $flags
 #
-echo "./$1"
-if ! ./$1
+n_zero="10"
+n_grid="40"
+n_sum="10"
+if [ "$repeat" != "automatic" ]
 then
+	date
+fi
+echo "./multi_newton $n_thread $repeat $n_zero $n_grid $n_sum"
+if ! ./multi_newton $n_thread $repeat $n_zero $n_grid $n_sum
+then
+	echo "Error in multi_newton."
 	exit 1
 fi
+if [ "$repeat" != "automatic" ]
+then
+	date
+fi
 #
-if [ -e "$1.exe" ]
+if [ -e "multi_newton.exe" ]
 then
-	echo "rm $1.exe"
-	rm $1.exe
+	echo "rm multi_newton.exe"
+	rm multi_newton.exe
 fi
-if [ -e "$1" ]
+if [ -e "multi_newton" ]
 then
-	echo "rm $1"
-	rm $1
+	echo "rm multi_newton"
+	rm multi_newton
 fi
+exit 0
