@@ -42,14 +42,12 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Minor changes.
+log_entry="Simplfy code (special _OPENMP case did not improve speed).
 
 svn_commit.sh: file that made this commit.
-svn_merge.sh: file that did the merge from branches/openmp.
-config.h: update version number and gettimeofday comments.
-multi_newton.cpp: put _OPENMP around # pragram and update.
-run.sh: update sample output.
-AUTHORS: update author statement.
+par_var.hpp: used same code for _OPENMP defined or not defined.
+ad.hpp: always pass thread number to id_handle and tape_handle.
+tape_link.hpp: change calls to id_handle and tape_handle.
 " 
 add_list="
 "
@@ -60,11 +58,9 @@ move_list="
 #
 change_list="
 	svn_commit.sh
-	svn_merge.sh
-	cppad/config.h
-	openmp/multi_newton.hpp
-	openmp/run.sh
-	AUTHORS
+	cppad/local/par_var.hpp
+	cppad/local/ad.hpp
+	cppad/local/tape_link.hpp
 "
 #
 copy_branch="" 

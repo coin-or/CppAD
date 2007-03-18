@@ -243,15 +243,10 @@ private:
 	inline ADTape<Base> *tape_this(void) const;
 	//
 	// static 
-# ifdef _OPENMP
 	inline static size_t        *id_handle (size_t thread);
 	inline static ADTape<Base> **tape_handle(size_t thread);
-# else
-	inline static size_t        *id_handle (void);
-	inline static ADTape<Base> **tape_handle(void);
-# endif
-	static size_t         tape_new(void);
-	static void           tape_delete(size_t id);
+	static size_t                tape_new(void);
+	static void                  tape_delete(size_t id);
 	inline static ADTape<Base>  *tape_ptr(void);
 	inline static ADTape<Base>  *tape_ptr(size_t id);
 }; 

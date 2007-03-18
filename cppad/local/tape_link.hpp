@@ -40,23 +40,32 @@ The argument $italic x$$ must a variable.
 
 $head id_handle$$
 $index id_handle$$
-
-$subhead _OPENMP Defined$$
-In the case where the preprocessor symbol $code _OPENMP$$ is defined,
-the syntax
+The syntax
 $syntax%
 	%id% = AD<%Base%>::id_handle(%thread%)
 %$$
 returns a pointer to the currently active tape identifier
 for the specified OpenMP thread.
+
+$subhead thread$$
+The argument $italic thread$$ has prototype
+$syntax%
+	size_t  %thread%
+%$$
+It must be less that $code CPPAD_MAX_NUM_THREADS$$ and
+specifies the OpenMP thread that the tape identifier is for.
+In the case where the preprocessor symbol $code _OPENMP$$ is not defined,
+$italic thread$$ must be zero.
+
+$subhead id$$
+The return value $italic id$$ has prototype
+$syntax%
+	size_t *%id%
+%$$
+and is a pointer to the tape identifier for the specified thread.
 The initial value, for the tape identifier is zero.
 This way it is not equal to the default $code id_ = 1$$ value
 in each $syntax%AD<%Base%>%$$ object.
-The argument $italic thread$$ and the return value $italic id$$ have prototype
-$syntax%
-	size_t  %thread%
-	size_t *%id%
-%$$
 Either $syntax%*id_handle(%thread%)%$$ is zero (its initial value) or
 the current thread number satisfies the equation
 $syntax/
@@ -64,51 +73,27 @@ $syntax/
 /$$
 (This is a restriction on how $syntax%*id_handle(%thread%)%$$ may be changed.)
 
-$subhead _OPENMP Not Defined$$
-In the case where the preprocessor symbol $code _OPENMP$$ is not defined,
-the syntax
-$syntax%
-	%id% = AD<%Base%>::id_handle()
-%$$
-returns a pointer to the currently active tape identifier.
-The initial value, for the tape identifier is zero.
-This way it is not equal to the default $code id_ = 1$$ value
-in each $syntax%AD<%Base%>%$$ object.
-The return value $italic id$$ has prototype
-$syntax%
-	size_t *%id%
-%$$
-
 
 $head tape_handle$$
 $index tape_handle$$
-
-$head _OPENMP Defined$$
-In the case where the preprocessor symbol $code _OPENMP$$ is defined,
-the syntax
+The syntax
 $syntax%
 	%tape% = AD<%Base%>::tape_handle(%thread%)
 %$$
 returns a pointer to a pointer to the current tape
 for the specified OpenMP thread.
-The argument $italic thread$$ and 
-the return value $italic type$$ have prototype
-$syntax%%
-	size_t           thread
-	ADTape<%Base%> **tape
-%$$.
-If the tape is currently active,
-$syntax%
-	*%tape% != CPPAD_NULL
-%$$
 
-$head _OPENMP Not Defined$$
-In the case where the preprocessor symbol $code _OPENMP$$ is not defined,
-the syntax
+$subhead thread$$
+The argument $italic thread$$ has prototype
 $syntax%
-	%tape% = AD<%Base%>::tape_handle()
+	size_t  %thread%
 %$$
-returns a pointer to a pointer to the current tape.
+It must be less that $code CPPAD_MAX_NUM_THREADS$$ and
+specifies the OpenMP thread that the tape identifier is for.
+In the case where the preprocessor symbol $code _OPENMP$$ is not defined,
+$italic thread$$ must be zero.
+
+$subhead tape$$
 The return value $italic tape$$ has prototype
 $syntax%%
 	ADTape<%Base%> **tape
@@ -117,6 +102,7 @@ If the tape is currently active,
 $syntax%
 	*%tape% != CPPAD_NULL
 %$$
+
 
 $head tape_new$$
 $index tape_new$$
@@ -145,10 +131,9 @@ $syntax%
 	AD<%Base%>::tape_delete(%id%)
 %$$
 deletes the tape corresponding to the tape identifier $italic id$$.
-The value returned by $code *id_handle()$$ for this thread
+The value $syntax%*id_handle(%thread%)%$$ for this thread
 is set to a value larger than any previous value returned by
 $code tape_new()$$.
-
 
 $head tape_ptr$$
 $index tape_ptr$$
@@ -186,12 +171,13 @@ namespace CppAD {
 template <class Base>
 inline ADTape<Base> *AD<Base>::tape_this(void) const
 {	
-# ifdef _OPENMP
+
 	size_t thread = id_ % CPPAD_MAX_NUM_THREADS;
 	CppADUnknownError( id_ == *id_handle(thread) );
 	CppADUnknownError( *tape_handle(thread) != CPPAD_NULL );
 	return *tape_handle(thread);
-# else
+
+# if 0 // old code that did not use OpenMP 
 	CppADUnknownError( id_ == *id_handle() );
 	CppADUnknownError( *tape_handle() != CPPAD_NULL );
 	return *tape_handle();
@@ -201,7 +187,6 @@ inline ADTape<Base> *AD<Base>::tape_this(void) const
 // ----------------------------------------------------------------------
 // Static functions
 //
-# ifdef _OPENMP
 template <class Base>
 inline size_t * AD<Base>::id_handle(size_t thread)
 {	static size_t id_table[CPPAD_MAX_NUM_THREADS];
@@ -216,31 +201,18 @@ inline ADTape<Base> ** AD<Base>::tape_handle(size_t thread)
 {	static ADTape<Base> *tape_table[CPPAD_MAX_NUM_THREADS];
 	return tape_table + thread;
 }
-# else
-template <class Base>
-inline size_t * AD<Base>::id_handle(void)
-{	static size_t id;
-	return &id;
-}
-template <class Base>
-inline ADTape<Base> ** AD<Base>::tape_handle(void)
-{	static ADTape<Base> *tape;
-	return &tape;
-}
-# endif
 
 template <class Base>
 size_t  AD<Base>::tape_new(void)
 {
 # ifdef _OPENMP
-	size_t thread       = static_cast<size_t> ( omp_get_thread_num() );
+	size_t thread = static_cast<size_t> ( omp_get_thread_num() );
+# else
+	size_t thread = 0;
+# endif
 	size_t *id          = id_handle(thread);
 	ADTape<Base> **tape = tape_handle(thread);
-# else
-	size_t       thread = 0;
-	size_t          *id = id_handle();
-	ADTape<Base> **tape = tape_handle();
-# endif
+
 	CppADUsageError(
 	thread < omp_max_thread(0),
 	"Independent: OpenMP thread number is >= omp_max_thread setting"
@@ -260,18 +232,18 @@ size_t  AD<Base>::tape_new(void)
 template <class Base>
 void  AD<Base>::tape_delete(size_t id_old)
 {
-# ifdef _OPENMP
 	size_t thread = id_old % CPPAD_MAX_NUM_THREADS;
+# ifdef _OPENMP
 	CppADUsageError(
 	thread == static_cast<size_t> ( omp_get_thread_num() ),
 	"AD tape recording must stop in same thread as it started in."
 	);
+# else
+	CppADUnknownError(thread == 0);
+# endif
 	size_t        *id   = id_handle(thread);
 	ADTape<Base> **tape = tape_handle(thread);
-# else
-	size_t        *id   = id_handle();
-	ADTape<Base> **tape = tape_handle();
-# endif
+
 	CppADUnknownError( *id   == id_old     );
 	CppADUnknownError( *tape != CPPAD_NULL );
 
@@ -290,29 +262,27 @@ inline ADTape<Base> *AD<Base>::tape_ptr(void)
 {
 # ifdef _OPENMP
 	size_t thread = static_cast<size_t> ( omp_get_thread_num() );
-	return *tape_handle(thread); 
 # else
-	return *tape_handle();
+	size_t thread = 0;
 # endif
+	return *tape_handle(thread); 
 }
 
 template <class Base>
 inline ADTape<Base> *AD<Base>::tape_ptr(size_t id)
 {
-# ifdef _OPENMP
 	size_t thread = id % CPPAD_MAX_NUM_THREADS;
+# ifdef _OPENMP
 	CppADUsageError(
 	thread == static_cast<size_t> ( omp_get_thread_num() ),
-	"AD tape recording must stop in same thread as it started in."
+	"Attempt to use an AD variable in two different OpenMP threads."
 	);
+# else
+	CppADUnknownError(thread == 0 );
+# endif
 	CppADUnknownError( id == *id_handle(thread) );
 	CppADUnknownError( *tape_handle(thread) != CPPAD_NULL );
 	return *tape_handle(thread); 
-# else
-	CppADUnknownError( id == *id_handle() );
-	CppADUnknownError( *tape_handle() != CPPAD_NULL );
-	return *tape_handle(); 
-# endif
 }
 
 } // END CppAD namespace

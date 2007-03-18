@@ -79,47 +79,27 @@ namespace CppAD {
 	// Parameter
 	template <class Base>
 	inline bool Parameter(const AD<Base> &x)
-	{	
-# ifdef _OPENMP
-		size_t thread = x.id_ % CPPAD_MAX_NUM_THREADS;
+	{	size_t thread = x.id_ % CPPAD_MAX_NUM_THREADS;
 		return x.id_ != * AD<Base>::id_handle(thread); 
-# else
-		return x.id_ != * AD<Base>::id_handle();
-# endif
 	}
 
 	template <class Base>
 	inline bool Parameter(const VecAD<Base> &x)
-	{	
-# ifdef _OPENMP
-		size_t thread = x.id_ % CPPAD_MAX_NUM_THREADS;
+	{	size_t thread = x.id_ % CPPAD_MAX_NUM_THREADS;
 		return x.id_ != * AD<Base>::id_handle(thread); 
-# else
-		return x.id_ != * AD<Base>::id_handle();
-# endif
 	}
 
 	// Variable
 	template <class Base>
 	inline bool Variable(const AD<Base> &x)
-	{	
-# ifdef _OPENMP
-		size_t thread = x.id_ % CPPAD_MAX_NUM_THREADS;
+	{	size_t thread = x.id_ % CPPAD_MAX_NUM_THREADS;
 		return x.id_ == * AD<Base>::id_handle(thread); 
-# else
-		return x.id_ == * AD<Base>::id_handle();
-# endif
 	}
 
 	template <class Base>
 	inline bool Variable(const VecAD<Base> &x)
-	{
-# ifdef _OPENMP
-		size_t thread = x.id_ % CPPAD_MAX_NUM_THREADS;
+	{	size_t thread = x.id_ % CPPAD_MAX_NUM_THREADS;
 		return x.id_ == * AD<Base>::id_handle(thread); 
-# else
-		return x.id_ == * AD<Base>::id_handle();
-# endif
 	}
 } 
 // END CppAD namespace
