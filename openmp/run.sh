@@ -28,11 +28,19 @@
 # $section Compile and Run the OpenMP Test$$
 #
 # $head Syntax$$
-# $syntax%openmp/run.sh %n_thread% %repeat% %openmp% %optimize%$$
+# $syntax%openmp/run.sh %program% %n_thread% %repeat% %openmp% %optimize%$$
 #
 # $head Purpose$$
-# The script file $code openmp/run.sh$$ compiles and runs the openmp
-# test and example program.
+# The script file $code openmp/run.sh$$ compiles and runs two openmp
+# test programs. 
+# One test is Example A.1.1.1c from the OpenMP 2.5 standard
+# document. The other test is a parallel version of Newton's method
+# that uses OpenMP together with CppAD.
+#
+# $head program$$
+# The argument $italic program$$ is either $code example_a11c$$ 
+# (for example A.1.1.c of the OpenMP standards document)
+# or it is $xref/multi_newton/$$.
 #
 # $head n_thread$$
 # If the argument $italic n_thread$$ is $code automatic$$,
@@ -82,7 +90,7 @@
 # The following is an example $code run.sh$$ command 
 # with $italic openmp$$ false and $italic optimize$$ true:
 # $codep
-#	openmp/run.sh automatic automatic false true
+#	openmp/run.sh multi_newton automatic automatic false true
 # $$
 # The following is the corresponding output
 # $codep
@@ -99,7 +107,7 @@
 # The following is an example $code run.sh$$ command 
 # with $italic openmp$$ true and $italic optimize$$ true:
 # $codep
-#	openmp/run.sh automatic automatic true true
+#	openmp/run.sh multi_newton automatic automatic true true
 # $$
 # The following is the corresponding output
 # $codep
@@ -119,23 +127,37 @@ then
 	exit 1
 fi
 cd openmp
-#
-n_thread="$1"
-repeat="$2"
-openmp="$3"
-optimize="$4"
-for flag in "$openmp" "$optimize"
-do
-	if [ "$flag" != "true"  ] && [ "$flag" != "false" ]
-	then
-		echo "usage: openmp/run.sh n_thread repeat openmp optimize"
-		echo "n_thread: number of threads to use (or \"automatic\")"
-		echo "repeat:   repeat factor (or \"automatic\")"
-		echo "openmp:   true (use openmp) or false (do not use), and"
-		echo "optimize: true (optimized compile) or false (debugging)"
-		exit 1
-	fi
-done
+program="$1"
+n_thread="$2"
+repeat="$3"
+openmp="$4"
+optimize="$5"
+ok="true"
+if [ "$program" != "multi_newton" ]  && [ "$program" != "example_a11c" ]
+then
+	echo "Error: program=$program"
+	ok="false"
+fi
+if [ "$openmp" != "true" ]  && [ "$openmp" != "false" ]
+then
+	echo "Error: openmp=$openmp"
+	ok="false"
+fi
+if [ "$optimize" != "true" ]  && [ "$optimize" != "false" ]
+then
+	echo "Error: optimize=$optimize"
+	ok="false"
+fi
+if [ "$ok" == "false"  ] 
+then
+	echo "usage:    openmp/run.sh program n_thread repeat openmp optimize"
+	echo "program:  is either example_a11c or multi_newton"
+	echo "n_thread: number of threads to use (or \"automatic\")"
+	echo "repeat:   repeat factor (or \"automatic\")"
+	echo "openmp:   true (use openmp) or false (do not use), and"
+	echo "optimize: true (optimized compile) or false (debugging)"
+	exit 1
+fi
 if [ "$openmp" == "true"  ]
 then
 	flags=-fopenmp
@@ -149,35 +171,45 @@ else
 	flags="$flags -g"
 fi
 #
-echo "g++ -I.. multi_newton.cpp -o multi_newton $flags"
-g++ -I.. multi_newton.cpp -o multi_newton $flags
+echo "g++ -I.. $program.cpp -o $program $flags"
+g++ -I.. $program.cpp -o $program $flags
 #
 n_zero="10"
 n_grid="40"
 n_sum="10"
+size="10000"
+#
 if [ "$repeat" != "automatic" ]
 then
 	date
 fi
-echo "./multi_newton $n_thread $repeat $n_zero $n_grid $n_sum"
-if ! ./multi_newton $n_thread $repeat $n_zero $n_grid $n_sum
+if [ "$program" == "multi_newton" ]
 then
-	echo "Error in multi_newton."
-	exit 1
+	echo "./multi_newton $n_thread $repeat $n_zero $n_grid $n_sum"
+	if ! ./multi_newton $n_thread $repeat $n_zero $n_grid $n_sum
+	then
+		echo "Error in multi_newton."
+		exit 1
+	fi
+else 
+	echo "./example_a11c $n_thread $repeat $size"
+	if ! ./example_a11c $n_thread $repeat $size
+	then
+		echo "Error in example_a11c."
+		exit 1
+	fi
 fi
 if [ "$repeat" != "automatic" ]
 then
 	date
 fi
 #
-if [ -e "multi_newton.exe" ]
-then
-	echo "rm multi_newton.exe"
-	rm multi_newton.exe
-fi
-if [ -e "multi_newton" ]
-then
-	echo "rm multi_newton"
-	rm multi_newton
-fi
+for file in multi_newton.exe multi_newton example_a11c.exe example_a11c
+do
+	if [ -e "$file" ]
+	then
+		echo "rm $file"
+		rm $file
+	fi
+done
 exit 0

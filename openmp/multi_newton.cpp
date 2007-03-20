@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
 	using std::endl;
 	using CppAD::vector;
 
-	char *usage = "multi_newton n_thread n_zero n_grid n_sum repeat";
+	char *usage = "multi_newton n_thread repeat n_zero n_grid n_sum";
 	if( argc != 6 )
 	{	std::cerr << usage << endl;
 		exit(1);

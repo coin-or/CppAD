@@ -42,14 +42,16 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Simplfy code (special _OPENMP case did not improve speed).
+log_entry="Add another test to openmp/run.sh
 
 svn_commit.sh: file that made this commit.
-par_var.hpp: used same code for _OPENMP defined or not defined.
-ad.hpp: always pass thread number to id_handle and tape_handle.
-tape_link.hpp: change calls to id_handle and tape_handle.
+build.sh: add new argument to run.sh.
+example_a11c.cpp: new test.
+multi_newton.cpp:
+run.sh: add interface for new test.
 " 
 add_list="
+	openmp/example_a11c.cpp
 "
 delete_list="
 "
@@ -58,9 +60,9 @@ move_list="
 #
 change_list="
 	svn_commit.sh
-	cppad/local/par_var.hpp
-	cppad/local/ad.hpp
-	cppad/local/tape_link.hpp
+	build.sh
+	openmp/multi_newton.cpp
+	openmp/run.sh
 "
 #
 copy_branch="" 
