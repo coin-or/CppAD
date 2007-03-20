@@ -42,16 +42,14 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add another test to openmp/run.sh
+log_entry="Include example_a11c in the documentation.
 
 svn_commit.sh: file that made this commit.
-build.sh: add new argument to run.sh.
-example_a11c.cpp: new test.
-multi_newton.cpp:
-run.sh: add interface for new test.
+whats_new_07.omh: user's view of the changes.
+omp_max_thread.hpp: include example_a11c in example list.
+run.sh: allow for choice of multi_newton or example_a11c.
 " 
 add_list="
-	openmp/example_a11c.cpp
 "
 delete_list="
 "
@@ -60,8 +58,9 @@ move_list="
 #
 change_list="
 	svn_commit.sh
-	build.sh
-	openmp/multi_newton.cpp
+	omh/whats_new_07.omh
+	cppad/local/omp_max_thread.hpp
+	openmp/example_a11c.cpp
 	openmp/run.sh
 "
 #

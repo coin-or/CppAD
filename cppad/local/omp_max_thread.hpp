@@ -68,12 +68,24 @@ $cref/active/glossary/Tape/Active/$$ when this function is called.
 $head Example$$
 $children%
 	openmp/run.sh%
+	openmp/example_a11c.cpp%
 	openmp/multi_newton.cpp
 %$$
+
+$subhead run.sh$$
 The shell script $cref/openmp_run.sh/$$ can be used to 
-run the program $cref/multi_newton.cpp/$$.
-This program contains an example, speed test, and correctness test
-of using OpenMP with CppAD.
+compile and run the OpenMP examples.
+
+$subhead example_a11c.cpp$$
+The program $cref/example_a11c.cpp/$$ is a simple example and
+test of OpenMP that does not use CppAD.
+This can be used to make sure that OpenMP is running properly,
+and to access how fast multi-threading is,
+on your system.
+
+$subhead multi_newton.cpp$$
+The program $cref/multi_newton.cpp/$$ is an example and test
+of OpenMP together with CppAD.
 
 $end
 -----------------------------------------------------------------------------

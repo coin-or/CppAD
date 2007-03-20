@@ -35,6 +35,11 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-20$$
+$cref/Example A.1.1c/example_a11c.cpp/$$,
+from the OpenMP 2.5 standards document,
+was added to the tests that can be run using $cref/openmp_run.sh/$$.
+
 $head 07-15$$
 Included the changes from openmp branch
 so that so CppAD does not use the OpenMP $code threadprivate$$ command

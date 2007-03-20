@@ -38,8 +38,9 @@
 # that uses OpenMP together with CppAD.
 #
 # $head program$$
-# The argument $italic program$$ is either $code example_a11c$$ 
-# (for example A.1.1.c of the OpenMP standards document)
+# The argument $italic program$$ is either 
+# $cref/example_a11c/example_a11c.cpp/$$ 
+# (for example A.1.1.c of the OpenMP 2.5 standards document)
 # or it is $xref/multi_newton/$$.
 #
 # $head n_thread$$

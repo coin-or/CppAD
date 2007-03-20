@@ -48,9 +48,33 @@ The rate of execution is not reported (it is assumed that the
 program execution time is being calculated some other way).
 
 $head size$$
-The argument $italic size$$ is the lenght of the arrays in the example code.
+The argument $italic size$$ is the length of the arrays in the example code.
 
 $head Example Source$$
+$spell
+	test test
+	ifdef
+	endif
+	omp
+	cmath
+	http://www.coin-or.org/CppAD/Doc/cppad_vector.htm
+	cppad.hpp
+	pragma omp
+	for for
+	argc
+	argv
+	std 
+	cout
+	endl
+	cerr
+	strcmp
+	atoi
+	num
+	CppAD
+	bool
+	fabs
+	vec
+$$
 $codep */
 
 # ifdef _OPENMP
@@ -58,17 +82,23 @@ $codep */
 # endif
 
 # include <cmath>
-# include <cppad/speed_test.hpp>
+
+// see http://www.coin-or.org/CppAD/Doc/cppad_vector.htm
 # include <cppad/vector.hpp>
 
-// Example A.1.1.1c of OpenMP 2.5 standard document
+// see http://www.coin-or.org/CppAD/Doc/speed_test.htm
+# include <cppad/speed_test.hpp>
+
+// Beginning of Example A.1.1.1c of OpenMP 2.5 standard document ---------
 void a1(int n, float *a, float *b)
 {	int i;
 # pragma omp parallel for
 	for(i = 1; i < n; i++) /* i is private by default */
 		b[i] = (a[i] + a[i-1]) / 2.0;
 }
+// End of Example A.1.1.1c of OpenMP 2.5 standard document ---------------
 		
+// routine that is called to repeat the example a number of times
 void test(size_t size, size_t repeat)
 {	// setup
 	size_t i;
@@ -86,26 +116,26 @@ void test(size_t size, size_t repeat)
 	return;
 }
 
+// main program
 int main(int argc, char *argv[])
 {
 	using std::cout;
 	using std::endl;
 
+	// get command line arguments -----------------------------------
 	char *usage = "example_a11c n_thread repeat size";
 	if( argc != 4 )
 	{	std::cerr << usage << endl;
 		exit(1);
 	}
 	argv++;
-
-	// n_thread command line argument
+	// n_thread 
 	int n_thread;
 	if( strcmp(*argv, "automatic") == 0 )
 		n_thread = 0;
 	else	n_thread = std::atoi(*argv);
 	argv++;
-
-	// repeat command line argument
+	// repeat 
 	size_t repeat;
 	if( strcmp(*argv, "automatic") == 0 )
 		repeat = 0;
@@ -114,14 +144,13 @@ int main(int argc, char *argv[])
 		repeat = std::atoi(*argv);
 	}
 	argv++;
-
-	// size command line argument 
+	// size 
 	assert( std::atoi(*argv) > 1 );
 	size_t size = std::atoi(*argv++);
+	// ---------------------------------------------------------------
 
 	// minimum time for test (repeat until this much time)
 	double time_min = 1.;
-
 # ifdef _OPENMP
 	if( n_thread > 0 )
 	{	omp_set_dynamic(0);            // off dynamic thread adjust
@@ -138,7 +167,7 @@ int main(int argc, char *argv[])
 	cout << "_OPENMP is not defined, ";
 	cout << "running in single tread mode" << endl;
 # endif
-	// Correctness check
+	// Correctness check (store result in ok)
 	size_t i;
 	float *a = new float[size];
 	float *b = new float[size];
@@ -153,17 +182,17 @@ int main(int argc, char *argv[])
 	delete [] b;
 
 	if( repeat > 0 )
-	{	// run the calculation the requested number of time
+	{	// user specified the number of times to repeat the test
 		test(size, repeat);
 	}
 	else
-	{ 	// size of the one test case
+	{	// automatic determination of number of times to repeat test
+
+	 	// speed test uses a SimpleVector with size_t elements
 		CppAD::vector<size_t> size_vec(1);
 		size_vec[0] = size;
-
-		// run the test case
 		CppAD::vector<size_t> rate_vec =
-		CppAD::speed_test(test, size_vec, time_min);
+			CppAD::speed_test(test, size_vec, time_min);
 
 		// report results
 		cout << "size             = " << size_vec[0] << endl;
