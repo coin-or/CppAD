@@ -31,7 +31,7 @@ $spell
 	bool
 $$
 
-$section CppAD Speed: Second Derivative of a Polynomial$$
+$section Adolc Speed: Second Derivative of a Polynomial$$
 
 $index adolc, speed polynomial$$
 $index speed, adolc polynomial$$
@@ -45,7 +45,7 @@ Hence we use the same $cref/ADFun/$$ object for all the argument values.
 
 $head compute_poly$$
 $index compute_poly$$
-Routine that computes the second derivative of a polynomial using CppAD:
+Routine that computes the second derivative of a polynomial using Adolc:
 $codep */
 # include <vector>
 

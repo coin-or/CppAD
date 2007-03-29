@@ -24,6 +24,8 @@ $spell
 	cygwin
 	cppad.hpp
 	config.h
+	dd
+	Adolc
 $$
 
 $section Changes and Additions to CppAD During 2007$$
@@ -35,21 +37,36 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 07-20$$
+$head 03-29$$
+Fixed entries in this file where the year was mistakenly used for the month.
+To be more specific, $syntax%07-%dd%$$ was changed to $syntax%03-%dd%$$
+for some of the entries directly below.
+$pre
+
+$$
+Corrected some places where $code CppAD$$ was used in stead of $code Adolc$$
+in the $cref/adolc_poly.cpp/$$ documentation.
+$pre
+
+$$
+Added an $cref/Introduction/WishList/Introduction/$$ and 
+$cref/Tracing/WishList/Tracing/$$ entry to the wish list.
+
+$head 03-20$$
 $cref/Example A.1.1c/example_a11c.cpp/$$,
 from the OpenMP 2.5 standards document,
 was added to the tests that can be run using $cref/openmp_run.sh/$$.
 
-$head 07-15$$
+$head 03-15$$
 Included the changes from openmp branch
 so that so CppAD does not use the OpenMP $code threadprivate$$ command
 (some systems do not support this command).
 
-$subhead 07-15$$
+$subhead 03-15$$
 Add command line arguments to $cref/multi_newton.cpp/$$, and
 modified $cref/openmp_run.sh/$$ to allow for more flexible testing. 
 
-$subhead 07-14$$
+$subhead 03-14$$
 Fixed some Microsoft compiler warnings by explicitly converting from 
 $code size_t$$ to $code int$$.
 $pre
@@ -64,21 +81,21 @@ $pre
 $$
 Some minor changes were made in an effort to speed up the multi-threading case.
 
-$subhead 07-13$$
+$subhead 03-13$$
 Started a new openmp branch and created a version of CppAD 
 that does not use the OpenMP $code threadprivate$$ command
 (not supported on some systems).
 
-$head 07-09$$
+$head 03-09$$
 Included the changes from openmp branch
 so that OpenMP can be used with CppAD,
 see $cref/omp_max_thread/$$.
 The changes
-dated between $cref/02-15/whats_new_07/07-09/02-15/$$ and 07-28 below
-were made in the openmp branch and transferred to the trunk on 07-09.
+dated between $cref/02-15/whats_new_07/03-09/02-15/$$ and 03-28 below
+were made in the openmp branch and transferred to the trunk on 03-09.
 
 
-$subhead 07-28$$
+$subhead 03-28$$
 The conditional include commands were missing on some include files; 
 for example
 $codep

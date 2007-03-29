@@ -42,12 +42,12 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Include example_a11c in the documentation.
+log_entry="Extend wish list and fix minor documentation error.
 
 svn_commit.sh: file that made this commit.
 whats_new_07.omh: user's view of the changes.
-omp_max_thread.hpp: include example_a11c in example list.
-run.sh: allow for choice of multi_newton or example_a11c.
+wish_list.omh: Add and Introduction and Tracing entry.
+poly.cpp: change references to CppAD that should be Adolc.
 " 
 add_list="
 "
@@ -58,10 +58,9 @@ move_list="
 #
 change_list="
 	svn_commit.sh
+	omh/wish_list.omh
 	omh/whats_new_07.omh
-	cppad/local/omp_max_thread.hpp
-	openmp/example_a11c.cpp
-	openmp/run.sh
+	speed/adolc/poly.cpp
 "
 #
 copy_branch="" 
