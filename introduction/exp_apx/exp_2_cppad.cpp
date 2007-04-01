@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,13 +9,13 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin exp_apx_cppad.cpp$$
+$begin exp_2_cppad.cpp$$
 $spell
 	cppad.hpp
 	cmath
 	fabs
 	bool
-	exp_apx_cppad
+	exp_2_cppad
 	du
 	dv
 	dw
@@ -26,66 +26,64 @@ $spell
 	std
 	www
 	CppAD
+	apx
 $$
 
-$section exp_apx: CppAD First Order Forward and Reverse$$.
+$section exp_2: CppAD First Order Forward and Reverse$$.
 
 $head Purpose$$
 Use CppAD forward and reverse modes to compute the
 partial derivative with respect to $latex x$$,
-at the point $latex x = .5$$ and $latex e = .2$$,
+at the point $latex x = .5$$,
 of the function 
 $syntax%
-	exp_apx(%x%, %e%)
+	exp_2(%x%)
 %$$
-as defined by the $cref/exp_apx.hpp/$$ include file.
+as defined by the $cref/exp_2.hpp/$$ include file.
 
 $head Exercises$$
 $list number$$
 Create and tests a modified version of the routine below that computes
 partial derivative with respect to $latex x$$,
-at the point $latex x = .1$$ and $latex e = .2$$,
+at the point $latex x = .1$$ 
 of the function 
 $syntax%
-	exp_apx(%x%, %e%)
+	exp_2(%x%)
 %$$
 $lnext
-Create and test a modified version of the routine below that computes
-partial derivative with respect to $latex x$$,
-at the point $latex x = .1$$ and $latex e = .2$$,
-of the function corresponding to the operation sequence 
-for $latex x = .5$$ and $latex e = .2$$.
-Hint: you could define a vector u with two components and use
+Create routine called
 $syntax%
-	%f%.Forward(0, %u%)
-%$$
-to run zero order forward mode at a point different
-form the point where the operation sequence corresponding to
-$italic f$$ was recorded.
+	exp_3(%x%)
+%$$ 
+that evaluates the function
+$latex \[
+	f(x) = 1 + x^2 / 2 + x^3 / 6
+\] $$
+Test a modified version of the routine below that computes
+the derivative of $latex f(x)$$
+at the point $latex x = .5$$.
 $lend
 $codep */
 
 # include <cppad/cppad.hpp>  // http://www.coin-or.org/CppAD/ 
-# include "exp_apx.hpp"      // our example exponential function approximation
-bool exp_apx_cppad(void)
+# include "exp_2.hpp"        // second order exponential approximation
+bool exp_2_cppad(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::vector;    // can use any simple vector template class
 	using CppAD::NearEqual; // checks if values are nearly equal
 
 	// domain space vector
-	size_t n = 2; // dimension of the domain space
+	size_t n = 1; // dimension of the domain space
 	vector< AD<double> > U(n);
 	U[0] = .5;    // value of x for this operation sequence
-	U[1] = .2;    // value of e for this operation sequence
 
 	// declare independent variables and start recording operation sequence
 	CppAD::Independent(U);
 
 	// evaluate our exponential approximation
 	AD<double> x   = U[0];
-	AD<double> e   = U[1];
-	AD<double> apx = exp_apx(x, e);  
+	AD<double> apx = exp_2(x);  
 
 	// range space vector
 	size_t m = 1;  // dimension of the range space
@@ -101,8 +99,7 @@ bool exp_apx_cppad(void)
 	vector<double> du(n);  // differential in domain space
 	vector<double> dv(m);  // differential in range space
 	du[0] = 1.;  // x direction in domain space
-	du[1] = 0.;
-	// partial of exp_apx(x, e) with respect to x
+	// partial of exp_2(x) with respect to x
 	dv    = f.Forward(1, du);
 	double check = 1.5;
 	ok   &= NearEqual(dv[0], check, 1e-10, 1e-10);
@@ -111,12 +108,10 @@ bool exp_apx_cppad(void)
 	vector<double>  w(m);   // weights for components of the range
 	vector<double> dw(n);   // derivative of the weighted function
 	w[0] = 1.;   // only one weight and it is one
-	// derivative of w[0] * exp_apx(x, e)
+	// derivative of w[0] * exp_2(x)
 	dw   = f.Reverse(1, w);
-	check = 1.5;  // partial of exp_apx(x, e) with respect to x
+	check = 1.5;  // partial of exp_2(x) with respect to x
 	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);
-	check = 0.;   // partial of exp_apx(x, e) with respect to e
-	ok   &= NearEqual(dw[1], check, 1e-10, 1e-10);
 
 	return ok;
 }

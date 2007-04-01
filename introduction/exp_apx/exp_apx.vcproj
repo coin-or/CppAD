@@ -114,19 +114,40 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\exp_apx.cpp">
+				RelativePath=".\exp_2.cpp">
 			</File>
 			<File
-				RelativePath=".\exp_apx_ad.cpp">
+				RelativePath=".\exp_2.hpp">
 			</File>
 			<File
-				RelativePath=".\exp_apx_for.cpp">
+				RelativePath=".\exp_2_cppad.cpp">
 			</File>
 			<File
-				RelativePath=".\exp_apx_rev.cpp">
+				RelativePath=".\exp_2_for.cpp">
 			</File>
 			<File
-				RelativePath=".\exp_apx_seq.cpp">
+				RelativePath=".\exp_2_rev.cpp">
+			</File>
+			<File
+				RelativePath=".\exp_2_seq.cpp">
+			</File>
+			<File
+				RelativePath=".\exp_eps.cpp">
+			</File>
+			<File
+				RelativePath=".\exp_eps.hpp">
+			</File>
+			<File
+				RelativePath=".\exp_eps_cppad.cpp">
+			</File>
+			<File
+				RelativePath=".\exp_eps_for.cpp">
+			</File>
+			<File
+				RelativePath=".\exp_eps_rev.cpp">
+			</File>
+			<File
+				RelativePath=".\exp_eps_seq.cpp">
 			</File>
 			<File
 				RelativePath=".\main.cpp">

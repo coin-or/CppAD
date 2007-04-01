@@ -11,6 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	vcproj
+	exp_apx
 	Microsoft
 	threadprivate
 	gettimeofday
@@ -37,6 +39,29 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-31$$
+Merge in changes made in $code branches/intro$$
+and remove the corresponding Introduction item from the wish list:
+
+$subhead 03-31$$
+Create the a simpler exponential approximation in the $cref/introduction/$$
+called $cref/exp_2/$$ which has a different program 
+variable for each variable in the operation sequence.
+$pre
+
+$$
+Simplify the $cref/exp_eps/$$ approximation using the
+$latex v_1 , \ldots , v_7$$ notation so that variables directly
+correspond to index in operation sequence (as with the $cref/exp_2/$$ 
+example).
+
+$subhead 03-30$$
+The Microsoft project file $code introduction/exp_apx/exp_apx.vcproj$$
+was referencing $code exp_apx_ad.cpp$$ which no longer exists.
+It has been changed to reference $code exp_apx_cppad.cpp$$
+which is the new name for that file.
+
+
 $head 03-29$$
 Fixed entries in this file where the year was mistakenly used for the month.
 To be more specific, $syntax%07-%dd%$$ was changed to $syntax%03-%dd%$$
@@ -49,8 +74,9 @@ in the $cref/adolc_poly.cpp/$$ documentation.
 $pre
 
 $$
-Added an $cref/Introduction/WishList/Introduction/$$ and 
+Added an Introduction and 
 $cref/Tracing/WishList/Tracing/$$ entry to the wish list.
+(The Introduction item was completed on $cref/03-31/whats_new_07/03-31/$$.)
 
 $head 03-20$$
 $cref/Example A.1.1c/example_a11c.cpp/$$,

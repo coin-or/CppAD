@@ -53,17 +53,6 @@ $xref/ADFun/$$ constructor or $cref/Dependent/$$,
 the tape recording will be never stop.
 Thus, there should be a way to abort a tape recording.
 
-$head Introduction$$
-Change the $cref/Introduction/$$ to begin with an algorithm
-that does not have any logical operations and follow it through
-the operation sequence and derivative calculations.
-Then introduce the issue of logical operations.
-In addition, user a single variable name for all the variables
-in the operation sequence so that the operation index corresponds
-to the variable index.
-
-
-
 $head Operation Sequence$$
 $index sequence, operation$$
 $index operation, sequence$$

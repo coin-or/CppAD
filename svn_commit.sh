@@ -42,25 +42,58 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Extend wish list and fix minor documentation error.
+log_entry="Merge in changes from branches/intro.
 
 svn_commit.sh: file that made this commit.
-whats_new_07.omh: user's view of the changes.
-wish_list.omh: Add and Introduction and Tracing entry.
-poly.cpp: change references to CppAD that should be Adolc.
+whish_list: remove Introduction item (accomplished by this merge).
+svn_merge.sh: the command used for the merge.
 " 
 add_list="
 "
 delete_list="
 "
 move_list="
+	get_started
+	introduction/introduction.vcproj
+	introduction/introduction.sln
+	introduction/exp_apx/exp_apx_rev.cpp
+	introduction/exp_apx/exp_apx.cpp
+	introduction/exp_apx/exp_apx.hpp
+	introduction/exp_apx/exp_apx_for.cpp
+	introduction/exp_apx/exp_apx_cppad.cpp
+	introduction/exp_apx/exp_apx_seq.cpp
+	omh/exp_apx_rev.omh
+	omh/exp_apx.omh
+	omh/exp_apx_for.omh
+	omh/exp_apx_seq.omh
 "
 #
 change_list="
-	svn_commit.sh
+	svn_merge.sh
 	omh/wish_list.omh
+	svn_commit.sh
+	check_include_omh.sh
+	introduction/exp_apx/exp_eps.cpp
+	introduction/exp_apx/exp_eps.omh
+	introduction/exp_apx/exp_eps.hpp
+	introduction/exp_apx/exp_eps_for.cpp
+	introduction/exp_apx/exp_eps_cppad.cpp
+	introduction/exp_apx/exp_eps_seq.cpp
+	introduction/exp_apx/exp_2.cpp
+	introduction/exp_apx/exp_2.omh
+	introduction/exp_apx/exp_eps_rev.cpp
+	introduction/exp_apx/exp_2.hpp
+	introduction/exp_apx/exp_2_for.cpp
+	introduction/exp_apx/exp_2_cppad.cpp
+	introduction/exp_apx/main.cpp
+	introduction/exp_apx/exp_apx.vcproj
+	introduction/exp_apx/exp_2_seq.cpp
+	introduction/exp_apx/makefile.am
+	introduction/exp_apx/exp_2_rev.cpp
+	omh/whats_new_06.omh
 	omh/whats_new_07.omh
-	speed/adolc/poly.cpp
+	omh/introduction.omh
+	doc.omh
 "
 #
 copy_branch="" 

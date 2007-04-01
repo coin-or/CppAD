@@ -25,13 +25,13 @@ echo "DryRun = $DryRun"
 ToDirectory=trunk
 #
 # Name of the directory where the changes have been committed
-FromDirectory=branches/openmp
+FromDirectory=branches/intro
 #
 # Version of the repository corresponding to FromDirectory just before changes
-Start=867
+Start=884
 # 
 # Version of the repository corresponding to FromDirecrtory after the changes
-End=874
+End=900
 #
 # echo the svn merge command
 echo "cd  .."

@@ -29,6 +29,7 @@ list="
 	introduction/get_started/*.cpp
 	introduction/exp_apx/*.cpp
 	introduction/exp_apx/*.hpp
+	introduction/exp_apx/*.omh
 	openmp/*.hpp
 	openmp/*.cpp
 	openmp/*.sh

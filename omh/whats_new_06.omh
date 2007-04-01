@@ -11,7 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_06$$
 $spell
-	exp_apx
+	apx
+	exp_eps
 	Alloc
 	fadbad
 	exp
@@ -70,24 +71,24 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 12-24$$
-Move $code exp_apx_ad$$ to $code exp_apx_cppad$$ and
+Move $code exp_eps_ad$$ to $code exp_eps_cppad$$ and
 add exercises to the following sections:
-$cref/exp_apx_rev/$$,
-$cref/exp_apx_cppad.cpp/$$.
+$cref/exp_eps_rev/$$,
+$cref/exp_eps_cppad.cpp/$$.
 $pre
 
 $$
 Add operation sequence indices to help track operations in
-$cref/exp_apx_seq/$$,
-$cref/exp_apx_for/$$,
-$cref/exp_apx_rev/$$.
+$cref/exp_eps_seq/$$,
+$cref/exp_eps_for/$$,
+$cref/exp_eps_rev/$$.
 
 $head 12-23$$
 Add exercises to the following sections:
 $cref/get_started.cpp/$$,
-$cref/exp_apx/$$, 
-$cref/exp_apx_seq/$$, and
-$cref/exp_apx_for/$$.
+$cref/exp_eps/$$, 
+$cref/exp_eps_seq/$$, and
+$cref/exp_eps_for/$$.
 
 $head 12-22$$
 Move $cref/get_started.cpp/$$ below the $cref/introduction/$$ directory.
@@ -539,7 +540,7 @@ this conflict between CppAD and $href%http://valgrind.org/%valgrind%$$.
 
 $head 07-14$$
 Make some improvements were made to the $cref/Introduction/$$, 
-$cref/exp_apx.hpp/$$ and $cref/exp_apx_rev/$$ sections.
+$cref/exp_eps.hpp/$$ and $cref/exp_eps_rev/$$ sections.
 
 $head 07-12$$
 Use a drop down menu for the navigation links, instead of a separate frame
@@ -631,7 +632,7 @@ $pre
 
 $$
 In the $xref/Introduction/$$ example,
-$latex exp_apx$$ was changed to $latex {\rm exp\_apx}$$.
+$latex exp_eps$$ was changed to $latex {\rm exp\_eps}$$.
 
 $head 06-05$$
 Change $xref/BenderQuad/$$ 

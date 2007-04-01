@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,10 +13,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin exp_apx_main.cpp$$
 $spell
 	Cpp
-	exp_apx
+	exp_eps
+	apx
 $$
 
-$section exp_apx: Report All the Test Routine Results$$
+$section exp_apx: Run All Exponential Approximation Tests$$
 
 $index exp_apx, main test$$
 $index run, exp_apx test$$
@@ -34,11 +35,16 @@ $end
 # include <iostream>
 
 // external complied tests
-extern bool exp_apx(void);
-extern bool exp_apx_cppad(void);
-extern bool exp_apx_for(void);
-extern bool exp_apx_seq(void);
-extern bool exp_apx_rev(void);
+extern bool exp_2(void);
+extern bool exp_2_cppad(void);
+extern bool exp_2_for(void);
+extern bool exp_2_rev(void);
+extern bool exp_2_seq(void);
+extern bool exp_eps(void);
+extern bool exp_eps_cppad(void);
+extern bool exp_eps_for(void);
+extern bool exp_eps_seq(void);
+extern bool exp_eps_rev(void);
 
 namespace {
 	// function that runs one test
@@ -67,14 +73,19 @@ int main(void)
 	// This comment is used by OneTest 
 
 	// external compiled tests
-	ok &= Run( exp_apx,         "exp_apx"        );
-	ok &= Run( exp_apx_cppad,   "exp_apx_cppad"  );
-	ok &= Run( exp_apx_for,     "exp_apx_for"    );
-	ok &= Run( exp_apx_seq,     "exp_apx_seq"    );
-	ok &= Run( exp_apx_rev,     "exp_apx_rev"    );
+	ok &= Run( exp_2,           "exp_2"          );
+	ok &= Run( exp_2_cppad,     "exp_2_cppad"    );
+	ok &= Run( exp_2_for,       "exp_2_for"      );
+	ok &= Run( exp_2_rev,       "exp_2_rev"      );
+	ok &= Run( exp_2_seq,       "exp_2_seq"      );
+	ok &= Run( exp_eps,         "exp_eps"        );
+	ok &= Run( exp_eps_cppad,   "exp_eps_cppad"  );
+	ok &= Run( exp_eps_for,     "exp_eps_for"    );
+	ok &= Run( exp_eps_seq,     "exp_eps_seq"    );
+	ok &= Run( exp_eps_rev,     "exp_eps_rev"    );
 	if( ok )
-		cout << "All " << Run_ok_count << " tests passed." << endl;
-	else	cout << Run_error_count << " tests failed." << endl;
+		cout << "All " << int(Run_ok_count) << " tests passed." << endl;
+	else	cout << int(Run_error_count) << " tests failed." << endl;
 
 	return static_cast<int>( ! ok );
 }

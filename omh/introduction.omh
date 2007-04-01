@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin Introduction$$
 $spell
-	exp_apx
+	exp_eps
 	Griewank
 	Andreas
 	CppAD
@@ -78,11 +78,11 @@ Present a simple program using CppAD to compute the derivative
 of a polynomial.
 $lnext
 Define an algorithm
-that approximates the exponential function, exp_apx.
+that approximates the exponential function, exp_eps.
 $lnext
 Write out 
 the floating point operation sequence 
-that corresponds to a specific input to exp_apx. 
+that corresponds to a specific input to exp_eps. 
 $lnext
 Use the operation sequence, and a forward mode sweep,
 to calculate a derivative of the function corresponding 
@@ -93,7 +93,7 @@ $lnext
 Use CppAD to compute the derivative of the operation sequence
 both with a forward mode sweep and with a reverse mode sweep.
 $lnext
-Run all of the exp_apx routines and check the results.
+Run all of the exp_eps routines and check the results.
 $lend
 
 $head Reference$$
@@ -109,11 +109,8 @@ SIAM Frontiers in Applied Mathematics,
 
 $childtable%
 	introduction/get_started/get_started.cpp%
-	omh/exp_apx.omh%
-	omh/exp_apx_seq.omh%
-	omh/exp_apx_for.omh%
-	omh/exp_apx_rev.omh%
-	introduction/exp_apx/exp_apx_cppad.cpp%
+	introduction/exp_apx/exp_2.hpp%
+	introduction/exp_apx/exp_eps.hpp%
 	introduction/exp_apx/main.cpp
 %$$
 
