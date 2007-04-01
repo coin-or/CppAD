@@ -449,7 +449,7 @@ as equal to $latex f_3 $$
 except that $latex v_3 $$ is eliminated using this operation; i.e.,
 $latex \[
 f_2 = 
-f_2 [ v_1 , v_2 , v_3 ( v_1 ) ]
+f_3 [ v_1 , v_2 , v_3 ( v_1 ) ]
 \] $$
 Note that the value of $latex v_1$$ is equal to $latex x$$
 which is .5 for this evaluation.
