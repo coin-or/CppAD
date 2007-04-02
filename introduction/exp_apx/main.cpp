@@ -17,7 +17,7 @@ $spell
 	apx
 $$
 
-$section exp_apx: Run All Exponential Approximation Tests$$
+$section Run All the exp_2 and exp_eps Tests$$
 
 $index exp_apx, main test$$
 $index run, exp_apx test$$

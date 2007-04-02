@@ -74,7 +74,7 @@ $head 12-24$$
 Move $code exp_eps_ad$$ to $code exp_eps_cppad$$ and
 add exercises to the following sections:
 $cref/exp_eps_rev/$$,
-$cref/exp_eps_cppad.cpp/$$.
+$cref/exp_eps_cppad/$$.
 $pre
 
 $$

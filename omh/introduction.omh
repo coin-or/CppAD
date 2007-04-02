@@ -73,27 +73,42 @@ and the amount of computation and memory required
 for a forward or reverse sweep.
 
 $head Outline$$
+$list Alpha$$
+Demonstrate the use of CppAD to calculate derivatives of a 
+polynomial: $cref/get_started.cpp/$$.
+
+$lnext
+Present two algorithms that approximate the exponential function.
+The first algorithm $cref/exp_2.hpp/$$ is simpler and does not 
+include any logical variables or loops.
+The second algorithm $cref/exp_eps.hpp/$$ includes
+logical operations and a $code while$$ loop.
+For each of these algorithms, do the following:
+
 $list number$$
-Present a simple program using CppAD to compute the derivative
-of a polynomial.
+Define the mathematical function corresponding to the algorithm
+($cref/exp_2/$$ and $cref/exp_eps/$$).
 $lnext
-Define an algorithm
-that approximates the exponential function, exp_eps.
+Write out the floating point operation sequence,
+and corresponding values,
+that correspond to executing the algorithm for a specific input
+($cref/exp_2_seq/$$ and $cref/exp_eps_seq/$$).
 $lnext
-Write out 
-the floating point operation sequence 
-that corresponds to a specific input to exp_eps. 
+Compute a forward sweep derivative of the operation sequence
+($cref/exp_2_for/$$ and $cref/exp_eps_for/$$).
 $lnext
-Use the operation sequence, and a forward mode sweep,
-to calculate a derivative of the function corresponding 
-to the operation sequence.
+Compute a reverse sweep derivative of the operation sequence
+($cref/exp_2_rev/$$ and $cref/exp_eps_rev/$$).
 $lnext
-Calculate the same derivative using a reverse mode sweep.
+Use CppAD to compute both a forward and reverse sweep 
+of the operation sequence
+($cref/exp_2_cppad/$$ and $cref/exp_eps_cppad/$$).
+$lend
+
 $lnext
-Use CppAD to compute the derivative of the operation sequence
-both with a forward mode sweep and with a reverse mode sweep.
-$lnext
-Run all of the exp_eps routines and check the results.
+The program $cref/exp_apx_main.cpp/$$ runs all of the test
+routines that validate the calculations in the $cref/exp_2/$$
+and $cref/exp_eps/$$ presentation.
 $lend
 
 $head Reference$$

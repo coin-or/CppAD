@@ -42,58 +42,30 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Merge in changes from branches/intro.
+log_entry="Improvements to Introduction.
 
 svn_commit.sh: file that made this commit.
-whish_list: remove Introduction item (accomplished by this merge).
-svn_merge.sh: the command used for the merge.
+exp_eps_cppad.cpp: change section tag from exp_eps_cppad.cpp to exp_eps_cppad.
+exp_2_cppad.cpp: change section tag from exp_2_cppad.cpp to exp_2_cppad.
+main.cpp: improve title for this section.
+introduction.omh: correct outline to correspond to two examples.
+whats_new_06.omh: change exp_eps_cppad.cpp to exp_eps_cppad.
+introduction.omh: improve outline.
 " 
 add_list="
 "
 delete_list="
 "
 move_list="
-	get_started
-	introduction/introduction.vcproj
-	introduction/introduction.sln
-	introduction/exp_apx/exp_apx_rev.cpp
-	introduction/exp_apx/exp_apx.cpp
-	introduction/exp_apx/exp_apx.hpp
-	introduction/exp_apx/exp_apx_for.cpp
-	introduction/exp_apx/exp_apx_cppad.cpp
-	introduction/exp_apx/exp_apx_seq.cpp
-	omh/exp_apx_rev.omh
-	omh/exp_apx.omh
-	omh/exp_apx_for.omh
-	omh/exp_apx_seq.omh
 "
 #
 change_list="
-	svn_merge.sh
-	omh/wish_list.omh
 	svn_commit.sh
-	check_include_omh.sh
-	introduction/exp_apx/exp_eps.cpp
-	introduction/exp_apx/exp_eps.omh
-	introduction/exp_apx/exp_eps.hpp
-	introduction/exp_apx/exp_eps_for.cpp
 	introduction/exp_apx/exp_eps_cppad.cpp
-	introduction/exp_apx/exp_eps_seq.cpp
-	introduction/exp_apx/exp_2.cpp
-	introduction/exp_apx/exp_2.omh
-	introduction/exp_apx/exp_eps_rev.cpp
-	introduction/exp_apx/exp_2.hpp
-	introduction/exp_apx/exp_2_for.cpp
 	introduction/exp_apx/exp_2_cppad.cpp
 	introduction/exp_apx/main.cpp
-	introduction/exp_apx/exp_apx.vcproj
-	introduction/exp_apx/exp_2_seq.cpp
-	introduction/exp_apx/makefile.am
-	introduction/exp_apx/exp_2_rev.cpp
 	omh/whats_new_06.omh
-	omh/whats_new_07.omh
 	omh/introduction.omh
-	doc.omh
 "
 #
 copy_branch="" 
