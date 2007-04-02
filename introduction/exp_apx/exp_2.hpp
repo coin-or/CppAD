@@ -131,7 +131,7 @@ $codep
 	double y = exp_2(x);
 $$
 What is the value assigned to 
-$code v_1$$, $code v_2$$, ... ,$code v_5$$ in $cref/exp_2.hpp/$$ ?
+$code v1$$, $code v2$$, ... ,$code v5$$ in $cref/exp_2.hpp/$$ ?
 $lnext
 Extend the routine $code exp_2.hpp$$ to
 a routine $code exp_3.hpp$$ that computes
@@ -157,12 +157,12 @@ $end
 // BEGIN PROGRAM
 template <class Type>
 Type exp_2(const Type &x) 
-{       Type v_1  = x;                 // v_1 = x
-        Type v_2  = Type(1) + v_1;     // v_2 = 1 + x
-        Type v_3  = v_1 * v_1;         // v_3 = x^2
-        Type v_4  = v_3 / Type(2);     // v_4 = x^2 / 2 
-        Type v_5  = v_2 + v_4;         // v_5 = 1 + x + x^2 / 2
-        return v_5;                    // exp_2(x) = 1 + x + x^2 / 2
+{       Type v1  = x;                // v1 = x
+        Type v2  = Type(1) + v1;     // v2 = 1 + x
+        Type v3  = v1 * v1;          // v3 = x^2
+        Type v4  = v3 / Type(2);     // v4 = x^2 / 2 
+        Type v5  = v2 + v4;          // v5 = 1 + x + x^2 / 2
+        return v5;                   // exp_2(x) = 1 + x + x^2 / 2
 }
 // END PROGRAM
 

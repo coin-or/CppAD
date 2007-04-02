@@ -42,15 +42,12 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Improvements to Introduction.
+log_entry="Change introduction source code v_[0-9] to v[0-9].
 
 svn_commit.sh: file that made this commit.
-exp_eps_cppad.cpp: change section tag from exp_eps_cppad.cpp to exp_eps_cppad.
-exp_2_cppad.cpp: change section tag from exp_2_cppad.cpp to exp_2_cppad.
-main.cpp: improve title for this section.
-introduction.omh: correct outline to correspond to two examples.
-whats_new_06.omh: change exp_eps_cppad.cpp to exp_eps_cppad.
-introduction.omh: improve outline.
+
+files changed:
+exp_eps_for.cpp, exp_2.omh, exp_2.hpp, exp_2_for.cpp, exp_2_seq.cpp.
 " 
 add_list="
 "
@@ -61,11 +58,11 @@ move_list="
 #
 change_list="
 	svn_commit.sh
-	introduction/exp_apx/exp_eps_cppad.cpp
-	introduction/exp_apx/exp_2_cppad.cpp
-	introduction/exp_apx/main.cpp
-	omh/whats_new_06.omh
-	omh/introduction.omh
+	introduction/exp_apx/exp_eps_for.cpp
+	introduction/exp_apx/exp_2.omh
+	introduction/exp_apx/exp_2.hpp
+	introduction/exp_apx/exp_2_for.cpp
+	introduction/exp_apx/exp_2_seq.cpp
 "
 #
 copy_branch="" 

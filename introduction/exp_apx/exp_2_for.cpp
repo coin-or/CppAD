@@ -34,19 +34,19 @@ bool exp_2_for(void)
 	// set the value of v[j] for j = 1 , ... , 5
 	ok &= exp_2_seq(v);
 
-	v_x[1] = 1.;                                      // v_1 = x
+	v_x[1] = 1.;                                      // v1 = x
 	ok    &= std::fabs( v_x[1] - 1. ) <= 1e-10;
 
-	v_x[2] = v_x[1];                                  // v_2 = 1 + v_1
+	v_x[2] = v_x[1];                                  // v2 = 1 + v1
 	ok    &= std::fabs( v_x[2] - 1. ) <= 1e-10;
 
-	v_x[3] = v_x[1] * v[1] + v[1] * v_x[1];           // v_3 = v_1 * v_1
+	v_x[3] = v_x[1] * v[1] + v[1] * v_x[1];           // v3 = v1 * v1
 	ok    &= std::fabs( v_x[3] - 1. ) <= 1e-10;
 
-	v_x[4] = v_x[3] / 2.;                             // v_4 = v_3 / 2
+	v_x[4] = v_x[3] / 2.;                             // v4 = v3 / 2
 	ok    &= std::fabs( v_x[4] - 0.5) <= 1e-10;
 
-	v_x[5] = v_x[2] + v_x[4];                         // v_5 = v_2 + v_4
+	v_x[5] = v_x[2] + v_x[4];                         // v5 = v2 + v4
 	ok    &= std::fabs( v_x[5] - 1.5) <= 1e-10;
 
 	return ok;

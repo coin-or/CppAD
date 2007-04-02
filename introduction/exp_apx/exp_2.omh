@@ -118,27 +118,27 @@ $bold Index$$
 	$cnext $pre  $$ $cnext $bold Zero Order$$
 $rnext
 1
-	$cnext $pre  $$ $cnext $code Type v_1  = x;$$
+	$cnext $pre  $$ $cnext $code Type v1  = x;$$
 	$cnext $cnext $latex v_1 = x $$ 
 	$cnext $cnext = 0.5      
 $rnext
 2
-	$cnext $pre  $$ $cnext $code Type v_2  = Type(1) + v_1;$$
+	$cnext $pre  $$ $cnext $code Type v2  = Type(1) + v1;$$
 	$cnext $cnext $latex v_2 = 1 + v_1 $$ 
 	$cnext $cnext = 1.5      
 $rnext
 3
-	$cnext $pre  $$ $cnext $code Type v_3  = v_1 * v_1;$$
+	$cnext $pre  $$ $cnext $code Type v3  = v1 * v1;$$
 	$cnext $cnext $latex v_3 = v_1 * v_1 $$ 
 	$cnext $cnext = 0.25      
 $rnext
 4
-	$cnext $pre  $$ $cnext $code Type v_4  = v_3 / Type(2);$$
+	$cnext $pre  $$ $cnext $code Type v4  = v3 / Type(2);$$
 	$cnext $cnext $latex v_4 = v_3 / 2$$ 
 	$cnext $cnext = 0.125      
 $rnext
 5
-	$cnext $pre  $$ $cnext $code  Type v_5  = v_2 + v_4;$$
+	$cnext $pre  $$ $cnext $code  Type v5  = v2 + v4;$$
 	$cnext $cnext $latex v_5 = v_2 + v_4 $$ 
 	$cnext $cnext = 1.625        
 $tend

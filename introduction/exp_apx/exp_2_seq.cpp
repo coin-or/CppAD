@@ -31,19 +31,19 @@ bool exp_2_seq(double *v)  // double v[6]
 {	bool  ok = true;
 	double x = .5;
 
-	v[1] = x;                                  // v_1 = x
+	v[1] = x;                                  // v1 = x
 	ok  &= std::fabs( v[1] - 0.5) < 1e-10;
 
-	v[2] = 1. + v[1];                          // v_2 = 1 + v_1
+	v[2] = 1. + v[1];                          // v2 = 1 + v1
 	ok  &= std::fabs( v[2] - 1.5) < 1e-10;
 
-	v[3] = v[1] * v[1];                        // v_3 = v_1 * v_1
+	v[3] = v[1] * v[1];                        // v3 = v1 * v1
 	ok  &= std::fabs( v[3] - 0.25) < 1e-10;
 
-	v[4] = v[3] / 2.;                          // v_4 = v_3 / 2
+	v[4] = v[3] / 2.;                          // v4 = v3 / 2
 	ok  &= std::fabs( v[4] - 0.125) < 1e-10;
 
-	v[5] = v[2] + v[4];                        // v_5  = v_2 + v_4
+	v[5] = v[2] + v[4];                        // v5  = v2 + v4
 	ok  &= std::fabs( v[5] - 1.625) < 1e-10;
 
 	return ok;
