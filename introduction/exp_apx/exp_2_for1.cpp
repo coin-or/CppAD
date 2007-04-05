@@ -9,7 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin exp_2_for.cpp$$
+$begin exp_2_for1.cpp$$
 $spell
 	std
 	exp_2_for
@@ -26,13 +26,13 @@ $index exp_2, first order$$
 
 $codep */
 # include <cmath>                 // prototype for fabs
-extern bool exp_2_seq(double *v); // computes zero order forward sweep
-bool exp_2_for(void)
+extern bool exp_2_for0(double *v); // computes zero order forward sweep
+bool exp_2_for1(void)
 {	bool ok = true;
 	double v[6], v_x[6];
 
 	// set the value of v[j] for j = 1 , ... , 5
-	ok &= exp_2_seq(v);
+	ok &= exp_2_for0(v);
 
 	v_x[1] = 1.;                                      // v1 = x
 	ok    &= std::fabs( v_x[1] - 1. ) <= 1e-10;

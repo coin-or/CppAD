@@ -38,7 +38,7 @@ $$
 
 $end
 -----------------------------------------------------------------------------
-$begin exp_eps_seq$$
+$begin exp_eps_for0$$
 $spell
 	cpp
 	exp_eps_seq
@@ -181,11 +181,11 @@ of $latex x = 0.5$$ for which the comparisons would have the
 same result and hence the operation sequence would be the same.
 
 $children%
-	introduction/exp_apx/exp_eps_seq.cpp
+	introduction/exp_apx/exp_eps_for0.cpp
 %$$
 
 $head Verification$$
-The file $xref/exp_eps_seq.cpp/$$ contains a routine 
+The file $xref/exp_eps_for0.cpp/$$ contains a routine 
 that verifies the values computed above.
 It returns true for success and false for failure.
 
@@ -198,17 +198,17 @@ i.e., what are the corresponding values for
 $latex v_1 , v_2 , \ldots , v_7$$.
 $lnext
 Create a modified version of 
-$cref/exp_eps_seq.cpp/$$ that verifies the values you obtained
+$cref/exp_eps_for0.cpp/$$ that verifies the values you obtained
 for the previous exercise.
 $lnext
 Create and run a main program that reports the result of calling 
 the modified version 
-of $cref/exp_eps_seq.cpp/$$ in the previous exercise.
+of $cref/exp_eps_for0.cpp/$$ in the previous exercise.
 $lend
 
 $end
 -----------------------------------------------------------------------------
-$begin exp_eps_for$$
+$begin exp_eps_for1$$
 $spell
 	exp_eps_for
 $$
@@ -225,7 +225,7 @@ to compute $syntax%exp_eps(%x%, %epsilon%)%$$
 with $italic x$$ is equal to .5
 and $italic epsilon$$ is equal to .2. 
 For this case, function corresponding to the 
-$cref/exp_eps operation sequence/exp_eps_seq/Operation Sequence/$$
+$cref/exp_eps operation sequence/exp_eps_for0/Operation Sequence/$$
 has the following form and partial derivative:
 $latex \[
 \begin{array}{rclll}
@@ -239,9 +239,9 @@ $latex \[
 
 $head Operation Sequence$$
 The corresponding 
-$cref/operation sequence/exp_eps_seq/Operation Sequence/$$
+$cref/operation sequence/exp_eps_for0/Operation Sequence/$$
 and 
-$cref/zero order/exp_eps_seq/Operation Sequence/Zero Order/$$
+$cref/zero order/exp_eps_for0/Operation Sequence/Zero Order/$$
 forward sweep values
 are inputs that are need by a first order sweep.
 A first order sweep 
@@ -345,11 +345,11 @@ for this case.
 
 
 $children%
-	introduction/exp_apx/exp_eps_for.cpp
+	introduction/exp_apx/exp_eps_for1.cpp
 %$$
 
 $head Verification$$
-The file $xref/exp_eps_for.cpp/$$ contains a routine 
+The file $xref/exp_eps_for1.cpp/$$ contains a routine 
 that verifies the values computed above.
 It returns true for success and false for failure.
 
@@ -362,11 +362,11 @@ i.e., what are the corresponding values for
 $latex v_1 , v_2 , \cdots , v_7$$ and
 $latex \partial_x v_1 , \partial_x v_2 , \cdots , \partial_x v_7$$ ?
 $lnext
-Create a modified version of $cref/exp_eps_for.cpp/$$ that verifies 
+Create a modified version of $cref/exp_eps_for1.cpp/$$ that verifies 
 the derivative values from the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
-$cref/exp_eps_for.cpp/$$.
+$cref/exp_eps_for1.cpp/$$.
 $lnext
 Suppose that $latex x = .1$$ and $latex epsilon = .2$$,
 what is the operation sequence corresponding to 
@@ -377,7 +377,7 @@ $lend
 
 $end
 -----------------------------------------------------------------------------
-$begin exp_eps_rev$$
+$begin exp_eps_rev1$$
 $spell
 	exp_eps_rev
 $$
@@ -390,9 +390,9 @@ $index reverse, first order$$
 
 $head First Order Reverse$$
 First order reverse mode uses the 
-$cref/operation sequence/exp_eps_seq/Operation Sequence/$$
+$cref/operation sequence/exp_eps_for0/Operation Sequence/$$
 and 
-$cref/zero order/exp_eps_seq/Operation Sequence/Zero Order/$$
+$cref/zero order/exp_eps_for0/Operation Sequence/Zero Order/$$
 forward sweep values
 to compute the first order derivative
 of one dependent variables with respect to all the independent variables. 
@@ -591,16 +591,16 @@ so the derivative of $syntax%exp_eps(%x%, %epsilon%)%$$
 at $italic x$$ equal to .5 and $italic epsilon$$ equal .2 is
 1.5 in the $italic x$$ direction and zero in the $italic epsilon$$ direction.
 We also note that 
-$cref/forward/exp_eps_for/$$ forward mode gave the 
+$cref/forward/exp_eps_for1/$$ forward mode gave the 
 same result for the partial in the $italic x$$ direction.
 
 
 $children%
-	introduction/exp_apx/exp_eps_rev.cpp
+	introduction/exp_apx/exp_eps_rev1.cpp
 %$$
 
 $head Verification$$
-The file $xref/exp_eps_rev.cpp/$$ contains a routine 
+The file $xref/exp_eps_rev1.cpp/$$ contains a routine 
 that verifies the values computed above.
 It returns true for success and false for failure.
 It only tests the partial derivatives of
@@ -618,11 +618,11 @@ $latex \D{f_j}{v_k}$$ for all $latex j, k$$ such that
 $latex \D{f_j}{v_k} \neq 0$$.
 $lnext
 Create a modified version of 
-$cref/exp_eps_rev.cpp/$$ 
+$cref/exp_eps_rev1.cpp/$$ 
 that verifies the values you obtained for the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
-$cref/exp_eps_rev.cpp/$$.
+$cref/exp_eps_rev1.cpp/$$.
 $lend
 
 $end

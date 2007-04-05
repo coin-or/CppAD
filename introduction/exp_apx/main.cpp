@@ -37,14 +37,14 @@ $end
 // external complied tests
 extern bool exp_2(void);
 extern bool exp_2_cppad(void);
-extern bool exp_2_for(void);
-extern bool exp_2_rev(void);
-extern bool exp_2_seq(void);
+extern bool exp_2_for1(void);
+extern bool exp_2_rev1(void);
+extern bool exp_2_for0(void);
 extern bool exp_eps(void);
 extern bool exp_eps_cppad(void);
-extern bool exp_eps_for(void);
-extern bool exp_eps_seq(void);
-extern bool exp_eps_rev(void);
+extern bool exp_eps_for1(void);
+extern bool exp_eps_for0(void);
+extern bool exp_eps_rev1(void);
 
 namespace {
 	// function that runs one test
@@ -75,14 +75,14 @@ int main(void)
 	// external compiled tests
 	ok &= Run( exp_2,           "exp_2"          );
 	ok &= Run( exp_2_cppad,     "exp_2_cppad"    );
-	ok &= Run( exp_2_for,       "exp_2_for"      );
-	ok &= Run( exp_2_rev,       "exp_2_rev"      );
-	ok &= Run( exp_2_seq,       "exp_2_seq"      );
+	ok &= Run( exp_2_for1,       "exp_2_for1"      );
+	ok &= Run( exp_2_rev1,       "exp_2_rev1"      );
+	ok &= Run( exp_2_for0,       "exp_2_for0"      );
 	ok &= Run( exp_eps,         "exp_eps"        );
 	ok &= Run( exp_eps_cppad,   "exp_eps_cppad"  );
-	ok &= Run( exp_eps_for,     "exp_eps_for"    );
-	ok &= Run( exp_eps_seq,     "exp_eps_seq"    );
-	ok &= Run( exp_eps_rev,     "exp_eps_rev"    );
+	ok &= Run( exp_eps_for1,     "exp_eps_for1"    );
+	ok &= Run( exp_eps_for0,     "exp_eps_for0"    );
+	ok &= Run( exp_eps_rev1,     "exp_eps_rev1"    );
 	if( ok )
 		cout << "All " << int(Run_ok_count) << " tests passed." << endl;
 	else	cout << int(Run_error_count) << " tests failed." << endl;

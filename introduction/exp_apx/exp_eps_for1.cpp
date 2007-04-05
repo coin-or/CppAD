@@ -9,7 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin exp_eps_for.cpp$$
+$begin exp_eps_for1.cpp$$
 $spell
 	std
 	vars
@@ -27,13 +27,13 @@ $index exp_2, first order$$
 
 $codep */
 # include <cmath>                   // for fabs function
-extern bool exp_eps_seq(double *v); // computes zero order forward sweep
-bool exp_eps_for(void)
+extern bool exp_eps_for0(double *v); // computes zero order forward sweep
+bool exp_eps_for1(void)
 {	bool ok = true;
 	double v[8], v_x[8];
 
 	// set the value of v[j] for j = 1 , ... , 7
-	ok &= exp_eps_seq(v);
+	ok &= exp_eps_for0(v);
 
 	v_x[1] = 1.;                                       // v1 = x
 	ok    &= std::fabs( v_x[1] - 1. ) <= 1e-10;

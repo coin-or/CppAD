@@ -9,7 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin exp_eps_seq.cpp$$
+$begin exp_eps_for0.cpp$$
 $spell
 	std
 	exp_eps_seq
@@ -27,7 +27,7 @@ $index exp_eps, zero order$$
 
 $codep */
 # include <cmath>              // for fabs function
-bool exp_eps_seq(double *v)    // double v[8]
+bool exp_eps_for0(double *v)    // double v[8]
 {	bool  ok = true;
 	double x = .5;
 
@@ -54,9 +54,9 @@ bool exp_eps_seq(double *v)    // double v[8]
 
 	return ok;
 }
-bool exp_eps_seq(void)
+bool exp_eps_for0(void)
 {	double v[8];
-	return exp_eps_seq(v);
+	return exp_eps_for0(v);
 }
 /* $$
 $end

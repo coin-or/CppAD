@@ -38,7 +38,7 @@ $$
 
 $end
 -----------------------------------------------------------------------------
-$begin exp_2_seq$$
+$begin exp_2_for0$$
 $spell
 	cpp
 	exp_2_seq
@@ -149,11 +149,11 @@ The return value of the algorithm for this case is
 $latex v_5$$ which is equal to 1.625.
 
 $children%
-	introduction/exp_apx/exp_2_seq.cpp
+	introduction/exp_apx/exp_2_for0.cpp
 %$$
 
 $head Verification$$
-The file $xref/exp_2_seq.cpp/$$ contains a routine 
+The file $xref/exp_2_for0.cpp/$$ contains a routine 
 that verifies the values computed above.
 It returns true for success and false for failure.
 
@@ -168,18 +168,18 @@ $latex \[
 \]$$
 $lnext
 Create a modified version of 
-$cref/exp_2_seq.cpp/$$ that verifies the values you obtained
+$cref/exp_2_for0.cpp/$$ that verifies the values you obtained
 for the previous exercise.
 $lnext
 Create and run a main program that reports the result of calling 
 the modified version 
-of $cref/exp_2_seq.cpp/$$ in the previous exercise.
+of $cref/exp_2_for0.cpp/$$ in the previous exercise.
 $lend
 
 
 $end
 ------------------------------------------------------------------------------
-$begin exp_2_for$$
+$begin exp_2_for1$$
 $spell
 	exp_2_for
 $$
@@ -198,7 +198,7 @@ $index forward, first order$$
 
 $head Purpose$$
 First order forward mode uses the 
-$cref/operation sequence/exp_2_seq/Operation Sequence/$$,
+$cref/operation sequence/exp_2_for0/Operation Sequence/$$,
 and zero order forward sweep values,
 to compute the first order partial derivative
 of all the dependent variables with respect to one independent variable. 
@@ -217,7 +217,7 @@ An algorithmic differentiation package
 does not operate on the mathematical form of the function,
 or its derivative,
 but rather on the 
-$cref/operation sequence/exp_2_seq/Operation Sequence/$$
+$cref/operation sequence/exp_2_for0/Operation Sequence/$$
 for the for the algorithm that is used to evaluate the function.
 
 $head Operation Sequence$$
@@ -225,7 +225,7 @@ We consider the case where $cref/exp_2.hpp/$$ is executed with
 $latex x = .5$$.
 The corresponding operation sequence and 
 zero order forward mode values
-(see $cref/zero order trace/exp_2_seq/Operation Sequence/Trace/$$)
+(see $cref/zero order trace/exp_2_for0/Operation Sequence/Trace/$$)
 are inputs and are used by a first order forward mode sweep.
 
 $subhead Index$$
@@ -240,7 +240,7 @@ mathematical function corresponding to each atomic operation in the sequence.
 
 $subhead Zero Order$$
 The Zero Order column contains the variable value
-(see $cref/zero order trace/exp_2_seq/Operation Sequence/Trace/$$)
+(see $cref/zero order trace/exp_2_for0/Operation Sequence/Trace/$$)
 corresponding to each atomic operation in the sequence.
 
 $subhead Partial$$
@@ -305,18 +305,18 @@ for this case.
 
 
 $children%
-	introduction/exp_apx/exp_2_for.cpp
+	introduction/exp_apx/exp_2_for1.cpp
 %$$
 $head Verification$$
-The file $xref/exp_2_for.cpp/$$ contains a routine 
+The file $xref/exp_2_for1.cpp/$$ contains a routine 
 which verifies the values computed above.
 It returns true for success and false for failure.
 
 $head Exercises$$
 $list number$$
-Which statement in the routine defined by $cref/exp_2_for.cpp/$$ uses 
+Which statement in the routine defined by $cref/exp_2_for1.cpp/$$ uses 
 the values that are calculated by the routine 
-defined by $cref/exp_2_seq.cpp/$$ ?
+defined by $cref/exp_2_for0.cpp/$$ ?
 $lnext
 Suppose that $latex x = .1$$,
 what are the results of a zero and first order forward mode sweep for 
@@ -325,16 +325,16 @@ i.e., what are the corresponding values for
 $latex v_1, v_2, \cdots , v_5$$ and
 $latex \partial_x v_1, \cdots , \partial_x v_5$$ ?
 $lnext
-Create a modified version of $cref/exp_2_for.cpp/$$ that verifies 
+Create a modified version of $cref/exp_2_for1.cpp/$$ that verifies 
 the derivative values from the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
-$cref/exp_2_for.cpp/$$.
+$cref/exp_2_for1.cpp/$$.
 $lend
 
 $end
 ------------------------------------------------------------------------------
-$begin exp_2_rev$$
+$begin exp_2_rev1$$
 $spell
 	exp_2_rev
 $$
@@ -353,7 +353,7 @@ $index reverse, first order$$
 
 $head Purpose$$
 First order reverse mode uses the 
-$cref/operation sequence/exp_2_seq/Operation Sequence/$$
+$cref/operation sequence/exp_2_for0/Operation Sequence/$$
 and zero order forward sweep values
 to compute the first order derivative
 of one dependent variable with respect to all the independent variables. 
@@ -364,7 +364,7 @@ In reverse mode we choose one dependent variable and
 compute its derivative with respect to all the independent variables.
 For our example, we chose the value returned by $cref/exp_2.hpp/$$
 which is equal to the symbol $latex v_5$$ in the
-$cref/exp_2 operation sequence/exp_2_seq/Operation Sequence/$$.
+$cref/exp_2 operation sequence/exp_2_for0/Operation Sequence/$$.
 We begin with the function $latex f_5 $$ where $latex v_5$$ 
 is both an argument and the value of the function; i.e.,
 $latex \[
@@ -494,10 +494,10 @@ so the derivative of this is the derivative of
 the function defined by $cref/exp_2.hpp/$$ at $latex x = .5$$.
 
 $children%
-	introduction/exp_apx/exp_2_rev.cpp
+	introduction/exp_apx/exp_2_rev1.cpp
 %$$
 $head Verification$$
-The file $xref/exp_2_rev.cpp/$$ contains a routine 
+The file $xref/exp_2_rev1.cpp/$$ contains a routine 
 which verifies the values computed above.
 It returns true for success and false for failure.
 It only tests the partial derivatives of
@@ -505,9 +505,9 @@ $latex f_k$$ that are different from those of $latex f_{k+1}$$.
 
 $head Exercises$$
 $list number$$
-Which statement in the routine defined by $cref/exp_2_rev.cpp/$$ uses 
+Which statement in the routine defined by $cref/exp_2_rev1.cpp/$$ uses 
 the values that are calculated by the routine 
-defined by $cref/exp_2_seq.cpp/$$ ?
+defined by $cref/exp_2_for0.cpp/$$ ?
 $lnext
 Consider the case where $latex x = .1$$
 and we first preform a zero order forward mode sweep
@@ -518,11 +518,11 @@ what are the corresponding derivatives of
 $latex f_5 , f_4 , \ldots , f_1$$.
 $lnext
 Create a modified version of 
-$cref/exp_2_rev.cpp/$$ 
+$cref/exp_2_rev1.cpp/$$ 
 that verifies the values you obtained for the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
-$cref/exp_2_rev.cpp/$$.
+$cref/exp_2_rev1.cpp/$$.
 $lend
 
 $end

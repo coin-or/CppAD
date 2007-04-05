@@ -9,7 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin exp_2_rev.cpp$$
+$begin exp_2_rev1.cpp$$
 $spell
 	cstddef
 	cmath
@@ -28,13 +28,13 @@ $index exp_2, reverse mode$$
 $codep */
 # include <cstddef>               // define size_t
 # include <cmath>                 // prototype for fabs
-extern bool exp_2_seq(double *v); // computes zero order forward sweep
-bool exp_2_rev(void)
+extern bool exp_2_for0(double *v); // computes zero order forward sweep
+bool exp_2_rev1(void)
 {	bool ok = true;
 
 	// set the value of v[j] for j = 1 , ... , 5
 	double v[6];
-	ok &= exp_2_seq(v);
+	ok &= exp_2_for0(v);
 
 	// initial all partial derivatives as zero
 	double f_v[6];

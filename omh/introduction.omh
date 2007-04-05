@@ -92,13 +92,13 @@ $lnext
 Write out the floating point operation sequence,
 and corresponding values,
 that correspond to executing the algorithm for a specific input
-($cref/exp_2_seq/$$ and $cref/exp_eps_seq/$$).
+($cref/exp_2_for0/$$ and $cref/exp_eps_for0/$$).
 $lnext
 Compute a forward sweep derivative of the operation sequence
-($cref/exp_2_for/$$ and $cref/exp_eps_for/$$).
+($cref/exp_2_for1/$$ and $cref/exp_eps_for1/$$).
 $lnext
 Compute a reverse sweep derivative of the operation sequence
-($cref/exp_2_rev/$$ and $cref/exp_eps_rev/$$).
+($cref/exp_2_rev1/$$ and $cref/exp_eps_rev1/$$).
 $lnext
 Use CppAD to compute both a forward and reverse sweep 
 of the operation sequence
