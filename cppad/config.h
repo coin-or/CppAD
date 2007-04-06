@@ -2,7 +2,7 @@
 /* cppad/config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* does system support gettimeofday (overidden if _MSC_VER defined) */
-#define CPPAD_GETTIMEOFDAY 1
+#define CPPAD_GETTIMEOFDAY 0
 
 /* is CppADvector == boost::numeric::ublas::vector */
 #define CppAD_BOOSTVECTOR 0
