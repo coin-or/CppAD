@@ -42,38 +42,39 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Change file names in prepration for second order example.
+log_entry="Merge in changes from branches/intro.
 
 svn_commit.sh: file that made this commit.
-
+svn_merge.sh: file that did this merge.
 " 
 add_list="
 "
 delete_list="
 "
 move_list="
-	introduction/exp_apx/exp_eps_for.cpp
-	introduction/exp_apx/exp_eps_rev.cpp
-	introduction/exp_apx/exp_eps_seq.cpp
-	introduction/exp_apx/exp_2_for.cpp
-	introduction/exp_apx/exp_2_rev.cpp
-	introduction/exp_apx/exp_2_seq.cpp
 "
 #
 change_list="
 	svn_commit.sh
+	doc.omh
 	introduction/exp_apx/exp_eps_rev1.cpp
+	introduction/exp_apx/exp_eps_rev2.cpp
 	introduction/exp_apx/exp_2_for0.cpp
-	introduction/exp_apx/exp_2_for1.cpp
 	introduction/exp_apx/exp_eps.omh
+	introduction/exp_apx/exp_2_for1.cpp
+	introduction/exp_apx/exp_2_for2.cpp
+	introduction/exp_apx/exp_eps_cppad.cpp
 	introduction/exp_apx/exp_2_rev1.cpp
+	introduction/exp_apx/exp_2_rev2.cpp
 	introduction/exp_apx/exp_2.omh
+	introduction/exp_apx/exp_2_cppad.cpp
 	introduction/exp_apx/main.cpp
+	introduction/exp_apx/exp_apx.vcproj
 	introduction/exp_apx/makefile.am
 	introduction/exp_apx/exp_eps_for0.cpp
 	introduction/exp_apx/exp_eps_for1.cpp
-	omh/whats_new_06.omh
-	omh/introduction.omh
+	introduction/exp_apx/exp_eps_for2.cpp
+	omh/whats_new_07.omh
 "
 #
 copy_branch="" 

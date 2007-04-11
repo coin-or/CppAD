@@ -39,6 +39,40 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-11$$
+Merge in changes made in $code branches/intro$$.
+
+$subhead 04-11$$
+Add $cref/exp_eps_rev2/$$ and its verification routine 
+$cref/exp_eps_rev2.cpp/$$.
+
+$subhead 04-10$$
+Finished off $cref/exp_2_rev2/$$ and
+added $cref/exp_2_rev2.cpp/$$ which verifies its calculations.
+Added second order calculations to $cref/exp_2_cppad/$$.
+Added $cref/exp_eps_for2/$$ and its verification routine.
+
+
+$subhead 04-07$$
+Added a preliminary version of $cref/exp_2_rev2/$$
+(does not yet have verification or exercises).
+
+$subhead 04-06$$
+Fixed a problem with the Microsoft Visual Studio project file 
+$code introduction/exp_apx/exp_apx.vcproj$$
+(it did not track the file name changes of the form 
+$code exp_apx/exp_2_for$$ to $code exp_apx/exp_2_for1$$ 
+on 04-05).
+$pre
+
+$$
+Added $cref/exp_2_for2/$$ to introduction.
+
+$subhead 04-05$$
+Use order expansions in introduction; e.g., the
+$cref/second order expansion/exp_2_for2/Second Order Expansion/$$ 
+for the $cref/exp_2/$$ example.
+
 $head 03-31$$
 Merge in changes made in $code branches/intro$$
 and remove the corresponding Introduction item from the wish list:

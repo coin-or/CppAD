@@ -15,7 +15,8 @@ $latex
 	\newcommand{\C}{ {\bf C} }
 	\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
 	\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
-	\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial {#2}^{#1}} }
+	\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+	\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }
 $$
 $comment default navigate command for all of CppAD documentation$$
 $navigate%
@@ -57,7 +58,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-20070331
+A Package for Differentiation of C++ Algorithms: cppad-20070411
 $$ 
 
 $head Syntax$$
@@ -73,6 +74,8 @@ as $italic Algorithmic Differentiation$$
 (often referred to as $italic Automatic Differentiation$$.) 
 Given a C++ algorithm that computes function values,
 CppAD generates an algorithm that computes its derivative values.
+A brief introduction to Algorithmic Differentiation can be found in
+$href%http://en.wikipedia.org/wiki/Automatic_differentiation%wikipedia%$$.
 
 $list number$$
 $href%http://www.coin-or.org/CppAD/%CppAD%$$

@@ -25,21 +25,21 @@ $spell
 	fabs
 $$
 
-$section exp_eps: Reverse Mode Verification$$
+$section exp_eps: Verify First Order Reverse Sweep$$
 
 $index reverse, exp_eps$$
 $index exp_eps, reverse$$
 
 $codep */
-# include <cstddef>                   // define size_t
-# include <cmath>                     // for fabs function
-extern bool exp_eps_for0(double *v);   // computes zero order forward sweep
+# include <cstddef>                     // define size_t
+# include <cmath>                       // for fabs function
+extern bool exp_eps_for0(double *v0);   // computes zero order forward sweep
 bool exp_eps_rev1(void)
 {	bool ok = true;
 
-	// set the value of v[j] for j = 1 , ... , 7
-	double v[8];
-	ok &= exp_eps_for0(v);
+	// set the value of v0[j] for j = 1 , ... , 7
+	double v0[8];
+	ok &= exp_eps_for0(v0);
 
 	// initial all partial derivatives as zero
 	double f_v[8];
@@ -62,8 +62,8 @@ bool exp_eps_rev1(void)
 	ok     &= std::fabs( f_v[5] - 0.5 ) <= 1e-10;   // f5_v5
 
 	// f4( v1 , v2 , v3 , v4 )
-	f_v[1] += f_v[5] * v[3];
-	f_v[3] += f_v[5] * v[1];
+	f_v[1] += f_v[5] * v0[3];
+	f_v[3] += f_v[5] * v0[1];
 	ok     &= std::fabs( f_v[1] - 0.25) <= 1e-10;   // f4_v1
 	ok     &= std::fabs( f_v[3] - 0.25) <= 1e-10;   // f4_v3
 
@@ -77,7 +77,7 @@ bool exp_eps_rev1(void)
 
 	// f1( v1 )
 	f_v[1] += f_v[2] * 1.;
-	ok     &= std::fabs( f_v[1] - 1.5 ) <= 1e-10;   // f2_v2
+	ok     &= std::fabs( f_v[1] - 1.5 ) <= 1e-10;   // f1_v2
 
 	return ok;
 }

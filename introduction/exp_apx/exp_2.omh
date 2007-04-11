@@ -56,9 +56,11 @@ $index zero, order forward$$
 $index order, zero forward$$
 $index forward, zero order$$
 
-$head Mathematical Function$$
-Suppose that we use the algorithm $xref/exp_2.hpp/$$
-to compute 
+
+$head Mathematical Form$$
+The operation sequence (see below) corresponding to
+the algorithm $xref/exp_2.hpp/$$ is the same for all values of $italic x$$.
+The mathematical form for the corresponding function is
 $latex \[
 	f(x) = 1 + x + x^2 / 2
 \] $$
@@ -66,6 +68,23 @@ An algorithmic differentiation package
 does not operate on the mathematical function $latex f(x)$$
 but rather on the particular algorithm used to compute the function 
 (in this case $cref/exp_2.hpp/$$).
+
+$head Zero Order Expansion$$
+$index expansion, zero order$$
+$index zero, order expansion$$
+$index order, zero expansion$$
+In general, a zero order forward sweep is given a vector
+$latex x^{(0)} \in \R^n$$ and it returns the corresponding vector
+$latex y^{(0)} \in \R^m$$ given by
+$latex \[
+	y^{(0)} = f( x^{(0)} )
+\]$$
+The superscript $latex (0)$$ denotes zero order derivative; 
+i.e., it is equal to the value
+of the corresponding variable.
+For the example we are considering here, 
+both $latex n$$ and $latex m$$ are equal to one.
+
 
 $head Operation Sequence$$
 An atomic $italic Type$$ operation is an operation
@@ -81,9 +100,9 @@ $pre
 
 $$
 We consider the case where $cref/exp_2.hpp/$$ is executed with
-$latex x = .5$$.
-The table below contains a trace of the corresponding operation sequence
-and zero order forward sweep values.
+$latex x^{(0)} = .5$$.
+The table below contains the corresponding operation sequence
+and the results of a zero order sweep.
 
 $subhead Index$$
 The Index column contains the index in the operation sequence
@@ -100,53 +119,52 @@ The Operation column contains the
 mathematical function corresponding to each atomic operation in the sequence.
 
 $subhead Zero Order$$
-The Zero Order column contains the variable value
-corresponding to each atomic operation in the sequence.
-These are also called the zero order forward mode values.
+The Zero Order column contains the zero order derivative for
+the corresponding variable in the operation sequence.
 Forward mode refers to the fact that
-the computations are done in the same order as the original algorithm; i.e,
-in order of increasing index.
-Zero order refers to the fact that variable values are
-zero order derivatives.
+these coefficients are computed in the same order as the original algorithm; 
+i.e, in order of increasing index in the operation sequence.
 
-$subhead Trace$$
+$subhead Sweep$$
 $center
 $table
 $bold Index$$
-	$cnext $pre  $$ $cnext $bold Code$$ 
+	$cnext $pre  $$ $cnext $bold Code$$
 	$cnext $pre  $$ $cnext $bold Operation$$
 	$cnext $pre  $$ $cnext $bold Zero Order$$
 $rnext
 1
 	$cnext $pre  $$ $cnext $code Type v1  = x;$$
-	$cnext $cnext $latex v_1 = x $$ 
-	$cnext $cnext = 0.5      
+	$cnext $cnext $latex v_1 = x $$
+	$cnext $cnext $latex v_1^{(0)} = 0.5$$
 $rnext
 2
 	$cnext $pre  $$ $cnext $code Type v2  = Type(1) + v1;$$
-	$cnext $cnext $latex v_2 = 1 + v_1 $$ 
-	$cnext $cnext = 1.5      
+	$cnext $cnext $latex v_2 = 1 + v_1 $$
+	$cnext $cnext $latex v_2^{(0)} = 1.5$$
 $rnext
 3
 	$cnext $pre  $$ $cnext $code Type v3  = v1 * v1;$$
-	$cnext $cnext $latex v_3 = v_1 * v_1 $$ 
-	$cnext $cnext = 0.25      
+	$cnext $cnext $latex v_3 = v_1 * v_1 $$
+	$cnext $cnext $latex v_3^{(0)} = 0.25$$
 $rnext
 4
 	$cnext $pre  $$ $cnext $code Type v4  = v3 / Type(2);$$
-	$cnext $cnext $latex v_4 = v_3 / 2$$ 
-	$cnext $cnext = 0.125      
+	$cnext $cnext $latex v_4 = v_3 / 2$$
+	$cnext $cnext $latex v_4^{(0)} = 0.125$$
 $rnext
 5
 	$cnext $pre  $$ $cnext $code  Type v5  = v2 + v4;$$
-	$cnext $cnext $latex v_5 = v_2 + v_4 $$ 
-	$cnext $cnext = 1.625        
+	$cnext $cnext $latex v_5 = v_2 + v_4 $$
+	$cnext $cnext $latex v_5^{(0)} = 1.625$$
 $tend
 $$
 
 $head Return Value$$
-The return value of the algorithm for this case is
-$latex v_5$$ which is equal to 1.625.
+The return value for this case is
+$latex \[
+	y^{(0)} = f( x^{(0)} ) = v_5^{(0)} = 1.625
+\] $$
 
 $children%
 	introduction/exp_apx/exp_2_for0.cpp
@@ -159,12 +177,12 @@ It returns true for success and false for failure.
 
 $head Exercises$$
 $list number$$
-Suppose that $latex x = .2$$,
+Suppose that $latex x^{(0)} = .2$$,
 what is the result of a zero order forward sweep for 
 the operation sequence above; 
 i.e., what are the corresponding values for
 $latex \[
-	v_1 , v_2 , \cdots , v_5
+	v_1^{(0)} , v_2^{(0)} , \cdots , v_5^{(0)}
 \]$$
 $lnext
 Create a modified version of 
@@ -190,19 +208,30 @@ $index exp_2, forward mode$$
 $index example, forward mode$$
 $index forward, mode example$$
 $index mode, example forward$$
-
-$index first, order forward$$
-$index order, first forward$$
 $index forward, first order$$
 
 
+$head First Order Expansion$$
+$index first, order expansion$$
+$index order, first expansion$$
+$index expansion, first order$$
+We define $latex x(t)$$ near $latex t = 0$$ by the first order expansion
+$latex \[
+	x(t) = x^{(0)} + x^{(1)} * t
+\]$$
+it follows that $latex x^{(0)}$$ is the zero,
+and $latex x^{(1)}$$ the first,
+order derivative of $latex x(t)$$
+at $latex t = 0$$.
+
 $head Purpose$$
-First order forward mode uses the 
-$cref/operation sequence/exp_2_for0/Operation Sequence/$$,
-and zero order forward sweep values,
-to compute the first order partial derivative
-of all the dependent variables with respect to one independent variable. 
-The computations are done in the same order as the original algorithm.
+In general, a first order forward sweep is given the
+$cref/zero order derivative/exp_2_for0/Zero Order Expansion/$$
+for all of the variables in an operation sequence,
+and the first order derivatives for the independent variables.
+It uses these to compute the first order derivatives,
+and thereby obtain the first order expansion,
+for all the other variables in the operation sequence.
 
 $head Mathematical Form$$
 Suppose that we use the algorithm $xref/exp_2.hpp/$$ to compute 
@@ -211,7 +240,7 @@ $latex \[
 \] $$
 The corresponding derivative function is 
 $latex \[
-	f^{(1)} (x) =   1 + x
+	\partial_x f (x) =   1 + x
 \] $$
 An algorithmic differentiation package
 does not operate on the mathematical form of the function,
@@ -225,8 +254,8 @@ We consider the case where $cref/exp_2.hpp/$$ is executed with
 $latex x = .5$$.
 The corresponding operation sequence and 
 zero order forward mode values
-(see $cref/zero order trace/exp_2_for0/Operation Sequence/Trace/$$)
-are inputs and are used by a first order forward mode sweep.
+(see $cref/zero order sweep/exp_2_for0/Operation Sequence/Sweep/$$)
+are inputs and are used by a first order forward sweep.
 
 $subhead Index$$
 The Index column contains the index in the operation sequence
@@ -239,70 +268,80 @@ The Operation column contains the
 mathematical function corresponding to each atomic operation in the sequence.
 
 $subhead Zero Order$$
-The Zero Order column contains the variable value
-(see $cref/zero order trace/exp_2_for0/Operation Sequence/Trace/$$)
-corresponding to each atomic operation in the sequence.
+The Zero Order column contains the zero order derivatives
+for the corresponding variable in the operation sequence
+(see $cref/zero order sweep/exp_2_for0/Operation Sequence/Sweep/$$).
 
-$subhead Partial$$
-The Partial column contains the
-mathematical function corresponding to the partial derivative
-with respect to $latex x$$ for each operation in the sequence.
+$subhead Derivative$$
+The Derivative column contains the
+mathematical function corresponding to the derivative
+with respect to $latex t$$,
+at $latex t = 0$$, for each variable in the sequence.
 
 $subhead First Order$$
-The First Order column contains the partial derivative value
-(first order forward sweep value)
-corresponding to each variable in the sequence of operations.
+The First Order column contains the first order derivatives
+for the corresponding variable in the operation sequence; i.e.,
+$latex \[
+	v_j (t) = v_j^{(0)} + v_j^{(1)} t
+\] $$
+We use $latex x^{(0)} = 1$$ so that differentiation
+with respect to $latex t$$,
+at $latex t = 0$$, is the same partial differentiation 
+with respect to $latex x$$ at $latex x = x^{(0)}$$.
 
 
-$subhead Trace$$
+
+$subhead Sweep$$
 
 $center
 $table
 $bold Index$$
 	$cnext $pre  $$ $cnext $bold Operation$$ 
 	$cnext $pre  $$ $cnext $bold Zero Order$$
-	$cnext $pre  $$ $cnext $bold Partial$$
+	$cnext $pre  $$ $cnext $bold Derivative$$
 	$cnext $pre  $$ $cnext $bold First Order$$
 $rnext
 1
 	$cnext $pre  $$ $cnext $latex v_1 = x $$
-	$cnext $cnext = 0.5
+	$cnext $cnext 0.5
 	$cnext $cnext 
-$latex \partial_x v_1 = \partial_x x  $$
-	$cnext $cnext = 1
+	$latex v_1^{(1)} = x^{(1)}  $$
+	$cnext $cnext $latex v_1^{(1)} = 1$$
 $rnext
 2
 	$cnext $pre  $$ $cnext $latex v_2 = 1 + v_1$$
-	$cnext $cnext = 1.5
+	$cnext $cnext 1.5
 	$cnext $cnext 
-$latex \partial_x v_2 = \partial_x v_1$$
-	$cnext $cnext = 1
+	$latex v_2^{(1)} = v_1^{(1)}$$
+	$cnext $cnext $latex v_2^{(1)} = 1$$
 $rnext
 3
 	$cnext $pre  $$ $cnext $latex v_3 = v_1 * v_1$$
-	$cnext $cnext = 0.25
+	$cnext $cnext 0.25
 	$cnext $cnext 
-$latex \partial_x v_3 = (\partial_x v_1) * v_1 + v_1 * (\partial_x v_1)$$
-	$cnext $cnext = 1
+	$latex v_3^{(1)} = 2 * v_1^{(0)} * v_1^{(1)}$$
+	$cnext $cnext $latex v_3^{(1)} = 1$$
 $rnext
 4
 	$cnext $pre  $$ $cnext $latex v_4 = v_3 / 2$$
-	$cnext $cnext = 0.125
+	$cnext $cnext 0.125
 	$cnext $cnext 
-$latex \partial_x v_4 = (\partial_x v_3) / 2$$
-	$cnext $cnext = 0.5
+	$latex v_4^{(1)} = v_3^{(1)} / 2$$
+	$cnext $cnext $latex v_4^{(1)} = 0.5$$
 $rnext
 5	$cnext $pre $$  $cnext $latex v_5 = v_2 + v_4$$
-	$cnext $cnext = 1.625
+	$cnext $cnext 1.625
 	$cnext $cnext
-$latex \partial_x v_5 = \partial_x v_2 + \partial_x v_4$$
-	$cnext $cnext = 1.5
+	$latex v_5^{(1)} = v_2^{(1)} + v_4^{(1)}$$
+	$cnext $cnext $latex v_5^{(1)} = 1.5$$
 $tend
 $$
-Thus forward mode returns
-1.5 as the derivative of the return value $latex v_5$$ 
-for this case.
 
+$head Return Value$$
+The return value for this case is
+$latex \[
+	y^{(1)} = \partial_x f ( x^{(0)} ) = v_5^{(1)} = 1.5
+\] $$
 
 $children%
 	introduction/exp_apx/exp_2_for1.cpp
@@ -319,11 +358,11 @@ the values that are calculated by the routine
 defined by $cref/exp_2_for0.cpp/$$ ?
 $lnext
 Suppose that $latex x = .1$$,
-what are the results of a zero and first order forward mode sweep for 
+what are the results of a zero and first order forward sweep for 
 the operation sequence above; 
 i.e., what are the corresponding values for
-$latex v_1, v_2, \cdots , v_5$$ and
-$latex \partial_x v_1, \cdots , \partial_x v_5$$ ?
+$latex v_1^{(0)}, v_2^{(0)}, \cdots , v_5^{(0)}$$ and
+$latex v_1^{(1)}, v_2^{(1)}, \cdots , v_5^{(1)}$$ ?
 $lnext
 Create a modified version of $cref/exp_2_for1.cpp/$$ that verifies 
 the derivative values from the previous exercise.
@@ -353,16 +392,26 @@ $index reverse, first order$$
 
 $head Purpose$$
 First order reverse mode uses the 
-$cref/operation sequence/exp_2_for0/Operation Sequence/$$
-and zero order forward sweep values
+$cref/operation sequence/exp_2_for0/Operation Sequence/$$,
+and zero order forward sweep values,
 to compute the first order derivative
 of one dependent variable with respect to all the independent variables. 
-The computations are done in the reverse order of the original algorithm.
+The computations are done in reverse 
+of the order of the computations in the original algorithm.
+
+$head Mathematical Form$$
+Suppose that we use the algorithm $xref/exp_2.hpp/$$ to compute 
+$latex \[
+	f(x) = 1 + x + x^2 / 2
+\] $$
+The corresponding derivative function is 
+$latex \[
+	\partial_x f (x) =   1 + x
+\] $$
 
 $head f_5$$
-In reverse mode we choose one dependent variable and
-compute its derivative with respect to all the independent variables.
-For our example, we chose the value returned by $cref/exp_2.hpp/$$
+For our example, we chose to compute the derivative
+of the value returned by $cref/exp_2.hpp/$$
 which is equal to the symbol $latex v_5$$ in the
 $cref/exp_2 operation sequence/exp_2_for0/Operation Sequence/$$.
 We begin with the function $latex f_5 $$ where $latex v_5$$ 
@@ -501,7 +550,10 @@ The file $xref/exp_2_rev1.cpp/$$ contains a routine
 which verifies the values computed above.
 It returns true for success and false for failure.
 It only tests the partial derivatives of
-$latex f_k$$ that are different from those of $latex f_{k+1}$$.
+$latex f_j$$ that might not be equal to the corresponding
+partials of $latex f_{j+1}$$; i.e., the
+other partials of $latex f_j$$ must be equal to the corresponding
+partials of $latex f_{j+1}$$.
 
 $head Exercises$$
 $list number$$
@@ -510,10 +562,10 @@ the values that are calculated by the routine
 defined by $cref/exp_2_for0.cpp/$$ ?
 $lnext
 Consider the case where $latex x = .1$$
-and we first preform a zero order forward mode sweep
-for the operation sequence used above (in reverse order).
+and we first preform a zero order forward sweep
+for the operation sequence used above.
 What are the results of a 
-first order reverse mode sweep; i.e.,
+first order reverse sweep; i.e.,
 what are the corresponding derivatives of
 $latex f_5 , f_4 , \ldots , f_1$$.
 $lnext
@@ -526,3 +578,465 @@ $cref/exp_2_rev1.cpp/$$.
 $lend
 
 $end
+------------------------------------------------------------------------------
+$begin exp_2_for2$$
+$spell
+	exp_2_for
+$$
+
+$section exp_2: Second Order Forward Mode$$
+
+$index exp_2, forward mode$$
+$index example, forward mode$$
+$index forward, mode example$$
+$index mode, example forward$$
+$index forward, second order$$
+
+
+$head Second Order Expansion$$
+$index second, order expansion$$
+$index order, second expansion$$
+$index expansion, second order$$
+We define $latex x(t)$$ near $latex t = 0$$ by the second order expansion
+$latex \[
+	x(t) = x^{(0)} + x^{(1)} * t + x^{(2)} * t^2 / 2
+\]$$
+It follows that for $latex k = 0 , 1 , 2$$,
+$latex \[
+	x^{(k)} = \dpow{k}{t} x (0)
+\] $$
+
+$head Purpose$$
+In general, a second order forward sweep is given the
+$cref/first order expansion/exp_2_for1/First Order Expansion/$$
+for all of the variables in an operation sequence,
+and the second order derivatives for the independent variables.
+It uses these to compute the second order derivative,
+and thereby obtain the second order expansion,
+for all the variables in the operation sequence.
+
+$head Mathematical Form$$
+Suppose that we use the algorithm $xref/exp_2.hpp/$$ to compute 
+$latex \[
+	f(x) = 1 + x + x^2 / 2
+\] $$
+The corresponding second derivative function is 
+$latex \[
+	\Dpow{2}{x} f (x) =   1
+\] $$
+
+$head Operation Sequence$$
+We consider the case where $cref/exp_2.hpp/$$ is executed with
+$latex x = .5$$.
+The corresponding operation sequence,
+zero order forward sweep values,
+and first order forward sweep values
+are inputs and are used by a second order forward sweep.
+
+$subhead Index$$
+The Index column contains the index in the operation sequence
+of the corresponding atomic operation. 
+A Forward sweep starts with the first operation 
+and ends with the last.
+
+$subhead Zero$$
+The Zero column contains the zero order sweep results
+for the corresponding variable in the operation sequence
+(see $cref/zero order sweep/exp_2_for0/Operation Sequence/Sweep/$$).
+
+$subhead Operation$$
+The Operation column contains the 
+first order sweep operation for this variable.
+
+$subhead First$$
+The First column contains the first order sweep results
+for the corresponding variable in the operation sequence
+(see $cref/first order sweep/exp_2_for1/Operation Sequence/Sweep/$$).
+
+$subhead Derivative$$
+The Derivative column contains the
+mathematical function corresponding to the second derivative
+with respect to $latex t$$,
+at $latex t = 0$$, for each variable in the sequence.
+
+$subhead Second$$
+The Second column contains the second order derivatives
+for the corresponding variable in the operation sequence; i.e.,
+the second order expansion for the $th i$$ variable is given by
+$latex \[
+	v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
+\] $$
+We use $latex x^{(0)} = 1$$, and $latex x^{(2)} = 0$$
+so that second order differentiation
+with respect to $latex t$$, at $latex t = 0$$, 
+is the same as the second partial differentiation 
+with respect to $latex x$$ at $latex x = x^{(0)}$$.
+
+
+$subhead Sweep$$
+
+$center
+$table
+$bold Index$$
+	$cnext $pre  $$ $cnext $bold Zero$$
+	$cnext $pre  $$ $cnext $bold Operation$$ 
+	$cnext $pre  $$ $cnext $bold First$$
+	$cnext $pre  $$ $cnext $bold Derivative$$
+	$cnext $pre  $$ $cnext $bold Second$$
+$rnext
+1
+	$cnext $cnext 0.5
+	$cnext $pre  $$ $cnext $latex v_1^{(1)} = x^{(1)} $$
+	$cnext $cnext 1
+	$cnext $cnext 
+	$latex v_1^{(2)} = x^{(2)}$$
+	$cnext $cnext $latex v_1^{(2)} = 0$$
+$rnext
+2
+	$cnext $cnext 1.5
+	$cnext $pre  $$ $cnext $latex v_2^{(1)} = v_1^{(1)}$$
+	$cnext $cnext 1
+	$cnext $cnext 
+	$latex v_2^{(2)} = v_1^{(2)}$$
+	$cnext $cnext $latex v_2^{(2)} = 0$$
+$rnext
+3
+	$cnext $cnext 0.25
+	$cnext $pre  $$ $cnext $latex v_3^{(1)} = 2 * v_1^{(0)} * v_1^{(1)}$$
+	$cnext $cnext 1
+	$cnext $cnext 
+$latex v_3^{(2)} = 2 * (v_1^{(1)} * v_1^{(1)} + v_1^{(0)} * v_1^{(2)} )$$
+	$cnext $cnext $latex v_3^{(2)} = 2$$
+$rnext
+4
+	$cnext $cnext 0.125
+	$cnext $pre  $$ $cnext $latex v_4^{(1)} = v_3^{(1)} / 2$$
+	$cnext $cnext .5
+	$cnext $cnext 
+	$latex v_4^{(2)} = v_3^{(2)} / 2$$
+	$cnext $cnext $latex v_4^{(2)} = 1$$
+$rnext
+5
+	$cnext $cnext 1.625
+	$cnext $pre $$  $cnext $latex v_5^{(1)} = v_2^{(1)} + v_4^{(1)}$$
+	$cnext $cnext 1.5
+	$cnext $cnext
+	$latex v_5^{(2)} = v_2^{(2)} + v_4^{(2)}$$
+	$cnext $cnext $latex v_5^{(2)} = 1$$
+$tend
+$$
+
+$head Return Value$$
+The return value for this case is
+$latex \[
+	y^{(2)} = \Dpow{2}{x} f ( x^{(0)} ) = v_5^{(2)} = 1
+\] $$
+
+$children%
+	introduction/exp_apx/exp_2_for2.cpp
+%$$
+$head Verification$$
+The file $xref/exp_2_for2.cpp/$$ contains a routine 
+which verifies the values computed above.
+It returns true for success and false for failure.
+
+$head Exercises$$
+$list number$$
+Which statement in the routine defined by $cref/exp_2_for2.cpp/$$ uses 
+the values that are calculated by the routine 
+defined by $cref/exp_2_for1.cpp/$$ ?
+$lnext
+Suppose that $latex x = .1$$,
+what are the results of a zero, first, and second order forward sweep for 
+the operation sequence above; 
+i.e., what are the corresponding values for
+$latex v_i^{(k)}$$ for $latex i = 1, \ldots , 5$$ and $latex k = 0, 1, 2$$.
+$lnext
+Create a modified version of $cref/exp_2_for2.cpp/$$ that verifies 
+the derivative values from the previous exercise.
+Also create and run a main program that reports the result
+of calling the modified version of
+$cref/exp_2_for2.cpp/$$.
+$lend
+
+$end
+------------------------------------------------------------------------------
+$begin exp_2_rev2$$
+$spell
+	exp_2_rev
+$$
+
+$section exp_2: Second Order Reverse Mode$$
+
+$index exp_2, reverse mode$$
+$index example, reverse mode$$
+$index reverse, mode example$$
+$index mode, example reverse$$
+
+$index second, order reverse$$
+$index order, second reverse$$
+$index reverse, second order$$
+
+
+$head Purpose$$
+In general, a second order reverse sweep is given the
+$cref/first order expansion/exp_2_for1/First Order Expansion/$$
+for all of the variables in an operation sequence.
+Given a choice of a particular variable, 
+it computes the derivative, 
+of that variables first order expansion coefficient, 
+with respect to all of the independent variables.
+
+$head Mathematical Form$$
+Suppose that we use the algorithm $xref/exp_2.hpp/$$ to compute 
+$latex \[
+	f(x) = 1 + x + x^2 / 2
+\] $$
+The corresponding second derivative is 
+$latex \[
+	\Dpow{2}{x} f (x) =   1
+\] $$
+
+$head f_5$$
+For our example, we chose to compute the derivative of $latex v_5^{(1)}$$
+with respect to all the independent variable.
+For the case computed for the
+$cref/first order sweep/exp_2_for1/Operation Sequence/Sweep/$$,
+$latex v_5^{(1)}$$ is the derivative 
+of the value returned by $cref/exp_2.hpp/$$.
+This the value computed will be the second derivative of 
+the value returned by  $cref/exp_2.hpp/$$.
+We begin with the function $latex f_5 $$ where $latex v_5^{(1)}$$ 
+is both an argument and the value of the function; i.e.,
+$latex \[
+\begin{array}{rcl}
+f_5 \left( 
+	v_1^{(0)}, v_1^{(1)} , \ldots  , v_5^{(0)} , v_5^{(1)} 
+\right) 
+& = & v_5^{(1)} 
+\\
+\D{f_5}{v_5^{(1)}} & = & 1
+\end{array}
+\] $$
+All the other partial derivatives of $latex f_5 $$ are zero.
+
+$head Index 5: f_4$$
+Second order reverse mode starts with the last operation in the sequence.
+For the case in question, this is the operation with index 5.
+The zero and first order sweep representations of this operation are
+$latex \[
+\begin{array}{rcl}
+	v_5^{(0)} & = & v_2^{(0)} + v_4^{(0)}
+	\\
+	v_5^{(1)} & = & v_2^{(1)} + v_4^{(1)}
+\end{array}
+\] $$
+We define the function 
+$latex f_4 \left( v_1^{(0)} , \ldots , v_4^{(1)} \right) $$
+as equal to $latex f_5 $$
+except that $latex v_5^{(0)} $$ and $latex v_5^{(1)}$$ are eliminated using 
+this operation; i.e.
+$latex \[
+f_4  = 
+f_5 \left[   v_1^{(0)} , \ldots , v_4^{(1)} , 
+	v_5^{(0)} \left( v_2^{(0)} , v_4^{(0)} \right) ,  
+	v_5^{(1)} \left( v_2^{(1)} , v_4^{(1)} \right) 
+\right] 
+\] $$
+It follows that 
+$latex \[
+\begin{array}{rcll}
+\D{f_4}{v_2^{(1)}} 
+& = & \D{f_5}{v_2^{(1)}} + 
+	\D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_2^{(1)}} 
+& = 1
+\\
+\D{f_4}{v_4^{(1)}} 
+& = & \D{f_5}{v_4^{(1)}} + 
+	\D{f_5}{v_5^{(1)}} * \D{v_5}{v_4^{(1)}} 
+& = 1
+\end{array}
+\] $$
+All the other partial derivatives of $latex f_4$$ are zero.
+
+$head Index 4: f_3$$
+The next operation has index 4, 
+$latex \[
+\begin{array}{rcl}
+	v_4^{(0)} & = & v_3^{(0)} / 2
+	\\
+	v_4^{(1)} & = & v_3^{(1)} / 2
+\end{array}
+\] $$
+We define the function 
+$latex f_3 \left(  v_1^{(0)} , \ldots , v_3^{(1)} \right) $$
+as equal to $latex f_4 $$
+except that $latex v_4^{(0)}$$ and $latex v_4^{(1)}$$ 
+are eliminated using this operation; i.e.,
+$latex \[
+f_3 = 
+f_4 \left[ v_1^{(0)} , \ldots , v_3^{(1)} ,
+	v_4^{(0)} \left( v_3^{(0)} \right) ,
+	v_4^{(1)} \left( v_3^{(1)} \right)
+\right]
+\] $$
+It follows that 
+$latex \[
+\begin{array}{rcll}
+\D{f_3}{v_2^{(1)}} 
+& = & \D{f_4}{v_2^{(1)}}
+& = 1
+\\
+\D{f_3}{v_3^{(1)}} 
+& = & \D{f_4}{v_3^{(1)}} + 
+	\D{f_4}{v_4^{(1)}} * \D{v_4^{(1)}}{v_3^{(1)}} 
+& = 0.5
+\end{array}
+\] $$
+All the other partial derivatives of $latex f_3$$ are zero.
+
+$head Index 3: f_2$$
+The next operation has index 3,
+$latex \[
+\begin{array}{rcl}
+	v_3^{(0)} & = & v_1^{(0)} * v_1^{(0)}
+	\\
+	v_3^{(1)} & = & 2 * v_1^{(0)} * v_1^{(1)}
+\end{array}
+\] $$
+We define the function 
+$latex f_2 \left(  v_1^{(0)} , \ldots , v_2^{(1)} \right) $$
+as equal to $latex f_3 $$
+except that $latex v_3^{(0)} $$ and $latex v_3^{(1)}$$ are
+eliminated using this operation; i.e.,
+$latex \[
+f_2 = 
+f_3 \left[ v_1^{(0)} , \ldots , v_2^{(1)} ,
+	v_3^{(0)} ( v_1^{(0)} ) ,
+	v_3^{(1)} ( v_1^{(0)} , v_1^{(1)} ) 
+\right]
+\] $$
+Note that, from the 
+$cref/first order forward sweep/exp_2_for1/Operation Sequence/Sweep/$$,
+the value of $latex v_1^{(0)}$$ is equal to $latex .5$$
+and  $latex v_1^{(1)}$$ is equal 1. 
+It follows that 
+$latex \[
+\begin{array}{rcll}
+\D{f_2}{v_1^{(0)}}
+& = & 
+\D{f_3}{v_1^{(0)}} +
+	\D{f_3}{v_3^{(0)}} * \D{v_3^{(0)}}{v_1^{(0)}}  +
+	\D{f_3}{v_3^{(1)}} * \D{v_3^{(1)}}{v_1^{(0)}}  
+& = 1
+\\
+\D{f_2}{v_1^{(1)}}
+& = & 
+\D{f_3}{v_1^{(1)}} +
+	\D{f_3}{v_3^{(1)}} * \D{v_3^{(1)}}{v_1^{(1)}}  
+& = 0.5 
+\\
+\D{f_2}{v_2^{(0)}} 
+& = & \D{f_3}{v_2^{(0)}}
+& = 0
+\\
+\D{f_2}{v_2^{(1)}} 
+& = & \D{f_3}{v_2^{(1)}}
+& = 1
+\end{array}
+\] $$
+
+$head Index 2: f_1$$
+The next operation has index 2,
+$latex \[
+\begin{array}{rcl}
+	v_2^{(0)} & = & 1 + v_1^{(0)}
+	\\
+	v_2^{(1)} & = & v_1^{(1)}
+\end{array}
+\] $$
+We define the function 
+$latex f_1 ( v_1^{(0)} , v_1^{(1)} ) $$
+as equal to $latex f_2 $$
+except that $latex v_2^{(0)} $$ and  $latex v_2^{(1)} $$
+are eliminated using this operation; i.e.,
+$latex \[
+f_1 = 
+f_2 \left[ v_1^{(0)} , v_1^{(1)} , 
+	v_2^{(0)} ( v_1^{(0)} )  ,
+	v_2^{(1)} ( v_1^{(1)} )
+\right]
+\] $$
+It follows that 
+$latex \[
+\begin{array}{rcll}
+\D{f_1}{v_1^{(0)}}
+& = & \D{f_2}{v_1^{(0)}} +
+	\D{f_2}{v_2^{(0)}} * \D{v_2^{(0)}}{v_1^{(0)}} 
+& = 1
+\\
+\D{f_1}{v_1^{(1)}}
+& = & \D{f_2}{v_1^{(1)}} +
+	\D{f_2}{v_2^{(1)}} * \D{v_2^{(1)}}{v_1^{(1)}} 
+& = 1.5 
+\end{array}
+\] $$
+Note that $latex v_1$$ is equal to $latex x$$,
+so the second derivative of 
+the function defined by $cref/exp_2.hpp/$$ at $latex x = .5$$
+is given by
+$latex \[
+\Dpow{2}{x} v_5^{(0)} 
+=
+\D{ v_5^{(1)} }{x} 
+=
+\D{ v_5^{(1)} }{v_1^{(0)}} 
+= 
+\D{f_1}{v_1^{(0)}} = 1
+\] $$
+There is a theorem about Algorithmic Differentiation that explains why
+the other partial of $latex f_1$$ is equal to the
+first derivative of 
+the function defined by $cref/exp_2.hpp/$$ at $latex x = .5$$.
+
+
+$children%
+	introduction/exp_apx/exp_2_rev2.cpp
+%$$
+$head Verification$$
+The file $xref/exp_2_rev2.cpp/$$ contains a routine 
+which verifies the values computed above.
+It returns true for success and false for failure.
+It only tests the partial derivatives of
+$latex f_j$$ that might not be equal to the corresponding
+partials of $latex f_{j+1}$$; i.e., the
+other partials of $latex f_j$$ must be equal to the corresponding
+partials of $latex f_{j+1}$$.
+
+$head Exercises$$
+$list number$$
+Which statement in the routine defined by $cref/exp_2_rev2.cpp/$$ uses 
+the values that are calculated by the routine 
+defined by $cref/exp_2_for0.cpp/$$ ?
+Which statements use values that are calculate by the routine
+defined in $cref/exp_2_for1.cpp/$$ ?
+$lnext
+Consider the case where $latex x = .1$$
+and we first preform a zero order forward sweep,
+then a first order sweep,
+for the operation sequence used above.
+What are the results of a 
+second order reverse sweep; i.e.,
+what are the corresponding derivatives of
+$latex f_5 , f_4 , \ldots , f_1$$.
+$lnext
+Create a modified version of 
+$cref/exp_2_rev2.cpp/$$ 
+that verifies the values you obtained for the previous exercise.
+Also create and run a main program that reports the result
+of calling the modified version of
+$cref/exp_2_rev2.cpp/$$.
+$lend
+
+$end
+------------------------------------------------------------------------------

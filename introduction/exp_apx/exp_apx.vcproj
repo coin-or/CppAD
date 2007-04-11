@@ -117,37 +117,43 @@
 				RelativePath=".\exp_2.cpp">
 			</File>
 			<File
-				RelativePath=".\exp_2.hpp">
-			</File>
-			<File
 				RelativePath=".\exp_2_cppad.cpp">
 			</File>
 			<File
-				RelativePath=".\exp_2_for.cpp">
+				RelativePath=".\exp_2_for0.cpp">
 			</File>
 			<File
-				RelativePath=".\exp_2_rev.cpp">
+				RelativePath=".\exp_2_for1.cpp">
 			</File>
 			<File
-				RelativePath=".\exp_2_seq.cpp">
+				RelativePath=".\exp_2_for2.cpp">
+			</File>
+			<File
+				RelativePath=".\exp_2_rev1.cpp">
+			</File>
+			<File
+				RelativePath=".\exp_2_rev2.cpp">
 			</File>
 			<File
 				RelativePath=".\exp_eps.cpp">
 			</File>
 			<File
-				RelativePath=".\exp_eps.hpp">
-			</File>
-			<File
 				RelativePath=".\exp_eps_cppad.cpp">
 			</File>
 			<File
-				RelativePath=".\exp_eps_for.cpp">
+				RelativePath=".\exp_eps_for0.cpp">
 			</File>
 			<File
-				RelativePath=".\exp_eps_rev.cpp">
+				RelativePath=".\exp_eps_for1.cpp">
 			</File>
 			<File
-				RelativePath=".\exp_eps_seq.cpp">
+				RelativePath=".\exp_eps_for2.cpp">
+			</File>
+			<File
+				RelativePath=".\exp_eps_rev1.cpp">
+			</File>
+			<File
+				RelativePath=".\exp_eps_rev2.cpp">
 			</File>
 			<File
 				RelativePath=".\main.cpp">

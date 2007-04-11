@@ -45,7 +45,7 @@ $spell
 	bool
 $$
 
-$section exp_eps: Operation Sequence and Zero Order Forward Mode$$
+$section exp_eps: Operation Sequence and Zero Order Forward Sweep$$
 
 $index exp_eps, operation sequence$$
 $index example, operation sequence$$
@@ -61,15 +61,15 @@ Suppose that we use the algorithm $xref/exp_eps.hpp/$$
 to compute $syntax%exp_eps(%x%, %epsilon%)%$$
 with $italic x$$ is equal to .5
 and $italic epsilon$$ is equal to .2. 
-For this case, function corresponding to the $code exp_eps$$
-has the following form and function value:
+For this case, 
+the mathematical form for the operation sequence 
+corresponding to the $code exp_eps$$ is
 $latex \[
-\begin{array}{rclll}
-{\rm exp\_apx} ( x , \varepsilon ) & = &   1 + x + x^2 / 2  
-	& =   1 + .5 + 0.125 
-	& =   1.625
-\end{array}
+	f( x , \varepsilon ) = 1 + x + x^2 / 2  
 \] $$
+Note that, for these particular values of $italic x$$ and $italic epsilon$$,
+this is the same as the mathematical form for
+$cref/exp_2/exp_2_for0/Mathematical Form/$$.
 
 
 $head Operation Sequence$$
@@ -86,8 +86,8 @@ $italic x$$ and $italic epsilon$$ as variables.
 $subhead Parameter$$
 We refer to values that do not depend on the input variables
 $italic x$$ or $italic epsilon$$ as parameters.
-Operations where the result is a parameter are not traced
-in the operation sequence below.
+Operations where the result is a parameter are not included
+in the zero order sweep below.
 
 
 $subhead Index$$
@@ -105,17 +105,15 @@ The Operation column contains the
 mathematical function corresponding to each atomic operation in the sequence.
 
 $subhead Zero Order$$
-The Zero Order column contains the variable value
-corresponding to each atomic operation in the sequence.
-These are also called the zero order forward mode values.
+The Zero Order column contains the 
+$cref/zero order derivative/exp_2_for0/Zero Order Expansion/$$
+for the corresponding variable in the operation sequence.
 Forward mode refers to the fact that
-the computations are done in the same order as the original algorithm; i.e,
-in order of increasing index.
-Zero order refers to the fact that variable values are
-zero order derivatives.
+these coefficients are computed in the same order as the original algorithm;
+i.e., in order of increasing index.
 
 
-$subhead Trace$$
+$subhead Sweep$$
 $center
 $table
 $bold Index$$
@@ -125,44 +123,46 @@ $bold Index$$
 $rnext
 1
 	$cnext $pre  $$ $cnext $code abs_x = x;$$
-	$cnext $cnext $latex v_1 = x $$ 
-	$cnext $cnext = 0.5      
+	$cnext $cnext $latex v_1 = x $$
+	$cnext $cnext $latex v_1^{(0)} = 0.5$$
 $rnext
 2
 	$cnext $pre  $$ $cnext $code temp  = term * abs_x;$$
-	$cnext $cnext $latex v_2 = 1 * v_1 $$ 
-	$cnext $cnext = 0.5      
+	$cnext $cnext $latex v_2 = 1 * v_1 $$
+	$cnext $cnext $latex v_2^{(0)} = 0.5$$
 $rnext
 3
 	$cnext $pre  $$ $cnext $code term = temp / Type(k);$$
-	$cnext $cnext $latex v_3 = v_2 / 1$$ 
-	$cnext $cnext = 0.5      
+	$cnext $cnext $latex v_3 = v_2 / 1$$
+	$cnext $cnext $latex v_3^{(0)} = 0.5$$
 $rnext
 4
 	$cnext $pre  $$ $cnext $code sum  = sum + term;$$
-	$cnext $cnext $latex v_4 = 1 + v_3 $$ 
-	$cnext $cnext = 1.5      
+	$cnext $cnext $latex v_4 = 1 + v_3 $$
+	$cnext $cnext $latex v_4^{(0)} = 1.5$$
 $rnext
 5
 	$cnext $pre  $$ $cnext  $code temp  = term * abs_x;$$
-	$cnext $cnext $latex v_5 = v_3 * v_1 $$ 
-	$cnext $cnext = 0.25     
+	$cnext $cnext $latex v_5 = v_3 * v_1 $$
+	$cnext $cnext $latex v_5^{(0)} = 0.25$$
 $rnext
 6
 	$cnext $pre  $$ $cnext $code term = temp / Type(k);$$
-	$cnext $cnext $latex v_6 = v_5 / 2$$ 
-	$cnext $cnext = 0.125    
+	$cnext $cnext $latex v_6 = v_5 / 2$$
+	$cnext $cnext $latex v_6^{(0)} = 0.125$$
 $rnext
 7
 	$cnext $pre  $$ $cnext $code sum  = sum + term;$$
-	$cnext $cnext $latex v_7 = v_4 + v_6 $$ 
-	$cnext $cnext = 1.625    
+	$cnext $cnext $latex v_7 = v_4 + v_6 $$
+	$cnext $cnext $latex v_7^{(0)} = 1.625$$
 $tend
 $$
 
 $head Return  Value$$
-The return value of the algorithm for this case is
-$latex v_7$$ which is equal to 1.625.
+The return value for this case is
+$latex \[
+y^{(0)} = f ( x^{(0)} , \varepsilon^{(0)} ) = v_7^{(0)} = 1.625
+\] $$
 
 $head Comparisons$$
 If $italic x$$ were negative,
@@ -191,11 +191,11 @@ It returns true for success and false for failure.
 
 $head Exercises$$
 $list number$$
-Suppose that $latex x = .1$$,
+Suppose that $latex x^{(0)} = .1$$,
 what is the result of a zero order forward sweep for 
 the operation sequence above; 
 i.e., what are the corresponding values for
-$latex v_1 , v_2 , \ldots , v_7$$.
+$latex v_1^{(0)} , v_2^{(0)} , \ldots , v_7^{(0)}$$.
 $lnext
 Create a modified version of 
 $cref/exp_eps_for0.cpp/$$ that verifies the values you obtained
@@ -213,46 +213,49 @@ $spell
 	exp_eps_for
 $$
 
-$section exp_eps: First Order Forward Mode$$
+$section exp_eps: First Order Forward Sweep$$
 
 $index first, order forward$$
 $index order, first forward$$
 $index forward, first order$$
+
+
+$head First Order Expansion$$
+$index first, order expansion$$
+$index order, first expansion$$
+$index expansion, first order$$
+We define $latex x(t)$$ and $latex \varepsilon(t) ]$$ near $latex t = 0$$ 
+by the first order expansions
+$latex \[
+\begin{array}{rcl}
+	x(t) & = & x^{(0)} + x^{(1)} * t 
+	\\
+	\varepsilon(t) & = & \varepsilon^{(0)} + \varepsilon^{(1)} * t
+\end{array}
+\]$$
+It follows that $latex x^{(0)}$$ ($latex \varepsilon^{(0)}$$) is the zero,
+and $latex x^{(1)}$$  ($latex \varepsilon^{(1)}$$) the first,
+order derivative of $latex x(t)$$
+at $latex t = 0$$ ($latex \varepsilon (t)$$)
+at $latex t = 0$$.
 
 $head Mathematical Form$$
 Suppose that we use the algorithm $xref/exp_eps.hpp/$$
 to compute $syntax%exp_eps(%x%, %epsilon%)%$$
 with $italic x$$ is equal to .5
 and $italic epsilon$$ is equal to .2. 
-For this case, function corresponding to the 
-$cref/exp_eps operation sequence/exp_eps_for0/Operation Sequence/$$
-has the following form and partial derivative:
+For this case, the mathematical function for the operation sequence
+corresponding to $code exp_eps$$ is
 $latex \[
-\begin{array}{rclll}
-{\rm exp\_apx} ( x , \varepsilon ) & = &   1 + x + x^2 / 2  
-\\
-\partial_x {\rm exp\_apx} ( x , \varepsilon ) & = &   1 + x 
-	& =   1 + .5 
-	& =   1.5
-\end{array}
+f ( x , \varepsilon ) =   1 + x + x^2 / 2  
+\] $$
+The corresponding partial derivative with respect to $latex x$$,
+and the value of the derivative, are
+$latex \[
+\partial_x f ( x , \varepsilon ) =   1 + x  = 1.5
 \] $$
 
 $head Operation Sequence$$
-The corresponding 
-$cref/operation sequence/exp_eps_for0/Operation Sequence/$$
-and 
-$cref/zero order/exp_eps_for0/Operation Sequence/Zero Order/$$
-forward sweep values
-are inputs that are need by a first order sweep.
-A first order sweep 
-computes the first order partial derivative
-of all the dependent variables with respect to one independent variable. 
-The $code exp_eps$$ operation sequence depends on $italic epsilon$$,
-but for a given the operation sequence,
-the values computed do not depend on $italic epsilon$$.
-Thus, the partial derivative with respect to $italic epsilon$$,
-of any of the variables in the operation sequence,
-is zero.
 
 $subhead Index$$
 The Index column contains the index in the operation sequence
@@ -265,83 +268,95 @@ The Operation column contains the
 mathematical function corresponding to each atomic operation in the sequence.
 
 $subhead Zero Order$$
-The Zero Order column contains the function value
-(zero order forward sweep value)
-corresponding to each atomic operation in the sequence.
+The Zero Order column contains the zero order derivatives
+for the corresponding variable in the operation sequence
+(see $cref/zero order sweep/exp_2_for1/Operation Sequence/Sweep/$$).
 
-$subhead Partial$$
-The Partial column contains the
-mathematical function corresponding to the partial derivative
-with respect to $italic x$$ for each operation in the sequence.
+$subhead Derivative$$
+The Derivative column contains the
+mathematical function corresponding to the derivative
+with respect to $latex t$$,
+at $latex t = 0$$, for each variable in the sequence.
 
 $subhead First Order$$
-The First Order column contains the partial derivative value
-(first order forward sweep value)
-corresponding to each atomic operation in the sequence.
+The First Order column contains the first order derivatives
+for the corresponding variable in the operation sequence; i.e.,
+$latex \[
+	v_j (t) = v_j^{(0)} + v_j^{(1)} t
+\] $$
+We use $latex x^{(0)} = 1$$ and $latex \varepsilon^{(1)} = 0$$,
+so that differentiation with respect to $latex t$$,
+at $latex t = 0$$, 
+is the same partial differentiation with respect to $latex x$$ 
+at $latex x = x^{(0)}$$.
 
-$subhead Trace$$
+
+$subhead Sweep$$
 
 $center
 $table
 $bold Index$$
 	$cnext $pre  $$ $cnext $bold Operation$$ 
 	$cnext $pre  $$ $cnext $bold Zero Order$$
-	$cnext $pre  $$ $cnext $bold Partial$$
+	$cnext $pre  $$ $cnext $bold Derivative$$
 	$cnext $pre  $$ $cnext $bold First Order$$
 $rnext
 1
 	$cnext $pre  $$ $cnext $latex v_1 = x $$
-	$cnext $cnext = 0.5
+	$cnext $cnext 0.5
 	$cnext $cnext 
-	$latex \partial_x v_1 = \partial_x x  $$
-	$cnext $cnext = 1
+	$latex v_1^{(1)} = x^{(1)}  $$
+	$cnext $cnext  $latex v_1^{(1)} = 1$$
 $rnext
 2
 	$cnext $pre  $$ $cnext $latex v_2 = 1 * v_1$$
-	$cnext $cnext = 0.5
+	$cnext $cnext 0.5
 	$cnext $cnext 
-	$latex \partial_x v_2 = 1 * \partial_x v_1$$
-	$cnext $cnext = 1
+	$latex v_2^{(1)} = 1 * v_1^{(1)}$$
+	$cnext $cnext $latex v_2^{(1)} = 1$$
 $rnext
 3
 	$cnext $pre  $$ $cnext $latex v_3 = v_2 / 1$$
-	$cnext $cnext = 0.5
+	$cnext $cnext 0.5
 	$cnext $cnext 
-	$latex \partial_x v_3 = ( \partial_x v_2 ) / 1$$
-	$cnext $cnext = 1
+	$latex v_3^{(1)} = v_2^{(1)} / 1$$
+	$cnext $cnext $latex v_3^{(1)} = 1$$
 $rnext
 4
 	$cnext $pre  $$ $cnext $latex v_4 = 1 + v_3$$
-	$cnext $cnext = 1.5
+	$cnext $cnext 1.5
 	$cnext $cnext 
-	$latex \partial_x v_4 = \partial_x v_3 $$
-	$cnext $cnext = 1
+	$latex v_4^{(1)} = v_3^{(1)} $$
+	$cnext $cnext $latex v_4^{(1)} = 1$$
 $rnext
 5
 	$cnext $pre  $$ $cnext $latex v_5 = v_3 * v_1$$
-	$cnext $cnext = 0.25
+	$cnext $cnext 0.25
 	$cnext $cnext 
-$latex \partial_x v_5 = ( \partial_x v_3 ) * v_1 + v_3 * ( \partial_x v_1 )$$
-	$cnext $cnext = 1
+	$latex v_5^{(1)} = v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}$$
+	$cnext $cnext $latex v_5^{(1)} = 1$$
 $rnext
 6
 	$cnext $pre  $$ $cnext $latex v_6 = v_5 / 2$$
-	$cnext $cnext = 0.125
+	$cnext $cnext 0.125
 	$cnext $cnext 
-	$latex \partial_x v_6 = ( \partial_x v_5 ) / 2$$
-	$cnext $cnext = 0.5
+	$latex v_6^{(1)} = v_5^{(1)} / 2$$
+	$cnext $cnext $latex v_6^{(1)} = 0.5$$
 $rnext
 7
 	$cnext $pre  $$ $cnext $latex v_7 = v_4 + v_6$$
-	$cnext $cnext = 1.625
+	$cnext $cnext 1.625
 	$cnext $cnext 
-	$latex  \partial_x v_7 = \partial_x v_4 + \partial_x v_6$$
-	$cnext $cnext = 1.5
+	$latex  v_7^{(1)} = v_4^{(1)} + v_6^{(1)}$$
+	$cnext $cnext $latex  v_7^{(1)} = 1.5$$
 $tend
 $$
-Thus forward mode returns
-1.5 as the derivative of the return value $latex v_7$$ 
-for this case.
+
+$head Return Value$$
+The return value for this case is
+$latex \[
+	y^{(1)} = \partial_x f ( x^{(0)} ) = v_7^{(1)} = 1.5
+\] $$
 
 
 $children%
@@ -359,8 +374,8 @@ Suppose that $latex x = .1$$,
 what are the results of a zero and first order forward mode sweep for 
 the operation sequence above; 
 i.e., what are the corresponding values for
-$latex v_1 , v_2 , \cdots , v_7$$ and
-$latex \partial_x v_1 , \partial_x v_2 , \cdots , \partial_x v_7$$ ?
+$latex v_1^{(0)}, v_2^{(0)}, \cdots , v_7^{(0)}$$ and
+$latex v_1^{(1)}, v_2^{(1)}, \cdots , v_7^{(1)}$$ ?
 $lnext
 Create a modified version of $cref/exp_eps_for1.cpp/$$ that verifies 
 the derivative values from the previous exercise.
@@ -368,7 +383,7 @@ Also create and run a main program that reports the result
 of calling the modified version of
 $cref/exp_eps_for1.cpp/$$.
 $lnext
-Suppose that $latex x = .1$$ and $latex epsilon = .2$$,
+Suppose that $latex x = .1$$ and $latex \epsilon = .2$$,
 what is the operation sequence corresponding to 
 $syntax%
 	exp_eps(%x%, %epsilon%)
@@ -382,21 +397,53 @@ $spell
 	exp_eps_rev
 $$
 
-$section exp_eps: First Order Reverse Mode$$
+$section exp_eps: First Order Reverse Sweep$$
+
+$index exp_eps, reverse mode$$
+$index example, reverse mode$$
+$index reverse, mode example$$
+$index mode, reverse example$$
 
 $index first, order reverse$$
 $index order, first reverse$$
 $index reverse, first order$$
 
-$head First Order Reverse$$
+$head Purpose$$
 First order reverse mode uses the 
-$cref/operation sequence/exp_eps_for0/Operation Sequence/$$
-and 
-$cref/zero order/exp_eps_for0/Operation Sequence/Zero Order/$$
-forward sweep values
+$cref/operation sequence/exp_eps_for0/Operation Sequence/$$,
+and zero order forward sweep values,
 to compute the first order derivative
-of one dependent variables with respect to all the independent variables. 
-The computations are done in the reverse order of the original algorithm.
+of one dependent variable with respect to all the independent variables. 
+The computations are done in reverse 
+of the order of the computations in the original algorithm.
+
+$head Mathematical Form$$
+Suppose that we use the algorithm $xref/exp_eps.hpp/$$
+to compute $syntax%exp_eps(%x%, %epsilon%)%$$
+with $italic x$$ is equal to .5
+and $italic epsilon$$ is equal to .2. 
+For this case, the mathematical function for the operation sequence
+corresponding to $code exp_eps$$ is
+$latex \[
+f ( x , \varepsilon ) =   1 + x + x^2 / 2  
+\] $$
+The corresponding partial derivatives,
+and the value of the derivatives, are
+$latex \[
+\begin{array}{rcl}
+\partial_x f ( x , \varepsilon ) & = &  1 + x  = 1.5
+\\
+\partial_\varepsilon f ( x , \varepsilon ) & = &  0
+\end{array}
+\] $$
+
+$head epsilon$$
+Since $latex \varepsilon$$ is an independent variable,
+it could included as an argument to all of the
+$latex f_j$$ functions below.
+The result would be that all the partials with respect to 
+$latex \varepsilon$$ would be zero and hence we drop it to simplify
+the presentation.
 
 $head f_7$$
 In reverse mode we choose one dependent variable and
@@ -604,7 +651,10 @@ The file $xref/exp_eps_rev1.cpp/$$ contains a routine
 that verifies the values computed above.
 It returns true for success and false for failure.
 It only tests the partial derivatives of
-$latex f_j$$ that are different from those of $latex f_{j+1}$$.
+$latex f_j$$ that might not be equal to the corresponding
+partials of $latex f_{j+1}$$; i.e., the
+other partials of $latex f_j$$ must be equal to the corresponding
+partials of $latex f_{j+1}$$.
 
 $head Exercises$$
 $list number$$
@@ -623,6 +673,608 @@ that verifies the values you obtained for the previous exercise.
 Also create and run a main program that reports the result
 of calling the modified version of
 $cref/exp_eps_rev1.cpp/$$.
+$lend
+
+$end
+-----------------------------------------------------------------------------
+$begin exp_eps_for2$$
+$spell
+	exp_eps_for
+$$
+
+$section exp_eps: Second Order Forward Mode$$
+
+$index exp_eps, forward mode$$
+$index example, forward mode$$
+$index forward, mode example$$
+$index mode, example forward$$
+$index forward, second order$$
+
+
+$head Second Order Expansion$$
+$index second, order expansion$$
+$index order, second expansion$$
+$index expansion, second order$$
+
+We define $latex x(t)$$ and $latex \varepsilon(t) ]$$ near $latex t = 0$$ 
+by the second order expansions
+$latex \[
+\begin{array}{rcl}
+	x(t) & = & x^{(0)} + x^{(1)} * t  + x^{(2)} * t^2 / 2
+	\\
+	\varepsilon(t) & = & \varepsilon^{(0)} + \varepsilon^{(1)} * t
+	                 +   \varepsilon^{(2)} * t^2 / 2
+\end{array}
+\]$$
+It follows that for $latex k = 0 , 1 , 2$$,
+$latex \[
+\begin{array}{rcl}
+	x^{(k)}  & = & \dpow{k}{t} x (0)
+	\\
+	\varepsilon^{(k)}  & = & \dpow{k}{t} \varepsilon (0)
+\end{array}
+\] $$
+
+$head Purpose$$
+In general, a second order forward sweep is given the
+$cref/first order expansion/exp_2_for1/First Order Expansion/$$
+for all of the variables in an operation sequence,
+and the second order derivatives for the independent variables.
+It uses these to compute the second order derivative,
+and thereby obtain the second order expansion,
+for all the variables in the operation sequence.
+
+$head Mathematical Form$$
+Suppose that we use the algorithm $xref/exp_eps.hpp/$$
+to compute $syntax%exp_eps(%x%, %epsilon%)%$$
+with $italic x$$ is equal to .5
+and $italic epsilon$$ is equal to .2. 
+For this case, the mathematical function for the operation sequence
+corresponding to $code exp_eps$$ is
+$latex \[
+f ( x , \varepsilon ) =   1 + x + x^2 / 2  
+\] $$
+The corresponding second partial derivative with respect to $latex x$$,
+and the value of the derivative, are
+$latex \[
+\Dpow{2}{x} f ( x , \varepsilon ) =   1.
+\] $$
+
+$head Operation Sequence$$
+
+$subhead Index$$
+The Index column contains the index in the operation sequence
+of the corresponding atomic operation. 
+A Forward sweep starts with the first operation 
+and ends with the last.
+
+$subhead Zero$$
+The Zero column contains the zero order sweep results
+for the corresponding variable in the operation sequence
+(see $cref/zero order sweep/exp_2_for0/Operation Sequence/Sweep/$$).
+
+$subhead Operation$$
+The Operation column contains the 
+first order sweep operation for this variable.
+
+$subhead First$$
+The First column contains the first order sweep results
+for the corresponding variable in the operation sequence
+(see $cref/first order sweep/exp_2_for1/Operation Sequence/Sweep/$$).
+
+$subhead Derivative$$
+The Derivative column contains the
+mathematical function corresponding to the second derivative
+with respect to $latex t$$,
+at $latex t = 0$$, for each variable in the sequence.
+
+$subhead Second$$
+The Second column contains the second order derivatives
+for the corresponding variable in the operation sequence; i.e.,
+the second order expansion for the $th i$$ variable is given by
+$latex \[
+	v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
+\] $$
+We use $latex x^{(0)} = 1$$, and $latex x^{(2)} = 0$$
+so that second order differentiation
+with respect to $latex t$$, at $latex t = 0$$, 
+is the same as the second partial differentiation 
+with respect to $latex x$$ at $latex x = x^{(0)}$$.
+
+
+$subhead Sweep$$
+
+$center
+$table
+$bold Index$$
+	$cnext $pre  $$ $cnext $bold Zero$$
+	$cnext $pre  $$ $cnext $bold Operation$$ 
+	$cnext $pre  $$ $cnext $bold First$$
+	$cnext $pre  $$ $cnext $bold Derivative$$
+	$cnext $pre  $$ $cnext $bold Second$$
+$rnext
+1
+	$cnext $cnext 0.5
+	$cnext $cnext 
+	$latex v_1^{(1)} = x^{(1)}  $$
+	$cnext $cnext 1
+	$cnext $cnext
+	$latex v_2^{(2)} = x^{(2)}  $$
+	$cnext $cnext 0
+$rnext
+2
+	$cnext $cnext 0.5
+	$cnext $cnext 
+	$latex v_2^{(1)} = 1 * v_1^{(1)}$$
+	$cnext $cnext 1
+	$cnext $cnext
+	$latex v_2^{(2)} = 1 * v_1^{(2)}$$
+	$cnext $cnext 0
+$rnext
+3
+	$cnext $cnext 0.5
+	$cnext $cnext 
+	$latex v_3^{(1)} = v_2^{(1)} / 1$$
+	$cnext $cnext 1
+	$cnext $cnext
+	$latex v_3^{(2)} = v_2^{(2)} / 1$$
+	$cnext $cnext 0
+$rnext
+4
+	$cnext $cnext 1.5
+	$cnext $cnext 
+	$latex v_4^{(1)} = v_3^{(1)} $$
+	$cnext $cnext 1
+	$cnext $cnext
+	$latex v_4^{(2)} = v_3^{(2)} $$
+	$cnext $cnext 0
+$rnext
+5
+	$cnext $cnext 0.25
+	$cnext $cnext 
+	$latex v_5^{(1)} = v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}$$
+	$cnext $cnext 1
+	$cnext $cnext
+	$latex v_5^{(2)} = v_3^{(2)} * v_1^{(0)} + 2 * v_3^{(1)} * v_1^{(1)}
+	                 + v_3^{(0)} * v_1^{(2)}$$
+	$cnext $cnext 2
+$rnext
+6
+	$cnext $cnext 0.125
+	$cnext $cnext 
+	$latex v_6^{(1)} = v_5^{(1)} / 2$$
+	$cnext $cnext 0.5
+	$cnext $cnext
+	$latex v_6^{(2)} = v_5^{(2)} / 2$$
+	$cnext $cnext 1
+$rnext
+7
+	$cnext $cnext 1.625
+	$cnext $cnext 
+	$latex  v_7^{(1)} = v_4^{(1)} + v_6^{(1)}$$
+	$cnext $cnext 1.5
+	$cnext $cnext
+	$latex  v_7^{(2)} = v_4^{(2)} + v_6^{(2)}$$
+	$cnext $cnext 1
+$tend
+$$
+
+$head Return Value$$
+The return value for this case is
+$latex \[
+	y^{(2)} = \Dpow{2}{x} f ( x^{(0)} ) = v_7^{(2)} = 1
+\] $$
+
+$children%
+	introduction/exp_apx/exp_eps_for2.cpp
+%$$
+$head Verification$$
+The file $xref/exp_eps_for2.cpp/$$ contains a routine 
+which verifies the values computed above.
+It returns true for success and false for failure.
+
+$head Exercises$$
+$list number$$
+Which statement in the routine defined by $cref/exp_eps_for2.cpp/$$ uses 
+the values that are calculated by the routine 
+defined by $cref/exp_eps_for1.cpp/$$ ?
+$lnext
+Suppose that $latex x = .1$$,
+what are the results of a zero, first, and second order forward sweep for 
+the operation sequence above; 
+i.e., what are the corresponding values for
+$latex v_i^{(k)}$$ for $latex i = 1, \ldots , 7$$ and $latex k = 0, 1, 2$$.
+$lnext
+Create a modified version of $cref/exp_eps_for2.cpp/$$ that verifies 
+the derivative values from the previous exercise.
+Also create and run a main program that reports the result
+of calling the modified version of
+$cref/exp_eps_for2.cpp/$$.
+$lend
+
+$end
+-----------------------------------------------------------------------------
+$begin exp_eps_rev2$$
+$spell
+	exp_eps_rev
+$$
+
+$section exp_eps: Second Order Reverse Sweep$$
+
+$index exp_eps, reverse mode$$
+$index example, reverse mode$$
+$index reverse, mode example$$
+$index mode, reverse example$$
+
+$index second, order reverse$$
+$index order, second reverse$$
+$index reverse, second order$$
+
+$head Purpose$$
+In general, a second order reverse sweep is given the
+$cref/first order expansion/exp_eps_for1/First Order Expansion/$$
+for all of the variables in an operation sequence.
+Given a choice of a particular variable, 
+it computes the derivative, 
+of that variables first order expansion coefficient, 
+with respect to all of the independent variables.
+
+$head Mathematical Form$$
+Suppose that we use the algorithm $xref/exp_eps.hpp/$$
+to compute $syntax%exp_eps(%x%, %epsilon%)%$$
+with $italic x$$ is equal to .5
+and $italic epsilon$$ is equal to .2. 
+For this case, the mathematical function for the operation sequence
+corresponding to $code exp_eps$$ is
+$latex \[
+f ( x , \varepsilon ) =   1 + x + x^2 / 2  
+\] $$
+The corresponding derivative of the
+partial derivative with respect to $latex x$$ is
+$latex \[
+\begin{array}{rcl}
+\Dpow{2}{x} f ( x , \varepsilon ) & = &  1
+\\
+\partial_\varepsilon \partial_x f ( x , \varepsilon ) & = &  0
+\end{array}
+\] $$
+
+$head epsilon$$
+Since $latex \varepsilon$$ is an independent variable,
+it could included as an argument to all of the
+$latex f_j$$ functions below.
+The result would be that all the partials with respect to 
+$latex \varepsilon$$ would be zero and hence we drop it to simplify
+the presentation.
+
+$head f_7$$
+In reverse mode we choose one dependent variable and
+compute its derivative with respect to all the independent variables.
+For our example, we chose the value returned by $cref/exp_eps.hpp/$$
+which is $latex v_7$$.
+We begin with the function $latex f_7$$ where $latex v_7$$ 
+is both an argument and the value of the function; i.e.,
+$latex \[
+\begin{array}{rcl}
+f_7 \left( 
+	v_1^{(0)} , v_1^{(1)} , \ldots , v_7^{(0)} , v_7^{(1)} 
+\right) 
+& = & v_7^{(1)} 
+\\
+\D{f_7}{v_7^{(1)}} & = & 1
+\end{array}
+\] $$
+All the other partial derivatives of $latex f_7$$ are zero.
+
+$head Index 7: f_6$$
+The last operation has index 7,
+$latex \[
+\begin{array}{rcl}
+	v_7^{(0)} & = &   v_4^{(0)} + v_6^{(0)}  
+	\\
+	v_7^{(1)} & = &   v_4^{(1)} + v_6^{(1)}  
+\end{array}
+\] $$
+We define the function 
+$latex f_6 \left( v_1^{(0)} , \ldots , v_6^{(1)} \right) $$
+as equal to $latex f_7$$
+except that $latex v_7^{(0)}$$ and $latex v_7^{(1)}$$ are eliminated using 
+this operation; i.e.
+$latex \[
+f_6  = 
+f_7 \left[ v_1^{(0)} , \ldots , v_6^{(1)} , 
+	v_7^{(0)} \left( v_4^{(0)} , v_6^{(0)} \right)  ,
+	v_7^{(1)} \left( v_4^{(1)} , v_6^{(1)} \right)  
+\right]
+\] $$
+It follows that 
+$latex \[
+\begin{array}{rcll}
+\D{f_6}{v_4^{(1)}} 
+& = & \D{f_7}{v_4^{(1)}} + 
+	\D{f_7}{v_7^{(1)}} * \D{v_7^{(1)}}{v_4^{(1)}} 
+& = 1
+\\
+\D{f_6}{v_6^{(1)}} 
+& = & \D{f_7}{v_6^{(1)}} + 
+	\D{f_7}{v_7^{(1)}} * \D{v_7^{(1)}}{v_6^{(1)}} 
+& = 1
+\end{array}
+\] $$
+All the other partial derivatives of $latex f_6$$ are zero.
+
+$head Index 6: f_5$$
+The previous operation has index 6, 
+$latex \[
+\begin{array}{rcl}
+	v_6^{(0)} & = & v_5^{(0)} / 2
+	\\
+	v_6^{(1)} & = & v_5^{(1)} / 2
+\end{array}
+\] $$
+We define the function 
+$latex f_5 \left( v_1^{(0)} , \ldots , v_5^{(1)} \right) $$
+as equal to $latex f_6 $$
+except that $latex v_6^{(0)}$$ and $latex v_6^{(1)}$$ are eliminated using 
+this operation; i.e.
+$latex \[
+f_5 = 
+f_6 \left[ v_1^{(0)} , \ldots , v_5^{(1)} , 
+	v_6^{(0)} \left( v_5^{(0)} \right) ,
+	v_6^{(1)} \left( v_5^{(1)} \right) 
+\right]
+\] $$
+It follows that 
+$latex \[
+\begin{array}{rcll}
+\D{f_5}{v_4^{(1)}} 
+& = & \D{f_6}{v_4^{(1)}} 
+& = 1
+\\
+\D{f_5}{v_5^{(1)}} 
+& = & \D{f_6}{v_5} + 
+	\D{f_6}{v_6^{(1)}} * \D{v_6^{(1)}}{v_5^{(1)}} 
+& = 0.5
+\end{array}
+\] $$
+All the other partial derivatives of $latex f_5$$ are zero.
+
+$head Index 5: f_4$$
+The previous operation has index 5,
+$latex \[
+\begin{array}{rcl}
+	v_5^{(0)} & = & v_3^{(0)} * v_1^{(0)}
+	\\
+	v_5^{(1)} & = & v_3^{(1)} * v_1^{(0)} + v_3^{(0)} * v_1^{(1)}
+\end{array}
+\] $$
+We define the function 
+$latex f_4 \left( v_1^{(0)} , \ldots , v_4^{(1)} \right) $$
+as equal to $latex f_5 $$
+except that $latex v_5^{(0)}$$ and $latex v_5^{(1)}$$ are eliminated using 
+this operation; i.e.
+$latex \[
+f_4 = 
+f_5 \left[  v_1^{(0)} , \ldots , v_4^{(1)} ,
+	v_5^{(0)} \left( v_1^{(0)}, v_3^{(0)} \right) ,
+	v_5^{(1)} \left( v_1^{(0)}, v_1^{(1)}, v_3^{(0)} , v_3^{(1)} \right) ,
+\right]
+\] $$
+Given the information from the forward sweep, we have
+$latex v_1^{(0)} =  0.5$$,
+$latex v_3^{(0)} =  0.5$$,
+$latex v_1^{(1)} =  1$$,
+$latex v_3^{(1)} =  1$$,
+and the fact that the partial of $latex f_5$$ with respect to
+$latex v_5^{(0)}$$ is zero, we have
+$latex \[
+\begin{array}{rcll}
+\D{f_4}{v_1^{(0)}}
+& = & \D{f_5}{v_1^{(0)}}
+  +   \D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_1^{(0)}} 
+& = 0.5
+\\
+\D{f_4}{v_1^{(1)}}
+& = & \D{f_5}{v_1^{(1)}}
+  +   \D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_1^{(1)}} 
+& = 0.25
+\\
+\D{f_4}{v_3^{(0)}}
+& = & \D{f_5}{v_3^{(0)}}
+  +   \D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_3^{(0)}} 
+& = 0.5
+\\
+\D{f_4}{v_3^{(1)}}
+& = & \D{f_3}{v_1^{(1)}}
+  +   \D{f_5}{v_5^{(1)}} * \D{v_5^{(1)}}{v_3^{(1)}} 
+& = 0.25
+\\
+\D{f_4}{v_4^{(1)}}
+& = & \D{f_5}{v_4^{(1)}}
+& = 1
+\end{array}
+\] $$
+All the other partial derivatives of $latex f_5$$ are zero.
+
+$head Index 4: f_3$$
+The previous operation has index 4,
+$latex \[
+\begin{array}{rcl}
+	v_4^{(0)} = 1 + v_3^{(0)}
+	\\
+	v_4^{(1)} = v_3^{(1)}
+\end{array}
+\] $$
+We define the function 
+$latex f_3 \left( v_1^{(0)} , \ldots , v_3^{(1)} \right) $$
+as equal to $latex f_4 $$
+except that $latex v_4^{(0)}$$ and $latex v_4^{(1)}$$ are eliminated using 
+this operation; i.e.
+$latex \[
+f_3 = 
+f_4 \left[ v_1^{(0)} , \ldots , v_3^{(1)} ,
+	v_4^{(0)} \left( v_3^{(0)} \right) ,
+	v_4^{(1)} \left( v_3^{(1)} \right)  
+\right]
+\] $$
+It follows that 
+$latex \[
+\begin{array}{rcll}
+\D{f_3}{v_1^{(0)}} 
+& = & \D{f_4}{v_1^{(0)}}
+& =  0.5
+\\
+\D{f_3}{v_1^{(1)}} 
+& = & \D{f_4}{v_1^{(1)}}
+& =  0.25
+\\
+\D{f_3}{v_2^{(0)}} 
+& = & \D{f_4}{v_2^{(0)}}  
+& = 0
+\\
+\D{f_3}{v_2^{(1)}} 
+& = & \D{f_4}{v_2^{(1)}}  
+& = 0
+\\
+\D{f_3}{v_3^{(0)}} 
+& = & \D{f_4}{v_3^{(0)}} 
+  +   \D{f_4}{v_4^{(0)}} * \D{v_4^{(0)}}{v_3^{(0)}} 
+& = 0.5
+\\
+\D{f_3}{v_3^{(1)}} 
+& = & \D{f_4}{v_3^{(1)}} 
+  +   \D{f_4}{v_4^{(1)}} * \D{v_4^{(1)}}{v_3^{(1)}} 
+& = 1.25
+\end{array}
+\] $$
+
+
+$head Index 3: f_2$$
+The previous operation has index 3,
+$latex \[
+\begin{array}{rcl}
+	v_3^{(0)} & = & v_2^{(0)} / 1
+	\\
+	v_3^{(1)} & = & v_2^{(1)} / 1
+\end{array}
+\] $$
+We define the function 
+$latex f_2 \left( v_1^{(0)} , \ldots , v_2^{(1)} \right) $$
+as equal to $latex f_3 $$
+except that $latex v_3^{(0)}$$ and $latex v_3^{(1)}$$ are eliminated using 
+this operation; i.e.
+$latex \[
+f_2 = 
+f_3 \left[ v_1^{(0)} , \ldots , v_2^{(1)} ,
+	v_3^{(0)} \left( v_2^{(0)} \right) ,
+	v_3^{(1)} \left( v_2^{(1)} \right)
+\right]
+\] $$
+It follows that 
+$latex \[
+\begin{array}{rcll}
+\D{f_2}{v_1^{(0)}} 
+& = & \D{f_3}{v_1^{(0)}}
+& =  0.5
+\\
+\D{f_2}{v_1^{(1)}} 
+& = & \D{f_3}{v_1^{(1)}}
+& =  0.25
+\\
+\D{f_2}{v_2^{(0)}} 
+& = & \D{f_3}{v_2^{(0)}}  
+  +   \D{f_3}{v_3^{(0)}} * \D{v_3^{(0)}}{v_2^{(0)}}
+& = 0.5
+\\
+\D{f_2}{v_2^{(1)}} 
+& = & \D{f_3}{v_2^{(1)}}  
+  +   \D{f_3}{v_3^{(1)}} * \D{v_3^{(1)}}{v_2^{(0)}}
+& = 1.25
+\end{array}
+\] $$
+
+$head Index 2: f_1$$
+The previous operation has index 1,
+$latex \[
+\begin{array}{rcl}
+	v_2^{(0)} & = & 1 * v_1^{(0)}
+	\\
+	v_2^{(1)} & = & 1 * v_1^{(1)}
+\end{array}
+\] $$
+We define the function 
+$latex f_1 \left( v_1^{(0)} , v_1^{(1)} \right) $$
+as equal to $latex f_2 $$
+except that $latex v_2^{(0)}$$ and $latex v_2^{(1)}$$ are eliminated using 
+this operation; i.e.
+$latex \[
+f_1 = 
+f_2 \left[  v_1^{(0)} , v_1^{(1)} , 
+	v_2^{(0)} \left( v_1^{(0)} \right)  ,
+	v_2^{(1)} \left( v_1^{(1)} \right)  
+\right]
+\] $$
+It follows that 
+$latex \[
+\begin{array}{rcll}
+\D{f_1}{v_1^{(0)}} 
+& = & \D{f_2}{v_1^{(0)}}
+  +   \D{f_2}{v_2^{(0)}} * \D{v_2^{(0)}}{v_1^{(0)}}
+& =  1
+\\
+\D{f_1}{v_1^{(1)}} 
+& = & \D{f_2}{v_1^{(1)}}
+  +   \D{f_2}{v_2^{(1)}} * \D{v_2^{(1)}}{v_1^{(1)}}
+& = 1.5
+\end{array}
+\] $$
+Note that $latex v_1$$ is equal to $latex x$$,
+so the second partial derivative of 
+$syntax%exp_eps(%x%, %epsilon%)%$$ 
+at $italic x$$ equal to .5 and $italic epsilon$$ equal .2 is 
+$latex \[
+\Dpow{2}{x} v_7^{(0)}
+= \D{v_7^{(1)}}{x} 
+= \D{f_1}{v_1^{(0)}}
+= 1
+\] $$
+There is a theorem about algorithmic differentiation that explains why
+the other partial of $latex f_1$$ is equal to the first partial of
+$syntax%exp_eps(%x%, %epsilon%)%$$ 
+with respect to $latex x$$.
+
+
+$children%
+	introduction/exp_apx/exp_eps_rev2.cpp
+%$$
+
+$head Verification$$
+The file $xref/exp_eps_rev2.cpp/$$ contains a routine 
+that verifies the values computed above.
+It returns true for success and false for failure.
+It only tests the partial derivatives of
+$latex f_j$$ that might not be equal to the corresponding
+partials of $latex f_{j+1}$$; i.e., the
+other partials of $latex f_j$$ must be equal to the corresponding
+partials of $latex f_{j+1}$$.
+
+$head Exercises$$
+$list number$$
+Consider the case where $latex x = .1$$
+and we first preform a zero order forward mode sweep
+for the operation sequence used above (in reverse order).
+What are the results of a 
+first order reverse mode sweep; i.e.,
+what are the corresponding values for 
+$latex \D{f_j}{v_k}$$ for all $latex j, k$$ such that
+$latex \D{f_j}{v_k} \neq 0$$.
+$lnext
+Create a modified version of 
+$cref/exp_eps_rev2.cpp/$$ 
+that verifies the values you obtained for the previous exercise.
+Also create and run a main program that reports the result
+of calling the modified version of
+$cref/exp_eps_rev2.cpp/$$.
 $lend
 
 $end

@@ -11,13 +11,16 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin exp_2_cppad$$
 $spell
+	Taylor
+	coef
+	resize
 	cppad.hpp
 	cmath
 	fabs
 	bool
 	exp_2_cppad
-	du
-	dv
+	dx
+	dy
 	dw
 	endl
 	hpp
@@ -29,7 +32,7 @@ $spell
 	apx
 $$
 
-$section exp_2: CppAD First Order Forward and Reverse$$.
+$section exp_2: CppAD Forward and Reverse Sweeps$$.
 
 $head Purpose$$
 Use CppAD forward and reverse modes to compute the
@@ -43,15 +46,15 @@ as defined by the $cref/exp_2.hpp/$$ include file.
 
 $head Exercises$$
 $list number$$
-Create and tests a modified version of the routine below that computes
-partial derivative with respect to $latex x$$,
+Create and test a modified version of the routine below that computes
+the same order derivatives with respect to $latex x$$,
 at the point $latex x = .1$$ 
 of the function 
 $syntax%
 	exp_2(%x%)
 %$$
 $lnext
-Create routine called
+Create a routine called
 $syntax%
 	exp_3(%x%)
 %$$ 
@@ -75,46 +78,62 @@ bool exp_2_cppad(void)
 
 	// domain space vector
 	size_t n = 1; // dimension of the domain space
-	vector< AD<double> > U(n);
-	U[0] = .5;    // value of x for this operation sequence
+	vector< AD<double> > X(n);
+	X[0] = .5;    // value of x for this operation sequence
 
 	// declare independent variables and start recording operation sequence
-	CppAD::Independent(U);
+	CppAD::Independent(X);
 
 	// evaluate our exponential approximation
-	AD<double> x   = U[0];
+	AD<double> x   = X[0];
 	AD<double> apx = exp_2(x);  
 
 	// range space vector
 	size_t m = 1;  // dimension of the range space
-	vector< AD<double> > V(m);
-	V[0] = apx;    // variable that represents only range space component
+	vector< AD<double> > Y(m);
+	Y[0] = apx;    // variable that represents only range space component
 
-	// Create f: U -> V corresponding to this operation sequence
+	// Create f: X -> Y corresponding to this operation sequence
 	// and stop recording. This also executes a zero order forward 
-	// mode sweep using values in U for x and e.
-	CppAD::ADFun<double> f(U, V);
+	// sweep using values in X for x.
+	CppAD::ADFun<double> f(X, Y);
 
-	// first order forward mode sweep that computes partial w.r.t x
-	vector<double> du(n);  // differential in domain space
-	vector<double> dv(m);  // differential in range space
-	du[0] = 1.;  // x direction in domain space
+	// first order forward sweep that computes
 	// partial of exp_2(x) with respect to x
-	dv    = f.Forward(1, du);
+	vector<double> dx(n);  // differential in domain space
+	vector<double> dy(m);  // differential in range space
+	dx[0] = 1.;            // direction for partial derivative
+	dy    = f.Forward(1, dx);
 	double check = 1.5;
-	ok   &= NearEqual(dv[0], check, 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
 
-	// first order reverse mode sweep that computes the derivative
+	// first order reverse sweep that computes the derivative
 	vector<double>  w(m);   // weights for components of the range
 	vector<double> dw(n);   // derivative of the weighted function
-	w[0] = 1.;   // only one weight and it is one
-	// derivative of w[0] * exp_2(x)
-	dw   = f.Reverse(1, w);
-	check = 1.5;  // partial of exp_2(x) with respect to x
+	w[0] = 1.;              // there is only one weight
+	dw   = f.Reverse(1, w); // derivative of w[0] * exp_2(x)
+	check = 1.5;            // partial of exp_2(x) with respect to x
 	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);
+
+	// second order forward sweep that computes
+	// second partial of exp_2(x) with respect to x
+	vector<double> x2(n);     // second order Taylor coefficients 
+	vector<double> y2(m);  
+	x2[0] = 0.;               // evaluate second partial .w.r.t. x
+	y2    = f.Forward(2, x2);
+	check = 0.5 * 1.;         // Taylor coef is 1/2 second derivative 
+	ok   &= NearEqual(y2[0], check, 1e-10, 1e-10);
+
+	// second order reverse sweep that computes
+	// derivative of partial of exp_2(x) w.r.t. x
+	dw.resize(2 * n);         // space for first and second derivatives
+	dw    = f.Reverse(2, w);
+	check = 1.;               // result should be second derivative
+	ok   &= NearEqual(dw[0*2+1], check, 1e-10, 1e-10);
 
 	return ok;
 }
+
 /* $$
 $end
 */
