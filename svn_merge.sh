@@ -28,10 +28,10 @@ ToDirectory=trunk
 FromDirectory=branches/intro
 #
 # Version of the repository corresponding to FromDirectory just before changes
-Start=884
+Start=907
 # 
 # Version of the repository corresponding to FromDirecrtory after the changes
-End=900
+End=923
 #
 # echo the svn merge command
 echo "cd  .."
