@@ -167,24 +167,28 @@ void one_newton(double &fcur, double &xcur, Fun &fun,
 	using CppAD::vector;
 	using CppAD::abs;
 
+	// domain space vector
+	size_t n = 1;
+	vector< AD<double> > X(n);
+	// range space vector
+	size_t m = 1;
+	vector< AD<double> > Y(m);
+	// domain and range differentials
+	vector<double> dx(n), dy(m);
+
 	size_t itr;
 	xcur = xin;
 	for(itr = 0; itr < max_itr; itr++)
 	{	// domain space vector
-		size_t n = 1;
-		vector< AD<double> > X(n);
 		X[0] = xcur;
 		CppAD::Independent(X);
 		// range space vector
-		size_t m = 1;
-		vector< AD<double> > Y(m);
 		Y[0] = fun(X[0]);
 		// F : X -> Y
 		CppAD::ADFun<double> F(X, Y);
 		// fcur = F(xcur)
 		fcur  = Value(Y[0]);
 		// evaluate dfcur = F'(xcur)
-		vector<double> dx(n), dy(m);
 		dx[0] = 1;
 		dy = F.Forward(1, dx);
 		double dfcur = dy[0];

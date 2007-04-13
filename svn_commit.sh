@@ -42,10 +42,11 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Merge in changes from branches/intro.
+log_entry="Minor changes
 
 svn_commit.sh: file that made this commit.
-svn_merge.sh: file that did this merge.
+reverse.omh: change W^{(j)} ( t , x ) to W^{(j)} (x).
+multi_newton.hpp: move some memory allocation out of loop.
 " 
 add_list="
 "
@@ -56,25 +57,8 @@ move_list="
 #
 change_list="
 	svn_commit.sh
-	doc.omh
-	introduction/exp_apx/exp_eps_rev1.cpp
-	introduction/exp_apx/exp_eps_rev2.cpp
-	introduction/exp_apx/exp_2_for0.cpp
-	introduction/exp_apx/exp_eps.omh
-	introduction/exp_apx/exp_2_for1.cpp
-	introduction/exp_apx/exp_2_for2.cpp
-	introduction/exp_apx/exp_eps_cppad.cpp
-	introduction/exp_apx/exp_2_rev1.cpp
-	introduction/exp_apx/exp_2_rev2.cpp
-	introduction/exp_apx/exp_2.omh
-	introduction/exp_apx/exp_2_cppad.cpp
-	introduction/exp_apx/main.cpp
-	introduction/exp_apx/exp_apx.vcproj
-	introduction/exp_apx/makefile.am
-	introduction/exp_apx/exp_eps_for0.cpp
-	introduction/exp_apx/exp_eps_for1.cpp
-	introduction/exp_apx/exp_eps_for2.cpp
-	omh/whats_new_07.omh
+	omh/reverse.omh
+	openmp/multi_newton.hpp
 "
 #
 copy_branch="" 
