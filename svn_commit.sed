@@ -1,5 +1,8 @@
 # Changs to be made at each commit
 #
+# Make sure config.h value for CPPAD_GETTIMEOFDAY is zero
+s/^# *define *CPPAD_GETTIMEOFDAY *1 *$/#define CPPAD_GETTIMEOFDAY 0/
+#
 # Delete short copyright comment (it is obvious)
 /BEGIN SHORT COPYRIGHT/d
 /END SHORT COPYRIGHT/d

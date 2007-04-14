@@ -42,11 +42,12 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Minor changes
+log_entry="More on GETTIMEOFDAY default is no.
 
 svn_commit.sh: file that made this commit.
-reverse.omh: change W^{(j)} ( t , x ) to W^{(j)} (x).
-multi_newton.hpp: move some memory allocation out of loop.
+svn_commit.sed: change GETTIMEOFDAY to zero on every commit.
+reverse.omh: fix mising parenthesis in documentation.
+speed_test.hpp: no longer need special define of GETTIMEOFDAY.
 " 
 add_list="
 "
@@ -57,8 +58,9 @@ move_list="
 #
 change_list="
 	svn_commit.sh
+	svn_commit.sed
 	omh/reverse.omh
-	openmp/multi_newton.hpp
+	cppad/speed_test.hpp
 "
 #
 copy_branch="" 

@@ -279,9 +279,9 @@ dw[ j * 2 + 0 ]
 \\
 dw[ j * 2 + 1 ] 
 & = & \D{ W^{(1)} }{ x_j } (0)  
-  = \left[ \D{ }{ x_j } \D{ W(t, x) }{t} \right]_{t=0,x=0)} 
+  = \left[ \D{ }{ x_j } \D{ W(t, x) }{t} \right]_{t=0,x=0} 
 \\
-& = & \left\{ \D{ }{ x_j } \D{ F_i [ X(t, x) ] }{t} \right\}_{(t=0,x=0)} 
+& = & \left\{ \D{ }{ x_j } \D{ F_i [ X(t, x) ] }{t} \right\}_{t=0,x=0} 
 \\
 & = & \left\{ \D{ }{ x_j } \left[
 		F_i^{(1)} ( x + x^{(0)} ) * x^{(1)} 
@@ -290,13 +290,13 @@ dw[ j * 2 + 1 ]
 & = &   
 \sum_{\ell=0}^{n-1} \left[ 
 	\D{ }{ x_j } \D { F_i }{ x_\ell } ( x + x^{(0)} ) 
-\right]_0 * x_\ell^{(1)}
+\right]_{x=0} * x_\ell^{(1)}
 \\
 & = &
 \sum_{\ell=0}^{n-1}
 \DD{F_i}{ x_j }{ x_\ell } \left( x^{(0)} \right) * x_\ell^{(1)}
 =
-[ F_i^{(2)} \left( x^{(0)} \right) * x^{(1)} ]_j
+\left[ F_i^{(2)} \left( x^{(0)} \right) * x^{(1)} \right]_j
 \end{array}
 \] $$
 Thus the vector $latex ( dw[1], dw[3], \ldots , dw[ n * p - 1 ] )$$
