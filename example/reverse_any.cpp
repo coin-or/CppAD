@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -10,12 +10,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin ReverseAny.cpp$$
+$begin reverse_any.cpp$$
 $spell
 	Cpp
 $$
 
-$section Reverse Mode (any Order): Example and Test$$
+$section Any Order Reverse Mode: Example and Test$$
 $index Reverse$$
 $index example, Reverse$$
 $index test, Reverse$$
@@ -29,18 +29,19 @@ $end
 // BEGIN PROGRAM
 # include <cppad/cppad.hpp>
 namespace { // ----------------------------------------------------------
-// define the template function ReverseAnyCases<Vector> in empty namespace
+// define the template function reverse_any_cases<Vector> in empty namespace
 template <typename Vector> 
-bool ReverseAnyCases(void)
+bool reverse_any_cases(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
 	// domain space vector
-	size_t n = 2;
+	size_t n = 3;
 	CppADvector< AD<double> > X(n);
 	X[0] = 0.; 
 	X[1] = 1.;
+	X[2] = 2.;
 
 	// declare independent variables and start recording
 	CppAD::Independent(X);
@@ -48,62 +49,70 @@ bool ReverseAnyCases(void)
 	// range space vector
 	size_t m = 1;
 	CppADvector< AD<double> > Y(m);
-	Y[0] = X[0] * X[0] * X[1];
+	Y[0] = X[0] * X[1] * X[2];
 
 	// create f : X -> Y and stop recording
 	CppAD::ADFun<double> f(X, Y);
 
-	// use zero order forward mode to evaluate y at x = (3, 4)
-	// use the template parameter Vector for the vector type
-	Vector x(n);
-	Vector y(m);
-	x[0]    = 3.;
-	x[1]    = 4.;
-	y       = f.Forward(0, x);
-	ok     &= NearEqual(y[0] , x[0]*x[0]*x[1], 1e-10, 1e-10);
+	// use zero order forward to evaluate W(0, u)
+	// W(t, u)    = (u_0 + dx_0*t)*(u_1 + dx_1*t)*(u_2 + dx_2*t)
+	Vector u(n), W(m);
+	u[0]    = 2.;
+	u[1]    = 3.;
+	u[2]    = 4.;
+	W       = f.Forward(0, u);
+	double check;
+	check   =  u[0]*u[1]*u[2];
+	ok     &= NearEqual(W[0] , check, 1e-10, 1e-10);
 
-	// use first order reverse mode to evaluate derivative of y[0]
-	Vector w(m);
-	Vector dw(n);
-	w[0] = 1.;
-	dw   = f.Reverse(1, w);
-	ok  &= NearEqual(dw[0] , 2.*x[0]*x[1], 1e-10, 1e-10);
-	ok  &= NearEqual(dw[1] ,    x[0]*x[0], 1e-10, 1e-10);
+	// use first order forward to evaluate W_t(0, u)
+	// W_t(t, u)  = (u_0 + dx_0*t)*(u_1 + dx_1*t)*dx_2
+	//            + (u_0 + dx_0*t)*(u_2 + dx_2*t)*dx_1
+	//            + (u_1 + dx_1*t)*(u_2 + dx_2*t)*dx_0
+	Vector dx(n), W1(m);
+	dx[0] = .2;
+	dx[1] = .3;
+	dx[2] = .4;
+	W1    = f.Forward(1, dx);
+        check =  u[0]*u[1]*dx[2] + u[0]*u[2]*dx[1] + u[1]*u[2]*dx[0];
+	ok   &= NearEqual(W1[0], check, 1e-10, 1e-10);
 
-	// apply first order forward mode in x[0] direction
-	// (all second order partials below involve x[0])
-	Vector dx(n);
-	Vector dy(m);
-	dx[0] = 1.;
-	dx[1] = 0.;
-	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0], 2.*x[0]*x[1], 1e-10, 1e-10);
+	// use second order forward to evaluate 1/2 * W_tt(0, u)
+	// W_tt(t, u) = 2*(u_0 + dx_0*t)*dx_1*dx_2
+	//            + 2*(u_1 + dx_1*t)*dx_0*dx_2
+	//            + 2*(u_3 + dx_3*t)*dx_0*dx_1
+	Vector ddx(n), W2(m);
+	ddx[0] = ddx[1] = ddx[2] = 0.;
+        W2     = f.Forward(2, ddx);
+        check  =  u[0]*dx[1]*dx[2] + u[1]*dx[0]*dx[2] + u[2]*dx[0]*dx[1];
+	ok    &= NearEqual(W2[0], check, 1e-10, 1e-10);
 
-	// use second order reverse mode to evalaute second partials of y[0]
-	// with respect to (x[0], x[0]) and with respect to (x[0], x[1])
-	Vector ddw( 2 * n );
-	ddw  = f.Reverse(2, w);
+	// use third order reverse mode to evaluate derivatives
+	size_t p = 3;
+	Vector w(m), dw(n * p);
+	w[0]   = 1.;
+	dw     = f.Reverse(p, w);
 
-	// check that first order result is part of second order result
-	ok  &= NearEqual(ddw[0 * 2 + 0] , dw[0], 1e-10, 1e-10);
-	ok  &= NearEqual(ddw[1 * 2 + 0] , dw[1], 1e-10, 1e-10);
+	// check derivative of W(0, u) with respect to u
+	ok    &= NearEqual(dw[0*p+0], u[1]*u[2], 1e-10, 1e-10);
+	ok    &= NearEqual(dw[1*p+0], u[0]*u[2], 1e-10, 1e-10);
+	ok    &= NearEqual(dw[2*p+0], u[0]*u[1], 1e-10, 1e-10);
 
-	// check partial of y[0] w.r.t (x[0], x[0])
-	ok  &= NearEqual(ddw[0 * 2 + 1] , 2.*x[1], 1e-10, 1e-10); 
-
-	// check partial of y[0] w.r.t (x[0], x[1])
-	ok  &= NearEqual(ddw[1 * 2 + 1] , 2.*x[0], 1e-10, 1e-10); 
+	// check derivative of W_t(0, u) with respect to u
+	ok    &= NearEqual(dw[0*p+1], u[1]*dx[2] + u[2]*dx[1], 1e-10, 1e-10);
+	ok    &= NearEqual(dw[1*p+1], u[0]*dx[2] + u[2]*dx[0], 1e-10, 1e-10);
+	ok    &= NearEqual(dw[2*p+1], u[0]*dx[1] + u[1]*dx[0], 1e-10, 1e-10);
 
 	return ok;
 }
 } // End empty namespace 
 # include <vector>
 # include <valarray>
-bool ReverseAny(void)
+bool reverse_any(void)
 {	bool ok = true;
-	ok &= ReverseAnyCases< CppAD::vector  <double> >();
-	ok &= ReverseAnyCases< std::vector    <double> >();
-	ok &= ReverseAnyCases< std::valarray  <double> >();
+	ok &= reverse_any_cases< CppAD::vector  <double> >();
+	ok &= reverse_any_cases< std::vector    <double> >();
+	ok &= reverse_any_cases< std::valarray  <double> >();
 	return ok;
 }
 // END PROGRAM

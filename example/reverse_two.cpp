@@ -10,18 +10,18 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin reverse_one.cpp$$
+$begin reverse_two.cpp$$
 $spell
 	Cpp
 $$
 
-$section First Order Reverse Mode: Example and Test$$
+$section Second Order Reverse ModeExample and Test$$
 $index Reverse$$
 $index example, Reverse$$
 $index test, Reverse$$
 
 $code
-$verbatim%example/reverse_one.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/reverse_any.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -29,9 +29,9 @@ $end
 // BEGIN PROGRAM
 # include <cppad/cppad.hpp>
 namespace { // ----------------------------------------------------------
-// define the template function reverse_one_cases<Vector> in empty namespace
+// define the template function reverse_two_cases<Vector> in empty namespace
 template <typename Vector> 
-bool reverse_one_cases(void)
+bool reverse_two_cases(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
@@ -53,17 +53,8 @@ bool reverse_one_cases(void)
 	// create f : X -> Y and stop recording
 	CppAD::ADFun<double> f(X, Y);
 
-	// use first order reverse mode to evaluate derivative of y[0]
-	// and use the values in X for the independent variables.
-	CppADvector<double> w(m);
-	CppADvector<double> dw(n);
-	w[0] = 1.;
-	dw   = f.Reverse(1, w);
-	ok  &= NearEqual(dw[0] , 2.*X[0]*X[1], 1e-10, 1e-10);
-	ok  &= NearEqual(dw[1] ,    X[0]*X[0], 1e-10, 1e-10);
-
 	// use zero order forward mode to evaluate y at x = (3, 4)
-	// and use the template parameter Vector for the vector type
+	// use the template parameter Vector for the vector type
 	Vector x(n);
 	Vector y(m);
 	x[0]    = 3.;
@@ -72,24 +63,47 @@ bool reverse_one_cases(void)
 	ok     &= NearEqual(y[0] , x[0]*x[0]*x[1], 1e-10, 1e-10);
 
 	// use first order reverse mode to evaluate derivative of y[0]
-	// and using the values in x for the independent variables.
+	Vector w(m);
+	Vector dw(n);
 	w[0] = 1.;
 	dw   = f.Reverse(1, w);
 	ok  &= NearEqual(dw[0] , 2.*x[0]*x[1], 1e-10, 1e-10);
 	ok  &= NearEqual(dw[1] ,    x[0]*x[0], 1e-10, 1e-10);
+
+	// apply first order forward mode in x[0] direction
+	// (all second order partials below involve x[0])
+	Vector dx(n);
+	Vector dy(m);
+	dx[0] = 1.;
+	dx[1] = 0.;
+	dy    = f.Forward(1, dx);
+	ok   &= NearEqual(dy[0], 2.*x[0]*x[1], 1e-10, 1e-10);
+
+	// use second order reverse mode to evalaute second partials of y[0]
+	// with respect to (x[0], x[0]) and with respect to (x[0], x[1])
+	Vector ddw( 2 * n );
+	ddw  = f.Reverse(2, w);
+
+	// check that first order result is part of second order result
+	ok  &= NearEqual(ddw[0 * 2 + 0] , dw[0], 1e-10, 1e-10);
+	ok  &= NearEqual(ddw[1 * 2 + 0] , dw[1], 1e-10, 1e-10);
+
+	// check partial of y[0] w.r.t (x[0], x[0])
+	ok  &= NearEqual(ddw[0 * 2 + 1] , 2.*x[1], 1e-10, 1e-10); 
+
+	// check partial of y[0] w.r.t (x[0], x[1])
+	ok  &= NearEqual(ddw[1 * 2 + 1] , 2.*x[0], 1e-10, 1e-10); 
 
 	return ok;
 }
 } // End empty namespace 
 # include <vector>
 # include <valarray>
-bool reverse_one(void)
+bool reverse_two(void)
 {	bool ok = true;
-	// Run with Vector equal to three different cases
-	// all of which are Simple Vectors with elements of type double.
-	ok &= reverse_one_cases< CppAD::vector  <double> >();
-	ok &= reverse_one_cases< std::vector    <double> >();
-	ok &= reverse_one_cases< std::valarray  <double> >();
+	ok &= reverse_two_cases< CppAD::vector  <double> >();
+	ok &= reverse_two_cases< std::vector    <double> >();
+	ok &= reverse_two_cases< std::valarray  <double> >();
 	return ok;
 }
 // END PROGRAM

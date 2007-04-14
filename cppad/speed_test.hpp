@@ -159,8 +159,13 @@ $end
 // use config.h to define CPPAD_GETIMEOFDAY preprocessor symbol
 # include <cppad/config.h>
 
-// Microsoft versions uses default valeu for CPPAD_GETTIMEOFDAY which is 0
-// (see cppad/config.h and svn_commit.sed)
+// Microsoft versions to not run autoconf, so CPPAD_GETTIMEOFDAY may not be
+// set to proper value.
+# ifdef _MSC_VER
+# undef  CPPAD_GETTIMEOFDAY
+# define CPPAD_GETTIMEOFDAY 0
+# endif
+
 # if CPPAD_GETTIMEOFDAY
 # include <sys/time.h>
 # else

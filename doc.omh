@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin CppAD$$
 $latex
 	% Latex macros defined for all the CppAD documentation:
+	\newcommand{\T}{ {\rm T} }
 	\newcommand{\R}{ {\bf R} }
 	\newcommand{\C}{ {\bf C} }
 	\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
@@ -58,7 +59,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-20070411
+A Package for Differentiation of C++ Algorithms: cppad-20070414
 $$ 
 
 $head Syntax$$

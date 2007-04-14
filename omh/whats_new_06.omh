@@ -812,7 +812,7 @@ improved and moved to be part of the $xref/Forward/$$ section.
 
 $head 04-04$$
 The documentation and examples for $xref/Reverse/$$ were 
-improved and split into $xref/ReverseOne/$$ and $xref/ReverseAny/$$.
+improved and split into $xref/reverse_one/$$ and $xref/reverse_any/$$.
 
 $head 04-03$$
 Create separate sections for the 

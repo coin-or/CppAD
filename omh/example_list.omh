@@ -151,8 +151,9 @@ $rref RevOne.cpp$$
 $rref RevSparseHes.cpp$$
 $rref RevSparseJac.cpp$$
 $rref RevTwo.cpp$$
-$rref ReverseAny.cpp$$
-$rref ReverseOne.cpp$$
+$rref reverse_any.cpp$$
+$rref reverse_one.cpp$$
+$rref reverse_two.cpp$$
 $rref RombergMul.cpp$$
 $rref RombergOne.cpp$$
 $rref Rosen34.cpp$$

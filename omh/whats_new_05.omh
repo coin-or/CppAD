@@ -389,7 +389,7 @@ $xref/ForOne.cpp/$$,
 $code Fun.cpp$$
 ($code Fun.cpp$$ has since been replaced by $xref/Independent.cpp/$$,
 $code Reverse.cpp$$ has since been replaced by 
-$xref/ReverseOne.cpp/$$ and $xref/ReverseAny.cpp/$$).
+$xref/reverse_one.cpp/$$ and $code reverse_any.cpp$$).
 
 $head 11-01$$
 Add forward mode $xref/ForSparseJac//Jacobian sparsity/$$ calculation.
