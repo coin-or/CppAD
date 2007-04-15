@@ -42,21 +42,13 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Improve reverse mode documentaiton and examples.
+log_entry="More improvement of reverse mode documentaiton and examples.
 
 svn_commit.sh: file that made this commit.
-whats_new_07.omh: users view of the changes.
-reverse_two.cpp: copy of old reverse_any.cpp.
-reverse_one.cpp: change ReverseOne to reverse_one.
-reverse_any.cpp: new higher order example.
-example.cpp: use reverse_ instead of mixed case and add reverse_two.cpp.
-makefile.am: and add reverse_two.cpp.
-example_list.omh: use reverse_ instead of mixed case and add reverse_two.cpp.
-reverse.omh: add reverse_two and major change to reverse_any.
-speed_test.cpp: back out last commit.
-doc.omh: add Latex macor for transpose.
-whats_new_05.omh: use reverse_ instead of mixed case.
-whats_new_06.omh: use reverse_ instead of mixed case.
+reverse_two.cpp: use dx is check of calculations (not simple partials).
+reverse_one.cpp: dimension vectors two at a time.
+reverse_any.cpp: add missing third order check.
+reverse.omh: correct subscript on W.
 " 
 add_list="
 "
@@ -67,18 +59,10 @@ move_list="
 #
 change_list="
 	svn_commit.sh
-	omh/whats_new_07.omh
 	example/reverse_two.cpp
 	example/reverse_one.cpp
 	example/reverse_any.cpp
-	example/makefile.am
-	example/example.cpp
-	omh/example_list.omh
-	omh/whats_new_05.omh
-	omh/whats_new_06.omh
 	omh/reverse.omh
-	cppad/speed_test.hpp
-	doc.omh
 "
 #
 copy_branch="" 

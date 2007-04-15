@@ -223,7 +223,7 @@ For $latex j = 0 , \ldots , n - 1$$,
 $latex \[
 dw [ j * 2 + 1 ] 
 = 
-\D{ W_0 }{ u_j } \left( x^{(0)} \right) 
+\D{ W_1 }{ u_j } \left( x^{(0)} \right) 
 =
 \sum_{\ell=0}^{n-1} x_\ell^{(1)} \left[
 w_0 * \DD{ F_0 }{ u_\ell }{ u_j } \left( x^{(0)} \right)

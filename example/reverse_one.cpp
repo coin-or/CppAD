@@ -16,9 +16,10 @@ $spell
 $$
 
 $section First Order Reverse Mode: Example and Test$$
-$index Reverse$$
-$index example, Reverse$$
-$index test, Reverse$$
+
+$index reverse, first order$$
+$index example, first order reverse$$
+$index test, first order reverse$$
 
 $code
 $verbatim%example/reverse_one.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -55,8 +56,7 @@ bool reverse_one_cases(void)
 
 	// use first order reverse mode to evaluate derivative of y[0]
 	// and use the values in X for the independent variables.
-	CppADvector<double> w(m);
-	CppADvector<double> dw(n);
+	CppADvector<double> w(m), dw(n);
 	w[0] = 1.;
 	dw   = f.Reverse(1, w);
 	ok  &= NearEqual(dw[0] , 2.*X[0]*X[1], 1e-10, 1e-10);
@@ -64,8 +64,7 @@ bool reverse_one_cases(void)
 
 	// use zero order forward mode to evaluate y at x = (3, 4)
 	// and use the template parameter Vector for the vector type
-	Vector x(n);
-	Vector y(m);
+	Vector x(n), y(m);
 	x[0]    = 3.;
 	x[1]    = 4.;
 	y       = f.Forward(0, x);

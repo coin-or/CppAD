@@ -16,12 +16,13 @@ $spell
 $$
 
 $section Second Order Reverse ModeExample and Test$$
-$index Reverse$$
-$index example, Reverse$$
-$index test, Reverse$$
+
+$index reverse, second order$$
+$index example, second order reverse$$
+$index test, second order reverse$$
 
 $code
-$verbatim%example/reverse_any.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/reverse_two.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -55,44 +56,36 @@ bool reverse_two_cases(void)
 
 	// use zero order forward mode to evaluate y at x = (3, 4)
 	// use the template parameter Vector for the vector type
-	Vector x(n);
-	Vector y(m);
-	x[0]    = 3.;
-	x[1]    = 4.;
-	y       = f.Forward(0, x);
-	ok     &= NearEqual(y[0] , x[0]*x[0]*x[1], 1e-10, 1e-10);
+	Vector x(n), y(m);
+	x[0]  = 3.;
+	x[1]  = 4.;
+	y     = f.Forward(0, x);
+	ok    &= NearEqual(y[0] , x[0]*x[0]*x[1], 1e-10, 1e-10);
 
-	// use first order reverse mode to evaluate derivative of y[0]
-	Vector w(m);
-	Vector dw(n);
-	w[0] = 1.;
-	dw   = f.Reverse(1, w);
-	ok  &= NearEqual(dw[0] , 2.*x[0]*x[1], 1e-10, 1e-10);
-	ok  &= NearEqual(dw[1] ,    x[0]*x[0], 1e-10, 1e-10);
-
-	// apply first order forward mode in x[0] direction
+	// use first order forward mode in x[0] direction
 	// (all second order partials below involve x[0])
-	Vector dx(n);
-	Vector dy(m);
+	Vector dx(n), dy(m);
 	dx[0] = 1.;
-	dx[1] = 0.;
+	dx[1] = 1.;
 	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0], 2.*x[0]*x[1], 1e-10, 1e-10);
+	double check = 2.*x[0]*x[1]*dx[0] + x[0]*x[0]*dx[1];
+	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
 
 	// use second order reverse mode to evalaute second partials of y[0]
 	// with respect to (x[0], x[0]) and with respect to (x[0], x[1])
-	Vector ddw( 2 * n );
-	ddw  = f.Reverse(2, w);
+	Vector w(m), dw( n * 2 );
+	w[0]  = 1.;
+	dw    = f.Reverse(2, w);
 
-	// check that first order result is part of second order result
-	ok  &= NearEqual(ddw[0 * 2 + 0] , dw[0], 1e-10, 1e-10);
-	ok  &= NearEqual(ddw[1 * 2 + 0] , dw[1], 1e-10, 1e-10);
+	// check derivative of f
+	ok   &= NearEqual(dw[0*2+0] , 2.*x[0]*x[1], 1e-10, 1e-10);
+	ok   &= NearEqual(dw[1*2+0] ,    x[0]*x[0], 1e-10, 1e-10);
 
-	// check partial of y[0] w.r.t (x[0], x[0])
-	ok  &= NearEqual(ddw[0 * 2 + 1] , 2.*x[1], 1e-10, 1e-10); 
-
-	// check partial of y[0] w.r.t (x[0], x[1])
-	ok  &= NearEqual(ddw[1 * 2 + 1] , 2.*x[0], 1e-10, 1e-10); 
+	// check derivative of f^{(1)} (x) * dx
+	check = 2.*x[1]*dx[1] + 2.*x[0]*dx[1];
+	ok   &= NearEqual(dw[0*2+1] , check, 1e-10, 1e-10); 
+	check = 2.*x[0]*dx[1];
+	ok   &= NearEqual(dw[1*2+1] , check, 1e-10, 1e-10); 
 
 	return ok;
 }
