@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,9 +8,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
-$begin ReverseIdentity$$
+$begin reverse_identity$$
 $spell
 	Taylor
 	Griewank
@@ -25,6 +23,12 @@ The theorem and the proof below is a restatement
 of the results on page 236 of
 $xref/Bib/Evaluating Derivatives/Evaluating Derivatives/$$.
 
+$head Notation$$
+Given a function $latex f(u, v)$$ where $latex u \in B^n$$
+we use the notation
+$latex \[
+\D{f}{u} (u, v) = \left[ \D{f}{u_1} (u, v) , \cdots , \D{f}{u_n} (u, v) \right]
+\] $$
 
 $head Theorem$$
 Suppose we are given an differentiable $latex F : B^n \rightarrow  B^m$$.
@@ -32,23 +36,23 @@ We define the functions
 $latex X : B \times B^{n \times p} \rightarrow B^n$$,
 $latex Y : B \times B^{n \times p }\rightarrow B^m$$,
 and
-$latex y^{(j)} : B \times B^{n \times p }\rightarrow B^m$$ by
+$latex y^{(j)} : B^{n \times p }\rightarrow B^m$$ by
 $latex \[
 \begin{array}{rcl}
-	X(t, x)  & = & x^{(0)} + x^{(1)} t + \cdots + x^{(p)} t^p
+	X(t, x)  & = & x^{(0)} + x^{(1)} t + \cdots + x^{(p-1)} t^{p-1}
 \\
 	Y(t, x)  & = & F [ X(t, x) ]
 \\
-	y^{(j)} (t, x) & = & \frac{1}{j !} \Dpow{j}{t} Y(t, x)
+	y^{(j)} (x) & = & \frac{1}{j !} \Dpow{j}{t} Y(0, x) 
 \end{array}
 \] $$
 where $latex x^{(j)}$$ denotes the $th j$$ column of 
 $latex x \in B^{n \times p}$$.
 It follows that
-for all $latex i, j$$ such that $latex i \leq j \leq p$$,
+for all $latex i, j$$ such that $latex i \leq j < p$$,
 $latex \[
 \begin{array}{rcl}
-\D{ y^{(j)} }{ x^{(i)} } (0, x) & = & \D{ y^{(j-i)} }{ x^{(0)} } (0, x)
+\D{ y^{(j)} }{ x^{(i)} } (x) & = & \D{ y^{(j-i)} }{ x^{(0)} } (x)
 \end{array}
 \] $$
 
@@ -57,71 +61,62 @@ $head Proof$$
 If follows from the definitions that
 $latex \[
 \begin{array}{rclr}
-\D{ y^{(j)} }{ x^{(i)} } (t, x)
+\D{ y^{(j)} }{ x^{(i)} } (x)
 & = & 
-\D{ }{ x^{(i)} } \frac{1}{j ! } \Dpow{j}{t} 
-	(F \circ  X) (t, x) 
+\frac{1}{j ! } \D{ }{ x^{(i)} } 
+	\left[ \Dpow{j}{t} (F \circ  X) (t, x)  \right]_{t=0}
 \\
 & = &
-\frac{1}{j ! } \Dpow{j}{t} 
-\D{ }{ x^{(i)} } 
-	(F \circ  X) (t, x) 
+\frac{1}{j ! } \left[ \Dpow{j}{t} 
+	\D{ }{ x^{(i)} } (F \circ  X) (t, x) 
+\right]_{t=0}
 \\
 & = &
-\frac{1}{j ! } \Dpow{j}{t} 
-[ t^i ( F^{(1)} \circ X ) (t, x) ] 
-& \hspace{2cm} (*)
+\frac{1}{j ! } \left\{ 
+	\Dpow{j}{t} \left[ t^i ( F^{(1)} \circ X ) (t, x) \right] 
+\right\}_{t=0}
 \end{array}
 \] $$
-Using the previous equation (*) we obtain 
-$latex \[
-\D{ y^{(j-i)} }{ x^{(0)} } (t, x)
-=
-\frac{1}{(j-i) ! } \Dpow{j-i}{t} 
-( F^{(1)} \circ X ) (t, x)
-\] $$
-Note that $latex i \leq j$$
-and if $latex i < k \leq j$$ the $th k$$ derivative
-of $latex t^i$$ is zero.
-Starting with equation (*),
-and using $latex k$$ to index the number of derivatives
-of $latex t^i$$,
-we have
+For $latex k > i$$, the $th k$$ 
+partial of $latex t^i$$ with respect to $latex t$$ is zero.
+Thus, the partial with respect to $latex t$$ is given by
 $latex \[
 \begin{array}{rcl}
-\D{ y^{(j)} }{ x^{(i)} } (t, x)
+\Dpow{j}{t} \left[ t^i ( F^{(1)} \circ X ) (t, x) \right] 
 & = &
-\frac{1}{j ! } \Dpow{j}{t} 
-[ t^i ( F^{(1)} \circ X ) (t, x) ] 
-\\
-& = &
-\frac{1}{j !} \sum_{k=0}^i 
+\sum_{k=0}^i 
 \left( \begin{array}{c} j \\ k \end{array} \right)
 \frac{ i ! }{ (i - k) ! } t^{i-k} \; 
 \Dpow{j-k}{t} ( F^{(1)} \circ X ) (t, x)
 \\
+\left\{ 
+	\Dpow{j}{t} \left[ t^i ( F^{(1)} \circ X ) (t, x) \right] 
+\right\}_{t=0}
 & = &
-\frac{1}{j !} \sum_{k=0}^i 
-\frac{ j ! }{ k ! \; (j - k) ! }
-\frac{ i ! }{ (i - k) ! } t^{i-k} \; 
-(j - k) ! \; \D{ y^{(j-k)} }{ x^{(0)} } 
-\end{array}
-\] $$
-Substituting zero for $latex t$$,
-only the term corresponding to $latex k = i$$ is non-zero,
-so we have
-$latex \[
-\begin{array}{rcl}
-\D{ y^{(j)} }{ x^{(i)} } (0, x)
-& = &
-\frac{ j ! \; i ! \; (j - i) ! }{ j ! \; i ! \; (j - i) ! }
-\D{ y^{(j-i)} }{ x^{(0)} } (0, x)
+\left( \begin{array}{c} j \\ i \end{array} \right)
+i ! \Dpow{j-i}{t} ( F^{(1)} \circ X ) (t, x)
 \\
 & = &
-\D{ y^{(j-i)} }{ x^{(0)} } (0, x)
+\frac{ j ! }{ (j - i) ! }
+\Dpow{j-i}{t} ( F^{(1)} \circ X ) (t, x)
+\\
+\D{ y^{(j)} }{ x^{(i)} } (x)
+& = & 
+\frac{ 1 }{ (j - i) ! }
+\Dpow{j-i}{t} ( F^{(1)} \circ X ) (t, x)
 \end{array}
 \] $$
-
-
+Applying this formula to the case where $latex j$$
+is replaced by $latex j - i$$ and $latex i$$ is replaced by zero,
+we obtain
+$latex \[
+\D{ y^{(j-i)} }{ x^{(0)} } (x)
+=
+\frac{ 1 }{ (j - i) ! }
+\Dpow{j-i}{t} ( F^{(1)} \circ X ) (t, x)
+=
+\D{ y^{(j)} }{ x^{(i)} } (x)
+\] $$
+which completes the proof
 
 $end

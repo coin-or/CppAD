@@ -42,13 +42,11 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="More improvement of reverse mode documentaiton and examples.
+log_entry="Improve the reverse mode identity proof.
 
 svn_commit.sh: file that made this commit.
-reverse_two.cpp: use dx is check of calculations (not simple partials).
-reverse_one.cpp: dimension vectors two at a time.
-reverse_any.cpp: add missing third order check.
-reverse.omh: correct subscript on W.
+whats_new_07.omh: user's view of the changes.
+reverse_identity.omh: simplify the proof.
 " 
 add_list="
 "
@@ -59,10 +57,8 @@ move_list="
 #
 change_list="
 	svn_commit.sh
-	example/reverse_two.cpp
-	example/reverse_one.cpp
-	example/reverse_any.cpp
-	omh/reverse.omh
+	omh/whats_new_07.omh
+	omh/reverse_identity.omh
 "
 #
 copy_branch="" 
