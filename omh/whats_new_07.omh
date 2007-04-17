@@ -39,6 +39,14 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-17$$
+Add a paragraph to $cref/reverse_identity/$$ explaining
+how it relates to $cref/reverse_any/$$ calculations.
+Add description of 
+$cref/first/reverse_any/dw/First Order/$$ and
+$cref/second order/reverse_any/dw/Second Order/$$ 
+results in $cref/reverse_any/$$.
+
 $head 04-14$$
 Simplify the $cref/Reverse/$$ mode documentation by creating 
 a separate $cref/reverse_two/$$ section for second order reverse,

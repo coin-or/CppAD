@@ -42,11 +42,12 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Improve the reverse mode identity proof.
+log_entry="More improvement of the reverse mode documentation.
 
 svn_commit.sh: file that made this commit.
 whats_new_07.omh: user's view of the changes.
-reverse_identity.omh: simplify the proof.
+reverse_identity: add a paragraph explaining relation to reverse sweep.
+reverse.omh: improve connection from reverse_any to first and second order.
 " 
 add_list="
 "
@@ -59,6 +60,7 @@ change_list="
 	svn_commit.sh
 	omh/whats_new_07.omh
 	omh/reverse_identity.omh
+	omh/reverse.omh
 "
 #
 copy_branch="" 

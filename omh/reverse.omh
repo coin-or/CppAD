@@ -346,7 +346,7 @@ $head W(t, u)$$
 The function
 $latex W : B \times B^n \rightarrow B$$ is defined by
 $latex \[
-W(t, u) = w_1 * F_1 [ X(t,u) ] + \cdots + w_{m-1} * F_{m-1} [ X(t, u) ]
+W(t, u) = w_0 * F_0 [ X(t,u) ] + \cdots + w_{m-1} * F_{m-1} [ X(t, u) ]
 \]$$
 For $latex k = 0 , \ldots , p-1$$,
 we use $latex W_k : B^n \rightarrow B^m$$ to denote the
@@ -363,6 +363,7 @@ $latex \[
 \] $$
 where 
 $latex o ( t^{p-1} ) * t^{1-p} \rightarrow 0$$ as $latex t \rightarrow 0$$.
+
 
 $head f$$
 The object $italic f$$ has prototype
@@ -406,8 +407,52 @@ $syntax%
 It is a vector with size $latex n \times p$$.
 For $latex j = 0, \ldots, n-1$$ and $latex k = 0 , \ldots , p-1$$
 $latex \[
-	dw[ j * p + k ] = \D{ W_k }{ u_j } \left( x^{(0)} \right) 
+	dw[ j * p + k ] = W_k^{(1)} \left( x^{(0)} \right) 
 \] $$
+
+$subhead First Order$$
+The first order derivatives computed by this call can be expressed as
+$latex \[
+\begin{array}{rcl}
+W_0^{(1)} \left( x^{(0)} \right) 
+& = &
+w_0 * \left[ \D{ F_0 \circ X }{ u }  ( 0, u ) \right]_{u = x^{(0)}} 
++ \cdots + 
+w_{m-1} * \left[ \D{ F_{m-1} \circ X }{ u }  ( 0, u ) \right]_{u = x^{(0)}} 
+\\
+& = &
+w_0 * F_0^{(1)} \left( x^{(0)} \right) 
++ \cdots + 
+w_{m-1} * F_{m-1}^{(1)} \left( x^{(0)} \right) 
+\end{array}
+\] $$
+This is the same as the result documented in $cref/reverse_one/$$.
+
+$subhead Second Order$$
+The second order derivatives computed by this call can be expressed as
+$latex \[
+\begin{array}{rcl}
+W_1^{(1)} \left( x^{(0)} \right) 
+& = &
+w_0 * \left[ 
+	\D{}{u} \D{ F_0 \circ X }{ t }  ( 0, u ) 
+\right]_{u = x^{(0)}} 
++ \cdots + w_{m-1} * \left[ 
+	\D{}{u} \D{ F_{m-1} \circ X }{ t }  ( 0, u ) 
+\right]_{u = x^{(0)}} 
+\\
+& = &
+w_0 * \left[ \D{ }{ u } F_0^{(1)} ( u ) * x^{(1)} \right]_{u = x^{(0)}} 
++ \cdots + 
+w_{m-1} * \left[ \D{ }{ u } F_{m-1}^{(1)} ( u ) * x^{(1)} \right]_{u = x^{(0)}} 
+\\
+& = &
+w_0 * \left( x^{(1)} \right)^\T * F_0^{(2)} \left( x^{(0)} \right) 
++ \cdots + 
+w_{m-1} * \left( x^{(1)} \right)^\T * F_{m-1}^{(2)} \left( x^{(0)} \right) 
+\end{array}
+\] $$
+This is the same as the result documented in $cref/reverse_two/$$.
 
 
 $head Vector$$
