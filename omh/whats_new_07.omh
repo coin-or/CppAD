@@ -39,6 +39,16 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-19$$
+Improve connection from $cref/reverse_identity/$$ theorem
+to $cref/reverse_any/$$ calculations.
+$pre
+
+$$
+Improve the $cref/openmp_run.sh/$$ script. 
+It now runs all the test cases at once in addition
+to including multiple number of thread cases for each test. 
+
 $head 04-17$$
 Add a paragraph to $cref/reverse_identity/$$ explaining
 how it relates to $cref/reverse_any/$$ calculations.
