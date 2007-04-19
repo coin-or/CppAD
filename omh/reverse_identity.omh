@@ -52,8 +52,15 @@ The theorem below implies that
 $latex \[
 	\D{ W_j }{ x^{(i)} } (x) = \D{ W_{j-i} }{ x^{(0)} } (x) 
 \] $$
-In reverse mode, we directly compute the term on the left above
-and specify the return value as using the term on the right.
+A $cref/general reverse sweep/reverse_any/$$ calculates the values
+$latex \[
+	\D{ W_{p-1} }{ x^{(i)} } (x)  \hspace{1cm} (i = 0 , \ldots , p-1)
+\] $$
+But the return values for a reverse sweep are specified
+in terms of the more useful values
+$latex \[
+	\D{ W_j }{ x^{(0)} } (x)  \hspace{1cm} (j = 0 , \ldots , p-1)
+\] $$
 
 $head Theorem$$
 Suppose that $latex F : B^n \rightarrow B^m$$ is a $latex p$$ times

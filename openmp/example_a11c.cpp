@@ -92,7 +92,9 @@ $codep */
 // Beginning of Example A.1.1.1c of OpenMP 2.5 standard document ---------
 void a1(int n, float *a, float *b)
 {	int i;
+# ifdef _OPENMP
 # pragma omp parallel for
+# endif
 	for(i = 1; i < n; i++) /* i is private by default */
 		b[i] = (a[i] + a[i-1]) / 2.0;
 }

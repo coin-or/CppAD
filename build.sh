@@ -372,17 +372,12 @@ then
 		# add a new line between program outputs
 		echo ""  >> ../build_test.log
 	done
-	for program in example_a11c multi_newton
-	do
-		echo "openmp/run.sh $program automatic automatic false false"
-		echo "openmp/run.sh $program automatic automatic false false" \
-		>> ../build_test.log
-		if !  openmp/run.sh $program automatic automatic false false  \
-			>> ../build_test.log
-		then
-			failed="openmp/run.sh $program"
-		fi
-	done
+	echo "openmp/run.sh"
+	echo "openmp/run.sh" >> ../build_test.log
+	if !  openmp/run.sh >> ../build_test.log
+	then
+		failed="openmp/run.sh $program"
+	fi
 	echo "" >> ../build_test.log
 	#
 	if ! ./run_omhelp.sh doc

@@ -28,189 +28,150 @@
 # $section Compile and Run the OpenMP Test$$
 #
 # $head Syntax$$
-# $syntax%openmp/run.sh %program% %n_thread% %repeat% %openmp% %optimize%$$
+# $code openmp/run.sh$$
 #
 # $head Purpose$$
-# The script file $code openmp/run.sh$$ compiles and runs two openmp
-# test programs. 
-# One test is Example A.1.1.1c from the OpenMP 2.5 standard
-# document. The other test is a parallel version of Newton's method
-# that uses OpenMP together with CppAD.
+# This script file, $code openmp/run.sh$$, compiles and runs the 
+# speed and correctness tests for using OpenMP.
+# The following are a list of parameters in this file that can
+# be changed by directly editing the file
+# (there are no command line parameters to the script):
 #
-# $head program$$
-# The argument $italic program$$ is either 
-# $cref/example_a11c/example_a11c.cpp/$$ 
-# (for example A.1.1.c of the OpenMP 2.5 standards document)
-# or it is $xref/multi_newton/$$.
-#
-# $head n_thread$$
-# If the argument $italic n_thread$$ is $code automatic$$,
-# the number of OpenMP threads is automatically determined.
-# Otherwise, this argument specifies the number of threads to use
-# for the test.
-#
-# $head repeat$$
-# If the argument $italic repeat$$ is $code automatic$$,
-# the number of times to repeat the calculation is determined automatically.
-# In this case the timing results are reported as execution speeds in
-# times per second that the set of zeros are calculated.
-# $pre
-#
+# $subhead Compiler Command$$
+# The following sets the name of the C++ compiler command:
+# $codep
+compiler="g++"
 # $$
-# If the argument $italic repeat$$ is not $code automatic$$,
-# it must be the a positive integer that specifies the number of times
-# to repeat the calculation.
-# In this case, the total time is represented by the difference in the 
-# unix $code date$$ command between when the program is started and 
-# when it ends.
 #
-# $head openmp$$
-# The argument $italic openmp$$ is either $code true$$ or $code false$$.
-# If it is true, the program will be compiled with OpenMP multi-threading.
-# Otherwise it is complied to run without multi-threading. Thus you
-# can easily test the speed for both cases on your system.
+# $subhead Version Flag$$
+# The following compiler flag requests its version information:
+# $codep
+version_flag="--version"
+# $$
 #
-# $head optimize$$
-# The argument $italic optimize$$ is either $code true$$ or $code false$$.
-# If it is true, the program will be compiled with optimization flags.
-# Otherwise it is complied with debugging flags.
+# $subhead OpenMP Flag$$
+# The following compiler flag requests openmp support
+# You can run these tests with a compiler that does not support OpenMP
+# by setting this flag to "".
+# $codep
+openmp_flag=""
+# $$
+# For g++ version 4.1 and higher, you can use "-fopenmp" for this flag.
+#
+# $subhead Other Flag$$
+# The following other flags will be used during compilation:
+# $codep
+other_flags="-DNDEBUG -O2 -Wall"
+# $$
+#
+# $subhead Number of Repeats$$
+# The following specifies the number of times to repeat
+# the calculation corresponding to one timing test. 
+# If this 
+# is equal to "automatic", the number of repeats is determined automatically.
+# If it is not equal to "automatic", it must be a positive integer.
+# $codep
+n_repeat="automatic"
+# $$
+#
+# $subhead Number of Threads$$
+# The following determines a set of number of threads to test.
+# Each value in the set must be a positive integer or zero
+# (the value zero is used for dynamic thread adjustment).
+# If the
+# $cref/openmp_flag/openmp_run.sh/Purpose/OpenMP Flag/$$ is equal to "",
+# this setting is not used.
+# $codep
+n_thread_set="0 1 2 3 4"
+# $$
+#
+# $subhead multi_newton$$
+# The following settings determine the corresponding command line
+# arguments for the $cref/multi_newton/$$ program:
+# $codep
+multi_newton_n_zero="10"
+multi_newton_n_grid="40"
+multi_newton_n_sum="10"
+# $$
+#
+# $subhead example_a11c$$
+# The following setting determine the corresponding command line
+# arguments for the $cref/example_a11c.cpp/$$ program:
+# $codep
+example_a11c_size="10000"
+# $$
 #
 # $head Restrictions$$
-# Current this script only runs under the bash shell; i.e., it will not
+# Current this script only runs under the bash shell; e.g., it will not
 # run in an MSDOS box.
 #
 # $head Example$$
-# The two example runs below were run in quick succession on a machine
-# with $code g++ --version$$ equal to
-# $codep
-#	g++ (GCC) 4.1.1 20070105 (Red Hat 4.1.1-51)
-# $$
-#
-#
-# $subhead Without OpenMP$$
-# The following is an example $code run.sh$$ command 
-# with $italic openmp$$ false and $italic optimize$$ true:
-# $codep
-#	openmp/run.sh multi_newton automatic automatic false true
-# $$
-# The following is the corresponding output
-# $codep
-#	g++ -I.. multi_newton.cpp -o multi_newton  -DNDEBUG -O2
-#	./multi_newton automatic automatic 10 40 10
-#	_OPENMP is not defined, running in single tread mode
-#	n_grid           = 40
-#	repeats per sec  = 1804
-#	Correctness Test Passed
-#	rm multi_newton
-# $$	
-#
-# $subhead With OpenMP$$
-# The following is an example $code run.sh$$ command 
-# with $italic openmp$$ true and $italic optimize$$ true:
-# $codep
-#	openmp/run.sh multi_newton automatic automatic true true
-# $$
-# The following is the corresponding output
-# $codep
-#	g++ -I.. multi_newton.cpp -o multi_newton -fopenmp -DNDEBUG -O2
-#	./multi_newton automatic automatic 10 40 10
-#	OpenMP: version = 200505, max number of threads = 2
-#	n_grid           = 40
-#	repeats per sec  = 2615
-#	Correctness Test Passed
-#	rm multi_newton
-# $$	
 #
 # $end
+# ****************************************************************************
 if [ ! -e openmp/run.sh ]
 then
 	echo "must execute this program from the CppAD distribution directory"
 	exit 1
 fi
 cd openmp
-program="$1"
-n_thread="$2"
-repeat="$3"
-openmp="$4"
-optimize="$5"
-ok="true"
-if [ "$program" != "multi_newton" ]  && [ "$program" != "example_a11c" ]
-then
-	echo "Error: program=$program"
-	ok="false"
-fi
-if [ "$openmp" != "true" ]  && [ "$openmp" != "false" ]
-then
-	echo "Error: openmp=$openmp"
-	ok="false"
-fi
-if [ "$optimize" != "true" ]  && [ "$optimize" != "false" ]
-then
-	echo "Error: optimize=$optimize"
-	ok="false"
-fi
-if [ "$ok" == "false"  ] 
-then
-	echo "usage:    openmp/run.sh program n_thread repeat openmp optimize"
-	echo "program:  is either example_a11c or multi_newton"
-	echo "n_thread: number of threads to use (or \"automatic\")"
-	echo "repeat:   repeat factor (or \"automatic\")"
-	echo "openmp:   true (use openmp) or false (do not use), and"
-	echo "optimize: true (optimized compile) or false (debugging)"
-	exit 1
-fi
-if [ "$openmp" == "true"  ]
-then
-	flags=-fopenmp
-else
-	flags=""
-fi
-if [ "$optimize" == "true" ]
-then
-	flags="$flags -DNDEBUG -O2"
-else
-	flags="$flags -g"
-fi
 #
-echo "g++ -I.. $program.cpp -o $program $flags"
-g++ -I.. $program.cpp -o $program $flags
+cmd="$compiler $version_flag"
+echo "$cmd"
+$cmd
 #
-n_zero="10"
-n_grid="40"
-n_sum="10"
-size="10000"
-#
-if [ "$repeat" != "automatic" ]
-then
-	date
-fi
-if [ "$program" == "multi_newton" ]
-then
-	echo "./multi_newton $n_thread $repeat $n_zero $n_grid $n_sum"
-	if ! ./multi_newton $n_thread $repeat $n_zero $n_grid $n_sum
-	then
-		echo "Error in multi_newton."
-		exit 1
-	fi
-else 
-	echo "./example_a11c $n_thread $repeat $size"
-	if ! ./example_a11c $n_thread $repeat $size
-	then
-		echo "Error in example_a11c."
-		exit 1
-	fi
-fi
-if [ "$repeat" != "automatic" ]
-then
-	date
-fi
-#
-for file in multi_newton.exe multi_newton example_a11c.exe example_a11c
+for name in \
+	example_a11c \
+	multi_newton
 do
-	if [ -e "$file" ]
+	case "$name" in
+	example_a11c )
+	args="$example_a11c_size"
+	;;
+	multi_newton )
+	args="$multi_newton_n_zero $multi_newton_n_grid $multi_newton_n_sum"
+	;;
+	esac
+	#
+	# Compile without OpenMP
+	#
+	cmd="$compiler $name.cpp -o ${name}_no_openmp -I.. $other_flags"
+	echo "$cmd"
+	$cmd
+	#
+	# Run without OpenMP
+	cmd="./${name}_no_openmp 0 $n_repeat $args"
+	echo "$cmd"
+	if ! $cmd
 	then
-		echo "rm $file"
-		rm $file
+		echo "Error in ${name}_no_openmp."
+		exit 1
+	fi
+	echo "" # newline
+	if [ "$openmp_flag" != "" ]
+	then
+		#
+		# Compile with OpenMP
+		#
+		cmd="$compiler $name.cpp \
+			-o ${name}_yes_openmp \
+			$openmp_flag -I.. $other_flags"
+		cmd=`echo $cmd | sed -e 's|[ \t][ \t]*| |'`
+		echo "$cmd"
+		$cmd
+		#
+		# Run without OpenMP
+		#
+		for n_thread in $n_thread_set
+		do
+			cmd="./${name}_yes_openmp $n_thread $n_repeat $args"
+			echo "$cmd"
+			if ! $cmd
+			then
+				echo "Error in ${name}_yes_openmp."
+				exit 1
+			fi
+			echo "" # newline
+		done
 	fi
 done
-exit 0

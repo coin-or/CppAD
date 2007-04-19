@@ -42,12 +42,16 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="More improvement of the reverse mode documentation.
+log_entry="Improvements to openmp/run.sh
 
 svn_commit.sh: file that made this commit.
 whats_new_07.omh: user's view of the changes.
-reverse_identity: add a paragraph explaining relation to reverse sweep.
-reverse.omh: improve connection from reverse_any to first and second order.
+makefile.am: explicitly specify which openmp files to include in distribution.
+build.sh: change command that runs openmp/run.sh.
+reverse_identity.omh: improve connection to reverse_any.
+example_a11c.cpp: put ifdef around OpenMP pragma.
+multi_newton.hpp: fix size_t to int comparision warning.
+run.sh: run all test cases are and multiple number of threads in one run.
 " 
 add_list="
 "
@@ -58,9 +62,12 @@ move_list="
 #
 change_list="
 	svn_commit.sh
-	omh/whats_new_07.omh
+	makefile.am
+	build.sh
 	omh/reverse_identity.omh
-	omh/reverse.omh
+	openmp/example_a11c.cpp
+	openmp/multi_newton.hpp
+	openmp/run.sh
 "
 #
 copy_branch="" 

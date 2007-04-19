@@ -247,7 +247,10 @@ EXTRA_DIST = \
 	fix_aclocal.sh \
 	fix_makefile.sh \
 	omh \
-	openmp \
+	openmp/example_a11c.cpp \
+	openmp/multi_newton.cpp \
+	openmp/multi_newton.hpp \
+	openmp/run.sh \
 	run_omhelp.sh \
 	uw_copy_040507.html
 #

@@ -236,7 +236,7 @@ void multi_newton(
 	vector<double> grid(n_grid + 1);
 	vector<double> fcur(n_grid), xcur(n_grid), xmid(n_grid);
 	double dx = (xup - xlow) / double(n_grid);
-	for(i = 0; i < n_grid; i++)
+	for(i = 0; size_t(i) < n_grid; i++)
 	{	grid[i] = xlow + i * dx;
 		xmid[i] = xlow + (i + .5) * dx;
 	}
@@ -263,7 +263,7 @@ void multi_newton(
 	double xlast  = xlow;
 	size_t ilast  = 0;
 	size_t n_zero = 0;
-	for(i = 0; i < n_grid; i++)
+	for(i = 0; size_t(i) < n_grid; i++)
 	{	if( abs( fcur[i] ) <= epsilon )
 		{	if( n_zero == 0 )
 			{	xcur[n_zero++] = xlast = xcur[i];
@@ -282,7 +282,7 @@ void multi_newton(
 
 	// resize output vector and set its values
 	xout.resize(n_zero);
-	for(i = 0; i < n_zero; i++)
+	for(i = 0; size_t(i) < n_zero; i++)
 		xout[i] = xcur[i];
 
 	return;
