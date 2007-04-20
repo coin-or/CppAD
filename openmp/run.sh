@@ -11,6 +11,7 @@
 # -----------------------------------------------------------------------------
 # $begin openmp_run.sh$$ $newlinech #$$
 # $spell
+#	inv
 #       automatic automatic
 #	openmp
 #	vec
@@ -85,6 +86,13 @@ n_repeat="automatic"
 n_thread_set="0 1 2 3 4"
 # $$
 #
+# $subhead example_a11c$$
+# The following setting determine the corresponding command line
+# arguments for the $cref/example_a11c.cpp/$$ program:
+# $codep
+example_a11c_size="10000"
+# $$
+#
 # $subhead multi_newton$$
 # The following settings determine the corresponding command line
 # arguments for the $cref/multi_newton/$$ program:
@@ -94,18 +102,22 @@ multi_newton_n_grid="40"
 multi_newton_n_sum="10"
 # $$
 #
-# $subhead example_a11c$$
+# $subhead sum_i_inv$$
 # The following setting determine the corresponding command line
-# arguments for the $cref/example_a11c.cpp/$$ program:
+# arguments for the $cref/sum_i_inv.cpp/$$ program:
 # $codep
-example_a11c_size="10000"
+sum_i_inv_mega_sum="1"
 # $$
 #
 # $head Restrictions$$
 # Current this script only runs under the bash shell; e.g., it will not
 # run in an MSDOS box.
 #
-# $head Example$$
+# $childtable%
+#	openmp/example_a11c.cpp%
+#	openmp/multi_newton.cpp%
+#	openmp/sum_i_inv.cpp
+# %$$
 #
 # $end
 # ****************************************************************************
@@ -122,7 +134,8 @@ $cmd
 #
 for name in \
 	example_a11c \
-	multi_newton
+	multi_newton \
+	sum_i_inv 
 do
 	case "$name" in
 	example_a11c )
@@ -130,6 +143,9 @@ do
 	;;
 	multi_newton )
 	args="$multi_newton_n_zero $multi_newton_n_grid $multi_newton_n_sum"
+	;;
+	sum_i_inv )
+	args="$sum_i_inv_mega_sum"
 	;;
 	esac
 	#

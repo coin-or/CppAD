@@ -168,6 +168,7 @@ int main(int argc, char *argv[])
 # else
 	cout << "_OPENMP is not defined, ";
 	cout << "running in single tread mode" << endl;
+	n_thread = 1;
 # endif
 	// Correctness check (store result in ok)
 	size_t i;

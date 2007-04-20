@@ -48,6 +48,18 @@ $$
 Improve the $cref/openmp_run.sh/$$ script. 
 It now runs all the test cases at once in addition
 to including multiple number of thread cases for each test. 
+$pre
+
+$$
+Add the $cref/sum_i_inv.cpp/$$ OpenMP example case.
+$pre
+
+$$
+There was a typo in the 
+$cref/second order/ForwardAny/Second Order/$$ discussion
+(found by Kipp Martin).
+It has been fixed.
+
 
 $head 04-17$$
 Add a paragraph to $cref/reverse_identity/$$ explaining

@@ -42,18 +42,20 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Improvements to openmp/run.sh
+log_entry="Add openmp/sum_i_inv test.
 
 svn_commit.sh: file that made this commit.
 whats_new_07.omh: user's view of the changes.
-makefile.am: explicitly specify which openmp files to include in distribution.
-build.sh: change command that runs openmp/run.sh.
-reverse_identity.omh: improve connection to reverse_any.
-example_a11c.cpp: put ifdef around OpenMP pragma.
-multi_newton.hpp: fix size_t to int comparision warning.
-run.sh: run all test cases are and multiple number of threads in one run.
+makefile.am: add sum_i_inv.cpp to distribution.
+forward.omh: fix typo found by Kipp Martin.
+reverse_identity.omh: fix anohter typo found by Kipp.
+omp_max_thread.hpp: move individual tests below run.sh.
+example_a11c.cpp: set n_thread to 1 for no OpenMP case.
+multi_newton.cpp: set n_thread to 1 for no OpenMP case.
+run.sh: add sum_i_inv test.
 " 
 add_list="
+	openmp/sum_i_inv.cpp
 "
 delete_list="
 "
@@ -63,10 +65,12 @@ move_list="
 change_list="
 	svn_commit.sh
 	makefile.am
-	build.sh
+	omh/forward.omh
+	omh/whats_new_07.omh
 	omh/reverse_identity.omh
+	cppad/local/omp_max_thread.hpp
 	openmp/example_a11c.cpp
-	openmp/multi_newton.hpp
+	openmp/multi_newton.cpp
 	openmp/run.sh
 "
 #

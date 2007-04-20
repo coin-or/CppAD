@@ -250,6 +250,7 @@ EXTRA_DIST = \
 	openmp/example_a11c.cpp \
 	openmp/multi_newton.cpp \
 	openmp/multi_newton.hpp \
+	openmp/sum_i_inv.cpp \
 	openmp/run.sh \
 	run_omhelp.sh \
 	uw_copy_040507.html
