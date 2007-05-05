@@ -11,6 +11,7 @@
 # -----------------------------------------------------------------------------
 # $begin openmp_run.sh$$ $newlinech #$$
 # $spell
+#	mega
 #	inv
 #       automatic automatic
 #	openmp

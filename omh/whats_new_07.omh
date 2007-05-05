@@ -11,6 +11,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	sqrt
+	eps
+	mega
+	Kipp
 	vcproj
 	exp_apx
 	Microsoft
@@ -38,6 +42,37 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-05$$
+Third and fourth order derivatives were included in the
+routine $code test_more/sqrt.cpp$$ that tests square roots.
+$pre
+
+$$
+The return value descriptions were improved for the introduction
+examples:
+$cref/exp_2_for1/exp_2_for1/Return Value/$$, 
+$cref/exp_2_for2/exp_2_for2/Return Value/$$, 
+$cref/exp_eps_for1/exp_eps_for1/Return Value/$$, and
+$cref/exp_eps_for2/exp_eps_for2/Return Value/$$.
+$pre
+
+$$
+The summation index in $cref/SqrtReverse/$$ was changed from
+$latex k$$ to $latex \ell$$ to make partial differentiation
+with respect to $latex z^{(k)}$$ easier to understand.
+In addition, a sign error was corrected near the end of 
+$cref/SqrtReverse/$$.
+$pre
+
+$$
+The dimension for the notation $latex X$$ in 
+$cref/reverse_identity/$$ was corrected.
+$pre
+
+$$
+The word mega was added to the spelling exception list for
+$cref/openmp_run.sh/$$.
 
 $head 04-19$$
 Improve connection from $cref/reverse_identity/$$ theorem

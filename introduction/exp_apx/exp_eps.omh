@@ -1,4 +1,4 @@
------------------------------------------------------------------------------
+----------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
@@ -158,10 +158,12 @@ $rnext
 $tend
 $$
 
-$head Return  Value$$
+$head Return Value$$
 The return value for this case is
 $latex \[
-y^{(0)} = f ( x^{(0)} , \varepsilon^{(0)} ) = v_7^{(0)} = 1.625
+	1.625 =
+	v_7^{(0)} =
+	f ( x^{(0)} , \varepsilon^{(0)} )
 \] $$
 
 $head Comparisons$$
@@ -284,7 +286,7 @@ for the corresponding variable in the operation sequence; i.e.,
 $latex \[
 	v_j (t) = v_j^{(0)} + v_j^{(1)} t
 \] $$
-We use $latex x^{(0)} = 1$$ and $latex \varepsilon^{(1)} = 0$$,
+We use $latex x^{(1)} = 1$$ and $latex \varepsilon^{(1)} = 0$$,
 so that differentiation with respect to $latex t$$,
 at $latex t = 0$$, 
 is the same partial differentiation with respect to $latex x$$ 
@@ -353,11 +355,22 @@ $tend
 $$
 
 $head Return Value$$
-The return value for this case is
+The derivative of the return value for this case is
 $latex \[
-	y^{(1)} = \partial_x f ( x^{(0)} ) = v_7^{(1)} = 1.5
+\begin{array}{rcl}
+1.5 
+& = & 
+v_7^{(1)} =
+\left[ \D{v_7}{t} \right]_{t=0} =
+\left[ \D{}{t} f( x^{(0)} + x^{(1)} * t , \varepsilon^{(0)} ) \right]_{t=0}
+\\
+& = &
+\partial_x f ( x^{(0)} , \varepsilon^{(0)} ) * x^{(1)} = 
+\partial_x f ( x^{(0)} , \varepsilon^{(0)} )
+\end{array}
 \] $$
-
+(We have used the fact that 
+$latex x^{(1)} = 1$$ and $latex \varepsilon^{(1)} = 0$$.)
 
 $children%
 	introduction/exp_apx/exp_eps_for1.cpp
@@ -775,7 +788,8 @@ the second order expansion for the $th i$$ variable is given by
 $latex \[
 	v_i (t) = v_i^{(0)} + v_i^{(1)} * t +  v_i^{(2)} * t^2 / 2
 \] $$
-We use $latex x^{(0)} = 1$$, and $latex x^{(2)} = 0$$
+We use $latex x^{(1)} = 1$$, $latex x^{(2)} = 0$$,
+use $latex \varepsilon^{(1)} = 1$$, and $latex \varepsilon^{(2)} = 0$$
 so that second order differentiation
 with respect to $latex t$$, at $latex t = 0$$, 
 is the same as the second partial differentiation 
@@ -860,10 +874,23 @@ $tend
 $$
 
 $head Return Value$$
-The return value for this case is
+The second derivative of the return value for this case is
 $latex \[
-	y^{(2)} = \Dpow{2}{x} f ( x^{(0)} ) = v_7^{(2)} = 1
+\begin{array}{rcl}
+1 
+& = & 
+v_7^{(2)} =
+\left[ \Dpow{2}{t} v_7 \right]_{t=0} =
+\left[ \Dpow{2}{t} f( x^{(0)} + x^{(1)} * t , \varepsilon^{(0)} ) \right]_{t=0}
+\\
+& = &
+x^{(1)} * \Dpow{2}{x} f ( x^{(0)} ,  \varepsilon^{(0)} ) * x^{(1)} =
+\Dpow{2}{x} f ( x^{(0)} ,  \varepsilon^{(0)} )
+\end{array}
 \] $$
+(We have used the fact that
+$latex x^{(1)} = 1$$, $latex x^{(2)} = 0$$,
+$latex \varepsilon^{(1)} = 1$$, and $latex \varepsilon^{(2)} = 0$$.)
 
 $children%
 	introduction/exp_apx/exp_eps_for2.cpp

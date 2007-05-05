@@ -35,7 +35,7 @@ When using $cref/reverse mode/reverse_any/$$
 we are given a function $latex F : B^n \rightarrow B^m$$,
 a matrix of Taylor coefficients $latex x \in B^{n \times p}$$,
 and a weight vector $latex w \in B^m$$.
-We define the functions $latex X : B \times B^n \rightarrow B^n$$,
+We define the functions $latex X : B \times B^{n \times p} \rightarrow B^n$$,
 $latex W : B \times B^{n \times p} \rightarrow B$$, and
 $latex W_j : B^{n \times p} \rightarrow B$$ by
 $latex \[

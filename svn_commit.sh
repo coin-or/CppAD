@@ -46,16 +46,15 @@ log_entry="Add openmp/sum_i_inv test.
 
 svn_commit.sh: file that made this commit.
 whats_new_07.omh: user's view of the changes.
-makefile.am: add sum_i_inv.cpp to distribution.
-forward.omh: fix typo found by Kipp Martin.
-reverse_identity.omh: fix anohter typo found by Kipp.
-omp_max_thread.hpp: move individual tests below run.sh.
-example_a11c.cpp: set n_thread to 1 for no OpenMP case.
-multi_newton.cpp: set n_thread to 1 for no OpenMP case.
-run.sh: add sum_i_inv test.
+sqrt.cpp: test higher order derivatives (make sure correct).
+exp_eps.omh: improve description of return values in forward mode.
+exp_2.omh: improve description of return values in forward mode.
+sqrt_reverse.omh: change summation index and fix a sign error.
+reverse_identity.omh: fix dimension for X.
+run.sh: fix OMhelp spelling error.
+check_include_omh.sh: special code for shell scripts.
 " 
 add_list="
-	openmp/sum_i_inv.cpp
 "
 delete_list="
 "
@@ -64,14 +63,14 @@ move_list="
 #
 change_list="
 	svn_commit.sh
-	makefile.am
-	omh/forward.omh
 	omh/whats_new_07.omh
+	test_more/sqrt.cpp
+	introduction/exp_apx/exp_eps.omh
+	introduction/exp_apx/exp_2.omh
+	omh/sqrt_reverse.omh
 	omh/reverse_identity.omh
-	cppad/local/omp_max_thread.hpp
-	openmp/example_a11c.cpp
-	openmp/multi_newton.cpp
 	openmp/run.sh
+	check_include_omh.sh
 "
 #
 copy_branch="" 

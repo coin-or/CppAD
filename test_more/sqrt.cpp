@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -137,6 +137,60 @@ bool SqrtTestTwo(void)
 
 	return ok;
 }
+bool SqrtTestThree(void)
+{	bool ok = true;
+
+	using CppAD::sqrt;
+	using CppAD::exp;
+	using namespace CppAD;
+
+	// independent variable vector, indices, values, and declaration
+	double x = 4.;
+	CppADvector< AD<double> > X(1);
+	X[0]     = x;
+	Independent(X);
+
+	// dependent variable vector, indices, and values
+	CppADvector< AD<double> > Y(1);
+	Y[0]     = sqrt( exp(X[0]) );
+
+	// define f : X -> Y and vectors for derivative calculations
+	ADFun<double> f(X, Y);
+
+	// forward computation of first Taylor coefficient
+	CppADvector<double> x1( f.Domain() );
+	CppADvector<double> y1( f.Range() );
+	x1[0] = 1.;
+	y1    = f.Forward(1, x1);
+	ok   &= NearEqual(y1[0], exp(x/2.)/2.,   1e-10 , 1e-10); 
+
+	// forward computation of second Taylor coefficient
+	CppADvector<double> x2( f.Domain() );
+	CppADvector<double> y2( f.Range() );
+	x2[0] = 0.;
+	y2    = f.Forward(2, x2);
+	ok   &= NearEqual(2.*y2[0] , exp(x/2.)/4., 1e-10 , 1e-10 ); 
+
+	// forward computation of third Taylor coefficient
+	CppADvector<double> x3( f.Domain() );
+	CppADvector<double> y3( f.Range() );
+	x3[0] = 0.;
+	y3    = f.Forward(3, x3);
+	ok   &= NearEqual(6.*y3[0] , exp(x/2.)/8., 1e-10 , 1e-10 ); 
+
+	// reverse computation of deritavitve of Taylor coefficients
+	CppADvector<double> r( f.Domain() * 4 );
+	CppADvector<double> w(1);
+	w[0] = 1.;
+	r    = f.Reverse(4, w);
+	ok   &= NearEqual(r[0], exp(x/2.)/2., 1e-10 , 1e-10); 
+	ok   &= NearEqual(r[1], exp(x/2.)/4., 1e-10 , 1e-10 ); 
+	ok   &= NearEqual(2.*r[2], exp(x/2.)/8., 1e-10 , 1e-10 ); 
+	ok   &= NearEqual(6.*r[3], exp(x/2.)/16., 1e-10 , 1e-10 ); 
+
+	return ok;
+
+}
 
 } // END empty namespace
 
@@ -144,5 +198,6 @@ bool Sqrt(void)
 {	bool ok = true;
 	ok &= SqrtTestOne();
 	ok &= SqrtTestTwo(); 
+	ok &= SqrtTestThree(); 
 	return ok;
 }

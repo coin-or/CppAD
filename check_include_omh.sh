@@ -46,6 +46,7 @@ for file in $list
 do
 	# assume $childtable, ... , $verbatim use % for delimiter
 	sed -n < $file >> junk.1 \
+		-e 's/^#[ \t][ \t]*//' \
 		-e '/$childtable%/,/%$\$/p' \
 		-e '/$children%/,/%$\$/p' \
 		-e '/$contents%/,/%$\$/p' \
