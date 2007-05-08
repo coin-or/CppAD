@@ -49,6 +49,7 @@ nobase_include_HEADERS =  \
 	cppad/ode_gear.hpp \
 	cppad/ode_gear_control.hpp \
 	cppad/poly.hpp \
+	cppad/pow_int.hpp \
 	cppad/romberg_one.hpp \
 	cppad/romberg_mul.hpp \
 	cppad/rosen_34.hpp \

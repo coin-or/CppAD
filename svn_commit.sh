@@ -42,17 +42,19 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add openmp/sum_i_inv test.
+log_entry="Change pow_int so that it is no longer deprecated.
 
 svn_commit.sh: file that made this commit.
 whats_new_07.omh: user's view of the changes.
-sqrt.cpp: test higher order derivatives (make sure correct).
-exp_eps.omh: improve description of return values in forward mode.
-exp_2.omh: improve description of return values in forward mode.
-sqrt_reverse.omh: change summation index and fix a sign error.
-reverse_identity.omh: fix dimension for X.
-run.sh: fix OMhelp spelling error.
-check_include_omh.sh: special code for shell scripts.
+pow.cpp: use pow_int when base is less than zero and exponent is an integer.
+makefile.am: include pow_int.hpp in distribution.
+include_deprecated.omh: remove pow_int from deprecated list.
+library.omh: add library.omh to library children.
+whats_new_06.omh: change PowInt to pow_int.
+pow.hpp: compare with use of instead.
+PowInt.h: just include pow_int.hpp.
+cppad.hpp: add pow_int.hpp to list (and sort library list).
+pow_int.hpp: move PowInt.h to here.
 " 
 add_list="
 "
@@ -64,13 +66,15 @@ move_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_07.omh
-	test_more/sqrt.cpp
-	introduction/exp_apx/exp_eps.omh
-	introduction/exp_apx/exp_2.omh
-	omh/sqrt_reverse.omh
-	omh/reverse_identity.omh
-	openmp/run.sh
-	check_include_omh.sh
+	test_more/pow.cpp
+	makefile.am
+	omh/include_deprecated.omh
+	omh/library.omh
+	omh/whats_new_06.omh
+	cppad/local/pow.hpp
+	cppad/PowInt.h
+	cppad/cppad.hpp
+	cppad/pow_int.hpp
 "
 #
 copy_branch="" 

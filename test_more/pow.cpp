@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -226,7 +226,7 @@ bool PowTestThree(void)
 	ok   &= NearEqual(dy[2], 1., 1e-10, 1e-10);
 	ok   &= (dy[3] == 0.);
 
-	// reverse mode computation of derivative of y[0] + y[1]
+	// reverse mode computation of derivative of y[0]+y[1]+y[2]+y[3] 
 	CppADvector<double>  w(m);
 	CppADvector<double> dw(n);
 	w[0] = 1.;
@@ -262,7 +262,7 @@ bool PowTestFour(void)
 	y[0] = pow(1., x[0]);
 	size_t i;
 	for(i = 1; i < m; i++) 
-		y[i] = pow(x[0], double(i-1));
+		y[i] = pow(x[0], i-1);   // pow(AD<double>, int)
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
@@ -299,6 +299,55 @@ bool PowTestFour(void)
 
 	return ok;	
 }
+bool PowTestFive(void)
+{	bool ok = true;
+
+	using CppAD::AD;
+	using CppAD::NearEqual;
+
+	// domain space vector
+	size_t n  = 1;
+	double x0 = -1.;
+	CppADvector< AD<double> > x(n);
+	x[0]      = x0;
+
+	// declare independent variables and start tape recording
+	CppAD::Independent(x);
+
+	// range space vector 
+	size_t m = 1;
+	CppADvector< AD<double> > y(m);
+
+	// case of zero raised to a positive integer power
+	double e = 2.;
+	y[0] = pow(x[0], int(e)); // use pow(AD<double>, int)
+
+	// create f: x -> y and stop tape recording
+	CppAD::ADFun<double> f(x, y); 
+
+	// check function value
+	ok  &= (Value(y[0]) == pow(x0, e) );
+
+	// forward computation of first partial w.r.t. x[1]
+	double d1 = e * pow(x0, (e-1));
+	CppADvector<double> dx(n);
+	CppADvector<double> dy(m);
+	dx[0] = 1.;
+	dy    = f.Forward(1, dx);
+	ok   &= NearEqual(dy[0], d1, 1e-10, 1e-10);
+
+	// reverse mode computation of second partials 
+	// x.r.t. x[1],x[0]  and x[1], x[1]
+	double d2 = e * (e-1) * pow(x0, (e-2));
+	CppADvector<double>   w(m);
+	CppADvector<double> ddw(2*n);
+	w[0] = 1.;
+	ddw  = f.Reverse(2, w);
+	ok  &= NearEqual(ddw[0], d1, 1e-10, 1e-10);
+	ok  &= NearEqual(ddw[1], d2, 1e-10, 1e-10);
+
+	return ok;	
+}
 
 } // END empty namespace
  
@@ -308,5 +357,6 @@ bool Pow(void)
 	ok     &= PowTestTwo();
 	ok     &= PowTestThree();
 	ok     &= PowTestFour();
+	ok     &= PowTestFive();
 	return ok;
 }

@@ -35,11 +35,14 @@ $head Purpose$$
 Determines the value of the power function which is defined by
 $latex \[
 	{\rm pow} (x, y) = x^y
-\] $$.
-using logarithms and exponentiation to compute the value.
-If $italic y$$ has an integer value_,
-The other CppAD $cref/pow/PowInt/$$ function can compute the same value 
-using only multiplication and possibly division. 
+\] $$
+This version of the $code pow$$ function may use
+logarithms and exponentiation to compute derivatives.
+This will not work if $italic x$$ is less than or equal zero.
+If the value of $italic y$$ is an integer, 
+the $cref/pow_int/$$ function can be used to compute the same value 
+using only multiplication (and division if $italic y$$ is negative). 
+(This will work even if $italic x$$ is less than or equal zero.)
 
 $head x$$
 The argument $italic x$$ has one of the following prototypes
@@ -134,13 +137,13 @@ pow(const AD<Base> &x, const AD<Base> &y)
 				RecordOp(PowvvOp, p, x.taddr_, y.taddr_
 			);
 		}
-		// if IdenticalZero(y.value_), p = variable^0 = 1
+		// if IdenticalZero(y.value_), variable^0 is a parameter
 		else if( ! IdenticalZero(y.value_) )
 			x.tape_this()->
 				RecordOp(PowvpOp, p, x.taddr_, y.value_);
 	}
 	else if( Variable(y) )
-	{	// if IdenticalZero(x.value_), p = 0^variable = 0 
+	{	// if IdenticalZero(x.value_), 0^variable is a parameter
 		if( ! IdenticalZero(x.value_) )
 			y.tape_this()->
 				RecordOp(PowpvOp, p, x.value_, y.taddr_);
@@ -180,22 +183,24 @@ template <class Base> AD<Base>
 pow(const AD<Base> &x, const Base &y)
 {	return pow(x, AD<Base>(y)); }
 
-// Flod operations with int
+// Fold operations with int as base
+// (see cppad/pow_int.hpp for case with int as exponent).
 template <class Base> AD<Base> pow
 (int x, const VecAD_reference<Base> &y)
 {	return pow(AD<Base>(x), y.ADBase()); }
 
-template <class Base> AD<Base> pow
-(const VecAD_reference<Base> &x, int y)
-{	return pow(x.ADBase(), AD<Base>(y)); }
+// template <class Base> AD<Base> pow
+// (const VecAD_reference<Base> &x, int y)
+// {	return pow(x.ADBase(), AD<Base>(y)); }
 
 template <class Base> AD<Base> pow
 (int x, const AD<Base> &y)
 {	return pow(AD<Base>(x), y); }
 
-template <class Base> AD<Base> pow
-(const AD<Base> &x, int y)
-{	return pow(x, AD<Base>(y)); }
+// template <class Base> AD<Base> pow
+// (const AD<Base> &x, int y)
+// {	return pow(x, AD<Base>(y)); }
+// 
 
 } // END CppAD namespace
 

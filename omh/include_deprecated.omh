@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -62,10 +62,6 @@ $cref/Unix installation/InstallUnix/$$.
 This will link form the deprecated commands
 to the commands that should be used:
 
-$children%
-	cppad/PowInt.h
-%$$
-
 $table
 $bold Deprecated$$         $pre  $$ $cnext $bold Should Use$$   
 	$pre  $$ $cnext $bold Documentation$$
@@ -121,10 +117,6 @@ $rnext
 
 CppAD/Poly.h               $pre  $$ $cnext cppad/poly.hpp
 	$pre  $$ $cnext $cref/Poly/$$
-$rnext
-
-CppAD/PowInt.h             $pre  $$ (removed)
-	$pre  $$ $cnext $cref/PowInt/$$
 $rnext
 
 CppAD/RombergMul.h         $pre  $$ $cnext cppad/romberg_mul.hpp

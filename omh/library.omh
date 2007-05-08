@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -33,6 +33,7 @@ $children%
 	omh/simple_vector.omh%
 	cppad/check_simple_vector.hpp%
 
+	cppad/pow_int.hpp%
 	cppad/poly.hpp%
 	omh/lu_det_and_solve.omh%
 	cppad/romberg_one.hpp%
@@ -84,7 +85,7 @@ written with the floating point type A C++ template parameter.
 This enables them to be used with algorithmic differentiation types,
 as well as for other purposes. 
 $table
-$rref PowInt$$
+$rref pow_int$$
 $rref Poly$$
 $rref LuDetAndSolve$$
 $rref RombergOne$$

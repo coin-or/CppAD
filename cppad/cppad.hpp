@@ -15,23 +15,24 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // ---------------------------------------------------------------------------
 // CppAD general purpose library routines (can be included separately)
 
+# include <cppad/check_numeric_type.hpp>
+# include <cppad/check_simple_vector.hpp>
+# include <cppad/local/cppad_error.hpp>
 # include <cppad/lu_solve.hpp>
 # include <cppad/near_equal.hpp>
-# include <cppad/runge_45.hpp>
-# include <cppad/romberg_one.hpp>
-# include <cppad/romberg_mul.hpp>
-# include <cppad/rosen_34.hpp>
 # include <cppad/ode_err_control.hpp>
 # include <cppad/ode_gear.hpp>
 # include <cppad/ode_gear_control.hpp>
 # include <cppad/poly.hpp>
+# include <cppad/pow_int.hpp>
+# include <cppad/romberg_mul.hpp>
+# include <cppad/romberg_one.hpp>
+# include <cppad/rosen_34.hpp>
+# include <cppad/runge_45.hpp>
 # include <cppad/speed_test.hpp>
+# include <cppad/track_new_del.hpp>
 # include <cppad/vector.hpp>
 
-# include <cppad/check_simple_vector.hpp>
-# include <cppad/check_numeric_type.hpp>
-# include <cppad/track_new_del.hpp>
-# include <cppad/local/cppad_error.hpp>
 // --------------------------------------------------------------------------
 // System routines that can be used by rest of CppAD with out including 
 

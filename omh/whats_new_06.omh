@@ -1013,7 +1013,7 @@ $xref/NearEqualExt/$$.
 $head 03-16$$
 Improve the documentation and example for the $xref/pow/$$ function.
 This includes splitting out and generalizing the integer case 
-$xref/PowInt/$$.
+$xref/pow_int/$$.
 $pre
 
 $$
