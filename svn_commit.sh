@@ -42,19 +42,13 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Change pow_int so that it is no longer deprecated.
+log_entry="Simplify the AD<Base> binary operator definitions.
 
 svn_commit.sh: file that made this commit.
-whats_new_07.omh: user's view of the changes.
-pow.cpp: use pow_int when base is less than zero and exponent is an integer.
-makefile.am: include pow_int.hpp in distribution.
-include_deprecated.omh: remove pow_int from deprecated list.
-library.omh: add library.omh to library children.
-whats_new_06.omh: change PowInt to pow_int.
-pow.hpp: compare with use of instead.
-PowInt.h: just include pow_int.hpp.
-cppad.hpp: add pow_int.hpp to list (and sort library list).
-pow_int.hpp: move PowInt.h to here.
+whats_new_07.omh: users view of the changes.
+example.vcproj: add missing reference to reverse_two.cpp.
+ad.hpp: only AD<Base> Op AD<Base> is a member functions.
+define.hpp: only AD<Base> Op AD<Base> is a member functions.
 " 
 add_list="
 "
@@ -66,15 +60,9 @@ move_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_07.omh
-	test_more/pow.cpp
-	makefile.am
-	omh/include_deprecated.omh
-	omh/library.omh
-	omh/whats_new_06.omh
-	cppad/local/pow.hpp
-	cppad/PowInt.h
-	cppad/cppad.hpp
-	cppad/pow_int.hpp
+	example/example.vcproj
+	cppad/local/ad.hpp
+	cppad/local/define.hpp
 "
 #
 copy_branch="" 

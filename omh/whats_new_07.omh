@@ -43,6 +43,14 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-22$$
+The Microsoft 
+$cref/examples and testing/InstallWindows/Examples and Testing/$$ 
+project file $code example/example.vcproj$$ 
+was missing a reference to the
+source code file $code example/reverse_two.cpp$$.
+This has been fixed.  
+
 $head 05-08$$
 Reverse mode does not work with the 
 $cref/pow/$$ function when the base is less than or equal zero

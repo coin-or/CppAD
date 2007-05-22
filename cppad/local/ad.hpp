@@ -31,20 +31,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 	inline AD& operator Op (const VecAD_reference<Base> &right) \
 	{	return *this Op right.ADBase(); }
 
-// use this marco for binary operators 
-# define CPPAD_BINARY_MEMBER(Op)                                   \
-	inline AD operator Op (const AD &right) const;             \
-	inline AD operator Op (int right) const;                   \
-	inline AD operator Op (const Base &right) const;           \
-	inline AD operator Op (const VecAD_reference<Base> &right) const;
-
-// use this marco for comparison operators 
-# define CPPAD_COMPARE_MEMBER(Op)                                    \
-	inline bool operator Op (const AD &right) const;             \
-	inline bool operator Op (int right) const;                   \
-	inline bool operator Op (const Base &right) const;           \
-	inline bool operator Op (const VecAD_reference<Base> &right) const;
-
 //  BEGIN CppAD namespace
 namespace CppAD {
 
@@ -132,18 +118,18 @@ public:
 	typedef Base value_type;
 
 	// comparison operators
-	CPPAD_COMPARE_MEMBER( <  )
-	CPPAD_COMPARE_MEMBER( <= )
-	CPPAD_COMPARE_MEMBER( >  )
-	CPPAD_COMPARE_MEMBER( >= )
-	CPPAD_COMPARE_MEMBER( == )
-	CPPAD_COMPARE_MEMBER( != )
+	inline bool operator <  (const AD &right) const;
+	inline bool operator <= (const AD &right) const;
+	inline bool operator >  (const AD &right) const;
+	inline bool operator >= (const AD &right) const;
+	inline bool operator == (const AD &right) const;
+	inline bool operator != (const AD &right) const;
 
 	// binary operators
-	CPPAD_BINARY_MEMBER(+)
-	CPPAD_BINARY_MEMBER(-)
-	CPPAD_BINARY_MEMBER(*)
-	CPPAD_BINARY_MEMBER(/)
+	inline AD operator + (const AD &right) const;
+	inline AD operator - (const AD &right) const;
+	inline AD operator * (const AD &right) const;
+	inline AD operator / (const AD &right) const;
 
 	// default constructor
 	inline AD(void);
@@ -260,7 +246,6 @@ private:
 // operations that expect the AD template class to be defined
 
 # undef CPPAD_ASSIGN_MEMBER
-# undef CPPAD_BINARY_MEMBER
 # undef CPPAD_COMPARE_MEMBER
 
 # endif

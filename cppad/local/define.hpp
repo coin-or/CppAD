@@ -98,11 +98,11 @@ $end
 # define CPPAD_FOLD_BINARY_OPERATOR(Type, Op)                          \
 /* ----------------------------------------------------------------*/  \
 /* Operations with VecAD_reference<Base> and AD<Base> only*/           \
-template <class Base>                                                  \
                                                                        \
-inline Type AD<Base>::operator Op                                      \
-(const VecAD_reference<Base> &right) const                             \
-{	return *this Op right.ADBase(); }                              \
+template <class Base>                                                  \
+inline Type operator Op                                                \
+(const AD<Base> &left, const VecAD_reference<Base> &right)             \
+{	return left Op right.ADBase(); }                               \
                                                                        \
 template <class Base>                                                  \
 inline Type operator Op                                                \
@@ -127,8 +127,9 @@ inline Type operator Op                                                \
 {	return AD<Base>(left) Op right.ADBase(); }                     \
                                                                        \
 template <class Base>                                                  \
-inline Type AD<Base>::operator Op (const Base &right)  const           \
-{	return *this Op AD<Base>(right); }                             \
+inline Type operator Op                                                \
+	(const AD<Base> &left, const Base &right)                      \
+{	return left Op AD<Base>(right); }                              \
                                                                        \
 template <class Base>                                                  \
 inline Type operator Op                                                \
@@ -149,8 +150,9 @@ inline Type operator Op                                                \
 {	return AD<Base>(left) Op right.ADBase(); }                     \
                                                                        \
 template <class Base>                                                  \
-inline Type AD<Base>::operator Op (int right) const                    \
-{	return *this Op AD<Base>(right); }                             \
+inline Type operator Op                                                \
+	(const AD<Base> &left, int right)                              \
+{	return left Op AD<Base>(right); }                              \
                                                                        \
 template <class Base>                                                  \
 inline Type operator Op                                                \
