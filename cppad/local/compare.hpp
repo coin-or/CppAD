@@ -208,7 +208,7 @@ inline bool AD<Base>::operator < (const AD<Base> &right) const
 # endif
 
 // convert other cases into the case above
-CPPAD_FOLD_BINARY_OPERATOR(bool, <)
+CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(<)
 
 // -------------------------------- <= -------------------------
 # ifdef NDEBUG
@@ -238,7 +238,7 @@ inline bool AD<Base>::operator <= (const AD<Base> &right) const
 # endif
 
 // convert other cases into the case above
-CPPAD_FOLD_BINARY_OPERATOR(bool, <=)
+CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(<=)
 
 
 // -------------------------------- > -------------------------
@@ -270,7 +270,7 @@ inline bool AD<Base>::operator > (const AD<Base> &right) const
 # endif
 
 // convert other cases into the case above
-CPPAD_FOLD_BINARY_OPERATOR(bool, >)
+CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(>)
 
 // -------------------------------- >= -------------------------
 # ifdef NDEBUG
@@ -300,7 +300,7 @@ inline bool AD<Base>::operator >= (const AD<Base> &right) const
 # endif
 
 // convert other cases into the case above
-CPPAD_FOLD_BINARY_OPERATOR(bool, >=)
+CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(>=)
 
 
 // -------------------------------- == -------------------------
@@ -331,7 +331,7 @@ inline bool AD<Base>::operator == (const AD<Base> &right) const
 # endif
 
 // convert other cases into the case above
-CPPAD_FOLD_BINARY_OPERATOR(bool, ==)
+CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(==)
 
 // -------------------------------- != -------------------------
 # ifdef NDEBUG
@@ -361,7 +361,7 @@ inline bool AD<Base>::operator != (const AD<Base> &right) const
 # endif
 
 // convert other cases into the case above
-CPPAD_FOLD_BINARY_OPERATOR(bool, !=)
+CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(!=)
 
 } // END CppAD namespace
 

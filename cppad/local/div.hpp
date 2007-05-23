@@ -140,7 +140,7 @@ AD<Base> AD<Base>::operator /(const AD<Base> &right) const
 }
 
 // convert other cases into the case above
-CPPAD_FOLD_BINARY_OPERATOR(AD<Base>, /)
+CPPAD_FOLD_AD_VALUED_BINARY_OPERATOR(/)
 
 
 } // END CppAD namespace

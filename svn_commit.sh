@@ -42,10 +42,15 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Update CPPAD_FOLD_BINARY_OPERATOR developer documentation.
+log_entry="Split folding macro and remove one of its arguments.
 
 svn_commit.sh: file that made this commit.
-define.hpp: updated documentation.
+div.hpp: use AD valued version of folding macro.
+add.hpp: use AD valued version of folding macro.
+compare.hpp: use bool valued version of folding macro.
+sub.hpp: use AD valued version of folding macro.
+define.hpp: make return type explicit in macro.
+mul.hpp: use AD valued version of folding macro.
 " 
 add_list="
 "
@@ -56,7 +61,12 @@ move_list="
 #
 change_list="
 	svn_commit.sh
+	cppad/local/div.hpp
+	cppad/local/add.hpp
+	cppad/local/compare.hpp
+	cppad/local/sub.hpp
 	cppad/local/define.hpp
+	cppad/local/mul.hpp
 "
 #
 copy_branch="" 
