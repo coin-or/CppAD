@@ -48,35 +48,25 @@ The syntax
 $syntax%
 	CPPAD_FOLD_BINARY_OPERATOR(%Type%, %Op%)
 %$$
-defines the operators
+assumes that the operator
 $syntax%
 	%left% %Op% %right%
 %$$
-which has the result type $italic Type$$ and the 
-following argument types:
-$syntax%
-	%left%                    %right%
-	-----------------------   -----------------
-	AD<%Base%>                VecAD_reference<%Base%>
-	VecAD_reference<%Base%>   AD<%Base%>
-	VecAD_reference<%Base%>   VecAD_reference<%Base%>
-	%Base%                    AD<%Base%>
-	%Base%                    VecAD_reference<%Base%>
-	AD<%Base%>                %Base%
-	VecAD_reference<%Base%>   %Base%
-	int                       AD<%Base%>
-	int                       VecAD_reference<%Base%>
-	AD<%Base%>                int
-	VecAD_reference<%Base%>   int
-%$$
-In the case where the left operand has type $syntax%AD<%Base%>%$$,
-it defines a member function.
+is defined for the case where $italic left$$ and $italic right$$ both
+have type $syntax%AD<%Base%>%$$.
+It uses this case to define the cases either $italic left$$
+or $italic right$$ has type
+$syntax%VecAD_reference<%Base%>%$$ or
+$syntax%AD<%Base%>%$$
+and the type of the other operand is one of the following:
+$syntax%VecAD_reference<%Base%>%$$,
+$syntax%AD<%Base%>%$$,
+$italic Base$$,
+$code int$$.
 All of the arguments are $code const$$ and call by reference,
 except for the $code int$$ case which is call by value.
 In all cases, it converts the operands to $syntax%AD<%Base%>%$$ and then
 uses the definition of the same operation for that case. 
-Hence it assumes a definition
-for the case where both operands are $syntax%AD<%Base%>%$$ objects.
 
 
 $end

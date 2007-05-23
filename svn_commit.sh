@@ -42,13 +42,10 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Simplify the AD<Base> binary operator definitions.
+log_entry="Update CPPAD_FOLD_BINARY_OPERATOR developer documentation.
 
 svn_commit.sh: file that made this commit.
-whats_new_07.omh: users view of the changes.
-example.vcproj: add missing reference to reverse_two.cpp.
-ad.hpp: only AD<Base> Op AD<Base> is a member functions.
-define.hpp: only AD<Base> Op AD<Base> is a member functions.
+define.hpp: updated documentation.
 " 
 add_list="
 "
@@ -59,9 +56,6 @@ move_list="
 #
 change_list="
 	svn_commit.sh
-	omh/whats_new_07.omh
-	example/example.vcproj
-	cppad/local/ad.hpp
 	cppad/local/define.hpp
 "
 #
