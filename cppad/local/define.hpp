@@ -63,10 +63,9 @@ and the type of the other operand is one of the following:
 $syntax%VecAD_reference<%Base%>%$$,
 $syntax%AD<%Base%>%$$,
 $italic Base$$,
-$code int$$.
-All of the arguments are $code const$$ and call by reference,
-except for the $code int$$ case which is call by value.
-In all cases, it converts the operands to $syntax%AD<%Base%>%$$ and then
+$code double$$.
+All of the arguments are $code const$$ and call by reference.
+This macro converts the operands to $syntax%AD<%Base%>%$$ and then
 uses the definition of the same operation for that case. 
 
 $head CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR$$
@@ -89,10 +88,9 @@ and the type of the other operand is one of the following:
 $syntax%VecAD_reference<%Base%>%$$,
 $syntax%AD<%Base%>%$$,
 $italic Base$$,
-$code int$$.
-All of the arguments are $code const$$ and call by reference,
-except for the $code int$$ case which is call by value.
-In all cases, it converts the operands to $syntax%AD<%Base%>%$$ and then
+$code double$$.
+All of the arguments are $code const$$ and call by reference.
+This macro converts the operands to $syntax%AD<%Base%>%$$ and then
 uses the definition of the same operation for that case. 
 
 
@@ -154,27 +152,46 @@ inline AD<Base> operator Op                                            \
 {	return left.ADBase() Op AD<Base>(right); }                     \
                                                                        \
 /* ----------------------------------------------------------------*/  \
-/* Operations int */                                                   \
+/* Operations double */                                                \
                                                                        \
 template <class Base>                                                  \
 inline AD<Base> operator Op                                            \
-	(int left, const AD<Base> &right)                              \
+	(const double &left, const AD<Base> &right)                    \
 {	return AD<Base>(left) Op right; }                              \
                                                                        \
 template <class Base>                                                  \
 inline AD<Base> operator Op                                            \
-	(int left, const VecAD_reference<Base> &right)                 \
+	(const double &left, const VecAD_reference<Base> &right)       \
 {	return AD<Base>(left) Op right.ADBase(); }                     \
                                                                        \
 template <class Base>                                                  \
 inline AD<Base> operator Op                                            \
-	(const AD<Base> &left, int right)                              \
+	(const AD<Base> &left, const double &right)                    \
 {	return left Op AD<Base>(right); }                              \
                                                                        \
 template <class Base>                                                  \
 inline AD<Base> operator Op                                            \
-	(const VecAD_reference<Base> &left, int right)                 \
-{	return left.ADBase() Op AD<Base>(right); }
+	(const VecAD_reference<Base> &left, const double &right)       \
+{	return left.ADBase() Op AD<Base>(right); }                     \
+/* ----------------------------------------------------------------*/  \
+/* Special case to avoid ambuigity when Base is double */              \
+                                                                       \
+inline AD<double> operator Op                                          \
+	(const double &left, const AD<double> &right)                  \
+{	return AD<double>(left) Op right; }                            \
+                                                                       \
+inline AD<double> operator Op                                          \
+	(const double &left, const VecAD_reference<double> &right)     \
+{	return AD<double>(left) Op right.ADBase(); }                   \
+                                                                       \
+inline AD<double> operator Op                                          \
+	(const AD<double> &left, const double &right)                  \
+{	return left Op AD<double>(right); }                            \
+                                                                       \
+inline AD<double> operator Op                                          \
+	(const VecAD_reference<double> &left, const double &right)     \
+{	return left.ADBase() Op AD<double>(right); }
+
 // =======================================================================
 
 
@@ -220,26 +237,44 @@ inline bool operator Op                                                \
 {	return left.ADBase() Op AD<Base>(right); }                     \
                                                                        \
 /* ----------------------------------------------------------------*/  \
-/* Operations int */                                                   \
+/* Operations double */                                                \
                                                                        \
 template <class Base>                                                  \
 inline bool operator Op                                                \
-	(int left, const AD<Base> &right)                              \
+	(const double &left, const AD<Base> &right)                    \
 {	return AD<Base>(left) Op right; }                              \
                                                                        \
 template <class Base>                                                  \
 inline bool operator Op                                                \
-	(int left, const VecAD_reference<Base> &right)                 \
+	(const double &left, const VecAD_reference<Base> &right)       \
 {	return AD<Base>(left) Op right.ADBase(); }                     \
                                                                        \
 template <class Base>                                                  \
 inline bool operator Op                                                \
-	(const AD<Base> &left, int right)                              \
+	(const AD<Base> &left, const double &right)                    \
 {	return left Op AD<Base>(right); }                              \
                                                                        \
 template <class Base>                                                  \
 inline bool operator Op                                                \
-	(const VecAD_reference<Base> &left, int right)                 \
-{	return left.ADBase() Op AD<Base>(right); }
+	(const VecAD_reference<Base> &left, const double &right)       \
+{	return left.ADBase() Op AD<Base>(right); }                     \
+/* ----------------------------------------------------------------*/  \
+/* Special case to avoid ambuigity when Base is double */              \
+                                                                       \
+inline bool operator Op                                                \
+	(const double &left, const AD<double> &right)                  \
+{	return AD<double>(left) Op right; }                            \
+                                                                       \
+inline bool operator Op                                                \
+	(const double &left, const VecAD_reference<double> &right)     \
+{	return AD<double>(left) Op right.ADBase(); }                   \
+                                                                       \
+inline bool operator Op                                                \
+	(const AD<double> &left, const double &right)                  \
+{	return left Op AD<double>(right); }                            \
+                                                                       \
+inline bool operator Op                                                \
+	(const VecAD_reference<double> &left, const double &right)     \
+{	return left.ADBase() Op AD<double>(right); }
 
 # endif

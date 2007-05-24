@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	op
 	sqrt
 	eps
 	mega
@@ -42,6 +43,18 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-24$$
+Suppose that $italic op$$ is a binary operation and we have
+$syntax%
+	%left% %op% %right%
+%$$
+where one of the operands was $code AD< AD<double> >$$ and 
+the other operand was $code double$$.
+There was a bug in this case that caused the $code double$$
+operand to be converted to $code int$$ before
+being converted to $code AD< AD<double> >$$.
+This has been fixed.
 
 $head 05-22$$
 The Microsoft 

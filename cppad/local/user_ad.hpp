@@ -52,8 +52,8 @@ $end
 # include <cppad/local/constructor.hpp>
 # include <cppad/local/convert.hpp>
 # include <cppad/local/eq.hpp>
+# include <cppad/local/vec_ad.hpp>
 # include <cppad/local/ad_valued.hpp>
 # include <cppad/local/bool_valued.hpp>
-# include <cppad/local/vec_ad.hpp>
 
 # endif

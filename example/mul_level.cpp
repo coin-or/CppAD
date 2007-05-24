@@ -46,7 +46,7 @@ $end
 # include <cppad/cppad.hpp>
 
 namespace { // put this function in the empty namespace
-	// f(x) = |x|^2 = x[0]^2 + ... + x[n-1]^2
+	// f(x) = |x|^2 = .5 * ( x[0]^2 + ... + x[n-1]^2 )
 	template <class Type>
 	Type f(CppADvector<Type> &x)
 	{	Type sum = 0;
@@ -55,7 +55,7 @@ namespace { // put this function in the empty namespace
 		while(i--)
 			sum += x[i] * x[i];
 	
-		return sum;
+		return .5 * sum;
 	} 
 }
 
@@ -104,11 +104,11 @@ bool mul_level()
 		v[i] = double(n - i);
 	dgv = G.Reverse(p, v);
 
-	// f(x)      = x[0]^2 + x[1]^2 + ... + x[n-1]^2
-	// f'(x)     = 2 (x[0], x[1], ... , x[n-1])
-	// f'(x) * v = 2 ( x[0]*v[0] + x[1]*v[1] + ... + x[n-1]*v[n-1] )
+	// f(x)      = .5 * ( x[0]^2 + x[1]^2 + ... + x[n-1]^2 )
+	// f'(x)     = (x[0], x[1], ... , x[n-1])
+	// f'(x) * v = x[0]*v[0] + x[1]*v[1] + ... + x[n-1]*v[n-1]
 	for(i = 0; i < n; i++)
-		ok &= NearEqual(dgv[i], 2.*v[i], 1e-10, 1e-10);
+		ok &= NearEqual(dgv[i], v[i], 1e-10, 1e-10);
 
 	return ok;
 }

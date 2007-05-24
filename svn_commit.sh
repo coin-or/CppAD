@@ -42,15 +42,13 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Split folding macro and remove one of its arguments.
+log_entry="Make all binary functions on any AD type work with double argument.
 
 svn_commit.sh: file that made this commit.
-div.hpp: use AD valued version of folding macro.
-add.hpp: use AD valued version of folding macro.
-compare.hpp: use bool valued version of folding macro.
-sub.hpp: use AD valued version of folding macro.
-define.hpp: make return type explicit in macro.
-mul.hpp: use AD valued version of folding macro.
+whats_new_07.omh: user's view of the changes.
+mul_level.cpp: test for double sliced to int then converted to AD<AD<double>>.
+vec_ad.hpp: change order of includes so VecAD_reference defined before used.
+define.hpp: change int to double in folding macros.
 " 
 add_list="
 "
@@ -61,12 +59,10 @@ move_list="
 #
 change_list="
 	svn_commit.sh
-	cppad/local/div.hpp
-	cppad/local/add.hpp
-	cppad/local/compare.hpp
-	cppad/local/sub.hpp
+	omh/whats_new_07.omh
+	example/mul_level.cpp
+	cppad/local/user_ad.hpp
 	cppad/local/define.hpp
-	cppad/local/mul.hpp
 "
 #
 copy_branch="" 
