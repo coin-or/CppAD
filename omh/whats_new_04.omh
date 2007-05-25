@@ -282,7 +282,7 @@ $head 09-13$$
 The examples that are specific to an operation were moved
 to be below that operation in the documentation tree.
 For example
-$xref/Add.cpp/$$ is below $xref/Add/$$ 
+$xref/Add.cpp/$$ is below $cref/ad_binary/$$ 
 in the documentation tree.
 
 $head 09-10$$

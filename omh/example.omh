@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -30,7 +30,8 @@ $index example$$
 $head Introduction$$
 This section organizes the information related to the CppAD examples.
 Each CppAD operation has its own specific example,
-for example $xref/Add.cpp/$$ is an example for $xref/Add/$$.
+for example $xref/Add.cpp/$$ is an example for 
+$cref/addition/ad_binary/$$.
 Some of the examples are of a more general nature
 (not connected of a specific feature of CppAD).
 In addition, there are some utility functions that are used

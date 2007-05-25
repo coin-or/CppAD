@@ -816,11 +816,12 @@ improve $code OdeErrControl$$ choice of step size and documentation.
 
 $head 05-12$$
 Using profiling, the 
-$xref/Mul//multiplication operator/$$ was show to take a significant
+$cref/multiplication operator/ad_binary/$$ was show to take a significant
 amount of time. It was reorganized in order to make it faster.
 The profiling indicated an improvement so that same change was made 
 to the following operators:
-$mref/Add/AddEq/Sub/SubEq/MulEq/Div/DivEq/$$.
+$cref/addition, subtraction, division/ad_binary/$$,
+$mref/AddEq/SubEq/MulEq/DivEq/$$.
 
 
 $head 05-06$$

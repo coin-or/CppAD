@@ -42,15 +42,26 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Make all binary functions on any AD type work with double argument.
+log_entry="Document change to AD binary arithmetic operations.
 
 svn_commit.sh: file that made this commit.
 whats_new_07.omh: user's view of the changes.
-mul_level.cpp: test for double sliced to int then converted to AD<AD<double>>.
-vec_ad.hpp: change order of includes so VecAD_reference defined before used.
-define.hpp: change int to double in folding macros.
+example.omh: fix cross-references to Add, Sub, Mul, and Div.
+example_list.omh: fix cross-references to Add, Sub, Mul, and Div.
+whats_new_04.omh: fix cross-references to Add, Sub, Mul, and Div.
+whats_new_05.omh: fix cross-references to Add, Sub, Mul, and Div.
+whats_new_06.omh: fix cross-references to Add, Sub, Mul, and Div.
+ad_binary.hpp: combine documentation for Add, Sub, Mul, Div.
+div.hpp: remove documention (now in ad_binary.hpp).
+add.hpp: remove documention (now in ad_binary.hpp).
+arithmetic.hpp: include ad_binary instead of add, sub, mul, div.
+sub.hpp: remove documention (now in ad_binary.hpp).
+define.hpp: fix omhelp spelling error.
+mul.hpp: remove documention (now in ad_binary.hpp).
+config.h: update package date in subversion release.
 " 
 add_list="
+	cppad/local/ad_binary.hpp
 "
 delete_list="
 "
@@ -60,9 +71,18 @@ move_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_07.omh
-	example/mul_level.cpp
-	cppad/local/user_ad.hpp
+	omh/example.omh
+	omh/example_list.omh
+	omh/whats_new_04.omh
+	omh/whats_new_05.omh
+	omh/whats_new_06.omh
+	cppad/local/div.hpp
+	cppad/local/add.hpp
+	cppad/local/arithmetic.hpp
+	cppad/local/sub.hpp
 	cppad/local/define.hpp
+	cppad/local/mul.hpp
+	cppad/config.h
 "
 #
 copy_branch="" 

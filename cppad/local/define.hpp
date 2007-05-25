@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin Define$$ $comment CppAD Developer Documentation$$
 $spell
+	bool
 	cppad.hpp
 	Microsoft
 	VecAD_reference
