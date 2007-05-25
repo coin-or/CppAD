@@ -610,7 +610,7 @@ in the tape (where possible).
 $head 08-06$$
 During Lu factorization, certain elements of the matrix 
 are know to be zero or one and do not depend on the variables.
-The $xref/Mul//multiplication/$$ operator was modified to take 
+The $cref/multiplication/ad_binary/$$ operator was modified to take 
 advantage of this fact.
 This reduced the size of the tape and increased the speed 
 for the calculation of the gradient and Hessian for 

@@ -57,6 +57,7 @@ nobase_include_HEADERS =  \
 	cppad/speed_test.hpp \
 	cppad/track_new_del.hpp \
 	cppad/local/ad.hpp \
+	cppad/local/ad_binary.hpp \
 	cppad/local/ad_fun.hpp \
 	cppad/local/ad_tape.hpp \
 	cppad/local/ad_valued.hpp \
