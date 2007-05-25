@@ -44,6 +44,19 @@ valid for complex types by comparing real parts.
 In addition, use this change to extend $xref/LuRatio/$$ so 
 that it works with complex AD types.
 
+$head Computed Assignment$$
+If the $italic Base$$ type is not $code double$$,
+the $cref/computed assignment/compute_assign/$$ operators do not
+always allow for $code double$$ operands. For example,
+if $italic x$$ has type $code AD< AD<double> >$$
+$syntax%
+	%x% += .5;
+%$$
+will slice the value $code .5$$ to an $code int$$
+and then convert it to an $code AD< AD<double> >$$.
+Hence, zero will be added to $italic x$$.
+
+
 $head Exceptions$$
 When the function
 $xref/Independent/$$ is called,  

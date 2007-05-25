@@ -12,11 +12,13 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-// Undo definitions in Define.h 
+// Undo definitions in define.hpp 
 
 # undef CPPAD_NULL
 # undef CPPAD_MAX_NUM_THREADS
-# undef CppADBinaryFriend
-# undef CppADStandardMathBinaryFun
+# undef CPPAD_FOLD_ASSIGNMENT_OPERATOR
+# undef CPPAD_FOLD_AD_VALUED_BINARY_OPERATOR
+# undef CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR
+
 
 # endif

@@ -947,10 +947,7 @@ documentation and examples for
 $xref/UnaryPlus/$$,
 $xref/UnaryMinus/$$,
 $cref/ad_binary/$$,
-$xref/AddEq/$$,
-$xref/SubEq/$$,
-$xref/MulEq/$$,
-$xref/DivEq/$$, and 
+$xref/compute_assign/$$, and
 $xref/StdMathUnary/$$
 
 
@@ -1086,7 +1083,7 @@ The $xref/Compare/$$ documentation and example have been improved.
 
 $head 02-24$$
 The documentation and examples have been improved for the following sections:
-$cref/division/ad_binary/$$, $xref/SubEq/$$, $xref/MulEq/$$, and $xref/DivEq/$$. 
+$cref/division/ad_binary/$$, $cref/-=/compute_assign/$$, $cref/*=/compute_assign/$$, and $cref%/=%compute_assign%$$. 
 
 $head 02-23$$
 The $cref/multiplication/ad_binary/$$ documentation and example have been improved. 
@@ -1107,7 +1104,7 @@ and the problem has been fixed.
 
 
 $head 02-15$$
-The $xref/AddEq/$$ documentation and example have been improved. 
+The $cref/+=/compute_assign/$$ documentation and example have been improved. 
 
 $head 02-14$$
 The $cref/addition/ad_binary/$$ documentation and example have been improved. 

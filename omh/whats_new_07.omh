@@ -44,6 +44,19 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-25$$
+Document usage of $code double$$ with
+binary arithmetic operators,
+and combine all those operators into one section ($cref/ad_binary/$$).
+$pre
+
+$$
+The documentation for all the $cref/computed assignment/compute_assign/$$
+operators has been grouped together.
+In addition, a 
+$cref/computed assignment/WishList/Computed Assignment/$$
+wish list item has been added.
+
 
 $head 05-24$$
 Suppose that $italic op$$ is a binary operation and we have
@@ -56,12 +69,6 @@ There was a bug in this case that caused the $code double$$
 operand to be converted to $code int$$ before
 being converted to $code AD< AD<double> >$$.
 This has been fixed.
-$pre
-
-$$
-Document usage of $code double$$ with
-binary arithmetic operators,
-and combine all those operators into one section ($cref/ad_binary/$$).
 
 $head 05-22$$
 The Microsoft 

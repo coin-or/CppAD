@@ -34,10 +34,7 @@ $childtable%
 	cppad/local/unary_plus.hpp%
 	cppad/local/unary_minus.hpp%
 	cppad/local/ad_binary.hpp%
-	cppad/local/add_eq.hpp%
-	cppad/local/sub_eq.hpp%
-	cppad/local/mul_eq.hpp%
-	cppad/local/div_eq.hpp
+	cppad/local/compute_assign.hpp
 %$$
 
 $end
@@ -46,9 +43,6 @@ $end
 # include <cppad/local/unary_plus.hpp>
 # include <cppad/local/unary_minus.hpp>
 # include <cppad/local/ad_binary.hpp>
-# include <cppad/local/add_eq.hpp>
-# include <cppad/local/sub_eq.hpp>
-# include <cppad/local/mul_eq.hpp>
-# include <cppad/local/div_eq.hpp>
+# include <cppad/local/compute_assign.hpp>
 
 # endif

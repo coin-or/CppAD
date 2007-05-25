@@ -689,7 +689,7 @@ This documentation has been fixed to this effect.
 
 
 $head 04-19$$
-The $xref/AddEq//+=/$$ operator did not function correctly
+The $cref/+=/compute_assign/$$ operator did not function correctly
 when the left hand operand was a 
 $xref/glossary/Parameter/parameter/$$
 and the right hand operand was a variable

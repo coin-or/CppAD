@@ -77,6 +77,7 @@ nobase_include_HEADERS =  \
 	cppad/local/bool_valued.hpp \
 	cppad/local/cap_taylor.hpp \
 	cppad/local/compare.hpp \
+	cppad/local/compute_assign.hpp \
 	cppad/local/cond_exp.hpp \
 	cppad/local/constructor.hpp \
 	cppad/local/convert.hpp \

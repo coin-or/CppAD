@@ -42,26 +42,25 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Document change to AD binary arithmetic operations.
+log_entry="Group computed assignment documentation like AD binary doc.
 
 svn_commit.sh: file that made this commit.
 whats_new_07.omh: user's view of the changes.
-example.omh: fix cross-references to Add, Sub, Mul, and Div.
-example_list.omh: fix cross-references to Add, Sub, Mul, and Div.
-whats_new_04.omh: fix cross-references to Add, Sub, Mul, and Div.
-whats_new_05.omh: fix cross-references to Add, Sub, Mul, and Div.
-whats_new_06.omh: fix cross-references to Add, Sub, Mul, and Div.
-ad_binary.hpp: combine documentation for Add, Sub, Mul, Div.
-div.hpp: remove documention (now in ad_binary.hpp).
-add.hpp: remove documention (now in ad_binary.hpp).
-arithmetic.hpp: include ad_binary instead of add, sub, mul, div.
-sub.hpp: remove documention (now in ad_binary.hpp).
-define.hpp: fix omhelp spelling error.
-mul.hpp: remove documention (now in ad_binary.hpp).
-config.h: update package date in subversion release.
+makefile.am: include compute_assign.hpp in distribution.
+whish_list: add a computed assignment entry.
+whats_new_04.omh: correct cross references to +=, -=, *=, and /=.
+whats_new_05.omh: correct cross references to +=, -=, *=, and /=.
+whats_new_06.omh: correct cross references to +=, -=, *=, and /=.
+compute_assign.hpp: group +=, -=, *=, and /= documentation here.
+add_eq.hpp: remove documentation from here.
+under.hpp: bring up to date with changes in define.hpp.
+sub_eq.hpp: remove documentation from here.
+mul_eq.hpp: remove documentation from here.
+div_eq.hpp: remove documentation from here.
+arithmetic.hpp: include computed assignments as a group.
 " 
 add_list="
-	cppad/local/ad_binary.hpp
+	cppad/local/compute_assign.hpp
 "
 delete_list="
 "
@@ -71,18 +70,17 @@ move_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_07.omh
-	omh/example.omh
-	omh/example_list.omh
+	makefile.am
+	omh/wish_list.omh
 	omh/whats_new_04.omh
 	omh/whats_new_05.omh
 	omh/whats_new_06.omh
-	cppad/local/div.hpp
-	cppad/local/add.hpp
+	cppad/local/add_eq.hpp
+	cppad/local/undef.hpp
+	cppad/local/sub_eq.hpp
+	cppad/local/mul_eq.hpp
+	cppad/local/div_eq.hpp
 	cppad/local/arithmetic.hpp
-	cppad/local/sub.hpp
-	cppad/local/define.hpp
-	cppad/local/mul.hpp
-	cppad/config.h
 "
 #
 copy_branch="" 

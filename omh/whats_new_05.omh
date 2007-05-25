@@ -819,9 +819,7 @@ Using profiling, the
 $cref/multiplication operator/ad_binary/$$ was show to take a significant
 amount of time. It was reorganized in order to make it faster.
 The profiling indicated an improvement so that same change was made 
-to the following operators:
-$cref/addition, subtraction, division/ad_binary/$$,
-$mref/AddEq/SubEq/MulEq/DivEq/$$.
+to the $cref/ad_binary/$$ and $cref/compute_assign/$$ operators.
 
 
 $head 05-06$$
