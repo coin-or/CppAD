@@ -77,7 +77,7 @@ where $italic Type$$ is
 $syntax%VecAD<%Base%>::reference%$$,
 $syntax%AD<%Base%>%$$,
 $italic Base$$, or
-$code int$$.
+$code double$$.
 
 $head Result$$
 $index assignment, multiple$$
