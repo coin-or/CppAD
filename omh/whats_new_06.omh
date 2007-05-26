@@ -973,7 +973,7 @@ $pre
 $$
 Mention the $xref/VecAD/VecAD<Base>::reference/VecAD<Base>::reference/$$ case 
 and generally improve 
-$xref/Value/$$, $xref/Output/$$ and $xref/Eq/$$ documentation
+$xref/Value/$$, $xref/Output/$$ and $cref/assignment/ad_copy/Syntax/Assignment/$$ documentation
 and examples.
 $pre
 
@@ -1117,18 +1117,20 @@ $pre
 
 $$
 The documentation and examples have been improved for the following sections:
-$xref/Eq/$$, $xref/UnaryPlus/$$, $xref UnaryMinus$$.
+$cref/assignment/ad_copy/Syntax/Assignment/$$, $xref/UnaryPlus/$$, $xref UnaryMinus$$.
 
 $head 02-11$$
 The documentation and examples have been improved for the following sections:
-$xref/Default/$$, $xref/CopyBase/$$, $xref/CopyAD/$$, and
+$xref/Default/$$, 
+$cref/ad_copy/$$, and
 $xref/Value/$$.
 
 $head 02-10$$
 This is the beginning of a pass to improve the documentation: 
 The documentation sections 
-The $xref/CopyBase/$$ (formerly FromBase) and 
-$xref/CopyAD/$$ (formerly Copy) documentation has been modified.
+The CopyBase (formerly FromBase and now part of $cref/ad_copy/$$) and 
+$cref/AD copy constructor/ad_copy/Syntax/Constructor/$$ 
+(formerly Copy) documentation has been modified.
 $pre
 
 $$

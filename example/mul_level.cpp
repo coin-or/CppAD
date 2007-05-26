@@ -46,15 +46,23 @@ $end
 # include <cppad/cppad.hpp>
 
 namespace { // put this function in the empty namespace
-	// f(x) = |x|^2 = .5 * ( x[0]^2 + ... + x[n-1]^2 )
+	// f(x) = |x|^2 = .5 * ( x[0]^2 + ... + x[n-1]^2 + .5 )
 	template <class Type>
 	Type f(CppADvector<Type> &x)
-	{	Type sum = 0;
+	{	Type sum;
+
+		// check assignment of AD< AD<double> > = double
+		sum  = .5;
+		sum += .5;
+
 		size_t i = x.size();
-	
 		while(i--)
 			sum += x[i] * x[i];
+
+		// check computed assignment AD< AD<double> > -= int
+		sum -= 1; 
 	
+		// check double * AD< AD<double> > 
 		return .5 * sum;
 	} 
 }

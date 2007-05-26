@@ -55,6 +55,13 @@ $syntax%
 would slice the value $code .5$$ to an $code int$$
 and then convert it to an $code AD< AD<double> >$$.
 This has been fixed.
+$pre
+
+$$
+This slicing has also been fixed in the 
+$cref/assignment/ad_copy/Syntax/Assignment/$$ operation.
+In addition, the assignment and copy operations
+have been grouped together in the documentation; see $cref/ad_copy/$$.
 
 
 $head 05-25$$

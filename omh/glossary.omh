@@ -43,7 +43,9 @@ the operation sequence.)
 
 $head AD of Base$$
 An object is called an AD of $italic Base$$ object its type is 
-either $syntax%AD<%Base%>%$$ (see $xref/Constructor/$$)
+either $syntax%AD<%Base%>%$$ 
+(see $cref/default/Default/$$ or 
+$cref/constructor/ad_copy/Syntax/Constructor/$$)
 or $syntax%VecAD<%Base%>::reference%$$ (see $xref/VecAD/$$)
 for some $italic Base$$ type.
 

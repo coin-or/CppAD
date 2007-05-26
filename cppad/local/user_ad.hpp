@@ -37,9 +37,9 @@ can be used to evaluate the corresponding
 function and derivative values.
 
 $childtable%
-	cppad/local/constructor.hpp%
+	cppad/local/default.hpp%
+	cppad/local/ad_copy.hpp%
 	cppad/local/convert.hpp%
-	cppad/local/eq.hpp%
 	cppad/local/ad_valued.hpp%
 	cppad/local/bool_valued.hpp%
 	cppad/local/vec_ad.hpp
@@ -49,9 +49,9 @@ $end
 ---------------------------------------------------------------------------
 */
 
-# include <cppad/local/constructor.hpp>
+# include <cppad/local/default.hpp>
+# include <cppad/local/ad_copy.hpp>
 # include <cppad/local/convert.hpp>
-# include <cppad/local/eq.hpp>
 # include <cppad/local/vec_ad.hpp>
 # include <cppad/local/ad_valued.hpp>
 # include <cppad/local/bool_valued.hpp>

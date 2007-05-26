@@ -118,7 +118,7 @@ $syntax%
 no matter what the types of $italic z$$.
 
 $lnext
-$xref/Eq//Assignment/$$ to $italic y$$ returns a $code void$$.
+Assignment to $italic y$$ returns a $code void$$.
 For example, the following syntax is not valid:
 $syntax%
 	%z% = %v%[%x%] = %u%;

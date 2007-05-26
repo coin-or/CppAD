@@ -124,30 +124,24 @@ public:
 	// default constructor
 	inline AD(void);
 
-	// construction from base type
-	inline AD(const Base &b);
-
-	// use default copy constructor
+	// use default copy constructor and assignment operator
 	// inline AD(const AD &x);
+	// inline AD& operator=(const AD &x);
 
-	// contructor from VecAD<Base>::reference
+	// construction and assingment from base type
+	inline AD(const Base &b);
+	inline AD& operator=(const Base &b); 
+
+	// contructor and assignment from VecAD<Base>::reference
 	inline AD(const VecAD_reference<Base> &x);
+	inline AD& operator=(const VecAD_reference<Base> &x);
 
-	// construction from some other type
-	template <class T>
-	inline AD(const T &t);
+	// construction and assignment from some other type
+	template <class T> inline AD(const T &t);
+	template <class T> inline AD& operator=(const T &right);
 
 	// base type corresponding to an AD object
 	friend Base Value <Base> (const AD<Base> &x);
-
-	// assignment operator
-	inline AD& operator  = (const AD &right);
-	inline AD& operator  = (int right)
-	{	return *this = AD(right); };
-	inline AD& operator  = (const Base &right)
-	{	return *this = AD(right); };
-	inline AD& operator  = (const VecAD_reference<Base> &right)
-	{       return *this = right.ADBase(); }
 
 	// computed assignment operators
 	inline AD& operator += (const AD &right);
@@ -243,7 +237,5 @@ private:
 
 // operations that expect the AD template class to be defined
 
-# undef CPPAD_ASSIGN_MEMBER
-# undef CPPAD_COMPARE_MEMBER
 
 # endif

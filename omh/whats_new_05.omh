@@ -704,9 +704,9 @@ is no longer supported by CppAD.
 $pre
 
 $$
-The $xref/CopyBase/$$ section was split into the $xref/Default//default/$$ 
+The copy base section was split into the $xref/Default//default/$$ 
 constructor and the 
-$xref/CopyBase//construction for the base type/$$.
+construction for the base type.
 The construction from base type has been
 extended to include any type that is convertible to the base type.
 As a special case, this provides the previous wish list item of

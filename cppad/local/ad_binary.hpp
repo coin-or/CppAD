@@ -54,7 +54,7 @@ $cref%VecAD<Base>::reference%VecAD%VecAD<Base>::reference%$$.
 $head Op$$
 The operator $italic Op$$ is one of the following
 $table
-$bold Op$$  $cnext $bold Meaning$$
+$bold Op$$  $cnext $bold Meaning$$ $rnext
 $code +$$   $cnext $italic z$$ is $italic x$$ plus $italic y$$ $rnext
 $code -$$   $cnext $italic z$$ is $italic x$$ minus $italic y$$ $rnext
 $code *$$   $cnext $italic z$$ is $italic x$$ times $italic y$$ $rnext

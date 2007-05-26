@@ -681,7 +681,7 @@ $code Speed/SpeedTest$$.
 
 $head 07-30$$
 The
-$xref/Eq//assignment/$$
+$cref/assignment/ad_copy/Syntax/Assignment/$$
 operator was changed so the it returns a reference to
 the target.
 This allows for statements of the form
@@ -692,8 +692,8 @@ i.e., multiple assignments.
 
 $head 07-29$$
 If the 
-$xref/CopyAD/$$ constructor or 
-$xref/Eq//assignment/$$ operator
+$cref/AD copy constructor/ad_copy/Syntax/Constructor/$$ constructor or 
+$cref/assignment/ad_copy/Syntax/Assignment/$$ operator
 used an
 $cref/independent variable/glossary/Tape/Independent Variable/$$
 for its source value,
@@ -705,8 +705,8 @@ $head 07-26$$
 The $syntax%AD<%Base%>%$$ data structure
 was changed to include a doubly linked list of variables.
 This enabled  the
-$xref/CopyAD/$$ constructor and 
-$xref/Eq//assignment/$$ operator
+$cref/AD copy constructor/ad_copy/Syntax/Constructor/$$ constructor and 
+$cref/assignment/ad_copy/Syntax/Assignment/$$ operator
 to create multiple references to
 the same place in the tape.
 This reduced the size of the tape and increased the speed 

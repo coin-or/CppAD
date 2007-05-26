@@ -428,7 +428,7 @@ $code new$$ operations.
 
 $head 06-25$$
 A discussion of the order dependence of the
-$xref/Eq//assignment operator/$$
+$cref/assignment/ad_copy/Syntax/Assignment/$$ operator
 and the 
 $xref/Independent//independent function/$$
 was added to the

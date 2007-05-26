@@ -42,37 +42,53 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Fix slicing double to in for computed assignment operators.
+log_entry="Fix slicing double to in assignment operator.
 
 svn_commit.sh: file that made this commit.
 whats_new_07.omh: user's view of the changes.
-whish_list: remove computed assignment entry.
-add_eq.hpp: use new macro to fold in operand cases.
-ad.hpp: remove macro that folded operand cases (new one in define.hpp).
-eq.hpp: remove out of date comments.
-sub_eq.hpp: use new macro to fold in operand cases.
-mul_eq.hpp: use new macro to fold in operand cases.
-div_eq.hpp: use new macro to fold in operand cases.
-define.hpp: new macro for folding operand cases.
+whish_list.omh: add entry for fixing slicing in VecAD_reference.
+mul_level.cpp: test assignment from double to AD< AD<double> >.
+glossary.omh: fix crossreferences to CopyBase, CopyAD, Eq.
+whats_new_03.omh: fix crossreferences to CopyBase, CopyAD, Eq.
+whats_new_04.omh: fix crossreferences to CopyBase, CopyAD, Eq.
+whats_new_05.omh: fix crossreferences to CopyBase, CopyAD, Eq.
+whats_new_06.omh: fix crossreferences to CopyBase, CopyAD, Eq.
+ad_copy.hpp: combine CopyBase, CopyAD, and Eq (uniform documentation).
+copy_base.hpp: delete CopyBase.
+ad.hpp: combine CopyBase, CopyAD, and Eq (uniform interface).
+ad_binary.hpp: fix missing newline in documentation table.
+eq.hpp: delete Eq.
+vec_ad.hpp: fix crossreferences to CopyBase, CopyAD, Eq.
+user_ad.hpp: combine CopyBase, CopyAD, and Eq (uniform interface).
+copy_ad.hpp: delete CopyAD.
+constuctor.hpp: deleta, now in ad_copy (except for Default which is spearate).
 " 
 add_list="
+	cppad/local/ad_copy.hpp
 "
 delete_list="
 "
 move_list="
+	cppad/local/eq.hpp
+	cppad/local/copy_ad.hpp
+	cppad/local/copy_base.hpp
+	cppad/local/constructor.hpp
 "
 #
 change_list="
 	svn_commit.sh
 	omh/whats_new_07.omh
 	omh/wish_list.omh
-	cppad/local/add_eq.hpp
+	example/mul_level.cpp
+	omh/glossary.omh
+	omh/whats_new_03.omh
+	omh/whats_new_04.omh
+	omh/whats_new_05.omh
+	omh/whats_new_06.omh
 	cppad/local/ad.hpp
-	cppad/local/eq.hpp
-	cppad/local/sub_eq.hpp
-	cppad/local/mul_eq.hpp
-	cppad/local/div_eq.hpp
-	cppad/local/define.hpp
+	cppad/local/ad_binary.hpp
+	cppad/local/vec_ad.hpp
+	cppad/local/user_ad.hpp
 "
 #
 copy_branch="" 
