@@ -44,6 +44,28 @@ be used with CppAD.
 If it is not yet defined,
 it is defined when $code cppad/local/define.hpp/$$ is included.
 
+$head CPPAD_FOLD_ASSIGNMENT_OPERATOR$$
+The syntax
+$syntax%
+	CPPAD_FOLD_ASSIGNMENT_OPERATOR(%Op%)
+%$$
+assumes that the operator
+$syntax%
+	%left% %Op% %right%
+%$$
+is defined for the case where $italic left$$ and $italic right$$ 
+have type $syntax%AD<%Base%>%$$.
+It uses this case to define the cases where
+$italic left$$ has type $syntax%AD<%Base%>%$$ and
+$italic right$$ has type
+$syntax%VecAD_reference<%Base%>%$$,
+$syntax%AD<%Base%>%$$,
+$italic Base$$, or
+$code double$$.
+The argument $italic right$$ is $code const$$ and call by reference.
+This macro converts the operands to $syntax%AD<%Base%>%$$ and then
+uses the definition of the same operation for that case. 
+
 $head CPPAD_FOLD_AD_VALUED_BINARY_OPERATOR$$
 The syntax
 $syntax%
@@ -110,6 +132,29 @@ $end
 # endif
 # endif
 
+
+# define CPPAD_FOLD_ASSIGNMENT_OPERATOR(Op)                             \
+                                                                        \
+template <class Base>                                                   \
+inline AD<Base>& operator Op                                            \
+(AD<Base> &left, double right)                                          \
+{	return left Op AD<Base>(right); }                               \
+                                                                        \
+template <class Base>                                                   \
+inline AD<Base>& operator Op                                            \
+(AD<Base> &left, const Base &right)                                     \
+{	return left Op AD<Base>(right); }                               \
+                                                                        \
+inline AD<double>& operator Op                                          \
+(AD<double> &left, const double &right)                                 \
+{	return left Op AD<double>(right); }                             \
+                                                                        \
+template <class Base>                                                   \
+inline AD<Base>& operator Op                                            \
+(AD<Base> &left, const VecAD_reference<Base> &right)                    \
+{	return left Op right.ADBase(); }
+
+// =====================================================================
 
 # define CPPAD_FOLD_AD_VALUED_BINARY_OPERATOR(Op)                      \
 /* ----------------------------------------------------------------*/  \

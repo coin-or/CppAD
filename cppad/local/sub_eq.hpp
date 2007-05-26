@@ -49,6 +49,8 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 	return *this;
 }
 
+CPPAD_FOLD_ASSIGNMENT_OPERATOR(-=)
+
 } // END CppAD namespace
 
 # endif 

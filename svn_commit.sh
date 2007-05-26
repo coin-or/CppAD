@@ -42,25 +42,20 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Group computed assignment documentation like AD binary doc.
+log_entry="Fix slicing double to in for computed assignment operators.
 
 svn_commit.sh: file that made this commit.
 whats_new_07.omh: user's view of the changes.
-makefile.am: include compute_assign.hpp in distribution.
-whish_list: add a computed assignment entry.
-whats_new_04.omh: correct cross references to +=, -=, *=, and /=.
-whats_new_05.omh: correct cross references to +=, -=, *=, and /=.
-whats_new_06.omh: correct cross references to +=, -=, *=, and /=.
-compute_assign.hpp: group +=, -=, *=, and /= documentation here.
-add_eq.hpp: remove documentation from here.
-under.hpp: bring up to date with changes in define.hpp.
-sub_eq.hpp: remove documentation from here.
-mul_eq.hpp: remove documentation from here.
-div_eq.hpp: remove documentation from here.
-arithmetic.hpp: include computed assignments as a group.
+whish_list: remove computed assignment entry.
+add_eq.hpp: use new macro to fold in operand cases.
+ad.hpp: remove macro that folded operand cases (new one in define.hpp).
+eq.hpp: remove out of date comments.
+sub_eq.hpp: use new macro to fold in operand cases.
+mul_eq.hpp: use new macro to fold in operand cases.
+div_eq.hpp: use new macro to fold in operand cases.
+define.hpp: new macro for folding operand cases.
 " 
 add_list="
-	cppad/local/compute_assign.hpp
 "
 delete_list="
 "
@@ -70,17 +65,14 @@ move_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_07.omh
-	makefile.am
 	omh/wish_list.omh
-	omh/whats_new_04.omh
-	omh/whats_new_05.omh
-	omh/whats_new_06.omh
 	cppad/local/add_eq.hpp
-	cppad/local/undef.hpp
+	cppad/local/ad.hpp
+	cppad/local/eq.hpp
 	cppad/local/sub_eq.hpp
 	cppad/local/mul_eq.hpp
 	cppad/local/div_eq.hpp
-	cppad/local/arithmetic.hpp
+	cppad/local/define.hpp
 "
 #
 copy_branch="" 

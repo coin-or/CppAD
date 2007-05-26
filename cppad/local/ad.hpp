@@ -21,16 +21,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/tape_rec.hpp>
 # include <cppad/local/ad_tape.hpp>
 
-// use this marco for assignment and computed assignment
-# define CPPAD_ASSIGN_MEMBER(Op)                              \
-	inline AD& operator Op (const AD &right);             \
-	inline AD& operator Op (int right)                    \
-	{	return *this Op AD(right); }                  \
-	inline AD& operator Op (const Base &right)            \
-	{	return *this Op AD(right); }                  \
-	inline AD& operator Op (const VecAD_reference<Base> &right) \
-	{	return *this Op right.ADBase(); }
-
 //  BEGIN CppAD namespace
 namespace CppAD {
 
@@ -150,12 +140,20 @@ public:
 	// base type corresponding to an AD object
 	friend Base Value <Base> (const AD<Base> &x);
 
-	// binary operators implemented as member functions
-	CPPAD_ASSIGN_MEMBER(  = )
-	CPPAD_ASSIGN_MEMBER( += )
-	CPPAD_ASSIGN_MEMBER( -= )
-	CPPAD_ASSIGN_MEMBER( *= )
-	CPPAD_ASSIGN_MEMBER( /= )
+	// assignment operator
+	inline AD& operator  = (const AD &right);
+	inline AD& operator  = (int right)
+	{	return *this = AD(right); };
+	inline AD& operator  = (const Base &right)
+	{	return *this = AD(right); };
+	inline AD& operator  = (const VecAD_reference<Base> &right)
+	{       return *this = right.ADBase(); }
+
+	// computed assignment operators
+	inline AD& operator += (const AD &right);
+	inline AD& operator -= (const AD &right);
+	inline AD& operator *= (const AD &right);
+	inline AD& operator /= (const AD &right);
 
 	// unary operators
 	inline AD operator +(void) const;

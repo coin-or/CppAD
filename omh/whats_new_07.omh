@@ -44,6 +44,19 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-26$$
+If the $italic Base$$ type is not $code double$$,
+the $cref/computed assignment/compute_assign/$$ operators did not
+always allow for $code double$$ operands. For example,
+if $italic x$$ had type $code AD< AD<double> >$$
+$syntax%
+	%x% += .5;
+%$$
+would slice the value $code .5$$ to an $code int$$
+and then convert it to an $code AD< AD<double> >$$.
+This has been fixed.
+
+
 $head 05-25$$
 Document usage of $code double$$ with
 binary arithmetic operators,
@@ -54,8 +67,9 @@ $$
 The documentation for all the $cref/computed assignment/compute_assign/$$
 operators has been grouped together.
 In addition, a 
-$cref/computed assignment/WishList/Computed Assignment/$$
-wish list item has been added.
+computed assignment wish list item has been added
+(it was completed and removed with the 
+$cref/05-26/whats_new_07/05-26/$$ update.)
 
 
 $head 05-24$$

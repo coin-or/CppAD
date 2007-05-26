@@ -123,10 +123,6 @@ inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
 	return *this;
 }
 
-
 } // END CppAD namespace
-
-// int, Base, and VecAD_reference<Base> cases are folded in using
-// CPPAD_ASSIGN_MEMBER(=) in the file AD.h
 
 # endif
