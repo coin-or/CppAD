@@ -58,6 +58,7 @@ nobase_include_HEADERS =  \
 	cppad/track_new_del.hpp \
 	cppad/local/ad.hpp \
 	cppad/local/ad_binary.hpp \
+	cppad/local/ad_copy.hpp \
 	cppad/local/ad_fun.hpp \
 	cppad/local/ad_tape.hpp \
 	cppad/local/ad_valued.hpp \
@@ -79,10 +80,7 @@ nobase_include_HEADERS =  \
 	cppad/local/compare.hpp \
 	cppad/local/compute_assign.hpp \
 	cppad/local/cond_exp.hpp \
-	cppad/local/constructor.hpp \
 	cppad/local/convert.hpp \
-	cppad/local/copy_ad.hpp \
-	cppad/local/copy_base.hpp \
 	cppad/local/cppad_error.hpp \
 	cppad/local/cppad_vector.hpp \
 	cppad/local/declare.hpp \
@@ -94,7 +92,6 @@ nobase_include_HEADERS =  \
 	cppad/local/div_eq.hpp \
 	cppad/local/div_op.hpp \
 	cppad/local/drivers.hpp \
-	cppad/local/eq.hpp \
 	cppad/local/equal_op_seq.hpp \
 	cppad/local/erf.hpp \
 	cppad/local/exp_op.hpp \
