@@ -2,7 +2,7 @@
 # define CPPAD_RUNGE_45_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -334,7 +334,8 @@ Vector Runge45(
 	for(m = 0; m < M; m++)
 	{	// time at beginning of this interval
 		// (convert to int to avoid MS compiler warning)
-		Scalar t = ti * (int(M - m) / ns) + tf * (int(m) / ns);
+		Scalar t = ti * (Scalar(int(M - m)) / ns) 
+		         + tf * (Scalar(int(m)) / ns);
 
 		// loop over integration steps
 		x4 = x5 = xf;   // start x4 and x5 at same point for each step

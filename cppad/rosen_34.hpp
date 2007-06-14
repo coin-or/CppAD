@@ -2,7 +2,7 @@
 # define CPPAD_ROSEN_34_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -366,7 +366,8 @@ Vector Rosen34(
 	xf = xi;           // initialize solution
 	for(m = 0; m < M; m++)
 	{	// time at beginning of this interval
-		Scalar t = ti * ((M - m) / ns) + tf * (m / ns);
+		Scalar t = ti * (Scalar(int(M - m)) / ns) 
+		         + tf * (Scalar(int(m)) / ns);
 
 		// value of x at beginning of this interval
 		x3 = x4 = xf;

@@ -44,6 +44,17 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-14$$
+The routine $cref/Rosen34/$$ ( $cref/Runge45/$$ ) had a division
+of a $code size_t$$ ( $code int$$ ) by a $italic Scalar$$,
+where $italic Scalar$$ was any $cref/NumericType/$$.
+Such an operation may not be valid for a particular numeric type.
+This has been fixed by explicitly converting the 
+$code size_t$$ to an $code int$$,
+then converting the $code int$$ to a $italic Scalar$$,
+and then preforming the division.
+(The conversion of an $code int$$ to any numeric type must be valid.)
+
 $head 05-26$$
 If the $italic Base$$ type is not $code double$$,
 the $cref/computed assignment/compute_assign/$$ operators did not
