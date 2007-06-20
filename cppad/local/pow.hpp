@@ -102,18 +102,18 @@ $end
 namespace CppAD {
 
 // copy of standard functions in CppAD namespace
-inline float pow(float x, float y)
+inline float pow(const float &x, const float &y)
 {	return std::pow(x, y); }
 
-inline double pow(double x, double y)
+inline double pow(const double &x, const double &y)
 {	return std::pow(x, y); }
 
 inline std::complex<float> 
-pow(std::complex<float> x, std::complex<float> y)
+pow(const std::complex<float> &x, const std::complex<float> &y)
 {	return std::pow(x, y); }
 
 inline std::complex<double> 
-pow(std::complex<double> x, std::complex<double> y)
+pow(const std::complex<double> &x, const std::complex<double> &y)
 {	return std::pow(x, y); }
 
 // case where x and y are AD<Base> -----------------------------------------

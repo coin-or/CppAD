@@ -186,6 +186,9 @@
 				RelativePath=".\from_base.cpp">
 			</File>
 			<File
+				RelativePath=".\fun_check.cpp">
+			</File>
+			<File
 				RelativePath=".\log.cpp">
 			</File>
 			<File

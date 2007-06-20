@@ -169,8 +169,8 @@ int main(void)
 
 	assert( ok || (Run_error_count > 0) );
 	if( ok )
-		cout << "All " << Run_ok_count << " tests passed." << endl;
-	else	cout << Run_error_count << " tests failed." << endl;
+		cout << "All " << int(Run_ok_count) << " tests passed." << endl;
+	else	cout << int(Run_error_count) << " tests failed." << endl;
 
 	return static_cast<int>( ! ok );
 }

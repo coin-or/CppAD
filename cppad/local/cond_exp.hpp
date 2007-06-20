@@ -176,7 +176,8 @@ $end
 namespace CppAD {
 
 // ------------ CondExpOp(cop, left, right, trueCase, falseCase) --------------
-
+// CompareType and ResultType are different for the forward and reverse
+// sparese calculations.
 template <class CompareType, class ResultType>
 inline ResultType CondExpTemplate( 
 	enum  CompareOp            cop ,

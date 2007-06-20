@@ -326,13 +326,13 @@ Type erf_template(const Type &x)
 	return CondExpGe(x, zero, Gt0, -Gt0);
 }
 
-inline float erf(float x)
+inline float erf(const float &x)
 {	return erf_template(x); }
 
-inline double erf(double x)
+inline double erf(const double &x)
 {	return erf_template(x); }
 
-inline std::complex<float>  erf(std::complex<float> x)
+inline std::complex<float>  erf(const std::complex<float> &x)
 {	CppADUsageError(
 		0,
 		"CppAD::erf: attempt to use with std::complex<float> argument"
@@ -340,7 +340,7 @@ inline std::complex<float>  erf(std::complex<float> x)
 	return std::complex<float>(0);
 }
 
-inline std::complex<double>  erf(std::complex<double> x)
+inline std::complex<double>  erf(const std::complex<double> &x)
 {	CppADUsageError(
 		0,
 		"CppAD::erf: attempt to use with std::complex<double> argument"

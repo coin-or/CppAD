@@ -1,0 +1,407 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin Bugs$$
+$begin base_require$$
+$spell
+	acos
+	asin
+	atan
+	cos
+	sqrt
+	optimizations
+	bool
+	const
+	CppAD
+	enum
+	Lt
+	Le
+	Eq
+	Ge 
+	Gt
+	inline
+	Op
+	std
+	CondExp
+	erf
+$$
+
+$index Base, require$$
+$index require, Base type$$
+$index type, Base require$$
+
+$section AD<Base> Requirements for Base Type$$
+
+$head Purpose$$
+This section lists the requirements for the type
+$italic Base$$ so that the type $syntax%AD<%Base%>%$$ can be used.
+In the case where $italic Base$$ is $code float$$, $code double$$,
+$code std::complex<float>$$, $code std::complex<double>$$,
+or $syntax%AD<%Other%>%$$,
+these requirements are provided by the CppAD package.
+
+$head Warning$$
+This is a preliminary version of these specifications
+and it is subject to change in future versions of CppAD.
+
+$head abs$$
+$index abs, Base require$$
+The type $italic Base$$ must support the syntax
+$syntax%
+	%y% = abs(%x%)
+%$$
+which computes the absolute value of it's argument.
+The argument $italic x$$ has prototype
+$syntax%
+	const %Base% &%x%
+%$$
+and the return value $italic y$$ has prototype
+$syntax%
+	%Base% %y%
+%$$
+The CppAD $code abs$$ derivative calculation assumes that
+the type $italic Base$$ is ordered; i.e., 
+$latex \[
+	{\rm abs} (x) = \left\{ \begin{array}{ll}
+		x & {\rm if} \; x \geq 0
+		\\
+		- x & {\rm otherwise}
+	\end{array} \right.
+\] $$
+
+$subhead Ordered Type$$
+If the type $italic Base$$ supports the less than and unary minus operators,
+its $code abs$$ function can be defined by
+$syntax%
+	inline %Base% abs(const %Base% &x)
+	{	if( x < Base(0) )
+			return - x;
+		return x;
+	}
+%$$
+
+$subhead Not Ordered$$
+If the type $italic Base$$ does not support ordering,
+derivatives of its $code abs$$ function will not be computed correctly.
+In this case one might (but need not) define $code abs$$ as follows:
+$syntax%
+	inline %Base% abs(const %Base% &x)
+	{	// attempt to use abs with a %Base% argument
+		assert(0);
+		return x;
+	}
+%$$
+
+$head CondExp$$
+$index CondExp, Base require$$
+The type $italic Base$$ must support the syntax
+$syntax%
+	%result% = CondExpOp(%cop%, %left%, %right%, %trueCase%, %falseCase%)
+%$$
+which computes the result for the corresponding $cref/CondExp/$$ function.
+The argument $italic cop$$ has prototype
+$syntax%
+	enum CppAD::CompareOp %cop%
+%$$ 
+The possible values for this enum type are
+$code CompareLt$$,
+$code CompareLe$$,
+$code CompareEq$$,
+$code CompareGe$$, and
+$code CompareGt$$.
+The other arguments have the prototype
+$syntax%
+	const %Base%      &%left% ,
+	const %Base%     &%right% ,
+	const %Base%  &%trueCase% ,
+	const %Base% &%falseCase% )
+%$$
+The result has prototype
+$syntax%
+	%Base%  &%result%
+%$$
+
+$subhead Ordered Type$$
+If the type $italic Base$$ supports the 
+$code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators
+its $code CondExpOp$$ function can be defined by
+$syntax%
+	inline %Base% CondExpOp(
+	enum CompareOp      cop ,
+	const %Base%      &left ,
+	const %Base%     &right ,
+	const %Base%  &trueCase ,
+	const %Base% &falseCase )
+	return CppAD::CondExpTemplate(cop, left, right, trueCase, falseCase);
+}
+%$$
+
+$subhead Not Ordered$$
+If the type $italic Base$$ does not support ordering,
+the $code CondExpOp$$ function does not make sense.
+In this case one might (but need not) define $code CondExpOp$$ as follows:
+$syntax%
+	inline %Base% CondExpOp(
+	enum CompareOp      cop ,
+	const %Base%      &left ,
+	const %Base%     &right ,
+	const %Base%  &trueCase ,
+	const %Base% &falseCase )
+	{	// attempt to use CondExp with a %Base% argument
+		assert(0);
+		return %Base%(0);
+	}
+%$$
+
+
+$head EqualOpSeq$$
+$index EqualOpSeq, Base require$$
+The type $italic Base$$ must support the syntax
+$syntax%
+	%b% = EqualOpSeq(%x%, %y%)
+%$$
+which returns true if and only if $italic x$$ is equal to $italic y$$
+(this is used by the $cref/EqualOpSeq/$$ function).
+The arguments $italic x$$ and $italic y$$ have prototype
+$syntax%
+	const %Base% &%x%
+	const %Base% &%y%
+%$$
+The return value $italic b$$ has prototype
+$syntax%
+	bool %b%
+%$$
+
+$subhead Suggestion$$
+The $italic Base$$ version of the $code EqualOpSeq$$ function
+can be defined by
+$syntax%
+	inline %Base% EqualOpSeq(const %Base% &x, const %Base% &y)
+	{	return x == y; }
+%$$
+
+$head erf$$
+$index erf, Base require$$
+The type $italic Base$$ must support the syntax
+$syntax%
+	%y% = erf(%x%)
+%$$
+which computes the $cref/erf/$$ function.
+The argument $italic x$$ has prototype
+$syntax%
+	const %Base% &%x%
+%$$
+and the return value $italic y$$ has prototype
+$syntax%
+	%Base% %y%
+%$$
+
+$subhead Suggestion$$
+You can try defining the $italic Base$$ version of the $code erf$$ function
+using the as yet unspecified template function $code erf_template$$:
+$syntax%
+	inline %Base% erf(const %Base% &x)
+	{	return CppAD::erf_template(x); }
+%$$
+
+$head Identical$$
+$index Identical, Base require$$
+If the type $italic Base$$ records what operations are preformed by
+$syntax%AD<%Base%>%$$,
+CppAD must know if the $italic Base$$ value corresponding to an operation 
+will be the same. 
+For example, suppose the current operation is between two
+$syntax%AD<%Base%>%$$ objects where $italic Base$$ is $code AD<double>$$;
+some optimizations depend on one of the objects being a
+$cref/parameter/glossary/Parameter/$$ as well as its
+corresponding $italic Base$$ value also being a parameter.
+In general, the type $italic Base$$ must support the following functions:
+
+$table
+$bold Syntax$$ $cnext $bold Result$$
+$rnext
+$syntax%%b% = IdenticalPar(%x%)%$$ $pre  $$
+	$cnext the $italic Base$$ value will always be the same.
+$rnext
+$syntax%%b% = IdenticalZero(%x%)%$$ $pre  $$
+	$cnext $italic x$$ equals zero and $syntax%IdenticalPar(%x%)%$$
+$rnext
+$syntax%%b% = IdenticalOne(%x%)%$$ $pre  $$
+	$cnext $italic x$$ equals one and $syntax%IdenticalPar(%x%)%$$
+$rnext
+$syntax%%b% = IdenticalEqual(%x%, %y%)%$$ $pre  $$
+	$cnext $italic x$$ equals $italic y$$,
+ 	$syntax%IdenticalPar(%x%)%$$ and
+ 	$syntax%IdenticalPar(%y%)%$$
+$tend
+
+The argument $italic x$$ has prototype
+$syntax%
+	const %Base% %x%
+%$$
+If it is present, the argument $italic y$$ has prototype
+$syntax%
+	const %Base% %y%
+%$$
+The result $italic b$$ has prototype
+$syntax%
+	bool %b%
+%$$
+
+$subhead Suggestion$$
+If $italic Base$$ is a relatively simple type
+(does not record operations for future calculations),
+the $code IdenticalZero$$ function can be defined by
+$syntax%
+	inline bool IdenticalZero(const %Base% &x)
+        {       return x == Base(0); }
+%$$
+The other functions could be defined in a similar manner.
+$pre
+
+$$
+If the $italic Base$$ type records operations and may change 
+the value of $italic x$$ or $italic y$$ during some future calculation,
+these functions should return false.
+If you are not sure what should be returned, 
+false is a safer value (but makes some calculations slower).
+
+$head Integer$$
+$index Integer, Base require$$
+The type $italic Base$$ must support the syntax
+$syntax%
+	%i% = Integer(%x%)
+%$$
+which converts $italic x$$ to an $code int$$.
+The argument $italic x$$ has prototype
+$syntax%
+	const %Base% &%x%
+%$$
+and the return value $italic i$$ has prototype
+$syntax%
+	int %i%
+%$$
+
+$subhead Suggestion$$
+The $italic Base$$ version of the $code Integer$$ function
+might be defined by
+$syntax%
+	inline %Base% Integer(const %Base% &x)
+	{	return static_cast<int>(x); }
+%$$
+
+
+$head Ordered$$
+$index GreaterThanZero, Base require$$
+$index GreaterThanZero, Base require$$
+$index LessThanOrZero, Base require$$
+$index LessThanOrZero, Base require$$
+
+So that CppAD can be used with a base type that does not support the 
+ordering operations $code >$$, $code >=$$, $code <$$, or $code <=$$,
+$italic Base$$ must support the following functions:
+$table
+$bold Syntax$$ $cnext $bold Result$$
+$rnext
+$syntax%%b% = GreaterThanZero(%x%)%$$   $pre  $$
+	$cnext $latex x > 0$$
+$rnext
+$syntax%%b% = GreaterThanOrZero(%x%)%$$ $pre  $$
+	$cnext $latex x \geq 0$$
+$rnext
+$syntax%%b% = LessThanZero(%x%)%$$      $pre  $$
+	$cnext $latex x < 0$$
+$rnext
+$syntax%%b% = LessThanOrZero(%x%)%$$    $pre  $$
+	$cnext $latex x \leq 0$$
+$tend
+The argument $italic x$$ has prototype
+$syntax%
+	const %Base% &%x%
+%$$
+and the result $italic b$$ has prototype
+$syntax%
+	bool %b%
+%$$
+
+$subhead Ordered Type$$
+If the type $italic Base$$ supports ordered operations,
+these functions should have their corresponding definitions.
+For example,
+$syntax%
+	inline bool GreaterThanZero(const %Base% &x)
+	{	return (x > 0);
+	}
+%$$
+The other functions would replace $code >$$ by the corresponding operator.
+
+$subhead Not Ordered$$
+If the type $italic Base$$ does not support ordering,
+one might (but need not) define $code GreaterThanZero$$ as follows:
+$syntax%
+	inline bool GreaterThanZero(const %Base% &x)
+	{	// attempt to use GreaterThanZero with a %Base% argument
+		assert(0);
+		return x;
+	}
+%$$
+The other functions would have the corresponding definition.
+
+$head pow$$
+$index pow, Base require$$
+The type $italic Base$$ must support the syntax
+$syntax%
+	%z% = pow(%x%, %y%)
+%$$
+which computes $latex z = x^y$$.
+The arguments $italic x$$ and $italic y$$ have prototypes
+$syntax%
+	const %Base% &%x%
+	const %Base% &%y%
+%$$
+The return value $italic z$$ has prototype
+$syntax%
+	%Base% %z%
+%$$
+
+$head Standard Math Unary$$
+$index math, Base require$$
+The type $italic Base$$ must support the following 
+$cref/standard math unary functions/StdMathUnary/$$:
+$table
+$bold Syntax$$ $cnext $bold Result$$ 
+$rnext
+$syntax%%y% = acos(%x%)%$$ $cnext inverse cosine $rnext
+$syntax%%y% = asin(%x%)%$$ $cnext inverse sine   $rnext
+$syntax%%y% = atan(%x%)%$$ $cnext inverse tangent   $rnext
+$syntax%%y% = cos(%x%)%$$  $cnext cosine            $rnext
+$syntax%%y% = cosh(%x%)%$$ $cnext hyperbolic cosine $rnext
+$syntax%%y% = exp(%x%)%$$ $cnext exponential        $rnext
+$syntax%%y% = log(%x%)%$$ $cnext natural logarithm          $rnext
+$syntax%%y% = log10(%x%)%$$ $cnext logarithm base 10        $rnext
+$syntax%%y% = sin(%x%)%$$ $cnext sine               $rnext
+$syntax%%y% = sinh(%x%)%$$ $cnext hyperbolic sine   $rnext
+$syntax%%y% = sqrt(%x%)%$$ $cnext square root       $rnext
+$syntax%%y% = tan(%x%)%$$  $cnext tangent           
+$tend
+
+The argument $italic x$$ has prototype
+$syntax%
+	const %Base% &%x%
+%$$
+and the result $italic y$$ has prototype
+$syntax%
+	%Base% %y%
+%$$
+
+
+
+$end

@@ -2,7 +2,7 @@
 # define CPPAD_ORDERED_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -128,13 +128,13 @@ $end
 namespace CppAD { // BEGIN CppAD namespace
 
 // GreaterThanZero ------------------------------------------------------------
-inline bool GreaterThanZero(float x)
+inline bool GreaterThanZero(const float &x)
 {	return x > 0.; }
 
-inline bool GreaterThanZero(double x)
+inline bool GreaterThanZero(const double &x)
 {	return x > 0.; }
 
-inline bool GreaterThanZero(std::complex<float> x)
+inline bool GreaterThanZero(const std::complex<float> &x)
 {	CppADUsageError(
 		0,
 		"Attempt to use std::complex<float> as an ordered type"
@@ -142,7 +142,7 @@ inline bool GreaterThanZero(std::complex<float> x)
 	return false;
 }
 
-inline bool GreaterThanZero(std::complex<double> x)
+inline bool GreaterThanZero(const std::complex<double> &x)
 {	CppADUsageError(
 		0,
 		"Attempt to use std::complex<double> as an ordered type"
@@ -156,13 +156,13 @@ inline bool GreaterThanZero(const AD<Base> &x)
 
 
 // GreaterThanOrZero ---------------------------------------------------------
-inline bool GreaterThanOrZero(float x)
+inline bool GreaterThanOrZero(const float &x)
 {	return x >= 0.; }
 
-inline bool GreaterThanOrZero(double x)
+inline bool GreaterThanOrZero(const double &x)
 {	return x >= 0.; }
 
-inline bool GreaterThanOrZero(std::complex<float> x)
+inline bool GreaterThanOrZero(const std::complex<float> &x)
 {	CppADUsageError(
 		0,
 		"Attempt to use std::complex<float> as an ordered type"
@@ -170,7 +170,7 @@ inline bool GreaterThanOrZero(std::complex<float> x)
 	return false;
 }
 
-inline bool GreaterThanOrZero(std::complex<double> x)
+inline bool GreaterThanOrZero(const std::complex<double> &x)
 {	CppADUsageError(
 		0,
 		"Attempt to use std::complex<double> as an ordered type"
@@ -185,13 +185,13 @@ inline bool GreaterThanOrZero(const AD<Base> &x)
 
 // LessThanZero  ------------------------------------------------------------
 
-inline bool LessThanZero(float x)
+inline bool LessThanZero(const float &x)
 {	return x < 0.; }
 
-inline bool LessThanZero(double x)
+inline bool LessThanZero(const double &x)
 {	return x < 0.; }
 
-inline bool LessThanZero(std::complex<float> x)
+inline bool LessThanZero(const std::complex<float> &x)
 {	CppADUsageError(
 		0,
 		"Attempt to use std::complex<float> as an ordered type"
@@ -199,7 +199,7 @@ inline bool LessThanZero(std::complex<float> x)
 	return false;
 }
 
-inline bool LessThanZero(std::complex<double> x)
+inline bool LessThanZero(const std::complex<double> &x)
 {	CppADUsageError(
 		0,
 		"Attempt to use std::complex<double> as an ordered type"
@@ -213,13 +213,13 @@ inline bool LessThanZero(const AD<Base> &x)
 
 // LessThanOrZero  ------------------------------------------------------------
 
-inline bool LessThanOrZero(float x)
+inline bool LessThanOrZero(const float &x)
 {	return x <= 0.; }
 
-inline bool LessThanOrZero(double x)
+inline bool LessThanOrZero(const double &x)
 {	return x <= 0.; }
 
-inline bool LessThanOrZero(std::complex<float> x)
+inline bool LessThanOrZero(const std::complex<float> &x)
 {	CppADUsageError(
 		0,
 		"Attempt to use std::complex<float> as an ordered type"
@@ -227,7 +227,7 @@ inline bool LessThanOrZero(std::complex<float> x)
 	return false;
 }
 
-inline bool LessThanOrZero(std::complex<double> x)
+inline bool LessThanOrZero(const std::complex<double> &x)
 {	CppADUsageError(
 		0,
 		"Attempt to use std::complex<double> as an ordered type"

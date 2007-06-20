@@ -116,7 +116,7 @@ $code exp$$
 	$cnext exponential function
 	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
 $code log$$   
-	$cnext logarithm function
+	$cnext natural logarithm function
 	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
 $code log10$$ 
 	$cnext log base 10 function
@@ -131,7 +131,7 @@ $code sqrt$$
 	$cnext square root function
 	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
 $code tan$$  
-	$cnext square root function
+	$cnext tangent function
 	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
 $tend
 
@@ -277,27 +277,27 @@ $end
 
 # define CPPAD_STANDARD_MATH_UNARY_BASE_ALL(Name)                         \
                                                                           \
-	inline float Name(float x)                                        \
+	inline float Name(const float &x)                                 \
 	{	return std::Name(x); }                                    \
                                                                           \
-	inline double Name(double x)                                      \
+	inline double Name(const double &x)                               \
 	{	return std::Name(x); }                                    \
                                                                           \
-	inline std::complex<float> Name(std::complex<float> x)            \
+	inline std::complex<float> Name(const std::complex<float> &x)     \
 	{	return std::Name(x); }                                    \
                                                                           \
-	inline std::complex<double> Name(std::complex<double> x)          \
+	inline std::complex<double> Name(const std::complex<double> &x)   \
 	{	return std::Name(x); }
 
 # define CPPAD_STANDARD_MATH_UNARY_BASE_HALF(Name)                        \
                                                                           \
-	inline float Name(float x)                                        \
+	inline float Name(const float &x)                                 \
 	{	return std::Name(x); }                                    \
                                                                           \
-	inline double Name(double x)                                      \
+	inline double Name(const double &x)                               \
 	{	return std::Name(x); }                                    \
                                                                           \
-	inline std::complex<float> Name(std::complex<float> x)            \
+	inline std::complex<float> Name(const std::complex<float> &x)     \
 	{	CppADUsageError(                                          \
 			0,                                                \
 			#Name ": attempt to use with complex argument"    \
@@ -305,7 +305,7 @@ $end
 		return x;                                                 \
 	}                                                                 \
                                                                           \
-	inline std::complex<double> Name(std::complex<double> x)          \
+	inline std::complex<double> Name(const std::complex<double> &x)   \
 	{	CppADUsageError(                                          \
 			0,                                                \
 			#Name ": attempt to use with complex argument"    \

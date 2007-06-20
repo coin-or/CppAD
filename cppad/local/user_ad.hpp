@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin AD$$
 $spell
+	std
 	bool
 	cos
 	Cpp
@@ -36,13 +37,26 @@ be transferred to an $xref/ADFun/$$ object where it
 can be used to evaluate the corresponding 
 function and derivative values.
 
+$head Base Type Requirements$$
+$index Base, require$$
+The $italic Base$$ requirements are provided by the CppAD package 
+for the following base types:
+$code float$$, 
+$code double$$,
+$code std::complex<float>$$, 
+$code std::complex<double>$$, and
+$syntax%AD<%Other%>%$$.
+Otherwise, see $cref/base type requirements/base_require/$$.
+
+
 $childtable%
 	cppad/local/default.hpp%
 	cppad/local/ad_copy.hpp%
 	cppad/local/convert.hpp%
 	cppad/local/ad_valued.hpp%
 	cppad/local/bool_valued.hpp%
-	cppad/local/vec_ad.hpp
+	cppad/local/vec_ad.hpp%
+	omh/base_require.omh
 %$$
 
 $end
