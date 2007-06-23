@@ -39,6 +39,15 @@ $syntax%%
 %# include <cppad/cppad.hpp>
 BenderQuad(%x%, %y%, %fun%, %g%, %gx%, %gxx%)%$$  
 
+$head Problem$$
+The type $cref/ADvector/BenderQuad/ADvector/$$ cannot be determined
+form the arguments above 
+(currently the type $italic ADvector$$ must be 
+$syntax%CppADvector<%Base%>%$$.)
+This will be corrected in the future by requiring $italic Fun$$
+to define $syntax%%Fun%::vector_type%$$ which will specify the
+type $italic ADvector$$.
+
 $head Purpose$$
 We are given the optimization problem
 $latex \[

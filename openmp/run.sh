@@ -11,6 +11,9 @@
 # -----------------------------------------------------------------------------
 # $begin openmp_run.sh$$ $newlinech #$$
 # $spell
+#	fi
+#	usr
+#	Dir
 #	mega
 #	inv
 #       automatic automatic
@@ -64,6 +67,17 @@ openmp_flag=""
 # The following other flags will be used during compilation:
 # $codep
 other_flags="-DNDEBUG -O2 -Wall"
+# $$
+#
+# $subhead Boost Directory$$
+# If the $cref/BoostDir/InstallUnix/BoostDir/$$ is specified on the 
+# $cref/configure/InstallUnix/Configure/$$ command line,
+# you must add the corresponding include directory; e.g.,
+# $codep
+if [ -d /usr/include/boost-1_33_1 ]
+then
+	other_flags="-DNDEBUG -O2 -Wall -I/usr/include/boost-1_33_1"
+fi
 # $$
 #
 # $subhead Number of Repeats$$
