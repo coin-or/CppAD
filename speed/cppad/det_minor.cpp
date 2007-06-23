@@ -111,7 +111,7 @@ bool correct_det_minor(void)
 
 	compute_det_minor(size, repeat, matrix, gradient);
 
-	bool ok = det_grad_33(matrix, gradient);
+	bool ok = CppAD::det_grad_33(matrix, gradient);
 	return ok;
 }
 /* $$

@@ -2,7 +2,7 @@
 # define CPPAD_CPPAD_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -54,7 +54,7 @@ is specified by the following source code
 $codep */
 
 // The next line is C++ source code and its replacement is discussed below
-# if CppAD_CPPADVECTOR
+# if CPPAD_CPPADVECTOR
 # define CppADvector CppAD::vector
 # endif
 
@@ -69,7 +69,7 @@ command line during CppAD $xref/Install//installation/$$,
 the following code replaces the definition of $code CppADvector$$ 
 $codep */
 
-# if CppAD_STDVECTOR
+# if CPPAD_STDVECTOR
 # include <vector>
 # define CppADvector std::vector
 # endif
@@ -87,7 +87,7 @@ command line during CppAD $xref/Install//installation/$$,
 the following code replaces the definition of $code CppADvector$$ 
 $codep */
 
-# if CppAD_BOOSTVECTOR
+# if CPPAD_BOOSTVECTOR
 # include <boost/numeric/ublas/vector.hpp>
 # define CppADvector boost::numeric::ublas::vector
 # endif

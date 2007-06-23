@@ -10,17 +10,21 @@
 # -----------------------------------------------------------------------------
 # automake input file
 #
+# CppAD pusts all it's preprocessor definitions in the cppad/config.h file
+DEFS          =
+#
+if CppAD_BOOSTVECTOR
+BOOST_INCLUDE = -I$(BOOST_DIR)
+else
+BOOST_INCLUDE =
+endif
+#
 # Microsoft project files
 EXTRA_DIST        = test_more.sln test_more.vcproj test_one.sh
 #
 noinst_PROGRAMS   = test_more
 #
-if CppAD_BOOSTVECTOR
-AM_CPPFLAGS       = -I$(BOOST_DIR) \
-                    -I. -I$(top_builddir) 
-else
-AM_CPPFLAGS       = -I. -I$(top_builddir) 
-endif
+AM_CPPFLAGS       = -I. -I$(top_builddir) $(BOOST_INCLUDE)
 #
 AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #

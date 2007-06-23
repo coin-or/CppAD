@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -26,12 +26,13 @@ sed < example.cpp > test_one.cpp \
 -e '/ok *\&= *Run( /d' \
 -e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $2, \"$2\");/"  
 #
-echo "g++ test_one.cpp $1 $3  -o test_one.exe  \\"
-echo "  -g -Wall -ansi -pedantic-errors -std=c++98 \\"
-echo "  -I.. -I/usr/include/boost-1_33"
-g++ test_one.cpp $1 $3  -o test_one.exe  \
-        -g -Wall -ansi -pedantic-errors -std=c++98 \
-        -I.. -I/usr/include/boost-1_33 
+cmd="g++ test_one.cpp $1 $3
+	-o test_one.exe
+	-g -Wall -ansi -pedantic-errors -std=c++98 -DCPPAD_ADOLC
+	-I.. -I/usr/include/boost-1_33_1 -I$HOME/adolc_base/include
+	-L$HOME/adolc_base/lib -ladolc"
+echo $cmd
+$cmd
 #
 echo "./test_one.exe"
 if ! ./test_one.exe

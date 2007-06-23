@@ -57,6 +57,6 @@ $end
 
 // other preprocessor symbols defined in config.h
 # undef CPPAD_GETTIMEOFDAY
-# undef CppAD_BOOSTVECTOR
-# undef CppAD_CPPADVECTOR
-# undef CppAD_STDVECTOR
+# undef CPPAD_BOOSTVECTOR
+# undef CPPAD_CPPADVECTOR
+# undef CPPAD_STDVECTOR

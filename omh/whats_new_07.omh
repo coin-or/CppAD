@@ -11,6 +11,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	namespace
+	det_lu
+	adouble
+	Adolc
 	op
 	sqrt
 	eps
@@ -43,6 +47,29 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 06-22$$
+Add $cref/mul_level_adolc.cpp/$$, an example that demonstrates using
+$code adouble$$ and for the $cref/Base/base_require/$$ type.
+$pre
+
+$$
+The $cref/get_started/InstallUnix/--with-Introduction/get_started/$$ 
+example did not build when
+the $code -with-Introduction$$ and 
+$code BOOST_DIR$$ options were included on the 
+$cref/configure/InstallUnix/Configure/$$ command line.
+In fact, some of the $cref/speed/$$ tests also had compilation errors
+when $code BOOST_DIR$$ was include in the configure command.
+This has been fixed.
+$pre
+
+$$
+There was a namespace reference missing in the files
+that could have caused compilation errors in the files
+$code speed/cppad/det_minor.cpp$$ and
+$code speed/cppad/det_lu.cpp$$.
+This has been fixed.
 
 $head 06-20$$
 The MS project 

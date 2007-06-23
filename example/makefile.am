@@ -10,21 +10,44 @@
 # -----------------------------------------------------------------------------
 # automake input file
 #
+# CppAD pusts all it's preprocessor definitions in the cppad/config.h file
+DEFS          =
+#
+if CppAD_ADOLC
+ADOLC_FILES   = mul_level_adolc.cpp
+ADOLC_INCLUDE = -I$(ADOLC_DIR)/include 
+ADOLC_LIB     = -ladolc
+ADOLC_LIB_DIR = -L$(ADOLC_DIR)/lib
+ADOLC_FLAG    = -DINCLUDE_ADOLC_EXAMPLES
+else
+ADOLC_FILES   =
+ADOLC_INCLUDE =
+ADOLC_LIB     =
+ADOLC_LIB_DIR =
+ADOLC_FLAG    =
+endif
+if CppAD_BOOSTVECTOR
+BOOST_INCLUDE = -I$(BOOST_DIR)
+else
+BOOST_INCLUDE =
+endif
 # Microsoft project files
 EXTRA_DIST        = example.sln example.vcproj test_one.sh
 #
 noinst_PROGRAMS   = example 
 #
-if CppAD_BOOSTVECTOR
-AM_CPPFLAGS       = -I$(BOOST_DIR) \
-                    -I. -I$(top_builddir) 
-else
-AM_CPPFLAGS       = -I. -I$(top_builddir)
-endif
+AM_CXXFLAGS       = -g $(CPP_ERROR_WARN) $(ADOLC_FLAG)
 #
-AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
+AM_CPPFLAGS       = -I. \
+                   -I$(top_builddir) \
+                    $(BOOST_INCLUDE) \
+                    $(ADOLC_INCLUDE)
+#
+LDADD             = $(ADOLC_LIB)
+AM_LDFLAGS        = $(ADOLC_LIB_DIR)
 #
 example_SOURCES   = \
+	$(ADOLC_FILES) \
 	example.cpp \
 	abs.cpp \
 	acos.cpp \

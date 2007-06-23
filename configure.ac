@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20070315, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20070623, cppad@list.coin-or.org)
 
 dnl Set the default install prefix to the installers home directory
 dnl cygwin begin delete:
@@ -71,7 +71,7 @@ AC_ARG_WITH(TestMore,
 	[TestMore="yes"],
 	[TestMore="no"]
 )
-AM_CONDITIONAL(CppAD_TESTMORE, test "$TestMore" = "yes")
+AM_CONDITIONAL(CppAD_TEST_MORE, test "$TestMore" = "yes")
 AC_MSG_RESULT([$TestMore])
 
 dnl Are we building the Speed directory ----------------------------------
@@ -101,7 +101,7 @@ AC_ARG_WITH(SpeedExample,
 	[SpeedExample="yes"],
 	[SpeedExample="no"]
 )
-AM_CONDITIONAL(CppAD_SPEEDEXAMPLE, test "$SpeedExample" = "yes")
+AM_CONDITIONAL(CppAD_SPEED_EXAMPLE, test "$SpeedExample" = "yes")
 AC_MSG_RESULT([$SpeedExample])
 
 dnl Are we including profiling -------------------------------------------
@@ -122,9 +122,9 @@ AC_ARG_WITH(stdvector,
 	[stdvector="no"]
 )
 if test "$stdvector" = "yes" ; then
-	AC_DEFINE(CppAD_STDVECTOR, 1, [is CppADvector == std::vector])
+	AC_DEFINE(CPPAD_STDVECTOR, 1, [is CppADvector == std::vector])
 else
-	AC_DEFINE(CppAD_STDVECTOR, 0, [is CppADvector == std::vector])
+	AC_DEFINE(CPPAD_STDVECTOR, 0, [is CppADvector == std::vector])
 fi
 AC_MSG_RESULT([$stdvector])
 
@@ -166,12 +166,12 @@ AC_MSG_CHECKING([BOOST_DIR])
 AC_SUBST(BOOST_DIR)
 AM_CONDITIONAL(CppAD_BOOSTVECTOR, test "$BOOST_DIR" != "")
 if test "$BOOST_DIR" != "" ; then
-	AC_DEFINE(CppAD_BOOSTVECTOR, 1, 
+	AC_DEFINE(CPPAD_BOOSTVECTOR, 1, 
 		[is CppADvector == boost::numeric::ublas::vector]
 	)
 	AC_MSG_RESULT([$BOOST_DIR])
 else
-	AC_DEFINE(CppAD_BOOSTVECTOR, 0, 
+	AC_DEFINE(CPPAD_BOOSTVECTOR, 0, 
 		[is CppADvector == boost::numeric::ublas::vector]
 	)
 	AC_MSG_RESULT([no])
@@ -189,9 +189,9 @@ AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
 
 dnl Check which definition we are using for CppADvector
 if test "$stdvector$BOOST_DIR" = "no" ; then
-	AC_DEFINE(CppAD_CPPADVECTOR, 1, [is CppADvector == CppAD::vector])
+	AC_DEFINE(CPPAD_CPPADVECTOR, 1, [is CppADvector == CppAD::vector])
 else 
-	AC_DEFINE(CppAD_CPPADVECTOR, 0, [is CppADvector == CppAD::vector])
+	AC_DEFINE(CPPAD_CPPADVECTOR, 0, [is CppADvector == CppAD::vector])
 fi
 
 dnl the gettimeofday check automatically generates a yes / no configure msg

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -11,13 +11,18 @@
 #
 # automake input file
 #
-noinst_PROGRAMS  = fadbad 
+# CppAD pusts all it's preprocessor definitions in the cppad/config.h file
+DEFS          =
 #
 if CppAD_BOOSTVECTOR
-AM_CPPFLAGS   = -I$(BOOST_DIR) -I$(top_builddir) -I$(FADBAD_DIR)
+BOOST_INCLUDE = -I$(BOOST_DIR)
 else
-AM_CPPFLAGS   = -I$(top_builddir) -I$(FADBAD_DIR)
+BOOST_INCLUDE =
 endif
+#
+noinst_PROGRAMS  = fadbad 
+#
+AM_CPPFLAGS   = -I$(top_builddir) -I$(FADBAD_DIR) $(BOOST_INCLUDE)
 #
 AM_CXXFLAGS   = -O2 -DNDEBUG -O2 -DNDEBUG -Wno-deprecated -DFADBAD
 #

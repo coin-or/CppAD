@@ -1,4 +1,4 @@
-/* --------------------------------------------------------------------------
+d/* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
@@ -50,6 +50,10 @@ these requirements are provided by the CppAD package.
 $head Warning$$
 This is a preliminary version of these specifications
 and it is subject to change in future versions of CppAD.
+
+$head Numeric Type$$
+The type $italic Base$$ must support all the operations for a 
+$cref/NumericType/$$.
 
 $head abs$$
 $index abs, Base require$$
@@ -129,17 +133,18 @@ $syntax%
 %$$
 
 $subhead Ordered Type$$
-If the type $italic Base$$ supports the 
+If $italic Base$$ is a relatively simple type
+(does not record operations for future calculations) and it supports
 $code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators
 its $code CondExpOp$$ function can be defined by
 $syntax%
 	inline %Base% CondExpOp(
-	enum CompareOp      cop ,
-	const %Base%      &left ,
-	const %Base%     &right ,
-	const %Base%  &trueCase ,
-	const %Base% &falseCase )
-	return CppAD::CondExpTemplate(cop, left, right, trueCase, falseCase);
+	enum CppAD::CompareOp      cop ,
+	const %Base%             &left ,
+	const %Base%            &right ,
+	const %Base%         &trueCase ,
+	const %Base%        &falseCase )
+{	return CppAD::CondExpTemplate(cop, left, right, trueCase, falseCase);
 }
 %$$
 
@@ -293,7 +298,7 @@ $subhead Suggestion$$
 The $italic Base$$ version of the $code Integer$$ function
 might be defined by
 $syntax%
-	inline %Base% Integer(const %Base% &x)
+	inline int Integer(const %Base% &x)
 	{	return static_cast<int>(x); }
 %$$
 
@@ -401,6 +406,14 @@ $syntax%
 	%Base% %y%
 %$$
 
+$children%
+	example/mul_level_adolc.cpp
+%$$
 
+$head Example$$
+The file
+$xref/mul_level_adolc.cpp/$$
+contains an example and test of this procedure.   
+It returns true if it succeeds and false otherwise.
 
 $end

@@ -103,7 +103,7 @@ bool correct_det_lu(void)
 
 	compute_det_lu(size, repeat, matrix, gradient);
 
-	bool ok = det_grad_33(matrix, gradient);
+	bool ok = CppAD::det_grad_33(matrix, gradient);
 	return ok;
 }
 /* $$

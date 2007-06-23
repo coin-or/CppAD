@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -71,7 +71,7 @@ bool TapeIndex(void)
 	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
 
-	// vectors for arguments to the fucntion object f
+	// vectors for arguments to the function object f
 	CppADvector<double> x(n);   // argument values
 	CppADvector<double> y(m);   // function values 
 	CppADvector<double> w(m);   // function weights 

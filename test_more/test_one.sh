@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -28,7 +28,7 @@ sed < test_more.cpp > test_one.cpp \
 #
 echo "g++ test_one.cpp $1 $3  -o test_one.exe  \\"
 echo "  -g -Wall -ansi -pedantic-errors -std=c++98 \\"
-echo "  -I.. -I/usr/include/boost-1_33"
+echo "  -I.. -I/usr/include/boost-1_33_1"
 g++ test_one.cpp $1 $3  -o test_one.exe  \
         -g -Wall -ansi -pedantic-errors -std=c++98 \
         -I.. -I/usr/include/boost-1_33 

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -11,15 +11,20 @@
 #
 # automake input file
 #
+# CppAD pusts all it's preprocessor definitions in the cppad/config.h file
+DEFS          =
+#
+if CppAD_BOOSTVECTOR
+BOOST_INCLUDE = -I$(BOOST_DIR)
+else
+BOOST_INCLUDE =
+endif
+#
 EXTRA_DIST       = gprof.sed
 #
 noinst_PROGRAMS  = profile 
 #
-if CppAD_BOOSTVECTOR
-AM_CPPFLAGS   = -I$(BOOST_DIR) -I$(top_builddir) 
-else
-AM_CPPFLAGS   = -I$(top_builddir) 
-endif
+AM_CPPFLAGS   = -I$(top_builddir) $(BOOST_INCLUDE)
 #
 AM_CXXFLAGS   = -pg -O2 $(CPP_ERROR_WARN) -DPROFILE
 AM_LDFLAGS    = -pg

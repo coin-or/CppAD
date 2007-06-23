@@ -16,7 +16,7 @@
 # These defaults are development system dependent and can be changed.
 ADOLC_DIR=$HOME/adolc_base
 FADBAD_DIR=$HOME/include
-BOOST_DIR=/usr/include/boost-1_33
+BOOST_DIR=/usr/include/boost-1_33_1
 #
 #
 # date currently in configure.ac
@@ -331,12 +331,16 @@ then
 	then
 		exit 1
 	fi
+	# gcc 3.4.4 with optimization generates incorrect warning; see 
+	# 	http://cygwin.com/ml/cygwin-apps/2005-06/msg00161.html
+	# The sed commands below are intended to remove them.
 	if ! make            2>  make_error.log
 	then
-		cat make_error.log
+		sed -e '/stl_uninitialized.h:/d' make_error.log
 		exit 1
 	fi
-	cat make_error.log   >> ../build_test.log
+	sed -e '/stl_uninitialized.h:/d' make_error.log >> ../build_test.log
+	#
 	failed="no"
 	list="
 		introduction/get_started/get_started

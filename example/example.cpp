@@ -15,7 +15,7 @@ $spell
 	Cpp
 $$
 
-$section Program That Runs all the CppAD Example$$
+$section Program That Runs the CppAD Examples$$
 $index example, run all$$
 
 $code
@@ -133,6 +133,10 @@ extern bool UnaryPlus(void);
 extern bool Value(void);
 extern bool Var2Par(void);
 extern bool VecAD(void);
+
+# ifdef INCLUDE_ADOLC_EXAMPLES
+extern bool mul_level_adolc(void);
+# endif
 
 namespace {
 	// function that runs one test
@@ -257,6 +261,10 @@ int main(void)
 	ok &= Run( Value,             "Value"            );
 	ok &= Run( Var2Par,           "Var2Par"          );
 	ok &= Run( VecAD,             "VecAD"            );
+
+# ifdef INCLUDE_ADOLC_EXAMPLES
+	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );
+# endif
 
 	// check for errors
 	using std::cout;
