@@ -168,7 +168,9 @@ $syntax%
 
 $head EqualOpSeq$$
 $index EqualOpSeq, Base require$$
-The type $italic Base$$ must support the syntax
+If function $cref/EqualOpSeq/$$ is used with 
+arguments of type $syntax%AD<%Base%>%$$,
+the type $italic Base$$ must support the syntax
 $syntax%
 	%b% = EqualOpSeq(%x%, %y%)
 %$$
@@ -185,8 +187,9 @@ $syntax%
 %$$
 
 $subhead Suggestion$$
-The $italic Base$$ version of the $code EqualOpSeq$$ function
-can be defined by
+If $italic Base$$ is a relatively simple type
+(does not record operations for future calculations),
+the $code EqualOpSeq$$ function can be defined by
 $syntax%
 	inline %Base% EqualOpSeq(const %Base% &x, const %Base% &y)
 	{	return x == y; }
@@ -233,7 +236,7 @@ $table
 $bold Syntax$$ $cnext $bold Result$$
 $rnext
 $syntax%%b% = IdenticalPar(%x%)%$$ $pre  $$
-	$cnext the $italic Base$$ value will always be the same.
+	$cnext the $italic Base$$ value will always be the same 
 $rnext
 $syntax%%b% = IdenticalZero(%x%)%$$ $pre  $$
 	$cnext $italic x$$ equals zero and $syntax%IdenticalPar(%x%)%$$
@@ -261,9 +264,15 @@ $syntax%
 %$$
 
 $subhead Suggestion$$
+Note that $code false$$ is a slow but safer option for all of these functions.
 If $italic Base$$ is a relatively simple type
 (does not record operations for future calculations),
-the $code IdenticalZero$$ function can be defined by
+the $code IdenticalPar$$ function can be defined by
+$syntax%
+	inline bool IdenticalPar(const %Base% &x)
+	{	return true; }
+%$$
+and the $code IdenticalZero$$ function can be defined by
 $syntax%
 	inline bool IdenticalZero(const %Base% &x)
         {       return x == Base(0); }
@@ -407,13 +416,17 @@ $syntax%
 %$$
 
 $children%
+	example/base_adolc.hpp%
 	example/mul_level_adolc.cpp
 %$$
 
 $head Example$$
 The file
+$cref/base_adolc.hpp/$$ 
+contains an example implementation of these requirements.
+The file
 $xref/mul_level_adolc.cpp/$$
-contains an example and test of this procedure.   
+contains an example usage and test of this implementation.   
 It returns true if it succeeds and false otherwise.
 
 $end

@@ -28,7 +28,7 @@ sed < example.cpp > test_one.cpp \
 #
 cmd="g++ test_one.cpp $1 $3
 	-o test_one.exe
-	-g -Wall -ansi -pedantic-errors -std=c++98 -DCPPAD_ADOLC
+	-g -Wall -ansi -pedantic-errors -std=c++98 -DCPPAD_ADOLC_EXAMPLES
 	-I.. -I/usr/include/boost-1_33_1 -I$HOME/adolc_base/include
 	-L$HOME/adolc_base/lib -ladolc"
 echo $cmd

@@ -134,7 +134,7 @@ extern bool Value(void);
 extern bool Var2Par(void);
 extern bool VecAD(void);
 
-# ifdef INCLUDE_ADOLC_EXAMPLES
+# ifdef CPPAD_ADOLC_EXAMPLES
 extern bool mul_level_adolc(void);
 # endif
 
@@ -262,7 +262,7 @@ int main(void)
 	ok &= Run( Var2Par,           "Var2Par"          );
 	ok &= Run( VecAD,             "VecAD"            );
 
-# ifdef INCLUDE_ADOLC_EXAMPLES
+# ifdef CPPAD_ADOLC_EXAMPLES
 	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );
 # endif
 

@@ -12,6 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin mul_level.cpp$$
 $spell
+	Adolc
+	adouble
+	CppAD
 	abs
 $$
 
@@ -36,7 +39,8 @@ one level of taping (more efficient) and the identity
 $latex \[
 	\frac{d}{dx} \left[ f^{(1)} (x) * v \right] = f^{(2)} (x) * v
 \] $$
-
+The example $cref/mul_level_adolc.cpp/$$ computes the same values using
+Adolc's type $code adouble$$ and CppAD's type $code AD<adouble>$$.
 
 $code
 $verbatim%example/mul_level.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$

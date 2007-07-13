@@ -37,7 +37,7 @@ one level of taping (more efficient) and the identity
 $latex \[
 	\frac{d}{dx} \left[ f^{(1)} (x) * v \right] = f^{(2)} (x) * v
 \] $$
-The example $cref/mul_level/$$ computes the same values using
+The example $cref/mul_level.cpp/$$ computes the same values using
 $code AD<double>$$ and $code AD< AD<double> >$$.
 
 $code
@@ -55,40 +55,7 @@ $end
 
 // adouble definitions not in Adolc distribution and 
 // required in order to use CppAD<adouble>
-
-inline bool IdenticalZero(const adouble &x)
-{	return false; }
-
-inline bool IdenticalOne(const adouble &x)
-{	return false; }
-
-inline bool IdenticalEqual(const adouble &x, const adouble &y)
-{	return false; }
-
-inline adouble CondExpOp(
-	enum CppAD::CompareOp      cop ,
-	const adouble            &left ,
-	const adouble           &right ,
-	const adouble        &trueCase ,
-	const adouble       &falseCase )
-{	return CppAD::CondExpTemplate(cop, left, right, trueCase, falseCase);
-}
-
-inline bool GreaterThanZero(const adouble &x)
-{    return (x > 0); }
-
-inline bool GreaterThanOrZero(const adouble &x)
-{    return (x >= 0); }
-
-inline bool LessThanZero(const adouble &x)
-{    return (x < 0); }
-
-inline bool LessThanOrZero(const adouble &x)
-{    return (x <= 0); }
-
-inline int Integer(const adouble &x)
-{    return static_cast<int>( x.value() ); }
-
+# include "base_adolc.hpp"
 
 namespace { // put this function in the empty namespace
 

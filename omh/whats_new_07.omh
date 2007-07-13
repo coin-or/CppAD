@@ -48,6 +48,12 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-13$$
+Separate the include file
+$cref/base_adolc.hpp/$$ 
+from the $cref/mul_level_adolc.cpp/$$ example 
+so that it can be used by other examples.
+
 $head 06-22$$
 Add $cref/mul_level_adolc.cpp/$$, an example that demonstrates using
 $code adouble$$ and for the $cref/Base/base_require/$$ type.
