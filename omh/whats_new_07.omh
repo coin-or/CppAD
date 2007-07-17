@@ -48,6 +48,11 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-14$$
+Add a discussion at the beginning of
+$cref/ode_taylor.cpp/$$ example
+(and improve the notation used in the example).
+
 $head 07-13$$
 Separate the include file
 $cref/base_adolc.hpp/$$ 

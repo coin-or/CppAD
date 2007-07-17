@@ -99,7 +99,7 @@ extern bool OdeErrMaxabs(void);
 extern bool OdeGear(void);
 extern bool OdeGearControl(void);
 extern bool OdeStiff(void);
-extern bool OdeTaylor(void);
+extern bool ode_taylor(void);
 extern bool Output(void);
 extern bool ParVar(void);
 extern bool Piecewise(void);
@@ -227,7 +227,7 @@ int main(void)
 	ok &= Run( OdeGear,           "OdeGear"          );
 	ok &= Run( OdeGearControl,    "OdeGearControl"   );
 	ok &= Run( OdeStiff,          "OdeStiff"         );
-	ok &= Run( OdeTaylor,         "OdeTaylor"        );
+	ok &= Run( ode_taylor,        "ode_taylor"       );
 	ok &= Run( Output,            "Output"           );
 	ok &= Run( ParVar,            "ParVar"           );
 	ok &= Run( Piecewise,         "Piecewise"        );

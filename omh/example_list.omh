@@ -140,7 +140,7 @@ $rref OdeErrMaxabs.cpp$$
 $rref OdeGear.cpp$$
 $rref OdeGearControl.cpp$$
 $rref OdeStiff.cpp$$
-$rref OdeTaylor.cpp$$
+$rref ode_taylor.cpp$$
 $rref Output.cpp$$
 $rref ParVar.cpp$$
 $rref Piecewise.cpp$$
