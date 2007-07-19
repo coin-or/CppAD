@@ -48,6 +48,11 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-18$$
+A realistic example using Adolc with CppAD
+$cref/ode_taylor_adolc.cpp/$$ was added.
+The documentation for $cref/TrackNewDel/$$ was improved.
+
 $head 07-14$$
 Add a discussion at the beginning of
 $cref/ode_taylor.cpp/$$ example
