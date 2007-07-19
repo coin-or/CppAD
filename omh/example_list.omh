@@ -36,6 +36,7 @@ $childtable%
 	example/hes_lu_det.cpp%
 	example/ode_stiff.cpp%
 	example/ode_taylor.cpp%
+	example/ode_taylor_adolc.cpp%
 	example/stack_machine.cpp%
 	example/complex_poly.cpp%
 	omh/mul_level.omh
@@ -141,6 +142,7 @@ $rref OdeGear.cpp$$
 $rref OdeGearControl.cpp$$
 $rref OdeStiff.cpp$$
 $rref ode_taylor.cpp$$
+$rref ode_taylor_adolc.cpp$$
 $rref Output.cpp$$
 $rref ParVar.cpp$$
 $rref Piecewise.cpp$$

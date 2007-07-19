@@ -75,13 +75,12 @@ namespace { // put this function in the empty namespace
 }
 
 bool mul_level() 
-{	bool ok = true;                   // initialize test result
+{	bool ok = true;                          // initialize test result
 
-	using namespace CppAD;            // so do not need CppAD::
-	typedef AD<double>   ADdouble;    // type for one level of taping
-	typedef AD<ADdouble> ADDdouble;   // type for two levels of taping
-	size_t n = 5;                     // dimension for example
-	size_t j;                         // a temporary index variable
+	typedef CppAD::AD<double>   ADdouble;    // for one level of taping
+	typedef CppAD::AD<ADdouble> ADDdouble;   // for two levels of taping
+	size_t n = 5;                            // dimension for example
+	size_t j;                                // a temporary index variable
 
 	CppADvector<double>       x(n);
 	CppADvector<ADdouble>   a_x(n);
@@ -89,18 +88,18 @@ bool mul_level()
 
 	// value of the independent variables
 	for(j = 0; j < n; j++)
-		a_x[j] = x[j] = double(j);  // x[j] = j
-	Independent(a_x);                   // a_x is indedendent for ADdouble
+		a_x[j] = x[j] = double(j); // x[j] = j
+	Independent(a_x);                  // a_x is indedendent for ADdouble
 	for(j = 0; j < n; j++)
 		aa_x[j] = a_x[j];          // track how aa_x depends on a_x
-	Independent(aa_x);                 // aa_x is independent for ADDdouble
+	CppAD::Independent(aa_x);          // aa_x is independent for ADDdouble
 
 	// compute function
 	CppADvector<ADDdouble> aa_f(1);    // scalar valued function
 	aa_f[0] = f(aa_x);                 // has only one component
 
 	// declare inner function (corresponding to ADDdouble calculation)
-	ADFun<ADdouble> a_F(aa_x, aa_f);
+	CppAD::ADFun<ADdouble> a_F(aa_x, aa_f);
 
 	// compute f'(x) 
 	size_t p = 1;                  // order of derivative of a_F
@@ -110,7 +109,7 @@ bool mul_level()
 	a_df   = a_F.Reverse(p, a_w);  // gradient of f
 
 	// declare outter function (corresponding to ADdouble calculation)
-	ADFun<double> df(a_x, a_df);
+	CppAD::ADFun<double> df(a_x, a_df);
 
 	// compute the d/dx of f'(x) * v = f''(x) * v
 	CppADvector<double> v(n);
@@ -123,7 +122,7 @@ bool mul_level()
 	// f'(x)      = (x[0], x[1], ... , x[n-1])
 	// f''(x) * v = ( v[0], v[1],  ... , x[n-1] )
 	for(j = 0; j < n; j++)
-		ok &= NearEqual(ddf_v[j], v[j], 1e-10, 1e-10);
+		ok &= CppAD::NearEqual(ddf_v[j], v[j], 1e-10, 1e-10);
 
 	return ok;
 }

@@ -124,13 +124,19 @@ must be less than or equal $italic newlen$$.
 $head TrackNewVec$$
 $index TrackNewVec$$
 $index NDEBUG$$
-This routine is used to start the tracking of memory allocation 
-using $code new[]$$.
-The value of $italic oldptr$$ does not matter for this case
+If $code NDEBUG$$ is defined, this routine only sets
+$syntax%
+	%newptr% = %Type% new[%newlen%]
+%$$
+The value of $italic oldptr$$ does not matter 
 (except that it is used to identify $italic Type$$).
-If $code NDEBUG$$ is not defined and the memory cannot be allocated,
+If $code NDEBUG$$ is not defined, $code TrackNewVec$$ also
+tracks the this memory allocation.
+In this case, if memory cannot be allocated
 $xref/ErrorHandler/$$ is used to generate a message
 stating that there was not sufficient memory.
+
+$subhead CppADTrackNewVec$$
 The preprocessor macro call
 $syntax%
 	CppADTrackNewVec(%newlen%, %oldptr%)
@@ -145,11 +151,17 @@ $head TrackDelVec$$
 $index TrackDelVec$$
 This routine is used to a vector of objects 
 that have been allocated using $code TrackNew$$ or $code TrackExtend$$.
-If $code NDEBUG$$ is not defined, $code TrackDelete$$ check that
+If $code NDEBUG$$ is defined, this routine only frees memory with
+$syntax%
+	delete [] %oldptr%
+%$$
+If $code NDEBUG$$ is not defined, $code TrackDelete$$ also checks that
 $italic oldptr$$ was allocated by $code TrackNew$$ or $code TrackExtend$$
 and has not yet been freed.
 If this is not the case,
 $xref/ErrorHandler/$$ is used to generate an error message.
+
+$subhead CppADTrackDelVec$$
 The preprocessor macro call
 $syntax%
 	CppADTrackDelVec(%oldptr%)
@@ -163,7 +175,17 @@ $head TrackExtend$$
 $index TrackExtend$$
 This routine is used to 
 allocate a new vector (using $code TrackNewVec$$),
-and copy $italic ncopy$$ elements from the old vector to the new vector.
+copy $italic ncopy$$ elements from the old vector to the new vector.
+If $italic ncopy$$ is greater than zero, $italic oldptr$$ 
+must have been allocated using $code TrackNewVec$$ or $code TrackExtend$$.
+In this case, the vector pointed to by $italic oldptr$$ 
+must be have at least $italic ncopy$$ elements
+and it will be deleted (using $code TrackDelVec$$).
+Note that the dependence of $code TrackExtend$$ on $code NDEBUG$$
+is indirectly through the routines $code TrackNewVec$$ and 
+$code TrackDelVec$$.
+
+$subhead CppADTrackExtend$$
 The preprocessor macro call
 $syntax%
 	CppADTrackExtend(%newlen%, %ncopy%, %oldptr%)
@@ -172,11 +194,6 @@ expands to
 $syntax%
 	CppAD::TrackExtend(__FILE__, __LINE__, %newlen%, %ncopy%, %oldptr%)
 %$$
-If $italic ncopy$$ is greater than zero, $italic oldptr$$ 
-must have been allocated using $code TrackNewVec$$ or $code TrackExtend$$.
-In this case, the vector pointed to by $italic oldptr$$ 
-must be have at least $italic ncopy$$ elements
-and it will be freed (using $code TrackDelVec$$).
 
 $head TrackCount$$
 $index TrackCount$$

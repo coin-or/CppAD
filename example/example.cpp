@@ -136,6 +136,7 @@ extern bool VecAD(void);
 
 # ifdef CPPAD_ADOLC_EXAMPLES
 extern bool mul_level_adolc(void);
+extern bool ode_taylor_adolc(void);
 # endif
 
 namespace {
@@ -264,6 +265,7 @@ int main(void)
 
 # ifdef CPPAD_ADOLC_EXAMPLES
 	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );
+	ok &= Run( ode_taylor_adolc,  "ode_taylor_adolc" );
 # endif
 
 	// check for errors

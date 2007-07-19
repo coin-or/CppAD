@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin ode_taylor.cpp$$
+$begin ode_taylor_adolc.cpp$$
 $spell
 	Taylor
 	Cpp
@@ -18,26 +18,26 @@ $spell
 	std
 	Adolc
 	adouble
+	Vec
 $$
 
-$section Taylor's Ode Solver: An Example and Test$$
-$index ODE, Taylor$$
-$index Taylor, ODE$$
-$index example, ODE$$
-$index test, ODE$$
+$section Using Adolc with Taylor's Ode Solver: An Example and Test$$
+$index ODE, Taylor Adolc$$
+$index Taylor, ODE Adolc$$
+$index Adolc, ODE$$
 
 $head Purpose$$
 This is a realistic example using 
 two levels of taping (see $cref/mul_level/$$).
-The first level of taping uses $code AD<double>$$ to tape the solution of an 
-ordinary differential equation.
+The first level of taping uses Adolc's $code adouble$$ type
+to tape the solution of an ordinary differential equation.
 This solution is then differentiated with respect to a parameter vector.
-The second level of taping uses $code AD< AD<double> >$$
+The second level of taping uses CppAD's type $code AD<adouble>$$ 
 to take derivatives during the solution of the differential equation.
 These derivatives are used in the application
 of Taylor's method to the solution of the ODE.
-The example $cref/ode_taylor_adolc.cpp/$$ computes the same values using
-Adolc's type $code adouble$$ and CppAD's type $code AD<adouble>$$.
+The example $cref/ode_taylor.cpp/$$ computes the same values using
+$code AD<double>$$ and $code AD< AD<double> >$$.
 
 $head ODE$$
 For this example the ODE's are defined by the function
@@ -142,8 +142,20 @@ $latex \[
 are used to calculate the Taylor coefficient $latex z^{(k)} ( t , x )$$
 which in turn gives the value for $latex  y^{(k+1)} y ( t , x)$$.
 
+$head Tracking New and Delete$$
+Adolc uses raw memory arrays that depend on the number of 
+dependent and independent variables, hence $code new$$ and $code delete$$
+are used to allocate this memory.
+The preprocessor macros 
+$cref/CppADTrackNewVec/TrackNewDel/TrackNewVec/$$ 
+and
+$cref/CppADTrackDelVec/TrackNewDel/TrackDelVec/$$ 
+are used to check for errors in the
+use of $code new$$ and $code delete$$ when the example is compiled for
+debugging (when $code NDEBUG$$ is not defined).
+
 $code
-$verbatim%example/ode_taylor.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/ode_taylor_adolc.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -153,10 +165,17 @@ $end
 
 # include <cppad/cppad.hpp>
 
+# include <adolc/adouble.h>
+# include <adolc/drivers/drivers.h>
+
+// adouble definitions not in Adolc distribution and
+// required in order to use CppAD::AD<adouble>
+# include "base_adolc.hpp"
+
 // ----------- Define types -------------------------------
 // define types for each level
-typedef CppAD::AD<double>      ADdouble;   // one level of taping 
-typedef CppAD::AD< ADdouble >  ADDdouble;  // two levels of taping
+typedef adouble             ADdouble;   // one level of taping 
+typedef CppAD::AD<adouble>  ADDdouble;  // two levels of taping
 
 // -------------------------------------------------------------------------
 // class definition for C++ function object that defines ODE
@@ -246,9 +265,9 @@ CppADvector < ADdouble > taylor_ode(
 	return y;
 }
 // -------------------------------------------------------------------------
-// Routine that tests alogirhtmic differentiation of solutions computed
+// Routine that tests algorithmic differentiation of solutions computed
 // by the routine taylor_ode.
-bool ode_taylor(void)
+bool ode_taylor_adolc(void)
 {	// initialize the return value as true	
 	bool ok = true;
 
@@ -259,13 +278,18 @@ bool ode_taylor(void)
 	size_t i, j;
 
 	// parameter vector in both double and ADdouble
-	CppADvector<double>   x(n);
+	double *x;
+	x = CppADTrackNewVec(n, x);  // track x = new double[n];
 	CppADvector<ADdouble> X(n);
 	for(i = 0; i < n; i++)
 		X[i] = x[i] = double(i + 1);
 
 	// declare the parameters as the independent variable
-	CppAD::Independent(X);
+	int tag = 0;                     // Adolc setup
+	int keep = 1;
+	trace_on(tag, keep);
+	for(i = 0; i < n; i++)
+		X[i] <<= double(i + 1);  // X is independent for adouble type
 
 	// arguments to taylor_ode 
 	Ode G(X);                // function that defines the ODE
@@ -281,31 +305,48 @@ bool ode_taylor(void)
 	CppADvector< ADdouble > Y_FINAL(n);
  	Y_FINAL = taylor_ode(G, order, nstep, DT, Y_INI);
 
-	// define differentiable fucntion object f : A -> Y_FINAL
-	// that computes its derivatives in double
-	CppAD::ADFun<double> f(X, Y_FINAL);
+	// declare the differentiable fucntion f : A -> Y_FINAL
+	// (corresponding to the tape of adouble operations)
+	double *y_final;
+	y_final = CppADTrackNewVec(n, y_final); // track y_final= new double[m]
+	for(i = 0; i < n; i++)
+		Y_FINAL[i] >>= y_final[i];
+	trace_off();
 
 	// check function values
 	double check = 1.;
-	double t     = nstep * Value(DT);
+	double t     = nstep * DT.value();
 	for(i = 0; i < n; i++)
 	{	check *= x[i] * t / double(i + 1);
-		ok &= CppAD::NearEqual(Value(Y_FINAL[i]), check, 1e-10, 1e-10);
+		ok &= CppAD::NearEqual(y_final[i], check, 1e-10, 1e-10);
 	}
 
-	// evaluate the Jacobian of h at a
-	CppADvector<double> jac = f.Jacobian(x);
+	// memory where Jacobian will be returned
+	double *jac_;
+	jac_ = CppADTrackNewVec(n * n, jac_); // track jac_ = new double[n*n]
+	double **jac;
+	jac  = CppADTrackNewVec(n, jac);      // track jac = new (*double)[n]
+	for(i = 0; i < n; i++)
+		jac[i] = jac_ + i * n;
 
+	// evaluate Jacobian of h at a
+	size_t m = n;              // # dependent variables
+	jacobian(tag, int(m), int(n), x, jac); 
+	
 	// check Jacobian 
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
-		{	double jac_ij = jac[i * n + j]; 
-			if( i < j )
+		{	if( i < j )
 				check = 0.;
-			else	check = Value( Y_FINAL[i] ) / x[j];
-			ok &= CppAD::NearEqual(jac_ij, check, 1e-10, 1e-10);
+			else	check = y_final[i] / x[j];
+			ok &= CppAD::NearEqual(jac[i][j], check, 1e-10, 1e-10);
 		}
 	}
+
+	CppADTrackDelVec(x);        // check usage of delete
+	CppADTrackDelVec(y_final);
+	CppADTrackDelVec(jac_);
+	CppADTrackDelVec(jac);
 	return ok;
 }
 

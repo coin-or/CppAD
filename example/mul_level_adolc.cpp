@@ -15,6 +15,7 @@ $spell
 	Adolc
 	adouble
 	abs
+	Vec
 $$
 
 $section Using Adolc with Multiple Levels of Taping: Example and Test$$
@@ -40,6 +41,19 @@ $latex \[
 The example $cref/mul_level.cpp/$$ computes the same values using
 $code AD<double>$$ and $code AD< AD<double> >$$.
 
+$head Tracking New and Delete$$
+Adolc uses raw memory arrays that depend on the number of 
+dependent and independent variables, hence $code new$$ and $code delete$$
+are used to allocate this memory.
+The preprocessor macros 
+$cref/CppADTrackNewVec/TrackNewDel/TrackNewVec/$$ 
+and
+$cref/CppADTrackDelVec/TrackNewDel/TrackDelVec/$$ 
+are used to check for errors in the
+use of $code new$$ and $code delete$$ when the example is compiled for
+debugging (when $code NDEBUG$$ is not defined).
+
+
 $code
 $verbatim%example/mul_level_adolc.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -54,7 +68,7 @@ $end
 # include <adolc/interfaces.h>
 
 // adouble definitions not in Adolc distribution and 
-// required in order to use CppAD<adouble>
+// required in order to use CppAD::AD<adouble>
 # include "base_adolc.hpp"
 
 namespace { // put this function in the empty namespace
@@ -83,10 +97,9 @@ namespace { // put this function in the empty namespace
 bool mul_level_adolc() 
 {	bool ok = true;                   // initialize test result
 
-	using namespace CppAD;            // so do not need CppAD::
-	typedef adouble      ADdouble;    // type for one level of taping
-	typedef AD<ADdouble> ADDdouble;   // type for two levels of taping
-	size_t n = 5;                     // number of independent variables
+	typedef adouble      ADdouble;         // for first level of taping
+	typedef CppAD::AD<ADdouble> ADDdouble; // for second level of taping
+	size_t n = 5;                          // number independent variables
 
 	CppADvector<double>       x(n);
 	CppADvector<ADdouble>   a_x(n);
@@ -103,14 +116,14 @@ bool mul_level_adolc()
 	}
 	for(j = 0; j < n; j++)
 		aa_x[j] = a_x[j];          // track how aa_x depends on a_x
-	Independent(aa_x);                 // aa_x is independent for ADDdouble
+	CppAD::Independent(aa_x);          // aa_x is independent for ADDdouble
 
 	// compute function
 	CppADvector<ADDdouble> aa_f(1);    // scalar valued function
 	aa_f[0] = f(aa_x);                 // has only one component
 
 	// declare inner function (corresponding to ADDdouble calculation)
-	ADFun<ADdouble> a_F(aa_x, aa_f);
+	CppAD::ADFun<ADdouble> a_F(aa_x, aa_f);
 
 	// compute f'(x) 
 	size_t p = 1;                  // order of derivative of a_F
@@ -119,26 +132,30 @@ bool mul_level_adolc()
 	a_w[0] = 1;                    // weighted function is same as a_F
 	a_df   = a_F.Reverse(p, a_w);  // gradient of f
 
-	// declare outter function (corresponding to ADdouble calculation)
-	double *df = new double[n];
+	// declare outter function 
+	// (corresponding to the tape of adobule operations)
+	double df_j;
 	for(j = 0; j < n; j++)
-		a_df[j] >>= df[j];
+		a_df[j] >>= df_j;
 	trace_off();
 
 	// compute the d/dx of f'(x) * v = f''(x) * v
-	size_t m      = n;               // # dependent variables in f'(x)
-	double *v     = new double[m];   // vector of weights
-	double *ddf_v = new double[n];   // result for f''(x) * v
+	size_t m      = n;                   // # dependent variables in f'(x)
+	double *v, *ddf_v;
+	v     = CppADTrackNewVec(m, v);      // track v = new double[m]
+	ddf_v = CppADTrackNewVec(n, ddf_v);  // track ddf_v = new double[n]
 	for(j = 0; j < n; j++)
 		v[j] = double(n - j);
-	fos_reverse(tag, m, n, v, ddf_v);
+	fos_reverse(tag, int(m), int(n), v, ddf_v);
 
 	// f(x)       = .5 * ( x[0]^2 + x[1]^2 + ... + x[n-1]^2 )
 	// f'(x)      = (x[0], x[1], ... , x[n-1])
 	// f''(x) * v = ( v[0], v[1],  ... , x[n-1] )
 	for(j = 0; j < n; j++)
-		ok &= NearEqual(ddf_v[j], v[j], 1e-10, 1e-10);
+		ok &= CppAD::NearEqual(ddf_v[j], v[j], 1e-10, 1e-10);
 
+	CppADTrackDelVec(v);                 // check usage of delete
+	CppADTrackDelVec(ddf_v);
 	return ok;
 }
 // END PROGRAM

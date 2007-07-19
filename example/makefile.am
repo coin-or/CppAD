@@ -14,7 +14,7 @@
 DEFS          =
 #
 if CppAD_ADOLC
-ADOLC_FILES   = mul_level_adolc.cpp
+ADOLC_FILES   = mul_level_adolc.cpp ode_taylor_adolc.cpp
 ADOLC_INCLUDE = -I$(ADOLC_DIR)/include 
 ADOLC_LIB     = -ladolc
 ADOLC_LIB_DIR = -L$(ADOLC_DIR)/lib
