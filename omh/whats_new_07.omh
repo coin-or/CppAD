@@ -49,6 +49,15 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-20$$
+The download for CppAD was still broken.
+It turned out that the copyright message was missing from the file
+$cref/base_adolc.hpp/$$ and this stopped the creation of the download files.
+This has been fixed.
+In addition, the automated testing procedure has been modified so 
+that missing copyright messages and test program failures will
+be more obvious in the test log.
+
 $head 07-19$$
 The download for CppAD has been broken since the example 
 $code ode_taylor_adolc.cpp$$ was added because the
