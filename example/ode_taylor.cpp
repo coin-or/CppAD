@@ -153,10 +153,11 @@ $end
 
 # include <cppad/cppad.hpp>
 
-// ----------- Define types -------------------------------
+// =========================================================================
 // define types for each level
-typedef CppAD::AD<double>      ADdouble;   // one level of taping 
-typedef CppAD::AD< ADdouble >  ADDdouble;  // two levels of taping
+namespace { // BEGIN empty namespace
+typedef CppAD::AD<double>     ADdouble;
+typedef CppAD::AD< ADdouble > ADDdouble;
 
 // -------------------------------------------------------------------------
 // class definition for C++ function object that defines ODE
@@ -245,7 +246,8 @@ CppADvector < ADdouble > taylor_ode(
 	}
 	return y;
 }
-// -------------------------------------------------------------------------
+} // END empty namespace
+// ==========================================================================
 // Routine that tests alogirhtmic differentiation of solutions computed
 // by the routine taylor_ode.
 bool ode_taylor(void)

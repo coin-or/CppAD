@@ -37,6 +37,7 @@ $spell
 	config.h
 	dd
 	Adolc
+	Taylor
 $$
 
 $section Changes and Additions to CppAD During 2007$$
@@ -47,6 +48,12 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-19$$
+The download for CppAD has been broken since the example 
+$code ode_taylor_adolc.cpp$$ was added because the
+$code example/example$$ program was failing.
+This has been fixed.
 
 $head 07-18$$
 A realistic example using Adolc with CppAD

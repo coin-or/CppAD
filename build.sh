@@ -341,7 +341,6 @@ then
 	fi
 	sed -e '/stl_uninitialized.h:/d' make_error.log >> ../build_test.log
 	#
-	failed="no"
 	list="
 		introduction/get_started/get_started
 		introduction/exp_apx/exp_apx
@@ -355,6 +354,9 @@ then
 		if ! ./$program   >> ../build_test.log
 		then
 			failed="$program"
+			echo "Error: $failed failed."
+			echo "Error: $failed failed." >> ../build_test.log
+			exit 1
 		fi
 		# add a new line between program outputs
 		echo ""  >> ../build_test.log
@@ -372,6 +374,9 @@ then
 		if ! ./speed/$name/$name correct   >> ../build_test.log
 		then
 			failed="speed/$name/$name"
+			echo "Error: $failed failed."
+			echo "Error: $failed failed." >> ../build_test.log
+			exit 1
 		fi
 		# add a new line between program outputs
 		echo ""  >> ../build_test.log
@@ -381,12 +386,18 @@ then
 	if !  openmp/run.sh >> ../build_test.log
 	then
 		failed="openmp/run.sh $program"
+		echo "Error: $failed failed."
+		echo "Error: $failed failed." >> ../build_test.log
+		exit 1
 	fi
 	echo "" >> ../build_test.log
 	#
 	if ! ./run_omhelp.sh doc
 	then
 		failed="run_omhelp.sh"
+		echo "Error: $failed failed."
+		echo "Error: $failed failed." >> ../build_test.log
+		exit 1
 	fi
 	cat omhelp_doc.log        >> ../build_test.log
 	#
@@ -394,13 +405,6 @@ then
 	cd ..
 	dir=`pwd`
 	echo "Check the file $dir/build_test.log for errors and warnings."
-	if [ "$failed" == "no" ]
-	then
-		echo "All of the test programs executed."
-	else
-		echo "Error: $failed had an execution error."
-		exit 1
-	fi
 fi
 if [ "$1" = "gpl+dos" ] || [ "$1" = "all" ]
 then

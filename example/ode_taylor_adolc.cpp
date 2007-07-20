@@ -172,10 +172,11 @@ $end
 // required in order to use CppAD::AD<adouble>
 # include "base_adolc.hpp"
 
-// ----------- Define types -------------------------------
+// ==========================================================================
+namespace { // BEGIN empty namespace
 // define types for each level
-typedef adouble             ADdouble;   // one level of taping 
-typedef CppAD::AD<adouble>  ADDdouble;  // two levels of taping
+typedef adouble            ADdouble;
+typedef CppAD::AD<adouble> ADDdouble;
 
 // -------------------------------------------------------------------------
 // class definition for C++ function object that defines ODE
@@ -204,7 +205,7 @@ public:
 // -------------------------------------------------------------------------
 // Routine that uses Taylor's method to solve ordinary differential equaitons
 // and allows for algorithmic differentiation of the solution. 
-CppADvector < ADdouble > taylor_ode(
+CppADvector < ADdouble > taylor_ode_adolc(
 	Ode                     G       ,  // function that defines the ODE
 	size_t                  order   ,  // order of Taylor's method used
 	size_t                  nstep   ,  // number of steps to take
@@ -264,7 +265,8 @@ CppADvector < ADdouble > taylor_ode(
 	}
 	return y;
 }
-// -------------------------------------------------------------------------
+} // END empty namespace
+// ==========================================================================
 // Routine that tests algorithmic differentiation of solutions computed
 // by the routine taylor_ode.
 bool ode_taylor_adolc(void)
@@ -291,7 +293,7 @@ bool ode_taylor_adolc(void)
 	for(i = 0; i < n; i++)
 		X[i] <<= double(i + 1);  // X is independent for adouble type
 
-	// arguments to taylor_ode 
+	// arguments to taylor_ode_adolc 
 	Ode G(X);                // function that defines the ODE
 	size_t   order = n;      // order of Taylor's method used
 	size_t   nstep = 2;      // number of steps to take
@@ -303,7 +305,7 @@ bool ode_taylor_adolc(void)
 
 	// integrate the differential equation
 	CppADvector< ADdouble > Y_FINAL(n);
- 	Y_FINAL = taylor_ode(G, order, nstep, DT, Y_INI);
+ 	Y_FINAL = taylor_ode_adolc(G, order, nstep, DT, Y_INI);
 
 	// declare the differentiable fucntion f : A -> Y_FINAL
 	// (corresponding to the tape of adouble operations)
