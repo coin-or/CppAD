@@ -104,18 +104,8 @@ $end
 namespace CppAD {
 	inline bool EqualOpSeq(const float &x, const float &y)
 	{	return x == y; }
-	inline bool EqualOpSeq(
-		const std::complex<float> &x ,
-		const std::complex<float> &y )
-	{	return x == y; }
 	inline bool EqualOpSeq(const double &x, const double &y)
 	{	return x == y; }
-
-	inline bool EqualOpSeq(
-		const std::complex<double> &x ,
-		const std::complex<double> &y )
-	{	return x == y; }
-
 	template <class Base>
 	inline bool EqualOpSeq(const AD<Base> &x, const AD<Base> &y)
 	{	

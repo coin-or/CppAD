@@ -108,14 +108,6 @@ inline float pow(const float &x, const float &y)
 inline double pow(const double &x, const double &y)
 {	return std::pow(x, y); }
 
-inline std::complex<float> 
-pow(const std::complex<float> &x, const std::complex<float> &y)
-{	return std::pow(x, y); }
-
-inline std::complex<double> 
-pow(const std::complex<double> &x, const std::complex<double> &y)
-{	return std::pow(x, y); }
-
 // case where x and y are AD<Base> -----------------------------------------
 template <class Base> AD<Base> 
 pow(const AD<Base> &x, const AD<Base> &y)

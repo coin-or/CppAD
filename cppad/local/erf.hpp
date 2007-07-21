@@ -332,22 +332,6 @@ inline float erf(const float &x)
 inline double erf(const double &x)
 {	return erf_template(x); }
 
-inline std::complex<float>  erf(const std::complex<float> &x)
-{	CppADUsageError(
-		0,
-		"CppAD::erf: attempt to use with std::complex<float> argument"
-	);
-	return std::complex<float>(0);
-}
-
-inline std::complex<double>  erf(const std::complex<double> &x)
-{	CppADUsageError(
-		0,
-		"CppAD::erf: attempt to use with std::complex<double> argument"
-	);
-	return std::complex<double>(0);
-}
-
 template <class Base>
 inline AD<Base> erf(const AD<Base> &x)
 {	return erf_template(x); }

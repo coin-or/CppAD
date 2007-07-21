@@ -72,6 +72,7 @@ nobase_include_HEADERS =  \
 	cppad/local/asin_op.hpp \
 	cppad/local/atan2.hpp \
 	cppad/local/atan_op.hpp \
+	cppad/local/base_complex.hpp \
 	cppad/local/bender_quad.hpp \
 	cppad/local/bool_fun.hpp \
 	cppad/local/bool_fun_link.hpp \

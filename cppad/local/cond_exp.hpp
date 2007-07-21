@@ -243,33 +243,6 @@ inline double CondExpOp(
 {	return CondExpTemplate(cop, left, right, trueCase, falseCase);
 }
 
-inline std::complex<float> CondExpOp(
-	enum CompareOp             cop       ,
-	const std::complex<float> &left      ,
-	const std::complex<float> &right     ,
-	const std::complex<float> &trueCase  ,
-	const std::complex<float> &falseCase )
-{	CppADUsageError(
-		0,
-		"Error: cannot use CondExp with a complex type"
-	);
-	return std::complex<float>(0);
-}
-
-
-inline std::complex<double> CondExpOp(
-	enum CompareOp             cop        ,
-	const std::complex<double> &left      ,
-	const std::complex<double> &right     ,
-	const std::complex<double> &trueCase  ,
-	const std::complex<double> &falseCase )
-{	CppADUsageError(
-		0,
-		"Error: cannot use CondExp with a complex type"
-	);
-	return std::complex<double>(0);
-}
-
 template <class Base>
 inline AD<Base> CondExpOp(
 	enum  CompareOp cop       ,

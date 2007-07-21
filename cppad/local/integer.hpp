@@ -105,14 +105,8 @@ namespace CppAD {
 	inline int Integer(const float &x)
 	{	return static_cast<int>(x); }
 
-	inline int Integer(const std::complex<float> &x)
-	{	return static_cast<int>( x.real() ); }
-
 	inline int Integer(const double &x)
 	{	return static_cast<int>(x); }
-
-	inline int Integer(const std::complex<double> &x)
-	{	return static_cast<int>( x.real() ); }
 
 	template <class Base>
 	inline int Integer(const AD<Base> &x)

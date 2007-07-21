@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin base_require$$
 $spell
+	namespace
 	acos
 	asin
 	atan
@@ -84,11 +85,13 @@ $subhead Ordered Type$$
 If the type $italic Base$$ supports the less than and unary minus operators,
 its $code abs$$ function can be defined by
 $syntax%
+namespace CppAD {
 	inline %Base% abs(const %Base% &x)
 	{	if( x < Base(0) )
 			return - x;
 		return x;
 	}
+}
 %$$
 
 $subhead Not Ordered$$
@@ -96,11 +99,13 @@ If the type $italic Base$$ does not support ordering,
 derivatives of its $code abs$$ function will not be computed correctly.
 In this case one might (but need not) define $code abs$$ as follows:
 $syntax%
+namespace CppAD {
 	inline %Base% abs(const %Base% &x)
 	{	// attempt to use abs with a %Base% argument
 		assert(0);
 		return x;
 	}
+}
 %$$
 
 $head CondExp$$
@@ -138,13 +143,16 @@ If $italic Base$$ is a relatively simple type
 $code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators
 its $code CondExpOp$$ function can be defined by
 $syntax%
+namespace CppAD {
 	inline %Base% CondExpOp(
 	enum CppAD::CompareOp      cop ,
 	const %Base%             &left ,
 	const %Base%            &right ,
 	const %Base%         &trueCase ,
 	const %Base%        &falseCase )
-{	return CppAD::CondExpTemplate(cop, left, right, trueCase, falseCase);
+	{	return CppAD::CondExpTemplate(
+			cop, left, right, trueCase, falseCase);
+	}
 }
 %$$
 
@@ -153,6 +161,7 @@ If the type $italic Base$$ does not support ordering,
 the $code CondExpOp$$ function does not make sense.
 In this case one might (but need not) define $code CondExpOp$$ as follows:
 $syntax%
+namespace CppAD {
 	inline %Base% CondExpOp(
 	enum CompareOp      cop ,
 	const %Base%      &left ,
@@ -163,6 +172,7 @@ $syntax%
 		assert(0);
 		return %Base%(0);
 	}
+}
 %$$
 
 
@@ -191,8 +201,10 @@ If $italic Base$$ is a relatively simple type
 (does not record operations for future calculations),
 the $code EqualOpSeq$$ function can be defined by
 $syntax%
+namespace CppAD {
 	inline %Base% EqualOpSeq(const %Base% &x, const %Base% &y)
 	{	return x == y; }
+}
 %$$
 
 $head erf$$
@@ -215,8 +227,19 @@ $subhead Suggestion$$
 You can try defining the $italic Base$$ version of the $code erf$$ function
 using the as yet unspecified template function $code erf_template$$:
 $syntax%
+namespace CppAD {
 	inline %Base% erf(const %Base% &x)
 	{	return CppAD::erf_template(x); }
+}
+%$$
+If this does not work, you can make the user of $code erf$$ illegal; i.e.,
+$syntax%
+namespace CppAD {
+	inline %Base% erf(const %Base% &x)
+	{	assert (0);
+		return %Base%(0); 
+	}
+}
 %$$
 
 $head Identical$$
@@ -244,7 +267,7 @@ $rnext
 $syntax%%b% = IdenticalOne(%x%)%$$ $pre  $$
 	$cnext $italic x$$ equals one and $syntax%IdenticalPar(%x%)%$$
 $rnext
-$syntax%%b% = IdenticalEqual(%x%, %y%)%$$ $pre  $$
+$syntax%%b% = IdenticalEqualPar(%x%, %y%)%$$ $pre  $$
 	$cnext $italic x$$ equals $italic y$$,
  	$syntax%IdenticalPar(%x%)%$$ and
  	$syntax%IdenticalPar(%y%)%$$
@@ -269,13 +292,17 @@ If $italic Base$$ is a relatively simple type
 (does not record operations for future calculations),
 the $code IdenticalPar$$ function can be defined by
 $syntax%
+namespace CppAD {
 	inline bool IdenticalPar(const %Base% &x)
 	{	return true; }
+}
 %$$
 and the $code IdenticalZero$$ function can be defined by
 $syntax%
+namespace CppAD {
 	inline bool IdenticalZero(const %Base% &x)
         {       return x == Base(0); }
+}
 %$$
 The other functions could be defined in a similar manner.
 $pre
@@ -307,8 +334,10 @@ $subhead Suggestion$$
 The $italic Base$$ version of the $code Integer$$ function
 might be defined by
 $syntax%
+namespace CppAD {
 	inline int Integer(const %Base% &x)
 	{	return static_cast<int>(x); }
+}
 %$$
 
 
@@ -350,9 +379,11 @@ If the type $italic Base$$ supports ordered operations,
 these functions should have their corresponding definitions.
 For example,
 $syntax%
+namespace CppAD {
 	inline bool GreaterThanZero(const %Base% &x)
 	{	return (x > 0);
 	}
+}
 %$$
 The other functions would replace $code >$$ by the corresponding operator.
 
@@ -360,11 +391,13 @@ $subhead Not Ordered$$
 If the type $italic Base$$ does not support ordering,
 one might (but need not) define $code GreaterThanZero$$ as follows:
 $syntax%
+namespace CppAD {
 	inline bool GreaterThanZero(const %Base% &x)
 	{	// attempt to use GreaterThanZero with a %Base% argument
 		assert(0);
 		return x;
 	}
+}
 %$$
 The other functions would have the corresponding definition.
 
@@ -399,7 +432,6 @@ $syntax%%y% = cos(%x%)%$$  $cnext cosine            $rnext
 $syntax%%y% = cosh(%x%)%$$ $cnext hyperbolic cosine $rnext
 $syntax%%y% = exp(%x%)%$$ $cnext exponential        $rnext
 $syntax%%y% = log(%x%)%$$ $cnext natural logarithm          $rnext
-$syntax%%y% = log10(%x%)%$$ $cnext logarithm base 10        $rnext
 $syntax%%y% = sin(%x%)%$$ $cnext sine               $rnext
 $syntax%%y% = sinh(%x%)%$$ $cnext hyperbolic sine   $rnext
 $syntax%%y% = sqrt(%x%)%$$ $cnext square root       $rnext
@@ -416,17 +448,13 @@ $syntax%
 %$$
 
 $children%
-	example/base_adolc.hpp%
-	example/mul_level_adolc.cpp
+	cppad/local/base_complex.hpp%
+	example/base_adolc.hpp
 %$$
 
 $head Example$$
-The file
-$cref/base_adolc.hpp/$$ 
-contains an example implementation of these requirements.
-The file
-$xref/mul_level_adolc.cpp/$$
-contains an example usage and test of this implementation.   
-It returns true if it succeeds and false otherwise.
+The files
+$cref/base_complex.hpp/$$ and $cref/base_adolc.hpp/$$ 
+contain example implementations of these requirements.
 
 $end

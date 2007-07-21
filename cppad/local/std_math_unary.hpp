@@ -275,7 +275,7 @@ $end
 -------------------------------------------------------------------------------
 */
 
-# define CPPAD_STANDARD_MATH_UNARY_BASE_ALL(Name)                         \
+# define CPPAD_STANDARD_MATH_UNARY_BASE(Name)                             \
                                                                           \
 	inline float Name(const float &x)                                 \
 	{	return std::Name(x); }                                    \
@@ -283,35 +283,6 @@ $end
 	inline double Name(const double &x)                               \
 	{	return std::Name(x); }                                    \
                                                                           \
-	inline std::complex<float> Name(const std::complex<float> &x)     \
-	{	return std::Name(x); }                                    \
-                                                                          \
-	inline std::complex<double> Name(const std::complex<double> &x)   \
-	{	return std::Name(x); }
-
-# define CPPAD_STANDARD_MATH_UNARY_BASE_HALF(Name)                        \
-                                                                          \
-	inline float Name(const float &x)                                 \
-	{	return std::Name(x); }                                    \
-                                                                          \
-	inline double Name(const double &x)                               \
-	{	return std::Name(x); }                                    \
-                                                                          \
-	inline std::complex<float> Name(const std::complex<float> &x)     \
-	{	CppADUsageError(                                          \
-			0,                                                \
-			#Name ": attempt to use with complex argument"    \
-		)                                                         \
-		return x;                                                 \
-	}                                                                 \
-                                                                          \
-	inline std::complex<double> Name(const std::complex<double> &x)   \
-	{	CppADUsageError(                                          \
-			0,                                                \
-			#Name ": attempt to use with complex argument"    \
-		)                                                         \
-		return x;                                                 \
-	}
 
 # define CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(Name, Op)                \
 	template <class Base>                                             \
@@ -335,31 +306,31 @@ $end
 namespace CppAD {
 
         // acos
-        CPPAD_STANDARD_MATH_UNARY_BASE_HALF(acos)
+        CPPAD_STANDARD_MATH_UNARY_BASE(acos)
         CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(acos, AcosOp)
 
         // asin
-        CPPAD_STANDARD_MATH_UNARY_BASE_HALF(asin)
+        CPPAD_STANDARD_MATH_UNARY_BASE(asin)
         CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(asin, AsinOp)
 
         // atan
-        CPPAD_STANDARD_MATH_UNARY_BASE_HALF(atan)
+        CPPAD_STANDARD_MATH_UNARY_BASE(atan)
         CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(atan, AtanOp)
 
         // cos
-        CPPAD_STANDARD_MATH_UNARY_BASE_ALL(cos)
+        CPPAD_STANDARD_MATH_UNARY_BASE(cos)
         CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(cos, CosOp)
 
         // cosh
-        CPPAD_STANDARD_MATH_UNARY_BASE_ALL(cosh)
+        CPPAD_STANDARD_MATH_UNARY_BASE(cosh)
         CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(cosh, CoshOp)
 
         // exp
-        CPPAD_STANDARD_MATH_UNARY_BASE_ALL(exp)
+        CPPAD_STANDARD_MATH_UNARY_BASE(exp)
         CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(exp, ExpOp)
 
         // log
-        CPPAD_STANDARD_MATH_UNARY_BASE_ALL(log)
+        CPPAD_STANDARD_MATH_UNARY_BASE(log)
         CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(log, LogOp)
 
         // log10
@@ -371,15 +342,15 @@ namespace CppAD {
 	{	return CppAD::log(x.ADBase()) / CppAD::log( Base(10) ); }
 
         // sin
-        CPPAD_STANDARD_MATH_UNARY_BASE_ALL(sin)
+        CPPAD_STANDARD_MATH_UNARY_BASE(sin)
         CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(sin, SinOp)
 
         // sinh
-        CPPAD_STANDARD_MATH_UNARY_BASE_ALL(sinh)
+        CPPAD_STANDARD_MATH_UNARY_BASE(sinh)
         CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(sinh, SinhOp)
 
         // sqrt
-        CPPAD_STANDARD_MATH_UNARY_BASE_ALL(sqrt)
+        CPPAD_STANDARD_MATH_UNARY_BASE(sqrt)
         CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(sqrt, SqrtOp)
 	
         // tan
@@ -391,8 +362,7 @@ namespace CppAD {
 	{	return CppAD::sin(x.ADBase()) / CppAD::cos(x.ADBase()); }
 }
 
-# undef CPPAD_STANDARD_MATH_UNARY_BASE_ALL
-# undef CPPAD_STANDARD_MATH_UNARY_BASE_HALF
+# undef CPPAD_STANDARD_MATH_UNARY_BASE
 # undef CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE
 
 # endif 

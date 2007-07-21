@@ -38,7 +38,6 @@ $childtable%
 	example/ode_taylor.cpp%
 	example/ode_taylor_adolc.cpp%
 	example/stack_machine.cpp%
-	example/complex_poly.cpp%
 	omh/mul_level.omh
 %$$
 
@@ -79,6 +78,8 @@ $rref AddEq.cpp$$
 $rref Asin.cpp$$
 $rref Atan.cpp$$
 $rref Atan2.cpp$$
+$rref base_adolc.hpp$$
+$rref base_complex.hpp$$
 $rref BenderQuad.cpp$$
 $rref BoolFun.cpp$$
 $rref CheckNumericType.cpp$$

@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
+	namespace
 	erf
 	cassert
 	condassign
@@ -49,6 +50,15 @@ $syntax%
 	# include "base_adolc.hpp"
 %$$
 
+$children%
+	example/mul_level_adolc.cpp
+%$$
+
+$head Example$$
+The file $cref/mul_level_adolc.cpp/$$ contains an example use of
+Adolc's $code adouble$$ type for a CppAD $italic Base$$ type.
+It returns true if it succeeds and false otherwise.
+
 $head Functions Defined by Adolc Package$$
 The following required functions are defined by the Adolc package:
 $code abs$$,
@@ -60,7 +70,6 @@ $code cosh$$,
 $code erf$$,
 $code exp$$,
 $code log$$,
-$code log10$$, 
 $code pow$$,
 $code sin$$,
 $code sinh$$,
@@ -73,8 +82,9 @@ defeats the purpose of conditional expressions using
 $code AD<adouble>$$. 
 A better implementation would use Adolc's $code condassign$$ operation:
 $codep */
+namespace CppAD {
 	inline adouble CondExpOp(
-		enum CppAD::CompareOp      cop ,
+		enum  CppAD::CompareOp     cop ,
 		const adouble            &left ,
 		const adouble           &right ,
 		const adouble        &trueCase ,
@@ -83,6 +93,7 @@ $codep */
 			cop, left, right, trueCase, falseCase
 		);
 	}
+}
 /* $$
 
 $head EqualOpSeq$$
@@ -90,11 +101,16 @@ The Adolc user interface does not specify a way to determine if
 two $code adouble$$ variables correspond to the same operations sequence. 
 Make $code EqualOpSeq$$ an error if it gets used:
 $codep */
-	# include <cassert>
+namespace CppAD {
 	inline bool EqualOpSeq(const adouble &x, const adouble &y)
-	{	assert(0);
+	{	CppAD::ErrorHandler::Call(
+			true     , __LINE__ , __FILE__ ,
+			"CppAD::EqualOpSeq(x, y)",
+			"Error: adouble does not support EqualOpSeq."
+		);
 		return false;
 	}
+}
 /* $$
 
 $head Identical$$
@@ -102,6 +118,7 @@ The Adolc user interface does not specify a way to determine if an
 $code adouble$$ depends on the independent variables. 
 To be safe (but slow) return $code false$$ in all the cases below.
 $codep */
+namespace CppAD {
 	inline bool IdenticalPar(const adouble &x)
 	{	return false; }
 
@@ -111,8 +128,9 @@ $codep */
 	inline bool IdenticalOne(const adouble &x)
 	{	return false; }
 
-	inline bool IdenticalEqual(const adouble &x, const adouble &y)
+	inline bool IdenticalEqualPar(const adouble &x, const adouble &y)
 	{	return false; }
+}
 /* $$
 
 $head Ordered$$

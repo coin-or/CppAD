@@ -529,7 +529,7 @@ inline size_t TapeRec<Base>::PutPar(const Base &par)
 	{	i = NumberPar;
 		while(i > NumberPar - 3)
 		{	--i;
-			if( IdenticalEqual(Par[i], par) )
+			if( IdenticalEqualPar(Par[i], par) )
 				return i;
 		}
 	}

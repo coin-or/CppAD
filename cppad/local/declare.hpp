@@ -61,9 +61,9 @@ namespace CppAD {
 		const AD<Base>  &falseCase 
 	);
 	
-	// IdenticalEqual
+	// IdenticalEqualPar
 	template <class Base> 
-	bool IdenticalEqual (const AD<Base> &u, const AD<Base> &v);
+	bool IdenticalEqualPar (const AD<Base> &u, const AD<Base> &v);
 	
 	// EqualOpSeq
 	template <class Base> 

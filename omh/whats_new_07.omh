@@ -50,6 +50,7 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+
 $head 07-21$$
 The $cref/openmp_run.sh/$$ example programs
 $code example_a11c.cpp$$, 
@@ -57,6 +58,21 @@ $code multi_newton.cpp$$, and
 $code sum_i_inv.cpp$$
 have been changed so that they run on more systems
 (are C++ standard compliant).
+$pre
+
+$$
+The $code IdenticalEqual$$ function,
+in the $cref/base_require/$$ specification,
+was changed to $code IdenticalEqualPar$$
+(note the $cref/warning/base_require/Warning/$$ in the 
+$italic Base$$ requirement specifications).
+$pre
+
+$$
+Implementation of the $cref/base requirements/base_require/$$ for complex types
+were moved into the $cref/base_complex.hpp/$$ example.
+
+
 
 $head 07-20$$
 The download for CppAD was still broken.

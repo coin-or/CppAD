@@ -157,23 +157,6 @@ inline double abs(const double &x)
 	return x;
 }
 
-inline std::complex<float>  abs(const std::complex<float> &x)
-{	CppADUsageError(
-		0,
-		"CppAD::abs: attempt to use with std::complex<float> argument"
-	);
-	return std::complex<float>(0);
-}
-
-inline std::complex<double>  abs(const std::complex<double> &x)
-{	CppADUsageError(
-		0,
-		"CppAD::abs: attempt to use with std::complex<float> argument"
-	);
-	return std::complex<double>(0);
-}
-
-
 template <class Base>
 AD<Base> AD<Base>::Abs (void) const
 {	using CppAD::abs;

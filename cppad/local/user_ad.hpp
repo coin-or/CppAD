@@ -46,7 +46,7 @@ $code double$$,
 $code std::complex<float>$$, 
 $code std::complex<double>$$, and
 $syntax%AD<%Other%>%$$.
-Otherwise, see $cref/base type requirements/base_require/$$.
+Otherwise, see $cref/base_require/$$.
 
 
 $childtable%

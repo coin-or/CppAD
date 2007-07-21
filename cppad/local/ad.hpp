@@ -63,8 +63,8 @@ class AD {
 	friend AD pow <Base>
 		(const AD<Base> &x, const AD<Base> &y);
 
-	// IdenticalEqual function
-	friend bool IdenticalEqual <Base> 
+	// IdenticalEqualPar function
+	friend bool IdenticalEqualPar <Base> 
 		(const AD<Base> &u, const AD<Base> &v);
 
 	// EqualOpSeq function

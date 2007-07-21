@@ -134,22 +134,6 @@ inline bool GreaterThanZero(const float &x)
 inline bool GreaterThanZero(const double &x)
 {	return x > 0.; }
 
-inline bool GreaterThanZero(const std::complex<float> &x)
-{	CppADUsageError(
-		0,
-		"Attempt to use std::complex<float> as an ordered type"
-	);
-	return false;
-}
-
-inline bool GreaterThanZero(const std::complex<double> &x)
-{	CppADUsageError(
-		0,
-		"Attempt to use std::complex<double> as an ordered type"
-	);
-	return false;
-}
-
 template <class Base>
 inline bool GreaterThanZero(const AD<Base> &x)
 {	return GreaterThanZero(x.value_); }
@@ -161,22 +145,6 @@ inline bool GreaterThanOrZero(const float &x)
 
 inline bool GreaterThanOrZero(const double &x)
 {	return x >= 0.; }
-
-inline bool GreaterThanOrZero(const std::complex<float> &x)
-{	CppADUsageError(
-		0,
-		"Attempt to use std::complex<float> as an ordered type"
-	);
-	return false;
-}
-
-inline bool GreaterThanOrZero(const std::complex<double> &x)
-{	CppADUsageError(
-		0,
-		"Attempt to use std::complex<double> as an ordered type"
-	);
-	return false;
-}
 
 template <class Base>
 inline bool GreaterThanOrZero(const AD<Base> &x)
@@ -191,22 +159,6 @@ inline bool LessThanZero(const float &x)
 inline bool LessThanZero(const double &x)
 {	return x < 0.; }
 
-inline bool LessThanZero(const std::complex<float> &x)
-{	CppADUsageError(
-		0,
-		"Attempt to use std::complex<float> as an ordered type"
-	);
-	return false;
-}
-
-inline bool LessThanZero(const std::complex<double> &x)
-{	CppADUsageError(
-		0,
-		"Attempt to use std::complex<double> as an ordered type"
-	);
-	return false;
-}
-
 template <class Base>
 inline bool LessThanZero(const AD<Base> &x)
 {	return LessThanZero(x.value_); }
@@ -218,22 +170,6 @@ inline bool LessThanOrZero(const float &x)
 
 inline bool LessThanOrZero(const double &x)
 {	return x <= 0.; }
-
-inline bool LessThanOrZero(const std::complex<float> &x)
-{	CppADUsageError(
-		0,
-		"Attempt to use std::complex<float> as an ordered type"
-	);
-	return false;
-}
-
-inline bool LessThanOrZero(const std::complex<double> &x)
-{	CppADUsageError(
-		0,
-		"Attempt to use std::complex<double> as an ordered type"
-	);
-	return false;
-}
 
 template <class Base>
 inline bool LessThanOrZero(const AD<Base> &x)
