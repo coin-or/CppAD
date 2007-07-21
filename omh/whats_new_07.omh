@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	inv
 	namespace
 	det_lu
 	adouble
@@ -48,6 +49,14 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-21$$
+The $cref/openmp_run.sh/$$ example programs
+$code example_a11c.cpp$$, 
+$code multi_newton.cpp$$, and 
+$code sum_i_inv.cpp$$
+have been changed so that they run on more systems
+(are C++ standard compliant).
 
 $head 07-20$$
 The download for CppAD was still broken.

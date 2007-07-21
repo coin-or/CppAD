@@ -74,6 +74,8 @@ $spell
 	bool
 	fabs
 	vec
+	cstring
+	cstdlib
 $$
 $codep */
 
@@ -82,6 +84,8 @@ $codep */
 # endif
 
 # include <cmath>
+# include <cstring>
+# include <cstdlib>
 
 // see http://www.coin-or.org/CppAD/Doc/cppad_vector.htm
 # include <cppad/vector.hpp>
@@ -133,13 +137,13 @@ int main(int argc, char *argv[])
 	argv++;
 	// n_thread 
 	int n_thread;
-	if( strcmp(*argv, "automatic") == 0 )
+	if( std::strcmp(*argv, "automatic") == 0 )
 		n_thread = 0;
 	else	n_thread = std::atoi(*argv);
 	argv++;
 	// repeat 
 	size_t repeat;
-	if( strcmp(*argv, "automatic") == 0 )
+	if( std::strcmp(*argv, "automatic") == 0 )
 		repeat = 0;
 	else
 	{	assert( std::atoi(*argv) > 0 );

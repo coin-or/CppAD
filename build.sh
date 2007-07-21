@@ -23,12 +23,13 @@ BOOST_DIR=/usr/include/boost-1_33_1
 version=`grep "^ *AC_INIT(" configure.ac | \
 	sed -e "s/.*, *\([0-9]\{8\}\) *,.*/\1/"`
 #
+if [ "$1" = "test" ] || [ "$2" = "test" ]
+then
+	# start new build_test.log file with the date and time
+	date > build_test.log
+fi
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
 then
-	if [ -e build_test.log ]
-	then
-		rm build_test.log
-	fi
 	if [ -e cppad-$version ]
 	then
 		rm -rf cppad-$version
@@ -312,13 +313,12 @@ then
 		fi
 	fi
 	#
-	# Start build_test.log with include file checks
-	# (must do this before extracting copy of distribution directory).
-	./check_include_def.sh   > build_test.log
+	# check include files
+	./check_include_def.sh  >> build_test.log
 	./check_include_file.sh >> build_test.log
 	./check_include_omh.sh  >> build_test.log
 	# add a new line after last include file check
-	echo ""               >> ../build_test.log
+	echo ""                 >> build_test.log
 	#
 	echo "tar -xzf $dir/cppad-$version.cpl.tgz"
 	if ! tar -xzf $dir/cppad-$version.cpl.tgz
@@ -401,10 +401,16 @@ then
 	fi
 	cat omhelp_doc.log        >> ../build_test.log
 	#
-	# None of the cases get past this point
 	cd ..
-	dir=`pwd`
-	echo "Check the file $dir/build_test.log for errors and warnings."
+	if [ "$1" = "test" ]
+	then
+		# end the build_test.log file with the date and time
+		date >> build_test.log
+		#
+		dir=`pwd`
+		echo "Check $dir/build_test.log for errors and warnings."
+		exit 0
+	fi
 fi
 if [ "$1" = "gpl+dos" ] || [ "$1" = "all" ]
 then
@@ -412,12 +418,34 @@ then
 	echo "gpl_license.sh"
 	if ! ./gpl_license.sh
 	then
+		echo "Error: gpl_license.sh failed."
+		if [ "$2" = "test" ]
+		then
+			echo "Error: gpl_license.sh failed." >> build_test.log
+		fi
 		exit 1
+	else
+		echo "Ok: gpl_license.sh."
+		if [ "$2" = "test" ]
+		then
+			echo "Ok: gpl_license.sh." >> build_test.log
+		fi
 	fi
 	echo "./dos_format.sh"
 	if ! ./dos_format.sh
 	then
+		echo "Error: dos_format.sh failed."
+		if [ "$2" = "test" ]
+		then
+			echo "Error: dos_format.sh failed." >> build_test.log
+		fi
 		exit 1
+	else
+		echo "Ok: dos_format.sh."
+		if [ "$2" = "test" ]
+		then
+			echo "Ok: dos_format.sh." >> build_test.log
+		fi
 	fi
 	#
 	if [ "$1" != "all" ]
@@ -439,17 +467,26 @@ then
 		echo "mv $file doc/$file"
 		if ! mv $file doc/$file
 		then
-			echo "cannot move $file to doc/$file"
+			echo "Error: mv $file doc."
+			if [ "$2" = "test" ]
+			then
+				echo "Error: mv $file doc." >> build_test.log
+			fi
 			exit 1
 		fi
 	done
-       if [ "$1" != "all" ]
-       then
-               exit 0
-       fi
+	if [ "$1" != "move" ]
+	then
+		exit 0
+	fi
 fi
 if [ "$1" = "all" ]
 then
+	if [ "$2" = "test" ]
+	then
+		# end the build_test.log file with the date and time
+		date >> build_test.log
+	fi
 	exit 0
 fi
 #

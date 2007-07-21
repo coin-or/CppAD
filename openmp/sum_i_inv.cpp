@@ -77,6 +77,8 @@ $end
 # include <omp.h>
 # endif
 
+# include <cstring>
+
 namespace { // empty namespace
 	int n_thread;
 }
@@ -150,14 +152,14 @@ int main(int argc, char *argv[])
 	argv++;
 
 	// n_thread command line argument
-	if( strcmp(*argv, "automatic") == 0 )
+	if( std::strcmp(*argv, "automatic") == 0 )
 		n_thread = 0;
 	else	n_thread = std::atoi(*argv);
 	argv++;
 
 	// repeat command line argument
 	size_t repeat;
-	if( strcmp(*argv, "automatic") == 0 )
+	if( std::strcmp(*argv, "automatic") == 0 )
 		repeat = 0;
 	else
 	{	assert( std::atoi(*argv) > 0 );

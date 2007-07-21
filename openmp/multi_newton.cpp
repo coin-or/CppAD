@@ -95,6 +95,7 @@ $end
 
 # include <cppad/cppad.hpp>
 # include <cmath>
+# include <cstring>
 # include "multi_newton.hpp"
 
 # ifdef _OPENMP
@@ -160,14 +161,14 @@ int main(int argc, char *argv[])
 
 	// n_thread command line argument
 	int n_thread;
-	if( strcmp(*argv, "automatic") == 0 )
+	if( std::strcmp(*argv, "automatic") == 0 )
 		n_thread = 0;
 	else	n_thread = std::atoi(*argv);
 	argv++;
 
 	// repeat command line argument
 	size_t repeat;
-	if( strcmp(*argv, "automatic") == 0 )
+	if( std::strcmp(*argv, "automatic") == 0 )
 		repeat = 0;
 	else
 	{	assert( std::atoi(*argv) > 0 );
