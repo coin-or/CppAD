@@ -86,7 +86,7 @@ then
 		rm configure
 	fi
 	#
-	if [ "$1" != "all" ]
+	if [ "$1" = "version" ]
 	then
 		exit 0
 	fi
@@ -110,7 +110,7 @@ then
 		exit 1
 	fi
 	#
-	if [ "$1" != "all" ]
+	if [ "$1" = "omhelp" ]
 	then
 		exit 0
 	fi
@@ -153,7 +153,7 @@ then
 		exit 1
 	fi
 	#
-	if [ "$1" != "all" ]
+	if [ "$1" = "automake" ]
 	then
 		exit 0
 	fi
@@ -163,7 +163,7 @@ fi
 #
 if [ "$1" = "configure" ] || [ "$1" = "all" ]
 then
-	if [ "$2" == "test" ]
+	if [ "$2" = "test" ]
 	then
 		echo "build.sh configure test"
 	else
@@ -171,7 +171,7 @@ then
 	fi
 	#
 	TEST=""
-	if [ "$1" = "configure" ] && [ "$2" == "test" ]
+	if [ "$1" = "configure" ] && [ "$2" = "test" ]
 	then
 		TEST="
 			--with-Documentation
@@ -214,7 +214,7 @@ then
 	echo "fix_makefile.sh"
 	./fix_makefile.sh
 	#
-	if [ "$1" != "all" ]
+	if [ "$1" = "configure" ]
 	then
 		exit 0
 	fi
@@ -232,7 +232,7 @@ then
 		exit 1
 	fi
 	#
-	if [ "$1" != "all" ]
+	if [ "$1" = "make" ]
 	then
 		exit 0
 	fi
@@ -283,7 +283,7 @@ then
 	fi
 	#
 	#
-	if [ "$1" != "all" ]
+	if [ "$1" = "dist" ]
 	then
 		exit 0
 	fi
@@ -451,7 +451,7 @@ then
 		fi
 	fi
 	#
-	if [ "$1" != "all" ]
+	if [ "$1" = "gpl+dos" ]
 	then
 		exit 0
 	fi
@@ -478,7 +478,7 @@ then
 			exit 1
 		fi
 	done
-	if [ "$1" != "move" ]
+	if [ "$1" = "move" ]
 	then
 		exit 0
 	fi

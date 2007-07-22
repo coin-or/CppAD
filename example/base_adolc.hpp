@@ -13,7 +13,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
-	taylor
 	Lt
 	Le
 	Eq
@@ -64,12 +63,14 @@ $head Example$$
 The file $cref/mul_level_adolc.cpp/$$ contains an example use of
 Adolc's $code adouble$$ type for a CppAD $italic Base$$ type.
 It returns true if it succeeds and false otherwise.
-The file $code/ode_taylor_adolc.cpp/$$ contains a more realistic
+The file $cref/ode_taylor_adolc.cpp/$$ contains a more realistic
 (and complex) example.
 
 $head Functions Defined by Adolc Package$$
 The following $cref/required/base_require/$$ 
 functions are defined by the Adolc package:
+$pre
+$$
 $code abs$$,
 $code acos$$,
 $code asin$$,

@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin ode_taylor_adolc.cpp$$
 $spell
+	hpp
 	Taylor
 	Cpp
 	const
@@ -142,6 +143,12 @@ $latex \[
 are used to calculate the Taylor coefficient $latex z^{(k)} ( t , x )$$
 which in turn gives the value for $latex  y^{(k+1)} y ( t , x)$$.
 
+$head base_adolc.hpp$$
+The file $cref/base_adolc.hpp/$$ is implements the
+$cref/Base type requirements/base_require/$$ where $italic Base$$
+is $code adolc$$.
+
+
 $head Tracking New and Delete$$
 Adolc uses raw memory arrays that depend on the number of 
 dependent and independent variables, hence $code new$$ and $code delete$$
@@ -164,12 +171,10 @@ $end
 // BEGIN PROGRAM
 
 # include <cppad/cppad.hpp>
-
 # include <adolc/adouble.h>
 # include <adolc/drivers/drivers.h>
 
-// adouble definitions not in Adolc distribution and
-// required in order to use CppAD::AD<adouble>
+// definitions not in Adolc distribution and required to use CppAD::AD<adouble>
 # include "base_adolc.hpp"
 
 // ==========================================================================
