@@ -73,6 +73,10 @@ extern bool VecAD(void);
 extern bool VecADPar(void);
 extern bool VecUnary(void);
 
+# ifdef CPPAD_ADOLC_TEST
+extern bool base_adolc(void);
+# endif
+
 namespace {
 	// function that runs one test
 	static size_t Run_ok_count    = 0;
@@ -160,6 +164,9 @@ int main(void)
 	ok &= Run( VecADPar,        "VecADPar"       );
 	ok &= Run( VecUnary,        "VecUnary"       );
 
+# ifdef CPPAD_ADOLC_TEST
+	ok &= Run( base_adolc,      "base_adolc"     );
+# endif
 
 	// check for memory leak in previous calculations
 	if( CppADTrackCount() != 0 )

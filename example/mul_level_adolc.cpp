@@ -133,7 +133,7 @@ bool mul_level_adolc()
 	a_df   = a_F.Reverse(p, a_w);  // gradient of f
 
 	// declare outter function 
-	// (corresponding to the tape of adobule operations)
+	// (corresponding to the tape of adouble operations)
 	double df_j;
 	for(j = 0; j < n; j++)
 		a_df[j] >>= df_j;

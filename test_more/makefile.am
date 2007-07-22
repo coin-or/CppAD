@@ -13,6 +13,19 @@
 # CppAD pusts all it's preprocessor definitions in the cppad/config.h file
 DEFS          =
 #
+if CppAD_ADOLC
+ADOLC_FILES   = base_adolc.cpp 
+ADOLC_INCLUDE = -I$(ADOLC_DIR)/include 
+ADOLC_LIB     = -ladolc
+ADOLC_LIB_DIR = -L$(ADOLC_DIR)/lib
+ADOLC_FLAG    = -DCPPAD_ADOLC_TEST
+else
+ADOLC_FILES   =
+ADOLC_INCLUDE =
+ADOLC_LIB     =
+ADOLC_LIB_DIR =
+ADOLC_FLAG    =
+endif
 if CppAD_BOOSTVECTOR
 BOOST_INCLUDE = -I$(BOOST_DIR)
 else
@@ -24,11 +37,16 @@ EXTRA_DIST        = test_more.sln test_more.vcproj test_one.sh
 #
 noinst_PROGRAMS   = test_more
 #
-AM_CPPFLAGS       = -I. -I$(top_builddir) $(BOOST_INCLUDE)
+AM_CPPFLAGS       = -I. -I$(top_builddir) $(BOOST_INCLUDE) $(ADOLC_INCLUDE)
 #
-AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
+AM_CXXFLAGS       = -g $(CPP_ERROR_WARN) $(ADOLC_FLAG)
 #
-test_more_SOURCES  = test_more.cpp \
+LDADD             = $(ADOLC_LIB)
+AM_LDFLAGS        = $(ADOLC_LIB_DIR)
+#
+test_more_SOURCES  = \
+	$(ADOLC_FILES) \
+	test_more.cpp \
 	abs.cpp \
 	acos.cpp \
 	asin.cpp \

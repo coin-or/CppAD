@@ -151,7 +151,6 @@ namespace CppAD {
 	{	return static_cast<int>( x.real() ); }
 }
 /* $$
-The complex absolute value function is nowhere complex differentiable.
 
 $head Standard Functions$$
 The following standard math functions,
@@ -172,7 +171,6 @@ are not defined for complex types
 (see $cref/abs/abs/Complex Types/$$ and $cref/StdMathUnary/StdMathUnary/fun/$$).
 Hence we make it an error to use them.
 $codep */
-
 # define CPPAD_INVALID_COMPLEX_CASE(function)                                 \
 inline std::complex<double> function(const std::complex<double> &x)           \
 {	CppAD::ErrorHandler::Call(                                            \
@@ -182,7 +180,6 @@ inline std::complex<double> function(const std::complex<double> &x)           \
 	);                                                                    \
 	return std::complex<double>(0);                                       \
 }
-
 namespace CppAD {
 	CPPAD_INVALID_COMPLEX_CASE(abs)
 	CPPAD_INVALID_COMPLEX_CASE(acos)
@@ -190,7 +187,6 @@ namespace CppAD {
 	CPPAD_INVALID_COMPLEX_CASE(atan)
 	CPPAD_INVALID_COMPLEX_CASE(erf)
 }
-
 # undef CPPAD_INVALID_COMPLEX_CASE
 /* $$
 $end
@@ -278,10 +274,6 @@ namespace CppAD {
 	CPPAD_INVALID_COMPLEX_CASE(atan)
 	CPPAD_INVALID_COMPLEX_CASE(erf)
 }
-
 # undef CPPAD_INVALID_COMPLEX_CASE
-/* $$
-$end
-*/
 
 # endif

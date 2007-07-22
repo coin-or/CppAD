@@ -13,6 +13,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
+	Lt
+	Le
+	Eq
+	Ge
+	Gt
 	namespace
 	erf
 	cassert
@@ -58,9 +63,12 @@ $head Example$$
 The file $cref/mul_level_adolc.cpp/$$ contains an example use of
 Adolc's $code adouble$$ type for a CppAD $italic Base$$ type.
 It returns true if it succeeds and false otherwise.
+The file $code/ode_taylor_adolc.cpp/$$ contains a more realistic
+(and complex) example.
 
 $head Functions Defined by Adolc Package$$
-The following required functions are defined by the Adolc package:
+The following $cref/required/base_require/$$ 
+functions are defined by the Adolc package:
 $code abs$$,
 $code acos$$,
 $code asin$$,
@@ -77,10 +85,19 @@ $code sqrt$$,
 $code tan$$.
 
 $head CondExpOp$$
-This is a simple implementation of CondExpOp. It requires re-taping and 
-defeats the purpose of conditional expressions using 
-$code AD<adouble>$$. 
-A better implementation would use Adolc's $code condassign$$ operation:
+The type $code adouble$$ supports a conditional assignment function
+with the syntax
+$syntax%
+	condassign(%a%, %b%, %c%, %d%)
+%$$
+which evaluates to
+$syntax%
+	%a% = (%b% > 0) ? %c% : %d%;
+%$$
+This enables one to include conditionals in the recording of
+$code adouble$$ operations and later evaluation for different
+values of the independent variables 
+(in the same spirit as the CppAD $cref/CondExp/$$ function).
 $codep */
 namespace CppAD {
 	inline adouble CondExpOp(
@@ -89,9 +106,39 @@ namespace CppAD {
 		const adouble           &right ,
 		const adouble        &trueCase ,
 		const adouble       &falseCase )
-	{	return CppAD::CondExpTemplate(
-			cop, left, right, trueCase, falseCase
-		);
+	{	adouble result;
+		switch( cop )
+		{
+			case CompareLt: // left < right
+			condassign(result, right - left, trueCase, falseCase);
+			break;
+
+			case CompareLe: // left <= right
+			condassign(result, left - right, falseCase, trueCase);
+			break;
+
+			case CompareEq: // left == right
+			condassign(result, left - right, falseCase, trueCase);
+			condassign(result, right - left, falseCase, result);
+			break;
+
+			case CompareGe: // left >= right
+			condassign(result, right - left, falseCase, trueCase);
+			break;
+
+			case CompareGt: // left > right
+			condassign(result, left - right, trueCase, falseCase);
+			break;
+
+			default:
+			CppAD::ErrorHandler::Call(
+				true     , __LINE__ , __FILE__ ,
+				"CppAD::CondExp",
+				"Error: for unknown reason."
+			);
+			result = trueCase;
+		}
+		return result;
 	}
 }
 /* $$
@@ -121,13 +168,10 @@ $codep */
 namespace CppAD {
 	inline bool IdenticalPar(const adouble &x)
 	{	return false; }
-
 	inline bool IdenticalZero(const adouble &x)
 	{	return false; }
-
 	inline bool IdenticalOne(const adouble &x)
 	{	return false; }
-
 	inline bool IdenticalEqualPar(const adouble &x, const adouble &y)
 	{	return false; }
 }
@@ -137,25 +181,19 @@ $head Ordered$$
 $codep */
 	inline bool GreaterThanZero(const adouble &x)
 	{    return (x > 0); }
-
 	inline bool GreaterThanOrZero(const adouble &x)
 	{    return (x >= 0); }
-
 	inline bool LessThanZero(const adouble &x)
 	{    return (x < 0); }
-
 	inline bool LessThanOrZero(const adouble &x)
 	{    return (x <= 0); }
 /* $$
 
 $head Integer$$
 $codep */
-
 	inline int Integer(const adouble &x)
 	{    return static_cast<int>( x.value() ); }
-
 /* $$
 $end
 */
-
 # endif

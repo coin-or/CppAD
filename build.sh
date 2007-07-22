@@ -23,9 +23,10 @@ BOOST_DIR=/usr/include/boost-1_33_1
 version=`grep "^ *AC_INIT(" configure.ac | \
 	sed -e "s/.*, *\([0-9]\{8\}\) *,.*/\1/"`
 #
-if [ "$1" = "test" ] || [ "$2" = "test" ]
+if [ "$1" = "test" ] || ( [ "$1" != "configure" ] & [ "$2" != "test" ] )
 then
 	# start new build_test.log file with the date and time
+	# (Note that "configure test" is run by "build all test".)
 	date > build_test.log
 fi
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
@@ -162,7 +163,7 @@ fi
 #
 if [ "$1" = "configure" ] || [ "$1" = "all" ]
 then
-	if [ "$1" = "configure" ] && [ "$2" == "test" ]
+	if [ "$2" == "test" ]
 	then
 		echo "build.sh configure test"
 	else
@@ -329,6 +330,8 @@ then
 	cd cppad-$version
 	if ! ./build.sh configure test
 	then
+		echo "Error: build.sh configure test"  >> ../build_test.log
+		echo "Error: build.sh configure test" 
 		exit 1
 	fi
 	# gcc 3.4.4 with optimization generates incorrect warning; see 

@@ -11,6 +11,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin base_require$$
 $spell
+	Lt
+	Le
+	Eq
+	Ge
+	Gt
+	cppad.hpp
 	namespace
 	acos
 	asin
@@ -43,10 +49,14 @@ $section AD<Base> Requirements for Base Type$$
 $head Purpose$$
 This section lists the requirements for the type
 $italic Base$$ so that the type $syntax%AD<%Base%>%$$ can be used.
-In the case where $italic Base$$ is $code float$$, $code double$$,
-$code std::complex<float>$$, $code std::complex<double>$$,
+In the case where $italic Base$$ is 
+$code float$$, 
+$code double$$,
+$code std::complex<float>$$, 
+$code std::complex<double>$$,
 or $syntax%AD<%Other%>%$$,
-these requirements are provided by the CppAD package.
+these requirements are provided by including he file
+$code cppad/cppad.hpp$$.
 
 $head Warning$$
 This is a preliminary version of these specifications
@@ -224,15 +234,9 @@ $syntax%
 %$$
 
 $subhead Suggestion$$
-You can try defining the $italic Base$$ version of the $code erf$$ function
-using the as yet unspecified template function $code erf_template$$:
-$syntax%
-namespace CppAD {
-	inline %Base% erf(const %Base% &x)
-	{	return CppAD::erf_template(x); }
-}
-%$$
-If this does not work, you can make the user of $code erf$$ illegal; i.e.,
+If the type $italic Base$$ does not have a definition for 
+the $code erf$$ function, you could make its use 
+by $syntax%AD<%Base%>%$$ an error as follows:
 $syntax%
 namespace CppAD {
 	inline %Base% erf(const %Base% &x)
