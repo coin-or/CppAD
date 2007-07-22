@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
+	taylor
 	Lt
 	Le
 	Eq
