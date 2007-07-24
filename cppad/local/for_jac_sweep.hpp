@@ -167,7 +167,7 @@ void ForJacSweep(
 	const Base  *left, *right;
 	const Pack  *trueCase, *falseCase;
 	Pack  *zero = CPPAD_NULL;
-	zero        = CppADTrackNewVec(npv, zero);
+	zero        = CPPAD_TRACK_NEW_VEC(npv, zero);
 	for(j = 0; j < npv; j++)
 		zero[j] = 0;
 	
@@ -717,7 +717,7 @@ void ForJacSweep(
 	CppADUnknownError( (i_var + n_var) == Rec->TotNumVar() );
 
 	// free vector of zeros
-	CppADTrackDelVec(zero);
+	CPPAD_TRACK_DEL_VEC(zero);
 
 	return;
 }

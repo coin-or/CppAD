@@ -23,14 +23,10 @@ BOOST_DIR=/usr/include/boost-1_33_1
 version=`grep "^ *AC_INIT(" configure.ac | \
 	sed -e "s/.*, *\([0-9]\{8\}\) *,.*/\1/"`
 #
-if [ "$1" = "test" ] || ( [ "$1" != "configure" ] & [ "$2" != "test" ] )
+# Check if we are running all the test cases. 
+if [ "$1" = "test" ] || ( [ "$1" = "all" ] & [ "$2" = "test" ] )
 then
-	# start new build_test.log file with the date and time
-	# (Note that "configure test" is run by "build all test".)
 	date > build_test.log
-fi
-if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
-then
 	if [ -e cppad-$version ]
 	then
 		rm -rf cppad-$version

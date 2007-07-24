@@ -202,7 +202,7 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 
 	// array that will hold packed values
 	Pack *RevJac = CPPAD_NULL;
-	RevJac       = CppADTrackNewVec(totalNumVar * npv, RevJac);
+	RevJac       = CPPAD_TRACK_NEW_VEC(totalNumVar * npv, RevJac);
 
 	// update maximum memory requirement
 	// memoryMax = std::max( memoryMax, 
@@ -250,7 +250,7 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 	}
 
 	// done with buffer
-	CppADTrackDelVec(RevJac);
+	CPPAD_TRACK_DEL_VEC(RevJac);
 
 	return r;
 }

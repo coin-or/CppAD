@@ -2,7 +2,7 @@
 # define CPPAD_FOR_SPARSE_JAC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -205,8 +205,8 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	// array that will hold packed values
 	if( ForJacColDim < npv )
 	{	if( ForJacColDim > 0 )
-			CppADTrackDelVec(ForJac);
-		ForJac       = CppADTrackNewVec(totalNumVar * npv, ForJac);
+			CPPAD_TRACK_DEL_VEC(ForJac);
+		ForJac       = CPPAD_TRACK_NEW_VEC(totalNumVar * npv, ForJac);
 		ForJacColDim = npv;
 	}
 

@@ -282,15 +282,15 @@ public:
 	// destructor
 	~TapeRec(void)
 	{	if( LengthOp > 0 )
-			CppADTrackDelVec(Op);
+			CPPAD_TRACK_DEL_VEC(Op);
 		if( LengthVecInd > 0 )
-			CppADTrackDelVec(VecInd);
+			CPPAD_TRACK_DEL_VEC(VecInd);
 		if( LengthInd > 0 )
-			CppADTrackDelVec(Ind);
+			CPPAD_TRACK_DEL_VEC(Ind);
 		if( LengthPar > 0 )
-			CppADTrackDelVec(Par);
+			CPPAD_TRACK_DEL_VEC(Par);
 		if( LengthTxt > 0 )
-			CppADTrackDelVec(Txt);
+			CPPAD_TRACK_DEL_VEC(Txt);
 	}
 
 	// assignment from another recording
@@ -298,15 +298,15 @@ public:
 	{	size_t i;
 
 		if( LengthOp > 0 )
-			CppADTrackDelVec(Op);
+			CPPAD_TRACK_DEL_VEC(Op);
 		if( LengthVecInd > 0 )
-			CppADTrackDelVec(VecInd);
+			CPPAD_TRACK_DEL_VEC(VecInd);
 		if( LengthInd > 0 )
-			CppADTrackDelVec(Ind);
+			CPPAD_TRACK_DEL_VEC(Ind);
 		if( LengthPar > 0 )
-			CppADTrackDelVec(Par);
+			CPPAD_TRACK_DEL_VEC(Par);
 		if( LengthTxt > 0 )
-			CppADTrackDelVec(Txt);
+			CPPAD_TRACK_DEL_VEC(Txt);
 
 		// Var
 		TotalNumberVar  = Other.TotalNumberVar;
@@ -334,19 +334,19 @@ public:
 		// Allocate the memory
 		if( LengthOp == 0 )
 			Op = CPPAD_NULL;
-		else	Op = CppADTrackNewVec(LengthOp,      Op);
+		else	Op = CPPAD_TRACK_NEW_VEC(LengthOp,      Op);
 		if( LengthVecInd == 0 )
 			VecInd = CPPAD_NULL;
-		else	VecInd = CppADTrackNewVec(LengthVecInd, VecInd);
+		else	VecInd = CPPAD_TRACK_NEW_VEC(LengthVecInd, VecInd);
 		if( LengthInd == 0 )
 			Ind = CPPAD_NULL;
-		else	Ind = CppADTrackNewVec(LengthInd,       Ind);
+		else	Ind = CPPAD_TRACK_NEW_VEC(LengthInd,       Ind);
 		if( LengthPar == 0 )
 			Par = CPPAD_NULL;
-		else	Par = CppADTrackNewVec(LengthPar,       Par);
+		else	Par = CPPAD_TRACK_NEW_VEC(LengthPar,       Par);
 		if( LengthTxt == 0 )
 			Txt = CPPAD_NULL;
-		else	Txt = CppADTrackNewVec(LengthTxt,       Txt);
+		else	Txt = CPPAD_TRACK_NEW_VEC(LengthTxt,       Txt);
 
 		// Copy the data
 		i = NumberOp;
@@ -377,15 +377,15 @@ public:
 		NumberTxt       = 0;
 
 		if( LengthOp > 0 )
-			CppADTrackDelVec(Op);
+			CPPAD_TRACK_DEL_VEC(Op);
 		if( LengthVecInd > 0 )
-			CppADTrackDelVec(VecInd);
+			CPPAD_TRACK_DEL_VEC(VecInd);
 		if( LengthInd > 0 )
-			CppADTrackDelVec(Ind);
+			CPPAD_TRACK_DEL_VEC(Ind);
 		if( LengthPar > 0 )
-			CppADTrackDelVec(Par);
+			CPPAD_TRACK_DEL_VEC(Par);
 		if( LengthTxt > 0 )
-			CppADTrackDelVec(Txt);
+			CPPAD_TRACK_DEL_VEC(Txt);
 
 		LengthOp        = 0;
 		LengthVecInd    = 0;
@@ -495,7 +495,7 @@ inline size_t TapeRec<Base>::PutOp(OpCode op)
 	CppADUnknownError( NumberOp <= LengthOp );
 	if( NumberOp == LengthOp )
 	{	LengthOp = 2 * LengthOp + 8;
-		Op = CppADTrackExtend(LengthOp, NumberOp, Op);
+		Op = CPPAD_TRACK_EXTEND(LengthOp, NumberOp, Op);
 	}
 	CppADUnknownError( NumberOp < LengthOp );
 	Op[NumberOp++]  = op;
@@ -510,7 +510,7 @@ inline size_t TapeRec<Base>::PutVecInd(size_t vecInd)
 	CppADUnknownError( NumberVecInd <= LengthVecInd );
 	if( NumberVecInd == LengthVecInd )
 	{	LengthVecInd = 2 * LengthVecInd + 8;
-		VecInd = CppADTrackExtend(LengthVecInd, NumberVecInd, VecInd);
+		VecInd = CPPAD_TRACK_EXTEND(LengthVecInd, NumberVecInd, VecInd);
 	}
 	CppADUnknownError( NumberVecInd < LengthVecInd );
 	VecInd[NumberVecInd++] = vecInd;
@@ -537,7 +537,7 @@ inline size_t TapeRec<Base>::PutPar(const Base &par)
 	// place a new value in the table
 	if( NumberPar == LengthPar )
 	{	LengthPar = 2 * LengthPar + 8;
-		Par = CppADTrackExtend(LengthPar, NumberPar, Par);
+		Par = CPPAD_TRACK_EXTEND(LengthPar, NumberPar, Par);
 	}
 	CppADUnknownError( NumberPar < LengthPar );
 	Par[NumberPar++] = par;
@@ -551,7 +551,7 @@ inline void TapeRec<Base>::PutInd(size_t ind0)
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd == LengthInd )
 	{	LengthInd = 2 * LengthInd + 8;
-		Ind = CppADTrackExtend(LengthInd, NumberInd, Ind);
+		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -562,7 +562,7 @@ inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1)
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 1 >= LengthInd )
 	{	LengthInd = 2 * LengthInd + 8;
-		Ind = CppADTrackExtend(LengthInd, NumberInd, Ind);
+		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 1 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -574,7 +574,7 @@ inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2)
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 2 >= LengthInd )
 	{	LengthInd = 2 * LengthInd + 8;
-		Ind = CppADTrackExtend(LengthInd, NumberInd, Ind);
+		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 2 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -588,7 +588,7 @@ inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 3 >= LengthInd )
 	{	LengthInd = 2 * LengthInd + 8;
-		Ind = CppADTrackExtend(LengthInd, NumberInd, Ind);
+		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 3 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -604,7 +604,7 @@ inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 4 >= LengthInd )
 	{	LengthInd = 2 * LengthInd + 8;
-		Ind = CppADTrackExtend(LengthInd, NumberInd, Ind);
+		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 4 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -621,7 +621,7 @@ inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
 	CppADUnknownError( NumberInd <= LengthInd );
 	if( NumberInd + 5 >= LengthInd )
 	{	LengthInd = 2 * LengthInd + 8;
-		Ind = CppADTrackExtend(LengthInd, NumberInd, Ind);
+		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
 	}
 	CppADUnknownError( NumberInd + 5 < LengthInd );
 	Ind[NumberInd++] = ind0;
@@ -646,7 +646,7 @@ inline size_t TapeRec<Base>::PutTxt(const char *text)
 
 	if( NumberTxt + n >= LengthTxt )
 	{	LengthTxt  = 2 * LengthTxt + n + 8;
-		Txt = CppADTrackExtend(LengthTxt, NumberTxt, Txt);
+		Txt = CPPAD_TRACK_EXTEND(LengthTxt, NumberTxt, Txt);
 	}
 	CppADUnknownError( NumberTxt + n < LengthTxt );
 

@@ -232,9 +232,9 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 
 	// free old buffers
 	if( Taylor != CPPAD_NULL )
-		CppADTrackDelVec(Taylor);
+		CPPAD_TRACK_DEL_VEC(Taylor);
 	if( ForJac != CPPAD_NULL )
-		CppADTrackDelVec(ForJac);
+		CPPAD_TRACK_DEL_VEC(ForJac);
 
 	// initialize buffers
 	Taylor  = CPPAD_NULL;

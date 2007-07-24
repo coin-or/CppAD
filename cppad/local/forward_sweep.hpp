@@ -196,8 +196,8 @@ size_t ForwardSweep(
 	bool   *VectorVar = CPPAD_NULL;  // is element a variable
 	i = Rec->NumVecInd();
 	if( i > 0 )
-	{	VectorInd = CppADTrackNewVec(i, VectorInd);
-		VectorVar = CppADTrackNewVec(i, VectorVar);
+	{	VectorInd = CPPAD_TRACK_NEW_VEC(i, VectorInd);
+		VectorVar = CPPAD_TRACK_NEW_VEC(i, VectorVar);
 		while(i--)
 		{	VectorInd[i] = Rec->GetVecInd(i);
 			VectorVar[i] = false;
@@ -962,9 +962,9 @@ size_t ForwardSweep(
 # endif
 	CppADUnknownError( (i_var + n_var) == Rec->TotNumVar() );
 	if( VectorInd != CPPAD_NULL )
-		CppADTrackDelVec(VectorInd);
+		CPPAD_TRACK_DEL_VEC(VectorInd);
 	if( VectorVar != CPPAD_NULL )
-		CppADTrackDelVec(VectorVar);
+		CPPAD_TRACK_DEL_VEC(VectorVar);
 
 	return compareCount;
 }

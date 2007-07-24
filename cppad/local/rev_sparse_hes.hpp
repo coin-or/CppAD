@@ -232,11 +232,11 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 
 	// array that will hold packed reverse Jacobian values
 	Pack *RevJac = CPPAD_NULL;
-	RevJac       = CppADTrackNewVec(totalNumVar, RevJac);	
+	RevJac       = CPPAD_TRACK_NEW_VEC(totalNumVar, RevJac);	
 
 	// array that will hold packed reverse Hessain values
 	Pack *RevHes = CPPAD_NULL;
-	RevHes       = CppADTrackNewVec(totalNumVar * npv, RevHes);	
+	RevHes       = CPPAD_TRACK_NEW_VEC(totalNumVar * npv, RevHes);	
 
 	// update maximum memory requirement
 	// memoryMax = std::max( memoryMax, 
@@ -287,8 +287,8 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 	}
 
 	// free memory used for the calculation
-	CppADTrackDelVec(RevJac);
-	CppADTrackDelVec(RevHes);
+	CPPAD_TRACK_DEL_VEC(RevJac);
+	CPPAD_TRACK_DEL_VEC(RevHes);
 
 	return h;
 }

@@ -54,7 +54,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) const
 	size_t m = dep_taddr.size();
 
 	Base *Partial = CPPAD_NULL;
-	Partial       = CppADTrackNewVec(totalNumVar * p, Partial);
+	Partial       = CPPAD_TRACK_NEW_VEC(totalNumVar * p, Partial);
 
 	// update maximum memory requirement
 	// memoryMax = std::max( memoryMax, 
@@ -113,7 +113,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) const
 	}
 
 	// done with the Partial array
-	CppADTrackDelVec(Partial);
+	CPPAD_TRACK_DEL_VEC(Partial);
 
 	return value;
 }

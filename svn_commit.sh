@@ -42,15 +42,17 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Add missing copyright message to base_adolc.hpp
+log_entry="Convert some macros to use all upper case; to be specific,
 
-svn_commit.sh: file that made this commit.
+CppADTrackNewVec -> CPPAD_TRACK_NEW_VEC
+CppADTrackDelVec -> CPPAD_TRACK_DEL_VEC
+CppADTrackExtend -> CPPAD_TRACK_EXTEND
+
+svn_commit.sh: this file (include for list of files with edits).
 whats_new_07.omh: user's view of the changes.
-base_adolc.hpp: add copyright message.
-lu_vec_ad.hpp: renive short copyright comment.
+build.sh: more clean up of the automated testing done before commit.
 " 
 add_list="
-	omh/base_require.omh
 "
 delete_list="
 "
@@ -60,8 +62,29 @@ move_list="
 change_list="
 	svn_commit.sh
 	omh/whats_new_07.omh
-	example/base_adolc.hpp
-	example/lu_vec_ad.hpp
+	build.sh
+	cppad/local/ad_fun.hpp
+	cppad/local/cap_taylor.hpp
+	cppad/local/dependent.hpp
+	cppad/local/for_jac_sweep.hpp
+	cppad/local/for_sparse_jac.hpp
+	cppad/local/forward_sweep.hpp
+	cppad/local/fun_construct.hpp
+	cppad/local/rev_sparse_hes.hpp
+	cppad/local/rev_sparse_jac.hpp
+	cppad/local/reverse.hpp
+	cppad/local/tape_rec.hpp
+	cppad/local/vec_ad.hpp
+	cppad/track_new_del.hpp
+	cppad/vector.hpp
+	example/example.cpp
+	example/mul_level_adolc.cpp
+	example/ode_taylor_adolc.cpp
+	example/track_new_del.cpp
+	omh/wish_list.omh
+	speed/example/example.cpp
+	test_more/base_adolc.cpp
+	test_more/test_more.cpp
 "
 #
 copy_branch="" 

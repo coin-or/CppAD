@@ -118,7 +118,7 @@ void ADFun<Base>::capacity_taylor(size_t c)
 
 	if( c == 0 )
 	{	if( Taylor != CPPAD_NULL )
-			CppADTrackDelVec(Taylor);
+			CPPAD_TRACK_DEL_VEC(Taylor);
 		Taylor = CPPAD_NULL;
 		taylor_per_var = 0;
 		return;
@@ -127,7 +127,7 @@ void ADFun<Base>::capacity_taylor(size_t c)
 	// Allocate new matrix will requested number of columns 
 	size_t newlen   = c * totalNumVar;
 	Base *newptr    = CPPAD_NULL;
-	newptr          = CppADTrackNewVec(newlen, newptr);
+	newptr          = CPPAD_TRACK_NEW_VEC(newlen, newptr);
 
 	// number of columns to copy
 	p = std::min(taylor_per_var, c);
@@ -141,7 +141,7 @@ void ADFun<Base>::capacity_taylor(size_t c)
 	}
 	// free the old memory
 	if( Taylor != CPPAD_NULL )
-		CppADTrackDelVec(Taylor);
+		CPPAD_TRACK_DEL_VEC(Taylor);
 
 	// use the new pointer
 	Taylor         = newptr;

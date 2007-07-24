@@ -154,9 +154,13 @@ Adolc uses raw memory arrays that depend on the number of
 dependent and independent variables, hence $code new$$ and $code delete$$
 are used to allocate this memory.
 The preprocessor macros 
-$cref/CppADTrackNewVec/TrackNewDel/TrackNewVec/$$ 
+$small
+$cref/CPPAD_TRACK_NEW_VEC/TrackNewDel/TrackNewVec/$$ 
+$$
 and
-$cref/CppADTrackDelVec/TrackNewDel/TrackDelVec/$$ 
+$small
+$cref/CPPAD_TRACK_DEL_VEC/TrackNewDel/TrackDelVec/$$ 
+$$
 are used to check for errors in the
 use of $code new$$ and $code delete$$ when the example is compiled for
 debugging (when $code NDEBUG$$ is not defined).
@@ -286,7 +290,7 @@ bool ode_taylor_adolc(void)
 
 	// parameter vector in both double and ADdouble
 	double *x;
-	x = CppADTrackNewVec(n, x);  // track x = new double[n];
+	x = CPPAD_TRACK_NEW_VEC(n, x);  // track x = new double[n];
 	CppADvector<ADdouble> X(n);
 	for(i = 0; i < n; i++)
 		X[i] = x[i] = double(i + 1);
@@ -315,7 +319,7 @@ bool ode_taylor_adolc(void)
 	// declare the differentiable fucntion f : A -> Y_FINAL
 	// (corresponding to the tape of adouble operations)
 	double *y_final;
-	y_final = CppADTrackNewVec(n, y_final); // track y_final= new double[m]
+	y_final = CPPAD_TRACK_NEW_VEC(n, y_final); // y_final= new double[m]
 	for(i = 0; i < n; i++)
 		Y_FINAL[i] >>= y_final[i];
 	trace_off();
@@ -330,9 +334,9 @@ bool ode_taylor_adolc(void)
 
 	// memory where Jacobian will be returned
 	double *jac_;
-	jac_ = CppADTrackNewVec(n * n, jac_); // track jac_ = new double[n*n]
+	jac_ = CPPAD_TRACK_NEW_VEC(n * n, jac_); // jac_ = new double[n*n]
 	double **jac;
-	jac  = CppADTrackNewVec(n, jac);      // track jac = new (*double)[n]
+	jac  = CPPAD_TRACK_NEW_VEC(n, jac);      // jac = new (*double)[n]
 	for(i = 0; i < n; i++)
 		jac[i] = jac_ + i * n;
 
@@ -350,10 +354,10 @@ bool ode_taylor_adolc(void)
 		}
 	}
 
-	CppADTrackDelVec(x);        // check usage of delete
-	CppADTrackDelVec(y_final);
-	CppADTrackDelVec(jac_);
-	CppADTrackDelVec(jac);
+	CPPAD_TRACK_DEL_VEC(x);        // check usage of delete
+	CPPAD_TRACK_DEL_VEC(y_final);
+	CPPAD_TRACK_DEL_VEC(jac_);
+	CPPAD_TRACK_DEL_VEC(jac);
 	return ok;
 }
 

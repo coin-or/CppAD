@@ -50,6 +50,27 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-23$$
+The $cref/TrackNewDel/$$ macros
+$code CppADTrackNewVec$$,
+$code CppADTrackDelVec$$, and
+$code CppADTrackExtend$$ have been deprecated.
+The new macros names to use are 
+$code CPPAD_TRACK_NEW_VEC$$,
+$code CPPAD_TRACK_DEL_VEC$$, and
+$code CPPAD_TRACK_EXTEND$$ respectively.
+This item has been removed from the 
+$cref/software guidelines/WishList/Software Guidelines/$$
+section of the wish list.
+$pre
+
+$$
+The 
+$cref/member variables/WishList/Software Guidelines/Member Variables/$$ 
+wish list item has be brought up to date.
+
+$head 07-22$$
+Minor improvements to the $cref/ode_taylor_adolc.cpp/$$ example.
 
 $head 07-21$$
 The $cref/openmp_run.sh/$$ example programs

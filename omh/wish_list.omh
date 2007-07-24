@@ -110,14 +110,7 @@ Template parameter names should begin with an uppercase letter.
 
 $lnext
 Macro names (gasp!) names should use all uppercase.
-(This was done,  as a test case, 
-in the filename branch for the cppad/local directory at the end of 2006-08. 
-The macro's that are part of the
-CppAD user interface were left in their original case; to be specific,
-$code CppADTrackNewVec$$,
-$code CppADTrackDelVec$$,
-$code CppADTrackExtend$$,
-$code CppADTrackCount$$,
+Some CppAD user interface are still in their original case; to be specific,
 $code CppADvector$$,
 $code CppADCreateDiscrete$$.
 In addition,
@@ -132,7 +125,11 @@ Use spaces rather than tabs.
 $lend
 
 $subhead Member Variables$$
-Change member variable names so that they all end with an underscore.
+Change private member variables names
+(not part of the user interface)
+so that they all end with an underscore.
+(This has been done for the $code AD$$ and $code VecAD$$ template class,
+but not yet for the other classes.) 
 
 $head Vector Element Type$$
 Change cross references from 

@@ -444,7 +444,7 @@ public:
 		if( length_ > 0 )
 		{	size_t i;
 			Base zero(0);
-			data_  = CppADTrackNewVec(length_, data_);
+			data_  = CPPAD_TRACK_NEW_VEC(length_, data_);
 
 			// Initialize data to zero so all have same value.
 			// This uses less memory and avoids a valgrind error
@@ -458,7 +458,7 @@ public:
 	// destructor
 	~VecAD(void)
 	{	if( data_ != CPPAD_NULL )
-			CppADTrackDelVec(data_); 
+			CPPAD_TRACK_DEL_VEC(data_); 
 	}
 
 	// size

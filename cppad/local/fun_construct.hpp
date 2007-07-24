@@ -202,7 +202,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	// allocate memory for one zero order Taylor coefficient
 	taylor_per_var= 1;
 	TaylorColDim  = 1;
-	Taylor        = CppADTrackNewVec(totalNumVar, Taylor);
+	Taylor        = CPPAD_TRACK_NEW_VEC(totalNumVar, Taylor);
 
 	// set zero order coefficients corresponding to indpendent variables
 	n = ind_taddr.size();

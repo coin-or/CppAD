@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -41,7 +41,7 @@ bool TrackNewDel(void)
 	// allocate an array of lenght 5
 	double *ptr = 0;
 	size_t  newlen = 5;
-	ptr = CppADTrackNewVec(newlen, ptr);
+	ptr = CPPAD_TRACK_NEW_VEC(newlen, ptr);
 
 	// copy data into the array
 	size_t ncopy = newlen;
@@ -51,7 +51,7 @@ bool TrackNewDel(void)
 
 	// extend the buffer to be lenght 10
 	newlen = 10;
-	ptr    = CppADTrackExtend(newlen, ncopy, ptr);
+	ptr    = CPPAD_TRACK_EXTEND(newlen, ncopy, ptr);
 		
 	// copy data into the new part of the array
 	for(i = ncopy; i < newlen; i++)
@@ -62,7 +62,7 @@ bool TrackNewDel(void)
 		ok &= (ptr[i] == double(i));
 
 	// free the memory allocated since previous call to TrackCount
-	CppADTrackDelVec(ptr);
+	CPPAD_TRACK_DEL_VEC(ptr);
 
 	// check for memory leak
 	ok &= (count == CppADTrackCount());

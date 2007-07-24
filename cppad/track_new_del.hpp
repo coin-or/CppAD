@@ -33,15 +33,12 @@ $index memory, track$$
 $head Syntax$$
 $syntax%# include <cppad/track_new_del.hpp>
 %$$
-$syntax%%newptr% = TrackNewVec(%file%, %line%, %newlen%, %oldptr%)%$$
-$pre
-$$
-$syntax%TrackDelVec(%file%, %line%, %oldptr%)%$$
-$pre
-$$
-$syntax%%newptr% = TrackExtend(%file%, %line%, %newlen%, %ncopy%, %oldptr%)%$$
-$pre
-$$
+$syntax%%newptr% = TrackNewVec(%file%, %line%, %newlen%, %oldptr%)
+%$$
+$syntax%TrackDelVec(%file%, %line%, %oldptr%)
+%$$
+$syntax%%newptr% = TrackExtend(%file%, %line%, %newlen%, %ncopy%, %oldptr%)
+%$$
 $syntax%%count% = TrackCount(%file%, %line%)%$$
 
 
@@ -136,16 +133,24 @@ In this case, if memory cannot be allocated
 $xref/ErrorHandler/$$ is used to generate a message
 stating that there was not sufficient memory.
 
-$subhead CppADTrackNewVec$$
+$subhead Macro$$
+$index CPPAD_TRACK_NEW_VEC$$
 The preprocessor macro call
 $syntax%
-	CppADTrackNewVec(%newlen%, %oldptr%)
+	CPPAD_TRACK_NEW_VEC(%newlen%, %oldptr%)
 %$$
 expands to
 $syntax%
 	CppAD::TrackNewVec(__FILE__, __LINE__, %newlen%, %oldptr%)
 %$$
 
+$subhead Deprecated$$
+$index  CppADTrackNewVec$$
+The preprocessor macro $code CppADTrackNewVec$$ is the
+same as $code CPPAD_TRACK_NEW_VEC$$.
+It has been deprecated; i.e.,
+it is still defined in the CppAD distribution, but it should
+not be used.
 
 $head TrackDelVec$$
 $index TrackDelVec$$
@@ -161,15 +166,24 @@ and has not yet been freed.
 If this is not the case,
 $xref/ErrorHandler/$$ is used to generate an error message.
 
-$subhead CppADTrackDelVec$$
+$subhead Macro$$
+$index CPPAD_TRACK_DEL_VEC$$
 The preprocessor macro call
 $syntax%
-	CppADTrackDelVec(%oldptr%)
+	CPPAD_TRACK_DEL_VEC(%oldptr%)
 %$$
 expands to
 $syntax%
 	CppAD::TrackDelVec(__FILE__, __LINE__, %oldptr%)
 %$$
+
+$subhead Deprecated$$
+$index  CppADTrackDelVec$$
+The preprocessor macro $code CppADTrackDelVec$$ is the
+same as $code CPPAD_TRACK_DEL_VEC$$.
+It has been deprecated; i.e.,
+it is still defined in the CppAD distribution, but it should
+not be used.
 
 $head TrackExtend$$
 $index TrackExtend$$
@@ -185,15 +199,24 @@ Note that the dependence of $code TrackExtend$$ on $code NDEBUG$$
 is indirectly through the routines $code TrackNewVec$$ and 
 $code TrackDelVec$$.
 
-$subhead CppADTrackExtend$$
+$subhead Macro$$
+$index CPPAD_TRACK_EXTEND$$
 The preprocessor macro call
 $syntax%
-	CppADTrackExtend(%newlen%, %ncopy%, %oldptr%)
+	CPPAD_TRACK_EXTEND(%newlen%, %ncopy%, %oldptr%)
 %$$
 expands to
 $syntax%
 	CppAD::TrackExtend(__FILE__, __LINE__, %newlen%, %ncopy%, %oldptr%)
 %$$
+
+$subhead Deprecated$$
+$index  CppADTrackExtend$$
+The preprocessor macro $code CppADTrackExtend$$ is the
+same as $code CPPAD_TRACK_EXTEND$$.
+It has been deprecated; i.e.,
+it is still defined in the CppAD distribution, but it should
+not be used.
 
 $head TrackCount$$
 $index TrackCount$$
@@ -223,7 +246,6 @@ In the case of multi-threading with OpenMP,
 the information for all of the threads is checked 
 so only one thread can be running
 when this routine is called.
-
 
 $head Example$$
 $children%
@@ -259,18 +281,23 @@ $end
 
 # define CPPAD_TRACK_DEBUG 0
 
-# define CppADTrackNewVec(newlen, oldptr) \
+// -------------------------------------------------------------------------
+# define CPPAD_TRACK_NEW_VEC(newlen, oldptr) \
 	CppAD::TrackNewVec(__FILE__, __LINE__, newlen, oldptr)
 
-# define CppADTrackDelVec(oldptr) \
+# define CPPAD_TRACK_DEL_VEC(oldptr) \
 	CppAD::TrackDelVec(__FILE__, __LINE__, oldptr)
 
-# define CppADTrackExtend(newlen, ncopy, oldptr) \
+# define CPPAD_TRACK_EXTEND(newlen, ncopy, oldptr) \
 	CppAD::TrackExtend(__FILE__, __LINE__, newlen, ncopy, oldptr)
 
 # define CppADTrackCount() \
 	CppAD::TrackCount(__FILE__, __LINE__)
-
+// -------------------------------------------------------------------------
+# define CppADTrackNewVec CPPAD_TRACK_NEW_VEC
+# define CppADTrackDelVec CPPAD_TRACK_DEL_VEC
+# define CppADTrackExtend CPPAD_TRACK_EXTEND
+// -------------------------------------------------------------------------
 namespace CppAD { // Begin CppAD namespace
 
 // TrackElement ------------------------------------------------------------

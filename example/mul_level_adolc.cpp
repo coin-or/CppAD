@@ -46,9 +46,13 @@ Adolc uses raw memory arrays that depend on the number of
 dependent and independent variables, hence $code new$$ and $code delete$$
 are used to allocate this memory.
 The preprocessor macros 
-$cref/CppADTrackNewVec/TrackNewDel/TrackNewVec/$$ 
+$small
+$cref/CPPAD_TRACK_NEW_VEC/TrackNewDel/TrackNewVec/$$ 
+$$
 and
-$cref/CppADTrackDelVec/TrackNewDel/TrackDelVec/$$ 
+$small
+$cref/CPPAD_TRACK_DEL_VEC/TrackNewDel/TrackDelVec/$$ 
+$$
 are used to check for errors in the
 use of $code new$$ and $code delete$$ when the example is compiled for
 debugging (when $code NDEBUG$$ is not defined).
@@ -140,10 +144,10 @@ bool mul_level_adolc()
 	trace_off();
 
 	// compute the d/dx of f'(x) * v = f''(x) * v
-	size_t m      = n;                   // # dependent variables in f'(x)
+	size_t m      = n;                     // # dependent in f'(x)
 	double *v, *ddf_v;
-	v     = CppADTrackNewVec(m, v);      // track v = new double[m]
-	ddf_v = CppADTrackNewVec(n, ddf_v);  // track ddf_v = new double[n]
+	v     = CPPAD_TRACK_NEW_VEC(m, v);     // track v = new double[m]
+	ddf_v = CPPAD_TRACK_NEW_VEC(n, ddf_v); // track ddf_v = new double[n]
 	for(j = 0; j < n; j++)
 		v[j] = double(n - j);
 	fos_reverse(tag, int(m), int(n), v, ddf_v);
@@ -154,8 +158,8 @@ bool mul_level_adolc()
 	for(j = 0; j < n; j++)
 		ok &= CppAD::NearEqual(ddf_v[j], v[j], 1e-10, 1e-10);
 
-	CppADTrackDelVec(v);                 // check usage of delete
-	CppADTrackDelVec(ddf_v);
+	CPPAD_TRACK_DEL_VEC(v);                 // check usage of delete
+	CPPAD_TRACK_DEL_VEC(ddf_v);
 	return ok;
 }
 // END PROGRAM

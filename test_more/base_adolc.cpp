@@ -62,8 +62,8 @@ bool base_adolc()
 
 	// arrays for Adolc zos_forward
 	double *x, *y;
-	x = CppADTrackNewVec(n, x);
-	y = CppADTrackNewVec(m, y);
+	x = CPPAD_TRACK_NEW_VEC(n, x);
+	y = CPPAD_TRACK_NEW_VEC(m, y);
 
 	// switch order of arguments from when taping was done
 	for(j = 0; j < n; j++)
@@ -96,8 +96,8 @@ bool base_adolc()
 	// CondExpGt(1, 1, 2, 3)
 	ok &= (y[4] == double(3));
 
-	CppADTrackDelVec(x);
-	CppADTrackDelVec(y);
+	CPPAD_TRACK_DEL_VEC(x);
+	CPPAD_TRACK_DEL_VEC(y);
 	return ok;
 }
 // END PROGRAM

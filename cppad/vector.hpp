@@ -244,14 +244,14 @@ public:
 	{
 		data = CPPAD_NULL;
 		if( length > 0 )
-			data = CppADTrackNewVec(capacity, data);
+			data = CPPAD_TRACK_NEW_VEC(capacity, data);
 	}
 	// copy constructor
 	inline vector(const vector &x) : capacity(x.length), length(x.length)
 	{	size_t i;
 		data = CPPAD_NULL;
 		if( length > 0 )
-			data = CppADTrackNewVec(capacity, data);
+			data = CPPAD_TRACK_NEW_VEC(capacity, data);
 
 		for(i = 0; i < length; i++)
 			data[i] = x.data[i];
@@ -259,7 +259,7 @@ public:
 	// destructor
 	~vector(void)
 	{	if( data != CPPAD_NULL )
-			CppADTrackDelVec(data); 
+			CPPAD_TRACK_DEL_VEC(data); 
 	}
 
 	// size function
@@ -272,11 +272,11 @@ public:
 		if( (capacity >= n) & (n > 0)  )
 			return;
 		if( data != CPPAD_NULL  )
-			CppADTrackDelVec(data);
+			CPPAD_TRACK_DEL_VEC(data);
 		capacity = n;
 		if( capacity == 0 )
 			data = CPPAD_NULL;
-		else	data = CppADTrackNewVec(capacity, data);
+		else	data = CPPAD_TRACK_NEW_VEC(capacity, data);
 	}
 	// assignment operator
 	inline vector & operator=(const vector &x)
@@ -313,7 +313,7 @@ public:
 			if( capacity == 0 )
 				capacity = 2;
 			else	capacity = 2 * length;
-			data = CppADTrackExtend(capacity, length, data);
+			data = CPPAD_TRACK_EXTEND(capacity, length, data);
 		}
 		data[length++] = x;
 	}
@@ -384,7 +384,7 @@ public:
 		else 
 		{	nunit    = (n - 1) / BitPerUnit + 1;
 			length   = n;
-			data     = CppADTrackNewVec(nunit, data);
+			data     = CPPAD_TRACK_NEW_VEC(nunit, data);
 		}
 	}
 	// copy constructor
@@ -393,7 +393,7 @@ public:
 	{	size_t i;
 		if( nunit == 0 )
 			data = CPPAD_NULL;
-		else	data = CppADTrackNewVec(nunit, data);
+		else	data = CPPAD_TRACK_NEW_VEC(nunit, data);
 
 		for(i = 0; i < nunit; i++)
 			data[i] = v.data[i];
@@ -401,7 +401,7 @@ public:
 	// destructor
 	~vectorBool(void)
 	{	if( data != CPPAD_NULL )
-			CppADTrackDelVec(data);
+			CPPAD_TRACK_DEL_VEC(data);
 	}
 
 	// size function
@@ -414,14 +414,14 @@ public:
 		if( (nunit * BitPerUnit >= n) & (n > 0) )
 			return;
 		if( data != CPPAD_NULL )
-			CppADTrackDelVec(data);
+			CPPAD_TRACK_DEL_VEC(data);
 		if( n == 0 )
 		{	nunit = 0;
 			data = CPPAD_NULL;
 		}
 		else
 		{	nunit    = (n - 1) / BitPerUnit + 1;
-			data     = CppADTrackNewVec(nunit, data);
+			data     = CPPAD_TRACK_NEW_VEC(nunit, data);
 		}
 	}
 	// assignment operator
@@ -469,7 +469,7 @@ public:
 		CppADUnknownError( length <= nunit * BitPerUnit );
 		if( length == nunit * BitPerUnit )
 		{	// allocate another unit
-			data = CppADTrackExtend(nunit+1, nunit, data);
+			data = CPPAD_TRACK_EXTEND(nunit+1, nunit, data);
 			nunit++;
 		}
 		i    = length / BitPerUnit;
