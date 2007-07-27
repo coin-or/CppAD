@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -28,14 +28,14 @@ bool CondExpADOne(void)
 	size_t m = 8;
 
 	// ADdouble independent variable vector
-	CppADvector< ADdouble > Xa(n);
+	CPPAD_TEST_VECTOR< ADdouble > Xa(n);
 	Xa[0] = -1.;
 	Xa[1] =  0.;
 	Xa[2] =  1.;
 	Independent(Xa);
 
 	// ADdouble independent variable vector
-	CppADvector< ADADdouble > Xaa(n);
+	CPPAD_TEST_VECTOR< ADADdouble > Xaa(n);
 	Xaa[0] = Xa[0];
 	Xaa[1] = Xa[1];
 	Xaa[2] = Xa[2];
@@ -47,7 +47,7 @@ bool CondExpADOne(void)
 	ADADdouble r = ADADdouble(Xa[2]);
 
 	// ADADdouble dependent variable vector
-	CppADvector< ADADdouble > Yaa(m);
+	CPPAD_TEST_VECTOR< ADADdouble > Yaa(m);
 
 	// CondExp(parameter, parameter, parameter)
 	Yaa[0] = CondExp(p, q, r);
@@ -77,15 +77,15 @@ bool CondExpADOne(void)
 	ADFun< ADdouble > fa(Xaa, Yaa);
 
 	// function values 
-	CppADvector< ADdouble > Ya(m);
+	CPPAD_TEST_VECTOR< ADdouble > Ya(m);
 	Ya  = fa.Forward(0, Xa);
 
 	// create f: Xa -> Ya function object
 	ADFun<double> f(Xa, Ya);
 
 	// check result of function evaluation
-	CppADvector<double> x(n);
-	CppADvector<double> y(m);
+	CPPAD_TEST_VECTOR<double> x(n);
+	CPPAD_TEST_VECTOR<double> y(m);
 	x[0] = 1.;
 	x[1] = 0.;
 	x[2] = -1.;
@@ -99,8 +99,8 @@ bool CondExpADOne(void)
 	}
 
 	// check forward mode derivatives
-	CppADvector<double> dx(n);
-	CppADvector<double> dy(m);
+	CPPAD_TEST_VECTOR<double> dx(n);
+	CPPAD_TEST_VECTOR<double> dy(m);
 	dx[0] = 1.;
 	dx[1] = 2.;
 	dx[2] = 3.;
@@ -112,7 +112,7 @@ bool CondExpADOne(void)
 	}
 
 	// calculate Jacobian
-	CppADvector<double> J(m * n);
+	CPPAD_TEST_VECTOR<double> J(m * n);
 	size_t j;
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
@@ -135,13 +135,13 @@ bool CondExpADOne(void)
 	}
 
 	// forward mode computation of sparsity pattern
-	CppADvector<bool> Px(n * n);
+	CPPAD_TEST_VECTOR<bool> Px(n * n);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			Px[i * n + j] = false;
 		Px[i * n + i] = true;
 	}
-	CppADvector<bool> Py(m * n);
+	CPPAD_TEST_VECTOR<bool> Py(m * n);
 	Py = f.ForSparseJac(n, Px);
 	for(i = 0; i < m; i++)
 	{	ok &= Py[ i * n + 0 ] == false;
@@ -173,7 +173,7 @@ bool CondExpADTwo(void)
 	size_t m = 8;
 
 	// ADdouble independent variable vector
-	CppADvector< ADdouble > Xa(n);
+	CPPAD_TEST_VECTOR< ADdouble > Xa(n);
 	Xa[0] = -1.;
 	Xa[1] =  0.;
 	Xa[2] =  1.;
@@ -185,7 +185,7 @@ bool CondExpADTwo(void)
 	Va[zero]      = Xa[0];
 
 	// ADdouble independent variable vector
-	CppADvector< ADADdouble > Xaa(n);
+	CPPAD_TEST_VECTOR< ADADdouble > Xaa(n);
 	Xaa[0] = ADdouble( Va[zero] );
 	Xaa[1] = Xa[1];
 	Xaa[2] = Xa[2];
@@ -197,7 +197,7 @@ bool CondExpADTwo(void)
 	ADADdouble r = ADADdouble(Xa[2]);
 
 	// ADADdouble dependent variable vector
-	CppADvector< ADADdouble > Yaa(m);
+	CPPAD_TEST_VECTOR< ADADdouble > Yaa(m);
 
 	// CondExp(parameter, parameter, parameter)
 	Yaa[0] = CondExp(p, q, r);
@@ -227,7 +227,7 @@ bool CondExpADTwo(void)
 	ADFun< ADdouble > fa(Xaa, Yaa);
 
 	// function values 
-	CppADvector< ADdouble > Ya(m);
+	CPPAD_TEST_VECTOR< ADdouble > Ya(m);
 	Ya  = fa.Forward(0, Xa);
 
 	// create f: Xa -> Ya function object
@@ -237,8 +237,8 @@ bool CondExpADTwo(void)
 	ok &= f.use_VecAD();
 
 	// check result of function evaluation
-	CppADvector<double> x(n);
-	CppADvector<double> y(m);
+	CPPAD_TEST_VECTOR<double> x(n);
+	CPPAD_TEST_VECTOR<double> y(m);
 	x[0] = 1.;
 	x[1] = 0.;
 	x[2] = -1.;
@@ -252,8 +252,8 @@ bool CondExpADTwo(void)
 	}
 
 	// check forward mode derivatives
-	CppADvector<double> dx(n);
-	CppADvector<double> dy(m);
+	CPPAD_TEST_VECTOR<double> dx(n);
+	CPPAD_TEST_VECTOR<double> dy(m);
 	dx[0] = 1.;
 	dx[1] = 2.;
 	dx[2] = 3.;
@@ -265,7 +265,7 @@ bool CondExpADTwo(void)
 	}
 
 	// calculate Jacobian
-	CppADvector<double> J(m * n);
+	CPPAD_TEST_VECTOR<double> J(m * n);
 	size_t j;
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
@@ -288,13 +288,13 @@ bool CondExpADTwo(void)
 	}
 
 	// forward mode computation of sparsity pattern
-	CppADvector<bool> Px(n * n);
+	CPPAD_TEST_VECTOR<bool> Px(n * n);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			Px[i * n + j] = false;
 		Px[i * n + i] = true;
 	}
-	CppADvector<bool> Py(m * n);
+	CPPAD_TEST_VECTOR<bool> Py(m * n);
 	Py = f.ForSparseJac(n, Px);
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)

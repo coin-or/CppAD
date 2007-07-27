@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	CppADvector
 	inv
 	namespace
 	det_lu
@@ -49,6 +50,29 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-26$$
+Merge in changes made in $code branches/test_vector$$.
+
+$subhead 07-26$$
+Change all occurrences of $code CppADvector$$,
+in the files $syntax%test_more/%*%.cpp%$$ and $syntax%speed/%*%/%*%.cpp%$$,
+where changed to $code CPPAD_TEST_VECTOR$$.
+All occurrences of the $code CppADvector$$ in the documentation
+were edited to reflect that fact that it has been deprecated.
+The documentation index and search for
+deprecated items has been improved.
+
+$subhead 07-25$$
+Deprecate the preprocessor symbol $code CppADvector$$ 
+and start changing it to
+$small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$.
+$pre
+
+$$
+Change all occurrences of $code CppADvector$$,
+in the $syntax%example/%*%.cpp%$$ files,
+to $code CPPAD_TEST_VECTOR$$.
 
 $head 07-23$$
 The $cref/TrackNewDel/$$ macros

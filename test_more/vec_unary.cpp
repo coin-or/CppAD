@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -31,9 +31,9 @@ bool VecUnary(void)
 	size_t n = 8;
 	size_t i;
 
-	CppADvector< AD<double> > X(n);
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
 	VecAD<double>             Y(n);
-	CppADvector< AD<double> > Z(n);
+	CPPAD_TEST_VECTOR< AD<double> > Z(n);
 
 
 	for(i = 0; i < n; i++)
@@ -76,8 +76,8 @@ bool VecUnary(void)
 
 	
 	ADFun<double> f(X, Z);
-	CppADvector<double> x(n);
-	CppADvector<double> z(n);
+	CPPAD_TEST_VECTOR<double> x(n);
+	CPPAD_TEST_VECTOR<double> z(n);
 
 	for(i = 0; i < n; i++)
 		x[i] = 2. / double(i + 1);

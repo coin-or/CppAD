@@ -43,7 +43,7 @@ $head Problem$$
 The type $cref/ADvector/BenderQuad/ADvector/$$ cannot be determined
 form the arguments above 
 (currently the type $italic ADvector$$ must be 
-$syntax%CppADvector<%Base%>%$$.)
+$syntax%CPPAD_TEST_VECTOR<%Base%>%$$.)
 This will be corrected in the future by requiring $italic Fun$$
 to define $syntax%%Fun%::vector_type%$$ which will specify the
 type $italic ADvector$$.
@@ -312,7 +312,7 @@ void BenderQuad(
 	CheckSimpleVector<Base, BAvector>();
 
 	// declare the ADvector type
-	typedef CppADvector< AD<Base> > ADvector;
+	typedef CPPAD_TEST_VECTOR< AD<Base> > ADvector;
 
 	// size of the x and y spaces
 	size_t n = x.size();

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,16 +22,16 @@ bool SparseVecAD(void)
 	size_t i, j;
 
 	// independent variable vector 
-	CppADvector< AD<double> > X(n);
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double>(j); 
 	Independent(X);
 
 	// dependent variable vector
-	CppADvector< AD<double> > Y(n);
+	CPPAD_TEST_VECTOR< AD<double> > Y(n);
 
 	// check results vector
-	CppADvector< bool >  Check(n * n);
+	CPPAD_TEST_VECTOR< bool >  Check(n * n);
 
 	// VecAD equal to X
 	VecAD<double> Z(n);
@@ -56,7 +56,7 @@ bool SparseVecAD(void)
 	ADFun<double> F(X, Y);
 
 	// dependency matrix for the identity function W(x) = x
-	CppADvector< bool > Identity(n * n);
+	CPPAD_TEST_VECTOR< bool > Identity(n * n);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			Identity[ i * n + j ] = false;
@@ -64,7 +64,7 @@ bool SparseVecAD(void)
 	}
 
 	// evaluate the dependency matrix for F(Identity(x))
-	CppADvector< bool > Py(n * n);
+	CPPAD_TEST_VECTOR< bool > Py(n * n);
 	Py = F.ForSparseJac(n, Identity);
 
 	// check values
@@ -74,7 +74,7 @@ bool SparseVecAD(void)
 	}	
 
 	// evaluate the dependency matrix for Identity(F(x))
-	CppADvector< bool > Px(n * n);
+	CPPAD_TEST_VECTOR< bool > Px(n * n);
 	Px = F.RevSparseJac(n, Identity);
 
 	// check values

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -39,7 +39,7 @@ bool UnaryPlus(void)
 
 	// domain space vector
 	size_t n = 1;
-	CppADvector< AD<double> > x(n);
+	CPPAD_TEST_VECTOR< AD<double> > x(n);
 	x[0]      = 3.;
 
 	// declare independent variables and start tape recording
@@ -47,7 +47,7 @@ bool UnaryPlus(void)
 
 	// range space vector 
 	size_t m = 1;
-	CppADvector< AD<double> > y(m);
+	CPPAD_TEST_VECTOR< AD<double> > y(m);
 	y[0] = + x[0];
 
 	// create f: x -> y and stop tape recording
@@ -57,16 +57,16 @@ bool UnaryPlus(void)
 	ok &= ( y[0] == 3. );
 
 	// forward computation of partials w.r.t. x[0]
-	CppADvector<double> dx(n);
-	CppADvector<double> dy(m);
+	CPPAD_TEST_VECTOR<double> dx(n);
+	CPPAD_TEST_VECTOR<double> dy(m);
 	size_t p = 1;
 	dx[0]    = 1.;
 	dy       = f.Forward(p, dx);
 	ok      &= ( dy[0] == 1. );   // dy[0] / dx[0]
 
 	// reverse computation of dertivative of y[0]
-	CppADvector<double>  w(m);
-	CppADvector<double> dw(n);
+	CPPAD_TEST_VECTOR<double>  w(m);
+	CPPAD_TEST_VECTOR<double> dw(n);
 	w[0] = 1.;
 	dw   = f.Reverse(p, w);
 	ok &= ( dw[0] == 1. );       // dy[0] / dx[0]

@@ -11,10 +11,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_det_lu.cpp$$
 $spell
+	CppAD
 	vector Vector
 	typedef
 	Lu
-	CppADvector
 	cppad
 	det
 	hpp
@@ -44,16 +44,16 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 
 void compute_det_lu(
-	size_t                     size     , 
-	size_t                     repeat   , 
-	CppADvector<double>       &matrix   ,
-	CppADvector<double>       &gradient )
+	size_t                           size     , 
+	size_t                           repeat   , 
+	CPPAD_TEST_VECTOR<double>       &matrix   ,
+	CPPAD_TEST_VECTOR<double>       &gradient )
 {
 	// -----------------------------------------------------
 	// setup
-	typedef CppAD::AD<double>     ADScalar; 
-	typedef CppADvector<ADScalar> ADVector; 
-	CppAD::det_by_lu<ADScalar> Det(size);
+	typedef CppAD::AD<double>           ADScalar; 
+	typedef CPPAD_TEST_VECTOR<ADScalar> ADVector; 
+	CppAD::det_by_lu<ADScalar>         Det(size);
 
 	size_t i;               // temporary index
 	size_t m = 1;           // number of dependent variables
@@ -62,7 +62,7 @@ void compute_det_lu(
 	ADVector   detA(m);     // AD range space vector
 	
 	// vectors of reverse mode weights 
-	CppADvector<double> w(1);
+	CPPAD_TEST_VECTOR<double> w(1);
 	w[0] = 1.;
 
 	// ------------------------------------------------------
@@ -98,8 +98,8 @@ $codep */
 bool correct_det_lu(void)
 {	size_t size   = 3;
 	size_t repeat = 1;
-	CppADvector<double> matrix(size * size);
-	CppADvector<double> gradient(size * size);
+	CPPAD_TEST_VECTOR<double> matrix(size * size);
+	CPPAD_TEST_VECTOR<double> gradient(size * size);
 
 	compute_det_lu(size, repeat, matrix, gradient);
 
@@ -113,8 +113,8 @@ $index speed_det_lu$$
 Routine that links compute_det_lu to $cref/speed_test/$$:
 $codep */
 void speed_det_lu(size_t size, size_t repeat)
-{	CppADvector<double> matrix(size * size);
-	CppADvector<double> gradient(size * size);
+{	CPPAD_TEST_VECTOR<double> matrix(size * size);
+	CPPAD_TEST_VECTOR<double> gradient(size * size);
 
 	compute_det_lu(size, repeat, matrix, gradient);
 	

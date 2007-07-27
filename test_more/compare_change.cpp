@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 Old CompareChange example and test, now just used for validation testing
@@ -25,13 +23,13 @@ bool CompareChange(void)
 	// ------------------------------- < ----------------------------
 
 	// create independent variables
-	CppADvector< AD<double> > X(2);
+	CPPAD_TEST_VECTOR< AD<double> > X(2);
 	X[0] = 3.;
 	X[1] = 4.;
 	Independent(X);
 
 	// create dependent variables
-	CppADvector< AD<double> > Y(6);
+	CPPAD_TEST_VECTOR< AD<double> > Y(6);
 
 	// CondExp would never require retaping 
 	if( X[0] < X[1] )      // True variable < variable
@@ -58,12 +56,12 @@ bool CompareChange(void)
 	f = new ADFun<double>(X, Y);
 
 	// new argument value
-	CppADvector<double> x( X.size() );
+	CPPAD_TEST_VECTOR<double> x( X.size() );
 	x[0] = 4.;
 	x[1] = 3.;
 
 	// evaluate the function at new argument
-	CppADvector<double> y( Y.size() );
+	CPPAD_TEST_VECTOR<double> y( Y.size() );
 	y = f->Forward(0, x);
 
 	// check results

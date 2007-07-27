@@ -45,8 +45,8 @@ bool JacLuDet()
 	det_by_lu<ADComplex> Det(n);
 
 	// independent and dependent variable vectors
-	CppADvector<ADComplex>  X(n * n);
-	CppADvector<ADComplex>  D(1);
+	CPPAD_TEST_VECTOR<ADComplex>  X(n * n);
+	CPPAD_TEST_VECTOR<ADComplex>  D(1);
 
 	// value of the independent variable
 	size_t i;
@@ -63,12 +63,12 @@ bool JacLuDet()
 	ADFun<Complex> f(X, D);
 
 	// argument value
-	CppADvector<Complex>     x( n * n );
+	CPPAD_TEST_VECTOR<Complex>     x( n * n );
 	for(i = 0; i < n * n; i++)
 		x[i] = Complex(2 * i, i);
 
 	// first derivative of the determinant
-	CppADvector<Complex> J( n * n );
+	CPPAD_TEST_VECTOR<Complex> J( n * n );
 	J = f.Jacobian(x);
 
 	/*

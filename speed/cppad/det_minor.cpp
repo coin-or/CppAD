@@ -19,7 +19,7 @@ $spell
 	det
 	hpp
 	const
-	CppADvector
+	CPPAD_TEST_VECTOR
 	bool
 	srand
 $$
@@ -47,15 +47,15 @@ $codep */
 void compute_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	CppADvector<double>       &matrix   ,
-	CppADvector<double>       &gradient )
+	CPPAD_TEST_VECTOR<double>       &matrix   ,
+	CPPAD_TEST_VECTOR<double>       &gradient )
 {
 	// -----------------------------------------------------
 	// setup
 
 	// object for computing determinant
 	typedef CppAD::AD<double>     ADScalar; 
-	typedef CppADvector<ADScalar> ADVector; 
+	typedef CPPAD_TEST_VECTOR<ADScalar> ADVector; 
 	CppAD::det_by_minor<ADScalar> Det(size);
 
 	size_t i;               // temporary index
@@ -65,7 +65,7 @@ void compute_det_minor(
 	ADVector   detA(m);     // AD range space vector
 	
 	// vectors of reverse mode weights 
-	CppADvector<double> w(1);
+	CPPAD_TEST_VECTOR<double> w(1);
 	w[0] = 1.;
 
 	// choose a matrix
@@ -106,8 +106,8 @@ $codep */
 bool correct_det_minor(void)
 {	size_t size   = 3;
 	size_t repeat = 1;
-	CppADvector<double> matrix(size * size);
-	CppADvector<double> gradient(size * size);
+	CPPAD_TEST_VECTOR<double> matrix(size * size);
+	CPPAD_TEST_VECTOR<double> gradient(size * size);
 
 	compute_det_minor(size, repeat, matrix, gradient);
 
@@ -122,8 +122,8 @@ Routine that links compute_det_minor to $cref/speed_test/$$:
 
 $codep */
 void speed_det_minor(size_t size, size_t repeat)
-{	CppADvector<double> matrix(size * size);
-	CppADvector<double> gradient(size * size);
+{	CPPAD_TEST_VECTOR<double> matrix(size * size);
+	CPPAD_TEST_VECTOR<double> gradient(size * size);
 
 	compute_det_minor(size, repeat, matrix, gradient);
 	

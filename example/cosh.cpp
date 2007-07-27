@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,7 +40,7 @@ bool Cosh(void)
 	// domain space vector
 	size_t n  = 1;
 	double x0 = 0.5;
-	CppADvector< AD<double> > x(n);
+	CPPAD_TEST_VECTOR< AD<double> > x(n);
 	x[0]      = x0;
 
 	// declare independent variables and start tape recording
@@ -48,7 +48,7 @@ bool Cosh(void)
 
 	// range space vector 
 	size_t m = 1;
-	CppADvector< AD<double> > y(m);
+	CPPAD_TEST_VECTOR< AD<double> > y(m);
 	y[0] = CppAD::cosh(x[0]);
 
 	// create f: x -> y and stop tape recording
@@ -59,16 +59,16 @@ bool Cosh(void)
 	ok &= NearEqual(y[0] , check,  1e-10 , 1e-10);
 
 	// forward computation of first partial w.r.t. x[0]
-	CppADvector<double> dx(n);
-	CppADvector<double> dy(m);
+	CPPAD_TEST_VECTOR<double> dx(n);
+	CPPAD_TEST_VECTOR<double> dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 	check = std::sinh(x0);
 	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
 
 	// reverse computation of derivative of y[0]
-	CppADvector<double>  w(m);
-	CppADvector<double> dw(n);
+	CPPAD_TEST_VECTOR<double>  w(m);
+	CPPAD_TEST_VECTOR<double> dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
 	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);

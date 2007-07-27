@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin Example$$
 $spell
-	CppADvector
+	CppAD
 	Cygwin
 	Microsoft
 	chdir
@@ -43,15 +43,16 @@ $xref/Install//installation instructions/$$
 show how the examples can be run on your system.
 
 
-$head Choosing CppADvector$$
-Many of the examples use the $xref/CppADvector/$$ preprocessor symbol 
+$head The CppAD Test Vector Template Class$$
+Many of the examples use the 
+$small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$ preprocessor symbol 
 to determine which $xref/SimpleVector/$$ template class is used with
 the examples. 
 
 
 $contents%
 	omh/example_list.omh%
-	cppad/local/cppad_vector.hpp
+	cppad/local/test_vector.hpp
 %$$
 
 

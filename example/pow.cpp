@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -41,7 +41,7 @@ bool Pow(void)
 	size_t n  = 2;
 	double x = 0.5;
 	double y = 2.;
-	CppADvector< AD<double> > XY(n);
+	CPPAD_TEST_VECTOR< AD<double> > XY(n);
 	XY[0]      = x;
 	XY[1]      = y;
 
@@ -50,7 +50,7 @@ bool Pow(void)
 
 	// range space vector 
 	size_t m = 3;
-	CppADvector< AD<double> > Z(m);
+	CPPAD_TEST_VECTOR< AD<double> > Z(m);
 	Z[0] = CppAD::pow(XY[0], XY[1]);  // pow(variable, variable)
 	Z[1] = CppAD::pow(XY[0], y);      // pow(variable, parameter)
 	Z[2] = CppAD::pow(x,     XY[1]);  // pow(parameter, variable)
@@ -65,8 +65,8 @@ bool Pow(void)
 		ok &= NearEqual(Z[i] , check,  1e-10 , 1e-10);
 
 	// forward computation of first partial w.r.t. x
-	CppADvector<double> dxy(n);
-	CppADvector<double> dz(m);
+	CPPAD_TEST_VECTOR<double> dxy(n);
+	CPPAD_TEST_VECTOR<double> dz(m);
 	dxy[0] = 1.;
 	dxy[1] = 0.;
 	dz    = f.Forward(1, dxy);
@@ -85,8 +85,8 @@ bool Pow(void)
 	ok   &= NearEqual(dz[2], check, 1e-10, 1e-10);
 
 	// reverse computation of derivative of z[0] + z[1] + z[2]
-	CppADvector<double>  w(m);
-	CppADvector<double> dw(n);
+	CPPAD_TEST_VECTOR<double>  w(m);
+	CPPAD_TEST_VECTOR<double> dw(n);
 	w[0]  = 1.;
 	w[1]  = 1.;
 	w[2]  = 1.;

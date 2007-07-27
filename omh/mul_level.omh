@@ -16,7 +16,6 @@ $spell
 	const
 	var
 	Cpp
-	CppADvector
 	Arg
 $$
 
@@ -101,8 +100,7 @@ $syntax%
 %$$
 where $italic X$$ is 
 a $cref/SimpleVector/$$ with elements of type 
-$syntax%CppADvector< AD< AD<double> > >%$$.
-$code Independent$$ function.
+$syntax%CPPAD_TEST_VECTOR< AD< AD<double> > >%$$.
 This will start recording a new tape of 
 operations performed using $syntax%AD< AD<double> >%$$ class objects.
 

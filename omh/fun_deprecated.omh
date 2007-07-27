@@ -20,18 +20,14 @@ $$
 $section ADFun Object Deprecated Member Functions$$
 
 $head Syntax$$
-$syntax%%f%.Dependent(%y%)%$$
-$pre
-$$
-$syntax%%o% = %f%.Order()%$$
-$pre
-$$
-$syntax%%m% = %f%.Memory()%$$
-$pre
-$$
-$syntax%%s% = %f%.Size()%$$
-$pre
-$$
+$syntax%%f%.Dependent(%y%)
+%$$
+$syntax%%o% = %f%.Order()
+%$$
+$syntax%%m% = %f%.Memory()
+%$$
+$syntax%%s% = %f%.Size()
+%$$
 $syntax%%t% = %f%.taylor_size()%$$
 
 
@@ -41,8 +37,9 @@ i.e., they are no longer approved of and may be removed from some future
 version of CppAD.
 
 $head Dependent$$
-$index ADFun, Dependent$$
-$index Dependent, ADFun$$
+$index ADFun, Dependent deprecated$$
+$index Dependent, ADFun deprecated$$
+$index deprecated, Dependent ADFun$$
 A recording of and AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$
 is started by a call of the form
@@ -64,8 +61,9 @@ This was necessary to allow for multiple threading applications.
 
 
 $head Order$$
-$index ADFun, Order$$
-$index Order, ADFun$$
+$index ADFun, Order deprecated$$
+$index Order, ADFun deprecated$$
+$index deprecated, Order ADFun$$
 The result $italic o$$ has prototype 
 $syntax%
 	size_t %o%
@@ -88,8 +86,9 @@ in the ADFun object $italic f$$
 
 
 $head Memory$$
-$index ADFun, Memory$$
-$index Memory, ADFun$$
+$index ADFun, Memory deprecated$$
+$index Memory, ADFun deprecated$$
+$index deprecated, Memory ADFun$$
 The result 
 $syntax%
 	size_t %m%
@@ -109,8 +108,9 @@ when it no longer needs the values stored in that memory.
 Thus the $code Memory$$ function is no longer well defined.
 
 $head Size$$
-$index ADFun, Size$$
-$index Size, ADFun$$
+$index ADFun, Size deprecated$$
+$index Size, ADFun deprecated$$
+$index deprecated, Size ADFun$$
 The result $italic s$$ has prototype
 $syntax%
 	size_t %s%
@@ -129,8 +129,9 @@ use $xref/SeqProperty/size_var/size_var/$$ to obtain
 the number of variables in the operation sequence.
 
 $head taylor_size$$
-$index ADFun, taylor_size$$
-$index taylor_size, ADFun$$
+$index ADFun, taylor_size deprecated$$
+$index taylor_size, ADFun deprecated$$
+$index deprecated, taylor_size ADFun$$
 The result $italic t$$ has prototype
 $syntax%
 	size_t %t%

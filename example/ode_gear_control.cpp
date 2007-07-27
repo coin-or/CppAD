@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 $begin OdeGearControl.cpp$$
@@ -40,7 +38,6 @@ $latex \[
 \] $$
 The example tests OdeGearControl using the relations above:
 
-$comment This file is in the Example subdirectory$$ 
 $code
 $verbatim%example/ode_gear_control.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -56,32 +53,32 @@ namespace {
 	// --------------------------------------------------------------
 	class Fun {
 	private:
-		 CppADvector<double> w;
+		 CPPAD_TEST_VECTOR<double> w;
 	public:
 		// constructor
-		Fun(const CppADvector<double> &w_) : w(w_)
+		Fun(const CPPAD_TEST_VECTOR<double> &w_) : w(w_)
 		{ } 
 
 		// set f = x'(t)
 		template <typename Scalar>
 		void Ode(
-			const Scalar              &t, 
-			const CppADvector<Scalar> &x, 
-			CppADvector<Scalar>       &f)
+			const Scalar                    &t, 
+			const CPPAD_TEST_VECTOR<Scalar> &x, 
+			CPPAD_TEST_VECTOR<Scalar>       &f)
 		{	f[0] = - w[0] * x[0];
 			f[1] = + w[0] * x[0] - w[1] * x[1];	
 		}
 
 		void Ode_dep(
-			const double              &t, 
-			const CppADvector<double> &x, 
-			CppADvector<double>       &f_x)
+			const double                    &t, 
+			const CPPAD_TEST_VECTOR<double> &x, 
+			CPPAD_TEST_VECTOR<double>       &f_x)
 		{	using namespace CppAD;
 
 			size_t n  = x.size();	
-			CppADvector< AD<double> > T(1);
-			CppADvector< AD<double> > X(n);
-			CppADvector< AD<double> > F(n);
+			CPPAD_TEST_VECTOR< AD<double> > T(1);
+			CPPAD_TEST_VECTOR< AD<double> > X(n);
+			CPPAD_TEST_VECTOR< AD<double> > F(n);
 
 			// set argument values
 			T[0] = t;
@@ -99,8 +96,8 @@ namespace {
 			ADFun<double> Fun(X, F);
 
 			// compute partial of f w.r.t x
-			CppADvector<double> dx(n);
-			CppADvector<double> df(n);
+			CPPAD_TEST_VECTOR<double> dx(n);
+			CPPAD_TEST_VECTOR<double> df(n);
 			for(j = 0; j < n; j++)
 				dx[j] = 0.;
 			for(j = 0; j < n; j++)
@@ -117,23 +114,23 @@ namespace {
 bool OdeGearControl(void)
 {	bool ok = true;     // initial return value
 
-	CppADvector<double> w(2);
+	CPPAD_TEST_VECTOR<double> w(2);
 	w[0] = 10.;
 	w[1] = 1.;
 	Fun F(w);
 
-	CppADvector<double> xi(2);
+	CPPAD_TEST_VECTOR<double> xi(2);
 	xi[0] = 1.;
 	xi[1] = 0.;
 
-	CppADvector<double> eabs(2);
+	CPPAD_TEST_VECTOR<double> eabs(2);
 	eabs[0] = 1e-4;
 	eabs[1] = 1e-4;
 
 	// return values
-	CppADvector<double> ef(2);
-	CppADvector<double> maxabs(2);
-	CppADvector<double> xf(2);
+	CPPAD_TEST_VECTOR<double> ef(2);
+	CPPAD_TEST_VECTOR<double> maxabs(2);
+	CPPAD_TEST_VECTOR<double> xf(2);
 	size_t                nstep;
 
 	// input values

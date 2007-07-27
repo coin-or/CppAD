@@ -22,7 +22,6 @@ $spell
 	config
 	stdvector
 	std
-	CppADvector
 	ublas
 	hpp
 	adouble
@@ -56,26 +55,26 @@ $section Unix Download, Test, and Installation$$
 
 $head Download Current Version$$
 $index download, unix$$
-Note that $code 20070202$$ is the 
+Note that $code 20070726$$ is the 
 year, month, and date corresponding to the current version of CppAD.
 Download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-20070202.cpl.tgz%$$
+$href%cppad-20070726.cpl.tgz%$$
 
 $subhead GPL License$$
-$href%cppad-20070202.gpl.tgz%$$
+$href%cppad-20070726.gpl.tgz%$$
 
 $head Extraction$$
 Use the command
 $syntax%
-	tar -xvzf cppad-20070202.%license%.tgz
+	tar -xvzf cppad-20070726.%license%.tgz
 %$$
 (where $italic license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-20070202
+	cppad-20070726
 %$$
 All of the commands below are to be executed starting from this
 directory.
@@ -280,10 +279,11 @@ $$
 
 $head --with-stdvector$$
 $index std::vector, unix$$
-The template class 
-$xref/CppADvector/$$ is used for extensive examples and testing of CppAD.
+The 
+$small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$
+template class is used for extensive examples and testing of CppAD.
 If the command line argument $code --with-stdvector$$ is specified,
-the default definition of $xref/CppADvector/$$ is replaced by
+the default definition this template class is replaced by
 $codep
 	std::vector
 $$
@@ -365,9 +365,10 @@ you can compile and run the $cref/speed_fadbad/$$ tests.
 
 $head BoostDir$$
 $index boost, unix$$
-The template class 
-$xref/CppADvector/$$ is used for extensive examples and testing of CppAD.
-The default definition for $code CppADvector$$ is
+The
+$small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$
+template class is used for extensive examples and testing of CppAD.
+The default definition for $code CPPAD_TEST_VECTOR$$ is
 $xref/CppAD_vector//CppAD::vector/$$.
 If the command line argument
 $syntax%
@@ -378,7 +379,7 @@ $syntax%
 	%BoostDir%/boost/numeric/ublas/vector.hpp
 %$$
 is a valid reference to the file $code vector.hpp$$.
-In this case, the default definition of $code CppADvector$$ 
+In this case, the default definition of $code CPPAD_TEST_VECTOR$$ 
 is replaced by
 $codep
 	boost::numeric::ublas::vector

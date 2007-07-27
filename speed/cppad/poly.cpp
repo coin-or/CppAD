@@ -24,7 +24,7 @@ $spell
 	det
 	hpp
 	const
-	CppADvector
+	CPPAD_TEST_VECTOR
 	bool
 $$
 
@@ -50,14 +50,14 @@ $codep */
 void compute_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	CppADvector<double>       &a        ,  // coefficients of polynomial
-	CppADvector<double>       &z        ,  // polynomial argument value
-	CppADvector<double>       &ddp      )  // second derivative w.r.t z  
+	CPPAD_TEST_VECTOR<double>       &a        ,  // coefficients of polynomial
+	CPPAD_TEST_VECTOR<double>       &z        ,  // polynomial argument value
+	CPPAD_TEST_VECTOR<double>       &ddp      )  // second derivative w.r.t z  
 {
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>     ADScalar; 
-	typedef CppADvector<ADScalar> ADVector; 
+	typedef CPPAD_TEST_VECTOR<ADScalar> ADVector; 
 
 	size_t i;      // temporary index
 	size_t m = 1;  // number of dependent variables
@@ -74,7 +74,7 @@ void compute_poly(
 		A[i] = a[i];
 
 	// forward mode first and second differentials
-	CppADvector<double> dz(1), ddz(1);
+	CPPAD_TEST_VECTOR<double> dz(1), ddz(1);
 	dz[0]  = 1.;
 	ddz[0] = 0.;
 
@@ -118,7 +118,7 @@ $codep */
 bool correct_poly(void)
 {	size_t size   = 10;
 	size_t repeat = 1;
-	CppADvector<double> a(size), z(1), ddp(1);
+	CPPAD_TEST_VECTOR<double> a(size), z(1), ddp(1);
 
 	compute_poly(size, repeat, a, z, ddp);
 
@@ -137,7 +137,7 @@ Routine that links compute_poly to $cref/speed_test/$$:
 $codep */
 void speed_poly(size_t size, size_t repeat)
 {
-	CppADvector<double> a(size), z(1), ddp(1);
+	CPPAD_TEST_VECTOR<double> a(size), z(1), ddp(1);
 
 	compute_poly(size, repeat, a, z, ddp);
 	

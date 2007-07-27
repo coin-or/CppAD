@@ -27,12 +27,12 @@ bool RevSparseHes(void)
 	size_t i, j;
 
 	// initialize check values to false
-	CppADvector<bool> Check(n * n);
+	CPPAD_TEST_VECTOR<bool> Check(n * n);
 	for(j = 0; j < n * n; j++)
 		Check[j] = false;
 
 	// independent variable vector 
-	CppADvector< AD<double> > X(n);
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double>(j);
 	Independent(X);
@@ -60,7 +60,7 @@ bool RevSparseHes(void)
 	Check[9 * n + 8] = Check[9 * n + 9] = true;
 
 	// dependent variable vector
-	CppADvector< AD<double> > Y(m);
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
 	Y[0] = sum;
 
 	// variable - variable
@@ -70,7 +70,7 @@ bool RevSparseHes(void)
 	ADFun<double> F(X, Y);
 
 	// sparsity pattern for the identity function U(x) = x
-	CppADvector<bool> Px(n * n);
+	CPPAD_TEST_VECTOR<bool> Px(n * n);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			Px[ i * n + j ] = false;
@@ -81,10 +81,10 @@ bool RevSparseHes(void)
 	F.ForSparseJac(n, Px);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
-	CppADvector<bool> Py(m);
+	CPPAD_TEST_VECTOR<bool> Py(m);
 	Py[0] = true;
 	Py[1] = false;
-	CppADvector<bool> Pxx(n * n);
+	CPPAD_TEST_VECTOR<bool> Pxx(n * n);
 	Pxx = F.RevSparseHes(n, Py);
 
 	// check values

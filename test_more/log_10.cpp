@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,13 +22,13 @@ bool Log10(void)
 	using namespace CppAD;
 
 	// independent variable vector, indices, values, and declaration
-	CppADvector< AD<double> > U(1);
+	CPPAD_TEST_VECTOR< AD<double> > U(1);
 	size_t s = 0;
 	U[s]     = 10.;
 	Independent(U);
 
 	// dependent variable vector, indices, and values
-	CppADvector< AD<double> > Z(2);
+	CPPAD_TEST_VECTOR< AD<double> > Z(2);
 	size_t x = 0;
 	size_t y = 1;
 	Z[x]     = log10(U[s]);
@@ -36,8 +36,8 @@ bool Log10(void)
 
 	// define f : U -> Z and vectors for derivative calculations
 	ADFun<double> f(U, Z);
-	CppADvector<double> v( f.Domain() );
-	CppADvector<double> w( f.Range() );
+	CPPAD_TEST_VECTOR<double> v( f.Domain() );
+	CPPAD_TEST_VECTOR<double> w( f.Range() );
 
 	// check values
 	ok &= NearEqual(Z[x] , 1.,  1e-10 , 1e-10);

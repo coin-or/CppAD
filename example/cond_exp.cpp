@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -57,7 +57,7 @@ bool CondExp(void)
 
 	// domain space vector
 	size_t n = 5;
-	CppADvector< AD<double> > X(n);
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
 	size_t j;
 	for(j = 0; j < n; j++)
 		X[j] = 1.;
@@ -83,17 +83,17 @@ bool CondExp(void)
 
 	// range space vector 
 	size_t m = 1;
-	CppADvector< AD<double> > Y(m);
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
 	Y[0] = Sum;
 
 	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
 
 	// vectors for arguments to the function object f
-	CppADvector<double> x(n);   // argument values
-	CppADvector<double> y(m);   // function values 
-	CppADvector<double> w(m);   // function weights 
-	CppADvector<double> dw(n);  // derivative of weighted function
+	CPPAD_TEST_VECTOR<double> x(n);   // argument values
+	CPPAD_TEST_VECTOR<double> y(m);   // function values 
+	CPPAD_TEST_VECTOR<double> w(m);   // function weights 
+	CPPAD_TEST_VECTOR<double> dw(n);  // derivative of weighted function
 
 	// a case where abs( x[j] ) > 0 for all j
 	double check  = 0.;

@@ -10,7 +10,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
-	CppADvector
 	Adolc
 	Fadbad
 	cygwin
@@ -110,9 +109,8 @@ Template parameter names should begin with an uppercase letter.
 
 $lnext
 Macro names (gasp!) names should use all uppercase.
-Some CppAD user interface are still in their original case; to be specific,
-$code CppADvector$$,
-$code CppADCreateDiscrete$$.
+The CppAD macro $code CppADCreateDiscrete$$
+still is in its their original case.
 In addition,
 the macros $code CppADUsageError$$ and $code CppADUnknownError$$
 were not changed.

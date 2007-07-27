@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -72,8 +72,8 @@ $end
 namespace {
 	template <class Type>   // Type can be either double or AD<double>
 	class Fun {
-	typedef CppADvector<double> BAvector;
-	typedef CppADvector<Type>   ADvector;
+	typedef CPPAD_TEST_VECTOR<double> BAvector;
+	typedef CPPAD_TEST_VECTOR<Type>   ADvector;
 	private:
 		BAvector t; // measurement times
 		BAvector z; // measurement values
@@ -160,18 +160,18 @@ bool BenderQuad(void)
 
 	// x space vector
 	size_t n = 1;
-	CppADvector<double> x(n);
+	CPPAD_TEST_VECTOR<double> x(n);
 	x[0] = 2. * 3.141592653;
 
 	// y space vector
 	size_t m = 1;
-	CppADvector<double> y(m);
+	CPPAD_TEST_VECTOR<double> y(m);
 	y[0] = 1.;
 
 	// t and z vectors
 	size_t N = 10;
-	CppADvector<double> t(N);
-	CppADvector<double> z(N);
+	CPPAD_TEST_VECTOR<double> t(N);
+	CPPAD_TEST_VECTOR<double> z(N);
 	for(i = 0; i < N; i++)
 	{	t[i] = double(i) / double(N);       // time or measurement
 		z[i] = y[0] * sin( x[0] * t[i] );   // data without noise
@@ -184,16 +184,16 @@ bool BenderQuad(void)
 	Fun<double>       fun_test(z, t);       
 
 	// evaluate the G(x), G'(x) and G''(x)
-	CppADvector<double> g(1), gx(n), gxx(n * n);
+	CPPAD_TEST_VECTOR<double> g(1), gx(n), gxx(n * n);
 	BenderQuad(x, y, fun, g, gx, gxx);
 
 	// Evaluate G(x) at nearby points
 	double              step(1e-5);
-	CppADvector<double> g0 = fun_test.f(x, fun_test.Y(x) );
+	CPPAD_TEST_VECTOR<double> g0 = fun_test.f(x, fun_test.Y(x) );
 	x[0] = x[0] + 1. * step;
-	CppADvector<double> gp = fun_test.f(x, fun_test.Y(x) );
+	CPPAD_TEST_VECTOR<double> gp = fun_test.f(x, fun_test.Y(x) );
 	x[0] = x[0] - 2. * step;
-	CppADvector<double> gm = fun_test.f(x, fun_test.Y(x) );
+	CPPAD_TEST_VECTOR<double> gm = fun_test.f(x, fun_test.Y(x) );
 
 	// check function value
 	double check = g0[0];

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,8 +27,8 @@ bool Poly(void)
 	size_t deg = 4;
 
 	// vector that will hold polynomial coefficients for p(z)
-	CppADvector< AD<double> > A(deg + 1);  // AD<double> elements
-	CppADvector<double>       a(deg + 1);  //    double  elements
+	CPPAD_TEST_VECTOR< AD<double> > A(deg + 1);  // AD<double> elements
+	CPPAD_TEST_VECTOR<double>       a(deg + 1);  //    double  elements
 
 	// set the polynomial coefficients
 	A[0] = 1.;
@@ -37,20 +37,20 @@ bool Poly(void)
 		A[k] = a[k] = 1.;
 
 	// independent variables
-	CppADvector< AD<double> > Z(1); // one independent variable
-	Z[0]     = 3.;                  // value of independent variable
-	Independent(Z);                 // declare independent variable
+	CPPAD_TEST_VECTOR< AD<double> > Z(1); // one independent variable
+	Z[0]     = 3.;                        // value of independent variable
+	Independent(Z);                       // declare independent variable
 
 	// dependent variables 
-	CppADvector< AD<double> > P(1); // one dependent variable
+	CPPAD_TEST_VECTOR< AD<double> > P(1); // one dependent variable
 	P[0]     = Poly(0, A, Z[0]);    // value of polynomial at Z[0]
 
 	// define f : Z -> P as a function mapping independent to dependent 
 	ADFun<double> f(Z, P);          // ADFun corresponding to polynomial
 
 	// compute derivative of polynomial
-	CppADvector<double> z(1);  // vector of length f.Domain()
-	CppADvector<double> J(1);  // vector of length f.Range * f.Domain()
+	CPPAD_TEST_VECTOR<double> z(1);  // vector length f.Domain()
+	CPPAD_TEST_VECTOR<double> J(1);  // vector length f.Range * f.Domain()
 	z[0] = 3.;                 // point at which to compute derivative
 	J    = f.Jacobian(z);      // value of derivative
 

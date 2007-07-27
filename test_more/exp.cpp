@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -25,13 +25,13 @@ bool ExpTestOne(void)
 	using namespace CppAD;
 
 	// independent variable vector, indices, values, and declaration
-	CppADvector< AD<double> > U(1);
+	CPPAD_TEST_VECTOR< AD<double> > U(1);
 	size_t s = 0;
 	U[s]     = 1.;
 	Independent(U);
 
 	// dependent variable vector, indices, and values
-	CppADvector< AD<double> > Z(2);
+	CPPAD_TEST_VECTOR< AD<double> > Z(2);
 	size_t x = 0;
 	size_t y = 1;
 	Z[x]     = exp(U[s]);
@@ -39,8 +39,8 @@ bool ExpTestOne(void)
 
 	// define f : U -> Z and vectors for derivative calculations
 	ADFun<double> f(U, Z);
-	CppADvector<double> v( f.Domain() );
-	CppADvector<double> w( f.Range() );
+	CPPAD_TEST_VECTOR<double> v( f.Domain() );
+	CPPAD_TEST_VECTOR<double> w( f.Range() );
 
 	// check values
 	ok &= NearEqual(Z[x] , exp(1.),         1e-10 , 1e-10);
@@ -71,7 +71,7 @@ bool ExpTestOne(void)
 	); 
 
 	// reverse computation of second partials of y
-	CppADvector<double> r( f.Domain() * 2 );
+	CPPAD_TEST_VECTOR<double> r( f.Domain() * 2 );
 	w[x] = 0.;
 	w[y] = 1.;
 	r    = f.Reverse(2, w);
@@ -91,18 +91,18 @@ bool ExpTestTwo(void)
 	using namespace CppAD;
 
 	// independent variable vector
-	CppADvector< AD<double> > U(1);
+	CPPAD_TEST_VECTOR< AD<double> > U(1);
 	U[0]     = 1.;
 	Independent(U);
 
 	// dependent variable vector 
-	CppADvector< AD<double> > Z(1);
+	CPPAD_TEST_VECTOR< AD<double> > Z(1);
 	Z[0] = exp(U[0]); 
 
 	// create f: U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z); 
-	CppADvector<double> v(1);
-	CppADvector<double> w(1);
+	CPPAD_TEST_VECTOR<double> v(1);
+	CPPAD_TEST_VECTOR<double> w(1);
 
 	// check value 
 	double exp_u = exp( Value(U[0]) );
@@ -121,7 +121,7 @@ bool ExpTestTwo(void)
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CppADvector<double> r(p); 
+	CPPAD_TEST_VECTOR<double> r(p); 
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;

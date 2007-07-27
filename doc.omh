@@ -59,7 +59,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-20070717
+A Package for Differentiation of C++ Algorithms: cppad-20070726
 $$ 
 
 $head Syntax$$
@@ -120,7 +120,7 @@ $lnext
 Includes a C++ $xref/library/$$ that is useful
 for general operator overloaded numerical method.
 Allows for replacement of the
-$xref/CppADvector//CppADvector/$$ 
+$cref/test_vector/$$ 
 template vector class which is used for extensive testing; 
 for example, you can do your testing with the
 $href%http://www.boost.org/libs/numeric/ublas/doc/index.htm%uBlas%$$ 

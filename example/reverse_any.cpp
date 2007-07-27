@@ -39,7 +39,7 @@ bool reverse_any_cases(void)
 
 	// domain space vector
 	size_t n = 3;
-	CppADvector< AD<double> > X(n);
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
 	X[0] = 0.; 
 	X[1] = 1.;
 	X[2] = 2.;
@@ -49,7 +49,7 @@ bool reverse_any_cases(void)
 
 	// range space vector
 	size_t m = 1;
-	CppADvector< AD<double> > Y(m);
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
 	Y[0] = X[0] * X[1] * X[2];
 
 	// create f : X -> Y and stop recording

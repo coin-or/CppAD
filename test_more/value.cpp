@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 Old Value example now used just for valiadation testing
@@ -24,7 +22,7 @@ bool Value(void)
 	using namespace CppAD;
 
 	// independent variable vector, indices, values, and declaration
-	CppADvector< AD<double> > U(2);
+	CPPAD_TEST_VECTOR< AD<double> > U(2);
 	size_t s = 0;
 	size_t t = 1;
 	U[s] = 3.;
@@ -34,7 +32,7 @@ bool Value(void)
 	// cannot call Value after Independent (tape is recording)
 
 	// dependent variable vector and indices
-	CppADvector< AD<double> > Z(1);
+	CPPAD_TEST_VECTOR< AD<double> > Z(1);
 	size_t x = 0;
 
 	// dependent variable values
@@ -42,8 +40,8 @@ bool Value(void)
 
 	// create f: U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z);
-	CppADvector<double> v( f.Domain() );
-	CppADvector<double> w( f.Range() );
+	CPPAD_TEST_VECTOR<double> v( f.Domain() );
+	CPPAD_TEST_VECTOR<double> w( f.Range() );
 
 	// can call Value after ADFun constructor (tape is no longer recording)
 

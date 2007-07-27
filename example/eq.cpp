@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,7 +38,7 @@ bool Eq(void)
 
 	// domain space vector
 	size_t n = 3;
-	CppADvector< AD<double> > x(n);
+	CPPAD_TEST_VECTOR< AD<double> > x(n);
 	x[0]     = 2;      // AD<double> = int
 	x[1]     = 3.;     // AD<double> = double
 	x[2]     = x[1];   // AD<double> = AD<double>
@@ -48,7 +48,7 @@ bool Eq(void)
 	
 	// range space vector 
 	size_t m = 3;
-	CppADvector< AD<double> > y(m);
+	CPPAD_TEST_VECTOR< AD<double> > y(m);
 
 	// assign an AD<Base> object equal to an independent variable
 	// (choose the first independent variable to check a special case)
@@ -73,8 +73,8 @@ bool Eq(void)
 	ok &= ( y[2] == 5.);
 
 	// compute partials w.r.t x[1]
-	CppADvector<double> dx(n);
-	CppADvector<double> dy(m);
+	CPPAD_TEST_VECTOR<double> dx(n);
+	CPPAD_TEST_VECTOR<double> dy(m);
 	dx[0] = 0.;
 	dx[1] = 1.;
 	dx[2] = 0.;
@@ -84,8 +84,8 @@ bool Eq(void)
 	ok  &= (dy[2] == 0.);  // dy[2] / dx[1]
 
 	// compute the derivative y[2]
-	CppADvector<double>  w(m);
-	CppADvector<double> dw(n);
+	CPPAD_TEST_VECTOR<double>  w(m);
+	CPPAD_TEST_VECTOR<double> dw(n);
 	w[0] = 0.;
 	w[1] = 0.;
 	w[2] = 1.;

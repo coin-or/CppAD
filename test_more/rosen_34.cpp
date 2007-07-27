@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -33,14 +33,14 @@ x[2](t) = w[2] * t^2 / 2
 namespace {  // BEGIN Empty namespace
 	class TestFun {
 	public:
-		TestFun(const CppADvector< CppAD::AD<double> > &w_)
+		TestFun(const CPPAD_TEST_VECTOR< CppAD::AD<double> > &w_)
 		{	w.resize( w_.size() );
 			w = w_;
 		}
 		void Ode(
-			const CppAD::AD<double>                &t, 
-			const CppADvector< CppAD::AD<double> > &x, 
-			CppADvector< CppAD::AD<double> >       &f) 
+			const CppAD::AD<double>                      &t, 
+			const CPPAD_TEST_VECTOR< CppAD::AD<double> > &x, 
+			CPPAD_TEST_VECTOR< CppAD::AD<double> >       &f) 
 		{
 			f[0] = - w[0] * x[0];
 			f[1] = - w[1] * x[1];
@@ -49,9 +49,9 @@ namespace {  // BEGIN Empty namespace
 		}
 	
 		void Ode_ind(
-			const CppAD::AD<double>                &t, 
-			const CppADvector< CppAD::AD<double> > &x, 
-			CppADvector< CppAD::AD<double> >       &f_t) 
+			const CppAD::AD<double>                      &t, 
+			const CPPAD_TEST_VECTOR< CppAD::AD<double> > &x, 
+			CPPAD_TEST_VECTOR< CppAD::AD<double> >       &f_t) 
 		{
 			f_t[0] = 0.;
 			f_t[1] = 0.;
@@ -60,9 +60,9 @@ namespace {  // BEGIN Empty namespace
 		}
 	
 		void Ode_dep(
-			const CppAD::AD<double>                &t, 
-			const CppADvector< CppAD::AD<double> > &x, 
-			CppADvector< CppAD::AD<double> >       &f_x) 
+			const CppAD::AD<double>                      &t, 
+			const CPPAD_TEST_VECTOR< CppAD::AD<double> > &x, 
+			CPPAD_TEST_VECTOR< CppAD::AD<double> >       &f_x) 
 		{
 			f_x[0] = - w[0];    f_x[1] = 0.;      f_x[2] = 0.;
 			f_x[3] = 0.;        f_x[4] = - w[1];  f_x[5] = 0.;
@@ -71,7 +71,7 @@ namespace {  // BEGIN Empty namespace
 		}
 	
 	private:
-		CppADvector< CppAD::AD<double> > w;
+		CPPAD_TEST_VECTOR< CppAD::AD<double> > w;
 	};
 }	// END empty namespace
 
@@ -80,8 +80,8 @@ bool Rosen34(void)
 
 	using namespace CppAD;
 
-	CppADvector< AD<double> > x(3);
-	CppADvector< AD<double> > w(3);
+	CPPAD_TEST_VECTOR< AD<double> > x(3);
+	CPPAD_TEST_VECTOR< AD<double> > w(3);
 	size_t         n     = 3;
 	size_t         nstep = 20;
 	AD<double>     t0    = 0.;
@@ -97,7 +97,7 @@ bool Rosen34(void)
 	TestFun  fun(w);
 	
 	// initial value of x
-	CppADvector< AD<double> > xini(3);
+	CPPAD_TEST_VECTOR< AD<double> > xini(3);
 	xini[0] = 1.;
 	xini[1] = 1.;
 	xini[2] = 0.;
@@ -108,8 +108,8 @@ bool Rosen34(void)
 
 	// create f : w -> x and vectors for evaluating derivatives
 	ADFun<double> f(w, x);
-	CppADvector<double> q( f.Domain() );
-	CppADvector<double> r( f.Range() );
+	CPPAD_TEST_VECTOR<double> q( f.Domain() );
+	CPPAD_TEST_VECTOR<double> r( f.Range() );
 
 	// check function values
 	AD<double> x0 = exp( - w[0] * t1 );

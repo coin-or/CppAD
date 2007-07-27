@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -42,7 +42,7 @@ bool ForOneCases()
 
 	// domain space vector
 	size_t n = 2;
-	CppADvector< AD<double> >  X(n);
+	CPPAD_TEST_VECTOR< AD<double> >  X(n);
 	X[0] = 1.;
 	X[1] = 2.;
 
@@ -51,7 +51,7 @@ bool ForOneCases()
 
 	// range space vector
 	size_t m = 3;
-	CppADvector< AD<double> >  Y(m);
+	CPPAD_TEST_VECTOR< AD<double> >  Y(m);
 	Y[0] = X[0] * exp( X[1] );
 	Y[1] = X[0] * sin( X[1] );
 	Y[2] = X[0] * cos( X[1] );

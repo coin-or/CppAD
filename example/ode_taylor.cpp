@@ -164,16 +164,16 @@ typedef CppAD::AD< ADdouble > ADDdouble;
 class Ode {
 private:
 	// copy of a that is set by constructor and used by g(y)
-	CppADvector< ADdouble > x_; 
+	CPPAD_TEST_VECTOR< ADdouble > x_; 
 public:
 	// constructor
-	Ode( CppADvector< ADdouble > x) : x_(x)
+	Ode( CPPAD_TEST_VECTOR< ADdouble > x) : x_(x)
 	{ }
 	// the function g(y) is evaluated with two levels of taping
-	CppADvector< ADDdouble > operator()
-	( const CppADvector< ADDdouble > &y) const
+	CPPAD_TEST_VECTOR< ADDdouble > operator()
+	( const CPPAD_TEST_VECTOR< ADDdouble > &y) const
 	{	size_t n = y.size();
-		CppADvector< ADDdouble > g(n);
+		CPPAD_TEST_VECTOR< ADDdouble > g(n);
 		size_t i;
 		g[0] = x_[0];
 		for(i = 1; i < n; i++)
@@ -186,12 +186,12 @@ public:
 // -------------------------------------------------------------------------
 // Routine that uses Taylor's method to solve ordinary differential equaitons
 // and allows for algorithmic differentiation of the solution. 
-CppADvector < ADdouble > taylor_ode(
+CPPAD_TEST_VECTOR < ADdouble > taylor_ode(
 	Ode                     G       ,  // function that defines the ODE
 	size_t                  order   ,  // order of Taylor's method used
 	size_t                  nstep   ,  // number of steps to take
 	ADdouble                &dt     ,  // Delta t for each step
-	CppADvector< ADdouble > &y_ini  )  // y(t) at the initial time
+	CPPAD_TEST_VECTOR< ADdouble > &y_ini  )  // y(t) at the initial time
 {
 	// some temporary indices
 	size_t i, k, ell;
@@ -200,10 +200,10 @@ CppADvector < ADdouble > taylor_ode(
 	size_t n = y_ini.size();
 
 	// copies of x and g(y) with two levels of taping
-	CppADvector< ADDdouble >   Y(n), Z(n);
+	CPPAD_TEST_VECTOR< ADDdouble >   Y(n), Z(n);
 
 	// y, y^{(k)} , z^{(k)}, and y^{(k+1)}
-	CppADvector< ADdouble >  y(n), y_k(n), z_k(n), y_kp(n);
+	CPPAD_TEST_VECTOR< ADdouble >  y(n), y_k(n), z_k(n), y_kp(n);
 	
 	// initialize x
 	for(i = 0; i < n; i++)
@@ -261,8 +261,8 @@ bool ode_taylor(void)
 	size_t i, j;
 
 	// parameter vector in both double and ADdouble
-	CppADvector<double>   x(n);
-	CppADvector<ADdouble> X(n);
+	CPPAD_TEST_VECTOR<double>   x(n);
+	CPPAD_TEST_VECTOR<ADdouble> X(n);
 	for(i = 0; i < n; i++)
 		X[i] = x[i] = double(i + 1);
 
@@ -275,12 +275,12 @@ bool ode_taylor(void)
 	size_t   nstep = 2;      // number of steps to take
 	ADdouble DT    = 1.;     // Delta t for each step
 	// value of y(t, x) at the initial time
-	CppADvector< ADdouble > Y_INI(n);
+	CPPAD_TEST_VECTOR< ADdouble > Y_INI(n);
 	for(i = 0; i < n; i++)
 		Y_INI[i] = 0.;
 
 	// integrate the differential equation
-	CppADvector< ADdouble > Y_FINAL(n);
+	CPPAD_TEST_VECTOR< ADdouble > Y_FINAL(n);
  	Y_FINAL = taylor_ode(G, order, nstep, DT, Y_INI);
 
 	// define differentiable fucntion object f : A -> Y_FINAL
@@ -296,7 +296,7 @@ bool ode_taylor(void)
 	}
 
 	// evaluate the Jacobian of h at a
-	CppADvector<double> jac = f.Jacobian(x);
+	CPPAD_TEST_VECTOR<double> jac = f.Jacobian(x);
 
 	// check Jacobian 
 	for(i = 0; i < n; i++)

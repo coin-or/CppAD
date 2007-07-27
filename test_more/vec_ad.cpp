@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -50,7 +50,7 @@ bool VecADTestOne(void)
 		ok &= ( V[i] == 2. * double(n - i) ); 
 
 	// independent variable 
-	CppADvector< AD<double> > X(1);
+	CPPAD_TEST_VECTOR< AD<double> > X(1);
 	X[0] = double(n - 1);
 	Independent(X);
 
@@ -69,15 +69,15 @@ bool VecADTestOne(void)
 	}
 
 	// dependent variable
-	CppADvector< AD<double> > Z(1);
+	CPPAD_TEST_VECTOR< AD<double> > Z(1);
 	Z[0] = V[ X[0] ];
 
 	// create f: X -> Z
 	ADFun<double> f(X, Z);
-	CppADvector<double>  x( f.Domain() );
-	CppADvector<double> dx( f.Domain() );
-	CppADvector<double>  z( f.Range() );
-	CppADvector<double> dz( f.Range() );
+	CPPAD_TEST_VECTOR<double>  x( f.Domain() );
+	CPPAD_TEST_VECTOR<double> dx( f.Domain() );
+	CPPAD_TEST_VECTOR<double>  z( f.Range() );
+	CPPAD_TEST_VECTOR<double> dz( f.Range() );
 
 	double vx;
 	for(i = 0; i < n; i++)
@@ -128,7 +128,7 @@ bool VecADTestTwo(void)
 	}
 
 	// declare independent variable 
-	CppADvector< AD<double> > X(1);
+	CPPAD_TEST_VECTOR< AD<double> > X(1);
 	X[0] = 2.;
 	Independent(X);
 
@@ -148,22 +148,22 @@ bool VecADTestTwo(void)
 	AD<double> Iceil  = Ifloor + 1.;
 
 	// linear interpolate Data
-	CppADvector< AD<double> > Y(1);
+	CPPAD_TEST_VECTOR< AD<double> > Y(1);
 	Y[0] = Data[Ifloor] + (I - Ifloor) * (Data[Iceil] - Data[Ifloor]);
 
 	// create f: X -> Y that linearly interpolates the data vector
 	ADFun<double> f(X, Y);
 
 	// evaluate the linear interpolant at the mid point for first interval
-	CppADvector<double>  x(1);
-	CppADvector<double>  y(1);
+	CPPAD_TEST_VECTOR<double>  x(1);
+	CPPAD_TEST_VECTOR<double>  y(1);
 	x[0] = xStep / 2.;
 	y    = f.Forward(0, x);
 	ok  &= NearEqual(y[0], (Data[0] + Data[1])/2., 1e-10, 1e-10);
 
 	// evalute the derivative with respect to x
-	CppADvector<double> dx(1);
-	CppADvector<double> dy(1);
+	CPPAD_TEST_VECTOR<double> dx(1);
+	CPPAD_TEST_VECTOR<double> dy(1);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 	ok   &= NearEqual(dy[0], (Data[1] - Data[0]) / xStep, 1e-10, 1e-10);

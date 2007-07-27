@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,7 +22,7 @@ bool MulTestOne(void)
 	using namespace CppAD;
 
 	// independent variable vector, indices, values, and declaration
-	CppADvector< AD<double> > U(2);
+	CPPAD_TEST_VECTOR< AD<double> > U(2);
 	size_t s = 0;
 	size_t t = 1;
 	U[s]     = 3.;
@@ -34,7 +34,7 @@ bool MulTestOne(void)
 	AD<double> one  = 1.;
 
 	// dependent variable vector and indices
-	CppADvector< AD<double> > Z(5);
+	CPPAD_TEST_VECTOR< AD<double> > Z(5);
 	size_t x = 0;
 	size_t y = 1;
 	size_t z = 2;
@@ -53,8 +53,8 @@ bool MulTestOne(void)
 
 	// create f: U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z);
-	CppADvector<double> q( f.Domain() );
-	CppADvector<double> r( f.Range() );
+	CPPAD_TEST_VECTOR<double> q( f.Domain() );
+	CPPAD_TEST_VECTOR<double> r( f.Range() );
 
 	// check parameter flag
 	ok &= f.Parameter(v);
@@ -77,7 +77,7 @@ bool MulTestOne(void)
 	ok &= ( r[v] == 0. );             // dv/ds
 
 	// reverse computation of second partials of z
-	CppADvector<double> d2( f.Domain() * 2 );
+	CPPAD_TEST_VECTOR<double> d2( f.Domain() * 2 );
 	r[x] = 0.;
 	r[y] = 0.;
 	r[z] = 1.;
@@ -99,7 +99,7 @@ bool MulTestTwo(void)
 
 	// independent variable vector
 	double u0 = .5;
-	CppADvector< AD<double> > U(1);
+	CPPAD_TEST_VECTOR< AD<double> > U(1);
 	U[0]      = u0;
 	Independent(U);
 
@@ -109,13 +109,13 @@ bool MulTestTwo(void)
 	AD<double> d = 4  * c;    // int        * AD<double> 
 
 	// dependent variable vector 
-	CppADvector< AD<double> > Z(1);
+	CPPAD_TEST_VECTOR< AD<double> > Z(1);
 	Z[0] = U[0] * d;          // AD<double> * AD<double>
 
 	// create f: U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z); 
-	CppADvector<double> v(1);
-	CppADvector<double> w(1);
+	CPPAD_TEST_VECTOR<double> v(1);
+	CPPAD_TEST_VECTOR<double> w(1);
 
 	// check value 
 	ok &= NearEqual(Value(Z[0]) , u0*4*3*2*u0,  1e-10 , 1e-10);
@@ -140,7 +140,7 @@ bool MulTestTwo(void)
 	}
 
 	// reverse computation of partials of Taylor coefficients
-	CppADvector<double> r(p); 
+	CPPAD_TEST_VECTOR<double> r(p); 
 	w[0]  = 1.;
 	r     = f.Reverse(p, w);
 	jfac  = 1.;

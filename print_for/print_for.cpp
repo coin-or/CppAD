@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,9 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin PrintFor.cpp$$
 $spell
+	CppAD
 	cppad.hpp
 	std::cout
-	CppADvector
 	endl
 	namespace
 	newline
@@ -40,7 +40,7 @@ int main(void)
 
 	// independent variable vector
 	size_t n = 2;
-	CppADvector< AD<double> > X(n);
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
 	X[0] = 0.; 
 	X[1] = 1.;
 	Independent(X);
@@ -53,7 +53,7 @@ int main(void)
 
 	// dependent variable vector 
 	size_t m = 1;
-	CppADvector< AD<double> > Y(m);
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
 	Y[0] = V[Zero] + X[1];
 
 	// First print a newline to separate this from previous output,
@@ -64,7 +64,7 @@ int main(void)
 	ADFun<double> f(X, Y); 
 
 	// zero order forward with x[0] = 1 and x[1] = 1
-	CppADvector<double> x(n);
+	CPPAD_TEST_VECTOR<double> x(n);
 	x[0] = 1.;
 	x[1] = 1.;
 

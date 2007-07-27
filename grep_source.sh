@@ -9,7 +9,8 @@ if [ -e grep_source.tmp ]
 then
 	rm grep_source.tmp
 fi
-list="
+dir_list="
+	.
 	cppad
 	cppad/local
 	example
@@ -25,12 +26,13 @@ list="
 	speed/profile
 	test_more
 "
-for dir in $list
+for dir in $dir_list
 do
 	for string in $*
 	do
-		grep -s $string \
-			$dir/*.hpp $dir/*.cpp $dir/*.omh >> grep_source.tmp
+		grep -s "$string" \
+			$dir/*.hpp $dir/*.cpp $dir/*.omh $dir/*.sh  \
+			>> grep_source.tmp
 	done
 done
 sed -e 's/:.*//' < grep_source.tmp | sort -u

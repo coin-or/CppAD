@@ -77,17 +77,17 @@ bool ForSparseJac(void)
 	size_t m = (4 + 11 + 1) * 3 + 4;
 
 	// independent variable vector 
-	CppADvector< AD<double> > X(n);
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
 	X[0] = .1; 
 	X[1] = .2;
 	X[2] = .3;
 	Independent(X);
 
 	// dependent variable vector
-	CppADvector< AD<double> > Y(m);
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
 
 	// check results vector
-	CppADvector< bool >       Check(m * n);
+	CPPAD_TEST_VECTOR< bool >       Check(m * n);
 
 	// initialize index into Y
 	size_t index = 0;
@@ -145,7 +145,7 @@ bool ForSparseJac(void)
 	ADFun<double> F(X, Y);
 
 	// dependency matrix for the identity function W(x) = x
-	CppADvector< bool > Px(n * n);
+	CPPAD_TEST_VECTOR< bool > Px(n * n);
 	size_t i, j;
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
@@ -154,7 +154,7 @@ bool ForSparseJac(void)
 	}
 
 	// evaluate the dependency matrix for F(X(x))
-	CppADvector< bool > Py(m * n);
+	CPPAD_TEST_VECTOR< bool > Py(m * n);
 	Py = F.ForSparseJac(n, Px);
 
 	// check values

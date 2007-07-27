@@ -58,9 +58,9 @@ namespace {
 		// compute f(t, x) both for double and AD<double>
 		template <typename Scalar>
 		void Ode(
-			const Scalar              &t, 
-			const CppADvector<Scalar> &x, 
-			CppADvector<Scalar>       &f)
+			const Scalar                    &t, 
+			const CPPAD_TEST_VECTOR<Scalar> &x, 
+			CPPAD_TEST_VECTOR<Scalar>       &f)
 		{	size_t n  = x.size();	
 			Scalar ti(1);
 			f[0]   = Scalar(1);
@@ -76,15 +76,15 @@ namespace {
 		}
 
 		void Ode_dep(
-			const double              &t, 
-			const CppADvector<double> &x, 
-			CppADvector<double>       &f_x)
+			const double                    &t, 
+			const CPPAD_TEST_VECTOR<double> &x, 
+			CPPAD_TEST_VECTOR<double>       &f_x)
 		{	using namespace CppAD;
 
 			size_t n  = x.size();	
-			CppADvector< AD<double> > T(1);
-			CppADvector< AD<double> > X(n);
-			CppADvector< AD<double> > F(n);
+			CPPAD_TEST_VECTOR< AD<double> > T(1);
+			CPPAD_TEST_VECTOR< AD<double> > X(n);
+			CPPAD_TEST_VECTOR< AD<double> > F(n);
 
 			// set argument values
 			T[0] = t;
@@ -102,8 +102,8 @@ namespace {
 			ADFun<double> Fun(X, F);
 
 			// compute partial of f w.r.t x
-			CppADvector<double> dx(n);
-			CppADvector<double> df(n);
+			CPPAD_TEST_VECTOR<double> dx(n);
+			CPPAD_TEST_VECTOR<double> df(n);
 			for(j = 0; j < n; j++)
 				dx[j] = 0.;
 			for(j = 0; j < n; j++)
@@ -129,7 +129,7 @@ bool OdeGear(void)
 	size_t  n = m;  // number of components in x(t)
 
 	// vector of times
-	CppADvector<double> T(m+1); 
+	CPPAD_TEST_VECTOR<double> T(m+1); 
 	double step = .1;
 	T[0]        = 0.;
 	for(j = 1; j <= m; j++)
@@ -138,7 +138,7 @@ bool OdeGear(void)
 	}
 
 	// initial values for x( T[m-j] ) 
-	CppADvector<double> X((m+1) * n);
+	CPPAD_TEST_VECTOR<double> X((m+1) * n);
 	for(j = 0; j < m; j++)
 	{	double ti = T[j];
 		for(i = 0; i < n; i++)
@@ -148,7 +148,7 @@ bool OdeGear(void)
 	}
 
 	// error bound
-	CppADvector<double> e(n);
+	CPPAD_TEST_VECTOR<double> e(n);
 
 	size_t use_x;
 	for( use_x = 0; use_x < 2; use_x++)

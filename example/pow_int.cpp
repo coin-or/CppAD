@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -42,13 +42,13 @@ bool pow_int(void)
 	// declare independent variables and start tape recording
 	size_t n  = 1;
 	double x0 = -0.5;
-	CppADvector< AD<double> > x(n);
+	CPPAD_TEST_VECTOR< AD<double> > x(n);
 	x[0]      = x0;
 	CppAD::Independent(x);
 
 	// dependent variable vector 
 	size_t m = 7;
-	CppADvector< AD<double> > y(m);
+	CPPAD_TEST_VECTOR< AD<double> > y(m);
 	int i;
 	for(i = 0; i < int(m); i++) 
 		y[i] = CppAD::pow(x[0], i - 3);
@@ -64,8 +64,8 @@ bool pow_int(void)
 	}
 
 	// forward computation of first partial w.r.t. x[0]
-	CppADvector<double> dx(n);
-	CppADvector<double> dy(m);
+	CPPAD_TEST_VECTOR<double> dx(n);
+	CPPAD_TEST_VECTOR<double> dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 	for(i = 0; i < int(m); i++) 
@@ -74,8 +74,8 @@ bool pow_int(void)
 	}
 
 	// reverse computation of derivative of y[i]
-	CppADvector<double>  w(m);
-	CppADvector<double> dw(n);
+	CPPAD_TEST_VECTOR<double>  w(m);
+	CPPAD_TEST_VECTOR<double> dw(n);
 	for(i = 0; i < int(m); i++) 
 		w[i] = 0.;
 	for(i = 0; i < int(m); i++) 

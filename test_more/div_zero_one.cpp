@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -32,15 +32,15 @@ bool DivZeroOne(void)
 		for(j = 0; j < 3; j++)
 		{	// run through the cases y = 0, 1, 2
 
-			CppADvector< ADdouble > x(1);
+			CPPAD_TEST_VECTOR< ADdouble > x(1);
 			x[0] = double(i);
 			Independent(x);
 
-			CppADvector< ADDdouble > y(1);
+			CPPAD_TEST_VECTOR< ADDdouble > y(1);
 			y[0] = ADDdouble(j);
 			Independent(y);
 
-			CppADvector< ADDdouble > z(2);
+			CPPAD_TEST_VECTOR< ADDdouble > z(2);
 			if( j == 0 )
 				z[0] = ADDdouble(0);
 			else	z[0] = x[0] / y[0];
@@ -53,8 +53,8 @@ bool DivZeroOne(void)
 
 			// f(y) = z = { x / y , y / (x * x) }
 			ADFun< ADdouble > f(y, z);
-			CppADvector< ADdouble > u( f.Domain() );
-			CppADvector< ADdouble > v( f.Range() );
+			CPPAD_TEST_VECTOR< ADdouble > u( f.Domain() );
+			CPPAD_TEST_VECTOR< ADdouble > v( f.Range() );
 
 			// v = f'(y)
 			u[0] = ADdouble(1.);
@@ -71,8 +71,8 @@ bool DivZeroOne(void)
 
 			// g(x) = f'(y) = {-x/y^2 , 1/(x * x)}
 			ADFun<double> g(x, v);
-			CppADvector< double > a( g.Domain() );
-			CppADvector< double > b( g.Range() );
+			CPPAD_TEST_VECTOR< double > a( g.Domain() );
+			CPPAD_TEST_VECTOR< double > b( g.Range() );
 
 			// b = g'(x)
 			a[0] = 1.;

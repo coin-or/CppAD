@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -39,7 +39,7 @@ namespace {
 	//	a[0] * x[0] + a[1] * x[1] = b[0]
 	//	a[2] * x[0] + a[3] * x[1] = b[1]
 	// in a way that will record pivot operations on the AD<double> tape
-	typedef CppADvector< CppAD::AD<double> > Vector;
+	typedef CPPAD_TEST_VECTOR< CppAD::AD<double> > Vector;
 	Vector Solve(const Vector &a , const Vector &b)
 	{	using namespace CppAD;
 		assert(a.size() == 4 && b.size() == 2);	
@@ -74,7 +74,7 @@ namespace {
 		A[other * 2 + 0] = zero;
 
 		// back substitute to compute the solution vector x
-		CppADvector< AD<double> > x(2);
+		CPPAD_TEST_VECTOR< AD<double> > x(2);
 		size_t iother = Integer(other);
 		size_t imax   = Integer(rmax);
 		x[iother]     = B[other] / A[other * 2 + 1];
@@ -93,7 +93,7 @@ bool VecAD(void)
 
 	// domain space vector
 	size_t n = 4;
-	CppADvector< AD<double> > X(n);
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
 	X[0] = 2.; X[1] = 0.;  // 2 * identity matrix (rmax in Solve will be 0)
 	X[2] = 0.; X[3] = 2.; 
 
@@ -101,13 +101,13 @@ bool VecAD(void)
 	CppAD::Independent(X);
 
 	// define the vector b
-	CppADvector< AD<double> > B(2);
+	CPPAD_TEST_VECTOR< AD<double> > B(2);
 	B[0] = 0.;
 	B[1] = 1.;
 
 	// range space vector solves X * Y = b
 	size_t m = 2;
-	CppADvector< AD<double> > Y(m);
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
 	Y = Solve(X, B);
 
 	// create f: X -> Y and stop tape recording
@@ -118,8 +118,8 @@ bool VecAD(void)
 	ok &= NearEqual(Y[1] , B[1] / X[3],  1e-10 , 1e-10);
 
 	// forward computation of partials w.r.t. x[0]
-	CppADvector<double> dx(n);
-	CppADvector<double> dy(m);
+	CPPAD_TEST_VECTOR<double> dx(n);
+	CPPAD_TEST_VECTOR<double> dy(m);
 	dx[0] = 1.; dx[1] = 0.;
 	dx[2] = 0.; dx[3] = 0.;
 	dy    = f.Forward(1, dx);
@@ -128,8 +128,8 @@ bool VecAD(void)
 
 	// compute the solution for a new x matrix such that pivioting
 	// on the original rmax row would divide by zero
-	CppADvector<double> x(n);  
-	CppADvector<double> y(m);
+	CPPAD_TEST_VECTOR<double> x(n);  
+	CPPAD_TEST_VECTOR<double> y(m);
 	x[0] = 0.; x[1] = 2.;
 	x[2] = 2.; x[3] = 0.;
 	y    = f.Forward(0, x);

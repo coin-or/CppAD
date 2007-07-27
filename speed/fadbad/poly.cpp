@@ -29,7 +29,6 @@ $spell
 	det
 	hpp
 	const
-	CppADvector
 	bool
 $$
 

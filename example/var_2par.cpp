@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -43,7 +43,7 @@ bool Var2Par(void)
 
 	// domain space vector
 	size_t n = 2;
-	CppADvector< AD<double> > x(n);
+	CPPAD_TEST_VECTOR< AD<double> > x(n);
 	x[0] = 3.;
 	x[1] = 4.;
 
@@ -52,7 +52,7 @@ bool Var2Par(void)
 
 	// range space vector 
 	size_t m = 1;
-	CppADvector< AD<double> > y(m);
+	CPPAD_TEST_VECTOR< AD<double> > y(m);
 	y[0] = - x[1] * Var2Par(x[0]);    // same as y[0] = -x[1] * 3.;
 
 	// cannot call Value(x[j]) or Value(y[0]) here (currently variables)
@@ -69,8 +69,8 @@ bool Var2Par(void)
 	ok &= (Value(y[0]) == -12.);
 
 	// evaluate derivative of y w.r.t x
-	CppADvector<double> w(m);
-	CppADvector<double> dw(n);
+	CPPAD_TEST_VECTOR<double> w(m);
+	CPPAD_TEST_VECTOR<double> dw(n);
 	w[0] = 1.;
 	dw   = f.Reverse(1, w);
 	ok  &= (dw[0] == 0.);  // derivative of y[0] w.r.t x[0] is zero

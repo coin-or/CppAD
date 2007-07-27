@@ -55,7 +55,7 @@ $end
 namespace { // put this function in the empty namespace
 	// f(x) = |x|^2 = .5 * ( x[0]^2 + ... + x[n-1]^2 + .5 )
 	template <class Type>
-	Type f(CppADvector<Type> &x)
+	Type f(CPPAD_TEST_VECTOR<Type> &x)
 	{	Type sum;
 
 		// check assignment of AD< AD<double> > = double
@@ -82,9 +82,9 @@ bool mul_level()
 	size_t n = 5;                            // dimension for example
 	size_t j;                                // a temporary index variable
 
-	CppADvector<double>       x(n);
-	CppADvector<ADdouble>   a_x(n);
-	CppADvector<ADDdouble> aa_x(n);
+	CPPAD_TEST_VECTOR<double>       x(n);
+	CPPAD_TEST_VECTOR<ADdouble>   a_x(n);
+	CPPAD_TEST_VECTOR<ADDdouble> aa_x(n);
 
 	// value of the independent variables
 	for(j = 0; j < n; j++)
@@ -95,25 +95,25 @@ bool mul_level()
 	CppAD::Independent(aa_x);          // aa_x is independent for ADDdouble
 
 	// compute function
-	CppADvector<ADDdouble> aa_f(1);    // scalar valued function
+	CPPAD_TEST_VECTOR<ADDdouble> aa_f(1);    // scalar valued function
 	aa_f[0] = f(aa_x);                 // has only one component
 
 	// declare inner function (corresponding to ADDdouble calculation)
 	CppAD::ADFun<ADdouble> a_F(aa_x, aa_f);
 
 	// compute f'(x) 
-	size_t p = 1;                  // order of derivative of a_F
-	CppADvector<ADdouble> a_w(1);  // weight vector for a_F
-	CppADvector<ADdouble> a_df(n); // value of derivative
-	a_w[0] = 1;                    // weighted function is same as a_F
-	a_df   = a_F.Reverse(p, a_w);  // gradient of f
+	size_t p = 1;                        // order of derivative of a_F
+	CPPAD_TEST_VECTOR<ADdouble> a_w(1);  // weight vector for a_F
+	CPPAD_TEST_VECTOR<ADdouble> a_df(n); // value of derivative
+	a_w[0] = 1;                          // weighted function same as a_F
+	a_df   = a_F.Reverse(p, a_w);        // gradient of f
 
 	// declare outter function (corresponding to ADdouble calculation)
 	CppAD::ADFun<double> df(a_x, a_df);
 
 	// compute the d/dx of f'(x) * v = f''(x) * v
-	CppADvector<double> v(n);
-	CppADvector<double> ddf_v(n);
+	CPPAD_TEST_VECTOR<double> v(n);
+	CPPAD_TEST_VECTOR<double> ddf_v(n);
 	for(j = 0; j < n; j++)
 		v[j] = double(n - j);
 	ddf_v = df.Reverse(p, v);

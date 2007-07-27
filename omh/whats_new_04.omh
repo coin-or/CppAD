@@ -642,7 +642,7 @@ This has been fixed.
 
 $head 04-28$$
 The operator $xref/CppAD_vector/Output/<</$$ was added to the
-default $xref/CppADvector/$$ template class.
+default $cref/test_vector/$$ template class.
 $pre
 
 $$
@@ -1004,7 +1004,7 @@ were modified so that they could be used with out side effects.
 
 $head 01-28$$
 Some corrections and improvements were made to the documentation including:
-$xref/CppADvector/$$ was placed before its use,
+$code CppADvector$$ was placed before its use,
 a reference to $code Ode_ind$$ and $code Ode_dep$$ was fixed in 
 $code OdeImplicit$$.
 

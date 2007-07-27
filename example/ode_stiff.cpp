@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 $begin OdeStiff.cpp$$
@@ -61,32 +59,32 @@ namespace {
 	// --------------------------------------------------------------
 	class Fun {
 	private:
-		CppADvector<double> a;
+		CPPAD_TEST_VECTOR<double> a;
 	public:
 		// constructor
-		Fun(const CppADvector<double>& a_) : a(a_)
+		Fun(const CPPAD_TEST_VECTOR<double>& a_) : a(a_)
 		{ }
 		// compute f(t, x) 
 		void Ode(
-			const double              &t, 
-			const CppADvector<double> &x, 
-			CppADvector<double>       &f)
+			const double                    &t, 
+			const CPPAD_TEST_VECTOR<double> &x, 
+			CPPAD_TEST_VECTOR<double>       &f)
 		{	f[0]  = - a[0] * x[0];
 			f[1]  = + a[0] * x[0] - a[1] * x[1]; 
 		}
 		// compute partial of f(t, x) w.r.t. t 
 		void Ode_ind(
-			const double              &t, 
-			const CppADvector<double> &x, 
-			CppADvector<double>       &f_t)
+			const double                    &t, 
+			const CPPAD_TEST_VECTOR<double> &x, 
+			CPPAD_TEST_VECTOR<double>       &f_t)
 		{	f_t[0] = 0.;
 			f_t[1] = 0.;
 		}
 		// compute partial of f(t, x) w.r.t. x 
 		void Ode_dep(
-			const double              &t, 
-			const CppADvector<double> &x, 
-			CppADvector<double>       &f_x)
+			const double                    &t, 
+			const CPPAD_TEST_VECTOR<double> &x, 
+			CPPAD_TEST_VECTOR<double>       &f_x)
 		{	f_x[0] = -a[0];  
 			f_x[1] = 0.;
 			f_x[2] = +a[0];
@@ -99,14 +97,14 @@ namespace {
 		Fun F;
 	public:
 		// constructor
-		RungeMethod(const CppADvector<double> &a_) : F(a_)
+		RungeMethod(const CPPAD_TEST_VECTOR<double> &a_) : F(a_)
 		{ }
 		void step(
-			double               ta , 
-			double               tb , 
-			CppADvector<double> &xa ,
-			CppADvector<double> &xb ,
-			CppADvector<double> &eb )
+			double                     ta , 
+			double                     tb , 
+			CPPAD_TEST_VECTOR<double> &xa ,
+			CPPAD_TEST_VECTOR<double> &xb ,
+			CPPAD_TEST_VECTOR<double> &eb )
 		{	xb = CppAD::Runge45(F, 1, ta, tb, xa, eb);
 		}
 		size_t order(void)
@@ -117,14 +115,14 @@ namespace {
 		Fun F;
 	public:
 		// constructor
-		RosenMethod(const CppADvector<double> &a_) : F(a_)
+		RosenMethod(const CPPAD_TEST_VECTOR<double> &a_) : F(a_)
 		{ }
 		void step(
-			double               ta , 
-			double               tb , 
-			CppADvector<double> &xa ,
-			CppADvector<double> &xb ,
-			CppADvector<double> &eb )
+			double                     ta , 
+			double                     tb , 
+			CPPAD_TEST_VECTOR<double> &xa ,
+			CPPAD_TEST_VECTOR<double> &xb ,
+			CPPAD_TEST_VECTOR<double> &eb )
 		{	xb = CppAD::Rosen34(F, 1, ta, tb, xa, eb);
 		}
 		size_t order(void)
@@ -135,24 +133,24 @@ namespace {
 bool OdeStiff(void)
 {	bool ok = true;     // initial return value
 
-	CppADvector<double> a(2);
+	CPPAD_TEST_VECTOR<double> a(2);
 	a[0] = 1e3;
 	a[1] = 1.;
 	RosenMethod rosen(a);
 	RungeMethod runge(a);
 	Fun          gear(a);
 
-	CppADvector<double> xi(2);
+	CPPAD_TEST_VECTOR<double> xi(2);
 	xi[0] = 1.;
 	xi[1] = 0.;
 
-	CppADvector<double> eabs(2);
+	CPPAD_TEST_VECTOR<double> eabs(2);
 	eabs[0] = 1e-6;
 	eabs[1] = 1e-6;
 
-	CppADvector<double> ef(2);
-	CppADvector<double> xf(2);
-	CppADvector<double> maxabs(2);
+	CPPAD_TEST_VECTOR<double> ef(2);
+	CPPAD_TEST_VECTOR<double> xf(2);
+	CPPAD_TEST_VECTOR<double> maxabs(2);
 	size_t                nstep;
 
 	size_t k;

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,13 +24,13 @@ bool ForwardCases(void)
 	using namespace CppAD;
 
 	// independent variable vector 
-	CppADvector< AD<double> > X(2);
+	CPPAD_TEST_VECTOR< AD<double> > X(2);
 	X[0] = 0.; 
 	X[1] = 1.;
 	Independent(X);
 
 	// compute product of elements in X
-	CppADvector< AD<double> > Y(1);
+	CPPAD_TEST_VECTOR< AD<double> > Y(1);
 	Y[0] = X[0] * X[0] * X[1];
 
 	// create function object F : X -> Y
@@ -93,7 +93,7 @@ bool ForwardOlder(void)
 	using namespace CppAD;
 
 	// independent variable vector 
-	CppADvector< AD<double> > U(3);
+	CPPAD_TEST_VECTOR< AD<double> > U(3);
 	U[0] = 0.; U[1] = 1.; U[2] = 2.;
 	Independent(U);
 
@@ -107,7 +107,7 @@ bool ForwardOlder(void)
 	}
 
 	// dependent variable vector 
-	CppADvector< AD<double> > V(2);
+	CPPAD_TEST_VECTOR< AD<double> > V(2);
 	V[0] = sum;
 	V[1] = prod;
 
@@ -115,15 +115,15 @@ bool ForwardOlder(void)
 	ADFun<double> f(U, V);
 
 	// use ADFun object to evaluate f[ (1, 2, 3)^T ] -----------------
-	CppADvector<double> u0( f.Domain() );
-	CppADvector<double> v0( f.Range() );
+	CPPAD_TEST_VECTOR<double> u0( f.Domain() );
+	CPPAD_TEST_VECTOR<double> v0( f.Range() );
 	size_t p;
 	p     = 0;
 	u0[0] = 1.; u0[1] = 2.; u0[2] = 3.;
 	v0    = f.Forward(p, u0);
 
 	// direct evaluation of f[ u0 ]
-	CppADvector<double> f0(2);
+	CPPAD_TEST_VECTOR<double> f0(2);
 	f0[0] = u0[0] + u0[1] + u0[2];
 	f0[1] = u0[0] * u0[1] * u0[2];
 
@@ -132,14 +132,14 @@ bool ForwardOlder(void)
 	ok &= NearEqual(v0[1] , f0[1], 1e-10, 1e-10);
 
 	// use ADFun object to evaluate f^(1) [ u0 ] * u1 -----------------
-	CppADvector<double> u1( f.Domain() );
-	CppADvector<double> v1( f.Range() );
+	CPPAD_TEST_VECTOR<double> u1( f.Domain() );
+	CPPAD_TEST_VECTOR<double> v1( f.Range() );
 	p     = 1;
 	u1[0] = 1.; u1[1] = 1.; u1[2] = 1.;
 	v1    = f.Forward(p, u1);
 
 	// direct evaluation of gradients of components of f
-	CppADvector<double> g0(3), g1(3);
+	CPPAD_TEST_VECTOR<double> g0(3), g1(3);
 	g0[0] =          1.; g0[1] =          1.; g0[2] =          1.;
 	g1[0] = u0[1]*u0[2]; g1[1] = u0[0]*u0[2]; g1[2] = u0[0]*u0[1];
 
@@ -151,15 +151,15 @@ bool ForwardOlder(void)
 
 	// use ADFun object to evaluate ------------------------------------
 	// (1/2) * { f^(1)[ u0 ] * u2 + u1^T * f^(2)[ u0 ] * u1 }
-	CppADvector<double> u2( f.Domain() );
-	CppADvector<double> v2( f.Range() );
+	CPPAD_TEST_VECTOR<double> u2( f.Domain() );
+	CPPAD_TEST_VECTOR<double> v2( f.Range() );
 	p     = 2;
 	u2[0] = .5; u2[1] = .4; u2[2] = .3;  
 	v2    = f.Forward(p, u2);
 
 	// direct evaluation of Hessian of second components of f
 	// (the Hessian of the first component is zero)
-	CppADvector<double> H1(9);
+	CPPAD_TEST_VECTOR<double> H1(9);
 	H1[0] =    0.; H1[1] = u0[2]; H1[2] = u0[1];
 	H1[3] = u0[2]; H1[4] =    0.; H1[5] = u0[0];
 	H1[6] = u0[1]; H1[7] = u0[0]; H1[8] =    0.;

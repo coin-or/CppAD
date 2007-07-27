@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -33,7 +33,7 @@ $end
 namespace { // put this function in the empty namespace
 	// F(x) = |x|^2 = x[0]^2 + ... + x[n-1]^2
 	template <class Type>
-	Type F(CppADvector<Type> &x)
+	Type F(CPPAD_TEST_VECTOR<Type> &x)
 	{	Type sum = 0;
 		size_t i = x.size();
 		while(i--)
@@ -51,7 +51,7 @@ bool HesTimesDir()
 
 	// domain space vector
 	size_t n = 5; 
-	CppADvector< AD<double> >  X(n);
+	CPPAD_TEST_VECTOR< AD<double> >  X(n);
 	for(j = 0; j < n; j++)
 		X[j] = AD<double>(j); 
 
@@ -60,22 +60,22 @@ bool HesTimesDir()
 
 	// range space vector
 	size_t m = 1;
-	CppADvector< AD<double> > Y(m);
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
 	Y[0] = F(X);
 
 	// create f : X -> Y and stop recording
 	CppAD::ADFun<double> f(X, Y);
 
 	// choose a direction dx and compute dy(x) = F'(x) * dx
-	CppADvector<double> dx(n);
-	CppADvector<double> dy(m);
+	CPPAD_TEST_VECTOR<double> dx(n);
+	CPPAD_TEST_VECTOR<double> dy(m);
 	for(j = 0; j < n; j++)
 		dx[j] = double(n - j);
 	dy = f.Forward(1, dx);
 
 	// compute ddw = F''(x) * dx
-	CppADvector<double> w(m);
-	CppADvector<double> ddw(2 * n);
+	CPPAD_TEST_VECTOR<double> w(m);
+	CPPAD_TEST_VECTOR<double> ddw(2 * n);
 	w[0] = 1.;
 	ddw  = f.Reverse(2, w);
 	
