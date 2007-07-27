@@ -105,7 +105,7 @@ bool VecADTestOne(void)
 // create the discrete function AD<double> Floor(const AD<double> &X) 
 double Floor(const double &x)
 {	return std::floor(x); }	
-CppADCreateDiscrete(double, Floor)
+CPPAD_DISCRETE_FUNCTION(double, Floor)
 
 bool VecADTestTwo(void)
 {	bool ok = true;

@@ -47,7 +47,7 @@ namespace {
 		return array[i];
 	}
 	// in empty namespace and outside any other routine
-	CppADCreateDiscrete(double, Array)
+	CPPAD_DISCRETE_FUNCTION(double, Array)
 }
 
 bool TapeIndex(void)

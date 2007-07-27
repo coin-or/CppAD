@@ -51,6 +51,11 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-28$$
+The preprocessor macro $code CPPAD_DISCRETE_FUNCTIOIN$$ was defined
+as a replacement for $code CppADCreateDiscrete$$ 
+which has been deprecated.
+
 $head 07-26$$
 Merge in changes made in $code branches/test_vector$$.
 

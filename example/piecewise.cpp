@@ -74,9 +74,9 @@ namespace {
 		double dy = FunctionValue[j+1] - FunctionValue[j];
 		return dy / dx;
 	}
-	CppADCreateDiscrete(double, Argument)
-	CppADCreateDiscrete(double, Function)
-	CppADCreateDiscrete(double, Slope)
+	CPPAD_DISCRETE_FUNCTION(double, Argument)
+	CPPAD_DISCRETE_FUNCTION(double, Function)
+	CPPAD_DISCRETE_FUNCTION(double, Slope)
 }
 
 

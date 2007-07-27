@@ -67,7 +67,7 @@ $xref/Independent/$$ is called,
 a new tape is created.
 If an exception occurs before the call to the corresponding
 $xref/ADFun/$$ constructor or $cref/Dependent/$$, 
-the tape recording will be never stop.
+the tape recording will never stop.
 Thus, there should be a way to abort a tape recording.
 
 $head Operation Sequence$$
@@ -109,12 +109,8 @@ Template parameter names should begin with an uppercase letter.
 
 $lnext
 Macro names (gasp!) names should use all uppercase.
-The CppAD macro $code CppADCreateDiscrete$$
-still is in its their original case.
-In addition,
-the macros $code CppADUsageError$$ and $code CppADUnknownError$$
-were not changed.
-The macro names above should be changed to use entirely upper case names.
+The macros $code CppADUsageError$$ and $code CppADUnknownError$$
+have not yet been changed to upper case.
 
 
 $lnext
