@@ -32,7 +32,7 @@ $spell
 	openmp
 	dy
 	automake
-	makefile:wq
+	makefile
 	CppAD
 	cygwin
 	cppad.hpp
@@ -50,6 +50,22 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-29$$
+The preprocessor macros 
+$code CppADUsageError$$ and $code CppADUnknownError$$
+have been replaced by $code CPPAD_ASSERT_KNOWN$$ and
+$code CPPAD_ASSERT_UNKNOWN$$ respectively.
+The meaning for these macros 
+has been included in the $cref/cppad_assert/$$ section.
+In addition, the $italic known$$ argument to $cref/ErrorHandler/$$
+was wrong for the unknown case.
+$pre
+
+$$
+The $cref/WishList/$$ item 
+for conversion of all preprocessor macros to upper case
+has been changes (to an item that was previous missing).
 
 $head 07-28$$
 The preprocessor macro $code CPPAD_DISCRETE_FUNCTIOIN$$ was defined

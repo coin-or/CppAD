@@ -228,7 +228,7 @@ AD<double> LuVecAD(
 		for(i = p; i < N; i += 1.)
 		{	itmp = ip[i] * N;
 			for(j = p; j < N; j += 1.)
-			{	CppADUnknownError(
+			{	CPPAD_ASSERT_UNKNOWN(
 					(ip[i] < N) & (jp[j] < N)
 				);
 				index = itmp + jp[j];

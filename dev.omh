@@ -50,8 +50,7 @@ $contents%
 	cppad/local/forward_sweep.hpp%
 	cppad/local/reverse_sweep.hpp%
 	cppad/local/for_jac_sweep.hpp%
-	cppad/local/rev_jac_sweep.hpp%
-	cppad/local/cppad_error.hpp
+	cppad/local/rev_jac_sweep.hpp
 %$$
 
 

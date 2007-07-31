@@ -13,6 +13,7 @@ dir_list="
 	.
 	cppad
 	cppad/local
+	cppad/speed
 	example
 	introduction
 	introduction/get_started

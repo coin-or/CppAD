@@ -82,7 +82,7 @@ nobase_include_HEADERS =  \
 	cppad/local/compute_assign.hpp \
 	cppad/local/cond_exp.hpp \
 	cppad/local/convert.hpp \
-	cppad/local/cppad_error.hpp \
+	cppad/local/cppad_assert.hpp \
 	cppad/local/declare.hpp \
 	cppad/local/default.hpp \
 	cppad/local/define.hpp \

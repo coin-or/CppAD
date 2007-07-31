@@ -42,168 +42,42 @@
 # the changes will not be copied (and commited) into another branch.
 #
 # ----------------------------------------------------------------------
-log_entry="Merge in changes from test_vector branch
+log_entry="Change the following preprocessor macros to upper case; i.e.,
+	CppADUnknownError -> CPPAD_ASSERT_UNKNOWN
+	CppADUsageError   -> CPPAD_ASSERT_KNOWN
 
+cppad_assert.hpp: replace old cppad_error.hpp file (include in user doc).
+cppad_error.hpp: change name to cppad_assert.hpp.
+grep_soruce.sh: include cppad/speed directory in search.
+svn_commit.sh: file that made this commit.
+makefile.am: change cppad_error.hpp to cppad_assert.hpp
+wish_list.omh: change preprocessor entry.
 whats_new_07.omh: user's view of the changes.
+dev.omh: move cppad_assert documentation to user (from developer).
+cppad/?.hpp: batch edit these files for preprocessor name change above.
+cppad/local/?.hpp: batch edit these files preprocessor name for change above.
+cppad/speed/det_by_lu.hpp: batch edit preprocessor name for change above.
+config.h: update (because error handling macro for unknown case fixed).
+lu_vec_ad.cpp: batch edit preprocessor name for change above.
 " 
 add_list="
+	cppad/local/cppad_assert.hpp
 "
 delete_list="
+	cppad/local/cppad_error.hpp
 "
 move_list="
-	cppad/local/cppad_vector.hpp
 "
 #
 change_list="
-	svn_commit.sh
-	example/unary_plus.cpp
-	example/atan_2.cpp
-	example/reverse_two.cpp
-	example/div_eq.cpp
-	example/unary_minus.cpp
-	example/lu_vec_ad_ok.cpp
-	example/complex_poly.cpp
-	example/reverse_one.cpp
-	example/value.cpp
-	example/tape_index.cpp
-	example/log.cpp
-	example/vec_ad.cpp
-	example/reverse_any.cpp
-	example/atan.cpp
-	example/acos.cpp
-	example/rev_two.cpp
-	example/sin.cpp
-	example/sub.cpp
-	example/rosen_34.cpp
-	example/mul.cpp
-	example/integer.cpp
-	example/rev_one.cpp
-	example/abs.cpp
-	example/pow.cpp
-	example/jacobian.cpp
-	example/hes_lu_det.cpp
-	example/erf.cpp
-	example/var_2par.cpp
-	example/copy_ad.cpp
-	example/mul_level_adolc.cpp
-	example/par_var.cpp
-	example/compare_change.cpp
-	example/jac_minor_det.cpp
-	example/cond_exp.cpp
-	example/sinh.cpp
-	example/ode_stiff.cpp
-	example/bender_quad.cpp
-	example/add_eq.cpp
-	example/equal_op_seq.cpp
-	example/hes_times_dir.cpp
-	example/hes_minor_det.cpp
-	example/for_two.cpp
-	example/for_sparse_jac.cpp
-	example/div.cpp
-	example/tan.cpp
-	example/cos.cpp
-	example/rev_sparse_jac.cpp
-	example/for_one.cpp
-	example/add.cpp
-	example/jac_lu_det.cpp
-	example/sqrt.cpp
-	example/asin.cpp
-	example/cosh.cpp
-	example/seq_property.cpp
-	example/ode_taylor.cpp
-	example/ode_taylor_adolc.cpp
-	example/forward.cpp
-	example/eq.cpp
-	example/ode_gear.cpp
-	example/ode_gear_control.cpp
-	example/rev_sparse_hes.cpp
-	example/piecewise.cpp
-	example/lu_ratio.cpp
-	example/sub_eq.cpp
-	example/pow_int.cpp
 	example/lu_vec_ad.cpp
-	example/log_10.cpp
-	example/mul_eq.cpp
-	example/poly.cpp
-	example/mul_level.cpp
-	example/compare.cpp
-	example/hessian.cpp
-	example/exp.cpp
-	example/independent.cpp
-	test_more/cond_exp.cpp
-	test_more/sinh.cpp
-	test_more/cond_exp_ad.cpp
-	test_more/atan_2.cpp
-	test_more/div_eq.cpp
-	test_more/neg.cpp
-	test_more/copy.cpp
-	test_more/reverse.cpp
-	test_more/value.cpp
-	test_more/add_eq.cpp
-	test_more/for_sparse_jac.cpp
-	test_more/log.cpp
-	test_more/vec_ad.cpp
-	test_more/div_zero_one.cpp
-	test_more/div.cpp
-	test_more/atan.cpp
-	test_more/cos.cpp
-	test_more/acos.cpp
-	test_more/rev_sparse_jac.cpp
-	test_more/add_zero.cpp
-	test_more/add.cpp
-	test_more/sin.cpp
-	test_more/sqrt.cpp
-	test_more/sub.cpp
-	test_more/asin.cpp
-	test_more/cosh.cpp
-	test_more/rosen_34.cpp
-	test_more/mul.cpp
-	test_more/sparse_vec_ad.cpp
-	test_more/forward.cpp
-	test_more/abs.cpp
-	test_more/pow.cpp
-	test_more/for_hess.cpp
-	test_more/rev_sparse_hes.cpp
-	test_more/erf.cpp
-	test_more/base_adolc.cpp
-	test_more/sub_eq.cpp
-	test_more/pow_int.cpp
-	test_more/log_10.cpp
-	test_more/mul_eq.cpp
-	test_more/poly.cpp
-	test_more/vec_ad_par.cpp
-	test_more/runge_45.cpp
-	test_more/sub_zero.cpp
-	test_more/compare_change.cpp
-	test_more/vec_unary.cpp
-	test_more/exp.cpp
-	test_more/mul_zero_one.cpp
-	test_more/sin_cos.cpp
-	print_for/print_for.cpp
-	makefile.am
-	omh/mul_level.omh
-	omh/example.omh
-	omh/wish_list.omh
-	omh/fun_deprecated.omh
-	omh/install_unix.omh
-	omh/whats_new_04.omh
-	omh/whats_new_05.omh
-	omh/whats_new_07.omh
-	omh/faq.omh
 	grep_source.sh
-	doc.omh
-	cppad/local/test_vector.hpp
-	cppad/local/bender_quad.hpp
-	cppad/local/preprocessor.hpp
+	svn_commit.sh
+	makefile.am
+	omh/wish_list.omh
+	omh/whats_new_07.omh
+	dev.omh
 	cppad/config.h
-	cppad/cppad.hpp
-	speed/fadbad/poly.cpp
-	speed/adolc/poly.cpp
-	speed/cppad/det_minor.cpp
-	speed/cppad/poly.cpp
-	speed/cppad/det_lu.cpp
-	speed/example/det_by_lu.cpp
-	speed/example/det_by_minor.cpp
 "
 #
 copy_branch="" 

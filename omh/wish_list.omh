@@ -10,6 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	Bool
 	Adolc
 	Fadbad
 	cygwin
@@ -109,7 +110,7 @@ Template parameter names should begin with an uppercase letter.
 
 $lnext
 Macro names (gasp!) names should use all uppercase.
-The macros $code CppADUsageError$$ and $code CppADUnknownError$$
+The macros $code CppADCreateUnaryBool$$ and $code CppADCreateBinaryBool$$
 have not yet been changed to upper case.
 
 
