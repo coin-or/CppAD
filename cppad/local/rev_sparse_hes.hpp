@@ -211,16 +211,16 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 	size_t m = dep_taddr.size();
 	size_t n = ind_taddr.size();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		q > 0,
 		"RevSparseHes: q (first argument) is not greater than zero"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		q == ForJacBitDim,
 		"RevSparseHes: q (first argument) is not equal to its value"
 		" in the previous call to ForSparseJac with this ADFun object."
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		s.size() == m,
 		"RevSparseHes: s (third argument) length is not equal to\n"
 		"range dimension for ADFun object."
@@ -228,7 +228,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 	
 	// number of packed values per variable on the tape
 	size_t npv = 1 + (q - 1) / sizeof(Pack);
-	CppADUnknownError( npv <= ForJacColDim );
+	CPPAD_ASSERT_UNKNOWN( npv <= ForJacColDim );
 
 	// array that will hold packed reverse Jacobian values
 	Pack *RevJac = CPPAD_NULL;
@@ -250,7 +250,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 			RevHes[ i * npv + k ] = 0;
 	}
 	for(i = 0; i < m; i++)
-	{	CppADUnknownError( dep_taddr[i] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < totalNumVar );
 		if( s[i] )
 		{	// set all the bits to true
 			RevJac[ dep_taddr[i] ] = ~0;
@@ -271,10 +271,10 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 
 	// j is index corresponding to reverse mode martial
 	for(j = 0; j < n; j++)
-	{	CppADUnknownError( ind_taddr[j] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] < totalNumVar );
 
 		// ind_taddr[j] is operator taddr for j-th independent variable
-		CppADUnknownError( Rec.GetOp( ind_taddr[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr[j] ) == InvOp );
 
 		// i is index corresponding to forward mode partial
 		for(i = 0; i < q; i++) 

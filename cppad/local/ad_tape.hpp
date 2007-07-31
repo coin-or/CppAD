@@ -602,13 +602,13 @@ private:
 template  <class Base>
 void ADTape<Base>::RecordNonOp(void)
 {
-	CppADUnknownError( NumInd(NonOp) == 0 );
+	CPPAD_ASSERT_UNKNOWN( NumInd(NonOp) == 0 );
 
 	// Op value for this instruction
 	Rec.PutOp(NonOp);
 
 	// no Ind values for this instruction
-	CppADUnknownError( NumInd(NonOp) == 0 );
+	CPPAD_ASSERT_UNKNOWN( NumInd(NonOp) == 0 );
 }
 
 template <class Base>
@@ -616,7 +616,7 @@ size_t ADTape<Base>::RecordParOp(const Base &z)
 {	size_t z_taddr;
 	size_t ind;
 
-	CppADUnknownError( NumInd(ParOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumInd(ParOp) == 1 );
 	z_taddr = Rec.PutOp(ParOp);
 	ind     = Rec.PutPar(z);
 	Rec.PutInd(ind);
@@ -628,17 +628,17 @@ template  <class Base>
 void ADTape<Base>::RecordInvOp(AD<Base> &z)
 {
 	// in the independent variable case, should not already be in tape
-	CppADUnknownError( Parameter(z) );
+	CPPAD_ASSERT_UNKNOWN( Parameter(z) );
 
 	// Make z correspond to a next variable in tape
 	z.id_    = id_;
 	z.taddr_ = Rec.PutOp(InvOp);
 
 	// no Ind values for this instruction
-	CppADUnknownError( NumInd(InvOp) == 0 );
+	CPPAD_ASSERT_UNKNOWN( NumInd(InvOp) == 0 );
 
 	// check that z is an independent variable
-	CppADUnknownError( Variable(z) );
+	CPPAD_ASSERT_UNKNOWN( Variable(z) );
 }
 
 
@@ -650,8 +650,8 @@ void ADTape<Base>::RecordLoadOp(
 	size_t     x_taddr
 )
 {
-	CppADUnknownError( (op == LdvOp) | (op == LdpOp) );
-	CppADUnknownError( NumInd(op) == 3 );
+	CPPAD_ASSERT_UNKNOWN( (op == LdvOp) | (op == LdpOp) );
+	CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
 
 	// Make z correspond to a next variable in tape
 	z.id_    = id_;
@@ -662,7 +662,7 @@ void ADTape<Base>::RecordLoadOp(
 	Rec.PutInd(offset, x_taddr, 0);
 
 	// check that z is a dependent variable
-	CppADUnknownError( Variable(z) );
+	CPPAD_ASSERT_UNKNOWN( Variable(z) );
 }
 
 template  <class Base>
@@ -673,16 +673,16 @@ void ADTape<Base>::RecordStoreOp(
 	size_t    y_taddr
 )
 {
-	CppADUnknownError( 
+	CPPAD_ASSERT_UNKNOWN( 
 		(op == StppOp) | 
 		(op == StvpOp) | 
 		(op == StpvOp) | 
 		(op == StvvOp) 
 	);
-	CppADUnknownError( NumInd(op) == 3 );
-	CppADUnknownError( NumVar(op) == 0 );
-	CppADUnknownError( (op==StppOp) | (op==StpvOp) | (x_taddr!=0) );
-	CppADUnknownError( (op==StppOp) | (op==StvpOp) | (y_taddr!=0) );
+	CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
+	CPPAD_ASSERT_UNKNOWN( NumVar(op) == 0 );
+	CPPAD_ASSERT_UNKNOWN( (op==StppOp) | (op==StpvOp) | (x_taddr!=0) );
+	CPPAD_ASSERT_UNKNOWN( (op==StppOp) | (op==StvpOp) | (y_taddr!=0) );
 
 	// Put operator in the tape
 	Rec.PutOp(op);
@@ -700,9 +700,9 @@ inline void ADTape<Base>::RecordOp(
 	size_t    y_taddr
 )
 {
-	CppADUnknownError( (x_taddr != 0) & (y_taddr != 0) );
-	CppADUnknownError( (op != InvOp) & (op != DisOp) );
-	CppADUnknownError( NumInd(op) == 2 );
+	CPPAD_ASSERT_UNKNOWN( (x_taddr != 0) & (y_taddr != 0) );
+	CPPAD_ASSERT_UNKNOWN( (op != InvOp) & (op != DisOp) );
+	CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
 
 	// Make z correspond to a next variable in tape
 	z.id_    = id_;
@@ -712,7 +712,7 @@ inline void ADTape<Base>::RecordOp(
 	Rec.PutInd(x_taddr, y_taddr);
 
 	// check that z is a dependent variable
-	CppADUnknownError( Variable(z) );
+	CPPAD_ASSERT_UNKNOWN( Variable(z) );
 }
 
 template  <class Base>
@@ -723,10 +723,10 @@ inline void ADTape<Base>::RecordOp(
 )
 {
 
-	CppADUnknownError( (x_taddr != 0) & (y_taddr != 0) );
-	CppADUnknownError( (op != InvOp) & (op != DisOp) );
-	CppADUnknownError( NumInd(op) == 2 );
-	CppADUnknownError( NumVar(op) == 0 );
+	CPPAD_ASSERT_UNKNOWN( (x_taddr != 0) & (y_taddr != 0) );
+	CPPAD_ASSERT_UNKNOWN( (op != InvOp) & (op != DisOp) );
+	CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumVar(op) == 0 );
 
 	// record operator
 	Rec.PutOp(op);
@@ -743,9 +743,9 @@ inline void ADTape<Base>::RecordOp(
 	const Base       &y
 )
 {
-	CppADUnknownError( x_taddr != 0 );
-	CppADUnknownError( (op != InvOp) & (op != DisOp) );
-	CppADUnknownError( NumInd(op) == 2 );
+	CPPAD_ASSERT_UNKNOWN( x_taddr != 0 );
+	CPPAD_ASSERT_UNKNOWN( (op != InvOp) & (op != DisOp) );
+	CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
 
 	// Make z correspond to a next variable in tape
 	z.id_    = id_;
@@ -755,7 +755,7 @@ inline void ADTape<Base>::RecordOp(
 	Rec.PutInd(x_taddr, Rec.PutPar(y));
 
 	// check that z is a dependent variable
-	CppADUnknownError( Variable(z) );
+	CPPAD_ASSERT_UNKNOWN( Variable(z) );
 }
 
 template  <class Base>
@@ -766,10 +766,10 @@ inline void ADTape<Base>::RecordOp(
 )
 {
 
-	CppADUnknownError( x_taddr != 0 );
-	CppADUnknownError( (op != InvOp) & (op != DisOp) );
-	CppADUnknownError( NumInd(op) == 2 );
-	CppADUnknownError( NumVar(op) == 0 );
+	CPPAD_ASSERT_UNKNOWN( x_taddr != 0 );
+	CPPAD_ASSERT_UNKNOWN( (op != InvOp) & (op != DisOp) );
+	CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumVar(op) == 0 );
 
 	// record this operation
 	Rec.PutOp(op);
@@ -786,9 +786,9 @@ inline void ADTape<Base>::RecordOp(
 	size_t      y_taddr
 )
 {
-	CppADUnknownError( y_taddr != 0 );
-	CppADUnknownError( (op != InvOp) & (op != DisOp) );
-	CppADUnknownError( NumInd(op) == 2 );
+	CPPAD_ASSERT_UNKNOWN( y_taddr != 0 );
+	CPPAD_ASSERT_UNKNOWN( (op != InvOp) & (op != DisOp) );
+	CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
 
 	// Make z correspond to a next variable in tape
 	z.id_    = id_;
@@ -798,7 +798,7 @@ inline void ADTape<Base>::RecordOp(
 	Rec.PutInd(Rec.PutPar(x), y_taddr);
 
 	// check that z is a dependent variable
-	CppADUnknownError( Variable(z) );
+	CPPAD_ASSERT_UNKNOWN( Variable(z) );
 }
 
 template  <class Base>
@@ -809,10 +809,10 @@ inline void ADTape<Base>::RecordOp(
 )
 {
 
-	CppADUnknownError( y_taddr != 0 );
-	CppADUnknownError( (op != InvOp) & (op != DisOp) );
-	CppADUnknownError( NumInd(op) == 2 );
-	CppADUnknownError( NumVar(op) == 0 );
+	CPPAD_ASSERT_UNKNOWN( y_taddr != 0 );
+	CPPAD_ASSERT_UNKNOWN( (op != InvOp) & (op != DisOp) );
+	CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumVar(op) == 0 );
 
 	// record this operation
 	Rec.PutOp(op);
@@ -829,9 +829,9 @@ inline void ADTape<Base>::RecordOp(
 )
 {
 
-	CppADUnknownError( (op != InvOp) & (op != DisOp) );
-	CppADUnknownError( NumInd(op) == 2 );
-	CppADUnknownError( NumVar(op) == 0 );
+	CPPAD_ASSERT_UNKNOWN( (op != InvOp) & (op != DisOp) );
+	CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumVar(op) == 0 );
 
 	// record this operation
 	Rec.PutOp(op);
@@ -847,9 +847,9 @@ inline void ADTape<Base>::RecordOp(
 	size_t      x_taddr
 )
 {
-	CppADUnknownError( x_taddr != 0 );
-	CppADUnknownError( (op != InvOp) & (op != DisOp) );
-	CppADUnknownError( NumInd(op) == 1 );
+	CPPAD_ASSERT_UNKNOWN( x_taddr != 0 );
+	CPPAD_ASSERT_UNKNOWN( (op != InvOp) & (op != DisOp) );
+	CPPAD_ASSERT_UNKNOWN( NumInd(op) == 1 );
 
 	// Make z correspond to a next variable in tape
 	z.id_    = id_;
@@ -859,7 +859,7 @@ inline void ADTape<Base>::RecordOp(
 	Rec.PutInd(x_taddr);
 
 	// check that z is a dependent variable
-	CppADUnknownError( Variable(z) );
+	CPPAD_ASSERT_UNKNOWN( Variable(z) );
 }
 
 template  <class Base>
@@ -869,8 +869,8 @@ void ADTape<Base>::RecordDisOp(
 	size_t      y_taddr
 )
 {
-	CppADUnknownError( x_taddr != 0 );
-	CppADUnknownError( NumInd(DisOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( x_taddr != 0 );
+	CPPAD_ASSERT_UNKNOWN( NumInd(DisOp) == 2 );
 
 	// Make z correspond to a next variable in tape
 	z.id_    = id_;
@@ -880,14 +880,14 @@ void ADTape<Base>::RecordDisOp(
 	Rec.PutInd(x_taddr, y_taddr);
 
 	// check that z is a dependent variable
-	CppADUnknownError( Variable(z) );
+	CPPAD_ASSERT_UNKNOWN( Variable(z) );
 }
 
 template <class Base>
 void ADTape<Base>::RecordPripOp(const char *text, const Base &x)
 {
 
-	CppADUnknownError( NumInd(PripOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumInd(PripOp) == 2 );
 
 	// put this operator in the tape
 	Rec.PutOp(PripOp);
@@ -900,7 +900,7 @@ template <class Base>
 void ADTape<Base>::RecordPrivOp(const char *text, size_t x_taddr)
 {
 
-	CppADUnknownError( NumInd(PripOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumInd(PripOp) == 2 );
 
 	// put this operator in the tape
 	Rec.PutOp(PrivOp);
@@ -912,7 +912,7 @@ void ADTape<Base>::RecordPrivOp(const char *text, size_t x_taddr)
 
 template <class Base>
 size_t ADTape<Base>::AddVec(size_t length, const Base *data)
-{	CppADUnknownError( length > 0 );
+{	CPPAD_ASSERT_UNKNOWN( length > 0 );
 	size_t i;
 	size_t vecInd;
 

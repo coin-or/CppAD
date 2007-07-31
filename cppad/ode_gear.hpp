@@ -360,7 +360,7 @@ $end
 */
 
 # include <cstddef>
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_simple_vector.hpp>
 # include <cppad/check_numeric_type.hpp>
 # include <cppad/vector.hpp>
@@ -389,23 +389,23 @@ void OdeGear(
 	// check simple vector class specifications
 	CheckSimpleVector<Scalar, Vector>();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		m >= 1,
 		"OdeGear: m is less than one"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		n > 0,
 		"OdeGear: n is equal to zero"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		T.size() >= (m+1),
 		"OdeGear: size of T is not greater than or equal (m+1)"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		X.size() >= (m+1) * n,
 		"OdeGear: size of X is not greater than or equal (m+1) * n"
 	);
-	for(j = 0; j < m; j++) CppADUsageError(
+	for(j = 0; j < m; j++) CPPAD_ASSERT_KNOWN(
 		T[j] < T[j+1],
 		"OdeGear: the array T is not monotone increasing"
 	);
@@ -489,7 +489,7 @@ void OdeGear(
 	int sign;
 	CppAD::vector<size_t> ip(n) , jp(n);
 	sign = LuFactor(ip, jp, A);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		sign != 0,
 		"OdeGear: step size is to large"
 	);

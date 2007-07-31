@@ -185,12 +185,12 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 	size_t m = dep_taddr.size();
 	size_t n = ind_taddr.size();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		p > 0,
 		"RevSparseJac: p (first argument) is not greater than zero"
 	);
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		s.size() == p * m,
 		"RevSparseJac: s (second argument) length is not equal to\n"
 		"p (first argument) times range dimension for ADFun object."
@@ -217,7 +217,7 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 	// set values corresponding to dependent variables
 	Pack mask;
 	for(j = 0; j < m; j++)
-	{	CppADUnknownError( dep_taddr[j] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[j] < totalNumVar );
 
 		// set bits that are true
 		for(i = 0; i < p; i++) 
@@ -235,9 +235,9 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 	// return values corresponding to dependent variables
 	Vector r(p * n);
 	for(j = 0; j < n; j++)
-	{	CppADUnknownError( ind_taddr[j] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] < totalNumVar );
 		// ind_taddr[j] is operator taddr for j-th independent variable
-		CppADUnknownError( Rec.GetOp( ind_taddr[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr[j] ) == InvOp );
 
 		// set bits 
 		for(i = 0; i < p; i++) 

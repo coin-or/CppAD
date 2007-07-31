@@ -258,7 +258,7 @@ It returns true, if it succeeds, and false otherwise.
 $end
 ------------------------------------------------------------------------------
 */
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 # include <sstream>
 # include <string>
 
@@ -316,13 +316,13 @@ public:
 	
 	TrackElement(const char *f, int l, void *p)
 	: file(f), line(l), ptr(p), next(CPPAD_NULL)
-	{	CppADUnknownError( p != CPPAD_NULL);
+	{	CPPAD_ASSERT_UNKNOWN( p != CPPAD_NULL);
 	}
 
 	// There is only one tracking list and it starts it here
 	static TrackElement *root_for(size_t thread)
 	{	static TrackElement root[CPPAD_MAX_NUM_THREADS];
-		CppADUnknownError( thread < CPPAD_MAX_NUM_THREADS );
+		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS );
 		return root + thread;
 	}
 
@@ -334,7 +334,7 @@ public:
 # else
 		size_t thread = 0;
 # endif
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			thread < CPPAD_MAX_NUM_THREADS,
 			"TrackNewDel: too many OpenMP threads are active."
 		);
@@ -384,7 +384,7 @@ inline void TrackError(
 	for(i = 0; i < n; i++)
 		message[i] = str[i];
 	message[n] = '\0';
-	CppADUsageError( false , message);
+	CPPAD_ASSERT_KNOWN( false , message);
 }
 
 // TrackNewVec ---------------------------------------------------------------
@@ -486,7 +486,7 @@ Type *TrackExtend(
 	size_t      ncopy   ,
 	Type       *oldptr  ) 
 {	// check size of ncopy
-	CppADUsageError( 
+	CPPAD_ASSERT_KNOWN( 
 		ncopy <= newlen,
 		"TrackExtend: ncopy is greater than newlen."
 	);

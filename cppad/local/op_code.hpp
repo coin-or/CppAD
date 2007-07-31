@@ -306,10 +306,10 @@ const size_t NumIndTable[] = {
 
 inline size_t NumInd(OpCode op)
 {
-	CppADUnknownError( size_t(SubvvOp) == 
+	CPPAD_ASSERT_UNKNOWN( size_t(SubvvOp) == 
 		sizeof(NumIndTable) / sizeof(NumIndTable[0]) - 1
 	);
-	CppADUnknownError( size_t(op) <= size_t(SubvvOp) );
+	CPPAD_ASSERT_UNKNOWN( size_t(op) <= size_t(SubvvOp) );
 
 	return NumIndTable[(size_t) op];
 }
@@ -360,10 +360,10 @@ const size_t NumVarTable[] = {
 
 inline size_t NumVar(OpCode op)
 {
-	CppADUnknownError( size_t(SubvvOp) == 
+	CPPAD_ASSERT_UNKNOWN( size_t(SubvvOp) == 
 		sizeof(NumVarTable) / sizeof(NumVarTable[0]) - 1
 	);
-	CppADUnknownError( size_t(op) <= size_t(SubvvOp) );
+	CPPAD_ASSERT_UNKNOWN( size_t(op) <= size_t(SubvvOp) );
 
 	return NumVarTable[(size_t) op];
 }
@@ -465,7 +465,7 @@ void printOp(
 		"Subvp" ,
 		"Subvv"
 	};
-	CppADUnknownError( 
+	CPPAD_ASSERT_UNKNOWN( 
 		size_t(SubvvOp) == sizeof(OpName) / sizeof(OpName[0]) - 1
 	);
 
@@ -486,40 +486,40 @@ void printOp(
 	switch( op )
 	{
 		case LdpOp:
-		CppADUnknownError( NumInd(op) == 3 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, "  p=", *(Rec->GetPar(ind[1])), ncol);
 		break;
 
 		case LdvOp:
-		CppADUnknownError( NumInd(op) == 3 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, "  v=", ind[1], ncol);
 		break;
 
 		case StppOp:
-		CppADUnknownError( NumInd(op) == 3 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, " pl=", *(Rec->GetPar(ind[1])), ncol);
 		printOpField(os, " pr=", *(Rec->GetPar(ind[2])), ncol);
 		break;
 
 		case StpvOp:
-		CppADUnknownError( NumInd(op) == 3 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, " pl=", *(Rec->GetPar(ind[1])), ncol);
 		printOpField(os, " vr=", ind[2], ncol);
 		break;
 
 		case StvpOp:
-		CppADUnknownError( NumInd(op) == 3 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, " vl=", ind[1], ncol);
 		printOpField(os, " pr=", *(Rec->GetPar(ind[2])), ncol);
 		break;
 
 		case StvvOp:
-		CppADUnknownError( NumInd(op) == 3 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, " vl=", ind[1], ncol);
 		printOpField(os, " vr=", ind[2], ncol);
@@ -530,7 +530,7 @@ void printOp(
 		case MulvvOp:
 		case PowvvOp:
 		case SubvvOp:
-		CppADUnknownError( NumInd(op) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
 		printOpField(os, " vl=", ind[0], ncol);
 		printOpField(os, " vr=", ind[1], ncol);
 		break;
@@ -540,7 +540,7 @@ void printOp(
 		case MulpvOp:
 		case PowpvOp:
 		case DivpvOp:
-		CppADUnknownError( NumInd(op) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
 		printOpField(os, " pl=", *(Rec->GetPar(ind[0])), ncol);
 		printOpField(os, " vr=", ind[1], ncol);
 		break;
@@ -550,7 +550,7 @@ void printOp(
 		case MulvpOp:
 		case PowvpOp:
 		case SubvpOp:
-		CppADUnknownError( NumInd(op) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
 		printOpField(os, " vl=", ind[0], ncol);
 		printOpField(os, " pr=", *(Rec->GetPar(ind[1])), ncol);
 		break;
@@ -566,42 +566,42 @@ void printOp(
 		case SinOp:
 		case SinhOp:
 		case SqrtOp:
-		CppADUnknownError( NumInd(op) == 1 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 1 );
 		printOpField(os, "  v=", ind[0], ncol);
 		break;
 
 		case ParOp:
-		CppADUnknownError( NumInd(op) == 1 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 1 );
 		printOpField(os, "  p=", *(Rec->GetPar(ind[0])), ncol);
 		break;
 
 		case PripOp:
-		CppADUnknownError( NumInd(op) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
 		printOpField(os, "txt=", *(Rec->GetTxt(ind[0])), ncol);
 		printOpField(os, "  p=", *(Rec->GetPar(ind[1])), ncol);
 		break;
 
 		case PrivOp:
-		CppADUnknownError( NumInd(op) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
 		printOpField(os, "txt=", *(Rec->GetTxt(ind[0])), ncol);
 		printOpField(os, "  v=", ind[1], ncol);
 		break;
 
 		case InvOp:
 		case NonOp:
-		CppADUnknownError( NumInd(op) == 0 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 0 );
 		break;
 
 		case DisOp:
-		CppADUnknownError( NumInd(op) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
 		printOpField(os, "  v=", ind[0], ncol);
 		printOpField(os, "  f=", ind[1], ncol);
 		break;
 	
 
 		case CExpOp:
-		CppADUnknownError(ind[1] != 0);
-		CppADUnknownError( NumInd(op) == 6 );
+		CPPAD_ASSERT_UNKNOWN(ind[1] != 0);
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 6 );
 		if( ind[1] & 1 )
 			printOpField(os, " vl=", ind[2], ncol);
 		else	printOpField(os, " pl=", *(Rec->GetPar(ind[2])), ncol);
@@ -617,8 +617,8 @@ void printOp(
 		break;
 
 		case ComOp:
-		CppADUnknownError(ind[1] != 0);
-		CppADUnknownError( NumInd(op) == 4 );
+		CPPAD_ASSERT_UNKNOWN(ind[1] != 0);
+		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 4 );
 		if( ind[1] & 1 )
 			printOpField(os, "res=", 1, ncol);
 		else	printOpField(os, "res=", 0, ncol);
@@ -631,7 +631,7 @@ void printOp(
 		break;
 
 		default:
-		CppADUnknownError(0);
+		CPPAD_ASSERT_UNKNOWN(0);
 	}
 	size_t k;
 	if( NumVar(op) > 0 )

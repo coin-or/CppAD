@@ -382,23 +382,23 @@ Vector OdeGearControl(
 	// dimension of the state space
 	size_t n = xi.size();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		M >= 1,
 		"Error in OdeGearControl: M is less than one"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		smin <= smax,
 		"Error in OdeGearControl: smin is greater than smax"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		sini <= smax,
 		"Error in OdeGearControl: sini is greater than smax"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		eabs.size() == n,
 		"Error in OdeGearControl: size of eabs is not equal to n"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		maxabs.size() == n,
 		"Error in OdeGearControl: size of maxabs is not equal to n"
 	);
@@ -494,7 +494,7 @@ Vector OdeGearControl(
 
 		if( advance )
 		{	// accept the results of this time step
-			CppADUnknownError( m <= M );
+			CPPAD_ASSERT_UNKNOWN( m <= M );
 			if( m == M )
 			{	// shift for next step
 				for(k = 0; k < m; k++)

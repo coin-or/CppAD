@@ -165,11 +165,11 @@ VectorBase ADFun<Base>::ForTwo(
 	// check VectorSize_t is Simple Vector class with size_t elements
 	CheckSimpleVector<size_t, VectorSize_t>();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		x.size() == n,
 		"ForTwo: Length of x not equal domain dimension for f."
 	); 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		j.size() == k.size(),
 		"ForTwo: Lenght of the j and k vectors are not equal."
 	);
@@ -201,11 +201,11 @@ VectorBase ADFun<Base>::ForTwo(
 	for(l = 0; l < p; l++)
 	{	j1 = j[l];
 		k1 = k[l];
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 		j1 < n,
 		"ForTwo: an element of j not less than domain dimension for f."
 		);
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 		k1 < n,
 		"ForTwo: an element of k not less than domain dimension for f."
 		);

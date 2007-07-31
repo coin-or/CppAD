@@ -188,12 +188,12 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	size_t m = dep_taddr.size();
 	size_t n = ind_taddr.size();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		q > 0,
 		"ForSparseJac: q (first arugment) is not greater than zero"
 	);
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		r.size() == n * q,
 		"ForSparseJac: r (second argument) length is not equal to\n"
 		"q (first argument) times domain dimension for ADFun object."
@@ -213,9 +213,9 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	// set values corresponding to independent variables
 	Pack mask;
 	for(i = 0; i < n; i++)
-	{	CppADUnknownError( ind_taddr[i] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[i] < totalNumVar );
 		// ind_taddr[i] is operator taddr for i-th independent variable
-		CppADUnknownError( Rec.GetOp( ind_taddr[i] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr[i] ) == InvOp );
 
 		// initialize all bits as zero
 		for(k = 0; k < npv; k++)
@@ -237,7 +237,7 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	// return values corresponding to dependent variables
 	Vector s(m * q);
 	for(i = 0; i < m; i++)
-	{	CppADUnknownError( dep_taddr[i] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < totalNumVar );
 
 		// set bits 
 		for(j = 0; j < q; j++) 

@@ -163,32 +163,32 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 : totalNumVar(0), Taylor(CPPAD_NULL), ForJac(CPPAD_NULL)
 {	size_t i, j, m, n;
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		x.size() > 0,
 		"ADFun<Base>: independent variable vector has size zero."
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		Variable(x[0]),
 		"ADFun<Base>: independent variable vector has been changed."
 	);
 	ADTape<Base> *tape = AD<Base>::tape_ptr(x[0].id_);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		tape->size_independent == x.size(),
 		"ADFun<Base>: independent variable vector has been changed."
 	);
 # ifndef NDEBUG
 	for(j = 0; j < x.size(); j++)
-	{	CppADUsageError(
+	{	CPPAD_ASSERT_KNOWN(
 		x[j].taddr_ == (j+1),
 		"ADFun<Base>: independent variable vector has been changed."
 		);
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 		x[j].id_ == x[0].id_,
 		"ADFun<Base>: independent variable vector has been changed."
 		);
 	}
 	for(i = 0; i < y.size(); i++)
-	{	CppADUsageError(
+	{	CPPAD_ASSERT_KNOWN(
 		CppAD::Parameter( y[i] ) | (y[i].id_ == x[0].id_) ,
 		"ADFun<Base>: dependent vector contains variables for"
 		"\na different tape than the independent variables."
@@ -206,10 +206,10 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 
 	// set zero order coefficients corresponding to indpendent variables
 	n = ind_taddr.size();
-	CppADUnknownError( n == x.size() );
+	CPPAD_ASSERT_UNKNOWN( n == x.size() );
 	for(j = 0; j < n; j++)
-	{	CppADUnknownError( ind_taddr[j] == (j+1) );
-		CppADUnknownError( x[j].taddr_  == (j+1) );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] == (j+1) );
+		CPPAD_ASSERT_UNKNOWN( x[j].taddr_  == (j+1) );
 		Taylor[ ind_taddr[j] ]  = x[j].value_;
 	}
 
@@ -217,11 +217,11 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	compareChange = ForwardSweep(
 		false, 0, totalNumVar, &Rec, TaylorColDim, Taylor
 	);
-	CppADUnknownError( compareChange == 0 );
+	CPPAD_ASSERT_UNKNOWN( compareChange == 0 );
 
 	// check the dependent variable values
 	m = dep_taddr.size();
-	for(i = 0; i < m; i++) CppADUsageError(
+	for(i = 0; i < m; i++) CPPAD_ASSERT_KNOWN(
 		Taylor[dep_taddr[i]] == y[i].value_,
 		"An independent variable is not equal its tape evaluation"
 		", it may be nan."

@@ -120,8 +120,8 @@ void JacobianFor(ADFun<Base> &f, const Vector &x, Vector &jac)
 	// check Vector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, Vector>();
 
-	CppADUnknownError( x.size()   == f.Domain() );
-	CppADUnknownError( jac.size() == f.Range() * f.Domain() );
+	CPPAD_ASSERT_UNKNOWN( x.size()   == f.Domain() );
+	CPPAD_ASSERT_UNKNOWN( jac.size() == f.Range() * f.Domain() );
 
 	// argument and result for forward mode calculations
 	Vector u(m);
@@ -155,8 +155,8 @@ void JacobianRev(ADFun<Base> &f, const Vector &x, Vector &jac)
 	size_t m = f.Domain();
 	size_t n = f.Range();
 
-	CppADUnknownError( x.size()   == f.Domain() );
-	CppADUnknownError( jac.size() == f.Range() * f.Domain() );
+	CPPAD_ASSERT_UNKNOWN( x.size()   == f.Domain() );
+	CPPAD_ASSERT_UNKNOWN( jac.size() == f.Range() * f.Domain() );
 
 	// argument and result for reverse mode calculations
 	Vector u(m);
@@ -198,7 +198,7 @@ Vector ADFun<Base>::Jacobian(const Vector &x)
 	size_t m = Domain();
 	size_t n = Range();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		x.size() == m,
 		"Jacobian: length of x not equal domain dimension for F"
 	); 

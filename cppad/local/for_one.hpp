@@ -135,11 +135,11 @@ Vector ADFun<Base>::ForOne(const Vector &x, size_t j)
 	// check Vector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, Vector>();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		x.size() == n,
 		"ForOne: Length of x not equal domain dimension for f"
 	); 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		j < n,
 		"ForOne: the index j is not less than domain dimension for f"
 	);

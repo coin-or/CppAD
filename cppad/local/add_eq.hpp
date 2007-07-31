@@ -41,7 +41,7 @@ AD<Base>& AD<Base>::operator += (const AD<Base> &right)
 		}
 	}
 	else
-	{	CppADUsageError(
+	{	CPPAD_ASSERT_KNOWN(
 			id_ == right.id_,
 			"Adding AD objects that are"
 			" variables on different tapes."

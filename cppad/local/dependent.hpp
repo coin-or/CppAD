@@ -127,7 +127,7 @@ template <typename Base>
 template <typename ADvector>
 void ADFun<Base>::Dependent(const ADvector &y)
 {	ADTape<Base> *tape = AD<Base>::tape_ptr();
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		tape != CPPAD_NULL,
 		"Can't store current operation sequence in this ADFun object"
 		"\nbecause there is no active tape (for this thread)."
@@ -141,33 +141,33 @@ template <typename Base>
 template <typename ADvector>
 void ADFun<Base>::Dependent(const ADvector &x, const ADvector &y)
 {
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		x.size() > 0,
 		"Dependent: independent variable vector has size zero."
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		Variable(x[0]),
 		"Dependent: independent variable vector has been changed."
 	);
 	ADTape<Base> *tape = AD<Base>::tape_ptr(x[0].id_);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		tape->size_independent == x.size(),
 		"Dependent: independent variable vector has been changed."
 	);
 # ifndef NDEBUG
 	size_t i, j;
 	for(j = 0; j < x.size(); j++)
-	{	CppADUsageError(
+	{	CPPAD_ASSERT_KNOWN(
 		x[j].taddr_ == (j+1),
 		"ADFun<Base>: independent variable vector has been changed."
 		);
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 		x[j].id_ == x[0].id_,
 		"ADFun<Base>: independent variable vector has been changed."
 		);
 	}
 	for(i = 0; i < y.size(); i++)
-	{	CppADUsageError(
+	{	CPPAD_ASSERT_KNOWN(
 		CppAD::Parameter( y[i] ) | (y[i].id_ == x[0].id_) ,
 		"ADFun<Base>: dependent vector contains a variable for"
 		"\na different tape (thread) than the independent variables."
@@ -192,7 +192,7 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	// check ADvector is Simple Vector class with AD<Base> elements
 	CheckSimpleVector< AD<Base>, ADvector>();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		y.size() > 0,
 		"ADFun operation sequence dependent variable size is zero size"
 	); 
@@ -200,7 +200,7 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	// set total number of variables in tape, parameter flag, 
 	// make a tape copy of dependent variables that are parameters, 
 	// and store tape address for each dependent variable
-	CppADUnknownError( NumVar(ParOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumVar(ParOp) == 1 );
 	dep_parameter.resize(m);
 	dep_taddr.resize(m);
 	totalNumVar = tape->Rec.TotNumVar();
@@ -212,8 +212,8 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 		}
 		else	y_taddr = y[i].taddr_;
 
-		CppADUnknownError( y_taddr > 0 );
-		CppADUnknownError( y_taddr < totalNumVar );
+		CPPAD_ASSERT_UNKNOWN( y_taddr > 0 );
+		CPPAD_ASSERT_UNKNOWN( y_taddr < totalNumVar );
 		dep_taddr[i] = y_taddr;
 	}
 
@@ -225,10 +225,10 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	AD<Base>::tape_delete( tape->id_ );
 
 	// total number of varables in this recording 
-	CppADUnknownError( totalNumVar == Rec.TotNumVar() );
+	CPPAD_ASSERT_UNKNOWN( totalNumVar == Rec.TotNumVar() );
 
 	// used to determine if there is an operation sequence in *this
-	CppADUnknownError( totalNumVar > 0 );
+	CPPAD_ASSERT_UNKNOWN( totalNumVar > 0 );
 
 	// free old buffers
 	if( Taylor != CPPAD_NULL )
@@ -249,11 +249,11 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 
 	// set tape address 
 	ind_taddr.resize(n);
-	CppADUnknownError(
+	CPPAD_ASSERT_UNKNOWN(
 		n < totalNumVar
 	);
 	for(j = 0; j < n; j++)
-	{	CppADUnknownError( Rec.GetOp(j+1) == InvOp );
+	{	CPPAD_ASSERT_UNKNOWN( Rec.GetOp(j+1) == InvOp );
 		ind_taddr[j] = j+1;
 	}
 

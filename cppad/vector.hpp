@@ -215,7 +215,7 @@ $end
 # include <cstddef>
 # include <iostream>
 # include <limits>
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 # include <cppad/track_new_del.hpp>
 
 # ifndef CPPAD_NULL
@@ -281,7 +281,7 @@ public:
 	// assignment operator
 	inline vector & operator=(const vector &x)
 	{	size_t i;
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			length == x.length ,
 			"size miss match in assignment operation"
 		);
@@ -291,7 +291,7 @@ public:
 	}
 	// non-constant element access
 	Type & operator[](size_t i)
-	{	CppADUsageError(
+	{	CPPAD_ASSERT_KNOWN(
 			i < length,
 			"vector index greater than or equal vector size"
 		);
@@ -299,7 +299,7 @@ public:
 	}
 	// constant element access
 	const Type & operator[](size_t i) const
-	{	CppADUsageError(
+	{	CPPAD_ASSERT_KNOWN(
 			i < length,
 			"vector index greater than or equal vector size"
 		);
@@ -307,7 +307,7 @@ public:
 	}
 	// add to the back of the array
 	void push_back(const Type &x)
-	{	CppADUnknownError( length <= capacity );
+	{	CPPAD_ASSERT_UNKNOWN( length <= capacity );
 		if( length == capacity )
 		{	// allocate more capacity
 			if( capacity == 0 )
@@ -427,11 +427,11 @@ public:
 	// assignment operator
 	inline vectorBool & operator=(const vectorBool &v)
 	{	size_t i;
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			length == v.length ,
 			"size miss match in assignment operation"
 		);
-		CppADUnknownError( nunit == v.nunit );
+		CPPAD_ASSERT_UNKNOWN( nunit == v.nunit );
 		for(i = 0; i < nunit; i++)
 			data[i] = v.data[i];
 		return *this;
@@ -439,7 +439,7 @@ public:
 	// non-constant element access
 	vectorBoolElement operator[](size_t k)
 	{	size_t i, j;
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			k < length,
 			"vector index greater than or equal vector size"
 		);
@@ -452,7 +452,7 @@ public:
 	{	size_t i, j;
 		UnitType unit;
 		UnitType mask;
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			k < length,
 			"vector index greater than or equal vector size"
 		);
@@ -466,7 +466,7 @@ public:
 	void push_back(bool bit)
 	{	size_t i, j;
 		UnitType mask;
-		CppADUnknownError( length <= nunit * BitPerUnit );
+		CPPAD_ASSERT_UNKNOWN( length <= nunit * BitPerUnit );
 		if( length == nunit * BitPerUnit )
 		{	// allocate another unit
 			data = CPPAD_TRACK_EXTEND(nunit+1, nunit, data);

@@ -156,7 +156,7 @@ public:
 			n, m, A, B, X, logdet);
 
 		// make sure the martix is not singular
-		CppADUsageError( 
+		CPPAD_ASSERT_KNOWN( 
 			signdet != 0,
 			"det_by_lu: matrix is singular"
 		);

@@ -309,21 +309,21 @@ $end
 
 # define CPPAD_VEC_AD_COMPUTED_ASSIGNMENT(op, name)                     \
 VecAD_reference& operator op (const VecAD_reference<Base> &right)       \
-{	CppADUsageError(                                                \
+{	CPPAD_ASSERT_KNOWN(                                                \
 		0,                                                      \
 		"Cannot use a ADVec element on left side of" name       \
 	);                                                              \
 	return *this;                                                   \
 }                                                                       \
 VecAD_reference& operator op (const AD<Base> &right)                    \
-{	CppADUsageError(                                                \
+{	CPPAD_ASSERT_KNOWN(                                                \
 		0,                                                      \
 		"Cannot use a ADVec element on left side of" name       \
 	);                                                              \
 	return *this;                                                   \
 }                                                                       \
 VecAD_reference& operator op (const Base &right)                        \
-{	CppADUsageError(                                                \
+{	CPPAD_ASSERT_KNOWN(                                                \
 		0,                                                      \
 		"Cannot use a ADVec element on left side of" name       \
 	);                                                              \
@@ -363,10 +363,10 @@ public:
 	// AD<Base> constructor
 	AD<Base> ADBase(void) const
 	{	AD<Base> result;
-		CppADUnknownError( Parameter(result) );
+		CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
 		size_t i = static_cast<size_t>( Integer(x_) );
-		CppADUnknownError( i < vec_->length_ );
+		CPPAD_ASSERT_UNKNOWN( i < vec_->length_ );
 
 		// value_ corresponding to this element
 		result.value_ = *(vec_->data_ + i);
@@ -375,9 +375,9 @@ public:
 		if( Variable(*vec_) )
 		{
 			ADTape<Base> *tape = AD<Base>::tape_ptr(vec_->id_);
-			CppADUnknownError( tape != CPPAD_NULL );
+			CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
 
-			CppADUnknownError( vec_->offset_ > 0  );
+			CPPAD_ASSERT_UNKNOWN( vec_->offset_ > 0  );
 	
 			if( IdenticalPar(x_) )
 			{	// use parameter indexing
@@ -387,7 +387,7 @@ public:
 					vec_->offset_,
 					static_cast<size_t>(i)
 				);
-				CppADUnknownError( Parameter(x_) );
+				CPPAD_ASSERT_UNKNOWN( Parameter(x_) );
 			}
 			else
 			{	// check if we need to convert x to a variable
@@ -405,7 +405,7 @@ public:
 					vec_->offset_,
 					x_.taddr_
 				);
-				CppADUnknownError( 
+				CPPAD_ASSERT_UNKNOWN( 
 					x_.taddr_ > 0 && Variable(x_)
 				);
 			}
@@ -435,7 +435,7 @@ public:
 	// default constructor
 	// initialize id_ to one so not a variable
 	VecAD(void) : length_(0) , data_(CPPAD_NULL), offset_(0), id_(1)
-	{ CppADUnknownError( Parameter(*this) ); }
+	{ CPPAD_ASSERT_UNKNOWN( Parameter(*this) ); }
 
 	// constructor 
 	// initialize id_ to one so not a variable
@@ -452,7 +452,7 @@ public:
 			for(i = 0; i < length_; i++)
 				data_[i] = zero;
 		}
-		CppADUnknownError( Parameter(*this) );
+		CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
 	}
 
 	// destructor
@@ -468,12 +468,12 @@ public:
 	// not taped element access
 	Base &operator[](size_t i)
 	{
-		CppADUsageError( 
+		CPPAD_ASSERT_KNOWN( 
 			Parameter(*this),
 			"VecAD: cannot use size_t indexing because this"
 			" VecAD vector is a variable."
 		);
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			i < length_,
 			"VecAD: element index is >= vector length"
 		);
@@ -484,11 +484,11 @@ public:
 	// taped elemement access
 	VecAD_reference<Base> operator[](const AD<Base> &x) 
 	{
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			0 <= Integer(x),
 			"VecAD: element index is < zero"
 		);
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			static_cast<size_t>( Integer(x) ) < length_,
 			"VecAD: element index is >= vector length"
 		);
@@ -497,7 +497,7 @@ public:
 		if( Parameter(*this) & Parameter(x) )
 			return VecAD_reference<Base>(this, x);
 
-		CppADUsageError( 
+		CPPAD_ASSERT_KNOWN( 
 			Parameter(*this) | Parameter(x) | (id_ == x.id_),
 			"VecAD: vector and index are variables for"
 			" different tapes."
@@ -539,14 +539,14 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
 		return;
 	}
 
-	CppADUsageError( 
+	CPPAD_ASSERT_KNOWN( 
 		Parameter(*vec_) | (vec_->id_ == y.id_),
 		"VecAD: vector and new element value are variables"
 		"\nfor different tapes."
 	);
 
 	ADTape<Base> *tape = AD<Base>::tape_ptr(y.id_);
-	CppADUnknownError( tape != CPPAD_NULL );
+	CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
 	if( Parameter(*vec_) )
 	{	// must place a copy of vector in tape
 		vec_->offset_ = tape->AddVec(vec_->length_, vec_->data_);
@@ -557,17 +557,17 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
 		// tape id corresponding to this offest
 		vec_->id_ = y.id_;
 	}
-	CppADUnknownError( Variable(*vec_) );
+	CPPAD_ASSERT_UNKNOWN( Variable(*vec_) );
 
 
 	size_t i = static_cast<size_t>( Integer(x_) );
-	CppADUnknownError( i < vec_->length_ );
+	CPPAD_ASSERT_UNKNOWN( i < vec_->length_ );
 
 	// assign value both in the element and the original array
 	*(vec_->data_ + i) = y.value_;
 
 	// record the setting of this array element
-	CppADUnknownError( vec_->offset_ > 0 );
+	CPPAD_ASSERT_UNKNOWN( vec_->offset_ > 0 );
 	if( Parameter(x_) ) tape->RecordStoreOp(
 			StpvOp, vec_->offset_, i, y.taddr_ );
 	else	tape->RecordStoreOp(
@@ -580,7 +580,7 @@ void VecAD_reference<Base>::operator=(const Base &y)
 	size_t y_taddr;
 
 	size_t i = static_cast<size_t>( Integer(x_) );
-	CppADUnknownError( i < vec_->length_ );
+	CPPAD_ASSERT_UNKNOWN( i < vec_->length_ );
 
 	// assign value both in the element and the original array
 	*(vec_->data_ + i) = y;
@@ -590,13 +590,13 @@ void VecAD_reference<Base>::operator=(const Base &y)
 		return;
 
 	ADTape<Base> *tape = AD<Base>::tape_ptr(vec_->id_);
-	CppADUnknownError( tape != CPPAD_NULL );
+	CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
 
 	// place a copy of y in the tape
 	y_taddr = tape->Rec.PutPar(y);
 
 	// record the setting of this array element
-	CppADUnknownError( vec_->offset_ > 0 );
+	CPPAD_ASSERT_UNKNOWN( vec_->offset_ > 0 );
 	if( Parameter(x_) ) tape->RecordStoreOp(
 			StppOp, vec_->offset_, i, y_taddr );
 	else	tape->RecordStoreOp(

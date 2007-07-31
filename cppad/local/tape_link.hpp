@@ -173,13 +173,13 @@ inline ADTape<Base> *AD<Base>::tape_this(void) const
 {	
 
 	size_t thread = id_ % CPPAD_MAX_NUM_THREADS;
-	CppADUnknownError( id_ == *id_handle(thread) );
-	CppADUnknownError( *tape_handle(thread) != CPPAD_NULL );
+	CPPAD_ASSERT_UNKNOWN( id_ == *id_handle(thread) );
+	CPPAD_ASSERT_UNKNOWN( *tape_handle(thread) != CPPAD_NULL );
 	return *tape_handle(thread);
 
 # if 0 // old code that did not use OpenMP 
-	CppADUnknownError( id_ == *id_handle() );
-	CppADUnknownError( *tape_handle() != CPPAD_NULL );
+	CPPAD_ASSERT_UNKNOWN( id_ == *id_handle() );
+	CPPAD_ASSERT_UNKNOWN( *tape_handle() != CPPAD_NULL );
 	return *tape_handle();
 # endif
 
@@ -190,7 +190,7 @@ inline ADTape<Base> *AD<Base>::tape_this(void) const
 template <class Base>
 inline size_t * AD<Base>::id_handle(size_t thread)
 {	static size_t id_table[CPPAD_MAX_NUM_THREADS];
-	CppADUnknownError( 
+	CPPAD_ASSERT_UNKNOWN( 
 		(id_table[thread] == 0)
 		| (id_table[thread] % CPPAD_MAX_NUM_THREADS == thread)
 	); 
@@ -213,7 +213,7 @@ size_t  AD<Base>::tape_new(void)
 	size_t *id          = id_handle(thread);
 	ADTape<Base> **tape = tape_handle(thread);
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 	thread < omp_max_thread(0),
 	"Independent: OpenMP thread number is >= omp_max_thread setting"
 	);
@@ -223,7 +223,7 @@ size_t  AD<Base>::tape_new(void)
 		*id = thread + 2 * CPPAD_MAX_NUM_THREADS;
 
 	// tape for this thread must be null at the start
-	CppADUnknownError( *tape  == CPPAD_NULL );
+	CPPAD_ASSERT_UNKNOWN( *tape  == CPPAD_NULL );
 	*tape = new ADTape<Base>( *id );
 
 	return *id;
@@ -234,18 +234,18 @@ void  AD<Base>::tape_delete(size_t id_old)
 {
 	size_t thread = id_old % CPPAD_MAX_NUM_THREADS;
 # ifdef _OPENMP
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 	thread == static_cast<size_t> ( omp_get_thread_num() ),
 	"AD tape recording must stop in same thread as it started in."
 	);
 # else
-	CppADUnknownError(thread == 0);
+	CPPAD_ASSERT_UNKNOWN(thread == 0);
 # endif
 	size_t        *id   = id_handle(thread);
 	ADTape<Base> **tape = tape_handle(thread);
 
-	CppADUnknownError( *id   == id_old     );
-	CppADUnknownError( *tape != CPPAD_NULL );
+	CPPAD_ASSERT_UNKNOWN( *id   == id_old     );
+	CPPAD_ASSERT_UNKNOWN( *tape != CPPAD_NULL );
 
 	// increase the id for this thread in a way such that 
 	// thread = id % CPPAD_MAX_NUM_THREADS
@@ -273,15 +273,15 @@ inline ADTape<Base> *AD<Base>::tape_ptr(size_t id)
 {
 	size_t thread = id % CPPAD_MAX_NUM_THREADS;
 # ifdef _OPENMP
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 	thread == static_cast<size_t> ( omp_get_thread_num() ),
 	"Attempt to use an AD variable in two different OpenMP threads."
 	);
 # else
-	CppADUnknownError(thread == 0 );
+	CPPAD_ASSERT_UNKNOWN(thread == 0 );
 # endif
-	CppADUnknownError( id == *id_handle(thread) );
-	CppADUnknownError( *tape_handle(thread) != CPPAD_NULL );
+	CPPAD_ASSERT_UNKNOWN( id == *id_handle(thread) );
+	CPPAD_ASSERT_UNKNOWN( *tape_handle(thread) != CPPAD_NULL );
 	return *tape_handle(thread); 
 }
 

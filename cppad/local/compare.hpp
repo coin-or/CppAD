@@ -172,8 +172,8 @@ void ADTape<Base>::RecordCompare(
 	// ind[0] = cop 
 	ind0 = size_t (cop);
 
-	CppADUnknownError( ind1 > 1 );
-	CppADUnknownError( NumInd(ComOp) == 4 );
+	CPPAD_ASSERT_UNKNOWN( ind1 > 1 );
+	CPPAD_ASSERT_UNKNOWN( NumInd(ComOp) == 4 );
 
 	// put the operator in the tape
 	Rec.PutOp(ComOp);

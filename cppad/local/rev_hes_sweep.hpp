@@ -155,8 +155,8 @@ void RevHesSweep(
 	size_t             j;
 
 	// check numvar argument
-	CppADUnknownError( Rec->TotNumVar() == numvar );
-	CppADUnknownError( numvar > 0 );
+	CPPAD_ASSERT_UNKNOWN( Rec->TotNumVar() == numvar );
+	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 
 	// Initialize
 	i_op   = Rec->NumOp();
@@ -172,12 +172,12 @@ void RevHesSweep(
 
 		// corresponding varable
 		n_var  = NumVar(op);
-		CppADUnknownError( i_var >= n_var );
+		CPPAD_ASSERT_UNKNOWN( i_var >= n_var );
 		i_var -= n_var;
 
 		// corresponding index values
 		n_ind  = NumInd(op);
-		CppADUnknownError( i_ind >= n_ind );
+		CPPAD_ASSERT_UNKNOWN( i_ind >= n_ind );
 		i_ind -= n_ind;
 		ind    = Rec->GetInd(n_ind, i_ind);
 
@@ -204,9 +204,9 @@ void RevHesSweep(
 		switch( op )
 		{
 			case AbsOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			Xh  = RevHes + ind[0] * npv;
 			for(j = 0; j < npv; j++)
@@ -216,10 +216,10 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case AddvvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			Xh  = RevHes + ind[0] * npv;
 			Yh  = RevHes + ind[1] * npv;
@@ -231,9 +231,9 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case AddpvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			Yh  = RevHes + ind[1] * npv;
 			for(j = 0; j < npv; j++)
@@ -243,9 +243,9 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case AddvpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			Xh  = RevHes + ind[0] * npv;
 			for(j = 0; j < npv; j++)
@@ -255,12 +255,12 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case AcosOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// acos(x) and sqrt(1 - x * x) are computed in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 			Xf  = ForJac + ind[0] * npv;
 			Xh  = RevHes + ind[0] * npv;
@@ -271,12 +271,12 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case AsinOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// asin(x) and sqrt(1 - x * x) are computed in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 
 			Xf  = ForJac + ind[0] * npv;
@@ -288,12 +288,12 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case AtanOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// atan(x) and 1 + x * x must be computed in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 			Xf  = ForJac + ind[0] * npv;
 			Xh  = RevHes + ind[0] * npv;
@@ -303,9 +303,9 @@ void RevHesSweep(
 			break;
 			// -------------------------------------------------
 			case CExpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 6);
-			CppADUnknownError( ind[1] != 0 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 6);
+			CPPAD_ASSERT_UNKNOWN( ind[1] != 0 );
 
 			if( ind[1] & 1 )
 				left = Taylor + ind[2] * TaylorColDim;
@@ -341,19 +341,19 @@ void RevHesSweep(
 			// ---------------------------------------------------
 
 			case ComOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 4 );
-			CppADUnknownError( ind[1] > 1 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 0 );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 4 );
+			CPPAD_ASSERT_UNKNOWN( ind[1] > 1 );
 			break;
 			// --------------------------------------------------
 
 			case CosOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// cosine and sine must come in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 			Xf  = ForJac + ind[0] * npv;
 			Xh  = RevHes + ind[0] * npv;
@@ -364,12 +364,12 @@ void RevHesSweep(
 			// ---------------------------------------------------
 
 			case CoshOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// hyperbolic cosine and sine must come in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 
 			Xf  = ForJac + ind[0] * npv;
@@ -381,17 +381,17 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case DisOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
 
 			break;
 			// -------------------------------------------------
 
 			case DivvvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			Xf = ForJac + ind[0] * npv;
 			Xh = RevHes + ind[0] * npv;
@@ -405,9 +405,9 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case DivpvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			Yf = ForJac + ind[1] * npv;
 			Yh = RevHes + ind[1] * npv;
@@ -418,9 +418,9 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case DivvpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			Xh = RevHes + ind[0] * npv;
 			for(j = 0; j < npv; j++)
@@ -430,9 +430,9 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case ExpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 
 			Xf  = ForJac + ind[0] * npv;
@@ -444,18 +444,18 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case InvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 0 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 0 );
 			// Z is already defined
 			break;
 			// -------------------------------------------------
 
 			case LdpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 			
-			CppADUnknownError( ind[0] > 0 );
-			CppADUnknownError( ind[0] < Rec->NumVecInd() );
+			CPPAD_ASSERT_UNKNOWN( ind[0] > 0 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumVecInd() );
 
 			// ind[2] is variable corresponding to this load
 			if( ind[2] > 0 )
@@ -467,11 +467,11 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case LdvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 			
-			CppADUnknownError( ind[0] > 0 );
-			CppADUnknownError( ind[0] < Rec->NumVecInd() );
+			CPPAD_ASSERT_UNKNOWN( ind[0] > 0 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumVecInd() );
 
 			// ind[2] is variable corresponding to this load
 			if( ind[2] > 0 )
@@ -483,9 +483,9 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case LogOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			Xf  = ForJac + ind[0] * npv;
 			Xh  = RevHes + ind[0] * npv;
@@ -496,10 +496,10 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case MulvvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			Xf = ForJac + ind[0] * npv;
 			Xh = RevHes + ind[0] * npv;
@@ -513,9 +513,9 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case MulpvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			Yh = RevHes + ind[1] * npv;
 			for(j = 0; j < npv; j++)
@@ -525,9 +525,9 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case MulvpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			Xh = RevHes + ind[0] * npv;
 			for(j = 0; j < npv; j++)
@@ -537,23 +537,23 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case NonOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 0 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 0 );
 
 			break;
 			// -------------------------------------------------
 
 			case ParOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
 
 			break;
 			// -------------------------------------------------
 
 			case PowpvOp:
-			CppADUnknownError( n_var == 3 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			Yf = ForJac + ind[1] * npv;
 			Yh = RevHes + ind[1] * npv;
@@ -565,9 +565,9 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case PowvpOp:
-			CppADUnknownError( n_var == 3 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			Xf = ForJac + ind[0] * npv;
 			Xh = RevHes + ind[0] * npv;
@@ -579,10 +579,10 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case PowvvOp:
-			CppADUnknownError( n_var == 3 );
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			Xf = ForJac + ind[0] * npv;
 			Xh = RevHes + ind[0] * npv;
@@ -596,25 +596,25 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case PripOp:
-			CppADUnknownError( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
 
 			break;
 			// -------------------------------------------------
 
 			case PrivOp:
 			// nvar should be zero for this case
-			CppADUnknownError( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
 
 			break;
 			// -------------------------------------------------
 
 			case SinOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// sine and cosine must come in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 			Xf  = ForJac + ind[0] * npv;
 			Xh  = RevHes + ind[0] * npv;
@@ -625,12 +625,12 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case SinhOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// sine and cosine must come in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 			Xf  = ForJac + ind[0] * npv;
 			Xh  = RevHes + ind[0] * npv;
@@ -641,9 +641,9 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case SqrtOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			Xf  = ForJac + ind[0] * npv;
 			Xh  = RevHes + ind[0] * npv;
@@ -654,34 +654,34 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case StppOp:
-			CppADUnknownError( n_var == 0);
-			CppADUnknownError( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 0);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 			break;
 			// -------------------------------------------------
 
 			case StpvOp:
-			CppADUnknownError( n_var == 0);
-			CppADUnknownError( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 0);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 			break;
 			// -------------------------------------------------
 
 			case StvpOp:
-			CppADUnknownError( n_var == 0);
-			CppADUnknownError( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 0);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 			break;
 			// -------------------------------------------------
 
 			case StvvOp:
-			CppADUnknownError( n_var == 0);
-			CppADUnknownError( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 0);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 			break;
 			// -------------------------------------------------
 
 			case SubvvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			Xh  = RevHes + ind[0] * npv;
 			Yh  = RevHes + ind[1] * npv;
@@ -693,9 +693,9 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case SubpvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			Yh  = RevHes + ind[1] * npv;
 			for(j = 0; j < npv; j++)
@@ -705,9 +705,9 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case SubvpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			Xh  = RevHes + ind[0] * npv;
 			for(j = 0; j < npv; j++)
@@ -717,12 +717,12 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			default:
-			CppADUnknownError(0);
+			CPPAD_ASSERT_UNKNOWN(0);
 		}
 	}
-	CppADUnknownError( i_op == 1 );
-	CppADUnknownError( Rec->GetOp(i_op-1) == NonOp );
-	CppADUnknownError( i_var == NumVar(NonOp)  );
+	CPPAD_ASSERT_UNKNOWN( i_op == 1 );
+	CPPAD_ASSERT_UNKNOWN( Rec->GetOp(i_op-1) == NonOp );
+	CPPAD_ASSERT_UNKNOWN( i_var == NumVar(NonOp)  );
 
 	return;
 }

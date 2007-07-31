@@ -162,7 +162,7 @@ AD<Base> AD<Base>::Abs (void) const
 {	using CppAD::abs;
 
 	AD<Base> result;
-	CppADUnknownError( Parameter(result) );
+	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
 	result.value_ = abs(value_);
 	if( Variable(*this) ) 

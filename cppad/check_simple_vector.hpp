@@ -76,7 +76,7 @@ $end
 ---------------------------------------------------------------------------
 */
 
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 
 namespace CppAD {
 
@@ -109,7 +109,7 @@ namespace CppAD {
 		Vector d;
 
 		// size member function
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			d.size() == 0,
 			"default construtor result does not have size zero"
 		);
@@ -122,7 +122,7 @@ namespace CppAD {
 
 		// check element assignment
 		s[0] = Scalar(1);
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			s[0] == Scalar(1),
 			"element assignment failed"
 		);
@@ -131,7 +131,7 @@ namespace CppAD {
 		s[0] = Scalar(0);
 		const Vector c(s);
 		s[0] = Scalar(1);
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			c[0] == Scalar(0),
 			"copy constructor is shallow"
 		);
@@ -139,7 +139,7 @@ namespace CppAD {
 		// vector assignment operator
 		s = c;
 		s[0] = Scalar(1);
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			c[0] == Scalar(0),
 			"assignment operator is shallow"
 		);

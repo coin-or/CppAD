@@ -161,7 +161,7 @@ $end
 --------------------------------------------------------------------------
 */
 // BEGIN PROGRAM
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_simple_vector.hpp>
 # include <cppad/check_numeric_type.hpp>
 
@@ -190,16 +190,16 @@ void LuInvert(
 	Float etmp;
 	
 	size_t n = ip.size();
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		jp.size() == n,
 		"Error in LuInvert: jp must have size equal to n * n"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		LU.size() == n * n,
 		"Error in LuInvert: Lu must have size equal to n * m"
 	);
 	size_t m = B.size() / n;
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		B.size() == n * m,
 		"Error in LuSolve: B must have size equal to a multiple of n"
 	);

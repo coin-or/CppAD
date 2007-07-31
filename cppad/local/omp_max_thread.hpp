@@ -87,7 +87,7 @@ size_t AD<Base>::omp_max_thread(size_t number)
 	if( number > 0 )
 	{
 # ifndef NDEBUG
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			number <= CPPAD_MAX_NUM_THREADS,
 			"omp_max_thread argument is too large."
 		);

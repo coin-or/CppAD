@@ -134,7 +134,7 @@ public:
 
 	// is variable a parameter
 	bool Parameter(size_t i)
-	{	CppADUsageError(
+	{	CPPAD_ASSERT_KNOWN(
 			i < dep_taddr.size(),
 			"Argument to Parameter is >= dimension of range space"
 		);

@@ -380,7 +380,7 @@ $end
 # include <string>
 # include <iostream>
 # include <iomanip>
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 
@@ -420,11 +420,11 @@ inline void SpeedTest(
 
 	std::string name;
 
-	CppADUsageError( 
+	CPPAD_ASSERT_KNOWN( 
 		inc != 0 && first != 0 && last != 0,
 		"inc, first, or last is zero in call to SpeedTest"
 	);
-	CppADUsageError( 
+	CPPAD_ASSERT_KNOWN( 
 		(inc > 0 && first <= last) || (inc < 0 && first >= last),
 		"SpeedTest: increment is positive and first > last or "
 		"increment is negative and first < last"

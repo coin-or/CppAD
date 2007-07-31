@@ -82,7 +82,7 @@ template <class Base>
 inline Base Value(const AD<Base> &x) 
 {	Base result;
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		Parameter(x) ,
 		"Value: argument is a variable (not a parameter)" 
 	);

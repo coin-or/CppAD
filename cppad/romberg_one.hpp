@@ -145,7 +145,7 @@ $end
 */
 
 # include <cppad/check_numeric_type.hpp>
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 # include <cppad/vector.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
@@ -169,7 +169,7 @@ Float RombergOne(
 	// check specifications for a NumericType
 	CheckNumericType<Float>();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		n >= 2,
 		"RombergOne: n must be greater than or equal 2"
 	);

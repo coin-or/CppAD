@@ -182,7 +182,7 @@ public:
 	// used to evaluate from the recording
 	static Base Eval(size_t y_taddr, const Base &x)
 	{
-		CppADUnknownError(y_taddr < List()->size() );
+		CPPAD_ASSERT_UNKNOWN(y_taddr < List()->size() );
 
 		return (*List())[y_taddr]->f(x);
 	}

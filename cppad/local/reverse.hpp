@@ -64,16 +64,16 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) const
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		w.size() == m,
 		"Argument w to Reverse does not have length equal to\n"
 		"the dimension of the range for the corresponding ADFun."
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		p > 0,
 		"The first argument to Reverse must be greater than zero."
 	);  
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		taylor_per_var >= p,
 		"Less that p Taylor coefficients are currently stored"
 		" in this ADFun object."
@@ -87,7 +87,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) const
 	// set the dependent variable direction
 	// (use += because two dependent variables can point to same location)
 	for(i = 0; i < m; i++)
-	{	CppADUnknownError( dep_taddr[i] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < totalNumVar );
 		Partial[dep_taddr[i] * p + p - 1] += w[i];
 	}
 
@@ -99,10 +99,10 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) const
 	// return the derivative values
 	VectorBase value(n * p);
 	for(j = 0; j < n; j++)
-	{	CppADUnknownError( ind_taddr[j] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] < totalNumVar );
 
 		// independent variable taddr equals its operator taddr 
-		CppADUnknownError( Rec.GetOp( ind_taddr[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr[j] ) == InvOp );
 
 		// by the Reverse Identity Theorem 
 		// partial of y^{(k)} w.r.t. u^{(0)} is equal to

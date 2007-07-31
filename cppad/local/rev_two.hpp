@@ -165,11 +165,11 @@ VectorBase ADFun<Base>::RevTwo(
 	// check VectorSize_t is Simple Vector class with size_t elements
 	CheckSimpleVector<size_t, VectorSize_t>();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		x.size() == n,
 		"RevTwo: Length of x not equal domain dimension for f."
 	); 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		i.size() == j.size(),
 		"RevTwo: Lenght of the i and j vectors are not equal."
 	);
@@ -196,11 +196,11 @@ VectorBase ADFun<Base>::RevTwo(
 	for(l = 0; l < p; l++)
 	{	i1 = i[l];
 		j1 = j[l];
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 		i1 < m,
 		"RevTwo: an eleemnt of i not less than range dimension for f."
 		);
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 		j1 < n,
 		"RevTwo: an element of j not less than domain dimension for f."
 		);

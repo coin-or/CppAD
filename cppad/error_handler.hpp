@@ -106,10 +106,11 @@ $syntax%
 and is a $code '\0'$$ terminated character vector.
 It reports the meaning of the error from the C++ programmers point of view.
 
-$head Example$$
 $children%
-	example/error_handler.cpp
+	example/error_handler.cpp%
+	cppad/local/cppad_assert.hpp
 %$$
+$head Example$$
 The file
 $xref/ErrorHandler.cpp/$$
 contains an example and test a test of using this routine.

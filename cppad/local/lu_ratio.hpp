@@ -248,11 +248,11 @@ int LuRatio(SizeVector &ip, SizeVector &jp, ADvector &LU, AD<Base> &ratio) //
 
 	// -------------------------------------------------------
 	size_t n = ip.size();
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		jp.size() == n,
 		"Error in LuFactor: jp must have size equal to n"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		LU.size() == n * n,
 		"Error in LuFactor: LU must have size equal to n * m"
 	);
@@ -277,7 +277,7 @@ int LuRatio(SizeVector &ip, SizeVector &jp, ADvector &LU, AD<Base> &ratio) //
 		emax = zero;
 		for(i = p; i < n; i++)
 		{	for(j = p; j < n; j++)
-			{	CppADUnknownError(
+			{	CPPAD_ASSERT_UNKNOWN(
 					(ip[i] < n) & (jp[j] < n)
 				);
 				etmp = LU[ ip[i] * n + jp[j] ];
@@ -297,7 +297,7 @@ int LuRatio(SizeVector &ip, SizeVector &jp, ADvector &LU, AD<Base> &ratio) //
 				CondExpGt(etmp, ratio, etmp, ratio);         //
 			}                                                    //
 		}                                                            //
-		CppADUsageError( 
+		CPPAD_ASSERT_KNOWN( 
 			(imax < n) & (jmax < n) ,
 			"AbsGeq must return true when second argument is zero"
 		);

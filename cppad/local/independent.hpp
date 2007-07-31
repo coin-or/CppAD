@@ -133,24 +133,24 @@ void ADTape<Base>::Independent(VectorAD &x)
 
 	// dimension of the domain space
 	size_t n = x.size();
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		n > 0,
 		"Indepdendent: the argument vector x has zero size"
 	);
-	CppADUnknownError( Rec.NumOp() == 0 );
-	CppADUnknownError( Rec.TotNumVar() == 0 );
+	CPPAD_ASSERT_UNKNOWN( Rec.NumOp() == 0 );
+	CPPAD_ASSERT_UNKNOWN( Rec.TotNumVar() == 0 );
 
 	// skip the first record (parameters use taddr zero)
 	Rec.PutOp(NonOp);
 
 	// no Ind values for this operator
-	CppADUnknownError( NumInd(NonOp) == 0 );
+	CPPAD_ASSERT_UNKNOWN( NumInd(NonOp) == 0 );
 
 	// place each of the independent variables in the tape
 	size_t j;
 	for(j = 0; j < n; j++)
 	{	RecordInvOp(x[j]);
-		CppADUnknownError( x[j].taddr_ == j+1 );
+		CPPAD_ASSERT_UNKNOWN( x[j].taddr_ == j+1 );
 	}
 
 	// done specifying all of the independent variables
@@ -161,7 +161,7 @@ template <typename VectorAD>
 inline void Independent(VectorAD &x)
 {	typedef typename VectorAD::value_type ADBase;
 	typedef typename ADBase::value_type   Base;
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		ADBase::tape_ptr() == CPPAD_NULL,
 		"Independent: cannot create a new tape because"
 		"\na previous tape is still active (for this thread)."

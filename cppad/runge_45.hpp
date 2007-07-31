@@ -219,7 +219,7 @@ $end
 --------------------------------------------------------------------------
 */
 # include <cstddef>
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_simple_vector.hpp>
 # include <cppad/check_numeric_type.hpp>
 
@@ -310,11 +310,11 @@ Vector Runge45(
 		Scalar(512) / Scalar(1771)
 	};
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		M >= 1,
 		"Error in Runge45: the number of steps is less than one"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		e.size() == xi.size(),
 		"Error in Runge45: size of e not equal to size of xi"
 	);

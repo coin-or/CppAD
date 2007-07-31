@@ -206,7 +206,7 @@ size_t ForwardSweep(
 
 
 	// check numvar argument
-	CppADUnknownError( Rec->TotNumVar() == numvar );
+	CPPAD_ASSERT_UNKNOWN( Rec->TotNumVar() == numvar );
 
 	// set the number of operators
 	numop = Rec->NumOp();
@@ -218,9 +218,9 @@ size_t ForwardSweep(
 	op    = Rec->GetOp(i_op);
 	n_var = NumVar(op);
 	n_ind = NumInd(op);
-	CppADUnknownError( op == NonOp );
-	CppADUnknownError( n_var == 1 );
-	CppADUnknownError( n_ind == 0 );
+	CPPAD_ASSERT_UNKNOWN( op == NonOp );
+	CPPAD_ASSERT_UNKNOWN( n_var == 1 );
+	CPPAD_ASSERT_UNKNOWN( n_ind == 0 );
 
 	while(++i_op < numop)
 	{
@@ -246,19 +246,19 @@ size_t ForwardSweep(
 		switch( op )
 		{
 			case AbsOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 			X   = Taylor + ind[0] * J;
 			ForAbsOp(d, Z, X);
 			break;
 			// -------------------------------------------------
 
 			case AddvvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			X = Taylor + ind[0] * J;
 			Y = Taylor + ind[1] * J;
@@ -267,9 +267,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case AddpvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			P = Rec->GetPar( ind[0] );
 			Y = Taylor + ind[1] * J;
@@ -278,9 +278,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case AddvpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			X = Taylor + ind[0] * J;
 			P = Rec->GetPar( ind[1] );
@@ -289,12 +289,12 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case AcosOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// acos(x) and sqrt(1 - x * x) are computed in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 			// use W for data stored in variable record
 			W = Taylor + (i_var+1) * J;
@@ -304,12 +304,12 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case AsinOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// asin(x) and sqrt(1 - x * x) are computed in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 			// use W for data stored in variable record
 			W = Taylor + (i_var+1) * J;
@@ -319,12 +319,12 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case AtanOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// atan(x) and 1 + x * x must be computed in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 			// use W for data stored in variable record
 			W = Taylor + (i_var+1) * J;
@@ -334,9 +334,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case CExpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 6);
-			CppADUnknownError( ind[1] != 0 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 6);
+			CPPAD_ASSERT_UNKNOWN( ind[1] != 0 );
 			if( ind[1] & 1 )
 				left = Taylor + ind[2] * J;
 			else	left = Rec->GetPar(ind[2]);
@@ -370,9 +370,9 @@ size_t ForwardSweep(
 			// ---------------------------------------------------
 
 			case ComOp:
-			CppADUnknownError( n_var == 0);
-			CppADUnknownError( n_ind == 4);
-			CppADUnknownError( ind[1] > 1 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 0);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 4);
+			CPPAD_ASSERT_UNKNOWN( ind[1] > 1 );
 			if( d == 0 )
 			{	if( ind[1] & 1 )
 					result = true;
@@ -415,19 +415,19 @@ size_t ForwardSweep(
 					break;
 
 					default:
-					CppADUnknownError(0);
+					CPPAD_ASSERT_UNKNOWN(0);
 				}
 			}
 			break;
 			// ---------------------------------------------------
 
 			case CosOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// cosine and sine must come in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 			// use W for data stored in variable record
 			W = Taylor + (i_var+1) * J;
@@ -437,12 +437,12 @@ size_t ForwardSweep(
 			// ---------------------------------------------------
 
 			case CoshOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// hyperbolic cosine and sine must come in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 			// use W for data stored in variable record
 			W = Taylor + (i_var+1) * J;
@@ -452,9 +452,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case DisOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 			if( d == 0 ) 
 			{	X   = Taylor + ind[0] * J;
 				Z[0] = ADDiscrete<Base>::Eval(ind[1], X[0]);
@@ -464,10 +464,10 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case DivvvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			X = Taylor + ind[0] * J;
 			Y = Taylor + ind[1] * J;
@@ -476,9 +476,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case DivpvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			Y = Taylor + ind[1] * J;
 			P = Rec->GetPar( ind[0] );
@@ -487,9 +487,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case DivvpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			P = Rec->GetPar( ind[1] );
 			X = Taylor + ind[0] * J;
@@ -498,9 +498,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case ExpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			X = Taylor + ind[0] * J;
 			ForExpOp(d, Z, X);
@@ -508,34 +508,34 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case InvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 0 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 0 );
 			break;
 			// -------------------------------------------------
 
 			case LdpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 			
-			CppADUnknownError( ind[0] > 0 );
-			CppADUnknownError( ind[0] < Rec->NumVecInd() );
-			CppADUnknownError( VectorInd != CPPAD_NULL );
-			CppADUnknownError( VectorVar != CPPAD_NULL );
+			CPPAD_ASSERT_UNKNOWN( ind[0] > 0 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumVecInd() );
+			CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
+			CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
 
 			if( d == 0 )
 			{	i   = ind[1];
-				CppADUnknownError( 
+				CPPAD_ASSERT_UNKNOWN( 
 					i < VectorInd[ind[0] - 1] 
 				);
-				CppADUnknownError( 
+				CPPAD_ASSERT_UNKNOWN( 
 					i + ind[0] < Rec->NumVecInd() 
 				);
 
 				if( VectorVar[ i + ind[0] ] )
 				{	i   = VectorInd[ i + ind[0] ];
 					Rec->ReplaceInd(i_ind + 2, i);
-					CppADUnknownError(i > 0 );
-					CppADUnknownError( i < i_var );
+					CPPAD_ASSERT_UNKNOWN(i > 0 );
+					CPPAD_ASSERT_UNKNOWN( i < i_var );
 					Y     = Taylor + i * J;
 					Z[d]  = Y[d];
 				}
@@ -549,7 +549,7 @@ size_t ForwardSweep(
 			else
 			{	i = ind[2];
 				if( i > 0 )
-				{	CppADUnknownError( i < i_var );
+				{	CPPAD_ASSERT_UNKNOWN( i < i_var );
 					Y     = Taylor + i * J;
 					Z[d]  = Y[d];
 				}
@@ -559,32 +559,32 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case LdvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 			
-			CppADUnknownError( ind[0] > 0 );
-			CppADUnknownError( ind[0] < Rec->NumVecInd() );
-			CppADUnknownError( VectorInd != CPPAD_NULL );
-			CppADUnknownError( VectorVar != CPPAD_NULL );
+			CPPAD_ASSERT_UNKNOWN( ind[0] > 0 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumVecInd() );
+			CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
+			CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
 
 			if( d == 0 )
 			{
 				X   = Taylor + ind[1] * J;
 				i   = Integer( X[0] );
 				len = VectorInd[ ind[0] - 1 ];
-				CppADUsageError( 
+				CPPAD_ASSERT_KNOWN( 
 					i < len,
 					"VecAD index value >= vector length"
 				);
-				CppADUnknownError( 
+				CPPAD_ASSERT_UNKNOWN( 
 					i + ind[0] < Rec->NumVecInd() 
 				);
 
 				if( VectorVar[ i + ind[0] ] )
 				{	i   = VectorInd[ i + ind[0] ];
 					Rec->ReplaceInd(i_ind + 2, i);
-					CppADUnknownError(i > 0 );
-					CppADUnknownError( i < i_var );
+					CPPAD_ASSERT_UNKNOWN(i > 0 );
+					CPPAD_ASSERT_UNKNOWN( i < i_var );
 					Y     = Taylor + i * J;
 					Z[d]  = Y[d];
 				}
@@ -598,7 +598,7 @@ size_t ForwardSweep(
 			else
 			{	i = ind[2];
 				if( i > 0 )
-				{	CppADUnknownError( i < i_var );
+				{	CPPAD_ASSERT_UNKNOWN( i < i_var );
 					Y     = Taylor + i * J;
 					Z[d]  = Y[d];
 				}
@@ -608,9 +608,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case LogOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			X = Taylor + ind[0] * J;
 			ForLogOp(d, Z, X);
@@ -618,10 +618,10 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case MulvvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			X = Taylor + ind[0] * J;
 			Y = Taylor + ind[1] * J;
@@ -630,9 +630,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case MulpvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			Y = Taylor + ind[1] * J;
 			P = Rec->GetPar( ind[0] );
@@ -641,9 +641,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case MulvpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			X = Taylor + ind[0] * J;
 			P = Rec->GetPar( ind[1] );
@@ -652,14 +652,14 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case NonOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 0 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 0 );
 			break;
 			// -------------------------------------------------
 
 			case ParOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
 
 			P = Rec->GetPar( ind[0] );
 			if( d == 0 )
@@ -669,9 +669,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case PowvpOp:
-			CppADUnknownError( n_var == 3);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var);
+			CPPAD_ASSERT_UNKNOWN( n_var == 3);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var);
 			U = Z + J;
 			W = U + J;
 
@@ -693,9 +693,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case PowpvOp:
-			CppADUnknownError( n_var == 3);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var);
+			CPPAD_ASSERT_UNKNOWN( n_var == 3);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var);
 			U = Z + J;
 			W = U + J;
 
@@ -719,10 +719,10 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case PowvvOp:
-			CppADUnknownError( n_var == 3);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var);
-			CppADUnknownError( ind[1] < i_var);
+			CPPAD_ASSERT_UNKNOWN( n_var == 3);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var);
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var);
 			U = Z + J;
 			W = U + J;
 
@@ -744,10 +744,10 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case PripOp:
-			CppADUnknownError( n_var == 0 );
-			CppADUnknownError( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 0 );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
 			if( print & (d == 0) )
-			{	CppADUnknownError( ind[0] < Rec->NumTxt() );
+			{	CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumTxt() );
 				std::cout << Rec->GetTxt(ind[0]);
 				std::cout << *(Rec->GetPar(ind[1]));
 			}
@@ -755,11 +755,11 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case PrivOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
 			if( print & (d == 0) )
-			{	CppADUnknownError( ind[0] < Rec->NumTxt() );
-				CppADUnknownError( ind[1] < i_var );
+			{	CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumTxt() );
+				CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 				X      = Taylor + ind[1] * J;
 				std::cout << Rec->GetTxt(ind[0]);
@@ -769,12 +769,12 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case SinOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// sine and cosine must come in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 			// use W for data stored in second variable
 			W = Taylor + (i_var+1) * J;
@@ -784,12 +784,12 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case SinhOp:
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			// sine and cosine must come in pairs
-			CppADUnknownError( n_var == 2);
-			CppADUnknownError( (i_var+1) < numvar  );
+			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
 			// use W for data stored in second variable
 			W = Taylor + (i_var+1) * J;
@@ -799,9 +799,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case SqrtOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 1 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			X = Taylor + ind[0] * J;
 			ForSqrtOp(d, Z, X);
@@ -809,17 +809,17 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case StppOp:
-			CppADUnknownError( n_var == 0);
-			CppADUnknownError( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 0);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 
 			if( d == 0 )
-			{	CppADUnknownError( VectorInd != CPPAD_NULL );
-				CppADUnknownError( VectorVar != CPPAD_NULL );
-				CppADUnknownError( ind[0] < Rec->NumVecInd() );
+			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
+				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
+				CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumVecInd() );
 
 				i   = ind[1];
-				CppADUnknownError(i < VectorInd[ind[0] - 1]);
-				CppADUnknownError( 
+				CPPAD_ASSERT_UNKNOWN(i < VectorInd[ind[0] - 1]);
+				CPPAD_ASSERT_UNKNOWN( 
 					i + ind[0] < Rec->NumVecInd() 
 				);
 				VectorInd[ i + ind[0] ] = ind[2];
@@ -831,18 +831,18 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case StpvOp:
-			CppADUnknownError( n_var == 0);
-			CppADUnknownError( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 0);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 
 			if( d == 0 )
-			{	CppADUnknownError( VectorInd != CPPAD_NULL );
-				CppADUnknownError( VectorVar != CPPAD_NULL );
-				CppADUnknownError( ind[0] < Rec->NumVecInd() );
-				CppADUnknownError( ind[2] < i_var );
+			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
+				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
+				CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumVecInd() );
+				CPPAD_ASSERT_UNKNOWN( ind[2] < i_var );
 
 				i   = ind[1];
-				CppADUnknownError(i < VectorInd[ind[0] - 1]);
-				CppADUnknownError( 
+				CPPAD_ASSERT_UNKNOWN(i < VectorInd[ind[0] - 1]);
+				CPPAD_ASSERT_UNKNOWN( 
 					i + ind[0] < Rec->NumVecInd() 
 				);
 				VectorInd[ i + ind[0] ] = ind[2];
@@ -852,23 +852,23 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case StvpOp:
-			CppADUnknownError( n_var == 0);
-			CppADUnknownError( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 0);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 
 			if( d == 0 )
-			{	CppADUnknownError( VectorInd != CPPAD_NULL );
-				CppADUnknownError( VectorVar != CPPAD_NULL );
-				CppADUnknownError( ind[0] < Rec->NumVecInd() );
-				CppADUnknownError( ind[1] < i_var );
+			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
+				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
+				CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumVecInd() );
+				CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 				X   = Taylor + ind[1] * J;
 				i   = Integer( X[0] );
 				len = VectorInd[ ind[0] - 1 ];
-				CppADUsageError( 
+				CPPAD_ASSERT_KNOWN( 
 					i < len,
 					"VecAD index value >= vector length"
 				);
-				CppADUnknownError( 
+				CPPAD_ASSERT_UNKNOWN( 
 					i + ind[0] < Rec->NumVecInd() 
 				);
 				VectorInd[ i + ind[0] ] = ind[2];
@@ -880,24 +880,24 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case StvvOp:
-			CppADUnknownError( n_var == 0);
-			CppADUnknownError( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_var == 0);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 
 			if( d == 0 )
-			{	CppADUnknownError( VectorInd != CPPAD_NULL );
-				CppADUnknownError( VectorVar != CPPAD_NULL );
-				CppADUnknownError( ind[0] < Rec->NumVecInd() );
-				CppADUnknownError( ind[1] < i_var );
-				CppADUnknownError( ind[2] < i_var );
+			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
+				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
+				CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumVecInd() );
+				CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
+				CPPAD_ASSERT_UNKNOWN( ind[2] < i_var );
 
 				X   = Taylor + ind[1] * J;
 				i   = Integer( X[0] );
 				len = VectorInd[ ind[0] - 1 ];
-				CppADUsageError( 
+				CPPAD_ASSERT_KNOWN( 
 					i < len,
 					"VecAD index value >= vector length"
 				);
-				CppADUnknownError( 
+				CPPAD_ASSERT_UNKNOWN( 
 					i + ind[0] < Rec->NumVecInd() 
 				);
 				VectorInd[ i + ind[0] ] = ind[2];
@@ -907,10 +907,10 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case SubvvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			X = Taylor + ind[0] * J;
 			Y = Taylor + ind[1] * J;
@@ -919,9 +919,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case SubpvOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[1] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
 
 			P = Rec->GetPar( ind[0] );
 			Y = Taylor + ind[1] * J;
@@ -930,9 +930,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case SubvpOp:
-			CppADUnknownError( n_var == 1);
-			CppADUnknownError( n_ind == 2 );
-			CppADUnknownError( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
 
 			X = Taylor + ind[0] * J;
 			P = Rec->GetPar( ind[1] );
@@ -941,7 +941,7 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			default:
-			CppADUnknownError(0);
+			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FORWARD_SWEEP_TRACE
 		printOp(
@@ -960,7 +960,7 @@ size_t ForwardSweep(
 # else
 	}
 # endif
-	CppADUnknownError( (i_var + n_var) == Rec->TotNumVar() );
+	CPPAD_ASSERT_UNKNOWN( (i_var + n_var) == Rec->TotNumVar() );
 	if( VectorInd != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC(VectorInd);
 	if( VectorVar != CPPAD_NULL )

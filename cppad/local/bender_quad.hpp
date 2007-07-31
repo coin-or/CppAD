@@ -319,15 +319,15 @@ void BenderQuad(
 	size_t m = y.size();
 
 	// check the size of gx and gxx
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		g.size() == 1,
 		"BenderQuad: size of the vector g is not equal to 1"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		gx.size() == n,
 		"BenderQuad: size of the vector gx is not equal to n"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		gxx.size() == n * n,
 		"BenderQuad: size of the vector gxx is not equal to n * n"
 	);

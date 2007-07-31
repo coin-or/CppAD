@@ -101,7 +101,7 @@ namespace CppAD {
 	template <class Base>
 	void PrintFor(const char *text, const AD<Base> &u)
 	{	ADTape<Base> *tape = AD<Base>::tape_ptr();
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			tape != CPPAD_NULL,
 			"PrintFor: cannot use this function because no tape"
 			"\nis currently active (for this thread)."

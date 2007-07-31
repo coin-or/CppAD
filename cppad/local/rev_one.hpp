@@ -133,11 +133,11 @@ Vector ADFun<Base>::RevOne(const Vector  &x, size_t i)
 	// check Vector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, Vector>();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		x.size() == n,
 		"RevOne: Length of x not equal domain dimension for f"
 	); 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		i < m,
 		"RevOne: the index i is not less than range dimension for f"
 	);

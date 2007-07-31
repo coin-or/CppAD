@@ -219,7 +219,7 @@ inline ResultType CondExpTemplate(
 		break;
 
 		default:
-		CppADUnknownError(0);
+		CPPAD_ASSERT_UNKNOWN(0);
 		returnValue = trueCase;
 	}
 	return returnValue;
@@ -252,7 +252,7 @@ inline AD<Base> CondExpOp(
 	const AD<Base> &falseCase )
 {
 	AD<Base> returnValue;
-	CppADUnknownError( Parameter(returnValue) );
+	CPPAD_ASSERT_UNKNOWN( Parameter(returnValue) );
 
 	// check first case where do not need to tape
 	if( IdenticalPar(left) & IdenticalPar(right) )
@@ -289,7 +289,7 @@ inline AD<Base> CondExpOp(
 			break;
 
 			default:
-			CppADUnknownError(0);
+			CPPAD_ASSERT_UNKNOWN(0);
 			returnValue = trueCase;
 		}
 		return returnValue;
@@ -377,12 +377,12 @@ void ADTape<Base>::RecordCondExp(
 		ind5 = falseCase.taddr_;	
 	}
 
-	CppADUnknownError( NumInd(CExpOp) == 6 );
-	CppADUnknownError( ind1 > 0 );
+	CPPAD_ASSERT_UNKNOWN( NumInd(CExpOp) == 6 );
+	CPPAD_ASSERT_UNKNOWN( ind1 > 0 );
 	Rec.PutInd(ind0, ind1, ind2, ind3, ind4, ind5);
 
 	// check that returnValue is a dependent variable
-	CppADUnknownError( Variable(returnValue) );
+	CPPAD_ASSERT_UNKNOWN( Variable(returnValue) );
 }
 
 // ------------ CondExpOp(left, right, trueCase, falseCase) ----------------

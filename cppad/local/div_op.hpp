@@ -209,7 +209,7 @@ inline void ForDivvvOp(size_t j,
 
 # if 0
 // 05-01-08 removed divide by zero check for better use of CondExp
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		y[0] != Base(0),
 		"Attempt to divide by zero"
 	);
@@ -232,7 +232,7 @@ inline void RevDivvvOp(size_t d,
 
 # if 0
 // 05-01-08 removed divide by zero check for better use of CondExp
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		y[0] != Base(0),
 		"Attempt to divide by zero"
 	);
@@ -261,7 +261,7 @@ inline void ForDivpvOp(size_t j,
 
 # if 0
 // 05-01-08 removed divide by zero check for better use of CondExp
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		y[0] != Base(0),
 		"Attempt to divide by zero"
 	);
@@ -287,7 +287,7 @@ inline void RevDivpvOp(size_t d,
 
 # if 0
 // 05-01-08 removed divide by zero check for better use of CondExp
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		y[0] != Base(0),
 		"Attempt to divide by zero"
 	);
@@ -326,7 +326,7 @@ inline void RevDivvpOp(size_t d,
 # if 0
 // 05-01-08 removed divide by zero check for better use of CondExp
 	// should catch this case in zero order forward mode
-	CppADUnknownError( (*p) != Base(0) );
+	CPPAD_ASSERT_UNKNOWN( (*p) != Base(0) );
 # endif
 
 	while(j)

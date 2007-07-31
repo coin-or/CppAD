@@ -376,7 +376,7 @@ $end
 --------------------------------------------------------------------------
 */
 
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_simple_vector.hpp>
 
 namespace CppAD { // Begin CppAD namespace
@@ -401,20 +401,20 @@ Vector OdeErrControl(
 
 	size_t n = xi.size();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		smin <= smax,
 		"Error in OdeErrControl: smin > smax"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		eabs.size() == n,
 		"Error in OdeErrControl: size of eabs is not equal to n"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		maxabs.size() == n,
 		"Error in OdeErrControl: size of maxabs is not equal to n"
 	);
 	size_t m = method.order();
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		m > 1,
 		"Error in OdeErrControl: m is less than or equal one"
 	);

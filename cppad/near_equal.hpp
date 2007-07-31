@@ -149,7 +149,7 @@ $end
 */
 
 # include <complex>
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_numeric_type.hpp>
 
 namespace CppAD { // Begin CppAD namespace
@@ -177,11 +177,11 @@ bool NearEqual(const Type &x, const Type &y, const Type &r, const Type &a)
 	CheckNumericType<Type>();
 	Type zero(0);
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		zero <= r,
 		"Error in NearEqual: relative error is less than zero"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		zero <= a,
 		"Error in NearEqual: absolute error is less than zero"
 	);
@@ -221,11 +221,11 @@ bool NearEqual(
 	CheckNumericType<Type>();
 	Type zero(0);
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		zero <= r,
 		"Error in NearEqual: relative error is less than zero"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		zero <= a,
 		"Error in NearEqual: absolute error is less than zero"
 	);

@@ -243,7 +243,7 @@ $end
 # include <complex>
 # include <vector>
 
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_simple_vector.hpp>
 # include <cppad/check_numeric_type.hpp>
 
@@ -303,11 +303,11 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 
 	// -------------------------------------------------------
 	size_t n = ip.size();
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		jp.size() == n,
 		"Error in LuFactor: jp must have size equal to n"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		LU.size() == n * n,
 		"Error in LuFactor: LU must have size equal to n * m"
 	);
@@ -330,7 +330,7 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 		emax = zero;
 		for(i = p; i < n; i++)
 		{	for(j = p; j < n; j++)
-			{	CppADUnknownError(
+			{	CPPAD_ASSERT_UNKNOWN(
 					(ip[i] < n) & (jp[j] < n)
 				);
 				etmp = LU[ ip[i] * n + jp[j] ];
@@ -343,7 +343,7 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 				}
 			}
 		}
-		CppADUsageError( 
+		CPPAD_ASSERT_KNOWN( 
 			(imax < n) & (jmax < n) ,
 			"AbsGeq must return true when second argument is zero"
 		);

@@ -201,15 +201,15 @@ private:
 	// Make this variable a parameter
 	//
 	void make_parameter(void)
-	{	CppADUnknownError( Variable(*this) );  // currently a variable
+	{	CPPAD_ASSERT_UNKNOWN( Variable(*this) );  // currently a var
 		id_ = 0;
 	}
 	//
 	// Make this parameter a new variable 
 	//
 	void make_variable(size_t id,  size_t taddr)
-	{	CppADUnknownError( Parameter(*this) ); // currently a parameter
-		CppADUnknownError( taddr > 0 );        // make sure valid taddr
+	{	CPPAD_ASSERT_UNKNOWN( Parameter(*this) ); // currently a par
+		CPPAD_ASSERT_UNKNOWN( taddr > 0 );        // sure valid taddr
 
 		taddr_ = taddr;
 		id_    = id;

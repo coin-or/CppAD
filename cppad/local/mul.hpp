@@ -19,14 +19,14 @@ template <class Base>
 AD<Base> AD<Base>::operator *(const AD<Base> &right) const
 {
 	AD<Base> result;
-	CppADUnknownError( Parameter(result) );
+	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
 	result.value_  = value_ * right.value_;
 
 	if( Variable(*this) )
 	{	if( Variable(right) )
 		{	// result = variable * variable
-			CppADUsageError(
+			CPPAD_ASSERT_KNOWN(
 				id_ == right.id_,
 				"Multiplying AD objects that are"
 				" variables on different tapes."

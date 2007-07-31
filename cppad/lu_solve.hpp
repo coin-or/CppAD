@@ -251,7 +251,7 @@ $end
 # include <cppad/cppad.hpp>  
 # endif
 
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_simple_vector.hpp>
 # include <cppad/check_numeric_type.hpp>
 # include <cppad/lu_factor.hpp>
@@ -296,15 +296,15 @@ int LuSolve(
 	std::vector<size_t> jp(n);
 
 	// -------------------------------------------------------
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		A.size() == n * n,
 		"Error in LuSolve: A must have size equal to n * n"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		B.size() == n * m,
 		"Error in LuSolve: B must have size equal to n * m"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		X.size() == n * m,
 		"Error in LuSolve: X must have size equal to n * m"
 	);

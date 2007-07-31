@@ -258,7 +258,7 @@ $end
 */
 
 # include <cstddef>
-# include <cppad/local/cppad_error.hpp>
+# include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_simple_vector.hpp>
 # include <cppad/check_numeric_type.hpp>
 # include <cppad/vector.hpp>
@@ -335,11 +335,11 @@ Vector Rosen34(
 		Scalar(25)  / Scalar(216),
 		Scalar(125) / Scalar(216)
 	};
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		M >= 1,
 		"Error in Rosen34: the number of steps is less than one"
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		e.size() == xi.size(),
 		"Error in Rosen34: size of e not equal to size of xi"
 	);
@@ -385,7 +385,7 @@ Vector Rosen34(
 
 		// LU factor the matrix E
 		int sign = LuFactor(ip, jp, E);
-		CppADUsageError(
+		CPPAD_ASSERT_KNOWN(
 			sign != 0,
 			"Error in Rosen34: I - f_x * h / 2 not invertible"
 		);

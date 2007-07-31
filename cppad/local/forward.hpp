@@ -48,12 +48,12 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 	// check Vector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, Vector>();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		up.size() == n,
 		"Second argument to Forward does not have length equal to\n"
 		"the dimension of the domain for the corresponding ADFun."
 	);
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		p <= taylor_per_var,
 		"The number of Taylor coefficient currently stored\n"
 		"in this ADFun object is less than p."
@@ -62,14 +62,14 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 	// check if the Taylor matrix needs more columns
 	if( TaylorColDim <= p )
 		capacity_taylor(p + 1);
-	CppADUnknownError( TaylorColDim > p );
+	CPPAD_ASSERT_UNKNOWN( TaylorColDim > p );
 
 	// set the p-th order Taylor coefficients for independent variables
 	for(j = 0; j < n; j++)
-	{	CppADUnknownError( ind_taddr[j] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] < totalNumVar );
 
 		// ind_taddr[j] is operator taddr for j-th independent variable
-		CppADUnknownError( Rec.GetOp( ind_taddr[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr[j] ) == InvOp );
 
 		// It is also variable taddr for j-th independent variable
 		Taylor[ind_taddr[j] * TaylorColDim + p] = up[j];
@@ -83,7 +83,7 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 	// return the p-th order Taylor coefficients for dependent variables
 	Vector vp(m);
 	for(i = 0; i < m; i++)
-	{	CppADUnknownError( dep_taddr[i] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < totalNumVar );
 		vp[i] = Taylor[dep_taddr[i] * TaylorColDim + p];
 	}
 

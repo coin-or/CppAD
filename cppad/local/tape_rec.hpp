@@ -413,23 +413,23 @@ public:
 	retrieve information from recording
 	*/
 	OpCode GetOp (size_t i) const
-	{	CppADUnknownError(i < NumberOp);
+	{	CPPAD_ASSERT_UNKNOWN(i < NumberOp);
 		return Op[i];
 	}
 	size_t GetVecInd (size_t i) const
-	{	CppADUnknownError(i < NumberVecInd);
+	{	CPPAD_ASSERT_UNKNOWN(i < NumberVecInd);
 		return VecInd[i];
 	}
 	const Base *GetPar(size_t i) const
-	{	CppADUnknownError(i < NumberPar);
+	{	CPPAD_ASSERT_UNKNOWN(i < NumberPar);
 		return Par + i;
 	}
 	const size_t *GetInd(size_t n, size_t i) const
-	{	CppADUnknownError(i + n <= NumberInd)
+	{	CPPAD_ASSERT_UNKNOWN(i + n <= NumberInd)
 		return Ind + i;
 	}
 	const char *GetTxt(size_t i) const
-	{	CppADUnknownError(i < NumberTxt);
+	{	CPPAD_ASSERT_UNKNOWN(i < NumberTxt);
 		return Txt + i;
 	}
 	
@@ -437,7 +437,7 @@ public:
 	replace information 
 	*/
 	void ReplaceInd(size_t i, size_t value)
-	{	CppADUnknownError( i < NumberInd);
+	{	CPPAD_ASSERT_UNKNOWN( i < NumberInd);
 		Ind[i] = value;
 	}
 
@@ -492,12 +492,12 @@ template <class Base>
 inline size_t TapeRec<Base>::PutOp(OpCode op)
 {	size_t varIndex = TotalNumberVar;
 	
-	CppADUnknownError( NumberOp <= LengthOp );
+	CPPAD_ASSERT_UNKNOWN( NumberOp <= LengthOp );
 	if( NumberOp == LengthOp )
 	{	LengthOp = 2 * LengthOp + 8;
 		Op = CPPAD_TRACK_EXTEND(LengthOp, NumberOp, Op);
 	}
-	CppADUnknownError( NumberOp < LengthOp );
+	CPPAD_ASSERT_UNKNOWN( NumberOp < LengthOp );
 	Op[NumberOp++]  = op;
 	TotalNumberVar += NumVar(op);
 
@@ -507,12 +507,12 @@ inline size_t TapeRec<Base>::PutOp(OpCode op)
 template <class Base>
 inline size_t TapeRec<Base>::PutVecInd(size_t vecInd)
 {	
-	CppADUnknownError( NumberVecInd <= LengthVecInd );
+	CPPAD_ASSERT_UNKNOWN( NumberVecInd <= LengthVecInd );
 	if( NumberVecInd == LengthVecInd )
 	{	LengthVecInd = 2 * LengthVecInd + 8;
 		VecInd = CPPAD_TRACK_EXTEND(LengthVecInd, NumberVecInd, VecInd);
 	}
-	CppADUnknownError( NumberVecInd < LengthVecInd );
+	CPPAD_ASSERT_UNKNOWN( NumberVecInd < LengthVecInd );
 	VecInd[NumberVecInd++] = vecInd;
 
 	return NumberVecInd - 1;
@@ -522,7 +522,7 @@ template <class Base>
 inline size_t TapeRec<Base>::PutPar(const Base &par)
 {	size_t i;
 	
-	CppADUnknownError( NumberPar <= LengthPar );
+	CPPAD_ASSERT_UNKNOWN( NumberPar <= LengthPar );
 	
 	// check last three values to see if same one came up
 	if( NumberPar >= 3 )
@@ -539,7 +539,7 @@ inline size_t TapeRec<Base>::PutPar(const Base &par)
 	{	LengthPar = 2 * LengthPar + 8;
 		Par = CPPAD_TRACK_EXTEND(LengthPar, NumberPar, Par);
 	}
-	CppADUnknownError( NumberPar < LengthPar );
+	CPPAD_ASSERT_UNKNOWN( NumberPar < LengthPar );
 	Par[NumberPar++] = par;
 
 	return NumberPar - 1;
@@ -548,35 +548,35 @@ inline size_t TapeRec<Base>::PutPar(const Base &par)
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0)
 { 
-	CppADUnknownError( NumberInd <= LengthInd );
+	CPPAD_ASSERT_UNKNOWN( NumberInd <= LengthInd );
 	if( NumberInd == LengthInd )
 	{	LengthInd = 2 * LengthInd + 8;
 		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
 	}
-	CppADUnknownError( NumberInd < LengthInd );
+	CPPAD_ASSERT_UNKNOWN( NumberInd < LengthInd );
 	Ind[NumberInd++] = ind0;
 }
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1)
 { 
-	CppADUnknownError( NumberInd <= LengthInd );
+	CPPAD_ASSERT_UNKNOWN( NumberInd <= LengthInd );
 	if( NumberInd + 1 >= LengthInd )
 	{	LengthInd = 2 * LengthInd + 8;
 		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
 	}
-	CppADUnknownError( NumberInd + 1 < LengthInd );
+	CPPAD_ASSERT_UNKNOWN( NumberInd + 1 < LengthInd );
 	Ind[NumberInd++] = ind0;
 	Ind[NumberInd++] = ind1;
 }
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2)
 { 
-	CppADUnknownError( NumberInd <= LengthInd );
+	CPPAD_ASSERT_UNKNOWN( NumberInd <= LengthInd );
 	if( NumberInd + 2 >= LengthInd )
 	{	LengthInd = 2 * LengthInd + 8;
 		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
 	}
-	CppADUnknownError( NumberInd + 2 < LengthInd );
+	CPPAD_ASSERT_UNKNOWN( NumberInd + 2 < LengthInd );
 	Ind[NumberInd++] = ind0;
 	Ind[NumberInd++] = ind1;
 	Ind[NumberInd++] = ind2;
@@ -585,12 +585,12 @@ template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
 	size_t ind3)
 { 
-	CppADUnknownError( NumberInd <= LengthInd );
+	CPPAD_ASSERT_UNKNOWN( NumberInd <= LengthInd );
 	if( NumberInd + 3 >= LengthInd )
 	{	LengthInd = 2 * LengthInd + 8;
 		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
 	}
-	CppADUnknownError( NumberInd + 3 < LengthInd );
+	CPPAD_ASSERT_UNKNOWN( NumberInd + 3 < LengthInd );
 	Ind[NumberInd++] = ind0;
 	Ind[NumberInd++] = ind1;
 	Ind[NumberInd++] = ind2;
@@ -601,12 +601,12 @@ template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
 	size_t ind3, size_t ind4)
 { 
-	CppADUnknownError( NumberInd <= LengthInd );
+	CPPAD_ASSERT_UNKNOWN( NumberInd <= LengthInd );
 	if( NumberInd + 4 >= LengthInd )
 	{	LengthInd = 2 * LengthInd + 8;
 		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
 	}
-	CppADUnknownError( NumberInd + 4 < LengthInd );
+	CPPAD_ASSERT_UNKNOWN( NumberInd + 4 < LengthInd );
 	Ind[NumberInd++] = ind0;
 	Ind[NumberInd++] = ind1;
 	Ind[NumberInd++] = ind2;
@@ -618,12 +618,12 @@ template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2, 
 	size_t ind3, size_t ind4, size_t ind5)
 { 
-	CppADUnknownError( NumberInd <= LengthInd );
+	CPPAD_ASSERT_UNKNOWN( NumberInd <= LengthInd );
 	if( NumberInd + 5 >= LengthInd )
 	{	LengthInd = 2 * LengthInd + 8;
 		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
 	}
-	CppADUnknownError( NumberInd + 5 < LengthInd );
+	CPPAD_ASSERT_UNKNOWN( NumberInd + 5 < LengthInd );
 	Ind[NumberInd++] = ind0;
 	Ind[NumberInd++] = ind1;
 	Ind[NumberInd++] = ind2;
@@ -639,21 +639,21 @@ inline size_t TapeRec<Base>::PutTxt(const char *text)
 	// determine length of the text including terminating '\0'
 	size_t n;
 	for(n = 0; text[n] != '\0'; n++)
-		CppADUnknownError( n < 1000 ); // should check limit in PrintFor
+		CPPAD_ASSERT_UNKNOWN( n < 1000 ); // should check in PrintFor
 	n++;
 
-	CppADUnknownError( NumberTxt <= LengthTxt );
+	CPPAD_ASSERT_UNKNOWN( NumberTxt <= LengthTxt );
 
 	if( NumberTxt + n >= LengthTxt )
 	{	LengthTxt  = 2 * LengthTxt + n + 8;
 		Txt = CPPAD_TRACK_EXTEND(LengthTxt, NumberTxt, Txt);
 	}
-	CppADUnknownError( NumberTxt + n < LengthTxt );
+	CPPAD_ASSERT_UNKNOWN( NumberTxt + n < LengthTxt );
 
 	// copy text including terminating '\0'
 	for(i = 0; i < n; i++)
 		Txt[NumberTxt++] = text[i];
-	CppADUnknownError( text[i-1] == '\0' );
+	CPPAD_ASSERT_UNKNOWN( text[i-1] == '\0' );
 
 	return NumberTxt - n;
 }

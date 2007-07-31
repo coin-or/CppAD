@@ -130,11 +130,11 @@ Vector ADFun<Base>::Hessian(const Vector &x, size_t i)
 	// check Vector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, Vector>();
 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		x.size() == n,
 		"Hessian: length of x not equal domain dimension for f"
 	); 
-	CppADUsageError(
+	CPPAD_ASSERT_KNOWN(
 		i < m,
 		"Hessian: index i is not less than range dimension for f"
 	);
