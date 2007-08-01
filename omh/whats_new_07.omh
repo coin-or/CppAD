@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	Bool
 	CppADvector
 	inv
 	namespace
@@ -50,6 +51,13 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-30$$
+$code CppADCreateBinaryBool$$ and $code CppADCreateUnaryBool$$
+have been replaced by $code CPPAD_BOOL_BINARY$$ and
+$code CPPAD_BOOL_UNARY$$ respectively.
+In addition, the $cref/WishList/$$ item for conversion
+of all preprocessor macros to upper case been completed and removed.
 
 $head 07-29$$
 The preprocessor macros 

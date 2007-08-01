@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -52,11 +52,11 @@ namespace {
 
 	// Create version of IsReal with AD<Complex> argument
 	// inside of namespace and outside of any other function.
-	CppADCreateUnaryBool(Complex, IsReal)
+	CPPAD_BOOL_UNARY(Complex, IsReal)
 
 	// Create version of AbsGeq with AD<Complex> arguments
 	// inside of namespace and outside of any other function.
-	CppADCreateBinaryBool(Complex, AbsGeq)
+	CPPAD_BOOL_BINARY(Complex, AbsGeq)
 
 }
 bool BoolFun(void)

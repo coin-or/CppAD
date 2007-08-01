@@ -29,75 +29,104 @@ $index binary, AD bool$$
 $section AD Boolean Functions$$
 
 $head Syntax$$
-$syntax%CppADCreateUnaryBool(%Base%, %UnaryName%)%$$
-$pre
-$$
-$syntax%CppADCreateBinaryBool(%Base%, %BinaryName%)%$$
-$pre
-$$
-$syntax%%b% = %UnaryName%(%x%)%$$
-$pre
-$$
-$syntax%%b% = %BinaryName%(%x%, %y%)%$$
+$syntax%CPPAD_BOOL_UNARY(%Base%, %unary_name%)
+%$$
+$syntax%%b% = %unary_name%(%u%)
+%$$
+$syntax%%b% = %unary_name%(%x%)
+%$$
+$syntax%CPPAD_BOOL_BINARY(%Base%, %binary_name%)
+%$$
+$syntax%%b% = %binary_name%(%u%, %v%)
+%$$
+$syntax%%b% = %binary_name%(%x%, %y%)%$$
 
 
 $head Purpose$$
-Create a boolean valued function of with
-$syntax%AD<%Base%>%$$ arguments from a boolean valued function
-with $italic Base$$ arguments.
+Create a $code bool$$ valued function that has $syntax%AD<%Base%>%$$ arguments.
 
-$head Prototypes$$
-The variables above and below have the following prototypes
+$head unary_name$$
+This is the name of the $code bool$$ valued function with one argument
+(as it is used in the source code).
+The user must provide a version of $italic unary_name$$ where
+the argument has type $italic Base$$.
+CppAD uses this to create a version of $italic unary_name$$ where the
+argument has type $syntax%AD<%Base%>%$$.
+
+$head u$$
+The argument $italic u$$ has prototype
 $syntax%
-	bool  %%          %b%
-	const %Base%     &%u%
-	const %Base%     &%v%
+	const %Base% &%u%
+%$$
+It is the value at which the user provided version of $italic unary_name$$
+is to be evaluated.
+It is also used for the first argument to the 
+user provided version of $italic binary_name$$.
+
+$head x$$
+The argument $italic x$$ has prototype
+$syntax%
 	const AD<%Base%> &%x%
+%$$
+It is the value at which the CppAD provided version of $italic unary_name$$
+is to be evaluated.
+It is also used for the first argument to the 
+CppAD provided version of $italic binary_name$$.
+
+$head b$$
+The result $italic b$$ has prototype
+$syntax%
+	bool %b%
+%$$
+
+$head Create Unary$$
+$index CPPAD_BOOL_UNARY$$
+The preprocessor macro invocation
+$syntax%
+	CPPAD_BOOL_UNARY(%Base%, %unary_name%)
+%$$
+defines the version of $italic unary_name$$ with a $syntax%AD<%Base%>%$$
+argument.
+This can with in a namespace 
+(not the $code CppAD$$ namespace)
+but must be outside of any routine.
+
+$head binary_name$$
+This is the name of the $code bool$$ valued function with two arguments
+(as it is used in the source code).
+The user must provide a version of $italic binary_name$$ where
+the arguments have type $italic Base$$.
+CppAD uses this to create a version of $italic binary_name$$ where the
+arguments have type $syntax%AD<%Base%>%$$.
+
+$head v$$
+The argument $italic v$$ has prototype
+$syntax%
+	const %Base% &%v%
+%$$
+It is the second argument to
+the user provided version of $italic binary_name$$.
+
+$head y$$
+The argument $italic x$$ has prototype
+$syntax%
 	const AD<%Base%> &%y%
 %$$
+It is the second argument to
+the CppAD provided version of $italic binary_name$$.
 
-$head Unary Functions$$
-Given a function called $italic UnaryName$$ with syntax
-$syntax%
-	%b% = %UnaryName%(%u%)
-%$$
+$head Create Binary$$
+$index CPPAD_BOOL_BINARY$$
 The preprocessor macro invocation
 $syntax%
-	CppADCreateUnaryBool(%Base%, %UnaryName%)
-%$$ 
-can be with in a namespace but must be outside of any routine.
-It defines a function with the following syntax
-$syntax%
-	%b% = %UnaryName%(%x%)
+	CPPAD_BOOL_BINARY(%Base%, %binary_name%)
 %$$
-This enables one to define arbitrary
-boolean valued functions with one AD argument.
-The value returned for the argument $italic x$$
-is the value return for the argument $italic u$$
-where $italic u$$ is the $italic Base$$ value corresponding to $italic x$$.
+defines the version of $italic binary_name$$ with $syntax%AD<%Base%>%$$
+arguments.
+This can with in a namespace 
+(not the $code CppAD$$ namespace)
+but must be outside of any routine.
 
-$head Binary Functions$$
-Given a function called $italic BinaryName$$ with syntax
-$syntax%
-	%b% = %BinaryName%(%u%, %v%)
-%$$
-The preprocessor macro invocation
-$syntax%
-	CppADCreateBinaryBool(%Base%, %BinaryName%)
-%$$ 
-can be with in a namespace but must be outside of any routine.
-It defines a function with the following syntax
-$syntax%
-	%b% = %BinaryName%(%x%, %y%)
-%$$
-This enables one to define arbitrary
-boolean valued functions with two AD arguments.
-The value returned for the argument pair 
-$syntax%(%x%, %y%)%$$
-is the value return for the argument pair
-$syntax%(%u%, %v%)%$$
-where $italic u$$ is the $italic Base$$ value corresponding to $italic x$$ and
-$italic v$$ is the $italic Base$$ value corresponding to $italic y$$.
 
 $head Operation Sequence$$
 The result of this operation is not an
@@ -115,23 +144,32 @@ $xref/BoolFun.cpp/$$
 contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 
+$head Deprecated$$
+The preprocessor symbols $code CppADCreateUnaryBool$$ 
+and $code CppADCreateBinaryBool$$ are defined to be the same as
+$code CPPAD_BOOL_UNARY$$ and $code CPPAD_BOOL_BINARY$$ respectively
+(but their use is deprecated).
+
 $end
 */
 
 # include <cppad/local/bool_fun_link.hpp>
 
-# define CppADCreateUnaryBool(Base, FunName)                                 \
-	inline bool FunName (const CppAD::AD<Base> &x)                       \
-	{                                                                    \
-		return CppAD::AD<Base>::UnaryBool(FunName, x);               \
+# define CPPAD_BOOL_UNARY(Base, unary_name)                        \
+	inline bool unary_name (const CppAD::AD<Base> &x)          \
+	{                                                          \
+		return CppAD::AD<Base>::UnaryBool(unary_name, x);               \
 	}
 
-# define CppADCreateBinaryBool(Base, FunName)                                \
-	inline bool FunName (                                                \
-		const CppAD::AD<Base> &x, const CppAD::AD<Base> &y)          \
-	{                                                                    \
-		return CppAD::AD<Base>::BinaryBool(FunName, x, y);           \
+# define CPPAD_BOOL_BINARY(Base, binary_name)                         \
+	inline bool binary_name (                                     \
+		const CppAD::AD<Base> &x, const CppAD::AD<Base> &y)   \
+	{                                                             \
+		return CppAD::AD<Base>::BinaryBool(binary_name, x, y);\
 	}
+
+# define CppADCreateUnaryBool  CPPAD_BOOL_UNARY
+# define CppADCreateBinaryBool CPPAD_BOOL_BINARY
 
 
 # endif

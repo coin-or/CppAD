@@ -109,12 +109,6 @@ $lnext
 Template parameter names should begin with an uppercase letter.
 
 $lnext
-Macro names (gasp!) names should use all uppercase.
-The macros $code CppADCreateUnaryBool$$ and $code CppADCreateBinaryBool$$
-have not yet been changed to upper case.
-
-
-$lnext
 Use spaces rather than tabs.  
 
 $lend

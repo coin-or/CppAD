@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 $begin Runge45.cpp$$
@@ -39,7 +37,6 @@ X_i '(t)   & = & (i+1) t^i = (i+1) X_{i-1} (t) & {\rm if \;} i > 0
 \] $$
 The example tests Runge45 using the relations above:
 
-$comment This file is in the Example subdirectory$$ 
 $code
 $verbatim%example/runge_45.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -48,10 +45,10 @@ $end
 */
 // BEGIN PROGRAM
 
-# include <cstddef>              // for size_t
+# include <cstddef>                 // for size_t
 # include <cppad/runge_45.hpp>      // for CppAD::Runge45
 # include <cppad/near_equal.hpp>    // for CppAD::NearEqual
-# include <cppad/vector.hpp> // for CppAD::vector
+# include <cppad/vector.hpp>        // for CppAD::vector
 
 namespace {
 	class Fun {
