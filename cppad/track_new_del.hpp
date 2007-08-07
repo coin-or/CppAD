@@ -460,7 +460,8 @@ void TrackDelVec(
 	// check if pointer was not in list
 	if( E == CPPAD_NULL || E->ptr != vptr ) TrackError(
 		"TrackDelVec", file, line, 
-		"Invalid value for the argument oldptr"
+		"Invalid value for the argument oldptr.\n"
+		"Possible linking of debug and NDEBUG compliations of CppAD."
 	); 
 
 	// remove tracking element from list

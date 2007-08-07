@@ -33,6 +33,7 @@ $children%
 	omh/simple_vector.omh%
 	cppad/check_simple_vector.hpp%
 
+	cppad/nan.hpp%
 	cppad/pow_int.hpp%
 	cppad/poly.hpp%
 	omh/lu_det_and_solve.omh%
@@ -85,6 +86,7 @@ written with the floating point type A C++ template parameter.
 This enables them to be used with algorithmic differentiation types,
 as well as for other purposes. 
 $table
+$rref nan$$
 $rref pow_int$$
 $rref Poly$$
 $rref LuDetAndSolve$$

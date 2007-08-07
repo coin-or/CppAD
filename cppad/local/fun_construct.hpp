@@ -102,7 +102,7 @@ $syntax%
 $lnext
 Stop the tape and storing the operation sequence using
 $syntax%
-	%f%.Dependent(%y%);
+	%f%.Dependent(%x%, %y%);
 %$$
 (see $xref/Dependent/$$).
 $lnext

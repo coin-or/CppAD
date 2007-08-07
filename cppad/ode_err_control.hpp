@@ -2,7 +2,7 @@
 # define CPPAD_ODE_ERR_CONTROL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,7 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 $begin OdeErrControl$$
-
 $spell
 	cppad.hpp
 	nstep
@@ -68,17 +67,29 @@ $latex \[
 \end{array}
 \] $$
 The routine $code OdeErrControl$$ can be used to adjust the step size
-used by either of these methods in order to be as fast as possible
+used an arbitrary integration methods in order to be as fast as possible
 and still with in a requested error bound.
 
 $head Include$$
-The file $code cppad/ode_err_control.hpp$$ is included by $code cppad/cppad.hpp$$
+The file $code cppad/ode_err_control.hpp$$ is included by 
+$code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
 $head Notation$$
 The template parameter types $xref/OdeErrControl/Scalar/Scalar/$$ and
 $xref/OdeErrControl/Vector/Vector/$$ are documented below.
+
+$head xf$$
+The return value $italic xf$$ has the prototype
+$syntax%
+	%Vector% %xf%
+%$$
+(see description of $xref/OdeErrControl/Vector/Vector/$$ below). 
+and the size of $italic xf$$ is equal to $italic n$$.
+If $italic xf$$ contains not a number $cref/nan/$$,
+see the discussion of $cref/step/OdeErrControl/Method/step/$$ and
+$cref/xi/OdeErrControl/xi/$$.
 
 $head Method$$
 The class $italic Method$$
@@ -108,6 +119,9 @@ $syntax%
 %$$
 It specifies the final time for this step in the 
 ODE integration.
+$pre
+
+$$
 The argument $italic xa$$ has prototype
 $syntax%
 	const %Vector% &%xa%
@@ -115,6 +129,9 @@ $syntax%
 and size $italic n$$.
 It specifies the value of $latex X(ta)$$.
 (see description of $xref/OdeErrControl/Vector/Vector/$$ below). 
+$pre
+
+$$
 The argument value $italic xb$$ has prototype
 $syntax%
 	%Vector% &%xb%
@@ -123,6 +140,14 @@ and size $italic n$$.
 The input value of its elements does not matter.
 On output, 
 it contains the approximation for $latex X(tb)$$ that the method obtains.
+If any element of the vector $italic xb$$ is equal to not a number $code nan$$,
+the current step is considered to large.
+If this happens with the current step size equal to $italic smin$$, 
+$code OdeErrControl$$ returns with $italic xf$$ and $italic ef$$ as vectors
+of $code nan$$.
+$pre
+
+$$
 The argument value $italic eb$$ has prototype
 $syntax%
 	%Vector% &%eb%
@@ -135,6 +160,12 @@ It is assumed (locally) that the error bound in this approximation
 nearly equal to $latex K (tb - ta)^m$$ 
 where $italic K$$ is a fixed constant and $italic m$$
 is the corresponding argument to $code CodeControl$$.
+If any element of the vector $italic eb$$ is equal to not a number $code nan$$,
+the current step is considered to large.
+If this happens with the current step size equal to $italic smin$$, 
+$code OdeErrControl$$ returns with $italic xf$$ and $italic ef$$ as vectors
+of $code nan$$.
+
 
 $subhead order$$
 If $italic m$$ is $code size_t$$,
@@ -175,6 +206,8 @@ $syntax%
 %$$
 and size $italic n$$.
 It specifies value of $latex X(ti)$$.
+If any of the elements of $italic xi$$ are not a number $code nan$$,
+$code OdeErrControl$$ returns with $italic xf$$ and $italic ef$$ as $code nan$$.
 
 $head smin$$
 The argument $italic smin$$ has prototype
@@ -250,6 +283,9 @@ absolute error in the approximation $italic xf$$; i.e.,
 $latex \[
 	ef_i > | X( tf )_i - xf_i |
 \] $$
+If on output $italic ef$$ contains not a number $code nan$$,
+see the discussion of $cref/step/OdeErrControl/Method/step/$$ and
+$cref/xi/OdeErrControl/xi/$$.
 
 $head maxabs$$
 The argument $italic maxabs$$ is optional in the call to $code OdeErrControl$$.
@@ -378,6 +414,7 @@ $end
 
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_simple_vector.hpp>
+# include <cppad/nan.hpp>
 
 namespace CppAD { // Begin CppAD namespace
 
@@ -419,8 +456,9 @@ Vector OdeErrControl(
 		"Error in OdeErrControl: m is less than or equal one"
 	);
 
-	size_t i;
-	Vector xa(n), xb(n), eb(n);
+	bool    ok;
+	size_t   i;
+	Vector xa(n), xb(n), eb(n), nan_vec(n);
 
 	// initialization
 	Scalar zero(0);
@@ -430,14 +468,20 @@ Vector OdeErrControl(
 	Scalar m1(m-1);
 	Scalar ta = ti;
 	for(i = 0; i < n; i++)
-	{	ef[i] = zero;
-		xa[i] = xi[i];
+	{	nan_vec[i] = nan(zero);
+		ef[i]      = zero;
+		xa[i]      = xi[i];
 		if( zero <= xi[i] )
 			maxabs[i] = xi[i];
 		else	maxabs[i] = - xi[i];
 
 	}  
 	nstep = 0;
+
+	if( hasnan(xi) )
+	{	ef = nan_vec;
+		return nan_vec;
+	}
 
 	Scalar tb, step, lambda, axbi, a, r, root;
 	while( ! (ta == tf) )
@@ -462,6 +506,13 @@ Vector OdeErrControl(
 		method.step(ta, tb, xa, xb, eb);
 		step = tb - ta;
 
+		// check if this steps error estimate is ok
+		ok = ! (hasnan(xb) || hasnan(eb));
+		if( (! ok) && (step <= smin) )
+		{	ef = nan_vec;
+			return nan_vec;
+		}
+
 		// compute value of lambda for this step
 		lambda = Scalar(10) * scur / step;
 		for(i = 0; i < n; i++)
@@ -476,7 +527,7 @@ Vector OdeErrControl(
 					lambda = root;
 			}
 		}
-		if( one <= lambda || step <= smin * three / two )
+		if( ok && ( one <= lambda || step <= smin * three / two) )
 		{	// this step is within error limits or 
 			// close to the minimum size
 			ta = tb;
@@ -490,11 +541,15 @@ Vector OdeErrControl(
 					maxabs[i] = axbi;
 			}
 		}
-
-		// step suggested by error criteria 
-		// do not use last step becasue it may be very small
-		if( ! (ta == tf) )
+		if( ! ok )
+		{	// decrease step an see if method will work this time
+			scur = step / two;
+		}
+		else if( ! (ta == tf) )
+		{	// step suggested by the error criteria is not used
+			// on the last step because it may be very small.
 			scur = lambda * step / two;
+		}
 	}
 	return xa;
 }

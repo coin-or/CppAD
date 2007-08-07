@@ -52,6 +52,27 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-07$$
+Sometimes an ODE solver takes to large a step and this results
+in invalid values for the variables being integrated.
+The ODE solver $cref/Runge45/$$ has been modified to abort
+and return $cref/nan/$$ when it is returned by the differential
+equation evaluation.
+The solver $cref/OdeErrControl/$$ have been modified to try smaller steps 
+when this happens. 
+$pre
+
+$$
+Fix an $cref/Sequence Constructor/FunConstruct/Sequence Constructor/$$
+referenced to $code Dependent$$ in documentation
+(was using the $cref/FunDeprecated/$$ one argument syntax).
+$pre
+
+$$
+Add comment about mixing debug and non-debug versions of
+CppAD in $cref/TrackDelVec/TrackNewDel/TrackDelVec/$$ error message.
+
+
 $head 07-30$$
 $code CppADCreateBinaryBool$$ and $code CppADCreateUnaryBool$$
 have been replaced by $code CPPAD_BOOL_BINARY$$ and
