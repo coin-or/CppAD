@@ -55,7 +55,8 @@ assist you in learning about changes between various versions of CppAD.
 $head 08-07$$
 Sometimes an ODE solver takes to large a step and this results
 in invalid values for the variables being integrated.
-The ODE solver $cref/Runge45/$$ has been modified to abort
+The ODE solvers $cref/Runge45/$$ and $cref/Rosen34/$$ have been 
+modified to abort
 and return $cref/nan/$$ when it is returned by the differential
 equation evaluation.
 The solver $cref/OdeErrControl/$$ have been modified to try smaller steps 

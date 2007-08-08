@@ -43,17 +43,16 @@ $index equation, differential$$
 $section A 3rd and 4th Order Rosenbrock ODE Solver$$
 
 $head Syntax$$
-$code # include <cppad/rosen_34.hpp>$$
-$pre
-$$
-$syntax%%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%)%$$
-$pre
-$$
-$syntax%%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%, %e%)%$$
+$syntax%# include <cppad/rosen_34.hpp>
+%$$
+$syntax%%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%)
+%$$
+$syntax%%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%, %e%)
+%$$
 
 
 $head Description$$
-This is the embedded 3rd and 4th order Rosenbrock ODE solver 
+This is an embedded 3rd and 4th order Rosenbrock ODE solver 
 (see Section 16.6 of $xref/Bib/Numerical Recipes/Numerical Recipes/$$
 for a description of Rosenbrock ODE solvers).
 In particular, we use the formulas taken from page 100 of
@@ -88,12 +87,14 @@ The return value $italic xf$$ has the prototype
 $syntax%
 	%Vector% %xf%
 %$$
-an the size of $italic xf$$ is equal to $italic n$$ 
+and the size of $italic xf$$ is equal to $italic n$$ 
 (see description of $xref/Rosen34/Vector/Vector/$$ below).
 $latex \[
 	X(tf) = xf + O( h^5 )
 \] $$
 where $latex h = (tf - ti) / M$$ is the step size.
+If $italic xf$$ contains not a number $cref/nan/$$,
+see the discussion of $cref/f/Rosen34/Fun/Nan/$$ and $cref/xi/Rosen34/xi/$$.
 
 $head Fun$$
 The class $italic Fun$$ 
@@ -158,11 +159,30 @@ On output, the [$syntax%%i%*%n%+%j%$$] element of
 $italic f_x$$ is set equal to $latex \partial_{x(j)} F_i (t, x)$$ 
 (see $italic F(t, x)$$ in $xref/Rosen34/Description/Description/$$). 
 
+$subhead Nan$$
+If any of the elements of $italic f$$, $italic f_t$$, or $italic f_x$$
+have the value not a number $code nan$$,
+the routine $code Rosen34$$ returns with all the
+elements of $italic xf$$ and $italic e$$ equal to $code nan$$.
+
 $subhead Warning$$
 The arguments $italic f$$, $italic f_t$$, and $italic f_x$$
 must have a call by reference in their prototypes; i.e.,
 do not forget the $code &$$ in the prototype for 
 $italic f$$, $italic f_t$$ and $italic f_x$$.
+
+$subhead Optimization$$
+Every call of the form 
+$syntax%
+	%F%.Ode_ind(%t%, %x%, %f_t%)
+%$$
+is directly followed by a call of the form 
+$syntax%
+	%F%.Ode_dep(%t%, %x%, %f_x%)
+%$$
+where the arguments $italic t$$ and $italic x$$ have not changed between calls.
+In many cases it is faster to compute the values of $italic f_t$$
+and $italic f_x$$ together and then pass them back one at a time.
 
 $head M$$
 The argument $italic M$$ has prototype
@@ -355,13 +375,15 @@ Vector Rosen34(
 	// permutation vectors needed for LU factorization routine
 	CppAD::vector<size_t> ip(n), jp(n);
 
-	// initialize e = 0
-	for(i = 0; i < n; i++)
-		e[i] = zero;
-
 	// vectors used to store values returned by F
 	Vector E(n * n), Eg(n), f_t(n);
-	Vector g(n * 3), x3(n), x4(n), xf(n), ftmp(n), xtmp(n);
+	Vector g(n * 3), x3(n), x4(n), xf(n), ftmp(n), xtmp(n), nan_vec(n);
+
+	// initialize e = 0, nan_vec = nan
+	for(i = 0; i < n; i++)
+	{	e[i]       = zero;
+		nan_vec[i] = nan(zero);
+	}
 
 	xf = xi;           // initialize solution
 	for(m = 0; m < M; m++)
@@ -375,6 +397,10 @@ Vector Rosen34(
 		// evaluate partial derivatives at beginning of this interval
 		F.Ode_ind(t, xf, f_t);
 		F.Ode_dep(t, xf, E);    // E = f_x
+		if( hasnan(f_t) || hasnan(E) )
+		{	e = nan_vec;
+			return nan_vec;
+		}
 
 		// E = I - f_x * h / 2
 		for(i = 0; i < n; i++)
@@ -404,6 +430,10 @@ Vector Rosen34(
 			}
 			// ftmp = F(t + a[k] * h, xtmp)
 			F.Ode(t + a[k] * h, xtmp, ftmp); 
+			if( hasnan(ftmp) )
+			{	e = nan_vec;
+				return nan_vec;
+			}
 
 			// Form Eg for this integration step
 			for(i = 0; i < n; i++)

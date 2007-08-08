@@ -82,7 +82,7 @@ namespace {
 		{	f[0] = - alpha_ * x[0];
 			f[1] = 1. / x[0];	
 			// case where ODE does not make sense
-			if( f[1] < 0. )
+			if( x[0] < 0. )
 				f[1] = CppAD::nan(0.);
 		}
 
