@@ -134,14 +134,14 @@ $end
 namespace CppAD { // BEGIN CppAD namespace
 
 template <class Scalar>
-Scalar nan(const Scalar &zero)
+inline Scalar nan(const Scalar &zero)
 {	return zero / zero;
 }
 
 template <class Scalar>
-bool isnan(const Scalar &s)
+inline bool isnan(const Scalar &s)
 {	static Scalar scalar_nan = nan( Scalar(0) );	
-	return (s == scalar_nan) | (s != s);
+	return (s != s) || (s == scalar_nan);
 }
 
 template <class Vector>

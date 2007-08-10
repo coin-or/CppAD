@@ -94,7 +94,7 @@ $latex \[
 \] $$
 where $latex h = (tf - ti) / M$$ is the step size.
 If $italic xf$$ contains not a number $cref/nan/$$,
-see the discussion of $cref/f/Rosen34/Fun/Nan/$$ and $cref/xi/Rosen34/xi/$$.
+see the discussion of $cref/f/Rosen34/Fun/Nan/$$.
 
 $head Fun$$
 The class $italic Fun$$ 

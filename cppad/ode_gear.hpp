@@ -2,7 +2,7 @@
 # define CPPAD_ODE_GEAR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -33,13 +33,12 @@ $index equation, differential$$
 $section An Arbitrary Order Gear Method$$
 
 $head Syntax$$
-$code # include <cppad/ode_gear.hpp>$$
-$pre
-$$
+$syntax%# include <cppad/ode_gear.hpp>
+%$$
 $syntax%OdeGear(%F%, %m%, %n%, %T%, %X%, %e%)%$$
 
 
-$head Description$$
+$head Purpose$$
 This routine applies
 $xref/OdeGear/Gear's Method/Gear's Method/$$
 to solve an explicit set of ordinary differential equations.
@@ -49,7 +48,7 @@ This routine solves the following initial value problem
 $latex \[
 \begin{array}{rcl}
 	x( t_{m-1} )  & = & x^0    \\
-	x \prime (t)  & = & f[t , x(t)] 
+	x^\prime (t)  & = & f[t , x(t)] 
 \end{array}
 \] $$
 for the value of $latex x( t_m )$$.
@@ -97,7 +96,7 @@ On input and output, $italic f$$ is a vector of size $italic n$$
 and the input values of the elements of $italic f$$ do not matter.
 On output,
 $italic f$$ is set equal to $latex f(t, x)$$
-(see $italic f(t, x)$$ in $xref/OdeGear/Description/Description/$$). 
+(see $italic f(t, x)$$ in $xref/OdeGear/Purpose/Purpose/$$). 
 
 $subhead f_x$$
 The argument $italic f_x$$ has prototype
@@ -108,7 +107,7 @@ On input and output, $italic f_x$$ is a vector of size $latex n * n$$
 and the input values of the elements of $italic f_x$$ do not matter.
 On output, 
 $latex \[
-	f_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
+	f\_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
 \] $$ 
 
 $subhead Warning$$
@@ -234,9 +233,9 @@ x_j
 	\prod_{i \neq j} ( t_j - t_i ) 
 }
 \] $$
-The derivative $latex p \prime (t)$$ is given by
+The derivative $latex p^\prime (t)$$ is given by
 $latex \[
-p \prime (t) = 
+p^\prime (t) = 
 \sum_{j=0}^m 
 x_j
 \frac{ 
@@ -248,7 +247,7 @@ x_j
 Evaluating the derivative at the point $latex t_\ell$$ we have
 $latex \[
 \begin{array}{rcl}
-p \prime ( t_\ell ) & = & 
+p^\prime ( t_\ell ) & = & 
 x_\ell
 \frac{ 
 	\sum_{i \neq \ell} \prod_{k \neq i,\ell} ( t_\ell - t_k )
@@ -300,7 +299,7 @@ $latex \[
 \] $$
 It follows that
 $latex \[
-	p \prime ( t_m ) = \alpha_0 x_0 + \cdots + \alpha_m x_m
+	p^\prime ( t_m ) = \alpha_0 x_0 + \cdots + \alpha_m x_m
 \] $$
 Gear's method determines $latex x_m$$ by solving the following 
 nonlinear equation
@@ -338,7 +337,7 @@ $latex \[
 \] $$
 It follows that
 $latex \[
-	p \prime ( t_{m-1} ) = \beta_0 x_0 + \cdots + \beta_m x_m
+	p^\prime ( t_{m-1} ) = \beta_0 x_0 + \cdots + \beta_m x_m
 \] $$
 We solve the following approximation of the equation above to determine
 $latex x_m^0$$:

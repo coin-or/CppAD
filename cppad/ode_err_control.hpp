@@ -88,8 +88,7 @@ $syntax%
 (see description of $xref/OdeErrControl/Vector/Vector/$$ below). 
 and the size of $italic xf$$ is equal to $italic n$$.
 If $italic xf$$ contains not a number $cref/nan/$$,
-see the discussion of $cref/step/OdeErrControl/Method/step/$$ and
-$cref/xi/OdeErrControl/xi/$$.
+see the discussion of $cref/step/OdeErrControl/Method/Nan/$$.
 
 $head Method$$
 The class $italic Method$$
@@ -106,6 +105,10 @@ $syntax%
 	%method%.step(%ta%, %tb%, %xa%, %xb%, %eb%)
 %$$
 executes one step of the integration method. 
+$syntax%
+
+%ta%
+%$$
 The argument $italic ta$$ has prototype
 $syntax%
 	const %Scalar% &%ta%
@@ -113,15 +116,20 @@ $syntax%
 It specifies the initial time for this step in the 
 ODE integration.
 (see description of $xref/OdeErrControl/Scalar/Scalar/$$ below). 
+$syntax%
+
+%tb%
+%$$
 The argument $italic tb$$ has prototype
 $syntax%
 	const %Scalar% &%tb%
 %$$
 It specifies the final time for this step in the 
 ODE integration.
-$pre
+$syntax%
 
-$$
+%xa%
+%$$
 The argument $italic xa$$ has prototype
 $syntax%
 	const %Vector% &%xa%
@@ -129,9 +137,10 @@ $syntax%
 and size $italic n$$.
 It specifies the value of $latex X(ta)$$.
 (see description of $xref/OdeErrControl/Vector/Vector/$$ below). 
-$pre
+$syntax%
 
-$$
+%xb%
+%$$
 The argument value $italic xb$$ has prototype
 $syntax%
 	%Vector% &%xb%
@@ -140,14 +149,10 @@ and size $italic n$$.
 The input value of its elements does not matter.
 On output, 
 it contains the approximation for $latex X(tb)$$ that the method obtains.
-If any element of the vector $italic xb$$ is equal to not a number $code nan$$,
-the current step is considered to large.
-If this happens with the current step size equal to $italic smin$$, 
-$code OdeErrControl$$ returns with $italic xf$$ and $italic ef$$ as vectors
-of $code nan$$.
-$pre
+$syntax%
 
-$$
+%eb%
+%$$
 The argument value $italic eb$$ has prototype
 $syntax%
 	%Vector% &%eb%
@@ -160,12 +165,14 @@ It is assumed (locally) that the error bound in this approximation
 nearly equal to $latex K (tb - ta)^m$$ 
 where $italic K$$ is a fixed constant and $italic m$$
 is the corresponding argument to $code CodeControl$$.
-If any element of the vector $italic eb$$ is equal to not a number $code nan$$,
+
+$subhead Nan$$
+If any element of the vector $italic eb$$ or $italic xb$$ are
+not a number $code nan$$,
 the current step is considered to large.
 If this happens with the current step size equal to $italic smin$$, 
 $code OdeErrControl$$ returns with $italic xf$$ and $italic ef$$ as vectors
 of $code nan$$.
-
 
 $subhead order$$
 If $italic m$$ is $code size_t$$,
@@ -206,8 +213,6 @@ $syntax%
 %$$
 and size $italic n$$.
 It specifies value of $latex X(ti)$$.
-If any of the elements of $italic xi$$ are not a number $code nan$$,
-$code OdeErrControl$$ returns with $italic xf$$ and $italic ef$$ as $code nan$$.
 
 $head smin$$
 The argument $italic smin$$ has prototype
@@ -284,8 +289,7 @@ $latex \[
 	ef_i > | X( tf )_i - xf_i |
 \] $$
 If on output $italic ef$$ contains not a number $code nan$$,
-see the discussion of $cref/step/OdeErrControl/Method/step/$$ and
-$cref/xi/OdeErrControl/xi/$$.
+see the discussion of $cref/step/OdeErrControl/Method/Nan/$$.
 
 $head maxabs$$
 The argument $italic maxabs$$ is optional in the call to $code OdeErrControl$$.
@@ -297,7 +301,7 @@ and size $italic n$$.
 The input value of its elements does not matter.
 On output, 
 it contains an estimate for the 
-absolute error in the approximation to $latex X(t)$$; i.e.,
+maximum absolute value of $latex X(t)$$; i.e.,
 $latex \[
 	maxabs[i] \approx \max \left\{ 
 		| X( t )_i | \; : \;  t \in [ti, tf] 
@@ -477,11 +481,6 @@ Vector OdeErrControl(
 
 	}  
 	nstep = 0;
-
-	if( hasnan(xi) )
-	{	ef = nan_vec;
-		return nan_vec;
-	}
 
 	Scalar tb, step, lambda, axbi, a, r, root;
 	while( ! (ta == tf) )

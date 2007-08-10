@@ -85,7 +85,7 @@ $latex \[
 \] $$
 where $latex h = (tf - ti) / M$$ is the step size.
 If $italic xf$$ contains not a number $cref/nan/$$,
-see the discussion of $cref/f/Runge45/Fun/f/$$ and $cref/xi/Runge45/xi/$$.
+see the discussion for $cref/f/Runge45/Fun/f/$$.
 
 $head Fun$$
 The class $italic Fun$$ 
@@ -172,9 +172,6 @@ $syntax%
 %$$
 and the size of $italic xi$$ is equal to $italic n$$.
 It specifies the value of $latex X(ti)$$
-If any of the elements of $italic xi$$ have the value not a number $code nan$$,
-the routine $code Runge45$$ returns with all the
-elements of $italic xf$$ equal to $code nan$$.
 
 $head e$$
 The argument $italic e$$ is optional and has the prototype
@@ -192,8 +189,7 @@ $latex \[
 \] $$
 where $latex h = (tf - ti) / M$$ is the step size.
 If on output, $italic e$$ contains not a number $code nan$$,
-see the discussion of 
-$cref/f/Runge45/Fun/f/$$ and $cref/xi/Runge45/xi/$$.
+see the discussion for $cref/f/Runge45/Fun/f/$$.
 
 $head Scalar$$
 The type $italic Scalar$$ must satisfy the conditions
@@ -347,12 +343,6 @@ Vector Runge45(
 	// vector of nans
 	for(i = 0; i < n; i++)
 		nan_vec[i] = nan(z);
-
-	// check if any element of xi is equal to nan
-	if( hasnan(xi) )
-	{	e = nan_vec;
-		return nan_vec;
-	}
 
 	xf = xi;           // initialize solution
 	for(m = 0; m < M; m++)

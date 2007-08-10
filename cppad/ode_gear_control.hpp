@@ -2,7 +2,7 @@
 # define CPPAD_ODE_GEAR_CONTROL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -45,36 +45,46 @@ $index equation, Ode Gear control$$
 $section An Error Controller for Gear's Ode Solvers$$
 
 $head Syntax$$
-$code # include <cppad/ode_gear_control.hpp>$$
-$pre
-$$
+$syntax%# include <cppad/ode_gear_control.hpp>
+%$$
 $syntax%%xf% = OdeGearControl(%F%, %M%, %ti%, %tf%, %xi%,
 	%smin%, %smax%, %sini%, %eabs%, %erel%, %ef% , %maxabs%, %nstep% )%$$
 
 
-$head Description$$
+$head Purpose$$
 Let $latex \R$$ denote the real numbers
-and let $latex F : \R \times \R^n \rightarrow \R^n$$ be a smooth function.
+and let $latex f : \R \times \R^n \rightarrow \R^n$$ be a smooth function.
 We define $latex X : [ti , tf] \rightarrow \R^n$$ by 
 the following initial value problem:
 $latex \[
 \begin{array}{rcl}
 	X(ti)  & = & xi    \\
-	X'(t)  & = & F[t , X(t)] 
+	X'(t)  & = & f[t , X(t)] 
 \end{array}
 \] $$
-The routine $code OdeGearControl$$ can be used to adjust the step size
-used by either of these methods in order to be as fast as possible
-and still with in a requested error bound.
+The routine $cref/OdeGear/$$ is a stiff multi-step method that
+can be used to approximate the solution to this equation.
+The routine $code OdeGearControl$$ sets up this multi-step method
+and controls the error during such an approximation.
 
 $head Include$$
-The file $code cppad/ode_gear_control.hpp$$ is included by $code cppad/cppad.hpp$$
+The file $code cppad/ode_gear_control.hpp$$ 
+is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
 $head Notation$$
 The template parameter types $xref/OdeGearControl/Scalar/Scalar/$$ and
 $xref/OdeGearControl/Vector/Vector/$$ are documented below.
+
+$head xf$$
+The return value $italic xf$$ has the prototype
+$syntax%
+	%Vector% %xf%
+%$$
+and the size of $italic xf$$ is equal to $italic n$$
+(see description of $xref/OdeGear/Vector/Vector/$$ below).
+It is the approximation for $latex X(tf)$$.
 
 $head Fun$$
 The class $italic Fun$$ 
@@ -112,7 +122,7 @@ On input and output, $italic f$$ is a vector of size $italic N$$
 and the input values of the elements of $italic f$$ do not matter.
 On output,
 $italic f$$ is set equal to $latex f(t, x)$$
-(see $italic f(t, x)$$ in $xref/OdeGear/Description/Description/$$). 
+(see $italic f(t, x)$$ in $xref/OdeGear/Purpose/Purpose/$$). 
 
 $subhead f_x$$
 The argument $italic f_x$$ has prototype
@@ -123,7 +133,7 @@ On input and output, $italic f_x$$ is a vector of size $latex N * N$$
 and the input values of the elements of $italic f_x$$ do not matter.
 On output, 
 $latex \[
-	f_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
+	f\_x [i * n + j] = \partial_{x(j)} f_i ( t , x )
 \] $$ 
 
 $subhead Warning$$
@@ -193,7 +203,8 @@ $syntax%
 The value of $italic sini$$ is the minimum 
 step size to use during initialization of the multi-step method; i.e.,
 for calls to $code OdeGear$$ where $latex m < M$$.
-The value of $italic sini$$ must be less than or equal $italic smax$$.
+The value of $italic sini$$ must be less than or equal $italic smax$$
+(and can also be less than $italic smin$$).
 
 $head eabs$$
 The argument $italic eabs$$ has prototype
@@ -245,7 +256,7 @@ and size $italic n$$.
 The input value of its elements does not matter.
 On output, 
 it contains an estimate for the 
-absolute error in the approximation to $latex X(t)$$; i.e.,
+maximum absolute value of $latex X(t)$$; i.e.,
 $latex \[
 	maxabs[i] \approx \max \left\{ 
 		| X( t )_i | \; : \;  t \in [ti, tf] 
@@ -406,7 +417,9 @@ Vector OdeGearControl(
 	// some constants
 	const Scalar zero(0);
 	const Scalar one(1);
+	const Scalar one_plus( Scalar(3) / Scalar(2) );
 	const Scalar two(2);
+	const Scalar ten(10);
 
 	// temporary indices
 	size_t i, k;
@@ -458,7 +471,7 @@ Vector OdeGearControl(
 				step = smin;
 
 		// check if near the end
-		if( tf <= T[m-1] + 1.5 * step )
+		if( tf <= T[m-1] + one_plus * step )
 			T[m] = tf;
 		else	T[m] = T[m-1] + step;
 
@@ -476,7 +489,7 @@ Vector OdeGearControl(
 			a  = eabs[i] + erel * axi;
 			if( e[i] > zero )
 			{	if( m == 1 )
-					root = .1 * a / e[i];
+					root = (a / e[i]) / ten;
 				else
 				{	r = ( a / e[i] ) * step / (tf - ti);
 					root = exp( log(r) / Scalar(m-1) ); 
@@ -488,8 +501,8 @@ Vector OdeGearControl(
 
 		bool advance;
 		if( m == M )
-			advance = one <= lambda || step <= 1.5 * smin;
-		else	advance = one <= lambda || step <= 1.5 * sini; 
+			advance = one <= lambda || step <= one_plus * smin;
+		else	advance = one <= lambda || step <= one_plus * sini; 
 
 
 		if( advance )
@@ -517,7 +530,7 @@ Vector OdeGearControl(
 		}
 
 		// new step suggested by error criteria 
-		step = lambda * step / two;
+		step = std::min(lambda , ten) * step / two;
 	}
 	for(i = 0; i < n; i++)
 		xf[i] = X[(m-1) * n + i];
