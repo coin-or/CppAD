@@ -241,7 +241,7 @@ $code OdeErrControl$$ that its is taking to large a step.
 */
 
 # include <cppad/rosen_34.hpp>          // CppAD::Rosen34
-# include <cppad/cppad.h>
+# include <cppad/cppad.hpp>
 
 namespace {
 	// --------------------------------------------------------------

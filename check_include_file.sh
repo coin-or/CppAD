@@ -31,7 +31,19 @@ ls	cppad/config.h \
 	cppad/local/*.hpp \
 	cppad/speed/*.hpp \
 	| sort -u > junk.3 
-diff junk.2 junk.3
+if diff junk.2 junk.3
+then
+	different="no"
+else
+	different="yes"
+fi
 #
 echo "-------------------------------------------------------------------"
-echo "Nothing should be between the two dashed lines above"
+if [ $different = "yes" ]
+then
+	echo "Error: nothing should be between the two dashed lines above"
+	exit 1
+else
+	echo "Ok: nothing is between the two dashed lines above"
+	exit 0
+fi

@@ -11,6 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	Ginac
+	xi
 	Bool
 	CppADvector
 	inv
@@ -51,6 +53,24 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 08-09$$
+Let user detect and handel the case where an ODE initial vector $italic xi$$
+contains  not a number $code nan$$
+(see $cref/Runge45/$$, $cref/Rosen34/$$, and $cref/OdeErrControl/$$).
+$pre
+
+$$
+Use the $code ||$$ operation instead of $code |$$
+operator in the $code nan$$ function 
+(The Ginac library seems to use an alias for the type $code bool$$ and
+does not have $code |$$ defined for this alias).
+$pre
+
+$$
+The file $code test_more/ode_err_control.cpp$$ was using the 
+wrong include file name since the change on 08/07. 
+This has been fixed.
 
 $head 08-07$$
 Sometimes an ODE solver takes to large a step and this results

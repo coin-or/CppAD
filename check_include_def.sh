@@ -22,6 +22,19 @@ ls cppad/*.hpp cppad/local/*.hpp cppad/speed/*.hpp example/*.hpp openmp/*.hpp \
 	| sed -e 's|.*/||' -e 's|\.hpp||' \
 	| sort -u \
 	> junk.2
-diff junk.1 junk.2
-echo "-----------------------------------------------------"
-echo "Nothing should be between the two dashed lines above"
+if diff junk.1 junk.2
+then
+	different="no"
+else
+	different="yes"
+fi
+#
+echo "-------------------------------------------------------------------"
+if [ $different = "yes" ]
+then
+	echo "Error: nothing should be between the two dashed lines above"
+	exit 1
+else
+	echo "Ok: nothing is between the two dashed lines above"
+	exit 0
+fi

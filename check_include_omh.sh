@@ -65,12 +65,22 @@ sed < junk.1 > junk.2 \
 #
 ls $list > junk.3
 #
+different="no"
 for file in `cat junk.2`
 do
 	if [ "`grep $file junk.3`" == "" ]
 	then
 		echo $file
+		different="yes"
 	fi
 done
-echo "----------------------------------------------------------------------"
-echo "Nothing should be between the two dashed lines above"
+#
+echo "-------------------------------------------------------------------"
+if [ $different = "yes" ]
+then
+	echo "Error: nothing should be between the two dashed lines above"
+	exit 1
+else
+	echo "Ok: nothing is between the two dashed lines above"
+	exit 0
+fi

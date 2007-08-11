@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -79,12 +79,11 @@ cd ..
 echo "GplLicense: changing license from CPL to GPL"
 for file in $list
 do
-	ext=`echo $file | sed -e "s/.*\././"`
 	file=`echo $file | sed -e 's|^\./||'`
 	#
 	sed < cppad-$version/$file > GplLicense.tmp \
 -e 's/Common Public License Version 1.0/GNU General Public License Version 2/' 
-
+	#
 	mv GplLicense.tmp cppad-$version/$file
 	#
 	err="no"

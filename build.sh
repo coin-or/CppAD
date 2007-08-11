@@ -23,6 +23,13 @@ BOOST_DIR=/usr/include/boost-1_33_1
 version=`grep "^ *AC_INIT(" configure.ac | \
 	sed -e "s/.*, *\([0-9]\{8\}\) *,.*/\1/"`
 #
+if [ "$1" = "all" ] && [ "$2" != "" ] && [ "$2" != "test" ]
+then
+	echo "./build.sh $1 $2"
+	echo "is not valid, build.sh with no arguments lists valid choices."
+	exit 1
+fi
+#
 # Check if we are running all the test cases. 
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] & [ "$2" = "test" ] )
 then
@@ -311,9 +318,18 @@ then
 	fi
 	#
 	# check include files
-	./check_include_def.sh  >> build_test.log
-	./check_include_file.sh >> build_test.log
-	./check_include_omh.sh  >> build_test.log
+	if ! ./check_include_def.sh  >> build_test.log
+	then
+		exit 1
+	fi
+	if ! ./check_include_file.sh >> build_test.log
+	then
+		exit 1
+	fi
+	if ! ./check_include_omh.sh  >> build_test.log
+	then
+		exit 1
+	fi
 	# add a new line after last include file check
 	echo ""                 >> build_test.log
 	#
