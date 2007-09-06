@@ -54,6 +54,12 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-06$$
+If the $cref/method.step/OdeErrControl/Method/step/$$ function returned
+$code nan$$ (not a number),
+it was possible for $cref/OdeErrControl/$$ to drop into an infinite loop.
+This has been fixed.
+
 $head 08-09$$
 Let user detect and handel the case where an ODE initial vector $italic xi$$
 contains  not a number $code nan$$

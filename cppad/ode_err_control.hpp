@@ -461,7 +461,8 @@ Vector OdeErrControl(
 	);
 
 	bool    ok;
-	size_t   i;
+	bool    minimum_step;
+	size_t  i;
 	Vector xa(n), xb(n), eb(n), nan_vec(n);
 
 	// initialization
@@ -492,7 +493,8 @@ Vector OdeErrControl(
 			step = smax;
 
 		// check minimum
-		if( step <= smin )
+		minimum_step = step <= smin;
+		if( minimum_step )
 			step = smin;
 
 		// check if near the end
@@ -507,7 +509,7 @@ Vector OdeErrControl(
 
 		// check if this steps error estimate is ok
 		ok = ! (hasnan(xb) || hasnan(eb));
-		if( (! ok) && (step <= smin) )
+		if( (! ok) && minimum_step )
 		{	ef = nan_vec;
 			return nan_vec;
 		}

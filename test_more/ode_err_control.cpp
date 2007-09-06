@@ -369,12 +369,99 @@ bool OdeErrControl_three(void)
 	return ok;
 }
 
+namespace {
+	// --------------------------------------------------------------
+	class Fun_four {
+	private:
+		 size_t n;   // dimension of the state space
+	public:
+		// constructor
+		Fun_four(size_t n_) : n(n_)
+		{ } 
+
+		// given x(0) = 0
+		// solution is x_i (t) = t^(i+1)
+		void Ode(
+			const double                &t, 
+			const CppAD::vector<double> &x, 
+			CppAD::vector<double>       &f)
+		{	size_t i;
+			f[0] = CppAD::nan(0.);
+			for(i = 1; i < n; i++)
+				f[i] = (i+1) * x[i-1];
+		}
+	};
+
+	// --------------------------------------------------------------
+	class Method_four {
+	private:
+		Fun_four F;
+	public:
+		// constructor
+		Method_four(size_t n_) : F(n_)
+		{ }
+		void step(
+			double ta, 
+			double tb, 
+			CppAD::vector<double> &xa ,
+			CppAD::vector<double> &xb ,
+			CppAD::vector<double> &eb )
+		{	xb = CppAD::Runge45(F, 1, ta, tb, xa, eb);
+		}
+		size_t order(void)
+		{	return 4; }
+	};
+}
+
+bool OdeErrControl_four(void)
+{	bool   ok = true;     // initial return value
+	
+	// construct method for n component solution
+	size_t  n = 6;        
+	Method_four method(n);
+
+	// inputs to OdeErrControl
+
+	// special case where scur is converted to ti - tf
+	// (so it is not equal to smin)
+	double ti   = 0.;
+	double tf   = .9;
+	double smin = .8;
+	double smax = 1.;
+	double scur = smin;
+	double erel = 1e-7;
+
+	CppAD::vector<double> xi(n);
+	CppAD::vector<double> eabs(n);
+	size_t i;
+	for(i = 0; i < n; i++)
+	{	xi[i]   = 0.;
+		eabs[i] = 0.;
+	}
+
+	// outputs from OdeErrControl
+	CppAD::vector<double> ef(n);
+	CppAD::vector<double> xf(n);
+	
+	xf = OdeErrControl(method,
+		ti, tf, xi, smin, smax, scur, eabs, erel, ef);
+
+	// check that Fun_four always returning nan results in nan
+	for(i = 0; i < n; i++)
+	{	ok &= CppAD::isnan(xf[i]);
+		ok &= CppAD::isnan(ef[i]);
+	}
+
+	return ok;
+}
+
 // ==========================================================================
 bool OdeErrControl(void)
 {	bool ok = true;
 	ok     &= OdeErrControl_one();
 	ok     &= OdeErrControl_two();
 	ok     &= OdeErrControl_three();
+	ok     &= OdeErrControl_four();
 	return ok;
 }
 
