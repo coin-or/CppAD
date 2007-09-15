@@ -10,16 +10,26 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Piecewise.cpp$$
+$begin interp_onetape.cpp$$
+$spell
+	retaping
+	retape
+$$
 
-$section Piecewise Linear Interpolation: Example and Test$$
+$section Interpolation With Out Retaping: Example and Test$$
 
-$index piecewise, linear interpolate$$
-$index linear, piecewise interpolate$$
-$index interpolate, piecewise linear$$
+$index interpolate, example$$
+$index interpolate, test$$
+$index tape, interpolate$$
+$index retape, interpolate$$
 
+$head See Also$$
+$cref/interp_retape.cpp/$$
+$pre
+
+$$
 $code
-$verbatim%example/piecewise.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/interp_onetape.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -80,7 +90,7 @@ namespace {
 }
 
 
-bool Piecewise(void)
+bool interp_onetape(void)
 {	bool ok = true;
 
 	using CppAD::AD;

@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin Discrete$$
 $spell
+	retaping
 	namespace
 	std
 	Eq
@@ -120,16 +121,20 @@ All the derivatives of $italic name$$ will be evaluated as zero.
 $head Example$$
 $children%
 	example/tape_index.cpp%
-	example/piecewise.cpp
+	example/interp_onetape.cpp%
+	example/interp_retape.cpp
 %$$
 The file
 $xref/TapeIndex.cpp/$$
 contains an example and test that uses a discrete function 
 to vary an array index during $cref/Forward/$$ mode calculations.
 The file
-$xref/Piecewise.cpp/$$
+$xref/interp_onetape.cpp/$$
 contains an example and test that uses discrete
-functions for piecewise linear interpolation.
+functions to avoid retaping a calculation that requires interpolation.
+(The file
+$xref/interp_retape.cpp/$$
+shows how interpolation can be done with retaping.)
 
 $head Deprecated$$
 $index CppADCreateDiscrete, deprecated$$

@@ -92,6 +92,8 @@ example_SOURCES   = \
 	independent.cpp \
 	integer.cpp \
 	interface_2c.cpp\
+	interp_onetape.cpp\
+	interp_retape.cpp\
 	jac_lu_det.cpp \
 	jac_minor_det.cpp \
 	jacobian.cpp \
@@ -118,7 +120,6 @@ example_SOURCES   = \
 	ode_taylor.cpp \
 	output.cpp \
 	par_var.cpp \
-	piecewise.cpp \
 	poly.cpp \
 	pow.cpp \
 	pow_int.cpp \

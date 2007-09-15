@@ -240,6 +240,12 @@
 				RelativePath=".\interface_2c.cpp">
 			</File>
 			<File
+				RelativePath=".\interp_onetape.cpp">
+			</File>
+			<File
+				RelativePath=".\interp_retape.cpp">
+			</File>
+			<File
 				RelativePath=".\jac_lu_det.cpp">
 			</File>
 			<File
@@ -316,9 +322,6 @@
 			</File>
 			<File
 				RelativePath=".\par_var.cpp">
-			</File>
-			<File
-				RelativePath=".\piecewise.cpp">
 			</File>
 			<File
 				RelativePath=".\poly.cpp">
