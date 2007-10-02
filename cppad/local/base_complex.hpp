@@ -156,7 +156,7 @@ $head Standard Functions$$
 The following standard math functions,
 that are required by $cref/base_require/$$,
 are defined by 
-$code std:;complex$$:
+$code std::complex$$:
 $code cos$$,
 $code cosh$$,
 $code exp$$,

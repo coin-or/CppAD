@@ -348,6 +348,59 @@ bool PowTestFive(void)
 
 	return ok;	
 }
+bool PowTestSix(void)
+{	bool ok = true;
+
+	using CppAD::AD;
+	using CppAD::NearEqual;
+
+	// domain space vector
+	size_t n  = 1;
+	double x0 = 1.5;
+	CPPAD_TEST_VECTOR< AD<double> > x(n);
+	x[0]      = x0;
+
+	// domain space vector
+	CPPAD_TEST_VECTOR< AD< AD<double> > > X(n);
+	X[0]      = x[0];
+
+	// declare independent variables and start tape recording
+	CppAD::Independent(X);
+
+	// range space vector 
+	size_t m = 1;
+	CPPAD_TEST_VECTOR< AD< AD<double> > > Y(m);
+
+	// case of AD< AD<double> > raised to a double power
+	double e = 2.5;
+	Y[0] = pow(X[0], e); 
+
+	// create F: X -> Y and stop tape recording
+	CppAD::ADFun< AD<double> > F(X, Y); 
+
+	// check function value
+	ok  &= (Value( Value(Y[0]) ) == pow(x0, e) );
+
+	// forward computation of first partial w.r.t. x[1]
+	double d1 = e * pow(x0, (e-1));
+	CPPAD_TEST_VECTOR< AD<double> > dx(n);
+	CPPAD_TEST_VECTOR< AD<double> > dy(m);
+	dx[0] = 1.;
+	dy    = F.Forward(1, dx);
+	ok   &= NearEqual(dy[0], d1, 1e-10, 1e-10);
+
+	// reverse mode computation of second partials 
+	// x.r.t. x[1],x[0]  and x[1], x[1]
+	double d2 = e * (e-1) * pow(x0, (e-2));
+	CPPAD_TEST_VECTOR< AD<double> >   w(m);
+	CPPAD_TEST_VECTOR< AD<double> > ddw(2*n);
+	w[0] = 1.;
+	ddw  = F.Reverse(2, w);
+	ok  &= NearEqual(ddw[0], d1, 1e-10, 1e-10);
+	ok  &= NearEqual(ddw[1], d2, 1e-10, 1e-10);
+
+	return ok;	
+}
 
 } // END empty namespace
  
@@ -358,5 +411,6 @@ bool Pow(void)
 	ok     &= PowTestThree();
 	ok     &= PowTestFour();
 	ok     &= PowTestFive();
+	ok     &= PowTestSix();
 	return ok;
 }

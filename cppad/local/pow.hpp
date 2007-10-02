@@ -40,27 +40,35 @@ This version of the $code pow$$ function may use
 logarithms and exponentiation to compute derivatives.
 This will not work if $italic x$$ is less than or equal zero.
 If the value of $italic y$$ is an integer, 
-the $cref/pow_int/$$ function can be used to compute the same value 
+the $cref/pow_int/$$ function is used to compute this value 
 using only multiplication (and division if $italic y$$ is negative). 
 (This will work even if $italic x$$ is less than or equal zero.)
 
 $head x$$
-The argument $italic x$$ has one of the following prototypes
+The argument $italic x$$ has the following prototype
 $syntax%
-	int   %%                        %x%
-	const %Base%                   &%x%
-	const AD<%Base%>               &%x%
-	const VecAD<%Base%>::reference &%x%
-%$$ 
+	const %Type% &%x%
+%$$
+where $italic Type$$ is
+$syntax%VecAD<%Base%>::reference%$$,
+$syntax%AD<%Base%>%$$,
+$syntax%%Base%$$,
+$syntax%double%$$,
+or
+$syntax%int%$$.
 
 $head y$$
-The argument $italic y$$ has one of the following prototypes
+The argument $italic y$$ has the following prototype
 $syntax%
-	int   %%                        %y%
-	const %Base%                   &%y%
-	const AD<%Base%>               &%y%
-	const VecAD<%Base%>::reference &%y%
-%$$ 
+	const %Type% &%y%
+%$$
+where $italic Type$$ is
+$syntax%VecAD<%Base%>::reference%$$,
+$syntax%AD<%Base%>%$$,
+$syntax%%Base%$$,
+$syntax%double%$$,
+or
+$syntax%int%$$.
 
 $head z$$
 The result $italic z$$ has prototype
@@ -72,12 +80,8 @@ $head Standard Types$$
 A definition for the $code pow$$ function is included
 in the CppAD namespace for the case where both $italic x$$
 and $italic y$$ have the same type and that type is
-$code float$$, $code double$$, 
-$code std::complex<float>$$, or
-$code std::complex<double>$$.
-For these cases, 
-the result has the same type as the arguments.
-
+$code float$$ or $code double$$.
+ 
 $head Operation Sequence$$
 This is an AD of $italic Base$$
 $xref/glossary/Operation/Atomic/atomic operation/1/$$
@@ -100,13 +104,13 @@ $end
 */
 //  BEGIN CppAD namespace
 namespace CppAD {
-
+ 
 // copy of standard functions in CppAD namespace
 inline float pow(const float &x, const float &y)
-{	return std::pow(x, y); }
+{ return std::pow(x, y); }
 
 inline double pow(const double &x, const double &y)
-{	return std::pow(x, y); }
+{ return std::pow(x, y); }
 
 // case where x and y are AD<Base> -----------------------------------------
 template <class Base> AD<Base> 
@@ -143,56 +147,88 @@ pow(const AD<Base> &x, const AD<Base> &y)
 
 	return p;
 }
+// =========================================================================
+// Fold operations in same way as CPPAD_FOLD_AD_VALUED_BINARY_OPERATION(Op)
 // -------------------------------------------------------------------------
+// Operations with VecAD_reference<Base> and AD<Base> only
 
-// Fold operations with VecAD_reference<Base> and AD<Base>
 template <class Base> AD<Base>
 pow(const AD<Base> &x, const VecAD_reference<Base> &y)
 {	return pow(x, y.ADBase()); }
-
-template <class Base> AD<Base>
-pow(const VecAD_reference<Base> &x, const AD<Base> &y)
-{	return pow(x.ADBase(), y); }
 
 template <class Base> AD<Base> 
 pow(const VecAD_reference<Base> &x, const VecAD_reference<Base> &y) 
 {	return pow(x.ADBase(), y.ADBase()); }
 
-// Fold operations with Base
 template <class Base> AD<Base>
-pow(const Base &x, const VecAD_reference<Base> &y)
-{	return pow(AD<Base>(x), y.ADBase()); }
-
-template <class Base> AD<Base>
-pow(const VecAD_reference<Base> &x, const Base &y)
-{	return pow(x.ADBase(), AD<Base>(y)); }
+pow(const VecAD_reference<Base> &x, const AD<Base> &y)
+{	return pow(x.ADBase(), y); }
+// -------------------------------------------------------------------------
+// Operations with Base
 
 template <class Base> AD<Base>
 pow(const Base &x, const AD<Base> &y)
 {	return pow(AD<Base>(x), y); }
 
 template <class Base> AD<Base>
+pow(const Base &x, const VecAD_reference<Base> &y)
+{	return pow(AD<Base>(x), y.ADBase()); }
+
+template <class Base> AD<Base>
 pow(const AD<Base> &x, const Base &y)
 {	return pow(x, AD<Base>(y)); }
 
-// Fold operations with int as base
-// (see cppad/pow_int.hpp for case with int as exponent).
+template <class Base> AD<Base>
+pow(const VecAD_reference<Base> &x, const Base &y)
+{	return pow(x.ADBase(), AD<Base>(y)); }
+// -------------------------------------------------------------------------
+// Operations with double
+
+template <class Base> AD<Base>
+pow(const double &x, const AD<Base> &y)
+{	return pow(AD<Base>(x), y); }
+
+template <class Base> AD<Base>
+pow(const double &x, const VecAD_reference<Base> &y)
+{	return pow(AD<Base>(x), y.ADBase()); }
+
+template <class Base> AD<Base>
+pow(const AD<Base> &x, const double &y)
+{	return pow(x, AD<Base>(y)); }
+
+template <class Base> AD<Base>
+pow(const VecAD_reference<Base> &x, const double &y)
+{	return pow(x.ADBase(), AD<Base>(y)); }
+// -------------------------------------------------------------------------
+// Special case to avoid ambuigity when Base is double
+
+inline AD<double>
+pow(const double &x, const AD<double> &y)
+{	return pow(AD<double>(x), y); }
+
+inline AD<double>
+pow(const double &x, const VecAD_reference<double> &y)
+{	return pow(AD<double>(x), y.ADBase()); }
+
+inline AD<double>
+pow(const AD<double> &x, const double &y)
+{	return pow(x, AD<double>(y)); }
+
+inline AD<double>
+pow(const VecAD_reference<double> &x, const double &y)
+{	return pow(x.ADBase(), AD<double>(y)); }
+
+// =========================================================================
+// Fold operations for the cases where x is an int, 
+// but let cppad/pow_int.hpp handle the cases where y is an int.
+// -------------------------------------------------------------------------
 template <class Base> AD<Base> pow
 (int x, const VecAD_reference<Base> &y)
 {	return pow(AD<Base>(x), y.ADBase()); }
 
-// template <class Base> AD<Base> pow
-// (const VecAD_reference<Base> &x, int y)
-// {	return pow(x.ADBase(), AD<Base>(y)); }
-
 template <class Base> AD<Base> pow
 (int x, const AD<Base> &y)
 {	return pow(AD<Base>(x), y); }
-
-// template <class Base> AD<Base> pow
-// (const AD<Base> &x, int y)
-// {	return pow(x, AD<Base>(y)); }
-// 
 
 } // END CppAD namespace
 
