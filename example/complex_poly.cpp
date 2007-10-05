@@ -44,6 +44,7 @@ bool complex_poly(void)
 	size_t deg = 4;
 
 	using CppAD::AD;
+	using CppAD::Poly;
 	typedef std::complex<double> Complex; 
 
 	// polynomial coefficients

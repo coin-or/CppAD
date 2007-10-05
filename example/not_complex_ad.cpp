@@ -55,6 +55,7 @@ bool not_complex_ad(void)
 	size_t deg = 4;
 
 	using CppAD::AD;
+	using CppAD::Poly;
 	typedef std::complex<double>              Complex; 
 	typedef std::complex< CppAD::AD<double> > ComplexAD; 
 
