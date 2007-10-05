@@ -297,6 +297,9 @@
 				RelativePath=".\near_equal_ext.cpp">
 			</File>
 			<File
+				RelativePath=".\not_complex_ad.cpp">
+			</File>
+			<File
 				RelativePath=".\numeric_type.cpp">
 			</File>
 			<File

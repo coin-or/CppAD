@@ -39,13 +39,18 @@ $index double, complex Base$$
 $section Enable use of AD<Base> where Base is std::complex<double>$$
 
 $children%
-	example/complex_poly.cpp
+	example/complex_poly.cpp%
+	example/not_complex_ad.cpp
 %$$
 
 $head Example$$
 The file $cref/ComplexPoly.cpp/$$ contains an example use of
 $code std::complex<double>$$ type for a CppAD $italic Base$$ type.
 It returns true if it succeeds and false otherwise.
+
+$head See Also$$
+The file $cref/not_complex_ad.cpp/$$ contains an example using
+complex arithmetic where the function is not complex differentiable.
 
 
 $head CondExpOp$$

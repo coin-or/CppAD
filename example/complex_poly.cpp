@@ -17,10 +17,15 @@ $$
 
 $section Complex Polynomial: Example and Test$$
 
-$mindex complex polynomial$$
+$index complex, polynomial$$
+$index polynomial, complex$$
 $index example, complex polynomial$$
 $index test, complex polynomial$$
 
+$head See Also$$
+$cref/not_complex_ad.cpp/$$
+
+$head Poly$$
 Select this link to view specifications for $xref/Poly/$$:
 
 $code
@@ -34,15 +39,12 @@ $end
 # include <cppad/cppad.hpp>
 # include <complex>
 
-// define abbreviation for doubler precision complex
-typedef std::complex<double> Complex; 
-
-bool ComplexPoly(void)
-{	bool ok = true;
-
-	using namespace CppAD;
-
+bool complex_poly(void)
+{	bool ok    = true;
 	size_t deg = 4;
+
+	using CppAD::AD;
+	typedef std::complex<double> Complex; 
 
 	// polynomial coefficients
 	CPPAD_TEST_VECTOR< Complex >     a   (deg + 1); // coefficients for p(z)
@@ -51,33 +53,34 @@ bool ComplexPoly(void)
 	for(i = 0; i <= deg; i++)
 		A[i] = a[i] = Complex(i, i);
 
-	// independent variable vector, indices, values, and declaration
+	// independent variable vector
 	CPPAD_TEST_VECTOR< AD<Complex> > Z(1);
-	size_t z = 0;
- 	Z[z]     = Complex(1., 1.);
+	Complex z = Complex(1., 2.);
+ 	Z[0]      = z;
 	Independent(Z);
 
 	// dependent variable vector and indices
 	CPPAD_TEST_VECTOR< AD<Complex> > P(1);
-	size_t p = 0;
 
 	// dependent variable values
-	P[p] = Poly(0, A, Z[z]);
+	P[0] = Poly(0, A, Z[0]);
 
 	// create f: Z -> P and vectors used for derivative calculations
-	ADFun<Complex> f(Z, P);
+	CppAD::ADFun<Complex> f(Z, P);
 	CPPAD_TEST_VECTOR<Complex> v( f.Domain() );
 	CPPAD_TEST_VECTOR<Complex> w( f.Range() );
 
 	// check first derivative w.r.t z
-	v[z] = 1.;
-	w    = f.Forward(1, v);
-	ok &= ( w[p]  == Poly(1, a, Value(Z[z]) ) );
+	v[0]      = 1.;
+	w         = f.Forward(1, v);
+	Complex p = Poly(1, a, z);
+	ok &= ( w[0]  == p );
 
 	// second derivative w.r.t z is 2 times its second order Taylor coeff
-	v[z] = 0.;
+	v[0] = 0.;
 	w    = f.Forward(2, v);
-	ok &= ( 2. * w[p]  == Poly(2, a, Value(Z[z]) ) );
+	p    = Poly(2, a, z);
+	ok &= ( 2. * w[0]  == p );
 
 	return ok;
 }

@@ -138,6 +138,7 @@ $rref mul_level_adolc.cpp$$
 $rref multi_newton.cpp$$
 $rref NearEqualExt.cpp$$
 $rref Near_Equal.cpp$$
+$rref not_complex_ad.cpp$$
 $rref NumericType.cpp$$
 $rref OdeErrControl.cpp$$
 $rref OdeErrMaxabs.cpp$$

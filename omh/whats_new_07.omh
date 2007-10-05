@@ -54,6 +54,15 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-05$$
+Added and example using complex calculations for a 
+function that is not complex differentiable ($cref/not_complex_ad.cpp/$$).
+
+$head 10-02$$ 
+Extend the $cref/pow/$$ function to work for any case where one argument
+is $syntax%AD<%Base%>%$$ and the other is $code double$$ 
+(as do the binary operators).
+
 $head 09-06$$
 If the $cref/method.step/OdeErrControl/Method/step/$$ function returned
 $code nan$$ (not a number),
