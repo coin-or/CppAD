@@ -157,7 +157,7 @@ stating of the test passed or failed.
 
 $head Speed Results$$
 For each speed test, corresponds to three lines of output.
-The name of the test is printed on the first line,
+The name of the package and test are printed on the first line,
 the vector of problem sizes are printed on the next line,
 and the rates corresponding to the different problem sizes are
 printed on the third line.
@@ -224,7 +224,7 @@ namespace {
 		CppAD::vector<size_t> rate_vec( size_vec.size() );
 
 		rate_vec = CppAD::speed_test(speed_case, size_vec, time_min);
-		cout << case_name << endl;
+		cout << AD_PACKAGE << ": " << case_name << endl;
 		cout << "size = " << size_vec << endl;
 		cout << "rate = " << rate_vec << endl;
 		return;
@@ -253,9 +253,6 @@ int main(int argc, char *argv[])
 	const size_t option_poly      = 4;
 	assert( n_option == option_poly+1 );
 
-	// use preprocessor symbol defined in makefile
-	char *ad_package = AD_PACKAGE;
-
 	size_t match = n_option;
 	size_t i;
 	if( argc == 2 )
@@ -264,7 +261,7 @@ int main(int argc, char *argv[])
 				match = i;
 	}
 	if( match == n_option  )
-	{	cerr << "usage: " << ad_package << " option" << endl;
+	{	cerr << "usage: " << AD_PACKAGE << " option" << endl;
 		cerr << "where option is one of the following:" << endl;
 		for(i = 0; i < n_option; i++)
 		{	cerr << option[i];

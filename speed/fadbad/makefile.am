@@ -24,7 +24,7 @@ noinst_PROGRAMS  = fadbad
 #
 AM_CPPFLAGS   = -I$(top_builddir) -I$(FADBAD_DIR) $(BOOST_INCLUDE)
 #
-AM_CXXFLAGS   = -O2 -DNDEBUG -O2 -DNDEBUG -Wno-deprecated -DFADBAD
+AM_CXXFLAGS   = -O2 -DNDEBUG -Wno-deprecated -DFADBAD
 #
 fadbad_SOURCES = \
 	../main.cpp \

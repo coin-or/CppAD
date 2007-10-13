@@ -26,7 +26,7 @@ $spell
 	srand
 $$
 
-$section Adolc Speed: Gradient of Determinant Using Expansion by Minors$$
+$section Adolc Speed: Gradient of Determinant Using Lu Factorization$$
 
 $index adolc, speed lu$$
 $index speed, adolc lu$$

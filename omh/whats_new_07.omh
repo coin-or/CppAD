@@ -54,6 +54,11 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-13$$
+Fix the title in $cref/adolc_det_lu.cpp/$$.
+Add the package name to each test case result printed by
+$cref/speed_main/$$.
+
 $head 10-05$$
 Added and example using complex calculations for a 
 function that is not complex differentiable ($cref/not_complex_ad.cpp/$$).
