@@ -46,7 +46,11 @@ so it is not automatically included by
 $cref/cppad.hpp/cppad/$$.
 
 $head seed$$
-The argument $italic seed$$ specifies a seed
+The argument $italic seed$$ has prototype
+$syntax%
+	size_t %seed%
+%$$
+It specifies a seed
 for the uniform random number generator.
 
 $head n$$

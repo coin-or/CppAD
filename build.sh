@@ -382,11 +382,12 @@ then
 		fadbad
 		profile
 	"
+	seed="123"
 	for name in $list
 	do
-		echo "running speed/$name/$name correct"
-		echo "./speed/$name/$name correct" >> ../build_test.log
-		if ! ./speed/$name/$name correct   >> ../build_test.log
+		echo "running speed/$name/$name correct $seed"
+		echo "./speed/$name/$name correct $seed" >> ../build_test.log
+		if ! ./speed/$name/$name correct  $seed  >> ../build_test.log
 		then
 			failed="speed/$name/$name"
 			echo "Error: $failed failed."

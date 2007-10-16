@@ -162,8 +162,8 @@ $pre
 $$
 Add to the specifications that each repeated test corresponds to a 
 different matrix in
-$cref/det_lu/speed_main/det_lu/$$ and
-$cref/det_minor/speed_main/det_minor/$$.
+$cref/det_lu/speed_main/option/det_lu/$$ and
+$cref/det_minor/speed_main/option/det_minor/$$.
 In addition, modify all the speed tests so that they abide by this rule.
 $pre
 
@@ -179,7 +179,7 @@ matrix in the test.
 $pre
 
 $$
-Add the $cref/poly/speed_main/poly/$$ speed test for all three packages.
+Add the $cref/poly/speed_main/option/poly/$$ speed test for all three packages.
 In addition, correct a missing include in $cref/poly/$$ routine.
 
 

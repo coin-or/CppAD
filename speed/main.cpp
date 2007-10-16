@@ -41,7 +41,7 @@ $index test, cppad speed$$
 $section Speed Test Main Program$$
 
 $head Syntax$$
-$syntax%speed/%package%/%package% %option%
+$syntax%speed/%package%/%package% %option% %seed%
 %$$
 
 $head Purpose$$
@@ -63,20 +63,21 @@ where it is spending most of its time.
 $head option$$
 It the argument $italic option$$ specifies which test to run
 and has the following possible values:
-$code correct$$,
-$code all$$,
-$code det_minor$$,
-$code det_lu$$.
+$cref/correct/speed_main/option/correct/$$,
+$cref/all/speed_main/option/all/$$,
+$cref/det_minor/speed_main/option/det_minor/$$,
+$cref/det_lu/speed_main/option/det_lu/$$,
+$cref/poly/speed_main/option/poly/$$.
 
-$head correct$$
+$subhead correct$$
 If $italic option$$ is equal to $code correct$$,
 all of the correctness tests are run.
 
-$head all$$
+$subhead all$$
 If $italic option$$ is equal to $code all$$,
 all of the speed tests are run.
 
-$head det_lu$$
+$subhead det_lu$$
 $index det_lu, correct$$
 $index det_lu, speed$$
 $index speed, det_lu$$
@@ -98,7 +99,7 @@ $syntax%
 	bool correct_det_lu(void)
 %$$
 
-$head det_minor$$
+$subhead det_minor$$
 $index det_minor, correct$$
 $index det_minor, speed$$
 $index speed, det_minor$$
@@ -120,7 +121,7 @@ $syntax%
 	bool correct_det_minor(void)
 %$$
 
-$head poly$$
+$subhead poly$$
 $index poly, correct$$
 $index poly, speed$$
 $index speed, poly$$
@@ -142,14 +143,14 @@ $syntax%
 %$$
 
 
-$head uniform_01$$
+$head seed$$
 $index uniform_01$$
 The random number simulator $cref/uniform_01/$$ is initialized with
+the call
 $syntax%
 	uniform_01(%seed%)
 %$$
-before any of the speed testing routines (listed above) are called
-by this speed testing main program.
+before any of the testing routines (listed above) are called.
 
 $head Correctness Results$$
 An output line is generated for each correctness test
@@ -166,6 +167,7 @@ The rate is the number of times per second that the calculation was repeated.
 $end 
 */
 
+# include <cstdlib>
 # include <cassert>
 # include <cstddef>
 # include <iostream>
@@ -253,28 +255,27 @@ int main(int argc, char *argv[])
 	const size_t option_poly      = 4;
 	assert( n_option == option_poly+1 );
 
-	size_t match = n_option;
 	size_t i;
-	if( argc == 2 )
+	size_t match = n_option;
+	int    iseed = 0;
+	if( argc == 3 )
 	{	for(i = 0; i < n_option; i++)
 			if( strcmp(option[i], argv[1]) == 0 )
 				match = i;
+		iseed = std::atoi( argv[2] );
 	}
-	if( match == n_option  )
-	{	cerr << "usage: " << AD_PACKAGE << " option" << endl;
+	if( match == n_option  || iseed <= 0 )
+	{	cerr << "usage: " << AD_PACKAGE << " option seed" << endl;
 		cerr << "where option is one of the following:" << endl;
 		for(i = 0; i < n_option; i++)
-		{	cerr << option[i];
-			if( i == n_option - 1 )
-				cerr << ".";
-			else	cerr << ", ";
-		}
+			cerr << option[i] << ", ";
+		cerr << endl << "and seed is a positive integer." << endl;
 		cerr << endl;
 		return 1;
 	}
 
 	// initialize the random number simulator
-	CppAD::uniform_01(1);
+	CppAD::uniform_01(size_t(iseed));
 
 	// arguments needed for speed tests
 	size_t n_size   = 4;

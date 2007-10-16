@@ -54,6 +54,10 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-16$$
+Add $italic seed$$ argument and
+improve $cref/speed_main/$$ documentation.
+
 $head 10-13$$
 Fix the title in $cref/adolc_det_lu.cpp/$$.
 Add the package name to each test case result printed by
