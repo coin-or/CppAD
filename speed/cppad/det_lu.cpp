@@ -39,21 +39,21 @@ $head compute_det_lu$$
 $index compute_det_lu$$
 Routine that computes the gradient of determinant using CppAD:
 $codep */
-# include <cppad/cppad.hpp>
+# include <cppad/vector.hpp>
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
 void compute_det_lu(
 	size_t                           size     , 
 	size_t                           repeat   , 
-	CPPAD_TEST_VECTOR<double>       &matrix   ,
-	CPPAD_TEST_VECTOR<double>       &gradient )
+	CppAD::vector<double>           &matrix   ,
+	CppAD::vector<double>           &gradient )
 {
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>           ADScalar; 
-	typedef CPPAD_TEST_VECTOR<ADScalar> ADVector; 
-	CppAD::det_by_lu<ADScalar>         Det(size);
+	typedef CppAD::vector<ADScalar>     ADVector; 
+	CppAD::det_by_lu<ADScalar>          Det(size);
 
 	size_t i;               // temporary index
 	size_t m = 1;           // number of dependent variables
@@ -62,7 +62,7 @@ void compute_det_lu(
 	ADVector   detA(m);     // AD range space vector
 	
 	// vectors of reverse mode weights 
-	CPPAD_TEST_VECTOR<double> w(1);
+	CppAD::vector<double> w(1);
 	w[0] = 1.;
 
 	// ------------------------------------------------------
@@ -85,39 +85,6 @@ void compute_det_lu(
 		// evaluate and return gradient using reverse mode
 		gradient = f.Reverse(1, w);
 	}
-	return;
-}
-/* $$
-
-$head correct_det_lu$$
-$index correct_det_lu$$
-Routine that tests the correctness of the result computed by compute_det_lu:
-$codep */
-# include <cppad/speed/det_grad_33.hpp>
-
-bool correct_det_lu(void)
-{	size_t size   = 3;
-	size_t repeat = 1;
-	CPPAD_TEST_VECTOR<double> matrix(size * size);
-	CPPAD_TEST_VECTOR<double> gradient(size * size);
-
-	compute_det_lu(size, repeat, matrix, gradient);
-
-	bool ok = CppAD::det_grad_33(matrix, gradient);
-	return ok;
-}
-/* $$
-
-$head speed_det_lu$$
-$index speed_det_lu$$
-Routine that links compute_det_lu to $cref/speed_test/$$:
-$codep */
-void speed_det_lu(size_t size, size_t repeat)
-{	CPPAD_TEST_VECTOR<double> matrix(size * size);
-	CPPAD_TEST_VECTOR<double> gradient(size * size);
-
-	compute_det_lu(size, repeat, matrix, gradient);
-	
 	return;
 }
 /* $$

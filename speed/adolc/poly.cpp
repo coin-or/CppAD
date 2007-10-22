@@ -50,7 +50,7 @@ $codep */
 
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/poly.hpp>
-# include <cppad/near_equal.hpp>
+# include <cppad/vector.hpp>
 
 # include <adolc/adouble.h>
 # include <adolc/interfaces.h>
@@ -58,9 +58,9 @@ $codep */
 void compute_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	std::vector<double>       &a        ,  // coefficients of polynomial
-	std::vector<double>       &z        ,  // polynomial argument value
-	std::vector<double>       &ddp      )  // second derivative w.r.t z  
+	CppAD::vector<double>     &a        ,  // coefficients of polynomial
+	CppAD::vector<double>     &z        ,  // polynomial argument value
+	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  
 {
 	// -----------------------------------------------------
 	// setup
@@ -134,39 +134,6 @@ void compute_poly(
 	delete [] x;
 	delete [] y;
 
-	return;
-}
-/* $$
-
-$head correct_poly$$
-$index correct_poly$$
-Routine that tests the correctness of the result computed by compute_poly:
-$codep */
-bool correct_poly(void)
-{	size_t size   = 10;
-	size_t repeat = 1;
-	std::vector<double>  a(size), z(1), ddp(1);
-
-	compute_poly(size, repeat, a, z, ddp);
-
-	// use direct evaluation by Poly to check AD evaluation
-	double check = CppAD::Poly(2, a, z[0]);
-	bool ok = CppAD::NearEqual(check, ddp[0], 1e-10, 1e-10);
-	
-	return ok;
-}
-/* $$
-
-$head speed_poly$$
-$index speed_poly$$
-Routine that links compute_poly to $cref/speed_test/$$:
-
-$codep */
-void speed_poly(size_t size, size_t repeat)
-{	std::vector<double>  a(size), z(1), ddp(1);
-
-	compute_poly(size, repeat, a, z, ddp);
-	
 	return;
 }
 /* $$

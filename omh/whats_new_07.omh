@@ -54,6 +54,14 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-22$$
+The correctness checks and speed test wrappers were moved 
+from the individual package directories to $cref/speed_main/$$.
+This way they do not have to be reproduced for each package.
+This makes it easier to add a new package,
+but it requires the prototype for 
+$syntax%compute_%test_name%$$ to be the same for all packages.
+
 $head 10-16$$
 Add $italic seed$$ argument and
 improve $cref/speed_main/$$ documentation.

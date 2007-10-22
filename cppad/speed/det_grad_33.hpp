@@ -101,6 +101,7 @@ $end
 ------------------------------------------------------------------------------
 */
 // BEGIN PROGRAM
+# include <cppad/near_equal.hpp>
 namespace CppAD {
 template <class Vector>
 	bool det_grad_33(const Vector &x, const Vector &g)

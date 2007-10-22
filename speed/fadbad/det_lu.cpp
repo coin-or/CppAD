@@ -42,23 +42,23 @@ $head compute_det_lu$$
 $index compute_det_lu$$
 Routine that computes the gradient of determinant using Fadbad:
 $codep */
-# include <vector>
 # include <Fadbad++/badiff.h>
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
+# include <cppad/vector.hpp>
 
 void compute_det_lu(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	std::vector<double>       &matrix   ,
-	std::vector<double>       &gradient )
+	CppAD::vector<double>      &matrix   ,
+	CppAD::vector<double>      &gradient )
 {
 	// -----------------------------------------------------
 	// setup
 
 	// object for computing determinant
 	typedef B<double>             ADScalar; 
-	typedef std::vector<ADScalar> ADVector; 
+	typedef CppAD::vector<ADScalar> ADVector; 
 	CppAD::det_by_lu<ADScalar>    Det(size);
 
 	size_t i;                // temporary index
@@ -87,41 +87,6 @@ void compute_det_lu(
 			gradient[i] = A[i].d(0); // partial detA w.r.t A[i]
 	}
 	// ---------------------------------------------------------
-	return;
-}
-/* $$
-
-$head correct_det_lu$$
-$index correct_det_lu$$
-Routine that tests the correctness of the result computed by compute_det_lu:
-$codep */
-# include <cppad/speed/det_grad_33.hpp>
-
-bool correct_det_lu(void)
-{	size_t size   = 3;
-	size_t repeat = 1;
-	std::vector<double> matrix(size * size);
-	std::vector<double> gradient(size * size);
-
-	compute_det_lu(size, repeat, matrix, gradient);
-
-	bool ok = CppAD::det_grad_33(matrix, gradient);
-
-	return ok;
-}
-/* $$
-
-$head speed_det_lu$$
-$index speed_det_lu$$
-Routine that links compute_det_lu to $cref/speed_test/$$:
-
-$codep */
-void speed_det_lu(size_t size, size_t repeat)
-{	std::vector<double> matrix(size * size);
-	std::vector<double> gradient(size * size);
-
-	compute_det_lu(size, repeat, matrix, gradient);
-	
 	return;
 }
 /* $$

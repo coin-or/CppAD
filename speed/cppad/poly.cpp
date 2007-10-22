@@ -50,14 +50,14 @@ $codep */
 void compute_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	CPPAD_TEST_VECTOR<double>       &a        ,  // coefficients of polynomial
-	CPPAD_TEST_VECTOR<double>       &z        ,  // polynomial argument value
-	CPPAD_TEST_VECTOR<double>       &ddp      )  // second derivative w.r.t z  
+	CppAD::vector<double>     &a        ,  // coefficients of polynomial
+	CppAD::vector<double>     &z        ,  // polynomial argument value
+	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  
 {
 	// -----------------------------------------------------
 	// setup
 	typedef CppAD::AD<double>     ADScalar; 
-	typedef CPPAD_TEST_VECTOR<ADScalar> ADVector; 
+	typedef CppAD::vector<ADScalar> ADVector; 
 
 	size_t i;      // temporary index
 	size_t m = 1;  // number of dependent variables
@@ -74,7 +74,7 @@ void compute_poly(
 		A[i] = a[i];
 
 	// forward mode first and second differentials
-	CPPAD_TEST_VECTOR<double> dz(1), ddz(1);
+	CppAD::vector<double> p(1), dp(1), dz(1), ddz(1);
 	dz[0]  = 1.;
 	ddz[0] = 0.;
 
@@ -97,50 +97,15 @@ void compute_poly(
 		CppAD::uniform_01(1, z);
 
 		// evaluate the polynomial at the new argument value
-		ddp = f.Forward(0, z);
+		p = f.Forward(0, z);
 
 		// evaluate first order Taylor coefficient
-		ddp = f.Forward(1, dz);
+		dp = f.Forward(1, dz);
 
 		// second derivative is twice second order Taylor coefficient
 		ddp     = f.Forward(2, ddz);
 		ddp[0] *= 2.;
-
 	}
-	return;
-}
-/* $$
-
-$head correct_poly$$
-$index correct_poly$$
-Routine that tests the correctness of the result computed by compute_poly:
-$codep */
-bool correct_poly(void)
-{	size_t size   = 10;
-	size_t repeat = 1;
-	CPPAD_TEST_VECTOR<double> a(size), z(1), ddp(1);
-
-	compute_poly(size, repeat, a, z, ddp);
-
-	// use direct evaluation by Poly to check AD evaluation
-	double check = CppAD::Poly(2, a, z[0]);
-	bool ok = CppAD::NearEqual(check, ddp[0], 1e-10, 1e-10);
-	
-	return ok;
-}
-/* $$
-
-$head speed_poly$$
-$index speed_poly$$
-Routine that links compute_poly to $cref/speed_test/$$:
-
-$codep */
-void speed_poly(size_t size, size_t repeat)
-{
-	CPPAD_TEST_VECTOR<double> a(size), z(1), ddp(1);
-
-	compute_poly(size, repeat, a, z, ddp);
-	
 	return;
 }
 /* $$

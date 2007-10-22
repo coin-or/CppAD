@@ -40,23 +40,23 @@ $head compute_det_minor$$
 $index compute_det_minor$$
 Routine that computes the gradient of determinant using CppAD:
 $codep */
-# include <cppad/cppad.hpp>
+# include <cppad/vector.hpp>
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
 void compute_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	CPPAD_TEST_VECTOR<double>       &matrix   ,
-	CPPAD_TEST_VECTOR<double>       &gradient )
+	CppAD::vector<double>     &matrix   ,
+	CppAD::vector<double>     &gradient )
 {
 	// -----------------------------------------------------
 	// setup
 
 	// object for computing determinant
-	typedef CppAD::AD<double>     ADScalar; 
-	typedef CPPAD_TEST_VECTOR<ADScalar> ADVector; 
-	CppAD::det_by_minor<ADScalar> Det(size);
+	typedef CppAD::AD<double>       ADScalar; 
+	typedef CppAD::vector<ADScalar> ADVector; 
+	CppAD::det_by_minor<ADScalar>   Det(size);
 
 	size_t i;               // temporary index
 	size_t m = 1;           // number of dependent variables
@@ -65,7 +65,7 @@ void compute_det_minor(
 	ADVector   detA(m);     // AD range space vector
 	
 	// vectors of reverse mode weights 
-	CPPAD_TEST_VECTOR<double> w(1);
+	CppAD::vector<double> w(1);
 	w[0] = 1.;
 
 	// choose a matrix
@@ -93,40 +93,6 @@ void compute_det_minor(
 		// evaluate and return gradient using reverse mode
 		gradient = f.Reverse(1, w);
 	}
-	return;
-}
-/* $$
-
-$head correct_det_minor$$
-$index correct_det_minor$$
-Routine that tests the correctness of the result computed by compute_det_minor:
-$codep */
-# include <cppad/speed/det_grad_33.hpp>
-
-bool correct_det_minor(void)
-{	size_t size   = 3;
-	size_t repeat = 1;
-	CPPAD_TEST_VECTOR<double> matrix(size * size);
-	CPPAD_TEST_VECTOR<double> gradient(size * size);
-
-	compute_det_minor(size, repeat, matrix, gradient);
-
-	bool ok = CppAD::det_grad_33(matrix, gradient);
-	return ok;
-}
-/* $$
-
-$head speed_det_minor$$
-$index speed_det_minor$$
-Routine that links compute_det_minor to $cref/speed_test/$$:
-
-$codep */
-void speed_det_minor(size_t size, size_t repeat)
-{	CPPAD_TEST_VECTOR<double> matrix(size * size);
-	CPPAD_TEST_VECTOR<double> gradient(size * size);
-
-	compute_det_minor(size, repeat, matrix, gradient);
-	
 	return;
 }
 /* $$

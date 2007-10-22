@@ -9,9 +9,33 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+# include <cstdlib>
+# include <cassert>
+# include <cstddef>
+# include <iostream>
+# include <cppad/vector.hpp>
+# include <cppad/speed_test.hpp>
+# include <cppad/speed/uniform_01.hpp>
+# include <cppad/speed/det_grad_33.hpp>
+# include <cppad/poly.hpp>
+
+# ifdef ADOLC
+# define AD_PACKAGE "adolc"
+# endif
+# ifdef CPPAD
+# define AD_PACKAGE "cppad"
+# endif
+# ifdef FADBAD
+# define AD_PACKAGE "fadbad"
+# endif
+# ifdef PROFILE
+# define AD_PACKAGE "profile"
+# endif
+
 /*
 $begin speed_main$$
 $spell
+	ddp
 	hpp
 	iostream
 	const
@@ -64,84 +88,146 @@ $head option$$
 It the argument $italic option$$ specifies which test to run
 and has the following possible values:
 $cref/correct/speed_main/option/correct/$$,
-$cref/all/speed_main/option/all/$$,
-$cref/det_minor/speed_main/option/det_minor/$$,
-$cref/det_lu/speed_main/option/det_lu/$$,
-$cref/poly/speed_main/option/poly/$$.
+$cref/speed/speed_main/option/speed/$$,
+$cref/det_minor/speed_main/det_minor/$$,
+$cref/det_lu/speed_main/det_lu/$$,
+$cref/poly/speed_main/poly/$$.
 
 $subhead correct$$
 If $italic option$$ is equal to $code correct$$,
 all of the correctness tests are run.
 
-$subhead all$$
-If $italic option$$ is equal to $code all$$,
+$subhead speed$$
+If $italic option$$ is equal to $code speed$$,
 all of the speed tests are run.
 
-$subhead det_lu$$
+$head det_lu$$
 $index det_lu, correct$$
 $index det_lu, speed$$
 $index speed, det_lu$$
 $index correct, det_lu$$
 If $italic option$$ is equal to $code det_lu$$,
-the speed test for the
+the correctness and speed test for the
 gradient of the determinant using LU factorization tests is run.
-Each package defines a version of this speed test with the prototype
-$syntax%
-	void speed_det_lu(size_t %size%, size_t %repeat%)
-%$$
+Each package defines a version of this test with the following prototype:
+$codep */
+	extern void compute_det_lu(
+		size_t                     size      , 
+		size_t                     repeat    , 
+		CppAD::vector<double>      &matrix   ,
+		CppAD::vector<double>      &gradient 
+	);
+/* $$
+$subhead size$$
 The argument $italic size$$
 is the number of rows and columns in the matrix.
+
+$subhead repeat$$
 The argument $italic repeat$$ is the number of different matrices
 that the gradient is computed for.
-In addition, a test that $code speed_det_lu$$ works correctly
-is defined with the prototype
-$syntax%
-	bool correct_det_lu(void)
-%$$
 
-$subhead det_minor$$
+$subhead matrix$$
+The argument $italic matrix$$ is a vector with 
+$syntax%%size%*%size%$$ elements.
+The input value of its elements does not matter. 
+The output value of its elements is the last matrix that the
+gradient is computed for.
+
+$subhead gradient$$
+The argument $italic gradient$$ is a vector with 
+$syntax%%size%*%size%$$ elements.
+The input value of its elements does not matter. 
+The output value of its elements is the gradient of the
+determinant of $italic matrix$$ with respect to its elements.
+gradient is computed for.
+
+
+$head det_minor$$
 $index det_minor, correct$$
 $index det_minor, speed$$
 $index speed, det_minor$$
 $index correct, det_minor$$
 If $italic option$$ is equal to $code det_minor$$,
-the speed test for 
-computing the gradient of the determinant using expansion by minors is run.
-Each package defines a version of this speed test with the prototype
-$syntax%
-	void speed_det_minor(size_t %size%, size_t %repeat%)
-%$$
+the correctness and speed test for the
+gradient of the determinant using expansion by minors is run.
+Each package defines a version of this test with the following prototype:
+$codep */
+	extern void compute_det_minor(
+		size_t                     size      , 
+		size_t                     repeat    , 
+		CppAD::vector<double>      &matrix   ,
+		CppAD::vector<double>      &gradient 
+	);
+/* $$
+$subhead size$$
 The argument $italic size$$
 is the number of rows and columns in the matrix.
+
+$subhead repeat$$
 The argument $italic repeat$$ is the number of different matrices
 that the gradient is computed for.
-In addition, a test that $code speed_det_minor$$ works correctly
-is defined with the prototype
-$syntax%
-	bool correct_det_minor(void)
-%$$
 
-$subhead poly$$
+$subhead matrix$$
+The argument $italic matrix$$ is a vector with 
+$syntax%%size%*%size%$$ elements.
+The input value of its elements does not matter. 
+The output value of its elements is the last matrix that the
+gradient is computed for.
+
+$subhead gradient$$
+The argument $italic gradient$$ is a vector with 
+$syntax%%size%*%size%$$ elements.
+The input value of its elements does not matter. 
+The output value of its elements is the gradient of the
+determinant of $italic matrix$$ with respect to its elements.
+gradient is computed for.
+
+
+$head poly$$
 $index poly, correct$$
 $index poly, speed$$
 $index speed, poly$$
 $index correct, poly$$
 If $italic option$$ is equal to $code poly$$,
-the speed test for computing the second derivative of a polynomial is run.
-Each package defined a version for this speed test with the prototype
-$syntax%
-	void speed_poly(size_t %size%, size_t %repeat%)
-%$$
+the correctness and speed test for the derivative of a polynomial is run.
+Each package defines a version of this test with the following prototype:
+$codep */
+	extern void compute_poly(
+		size_t                     size     , 
+		size_t                     repeat   , 
+		CppAD::vector<double>      &a       ,
+		CppAD::vector<double>      &z       ,
+		CppAD::vector<double>      &ddp      
+	);
+/* $$
+
+$subhead size$$
 The argument $italic size$$ is the order of the polynomial
 (the number of coefficients in the polynomial).
+
+$subhead repeat$$
 The argument $italic repeat$$ is the number of different argument
 values that the polynomial will be differentiated at.
-In addition, a test that $code speed_poly$$ works correctly
-is defined with the prototype
-$syntax%
-	bool correct_poly(void)
-%$$
 
+$subhead a$$
+The argument $italic a$$ is a vector with 
+$syntax%%size%*%size%$$ elements.
+The input value of its elements does not matter. 
+The output value of its is the coefficients of the 
+last polynomial that is differentiated
+($th i$$ element is coefficient of order $latex i$$).
+
+$subhead z$$
+The argument $italic z$$ is a vector with one element.
+The input value of the element does not matter.
+The output its value is the polynomial argument value
+were the derivative was computed.
+
+$subhead ddp$$
+The argument $italic ddp$$ is a vector with one element.
+The input value of the element does not matter.
+The output its value is the second derivative of the polynomial value
+with respect to it's argument value.
 
 $head seed$$
 $index uniform_01$$
@@ -174,6 +260,8 @@ $end
 # include <cppad/vector.hpp>
 # include <cppad/speed_test.hpp>
 # include <cppad/speed/uniform_01.hpp>
+# include <cppad/speed/det_grad_33.hpp>
+# include <cppad/poly.hpp>
 
 # ifdef ADOLC
 # define AD_PACKAGE "adolc"
@@ -188,20 +276,12 @@ $end
 # define AD_PACKAGE "profile"
 # endif
 
-// external routines that are used for correctness testing
-extern bool    correct_det_lu(void);
-extern bool correct_det_minor(void);
-extern bool      correct_poly(void);
-
-// external routines that are used for speed testing
-extern void    speed_det_lu(size_t size, size_t repeat);
-extern void speed_det_minor(size_t size, size_t repeat);
-extern void      speed_poly(size_t size, size_t repeat);
 
 namespace {
 	// function that runs one correctness case
 	static size_t Run_ok_count    = 0;
 	static size_t Run_error_count = 0;
+	// ----------------------------------------------------------------
 	bool Run_correct(bool correct_case(void), const char *name)
 	{	bool ok;
 		ok = correct_case();
@@ -215,6 +295,38 @@ namespace {
 		}
 		return ok;
 	}
+	bool correct_det_lu(void)
+	{	size_t size   = 3;
+		size_t repeat = 1;
+		CppAD::vector<double> matrix(size * size);
+		CppAD::vector<double> gradient(size * size);
+
+		compute_det_lu(size, repeat, matrix, gradient);
+		bool ok = CppAD::det_grad_33(matrix, gradient);
+		return ok;
+	}
+	bool correct_det_minor(void)
+	{	size_t size   = 3;
+		size_t repeat = 1;
+		CppAD::vector<double> matrix(size * size);
+		CppAD::vector<double> gradient(size * size);
+
+		compute_det_minor(size, repeat, matrix, gradient);
+		bool ok = CppAD::det_grad_33(matrix, gradient);
+		return ok;
+	}
+	bool correct_poly(void)
+	{	size_t size   = 10;
+		size_t repeat = 1;
+		CppAD::vector<double>  a(size), z(1), ddp(1);
+
+		compute_poly(size, repeat, a, z, ddp);
+		// use direct evaluation by Poly to check AD evaluation
+		double check = CppAD::Poly(2, a, z[0]);
+		bool ok = CppAD::NearEqual(check, ddp[0], 1e-10, 1e-10);
+		return ok;
+	}
+	// ----------------------------------------------------------------
 	// function that runs one speed case
 	void Run_speed(
 		void speed_case(size_t size, size_t repeat) , 
@@ -231,6 +343,26 @@ namespace {
 		cout << "rate = " << rate_vec << endl;
 		return;
 	}
+	void speed_det_lu(size_t size, size_t repeat)
+	{	CppAD::vector<double> matrix(size * size);
+		CppAD::vector<double> gradient(size * size);
+
+		compute_det_lu(size, repeat, matrix, gradient);
+		return;
+	}
+	void speed_det_minor(size_t size, size_t repeat)
+	{	CppAD::vector<double> matrix(size * size);
+		CppAD::vector<double> gradient(size * size);
+
+		compute_det_minor(size, repeat, matrix, gradient);
+		return;
+	}
+	void speed_poly(size_t size, size_t repeat)
+	{	CppAD::vector<double>  a(size), z(1), ddp(1);
+
+		compute_poly(size, repeat, a, z, ddp);
+		return;
+	}
 }
 
 // main program that runs all the tests
@@ -242,14 +374,14 @@ int main(int argc, char *argv[])
 
 	char *option[]= {
 		"correct",
-		"all",
+		"speed",
 		"det_lu",
 		"det_minor",
 		"poly"
 	};
 	const size_t n_option  = sizeof(option) / sizeof(option[0]);
 	const size_t option_correct   = 0;
-	const size_t option_all       = 1;
+	const size_t option_speed     = 1;
 	const size_t option_det_lu    = 2;
 	const size_t option_det_minor = 3;
 	const size_t option_poly      = 4;
@@ -289,8 +421,9 @@ int main(int argc, char *argv[])
 	}
 
 	switch(match)
-	{	case option_correct:
+	{
 		// run all the correctness tests
+		case option_correct:
 		ok &= Run_correct(correct_det_lu,           "det_lu"       );
 		ok &= Run_correct(correct_det_minor,        "det_minor"    );
 		ok &= Run_correct(correct_poly,             "poly"         );
@@ -307,9 +440,8 @@ int main(int argc, char *argv[])
 		}
 		break;
 		// ---------------------------------------------------------
-
-		case option_all:
 		// run all the speed tests 
+		case option_speed:
 		Run_speed(speed_det_lu,    size_det_lu,    "det_lu");
 		Run_speed(speed_det_minor, size_det_minor, "det_minor");
 		Run_speed(speed_poly,      size_poly,      "poly");
@@ -318,16 +450,19 @@ int main(int argc, char *argv[])
 		// ---------------------------------------------------------
 
 		case option_det_lu:
+		Run_correct(correct_det_lu,                "det_lu");
 		Run_speed(speed_det_lu,    size_det_lu,    "det_lu");
 		break;
 		// ---------------------------------------------------------
 
 		case option_det_minor:
+		Run_correct(correct_det_minor,             "det_minor");
 		Run_speed(speed_det_minor, size_det_minor, "det_minor");
 		break;
 		// ---------------------------------------------------------
 
 		case option_poly:
+		Run_correct(correct_poly,                  "poly");
 		Run_speed(speed_poly,      size_poly,      "poly");
 		break;
 		// ---------------------------------------------------------

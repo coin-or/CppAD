@@ -43,7 +43,6 @@ $index compute_det_lu$$
 Routine that computes the gradient of determinant using Adolc:
 $codep */
 # include <cppad/speed/det_by_lu.hpp>
-# include <cppad/speed/det_grad_33.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
 # include <adolc/adouble.h>
@@ -52,8 +51,8 @@ $codep */
 void compute_det_lu(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	double*                    matrix   ,
-	double*                    gradient )
+	CppAD::vector<double>     &matrix   ,
+	CppAD::vector<double>     &gradient )
 {
 	// -----------------------------------------------------
 	// setup
@@ -62,7 +61,7 @@ void compute_det_lu(
 	int m    = 1;         // number of dependent variables
 	int n    = size*size; // number of independent variables
 	double f;             // function value
-	int i;                // temporary index
+	int j;                // temporary index
 
 	// object for computing determinant
 	typedef adouble    ADScalar;
@@ -78,15 +77,21 @@ void compute_det_lu(
 	// vectors of reverse mode weights 
 	double *u = new double [m];
 	u[0] = 1.;
+
+	// vector with matrix value
+	double *mat = new double[n];
+
+	// vector to receive gradient result
+	double *grad = new double[n];
 	// ------------------------------------------------------
 	while(repeat--)
 	{	// get the next matrix
-		CppAD::uniform_01(n, matrix);
+		CppAD::uniform_01(n, mat);
 
 		// declare independent variables
 		trace_on(tag, keep);
-		for(i = 0; i < n; i++)
-			A[i] <<= matrix[i];
+		for(j = 0; j < n; j++)
+			A[j] <<= mat[j];
 
 		// AD computation of the determinant
 		detA = Det(A);
@@ -96,53 +101,21 @@ void compute_det_lu(
 		trace_off();
 
 		// evaluate and return gradient using reverse mode
-		fos_reverse(tag, m, n, u, gradient);
+		fos_reverse(tag, m, n, u, grad);
 	}
 	// ------------------------------------------------------
+
+	// return matrix and gradient
+	for(j = 0; j < n; j++)
+	{	matrix[j] = mat[j];
+		gradient[j] = grad[j];
+	}
 	// tear down
+	delete [] grad;
+	delete [] mat;
 	delete [] u;
 	delete [] A;
 
-	return;
-}
-/* $$
-
-$head correct_det_lu$$
-$index correct_det_lu$$
-Routine that tests the correctness of the result computed by compute_det_lu:
-$codep */
-# include <cppad/speed/det_grad_33.hpp>
-
-bool correct_det_lu(void)
-{	size_t size   = 3;
-	size_t repeat = 1;
-
-	double *matrix   = new double[size * size];
-	double *gradient = new double[size * size];
-
-	compute_det_lu(size, repeat, matrix, gradient);
-
-	bool ok = CppAD::det_grad_33(matrix, gradient);
-
-	delete [] gradient;
-	delete [] matrix;
-	return ok;
-}
-/* $$
-
-$head speed_det_lu$$
-$index speed_det_lu$$
-Routine that links compute_det_lu to $cref/speed_test/$$:
-
-$codep */
-void speed_det_lu(size_t size, size_t repeat)
-{	double *matrix   = new double[size * size];
-	double *gradient = new double[size * size];
-
-	compute_det_lu(size, repeat, matrix, gradient);
-	
-	delete [] gradient;
-	delete [] matrix;
 	return;
 }
 /* $$
