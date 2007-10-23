@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	Sacado::Tay
 	Dir
 	Ginac
 	xi
@@ -78,6 +79,25 @@ it was not removed from the
 $cref/configure/InstallUnix/Configure/$$
 documentation.
 This has been fixed.
+$pre
+
+$$
+The routine $cref/CheckSimpleVector/$$ was changed.
+It used to require conversion of the form
+$syntax%
+	%Scalar%(%i%)
+%$$
+where $italic i$$ was $code 0$$ or $code 1$$.
+This does not work with when $italic Scalar$$ is
+$code Sacado::Tay::Taylor<double>$$.
+This requirement has been changed 
+(see $cref/restrictions/CheckSimpleVector/Restrictions/$$)
+to support of
+$syntax%
+	%x% = %i%
+%$$
+where $italic x$$ has type $italic Scalar$$ 
+and $italic i$$ has type $code int$$.
 
 
 $head 10-16$$
