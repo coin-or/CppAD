@@ -905,7 +905,7 @@ An new multiple level of AD example $xref/mul_level/$$ was added.
 
 $head 03-01$$
 An option that specifies error and warning 
-$xref/InstallUnix/CppErrorsAndWarnings/flags/$$
+$cref/flags/InstallUnix/CompilerFlags/$$
 for all the C++ compile commands,
 was added to the
 $xref/InstallUnix//Unix installation instructions/$$.

@@ -36,7 +36,7 @@ EXTRA_DIST        = example.sln example.vcproj test_one.sh
 #
 noinst_PROGRAMS   = example 
 #
-AM_CXXFLAGS       = -g $(CPP_ERROR_WARN) $(ADOLC_FLAG)
+AM_CXXFLAGS       = -g $(CXX_FLAGS) $(ADOLC_FLAG)
 #
 AM_CPPFLAGS       = -I. \
                    -I$(top_builddir) \

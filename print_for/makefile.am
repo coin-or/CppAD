@@ -26,6 +26,6 @@ noinst_PROGRAMS   = print_for
 #
 AM_CPPFLAGS       = -I. -I$(top_builddir) $(BOOST_INCLUDE)
 #
-AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
+AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #
 print_for_SOURCES = print_for.cpp

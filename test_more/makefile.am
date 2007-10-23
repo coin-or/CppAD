@@ -39,7 +39,7 @@ noinst_PROGRAMS   = test_more
 #
 AM_CPPFLAGS       = -I. -I$(top_builddir) $(BOOST_INCLUDE) $(ADOLC_INCLUDE)
 #
-AM_CXXFLAGS       = -g $(CPP_ERROR_WARN) $(ADOLC_FLAG)
+AM_CXXFLAGS       = -g $(CXX_FLAGS) $(ADOLC_FLAG)
 #
 LDADD             = $(ADOLC_LIB)
 AM_LDFLAGS        = $(ADOLC_LIB_DIR)

@@ -25,7 +25,7 @@ noinst_PROGRAMS   = example
 #
 AM_CPPFLAGS       = -I. -I$(top_builddir) $(BOOST_INCLUDE)
 #
-AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
+AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #
 example_SOURCES   = \
 	example.cpp \

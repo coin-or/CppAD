@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20071022, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20071023, cppad@list.coin-or.org)
 
 dnl Set the default install prefix to the installers home directory
 dnl cygwin begin delete:
@@ -181,14 +181,18 @@ else
 	)
 	AC_MSG_RESULT([no])
 fi
-dnl The C++ error and warning flags for every compliation ---------------
-AC_MSG_CHECKING([CPP_ERROR_WARN])
-AC_SUBST(CPP_ERROR_WARN)
-if test "$CPP_ERROR_WARN" != "" ; then
-	AC_MSG_RESULT([$CPP_ERROR_WARN]) 
+
+dnl The C++ compiler flags CXX_FLAGS -------------------------------------
+AC_MSG_CHECKING([CXX_FLAGS])
+AC_ARG_VAR(CXX_FLAGS,
+	[ CXXFLAGS is ignored, use this for compiler flags]
+)
+if test "$CXX_FLAGS" != "" ; then
+	AC_MSG_RESULT([$CXX_FLAGS]) 
 else
 	AC_MSG_RESULT([no])
 fi 
+AC_SUBST(CXXFLAGS, "")
 AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
 
 dnl Check which definition we are using for CppADvector

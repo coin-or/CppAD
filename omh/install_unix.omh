@@ -56,26 +56,26 @@ $section Unix Download, Test, and Installation$$
 
 $head Download Current Version$$
 $index download, unix$$
-Note that $code 20071022$$ is the 
+Note that $code 20071023$$ is the 
 year, month, and date corresponding to the current version of CppAD.
 Download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-20071022.cpl.tgz%$$
+$href%cppad-20071023.cpl.tgz%$$
 
 $subhead GPL License$$
-$href%cppad-20071022.gpl.tgz%$$
+$href%cppad-20071023.gpl.tgz%$$
 
 $head Extraction$$
 Use the command
 $syntax%
-	tar -xvzf cppad-20071022.%license%.tgz
+	tar -xvzf cppad-20071023.%license%.tgz
 %$$
 (where $italic license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-20071022
+	cppad-20071023
 %$$
 All of the commands below are to be executed starting from this
 directory.
@@ -111,7 +111,7 @@ $syntax%
 	FADBAD_DIR=%FadbadDir%                   \
 	SADADO_DIR=%SacadoDir%                   \
 	BOOST_DIR=%BoostDir%                     \
-	CPP_ERROR_WARN=%CppErrorsAndWarnings% 
+	CXX_FLAGS=%CompilerFlags% 
 %$$
 where only the $code configure$$ command need appear.
 The entries one each of the other lines are optional
@@ -387,22 +387,21 @@ $$
 If $italic BoostDir$$ is present, the argument $code --with-stdvector$$
 must not be present.
 
-$head CppErrorsAndWarnings$$
+$head CompilerFlags$$
 $index compile, unix flags$$
 $index flags, unix compile$$
-If the command line argument $italic CppErrorsAndWarnings$$ is present,
-it specifies compiler error and warning flags
-(not optimization and debugging flags). 
+If the command line argument $italic CompilerFlags$$ is present,
+it specifies compiler flags.
 For example,
 $syntax%
-	CPP_ERROR_WARN="-Wall -ansi"
+	CXX_FLAGS="-Wall -ansi"
 %$$
-would specify that error and warning flags $code -Wall$$
+would specify that warning flags $code -Wall$$
 and $code -ansi$$ should be included
 in all the C++ compile commands.
 The error and warning flags chosen must be valid options
 for the C++ compiler.
-The default value for $italic CppErrorsAndWarnings$$ is the
+The default value for $italic CompilerFlags$$ is the
 empty string.
 
 

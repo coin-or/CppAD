@@ -57,6 +57,11 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-23$$
+The $cref/compiler flags/InstallUnix/CompilerFlags/$$ configure
+parameter has been changed from $code CPP_ERROR_WARN$$ to
+$code CXX_FLAGS$$.
+
 $head 10-22$$
 The correctness checks and speed test wrappers were moved 
 from the individual package directories to $cref/speed_main/$$.
