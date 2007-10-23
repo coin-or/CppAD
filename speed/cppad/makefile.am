@@ -24,10 +24,10 @@ noinst_PROGRAMS  = cppad
 #
 AM_CPPFLAGS   = -I$(top_builddir) $(BOOST_INCLUDE)
 #
-AM_CXXFLAGS   = -O2 -DNDEBUG $(CPP_ERROR_WARN) -DCPPAD
+AM_CXXFLAGS   = -O2 -DNDEBUG $(CXXFLAGS) -DCPPAD
 #
 # debugging version
-# AM_CXXFLAGS   = -g $(CPP_ERROR_WARN) -DCPPAD
+# AM_CXXFLAGS   = -g $(CXXFLAGS) -DCPPAD
 #
 cppad_SOURCES = \
 	../main.cpp \

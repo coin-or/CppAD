@@ -42,7 +42,7 @@ $head compute_det_lu$$
 $index compute_det_lu$$
 Routine that computes the gradient of determinant using Fadbad:
 $codep */
-# include <Fadbad++/badiff.h>
+# include <FADBAD++/badiff.h>
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/vector.hpp>

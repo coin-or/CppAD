@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	Fadbad
 	Sacado::Tay
 	Dir
 	Ginac
@@ -98,6 +99,21 @@ $syntax%
 %$$
 where $italic x$$ has type $italic Scalar$$ 
 and $italic i$$ has type $code int$$.
+$pre
+
+$$
+Fix include directives in $cref/speed_fadbad/$$ programs
+$code det_lu$$, $code det_minor$$, and $code poly$$,
+to use $code FADBAD++$$ instead of $code Fadbad++$$ directory.
+$pre
+
+$$
+Add $code ADOLC_DIR$$, $code FADBAD_DIR$$, $code SACADO_DIR$$,
+and $code BOOST_DIR$$
+to the $cref/configure/InstallUnix/Configure/$$ help string.
+The flag $code CPP_ERROR_WARN$$ was replaced by 
+the standard name $code CXXFLAGS$$; see
+$cref%CppErrorsAndWarnings%InstallUnix%CppErrorsAndWarnings%$$.
 
 
 $head 10-16$$

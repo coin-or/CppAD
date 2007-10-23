@@ -25,7 +25,7 @@ AM_CPPFLAGS      = $(BOOST_INCLUDE) -I. -I$(top_builddir) -DNDEBUG
 # speed
 #
 noinst_PROGRAMS  = speed_cppad
-speed_cppad_CXXFLAGS   = -O2 $(CPP_ERROR_WARN)
+speed_cppad_CXXFLAGS   = -O2 $(CXXFLAGS)
 speed_cppad_SOURCES    = \
 	speed_cppad.cpp \
 	det_lu.cpp \
@@ -38,7 +38,7 @@ speed_cppad_SOURCES    = \
 #
 if CppAD_PROFILING
 noinst_PROGRAMS  += speed_cppad_p
-speed_cppad_p_CXXFLAGS = -O2 -pg $(CPP_ERROR_WARN)
+speed_cppad_p_CXXFLAGS = -O2 -pg $(CXXFLAGS)
 speed_cppad_p_LDFLAGS  = -pg 
 speed_cppad_p_SOURCES  = $(speed_cppad_SOURCES)
 endif

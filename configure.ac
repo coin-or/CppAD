@@ -128,22 +128,11 @@ else
 fi
 AC_MSG_RESULT([$stdvector])
 
-dnl The postfix directiory corresponding to this installation of CppAD --
-dnl AC_MSG_CHECKING([POSTFIX_DIR])
-dnl AC_SUBST(POSTFIX_DIR)
-dnl AM_CONDITIONAL(CppAD_POSTFIX, test "$POSTFIX_DIR" != "")
-dnl if test "$POSTFIX_DIR" != "" ; then
-dnl 	AC_MSG_RESULT([$POSTFIX_DIR])
-dnl else
-dnl 	AC_MSG_RESULT([no])
-dnl fi
-if test "$POSTFIX_DIR" != "" ; then
-    AC_MSG_ERROR([The POSTFIX_DIR configure option is no longer available])
-fi
-
 dnl The prefix corresponding to the installation of Adolc ---------------
 AC_MSG_CHECKING([ADOLC_DIR])
-AC_SUBST(ADOLC_DIR)
+AC_ARG_VAR(ADOLC_DIR, 
+	[value of configure prefix directory during Adolc install]
+)
 AM_CONDITIONAL(CppAD_ADOLC, test "$ADOLC_DIR" != "")
 if test "$ADOLC_DIR" != "" ; then
 	AC_MSG_RESULT([$ADOLC_DIR])
@@ -153,7 +142,9 @@ fi
 
 dnl The directory corresponding to the installation of FADBAD -----------
 AC_MSG_CHECKING([FADBAD_DIR])
-AC_SUBST(FADBAD_DIR)
+AC_ARG_VAR(FADBAD_DIR,
+	[parent directory directly above FADBAD++ directory]
+)
 AM_CONDITIONAL(CppAD_FADBAD, test "$FADBAD_DIR" != "")
 if test "$FADBAD_DIR" != "" ; then
 	AC_MSG_RESULT([$FADBAD_DIR])
@@ -163,7 +154,9 @@ fi
 
 dnl The directory corresponding to the installation of SACADO -----------
 AC_MSG_CHECKING([SACADO_DIR])
-AC_SUBST(SACADO_DIR)
+AC_ARG_VAR(SACADO_DIR,
+	[value of the configure prefix directory during Sacado install]
+)
 AM_CONDITIONAL(CppAD_SACADO, test "$SACADO_DIR" != "")
 if test "$SACADO_DIR" != "" ; then
 	AC_MSG_RESULT([$SACADO_DIR])
@@ -173,27 +166,28 @@ fi
 
 dnl The directory corresponding to the installation of BOOST ------------
 AC_MSG_CHECKING([BOOST_DIR])
-AC_SUBST(BOOST_DIR)
+AC_ARG_VAR(BOOST_DIR,
+	[parent directory directly above boost directory]
+)
 AM_CONDITIONAL(CppAD_BOOSTVECTOR, test "$BOOST_DIR" != "")
 if test "$BOOST_DIR" != "" ; then
 	AC_DEFINE(CPPAD_BOOSTVECTOR, 1, 
-		[is CppADvector == boost::numeric::ublas::vector]
+		[is CPPAD_TEST_VECTOR equal to boost::numeric::ublas::vector]
 	)
 	AC_MSG_RESULT([$BOOST_DIR])
 else
 	AC_DEFINE(CPPAD_BOOSTVECTOR, 0, 
-		[is CppADvector == boost::numeric::ublas::vector]
+		[is CPPAD_TEST_VECTOR equal to boost::numeric::ublas::vector]
 	)
 	AC_MSG_RESULT([no])
 fi
 
 dnl The C++ error and warning flags for every compliation ---------------
-AC_MSG_CHECKING([CPP_ERROR_WARN])
-AC_SUBST(CPP_ERROR_WARN)
-if test "$CPP_ERROR_WARN" != "" ; then
-	AC_MSG_RESULT([$CPP_ERROR_WARN]) 
+AC_MSG_CHECKING([CXXFLAGS])
+if test "$CXXFLAGS" != "" ; then
+ 	AC_MSG_RESULT([$CXXFLAGS]) 
 else
-	AC_MSG_RESULT([no])
+ 	AC_MSG_RESULT([no])
 fi 
 AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
 
@@ -229,9 +223,6 @@ AC_PROG_RANLIB
 
 dnl AC_PROG_CXX([compiler-search-list]) outputs CXX as C++ compiler to use
 AC_PROG_CXX
-
-dnl No default setting for compiler flags
-AC_SUBST(CXXFLAGS, "")
 
 dnl Have configure check source directory to see if cppad/CppAD.h is there
 AC_CONFIG_SRCDIR(cppad/CppAD.h)

@@ -52,7 +52,7 @@ $codep */
 # include <cppad/vector.hpp>
 # include <cppad/poly.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include <Fadbad++/tadiff.h>
+# include <FADBAD++/tadiff.h>
 
 void compute_poly(
 	size_t                     size     , 

@@ -42,7 +42,7 @@ $head compute_det_minor$$
 $index compute_det_minor$$
 Routine that computes the gradient of determinant using Fadbad:
 $codep */
-# include <Fadbad++/badiff.h>
+# include <FADBAD++/badiff.h>
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/vector.hpp>

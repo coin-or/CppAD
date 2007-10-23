@@ -24,10 +24,10 @@ noinst_PROGRAMS  = adolc
 #
 AM_CPPFLAGS   = -I$(top_builddir) -I$(ADOLC_DIR)/include $(BOOST_INCLUDE)
 #
-AM_CXXFLAGS   = -O2 -DNDEBUG $(CPP_ERROR_WARN) -DADOLC
+AM_CXXFLAGS   = -O2 -DNDEBUG $(CXXFLAGS) -DADOLC
 #
 # debugging version
-# AM_CXXFLAGS   = -g $(CPP_ERROR_WARN) -DADOLC
+# AM_CXXFLAGS   = -g $(CXXFLAGS) -DADOLC
 #
 LDADD            = -ladolc
 AM_LDFLAGS       = -L$(ADOLC_DIR)/lib
