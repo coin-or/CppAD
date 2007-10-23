@@ -111,7 +111,7 @@ $syntax%
 	FADBAD_DIR=%FadbadDir%                   \
 	SADADO_DIR=%SacadoDir%                   \
 	BOOST_DIR=%BoostDir%                     \
-	CPP_ERROR_WARN=%CppErrorsAndWarnings%    \
+	CXXFLAGS=%CppErrorsAndWarnings% 
 %$$
 where only the $code configure$$ command need appear.
 The entries one each of the other lines are optional
@@ -391,10 +391,11 @@ $head CppErrorsAndWarnings$$
 $index compile, unix flags$$
 $index flags, unix compile$$
 If the command line argument $italic CppErrorsAndWarnings$$ is present,
-it specifies compiler error and warning flags. 
+it specifies compiler error and warning flags
+(not optimization and debugging flags). 
 For example,
 $syntax%
-	CPP_ERROR_AND_WARN="-Wall -ansi"
+	CXXFLAGS="-Wall -ansi"
 %$$
 would specify that error and warning flags $code -Wall$$
 and $code -ansi$$ should be included
