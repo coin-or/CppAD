@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -43,14 +43,16 @@ $cref/install configure/InstallUnix/Configure/$$ command.
 After the Unix install $cref/make/InstallUnix/make/$$ command, 
 you can then run the CppAD speed tests 
 with the following commands (relative to the distribution directory):
-$codep
-	speed/cppad/cppad correct
-$$
+$syntax%
+	speed/cppad/cppad correct %seed%
+%$$
+where $italic seed$$ is a positive integer see for the
+random number generator $cref/uniform_01/$$.
 This will check that the speed tests have been built correctly.
 You can run the command
-$codep
-	speed/cppad/cppad all
-$$
+$syntax%
+	speed/cppad/cppad speed %seed%
+%$$
 to see the results of all the speed tests.
 See $cref/speed_main/$$ for more options.
 

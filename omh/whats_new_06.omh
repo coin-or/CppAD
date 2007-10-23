@@ -270,7 +270,7 @@ $head 12-05$$
 Add the unix installation
 $cref/--with-Documentation/InstallUnix/--with-Documentation/$$ option
 and remove the 
-$cref/PostfixDir/InstallUnix/PostfixDir/$$ option.
+$italic PostfixDir$$ option.
 $pre
 
 $$

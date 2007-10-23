@@ -31,6 +31,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # ifdef PROFILE
 # define AD_PACKAGE "profile"
 # endif
+# ifdef SACADO
+# define AD_PACKAGE "sacado"
+# endif
 
 /*
 $begin speed_main$$

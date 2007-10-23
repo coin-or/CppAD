@@ -14,9 +14,10 @@
 #
 # Default values used for arguments to configure during this script.
 # These defaults are development system dependent and can be changed.
+BOOST_DIR=/usr/include/boost-1_33_1
 ADOLC_DIR=$HOME/adolc_base
 FADBAD_DIR=$HOME/include
-BOOST_DIR=/usr/include/boost-1_33_1
+SACADO_DIR=$HOME/sacado_base
 #
 #
 # date currently in configure.ac
@@ -185,6 +186,11 @@ then
 			--with-PrintFor
 			--with-SpeedExample
 			--with-profiling"
+		if [ -e $BOOST_DIR/boost ]
+		then
+			TEST="$TEST 
+				BOOST_DIR=$BOOST_DIR"
+		fi
 		if [ -e $ADOLC_DIR/include/adolc ]
 		then
 			TEST="$TEST 
@@ -195,10 +201,10 @@ then
 			TEST="$TEST 
 				FADBAD_DIR=$FADBAD_DIR"
 		fi
-		if [ -e $BOOST_DIR/boost ]
+		if [ -e $SACADO_DIR/include/Sacado.hpp ]
 		then
 			TEST="$TEST 
-				BOOST_DIR=$BOOST_DIR"
+				SACADO_DIR=$SACADO_DIR"
 		fi
 	fi
 	TEST=`echo $TEST | sed -e 's|\t\t*| |g'`
@@ -381,6 +387,7 @@ then
 		cppad
 		fadbad
 		profile
+		sacado
 	"
 	seed="123"
 	for name in $list

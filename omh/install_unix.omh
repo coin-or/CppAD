@@ -42,6 +42,7 @@ $spell
 	CppAD
 	Adolc
 	Fadbad
+	Sacado
 	ls
 	aclocal
 $$
@@ -55,26 +56,26 @@ $section Unix Download, Test, and Installation$$
 
 $head Download Current Version$$
 $index download, unix$$
-Note that $code 20070726$$ is the 
+Note that $code 20071022$$ is the 
 year, month, and date corresponding to the current version of CppAD.
 Download either the CPL or GPL licensed version from:
 
 $subhead CPL License$$
-$href%cppad-20070726.cpl.tgz%$$
+$href%cppad-20071022.cpl.tgz%$$
 
 $subhead GPL License$$
-$href%cppad-20070726.gpl.tgz%$$
+$href%cppad-20071022.gpl.tgz%$$
 
 $head Extraction$$
 Use the command
 $syntax%
-	tar -xvzf cppad-20070726.%license%.tgz
+	tar -xvzf cppad-20071022.%license%.tgz
 %$$
 (where $italic license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-20070726
+	cppad-20071022
 %$$
 All of the commands below are to be executed starting from this
 directory.
@@ -106,9 +107,9 @@ $syntax%
 	--with-SpeedExample                    \
 	--with-profiling                       \
 	--with-stdvector                       \  
-	POSTFIX_DIR=%PostfixDir%                 \
 	ADOLC_DIR=%AdolcDir%                     \
 	FADBAD_DIR=%FadbadDir%                   \
+	SADADO_DIR=%SacadoDir%                   \
 	BOOST_DIR=%BoostDir%                     \
 	CPP_ERROR_WARN=%CppErrorsAndWarnings%    \
 %$$
@@ -290,26 +291,6 @@ $$
 (In this case $italic BoostDir$$ must not also be specified.)
 
 
-$head PostfixDir$$
-$index configure, postfix directory$$
-$index postfix, configure directory$$
-$index directory, configure postfix$$
-This configure command line option is no longer available.
-It's documentation is included so that you know what its intention was:
-$pre
-
-$$
-By default, there is no postfix directory.
-As an example of using both the 
-$code --prefix$$ and $code POSTFIX_DIR$$ options,
-$codep
-	./configure --prefix=/usr POSTFIX_DIR=test
-$$ 
-will set up for installing the CppAD include files in the directory
-$syntax%
-	/usr/include/test/cppad
-%$$
-
 $head AdolcDir$$
 $index Adolc, unix$$
 If you have 
@@ -362,6 +343,24 @@ is a valid reference to $code badiff.h$$.
 In this case,
 after you execute the $xref/InstallUnix/make/make/$$ command,
 you can compile and run the $cref/speed_fadbad/$$ tests.
+
+$head SacadoDir$$
+$index Sacado, unix$$
+If you have
+$href%
+	http://trilinos.sandia.gov/packages/%
+	Sacado
+%$$
+installed on your system, you can 
+specify a value for $italic SacadoDir$$.
+It must be such that
+$syntax%
+	%SacadoDir%/include/Sacado.hpp
+%$$
+is a valid reference to $code Sacado.hpp$$.
+In this case,
+after you execute the $xref/InstallUnix/make/make/$$ command,
+you can compile and run the $cref/speed_sacado/$$ tests.
 
 $head BoostDir$$
 $index boost, unix$$
@@ -419,8 +418,10 @@ $xref/InstallUnix/--with-Example/--with-Example/$$,
 $xref/InstallUnix/--with-TestMore/--with-TestMore/$$,
 $xref/InstallUnix/--with-Speed/--with-Speed/$$,
 $xref/InstallUnix/--with-PrintFor/--with-PrintFor/$$,
-$xref/InstallUnix/AdolcDir/AdolcDir/$$, and
-$xref/InstallUnix/FadbadDir/FadbadDir/$$ above.
+$xref/InstallUnix/AdolcDir/AdolcDir/$$, 
+$xref/InstallUnix/FadbadDir/FadbadDir/$$,
+and
+$xref/InstallUnix/SacadoDir/SacadoDir/$$ above.
 
 $head Final Installation$$
 Once you are satisfied that the tests are giving correct results,
@@ -429,7 +430,6 @@ $codep
 	make install
 $$
 This will install CppAD in the location specified by 
-$cref/PrefixDir/InstallUnix/PrefixDir/$$ and
-$cref/PostfixDir/InstallUnix/PostfixDir/$$.
+$cref/PrefixDir/InstallUnix/PrefixDir/$$.
 
 $end

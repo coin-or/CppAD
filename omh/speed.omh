@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -68,7 +68,8 @@ $contents%
 	omh/speed_utility.omh%
 	omh/speed_adolc.omh%
 	omh/speed_cppad.omh%
-	omh/speed_fadbad.omh
+	omh/speed_fadbad.omh%
+	omh/speed_sacado.omh
 %$$
 
 $end

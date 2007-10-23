@@ -2,7 +2,7 @@
 # define CPPAD_POLY_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -99,17 +99,15 @@ It is assumed that
 multiplication and addition of $italic Type$$ objects
 are commutative.
 
-$subhead Casting$$
-The syntax $syntax%%Type%(%i%)%$$ 
-must convert from a $code size_t$$ value $italic i$$
-to a $italic Type$$ object. 
-
 $subhead Operations$$
-The following operations must be supported by $italic Type$$:
+The following operations must be supported where
+$italic x$$ and $italic y$$ are objects of type $italic Type$$
+and $italic i$$ is an $code int$$:
 $table
-$code  =$$    $cnext assignment     $rnext
-$code  *=$$   $cnext multiplication computed assignment $rnext
-$code  +=$$   $cnext addition computed assignment 
+$syntax%%x%  = %i%$$   $cnext assignment     $rnext
+$syntax%%x%  = %y%$$   $cnext assignment     $rnext
+$syntax%%x% *= %y%$$   $cnext multiplication computed assignment $rnext
+$syntax%%x% += %y%$$   $cnext addition computed assignment
 
 $tend
 
@@ -157,12 +155,16 @@ Type Poly(size_t k, const Vector &a, const Type &z)
 {	size_t i;
 	size_t d = a.size() - 1;
 
+	Type tmp;
+
 	// check Vector is Simple Vector class with Type elements
 	CheckSimpleVector<Type, Vector>();
 
 	// case where derivative order greater than degree of polynomial
 	if( k > d )
-		return Type(0);
+	{	tmp = 0;
+		return tmp;
+	}
 	// case where we are evaluating a derivative
 	if( k > 0 )
 	{	// initialize factor as (k-1) !
@@ -174,7 +176,8 @@ Type Poly(size_t k, const Vector &a, const Type &z)
 		Vector b(d - k + 1);
 		for(i = k; i <= d; i++)
 		{	factor   *= i;
-			b[i - k]  = a[i] * Type(factor); 
+			tmp       = factor;
+			b[i - k]  = a[i] * tmp; 
 			factor   /= (i - k + 1);
 		}
 		// value of derivative polynomial

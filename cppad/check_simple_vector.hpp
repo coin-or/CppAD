@@ -46,14 +46,22 @@ a an error message makes it clear what condition is not satisfied.
 
 $head Restrictions$$
 The following extra assumption is made by $code CheckSimpleVector$$:
-The type $italic Scalar$$ supports the syntax
+If $italic x$$ is a $italic Scalar$$ object,
 $syntax%
-	%Scalar%(%i%) == %Scalar%(%j%)%
+	%x% = %i%
 %$$
-where $italic i$$ and $italic j$$ are either $code 0$$ or $code 1$$.
-In addition, this syntax returns the value true (false) if and only if
-$italic i$$ equals $italic j$$.
-($italic i$$ does not equal $italic j$$).
+assigns the object $italic x$$ the value of the
+$code int$$ value $italic i$$.
+If $italic y$$ is another $italic Scalar$$ object,
+$syntax%
+	%x% = %y%
+%$$
+assigns the object $italic x$$ the value of $italic y$$.
+If $italic i$$ is and $code int$$,
+$syntax%
+	%x% = %i%
+%$$
+assigns the object $italic x$$ the value of $italic i$$.
 
 
 $head Include$$
@@ -93,8 +101,12 @@ namespace CppAD {
 
 	template <class Scalar, class Vector>
 	void CheckSimpleVector(void)
-	{	Scalar zero = Scalar(0);
-		Scalar one  = Scalar(1);
+	{	Scalar zero;
+		Scalar one;
+
+		// use assignment and not constructor
+		zero = 0;
+		one  = 1;
 
 		// only need execute once per value Scalar, Vector pair
 		static bool runOnce = false;

@@ -13,7 +13,7 @@
 # Merge the changes that occurred in FromDirectory into the ToDirectory
 #
 DryRun="--dry-run"
-if [ "$1" == "not--dry-run" ]
+if [ "$1" == "not-dry-run" ]
 then
 	DryRun=""
 fi
@@ -25,13 +25,13 @@ echo "DryRun = $DryRun"
 ToDirectory=trunk
 #
 # Name of the directory where the changes have been committed
-FromDirectory=branches/intro
+FromDirectory=branches/sacado
 #
 # Version of the repository corresponding to FromDirectory just before changes
-Start=907
+Start=1000
 # 
 # Version of the repository corresponding to FromDirecrtory after the changes
-End=923
+End=1004
 #
 # echo the svn merge command
 echo "cd  .."

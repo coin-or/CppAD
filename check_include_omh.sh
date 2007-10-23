@@ -40,6 +40,7 @@ list="
 	speed/cppad/*.cpp
 	speed/example/*.cpp
 	speed/fadbad/*.cpp
+	speed/sacado/*.cpp
 	omh/*.omh
 "
 for file in $list

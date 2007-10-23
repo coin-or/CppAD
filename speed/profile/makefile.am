@@ -27,6 +27,10 @@ noinst_PROGRAMS  = profile
 AM_CPPFLAGS   = -I$(top_builddir) $(BOOST_INCLUDE)
 #
 AM_CXXFLAGS   = -pg -O2 $(CPP_ERROR_WARN) -DPROFILE
+#
+# debugging version
+# AM_CXXFLAGS   = -g $(CPP_ERROR_WARN) -DPROFILE
+#
 AM_LDFLAGS    = -pg
 #
 profile_SOURCES = \

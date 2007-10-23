@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20070623, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20071022, cppad@list.coin-or.org)
 
 dnl Set the default install prefix to the installers home directory
 dnl cygwin begin delete:
@@ -161,6 +161,16 @@ else
 	AC_MSG_RESULT([no])
 fi
 
+dnl The directory corresponding to the installation of SACADO -----------
+AC_MSG_CHECKING([SACADO_DIR])
+AC_SUBST(SACADO_DIR)
+AM_CONDITIONAL(CppAD_SACADO, test "$SACADO_DIR" != "")
+if test "$SACADO_DIR" != "" ; then
+	AC_MSG_RESULT([$SACADO_DIR])
+else
+	AC_MSG_RESULT([no])
+fi
+
 dnl The directory corresponding to the installation of BOOST ------------
 AC_MSG_CHECKING([BOOST_DIR])
 AC_SUBST(BOOST_DIR)
@@ -249,6 +259,7 @@ AC_CONFIG_FILES([
 	speed/example/makefile
 	speed/fadbad/makefile
 	speed/profile/makefile
+	speed/sacado/makefile
 	test_more/makefile 
 ])
 

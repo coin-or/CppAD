@@ -225,6 +225,13 @@ else
 SPEED_FADBAD = 
 endif
 #
+# Did user specify a value for SACADO_DIR in configure command line
+if CppAD_SACADO
+SPEED_SACADO = speed/sacado
+else
+SPEED_SACADO = 
+endif
+#
 SUBDIRS = \
 	$(EXAMPLE) \
 	$(INTRODUCTION) \
@@ -234,6 +241,7 @@ SUBDIRS = \
 	$(SPEED_CPPAD) \
 	$(SPEED_EXAMPLE) \
 	$(SPEED_FADBAD) \
+	$(SPEED_SACADO) \
 	$(TEST_MORE) 
 #
 EXTRA_DIST = \

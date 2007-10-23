@@ -24,6 +24,7 @@ EXTRA_DIST        = speedtest.cpp
 noinst_PROGRAMS   = example 
 #
 AM_CPPFLAGS       = -I. -I$(top_builddir) $(BOOST_INCLUDE)
+#
 AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #
 example_SOURCES   = \

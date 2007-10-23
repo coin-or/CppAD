@@ -9,51 +9,52 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin speed_fadbad$$
+$begin speed_sacado$$
 $spell
-	FadbadDir
+	SacadoDir
 	CppAD
 	Cygwin
 $$
 
-$index speed, test fadbad$$
-$index test, fadbad speed$$
-$index fadbad, speed test$$
+$index speed, test sacado$$
+$index test, sacado speed$$
+$index sacado, speed test$$
 
-$section The Fadbad Speed Tests$$
+$section The Sacado Speed Tests$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to compare
-Fadbad with other AD packages.
-This section links to the source code the Fadbad speed tests
-(any suggestions to make the Fadbad results faster are welcome).
+Sacado with other AD packages.
+This section links to the source code the Sacado speed tests
+(any suggestions to make the Sacado results faster are welcome).
 
-$head FadbadDir$$
+$head SacadoDir$$
 To run these tests, you must include the $code configure$$ command line option
 $syntax%
-	FADBAD_DIR=%FadbadDir%
+	SACADO_DIR=%SacadoDir%
 %$$
-during $cref/installation/InstallUnix/FadbadDir/$$.
+during $cref/installation/InstallUnix/SacadoDir/$$.
 After the Unix install $cref/make/InstallUnix/make/$$ command, 
-you can then run the Fadbad speed tests 
+you can then run the Sacado speed tests 
 with the following commands (relative to the distribution directory):
 $syntax%
-	speed/fadbad/fadbad correct %seed%
+	speed/sacado/sacado correct %seed%
 %$$
+This will check that the speed tests have been built correctly.
 where $italic seed$$ is a positive integer see for the
 random number generator $cref/uniform_01/$$.
 This will check that the speed tests have been built correctly.
 You can run the command
 $syntax%
-	speed/fadbad/fadbad speed %seed%
+	speed/sacado/sacado speed %seed%
 %$$
 to see the results of all the speed tests.
 See $cref/speed_main/$$ for more options.
 
 $contents%
-	speed/fadbad/det_minor.cpp%
-	speed/fadbad/det_lu.cpp%
-	speed/fadbad/poly.cpp
+	speed/sacado/det_minor.cpp%
+	speed/sacado/det_lu.cpp%
+	speed/sacado/poly.cpp
 %$$
 
 $end

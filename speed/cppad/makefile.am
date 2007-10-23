@@ -26,6 +26,9 @@ AM_CPPFLAGS   = -I$(top_builddir) $(BOOST_INCLUDE)
 #
 AM_CXXFLAGS   = -O2 -DNDEBUG $(CPP_ERROR_WARN) -DCPPAD
 #
+# debugging version
+# AM_CXXFLAGS   = -g $(CPP_ERROR_WARN) -DCPPAD
+#
 cppad_SOURCES = \
 	../main.cpp \
 	det_lu.cpp  \

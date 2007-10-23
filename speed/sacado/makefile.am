@@ -20,20 +20,21 @@ else
 BOOST_INCLUDE =
 endif
 #
-noinst_PROGRAMS  = adolc 
+noinst_PROGRAMS  = sacado 
 #
-AM_CPPFLAGS   = -I$(top_builddir) -I$(ADOLC_DIR)/include $(BOOST_INCLUDE)
+AM_CPPFLAGS   = -I$(top_builddir) -I$(SACADO_DIR)/include $(BOOST_INCLUDE)
 #
-AM_CXXFLAGS   = -O2 -DNDEBUG $(CPP_ERROR_WARN) -DADOLC
+# optimized version
+AM_CXXFLAGS   = -O2 -DNDEBUG  $(CPP_ERROR_WARN) -DSACADO
 #
 # debugging version
-# AM_CXXFLAGS   = -g $(CPP_ERROR_WARN) -DADOLC
+# AM_CXXFLAGS   = -g $(CPP_ERROR_WARN) -DSACADO
 #
-LDADD            = -ladolc
-AM_LDFLAGS       = -L$(ADOLC_DIR)/lib
+LDADD            = -lsacado
+AM_LDFLAGS       = -L$(SACADO_DIR)/lib
 #
-adolc_SOURCES = \
+sacado_SOURCES = \
 	../main.cpp \
-	det_lu.cpp \
+	det_lu.cpp  \
 	det_minor.cpp \
 	poly.cpp

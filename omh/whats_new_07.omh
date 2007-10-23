@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	Dir
 	Ginac
 	xi
 	Bool
@@ -61,6 +62,23 @@ This way they do not have to be reproduced for each package.
 This makes it easier to add a new package,
 but it requires the prototype for 
 $syntax%compute_%test_name%$$ to be the same for all packages.
+$pre
+
+$$
+The $href%http://trilinos.sandia.gov/packages/%Sacado%$$
+package was added to the list of $cref/speed/$$ tests.
+In addition, the discussion about how to run each of the
+speed tests was corrected to include the $italic seed$$ argument.
+$pre
+
+$$
+The $italic PostfixDir$$ option
+was removed on $cref/2006-12-05/whats_new_06/12-05/$$ but 
+it was not removed from the 
+$cref/configure/InstallUnix/Configure/$$
+documentation.
+This has been fixed.
+
 
 $head 10-16$$
 Add $italic seed$$ argument and

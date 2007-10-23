@@ -455,7 +455,7 @@ has been removed from the documentation.
 $head 09-27$$
 Add the 
 $cref/PrefixDir/InstallUnix/PrefixDir/$$ and 
-$cref/PostfixDir/InstallUnix/PostfixDir/$$ 
+$italic PostfixDir$$ ($italic PostfixDir$$ has since been removed) 
 options to the $code configure$$ command line.
 This gives the user more control over the location where CppAD is installed.
 
