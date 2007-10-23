@@ -111,9 +111,6 @@ $$
 Add $code ADOLC_DIR$$, $code FADBAD_DIR$$, $code SACADO_DIR$$,
 and $code BOOST_DIR$$
 to the $cref/configure/InstallUnix/Configure/$$ help string.
-The flag $code CPP_ERROR_WARN$$ was replaced by 
-the standard name $code CXXFLAGS$$; see
-$cref%CppErrorsAndWarnings%InstallUnix%CppErrorsAndWarnings%$$.
 
 
 $head 10-16$$
