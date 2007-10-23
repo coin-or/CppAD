@@ -181,13 +181,13 @@ else
 	)
 	AC_MSG_RESULT([no])
 fi
-
 dnl The C++ error and warning flags for every compliation ---------------
-AC_MSG_CHECKING([CXXFLAGS])
-if test "$CXXFLAGS" != "" ; then
- 	AC_MSG_RESULT([$CXXFLAGS]) 
+AC_MSG_CHECKING([CPP_ERROR_WARN])
+AC_SUBST(CPP_ERROR_WARN)
+if test "$CPP_ERROR_WARN" != "" ; then
+	AC_MSG_RESULT([$CPP_ERROR_WARN]) 
 else
- 	AC_MSG_RESULT([no])
+	AC_MSG_RESULT([no])
 fi 
 AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
 
