@@ -211,10 +211,10 @@ then
 	#
 	echo "configure \\"
 	echo "$TEST" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
-	echo "	CPP_ERROR_WARN=\"-Wall -ansi -pedantic-errors -std=c++98\""
+	echo "	CXX_FLAGS=\"-Wall -ansi -pedantic-errors -std=c++98\""
 	#
 	if ! ./configure $TEST \
-		CPP_ERROR_WARN="-Wall -ansi -pedantic-errors -std=c++98"
+		CXX_FLAGS="-Wall -ansi -pedantic-errors -std=c++98"
 	then
 		exit 1
 	fi

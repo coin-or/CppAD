@@ -58,9 +58,23 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 10-23$$
-The $cref/compiler flags/InstallUnix/CompilerFlags/$$ configure
-parameter has been changed from $code CPP_ERROR_WARN$$ to
+The $cref/compiler flags/InstallUnix/CompilerFlags/$$ environment variable
+has been changed from $code CPP_ERROR_WARN$$ to $code CXX_FLAGS$$.
+$pre
+
+$$
+The command $code configure --help$$ now prints a description
+of the environment variables
+$code ADOLC_DIR$$,
+$code FADBAD_DIR$$,
+$code SACADO_DIR$$,
+$code BOOST_DIR$$,
+and
 $code CXX_FLAGS$$.
+In addition, if the environment variables
+$code POSTFIX_DIR$$ or $code CPP_ERROR_WARN$$ are used,
+an message is printed saying that are not longer valid.
+
 
 $head 10-22$$
 The correctness checks and speed test wrappers were moved 

@@ -21,6 +21,14 @@ dnl cygwin replace: AC_PREFIX_DEFAULT(/usr)
 
 AC_MSG_NOTICE([******** Begin Checking Command Line arguments ***************])
 
+dnl check for certain invalid configure command line options -------------
+if test "$POSTFIX_DIR" != "" ; then
+    AC_MSG_ERROR([The POSTFIX_DIR configure option is no longer available])
+fi
+if test "$CPP_ERROR_WARN" != "" ; then
+    AC_MSG_ERROR([The CPP_ERROR_WARN configure option is now CXX_FLAGS])
+fi
+
 dnl the prefix directory corresponding to CppAD -------------------------
 dnl The following seems to work but NONE is not in autoconf specifications
 AC_MSG_CHECKING([--prefix])

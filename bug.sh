@@ -1,17 +1,12 @@
 #! /bin/bash
 #
 echo "Assuming ../configure was executed with no arguments,"
-echo "This generates a segmentation falut under Cygwin:"
+echo "This generates a segmentation falut under Cygwin (when -O2 is used):"
 echo
 #
 cat << EOF > bug0.hpp
-# include <cassert>
-# include <iostream>
-# include <sstream>
 # include <string>
 
-
-// TrackElement ------------------------------------------------------------
 class TrackElement {
 	
 public:
@@ -30,26 +25,15 @@ public:
 	}
 
 }; 
-
-inline void TrackError(void)
-{
-	std::string str = "test";
-	size_t i;
-	char message[5];
-	for(i = 0; i < 1; i++)
-		message[i] = str[i];
-	message[1] = '\0';
-	assert( false );
-}
-
-// TrackNewVec ---------------------------------------------------------------
-template <class Type>
-Type *TrackNewVec(size_t len , Type *oldptr)
+inline double *TrackNewVec(size_t len)
 {
 	// try to allocate the new memrory
-	Type *newptr = new Type[len];
+	double *newptr = new double[len];
 	if( newptr == 0 )
-	{	TrackError();
+	{	std::string str("test");
+		char message[5];
+		message[0] = str[0];
+		message[1] = '\0';
 	}
 	// create tracking element
 	void *vptr = static_cast<void *>(newptr);
@@ -64,12 +48,7 @@ Type *TrackNewVec(size_t len , Type *oldptr)
 
 	return newptr;
 }
-
-
-// TrackDelVec --------------------------------------------------------------
-
-template <class Type>
-void TrackDelVec(Type *oldptr )
+inline void TrackDelVec(double *oldptr )
 {
 	TrackElement        *P;
 	TrackElement        *E;
@@ -83,11 +62,9 @@ void TrackDelVec(Type *oldptr )
 		E = E->next;
 	}
 
-	// check if pointer was not in list
-	if( E == 0 || E->ptr != vptr ) assert(0);
-
 	// remove tracking element from list
-	P->next = E->next;
+	if( E != 0 )
+		P->next = E->next;
 
 	// delete allocated pointer
 	delete [] oldptr;
@@ -97,10 +74,6 @@ void TrackDelVec(Type *oldptr )
 
 	return;
 }
-
-
-
-// TrackCount --------------------------------------------------------------
 inline size_t TrackCount(void)
 {
 	size_t count = 0;
@@ -118,7 +91,6 @@ cat << EOF >  bug1.cpp
 extern bool bug2(void);
 int main(void)
 {	size_t count = TrackCount();
-	std::cout << "count = " <<  count << std::endl;
 	bug2();
 	return 0;
 }
@@ -127,12 +99,16 @@ cat << EOF > bug2.cpp
 # include "bug0.hpp"
 bool bug2(void)
 {	double *x = 0;
-	x = TrackNewVec(1, x);
+	x = TrackNewVec(1);
 	x[0] = .4; 
 	TrackDelVec(x);
 	return true;
 }
 EOF
+echo "g++ bug1.cpp bug2.cpp -O1 -o bug.exe"
+g++ bug1.cpp bug2.cpp  -O1 -o bug.exe
+echo "./bug"
+./bug
 echo "g++ bug1.cpp bug2.cpp -O2 -o bug.exe"
 g++ bug1.cpp bug2.cpp  -O2 -o bug.exe
 echo "./bug"
