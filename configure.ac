@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20071023, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20071024, cppad@list.coin-or.org)
 
 dnl Set the default install prefix to the installers home directory
 dnl cygwin begin delete:
@@ -265,6 +265,8 @@ AC_CONFIG_FILES([
 	speed/sacado/makefile
 	test_more/makefile 
 ])
+dnl END AC_CONFIG_FILES 
+dnl the comment line above is used by ./new_stable.sh
 
 
 dnl create all the requested output files
