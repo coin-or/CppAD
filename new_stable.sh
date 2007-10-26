@@ -76,32 +76,21 @@ fi
 #
 # change version number in files -----------------------------------------------
 #
-# AUTHORS
-sed AUTHORS > AUTHORS.tmp \
-	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
-echo "diff AUTHORS AUTHORS.tmp"
-diff AUTHORS AUTHORS.tmp
-mv   AUTHORS.tmp AUTHORS 
-#
-# configure.ac
-sed configure.ac > configure.ac.tmp \
-	-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/"
-echo "diff configure.ac configure.ac.tmp"
-diff configure.ac configure.ac.tmp
-mv   configure.ac.tmp configure.ac
-#
-# For installs without configure, update cppad/config.h
-# (gets overwritten when configure runs).
-sed cppad/config.h > cppad/config.tmp \
-	-e "s/\"[0-9]\{8\}\"/\"$yyyymmdd\"/" \
-	-e "s/ [0-9]\{8\}\"/ $yyyymmdd\"/"
-echo "diff cppad/config.h cppad/config.tmp"
-diff cppad/config.h cppad/config.tmp
-mv   cppad/config.tmp cppad/config.h
-#
-for name in doc.omh omh/install_unix.omh omh/install_windows.omh
+list="
+	AUTHORS
+	cppad/config.h
+	configure.ac
+	doc.omh
+	omh/install_unix.omh
+	omh/install_windows.omh
+"
+for name in $list
 do
-	sed $name > $name.tmp \
+	sed $name -f svn_commit.sed | sed > $name.tmp \
+		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/" \
+		-e "s/ [0-9]\{8\}\"/ $yyyymmdd\"/" \
+		-e "s/\"[0-9]\{8\}\"/\"$yyyymmdd\"/" \
+		-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" \
 		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
 		-e "s/ [0-9]\{8\}\\\$\\\$/ $yyyymmdd\$\$/"
 	echo "diff $name $name.tmp"
@@ -117,14 +106,33 @@ echo "diff build.sh build.sh.tmp"
 diff build.sh build.sh.tmp
 mv build.sh.tmp build.sh
 #
-# Create configure script ----------------------------------------------------
+# Determine which built sources are not yet in repository -------------------
 #
-if [ -e configure ]
-then
-	configure_before="yes"
-else
-	configure_before="no"
-fi
+list_name=`sed configure.ac \
+	-n \
+	-e '/END AC_CONFIG_FILES/,$d' \
+	-e '1,/AC_CONFIG_FILES/d' \
+	-e 's/makefile/&.in/' \
+	-e 's/^[ \t]*//' \
+	-e '/makefile/p'`
+list_name="
+	$list_name 
+	cppad/config.h.in
+	configure 
+	depcomp
+	install-sh 
+	missing
+"
+list_add=""
+for name in $list_name
+do
+	if [ ! -e $name ]
+	then
+		list_add="$list_add $name"
+	fi
+done
+#
+# Build all sources --------------------------------------------------------- 
 #
 echo "aclocal"
 if ! aclocal
@@ -154,16 +162,22 @@ then
 	exit 1
 fi
 #
-if [ "$configure_before" == "no" ]
-then
-	if ! svn add configure
+# Add build sources to repository ------------------------------------
+#
+for name in $list_add
+do
+	echo "svn add $name"
+	if ! svn add $name
 	then
-		echo "cannot add configure to repository"
+		echo "cannot add $name to repository"
 		exit 1
 	fi
-fi
-# ---------------------------------------------------------------------------
-echo "Change into ../stable/$stable_version and then check the differences."
-echo "If you are happy with the result, then execute the command"
-echo "	svn commit -m \"stable/$stable_version: set date and create configure\""
-echo "Otherwise, modify the new_stable.sh script and re-execute it."
+done
+echo "--------------------------------------------------------------------"
+echo "Step 1: cd ../stable/$stable_version"
+echo "Step 2: Check differences between repository and local copy."
+echo "Step 3: If needs changing, edit CppAD/trunk/new_stable.sh and repeat."
+echo "Step 4: svn commit \\"
+echo "	-m \"stable/$stable_version: set date and create configure\""
+echo "Step 5: Checkout a fresh copy of stable/$stable_version"
+echo "Step 6: Test that configure works (without using autoconf or automake)"
