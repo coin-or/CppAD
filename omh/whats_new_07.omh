@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	autoconf
 	Fadbad
 	Sacado::Tay
 	Dir
@@ -56,6 +57,13 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-27$$
+The installation was broken on some systems because the
+$cref/configure/InstallUnix/Configure/$$ command tried to run
+the $code autoconf$$ and $code automake$$ programs.
+This has been fixed by adding
+$code AM_MAINTAINER_MODE$$ to the $code autoconf$$ input file.
 
 $head 10-23$$
 The $cref/compiler flags/InstallUnix/CompilerFlags/$$ environment variable
