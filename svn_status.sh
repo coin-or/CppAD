@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -33,15 +33,11 @@ sed                                                           \
 	-e '/^[?].*\/stamp-h1$/d'                             \
 	-e '/^[?].*\/makefile$/d'                             \
 	-e '/^[?].*\/_adolc-*/d'                              \
-	-e '/^[?] *install-sh$/d'                             \
 	-e '/^[?] *makefile$/d'                               \
-	-e '/^[?] *depcomp$/d'                                \
-	-e '/^[?] *missing$/d'                                \
 	-e '/^[?].*\/junk$/d'                                 \
 	-e '/^[?] *junk$/d'                                   \
 	-e '/^[?].*\/junk\.[0-9a-zA-Z]*$/d'                   \
 	-e '/^[?] *junk\.[0-9a-zA-Z]*$/d'                     \
-	-e '/^[?] *configure$/d'                              \
 	-e '/^[?] *dev$/d'                                    \
 	-e '/^[?] *config.status$/d'                          \
 	-e '/^[?] *Doc$/d'                                    \

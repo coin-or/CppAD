@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -17,15 +17,12 @@ list=`find .                             \
 	\( -name '_adolc-*'       \) -or \
 	\( -name 'aclocal.m4'     \) -or \
 	\( -name 'autom4te.cache' \) -or \
-	\( -name 'configure'      \) -or \
-	\( -name 'config.h.in'    \) -or \
 	\( -name 'config.status'  \) -or \
 	\( -name 'cppad-*'        \) -or \
 	\( -name 'cygwin_package' \) -or \
 	\( -name 'Debug'          \) -or \
 	\( -name 'Release'        \) -or \
 	\( -name '.deps'          \) -or \
-	\( -name 'depcomp'        \) -or \
 	\( -name 'dev'            \) -or \
 	\( -name 'Doc'            \) -or \
 	\( -name 'doc'            \) -or \
@@ -33,10 +30,7 @@ list=`find .                             \
 	\( -name 'junk'           \) -or \
 	\( -name 'junk?'          \) -or \
 	\( -name 'junk.*'         \) -or \
-	\( -name 'install-sh'     \) -or \
 	\( -name 'makefile'       \) -or \
-	\( -name 'makefile.in'    \) -or \
-	\( -name 'missing'        \) -or \
 	\( -name 'Release'        \) -or \
 	\( -name 'stamp-h1'       \) -or \
 	\( -name 'temp'           \) -or \

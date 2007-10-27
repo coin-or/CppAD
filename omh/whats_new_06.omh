@@ -257,7 +257,7 @@ This has been fixed.
 
 $head 12-07$$
 Fix bug in the 
-$cref/subversion installation/InstallSubversion/$$ instructions; see 
+subversion installation instructions; see 
 $href%http://list.coin-or.org/pipermail/cppad/2006q4/000076.html%bug report%$$.
 $pre
 
@@ -298,8 +298,6 @@ $lend
 
 $head 12-02$$
 Put explanation of version numbering in the 
-$cref/unix/InstallUnix/Download Current Version/$$ and
-$cref/windows/InstallWindows/Download Current Version/$$
 download instructions.
 $pre
 
@@ -468,7 +466,7 @@ $cref/Independent/$$ and the $syntax%ADFun<%Base%>%$$
 $cref/constructor/FunConstruct/$$.
 
 $head 10-25$$
-A $cref/subversion install procedure/InstallSubversion/$$ was
+A subversion install procedure was
 added to the documentation.
 $pre
 
@@ -595,8 +593,7 @@ $comment ----------------------------------------------------------- $$
 $head 06-17$$
 The location where the distribution files are stored has changed
 and this broke the Download Current Version links for the
-$xref/InstallUnix/Download Current Version/Unix/$$ and 
-$xref/InstallWindows/Download Current Version/Windows/$$ installation.
+unix and windows installation.
 This has been fixed.
 $pre
 

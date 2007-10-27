@@ -1,0 +1,157 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin download$$
+$spell
+	http://www.coin-or.org/CppAD/
+	gzip
+	cppad
+	xvzf
+	cpl
+	gpl
+	tgz
+	omhelp
+	https
+	svn
+	org
+	OMhelp
+	hpp
+	xml
+	htm
+	mkdir
+	omh
+	noframe
+$$
+$index download, CppAD$$
+$index CppAD, download$$
+
+$section Downloading CppAD$$
+
+$head Version$$
+The year, month, and day corresponding to
+this version of CppAD is $code 20071027$$.
+
+$head Windows Zip Files$$
+$index CppAD, zip file$$
+$index zip, CppAD file$$
+The download choices below were archived and compressed with
+the $code zip$$ utility.
+The ascii files for these downloads are in 
+Windows format; i.e., each line ends with both a carriage return
+and then a line feed. 
+
+$table
+CPL License $pre  $$ $cnext $href%cppad-20071027.cpl.zip%$$ 
+$rnext
+GPL License $pre  $$ $cnext $href%cppad-20071027.gpl.zip%$$
+$tend
+
+$subhead Zip File Extraction$$
+There are many ways to unzip these archives; e.g., $code WinZip$$.
+Doing this should create the distribution directory
+$syntax%
+	cppad-20071027
+%$$
+To see if this has been done correctly, check for the following file:
+$syntax%
+	cppad-20071027/cppad/cppad.hpp
+%$$
+
+
+$head Unix Tar Files$$
+$index CppAD, tar file$$
+$index tar, CppAD file$$
+The download choices below were first archived with $code tar$$
+and then compressed with $code gzip$$:
+The ascii files for these downloads are in 
+Unix format; i.e., each line ends with just a line feed.
+
+$table
+CPL License $pre  $$ $cnext $href%cppad-20071027.cpl.tgz%$$ 
+$rnext
+GPL License $pre  $$ $cnext $href%cppad-20071027.gpl.tgz%$$
+$tend
+
+$subhead Tar File Extraction$$
+Use the unix command
+$syntax%
+	tar -xvzf cppad-20071027.%license%.tgz
+%$$
+(where $italic license$$ is $code cpl$$ or $code gpl$$)
+to decompress and extract the unix format version
+into the distribution directory
+$syntax%
+	cppad-20071027
+%$$
+To see if this has been done correctly, check for the following file:
+$syntax%
+	cppad-20071027/cppad/cppad.hpp
+%$$
+
+$head Subversion Current Version$$
+$index subversion, CppAD files$$
+$index CppAD, subversion files$$
+The ascii files for these downloads are in 
+Unix format; i.e., each line ends with just a line feed.
+The following subversion command will download the current version
+of CppAD:
+$syntax%
+	svn co https://projects.coin-or.org/svn/CppAD/trunk cppad-20071027
+%$$
+To see if this has been done correctly, check for the following file:
+$syntax%
+	cppad-20071027/cppad/cppad.hpp
+%$$
+
+$head Subversion Old Version$$
+$index old, CppAD version$$
+$index version, CppAD old$$
+
+The ascii files for these downloads are in 
+Unix format; i.e., each line ends with just a line feed.
+If you are downloading a old version of CppAD, you will need 
+a copy of the corresponding documentation.
+This will require downloading and installing OMhelp.
+
+$list number$$
+Download and install
+$href%http://www.seanet.com/~bradbell/omhelp/overview.xml%OMhelp%$$.
+
+$lnext
+Use the following subversion command
+$syntax%
+	svn co https://projects.coin-or.org/svn/CppAD/%name% cppad-%date%
+%$$
+where $italic name$$ and $italic date$$ are one of the following choices:
+$table
+$italic name$$        $cnext $italic date$$   $rnext
+$code stable/2.0   $$ $cnext $code 20071016$$ $rnext     
+$code stable/2.1   $$ $cnext $code 20060913$$ 
+$tend     
+
+$lnext
+In the directory $syntax%cppad-%date%$$ execute the commands
+$codep
+	mkdir doc
+	cd doc
+	omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/
+	omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/ -xml
+$$
+The documentation for the corresponding version can now be viewed 
+by opening the file
+$syntax%cppad-%date%/doc/index.xml%$$ or 
+$syntax%cppad-%date%/doc/index.htm%$$ 
+in a web browser.
+
+$lnext
+Follow the install instructions in the documentation you just built.
+$lend
+
+$end

@@ -241,9 +241,7 @@ $href%
 %$$.
 From now on the dates in this file will correspond to the first
 version of CppAD where the change appears; i.e., the date in the
-$xref/InstallUnix/Download Current Version/unix/$$
-and
-$xref/InstallWindows/Download Current Version/windows/$$
+unix and windows
 download file names $syntax%CppAD-%yy%-%mm%-%dd%$$.
 
 
@@ -511,8 +509,7 @@ $code CppAD.unix.tar.gz$$ and $code CppAD.dos.tar.gz$$
 to 
 $syntax%CppAD-%yy%-%mm%-%dd%.tar.gz%$$ and $syntax%CppAD-%yy%-%mm%-%dd%.zip%$$ 
 (the $syntax%%*%.zip%$$ file
-uses pkzip compression as discussed in 
-$xref/InstallWindows/Extraction/windows install extraction/$$).
+uses pkzip compression (see $cref/zip files/download/Windows Zip Files/$$).
 
 
 $head 08-30$$

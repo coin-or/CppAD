@@ -64,6 +64,11 @@ $cref/configure/InstallUnix/Configure/$$ command tried to run
 the $code autoconf$$ and $code automake$$ programs.
 This has been fixed by adding
 $code AM_MAINTAINER_MODE$$ to the $code autoconf$$ input file.
+$pre
+
+$$
+Extend the $cref/download/$$ methods to include a full installation
+and old versions using subversion for downloading.
 
 $head 10-23$$
 The $cref/compiler flags/InstallUnix/CompilerFlags/$$ environment variable
@@ -761,10 +766,7 @@ $head 01-29$$
 The copyright message was missing from some of the distribution files
 for some new files added on $cref%06-12-15%whats_new_06%12-15%$$.
 This resulted in the 
-$cref%unix%InstallUnix%Download Current Version%$$
-and
-$cref%windows%InstallWindows%Download Current Version%$$
-download files not existing for a period of time.
+$cref/download/$$ files not existing for a period of time.
 The automated tests have been extended so that this should not happen again.
 
 $end

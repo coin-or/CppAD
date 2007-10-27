@@ -18,7 +18,7 @@ BOOST_DIR=/usr/include/boost-1_33_1
 ADOLC_DIR=$HOME/adolc_base
 FADBAD_DIR=$HOME/include
 SACADO_DIR=$HOME/sacado_base
-#
+# -----------------------------------------------------------------------------
 #
 # date currently in configure.ac
 version=`grep "^ *AC_INIT(" configure.ac | \
@@ -52,43 +52,33 @@ then
 	yyyymmdd=`date +%G%m%d`
 	yyyy_mm_dd=`date +%G-%m-%d`
 	#
-	# change Autoconf version to today
-	version=$yyyymmdd
+	# change version for entries in list
+	list="
+		AUTHORS
+		cppad/config.h
+		configure.ac
+		doc.omh
+		omh/install_unix.omh
+		omh/install_windows.omh
+	"
 	#
-	# configure.ac
-	sed configure.ac > configure.ac.tmp \
-	-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/"
-	diff configure.ac  configure.ac.tmp
-	mv   configure.ac.tmp configure.ac
-	#
-	# AUTHORS
-	sed AUTHORS > AUTHORS.tmp \
-	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
-	diff AUTHORS    AUTHORS.tmp
-	mv   AUTHORS.tmp AUTHORS 
-	#
-	# For installs without configure, update cppad/config.h
-	# (gets overwritten when configure runs).
-	sed cppad/config.h > cppad/config.tmp \
-	-e "s/\"[0-9]\{8\}\"/\"$yyyymmdd\"/" \
-	-e "s/ [0-9]\{8\}\"/ $yyyymmdd\"/"
-	diff cppad/config.h   cppad/config.tmp
-	mv   cppad/config.tmp cppad/config.h
-	#
-	for name in doc.omh omh/install_unix.omh omh/install_windows.omh
+	for name in $list
 	do
-		sed $name > $name.tmp \
-			-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
-			-e "s/ [0-9]\{8\}\\\$\\\$/ $yyyymmdd\$\$/"
-		diff $name $name.tmp
-		mv   $name.tmp $name
+		sed $name > $name.$$ \
+		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/" \
+		-e "s/ [0-9]\{8\}\"/ $yyyymmdd\"/" \
+		-e "s/\"[0-9]\{8\}\"/\"$yyyymmdd\"/" \
+		-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" \
+		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
+		-e "s/ [0-9]\{8\}\\\$\\\$/ $yyyymmdd\$\$/"
+		echo "diff $name $name.$$"
+		diff $name $name.$$
+		echo "mv   $name.$$ $name"
+		mv   $name.$$ $name
 	done
 	#
-	# configure file is out of date so remove it
-	if [ -e configure ]
-	then
-		rm configure
-	fi
+	# change Autoconf version to today
+	version=$yyyymmdd
 	#
 	if [ "$1" = "version" ]
 	then
@@ -126,10 +116,33 @@ if [ "$1" = "automake" ] || [ "$1" = "all" ]
 then
 	echo "build.sh automake"
 	#
-	if [ -e configure ]
-	then
-		rm configure
-	fi
+	# check that autoconf and automake output are in original version
+	#
+	makefile_in=`sed configure.ac \
+        	-n \
+        	-e '/END AC_CONFIG_FILES/,$d' \
+        	-e '1,/AC_CONFIG_FILES/d' \
+        	-e 's/makefile/&.in/' \
+        	-e 's/^[ \t]*//' \
+        	-e '/makefile/p'`
+	auto_output="
+		depcomp 
+		install-sh 
+		missing 
+		configure 
+		cppad/config.h 
+		cppad/config.h.in 
+		$makefile_in
+	"
+	for name in $auto_output
+	do
+		if [ ! -e $name ]
+		then
+			echo "$name is not in subversion repository"
+			exit 1
+		fi
+	done
+	#
 	echo "---------------------------------------------------------"
 	echo "If aclocal generates warning messages, run ./fix_aclocal.sh"
 	echo "aclocal"
@@ -156,6 +169,20 @@ then
 	then
 		exit 1
 	fi
+	link_list="missing install-sh depcomp"
+	for name in $link_list
+	do
+		if [ -h "$name" ]
+		then
+			echo "Converting $name from a link to a regular file"
+			cp $name $name.$$
+			if ! mv $name.$$ $name
+			then
+				echo "Cannot convert $name"
+				exit 1
+			fi
+		fi
+	done
 	#
 	if [ "$1" = "automake" ]
 	then
@@ -336,6 +363,7 @@ then
 	then
 		exit 1
 	fi
+	#
 	# add a new line after last include file check
 	echo ""                 >> build_test.log
 	#
