@@ -74,7 +74,7 @@ then
 	exit 1
 fi
 #
-# change version number in files -----------------------------------------------
+# sed edit certain files -----------------------------------------------------
 #
 list="
 	AUTHORS
@@ -84,6 +84,9 @@ list="
 	omh/install_unix.omh
 	omh/install_windows.omh
 "
+#
+# change version for entries in list
+#
 for name in $list
 do
 	sed $name -f svn_commit.sed | sed > $name.tmp \
@@ -93,18 +96,36 @@ do
 		-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" \
 		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
 		-e "s/ [0-9]\{8\}\\\$\\\$/ $yyyymmdd\$\$/"
-	echo "diff $name $name.tmp"
-	diff $name $name.tmp
-	mv   $name.tmp $name
 done
 #
-# in build.sh 
+# change version for build.sh 
+#
 sed < build.sh > build.sh.tmp \
 	-e "s/yyyymmdd=.*/yyyymmdd=\"$yyyymmdd\"/" \
 	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/" 
-echo "diff build.sh build.sh.tmp"
-diff build.sh build.sh.tmp
-mv build.sh.tmp build.sh
+#
+# change set of files that svn_status.sh ignores
+#
+sed < svn_status.sh > svn_status.sh.tmp \
+	-e '/install-sh/d' \
+	-e '/decpomp/d' \
+	-e '/missing/d' \
+	-e '/configure/d' \
+	-e '/AUTHORS/d' \
+	-e '/configure.ac/d' \
+	-e '/doc.omh/d' \
+	-e '/install_unix.omh/d' \
+	-e '/install_windows.omh/d' \
+	-e '/diff_today.sh/d'
+#
+list="$list build.sh svn_status.sh"
+for name in $list
+do
+	echo "diff $name $name.tmp"
+	diff $name $name.tmp
+	echo "mv   $name.tmp $name"
+	mv   $name.tmp $name
+done
 #
 # Determine which built sources are not yet in repository -------------------
 #
@@ -166,6 +187,22 @@ fi
 #
 for name in $list_add
 do
+	if [ -h "$name" ]
+	then
+		echo "convert $name from symbolic link to regular file"
+		echo "cp $name $name.tmp"
+		if ! cp $name $name.tmp
+		then
+			echo "cannot convert $name to regular file"
+			exit 1
+		fi
+		echo "mv $name.tmp $name"
+		if ! mv $name.tmp $name
+		then
+			echo "cannot convert $name to regular file"
+			exit 1
+		fi
+	fi
 	echo "svn add $name"
 	if ! svn add $name
 	then
