@@ -75,15 +75,20 @@ do
 	if \
 	[ -f $file            ]      &&   \
 	[ $file != "svn_commit.sh" ] &&   \
+	[ $file != "configure" ]     &&   \
+	[ $ext  != ".in"     ]       &&   \
 	[ $ext  != ".sed"     ]      &&   \
-	[ $ext  != ".vcproj"  ]      &&   \
 	[ $ext  != ".sln"     ]      &&   \
+	[ $ext  != ".vcproj"  ]      &&   \
 	[ $ext  != ".vim"     ]
 	then
 		# automatic edits and backups
 		echo "cp $file junk.$count"
 		cp $file junk.$count
-		sed -f svn_commit.sed < junk.$count > $file
+		if [ "$file" != "configure" ]
+		then
+			sed -f svn_commit.sed < junk.$count > $file
+		fi
 		diff junk.$count $file
 		if [ "$ext" == ".sh" ]
 		then
