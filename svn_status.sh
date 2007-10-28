@@ -45,14 +45,10 @@ sed                                                           \
 	-e '/^[?] *dev$/d'                                    \
 	-e '/^[?] *aclocal.m4$/d'                             \
 	-e '/cygwin_package$/d'                               \
-	-e '/^[?] *cppad-[0-9]\{8\}$/d'                       \
-	-e '/^M *AUTHORS$/d'                                  \
-	-e '/^M *configure.ac$/d'                             \
-	-e '/^M *doc.omh$/d'                                  \
-	-e '/^M *omh[/]install_unix.omh$/d'                   \
-	-e '/^M *omh[/]install_windows.omh$/d'
+	-e '/^[?] *cppad-[0-9]\{8\}$/d'
 #
-# Add differences for automatically updated files
+# Add differences for files that are both automatically updated 
+# and updated by hand
 ./diff_today.sh AUTHORS
 ./diff_today.sh doc.omh
 ./diff_today.sh configure.ac

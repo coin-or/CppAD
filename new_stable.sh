@@ -107,10 +107,6 @@ sed < build.sh > build.sh.tmp \
 # change set of files that svn_status.sh ignores
 #
 sed < svn_status.sh > svn_status.sh.tmp \
-	-e '/install-sh/d' \
-	-e '/decpomp/d' \
-	-e '/missing/d' \
-	-e '/configure/d' \
 	-e '/AUTHORS/d' \
 	-e '/configure.ac/d' \
 	-e '/doc.omh/d' \
@@ -127,7 +123,7 @@ do
 	mv   $name.tmp $name
 done
 #
-# Determine which built sources are not yet in repository -------------------
+# make sure all autoconf and automake output is in repository ----------------
 #
 list_name=`sed configure.ac \
 	-n \
@@ -144,12 +140,12 @@ list_name="
 	install-sh 
 	missing
 "
-list_add=""
 for name in $list_name
 do
 	if [ ! -e $name ]
 	then
-		list_add="$list_add $name"
+		echo "$name is not in repository"
+		exit 1
 	fi
 done
 #
@@ -183,33 +179,6 @@ then
 	exit 1
 fi
 #
-# Add build sources to repository ------------------------------------
-#
-for name in $list_add
-do
-	if [ -h "$name" ]
-	then
-		echo "convert $name from symbolic link to regular file"
-		echo "cp $name $name.tmp"
-		if ! cp $name $name.tmp
-		then
-			echo "cannot convert $name to regular file"
-			exit 1
-		fi
-		echo "mv $name.tmp $name"
-		if ! mv $name.tmp $name
-		then
-			echo "cannot convert $name to regular file"
-			exit 1
-		fi
-	fi
-	echo "svn add $name"
-	if ! svn add $name
-	then
-		echo "cannot add $name to repository"
-		exit 1
-	fi
-done
 echo "--------------------------------------------------------------------"
 echo "Step 1: cd ../stable/$stable_version"
 echo "Step 2: Check differences between repository and local copy."

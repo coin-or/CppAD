@@ -59,7 +59,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-20071024
+A Package for Differentiation of C++ Algorithms: cppad-20071028
 $$ 
 
 $head Syntax$$

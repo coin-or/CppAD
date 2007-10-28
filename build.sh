@@ -205,7 +205,6 @@ then
 	if [ "$1" = "configure" ] && [ "$2" = "test" ]
 	then
 		TEST="
-			--with-Documentation
 			--with-Introduction
 			--with-Example
 			--with-TestMore
@@ -213,6 +212,11 @@ then
 			--with-PrintFor
 			--with-SpeedExample
 			--with-profiling"
+		if [ -e doc/index.htm ]
+		then
+			TEST="$TEST
+				--with-Documentation"
+		fi
 		if [ -e $BOOST_DIR/boost ]
 		then
 			TEST="$TEST 
