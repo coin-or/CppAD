@@ -35,7 +35,7 @@ $syntax%# include <cppad/speed/det_by_minor.hpp>
 %$$
 $syntax%det_by_minor<%Scalar%> %det%(%n%)
 %$$
-$syntax%%d% = %det%(%matrix%)
+$syntax%%d% = %det%(%a%)
 %$$
 
 $head Inclusion$$
@@ -69,19 +69,29 @@ $syntax%
 $head det$$
 The syntax
 $syntax%
-	%d% = %det%(%matrix%)
+	%d% = %det%(%a%)
 %$$
-returns the determinant of $italic matrix$$ using expansion by minors.
-The argument $italic matrix$$ has prototype
+returns the determinant of the matrix $italic A$$ using expansion by minors.
+
+$subhead a$$
+The argument $italic a$$ has prototype
 $syntax%
-	const %Vector% &%matrix%
+	const %Vector% &%a%
 %$$
 It must be a $italic Vector$$ with length $latex n * n$$ and with
 elements of type $italic Scalar$$.
+The elements of the $latex n \times n$$ matrix $latex A$$ are defined,
+for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , n-1$$, by
+$latex \[
+	A_{i,j} = a[ i * m + j]
+\] $$
+
+$subhead d$$
 The return value $italic d$$ has prototype
 $syntax%
 	%Scalar% %d%
 %$$
+It is equal to the determinant of $latex A$$.
 
 $head Vector$$
 If $italic y$$ is a $italic Vector$$ object, 
@@ -124,6 +134,15 @@ namespace CppAD {
 
 template <class Scalar>
 class det_by_minor {
+private:
+	size_t              m_;
+
+	// made mutable because modified and then restored
+	mutable std::vector<size_t> r_;
+	mutable std::vector<size_t> c_;
+
+	// make mutable because its value does not matter
+	mutable std::vector<Scalar> a_;
 public:
 	det_by_minor(size_t m) : m_(m) , r_(m + 1) , c_(m + 1), a_(m * m)
 	{
@@ -146,14 +165,6 @@ public:
 		return det_of_minor(a_, m_, m_, r_, c_); 
 	}
 
-private:
-	size_t              m_;
-
-	// made mutable because modified and then restored
-	mutable std::vector<size_t> r_;
-	mutable std::vector<size_t> c_;
-	// make mutable because its value does not matter
-	mutable std::vector<Scalar> a_;
 };
 
 } // END CppAD namespace

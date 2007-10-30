@@ -37,7 +37,7 @@ $syntax%# include <cppad/speed/det_by_lu.hpp>
 %$$
 $syntax%det_by_lu<%Scalar%> %det%(%n%)
 %$$
-$syntax%%d% = %det%(%matrix%)
+$syntax%%d% = %det%(%a%)
 %$$
 
 $head Inclusion$$
@@ -71,15 +71,25 @@ $syntax%
 $head det$$
 The syntax
 $syntax%
-	%d% = %det%(%matrix%)
+	%d% = %det%(%a%)
 %$$
-returns the determinant of $italic matrix$$ using LU factorization.
-The argument $italic matrix$$ has prototype
+returns the determinant of the matrix $latex A$$ using LU factorization.
+
+$subhead a$$
+The argument $italic a$$ has prototype
 $syntax%
-	const %Vector% &%matrix%
+	const %Vector% &%a%
 %$$
 It must be a $italic Vector$$ with length $latex n * n$$ and with
+It must be a $italic Vector$$ with length $latex n * n$$ and with
 elements of type $italic Scalar$$.
+The elements of the $latex n \times n$$ matrix $latex A$$ are defined,
+for $latex i = 0 , \ldots , n-1$$ and $latex j = 0 , \ldots , n-1$$, by
+$latex \[
+	A_{i,j} = a[ i * m + j]
+\] $$
+
+$subhead d$$
 The return value $italic d$$ has prototype
 $syntax%
 	%Scalar% %d%
@@ -133,6 +143,12 @@ CPPAD_BOOL_BINARY(Complex, AbsGeq )
 
 template <class Scalar>
 class det_by_lu {
+private:
+	const size_t m;
+	const size_t n;
+	CppADvector<Scalar> A;
+	CppADvector<Scalar> B;
+	CppADvector<Scalar> X;
 public:
 	det_by_lu(size_t n_) : m(0), n(n_), A(n_ * n_)
 	{	}
@@ -172,12 +188,6 @@ public:
 
 		return det;
 	}
-private:
-	const size_t m;
-	const size_t n;
-	CppADvector<Scalar> A;
-	CppADvector<Scalar> B;
-	CppADvector<Scalar> X;
 };
 } // END CppAD namespace
 // END PROGRAM

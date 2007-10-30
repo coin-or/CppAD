@@ -34,9 +34,12 @@ $index CppAD, download$$
 
 $section Downloading CppAD$$
 
-$head Version$$
-The year, month, and day corresponding to
-this version of CppAD is $code 20071027$$.
+$head Current Version$$
+Each version of CppAD is identified by $code cppad-$$ followed
+by the year (4 decimal digits), 
+month (2 decimal digits), and 
+day (2 decimal digits) corresponding to the version.
+The current version of CppAD is $code cppad-20071029$$.
 
 $head Windows Zip Files$$
 $index CppAD, zip file$$
@@ -48,20 +51,20 @@ Windows format; i.e., each line ends with both a carriage return
 and then a line feed. 
 
 $table
-CPL License $pre  $$ $cnext $href%cppad-20071027.cpl.zip%$$ 
+CPL License $pre  $$ $cnext $href%cppad-20071029.cpl.zip%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20071027.gpl.zip%$$
+GPL License $pre  $$ $cnext $href%cppad-20071029.gpl.zip%$$
 $tend
 
 $subhead Zip File Extraction$$
 There are many ways to unzip these archives; e.g., $code WinZip$$.
 Doing this should create the distribution directory
 $syntax%
-	cppad-20071027
+	cppad-20071029
 %$$
 To see if this has been done correctly, check for the following file:
 $syntax%
-	cppad-20071027/cppad/cppad.hpp
+	cppad-20071029/cppad/cppad.hpp
 %$$
 
 
@@ -74,84 +77,86 @@ The ascii files for these downloads are in
 Unix format; i.e., each line ends with just a line feed.
 
 $table
-CPL License $pre  $$ $cnext $href%cppad-20071027.cpl.tgz%$$ 
+CPL License $pre  $$ $cnext $href%cppad-20071029.cpl.tgz%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20071027.gpl.tgz%$$
+GPL License $pre  $$ $cnext $href%cppad-20071029.gpl.tgz%$$
 $tend
 
 $subhead Tar File Extraction$$
 Use the unix command
 $syntax%
-	tar -xvzf cppad-20071027.%license%.tgz
+	tar -xvzf cppad-20071029.%license%.tgz
 %$$
 (where $italic license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-20071027
+	cppad-20071029
 %$$
 To see if this has been done correctly, check for the following file:
 $syntax%
-	cppad-20071027/cppad/cppad.hpp
+	cppad-20071029/cppad/cppad.hpp
 %$$
 
-$head Subversion Current Version$$
+$head Subversion Files$$
 $index subversion, CppAD files$$
 $index CppAD, subversion files$$
 The ascii files for these downloads are in 
 Unix format; i.e., each line ends with just a line feed.
+
+$subhead Current Version$$
 The following subversion command will download the current version
 of CppAD:
 $syntax%
-	svn co https://projects.coin-or.org/svn/CppAD/trunk cppad-20071027
+	svn co https://projects.coin-or.org/svn/CppAD/trunk cppad-20071029
 %$$
 To see if this has been done correctly, check for the following file:
 $syntax%
-	cppad-20071027/cppad/cppad.hpp
+	cppad-20071029/cppad/cppad.hpp
 %$$
 
-$head Subversion Old Version$$
+$subhead Old Version$$
 $index old, CppAD version$$
 $index version, CppAD old$$
-
-The ascii files for these downloads are in 
-Unix format; i.e., each line ends with just a line feed.
 If you are downloading a old version of CppAD, you will need 
 a copy of the corresponding documentation.
 This will require downloading and installing OMhelp.
 
 $list number$$
 Download and install
-$href%http://www.seanet.com/~bradbell/omhelp/overview.xml%OMhelp%$$.
+$href%http://www.seanet.com/~bradbell/omhelp/installunix.htm%OMhelp%$$.
 
 $lnext
-Use the following subversion command
+The following subversion command will download an old version of CppAD:
 $syntax%
 	svn co https://projects.coin-or.org/svn/CppAD/%name% cppad-%date%
 %$$
 where $italic name$$ and $italic date$$ are one of the following choices:
 $table
-$italic name$$        $cnext $italic date$$   $rnext
-$code stable/2.0   $$ $cnext $code 20071016$$ $rnext     
-$code stable/2.1   $$ $cnext $code 20060913$$ 
+$italic name$$ $pre  $$        $cnext $italic date$$   $rnext 
+$code stable/2.0 $pre  $$   $$ $cnext $code 20071016$$ $rnext     
+$code stable/2.1 $pre  $$   $$ $cnext $code 20060913$$ 
 $tend     
 
 $lnext
-In the directory $syntax%cppad-%date%$$ execute the commands
+In the directory $syntax%cppad-%date%$$ execute the following commands
+(this will build the documentation for your old version of CppAD):
 $codep
 	mkdir doc
 	cd doc
 	omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/
 	omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/ -xml
 $$
-The documentation for the corresponding version can now be viewed 
-by opening the file
-$syntax%cppad-%date%/doc/index.xml%$$ or 
-$syntax%cppad-%date%/doc/index.htm%$$ 
-in a web browser.
 
 $lnext
-Follow the install instructions in the documentation you just built.
+Follow the install instructions (not including downloading or extraction)
+in the documentation you just built.
+Start by opening the one of the two files
+$syntax%
+	cppad-%date%/doc/index.xml
+	cppad-%date%/doc/index.htm
+%$$ 
+in a web browser.
 $lend
 
 $end

@@ -52,25 +52,20 @@ then
 	yyyymmdd=`date +%G%m%d`
 	yyyy_mm_dd=`date +%G-%m-%d`
 	#
-	# change version for entries in list
+	# automatically change version for certain files
+	sed < AUTHORS > AUTHORS.$$ \
+		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
+	sed < configure.ac > configure.ac.$$\
+		-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" 
+	sed < omh/download.omh > omh/download.omh.$$ \
+		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
 	list="
 		AUTHORS
-		cppad/config.h
 		configure.ac
-		doc.omh
-		omh/install_unix.omh
-		omh/install_windows.omh
+		omh/download.omh
 	"
-	#
 	for name in $list
 	do
-		sed $name > $name.$$ \
-		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/" \
-		-e "s/ [0-9]\{8\}\"/ $yyyymmdd\"/" \
-		-e "s/\"[0-9]\{8\}\"/\"$yyyymmdd\"/" \
-		-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" \
-		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
-		-e "s/ [0-9]\{8\}\\\$\\\$/ $yyyymmdd\$\$/"
 		echo "diff $name $name.$$"
 		diff $name $name.$$
 		echo "mv   $name.$$ $name"

@@ -9,16 +9,6 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin CppAD$$
-$latex
-	% Latex macros defined for all the CppAD documentation:
-	\newcommand{\T}{ {\rm T} }
-	\newcommand{\R}{ {\bf R} }
-	\newcommand{\C}{ {\bf C} }
-	\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
-	\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
-	\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
-	\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }
-$$
 $comment default navigate command for all of CppAD documentation$$
 $navigate%
 	Across%Index%
@@ -59,12 +49,11 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-A Package for Differentiation of C++ Algorithms: cppad-20071028
+CppAD: A Package for Differentiation of C++ Algorithms
 $$ 
 
 $head Syntax$$
 $code # include <cppad/cppad.hpp>$$
-
 
 $head Introduction$$
 $index introduction$$
@@ -111,10 +100,24 @@ functions that depend on the
 $cref/independent variables/glossary/Tape/Independent Variable/$$
 but which have identically zero derivatives
 (e.g., a step function).
+
+$lnext
 Derivatives of functions that are defined in terms of other derivatives
-can be computed using multiple levels of AD
-(see $xref/mul_level.cpp/$$ for a simple example
-and $xref/ode_taylor.cpp//$$ for a more realistic example).
+can be computed using multiple levels of AD;
+see $cref/mul_level.cpp/$$ for a simple example
+and $cref/ode_taylor.cpp/$$ for a more realistic example.
+To this end, CppAD can also be used with other AD types; for example see
+$cref/ode_taylor_adolc.cpp/$$.
+
+$lnext
+A set of programs for doing $cref/speed/$$ comparisons between
+$href%http://www.math.tu-dresden.de/~adol-c/%Adolc%$$,
+CppAD,
+$href%http://www.imm.dtu.dk/fadbad.html/%Fadbad%$$,
+and
+$href%http://trilinos.sandia.gov/packages/%Sacado%$$
+are included.
+
 
 $lnext
 Includes a C++ $xref/library/$$ that is useful
@@ -144,21 +147,6 @@ contains an example and test of using CppAD to compute
 the derivative of a polynomial.
 There are many other 
 $xref/Example//examples/$$.
-
-$head Base Type Requirements$$
-$index require, Base$$
-$index type, Base require$$
-$index Base, require$$
-
-The currently allowable base types are:
-$code float$$,
-$code double$$,
-$code std::complex<float>$$,
-$code std::complex<double>$$, 
-or any type in the 
-$cref/AD levels above/glossary/AD Levels Above Base/$$
-these types.
-
 
 $head Include File$$
 $index include, cppad.hpp$$
@@ -211,5 +199,18 @@ $childtable%
 	omh/example.omh%
 	omh/appendix.omh
 %$$
+
+$latex
+% --------------------------------------------------------------------
+% Latex macros defined here and used throughout the CppAD documentation
+\newcommand{\T}{ {\rm T} }
+\newcommand{\R}{ {\bf R} }
+\newcommand{\C}{ {\bf C} }
+\newcommand{\D}[2]{ \frac{\partial #1}{\partial #2} }
+\newcommand{\DD}[3]{ \frac{\partial^2 #1}{\partial #2 \partial #3} }
+\newcommand{\Dpow}[2]{ \frac{\partial^{#1}}{\partial  {#2}^{#1}} }
+\newcommand{\dpow}[2]{ \frac{ {\rm d}^{#1}}{{\rm d}\, {#2}^{#1}} }
+% --------------------------------------------------------------------
+$$
 
 $end

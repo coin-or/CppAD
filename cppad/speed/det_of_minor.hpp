@@ -95,7 +95,7 @@ and is a vector with size $latex m * m$$
 The elements of the $latex m \times m$$ matrix $latex A$$ are defined,
 for $latex i = 0 , \ldots , m-1$$ and $latex j = 0 , \ldots , m-1$$, by
 $latex \[
-	A_{i,j} = a[ i + j * m ]
+	A_{i,j} = a[ i * m + j]
 \] $$
 
 $head m$$
