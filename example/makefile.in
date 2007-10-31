@@ -257,7 +257,7 @@ EXTRA_DIST = example.sln example.vcproj test_one.sh
 AM_CXXFLAGS = -g $(CXX_FLAGS) $(ADOLC_FLAG)
 #
 AM_CPPFLAGS = -I. \
-                   -I$(top_builddir) \
+                   -I$(top_srcdir) \
                     $(BOOST_INCLUDE) \
                     $(ADOLC_INCLUDE)
 

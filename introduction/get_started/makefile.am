@@ -25,7 +25,7 @@ EXTRA_DIST          = get_started.sln get_started.vcproj
 #
 noinst_PROGRAMS     = get_started 
 #
-AM_CPPFLAGS         = -I. -I$(top_builddir) $(BOOST_INCLUDE)
+AM_CPPFLAGS         = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
 AM_CXXFLAGS         = -g $(CPP_ERROR_WARN)
 #
 get_started_SOURCES = get_started.cpp

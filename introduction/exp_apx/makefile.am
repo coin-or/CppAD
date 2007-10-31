@@ -28,7 +28,7 @@ EXTRA_DIST        = \
 #
 noinst_PROGRAMS   = exp_apx 
 #
-AM_CPPFLAGS       = -I. -I$(top_builddir) $(BOOST_INCLUDE)
+AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
 AM_CXXFLAGS       = -g $(CPP_ERROR_WARN)
 #
 exp_apx_SOURCES   = \

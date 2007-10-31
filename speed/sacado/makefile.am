@@ -22,7 +22,7 @@ endif
 #
 noinst_PROGRAMS  = sacado 
 #
-AM_CPPFLAGS   = -I$(top_builddir) -I$(SACADO_DIR)/include $(BOOST_INCLUDE)
+AM_CPPFLAGS   = -I$(top_srcdir) -I$(SACADO_DIR)/include $(BOOST_INCLUDE)
 #
 # optimized version
 AM_CXXFLAGS   = -O2 -DNDEBUG  $(CXX_FLAGS) -DSACADO

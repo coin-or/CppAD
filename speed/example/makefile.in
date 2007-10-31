@@ -172,7 +172,7 @@ top_srcdir = @top_srcdir@
 #
 EXTRA_DIST = speedtest.cpp
 #
-AM_CPPFLAGS = -I. -I$(top_builddir) $(BOOST_INCLUDE)
+AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
 #
 AM_CXXFLAGS = -g $(CXX_FLAGS)
 #

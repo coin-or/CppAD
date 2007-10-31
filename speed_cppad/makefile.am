@@ -20,7 +20,7 @@ else
 BOOSE_INCLUDE    =
 endif
 #
-AM_CPPFLAGS      = $(BOOST_INCLUDE) -I. -I$(top_builddir) -DNDEBUG
+AM_CPPFLAGS      = $(BOOST_INCLUDE) -I. -I$(top_srcdir) -DNDEBUG
 #
 # speed
 #

@@ -171,7 +171,7 @@ top_srcdir = @top_srcdir@
 #
 @CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 #
-AM_CPPFLAGS = -I$(top_builddir) -I$(ADOLC_DIR)/include $(BOOST_INCLUDE)
+AM_CPPFLAGS = -I$(top_srcdir) -I$(ADOLC_DIR)/include $(BOOST_INCLUDE)
 #
 AM_CXXFLAGS = -O2 -DNDEBUG $(CXX_FLAGS) -DADOLC
 #

@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	makefiles
 	tarballs
 	autoconf
 	Fadbad
@@ -59,7 +60,7 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 10-28$$
+$head 10-30$$
 The $cref/download/$$ section did not update current version number
 and this broke the links to the current tarballs.
 This has been fixed.
@@ -71,8 +72,18 @@ has been improved.
 The order of the elements in $cref/det_of_minor/$$ has been
 corrected (they were transposed but this did not really matter
 because determinants of transposes are equal). 
+$pre
+
+$$
+The makefiles in the distribution have been changed so that
+one can run configure from a directory other than the distribution directory.
 
 $head 10-27$$
+A $cref/subversion/download/Subversion Files/$$ method
+for downloading CppAD has been added.
+$pre
+
+$$
 The installation was broken on some systems because the
 $cref/configure/InstallUnix/Configure/$$ command tried to run
 the $code autoconf$$ and $code automake$$ programs.

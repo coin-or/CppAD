@@ -170,7 +170,7 @@ top_srcdir = @top_srcdir@
 #
 @CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 #
-AM_CPPFLAGS = -I$(top_builddir) -I$(FADBAD_DIR) $(BOOST_INCLUDE)
+AM_CPPFLAGS = -I$(top_srcdir) -I$(FADBAD_DIR) $(BOOST_INCLUDE)
 #
 AM_CXXFLAGS = -O2 -DNDEBUG -Wno-deprecated -DFADBAD
 #

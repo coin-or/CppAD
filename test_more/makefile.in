@@ -216,7 +216,7 @@ top_srcdir = @top_srcdir@
 # Microsoft project files
 EXTRA_DIST = test_more.sln test_more.vcproj test_one.sh
 #
-AM_CPPFLAGS = -I. -I$(top_builddir) $(BOOST_INCLUDE) $(ADOLC_INCLUDE)
+AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(ADOLC_INCLUDE)
 #
 AM_CXXFLAGS = -g $(CXX_FLAGS) $(ADOLC_FLAG)
 #
