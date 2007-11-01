@@ -60,6 +60,23 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-01$$
+The instructions for downloading the current version using
+$cref/subversion/download/Subversion Files/Current Version/$$ 
+have changed.
+The user must now execute the command
+$codep
+	./build.sh version
+$$
+in order to set the correct version number for her (or his) installation.
+$pre
+
+$$
+Add the correctness tests
+$cref/return status/InstallUnix/Testing Return Status/$$
+to the documentation.
+
+
 $head 10-30$$
 The $cref/download/$$ section did not update current version number
 and this broke the links to the current tarballs.

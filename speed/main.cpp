@@ -453,19 +453,19 @@ int main(int argc, char *argv[])
 		// ---------------------------------------------------------
 
 		case option_det_lu:
-		Run_correct(correct_det_lu,                "det_lu");
+		ok &= Run_correct(correct_det_lu,          "det_lu");
 		Run_speed(speed_det_lu,    size_det_lu,    "det_lu");
 		break;
 		// ---------------------------------------------------------
 
 		case option_det_minor:
-		Run_correct(correct_det_minor,             "det_minor");
+		ok &= Run_correct(correct_det_minor,       "det_minor");
 		Run_speed(speed_det_minor, size_det_minor, "det_minor");
 		break;
 		// ---------------------------------------------------------
 
 		case option_poly:
-		Run_correct(correct_poly,                  "poly");
+		ok &= Run_correct(correct_poly,            "poly");
 		Run_speed(speed_poly,      size_poly,      "poly");
 		break;
 		// ---------------------------------------------------------

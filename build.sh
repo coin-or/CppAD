@@ -59,10 +59,21 @@ then
 		-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" 
 	sed < omh/download.omh > omh/download.omh.$$ \
 		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
+	sed < configure > configure.$$ \
+		-e "s/CppAD [0-9]\{8\}/CppAD $yyyymmdd/g" \
+		-e "s/VERSION='[0-9]\{8\}'/VERSION='$yyyymmdd'/g" \
+		-e "s/configure [0-9]\{8\}/configure $yyyymmdd/g" \
+		-e "s/config.status [0-9]\{8\}/config.status $yyyymmdd/g" \
+		-e "s/\$as_me [0-9]\{8\}/\$as_me $yyyymmdd/g" 
+	sed < cppad/config.h > cppad/config.h.$$ \
+		-e "s/CppAD [0-9]\{8\}/CppAD $yyyymmdd/g" \
+		-e "s/VERSION \"[0-9]\{8\}\"/VERSION \"$yyyymmdd\"/g"
 	list="
 		AUTHORS
 		configure.ac
 		omh/download.omh
+		configure
+		cppad/config.h
 	"
 	for name in $list
 	do
@@ -412,6 +423,7 @@ then
 	list="
 		adolc
 		cppad
+		example
 		fadbad
 		profile
 		sacado

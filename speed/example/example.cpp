@@ -66,9 +66,9 @@ int main(void)
 	using namespace std;
 
 	ok &= Run(det_of_minor,          "det_of_minor"   );
-	ok &= Run(det_by_minor,            "det_by_minor"     );
-	ok &= Run(det_by_lu,               "det_by_lu"        );
-	ok &= Run(speed_test,            "speed_test"     );
+	ok &= Run(det_by_minor,         "det_by_minor"    );
+	ok &= Run(det_by_lu,               "det_by_lu"    );
+	ok &= Run(speed_test,             "speed_test"    );
 
 	// check for memory leak in previous calculations
 	if( CppADTrackCount() != 0 )
