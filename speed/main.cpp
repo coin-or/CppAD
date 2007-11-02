@@ -65,7 +65,7 @@ $index cppad, speed test$$
 $index speed, test cppad$$
 $index test, cppad speed$$
 
-$section Speed Test Main Program$$
+$section Speed Testing Main Program$$
 
 $head Syntax$$
 $syntax%speed/%package%/%package% %option% %seed%

@@ -65,6 +65,7 @@ $href%
 to run these speed tests.
 
 $contents%
+	speed/main.cpp%
 	omh/speed_utility.omh%
 	omh/speed_adolc.omh%
 	omh/speed_cppad.omh%

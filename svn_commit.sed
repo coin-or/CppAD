@@ -1,9 +1,8 @@
 # Changs to be made at each commit
 #
-# Make sure config.h has certian default vlaues
+# Make sure config.h has certian default values (Used by Microsoft install)
 s/^# *define *CPPAD_BOOSTVECTOR *1 *$/#define CPPAD_BOOSTVECTOR 0/
 s/^# *define *CPPAD_CPPADVECTOR *0 *$/#define CPPAD_CPPADVECTOR 1/
-s/^# *define *CPPAD_GETTIMEOFDAY *1 *$/#define CPPAD_GETTIMEOFDAY 0/
 s/^# *define *CPPAD_STDVECTOR *1 *$/#define CPPAD_STDVECTOR 0/
 #
 # Delete short copyright comment (it is obvious)

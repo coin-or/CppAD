@@ -11,13 +11,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin speed_utility$$
 
-$section Speed Testing: Main Program and Utilities$$
+$section Speed Testing Utilities$$
 
 $index speed, utility$$
 $index utility, speed$$
 
 $children%
-	speed/main.cpp%
 	cppad/speed/uniform_01.hpp%
 	cppad/speed/det_grad_33.hpp%
 	cppad/speed/det_of_minor.hpp%

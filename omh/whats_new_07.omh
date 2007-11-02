@@ -60,9 +60,24 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-02$$
+The instructions for downloading the current version using 
+$cref/subversion/download/Subversion Files/Downloading Current Version/$$
+have changed.
+The user should now directly edit the file
+$codep
+	trunk/configure
+$$
+in order to set the correct date for the installation
+and to build the corresponding documentation.
+$pre
+
+$$
+The $cref/speed/$$ section has been slightly reorganized
+(the main program and utilities have been separated).
+
 $head 11-01$$
-The instructions for downloading the current version using
-$cref/subversion/download/Subversion Files/Current Version/$$ 
+The instructions for downloading the current version using subversion
 have changed.
 The user must now execute the command
 $codep
