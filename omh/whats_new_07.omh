@@ -156,7 +156,7 @@ $syntax%compute_%test_name%$$ to be the same for all packages.
 $pre
 
 $$
-The $href%http://trilinos.sandia.gov/packages/%Sacado%$$
+The $href%http://trilinos.sandia.gov/packages/sacado/%Sacado%$$
 package was added to the list of $cref/speed/$$ tests.
 In addition, the discussion about how to run each of the
 speed tests was corrected to include the $italic seed$$ argument.

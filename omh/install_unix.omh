@@ -348,7 +348,7 @@ $head SacadoDir$$
 $index Sacado, unix$$
 If you have
 $href%
-	http://trilinos.sandia.gov/packages/%
+	http://trilinos.sandia.gov/packages/sacado/%
 	Sacado
 %$$
 installed on your system, you can 
