@@ -60,6 +60,10 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-03$$
+Improve the $cref/speed_main/$$ documentation and output
+(as well as the title for other sections under $cref/speed/$$).
+
 $head 11-02$$
 The instructions for downloading the current version using 
 $cref/subversion/download/Subversion Files/Downloading Current Version/$$
