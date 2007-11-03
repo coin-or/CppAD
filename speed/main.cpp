@@ -38,6 +38,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	sacado
 	ddp
 	hpp
 	iostream
@@ -76,12 +77,18 @@ A version of this program runs the correctness tests
 or the speed tests for one AD package identified by $italic package$$.
 
 $head package$$
+
+$subhead AD Package$$
 The value
-$italic package$$ specifies the AD package that is used for the speed tests 
-and is one of the following packages:
+$italic package$$ can specify one of the following AD packages:
 $cref/adolc/speed_adolc/$$,
 $cref/cppad/speed_cppad/$$, 
 $cref/fadbad/speed_fadbad/$$, 
+$cref/sacado/speed_sacado/$$.
+
+$subhead Profile$$
+The value 
+$italic package$$ can also be
 $cref/profile/InstallUnix/--with-profiling/$$.
 In the special case where $italic package$$ is $code profile$$,
 the CppAD package is compiled and run with profiling to determine
@@ -111,7 +118,7 @@ $index speed, det_lu$$
 $index correct, det_lu$$
 If $italic option$$ is equal to $code det_lu$$,
 the correctness and speed test for the
-gradient of the determinant using LU factorization tests is run.
+gradient of the determinant using LU factorization tests are run.
 Each package defines a version of this test with the following prototype:
 $codep */
 	extern void compute_det_lu(
@@ -152,7 +159,7 @@ $index speed, det_minor$$
 $index correct, det_minor$$
 If $italic option$$ is equal to $code det_minor$$,
 the correctness and speed test for the
-gradient of the determinant using expansion by minors is run.
+gradient of the determinant using expansion by minors are run.
 Each package defines a version of this test with the following prototype:
 $codep */
 	extern void compute_det_minor(
@@ -192,7 +199,7 @@ $index poly, speed$$
 $index speed, poly$$
 $index correct, poly$$
 If $italic option$$ is equal to $code poly$$,
-the correctness and speed test for the derivative of a polynomial is run.
+the correctness and speed test for the derivative of a polynomial are run.
 Each package defines a version of this test with the following prototype:
 $codep */
 	extern void compute_poly(
@@ -281,6 +288,10 @@ $end
 
 
 namespace {
+	using std::cout;
+	using std::cerr;
+	using std::endl;
+
 	// function that runs one correctness case
 	static size_t Run_ok_count    = 0;
 	static size_t Run_error_count = 0;
@@ -289,11 +300,11 @@ namespace {
 	{	bool ok;
 		ok = correct_case();
 		if( ok )
-		{	std::cout << "Ok:    " << name << std::endl;
+		{	cout << AD_PACKAGE << " Ok:    " << name << endl;
 			Run_ok_count++;
 		}
 		else
-		{	std::cout << "Error: " << name << std::endl;
+		{	cout << AD_PACKAGE << " Error: " << name << endl;
 			Run_error_count++;
 		}
 		return ok;
@@ -336,8 +347,6 @@ namespace {
 		CppAD::vector<size_t>              size_vec ,
 		std::string                       case_name )
 	{	double time_min = 1.;
-		using std::cout;
-		using std::endl;
 		CppAD::vector<size_t> rate_vec( size_vec.size() );
 
 		rate_vec = CppAD::speed_test(speed_case, size_vec, time_min);
@@ -371,9 +380,6 @@ namespace {
 // main program that runs all the tests
 int main(int argc, char *argv[])
 {	bool ok = true;
-	using std::cout;
-	using std::endl;
-	using std::cerr;
 
 	char *option[]= {
 		"correct",
@@ -400,7 +406,7 @@ int main(int argc, char *argv[])
 		iseed = std::atoi( argv[2] );
 	}
 	if( match == n_option  || iseed <= 0 )
-	{	cerr << "usage: " << AD_PACKAGE << " option seed" << endl;
+	{	cerr << "usage: ./" << AD_PACKAGE << " option seed" << endl;
 		cerr << "where option is one of the following:" << endl;
 		for(i = 0; i < n_option; i++)
 			cerr << option[i] << ", ";

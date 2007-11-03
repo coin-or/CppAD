@@ -57,8 +57,8 @@ evaluating the determinant of $italic n$$ by $italic n$$ matrices
 using expansion by minors.
 
 $head Scalar$$
-The type $italic Scalar$$ can be any
-$cref/NumericType/$$
+The type $italic Scalar$$ must satisfy the same conditions
+as in the function $cref/det_of_minor/det_of_minor/Scalar/$$.
 
 $head n$$
 The argument $italic n$$ has prototype

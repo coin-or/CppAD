@@ -177,18 +177,18 @@ $rnext
 $syntax%%Scalar% %x%$$
 	$cnext default constructor for $italic Scalar$$ object.
 $rnext
-$syntax%%Scalar% %x%(%i%)%$$
-	$cnext construct $italic x$$ with value corresponding to $italic i$$
+$syntax%%x% = %i%$$
+	$cnext set value of $italic x$$ to current value of $italic i$$
 $rnext
 $syntax%%x% = %y%$$
 	$cnext set value of $italic x$$ to current value of $italic y$$
 $rnext
 $syntax%%x% + %y%$$
-	$cnext value of $italic x$$ plus of $italic y$$
+	$cnext value of $italic x$$ plus $italic y$$
 	$cnext $italic Scalar$$
 $rnext
 $syntax%%x% - %y%$$
-	$cnext value of $italic x$$ minus of $italic y$$
+	$cnext value of $italic x$$ minus $italic y$$
 	$cnext $italic Scalar$$
 $rnext
 $syntax%%x% * %y%$$
@@ -218,57 +218,46 @@ $end
 */
 // BEGIN PROGRAM
 namespace CppAD { // BEGIN CppAD namespace
-template <class Scalar>
-Scalar det_of_minor(
+template <class Scalar> 
+Scalar det_of_minor( 
 	const std::vector<Scalar>& a  , 
 	size_t                     m  , 
 	size_t                     n  , 
 	std::vector<size_t>&       r  , 
 	std::vector<size_t>&       c  )
-{	size_t         R0;  // R(0)
-	size_t         Cj;  // C(j)
-	size_t        Cj1;  // C(j-1)
-	size_t          j;  // column index in M
-	Scalar       detS;  // determinant of sub-minor of M
-	Scalar        M0j;  // an element of the first row of M
-	int            s;   // sign of the current sub-minor in summation
-
-	// value of R(0) and C(0)
-	R0 = r[m];
-	Cj = c[m];
+{	
+	const size_t R0 = r[m]; // R(0)
+	size_t       Cj = c[m]; // C(j)    (case j = 0)
+	size_t       Cj1 = m;   // C(j-1)  (case j = 0)
 
 	// check for 1 by 1 case
-	if( n == 1 )
-		return a[ R0 * m + Cj ];
+	if( n == 1 ) return a[ R0 * m + Cj ];
 
 	// initialize determinant of the minor M
-	Scalar detM(0);
+	Scalar detM;
+	detM = 0;
 
-	// initialize sign of permutation
-	s = 1;
+	// initialize sign of factor for next sub-minor
+	int s = 1;
 
-	// remove row with index R0 from sub-minors of M
+	// remove row with index 0 in M from all the sub-minors of M
 	r[m] = r[R0];
 
-	// initialize previous column index; Cj = c[ Cj1 ]
-	Cj1  = m;
-
 	// for each column of M
-	for(j = 0; j < n; j++)
-	{	// M(0, j)
-		M0j = a[ R0 * m + Cj ];
+	for(size_t j = 0; j < n; j++)
+	{	// element with index (0,j) in the minor M
+		Scalar M0j = a[ R0 * m + Cj ];
 
-		// remove column index j from sub-minor of M
+		// remove column wht index j in M to form next sub-minor S of M
 		c[Cj1] = c[Cj];
 
-		// compute determinant of sub-minor of M 
-		// where row R0 and column Cj are removed
-		detS = det_of_minor(a, m, n - 1, r, c);
+		// compute determinant of the current sub-minor S
+		Scalar detS = det_of_minor(a, m, n - 1, r, c);
 
-		// restore column Cj to sub-minor of M
+		// restore column Cj to representaion of M as a minor of A
 		c[Cj1] = Cj;
 
-		// include in summation
+		// include this sub-minor term in the summation
 		if( s > 0 )
 			detM = detM + M0j * detS;
 		else	detM = detM - M0j * detS;
@@ -276,10 +265,10 @@ Scalar det_of_minor(
 		// advance to next column of M
 		Cj1 = Cj;
 		Cj  = c[Cj];
-		s   = -s;		
+		s   = - s;		
 	}
 
-	// restore row index zero to the minor M
+	// restore row zero to the minor representation for M
 	r[m] = R0;
 
 	// return the determinant of the minor M

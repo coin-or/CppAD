@@ -95,7 +95,7 @@ $children%
 $head Source Code$$
 The file 
 $cref/det_grad_33.hpp/$$
-constraints the source code for this template function.
+contains the source code for this template function.
 
 $end
 ------------------------------------------------------------------------------
