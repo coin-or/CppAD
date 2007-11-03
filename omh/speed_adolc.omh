@@ -20,7 +20,7 @@ $index speed, test adolc$$
 $index test, adolc speed$$
 $index adolc, speed test$$
 
-$section The Adolc Speed Tests$$
+$section Speed Test Derivatives Using Adolc$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to compare

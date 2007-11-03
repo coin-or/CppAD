@@ -78,13 +78,15 @@ $cref/sacado/speed_sacado/$$.
 
 $subhead double$$
 The value
-$italic double$$ can be $code double$$ in which case
+$italic package$$ can be $code double$$ in which case
 the function values (instead of derivatives) are computed
 using double precision operations.
-This is included to compare the speed of computing function
+This enables one to compare the speed of computing function
 values in $code double$$ to the speed of the derivative computations.
+(It is often useful to divide the speed of the derivative computation by
+the speed of the function evaluation in $code double$$.) 
 
-$subhead Profile$$
+$subhead profile$$
 The value 
 $italic package$$ can also be
 $cref/profile/InstallUnix/--with-profiling/$$.
@@ -279,15 +281,16 @@ namespace {
 	static size_t Run_ok_count    = 0;
 	static size_t Run_error_count = 0;
 	// ----------------------------------------------------------------
-	bool Run_correct(bool correct_case(void), const char *name)
+	bool Run_correct(bool correct_case(void), const char *case_name)
 	{	bool ok;
+		cout << AD_PACKAGE << "_" << case_name << "_ok = ";
 		ok = correct_case();
 		if( ok )
-		{	cout << AD_PACKAGE << " Ok:    " << name << endl;
+		{	cout << " true" << endl;
 			Run_ok_count++;
 		}
 		else
-		{	cout << AD_PACKAGE << " Error: " << name << endl;
+		{	cout << " false" << endl;
 			Run_error_count++;
 		}
 		return ok;
@@ -327,7 +330,12 @@ namespace {
 		double check = CppAD::Poly(2, a, z[0]);
 		// use direct evaluation by Poly to check AD evaluation
 # if DOUBLE
-		check = CppAD::Poly(0, a, z[0]);
+		check = 0.;
+		size_t i = size;
+		while(i--)
+		{	check *= z[0];
+			check += a[i];
+		}
 # endif
 		bool ok = CppAD::NearEqual(check, ddp[0], 1e-10, 1e-10);
 		return ok;
@@ -339,12 +347,13 @@ namespace {
 		CppAD::vector<size_t>              size_vec ,
 		std::string                       case_name )
 	{	double time_min = 1.;
-		CppAD::vector<size_t> rate_vec( size_vec.size() );
+		cout << AD_PACKAGE << "_" << case_name << "_size = ";
+		cout << size_vec << endl;
 
+		CppAD::vector<size_t> rate_vec( size_vec.size() );
 		rate_vec = CppAD::speed_test(speed_case, size_vec, time_min);
-		cout << AD_PACKAGE << ": " << case_name << endl;
-		cout << "size = " << size_vec << endl;
-		cout << "rate = " << rate_vec << endl;
+		cout << AD_PACKAGE << "_" << case_name << "_rate = ";
+		cout << rate_vec << endl;
 		return;
 	}
 	void speed_det_lu(size_t size, size_t repeat)
@@ -411,12 +420,12 @@ int main(int argc, char *argv[])
 	CppAD::uniform_01(size_t(iseed));
 
 	// arguments needed for speed tests
-	size_t n_size   = 4;
+	size_t n_size   = 5;
 	CppAD::vector<size_t> size_det_lu(n_size);
 	CppAD::vector<size_t> size_det_minor(n_size);
 	CppAD::vector<size_t> size_poly(n_size);
 	for(i = 0; i < n_size; i++) 
-	{	size_det_lu[i]    = 2 * i + 1;
+	{	size_det_lu[i]    = 3 * i + 1;
 		size_det_minor[i] = i + 1;
 		size_poly[i]      = 8 * i + 1;
 	}

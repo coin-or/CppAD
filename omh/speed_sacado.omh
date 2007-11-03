@@ -20,7 +20,7 @@ $index speed, test sacado$$
 $index test, sacado speed$$
 $index sacado, speed test$$
 
-$section The Sacado Speed Tests$$
+$section Speed Test Derivatives Using Sacado$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to compare

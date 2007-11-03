@@ -26,7 +26,7 @@ $index speed, test double$$
 $index test, double speed$$
 $index double, speed test$$
 
-$section The Double Speed Tests$$
+$section Speed Test Functions in Double$$
 
 $head Purpose$$
 CppAD has a set of speed tests for just calculating functions

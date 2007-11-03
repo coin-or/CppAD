@@ -98,17 +98,24 @@ if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
 then
 	echo "build.sh omhelp"
 	#
-	echo "run_omhelp.sh dev"
-	if ! ./run_omhelp.sh dev
-	then
-		exit 1
-	fi
-	#
-	echo "run_omhelp.sh doc"
-	if ! ./run_omhelp.sh doc
-	then
-		exit 1
-	fi
+	for user in doc dev
+	do
+		echo "run_omhelp.sh $user"
+		if ! ./run_omhelp.sh $user
+		then
+			exit 1
+		fi
+		if [ ! -e omhelp_$user.log ]
+		then
+			echo "omhelp_$user.log file is missing"
+			exit 1
+		fi
+		if grep 'OMhelp Warning:' omhelp_$user.log
+		then
+			echo "omhelp_$user.log has warnings in it"
+			exit 1
+		fi
+	done
 	#
 	if [ "$1" = "omhelp" ]
 	then
@@ -423,6 +430,7 @@ then
 	list="
 		adolc
 		cppad
+		double
 		example
 		fadbad
 		profile

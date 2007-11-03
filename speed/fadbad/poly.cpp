@@ -32,7 +32,7 @@ $spell
 	bool
 $$
 
-$section Fadbad Speed: Derivative of a Polynomial$$
+$section Fadbad Speed: Second Derivative of a Polynomial$$
 
 $index fadbad, speed polynomial$$
 $index speed, fadbad polynomial$$

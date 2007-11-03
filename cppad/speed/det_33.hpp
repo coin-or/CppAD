@@ -36,7 +36,7 @@ $syntax%# include <cppad/speed/det_33.hpp>
 $syntax%%ok% = det_33(%x%, %d%)%$$
 
 $head Purpose$$
-This routine can be used to check a method for computing the 
+This routine can be used to check a method for computing
 the determinant of a matrix.
 
 $head Inclusion$$

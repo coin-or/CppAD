@@ -33,7 +33,7 @@ $spell
 	Coeff
 $$
 
-$section Sacado Speed: Derivative of a Polynomial$$
+$section Sacado Speed: Second Derivative of a Polynomial$$
 
 $index sacado, speed polynomial$$
 $index speed, sacado polynomial$$

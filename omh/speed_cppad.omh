@@ -26,7 +26,7 @@ $index speed, test cppad$$
 $index test, cppad speed$$
 $index cppad, speed test$$
 
-$section The CppAD Speed Tests$$
+$section Speed Test Derivatives Using CppAD$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to determine if 

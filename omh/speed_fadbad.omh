@@ -20,7 +20,7 @@ $index speed, test fadbad$$
 $index test, fadbad speed$$
 $index fadbad, speed test$$
 
-$section The Fadbad Speed Tests$$
+$section Speed Test Derivatives Using Fadbad$$
 
 $head Purpose$$
 CppAD has a set of speed tests that are used to compare
