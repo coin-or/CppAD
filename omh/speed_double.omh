@@ -1,0 +1,63 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin speed_double$$
+$spell
+	cppad
+	CppAD
+	Cygwin
+	Microsoft
+	chdir
+	Workspace
+	dsw
+	exe
+	sln
+$$
+
+$index speed, test double$$
+$index test, double speed$$
+$index double, speed test$$
+
+$section The Double Speed Tests$$
+
+$head Purpose$$
+CppAD has a set of speed tests for just calculating functions
+(in double precision instead of an AD type).
+This section links to the source code the function value speed tests.
+
+
+$head Speed$$
+To run these tests, you must include the
+$code --with-Speed$$ command line option during the
+$cref/install configure/InstallUnix/Configure/$$ command. 
+After the Unix install $cref/make/InstallUnix/make/$$ command, 
+you can then run the function value speed tests 
+with the following commands (relative to the distribution directory):
+$syntax%
+	speed/double/double correct %seed%
+%$$
+where $italic seed$$ is a positive integer see for the
+random number generator $cref/uniform_01/$$.
+This will check that the speed tests have been built correctly.
+You can run the command
+$syntax%
+	speed/double/double speed %seed%
+%$$
+to see the results of all the speed tests.
+See $cref/speed_main/$$ for more options.
+
+$contents%
+	speed/double/det_minor.cpp%
+	speed/double/det_lu.cpp%
+	speed/double/poly.cpp
+%$$
+
+$end

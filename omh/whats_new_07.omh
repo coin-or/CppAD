@@ -75,6 +75,11 @@ $pre
 $$
 The $cref/speed/$$ section has been slightly reorganized
 (the main program and utilities have been separated).
+$pre
+
+$$
+Add $cref/speed_double/$$ for testing the speed of evaluating
+functions in $code double$$ as apposed to gradients using AD types.
 
 $head 11-01$$
 The instructions for downloading the current version using subversion

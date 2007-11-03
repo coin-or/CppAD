@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/speed_test.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/det_grad_33.hpp>
+# include <cppad/speed/det_33.hpp>
 # include <cppad/poly.hpp>
 
 # ifdef ADOLC
@@ -24,6 +25,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # endif
 # ifdef CPPAD
 # define AD_PACKAGE "cppad"
+# endif
+# ifdef DOUBLE
+# define AD_PACKAGE "double"
 # endif
 # ifdef FADBAD
 # define AD_PACKAGE "fadbad"
@@ -38,28 +42,14 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
-	sacado
 	ddp
-	hpp
-	iostream
-	const
-	argc
 	cppad
-	CppAD
 	adolc
 	fadbad
-	cstddef
-	bool
+	sacado
+	CppAD
 	det
 	lu
-	namespace
-	std
-	cout
-	endl
-	vec
-	strcmp
-	argv
-	cerr
 $$
 
 $index cppad, speed test$$
@@ -85,6 +75,14 @@ $cref/adolc/speed_adolc/$$,
 $cref/cppad/speed_cppad/$$, 
 $cref/fadbad/speed_fadbad/$$, 
 $cref/sacado/speed_sacado/$$.
+
+$subhead double$$
+The value
+$italic double$$ can be $code double$$ in which case
+the function values (instead of derivatives) are computed
+using double precision operations.
+This is included to compare the speed of computing function
+values in $code double$$ to the speed of the derivative computations.
 
 $subhead Profile$$
 The value 
@@ -150,6 +148,9 @@ The input value of its elements does not matter.
 The output value of its elements is the gradient of the
 determinant of $italic matrix$$ with respect to its elements.
 gradient is computed for.
+(If $italic package$$ is $code double$$, only the first element
+of $italic gradient$$ is used and it is actually the determinant value instead
+of the gradient value.)
 
 
 $head det_minor$$
@@ -191,6 +192,9 @@ The input value of its elements does not matter.
 The output value of its elements is the gradient of the
 determinant of $italic matrix$$ with respect to its elements.
 gradient is computed for.
+(If $italic package$$ is $code double$$, only the first element
+of $italic gradient$$ is used and it is actually the determinant value
+instead of the gradient value.)
 
 
 $head poly$$
@@ -238,6 +242,9 @@ The argument $italic ddp$$ is a vector with one element.
 The input value of the element does not matter.
 The output its value is the second derivative of the polynomial value
 with respect to it's argument value.
+(If $italic package$$ is $code double$$, only the first element
+of $italic ddp$$ is used and it is actually the polynomial value instead
+of the gradient value.)
 
 $head seed$$
 $index uniform_01$$
@@ -262,30 +269,6 @@ The rate is the number of times per second that the calculation was repeated.
 
 $end 
 */
-
-# include <cstdlib>
-# include <cassert>
-# include <cstddef>
-# include <iostream>
-# include <cppad/vector.hpp>
-# include <cppad/speed_test.hpp>
-# include <cppad/speed/uniform_01.hpp>
-# include <cppad/speed/det_grad_33.hpp>
-# include <cppad/poly.hpp>
-
-# ifdef ADOLC
-# define AD_PACKAGE "adolc"
-# endif
-# ifdef CPPAD
-# define AD_PACKAGE "cppad"
-# endif
-# ifdef FADBAD
-# define AD_PACKAGE "fadbad"
-# endif
-# ifdef PROFILE
-# define AD_PACKAGE "profile"
-# endif
-
 
 namespace {
 	using std::cout;
@@ -317,6 +300,9 @@ namespace {
 
 		compute_det_lu(size, repeat, matrix, gradient);
 		bool ok = CppAD::det_grad_33(matrix, gradient);
+# if DOUBLE
+		ok = CppAD::det_33(matrix, gradient);
+# endif
 		return ok;
 	}
 	bool correct_det_minor(void)
@@ -327,6 +313,9 @@ namespace {
 
 		compute_det_minor(size, repeat, matrix, gradient);
 		bool ok = CppAD::det_grad_33(matrix, gradient);
+# if DOUBLE
+		ok = CppAD::det_33(matrix, gradient);
+# endif
 		return ok;
 	}
 	bool correct_poly(void)
@@ -335,8 +324,11 @@ namespace {
 		CppAD::vector<double>  a(size), z(1), ddp(1);
 
 		compute_poly(size, repeat, a, z, ddp);
-		// use direct evaluation by Poly to check AD evaluation
 		double check = CppAD::Poly(2, a, z[0]);
+		// use direct evaluation by Poly to check AD evaluation
+# if DOUBLE
+		check = CppAD::Poly(0, a, z[0]);
+# endif
 		bool ok = CppAD::NearEqual(check, ddp[0], 1e-10, 1e-10);
 		return ok;
 	}

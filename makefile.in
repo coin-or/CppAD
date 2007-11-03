@@ -68,8 +68,8 @@ RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
 ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = example introduction/get_started introduction/exp_apx \
-	print_for speed/profile speed/adolc speed/cppad speed/example \
-	speed/fadbad speed/sacado test_more
+	print_for speed/profile speed/adolc speed/cppad speed/double \
+	speed/example speed/fadbad speed/sacado test_more
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -328,6 +328,7 @@ nobase_include_HEADERS = \
 	cppad/local/undef.hpp \
 	cppad/local/value.hpp \
 	cppad/local/var2par.hpp \
+	cppad/speed/det_33.hpp \
 	cppad/speed/det_by_lu.hpp \
 	cppad/speed/det_by_minor.hpp \
 	cppad/speed/det_grad_33.hpp \
@@ -355,6 +356,8 @@ nobase_include_HEADERS = \
 # Did user specify --with-Speed
 #
 @CppAD_SPEED_TRUE@SPEED_CPPAD = speed/cppad
+@CppAD_SPEED_FALSE@SPEED_DOUBLE = 
+@CppAD_SPEED_TRUE@SPEED_DOUBLE = speed/double
 @CppAD_PRINTFOR_FALSE@PRINTFOR = 
 #
 # Did user specify --with-PrintFor
@@ -388,6 +391,7 @@ SUBDIRS = \
 	$(PROFILE) \
 	$(SPEED_ADOLC) \
 	$(SPEED_CPPAD) \
+	$(SPEED_DOUBLE) \
 	$(SPEED_EXAMPLE) \
 	$(SPEED_FADBAD) \
 	$(SPEED_SACADO) \

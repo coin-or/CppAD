@@ -18,10 +18,11 @@ $index utility, speed$$
 
 $children%
 	cppad/speed/uniform_01.hpp%
-	cppad/speed/det_grad_33.hpp%
 	cppad/speed/det_of_minor.hpp%
 	cppad/speed/det_by_minor.hpp%
-	cppad/speed/det_by_lu.hpp
+	cppad/speed/det_by_lu.hpp%
+	cppad/speed/det_33.hpp%
+	cppad/speed/det_grad_33.hpp
 %$$
 
 $head Speed Main Program$$
@@ -33,9 +34,10 @@ $head Speed Utility Routines$$
 $table
 $rref det_by_lu$$
 $rref det_by_minor$$
-$rref det_grad_33$$
 $rref det_of_minor$$
 $rref uniform_01$$
+$rref det_33$$
+$rref det_grad_33$$
 $tend 
 
 $head Library Routines$$

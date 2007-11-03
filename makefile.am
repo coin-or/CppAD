@@ -151,6 +151,7 @@ nobase_include_HEADERS =  \
 	cppad/local/undef.hpp \
 	cppad/local/value.hpp \
 	cppad/local/var2par.hpp \
+	cppad/speed/det_33.hpp \
 	cppad/speed/det_by_lu.hpp \
 	cppad/speed/det_by_minor.hpp \
 	cppad/speed/det_grad_33.hpp \
@@ -185,8 +186,10 @@ endif
 #
 if CppAD_SPEED
 SPEED_CPPAD = speed/cppad
+SPEED_DOUBLE = speed/double
 else
 SPEED_CPPAD =
+SPEED_DOUBLE =
 endif
 #
 # Did user specify --with-PrintFor
@@ -239,6 +242,7 @@ SUBDIRS = \
 	$(PROFILE) \
 	$(SPEED_ADOLC) \
 	$(SPEED_CPPAD) \
+	$(SPEED_DOUBLE) \
 	$(SPEED_EXAMPLE) \
 	$(SPEED_FADBAD) \
 	$(SPEED_SACADO) \

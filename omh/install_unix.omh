@@ -205,7 +205,8 @@ you can run the $cref/speed_main/$$ program with the command
 $syntax%
 	speed/%package%/%package% %option% %seed%
 %$$
-where $italic package$$ is equal to $code cppad$$.
+where $italic package$$ is equal to $code cppad$$
+or $code double$$.
 
 $head --with-PrintFor$$
 $index print, forward mode$$

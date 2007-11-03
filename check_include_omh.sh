@@ -38,6 +38,7 @@ list="
 	speed/*.cpp
 	speed/adolc/*.cpp
 	speed/cppad/*.cpp
+	speed/double/*.cpp
 	speed/example/*.cpp
 	speed/fadbad/*.cpp
 	speed/sacado/*.cpp
