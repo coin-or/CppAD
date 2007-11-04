@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin InstallUnix$$
 $dollar @$$
 $spell
+	Linux
 	fi
 	exp_apx
 	tgz
@@ -306,12 +307,21 @@ $syntax%
 	speed/%package%/%package% %option% %seed%
 %$$
 where $italic package$$ is equal to $code adolc$$.
-$pre
 
-$$
+$subhead Linux$$
+If you are using Linux, 
+you will have to add to following lines to the file
+$code .bash_profile$$ in your home directory:
+$syntax%
+	LD_LIBRARY_PATH=%AdolcDir%/lib:@{PATH}
+	export LD_LIBRARY_PATH
+%$$
+in order for Adolc to run properly.
+
+$subhead Cygwin$$
 If you are using Cygwin, 
 you will have to add to following lines to the file
-$code .profile$$ in your home directory:
+$code .bash_profile$$ in your home directory:
 $syntax%
 	PATH=%AdolcDir%/bin:@{PATH}
 	export PATH

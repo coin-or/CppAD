@@ -63,6 +63,12 @@ assist you in learning about changes between various versions of CppAD.
 $head 11-03$$
 Improve the $cref/speed_main/$$ documentation and output
 (as well as the title for other sections under $cref/speed/$$).
+$pre
+
+$$
+The subversion copy of the $cref/configure/InstallUnix/Configure/$$ script 
+was not executable. 
+This has been fixed.
 
 $head 11-02$$
 The instructions for downloading the current version using 

@@ -37,7 +37,6 @@ list=`find .                             \
 	\( -name 'temp?'          \) -or \
 	\( -name 'temp.*'         \) -or \
 	\( -name 'test_one.cpp'   \) -or \
-	\( -name '*.[0-9]*'       \) -or \
 	\( -name '*.a'            \) -or \
 	\( -name '*.exe'          \) -or \
 	\( -name '*.log'          \) -or \
@@ -52,7 +51,11 @@ list=`find .                             \
 	\( -name '.*.swp'         \) -or \
 	\( -name '*.tgz'          \) -or \
 	\( -name '*.tmp'          \) -or \
-	\( -name '*.zip'          \)     \
+	\( -name '*.zip'          \) -or \
+	\( -name '*.[0-9]'                  \) -or \
+	\( -name '*.[0-9][0-9]'             \) -or \
+	\( -name '*.[0-9][0-9][0-9]'        \) -or \
+	\( -name '*.[0-9][0-9][0-9][0-9]'   \) 
 `
 # remove entries that have /.svn/ in them
 list=`echo $list | sed -e 's| [^ ]*/.svn/[^ ]*||g'`
