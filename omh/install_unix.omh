@@ -83,6 +83,8 @@ The entries one each of the other lines are optional
 and the text in italic is replaced values that you choose.
 
 $head Testing Return Status$$
+$head statue, test return$$
+$head test, return statue$$
 All of the test programs mentioned below
 (with the exception of $cref/print_for/InstallUnix/--with-PrintFor/$$)
 return a status of zero, if all correctness tests pass, and one for an error.
@@ -185,6 +187,7 @@ $$
 
 $head --with-TestMore$$
 $index test more, unix$$
+$index unix, test more$$
 If the command line argument $code --with-TestMore$$ is specified,
 another extensive set of correctness tests will be compiled by the
 $xref/InstallUnix/make/make/$$ command. Once the $code make$$ command 
@@ -194,13 +197,16 @@ $codep
 $$
 
 $head --with-Speed$$
-$index speed, cppad test$$
-$index test, cppad speed$$
-$index cppad, speed test$$
+$index speed, test unix$$
+$index test, unix speed$$
+$index unix, speed test$$
 If the command line argument $code --with-Speed$$ is specified,
 a set of speed tests will built.
 
 $subhead cppad$$
+$index speed, cppad test$$
+$index cppad, test speed$$
+$index test, cppad speed$$
 After you execute the $xref/InstallUnix/make/make/$$ command,
 you can run the $cref/speed_main/$$ program with the command
 $syntax%
@@ -208,6 +214,9 @@ $syntax%
 %$$
 
 $subhead double$$
+$index speed, double test$$
+$index double, test speed$$
+$index test, double speed$$
 After you execute the $xref/InstallUnix/make/make/$$ command,
 you can run the $cref/speed_main/$$ program with the command
 $syntax%
@@ -215,6 +224,9 @@ $syntax%
 %$$
 
 $subhead profile$$
+$index speed, profile cppad$$
+$index profile, cppad speed$$
+$index cppad, profile speed$$
 After you execute the $xref/InstallUnix/make/make/$$ command,
 you can run the $cref/speed_main/$$ program with the command
 $syntax%
@@ -244,6 +256,16 @@ you would need to use
 $codep
 	gprof -b speed/profile/profile.exe | sed -f speed/profile/gprof.sed
 $$
+
+$subhead example$$
+$index speed, utility example$$
+$index example, speed utility$$
+$index utility, speed example$$
+After you execute the $xref/InstallUnix/make/make/$$ command,
+you can run the $cref/speed_utility/$$ examples with the command
+$syntax%
+	speed/example/example
+%$$
 
 $head --with-PrintFor$$
 $index print, forward mode$$

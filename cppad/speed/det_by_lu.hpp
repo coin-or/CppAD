@@ -171,11 +171,13 @@ public:
 		signdet = CppAD::LuSolve(
 			n, m, A, B, X, logdet);
 
-		// make sure the martix is not singular
-		CPPAD_ASSERT_KNOWN( 
-			signdet != 0,
-			"det_by_lu: matrix is singular"
-		);
+# if 0
+		// Do not do this for speed test because it makes floating 
+		// point operation sequence very simple.
+		if( signdet == 0 )
+			det = 0;
+		else	det =  Scalar( signdet ) * exp( logdet );
+# endif
 
 		// convert to determinant
 		det     = Scalar( signdet ) * exp( logdet ); 

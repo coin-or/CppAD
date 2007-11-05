@@ -61,6 +61,12 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-05$$
+Project files have been added for running the
+$cref/cppad/InstallWindows/CppAD Speed Test/$$ and
+$cref/double/InstallWindows/Double Speed Test/$$ 
+speed tests.
+
 $head 11-04$$
 The $code cppad/config.h$$ file was not compatible with the 
 $cref/Windows install procedure/InstallWindows/$$ and 

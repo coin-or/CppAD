@@ -110,9 +110,35 @@ $codep
 	print_for\Debug\print_for
 $$
 
-$head Speed Test Example$$
-$index SpeedTest, windows example$$
-$index example, windows SpeedTest$$
+$head CppAD Speed Test$$
+$index speed, cppad test$$
+$index cppad, test speed$$
+$index test, cppad speed$$
+Using Microsoft Visual C++,
+open the workspace $code speed\cppad\cppad.sln$$ in Visual Studio.
+Then select $code Build | Build cppad.exe$$.
+Then in a Dos box, execute the following commands
+$codep
+	speed\cppad\Debug\cppad
+$$
+Note that none of the 
+
+$head Double Speed Test$$
+$index speed, double test$$
+$index double, test speed$$
+$index test, double speed$$
+Using Microsoft Visual C++,
+open the workspace $code speed\double\double.sln$$ in Visual Studio.
+Then select $code Build | Build double.exe$$.
+Then in a Dos box, execute the following commands
+$codep
+	speed\double\Debug\double
+$$
+
+$head Speed Utility Example$$
+$index speed, utility example$$
+$index example, speed utility$$
+$index utility, speed example$$
 Using Microsoft Visual C++,
 open the workspace $code speed\example\example.sln$$ in Visual Studio.
 Then select $code Build | Build example.exe$$.

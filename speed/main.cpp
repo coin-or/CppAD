@@ -271,13 +271,26 @@ $end
 
 namespace {
 	using std::cout;
-	using std::cerr;
 	using std::endl;
 
+	// ------------------------------------------------------
+	// output vector in form readable by octave or matlab
+	// convert size_t to int to avoid warning by MS compiler
+	void output(const CppAD::vector<size_t> &v)
+	{	size_t i= 0, n = v.size();
+		cout << "[ ";
+		while(i < n)
+		{	cout << int(v[i++]);
+			if( i < n )
+				cout << ", ";
+		}
+		cout << " ]";
+	}
+
+	// ----------------------------------------------------------------
 	// function that runs one correctness case
 	static size_t Run_ok_count    = 0;
 	static size_t Run_error_count = 0;
-	// ----------------------------------------------------------------
 	bool Run_correct(bool correct_case(void), const char *case_name)
 	{	bool ok;
 		cout << AD_PACKAGE << "_" << case_name << "_ok = ";
@@ -345,12 +358,14 @@ namespace {
 		std::string                       case_name )
 	{	double time_min = 1.;
 		cout << AD_PACKAGE << "_" << case_name << "_size = ";
-		cout << size_vec << endl;
+		output(size_vec);
+		cout << endl;
 
 		CppAD::vector<size_t> rate_vec( size_vec.size() );
 		rate_vec = CppAD::speed_test(speed_case, size_vec, time_min);
 		cout << AD_PACKAGE << "_" << case_name << "_rate = ";
-		cout << rate_vec << endl;
+		output(rate_vec);
+		cout << endl;
 		return;
 	}
 	void speed_det_lu(size_t size, size_t repeat)
@@ -404,12 +419,12 @@ int main(int argc, char *argv[])
 		iseed = std::atoi( argv[2] );
 	}
 	if( match == n_option  || iseed <= 0 )
-	{	cerr << "usage: ./" << AD_PACKAGE << " option seed" << endl;
-		cerr << "where option is one of the following:" << endl;
+	{	cout << "usage: ./" << AD_PACKAGE << " option seed" << endl;
+		cout << "where option is one of the following:" << endl;
 		for(i = 0; i < n_option; i++)
-			cerr << option[i] << ", ";
-		cerr << endl << "and seed is a positive integer." << endl;
-		cerr << endl;
+			cout << option[i] << ", ";
+		cout << endl << "and seed is a positive integer." << endl;
+		cout << endl;
 		return 1;
 	}
 
@@ -438,11 +453,11 @@ int main(int argc, char *argv[])
 		// summarize results
 		assert( ok || (Run_error_count > 0) );
 		if( ok )
-		{	cout	<< "All " << Run_ok_count 
+		{	cout	<< "All " << int(Run_ok_count) 
 				<< " correctness tests passed." << endl;
 		}
 		else
-		{	cout	<< Run_error_count 
+		{	cout	<< int(Run_error_count) 
 				<< " correctness tests failed." << endl;
 		}
 		break;

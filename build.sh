@@ -438,6 +438,8 @@ then
 	seed="123"
 	for name in $list
 	do
+		# Note that example does not use command line arguments,
+		# but it does not currently care about their presence.
 		echo "running speed/$name/$name correct $seed"
 		echo "./speed/$name/$name correct $seed" >> ../build_test.log
 		if ! ./speed/$name/$name correct  $seed  >> ../build_test.log
