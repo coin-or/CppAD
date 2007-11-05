@@ -61,7 +61,7 @@ open the workspace $code get_started/get_started.sln$$
 in Visual Studio and then select $code Build | Build get_started.exe$$.
 Then in a Dos box, execute the following command
 $codep
-	introduction\get_started\debug\get_started
+	introduction\get_started\Debug\get_started
 $$
 
 $head Introduction$$
@@ -73,7 +73,7 @@ open the workspace $code introduction/exp_apx/exp_apx.sln$$ in Visual Studio.
 Then select $code Build | Build exp_apx.exe$$.
 Then in a Dos box, execute the following command
 $codep
-	introduction\exp_apx\debug\exp_apx
+	introduction\exp_apx\Debug\exp_apx
 $$
 
 $head Examples and Testing$$
@@ -82,7 +82,7 @@ $index test, windows$$
 The following steps will build an extensive set of examples
 and correctness tests.
 Using Microsoft Visual C++,
-open the workspace $code example/Example.sln$$ in Visual Studio.
+open the workspace $code example/example.sln$$ in Visual Studio.
 Then select $code Build | Build Example.exe$$.
 Then in a Dos box, execute the following command
 $codep
@@ -96,41 +96,29 @@ open the workspace $code test_more/test_more.sln$$
 in Visual Studio and then select $code Build | Build test_more.exe$$.
 Then in a Dos box, execute the following command
 $codep
-	test_more\debug\test_more
-$$
-
-$head Speed Testing$$
-$index speed, test cppad$$
-$index test, cppad speed$$
-$index cppad, speed test$$
-Using Microsoft Visual C++,
-open the workspace $code speed/speed.sln$$
-in Visual Studio and then select $code Build | Build speed.exe$$.
-Then in a Dos box, execute the following commands
-$codep
-	speed_cppad\release\speed
+	test_more\Debug\test_more
 $$
 
 $head Printing During Forward Mode$$
 $index print, forward mode$$
 $index forward, print$$
 Using Microsoft Visual C++,
-open the workspace $code print_for/print_for.sln$$ in Visual Studio.
+open the workspace $code print_for\print_for.sln$$ in Visual Studio.
 Then select $code Build | Build print_for.exe$$.
 Then in a Dos box, execute the following commands
 $codep
-	print_for\debug\print_for
+	print_for\Debug\print_for
 $$
 
 $head Speed Test Example$$
 $index SpeedTest, windows example$$
 $index example, windows SpeedTest$$
 Using Microsoft Visual C++,
-open the workspace $code speed/example/example.sln$$ in Visual Studio.
+open the workspace $code speed\example\example.sln$$ in Visual Studio.
 Then select $code Build | Build example.exe$$.
 Then in a Dos box, execute the following commands
 $codep
-	speed\example\debug\example
+	speed\example\Debug\example
 $$
 
 $end

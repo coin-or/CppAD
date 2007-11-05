@@ -109,7 +109,7 @@ bool OdeErrControl_one(void)
 }
 
 /*
-Old example new just a test
+Old example now just a test
 Define 
 $latex X : \R \rightarrow \R^2$$ by
 $latex \[
@@ -456,7 +456,7 @@ bool OdeErrControl_four(void)
 }
 
 // ==========================================================================
-bool OdeErrControl(void)
+bool ode_err_control(void)
 {	bool ok = true;
 	ok     &= OdeErrControl_one();
 	ok     &= OdeErrControl_two();

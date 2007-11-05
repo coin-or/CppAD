@@ -71,8 +71,6 @@ $syntax%
 	--with-TestMore                        \
 	--with-Speed                           \
 	--with-PrintFor                        \
-	--with-SpeedExample                    \
-	--with-profiling                       \
 	--with-stdvector                       \  
 	ADOLC_DIR=%AdolcDir%                     \
 	FADBAD_DIR=%FadbadDir%                   \
@@ -201,52 +199,27 @@ $index test, cppad speed$$
 $index cppad, speed test$$
 If the command line argument $code --with-Speed$$ is specified,
 a set of speed tests will built.
+
+$subhead cppad$$
 After you execute the $xref/InstallUnix/make/make/$$ command,
 you can run the $cref/speed_main/$$ program with the command
 $syntax%
-	speed/%package%/%package% %option% %seed%
+	speed/cppad/cppad %option% %seed%
 %$$
-where $italic package$$ is equal to $code cppad$$
-or $code double$$.
 
-$head --with-PrintFor$$
-$index print, forward mode$$
-$index forward, print$$
-If the command line argument $code --with-PrintFor$$ is specified,
-the $xref/PrintFor.cpp/$$ example will be built.
-Once the $code make$$ command 
-has been executed, you can run this example by executing the command 
-$codep
-	print_for/print_for
-$$
-Unlike the other programs listed in this section,
-$code print_for$$ does not automatically check for correctness 
-and return a corresponding
-$cref/status/InstallUnix/Testing Return Status/$$.
-Instead, it displays what it's output should be.
-
-$head --with-SpeedExample$$
-$index speed, test example$$
-$index example, speed test$$
-$index test, speed example$$
-If the command line argument $code --with-SpeedExample$$ is specified,
-the speed example and correctness test program will be built.
-Once the $code make$$ command 
-has been executed, you can run this example by executing the command 
-$codep
-	speed/example/example
-$$
-
-$head --with-profiling$$
-$index profile, unix$$
-CppAD profile files that aid profiling with the GNU C++ compiler.
-If $cref/--with-Speed/InstallUnix/--with-Speed/$$ is also specified,
-after you execute the $xref/InstallUnix/make/make/$$ command,
+$subhead double$$
+After you execute the $xref/InstallUnix/make/make/$$ command,
 you can run the $cref/speed_main/$$ program with the command
 $syntax%
-	speed/%package%/%package% %option% %seed%
+	speed/double/double %option% %seed%
 %$$
-where $italic package$$ is equal to $code profile$$.
+
+$subhead profile$$
+After you execute the $xref/InstallUnix/make/make/$$ command,
+you can run the $cref/speed_main/$$ program with the command
+$syntax%
+	speed/profile/profile %option% %seed%
+%$$
 You can then obtain the profiling results with
 $syntax%
 	gprof -b speed/profile/profile
@@ -271,6 +244,22 @@ you would need to use
 $codep
 	gprof -b speed/profile/profile.exe | sed -f speed/profile/gprof.sed
 $$
+
+$head --with-PrintFor$$
+$index print, forward mode$$
+$index forward, print$$
+If the command line argument $code --with-PrintFor$$ is specified,
+the $xref/PrintFor.cpp/$$ example will be built.
+Once the $code make$$ command 
+has been executed, you can run this example by executing the command 
+$codep
+	print_for/print_for
+$$
+Unlike the other programs listed in this section,
+$code print_for$$ does not automatically check for correctness 
+and return a corresponding
+$cref/status/InstallUnix/Testing Return Status/$$.
+Instead, it displays what it's output should be.
 
 $head --with-stdvector$$
 $index std::vector, unix$$
@@ -313,7 +302,7 @@ If you are using Linux,
 you will have to add to following lines to the file
 $code .bash_profile$$ in your home directory:
 $syntax%
-	LD_LIBRARY_PATH=%AdolcDir%/lib:@{PATH}
+	LD_LIBRARY_PATH=%AdolcDir%/lib:@{LD_LIBRARY_PATH}
 	export LD_LIBRARY_PATH
 %$$
 in order for Adolc to run properly.

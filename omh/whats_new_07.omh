@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	executables
 	makefiles
 	tarballs
 	autoconf
@@ -59,6 +60,20 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-04$$
+The $code cppad/config.h$$ file was not compatible with the 
+$cref/Windows install procedure/InstallWindows/$$ and 
+the Windows project's could not find a certain include file.
+This has been fixed in the definition of; see
+$cref/Windows test vector/test_vector/MS Windows/$$.
+$pre
+
+$$
+The $cref/unix install/InstallUnix/$$ procedure has been modified
+so that the one configure flag
+$cref/--with-Speed/InstallUnix/--with-Speed/$$
+builds all the possible executables related to the speed testing.
 
 $head 11-03$$
 Improve the $cref/speed_main/$$ documentation and output
@@ -825,7 +840,7 @@ This has been fixed.
 
 $head 02-02$$
 Fix minor errors and improve
-$cref/profiling/InstallUnix/--with-profiling/$$ documentation.
+$cref/profiling/InstallUnix/--with-Speed/profile/$$ documentation.
 Also change the problem sizes used for the $cref/speed/$$ tests.
 
 $head 02-01$$

@@ -197,7 +197,7 @@ $cref|speed/cppad|speed_cppad|$$
 	$cnext CppAD drivers for the template functions  $rnext
 $cref|speed/fadbad|speed_fadbad|$$
 	$cnext Fadbad drivers for the template functions $rnext
-$cref|speed/profile|InstallUnix|--with-profiling|$$
+$cref|speed/profile|InstallUnix|--with-Speed|profile|$$
 	$cnext profiling version of CppAD drivers        
 $tend
 
@@ -1182,7 +1182,7 @@ file $code cppad/local/CppADError.h$$).
 
 $head 01-02$$
 Add the sed script $code Speed/gprof.sed$$ to aid in the display of the
-$xref/InstallUnix/--with-profiling/--with-profiling/$$ output.
+$cref/profiling/InstallUnix/--with-Speed/profile/$$ output.
 $pre
 
 $$

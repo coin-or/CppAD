@@ -863,8 +863,8 @@ During the process above, the function $xref/ParVar//Variable/$$ was added.
 
 
 $head 04-20$$
-Add $xref/InstallUnix/--with-profiling/profiling/$$ to
-the speed tests.
+Add $cref/profiling/InstallUnix/--with-Speed/profile/$$
+to the speed tests.
 
 $head 04-19$$
 Remove an extra (not necessary) 

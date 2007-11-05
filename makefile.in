@@ -68,8 +68,8 @@ RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
 ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = example introduction/get_started introduction/exp_apx \
-	print_for speed/profile speed/adolc speed/cppad speed/double \
-	speed/example speed/fadbad speed/sacado test_more
+	print_for speed/cppad speed/double speed/example speed/profile \
+	speed/adolc speed/fadbad speed/sacado test_more
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -351,48 +351,35 @@ nobase_include_HEADERS = \
 #
 # Did user specify --with-TestMore
 @CppAD_TEST_MORE_TRUE@TEST_MORE = test_more
+# ----------------------------------------------------------------------
+# user did not specify --with-Speed
 @CppAD_SPEED_FALSE@SPEED_CPPAD = 
 #
-# Did user specify --with-Speed
-#
-@CppAD_SPEED_TRUE@SPEED_CPPAD = speed/cppad
-@CppAD_SPEED_FALSE@SPEED_DOUBLE = 
-@CppAD_SPEED_TRUE@SPEED_DOUBLE = speed/double
-@CppAD_PRINTFOR_FALSE@PRINTFOR = 
-#
-# Did user specify --with-PrintFor
-@CppAD_PRINTFOR_TRUE@PRINTFOR = print_for
-@CppAD_SPEED_EXAMPLE_FALSE@SPEED_EXAMPLE = 
-#
-# Did user specify --with-SpeedExample
-@CppAD_SPEED_EXAMPLE_TRUE@SPEED_EXAMPLE = speed/example
-@CppAD_PROFILING_FALSE@PROFILE = 
-#
-# Did user specify --with-Profiling
-@CppAD_PROFILING_TRUE@PROFILE = speed/profile
-@CppAD_ADOLC_FALSE@SPEED_ADOLC = 
+# user specified --with-Speed -------------------------------------
+@CppAD_SPEED_TRUE@SPEED_CPPAD = speed/cppad speed/double speed/example speed/profile
 #
 # Did user specify a value for ADOLC_DIR in configure command line
-@CppAD_ADOLC_TRUE@SPEED_ADOLC = speed/adolc
-@CppAD_ADOLC_FALSE@EXAMPLE_ADOLC = 
-@CppAD_FADBAD_FALSE@SPEED_FADBAD = 
+@CppAD_ADOLC_TRUE@@CppAD_SPEED_TRUE@SPEED_ADOLC = speed/adolc
+@CppAD_SPEED_FALSE@SPEED_ADOLC = 
 #
 # Did user specify a value for FADBAD_DIR in configure command line
-@CppAD_FADBAD_TRUE@SPEED_FADBAD = speed/fadbad
-@CppAD_SACADO_FALSE@SPEED_SACADO = 
+@CppAD_FADBAD_TRUE@@CppAD_SPEED_TRUE@SPEED_FADBAD = speed/fadbad
+@CppAD_SPEED_FALSE@SPEED_FADBAD = 
 #
 # Did user specify a value for SACADO_DIR in configure command line
-@CppAD_SACADO_TRUE@SPEED_SACADO = speed/sacado
+@CppAD_SACADO_TRUE@@CppAD_SPEED_TRUE@SPEED_SACADO = speed/sacado
+@CppAD_SPEED_FALSE@SPEED_SACADO = 
+@CppAD_PRINTFOR_FALSE@PRINTFOR = 
+# ----------------------------------------------------------------------
+# Did user specify --with-PrintFor
+@CppAD_PRINTFOR_TRUE@PRINTFOR = print_for
 #
 SUBDIRS = \
 	$(EXAMPLE) \
 	$(INTRODUCTION) \
 	$(PRINTFOR) \
-	$(PROFILE) \
-	$(SPEED_ADOLC) \
 	$(SPEED_CPPAD) \
-	$(SPEED_DOUBLE) \
-	$(SPEED_EXAMPLE) \
+	$(SPEED_ADOLC) \
 	$(SPEED_FADBAD) \
 	$(SPEED_SACADO) \
 	$(TEST_MORE) 

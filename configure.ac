@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20071102, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20071104, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -32,6 +32,20 @@ if test "$POSTFIX_DIR" != "" ; then
 fi
 if test "$CPP_ERROR_WARN" != "" ; then
     AC_MSG_ERROR([The CPP_ERROR_WARN configure option is now CXX_FLAGS])
+fi
+AC_ARG_WITH(SpeedExample, AC_HELP_STRING(
+	[--with-SpeedExample], [is now part of the --with-Speed option]),
+	[SpeedExample="yes"], [SpeedExample="no"]
+)
+if test "$SpeedExample" = "yes" ; then
+    AC_MSG_ERROR([--with-SpeedExample is now part of --with-Speed option])
+fi
+AC_ARG_WITH(profiling, AC_HELP_STRING(
+	[--with-profiling], [is now part of the --with-Speed option]),
+	[profiling="yes"], [profiling="no"]
+)
+if test "$profiling" = "yes" ; then
+    AC_MSG_ERROR([--with-profiling is now part of --with-Speed option])
 fi
 
 dnl the prefix directory corresponding to CppAD -------------------------
@@ -107,26 +121,6 @@ AC_ARG_WITH(PrintFor,
 AM_CONDITIONAL(CppAD_PRINTFOR, test "$PrintFor" = "yes")
 AC_MSG_RESULT([$PrintFor])
 
-dnl Are we building the SpeedExample directory --------------------------------
-AC_MSG_CHECKING([--with-SpeedExample])
-AC_ARG_WITH(SpeedExample, 
-	AC_HELP_STRING([--with-SpeedExample], [default is no]),
-	[SpeedExample="yes"],
-	[SpeedExample="no"]
-)
-AM_CONDITIONAL(CppAD_SPEED_EXAMPLE, test "$SpeedExample" = "yes")
-AC_MSG_RESULT([$SpeedExample])
-
-dnl Are we including profiling -------------------------------------------
-AC_MSG_CHECKING([--with-profiling])
-AC_ARG_WITH(profiling, 
-	AC_HELP_STRING([--with-profiling], [default is no]),
-	[profiling="yes"],
-	[profiling="no"]
-)
-AM_CONDITIONAL(CppAD_PROFILING, test "$profiling" = "yes")
-AC_MSG_RESULT([$profiling])
-
 dnl Are we using standard vectors ----------------------------------------
 AC_MSG_CHECKING([--with-stdvector])
 AC_ARG_WITH(stdvector, 
@@ -135,9 +129,9 @@ AC_ARG_WITH(stdvector,
 	[stdvector="no"]
 )
 if test "$stdvector" = "yes" ; then
-	AC_DEFINE(CPPAD_STDVECTOR, 1, [is CppADvector == std::vector])
+	AC_DEFINE(CPPAD_STDVECTOR, 1, [is CPPAD_TEST_VECTOR == std::vector])
 else
-	AC_DEFINE(CPPAD_STDVECTOR, 0, [is CppADvector == std::vector])
+	AC_DEFINE(CPPAD_STDVECTOR, 0, [is CPPAD_TEST_VECTOR == std::vector])
 fi
 AC_MSG_RESULT([$stdvector])
 
@@ -185,12 +179,12 @@ AC_ARG_VAR(BOOST_DIR,
 AM_CONDITIONAL(CppAD_BOOSTVECTOR, test "$BOOST_DIR" != "")
 if test "$BOOST_DIR" != "" ; then
 	AC_DEFINE(CPPAD_BOOSTVECTOR, 1, 
-		[is CPPAD_TEST_VECTOR equal to boost::numeric::ublas::vector]
+	[is CPPAD_TEST_VECTOR = boost vector (overriden if _MSC_VER defined)]
 	)
 	AC_MSG_RESULT([$BOOST_DIR])
 else
 	AC_DEFINE(CPPAD_BOOSTVECTOR, 0, 
-		[is CPPAD_TEST_VECTOR equal to boost::numeric::ublas::vector]
+	[is CPPAD_TEST_VECTOR = boost vector (overriden if _MSC_VER defined)]
 	)
 	AC_MSG_RESULT([no])
 fi
@@ -208,11 +202,11 @@ fi
 AC_SUBST(CXXFLAGS, "")
 AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
 
-dnl Check which definition we are using for CppADvector
+dnl Check which definition we are using for CPPAD_TEST_VECTOR
 if test "$stdvector$BOOST_DIR" = "no" ; then
-	AC_DEFINE(CPPAD_CPPADVECTOR, 1, [is CppADvector == CppAD::vector])
+	AC_DEFINE(CPPAD_CPPADVECTOR, 1, [is CPPAD_TEST_VECTOR == CppAD::vector])
 else 
-	AC_DEFINE(CPPAD_CPPADVECTOR, 0, [is CppADvector == CppAD::vector])
+	AC_DEFINE(CPPAD_CPPADVECTOR, 0, [is CPPAD_TEST_VECTOR == CppAD::vector])
 fi
 
 dnl the gettimeofday check automatically generates a yes / no configure msg
@@ -223,11 +217,11 @@ AC_CHECK_FUNC(
 )
 if test "$gettimeofday" = "yes" ; then
 	AC_DEFINE(CPPAD_GETTIMEOFDAY, 1, 
-	[does system support gettimeofday (overidden if _MSC_VER defined)]
+	[does system support gettimeofday (overriden if _MSC_VER defined)]
 	)
 else
 	AC_DEFINE(CPPAD_GETTIMEOFDAY, 0, 
-	[does system support gettimeofday (overidden if _MSC_VER defined)]
+	[does system support gettimeofday (overriden if _MSC_VER defined)]
 	)
 fi
 

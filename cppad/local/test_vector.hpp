@@ -15,6 +15,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin test_vector$$
 $spell
+	ifdef
+	undef
+	Microsofts
 	CppADvector
 	hpp
 	std
@@ -41,11 +44,26 @@ the $code CPPAD_TEST_VECTOR$$ template class to pass information.
 The default definition for this template class is
 $xref/CppAD_vector//CppAD::vector/$$.
 
+$head MS Windows$$
+The include path for boost is not defined in the Windows project files.
+If we are using Microsofts compiler, the following code overrides the setting
+of $code CPPAD_BOOSTVECTOR$$:
+$codep */
+// The next 7 lines are C++ source code.
+# ifdef _MSC_VER
+# if CPPAD_BOOSTVECTOR
+# undef  CPPAD_BOOSTVECTOR
+# define CPPAD_BOOSTVECTOR 0
+# define CPPAD_CPPADVECTOR 1
+# endif
+# endif
+/* $$
+
 $head CppAD::vector$$
 By default $code CPPAD_CPPADVECTOR$$ is true
 and $code CPPAD_TEST_VECTOR$$ is defined by the following source code
 $codep */
-// The next line is C++ source code and its replacement is discussed below
+// The next 3 line are C++ source code.
 # if CPPAD_CPPADVECTOR
 # define CPPAD_TEST_VECTOR CppAD::vector
 # endif
@@ -60,8 +78,8 @@ $cref/configure/InstallUnix/Configure/$$
 command line during CppAD installation,
 $code CPPAD_STDVECTOR$$ is true
 and $code CPPAD_TEST_VECTOR$$ is defined by the following source code
-$code CPPAD_TEST_VECTOR$$ 
 $codep */
+// The next 4 lines are C++ source code.
 # if CPPAD_STDVECTOR
 # include <vector>
 # define CPPAD_TEST_VECTOR std::vector
@@ -79,6 +97,7 @@ command line during CppAD installation,
 $code CPPAD_BOOSTVECTOR$$ is true 
 and $code CPPAD_TEST_VECTOR$$ is defined by the following source code
 $codep */
+// The next 4 lines are C++ source code.
 # if CPPAD_BOOSTVECTOR
 # include <boost/numeric/ublas/vector.hpp>
 # define CPPAD_TEST_VECTOR boost::numeric::ublas::vector

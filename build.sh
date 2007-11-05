@@ -223,9 +223,7 @@ then
 			--with-Example
 			--with-TestMore
 			--with-Speed
-			--with-PrintFor
-			--with-SpeedExample
-			--with-profiling"
+			--with-PrintFor"
 		if [ -e doc/index.htm ]
 		then
 			TEST="$TEST

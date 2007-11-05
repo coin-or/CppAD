@@ -182,16 +182,33 @@ else
 TEST_MORE =
 endif
 #
-# Did user specify --with-Speed
-#
 if CppAD_SPEED
-SPEED_CPPAD = speed/cppad
-SPEED_DOUBLE = speed/double
-else
-SPEED_CPPAD =
-SPEED_DOUBLE =
+# user specified --with-Speed -------------------------------------
+SPEED_CPPAD = speed/cppad speed/double speed/example speed/profile
+#
+if CppAD_ADOLC
+# Did user specify a value for ADOLC_DIR in configure command line
+SPEED_ADOLC    = speed/adolc
 endif
 #
+# Did user specify a value for FADBAD_DIR in configure command line
+if CppAD_FADBAD
+SPEED_FADBAD = speed/fadbad
+endif
+#
+# Did user specify a value for SACADO_DIR in configure command line
+if CppAD_SACADO
+SPEED_SACADO = speed/sacado
+endif
+# ----------------------------------------------------------------------
+# user did not specify --with-Speed
+else
+SPEED_CPPAD  =
+SPEED_ADOLC  = 
+SPEED_FADBAD = 
+SPEED_SACADO = 
+endif
+# ----------------------------------------------------------------------
 # Did user specify --with-PrintFor
 if CppAD_PRINTFOR
 PRINTFOR = print_for
@@ -199,51 +216,12 @@ else
 PRINTFOR =
 endif
 #
-# Did user specify --with-SpeedExample
-if CppAD_SPEED_EXAMPLE
-SPEED_EXAMPLE = speed/example
-else
-SPEED_EXAMPLE =
-endif
-#
-# Did user specify --with-Profiling
-if CppAD_PROFILING
-PROFILE = speed/profile
-else
-PROFILE = 
-endif
-#
-# Did user specify a value for ADOLC_DIR in configure command line
-if CppAD_ADOLC
-SPEED_ADOLC    = speed/adolc
-else
-EXAMPLE_ADOLC  =
-SPEED_ADOLC    = 
-endif
-#
-# Did user specify a value for FADBAD_DIR in configure command line
-if CppAD_FADBAD
-SPEED_FADBAD = speed/fadbad
-else
-SPEED_FADBAD = 
-endif
-#
-# Did user specify a value for SACADO_DIR in configure command line
-if CppAD_SACADO
-SPEED_SACADO = speed/sacado
-else
-SPEED_SACADO = 
-endif
-#
 SUBDIRS = \
 	$(EXAMPLE) \
 	$(INTRODUCTION) \
 	$(PRINTFOR) \
-	$(PROFILE) \
-	$(SPEED_ADOLC) \
 	$(SPEED_CPPAD) \
-	$(SPEED_DOUBLE) \
-	$(SPEED_EXAMPLE) \
+	$(SPEED_ADOLC) \
 	$(SPEED_FADBAD) \
 	$(SPEED_SACADO) \
 	$(TEST_MORE) 

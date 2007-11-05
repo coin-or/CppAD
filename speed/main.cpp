@@ -87,11 +87,8 @@ values in $code double$$ to the speed of the derivative computations.
 the speed of the function evaluation in $code double$$.) 
 
 $subhead profile$$
-The value 
-$italic package$$ can also be
-$cref/profile/InstallUnix/--with-profiling/$$.
 In the special case where $italic package$$ is $code profile$$,
-the CppAD package is compiled and run with profiling to determine
+the CppAD package is compiled and run with profiling to aid in determining
 where it is spending most of its time.
 
 $head option$$
