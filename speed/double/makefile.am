@@ -24,10 +24,13 @@ noinst_PROGRAMS  = double
 #
 AM_CPPFLAGS   = -I$(top_srcdir) $(BOOST_INCLUDE)
 #
+# BEGIN OPTIMIZE
 AM_CXXFLAGS   = -O2 -DNDEBUG $(CXX_FLAGS) -DDOUBLE
+# END OPTIMIZE
 #
-# debugging version
+# BEGIN DEBUG
 # AM_CXXFLAGS   = -g $(CXX_FLAGS) -DDOUBLE
+# END DEBUG
 #
 double_SOURCES = \
 	../main.cpp \

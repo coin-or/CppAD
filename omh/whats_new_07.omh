@@ -61,8 +61,15 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-06$$
+Added the $code -DRAD_EQ_ALIAS$$ compiler flag to the 
+$cref/Sacado speed tests/speed_sacado/$$.
+In addition, compiler flag documentation was included for
+$cref/Sacado/speed_sacado/C++ Compiler Flags/$$ and 
+all the other speed tests.
+
 $head 11-05$$
-Project files have been added for running the
+MS project files have been added for running the
 $cref/cppad/InstallWindows/CppAD Speed Test/$$ and
 $cref/double/InstallWindows/Double Speed Test/$$ 
 speed tests.

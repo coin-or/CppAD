@@ -172,10 +172,13 @@ top_srcdir = @top_srcdir@
 #
 AM_CPPFLAGS = -I$(top_srcdir) $(BOOST_INCLUDE)
 #
+# BEGIN OPTIMIZE
 AM_CXXFLAGS = -O2 -DNDEBUG $(CXX_FLAGS) -DCPPAD
+# END OPTIMIZE
 #
-# debugging version
+# BEGIN DEBUG
 # AM_CXXFLAGS   = -g $(CXX_FLAGS) -DCPPAD
+# END DEBUG
 #
 cppad_SOURCES = \
 	../main.cpp \

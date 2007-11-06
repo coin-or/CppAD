@@ -36,12 +36,8 @@ list="
 	print_for/*.cpp
 	speed_cppad/*.cpp
 	speed/*.cpp
-	speed/adolc/*.cpp
-	speed/cppad/*.cpp
-	speed/double/*.cpp
-	speed/example/*.cpp
-	speed/fadbad/*.cpp
-	speed/sacado/*.cpp
+	speed/*/*.cpp
+	speed/*/makefile.am
 	omh/*.omh
 "
 for file in $list

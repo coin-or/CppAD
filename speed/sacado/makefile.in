@@ -173,11 +173,13 @@ top_srcdir = @top_srcdir@
 #
 AM_CPPFLAGS = -I$(top_srcdir) -I$(SACADO_DIR)/include $(BOOST_INCLUDE)
 #
-# optimized version
-AM_CXXFLAGS = -O2 -DNDEBUG  $(CXX_FLAGS) -DSACADO
+# BEGIN OPTIMIZE
+AM_CXXFLAGS = -O2 -DNDEBUG  $(CXX_FLAGS) -DSACADO -DRAD_EQ_ALIAS
+# END OPTIMIZE
 #
-# debugging version
-# AM_CXXFLAGS   = -g $(CXX_FLAGS) -DSACADO
+# BEGIN DEBUG
+# AM_CXXFLAGS   = -g $(CXX_FLAGS) $(CXX_FLAGS) -DSACADO
+# END DEBUG
 #
 LDADD = -lsacado
 AM_LDFLAGS = -L$(SACADO_DIR)/lib

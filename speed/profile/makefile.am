@@ -26,10 +26,13 @@ noinst_PROGRAMS  = profile
 #
 AM_CPPFLAGS   = -I$(top_srcdir) $(BOOST_INCLUDE)
 #
+# BEGIN OPTIMIZE
 AM_CXXFLAGS   = -pg -O2 $(CXX_FLAGS) -DPROFILE
+# END OPTIMIZE
 #
-# debugging version
+# BEGIN DEBUG
 # AM_CXXFLAGS   = -g $(CXX_FLAGS) -DPROFILE
+# END DEBUG
 #
 AM_LDFLAGS    = -pg
 #

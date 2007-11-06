@@ -227,6 +227,10 @@ $subhead profile$$
 $index speed, profile cppad$$
 $index profile, cppad speed$$
 $index cppad, profile speed$$
+The C++ compiler flags used to build the profile speed tests are
+$code
+$verbatim%speed/profile/makefile.am%5%# BEGIN OPTIMIZE%# END OPTIMIZE%$$
+$$
 After you execute the $xref/InstallUnix/make/make/$$ command,
 you can run the $cref/speed_main/$$ program with the command
 $syntax%
