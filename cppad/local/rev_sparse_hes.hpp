@@ -44,7 +44,7 @@ $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
 For a fixed $latex n \times q$$ matrix $latex R$$
-and a fixed $latex m \times 1$$ matrix $latex S$$,
+and a fixed $latex 1 \times m$$ matrix $latex S$$,
 the second partial of $latex S * F[ x + R * u ]$$
 with respect to $latex u$$ at $latex u = 0$$ and with respect to x
 $latex \[
