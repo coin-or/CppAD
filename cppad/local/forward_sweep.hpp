@@ -168,13 +168,13 @@ size_t ForwardSweep(
 	size_t        n_var;
 	size_t        n_ind;
 
-	const size_t   *ind;
+	const size_t   *ind = 0;
 	const Base       *P = 0;
 	const Base       *X = 0;
 	const Base       *Y = 0;
 
 	// used by CExp operator (left and right also used by Com operator)
-	const Base  *left, *right, *trueCase, *falseCase;
+	const Base  *left = 0, *right = 0, *trueCase = 0, *falseCase = 0;
 	const Base  zero = Base(0);
 
 	// used by Com operator

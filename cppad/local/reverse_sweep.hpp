@@ -148,7 +148,7 @@ void ReverseSweep(
 	size_t        n_var;
 	size_t        n_ind;
 
-	const size_t   *ind;
+	const size_t   *ind = 0;
 	const Base       *P = 0;
 	const Base       *Z = 0;
 	const Base       *Y = 0;

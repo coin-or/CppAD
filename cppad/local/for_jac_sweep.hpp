@@ -153,19 +153,19 @@ void ForJacSweep(
 	size_t        n_var;
 	size_t        n_ind;
 
-	const size_t   *ind;
-	const Pack       *X;
-	const Pack       *Y;
+	const size_t   *ind = 0;
+	const Pack       *X = 0;
+	const Pack       *Y = 0;
 
-	Pack             *Z;
-	Pack           *Tmp;
+	Pack             *Z = 0;
+	Pack           *Tmp = 0;
 
 	size_t            j;
 
 	// used by CExp operator 
 	bool use_VecAD = Rec->NumVecInd() > 0;
-	const Base  *left, *right;
-	const Pack  *trueCase, *falseCase;
+	const Base  *left = 0, *right = 0;
+	const Pack  *trueCase = 0, *falseCase = 0;
 	Pack  *zero = CPPAD_NULL;
 	zero        = CPPAD_TRACK_NEW_VEC(npv, zero);
 	for(j = 0; j < npv; j++)

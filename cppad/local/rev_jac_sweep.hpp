@@ -131,16 +131,16 @@ void RevJacSweep(
 	size_t        n_var;
 	size_t        n_ind;
 
-	const size_t   *ind;
-	Pack             *X;
-	Pack             *Y;
-	const Pack       *Z;
+	const size_t   *ind = 0;
+	Pack             *X = 0;
+	Pack             *Y = 0;
+	const Pack       *Z = 0;
 
 	size_t            j;
 
 	// used by CExp operator 
-	const Base  *left, *right;
-	Pack        *trueCase, *falseCase;
+	const Base  *left = 0, *right = 0;
+	Pack        *trueCase = 0, *falseCase = 0;
 	Pack         zero(0);
 
 	// check numvar argument

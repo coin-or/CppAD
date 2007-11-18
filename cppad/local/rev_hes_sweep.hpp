@@ -133,23 +133,23 @@ void RevHesSweep(
 	size_t        n_var;
 	size_t        n_ind;
 
-	const size_t   *ind;
+	const size_t   *ind = 0;
 
-	const Pack       *Xf;
-	Pack             *Xh;
+	const Pack       *Xf = 0;
+	Pack             *Xh = 0;
 
-	const Pack       *Yf;
-	Pack             *Yh;
+	const Pack       *Yf = 0;
+	Pack             *Yh = 0;
 
-	const Pack       *Zf;
-	const Pack       *Zr;
-	const Pack       *Zh;
+	const Pack       *Zf = 0;
+	const Pack       *Zr = 0;
+	const Pack       *Zh = 0;
 
 
 	// used by CExp operator 
-	const Base *left, *right;
-	Pack  *trueCaseh;
-	Pack  *falseCaseh;
+	const Base *left = 0, *right = 0;
+	Pack  *trueCaseh = 0;
+	Pack  *falseCaseh = 0;
 	Pack  zero(0);
 
 	size_t             j;
