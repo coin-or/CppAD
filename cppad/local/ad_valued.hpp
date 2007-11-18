@@ -2,7 +2,7 @@
 # define CPPAD_AD_VALUED_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,7 +24,7 @@ $section AD Valued Operations and Functions$$
 
 $childtable%
 	cppad/local/arithmetic.hpp%
-	cppad/local/std_math_unary.hpp%
+	cppad/local/std_math_ad.hpp%
 	cppad/local/math_other.hpp%
 	cppad/local/cond_exp.hpp%
 	cppad/local/discrete.hpp
@@ -37,7 +37,7 @@ $end
 // CondExp.h and CondExp.h is not sufficently declared in Declare.h
 
 # include <cppad/local/arithmetic.hpp>
-# include <cppad/local/std_math_unary.hpp>
+# include <cppad/local/std_math_ad.hpp>
 # include <cppad/local/cond_exp.hpp>
 # include <cppad/local/math_other.hpp>
 # include <cppad/local/discrete.hpp>

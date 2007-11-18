@@ -76,7 +76,7 @@ so it is necessary to define the error handler
 in addition to including
 $cref/declare.hpp/base_require/declare.hpp/$$
 $codep */
-# include <cppad/local/declare.hpp>
+# include <cppad/declare.hpp>
 # include <cppad/error_handler.hpp>
 /* $$
 

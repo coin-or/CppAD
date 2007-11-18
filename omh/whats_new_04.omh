@@ -466,12 +466,12 @@ The $xref/atan2//atan2/$$ function was added.
 
 $head 06-03$$
 The $code asin$$ and $code acos$$ 
-$xref/StdMathUnary//AD standard math unary functions/$$ were added.
+$xref/std_math_ad//AD standard math unary functions/$$ were added.
 $pre
 
 $$
 There was a bug the reverse mode theory and calculation of 
-derivatives of $xref/StdMathUnary//sqrt/$$ for fourth and higher orders. 
+derivatives of $xref/std_math_ad//sqrt/$$ for fourth and higher orders. 
 This has been fixed.
 In addition,
 the following examples have been changed
@@ -486,7 +486,7 @@ $xref/Sqrt.cpp//sqrt/$$.
 
 
 $head 06-01$$
-There was a bug in the $xref/StdMathUnary//atan/$$ function 
+There was a bug in the $xref/std_math_ad//atan/$$ function 
 $xref/Forward//forward mode/$$ calculations for Taylor coefficient
 orders greater than two.
 This has been fixed.
@@ -634,7 +634,7 @@ $xref/CondExp//conditional expressions/$$ were mistakenly left out.
 This has been fixed.
 
 $head 04-29$$
-The unary functions, such as $xref/StdMathUnary//sin/$$ and $xref/StdMathUnary//cos/$$,
+The unary functions, such as $xref/std_math_ad//sin/$$ and $xref/std_math_ad//cos/$$,
 were not defined for elements of an $xref/VecAD/$$ vector.
 This has been fixed.
 
@@ -665,7 +665,7 @@ and an increase in the speed for $xref/VecAD/$$ operations.
 $pre
 
 $$
-The $xref/StdMathUnary//log10/$$ function was added.
+The $xref/std_math_ad//log10/$$ function was added.
 
 
 $head 04-22$$

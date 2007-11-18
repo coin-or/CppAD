@@ -69,10 +69,18 @@ $pre
 
 $$
 The interface specifications for
-$cref/base type requirements/base_require/$$ have been changed to fix a bug
-that was demonstrated by newer version of $code gcc$$.
-This changes of requirements is demonstrated by the
+$cref/base type requirements/base_require/$$ have been changed so that
+CppAD would compile with $code gcc 4.1.1$$
+(which requires more definitions before use in template functions).
+This changed of requirements is demonstrated by the
 $cref/base_complex.hpp/$$ and $cref/base_adolc.hpp/$$ examples.
+$pre
+
+$$
+The problem with newer C++ compilers requiring more definitions before use
+also required the user to know about $code float$$ and $code double$$ 
+definitions for the standard math 
+functions in the CppAD namespace; see $cref/std_math_unary/$$.
 $pre
 
 $$
@@ -511,7 +519,7 @@ $pre
 
 $$
 Fix the description of the $code tan$$ function in 
-$cref/StdMathUnary/$$.
+$cref/std_math_ad/$$.
 
 
 $head 06-14$$

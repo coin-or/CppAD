@@ -434,7 +434,7 @@ $syntax%
 $head Standard Math Unary$$
 $index math, Base require$$
 The type $italic Base$$ must support the following 
-$cref/standard math unary functions/StdMathUnary/$$:
+$cref/standard math unary functions/std_math_ad/$$:
 $table
 $bold Syntax$$ $cnext $bold Result$$ 
 $rnext

@@ -1,5 +1,5 @@
-# ifndef CPPAD_STD_MATH_UNARY_INCLUDED
-# define CPPAD_STD_MATH_UNARY_INCLUDED
+# ifndef CPPAD_STD_MATH_AD_INCLUDED
+# define CPPAD_STD_MATH_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
@@ -11,10 +11,9 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-
 /*
 -------------------------------------------------------------------------------
-$begin StdMathUnary$$
+$begin std_math_ad$$
 $spell
 	Vec
 	std
@@ -82,58 +81,20 @@ $xref/glossary/Operation/Independent/independent/1/$$
 of $italic x$$.
 
 $head fun$$ 
-A definition of $italic fun$$ for each of the argument types
-list below is included in the $code CppAD$$ namespace
-(the corresponding result has the same type as the argument).
-These definitions extend to the 
-$cref/AD levels above/glossary/AD Levels Above Base/$$
-above each of the types list below.
-
-$table
-$bold fun$$   
-	$cnext $bold Meaning$$
-	$cnext $code float$$ 
-	$cnext $code double$$
-	$cnext $code std::complex<float>$$ 
-	$cnext $code std::complex<double>$$
-$rnext
-$code acos$$  
-	$cnext inverse cosine function
-	$cnext yes $cnext yes $cnext no  $cnext no  $rnext
-$code asin$$  
-	$cnext inverse cosine function
-	$cnext yes $cnext yes $cnext no  $cnext no  $rnext
-$code atan$$  
-	$cnext inverse tangent function
-	$cnext yes $cnext yes $cnext no  $cnext no  $rnext
-$code cos$$   
-	$cnext trigonometric cosine function
-	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
-$code cosh$$  
-	$cnext hyperbolic cosine function
-	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
-$code exp$$   
-	$cnext exponential function
-	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
-$code log$$   
-	$cnext natural logarithm function
-	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
-$code log10$$ 
-	$cnext log base 10 function
-	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
-$code sin$$   
-	$cnext trigonometric sine function
-	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
-$code sinh$$  
-	$cnext hyperbolic sine function
-	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
-$code sqrt$$  
-	$cnext square root function
-	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
-$code tan$$  
-	$cnext tangent function
-	$cnext yes $cnext yes $cnext yes $cnext yes $rnext
-$tend
+A definition of $italic fun$$ is included 
+for each of the following functions:
+$code acos$$,
+$code asin$$,
+$code atan$$,
+$code cos$$,
+$code cosh$$,
+$code exp$$,
+$code log$$,
+$code log10$$,
+$code sin$$,
+$code sinh$$,
+$code sqrt$$,
+$code tan$$.
 
 
 $head Examples$$
@@ -275,21 +236,14 @@ $end
 -------------------------------------------------------------------------------
 */
 
-# define CPPAD_STANDARD_MATH_UNARY_BASE(Name)                             \
-                                                                          \
-	inline float Name(const float &x)                                 \
-	{	return std::Name(x); }                                    \
-                                                                          \
-	inline double Name(const double &x)                               \
-	{	return std::Name(x); }                                    \
-                                                                          \
+# include <cppad/std_math_unary.hpp>
 
-# define CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(Name, Op)                \
+# define CPPAD_STANDARD_MATH_UNARY_AD(Name, Op)                           \
 	template <class Base>                                             \
 	inline AD<Base> AD<Base>::Name (void) const                       \
         {	using CppAD::Name;                                        \
 		AD<Base> result;                                          \
-		CPPAD_ASSERT_UNKNOWN( Parameter(result) );                   \
+		CPPAD_ASSERT_UNKNOWN( Parameter(result) );                \
 		result.value_ = Name(value_);                             \
 		if( Variable(*this) )                                     \
 			tape_this()->RecordOp(Op, result, taddr_);        \
@@ -305,54 +259,23 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-        // acos
-        CPPAD_STANDARD_MATH_UNARY_BASE(acos)
-        CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(acos, AcosOp)
-
-        // asin
-        CPPAD_STANDARD_MATH_UNARY_BASE(asin)
-        CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(asin, AsinOp)
-
-        // atan
-        CPPAD_STANDARD_MATH_UNARY_BASE(atan)
-        CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(atan, AtanOp)
-
-        // cos
-        CPPAD_STANDARD_MATH_UNARY_BASE(cos)
-        CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(cos, CosOp)
-
-        // cosh
-        CPPAD_STANDARD_MATH_UNARY_BASE(cosh)
-        CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(cosh, CoshOp)
-
-        // exp
-        CPPAD_STANDARD_MATH_UNARY_BASE(exp)
-        CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(exp, ExpOp)
-
-        // log
-        CPPAD_STANDARD_MATH_UNARY_BASE(log)
-        CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(log, LogOp)
-
-        // log10
+        CPPAD_STANDARD_MATH_UNARY_AD(acos, AcosOp)
+        CPPAD_STANDARD_MATH_UNARY_AD(asin, AsinOp)
+        CPPAD_STANDARD_MATH_UNARY_AD(atan, AtanOp)
+        CPPAD_STANDARD_MATH_UNARY_AD(cos, CosOp)
+        CPPAD_STANDARD_MATH_UNARY_AD(cosh, CoshOp)
+        CPPAD_STANDARD_MATH_UNARY_AD(exp, ExpOp)
+        CPPAD_STANDARD_MATH_UNARY_AD(log, LogOp)
+	// log10
 	template <class Base>
 	inline AD<Base> log10(const AD<Base> &x)
 	{	return CppAD::log(x) / CppAD::log( Base(10) ); }
 	template <class Base>
 	inline AD<Base> log10(const VecAD_reference<Base> &x)
 	{	return CppAD::log(x.ADBase()) / CppAD::log( Base(10) ); }
-
-        // sin
-        CPPAD_STANDARD_MATH_UNARY_BASE(sin)
-        CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(sin, SinOp)
-
-        // sinh
-        CPPAD_STANDARD_MATH_UNARY_BASE(sinh)
-        CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(sinh, SinhOp)
-
-        // sqrt
-        CPPAD_STANDARD_MATH_UNARY_BASE(sqrt)
-        CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE(sqrt, SqrtOp)
-	
+        CPPAD_STANDARD_MATH_UNARY_AD(sin, SinOp)
+        CPPAD_STANDARD_MATH_UNARY_AD(sinh, SinhOp)
+        CPPAD_STANDARD_MATH_UNARY_AD(sqrt, SqrtOp)
         // tan
 	template <class Base>
 	inline AD<Base> tan(const AD<Base> &x)
@@ -362,7 +285,6 @@ namespace CppAD {
 	{	return CppAD::sin(x.ADBase()) / CppAD::cos(x.ADBase()); }
 }
 
-# undef CPPAD_STANDARD_MATH_UNARY_BASE
-# undef CPPAD_STANDARD_MATH_UNARY_BASE_TEMPLATE
+# undef CPPAD_STANDARD_MATH_UNARY_AD
 
 # endif 

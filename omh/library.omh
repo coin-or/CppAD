@@ -48,6 +48,7 @@ $children%
 	cppad/local/bender_quad.hpp%
 	cppad/local/lu_ratio.hpp%
 
+	cppad/std_math_unary.hpp%
 	cppad/vector.hpp%
 	cppad/track_new_del.hpp
 %$$
@@ -110,6 +111,7 @@ $tend
 $head CppAD Support Template Library$$
 The classes listed are used to support CppAD calculations:
 $table
+$rref std_math_unary$$
 $rref CppAD_vector$$
 $rref TrackNewDel$$
 $tend

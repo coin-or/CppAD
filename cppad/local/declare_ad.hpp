@@ -1,5 +1,5 @@
-# ifndef CPPAD_DECLARE_INCLUDED
-# define CPPAD_DECLARE_INCLUDED
+# ifndef CPPAD_DECLARE_AD_INCLUDED
+# define CPPAD_DECLARE_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
@@ -49,10 +49,7 @@ namespace CppAD {
 	template <class Base> bool NearEqual(
 	const AD<Base> &x, const Base &y, const Base &r, const Base &a);
 	
-	// CondExp
-	enum CompareOp 
-	{CompareLt, CompareLe, CompareEq, CompareGe, CompareGt, CompareNe};
-
+	// CondExpOp
 	template <class Base> AD<Base> CondExpOp (
 		enum CompareOp         cop ,
 		const AD<Base>       &left , 

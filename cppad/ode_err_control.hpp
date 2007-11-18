@@ -416,6 +416,9 @@ $end
 --------------------------------------------------------------------------
 */
 
+// link exp and log for float and double
+# include <cppad/std_math_unary.hpp>
+
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_simple_vector.hpp>
 # include <cppad/nan.hpp>

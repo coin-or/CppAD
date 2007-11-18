@@ -60,7 +60,7 @@ in addition to including
 $cref/declare.hpp/base_require/declare.hpp/$$
 $codep */
 # include <complex>
-# include <cppad/local/declare.hpp>
+# include <cppad/declare.hpp>
 # include <cppad/error_handler.hpp>
 /* $$
 
@@ -208,7 +208,7 @@ $subhead Invalid Complex Functions$$
 The other standard math functions,
 (and $code abs$$) required by $cref/base_require/$$
 are not defined for complex types
-(see $cref/abs/abs/Complex Types/$$ and $cref/StdMathUnary/StdMathUnary/fun/$$).
+(see $cref/abs/abs/Complex Types/$$).
 Hence we make it an error to use them.
 (Note that the standard math functions are not defined in the CppAD namespace.)
 $codep */

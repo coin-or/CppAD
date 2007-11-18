@@ -367,6 +367,9 @@ $end
 --------------------------------------------------------------------------
 */
 
+// link exp and log for float and double
+# include <cppad/std_math_unary.hpp>
+
 # include <cppad/ode_gear.hpp>
 
 namespace CppAD { // Begin CppAD namespace

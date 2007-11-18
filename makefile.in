@@ -216,6 +216,7 @@ nobase_include_HEADERS = \
 	cppad/check_numeric_type.hpp \
 	cppad/check_simple_vector.hpp \
 	cppad/cppad.hpp \
+	cppad/declare.hpp \
 	cppad/vector.hpp \
 	cppad/error_handler.hpp \
 	cppad/lu_factor.hpp \
@@ -233,6 +234,7 @@ nobase_include_HEADERS = \
 	cppad/rosen_34.hpp \
 	cppad/runge_45.hpp \
 	cppad/speed_test.hpp \
+	cppad/std_math_unary.hpp \
 	cppad/track_new_del.hpp \
 	cppad/local/ad.hpp \
 	cppad/local/ad_binary.hpp \
@@ -261,7 +263,7 @@ nobase_include_HEADERS = \
 	cppad/local/cond_exp.hpp \
 	cppad/local/convert.hpp \
 	cppad/local/cppad_assert.hpp \
-	cppad/local/declare.hpp \
+	cppad/local/declare_ad.hpp \
 	cppad/local/default.hpp \
 	cppad/local/define.hpp \
 	cppad/local/dependent.hpp \
@@ -314,7 +316,7 @@ nobase_include_HEADERS = \
 	cppad/local/sin_cos.hpp \
 	cppad/local/sparse.hpp \
 	cppad/local/sqrt_op.hpp \
-	cppad/local/std_math_unary.hpp \
+	cppad/local/std_math_ad.hpp \
 	cppad/local/sub.hpp \
 	cppad/local/sub_eq.hpp \
 	cppad/local/sub_op.hpp \

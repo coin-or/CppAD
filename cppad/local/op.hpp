@@ -36,7 +36,7 @@ $end
 */
 
 
-# include <cppad/local/std_math_unary.hpp>
+# include <cppad/local/std_math_ad.hpp>
 # include <cppad/local/abs_op.hpp>
 # include <cppad/local/add_op.hpp>
 # include <cppad/local/asin_op.hpp>

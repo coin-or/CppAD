@@ -146,7 +146,7 @@ Are there plans to add more math functions to CppAD ?
 $pre
 
 $$
-Yes. The $xref/StdMathUnary/$$ and $xref/MathOther/$$ section contains
+Yes. The $xref/std_math_ad/$$ and $xref/MathOther/$$ section contains
 a list of the math functions included so far.
 Contact the mailing list 
 $href%

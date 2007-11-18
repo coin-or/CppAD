@@ -266,7 +266,7 @@ tape only supports partial derivatives.
 
 $head 10-14$$
 The $code sqrt$$ function was added to the 
-$xref/StdMathUnary//AD standard math unary functions/$$.
+$xref/std_math_ad//AD standard math unary functions/$$.
 In addition, a definition of the power function for the
 $xref/Pow/Standard Types/standard types/$$ was automatically 
 included in the $code CppAD$$ namespace.
@@ -278,7 +278,7 @@ be called when the tape is in the Empty state.
 
 $head 10-10$$
 The $code atan$$ function was added to the 
-$xref/StdMathUnary//AD standard math unary functions/$$.
+$xref/std_math_ad//AD standard math unary functions/$$.
 
 $head 10-06$$
 In the notation below, $italic zero$$ and $italic one$$

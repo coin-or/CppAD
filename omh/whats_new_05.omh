@@ -556,7 +556,7 @@ The $xref/Value.cpp/$$ example has been improved and the old example
 has been moved into the $code TestMore$$ directory.
 
 $head 08-13$$
-The $xref/StdMathUnary//AD standard math unary functions/$$
+The $xref/std_math_ad//AD standard math unary functions/$$
 $code sinh$$, and $code cosh$$ have been added. 
 In addition, more correctness testing 
 (
@@ -585,7 +585,7 @@ The old $code CondExp$$ function has been deprecated.
 
 $head 07-21$$
 Remove unnecessary no-op that was left in tape for the 
-$xref/StdMathUnary//AD standard math unary functions/$$
+$xref/std_math_ad//AD standard math unary functions/$$
 $code acos$$, $code asin$$, $code atan$$, $code cos$$.
 $pre
 

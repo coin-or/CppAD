@@ -945,7 +945,7 @@ $xref/UnaryPlus/$$,
 $xref/UnaryMinus/$$,
 $cref/ad_binary/$$,
 $xref/compute_assign/$$, and
-$xref/StdMathUnary/$$
+$xref/std_math_ad/$$
 
 
 $head 03-27$$
@@ -1036,7 +1036,7 @@ how an $xref/ADFun/$$ object is related to the C++ algorithm.
 
 
 $head 03-10$$
-The math functions that are not under $xref/StdMathUnary/$$ have
+The math functions that are not under $xref/std_math_ad/$$ have
 been grouped under $xref/MathOther/$$.
 $pre
 
@@ -1068,7 +1068,7 @@ $xref/Atan.cpp/$$ have been improved.
 $head 03-05$$
 The AD standard math unary functions documentation
 has been grouped together with improved documentation
-in $xref/StdMathUnary/$$.
+in $xref/std_math_ad/$$.
 
 $head 02-28$$
 The $xref/Output/$$ and $xref/Abs/$$

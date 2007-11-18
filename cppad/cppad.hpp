@@ -11,8 +11,9 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/declare.hpp>            // forward declarations need by user
+// ---------------------------------------------------------------------------
 # include <cppad/local/base_complex.hpp> // allow form complex Base types
-
 // ---------------------------------------------------------------------------
 // CppAD general purpose library routines (can be included separately)
 
@@ -56,7 +57,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/test_vector.hpp>
 
 // Declare classes and fucntions that are used before defined
-# include <cppad/local/declare.hpp>
+# include <cppad/local/declare_ad.hpp>
 
 // ---------------------------------------------------------------------------
 // declare the AD<Base> template class
