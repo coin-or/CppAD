@@ -2,7 +2,7 @@
 # define CPPAD_OP_CODE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -345,7 +345,7 @@ const size_t NumVarTable[] = {
 	3, // PowpvOp
 	3, // PowvvOp
 	0, // PripOp
-	1, // PrivOp
+	0, // PrivOp
 	2, // SinOp
 	2, // SinhOp
 	1, // SqrtOp

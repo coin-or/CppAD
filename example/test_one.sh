@@ -12,19 +12,22 @@
 # Run one of the tests
 if [ "$1" = "" ]
 then
-	echo "usage: test_one.sh file function [extra]"
+	echo "usage: test_one.sh file [extra]"
 	echo "file is the *.cpp file name with extension"
-	echo "function is the name of the function being tested"
 	echo "and extra is extra options for g++ command"
 	exit 1
 fi
+# determine the function name
+fun=`grep "^bool *[a-zA-Z_]*( *void *)" $1 | tail -1 | \
+	sed -e "s/^bool *\([a-zA-Z_]*\) *( *void *)/\1/"`
+#
 if [ -e test_one.exe ]
 then
 	rm test_one.exe
 fi
 sed < example.cpp > test_one.cpp \
 -e '/ok *\&= *Run( /d' \
--e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $2, \"$2\");/"  
+-e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $fun, \"$fun\");/"  
 #
 cmd="g++ test_one.cpp $1 $3
 	-o test_one.exe

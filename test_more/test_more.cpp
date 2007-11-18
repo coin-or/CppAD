@@ -168,17 +168,25 @@ int main(void)
 	ok &= Run( base_adolc,      "base_adolc"     );
 # endif
 
-	// check for memory leak in previous calculations
-	if( CppADTrackCount() != 0 )
-	{	ok = false;
-		cout << "Error: memroy leak detected" << endl;
-	}
-
+	// check for errors
+	using std::cout;
+	using std::endl;
 	assert( ok || (Run_error_count > 0) );
+	if( CppADTrackCount() == 0 )
+	{	Run_ok_count++;
+		cout << "Ok:    " << "No memory leak detected" << endl;
+	}
+	else
+	{	ok = false;
+		Run_error_count++;
+		cout << "Error: " << "memory leak detected" << endl;
+	}
+	// convert int(size_t) to avoid warning on _MSC_VER systems
 	if( ok )
 		cout << "All " << int(Run_ok_count) << " tests passed." << endl;
 	else	cout << int(Run_error_count) << " tests failed." << endl;
 
 	return static_cast<int>( ! ok );
+
 }
 // END PROGRAM

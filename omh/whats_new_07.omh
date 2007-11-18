@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	gcc
 	executables
 	makefiles
 	tarballs
@@ -60,6 +61,38 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-18$$
+Speed tests for $code tape_values$$ branch were not better than trunk,
+so the good parts of that branch (but not all) were merged into the trunk.
+$pre
+
+$$
+The interface specifications for
+$cref/base type requirements/base_require/$$ have been changed to fix a bug
+that was demonstrated by newer version of $code gcc$$.
+This changes of requirements is demonstrated by the
+$cref/base_complex.hpp/$$ and $cref/base_adolc.hpp/$$ examples.
+$pre
+
+$$
+The $code example/test_one.sh$$ and $code test_more/test_one.sh$$
+scripts were modified so that one only need specify the test file name
+(does not also need the test routine name). Some of the test routine
+declarations were changed from $syntax//name/()/$$ to
+$syntax//name/(void)/$$ to make this possible.
+$pre
+
+$$
+The program $code test_more/test_more$$ was changed to always
+report the memory leak test results (same as $code example/example$$).
+$pre
+
+$$
+The $cref/PrintFor/$$ function was putting an unused variable in the tape.
+This has been fixed.
+
+
 
 $head 11-06$$
 Added the $code -DRAD_EQ_ALIAS$$ compiler flag to the 

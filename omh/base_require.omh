@@ -66,6 +66,15 @@ $head Numeric Type$$
 The type $italic Base$$ must support all the operations for a 
 $cref/NumericType/$$.
 
+$head declare.hpp$$
+The base type requirements must be included before the rest of
+CppAD. It is however necessary to declare the $code enum$$ type
+$code CompareOp$$ (and possible other things).
+This should be done with the following include command:
+$codep 
+	# include <cppad/local/declare.hpp>
+$$
+
 $head abs$$
 $index abs, Base require$$
 The type $italic Base$$ must support the syntax

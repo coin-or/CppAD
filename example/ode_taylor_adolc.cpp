@@ -173,14 +173,13 @@ $end
 --------------------------------------------------------------------------
 */
 // BEGIN PROGRAM
-
-# include <cppad/cppad.hpp>
 # include <adolc/adouble.h>
 # include <adolc/drivers/drivers.h>
 
 // definitions not in Adolc distribution and required to use CppAD::AD<adouble>
 # include "base_adolc.hpp"
 
+# include <cppad/cppad.hpp>
 // ==========================================================================
 namespace { // BEGIN empty namespace
 // define types for each level

@@ -13,6 +13,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
+	cppad.hpp
+	fabs
+	undef
 	Lt
 	Le
 	Eq
@@ -66,12 +69,32 @@ It returns true if it succeeds and false otherwise.
 The file $cref/ode_taylor_adolc.cpp/$$ contains a more realistic
 (and complex) example.
 
-$head Functions Defined by Adolc Package$$
+
+$head Include File$$
+This file is included before $code <cppad/cppad.hpp>$$
+so it is necessary to define the error handler
+in addition to including
+$cref/declare.hpp/base_require/declare.hpp/$$
+$codep */
+# include <cppad/local/declare.hpp>
+# include <cppad/error_handler.hpp>
+/* $$
+
+$head abs$$
+The $code abs$$ function is called $code fabs$$ in the Adolc package.
+$codep */
+namespace CppAD {
+	inline adouble abs(const adouble &x)    \
+	{	return ::fabs(x); }
+}
+
+/* $$
+
+$head Standard Math Functions Defined by Adolc Package$$
 The following $cref/required/base_require/$$ 
 functions are defined by the Adolc package:
 $pre
 $$
-$code abs$$,
 $code acos$$,
 $code asin$$,
 $code atan$$,
@@ -85,6 +108,30 @@ $code sin$$,
 $code sinh$$,
 $code sqrt$$,
 $code tan$$.
+$codep */
+# define CPPAD_USER_MACRO(function)          \
+inline adouble function(const adouble &x)    \
+{	return ::function(x); }
+
+namespace CppAD {
+	CPPAD_USER_MACRO(acos)
+	CPPAD_USER_MACRO(asin)
+	CPPAD_USER_MACRO(atan)
+	CPPAD_USER_MACRO(cos)
+	CPPAD_USER_MACRO(cosh)
+	CPPAD_USER_MACRO(erf)
+	CPPAD_USER_MACRO(exp)
+	CPPAD_USER_MACRO(log)
+	inline adouble pow(const adouble &x, const adouble y)
+	{	return ::pow(x, y); }
+	CPPAD_USER_MACRO(sin)
+	CPPAD_USER_MACRO(sinh)
+	CPPAD_USER_MACRO(sqrt)
+	CPPAD_USER_MACRO(tan)
+}
+# undef CPPAD_USER_MACRO
+
+/* $$
 
 $head CondExpOp$$
 The type $code adouble$$ supports a conditional assignment function

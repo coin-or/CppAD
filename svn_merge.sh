@@ -25,13 +25,13 @@ echo "DryRun = $DryRun"
 ToDirectory=trunk
 #
 # Name of the directory where the changes have been committed
-FromDirectory=branches/sacado
+FromDirectory=branches/tape_values
 #
 # Version of the repository corresponding to FromDirectory just before changes
-Start=1000
+Start=1065
 # 
 # Version of the repository corresponding to FromDirecrtory after the changes
-End=1004
+End=1076
 #
 # echo the svn merge command
 echo "cd  .."

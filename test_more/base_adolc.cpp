@@ -8,8 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# include <cppad/cppad.hpp>
-
 # include <adolc/adouble.h>
 # include <adolc/interfaces.h>
 
@@ -17,7 +15,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // required in order to use CppAD::AD<adouble>
 # include "../example/base_adolc.hpp"
 
-bool base_adolc() 
+# include <cppad/cppad.hpp>
+
+bool base_adolc(void) 
 {	bool ok = true;                   // initialize test result
 
 	typedef adouble             ADdouble;  // for first level of taping

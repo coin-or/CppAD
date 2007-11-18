@@ -602,8 +602,7 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case PrivOp:
-			// nvar should be zero for this case
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_var == 0);
 
 			break;
 			// -------------------------------------------------

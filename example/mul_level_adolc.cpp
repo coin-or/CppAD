@@ -14,7 +14,6 @@ $spell
 	CppAD
 	Adolc
 	adouble
-	abs
 	Vec
 $$
 
@@ -65,15 +64,16 @@ $$
 $end
 */
 // BEGIN PROGRAM
-
-# include <cppad/cppad.hpp>
-
 # include <adolc/adouble.h>
 # include <adolc/interfaces.h>
 
 // adouble definitions not in Adolc distribution and 
 // required in order to use CppAD::AD<adouble>
 # include "base_adolc.hpp"
+
+# include <cppad/cppad.hpp>
+
+
 
 namespace { // put this function in the empty namespace
 
@@ -98,7 +98,7 @@ namespace { // put this function in the empty namespace
 	} 
 }
 
-bool mul_level_adolc() 
+bool mul_level_adolc(void) 
 {	bool ok = true;                   // initialize test result
 
 	typedef adouble      ADdouble;         // for first level of taping

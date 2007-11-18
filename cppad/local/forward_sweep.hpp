@@ -289,10 +289,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case AcosOp:
+			// variables: acos(x),  sqrt(1 - x * x) 
 			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
 			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			// acos(x) and sqrt(1 - x * x) are computed in pairs
 			CPPAD_ASSERT_UNKNOWN( n_var == 2);
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
@@ -304,10 +303,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case AsinOp:
+			// variables: asin(x),  sqrt(1 - x * x) 
 			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
 			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			// asin(x) and sqrt(1 - x * x) are computed in pairs
 			CPPAD_ASSERT_UNKNOWN( n_var == 2);
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
@@ -319,10 +317,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case AtanOp:
+			// variables: atan(x),  1 + x * x 
 			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
 			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			// atan(x) and 1 + x * x must be computed in pairs
 			CPPAD_ASSERT_UNKNOWN( n_var == 2);
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
@@ -422,10 +419,9 @@ size_t ForwardSweep(
 			// ---------------------------------------------------
 
 			case CosOp:
+			// variables: cos(x), sin(x)
 			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
 			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			// cosine and sine must come in pairs
 			CPPAD_ASSERT_UNKNOWN( n_var == 2);
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
@@ -437,10 +433,9 @@ size_t ForwardSweep(
 			// ---------------------------------------------------
 
 			case CoshOp:
+			// variables: cosh(x), sinh(x)
 			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
 			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			// hyperbolic cosine and sine must come in pairs
 			CPPAD_ASSERT_UNKNOWN( n_var == 2);
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
@@ -669,6 +664,7 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case PowvpOp:
+			// variables: pow(x, y), log(x), y * log(x)
 			CPPAD_ASSERT_UNKNOWN( n_var == 3);
 			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
 			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var);
@@ -693,6 +689,7 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case PowpvOp:
+			// variables: pow(x, y), log(x), y * log(x)
 			CPPAD_ASSERT_UNKNOWN( n_var == 3);
 			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
 			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var);
@@ -719,6 +716,7 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case PowvvOp:
+			// variables: pow(x, y), log(x), y * log(x)
 			CPPAD_ASSERT_UNKNOWN( n_var == 3);
 			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
 			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var);
@@ -755,7 +753,7 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case PrivOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
+			CPPAD_ASSERT_UNKNOWN( n_var == 0);
 			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
 			if( print & (d == 0) )
 			{	CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumTxt() );
@@ -769,10 +767,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case SinOp:
+			// variables: sin(x), cos(x)
 			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
 			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			// sine and cosine must come in pairs
 			CPPAD_ASSERT_UNKNOWN( n_var == 2);
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 
@@ -784,10 +781,9 @@ size_t ForwardSweep(
 			// -------------------------------------------------
 
 			case SinhOp:
+			// variables: sinh(x), cosh(x)
 			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
 			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			// sine and cosine must come in pairs
 			CPPAD_ASSERT_UNKNOWN( n_var == 2);
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
 

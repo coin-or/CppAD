@@ -74,7 +74,7 @@ namespace { // put this function in the empty namespace
 	} 
 }
 
-bool mul_level() 
+bool mul_level(void) 
 {	bool ok = true;                          // initialize test result
 
 	typedef CppAD::AD<double>   ADdouble;    // for one level of taping

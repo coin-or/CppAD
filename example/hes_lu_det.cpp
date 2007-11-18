@@ -34,7 +34,7 @@ $end
 # include <cppad/cppad.hpp>
 # include <cppad/speed/det_by_lu.hpp>
 
-bool HesLuDet()
+bool HesLuDet(void)
 {	bool ok = true;
 
 	using namespace CppAD;
