@@ -36,6 +36,7 @@ $index standard, math unary$$
 $index math, unary$$
 $index unary, math$$
 
+$index abs, float and double$$
 $index acos, float and double$$
 $index asin, float and double$$
 $index atan, float and double$$
@@ -81,6 +82,7 @@ $syntax%
 $head fun$$ 
 A definition of $italic fun$$ is included for each of the 
 following functions:
+$code abs$$, 
 $code acos$$, 
 $code asin$$, 
 $code atan$$, 
@@ -111,6 +113,7 @@ $end
 
 namespace CppAD {
 
+        CPPAD_STANDARD_MATH_UNARY(abs)
         CPPAD_STANDARD_MATH_UNARY(acos)
         CPPAD_STANDARD_MATH_UNARY(asin)
         CPPAD_STANDARD_MATH_UNARY(atan)
