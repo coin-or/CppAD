@@ -2,7 +2,7 @@
 # define CPPAD_NEAR_EQUAL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -156,7 +156,8 @@ namespace CppAD { // Begin CppAD namespace
 
 // determine if both x and y are finite values (z1 and z2 are zero).
 template <class Type>
-bool isfinite(const Type &z1, const Type &z2, const Type &x , const Type &y)
+bool near_equal_isfinite(
+	const Type &z1, const Type &z2, const Type &x , const Type &y)
 {	Type infinity = Type(1) / z1;
 	Type nan      = z1      / z2;
 
@@ -187,7 +188,7 @@ bool NearEqual(const Type &x, const Type &y, const Type &r, const Type &a)
 	);
 
 	// check for special cases
-	if( ! isfinite(zero, zero, x, y) )
+	if( ! CppAD::near_equal_isfinite(zero, zero, x, y) )
 		return false;
 
 	Type ax = x;
@@ -231,9 +232,9 @@ bool NearEqual(
 	);
 
 	// check for special cases
-	if( ! isfinite(zero, zero, x.real(), x.imag()) )
+	if( ! CppAD::near_equal_isfinite(zero, zero, x.real(), x.imag()) )
 		return false;
-	if( ! isfinite(zero, zero, y.real(), y.imag()) )
+	if( ! CppAD::near_equal_isfinite(zero, zero, y.real(), y.imag()) )
 		return false;
 
 	std::complex<Type> d = x - y;

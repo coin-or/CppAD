@@ -255,143 +255,143 @@ public:
 	// default
 	TapeRec(void) 
 	{	
-		TotalNumberVar = 0;
+		TotalNumberVar_ = 0;
 
-		NumberOp       = 0;
-		LengthOp       = 0;
-		Op             = CPPAD_NULL;
+		NumberOp_       = 0;
+		LengthOp_       = 0;
+		Op_             = CPPAD_NULL;
 
-		NumberVecInd   = 0;
-		LengthVecInd   = 0;
-		VecInd         = CPPAD_NULL;
+		NumberVecInd_   = 0;
+		LengthVecInd_   = 0;
+		VecInd_         = CPPAD_NULL;
 
-		NumberInd      = 0;
-		LengthInd      = 0;
-		Ind            = CPPAD_NULL;
+		NumberInd_      = 0;
+		LengthInd_      = 0;
+		Ind_            = CPPAD_NULL;
 
-		NumberPar      = 0;
-		LengthPar      = 0;
-		Par            = CPPAD_NULL;
+		NumberPar_      = 0;
+		LengthPar_      = 0;
+		Par_            = CPPAD_NULL;
 
-		NumberTxt      = 0;
-		LengthTxt      = 0;
-		Txt            = CPPAD_NULL;
+		NumberTxt_      = 0;
+		LengthTxt_      = 0;
+		Txt_            = CPPAD_NULL;
 
 	}
 
 	// destructor
 	~TapeRec(void)
-	{	if( LengthOp > 0 )
-			CPPAD_TRACK_DEL_VEC(Op);
-		if( LengthVecInd > 0 )
-			CPPAD_TRACK_DEL_VEC(VecInd);
-		if( LengthInd > 0 )
-			CPPAD_TRACK_DEL_VEC(Ind);
-		if( LengthPar > 0 )
-			CPPAD_TRACK_DEL_VEC(Par);
-		if( LengthTxt > 0 )
-			CPPAD_TRACK_DEL_VEC(Txt);
+	{	if( LengthOp_ > 0 )
+			CPPAD_TRACK_DEL_VEC(Op_);
+		if( LengthVecInd_ > 0 )
+			CPPAD_TRACK_DEL_VEC(VecInd_);
+		if( LengthInd_ > 0 )
+			CPPAD_TRACK_DEL_VEC(Ind_);
+		if( LengthPar_ > 0 )
+			CPPAD_TRACK_DEL_VEC(Par_);
+		if( LengthTxt_ > 0 )
+			CPPAD_TRACK_DEL_VEC(Txt_);
 	}
 
 	// assignment from another recording
 	void operator=(const TapeRec &Other)
 	{	size_t i;
 
-		if( LengthOp > 0 )
-			CPPAD_TRACK_DEL_VEC(Op);
-		if( LengthVecInd > 0 )
-			CPPAD_TRACK_DEL_VEC(VecInd);
-		if( LengthInd > 0 )
-			CPPAD_TRACK_DEL_VEC(Ind);
-		if( LengthPar > 0 )
-			CPPAD_TRACK_DEL_VEC(Par);
-		if( LengthTxt > 0 )
-			CPPAD_TRACK_DEL_VEC(Txt);
+		if( LengthOp_ > 0 )
+			CPPAD_TRACK_DEL_VEC(Op_);
+		if( LengthVecInd_ > 0 )
+			CPPAD_TRACK_DEL_VEC(VecInd_);
+		if( LengthInd_ > 0 )
+			CPPAD_TRACK_DEL_VEC(Ind_);
+		if( LengthPar_ > 0 )
+			CPPAD_TRACK_DEL_VEC(Par_);
+		if( LengthTxt_ > 0 )
+			CPPAD_TRACK_DEL_VEC(Txt_);
 
 		// Var
-		TotalNumberVar  = Other.TotalNumberVar;
+		TotalNumberVar_  = Other.TotalNumberVar_;
 
 		// Op
-		NumberOp        = Other.NumberOp;
-		LengthOp        = Other.NumberOp;
+		NumberOp_        = Other.NumberOp_;
+		LengthOp_        = Other.NumberOp_;
 
 		// VecInd
-		NumberVecInd    = Other.NumberVecInd;
-		LengthVecInd    = Other.NumberVecInd;
+		NumberVecInd_    = Other.NumberVecInd_;
+		LengthVecInd_    = Other.NumberVecInd_;
 
 		// Ind
-		NumberInd       = Other.NumberInd;
-		LengthInd       = Other.NumberInd;
+		NumberInd_       = Other.NumberInd_;
+		LengthInd_       = Other.NumberInd_;
 
 		// Par
-		NumberPar       = Other.NumberPar;
-		LengthPar       = Other.NumberPar;
+		NumberPar_       = Other.NumberPar_;
+		LengthPar_       = Other.NumberPar_;
 
 		// Txt
-		NumberTxt       = Other.NumberTxt;
-		LengthTxt       = Other.NumberTxt;
+		NumberTxt_       = Other.NumberTxt_;
+		LengthTxt_       = Other.NumberTxt_;
 
 		// Allocate the memory
-		if( LengthOp == 0 )
-			Op = CPPAD_NULL;
-		else	Op = CPPAD_TRACK_NEW_VEC(LengthOp,      Op);
-		if( LengthVecInd == 0 )
-			VecInd = CPPAD_NULL;
-		else	VecInd = CPPAD_TRACK_NEW_VEC(LengthVecInd, VecInd);
-		if( LengthInd == 0 )
-			Ind = CPPAD_NULL;
-		else	Ind = CPPAD_TRACK_NEW_VEC(LengthInd,       Ind);
-		if( LengthPar == 0 )
-			Par = CPPAD_NULL;
-		else	Par = CPPAD_TRACK_NEW_VEC(LengthPar,       Par);
-		if( LengthTxt == 0 )
-			Txt = CPPAD_NULL;
-		else	Txt = CPPAD_TRACK_NEW_VEC(LengthTxt,       Txt);
+		if( LengthOp_ == 0 )
+			Op_ = CPPAD_NULL;
+		else	Op_ = CPPAD_TRACK_NEW_VEC(LengthOp_,      Op_);
+		if( LengthVecInd_ == 0 )
+			VecInd_ = CPPAD_NULL;
+		else	VecInd_ = CPPAD_TRACK_NEW_VEC(LengthVecInd_, VecInd_);
+		if( LengthInd_ == 0 )
+			Ind_ = CPPAD_NULL;
+		else	Ind_ = CPPAD_TRACK_NEW_VEC(LengthInd_,       Ind_);
+		if( LengthPar_ == 0 )
+			Par_ = CPPAD_NULL;
+		else	Par_ = CPPAD_TRACK_NEW_VEC(LengthPar_,       Par_);
+		if( LengthTxt_ == 0 )
+			Txt_ = CPPAD_NULL;
+		else	Txt_ = CPPAD_TRACK_NEW_VEC(LengthTxt_,       Txt_);
 
 		// Copy the data
-		i = NumberOp;
+		i = NumberOp_;
 		while(i--)
-			Op[i] = Other.Op[i];
-		i = NumberVecInd;
+			Op_[i] = Other.Op_[i];
+		i = NumberVecInd_;
 		while(i--)
-			VecInd[i] = Other.VecInd[i];
-		i = NumberInd;
+			VecInd_[i] = Other.VecInd_[i];
+		i = NumberInd_;
 		while(i--)
-			Ind[i] = Other.Ind[i];
-		i = NumberPar;
+			Ind_[i] = Other.Ind_[i];
+		i = NumberPar_;
 		while(i--)
-			Par[i] = Other.Par[i];
-		i = NumberTxt;
+			Par_[i] = Other.Par_[i];
+		i = NumberTxt_;
 		while(i--)
-			Txt[i] = Other.Txt[i];
+			Txt_[i] = Other.Txt_[i];
 	}
 
 	// erase all information in recording
 	void Erase(void)
 	{	
-		TotalNumberVar  = 0;
-		NumberOp        = 0;
-		NumberVecInd    = 0;
-		NumberInd       = 0;
-		NumberPar       = 0;
-		NumberTxt       = 0;
+		TotalNumberVar_  = 0;
+		NumberOp_        = 0;
+		NumberVecInd_    = 0;
+		NumberInd_       = 0;
+		NumberPar_       = 0;
+		NumberTxt_       = 0;
 
-		if( LengthOp > 0 )
-			CPPAD_TRACK_DEL_VEC(Op);
-		if( LengthVecInd > 0 )
-			CPPAD_TRACK_DEL_VEC(VecInd);
-		if( LengthInd > 0 )
-			CPPAD_TRACK_DEL_VEC(Ind);
-		if( LengthPar > 0 )
-			CPPAD_TRACK_DEL_VEC(Par);
-		if( LengthTxt > 0 )
-			CPPAD_TRACK_DEL_VEC(Txt);
+		if( LengthOp_ > 0 )
+			CPPAD_TRACK_DEL_VEC(Op_);
+		if( LengthVecInd_ > 0 )
+			CPPAD_TRACK_DEL_VEC(VecInd_);
+		if( LengthInd_ > 0 )
+			CPPAD_TRACK_DEL_VEC(Ind_);
+		if( LengthPar_ > 0 )
+			CPPAD_TRACK_DEL_VEC(Par_);
+		if( LengthTxt_ > 0 )
+			CPPAD_TRACK_DEL_VEC(Txt_);
 
-		LengthOp        = 0;
-		LengthVecInd    = 0;
-		LengthInd       = 0;
-		LengthPar       = 0;
-		LengthTxt       = 0;
+		LengthOp_        = 0;
+		LengthVecInd_    = 0;
+		LengthInd_       = 0;
+		LengthPar_       = 0;
+		LengthTxt_       = 0;
 	}
 
 	// add information to recording
@@ -413,93 +413,93 @@ public:
 	retrieve information from recording
 	*/
 	OpCode GetOp (size_t i) const
-	{	CPPAD_ASSERT_UNKNOWN(i < NumberOp);
-		return Op[i];
+	{	CPPAD_ASSERT_UNKNOWN(i < NumberOp_);
+		return Op_[i];
 	}
 	size_t GetVecInd (size_t i) const
-	{	CPPAD_ASSERT_UNKNOWN(i < NumberVecInd);
-		return VecInd[i];
+	{	CPPAD_ASSERT_UNKNOWN(i < NumberVecInd_);
+		return VecInd_[i];
 	}
 	const Base *GetPar(size_t i) const
-	{	CPPAD_ASSERT_UNKNOWN(i < NumberPar);
-		return Par + i;
+	{	CPPAD_ASSERT_UNKNOWN(i < NumberPar_);
+		return Par_ + i;
 	}
 	const size_t *GetInd(size_t n, size_t i) const
-	{	CPPAD_ASSERT_UNKNOWN(i + n <= NumberInd)
-		return Ind + i;
+	{	CPPAD_ASSERT_UNKNOWN(i + n <= NumberInd_)
+		return Ind_ + i;
 	}
 	const char *GetTxt(size_t i) const
-	{	CPPAD_ASSERT_UNKNOWN(i < NumberTxt);
-		return Txt + i;
+	{	CPPAD_ASSERT_UNKNOWN(i < NumberTxt_);
+		return Txt_ + i;
 	}
 	
 	/*
 	replace information 
 	*/
 	void ReplaceInd(size_t i, size_t value)
-	{	CPPAD_ASSERT_UNKNOWN( i < NumberInd);
-		Ind[i] = value;
+	{	CPPAD_ASSERT_UNKNOWN( i < NumberInd_);
+		Ind_[i] = value;
 	}
 
 	// number of values
 	size_t TotNumVar(void) const
-	{	return TotalNumberVar; }
+	{	return TotalNumberVar_; }
 	size_t NumOp(void) const
-	{	return NumberOp; }
+	{	return NumberOp_; }
 	size_t NumVecInd(void) const
-	{	return NumberVecInd; }
+	{	return NumberVecInd_; }
 	size_t NumInd(void) const
-	{	return NumberInd; }
+	{	return NumberInd_; }
 	size_t NumPar(void) const
-	{	return NumberPar; }
+	{	return NumberPar_; }
 	size_t NumTxt(void) const
-	{	return NumberTxt; }
+	{	return NumberTxt_; }
 
 	// amount of memory used 
 	size_t Memory(void) const
-	{	return LengthOp * sizeof(OpCode) 
-		     + LengthVecInd * sizeof(size_t)
-		     + LengthInd * sizeof(size_t)
-		     + LengthPar * sizeof(Base)
-		     + LengthTxt * sizeof(char);
+	{	return LengthOp_ * sizeof(OpCode) 
+		     + LengthVecInd_ * sizeof(size_t)
+		     + LengthInd_ * sizeof(size_t)
+		     + LengthPar_ * sizeof(Base)
+		     + LengthTxt_ * sizeof(char);
 	}
 
 private:
-	size_t    TotalNumberVar;
+	size_t    TotalNumberVar_;
 
-	size_t    NumberOp;
-	size_t    LengthOp;
-	OpCode   *Op;
+	size_t    NumberOp_;
+	size_t    LengthOp_;
+	OpCode   *Op_;
 
-	size_t    NumberVecInd;
-	size_t    LengthVecInd;
-	size_t   *VecInd;
+	size_t    NumberVecInd_;
+	size_t    LengthVecInd_;
+	size_t   *VecInd_;
 
-	size_t    NumberInd;
-	size_t    LengthInd;
-	size_t   *Ind;
+	size_t    NumberInd_;
+	size_t    LengthInd_;
+	size_t   *Ind_;
 
-	size_t    NumberPar;
-	size_t    LengthPar;
-	Base     *Par;
+	size_t    NumberPar_;
+	size_t    LengthPar_;
+	Base     *Par_;
 
-	size_t    NumberTxt;
-	size_t    LengthTxt;
-	char     *Txt;
+	size_t    NumberTxt_;
+	size_t    LengthTxt_;
+	char     *Txt_;
 };
 
 template <class Base>
 inline size_t TapeRec<Base>::PutOp(OpCode op)
-{	size_t varIndex = TotalNumberVar;
+{	size_t varIndex = TotalNumberVar_;
 	
-	CPPAD_ASSERT_UNKNOWN( NumberOp <= LengthOp );
-	if( NumberOp == LengthOp )
-	{	LengthOp = 2 * LengthOp + 8;
-		Op = CPPAD_TRACK_EXTEND(LengthOp, NumberOp, Op);
+	CPPAD_ASSERT_UNKNOWN( NumberOp_ <= LengthOp_ );
+	if( NumberOp_ == LengthOp_ )
+	{	LengthOp_ = 2 * LengthOp_ + 8;
+		Op_ = CPPAD_TRACK_EXTEND(LengthOp_, NumberOp_, Op_);
 	}
-	CPPAD_ASSERT_UNKNOWN( NumberOp < LengthOp );
-	Op[NumberOp++]  = op;
-	TotalNumberVar += NumVar(op);
+	CPPAD_ASSERT_UNKNOWN( NumberOp_ < LengthOp_ );
+	Op_[NumberOp_++]  = op;
+	TotalNumberVar_ += NumVar(op);
 
 	return varIndex;
 }
@@ -507,129 +507,129 @@ inline size_t TapeRec<Base>::PutOp(OpCode op)
 template <class Base>
 inline size_t TapeRec<Base>::PutVecInd(size_t vecInd)
 {	
-	CPPAD_ASSERT_UNKNOWN( NumberVecInd <= LengthVecInd );
-	if( NumberVecInd == LengthVecInd )
-	{	LengthVecInd = 2 * LengthVecInd + 8;
-		VecInd = CPPAD_TRACK_EXTEND(LengthVecInd, NumberVecInd, VecInd);
+	CPPAD_ASSERT_UNKNOWN( NumberVecInd_ <= LengthVecInd_ );
+	if( NumberVecInd_ == LengthVecInd_ )
+	{	LengthVecInd_ = 2 * LengthVecInd_ + 8;
+		VecInd_ = CPPAD_TRACK_EXTEND(LengthVecInd_, NumberVecInd_, VecInd_);
 	}
-	CPPAD_ASSERT_UNKNOWN( NumberVecInd < LengthVecInd );
-	VecInd[NumberVecInd++] = vecInd;
+	CPPAD_ASSERT_UNKNOWN( NumberVecInd_ < LengthVecInd_ );
+	VecInd_[NumberVecInd_++] = vecInd;
 
-	return NumberVecInd - 1;
+	return NumberVecInd_ - 1;
 }
 
 template <class Base>
 inline size_t TapeRec<Base>::PutPar(const Base &par)
 {	size_t i;
 	
-	CPPAD_ASSERT_UNKNOWN( NumberPar <= LengthPar );
+	CPPAD_ASSERT_UNKNOWN( NumberPar_ <= LengthPar_ );
 	
 	// check last three values to see if same one came up
-	if( NumberPar >= 3 )
-	{	i = NumberPar;
-		while(i > NumberPar - 3)
+	if( NumberPar_ >= 3 )
+	{	i = NumberPar_;
+		while(i > NumberPar_ - 3)
 		{	--i;
-			if( IdenticalEqualPar(Par[i], par) )
+			if( IdenticalEqualPar(Par_[i], par) )
 				return i;
 		}
 	}
 	
 	// place a new value in the table
-	if( NumberPar == LengthPar )
-	{	LengthPar = 2 * LengthPar + 8;
-		Par = CPPAD_TRACK_EXTEND(LengthPar, NumberPar, Par);
+	if( NumberPar_ == LengthPar_ )
+	{	LengthPar_ = 2 * LengthPar_ + 8;
+		Par_ = CPPAD_TRACK_EXTEND(LengthPar_, NumberPar_, Par_);
 	}
-	CPPAD_ASSERT_UNKNOWN( NumberPar < LengthPar );
-	Par[NumberPar++] = par;
+	CPPAD_ASSERT_UNKNOWN( NumberPar_ < LengthPar_ );
+	Par_[NumberPar_++] = par;
 
-	return NumberPar - 1;
+	return NumberPar_ - 1;
 }
  // -------------------------- PutInd --------------------------------------
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0)
 { 
-	CPPAD_ASSERT_UNKNOWN( NumberInd <= LengthInd );
-	if( NumberInd == LengthInd )
-	{	LengthInd = 2 * LengthInd + 8;
-		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
+	CPPAD_ASSERT_UNKNOWN( NumberInd_ <= LengthInd_ );
+	if( NumberInd_ == LengthInd_ )
+	{	LengthInd_ = 2 * LengthInd_ + 8;
+		Ind_ = CPPAD_TRACK_EXTEND(LengthInd_, NumberInd_, Ind_);
 	}
-	CPPAD_ASSERT_UNKNOWN( NumberInd < LengthInd );
-	Ind[NumberInd++] = ind0;
+	CPPAD_ASSERT_UNKNOWN( NumberInd_ < LengthInd_ );
+	Ind_[NumberInd_++] = ind0;
 }
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1)
 { 
-	CPPAD_ASSERT_UNKNOWN( NumberInd <= LengthInd );
-	if( NumberInd + 1 >= LengthInd )
-	{	LengthInd = 2 * LengthInd + 8;
-		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
+	CPPAD_ASSERT_UNKNOWN( NumberInd_ <= LengthInd_ );
+	if( NumberInd_ + 1 >= LengthInd_ )
+	{	LengthInd_ = 2 * LengthInd_ + 8;
+		Ind_ = CPPAD_TRACK_EXTEND(LengthInd_, NumberInd_, Ind_);
 	}
-	CPPAD_ASSERT_UNKNOWN( NumberInd + 1 < LengthInd );
-	Ind[NumberInd++] = ind0;
-	Ind[NumberInd++] = ind1;
+	CPPAD_ASSERT_UNKNOWN( NumberInd_ + 1 < LengthInd_ );
+	Ind_[NumberInd_++] = ind0;
+	Ind_[NumberInd_++] = ind1;
 }
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2)
 { 
-	CPPAD_ASSERT_UNKNOWN( NumberInd <= LengthInd );
-	if( NumberInd + 2 >= LengthInd )
-	{	LengthInd = 2 * LengthInd + 8;
-		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
+	CPPAD_ASSERT_UNKNOWN( NumberInd_ <= LengthInd_ );
+	if( NumberInd_ + 2 >= LengthInd_ )
+	{	LengthInd_ = 2 * LengthInd_ + 8;
+		Ind_ = CPPAD_TRACK_EXTEND(LengthInd_, NumberInd_, Ind_);
 	}
-	CPPAD_ASSERT_UNKNOWN( NumberInd + 2 < LengthInd );
-	Ind[NumberInd++] = ind0;
-	Ind[NumberInd++] = ind1;
-	Ind[NumberInd++] = ind2;
+	CPPAD_ASSERT_UNKNOWN( NumberInd_ + 2 < LengthInd_ );
+	Ind_[NumberInd_++] = ind0;
+	Ind_[NumberInd_++] = ind1;
+	Ind_[NumberInd_++] = ind2;
 }
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
 	size_t ind3)
 { 
-	CPPAD_ASSERT_UNKNOWN( NumberInd <= LengthInd );
-	if( NumberInd + 3 >= LengthInd )
-	{	LengthInd = 2 * LengthInd + 8;
-		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
+	CPPAD_ASSERT_UNKNOWN( NumberInd_ <= LengthInd_ );
+	if( NumberInd_ + 3 >= LengthInd_ )
+	{	LengthInd_ = 2 * LengthInd_ + 8;
+		Ind_ = CPPAD_TRACK_EXTEND(LengthInd_, NumberInd_, Ind_);
 	}
-	CPPAD_ASSERT_UNKNOWN( NumberInd + 3 < LengthInd );
-	Ind[NumberInd++] = ind0;
-	Ind[NumberInd++] = ind1;
-	Ind[NumberInd++] = ind2;
-	Ind[NumberInd++] = ind3;
+	CPPAD_ASSERT_UNKNOWN( NumberInd_ + 3 < LengthInd_ );
+	Ind_[NumberInd_++] = ind0;
+	Ind_[NumberInd_++] = ind1;
+	Ind_[NumberInd_++] = ind2;
+	Ind_[NumberInd_++] = ind3;
 
 }
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2,
 	size_t ind3, size_t ind4)
 { 
-	CPPAD_ASSERT_UNKNOWN( NumberInd <= LengthInd );
-	if( NumberInd + 4 >= LengthInd )
-	{	LengthInd = 2 * LengthInd + 8;
-		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
+	CPPAD_ASSERT_UNKNOWN( NumberInd_ <= LengthInd_ );
+	if( NumberInd_ + 4 >= LengthInd_ )
+	{	LengthInd_ = 2 * LengthInd_ + 8;
+		Ind_ = CPPAD_TRACK_EXTEND(LengthInd_, NumberInd_, Ind_);
 	}
-	CPPAD_ASSERT_UNKNOWN( NumberInd + 4 < LengthInd );
-	Ind[NumberInd++] = ind0;
-	Ind[NumberInd++] = ind1;
-	Ind[NumberInd++] = ind2;
-	Ind[NumberInd++] = ind3;
-	Ind[NumberInd++] = ind4;
+	CPPAD_ASSERT_UNKNOWN( NumberInd_ + 4 < LengthInd_ );
+	Ind_[NumberInd_++] = ind0;
+	Ind_[NumberInd_++] = ind1;
+	Ind_[NumberInd_++] = ind2;
+	Ind_[NumberInd_++] = ind3;
+	Ind_[NumberInd_++] = ind4;
 
 }
 template <class Base>
 inline void TapeRec<Base>::PutInd(size_t ind0, size_t ind1, size_t ind2, 
 	size_t ind3, size_t ind4, size_t ind5)
 { 
-	CPPAD_ASSERT_UNKNOWN( NumberInd <= LengthInd );
-	if( NumberInd + 5 >= LengthInd )
-	{	LengthInd = 2 * LengthInd + 8;
-		Ind = CPPAD_TRACK_EXTEND(LengthInd, NumberInd, Ind);
+	CPPAD_ASSERT_UNKNOWN( NumberInd_ <= LengthInd_ );
+	if( NumberInd_ + 5 >= LengthInd_ )
+	{	LengthInd_ = 2 * LengthInd_ + 8;
+		Ind_ = CPPAD_TRACK_EXTEND(LengthInd_, NumberInd_, Ind_);
 	}
-	CPPAD_ASSERT_UNKNOWN( NumberInd + 5 < LengthInd );
-	Ind[NumberInd++] = ind0;
-	Ind[NumberInd++] = ind1;
-	Ind[NumberInd++] = ind2;
-	Ind[NumberInd++] = ind3;
-	Ind[NumberInd++] = ind4;
-	Ind[NumberInd++] = ind5;
+	CPPAD_ASSERT_UNKNOWN( NumberInd_ + 5 < LengthInd_ );
+	Ind_[NumberInd_++] = ind0;
+	Ind_[NumberInd_++] = ind1;
+	Ind_[NumberInd_++] = ind2;
+	Ind_[NumberInd_++] = ind3;
+	Ind_[NumberInd_++] = ind4;
+	Ind_[NumberInd_++] = ind5;
 }
 
 template <class Base>
@@ -642,20 +642,20 @@ inline size_t TapeRec<Base>::PutTxt(const char *text)
 		CPPAD_ASSERT_UNKNOWN( n < 1000 ); // should check in PrintFor
 	n++;
 
-	CPPAD_ASSERT_UNKNOWN( NumberTxt <= LengthTxt );
+	CPPAD_ASSERT_UNKNOWN( NumberTxt_ <= LengthTxt_ );
 
-	if( NumberTxt + n >= LengthTxt )
-	{	LengthTxt  = 2 * LengthTxt + n + 8;
-		Txt = CPPAD_TRACK_EXTEND(LengthTxt, NumberTxt, Txt);
+	if( NumberTxt_ + n >= LengthTxt_ )
+	{	LengthTxt_  = 2 * LengthTxt_ + n + 8;
+		Txt_ = CPPAD_TRACK_EXTEND(LengthTxt_, NumberTxt_, Txt_);
 	}
-	CPPAD_ASSERT_UNKNOWN( NumberTxt + n < LengthTxt );
+	CPPAD_ASSERT_UNKNOWN( NumberTxt_ + n < LengthTxt_ );
 
 	// copy text including terminating '\0'
 	for(i = 0; i < n; i++)
-		Txt[NumberTxt++] = text[i];
+		Txt_[NumberTxt_++] = text[i];
 	CPPAD_ASSERT_UNKNOWN( text[i-1] == '\0' );
 
-	return NumberTxt - n;
+	return NumberTxt_ - n;
 }
 
 } // END CppAD namespace
