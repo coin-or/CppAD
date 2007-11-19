@@ -151,7 +151,7 @@ void ADFun<Base>::Dependent(const ADvector &x, const ADvector &y)
 	);
 	ADTape<Base> *tape = AD<Base>::tape_ptr(x[0].id_);
 	CPPAD_ASSERT_KNOWN(
-		tape->size_independent == x.size(),
+		tape->size_independent_ == x.size(),
 		"Dependent: independent variable vector has been changed."
 	);
 # ifndef NDEBUG
@@ -185,7 +185,7 @@ template <typename ADvector>
 void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 {
 	size_t   m = y.size();
-	size_t   n = tape->size_independent;
+	size_t   n = tape->size_independent_;
 	size_t   i, j;
 	size_t   y_taddr;
 
@@ -203,7 +203,7 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	CPPAD_ASSERT_UNKNOWN( NumVar(ParOp) == 1 );
 	dep_parameter.resize(m);
 	dep_taddr.resize(m);
-	totalNumVar = tape->Rec.TotNumVar();
+	totalNumVar = tape->Rec_.TotNumVar();
 	for(i = 0; i < m; i++)
 	{	dep_parameter[i] = CppAD::Parameter(y[i]);
 		if( dep_parameter[i] )
@@ -219,7 +219,7 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 
 	// now that each dependent variable has a place in the tape,
 	// we can make a copy for this function and erase the tape.
-	Rec = tape->Rec;
+	Rec = tape->Rec_;
 
 	// now we can delete the tape
 	AD<Base>::tape_delete( tape->id_ );

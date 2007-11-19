@@ -145,7 +145,7 @@ public:
 
 	// destructor
 	~ADTape(void)
-	{	Rec.Erase(); }
+	{	Rec_.Erase(); }
 
 	// public function only used by CppAD::Independent
 	template <typename VectorADBase>
@@ -153,9 +153,9 @@ public:
 
 private:
 	// private data
-	size_t                      id_;
-	size_t         size_independent;
-	TapeRec<Base>               Rec;
+	size_t                       id_;
+	size_t         size_independent_;
+	TapeRec<Base>               Rec_;
 
 	/*
 	Private functions
@@ -198,9 +198,9 @@ size_t ADTape<Base>::RecordParOp(const Base &z)
 	size_t ind;
 	CPPAD_ASSERT_UNKNOWN( NumVar(ParOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumInd(ParOp) == 1 );
-	z_taddr = Rec.PutOp(ParOp);
-	ind     = Rec.PutPar(z);
-	Rec.PutInd(ind);
+	z_taddr = Rec_.PutOp(ParOp);
+	ind     = Rec_.PutPar(z);
+	Rec_.PutInd(ind);
 
 	return z_taddr;
 }
@@ -212,13 +212,13 @@ size_t ADTape<Base>::AddVec(size_t length, const Base *data)
 	size_t value_index;
 
 	// store the length in VecInd
-	size_t start = Rec.PutVecInd(length);
+	size_t start = Rec_.PutVecInd(length);
 
 	// store indices of the values in VecInd 
 	for(i = 0; i < length; i++)
 	{
-		value_index = Rec.PutPar( data[i] );
-		Rec.PutVecInd( value_index );
+		value_index = Rec_.PutPar( data[i] );
+		Rec_.PutVecInd( value_index );
 	}
  
 	// return the taddr of the length (where the vector starts)

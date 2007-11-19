@@ -332,7 +332,7 @@ void ADTape<Base>::RecordCondExp(
 
 	// taddr_ of this variable
 	CPPAD_ASSERT_UNKNOWN( NumVar(CExpOp) == 1 );
-	returnValue_taddr = Rec.PutOp(CExpOp);
+	returnValue_taddr = Rec_.PutOp(CExpOp);
 
 	// ind[0] = cop
 	ind0 = size_t( cop );
@@ -348,7 +348,7 @@ void ADTape<Base>::RecordCondExp(
 
 	// ind[2] = left address
 	if( Parameter(left) )
-		ind2 = Rec.PutPar(left.value_);
+		ind2 = Rec_.PutPar(left.value_);
 	else
 	{	ind1 += 1;
 		ind2 = left.taddr_;	
@@ -356,7 +356,7 @@ void ADTape<Base>::RecordCondExp(
 
 	// ind[3] = right address
 	if( Parameter(right) )
-		ind3 = Rec.PutPar(right.value_);
+		ind3 = Rec_.PutPar(right.value_);
 	else
 	{	ind1 += 2;
 		ind3 = right.taddr_;	
@@ -364,7 +364,7 @@ void ADTape<Base>::RecordCondExp(
 
 	// ind[4] = trueCase address
 	if( Parameter(trueCase) )
-		ind4 = Rec.PutPar(trueCase.value_);
+		ind4 = Rec_.PutPar(trueCase.value_);
 	else
 	{	ind1 += 4;
 		ind4 = trueCase.taddr_;	
@@ -372,7 +372,7 @@ void ADTape<Base>::RecordCondExp(
 
 	// ind[5] =  falseCase address
 	if( Parameter(falseCase) )
-		ind5 = Rec.PutPar(falseCase.value_);
+		ind5 = Rec_.PutPar(falseCase.value_);
 	else
 	{	ind1 += 8;
 		ind5 = falseCase.taddr_;	
@@ -380,7 +380,7 @@ void ADTape<Base>::RecordCondExp(
 
 	CPPAD_ASSERT_UNKNOWN( NumInd(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( ind1 > 0 );
-	Rec.PutInd(ind0, ind1, ind2, ind3, ind4, ind5);
+	Rec_.PutInd(ind0, ind1, ind2, ind3, ind4, ind5);
 
 	// check that returnValue is a dependent variable
 	CPPAD_ASSERT_UNKNOWN( Variable(returnValue) );

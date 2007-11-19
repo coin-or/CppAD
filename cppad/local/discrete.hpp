@@ -180,9 +180,9 @@ public:
 			CPPAD_ASSERT_UNKNOWN( NumInd(DisOp) == 2 );
 
 			// put operand addresses in the tape
-			tape->Rec.PutInd(x.taddr_, f_index_);
+			tape->Rec_.PutInd(x.taddr_, f_index_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec.PutOp(DisOp);
+			result.taddr_ = tape->Rec_.PutOp(DisOp);
 			// make result a variable
 			result.id_ = tape->id_;
 

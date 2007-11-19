@@ -159,9 +159,9 @@ AD<Base> AD<Base>::Abs (void) const
 		ADTape<Base> *tape = tape_this();
 
 		// corresponding operand address
-		tape->Rec.PutInd(taddr_);
+		tape->Rec_.PutInd(taddr_);
 		// put operator in the tape
-		result.taddr_ = tape->Rec.PutOp(AbsOp);
+		result.taddr_ = tape->Rec_.PutOp(AbsOp);
 		// make result a variable
 		result.id_    = tape->id_;
 	}

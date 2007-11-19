@@ -147,7 +147,7 @@ void ADTape<Base>::RecordCompare(
 
 	// ind[2] = left address
 	if( Parameter(left) )
-		ind2 = Rec.PutPar(left.value_);
+		ind2 = Rec_.PutPar(left.value_);
 	else
 	{	ind1 += 2;
 		ind2 =  left.taddr_;
@@ -155,7 +155,7 @@ void ADTape<Base>::RecordCompare(
 
 	// ind[3] = right address
 	if( Parameter(right) )
-		ind3 = Rec.PutPar(right.value_);
+		ind3 = Rec_.PutPar(right.value_);
 	else
 	{	ind1 += 4;
 		ind3 =  right.taddr_;
@@ -177,8 +177,8 @@ void ADTape<Base>::RecordCompare(
 	CPPAD_ASSERT_UNKNOWN( NumVar(ComOp) == 0 );
 
 	// put the operator in the tape
-	Rec.PutOp(ComOp);
-	Rec.PutInd(ind0, ind1, ind2, ind3);
+	Rec_.PutOp(ComOp);
+	Rec_.PutInd(ind0, ind1, ind2, ind3);
 }
 
 // -------------------------------- < -------------------------

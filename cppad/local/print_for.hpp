@@ -111,20 +111,20 @@ namespace CppAD {
 		{	CPPAD_ASSERT_UNKNOWN( NumVar(PripOp) == 0 );
 			CPPAD_ASSERT_UNKNOWN( NumInd(PripOp) == 2 );
 			// put operand addresses in tape
-			size_t t = tape->Rec.PutTxt(text);
-			size_t p = tape->Rec.PutPar(u.value_);
-			tape->Rec.PutInd(t, p);
+			size_t t = tape->Rec_.PutTxt(text);
+			size_t p = tape->Rec_.PutPar(u.value_);
+			tape->Rec_.PutInd(t, p);
 			// put operator in the tape
-			tape->Rec.PutOp(PripOp);
+			tape->Rec_.PutOp(PripOp);
 		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN( NumVar(PrivOp) == 0 );
 			CPPAD_ASSERT_UNKNOWN( NumInd(PrivOp) == 2 );
 			// put operand addresses in tape
-			size_t t = tape->Rec.PutTxt(text);
-			tape->Rec.PutInd(t, u.taddr_);
+			size_t t = tape->Rec_.PutTxt(text);
+			tape->Rec_.PutInd(t, u.taddr_);
 			// put operator in the tape
-			tape->Rec.PutOp(PrivOp);
+			tape->Rec_.PutOp(PrivOp);
 		}
 	}
 	template <class Base>

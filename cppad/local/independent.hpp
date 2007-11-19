@@ -137,13 +137,13 @@ void ADTape<Base>::Independent(VectorAD &x)
 		n > 0,
 		"Indepdendent: the argument vector x has zero size"
 	);
-	CPPAD_ASSERT_UNKNOWN( Rec.NumOp() == 0 );
-	CPPAD_ASSERT_UNKNOWN( Rec.TotNumVar() == 0 );
+	CPPAD_ASSERT_UNKNOWN( Rec_.NumOp() == 0 );
+	CPPAD_ASSERT_UNKNOWN( Rec_.TotNumVar() == 0 );
 
 	// skip the first record (parameters use taddr zero)
 	CPPAD_ASSERT_UNKNOWN( NumVar(NonOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumInd(NonOp) == 0 );
-	Rec.PutOp(NonOp);
+	Rec_.PutOp(NonOp);
 
 
 	// place each of the independent variables in the tape
@@ -152,14 +152,14 @@ void ADTape<Base>::Independent(VectorAD &x)
 	size_t j;
 	for(j = 0; j < n; j++)
 	{	// tape address for this independent variable
-		x[j].taddr_ = Rec.PutOp(InvOp);
+		x[j].taddr_ = Rec_.PutOp(InvOp);
 		x[j].id_    = id_;
 		CPPAD_ASSERT_UNKNOWN( x[j].taddr_ == j+1 );
 		CPPAD_ASSERT_UNKNOWN( Variable(x[j] ) );
 	}
 
 	// done specifying all of the independent variables
-	size_independent = n;
+	size_independent_ = n;
 }
 
 template <typename VectorAD>

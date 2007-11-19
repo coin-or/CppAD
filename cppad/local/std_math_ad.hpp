@@ -250,8 +250,8 @@ $end
         {   CPPAD_ASSERT_UNKNOWN( NumVar(Op) <= 2 );              \
             CPPAD_ASSERT_UNKNOWN( NumInd(Op) == 1 );              \
             ADTape<Base> *tape = tape_this();                     \
-            tape->Rec.PutInd(taddr_);                             \
-            result.taddr_ = tape->Rec.PutOp(Op);                  \
+            tape->Rec_.PutInd(taddr_);                             \
+            result.taddr_ = tape->Rec_.PutOp(Op);                  \
             result.id_    = tape->id_;                            \
         }                                                         \
         return result;                                            \

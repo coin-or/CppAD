@@ -173,7 +173,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	);
 	ADTape<Base> *tape = AD<Base>::tape_ptr(x[0].id_);
 	CPPAD_ASSERT_KNOWN(
-		tape->size_independent == x.size(),
+		tape->size_independent_ == x.size(),
 		"ADFun<Base>: independent variable vector has been changed."
 	);
 # ifndef NDEBUG
