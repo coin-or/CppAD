@@ -36,7 +36,7 @@ End=1076
 # echo the svn merge command
 echo "cd  .."
 echo "svn merge $DryRun -r $Start:$End                    \\"
-echo "	  http://www.coin-or.org/svn/CppAD/$FromDirectory \\"
+echo "	  https://projects.coin-or.org/svn/CppAD/$FromDirectory \\"
 echo "	  $ToDirectory                                    \\"
 echo "| tee $ToDirectory/svn_merge.out "
 #

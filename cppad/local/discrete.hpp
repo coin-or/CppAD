@@ -166,35 +166,42 @@ template <class Base>
 class ADDiscrete {
 	typedef Base (*F) (const Base &x);
 public:
-	ADDiscrete(F f_) : f(f_), y_taddr( List()->size() )
+	ADDiscrete(F f) : f_(f), f_index_( List()->size() )
 	{	List()->push_back(this); }
 
 	// used during the recording process
 	AD<Base> Eval(const AD<Base> &x) const
-	{	AD<Base> z;
+	{	AD<Base> result;
 
-		z.value_ = f(x.value_);
+		result.value_ = f_(x.value_);
 		if( Variable(x) )
-		{	x.tape_this()->RecordDisOp(
-				z,
-				x.taddr_,
-				y_taddr
-			);
-		}
-		return z;
+		{	ADTape<Base> *tape = x.tape_this();
+			CPPAD_ASSERT_UNKNOWN( NumVar(DisOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumInd(DisOp) == 2 );
+
+			// put operand addresses in the tape
+			tape->Rec.PutInd(x.taddr_, f_index_);
+			// put operator in the tape
+			result.taddr_ = tape->Rec.PutOp(DisOp);
+			// make result a variable
+			result.id_ = tape->id_;
+
+			CPPAD_ASSERT_UNKNOWN( Variable(result) );
+		} 
+		return result;
 	}
 
 	// used to evaluate from the recording
-	static Base Eval(size_t y_taddr, const Base &x)
+	static Base Eval(size_t f_index, const Base &x)
 	{
-		CPPAD_ASSERT_UNKNOWN(y_taddr < List()->size() );
+		CPPAD_ASSERT_UNKNOWN(f_index < List()->size() );
 
-		return (*List())[y_taddr]->f(x);
+		return (*List())[f_index]->f_(x);
 	}
 
 private:
-	const F            f;
-	const size_t y_taddr;
+	const F            f_;
+	const size_t f_index_;
 
 	static std::vector<ADDiscrete *> *List(void)
 	{	static std::vector<ADDiscrete *> list;

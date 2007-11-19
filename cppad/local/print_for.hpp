@@ -108,8 +108,24 @@ namespace CppAD {
 		);
 
 		if( Parameter(u) )
-			tape->RecordPripOp(text, u.value_);
-		else	tape->RecordPrivOp(text, u.taddr_);
+		{	CPPAD_ASSERT_UNKNOWN( NumVar(PripOp) == 0 );
+			CPPAD_ASSERT_UNKNOWN( NumInd(PripOp) == 2 );
+			// put operand addresses in tape
+			size_t t = tape->Rec.PutTxt(text);
+			size_t p = tape->Rec.PutPar(u.value_);
+			tape->Rec.PutInd(t, p);
+			// put operator in the tape
+			tape->Rec.PutOp(PripOp);
+		}
+		else
+		{	CPPAD_ASSERT_UNKNOWN( NumVar(PrivOp) == 0 );
+			CPPAD_ASSERT_UNKNOWN( NumInd(PrivOp) == 2 );
+			// put operand addresses in tape
+			size_t t = tape->Rec.PutTxt(text);
+			tape->Rec.PutInd(t, u.taddr_);
+			// put operator in the tape
+			tape->Rec.PutOp(PrivOp);
+		}
 	}
 	template <class Base>
 	void PrintFor(const char *text, const VecAD_reference<Base> &u)

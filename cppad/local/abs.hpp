@@ -145,30 +145,25 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-inline float abs(const float &x)
-{	if( x < 0. )
-		return - x;
-	return x;
-}
-
-inline double abs(const double &x)
-{	if( x < 0. )
-		return - x;
-	return x;
-}
-
 template <class Base>
 AD<Base> AD<Base>::Abs (void) const
-{	using CppAD::abs;
-
+{ 
 	AD<Base> result;
+	result.value_ = abs(value_);
 	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
-	result.value_ = abs(value_);
 	if( Variable(*this) ) 
 	{	// add this operation to the tape
-		tape_this()->RecordOp(AbsOp, result, taddr_);
+		CPPAD_ASSERT_UNKNOWN( NumVar(AbsOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(AbsOp) == 1 );
+		ADTape<Base> *tape = tape_this();
 
+		// corresponding operand address
+		tape->Rec.PutInd(taddr_);
+		// put operator in the tape
+		result.taddr_ = tape->Rec.PutOp(AbsOp);
+		// make result a variable
+		result.id_    = tape->id_;
 	}
 	return result;
 }

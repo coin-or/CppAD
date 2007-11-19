@@ -17,34 +17,76 @@ namespace CppAD {
 
 template <class Base>
 AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
-{	Base left;
-
-	left   = value_;
-	value_ -= right.value_;
-
-	if( Parameter(*this) )
-	{	if( Variable(right) )
-		{	right.tape_this()->RecordOp(SubpvOp, 
-				*this, left, right.taddr_
-			);
-		}
-	}
-	else if( Parameter(right) )
-	{	if( ! IdenticalZero(right) )
-		{	tape_this()->RecordOp(SubvpOp, 
-				*this, taddr_, right.value_
-			);
-		}
+{	ADTape<Base> *tape = tape_ptr();
+	bool var_left, var_right;
+# ifdef NDEBUG
+	if( tape == CPPAD_NULL )
+	{	var_left =  false;
+		var_right = false;
 	}
 	else
-	{	CPPAD_ASSERT_KNOWN(
-			id_ == right.id_,
-			"Subtracting AD objects that are"
-			" variables on different tapes."
-		);
-		tape_this()->RecordOp(SubvvOp, 
-			*this, taddr_, right.taddr_
-		);
+	{
+		var_left  = id_       == tape->id_;
+		var_right = right.id_ == tape->id_;
+	}
+# else
+	var_left  = Variable(*this);
+	var_right = Variable(right);
+	CPPAD_ASSERT_KNOWN(
+		(! var_left) || id_ == tape->id_ ,
+		"-= left operand is a variable for a different thread"
+	);
+	CPPAD_ASSERT_KNOWN(
+		(! var_right) || right.id_ == tape->id_ ,
+		"-= right operand is a variable for a different thread"
+	);
+# endif
+	Base left;
+	left    = value_;
+	value_ -= right.value_;
+
+	if( var_left )
+	{	if( var_right )
+		{	// this = variable - variable
+			CPPAD_ASSERT_UNKNOWN( NumVar(SubvvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumInd(SubvvOp) == 2 );
+
+			// put operand addresses in tape
+			tape->Rec.PutInd(taddr_, right.taddr_);
+			// put operator in the tape
+			taddr_ = tape->Rec.PutOp(SubvvOp);
+			// make this a variable
+			CPPAD_ASSERT_UNKNOWN( id_ = tape->id_ );
+		}
+		else if( IdenticalZero( right.value_ ) )
+		{	// this = variable - 0
+		}
+		else
+		{	// this = variable - parameter
+			CPPAD_ASSERT_UNKNOWN( NumVar(SubvpOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumInd(SubvpOp) == 2 );
+
+			// put operand addresses in tape
+			size_t p = tape->Rec.PutPar(right.value_);
+			tape->Rec.PutInd(taddr_, p);
+			// put operator in the tape
+			taddr_ = tape->Rec.PutOp(SubvpOp);
+			// make this a variable
+			CPPAD_ASSERT_UNKNOWN( id_ == tape->id_);
+		}
+	}
+	else if( var_right  )
+	{	// this = parameter - variable
+		CPPAD_ASSERT_UNKNOWN( NumVar(SubpvOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( NumInd(SubpvOp) == 2 );
+
+		// put operand addresses in tape
+		size_t p = tape->Rec.PutPar(left);
+		tape->Rec.PutInd(p, right.taddr_);
+		// put operator in the tape
+		taddr_ = tape->Rec.PutOp(SubpvOp);
+		// make this a variable
+		id_ = tape->id_;
 	}
 	return *this;
 }

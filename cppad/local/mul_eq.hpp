@@ -17,45 +17,89 @@ namespace CppAD {
 
 template <class Base>
 AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
-{	Base left;
-
-	left   = value_;
-	value_ *= right.value_;
-
-	if( Parameter(*this) )
-	{	if( Variable(right) )
-		{	if( ! IdenticalZero(left) )
-			{	if( IdenticalOne(left) )
-				{	// z = 1 * right
-					make_variable(right.id_, right.taddr_);
-				}
-				else	right.tape_this()->RecordOp(
-						MulpvOp, 
-						*this, 
-						left, 
-						right.taddr_
-				);
-			}
-		}
-	}
-	else if( Parameter(right) )
-	{	if( ! IdenticalOne(right.value_) )
-		{	if( IdenticalZero(right.value_) )
-				make_parameter();
-			else	tape_this()->RecordOp(MulvpOp, 
-					*this, taddr_, right.value_
-			);
-		}
+{	ADTape<Base> *tape = tape_ptr();
+	bool var_left, var_right;
+# ifdef NDEBUG
+	if( tape == CPPAD_NULL )
+	{	var_left =  false;
+		var_right = false;
 	}
 	else
-	{	CPPAD_ASSERT_KNOWN(
-			id_ == right.id_,
-			"Multiplying AD objects that are"
-			" variables on different tapes."
-		);
-		tape_this()->RecordOp(MulvvOp, 
-			*this, taddr_, right.taddr_
-		);
+	{
+		var_left  = id_       == tape->id_;
+		var_right = right.id_ == tape->id_;
+	}
+# else
+	var_left  = Variable(*this);
+	var_right = Variable(right);
+	CPPAD_ASSERT_KNOWN(
+		(! var_left) || id_ == tape->id_ ,
+		"*= left operand is a variable for a different thread"
+	);
+	CPPAD_ASSERT_KNOWN(
+		(! var_right) || right.id_ == tape->id_ ,
+		"*= right operand is a variable for a different thread"
+	);
+# endif
+	Base left;
+	left    = value_;
+	value_ *= right.value_;
+
+	if( var_left )
+	{	if( var_right )
+		{	// this = variable * variable
+			CPPAD_ASSERT_UNKNOWN( NumVar(MulvvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumInd(MulvvOp) == 2 );
+
+			// put operand addresses in tape
+			tape->Rec.PutInd(taddr_, right.taddr_);
+			// put operator in the tape
+			taddr_ = tape->Rec.PutOp(MulvvOp);
+			// make this a variable
+			CPPAD_ASSERT_UNKNOWN( id_ = tape->id_ );
+		}
+		else if( IdenticalOne( right.value_ ) )
+		{	// this = variable * 1
+		}
+		else if( IdenticalZero( right.value_ ) )
+		{	// this = variable * 0
+			make_parameter();
+		}
+		else
+		{	// this = variable * parameter
+			CPPAD_ASSERT_UNKNOWN( NumVar(MulvpOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumInd(MulvpOp) == 2 );
+
+			// put operand addresses in tape
+			size_t p = tape->Rec.PutPar(right.value_);
+			tape->Rec.PutInd(taddr_, p);
+			// put operator in the tape
+			taddr_ = tape->Rec.PutOp(MulvpOp);
+			// make this a variable
+			CPPAD_ASSERT_UNKNOWN( id_ == tape->id_);
+		}
+	}
+	else if( var_right  )
+	{	if( IdenticalZero(left) )
+		{	// this = 0 * right
+		}
+		else if( IdenticalOne(left) )
+		{	// this = 1 * right
+			make_variable(right.id_, right.taddr_);
+		}
+		else
+		{	// this = parameter * variable
+			CPPAD_ASSERT_UNKNOWN( NumVar(MulpvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumInd(MulpvOp) == 2 );
+
+			// put operand addresses in tape
+			size_t p = tape->Rec.PutPar(left);
+			tape->Rec.PutInd(p, right.taddr_);
+			// put operator in the tape
+			taddr_ = tape->Rec.PutOp(MulpvOp);
+			// make this a variable
+			id_ = tape->id_;
+		}
 	}
 	return *this;
 }
