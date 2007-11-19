@@ -38,6 +38,20 @@ namespace CppAD {
 	template <class Base> bool GreaterThanZero   (const AD<Base> &u);
 	template <class Base> bool GreaterThanOrZero (const AD<Base> &u);
 	template <class Base> AD<Base> Var2Par       (const AD<Base> &u);
+	template <class Base> AD<Base> abs           (const AD<Base> &u);
+	template <class Base> AD<Base> acos          (const AD<Base> &u);
+	template <class Base> AD<Base> asin          (const AD<Base> &u);
+	template <class Base> AD<Base> atan          (const AD<Base> &u);
+	template <class Base> AD<Base> cos           (const AD<Base> &u);
+	template <class Base> AD<Base> cosh          (const AD<Base> &u);
+	template <class Base> AD<Base> exp           (const AD<Base> &u);
+	template <class Base> AD<Base> log           (const AD<Base> &u);
+	template <class Base> AD<Base> log10         (const AD<Base> &u);
+	template <class Base> AD<Base> tan           (const AD<Base> &u);
+
+	// pow
+	template <class Base> AD<Base> pow (
+		const AD<Base> &x, const AD<Base> &y);
 
 	// NearEqual
 	template <class Base> bool NearEqual(

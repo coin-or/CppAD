@@ -238,23 +238,30 @@ $end
 
 # include <cppad/std_math_unary.hpp>
 
-# define CPPAD_STANDARD_MATH_UNARY_AD(Name, Op)                           \
-	template <class Base>                                             \
-	inline AD<Base> AD<Base>::Name (void) const                       \
-        {	using CppAD::Name;                                        \
-		AD<Base> result;                                          \
-		CPPAD_ASSERT_UNKNOWN( Parameter(result) );                \
-		result.value_ = Name(value_);                             \
-		if( Variable(*this) )                                     \
-			tape_this()->RecordOp(Op, result, taddr_);        \
-		return result;                                            \
-	}                                                                 \
-	template <class Base>                                             \
-	inline AD<Base> Name(const AD<Base> &x)                           \
-	{	return x.Name(); }                                        \
-	template <class Base>                                             \
-	inline AD<Base> Name(const VecAD_reference<Base> &x)              \
-	{	return Name( x.ADBase() ); }
+# define CPPAD_STANDARD_MATH_UNARY_AD(Name, Op)                   \
+    template <class Base>                                         \
+    inline AD<Base> AD<Base>::Name (void) const                   \
+    {                                                             \
+        AD<Base> result;                                          \
+        result.value_ = CppAD::Name(value_);                      \
+        CPPAD_ASSERT_UNKNOWN( Parameter(result) );                \
+                                                                  \
+        if( Variable(*this) )                                     \
+        {   CPPAD_ASSERT_UNKNOWN( NumVar(Op) <= 2 );              \
+            CPPAD_ASSERT_UNKNOWN( NumInd(Op) == 1 );              \
+            ADTape<Base> *tape = tape_this();                     \
+            tape->Rec.PutInd(taddr_);                             \
+            result.taddr_ = tape->Rec.PutOp(Op);                  \
+            result.id_    = tape->id_;                            \
+        }                                                         \
+        return result;                                            \
+    }                                                             \
+    template <class Base>                                         \
+    inline AD<Base> Name(const AD<Base> &x)                       \
+    {   return x.Name(); }                                        \
+    template <class Base>                                         \
+    inline AD<Base> Name(const VecAD_reference<Base> &x)          \
+    {   return Name( x.ADBase() ); }
 
 //  BEGIN CppAD namespace
 namespace CppAD {

@@ -115,37 +115,89 @@ inline double pow(const double &x, const double &y)
 // case where x and y are AD<Base> -----------------------------------------
 template <class Base> AD<Base> 
 pow(const AD<Base> &x, const AD<Base> &y)
-{	AD<Base> p;
-	CPPAD_ASSERT_UNKNOWN( Parameter(p) );
+{	ADTape<Base> *tape = AD<Base>::tape_ptr();
+	bool var_x, var_y;
+# ifdef NDEBUG
+	if( tape == CPPAD_NULL )
+	{	var_x =  false;
+		var_y = false;
+	}
+	else
+	{
+		var_x = x.id_ == tape->id_;
+		var_y = y.id_ == tape->id_;
+	}
+# else
+	var_x  = Variable(x);
+	var_y = Variable(y);
+	CPPAD_ASSERT_KNOWN(
+		(! var_x) || x.id_ == tape->id_ ,
+		"pow first operand is a variable for a different thread"
+	);
+	CPPAD_ASSERT_KNOWN(
+		(! var_y) || y.id_ == tape->id_ ,
+		"pow second operand is a variable for a different thread"
+	);
+# endif
+	AD<Base> result;
+	result.value_  = pow(x.value_, y.value_);
+	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
-	// base type result
-	p.value_  = pow(x.value_, y.value_);
+	if( var_x )
+	{	if( var_y )
+		{	// result = variable^variable
+			CPPAD_ASSERT_UNKNOWN( NumVar(PowvvOp) == 3 );
+			CPPAD_ASSERT_UNKNOWN( NumInd(PowvvOp) == 2 );
 
-	if( Variable(x) )
-	{	if( Variable(y) )
-		{	// result = variable + variable
-			CPPAD_ASSERT_KNOWN(
-				x.id_ == y.id_,
-				"pow: arguments are AD objects that are"
-				" variables on different tapes."
-			);
-			x.tape_this()-> 
-				RecordOp(PowvvOp, p, x.taddr_, y.taddr_
-			);
+			// put operand addresses in tape
+			tape->Rec.PutInd(x.taddr_, y.taddr_);
+
+			// put operator in the tape
+			result.taddr_ = tape->Rec.PutOp(PowvvOp);
+
+			// make result a variable
+			result.id_ = tape->id_;
 		}
-		// if IdenticalZero(y.value_), variable^0 is a parameter
-		else if( ! IdenticalZero(y.value_) )
-			x.tape_this()->
-				RecordOp(PowvpOp, p, x.taddr_, y.value_);
-	}
-	else if( Variable(y) )
-	{	// if IdenticalZero(x.value_), 0^variable is a parameter
-		if( ! IdenticalZero(x.value_) )
-			y.tape_this()->
-				RecordOp(PowpvOp, p, x.value_, y.taddr_);
-	}
+		else if( IdenticalZero( y.value_ ) )
+		{	// result = variable^0
+		}
+		else
+		{	// result = variable^parameter 
+			CPPAD_ASSERT_UNKNOWN( NumVar(PowvpOp) == 3 );
+			CPPAD_ASSERT_UNKNOWN( NumInd(PowvpOp) == 2 );
 
-	return p;
+			// put operand addresses in tape
+			size_t p = tape->Rec.PutPar(y.value_);
+			tape->Rec.PutInd(x.taddr_, p);
+
+			// put operator in the tape
+			result.taddr_ = tape->Rec.PutOp(PowvpOp);
+
+			// make result a variable
+			result.id_ = tape->id_;
+		}
+	}
+	else if( var_y )
+	{	if( IdenticalZero(x.value_) )
+		{	// result = 0^variable 
+		}
+		else
+		{	// result = variable^parameter 
+			CPPAD_ASSERT_UNKNOWN( NumVar(PowpvOp) == 3 );
+			CPPAD_ASSERT_UNKNOWN( NumInd(PowpvOp) == 2 );
+
+			// put operand addresses in tape
+			size_t p = tape->Rec.PutPar(x.value_);
+			tape->Rec.PutInd(p, y.taddr_);
+
+			// put operator in the tape
+			result.taddr_ = tape->Rec.PutOp(PowpvOp);
+
+			// make result a variable
+			result.id_ = tape->id_;
+		}
+	}
+	return result;
 }
 // =========================================================================
 // Fold operations in same way as CPPAD_FOLD_AD_VALUED_BINARY_OPERATION(Op)
