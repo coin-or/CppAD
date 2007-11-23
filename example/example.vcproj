@@ -291,6 +291,9 @@
 				RelativePath=".\mul_level.cpp">
 			</File>
 			<File
+				RelativePath=".\nan.cpp">
+			</File>
+			<File
 				RelativePath=".\near_equal.cpp">
 			</File>
 			<File

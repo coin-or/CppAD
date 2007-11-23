@@ -55,6 +55,16 @@ The file $code cppad/nan.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of 
 the $code CppAD$$ routines.
 
+$subhead Macros$$
+$index macro, nan$$
+$index macro,  isnan$$
+$index nan, macro$$
+$index isnan, macro$$
+Some C++ compilers use preprocessor symbols called $code nan$$ 
+and $code isnan$$.
+These preprocessor symbols will no longer be defined after 
+this file is included. 
+
 $head nan$$
 This routine returns a $code nan$$ with the same type as $italic z$$.
 
@@ -128,8 +138,25 @@ $head Vector$$
 The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
 elements of type $italic Scalar$$.
 
+$children%
+	example/nan.cpp
+%$$
+$head Example$$
+The file $cref/nan.cpp/$$
+contains an example and test of this routine.
+It returns true if it succeeds and false otherwise.
+
 $end
 */
+
+# include <cstddef>
+
+# ifdef nan
+# undef nan
+# endif
+# ifdef isnan
+# undef isnan
+# endif
 
 namespace CppAD { // BEGIN CppAD namespace
 
