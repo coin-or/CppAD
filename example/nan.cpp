@@ -26,17 +26,19 @@ $end
 */
 
 // these definitions will be erased when nan.hpp is included
-# ifndef nan
+# ifdef nan
+# else
 # define nan(z)   Error_if_this_symbol_gets_used
 # endif
-# ifndef isnan
+# ifdef isnan
+# else
 # define isnan(z) Error_if_this_symbol_gets_used
 # endif
 
 
 
 // BEGIN PROGRAM
-# include <cppad/cppad.hpp>
+# include <cppad/nan.hpp>
 # include <vector>
 
 bool nan(void)
