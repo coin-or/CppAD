@@ -11,12 +11,12 @@
 # -----------------------------------------------------------------------------
 #
 copy_done="yes"
-trunk_revision="996"
-yyyymmdd="20071016"
-yyyy_mm_dd="2007-10-16"
-stable_version="2.0"
+trunk_revision="1087"
+yyyymmdd="20071124"
+yyyy_mm_dd="2007-11-24"
+stable_version="2.1"
 # -----------------------------------------------------------------------------
-repository="http://www.coin-or.org/svn/CppAD"
+repository="https://projects.coin-or.org/svn/CppAD"
 rep_trunk="$repository/trunk"
 rep_stable="$repository/stable/$stable_version"
 #
@@ -62,7 +62,7 @@ then
 	fi
 fi
 #
-# retrieve stable verison ------------------------------------------
+# retrieve stable verison from repository ------------------------------------
 #
 echo "svn checkout $rep_stable stable/$stable_version"
 svn checkout $rep_stable stable/$stable_version
@@ -74,83 +74,41 @@ then
 	exit 1
 fi
 #
-# sed edit certain files -----------------------------------------------------
+# set the proper version -----------------------------------------------------
+sed < AUTHORS > AUTHORS.$$ \
+	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
+sed < configure.ac > configure.ac.$$\
+	-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" 
+sed < omh/download.omh > omh/download.omh.$$ \
+	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
+sed < build.sh > build.sh.$$ \
+	-e "s/yyyymmdd=.*/yyyymmdd=\"$yyyymmdd\"/" \
+	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/" 
+sed < svn_status.sh > svn_status.sh.$$ \
+	-e "s/yyyymmdd=.*/yyyymmdd=\"$yyyymmdd\"/" \
+	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/"  \
+	-e '/^[\t ]*cppad\/config.h$/d'
 #
 list="
 	AUTHORS
-	cppad/config.h
 	configure.ac
-	doc.omh
-	omh/install_unix.omh
-	omh/install_windows.omh
+	omh/download.omh
+	build.sh
+	svn_status.sh
 "
-#
-# change version for entries in list
-#
-for name in $list
+for name in $list 
 do
-	sed $name -f svn_commit.sed | sed > $name.tmp \
-		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/" \
-		-e "s/ [0-9]\{8\}\"/ $yyyymmdd\"/" \
-		-e "s/\"[0-9]\{8\}\"/\"$yyyymmdd\"/" \
-		-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" \
-		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
-		-e "s/ [0-9]\{8\}\\\$\\\$/ $yyyymmdd\$\$/"
-done
-#
-# change version for build.sh 
-#
-sed < build.sh > build.sh.tmp \
-	-e "s/yyyymmdd=.*/yyyymmdd=\"$yyyymmdd\"/" \
-	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/" 
-#
-# change set of files that svn_status.sh ignores
-#
-sed < svn_status.sh > svn_status.sh.tmp \
-	-e '/AUTHORS/d' \
-	-e '/configure.ac/d' \
-	-e '/doc.omh/d' \
-	-e '/install_unix.omh/d' \
-	-e '/install_windows.omh/d' \
-	-e '/diff_today.sh/d'
-#
-list="$list build.sh svn_status.sh"
-for name in $list
-do
-	echo "diff $name $name.tmp"
-	diff $name $name.tmp
-	echo "mv   $name.tmp $name"
-	mv   $name.tmp $name
-done
-#
-# make sure all autoconf and automake output is in repository ----------------
-#
-list_name=`sed configure.ac \
-	-n \
-	-e '/END AC_CONFIG_FILES/,$d' \
-	-e '1,/AC_CONFIG_FILES/d' \
-	-e 's/makefile/&.in/' \
-	-e 's/^[ \t]*//' \
-	-e '/makefile/p'`
-list_name="
-	$list_name 
-	cppad/config.h.in
-	configure 
-	depcomp
-	install-sh 
-	missing
-"
-for name in $list_name
-do
-	if [ ! -e $name ]
+	echo "diff $name $name.$$"
+	diff $name $name.$$
+	echo "mv   $name.$$ $name"
+	if ! mv   $name.$$ $name
 	then
-		echo "$name is not in repository"
+		echo "Cannot set the version in $name"
 		exit 1
 	fi
 done
 #
 # Build all sources --------------------------------------------------------- 
-#
 echo "aclocal"
 if ! aclocal
 then
@@ -180,11 +138,10 @@ then
 fi
 #
 echo "--------------------------------------------------------------------"
-echo "Step 1: cd ../stable/$stable_version"
-echo "Step 2: Check differences between repository and local copy."
-echo "Step 3: If needs changing, edit CppAD/trunk/new_stable.sh and repeat."
-echo "Step 4: svn commit -m \\"
-echo "\"stable/$stable_version: set version to $yyyymmdd, add built sources\""
+echo "Step 1: change directory: cd ../stable/$stable_version"
+echo "Step 2: review differences: ./svn_status.sh"
+echo "Step 3: If not correct, edit CppAD/trunk/new_stable.sh and repeat."
+echo "Step 4: use ./svn_commit.sh to commit changes." 
 echo "Step 5: Checkout a fresh copy of stable/$stable_version"
 echo "Step 6: Test that configure works (without using autoconf or automake)"
 echo "Step 8: If problems occur, edit CppAD/trunk/new_stable.sh and repeat."

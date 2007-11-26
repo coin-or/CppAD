@@ -39,10 +39,13 @@ $href%
 	http://www.coin-or.org/CppAD/%
 	CppAD
 %$$,
-and 
 $href%
         http://www.imm.dtu.dk/fadbad.html/%
         Fadbad
+%$$ and
+$href%
+	http://trilinos.sandia.gov/packages/sacado/%
+	Sacado
 %$$.
 This section explains how you can run these tests on your computer.
 
