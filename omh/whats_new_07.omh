@@ -63,6 +63,11 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-29$$
+The $cref/std_math_ad/$$ function $code sqrt$$ did not link properly
+when $italic Base$$ was $code AD<double>$$.
+This has been fixed.
+
 $head 11-23$$
 The routines $code nan$$ and $code isnan$$ were failing 
 for some systems because they use $code nan$$ and or $code isnan$$ 

@@ -96,6 +96,7 @@ test_more_SOURCES  = \
 	sinh.cpp \
 	sparse_vec_ad.cpp \
 	sqrt.cpp \
+	std_math.cpp \
 	sub.cpp \
 	sub_eq.cpp \
 	sub_zero.cpp \

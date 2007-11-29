@@ -261,6 +261,9 @@
 				RelativePath=".\sqrt.cpp">
 			</File>
 			<File
+				RelativePath=".\std_math.cpp">
+			</File>
+			<File
 				RelativePath=".\sub.cpp">
 			</File>
 			<File

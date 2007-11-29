@@ -47,6 +47,9 @@ namespace CppAD {
 	template <class Base> AD<Base> exp           (const AD<Base> &u);
 	template <class Base> AD<Base> log           (const AD<Base> &u);
 	template <class Base> AD<Base> log10         (const AD<Base> &u);
+	template <class Base> AD<Base> sin           (const AD<Base> &u);
+	template <class Base> AD<Base> sinh          (const AD<Base> &u);
+	template <class Base> AD<Base> sqrt          (const AD<Base> &u);
 	template <class Base> AD<Base> tan           (const AD<Base> &u);
 
 	// pow

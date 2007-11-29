@@ -65,6 +65,7 @@ extern bool SinCos(void);
 extern bool Sinh(void);
 extern bool SparseVecAD(void);
 extern bool Sqrt(void);
+extern bool std_math(void);
 extern bool Sub(void);
 extern bool SubEq(void);
 extern bool SubZero(void);
@@ -156,6 +157,7 @@ int main(void)
 	ok &= Run( Sinh,            "Sinh"           );
 	ok &= Run( SparseVecAD,     "SparseVecAD"    );
 	ok &= Run( Sqrt,            "Sqrt"           );
+	ok &= Run( std_math,        "std_math"       );
 	ok &= Run( Sub,             "Sub"            );
 	ok &= Run( SubEq,           "SubEq"          );
 	ok &= Run( SubZero,         "SubZero"        );
