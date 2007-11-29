@@ -52,8 +52,8 @@ am__test_more_SOURCES_DIST = base_adolc.cpp test_more.cpp abs.cpp \
 	pow.cpp pow_int.cpp romberg_one.cpp rosen_34.cpp runge_45.cpp \
 	reverse.cpp rev_sparse_hes.cpp rev_sparse_jac.cpp rev_two.cpp \
 	simple_vector.cpp sin.cpp sin_cos.cpp sinh.cpp \
-	sparse_vec_ad.cpp sqrt.cpp sub.cpp sub_eq.cpp sub_zero.cpp \
-	value.cpp vec_ad.cpp vec_ad_par.cpp vec_unary.cpp
+	sparse_vec_ad.cpp sqrt.cpp std_math.cpp sub.cpp sub_eq.cpp \
+	sub_zero.cpp value.cpp vec_ad.cpp vec_ad_par.cpp vec_unary.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = base_adolc.$(OBJEXT)
 am_test_more_OBJECTS = $(am__objects_1) test_more.$(OBJEXT) \
 	abs.$(OBJEXT) acos.$(OBJEXT) asin.$(OBJEXT) add.$(OBJEXT) \
@@ -72,9 +72,9 @@ am_test_more_OBJECTS = $(am__objects_1) test_more.$(OBJEXT) \
 	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
 	simple_vector.$(OBJEXT) sin.$(OBJEXT) sin_cos.$(OBJEXT) \
 	sinh.$(OBJEXT) sparse_vec_ad.$(OBJEXT) sqrt.$(OBJEXT) \
-	sub.$(OBJEXT) sub_eq.$(OBJEXT) sub_zero.$(OBJEXT) \
-	value.$(OBJEXT) vec_ad.$(OBJEXT) vec_ad_par.$(OBJEXT) \
-	vec_unary.$(OBJEXT)
+	std_math.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
+	sub_zero.$(OBJEXT) value.$(OBJEXT) vec_ad.$(OBJEXT) \
+	vec_ad_par.$(OBJEXT) vec_unary.$(OBJEXT)
 test_more_OBJECTS = $(am_test_more_OBJECTS)
 test_more_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -275,6 +275,7 @@ test_more_SOURCES = \
 	sinh.cpp \
 	sparse_vec_ad.cpp \
 	sqrt.cpp \
+	std_math.cpp \
 	sub.cpp \
 	sub_eq.cpp \
 	sub_zero.cpp \
@@ -379,6 +380,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sinh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_vec_ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sqrt.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/std_math.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub_zero.Po@am__quote@

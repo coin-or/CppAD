@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-Test the use of the special parameters zero and one with the multiply operator
+Test the using standard math functions with AD< AD<double> >
 */
 
 # include <cppad/cppad.hpp>
