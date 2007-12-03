@@ -453,7 +453,7 @@ $xref/InstallUnix/FadbadDir/FadbadDir/$$,
 and
 $xref/InstallUnix/SacadoDir/SacadoDir/$$ above.
 
-$head Final Installation$$
+$head make install$$
 Once you are satisfied that the tests are giving correct results,
 you can install CppAD into easy to use directories by executing the command
 $codep
@@ -461,5 +461,11 @@ $codep
 $$
 This will install CppAD in the location specified by 
 $cref/PrefixDir/InstallUnix/PrefixDir/$$.
+You must have permission to write in the $italic PrefixDir$$
+directory to execute this command. 
+You may optionally specify a destination directory for the install; i.e.,
+$syntax%
+	make install DESTDIR=%DestinationDirectory%
+%$$
 
 $end

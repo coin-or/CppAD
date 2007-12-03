@@ -394,6 +394,7 @@ EXTRA_DIST = \
 	check_include_def.sh \
 	clean_cppad.sh \
 	cpl1.0.txt \
+	cppad-$(VERSION).spec \
 	dev \
 	dev.omh \
 	doc \
@@ -410,8 +411,9 @@ EXTRA_DIST = \
 	uw_copy_040507.html
 
 #
-@CppAD_DOCUMENTATION_TRUE@mydocdir = $(datadir)/doc
-@CppAD_DOCUMENTATION_TRUE@myprogdocdir = $(mydocdir)/$(PACKAGE)-$(VERSION)
+@CppAD_DOCUMENTATION_TRUE@docdir_1 = $(DESTDIR)$(datadir)
+@CppAD_DOCUMENTATION_TRUE@docdir_2 = $(docdir_1)/doc
+@CppAD_DOCUMENTATION_TRUE@docdir_3 = $(docdir_2)/$(PACKAGE)-$(VERSION)
 all: all-recursive
 
 .SUFFIXES:
@@ -877,10 +879,11 @@ uninstall-am: uninstall-nobase_includeHEADERS
 dist-hook:
 	rm -rf `find $(distdir)/omh $(distdir)/openmp -name .svn`
 @CppAD_DOCUMENTATION_TRUE@install-data-hook:
-@CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(mydocdir) ] ; then mkdir $(mydocdir) ; fi
-@CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(myprogdocdir) ] ; then mkdir $(myprogdocdir) ; fi
-@CppAD_DOCUMENTATION_TRUE@	cp -r $(top_builddir)/doc/* $(myprogdocdir)
-@CppAD_DOCUMENTATION_TRUE@	chmod 644 $(myprogdocdir)/* 
+@CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(docdir_1) ] ; then mkdir $(docdir_1) ; fi
+@CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(docdir_2) ] ; then mkdir $(docdir_2) ; fi
+@CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(docdir_3) ] ; then mkdir $(docdir_3) ; fi
+@CppAD_DOCUMENTATION_TRUE@	cp -r $(top_builddir)/doc/* $(docdir_3)
+@CppAD_DOCUMENTATION_TRUE@	chmod 644 $(docdir_3)/* 
 #
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

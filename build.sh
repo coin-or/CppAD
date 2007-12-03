@@ -52,6 +52,10 @@ then
 	yyyymmdd=`date +%G%m%d`
 	yyyy_mm_dd=`date +%G-%m-%d`
 	#
+	# create spec file for this version
+	sed < cppad.spec > cppad-$yyyymmdd.spec \
+		-e "s/yyyymmdd/$yyyymmdd/g"
+	#
 	# automatically change version for certain files
 	sed < AUTHORS > AUTHORS.$$ \
 		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"

@@ -114,6 +114,14 @@ do
 	fi
 done
 #
+# change cppad-yyyymmdd.spec from CPL to GPL
+yyyymmdd=`date +%G%m%d`
+sed < cppad.spec > cppad-$version/cppad-$yyyymmdd.spec \
+	-e "s/yyyymmdd/$yyyymmdd/g" \
+	-e "s/CPL/GPL/g" \
+	-e "s/\.cpl\./.gpl./g" \
+	-e 's/Common Public License Version 1.0/GNU General Public License Version 2/'
+#
 # change the COPYING file
 sed -n < cppad-$version/COPYING > GplLicense.tmp \
 -e 's/Common Public License Version 1.0/GNU General Public License Version 2/' \
@@ -135,18 +143,6 @@ mv GplLicense.tmp cppad-$version/makefile.in
 sed < cppad-$version/omh/license.omh > GplLicense.tmp \
 	-e 's/$verbatim%cpl1.0.txt%$\$/$verbatim%gpl2.txt%$$/'
 mv GplLicense.tmp cppad-$version/omh/license.omh
-#
-# Make sure that dates in certain files are older than the files converted 
-# and make sure they are in a certain time order.
-echo "GplLicense: ensuring certain time order in file dates"
-touch cppad-$version/aclocal.m4
-sleep 2
-touch cppad-$version/cppad/config.h.in
-sleep 2
-touch cppad-$version/makefile.in
-touch cppad-$version/*/makefile.in
-sleep 2
-touch cppad-$version/configure
 #
 # create *.gpl.tgz file
 echo "tar -czf cppad-$version.gpl.tgz cppad-$version"

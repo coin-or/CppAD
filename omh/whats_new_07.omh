@@ -63,6 +63,10 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-02$$
+The $syntax%DESTDIR=%directory%$$ option on the 
+$cref/make install/InstallUnix/make install/$$ command line.
+
 $head 11-29$$
 The $cref/std_math_ad/$$ function $code sqrt$$ did not link properly
 when $italic Base$$ was $code AD<double>$$.
