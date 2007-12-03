@@ -43,8 +43,8 @@ sed                                                           \
 	-e '/^[?] *doc$/d'                                    \
 	-e '/^[?] *dev$/d'                                    \
 	-e '/^[?] *aclocal.m4$/d'                             \
-	-e '/cygwin_package$/d'                               \
-	-e '/^[?] *cppad-[0-9]\{8\}$/d'
+	-e '/^[?] *cppad-[0-9]\{8\}.*$/d'                     \
+	-e '/cygwin_package$/d'
 #
 yyyymmdd=`date +%G%m%d`
 yyyy_mm_dd=`date +%G-%m-%d`

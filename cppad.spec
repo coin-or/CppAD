@@ -8,21 +8,26 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+# RPM documentation
+# http://www.rpm.org/max-rpm/
 #
-# Some Example Spec Files. 
-# http://www.rpm.org/RPM-HOWTO/build.html
-# http://www.rpm.org/howto/thefight/
-# http://www.rpm.org/max-rpm/s1-rpm-build-creating-spec-file.html
+# Prefix for directories where CppAD will be installed, you may change this
+%define _prefix  /usr/local
 #
-# Commands to Execute
-# Put a copy of cppad-yyyymmdd.cpl.tgz in /usr/src/redhat/SOURCES
-# Put a copy of cppad-yyymmdd.spec in /usr/src/redhat/SPECS
-# Execute the command: sudo rpmbuild -ba --target=noarch cppad-yyyymmdd.spec
+# Preform the following steps:
+# 1. Put a copy of the file ../cppad-yyyymmdd.cpl.tgz in 
+#    /usr/src/redhat/SOURCES
+# 2. Put a copy of this file (cppad-yyyymmdd.spec) in 
+#    /usr/src/redhat/SPECS
+# 3. In the /usr/src/redhat/SPECS directory, execute the following command:
+#    sudo rpmbuild -ba --target=noarch cppad-yyyymmdd.spec
 #
 # RPMS Created:
 # /usr/src/redhat/SRPMS/cppad-yyyymmdd-1.src.rpm
 # /usr/src/redhat/RPMS/noarch/cppad-yyyymmdd-1.noarch.rpm
 #
+# Note that CppAD has no requirements; i.e., there is no Requires field
+# ----------------------------------------------------------------------------
 Name: cppad
 Summary: A Package for Differentiation of C++ Algorithms
 Version: yyyymmdd
@@ -32,7 +37,7 @@ Group: Math
 Source: http://www.coin-or.org/download/source/CppAD/cppad-yyyymmdd.cpl.tgz
 URL: http://www.coin-or.org/CppAD/
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
-Packager: Brad Bell <bradbell@seanet.com>
+Packager: Brad Bell, bradbell at seanet dot com
 
 %description
 We refer to the step by step conversion from an algorithm that computes 
@@ -43,17 +48,21 @@ algorithm that computes its derivative values. A brief introduction to
 Algorithmic Differentiation can be found at
 	http://en.wikipedia.org/wiki/Automatic_differentiation
 
-# before extracting the source, remove the old build directory.
+# Remove the old build directory before exactring the source code
 %prep
 rm -rf $RPM_BUILD_ROOT
 
-# uncompress and extract the source code and change into that directory
+# Uncompress and extract the source code and change into that directory
 %setup -q 
 
-# set prefix to /usr/local and create the test programs example/example and 
-# test_more/test_more
+# Set the prefix, create test programs 
+# example/example and test_more/test_more, and run the tests
 %build
-./configure --prefix=/usr/local  --with-Example --with-TestMore  --with-Documentation
+./configure \
+	--prefix=%{_prefix} \
+	--with-Example \
+	--with-TestMore  \
+	--with-Documentation
 make
 for program in example/example test_more/test_more
 do
@@ -65,13 +74,21 @@ do
 	fi
 done
 #
-# install include files to /usr/include/cppad
-make install DESTDIR=$RPM_BUILD_ROOT
-
-# list of files that are installed
+# install include files to $RPM_BUILD_ROOT/%{_prefix}/cppad-yyyymmdd-1
+if ! make install DESTDIR=$RPM_BUILD_ROOT
+then
+	echo "Error during make install DESTDIR=$RPM_BUILD_ROOT"
+	exit 1
+fi
+#
+# cleanup 
+%clean
+rm -rf $RPM_BUILD_ROOT
+#
+# List of files that are installed
 %files
 # default attributes, mode = same as after build, owner = root, group = root
 %defattr(-,root,root)
 %doc doc/*
-/usr/local/include/cppad/*
-/usr/local/share/doc
+%{_prefix}/include/cppad/*
+%{_prefix}/share/doc
