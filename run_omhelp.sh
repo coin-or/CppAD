@@ -29,12 +29,13 @@ then
 		echo "See the complete error message in omhelp_dev.log"
 		exit 1
 	fi
-	omhelp ../dev.omh -noframe -debug
-	cd ..
 	if grep "^OMhelp Warning:" omhelp_dev.log
 	then
 		echo "See the complete warning messages in omhelp_dev.log."
+		exit 1
 	fi
+	omhelp ../dev.omh -noframe -debug
+	cd ..
 fi
 if [ "$1" = doc ]
 then
@@ -55,14 +56,15 @@ then
 		echo "See the complete error message in omhelp_doc.log."
 		exit 1
 	fi
+	if grep "^OMhelp Warning:" omhelp_doc.log
+	then
+		echo "See the complete warning messages in omhelp_doc.log."
+		exit 1
+	fi
 	omhelp ../doc.omh  \
                 -l http://www.coin-or.org/CppAD/ \
 		-noframe \
 		-debug
 	cd ..
-	if grep "^OMhelp Warning:" omhelp_doc.log
-	then
-		echo "See the complete warning messages in omhelp_doc.log."
-	fi
 fi
 exit 0

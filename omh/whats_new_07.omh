@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	yyyymmdd
 	isnan
 	gcc
 	executables
@@ -63,8 +64,20 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-05$$
+Change the name of the spec file from
+$syntax%cppad-%yyyymmdd%.spec%$$ to $code cppad.spec$$.
+
+$head 12-04$$
+Add the capability for the RPM spec file to use a different
+prefix directory.
+
+$head 12-03$$
+This is the first version with an 
+$cref/RPM spec file/download/Unix Tar Files/RPM Spec File/$$.
+
 $head 12-02$$
-The $syntax%DESTDIR=%directory%$$ option on the 
+Add the $syntax%DESTDIR=%directory%$$ option on the 
 $cref/make install/InstallUnix/make install/$$ command line.
 
 $head 11-29$$

@@ -116,8 +116,9 @@ done
 #
 # change cppad-yyyymmdd.spec from CPL to GPL
 yyyymmdd=`date +%G%m%d`
-sed < cppad.spec > cppad-$version/cppad-$yyyymmdd.spec \
-	-e "s/yyyymmdd/$yyyymmdd/g" \
+sed < cppad.spec > cppad-$version/cppad.spec \
+	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
+	-e "s/^Version: *[0-9]\{8\}/Version: $yyyymmdd/" \
 	-e "s/CPL/GPL/g" \
 	-e "s/\.cpl\./.gpl./g" \
 	-e 's/Common Public License Version 1.0/GNU General Public License Version 2/'

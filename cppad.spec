@@ -15,26 +15,26 @@
 %define _prefix  /usr/local
 #
 # Preform the following steps:
-# 1. Put a copy of the file ../cppad-yyyymmdd.cpl.tgz in 
+# 1. Put a copy of the file ../cppad-20071205.cpl.tgz in 
 #    /usr/src/redhat/SOURCES
-# 2. Put a copy of this file (cppad-yyyymmdd.spec) in 
+# 2. Put a copy of this file (cppad.spec) in 
 #    /usr/src/redhat/SPECS
 # 3. In the /usr/src/redhat/SPECS directory, execute the following command:
-#    sudo rpmbuild -ba --target=noarch cppad-yyyymmdd.spec
+#    sudo rpmbuild -ba --target=noarch cppad.spec
 #
 # RPMS Created:
-# /usr/src/redhat/SRPMS/cppad-yyyymmdd-1.src.rpm
-# /usr/src/redhat/RPMS/noarch/cppad-yyyymmdd-1.noarch.rpm
+# /usr/src/redhat/SRPMS/cppad-20071205-1.src.rpm
+# /usr/src/redhat/RPMS/noarch/cppad-20071205-1.noarch.rpm
 #
 # Note that CppAD has no requirements; i.e., there is no Requires field
 # ----------------------------------------------------------------------------
 Name: cppad
 Summary: A Package for Differentiation of C++ Algorithms
-Version: yyyymmdd
+Version: 20071205
 Release: 1
 License: CPL
 Group: Math 
-Source: http://www.coin-or.org/download/source/CppAD/cppad-yyyymmdd.cpl.tgz
+Source: http://www.coin-or.org/download/source/CppAD/cppad-20071205.cpl.tgz
 URL: http://www.coin-or.org/CppAD/
 BuildRoot: %{_tmppath}/%{name}-%{version}-buildroot
 Packager: Brad Bell, bradbell at seanet dot com
@@ -74,7 +74,7 @@ do
 	fi
 done
 #
-# install include files to $RPM_BUILD_ROOT/%{_prefix}/cppad-yyyymmdd-1
+# install include files to $RPM_BUILD_ROOT/%{_prefix}/cppad-20071205-1
 if ! make install DESTDIR=$RPM_BUILD_ROOT
 then
 	echo "Error during make install DESTDIR=$RPM_BUILD_ROOT"

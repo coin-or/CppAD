@@ -49,6 +49,9 @@ sed                                                           \
 yyyymmdd=`date +%G%m%d`
 yyyy_mm_dd=`date +%G-%m-%d`
 #
+svn cat cppad.spec | sed > cppad.spec.$$ \
+       	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
+       	-e "s/^Version: *[0-9]\{8\}/Version: $yyyymmdd/"
 svn cat configure | sed > configure.$$ \
 	-e "s/CppAD [0-9]\{8\}/CppAD $yyyymmdd/g" \
 	-e "s/VERSION='[0-9]\{8\}'/VERSION='$yyyymmdd'/g" \
@@ -65,6 +68,7 @@ svn cat cppad/config.h | sed > cppad/config.h.$$ \
 	-e "s/CppAD [0-9]\{8\}/CppAD $yyyymmdd/g" \
 	-e "s/VERSION \"[0-9]\{8\}\"/VERSION \"$yyyymmdd\"/g"
 list="
+	cppad.spec
 	configure
 	AUTHORS
 	configure.ac

@@ -1,14 +1,5 @@
-The OMhelp source code summary of recent changes for this version of 
-CppAD is in the file:
-	omh/whats_new.omh
-This file references a separate file for each year of changes.
-
-If you used a tarball or zip file for this distribution, the HTML and XML 
-summary of recent changes for this version of CppAD are in the files:
-	doc/whats_new.htm
-	doc/whats_new.xml
-
-The HTML and XML summary of recent changes news for the version of CppAD
-corresponding to the current date (minus at most one day) are in the files:
-	http://www.coin-or.org/CppAD/Doc/whats_new.htm
-	http://www.coin-or.org/CppAD/Doc/whats_new.xml
+* 2007-12-05 Brad Bell <bradbell at seanet dot com> 
+- Start using this file for an overview of changes from a developers viewpoint.
+- A more detailed view of the changes can be found in the svn log; e.g.,
+-	https://projects.coin-or.org/CppAD/timeline
+- A users viewpoint is located in doc/whats_new.xml or doc/whats_new.htm.

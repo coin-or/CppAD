@@ -52,11 +52,11 @@ then
 	yyyymmdd=`date +%G%m%d`
 	yyyy_mm_dd=`date +%G-%m-%d`
 	#
-	# create spec file for this version
-	sed < cppad.spec > cppad-$yyyymmdd.spec \
-		-e "s/yyyymmdd/$yyyymmdd/g"
-	#
 	# automatically change version for certain files
+	sed < cppad.spec > cppad.spec.$$ \
+        	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
+        	-e "s/^Version: *[0-9]\{8\}/Version: $yyyymmdd/"
+	#
 	sed < AUTHORS > AUTHORS.$$ \
 		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
 	sed < configure.ac > configure.ac.$$\
@@ -74,6 +74,7 @@ then
 		-e "s/CppAD [0-9]\{8\}/CppAD $yyyymmdd/g" \
 		-e "s/VERSION \"[0-9]\{8\}\"/VERSION \"$yyyymmdd\"/g"
 	list="
+		cppad.spec
 		AUTHORS
 		configure.ac
 		omh/download.omh
