@@ -4,10 +4,10 @@ http://www.coin-or.org/CppAD
 This is the CppAD home page.
 
 cppad@list.coin-or.org
-This mailing list is used for CppAD discussion and bug reporting. You must
-first join the mailing list using its general information page
+This mailing list is used for CppAD discussion and bug reporting. Only members 
+of the mailing list can post messages (this avoids spam on the mailing list).
+You can join the mailing list using its general information page
 	http://list.coin-or.org/mailman/listinfo/CppAD
-(this avoids having spam on the mailing list).
 
 
 File        Description
@@ -20,6 +20,7 @@ NEWS        Pointer to log of recent changes.
 README      This file
 cpl1.0.txt  A copy of the CPL license.
 gpl2.txt    A copy of the GPL license.
+cppad.spec  An RPM spec file (for creating RPM distributions of CPPAD).
 
 doc
 sub-directory containing the documentation for this version of CppAD.
