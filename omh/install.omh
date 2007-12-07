@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin Install$$
 $dollar @$$
 $spell
+	tarball
 	CppAD
 $$
 
@@ -35,7 +36,7 @@ $tref InstallUnix$$
 For installation from a tarball,
 follow the instruction in the $tref InstallUnix$$ section.
 If you want to distribute and install CppAD using an RPM file,
-see the $cref/RPM spec file/download/RPM Spec File/$$ heading
+see the $cref/RPM spec file/download/Unix Tar Files/RPM Spec File/$$ heading
 in the $cref/download/$$ instructions.
 
 $head Windows Install$$

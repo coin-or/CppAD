@@ -253,6 +253,7 @@ EXTRA_DIST = \
 #
 dist-hook:
 	rm -rf `find $(distdir)/omh $(distdir)/openmp -name .svn`
+	rm $(distdir)/doc/error.wrd
 #
 if CppAD_DOCUMENTATION
 docdir_1 = $(DESTDIR)$(datadir)
