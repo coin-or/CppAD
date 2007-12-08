@@ -72,6 +72,8 @@ for file in $add_list $change_list
 do
 	count=`expr $count + 1`
 	ext=`echo $file | sed -e "s/.*\././"`
+	# If you change the conditions below, you must also change the 
+	# conditions in the abort section below (in this script).
 	if \
 	[ -f $file            ]      &&   \
 	[ $file != "svn_commit.sh" ] &&   \
@@ -79,8 +81,7 @@ do
 	[ $ext  != ".in"     ]       &&   \
 	[ $ext  != ".sed"     ]      &&   \
 	[ $ext  != ".sln"     ]      &&   \
-	[ $ext  != ".vcproj"  ]      &&   \
-	[ $ext  != ".vim"     ]
+	[ $ext  != ".vcproj"  ]      &&
 	then
 		# automatic edits and backups
 		echo "cp $file junk.$count"
@@ -146,12 +147,13 @@ then
 		count=`expr $count + 1`
 		ext=`echo $file | sed -e "s/.*\././"`
 		if \
-		[ -f $file            ] && \
-		[ $ext  != ".sh"      ] && \
-		[ $ext  != ".sed"     ] && \
-		[ $ext  != ".vcproj"  ] && \
-		[ $ext  != ".sln"     ] && \
-		[ $ext  != ".vim"     ]
+		[ -f $file            ]      &&   \
+		[ $file != "svn_commit.sh" ] &&   \
+		[ $file != "configure" ]     &&   \
+		[ $ext  != ".in"     ]       &&   \
+		[ $ext  != ".sed"     ]      &&   \
+		[ $ext  != ".sln"     ]      &&   \
+		[ $ext  != ".vcproj"  ]      &&
 		then
 			# undo the automatic edits
 			echo "mv junk.$count $file"
