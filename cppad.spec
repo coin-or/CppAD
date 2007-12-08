@@ -13,10 +13,10 @@
 #
 # If this value is true, a set of validation tests are run to make sure that 
 # CppAD works properly on the system where the rpmbuild command is executed.
-%define _validation_testing_during_rpmbuild true
+%define _validation_testing_during_rpmbuild false
 #
 # Preform the following steps:
-# 1. Put a copy of the file ../cppad-20071207.cpl.tgz in 
+# 1. Put a copy of the file ../cppad-20071208.cpl.tgz in 
 #    /usr/src/redhat/SOURCES
 # 2. Put a copy of this file (cppad.spec) in 
 #    /usr/src/redhat/SPECS
@@ -24,31 +24,36 @@
 #    sudo rpmbuild -ba --target=noarch cppad.spec
 #
 # RPMS Created:
-# /usr/src/redhat/SRPMS/cppad-20071207-1.src.rpm
-# /usr/src/redhat/RPMS/noarch/cppad-20071207-1.noarch.rpm
+# /usr/src/redhat/SRPMS/cppad-20071208-1.src.rpm
+# /usr/src/redhat/RPMS/noarch/cppad-devel-20071208-1.noarch.rpm
+# /usr/src/redhat/RPMS/noarch/cppad-doc-20071208-1.noarch.rpm
 #
 # Note 1:
 # There are no requirements because CppAD does not depend on any other packages.
 #
 # Note 2:
-# There is not need for a debug version because CppAD does not install any
-# object or binary files. It only installs include files.
+# There is not need for a debug or special architecture versions because CppAD 
+# does not install any object or binary files. It is an include file library.
 #
 # Note 3:
-# The quotes in the comments below are from 
-# http://fedoraproject.org/wiki/Packaging/Guidelines
+# The is no base package cppad, only cppad-devel and cppad-doc.
 #
 # Note 4:
-# This package has the following rpmlint errors:
-# W: devel-file-in-non-devel-package .*\/usr\/include\/cppad.*\.h$
-# W: devel-file-in-non-devel-package .*\/usr\/include\/cppad.*\.hpp$
-#    CppAD is an include file library and hence its include files are
-#    intended to be used by its users.
-# W: file-not-utf8 /usr/share/doc/cppad-20071207/pmathmlcss.xsl
-#    This is the standard presentation MathML style sheet.
+# This package has the following rpmlint error:
+# W: file-not-utf8 /usr/share/doc/cppad-20071208/pmathmlcss.xsl
+#    This is the standard presentation MathML style sheet. Except for white
+#    space and a comment at the top, it is identical to
+#         http://www.w3.org/Math/XSL/pmathmlcss.xsl
+#    (use weget and diff -b to see that this is true).
+#
+# Note 5:
+# A copy of the license is include in the files
+#    /usr/share/doc/cppad-20071208/COPYING
+#    /usr/share/doc/cppad-doc-20071208/license.htm
+#    /usr/share/doc/cppad-doc-20071208/license.xml
 # ============================================================================
 Name: cppad
-Version: 20071207
+Version: 20071208
 Release: 1
 Summary: A Package for Differentiation of C++ Algorithms
 
@@ -56,17 +61,42 @@ Group: Development/Libraries
 License: CPL
 URL: http://www.coin-or.org/CppAD/
 
+# To quote http://fedoraproject.org/wiki/Packaging/Guidelines
 # "The recommended values for the BuildRoot tag are ...
 # %{_tmppath}/%{name}-%{version}-%{release}-root"
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
+# To quote http://fedoraproject.org/wiki/Packaging/Guidelines
 # "The Packager tag should not be used in spec files."
 # Packager: Brad Bell, bradbell at seanet dot com
 
-# This is the tarball file that contains this cppad.spec file
-Source: http://www.coin-or.org/download/source/CppAD/cppad-20071207.cpl.tgz
+# Each day a new tarball is created at the web address
+# http://www.coin-or.org/download/source/CppAD/cppad-yyyymmdd.cpl.tgz
+# where yyyy is the year, mm is the month, and dd is the day. 
+# The old tarballs are deleted after two days.
+#
+# The tarball contains its corresponding spec in cppad-yyyymmdd/cppad.spec.
+Source: http://www.coin-or.org/download/source/CppAD/cppad-20071208.cpl.tgz
+# ---------------------------------------------------------------------------
+%package devel
+Summary: A Package for Differentiation of C++ Algorithms
+Group: Development/Libraries
+
+%package doc
+Summary: A Package for Differentiation of C++ Algorithms
+Group: Development/Libraries
+
 # ----------------------------------------------------------------------------
 %description
+We refer to the step by step conversion from an algorithm that computes 
+function values to an algorithm that computes derivative values as 
+Algorithmic Differentiation (often referred to as Automatic Differentiation.) 
+Given a C++ algorithm that computes function values, CppAD generates an 
+algorithm that computes its derivative values. A brief introduction to 
+Algorithmic Differentiation can be found at
+	http://en.wikipedia.org/wiki/Automatic_differentiation
+
+%description devel
 We refer to the step by step conversion from an algorithm that computes 
 function values to an algorithm that computes derivative values as 
 Algorithmic Differentiation (often referred to as Automatic Differentiation.) 
@@ -111,7 +141,7 @@ else
 fi
 # ----------------------------------------------------------------------------
 %install
-# install files under $RPM_BUILD_ROOT/cppad-20071207-1/usr
+# install files under $RPM_BUILD_ROOT/cppad-20071208-1/usr
 if ! make install DESTDIR=$RPM_BUILD_ROOT
 then
 	echo "Error during make install DESTDIR=$RPM_BUILD_ROOT"
@@ -124,18 +154,23 @@ fi
 rm -rf $RPM_BUILD_ROOT
 
 # ----------------------------------------------------------------------------
-%files
+%files devel
 # Default attributes, mode = same as after build, owner = root, group = root
-# execute = same as after build. Install the doc and cppad directories.
+# execute = same as after build. Install the cppad include files.
 %defattr(-,root,root,-)
+%doc COPYING
 /usr/include/cppad
-/usr/share/doc/cppad-%{version}
+
+%files doc
+# Default attributes, mode = same as after build, owner = root, group = root
+# execute = same as after build. Install the cppad documentation.
+%defattr(-,root,root,-)
+%doc /usr/share/doc/cppad-%{version}
 
 # ----------------------------------------------------------------------------
 %changelog
-* Fri Dec 07 2007 Brad Bell ( bradbell at seanet dot com ) 20071207-1
-- Remove option to relocate change the prefix directory
-- and fix some other rpmlint errors.
+* Sat Dec 08 2007 Brad Bell ( bradbell at seanet dot com ) 20071208-1
+- Fix all but one rpmlint warning (see Note 4 above).
 
 * Mon Dec 03 2007 Brad Bell ( bradbell at seanet dot com ) 20071203-1
 - first version of CppAD that included RPM spec file.

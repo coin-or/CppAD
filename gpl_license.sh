@@ -114,36 +114,44 @@ do
 	fi
 done
 #
-# change cppad-yyyymmdd.spec from CPL to GPL
+# change cppad.spec from CPL to GPL
 yyyymmdd=`date +%G%m%d`
 sed < cppad.spec > cppad-$version/cppad.spec \
 	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
 	-e "s/^Version: *[0-9]\{8\}/Version: $yyyymmdd/" \
 	-e "s/CPL/GPL/g" \
+	-e "s/License: *GPL *$/License: GPLv2/" \
 	-e "s/\.cpl\./.gpl./g" \
 	-e 's/Common Public License Version 1.0/GNU General Public License Version 2/'
 #
 # change the COPYING file
-sed -n < cppad-$version/COPYING > GplLicense.tmp \
+sed -n < COPYING > cppad-$version/COPYING \
 -e 's/Common Public License Version 1.0/GNU General Public License Version 2/' \
 -e '/-\{70\}/,/-\{70\}/p'
-#
-cat gpl2.txt >> GplLicense.tmp
-mv GplLicense.tmp cppad-$version/COPYING
+cat gpl2.txt >> cppad-$version/COPYING
 #
 # change the file cpl1.0.txt to the file gpl2.txt
 rm cppad-$version/cpl1.0.txt
 cp gpl2.txt cppad-$version/gpl2.txt
-sed < cppad-$version/makefile.am > GplLicense.tmp \
-	-e 's/cpl1.0.txt/gpl2.txt/'
-mv GplLicense.tmp cppad-$version/makefile.am
-sed < cppad-$version/makefile.in > GplLicense.tmp \
-	-e 's/cpl1.0.txt/gpl2.txt/'
-mv GplLicense.tmp cppad-$version/makefile.in
 #
-sed < cppad-$version/omh/license.omh > GplLicense.tmp \
+# change occorances of cpl1.0.txt to gpl2.txt
+sed < makefile.am > cppad-$version/makefile.am  \
+	-e 's/cpl1.0.txt/gpl2.txt/'
+#
+sed < makefile.in > cppad-$version/makefile.in \
+	-e 's/cpl1.0.txt/gpl2.txt/'
+#
+sed < omh/license.omh > cppad-$version/omh/license.omh \
 	-e 's/$verbatim%cpl1.0.txt%$\$/$verbatim%gpl2.txt%$$/'
-mv GplLicense.tmp cppad-$version/omh/license.omh
+#
+# Rerun omhelp to change documentation version of license from CPL to GPL 
+cd cppad-$version
+if ! ./run_omhelp.sh doc
+then
+	echo "Error running omhelp in gpl license version"
+	exit 1
+fi
+cd ..
 #
 # create *.gpl.tgz file
 echo "tar -czf cppad-$version.gpl.tgz cppad-$version"

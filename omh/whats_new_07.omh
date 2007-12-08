@@ -64,6 +64,11 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-08$$
+By mistake, the documentation $cref/License/$$ statement
+for the GPL distribution was the same as for the CPL distribution.
+This has been fixed.
+
 $head 12-05$$
 Change the name of the spec file from
 $syntax%cppad-%yyyymmdd%.spec%$$ to $code cppad.spec$$.
