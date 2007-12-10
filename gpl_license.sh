@@ -151,6 +151,10 @@ then
 	echo "Error running omhelp in gpl license version"
 	exit 1
 fi
+if [ -e "doc/error.wrd" ]
+then
+	rm -rf doc/error.wrd
+fi
 cd ..
 #
 # create *.gpl.tgz file

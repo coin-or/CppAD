@@ -8,38 +8,43 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# RPM documentation
-# http://www.rpm.org/max-rpm/
-#
+# CppAD Subversion Repository:
+#	https://projects.coin-or.org/CppAD/browser
+# CppAD Documentation in HTML or XHTML + MathML
+#	http://www.coin-or.org/CppAD/Doc/cppad.htm
+#	http://www.coin-or.org/CppAD/Doc/cppad.xml
+# -----------------------------------------------------------------------------
 # If this value is true, a set of validation tests are run to make sure that 
 # CppAD works properly on the system where the rpmbuild command is executed.
 %define _validation_testing_during_rpmbuild false
 #
 # Preform the following steps:
 # 1. Put a copy of the file ../cppad-20071208.cpl.tgz in 
-#    /usr/src/redhat/SOURCES
+#        /usr/src/redhat/SOURCES
+#    or get a copy of cppad-20071208-1.src.rpm and execute
+#        sudo rpm --install cppad-20071208-1.src.rpm
 # 2. Put a copy of this file (cppad.spec) in 
-#    /usr/src/redhat/SPECS
+#        /usr/src/redhat/SPECS
 # 3. In the /usr/src/redhat/SPECS directory, execute the following command:
-#    sudo rpmbuild -ba --target=noarch cppad.spec
+#        sudo rpmbuild -ba --target=noarch cppad.spec
 #
 # RPMS Created:
-# /usr/src/redhat/SRPMS/cppad-20071208-1.src.rpm
-# /usr/src/redhat/RPMS/noarch/cppad-devel-20071208-1.noarch.rpm
-# /usr/src/redhat/RPMS/noarch/cppad-doc-20071208-1.noarch.rpm
+# 1. /usr/src/redhat/SRPMS/cppad-20071208-1.src.rpm
+# 2. /usr/src/redhat/RPMS/noarch/cppad-devel-20071208-1.noarch.rpm
+# 3. /usr/src/redhat/RPMS/noarch/cppad-doc-20071208-1.noarch.rpm
 #
 # Note 1:
 # There are no requirements because CppAD does not depend on any other packages.
 #
 # Note 2:
-# There is not need for a debug or special architecture versions because CppAD 
+# There is no need for a debug or special architecture versions because CppAD 
 # does not install any object or binary files. It is an include file library.
 #
 # Note 3:
 # The is no base package cppad, only cppad-devel and cppad-doc.
 #
 # Note 4:
-# This package has the following rpmlint error:
+# The cppad-doc package has the following rpmlint error:
 # W: file-not-utf8 /usr/share/doc/cppad-20071208/pmathmlcss.xsl
 #    This is the standard presentation MathML style sheet. Except for white
 #    space and a comment at the top, it is identical to
@@ -47,10 +52,10 @@
 #    (use weget and diff -b to see that this is true).
 #
 # Note 5:
-# A copy of the license is include in the files
-#    /usr/share/doc/cppad-20071208/COPYING
-#    /usr/share/doc/cppad-doc-20071208/license.htm
-#    /usr/share/doc/cppad-doc-20071208/license.xml
+# A copy of the license is included in the files
+#    /usr/share/doc/cppad-devel-20071208/COPYING
+#    /usr/share/doc/cppad-20071208/license.htm
+#    /usr/share/doc/cppad-20071208/license.xml
 # ============================================================================
 Name: cppad
 Version: 20071208
@@ -70,12 +75,12 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 # "The Packager tag should not be used in spec files."
 # Packager: Brad Bell, bradbell at seanet dot com
 
-# Each day a new tarball is created at the web address
-# http://www.coin-or.org/download/source/CppAD/cppad-yyyymmdd.cpl.tgz
-# where yyyy is the year, mm is the month, and dd is the day. 
-# The old tarballs are deleted after two days.
+# Each day a new CppAD tarball is created with the web address
+#    http://www.coin-or.org/download/source/CppAD/cppad-yyyymmdd.lll.tgz
+# where yyyy is the year, mm is the month, dd is the day, and lll is the
+# license (either cpl or gpl).
 #
-# The tarball contains its corresponding spec in cppad-yyyymmdd/cppad.spec.
+# This version of cppad.spec corresponds to the following CppAD snapshot:
 Source: http://www.coin-or.org/download/source/CppAD/cppad-20071208.cpl.tgz
 # ---------------------------------------------------------------------------
 %package devel
@@ -94,7 +99,7 @@ Algorithmic Differentiation (often referred to as Automatic Differentiation.)
 Given a C++ algorithm that computes function values, CppAD generates an 
 algorithm that computes its derivative values. A brief introduction to 
 Algorithmic Differentiation can be found at
-	http://en.wikipedia.org/wiki/Automatic_differentiation
+Wiki: http://en.wikipedia.org/wiki/Automatic_differentiation
 
 %description devel
 We refer to the step by step conversion from an algorithm that computes 
@@ -103,7 +108,16 @@ Algorithmic Differentiation (often referred to as Automatic Differentiation.)
 Given a C++ algorithm that computes function values, CppAD generates an 
 algorithm that computes its derivative values. A brief introduction to 
 Algorithmic Differentiation can be found at
-	http://en.wikipedia.org/wiki/Automatic_differentiation
+Wiki: http://en.wikipedia.org/wiki/Automatic_differentiation
+
+%description doc
+We refer to the step by step conversion from an algorithm that computes 
+function values to an algorithm that computes derivative values as 
+Algorithmic Differentiation (often referred to as Automatic Differentiation.) 
+Given a C++ algorithm that computes function values, CppAD generates an 
+algorithm that computes its derivative values. A brief introduction to 
+Algorithmic Differentiation can be found at
+Wiki: http://en.wikipedia.org/wiki/Automatic_differentiation
 
 # ----------------------------------------------------------------------------
 %prep
@@ -170,7 +184,7 @@ rm -rf $RPM_BUILD_ROOT
 # ----------------------------------------------------------------------------
 %changelog
 * Sat Dec 08 2007 Brad Bell ( bradbell at seanet dot com ) 20071208-1
-- Fix all but one rpmlint warning (see Note 4 above).
+- Fix all but one rpmlint warning (see Notes at beginning of this file).
 
 * Mon Dec 03 2007 Brad Bell ( bradbell at seanet dot com ) 20071203-1
 - first version of CppAD that included RPM spec file.
