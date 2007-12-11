@@ -55,6 +55,8 @@ then
 	# automatically change version for certain files
 	sed < cppad.spec > cppad.spec.$$ \
         	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
+        	-e "s/cppad-devel-[0-9]\{8\}/cppad-devel-$yyyymmdd/g" \
+        	-e "s/cppad-doc-[0-9]\{8\}/cppad-doc-$yyyymmdd/g" \
         	-e "s/^Version: *[0-9]\{8\}/Version: $yyyymmdd/"
 	#
 	sed < AUTHORS > AUTHORS.$$ \
@@ -374,14 +376,17 @@ then
 	# check include files
 	if ! ./check_include_def.sh  >> build_test.log
 	then
+		echo "./check_include_def.sh failed"
 		exit 1
 	fi
 	if ! ./check_include_file.sh >> build_test.log
 	then
+		echo "./check_include_file.sh failed"
 		exit 1
 	fi
 	if ! ./check_include_omh.sh  >> build_test.log
 	then
+		echo "./check_include_omh.sh failed"
 		exit 1
 	fi
 	#
@@ -412,9 +417,9 @@ then
 	sed -e '/stl_uninitialized.h:/d' make_error.log >> ../build_test.log
 	#
 	list="
-		introduction/get_started/get_started
-		introduction/exp_apx/exp_apx
 		example/example
+		introduction/exp_apx/exp_apx
+		introduction/get_started/get_started
 		test_more/test_more
 	"
 	for program in $list

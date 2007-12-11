@@ -19,19 +19,19 @@
 %define _validation_testing_during_rpmbuild false
 #
 # Preform the following steps:
-# 1. Put a copy of the file ../cppad-20071208.cpl.tgz in 
+# 1. Put a copy of the file ../cppad-20071211.cpl.tgz in 
 #        /usr/src/redhat/SOURCES
-#    or get a copy of cppad-20071208-1.src.rpm and execute
-#        sudo rpm --install cppad-20071208-1.src.rpm
+#    or get a copy of cppad-20071211-1.src.rpm and execute
+#        sudo rpm --install cppad-20071211-1.src.rpm
 # 2. Put a copy of this file (cppad.spec) in 
 #        /usr/src/redhat/SPECS
 # 3. In the /usr/src/redhat/SPECS directory, execute the following command:
 #        sudo rpmbuild -ba --target=noarch cppad.spec
 #
 # RPMS Created:
-# 1. /usr/src/redhat/SRPMS/cppad-20071208-1.src.rpm
-# 2. /usr/src/redhat/RPMS/noarch/cppad-devel-20071208-1.noarch.rpm
-# 3. /usr/src/redhat/RPMS/noarch/cppad-doc-20071208-1.noarch.rpm
+# 1. /usr/src/redhat/SRPMS/cppad-20071211-1.src.rpm
+# 2. /usr/src/redhat/RPMS/noarch/cppad-devel-20071211-1.noarch.rpm
+# 3. /usr/src/redhat/RPMS/noarch/cppad-doc-20071211-1.noarch.rpm
 #
 # Note 1:
 # There are no requirements because CppAD does not depend on any other packages.
@@ -45,7 +45,7 @@
 #
 # Note 4:
 # The cppad-doc package has the following rpmlint error:
-# W: file-not-utf8 /usr/share/doc/cppad-20071208/pmathmlcss.xsl
+# W: file-not-utf8 /usr/share/doc/cppad-20071211/pmathmlcss.xsl
 #    This is the standard presentation MathML style sheet. Except for white
 #    space and a comment at the top, it is identical to
 #         http://www.w3.org/Math/XSL/pmathmlcss.xsl
@@ -53,12 +53,12 @@
 #
 # Note 5:
 # A copy of the license is included in the files
-#    /usr/share/doc/cppad-devel-20071208/COPYING
-#    /usr/share/doc/cppad-20071208/license.htm
-#    /usr/share/doc/cppad-20071208/license.xml
+#    /usr/share/doc/cppad-devel-20071211/COPYING
+#    /usr/share/doc/cppad-20071211/license.htm
+#    /usr/share/doc/cppad-20071211/license.xml
 # ============================================================================
 Name: cppad
-Version: 20071208
+Version: 20071211
 Release: 1
 Summary: A Package for Differentiation of C++ Algorithms
 
@@ -81,7 +81,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 # license (either cpl or gpl).
 #
 # This version of cppad.spec corresponds to the following CppAD snapshot:
-Source: http://www.coin-or.org/download/source/CppAD/cppad-20071208.cpl.tgz
+Source: http://www.coin-or.org/download/source/CppAD/cppad-20071211.cpl.tgz
 # ---------------------------------------------------------------------------
 %package devel
 Summary: A Package for Differentiation of C++ Algorithms
@@ -155,7 +155,7 @@ else
 fi
 # ----------------------------------------------------------------------------
 %install
-# install files under $RPM_BUILD_ROOT/cppad-20071208-1/usr
+# install files under $RPM_BUILD_ROOT/cppad-20071211-1/usr
 if ! make install DESTDIR=$RPM_BUILD_ROOT
 then
 	echo "Error during make install DESTDIR=$RPM_BUILD_ROOT"

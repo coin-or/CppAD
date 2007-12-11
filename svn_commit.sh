@@ -12,7 +12,10 @@
 # Define your subversion commit by editing the definition of 
 # log_entry, add_list, delete_list, and change_list below:
 # 
-log_entry="
+log_entry="Imporve new_stable.sh
+
+new_stable.sh: automate testing of the new version.
+build.sh: minor fix and improvement.
 " 
 add_list="
 "

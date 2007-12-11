@@ -46,7 +46,7 @@ Each version of CppAD is identified by $code cppad-$$ followed
 by the year (4 decimal digits), 
 month (2 decimal digits), and 
 day (2 decimal digits) corresponding to the version.
-The current version of CppAD is $code cppad-20071205$$.
+The current version of CppAD is $code cppad-20071211$$.
 
 $head Windows Zip Files$$
 $index CppAD, zip file$$
@@ -58,20 +58,20 @@ Windows format; i.e., each line ends with both a carriage return
 and then a line feed. 
 
 $table
-CPL License $pre  $$ $cnext $href%cppad-20071205.cpl.zip%$$ 
+CPL License $pre  $$ $cnext $href%cppad-20071211.cpl.zip%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20071205.gpl.zip%$$
+GPL License $pre  $$ $cnext $href%cppad-20071211.gpl.zip%$$
 $tend
 
 $subhead Zip File Extraction$$
 There are many ways to unzip these archives; e.g., $code WinZip$$.
 Doing this should create the distribution directory
 $syntax%
-	cppad-20071205
+	cppad-20071211
 %$$
 To see if this has been done correctly, check for the following file:
 $syntax%
-	cppad-20071205/cppad/cppad.hpp
+	cppad-20071211/cppad/cppad.hpp
 %$$
 You can now proceed with the
 $cref/installation instructions/install/$$.
@@ -86,25 +86,25 @@ The ascii files for these downloads are in
 Unix format; i.e., each line ends with just a line feed.
 
 $table
-CPL License $pre  $$ $cnext $href%cppad-20071205.cpl.tgz%$$ 
+CPL License $pre  $$ $cnext $href%cppad-20071211.cpl.tgz%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20071205.gpl.tgz%$$
+GPL License $pre  $$ $cnext $href%cppad-20071211.gpl.tgz%$$
 $tend
 
 $subhead Tar File Extraction$$
 Use the unix command
 $syntax%
-	tar -xvzf cppad-20071205.%license%.tgz
+	tar -xvzf cppad-20071211.%license%.tgz
 %$$
 (where $italic license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-20071205
+	cppad-20071211
 %$$
 To see if this has been done correctly, check for the following file:
 $syntax%
-	cppad-20071205/cppad/cppad.hpp
+	cppad-20071211/cppad/cppad.hpp
 %$$
 You can now proceed with the
 $cref/installation instructions/install/$$.
@@ -116,7 +116,7 @@ $index spec, CppAD rpm file$$
 You want to distribute CppAD using an RPM format file,
 see the instructions at the beginning of the file
 $syntax%
-	cppad-20071205/cppad.spec
+	cppad-20071211/cppad.spec
 %$$
 
 $head Subversion Files$$
