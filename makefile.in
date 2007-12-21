@@ -882,9 +882,9 @@ dist-hook:
 @CppAD_DOCUMENTATION_TRUE@install-data-hook:
 @CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(docdir_1) ] ; then mkdir $(docdir_1) ; fi
 @CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(docdir_2) ] ; then mkdir $(docdir_2) ; fi
-@CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(docdir_3) ] ; then mkdir $(docdir_3) ; fi
-@CppAD_DOCUMENTATION_TRUE@	cp -r $(top_builddir)/doc/* $(docdir_3)
-@CppAD_DOCUMENTATION_TRUE@	chmod 644 $(docdir_3)/* 
+@CppAD_DOCUMENTATION_TRUE@	if [ -e $(docdir_3) ] ; then rm -rf $(docdir_3) ; fi
+@CppAD_DOCUMENTATION_TRUE@	cp -a $(top_builddir)/doc $(docdir_3)
+@CppAD_DOCUMENTATION_TRUE@	chmod -R 644 $(docdir_3)
 #
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

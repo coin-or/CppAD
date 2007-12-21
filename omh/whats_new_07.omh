@@ -64,6 +64,12 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-21$$
+The $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
+option on the $code configure$$ command line caused an error on some
+systems because it attempted to copy to many files.
+This has been fixed by copying the directory instead of the individual files.
+
 $head 12-08$$
 By mistake, the documentation $cref/License/$$ statement
 for the GPL distribution was the same as for the CPL distribution.

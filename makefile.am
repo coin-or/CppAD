@@ -262,8 +262,8 @@ docdir_3 = $(docdir_2)/$(PACKAGE)-$(VERSION)
 install-data-hook:
 	if [ ! -e $(docdir_1) ] ; then mkdir $(docdir_1) ; fi
 	if [ ! -e $(docdir_2) ] ; then mkdir $(docdir_2) ; fi
-	if [ ! -e $(docdir_3) ] ; then mkdir $(docdir_3) ; fi
-	cp -r $(top_builddir)/doc/* $(docdir_3)
-	chmod 644 $(docdir_3)/* 
+	if [ -e $(docdir_3) ] ; then rm -rf $(docdir_3) ; fi
+	cp -a $(top_builddir)/doc $(docdir_3)
+	chmod -R 644 $(docdir_3)
 endif
 #
