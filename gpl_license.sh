@@ -18,48 +18,49 @@
 # date currently in configure.ac
 version=`grep "^ *AC_INIT(" configure.ac | \
 	sed -e "s/.*, \([0-9]\{8\}\) *,.*/\1/"`
+dir="cppad-$version"
 #
 # delete old version of *.gpl.tgz and *.gpl.zip
-for file in cppad-$version.gpl.tgz cppad-$version.gpl.zip
+for file in $dir.gpl.tgz $dir.gpl.zip
 do
 	if [ -e $file ]
 	then
         	echo "rm -f $file"
         	if ! rm -f $file
         	then
-			echo "GplLicense: cannot remove old $file"
+			echo "gpl_license.sh: cannot remove old $file"
         		exit 1
 		fi
 	fi
 done
 #
 # start from the *.cpl.tgz file
-if [ ! -e cppad-$version.cpl.tgz ]
+if [ ! -e $dir.cpl.tgz ]
 then
-	echo "GplLicense: cannot find cppad-$version.cpl.tgz"
+	echo "gpl_license.sh: cannot find $dir.cpl.tgz"
 	exit 1
 fi
 #
 # delete old version of directory (if it exists)
-if [ -e cppad-$version ]
+if [ -e $dir ]
 then
-	echo "rm -f -r cppad-$version"
-	rm -f -r cppad-$version
+	echo "rm -f -r $dir"
+	rm -f -r $dir
 fi
-if [ -e cppad-$version ]
+if [ -e $dir ]
 then
-	echo "GplLicense: cannot remove old cppad-$version directory"
+	echo "gpl_license.sh: cannot remove old $dir directory"
 	exit 1
 fi
 #
 # extract from the *.cpl.tgz file
-echo "tar -xzf cppad-$version.cpl.tgz"
-tar -xzf cppad-$version.cpl.tgz
+echo "tar -xzf $dir.cpl.tgz"
+tar -xzf $dir.cpl.tgz
 #
 # make sure can change into new directory 
-if ! cd cppad-$version
+if ! cd $dir
 then
-	echo "GplLicense: cannot make new cppad-$version working directory"
+	echo "gpl_license.sh: cannot make new $dir working directory"
 	exit 1
 fi
 #
@@ -76,19 +77,17 @@ list=`find . \
 # change back up to original directory (to be safe)
 cd ..
 #
-echo "GplLicense: changing license from CPL to GPL"
+echo "gpl_license.sh: changing license from CPL to GPL"
 for file in $list
 do
 	file=`echo $file | sed -e 's|^\./||'`
 	#
-	sed < cppad-$version/$file > GplLicense.tmp \
+	sed -i $dir/$file \
 -e 's/Common Public License Version 1.0/GNU General Public License Version 2/' 
-	#
-	mv GplLicense.tmp cppad-$version/$file
 	#
 	err="no"
 	if ! grep "GNU General Public License Version 2" \
-		cppad-$version/$file > /dev/null
+		$dir/$file > /dev/null
 	then
 		err="yes"
 		# Check for special case where automatically generated files
@@ -97,7 +96,7 @@ do
 		if [ "$ext" = "in" ] 
 		then
 			if ! grep "Common Public License" \
-				cppad-$version/$file > /dev/null
+				$dir/$file > /dev/null
 			then
 				err="no"
 			fi
@@ -105,18 +104,18 @@ do
 	fi
 	if [ "$err" = "yes" ]
 	then
-		echo "GplLicense: cannot change cppad-$version/$file license" 
+		echo "gpl_license.sh: cannot change $dir/$file license" 
 		exit 1
 	fi
 	if [ "$ext" = ".sh" ]
 	then
-		chmod +x cppad-$version/$file
+		chmod +x $dir/$file
 	fi
 done
 #
 # change cppad.spec from CPL to GPL
 yyyymmdd=`date +%G%m%d`
-sed < cppad.spec > cppad-$version/cppad.spec \
+sed < cppad.spec > $dir/cppad.spec \
 	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
 	-e "s/^Version: *[0-9]\{8\}/Version: $yyyymmdd/" \
 	-e "s/CPL/GPL/g" \
@@ -125,30 +124,30 @@ sed < cppad.spec > cppad-$version/cppad.spec \
 	-e 's/Common Public License Version 1.0/GNU General Public License Version 2/'
 #
 # change the COPYING file
-sed -n < COPYING > cppad-$version/COPYING \
+sed -n < COPYING > $dir/COPYING \
 -e 's/Common Public License Version 1.0/GNU General Public License Version 2/' \
 -e '/-\{70\}/,/-\{70\}/p'
-cat gpl2.txt >> cppad-$version/COPYING
+cat gpl2.txt >> $dir/COPYING
 #
 # change the file cpl1.0.txt to the file gpl2.txt
-rm cppad-$version/cpl1.0.txt
-cp gpl2.txt cppad-$version/gpl2.txt
+rm $dir/cpl1.0.txt
+cp gpl2.txt $dir/gpl2.txt
 #
 # change occorances of cpl1.0.txt to gpl2.txt
-sed < makefile.am > cppad-$version/makefile.am  \
+sed < makefile.am > $dir/makefile.am  \
 	-e 's/cpl1.0.txt/gpl2.txt/'
 #
-sed < makefile.in > cppad-$version/makefile.in \
+sed < makefile.in > $dir/makefile.in \
 	-e 's/cpl1.0.txt/gpl2.txt/'
 #
-sed < omh/license.omh > cppad-$version/omh/license.omh \
+sed < omh/license.omh > $dir/omh/license.omh \
 	-e 's/$verbatim%cpl1.0.txt%$\$/$verbatim%gpl2.txt%$$/'
 #
 # Rerun omhelp to change documentation version of license from CPL to GPL 
-cd cppad-$version
+cd $dir
 if ! ./run_omhelp.sh doc
 then
-	echo "Error running omhelp in gpl license version"
+	echo "gpl_license.sh: error running omhelp"
 	exit 1
 fi
 if [ -e "doc/error.wrd" ]
@@ -158,5 +157,5 @@ fi
 cd ..
 #
 # create *.gpl.tgz file
-echo "tar -czf cppad-$version.gpl.tgz cppad-$version"
-tar -czf cppad-$version.gpl.tgz cppad-$version
+echo "tar -czf $dir.gpl.tgz $dir"
+tar -czf $dir.gpl.tgz $dir
