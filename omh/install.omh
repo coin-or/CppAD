@@ -21,26 +21,11 @@ $index test$$
 
 $section CppAD Download, Test, and Installation Instructions$$
 
-$children%
-	omh/download.omh%
+$contents%
 	omh/install_unix.omh%
 	omh/install_windows.omh
 %$$
 
 
-$head Download$$
-First follow the instructions in the $tref download$$ section.
-
-$head Unix Install$$
-$tref InstallUnix$$
-For installation from a tarball,
-follow the instruction in the $tref InstallUnix$$ section.
-If you want to distribute and install CppAD using an RPM file,
-see the $cref/RPM spec file/download/Unix Tar Files/RPM Spec File/$$ heading
-in the $cref/download/$$ instructions.
-
-$head Windows Install$$
-For installation on a Windows machine,
-ss the $tref InstallWindows$$ section.
 
 $end

@@ -44,14 +44,43 @@ $index install, windows CppAD$$
 $index windows, CppAD install$$
 $index CppAD, install windows$$
 
-$section Windows Test and Installation$$
+$section Windows Download and Test$$
 
-$head Download$$
-You must first $cref/download/$$ a copy of CppAD.
 
 $head Cygwin$$
 If you are using Cygwin, or MinGW with MSYS, follow the 
 $cref/unix install/InstallUnix/$$ instructions.
+
+$head Download$$
+$index CppAD, zip file$$
+$index zip, CppAD file$$
+$index download, windows$$
+$index windows, download$$
+
+$subhead Subversion$$
+If you are familiar with subversion, you may want to follow
+the more complicated $cref/subversion/$$ download instructions 
+instead of the ones below.
+
+$subhead Web Link$$
+If you are not using the subversion download instructions,
+sure you are reading the web based version of this documentation by
+following the link
+$href%http://www.coin-or.org/CppAD/Doc/installwindows.htm%web version%$$.
+Then proceed with the instruction that appear below this point.
+
+$subhead Windows Zip Files$$
+The windows download files below were archived and compressed with
+the $code zip$$ utility.
+The ascii files for these downloads are in 
+Windows format; i.e., each line ends with both a carriage return
+and then a line feed. 
+
+$table
+CPL License $pre  $$ $cnext $href%cppad-20071225.cpl.zip%$$ 
+$rnext
+GPL License $pre  $$ $cnext $href%cppad-20071225.gpl.zip%$$
+$tend
 
 $head Getting Started$$
 $index GetStarted, windows$$

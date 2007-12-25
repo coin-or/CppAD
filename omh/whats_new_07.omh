@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	tgz
 	yyyymmdd
 	isnan
 	gcc
@@ -64,6 +65,9 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-35$$
+The $cref/install/$$ instructions have been improved.
+
 $head 12-21$$
 The $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
 option on the $code configure$$ command line caused an error on some
@@ -84,8 +88,8 @@ Add the capability for the RPM spec file to use a different
 prefix directory.
 
 $head 12-03$$
-This is the first version with an 
-$cref/RPM spec file/download/Unix Tar Files/RPM Spec File/$$.
+This is the first version with the rpm spec file
+$code cppad.spec$$.
 
 $head 12-02$$
 Add the $syntax%DESTDIR=%directory%$$ option on the 
@@ -182,7 +186,7 @@ This has been fixed.
 
 $head 11-02$$
 The instructions for downloading the current version using 
-$cref/subversion/download/Subversion Files/Downloading Current Version/$$
+$cref/subversion/$$
 have changed.
 The user should now directly edit the file
 $codep
@@ -218,7 +222,7 @@ to the documentation.
 
 
 $head 10-30$$
-The $cref/download/$$ section did not update current version number
+The download instructions did not update current version number
 and this broke the links to the current tarballs.
 This has been fixed.
 $pre
@@ -236,7 +240,7 @@ The makefiles in the distribution have been changed so that
 one can run configure from a directory other than the distribution directory.
 
 $head 10-27$$
-A $cref/subversion/download/Subversion Files/$$ method
+A $cref/subversion/$$ method
 for downloading CppAD has been added.
 $pre
 
@@ -249,8 +253,8 @@ $code AM_MAINTAINER_MODE$$ to the $code autoconf$$ input file.
 $pre
 
 $$
-Extend the $cref/download/$$ methods to include a full installation
-and old versions using subversion for downloading.
+Extend the $cref/subversion/$$ methods to include a full installation
+and old versions.
 
 $head 10-23$$
 The $cref/compiler flags/InstallUnix/CompilerFlags/$$ environment variable
@@ -948,7 +952,8 @@ $head 01-29$$
 The copyright message was missing from some of the distribution files
 for some new files added on $cref%06-12-15%whats_new_06%12-15%$$.
 This resulted in the 
-$cref/download/$$ files not existing for a period of time.
+tarballs $syntax%%*%.tgz%$$ and $syntax%%*%.zip%$$
+not existing for a period of time.
 The automated tests have been extended so that this should not happen again.
 
 $end

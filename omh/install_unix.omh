@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin InstallUnix$$
 $dollar @$$
 $spell
+	gzip
 	Linux
 	fi
 	exp_apx
@@ -54,10 +55,56 @@ $index unix, CppAD install$$
 $index free, unix install$$
 $index install, unix CppAD$$
 
-$section Unix Test and Installation$$
+$section Unix Download, Test and Installation$$
 
 $head Download$$
-You must first $cref/download/$$ a copy of CppAD.
+$index download, unix$$
+$index unix, download$$
+
+$children%
+	omh/subversion.omh
+%$$
+$subhead Subversion$$
+If you are familiar with subversion, you may want to follow
+the more complicated CppAD download instructions;
+see the following $cref/subversion instructions/subversion/$$.
+
+$subhead Web Link$$
+If you are not using the subversion download instructions,
+make sure you are reading the web version of this documentation by
+following the link 
+$href%http://www.coin-or.org/CppAD/Doc/installunix.htm%web version%$$.
+Then proceed with the instruction that appear below this point.
+
+$subhead Unix Tar Files$$
+$index CppAD, tar file$$
+$index tar, CppAD file$$
+The download files below were first archived with $code tar$$
+and then compressed with $code gzip$$:
+The ascii files for these downloads are in 
+Unix format; i.e., each line ends with just a line feed.
+
+$table
+CPL License $pre  $$ $cnext $href%cppad-20071225.cpl.tgz%$$ 
+$rnext
+GPL License $pre  $$ $cnext $href%cppad-20071225.gpl.tgz%$$
+$tend
+
+$subhead Tar File Extraction$$
+Use the unix command
+$syntax%
+	tar -xvzf cppad-20071225.%license%.tgz
+%$$
+(where $italic license$$ is $code cpl$$ or $code gpl$$)
+to decompress and extract the unix format version
+into the distribution directory
+$syntax%
+	cppad-20071225
+%$$
+To see if this has been done correctly, check for the following file:
+$syntax%
+	cppad-20071225/cppad/cppad.hpp
+%$$
 
 $head Configure$$
 $index configure$$

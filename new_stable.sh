@@ -115,7 +115,10 @@ then
 	sed < configure.ac > configure.ac.$$\
 	-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" 
 	#
-	sed < omh/download.omh > omh/download.omh.$$ \
+	sed < omh/install_unix.omh > omh/install_unix.omh.$$ \
+	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
+	#
+	sed < omh/install_windows.omh > omh/install_windows.omh.$$ \
 	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
 	#
 	sed < build.sh > build.sh.$$ \
@@ -131,7 +134,8 @@ then
 		cppad.spec
 		AUTHORS
 		configure.ac
-		omh/download.omh
+		omh/install_unix.omh
+		omh/install_windows.omh
 		build.sh
 		svn_status.sh
 	"

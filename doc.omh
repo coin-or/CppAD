@@ -136,9 +136,8 @@ $lend
 
 You can find out about other algorithmic differentiation tools
 and about algorithmic differentiation in general at the following web sites:
-$href%http://www.autodiff.org%$$,
-$href%http://www.autodiff.com%$$,
-$href%http://www.math.hu-berlin.de/~griewank/%Andreas Griewank%$$.
+$href%http://en.wikipedia.org/wiki/Automatic_differentiation%wikipedia%$$,
+$href%http://www.autodiff.org%autodiff.org%$$.
 
 $head Example$$
 The file

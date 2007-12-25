@@ -509,7 +509,8 @@ $code CppAD.unix.tar.gz$$ and $code CppAD.dos.tar.gz$$
 to 
 $syntax%CppAD-%yy%-%mm%-%dd%.tar.gz%$$ and $syntax%CppAD-%yy%-%mm%-%dd%.zip%$$ 
 (the $syntax%%*%.zip%$$ file
-uses pkzip compression (see $cref/zip files/download/Windows Zip Files/$$).
+uses pkzip compression 
+(see $cref/zip files/InstallWindows/Download/Windows Zip Files/$$).
 
 
 $head 08-30$$

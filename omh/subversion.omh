@@ -1,0 +1,144 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin subversion$$
+$spell
+	mkdir
+	omh
+	noframe
+	http
+	www
+	xml
+	htm
+	config
+	yyyymmdd
+	yyyy
+	mm
+	dd
+	omhelp
+	cppad
+	OMhelp
+	CppAD
+	svn
+	https
+	org
+	dir
+	hpp
+$$
+$index download, subversion$$
+$index subversion, download$$
+
+$section Using Subversion To Download Source Code$$
+
+
+$head File Format$$
+The files corresponding to this download
+procedure are in Unix format; i.e., 
+each line ends with just a line feed.
+
+$head Subversion$$
+You must have
+$href%http://subversion.tigris.org/%subversion%$$
+installed to use this download procedure.
+In Unix, you can check if subversion 
+is already installed in your path by entering the command
+$codep
+	which svn
+$$
+
+
+$head OMhelp$$
+The documentation for CppAD is built from the source code files using
+$href%http://www.seanet.com/~bradbell/omhelp/%OMhelp%$$.
+In Unix, you can check if OMhelp 
+is already installed in your path by entering the command
+$codep
+	which omhelp
+$$
+
+$head Current Version$$
+The following command will download the 
+current version of the CppAD source code:
+$syntax%
+	svn co https://projects.coin-or.org/svn/CppAD/%dir% %dir%
+%$$
+where $italic dir$$ is replaced by $code trunk$$.
+To see if this has been done correctly, check for the following file:
+$syntax%
+	%dir%/cppad/cppad.hpp
+%$$
+Since you downloaded the current version,
+you should set the version of CppAD to the current date.
+Using an editor of you choice, open the file
+$syntax%
+	%dir%/configure
+%$$
+(if you plan to use the 
+$cref/Windows install/InstallWindows/$$ instructions,
+edit $syntax%dir%/cppad/config.h%$$ instead of $syntax%dir%/configure%$$).
+Search this file for text of the form $italic yyyymmdd$$
+where $italic yyyy$$ are four decimal digits representing a year,
+$italic mm$$ is two decimal digits representing a month,
+and $italic dd$$ is two decimal digits representing a day.
+Replace each occurrence of this text with the decimal digits
+for the current year, month, and day
+(i.e., the eight decimal digits representing the current date).
+
+$head Stable Version$$
+Subversion downloads are available for the following stable versions
+of CppAD:
+$table
+$italic dir$$        $cnext $italic yyyymmdd$$  $rnext
+$code 1.0$$ $pre  $$ $cnext $code 20060913$$    $rnext
+$code 2.0$$ $pre  $$ $cnext $code 20071016$$    $rnext
+$code 2.1$$ $pre  $$ $cnext $code 20071124$$    $rnext
+$code 2.2$$ $pre  $$ $cnext $code 20071210$$
+$tend
+The following command will download a 
+stable version of the CppAD source code:
+$syntax%
+	svn co https://projects.coin-or.org/svn/CppAD/stable/%dir% %dir%
+%$$
+To see if this has been done correctly, check for the following file:
+if $italic dir$$ is $code 1.0$$ check for
+$syntax%
+	1.0/CppAD/CppAD.h
+%$$
+otherwise check for
+$syntax%
+	%dir%/cppad/cppad.hpp
+%$$
+Since you downloaded a stable version,
+the version of CppAD $code configure$$,
+and all the other relevant files, is correct.
+
+$head Build the Documentation$$
+Now build the documentation for this version using the commands
+$syntax%
+	mkdir %dir%/doc
+	cd %dir%/doc
+	omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/
+	omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/ -xml
+%$$
+
+$head Continue with Installation$$
+Once the steps above are completed,
+you can proceed with the install instructions in 
+the documentation you just built.
+Start by opening the one of the two files
+$syntax%
+	%dir%/doc/index.xml
+	%dir%/doc/index.htm
+%$$ 
+in a web browser and proceeding to the 
+$cref/Unix/InstallUnix/$$ or $cref/Windows/InstallWindows/$$
+install instructions.
+
+$end

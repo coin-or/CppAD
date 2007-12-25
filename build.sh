@@ -63,7 +63,9 @@ then
 		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
 	sed < configure.ac > configure.ac.$$\
 		-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" 
-	sed < omh/download.omh > omh/download.omh.$$ \
+	sed < omh/install_unix.omh > omh/install_unix.omh.$$ \
+		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
+	sed < omh/install_windows.omh > omh/install_windows.omh.$$ \
 		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
 	sed < configure > configure.$$ \
 		-e "s/CppAD [0-9]\{8\}/CppAD $yyyymmdd/g" \
@@ -79,7 +81,8 @@ then
 		cppad.spec
 		AUTHORS
 		configure.ac
-		omh/download.omh
+		omh/install_unix.omh
+		omh/install_windows.omh
 		configure
 		cppad/config.h
 	"
