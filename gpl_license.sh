@@ -135,12 +135,15 @@ cp gpl2.txt $dir/gpl2.txt
 #
 # change occorances of cpl1.0.txt to gpl2.txt
 sed < makefile.am > $dir/makefile.am  \
+-e 's/Common Public License Version 1.0/GNU General Public License Version 2/' \
 	-e 's/cpl1.0.txt/gpl2.txt/'
 #
 sed < makefile.in > $dir/makefile.in \
+-e 's/Common Public License Version 1.0/GNU General Public License Version 2/' \
 	-e 's/cpl1.0.txt/gpl2.txt/'
 #
 sed < omh/license.omh > $dir/omh/license.omh \
+-e 's/Common Public License Version 1.0/GNU General Public License Version 2/' \
 	-e 's/$verbatim%cpl1.0.txt%$\$/$verbatim%gpl2.txt%$$/'
 #
 # Rerun omhelp to change documentation version of license from CPL to GPL 

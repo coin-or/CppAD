@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_07$$
 $spell
+	omh
 	tgz
 	yyyymmdd
 	isnan
@@ -65,7 +66,14 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 12-35$$
+$head 12-29$$
+License conversions missed the copyright message at the top
+in the following special cases:
+$code makefile.am$$, $code makefile.in$$, and
+$code omh/license.omh$$.
+
+
+$head 12-25$$
 The $cref/install/$$ instructions have been improved.
 
 $head 12-21$$

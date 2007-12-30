@@ -264,6 +264,8 @@ install-data-hook:
 	if [ ! -e $(docdir_2) ] ; then mkdir $(docdir_2) ; fi
 	if [ -e $(docdir_3) ] ; then rm -rf $(docdir_3) ; fi
 	cp -a $(top_builddir)/doc $(docdir_3)
-	chmod -R 644 $(docdir_3)
+	chmod -R a-w $(docdir_3)
+	chmod -R u+w $(docdir_3)
+	chmod -R a+r $(docdir_3)
 endif
 #

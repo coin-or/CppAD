@@ -2,4 +2,5 @@
 - Start using this file for an overview of changes from a developers viewpoint.
 - A more detailed view of the changes can be found in the svn log; e.g.,
 -	https://projects.coin-or.org/CppAD/timeline
-- A users viewpoint is located in doc/whats_new.xml or doc/whats_new.htm.
+- A user's ChangeLog is located at
+--      http://www.coin-or.org/CppAD/Doc/whats_new.htm
