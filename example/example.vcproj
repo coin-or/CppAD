@@ -384,6 +384,9 @@
 				RelativePath=".\sinh.cpp">
 			</File>
 			<File
+				RelativePath=".\sparse_hessian.cpp">
+			</File>
+			<File
 				RelativePath=".\sqrt.cpp">
 			</File>
 			<File

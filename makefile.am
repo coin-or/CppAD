@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -113,10 +113,12 @@ nobase_include_HEADERS =  \
 	cppad/local/integer.hpp \
 	cppad/local/jacobian.hpp \
 	cppad/local/log_op.hpp \
-	cppad/local/omp_max_thread.hpp \
+	cppad/local/lu_ratio.hpp \
+	cppad/local/math_other.hpp \
 	cppad/local/mul.hpp \
 	cppad/local/mul_eq.hpp \
 	cppad/local/mul_op.hpp \
+	cppad/local/omp_max_thread.hpp \
 	cppad/local/op.hpp \
 	cppad/local/op_code.hpp \
 	cppad/local/ordered.hpp \
@@ -125,8 +127,6 @@ nobase_include_HEADERS =  \
 	cppad/local/pow.hpp \
 	cppad/local/preprocessor.hpp \
 	cppad/local/print_for.hpp \
-	cppad/local/lu_ratio.hpp \
-	cppad/local/math_other.hpp \
 	cppad/local/near_equal_ext.hpp \
 	cppad/local/reverse.hpp \
 	cppad/local/rev_hes_sweep.hpp \
@@ -138,6 +138,7 @@ nobase_include_HEADERS =  \
 	cppad/local/reverse_sweep.hpp \
 	cppad/local/sin_cos.hpp \
 	cppad/local/sparse.hpp \
+	cppad/local/sparse_hessian.hpp \
 	cppad/local/sqrt_op.hpp \
 	cppad/local/std_math_ad.hpp \
 	cppad/local/sub.hpp \

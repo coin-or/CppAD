@@ -2,7 +2,7 @@
 # define CPPAD_REV_SPARSE_HES_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -124,7 +124,7 @@ $latex \[
 	S_{0,j} \neq 0 ; \Rightarrow \; s [ j ] = {\rm true}
 \] $$
 
-$head t$$
+$head h$$
 The result $italic h$$ has prototype
 $syntax%
 	%Vector% &%h%

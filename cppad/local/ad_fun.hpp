@@ -2,7 +2,7 @@
 # define CPPAD_AD_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -153,6 +153,8 @@ public:
 
 	// calculate Hessian for one component of f
 	template <typename VectorBase>
+	VectorBase Hessian(const VectorBase &x, const VectorBase &w); 
+	template <typename VectorBase>
 	VectorBase Hessian(const VectorBase &x, size_t i); 
 
 	// forward mode calculation of partial w.r.t one domain component
@@ -180,6 +182,10 @@ public:
 		const VectorBase   &x ,
 		const VectorSize_t &I ,
 		const VectorSize_t &J );
+
+	// calculate sparse Hessians 
+	template <typename VectorBase>
+	VectorBase SparseHessian(const VectorBase &x, const VectorBase &w); 
 
 	// ------------------- Deprecated -----------------------------
 
@@ -255,7 +261,6 @@ private:
 # include <cppad/local/for_jac_sweep.hpp>
 # include <cppad/local/rev_jac_sweep.hpp>
 # include <cppad/local/rev_hes_sweep.hpp>
-
 
 // user interfaces
 # include <cppad/local/independent.hpp>

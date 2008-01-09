@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -65,6 +65,11 @@ This section contains a list of the changes to CppAD during 2007
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-08$$
+Added a $cref/sparse_hessian/$$ routine and
+extended $cref/Hessian/$$ to allow for a weight vector $italic w$$
+instead of just one component $italic l$$.
 
 $head 12-29$$
 License conversions missed the copyright message at the top

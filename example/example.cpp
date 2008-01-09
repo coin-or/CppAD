@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -124,6 +124,7 @@ extern bool SeqProperty(void);
 extern bool SimpleVector(void);
 extern bool Sin(void);
 extern bool Sinh(void);
+extern bool sparse_hessian(void);
 extern bool Sqrt(void);
 extern bool StackMachine(void);
 extern bool Sub(void);
@@ -256,6 +257,7 @@ int main(void)
 	ok &= Run( SimpleVector,      "SimpleVector"     );
 	ok &= Run( Sin,               "Sin"              );
 	ok &= Run( Sinh,              "Sinh"             );
+	ok &= Run( sparse_hessian,    "sparse_hessian"   );
 	ok &= Run( Sqrt,              "Sqrt"             );
 	ok &= Run( StackMachine,      "StackMachine"     );
 	ok &= Run( Sub,               "Sub"              );

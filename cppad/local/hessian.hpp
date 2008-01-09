@@ -2,7 +2,7 @@
 # define CPPAD_HESSIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -29,17 +29,22 @@ $index driver, Hessian$$
 $section Hessian: Easy Driver$$
 
 $head Syntax$$
-$syntax%%hes% = %f%.Hessian(%x%, %i%)%$$
+$syntax%%hes% = %f%.Hessian(%x%, %w%)
+%$$
+$syntax%%hes% = %f%.Hessian(%x%, %l%)
+%$$
 
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
-The syntax above sets $italic hes$$ to the
-Hessian of $italic F_i$$ evaluated at $italic x$$; i.e.,
+The syntax above sets $italic hes$$ to the Hessian 
+The syntax above sets $italic h$$ to the Hessian 
 $latex \[
-	hes = F^{(2)} (x)
+	hes = \dpow{2}{x} \sum_{i=1}^m w_i F_i (x) 
 \] $$
+The routine $cref/sparse_hessian/$$ may be faster in the case
+where the Hessian is sparse.
 
 $head f$$
 The object $italic f$$ has prototype
@@ -61,15 +66,31 @@ $xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
 It specifies
 that point at which to evaluate the Hessian.
 
-$head i$$
-The index $italic i$$ has prototype
+$head l$$
+If the argument $italic l$$ is present, it has prototype
 $syntax%
-	size_t %i%
+	size_t %l%
 %$$
 and is less than $italic m$$, the dimension of the
 $xref/SeqProperty/Range/range/$$ space for $italic f$$.
 It specifies the component of $italic F$$
 for which we are evaluating the Hessian.
+To be specific, in the case where the argument $italic l$$ is present,
+$latex \[
+	w_i = \left\{ \begin{array}{ll}
+		1 & i = l \\
+		0 & {\rm otherwise}
+	\end{array} \right.
+\] $$
+
+$head w$$
+If the argument $italic w$$ is present, it has prototype
+$syntax%
+	const %Vector% &%w%
+%$$
+and size $latex m$$.
+It specifies the value of $latex w_i$$ in the expression 
+for $italic h$$.
 
 $head hes$$
 The result $italic hes$$ has prototype
@@ -81,7 +102,7 @@ and its size is $latex n * n$$.
 For $latex j = 0 , \ldots , n - 1 $$ 
 and $latex \ell = 0 , \ldots , n - 1$$
 $latex \[
-	hes [ j * n + \ell ] = \DD{ F_i }{ x_j }{ x_\ell } ( x )
+	hes [ j * n + \ell ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } ( x )
 \] $$
 
 $head Vector$$
@@ -119,10 +140,27 @@ namespace CppAD {
 
 template <typename Base>
 template <typename Vector>
-Vector ADFun<Base>::Hessian(const Vector &x, size_t i)
+Vector ADFun<Base>::Hessian(const Vector &x, size_t l)
+{	size_t i, m = Range();
+	CPPAD_ASSERT_KNOWN(
+		l < m,
+		"Hessian: index i is not less than range dimension for f"
+	);
+
+	Vector w(m);
+	for(i = 0; i < m; i++)
+		w[i] = Base(0);
+	w[l] = Base(1);
+
+	return Hessian(x, w);
+}
+
+
+template <typename Base>
+template <typename Vector>
+Vector ADFun<Base>::Hessian(const Vector &x, const Vector &w)
 {	size_t j;
 	size_t k;
-	size_t l;
 
 	size_t n = Domain();
 	size_t m = Range();
@@ -135,8 +173,8 @@ Vector ADFun<Base>::Hessian(const Vector &x, size_t i)
 		"Hessian: length of x not equal domain dimension for f"
 	); 
 	CPPAD_ASSERT_KNOWN(
-		i < m,
-		"Hessian: index i is not less than range dimension for f"
+		w.size() == m,
+		"Hessian: length of w not equal range dimension for f"
 	);
 
 	// point at which we are evaluating the Hessian
@@ -150,16 +188,11 @@ Vector ADFun<Base>::Hessian(const Vector &x, size_t i)
 	for(j = 0; j < n; j++)
 		u[j] = Base(0);
 
-	// direction vector for calls to reverse
-	Vector w(m);
-	for(l = 0; l < m; l++)
-		w[l] = Base(0);
-	w[i] = Base(1);
 
 	// location for return values from Reverse
 	Vector ddw(n * 2);
 
-	// loop over forward direstions
+	// loop over forward directions
 	for(j = 0; j < n; j++)
 	{	// evaluate partials of entire function w.r.t. j-th coordinate
 		u[j] = Base(1);
