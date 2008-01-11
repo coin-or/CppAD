@@ -159,6 +159,9 @@
 				RelativePath=".\cosh.cpp">
 			</File>
 			<File
+				RelativePath=".\dbl_epsilon.cpp">
+			</File>
+			<File
 				RelativePath=".\div.cpp">
 			</File>
 			<File

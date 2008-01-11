@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -31,6 +31,7 @@ extern bool CondExpAD(void);
 extern bool Copy(void);
 extern bool Cos(void);
 extern bool Cosh(void);
+extern bool dbl_epsilon(void);
 extern bool Div(void);
 extern bool DivEq(void);
 extern bool DivZeroOne(void);
@@ -123,6 +124,7 @@ int main(void)
 	ok &= Run( Copy,            "Copy"           );
 	ok &= Run( Cos,             "Cos"            );
 	ok &= Run( Cosh,            "Cosh"           );
+	ok &= Run( dbl_epsilon,     "dbl_epsilon"    );
 	ok &= Run( Div,             "Div"            );
 	ok &= Run( DivEq,           "DivEq"          );
 	ok &= Run( DivZeroOne,      "DivZeroOne"     );
