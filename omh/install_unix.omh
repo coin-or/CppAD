@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -48,6 +48,8 @@ $spell
 	Sacado
 	ls
 	aclocal
+	yum
+	devel
 $$
 
 $index CppAD, unix install$$
@@ -56,6 +58,32 @@ $index free, unix install$$
 $index install, unix CppAD$$
 
 $section Unix Download, Test and Installation$$
+
+$head Fedora$$
+$index install, Fedora$$
+$index Fedora, install$$
+CppAD is available through yum on the Fedora operating system starting
+Fedora version 7. You can download and install CppAD with the instruction
+$code
+	yum install cppad-devel
+$$
+(In Fedora, $code devel$$ is used for program development tools.)
+You can download and install the corresponding version of the
+documentation using the command
+$code
+	yum install cppad-doc
+$$ 
+
+$head RPM$$
+$index rpm, cppad.spec$$
+$index cppad.spec$$
+If you want to use the Fedora $code cppad.spec$$ file
+to build an RPM for some other operating system,
+it can be found at
+$pre
+$$
+$href%https://projects.coin-or.org/CppAD/browser/trunk/cppad.spec%$$
+
 
 $head Download$$
 $index download, unix$$
@@ -85,25 +113,25 @@ The ascii files for these downloads are in
 Unix format; i.e., each line ends with just a line feed.
 
 $table
-CPL License $pre  $$ $cnext $href%cppad-20071225.cpl.tgz%$$ 
+CPL License $pre  $$ $cnext $href%cppad-20080120.cpl.tgz%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20071225.gpl.tgz%$$
+GPL License $pre  $$ $cnext $href%cppad-20080120.gpl.tgz%$$
 $tend
 
 $subhead Tar File Extraction$$
 Use the unix command
 $syntax%
-	tar -xvzf cppad-20071225.%license%.tgz
+	tar -xvzf cppad-20080120.%license%.tgz
 %$$
 (where $italic license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-20071225
+	cppad-20080120
 %$$
 To see if this has been done correctly, check for the following file:
 $syntax%
-	cppad-20071225/cppad/cppad.hpp
+	cppad-20080120/cppad/cppad.hpp
 %$$
 
 $head Configure$$

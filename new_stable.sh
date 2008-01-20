@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -103,11 +103,6 @@ fi
 if [ "$test_stable" = "false" ]
 then
 	# Automatic editing ------------------------------------------------ 
-	sed < cppad.spec > cppad.spec.$$ \
-       	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
-       	-e "s/cppad-devel-[0-9]\{8\}/cppad-devel-$yyyymmdd/g" \
-       	-e "s/cppad-doc-[0-9]\{8\}/cppad-doc-$yyyymmdd/g" \
-       	-e "s/^Version: *[0-9]\{8\}/Version: $yyyymmdd/"
 	#
 	sed < AUTHORS > AUTHORS.$$ \
 	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
@@ -131,7 +126,6 @@ then
 	-e '/^[\t ]*cppad\/config.h$/d'
 	#
 	list="
-		cppad.spec
 		AUTHORS
 		configure.ac
 		omh/install_unix.omh

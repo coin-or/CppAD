@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -49,11 +49,6 @@ sed                                                           \
 yyyymmdd=`date +%G%m%d`
 yyyy_mm_dd=`date +%G-%m-%d`
 #
-svn cat cppad.spec | sed > cppad.spec.$$ \
-       	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
-       	-e "s/cppad-devel-[0-9]\{8\}/cppad-devel-$yyyymmdd/g" \
-       	-e "s/cppad-doc-[0-9]\{8\}/cppad-doc-$yyyymmdd/g" \
-       	-e "s/^Version: *[0-9]\{8\}/Version: $yyyymmdd/"
 svn cat configure | sed > configure.$$ \
 	-e "s/CppAD [0-9]\{8\}/CppAD $yyyymmdd/g" \
 	-e "s/VERSION='[0-9]\{8\}'/VERSION='$yyyymmdd'/g" \
@@ -72,7 +67,6 @@ svn cat cppad/config.h | sed > cppad/config.h.$$ \
 	-e "s/CppAD [0-9]\{8\}/CppAD $yyyymmdd/g" \
 	-e "s/VERSION \"[0-9]\{8\}\"/VERSION \"$yyyymmdd\"/g"
 list="
-	cppad.spec
 	configure
 	AUTHORS
 	configure.ac

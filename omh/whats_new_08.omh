@@ -1,0 +1,46 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin whats_new_08$$
+$spell
+	CppAD
+	yum
+$$
+
+$section Changes and Additions to CppAD During 2008$$
+
+
+$head Introduction$$
+This section contains a list of the changes to CppAD during 2008
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+
+$head 01-20$$
+CppAD can now be installed using $code yum$$ on 
+$cref/Fedora/InstallUnix/Fedora/$$ operating systems.
+
+
+$head 01-11$$
+The CppAD correctness tests assume that machine epsilon is less
+than $code 1e-13$$. A test for this has been added to the
+$code test_more/test_more$$ program; see 
+$cref/--with-Testing/InstallUnix/--with-TestMore/$$ 
+in Unix install instructions or
+$cref/more correctness testing/InstallWindows/More Correctness Testing/$$
+in Windows install instructions.
+
+$head 01-08$$
+Added a $cref/sparse_hessian/$$ routine and
+extended $cref/Hessian/$$ to allow for a weight vector $italic w$$
+instead of just one component $italic l$$.
+
+$end

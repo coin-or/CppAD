@@ -66,20 +66,6 @@ This section contains a list of the changes to CppAD during 2007
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 01-11$$
-The CppAD correctness tests assume that machine epsilon is less
-than $code 1e-13$$. A test for this has been added to the
-$code test_more/test_more$$ program; see 
-$cref/--with-Testing/InstallUnix/--with-TestMore/$$ 
-in Unix install instructions or
-$cref/more correctness testing/InstallWindows/More Correctness Testing/$$
-in Windows install instructions.
-
-$head 01-08$$
-Added a $cref/sparse_hessian/$$ routine and
-extended $cref/Hessian/$$ to allow for a weight vector $italic w$$
-instead of just one component $italic l$$.
-
 $head 12-29$$
 License conversions missed the copyright message at the top
 in the following special cases:

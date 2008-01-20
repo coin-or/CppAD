@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -112,16 +112,6 @@ do
 		chmod +x $dir/$file
 	fi
 done
-#
-# change cppad.spec from CPL to GPL
-yyyymmdd=`date +%G%m%d`
-sed < cppad.spec > $dir/cppad.spec \
-	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g" \
-	-e "s/^Version: *[0-9]\{8\}/Version: $yyyymmdd/" \
-	-e "s/CPL/GPL/g" \
-	-e "s/License: *GPL *$/License: GPLv2/" \
-	-e "s/\.cpl\./.gpl./g" \
-	-e 's/Common Public License Version 1.0/GNU General Public License Version 2/'
 #
 # change the COPYING file
 sed -n < COPYING > $dir/COPYING \
