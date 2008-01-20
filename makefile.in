@@ -395,7 +395,6 @@ EXTRA_DIST = \
 	check_include_def.sh \
 	clean_cppad.sh \
 	cpl1.0.txt \
-	cppad.spec \
 	dev \
 	dev.omh \
 	doc \

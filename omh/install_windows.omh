@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -77,9 +77,9 @@ Windows format; i.e., each line ends with both a carriage return
 and then a line feed. 
 
 $table
-CPL License $pre  $$ $cnext $href%cppad-20071225.cpl.zip%$$ 
+CPL License $pre  $$ $cnext $href%cppad-20080120.cpl.zip%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20071225.gpl.zip%$$
+GPL License $pre  $$ $cnext $href%cppad-20080120.gpl.zip%$$
 $tend
 
 $head Getting Started$$
