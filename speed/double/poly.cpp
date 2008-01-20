@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin double_poly.cpp$$
 $spell
+	bool
 	cppad
 	CppAD
 	hpp
@@ -29,7 +30,7 @@ $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
-void compute_poly(
+bool compute_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
 	CppAD::vector<double>     &a        ,  // coefficients of polynomial
@@ -47,7 +48,7 @@ void compute_poly(
 		// evaluate the polynomial at the new argument value
 		p[0] = CppAD::Poly(0, a, z[0]);
 	}
-	return;
+	return true;
 }
 /* $$
 $end

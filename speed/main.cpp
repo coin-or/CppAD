@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -42,6 +42,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	bool
 	ddp
 	cppad
 	adolc
@@ -108,6 +109,17 @@ $subhead speed$$
 If $italic option$$ is equal to $code speed$$,
 all of the speed tests are run.
 
+$head Return Values$$
+Each of the $italic option$$ values specified below
+corresponds to a particular test.
+The function call corresponding to each test
+has a $code bool$$ return value.
+If a particular $italic package$$ supports a test,
+it should return $code true$$ when the corresponding function is called.
+Otherwise (if the return value is $code false$$),
+the test is skipped whenever the corresponding
+$italic package$$ and $italic option$$ are specified.
+
 $head det_lu$$
 $index det_lu, correct$$
 $index det_lu, speed$$
@@ -118,13 +130,14 @@ the correctness and speed test for the
 gradient of the determinant using LU factorization tests are run.
 Each package defines a version of this test with the following prototype:
 $codep */
-	extern void compute_det_lu(
+	extern bool compute_det_lu(
 		size_t                     size      , 
 		size_t                     repeat    , 
 		CppAD::vector<double>      &matrix   ,
 		CppAD::vector<double>      &gradient 
 	);
 /* $$
+
 $subhead size$$
 The argument $italic size$$
 is the number of rows and columns in the matrix.
@@ -162,7 +175,7 @@ the correctness and speed test for the
 gradient of the determinant using expansion by minors are run.
 Each package defines a version of this test with the following prototype:
 $codep */
-	extern void compute_det_minor(
+	extern bool compute_det_minor(
 		size_t                     size      , 
 		size_t                     repeat    , 
 		CppAD::vector<double>      &matrix   ,
@@ -205,7 +218,7 @@ If $italic option$$ is equal to $code poly$$,
 the correctness and speed test for the derivative of a polynomial are run.
 Each package defines a version of this test with the following prototype:
 $codep */
-	extern void compute_poly(
+	extern bool compute_poly(
 		size_t                     size     , 
 		size_t                     repeat   , 
 		CppAD::vector<double>      &a       ,
@@ -285,6 +298,32 @@ namespace {
 				cout << ", ";
 		}
 		cout << " ]";
+	}
+
+	// ----------------------------------------------------------------
+	// functions that check if a test is available
+	bool available_det_lu(void)
+	{	size_t size   = 3;
+		size_t repeat = 1;
+		CppAD::vector<double> matrix(size * size);
+		CppAD::vector<double> gradient(size * size);
+
+		return compute_det_lu(size, repeat, matrix, gradient);
+	}
+	bool available_det_minor(void)
+	{	size_t size   = 3;
+		size_t repeat = 1;
+		CppAD::vector<double> matrix(size * size);
+		CppAD::vector<double> gradient(size * size);
+
+		return compute_det_minor(size, repeat, matrix, gradient);
+	}
+	bool available_poly(void)
+	{	size_t size   = 10;
+		size_t repeat = 1;
+		CppAD::vector<double>  a(size), z(1), ddp(1);
+
+		return compute_poly(size, repeat, a, z, ddp);
 	}
 
 	// ----------------------------------------------------------------
@@ -420,10 +459,11 @@ int main(int argc, char *argv[])
 	}
 	if( match == n_option  || iseed <= 0 )
 	{	cout << "usage: ./" << AD_PACKAGE << " option seed" << endl;
-		cout << "where option is one of the following:" << endl;
-		for(i = 0; i < n_option; i++)
-			cout << option[i] << ", ";
-		cout << endl << "and seed is a positive integer." << endl;
+		cout << "option choices: " << option[0];
+		for(i = 1; i < n_option; i++)
+			cout << ", " << option[i];
+		cout << "." << endl << "seed value: ";
+		cout << "a positive integer used as a random seed." << endl;
 		cout << endl;
 		return 1;
 	}
@@ -446,9 +486,12 @@ int main(int argc, char *argv[])
 	{
 		// run all the correctness tests
 		case option_correct:
-		ok &= Run_correct(correct_det_lu,           "det_lu"       );
-		ok &= Run_correct(correct_det_minor,        "det_minor"    );
-		ok &= Run_correct(correct_poly,             "poly"         );
+		if( available_det_lu() )
+			ok &= Run_correct(correct_det_lu,    "det_lu"       );
+		if( available_det_minor() )
+			ok &= Run_correct(correct_det_minor, "det_minor"    );
+		if( available_poly() )
+			ok &= Run_correct(correct_poly,      "poly"         );
 
 		// summarize results
 		assert( ok || (Run_error_count > 0) );
@@ -464,26 +507,44 @@ int main(int argc, char *argv[])
 		// ---------------------------------------------------------
 		// run all the speed tests 
 		case option_speed:
-		Run_speed(speed_det_lu,    size_det_lu,    "det_lu");
-		Run_speed(speed_det_minor, size_det_minor, "det_minor");
-		Run_speed(speed_poly,      size_poly,      "poly");
+		if( available_det_lu() )
+			Run_speed(speed_det_lu,    size_det_lu,    "det_lu");
+		if( available_det_minor() )
+			Run_speed(speed_det_minor, size_det_minor, "det_minor");
+		if( available_poly() )
+			Run_speed(speed_poly,      size_poly,      "poly");
 		ok = true;
 		break;
 		// ---------------------------------------------------------
 
 		case option_det_lu:
+		if( ! available_det_lu() )
+		{	cout << AD_PACKAGE << ": option " << argv[1] 
+			     << " not available" << endl; 
+			exit(1);
+		}
 		ok &= Run_correct(correct_det_lu,          "det_lu");
 		Run_speed(speed_det_lu,    size_det_lu,    "det_lu");
 		break;
 		// ---------------------------------------------------------
 
 		case option_det_minor:
+		if( ! available_det_minor() )
+		{	cout << AD_PACKAGE << ": option " << argv[1] 
+			     << " not available" << endl; 
+			exit(1);
+		}
 		ok &= Run_correct(correct_det_minor,       "det_minor");
 		Run_speed(speed_det_minor, size_det_minor, "det_minor");
 		break;
 		// ---------------------------------------------------------
 
 		case option_poly:
+		if( ! available_poly() )
+		{	cout << AD_PACKAGE << ": option " << argv[1] 
+			     << " not available" << endl; 
+			exit(1);
+		}
 		ok &= Run_correct(correct_poly,            "poly");
 		Run_speed(speed_poly,      size_poly,      "poly");
 		break;

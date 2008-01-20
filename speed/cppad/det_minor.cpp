@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,7 +44,7 @@ $codep */
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
-void compute_det_minor(
+bool compute_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
 	CppAD::vector<double>     &matrix   ,
@@ -93,7 +93,7 @@ void compute_det_minor(
 		// evaluate and return gradient using reverse mode
 		gradient = f.Reverse(1, w);
 	}
-	return;
+	return true;
 }
 /* $$
 $end

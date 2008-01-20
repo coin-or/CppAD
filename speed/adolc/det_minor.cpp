@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -50,7 +50,7 @@ $codep */
 # include <adolc/adouble.h>
 # include <adolc/interfaces.h>
 
-void compute_det_minor(
+bool compute_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
 	CppAD::vector<double>     &matrix   ,
@@ -125,7 +125,7 @@ void compute_det_minor(
 	delete [] mat;
 	delete [] u;
 	delete [] A;
-	return;
+	return true;
 }
 /* $$
 $end

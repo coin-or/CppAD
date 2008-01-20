@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -48,7 +48,7 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/vector.hpp>
 
-void compute_det_lu(
+bool compute_det_lu(
 	size_t                     size     , 
 	size_t                     repeat   , 
 	CppAD::vector<double>     &matrix   ,
@@ -87,7 +87,7 @@ void compute_det_lu(
 			gradient[i] = A[i].adj(); // partial detA w.r.t A[i]
 	}
 	// ---------------------------------------------------------
-	return;
+	return true;
 }
 /* $$
 $end
