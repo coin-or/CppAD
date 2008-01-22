@@ -2,7 +2,7 @@
 # define CPPAD_TEST_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -54,6 +54,7 @@ $codep */
 # if CPPAD_BOOSTVECTOR
 # undef  CPPAD_BOOSTVECTOR
 # define CPPAD_BOOSTVECTOR 0
+# undef  CPPAD_CPPADVECTOR
 # define CPPAD_CPPADVECTOR 1
 # endif
 # endif

@@ -14,10 +14,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cstddef>
 # include <iostream>
 # include <cppad/vector.hpp>
-# include <cppad/speed_test.hpp>
-# include <cppad/speed/uniform_01.hpp>
 # include <cppad/speed/det_grad_33.hpp>
 # include <cppad/speed/det_33.hpp>
+# include <cppad/speed_test.hpp>
+# include <cppad/speed/quadratic_ok.hpp>
+# include <cppad/speed/uniform_01.hpp>
 # include <cppad/poly.hpp>
 
 # ifdef ADOLC
@@ -120,6 +121,28 @@ Otherwise (if the return value is $code false$$),
 the test is skipped whenever the corresponding
 $italic package$$ and $italic option$$ are specified.
 
+$head seed$$
+$index uniform_01$$
+The random number simulator $cref/uniform_01/$$ is initialized with
+the call
+$syntax%
+	uniform_01(%seed%)
+%$$
+before any of the testing routines (listed above) are called.
+
+$head Correctness Results$$
+An output line is generated for each correctness test
+stating of the test passed or failed.
+
+$head Speed Results$$
+For each speed test, corresponds to three lines of output.
+The name of the package and test are printed on the first line,
+the vector of problem sizes are printed on the next line,
+and the rates corresponding to the different problem sizes are
+printed on the third line.
+The rate is the number of times per second that the calculation was repeated.
+
+$comment -----------------------------------------------------------------$$
 $head det_lu$$
 $index det_lu, correct$$
 $index det_lu, speed$$
@@ -165,6 +188,7 @@ of $italic gradient$$ is used and it is actually the determinant value instead
 of the gradient value.)
 
 
+$comment -----------------------------------------------------------------$$
 $head det_minor$$
 $index det_minor, correct$$
 $index det_minor, speed$$
@@ -209,6 +233,7 @@ of $italic gradient$$ is used and it is actually the determinant value
 instead of the gradient value.)
 
 
+$comment -----------------------------------------------------------------$$
 $head poly$$
 $index poly, correct$$
 $index poly, speed$$
@@ -258,28 +283,84 @@ with respect to it's argument value.
 of $italic ddp$$ is used and it is actually the polynomial value instead
 of the gradient value.)
 
-$head seed$$
-$index uniform_01$$
-The random number simulator $cref/uniform_01/$$ is initialized with
-the call
+$comment -----------------------------------------------------------------$$
+$head sparse_hessian$$
+$index sparse, quadratic$$
+$index quadratic, sparse$$
+$index speed, sparse quadratic$$
+$index correct, sparse quadratic$$
+If $italic option$$ is equal to $code sparse_hessian$$,
+the correctness and speed test for computing a sparse Hessian matrix are run.
+Each package defines a version of this test with the following prototype:
+$codep */
+	extern bool compute_sparse_hessian(
+		size_t                     size       , 
+		size_t                     repeat     ,
+		size_t                      ell       ,
+		CppAD::vector<size_t>      &i         ,
+		CppAD::vector<size_t>      &j         , 
+		CppAD::vector<double>      &hessian
+	);
+/* $$
+
+$subhead f$$
+The function $latex f : \R^n \rightarrow \R $$ is defined by
+$latex \[
+	f(x) = \sum_{k=1}^\ell x_{i[k]} x_{j[k]}
+\] $$
+Note that different vectors $latex i$$ and $latex j$$ 
+correspond to different functions $latex f(x)$$.
+
+$subhead size$$
+The argument $italic size$$
+is the dimension of the argument space for the function $latex f$$; 
+i.e. $italic size$$ is equal to $latex n$$.
+
+$subhead repeat$$
+The argument $italic repeat$$ is the number of different matrices
+that the Hessian is computed for.
+
+$head ell$$
+The argument $italic ell$$ has prototype
 $syntax%
-	uniform_01(%seed%)
+        size_t %ell%
 %$$
-before any of the testing routines (listed above) are called.
+and is the number of terms in the summation that defines $latex f(x)$$; i.e.,
+$latex \ell$$.
 
-$head Correctness Results$$
-An output line is generated for each correctness test
-stating of the test passed or failed.
+$subhead i$$
+The argument $italic i$$ is a vector of size $italic ell$$.
+The input value of its elements does not matter.
+On output, it has been set the first index vector
+for the last function $latex f(x)$$ (each element of the repeat
+loop corresponds to a different choice of $latex i$$ and $latex j$$).
+All the elements of $italic i$$ must be between zero and $syntax%%size%-1%$$.
 
-$head Speed Results$$
-For each speed test, corresponds to three lines of output.
-The name of the package and test are printed on the first line,
-the vector of problem sizes are printed on the next line,
-and the rates corresponding to the different problem sizes are
-printed on the third line.
-The rate is the number of times per second that the calculation was repeated.
+$subhead j$$
+The argument $italic j$$ is a vector of size $italic ell$$.
+The input value of its elements does not matter.
+On output, it has been set the second index vector
+for the last function $latex f(x)$$. 
+All the elements of $italic j$$ must be between zero and $syntax%%size%-1%$$.
+
+$subhead hessian$$
+The argument $italic hessian$$ is a vector with 
+$syntax%%n%*%n%$$ elements.
+The input value of its elements does not matter. 
+The output value of its elements is the Hessian of the function $latex f(x)$$
+corresponding to output values of $italic i$$ and $italic j$$.
+To be more specific,
+$latex k = 0 , \ldots , n-1$$,
+$latex m = 0 , \ldots , n-1$$,
+$latex \[
+	\DD{f}{x[k]}{x[m]} = hessian [ k * n + m ]
+\] $$
+(If $italic package$$ is $code double$$, only the first element
+of $italic hessian$$ is used and it is actually $latex f(x)$$  value instead
+of $latex f^{(2)} (x)$$.)
 
 $end 
+-----------------------------------------------------------------------------
 */
 
 namespace {
@@ -325,7 +406,17 @@ namespace {
 
 		return compute_poly(size, repeat, a, z, ddp);
 	}
+	bool available_sparse_hessian(void)
+	{	size_t size   = 10;
+		size_t repeat = 1;
+		size_t ell    = 3 * size;
+		CppAD::vector<size_t> i(ell), j(ell); 
+		CppAD::vector<double> hessian(size * size);
 
+		return compute_sparse_hessian(
+			size, repeat, ell, i, j, hessian
+		);
+	}
 	// ----------------------------------------------------------------
 	// function that runs one correctness case
 	static size_t Run_ok_count    = 0;
@@ -389,6 +480,19 @@ namespace {
 		bool ok = CppAD::NearEqual(check, ddp[0], 1e-10, 1e-10);
 		return ok;
 	}
+	bool correct_sparse_hessian(void)
+	{	size_t size   = 10;
+		size_t repeat = 1;
+		size_t ell    = 3 * size;
+		CppAD::vector<size_t> i(ell), j(ell);
+		CppAD::vector<double> x(size); // values do not matter
+		CppAD::vector<double> hessian(size * size);
+
+		compute_sparse_hessian(size, repeat, ell, i, j, hessian);
+		size_t m = 2; // order of derivative
+		bool ok = CppAD::quadratic_ok(size, i, j, x, m, hessian);
+		return ok;
+	}
 	// ----------------------------------------------------------------
 	// function that runs one speed case
 	void Run_speed(
@@ -427,6 +531,14 @@ namespace {
 		compute_poly(size, repeat, a, z, ddp);
 		return;
 	}
+	void speed_sparse_hessian(size_t size, size_t repeat)
+	{	CppAD::vector<double> hessian(size * size);
+
+		size_t ell = 3 * size;
+		CppAD::vector<size_t> i(ell), j(ell);
+		compute_sparse_hessian(size, repeat, ell, i, j, hessian);
+		return;
+	}
 }
 
 // main program that runs all the tests
@@ -438,7 +550,8 @@ int main(int argc, char *argv[])
 		"speed",
 		"det_lu",
 		"det_minor",
-		"poly"
+		"poly",
+		"sparse_hessian"
 	};
 	const size_t n_option  = sizeof(option) / sizeof(option[0]);
 	const size_t option_correct   = 0;
@@ -446,7 +559,8 @@ int main(int argc, char *argv[])
 	const size_t option_det_lu    = 2;
 	const size_t option_det_minor = 3;
 	const size_t option_poly      = 4;
-	assert( n_option == option_poly+1 );
+	const size_t option_sparse_hessian = 5;
+	assert( n_option == option_sparse_hessian+1 );
 
 	size_t i;
 	size_t match = n_option;
@@ -476,23 +590,30 @@ int main(int argc, char *argv[])
 	CppAD::vector<size_t> size_det_lu(n_size);
 	CppAD::vector<size_t> size_det_minor(n_size);
 	CppAD::vector<size_t> size_poly(n_size);
+	CppAD::vector<size_t> size_sparse_hessian(n_size);
 	for(i = 0; i < n_size; i++) 
-	{	size_det_lu[i]    = 3 * i + 1;
-		size_det_minor[i] = i + 1;
-		size_poly[i]      = 8 * i + 1;
+	{	size_det_lu[i]      = 3 * i + 1;
+		size_det_minor[i]   = i + 1;
+		size_poly[i]        = 8 * i + 1;
+		size_sparse_hessian[i] = 10 * (i + 1);
 	}
 
 	switch(match)
 	{
 		// run all the correctness tests
 		case option_correct:
-		if( available_det_lu() )
-			ok &= Run_correct(correct_det_lu,    "det_lu"       );
-		if( available_det_minor() )
-			ok &= Run_correct(correct_det_minor, "det_minor"    );
-		if( available_poly() )
-			ok &= Run_correct(correct_poly,      "poly"         );
-
+		if( available_det_lu() ) ok &= Run_correct(
+			correct_det_lu,    "det_lu"       
+		);
+		if( available_det_minor() ) ok &= Run_correct(
+			correct_det_minor, "det_minor"    
+		);
+		if( available_poly() ) ok &= Run_correct(
+			correct_poly,      "poly"         
+		);
+		if( available_sparse_hessian() ) ok &= Run_correct(
+			correct_sparse_hessian, "sparse_hessian"         
+		);
 		// summarize results
 		assert( ok || (Run_error_count > 0) );
 		if( ok )
@@ -507,12 +628,18 @@ int main(int argc, char *argv[])
 		// ---------------------------------------------------------
 		// run all the speed tests 
 		case option_speed:
-		if( available_det_lu() )
-			Run_speed(speed_det_lu,    size_det_lu,    "det_lu");
-		if( available_det_minor() )
-			Run_speed(speed_det_minor, size_det_minor, "det_minor");
-		if( available_poly() )
-			Run_speed(speed_poly,      size_poly,      "poly");
+		if( available_det_lu() ) Run_speed(
+		speed_det_lu,    size_det_lu,    "det_lu"
+		);
+		if( available_det_minor() ) Run_speed(
+		speed_det_minor, size_det_minor, "det_minor"
+		);
+		if( available_poly() ) Run_speed(
+		speed_poly,      size_poly,      "poly"
+		);
+		if( available_sparse_hessian() ) Run_speed(
+		speed_sparse_hessian,  size_sparse_hessian,   "sparse_hessian"
+		);
 		ok = true;
 		break;
 		// ---------------------------------------------------------
@@ -547,6 +674,18 @@ int main(int argc, char *argv[])
 		}
 		ok &= Run_correct(correct_poly,            "poly");
 		Run_speed(speed_poly,      size_poly,      "poly");
+		break;
+		// ---------------------------------------------------------
+
+		case option_sparse_hessian:
+		if( ! available_sparse_hessian() )
+		{	cout << AD_PACKAGE << ": option " << argv[1] 
+			     << " not available" << endl; 
+			exit(1);
+		}
+		ok &= Run_correct(correct_sparse_hessian, "sparse_hessian");
+		Run_speed(
+		speed_sparse_hessian, size_sparse_hessian,  "sparse_hessian");
 		break;
 		// ---------------------------------------------------------
 		

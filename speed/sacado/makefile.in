@@ -42,7 +42,7 @@ CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
 am_sacado_OBJECTS = main.$(OBJEXT) det_lu.$(OBJEXT) \
-	det_minor.$(OBJEXT) poly.$(OBJEXT)
+	det_minor.$(OBJEXT) poly.$(OBJEXT) sparse_hessian.$(OBJEXT)
 sacado_OBJECTS = $(am_sacado_OBJECTS)
 sacado_LDADD = $(LDADD)
 sacado_DEPENDENCIES =
@@ -188,7 +188,8 @@ sacado_SOURCES = \
 	../main.cpp \
 	det_lu.cpp  \
 	det_minor.cpp \
-	poly.cpp
+	poly.cpp \
+	sparse_hessian.cpp
 
 all: all-am
 
@@ -240,6 +241,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_minor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

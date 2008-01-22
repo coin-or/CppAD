@@ -163,7 +163,6 @@ Vector ADFun<Base>::Hessian(const Vector &x, const Vector &w)
 	size_t k;
 
 	size_t n = Domain();
-	size_t m = Range();
 
 	// check Vector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, Vector>();
@@ -173,7 +172,7 @@ Vector ADFun<Base>::Hessian(const Vector &x, const Vector &w)
 		"Hessian: length of x not equal domain dimension for f"
 	); 
 	CPPAD_ASSERT_KNOWN(
-		w.size() == m,
+		w.size() == Range(),
 		"Hessian: length of w not equal range dimension for f"
 	);
 

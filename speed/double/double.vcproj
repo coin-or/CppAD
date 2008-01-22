@@ -126,6 +126,9 @@
 			<File
 				RelativePath=".\poly.cpp">
 			</File>
+			<File
+				RelativePath=".\sparse_hessian.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

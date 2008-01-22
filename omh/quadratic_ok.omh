@@ -1,0 +1,34 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin quadratic_ok.hpp$$
+$spell
+	ifndef
+	endif
+$$
+
+$section Source: quadratic_ok$$
+
+$index quadratic_ok, source$$
+$index source, quadratic_ok$$
+
+$code
+# ifndef CPPAD_SPARSE_QUAD_INCLUDED 
+$pre
+$$
+# define CPPAD_SPARSE_QUAD_INCLUDED 
+
+$verbatim%cppad/speed/quadratic_ok.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
+
+# endif
+$$
+
+$end

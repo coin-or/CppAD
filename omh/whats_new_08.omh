@@ -24,6 +24,10 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-21$$
+A sparse Hessian case was added to the $cref/speed/$$ tests; see
+$cref/sparse_hessian/speed_main/sparse_hessian/$$.
+
 $head 01-20$$
 CppAD can now be installed using $code yum$$ on 
 $cref/Fedora/InstallUnix/Fedora/$$ operating systems.

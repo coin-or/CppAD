@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,7 +22,8 @@ $children%
 	cppad/speed/det_by_minor.hpp%
 	cppad/speed/det_by_lu.hpp%
 	cppad/speed/det_33.hpp%
-	cppad/speed/det_grad_33.hpp
+	cppad/speed/det_grad_33.hpp%
+	cppad/speed/quadratic_ok.hpp
 %$$
 
 $head Speed Main Program$$
@@ -35,9 +36,10 @@ $table
 $rref det_by_lu$$
 $rref det_by_minor$$
 $rref det_of_minor$$
-$rref uniform_01$$
 $rref det_33$$
 $rref det_grad_33$$
+$rref sparse_hessian$$
+$rref uniform_01$$
 $tend 
 
 $head Library Routines$$
@@ -58,6 +60,7 @@ $rref lu_factor.hpp$$
 $rref lu_invert.hpp$$
 $rref lu_solve.hpp$$
 $rref poly.hpp$$
+$rref quadratic_ok.hpp$$
 $rref uniform_01.hpp$$
 $tend
 

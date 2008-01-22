@@ -159,6 +159,7 @@ nobase_include_HEADERS =  \
 	cppad/speed/det_by_minor.hpp \
 	cppad/speed/det_grad_33.hpp \
 	cppad/speed/det_of_minor.hpp \
+	cppad/speed/quadratic_ok.hpp \
 	cppad/speed/uniform_01.hpp
 #
 #
