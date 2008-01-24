@@ -24,6 +24,10 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-24$$
+The $cref/postfix directory/InstallUnix/PostfixDir/$$
+has been added to the $code configure$$ command line options.
+
 $head 01-21$$
 A sparse Hessian case was added to the $cref/speed/$$ tests; see
 $cref/sparse_hessian/speed_main/sparse_hessian/$$.

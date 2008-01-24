@@ -31,7 +31,7 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = .
-DIST_COMMON = README $(am__configure_deps) $(nobase_include_HEADERS) \
+DIST_COMMON = README $(am__configure_deps) $(nobase_myinclude_HEADERS) \
 	$(srcdir)/makefile.am $(srcdir)/makefile.in \
 	$(top_srcdir)/configure $(top_srcdir)/cppad/config.h.in \
 	AUTHORS COPYING ChangeLog INSTALL NEWS depcomp install-sh \
@@ -60,9 +60,9 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(includedir)"
-nobase_includeHEADERS_INSTALL = $(install_sh_DATA)
-HEADERS = $(nobase_include_HEADERS)
+am__installdirs = "$(DESTDIR)$(myincludedir)"
+nobase_myincludeHEADERS_INSTALL = $(install_sh_DATA)
+HEADERS = $(nobase_myinclude_HEADERS)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 ETAGS = etags
@@ -126,6 +126,7 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+POSTFIX_DIR = @POSTFIX_DIR@
 RANLIB = @RANLIB@
 SACADO_DIR = @SACADO_DIR@
 SET_MAKE = @SET_MAKE@
@@ -174,6 +175,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+@CppAD_POSTFIX_FALSE@myincludedir = $(includedir)
 
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
@@ -191,7 +193,8 @@ top_srcdir = @top_srcdir@
 # Note that config.h is needed by VC++; i.e., for users that do not run
 # the configure script but rather use the project files 
 #
-nobase_include_HEADERS = \
+@CppAD_POSTFIX_TRUE@myincludedir = $(includedir)/$(POSTFIX_DIR)
+nobase_myinclude_HEADERS = \
 	cppad/TrackNewDel.h \
 	cppad/SpeedTest.h \
 	cppad/Runge45.h \
@@ -412,9 +415,10 @@ EXTRA_DIST = \
 	uw_copy_040507.html
 
 #
-@CppAD_DOCUMENTATION_TRUE@docdir_1 = $(DESTDIR)$(datadir)
-@CppAD_DOCUMENTATION_TRUE@docdir_2 = $(docdir_1)/doc
-@CppAD_DOCUMENTATION_TRUE@docdir_3 = $(docdir_2)/$(PACKAGE)-$(VERSION)
+@CppAD_DOCUMENTATION_TRUE@doc_prefix = $(DESTDIR)$(datadir)
+@CppAD_DOCUMENTATION_TRUE@doc_doc = $(doc_prefix)/doc
+@CppAD_DOCUMENTATION_TRUE@doc_postfix = $(doc_doc)/$(POSTFIX_DIR)
+@CppAD_DOCUMENTATION_TRUE@doc_package = $(doc_postfix)/$(PACKAGE)-$(VERSION)
 all: all-recursive
 
 .SUFFIXES:
@@ -468,24 +472,24 @@ $(top_srcdir)/cppad/config.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f cppad/config.h cppad/stamp-h1
-install-nobase_includeHEADERS: $(nobase_include_HEADERS)
+install-nobase_myincludeHEADERS: $(nobase_myinclude_HEADERS)
 	@$(NORMAL_INSTALL)
-	test -z "$(includedir)" || $(MKDIR_P) "$(DESTDIR)$(includedir)"
+	test -z "$(myincludedir)" || $(MKDIR_P) "$(DESTDIR)$(myincludedir)"
 	@$(am__vpath_adj_setup) \
-	list='$(nobase_include_HEADERS)'; for p in $$list; do \
+	list='$(nobase_myinclude_HEADERS)'; for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  $(am__vpath_adj) \
-	  echo " $(nobase_includeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(includedir)/$$f'"; \
-	  $(nobase_includeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(includedir)/$$f"; \
+	  echo " $(nobase_myincludeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(myincludedir)/$$f'"; \
+	  $(nobase_myincludeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(myincludedir)/$$f"; \
 	done
 
-uninstall-nobase_includeHEADERS:
+uninstall-nobase_myincludeHEADERS:
 	@$(NORMAL_UNINSTALL)
 	@$(am__vpath_adj_setup) \
-	list='$(nobase_include_HEADERS)'; for p in $$list; do \
+	list='$(nobase_myinclude_HEADERS)'; for p in $$list; do \
 	  $(am__vpath_adj) \
-	  echo " rm -f '$(DESTDIR)$(includedir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(includedir)/$$f"; \
+	  echo " rm -f '$(DESTDIR)$(myincludedir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(myincludedir)/$$f"; \
 	done
 
 # This directory's subdirectories are mostly independent; you can cd
@@ -769,7 +773,7 @@ check: check-recursive
 all-am: makefile $(HEADERS)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(includedir)"; do \
+	for dir in "$(DESTDIR)$(myincludedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -816,7 +820,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-nobase_includeHEADERS
+install-data-am: install-nobase_myincludeHEADERS
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 
@@ -854,7 +858,7 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-nobase_includeHEADERS
+uninstall-am: uninstall-nobase_myincludeHEADERS
 
 .MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) install-am \
 	install-data-am install-strip
@@ -868,26 +872,26 @@ uninstall-am: uninstall-nobase_includeHEADERS
 	info-am install install-am install-data install-data-am \
 	install-data-hook install-dvi install-dvi-am install-exec \
 	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-nobase_includeHEADERS \
+	install-info-am install-man install-nobase_myincludeHEADERS \
 	install-pdf install-pdf-am install-ps install-ps-am \
 	install-strip installcheck installcheck-am installdirs \
 	installdirs-am maintainer-clean maintainer-clean-generic \
 	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am tags \
 	tags-recursive uninstall uninstall-am \
-	uninstall-nobase_includeHEADERS
+	uninstall-nobase_myincludeHEADERS
 
 #
 dist-hook:
 	rm -rf `find $(distdir)/omh $(distdir)/openmp -name .svn`
 	rm $(distdir)/doc/error.wrd
 @CppAD_DOCUMENTATION_TRUE@install-data-hook:
-@CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(docdir_1) ] ; then mkdir $(docdir_1) ; fi
-@CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(docdir_2) ] ; then mkdir $(docdir_2) ; fi
-@CppAD_DOCUMENTATION_TRUE@	if [ -e $(docdir_3) ] ; then rm -rf $(docdir_3) ; fi
-@CppAD_DOCUMENTATION_TRUE@	cp -a $(top_builddir)/doc $(docdir_3)
-@CppAD_DOCUMENTATION_TRUE@	chmod -R a-w $(docdir_3)
-@CppAD_DOCUMENTATION_TRUE@	chmod -R u+w $(docdir_3)
-@CppAD_DOCUMENTATION_TRUE@	chmod -R a+r $(docdir_3)
+@CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(doc_doc) ] ; then mkdir $(doc_doc) ; fi
+@CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(doc_postfix) ] ; then mkdir $(doc_postfix) ; fi
+@CppAD_DOCUMENTATION_TRUE@	if [ -e $(doc_package) ] ; then rm -rf $(doc_package) ; fi
+@CppAD_DOCUMENTATION_TRUE@	cp -a $(top_builddir)/doc $(doc_package)
+@CppAD_DOCUMENTATION_TRUE@	chmod -R a-w $(doc_package)
+@CppAD_DOCUMENTATION_TRUE@	chmod -R u+w $(doc_package)
+@CppAD_DOCUMENTATION_TRUE@	chmod -R a+r $(doc_package)
 #
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -232,6 +232,8 @@ then
 			TEST="$TEST
 				--with-Documentation"
 		fi
+		TEST="$TEST
+			POSTFIX_DIR=coin"
 		if [ -e $BOOST_DIR/boost ]
 		then
 			TEST="$TEST 

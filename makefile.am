@@ -14,7 +14,12 @@
 # Note that config.h is needed by VC++; i.e., for users that do not run
 # the configure script but rather use the project files 
 #
-nobase_include_HEADERS =  \
+if CppAD_POSTFIX
+myincludedir = $(includedir)/$(POSTFIX_DIR)
+else
+myincludedir = $(includedir)
+endif
+nobase_myinclude_HEADERS =  \
 	cppad/TrackNewDel.h \
 	cppad/SpeedTest.h \
 	cppad/Runge45.h \
@@ -257,16 +262,17 @@ dist-hook:
 	rm $(distdir)/doc/error.wrd
 #
 if CppAD_DOCUMENTATION
-docdir_1 = $(DESTDIR)$(datadir)
-docdir_2 = $(docdir_1)/doc
-docdir_3 = $(docdir_2)/$(PACKAGE)-$(VERSION)
+doc_prefix  = $(DESTDIR)$(datadir)
+doc_doc     = $(doc_prefix)/doc
+doc_postfix = $(doc_doc)/$(POSTFIX_DIR)
+doc_package = $(doc_postfix)/$(PACKAGE)-$(VERSION)
 install-data-hook:
-	if [ ! -e $(docdir_1) ] ; then mkdir $(docdir_1) ; fi
-	if [ ! -e $(docdir_2) ] ; then mkdir $(docdir_2) ; fi
-	if [ -e $(docdir_3) ] ; then rm -rf $(docdir_3) ; fi
-	cp -a $(top_builddir)/doc $(docdir_3)
-	chmod -R a-w $(docdir_3)
-	chmod -R u+w $(docdir_3)
-	chmod -R a+r $(docdir_3)
+	if [ ! -e $(doc_doc) ] ; then mkdir $(doc_doc) ; fi
+	if [ ! -e $(doc_postfix) ] ; then mkdir $(doc_postfix) ; fi
+	if [ -e $(doc_package) ] ; then rm -rf $(doc_package) ; fi
+	cp -a $(top_builddir)/doc $(doc_package)
+	chmod -R a-w $(doc_package)
+	chmod -R u+w $(doc_package)
+	chmod -R a+r $(doc_package)
 endif
 #

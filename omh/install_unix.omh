@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin InstallUnix$$
 $dollar @$$
 $spell
+	yyyymmdd
 	gzip
 	Linux
 	fi
@@ -113,25 +114,25 @@ The ascii files for these downloads are in
 Unix format; i.e., each line ends with just a line feed.
 
 $table
-CPL License $pre  $$ $cnext $href%cppad-20080120.cpl.tgz%$$ 
+CPL License $pre  $$ $cnext $href%cppad-20080124.cpl.tgz%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20080120.gpl.tgz%$$
+GPL License $pre  $$ $cnext $href%cppad-20080124.gpl.tgz%$$
 $tend
 
 $subhead Tar File Extraction$$
 Use the unix command
 $syntax%
-	tar -xvzf cppad-20080120.%license%.tgz
+	tar -xvzf cppad-20080124.%license%.tgz
 %$$
 (where $italic license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-20080120
+	cppad-20080124
 %$$
 To see if this has been done correctly, check for the following file:
 $syntax%
-	cppad-20080120/cppad/cppad.hpp
+	cppad-20080124/cppad/cppad.hpp
 %$$
 
 $head Configure$$
@@ -147,6 +148,7 @@ $syntax%
 	--with-Speed                           \
 	--with-PrintFor                        \
 	--with-stdvector                       \  
+	POSTFIX_DIR=%PostfixDir%               \
 	ADOLC_DIR=%AdolcDir%                     \
 	FADBAD_DIR=%FadbadDir%                   \
 	SADADO_DIR=%SacadoDir%                   \
@@ -158,8 +160,8 @@ The entries one each of the other lines are optional
 and the text in italic is replaced values that you choose.
 
 $head Testing Return Status$$
-$head statue, test return$$
-$head test, return statue$$
+$index status, test return$$
+$index test, return status$$
 All of the test programs mentioned below
 (with the exception of $cref/print_for/InstallUnix/--with-PrintFor/$$)
 return a status of zero, if all correctness tests pass, and one for an error.
@@ -175,30 +177,30 @@ $codep
 $$
 could be used abort the a bash shell script when the test failed.
 
-
 $head PrefixDir$$
 $index configure, prefix directory$$
 $index prefix, configure directory$$
 $index directory, configure prefix$$
-The default value for $italic PrefixDir$$ is $code @HOME$$
+The default value for prefix directory is $code @HOME$$
 i.e., by default the CppAD include files 
-will install in $code @HOME$$.
+will $cref/install/InstallUnix/make install/$$ below $code @HOME$$.
 If you want to install elsewhere, you will have to use this option.
-$pre
-
-$$
-As an example of using just the $code --prefix$$ option,
-if you have permission to write into the directory 
-$code /usr/local/include$$ 
+As an example of using the $syntax%--prefix=%PrefixDir%$$ option,
+if you specify
 $codep
 	./configure --prefix=/usr/local
 $$ 
-will set up for installing the CppAD include files in the directory
+the CppAD include files will be installed in the directory
 $syntax%
 	/usr/local/include/cppad
 %$$
-This is the standard location for such files on many systems.
-In this case, $italic PrefixDir$$ is $code /usr/local$$.
+If $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
+is specified, the CppAD documentation files will be installed in the directory
+$syntax%
+	/usr/local/share/doc/cppad-%yyyymmdd%
+%$$
+where $italic yyyymmdd$$ is the year, month, and day corresponding
+to this version of CppAD.
 
 $head --with-Documentation$$
 $index documentation, install$$
@@ -206,19 +208,21 @@ $index install, documentation$$
 If the command line argument $code --with-Documentation$$ is specified,
 the CppAD documentation HTML and XML files are copied to the directory
 $syntax%
-	%PrefixDir%/share/doc/cppad-%version%/*
+	%PrefixDir%/share/doc/%PostfixDir%/cppad-%yyyymmdd%
 %$$
-In this case, the top of the CppAD HTML documentation tree 
+(see $cref/PostfixDir/InstallUnix/PostfixDir/$$).
+The top of the CppAD HTML documentation tree 
 (with mathematics displayed as LaTex command) will be located at
 $syntax%
-	%PrefixDir%/share/doc/cppad-%version%/cppad.htm
+	%PrefixDir%/share/doc/%PostfixDir%/cppad-%yyyymmdd%/cppad.htm
 %$$
 and the top of the XML documentation tree
 (with mathematics displayed as MathML) will be located at
 $syntax%
-	%PrefixDir%/share/doc/cppad-%version%/cppad.xml
+	%PrefixDir%/share/doc/%PostfixDir%/cppad-%yyyymmdd%/cppad.xml
 %$$
-
+where $italic yyyymmdd$$ is the year, month, and day corresponding
+to this version of CppAD.
 
 $head --with-Introduction$$
 $index introduction, unix$$
@@ -373,6 +377,30 @@ $codep
 	std::vector
 $$
 (In this case $italic BoostDir$$ must not also be specified.)
+
+$head PostfixDir$$
+$index configure, postfix directory$$
+$index postfix, configure directory$$
+$index directory, configure postfix$$
+By default, the postfix directory is empty; i.e., there
+is no postfix directory.
+As an example of using the $syntax%POSTFIX_DIR=%PostfixDir%$$ option,
+if you specify
+$codep
+	./configure --prefix=/usr/local POSTFIX_DIR=coin
+$$ 
+the CppAD include files will be 
+$cref/installed/InstallUnix/make install/$$ in the directory
+$syntax%
+	/usr/local/include/coin/cppad
+%$$
+If $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
+is specified, the CppAD documentation files will be installed in the directory
+$syntax%
+	/usr/local/share/doc/coin/cppad-%yyyymmdd%
+%$$
+where $italic yyyymmdd$$ is the year, month, and day corresponding
+to this version of CppAD.
 
 
 $head AdolcDir$$

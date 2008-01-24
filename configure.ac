@@ -1,5 +1,5 @@
 dnl ---------------------------------------------------------------------------
-dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 dnl
 dnl CppAD is distributed under multiple licenses. This distribution is under
 dnl the terms of the
@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20071211, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20080124, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -26,10 +26,6 @@ dnl cygwin replace: AC_PREFIX_DEFAULT(/usr)
 
 AC_MSG_NOTICE([******** Begin Checking Command Line arguments ***************])
 
-dnl check for certain invalid configure command line options -------------
-if test "$POSTFIX_DIR" != "" ; then
-    AC_MSG_ERROR([The POSTFIX_DIR configure option is no longer available])
-fi
 if test "$CPP_ERROR_WARN" != "" ; then
     AC_MSG_ERROR([The CPP_ERROR_WARN configure option is now CXX_FLAGS])
 fi
@@ -134,6 +130,18 @@ else
 	AC_DEFINE(CPPAD_STDVECTOR, 0, [is CPPAD_TEST_VECTOR == std::vector])
 fi
 AC_MSG_RESULT([$stdvector])
+
+dnl The postfix directiory corresponding to CppAD ------------------------
+AC_MSG_CHECKING([POSTFIX_DIR])
+AC_ARG_VAR(POSTFIX_DIR, 
+	[postfix directory for CppAD installation]
+)
+AM_CONDITIONAL(CppAD_POSTFIX, test "$POSTFIX_DIR" != "")
+if test "$POSTFIX_DIR" != "" ; then
+	AC_MSG_RESULT([$POSTFIX_DIR])
+else
+	AC_MSG_RESULT([no])
+fi
 
 dnl The prefix corresponding to the installation of Adolc ---------------
 AC_MSG_CHECKING([ADOLC_DIR])
