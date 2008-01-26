@@ -2,7 +2,7 @@
 # define CPPAD_LU_FACTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -344,8 +344,11 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 			}
 		}
 		CPPAD_ASSERT_KNOWN( 
-			(imax < n) & (jmax < n) ,
-			"AbsGeq must return true when second argument is zero"
+		(imax < n) & (jmax < n) ,
+		"LuFactor can't determine an element with "
+		"maximum absolute value.\n"
+		"Perhaps orginal matrix contains not a number or infinity.\n" 
+		"Perhaps your specilization of AbsGeq is not correct."
 		);
 		if( imax != p )
 		{	// switch rows so max absolute element is in row p
