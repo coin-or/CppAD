@@ -347,8 +347,8 @@ int LuFactor(SizeVector &ip, SizeVector &jp, FloatVector &LU)           //
 		(imax < n) & (jmax < n) ,
 		"LuFactor can't determine an element with "
 		"maximum absolute value.\n"
-		"Perhaps orginal matrix contains not a number or infinity.\n" 
-		"Perhaps your specilization of AbsGeq is not correct."
+		"Perhaps original matrix contains not a number or infinity.\n" 
+		"Perhaps your specialization of AbsGeq is not correct."
 		);
 		if( imax != p )
 		{	// switch rows so max absolute element is in row p
