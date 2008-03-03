@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,6 +27,7 @@ $end
 */
 // BEGIN PROGRAM
 
+# include <cstring>
 # include <cstddef>
 # include <cstdlib>
 # include <cctype>
@@ -40,7 +41,7 @@ namespace {
 
 bool is_number( const std::string &s )
 {	char ch = s[0];
-	bool number = (strchr("0123456789.", ch) != 0);
+	bool number = (std::strchr("0123456789.", ch) != 0);
 	return number;
 }
 bool is_binary( const std::string &s )
@@ -140,7 +141,7 @@ bool StackMachine(void)
 	using CppAD::vector;
 
 	// The users program in that stack machine language
-	char *program[] = {
+	const char *program[] = {
 		"1.0", "a", "+", "=", "b",  // b = a + 1
 		"2.0", "b", "*", "=", "c",  // c = b * 2
 		"3.0", "c", "-", "=", "d",  // d = c - 3

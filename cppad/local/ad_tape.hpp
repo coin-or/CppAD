@@ -2,7 +2,7 @@
 # define CPPAD_AD_TAPE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -126,6 +126,31 @@ class ADTape {
 		const AD<Base> &trueCase     , 
 		const AD<Base> &falseCase 
 	);
+
+	// arithematic binary operators
+	friend AD<Base> operator + <Base>
+		(const AD<Base> &left, const AD<Base> &right);
+	friend AD<Base> operator - <Base>
+		(const AD<Base> &left, const AD<Base> &right);
+	friend AD<Base> operator * <Base>
+		(const AD<Base> &left, const AD<Base> &right);
+	friend AD<Base> operator / <Base>
+		(const AD<Base> &left, const AD<Base> &right);
+
+	// comparison operators
+	friend bool operator < <Base>
+		(const AD<Base> &left, const AD<Base> &right);
+	friend bool operator <= <Base>
+		(const AD<Base> &left, const AD<Base> &right);
+	friend bool operator > <Base>
+		(const AD<Base> &left, const AD<Base> &right);
+	friend bool operator >= <Base>
+		(const AD<Base> &left, const AD<Base> &right);
+	friend bool operator == <Base>
+		(const AD<Base> &left, const AD<Base> &right);
+	friend bool operator != <Base>
+		(const AD<Base> &left, const AD<Base> &right);
+
 
 	// pow
 	friend AD<Base> pow <Base>

@@ -2,7 +2,7 @@
 # define CPPAD_DECLARE_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -51,6 +51,30 @@ namespace CppAD {
 	template <class Base> AD<Base> sinh          (const AD<Base> &u);
 	template <class Base> AD<Base> sqrt          (const AD<Base> &u);
 	template <class Base> AD<Base> tan           (const AD<Base> &u);
+
+	// arithematic operators
+	template <class Base> AD<Base> operator + (
+		const AD<Base> &left, const AD<Base> &right);
+	template <class Base> AD<Base> operator - (
+		const AD<Base> &left, const AD<Base> &right);
+	template <class Base> AD<Base> operator * (
+		const AD<Base> &left, const AD<Base> &right);
+	template <class Base> AD<Base> operator / (
+		const AD<Base> &left, const AD<Base> &right);
+
+	// comparison operators
+	template <class Base> bool operator < (
+		const AD<Base> &left, const AD<Base> &right);
+	template <class Base> bool operator <= (
+		const AD<Base> &left, const AD<Base> &right);
+	template <class Base> bool operator > (
+		const AD<Base> &left, const AD<Base> &right);
+	template <class Base> bool operator >= (
+		const AD<Base> &left, const AD<Base> &right);
+	template <class Base> bool operator == (
+		const AD<Base> &left, const AD<Base> &right);
+	template <class Base> bool operator != (
+		const AD<Base> &left, const AD<Base> &right);
 
 	// pow
 	template <class Base> AD<Base> pow (

@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_08$$
 $spell
+	op
 	CppAD
 	yum
 $$
@@ -23,6 +24,17 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-03$$
+There was an ambiguity problem 
+(detected by g++ 4.3) with the following operations
+$syntax%
+	%x% %op% %y%
+%$$
+where $italic x$$ and $italic y$$ were $code AD<double>$$ and
+$italic op$$ was a member operator of that class.
+This has been fixed by making all such member functions friends
+instead of members of $code AD<double>$$. 
 
 $head 01-26$$
 The $cref/LuFactor/$$ routine gave a misleading error message 

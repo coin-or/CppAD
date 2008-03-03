@@ -2,7 +2,7 @@
 # define CPPAD_ADD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,8 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 namespace CppAD {
 
 template <class Base>
-AD<Base> AD<Base>::operator +(const AD<Base> &right) const
-{	ADTape<Base> *tape = tape_ptr();
+AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
+{	ADTape<Base> *tape = AD<Base>::tape_ptr();
 	bool var_left, var_right;
 # ifdef NDEBUG
 	if( tape == CPPAD_NULL )
@@ -26,14 +26,14 @@ AD<Base> AD<Base>::operator +(const AD<Base> &right) const
 	}
 	else
 	{
-		var_left  = id_       == tape->id_;
+		var_left  = left.id_  == tape->id_;
 		var_right = right.id_ == tape->id_;
 	}
 # else
-	var_left  = Variable(*this);
+	var_left  = Variable(left);
 	var_right = Variable(right);
 	CPPAD_ASSERT_KNOWN(
-		(! var_left) || id_ == tape->id_ ,
+		(! var_left) || left.id_ == tape->id_ ,
 		"+ left operand is a variable for a different thread"
 	);
 	CPPAD_ASSERT_KNOWN(
@@ -43,7 +43,7 @@ AD<Base> AD<Base>::operator +(const AD<Base> &right) const
 # endif
 
 	AD<Base> result;
-	result.value_  = value_ + right.value_;
+	result.value_  = left.value_ + right.value_;
 	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
 	if( var_left )
@@ -53,7 +53,7 @@ AD<Base> AD<Base>::operator +(const AD<Base> &right) const
 			CPPAD_ASSERT_UNKNOWN( NumInd(AddvvOp) == 2 );
 
 			// put operand addresses in tape
-			tape->Rec_.PutInd(taddr_, right.taddr_);
+			tape->Rec_.PutInd(left.taddr_, right.taddr_);
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(AddvvOp);
 			// make result a variable
@@ -61,7 +61,7 @@ AD<Base> AD<Base>::operator +(const AD<Base> &right) const
 		}
 		else if( IdenticalZero(right.value_) )
 		{	// result = variable + 0
-			result.make_variable(id_, taddr_);
+			result.make_variable(left.id_, left.taddr_);
 		}
 		else
 		{	// result = variable + parameter
@@ -70,7 +70,7 @@ AD<Base> AD<Base>::operator +(const AD<Base> &right) const
 
 			// put operand addresses in tape
 			size_t p = tape->Rec_.PutPar(right.value_);
-			tape->Rec_.PutInd(taddr_, p);
+			tape->Rec_.PutInd(left.taddr_, p);
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(AddvpOp);
 			// make result a variable
@@ -78,7 +78,7 @@ AD<Base> AD<Base>::operator +(const AD<Base> &right) const
 		}
 	}
 	else if( var_right )
-	{	if( IdenticalZero(value_) )
+	{	if( IdenticalZero(left.value_) )
 		{	// result = 0 + variable
 			result.make_variable(right.id_, right.taddr_);
 		}
@@ -88,7 +88,7 @@ AD<Base> AD<Base>::operator +(const AD<Base> &right) const
 			CPPAD_ASSERT_UNKNOWN( NumInd(AddpvOp) == 2 );
 
 			// put operand addresses in tape
-			size_t p = tape->Rec_.PutPar(value_);
+			size_t p = tape->Rec_.PutPar(left.value_);
 			tape->Rec_.PutInd(p, right.taddr_);
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(AddpvOp);

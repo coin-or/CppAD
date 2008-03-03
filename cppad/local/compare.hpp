@@ -2,7 +2,7 @@
 # define CPPAD_COMPARE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -185,24 +185,24 @@ void ADTape<Base>::RecordCompare(
 # ifdef NDEBUG
 
 template <class Base>
-inline bool AD<Base>::operator < (const AD<Base> &right) const
-{	bool result =  (value_ < right.value_); 
+inline bool operator < (const AD<Base> &left , const AD<Base> &right)
+{	bool result =  (left.value_ < right.value_); 
 	return result;
 }
 
 # else
 template <class Base>
-inline bool AD<Base>::operator < (const AD<Base> &right) const
-{	bool result =  (value_ < right.value_); 
+inline bool operator < (const AD<Base> &left , const AD<Base> &right)
+{	bool result =  (left.value_ < right.value_); 
 
 	ADTape<Base> *tape = CPPAD_NULL;
-	if( Variable(*this) )
-		tape = tape_this();
+	if( Variable(left) )
+		tape = left.tape_this();
 	else if ( Variable(right) )
 		tape = right.tape_this();
 
 	if( tape != CPPAD_NULL )
-		tape->RecordCompare(CompareLt, result, *this, right);
+		tape->RecordCompare(CompareLt, result, left, right);
 
 	return result;
 }
@@ -215,24 +215,24 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(<)
 # ifdef NDEBUG
 
 template <class Base>
-inline bool AD<Base>::operator <= (const AD<Base> &right) const
-{ 	bool result =  (value_ <= right.value_); 
+inline bool operator <= (const AD<Base> &left , const AD<Base> &right)
+{ 	bool result =  (left.value_ <= right.value_); 
 	return result;
 }
 
 # else
 template <class Base>
-inline bool AD<Base>::operator <= (const AD<Base> &right) const
-{ 	bool result =  (value_ <= right.value_); 
+inline bool operator <= (const AD<Base> &left , const AD<Base> &right)
+{ 	bool result =  (left.value_ <= right.value_); 
 
 	ADTape<Base> *tape = CPPAD_NULL;
-	if( Variable(*this) )
-		tape = tape_this();
+	if( Variable(left) )
+		tape = left.tape_this();
 	else if ( Variable(right) )
 		tape = right.tape_this();
 
 	if( tape != CPPAD_NULL )
-		tape->RecordCompare(CompareLe, result, *this, right);
+		tape->RecordCompare(CompareLe, result, left, right);
 
 	return result;
 }
@@ -246,24 +246,24 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(<=)
 # ifdef NDEBUG
 
 template <class Base>
-inline bool AD<Base>::operator > (const AD<Base> &right) const
-{	bool result =  (value_ > right.value_); 
+inline bool operator > (const AD<Base> &left , const AD<Base> &right)
+{	bool result =  (left.value_ > right.value_); 
 	return result;
 }
 
 # else
 template <class Base>
-inline bool AD<Base>::operator > (const AD<Base> &right) const
-{	bool result =  (value_ > right.value_); 
+inline bool operator > (const AD<Base> &left , const AD<Base> &right)
+{	bool result =  (left.value_ > right.value_); 
 
 	ADTape<Base> *tape = CPPAD_NULL;
-	if( Variable(*this) )
-		tape = tape_this();
+	if( Variable(left) )
+		tape = left.tape_this();
 	else if ( Variable(right) )
 		tape = right.tape_this();
 
 	if( tape != CPPAD_NULL )
-		tape->RecordCompare(CompareGt, result, *this, right);
+		tape->RecordCompare(CompareGt, result, left, right);
 
 
 	return result;
@@ -277,24 +277,24 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(>)
 # ifdef NDEBUG
 
 template <class Base>
-inline bool AD<Base>::operator >= (const AD<Base> &right) const
-{ 	bool result =  (value_ >= right.value_); 
+inline bool operator >= (const AD<Base> &left , const AD<Base> &right)
+{ 	bool result =  (left.value_ >= right.value_); 
 	return result;
 }
 
 # else
 template <class Base>
-inline bool AD<Base>::operator >= (const AD<Base> &right) const
-{ 	bool result =  (value_ >= right.value_); 
+inline bool operator >= (const AD<Base> &left , const AD<Base> &right)
+{ 	bool result =  (left.value_ >= right.value_); 
 
 	ADTape<Base> *tape = CPPAD_NULL;
-	if( Variable(*this) )
-		tape = tape_this();
+	if( Variable(left) )
+		tape = left.tape_this();
 	else if ( Variable(right) )
 		tape = right.tape_this();
 
 	if( tape != CPPAD_NULL )
-		tape->RecordCompare(CompareGe, result, *this, right);
+		tape->RecordCompare(CompareGe, result, left, right);
 
 	return result;
 }
@@ -308,24 +308,24 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(>=)
 # ifdef NDEBUG
 
 template <class Base>
-inline bool AD<Base>::operator == (const AD<Base> &right) const
-{	bool result =  (value_ == right.value_); 
+inline bool operator == (const AD<Base> &left , const AD<Base> &right)
+{	bool result =  (left.value_ == right.value_); 
 	return result;
 }
 
 # else 
 template <class Base>
-inline bool AD<Base>::operator == (const AD<Base> &right) const
-{	bool result =  (value_ == right.value_); 
+inline bool operator == (const AD<Base> &left , const AD<Base> &right)
+{	bool result =  (left.value_ == right.value_); 
 
 	ADTape<Base> *tape = CPPAD_NULL;
-	if( Variable(*this) )
-		tape = tape_this();
+	if( Variable(left) )
+		tape = left.tape_this();
 	else if ( Variable(right) )
 		tape = right.tape_this();
 
 	if( tape != CPPAD_NULL )
-		tape->RecordCompare(CompareEq, result, *this, right);
+		tape->RecordCompare(CompareEq, result, left, right);
 
 	return result;
 }
@@ -338,24 +338,24 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(==)
 # ifdef NDEBUG
 
 template <class Base>
-inline bool AD<Base>::operator != (const AD<Base> &right) const
-{	bool result =  (value_ != right.value_);
+inline bool operator != (const AD<Base> &left , const AD<Base> &right)
+{	bool result =  (left.value_ != right.value_);
 	return result;
 }
 
 # else
 template <class Base>
-inline bool AD<Base>::operator != (const AD<Base> &right) const
-{	bool result =  (value_ != right.value_);
+inline bool operator != (const AD<Base> &left , const AD<Base> &right)
+{	bool result =  (left.value_ != right.value_);
 
 	ADTape<Base> *tape = CPPAD_NULL;
-	if( Variable(*this) )
-		tape = tape_this();
+	if( Variable(left) )
+		tape = left.tape_this();
 	else if ( Variable(right) )
 		tape = right.tape_this();
 
 	if( tape != CPPAD_NULL )
-		tape->RecordCompare(CompareNe, result, *this, right);
+		tape->RecordCompare(CompareNe, result, left, right);
 
 	return result;
 }
