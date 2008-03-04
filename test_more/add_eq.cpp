@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,7 +40,9 @@ bool AddEqOne(void)
 	Z[y]  = U[t];
 	Z[x] += U[s];  // parameter += variable
 	Z[x] += U[t];  // variable  += variable
-	Z[y] += 5.;    // variable  += double
+	Z[y] += .5;    // variable  += double 
+	// use .5 because it is represented exactly in binary and
+	// because it makes sure that += does not slice the double to an int
 
 	// create f: U -> Z and vectors used for derivative calculations
 	ADFun<double> f(U, Z);
@@ -49,7 +51,7 @@ bool AddEqOne(void)
 
 	// check function values
 	ok &= ( Z[x] == 4. + 3. + 2. );
-	ok &= ( Z[y] == 2. + 5. );
+	ok &= ( Z[y] == 2. + .5 );
 
 	// forward computation of partials w.r.t. s
 	v[s] = 1.;

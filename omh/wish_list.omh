@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -10,22 +10,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
-	Bool
-	Adolc
-	Fadbad
-	cygwin
-	yy-mm-dd
-	yyyymmdd
-	cppad
+	Python
 	xml
 	hpp
-	xmguidlinesl
 	CondExp
-	Jacobian
 	Vec
 	Cpp
 	Atan
-	CppADlib
 $$
 
 $section The CppAD Wish List$$
@@ -49,19 +40,6 @@ valid for complex types by comparing real parts.
 In addition, use this change to extend $xref/LuRatio/$$ so 
 that it works with complex AD types.
 
-$head Computed Assignment$$
-If the $italic Base$$ type is not $code double$$,
-the $cref/computed assignment/compute_assign/$$ operators do not
-always allow for $code double$$ operands. For example,
-if $italic x$$ has type $code AD< AD<double> >$$
-$syntax%
-	%x% += .5;
-%$$
-will slice the value $code .5$$ to an $code int$$
-and then convert it to an $code AD< AD<double> >$$.
-Hence, zero will be added to $italic x$$.
-
-
 $head Exceptions$$
 When the function
 $xref/Independent/$$ is called,  
@@ -70,6 +48,11 @@ If an exception occurs before the call to the corresponding
 $xref/ADFun/$$ constructor or $cref/Dependent/$$, 
 the tape recording will never stop.
 Thus, there should be a way to abort a tape recording.
+
+$head Library$$
+One could build a CppAD library for use with the type $code AD<double>$$.
+This would speed up compilation for the most common usage where
+the $italic Base$$ type is $code double$$.
 
 $head Operation Sequence$$
 $index sequence, operation$$
@@ -83,6 +66,8 @@ This could be returned as an extra
 $xref/SeqProperty/$$.
 
 $head Optimization$$
+
+$subhead Remove Dead Code$$
 $index optimize, operation sequence$$
 $index tape, optimize$$
 $index sequence, optimize operations$$
@@ -90,6 +75,22 @@ $index operation, optimize sequence$$
 A single $cref/RevSparseJac/$$ sweep could be used to determine
 which parts of the operation sequence in an
 $cref/ADFun/FunConstruct/$$ object can be removed.
+
+$subhead Expression Hashing$$
+Has codes could be used to detect expressions that have already
+been computed (and avoid extra entries in the operation sequence).
+This would also involve has coding the constants and avoiding
+duplicate copies in the constant table.
+
+$head Scripting Languages$$
+One could develop a
+SWIG compatible interface to $code AD<double>$$ and $code ADFun<double>$$ that 
+would make it easy to connect the SWIG languages, e.g., Python, see, 
+$href%http://www.swig.org/%SWIG%$$ for a description of SWIG
+and a list of the languages.
+This would require the $cref/library/WishList/Library/$$ wish list 
+entry being implemented.
+
 
 $head Software Guidelines$$
 
@@ -117,8 +118,8 @@ $subhead Member Variables$$
 Change private member variables names
 (not part of the user interface)
 so that they all end with an underscore.
-(This has been done for the $code AD$$ and $code VecAD$$ template class,
-but not yet for the other classes.) 
+(This has been done for all the classes except the
+$code ADFun$$ template class).
 
 $head Vector Element Type$$
 Change cross references from 

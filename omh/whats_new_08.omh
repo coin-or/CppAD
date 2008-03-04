@@ -35,6 +35,16 @@ where $italic x$$ and $italic y$$ were $code AD<double>$$ and
 $italic op$$ was a member operator of that class.
 This has been fixed by making all such member functions friends
 instead of members of $code AD<double>$$. 
+$pre
+
+$$
+Remove computed assignment entry from wish list
+(it was fixed on $cref/2007-05-26/whats_new_07/05-26/$$).
+Add 
+$cref/expression hashing/WishList/Optimization/Expression Hashing/$$,
+$cref/library/WishList/Library/$$,
+and $cref/scripting languages/WishList/Scripting Languages/$$
+entries to the wish list.
 
 $head 01-26$$
 The $cref/LuFactor/$$ routine gave a misleading error message 
