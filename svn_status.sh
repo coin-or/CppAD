@@ -44,6 +44,8 @@ sed                                                           \
 	-e '/^[?] *dev$/d'                                    \
 	-e '/^[?] *aclocal.m4$/d'                             \
 	-e '/^[?] *cppad-[0-9]\{8\}.*$/d'                     \
+	-e '/^[?] *omh\/install_unix.omh$/d'                  \
+	-e '/^[?] *omh\/install_windows.omh$/d'               \
 	-e '/cygwin_package$/d'
 #
 yyyymmdd=`date +%G%m%d`
