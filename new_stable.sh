@@ -110,12 +110,6 @@ then
 	sed < configure.ac > configure.ac.$$\
 	-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" 
 	#
-	sed < omh/install_unix.omh > omh/install_unix.omh.$$ \
-	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
-	#
-	sed < omh/install_windows.omh > omh/install_windows.omh.$$ \
-	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
-	#
 	sed < build.sh > build.sh.$$ \
 	-e "s/yyyymmdd=.*/yyyymmdd=\"$yyyymmdd\"/" \
 	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/" 
@@ -128,8 +122,6 @@ then
 	list="
 		AUTHORS
 		configure.ac
-		omh/install_unix.omh
-		omh/install_windows.omh
 		build.sh
 		svn_status.sh
 	"

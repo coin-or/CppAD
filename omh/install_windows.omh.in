@@ -77,9 +77,9 @@ Windows format; i.e., each line ends with both a carriage return
 and then a line feed. 
 
 $table
-CPL License $pre  $$ $cnext $href%cppad-20080120.cpl.zip%$$ 
+CPL License $pre  $$ $cnext $href%cppad-@VERSION@.cpl.zip%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20080120.gpl.zip%$$
+GPL License $pre  $$ $cnext $href%cppad-@VERSION@.gpl.zip%$$
 $tend
 
 $head Getting Started$$

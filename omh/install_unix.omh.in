@@ -10,9 +10,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 $begin InstallUnix$$
-$dollar @$$
+$dollar ^$$
 $spell
-	yyyymmdd
 	gzip
 	Linux
 	fi
@@ -114,25 +113,25 @@ The ascii files for these downloads are in
 Unix format; i.e., each line ends with just a line feed.
 
 $table
-CPL License $pre  $$ $cnext $href%cppad-20080124.cpl.tgz%$$ 
+CPL License $pre  $$ $cnext $href%cppad-@VERSION@.cpl.tgz%$$ 
 $rnext
-GPL License $pre  $$ $cnext $href%cppad-20080124.gpl.tgz%$$
+GPL License $pre  $$ $cnext $href%cppad-@VERSION@.gpl.tgz%$$
 $tend
 
 $subhead Tar File Extraction$$
 Use the unix command
 $syntax%
-	tar -xvzf cppad-20080124.%license%.tgz
+	tar -xvzf cppad-@VERSION@.%license%.tgz
 %$$
 (where $italic license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
 $syntax%
-	cppad-20080124
+	cppad-@VERSION@
 %$$
 To see if this has been done correctly, check for the following file:
 $syntax%
-	cppad-20080124/cppad/cppad.hpp
+	cppad-@VERSION@/cppad/cppad.hpp
 %$$
 
 $head Configure$$
@@ -181,9 +180,9 @@ $head PrefixDir$$
 $index configure, prefix directory$$
 $index prefix, configure directory$$
 $index directory, configure prefix$$
-The default value for prefix directory is $code @HOME$$
+The default value for prefix directory is $code ^HOME$$
 i.e., by default the CppAD include files 
-will $cref/install/InstallUnix/make install/$$ below $code @HOME$$.
+will $cref/install/InstallUnix/make install/$$ below $code ^HOME$$.
 If you want to install elsewhere, you will have to use this option.
 As an example of using the $syntax%--prefix=%PrefixDir%$$ option,
 if you specify
@@ -197,10 +196,8 @@ $syntax%
 If $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
 is specified, the CppAD documentation files will be installed in the directory
 $syntax%
-	/usr/local/share/doc/cppad-%yyyymmdd%
+	/usr/local/share/doc/cppad-@VERSION@
 %$$
-where $italic yyyymmdd$$ is the year, month, and day corresponding
-to this version of CppAD.
 
 $head --with-Documentation$$
 $index documentation, install$$
@@ -208,21 +205,19 @@ $index install, documentation$$
 If the command line argument $code --with-Documentation$$ is specified,
 the CppAD documentation HTML and XML files are copied to the directory
 $syntax%
-	%PrefixDir%/share/doc/%PostfixDir%/cppad-%yyyymmdd%
+	%PrefixDir%/share/doc/%PostfixDir%/cppad-@VERSION@
 %$$
 (see $cref/PostfixDir/InstallUnix/PostfixDir/$$).
 The top of the CppAD HTML documentation tree 
 (with mathematics displayed as LaTex command) will be located at
 $syntax%
-	%PrefixDir%/share/doc/%PostfixDir%/cppad-%yyyymmdd%/cppad.htm
+	%PrefixDir%/share/doc/%PostfixDir%/cppad-@VERSION@/cppad.htm
 %$$
 and the top of the XML documentation tree
 (with mathematics displayed as MathML) will be located at
 $syntax%
-	%PrefixDir%/share/doc/%PostfixDir%/cppad-%yyyymmdd%/cppad.xml
+	%PrefixDir%/share/doc/%PostfixDir%/cppad-@VERSION@/cppad.xml
 %$$
-where $italic yyyymmdd$$ is the year, month, and day corresponding
-to this version of CppAD.
 
 $head --with-Introduction$$
 $index introduction, unix$$
@@ -397,10 +392,8 @@ $syntax%
 If $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
 is specified, the CppAD documentation files will be installed in the directory
 $syntax%
-	/usr/local/share/doc/coin/cppad-%yyyymmdd%
+	/usr/local/share/doc/coin/cppad-@VERSION@
 %$$
-where $italic yyyymmdd$$ is the year, month, and day corresponding
-to this version of CppAD.
 
 
 $head AdolcDir$$
@@ -431,7 +424,7 @@ If you are using Linux,
 you will have to add to following lines to the file
 $code .bash_profile$$ in your home directory:
 $syntax%
-	LD_LIBRARY_PATH=%AdolcDir%/lib:@{LD_LIBRARY_PATH}
+	LD_LIBRARY_PATH=%AdolcDir%/lib:^{LD_LIBRARY_PATH}
 	export LD_LIBRARY_PATH
 %$$
 in order for Adolc to run properly.
@@ -441,7 +434,7 @@ If you are using Cygwin,
 you will have to add to following lines to the file
 $code .bash_profile$$ in your home directory:
 $syntax%
-	PATH=%AdolcDir%/bin:@{PATH}
+	PATH=%AdolcDir%/bin:^{PATH}
 	export PATH
 %$$
 in order for Adolc to run properly.

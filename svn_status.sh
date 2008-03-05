@@ -59,10 +59,6 @@ svn cat AUTHORS | sed > AUTHORS.$$ \
 	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
 svn cat configure.ac | sed > configure.ac.$$\
 	-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" 
-svn cat omh/install_unix.omh | sed > omh/install_unix.omh.$$ \
-	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
-svn cat omh/install_windows.omh | sed > omh/install_windows.omh.$$ \
-	-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
 svn cat cppad/config.h | sed > cppad/config.h.$$ \
 	-e "s/CppAD [0-9]\{8\}/CppAD $yyyymmdd/g" \
 	-e "s/VERSION \"[0-9]\{8\}\"/VERSION \"$yyyymmdd\"/g"
@@ -70,8 +66,6 @@ list="
 	configure
 	AUTHORS
 	configure.ac
-	omh/install_unix.omh
-	omh/install_windows.omh
 	cppad/config.h
 "
 for name in $list

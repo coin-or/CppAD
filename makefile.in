@@ -34,8 +34,9 @@ subdir = .
 DIST_COMMON = README $(am__configure_deps) $(nobase_myinclude_HEADERS) \
 	$(srcdir)/makefile.am $(srcdir)/makefile.in \
 	$(top_srcdir)/configure $(top_srcdir)/cppad/config.h.in \
-	AUTHORS COPYING ChangeLog INSTALL NEWS depcomp install-sh \
-	missing
+	$(top_srcdir)/omh/install_unix.omh.in \
+	$(top_srcdir)/omh/install_windows.omh.in AUTHORS COPYING \
+	ChangeLog INSTALL NEWS depcomp install-sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -44,7 +45,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/cppad/config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = omh/install_unix.omh omh/install_windows.omh
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -472,6 +473,10 @@ $(top_srcdir)/cppad/config.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f cppad/config.h cppad/stamp-h1
+omh/install_unix.omh: $(top_builddir)/config.status $(top_srcdir)/omh/install_unix.omh.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+omh/install_windows.omh: $(top_builddir)/config.status $(top_srcdir)/omh/install_windows.omh.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
 install-nobase_myincludeHEADERS: $(nobase_myinclude_HEADERS)
 	@$(NORMAL_INSTALL)
 	test -z "$(myincludedir)" || $(MKDIR_P) "$(DESTDIR)$(myincludedir)"

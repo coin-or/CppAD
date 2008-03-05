@@ -57,10 +57,6 @@ then
 		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
 	sed < configure.ac > configure.ac.$$\
 		-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" 
-	sed < omh/install_unix.omh > omh/install_unix.omh.$$ \
-		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
-	sed < omh/install_windows.omh > omh/install_windows.omh.$$ \
-		-e "s/cppad-[0-9]\{8\}/cppad-$yyyymmdd/g"
 	sed < configure > configure.$$ \
 		-e "s/CppAD [0-9]\{8\}/CppAD $yyyymmdd/g" \
 		-e "s/VERSION='[0-9]\{8\}'/VERSION='$yyyymmdd'/g" \
@@ -74,8 +70,6 @@ then
 	list="
 		AUTHORS
 		configure.ac
-		omh/install_unix.omh
-		omh/install_windows.omh
 		configure
 		cppad/config.h
 	"
@@ -91,37 +85,6 @@ then
 	version=$yyyymmdd
 	#
 	if [ "$1" = "version" ]
-	then
-		exit 0
-	fi
-fi
-#
-# omhelp
-#
-if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
-then
-	echo "build.sh omhelp"
-	#
-	for user in doc dev
-	do
-		echo "run_omhelp.sh $user"
-		if ! ./run_omhelp.sh $user
-		then
-			exit 1
-		fi
-		if [ ! -e omhelp_$user.log ]
-		then
-			echo "omhelp_$user.log file is missing"
-			exit 1
-		fi
-		if grep 'OMhelp Warning:' omhelp_$user.log
-		then
-			echo "omhelp_$user.log has warnings in it"
-			exit 1
-		fi
-	done
-	#
-	if [ "$1" = "omhelp" ]
 	then
 		exit 0
 	fi
@@ -272,6 +235,43 @@ then
 	./fix_makefile.sh
 	#
 	if [ "$1" = "configure" ]
+	then
+		exit 0
+	fi
+fi
+#
+# omhelp
+#
+if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
+then
+	if [ ! -e omh/install_unix.omh ] || [ ! -e omh/install_windows.omh ]
+	then
+		echo "First run ./configure to create the files"
+		echo "omh/install_unix.omh and omh/install_windows.omh"
+		exit 1
+	fi
+	echo "build.sh omhelp"
+	#
+	for user in doc dev
+	do
+		echo "run_omhelp.sh $user"
+		if ! ./run_omhelp.sh $user
+		then
+			exit 1
+		fi
+		if [ ! -e omhelp_$user.log ]
+		then
+			echo "omhelp_$user.log file is missing"
+			exit 1
+		fi
+		if grep 'OMhelp Warning:' omhelp_$user.log
+		then
+			echo "omhelp_$user.log has warnings in it"
+			exit 1
+		fi
+	done
+	#
+	if [ "$1" = "omhelp" ]
 	then
 		exit 0
 	fi
@@ -578,10 +578,10 @@ fi
 echo "option"
 echo "------"
 echo "version        update configure.ac and doc.omh version number"
-echo "omhelp         build all the documentation in doc & dev directories"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
 echo "configure      excludes --with-*"
 echo "configure test includes all the possible options except PREFIX_DIR"
+echo "omhelp         build all the documentation in doc & dev directories"
 echo "make           use make to build all of the requested targets"
 echo "dist           create the distribution file cppad-version.cpl.tgz"
 echo "test           unpack *.cpl.tgz, compile, tests, result in build_test.log"
