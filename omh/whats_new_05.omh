@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -509,8 +509,7 @@ $code CppAD.unix.tar.gz$$ and $code CppAD.dos.tar.gz$$
 to 
 $syntax%CppAD-%yy%-%mm%-%dd%.tar.gz%$$ and $syntax%CppAD-%yy%-%mm%-%dd%.zip%$$ 
 (the $syntax%%*%.zip%$$ file
-uses pkzip compression 
-(see $cref/zip files/InstallWindows/Download/Windows Zip Files/$$).
+uses pkzip compression).
 
 
 $head 08-30$$

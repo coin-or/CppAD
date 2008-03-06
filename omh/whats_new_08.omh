@@ -11,6 +11,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_08$$
 $spell
+	tarballs
+	cppad
+	cpl
+	gpl
+	tgz
+	Microsoft
 	op
 	CppAD
 	yum
@@ -24,6 +30,14 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-05$$
+Change $cref/windows install instructions/InstallWindows/$$ 
+instructions to use Unix formatted files (so only two instead of
+four tarballs are necessary for each version).
+The Microsoft project files for
+$code speed/cppad$$, $code speed/double$$, and $code speed/example$$
+were missing. This has also been fixed.
 
 $head 02-03$$
 There was an ambiguity problem 

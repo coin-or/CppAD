@@ -171,7 +171,7 @@ top_srcdir = @top_srcdir@
 #
 @CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 #
-EXTRA_DIST = speedtest.cpp
+EXTRA_DIST = example.sln example.vcproj speedtest.cpp
 #
 AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
 #

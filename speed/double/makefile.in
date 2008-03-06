@@ -171,6 +171,8 @@ top_srcdir = @top_srcdir@
 #
 @CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 #
+EXTRA_DIST = double.sln double.vcproj
+#
 AM_CPPFLAGS = -I$(top_srcdir) $(BOOST_INCLUDE)
 #
 # BEGIN OPTIMIZE

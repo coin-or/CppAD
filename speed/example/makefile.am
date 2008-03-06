@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -19,7 +19,7 @@ else
 BOOST_INCLUDE =
 endif
 #
-EXTRA_DIST        = speedtest.cpp
+EXTRA_DIST        = example.sln example.vcproj speedtest.cpp
 #
 noinst_PROGRAMS   = example 
 #

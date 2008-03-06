@@ -491,7 +491,7 @@ then
 		exit 0
 	fi
 fi
-if [ "$1" = "gpl+dos" ] || [ "$1" = "all" ]
+if [ "$1" = "gpl" ] || [ "$1" = "all" ]
 then
 	# create GPL licensed version
 	echo "gpl_license.sh"
@@ -510,6 +510,13 @@ then
 			echo "Ok: gpl_license.sh." >> build_test.log
 		fi
 	fi
+	if [ "$1" = "gpl" ]
+	then
+		exit 0
+	fi
+fi
+if [ "$1" = "dos" ] || [ "$1" = "all" ]
+then
 	echo "./dos_format.sh"
 	if ! ./dos_format.sh
 	then
@@ -527,7 +534,7 @@ then
 		fi
 	fi
 	#
-	if [ "$1" = "gpl+dos" ]
+	if [ "$1" = "dos" ]
 	then
 		exit 0
 	fi
@@ -585,15 +592,20 @@ echo "omhelp         build all the documentation in doc & dev directories"
 echo "make           use make to build all of the requested targets"
 echo "dist           create the distribution file cppad-version.cpl.tgz"
 echo "test           unpack *.cpl.tgz, compile, tests, result in build_test.log"
-echo "gpl+dos        create ./*.gpl.tgz, ./*.gpl.zip, and ./*.cpl.zip"
-echo "move           move ./*.tgz and ./*.zip to doc directory"
+echo "gpl            create *.gpl.tgz"
+echo "dos            create *.gpl.zip, and *.cpl.zip"
+echo "move           move *.tgz and *.zip to doc directory"
 echo
 echo "build.sh all"
-echo "This command will execute all the options in the order above with the"
-echo "exception that \"configue test\" and \"test\" will be excluded."
+echo "This command will execute all the options above in order with the"
+echo "exception that \"configue test\", \"test\", and \"dos\" are excluded."
+echo
+echo "build.sh all dos"
+echo "This command will execute all the options above in order with the"
+echo "exception that \"configure test\" and \"test\" are excluded."
 echo
 echo "build.sh all test"
-echo "This command will execute all the options above in the order"
-echo "with the exception of \"configure test\"  and \"move\"."
+echo "This command will execute all the options above in order with the"
+echo "exception that \"configure test\",  \"dos\", and \"move\" are excluded."
 #
 exit 1
