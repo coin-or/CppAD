@@ -19,6 +19,7 @@ echo "trunk_revision=$trunk_revision"
 echo "yyyy_mm_dd=$yyyy_mm_dd"
 echo "stable_version=$stable_version"
 echo
+release_version="$stable_version.0"
 yyyymmdd=`echo $yyyy_mm_dd | sed -e 's/-//g'`
 repository="https://projects.coin-or.org/svn/CppAD"
 rep_trunk="$repository/trunk"
@@ -97,10 +98,10 @@ sed < AUTHORS > AUTHORS.$$ \
 sed < configure.ac > configure.ac.$$ \
 	-e "/^AC_INIT(/s/$/\ndnl trunk version $yyyymmdd/"  \
 	-e "/^AC_INIT(/s/$/\ndnl trunk revision $trunk_revision/" \
-	-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $stable_version,/" 
+	-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $release_version,/" 
 #
 sed < build.sh > build.sh.$$ \
-	-e "s/yyyymmdd=.*/yyyymmdd=\"$stable_version\"/" \
+	-e "s/yyyymmdd=.*/yyyymmdd=\"$release_version\"/" \
 	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/" 
 #
 sed < svn_status.sh > svn_status.sh.$$ \
