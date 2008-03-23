@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -15,9 +15,10 @@ then
 	rm DosFormat.log
 fi
 #
-# date currently in configure.ac
+# get version currently in configure.ac file
+# (in a way that works when version is not a date)
 version=`grep "^ *AC_INIT(" configure.ac | \
-	sed -e "s/.*, *\([0-9]\{8\}\) *,.*/\1/"`
+	sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
 #
 # delete old version of *.cpl.zip and *.gpl.zip
 for file in cppad-$version.cpl.zip cppad-$version.gpl.zip

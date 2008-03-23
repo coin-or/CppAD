@@ -9,26 +9,16 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-copy_from_trunk="keep"     # do, redo, or keep
-trunk_revision="1104"      # trunk revision number that stable corresponds to
-yyyy_mm_dd="2007-12-10"    # Date corresponding to this trunk revision
-stable_version="2.2"       # stable version number
-test_stable="true"         # true or false
+copy_from_trunk="keep"     # do (frist time), keep (use current), redo
+trunk_revision="1139"      # trunk revision number that stable corresponds to
+yyyy_mm_dd="2008-03-06"    # Date corresponding to this trunk revision
+stable_version="2.3"       # stable version number
 # -----------------------------------------------------------------------------
 echo "copy_from_trunk=$copy_from_trunk"
 echo "trunk_revision=$trunk_revision"
 echo "yyyy_mm_dd=$yyyy_mm_dd"
 echo "stable_version=$stable_version"
-echo "test_stable=$test_stable"
 echo
-if [ "$test_stable" = "true" ]
-then
-	if [ "$copy_from_trunk" != "keep" ]
-	then
-		echo "cannot test until copy_from_trunk = keep"
-		exit 1
-	fi
-fi
 yyyymmdd=`echo $yyyy_mm_dd | sed -e 's/-//g'`
 repository="https://projects.coin-or.org/svn/CppAD"
 rep_trunk="$repository/trunk"
@@ -99,219 +89,97 @@ then
 	exit 1
 fi
 #
-# ----------------------------------------------------------------------------
-if [ "$test_stable" = "false" ]
-then
-	# Automatic editing ------------------------------------------------ 
-	#
-	sed < AUTHORS > AUTHORS.$$ \
+# Automatic editing ------------------------------------------------ 
+#
+sed < AUTHORS > AUTHORS.$$ \
 	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
-	#
-	sed < configure.ac > configure.ac.$$\
-	-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" 
-	#
-	sed < build.sh > build.sh.$$ \
-	-e "s/yyyymmdd=.*/yyyymmdd=\"$yyyymmdd\"/" \
+#
+sed < configure.ac > configure.ac.$$ \
+	-e "/^AC_INIT(/s/$/\ndnl trunk version $yyyymmdd/"  \
+	-e "/^AC_INIT(/s/$/\ndnl trunk revision $trunk_revision/" \
+	-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $stable_version,/" 
+#
+sed < build.sh > build.sh.$$ \
+	-e "s/yyyymmdd=.*/yyyymmdd=\"$stable_version\"/" \
 	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/" 
-	#
-	sed < svn_status.sh > svn_status.sh.$$ \
-	-e "s/yyyymmdd=.*/yyyymmdd=\"$yyyymmdd\"/" \
-	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/"  \
-	-e '/^[\t ]*cppad\/config.h$/d'
-	#
-	list="
-		AUTHORS
-		configure.ac
-		build.sh
-		svn_status.sh
-	"
-	for name in $list 
-	do
-		echo "diff $name $name.$$"
-		diff $name $name.$$
-		echo "mv   $name.$$ $name"
-		if ! mv   $name.$$ $name
-		then
-			echo "Cannot set the version in $name"
-			exit 1
-		fi
-	done
-	#
-	# Build all sources ------------------------------------------------ 
-	echo "aclocal"
-	if ! aclocal
-	then
-		echo "aclocal failed"
-		exit 1
-	fi
-	#
-	echo "autoheader"
-	if ! autoheader
-	then
-		echo "autoheader failed"
-		exit 1
-	fi
-	#
-	echo "autoconf"
-	if ! autoconf
-	then
-		echo "autoconf failed"
-		exit 1
-	fi
-	#
-	echo "automake --add-missing"
-	if ! automake --add-missing
-	then
-		echo "automake failed"
-		exit 1
-	fi
-	#
-	echo "Change directory: cd ../stable/$stable_version."
-	echo "Review differences: ./svn_status.sh."
-	echo "If not correct, edit CppAD/trunk/new_stable.sh and repeat."
-	echo "If correct, commit the changes and then run"
-	echo "CppAD/trunk/new_stable.sh with test_stable equal to true."
-	echo 
-	echo "If errors occur during the test, commit changes to fix them"
-	echo "in stable/$stable_version and then repeat the test."
-	echo
-	exit 0
-fi
-# -------------------------------------------------------------------------
-# check include files
-cmd="./check_include_def.sh"
-echo "$cmd" 
-echo "$cmd" > $dir/trunk/new_stable.log
-if ! $cmd  >> $dir/trunk/new_stable.log
-then
-	echo "Error detected."
-	exit 1
-fi
-cmd="./check_include_file.sh"
-echo "$cmd"
-echo "$cmd" >> $dir/trunk/new_stable.log
-if ! $cmd   >> $dir/trunk/new_stable.log
-then
-	echo "Error detected"
-	exit 1
-fi
-cmd="./check_include_omh.sh"
-echo "$cmd"
-echo "$cmd" >> $dir/trunk/new_stable.log
-if ! $cmd   >> $dir/trunk/new_stable.log
-then
-	echo "Error detected"
-	exit 1
-fi
-# -------------------------------------------------------------------------
-# check creating documentation 
-cmd="mkdir doc"
-echo "$cmd"
-echo "$cmd" >> $dir/trunk/new_stable.log
-if ! $cmd   >> $dir/trunk/new_stable.log
-then
-	echo "Error detected"
-	exit 1
-fi
-cmd="cd doc"
-echo "$cmd"
-echo "$cmd" >> $dir/trunk/new_stable.log
-if ! $cmd   >> $dir/trunk/new_stable.log
-then
-	echo "Error detected"
-	exit 1
-fi
-cmd="omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/"
-echo "$cmd"
-echo "$cmd" >> $dir/trunk/new_stable.log
-if ! $cmd   >> $dir/trunk/new_stable.log
-then
-	echo "Error detected"
-	exit 1
-fi
-cmd="omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/ -xml"
-echo "$cmd"
-echo "$cmd" >> $dir/trunk/new_stable.log
-if ! $cmd   >> $dir/trunk/new_stable.log
-then
-	echo "Error detected"
-	exit 1
-fi
 #
-cmd="cd .."
-echo "$cmd"
-echo "$cmd" >> $dir/trunk/new_stable.log
-if ! $cmd   >> $dir/trunk/new_stable.log
-then
-	echo "Error detected"
-	exit 1
-fi
-# -------------------------------------------------------------------------
-# check programs
-cmd="./build.sh configure test"
-echo "$cmd"
-echo "$cmd" >> $dir/trunk/new_stable.log
-if ! $cmd   >> $dir/trunk/new_stable.log
-then
-	echo "Error detected"
-	exit 1
-fi
+sed < svn_status.sh > svn_status.sh.$$ \
+	-e '/^yyyymmdd=/,$d'
 #
-cmd="make"
-echo "$cmd"
-echo "$cmd" >> $dir/trunk/new_stable.log
-if ! $cmd   >> $dir/trunk/new_stable.log
-then
-	echo "Error detected"
-	exit 1
-fi
+dir="http://www.coin-or.org/download/source/CppAD"
+sed < omh/install_windows.omh.in > omh/install_windows.omh.in.$$ \
+	-e "s|cppad-@VERSION@.[cg]pl.tgz|\$href%\n$dir/&%\n&|" 
+#
+dir="http://www.coin-or.org/download/source/CppAD"
+sed < omh/install_unix.omh.in > omh/install_unix.omh.in.$$ \
+	-e "s|cppad-@VERSION@.[cg]pl.tgz|\$href%\n$dir/&%\n&|" 
 list="
-	example/example
-	introduction/exp_apx/exp_apx
-	introduction/get_started/get_started
-	test_more/test_more
+	AUTHORS
+	configure.ac
+	build.sh
+	svn_status.sh
+	omh/install_windows.omh.in
+	omh/install_unix.omh.in
 "
-for program in $list
+for name in $list 
 do
-	cmd="./$program"
-	echo "$cmd"
-	echo "$cmd" >> $dir/trunk/new_stable.log
-	if ! $cmd   >> $dir/trunk/new_stable.log
+	echo "diff $name $name.$$"
+	diff $name $name.$$
+	echo "mv   $name.$$ $name"
+	if ! mv   $name.$$ $name
 	then
-		echo "Error detected"
+		echo "Cannot set the version in $name"
 		exit 1
 	fi
 done
-list="
-	adolc
-	cppad
-	double
-	example
-	fadbad
-	profile
-	sacado
-"
-seed="123"
-for name in $list
-do
-	# Note that example does not use command line arguments,
-	# but it does not currently care about their presence.
-	cmd="./speed/$name/$name correct  $seed"
-	echo "$cmd"
-	echo "$cmd" >> $dir/trunk/new_stable.log
-	if ! $cmd   >> $dir/trunk/new_stable.log
-	then
-		echo "Error detected"
-		exit 1
-	fi
-done
-cmd="openmp/run.sh"
-echo "$cmd"
-echo "$cmd" >> $dir/trunk/new_stable.log
-if ! $cmd   >> $dir/trunk/new_stable.log
+#
+# Built sources ------------------------------------------------ 
+#
+echo "aclocal"
+if ! aclocal
 then
-	echo "Error detected"
+	echo "aclocal failed"
 	exit 1
 fi
-echo "-------------------------------------------------------"
-echo "All tests passed; see new_stable.log in this directory."
+#
+echo "autoheader"
+if ! autoheader
+then
+	echo "autoheader failed"
+	exit 1
+fi
+#
+echo "autoconf"
+if ! autoconf
+then
+	echo "autoconf failed"
+	exit 1
+fi
+#
+echo "automake --add-missing"
+if ! automake --add-missing
+then
+	echo "automake failed"
+	exit 1
+fi
+#
+# Instructions --------------------------------------------------------------
+#
+echo "1: Review differences using ./svn_status.sh in stable/$stable_version."
+echo "2: If not correct, fix trunk/new_stable.sh and re-run it and goto 1."
+echo "3: In stable/$stable_version run the following commands:"
+echo "      ./build.sh configure"
+echo "      ./build.sh omhelp"
+echo "      ./build.sh dist"
+echo "      ./build.sh test"
+echo "4: If errors occur, fix trunk/new_stable.sh and goto 1."
+echo "5: Commit changes in stable/$stable_version."
+echo "6: Check did all necessary commits in stable/$version with command"
+echo "      ./svn_status.sh"
+echo
+echo "7: In stable/$stable_version run the command \"./build.sh all test\""
+echo "8: If errors occur, fix stable/$stable_version and goto 5."
+echo
+echo "9: Commit the changes to trunk/new_stable.sh."
+echo
+exit 0

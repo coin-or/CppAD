@@ -20,11 +20,12 @@ FADBAD_DIR=$HOME/include
 SACADO_DIR=$HOME/sacado_base
 # -----------------------------------------------------------------------------
 #
-# date currently in configure.ac
+# get version currently in configure.ac file
+# (in a way that works when version is not a date)
 version=`grep "^ *AC_INIT(" configure.ac | \
-	sed -e "s/.*, *\([0-9]\{8\}\) *,.*/\1/"`
+	sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
 #
-if [ "$1" = "all" ] && [ "$2" != "" ] && [ "$2" != "test" ]
+if [ "$1" = "all" ] && [ "$2" != "" ] && [ "$2" != "test" ] && [ "$2" != "dos" ]
 then
 	echo "./build.sh $1 $2"
 	echo "is not valid, build.sh with no arguments lists valid choices."
@@ -32,7 +33,7 @@ then
 fi
 #
 # Check if we are running all the test cases. 
-if [ "$1" = "test" ] || ( [ "$1" = "all" ] & [ "$2" = "test" ] )
+if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
 then
 	date > build_test.log
 	if [ -e cppad-$version ]
@@ -515,7 +516,7 @@ then
 		exit 0
 	fi
 fi
-if [ "$1" = "dos" ] || [ "$1" = "all" ]
+if [ "$1" = "dos" ] || ( [ "$1" = "all" ] && [ "$2" == "dos" ] )
 then
 	echo "./dos_format.sh"
 	if ! ./dos_format.sh
@@ -545,9 +546,14 @@ then
 	list="
 		cppad-$version.cpl.tgz
 		cppad-$version.gpl.tgz
-		cppad-$version.cpl.zip
-		cppad-$version.gpl.zip
 	"
+	if [ "$1" = "all" ] && [ "$2" == "dos" ] 
+	then
+		list="$list
+			cppad-$version.cpl.zip
+			cppad-$version.gpl.zip
+		"
+	fi
 	for file in $list
 	do
 		echo "mv $file doc/$file"
@@ -594,7 +600,7 @@ echo "dist           create the distribution file cppad-version.cpl.tgz"
 echo "test           unpack *.cpl.tgz, compile, tests, result in build_test.log"
 echo "gpl            create *.gpl.tgz"
 echo "dos            create *.gpl.zip, and *.cpl.zip"
-echo "move           move *.tgz and *.zip to doc directory"
+echo "move           move *.tgz to doc directory"
 echo
 echo "build.sh all"
 echo "This command will execute all the options above in order with the"
@@ -606,6 +612,6 @@ echo "exception that \"configure test\" and \"test\" are excluded."
 echo
 echo "build.sh all test"
 echo "This command will execute all the options above in order with the"
-echo "exception that \"configure test\",  \"dos\", and \"move\" are excluded."
+echo "exception that \"configure\",  \"dos\", and \"move\" are excluded."
 #
 exit 1
