@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_08$$
 $spell
+	speedtest
 	tarballs
 	cppad
 	cpl
@@ -30,6 +31,18 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-27$$
+Corrected $cref/cppad_sparse_hessian.cpp/$$
+so that it uses the sparse case when 
+$code USE_CPPAD_SPARSE_HESSIAN$$ is $code 1$$.
+Also added a wish list 
+$cref/sparse Hessian/WishList/Sparse Hessians/$$ entry.
+$pre
+
+$$
+Change the name of $code speedtest.cpp$$ to $cref/speed_program.cpp/$$.
+
 
 $head 02-05$$
 Change $cref/windows install instructions/InstallWindows/$$ 

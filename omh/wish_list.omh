@@ -121,11 +121,15 @@ so that they all end with an underscore.
 (This has been done for all the classes except the
 $code ADFun$$ template class).
 
-$head Vector Element Type$$
-Change cross references from 
-$xref/SimpleVector/Elements of Specified Type/elements of a specified type/$$
-to
-$xref/SimpleVector/Value Type/value_type/$$.
+$head Sparse Hessians$$
+Create an implementation of $cref/sparse_hessian/$$ that is more efficient
+(the initial implementation was only meant as a demonstration).
+Testing using 
+$cref/cppad_sparse_hessian.cpp/$$ 
+with $code USE_CPPAD_SPARSE_HESSIAN$$ equal to 
+$code 1$$ (true) and $code 0$$ (false) 
+indicates that $code sparse_hessian$$ is more efficient
+than $cref/Hessian/$$ (for large sparse cases).
 
 $head Tracing$$
 Add forward and reverse mode operation tracing to the developer documentation
@@ -138,5 +142,11 @@ assignment in $cref/ad_copy/$$.
 This will fix slicing to $code int$$ when assigning
 from $code double$$ to 
 $code VecAD< AD<double> >::reference$$ object.
+
+$head Vector Element Type$$
+Change cross references from 
+$xref/SimpleVector/Elements of Specified Type/elements of a specified type/$$
+to
+$xref/SimpleVector/Value Type/value_type/$$.
 
 $end

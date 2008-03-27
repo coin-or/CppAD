@@ -317,7 +317,8 @@ is the dimension of the argument space for the function $latex f$$;
 i.e. $italic size$$ is equal to $latex n$$.
 
 $subhead repeat$$
-The argument $italic repeat$$ is the number of different matrices
+The argument $italic repeat$$ is the number of different functions
+$latex f(x)$$
 that the Hessian is computed for.
 
 $head ell$$

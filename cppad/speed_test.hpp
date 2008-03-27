@@ -2,7 +2,7 @@
 # define CPPAD_SPEED_TEST_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -366,9 +366,9 @@ $xref/ErrorHandler/$$
 
 $head Example$$
 $children%
-	speed/example/speedtest.cpp
+	speed/example/speed_program.cpp
 %$$
-The section $xref/speedtest.cpp/$$ contains an example usage
+The section $xref/speed_program.cpp/$$ contains an example usage
 of $code SpeedTest$$.
 
 $end

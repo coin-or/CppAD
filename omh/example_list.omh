@@ -170,8 +170,8 @@ $rref SimpleVector.cpp$$
 $rref Sin.cpp$$
 $rref Sinh.cpp$$
 $rref sparse_hessian.cpp$$
+$rref speed_program.cpp$$
 $rref speed_test.cpp$$
-$rref speedtest.cpp$$
 $rref Sqrt.cpp$$
 $rref StackMachine.cpp$$
 $rref Sub.cpp$$

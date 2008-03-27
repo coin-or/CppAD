@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,9 +9,9 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin SpeedTest.cpp$$
+$begin speed_program.cpp$$
 $spell
-	speedtest.exe
+	speed_program.exe
 	cppad.hpp
 	Microsoft
 	namespace
@@ -36,8 +36,8 @@ On a Unix system that includes the $code g++$$ compiler,
 you can compile and run this program by changing into the
 $code speed/example$$ directory and executing the following commands
 $codep
-	g++ -I../.. speedtest.cpp -o speedtest.exe
-	./speedtest.exe
+	g++ -I../.. speed_program.cpp -o speed_program.exe
+	./speed_program.exe
 $$
 
 $head Program$$

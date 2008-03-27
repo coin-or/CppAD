@@ -48,7 +48,7 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 
 // value can be true or false
-# define USE_CPPAD_SPARSE_HESSIAN  0
+# define USE_CPPAD_SPARSE_HESSIAN  1
 
 bool compute_sparse_hessian(
 	size_t                     size     , 
@@ -109,7 +109,7 @@ bool compute_sparse_hessian(
 
 		// evaluate and return the hessian of f
 # if USE_CPPAD_SPARSE_HESSIAN
-		hessian = f.Hessian(x, w);
+		hessian = f.SparseHessian(x, w);
 # else
 		hessian = f.Hessian(x, w);
 # endif
