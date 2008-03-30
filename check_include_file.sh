@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -22,8 +22,7 @@ grep '^# *include *<cppad/' \
 	speed/adolc/*.cpp \
 	speed/cppad/*.cpp \
 	speed/fadbad/*.cpp \
-	test_more/*.cpp \
-	speed_cppad/*.cpp  > junk.1
+	test_more/*.cpp > junk.1
 #
 cat junk.1 | sed -e 's%[^<]*<%%'  -e 's%>.*$%%' | sort -u > junk.2
 ls	cppad/config.h \

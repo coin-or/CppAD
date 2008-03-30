@@ -77,7 +77,7 @@ which parts of the operation sequence in an
 $cref/ADFun/FunConstruct/$$ object can be removed.
 
 $subhead Expression Hashing$$
-Has codes could be used to detect expressions that have already
+Hash codes could be used to detect expressions that have already
 been computed (and avoid extra entries in the operation sequence).
 This would also involve has coding the constants and avoiding
 duplicate copies in the constant table.

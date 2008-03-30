@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -34,7 +34,6 @@ list="
 	openmp/*.cpp
 	openmp/*.sh
 	print_for/*.cpp
-	speed_cppad/*.cpp
 	speed/*.cpp
 	speed/*/*.cpp
 	speed/*/makefile.am

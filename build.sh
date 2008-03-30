@@ -372,23 +372,6 @@ then
 		fi
 	fi
 	#
-	# check include files
-	if ! ./check_include_def.sh  >> build_test.log
-	then
-		echo "./check_include_def.sh failed"
-		exit 1
-	fi
-	if ! ./check_include_file.sh >> build_test.log
-	then
-		echo "./check_include_file.sh failed"
-		exit 1
-	fi
-	if ! ./check_include_omh.sh  >> build_test.log
-	then
-		echo "./check_include_omh.sh failed"
-		exit 1
-	fi
-	#
 	# add a new line after last include file check
 	echo ""                 >> build_test.log
 	#
@@ -399,6 +382,23 @@ then
 	fi
 	#
 	cd cppad-$version
+	#
+	# check include files
+	if ! ./check_include_def.sh  >> ../build_test.log
+	then
+		echo "./check_include_def.sh failed"
+		exit 1
+	fi
+	if ! ./check_include_file.sh >> ../build_test.log
+	then
+		echo "./check_include_file.sh failed"
+		exit 1
+	fi
+	if ! ./check_include_omh.sh  >> ../build_test.log
+	then
+		echo "./check_include_omh.sh failed"
+		exit 1
+	fi
 	if ! ./build.sh configure test
 	then
 		echo "Error: build.sh configure test"  >> ../build_test.log
@@ -436,14 +436,23 @@ then
 		echo ""  >> ../build_test.log
 	done
 	list="
-		adolc
 		cppad
 		double
 		example
-		fadbad
 		profile
-		sacado
 	"
+	if [ -e $ADOLC_DIR/include/adolc ]
+	then
+        	list="$list adolc"
+	fi
+	if [ -e $FADBAD_DIR/FADBAD++ ]
+	then
+        	list="$list fadbad"
+	fi
+	if [ -e $SACADO_DIR/include/Sacado.hpp ]
+	then
+		list="$list sacado"
+	fi
 	seed="123"
 	for name in $list
 	do
