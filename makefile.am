@@ -15,10 +15,11 @@
 # the configure script but rather use the project files 
 #
 if CppAD_POSTFIX
-myincludedir = $(includedir)/$(POSTFIX_DIR)
+postfix_dir  = $(POSTFIX_DIR)
 else
-myincludedir = $(includedir)
+postfix_dir  = .
 endif
+myincludedir = $(includedir)/$(postfix_dir)
 nobase_myinclude_HEADERS =  \
 	cppad/TrackNewDel.h \
 	cppad/SpeedTest.h \
@@ -264,9 +265,10 @@ dist-hook:
 if CppAD_DOCUMENTATION
 doc_prefix  = $(DESTDIR)$(datadir)
 doc_doc     = $(doc_prefix)/doc
-doc_postfix = $(doc_doc)/$(POSTFIX_DIR)
+doc_postfix = $(doc_doc)/$(postfix_dir)
 doc_package = $(doc_postfix)/$(PACKAGE)-$(VERSION)
 install-data-hook:
+	if [ ! -e $(doc_prefix) ] ; then mkdir $(doc_prefix) ; fi
 	if [ ! -e $(doc_doc) ] ; then mkdir $(doc_doc) ; fi
 	if [ ! -e $(doc_postfix) ] ; then mkdir $(doc_postfix) ; fi
 	if [ -e $(doc_package) ] ; then rm -rf $(doc_package) ; fi

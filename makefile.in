@@ -176,7 +176,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@CppAD_POSTFIX_FALSE@myincludedir = $(includedir)
+@CppAD_POSTFIX_FALSE@postfix_dir = .
 
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
@@ -194,7 +194,8 @@ top_srcdir = @top_srcdir@
 # Note that config.h is needed by VC++; i.e., for users that do not run
 # the configure script but rather use the project files 
 #
-@CppAD_POSTFIX_TRUE@myincludedir = $(includedir)/$(POSTFIX_DIR)
+@CppAD_POSTFIX_TRUE@postfix_dir = $(POSTFIX_DIR)
+myincludedir = $(includedir)/$(postfix_dir)
 nobase_myinclude_HEADERS = \
 	cppad/TrackNewDel.h \
 	cppad/SpeedTest.h \
@@ -418,7 +419,7 @@ EXTRA_DIST = \
 #
 @CppAD_DOCUMENTATION_TRUE@doc_prefix = $(DESTDIR)$(datadir)
 @CppAD_DOCUMENTATION_TRUE@doc_doc = $(doc_prefix)/doc
-@CppAD_DOCUMENTATION_TRUE@doc_postfix = $(doc_doc)/$(POSTFIX_DIR)
+@CppAD_DOCUMENTATION_TRUE@doc_postfix = $(doc_doc)/$(postfix_dir)
 @CppAD_DOCUMENTATION_TRUE@doc_package = $(doc_postfix)/$(PACKAGE)-$(VERSION)
 all: all-recursive
 
@@ -890,6 +891,7 @@ dist-hook:
 	rm -rf `find $(distdir)/omh $(distdir)/openmp -name .svn`
 	rm $(distdir)/doc/error.wrd
 @CppAD_DOCUMENTATION_TRUE@install-data-hook:
+@CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(doc_prefix) ] ; then mkdir $(doc_prefix) ; fi
 @CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(doc_doc) ] ; then mkdir $(doc_doc) ; fi
 @CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(doc_postfix) ] ; then mkdir $(doc_postfix) ; fi
 @CppAD_DOCUMENTATION_TRUE@	if [ -e $(doc_package) ] ; then rm -rf $(doc_package) ; fi

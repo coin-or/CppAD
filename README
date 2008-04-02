@@ -20,7 +20,8 @@ NEWS        Pointer to log of recent changes.
 README      This file
 cpl1.0.txt  A copy of the CPL license.
 gpl2.txt    A copy of the GPL license.
-cppad.spec  An RPM spec file (for creating RPM distributions of CPPAD).
+configure   The script file used (on Unix systems) to configure CppAD 
+*.sh        Bash shell scripts used for CppAD development
 
 doc
 sub-directory containing the documentation for this version of CppAD.
