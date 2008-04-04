@@ -9,6 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+# include <cstring>
 # include <cstdlib>
 # include <cassert>
 # include <cstddef>
@@ -546,7 +547,7 @@ namespace {
 int main(int argc, char *argv[])
 {	bool ok = true;
 
-	char *option[]= {
+	const char *option[]= {
 		"correct",
 		"speed",
 		"det_lu",
