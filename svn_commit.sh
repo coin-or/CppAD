@@ -46,6 +46,14 @@ change_list="
 # List of files that are currently in repository and change during this commit.
 # ----------------------------------------------------------------------
 #
+check=\
+`echo "$add_list$delete_list$old_list$change_list" | sed -e 's/[ \t\n]*//g'`
+if [ "$check" = "" ] 
+then
+	echo "svn_commit.sh: no files are specified in the argument lists"
+	exit 1
+fi
+#
 this_branch=`pwd | sed -e "s|.*/CppAD/||"`
 echo "$this_branch: $log_entry" > svn_commit.log
 count=0
