@@ -111,7 +111,7 @@ public:
 
 	// does this AD operation sequence use VecAD<Base>::reference operands
 	bool use_VecAD(void) const
-	{	return Rec.NumVecInd() > 0; }
+	{	return rec_.NumVecInd() > 0; }
 
 	// number of variables in opertion sequence
 	size_t size_var(void) const
@@ -201,7 +201,7 @@ public:
 	size_t Memory(void) const
 	{	size_t pervar  = taylor_col_dim_ * sizeof(Base)
 		+ for_jac_col_dim_ * sizeof(Pack);
-		size_t total   = total_num_var_ * pervar + Rec.Memory();
+		size_t total   = total_num_var_ * pervar + rec_.Memory();
 		return total;
 	}
 
@@ -220,7 +220,7 @@ private:
 	size_t taylor_per_var_;
 
 	// number of bits currently calculated per row of the for_jac_ array
-	size_t ForJacBitDim; 
+	size_t for_jac_bit_dim_; 
 
 	// number of columns currently allocated for taylor_ array
 	size_t taylor_col_dim_;
@@ -228,7 +228,7 @@ private:
 	// number of columns currently allocated for for_jac_ array
 	size_t for_jac_col_dim_;
 
-	// number of rows (variables) in the recording (Rec)
+	// number of rows (variables) in the recording (rec_)
 	size_t total_num_var_;
 
 	// tape address for the independent variables
@@ -239,7 +239,7 @@ private:
 	CppAD::vector<bool>   dep_parameter_;
 
 	// the operations corresponding to this function
-	TapeRec<Base> Rec;
+	TapeRec<Base> rec_;
 
 	// results of the forward mode calculations
 	Base *taylor_;

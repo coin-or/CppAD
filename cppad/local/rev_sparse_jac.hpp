@@ -230,14 +230,21 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 	}
 
 	// evaluate the sparsity patterns
-	RevJacSweep(npv, total_num_var_, &Rec, taylor_col_dim_, taylor_, RevJac);
+	RevJacSweep(
+		npv,
+		total_num_var_,
+		&rec_,
+		taylor_col_dim_,
+		taylor_,
+		RevJac
+	);
 
 	// return values corresponding to dependent variables
 	Vector r(p * n);
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < total_num_var_ );
 		// ind_taddr_[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( rec_.GetOp( ind_taddr_[j] ) == InvOp );
 
 		// set bits 
 		for(i = 0; i < p; i++) 

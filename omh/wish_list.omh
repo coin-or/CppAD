@@ -114,13 +114,6 @@ Use spaces rather than tabs.
 
 $lend
 
-$subhead Member Variables$$
-Change private member variables names
-(not part of the user interface)
-so that they all end with an underscore.
-(This has been done for all the classes except the
-$code ADFun$$ template class).
-
 $head Sparse Hessians$$
 Create an implementation of $cref/sparse_hessian/$$ that is more efficient
 (the initial implementation was only meant as a demonstration).

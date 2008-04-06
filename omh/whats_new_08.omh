@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_08$$
 $spell
+	gcc
 	speedtest
 	tarballs
 	cppad
@@ -31,6 +32,17 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 04-06$$
+The following $cref/wish list/WishList/$$ 
+entry has been completed and removed from the list:
+"Change private member variables names
+(not part of the user interface)
+so that they all end with an underscore."
+
+$head 04-04$$
+Fix a problem compiling the speed test
+$cref/main/speed_main/$$ program with gcc 4.3.
 
 $head 03-27$$
 Corrected $cref/cppad_sparse_hessian.cpp/$$

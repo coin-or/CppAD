@@ -206,7 +206,7 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	if( for_jac_col_dim_ < npv )
 	{	if( for_jac_col_dim_ > 0 )
 			CPPAD_TRACK_DEL_VEC(for_jac_);
-		for_jac_       = CPPAD_TRACK_NEW_VEC(total_num_var_ * npv, for_jac_);
+		for_jac_ = CPPAD_TRACK_NEW_VEC(total_num_var_ * npv, for_jac_);
 		for_jac_col_dim_ = npv;
 	}
 
@@ -215,7 +215,7 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	for(i = 0; i < n; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < total_num_var_ );
 		// ind_taddr_[i] is operator taddr for i-th independent variable
-		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr_[i] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( rec_.GetOp( ind_taddr_[i] ) == InvOp );
 
 		// initialize all bits as zero
 		for(k = 0; k < npv; k++)
@@ -232,7 +232,14 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	}
 
 	// evaluate the sparsity patterns
-	ForJacSweep(npv, total_num_var_, &Rec, taylor_col_dim_, taylor_, for_jac_);
+	ForJacSweep(
+		npv,
+		total_num_var_,
+		&rec_,
+		taylor_col_dim_,
+		taylor_,
+		for_jac_
+	);
 
 	// return values corresponding to dependent variables
 	Vector s(m * q);
@@ -250,7 +257,7 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	}
 
 	// update number of bits currently stored in for_jac_
-	ForJacBitDim = q;
+	for_jac_bit_dim_ = q;
 
 	return s;
 }

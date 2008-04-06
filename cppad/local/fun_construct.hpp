@@ -215,7 +215,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 
 	// use independent variable values to fill in values for others
 	compare_change_ = ForwardSweep(
-		false, 0, total_num_var_, &Rec, taylor_col_dim_, taylor_
+		false, 0, total_num_var_, &rec_, taylor_col_dim_, taylor_
 	);
 	CPPAD_ASSERT_UNKNOWN( compare_change_ == 0 );
 

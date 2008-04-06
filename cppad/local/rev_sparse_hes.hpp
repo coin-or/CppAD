@@ -216,7 +216,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 		"RevSparseHes: q (first argument) is not greater than zero"
 	);
 	CPPAD_ASSERT_KNOWN(
-		q == ForJacBitDim,
+		q == for_jac_bit_dim_,
 		"RevSparseHes: q (first argument) is not equal to its value"
 		" in the previous call to ForSparseJac with this ADFun object."
 	);
@@ -258,11 +258,18 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 	}
 
 	// comput the reverse mode Jacobian sparsity
-	RevJacSweep(1, total_num_var_, &Rec, taylor_col_dim_, taylor_, RevJac);
+	RevJacSweep(1, total_num_var_, &rec_, taylor_col_dim_, taylor_, RevJac);
 
 	// compute the Hessian sparsity patterns
-	RevHesSweep(npv, total_num_var_, &Rec, taylor_col_dim_, taylor_, for_jac_, 
-		RevJac, RevHes
+	RevHesSweep(
+		npv,
+		total_num_var_,
+		&rec_,
+		taylor_col_dim_,
+		taylor_,
+		for_jac_, 
+		RevJac,
+		RevHes
 	);
 
 	// return values corresponding to independent variables
@@ -274,7 +281,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < total_num_var_ );
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( rec_.GetOp( ind_taddr_[j] ) == InvOp );
 
 		// i is index corresponding to forward mode partial
 		for(i = 0; i < q; i++) 
