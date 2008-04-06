@@ -2,7 +2,7 @@
 # define CPPAD_FOR_SPARSE_JAC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -185,8 +185,8 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	CheckSimpleVector<bool, Vector>();
 
 	// range and domain dimensions for F
-	size_t m = dep_taddr.size();
-	size_t n = ind_taddr.size();
+	size_t m = dep_taddr_.size();
+	size_t n = ind_taddr_.size();
 
 	CPPAD_ASSERT_KNOWN(
 		q > 0,
@@ -203,23 +203,23 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	size_t npv = 1 + (q - 1) / sizeof(Pack);
 
 	// array that will hold packed values
-	if( ForJacColDim < npv )
-	{	if( ForJacColDim > 0 )
-			CPPAD_TRACK_DEL_VEC(ForJac);
-		ForJac       = CPPAD_TRACK_NEW_VEC(totalNumVar * npv, ForJac);
-		ForJacColDim = npv;
+	if( for_jac_col_dim_ < npv )
+	{	if( for_jac_col_dim_ > 0 )
+			CPPAD_TRACK_DEL_VEC(for_jac_);
+		for_jac_       = CPPAD_TRACK_NEW_VEC(total_num_var_ * npv, for_jac_);
+		for_jac_col_dim_ = npv;
 	}
 
 	// set values corresponding to independent variables
 	Pack mask;
 	for(i = 0; i < n; i++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[i] < totalNumVar );
-		// ind_taddr[i] is operator taddr for i-th independent variable
-		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr[i] ) == InvOp );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < total_num_var_ );
+		// ind_taddr_[i] is operator taddr for i-th independent variable
+		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr_[i] ) == InvOp );
 
 		// initialize all bits as zero
 		for(k = 0; k < npv; k++)
-			ForJac[ ind_taddr[i] * npv + k ] = 0;
+			for_jac_[ ind_taddr_[i] * npv + k ] = 0;
 
 		// set bits that are true
 		for(j = 0; j < q; j++) 
@@ -227,29 +227,29 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 			p    = j - k * sizeof(Pack);
 			mask = Pack(1) << p;
 			if( r[ i * q + j ] )
-				ForJac[ ind_taddr[i] * npv + k ] |= mask;
+				for_jac_[ ind_taddr_[i] * npv + k ] |= mask;
 		}
 	}
 
 	// evaluate the sparsity patterns
-	ForJacSweep(npv, totalNumVar, &Rec, TaylorColDim, Taylor, ForJac);
+	ForJacSweep(npv, total_num_var_, &Rec, taylor_col_dim_, taylor_, for_jac_);
 
 	// return values corresponding to dependent variables
 	Vector s(m * q);
 	for(i = 0; i < m; i++)
-	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
 
 		// set bits 
 		for(j = 0; j < q; j++) 
 		{	k     = j / sizeof(Pack);
 			p     = j - k * sizeof(Pack);
 			mask  = Pack(1) << p;
-			mask &=	ForJac[ dep_taddr[i] * npv + k ];
+			mask &=	for_jac_[ dep_taddr_[i] * npv + k ];
 			s[ i * q + j ] = (mask != 0);
 		}
 	}
 
-	// update number of bits currently stored in ForJac
+	// update number of bits currently stored in for_jac_
 	ForJacBitDim = q;
 
 	return s;

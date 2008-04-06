@@ -2,7 +2,7 @@
 # define CPPAD_FORWARD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,10 +40,10 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 	size_t i, j;
 
 	// number of independent variables
-	size_t n = ind_taddr.size();
+	size_t n = ind_taddr_.size();
 
 	// number of dependent variables
-	size_t m = dep_taddr.size();
+	size_t m = dep_taddr_.size();
 
 	// check Vector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, Vector>();
@@ -54,41 +54,41 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 		"the dimension of the domain for the corresponding ADFun."
 	);
 	CPPAD_ASSERT_KNOWN(
-		p <= taylor_per_var,
-		"The number of Taylor coefficient currently stored\n"
+		p <= taylor_per_var_,
+		"The number of taylor_ coefficient currently stored\n"
 		"in this ADFun object is less than p."
 	);  
 
-	// check if the Taylor matrix needs more columns
-	if( TaylorColDim <= p )
+	// check if the taylor_ matrix needs more columns
+	if( taylor_col_dim_ <= p )
 		capacity_taylor(p + 1);
-	CPPAD_ASSERT_UNKNOWN( TaylorColDim > p );
+	CPPAD_ASSERT_UNKNOWN( taylor_col_dim_ > p );
 
-	// set the p-th order Taylor coefficients for independent variables
+	// set the p-th order taylor_ coefficients for independent variables
 	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < total_num_var_ );
 
-		// ind_taddr[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr[j] ) == InvOp );
+		// ind_taddr_[j] is operator taddr for j-th independent variable
+		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr_[j] ) == InvOp );
 
 		// It is also variable taddr for j-th independent variable
-		Taylor[ind_taddr[j] * TaylorColDim + p] = up[j];
+		taylor_[ind_taddr_[j] * taylor_col_dim_ + p] = up[j];
 	}
 
 	// evaluate the derivatives
-	compareChange = ForwardSweep(
-		true, p, totalNumVar, &Rec, TaylorColDim, Taylor
+	compare_change_ = ForwardSweep(
+		true, p, total_num_var_, &Rec, taylor_col_dim_, taylor_
 	);
 
-	// return the p-th order Taylor coefficients for dependent variables
+	// return the p-th order taylor_ coefficients for dependent variables
 	Vector vp(m);
 	for(i = 0; i < m; i++)
-	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < totalNumVar );
-		vp[i] = Taylor[dep_taddr[i] * TaylorColDim + p];
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
+		vp[i] = taylor_[dep_taddr_[i] * taylor_col_dim_ + p];
 	}
 
-	// now we have p + 1  Taylor coefficients per variable
-	taylor_per_var = p + 1;
+	// now we have p + 1  taylor_ coefficients per variable
+	taylor_per_var_ = p + 1;
 
 	return vp;
 }

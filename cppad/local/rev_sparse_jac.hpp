@@ -2,7 +2,7 @@
 # define CPPAD_REV_SPARSE_JAC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -182,8 +182,8 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 	CheckSimpleVector<bool, Vector>();
 
 	// range and domain dimensions for F
-	size_t m = dep_taddr.size();
-	size_t n = ind_taddr.size();
+	size_t m = dep_taddr_.size();
+	size_t n = ind_taddr_.size();
 
 	CPPAD_ASSERT_KNOWN(
 		p > 0,
@@ -202,22 +202,22 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 
 	// array that will hold packed values
 	Pack *RevJac = CPPAD_NULL;
-	RevJac       = CPPAD_TRACK_NEW_VEC(totalNumVar * npv, RevJac);
+	RevJac       = CPPAD_TRACK_NEW_VEC(total_num_var_ * npv, RevJac);
 
 	// update maximum memory requirement
 	// memoryMax = std::max( memoryMax, 
-	// 	Memory() + totalNumVar * npv * sizeof(Pack)
+	// 	Memory() + total_num_var_ * npv * sizeof(Pack)
 	// );
 
 	// initialize entire RevJac matrix as false
-	for(i = 0; i < totalNumVar; i++)
+	for(i = 0; i < total_num_var_; i++)
 		for(k = 0; k < npv; k++)
 			RevJac[ i * npv + k ] = 0;
 
 	// set values corresponding to dependent variables
 	Pack mask;
 	for(j = 0; j < m; j++)
-	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[j] < totalNumVar );
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[j] < total_num_var_ );
 
 		// set bits that are true
 		for(i = 0; i < p; i++) 
@@ -225,26 +225,26 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 			q    = i - k * sizeof(Pack);
 			mask = Pack(1) << q;
 			if( s[ i * m + j ] )
-				RevJac[ dep_taddr[j] * npv + k ] |= mask;
+				RevJac[ dep_taddr_[j] * npv + k ] |= mask;
 		}
 	}
 
 	// evaluate the sparsity patterns
-	RevJacSweep(npv, totalNumVar, &Rec, TaylorColDim, Taylor, RevJac);
+	RevJacSweep(npv, total_num_var_, &Rec, taylor_col_dim_, taylor_, RevJac);
 
 	// return values corresponding to dependent variables
 	Vector r(p * n);
 	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] < totalNumVar );
-		// ind_taddr[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr[j] ) == InvOp );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < total_num_var_ );
+		// ind_taddr_[j] is operator taddr for j-th independent variable
+		CPPAD_ASSERT_UNKNOWN( Rec.GetOp( ind_taddr_[j] ) == InvOp );
 
 		// set bits 
 		for(i = 0; i < p; i++) 
 		{	k     = i / sizeof(Pack);
 			q     = i - k * sizeof(Pack);
 			mask  = Pack(1) << q;
-			mask &=	RevJac[ ind_taddr[j] * npv + k ];
+			mask &=	RevJac[ ind_taddr_[j] * npv + k ];
 			r[ i * n + j ] = (mask != 0);
 		}
 	}

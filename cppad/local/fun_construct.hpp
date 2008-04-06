@@ -2,7 +2,7 @@
 # define CPPAD_FUN_CONSTRUCT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin FunConstruct$$
 $spell 
-	Taylor
+	taylor_
 	var
 	ADvector
 	const
@@ -91,7 +91,7 @@ $syntax%
 	Independent(%x%)
 %$$
 and stores the corresponding operation sequence in the object $italic f$$.
-It then stores the first order Taylor coefficients 
+It then stores the first order taylor_ coefficients 
 (corresponding to the value of $italic x$$) in $italic f$$.
 This is equivalent to the following steps using the default constructor:
 $list number$$
@@ -106,7 +106,7 @@ $syntax%
 %$$
 (see $xref/Dependent/$$).
 $lnext
-Calculating the first order Taylor coefficients for all 
+Calculating the first order taylor_ coefficients for all 
 the variables in the operation sequence using
 $syntax%
 	%f%.Forward(%p%, %x_p%)
@@ -160,7 +160,7 @@ namespace CppAD {
 template <typename Base>
 template <typename VectorAD>
 ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
-: totalNumVar(0), Taylor(CPPAD_NULL), ForJac(CPPAD_NULL)
+: total_num_var_(0), taylor_(CPPAD_NULL), for_jac_(CPPAD_NULL)
 {	size_t i, j, m, n;
 
 	CPPAD_ASSERT_KNOWN(
@@ -199,30 +199,30 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	// stop the tape and store the operation sequence
 	Dependent(tape, y);
 
-	// allocate memory for one zero order Taylor coefficient
-	taylor_per_var= 1;
-	TaylorColDim  = 1;
-	Taylor        = CPPAD_TRACK_NEW_VEC(totalNumVar, Taylor);
+	// allocate memory for one zero order taylor_ coefficient
+	taylor_per_var_= 1;
+	taylor_col_dim_  = 1;
+	taylor_        = CPPAD_TRACK_NEW_VEC(total_num_var_, taylor_);
 
 	// set zero order coefficients corresponding to indpendent variables
-	n = ind_taddr.size();
+	n = ind_taddr_.size();
 	CPPAD_ASSERT_UNKNOWN( n == x.size() );
 	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] == (j+1) );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
 		CPPAD_ASSERT_UNKNOWN( x[j].taddr_  == (j+1) );
-		Taylor[ ind_taddr[j] ]  = x[j].value_;
+		taylor_[ ind_taddr_[j] ]  = x[j].value_;
 	}
 
 	// use independent variable values to fill in values for others
-	compareChange = ForwardSweep(
-		false, 0, totalNumVar, &Rec, TaylorColDim, Taylor
+	compare_change_ = ForwardSweep(
+		false, 0, total_num_var_, &Rec, taylor_col_dim_, taylor_
 	);
-	CPPAD_ASSERT_UNKNOWN( compareChange == 0 );
+	CPPAD_ASSERT_UNKNOWN( compare_change_ == 0 );
 
 	// check the dependent variable values
-	m = dep_taddr.size();
+	m = dep_taddr_.size();
 	for(i = 0; i < m; i++) CPPAD_ASSERT_KNOWN(
-		Taylor[dep_taddr[i]] == y[i].value_,
+		taylor_[dep_taddr_[i]] == y[i].value_,
 		"An independent variable is not equal its tape evaluation"
 		", it may be nan."
 	);

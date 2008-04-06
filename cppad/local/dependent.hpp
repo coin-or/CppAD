@@ -2,7 +2,7 @@
 # define CPPAD_DEPENDENT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin Dependent$$
 $spell 
-	Taylor
+	taylor_
 	ADvector
 	const
 $$
@@ -201,20 +201,20 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	// make a tape copy of dependent variables that are parameters, 
 	// and store tape address for each dependent variable
 	CPPAD_ASSERT_UNKNOWN( NumVar(ParOp) == 1 );
-	dep_parameter.resize(m);
-	dep_taddr.resize(m);
-	totalNumVar = tape->Rec_.TotNumVar();
+	dep_parameter_.resize(m);
+	dep_taddr_.resize(m);
+	total_num_var_ = tape->Rec_.TotNumVar();
 	for(i = 0; i < m; i++)
-	{	dep_parameter[i] = CppAD::Parameter(y[i]);
-		if( dep_parameter[i] )
+	{	dep_parameter_[i] = CppAD::Parameter(y[i]);
+		if( dep_parameter_[i] )
 		{	y_taddr = tape->RecordParOp( y[i].value_ );
-			totalNumVar++;
+			total_num_var_++;
 		}
 		else	y_taddr = y[i].taddr_;
 
 		CPPAD_ASSERT_UNKNOWN( y_taddr > 0 );
-		CPPAD_ASSERT_UNKNOWN( y_taddr < totalNumVar );
-		dep_taddr[i] = y_taddr;
+		CPPAD_ASSERT_UNKNOWN( y_taddr < total_num_var_ );
+		dep_taddr_[i] = y_taddr;
 	}
 
 	// now that each dependent variable has a place in the tape,
@@ -225,36 +225,36 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	AD<Base>::tape_delete( tape->id_ );
 
 	// total number of varables in this recording 
-	CPPAD_ASSERT_UNKNOWN( totalNumVar == Rec.TotNumVar() );
+	CPPAD_ASSERT_UNKNOWN( total_num_var_ == Rec.TotNumVar() );
 
 	// used to determine if there is an operation sequence in *this
-	CPPAD_ASSERT_UNKNOWN( totalNumVar > 0 );
+	CPPAD_ASSERT_UNKNOWN( total_num_var_ > 0 );
 
 	// free old buffers
-	if( Taylor != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(Taylor);
-	if( ForJac != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(ForJac);
+	if( taylor_ != CPPAD_NULL )
+		CPPAD_TRACK_DEL_VEC(taylor_);
+	if( for_jac_ != CPPAD_NULL )
+		CPPAD_TRACK_DEL_VEC(for_jac_);
 
 	// initialize buffers
-	Taylor  = CPPAD_NULL;
-	ForJac  = CPPAD_NULL;
+	taylor_  = CPPAD_NULL;
+	for_jac_  = CPPAD_NULL;
 
 	// initial row and column dimensions
 	// memoryMax  = 0;
-	taylor_per_var= 0;
-	ForJacColDim  = 0;
+	taylor_per_var_= 0;
+	for_jac_col_dim_  = 0;
 	ForJacBitDim  = 0;
-	TaylorColDim  = 0;
+	taylor_col_dim_  = 0;
 
 	// set tape address 
-	ind_taddr.resize(n);
+	ind_taddr_.resize(n);
 	CPPAD_ASSERT_UNKNOWN(
-		n < totalNumVar
+		n < total_num_var_
 	);
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( Rec.GetOp(j+1) == InvOp );
-		ind_taddr[j] = j+1;
+		ind_taddr_[j] = j+1;
 	}
 
 }

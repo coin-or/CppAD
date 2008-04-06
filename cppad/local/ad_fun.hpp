@@ -17,12 +17,12 @@ $spell
 	xk
 	Ind
 	bool
-	Taylor
+	taylor_
 	sizeof
 	const
 	std
-	ind_taddr
-	dep_taddr
+	ind_taddr_
+	dep_taddr_
 $$
 
 $spell
@@ -67,7 +67,7 @@ class ADFun {
 public:
 	// default constructor
 	ADFun(void) 
-	: totalNumVar(0), Taylor(CPPAD_NULL), ForJac(CPPAD_NULL)
+	: total_num_var_(0), taylor_(CPPAD_NULL), for_jac_(CPPAD_NULL)
 	{ }
 
 	// sequence constructor
@@ -76,10 +76,10 @@ public:
 
 	// destructor
 	~ADFun(void)
-	{	if( Taylor != CPPAD_NULL )
-			CPPAD_TRACK_DEL_VEC(Taylor);
-		if( ForJac != CPPAD_NULL )
-			CPPAD_TRACK_DEL_VEC(ForJac);
+	{	if( taylor_ != CPPAD_NULL )
+			CPPAD_TRACK_DEL_VEC(taylor_);
+		if( for_jac_ != CPPAD_NULL )
+			CPPAD_TRACK_DEL_VEC(for_jac_);
 	}
 
 	// assign a new operation sequence
@@ -115,36 +115,36 @@ public:
 
 	// number of variables in opertion sequence
 	size_t size_var(void) const
-	{	return totalNumVar; }
+	{	return total_num_var_; }
 
-	// number of Taylor coefficients currently calculated (per variable)
+	// number of taylor_ coefficients currently calculated (per variable)
 	size_t size_taylor(void) const
-	{	return taylor_per_var; } 
+	{	return taylor_per_var_; } 
 
 	// set number of coefficients currently allocated (per variable)
 	void capacity_taylor(size_t per_var);   
 
 	// number of independent variables
 	size_t Domain(void) const
-	{	return ind_taddr.size(); }
+	{	return ind_taddr_.size(); }
 
 	// number of dependent variables
 	size_t Range(void) const
-	{	return dep_taddr.size(); }
+	{	return dep_taddr_.size(); }
 
 	// is variable a parameter
 	bool Parameter(size_t i)
 	{	CPPAD_ASSERT_KNOWN(
-			i < dep_taddr.size(),
+			i < dep_taddr_.size(),
 			"Argument to Parameter is >= dimension of range space"
 		);
-		return dep_parameter[i]; 
+		return dep_parameter_[i]; 
 	}
 
 # ifndef NDEBUG
 	// in not NDEBUG case, number of comparison operations that change
 	size_t CompareChange(void) const
-	{	return compareChange; }
+	{	return compare_change_; }
 # endif
 
 	// calculate entire Jacobian
@@ -191,61 +191,61 @@ public:
 
 	// number of variables in opertion sequence
 	size_t Size(void) const
-	{	return totalNumVar; }
+	{	return total_num_var_; }
 
-	// number of Taylor coefficients currently stored (per variable)
+	// number of taylor_ coefficients currently stored (per variable)
 	size_t Order(void) const
-	{	return taylor_per_var - 1; }
+	{	return taylor_per_var_ - 1; }
 
 	// amount of memory for each variable 
 	size_t Memory(void) const
-	{	size_t pervar  = TaylorColDim * sizeof(Base)
-		+ ForJacColDim * sizeof(Pack);
-		size_t total   = totalNumVar * pervar + Rec.Memory();
+	{	size_t pervar  = taylor_col_dim_ * sizeof(Base)
+		+ for_jac_col_dim_ * sizeof(Pack);
+		size_t total   = total_num_var_ * pervar + Rec.Memory();
 		return total;
 	}
 
-	// number of Taylor coefficients currently calculated (per variable)
+	// number of taylor_ coefficients currently calculated (per variable)
 	size_t taylor_size(void) const
-	{	return taylor_per_var; } 
+	{	return taylor_per_var_; } 
 	// ------------------------------------------------------------
 private:
 	// maximum amount of memory required for this function object
 	// mutable size_t memoryMax;
 
 	// debug checking number of comparision operations that changed
-	size_t compareChange;
+	size_t compare_change_;
 
-	// number of Taylor coefficieint per variable (currently stored)
-	size_t taylor_per_var;
+	// number of taylor_ coefficieint per variable (currently stored)
+	size_t taylor_per_var_;
 
-	// number of bits currently calculated per row of the ForJac array
+	// number of bits currently calculated per row of the for_jac_ array
 	size_t ForJacBitDim; 
 
-	// number of columns currently allocated for Taylor array
-	size_t TaylorColDim;
+	// number of columns currently allocated for taylor_ array
+	size_t taylor_col_dim_;
 
-	// number of columns currently allocated for ForJac array
-	size_t ForJacColDim;
+	// number of columns currently allocated for for_jac_ array
+	size_t for_jac_col_dim_;
 
 	// number of rows (variables) in the recording (Rec)
-	size_t totalNumVar;
+	size_t total_num_var_;
 
 	// tape address for the independent variables
-	CppAD::vector<size_t> ind_taddr;
+	CppAD::vector<size_t> ind_taddr_;
 
 	// tape address and parameter flag for the dependent variables
-	CppAD::vector<size_t> dep_taddr;
-	CppAD::vector<bool>   dep_parameter;
+	CppAD::vector<size_t> dep_taddr_;
+	CppAD::vector<bool>   dep_parameter_;
 
 	// the operations corresponding to this function
 	TapeRec<Base> Rec;
 
 	// results of the forward mode calculations
-	Base *Taylor;
+	Base *taylor_;
 
 	// results of the forward mode Jacobian sparsity calculations
-	Pack *ForJac;
+	Pack *for_jac_;
 
 
 	template <typename ADvector>
