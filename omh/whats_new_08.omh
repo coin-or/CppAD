@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_08$$
 $spell
+	Adolc
 	gcc
 	speedtest
 	tarballs
@@ -32,6 +33,19 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 04-10$$
+Change all the 
+$cref/Adolc speed/speed_adolc/$$ examples to use
+$cref/TrackNewDel/$$ instead of using $code new$$ and $code delete$$
+directly.
+This makes it easy to check for memory allocation errors and leaks
+(when $code NDEBUG$$ is not defined).
+Also include in documentation sub functions that indicate 
+the $code sparse_hessian$$ speed test is not available for
+$cref/double_sparse_hessian/$$,
+$cref/fadbad_sparse_hessian/$$, and
+$cref/sacado_sparse_hessian/$$.
 
 $head 04-06$$
 The following $cref/wish list/WishList/$$ 

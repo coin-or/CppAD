@@ -215,7 +215,7 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	for(i = 0; i < n; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < total_num_var_ );
 		// ind_taddr_[i] is operator taddr for i-th independent variable
-		CPPAD_ASSERT_UNKNOWN( rec_.GetOp( ind_taddr_[i] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
 
 		// initialize all bits as zero
 		for(k = 0; k < npv; k++)
@@ -235,7 +235,7 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	ForJacSweep(
 		npv,
 		total_num_var_,
-		&rec_,
+		&play_,
 		taylor_col_dim_,
 		taylor_,
 		for_jac_

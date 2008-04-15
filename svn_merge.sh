@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -25,13 +25,13 @@ echo "DryRun = $DryRun"
 ToDirectory=trunk
 #
 # Name of the directory where the changes have been committed
-FromDirectory=branches/tape_values
+FromDirectory=branches/hash_table
 #
 # Version of the repository corresponding to FromDirectory just before changes
-Start=1065
+Start=1167
 # 
 # Version of the repository corresponding to FromDirecrtory after the changes
-End=1076
+End=HEAD
 #
 # echo the svn merge command
 echo "cd  .."
@@ -41,22 +41,22 @@ echo "	  $ToDirectory                                    \\"
 echo "| tee $ToDirectory/svn_merge.out "
 #
 # Change into the directory corresponding to the entire repository; i.e.,
-# http://www.coin-or.org/svn/CppAD/ 
+# https://www.coin-or.org/svn/CppAD/ 
 cd ..
 #
 # execute the svn merge command
 svn merge $DryRun -r $Start:$End                         \
-    http://www.coin-or.org/svn/CppAD/$FromDirectory      \
+    https://www.coin-or.org/svn/CppAD/$FromDirectory     \
     $ToDirectory                                         \
 | tee $ToDirectory/svn_merge.out
 #
 # create commands to go in svn_commit
 #
 echo "create files for use by svn_commit.sh"
-echo "$ToDirectory/svn_merge.move_list"
+echo "$ToDirectory/svn_merge.old"
 grep '^D    ' < $ToDirectory/svn_merge.out \
 	| sed -e 's/^D */\t/' -e "s|$ToDirectory/||" \
-		> $ToDirectory/svn_merge.move_list
+		> $ToDirectory/svn_merge.old
 echo "$ToDirectory/svn_merge.change_list"
 grep '^[UA]    ' < $ToDirectory/svn_merge.out \
 	| sed -e 's/^[UA] */\t/'  -e "s|$ToDirectory/||" \

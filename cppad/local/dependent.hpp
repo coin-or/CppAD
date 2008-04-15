@@ -219,13 +219,13 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 
 	// now that each dependent variable has a place in the tape,
 	// we can make a copy for this function and erase the tape.
-	rec_ = tape->Rec_;
+	play_ = tape->Rec_;
 
 	// now we can delete the tape
 	AD<Base>::tape_delete( tape->id_ );
 
 	// total number of varables in this recording 
-	CPPAD_ASSERT_UNKNOWN( total_num_var_ == rec_.TotNumVar() );
+	CPPAD_ASSERT_UNKNOWN( total_num_var_ == play_.TotNumVar() );
 
 	// used to determine if there is an operation sequence in *this
 	CPPAD_ASSERT_UNKNOWN( total_num_var_ > 0 );
@@ -253,7 +253,7 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 		n < total_num_var_
 	);
 	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( rec_.GetOp(j+1) == InvOp );
+	{	CPPAD_ASSERT_UNKNOWN( play_.GetOp(j+1) == InvOp );
 		ind_taddr_[j] = j+1;
 	}
 

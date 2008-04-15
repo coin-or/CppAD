@@ -2,7 +2,7 @@
 # define CPPAD_REVERSE_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -34,7 +34,7 @@ $head Syntax$$
 $syntax%void ReverseSweep(
 	size_t %d%,
 	size_t %numvar%,
-	const TapeRec<%Base%> *%Rec%,
+	const player<%Base%> *%Rec%,
 	size_t %J%,
 	const Base *%Taylor%,
 	size_t %K%,
@@ -134,7 +134,7 @@ template <class Base>
 void ReverseSweep(
 	size_t                d,
 	size_t                numvar,
-	const TapeRec<Base>  *Rec,
+	const player<Base>   *Rec,
 	size_t                J,
 	const Base           *Taylor,
 	size_t                K,

@@ -2,7 +2,7 @@
 # define CPPAD_TRACK_NEW_DEL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -231,13 +231,25 @@ have been allocated
 (by $code TrackNewVec$$ or $code TrackExtend$$)
 and not yet freed
 (by $code TrackDelete$$).
+
+$subhead Macro$$
+$index CPPAD_TRACK_COUNT$$
+The preprocessor macro call
 $syntax%
-	CppADTrackCount()
+	CPPAD_TRACK_COUNT()
 %$$
 expands to
 $syntax%
 	CppAD::TrackCount(__FILE__, __LINE__)
 %$$
+
+$subhead Deprecated$$
+$index  CppADTrackNewVec$$
+The preprocessor macro $code CppADTrackCount$$ is the
+same as $code CPPAD_TRACK_COUNT$$.
+It has been deprecated; i.e.,
+it is still defined in the CppAD distribution, but it should
+not be used.
 
 $subhead OpenMP$$
 $index OpenMP, TrackCount$$
@@ -291,12 +303,13 @@ $end
 # define CPPAD_TRACK_EXTEND(newlen, ncopy, oldptr) \
 	CppAD::TrackExtend(__FILE__, __LINE__, newlen, ncopy, oldptr)
 
-# define CppADTrackCount() \
+# define CPPAD_TRACK_COUNT() \
 	CppAD::TrackCount(__FILE__, __LINE__)
 // -------------------------------------------------------------------------
 # define CppADTrackNewVec CPPAD_TRACK_NEW_VEC
 # define CppADTrackDelVec CPPAD_TRACK_DEL_VEC
 # define CppADTrackExtend CPPAD_TRACK_EXTEND
+# define CppADTrackCount  CPPAD_TRACK_COUNT
 // -------------------------------------------------------------------------
 namespace CppAD { // Begin CppAD namespace
 

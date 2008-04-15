@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -62,7 +62,8 @@ $cref/configure/InstallUnix/Configure/$$ command.
 $contents%
 	speed/sacado/det_minor.cpp%
 	speed/sacado/det_lu.cpp%
-	speed/sacado/poly.cpp
+	speed/sacado/poly.cpp%
+	speed/sacado/sparse_hessian.cpp
 %$$
 
 $end

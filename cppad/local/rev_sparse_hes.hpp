@@ -258,13 +258,13 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 	}
 
 	// comput the reverse mode Jacobian sparsity
-	RevJacSweep(1, total_num_var_, &rec_, taylor_col_dim_, taylor_, RevJac);
+	RevJacSweep(1, total_num_var_, &play_, taylor_col_dim_, taylor_, RevJac);
 
 	// compute the Hessian sparsity patterns
 	RevHesSweep(
 		npv,
 		total_num_var_,
-		&rec_,
+		&play_,
 		taylor_col_dim_,
 		taylor_,
 		for_jac_, 
@@ -281,7 +281,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < total_num_var_ );
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( rec_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
 
 		// i is index corresponding to forward mode partial
 		for(i = 0; i < q; i++) 

@@ -11,6 +11,19 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <cppad/vector.hpp>
 
+/*
+$begin sacado_sparse_hessian$$
+$spell
+	Sacado
+	bool
+	CppAD
+$$
+
+$section Sacado Speed: Sparse Hessian of a Quadratic Function$$
+
+Indicate that this test is not available:
+$codep */
+
 // The sacado version of this test is not yet available 
 bool compute_sparse_hessian(
 	size_t                     size     , 
@@ -22,3 +35,6 @@ bool compute_sparse_hessian(
 {
 	return false;
 }
+/* $$
+$end
+*/

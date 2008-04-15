@@ -74,17 +74,17 @@ bool compute_det_minor(
 	ADScalar   detA;
 
 	// AD version of matrix
-	ADVector   A = new ADScalar[n];
+	ADVector   A = CPPAD_TRACK_NEW_VEC(n, A);
 	
 	// vectors of reverse mode weights 
-	double *u = new double[m];
+	double *u = CPPAD_TRACK_NEW_VEC(m, u);
 	u[0] = 1.;
 
 	// vector with matrix value
-	double *mat = new double[n];
+	double *mat = CPPAD_TRACK_NEW_VEC(n, mat);
 
 	// vector to receive gradient result
-	double *grad = new double[n];
+	double *grad = CPPAD_TRACK_NEW_VEC(n, grad);
 
 	// choose a matrix
 	CppAD::uniform_01(n, mat);
@@ -121,10 +121,10 @@ bool compute_det_minor(
 	}
 
 	// tear down
-	delete [] grad;
-	delete [] mat;
-	delete [] u;
-	delete [] A;
+	CPPAD_TRACK_DEL_VEC(grad);
+	CPPAD_TRACK_DEL_VEC(mat);
+	CPPAD_TRACK_DEL_VEC(u);
+	CPPAD_TRACK_DEL_VEC(A);
 	return true;
 }
 /* $$

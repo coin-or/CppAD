@@ -599,6 +599,9 @@ int main(int argc, char *argv[])
 		size_poly[i]        = 8 * i + 1;
 		size_sparse_hessian[i] = 10 * (i + 1);
 	}
+# ifndef NDEBUG
+	size_t base_count = CPPAD_TRACK_COUNT();
+# endif
 
 	switch(match)
 	{
@@ -694,5 +697,16 @@ int main(int argc, char *argv[])
 		default:
 		assert(0);
 	}
+# ifndef NDEBUG
+	if( CPPAD_TRACK_COUNT() == base_count )
+	{	Run_ok_count++;
+		cout << "No memory leak detected" << endl;
+	}
+	else
+	{	ok = false;
+		Run_error_count++;
+		cout << "Memory leak detected" << endl;
+        }
+# endif
 	return static_cast<int>( ! ok );
 }

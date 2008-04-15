@@ -18,7 +18,8 @@ namespace CppAD {
 	template <class Base> class ADFun;
 	template <class Base> class ADTape;
 	template <class Base> class VecAD;
-	template <class Base> class TapeRec;
+	template <class Base> class recorder;
+	template <class Base> class player;
 	template <class Base> class VecAD_reference;
 	template <class Base> class ADDiscrete;
 

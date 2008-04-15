@@ -2,7 +2,7 @@
 # define CPPAD_FOR_JAC_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,7 +38,7 @@ $head Syntax$$
 $syntax%void ForJacSweep(
 	size_t %npv%,
 	size_t %numvar%,
-	const TapeRec<%Base%> *%Rec%,
+	const player<%Base%> *%Rec%,
 	size_t %TaylorColDim%,
 	const %Base% *%Taylor%,
 	%Pack% *%ForJac%
@@ -139,7 +139,7 @@ template <class Base, class Pack>
 void ForJacSweep(
 	size_t                npv,
 	size_t                numvar,
-	const TapeRec<Base>  *Rec,
+	const player<Base>   *Rec,
 	size_t                TaylorColDim,
 	const Base           *Taylor,
 	Pack                 *ForJac

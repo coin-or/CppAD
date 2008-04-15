@@ -151,7 +151,8 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/sub_eq.hpp \
 	cppad/local/sub_op.hpp \
 	cppad/local/tape_link.hpp \
-	cppad/local/tape_rec.hpp \
+	cppad/local/recorder.hpp \
+	cppad/local/player.hpp \
 	cppad/local/test_vector.hpp \
 	cppad/local/user_ad.hpp \
 	cppad/local/unary_minus.hpp \

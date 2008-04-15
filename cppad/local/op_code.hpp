@@ -2,7 +2,7 @@
 # define CPPAD_OP_CODE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -151,7 +151,7 @@ $section Print the Information Corresponding to One Tape Operation$$
 $head Syntax$$
 $syntax%void printOp(
 	std::ostream &%os% ,
-	const TapeRec<%Base%> *%Rec% ,
+	const player<%Base%> *%Rec% ,
 	size_t %i_var% ,
 	OpCode %op% ,
 	const size_t *%ind% ,
@@ -413,7 +413,7 @@ void printOpField(
 template <class Base, class Value>
 void printOp(
 	std::ostream          &os     , 
-	const TapeRec<Base>   *Rec    ,
+	const player<Base>   *Rec     ,
 	size_t                 i_var  , 
 	OpCode                 op     ,
 	const size_t          *ind    ,

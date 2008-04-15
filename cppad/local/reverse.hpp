@@ -95,7 +95,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) const
 	ReverseSweep(
 		p - 1,
 		total_num_var_,
-		&rec_,
+		&play_,
 		taylor_col_dim_,
 		taylor_,
 		p,
@@ -108,7 +108,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) const
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < total_num_var_ );
 
 		// independent variable taddr equals its operator taddr 
-		CPPAD_ASSERT_UNKNOWN( rec_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
 
 		// by the Reverse Identity Theorem 
 		// partial of y^{(k)} w.r.t. u^{(0)} is equal to

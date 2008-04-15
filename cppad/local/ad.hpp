@@ -18,7 +18,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // define the template classes that are used by the AD template class
 # include <cppad/local/op_code.hpp>
-# include <cppad/local/tape_rec.hpp>
+# include <cppad/local/recorder.hpp>
+# include <cppad/local/player.hpp>
 # include <cppad/local/ad_tape.hpp>
 
 //  BEGIN CppAD namespace

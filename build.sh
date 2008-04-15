@@ -348,6 +348,7 @@ then
 fi
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
 then
+	speed_test_example_failed="false"
 	#
 	if [ -e cppad-$version ]
 	then
@@ -465,7 +466,11 @@ then
 			failed="speed/$name/$name"
 			echo "Error: $failed failed."
 			echo "Error: $failed failed." >> ../build_test.log
-			exit 1
+			if [ "$name" != "example" ]
+			then
+				exit 1
+			fi
+			speed_test_example_failed="true"
 		fi
 		# add a new line between program outputs
 		echo ""  >> ../build_test.log
@@ -490,6 +495,14 @@ then
 	fi
 	cat omhelp_doc.log        >> ../build_test.log
 	#
+	if [ "$speed_test_example_failed" = "true" ]
+	then
+		msg="cppad-$version/speed/example/example failed,"
+		echo "$msg"
+		echo "$msg" >> build_test.log
+		msg="rerun with out other processes running at same time."
+		echo "$msg"
+		echo "$msg" >> build_test.log
 	cd ..
 	if [ "$1" = "test" ]
 	then

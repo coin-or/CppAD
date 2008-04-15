@@ -233,7 +233,7 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 	RevJacSweep(
 		npv,
 		total_num_var_,
-		&rec_,
+		&play_,
 		taylor_col_dim_,
 		taylor_,
 		RevJac
@@ -244,7 +244,7 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < total_num_var_ );
 		// ind_taddr_[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( rec_.GetOp( ind_taddr_[j] ) == InvOp );
+		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
 
 		// set bits 
 		for(i = 0; i < p; i++) 

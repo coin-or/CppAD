@@ -59,7 +59,7 @@ This object is used to record
 $syntax%AD<%Base%>%$$ operations and compute derivatives.
 
 $head Rec$$
-the $xref/TapeRec/$$ object $syntax%%Tape%.Rec%$$ contains
+the $xref/recorder/$$ object $syntax%%Tape%.Rec%$$ contains
 the currently recorded information.
 This information is recorded using the following functions:
 
@@ -180,7 +180,7 @@ private:
 	// private data
 	size_t                       id_;
 	size_t         size_independent_;
-	TapeRec<Base>               Rec_;
+	recorder<Base>              Rec_;
 
 	/*
 	Private functions

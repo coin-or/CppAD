@@ -280,7 +280,7 @@ int main(void)
 	using std::cout;
 	using std::endl;
 	assert( ok || (Run_error_count > 0) );
-	if( CppADTrackCount() == 0 )
+	if( CPPAD_TRACK_COUNT() == 0 )
 	{	Run_ok_count++;
 		cout << "Ok:    " << "No memory leak detected" << endl;
 	}

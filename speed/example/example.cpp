@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -71,7 +71,7 @@ int main(void)
 	ok &= Run(speed_test,             "speed_test"    );
 
 	// check for memory leak in previous calculations
-	if( CppADTrackCount() != 0 )
+	if( CPPAD_TRACK_COUNT() != 0 )
 		cout << "Error: memroy leak detected" << endl;
 
 	assert( ok || (Run_error_count > 0) );

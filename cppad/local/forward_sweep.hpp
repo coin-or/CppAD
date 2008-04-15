@@ -2,7 +2,7 @@
 # define CPPAD_FORWARD_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,7 +44,7 @@ $syntax%size_t ForwardSweep(
 	bool %print%,
 	size_t %d%,
 	size_t %numvar%,
-	TapeRec<%Base%> *%Rec%,
+	player<%Base%> *%Rec%,
 	size_t %J%,
 	Base *%Taylor%,
 )%$$
@@ -155,7 +155,7 @@ size_t ForwardSweep(
 	bool                  print,
 	size_t                d,
 	size_t                numvar,
-	TapeRec<Base>        *Rec,
+	player<Base>         *Rec,
 	size_t                J,
 	Base                 *Taylor
 )
