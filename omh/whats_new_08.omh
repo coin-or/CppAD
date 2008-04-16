@@ -42,10 +42,10 @@ directly.
 This makes it easy to check for memory allocation errors and leaks
 (when $code NDEBUG$$ is not defined).
 Also include in documentation sub functions that indicate 
-the $code sparse_hessian$$ speed test is not available for
-$cref/double_sparse_hessian/$$,
-$cref/fadbad_sparse_hessian/$$, and
-$cref/sacado_sparse_hessian/$$.
+the $code quadratic$$ speed test is not available for
+$cref/double_quadratic/$$,
+$cref/fadbad_quadratic/$$, and
+$cref/sacado_quadratic/$$.
 
 $head 04-06$$
 The following $cref/wish list/WishList/$$ 
@@ -59,7 +59,7 @@ Fix a problem compiling the speed test
 $cref/main/speed_main/$$ program with gcc 4.3.
 
 $head 03-27$$
-Corrected $cref/cppad_sparse_hessian.cpp/$$
+Corrected $cref/cppad_quadratic.cpp/$$
 so that it uses the sparse case when 
 $code USE_CPPAD_SPARSE_HESSIAN$$ is $code 1$$.
 Also added a wish list 
@@ -110,7 +110,7 @@ has been added to the $code configure$$ command line options.
 
 $head 01-21$$
 A sparse Hessian case was added to the $cref/speed/$$ tests; see
-$cref/sparse_hessian/speed_main/sparse_hessian/$$.
+$cref/quadratic/link_quadratic/$$.
 
 $head 01-20$$
 CppAD can now be installed using $code yum$$ on 

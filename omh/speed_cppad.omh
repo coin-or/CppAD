@@ -68,7 +68,7 @@ $contents%
 	speed/cppad/det_minor.cpp%
 	speed/cppad/det_lu.cpp%
 	speed/cppad/poly.cpp%
-	speed/cppad/sparse_hessian.cpp
+	speed/cppad/quadratic.cpp
 %$$
 
 $end

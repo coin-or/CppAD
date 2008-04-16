@@ -37,7 +37,11 @@ AM_LDFLAGS       = -L$(ADOLC_DIR)/lib
 #
 adolc_SOURCES = \
 	../main.cpp \
+	../link_det_lu.cpp \
+	../link_det_minor.cpp \
+	../link_poly.cpp \
+	../link_quadratic.cpp \
 	det_lu.cpp \
 	det_minor.cpp \
 	poly.cpp \
-	sparse_hessian.cpp
+	quadratic.cpp

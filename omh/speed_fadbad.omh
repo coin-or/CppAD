@@ -60,7 +60,7 @@ $contents%
 	speed/fadbad/det_minor.cpp%
 	speed/fadbad/det_lu.cpp%
 	speed/fadbad/poly.cpp%
-	speed/fadbad/sparse_hessian.cpp
+	speed/fadbad/quadratic.cpp
 %$$
 
 $end

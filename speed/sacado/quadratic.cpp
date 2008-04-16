@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/vector.hpp>
 
 /*
-$begin sacado_sparse_hessian$$
+$begin sacado_quadratic$$
 $spell
 	Sacado
 	bool
@@ -25,7 +25,7 @@ Indicate that this test is not available:
 $codep */
 
 // The sacado version of this test is not yet available 
-bool compute_sparse_hessian(
+bool compute_quadratic(
 	size_t                     size     , 
 	size_t                     repeat   , 
 	size_t                     ell      ,

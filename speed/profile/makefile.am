@@ -38,7 +38,11 @@ AM_LDFLAGS    = -pg
 #
 profile_SOURCES = \
 	../main.cpp \
+	../link_det_lu.cpp \
+	../link_det_minor.cpp \
+	../link_poly.cpp \
+	../link_quadratic.cpp \
 	../cppad/det_lu.cpp  \
 	../cppad/det_minor.cpp  \
 	../cppad/poly.cpp \
-	../cppad/sparse_hessian.cpp
+	../cppad/quadratic.cpp

@@ -9,7 +9,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin adolc_sparse_hessian.cpp$$
+$begin adolc_quadratic.cpp$$
 $spell
 	cppad
 	adouble
@@ -37,13 +37,8 @@ depends on the vectors $italic i$$ and $italic j$$.
 Hence we use a different $cref/ADFun/$$ object for 
 each choice of $italic i$$ and $italic j$$.
 
-$head Adolc Sparse Hessian$$
-If the preprocessor symbol $code USE_CPPAD_SPARSE_HESSIAN$$ is 
-true, the routine $cref/sparse_hessian/$$ is used for the calculation.
-Otherwise, the routine $cref/Hessian/$$ is used.
-
-$head compute_sparse_hessian$$
-$index compute_sparse_hessian$$
+$head compute_quadratic$$
+$index compute_quadratic$$
 Routine that computes the gradient of determinant using Adolc:
 $codep */
 # include <cppad/vector.hpp>
@@ -53,7 +48,7 @@ $codep */
 # include <adolc/adouble.h>
 # include <adolc/drivers/drivers.h>
 
-bool compute_sparse_hessian(
+bool compute_quadratic(
 	size_t                     size     , 
 	size_t                     repeat   , 
 	size_t                     ell      ,

@@ -20,6 +20,8 @@ $spell
 $$
 
 $section Sparse Hessian: Easy Driver$$
+$index SparseHessian$$
+$index hessian, sparse$$
 
 $head Syntax$$
 $syntax%%h% = %f%.SparseHessian(%x%, %w%)%$$
