@@ -503,6 +503,7 @@ then
 		msg="rerun with out other processes running at same time."
 		echo "$msg"
 		echo "$msg" >> build_test.log
+	fi
 	cd ..
 	if [ "$1" = "test" ]
 	then
