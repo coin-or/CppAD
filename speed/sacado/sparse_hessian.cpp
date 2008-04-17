@@ -12,20 +12,20 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/vector.hpp>
 
 /*
-$begin fadbad_quadratic$$
+$begin sacado_sparse_hessian$$
 $spell
-	Fadbad
+	Sacado
 	bool
 	CppAD
 $$
 
-$section Fadbad Speed: Sparse Hessian of a Quadratic Function$$
+$section Sacado Speed: Sparse Hessian$$
 
 Indicate that this test is not available:
 $codep */
 
-// The fadbad version of this test is not yet available 
-bool compute_quadratic(
+// The sacado version of this test is not yet available 
+bool compute_sparse_hessian(
 	size_t                     size     , 
 	size_t                     repeat   , 
 	size_t                     ell      ,

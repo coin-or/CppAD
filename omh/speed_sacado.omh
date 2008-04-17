@@ -63,7 +63,7 @@ $contents%
 	speed/sacado/det_minor.cpp%
 	speed/sacado/det_lu.cpp%
 	speed/sacado/poly.cpp%
-	speed/sacado/quadratic.cpp
+	speed/sacado/sparse_hessian.cpp
 %$$
 
 $end

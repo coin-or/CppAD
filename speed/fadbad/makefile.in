@@ -43,8 +43,8 @@ CONFIG_CLEAN_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
 am_fadbad_OBJECTS = main.$(OBJEXT) link_det_lu.$(OBJEXT) \
 	link_det_minor.$(OBJEXT) link_poly.$(OBJEXT) \
-	link_quadratic.$(OBJEXT) det_lu.$(OBJEXT) det_minor.$(OBJEXT) \
-	poly.$(OBJEXT) quadratic.$(OBJEXT)
+	link_sparse_hessian.$(OBJEXT) det_lu.$(OBJEXT) \
+	det_minor.$(OBJEXT) poly.$(OBJEXT) sparse_hessian.$(OBJEXT)
 fadbad_OBJECTS = $(am_fadbad_OBJECTS)
 fadbad_LDADD = $(LDADD)
 DEFAULT_INCLUDES = 
@@ -190,11 +190,11 @@ fadbad_SOURCES = \
 	../link_det_lu.cpp \
 	../link_det_minor.cpp \
 	../link_poly.cpp \
-	../link_quadratic.cpp \
+	../link_sparse_hessian.cpp \
 	det_lu.cpp  \
 	det_minor.cpp  \
 	poly.cpp \
-	quadratic.cpp
+	sparse_hessian.cpp
 
 all: all-am
 
@@ -247,10 +247,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_det_lu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_det_minor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_poly.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_quadratic.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_sparse_hessian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/quadratic.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -322,19 +322,19 @@ link_poly.obj: ../link_poly.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_poly.obj `if test -f '../link_poly.cpp'; then $(CYGPATH_W) '../link_poly.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_poly.cpp'; fi`
 
-link_quadratic.o: ../link_quadratic.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_quadratic.o -MD -MP -MF $(DEPDIR)/link_quadratic.Tpo -c -o link_quadratic.o `test -f '../link_quadratic.cpp' || echo '$(srcdir)/'`../link_quadratic.cpp
-@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/link_quadratic.Tpo $(DEPDIR)/link_quadratic.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_quadratic.cpp' object='link_quadratic.o' libtool=no @AMDEPBACKSLASH@
+link_sparse_hessian.o: ../link_sparse_hessian.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_sparse_hessian.o -MD -MP -MF $(DEPDIR)/link_sparse_hessian.Tpo -c -o link_sparse_hessian.o `test -f '../link_sparse_hessian.cpp' || echo '$(srcdir)/'`../link_sparse_hessian.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/link_sparse_hessian.Tpo $(DEPDIR)/link_sparse_hessian.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_sparse_hessian.cpp' object='link_sparse_hessian.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_quadratic.o `test -f '../link_quadratic.cpp' || echo '$(srcdir)/'`../link_quadratic.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_sparse_hessian.o `test -f '../link_sparse_hessian.cpp' || echo '$(srcdir)/'`../link_sparse_hessian.cpp
 
-link_quadratic.obj: ../link_quadratic.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_quadratic.obj -MD -MP -MF $(DEPDIR)/link_quadratic.Tpo -c -o link_quadratic.obj `if test -f '../link_quadratic.cpp'; then $(CYGPATH_W) '../link_quadratic.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_quadratic.cpp'; fi`
-@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/link_quadratic.Tpo $(DEPDIR)/link_quadratic.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_quadratic.cpp' object='link_quadratic.obj' libtool=no @AMDEPBACKSLASH@
+link_sparse_hessian.obj: ../link_sparse_hessian.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_sparse_hessian.obj -MD -MP -MF $(DEPDIR)/link_sparse_hessian.Tpo -c -o link_sparse_hessian.obj `if test -f '../link_sparse_hessian.cpp'; then $(CYGPATH_W) '../link_sparse_hessian.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_sparse_hessian.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/link_sparse_hessian.Tpo $(DEPDIR)/link_sparse_hessian.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_sparse_hessian.cpp' object='link_sparse_hessian.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_quadratic.obj `if test -f '../link_quadratic.cpp'; then $(CYGPATH_W) '../link_quadratic.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_quadratic.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_sparse_hessian.obj `if test -f '../link_sparse_hessian.cpp'; then $(CYGPATH_W) '../link_sparse_hessian.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_sparse_hessian.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

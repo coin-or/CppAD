@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin link_quadratic$$
+$begin link_sparse_hessian$$
 $spell
 	bool
 	CppAD
@@ -20,10 +20,10 @@ $index sparse, speed test$$
 $index speed, test sparse$$
 $index test, sparse speed$$
 
-$section Speed Testing Sparse Hessian of a Quadratic Function$$
+$section Speed Testing Sparse Hessian$$
 
 $head Prototype$$
-$codei%extern bool compute_quadratic(
+$codei%extern bool compute_sparse_hessian(
 	size_t                 %size%      , 
 	size_t                 %repeat%    ,
 	size_t                 %ell%       ,
@@ -103,7 +103,7 @@ $end
 # include <cassert>
 
 
-extern bool compute_quadratic(
+extern bool compute_sparse_hessian(
 	size_t                     size       , 
 	size_t                     repeat     ,
 	size_t                      ell       ,
@@ -111,18 +111,18 @@ extern bool compute_quadratic(
 	CppAD::vector<size_t>      &j         , 
 	CppAD::vector<double>      &hessian
 );
-bool available_quadratic(void)
+bool available_sparse_hessian(void)
 {	size_t size   = 10;
 	size_t repeat = 1;
 	size_t ell    = 3 * size;
 	CppAD::vector<size_t> i(ell), j(ell); 
 	CppAD::vector<double> hessian(size * size);
 
-	return compute_quadratic(
+	return compute_sparse_hessian(
 		size, repeat, ell, i, j, hessian
 	);
 }
-bool correct_quadratic(bool is_package_double)
+bool correct_sparse_hessian(bool is_package_double)
 {	size_t size   = 10;
 	size_t repeat = 1;
 	size_t ell    = 3 * size;
@@ -134,16 +134,16 @@ bool correct_quadratic(bool is_package_double)
 	if( is_package_double )
 		assert(0);
 
-	compute_quadratic(size, repeat, ell, i, j, hessian);
+	compute_sparse_hessian(size, repeat, ell, i, j, hessian);
 	size_t m = 2; // order of derivative
 	bool ok = CppAD::quadratic_ok(size, i, j, x, m, hessian);
 	return ok;
 }
-void speed_quadratic(size_t size, size_t repeat)
+void speed_sparse_hessian(size_t size, size_t repeat)
 {	CppAD::vector<double> hessian(size * size);
 
 	size_t ell = 3 * size;
 	CppAD::vector<size_t> i(ell), j(ell);
-	compute_quadratic(size, repeat, ell, i, j, hessian);
+	compute_sparse_hessian(size, repeat, ell, i, j, hessian);
 	return;
 }

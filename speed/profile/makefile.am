@@ -41,8 +41,8 @@ profile_SOURCES = \
 	../link_det_lu.cpp \
 	../link_det_minor.cpp \
 	../link_poly.cpp \
-	../link_quadratic.cpp \
+	../link_sparse_hessian.cpp \
 	../cppad/det_lu.cpp  \
 	../cppad/det_minor.cpp  \
 	../cppad/poly.cpp \
-	../cppad/quadratic.cpp
+	../cppad/sparse_hessian.cpp

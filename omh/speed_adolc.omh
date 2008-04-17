@@ -62,7 +62,7 @@ $contents%
 	speed/adolc/det_minor.cpp%
 	speed/adolc/det_lu.cpp%
 	speed/adolc/poly.cpp%
-	speed/adolc/quadratic.cpp
+	speed/adolc/sparse_hessian.cpp
 %$$
 
 $end

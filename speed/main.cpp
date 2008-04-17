@@ -102,7 +102,7 @@ $cref/speed/speed_main/option/speed/$$,
 $cref/det_minor/link_det_minor/$$,
 $cref/det_lu/link_det_lu/$$,
 $cref/poly/link_poly/$$,
-$cref/quadratic/link_quadratic/$$.
+$cref/sparse_hessian/link_sparse_hessian/$$.
 
 $subhead correct$$
 If $italic option$$ is equal to $code correct$$,
@@ -149,7 +149,7 @@ $childtable%
 	speed/link_det_lu.cpp%
 	speed/link_det_minor.cpp%
 	speed/link_poly.cpp%
-	speed/link_quadratic.cpp
+	speed/link_sparse_hessian.cpp
 %$$
 
 $end 
@@ -164,7 +164,7 @@ $end
 CPPAD_DECLARE_SPEED(det_lu);
 CPPAD_DECLARE_SPEED(det_minor);
 CPPAD_DECLARE_SPEED(poly);
-CPPAD_DECLARE_SPEED(quadratic);
+CPPAD_DECLARE_SPEED(sparse_hessian);
 
 namespace {
 	using std::cout;
@@ -236,7 +236,7 @@ int main(int argc, char *argv[])
 		"det_lu",
 		"det_minor",
 		"poly",
-		"quadratic"
+		"sparse_hessian"
 	};
 	const size_t n_option  = sizeof(option) / sizeof(option[0]);
 	const size_t option_correct   = 0;
@@ -244,8 +244,8 @@ int main(int argc, char *argv[])
 	const size_t option_det_lu    = 2;
 	const size_t option_det_minor = 3;
 	const size_t option_poly      = 4;
-	const size_t option_quadratic = 5;
-	assert( n_option == option_quadratic+1 );
+	const size_t option_sparse_hessian = 5;
+	assert( n_option == option_sparse_hessian+1 );
 
 	size_t i;
 	size_t match = n_option;
@@ -276,12 +276,12 @@ int main(int argc, char *argv[])
 	CppAD::vector<size_t> size_det_lu(n_size);
 	CppAD::vector<size_t> size_det_minor(n_size);
 	CppAD::vector<size_t> size_poly(n_size);
-	CppAD::vector<size_t> size_quadratic(n_size);
+	CppAD::vector<size_t> size_sparse_hessian(n_size);
 	for(i = 0; i < n_size; i++) 
 	{	size_det_lu[i]      = 3 * i + 1;
 		size_det_minor[i]   = i + 1;
 		size_poly[i]        = 8 * i + 1;
-		size_quadratic[i] = 10 * (i + 1);
+		size_sparse_hessian[i] = 10 * (i + 1);
 	}
 # ifndef NDEBUG
 	size_t base_count = CPPAD_TRACK_COUNT();
@@ -300,8 +300,8 @@ int main(int argc, char *argv[])
 		if( available_poly() ) ok &= run_correct(
 			correct_poly,      "poly"         
 		);
-		if( available_quadratic() ) ok &= run_correct(
-			correct_quadratic, "quadratic"         
+		if( available_sparse_hessian() ) ok &= run_correct(
+			correct_sparse_hessian, "sparse_hessian"         
 		);
 		// summarize results
 		assert( ok || (Run_error_count > 0) );
@@ -326,8 +326,8 @@ int main(int argc, char *argv[])
 		if( available_poly() ) Run_speed(
 		speed_poly,      size_poly,      "poly"
 		);
-		if( available_quadratic() ) Run_speed(
-		speed_quadratic,  size_quadratic,   "sparse_hessian"
+		if( available_sparse_hessian() ) Run_speed(
+		speed_sparse_hessian,  size_sparse_hessian,   "sparse_hessian"
 		);
 		ok = true;
 		break;
@@ -366,15 +366,15 @@ int main(int argc, char *argv[])
 		break;
 		// ---------------------------------------------------------
 
-		case option_quadratic:
-		if( ! available_quadratic() )
+		case option_sparse_hessian:
+		if( ! available_sparse_hessian() )
 		{	cout << AD_PACKAGE << ": option " << argv[1] 
 			     << " not available" << endl; 
 			exit(1);
 		}
-		ok &= run_correct(correct_quadratic, "quadratic");
+		ok &= run_correct(correct_sparse_hessian, "sparse_hessian");
 		Run_speed(
-		speed_quadratic, size_quadratic,  "sparse_hessian");
+		speed_sparse_hessian, size_sparse_hessian,  "sparse_hessian");
 		break;
 		// ---------------------------------------------------------
 		

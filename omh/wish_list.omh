@@ -115,10 +115,10 @@ Use spaces rather than tabs.
 $lend
 
 $head Sparse Hessians$$
-Create an implementation of $cref/cppad_quadratic.cpp/$$ 
+Create an implementation of $cref/sparse_hessian/$$ 
 that is more efficient
 (the initial implementation was only meant as a demonstration).
-Testing $cref/cppad_quadratic.cpp/$$ 
+Testing $cref/cppad_sparse_hessian.cpp/$$ 
 with $code USE_CPPAD_SPARSE_HESSIAN$$ equal to 
 $code 1$$ (true) and $code 0$$ (false) 
 indicates that $code sparse_hessian$$ is already more efficient
