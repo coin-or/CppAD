@@ -17,6 +17,7 @@ $spell
 	CppAD
 $$
 
+$index compute_det_lu$$
 $index det_lu, speed test$$
 $index speed, test det_lu$$
 $index test, det_lu speed$$
@@ -53,7 +54,7 @@ The argument $icode repeat$$ is the number of different matrices
 that the gradient (or determinant) is computed for.
 
 $subhead Operation Sequence$$
-For this test, only the operation sequence changes for each repetition.
+For this test, the operation sequence changes for each repetition.
 Thus an AD package can not use one recording of the 
 operation sequence to compute the gradient for all of the repetitions.
 

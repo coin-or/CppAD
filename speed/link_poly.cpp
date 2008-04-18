@@ -18,6 +18,7 @@ $spell
 	ddp
 $$
 
+$index compute_poly$$
 $index polynomial, speed test$$
 $index speed, test polynomial$$
 $index test, polynomial speed$$
@@ -110,20 +111,15 @@ bool correct_poly(bool is_package_double)
 	size_t repeat = 1;
 	CppAD::vector<double>  a(size), z(1), ddp(1);
 
+	compute_poly(size, repeat, a, z, ddp);
+
+	size_t k;
 	double check;
 	if( is_package_double )
-	{	check = 0.;
-		size_t i = size;
-		while(i--)
-		{	check *= z[0];
-			check += a[i];
-		}
-	}
-	else
-	{	// use direct evaluation by Poly to check AD evaluation
-		compute_poly(size, repeat, a, z, ddp);
-		check = CppAD::Poly(2, a, z[0]);
-	}
+		k = 0;
+	else	k = 2;
+	check = CppAD::Poly(k, a, z[0]);
+
 	bool ok = CppAD::NearEqual(check, ddp[0], 1e-10, 1e-10);
 	return ok;
 }

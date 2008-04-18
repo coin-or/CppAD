@@ -18,7 +18,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/speed/det_grad_33.hpp>
 # include <cppad/speed/det_33.hpp>
 # include <cppad/speed_test.hpp>
-# include <cppad/speed/quadratic_ok.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/poly.hpp>
 

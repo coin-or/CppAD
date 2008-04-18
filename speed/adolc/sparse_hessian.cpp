@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_sparse_hessian.cpp$$
 $spell
+	arg
 	cppad
 	adouble
 	CppAD
@@ -44,14 +45,14 @@ $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/track_new_del.hpp>
+# include <cppad/speed/sparse_evaluate.hpp>
 
 # include <adolc/adouble.h>
 # include <adolc/drivers/drivers.h>
 
 bool compute_sparse_hessian(
-	size_t                     size     , 
 	size_t                     repeat   , 
-	size_t                     ell      ,
+	CppAD::vector<double>     &x_arg    ,
 	CppAD::vector<size_t>     &i        ,
 	CppAD::vector<size_t>     &j        ,
 	CppAD::vector<double>     &h        )
@@ -59,10 +60,12 @@ bool compute_sparse_hessian(
 	// -----------------------------------------------------
 	// setup
 	size_t k, m;
-	size_t tag  = 0;     // tape identifier
-	size_t keep = 1;     // keep forward mode results in buffer
-	size_t n    = size;  // number of independent variables
-	double f;            // function value
+	size_t order = 0;         // derivative order corresponding to function
+	size_t tag  = 0;          // tape identifier
+	size_t keep = 1;          // keep forward mode results in buffer
+	size_t n = x_arg.size();  // number of independent variables
+	size_t ell = i.size();    // number of indices in i and j
+	double f;                 // function value
 
 	typedef CppAD::vector<double>  DblVector;
 	typedef CppAD::vector<adouble> ADVector;
@@ -71,7 +74,7 @@ bool compute_sparse_hessian(
 	ADVector   X(n);    // AD domain space vector
 	double       *x;    // double domain space vector
 	double      **H;    // Hessian 
-	adouble       Y;    // AD range space value
+	ADVector   Y(1);    // AD range space value
 	DblVector tmp(2 * ell);       // double temporary vector
 
 	x = CPPAD_TRACK_NEW_VEC(n, x);
@@ -79,8 +82,10 @@ bool compute_sparse_hessian(
 	for(k = 0; k < n; k++)
 		H[k] = CPPAD_TRACK_NEW_VEC(n, H[k]);
 
-	// choose a value for x (does not matter because f is sparse_hessian)
+	// choose a value for x 
 	CppAD::uniform_01(n, x);
+	for(k = 0; k < n; k++)
+		x_arg[k] = x[k];
 
 	// ------------------------------------------------------
 	while(repeat--)
@@ -101,12 +106,10 @@ bool compute_sparse_hessian(
 			X[k] <<= x[k];
 
 		// AD computation of f(x)
-		Y = 0.;
-		for(k = 0; k < ell; k++)
-			Y += X[i[k]] * X[j[k]];
+		CppAD::sparse_evaluate(X, i, j, order, Y);
 
 		// create function object f : X -> Y
-		Y >>= f;
+		Y[0] >>= f;
 		trace_off();
 
 		// evaluate and return the hessian of f

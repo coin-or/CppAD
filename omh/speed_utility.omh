@@ -23,7 +23,7 @@ $children%
 	cppad/speed/det_by_lu.hpp%
 	cppad/speed/det_33.hpp%
 	cppad/speed/det_grad_33.hpp%
-	cppad/speed/quadratic_ok.hpp
+	cppad/speed/sparse_evaluate.hpp
 %$$
 
 $head Speed Main Program$$
@@ -38,7 +38,7 @@ $rref det_by_minor$$
 $rref det_of_minor$$
 $rref det_33$$
 $rref det_grad_33$$
-$rref sparse_hessian$$
+$rref sparse_evaluate$$
 $rref uniform_01$$
 $tend 
 
@@ -60,7 +60,7 @@ $rref lu_factor.hpp$$
 $rref lu_invert.hpp$$
 $rref lu_solve.hpp$$
 $rref poly.hpp$$
-$rref quadratic_ok.hpp$$
+$rref sparse_evaluate.hpp$$
 $rref uniform_01.hpp$$
 $tend
 

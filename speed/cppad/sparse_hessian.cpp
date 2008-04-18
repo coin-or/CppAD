@@ -47,14 +47,14 @@ Routine that computes the gradient of determinant using CppAD:
 $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
+# include <cppad/speed/sparse_evaluate.hpp>
 
 // value can be true or false
 # define USE_CPPAD_SPARSE_HESSIAN  1
 
 bool compute_sparse_hessian(
-	size_t                     size     , 
 	size_t                     repeat   , 
-	size_t                     ell      ,
+	CppAD::vector<double>     &x        ,
 	CppAD::vector<size_t>     &i        ,
 	CppAD::vector<size_t>     &j        ,
 	CppAD::vector<double>     &hessian  )
@@ -66,16 +66,17 @@ bool compute_sparse_hessian(
 	typedef CppAD::vector< AD<double> > ADVector;
 	typedef CppAD::vector<size_t>       SizeVector;
 
+	size_t order = 0;         // derivative order corresponding to function
 	size_t m = 1;             // number of dependent variables
-	size_t n = size;          // number of independent variables
+	size_t n = x.size();      // number of independent variables
+	size_t ell = i.size();    // number of indices in i and j
 	ADVector   X(n);          // AD domain space vector
 	ADVector   Y(m);          // AD range space vector
-	DblVector  x(n);          // double domain space vector
 	DblVector  w(m);          // double range space vector
 	DblVector tmp(2 * ell);   // double temporary vector
 
 	
-	// choose a value for x (does not matter because f is sparse_hessian)
+	// choose a value for x 
 	CppAD::uniform_01(n, x);
 	size_t k;
 	for(k = 0; k < n; k++)
@@ -101,9 +102,7 @@ bool compute_sparse_hessian(
 		Independent(X);	
 
 		// AD computation of f(x)
-		Y[0] = 0.;
-		for(k = 0; k < ell; k++)
-			Y[0] += X[i[k]] * X[j[k]];
+		CppAD::sparse_evaluate< AD<double> >(X, i, j, order, Y);
 
 		// create function object f : X -> Y
 		CppAD::ADFun<double> f(X, Y);

@@ -88,8 +88,10 @@ SWIG compatible interface to $code AD<double>$$ and $code ADFun<double>$$ that
 would make it easy to connect the SWIG languages, e.g., Python, see, 
 $href%http://www.swig.org/%SWIG%$$ for a description of SWIG
 and a list of the languages.
+This could also be used for faster evaluation of algorithms
+that have a fixed $cref/operation sequence/glossary/Operation/Sequence/$$.
 This would require the $cref/library/WishList/Library/$$ wish list 
-entry being implemented.
+entry to be implemented.
 
 
 $head Software Guidelines$$

@@ -17,6 +17,7 @@ $spell
 	CppAD
 $$
 
+$index compute_det_minor$$
 $index det_minor, speed test$$
 $index speed, test det_minor$$
 $index test, det_minor speed$$

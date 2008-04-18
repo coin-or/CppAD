@@ -9,24 +9,24 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-$begin quadratic_ok.hpp$$
+$begin sparse_evaluate.hpp$$
 $spell
 	ifndef
 	endif
 $$
 
-$section Source: quadratic_ok$$
+$section Source: sparse_evaluate$$
 
-$index quadratic_ok, source$$
-$index source, quadratic_ok$$
+$index sparse_evaluate, source$$
+$index source, sparse_evaluate$$
 
 $code
-# ifndef CPPAD_SPARSE_QUAD_INCLUDED 
+# ifndef CPPAD_SPARSE_EVALUATE_INCLUDED 
 $pre
 $$
-# define CPPAD_SPARSE_QUAD_INCLUDED 
+# define CPPAD_SPARSE_EVALUATE_INCLUDED 
 
-$verbatim%cppad/speed/quadratic_ok.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
+$verbatim%cppad/speed/sparse_evaluate.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
 
 # endif
 $$
