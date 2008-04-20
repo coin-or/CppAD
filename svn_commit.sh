@@ -89,7 +89,15 @@ do
 	if [ ! -e $file ]
 	then
 		bad_name="$file"
-		echo "$file is not a file or directory not exist"
+		echo "$file does not exist and is in add_list or change_list"
+	fi
+done
+for file in $delete_list $old_list 
+do
+	if [ -e $file ]
+	then
+		bad_name="$file"
+		echo "$file exists and is in delete_list or old_list"
 	fi
 done
 for file in $add_list
