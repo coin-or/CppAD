@@ -37,6 +37,8 @@ AM_LDFLAGS       = -L$(SACADO_DIR)/lib
 #
 sacado_SOURCES = \
 	../main.cpp \
+	../link_ode.cpp \
+	ode.cpp \
 	../link_det_lu.cpp \
 	../link_det_minor.cpp \
 	../link_poly.cpp \

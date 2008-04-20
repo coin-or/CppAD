@@ -148,7 +148,8 @@ $childtable%
 	speed/link_det_lu.cpp%
 	speed/link_det_minor.cpp%
 	speed/link_poly.cpp%
-	speed/link_sparse_hessian.cpp
+	speed/link_sparse_hessian.cpp%
+	speed/link_ode.cpp
 %$$
 
 $end 

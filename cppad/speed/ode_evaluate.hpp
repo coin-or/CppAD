@@ -19,7 +19,7 @@ $spell
 	Cpp
 	cppad
 	hpp	
-	ym
+	fm
 	namespace
 	exp
 $$
@@ -32,19 +32,27 @@ $index function, ode_evaluate$$
 $head Syntax$$
 $codei%# include <cppad/speed/ode_evaluate.hpp>
 %$$
-$codei%ode_evaluate(%x%, %m%, %ym%)%$$
+$codei%ode_evaluate(%x%, %m%, %fm%)%$$
 
 $head Purpose$$
-This routine evaluates either $latex y(x, 1) \in \R^1$$ or 
-$latex \partial_x y(x, 1) \in \R^n$$
-where $latex y(x, t)$$ is defined as the solution of an ordinary 
-differential equation with parameter vector $latex x$$. 
-To be more specific, the function $latex y(x, t)$$ is defined by
+This routine evaluates a function that is defined by the 
+following initial value problem:
 $latex \[
 \begin{array}{rcl}
-	\partial_t y(x, t)  & = & g[ t , y(x, t) ] \\
-	y(x, 0)             & = & g_0 (x)
+	y(x, 0)                & = & b(x)
+	\\
+	\partial_t y ( x , t ) & = & g[ x , y(x,t) , t ]
 \end{array}
+\] $$
+where $latex b : \R^n \rightarrow \R^n$$ and
+$latex g : \R^n \times \R^n \times \R \rightarrow \R$$
+are not any further specified. 
+A numerical method is used to solve the ode and obtain an accurate
+approximation for $latex y(x, 1)$$.
+This in turn is used to compute values and gradients for the
+function $latex f : \R^n \rightarrow \R$$ defined by
+$latex \[
+	f(x) = y_n ( x , 1)
 \] $$
 
 $head Inclusion$$
@@ -65,6 +73,11 @@ $codei%
 must set the $icode y$$ equal the exponential of $icode z$$, i.e.,
 the derivative of $icode y$$ with respect to $icode z$$ is equal to $icode y$$.
 
+$subhead Operation Sequence$$
+The functions $latex b(x)$$, $latex g(x, y, t)$$ and 
+the ODE solver are chosen so that the $icode Float$$ 
+operation sequence does not depend on the value of $latex x$$.
+
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
@@ -72,7 +85,7 @@ $codei%
 %$$
 It contains he argument value for which the function,
 or its derivative, is being evaluated.
-We use $latex n$$ to denote the size of the vector $icode x$$.
+The value $latex n$$ is determined by the size of the vector $icode x$$.
 
 $head m$$
 The argument $italic m$$ has prototype
@@ -80,26 +93,42 @@ $icode%
 	size_t %m%
 %$$
 It is either zero or one and
-specifies the order of the derivative of $latex y(x, 1)$$,
-with respect to $latex x$$,
+specifies the order of the derivative of $latex f(x)$$,
+with respect to $latex x$$, 
 that is being evaluated.
 
-$head ym$$
-The argument $italic ym$$ has prototype
+$head m = 1$$
+In the case where $latex m = 1$$, 
+the following extended system is solved:
+$latex \[
+\begin{array}{rcl}
+y(x, 0)                & = & b(x)
+\\
+\partial_t y ( x , t ) & = & g[ x , y(x,t) , t ]
+\\
+y_x (x, 0)             & = & b^{(1)} (x)
+\\
+partial_t y_x (x,  t)  & = & \partial_x g[ x , y(x,t) , t ] 
+                         +   \partial_y g[ x , y(x,t) , t ] y_x
+\end{array}
+\] $$
+
+$head fm$$
+The argument $italic fm$$ has prototype
 $icode%
-	CppAD::vector<%Float%> &%ym%
+	CppAD::vector<%Float%> &%fm%
 %$$
-The input value of the elements of $icode ym$$ does not matter.
+The input value of the elements of $icode fm$$ does not matter.
 
 $subhead Function$$
-If $icode m$$ is zero, $italic ym$$ has size one and
-$syntax%%ym%[0]%$$ is the value of $latex y(x, 1)$$.
+If $icode m$$ is zero, $italic fm$$ has size equal to one
+and $icode%fm%[0]%$$ is the value of $latex y(x, 1)$$.
 
 $subhead Gradient$$
-If $icode m$$ is one, $italic ym$$ has size $italic n$$ and 
-for $latex j = 0 , \ldots , n-1$$
+If $icode m$$ is one, $italic fm$$ has size equal to $italic n$$ 
+and for $latex j = 0 , \ldots , n-1$$
 $latex \[
-	\D{y}{x[j]} (x, 1) = ym [ j ]
+	\D{y}{x[j]} (x, 1) = fm [ j ]
 \] $$
 
 $children%
@@ -212,14 +241,18 @@ template <class Float>
 void ode_evaluate(
 	CppAD::vector<Float> &x  , 
 	size_t m                 , 
-	CppAD::vector<Float> &ym )
+	CppAD::vector<Float> &fm )
 {
 	typedef CppAD::vector<Float> Vector;
 
 	size_t n = x.size();
 	size_t ell;
 	CPPAD_ASSERT_KNOWN( m == 0 || m == 1,
-		"ode_evaluae: m is not zero or one"
+		"ode_evaluate: m is not zero or one"
+	);
+	CPPAD_ASSERT_KNOWN( 
+		((m==0) & (fm.size()==1) ) || ((m==1) & (fm.size()==n)),
+		"ode_evaluate: the size of fm is not correct"
 	);
 	if( m == 0 )
 		ell = n;
@@ -244,10 +277,10 @@ void ode_evaluate(
 	yf = Runge45(f, M, ti, tf, yi);
 
 	if( m == 0 )
-		ym[0] = yf[n-1];
+		fm[0] = yf[n-1];
 	else
 	{	for(i = 0; i < n; i++)
-			ym[i] = yf[n + (n-1) * n + i];
+			fm[i] = yf[n + (n-1) * n + i];
 	}
 	return;
 }

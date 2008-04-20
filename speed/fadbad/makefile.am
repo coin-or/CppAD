@@ -36,6 +36,8 @@ AM_CXXFLAGS   = -O2 -DNDEBUG -Wno-deprecated -DFADBAD
 #
 fadbad_SOURCES = \
 	../main.cpp \
+	../link_ode.cpp \
+	ode.cpp \
 	../link_det_lu.cpp \
 	../link_det_minor.cpp \
 	../link_poly.cpp \

@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_08$$
 $spell
+	det
 	Adolc
 	gcc
 	speedtest
@@ -39,6 +40,15 @@ Added the $cref/ode_evaluate/$$ speed test utility in
 preparation for having ode speed tests.
 In addition, 
 added the examples $cref/ode_evaluate.cpp/$$ and $cref/sparse_hessian.cpp/$$.
+$pre
+
+$$
+Changed the $cref/speed_main/$$ routines defined for each package
+from $codei%compute_%name%$$ to $codei%link_%name%$$.
+For example, in $code speed/cppad/det_minor.cpp$$,
+the function name 
+$code compute_det_minor$$ was changed to $code link_det_minor$$.
+
 
 $head 04-18$$
 Fix a problem in the $cref/link_poly/$$ correctness test.

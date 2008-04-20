@@ -54,7 +54,7 @@ $latex i[k]$$ and $latex j[k]$$ for $latex k = 0 , \ldots , \ell-1$$.
 $head Operation Sequence$$
 For this test, the operation sequence changes for each repetition.
 Thus an AD package can not use one recording of the 
-operation sequence to compute the gradient for all of the repetitions.
+operation sequence to compute the Hessian for all of the repetitions.
 
 $head x$$
 The argument $icode x$$ has prototype
@@ -88,7 +88,7 @@ $head hessian$$
 The argument $icode hessian$$ is a vector with $latex n \times n$$ elements.
 The input value of its elements does not matter. 
 The output value of its elements is the Hessian of the function $latex f(x)$$
-that corresponds to output values of $icode i$$ and $icode j$$.
+that corresponds to output values of $icode i$$, $icode j$$, and $icode x$$.
 To be more specific, for
 $latex k = 0 , \ldots , n-1$$,
 $latex m = 0 , \ldots , n-1$$,
