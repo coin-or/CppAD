@@ -53,11 +53,26 @@ then
 	echo "svn_commit.sh: no files are specified in the argument lists"
 	exit 1
 fi
+for file in $delete_list $old_list 
+do
+	if [ -e $file ]
+	then
+		echo "$file exists and is in delete_list or old_list"
+		exit 1
+	fi
+done
+for file in $add_list $change_list
+do
+	if [ ! -e $file ]
+	then
+		echo "$file does not exist and is in add_list or change_list"
+		exit 1
+	fi
+done
 #
 this_branch=`pwd | sed -e "s|.*/CppAD/||"`
 echo "$this_branch: $log_entry" > svn_commit.log
 count=0
-bad_name=""
 for file in $add_list $change_list
 do
 	count=`expr $count + 1`
@@ -86,19 +101,6 @@ do
 			chmod +x $file
 		fi
 	fi
-	if [ ! -e $file ]
-	then
-		bad_name="$file"
-		echo "$file does not exist and is in add_list or change_list"
-	fi
-done
-for file in $delete_list $old_list 
-do
-	if [ -e $file ]
-	then
-		bad_name="$file"
-		echo "$file exists and is in delete_list or old_list"
-	fi
 done
 for file in $add_list
 do
@@ -111,16 +113,10 @@ done
 echo "-------------------------------------------------------------"
 cat svn_commit.log
 response=""
-if [ "$bad_name" != "" ]
-then
-	echo "bad file or directory name: $bad_name"
-	response="a"
-else
-	while [ "$response" != "c" ] && [ "$response" != "a" ]
-	do
-		read -p "continue [c] or abort [a] ? " response
-	done
-fi
+while [ "$response" != "c" ] && [ "$response" != "a" ]
+do
+	read -p "continue [c] or abort [a] ? " response
+done
 if [ "$response" = "a" ]
 then
 	echo "aborting commit"
