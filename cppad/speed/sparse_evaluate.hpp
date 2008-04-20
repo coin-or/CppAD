@@ -130,10 +130,16 @@ $latex \[
 	\DD{f}{x[k]}{x[m]} = fm [ k * n + m ]
 \] $$
 
-
 $children%
+	speed/example/sparse_evaluate.cpp%
 	omh/sparse_evaluate.omh
 %$$
+
+$head Example$$
+The file
+$cref/sparse_evaluate.cpp/$$
+contains an example and test  of $code sparse_evaluate.hpp$$.
+It returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The file 
@@ -146,6 +152,7 @@ $end
 // BEGIN PROGRAM
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_numeric_type.hpp>
+# include <cppad/vector.hpp>
 
 namespace CppAD {
 	template <class Float>

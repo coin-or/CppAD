@@ -43,6 +43,7 @@ CONFIG_CLEAN_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
 am_example_OBJECTS = example.$(OBJEXT) det_by_lu.$(OBJEXT) \
 	det_by_minor.$(OBJEXT) det_of_minor.$(OBJEXT) \
+	ode_evaluate.$(OBJEXT) sparse_evaluate.$(OBJEXT) \
 	speed_test.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
@@ -182,6 +183,8 @@ example_SOURCES = \
 	det_by_lu.cpp \
 	det_by_minor.cpp \
 	det_of_minor.cpp \
+	ode_evaluate.cpp \
+	sparse_evaluate.cpp \
 	speed_test.cpp
 
 all: all-am
@@ -234,6 +237,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_by_minor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_of_minor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/example.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_evaluate.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_evaluate.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speed_test.Po@am__quote@
 
 .cpp.o:

@@ -22,6 +22,7 @@ grep '^# *include *<cppad/' \
 	speed/adolc/*.cpp \
 	speed/cppad/*.cpp \
 	speed/fadbad/*.cpp \
+	speed/example/*.cpp \
 	test_more/*.cpp > junk.1
 #
 cat junk.1 | sed -e 's%[^<]*<%%'  -e 's%>.*$%%' | sort -u > junk.2
@@ -29,7 +30,7 @@ ls	cppad/config.h \
 	cppad/*.hpp \
 	cppad/local/*.hpp \
 	cppad/speed/*.hpp \
-	| sort -u > junk.3 
+	| sort > junk.3 
 if diff junk.2 junk.3
 then
 	different="no"

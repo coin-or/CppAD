@@ -23,6 +23,7 @@ $children%
 	cppad/speed/det_by_lu.hpp%
 	cppad/speed/det_33.hpp%
 	cppad/speed/det_grad_33.hpp%
+	cppad/speed/ode_evaluate.hpp%
 	cppad/speed/sparse_evaluate.hpp
 %$$
 

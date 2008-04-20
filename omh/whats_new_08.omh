@@ -34,6 +34,12 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-20$$
+Added the $cref/ode_evaluate/$$ speed test utility in 
+preparation for having ode speed tests.
+In addition, 
+added the examples $cref/ode_evaluate.cpp/$$ and $cref/sparse_hessian.cpp/$$.
+
 $head 04-18$$
 Fix a problem in the $cref/link_poly/$$ correctness test.
 Also add $cref/double_sparse_hessian.cpp/$$ to the set 

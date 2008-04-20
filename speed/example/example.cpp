@@ -35,6 +35,8 @@ $end
 extern bool det_of_minor(void);
 extern bool det_by_lu(void);
 extern bool det_by_minor(void);
+extern bool ode_evaluate(void);
+extern bool sparse_evaluate(void);
 extern bool speed_test(void);
 
 namespace {
@@ -68,6 +70,8 @@ int main(void)
 	ok &= Run(det_of_minor,          "det_of_minor"   );
 	ok &= Run(det_by_minor,         "det_by_minor"    );
 	ok &= Run(det_by_lu,               "det_by_lu"    );
+	ok &= Run(ode_evaluate,         "ode_evaluate"    );
+	ok &= Run(sparse_evaluate,   "sparse_evaluate"    );
 	ok &= Run(speed_test,             "speed_test"    );
 
 	// check for memory leak in previous calculations

@@ -146,6 +146,7 @@ $rref OdeErrMaxabs.cpp$$
 $rref OdeGear.cpp$$
 $rref OdeGearControl.cpp$$
 $rref OdeStiff.cpp$$
+$rref ode_evaluate.cpp$$
 $rref ode_taylor.cpp$$
 $rref ode_taylor_adolc.cpp$$
 $rref Output.cpp$$
@@ -169,6 +170,7 @@ $rref SeqProperty.cpp$$
 $rref SimpleVector.cpp$$
 $rref Sin.cpp$$
 $rref Sinh.cpp$$
+$rref sparse_evaluate.cpp$$
 $rref sparse_hessian.cpp$$
 $rref speed_program.cpp$$
 $rref speed_test.cpp$$
