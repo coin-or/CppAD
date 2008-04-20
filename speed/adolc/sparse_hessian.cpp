@@ -38,8 +38,8 @@ depends on the vectors $italic i$$ and $italic j$$.
 Hence we use a different $cref/ADFun/$$ object for 
 each choice of $italic i$$ and $italic j$$.
 
-$head compute_sparse_hessian$$
-$index compute_sparse_hessian$$
+$head link_sparse_hessian$$
+$index link_sparse_hessian$$
 Routine that computes the gradient of determinant using Adolc:
 $codep */
 # include <cppad/vector.hpp>
@@ -50,7 +50,7 @@ $codep */
 # include <adolc/adouble.h>
 # include <adolc/drivers/drivers.h>
 
-bool compute_sparse_hessian(
+bool link_sparse_hessian(
 	size_t                     repeat   , 
 	CppAD::vector<double>     &x_arg    ,
 	CppAD::vector<size_t>     &i        ,

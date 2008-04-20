@@ -25,15 +25,15 @@ $index double, speed lu$$
 $index speed, double lu$$
 $index lu, speed double$$
 
-$head compute_det_lu$$
-$index compute_det_lu$$
+$head link_det_lu$$
+$index link_det_lu$$
 Routine that computes the gradient of determinant using CppAD:
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_lu.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
-bool compute_det_lu(
+bool link_det_lu(
 	size_t                           size     , 
 	size_t                           repeat   , 
 	CppAD::vector<double>           &matrix   ,

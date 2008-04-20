@@ -23,14 +23,14 @@ $index cppad, speed polynomial$$
 $index speed, cppad polynomial$$
 $index polynomial, speed cppad$$
 
-$head compute_poly$$
-$index compute_poly$$
+$head link_poly$$
+$index link_poly$$
 Routine that computes the second derivative of a polynomial using CppAD:
 $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
-bool compute_poly(
+bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
 	CppAD::vector<double>     &a        ,  // coefficients of polynomial

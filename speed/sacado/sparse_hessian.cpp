@@ -25,7 +25,7 @@ Indicate that this test is not available:
 $codep */
 
 // The sacado version of this test is not yet available 
-extern bool compute_sparse_hessian(
+extern bool link_sparse_hessian(
         size_t                     repeat     ,
         CppAD::vector<double>      &x         ,
         CppAD::vector<size_t>      &i         ,

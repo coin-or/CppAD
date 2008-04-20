@@ -17,7 +17,7 @@ $spell
 	CppAD
 $$
 
-$index compute_det_lu$$
+$index link_det_lu$$
 $index det_lu, speed test$$
 $index speed, test det_lu$$
 $index test, det_lu speed$$
@@ -25,7 +25,7 @@ $index test, det_lu speed$$
 $section Speed Testing Gradient of Determinant Using Lu Factorization$$
 
 $head Prototype$$
-$codei%extern bool compute_det_lu(
+$codei%extern bool link_det_lu(
 	size_t                 %size%      , 
 	size_t                 %repeat%    , 
 	CppAD::vector<double> &%matrix%    ,
@@ -42,7 +42,7 @@ to run the corresponding speed and correctness tests.
 $head Return Value$$
 If this speed test is not yet
 supported by a particular $icode package$$,
-the corresponding return value for $code compute_det_lu$$ 
+the corresponding return value for $code link_det_lu$$ 
 should be $code false$$.
 
 $head size$$
@@ -83,7 +83,7 @@ $end
 # include <cppad/speed/det_grad_33.hpp>
 # include <cppad/speed/det_33.hpp>
 
-extern bool compute_det_lu(
+extern bool link_det_lu(
 	size_t                     size      , 
 	size_t                     repeat    , 
 	CppAD::vector<double>      &matrix   ,
@@ -97,7 +97,7 @@ bool available_det_lu(void)
 	CppAD::vector<double> matrix(size * size);
 	CppAD::vector<double> gradient(size * size);
 
-	return compute_det_lu(size, repeat, matrix, gradient);
+	return link_det_lu(size, repeat, matrix, gradient);
 }
 bool correct_det_lu(bool is_package_double)
 {	size_t size   = 3;
@@ -105,7 +105,7 @@ bool correct_det_lu(bool is_package_double)
 	CppAD::vector<double> matrix(size * size);
 	CppAD::vector<double> gradient(size * size);
 
-	compute_det_lu(size, repeat, matrix, gradient);
+	link_det_lu(size, repeat, matrix, gradient);
 	bool ok;
 	if( is_package_double )
 		ok = CppAD::det_33(matrix, gradient);
@@ -116,6 +116,6 @@ void speed_det_lu(size_t size, size_t repeat)
 {	CppAD::vector<double> matrix(size * size);
 	CppAD::vector<double> gradient(size * size);
 
-	compute_det_lu(size, repeat, matrix, gradient);
+	link_det_lu(size, repeat, matrix, gradient);
 	return;
 }

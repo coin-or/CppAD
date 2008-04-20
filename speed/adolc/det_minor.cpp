@@ -39,8 +39,8 @@ $cref/operation sequence/glossary/Operation/Sequence/$$
 does not depend on the matrix being factored.
 Hence we use the same tape recording for all the matrices.
 
-$head compute_det_minor$$
-$index compute_det_minor$$
+$head link_det_minor$$
+$index link_det_minor$$
 Routine that computes the gradient of determinant using Adolc:
 $codep */
 # include <cppad/vector.hpp>
@@ -50,7 +50,7 @@ $codep */
 # include <adolc/adouble.h>
 # include <adolc/interfaces.h>
 
-bool compute_det_minor(
+bool link_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
 	CppAD::vector<double>     &matrix   ,

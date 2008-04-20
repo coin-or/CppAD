@@ -41,8 +41,8 @@ true, the routine $cref/SparseHessian/sparse_hessian/$$
 is used for the calculation.
 Otherwise, the routine $cref/Hessian/$$ is used.
 
-$head compute_sparse_hessian$$
-$index compute_sparse_hessian$$
+$head link_sparse_hessian$$
+$index link_sparse_hessian$$
 Routine that computes the gradient of determinant using CppAD:
 $codep */
 # include <cppad/cppad.hpp>
@@ -52,7 +52,7 @@ $codep */
 // value can be true or false
 # define USE_CPPAD_SPARSE_HESSIAN  1
 
-bool compute_sparse_hessian(
+bool link_sparse_hessian(
 	size_t                     repeat   , 
 	CppAD::vector<double>     &x        ,
 	CppAD::vector<size_t>     &i        ,

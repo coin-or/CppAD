@@ -27,8 +27,8 @@ $index double, speed sparse hessian$$
 $index speed, double sparse hessian$$
 $index sparse, hessian speed double$$
 
-$head compute_sparse_hessian$$
-$index compute_sparse_hessian$$
+$head link_sparse_hessian$$
+$index link_sparse_hessian$$
 Routine that computes function values for $cref/sparse_evaluate/$$
 $codep */
 # include <cppad/vector.hpp>
@@ -38,7 +38,7 @@ $codep */
 # include <cmath>
 # include <cppad/speed/sparse_evaluate.hpp>
 
-bool compute_sparse_hessian(
+bool link_sparse_hessian(
 	size_t                     repeat   , 
 	CppAD::vector<double>     &x        ,
 	CppAD::vector<size_t>     &i        ,

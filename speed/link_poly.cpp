@@ -18,7 +18,7 @@ $spell
 	ddp
 $$
 
-$index compute_poly$$
+$index link_poly$$
 $index polynomial, speed test$$
 $index speed, test polynomial$$
 $index test, polynomial speed$$
@@ -26,7 +26,7 @@ $index test, polynomial speed$$
 $section Speed Testing Second Derivative of a Polynomial$$
 
 $head Prototype$$
-$codei%extern bool compute_poly(
+$codei%extern bool link_poly(
 	size_t                 %size%    , 
 	size_t                 %repeat%  , 
 	CppAD::vector<double> &%a%       ,
@@ -44,7 +44,7 @@ to run the corresponding speed and correctness tests.
 $head Return Value$$
 If this speed test is not yet
 supported by a particular $icode package$$,
-the corresponding return value for $code compute_poly$$ 
+the corresponding return value for $code link_poly$$ 
 should be $code false$$.
 
 $head size$$
@@ -92,7 +92,7 @@ $end
 # include <cppad/poly.hpp>
 # include <cppad/near_equal.hpp>
 
-extern bool compute_poly(
+extern bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
 	CppAD::vector<double>      &a       ,
@@ -104,14 +104,14 @@ bool available_poly(void)
 	size_t repeat = 1;
 	CppAD::vector<double>  a(size), z(1), ddp(1);
 
-	return compute_poly(size, repeat, a, z, ddp);
+	return link_poly(size, repeat, a, z, ddp);
 }
 bool correct_poly(bool is_package_double)
 {	size_t size   = 10;
 	size_t repeat = 1;
 	CppAD::vector<double>  a(size), z(1), ddp(1);
 
-	compute_poly(size, repeat, a, z, ddp);
+	link_poly(size, repeat, a, z, ddp);
 
 	size_t k;
 	double check;
@@ -126,6 +126,6 @@ bool correct_poly(bool is_package_double)
 void speed_poly(size_t size, size_t repeat)
 {	CppAD::vector<double>  a(size), z(1), ddp(1);
 
-	compute_poly(size, repeat, a, z, ddp);
+	link_poly(size, repeat, a, z, ddp);
 	return;
 }

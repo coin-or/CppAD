@@ -16,7 +16,7 @@ $spell
 	CppAD
 $$
 
-$index compute_sparse_hessian$$
+$index link_sparse_hessian$$
 $index sparse, speed test$$
 $index speed, test sparse$$
 $index test, sparse speed$$
@@ -24,7 +24,7 @@ $index test, sparse speed$$
 $section Speed Testing Sparse Hessian$$
 
 $head Prototype$$
-$codei%extern bool compute_sparse_hessian(
+$codei%extern bool link_sparse_hessian(
 	size_t                 %repeat%    ,
 	CppAD::vector<double> &%x%         ,
 	CppAD::vector<size_t> &%i%         ,
@@ -39,10 +39,10 @@ the corresponding function
 $latex f : \R^n \rightarrow \R $$ is defined by $cref/sparse_evaluate/$$
 and the index vectors $icode i$$ and $icode j$$.
 The only non-zero entries in the Hessian of this function have the form
-\[
-	\DD{f}{x[k]]}{x[j[k]}
-\]
-for some \( k \) between zero and \( \ell-1 \).
+$latex \[
+	\DD{f}{x[[k]]}{x[j[k]]}
+\] $$
+for some $latex k $$ between zero and $latex \ell-1 $$.
 
 $head repeat$$
 The argument $icode repeat$$ is the number of different functions
@@ -109,7 +109,7 @@ $end
 # include <cppad/near_equal.hpp>
 
 
-extern bool compute_sparse_hessian(
+extern bool link_sparse_hessian(
 	size_t                     repeat     ,
 	CppAD::vector<double>      &x         ,
 	CppAD::vector<size_t>      &i         ,
@@ -124,7 +124,7 @@ bool available_sparse_hessian(void)
 	CppAD::vector<size_t> i(ell), j(ell); 
 	CppAD::vector<double> hessian(n * n);
 
-	return compute_sparse_hessian(repeat, x, i, j, hessian);
+	return link_sparse_hessian(repeat, x, i, j, hessian);
 }
 bool correct_sparse_hessian(bool is_package_double)
 {	size_t n      = 10;
@@ -134,7 +134,7 @@ bool correct_sparse_hessian(bool is_package_double)
 	CppAD::vector<size_t> i(ell), j(ell);
 	CppAD::vector<double> hessian(n * n);
 
-	compute_sparse_hessian(repeat, x, i, j, hessian);
+	link_sparse_hessian(repeat, x, i, j, hessian);
 
 	size_t m, size;
 	if( is_package_double)
@@ -160,6 +160,6 @@ void speed_sparse_hessian(size_t n, size_t repeat)
 	CppAD::vector<double> x(n);
 	CppAD::vector<size_t> i(ell), j(ell);
 	CppAD::vector<double> hessian(n * n);
-	compute_sparse_hessian(repeat, x, i, j, hessian);
+	link_sparse_hessian(repeat, x, i, j, hessian);
 	return;
 }

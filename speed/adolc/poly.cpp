@@ -42,8 +42,8 @@ $cref/operation sequence/glossary/Operation/Sequence/$$
 does not depend on the argument to the polynomial.
 Hence we use the same $cref/ADFun/$$ object for all the argument values.
 
-$head compute_poly$$
-$index compute_poly$$
+$head link_poly$$
+$index link_poly$$
 Routine that computes the second derivative of a polynomial using Adolc:
 $codep */
 # include <vector>
@@ -55,7 +55,7 @@ $codep */
 # include <adolc/adouble.h>
 # include <adolc/interfaces.h>
 
-bool compute_poly(
+bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
 	CppAD::vector<double>     &a        ,  // coefficients of polynomial
