@@ -139,10 +139,8 @@ bool correct_ode(bool is_package_double)
 void speed_ode(size_t n, size_t repeat)
 {
 	bool retape   = true;
-	size_t ell    = 3 * n;
 	CppAD::vector<double> x(n);
-	CppAD::vector<size_t> i(ell), j(ell);
-	CppAD::vector<double> gradient(n * n);
+	CppAD::vector<double> gradient(n);
 	link_ode(repeat, retape, x, gradient);
 	return;
 }
