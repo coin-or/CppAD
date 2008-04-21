@@ -38,6 +38,8 @@ AM_LDFLAGS    = -pg
 #
 profile_SOURCES = \
 	../main.cpp \
+	../link_ode.cpp \
+	../cppad/ode.cpp \
 	../link_det_lu.cpp \
 	../link_det_minor.cpp \
 	../link_poly.cpp \

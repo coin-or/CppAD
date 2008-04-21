@@ -38,6 +38,8 @@ assist you in learning about changes between various versions of CppAD.
 $head 04-20$$
 Added the $cref/ode_evaluate/$$ speed test utility in 
 preparation for having ode speed tests.
+Created ode speed test for the $code cppad$$ and $code double$$ 
+cases; see $cref/speed_main/$$.
 In addition, 
 added the examples $cref/ode_evaluate.cpp/$$ and $cref/sparse_hessian.cpp/$$.
 $pre

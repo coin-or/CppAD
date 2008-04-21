@@ -35,8 +35,8 @@ depends on the vectors $italic i$$ and $italic j$$.
 Hence we use a different $cref/ADFun/$$ object for 
 each choice of $italic i$$ and $italic j$$.
 
-$head CppAD Sparse Hessian$$
-If the preprocessor symbol $code USE_CPPAD_SPARSE_HESSIAN$$ is 
+$head Sparse Hessian$$
+If the preprocessor symbol $code CPPAD_USE_SPARSE_HESSIAN$$ is 
 true, the routine $cref/SparseHessian/sparse_hessian/$$ 
 is used for the calculation.
 Otherwise, the routine $cref/Hessian/$$ is used.
@@ -50,7 +50,7 @@ $codep */
 # include <cppad/speed/sparse_evaluate.hpp>
 
 // value can be true or false
-# define USE_CPPAD_SPARSE_HESSIAN  1
+# define CPPAD_USE_SPARSE_HESSIAN  1
 
 bool link_sparse_hessian(
 	size_t                     repeat   , 
@@ -108,7 +108,7 @@ bool link_sparse_hessian(
 		CppAD::ADFun<double> f(X, Y);
 
 		// evaluate and return the hessian of f
-# if USE_CPPAD_SPARSE_HESSIAN
+# if CPPAD_USE_SPARSE_HESSIAN
 		hessian = f.SparseHessian(x, w);
 # else
 		hessian = f.Hessian(x, w);

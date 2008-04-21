@@ -22,7 +22,7 @@ $index ode, speed test$$
 $index speed, test ode$$
 $index test, ode speed$$
 
-$section Speed Testing Sparse Hessian$$
+$section Speed Testing Gradient of Ode Solution$$
 
 $head Prototype$$
 $codei%extern bool link_ode(
@@ -82,8 +82,8 @@ $latex \[
 
 $subhead double$$
 In the case where $icode package$$ is $code double$$,
-only the first element of $icode gradient$$ is used and it is actually 
-the value of $latex f(x)$$ ($latex f^{(1)} (x)$$ is not computed).
+only the first element of $icode gradient$$
+is modified and it is set to the function value.
 
 $end 
 -----------------------------------------------------------------------------
@@ -113,21 +113,19 @@ bool correct_ode(bool is_package_double)
 
 	size_t n      = 10;
 	size_t repeat = 1;
-	size_t ell    = 3 * n;
 	CppAD::vector<double> x(n);
-	CppAD::vector<size_t> i(ell), j(ell);
-	CppAD::vector<double> gradient(n * n);
+	CppAD::vector<double> gradient(n);
 
-	bool retape   = true;
+	bool retape   = ! is_package_double;
 	link_ode(repeat, retape, x, gradient);
 
 	size_t m, size;
-	if( is_package_double)
+	if( is_package_double )
 	{	m    = 0;  // check function value
 		size = 1;
 	}
 	else
-	{	m    = 2;  // check gradient value
+	{	m    = 1;  // check gradient value
 		size = n;
 	}
 	CppAD::vector<double> check(size);

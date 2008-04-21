@@ -100,6 +100,7 @@ $cref/correct/speed_main/option/correct/$$,
 $cref/speed/speed_main/option/speed/$$,
 $cref/det_minor/link_det_minor/$$,
 $cref/det_lu/link_det_lu/$$,
+$cref/ode/link_ode/$$,
 $cref/poly/link_poly/$$,
 $cref/sparse_hessian/link_sparse_hessian/$$.
 
@@ -165,6 +166,7 @@ CPPAD_DECLARE_SPEED(det_lu);
 CPPAD_DECLARE_SPEED(det_minor);
 CPPAD_DECLARE_SPEED(poly);
 CPPAD_DECLARE_SPEED(sparse_hessian);
+CPPAD_DECLARE_SPEED(ode);
 
 namespace {
 	using std::cout;
@@ -232,20 +234,22 @@ int main(int argc, char *argv[])
 
 	const char *option[]= {
 		"correct",
-		"speed",
 		"det_lu",
 		"det_minor",
+		"ode",
 		"poly",
-		"sparse_hessian"
+		"sparse_hessian",
+		"speed"
 	};
 	const size_t n_option  = sizeof(option) / sizeof(option[0]);
-	const size_t option_correct   = 0;
-	const size_t option_speed     = 1;
-	const size_t option_det_lu    = 2;
-	const size_t option_det_minor = 3;
-	const size_t option_poly      = 4;
+	const size_t option_correct        = 0;
+	const size_t option_det_lu         = 1;
+	const size_t option_det_minor      = 2;
+	const size_t option_ode            = 3;
+	const size_t option_poly           = 4;
 	const size_t option_sparse_hessian = 5;
-	assert( n_option == option_sparse_hessian+1 );
+	const size_t option_speed          = 6;
+	assert( n_option == option_speed+1 );
 
 	size_t i;
 	size_t match = n_option;
@@ -275,11 +279,13 @@ int main(int argc, char *argv[])
 	size_t n_size   = 5;
 	CppAD::vector<size_t> size_det_lu(n_size);
 	CppAD::vector<size_t> size_det_minor(n_size);
+	CppAD::vector<size_t> size_ode(n_size);
 	CppAD::vector<size_t> size_poly(n_size);
 	CppAD::vector<size_t> size_sparse_hessian(n_size);
 	for(i = 0; i < n_size; i++) 
 	{	size_det_lu[i]      = 3 * i + 1;
 		size_det_minor[i]   = i + 1;
+		size_ode[i]         = 2 * i + 1;
 		size_poly[i]        = 8 * i + 1;
 		size_sparse_hessian[i] = 10 * (i + 1);
 	}
@@ -296,6 +302,9 @@ int main(int argc, char *argv[])
 		);
 		if( available_det_minor() ) ok &= run_correct(
 			correct_det_minor, "det_minor"    
+		);
+		if( available_ode() ) ok &= run_correct(
+			correct_ode,      "ode"         
 		);
 		if( available_poly() ) ok &= run_correct(
 			correct_poly,      "poly"         
@@ -322,6 +331,9 @@ int main(int argc, char *argv[])
 		);
 		if( available_det_minor() ) Run_speed(
 		speed_det_minor, size_det_minor, "det_minor"
+		);
+		if( available_ode() ) Run_speed(
+		speed_ode,       size_ode,       "ode"
 		);
 		if( available_poly() ) Run_speed(
 		speed_poly,      size_poly,      "poly"
@@ -352,6 +364,17 @@ int main(int argc, char *argv[])
 		}
 		ok &= run_correct(correct_det_minor,       "det_minor");
 		Run_speed(speed_det_minor, size_det_minor, "det_minor");
+		break;
+		// ---------------------------------------------------------
+
+		case option_ode:
+		if( ! available_ode() )
+		{	cout << AD_PACKAGE << ": option " << argv[1] 
+			     << " not available" << endl; 
+			exit(1);
+		}
+		ok &= run_correct(correct_ode,           "ode");
+		Run_speed(speed_ode,      size_ode,      "ode");
 		break;
 		// ---------------------------------------------------------
 

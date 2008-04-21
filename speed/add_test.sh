@@ -15,9 +15,9 @@ then
 	echo "It must first be created before executing this script."
 	exit 1
 fi
-if grep "speed\/link_$test_name.cpp" main.cpp
+if ! grep "speed\/link_$test_name.cpp" main.cpp
 then
-	echo "speed/link_$test_name.cpp is already in main.cpp children" 
+	echo "link_$test_name.cpp has not yet been added to main.cpp"
 	exit 1
 fi
 list="
@@ -27,7 +27,7 @@ list="
 	fadbad
 	sacado
 "
-for dir in $list
+for dir in profile $list
 do
 	if grep "link_$test_name.cpp" $dir/makefile.am
 	then
@@ -53,3 +53,6 @@ do
 		-e "s/\/main.cpp.*/&\n\t..\/link_$test_name.cpp \\\\/" \
 		-e "s/\/link_$test_name.cpp.*/&\n\t$test_name.cpp \\\\/"
 done
+sed -i profile/makefile.am \
+	-e "s/\/main.cpp.*/&\n\t..\/link_$test_name.cpp \\\\/" \
+	-e "s/\/link_$test_name.cpp.*/&\n\t..\/cppad\/$test_name.cpp \\\\/"

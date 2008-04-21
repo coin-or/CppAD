@@ -173,7 +173,8 @@ public:
 	{
 		if( m_ == 0 )
 			ode_y(t, z, h);
-		else	ode_z(t, z, h);
+		if( m_ == 1 )
+			ode_z(t, z, h);
 	}
 	void ode_y(
 		const Float                  &t, 
