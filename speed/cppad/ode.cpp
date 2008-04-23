@@ -38,7 +38,7 @@ $codep */
 # include <cppad/speed/ode_evaluate.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
-extern bool link_ode(
+bool link_ode(
 	size_t                     repeat     ,
 	bool                       retape     ,
 	CppAD::vector<double>      &x         ,
@@ -46,14 +46,16 @@ extern bool link_ode(
 )
 {	// -------------------------------------------------------------
 	// setup
-	using CppAD::AD;
+	typedef CppAD::AD<double>       ADScalar;
+	typedef CppAD::vector<ADScalar> ADVector;
+	typedef CppAD::vector<double>   DblVector;
 
 	size_t j;
 	size_t m = 0;
 	size_t n = x.size();
-	CppAD::vector< AD<double> > X(n);
-	CppAD::vector< AD<double> > Y(1);
-	CppAD::vector<double>       w(1);
+	ADVector  X(n);
+	ADVector  Y(1);
+	DblVector w(1);
 	w[0] = 1.;
 
 	while(repeat--)

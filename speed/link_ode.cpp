@@ -111,12 +111,12 @@ bool available_ode(void)
 bool correct_ode(bool is_package_double)
 {	bool ok       = true;
 
-	size_t n      = 10;
+	size_t n      = 5;
 	size_t repeat = 1;
 	CppAD::vector<double> x(n);
 	CppAD::vector<double> gradient(n);
 
-	bool retape   = ! is_package_double;
+	bool retape   = true;
 	link_ode(repeat, retape, x, gradient);
 
 	size_t m, size;

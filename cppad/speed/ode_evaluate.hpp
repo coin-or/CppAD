@@ -186,14 +186,14 @@ public:
 		size_t i, n = x_.size();
 		Float yi1 = Float(1);
 		for(i = 0; i < n; i++)
-		{	g[i]  = x_[i] * yi1;
+		{	g[i]  = Float(int(i+1)) * x_[i] * yi1;
 			yi1   = y[i];
 		}
 
 		// solution  for this equation is
-		// y_0 (t) = x_0 * t / 1 !
-		// y_1 (t) = x_1 * x_0 * t^2 / 2 !
-		// y_2 (t) = x_2 * x_1 * x_0 * t^3 / 3 !
+		// y_0 (t) = x_0 * t
+		// y_1 (t) = x_1 * x_0 * t^2 
+		// y_2 (t) = x_2 * x_1 * x_0 * t^3
 		// ...
 	}
 	void ode_z(
@@ -208,7 +208,7 @@ public:
 		// y_t
 		Float zi1 = Float(1);
 		for(i = 0; i < n; i++)
-		{	h[i] = x_[i] * zi1;
+		{	h[i] = Float(int(i+1)) * x_[i] * zi1;
 			for(j = 0; j < n; j++)
 				h[n + i * n + j] = 0.;
 			zi1 = z[i];
@@ -222,11 +222,11 @@ public:
 		// yi_xj_t
 		for(i = 1; i < n; i++)
 		{	// partial g[i] w.r.t. x[i]
-			gi_xi  = z[i-1];
+			gi_xi  = Float(int(i+1)) * z[i-1];
 			ij     = n + i * n + i;	
 			h[ij] += gi_xi;
 			// partial g[i] w.r.t y[i-1] 
-			gi_yi1 = x_[i];
+			gi_yi1 = Float(int(i+1)) * x_[i];
 			// multiply by partial y[i-1] w.r.t x[j];
 			for(j = 0; j < n; j++)
 			{	ij     = n + (i-1) * n + j;
@@ -265,7 +265,6 @@ void ode_evaluate(
 	Float  tf = 1.;
 	Vector yi(ell);
 	Vector yf(ell);
-	Vector e(ell);
 
 	size_t i;
 	for(i = 0; i < ell; i++)

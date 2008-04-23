@@ -45,7 +45,7 @@ sed -i main.cpp -e "s/speed\/link[^%]*\$/&%\n\tspeed\/link_$test_name.cpp/"
 #
 copy=`sed -n ../COPYING -e '/^\/\*/,/\*\/$/p'`
 link=`sed -n link_$test_name.cpp -e "/^ *extern *bool *link_$test_name/,/^);/p"`
-fun=`echo "$link" | sed -e 's/extern/\n&/' -e 's/^);/)\n{\n\treturn false;\n}/'`
+fun=`echo "$link" | sed -e 's/extern */\n/' -e 's/^);/)\n{\n\treturn false;\n}/'`
 for dir in $list
 do
 	echo "$copy$fun" > $dir/$test_name.cpp

@@ -2,7 +2,7 @@
 # define CPPAD_RUNGE_45_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -331,7 +331,7 @@ Vector Runge45(
 	size_t i, j, k, m;              // indices
 
 	size_t  n = xi.size();          // number of components in X(t)
-	Scalar  ns = Scalar(double(M)); // number of steps as Scalar object
+	Scalar  ns = Scalar(int(M));    // number of steps as Scalar object
 	Scalar  h = (tf - ti) / ns;     // step size 
 	Scalar  z = Scalar(0);          // zero
 	for(i = 0; i < n; i++)          // initialize e = 0

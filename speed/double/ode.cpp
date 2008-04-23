@@ -35,7 +35,7 @@ $codep */
 // value can be true of false
 # define DOUBLE_COMPUTE_GRADIENT 0
 
-extern bool link_ode(
+bool link_ode(
 	size_t                     repeat     ,
 	bool                       retape     ,
 	CppAD::vector<double>      &x         ,
