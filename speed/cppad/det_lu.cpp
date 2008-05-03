@@ -29,15 +29,12 @@ $index cppad, speed lu$$
 $index speed, cppad lu$$
 $index lu, speed cppad$$
 
-$head Operation Sequence$$
-Note that the Lu factorization
-$cref/operation sequence/glossary/Operation/Sequence/$$
-depends on the matrix being factored.
-Hence we use a different $cref/ADFun/$$ object for each matrix.
+$head Specifications$$
+See $cref/link_det_lu/$$.
 
-$head link_det_lu$$
-$index link_det_lu$$
-Routine that computes the gradient of determinant using CppAD:
+$head Implementation$$
+$index cppad, link_det_lu$$
+$index link_det_lu, cppad$$
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_lu.hpp>

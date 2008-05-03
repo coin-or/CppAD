@@ -2,6 +2,10 @@
 # Use this shell script when a new test is added to initially create 
 # the source code files */test_name.cpp which return false (for not available).
 #
+echo "Change this script so that it automates the omhelp commands"
+echo "at the beginning of the created files."
+echo exit 1
+#
 if [ "$1" == "" ]
 then
 	echo "usage: new_test.sh test_name"

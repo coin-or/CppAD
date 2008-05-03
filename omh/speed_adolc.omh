@@ -61,6 +61,7 @@ $cref/configure/InstallUnix/Configure/$$ command.
 $contents%
 	speed/adolc/det_minor.cpp%
 	speed/adolc/det_lu.cpp%
+	speed/adolc/ode.cpp%
 	speed/adolc/poly.cpp%
 	speed/adolc/sparse_hessian.cpp
 %$$

@@ -8,6 +8,25 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+/*
+$begin fadbad_ode.cpp$$
+$spell
+	cstring
+	cppad
+	hpp
+	retape
+        Fadbad
+        bool
+        CppAD
+$$
+
+$section Fadbad Speed: Ode$$
+
+Indicate that this test is not available:
+$codep */
+
+// The fadbad version of this test is not yet available
+
 # include <cstring>
 # include <cppad/vector.hpp>
 
@@ -20,3 +39,6 @@ bool link_ode(
 {
 	return false;
 }
+/* $$
+$end
+*/

@@ -11,6 +11,22 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cstring>
 # include <cppad/vector.hpp>
 
+/*
+$begin adolc_ode.cpp$$
+$spell
+        Adolc
+        bool
+        CppAD
+	retape
+$$
+
+$section Adolc Speed: Ode$$
+
+Indicate that this test is not available:
+$codep */
+
+// The adolc version of this test is not yet available
+
 bool link_ode(
 	size_t                     repeat     ,
 	bool                       retape     ,
@@ -20,3 +36,6 @@ bool link_ode(
 {
 	return false;
 }
+/* $$
+$end
+*/

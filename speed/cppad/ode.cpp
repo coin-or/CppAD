@@ -15,9 +15,13 @@ $spell
 	cppad
 	hpp
 	bool
+	cstring
+	retape
+	typedef
+	gradient gradient
 $$
 
-$section CppAD Speed: Grandient of Ode Solution$$
+$section CppAD Speed: Gradient of Ode Solution$$
 
 $index cppad, speed ode gradient$$
 $index speed, cppad ode gradient$$
@@ -25,9 +29,7 @@ $index gradient, ode speed cppad$$
 $index ode, gradient speed cppad$$
 
 $head Operation Sequence$$
-The operation sequence is taped for each repetition.
-Otherwise, the operation sequence is only taped once
-and that sequence is used for each repetition.
+This initial implementation ignores the argument $italic retape$$.
 
 $head link_ode$$
 $index link_ode$$
@@ -78,3 +80,6 @@ bool link_ode(
 	}
 	return true;
 }
+/* $$
+$end
+*/

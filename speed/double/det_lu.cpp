@@ -21,13 +21,16 @@ $$
 
 $section Double Speed: Determinant Using Lu Factorization$$
 
+$head Specifications$$
+See $cref/link_det_lu/$$.
+
 $index double, speed lu$$
 $index speed, double lu$$
 $index lu, speed double$$
 
-$head link_det_lu$$
-$index link_det_lu$$
-Routine that computes the gradient of determinant using CppAD:
+$head Implementation$$
+$index double, link_det_lu$$
+$index link_det_lu, double$$
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_lu.hpp>

@@ -15,6 +15,10 @@ $spell
 	cppad
 	hpp
 	bool
+	cstring
+	retape
+	resize
+	endif
 $$
 
 $section Double Speed: Ode Solution$$
@@ -67,3 +71,6 @@ bool link_ode(
 # endif
 	return true;
 }
+/* $$
+$end
+*/

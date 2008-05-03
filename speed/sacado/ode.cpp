@@ -11,6 +11,17 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sacado_ode.cpp$$
 $spell
+	Sacado
+	cstring
+	cppad
+	hpp
+	bool
+	retape
+	CppAD
+	typedef
+	ADvar
+	Gradcomp
+	endif
 $$
 
 $section Sacado Speed: Gradient of Ode Solution$$
@@ -22,12 +33,14 @@ $index ode, gradient speed sacado$$
 
 $head link_ode$$
 $index link_ode$$
-This test is not yet avialble. It is waiting for a Sacado bug fix.
 $codep */
 
 # include <cstring>
 # include <cppad/vector.hpp>
 
+# define ODE_TEST_AVAILABLE 0
+
+# if ! ODE_TEST_AVAILABLE
 bool link_ode(
 	size_t                     repeat     ,
 	bool                       retape     ,
@@ -37,12 +50,10 @@ bool link_ode(
 {
 	return false;
 }
-# if 0
-/* $$
-$end
-*/
-// There apprears to be a bug in Sacado and the following generates
-// a segmentation fault.  See sacado_bug.sh in this directory.
+# else
+
+// There appears to be a problem with the way Sacado is used below
+// because the following generates a segmentation fault.  
 
 # include <Sacado.hpp>
 # include <cppad/speed/ode_evaluate.hpp>
@@ -95,3 +106,7 @@ bool link_ode(
 	return true;
 }
 # endif
+
+/* $$
+$end
+*/

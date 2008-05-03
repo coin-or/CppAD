@@ -67,6 +67,7 @@ $cref/configure/InstallUnix/Configure/$$ command.
 $contents%
 	speed/cppad/det_minor.cpp%
 	speed/cppad/det_lu.cpp%
+	speed/cppad/ode.cpp%
 	speed/cppad/poly.cpp%
 	speed/cppad/sparse_hessian.cpp
 %$$

@@ -33,15 +33,12 @@ $index sacado, speed lu$$
 $index speed, sacado lu$$
 $index lu, speed sacado$$
 
+$head Specifications$$
+See $cref/link_det_lu/$$.
 
-$head Operation Sequence$$
-Note that the Lu factorization
-$cref/operation sequence/glossary/Operation/Sequence/$$
-depends on the matrix being factored.
-
-$head link_det_lu$$
-$index link_det_lu$$
-Routine that computes the gradient of determinant using Sacado:
+$head Implementation$$
+$index sacado, link_det_lu$$
+$index link_det_lu, sacado$$
 $codep */
 # include <Sacado.hpp>
 # include <cppad/speed/det_by_lu.hpp>
