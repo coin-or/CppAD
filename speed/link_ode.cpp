@@ -106,6 +106,8 @@ $end
 # include <cppad/speed/ode_evaluate.hpp>
 # include <cppad/near_equal.hpp>
 
+// command line argument
+extern bool main_retape;
 
 extern bool link_ode(
 	size_t                     size       ,
@@ -117,7 +119,7 @@ extern bool link_ode(
 bool available_ode(void)
 {	size_t n      = 10;
 	size_t repeat = 1;
-	bool retape   = true;
+	bool retape   = main_retape;
 	CppAD::vector<double> x(n);
 	CppAD::vector<double> gradient(n);
 
@@ -131,7 +133,7 @@ bool correct_ode(bool is_package_double)
 	CppAD::vector<double> x(n);
 	CppAD::vector<double> gradient(n);
 
-	bool retape   = true;
+	bool retape   = main_retape;
 	link_ode(n, repeat, retape, x, gradient);
 
 	size_t m, size;
@@ -153,7 +155,7 @@ bool correct_ode(bool is_package_double)
 }
 void speed_ode(size_t n, size_t repeat)
 {
-	bool retape   = true;
+	bool retape   = main_retape;
 	CppAD::vector<double> x(n);
 	CppAD::vector<double> gradient(n);
 	link_ode(n, repeat, retape, x, gradient);

@@ -43,6 +43,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	retaped
+	retape
 	bool
 	ddp
 	cppad
@@ -61,18 +63,18 @@ $index test, cppad speed$$
 $section Speed Testing Main Program$$
 
 $head Syntax$$
-$syntax%speed/%package%/%package% %option% %seed%
+$codei%speed/%package%/%package% %option% %seed% %retape%
 %$$
 
 $head Purpose$$
 A version of this program runs the correctness tests
-or the speed tests for one AD package identified by $italic package$$.
+or the speed tests for one AD package identified by $icode package$$.
 
 $head package$$
 
 $subhead AD Package$$
-The value
-$italic package$$ can specify one of the following AD packages:
+The command line argument
+$icode package$$ specifies one of the following AD packages:
 $cref/adolc/speed_adolc/$$,
 $cref/cppad/speed_cppad/$$, 
 $cref/fadbad/speed_fadbad/$$, 
@@ -80,7 +82,7 @@ $cref/sacado/speed_sacado/$$.
 
 $subhead double$$
 The value
-$italic package$$ can be $code double$$ in which case
+$icode package$$ can be $code double$$ in which case
 the function values (instead of derivatives) are computed
 using double precision operations.
 This enables one to compare the speed of computing function
@@ -89,12 +91,12 @@ values in $code double$$ to the speed of the derivative computations.
 the speed of the function evaluation in $code double$$.) 
 
 $subhead profile$$
-In the special case where $italic package$$ is $code profile$$,
+In the special case where $icode package$$ is $code profile$$,
 the CppAD package is compiled and run with profiling to aid in determining
 where it is spending most of its time.
 
 $head option$$
-It the argument $italic option$$ specifies which test to run
+It the argument $icode option$$ specifies which test to run
 and has the following possible values:
 $cref/correct/speed_main/option/correct/$$,
 $cref/speed/speed_main/option/speed/$$,
@@ -105,32 +107,33 @@ $cref/poly/link_poly/$$,
 $cref/sparse_hessian/link_sparse_hessian/$$.
 
 $subhead correct$$
-If $italic option$$ is equal to $code correct$$,
+If $icode option$$ is equal to $code correct$$,
 all of the correctness tests are run.
 
 $subhead speed$$
-If $italic option$$ is equal to $code speed$$,
+If $icode option$$ is equal to $code speed$$,
 all of the speed tests are run.
-
-$head Return Values$$
-Each of the $italic option$$ values specified below
-corresponds to a particular test.
-The function call corresponding to each test
-has a $code bool$$ return value.
-If a particular $italic package$$ supports a test,
-it should return $code true$$ when the corresponding function is called.
-Otherwise (if the return value is $code false$$),
-the test is skipped whenever the corresponding
-$italic package$$ and $italic option$$ are specified.
 
 $head seed$$
 $index uniform_01$$
+The command line argument $icode seed$$ is a positive integer.
 The random number simulator $cref/uniform_01/$$ is initialized with
 the call
-$syntax%
+$codei%
 	uniform_01(%seed%)
 %$$
 before any of the testing routines (listed above) are called.
+
+$head retape$$
+The command line argument $icode retape$$ is
+either $code true$$ or $code false$$.
+If it is true,
+the AD operation sequence is retaped for every test repetition
+of each speed test.
+If it is false,
+and the particular test has a fixed operation sequence,
+the AD package is allowed to use on taping of the operation
+sequence for all the repetitions of that speed test.
 
 $head Correctness Results$$
 An output line is generated for each correctness test
@@ -167,6 +170,8 @@ CPPAD_DECLARE_SPEED(det_minor);
 CPPAD_DECLARE_SPEED(poly);
 CPPAD_DECLARE_SPEED(sparse_hessian);
 CPPAD_DECLARE_SPEED(ode);
+
+bool   main_retape;
 
 namespace {
 	using std::cout;
@@ -254,19 +259,30 @@ int main(int argc, char *argv[])
 	size_t i;
 	size_t match = n_option;
 	int    iseed = 0;
-	if( argc == 3 )
+	bool   error = argc != 4;
+	if( ! error )
 	{	for(i = 0; i < n_option; i++)
 			if( strcmp(option[i], argv[1]) == 0 )
 				match = i;
+		error = match == n_option;
 		iseed = std::atoi( argv[2] );
+		error |= iseed < 0;
+		if( strcmp(argv[3], "true") == 0 )
+			main_retape = true;
+		else if( strcmp(argv[3], "false") == 0 )
+			main_retape = false;
+		else	error = true;
+
 	}
-	if( match == n_option  || iseed <= 0 )
-	{	cout << "usage: ./" << AD_PACKAGE << " option seed" << endl;
+	if( error )
+	{	cout << "usage: ./" 
+		     << AD_PACKAGE << " option seed retape" << endl;
 		cout << "option choices: " << option[0];
 		for(i = 1; i < n_option; i++)
 			cout << ", " << option[i];
 		cout << "." << endl << "seed value: ";
 		cout << "a positive integer used as a random seed." << endl;
+		cout << "retape value: either \"ture\" or \"false\"." << endl;
 		cout << endl;
 		return 1;
 	}

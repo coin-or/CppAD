@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin double_poly.cpp$$
 $spell
+	retape
 	bool
 	cppad
 	CppAD
@@ -33,6 +34,7 @@ $codep */
 bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
+	bool                       retape   ,
 	CppAD::vector<double>     &a        ,  // coefficients of polynomial
 	CppAD::vector<double>     &z        ,  // polynomial argument value
 	CppAD::vector<double>     &p        )  // second derivative w.r.t z  

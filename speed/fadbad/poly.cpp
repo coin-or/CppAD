@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin fadbad_poly.cpp$$
 $spell
+	retape
 	std
 	cppad
 	cpp
@@ -38,13 +39,6 @@ $index fadbad, speed polynomial$$
 $index speed, fadbad polynomial$$
 $index polynomial, speed fadbad$$
 
-$head Operation Sequence$$
-Note that the polynomial evaluation
-$cref/operation sequence/glossary/Operation/Sequence/$$
-does not depend on the argument to the polynomial.
-Yet there does not seem to be a way to reuse the DAG to
-compute derivatives for other values of z.
-
 $head link_poly$$
 $index link_poly$$
 Routine that computes the derivative of a polynomial using Fadbad:
@@ -57,6 +51,7 @@ $codep */
 bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
+	bool                       retape   ,
 	CppAD::vector<double>     &a        ,  // coefficients of polynomial
 	CppAD::vector<double>     &z        ,  // polynomial argument value
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  

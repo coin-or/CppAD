@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_08$$
 $spell
+	retape
 	det
 	Adolc
 	gcc
@@ -34,6 +35,15 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-03$$
+Add the $cref/retape/speed_main/retape/$$ command line
+argument to the speed test main program.
+In addition, the following speed tests use this flag:
+$cref/cppad_ode.cpp/$$,
+$cref/adolc_poly.cpp/$$,
+$cref/cppad_poly.cpp/$$.
+
 
 $head 04-20$$
 Added the $cref/ode_evaluate/$$ speed test utility in 

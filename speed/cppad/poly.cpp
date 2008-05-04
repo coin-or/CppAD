@@ -11,6 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_poly.cpp$$
 $spell
+	retape
+	coef
 	ddp
 	ADScalar
 	dz
@@ -34,12 +36,6 @@ $index cppad, speed polynomial$$
 $index speed, cppad polynomial$$
 $index polynomial, speed cppad$$
 
-$head Operation Sequence$$
-Note that the polynomial evaluation
-$cref/operation sequence/glossary/Operation/Sequence/$$
-does not depend on the argument to the polynomial.
-Hence we use the same $cref/ADFun/$$ object for all the argument values.
-
 $head link_poly$$
 $index link_poly$$
 Routine that computes the second derivative of a polynomial using CppAD:
@@ -50,6 +46,7 @@ $codep */
 bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
+	bool                       retape   ,
 	CppAD::vector<double>     &a        ,  // coefficients of polynomial
 	CppAD::vector<double>     &z        ,  // polynomial argument value
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  
@@ -78,22 +75,22 @@ bool link_poly(
 	dz[0]  = 1.;
 	ddz[0] = 0.;
 
-	// choose an argument value
-	CppAD::uniform_01(1, z);
-	Z[0] = z[0];
+	if( retape ) while(repeat--)
+	{
+		// choose an argument value
+		CppAD::uniform_01(1, z);
+		Z[0] = z[0];
 
-	// declare independent variables
-	Independent(Z);
+		// declare independent variables
+		Independent(Z);
 
-	// AD computation of the function value 
-	P[0] = CppAD::Poly(0, A, Z[0]);
+		// AD computation of the function value 
+		P[0] = CppAD::Poly(0, A, Z[0]);
 
-	// create function object f : A -> detA
-	CppAD::ADFun<double> f(Z, P);
+		// create function object f : A -> detA
+		CppAD::ADFun<double> f(Z, P);
 
-	// ------------------------------------------------------
-	while(repeat--)
-	{	// get the next argument value
+		// get the next argument value
 		CppAD::uniform_01(1, z);
 
 		// evaluate the polynomial at the new argument value
@@ -102,9 +99,39 @@ bool link_poly(
 		// evaluate first order Taylor coefficient
 		dp = f.Forward(1, dz);
 
-		// second derivative is twice second order Taylor coefficient
+		// second derivative is twice second order Taylor coef
 		ddp     = f.Forward(2, ddz);
 		ddp[0] *= 2.;
+	}
+	else
+	{
+		// choose an argument value
+		CppAD::uniform_01(1, z);
+		Z[0] = z[0];
+
+		// declare independent variables
+		Independent(Z);
+
+		// AD computation of the function value 
+		P[0] = CppAD::Poly(0, A, Z[0]);
+
+		// create function object f : A -> detA
+		CppAD::ADFun<double> f(Z, P);
+
+		while(repeat--)
+		{	// get the next argument value
+			CppAD::uniform_01(1, z);
+
+			// evaluate the polynomial at the new argument value
+			p = f.Forward(0, z);
+
+			// evaluate first order Taylor coefficient
+			dp = f.Forward(1, dz);
+
+			// second derivative is twice second order Taylor coef
+			ddp     = f.Forward(2, ddz);
+			ddp[0] *= 2.;
+		}
 	}
 	return true;
 }

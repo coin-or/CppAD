@@ -11,6 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_poly.cpp$$
 $spell
+	retape
+	coef
 	cppad
 	hos
 	Taylor
@@ -36,12 +38,6 @@ $index adolc, speed polynomial$$
 $index speed, adolc polynomial$$
 $index polynomial, speed adolc$$
 
-$head Operation Sequence$$
-Note that the polynomial evaluation
-$cref/operation sequence/glossary/Operation/Sequence/$$
-does not depend on the argument to the polynomial.
-Hence we use the same $cref/ADFun/$$ object for all the argument values.
-
 $head link_poly$$
 $index link_poly$$
 Routine that computes the second derivative of a polynomial using Adolc:
@@ -58,6 +54,7 @@ $codep */
 bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
+	bool                       retape   ,
 	CppAD::vector<double>     &a        ,  // coefficients of polynomial
 	CppAD::vector<double>     &z        ,  // polynomial argument value
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  
@@ -83,20 +80,6 @@ bool link_poly(
 	// domain and range space AD values
 	adouble Z, P;
 
-	// choose an argument value
-	CppAD::uniform_01(1, z);
-
-	// declare independent variables
-	trace_on(tag, keep);
-	Z <<= z[0]; 
-
-	// AD computation of the function value 
-	P = CppAD::Poly(0, A, Z);
-
-	// create function object f : Z -> P
-	P >>= f;
-	trace_off();
-
 	// allocate arguments to hos_forward
 	double *x0 = CPPAD_TRACK_NEW_VEC(n, x0);
 	double *y0 = CPPAD_TRACK_NEW_VEC(m, y0);
@@ -111,17 +94,58 @@ bool link_poly(
 	x[0][0] = 1.;  // first order
 	x[0][1] = 0.;  // second order
 	
-	// ------------------------------------------------------
-	while(repeat--)
-	{	// get the next argument value
+
+	if( retape ) while(repeat--)
+	{	// choose an argument value
+		CppAD::uniform_01(1, z);
+
+		// declare independent variables
+		trace_on(tag, keep);
+		Z <<= z[0]; 
+
+		// AD computation of the function value 
+		P = CppAD::Poly(0, A, Z);
+
+		// create function object f : Z -> P
+		P >>= f;
+		trace_off();
+
+		// get the next argument value
 		CppAD::uniform_01(1, z);
 		x0[0] = z[0];
 
 		// evaluate the polynomial at the new argument value
 		hos_forward(tag, m, n, d, keep, x0, x, y0, y);
 
-		// second derivative is twice second order Taylor coefficient
+		// second derivative is twice second order Taylor coef
 		ddp[0] = 2. * y[0][1];
+	}
+	else
+	{
+		// choose an argument value
+		CppAD::uniform_01(1, z);
+
+		// declare independent variables
+		trace_on(tag, keep);
+		Z <<= z[0]; 
+
+		// AD computation of the function value 
+		P = CppAD::Poly(0, A, Z);
+
+		// create function object f : Z -> P
+		P >>= f;
+		trace_off();
+		while(repeat--)
+		{	// get the next argument value
+			CppAD::uniform_01(1, z);
+			x0[0] = z[0];
+
+			// evaluate the polynomial at the new argument value
+			hos_forward(tag, m, n, d, keep, x0, x, y0, y);
+
+			// second derivative is twice second order Taylor coef
+			ddp[0] = 2. * y[0][1];
+		}
 	}
 	// ------------------------------------------------------
 	// tear down

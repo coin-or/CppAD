@@ -29,9 +29,6 @@ $index speed, cppad ode gradient$$
 $index gradient, ode speed cppad$$
 $index ode, gradient speed cppad$$
 
-$head Operation Sequence$$
-This initial implementation ignores the argument $italic retape$$.
-
 $head link_ode$$
 $index link_ode$$
 Routine that computes the gradient of determinant using CppAD:
@@ -65,7 +62,7 @@ bool link_ode(
 	DblVector w(1);
 	w[0] = 1.;
 
-	while(repeat--)
+	if( retape ) while(repeat--)
 	{ 	// choose next x value
 		uniform_01(n, x);
 		for(j = 0; j < n; j++)
@@ -83,6 +80,30 @@ bool link_ode(
 		// use reverse mode to compute gradient
 		gradient = F.Reverse(1, w);
 	}
+	else
+	{	// choose any x value
+		for(j = 0; j < n; j++)
+			X[j] = 0.;
+
+		// declare the independent variable vector
+		Independent(X);
+
+		// evaluate function
+		CppAD::ode_evaluate(X, m, Y);
+
+		// create function object f : X -> Y
+		CppAD::ADFun<double>   F(X, Y);
+
+		while(repeat--)
+		{ 	// choose next x value
+			uniform_01(n, x);
+			// zero order forward mode to evaluate function at x
+			F.Forward(0, x);
+			// first order reverse mode to compute gradient
+			gradient = F.Reverse(1, w);
+		}
+	}
+
 	return true;
 }
 /* $$
