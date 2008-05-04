@@ -414,7 +414,13 @@ then
 		sed -e '/stl_uninitialized.h:/d' make_error.log
 		exit 1
 	fi
-	sed -e '/stl_uninitialized.h:/d' make_error.log >> ../build_test.log
+	sed -i -e '/stl_uninitialized.h:/d' make_error.log 
+	if grep 'warning:' make_error.log
+	then
+		cat make_error.log
+		exit 1
+	fi
+	cat make_error.log >> ../build_test.log
 	#
 	list="
 		example/example

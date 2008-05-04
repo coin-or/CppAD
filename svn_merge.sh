@@ -25,30 +25,25 @@ echo "DryRun = $DryRun"
 ToDirectory=trunk
 #
 # Name of the directory where the changes have been committed
-FromDirectory=branches/hash_table
+FromDirectory=branches/speed
 #
 # Version of the repository corresponding to FromDirectory just before changes
-Start=1167
+Start=1197
 # 
 # Version of the repository corresponding to FromDirecrtory after the changes
 End=HEAD
 #
-# echo the svn merge command
-echo "cd  .."
-echo "svn merge $DryRun -r $Start:$End                    \\"
-echo "	  https://projects.coin-or.org/svn/CppAD/$FromDirectory \\"
-echo "	  $ToDirectory                                    \\"
-echo "| tee $ToDirectory/svn_merge.out "
-#
 # Change into the directory corresponding to the entire repository; i.e.,
 # https://www.coin-or.org/svn/CppAD/ 
+echo "cd .."
 cd ..
 #
-# execute the svn merge command
-svn merge $DryRun -r $Start:$End                         \
-    https://www.coin-or.org/svn/CppAD/$FromDirectory     \
-    $ToDirectory                                         \
-| tee $ToDirectory/svn_merge.out
+# the svn merge command
+args="merge $DryRun -r $Start:$End"
+args="$args https://projects.coin-or.org/svn/CppAD/$FromDirectory"
+args="$args $ToDirectory"
+echo "svn $args"
+svn $args
 #
 # create commands to go in svn_commit
 #

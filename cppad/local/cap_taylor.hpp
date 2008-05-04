@@ -121,6 +121,7 @@ void ADFun<Base>::capacity_taylor(size_t c)
 			CPPAD_TRACK_DEL_VEC(taylor_);
 		taylor_ = CPPAD_NULL;
 		taylor_per_var_ = 0;
+		taylor_col_dim_ = 0;
 		return;
 	}
 	

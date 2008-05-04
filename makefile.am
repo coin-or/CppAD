@@ -110,6 +110,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/for_sparse_jac.hpp \
 	cppad/local/forward.hpp \
 	cppad/local/forward_sweep.hpp \
+	cppad/local/forward0sweep.hpp \
 	cppad/local/fun_check.hpp \
 	cppad/local/fun_eval.hpp \
 	cppad/local/fun_construct.hpp \

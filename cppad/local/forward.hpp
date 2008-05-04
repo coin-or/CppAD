@@ -76,7 +76,10 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 	}
 
 	// evaluate the derivatives
-	compare_change_ = ForwardSweep(
+	if( p == 0 ) compare_change_ = forward0sweep(
+		true, total_num_var_, &play_, taylor_col_dim_, taylor_
+	);
+	else forward_sweep(
 		true, p, total_num_var_, &play_, taylor_col_dim_, taylor_
 	);
 
