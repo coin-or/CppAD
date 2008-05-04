@@ -40,6 +40,7 @@ $codep */
 # define DOUBLE_COMPUTE_GRADIENT 0
 
 bool link_ode(
+	size_t                     size       ,
 	size_t                     repeat     ,
 	bool                       retape     ,
 	CppAD::vector<double>      &x         ,
@@ -48,7 +49,8 @@ bool link_ode(
 {	// -------------------------------------------------------------
 	// setup
 
-	size_t n = x.size();
+	size_t n = size;
+	assert( x.size() == n );
 
 	size_t m = 0;
 	CppAD::vector<double> f(1);

@@ -22,6 +22,7 @@ $spell
 	ADvar
 	Gradcomp
 	endif
+	cassert
 $$
 
 $section Sacado Speed: Gradient of Ode Solution$$
@@ -42,6 +43,7 @@ $codep */
 
 # if ! ODE_TEST_AVAILABLE
 bool link_ode(
+	size_t                     size       ,
 	size_t                     repeat     ,
 	bool                       retape     ,
 	CppAD::vector<double>      &x         ,
@@ -59,6 +61,7 @@ bool link_ode(
 # include <cppad/speed/ode_evaluate.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/vector.hpp>
+# include <cassert>
 
 bool link_ode(
 	size_t                     repeat     ,
@@ -75,7 +78,8 @@ bool link_ode(
 
 	size_t j;
 	size_t m = 0;
-	size_t n = x.size();
+	size_t n = size;
+	assert( x.size() == n );
 	ADVector  X(n);
 	ADVector  Y(1);
 	ADScalar  last;

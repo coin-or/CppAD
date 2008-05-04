@@ -26,6 +26,7 @@ $section Speed Testing Gradient of Ode Solution$$
 
 $head Prototype$$
 $codei%extern bool link_ode(
+	size_t                 %size%      ,
 	size_t                 %repeat%    ,
 	bool                   %retape%    ,
 	CppAD::vector<double> &%x%         ,
@@ -33,10 +34,28 @@ $codei%extern bool link_ode(
 );
 %$$
 
+$head Purpose$$
+Each $cref/package/speed_main/package/$$
+must define a version of this routine as specified below.
+This is used by the $cref/speed_main/$$ program
+to run the corresponding speed and correctness tests.
+
+
 $head f$$
 The function 
 $latex f : \R^n \rightarrow \R $$ that is define and computed by
 evaluating $cref/ode_evaluate/$$.
+
+$head Return Value$$
+If this speed test is not yet
+supported by a particular $icode package$$,
+the corresponding return value for $code link_ode$$
+should be $code false$$.
+
+$head size$$
+The argument $icode size$$ 
+is the number of variables in the ordinary differential equation;
+i.e., $latex n = size$$.
 
 $head repeat$$
 The argument $icode repeat$$ is the number of different functions
@@ -57,12 +76,7 @@ Thus an AD package may use one recording of the
 operation sequence to compute the gradient for all of the repetitions.
 
 $head x$$
-The argument $icode x$$ has prototype
-$codei%
-        CppAD::vector<double> &%x%
-%$$
-The size of the vector $icode x$$ determines 
-and is equal to the value of $latex n$$.
+The argument $icode x$$ is a vector with $latex n$$ elements.
 The input value of the elements of $icode x$$ does not matter.
 On output, it has been set to the
 argument value for which the function,
@@ -94,6 +108,7 @@ $end
 
 
 extern bool link_ode(
+	size_t                     size       ,
 	size_t                     repeat     ,
 	bool                       retape     ,
 	CppAD::vector<double>      &x         ,
@@ -106,7 +121,7 @@ bool available_ode(void)
 	CppAD::vector<double> x(n);
 	CppAD::vector<double> gradient(n);
 
-	return link_ode(repeat, retape, x, gradient);
+	return link_ode(n, repeat, retape, x, gradient);
 }
 bool correct_ode(bool is_package_double)
 {	bool ok       = true;
@@ -117,7 +132,7 @@ bool correct_ode(bool is_package_double)
 	CppAD::vector<double> gradient(n);
 
 	bool retape   = true;
-	link_ode(repeat, retape, x, gradient);
+	link_ode(n, repeat, retape, x, gradient);
 
 	size_t m, size;
 	if( is_package_double )
@@ -141,6 +156,6 @@ void speed_ode(size_t n, size_t repeat)
 	bool retape   = true;
 	CppAD::vector<double> x(n);
 	CppAD::vector<double> gradient(n);
-	link_ode(repeat, retape, x, gradient);
+	link_ode(n, repeat, retape, x, gradient);
 	return;
 }

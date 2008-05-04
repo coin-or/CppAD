@@ -28,6 +28,7 @@ $codep */
 // The adolc version of this test is not yet available
 
 bool link_ode(
+	size_t                     size       ,
 	size_t                     repeat     ,
 	bool                       retape     ,
 	CppAD::vector<double>      &x         ,
