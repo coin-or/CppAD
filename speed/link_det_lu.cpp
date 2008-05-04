@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin link_det_lu$$
 $spell
+	retape
 	det_lu
 	bool
 	CppAD
@@ -53,9 +54,10 @@ $head repeat$$
 The argument $icode repeat$$ is the number of different matrices
 that the gradient (or determinant) is computed for.
 
-$subhead Operation Sequence$$
+$head retape$$
 For this test, the operation sequence changes for each repetition.
-Thus an AD package can not use one recording of the 
+Thus the argument $cref/retape/speed_main/retape/$$ is not present
+because an AD package can not use one recording of the 
 operation sequence to compute the gradient for all of the repetitions.
 
 $head matrix$$

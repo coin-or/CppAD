@@ -37,9 +37,16 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 05-03$$
-Add the $cref/retape/speed_main/retape/$$ command line
-argument to the speed test main program.
-In addition, the following speed tests use this flag:
+The $code retape$$ flag has been added to $cref/speed_main/$$.
+In addition the routines
+$cref/link_det_minor/$$, $cref/link_poly/$$, and $cref/link_ode/$$
+pass this flag along to the speed test implementations
+(because the corresponding tests have a fixed operation sequence).
+If this flag is false, a test implementation is allowed to just tape
+the operation sequence once and reuse it. 
+The following tests use this flag:
+$cref/adolc_det_minor.cpp/$$,
+$cref/cppad_det_minor.cpp/$$,
 $cref/cppad_ode.cpp/$$,
 $cref/adolc_poly.cpp/$$,
 $cref/cppad_poly.cpp/$$.

@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin link_sparse_hessian$$
 $spell
+	retape
 	bool
 	CppAD
 $$
@@ -51,10 +52,11 @@ Each function corresponds to a randomly chosen index vectors, i.e.,
 for each repetition a random choice is made for
 $latex i[k]$$ and $latex j[k]$$ for $latex k = 0 , \ldots , \ell-1$$.
 
-$head Operation Sequence$$
+$head retape$$
 For this test, the operation sequence changes for each repetition.
-Thus an AD package can not use one recording of the 
-operation sequence to compute the Hessian for all of the repetitions.
+Thus the argument $cref/retape/speed_main/retape/$$ is not present
+because an AD package can not use one recording of the 
+operation sequence to compute the gradient for all of the repetitions.
 
 $head x$$
 The argument $icode x$$ has prototype

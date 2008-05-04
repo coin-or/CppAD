@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin double_det_minor.cpp$$
 $spell
+	retape
 	bool
 	cppad
 	det
@@ -18,12 +19,11 @@ $spell
 	hpp
 $$
 
-$section Double Speed: Determinant Using Expansion by Minors$$
+$section Double Speed: Determinant by Minor Expansion$$
 
 $index cppad, speed minor$$
 $index speed, cppad minor$$
 $index minor, speed cppad$$
-
 
 $head link_det_minor$$
 $index link_det_minor$$
@@ -36,6 +36,7 @@ $codep */
 bool link_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
+	bool                       retape   ,
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &det      )
 {

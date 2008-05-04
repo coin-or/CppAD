@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin link_det_minor$$
 $spell
+	retape
 	det
 	bool
 	CppAD
@@ -22,12 +23,13 @@ $index det_minor, speed test$$
 $index speed, test det_minor$$
 $index test, det_minor speed$$
 
-$section Speed Testing Gradient of Determinant Computed by Minor Expansion$$
+$section Speed Testing Gradient of Determinant by Minor Expansion$$
 
 $head Prototype$$
 $codei%extern bool link_det_minor(
 	size_t                 %size%      , 
 	size_t                 %repeat%    , 
+	bool                   %retape%    ,
 	CppAD::vector<double> &%matrix%    ,
 	CppAD::vector<double> &%gradient% 
 );
@@ -53,10 +55,19 @@ $head repeat$$
 The argument $icode repeat$$ is the number of different matrices
 that the gradient (or determinant) is computed for.
 
-$subhead Operation Sequence$$
-For this test, the operation sequence is the same for each repetition 
-and it is valid for an AD package to use one recording of the 
-operation sequence to compute the derivatives for all repetitions.
+$head retape$$
+
+$subhead true$$
+If $icode retape$$ is true, 
+the operation sequence is considered to change for each repetition.
+Thus an AD package can not use one recording of the 
+operation sequence to compute the gradient for all of the repetitions.
+
+$subhead false$$
+If $icode retape$$ is false, 
+the operation sequence is known to be the same for each repetition.
+Thus an AD package may use one recording of the 
+operation sequence to compute the gradient for all of the repetitions.
 
 $head matrix$$
 The argument $icode matrix$$ is a vector with 
@@ -85,9 +96,13 @@ $end
 # include <cppad/speed/det_grad_33.hpp>
 # include <cppad/speed/det_33.hpp>
 
+// command line argument
+extern bool main_retape;
+
 extern bool link_det_minor(
 	size_t                     size      , 
 	size_t                     repeat    , 
+	bool                       retape    ,
 	CppAD::vector<double>      &matrix   ,
 	CppAD::vector<double>      &gradient 
 );
@@ -95,18 +110,20 @@ extern bool link_det_minor(
 bool available_det_minor(void)
 {	size_t size   = 3;
 	size_t repeat = 1;
+	bool   retape = main_retape;
 	CppAD::vector<double> matrix(size * size);
 	CppAD::vector<double> gradient(size * size);
 
-	return link_det_minor(size, repeat, matrix, gradient);
+	return link_det_minor(size, repeat, retape, matrix, gradient);
 }
 bool correct_det_minor(bool is_package_double)
 {	size_t size   = 3;
 	size_t repeat = 1;
+	bool   retape = main_retape;
 	CppAD::vector<double> matrix(size * size);
 	CppAD::vector<double> gradient(size * size);
 
-	link_det_minor(size, repeat, matrix, gradient);
+	link_det_minor(size, repeat, retape, matrix, gradient);
 	bool ok = CppAD::det_grad_33(matrix, gradient);
 	if( is_package_double )
 		ok = CppAD::det_33(matrix, gradient);
@@ -116,7 +133,8 @@ bool correct_det_minor(bool is_package_double)
 void speed_det_minor(size_t size, size_t repeat)
 {	CppAD::vector<double> matrix(size * size);
 	CppAD::vector<double> gradient(size * size);
+	bool   retape = main_retape;
 
-	link_det_minor(size, repeat, matrix, gradient);
+	link_det_minor(size, repeat, retape, matrix, gradient);
 	return;
 }

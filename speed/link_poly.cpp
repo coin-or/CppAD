@@ -30,7 +30,7 @@ $head Prototype$$
 $codei%extern bool link_poly(
 	size_t                 %size%    , 
 	size_t                 %repeat%  , 
-	size_t                 %retape%  ,
+	bool                   %retape%  ,
 	CppAD::vector<double> &%a%       ,
 	CppAD::vector<double> &%z%       ,
 	CppAD::vector<double> &%ddp      

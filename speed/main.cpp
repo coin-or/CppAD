@@ -280,9 +280,9 @@ int main(int argc, char *argv[])
 		cout << "option choices: " << option[0];
 		for(i = 1; i < n_option; i++)
 			cout << ", " << option[i];
-		cout << "." << endl << "seed value: ";
+		cout << "." << endl << "seed choices: ";
 		cout << "a positive integer used as a random seed." << endl;
-		cout << "retape value: either \"ture\" or \"false\"." << endl;
+		cout << "retape choices: either \"ture\" or \"false\"." << endl;
 		cout << endl;
 		return 1;
 	}

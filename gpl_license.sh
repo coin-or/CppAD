@@ -82,31 +82,38 @@ echo "gpl_license.sh: changing license from CPL to GPL"
 for file in $list
 do
 	file=`echo $file | sed -e 's|^\./||'`
-	#
-	sed -i $dir/$file \
--e 's/Common Public License Version 1.0/GNU General Public License Version 2/' 
-	#
-	err="no"
-	if ! grep "GNU General Public License Version 2" \
-		$dir/$file > /dev/null
+	name=`echo $file | sed -e 's|.*\/||'`
+	if [ "$name" = "makefine.in" ] || [ "$name" == "config.h.in" ]
 	then
-		err="yes"
-		# Check for special case where automatically generated files
-		# do not have any license statement.
-		ext=`echo $file | sed -e 's|.*\.||'`
-		if [ "$ext" = "in" ] 
+		if grep "Common Public License" $dir/$file > /dev/null
 		then
-			if ! grep "Common Public License" \
-				$dir/$file > /dev/null
+			echo "CPL license in $dir/$file"
+			exit 1
+		fi
+	else
+		if grep "GNU General Public License" $dir/$file > /dev/null
+		then
+			if [ "$name" != "doc.omh" ]
 			then
-				err="no"
+				echo "GPL license in initial $dir/$file"
+				exit 1
+			fi
+			head -20 $dir/$file | \
+			if grep "GNU General Public License" > /dev/null
+			then
+				echo "GPL license in initial $dir/$file"
+				exit 1
 			fi
 		fi
-	fi
-	if [ "$err" = "yes" ]
-	then
-		echo "gpl_license.sh: cannot change $dir/$file license" 
-		exit 1
+		#
+		sed -i $dir/$file \
+-e 's/Common Public License Version 1.0/GNU General Public License Version 2/' 
+		#
+		if ! grep "GNU General Public License" $dir/$file > /dev/null
+		then
+			echo "Cannot change CPL to GPL for $dir/$file"
+			exit 1
+		fi
 	fi
 	if [ "$ext" = ".sh" ]
 	then

@@ -64,6 +64,7 @@ bool link_ode(
 # include <cassert>
 
 bool link_ode(
+	size_t                     size       ,
 	size_t                     repeat     ,
 	bool                       retape     ,
 	CppAD::vector<double>      &x         ,

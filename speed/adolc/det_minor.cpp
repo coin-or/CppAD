@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_det_minor.cpp$$
 $spell
+	retape
 	cppad
 	zos
 	fos
@@ -27,17 +28,11 @@ $spell
 	srand
 $$
 
-$section Adolc Speed: Gradient of Determinant Using Expansion by Minors$$
+$section Adolc Speed: Gradient of Determinant by Minor Expansion$$
 
 $index adolc, speed minor$$
 $index speed, adolc minor$$
 $index minor, speed adolc$$
-
-$head Operation Sequence$$
-Note that the expansion by minors 
-$cref/operation sequence/glossary/Operation/Sequence/$$
-does not depend on the matrix being factored.
-Hence we use the same tape recording for all the matrices.
 
 $head link_det_minor$$
 $index link_det_minor$$
@@ -53,6 +48,7 @@ $codep */
 bool link_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
+	bool                       retape   ,
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &gradient )
 {
@@ -86,24 +82,25 @@ bool link_det_minor(
 	// vector to receive gradient result
 	double *grad = CPPAD_TRACK_NEW_VEC(n, grad);
 
-	// choose a matrix
-	CppAD::uniform_01(n, mat);
 
-	// declare independent variables
-	trace_on(tag, keep);
-	for(j = 0; j < n; j++)
-		A[j] <<= mat[j];
+	if( retape ) while(repeat--)
+	{
+		// choose a matrix
+		CppAD::uniform_01(n, mat);
 
-	// AD computation of the determinant
-	detA = Det(A);
+		// declare independent variables
+		trace_on(tag, keep);
+		for(j = 0; j < n; j++)
+			A[j] <<= mat[j];
 
-	// create function object f : A -> detA
-	detA >>= f;
-	trace_off();
+		// AD computation of the determinant
+		detA = Det(A);
 
-	// ------------------------------------------------------
-	while(repeat--)
-	{	// get the next matrix
+		// create function object f : A -> detA
+		detA >>= f;
+		trace_off();
+
+		// get the next matrix
 		CppAD::uniform_01(n, mat);
 
 		// evaluate the determinant at the new matrix value
@@ -112,7 +109,34 @@ bool link_det_minor(
 		// evaluate and return gradient using reverse mode
 		fos_reverse(tag, m, n, u, grad);
 	}
-	// ------------------------------------------------------
+	else
+	{
+		// choose a matrix
+		CppAD::uniform_01(n, mat);
+
+		// declare independent variables
+		trace_on(tag, keep);
+		for(j = 0; j < n; j++)
+			A[j] <<= mat[j];
+
+		// AD computation of the determinant
+		detA = Det(A);
+
+		// create function object f : A -> detA
+		detA >>= f;
+		trace_off();
+
+		while(repeat--)
+		{	// get the next matrix
+			CppAD::uniform_01(n, mat);
+
+			// evaluate the determinant at the new matrix value
+			zos_forward(tag, m, n, keep, mat, &f); 
+
+			// evaluate and return gradient using reverse mode
+			fos_reverse(tag, m, n, u, grad);
+		}
+	}
 
 	// return matrix and gradient
 	for(j = 0; j < n; j++)

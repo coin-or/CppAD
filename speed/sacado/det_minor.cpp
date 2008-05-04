@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sacado_det_minor.cpp$$
 $spell
+	retape
 	cppad
 	det
 	const
@@ -24,19 +25,11 @@ $spell
 	Gradcomp
 $$
 
-$section Sacado Speed: Gradient of Determinant Using Expansion by Minors$$
+$section Sacado Speed: Gradient of Determinant by Minor Expansion$$
 
 $index sacado, speed minor$$
 $index speed, sacado minor$$
 $index minor, speed sacado$$
-
-
-$head Operation Sequence$$
-Note that the expansion by minors
-$cref/operation sequence/glossary/Operation/Sequence/$$
-does not depends on the matrix being factored.
-Yet there does not seem to be a way to reuse the operation sequence to
-compute derivatives for multiple matrices.
 
 $head link_det_minor$$
 $index link_det_minor$$
@@ -50,6 +43,7 @@ $codep */
 bool link_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
+	bool                       retape   ,
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &gradient )
 {

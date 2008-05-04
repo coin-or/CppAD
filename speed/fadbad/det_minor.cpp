@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin fadbad_det_minor.cpp$$
 $spell
+	retape
 	cppad
 	std
 	Fadbad
@@ -24,19 +25,11 @@ $spell
 	srand
 $$
 
-$section Fadbad Speed: Gradient of Determinant Using Expansion by Minors$$
+$section Fadbad Speed: Gradient of Determinant by Minor Expansion$$
 
 $index fadbad, speed minor$$
 $index speed, fadbad minor$$
 $index minor, speed fadbad$$
-
-
-$head Operation Sequence$$
-Note that the expansion by minors
-$cref/operation sequence/glossary/Operation/Sequence/$$
-does not depends on the matrix being factored.
-Yet there does not seem to be a way to reuse the DAG to
-compute derivatives for multiple matrices.
 
 $head link_det_minor$$
 $index link_det_minor$$
@@ -50,6 +43,7 @@ $codep */
 bool link_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
+	bool                       retape   ,
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &gradient )
 {
