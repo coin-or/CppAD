@@ -72,6 +72,12 @@ $syntax%
 with $italic c$$ equal to $latex q + 1$$.
 If you do no do this, $code Forward$$ will automatically allocate memory
 and will copy the results to a larger buffer, when necessary.
+$pre
+
+$$
+Note that each call to $cref/Dependent/$$ frees the old memory
+connected to the function object and sets the corresponding 
+taylor capacity to zero.
 
 $subhead Freeing Memory$$
 If you no longer need the taylor_ coefficients of order $italic q$$

@@ -75,6 +75,8 @@ bool link_poly(
 	dz[0]  = 1.;
 	ddz[0] = 0.;
 
+	CppAD::ADFun<double> f;
+
 	if( retape ) while(repeat--)
 	{
 		// choose an argument value
@@ -88,7 +90,10 @@ bool link_poly(
 		P[0] = CppAD::Poly(0, A, Z[0]);
 
 		// create function object f : A -> detA
-		CppAD::ADFun<double> f(Z, P);
+		f.Dependent(Z, P);
+
+		// pre-allocate memory for three forward mode calculations
+		f.capacity_taylor(3);
 
 		// get the next argument value
 		CppAD::uniform_01(1, z);
@@ -116,10 +121,12 @@ bool link_poly(
 		P[0] = CppAD::Poly(0, A, Z[0]);
 
 		// create function object f : A -> detA
-		CppAD::ADFun<double> f(Z, P);
+		f.Dependent(Z, P);
 
 		while(repeat--)
-		{	// get the next argument value
+		{	// sufficient memory is allocated by second repetition
+
+			// get the next argument value
 			CppAD::uniform_01(1, z);
 
 			// evaluate the polynomial at the new argument value
