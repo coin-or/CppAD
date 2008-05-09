@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sparse_hessian$$
 $spell
+	hes
 	const
 	Taylor
 $$
@@ -24,15 +25,15 @@ $index SparseHessian$$
 $index hessian, sparse$$
 
 $head Syntax$$
-$syntax%%h% = %f%.SparseHessian(%x%, %w%)%$$
+$codei%%hes% = %f%.SparseHessian(%x%, %w%)%$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ do denote the
 $cref/AD function/glossary/AD Function/$$
-corresponding to $italic f$$. 
-The syntax above sets $italic h$$ to the Hessian 
+corresponding to $icode f$$. 
+The syntax above sets $icode hes$$ to the Hessian 
 $latex \[
-	h = \dpow{2}{x} \sum_{i=1}^m w_i F_i (x) 
+	hes = \dpow{2}{x} \sum_{i=1}^m w_i F_i (x) 
 \] $$
 This is a preliminary implementation of a method for using the fact
 that the matrix is sparse to reduce the amount of computation necessary.
@@ -40,41 +41,41 @@ One should use speed tests to verify that results are computed faster
 than when using the routine $cref/Hessian/$$.
 
 $head f$$
-The object $italic f$$ has prototype
-$syntax%
+The object $icode f$$ has prototype
+$codei%
 	ADFun<%Base%> %f%
 %$$
-Note that the $cref/ADFun/$$ object $italic f$$ is not $code const$$
+Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$
 (see $cref/Uses Forward/sparse_hessian/Uses Forward/$$ below).
 
 $head x$$
-The argument $italic x$$ has prototype
-$syntax%
+The argument $icode x$$ has prototype
+$codei%
 	const %Vector% &%x%
 %$$
 (see $cref/Vector/sparse_hessian/Vector/$$ below)
 and its size 
-must be equal to $italic n$$, the dimension of the
-$cref/domain/SeqProperty/Domain/$$ space for $italic f$$.
+must be equal to $icode n$$, the dimension of the
+$cref/domain/SeqProperty/Domain/$$ space for $icode f$$.
 It specifies
 that point at which to evaluate the Hessian.
 
 $head w$$
-The argument $italic w$$ has prototype
-$syntax%
+The argument $icode w$$ has prototype
+$codei%
 	const %Vector% &%w%
 %$$
 and size $latex m$$.
 It specifies the value of $latex w_i$$ in the expression 
-for $italic h$$.
+for $icode hes$$.
 The more components of $latex w$$ that are identically zero,
 the more spares the resulting Hessian may be (and hence the more efficient
-the calculation of $italic h$$ may be).
+the calculation of $icode hes$$ may be).
 
-$head h$$
-The result $italic h$$ has prototype
-$syntax%
-	%Vector% %h%
+$head hes$$
+The result $icode hes$$ has prototype
+$codei%
+	%Vector% %hes%
 %$$
 and its size is $latex n * n$$.
 For $latex j = 0 , \ldots , n - 1 $$ 
@@ -84,15 +85,15 @@ $latex \[
 \] $$
 
 $head Vector$$
-The type $italic Vector$$ must be a $cref/SimpleVector/$$ class with
+The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
-$italic Base$$.
+$icode Base$$.
 The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
 $head Uses Forward$$
 After each call to $cref/Forward/$$,
-the object $italic f$$ contains the corresponding 
+the object $icode f$$ contains the corresponding 
 $cref/Taylor coefficients/glossary/Taylor Coefficient/$$.
 After $code SparseHessian$$,
 the previous calls to $xref/Forward/$$ are undefined.
@@ -101,11 +102,10 @@ $head Example$$
 $children%
 	example/sparse_hessian.cpp
 %$$
-The routines 
-$cref/Hessian.cpp/$$ and
-$cref/HesLagrangian.cpp/$$
-are examples and tests of $code Hessian$$.
-They return $code true$$, if they succeed and $code false$$ otherwise.
+The routine
+$cref/sparse_hessian.cpp/$$ 
+is examples and tests of $code sparse_hessian$$.
+It return $code true$$, if it succeeds and $code false$$ otherwise.
 
 
 $end

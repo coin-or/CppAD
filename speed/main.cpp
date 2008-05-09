@@ -132,7 +132,7 @@ the AD operation sequence is retaped for every test repetition
 of each speed test.
 If it is false,
 and the particular test has a fixed operation sequence,
-the AD package is allowed to use on taping of the operation
+the AD package is allowed to use one taping of the operation
 sequence for all the repetitions of that speed test.
 
 $head Correctness Results$$

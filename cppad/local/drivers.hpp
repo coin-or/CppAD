@@ -32,6 +32,7 @@ $childtable%
 	cppad/local/hessian.hpp%
 	cppad/local/for_two.hpp%
 	cppad/local/rev_two.hpp%
+	cppad/local/sparse_jacobian.hpp%
 	cppad/local/sparse_hessian.hpp
 %$$
 
@@ -43,6 +44,7 @@ $end
 # include <cppad/local/hessian.hpp>
 # include <cppad/local/for_two.hpp>
 # include <cppad/local/rev_two.hpp>
+# include <cppad/local/sparse_jacobian.hpp>
 # include <cppad/local/sparse_hessian.hpp>
  
 # endif

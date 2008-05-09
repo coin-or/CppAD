@@ -141,6 +141,7 @@ example_SOURCES   = \
 	sin.cpp \
 	sinh.cpp \
 	sparse_hessian.cpp \
+	sparse_jacobian.cpp \
 	sqrt.cpp \
 	stack_machine.cpp \
 	sub.cpp \

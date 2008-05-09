@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_08$$
 $spell
+	Jacobians
 	cygwin
 	retape
 	det
@@ -36,6 +37,15 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-08$$
+The $cref/sparse_jacobian/$$ routine has been added.
+$pre
+
+$$
+The example in $cref/sparse_hessian/$$ pointed to $cref/Hessian.cpp/$$
+instead of $cref/sparse_hessian.cpp/$$.
+This has been fixed.
 
 $head 05-03$$
 The $code retape$$ flag has been added to $cref/speed_main/$$.

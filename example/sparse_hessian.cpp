@@ -94,10 +94,8 @@ bool sparse_hessian(void)
 	// Run with Vector equal to three different cases
 	// all of which are Simple Vectors with elements of type double.
 	ok &= Case< CppAD::vector  <double> >();
-# if 0
 	ok &= Case< std::vector    <double> >();
 	ok &= Case< std::valarray  <double> >();
-# endif
 	return ok;
 }
 // END PROGRAM

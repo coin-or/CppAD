@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 $begin NumericType$$
@@ -84,7 +82,7 @@ may not be legal.
 $head Operators$$
 Suppose $italic x$$, $italic y$$ and $italic z$$
 $italic NumericType$$ objects where
-$italic x$$ and $italic y$$ my be $code const$$.
+$italic x$$ and $italic y$$ may be $code const$$.
 In the result type column,
 $italic NumericType$$ can be replaced by any type that can 
 be used just like a $italic NumericType$$ object.
