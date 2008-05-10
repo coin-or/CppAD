@@ -322,6 +322,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/sin_cos.hpp \
 	cppad/local/sparse.hpp \
 	cppad/local/sparse_hessian.hpp \
+	cppad/local/sparse_jacobian.hpp \
 	cppad/local/sqrt_op.hpp \
 	cppad/local/std_math_ad.hpp \
 	cppad/local/sub.hpp \

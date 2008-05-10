@@ -65,10 +65,10 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	reverse_one.cpp reverse_two.cpp rev_one.cpp rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp rev_two.cpp romberg_mul.cpp romberg_one.cpp \
 	rosen_34.cpp runge_45.cpp seq_property.cpp simple_vector.cpp \
-	sin.cpp sinh.cpp sparse_hessian.cpp sqrt.cpp stack_machine.cpp \
-	sub.cpp sub_eq.cpp tan.cpp tape_index.cpp track_new_del.cpp \
-	unary_minus.cpp unary_plus.cpp value.cpp var_2par.cpp \
-	vec_ad.cpp
+	sin.cpp sinh.cpp sparse_hessian.cpp sparse_jacobian.cpp \
+	sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp tan.cpp \
+	tape_index.cpp track_new_del.cpp unary_minus.cpp \
+	unary_plus.cpp value.cpp var_2par.cpp vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) abs.$(OBJEXT) \
@@ -106,11 +106,12 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) abs.$(OBJEXT) \
 	rev_two.$(OBJEXT) romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) \
 	rosen_34.$(OBJEXT) runge_45.$(OBJEXT) seq_property.$(OBJEXT) \
 	simple_vector.$(OBJEXT) sin.$(OBJEXT) sinh.$(OBJEXT) \
-	sparse_hessian.$(OBJEXT) sqrt.$(OBJEXT) \
-	stack_machine.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
-	tan.$(OBJEXT) tape_index.$(OBJEXT) track_new_del.$(OBJEXT) \
-	unary_minus.$(OBJEXT) unary_plus.$(OBJEXT) value.$(OBJEXT) \
-	var_2par.$(OBJEXT) vec_ad.$(OBJEXT)
+	sparse_hessian.$(OBJEXT) sparse_jacobian.$(OBJEXT) \
+	sqrt.$(OBJEXT) stack_machine.$(OBJEXT) sub.$(OBJEXT) \
+	sub_eq.$(OBJEXT) tan.$(OBJEXT) tape_index.$(OBJEXT) \
+	track_new_del.$(OBJEXT) unary_minus.$(OBJEXT) \
+	unary_plus.$(OBJEXT) value.$(OBJEXT) var_2par.$(OBJEXT) \
+	vec_ad.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -362,6 +363,7 @@ example_SOURCES = \
 	sin.cpp \
 	sinh.cpp \
 	sparse_hessian.cpp \
+	sparse_jacobian.cpp \
 	sqrt.cpp \
 	stack_machine.cpp \
 	sub.cpp \
@@ -513,6 +515,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sin.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sinh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jacobian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sqrt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stack_machine.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub.Po@am__quote@
