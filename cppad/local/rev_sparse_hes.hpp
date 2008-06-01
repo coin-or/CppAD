@@ -253,7 +253,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
 		if( s[i] )
 		{	// set all the bits to true
-			RevJac[ dep_taddr_[i] ] = ~0;
+			RevJac[ dep_taddr_[i] ] = ~ Pack(0);
 		}
 	}
 
