@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sparse_jacobian$$
 $spell
+	Bool
 	jac
 	Jacobian
 	const
@@ -26,7 +27,9 @@ $index SparseJacobian$$
 $index jacobian, sparse$$
 
 $head Syntax$$
-$codei%%jac% = %f%.SparseJacobian(%x%)%$$
+$codei%%jac% = %f%.SparseJacobian(%x%)
+%$$
+$codei%%jac% = %f%.SparseJacobian(%x%, %p%)%$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ do denote the
@@ -52,19 +55,40 @@ Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const %Vector% &%x%
+	const %BaseVector% &%x%
 %$$
-(see $cref/Vector/sparse_jacobian/Vector/$$ below)
+(see $cref/BaseVector/sparse_jacobian/BaseVector/$$ below)
 and its size 
 must be equal to $icode n$$, the dimension of the
 $cref/domain/SeqProperty/Domain/$$ space for $icode f$$.
 It specifies
 that point at which to evaluate the Jacobian.
 
+$head p$$
+The argument $icode p$$ is optional and has prototype
+$syntax%
+	const %BoolVector% &%p%
+%$$
+(see $cref/BoolVector/sparse_jacobian/BoolVector/$$ below)
+and its size is $latex m * n$$.
+It specifies a 
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
+for the Jacobian; i.e.,
+for $latex i = 0 , \ldots , m-1$$ and $latex j = 0 , \ldots , n-1$$.
+$latex \[
+	\D{ F_i }{ x_j } \neq 0 ; \Rightarrow \; p [ i * n + j ] = {\rm true}
+\] $$
+$pre
+
+$$
+If this sparsity pattern does not change between calls to 
+$codei SparseJacobian$$, it should be faster to calculate $icode p$$ once and
+pass this argument to $code SparseJacobian$$.
+
 $head jac$$
 The result $icode jac$$ has prototype
 $codei%
-	%Vector% %jac%
+	%BaseVector% %jac%
 %$$
 and its size is $latex m * n$$.
 For $latex i = 0 , \ldots , m - 1$$,
@@ -73,12 +97,22 @@ $latex \[
 	jac [ i * n + j ] = \D{ F_i }{ x_j }
 \] $$
 
-$head Vector$$
-The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+$head BaseVector$$
+The type $icode BaseVector$$ must be a $cref/SimpleVector/$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
 The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
+
+$head BoolVector$$
+The type $icode BoolVector$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
+In order to save memory, 
+you may want to use a class that packs multiple elements into one
+storage location; for example,
+$cref/vectorBool/CppAD_vector/vectorBool/$$.
 
 $head Uses Forward$$
 After each call to $cref/Forward/$$,
@@ -106,12 +140,52 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-template <typename Base>
-template <typename Vector>
-Vector ADFun<Base>::SparseJacobian(const Vector &x)
+template <class Base>
+template <class BaseVector>
+BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x)
+{	typedef CppAD::vector<bool>   BoolVector;
+
+	size_t m = Range();
+	size_t n = Domain();
+
+	// check BoolVector is Simple Vector class with bool elements
+	CheckSimpleVector<bool, BoolVector>();
+
+	// sparsity pattern for Jacobian
+	BoolVector p(n * m);
+
+	if( n <= m )
+	{	size_t j, k;
+
+		// use forward mode 
+		BoolVector r(n * n);
+		for(j = 0; j < n; j++)
+		{	for(k = 0; k < n; k++)
+				r[j * n + k] = false;
+			r[j * n + j] = true;
+		}
+		p = ForSparseJac(n, r);
+	}
+	else
+	{	size_t i, k;
+
+		// use reverse mode 
+		BoolVector s(m * m);
+		for(i = 0; i < m; i++)
+		{	for(k = 0; k < m; k++)
+				s[i * m + k] = false;
+			s[i * m + i] = true;
+		}
+		p = RevSparseJac(m, s);
+	}
+	return SparseJacobian(x, p);
+}
+
+template <class Base>
+template <class BaseVector, class BoolVector>
+BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x, const BoolVector &p)
 {
 	typedef CppAD::vector<size_t> SizeVector;
-	typedef CppAD::vector<bool>   BoolVector;
 	size_t i, j, k;
 
 	size_t m = Range();
@@ -121,8 +195,8 @@ Vector ADFun<Base>::SparseJacobian(const Vector &x)
 	const Base zero(0);
 	const Base one(1);
 
-	// check Vector is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, Vector>();
+	// check BaseVector is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, BaseVector>();
 
 	CPPAD_ASSERT_KNOWN(
 		x.size() == n,
@@ -133,23 +207,13 @@ Vector ADFun<Base>::SparseJacobian(const Vector &x)
 	Forward(0, x);
 
 	// initialize the return value
-	Vector jac(m * n);
+	BaseVector jac(m * n);
 	for(i = 0; i < m; i++)
 		for(j = 0; j < n; j++)
 			jac[i * n + j] = zero;
 
-	// sparsity pattern for Jacobian
-	BoolVector p(n * m);
-
 	if( n <= m )
 	{	// use forward mode ----------------------------------------
-		BoolVector r(n * n);
-		for(j = 0; j < n; j++)
-		{	for(k = 0; k < n; k++)
-				r[j * n + k] = false;
-			r[j * n + j] = true;
-		}
-		p = ForSparseJac(n, r);
 	
 		// initial coloring
 		SizeVector color(n);
@@ -183,10 +247,10 @@ Vector ADFun<Base>::SparseJacobian(const Vector &x)
 			n_color = std::max(n_color, color[k] + 1);
 
 		// direction vector for calls to forward
-		Vector dx(n);
+		BaseVector dx(n);
 
 		// location for return values from Reverse
-		Vector dy(m);
+		BaseVector dy(m);
 
 		// loop over colors
 		size_t c;
@@ -210,13 +274,6 @@ Vector ADFun<Base>::SparseJacobian(const Vector &x)
 	}
 	else
 	{	// use reverse mode ----------------------------------------
-		BoolVector s(m * m);
-		for(i = 0; i < m; i++)
-		{	for(k = 0; k < m; k++)
-				s[i * m + k] = false;
-			s[i * m + i] = true;
-		}
-		p = RevSparseJac(m, s);
 	
 		// initial coloring
 		SizeVector color(m);
@@ -250,10 +307,10 @@ Vector ADFun<Base>::SparseJacobian(const Vector &x)
 			n_color = std::max(n_color, color[k] + 1);
 
 		// weight vector for calls to reverse
-		Vector w(m);
+		BaseVector w(m);
 
 		// location for return values from Reverse
-		Vector dw(n);
+		BaseVector dw(n);
 
 		// loop over colors
 		size_t c;

@@ -184,8 +184,11 @@ public:
 		const VectorSize_t &J );
 
 	// calculate sparse Jacobians 
-	template <typename VectorBase>
-	VectorBase SparseJacobian(const VectorBase &x); 
+	template <typename BaseVector>
+	BaseVector SparseJacobian(const BaseVector &x); 
+
+	template <typename BaseVector, typename BoolVector>
+	BaseVector SparseJacobian(const BaseVector &x, const BoolVector &p); 
 
 	// calculate sparse Hessians 
 	template <typename VectorBase>

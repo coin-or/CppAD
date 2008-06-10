@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_08$$
 $spell
 	Jacobians
+	Jacobian
 	cygwin
 	retape
 	det
@@ -37,6 +38,14 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 06-10$$
+The sparsity pattern for the Jacobian was being calculated each time
+by $cref/SparseJacobian/sparse_jacobian/$$.
+This is not efficient
+when the pattern does not change between calls to $code SparseJacobian$$.
+An optional sparsity pattern argument was added to $code SparseJacobian$$
+so that it need not be recalculated each time.
 
 $head 05-08$$
 The $cref/sparse_jacobian/$$ routine has been added.
