@@ -400,6 +400,7 @@ SUBDIRS = \
 #
 EXTRA_DIST = \
 	build.sh \
+	check_example.sh \
 	check_include_file.sh \
 	check_include_omh.sh \
 	check_include_def.sh \
