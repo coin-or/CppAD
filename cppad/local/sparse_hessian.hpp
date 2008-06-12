@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sparse_hessian$$
 $spell
+	Bool
 	hes
 	const
 	Taylor
@@ -25,7 +26,9 @@ $index SparseHessian$$
 $index hessian, sparse$$
 
 $head Syntax$$
-$codei%%hes% = %f%.SparseHessian(%x%, %w%)%$$
+$codei%%hes% = %f%.SparseHessian(%x%, %w%)
+%$$
+$codei%%hes% = %f%.SparseHessian(%x%, %w%, %p%)%$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ do denote the
@@ -51,9 +54,9 @@ Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const %Vector% &%x%
+	const %BaseVector% &%x%
 %$$
-(see $cref/Vector/sparse_hessian/Vector/$$ below)
+(see $cref/BaseVector/sparse_hessian/BaseVector/$$ below)
 and its size 
 must be equal to $icode n$$, the dimension of the
 $cref/domain/SeqProperty/Domain/$$ space for $icode f$$.
@@ -63,7 +66,7 @@ that point at which to evaluate the Hessian.
 $head w$$
 The argument $icode w$$ has prototype
 $codei%
-	const %Vector% &%w%
+	const %BaseVector% &%w%
 %$$
 and size $latex m$$.
 It specifies the value of $latex w_i$$ in the expression 
@@ -72,10 +75,32 @@ The more components of $latex w$$ that are identically zero,
 the more spares the resulting Hessian may be (and hence the more efficient
 the calculation of $icode hes$$ may be).
 
+$head p$$
+The argument $icode p$$ is optional and has prototype
+$syntax%
+	const %BoolVector% &%p%
+%$$
+(see $cref/BoolVector/sparse_hessian/BoolVector/$$ below)
+and its size is $latex n * n$$.
+It specifies a 
+$cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
+for the Hessian; i.e.,
+for $latex j = 0 , \ldots , n-1$$ and $latex k = 0 , \ldots , n-1$$.
+$latex \[
+	\sum_i w_i \DD{ F_i }{ x_j }{ x_k } \neq 0 
+		; \Rightarrow \; p [ j * n + k ] = {\rm true}
+\] $$
+$pre
+
+$$
+If this sparsity pattern does not change between calls to 
+$codei SparseHessian$$, it should be faster to calculate $icode p$$ once and
+pass this argument to $codei SparseHessian$$.
+
 $head hes$$
 The result $icode hes$$ has prototype
 $codei%
-	%Vector% %hes%
+	%BaseVector% %hes%
 %$$
 and its size is $latex n * n$$.
 For $latex j = 0 , \ldots , n - 1 $$ 
@@ -84,12 +109,22 @@ $latex \[
 	hes [ j * n + \ell ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } ( x )
 \] $$
 
-$head Vector$$
-The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+$head BaseVector$$
+The type $icode BaseVector$$ must be a $cref/SimpleVector/$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
 The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
+
+$head BoolVector$$
+The type $icode BoolVector$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
+The routine $xref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
+In order to save memory, 
+you may want to use a class that packs multiple elements into one
+storage location; for example,
+$cref/vectorBool/CppAD_vector/vectorBool/$$.
 
 $head Uses Forward$$
 After each call to $cref/Forward/$$,
@@ -119,29 +154,16 @@ $end
 namespace CppAD {
 
 template <typename Base>
-template <typename Vector>
-Vector ADFun<Base>::SparseHessian(const Vector &x, const Vector &w)
-{
-	typedef CppAD::vector<size_t> SizeVector;
+template <typename BaseVector>
+BaseVector ADFun<Base>::SparseHessian(const BaseVector &x, const BaseVector &w)
+{	size_t i, j, k;
+
 	typedef CppAD::vector<bool>   BoolVector;
-	size_t i, j, k, l;
 
 	size_t m = Range();
 	size_t n = Domain();
 
-	// check Vector is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, Vector>();
-
-	CPPAD_ASSERT_KNOWN(
-		x.size() == n,
-		"SparseHessian: length of x not equal domain dimension for f"
-	); 
-	CPPAD_ASSERT_KNOWN(
-		w.size() == m,
-		"SparseHessian: length of w not equal range dimension for f"
-	);
-
-	// determine the sparsity pattern p for hessian of w^T F
+	// determine the sparsity pattern p for Hessian of w^T F
 	BoolVector r(n * n);
 	for(j = 0; j < n; j++)
 	{	for(k = 0; k < n; k++)
@@ -154,6 +176,42 @@ Vector ADFun<Base>::SparseHessian(const Vector &x, const Vector &w)
 	for(i = 0; i < m; i++)
 		s[i] = w[i] != 0;
 	BoolVector p = RevSparseHes(n, s);
+
+	// compute sparse Hessian
+	return SparseHessian(x, w, p);
+}
+
+template <typename Base>
+template <typename BaseVector, typename BoolVector>
+BaseVector ADFun<Base>::SparseHessian(
+	const BaseVector &x ,
+	const BaseVector &w ,
+	const BoolVector &p )
+{
+	typedef CppAD::vector<size_t> SizeVector;
+	size_t j, k, l;
+
+	size_t n = Domain();
+
+	// check Vector is Simple Vector class with bool elements
+	CheckSimpleVector<bool, BoolVector>();
+
+	// check Vector is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, BaseVector>();
+
+	CPPAD_ASSERT_KNOWN(
+		x.size() == n,
+		"SparseHessian: size of x not equal domain dimension for f"
+	); 
+	CPPAD_ASSERT_KNOWN(
+		w.size() == Range(),
+		"SparseHessian: size of w not equal range dimension for f"
+	);
+	CPPAD_ASSERT_KNOWN(
+		p.size() == n * n,
+		"SparseHessian: size of p not equal square of"
+		" domain dimension for f"
+	);
 	
 	// initial coloring
 	SizeVector color(n);
@@ -192,16 +250,16 @@ Vector ADFun<Base>::SparseHessian(const Vector &x, const Vector &w)
 	Forward(0, x);
 
 	// define the return value
-	Vector h(n * n);
+	BaseVector h(n * n);
 	for(j = 0; j < n; j++)
 		for(k = 0; k < n; k++)
 			h[j * n + k] = zero;
 
 	// direction vector for calls to forward
-	Vector u(n);
+	BaseVector u(n);
 
 	// location for return values from Reverse
-	Vector ddw(n * 2);
+	BaseVector ddw(n * 2);
 
 	// loop over colors
 	size_t c;

@@ -83,7 +83,7 @@ $pre
 $$
 If this sparsity pattern does not change between calls to 
 $codei SparseJacobian$$, it should be faster to calculate $icode p$$ once and
-pass this argument to $code SparseJacobian$$.
+pass this argument to $codei SparseJacobian$$.
 
 $head jac$$
 The result $icode jac$$ has prototype
@@ -148,9 +148,6 @@ BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x)
 	size_t m = Range();
 	size_t n = Domain();
 
-	// check BoolVector is Simple Vector class with bool elements
-	CheckSimpleVector<bool, BoolVector>();
-
 	// sparsity pattern for Jacobian
 	BoolVector p(n * m);
 
@@ -195,12 +192,21 @@ BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x, const BoolVector &p)
 	const Base zero(0);
 	const Base one(1);
 
+	// check BoolVector is Simple Vector class with bool elements
+	CheckSimpleVector<bool, BoolVector>();
+
 	// check BaseVector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, BaseVector>();
 
 	CPPAD_ASSERT_KNOWN(
 		x.size() == n,
-		"SparseJacobian: length of x not equal domain dimension for f"
+		"SparseJacobian: size of x not equal domain dimension for f"
+	); 
+
+	CPPAD_ASSERT_KNOWN(
+		p.size() == m * n,
+		"SparseJacobian: size of p not equal domain dimension times "
+		" range dimension for f"
 	); 
 
 	// point at which we are evaluating the Jacobian

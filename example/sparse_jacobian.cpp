@@ -33,7 +33,7 @@ $end
 
 # include <cppad/cppad.hpp>
 namespace { // ---------------------------------------------------------
-// define the template function Case<BaseVector> in empty namespace
+// define the template function in empty namespace
 template <class BaseVector, class BoolVector> 
 bool reverse_case()
 {	bool ok = true;
@@ -165,14 +165,15 @@ bool sparse_jacobian(void)
 {	bool ok = true;
 	// Run with BaseVector equal to three different cases
 	// all of which are Simple Vectors with elements of type double.
-	ok &= forward_case< CppAD::vector  <double>, CppAD::vectorBool >();
-	ok &= reverse_case< CppAD::vector  <double>, CppAD::vector<bool> >();
+	// Also vary the type of vector for BoolVector.
+	ok &= forward_case< CppAD::vector<double>, CppAD::vectorBool   >();
+	ok &= reverse_case< CppAD::vector<double>, CppAD::vector<bool> >();
 	//
-	ok &= forward_case< std::vector  <double>,   std::vector<bool> >();
-	ok &= reverse_case< std::vector  <double>,   std::valarray<bool> >();
+	ok &= forward_case< std::vector<double>,   std::vector<bool>   >();
+	ok &= reverse_case< std::vector<double>,   std::valarray<bool> >();
 	//
-	ok &= forward_case< std::valarray  <double>, CppAD::vectorBool >();
-	ok &= reverse_case< std::valarray  <double>, CppAD::vector<bool> >();
+	ok &= forward_case< std::valarray<double>, CppAD::vectorBool   >();
+	ok &= reverse_case< std::valarray<double>, CppAD::vector<bool> >();
 	//
 	return ok;
 }

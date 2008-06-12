@@ -172,6 +172,7 @@ $rref Sin.cpp$$
 $rref Sinh.cpp$$
 $rref sparse_evaluate.cpp$$
 $rref sparse_hessian.cpp$$
+$rref sparse_jacobian.cpp$$
 $rref speed_program.cpp$$
 $rref speed_test.cpp$$
 $rref Sqrt.cpp$$

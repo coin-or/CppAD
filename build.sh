@@ -384,6 +384,13 @@ then
 	#
 	cd cppad-$version
 	#
+	# check example list
+	if ! ./check_example.sh >> ../build_test.log
+	then
+		echo "./check_example.sh failed"
+		exit 1
+	fi
+	#
 	# check include files
 	if ! ./check_include_def.sh  >> ../build_test.log
 	then

@@ -33,13 +33,13 @@ $end
 
 # include <cppad/cppad.hpp>
 namespace { // ---------------------------------------------------------
-// define the template function Case<Vector> in empty namespace
-template <typename Vector> 
+// define the template function in empty namespace
+template <class BaseVector, class BoolVector> 
 bool Case()
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	size_t i;
+	size_t i, j, k;
 
 	// domain space vector
 	size_t n = 3;
@@ -58,31 +58,45 @@ bool Case()
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	Vector x(n);
+	BaseVector x(n);
 	for(i = 0; i < n; i++)
 		x[i] = double(i);
 
 	// second derivative of y[1] 
-	Vector w(m);
+	BaseVector w(m);
 	w[0] = 1.;
-	Vector h( n * n );
+	BaseVector h( n * n );
 	h = f.SparseHessian(x, w);
 	/*
 	    [ 2 1 0 ]
 	h = [ 1 2 0 ]
             [ 0 0 2 ]
 	*/
-	ok &=  NearEqual(2., h[0*n+0], 1e-10, 1e-10 );
-	ok &=  NearEqual(1., h[0*n+1], 1e-10, 1e-10 );
-	ok &=  NearEqual(0., h[0*n+2], 1e-10, 1e-10 );
+	BaseVector check(n * n);
+	check[0] = 2.; check[1] = 1.; check[2] = 0.;
+	check[3] = 1.; check[4] = 2.; check[5] = 0.;
+	check[6] = 0.; check[7] = 0.; check[8] = 2.;
+	for(k = 0; k < n * n; k++)
+		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
 
-	ok &=  NearEqual(1., h[1*n+0], 1e-10, 1e-10 );
-	ok &=  NearEqual(2., h[1*n+1], 1e-10, 1e-10 );
-	ok &=  NearEqual(0., h[1*n+2], 1e-10, 1e-10 );
+	// determine the sparsity pattern p for Hessian of w^T F
+        BoolVector r(n * n);
+        for(j = 0; j < n; j++)
+        {       for(k = 0; k < n; k++)
+                        r[j * n + k] = false;
+                r[j * n + j] = true;
+        }
+        f.ForSparseJac(n, r);
+        //
+        BoolVector s(m);
+        for(i = 0; i < m; i++)
+                s[i] = w[i] != 0;
+        BoolVector p = f.RevSparseHes(n, s);
 
-	ok &=  NearEqual(0., h[2*n+0], 1e-10, 1e-10 );
-	ok &=  NearEqual(0., h[2*n+1], 1e-10, 1e-10 );
-	ok &=  NearEqual(2., h[2*n+2], 1e-10, 1e-10 );
+	// test passing sparsity pattern
+	h = f.SparseHessian(x, w, p);
+	for(k = 0; k < n * n; k++)
+		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
 
 	return ok;
 }
@@ -91,11 +105,12 @@ bool Case()
 # include <valarray>
 bool sparse_hessian(void)
 {	bool ok = true;
-	// Run with Vector equal to three different cases
+	// Run with BaseVector equal to three different cases
 	// all of which are Simple Vectors with elements of type double.
-	ok &= Case< CppAD::vector  <double> >();
-	ok &= Case< std::vector    <double> >();
-	ok &= Case< std::valarray  <double> >();
+	// Also vary the type of vector for BoolVector.
+	ok &= Case< CppAD::vector  <double>, CppAD::vectorBool   >();
+	ok &= Case< std::vector    <double>, CppAD::vector<bool> >();
+	ok &= Case< std::valarray  <double>, std::vector<bool>   >();
 	return ok;
 }
 // END PROGRAM

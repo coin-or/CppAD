@@ -191,8 +191,13 @@ public:
 	BaseVector SparseJacobian(const BaseVector &x, const BoolVector &p); 
 
 	// calculate sparse Hessians 
-	template <typename VectorBase>
-	VectorBase SparseHessian(const VectorBase &x, const VectorBase &w); 
+	template <typename BaseVector>
+	BaseVector SparseHessian(const BaseVector &x, const BaseVector &w); 
+
+	template <typename BaseVector, typename BoolVector>
+	BaseVector SparseHessian(
+		const BaseVector &x, const BaseVector &w, const BoolVector &p
+	); 
 
 	// ------------------- Deprecated -----------------------------
 

@@ -39,6 +39,14 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-11$$
+The sparsity pattern for the Hessian was being calculated each time
+by $cref/SparseHessian/sparse_hessian/$$.
+This is not efficient
+when the pattern does not change between calls to $code SparseHessian$$.
+An optional sparsity pattern argument was added to $code SparseHessian$$
+so that it need not be recalculated each time.
+
 $head 06-10$$
 The sparsity pattern for the Jacobian was being calculated each time
 by $cref/SparseJacobian/sparse_jacobian/$$.
