@@ -80,6 +80,7 @@ extern bool Integer(void);
 extern bool Interface2C(void);
 extern bool interp_onetape(void);
 extern bool interp_retape(void);
+extern bool ipopt_cppad(void);
 extern bool JacLuDet(void);
 extern bool JacMinorDet(void);
 extern bool Jacobian(void);
@@ -93,6 +94,7 @@ extern bool LuVecADOk(void);
 extern bool Mul(void);
 extern bool MulEq(void);
 extern bool mul_level(void);
+extern bool mul_level_adolc(void);
 extern bool nan(void);
 extern bool Near_Equal(void);
 extern bool NearEqualExt(void);
@@ -104,6 +106,7 @@ extern bool OdeGear(void);
 extern bool OdeGearControl(void);
 extern bool OdeStiff(void);
 extern bool ode_taylor(void);
+extern bool ode_taylor_adolc(void);
 extern bool Output(void);
 extern bool ParVar(void);
 extern bool Poly(void);
@@ -138,11 +141,6 @@ extern bool UnaryPlus(void);
 extern bool Value(void);
 extern bool Var2Par(void);
 extern bool VecAD(void);
-
-# ifdef CPPAD_ADOLC_EXAMPLES
-extern bool mul_level_adolc(void);
-extern bool ode_taylor_adolc(void);
-# endif
 
 namespace {
 	// function that runs one test
@@ -277,6 +275,10 @@ int main(void)
 	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );
 	ok &= Run( ode_taylor_adolc,  "ode_taylor_adolc" );
 # endif
+# ifdef CPPAD_IPOPT_EXAMPLES
+	ok &= Run( ipopt_cppad,       "ipopt_cppad"      );
+# endif
+	
 
 	// check for errors
 	using std::cout;

@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -31,9 +31,12 @@ cmd="g++ test_one.cpp $1 $3
 	-o test_one.exe
 	-g -Wall -ansi -pedantic-errors 
 	-std=c++98 -DCPPAD_ADOLC_TEST
-	-I.. -I/usr/include/boost-1_33_1 
-	-I$HOME/adolc_base/include
-	-L$HOME/adolc_base/lib -ladolc"
+	-I.. -I/usr/include/boost-1_33_1
+"
+if [ -e $HOME/adolc_base/inclue/adouble.h ]
+then
+	cmd="$cmd -I$HOME/adolc_base/include -L$HOME/adolc_base/lib -ladolc"
+fi
 echo $cmd
 $cmd
 echo "./test_one.exe"

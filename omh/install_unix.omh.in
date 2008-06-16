@@ -12,6 +12,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin InstallUnix$$
 $dollar ^$$
 $spell
+	Ipopt
+	Ip
 	gzip
 	Linux
 	fi
@@ -147,11 +149,12 @@ $syntax%
 	--with-Speed                           \
 	--with-PrintFor                        \
 	--with-stdvector                       \  
-	POSTFIX_DIR=%PostfixDir%               \
+	POSTFIX_DIR=%PostfixDir%                 \
 	ADOLC_DIR=%AdolcDir%                     \
 	FADBAD_DIR=%FadbadDir%                   \
 	SADADO_DIR=%SacadoDir%                   \
 	BOOST_DIR=%BoostDir%                     \
+	IPOPT_DIR=%IpoptDir%                     \
 	CXX_FLAGS=%CompilerFlags% 
 %$$
 where only the $code configure$$ command need appear.
@@ -513,6 +516,23 @@ $$
 If $italic BoostDir$$ is present, the argument $code --with-stdvector$$
 must not be present.
 
+$head IpoptDir$$
+$index Ipopt, unix$$
+If you have
+$href%
+	http://www.coin-or.org/projects/Ipopt.xml%
+	Ipopt
+%$$
+installed on your system, you can 
+specify a value for $italic IpoptDir$$.
+It must be such that
+$syntax%
+	%IpoptDir%/include/IpIpoptApplication.hpp
+%$$
+is a valid reference to $code IpIpoptApplication.hpp$$.
+In this case, 
+$cref/ipopt_cppad.cpp/$$ will be included in the example testing.
+
 $head CompilerFlags$$
 $index compile, unix flags$$
 $index flags, unix compile$$
@@ -546,8 +566,8 @@ $xref/InstallUnix/--with-Speed/--with-Speed/$$,
 $xref/InstallUnix/--with-PrintFor/--with-PrintFor/$$,
 $xref/InstallUnix/AdolcDir/AdolcDir/$$, 
 $xref/InstallUnix/FadbadDir/FadbadDir/$$,
-and
-$xref/InstallUnix/SacadoDir/SacadoDir/$$ above.
+$xref/InstallUnix/SacadoDir/SacadoDir/$$,
+and $xref/InstallUnix/IpoptDir/IpoptDir/$$ above.
 
 $head make install$$
 Once you are satisfied that the tests are giving correct results,

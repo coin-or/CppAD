@@ -42,22 +42,22 @@ CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
 am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
-	example.cpp abs.cpp acos.cpp add.cpp add_eq.cpp asin.cpp \
-	atan.cpp atan_2.cpp base_adolc.hpp bender_quad.cpp \
-	bool_fun.cpp vector_bool.cpp check_numeric_type.cpp \
-	check_simple_vector.cpp compare.cpp compare_change.cpp \
-	complex_poly.cpp cond_exp.cpp copy_ad.cpp copy_base.cpp \
-	cos.cpp cosh.cpp cpp_ad_vector.cpp default.cpp div.cpp \
-	div_eq.cpp eq.cpp equal_op_seq.cpp erf.cpp error_handler.cpp \
-	exp.cpp for_one.cpp for_two.cpp forward.cpp for_sparse_jac.cpp \
-	fun_check.cpp hes_lagrangian.cpp hes_lu_det.cpp \
-	hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
-	independent.cpp integer.cpp interface_2c.cpp \
-	interp_onetape.cpp interp_retape.cpp jac_lu_det.cpp \
-	jac_minor_det.cpp jacobian.cpp log.cpp log_10.cpp \
-	lu_factor.cpp lu_invert.cpp lu_ratio.cpp lu_solve.cpp \
-	lu_vec_ad.cpp lu_vec_ad.hpp lu_vec_ad_ok.cpp mul.cpp \
-	mul_eq.cpp mul_level.cpp nan.cpp near_equal.cpp \
+	ipopt_cppad_nlp.cpp ipopt_cppad.cpp example.cpp abs.cpp \
+	acos.cpp add.cpp add_eq.cpp asin.cpp atan.cpp atan_2.cpp \
+	base_adolc.hpp bender_quad.cpp bool_fun.cpp vector_bool.cpp \
+	check_numeric_type.cpp check_simple_vector.cpp compare.cpp \
+	compare_change.cpp complex_poly.cpp cond_exp.cpp copy_ad.cpp \
+	copy_base.cpp cos.cpp cosh.cpp cpp_ad_vector.cpp default.cpp \
+	div.cpp div_eq.cpp eq.cpp equal_op_seq.cpp erf.cpp \
+	error_handler.cpp exp.cpp for_one.cpp for_two.cpp forward.cpp \
+	for_sparse_jac.cpp fun_check.cpp hes_lagrangian.cpp \
+	hes_lu_det.cpp hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
+	ipopt_cppad_nlp.hpp independent.cpp integer.cpp \
+	interface_2c.cpp interp_onetape.cpp interp_retape.cpp \
+	jac_lu_det.cpp jac_minor_det.cpp jacobian.cpp log.cpp \
+	log_10.cpp lu_factor.cpp lu_invert.cpp lu_ratio.cpp \
+	lu_solve.cpp lu_vec_ad.cpp lu_vec_ad.hpp lu_vec_ad_ok.cpp \
+	mul.cpp mul_eq.cpp mul_level.cpp nan.cpp near_equal.cpp \
 	near_equal_ext.cpp not_complex_ad.cpp numeric_type.cpp \
 	ode_err_control.cpp ode_err_maxabs.cpp ode_gear.cpp \
 	ode_gear_control.cpp ode_stiff.cpp ode_taylor.cpp output.cpp \
@@ -71,19 +71,21 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	unary_plus.cpp value.cpp var_2par.cpp vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
-am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) abs.$(OBJEXT) \
-	acos.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) asin.$(OBJEXT) \
-	atan.$(OBJEXT) atan_2.$(OBJEXT) bender_quad.$(OBJEXT) \
-	bool_fun.$(OBJEXT) vector_bool.$(OBJEXT) \
-	check_numeric_type.$(OBJEXT) check_simple_vector.$(OBJEXT) \
-	compare.$(OBJEXT) compare_change.$(OBJEXT) \
-	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) copy_ad.$(OBJEXT) \
-	copy_base.$(OBJEXT) cos.$(OBJEXT) cosh.$(OBJEXT) \
-	cpp_ad_vector.$(OBJEXT) default.$(OBJEXT) div.$(OBJEXT) \
-	div_eq.$(OBJEXT) eq.$(OBJEXT) equal_op_seq.$(OBJEXT) \
-	erf.$(OBJEXT) error_handler.$(OBJEXT) exp.$(OBJEXT) \
-	for_one.$(OBJEXT) for_two.$(OBJEXT) forward.$(OBJEXT) \
-	for_sparse_jac.$(OBJEXT) fun_check.$(OBJEXT) \
+@CppAD_IPOPT_TRUE@am__objects_2 = ipopt_cppad_nlp.$(OBJEXT) \
+@CppAD_IPOPT_TRUE@	ipopt_cppad.$(OBJEXT)
+am_example_OBJECTS = $(am__objects_1) $(am__objects_2) \
+	example.$(OBJEXT) abs.$(OBJEXT) acos.$(OBJEXT) add.$(OBJEXT) \
+	add_eq.$(OBJEXT) asin.$(OBJEXT) atan.$(OBJEXT) \
+	atan_2.$(OBJEXT) bender_quad.$(OBJEXT) bool_fun.$(OBJEXT) \
+	vector_bool.$(OBJEXT) check_numeric_type.$(OBJEXT) \
+	check_simple_vector.$(OBJEXT) compare.$(OBJEXT) \
+	compare_change.$(OBJEXT) complex_poly.$(OBJEXT) \
+	cond_exp.$(OBJEXT) copy_ad.$(OBJEXT) copy_base.$(OBJEXT) \
+	cos.$(OBJEXT) cosh.$(OBJEXT) cpp_ad_vector.$(OBJEXT) \
+	default.$(OBJEXT) div.$(OBJEXT) div_eq.$(OBJEXT) eq.$(OBJEXT) \
+	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) error_handler.$(OBJEXT) \
+	exp.$(OBJEXT) for_one.$(OBJEXT) for_two.$(OBJEXT) \
+	forward.$(OBJEXT) for_sparse_jac.$(OBJEXT) fun_check.$(OBJEXT) \
 	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
 	hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
 	hes_times_dir.$(OBJEXT) independent.$(OBJEXT) \
@@ -115,7 +117,7 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) abs.$(OBJEXT) \
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
-example_DEPENDENCIES = $(am__DEPENDENCIES_1)
+example_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -177,6 +179,7 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+IPOPT_DIR = @IPOPT_DIR@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -241,35 +244,54 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@CppAD_ADOLC_FALSE@ADOLC_FILES = 
+@CppAD_ADOLC_FALSE@ADOLC_SRC_FILES = 
 #
-@CppAD_ADOLC_TRUE@ADOLC_FILES = mul_level_adolc.cpp ode_taylor_adolc.cpp
+@CppAD_ADOLC_TRUE@ADOLC_SRC_FILES = mul_level_adolc.cpp ode_taylor_adolc.cpp
+@CppAD_ADOLC_FALSE@ADOLC_EXTRA_FILES = mul_level_adolc.cpp ode_taylor_adolc.cpp
+@CppAD_ADOLC_TRUE@ADOLC_EXTRA_FILES = 
 @CppAD_ADOLC_FALSE@ADOLC_INCLUDE = 
 @CppAD_ADOLC_TRUE@ADOLC_INCLUDE = -I$(ADOLC_DIR)/include 
 @CppAD_ADOLC_FALSE@ADOLC_LIB = 
 @CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc
 @CppAD_ADOLC_FALSE@ADOLC_LIB_DIR = 
 @CppAD_ADOLC_TRUE@ADOLC_LIB_DIR = -L$(ADOLC_DIR)/lib
-@CppAD_ADOLC_FALSE@ADOLC_FLAG = 
-@CppAD_ADOLC_TRUE@ADOLC_FLAG = -DCPPAD_ADOLC_EXAMPLES
+@CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
+@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_EXAMPLES
+@CppAD_IPOPT_FALSE@IPOPT_SRC_FILES = 
+#
+@CppAD_IPOPT_TRUE@IPOPT_SRC_FILES = ipopt_cppad_nlp.cpp ipopt_cppad.cpp
+@CppAD_IPOPT_FALSE@IPOPT_EXTRA_FILES = ipopt_cppad_nlp.cpp ipopt_cppad.cpp
+@CppAD_IPOPT_TRUE@IPOPT_EXTRA_FILES = 
+@CppAD_IPOPT_FALSE@IPOPT_INCLUDE = 
+@CppAD_IPOPT_TRUE@IPOPT_INCLUDE = -I$(IPOPT_DIR)/include
+@CppAD_IPOPT_FALSE@IPOPT_LIB = 
+@CppAD_IPOPT_TRUE@IPOPT_LIB = -lipopt -lpthread -lgfortran
+@CppAD_IPOPT_TRUE@IPOPT_LIB_DIR = -L$(IPOPT_DIR)/lib
+@CppAD_IPOPT_TRUE@IPOPT_FLAGS = -DCPPAD_IPOPT_EXAMPLES
 @CppAD_BOOSTVECTOR_FALSE@BOOST_INCLUDE = 
 @CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
+# 
 # Microsoft project files
-EXTRA_DIST = example.sln example.vcproj test_one.sh
+EXTRA_DIST = example.sln example.vcproj test_one.sh \
+	$(ADOLC_EXTRA_FILES) \
+	$(IPOPT_EXTRA_FILES)
+
 #
-AM_CXXFLAGS = -g $(CXX_FLAGS) $(ADOLC_FLAG)
+AM_CXXFLAGS = -g $(CXX_FLAGS) $(ADOLC_FLAGS) $(IPOPT_FLAGS)
 #
 AM_CPPFLAGS = -I. \
                    -I$(top_srcdir) \
                     $(BOOST_INCLUDE) \
-                    $(ADOLC_INCLUDE)
+                    $(ADOLC_INCLUDE) \
+                    $(IPOPT_INCLUDE)
 
 #
-LDADD = $(ADOLC_LIB)
-AM_LDFLAGS = $(ADOLC_LIB_DIR)
+LDADD = $(ADOLC_LIB) $(IPOPT_LIB)
+AM_LDFLAGS = $(ADOLC_LIB_DIR) $(IPOPT_LIB_DIR)
 #
 example_SOURCES = \
-	$(ADOLC_FILES) \
+	$(ADOLC_SRC_FILES) \
+	$(IPOPT_SRC_FILES) \
 	example.cpp \
 	abs.cpp \
 	acos.cpp \
@@ -311,6 +333,7 @@ example_SOURCES = \
 	hes_minor_det.cpp \
 	hessian.cpp \
 	hes_times_dir.cpp \
+	ipopt_cppad_nlp.hpp \
 	independent.cpp \
 	integer.cpp \
 	interface_2c.cpp\
@@ -467,6 +490,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interface_2c.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interp_onetape.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interp_retape.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad_nlp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jac_lu_det.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jac_minor_det.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jacobian.Po@am__quote@

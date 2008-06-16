@@ -192,6 +192,9 @@
 				RelativePath=".\fun_check.cpp">
 			</File>
 			<File
+				RelativePath=".\jacobian.cpp">
+			</File>
+			<File
 				RelativePath=".\log.cpp">
 			</File>
 			<File

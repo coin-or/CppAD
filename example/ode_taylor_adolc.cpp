@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -17,7 +17,7 @@ $spell
 	Cpp
 	const
 	std
-	Adolc
+	AdolcDir
 	adouble
 	Vec
 $$
@@ -164,6 +164,11 @@ $$
 are used to check for errors in the
 use of $code new$$ and $code delete$$ when the example is compiled for
 debugging (when $code NDEBUG$$ is not defined).
+
+$head Configuration Requirement$$
+This example will be compiled and tested provided that
+the value $cref/AdolcDir/InstallUnix/AdolcDir/$$ is specified on the 
+$cref/configure/InstallUnix/Configure/$$ command line.
 
 $code
 $verbatim%example/ode_taylor_adolc.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$

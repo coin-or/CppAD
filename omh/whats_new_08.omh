@@ -39,6 +39,10 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-15$$
+The nonlinear programming example $cref/ipopt_cppad.cpp/$$ was added.
+This is a preliminary version of this example.
+
 $head 06-11$$
 The sparsity pattern for the Hessian was being calculated each time
 by $cref/SparseHessian/sparse_hessian/$$.

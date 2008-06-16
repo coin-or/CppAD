@@ -73,6 +73,7 @@ test_more_SOURCES  = \
 	forward.cpp \
 	from_base.cpp \
 	fun_check.cpp \
+	jacobian.cpp \
 	log.cpp \
 	log_10.cpp \
 	mul.cpp \

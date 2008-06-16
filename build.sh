@@ -18,6 +18,7 @@ BOOST_DIR=/usr/include/boost-1_33_1
 ADOLC_DIR=$HOME/adolc_base
 FADBAD_DIR=$HOME/include
 SACADO_DIR=$HOME/sacado_base
+IPOPT_DIR=$HOME
 # -----------------------------------------------------------------------------
 #
 # get version currently in configure.ac file
@@ -218,6 +219,11 @@ then
 			TEST="$TEST 
 				SACADO_DIR=$SACADO_DIR"
 		fi
+		if [ -e $IPOPT_DIR/include/coin/IpIpoptApplication.hpp ]
+		then
+			TEST="$TEST 
+				IPOPT_DIR=$IPOPT_DIR"
+		fi
 	fi
 	TEST=`echo $TEST | sed -e 's|\t\t*| |g'`
 	#
@@ -416,12 +422,15 @@ then
 	# gcc 3.4.4 with optimization generates incorrect warning; see 
 	# 	http://cygwin.com/ml/cygwin-apps/2005-06/msg00161.html
 	# The sed commands below are intended to remove them.
-	if ! make            2>  make_error.log
+	#
+	if ! make   2>  make_error.log
 	then
 		sed -e '/stl_uninitialized.h:/d' make_error.log
 		exit 1
 	fi
-	sed -i -e '/stl_uninitialized.h:/d' make_error.log 
+	sed -i make_error.log \
+		-e '/stl_uninitialized.h:/d' \
+		-e '/\/Sacado_trad.hpp:/d'
 	if grep 'warning:' make_error.log
 	then
 		cat make_error.log

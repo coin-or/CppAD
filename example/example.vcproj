@@ -246,6 +246,12 @@
 				RelativePath=".\interp_retape.cpp">
 			</File>
 			<File
+				RelativePath=".\ipopt_cppad.cpp">
+			</File>
+			<File
+				RelativePath=".\ipopt_cppad_nlp.cpp">
+			</File>
+			<File
 				RelativePath=".\jac_lu_det.cpp">
 			</File>
 			<File

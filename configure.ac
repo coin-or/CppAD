@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20080304, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20080616, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -175,6 +175,18 @@ AC_ARG_VAR(SACADO_DIR,
 AM_CONDITIONAL(CppAD_SACADO, test "$SACADO_DIR" != "")
 if test "$SACADO_DIR" != "" ; then
 	AC_MSG_RESULT([$SACADO_DIR])
+else
+	AC_MSG_RESULT([no])
+fi
+
+dnl The directory corresponding to the installation of IPOPT -----------
+AC_MSG_CHECKING([IPOPT_DIR])
+AC_ARG_VAR(IPOPT_DIR,
+	[value of the configure prefix directory during Ipopt install]
+)
+AM_CONDITIONAL(CppAD_IPOPT, test "$IPOPT_DIR" != "")
+if test "$IPOPT_DIR" != "" ; then
+	AC_MSG_RESULT([$IPOPT_DIR])
 else
 	AC_MSG_RESULT([no])
 fi

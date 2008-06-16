@@ -29,6 +29,7 @@ example using the $cref/addition operator/ad_binary/$$.
 The examples list in this section are of a more general nature.
 
 $childtable%
+	example/ipopt_cppad.cpp%
 	example/interface_2c.cpp%
 	example/jac_minor_det.cpp%
 	example/jac_lu_det.cpp%
@@ -111,6 +112,7 @@ $rref Forward.cpp$$
 $rref ForSparseJac.cpp$$
 $rref FunCheck.cpp$$
 $rref get_started.cpp$$
+$rref ipopt_cppad.cpp$$
 $rref HesLagrangian.cpp$$
 $rref HesLuDet.cpp$$
 $rref HesMinorDet.cpp$$

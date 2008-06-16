@@ -24,6 +24,7 @@ extern bool AddZero(void);
 extern bool Asin(void);
 extern bool Atan(void);
 extern bool Atan2(void);
+extern bool base_adolc(void);
 extern bool Compare(void);
 extern bool CompareChange(void);
 extern bool CondExp(void);
@@ -42,6 +43,7 @@ extern bool ForSparseJac(void);
 extern bool Forward(void);
 extern bool FromBase(void);
 extern bool FunCheck(void);
+extern bool jacobian(void);
 extern bool Log(void);
 extern bool Log10(void);
 extern bool Mul(void);
@@ -74,10 +76,6 @@ extern bool Value(void);
 extern bool VecAD(void);
 extern bool VecADPar(void);
 extern bool VecUnary(void);
-
-# ifdef CPPAD_ADOLC_TEST
-extern bool base_adolc(void);
-# endif
 
 namespace {
 	// function that runs one test
@@ -135,6 +133,7 @@ int main(void)
 	ok &= Run( Forward,         "Forward"        );
 	ok &= Run( FromBase,        "FromBase"       );
 	ok &= Run( FunCheck,        "FunCheck"       );
+	ok &= Run( jacobian,        "jacobian"       );
 	ok &= Run( Log,             "Log"            );
 	ok &= Run( Log10,           "Log10"          );
 	ok &= Run( Mul,             "Mul"            );

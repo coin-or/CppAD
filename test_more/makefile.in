@@ -47,8 +47,8 @@ am__test_more_SOURCES_DIST = base_adolc.cpp test_more.cpp abs.cpp \
 	cond_exp_ad.cpp copy.cpp cos.cpp cosh.cpp dbl_epsilon.cpp \
 	div.cpp div_eq.cpp div_zero_one.cpp erf.cpp exp.cpp \
 	for_hess.cpp for_sparse_jac.cpp forward.cpp from_base.cpp \
-	fun_check.cpp log.cpp log_10.cpp mul.cpp mul_eq.cpp \
-	mul_zero_one.cpp near_equal_ext.cpp neg.cpp \
+	fun_check.cpp jacobian.cpp log.cpp log_10.cpp mul.cpp \
+	mul_eq.cpp mul_zero_one.cpp near_equal_ext.cpp neg.cpp \
 	ode_err_control.cpp poly.cpp pow.cpp pow_int.cpp \
 	romberg_one.cpp rosen_34.cpp runge_45.cpp reverse.cpp \
 	rev_sparse_hes.cpp rev_sparse_jac.cpp rev_two.cpp \
@@ -65,9 +65,9 @@ am_test_more_OBJECTS = $(am__objects_1) test_more.$(OBJEXT) \
 	div.$(OBJEXT) div_eq.$(OBJEXT) div_zero_one.$(OBJEXT) \
 	erf.$(OBJEXT) exp.$(OBJEXT) for_hess.$(OBJEXT) \
 	for_sparse_jac.$(OBJEXT) forward.$(OBJEXT) from_base.$(OBJEXT) \
-	fun_check.$(OBJEXT) log.$(OBJEXT) log_10.$(OBJEXT) \
-	mul.$(OBJEXT) mul_eq.$(OBJEXT) mul_zero_one.$(OBJEXT) \
-	near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
+	fun_check.$(OBJEXT) jacobian.$(OBJEXT) log.$(OBJEXT) \
+	log_10.$(OBJEXT) mul.$(OBJEXT) mul_eq.$(OBJEXT) \
+	mul_zero_one.$(OBJEXT) near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
 	ode_err_control.$(OBJEXT) poly.$(OBJEXT) pow.$(OBJEXT) \
 	pow_int.$(OBJEXT) romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) \
 	runge_45.$(OBJEXT) reverse.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
@@ -138,6 +138,7 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+IPOPT_DIR = @IPOPT_DIR@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -255,6 +256,7 @@ test_more_SOURCES = \
 	forward.cpp \
 	from_base.cpp \
 	fun_check.cpp \
+	jacobian.cpp \
 	log.cpp \
 	log_10.cpp \
 	mul.cpp \
@@ -361,6 +363,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/from_base.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fun_check.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jacobian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log_10.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul.Po@am__quote@
