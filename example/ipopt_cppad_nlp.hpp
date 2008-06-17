@@ -14,7 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 #include <coin/IpTNLP.hpp>
 #include <cppad/cppad.hpp>
 
-using namespace Ipopt;
+using Ipopt::Number;
+using Ipopt::Index;
 
 typedef CppAD::AD<Number>       ADNumber;
 typedef CppAD::vector<Number>   NumberVector;
@@ -22,37 +23,39 @@ typedef CppAD::vector<ADNumber> ADVector;
 typedef CppAD::vectorBool       BoolVector;
 typedef CppAD::vector<Index>    IndexVector;
 typedef ADVector (*FgPointer) (const ADVector& x);
-typedef void (*SolutionPointer) (
-	SolverReturn               status    ,
-	Index                      n         , 
-	const Number*              x         , 
-	const Number*              z_L       , 
-	const Number*              z_U       ,
-	Index                      m         , 
-	const Number*              g         , 
-	const Number*              lambda    ,
-	Number                     obj_value 
-);
 
 /* 
 C++ class for interfacing a problem to IPOPT and using CppAD for derivative 
 and sparsity pattern calculations.
- */
-class ipopt_cppad_nlp : public TNLP
+*/
+class ipopt_cppad_solution 
 {
+public:
+	Ipopt::SolverReturn        status;
+	NumberVector               x;
+	NumberVector               z_l;
+	NumberVector               z_u;
+	NumberVector               g;
+	NumberVector               lambda;
+	Number                     obj_value;
+};
+
+class ipopt_cppad_nlp : public Ipopt::TNLP
+{
+	using Ipopt::TNLP::IndexStyleEnum;
 public:
 	// constructor 
 	ipopt_cppad_nlp(
-		Index n                       , 
-		Index m                       , 
-		const NumberVector &x_i       ,
-		const NumberVector &x_l       ,
-		const NumberVector &x_u       ,
-		const NumberVector &g_l       ,
-		const NumberVector &g_u       ,
-		FgPointer           fg        ,
-		bool                retape    ,
-		SolutionPointer     solution
+		Index n                          , 
+		Index m                          ,
+		const NumberVector    &x_i       ,
+		const NumberVector    &x_l       ,
+		const NumberVector    &x_u       ,
+		const NumberVector    &g_l       ,
+		const NumberVector    &g_u       ,
+		FgPointer              fg        ,
+		bool                   retape    ,
+		ipopt_cppad_solution*  solution
   	);
 
 
@@ -61,20 +64,22 @@ public:
 
 	// return info about the nlp
 	virtual bool get_nlp_info(
-		Index& n, 
-		Index& m, 
-		Index& nnz_jac_g,
-		Index& nnz_h_lag, 
-		IndexStyleEnum& index_style);
+		Index&          n           , 
+		Index&          m           , 
+		Index&          nnz_jac_g   ,
+		Index&          nnz_h_lag   , 
+		IndexStyleEnum& index_style
+	);
 
 	// return bounds for my problem 
 	virtual bool get_bounds_info(
-		Index n, 
-		Number* x_l, 
-		Number* x_u,
-		Index m, 
-		Number* g_l, 
-		Number* g_u);
+		Index           n   , 
+		Number*         x_l , 
+		Number*         x_u ,
+		Index           m   , 
+		Number*         g_l , 
+		Number*         g_u   
+	);
 
 	// return the starting point for the algorithm 
 	virtual bool get_starting_point(
@@ -140,10 +145,10 @@ public:
 		Index* jCol, 
 		Number* values);
 
-	// called when the algorithm is complete so the TNLP can 
+	// called when the algorithm is completed so the TNLP can 
 	// store/write the solution 
 	virtual void finalize_solution(
-		SolverReturn               status     ,
+		Ipopt::SolverReturn       status      ,
 		Index                      n          , 
 		const Number*              x          , 
 		const Number*              z_L        , 
@@ -152,30 +157,30 @@ public:
 		const Number*              g          , 
 		const Number*              lambda     ,
 		Number                     obj_value  ,
-		const IpoptData*           ip_data    ,
-		IpoptCalculatedQuantities* ip_cq
+		const Ipopt::IpoptData*           ip_data    ,
+		Ipopt::IpoptCalculatedQuantities* ip_cq
 	);
 private:
 	/*
  	Values passed in by user
 	*/
 	// dimension of the domain space
-	const Index                n_;
+	const Index                     n_;
 	// number of components in g
-	const Index                m_;
+	const Index                     m_;
 	// initial x
-	const NumberVector         x_i_;
+	const NumberVector              x_i_;
 	// limits for x and g
-	const NumberVector         x_l_;
-	const NumberVector         x_u_;
-	const NumberVector         g_l_;
-	const NumberVector         g_u_;
+	const NumberVector              x_l_;
+	const NumberVector              x_u_;
+	const NumberVector              g_l_;
+	const NumberVector              g_u_;
 	// Users function that evaluates f and g
-	FgPointer const             fg_;
+	FgPointer const                fg_;
 	// does operation sequence chage with argument value
-	const bool                 retape_;
-	// user function that receives solution
-	SolutionPointer const      solution_;
+	const bool                    retape_;
+	// object for storing final solution results
+	ipopt_cppad_solution* const   solution_;
 	/*
  	Computed values
 	*/
@@ -237,6 +242,7 @@ private:
 	);
 
 };
+
 
 
 # endif

@@ -19,16 +19,16 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /* Constructor. */
 ipopt_cppad_nlp::ipopt_cppad_nlp(
-	Index                      n        , 
-	Index                      m        , 
-	const NumberVector&        x_i      ,
-	const NumberVector&        x_l      ,
-	const NumberVector&        x_u      ,
-	const NumberVector&        g_l      ,
-	const NumberVector&        g_u      ,
-	FgPointer                  fg       ,
-	bool                       retape   ,
-	SolutionPointer            solution )
+	Index                      n           , 
+	Index                      m           , 
+	const NumberVector&        x_i         ,
+	const NumberVector&        x_l         ,
+	const NumberVector&        x_u         ,
+	const NumberVector&        g_l         ,
+	const NumberVector&        g_u         ,
+	FgPointer                  fg          ,
+	bool                       retape      ,
+	ipopt_cppad_solution*      solution    )
 	: n_ ( n ),
 	  m_ ( m ),
 	  x_i_ ( x_i ),
@@ -37,7 +37,7 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 	  g_l_ ( g_l ),
 	  g_u_ ( g_u ),
 	  fg_  ( fg ) ,
-	  retape_ (retape) ,
+	  retape_ (retape),
 	  solution_ (solution)
 {	Index i, j, k;
 
@@ -588,30 +588,38 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 }
 
 void ipopt_cppad_nlp::finalize_solution(
-	SolverReturn               status    ,
-	Index                      n         , 
-	const Number*              x         , 
-	const Number*              z_L       , 
-	const Number*              z_U       ,
-	Index                      m         , 
-	const Number*              g         , 
-	const Number*              lambda    ,
-	Number                     obj_value ,
-	const IpoptData*           ip_data   ,
-	IpoptCalculatedQuantities* ip_cq
+	Ipopt::SolverReturn               status    ,
+	Index                             n         , 
+	const Number*                     x         , 
+	const Number*                     z_L       , 
+	const Number*                     z_U       ,
+	Index                             m         , 
+	const Number*                     g         , 
+	const Number*                     lambda    ,
+	Number                            obj_value ,
+	const Ipopt::IpoptData*           ip_data   ,
+	Ipopt::IpoptCalculatedQuantities* ip_cq
 )
-{	assert( n == n_ );
+{	Index i, j;
+
+	assert( n == n_ );
 	assert( m == m_ );
 
-	solution_(
-		status     ,
-		n          ,
-		x          ,
-		z_L        ,
-		z_U        ,
-		m          ,
-		g          ,
-		lambda     ,
-		obj_value
-	);
+	solution_->status = status;
+	solution_->x.resize(n);
+	solution_->z_l.resize(n);
+	solution_->z_u.resize(n);
+	for(j = 0; j < n; j++)
+	{	solution_->x[j]    = x[j];
+		solution_->z_l[j]  = z_L[j];
+		solution_->z_u[j]  = z_U[j];
+	}
+	solution_->g.resize(m);
+	solution_->lambda.resize(m);
+	for(i = 0; i < m; i++)
+	{	solution_->g[i]      = g[i];
+		solution_->lambda[i] = lambda[i];
+	}
+	solution_->obj_value = obj_value;
+	return;
 }

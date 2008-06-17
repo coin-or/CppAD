@@ -37,21 +37,6 @@ $latex \[
 \end{array}
 \] $$
 
-$head Tracking New and Delete$$
-This example uses raw memory arrays that depend on the number of 
-dependent and independent variables, hence $code new$$ and $code delete$$
-are used to allocate this memory.
-The preprocessor macros 
-$small
-$cref/CPPAD_TRACK_NEW_VEC/TrackNewDel/TrackNewVec/$$ 
-$$
-and
-$small
-$cref/CPPAD_TRACK_DEL_VEC/TrackNewDel/TrackDelVec/$$ 
-$$
-are used to check for errors in the
-use of $code new$$ and $code delete$$ when the example is compiled for
-debugging (when $code NDEBUG$$ is not defined).
 
 $head Configuration Requirement$$
 This example will be compiled and tested provided that
@@ -88,54 +73,15 @@ namespace {
 		fg_vec[2] = x1 * x1 + x2 * x2 + x3 * x3 + x4 * x4;
 		return fg_vec;
 	}
-	// Final solution infromation
-	SolverReturn         final_status;
-	Number*              final_x;
-	Number*              final_z_l;
-	Number*              final_z_u;
-	Number*              final_g;
-	Number*              final_lambda;
-	Number               final_obj_value;
-	void solution(
-		SolverReturn               status     ,
-		Index                      n          , 
-		const Number*              x          , 
-		const Number*              z_L        , 
-		const Number*              z_U        ,
-		Index                      m          , 
-		const Number*              g          , 
-		const Number*              lambda     ,
-		Number                     obj_value  )
-	{
-		assert( n == 4 );
-		assert( m == 2 );
-
-		Index i, j;
-
-		final_status = status;
-		//
-		final_x   = CPPAD_TRACK_NEW_VEC(n, final_x);
-		final_z_l = CPPAD_TRACK_NEW_VEC(n, final_z_l);
-		final_z_u = CPPAD_TRACK_NEW_VEC(n, final_z_u);
-		for(j = 0; j < n; j++)
-		{	final_x[j]    = x[j];
-			final_z_l[j] = z_L[j];
-			final_z_u[j] = z_U[j];
-		}
-
-		final_g      = CPPAD_TRACK_NEW_VEC(m, final_g);
-		final_lambda = CPPAD_TRACK_NEW_VEC(m, final_lambda);
-		for(i = 0; i < m; i++)
-		{	final_g[i]      = g[i];
-			final_lambda[i] = lambda[i];
-		}
-		final_obj_value = obj_value;
-	}
 }
 	
 bool ipopt_cppad(void)
 {	bool ok = true;
 	Index j;
+	using Ipopt::SmartPtr;
+	using Ipopt::IpoptApplication;
+	using Ipopt::ApplicationReturnStatus;
+	using Ipopt::IpoptCalculatedQuantities;
 
 	// number of independent variables (domain dimension for f and g)
 	Index n = 4;  
@@ -162,35 +108,49 @@ bool ipopt_cppad(void)
 	// does the ADNumber sequence of operations depend on the value of x
 	bool retape = true;
 	//
-	SmartPtr<TNLP> cppad_nlp = new ipopt_cppad_nlp(
-		n, m, x_i, x_l, x_u, g_l, g_u, &fg, retape, solution
+	ipopt_cppad_solution solution;
+	SmartPtr<Ipopt::TNLP> cppad_nlp = new ipopt_cppad_nlp(
+		n, m, x_i, x_l, x_u, g_l, g_u, &fg, retape, &solution
 	);
 
 	// Create an instance of the IpoptApplication
 	SmartPtr<IpoptApplication> app = new IpoptApplication();
 
-	// Change some options
-	app->Options()->SetNumericValue("tol", 1e-9);
-	app->Options()->SetStringValue("mu_strategy", "adaptive");
+	// turn off any printing
 	app->Options()->SetIntegerValue("print_level", -2);
+
+	// maximum number of iterations
+	app->Options()->SetIntegerValue("max_iter", 10);
+
+	// approximate accuracy in first order necessary conditions;
+	// see Mathematical Programming, Vol 106, Number 1, Pages 25-57, 
+	// Equation (6)
+	app->Options()->SetNumericValue("tol", 1e-9);
 
 	// Initialize the IpoptApplication and process the options
 	ApplicationReturnStatus status;
 	status = app->Initialize();
-	ok    &= status == Solve_Succeeded;
+	ok    &= status == Ipopt::Solve_Succeeded;
 
+	// Run the IpoptApplication
 	status = app->OptimizeTNLP(cppad_nlp);
+	ok    &= status == Ipopt::Solve_Succeeded;
 
-	ok &= CppAD::NearEqual(final_x[0], 1.000000, 1e-6, 1e-6);
-	ok &= CppAD::NearEqual(final_x[1], 4.743000, 1e-6, 1e-6);
-	ok &= CppAD::NearEqual(final_x[2], 3.821150, 1e-6, 1e-6);
-	ok &= CppAD::NearEqual(final_x[3], 1.379408, 1e-6, 1e-6);
-	
-	CPPAD_TRACK_DEL_VEC(final_x);
-	CPPAD_TRACK_DEL_VEC(final_z_l);
-	CPPAD_TRACK_DEL_VEC(final_z_u);
-	CPPAD_TRACK_DEL_VEC(final_g);
-	CPPAD_TRACK_DEL_VEC(final_lambda);
+
+	/*
+ 	Get isome of the solution values
+ 	*/
+	ok &= solution.status == Ipopt::SUCCESS;
+	//
+	double check_x[]   = { 1.000000, 4.743000, 3.82115, 1.379408 };
+	double check_z_l[] = { 1.087871, 0.,       0.,      0.       };
+	double check_z_u[] = { 0.,       0.,       0.,      0.       };
+	using CppAD::NearEqual;
+	for(j = 0; j < n; j++)
+	{	ok &= NearEqual(check_x[j],   solution.x[j],   1e-6, 1e-6);
+		ok &= NearEqual(check_z_l[j], solution.z_l[j], 1e-6, 1e-6);
+		ok &= NearEqual(check_z_u[j], solution.z_u[j], 1e-6, 1e-6);
+	}
 
 	return ok;
 }
