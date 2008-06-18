@@ -56,37 +56,35 @@ $end
 # include "ipopt_cppad_nlp.hpp"
 
 namespace {
-	// objective function f(x), and constraints g(x)
-	ADVector fg(const ADVector&  x_vec)
-	{	ADVector fg_vec(3);
+
+	// Evaluation of the objective f(x), and constraints g(x)
+	// using an Algorithmic Differentiation (AD) class.
+	ADVector fg_ad(const ADVector&  x)
+	{	ADVector fg(3);
 
 		// Fortran style indexing 
-		ADNumber x1 = x_vec[0];
-		ADNumber x2 = x_vec[1];
-		ADNumber x3 = x_vec[2];
-		ADNumber x4 = x_vec[3];
+		ADNumber x1 = x[0];
+		ADNumber x2 = x[1];
+		ADNumber x3 = x[2];
+		ADNumber x4 = x[3];
 		// f(x)
-		fg_vec[0] = x1 * x4 * (x1 + x2 + x3) + x3;
+		fg[0] = x1 * x4 * (x1 + x2 + x3) + x3;
 		// g_1 (x)
-		fg_vec[1] = x1 * x2 * x3 * x4;
+		fg[1] = x1 * x2 * x3 * x4;
 		// g_2 (x)
-		fg_vec[2] = x1 * x1 + x2 * x2 + x3 * x3 + x4 * x4;
-		return fg_vec;
+		fg[2] = x1 * x1 + x2 * x2 + x3 * x3 + x4 * x4;
+		return fg;
 	}
 }
 	
 bool ipopt_cppad(void)
 {	bool ok = true;
-	Index j;
-	using Ipopt::SmartPtr;
-	using Ipopt::IpoptApplication;
-	using Ipopt::ApplicationReturnStatus;
-	using Ipopt::IpoptCalculatedQuantities;
+	Ipopt::Index j;
 
 	// number of independent variables (domain dimension for f and g)
-	Index n = 4;  
+	Ipopt::Index n = 4;  
 	// number of constraints (range dimension for g)
-	Index m = 2;
+	Ipopt::Index m = 2;
 	// initial value of the independent variables
 	NumberVector x_i(n);
 	x_i[0] = 1.0;
@@ -105,51 +103,63 @@ bool ipopt_cppad(void)
 	NumberVector g_u(m);
 	g_l[0] = 25.0;     g_u[0] = 1.0e19;
   	g_l[1] = 40.0;     g_u[1] = 40.0;
-	// does the ADNumber sequence of operations depend on the value of x
-	bool retape = true;
-	//
-	ipopt_cppad_solution solution;
-	SmartPtr<Ipopt::TNLP> cppad_nlp = new ipopt_cppad_nlp(
-		n, m, x_i, x_l, x_u, g_l, g_u, &fg, retape, &solution
-	);
 
-	// Create an instance of the IpoptApplication
-	SmartPtr<IpoptApplication> app = new IpoptApplication();
+	Ipopt::Index icase;
+	for(icase = 0; icase <= 1; icase++)
+	{	// Should ipopt_cppad_nlp retape the operation sequence for
+		// every new x. Can test both true and false cases because 
+		// the operation sequence does not depend on x (for this case).
+		bool retape = bool(icase);
+		//
+		ipopt_cppad_solution solution;
+		Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new ipopt_cppad_nlp(
+		n, m, x_i, x_l, x_u, g_l, g_u, &fg_ad, retape, &solution
+		);
 
-	// turn off any printing
-	app->Options()->SetIntegerValue("print_level", -2);
+		// Create an instance of the IpoptApplication
+		using Ipopt::IpoptApplication;
+		Ipopt::SmartPtr<IpoptApplication> app = new IpoptApplication();
 
-	// maximum number of iterations
-	app->Options()->SetIntegerValue("max_iter", 10);
+		// turn off any printing
+		app->Options()->SetIntegerValue("print_level", -2);
 
-	// approximate accuracy in first order necessary conditions;
-	// see Mathematical Programming, Vol 106, Number 1, Pages 25-57, 
-	// Equation (6)
-	app->Options()->SetNumericValue("tol", 1e-9);
+		// maximum number of iterations
+		app->Options()->SetIntegerValue("max_iter", 10);
 
-	// Initialize the IpoptApplication and process the options
-	ApplicationReturnStatus status;
-	status = app->Initialize();
-	ok    &= status == Ipopt::Solve_Succeeded;
+		// approximate accuracy in first order necessary conditions;
+		// see Mathematical Programming, Volume 106, Number 1, 
+		// Pages 25-57, Equation (6)
+		app->Options()->SetNumericValue("tol", 1e-9);
 
-	// Run the IpoptApplication
-	status = app->OptimizeTNLP(cppad_nlp);
-	ok    &= status == Ipopt::Solve_Succeeded;
+		// Initialize the IpoptApplication and process the options
+		Ipopt::ApplicationReturnStatus status = app->Initialize();
+		ok    &= status == Ipopt::Solve_Succeeded;
 
+		// Run the IpoptApplication
+		status = app->OptimizeTNLP(cppad_nlp);
+		ok    &= status == Ipopt::Solve_Succeeded;
 
-	/*
- 	Get isome of the solution values
- 	*/
-	ok &= solution.status == Ipopt::SUCCESS;
-	//
-	double check_x[]   = { 1.000000, 4.743000, 3.82115, 1.379408 };
-	double check_z_l[] = { 1.087871, 0.,       0.,      0.       };
-	double check_z_u[] = { 0.,       0.,       0.,      0.       };
-	using CppAD::NearEqual;
-	for(j = 0; j < n; j++)
-	{	ok &= NearEqual(check_x[j],   solution.x[j],   1e-6, 1e-6);
-		ok &= NearEqual(check_z_l[j], solution.z_l[j], 1e-6, 1e-6);
-		ok &= NearEqual(check_z_u[j], solution.z_u[j], 1e-6, 1e-6);
+		/*
+ 		Check some of the solution values
+ 		*/
+		ok &= solution.status == Ipopt::SUCCESS;
+		//
+		double check_x[]   = { 1.000000, 4.743000, 3.82115, 1.379408 };
+		double check_z_l[] = { 1.087871, 0.,       0.,      0.       };
+		double check_z_u[] = { 0.,       0.,       0.,      0.       };
+		double rel_tol     = 1e-6;  // relative tolerance
+		double abs_tol     = 1e-6;  // absolute tolerance
+		for(j = 0; j < n; j++)
+		{	ok &= CppAD::NearEqual(
+			check_x[j],   solution.x[j],   rel_tol, abs_tol
+			);
+			ok &= CppAD::NearEqual(
+			check_z_l[j], solution.z_l[j], rel_tol, abs_tol
+			);
+			ok &= CppAD::NearEqual(
+			check_z_u[j], solution.z_u[j], rel_tol, abs_tol
+			);
+		}
 	}
 
 	return ok;
