@@ -141,7 +141,7 @@ bool ipopt_cppad(void)
 		/*
  		Check some of the solution values
  		*/
-		ok &= solution.status == Ipopt::SUCCESS;
+		ok &= solution.status == "success";
 		//
 		double check_x[]   = { 1.000000, 4.743000, 3.82115, 1.379408 };
 		double check_z_l[] = { 1.087871, 0.,       0.,      0.       };

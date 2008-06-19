@@ -605,7 +605,56 @@ void ipopt_cppad_nlp::finalize_solution(
 	assert( n == n_ );
 	assert( m == m_ );
 
-	solution_->status = status;
+	switch(status)
+	{	// convert status from an enum type to a string
+		case Ipopt::SUCCESS:
+		solution_->status = "success";
+		break;
+
+		case Ipopt::MAXITER_EXCEEDED:
+		solution_->status = "maxiter_exceeded";
+		break;
+
+		case Ipopt::STOP_AT_TINY_STEP:
+		solution_->status = "stop_at_tiny_step";
+		break;
+
+		case Ipopt::STOP_AT_ACCEPTABLE_POINT:
+		solution_->status = "stop_at_acceptable_point";
+		break;
+
+		case Ipopt::LOCAL_INFEASIBILITY:
+		solution_->status = "local_infeasibility";
+		break;
+
+		case Ipopt::USER_REQUESTED_STOP:
+		solution_->status = "user_requested_stop";
+		break;
+
+		case Ipopt::DIVERGING_ITERATES:
+		solution_->status = "diverging_iterates";
+		break;
+
+		case Ipopt::RESTORATION_FAILURE:
+		solution_->status = "restoration_failure";
+		break;
+
+		case Ipopt::ERROR_IN_STEP_COMPUTATION:
+		solution_->status = "error_in_step_computation";
+		break;
+
+		case Ipopt::INVALID_NUMBER_DETECTED:
+		solution_->status = "invalid_number_detected";
+		break;
+
+		case Ipopt::INTERNAL_ERROR:
+		solution_->status = "internal_error";
+		break;
+
+		default:
+		solution_->status = "unknown";
+	}
+
 	solution_->x.resize(n);
 	solution_->z_l.resize(n);
 	solution_->z_u.resize(n);

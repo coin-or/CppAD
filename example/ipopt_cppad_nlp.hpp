@@ -13,6 +13,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin ipopt_cppad_nlp$$
 $spell
+	doesn't
+	nan
+	inf
+	naninf
+	std
+	maxiter
+	infeasibility
 	obj
 	const
 	optimizer
@@ -175,60 +182,115 @@ After the optimization process is completed, $icode solution$$ contains
 the following information:
 
 $subhead status$$
-The $code status%$$ field of $icode solution$$ has prototype
-$codei
-	Ipopt::SolverReturn status
-$$
-It is the final Ipopt status for the optimizer.
+The $icode status$$ field of $icode solution$$ has prototype
+$codei%
+	std::string %solution%.status
+%$$
+It is the final Ipopt status for the optimizer. 
+Here is a list of the possible values for the status:
+
+$table
+$icode status$$ $cnext Meaning
+$rnext
+not_defined $cnext
+The optimizer did not return a final status to this $code ipopt_cppad_nlp$$
+object.
+$rnext
+unknown $cnext
+The status returned by the optimizer is not defined in the Ipopt
+documentation for $code finalize_solution$$.
+$rnext
+success $cnext
+Algorithm terminated successfully at a point satisfying the convergence 
+tolerances (see Ipopt options).
+$rnext
+maxiter_exceeded $cnext
+The maximum number of iterations was exceeded (see Ipopt options).
+$rnext
+stop_at_tiny_step $cnext
+Algorithm terminated because progress was very slow.
+$rnext
+stop_at_acceptable_point $cnext
+Algorithm stopped at a point that was converged, 
+not to the 'desired' tolerances, but to 'acceptable' tolerances 
+(see Ipopt options).
+$rnext
+local_infeasibility $cnext
+Algorithm converged to a non-feasible point
+(problem may have no solution).
+$rnext
+user_requested_stop $cnext
+This return value should not happen.
+$rnext
+diverging_iterates $cnext
+It the iterates are diverging.
+$rnext
+restoration_failure $cnext
+Restoration phase failed, algorithm doesn't know how to proceed.
+$rnext
+error_in_step_computation $cnext
+An unrecoverable error occurred while Ipopt tried to 
+compute the search direction.
+$rnext
+invalid_number_detected $cnext
+Algorithm received an invalid number (such as $code nan$$ or $code inf$$) 
+from the users function $icode fg_ad$$ or from the CppAD evaluations
+of its derivatives
+(see the Ipopt option $code check_derivatives_for_naninf$$).
+$rnext
+internal_error $cnext
+An unknown Ipopt internal error occurred.
+Contact the Ipopt authors through the mailing list.
+$tend
 
 $subhead x$$
 The $code x$$ field of $icode solution$$ has prototype
-$codei
-	NumberVector x
-$$
+$codei%
+	NumberVector %solution%.x
+%$$
 and its size is equal to $latex n$$.
 It is the final $latex x$$ value for the optimizer.
 
 $subhead z_l$$
 The $code z_l$$ field of $icode solution$$ has prototype
-$codei
-	NumberVector z_l
-$$
+$codei%
+	NumberVector %solution%.z_l
+%$$
 and its size is equal to $latex n$$.
 It is the final Lagrange multipliers for the 
 lower bounds on $latex x$$.
 
 $subhead z_u$$
 The $code z_u$$ field of $icode solution$$ has prototype
-$codei
-	NumberVector z_u
-$$
+$codei%
+	NumberVector %solution%.z_u
+%$$
 and its size is equal to $latex n$$.
 It is the final Lagrange multipliers for the 
 upper bounds on $latex x$$.
 
 $subhead g$$
 The $code g$$ field of $icode solution$$ has prototype
-$codei
-	NumberVector g
-$$
+$codei%
+	NumberVector %solution%.g
+%$$
 and its size is equal to $latex m$$.
 It is the final value for the constraint function $latex g(x)$$.
 
 $subhead lambda$$
 The $code lambda$$ field of $icode solution$$ has prototype
-$codei
-	NumberVector lambda
-$$
+$codei%
+	NumberVector %solution%.lambda
+%$$
 and its size is equal to $latex m$$.
 It is the final value for the 
 Lagrange multipliers corresponding to the constraint function.
 
 $subhead obj_value$$
 The $code obj_value$$ field of $icode solution$$ has prototype
-$codei
-	Number obj_value
-$$
+$codei%
+	Number %solution%.obj_value
+%$$
 It is the final value of the objective function $latex f(x)$$.
 
 
@@ -245,9 +307,10 @@ $end
 -----------------------------------------------------------------------------
 */
 
+# include <string>
+# include <cppad/cppad.hpp>
 # include <coin/IpIpoptApplication.hpp>
 # include <coin/IpTNLP.hpp>
-# include <cppad/cppad.hpp>
 
 typedef CppAD::AD<Ipopt::Number>       ADNumber;
 typedef CppAD::vector<Ipopt::Number>   NumberVector;
@@ -260,13 +323,16 @@ and sparsity pattern calculations.
 class ipopt_cppad_solution 
 {
 public:
-	Ipopt::SolverReturn        status;
-	NumberVector               x;
-	NumberVector               z_l;
-	NumberVector               z_u;
-	NumberVector               g;
-	NumberVector               lambda;
-	Ipopt::Number              obj_value;
+	std::string       status;
+	NumberVector      x;
+	NumberVector      z_l;
+	NumberVector      z_u;
+	NumberVector      g;
+	NumberVector      lambda;
+	Ipopt::Number     obj_value;
+
+	ipopt_cppad_solution(void)
+	{	status = "not_defined"; }
 };
 
 class ipopt_cppad_nlp : public Ipopt::TNLP
