@@ -10,6 +10,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	Jacobian
+	recomputed
+	Ipopt
+	Adolc
+	Fadbad
+	Sacado
 	Python
 	xml
 	hpp
@@ -48,6 +54,18 @@ If an exception occurs before the call to the corresponding
 $xref/ADFun/$$ constructor or $cref/Dependent/$$, 
 the tape recording will never stop.
 Thus, there should be a way to abort a tape recording.
+
+$head Ipopt$$
+A speed test for the Ipopt nonlinear programming class
+$cref/ipopt_cppad_nlp/$$ should be added.
+Then changes should be made to improve its speed.
+For example:
+Perhaps the evaluation of the objective
+and the constraints should be done in separate functions.
+Perhaps it would help to cache the solution of the sparse Jacobian
+and spare Hessian graph coloring algorithm.
+Then, when the sparsity pattern does not depend on the argument value,
+these colorings would not have to be recomputed.
 
 $head Library$$
 One could build a CppAD library for use with the type $code AD<double>$$.
@@ -125,6 +143,13 @@ with $code USE_CPPAD_SPARSE_HESSIAN$$ equal to
 $code 1$$ (true) and $code 0$$ (false) 
 indicates that $code sparse_hessian$$ is already more efficient
 than $cref/Hessian/$$ (for large sparse cases).
+(Also see sparse Hessian discussion under $cref/Ipopt/WishList/Ipopt/$$.)
+
+$head Speed Testing$$
+Extend the speed tests for Adolc, Fadbad, and Sacado
+to run under MS Windows.
+Run the CppAD $cref/speed/$$ tests on a set of different machines
+and operating systems.
 
 $head Tracing$$
 Add forward and reverse mode operation tracing to the developer documentation

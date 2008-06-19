@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_08$$
 $spell
+	Ipopt
 	Jacobians
 	Jacobian
 	cygwin
@@ -38,6 +39,11 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 06-18$$
+Add specifications for the Ipopt class $cref/ipopt_cppad_nlp/$$.
+This is only an example class it may change with future 
+versions of CppAD.
 
 $head 06-15$$
 The nonlinear programming example $cref/ipopt_cppad.cpp/$$ was added.

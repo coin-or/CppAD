@@ -10,16 +10,248 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+/*
+$begin ipopt_cppad_nlp$$
+$spell
+	obj
+	const
+	optimizer
+	ipopt_cppad_nlp.hpp
+	fg_ad
+	retape
+	CppAD
+	
+$$
+$section Nonlinear Programming Using Ipopt and CppAD$$
 
-#include <coin/IpTNLP.hpp>
-#include <cppad/cppad.hpp>
+$head Syntax$$
+$codei%# include "ipopt_cppad_nlp.hpp"
+%$$
+$codei%# ipopt_cppad_solution %solution%;
+%$$
+$codei%ipopt_cppad_nlp %cppad_nlp%(
+	%n%, %m%, %x_i%, %x_l%, %x_u%, %g_l%, %g_u%, &%fg_ad%, %retape%, &%solution%
+)%$$
+
+$head Purpose$$
+The class $code ipopt_cppad_nlp$$ is used to solve nonlinear programming
+problems of the form
+$latex \[
+\begin{array}{rll}
+{\rm minimize}      & f(x) 
+\\
+{\rm subject \; to} & g_l \leq g(x) \leq g_u
+\\
+                    & x_l  \leq x   \leq x_u
+\end{array}
+\] $$
+This is done using 
+$href%
+	https://www.coin-or.org/projects/Ipopt%
+	Ipopt
+%$$
+optimizer and 
+$href%
+	http://www.coin-or.org/CppAD/%
+	CppAD
+%$$
+Algorithmic Differentiation package.
+
+$head Warning$$
+This is only and example use of CppAD.
+It is expected that this class will be improved and that
+its user interface may change in ways that are not backward compatible.
+
+$head NumberVector$$
+The type $codei NumberVector$$ is defined by the 
+$codei ipopt_cppad_nlp.hpp$$ include file to be a 
+$cref/SimpleVector/$$ class with elements of type
+$code Ipopt::Number$$.
+
+$head ADNumber$$
+The type $codei ADNumber$$ is defined by the 
+$codei ipopt_cppad_nlp.hpp$$ include file to be a 
+an AD type that can be used to compute derivatives.
+
+$head ADVector$$
+The type $codei ADVector$$ is defined by the 
+$codei ipopt_cppad_nlp.hpp$$ include file to be a 
+$cref/SimpleVector/$$ class with elements of type
+$code ADNumber$$. 
+
+$head n$$
+The argument $icode n$$ has prototype
+$codei%
+	Ipopt::Index %n%
+%$$
+It specifies the dimension of the argument space; 
+i.e., $latex x \in \R^n$$.
+
+$head m$$
+The argument $icode m$$ has prototype
+$codei%
+	Ipopt::Index %m%
+%$$
+It specifies the dimension of the range space for $latex g$$; 
+i.e., $latex g : \R^n \rightarrow \R^m$$.
+
+$head x_i$$
+The argument $icode x_i$$ has prototype
+$codei%
+	const NumberVector& %x_i%
+%$$
+and its size is equal to $latex n$$.
+It specifies the initial point where Ipopt starts the optimization process.
+
+$head x_l$$
+The argument $icode x_l$$ has prototype
+$codei%
+	const NumberVector& %x_l%
+%$$
+and its size is equal to $latex n$$.
+It specifies the lower limits for the argument in the optimization problem.
+
+$head x_u$$
+The argument $icode x_u$$ has prototype
+$codei%
+	const NumberVector& %x_u%
+%$$
+and its size is equal to $latex n$$.
+It specifies the upper limits for the argument in the optimization problem.
+
+$head g_l$$
+The argument $icode g_l$$ has prototype
+$codei%
+	const NumberVector& %g_l%
+%$$
+and its size is equal to $latex m$$.
+It specifies the lower limits for the constraints in the optimization problem.
+
+$head g_u$$
+The argument $icode g_u$$ has prototype
+$codei%
+	const NumberVector& %g_u%
+%$$
+and its size is equal to $latex n$$.
+It specifies the upper limits for the constraints in the optimization problem.
+
+$head fg_ad$$
+The argument $icode fg_ad$$ has prototype
+$codei%
+	ADVector %fg_ad%(const ADVector& %x%);
+%$$
+This function computes the value of $latex f(x)$$ and $latex g(x)$$
+using the syntax
+$codei%
+	%fg% = %fg_ad%(%x%)
+%$$
+
+$subhead x$$
+The $icode fg_ad$$ argument $icode x$$ has prototype
+$codei%
+	const ADVector& %x%
+%$$
+and its size is equal to $latex n$$.
+It is the value of $latex x$$ at which to compute $icode fg$$.
+
+$subhead fg$$
+The $icode fg_ad$$ return value $icode fg$$ has prototype
+$codei%
+	ADVector& %fg%
+%$$
+and its size is equal to $latex m+1$$.
+It is the vector of $latex ( f(x) , g(x) )$$; i.e.,
+$latex \[
+\begin{array}{rcl}
+	f(x)        & = &        fg[0] \\
+	g_0 (x)     & = &        fg[1] \\
+	            & \vdots &         \\
+	g_{m-1} (x) & = &        fg[m]
+	\end{array}
+\] $$
+
+$head solution$$
+After the optimization process is completed, $icode solution$$ contains
+the following information:
+
+$subhead status$$
+The $code status%$$ field of $icode solution$$ has prototype
+$codei
+	Ipopt::SolverReturn status
+$$
+It is the final Ipopt status for the optimizer.
+
+$subhead x$$
+The $code x$$ field of $icode solution$$ has prototype
+$codei
+	NumberVector x
+$$
+and its size is equal to $latex n$$.
+It is the final $latex x$$ value for the optimizer.
+
+$subhead z_l$$
+The $code z_l$$ field of $icode solution$$ has prototype
+$codei
+	NumberVector z_l
+$$
+and its size is equal to $latex n$$.
+It is the final Lagrange multipliers for the 
+lower bounds on $latex x$$.
+
+$subhead z_u$$
+The $code z_u$$ field of $icode solution$$ has prototype
+$codei
+	NumberVector z_u
+$$
+and its size is equal to $latex n$$.
+It is the final Lagrange multipliers for the 
+upper bounds on $latex x$$.
+
+$subhead g$$
+The $code g$$ field of $icode solution$$ has prototype
+$codei
+	NumberVector g
+$$
+and its size is equal to $latex m$$.
+It is the final value for the constraint function $latex g(x)$$.
+
+$subhead lambda$$
+The $code lambda$$ field of $icode solution$$ has prototype
+$codei
+	NumberVector lambda
+$$
+and its size is equal to $latex m$$.
+It is the final value for the 
+Lagrange multipliers corresponding to the constraint function.
+
+$subhead obj_value$$
+The $code obj_value$$ field of $icode solution$$ has prototype
+$codei
+	Number obj_value
+$$
+It is the final value of the objective function $latex f(x)$$.
+
+
+$children%
+	example/ipopt_cppad.cpp
+%$$
+
+$head Example$$
+The file 
+$cref/ipopt_cppad.cpp/$$ is an example and test of $code ipopt_cppad_nlp$$.
+It returns true if it succeeds and false otherwise.
+
+$end
+-----------------------------------------------------------------------------
+*/
+
+# include <coin/IpIpoptApplication.hpp>
+# include <coin/IpTNLP.hpp>
+# include <cppad/cppad.hpp>
 
 typedef CppAD::AD<Ipopt::Number>       ADNumber;
 typedef CppAD::vector<Ipopt::Number>   NumberVector;
 typedef CppAD::vector<ADNumber>        ADVector;
-typedef CppAD::vectorBool              BoolVector;
-typedef CppAD::vector<Ipopt::Index>    IndexVector;
-typedef ADVector (*FgPointer) (const ADVector& x);
 
 /* 
 C++ class for interfacing a problem to IPOPT and using CppAD for derivative 
@@ -39,9 +271,12 @@ public:
 
 class ipopt_cppad_nlp : public Ipopt::TNLP
 {
-	typedef Ipopt::Number               Number;
-	typedef Ipopt::Index                Index;
-	typedef Ipopt::TNLP::IndexStyleEnum IndexStyleEnum;
+	typedef Ipopt::Number                  Number;
+	typedef Ipopt::Index                   Index;
+	typedef Ipopt::TNLP::IndexStyleEnum    IndexStyleEnum;
+	typedef CppAD::vectorBool              BoolVector;
+	typedef CppAD::vector<Ipopt::Index>    IndexVector;
+	typedef ADVector (*FgPointer) (const ADVector& x);
 public:
 	// constructor 
 	ipopt_cppad_nlp(

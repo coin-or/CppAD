@@ -8,6 +8,7 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+
 /*
 
 $begin ipopt_cppad.cpp$$
@@ -20,7 +21,7 @@ $index nonlinear, programming$$
 $index programming, nonlinear$$
 $index ipopt$$
 
-$section Nonlinear Programming Using CppAD and Ipopt$$
+$section Nonlinear Programming Using CppAD and Ipopt: Example and Test$$
 
 $head Purpose$$
 This example program demonstrates how to use the class ipopt_cppad_nlp to 
@@ -47,12 +48,10 @@ $code
 $verbatim%example/ipopt_cppad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
-
 $end
 */
 // BEGIN PROGRAM
 
-# include <coin/IpIpoptApplication.hpp>
 # include "ipopt_cppad_nlp.hpp"
 
 namespace {
