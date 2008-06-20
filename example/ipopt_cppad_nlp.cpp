@@ -606,53 +606,65 @@ void ipopt_cppad_nlp::finalize_solution(
 	assert( m == m_ );
 
 	switch(status)
-	{	// convert status from an enum type to a string
+	{	// convert status from Ipopt enum to ipopt_cppad_solution enum
 		case Ipopt::SUCCESS:
-		solution_->status = "success";
+		solution_->status = 
+			ipopt_cppad_solution::success;
 		break;
 
 		case Ipopt::MAXITER_EXCEEDED:
-		solution_->status = "maxiter_exceeded";
+		solution_->status = 
+			ipopt_cppad_solution::maxiter_exceeded;
 		break;
 
 		case Ipopt::STOP_AT_TINY_STEP:
-		solution_->status = "stop_at_tiny_step";
+		solution_->status = 
+			ipopt_cppad_solution::stop_at_tiny_step;
 		break;
 
 		case Ipopt::STOP_AT_ACCEPTABLE_POINT:
-		solution_->status = "stop_at_acceptable_point";
+		solution_->status = 
+			ipopt_cppad_solution::stop_at_acceptable_point;
 		break;
 
 		case Ipopt::LOCAL_INFEASIBILITY:
-		solution_->status = "local_infeasibility";
+		solution_->status = 
+			ipopt_cppad_solution::local_infeasibility;
 		break;
 
 		case Ipopt::USER_REQUESTED_STOP:
-		solution_->status = "user_requested_stop";
+		solution_->status = 
+			ipopt_cppad_solution::user_requested_stop;
 		break;
 
 		case Ipopt::DIVERGING_ITERATES:
-		solution_->status = "diverging_iterates";
+		solution_->status = 
+			ipopt_cppad_solution::diverging_iterates;
 		break;
 
 		case Ipopt::RESTORATION_FAILURE:
-		solution_->status = "restoration_failure";
+		solution_->status = 
+			ipopt_cppad_solution::restoration_failure;
 		break;
 
 		case Ipopt::ERROR_IN_STEP_COMPUTATION:
-		solution_->status = "error_in_step_computation";
+		solution_->status = 
+			ipopt_cppad_solution::error_in_step_computation;
 		break;
 
 		case Ipopt::INVALID_NUMBER_DETECTED:
-		solution_->status = "invalid_number_detected";
+		solution_->status = 
+			ipopt_cppad_solution::invalid_number_detected;
 		break;
 
 		case Ipopt::INTERNAL_ERROR:
-		solution_->status = "internal_error";
+		solution_->status = 
+			ipopt_cppad_solution::internal_error;
 		break;
 
 		default:
-		solution_->status = "unknown";
+		solution_->status = 
+			ipopt_cppad_solution::unknown;
 	}
 
 	solution_->x.resize(n);
