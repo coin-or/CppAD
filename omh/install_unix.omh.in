@@ -12,6 +12,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin InstallUnix$$
 $dollar ^$$
 $spell
+	err_retu
+	const
+	printf
+	avector.h
 	Ipopt
 	Ip
 	gzip
@@ -404,7 +408,7 @@ $index Adolc, unix$$
 If you have 
 $href%
 	http://www.math.tu-dresden.de/~adol-c/%
-	Adolc
+	Adolc 1.10.2
 %$$
 installed on your system, you can 
 specify a value for $italic AdolcDir$$ in the 
@@ -421,6 +425,31 @@ $syntax%
 	speed/%package%/%package% %option% %seed%
 %$$
 where $italic package$$ is equal to $code adolc$$.
+
+$subhead Fix Adolc$$
+Some compilers will complain about Adolc use for a $code const char*$$
+as a $code char*$$. This can be fixed by changing the following
+routine in the file $code adolc/avector.h$$:
+$codep
+	class ADOLC_DLL_EXPORT err_retu {
+	char* message;
+	public:
+		err_retu(char* x) {
+		printf("%s \n",x);
+		};
+	};
+$$
+to be as follows
+$codep
+	class ADOLC_DLL_EXPORT err_retu {
+	char* message;
+	public:
+		err_retu(const char* x) {
+		printf("%s \n",x);
+		};
+	};
+$$
+
 
 $subhead Linux$$
 If you are using Linux, 
@@ -451,8 +480,8 @@ $head FadbadDir$$
 $index Fadbad, unix$$
 If you have
 $href%
-	http://www.imm.dtu.dk/fadbad.html/%
-	Fadbad
+	http://www.fadbad.com/%
+	Fadbad 2.1
 %$$
 installed on your system, you can 
 specify a value for $italic FadbadDir$$.

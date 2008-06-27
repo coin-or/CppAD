@@ -53,9 +53,9 @@ bool link_det_lu(
 	// setup
 
 	// object for computing determinant
-	typedef B<double>             ADScalar; 
+	typedef fadbad::B<double>       ADScalar; 
 	typedef CppAD::vector<ADScalar> ADVector; 
-	CppAD::det_by_lu<ADScalar>    Det(size);
+	CppAD::det_by_lu<ADScalar>      Det(size);
 
 	size_t i;                // temporary index
 	size_t m = 1;            // number of dependent variables

@@ -77,10 +77,14 @@ bool link_sparse_hessian(
 	ADVector   Y(1);    // AD range space value
 	DblVector tmp(2 * ell);       // double temporary vector
 
+	x = 0;
 	x = CPPAD_TRACK_NEW_VEC(n, x);
+	H = 0;
 	H = CPPAD_TRACK_NEW_VEC(n, H);
 	for(k = 0; k < n; k++)
+	{	H[k] = 0;
 		H[k] = CPPAD_TRACK_NEW_VEC(n, H[k]);
+	}
 
 	// choose a value for x 
 	CppAD::uniform_01(n, x);

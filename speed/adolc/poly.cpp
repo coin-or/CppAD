@@ -81,15 +81,22 @@ bool link_poly(
 	adouble Z, P;
 
 	// allocate arguments to hos_forward
-	double *x0 = CPPAD_TRACK_NEW_VEC(n, x0);
-	double *y0 = CPPAD_TRACK_NEW_VEC(m, y0);
-	double **x = CPPAD_TRACK_NEW_VEC(n, x);
-	double **y = CPPAD_TRACK_NEW_VEC(m, y);
+	double *x0 = 0;
+	x0         = CPPAD_TRACK_NEW_VEC(n, x0);
+	double *y0 = 0;
+	y0         = CPPAD_TRACK_NEW_VEC(m, y0);
+	double **x = 0;
+	x          = CPPAD_TRACK_NEW_VEC(n, x);
+	double **y = 0;
+	y          = CPPAD_TRACK_NEW_VEC(m, y);
 	for(i = 0; i < n; i++)
+	{	x[i] = 0;
 		x[i] = CPPAD_TRACK_NEW_VEC(d, x[i]);
+	}
 	for(i = 0; i < m; i++)
+	{	y[i] = 0;
 		y[i] = CPPAD_TRACK_NEW_VEC(d, y[i]);
-
+	}
 	// Taylor coefficient for argument
 	x[0][0] = 1.;  // first order
 	x[0][1] = 0.;  // second order

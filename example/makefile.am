@@ -33,7 +33,7 @@ if CppAD_IPOPT
 IPOPT_SRC_FILES   = ipopt_cppad_nlp.cpp ipopt_cppad.cpp
 IPOPT_EXTRA_FILES =
 IPOPT_INCLUDE     = -I$(IPOPT_DIR)/include
-IPOPT_LIB         = -lipopt -lpthread -lgfortran
+IPOPT_LIB         = -lipopt -lpthread -lgfortran -ldl
 IPOPT_LIB_DIR     = -L$(IPOPT_DIR)/lib
 IPOPT_FLAGS       = -DCPPAD_IPOPT_EXAMPLES
 else
@@ -49,7 +49,7 @@ BOOST_INCLUDE =
 endif
 # 
 # Microsoft project files
-EXTRA_DIST        = example.sln example.vcproj test_one.sh \
+EXTRA_DIST        = example.sln example.vcproj test_one.sh.in \
 	$(ADOLC_EXTRA_FILES) \
 	$(IPOPT_EXTRA_FILES)
 #

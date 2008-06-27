@@ -15,10 +15,11 @@
 # Default values used for arguments to configure during this script.
 # These defaults are development system dependent and can be changed.
 BOOST_DIR=/usr/include/boost-1_33_1
-ADOLC_DIR=$HOME/adolc_base
-FADBAD_DIR=$HOME/include
-SACADO_DIR=$HOME/sacado_base
-IPOPT_DIR=$HOME
+ADOLC_DIR=$HOME/prefix/adolc
+FADBAD_DIR=$HOME/prefix/fadbad
+SACADO_DIR=$HOME/prefix/sacado
+IPOPT_DIR=$HOME/prefix/ipopt
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ADOLC_DIR/lib:$IPOPT_DIR/lib"
 # -----------------------------------------------------------------------------
 #
 # get version currently in configure.ac file
@@ -245,6 +246,12 @@ then
 	then
 		exit 0
 	fi
+	#
+	# make shell scripts created by configure executable
+	echo "chmod +x example/test_one.sh"
+	chmod +x example/test_one.sh
+	echo "chmod +x test_more/test_one.sh"
+	chmod +x test_more/test_one.sh
 fi
 #
 # omhelp
@@ -388,34 +395,35 @@ then
 		exit 1
 	fi
 	#
+	dir=`pwd`
 	cd cppad-$version
 	#
 	# check example list
-	if ! ./check_example.sh >> ../build_test.log
+	if ! ./check_example.sh >> $dir/build_test.log
 	then
 		echo "./check_example.sh failed"
 		exit 1
 	fi
 	#
 	# check include files
-	if ! ./check_include_def.sh  >> ../build_test.log
+	if ! ./check_include_def.sh  >> $dir/build_test.log
 	then
 		echo "./check_include_def.sh failed"
 		exit 1
 	fi
-	if ! ./check_include_file.sh >> ../build_test.log
+	if ! ./check_include_file.sh >> $dir/build_test.log
 	then
 		echo "./check_include_file.sh failed"
 		exit 1
 	fi
-	if ! ./check_include_omh.sh  >> ../build_test.log
+	if ! ./check_include_omh.sh  >> $dir/build_test.log
 	then
 		echo "./check_include_omh.sh failed"
 		exit 1
 	fi
 	if ! ./build.sh configure test
 	then
-		echo "Error: build.sh configure test"  >> ../build_test.log
+		echo "Error: build.sh configure test"  >> $dir/build_test.log
 		echo "Error: build.sh configure test" 
 		exit 1
 	fi
@@ -423,20 +431,25 @@ then
 	# 	http://cygwin.com/ml/cygwin-apps/2005-06/msg00161.html
 	# The sed commands below are intended to remove them.
 	#
-	if ! make   2>  make_error.log
+	echo "make >& $dir/make.log"
+	echo "You may use commmand below to view progress of command above"
+	echo "tail -f $dir/make.log"
+	if ! make >&  ../make.log
 	then
-		sed -e '/stl_uninitialized.h:/d' make_error.log
+		echo "There are errors in $dir/make.log"
 		exit 1
 	fi
-	sed -i make_error.log \
-		-e '/stl_uninitialized.h:/d' \
-		-e '/\/Sacado_trad.hpp:/d'
-	if grep 'warning:' make_error.log
+	sed make.log > make.log.$$ \
+		-e '/op_code.hpp:368 warining array subscript is above/d'
+	if grep 'warning:' make.log.$$
 	then
-		cat make_error.log
+		tmp=`pwd`
+		echo "Stopping because there are warnings in"
+		echo "$tmp/make.log.$$"
 		exit 1
 	fi
-	cat make_error.log >> ../build_test.log
+	echo "Ok: make" 
+	echo "Ok: make" >> $dir/build_test.log
 	#
 	list="
 		example/example
@@ -447,16 +460,16 @@ then
 	for program in $list
 	do
 		echo "running $program"
-		echo "$program"   >> ../build_test.log
-		if ! ./$program   >> ../build_test.log
+		echo "$program"   >> $dir/build_test.log
+		if ! ./$program   >> $dir/build_test.log
 		then
 			failed="$program"
 			echo "Error: $failed failed."
-			echo "Error: $failed failed." >> ../build_test.log
+			echo "Error: $failed failed." >> $dir/build_test.log
 			exit 1
 		fi
 		# add a new line between program outputs
-		echo ""  >> ../build_test.log
+		echo ""  >> $dir/build_test.log
 	done
 	list="
 		cppad
@@ -484,13 +497,13 @@ then
 		# but it does not currently care about their presence.
 		echo "running speed/$name/$name correct $seed $retape"
 		echo "./speed/$name/$name correct $seed $retape" \
-			>> ../build_test.log
+			>> $dir/build_test.log
 		if ! ./speed/$name/$name correct  $seed $retape \
-			>> ../build_test.log
+			>> $dir/build_test.log
 		then
 			failed="speed/$name/$name"
 			echo "Error: $failed failed."
-			echo "Error: $failed failed." >> ../build_test.log
+			echo "Error: $failed failed." >> $dir/build_test.log
 			if [ "$name" != "example" ]
 			then
 				exit 1
@@ -498,27 +511,27 @@ then
 			speed_test_example_failed="true"
 		fi
 		# add a new line between program outputs
-		echo ""  >> ../build_test.log
+		echo ""  >> $dir/build_test.log
 	done
 	echo "openmp/run.sh"
-	echo "openmp/run.sh" >> ../build_test.log
-	if !  openmp/run.sh >> ../build_test.log
+	echo "openmp/run.sh" >> $dir/build_test.log
+	if !  openmp/run.sh >> $dir/build_test.log
 	then
 		failed="openmp/run.sh $program"
 		echo "Error: $failed failed."
-		echo "Error: $failed failed." >> ../build_test.log
+		echo "Error: $failed failed." >> $dir/build_test.log
 		exit 1
 	fi
-	echo "" >> ../build_test.log
+	echo "" >> $dir/build_test.log
 	#
 	if ! ./run_omhelp.sh doc
 	then
 		failed="run_omhelp.sh"
 		echo "Error: $failed failed."
-		echo "Error: $failed failed." >> ../build_test.log
+		echo "Error: $failed failed." >> $dir/build_test.log
 		exit 1
 	fi
-	cat omhelp_doc.log        >> ../build_test.log
+	cat omhelp_doc.log        >> $dir/build_test.log
 	#
 	if [ "$speed_test_example_failed" = "true" ]
 	then
@@ -543,8 +556,8 @@ fi
 if [ "$1" = "gpl" ] || [ "$1" = "all" ]
 then
 	# create GPL licensed version
-	echo "gpl_license.sh"
-	if ! ./gpl_license.sh
+	echo "gpl_license.sh $version"
+	if ! ./gpl_license.sh $version
 	then
 		echo "Error: gpl_license.sh failed."
 		if [ "$2" = "test" ]
@@ -566,8 +579,8 @@ then
 fi
 if [ "$1" = "dos" ] || ( [ "$1" = "all" ] && [ "$2" == "dos" ] )
 then
-	echo "./dos_format.sh"
-	if ! ./dos_format.sh
+	echo "./dos_format.sh $version"
+	if ! ./dos_format.sh $version
 	then
 		echo "Error: dos_format.sh failed."
 		if [ "$2" = "test" ]

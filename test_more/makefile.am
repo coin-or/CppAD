@@ -33,7 +33,7 @@ BOOST_INCLUDE =
 endif
 #
 # Microsoft project files
-EXTRA_DIST        = test_more.sln test_more.vcproj test_one.sh
+EXTRA_DIST        = test_more.sln test_more.vcproj test_one.sh.in
 #
 noinst_PROGRAMS   = test_more
 #

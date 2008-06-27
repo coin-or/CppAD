@@ -58,15 +58,15 @@ bool link_poly(
 {
 	// -----------------------------------------------------
 	// setup
-	size_t i;     // temporary index     
-	T<double>  Z; // domain space AD value
-	T<double>  P; // range space AD value
+	size_t i;             // temporary index     
+	fadbad::T<double>  Z; // domain space AD value
+	fadbad::T<double>  P; // range space AD value
 
 	// choose the polynomial coefficients
 	CppAD::uniform_01(size, a);
 
 	// AD copy of the polynomial coefficients
-	CppAD::vector< T<double> > A(size);
+	CppAD::vector< fadbad::T<double> > A(size);
 	for(i = 0; i < size; i++)
 		A[i] = a[i];
 

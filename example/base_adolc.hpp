@@ -1,7 +1,7 @@
 # ifndef CPPAD_BASE_ADOLC_INCLUDED
 # define CPPAD_BASE_ADOLC_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -85,7 +85,7 @@ The $code abs$$ function is called $code fabs$$ in the Adolc package.
 $codep */
 namespace CppAD {
 	inline adouble abs(const adouble &x)    \
-	{	return ::fabs(x); }
+	{	return fabs(x); }
 }
 
 /* $$
@@ -108,30 +108,6 @@ $code sin$$,
 $code sinh$$,
 $code sqrt$$,
 $code tan$$.
-$codep */
-# define CPPAD_USER_MACRO(function)          \
-inline adouble function(const adouble &x)    \
-{	return ::function(x); }
-
-namespace CppAD {
-	CPPAD_USER_MACRO(acos)
-	CPPAD_USER_MACRO(asin)
-	CPPAD_USER_MACRO(atan)
-	CPPAD_USER_MACRO(cos)
-	CPPAD_USER_MACRO(cosh)
-	CPPAD_USER_MACRO(erf)
-	CPPAD_USER_MACRO(exp)
-	CPPAD_USER_MACRO(log)
-	inline adouble pow(const adouble &x, const adouble y)
-	{	return ::pow(x, y); }
-	CPPAD_USER_MACRO(sin)
-	CPPAD_USER_MACRO(sinh)
-	CPPAD_USER_MACRO(sqrt)
-	CPPAD_USER_MACRO(tan)
-}
-# undef CPPAD_USER_MACRO
-
-/* $$
 
 $head CondExpOp$$
 The type $code adouble$$ supports a conditional assignment function

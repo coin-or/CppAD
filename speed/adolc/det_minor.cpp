@@ -70,17 +70,21 @@ bool link_det_minor(
 	ADScalar   detA;
 
 	// AD version of matrix
-	ADVector   A = CPPAD_TRACK_NEW_VEC(n, A);
+	ADVector   A = 0;
+	A            = CPPAD_TRACK_NEW_VEC(n, A);
 	
 	// vectors of reverse mode weights 
-	double *u = CPPAD_TRACK_NEW_VEC(m, u);
+	double *u = 0;
+	u         = CPPAD_TRACK_NEW_VEC(m, u);
 	u[0] = 1.;
 
 	// vector with matrix value
-	double *mat = CPPAD_TRACK_NEW_VEC(n, mat);
+	double *mat = 0;
+	mat         = CPPAD_TRACK_NEW_VEC(n, mat);
 
 	// vector to receive gradient result
-	double *grad = CPPAD_TRACK_NEW_VEC(n, grad);
+	double *grad = 0;
+	grad         = CPPAD_TRACK_NEW_VEC(n, grad);
 
 
 	if( retape ) while(repeat--)
