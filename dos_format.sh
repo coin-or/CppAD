@@ -9,13 +9,8 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-version="$1"
-if [ "$version" == "" ]
-then
-	echo "usage: ./gpl_license.sh version"
-	exit 1
-fi
-#
+version=`grep "^ *AC_INIT(" configure.ac | \
+        sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
 if [ -e DosFormat.log ]
 then
 	rm DosFormat.log

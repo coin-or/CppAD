@@ -556,8 +556,8 @@ fi
 if [ "$1" = "gpl" ] || [ "$1" = "all" ]
 then
 	# create GPL licensed version
-	echo "gpl_license.sh $version"
-	if ! ./gpl_license.sh $version
+	echo "gpl_license.sh"
+	if ! ./gpl_license.sh
 	then
 		echo "Error: gpl_license.sh failed."
 		if [ "$2" = "test" ]
@@ -579,8 +579,8 @@ then
 fi
 if [ "$1" = "dos" ] || ( [ "$1" = "all" ] && [ "$2" == "dos" ] )
 then
-	echo "./dos_format.sh $version"
-	if ! ./dos_format.sh $version
+	echo "./dos_format.sh"
+	if ! ./dos_format.sh
 	then
 		echo "Error: dos_format.sh failed."
 		if [ "$2" = "test" ]

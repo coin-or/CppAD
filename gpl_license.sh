@@ -15,12 +15,8 @@
 # in place of "Common Public License Version 1.0." in all occurrences
 # of the message above.
 #
-version="$1"
-if [ "$version" == "" ]
-then
-	echo "usage: ./gpl_license.sh version"
-	exit 1
-fi
+version=`grep "^ *AC_INIT(" configure.ac | \
+        sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
 dir="cppad-$version"
 #
 # delete old version of *.gpl.tgz and *.gpl.zip

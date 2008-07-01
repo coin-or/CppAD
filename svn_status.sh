@@ -46,6 +46,13 @@ sed                                                           \
 	-e '/^[?] *cppad-[0-9]\{8\}.*$/d'                     \
 	-e '/^[?] *omh\/install_unix.omh$/d'                  \
 	-e '/^[?] *omh\/install_windows.omh$/d'               \
+	-e '/^[?] *example\/test_one.sh$/d'                   \
+	-e '/^[?] *test_more\/test_one.sh$/d'                 \
+	-e '/^[?] *example\/example$/d'                       \
+	-e '/^[?] *speed\/adolc\/adolc$/d'                    \
+	-e '/^[?] *speed\/cppad\/cppad$/d'                    \
+	-e '/^[?] *speed\/fadbad\/fadbad$/d'                  \
+	-e '/^[?] *speed\/profile\/profile$/d'                \
 	-e '/cygwin_package$/d'
 #
 yyyymmdd=`date +%G%m%d`
