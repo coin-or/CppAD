@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20080627, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20080702, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -268,6 +268,28 @@ dnl Do nothing if complier supports inline, otherwise try to find a subsitute
 dnl definition or, if cannot, define inline as empty
 AC_C_INLINE
 
+dnl determine FCLIBS, flags necessary for linking C++ with modern fortran
+AC_FC_LIBRARY_LDFLAGS
+
+dnl check for pthread library
+AC_SUBST(PTHREAD_LIB, "")
+AC_CHECK_LIB(
+	[pthread],
+	[pthread_create],
+	[PTHREAD_LIB="-lpthread"],
+	[PTHREAD_LIB=""]
+)
+
+dnl check for pthread library
+AC_SUBST(DL_LIB, "")
+AC_CHECK_LIB(
+	[dl],
+	[dlopen],
+	[DL_LIB="-ldl"],
+	[DL_LIB=""]
+)
+
+dnl -----------------------------------------------------------------------
 dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will 
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
@@ -289,6 +311,8 @@ AC_CONFIG_FILES([
 	speed/sacado/makefile
 	test_more/makefile 
 ])
+AC_OUTPUT_COMMANDS([chmod +x example/test_one.sh])
+AC_OUTPUT_COMMANDS([chmod +x test_more/test_one.sh])
 dnl END AC_CONFIG_FILES 
 dnl the comment line above is used by ./new_stable.sh
 

@@ -135,14 +135,16 @@ Use spaces rather than tabs.
 $lend
 
 $head Sparse Hessians$$
-Create an implementation of $cref/sparse_hessian/$$ 
-that is more efficient
-(the initial implementation was only meant as a demonstration).
 Testing $cref/cppad_sparse_hessian.cpp/$$ 
 with $code USE_CPPAD_SPARSE_HESSIAN$$ equal to 
 $code 1$$ (true) and $code 0$$ (false) 
-indicates that $code sparse_hessian$$ is already more efficient
+indicates that $code sparse_hessian$$ is more efficient
 than $cref/Hessian/$$ (for large sparse cases).
+Create an implementation of $cref/sparse_hessian/$$ 
+that is more efficient
+(the initial implementation was only meant as a demonstration).
+For example, use arrays of linked lists where for each row (column) the
+list contains the non-zero column (row) indices.
 (Also see sparse Hessian discussion under $cref/Ipopt/WishList/Ipopt/$$.)
 
 $head Speed Testing$$

@@ -8,8 +8,6 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-IPOPT_LD_FLAGS="-lpthread -lgfortran"
-#
 # Run one of the tests
 if [ "$1" = "" ]
 then
@@ -46,9 +44,11 @@ then
 	cmd="$cmd -I@ADOLC_DIR@/include -L@ADOLC_DIR@/lib -ladolc"
 	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@ADOLC_DIR@/lib"
 fi
-if [ -e @IPOPT_DIR@/lib/libipopt.so ]
+if [ -e @IPOPT_DIR@/lib/libipopt.a ]
 then
-	cmd="$cmd -L@IPOPT_DIR@/lib -lipopt $IPOPT_LD_FLAGS"
+	cmd="$cmd -I@IPOPT_DIR@/include"
+	cmd="$cmd -L@IPOPT_DIR@/lib -lipopt"
+	cmd="$cmd @FCLIBS@ @PTHREAD_LIB@ @DL_LIB@"
 	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@IPOPT_DIR@/lib"
 fi
 echo $cmd
