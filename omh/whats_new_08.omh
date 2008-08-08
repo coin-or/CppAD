@@ -40,6 +40,13 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-08$$
+There was an indexing bug in the $cref/Ipopt/ipopt_cppad_nlp/$$ example
+that affected the $icode retape$$ equal to $code false$$ case.
+This has been fixed.
+In addition, the missing 
+$cref/retape documentation/ipopt_cppad_nlp/retape/$$ was added.
+
 $head 07-02$$
 Extend $cref/configure/InstallUnix/Configure/$$ command to check for
 extras libraries that are necessary for linking the ipopt example.

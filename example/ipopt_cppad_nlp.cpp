@@ -262,7 +262,7 @@ corresponding to each non-zero entry in the Jacobian of g.
 	nnz_jac_g = 0;
 	for(i = 1; i <= m; i++)
 	{	for(j = 0; j < n; j++)
-			if( pattern_jac_fg[ i * (m + 1) + j ] )
+			if( pattern_jac_fg[ i * n + j ] )
 				++nnz_jac_g;
 	}
 	iRow_jac_g.resize( nnz_jac_g );
@@ -270,7 +270,7 @@ corresponding to each non-zero entry in the Jacobian of g.
 	k = 0;
 	for(i = 1; i <= m; i++)
 	{	for(j = 0; j < n; j++)
-			if( pattern_jac_fg[ i * (m + 1) + j ] )
+			if( pattern_jac_fg[ i * n + j ] )
 			{	iRow_jac_g[k] = i;
 				jCol_jac_g[k] = j + 1;
 				k++;

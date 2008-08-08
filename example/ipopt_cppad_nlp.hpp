@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin ipopt_cppad_nlp$$
 $spell
+	bool
 	doesn't
 	nan
 	inf
@@ -176,6 +177,19 @@ $latex \[
 	g_{m-1} (x) & = &        fg[m]
 	\end{array}
 \] $$
+
+$head retape$$
+This argument has the prototype
+$codei%
+        bool %retape%
+%$$
+If $icode retape$$ is true, 
+$code ipopt_cppad_nlp$$ will retape the operation sequence for
+every new $icode x$$ value. 
+The program should use much less memory and run faster if $icode retape$$
+is false.
+You can test both the true and false cases to make sure 
+the operation sequence does not depend on x.
 
 $head solution$$
 After the optimization process is completed, $icode solution$$ contains
