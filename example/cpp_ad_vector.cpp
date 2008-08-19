@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 $begin CppAD_vector.cpp$$
@@ -24,7 +22,6 @@ $index CppAD::vector, example$$
 $index example, CppAD::vector$$
 $index test, CppAD::vector$$
 
-$comment This file is in the Example subdirectory$$
 $code
 $verbatim%example/cpp_ad_vector.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -42,6 +39,10 @@ bool CppAD_vector(void)
 {	bool ok = true;
 	using CppAD::vector;     // so can use vector instead of CppAD::vector 
 	typedef double Type;     // change double to test other types
+
+	// check Simple Vector specifications
+	CppAD::CheckSimpleVector< Type, vector<Type> >();
+
 
 	vector<Type> x;          // default constructor 
 	ok &= (x.size() == 0);
@@ -74,17 +75,23 @@ bool CppAD_vector(void)
 	str = buf.str();
 	ok &= (str == correct);
 
-	// test of push_back
+	// test of push_back scalar
 	size_t i;
+	size_t N = 100;
 	x.resize(0);
-	for(i = 0; i < 100; i++)
+	for(i = 0; i < N; i++)
 		x.push_back( Type(i) );
-	ok &= (x.size() == 100);
-	for(i = 0; i < 100; i++)
+	ok &= (x.size() == N);
+	for(i = 0; i < N; i++)
 		ok &= ( x[i] == Type(i) );
 
-	// check Simple Vector specifications
-	CppAD::CheckSimpleVector< Type, vector<Type> >();
+	// test of push_vector 
+	x.push_vector(x);
+	ok &= (x.size() == 2 * N);
+	for(i = 0; i < N; i++)
+	{	ok &= ( x[i] == Type(i) );
+		ok &= ( x[i+N] == Type(i) );
+	}
 
 	return ok;
 }

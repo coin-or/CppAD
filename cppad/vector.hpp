@@ -2,7 +2,7 @@
 # define CPPAD_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -52,9 +52,9 @@ CppAD include files.
 
 $head Assignment$$
 $index assignment, CppAD vector$$
-If $italic x$$ and $italic y$$ are 
-$syntax%CppAD::vector<%Scalar%>%$$ objects,
-$syntax%
+If $icode x$$ and $icode y$$ are 
+$codei%CppAD::vector<%Scalar%>%$$ objects,
+$codei%
 	%y% = %x%
 %$$
 has all the properties listed for a
@@ -64,7 +64,7 @@ $pre
 
 $$
 The $code CppAD::vector$$ template class will check that
-the size of $italic x$$ is equal to the size of $italic y$$
+the size of $icode x$$ is equal to the size of $icode y$$
 before doing the assignment.
 If the sizes are not equal, $code CppAD::vector$$ will use
 $xref/ErrorHandler/$$
@@ -72,18 +72,18 @@ to generate an appropriate error report.
 $pre
 
 $$
-A reference to the vector $italic y$$ is returned.
+A reference to the vector $icode y$$ is returned.
 An example use of this reference is in multiple assignments of the form
-$syntax%
+$codei%
 	%z% = %y% = %x%
 %$$
 
 $head Element Access$$
 $index [], CppAD vector$$
 $index vector, [] CppAD$$
-If $italic x$$ is a $syntax%CppAD::vector<%Scalar%>%$$ object
+If $icode x$$ is a $codei%CppAD::vector<%Scalar%>%$$ object
 and $code i$$ has type $code size_t$$,
-$syntax%
+$codei%
 	%x%[%i%]
 %$$
 has all the properties listed for a
@@ -92,12 +92,12 @@ plus the following:
 $pre
 
 $$
-The object $syntax%%x%[%i%]%$$ has type $italic Scalar$$
-(is not possibly a different type that can be converted to $italic Scalar$$).
+The object $codei%%x%[%i%]%$$ has type $icode Scalar$$
+(is not possibly a different type that can be converted to $icode Scalar$$).
 $pre
 
 $$
-If $italic i$$ is not less than the size of the $italic x$$,
+If $icode i$$ is not less than the size of the $icode x$$,
 $code CppAD::vector$$ will use
 $xref/ErrorHandler/$$
 to generate an appropriate error report.
@@ -105,36 +105,52 @@ to generate an appropriate error report.
 $head push_back$$
 $index push_back, CppAD vector$$
 $index vector, CppAD push_back$$
-If $italic x$$ is a $syntax%CppAD::vector<%Scalar%>%$$ object
-with size equal to $italic n$$ and
-$italic t$$ has type $italic Scalar$$,
-$syntax%
-	%x%.push_back(%t%)
+If $icode x$$ is a $codei%CppAD::vector<%Scalar%>%$$ object
+with size equal to $icode n$$ and
+$icode s$$ has type $icode Scalar$$,
+$codei%
+	%x%.push_back(%s%)
 %$$
-extends the vector $italic x$$ so that its new size is $italic n$$ plus one
-and $syntax%%x%[%n%]%$$ is equal to $italic t$$
-(in the sense of the $italic Scalar$$ assignment operator).
+extends the vector $icode x$$ so that its new size is $icode n$$ plus one
+and $codei%%x%[%n%]%$$ is equal to $icode s$$
+(equal in the sense of the $icode Scalar$$ assignment operator).
+
+
+$head push_vector$$
+$index push_vector, CppAD$$
+$index vector, CppAD push$$
+If $icode x$$ is a $codei%CppAD::vector<%Scalar%>%$$ object
+with size equal to $icode n$$ and
+$icode v$$ is a $cref/simple vector/SimpleVector/$$
+with elements of type $icode Scalar$$ and size $icode m$$,
+$codei%
+	%x%.push_vector(%v%)
+%$$
+extends the vector $icode x$$ so that its new size is $icode%n%+%m%$$
+and $icode%x%[%n% + %i%]%$$ is equal to $icode%v%[%i%]%$$
+for $icode%i = 1 , ... , m-1%$$
+(equal in the sense of the $icode Scalar$$ assignment operator).
 
 $head Output$$
-If $italic x$$ is a $syntax%CppAD::vector<%Scalar%>%$$ object
-and $italic os$$ is an $code std::ostream$$,
+If $icode x$$ is a $codei%CppAD::vector<%Scalar%>%$$ object
+and $icode os$$ is an $code std::ostream$$,
 and the operation
-$syntax%
+$codei%
 	%os% << %x%
 %$$
-will output the vector $italic x$$ to the standard
-output stream $italic os$$.
-The elements of $italic x$$ are enclosed at the beginning by a
+will output the vector $icode x$$ to the standard
+output stream $icode os$$.
+The elements of $icode x$$ are enclosed at the beginning by a
 $code {$$ character,
 they are separated by $code ,$$ characters,
 and they are enclosed at the end by $code }$$ character.
-It is assumed by this operation that if $italic e$$
-is an object with type $italic Scalar$$,
-$syntax%
+It is assumed by this operation that if $icode e$$
+is an object with type $icode Scalar$$,
+$codei%
 	%os% << %e%
 %$$
-will output the value $italic e$$ to the standard
-output stream $italic os$$.
+will output the value $icode e$$ to the standard
+output stream $icode os$$.
 
 $head resize$$
 If the $code resize$$ member function is called with argument
@@ -164,18 +180,18 @@ the vector is written a long sequence of zeros and ones with no
 surrounding $code {$$, $code }$$ and with no separating commas or spaces. 
 
 $lnext
-If $italic x$$ has type $code vectorBool$$
-and $italic i$$ has type $code size_t$$,
-the element access value $syntax%%x%[%i%]%$$ has an unspecified type
-(referred to here as $italic elementType$$)
+If $icode x$$ has type $code vectorBool$$
+and $icode i$$ has type $code size_t$$,
+the element access value $codei%%x%[%i%]%$$ has an unspecified type
+(referred to here as $icode elementType$$)
 that can be implicitly converted to $code bool$$.
 The return value of the assignment operator
-$syntax%
+$codei%
 	%x%[%i%] = %y%
 %$$
-also has type $italic elementType$$. Thus, if $italic z$$
+also has type $icode elementType$$. Thus, if $icode z$$
 has type $code bool$$, the syntax
-$syntax%
+$codei%
 	%z% = %x%[%i%] = %y%
 %$$
 is valid.
@@ -217,6 +233,7 @@ $end
 # include <limits>
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/track_new_del.hpp>
+# include <cppad/check_simple_vector.hpp>
 
 # ifndef CPPAD_NULL
 # define CPPAD_NULL 0
@@ -305,17 +322,37 @@ public:
 		);
 		return data[i]; 
 	}
-	// add to the back of the array
-	void push_back(const Type &x)
+	// add scalar to the back of the array
+	void push_back(const Type &s)
 	{	CPPAD_ASSERT_UNKNOWN( length <= capacity );
-		if( length == capacity )
+		if( length + 1 > capacity )
 		{	// allocate more capacity
 			if( capacity == 0 )
 				capacity = 2;
 			else	capacity = 2 * length;
 			data = CPPAD_TRACK_EXTEND(capacity, length, data);
 		}
-		data[length++] = x;
+		data[length++] = s;
+		CPPAD_ASSERT_UNKNOWN( length <= capacity );
+	}
+
+	// add vector to the back of the array
+	// (Cannot use push_back becasue MS V++ 7.1 does not resolve
+	// to non-template member function when scalar is used.)
+	template <class Vector>
+	void push_vector(const Vector &v)
+	{	CheckSimpleVector<Type, Vector>();
+		size_t m = v.size();
+		CPPAD_ASSERT_UNKNOWN( length <= capacity );
+		if( length + m > capacity )
+		{	// allocate more capacity
+			capacity = length + m;
+			data     = CPPAD_TRACK_EXTEND(capacity, length, data);
+		}
+		size_t i;
+		for(i = 0; i < m; i++)
+			data[length++] = v[i];
+		CPPAD_ASSERT_UNKNOWN( length <= capacity );
 	}
 };
 

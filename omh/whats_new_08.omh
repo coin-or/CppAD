@@ -40,6 +40,12 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-19$$
+Add $cref/push of a vector/CppAD_vector/push_vector/$$
+to the $code CppAD::vector$$ template class.
+This makes it easy to accumulate multiple scalars and
+$cref/simple vectors/SimpleVector/$$ into one large $code CppAD::vector$$.
+
 $head 08-08$$
 There was an indexing bug in the $cref/Ipopt/ipopt_cppad_nlp/$$ example
 that affected the $icode retape$$ equal to $code false$$ case.
