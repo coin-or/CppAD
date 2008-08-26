@@ -419,6 +419,7 @@ EXTRA_DIST = \
 	dev.omh \
 	doc \
 	doc.omh \
+	doc.omh.in \
 	fix_aclocal.sh \
 	fix_makefile.sh \
 	omh \
