@@ -171,7 +171,7 @@
 				RelativePath=".\cosh.cpp">
 			</File>
 			<File
-				RelativePath=".\cpp_ad_vector.cpp">
+				RelativePath=".\cppad_vector.cpp">
 			</File>
 			<File
 				RelativePath=".\default.cpp">

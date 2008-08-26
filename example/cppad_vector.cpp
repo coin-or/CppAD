@@ -23,7 +23,7 @@ $index example, CppAD::vector$$
 $index test, CppAD::vector$$
 
 $code
-$verbatim%example/cpp_ad_vector.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/cppad_vector.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

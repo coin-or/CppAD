@@ -48,7 +48,7 @@ $index CppAD$$
 $index version, CppAD$$
 
 $section 
-CppAD: A Package for Differentiation of C++ Algorithms
+cppad-@VERSION@: A Package for Differentiation of C++ Algorithms
 $$ 
 
 $head Syntax$$

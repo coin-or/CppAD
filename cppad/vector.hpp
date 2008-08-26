@@ -200,7 +200,7 @@ $lend
 
 $head Example$$
 $children%
-	example/cpp_ad_vector.cpp%
+	example/cppad_vector.cpp%
 	example/vector_bool.cpp
 %$$
 The files

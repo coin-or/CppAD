@@ -91,7 +91,7 @@ example_SOURCES   = \
 	copy_base.cpp \
 	cos.cpp \
 	cosh.cpp \
-	cpp_ad_vector.cpp \
+	cppad_vector.cpp \
 	default.cpp \
 	div.cpp \
 	div_eq.cpp \
