@@ -18,6 +18,7 @@ echo "trunk_revision=$trunk_revision"
 echo "yyyy_mm_dd=$yyyy_mm_dd"
 echo
 stable_version=`echo $yyyy_mm_dd | sed -e 's/-//g'`
+release_version="$stable_version.0"
 repository="https://projects.coin-or.org/svn/CppAD"
 rep_trunk="$repository/trunk"
 rep_stable="$repository/stable/$stable_version"
@@ -94,7 +95,7 @@ fi
 # Automatic editing ------------------------------------------------ 
 #
 sed < build.sh > build.sh.$$ \
-	-e "s/yyyymmdd=.*/yyyymmdd=\"$stable_version\"/" \
+	-e "s/yyyymmdd=.*/yyyymmdd=\"$release_version\"/" \
 	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/" 
 #
 sed < svn_status.sh > svn_status.sh.$$ \

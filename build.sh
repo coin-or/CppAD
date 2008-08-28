@@ -439,7 +439,7 @@ then
 		echo "There are errors in $dir/make.log"
 		exit 1
 	fi
-	sed make.log > make.log.$$ \
+	sed ../make.log > make.log.$$ \
 		-e '/op_code.hpp:368 warining array subscript is above/d'
 	if grep 'warning:' make.log.$$
 	then
