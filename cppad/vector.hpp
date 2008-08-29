@@ -397,6 +397,12 @@ public:
 		else	*unit &= ~mask;
 		return *this;
 	} 
+	vectorBoolElement& operator=(const vectorBoolElement &e)
+	{	if( *(e.unit) & e.mask )
+			*unit |= mask;
+		else	*unit &= ~mask;
+		return *this;
+	} 
 };
 
 class vectorBool {
@@ -516,6 +522,30 @@ public:
 			data[i] |= mask;
 		else	data[i] &= ~mask;
 		length++;
+	}
+	// add vector to back of array
+	void push_vector(const vectorBool &v)
+	{	size_t i, j, k;
+		UnitType mask;
+		bool bit;
+		CPPAD_ASSERT_UNKNOWN( length <= nunit * BitPerUnit );
+		CPPAD_ASSERT_UNKNOWN( v.length <= v.nunit * BitPerUnit );
+		if( length + v.length >= nunit * BitPerUnit )
+		{	// allocate enough space
+			data = CPPAD_TRACK_EXTEND(nunit+v.nunit, nunit, data);
+			nunit += v.nunit;
+		}
+		for(k = 0; k < v.size(); k++)
+		{	i    = length / BitPerUnit;
+			j    = length - i * BitPerUnit;
+			bit  = v[k];
+			mask = UnitType(1) << j;
+			if( bit )
+				data[i] |= mask;
+			else	data[i] &= ~mask;
+			length++;
+		}
+		CPPAD_ASSERT_UNKNOWN( length <= nunit * BitPerUnit );
 	}
 };
 

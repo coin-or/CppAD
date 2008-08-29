@@ -11,6 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_08$$
 $spell
+	fg_vector
+	Bool
 	Ipopt
 	Jacobians
 	Jacobian
@@ -39,6 +41,28 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 08-29$$
+The $code push_vector$$ member function was missing from the
+$cref/vectorBool/Cppad_vector/vectorBool/$$ class. 
+This has been fixed.
+In addition, it seems that for some cases (or compilers)
+the assignment
+$codei%
+	%x%[%i%] = %y%[%j%]
+%$$
+did not work properly when both $icode x$$ and $icode y$$ 
+had type $code vectorBool$$.
+This has been fixed.
+$pre
+
+$$
+The $cref/ipopt_cppad_nlp/$$ example has been extended
+so that it allows for both scalar and vector evaluation of the
+objective and constraints; see
+$cref/fg_vector/ipopt_cppad_nlp/fg_vector/$$.
+In the case where there is not a lot of common terms
+between the functions, the scalar evaluation may be more efficient.
 
 $head 08-19$$
 Add $cref/push of a vector/CppAD_vector/push_vector/$$

@@ -1,6 +1,5 @@
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,7 +8,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 $begin vectorBool.cpp$$
@@ -46,7 +44,7 @@ bool vectorBool(void)
 	vectorBool x;          // default constructor 
 	ok &= (x.size() == 0);
 
-	x.resize(2);             // resize and set element assignment
+	x.resize(2);             // resize and set element assignment to bool
 	ok &= (x.size() == 2);
 	x[0] = false;
 	x[1] = true;
@@ -61,10 +59,20 @@ bool vectorBool(void)
 	x[0] = true;           // modify, assignment changes x
 	ok &= (x[0] == true);
 
-	x = y = z;               // vector assignment
+	x = y = z;              // vector assignment
 	ok &= ( (x[0] == false) && (x[1] == true) );
 	ok &= ( (y[0] == false) && (y[1] == true) );
 	ok &= ( (z[0] == false) && (z[1] == true) );
+
+	// test of push_vector
+	y.push_vector(z);
+	ok &= y.size() == 4;
+	ok &= ( (y[0] == false) && (y[1] == true) );
+	ok &= ( (y[2] == false) && (y[3] == true) );
+
+	y[1] = false;           // element assignment to another element
+	x[0] = y[1];
+	ok &= (x[0] == false);
 
 	// test of output
 	std::string        correct= "01";
@@ -74,7 +82,7 @@ bool vectorBool(void)
 	str = buf.str();
 	ok &= (str == correct);
 
-	// test of push_back
+	// test of push_back element
 	size_t i;
 	x.resize(0);
 	for(i = 0; i < 100; i++)

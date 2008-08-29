@@ -38,7 +38,7 @@ $codei%# include "ipopt_cppad_nlp.hpp"
 $codei%# ipopt_cppad_solution %solution%;
 %$$
 $codei%ipopt_cppad_nlp %cppad_nlp%(
-	%n%, %m%, %x_i%, %x_l%, %x_u%, %g_l%, %g_u%, &%fg_ad%, %retape%, &%solution%
+%n%, %m%, %x_i%, %x_l%, %x_u%, %g_l%, %g_u%, &%fg_ad%, &%solution%, %retape%, %fg_vector%
 )%$$
 
 $head Purpose$$
@@ -146,12 +146,12 @@ It specifies the upper limits for the constraints in the optimization problem.
 $head fg_ad$$
 The argument $icode fg_ad$$ has prototype
 $codei%
-	ADVector %fg_ad%(const ADVector& %x%);
+	ADVector %fg_ad%(const ADVector& %x%, Ipopt::Index %i%);
 %$$
 This function computes the value of $latex f(x)$$ and $latex g(x)$$
 using the syntax
 $codei%
-	%fg% = %fg_ad%(%x%)
+	%fg% = %fg_ad%(%x%, %i%)
 %$$
 
 $subhead x$$
@@ -162,34 +162,48 @@ $codei%
 and its size is equal to $latex n$$.
 It is the value of $latex x$$ at which to compute $icode fg$$.
 
+$subhead i$$
+The $icode fg_ad$$ argument $icode i$$ has prototype
+$codei%
+	Ipopt::Index %i%
+%$$
+If $icode i$$ is equal to $code -1$$,
+the objective and all the constraint functions are computed together.
+Otherwise, $icode i$$ is between zero and $latex m$$
+and it specifies which function to compute during this call.
+
 $subhead fg$$
 The $icode fg_ad$$ return value $icode fg$$ has prototype
 $codei%
 	ADVector& %fg%
 %$$
-and its size is equal to $latex m+1$$.
+$pre
+
+$$
+If $icode i$$ is equal to $code -1$$,
+$icode fg$$ has size is equal to $latex m+1$$.
 It is the vector of $latex ( f(x) , g(x) )$$; i.e.,
 $latex \[
 \begin{array}{rcl}
-	f(x)        & = &        fg[0] \\
-	g_0 (x)     & = &        fg[1] \\
-	            & \vdots &         \\
-	g_{m-1} (x) & = &        fg[m]
+	fg[0] & = & f(x) 0] \\
+	fg[1] & = & g_0 (x) \\
+	& \vdots &          \\
+	fg[m] & = & g_{m-1} (x)
 	\end{array}
 \] $$
+$pre
 
-$head retape$$
-This argument has the prototype
-$codei%
-        bool %retape%
-%$$
-If $icode retape$$ is true, 
-$code ipopt_cppad_nlp$$ will retape the operation sequence for
-every new $icode x$$ value. 
-The program should use much less memory and run faster if $icode retape$$
-is false.
-You can test both the true and false cases to make sure 
-the operation sequence does not depend on x.
+$$
+Otherwise, $icode i$$ is between zero and $latex m$$.
+In this case,
+$icode fg$$ has size is equal to one and
+$latex \[
+fg[0] = \left\{ \begin{array}{ll}
+	f(x)        & {\rm if} \; i = 0
+	\\
+	g_{i-1} (x) & {\rm otherwise}
+\end{array} \right.
+\] $$
 
 $head solution$$
 After the optimization process is completed, $icode solution$$ contains
@@ -308,6 +322,39 @@ $codei%
 It is the final value of the objective function $latex f(x)$$.
 
 
+$head retape$$
+This argument has the prototype
+$codei%
+        bool %retape%
+%$$
+If $icode retape$$ is true, 
+$code ipopt_cppad_nlp$$ will retape the operation sequence for
+every new $icode x$$ value. 
+The program should run faster if $icode retape$$ is false.
+You can test both the true and false cases to make sure 
+the operation sequence does not depend on x.
+
+$head fg_vector$$
+if $icode fg_vector$$ is true,
+$code ipopt_cppad_nlp$$ will use $icode fg_ad$$ to compute the
+objective and constraint functions all in one call; i.e.,
+with $icode i$$ equal to $code -1$$ in 
+$cref/fg_ad/ipopt_cppad_nlp/fg_ad/$$.
+This should be more efficient for problems where there are
+many common terms between the different component functions
+computed by $icode fg_ad$$.
+$pre
+
+$$
+if $icode fg_vector$$ is false,
+$code ipopt_cppad_nlp$$ will use $icode fg_ad$$ to compute the
+objective and constraint functions one at a time; i.e.,
+with $icode i$$ between zero and $latex m$$ in 
+$cref/fg_ad/ipopt_cppad_nlp/fg_ad/$$.
+This should be more efficient for problems where there are
+few common terms between the different component functions
+computed by $icode fg_ad$$.
+
 $children%
 	example/ipopt_cppad.cpp
 %$$
@@ -371,7 +418,7 @@ class ipopt_cppad_nlp : public Ipopt::TNLP
 	typedef Ipopt::TNLP::IndexStyleEnum    IndexStyleEnum;
 	typedef CppAD::vectorBool              BoolVector;
 	typedef CppAD::vector<Ipopt::Index>    IndexVector;
-	typedef ADVector (*FgPointer) (const ADVector& x);
+	typedef ADVector (*FgPointer) (const ADVector& x, Index i);
 public:
 	// constructor 
 	ipopt_cppad_nlp(
@@ -383,8 +430,9 @@ public:
 		const NumberVector    &g_l       ,
 		const NumberVector    &g_u       ,
 		FgPointer              fg_ad     ,
+		ipopt_cppad_solution*  solution  ,
 		bool                   retape    ,
-		ipopt_cppad_solution*  solution
+		bool                   fg_vector
   	);
 
 
@@ -511,10 +559,12 @@ private:
 	const NumberVector              g_u_;
 	// Users function that evaluates f and g
 	FgPointer const                 fg_ad_;
-	// does operation sequence chage with argument value
-	const bool                      retape_;
 	// object for storing final solution results
 	ipopt_cppad_solution* const     solution_;
+	// does operation sequence chage with argument value
+	const bool                      retape_;
+	// compute fg in vector (or scalar) mode
+	const bool                      fg_vector_;
 	/*
  	Computed values
 	*/
@@ -530,7 +580,7 @@ private:
 	IndexVector                      iRow_h_lag_;
 	IndexVector                      jCol_h_lag_;
 	// CppAD function object for both f and g as one function
-	CppAD::ADFun<Number>             fg_fun_;
+	CppAD::vector< CppAD::ADFun<Number> >  fg_fun_;
 	/*
  	Methods
 	*/
@@ -540,23 +590,26 @@ private:
 
 	// Methods used by public methods
 	static void record_fg_fun(
-		Index                 m      ,
-		Index                 n      ,
-		ADVector&             x_vec  , 
-		FgPointer fg_ad              , 
-		CppAD::ADFun<Number>& fg_fun
+		Index                                   m         ,
+		Index                                   n         ,
+		ADVector&                               x_vec     , 
+		FgPointer                               fg_ad     , 
+                bool                                    fg_vector ,
+		CppAD::vector< CppAD::ADFun<Number> > & fg_fun
 	);
 	static void compute_pattern_jac_fg(
-		Index                 m              ,
-		Index                 n              ,
-		CppAD::ADFun<Number>& fg_fun         ,
-		BoolVector&           pattern_jac_fg 
+		Index                                  m              ,
+		Index                                  n              ,
+		bool                                   fg_vector      ,
+		CppAD::vector< CppAD::ADFun<Number> >& fg_fun         ,
+		BoolVector&                            pattern_jac_fg 
 	);
 	static void compute_pattern_h_lag(
-		Index                 m              ,
-		Index                 n              ,
-		CppAD::ADFun<Number>& fg_fun         ,
-		BoolVector&           pattern_h_lag 
+		Index                                  m              ,
+		Index                                  n              ,
+		bool                                   fg_vector      ,
+		CppAD::vector< CppAD::ADFun<Number> >& fg_fun         ,
+		BoolVector&                            pattern_h_lag 
 	);
 	static void compute_structure_jac_g(
 		Index                 m              ,
