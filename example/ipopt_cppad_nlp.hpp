@@ -90,7 +90,7 @@ $code ADNumber$$.
 $head n$$
 The argument $icode n$$ has prototype
 $codei%
-	Ipopt::Index %n%
+	size_t %n%
 %$$
 It specifies the dimension of the argument space; 
 i.e., $latex x \in \R^n$$.
@@ -98,7 +98,7 @@ i.e., $latex x \in \R^n$$.
 $head m$$
 The argument $icode m$$ has prototype
 $codei%
-	Ipopt::Index %m%
+	size_t %m%
 %$$
 It specifies the dimension of the range space for $latex g$$; 
 i.e., $latex g : \R^n \rightarrow \R^m$$.
@@ -321,11 +321,13 @@ $end
 -----------------------------------------------------------------------------
 */
 
+
 # include <cppad/cppad.hpp>
 # include <coin/IpIpoptApplication.hpp>
 # include <coin/IpTNLP.hpp>
 
 typedef CppAD::AD<Ipopt::Number>       ADNumber;
+typedef CppAD::vector<size_t>          SizeVector;
 typedef CppAD::vector<Ipopt::Number>   NumberVector;
 typedef CppAD::vector<ADNumber>        ADVector;
 
@@ -375,8 +377,8 @@ class ipopt_cppad_nlp : public Ipopt::TNLP
 public:
 	// constructor 
 	ipopt_cppad_nlp(
-		Index n                          , 
-		Index m                          ,
+		size_t n                         , 
+		size_t m                         ,
 		const NumberVector    &x_i       ,
 		const NumberVector    &x_l       ,
 		const NumberVector    &x_u       ,
@@ -499,9 +501,9 @@ private:
  	Values passed in by user
 	*/
 	// dimension of the domain space
-	const Index                     n_;
+	const size_t                    n_;
 	// number of components in g
-	const Index                     m_;
+	const size_t                    m_;
 	// initial x
 	const NumberVector              x_i_;
 	// limits for x and g
@@ -522,13 +524,13 @@ private:
 	BoolVector                       pattern_jac_fg_;
 	BoolVector                       pattern_h_lag_;
 	// Ipopt sparsity structure for Jacobian of g
-	Index                            nnz_jac_g_;
-	IndexVector                      iRow_jac_g_;
-	IndexVector                      jCol_jac_g_;
+	size_t                           nnz_jac_g_;
+	SizeVector                       iRow_jac_g_;
+	SizeVector                       jCol_jac_g_;
 	// Ipopt sparsity structure for Hessian of Lagragian
-	Index                            nnz_h_lag_;
-	IndexVector                      iRow_h_lag_;
-	IndexVector                      jCol_h_lag_;
+	size_t                           nnz_h_lag_;
+	SizeVector                       iRow_h_lag_;
+	SizeVector                       jCol_h_lag_;
 	// CppAD function object for both f and g as one function
 	CppAD::ADFun<Number>             fg_fun_;
 	/*
@@ -540,39 +542,39 @@ private:
 
 	// Methods used by public methods
 	static void record_fg_fun(
-		Index                 m      ,
-		Index                 n      ,
+		size_t                m      ,
+		size_t                n      ,
 		ADVector&             x_vec  , 
 		FgPointer fg_ad              , 
 		CppAD::ADFun<Number>& fg_fun
 	);
 	static void compute_pattern_jac_fg(
-		Index                 m              ,
-		Index                 n              ,
+		size_t                m              ,
+		size_t                n              ,
 		CppAD::ADFun<Number>& fg_fun         ,
 		BoolVector&           pattern_jac_fg 
 	);
 	static void compute_pattern_h_lag(
-		Index                 m              ,
-		Index                 n              ,
+		size_t                m              ,
+		size_t                n              ,
 		CppAD::ADFun<Number>& fg_fun         ,
 		BoolVector&           pattern_h_lag 
 	);
 	static void compute_structure_jac_g(
-		Index                 m              ,
-		Index                 n              ,
+		size_t                m              ,
+		size_t                n              ,
 		const BoolVector&     pattern_jac_fg ,
-		Index&                nnz_jac_g      ,
-		IndexVector&          iRow_jac_g     ,
-		IndexVector&          jCol_jac_g
+		size_t&               nnz_jac_g      ,
+		SizeVector&           iRow_jac_g     ,
+		SizeVector&           jCol_jac_g
 	);
 	static void compute_structure_h_lag(
-		Index                 m              ,
-		Index                 n              ,
+		size_t                m              ,
+		size_t                n              ,
 		const BoolVector&     pattern_h_lag  ,
-		Index&                nnz_h_lag      ,
-		IndexVector&          iRow_h_lag     ,
-		IndexVector&          jCol_h_lag
+		size_t&               nnz_h_lag      ,
+		SizeVector&           iRow_h_lag     ,
+		SizeVector&           jCol_h_lag
 	);
 
 };

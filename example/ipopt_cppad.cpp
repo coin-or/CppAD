@@ -78,12 +78,12 @@ namespace {
 	
 bool ipopt_cppad(void)
 {	bool ok = true;
-	Ipopt::Index j;
+	size_t j;
 
 	// number of independent variables (domain dimension for f and g)
-	Ipopt::Index n = 4;  
+	size_t n = 4;  
 	// number of constraints (range dimension for g)
-	Ipopt::Index m = 2;
+	size_t m = 2;
 	// initial value of the independent variables
 	NumberVector x_i(n);
 	x_i[0] = 1.0;
@@ -103,7 +103,7 @@ bool ipopt_cppad(void)
 	g_l[0] = 25.0;     g_u[0] = 1.0e19;
   	g_l[1] = 40.0;     g_u[1] = 40.0;
 
-	Ipopt::Index icase;
+	size_t icase;
 	for(icase = 0; icase <= 1; icase++)
 	{	// Should ipopt_cppad_nlp retape the operation sequence for
 		// every new x. Can test both true and false cases because 

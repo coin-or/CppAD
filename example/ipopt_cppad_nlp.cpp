@@ -19,8 +19,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /* Constructor. */
 ipopt_cppad_nlp::ipopt_cppad_nlp(
-	Index                      n           , 
-	Index                      m           , 
+	size_t                     n           , 
+	size_t                     m           , 
 	const NumberVector&        x_i         ,
 	const NumberVector&        x_l         ,
 	const NumberVector&        x_u         ,
@@ -39,7 +39,7 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 	  fg_ad_  ( fg_ad ) ,
 	  retape_ (retape),
 	  solution_ (solution)
-{	Index i, j, k;
+{	size_t i, j, k;
 
 	pattern_jac_fg_.resize( (m + 1) * n );
 	pattern_h_lag_.resize( n * n );
@@ -95,8 +95,8 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 
 // static member function that records operation sequence
 void ipopt_cppad_nlp::record_fg_fun( 
-	Index                  m        ,
-	Index                  n        ,
+	size_t                 m        ,
+	size_t                 n        ,
 	ADVector&              x_ad_vec ,
 	FgPointer              fg_ad    , 
 	CppAD::ADFun<Number>&  fg_fun   )
@@ -133,8 +133,8 @@ seqeunce that was previously in fg_fun is deleted.)
 // static member function that computes CppAD sparsity pattern for 
 // Jacobian of fg
 void ipopt_cppad_nlp::compute_pattern_jac_fg(
-	Index                 m              ,
-	Index                 n              ,
+	size_t                m              ,
+	size_t                n              ,
 	CppAD::ADFun<Number>& fg_fun         ,
 	BoolVector&           pattern_jac_fg )
 /*
@@ -158,7 +158,7 @@ On output it is the CppAD sparsity pattern for the Jacobian of fg_fun.
 	assert( fg_fun.Domain() == size_t(n) );
 	assert( pattern_jac_fg.size() == size_t( (m+1) * n ) );
 
-	Index i, j, k;
+	size_t i, j, k;
 	if( n < m + 1 )
 	{	// use forward mode
 		BoolVector pattern_domain(n * n);
@@ -184,8 +184,8 @@ On output it is the CppAD sparsity pattern for the Jacobian of fg_fun.
 // static member function that computes CppAD sparsity pattern for 
 // Hessian of Lagragian
 void ipopt_cppad_nlp::compute_pattern_h_lag(
-	Index                 m              ,
-	Index                 n              ,
+	size_t                m              ,
+	size_t                n              ,
 	CppAD::ADFun<Number>& fg_fun         ,
 	BoolVector&           pattern_h_lag  )
 /*
@@ -209,7 +209,7 @@ the Lagragian.
 {	assert( fg_fun.Range() == size_t(m+1) );
 	assert( fg_fun.Domain() == size_t(n) );
 	assert( pattern_h_lag.size() == size_t(n*n) );
-	Index i, j;
+	size_t i, j;
 	BoolVector pattern_domain(n * n);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++) 
@@ -226,12 +226,12 @@ the Lagragian.
 // static member function that computes the Ipopt sparsity structure for 
 // Jacobian of g
 void ipopt_cppad_nlp::compute_structure_jac_g(
-	Index m                          ,
-	Index n                          ,
+	size_t            m              ,
+	size_t            n              ,
 	const BoolVector& pattern_jac_fg ,
-	Index&            nnz_jac_g      ,
-	IndexVector&      iRow_jac_g     ,
-	IndexVector&      jCol_jac_g     )
+	size_t&           nnz_jac_g      ,
+	SizeVector&       iRow_jac_g     ,
+	SizeVector&       jCol_jac_g     )
 /*
 m: input
 The number of components in the constraint function g.
@@ -257,7 +257,7 @@ On output it has size nnz_jac_g.
 It specifies the Fortran column index (i.e. base one) 
 corresponding to each non-zero entry in the Jacobian of g.
 */
-{	Index i, j, k;
+{	size_t i, j, k;
 
 	nnz_jac_g = 0;
 	for(i = 1; i <= m; i++)
@@ -281,12 +281,12 @@ corresponding to each non-zero entry in the Jacobian of g.
 // static member function that computes the Ipopt sparsity structure for 
 // Hessian of Lagragian
 void ipopt_cppad_nlp::compute_structure_h_lag(
-	Index m                          ,
-	Index n                          ,
+	size_t             m             ,
+	size_t             n             ,
 	const BoolVector& pattern_h_lag  ,
-	Index&            nnz_h_lag      ,
-	IndexVector&      iRow_h_lag     ,
-	IndexVector&      jCol_h_lag     )
+	size_t&           nnz_h_lag      ,
+	SizeVector&       iRow_h_lag     ,
+	SizeVector&       jCol_h_lag     )
 /*
 m: input
 The number of components in the constraint function g.
@@ -312,7 +312,7 @@ On output it has size nnz_h_lag.
 It specifies the Fortran column index (i.e. base one) 
 corresponding to each non-zero entry in the Hessian of the Lagragian.
 */
-{	Index i, j, k;
+{	size_t i, j, k;
 
 	nnz_h_lag = 0;
 	for(i = 0; i < n; i++)
@@ -352,17 +352,17 @@ bool ipopt_cppad_nlp::get_nlp_info(Index& n, Index& m, Index& nnz_jac_g,
 
 bool ipopt_cppad_nlp::get_bounds_info(Index n, Number* x_l, Number* x_u,
                             Index m, Number* g_l, Number* g_u)
-{	Index i, j;
+{	size_t i, j;
 	// here, the n and m we gave IPOPT in get_nlp_info are passed back 
-	assert(n == n_);
-	assert(m == m_);
+	assert(size_t(n) == n_);
+	assert(size_t(m) == m_);
 
 	// pass back bounds
-	for(j = 0; j < n; j++)
+	for(j = 0; j < n_; j++)
 	{	x_l[j] = x_l_[j];
 		x_u[j] = x_u_[j];
 	}
-	for(i = 0; i < m; i++)
+	for(i = 0; i < m_; i++)
 	{	g_l[i] = g_l_[i];
 		g_u[i] = g_u_[i];
 	}
@@ -374,15 +374,15 @@ bool ipopt_cppad_nlp::get_starting_point(Index n, bool init_x, Number* x,
                                bool init_z, Number* z_L, Number* z_U,
                                Index m, bool init_lambda,
                                Number* lambda)
-{	Index j;
+{	size_t j;
 
-	assert( n == n_ );
-	assert( m == m_ );
+	assert(size_t(n) == n_ );
+	assert(size_t(m) == m_ );
 	assert(init_x == true);
 	assert(init_z == false);
 	assert(init_lambda == false);
 
-	for(j = 0; j < n; j++)
+	for(j = 0; j < n_; j++)
 		x[j] = x_i_[j];
 
 	return true;
@@ -391,29 +391,29 @@ bool ipopt_cppad_nlp::get_starting_point(Index n, bool init_x, Number* x,
 bool ipopt_cppad_nlp::eval_f(
 	Index n, const Number* x, bool new_x, Number& obj_value
 )
-{	Index j;
-	assert( n == n_ );
+{	size_t j;
+	assert(size_t(n) == n_ );
 
 	if( new_x && retape_ )
 	{	// Record fg for the current value of x
-		ADVector x_ad_vec(n);
-		for(j = 0; j < n; j++)
+		ADVector x_ad_vec(n_);
+		for(j = 0; j < n_; j++)
 			x_ad_vec[0] = x[j];
 		record_fg_fun(
-			m_, n, x_ad_vec, fg_ad_,              // inputs
+			m_, n_, x_ad_vec, fg_ad_,              // inputs
 			fg_fun_                               // outputs
 		);
 	}
 
-	NumberVector x_vec(n);
+	NumberVector x_vec(n_);
 	NumberVector fg_vec(1 + m_);
-	for(j = 0; j < n; j++)
+	for(j = 0; j < n_; j++)
 		x_vec[j]   = x[j];
 	fg_vec    = fg_fun_.Forward(0, x_vec);
 	obj_value = fg_vec[0];
 # if CPPAD_NLP_TRACE
 	using std::printf;
-	for(j = 0; j < n; j++)
+	for(j = 0; j < n_; j++)
 		printf("ipopt_cppad_nlp::eval_f::x[%d] = %20.14g\n", j, x[j]);
 	printf("ipopt_cppad_nlp::eval_f::obj_value = %20.14g\n", obj_value);
 # endif
@@ -423,33 +423,33 @@ bool ipopt_cppad_nlp::eval_f(
 bool ipopt_cppad_nlp::eval_grad_f(
 	Index n, const Number* x, bool new_x, Number* grad_f
 )
-{	Index j;
-	assert( n == n_ );
+{	size_t j;
+	assert(size_t(n) == n_ );
 
 	if( new_x && retape_ )
 	{	// Record fg for the current value of x
-		ADVector x_ad_vec(n);
-		for(j = 0; j < n; j++)
+		ADVector x_ad_vec(n_);
+		for(j = 0; j < n_; j++)
 			x_ad_vec[0] = x[j];
 		record_fg_fun(
-			m_, n, x_ad_vec, fg_ad_,              // inputs
+			m_, n_, x_ad_vec, fg_ad_,              // inputs
 			fg_fun_                               // outputs
 		);
 	}
 
-	NumberVector x_vec(n);
-	NumberVector fg_grad_vec((1 + m_) * n);
-	for(Index j = 0; j < n; j++)
+	NumberVector x_vec(n_);
+	NumberVector fg_grad_vec((1 + m_) * n_);
+	for(j = 0; j < n_; j++)
 		x_vec[j]   = x[j];
 	fg_grad_vec = fg_fun_.Jacobian(x_vec);
-	for(j = 0; j < n; j++)
-		grad_f[j] = fg_grad_vec[0 * n + j];
+	for(j = 0; j < n_; j++)
+		grad_f[j] = fg_grad_vec[0 * n_ + j];
 # if CPPAD_NLP_TRACE
 	using std::printf;
-	for(j = 0; j < n; j++) printf(
+	for(j = 0; j < n_; j++) printf(
 	"ipopt_cppad_nlp::eval_grad_f::x[%d] = %20.14g\n", j, x[j]
 	);
-	for(j = 0; j < n; j++) printf(
+	for(j = 0; j < n_; j++) printf(
 	"ipopt_cppad_nlp::eval_grad_f::grad_f[%d] = %20.14g\n", j, grad_f[j]
 	);
 # endif
@@ -459,33 +459,33 @@ bool ipopt_cppad_nlp::eval_grad_f(
 bool ipopt_cppad_nlp::eval_g(
 	Index n, const Number* x, bool new_x, Index m, Number* g
 )
-{	Index i, j;
-	assert( n == n_);
-	assert( m == m_);
+{	size_t i, j;
+	assert(size_t(n) == n_);
+	assert(size_t(m) == m_);
 
 	if( new_x && retape_ )
 	{	// Record fg for the current value of x
-		ADVector x_ad_vec(n);
-		for(j = 0; j < n; j++)
+		ADVector x_ad_vec(n_);
+		for(j = 0; j < n_; j++)
 			x_ad_vec[0] = x[j];
 		record_fg_fun(
-			m, n, x_ad_vec, fg_ad_,               // inputs
+			m, n_, x_ad_vec, fg_ad_,               // inputs
 			fg_fun_                               // outputs
 		);
 	}
 
-	NumberVector x_vec(n);
-	NumberVector fg_vec(1 + m);
-	for(j = 0; j < n; j++)
+	NumberVector x_vec(n_);
+	NumberVector fg_vec(1 + m_);
+	for(j = 0; j < n_; j++)
 		x_vec[j]   = x[j];
 	fg_vec = fg_fun_.Forward(0, x_vec);
-	for(i = 0; i < m; i++)
+	for(i = 0; i < m_; i++)
 		g[i] = fg_vec[1+i];
 # if CPPAD_NLP_TRACE
 	using std::printf;
-	for(j = 0; j < n; j++)
+	for(j = 0; j < n_; j++)
 		printf("ipopt_cppad_nlp::eval_g::x[%d] = %20.14g\n", j, x[j]);
-	for(i = 0; i < m; i++)
+	for(i = 0; i < m_; i++)
 		printf("ipopt_cppad_nlp::eval_g::g[%d] = %20.14g\n", i, g[i]);
 # endif
 	return true;
@@ -494,22 +494,22 @@ bool ipopt_cppad_nlp::eval_g(
 bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
                        Index m, Index nele_jac, Index* iRow, Index *jCol,
                        Number* values)
-{	assert( n == n_ );
-	assert( m == m_ );
+{	assert(size_t(n) == n_ );
+	assert(size_t(m) == m_ );
 
 	if( new_x && retape_ )
 	{	// Record fg for the current value of x
-		ADVector x_ad_vec(n);
-		Index j;
-		for(j = 0; j < n; j++)
+		ADVector x_ad_vec(n_);
+		size_t j;
+		for(j = 0; j < n_; j++)
 			x_ad_vec[0] = x[j];
 		record_fg_fun(
-			m, n, x_ad_vec, fg_ad_,                // inputs
+			m_, n_, x_ad_vec, fg_ad_,                // inputs
 			fg_fun_                               // outputs
 		);
 	}
 
-	Index k;
+	size_t k;
 	if (values == NULL) 
 	{	for(k = 0; k < nnz_jac_g_; k++)
 		{	iRow[k] = iRow_jac_g_[k];
@@ -519,8 +519,8 @@ bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 	else 
 	{	// return the values of the jacobian of the constraints
 		NumberVector x_vec(n);
-		NumberVector jac_fg_vec((1 + m) * n);
-		for(Index j = 0; j < n; j++)
+		NumberVector jac_fg_vec((1 + m_) * n_);
+		for(size_t j = 0; j < n_; j++)
 			x_vec[j]   = x[j];
 		if( retape_ )
 			jac_fg_vec = fg_fun_.Jacobian(x_vec);
@@ -529,9 +529,9 @@ bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 			);
 
 		for(k = 0; k < nnz_jac_g_; k++)
-		{	Index i = iRow_jac_g_[k];
-			Index j = jCol_jac_g_[k] - 1;	
-			values[k] = jac_fg_vec[ i * n + j ];
+		{	size_t i  = iRow_jac_g_[k];
+			size_t j  = jCol_jac_g_[k] - 1;	
+			values[k] = jac_fg_vec[ i * n_ + j ];
 		} 
 	}
   	return true;
@@ -541,17 +541,17 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
                    Number obj_factor, Index m, const Number* lambda,
                    bool new_lambda, Index nele_hess, Index* iRow,
                    Index* jCol, Number* values)
-{	Index j, k;
-	assert( n == n_ );
-	assert( m == m_ );
+{	size_t j, k;
+	assert(size_t(n) == n_ );
+	assert(size_t(m) == m_ );
 
 	if( new_x && retape_ )
 	{	// Record fg for the current value of x
-		ADVector x_ad_vec(n);
-		for(j = 0; j < n; j++)
+		ADVector x_ad_vec(n_);
+		for(j = 0; j < n_; j++)
 			x_ad_vec[0] = x[j];
 		record_fg_fun(
-			m, n, x_ad_vec, fg_ad_,               // inputs
+			m_, n_, x_ad_vec, fg_ad_,               // inputs
 			fg_fun_                               // outputs
 		);
 	}
@@ -564,13 +564,13 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 	}
 	else 
 	{	// return the values of the Hessian of the Lagragina
-		NumberVector x_vec(n);
-		NumberVector w_vec(1 + m);
-		NumberVector L_hes_vec(n * n);
-		for(j = 0; j < n; j++)
+		NumberVector x_vec(n_);
+		NumberVector w_vec(1 + m_);
+		NumberVector L_hes_vec(n_ * n_);
+		for(j = 0; j < n_; j++)
 			x_vec[j]   = x[j];
 		w_vec[0] = obj_factor;
-		for(Index i = 0; i < m; i++)
+		for(size_t i = 0; i < m_; i++)
 			w_vec[1+i] = lambda[i];
 		if( retape_ )
 			L_hes_vec = fg_fun_.Hessian(x_vec, w_vec);
@@ -578,9 +578,9 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 				x_vec, w_vec, pattern_h_lag_
 			);
 		for(k = 0; k < nnz_h_lag_; k++)
-		{	Index i = iRow_h_lag_[k] - 1;
-			Index j = jCol_h_lag_[k] - 1;	
-			values[k] = L_hes_vec[ i * n + j ];
+		{	size_t i  = iRow_h_lag_[k] - 1;
+			size_t j  = jCol_h_lag_[k] - 1;	
+			values[k] = L_hes_vec[ i * n_ + j ];
 		} 
 	}
 
@@ -600,10 +600,10 @@ void ipopt_cppad_nlp::finalize_solution(
 	const Ipopt::IpoptData*           ip_data   ,
 	Ipopt::IpoptCalculatedQuantities* ip_cq
 )
-{	Index i, j;
+{	size_t i, j;
 
-	assert( n == n_ );
-	assert( m == m_ );
+	assert(size_t(n) == n_ );
+	assert(size_t(m) == m_ );
 
 	switch(status)
 	{	// convert status from Ipopt enum to ipopt_cppad_solution enum
@@ -667,17 +667,17 @@ void ipopt_cppad_nlp::finalize_solution(
 			ipopt_cppad_solution::unknown;
 	}
 
-	solution_->x.resize(n);
-	solution_->z_l.resize(n);
-	solution_->z_u.resize(n);
-	for(j = 0; j < n; j++)
+	solution_->x.resize(n_);
+	solution_->z_l.resize(n_);
+	solution_->z_u.resize(n_);
+	for(j = 0; j < n_; j++)
 	{	solution_->x[j]    = x[j];
 		solution_->z_l[j]  = z_L[j];
 		solution_->z_u[j]  = z_U[j];
 	}
-	solution_->g.resize(m);
-	solution_->lambda.resize(m);
-	for(i = 0; i < m; i++)
+	solution_->g.resize(m_);
+	solution_->lambda.resize(m_);
+	for(i = 0; i < m_; i++)
 	{	solution_->g[i]      = g[i];
 		solution_->lambda[i] = lambda[i];
 	}
