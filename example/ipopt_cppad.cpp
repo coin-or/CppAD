@@ -56,9 +56,9 @@ $end
 
 namespace {
 
-	// Evaluation of object f(x) and constraints g(x)
-	// as one large vector.
-	ADVector fg_ad_vector(const ADVector&  x)
+	// Evaluation of the objective f(x), and constraints g(x)
+	// using an Algorithmic Differentiation (AD) class.
+	ADVector fg_ad(const ADVector&  x)
 	{	ADVector fg(3);
 
 		// Fortran style indexing 
@@ -72,46 +72,6 @@ namespace {
 		fg[1] = x1 * x2 * x3 * x4;
 		// g_2 (x)
 		fg[2] = x1 * x1 + x2 * x2 + x3 * x3 + x4 * x4;
-		return fg;
-	}
-
-	// Evaluation of the objective f(x), and constraints g(x)
-	// using an Algorithmic Differentiation (AD) class.
-	ADNumber fg_ad_scalar(const ADVector&  x, Ipopt::Index i)
-	{	ADNumber fg_i;
-
-		// Fortran style indexing 
-		ADNumber x1 = x[0];
-		ADNumber x2 = x[1];
-		ADNumber x3 = x[2];
-		ADNumber x4 = x[3];
-		switch(i)
-		{	case 0:
-			// f(x)
-			fg_i = x1 * x4 * (x1 + x2 + x3) + x3;
-			break;
-
-			case 1:
-			// g_1 (x)
-			fg_i = x1 * x2 * x3 * x4;
-			break;
-
-			case 2:
-			// g_2 (x)
-			fg_i = x1 * x1 + x2 * x2 + x3 * x3 + x4 * x4;
-			break;
-
-			default:
-			assert(0);
-		}
-		return fg_i;
-	}
-	ADVector fg_ad(const ADVector&  x, Ipopt::Index i)
-	{	if( i == -1 )
-			return fg_ad_vector(x);
-
-		ADVector fg(1);
-		fg[0] = fg_ad_scalar(x, i);
 		return fg;
 	}
 }
@@ -144,23 +104,15 @@ bool ipopt_cppad(void)
   	g_l[1] = 40.0;     g_u[1] = 40.0;
 
 	Ipopt::Index icase;
-	for(icase = 0; icase < 4; icase++)
+	for(icase = 0; icase <= 1; icase++)
 	{	// Should ipopt_cppad_nlp retape the operation sequence for
 		// every new x. Can test both true and false cases because 
 		// the operation sequence does not depend on x (for this case).
-		bool retape;
-		bool fg_vector;
-		if( icase % 2 == 1 )
-			retape = true;
-		else	retape = false;
-		if( icase >= 2 )
-			fg_vector = true;
-		else	fg_vector = false;
+		bool retape = bool(icase);
 		//
 		ipopt_cppad_solution solution;
 		Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new ipopt_cppad_nlp(
-			n, m, x_i, x_l, x_u, g_l, g_u, &fg_ad, &solution, 
-			retape, fg_vector
+		n, m, x_i, x_l, x_u, g_l, g_u, &fg_ad, retape, &solution
 		);
 
 		// Create an instance of the IpoptApplication
