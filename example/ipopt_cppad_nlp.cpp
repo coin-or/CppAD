@@ -26,8 +26,7 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 	const NumberVector&        x_u         ,
 	const NumberVector&        g_l         ,
 	const NumberVector&        g_u         ,
-	FgPointer                  fg_ad       ,
-	bool                       retape      ,
+	ipopt_cppad_fg_info       *fg_info     ,
 	ipopt_cppad_solution*      solution    )
 	: n_ ( n ),
 	  m_ ( m ),
@@ -36,15 +35,15 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 	  x_u_ ( x_u ),
 	  g_l_ ( g_l ),
 	  g_u_ ( g_u ),
-	  fg_ad_  ( fg_ad ) ,
-	  retape_ (retape),
+	  fg_info_ ( fg_info ) ,
+	  retape_ ( fg_info->retape() ) ,
 	  solution_ (solution)
 {	size_t i, j, k;
 
 	pattern_jac_fg_.resize( (m + 1) * n );
 	pattern_h_lag_.resize( n * n );
 
-	if ( retape )
+	if ( retape_ )
 	{	// true sparsity pattern valid for all x is unknown
 		for(i = 0; i <= m; i++)
 		{	for(j = 0; j < n; j++)
@@ -62,7 +61,7 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 		for(j = 0; j < n; j++)
 			x_ad_vec[0] = 0.;
 		record_fg_fun(
-			m, n, x_ad_vec, fg_ad_,               // inputs
+			m, n, x_ad_vec, fg_info_,             // inputs
 			fg_fun_                               // outputs
 		);
 
@@ -98,7 +97,7 @@ void ipopt_cppad_nlp::record_fg_fun(
 	size_t                 m        ,
 	size_t                 n        ,
 	ADVector&              x_ad_vec ,
-	FgPointer              fg_ad    , 
+	ipopt_cppad_fg_info*   fg_info  , 
 	CppAD::ADFun<Number>&  fg_fun   )
 /*
 m: input
@@ -111,8 +110,8 @@ x_ad_vec: input
 vector of independent variable values. This is an input except for 
 the fact that its CppAD private data changes.
 
-fg_ad: input
-the FgPointer that is used to compute the value of f and g.
+fg_info: input
+the ipopt_cppad_fg_info object that is used to compute the value of f and g.
 
 fg_fun: output 
 The CppAD operation sequence corresponding to the value of x_ad_vec,
@@ -125,7 +124,7 @@ seqeunce that was previously in fg_fun is deleted.)
 	// start the recording
 	CppAD::Independent(x_ad_vec);
 	// record operations for f(x)
-	fg_ad_vec = (*fg_ad)(x_ad_vec);
+	fg_ad_vec = fg_info->fg_eval(x_ad_vec);
 	// stop the resording and store it in fg_fun
 	fg_fun.Dependent(x_ad_vec, fg_ad_vec);
 }
@@ -400,7 +399,7 @@ bool ipopt_cppad_nlp::eval_f(
 		for(j = 0; j < n_; j++)
 			x_ad_vec[0] = x[j];
 		record_fg_fun(
-			m_, n_, x_ad_vec, fg_ad_,              // inputs
+			m_, n_, x_ad_vec, fg_info_,           // inputs
 			fg_fun_                               // outputs
 		);
 	}
@@ -432,7 +431,7 @@ bool ipopt_cppad_nlp::eval_grad_f(
 		for(j = 0; j < n_; j++)
 			x_ad_vec[0] = x[j];
 		record_fg_fun(
-			m_, n_, x_ad_vec, fg_ad_,              // inputs
+			m_, n_, x_ad_vec, fg_info_,           // inputs
 			fg_fun_                               // outputs
 		);
 	}
@@ -469,7 +468,7 @@ bool ipopt_cppad_nlp::eval_g(
 		for(j = 0; j < n_; j++)
 			x_ad_vec[0] = x[j];
 		record_fg_fun(
-			m, n_, x_ad_vec, fg_ad_,               // inputs
+			m, n_, x_ad_vec, fg_info_,            // inputs
 			fg_fun_                               // outputs
 		);
 	}
@@ -504,7 +503,7 @@ bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 		for(j = 0; j < n_; j++)
 			x_ad_vec[0] = x[j];
 		record_fg_fun(
-			m_, n_, x_ad_vec, fg_ad_,                // inputs
+			m_, n_, x_ad_vec, fg_info_,           // inputs
 			fg_fun_                               // outputs
 		);
 	}
@@ -551,7 +550,7 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 		for(j = 0; j < n_; j++)
 			x_ad_vec[0] = x[j];
 		record_fg_fun(
-			m_, n_, x_ad_vec, fg_ad_,               // inputs
+			m_, n_, x_ad_vec, fg_info_,           // inputs
 			fg_fun_                               // outputs
 		);
 	}

@@ -43,6 +43,14 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-04$$
+The $cref/ipopt_cppad_nlp/$$ interface has been changed to use
+a derived class object instead of a pointer to a function.
+
+$head 09-03$$
+The $cref/ipopt_cppad_nlp/$$ interface has been changed to use
+$code size_t$$ instead of $code Ipopt::Index$$.
+
 $head 09-01$$
 Back out the changes made to $cref/ipopt_cppad_nlp/$$ on 08-29
 (because testing proved the change to be less efficient in the case
@@ -82,7 +90,7 @@ There was an indexing bug in the $cref/Ipopt/ipopt_cppad_nlp/$$ example
 that affected the $icode retape$$ equal to $code false$$ case.
 This has been fixed.
 In addition, the missing 
-$cref/retape documentation/ipopt_cppad_nlp/retape/$$ was added.
+$icode retape$$ documentation was added.
 
 $head 07-02$$
 Extend $cref/configure/InstallUnix/Configure/$$ command to check for

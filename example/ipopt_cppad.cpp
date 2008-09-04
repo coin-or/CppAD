@@ -56,29 +56,42 @@ $end
 
 namespace {
 
-	// Evaluation of the objective f(x), and constraints g(x)
-	// using an Algorithmic Differentiation (AD) class.
-	ADVector fg_ad(const ADVector&  x)
-	{	ADVector fg(3);
+	class my_FG_info : public ipopt_cppad_fg_info
+	{
+	private:
+		bool retape_;
+	public:
+		// derived class part of constructor
+		my_FG_info(bool retape)
+		: retape_ (retape)
+		{ }
+		// Evaluation of the objective f(x), and constraints g(x)
+		// using an Algorithmic Differentiation (AD) class.
+		ADVector fg_eval(const ADVector&  x)
+		{	ADVector fg(3);
 
-		// Fortran style indexing 
-		ADNumber x1 = x[0];
-		ADNumber x2 = x[1];
-		ADNumber x3 = x[2];
-		ADNumber x4 = x[3];
-		// f(x)
-		fg[0] = x1 * x4 * (x1 + x2 + x3) + x3;
-		// g_1 (x)
-		fg[1] = x1 * x2 * x3 * x4;
-		// g_2 (x)
-		fg[2] = x1 * x1 + x2 * x2 + x3 * x3 + x4 * x4;
-		return fg;
-	}
+			// Fortran style indexing 
+			ADNumber x1 = x[0];
+			ADNumber x2 = x[1];
+			ADNumber x3 = x[2];
+			ADNumber x4 = x[3];
+			// f(x)
+			fg[0] = x1 * x4 * (x1 + x2 + x3) + x3;
+			// g_1 (x)
+			fg[1] = x1 * x2 * x3 * x4;
+			// g_2 (x)
+			fg[2] = x1 * x1 + x2 * x2 + x3 * x3 + x4 * x4;
+			return fg;
+		}
+		bool retape(void)
+		{	return retape_; }
+	};
 }
 	
 bool ipopt_cppad(void)
 {	bool ok = true;
 	size_t j;
+
 
 	// number of independent variables (domain dimension for f and g)
 	size_t n = 4;  
@@ -109,10 +122,15 @@ bool ipopt_cppad(void)
 		// every new x. Can test both true and false cases because 
 		// the operation sequence does not depend on x (for this case).
 		bool retape = bool(icase);
-		//
+
+		// object in derived class
+		my_FG_info my_fg_info(retape);
+		ipopt_cppad_fg_info *fg_info = &my_fg_info;  
+
+		// create the Ipopt interface
 		ipopt_cppad_solution solution;
 		Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new ipopt_cppad_nlp(
-		n, m, x_i, x_l, x_u, g_l, g_u, &fg_ad, retape, &solution
+		n, m, x_i, x_l, x_u, g_l, g_u, fg_info, &solution
 		);
 
 		// Create an instance of the IpoptApplication

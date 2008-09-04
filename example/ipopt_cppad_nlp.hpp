@@ -25,7 +25,7 @@ $spell
 	const
 	optimizer
 	ipopt_cppad_nlp.hpp
-	fg_ad
+	fg_info.eval
 	retape
 	CppAD
 	
@@ -38,7 +38,7 @@ $codei%# include "ipopt_cppad_nlp.hpp"
 $codei%# ipopt_cppad_solution %solution%;
 %$$
 $codei%ipopt_cppad_nlp %cppad_nlp%(
-	%n%, %m%, %x_i%, %x_l%, %x_u%, %g_l%, %g_u%, &%fg_ad%, %retape%, &%solution%
+	%n%, %m%, %x_i%, %x_l%, %x_u%, %g_l%, %g_u%, %fg_info%, &%solution%
 )%$$
 
 $head Purpose$$
@@ -48,9 +48,9 @@ $latex \[
 \begin{array}{rll}
 {\rm minimize}      & f(x) 
 \\
-{\rm subject \; to} & g_l \leq g(x) \leq g_u
+{\rm subject \; to} & g^l \leq g(x) \leq g^u
 \\
-                    & x_l  \leq x   \leq x_u
+                    & x^l  \leq x   \leq x^u
 \end{array}
 \] $$
 This is done using 
@@ -69,6 +69,17 @@ $head Warning$$
 This is only and example use of CppAD.
 It is expected that this class will be improved and that
 its user interface may change in ways that are not backward compatible.
+
+$head fg(x)$$
+The function $latex fg : \R^n \rightarrow \R^{m+1}$$ is defined by
+$latex \[
+\begin{array}{rcl}
+	fg_0 (x)     & = & f(x)         \\
+	fg_1 (x)     & = & g_0 (x)      \\
+	             & \vdots &         \\
+	fg_m (x)     & = & g_{m-1} (x)
+	\end{array}
+\] $$
 
 $head NumberVector$$
 The type $codei NumberVector$$ is defined by the 
@@ -117,7 +128,8 @@ $codei%
 	const NumberVector& %x_l%
 %$$
 and its size is equal to $latex n$$.
-It specifies the lower limits for the argument in the optimization problem.
+It specifies the lower limits for the argument in the optimization problem;
+i.e., $latex x^l$$.
 
 $head x_u$$
 The argument $icode x_u$$ has prototype
@@ -125,7 +137,8 @@ $codei%
 	const NumberVector& %x_u%
 %$$
 and its size is equal to $latex n$$.
-It specifies the upper limits for the argument in the optimization problem.
+It specifies the upper limits for the argument in the optimization problem;
+i.e., $latex x^u$$.
 
 $head g_l$$
 The argument $icode g_l$$ has prototype
@@ -133,7 +146,8 @@ $codei%
 	const NumberVector& %g_l%
 %$$
 and its size is equal to $latex m$$.
-It specifies the lower limits for the constraints in the optimization problem.
+It specifies the lower limits for the constraints in the optimization problem;
+i.e., $latex g^l$$.
 
 $head g_u$$
 The argument $icode g_u$$ has prototype
@@ -141,55 +155,63 @@ $codei%
 	const NumberVector& %g_u%
 %$$
 and its size is equal to $latex n$$.
-It specifies the upper limits for the constraints in the optimization problem.
+It specifies the upper limits for the constraints in the optimization problem;
+i.e., $latex g^u$$.
 
-$head fg_ad$$
-The argument $icode fg_ad$$ has prototype
+$head fg_info$$
+The argument $icode fg_info$$ has prototype
 $codei%
-	ADVector %fg_ad%(const ADVector& %x%);
+	ipopt_cppad_fg_info* %fg_info%
 %$$
-This function computes the value of $latex f(x)$$ and $latex g(x)$$
-using the syntax
-$codei%
-	%fg% = %fg_ad%(%x%)
-%$$
+where the object $codei%*%fg_info%$$ is a member of
+a class (referred to as $icode FG_info$$)
+that is derived from the base class $code ipopt_cppad_fg_info$$.
+Certain virtual member functions of $code ipopt_cppad_fg_info$$ are used to 
+compute the value of $latex fg(x)$$.
+The specifications for these member functions is given below:
 
-$subhead x$$
-The $icode fg_ad$$ argument $icode x$$ has prototype
+$subhead fg_info->eval$$
+This member function has the prototype
 $codei%
-	const ADVector& %x%
+	virtual ADVector ipopt_cppad_fg_info::fg_eval(const ADVector& %x%) = 0;
 %$$
-and its size is equal to $latex n$$.
-It is the value of $latex x$$ at which to compute $icode fg$$.
+This prototype is pure virtual and hence it must be defined in the 
+derived class $icode FG_info$$.
+$pre
 
-$subhead fg$$
-The $icode fg_ad$$ return value $icode fg$$ has prototype
+$$
+This function computes the value of $cref/fg(x)/ipopt_cppad_nlp/fg(x)/$$.
+If $icode x$$ is an $code ADVector$$ of size $icode n$$ 
+and $icode fg$$ is an $code ADVector$$ of size $icode m+1$$
+the syntax
 $codei%
-	ADVector& %fg%
+	%fg% = %fg_info%->eval(%x%)
 %$$
-and its size is equal to $latex m+1$$.
-It is the vector of $latex ( f(x) , g(x) )$$; i.e.,
-$latex \[
-\begin{array}{rcl}
-	f(x)        & = &        fg[0] \\
-	g_0 (x)     & = &        fg[1] \\
-	            & \vdots &         \\
-	g_{m-1} (x) & = &        fg[m]
-	\end{array}
-\] $$
+set $icode fg$$ to the vector $latex fg(x)$$.
 
-$head retape$$
-This argument has the prototype
+$subhead fg_info->retape$$
+This member function has the prototype
 $codei%
-        bool %retape%
+	virtual bool ipopt_cppad_fg_info::retape(void)
 %$$
+If $icode retape$$ has type $code bool$$,
+the syntax
+$codei%
+        %retape% = %fg_info%->retape()
+%$$
+sets $icode retape$$ to true or false.
 If $icode retape$$ is true, 
 $code ipopt_cppad_nlp$$ will retape the operation sequence for
 every new $icode x$$ value. 
 The program should use much less memory and run faster if $icode retape$$
 is false.
 You can test both the true and false cases to make sure 
-the operation sequence does not depend on x.
+the operation sequence does not depend on $icode x$$.
+$pre
+
+$$
+The $code ipopt_cppad_fg_info$$ implementation of this function
+sets $icode retape$$ to true.
 
 $head solution$$
 After the optimization process is completed, $icode solution$$ contains
@@ -248,7 +270,7 @@ compute the search direction.
 $rnext
 invalid_number_detected $cnext
 Algorithm received an invalid number (such as $code nan$$ or $code inf$$) 
-from the users function $icode fg_ad$$ or from the CppAD evaluations
+from the users function $icode%fg_info%.eval%$$ or from the CppAD evaluations
 of its derivatives
 (see the Ipopt option $code check_derivatives_for_naninf$$).
 $rnext
@@ -331,10 +353,25 @@ typedef CppAD::vector<size_t>          SizeVector;
 typedef CppAD::vector<Ipopt::Number>   NumberVector;
 typedef CppAD::vector<ADNumber>        ADVector;
 
-/* 
-C++ class for interfacing a problem to IPOPT and using CppAD for derivative 
-and sparsity pattern calculations.
+/*
+Class for return solution values.
 */
+class ipopt_cppad_fg_info
+{
+public:
+	// constructor
+	ipopt_cppad_fg_info(void)
+	{ }
+	// make destructor virtual so that derived class destructor gets called
+	virtual ~ipopt_cppad_fg_info(void)
+	{ }
+	// default definition for retape
+	virtual bool retape(void)
+	{	return true; }
+	// fg_eval is pure virtual so that it must be defined by derived class
+	virtual ADVector fg_eval(const ADVector& x) = 0;
+};
+
 class ipopt_cppad_solution 
 {
 public:
@@ -366,6 +403,10 @@ public:
 	{	status = not_defined; }
 };
 
+/* 
+Class for interfacing a problem to IPOPT and using CppAD for derivative 
+and sparsity pattern calculations.
+*/
 class ipopt_cppad_nlp : public Ipopt::TNLP
 {
 	typedef Ipopt::Number                  Number;
@@ -373,7 +414,6 @@ class ipopt_cppad_nlp : public Ipopt::TNLP
 	typedef Ipopt::TNLP::IndexStyleEnum    IndexStyleEnum;
 	typedef CppAD::vectorBool              BoolVector;
 	typedef CppAD::vector<Ipopt::Index>    IndexVector;
-	typedef ADVector (*FgPointer) (const ADVector& x);
 public:
 	// constructor 
 	ipopt_cppad_nlp(
@@ -384,8 +424,7 @@ public:
 		const NumberVector    &x_u       ,
 		const NumberVector    &g_l       ,
 		const NumberVector    &g_u       ,
-		FgPointer              fg_ad     ,
-		bool                   retape    ,
+		ipopt_cppad_fg_info*   fg_info   ,
 		ipopt_cppad_solution*  solution
   	);
 
@@ -512,7 +551,7 @@ private:
 	const NumberVector              g_l_;
 	const NumberVector              g_u_;
 	// Users function that evaluates f and g
-	FgPointer const                 fg_ad_;
+	ipopt_cppad_fg_info* const      fg_info_;
 	// does operation sequence chage with argument value
 	const bool                      retape_;
 	// object for storing final solution results
@@ -542,10 +581,10 @@ private:
 
 	// Methods used by public methods
 	static void record_fg_fun(
-		size_t                m      ,
-		size_t                n      ,
-		ADVector&             x_vec  , 
-		FgPointer fg_ad              , 
+		size_t                m       ,
+		size_t                n       ,
+		ADVector&             x_vec   , 
+		ipopt_cppad_fg_info  *fg_info , 
 		CppAD::ADFun<Number>& fg_fun
 	);
 	static void compute_pattern_jac_fg(
