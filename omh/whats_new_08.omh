@@ -32,6 +32,7 @@ $spell
 	op
 	CppAD
 	yum
+	vec
 $$
 
 $section Changes and Additions to CppAD During 2008$$
@@ -42,6 +43,19 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 09-05$$
+Fix bug in $cref/ipopt_cppad_nlp/$$ (not recording the function
+at the proper location. Here is the difference that occurred 
+multiple places in the $code example/ipopt_cppad_nlp.cpp$$ source:
+$codep
+	for(j = 0; j < n_; j++)
+-		x_ad_vec[0] = x[j];
++		x_ad_vec[j] = x[j];
+$$
+This did not show up in testing because there currently is no test of
+$code ipopt_cppad_nlp$$ where the operation sequence depends
+on the value of $latex x$$.
 
 $head 09-04$$
 The $cref/ipopt_cppad_nlp/$$ interface has been changed to use

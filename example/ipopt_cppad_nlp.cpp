@@ -59,7 +59,7 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 		// (operation sequence does not depend on value of x).
 		ADVector x_ad_vec(n);
 		for(j = 0; j < n; j++)
-			x_ad_vec[0] = 0.;
+			x_ad_vec[j] = 0.;
 		record_fg_fun(
 			m, n, x_ad_vec, fg_info_,             // inputs
 			fg_fun_                               // outputs
@@ -397,7 +397,7 @@ bool ipopt_cppad_nlp::eval_f(
 	{	// Record fg for the current value of x
 		ADVector x_ad_vec(n_);
 		for(j = 0; j < n_; j++)
-			x_ad_vec[0] = x[j];
+			x_ad_vec[j] = x[j];
 		record_fg_fun(
 			m_, n_, x_ad_vec, fg_info_,           // inputs
 			fg_fun_                               // outputs
@@ -429,7 +429,7 @@ bool ipopt_cppad_nlp::eval_grad_f(
 	{	// Record fg for the current value of x
 		ADVector x_ad_vec(n_);
 		for(j = 0; j < n_; j++)
-			x_ad_vec[0] = x[j];
+			x_ad_vec[j] = x[j];
 		record_fg_fun(
 			m_, n_, x_ad_vec, fg_info_,           // inputs
 			fg_fun_                               // outputs
@@ -466,7 +466,7 @@ bool ipopt_cppad_nlp::eval_g(
 	{	// Record fg for the current value of x
 		ADVector x_ad_vec(n_);
 		for(j = 0; j < n_; j++)
-			x_ad_vec[0] = x[j];
+			x_ad_vec[j] = x[j];
 		record_fg_fun(
 			m, n_, x_ad_vec, fg_info_,            // inputs
 			fg_fun_                               // outputs
@@ -501,7 +501,7 @@ bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 		ADVector x_ad_vec(n_);
 		size_t j;
 		for(j = 0; j < n_; j++)
-			x_ad_vec[0] = x[j];
+			x_ad_vec[j] = x[j];
 		record_fg_fun(
 			m_, n_, x_ad_vec, fg_info_,           // inputs
 			fg_fun_                               // outputs
@@ -548,7 +548,7 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 	{	// Record fg for the current value of x
 		ADVector x_ad_vec(n_);
 		for(j = 0; j < n_; j++)
-			x_ad_vec[0] = x[j];
+			x_ad_vec[j] = x[j];
 		record_fg_fun(
 			m_, n_, x_ad_vec, fg_info_,           // inputs
 			fg_fun_                               // outputs
