@@ -33,6 +33,7 @@ $spell
 	CppAD
 	yum
 	vec
+	eval
 $$
 
 $section Changes and Additions to CppAD During 2008$$
@@ -56,6 +57,11 @@ $$
 This did not show up in testing because there currently is no test of
 $code ipopt_cppad_nlp$$ where the operation sequence depends
 on the value of $latex x$$.
+$pre
+
+$$
+Changed $code eval_grad_f$$ in $code ipopt_cppad_nlp.cpp$$
+to be more efficient.
 
 $head 09-04$$
 The $cref/ipopt_cppad_nlp/$$ interface has been changed to use

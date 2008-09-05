@@ -422,7 +422,7 @@ bool ipopt_cppad_nlp::eval_f(
 bool ipopt_cppad_nlp::eval_grad_f(
 	Index n, const Number* x, bool new_x, Number* grad_f
 )
-{	size_t j;
+{	size_t i, j;
 	assert(size_t(n) == n_ );
 
 	if( new_x && retape_ )
@@ -437,12 +437,17 @@ bool ipopt_cppad_nlp::eval_grad_f(
 	}
 
 	NumberVector x_vec(n_);
-	NumberVector fg_grad_vec((1 + m_) * n_);
+	NumberVector f_grad_vec(n_);
+	NumberVector w_vec(m_ + 1);
 	for(j = 0; j < n_; j++)
-		x_vec[j]   = x[j];
-	fg_grad_vec = fg_fun_.Jacobian(x_vec);
+		x_vec[j] = x[j];
+	for(i = 0; i <= m_; i++)
+		w_vec[i] = 0.;
+	w_vec[0] = 1.;
+	fg_fun_.Forward(0, x_vec);
+	f_grad_vec = fg_fun_.Reverse(1, w_vec);
 	for(j = 0; j < n_; j++)
-		grad_f[j] = fg_grad_vec[0 * n_ + j];
+		grad_f[j] = f_grad_vec[j];
 # if CPPAD_NLP_TRACE
 	using std::printf;
 	for(j = 0; j < n_; j++) printf(
