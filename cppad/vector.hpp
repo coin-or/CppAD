@@ -434,9 +434,9 @@ public:
 	inline vectorBool(const vectorBool &v) 
 	: nunit(v.nunit), length(v.length)
 	{	size_t i;
-		if( nunit == 0 )
-			data = CPPAD_NULL;
-		else	data = CPPAD_TRACK_NEW_VEC(nunit, data);
+		data = CPPAD_NULL;
+		if( nunit > 0 )
+			data = CPPAD_TRACK_NEW_VEC(nunit, data);
 
 		for(i = 0; i < nunit; i++)
 			data[i] = v.data[i];

@@ -43,6 +43,7 @@ extern bool ForSparseJac(void);
 extern bool Forward(void);
 extern bool FromBase(void);
 extern bool FunCheck(void);
+extern bool ipopt_cppad(void);
 extern bool jacobian(void);
 extern bool Log(void);
 extern bool Log10(void);
@@ -169,6 +170,9 @@ int main(void)
 
 # ifdef CPPAD_ADOLC_TEST
 	ok &= Run( base_adolc,      "base_adolc"     );
+# endif
+# ifdef CPPAD_IPOPT_TEST
+	ok &= Run( ipopt_cppad,     "ipopt_cppad"    );
 # endif
 
 	// check for errors

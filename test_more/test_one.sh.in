@@ -27,7 +27,7 @@ sed < test_more.cpp > test_one.cpp \
 -e '/ok *\&= *Run( /d' \
 -e "s/.*This line is used by test_one.sh.*/	ok \&= Run( $fun, \"$fun\");/"  
 #
-cmd="g++ test_one.cpp $1 $3
+cmd="g++ test_one.cpp $*
 	-o test_one.exe
 	-g -Wall -ansi -pedantic-errors 
 	-std=c++98 -DCPPAD_ADOLC_TEST
@@ -36,6 +36,13 @@ cmd="g++ test_one.cpp $1 $3
 if [ -e @ADOLD_DIR@/include/adolc/adouble.h ]
 then
 	cmd="$cmd -I@ADOLC_DIR@/include -L@ADOLC_DIR@/lib -ladolc"
+fi
+if [ -e @IPOPT_DIR@/lib/libipopt.a ]
+then
+	cmd="$cmd -I@IPOPT_DIR@/include"
+	cmd="$cmd -L@IPOPT_DIR@/lib -lipopt"
+	cmd="$cmd @FCLIBS@ @PTHREAD_LIB@ @DL_LIB@"
+	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@IPOPT_DIR@/lib"
 fi
 echo $cmd
 $cmd

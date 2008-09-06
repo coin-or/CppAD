@@ -45,6 +45,14 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+
+$head 09-06$$
+Checked in a major change to $code ipopt_cppad_nlp.cpp$$
+whereby the object and constraints can be expressed as the
+sum of simpler functions. 
+This is the first step in what will eventually be a more versatile
+representation.
+
 $head 09-05$$
 Fix bug in $cref/ipopt_cppad_nlp/$$ (not recording the function
 at the proper location. Here is the difference that occurred 
