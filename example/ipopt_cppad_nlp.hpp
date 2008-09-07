@@ -66,7 +66,7 @@ $href%
 Algorithmic Differentiation package.
 
 $head Warning$$
-This is only and example use of CppAD.
+This is only an example use of CppAD.
 It is expected that this class will be improved and that
 its user interface may change in ways that are not backward compatible.
 
@@ -120,26 +120,30 @@ to compute its derivatives.
 $pre
 
 $$
-We use a function $latex r : \R^q \rightarrow \R^p$$ to express our
+We use the functions
+$latex r_k : \R^{q(k)} \rightarrow \R^{p(k)}$$ 
+for $latex k = 0 , \ldots , K$$ to express our
 representation of $latex fg(x)$$ in terms of simpler functions
 as follows
 $latex \[
-fg(x) = \sum_{k=0}^{K-1} \; (m+1) \otimes I_k \; 
-	\{  r [ \; J_k \otimes n \; (x) ] \} 
+fg(x) = \sum_{k=0}^{K-1} \; \sum_{\ell=0}^{L(k) - 1} 
+(m+1) \otimes I_{k,\ell} \; 
+	\{  \; r_k \; [ \; J_{k,\ell} \otimes n \; (x) \; ] \} 
 \] $$
-where $latex K$$ is a positive integer,
-and for each $latex k$$, $latex I_k$$, $latex J_k$$ are index vectors.
-Note that for each $latex k$$,
-$latex | J_k | = q$$ and $latex | I_k | = p$$. 
+where for $latex k = 0 , \ldots , K - 1$$,
+and $latex \ell = 0 , \ldots , L(k)$$,
+$latex I_{k,\ell}$$, and  $latex J_{k,\ell}$$ are index vectors with
+$latex | J_{k,\ell} | = q(k)$$ and $latex | I_{k,\ell} | = p(k)$$. 
 
 $head Simple Representation$$
 In the simple representation,
+$latex r_0 (x) = fg(x)$$,
 $latex K = 1$$,
-$latex q = n$$,
-$latex p = m$$,
-$latex I_0 = (0 , \ldots , m)$$,
-$latex J_0 = (0 , \ldots , n-1)$$,
-and $latex r(x) = fg(x)$$.
+$latex q(0) = n$$,
+$latex p(0) = m$$,
+$latex L(0) = 1$$,
+$latex I_{0,0} = (0 , \ldots , m)$$,
+and $latex J_{0,0} = (0 , \ldots , n-1)$$.
 
 $head SizeVector$$
 The type $codei SizeVector$$ is defined by the 
@@ -236,62 +240,18 @@ Certain virtual member functions of $code ipopt_cppad_fg_info$$ are used to
 compute the value of $latex fg(x)$$.
 The specifications for these member functions are given below:
 
-$subhead fg_info->r_eval$$
-This member function has the prototype
-$codei%
-	virtual ADVector ipopt_cppad_fg_info::r_eval(const ADVector& %u%) = 0;
-%$$
-This prototype is pure virtual and hence it must be defined in the 
-derived class $icode FG_info$$.
-$pre
-
-$$
-This function computes the value of $latex r(u)$$
-used in the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$
-for $latex fg(x)$$.
-If $icode u$$ is an $code ADVector$$ of size $icode q$$ 
-and $icode r$$ is an $code ADVector$$ of size $icode p$$
-the syntax
-$codei%
-	%r% = %fg_info%->r_eval(%u%)
-%$$
-set $icode r$$ to the vector $latex r(u)$$.
-
-$subhead fg_info->retape$$
-This member function has the prototype
-$codei%
-	virtual bool ipopt_cppad_fg_info::retape(void)
-%$$
-If $icode retape$$ has type $code bool$$,
-the syntax
-$codei%
-        %retape% = %fg_info%->retape()
-%$$
-sets $icode retape$$ to true or false.
-If $icode retape$$ is true, 
-$code ipopt_cppad_nlp$$ will retape the operation sequence for
-every new $icode x$$ value. 
-The program should use much less memory and run faster if $icode retape$$
-is false.
-You can test both the true and false cases to make sure 
-the operation sequence does not depend on $icode x$$.
-$pre
-
-$$
-The $code ipopt_cppad_fg_info$$ implementation of this function
-sets $icode retape$$ to true.
-
-$subhead fg_info->number_sum()$$
+$subhead fg_info->number_functions$$
 This member function has prototype
 $codei%
-	virtual size_t ipopt_cppad_fg_info::number_sum(void)
+	virtual size_t ipopt_cppad_fg_info::number_functions(void)
 %$$
 If $icode K$$ has type $code size_t$$, the syntax
 $codei%
-	%K% = %fg_info%->number_sum()
+	%K% = %fg_info%->number_functions()
 %$$
-sets $icode K$$ to the number of terms in the summation 
-used to represent $latex fg(x)$$ in term of $latex r(u)$$.
+sets $icode K$$ to the number of functions used in the
+representation of $latex fg(x)$$; i.e., $latex K$$ in
+the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
 $pre
 
 $$
@@ -299,16 +259,68 @@ The $code ipopt_cppad_fg_info$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.
 $icode%K% = 1%$$.
 
-$subhead fg_info->domain_size()$$
+$subhead fg_info->r_eval$$
+This member function has the prototype
+$codei%
+virtual ADVector ipopt_cppad_fg_info::r_eval(size_t %k%, const ADVector& %u%) = 0;
+%$$
+This prototype is pure virtual and hence it must be defined in the 
+derived class $icode FG_info$$.
+$pre
+
+$$
+This function computes the value of $latex r_k (u)$$
+used in the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$
+for $latex fg(x)$$.
+If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
+$icode u$$ is an $code ADVector$$ of size $icode q(k)$$ 
+and $icode r$$ is an $code ADVector$$ of size $icode p(k)$$
+the syntax
+$codei%
+	%r% = %fg_info%->r_eval(%k%, %u%)
+%$$
+set $icode r$$ to the vector $latex r_k (u)$$.
+
+$subhead fg_info->retape$$
+This member function has the prototype
+$codei%
+	virtual bool ipopt_cppad_fg_info::retape(size_t %k%)
+%$$
+If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
+and $icode retape$$ has type $code bool$$,
+the syntax
+$codei%
+        %retape% = %fg_info%->retape(%k%)
+%$$
+sets $icode retape$$ to true or false.
+If $icode retape$$ is true, 
+$code ipopt_cppad_nlp$$ will retape the operation sequence 
+corresponding to $latex r_k (u)$$ for
+every value of $icode u$$. 
+An $code ipopt_cppad_nlp$$ object
+should use much less memory and run faster if $icode retape$$ is false.
+You can test both the true and false cases to make sure 
+the operation sequence does not depend on $icode u$$.
+$pre
+
+$$
+The $code ipopt_cppad_fg_info$$ implementation of this function
+sets $icode retape$$ to true.
+
+$subhead fg_info->domain_size$$
 This member function has prototype
 $codei%
-	virtual size_t ipopt_cppad_fg_info::domain_size(void)
+	virtual size_t ipopt_cppad_fg_info::domain_size(size_t %k%)
 %$$
-If $icode q$$ has type $code size_t$$, the syntax
+If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
+and $icode q$$ has type $code size_t$$, the syntax
 $codei%
-	%q% = %fg_info%->domain_size()
+	%q% = %fg_info%->domain_size(%k%)
 %$$
-sets $icode q$$ to the dimension of the domain space for $latex r(u)$$.
+sets $icode q$$ to the dimension of the domain space for $latex r_k (u)$$;
+i.e., $latex q(k)$$ in
+the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
+
 $pre
 
 $$
@@ -316,16 +328,19 @@ The $code ipopt_cppad_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
 $latex q = n$$.
 
-$subhead fg_info->range_size()$$
+$subhead fg_info->range_size$$
 This member function has prototype
 $codei%
-	virtual size_t ipopt_cppad_fg_info::range_size(void)
+	virtual size_t ipopt_cppad_fg_info::range_size(size_t %k%)
 %$$
-If $icode p$$ has type $code size_t$$, the syntax
+If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
+and $icode p$$ has type $code size_t$$, the syntax
 $codei%
-	%p% = %fg_info%->range_size()
+	%p% = %fg_info%->range_size(%k%)
 %$$
-sets $icode p$$ to the dimension of the range space for $latex r(u)$$.
+sets $icode p$$ to the dimension of the range space for $latex r_k (u)$$;
+i.e., $latex p(k)$$ in
+the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
 $pre
 
 $$
@@ -333,57 +348,78 @@ The $code ipopt_cppad_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
 $latex p = m+1$$.
 
+$subhead fg_info->number_terms$$
+This member function has prototype
+$codei%
+	virtual size_t ipopt_cppad_fg_info::number_terms(size_t %k%)
+%$$
+If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
+and $icode L$$ has type $code size_t$$, the syntax
+$codei%
+	%L% = %fg_info%->range_sum(%k%)
+%$$
+sets $icode L$$ to the number of terms in representation
+for this value of $icode k$$;
+i.e., $latex L(k)$$ in
+the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
+$pre
+
+$$
+The $code ipopt_cppad_h_base$$ implementation of this function
+corresponds to the simple representation mentioned above; i.e.,
+$latex L = 1$$.
+
 $subhead fg_info->domain_index$$
 This member function has prototype
 $codei%
 	virtual void ipopt_cppad_fg_info::domain_index(
-		size_t %k%, SizeVector& %J_k%
+		size_t %k%, size_t %ell%, SizeVector& %J%
 	)
 %$$ 
-Let $icode k$$ have type $code size_t$$ and value
-between zero and $latex K - 1$$.
-Let $icode J_k$$ be a $cref/SimpleVector/$$ with elements
-of type $code size_t$$ and size equal to $icode q$$.
+If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
+$icode ell$$ is in $latex \{0, \ldots , L(k) \}$$,
+and $icode J$$ is a $cref/SimpleVector/$$ with elements
+of type $code size_t$$ and size greater than or equal to $latex q(k)$$.
 The syntax
 $codei%
-	%fg_info%->domain_index(%k%, %J_k%)
+	%fg_info%->domain_index(%k%, %ell%, %J%)
 %$$
-sets the elements of $icode J_k$$
-to the corresponding elements of $latex J_k$$ in the 
-representation of $latex fg(x)$$ in terms of $latex r(u)$$.
+sets the first $latex q(k)$$ elements of $icode J$$ to
+the corresponding elements of $latex J_{k,ell}$$ 
+in the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
 $pre
 
 $$
 The $code ipopt_cppad_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
 for $latex j = 0 , \ldots , n-1$$,
-$icode%J_k%[%j%] = %j%$$.
+$icode%J%[%j%] = %j%$$.
 
 $subhead fg_info->range_index$$
 This member function has prototype
 $codei%
 	virtual void ipopt_cppad_fg_info::range_index(
-		size_t %k%, SizeVector& %I_k%
+		size_t %k%, size_t %ell%, SizeVector& %I%
 	)
 %$$ 
-Let $icode k$$ have type $code size_t$$ and value
-between zero and $latex K - 1$$.
-Let $icode I_k$$ be a $cref/SimpleVector/$$ with elements
-of type $code size_t$$ and size equal to $icode p$$.
+If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
+$icode ell$$ is in $latex \{0, \ldots , L(k) \}$$,
+and $icode I$$ is a $cref/SimpleVector/$$ with elements
+of type $code size_t$$ and size greater than or equal to $latex p(k)$$.
 The syntax
 $codei%
-	%fg_info%->domain_index(%k%, %I_k%)
+	%fg_info%->range_index(%k%, %ell%, %I%)
 %$$
-sets the elements of $icode I_k$$
-to the corresponding elements of $latex I_k$$ in the 
-representation of $latex fg(x)$$ in terms of $latex r(u)$$.
+sets the first $latex p(k)$$ elements of $icode I$$ to
+the corresponding elements of $latex I_{k,ell}$$ 
+in the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
 $pre
 
 $$
 The $code ipopt_cppad_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
-for $latex i = 0 , \ldots , m$$,
-$icode%I_k%[%i%] = %i%$$.
+for $latex k = 0 , \ldots , m$$,
+$icode%I%[%i%] = %i%$$.
 
 $head solution$$
 After the optimization process is completed, $icode solution$$ contains
@@ -544,31 +580,34 @@ public:
 	// make destructor virtual so that derived class destructor gets called
 	virtual ~ipopt_cppad_fg_info(void)
 	{ }
-	// r_eval: pure virtual so that it must be defined by derived class
-	virtual ADVector r_eval(const ADVector& x) = 0;
-	// retape: default definition 
-	virtual bool retape(void)
-	{	return true; }
-	// number_sum: for simple representation 
-	virtual size_t number_sum(void)
+	// number_functions: for simple representation 
+	virtual size_t number_functions(void)
 	{	return 1; }
+	// r_eval: pure virtual so that it must be defined by derived class
+	virtual ADVector r_eval(size_t k, const ADVector& u) = 0;
+	// retape: default definition 
+	virtual bool retape(size_t k)
+	{	return true; }
 	// domain_size: for simple representation 
-	virtual size_t domain_size(void)
+	virtual size_t domain_size(size_t k)
 	{	return n_; }
 	// range_size: for simple representation 
-	virtual size_t range_size(void)
+	virtual size_t range_size(size_t k)
 	{	return m_ + 1; }
+	// number_terms: for simple representation
+	virtual size_t number_terms(size_t k)
+	{	return 1; }
 	// domain_index: for simple representation
-	virtual void domain_index(size_t k, SizeVector& index_vector)
-	{	assert( index_vector.size() == n_ );
+	virtual void domain_index(size_t k, size_t ell, SizeVector& J)
+	{	assert( J.size() >= n_ );
 		for(size_t j = 0; j < n_; j++)
-			index_vector[j] = j;
+			J[j] = j;
 	}
 	// range_index: for simple representation
-	virtual void range_index(size_t k, SizeVector& index_vector)
-	{	assert( index_vector.size() == m_ + 1 );
+	virtual void range_index(size_t k, size_t ell, SizeVector& I)
+	{	assert( I.size() >= m_ + 1 );
 		for(size_t i = 0; i <= m_; i++)
-			index_vector[i] = i;
+			I[i] = i;
 	}
 };
 
@@ -609,11 +648,12 @@ and sparsity pattern calculations.
 */
 class ipopt_cppad_nlp : public Ipopt::TNLP
 {
-	typedef Ipopt::Number                  Number;
-	typedef Ipopt::Index                   Index;
-	typedef Ipopt::TNLP::IndexStyleEnum    IndexStyleEnum;
-	typedef CppAD::vectorBool              BoolVector;
-	typedef CppAD::vector<Ipopt::Index>    IndexVector;
+	typedef Ipopt::Number                         Number;
+	typedef Ipopt::Index                          Index;
+	typedef Ipopt::TNLP::IndexStyleEnum           IndexStyleEnum;
+	typedef CppAD::vectorBool                     BoolVector;
+	typedef CppAD::vector< CppAD::ADFun<Number> > ADFunVector;
+	typedef CppAD::vector<BoolVector>             BoolVectorVector;
 public:
 	// constructor 
 	ipopt_cppad_nlp(
@@ -752,22 +792,22 @@ private:
 	const NumberVector              g_u_;
 	// Users function that evaluates f and g
 	ipopt_cppad_fg_info* const      fg_info_;
-	// does operation sequence chage with argument value
-	const bool                      retape_;
 	// object for storing final solution results
 	ipopt_cppad_solution* const     solution_;
 	// values determined by fg_info
-	size_t                          K_;  // number terms in summation
-	size_t                          q_;  // dimension of domain for r(u)
-	size_t                          p_;  // dimension of range for r(u)
-	SizeVector                    J_k_;  // index vector for domain
-	SizeVector                    I_k_;  // index vector for range
+	size_t                 K_;      // number terms in summation
+	BoolVector             retape_; // for operations sequence of r_k (u) 
+	SizeVector             q_;      // dimension of domain for r_k (u)
+	SizeVector             p_;      // dimension of range for r_k (u)
+	SizeVector             L_;      // number of r_k (u) terms
+	SizeVector             J_;      // index vector for domain
+	SizeVector             I_;      // index vector for range
 	/*
  	Computed values
 	*/
 	// CppAD sparsity patterns
-	BoolVector                       pattern_jac_r_;
-	BoolVector                       pattern_r_lag_;
+	BoolVectorVector                 pattern_jac_r_;
+	BoolVectorVector                 pattern_r_lag_;
 	BoolVector                       pattern_jac_fg_;
 	BoolVector                       pattern_h_lag_;
 	// Ipopt sparsity structure for Jacobian of g
@@ -779,7 +819,7 @@ private:
 	SizeVector                       iRow_h_lag_;
 	SizeVector                       jCol_h_lag_;
 	// CppAD function object for both f and g as one function
-	CppAD::ADFun<Number>             r_fun_;
+	ADFunVector                      r_fun_;
 	/*
  	Methods
 	*/
@@ -790,35 +830,38 @@ private:
 	// Methods used by public methods
 	static void record_r_fun(
 		ipopt_cppad_fg_info  *fg_info    , 
-		size_t                p          ,
-		size_t                q          ,
+		size_t                k          ,
+		SizeVector&           p          ,
+		SizeVector&           q          ,
 		ADVector&             u_ad       , 
-		CppAD::ADFun<Number>& r_fun
+		ADFunVector&          r_fun
 	);
 	static void compute_pattern_jac_fg(
 		ipopt_cppad_fg_info  *fg_info        , 
-		SizeVector&           I_k            ,
-		SizeVector&           J_k            ,
+		SizeVector&           I              ,
+		SizeVector&           J              ,
 		size_t                K              ,
+		SizeVector&           L              ,
 		size_t                m              ,
 		size_t                n              ,
-		size_t                p              ,
-		size_t                q              ,
-		CppAD::ADFun<Number>& r_fun          ,
-		BoolVector&           pattern_jac_r  ,
+		SizeVector&           p              ,
+		SizeVector&           q              ,
+		ADFunVector&          r_fun          ,
+		BoolVectorVector&     pattern_jac_r  ,
 		BoolVector&           pattern_jac_fg 
 	);
 	static void compute_pattern_h_lag(
 		ipopt_cppad_fg_info  *fg_info        , 
-		SizeVector&           I_k            ,
-		SizeVector&           J_k            ,
+		SizeVector&           I              ,
+		SizeVector&           J              ,
 		size_t                K              ,
+		SizeVector&           L              ,
 		size_t                m              ,
 		size_t                n              ,
-		size_t                p              ,
-		size_t                q              ,
-		CppAD::ADFun<Number>& r_fun          ,
-		BoolVector&           pattern_r_lag  , 
+		SizeVector&           p              ,
+		SizeVector&           q              ,
+		ADFunVector&          r_fun          ,
+		BoolVectorVector&     pattern_r_lag  , 
 		BoolVector&           pattern_h_lag 
 	);
 	static void compute_structure_jac_g(

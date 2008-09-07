@@ -21,7 +21,7 @@ namespace {
 		{ }
 		// Evaluation of the objective f(x), and constraints g(x)
 		// using an Algorithmic Differentiation (AD) class.
-		ADVector r_eval(const ADVector&  x)
+		ADVector r_eval(size_t k, const ADVector&  x)
 		{	ADVector fg(2);
 
 			// f(x)
@@ -33,7 +33,7 @@ namespace {
 
 			return fg;
 		}
-		bool retape(void)
+		bool retape(size_t k)
 		{	return true; }
 	};
 }

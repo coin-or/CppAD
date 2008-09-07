@@ -36,7 +36,6 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 	  g_l_ ( g_l ),
 	  g_u_ ( g_u ),
 	  fg_info_ ( fg_info ) ,
-	  retape_ ( fg_info->retape() ) ,
 	  solution_ (solution)
 {	size_t i, j, k;
 
@@ -45,19 +44,46 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 	fg_info->set_m(m);
 
 	// get information from derived class version of fg_info
-	K_ = fg_info->number_sum();
-	q_ = fg_info->domain_size();
-	p_ = fg_info->range_size();
-	J_k_.resize(q_);
-	I_k_.resize(p_);
-
-	pattern_jac_r_.resize( p_ * q_ );
-	pattern_r_lag_.resize( q_ * q_ );
+	K_ = fg_info->number_functions();
+	L_.resize(K_);
+	p_.resize(K_);
+	q_.resize(K_);
+	r_fun_.resize(K_);
+	retape_.resize(K_);
+	pattern_jac_r_.resize(K_);
+	pattern_r_lag_.resize(K_);
+	size_t max_p      = 0;
+	size_t max_q      = 0;
+	bool   retape_any = false;
+	for(k = 0; k < K_; k++)
+	{	L_[k]       = fg_info->number_terms(k);
+		p_[k]       = fg_info->range_size(k);
+		q_[k]       = fg_info->domain_size(k);
+		retape_[k]  = fg_info->retape(k);
+		max_p       = std::max(max_p, p_[k]);
+		max_q       = std::max(max_q, q_[k]);
+		retape_any |= retape_[k];
+		pattern_jac_r_[k].resize( p_[k] * q_[k] );
+		pattern_r_lag_[k].resize( q_[k] * q_[k] );
+		if( ! retape_[k] )
+		{	// Record both r_k (u) 
+			// (operation sequence does not depend on value of u).
+			ADVector u_ad(q_[k]);
+			for(j = 0; j < q_[k]; j++)
+				u_ad[j] = 0.;
+			record_r_fun(
+				fg_info_, k, p_, q_, u_ad, // inputs
+				r_fun_                     // outputs
+			);
+		}
+	}
+	I_.resize(max_p);
+	J_.resize(max_q);
 
 	pattern_jac_fg_.resize( (m + 1) * n );
 	pattern_h_lag_.resize( n * n );
 
-	if ( retape_ )
+	if ( retape_any )
 	{	// true sparsity pattern valid for all x is unknown
 		for(i = 0; i <= m; i++)
 		{	for(j = 0; j < n; j++)
@@ -69,25 +95,15 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 		}
 	}
 	else
-	{	// Record both f and g in one AD function object
-		// (operation sequence does not depend on value of x).
-		ADVector u_ad(q_);
-		for(j = 0; j < q_; j++)
-			u_ad[j] = 0.;
-		record_r_fun(
-			fg_info_, p_, q_, u_ad, // inputs
-			r_fun_                  // outputs
-		);
-
-		// compute CppAD sparsity partern for Jacobian of fg
+	{	// compute CppAD sparsity partern for Jacobian of fg
 		compute_pattern_jac_fg(
-		fg_info_, I_k_, J_k_, K_, m_, n_, p_, q_, r_fun_,   // inputs
+		fg_info_, I_, J_, K_, L_, m_, n_, p_, q_, r_fun_,   // inputs
 		pattern_jac_r_, pattern_jac_fg_                     // outputs
 		);
 
 		// compute CppAD sparsity partern for Hessian of Lagragian
 		compute_pattern_h_lag(
-		fg_info_, I_k_, J_k_, K_, m_, n_, p_, q_, r_fun_,   // inputs
+		fg_info_, I_, J_, K_, L_, m_, n_, p_, q_, r_fun_,   // inputs
 		pattern_r_lag_, pattern_h_lag_                      // outputs
 		);
 	}
@@ -109,67 +125,77 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 // static member function that records operation sequence
 void ipopt_cppad_nlp::record_r_fun( 
 	ipopt_cppad_fg_info*   fg_info  , 
-	size_t                 p        ,
-	size_t                 q        ,
+	size_t                 k        ,
+	SizeVector&            p        ,
+	SizeVector&            q        ,
 	ADVector&              u_ad     ,
-	CppAD::ADFun<Number>&  r_fun    )
+	ADFunVector&           r_fun    )
 /*
 fg_info: input
-the ipopt_cppad_fg_info object that is used to compute the value of r(u).
+the ipopt_cppad_fg_info object that is used to information
+about the representation of fg(x).
+
+k: input
+index of the function r_k (u)
 
 p: input
-number of components in the range space for r(u).
+p[k] is number of components in the range space for r_k (u).
 
 q: input
-number of components in domain space for r(u).
+q[k] number of components in domain space for r_k (u).
 
 u_ad: input
-vector of independent variable values at which to record r(u).
+vector of independent variable values at which to record r_k (u).
 This is an input except for 
 the fact that its CppAD private data changes.
 
 r_fun: output 
 The CppAD operation sequence corresponding to the value of u_ad,
-and the algorithm used by fg_info, is stored in r_fun. (Any operation
-seqeunce that was previously in r_fun  is deleted.)
+and the algorithm used by fg_info, is stored in r_fun[k]. (Any operation
+seqeunce that was previously in r_fun[k] is deleted.)
 */
-{	assert( u_ad.size() == size_t(q) );
+{	assert( u_ad.size() == size_t(q[k]) );
 	// vector of dependent variables during function recording
-	ADVector r_ad(p);
+	ADVector r_ad(p[k]);
 	// start the recording
 	CppAD::Independent(u_ad);
 	// record operations for r(u)
-	r_ad = fg_info->r_eval(u_ad);
+	r_ad = fg_info->r_eval(k, u_ad);
 	// stop the resording and store operation sequence in r_fun
-	r_fun.Dependent(u_ad, r_ad);
+	r_fun[k].Dependent(u_ad, r_ad);
 }
 
 // static member function that computes CppAD sparsity pattern for 
 // Jacobian of fg
 void ipopt_cppad_nlp::compute_pattern_jac_fg(
 	ipopt_cppad_fg_info*  fg_info        , 
-	SizeVector&           I_k            ,
-	SizeVector&           J_k            ,
+	SizeVector&           I              ,
+	SizeVector&           J              ,
 	size_t                K              ,
+	SizeVector&           L              ,
 	size_t                m              ,
 	size_t                n              ,
-	size_t                p              ,
-	size_t                q              ,
-	CppAD::ADFun<Number>& r_fun          ,
-	BoolVector&           pattern_jac_r  ,
+	SizeVector&           p              ,
+	SizeVector&           q              ,
+	ADFunVector&          r_fun          ,
+	BoolVectorVector&     pattern_jac_r  ,
 	BoolVector&           pattern_jac_fg )
 /*
 fg_info: input
-the ipopt_cppad_fg_info object that is used to compute the value of r(u).
+the ipopt_cppad_fg_info object that is used to compute 
+information about the representation of fg(x).
 
-I_k: scratch space
-Vector of length p.
+I: scratch space
+Vector of length greater than or equal p[k] for all k.
 
-J_k: scratch space
-Vector of length q.
+J: scratch space
+Vector of length greatern than or equal q[k] for all k.
 
 K: input
-Number of terms in the representation for fg(x) in terms of r(u).
+Number of functions in the representation for fg(x) in terms of r_k (u).
+
+L: input
+L[k] is the number of terms, in the representaiton for fg(x), that use r_k (u).
 
 m: input
 The number of components in the constraint function g.
@@ -178,67 +204,77 @@ n: input
 Number of indpendent variables.
 
 p: input
-Dimension of the range space for r(u).
+for k = 0 , ... , K-1,
+p[k] is dimension of the range space for r_k (u).
 
 q: input
-Dimension of the domain space for r(u).
+for k = 0 , ... , K-1,
+p[k] is dimension of the domain space for r_k (u).
 
 r_fun: input
-the CppAD function object that is used to compute the sparsity patterns.
-The state of this object actually changes because some forward mode
+for k = 0 , ... , K-1,
+r_fun[k] is the CppAD function object that is used to compute 
+the sparsity patterns for r_k (u).
+The state of these objects actually changes because some forward mode
 routines are used.
-The operation sequence correspopnding to this object does not change.
+The operation sequence correspopnding to these object do not change.
 
 pattern_jac_r: output
-On input, this must be a vector of length p * q.
-On output it is the CppAD sparsity pattern for the Jacobian of r.
+For k = 0 , ... , K-1,
+on input pattern_jac_r[k], this must be a vector of length p[k] * q[k].
+On output it is the CppAD sparsity pattern for the Jacobian of r_k (u).
 
 pattern_jac_fg: output
 On input, this must be a vector of length (m+1) * n.
-On output it is the CppAD sparsity pattern for the Jacobian of fg.
+On output it is the CppAD sparsity pattern for the Jacobian of fg(x).
 */
-{	assert( r_fun.Range() == p );
-	assert( r_fun.Domain() == q );
-	assert( pattern_jac_r.size() == p * q );
+{
 	assert( pattern_jac_fg.size() == (m+1) * n );
 
-	size_t i, j, k, ir, ifg;
+	size_t i, j, k, ell, ir, ifg;
 
-	// compute sparsity pattern for r
-	if( q < p )
-	{	// use forward mode
-		BoolVector pattern_domain(q * q);
-		for(i = 0; i < q; i++)
-		{	for(j = 0; j < q; j++) 
-				pattern_domain[ i * q + j ] = false;
-			pattern_domain[ i * q + i ] = true;
+	for(k = 0; k < K; k++)
+	{	// compute sparsity pattern for r_k (u)
+		assert( pattern_jac_r[k].size() == p[k] * q[k] );
+		assert( r_fun[k].Range() == p[k] );
+		assert( r_fun[k].Domain() == q[k] );
+		if( q[k] < p[k] )
+		{	// use forward mode
+			BoolVector pattern_domain(q[k] * q[k]);
+			for(i = 0; i < q[k]; i++)
+			{	for(j = 0; j < q[k]; j++) 
+					pattern_domain[i * q[k] + j] = false;
+				pattern_domain[i * q[k] + i] = true;
+			}
+			pattern_jac_r[k] = 
+				r_fun[k].ForSparseJac(q[k], pattern_domain);
 		}
-		pattern_jac_r = r_fun.ForSparseJac(q, pattern_domain);
-	}
-	else
-	{	// use reverse mode
-		BoolVector pattern_range(p * p);
-		for(i = 0; i < p; i++)
-		{	for(k = 0; k < p; k++) 
-				pattern_range[ i * p + k ] = false;
-			pattern_range[ i * p + i ] = true;
+		else
+		{	// use reverse mode
+			BoolVector pattern_range(p[k] * p[k]);
+			for(i = 0; i < p[k]; i++)
+			{	for(j = 0; j < p[k]; j++) 
+					pattern_range[i * p[k] + j] = false;
+				pattern_range[i * p[k] + i] = true;
+			}
+			pattern_jac_r[k] = 
+				r_fun[k].RevSparseJac(p[k], pattern_range);
 		}
-		pattern_jac_r = r_fun.RevSparseJac(p, pattern_range);
 	}
 
 	// now compute pattern for fg
-	k = (m+1) * n;
-	while(k--)
-		pattern_jac_fg[k] = false;
-	for(k = 0; k < K; k++)
-	{	fg_info->range_index(k, I_k);	
-		fg_info->domain_index(k, J_k);
-		for(i = 0; i < p; i++)
-		{	for(j = 0; j < q; j++)
-			{	ir  = i * q + j;
-				ifg = I_k[i] * n + J_k[j];
+	j = (m+1) * n;
+	while(j--)
+		pattern_jac_fg[j] = false;
+	for(k = 0; k < K; k++) for(ell = 0; ell < L[k]; ell++)
+	{	fg_info->range_index(k, ell, I);	
+		fg_info->domain_index(k, ell, J);
+		for(i = 0; i < p[k]; i++)
+		{	for(j = 0; j < q[k]; j++)
+			{	ir  = i * q[k] + j;
+				ifg = I[i] * n + J[j];
 				pattern_jac_fg[ifg] = ( pattern_jac_fg[ifg] 
-				                    | pattern_jac_r[ir]    );
+				                    | pattern_jac_r[k][ir]    );
 			}
 		}
 	}
@@ -248,28 +284,33 @@ On output it is the CppAD sparsity pattern for the Jacobian of fg.
 // Hessian of Lagragian
 void ipopt_cppad_nlp::compute_pattern_h_lag(
 	ipopt_cppad_fg_info  *fg_info        , 
-	SizeVector&           I_k            ,
-	SizeVector&           J_k            ,
+	SizeVector&           I              ,
+	SizeVector&           J              ,
 	size_t                K              ,
+	SizeVector&           L              ,
 	size_t                m              ,
 	size_t                n              ,
-	size_t                p              ,
-	size_t                q              ,
-	CppAD::ADFun<Number>& r_fun          ,
-	BoolVector&           pattern_r_lag  ,
+	SizeVector&           p              ,
+	SizeVector&           q              ,
+	ADFunVector&          r_fun          ,
+	BoolVectorVector&     pattern_r_lag  ,
 	BoolVector&           pattern_h_lag  )
 /*
 fg_info: input
-the ipopt_cppad_fg_info object that is used to compute the value of r(u).
+the ipopt_cppad_fg_info object that is used to compute 
+information about the representation of fg(x).
 
-I_k: scratch space
-Vector of length p.
+I: scratch space
+Vector of length greater than or equal p[k] for all k.
 
-J_k: scratch space
-Vector of length q.
+J: scratch space
+Vector of length greatern than or equal q[k] for all k.
 
 K: input
-Number of terms in the representation for fg(x) in terms of r(u).
+Number of functions in the representation for fg(x) in terms of r_k (u).
+
+L: input
+L[k] is the number of terms, in the representaiton for fg(x), that use r_k (u).
 
 m: input
 The number of components in the constraint function g.
@@ -278,58 +319,68 @@ n: input
 Number of indpendent variables.
 
 p: input
-Dimension of the range space for r(u).
+for k = 0 , ... , K-1,
+p[k] is dimension of the range space for r_k (u).
 
 q: input
-Dimension of the domain space for r(u).
+for k = 0 , ... , K-1,
+p[k] is dimension of the domain space for r_k (u).
 
 r_fun: input
-the CppAD function object that is used to compute the sparsity patterns.
-The state of this object actually changes because some forward mode
+for k = 0 , ... , K-1,
+r_fun[k] is the CppAD function object that is used to compute 
+the sparsity patterns for r_k (u).
+The state of these objects actually changes because some forward mode
 routines are used.
-The operation sequence correspopnding to this object does not change.
+The operation sequence correspopnding to these object do not change.
 
 pattern_r_lag: output
-On input, this must be a vector of length q * q.
+For k = 0 , ... , K-1,
+on input pattern_r_lag[k], this must be a vector of length q[k] * q[k].
 On output it is the CppAD sparsity pattern for the Hessian of 
-the Lagragian for r.
+a Lagragian that sums components of r_k (u).
 
 pattern_h_lag: output
 On input, this must be a vector of length n * n.
 On output it is the CppAD sparsity pattern for the Hessian of 
-the Lagragian for fg.
+a Lagragian that sums components of fg(x).
 */
-{	assert( r_fun.Range() == p );
-	assert( r_fun.Domain() == q );
-	assert( pattern_r_lag.size() == q * q );
+{
 	assert( pattern_h_lag.size() == n * n );
-	size_t i, j, k;
-	BoolVector pattern_domain(q * q);
-	BoolVector pattern_ones(p);
+	size_t i, j, k, ell;
 
-	for(i = 0; i < q; i++)
-	{	for(j = 0; j < q; j++) 
-			pattern_domain[ i * q + j ] = false;
-		pattern_domain[ i * q + i ] = true;
+	for(k = 0; k < K; k++)
+	{	assert( pattern_r_lag[k].size() == q[k] * q[k] );
+		assert( r_fun[k].Range() == p[k] );
+		assert( r_fun[k].Domain() == q[k] );
+
+		BoolVector pattern_domain(q[k] * q[k]);
+		BoolVector pattern_ones(p[k]);
+
+		for(i = 0; i < q[k]; i++)
+		{	for(j = 0; j < q[k]; j++) 
+				pattern_domain[i * q[k] + j] = false;
+			pattern_domain[i * q[k] + i] = true;
+		}
+		r_fun[k].ForSparseJac(q[k], pattern_domain);
+		for(i = 0; i < p[k]; i++)
+			pattern_ones[i] = true;
+		pattern_r_lag[k] = r_fun[k].RevSparseHes(q[k], pattern_ones);
 	}
-	r_fun.ForSparseJac(q, pattern_domain);
-	for(i = 0; i < p; i++)
-		pattern_ones[i] = true;
-	pattern_r_lag = r_fun.RevSparseHes(q, pattern_ones);
 
 	// now compute pattern for fg
-	k = (n * n);
-	while(k--)
-		pattern_h_lag[k] = false;
-	for(k = 0; k < K; k++)
-	{	fg_info->domain_index(k, J_k);
-		for(i = 0; i < q; i++)
-		{	for(j = 0; j < q; j++)
+	j = (n * n);
+	while(j--)
+		pattern_h_lag[j] = false;
+	for(k = 0; k < K; k++) for(ell = 0; ell < L[k]; ell++)
+	{	fg_info->domain_index(k, ell, J);
+		for(i = 0; i < q[k]; i++)
+		{	for(j = 0; j < q[k]; j++)
 			{	size_t ir, ifg;
-				ir  = i * q + j;
-				ifg = J_k[i] * n + J_k[j];
+				ir  = i * q[k] + j;
+				ifg = J[i] * n + J[j];
 				pattern_h_lag[ifg] = ( pattern_h_lag[ifg] 
-				                    | pattern_r_lag[ir]    );
+				                    | pattern_r_lag[k][ir]    );
 			}
 		}
 	}
@@ -508,32 +559,34 @@ bool ipopt_cppad_nlp::eval_f(
 	// calculate function values instead of retaping (when necessary).
 	assert(size_t(n) == n_ );
 
-	size_t iobj, j, k;
-	ADVector     u_ad(q_);
-	NumberVector u(q_);
-	NumberVector r(p_);
+	size_t iobj, j, k, ell;
 
+	// initialize summation
 	obj_value = 0.;
-	for(k = 0; k < K_; k++)
-	{	fg_info_->range_index(k, I_k_);
-		for(iobj = 0; iobj < p_; iobj++) if( I_k_[iobj] == 0 )
-		{	if( (new_x || K_ > 1)  && retape_ )
-			{	// Record r for value of u corresponding to x
-				fg_info_->domain_index(k, J_k_);
-				for(j = 0; j < q_; j++)
-				{	assert( J_k_[j] < n_ );
-					u_ad[j] = x[ J_k_[j] ];
+
+	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
+	{	fg_info_->range_index(k, ell, I_);
+		for(iobj = 0; iobj < p_[k]; iobj++) if( I_[iobj] == 0 )
+		{	if( (new_x || K_ > 1)  && retape_[k] )
+			{	// Record r_k for value of u corresponding to x
+				fg_info_->domain_index(k, ell, J_);
+				ADVector u_ad(q_[0]);
+				for(j = 0; j < q_[k]; j++)
+				{	assert( J_[j] < n_ );
+					u_ad[j] = x[ J_[j] ];
 				}
 				record_r_fun(
-					fg_info_, p_, q_, u_ad,  // inputs
-					r_fun_                   // outputs
+					fg_info_, k, p_, q_, u_ad,  // inputs
+					r_fun_                      // outputs
 				);
 			}
-			for(j = 0; j < q_; j++)
-			{	assert( J_k_ [j] < n_ );
-				u[j]   = x[ J_k_[j] ];
+			NumberVector u(q_[k]);
+			NumberVector r(p_[k]);
+			for(j = 0; j < q_[k]; j++)
+			{	assert( J_[j] < n_ );
+				u[j]   = x[ J_[j] ];
 			}
-			r          = r_fun_.Forward(0, u);
+			r          = r_fun_[k].Forward(0, u);
 			obj_value += r[iobj];
 		}
 	}
@@ -551,49 +604,48 @@ bool ipopt_cppad_nlp::eval_grad_f(
 )
 {	assert(size_t(n) == n_ );
 
-	size_t iobj, i, j, k;
-	ADVector     u_ad(q_);
-	NumberVector u(q_);
-	NumberVector w(p_);
-	NumberVector obj_grad(n_);
-	NumberVector r_grad(q_);
+	size_t iobj, i, j, k, ell;
 
-	// initialize weights as all zero
-	for(i = 0; i < p_; i++)
-		w[i] = 0.;
-	// initialize gradient as zero
+	// initialize summation
 	for(j = 0; j < n_; j++)
-		obj_grad[j] = 0.;
+		grad_f[j] = 0.;
 
-	for(k = 0; k < K_; k++)
-	{	fg_info_->range_index(k, I_k_);
-		for(iobj = 0; iobj < p_; iobj++) if( I_k_[iobj] == 0 )
-		{	if( (new_x || K_ > 1)  && retape_ )
-			{	// Record r for value of u corresponding to x
-				fg_info_->domain_index(k, J_k_);
-				for(j = 0; j < q_; j++)
-				{	assert( J_k_[j] < n_ );
-					u_ad[j] = x[ J_k_[j] ];
+	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
+	{	fg_info_->range_index(k, ell, I_);
+		for(iobj = 0; iobj < p_[k]; iobj++) if( I_[iobj] == 0 )
+		{	if( (new_x || K_ > 1)  && retape_[k] )
+			{	// Record r_k for value of u corresponding to x
+				// If we has stored all recordings in f_eval
+				// we might not need to do this over again.
+				ADVector u_ad(q_[k]);
+				fg_info_->domain_index(k, ell, J_);
+				for(j = 0; j < q_[k]; j++)
+				{	assert( J_[j] < n_ );
+					u_ad[j] = x[ J_[j] ];
 				}
 				record_r_fun(
-					fg_info_, p_, q_, u_ad,  // inputs
-					r_fun_                   // outputs
+					fg_info_, k, p_, q_, u_ad,  // inputs
+					r_fun_                      // outputs
 				);
 			}
-			for(j = 0; j < q_; j++)
-			{	assert( J_k_ [j] < n_ );
-				u[j]   = x[ J_k_[j] ];
+			NumberVector u(q_[k]);
+			NumberVector w(p_[k]);
+			NumberVector r_grad(q_[k]);
+			for(j = 0; j < q_[k]; j++)
+			{	assert( J_[j] < n_ );
+				u[j]   = x[ J_[j] ];
 			}
-			r_fun_.Forward(0, u);
+			r_fun_[k].Forward(0, u);
+			for(i = 0; i < p_[k]; i++)
+				w[i] = 0.;
 			w[iobj]    = 1.;
-			r_grad     = r_fun_.Reverse(1, w);
-			w[iobj]    = 0.;
-			for(j = 0; j < q_; j++)
-				obj_grad[ J_k_[j] ]  += r_grad[j];
+			r_grad     = r_fun_[k].Reverse(1, w);
+			for(j = 0; j < q_[k]; j++)
+			{	assert( J_[j] < n_ );
+				grad_f[ J_[j] ]  += r_grad[j];
+			}
 		}
 	}
-	for(j = 0; j < n_; j++)
-		grad_f[j] = obj_grad[j];
 # if CPPAD_NLP_TRACE
 	using std::printf;
 	for(j = 0; j < n_; j++) printf(
@@ -611,39 +663,40 @@ bool ipopt_cppad_nlp::eval_g(
 )
 {	assert(size_t(n) == n_ );
 
-	size_t i, j, k;
-	ADVector     u_ad(q_);
-	NumberVector u(q_);
-	NumberVector r(p_);
-	NumberVector fg(m_ + 1);
+	size_t i, j, k, ell;
 
-	for(i = 0; i <= m_; i++)
-		fg[i] = 0.;
+	// initialize summation
+	for(i = 0; i < m_; i++)
+		g[i] = 0.;
 
-	for(k = 0; k < K_; k++)
-	{	fg_info_->range_index(k, I_k_);
-		if( (new_x || K_ > 1)  && retape_ )
-		{	// Record r for value of u corresponding to x
-			fg_info_->domain_index(k, J_k_);
-			for(j = 0; j < q_; j++)
-			{	assert( J_k_[j] < n_ );
-				u_ad[j] = x[ J_k_[j] ];
+	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
+	{	fg_info_->range_index(k, ell, I_);
+		if( (new_x || K_ > 1)  && retape_[k] )
+		{	// Record r_k for value of u corresponding to x
+			ADVector     u_ad(q_[k]);
+			fg_info_->domain_index(k, ell, J_);
+			for(j = 0; j < q_[k]; j++)
+			{	assert( J_[j] < n_ );
+				u_ad[j] = x[ J_[j] ];
 			}
 			record_r_fun(
-				fg_info_, p_, q_, u_ad,  // inputs
-				r_fun_                   // outputs
+				fg_info_, k, p_, q_, u_ad,  // inputs
+				r_fun_                      // outputs
 			);
 		}
-		for(j = 0; j < q_; j++)
-		{	assert( J_k_ [j] < n_ );
-			u[j]   = x[ J_k_[j] ];
+		NumberVector u(q_[k]);
+		NumberVector r(p_[k]);
+		for(j = 0; j < q_[k]; j++)
+		{	assert( J_[j] < n_ );
+			u[j]   = x[ J_[j] ];
 		}
-		r          = r_fun_.Forward(0, u);
-		for(i = 0; i < p_; i++)
-			fg[ I_k_[i] ] += r[i];
+		r   = r_fun_[k].Forward(0, u);
+		for(i = 0; i < p_[k]; i++)
+		{	assert( I_[i] <= m_ );
+			if( I_[i] >= 1 )
+				g[ I_[i] - 1 ] += r[i];
+		}
 	}
-	for(i = 0; i < m_; i++)
-		g[i] = fg[i + 1];
 # if CPPAD_NLP_TRACE
 	using std::printf;
 	for(j = 0; j < n_; j++)
@@ -660,11 +713,7 @@ bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 {	assert(size_t(m) == m_ );
 	assert(size_t(n) == n_ );
 
-	size_t i, j, k;
-	ADVector     u_ad(q_);
-	NumberVector u(q_);
-	NumberVector jac_fg((m_ + 1) * n_);
-	NumberVector jac_r(p_ * q_);
+	size_t i, j, k, ell;
 
 	if (values == NULL) 
 	{	for(k = 0; k < nnz_jac_g_; k++)
@@ -674,38 +723,42 @@ bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 		return true;
 	}
 
-	// initialize Jacobian of fg
+	// initialize summation
+	// This stores the entire Jacobian including zeros (wastes space ?)
+	NumberVector jac_fg((m_ + 1) * n_);
 	i = (m_ + 1) * n_; 
 	while(i--)
 		jac_fg[i] = 0.;
 
-	for(k = 0; k < K_; k++)
-	{	fg_info_->range_index(k, I_k_);
-		fg_info_->domain_index(k, J_k_);
-		if( (new_x || K_ > 1)  && retape_ )
-		{	// Record r for value of u corresponding to x
-			fg_info_->domain_index(k, J_k_);
-			for(j = 0; j < q_; j++)
-			{	assert( J_k_[j] < n_ );
-				u_ad[j] = x[ J_k_[j] ];
+	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
+	{	fg_info_->range_index(k, ell, I_);
+		fg_info_->domain_index(k, ell, J_);
+		if( (new_x || K_ > 1)  && retape_[k] )
+		{	// Record r_k for value of u corresponding to x
+			ADVector     u_ad(q_[k]);
+			for(j = 0; j < q_[k]; j++)
+			{	assert( J_[j] < n_ );
+				u_ad[j] = x[ J_[j] ];
 			}
 			record_r_fun(
-				fg_info_, p_, q_, u_ad,  // inputs
-				r_fun_                   // outputs
+				fg_info_, k, p_, q_, u_ad,  // inputs
+				r_fun_                      // outputs
 			);
 		}
-		for(j = 0; j < q_; j++)
-		{	assert( J_k_ [j] < n_ );
-			u[j]   = x[ J_k_[j] ];
+		NumberVector u(q_[k]);
+		NumberVector jac_r(p_[k] * q_[k]);
+		for(j = 0; j < q_[k]; j++)
+		{	assert( J_[j] < n_ );
+			u[j]   = x[ J_[j] ];
 		}
-		if( retape_ )
-			jac_r = r_fun_.Jacobian(u);
-		else	jac_r = r_fun_.SparseJacobian(u, pattern_jac_r_);
-		for(i = 0; i < p_; i++)
-		{	assert( I_k_[i] <= m_ );
-			for(j = 0; j < q_; j++)
-				jac_fg[ I_k_[i] * n_ + J_k_[j] ] += 
-					jac_r[i * q_ + j];
+		if( retape_[k] )
+			jac_r = r_fun_[k].Jacobian(u);
+		else	jac_r = r_fun_[k].SparseJacobian(u, pattern_jac_r_[k]);
+		for(i = 0; i < p_[k]; i++)
+		{	assert( I_[i] <= m_ );
+			for(j = 0; j < q_[k]; j++)
+				jac_fg[ I_[i] * n_ + J_[j] ] += 
+					jac_r[i * q_[k] + j];
 		}
 	}
 	for(k = 0; k < nnz_jac_g_; k++)
@@ -723,12 +776,7 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 {	assert(size_t(m) == m_ );
 	assert(size_t(n) == n_ );
 
-	size_t i, j, k;
-	ADVector     u_ad(q_);
-	NumberVector u(q_);
-	NumberVector w(p_);
-	NumberVector fg_hes(n_ * n_);
-	NumberVector r_hes(q_ * q_);
+	size_t i, j, k, ell;
 
 	if (values == NULL) 
 	{	for(k = 0; k < nnz_h_lag_; k++)
@@ -739,42 +787,47 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 	}
 
 	// initialize Jacobian of fg
-	k = n_ * n_; 
-	while(k--)
-		fg_hes[k] = 0.;
+	NumberVector fg_hes(n_ * n_);
+	j = n_ * n_; 
+	while(j--)
+		fg_hes[j] = 0.;
 
-	for(k = 0; k < K_; k++)
-	{	fg_info_->range_index(k, I_k_);
-		fg_info_->domain_index(k, J_k_);
-		if( (new_x || K_ > 1)  && retape_ )
-		{	// Record r for value of u corresponding to x
-			fg_info_->domain_index(k, J_k_);
-			for(j = 0; j < q_; j++)
-			{	assert( J_k_[j] < n_ );
-				u_ad[j] = x[ J_k_[j] ];
+	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
+	{	fg_info_->range_index(k, ell, I_);
+		fg_info_->domain_index(k, ell, J_);
+		if( (new_x || K_ > 1)  && retape_[k] )
+		{	// Record r_k for value of u corresponding to x
+			ADVector     u_ad(q_[k]);
+			for(j = 0; j < q_[k]; j++)
+			{	assert( J_[j] < n_ );
+				u_ad[j] = x[ J_[j] ];
 			}
 			record_r_fun(
-				fg_info_, p_, q_, u_ad,  // inputs
-				r_fun_                   // outputs
+				fg_info_, k, p_, q_, u_ad,  // inputs
+				r_fun_                      // outputs
 			);
 		}
-		for(j = 0; j < q_; j++)
-		{	assert( J_k_ [j] < n_ );
-			u[j]   = x[ J_k_[j] ];
+		NumberVector w(p_[k]);
+		NumberVector r_hes(q_[k] * q_[k]);
+		NumberVector u(q_[k]);
+		for(j = 0; j < q_[k]; j++)
+		{	assert( J_[j] < n_ );
+			u[j]   = x[ J_[j] ];
 		}
-		for(i = 0; i < p_; i++)
-		{	assert( I_k_[i] <= m_ );
-			if( I_k_[i] == 0 )
+		for(i = 0; i < p_[k]; i++)
+		{	assert( I_[i] <= m_ );
+			if( I_[i] == 0 )
 				w[i] = obj_factor;
-			else	w[i] = lambda[ I_k_[i] - 1 ];
+			else	w[i] = lambda[ I_[i] - 1 ];
 		}
-		if( retape_ )
-			r_hes = r_fun_.Hessian(u, w);
-		else	r_hes = r_fun_.SparseHessian(u, w, pattern_r_lag_);
-		for(i = 0; i < q_; i++)
-		{	for(j = 0; j < q_; j++)
-				fg_hes[ J_k_[i] * n_ + J_k_[j] ] += 
-					r_hes[i * q_ + j];
+		if( retape_[k] )
+			r_hes = r_fun_[k].Hessian(u, w);
+		else	r_hes = 
+			r_fun_[k].SparseHessian(u, w, pattern_r_lag_[k]);
+		for(i = 0; i < q_[k]; i++)
+		{	for(j = 0; j < q_[k]; j++)
+				fg_hes[ J_[i] * n_ + J_[j] ] += 
+					r_hes[i * q_[k] + j];
 		}
 	}
 	for(k = 0; k < nnz_h_lag_; k++)

@@ -67,7 +67,7 @@ namespace {
 		{ }
 		// Evaluation of the objective f(x), and constraints g(x)
 		// using an Algorithmic Differentiation (AD) class.
-		ADVector r_eval(const ADVector&  x)
+		ADVector r_eval(size_t k, const ADVector&  x)
 		{	ADVector fg(3);
 
 			// Fortran style indexing 
@@ -83,7 +83,7 @@ namespace {
 			fg[2] = x1 * x1 + x2 * x2 + x3 * x3 + x4 * x4;
 			return fg;
 		}
-		bool retape(void)
+		bool retape(size_t k)
 		{	return retape_; }
 	};
 }
