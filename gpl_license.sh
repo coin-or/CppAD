@@ -91,7 +91,7 @@ do
 	else
 		if grep "GNU General Public License" $dir/$file > /dev/null
 		then
-			if ["$name" != "doc.omh.in" ] && ["$name" != "doc.omh"]
+		if [ "$name" != "doc.omh.in" ] && [ "$name" != "doc.omh" ]
 			then
 				echo "GPL license in initial $dir/$file"
 				exit 1

@@ -671,10 +671,10 @@ bool ipopt_cppad_nlp::eval_g(
 
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
 	{	fg_info_->range_index(k, ell, I_);
+		fg_info_->domain_index(k, ell, J_);
 		if( (new_x || K_ > 1)  && retape_[k] )
 		{	// Record r_k for value of u corresponding to x
 			ADVector     u_ad(q_[k]);
-			fg_info_->domain_index(k, ell, J_);
 			for(j = 0; j < q_[k]; j++)
 			{	assert( J_[j] < n_ );
 				u_ad[j] = x[ J_[j] ];
