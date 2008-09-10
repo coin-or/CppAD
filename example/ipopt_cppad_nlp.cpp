@@ -566,10 +566,10 @@ bool ipopt_cppad_nlp::eval_f(
 
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
 	{	fg_info_->range_index(k, ell, I_);
+		fg_info_->domain_index(k, ell, J_);
 		for(iobj = 0; iobj < p_[k]; iobj++) if( I_[iobj] == 0 )
 		{	if( (new_x || K_ > 1)  && retape_[k] )
 			{	// Record r_k for value of u corresponding to x
-				fg_info_->domain_index(k, ell, J_);
 				ADVector u_ad(q_[0]);
 				for(j = 0; j < q_[k]; j++)
 				{	assert( J_[j] < n_ );
@@ -612,13 +612,13 @@ bool ipopt_cppad_nlp::eval_grad_f(
 
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
 	{	fg_info_->range_index(k, ell, I_);
+		fg_info_->domain_index(k, ell, J_);
 		for(iobj = 0; iobj < p_[k]; iobj++) if( I_[iobj] == 0 )
 		{	if( (new_x || K_ > 1)  && retape_[k] )
 			{	// Record r_k for value of u corresponding to x
 				// If we has stored all recordings in f_eval
 				// we might not need to do this over again.
 				ADVector u_ad(q_[k]);
-				fg_info_->domain_index(k, ell, J_);
 				for(j = 0; j < q_[k]; j++)
 				{	assert( J_[j] < n_ );
 					u_ad[j] = x[ J_[j] ];

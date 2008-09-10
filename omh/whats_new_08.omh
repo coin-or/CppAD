@@ -45,9 +45,14 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-10$$
+Fixed more indexing bugs in $cref/ipopt_cppad_nlp/$$
+that effected cases where the domain index vector $latex J_{k, \ell}$$
+was different for different values of $latex k$$ and $latex \ell$$.
+
 $head 09-09$$
 Fixed an indexing bug in $cref/ipopt_cppad_nlp/$$.
-(This effected chases where the domain index vector $latex J_{k, \ell}$$
+(This effected cases where the domain index vector $latex J_{k, \ell}$$
 was different for different values of $latex k$$ and $latex \ell$$.)
 
 $head 09-07$$
