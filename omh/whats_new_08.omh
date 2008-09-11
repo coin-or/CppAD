@@ -49,6 +49,14 @@ $head 09-10$$
 Fixed more indexing bugs in $cref/ipopt_cppad_nlp/$$
 that effected cases where the domain index vector $latex J_{k, \ell}$$
 was different for different values of $latex k$$ and $latex \ell$$.
+$pre
+
+$$
+In $cref/ipopt_cppad_nlp/$$,
+combined $icode%fg_info%->domain_index()%$$ and 
+$icode%fg_info%->range_index()%$$ into a single function called
+$icode%fg_info%->index()%$$.
+Also added more error checking (if $code NDEBUG$$ is not defined). 
 
 $head 09-09$$
 Fixed an indexing bug in $cref/ipopt_cppad_nlp/$$.

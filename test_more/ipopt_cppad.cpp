@@ -163,19 +163,17 @@ public:
 	}
 	size_t number_terms(size_t k)
 	{	return 1; }
-	void domain_index(size_t k, size_t ell, SizeVector& J)
-	{	size_t j;
-		// reversion the order of the variables in u from that in x
-		for(j = 0; j < 4; j++)
-			J[j] = 3-j;
-	}
-	void range_index(size_t k, size_t ell, SizeVector& I)
-	{	if( k == 0 )
+	void index(size_t k, size_t ell, SizeVector& I, SizeVector& J)
+	{
+		if( k == 0 )
 			I[0] = 0;
 		else
 		{	I[0] = 1;
 			I[1] = 2; 
 		}
+		// reverse the order of the variables in u from that in x
+		for(size_t j = 0; j < 4; j++)
+			J[j] = 3-j;
 	}
 };
 	
@@ -327,18 +325,15 @@ public:
 		}
 		return L;
 	}
-	void domain_index(size_t k, size_t ell, SizeVector& J)
-	{	assert( J.size() >= 1 );
+	void index(size_t k, size_t ell, SizeVector&I, SizeVector& J)
+	{	assert( I.size() >= 1 );
+		assert( J.size() >= 1 );
+		I[0] = ell;
 		if( ell == 0 )
 		{	J[0] = 1;
 			return;
 		}
 		J[0] = ell - 1;
-		return;
-	}
-	void range_index(size_t k, size_t ell, SizeVector& I)
-	{	assert( I.size() >= 1 );
-		I[0] = ell;
 		return;
 	}
 	// retape function

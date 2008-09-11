@@ -79,6 +79,22 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 	}
 	I_.resize(max_p);
 	J_.resize(max_q);
+# ifndef NDEBUG
+	size_t ell;
+	// check for valid range and domain indices
+	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
+	{
+		for( i = 0; i < p_[k]; i++)
+			I_[i] = m+1; // an invalid range index
+		for( j = 0; j < q_[k]; j++)
+			J_[j] = n; // an invalid domain index
+		fg_info->index(k, ell, I_, J_);	
+		for( i = 0; i < p_[k]; i++)
+			assert( I_[i] <= m );
+		for( j = 0; j < q_[k]; j++)
+			assert( J_[j] < n );
+	}
+# endif
 
 	pattern_jac_fg_.resize( (m + 1) * n );
 	pattern_h_lag_.resize( n * n );
@@ -267,8 +283,7 @@ On output it is the CppAD sparsity pattern for the Jacobian of fg(x).
 	while(j--)
 		pattern_jac_fg[j] = false;
 	for(k = 0; k < K; k++) for(ell = 0; ell < L[k]; ell++)
-	{	fg_info->range_index(k, ell, I);	
-		fg_info->domain_index(k, ell, J);
+	{	fg_info->index(k, ell, I, J);	
 		for(i = 0; i < p[k]; i++)
 		{	for(j = 0; j < q[k]; j++)
 			{	ir  = i * q[k] + j;
@@ -373,7 +388,7 @@ a Lagragian that sums components of fg(x).
 	while(j--)
 		pattern_h_lag[j] = false;
 	for(k = 0; k < K; k++) for(ell = 0; ell < L[k]; ell++)
-	{	fg_info->domain_index(k, ell, J);
+	{	fg_info->index(k, ell, I, J);
 		for(i = 0; i < q[k]; i++)
 		{	for(j = 0; j < q[k]; j++)
 			{	size_t ir, ifg;
@@ -565,8 +580,7 @@ bool ipopt_cppad_nlp::eval_f(
 	obj_value = 0.;
 
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
-	{	fg_info_->range_index(k, ell, I_);
-		fg_info_->domain_index(k, ell, J_);
+	{	fg_info_->index(k, ell, I_, J_);
 		for(iobj = 0; iobj < p_[k]; iobj++) if( I_[iobj] == 0 )
 		{	if( (new_x || K_ > 1)  && retape_[k] )
 			{	// Record r_k for value of u corresponding to x
@@ -611,8 +625,7 @@ bool ipopt_cppad_nlp::eval_grad_f(
 		grad_f[j] = 0.;
 
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
-	{	fg_info_->range_index(k, ell, I_);
-		fg_info_->domain_index(k, ell, J_);
+	{	fg_info_->index(k, ell, I_, J_);
 		for(iobj = 0; iobj < p_[k]; iobj++) if( I_[iobj] == 0 )
 		{	if( (new_x || K_ > 1)  && retape_[k] )
 			{	// Record r_k for value of u corresponding to x
@@ -670,8 +683,7 @@ bool ipopt_cppad_nlp::eval_g(
 		g[i] = 0.;
 
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
-	{	fg_info_->range_index(k, ell, I_);
-		fg_info_->domain_index(k, ell, J_);
+	{	fg_info_->index(k, ell, I_, J_);
 		if( (new_x || K_ > 1)  && retape_[k] )
 		{	// Record r_k for value of u corresponding to x
 			ADVector     u_ad(q_[k]);
@@ -731,8 +743,7 @@ bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 		jac_fg[i] = 0.;
 
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
-	{	fg_info_->range_index(k, ell, I_);
-		fg_info_->domain_index(k, ell, J_);
+	{	fg_info_->index(k, ell, I_, J_);
 		if( (new_x || K_ > 1)  && retape_[k] )
 		{	// Record r_k for value of u corresponding to x
 			ADVector     u_ad(q_[k]);
@@ -793,8 +804,7 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 		fg_hes[j] = 0.;
 
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
-	{	fg_info_->range_index(k, ell, I_);
-		fg_info_->domain_index(k, ell, J_);
+	{	fg_info_->index(k, ell, I_, J_);
 		if( (new_x || K_ > 1)  && retape_[k] )
 		{	// Record r_k for value of u corresponding to x
 			ADVector     u_ad(q_[k]);
