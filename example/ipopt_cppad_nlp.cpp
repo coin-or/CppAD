@@ -426,13 +426,13 @@ The number of possibly non-zero entries in the Jacobian of g.
 iRow_jac_g: output
 The input size of this vector does not matter.
 On output it has size nnz_jac_g.
-It specifies the Fortran row index (i.e. base one) 
+It specifies the C row index (i.e. base one) 
 corresponding to each non-zero entry in the Jacobian of g.
 
 jCol_jac_g: output
 The input size of this vector does not matter.
 On output it has size nnz_jac_g.
-It specifies the Fortran column index (i.e. base one) 
+It specifies the C column index (i.e. base one) 
 corresponding to each non-zero entry in the Jacobian of g.
 */
 {	size_t i, j, k;
@@ -449,8 +449,8 @@ corresponding to each non-zero entry in the Jacobian of g.
 	for(i = 1; i <= m; i++)
 	{	for(j = 0; j < n; j++)
 			if( pattern_jac_fg[ i * n + j ] )
-			{	iRow_jac_g[k] = i;
-				jCol_jac_g[k] = j + 1;
+			{	iRow_jac_g[k] = i - 1;
+				jCol_jac_g[k] = j;
 				k++;
 			}
 	}
@@ -481,13 +481,13 @@ The number of possibly non-zero entries in the Hessian of the Lagragian.
 iRow_h_lag: output
 The input size of this vector does not matter.
 On output it has size nnz_h_lag.
-It specifies the Fortran row index (i.e. base one) 
+It specifies the C row index (i.e. base one) 
 corresponding to each non-zero entry in the Hessian of the Lagragian.
 
 jCol_h_lag: output
 The input size of this vector does not matter.
 On output it has size nnz_h_lag.
-It specifies the Fortran column index (i.e. base one) 
+It specifies the C column index (i.e. base one) 
 corresponding to each non-zero entry in the Hessian of the Lagragian.
 */
 {	size_t i, j, k;
@@ -504,8 +504,8 @@ corresponding to each non-zero entry in the Hessian of the Lagragian.
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j <= i; j++)
 			if( pattern_h_lag[ i * n + j ] )
-			{	iRow_h_lag[k] = i + 1;
-				jCol_h_lag[k] = j + 1;
+			{	iRow_h_lag[k] = i;
+				jCol_h_lag[k] = j;
 				k++;
 			}
 	}
@@ -523,7 +523,7 @@ bool ipopt_cppad_nlp::get_nlp_info(Index& n, Index& m, Index& nnz_jac_g,
 	nnz_h_lag = nnz_h_lag_;
 
   	// use the fortran index style for row/col entries
-	index_style = FORTRAN_STYLE;
+	index_style = C_STYLE;
 
 	return true;
 }
@@ -773,8 +773,8 @@ bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 		}
 	}
 	for(k = 0; k < nnz_jac_g_; k++)
-	{	size_t i  = iRow_jac_g_[k];
-		size_t j  = jCol_jac_g_[k] - 1;	
+	{	size_t i  = iRow_jac_g_[k] + 1;
+		size_t j  = jCol_jac_g_[k];	
 		values[k] = jac_fg[ i * n_ + j ];
 	}
   	return true;
@@ -841,8 +841,8 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 		}
 	}
 	for(k = 0; k < nnz_h_lag_; k++)
-	{	size_t i  = iRow_h_lag_[k] - 1;
-		size_t j  = jCol_h_lag_[k] - 1;	
+	{	size_t i  = iRow_h_lag_[k];
+		size_t j  = jCol_h_lag_[k];	
 		values[k] = fg_hes[ i * n_ + j ];
 	} 
 
