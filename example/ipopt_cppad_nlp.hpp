@@ -369,57 +369,54 @@ The $code ipopt_cppad_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
 $latex L = 1$$.
 
-$subhead fg_info->domain_index$$
+$subhead fg_info->index$$
 This member function has prototype
 $codei%
-	virtual void ipopt_cppad_fg_info::domain_index(
-		size_t %k%, size_t %ell%, SizeVector& %J%
+	virtual void ipopt_cppad_fg_info::index(
+		size_t %k%, size_t %ell%, SizeVector& %I%, SizeVector& %J%
 	)
 %$$ 
-If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
-$icode ell$$ is in $latex \{0, \ldots , L(k) \}$$,
-and $icode J$$ is a $cref/SimpleVector/$$ with elements
-of type $code size_t$$ and size greater than or equal to $latex q(k)$$.
-The syntax
-$codei%
-	%fg_info%->domain_index(%k%, %ell%, %J%)
+The argument 
+$icode% 
+	k
 %$$
-sets the first $latex q(k)$$ elements of $icode J$$ to
-the corresponding elements of $latex J_{k,ell}$$ 
-in the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
-$pre
-
-$$
-The $code ipopt_cppad_h_base$$ implementation of this function
-corresponds to the simple representation mentioned above; i.e.,
-for $latex j = 0 , \ldots , n-1$$,
-$icode%J%[%j%] = %j%$$.
-
-$subhead fg_info->range_index$$
-This member function has prototype
-$codei%
-	virtual void ipopt_cppad_fg_info::range_index(
-		size_t %k%, size_t %ell%, SizeVector& %I%
-	)
-%$$ 
-If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
-$icode ell$$ is in $latex \{0, \ldots , L(k) \}$$,
-and $icode I$$ is a $cref/SimpleVector/$$ with elements
+has type $codei size_t$$
+and is a value between zero and $latex K-1$$ inclusive.
+The argument 
+$icode% 
+	ell
+%$$
+has type $codei size_t$$
+and is a value between zero and $latex L(k)-1$$ inclusive.
+The argument 
+$icode%
+	I
+%$$ is a $cref/SimpleVector/$$ with elements
 of type $code size_t$$ and size greater than or equal to $latex p(k)$$.
-The syntax
-$codei%
-	%fg_info%->range_index(%k%, %ell%, %I%)
-%$$
-sets the first $latex p(k)$$ elements of $icode I$$ to
-the corresponding elements of $latex I_{k,ell}$$ 
+The input value of the elements of $icode I$$ does not matter.
+The output value of
+the first $latex p(k)$$ elements of $icode I$$ 
+must be the corresponding elements of $latex I_{k,ell}$$ 
+in the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
+The argument 
+$icode%
+	J
+%$$ is a $cref/SimpleVector/$$ with elements
+of type $code size_t$$ and size greater than or equal to $latex q(k)$$.
+The input value of the elements of $icode J$$ does not matter.
+The output value of 
+the first $latex q(k)$$ elements of $icode J$$ 
+must be the corresponding elements of $latex J_{k,ell}$$ 
 in the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
 $pre
 
 $$
 The $code ipopt_cppad_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
-for $latex k = 0 , \ldots , m$$,
-$icode%I%[%i%] = %i%$$.
+for $latex i = 0 , \ldots , m$$,
+$icode%I%[%i%] = %i%$$,
+and  for $latex j = 0 , \ldots , n-1$$,
+$icode%J%[%j%] = %j%$$.
 
 $head solution$$
 After the optimization process is completed, $icode solution$$ contains
@@ -597,17 +594,14 @@ public:
 	// number_terms: for simple representation
 	virtual size_t number_terms(size_t k)
 	{	return 1; }
-	// domain_index: for simple representation
-	virtual void domain_index(size_t k, size_t ell, SizeVector& J)
-	{	assert( J.size() >= n_ );
-		for(size_t j = 0; j < n_; j++)
-			J[j] = j;
-	}
-	// range_index: for simple representation
-	virtual void range_index(size_t k, size_t ell, SizeVector& I)
+	// index: for simple representation
+	virtual void index(size_t k, size_t ell, SizeVector& I, SizeVector& J)
 	{	assert( I.size() >= m_ + 1 );
+		assert( J.size() >= n_ );
 		for(size_t i = 0; i <= m_; i++)
 			I[i] = i;
+		for(size_t j = 0; j < n_; j++)
+			J[j] = j;
 	}
 };
 
