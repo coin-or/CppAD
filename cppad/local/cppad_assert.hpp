@@ -2,7 +2,7 @@
 # define CPPAD_CPPAD_ASSERT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -95,7 +95,7 @@ $end
 # else
 # define CPPAD_ASSERT_KNOWN(exp, msg)           \
 {	if( ! ( exp ) )                         \
-	ErrorHandler::Call(                     \
+	CppAD::ErrorHandler::Call(              \
 		true       ,                    \
 		__LINE__   ,                    \
  		__FILE__   ,                    \
@@ -109,7 +109,7 @@ $end
 # else
 # define CPPAD_ASSERT_UNKNOWN(exp)              \
 {	if( ! ( exp ) )                         \
-	ErrorHandler::Call(                     \
+	CppAD::ErrorHandler::Call(              \
 		false      ,                    \
 		__LINE__   ,                    \
  		__FILE__   ,                    \

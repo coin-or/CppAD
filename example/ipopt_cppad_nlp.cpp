@@ -89,10 +89,12 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 		for( j = 0; j < q_[k]; j++)
 			J_[j] = n; // an invalid domain index
 		fg_info->index(k, ell, I_, J_);	
-		for( i = 0; i < p_[k]; i++)
-			assert( I_[i] <= m );
-		for( j = 0; j < q_[k]; j++)
-			assert( J_[j] < n );
+		for( i = 0; i < p_[k]; i++) CPPAD_ASSERT_KNOWN( I_[i] <= m,
+			"ipopt_cppad_nlp: invalid value in index vector I"
+		);
+		for( j = 0; j < q_[k]; j++) CPPAD_ASSERT_KNOWN( J_[j] < n,
+			"ipopt_cppad_nlp: invalid value in index vector J"
+		);
 	}
 # endif
 
@@ -170,7 +172,7 @@ The CppAD operation sequence corresponding to the value of u_ad,
 and the algorithm used by fg_info, is stored in r_fun[k]. (Any operation
 seqeunce that was previously in r_fun[k] is deleted.)
 */
-{	assert( u_ad.size() == size_t(q[k]) );
+{	CPPAD_ASSERT_UNKNOWN( u_ad.size() == size_t(q[k]) );
 	// vector of dependent variables during function recording
 	ADVector r_ad(p[k]);
 	// start the recording
@@ -245,15 +247,15 @@ On input, this must be a vector of length (m+1) * n.
 On output it is the CppAD sparsity pattern for the Jacobian of fg(x).
 */
 {
-	assert( pattern_jac_fg.size() == (m+1) * n );
+	CPPAD_ASSERT_UNKNOWN( pattern_jac_fg.size() == (m+1) * n );
 
 	size_t i, j, k, ell, ir, ifg;
 
 	for(k = 0; k < K; k++)
 	{	// compute sparsity pattern for r_k (u)
-		assert( pattern_jac_r[k].size() == p[k] * q[k] );
-		assert( r_fun[k].Range() == p[k] );
-		assert( r_fun[k].Domain() == q[k] );
+		CPPAD_ASSERT_UNKNOWN( pattern_jac_r[k].size() == p[k] * q[k] );
+		CPPAD_ASSERT_UNKNOWN( r_fun[k].Range() == p[k] );
+		CPPAD_ASSERT_UNKNOWN( r_fun[k].Domain() == q[k] );
 		if( q[k] < p[k] )
 		{	// use forward mode
 			BoolVector pattern_domain(q[k] * q[k]);
@@ -361,13 +363,13 @@ On output it is the CppAD sparsity pattern for the Hessian of
 a Lagragian that sums components of fg(x).
 */
 {
-	assert( pattern_h_lag.size() == n * n );
+	CPPAD_ASSERT_UNKNOWN( pattern_h_lag.size() == n * n );
 	size_t i, j, k, ell;
 
 	for(k = 0; k < K; k++)
-	{	assert( pattern_r_lag[k].size() == q[k] * q[k] );
-		assert( r_fun[k].Range() == p[k] );
-		assert( r_fun[k].Domain() == q[k] );
+	{	CPPAD_ASSERT_UNKNOWN( pattern_r_lag[k].size() == q[k] * q[k] );
+		CPPAD_ASSERT_UNKNOWN( r_fun[k].Range() == p[k] );
+		CPPAD_ASSERT_UNKNOWN( r_fun[k].Domain() == q[k] );
 
 		BoolVector pattern_domain(q[k] * q[k]);
 		BoolVector pattern_ones(p[k]);
@@ -532,8 +534,8 @@ bool ipopt_cppad_nlp::get_bounds_info(Index n, Number* x_l, Number* x_u,
                             Index m, Number* g_l, Number* g_u)
 {	size_t i, j;
 	// here, the n and m we gave IPOPT in get_nlp_info are passed back 
-	assert(size_t(n) == n_);
-	assert(size_t(m) == m_);
+	CPPAD_ASSERT_UNKNOWN(size_t(n) == n_);
+	CPPAD_ASSERT_UNKNOWN(size_t(m) == m_);
 
 	// pass back bounds
 	for(j = 0; j < n_; j++)
@@ -554,11 +556,11 @@ bool ipopt_cppad_nlp::get_starting_point(Index n, bool init_x, Number* x,
                                Number* lambda)
 {	size_t j;
 
-	assert(size_t(n) == n_ );
-	assert(size_t(m) == m_ );
-	assert(init_x == true);
-	assert(init_z == false);
-	assert(init_lambda == false);
+	CPPAD_ASSERT_UNKNOWN(size_t(n) == n_ );
+	CPPAD_ASSERT_UNKNOWN(size_t(m) == m_ );
+	CPPAD_ASSERT_UNKNOWN(init_x == true);
+	CPPAD_ASSERT_UNKNOWN(init_z == false);
+	CPPAD_ASSERT_UNKNOWN(init_lambda == false);
 
 	for(j = 0; j < n_; j++)
 		x[j] = x_i_[j];
@@ -572,7 +574,7 @@ bool ipopt_cppad_nlp::eval_f(
 {	// This routine is not efficient. It would be better if users version
 	// of the function was templated so that we could use double to 
 	// calculate function values instead of retaping (when necessary).
-	assert(size_t(n) == n_ );
+	CPPAD_ASSERT_UNKNOWN(size_t(n) == n_ );
 
 	size_t iobj, j, k, ell;
 
@@ -586,7 +588,7 @@ bool ipopt_cppad_nlp::eval_f(
 			{	// Record r_k for value of u corresponding to x
 				ADVector u_ad(q_[0]);
 				for(j = 0; j < q_[k]; j++)
-				{	assert( J_[j] < n_ );
+				{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
 					u_ad[j] = x[ J_[j] ];
 				}
 				record_r_fun(
@@ -597,7 +599,7 @@ bool ipopt_cppad_nlp::eval_f(
 			NumberVector u(q_[k]);
 			NumberVector r(p_[k]);
 			for(j = 0; j < q_[k]; j++)
-			{	assert( J_[j] < n_ );
+			{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
 				u[j]   = x[ J_[j] ];
 			}
 			r          = r_fun_[k].Forward(0, u);
@@ -616,7 +618,7 @@ bool ipopt_cppad_nlp::eval_f(
 bool ipopt_cppad_nlp::eval_grad_f(
 	Index n, const Number* x, bool new_x, Number* grad_f
 )
-{	assert(size_t(n) == n_ );
+{	CPPAD_ASSERT_UNKNOWN(size_t(n) == n_ );
 
 	size_t iobj, i, j, k, ell;
 
@@ -633,7 +635,7 @@ bool ipopt_cppad_nlp::eval_grad_f(
 				// we might not need to do this over again.
 				ADVector u_ad(q_[k]);
 				for(j = 0; j < q_[k]; j++)
-				{	assert( J_[j] < n_ );
+				{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
 					u_ad[j] = x[ J_[j] ];
 				}
 				record_r_fun(
@@ -645,7 +647,7 @@ bool ipopt_cppad_nlp::eval_grad_f(
 			NumberVector w(p_[k]);
 			NumberVector r_grad(q_[k]);
 			for(j = 0; j < q_[k]; j++)
-			{	assert( J_[j] < n_ );
+			{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
 				u[j]   = x[ J_[j] ];
 			}
 			r_fun_[k].Forward(0, u);
@@ -654,7 +656,7 @@ bool ipopt_cppad_nlp::eval_grad_f(
 			w[iobj]    = 1.;
 			r_grad     = r_fun_[k].Reverse(1, w);
 			for(j = 0; j < q_[k]; j++)
-			{	assert( J_[j] < n_ );
+			{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
 				grad_f[ J_[j] ]  += r_grad[j];
 			}
 		}
@@ -674,7 +676,7 @@ bool ipopt_cppad_nlp::eval_grad_f(
 bool ipopt_cppad_nlp::eval_g(
 	Index n, const Number* x, bool new_x, Index m, Number* g
 )
-{	assert(size_t(n) == n_ );
+{	CPPAD_ASSERT_UNKNOWN(size_t(n) == n_ );
 
 	size_t i, j, k, ell;
 
@@ -688,7 +690,7 @@ bool ipopt_cppad_nlp::eval_g(
 		{	// Record r_k for value of u corresponding to x
 			ADVector     u_ad(q_[k]);
 			for(j = 0; j < q_[k]; j++)
-			{	assert( J_[j] < n_ );
+			{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
 				u_ad[j] = x[ J_[j] ];
 			}
 			record_r_fun(
@@ -699,12 +701,12 @@ bool ipopt_cppad_nlp::eval_g(
 		NumberVector u(q_[k]);
 		NumberVector r(p_[k]);
 		for(j = 0; j < q_[k]; j++)
-		{	assert( J_[j] < n_ );
+		{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
 			u[j]   = x[ J_[j] ];
 		}
 		r   = r_fun_[k].Forward(0, u);
 		for(i = 0; i < p_[k]; i++)
-		{	assert( I_[i] <= m_ );
+		{	CPPAD_ASSERT_UNKNOWN( I_[i] <= m_ );
 			if( I_[i] >= 1 )
 				g[ I_[i] - 1 ] += r[i];
 		}
@@ -722,8 +724,8 @@ bool ipopt_cppad_nlp::eval_g(
 bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
                        Index m, Index nele_jac, Index* iRow, Index *jCol,
                        Number* values)
-{	assert(size_t(m) == m_ );
-	assert(size_t(n) == n_ );
+{	CPPAD_ASSERT_UNKNOWN(size_t(m) == m_ );
+	CPPAD_ASSERT_UNKNOWN(size_t(n) == n_ );
 
 	size_t i, j, k, ell;
 
@@ -748,7 +750,7 @@ bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 		{	// Record r_k for value of u corresponding to x
 			ADVector     u_ad(q_[k]);
 			for(j = 0; j < q_[k]; j++)
-			{	assert( J_[j] < n_ );
+			{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
 				u_ad[j] = x[ J_[j] ];
 			}
 			record_r_fun(
@@ -759,14 +761,14 @@ bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 		NumberVector u(q_[k]);
 		NumberVector jac_r(p_[k] * q_[k]);
 		for(j = 0; j < q_[k]; j++)
-		{	assert( J_[j] < n_ );
+		{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
 			u[j]   = x[ J_[j] ];
 		}
 		if( retape_[k] )
 			jac_r = r_fun_[k].Jacobian(u);
 		else	jac_r = r_fun_[k].SparseJacobian(u, pattern_jac_r_[k]);
 		for(i = 0; i < p_[k]; i++)
-		{	assert( I_[i] <= m_ );
+		{	CPPAD_ASSERT_UNKNOWN( I_[i] <= m_ );
 			for(j = 0; j < q_[k]; j++)
 				jac_fg[ I_[i] * n_ + J_[j] ] += 
 					jac_r[i * q_[k] + j];
@@ -784,8 +786,8 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
                    Number obj_factor, Index m, const Number* lambda,
                    bool new_lambda, Index nele_hess, Index* iRow,
                    Index* jCol, Number* values)
-{	assert(size_t(m) == m_ );
-	assert(size_t(n) == n_ );
+{	CPPAD_ASSERT_UNKNOWN(size_t(m) == m_ );
+	CPPAD_ASSERT_UNKNOWN(size_t(n) == n_ );
 
 	size_t i, j, k, ell;
 
@@ -809,7 +811,7 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 		{	// Record r_k for value of u corresponding to x
 			ADVector     u_ad(q_[k]);
 			for(j = 0; j < q_[k]; j++)
-			{	assert( J_[j] < n_ );
+			{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
 				u_ad[j] = x[ J_[j] ];
 			}
 			record_r_fun(
@@ -821,11 +823,11 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 		NumberVector r_hes(q_[k] * q_[k]);
 		NumberVector u(q_[k]);
 		for(j = 0; j < q_[k]; j++)
-		{	assert( J_[j] < n_ );
+		{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
 			u[j]   = x[ J_[j] ];
 		}
 		for(i = 0; i < p_[k]; i++)
-		{	assert( I_[i] <= m_ );
+		{	CPPAD_ASSERT_UNKNOWN( I_[i] <= m_ );
 			if( I_[i] == 0 )
 				w[i] = obj_factor;
 			else	w[i] = lambda[ I_[i] - 1 ];
@@ -864,8 +866,8 @@ void ipopt_cppad_nlp::finalize_solution(
 )
 {	size_t i, j;
 
-	assert(size_t(n) == n_ );
-	assert(size_t(m) == m_ );
+	CPPAD_ASSERT_UNKNOWN(size_t(n) == n_ );
+	CPPAD_ASSERT_UNKNOWN(size_t(m) == m_ );
 
 	switch(status)
 	{	// convert status from Ipopt enum to ipopt_cppad_solution enum
