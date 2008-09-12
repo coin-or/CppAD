@@ -45,6 +45,12 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-12$$
+Converted from storing full Hessian and Jacobian to a sparse data structure
+in $cref/ipopt_cppad_nlp/$$.
+This greatly reduced the memory requirements (and increased the speed)
+for sparse problems.
+
 $head 09-10$$
 Fixed more indexing bugs in $cref/ipopt_cppad_nlp/$$
 that effected cases where the domain index vector $latex J_{k, \ell}$$

@@ -648,6 +648,8 @@ class ipopt_cppad_nlp : public Ipopt::TNLP
 	typedef CppAD::vectorBool                     BoolVector;
 	typedef CppAD::vector< CppAD::ADFun<Number> > ADFunVector;
 	typedef CppAD::vector<BoolVector>             BoolVectorVector;
+
+	typedef CppAD::vector< std::map<size_t,size_t> > IndexMap;
 public:
 	// constructor 
 	ipopt_cppad_nlp(
@@ -808,6 +810,9 @@ private:
 	size_t                           nnz_jac_g_;
 	SizeVector                       iRow_jac_g_;
 	SizeVector                       jCol_jac_g_;
+	// mapping from array indices to Ipopt sparsity structure
+	IndexMap                         index_jac_fg_;
+	IndexMap                         index_h_lag_;
 	// Ipopt sparsity structure for Hessian of Lagragian
 	size_t                           nnz_h_lag_;
 	SizeVector                       iRow_h_lag_;
@@ -873,6 +878,18 @@ private:
 		size_t&               nnz_h_lag      ,
 		SizeVector&           iRow_h_lag     ,
 		SizeVector&           jCol_h_lag
+	);
+	static void compute_index_jac_fg(
+		size_t                m              ,
+		size_t                n              ,
+		const BoolVector&     pattern_jac_fg ,
+		IndexMap&             index_jac_fg
+	);
+	static void compute_index_h_lag(
+		size_t                m              ,
+		size_t                n              ,
+		const BoolVector&     pattern_h_lag  ,
+		IndexMap&             index_h_lag
 	);
 
 };
