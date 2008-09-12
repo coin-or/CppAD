@@ -97,55 +97,46 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 		);
 	}
 # endif
-	pattern_jac_fg_.resize( (m + 1) * n );
-	pattern_h_lag_.resize( n * n );
 
 	if ( retape_any )
 	{	// true sparsity pattern valid for all x is unknown
+		BoolVector pattern_jac_fg((m+1) * n);
 		for(i = 0; i <= m; i++)
 		{	for(j = 0; j < n; j++)
-				pattern_jac_fg_[i * n + j] = true;
+				pattern_jac_fg[i * n + j] = true;
 		}
+		compute_index_jac_fg(m, n, pattern_jac_fg, index_jac_fg_);
+		//
+		BoolVector pattern_h_lag(n * n);
 		for(j = 0; j < n; j++)
 		{	for(k = 0; k < n; k++)
-				pattern_h_lag_[j * n + k] = true;
+				pattern_h_lag[j * n + k] = true;
 		}
+		compute_index_h_lag(m, n, pattern_h_lag, index_h_lag_);
 	}
 	else
-	{	// compute CppAD sparsity partern for Jacobian of fg
-		compute_pattern_jac_fg(
+	{	// compute index map for Jacobian of fg
+		compute_index_jac_fg(
 		fg_info_, I_, J_, K_, L_, m_, n_, p_, q_, r_fun_,   // inputs
-		pattern_jac_r_, pattern_jac_fg_                     // outputs
+		pattern_jac_r_, index_jac_fg_                       // outputs
 		);
 
-		// compute CppAD sparsity partern for Hessian of Lagragian
-		compute_pattern_h_lag(
+		// compute index map for Hessian of Lagragian
+		compute_index_h_lag(
 		fg_info_, I_, J_, K_, L_, m_, n_, p_, q_, r_fun_,   // inputs
-		pattern_r_lag_, pattern_h_lag_                      // outputs
+		pattern_r_lag_, index_h_lag_                        // outputs
 		);
 	}
-
-	// Compute index map for Jacobian of g
-	compute_index_jac_fg(
-		m, n, pattern_jac_fg_,  // inputs
-		index_jac_fg_           // outputs
-	);
-
-	// Compute index map for Hessian of Lagragian
-	compute_index_h_lag(
-		m, n, pattern_h_lag_,   // inputs
-		index_h_lag_            // outputs
-	);
 
 	// Compute Ipopt sparsity structure for Jacobian of g 
 	compute_structure_jac_g(
-		m, n, pattern_jac_fg_,                // inputs
+		index_jac_fg_, m, n,                  // inputs
 		nnz_jac_g_, iRow_jac_g_, jCol_jac_g_  // outputs
 	);
 
 	// Compute Ipopt sparsity structure for Hessian of Lagragian
 	compute_structure_h_lag(
-		m, n, pattern_h_lag_,                 // inputs
+		index_h_lag_, m, n,                   // inputs
 		nnz_h_lag_, iRow_h_lag_, jCol_h_lag_  // outputs
 	);
 
@@ -196,7 +187,7 @@ seqeunce that was previously in r_fun[k] is deleted.)
 
 // static member function that computes CppAD sparsity pattern for 
 // Jacobian of fg
-void ipopt_cppad_nlp::compute_pattern_jac_fg(
+void ipopt_cppad_nlp::compute_index_jac_fg(
 	ipopt_cppad_fg_info*  fg_info        , 
 	SizeVector&           I              ,
 	SizeVector&           J              ,
@@ -208,7 +199,7 @@ void ipopt_cppad_nlp::compute_pattern_jac_fg(
 	SizeVector&           q              ,
 	ADFunVector&          r_fun          ,
 	BoolVectorVector&     pattern_jac_r  ,
-	BoolVector&           pattern_jac_fg )
+	IndexMap&             index_jac_fg   )
 /*
 fg_info: input
 the ipopt_cppad_fg_info object that is used to compute 
@@ -253,13 +244,14 @@ For k = 0 , ... , K-1,
 on input pattern_jac_r[k], this must be a vector of length p[k] * q[k].
 On output it is the CppAD sparsity pattern for the Jacobian of r_k (u).
 
-pattern_jac_fg: output
-On input, this must be a vector of length (m+1) * n.
-On output it is the CppAD sparsity pattern for the Jacobian of fg(x).
+index_jac_fg:
+On input, this is empty; i.e., index_jac_fg.size() == 0.
+On output, it is the index mapping from (i, j) in the Jacobian of fg
+to the corresponding values array index in Ipopt. 
+Furthermore, if index_jac_fg[i].find(j) == index_jac_fg[i].end(),
+then either i = 0 or the (i, j) entry in the Jacobian of fg is always zero.
 */
 {
-	CPPAD_ASSERT_UNKNOWN( pattern_jac_fg.size() == (m+1) * n );
-
 	size_t i, j, k, ell, ir, ifg;
 
 	for(k = 0; k < K; k++)
@@ -292,6 +284,7 @@ On output it is the CppAD sparsity pattern for the Jacobian of fg(x).
 	}
 
 	// now compute pattern for fg
+	BoolVector pattern_jac_fg((m+1) * n);
 	j = (m+1) * n;
 	while(j--)
 		pattern_jac_fg[j] = false;
@@ -306,6 +299,7 @@ On output it is the CppAD sparsity pattern for the Jacobian of fg(x).
 			}
 		}
 	}
+	compute_index_jac_fg(m, n, pattern_jac_fg, index_jac_fg);
 }
 
 // static member function that computes index map from array indices
@@ -347,7 +341,7 @@ then either i = 0 or the (i, j) entry in the Jacobian of fg is always zero.
 
 // static member function that computes CppAD sparsity pattern for 
 // Hessian of Lagragian
-void ipopt_cppad_nlp::compute_pattern_h_lag(
+void ipopt_cppad_nlp::compute_index_h_lag(
 	ipopt_cppad_fg_info  *fg_info        , 
 	SizeVector&           I              ,
 	SizeVector&           J              ,
@@ -359,7 +353,7 @@ void ipopt_cppad_nlp::compute_pattern_h_lag(
 	SizeVector&           q              ,
 	ADFunVector&          r_fun          ,
 	BoolVectorVector&     pattern_r_lag  ,
-	BoolVector&           pattern_h_lag  )
+	IndexMap&             index_h_lag    )
 /*
 fg_info: input
 the ipopt_cppad_fg_info object that is used to compute 
@@ -405,13 +399,15 @@ on input pattern_r_lag[k], this must be a vector of length q[k] * q[k].
 On output it is the CppAD sparsity pattern for the Hessian of 
 a Lagragian that sums components of r_k (u).
 
-pattern_h_lag: output
-On input, this must be a vector of length n * n.
-On output it is the CppAD sparsity pattern for the Hessian of 
-a Lagragian that sums components of fg(x).
+index_h_lag:
+On input, this is empty; i.e., index_h_lag.size() == 0.
+On output, it is the index mapping from (i, j) in the Hessian of the Lagragian
+to the corresponding values array index in Ipopt. 
+Furthermore, if index_h_lag[i].find(j) == index_h_lag[i].end(),
+then either i < j or the (i, j) entry in the Hessian of the Lagragian is
+always zero.
 */
 {
-	CPPAD_ASSERT_UNKNOWN( pattern_h_lag.size() == n * n );
 	size_t i, j, k, ell;
 
 	for(k = 0; k < K; k++)
@@ -434,6 +430,7 @@ a Lagragian that sums components of fg(x).
 	}
 
 	// now compute pattern for fg
+	BoolVector pattern_h_lag(n * n);
 	j = (n * n);
 	while(j--)
 		pattern_h_lag[j] = false;
@@ -449,6 +446,7 @@ a Lagragian that sums components of fg(x).
 			}
 		}
 	}
+	compute_index_h_lag(m, n, pattern_h_lag, index_h_lag);
 }
 
 // static member function that computes index map from array indices
@@ -491,21 +489,24 @@ always zero.
 // static member function that computes the Ipopt sparsity structure for 
 // Jacobian of g
 void ipopt_cppad_nlp::compute_structure_jac_g(
+	IndexMap&         index_jac_fg   , // const does not work
 	size_t            m              ,
 	size_t            n              ,
-	const BoolVector& pattern_jac_fg ,
 	size_t&           nnz_jac_g      ,
 	SizeVector&       iRow_jac_g     ,
 	SizeVector&       jCol_jac_g     )
 /*
+index_jac_fg:
+is the index mapping from (i, j) in the Jacobian of fg
+to the corresponding values array index in Ipopt. 
+If index_jac_fg[i].find(j) == index_jac_fg[i].end(),
+then either i = 0 or the (i, j) entry in the Jacobian of fg is always zero.
+
 m: input
 The number of components in the constraint function g.
 
 n: input
 Number of indpendent variables.
-
-pattern_jac_fg: input
-The CppAD sparsity pattern for the Jacobian of fg.
 
 nnz_jac_g: output
 The number of possibly non-zero entries in the Jacobian of g.
@@ -522,45 +523,54 @@ On output it has size nnz_jac_g.
 It specifies the C column index (i.e. base one) 
 corresponding to each non-zero entry in the Jacobian of g.
 */
-{	size_t i, j, k;
+{	size_t i, j, l;
+	std::map<size_t,size_t>::iterator index_ij;
 
 	nnz_jac_g = 0;
 	for(i = 1; i <= m; i++)
 	{	for(j = 0; j < n; j++)
-			if( pattern_jac_fg[ i * n + j ] )
+		{	index_ij = index_jac_fg[i].find(j);
+			if( index_ij != index_jac_fg[i].end() )
 				++nnz_jac_g;
+		}
 	}
 	iRow_jac_g.resize( nnz_jac_g );
 	jCol_jac_g.resize( nnz_jac_g );
-	k = 0;
+	l = 0;
 	for(i = 1; i <= m; i++)
 	{	for(j = 0; j < n; j++)
-			if( pattern_jac_fg[ i * n + j ] )
-			{	iRow_jac_g[k] = i - 1;
-				jCol_jac_g[k] = j;
-				k++;
+		{	index_ij = index_jac_fg[i].find(j);
+			if( index_ij != index_jac_fg[i].end() )
+			{	iRow_jac_g[l] = i - 1;
+				jCol_jac_g[l] = j;
+				l++;
 			}
+		}
 	}
 }
 
 // static member function that computes the Ipopt sparsity structure for 
 // Hessian of Lagragian
 void ipopt_cppad_nlp::compute_structure_h_lag(
+	IndexMap&         index_h_lag    , // const does not work
 	size_t             m             ,
 	size_t             n             ,
-	const BoolVector& pattern_h_lag  ,
 	size_t&           nnz_h_lag      ,
 	SizeVector&       iRow_h_lag     ,
 	SizeVector&       jCol_h_lag     )
 /*
+index_h_lag:
+is the index mapping from (i, j) in the Hessian of the Lagragian
+to the corresponding values array index in Ipopt. 
+If index_h_lag[i].find(j) == index_h_lag[i].end(),
+then either i < j or the (i, j) entry in the Hessian of the Lagragian is
+always zero.
+
 m: input
 The number of components in the constraint function g.
 
 n: input
 Number of indpendent variables.
-
-pattern_jac_fg: input
-The CppAD sparsity pattern for the Hessian of the Lagragian.
 
 nnz_h_lag: output
 The number of possibly non-zero entries in the Hessian of the Lagragian.
@@ -577,24 +587,29 @@ On output it has size nnz_h_lag.
 It specifies the C column index (i.e. base one) 
 corresponding to each non-zero entry in the Hessian of the Lagragian.
 */
-{	size_t i, j, k;
+{	size_t i, j, l;
+	std::map<size_t,size_t>::iterator index_ij;
 
 	nnz_h_lag = 0;
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j <= i; j++)
-			if( pattern_h_lag[ i * n + j ] )
+		{	index_ij = index_h_lag[i].find(j);
+			if( index_ij != index_h_lag[i].end() )
 				++nnz_h_lag;
+		}
 	}
 	iRow_h_lag.resize( nnz_h_lag );
 	jCol_h_lag.resize( nnz_h_lag );
-	k = 0;
+	l = 0;
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j <= i; j++)
-			if( pattern_h_lag[ i * n + j ] )
-			{	iRow_h_lag[k] = i;
-				jCol_h_lag[k] = j;
-				k++;
+		{	index_ij = index_h_lag[i].find(j);
+			if( index_ij != index_h_lag[i].end() )
+			{	iRow_h_lag[l] = i;
+				jCol_h_lag[l] = j;
+				l++;
 			}
+		}
 	}
 }
 
@@ -860,14 +875,9 @@ bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 				{	l          = index_ij->second;
 					values[l] += jac_r[i * q_[k] + j];
 				}
-				else 
-				{	CPPAD_ASSERT_UNKNOWN(
-					! pattern_jac_fg_[ I_[i] * n + J_[j] ]
-					);
-					CPPAD_ASSERT_UNKNOWN(
+				else	CPPAD_ASSERT_UNKNOWN(
 					jac_r[i * q_[k] + j] == 0.
-					);
-				}
+				);
 			}
 		}
 	}
@@ -935,14 +945,9 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 				{	l          = index_ij->second;
 					values[l] += r_hes[i * q_[k] + j];
 				}
-				else 
-				{	CPPAD_ASSERT_UNKNOWN(
-					! pattern_h_lag_[ J_[i] * n + J_[j] ]
-					);
-					CPPAD_ASSERT_UNKNOWN(
+				else	CPPAD_ASSERT_UNKNOWN(
 					r_hes[i * q_[k] + j] == 0.
-					);
-				}
+				);
 			}
 		}
 	}

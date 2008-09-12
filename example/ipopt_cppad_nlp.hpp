@@ -804,8 +804,6 @@ private:
 	// CppAD sparsity patterns
 	BoolVectorVector                 pattern_jac_r_;
 	BoolVectorVector                 pattern_r_lag_;
-	BoolVector                       pattern_jac_fg_;
-	BoolVector                       pattern_h_lag_;
 	// Ipopt sparsity structure for Jacobian of g
 	size_t                           nnz_jac_g_;
 	SizeVector                       iRow_jac_g_;
@@ -835,7 +833,7 @@ private:
 		ADVector&             u_ad       , 
 		ADFunVector&          r_fun
 	);
-	static void compute_pattern_jac_fg(
+	static void compute_index_jac_fg(
 		ipopt_cppad_fg_info  *fg_info        , 
 		SizeVector&           I              ,
 		SizeVector&           J              ,
@@ -847,9 +845,9 @@ private:
 		SizeVector&           q              ,
 		ADFunVector&          r_fun          ,
 		BoolVectorVector&     pattern_jac_r  ,
-		BoolVector&           pattern_jac_fg 
+		IndexMap&             index_jac_fg 
 	);
-	static void compute_pattern_h_lag(
+	static void compute_index_h_lag(
 		ipopt_cppad_fg_info  *fg_info        , 
 		SizeVector&           I              ,
 		SizeVector&           J              ,
@@ -861,20 +859,20 @@ private:
 		SizeVector&           q              ,
 		ADFunVector&          r_fun          ,
 		BoolVectorVector&     pattern_r_lag  , 
-		BoolVector&           pattern_h_lag 
+		IndexMap&             index_h_hag 
 	);
 	static void compute_structure_jac_g(
+		IndexMap&             index_jac_fg   , // const does not work
 		size_t                m              ,
 		size_t                n              ,
-		const BoolVector&     pattern_jac_fg ,
 		size_t&               nnz_jac_g      ,
 		SizeVector&           iRow_jac_g     ,
 		SizeVector&           jCol_jac_g
 	);
 	static void compute_structure_h_lag(
+		IndexMap&             index_h_lag    , // const does not work
 		size_t                m              ,
 		size_t                n              ,
-		const BoolVector&     pattern_h_lag  ,
 		size_t&               nnz_h_lag      ,
 		SizeVector&           iRow_h_lag     ,
 		SizeVector&           jCol_h_lag
