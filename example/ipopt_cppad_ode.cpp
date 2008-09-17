@@ -41,6 +41,18 @@ $latex \[
 \end{array}
 \] $$
 
+$head Specific Case$$
+Most of the code below is for the general problem above but some of it
+for a specific case where
+$latex \[
+\begin{array}{rcl}
+	x_0 (t, a) & = & a_0 \exp( - a_1 t )
+	\\
+	x_1 (t, a) & = & a_0 a_1 [\exp(- a_2 t) - \exp(- a_1 t)] / (a_1 - a_2)
+\end{array}
+\] $$ 
+
+
 
 $end
 ------------------------------------------------------------------------------
@@ -54,15 +66,23 @@ typedef Ipopt::Number Number;
 // ---------------------------------------------------------------------------
 namespace { // Begin empty namespace 
 
-size_t nx = 1;    // dimension of x(t, a) for this case
-size_t na = 2;    // dimension of a for this case 
-size_t ng = 10;  // number of grid intervals with in each data interval
+size_t nx = 2;    // dimension of x(t, a) for this case
+size_t na = 3;    // dimension of a for this case 
+size_t ng = 1;    // number of grid intervals with in each data interval
+
+// function used to simulate data
+Number x_one(Number t)
+{	Number a0 = 1.; 
+	Number a1 = 1.; 
+	Number a2 = 1.; 
+	Number x_1 =  a0 + a1 * t + a2 * t * t / 2;
+	return x_1;
+}
 
 // time points were we have data
-double td[] = {       .5,      1.,       2.  }; 
-// The solution for our ODE is x(t) = a[0] * exp( -a[1] * t )
-// This data is for the case where a[0] = a[1] = 1 and there is no noise.
-double yd[] = { exp(-.5), exp(-1.), exp(-2.) };
+double td[] = {        1.,         2.,         3.  }; 
+// This data is for the case 
+double yd[] = {  x_one(1.),  x_one(2.),  x_one(3.) };
 // number of data values
 size_t nd   = sizeof(yd) / sizeof(yd[0]);
 
@@ -71,21 +91,23 @@ template <class Vector>
 Vector eval_F(Vector a)
 {	// this particual F is for the case where nx == 1 and na == 2	
 	Vector F(nx);
-	F[0] = a[0];
+	F[0] = .0;    // x_0 (t) = t
+	F[1] = a[0];  // x_1 (t) = a0 + a1 * t + a2 * t * t / 2
 	return F;
 }
-// G(t, x, a) =  x'(t, a)
+// G(x, a) =  x'(t, a)
 template <class Vector>
-Vector eval_G(Number t, Vector x , Vector a)
+Vector eval_G(Vector x , Vector a)
 {	// this particular G is for the case where nx == 1 and na == 2
 	Vector G(nx);
-	G[0] = - a[1] * x[0];
+	G[0] = 1.;                 // x_0 (t) = t
+	G[1] = a[1] + a[2] * x[0]; // x_1 (t) = a0 + a1 * t + a2 * t * t / 2
 	return G;
 } 
 // H(k, x, a) = contribution to objective at k-th data point
 template <class Scalar, class Vector>
 Scalar eval_H(size_t k, Vector x, Vector a)
-{	Scalar diff = yd[k] - x[0];
+{	Scalar diff = yd[k] - x[1];
  	return diff * diff;
 }
 
@@ -124,10 +146,11 @@ public:
 	{	size_t j;
 		// objective function case
 		if( k > nd )
-		{	ADVector r(1);
-			r[0] = 0.;
+		{	// We use a differnent k for each data interval
+			// (there may be more efficient ways to do this).
+			ADVector r(1);
 			size_t j;
-			// u is x(t) at t = td[ell]
+			// u is [x(t) , a] where t = td[ell]
 			ADVector xJ(nx), a(na);
 			for(j = 0; j < nx; j++)
 				xJ[j] = u[j];
@@ -136,7 +159,6 @@ public:
 			r[0] = eval_H<ADNumber>(k - nd - 1, xJ, a);
 			return r;
 		}
-		Number s = 0.; // not used
 		ADVector xJ(nx), xJ1(nx), a(na);
 		Number dtg;
 		if( k == nd )
@@ -160,14 +182,12 @@ public:
 			}
 			for(j = 0; j < na; j++)
 				a[j] = u[2 * nx + j];
-			// We use a differnent k for each data interval
-			// (there may be more efficient ways to do this).
 			if( k == 0 )
 				dtg = (td[0] - 0.) / Number(ng);
 			else	dtg = (td[k] - td[k-1]) / Number(ng);
 		}
-		ADVector GJ   = eval_G(s, xJ,  a);
-		ADVector GJ1  = eval_G(s, xJ1, a);
+		ADVector GJ   = eval_G(xJ,  a);
+		ADVector GJ1  = eval_G(xJ1, a);
 		ADVector r(nx);
 		for(j = 0; j < nx; j++)
 			r[j] = xJ1[j] - xJ[j] - (GJ1[j] + GJ[j]) * dtg / 2.;
@@ -217,7 +237,7 @@ public:
 			// with x(t) at time tg[1] and x(t). Also Note that 
 			// there are ng subintervals between each data point.
 			for(j = 0; j < nx; j++)
-				J[j] = ( (k - nd) * ng - 1) * nx;
+				J[j] = ( (k - nd) * ng - 1) * nx + j;
 			// all of a (which is last na components of xa)
 			for(j = 0; j < na; j++)
 				J[nx + j] = m + j; 
@@ -272,9 +292,9 @@ bool ipopt_cppad_ode(void)
 		xa_u[J] = +1.0e19;  // no upper limit
 	}
 	for(j = 0; j < na; j++)
-	{	xa_i[m + j ] = .5;  // initiali a for optimization
-		xa_l[m + j ] =  -1.e19; // no lower limit
-		xa_u[m + j ] =  +1.e19; // no upper
+	{	xa_i[m + j ] = .5;       // initiali a for optimization
+		xa_l[m + j ] =  -1.e19;  // no lower limit
+		xa_u[m + j ] =  +1.e19;  // no upper
 	}
 	// all of the difference equations are contrianed to the value zero
 	NumberVector g_l(m), g_u(m);
@@ -326,17 +346,15 @@ bool ipopt_cppad_ode(void)
 		ok    &= status == Ipopt::Solve_Succeeded;
 
 		// Check some of the return values
-		double rel_tol   = 1e-3;
-		double abs_tol   = 1e-3;
-		double check_a[] = {1., 1.};
+		Number rel_tol = 1e-6;
+		Number abs_tol = 1e-6;
+		double check_a[] = {1., 1., 1.}; // see the x_one function
 		for(j = 0; j < na; j++)
 		{
 			ok &= CppAD::NearEqual( 
 				check_a[j], solution.x[m+j], rel_tol, abs_tol
 			);
 		}
-		rel_tol = 1e-6;
-		abs_tol = 1e-6;
 
 		// split out return values
 		NumberVector a(na), x0(nx), x1(nx), x2(nx);
@@ -349,8 +367,8 @@ bool ipopt_cppad_ode(void)
 		} 
 		//
 		// check the initial difference equation
-		NumberVector G0 = eval_G(0., x0, a);
-		NumberVector G1 = eval_G(0., x1, a);
+		NumberVector G0 = eval_G(x0, a);
+		NumberVector G1 = eval_G(x1, a);
 		Number dtg = td[0] / Number(ng);
 		for(j = 0; j < nx; j++)
 		{	Number check = x1[j] - x0[j]-(G1[j]+G0[j])*dtg/2;
@@ -358,7 +376,7 @@ bool ipopt_cppad_ode(void)
 		}
 		//
 		// check the second difference equation
-		NumberVector G2 = eval_G(0., x2, a);
+		NumberVector G2 = eval_G(x2, a);
 		if( ng == 1 )
 			dtg = (td[1] - td[0]) / Number(ng);
 		for(j = 0; j < nx; j++)
@@ -371,7 +389,9 @@ bool ipopt_cppad_ode(void)
 		NumberVector xk(nx);
 		for(size_t k = 0; k < nd; k++)
 		{	for(j = 0; j < nx; j++)
-				xk[j] =  solution.x[(k+1) * ng - 1 + j];
+			{	size_t grid_point = (k + 1) * ng;
+				xk[j] =  solution.x[(grid_point-1) * nx + j];
+			}
 			check += eval_H<Number>(k, xk, a);
 		}
 		Number obj_value = solution.obj_value;

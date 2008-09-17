@@ -46,9 +46,8 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 09-17$$
-Changed $cref/ipopt_cppad_ode.cpp/$$ to the exponential case
-$latex x(t) = a_0 \exp ( - a_1 t )$$ (instead of the linear case
-$latex x(t) = a_0 + a_1 t$$).
+Changed $cref/ipopt_cppad_ode.cpp/$$ to a case where there are
+two components in the ODE (instead of one).
 Also removed an initialization section that was only intended for tests
 with a specific initial value.
 
