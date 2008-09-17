@@ -259,10 +259,10 @@ The $code ipopt_cppad_fg_info$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.
 $icode%K% = 1%$$.
 
-$subhead fg_info->r_eval$$
+$subhead fg_info->eval_r$$
 This member function has the prototype
 $codei%
-virtual ADVector ipopt_cppad_fg_info::r_eval(size_t %k%, const ADVector& %u%) = 0;
+virtual ADVector ipopt_cppad_fg_info::eval_r(size_t %k%, const ADVector& %u%) = 0;
 %$$
 This prototype is pure virtual and hence it must be defined in the 
 derived class $icode FG_info$$.
@@ -277,7 +277,7 @@ $icode u$$ is an $code ADVector$$ of size $icode q(k)$$
 and $icode r$$ is an $code ADVector$$ of size $icode p(k)$$
 the syntax
 $codei%
-	%r% = %fg_info%->r_eval(%k%, %u%)
+	%r% = %fg_info%->eval_r(%k%, %u%)
 %$$
 set $icode r$$ to the vector $latex r_k (u)$$.
 
@@ -536,13 +536,19 @@ It is the final value of the objective function $latex f(x)$$.
 
 
 $children%
-	example/ipopt_cppad.cpp
+	example/ipopt_cppad.cpp%
+	example/ipopt_cppad_ode.cpp
 %$$
 
 $head Example$$
 The file 
 $cref/ipopt_cppad.cpp/$$ is an example and test of $code ipopt_cppad_nlp$$.
-It returns true if it succeeds and false otherwise.
+that uses the 
+$cref/simple representation/ipopt_cppad_nlp/Simple Representation/$$.
+The file
+$cref/ipopt_cppad_ode.cpp/$$ is a more complex example that optimizes
+the solution of an ordinary differential equation.
+They return true if they succeed and false otherwise.
 
 $end
 -----------------------------------------------------------------------------
@@ -580,8 +586,8 @@ public:
 	// number_functions: for simple representation 
 	virtual size_t number_functions(void)
 	{	return 1; }
-	// r_eval: pure virtual so that it must be defined by derived class
-	virtual ADVector r_eval(size_t k, const ADVector& u) = 0;
+	// eval_r: pure virtual so that it must be defined by derived class
+	virtual ADVector eval_r(size_t k, const ADVector& u) = 0;
 	// retape: default definition 
 	virtual bool retape(size_t k)
 	{	return true; }

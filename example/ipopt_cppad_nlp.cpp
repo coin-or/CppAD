@@ -65,17 +65,6 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 		retape_any |= retape_[k];
 		pattern_jac_r_[k].resize( p_[k] * q_[k] );
 		pattern_r_lag_[k].resize( q_[k] * q_[k] );
-		if( ! retape_[k] )
-		{	// Record both r_k (u) 
-			// (operation sequence does not depend on value of u).
-			ADVector u_ad(q_[k]);
-			for(j = 0; j < q_[k]; j++)
-				u_ad[j] = 0.;
-			record_r_fun(
-				fg_info_, k, p_, q_, u_ad, // inputs
-				r_fun_                     // outputs
-			);
-		}
 	}
 	I_.resize(max_p);
 	J_.resize(max_q);
@@ -89,15 +78,34 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 		for( j = 0; j < q_[k]; j++)
 			J_[j] = n; // an invalid domain index
 		fg_info->index(k, ell, I_, J_);	
-		for( i = 0; i < p_[k]; i++) CPPAD_ASSERT_KNOWN( I_[i] <= m,
+		for( i = 0; i < p_[k]; i++) if( I_[i] > m )
+		{	std::cerr << "k=" << k << ", ell=" << ell 
+			<< ", I[" << i << "]=" << I_[i] << std::endl;
+		 	CPPAD_ASSERT_KNOWN( I_[i] <= m,
 			"ipopt_cppad_nlp: invalid value in index vector I"
-		);
-		for( j = 0; j < q_[k]; j++) CPPAD_ASSERT_KNOWN( J_[j] < n,
+			);
+		}
+		for( j = 0; j < q_[k]; j++) if( J_[j] >= n )
+		{	std::cerr << "k=" << k << ", ell=" << ell 
+			<< ", J[" << j << "]=" << J_[j] << std::endl;
+			CPPAD_ASSERT_KNOWN( J_[j] < n,
 			"ipopt_cppad_nlp: invalid value in index vector J"
-		);
+			);
+		}
 	}
 # endif
-
+	for(k = 0; k < K_; k++) if( ! retape_[k] )
+	{	// Record r_k (u): operation sequence does not depend on value 
+		// of u but record at initial value to make debugging easier.
+		fg_info->index(k, 0, I_, J_);
+		ADVector u_ad(q_[k]);
+		for(j = 0; j < q_[k]; j++)
+			u_ad[j] = x_i[ J_[j] ];
+		record_r_fun(
+			fg_info_, k, p_, q_, u_ad, // inputs
+			r_fun_                     // outputs
+		);
+	}
 	if ( retape_any )
 	{	// true sparsity pattern valid for all x is unknown
 		BoolVector pattern_jac_fg((m+1) * n);
@@ -175,13 +183,14 @@ and the algorithm used by fg_info, is stored in r_fun[k]. (Any operation
 seqeunce that was previously in r_fun[k] is deleted.)
 */
 {	CPPAD_ASSERT_UNKNOWN( u_ad.size() == size_t(q[k]) );
-	// vector of dependent variables during function recording
-	ADVector r_ad(p[k]);
 	// start the recording
 	CppAD::Independent(u_ad);
-	// record operations for r(u)
-	r_ad = fg_info->r_eval(k, u_ad);
-	// stop the resording and store operation sequence in r_fun
+	// vector of dependent variables during function recording
+	ADVector r_ad = fg_info->eval_r(k, u_ad);
+	CPPAD_ASSERT_KNOWN( r_ad.size() == p[k] ,
+		"ipopt_cppad_nlp: eval_r return value size not equal to p[k]."
+	);
+	// stop the recording and store operation sequence in r_fun
 	r_fun[k].Dependent(u_ad, r_ad);
 }
 
@@ -686,7 +695,7 @@ bool ipopt_cppad_nlp::eval_f(
 		for(iobj = 0; iobj < p_[k]; iobj++) if( I_[iobj] == 0 )
 		{	if( (new_x || K_ > 1)  && retape_[k] )
 			{	// Record r_k for value of u corresponding to x
-				ADVector u_ad(q_[0]);
+				ADVector u_ad(q_[k]);
 				for(j = 0; j < q_[k]; j++)
 				{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
 					u_ad[j] = x[ J_[j] ];

@@ -30,7 +30,7 @@ ADOLC_FLAGS       =
 endif
 #
 if CppAD_IPOPT
-IPOPT_SRC_FILES   = ipopt_cppad_nlp.cpp ipopt_cppad.cpp
+IPOPT_SRC_FILES   = ipopt_cppad_nlp.cpp ipopt_cppad.cpp ipopt_cppad_ode.cpp
 IPOPT_EXTRA_FILES =
 IPOPT_INCLUDE     = -I$(IPOPT_DIR)/include
 IPOPT_LIB         = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
@@ -38,7 +38,7 @@ IPOPT_LIB_DIR     = -L$(IPOPT_DIR)/lib
 IPOPT_FLAGS       = -DCPPAD_IPOPT_EXAMPLES
 else
 IPOPT_SRC_FILES   = 
-IPOPT_EXTRA_FILES = ipopt_cppad_nlp.cpp ipopt_cppad.cpp
+IPOPT_EXTRA_FILES = ipopt_cppad_nlp.cpp ipopt_cppad.cpp ipopt_cppad_ode.cpp
 IPOPT_INCLUDE     =
 IPOPT_LIB         = 
 endif

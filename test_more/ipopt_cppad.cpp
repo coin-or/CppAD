@@ -21,7 +21,7 @@ public:
 	{ }
 	// Evaluation of the objective f(x), and constraints g(x)
 	// using an Algorithmic Differentiation (AD) class.
-	ADVector r_eval(size_t k, const ADVector&  x)
+	ADVector eval_r(size_t k, const ADVector&  x)
 	{	ADVector fg(2);
 
 		// f(x)
@@ -129,7 +129,7 @@ public:
 	{ }
 	// Evaluation of the objective f(x), and constraints g(x)
 	// using an Algorithmic Differentiation (AD) class.
-	ADVector r_eval(size_t k, const ADVector&  u)
+	ADVector eval_r(size_t k, const ADVector&  u)
 	{
 
 		// Fortran style indexing 
@@ -339,7 +339,7 @@ public:
 	// retape function
 	bool retape(size_t k)
 	{	return retape_; }
-	ADVector r_eval(size_t k, const ADVector&  u)
+	ADVector eval_r(size_t k, const ADVector&  u)
 	{
 		assert( u.size() == 1 );
 		ADVector r(1);

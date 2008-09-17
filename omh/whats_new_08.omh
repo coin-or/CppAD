@@ -45,6 +45,12 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-16$$
+Add $cref/ipopt_cppad_ode.cpp/$$, an example and test
+that optimizes the solution of an ODE.
+Change $code r_eval$$ to $code eval_r$$ in $cref/ipopt_cppad_nlp/$$.
+Fix a dimension of $code u_ad$$ error in $code ipopt_cppad_nlp$$.
+
 $head 09-12$$
 Converted from storing full Hessian and Jacobian to a sparse data structure
 in $cref/ipopt_cppad_nlp/$$.

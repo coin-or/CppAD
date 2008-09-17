@@ -67,7 +67,7 @@ namespace {
 		{ }
 		// Evaluation of the objective f(x), and constraints g(x)
 		// using an Algorithmic Differentiation (AD) class.
-		ADVector r_eval(size_t k, const ADVector&  x)
+		ADVector eval_r(size_t k, const ADVector&  x)
 		{	ADVector fg(3);
 
 			// Fortran style indexing 

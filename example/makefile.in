@@ -43,16 +43,17 @@ CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES = test_one.sh
 PROGRAMS = $(noinst_PROGRAMS)
 am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
-	ipopt_cppad_nlp.cpp ipopt_cppad.cpp example.cpp abs.cpp \
-	acos.cpp add.cpp add_eq.cpp asin.cpp atan.cpp atan_2.cpp \
-	base_adolc.hpp bender_quad.cpp bool_fun.cpp vector_bool.cpp \
-	check_numeric_type.cpp check_simple_vector.cpp compare.cpp \
-	compare_change.cpp complex_poly.cpp cond_exp.cpp copy_ad.cpp \
-	copy_base.cpp cos.cpp cosh.cpp cppad_vector.cpp default.cpp \
-	div.cpp div_eq.cpp eq.cpp equal_op_seq.cpp erf.cpp \
-	error_handler.cpp exp.cpp for_one.cpp for_two.cpp forward.cpp \
-	for_sparse_jac.cpp fun_check.cpp hes_lagrangian.cpp \
-	hes_lu_det.cpp hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
+	ipopt_cppad_nlp.cpp ipopt_cppad.cpp ipopt_cppad_ode.cpp \
+	example.cpp abs.cpp acos.cpp add.cpp add_eq.cpp asin.cpp \
+	atan.cpp atan_2.cpp base_adolc.hpp bender_quad.cpp \
+	bool_fun.cpp vector_bool.cpp check_numeric_type.cpp \
+	check_simple_vector.cpp compare.cpp compare_change.cpp \
+	complex_poly.cpp cond_exp.cpp copy_ad.cpp copy_base.cpp \
+	cos.cpp cosh.cpp cppad_vector.cpp default.cpp div.cpp \
+	div_eq.cpp eq.cpp equal_op_seq.cpp erf.cpp error_handler.cpp \
+	exp.cpp for_one.cpp for_two.cpp forward.cpp for_sparse_jac.cpp \
+	fun_check.cpp hes_lagrangian.cpp hes_lu_det.cpp \
+	hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
 	ipopt_cppad_nlp.hpp independent.cpp integer.cpp \
 	interface_2c.cpp interp_onetape.cpp interp_retape.cpp \
 	jac_lu_det.cpp jac_minor_det.cpp jacobian.cpp log.cpp \
@@ -73,7 +74,8 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
 @CppAD_IPOPT_TRUE@am__objects_2 = ipopt_cppad_nlp.$(OBJEXT) \
-@CppAD_IPOPT_TRUE@	ipopt_cppad.$(OBJEXT)
+@CppAD_IPOPT_TRUE@	ipopt_cppad.$(OBJEXT) \
+@CppAD_IPOPT_TRUE@	ipopt_cppad_ode.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	example.$(OBJEXT) abs.$(OBJEXT) acos.$(OBJEXT) add.$(OBJEXT) \
 	add_eq.$(OBJEXT) asin.$(OBJEXT) atan.$(OBJEXT) \
@@ -268,8 +270,8 @@ top_srcdir = @top_srcdir@
 @CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_EXAMPLES
 @CppAD_IPOPT_FALSE@IPOPT_SRC_FILES = 
 #
-@CppAD_IPOPT_TRUE@IPOPT_SRC_FILES = ipopt_cppad_nlp.cpp ipopt_cppad.cpp
-@CppAD_IPOPT_FALSE@IPOPT_EXTRA_FILES = ipopt_cppad_nlp.cpp ipopt_cppad.cpp
+@CppAD_IPOPT_TRUE@IPOPT_SRC_FILES = ipopt_cppad_nlp.cpp ipopt_cppad.cpp ipopt_cppad_ode.cpp
+@CppAD_IPOPT_FALSE@IPOPT_EXTRA_FILES = ipopt_cppad_nlp.cpp ipopt_cppad.cpp ipopt_cppad_ode.cpp
 @CppAD_IPOPT_TRUE@IPOPT_EXTRA_FILES = 
 @CppAD_IPOPT_FALSE@IPOPT_INCLUDE = 
 @CppAD_IPOPT_TRUE@IPOPT_INCLUDE = -I$(IPOPT_DIR)/include
@@ -503,6 +505,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interp_retape.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad_nlp.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad_ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jac_lu_det.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jac_minor_det.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jacobian.Po@am__quote@
