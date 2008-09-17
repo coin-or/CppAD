@@ -45,6 +45,13 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-17$$
+Changed $cref/ipopt_cppad_ode.cpp/$$ to the exponential case
+$latex x(t) = a_0 \exp ( - a_1 t )$$ (instead of the linear case
+$latex x(t) = a_0 + a_1 t$$).
+Also removed an initialization section that was only intended for tests
+with a specific initial value.
+
 $head 09-16$$
 Add $cref/ipopt_cppad_ode.cpp/$$, an example and test
 that optimizes the solution of an ODE.

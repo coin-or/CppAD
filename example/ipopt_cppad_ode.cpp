@@ -24,19 +24,23 @@ $cref/ipopt_cppad_nlp/$$
 enables one to represent an optimization problem
 with a large number of variables and constraints in terms of functions
 with a few domain and range variables.
-This is an example of using such a representation to solve the problem
+This is a demonstration of how to use this representation.
+
+$head General Problem$$
+This example solves a problem of the form
 $latex \[
 {\rm minimize} \; 
-	\sum_{j=1}^N [ x( t_j , a ) - y_j ]^2 \;
+	\sum_{j=1}^N H_j [ j ,  x( t_j , a ) , a ] \;
 		{\rm with \; respect \; to} \; a \in \R^p
 \] $$
 where $latex x(t)$$ is the solution of the ODE
 $latex \[
 \begin{array}{rcl}
 	x(0, a)  & = &  F(a)                 \\
-	x'(t, a) & = & G[ t , x(t) , a ]
+	x'(t, a) & = & G[ t , x(t, a) , a ]
 \end{array}
 \] $$
+
 
 $end
 ------------------------------------------------------------------------------
@@ -52,12 +56,13 @@ namespace { // Begin empty namespace
 
 size_t nx = 1;    // dimension of x(t, a) for this case
 size_t na = 2;    // dimension of a for this case 
-size_t ng = 1;   // number of grid intervals for each data interval
+size_t ng = 10;  // number of grid intervals with in each data interval
 
 // time points were we have data
-double td[] = { 1., 2.}; 
-// corresponding data values for x(t) = 1 + t with no noise
-double yd[] = { 2., 3. };
+double td[] = {       .5,      1.,       2.  }; 
+// The solution for our ODE is x(t) = a[0] * exp( -a[1] * t )
+// This data is for the case where a[0] = a[1] = 1 and there is no noise.
+double yd[] = { exp(-.5), exp(-1.), exp(-2.) };
 // number of data values
 size_t nd   = sizeof(yd) / sizeof(yd[0]);
 
@@ -71,12 +76,18 @@ Vector eval_F(Vector a)
 }
 // G(t, x, a) =  x'(t, a)
 template <class Vector>
-Vector eval_G(Number t, Vector x , Vector a )
+Vector eval_G(Number t, Vector x , Vector a)
 {	// this particular G is for the case where nx == 1 and na == 2
 	Vector G(nx);
-	G[0] = a[1];
+	G[0] = - a[1] * x[0];
 	return G;
 } 
+// H(k, x, a) = contribution to objective at k-th data point
+template <class Scalar, class Vector>
+Scalar eval_H(size_t k, Vector x, Vector a)
+{	Scalar diff = yd[k] - x[0];
+ 	return diff * diff;
+}
 
 /* Index plan:
 Time grid:
@@ -117,14 +128,12 @@ public:
 			r[0] = 0.;
 			size_t j;
 			// u is x(t) at t = td[ell]
-			ADVector xJ(nx);
+			ADVector xJ(nx), a(na);
 			for(j = 0; j < nx; j++)
 				xJ[j] = u[j];
-			// Next line is particular to case where nx == 1.
-			// We use a different k for each data value (there may
-			// be more efficient ways to do this).
-			ADNumber residual  = xJ[0] - yd[k - nd - 1];
-			r[0]       += residual * residual;
+			for(j = 0; j < na; j++)
+				a[j] = u[nx + j];
+			r[0] = eval_H<ADNumber>(k - nd - 1, xJ, a);
 			return r;
 		}
 		Number s = 0.; // not used
@@ -171,7 +180,7 @@ public:
 	// size of the vector u in eval_r
 	size_t domain_size(size_t k)
 	{	if( k > nd )
-			return nx;       // objective function
+			return nx + na;   // objective function
 		if( k == nd )
 			return nx + na;  // initial difference equation
 		return 2 * nx + na;      // other difference equations
@@ -203,10 +212,15 @@ public:
 		if( k > nd )
 		{	// the first component of fg	
 			I[0] = 0;
-			// u is x(t) at t = td[j]; i.e. tg[(j+1)*ng]
-			// note that the xa starts with x(t) at time tg[1]
+			// The first nx components of u is x(t) at t = td[j]; 
+			// i.e. at time tg[(j+1)*ng]. Note that the xa starts 
+			// with x(t) at time tg[1] and x(t). Also Note that 
+			// there are ng subintervals between each data point.
 			for(j = 0; j < nx; j++)
 				J[j] = ( (k - nd) * ng - 1) * nx;
+			// all of a (which is last na components of xa)
+			for(j = 0; j < na; j++)
+				J[nx + j] = m + j; 
 			return;
 		}
 		// special grid equaiton for initial value
@@ -269,18 +283,9 @@ bool ipopt_cppad_ode(void)
 		g_u[I] = 0.;
 	}
 	// derived class object
-# if 0
-	for(size_t icase = 0; icase <= 1; icase++)
-	{	// both true and false should work, but false should be faster
-# else
 	
-	for(size_t icase = 0; icase <= 0; icase++)
+	for(size_t icase = 0; icase <= 1; icase++)
 	{
-		xa_i[0] =  0.418523;
-		xa_i[1] = 0.0165896;
-		xa_i[2] = 0.0833253;
-		xa_i[3] = -6.67926;
-# endif
 		bool retape = bool(icase);
 
 		// object defining the objective f(x) and constraints g(x)
@@ -300,7 +305,7 @@ bool ipopt_cppad_ode(void)
 		app->Options()->SetIntegerValue("print_level", -2);
 
 		// maximum number of iterations
-		app->Options()->SetIntegerValue("max_iter", 10);
+		app->Options()->SetIntegerValue("max_iter", 20);
 
 		// approximate accuracy in first order necessary conditions;
 		// see Mathematical Programming, Volume 106, Number 1, 
@@ -321,8 +326,8 @@ bool ipopt_cppad_ode(void)
 		ok    &= status == Ipopt::Solve_Succeeded;
 
 		// Check some of the return values
-		double rel_tol   = 1e-6;
-		double abs_tol   = 1e-6;
+		double rel_tol   = 1e-3;
+		double abs_tol   = 1e-3;
 		double check_a[] = {1., 1.};
 		for(j = 0; j < na; j++)
 		{
@@ -330,6 +335,8 @@ bool ipopt_cppad_ode(void)
 				check_a[j], solution.x[m+j], rel_tol, abs_tol
 			);
 		}
+		rel_tol = 1e-6;
+		abs_tol = 1e-6;
 
 		// split out return values
 		NumberVector a(na), x0(nx), x1(nx), x2(nx);
@@ -360,14 +367,15 @@ bool ipopt_cppad_ode(void)
 		}
 		//
 		// check the objective function (specialized to this case)
-		assert( nx == 1 );
-		Number sum_sq = 0.;
+		Number check = 0.;
+		NumberVector xk(nx);
 		for(size_t k = 0; k < nd; k++)
-		{	Number xk =  solution.x[(k+1) * ng - 1];
-			sum_sq += (xk - yd[k]) * (xk - yd[k]);
+		{	for(j = 0; j < nx; j++)
+				xk[j] =  solution.x[(k+1) * ng - 1 + j];
+			check += eval_H<Number>(k, xk, a);
 		}
 		Number obj_value = solution.obj_value;
-		ok &= CppAD::NearEqual(sum_sq, obj_value, rel_tol, abs_tol);
+		ok &= CppAD::NearEqual(check, obj_value, rel_tol, abs_tol);
 	}
 	return ok;
 }
