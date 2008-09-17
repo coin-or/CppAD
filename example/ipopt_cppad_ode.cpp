@@ -42,16 +42,8 @@ $latex \[
 \] $$
 
 $head Specific Case$$
-Most of the code below is for the general problem above but some of it
-for a specific case where
-$latex \[
-\begin{array}{rcl}
-	x_0 (t, a) & = & a_0 \exp( - a_1 t )
-	\\
-	x_1 (t, a) & = & a_0 a_1 [\exp(- a_2 t) - \exp(- a_1 t)] / (a_1 - a_2)
-\end{array}
-\] $$ 
-
+Almost all the code below is for the general problem but some of it
+for a specific case defined by the function $code x_one(t)$$.
 
 
 $end
@@ -68,7 +60,7 @@ namespace { // Begin empty namespace
 
 size_t nx = 2;    // dimension of x(t, a) for this case
 size_t na = 3;    // dimension of a for this case 
-size_t ng = 1;    // number of grid intervals with in each data interval
+size_t ng = 5;    // number of grid intervals with in each data interval
 
 // function used to simulate data
 Number x_one(Number t)
