@@ -45,11 +45,16 @@ $head Specific Case$$
 Almost all the code below is for the general problem but some of it
 for a specific case defined by the function $code x_one(t)$$.
 
+$head Source Code$$
+$code
+$verbatim%example/ipopt_cppad_ode.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$$
+
 
 $end
 ------------------------------------------------------------------------------
 */
-
+// BEGIN PROGRAM
 # include "ipopt_cppad_nlp.hpp"
 
 // include a definition for Number.
@@ -58,16 +63,18 @@ typedef Ipopt::Number Number;
 // ---------------------------------------------------------------------------
 namespace { // Begin empty namespace 
 
-size_t nx = 2;    // dimension of x(t, a) for this case
-size_t na = 3;    // dimension of a for this case 
-size_t ng = 5;    // number of grid intervals with in each data interval
+size_t nx = 2;   // dimension of x(t, a) for this case
+size_t na = 3;   // dimension of a for this case 
+size_t ng = 5;   // number of grid intervals with in each data interval
+
+// parameter vector component values used during simulation
+Number a0 = 1.;
+Number a1 = 2.; 
+Number a2 = 1.; 
 
 // function used to simulate data
 Number x_one(Number t)
-{	Number a0 = 1.; 
-	Number a1 = 1.; 
-	Number a2 = 1.; 
-	Number x_1 =  a0 + a1 * t + a2 * t * t / 2;
+{	Number x_1 =  a0 * a1 * (exp(-a2 * t) - exp(-a1 * t)) / (a1 - a2);
 	return x_1;
 }
 
@@ -81,25 +88,30 @@ size_t nd   = sizeof(yd) / sizeof(yd[0]);
 // F(a) = x(0, a)
 template <class Vector>
 Vector eval_F(Vector a)
-{	// this particual F is for the case where nx == 1 and na == 2	
+{	// This particual F is a case where nx == 2 and na == 3	
 	Vector F(nx);
-	F[0] = .0;    // x_0 (t) = t
-	F[1] = a[0];  // x_1 (t) = a0 + a1 * t + a2 * t * t / 2
+	// x_0 (t) = a[0]*exp(-a[1] * t)
+	F[0] = a[0];
+	// x_1 (t) = a[0]*a[1]*(exp(-a[2] * t) - exp(-a[1] * t))/(a[1] - a[2])
+	F[1] = 0.; 
 	return F;
 }
 // G(x, a) =  x'(t, a)
 template <class Vector>
 Vector eval_G(Vector x , Vector a)
-{	// this particular G is for the case where nx == 1 and na == 2
+{	// This particular G is for a case where nx == 2 and na == 3
 	Vector G(nx);
-	G[0] = 1.;                 // x_0 (t) = t
-	G[1] = a[1] + a[2] * x[0]; // x_1 (t) = a0 + a1 * t + a2 * t * t / 2
+	// x_0 (t) = a[0]*exp(-a[1] * t)
+	G[0] = -a[1] * x[0];  
+	// x_1 (t) = a[0]*a[1]*(exp(-a[2] * t) - exp(-a[1] * t))/(a[1] - a[2])
+	G[1] = - G[0] - a[2] * x[1]; 
 	return G;
 } 
 // H(k, x, a) = contribution to objective at k-th data point
 template <class Scalar, class Vector>
 Scalar eval_H(size_t k, Vector x, Vector a)
-{	Scalar diff = yd[k] - x[1];
+{	// This particular H is for a case where x_1 (t) is measured
+	Scalar diff = yd[k] - x[1];
  	return diff * diff;
 }
 
@@ -107,21 +119,22 @@ Scalar eval_H(size_t k, Vector x, Vector a)
 Time grid:
 For k = 0,...,nd - 1, dtg[k] = (td[k] - td[k-1]) / ng where td[-1] is 
 interpreted as zero. For k = 0 , ... , nd-1 and ell = 0 , ... , ng-1,
-        tg[k*ng+ell] = td[k-1] + dtg[k] * ell
+        tg[k * ng + ell] = td[k-1] + dtg[k] * ell
 
 xa
 The value of x(t) at t = tg[0] is given by the first nx components of
-the vector a (which is store in the last nx components of the vector xa).
+the vector a (which is store in the last na components of the vector xa).
 For J > 0, the value of x(t) at t = tg[J] is given by
 	xJ = ( xa[(J-1)*nx] , ... , xa[J*nx -1] ) 
 We use the following difference approximation to solution of ODE
-	0 = x_{J+1} - x_J - [G(x_{J+1}, a) + G(x_J , a)] * dtg[k]
+	0 = x_{J+1} - x_J - [G(x_{J+1}, a) + G(x_J , a)] * dtg[k] / 2
 where J > 0 and k is chosen so that td[k-1] <= tg[J] < td[k].
 
 k:
 0 < k < nd is for two sided difference equations.  Note that there is one less 
-such equation for k = 0.  k = nd is for the initial difference equation.
-k = nd + 1 , ... , nd + nd is for the objective function.
+such equation for k = 0.  k = nd is used for the initial difference equation.
+k = nd + 1 , ... , nd + nd is used for the objective function contribution
+corresponding to the data pair (td[k-nd-1], yd[k-nd-1]).
 */
 class my_FG_info : public ipopt_cppad_fg_info
 {
@@ -297,7 +310,8 @@ bool ipopt_cppad_ode(void)
 	// derived class object
 	
 	for(size_t icase = 0; icase <= 1; icase++)
-	{
+	{	// Retaping is slow, so only do icase = 0 for large values 
+		// of ng.
 		bool retape = bool(icase);
 
 		// object defining the objective f(x) and constraints g(x)
@@ -324,7 +338,8 @@ bool ipopt_cppad_ode(void)
 		// Pages 25-57, Equation (6)
 		app->Options()->SetNumericValue("tol", 1e-9);
 
-		// derivative testing (this is very slow for large problems)
+		// Derivative testing is very slow for large problems
+		// so comment this out if you use a large value for ng.
 		app->Options()-> SetStringValue(
 			"derivative_test", "second-order"
 		);
@@ -338,15 +353,17 @@ bool ipopt_cppad_ode(void)
 		ok    &= status == Ipopt::Solve_Succeeded;
 
 		// Check some of the return values
-		Number rel_tol = 1e-6;
-		Number abs_tol = 1e-6;
-		double check_a[] = {1., 1., 1.}; // see the x_one function
+		Number rel_tol = 1e-2; // use a larger value of ng
+		Number abs_tol = 1e-2; // to get better accuracy here.
+		Number check_a[] = {a0, a1, a2}; // see the x_one function
 		for(j = 0; j < na; j++)
 		{
 			ok &= CppAD::NearEqual( 
 				check_a[j], solution.x[m+j], rel_tol, abs_tol
 			);
 		}
+		rel_tol = 1e-9;
+		abs_tol = 1e-9;
 
 		// split out return values
 		NumberVector a(na), x0(nx), x1(nx), x2(nx);
@@ -391,3 +408,4 @@ bool ipopt_cppad_ode(void)
 	}
 	return ok;
 }
+// END PROGRAM

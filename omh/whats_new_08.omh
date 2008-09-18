@@ -45,6 +45,12 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-18$$
+Changed $cref/ipopt_cppad_ode.cpp/$$ to a case where $latex x(t)$$
+is a pair of exponential functions instead of a linear and quadratic.
+Fixed some of the comments in this example and included the source
+code in the documentation (which was missing by mistake).
+
 $head 09-17$$
 Changed $cref/ipopt_cppad_ode.cpp/$$ to a case where there are
 two components in the ODE (instead of one).
