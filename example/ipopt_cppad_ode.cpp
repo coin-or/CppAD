@@ -67,7 +67,7 @@ size_t nx = 2;   // dimension of x(t, a) for this case
 size_t na = 3;   // dimension of a for this case 
 size_t ng = 5;   // number of grid intervals with in each data interval
 
-// parameter vector component values used during simulation
+// parameter vector component values used to simulate data
 Number a0 = 1.;
 Number a1 = 2.; 
 Number a2 = 1.; 
@@ -79,13 +79,13 @@ Number x_one(Number t)
 }
 
 // time points were we have data
-double td[] = {        1.,         2.,         3.  }; 
-// This data is for the case 
-double yd[] = {  x_one(1.),  x_one(2.),  x_one(3.) };
+double td[] = {        .5,         1.,         1.5  }; 
+// Simulated data is for the case (no noise)
+double yd[] = {  x_one(.5),  x_one(1.),  x_one(1.5) };
 // number of data values
 size_t nd   = sizeof(yd) / sizeof(yd[0]);
 
-// F(a) = x(0, a)
+// F(a) = x(0, a); i.e., initial condition
 template <class Vector>
 Vector eval_F(Vector a)
 {	// This particual F is a case where nx == 2 and na == 3	
@@ -96,7 +96,7 @@ Vector eval_F(Vector a)
 	F[1] = 0.; 
 	return F;
 }
-// G(x, a) =  x'(t, a)
+// G(x, a) =  x'(t, a); i.e. ODE
 template <class Vector>
 Vector eval_G(Vector x , Vector a)
 {	// This particular G is for a case where nx == 2 and na == 3
@@ -151,7 +151,7 @@ public:
 	{	size_t j;
 		// objective function case
 		if( k > nd )
-		{	// We use a differnent k for each data interval
+		{	// We use a differnent k for each data point
 			// (there may be more efficient ways to do this).
 			ADVector r(1);
 			size_t j;
@@ -331,7 +331,7 @@ bool ipopt_cppad_ode(void)
 		app->Options()->SetIntegerValue("print_level", -2);
 
 		// maximum number of iterations
-		app->Options()->SetIntegerValue("max_iter", 20);
+		app->Options()->SetIntegerValue("max_iter", 30);
 
 		// approximate accuracy in first order necessary conditions;
 		// see Mathematical Programming, Volume 106, Number 1, 
