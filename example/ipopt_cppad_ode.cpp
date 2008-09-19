@@ -12,11 +12,16 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin ipopt_cppad_ode.cpp$$
 $spell
 	CppAD
-	Ipopt
+	ipopt_cppad_nlp
 $$
 
 
 $section Fitting an Ode Using the CppAD Interface to Ipopt$$
+
+$index optimizing, ODE solution using AD$$
+$index ODE, optimizing solution using AD$$
+$index example, ipopt_cppad_nlp$$
+$index ipopt_cppad_nlp, example$$
 
 $head Purpose$$
 The CppAD interface to Ipopt 

@@ -17,9 +17,9 @@ $spell
 	IpoptDir
 	CppAD
 $$
-$index nonlinear, programming$$
-$index programming, nonlinear$$
-$index ipopt$$
+$index example, nonlinear, programming$$
+$index programming, nonlinear example$$
+$index ipopt, AD example$$
 
 $section Nonlinear Programming Using CppAD and Ipopt: Example and Test$$
 

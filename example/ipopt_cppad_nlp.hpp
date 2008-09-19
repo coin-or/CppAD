@@ -32,6 +32,12 @@ $spell
 $$
 $section Nonlinear Programming Using Ipopt and CppAD$$
 
+$index nonlinear, programming$$
+$index programming, nonlinear$$
+$index AD, nonlinear programming$$
+$index CppAD, nonlinear programming$$
+$index Ipopt, with AD$$
+
 $head Syntax$$
 $codei%# include "ipopt_cppad_nlp.hpp"
 %$$
