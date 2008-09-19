@@ -9,9 +9,10 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-copy_from_trunk="keep"     # do (frist time), keep (use current), redo
-trunk_revision="1258"      # trunk revision number that stable corresponds to
-yyyy_mm_dd="2008-08-26"    # Date corresponding to this trunk revision
+# Check in the changes to these values before running this script.
+copy_from_trunk="redo"     # do (frist time), keep (use current), redo
+trunk_revision="1292"      # trunk revision number that stable corresponds to
+yyyy_mm_dd="2008-09-19"    # Date corresponding to this trunk revision
 # -----------------------------------------------------------------------------
 echo "copy_from_trunk=$copy_from_trunk"
 echo "trunk_revision=$trunk_revision"
@@ -94,19 +95,21 @@ fi
 #
 # Automatic editing ------------------------------------------------ 
 #
-sed < build.sh > build.sh.$$ \
+sed -i new_release.sh \
+	-e "s/stable_version=.*/stable_version=\"$stable_version\""
+#
+sed -i build.sh \
 	-e "s/yyyymmdd=.*/yyyymmdd=\"$release_version\"/" \
 	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/" 
 #
-sed < svn_status.sh > svn_status.sh.$$ \
+sed -i svn_status.sh \
 	-e '/^yyyymmdd=/,$d'
 #
 dir="http://www.coin-or.org/download/source/CppAD"
-sed < omh/install_windows.omh.in > omh/install_windows.omh.in.$$ \
+sed -i omh/install_windows.omh.in \
 	-e "s|cppad-@VERSION@.[cg]pl.tgz|\n$dir/&%\n&|" 
 #
-dir="http://www.coin-or.org/download/source/CppAD"
-sed < omh/install_unix.omh.in > omh/install_unix.omh.in.$$ \
+sed -i omh/install_unix.omh.in \
 	-e "s|cppad-@VERSION@.[cg]pl.tgz|\n$dir/&%\n&|" 
 list="
 	build.sh
@@ -114,19 +117,8 @@ list="
 	omh/install_windows.omh.in
 	omh/install_unix.omh.in
 "
-for name in $list 
-do
-	echo "diff $name $name.$$"
-	diff $name $name.$$
-	echo "mv   $name.$$ $name"
-	if ! mv   $name.$$ $name
-	then
-		echo "Cannot set the version in $name"
-		exit 1
-	fi
-done
 #
-# Built sources ------------------------------------------------ 
+# Sources automatically changed by build.sh -------------------------------- 
 echo "./build.sh version"
 if ! ./build.sh version
 then
@@ -162,9 +154,11 @@ echo "5: Commit changes in stable/$stable_version."
 echo "6: Check did all necessary commits in stable/$version with command"
 echo "      ./svn_status.sh"
 echo
-echo "7: In stable/$stable_version run the command \"./build.sh all test\""
+echo "7: In stable/$stable_version run the command"
+echo "      ./build.sh all test"
 echo "8: If errors occur, fix stable/$stable_version and goto 5."
 echo
-echo "9: Commit the changes to trunk/new_stable.sh."
+echo "9: In stable/$stable_version check first, then run the script"
+echo "      ./new_release.sh"	
 echo
 exit 0
