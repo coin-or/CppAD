@@ -60,18 +60,19 @@ yyyymmdd=`date +%G%m%d`
 yyyy_mm_dd=`date +%G-%m-%d`
 #
 svn cat configure | sed > configure.$$ \
-	-e "s/CppAD [0-9]\{8\}/CppAD $yyyymmdd/g" \
-	-e "s/VERSION='[0-9]\{8\}'/VERSION='$yyyymmdd'/g" \
-	-e "s/configure [0-9]\{8\}/configure $yyyymmdd/g" \
-	-e "s/config.status [0-9]\{8\}/config.status $yyyymmdd/g" \
-	-e "s/\$as_me [0-9]\{8\}/\$as_me $yyyymmdd/g" 
+	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $yyyymmdd/g" \
+	-e 's/CppAD [0-9]\{8\}[.0-9]*$/&./' \
+	-e "s/VERSION='[0-9]\{8\}[.0-9]*'/VERSION='$yyyymmdd'/g" \
+	-e "s/configure [0-9]\{8\}[.0-9]*/configure $yyyymmdd/g" \
+	-e "s/config.status [0-9]\{8\}[.0-9]*/config.status $yyyymmdd/g" \
+	-e "s/\$as_me [0-9]\{8\}[.0-9]*/\$as_me $yyyymmdd/g" 
 svn cat AUTHORS | sed > AUTHORS.$$ \
 	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
 svn cat configure.ac | sed > configure.ac.$$\
-	-e "s/(CppAD, [0-9]\{8\} *,/(CppAD, $yyyymmdd,/" 
+	-e "s/(CppAD, [0-9]\{8\}[.0-9]* *,/(CppAD, $yyyymmdd,/" 
 svn cat cppad/config.h | sed > cppad/config.h.$$ \
-	-e "s/CppAD [0-9]\{8\}/CppAD $yyyymmdd/g" \
-	-e "s/VERSION \"[0-9]\{8\}\"/VERSION \"$yyyymmdd\"/g"
+	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $yyyymmdd/g" \
+	-e "s/VERSION \"[0-9]\{8\}[.0-9]*\"/VERSION \"$yyyymmdd\"/g"
 list="
 	configure
 	AUTHORS

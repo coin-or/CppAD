@@ -9,8 +9,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# Check in the changes to these values before running this script.
-copy_from_trunk="redo"     # do (frist time), keep (use current), redo
+copy_from_trunk="keep"     # do (frist time), keep (use current), redo
 trunk_revision="1292"      # trunk revision number that stable corresponds to
 yyyy_mm_dd="2008-09-19"    # Date corresponding to this trunk revision
 # -----------------------------------------------------------------------------
@@ -86,17 +85,26 @@ then
 	exit 1
 fi
 #
+# make sure that new_stable.sh corresponds to this verison 
+# (may not be same as verion in repository that was copied).
+echo "trunk/new_stable.sh stable/$stable_version/new_stable.sh"
+if ! cp trunk/new_stable.sh stable/$stable_version/new_stable.sh
+then
+	echo "Cannot change $dir/stable/$stable_version/new_stable.sh"
+	exit 1
+fi
+#
 echo "cd stable/$stable_version"
 if ! cd stable/$stable_version
 then
-	echo "Cannot create $dir/stable/$stable_version"
+	echo "Cannot change into directory $dir/stable/$stable_version"
 	exit 1
 fi
 #
 # Automatic editing ------------------------------------------------ 
 #
 sed -i new_release.sh \
-	-e "s/stable_version=.*/stable_version=\"$stable_version\""
+	-e "s/stable_version=.*/stable_version=\"$stable_version\"/"
 #
 sed -i build.sh \
 	-e "s/yyyymmdd=.*/yyyymmdd=\"$release_version\"/" \
