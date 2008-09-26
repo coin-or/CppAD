@@ -97,19 +97,19 @@ to denote the value of the maximum element in $latex I$$.
 
 $subhead Projection$$
 Given an index vector $latex J$$ and a positive integer $latex n$$
-where $latex n > \| J \|$$, we use $latex J \otimes n$$ for
-the mapping $latex J \otimes n : \R^n \rightarrow \R^{|J|}$$ defined by
+where $latex n > \| J \|$$, we use $latex J \otimes n $$ for
+the mapping $latex ( J \otimes n ) : \R^n \rightarrow \R^{|J|}$$ defined by
 $latex \[
-	J \otimes n (x)_j = x_{J(j)}
+	[ J \otimes n ] (x)_j = x_{J(j)}
 \] $$
 for $latex j = 0 , \ldots |J| - 1$$.
 
 $subhead Injection$$
 Given an index vector $latex I$$ and a positive integer $latex m$$
 where $latex m > \| I \|$$, we use $latex m \otimes I$$ for
-the mapping $latex m \otimes I: \R^{|I|} \rightarrow \R^m$$ defined by
+the mapping $latex ( m \otimes I ): \R^{|I|} \rightarrow \R^m$$ defined by
 $latex \[
-m \otimes I (y)_i = \left\{ \begin{array}{ll}
+[ m \otimes I ] (y)_i = \left\{ \begin{array}{ll}
 y_k & {\rm if} \; i = I(k) \; {\rm for \; some} \; 
 	k \in \{ 0 , \cdots, |I|-1 \} 
 \\
@@ -133,20 +133,23 @@ representation of $latex fg(x)$$ in terms of simpler functions
 as follows
 $latex \[
 fg(x) = \sum_{k=0}^{K-1} \; \sum_{\ell=0}^{L(k) - 1} 
-(m+1) \otimes I_{k,\ell} \; 
-	\{  \; r_k \; [ \; J_{k,\ell} \otimes n \; (x) \; ] \} 
+[ (m+1) \otimes I_{k,\ell} ] \; \circ
+	 \; r_k \; \circ \; [ J_{k,\ell} \otimes n ] \; (x)
 \] $$
-where for $latex k = 0 , \ldots , K - 1$$,
-and $latex \ell = 0 , \ldots , L(k)$$,
-$latex I_{k,\ell}$$, and  $latex J_{k,\ell}$$ are index vectors with
-$latex | J_{k,\ell} | = q(k)$$ and $latex | I_{k,\ell} | = p(k)$$. 
+where $latex \circ$$ represents function composition,
+for $latex k = 0 , \ldots , K - 1$$, and $latex \ell = 0 , \ldots , L(k)$$,
+$latex I_{k,\ell}$$ and  $latex J_{k,\ell}$$ are index vectors with
+$latex | J_{k,\ell} | = q(k)$$, 
+$latex \| J_{k,\ell} \| < n$$,
+$latex | I_{k,\ell} | = p(k)$$, and
+$latex \| I_{k,\ell} \| \leq m$$. 
 
 $head Simple Representation$$
 In the simple representation,
 $latex r_0 (x) = fg(x)$$,
 $latex K = 1$$,
 $latex q(0) = n$$,
-$latex p(0) = m$$,
+$latex p(0) = m+1$$,
 $latex L(0) = 1$$,
 $latex I_{0,0} = (0 , \ldots , m)$$,
 and $latex J_{0,0} = (0 , \ldots , n-1)$$.

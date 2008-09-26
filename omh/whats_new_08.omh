@@ -45,6 +45,15 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-26$$
+Use parenthesis and brackets to group terms of the form
+$latex m \times I$$ to make the documentation of
+$cref/ipopt_cppad_nlp/$$ easier to read.
+
+Changed $cref/ipopt_cppad_ode.cpp/$$ to use $latex y(t)$$ for
+the solution of the ODE to distinguish it for $latex x$$,
+the vector we are optimizing with respect to.
+
 $head 09-18$$
 Changed $cref/ipopt_cppad_ode.cpp/$$ to a case where $latex x(t)$$
 is a pair of exponential functions instead of a linear and quadratic.
