@@ -161,13 +161,13 @@ For k = nd + 1 , ... , nd + nd, r_k (u) is used for the objective function
 contribution corresponding to the data pair 
 	( td[k-nd-1], yd[k-nd-1] ).
 */
-class my_FG_info : public ipopt_cppad_fg_info
+class FG_info : public ipopt_cppad_fg_info
 {
 private:
 	bool retape_;
 public:
 	// derived class part of constructor
-	my_FG_info(bool retape)
+	FG_info(bool retape)
 	: retape_ (retape)
 	{ }
 	size_t number_functions(void)
@@ -343,7 +343,7 @@ bool ipopt_cppad_ode(void)
 		bool retape = bool(icase);
 
 		// object defining the objective f(x) and constraints g(x)
-		my_FG_info fg_info(retape);
+		FG_info fg_info(retape);
 
 		// create the CppAD Ipopt interface
 		ipopt_cppad_solution solution;

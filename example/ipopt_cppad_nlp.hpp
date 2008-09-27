@@ -44,7 +44,7 @@ $codei%# include "ipopt_cppad_nlp.hpp"
 $codei%# ipopt_cppad_solution %solution%;
 %$$
 $codei%ipopt_cppad_nlp %cppad_nlp%(
-	%n%, %m%, %x_i%, %x_l%, %x_u%, %g_l%, %g_u%, %fg_info%, &%solution%
+	%n%, %m%, %x_i%, %x_l%, %x_u%, %g_l%, %g_u%, &%fg_info%, &%solution%
 )%$$
 
 $head Purpose$$
@@ -240,23 +240,22 @@ i.e., $latex g^u$$.
 $head fg_info$$
 The argument $icode fg_info$$ has prototype
 $codei%
-	ipopt_cppad_fg_info* %fg_info%
+	FG_info %fg_info%
 %$$
-where the object $codei%*%fg_info%$$ is a member of
-a class (referred to as $icode FG_info$$)
-that is derived from the base class $code ipopt_cppad_fg_info$$.
-Certain virtual member functions of $code ipopt_cppad_fg_info$$ are used to 
+where the class $icode FG_info$$ is derived from the 
+base class $code ipopt_cppad_fg_info$$.
+Certain virtual member functions of $icode fg_info$$ are used to 
 compute the value of $latex fg(x)$$.
 The specifications for these member functions are given below:
 
-$subhead fg_info->number_functions$$
+$subhead fg_info.number_functions$$
 This member function has prototype
 $codei%
 	virtual size_t ipopt_cppad_fg_info::number_functions(void)
 %$$
 If $icode K$$ has type $code size_t$$, the syntax
 $codei%
-	%K% = %fg_info%->number_functions()
+	%K% = %fg_info%.number_functions()
 %$$
 sets $icode K$$ to the number of functions used in the
 representation of $latex fg(x)$$; i.e., $latex K$$ in
@@ -268,12 +267,12 @@ The $code ipopt_cppad_fg_info$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.
 $icode%K% = 1%$$.
 
-$subhead fg_info->eval_r$$
+$subhead fg_info.eval_r$$
 This member function has the prototype
 $codei%
 virtual ADVector ipopt_cppad_fg_info::eval_r(size_t %k%, const ADVector& %u%) = 0;
 %$$
-This prototype is pure virtual and hence it must be defined in the 
+Thus it is a pure virtual function and must be defined in the 
 derived class $icode FG_info$$.
 $pre
 
@@ -281,25 +280,25 @@ $$
 This function computes the value of $latex r_k (u)$$
 used in the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$
 for $latex fg(x)$$.
-If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
+If $icode k$$ in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
 $icode u$$ is an $code ADVector$$ of size $icode q(k)$$ 
 and $icode r$$ is an $code ADVector$$ of size $icode p(k)$$
 the syntax
 $codei%
-	%r% = %fg_info%->eval_r(%k%, %u%)
+	%r% = %fg_info%.eval_r(%k%, %u%)
 %$$
 set $icode r$$ to the vector $latex r_k (u)$$.
 
-$subhead fg_info->retape$$
+$subhead fg_info.retape$$
 This member function has the prototype
 $codei%
 	virtual bool ipopt_cppad_fg_info::retape(size_t %k%)
 %$$
-If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
+If $icode k$$ in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
 and $icode retape$$ has type $code bool$$,
 the syntax
 $codei%
-        %retape% = %fg_info%->retape(%k%)
+        %retape% = %fg_info%.retape(%k%)
 %$$
 sets $icode retape$$ to true or false.
 If $icode retape$$ is true, 
@@ -314,17 +313,18 @@ $pre
 
 $$
 The $code ipopt_cppad_fg_info$$ implementation of this function
-sets $icode retape$$ to true.
+sets $icode retape$$ to true 
+(while slower it is also safer to always retape).
 
-$subhead fg_info->domain_size$$
+$subhead fg_info.domain_size$$
 This member function has prototype
 $codei%
 	virtual size_t ipopt_cppad_fg_info::domain_size(size_t %k%)
 %$$
-If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
+If $icode k$$ in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
 and $icode q$$ has type $code size_t$$, the syntax
 $codei%
-	%q% = %fg_info%->domain_size(%k%)
+	%q% = %fg_info%.domain_size(%k%)
 %$$
 sets $icode q$$ to the dimension of the domain space for $latex r_k (u)$$;
 i.e., $latex q(k)$$ in
@@ -337,15 +337,15 @@ The $code ipopt_cppad_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
 $latex q = n$$.
 
-$subhead fg_info->range_size$$
+$subhead fg_info.range_size$$
 This member function has prototype
 $codei%
 	virtual size_t ipopt_cppad_fg_info::range_size(size_t %k%)
 %$$
-If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
+If $icode k$$ in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
 and $icode p$$ has type $code size_t$$, the syntax
 $codei%
-	%p% = %fg_info%->range_size(%k%)
+	%p% = %fg_info%.range_size(%k%)
 %$$
 sets $icode p$$ to the dimension of the range space for $latex r_k (u)$$;
 i.e., $latex p(k)$$ in
@@ -357,15 +357,15 @@ The $code ipopt_cppad_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
 $latex p = m+1$$.
 
-$subhead fg_info->number_terms$$
+$subhead fg_info.number_terms$$
 This member function has prototype
 $codei%
 	virtual size_t ipopt_cppad_fg_info::number_terms(size_t %k%)
 %$$
-If $icode k$$ is in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
+If $icode k$$ in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
 and $icode L$$ has type $code size_t$$, the syntax
 $codei%
-	%L% = %fg_info%->range_sum(%k%)
+	%L% = %fg_info%.number_terms(%k%)
 %$$
 sets $icode L$$ to the number of terms in representation
 for this value of $icode k$$;
@@ -378,7 +378,7 @@ The $code ipopt_cppad_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
 $latex L = 1$$.
 
-$subhead fg_info->index$$
+$subhead fg_info.index$$
 This member function has prototype
 $codei%
 	virtual void ipopt_cppad_fg_info::index(

@@ -56,13 +56,13 @@ $end
 
 namespace {
 
-	class my_FG_info : public ipopt_cppad_fg_info
+	class FG_info : public ipopt_cppad_fg_info
 	{
 	private:
 		bool retape_;
 	public:
 		// derived class part of constructor
-		my_FG_info(bool retape)
+		FG_info(bool retape)
 		: retape_ (retape)
 		{ }
 		// Evaluation of the objective f(x), and constraints g(x)
@@ -124,13 +124,12 @@ bool ipopt_cppad(void)
 		bool retape = bool(icase);
 
 		// object in derived class
-		my_FG_info my_fg_info(retape);
-		ipopt_cppad_fg_info *fg_info = &my_fg_info;  
+		FG_info fg_info(retape);
 
 		// create the Ipopt interface
 		ipopt_cppad_solution solution;
 		Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new ipopt_cppad_nlp(
-		n, m, x_i, x_l, x_u, g_l, g_u, fg_info, &solution
+		n, m, x_i, x_l, x_u, g_l, g_u, &fg_info, &solution
 		);
 
 		// Create an instance of the IpoptApplication
