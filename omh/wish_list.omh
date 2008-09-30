@@ -10,6 +10,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	booleans
+	parallelize
 	Jacobian
 	recomputed
 	Ipopt
@@ -23,6 +25,10 @@ $spell
 	Vec
 	Cpp
 	Atan
+	retape
+	cppad
+	nlp
+	Jacobians
 $$
 
 $section The CppAD Wish List$$
@@ -55,22 +61,43 @@ $xref/ADFun/$$ constructor or $cref/Dependent/$$,
 the tape recording will never stop.
 Thus, there should be a way to abort a tape recording.
 
+
 $head Ipopt$$
-A speed test for the Ipopt nonlinear programming class
-$cref/ipopt_cppad_nlp/$$ should be added.
+$list number$$
+A speed test for $cref/ipopt_cppad_nlp/$$ should be added.
 Then changes should be made to improve its speed.
-For example:
-Perhaps the evaluation of the objective
-and the constraints should be done in separate functions.
+
+$lnext
 Perhaps it would help to cache the solution of the sparse Jacobian
 and spare Hessian graph coloring algorithm.
 Then, when the sparsity pattern does not depend on the argument value,
 these colorings would not have to be recomputed.
 
+$lnext
+In the case where $codei%retape(%k%)%$$ is true for some $icode k$$,
+one can still use the structure of the representation to compute a 
+sparsity structure. Currently $code ipopt_cppad_nlp$$ uses a dense 
+sparsity structure for this case
+
+$lnext
+The $icode new_x$$ flag could be used to avoid zero order forward mode
+computations. Because the same $code ADFun$$ object is used at different
+argument values, this would require forward mode at multiple argument values
+(see $cref/multiple arguments/WishList/Multiple Arguments/$$). 
+
+$lend
+
 $head Library$$
 One could build a CppAD library for use with the type $code AD<double>$$.
 This would speed up compilation for the most common usage where
 the $italic Base$$ type is $code double$$.
+
+$head Multiple Arguments$$
+It has been suggested that computing and storing forward mode
+results for multiple argument values (and for multiple orders)
+is faster for Adolc. 
+Perhaps CppAD should allow for forward mode at multiple argument values
+(perhaps multiple orders).
 
 $head Operation Sequence$$
 $index sequence, operation$$
@@ -134,7 +161,7 @@ Use spaces rather than tabs.
 
 $lend
 
-$head Sparse Hessians$$
+$head Sparse Jacobians and Hessians$$
 Testing $cref/cppad_sparse_hessian.cpp/$$ 
 with $code USE_CPPAD_SPARSE_HESSIAN$$ equal to 
 $code 1$$ (true) and $code 0$$ (false) 
@@ -143,9 +170,18 @@ than $cref/Hessian/$$ (for large sparse cases).
 Create an implementation of $cref/sparse_hessian/$$ 
 that is more efficient
 (the initial implementation was only meant as a demonstration).
-For example, use arrays of linked lists where for each row (column) the
-list contains the non-zero column (row) indices.
-(Also see sparse Hessian discussion under $cref/Ipopt/WishList/Ipopt/$$.)
+For example, use arrays of index sets where for each row (column) the
+index contains the non-zero column (row) indices.
+(Also see $cref/Ipopt/WishList/Ipopt/$$ wish list.)
+
+$head Sparsity Patterns$$
+Add option to use index sets for each variable 
+(instead of a boolean array)
+for the computation of sparsity patterns.
+This should be more efficient for very large problems.
+When using arrays of booleans, use OpenMP to parallelize 
+the computation of the sparsity patterns.
+
 
 $head Speed Testing$$
 Extend the speed tests for Adolc, Fadbad, and Sacado

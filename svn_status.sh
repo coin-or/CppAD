@@ -10,7 +10,13 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-svn status | \
+if [ "$1" == "" ]
+then
+	echo "./svn_status.sh <makefile.in flag>"
+	echo "where makefile.in flag is + or -"
+	exit 1
+fi
+svn status | > svn_status.$$ \
 sed                                                           \
 	-e '/^[?].*\.[0-9]*$/d'                               \
 	-e '/^[?].*\.tmp$/d'                                  \
@@ -56,6 +62,12 @@ sed                                                           \
 	-e '/^[?] *speed\/profile\/profile$/d'                \
 	-e '/cygwin_package$/d'
 #
+if [ "$1" == "+" ]
+then
+	cat svn_status.$$
+else
+	cat svn_status.$$ | sed -e '/\/makefile.in$/d' -e '/ makefile\.in/d'
+fi
 yyyymmdd=`date +%G%m%d`
 yyyy_mm_dd=`date +%G-%m-%d`
 #
