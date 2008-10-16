@@ -132,14 +132,14 @@ For k = 0 , ... , nd-1 and ell = 0 , ... , ng-1,
         tg[k * ng + ell] = td[k-1] + dtg[k] * ell
 
 -----------------------------------------------------------------------------
-Optimization Argument: x
+Optimization Argument: 
+	x = [ y_1 , y_2 , ... , y_{ng * nd} , a ]
 
-The value of the vector a is stored in the last na components of the vector x.
-The initial value for y(t) at t = tg[0] is given by
+The initial value for y(t) at t = tg[0] is denoted by
 	y_0 = F(a)
 
-For J > 0, the value of y(t) at t = tg[J] is given by
-	y_J = ( x[(J-1)*nx] , ... , x[J*nx -1] ) 
+For J = 1 , ... , ng * nd, the value of y(t) at t = tg[J] is denoted by
+	y_J = ( x[(J-1)*ny] , ... , x[J*ny -1] ) 
 
 We use the following difference approximation to solution of ODE
 	0 = y_{J+1} - y_J - [G(y_{J+1}, a) + G(y_J , a)] * dtg[k] / 2

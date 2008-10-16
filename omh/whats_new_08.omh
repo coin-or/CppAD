@@ -45,6 +45,10 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-16$$
+Minor improvement to description of optimization argument in 
+$cref/ipopt_cppad_ode.cpp/$$.
+
 $head 09-30$$
 Add or modify some wish list entries; see
 $cref/Ipopt/WishList/Ipopt/$$,
