@@ -35,22 +35,67 @@ $head General Problem$$
 This example solves a problem of the form
 $latex \[
 {\rm minimize} \; 
-	\sum_{j=1}^N H_j [ j ,  y( t_j , a ) , a ] \;
-		{\rm with \; respect \; to} \; a \in \R^p
+	\sum_{k=1}^{nd} H( k ,  y( td[k] , a ) , a ) \;
+		{\rm with \; respect \; to} \; a \in \R^{na}
 \] $$
-where $latex y(t)$$ is the solution of the ODE
+where the function $latex y : \R \times \R^{na} \rightarrow \R^{ny}$$ 
+is the solution of the initial value ordinary differential equation
 $latex \[
 \begin{array}{rcl}
-	y(0, a)  & = &  F(a)                 \\
-	y'(t, a) & = & G[ t , y(t, a) , a ]
+	y(0, a)            & = &  F(a)                 \\
+	\partial_t y(t, a) & = & G( y(t, a) , a )
 \end{array}
 \] $$
 
-$head Specific Case$$
-Almost all the code below is for the general problem but some of it
-for a specific case defined by the function $code y_one(t)$$.
+
+$head ODE Discrete Approximation$$
+The ODE solution is approximated using a trapezoidal rule with $latex ns$$
+uniformly spaced time intervals before the first measurement time
+and between all the other measurement times. 
+We use $latex ts[M]$$ for $latex M = 0 , \ldots , ns * nd$$ to denote
+the corresponding time points; i.e.,
+for $latex k = 0 , \ldots , nd - 1$$ 
+and for $latex \ell = 0 , \ldots , ns$$
+$latex \[
+\begin{array}{rcl}
+	dt[k * ns + \ell ]  & = & \frac{td[k+1] - td[k]}{ns}
+	\\
+	ts[ k * ns + \ell ] & = & td[k] + dt[k * ns + \ell ]
+\end{array}
+\] $$
+where the value $latex td[0]$$ is defined to be zero.
+We use $latex y[M]$$ to denote our approximate value for 
+$latex y( ts[M] , a)$$.
+Our trapezoidal approximation to the differential equation is given by
+$latex \[
+	y[M+1] = y[M] + \frac{G( y[M] , a) + G( y[M+1] , a )}{2} * dt[M]
+\] $$
+for $latex M = 0 , \ldots , ns * nd - 1$$.
+
+$head Optimization Problem$$
+We use $latex x$$ for the argument to the  optimization problem where
+$latex \[
+	x = ( y[1] , y[2] , \ldots , y[ns * nd] , a )
+\] $$
+Note that the initial value $latex y[0]$$ is given by $latex F(a)$$.
+The optimization problem that we solve includes our ODE approximation
+as constraints; i.e.
+$latex \[
+\begin{array}{lcr}
+{\rm minimize} & 
+	\sum_{k=1}^{nd} H( k ,  y[ns * k], a ) &
+		{\rm w.r.t.} \; x \in \R^{ns * nd * ny + na}
+\\
+{\rm subject \; to} &
+	0 = y[M+1] - y[M] - \frac{G( y[M] , a) + G( y[M+1] , a )}{2} * dt[M]
+	& {\rm for} \; M = 0 , \ldots , ns * nd
+\end{array}
+\] $$
+
 
 $head Source Code$$
+Almost all the code below is for the general problem but some of it
+for a specific case defined by the function $code y_one(t)$$.
 $code
 $verbatim%example/ipopt_cppad_ode.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -65,30 +110,32 @@ $end
 // include a definition for Number.
 typedef Ipopt::Number Number;
 
+namespace {
+	//------------------------------------------------------------------
+	// simulated data
+	Number a0 = 1.;  // simulation value for a[0]
+	Number a1 = 2.;  // simulation value for a[1]
+	Number a2 = 1.;  // simulatioln value for a[2]
+
+	// function used to simulate data
+	Number y_one(Number t)
+	{	Number y_1 =  a0*a1 * (exp(-a2*t) - exp(-a1*t)) / (a1 - a2);
+		return y_1;
+	}
+
+	// time points were we have data (no data at first point)
+	double td[] = { 0.,        .5,         1.,         1.5  }; 
+	// Simulated data for case with no noise (first point is not used)
+	double yd[] = { 0.,  y_one(.5),  y_one(1.),  y_one(1.5) };
+	// number of actual data values
+	size_t nd   = sizeof(td) / sizeof(td[0]) - 1;
+}
 // ---------------------------------------------------------------------------
 namespace { // Begin empty namespace 
 
 size_t ny = 2;   // dimension of y(t, a) for this case
 size_t na = 3;   // dimension of a for this case 
-size_t ng = 5;   // number of grid intervals with in each data interval
-
-// parameter vector component values used to simulate data
-Number a0 = 1.;
-Number a1 = 2.; 
-Number a2 = 1.; 
-
-// function used to simulate data
-Number y_one(Number t)
-{	Number y_1 =  a0 * a1 * (exp(-a2 * t) - exp(-a1 * t)) / (a1 - a2);
-	return y_1;
-}
-
-// time points were we have data
-double td[] = {        .5,         1.,         1.5  }; 
-// Simulated data is for the case (no noise)
-double yd[] = {  y_one(.5),  y_one(1.),  y_one(1.5) };
-// number of data values
-size_t nd   = sizeof(yd) / sizeof(yd[0]);
+size_t ns = 5;   // number of grid intervals with in each data interval
 
 // F(a) = y(0, a); i.e., initial condition
 template <class Vector>
@@ -116,38 +163,11 @@ Vector eval_G(Vector y , Vector a)
 template <class Scalar, class Vector>
 Scalar eval_H(size_t k, Vector y, Vector a)
 {	// This particular H is for a case where y_1 (t) is measured
-	Scalar diff = yd[k] - y[1];
+	Scalar diff = yd[k+1] - y[1];
  	return diff * diff;
 }
 
 /* 
------------------------------------------------------------------------------
-Time Grid: tg
-
-For k = 0,...,nd - 1, 
-	dtg[k] = (td[k] - td[k-1]) / ng 
-where td[-1] is interpreted as zero. 
-
-For k = 0 , ... , nd-1 and ell = 0 , ... , ng-1,
-        tg[k * ng + ell] = td[k-1] + dtg[k] * ell
-
------------------------------------------------------------------------------
-Optimization Argument: 
-	x = [ y_1 , y_2 , ... , y_{ng * nd} , a ]
-
-The initial value for y(t) at t = tg[0] is denoted by
-	y_0 = F(a)
-
-For J = 1 , ... , ng * nd, the value of y(t) at t = tg[J] is denoted by
-	y_J = ( x[(J-1)*ny] , ... , x[J*ny -1] ) 
-
-We use the following difference approximation to solution of ODE
-	0 = y_{J+1} - y_J - [G(y_{J+1}, a) + G(y_J , a)] * dtg[k] / 2
-where J > 0 and k is chosen so that 
-	td[k-1] <= tg[J] < td[k].
-Note that td is the time grid for the data and tg is the time grid
-for the disctetization of the ODE.
-
 -----------------------------------------------------------------------------
 Representation Index: k
 
@@ -159,7 +179,7 @@ For k = nd, r_k (u) is used for the initial difference equation.
 
 For k = nd + 1 , ... , nd + nd, r_k (u) is used for the objective function 
 contribution corresponding to the data pair 
-	( td[k-nd-1], yd[k-nd-1] ).
+	( td[k-nd], yd[k-nd] ).
 */
 class FG_info : public ipopt_cppad_fg_info
 {
@@ -180,47 +200,45 @@ public:
 			// (there may be more efficient ways to do this).
 			ADVector r(1);
 			size_t j;
-			// u is [y(t) , a] where t = td[ell]
-			ADVector y_J(ny), a(na);
+			// u is [y(t) , a] where t = td[ell + 1]
+			ADVector y_M(ny), a(na);
 			for(j = 0; j < ny; j++)
-				y_J[j] = u[j];
+				y_M[j] = u[j];
 			for(j = 0; j < na; j++)
 				a[j] = u[ny + j];
-			r[0] = eval_H<ADNumber>(k - nd - 1, y_J, a);
+			r[0] = eval_H<ADNumber>(k - nd - 1, y_M, a);
 			return r;
 		}
-		ADVector y_J(ny), y_J1(ny), a(na);
-		Number dtg;
+		ADVector y_M(ny), y_M1(ny), a(na);
+		Number dt;
 		if( k == nd )
-		{	// u = [y_J1 , a] where y_J1 is y(t) at t = tg[1]
+		{	// u = [y_M1 , a] where y_M1 is y(t) at t = ts[1]
 			for(j = 0; j < ny; j++)
-				y_J1[j] = u[j];
+				y_M1[j] = u[j];
 			for(j = 0; j < na; j++)
 				a[j] = u[ny + j];
-			// y_J is value of y(t) at t = tg[0]
-			y_J = eval_F(a);
+			// y_M is value of y(t) at t = ts[0]
+			y_M = eval_F(a);
 			// size of subinterval
-			dtg = (td[0] - 0.) / Number(ng);
+			dt = (td[1] - td[0]) / Number(ns);
 		}
 		else
-		{	// u = [y_J, y_J1, a] where y_J is y(t) at 
-			// t = tg[ k * ng + ell + 1 ] for k = 0 case 
-			// t = tg[ k * ng + ell ]     for 0 < k < nd cases
+		{	// u = [y_M, y_M1, a] where y_M is y(t) at 
+			// t = ts[ k * ns + ell + 1 ] for k = 0 case 
+			// t = ts[ k * ns + ell ]     for 0 < k < nd cases
 			for(j = 0; j < ny; j++)
-			{	y_J[j]  = u[j];
-				y_J1[j] = u[ny + j];
+			{	y_M[j]  = u[j];
+				y_M1[j] = u[ny + j];
 			}
 			for(j = 0; j < na; j++)
 				a[j] = u[2 * ny + j];
-			if( k == 0 )
-				dtg = (td[0] - 0.) / Number(ng);
-			else	dtg = (td[k] - td[k-1]) / Number(ng);
+			dt = (td[k+1] - td[k]) / Number(ns);
 		}
-		ADVector G_J   = eval_G(y_J,  a);
-		ADVector G_J1  = eval_G(y_J1, a);
+		ADVector G_M   = eval_G(y_M,  a);
+		ADVector G_M1  = eval_G(y_M1, a);
 		ADVector r(ny);
 		for(j = 0; j < ny; j++)
-			r[j] = y_J1[j] - y_J[j] - (G_J1[j] + G_J[j]) * dtg/2.;
+			r[j] = y_M1[j] - y_M[j] - (G_M1[j] + G_M[j]) * dt/2.;
 		return r;
 	}
 	// Operation sequence does not depend on u so retape = false should
@@ -248,8 +266,8 @@ public:
 		if( k == nd )
 			return 1;        // one initial difference equation
 		if( k == 0 )
-			return ng - 1;   // exclude initial difference equation
-		return ng;               // number difference equations
+			return ns - 1;   // exclude initial difference equation
+		return ns;               // number difference equations
 	}
 	// k is index of time interal between data values
 	// ell is index of grid point within data interval
@@ -257,17 +275,17 @@ public:
 	{	size_t i, j;
 		// number of constraints, one for each subinterval interval
 		// times the number of components in y(t)
-		size_t m = nd * ng * ny;
+		size_t m = nd * ns * ny;
 		if( k > nd )
 		{	// must use range index zero for the objective function
 			I[0] = 0;
 			// The first ny components of u is y(t) at 
-			// 	t = td[j] = tg[(j+1)*ng]
-			// Note that x starts with y(t) at time tg[1]. 
-			// Also Note that there are ng subintervals between 
+			// 	t = td[k-nd] = ts[(k-nd)*ns]
+			// Note that x starts with y(t) at time ts[1]. 
+			// Also Note that there are ns subintervals between 
 			// each data point.
 			for(j = 0; j < ny; j++)
-				J[j] = ( (k - nd) * ng - 1) * ny + j;
+				J[j] = ( (k - nd) * ns - 1) * ny + j;
 			// All of a (which is last na components of x)
 			for(j = 0; j < na; j++)
 				J[ny + j] = m + j; 
@@ -279,7 +297,7 @@ public:
 			for(i = 0; i < ny; i++)
 				I[i] = 1 + i;
 			// u starts with the first j components of x
-			// (which corresponding to y(t) at tg[1])
+			// (which corresponding to y(t) at ts[1])
 			for(j = 0; j < ny; j++)
 				J[j] = j;
 			// following that, u contains the vector a 
@@ -287,21 +305,21 @@ public:
 				J[ny + j] = m + j;
 			return;
 		}
-		// index of first grid point in tg for difference equation
-		size_t grid_point; 
+		// index of first grid point in ts for difference equation
+		size_t M; 
 		if( k == 0 )
-			grid_point = k * ng + ell + 1;
-		else	grid_point = k * ng + ell;
+			M = k * ns + ell + 1;
+		else	M = k * ns + ell;
 		for(j = 0; j < ny; j++)
-		{	J[j]          = (grid_point - 1) * ny  + j; // y_J
-			J[ny + j]     = J[j] + ny;                  // y_J1
+		{	J[j]          = (M - 1) * ny  + j; // index of y_M in x
+			J[ny + j]     = J[j] + ny;         // index of y_M1
 		}
 		for(j = 0; j < na; j++)
 			J[2 * ny + j] = m + j;                      // a
 		// There are ny difference equations for each grid point.
 		// (add one for the objective function index).
 		for(i = 0; i < ny; i++)
-			I[i] = grid_point * ny + 1 + i;
+			I[i] = M * ny + 1 + i;
 	} 
 };
 
@@ -313,11 +331,11 @@ bool ipopt_cppad_ode(void)
 	size_t j, I;
 
 	// number of constraints (range dimension of g)
-	size_t m = nd * ng * ny;
+	size_t m = nd * ns * ny;
 	// number of independent variables (domain dimension for f and g)
 	size_t n = m + na;
 	// the argument vector for the optimization is 
-	// y(t) at t = tg[1] , ... , tg[nd*ng] , followed by a
+	// y(t) at t = ts[1] , ... , ts[nd*ns] , followed by a
 	NumberVector x_i(n), x_l(n), x_u(n);
 	for(j = 0; j < m; j++)
 	{	x_i[j] = 0.;       // initial y(t) for optimization
@@ -339,7 +357,7 @@ bool ipopt_cppad_ode(void)
 	
 	for(size_t icase = 0; icase <= 1; icase++)
 	{	// Retaping is slow, so only do icase = 0 for large values 
-		// of ng.
+		// of ns.
 		bool retape = bool(icase);
 
 		// object defining the objective f(x) and constraints g(x)
@@ -367,7 +385,7 @@ bool ipopt_cppad_ode(void)
 		app->Options()->SetNumericValue("tol", 1e-9);
 
 		// Derivative testing is very slow for large problems
-		// so comment this out if you use a large value for ng.
+		// so comment this out if you use a large value for ns.
 		app->Options()-> SetStringValue(
 			"derivative_test", "second-order"
 		);
@@ -381,7 +399,7 @@ bool ipopt_cppad_ode(void)
 		ok    &= status == Ipopt::Solve_Succeeded;
 
 		// Check some of the return values
-		Number rel_tol = 1e-2; // use a larger value of ng
+		Number rel_tol = 1e-2; // use a larger value of ns
 		Number abs_tol = 1e-2; // to get better accuracy here.
 		Number check_a[] = {a0, a1, a2}; // see the y_one function
 		for(j = 0; j < na; j++)
@@ -406,30 +424,30 @@ bool ipopt_cppad_ode(void)
 		// check the initial difference equation
 		NumberVector G_0 = eval_G(y_0, a);
 		NumberVector G_1 = eval_G(y_1, a);
-		Number dtg = td[0] / Number(ng);
+		Number dt = (td[1] - td[0]) / Number(ns);
 		for(j = 0; j < ny; j++)
-		{	Number check = y_1[j] - y_0[j] - (G_1[j]+G_0[j])*dtg/2;
+		{	Number check = y_1[j] - y_0[j] - (G_1[j]+G_0[j])*dt/2;
 			ok &= CppAD::NearEqual( check, 0., rel_tol, abs_tol);
 		}
 		//
 		// check the second difference equation
 		NumberVector G_2 = eval_G(y_2, a);
-		if( ng == 1 )
-			dtg = (td[1] - td[0]) / Number(ng);
+		if( ns == 1 )
+			dt = (td[2] - td[1]) / Number(ns);
 		for(j = 0; j < ny; j++)
-		{	Number check = y_2[j] - y_1[j] - (G_2[j]+G_1[j])*dtg/2;
+		{	Number check = y_2[j] - y_1[j] - (G_2[j]+G_1[j])*dt/2;
 			ok &= CppAD::NearEqual( check, 0., rel_tol, abs_tol);
 		}
 		//
 		// check the objective function (specialized to this case)
 		Number check = 0.;
-		NumberVector y_J(ny);
+		NumberVector y_M(ny);
 		for(size_t k = 0; k < nd; k++)
 		{	for(j = 0; j < ny; j++)
-			{	size_t grid_point = (k + 1) * ng;
-				y_J[j] =  solution.x[(grid_point-1) * ny + j];
+			{	size_t M = (k + 1) * ns;
+				y_M[j] =  solution.x[(M-1) * ny + j];
 			}
-			check += eval_H<Number>(k, y_J, a);
+			check += eval_H<Number>(k, y_M, a);
 		}
 		Number obj_value = solution.obj_value;
 		ok &= CppAD::NearEqual(check, obj_value, rel_tol, abs_tol);

@@ -45,6 +45,9 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-17$$
+Major improvements to the $cref/ipopt_cppad_ode.cpp/$$ example.
+
 $head 10-16$$
 Minor improvement to description of optimization argument in 
 $cref/ipopt_cppad_ode.cpp/$$.
