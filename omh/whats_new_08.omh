@@ -34,6 +34,7 @@ $spell
 	yum
 	vec
 	eval
+	const
 $$
 
 $section Changes and Additions to CppAD During 2008$$
@@ -44,6 +45,10 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-27$$
+Change prototypes for $cref/ipopt_cppad_ode.cpp/$$ helper routines
+to use $code const$$ (where appropriate).
 
 $head 10-17$$
 Major improvements to the $cref/ipopt_cppad_ode.cpp/$$ example.

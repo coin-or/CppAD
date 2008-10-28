@@ -139,7 +139,7 @@ size_t ns = 5;   // number of grid intervals with in each data interval
 
 // F(a) = y(0, a); i.e., initial condition
 template <class Vector>
-Vector eval_F(Vector a)
+Vector eval_F(const Vector &a)
 {	// This particual F is a case where ny == 2 and na == 3	
 	Vector F(ny);
 	// y_0 (t) = a[0]*exp(-a[1] * t)
@@ -150,7 +150,7 @@ Vector eval_F(Vector a)
 }
 // G(y, a) =  y'(t, a); i.e. ODE
 template <class Vector>
-Vector eval_G(Vector y , Vector a)
+Vector eval_G(const Vector &y , const Vector &a)
 {	// This particular G is for a case where ny == 2 and na == 3
 	Vector G(ny);
 	// y_0 (t) = a[0]*exp(-a[1] * t)
@@ -161,7 +161,7 @@ Vector eval_G(Vector y , Vector a)
 } 
 // H(k, y, a) = contribution to objective at k-th data point
 template <class Scalar, class Vector>
-Scalar eval_H(size_t k, Vector y, Vector a)
+Scalar eval_H(size_t k, const Vector &y, const Vector &a)
 {	// This particular H is for a case where y_1 (t) is measured
 	Scalar diff = yd[k+1] - y[1];
  	return diff * diff;
