@@ -13,6 +13,8 @@ $begin ipopt_cppad_ode.cpp$$
 $spell
 	CppAD
 	ipopt_cppad_nlp
+	eval_r
+	nd
 $$
 
 
@@ -35,10 +37,12 @@ $head General Problem$$
 This example solves a problem of the form
 $latex \[
 {\rm minimize} \; 
-	\sum_{k=1}^{nd} H( k ,  y( td[k] , a ) , a ) \;
+	\sum_{k=1}^{nd} H_k ( y( td[k] , a ) , a ) \;
 		{\rm with \; respect \; to} \; a \in \R^{na}
 \] $$
-where the function $latex y : \R \times \R^{na} \rightarrow \R^{ny}$$ 
+where the function 
+$latex H_k : \R^{ny} \times \R^{na} \rightarrow \R$$ is known 
+and the function $latex y : \R \times \R^{na} \rightarrow \R^{ny}$$ 
 is the solution of the initial value ordinary differential equation
 $latex \[
 \begin{array}{rcl}
@@ -83,13 +87,44 @@ as constraints; i.e.
 $latex \[
 \begin{array}{lcr}
 {\rm minimize} & 
-	\sum_{k=1}^{nd} H( k ,  y[ns * k], a ) &
+	\sum_{k=1}^{nd} H_k ( y[ns * k], a ) &
 		{\rm w.r.t.} \; x \in \R^{ns * nd * ny + na}
 \\
 {\rm subject \; to} &
 	0 = y[M+1] - y[M] - \frac{G( y[M] , a) + G( y[M+1] , a )}{2} * dt[M]
 	& {\rm for} \; M = 0 , \ldots , ns * nd
 \end{array}
+\] $$
+
+$head eval_r(k, u)$$
+The $code eval_r$$ function in the code below uses the index $italic k$$
+and the vector u in the following way:
+
+$codei%
+0 <= %k% < %nd%
+%$$ 
+In this case, $latex u = [ y[M], y[M+1], a] \in \R^{ny + ny + na}$$ and
+$latex \[
+r_k (u) = y[M+1] - y[M] - \frac{G( y[M] , a) + G( y[M+1] , a )}{2} * dt[M]
+\] $$
+
+$codei%
+%k% = %nd% 
+%$$
+In this case, $latex u = [ y[1], a] \in \R^{ny + na}$$ and
+$latex \[
+r_k (u) = y[1] - F(a) - \frac{G( F(a) , a) + G( y[1] , a )}{2} * dt[M]
+\] $$
+
+$codei%
+%k% > %nd%
+%$$
+For $latex k = nd + 1 , ... , nd + nd$$,  
+$latex M = (k - nd - 1) * ns$$,
+and
+$latex u = [ y[M], a ] \in \R^{ny + na}$$,
+$latex \[
+	r_k (u) = H_k ( y[M], a )
 \] $$
 
 
@@ -167,20 +202,7 @@ Scalar eval_H(size_t k, const Vector &y, const Vector &a)
  	return diff * diff;
 }
 
-/* 
------------------------------------------------------------------------------
-Representation Index: k
-
-For 0 <= k < nd, r_k (u) is for two sided difference equations. Note that 
-there is one less such equation for k = 0 (because k = nd) is used for the
-initial difference equation.  
-
-For k = nd, r_k (u) is used for the initial difference equation.
-
-For k = nd + 1 , ... , nd + nd, r_k (u) is used for the objective function 
-contribution corresponding to the data pair 
-	( td[k-nd], yd[k-nd] ).
-*/
+// -----------------------------------------------------------------------------
 class FG_info : public ipopt_cppad_fg_info
 {
 private:

@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include "../example/ipopt_cppad_nlp.hpp"
 
 namespace { // Begin empty namespace
-
+// ---------------------------------------------------------------------------
 class FG_retape : public ipopt_cppad_fg_info
 {
 public:
@@ -114,9 +114,10 @@ bool ipopt_cppad_retape(void)
 
 	return ok;
 }
-
+// ---------------------------------------------------------------------------
 /*
-This solve the same problem as ../example/ipopt_cppad.cpp (repository revision 1276) in a convoluted way in order to test the representation code.
+This solve the same problem as ../example/ipopt_cppad.cpp (repository revision 
+1276) in a convoluted way in order to test the representation code.
 */
 class FG_K_gt_1 : public ipopt_cppad_fg_info
 {
@@ -205,12 +206,21 @@ bool ipopt_cppad_K_gt_1(void)
 	g_l[0] = 25.0;     g_u[0] = 1.0e19;
   	g_l[1] = 40.0;     g_u[1] = 40.0;
 
+	// known solution to check against
+	double check_x[]   = { 1.000000, 4.743000, 3.82115, 1.379408 };
+
 	size_t icase;
 	for(icase = 0; icase <= 1; icase++)
 	{	// Should ipopt_cppad_nlp retape the operation sequence for
 		// every new x. Can test both true and false cases because 
 		// the operation sequence does not depend on x (for this case).
 		bool retape = bool(icase);
+
+		// check case where upper and lower limits are equal
+		if( icase == 1 )
+		{	x_l[2] = check_x[2];
+			x_u[2] = check_x[2];
+		}
 
 		// object in derived class
 		FG_K_gt_1 my_fg_info(retape);
@@ -254,7 +264,6 @@ bool ipopt_cppad_K_gt_1(void)
  		*/
 		ok &= solution.status == ipopt_cppad_solution::success;
 		//
-		double check_x[]   = { 1.000000, 4.743000, 3.82115, 1.379408 };
 		double check_z_l[] = { 1.087871, 0.,       0.,      0.       };
 		double check_z_u[] = { 0.,       0.,       0.,      0.       };
 		double rel_tol     = 1e-6;  // relative tolerance
@@ -274,8 +283,7 @@ bool ipopt_cppad_K_gt_1(void)
 
 	return ok;
 }
-
-
+// ---------------------------------------------------------------------------
 /*
 f(x)    = x[1]; k=0, ell=0, I[0] = 0, J[0] = 1
 g_0 (x) = x[0]; k=0, ell=1, I[0] = 1, J[0] = 0
@@ -413,8 +421,7 @@ bool ipopt_cppad_J_changes(void)
 
 	return ok;
 }
-
-
+// ---------------------------------------------------------------------------
 
 } // End empty namespace
 
