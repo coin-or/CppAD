@@ -37,7 +37,7 @@ $head General Problem$$
 This example solves a problem of the form
 $latex \[
 {\rm minimize} \; 
-	\sum_{k=1}^{nd} H_k ( y( td[k] , a ) , a ) \;
+	\sum_{k=0}^{nd-1} H_k ( y( td[k+1] , a ) , a ) \;
 		{\rm with \; respect \; to} \; a \in \R^{na}
 \] $$
 where the function 
@@ -64,7 +64,7 @@ $latex \[
 \begin{array}{rcl}
 	dt[k * ns + \ell ]  & = & \frac{td[k+1] - td[k]}{ns}
 	\\
-	ts[ k * ns + \ell ] & = & td[k] + dt[k * ns + \ell ]
+	ts[ k * ns + \ell ] & = & td[k] + dt[k * ns + \ell ] * \ell
 \end{array}
 \] $$
 where the value $latex td[0]$$ is defined to be zero.
@@ -87,7 +87,7 @@ as constraints; i.e.
 $latex \[
 \begin{array}{lcr}
 {\rm minimize} & 
-	\sum_{k=1}^{nd} H_k ( y[ns * k], a ) &
+	\sum_{k=0}^{nd-1} H_k ( y[ns * (k+1)], a ) &
 		{\rm w.r.t.} \; x \in \R^{ns * nd * ny + na}
 \\
 {\rm subject \; to} &
@@ -101,6 +101,7 @@ The $code eval_r$$ function in the code below uses the index $italic k$$
 and the vector u in the following way:
 
 $codei%
+
 0 <= %k% < %nd%
 %$$ 
 In this case, $latex u = [ y[M], y[M+1], a] \in \R^{ny + ny + na}$$ and
@@ -120,11 +121,11 @@ $codei%
 %k% > %nd%
 %$$
 For $latex k = nd + 1 , ... , nd + nd$$,  
-$latex M = (k - nd - 1) * ns$$,
-and
-$latex u = [ y[M], a ] \in \R^{ny + na}$$,
+define $latex M = (k - nd) * ns$$.
+The argument $icode u$$ to $codei r_eval$$ is
+given by $latex u = [ y[M], a ] \in \R^{ny + na}$$,
 $latex \[
-	r_k (u) = H_k ( y[M], a )
+	r_k (u) = H_{nd + 1 - k} ( y[M], a )
 \] $$
 
 
