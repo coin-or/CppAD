@@ -2,7 +2,7 @@
 # define CPPAD_LU_RATIO_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -193,14 +193,6 @@ $xref/SimpleVector/Elements of Specified Type/elements of type size_t/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head Base$$
-This type is determined by the argument $italic ratio$$
-which has type $syntax%AD<%Base%>%$$.
-The type $italic Base$$ must be
-$code float$$, $code double$$, or any type in the
-$cref/AD levels above/glossary/AD Levels Above Base/$$
-above $code float$$ or $code double$$.
-
 $head ADvector$$
 The type $italic ADvector$$ must be a 
 $xref/SimpleVector//simple vector class/$$ with elements of type
@@ -222,8 +214,8 @@ $end
 */
 namespace CppAD { // BEGIN CppAD namespace
 
-// Lines different from the code in cppad/lu_factor.hpp end with               //
-template <class SizeVector, class ADvector, class Base>                     //
+// Lines different from the code in cppad/lu_factor.hpp end with           //
+template <class SizeVector, class ADvector, class Base>                    //
 int LuRatio(SizeVector &ip, SizeVector &jp, ADvector &LU, AD<Base> &ratio) //
 {	
 	typedef ADvector FloatVector;                                       //

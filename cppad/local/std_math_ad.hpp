@@ -2,7 +2,7 @@
 # define CPPAD_STD_MATH_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,6 +27,7 @@ $spell
 	sqrt
 	CppAD
 	namespace
+	tanh
 $$
 
 $index standard, AD math unary$$
@@ -45,6 +46,7 @@ $index sin, AD$$
 $index sinh, AD$$
 $index sqrt, AD$$
 $index tan, AD$$
+$index tanh, AD$$
 
 $section AD Standard Math Unary Functions$$
 
@@ -94,7 +96,8 @@ $code log10$$,
 $code sin$$,
 $code sinh$$,
 $code sqrt$$,
-$code tan$$.
+$code tan$$,
+$code tanh$$.
 
 
 $head Examples$$
@@ -113,7 +116,8 @@ $children%
 	example/sin.cpp%
 	example/sinh.cpp%
 	example/sqrt.cpp%
-	example/tan.cpp
+	example/tan.cpp%
+	example/tanh.cpp
 %$$
 $table
 $rref Acos.cpp$$
@@ -128,6 +132,7 @@ $rref Sin.cpp$$
 $rref Sinh.cpp$$
 $rref Sqrt.cpp$$
 $rref Tan.cpp$$
+$rref Tanh.cpp$$
 $tend
 
 
@@ -232,6 +237,15 @@ $latex \[
 \end{array}
 \] $$
 
+$subhead tanh$$
+This function is also special in that it's derivatives are calculated
+using the relation
+$latex \[
+\begin{array}{lcr}
+        \tanh (x) & = & \sinh(x) / \cosh(x)
+\end{array}
+\] $$
+
 $end
 -------------------------------------------------------------------------------
 */
@@ -290,6 +304,13 @@ namespace CppAD {
 	template <class Base>
 	inline AD<Base> tan(const VecAD_reference<Base> &x)
 	{	return CppAD::sin(x.ADBase()) / CppAD::cos(x.ADBase()); }
+        // tanh
+	template <class Base>
+	inline AD<Base> tanh(const AD<Base> &x)
+	{	return CppAD::sinh(x) / CppAD::cosh(x); }
+	template <class Base>
+	inline AD<Base> tanh(const VecAD_reference<Base> &x)
+	{	return CppAD::sinh(x.ADBase()) / CppAD::cosh(x.ADBase()); }
 }
 
 # undef CPPAD_STANDARD_MATH_UNARY_AD

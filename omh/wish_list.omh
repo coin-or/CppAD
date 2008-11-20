@@ -10,6 +10,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	std
+	tanh
+	cos
 	booleans
 	parallelize
 	Jacobian
@@ -98,6 +101,11 @@ results for multiple argument values (and for multiple orders)
 is faster for Adolc. 
 Perhaps CppAD should allow for forward mode at multiple argument values
 (perhaps multiple orders).
+
+$head Numeric Limits$$
+Use a multiple of $code std::numeric_limits<double>::epsilon()$$ instead
+$code 1e-10$$ for a small number in correctness checks; e.g.,
+see $cref/tan.cpp/$$.
 
 $head Operation Sequence$$
 $index sequence, operation$$
@@ -188,6 +196,20 @@ Extend the speed tests for Adolc, Fadbad, and Sacado
 to run under MS Windows.
 Run the CppAD $cref/speed/$$ tests on a set of different machines
 and operating systems.
+
+$head Tan and Tanh$$
+The AD $code tan$$ and $code tanh$$ functions
+are implemented using the AD $code sin$$, $code cos$$, $code sinh$$
+and $code cosh$$ functions.
+They could be improved by making them atomic using the equations
+$latex \[
+\begin{array}{rcl}
+	\tan^{(1)} (x)  & = & 1 + \tan (x)^2 \\
+	\tanh^{(1)} (x) & = & 1 - \tanh (x)^2
+\end{array}
+\] $$
+see $cref/standard math functions/ForwardTheory/Standard Math Functions/$$.
+
 
 $head Tracing$$
 Add forward and reverse mode operation tracing to the developer documentation

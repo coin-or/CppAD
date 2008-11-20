@@ -1,7 +1,7 @@
 # ifndef CPPAD_BASE_COMPLEX_INCLUDED
 # define CPPAD_BASE_COMPLEX_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -223,11 +223,9 @@ inline std::complex<double> function(const std::complex<double> &x)          \
 }
 
 namespace CppAD {
-	CPPAD_USER_MACRO(abs)
 	CPPAD_USER_MACRO(acos)
 	CPPAD_USER_MACRO(asin)
 	CPPAD_USER_MACRO(atan)
-	CPPAD_USER_MACRO(erf)
 }
 # undef CPPAD_USER_MACRO
 /* $$

@@ -2,7 +2,7 @@
 # define CPPAD_ERF_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,15 +38,6 @@ Returns the value of the error function which is defined by
 $latex \[
 {\rm erf} (x) = \frac{2}{ \sqrt{\pi} } \int_0^x \exp( - t * t ) \; {\bf d} t
 \] $$
-
-$head Base$$ 
-A definition of $code erf$$ for arguments of type
-$code float$$ and $code double$$ 
-is included in the $code CppAD$$ namespace
-(the corresponding results has the same type as the arguments).
-The type $italic Base$$ can be any type in the 
-$cref/AD levels above/glossary/AD Levels Above Base/$$
-above $code float$$ or $code double$$.
 
 $head x$$
 The argument $italic x$$ has prototype

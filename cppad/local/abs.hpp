@@ -2,7 +2,7 @@
 # define CPPAD_ABS_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -37,18 +37,7 @@ $syntax%%y% = abs(%x%)%$$
 
 
 $head Purpose$$
-Evaluates the absolute value function where its argument is an
-$xref/glossary/AD of Base/AD of/$$ $italic Base$$ object.
-
-
-$head Base$$ 
-A definition of $code abs$$ for arguments of type
-$code float$$ and $code double$$ 
-is included in the $code CppAD$$ namespace
-(the corresponding results has the same type as the arguments).
-The type $italic Base$$ can be any type in the 
-$cref/AD levels above/glossary/AD Levels Above Base/$$
-above $code float$$ or $code double$$.
+Evaluates the absolute value function.
 
 
 $head x$$
@@ -57,10 +46,6 @@ $syntax%
 	const AD<%Base%>               &%x%
 	const VecAD<%Base%>::reference &%x%
 %$$
-where $italic Base$$ is $code float$$, $code double$$ or in the 
-$cref/AD levels above/glossary/AD Levels Above Base/$$
-above $code float$$ or $code double$$; for example,
-$code AD<double>$$.
 
 $head y$$
 The result $italic y$$ has prototype

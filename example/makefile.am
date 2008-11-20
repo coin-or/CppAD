@@ -169,6 +169,7 @@ example_SOURCES   = \
 	sub.cpp \
 	sub_eq.cpp \
 	tan.cpp \
+	tanh.cpp \
 	tape_index.cpp \
 	track_new_del.cpp \
 	unary_minus.cpp \

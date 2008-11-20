@@ -1014,8 +1014,7 @@ $pre
 $$
 The copies of the $code atan2$$ function were included
 in the CppAD namespace for the 
-$xref/Atan2/Base/Base types/$$ 
-$code float$$ and $code double$$.
+$code float$$ and $code double$$ types.
 
 $head 03-15$$
 Improve the 

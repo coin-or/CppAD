@@ -405,6 +405,9 @@
 				RelativePath=".\tan.cpp">
 			</File>
 			<File
+				RelativePath=".\tanh.cpp">
+			</File>
+			<File
 				RelativePath=".\tape_index.cpp">
 			</File>
 			<File

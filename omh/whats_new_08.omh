@@ -11,6 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_08$$
 $spell
+	tanh
+	erf
 	nlp
 	fg_vector
 	Bool
@@ -45,6 +47,14 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-20$$
+The function $codei%tanh(%x%)%$$ was added to the 
+$cref/std_math_ad/$$ functions.
+The $code abs$$ and $code erf$$ functions were removed from the
+$cref/Base requirements/base_require/$$.
+The restrictions about the Base class were removed from
+$cref/abs/$$, $cref/atan2/$$, $cref/LuRatio/$$, $cref/erf/$$.
 
 $head 10-27$$
 Change prototypes for $cref/ipopt_cppad_ode.cpp/$$ helper routines

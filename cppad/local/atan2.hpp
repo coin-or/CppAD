@@ -2,7 +2,7 @@
 # define CPPAD_ATAN2_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -43,16 +43,6 @@ $latex \[
 	\cos ( \theta )  & = & x / \sqrt{ x^2 + y^2 }
 \end{array}
 \] $$
-
-$head Base$$ 
-A definition of $code atan2$$,
-for the case where both arguments are $code float$$ 
-or both arguments are $code double$$, 
-is included in the $code CppAD$$ namespace
-(the corresponding results has the same type as the arguments).
-The type $italic Base$$ can be any type in the 
-$cref/AD levels above/glossary/AD Levels Above Base/$$
-above $code float$$ or $code double$$.
 
 $head y$$
 The argument $italic y$$ has one of the following prototypes

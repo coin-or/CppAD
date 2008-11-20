@@ -2,7 +2,7 @@
 # define CPPAD_COND_EXP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -80,20 +80,17 @@ $cref/independent variables/glossary/Tape/Independent Variable/$$.
 This is in contrast to the $xref/Compare//AD comparison operators/$$
 which are boolean valued and not included in the AD operation sequence. 
 
-$head Type$$
-We use $italic Type$$ for the type of
-$italic left$$, $italic right$$, $italic trueCase$$, and $italic falseCase$$
-(which must all have the same type). 
-This type must be
-$code float$$, $code double$$, or in the 
-$cref/AD levels above/glossary/AD Levels Above Base/$$
-above $code float$$ or $code double$$.
-
 $head Op$$
 In the syntax above, $italic Op$$ represents one of the following
 two characters: $code Lt$$, $code Le$$, $code Eq$$, $code Ge$$, $code Gt$$. 
 As in the table above,
 $italic Op$$ determines the comparison operator $italic op$$.
+
+$head Type$$
+These functions are defined in the CppAD namespace for arguments of
+$italic Type$$ is $code float$$ , $code double$$, or any type of the form
+$syntax%AD<%Base%>%$$.
+(Note that all four arguments must have the same type.)
  
 $head left$$
 The argument $italic left$$ has prototype

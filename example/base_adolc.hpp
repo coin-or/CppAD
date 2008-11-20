@@ -14,7 +14,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin base_adolc.hpp$$
 $spell
 	cppad.hpp
-	fabs
 	undef
 	Lt
 	Le
@@ -22,7 +21,6 @@ $spell
 	Ge
 	Gt
 	namespace
-	erf
 	cassert
 	condassign
 	hpp
@@ -78,15 +76,6 @@ $cref/declare.hpp/base_require/declare.hpp/$$
 $codep */
 # include <cppad/declare.hpp>
 # include <cppad/error_handler.hpp>
-/* $$
-
-$head abs$$
-The $code abs$$ function is called $code fabs$$ in the Adolc package.
-$codep */
-namespace CppAD {
-	inline adouble abs(const adouble &x)    \
-	{	return fabs(x); }
-}
 
 /* $$
 
@@ -100,7 +89,6 @@ $code asin$$,
 $code atan$$,
 $code cos$$,
 $code cosh$$,
-$code erf$$,
 $code exp$$,
 $code log$$,
 $code pow$$,

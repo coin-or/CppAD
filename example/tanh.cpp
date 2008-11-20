@@ -10,20 +10,19 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Tan.cpp$$
+$begin Tanh.cpp$$
 $spell
-	tan
-	tan
+	tanh
 $$
 
-$section The AD tan Function: Example and Test$$
+$section The AD tanh Function: Example and Test$$
 
-$index tan, example$$
-$index example, tan$$
-$index test, tan$$
+$index tanh, example$$
+$index example, tanh$$
+$index test, tanh$$
 
 $code
-$verbatim%example/tan.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/tanh.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -34,7 +33,7 @@ $end
 # include <cmath>
 # include <limits>
 
-bool Tan(void)
+bool Tanh(void)
 {	bool ok = true;
 
 	using CppAD::AD;
@@ -53,13 +52,13 @@ bool Tan(void)
 	// range space vector 
 	size_t m = 1;
 	CPPAD_TEST_VECTOR< AD<double> > y(m);
-	y[0] = CppAD::tan(x[0]);
+	y[0] = CppAD::tanh(x[0]);
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
 
 	// check value 
-	double check = std::tan(x0);
+	double check = std::tanh(x0);
 	ok &= NearEqual(y[0] , check,  eps, eps);
 
 	// forward computation of first partial w.r.t. x[0]
@@ -67,7 +66,7 @@ bool Tan(void)
 	CPPAD_TEST_VECTOR<double> dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	check = 1. + std::tan(x0) * std::tan(x0); 
+	check = 1. - std::tanh(x0) * std::tanh(x0); 
 	ok   &= NearEqual(dy[0], check, eps, eps);
 
 	// reverse computation of derivative of y[0]
@@ -81,8 +80,8 @@ bool Tan(void)
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
 	v[zero]           = x0;
-	AD<double> result = CppAD::tan(v[zero]);
-	check = std::tan(x0);
+	AD<double> result = CppAD::tanh(v[zero]);
+	check = std::tanh(x0);
 	ok   &= NearEqual(result, check, eps, eps);
 
 	return ok;
