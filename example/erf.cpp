@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -18,9 +18,9 @@ $$
 
 $section The AD erf Function: Example and Test$$
 
-$index erf, AD example$$
-$index example, AD erf$$
-$index test, AD erf$$
+$index erf, example$$
+$index example, erf$$
+$index test, erf$$
 
 $code
 $verbatim%example/erf.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -32,12 +32,14 @@ $end
 
 # include <cppad/cppad.hpp>
 # include <cmath>
+# include <limits>
 
 bool Erf(void)
 {	bool ok = true;
 
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	double eps = 10. * std::numeric_limits<double>::epsilon();
 
 	// domain space vector
 	size_t n  = 1;
@@ -58,9 +60,9 @@ bool Erf(void)
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
 
-	// check value 
+	// check relative erorr 
 	double erf_x0 = 0.5205;
-	ok &= NearEqual(y[0] , erf_x0,  1e-4 , 1e-4);
+	ok &= NearEqual(y[0] , erf_x0,  4e-4 , 0.);
 
 	// value of derivative of erf at x0
 	double pi     = 4. * std::atan(1.);
@@ -72,24 +74,24 @@ bool Erf(void)
 	CPPAD_TEST_VECTOR<double> dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
-	ok   &= NearEqual(dy[0], check, 1e-10, 1e-10);
+	ok   &= NearEqual(dy[0], check, 4e-4, 0.);
 
 	// reverse computation of derivative of y[0]
 	CPPAD_TEST_VECTOR<double>  w(m);
 	CPPAD_TEST_VECTOR<double> dw(n);
 	w[0]  = 1.;
 	dw    = f.Reverse(1, w);
-	ok   &= NearEqual(dw[0], check, 1e-10, 1e-10);
+	ok   &= NearEqual(dw[0], check, 4e-4, 0.);
 
 	// use a VecAD<Base>::reference object with erf
 	CppAD::VecAD<double> v(1);
 	AD<double> zero(0);
 	v[zero]           = x0;
 	AD<double> result = CppAD::erf(v[zero]);
-	ok   &= NearEqual(result, y[0], 1e-10, 1e-10);
+	ok   &= NearEqual(result, y[0], eps, eps);
 
 	// use a double with erf
-	ok   &= NearEqual(CppAD::erf(x0), y[0], 1e-10, 1e-10);
+	ok   &= NearEqual(CppAD::erf(x0), y[0], eps, eps);
 
 	return ok;
 }

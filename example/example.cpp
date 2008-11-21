@@ -135,6 +135,7 @@ extern bool StackMachine(void);
 extern bool Sub(void);
 extern bool SubEq(void);
 extern bool Tan(void);
+extern bool Tanh(void);
 extern bool TapeIndex(void);
 extern bool TrackNewDel(void);
 extern bool UnaryMinus(void);
@@ -264,6 +265,7 @@ int main(void)
 	ok &= Run( Sub,               "Sub"              );
 	ok &= Run( SubEq,             "SubEq"            );
 	ok &= Run( Tan,               "Tan"              );
+	ok &= Run( Tanh,              "Tanh"             );
 	ok &= Run( TapeIndex,         "TapeIndex"        );
 	ok &= Run( TrackNewDel,       "TrackNewDel"      );
 	ok &= Run( UnaryMinus,        "UnaryMinus"       );

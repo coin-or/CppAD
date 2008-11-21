@@ -49,12 +49,23 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 11-20$$
+$index erf$$
 The function $codei%tanh(%x%)%$$ was added to the 
 $cref/std_math_ad/$$ functions.
 The $code abs$$ and $code erf$$ functions were removed from the
 $cref/Base requirements/base_require/$$.
 The restrictions about the Base class were removed from
 $cref/abs/$$, $cref/atan2/$$, $cref/LuRatio/$$, $cref/erf/$$.
+$pre
+
+$$
+Visual Studio Version 9.0 could not handle the large number of static
+constants in the CppAD $cref/erf/$$ function.
+This function was changed to a simpler representation
+that is much faster and that 
+is differentiable at all points (not defined differently on subregions).
+The down side to this is that the new version 
+is not as accurate (see $cref/method/erf/Method/$$).
 
 $head 10-27$$
 Change prototypes for $cref/ipopt_cppad_ode.cpp/$$ helper routines
