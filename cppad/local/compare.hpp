@@ -20,7 +20,6 @@ $spell
 	Op
 	bool
 	const
-	inline
 $$
 
 $index binary, AD compare operator$$
@@ -185,14 +184,14 @@ void ADTape<Base>::RecordCompare(
 # ifdef NDEBUG
 
 template <class Base>
-inline bool operator < (const AD<Base> &left , const AD<Base> &right)
+CPPAD_INLINE bool operator < (const AD<Base> &left , const AD<Base> &right)
 {	bool result =  (left.value_ < right.value_); 
 	return result;
 }
 
 # else
 template <class Base>
-inline bool operator < (const AD<Base> &left , const AD<Base> &right)
+CPPAD_INLINE bool operator < (const AD<Base> &left , const AD<Base> &right)
 {	bool result =  (left.value_ < right.value_); 
 
 	ADTape<Base> *tape = CPPAD_NULL;
@@ -215,14 +214,14 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(<)
 # ifdef NDEBUG
 
 template <class Base>
-inline bool operator <= (const AD<Base> &left , const AD<Base> &right)
+CPPAD_INLINE bool operator <= (const AD<Base> &left , const AD<Base> &right)
 { 	bool result =  (left.value_ <= right.value_); 
 	return result;
 }
 
 # else
 template <class Base>
-inline bool operator <= (const AD<Base> &left , const AD<Base> &right)
+CPPAD_INLINE bool operator <= (const AD<Base> &left , const AD<Base> &right)
 { 	bool result =  (left.value_ <= right.value_); 
 
 	ADTape<Base> *tape = CPPAD_NULL;
@@ -246,14 +245,14 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(<=)
 # ifdef NDEBUG
 
 template <class Base>
-inline bool operator > (const AD<Base> &left , const AD<Base> &right)
+CPPAD_INLINE bool operator > (const AD<Base> &left , const AD<Base> &right)
 {	bool result =  (left.value_ > right.value_); 
 	return result;
 }
 
 # else
 template <class Base>
-inline bool operator > (const AD<Base> &left , const AD<Base> &right)
+CPPAD_INLINE bool operator > (const AD<Base> &left , const AD<Base> &right)
 {	bool result =  (left.value_ > right.value_); 
 
 	ADTape<Base> *tape = CPPAD_NULL;
@@ -277,14 +276,14 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(>)
 # ifdef NDEBUG
 
 template <class Base>
-inline bool operator >= (const AD<Base> &left , const AD<Base> &right)
+CPPAD_INLINE bool operator >= (const AD<Base> &left , const AD<Base> &right)
 { 	bool result =  (left.value_ >= right.value_); 
 	return result;
 }
 
 # else
 template <class Base>
-inline bool operator >= (const AD<Base> &left , const AD<Base> &right)
+CPPAD_INLINE bool operator >= (const AD<Base> &left , const AD<Base> &right)
 { 	bool result =  (left.value_ >= right.value_); 
 
 	ADTape<Base> *tape = CPPAD_NULL;
@@ -308,14 +307,14 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(>=)
 # ifdef NDEBUG
 
 template <class Base>
-inline bool operator == (const AD<Base> &left , const AD<Base> &right)
+CPPAD_INLINE bool operator == (const AD<Base> &left , const AD<Base> &right)
 {	bool result =  (left.value_ == right.value_); 
 	return result;
 }
 
 # else 
 template <class Base>
-inline bool operator == (const AD<Base> &left , const AD<Base> &right)
+CPPAD_INLINE bool operator == (const AD<Base> &left , const AD<Base> &right)
 {	bool result =  (left.value_ == right.value_); 
 
 	ADTape<Base> *tape = CPPAD_NULL;
@@ -338,14 +337,14 @@ CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR(==)
 # ifdef NDEBUG
 
 template <class Base>
-inline bool operator != (const AD<Base> &left , const AD<Base> &right)
+CPPAD_INLINE bool operator != (const AD<Base> &left , const AD<Base> &right)
 {	bool result =  (left.value_ != right.value_);
 	return result;
 }
 
 # else
 template <class Base>
-inline bool operator != (const AD<Base> &left , const AD<Base> &right)
+CPPAD_INLINE bool operator != (const AD<Base> &left , const AD<Base> &right)
 {	bool result =  (left.value_ != right.value_);
 
 	ADTape<Base> *tape = CPPAD_NULL;

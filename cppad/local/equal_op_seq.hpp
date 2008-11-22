@@ -2,7 +2,7 @@
 # define CPPAD_EQUAL_OP_SEQ_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -17,7 +17,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin EqualOpSeq$$ 
 $spell
 	Op
-	inline
 	const
 	bool
 $$
@@ -107,7 +106,7 @@ namespace CppAD {
 	inline bool EqualOpSeq(const double &x, const double &y)
 	{	return x == y; }
 	template <class Base>
-	inline bool EqualOpSeq(const AD<Base> &x, const AD<Base> &y)
+	CPPAD_INLINE bool EqualOpSeq(const AD<Base> &x, const AD<Base> &y)
 	{	
 		if( Parameter(x) )
 		{	if( Parameter(y) )

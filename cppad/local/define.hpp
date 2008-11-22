@@ -2,7 +2,7 @@
 # define CPPAD_DEFINE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -31,6 +31,20 @@ $aindex head$$
 
 $mindex macro definition$$
 $section Macros Used by CppAD Implementation$$ 
+
+$head CPPAD_INLINE$$
+Microsoft Visual C++ version 9.0 generates a warning if a template
+function is declared as a friend
+(this was not a problem for version 7.0). 
+The warning identifier is
+$code warning C4396:$$ and it contains the text
+$code 
+the inline specifier cannot be used when a friend declaration refers 
+to a specialization of a function template
+$$.
+This happens even if the function is not a specialization.
+The macro $code CPPAD_INLINE$$ is defined as empty for Microsoft compilers.
+ 
 
 $head CPPAD_NULL$$
 The preprocessor symbol $code CPPAD_NULL$$ is used for a null pointer. 
@@ -119,6 +133,12 @@ uses the definition of the same operation for that case.
 
 $end
 */
+
+# ifdef _MSC_VER
+# define CPPAD_INLINE
+# else
+# define CPPAD_INLINE inline
+# endif
 
 # ifndef CPPAD_NULL
 # define CPPAD_NULL     0

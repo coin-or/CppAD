@@ -2,7 +2,7 @@
 # define CPPAD_ORDERED_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -135,7 +135,7 @@ inline bool GreaterThanZero(const double &x)
 {	return x > 0.; }
 
 template <class Base>
-inline bool GreaterThanZero(const AD<Base> &x)
+CPPAD_INLINE bool GreaterThanZero(const AD<Base> &x)
 {	return GreaterThanZero(x.value_); }
 
 
@@ -147,7 +147,7 @@ inline bool GreaterThanOrZero(const double &x)
 {	return x >= 0.; }
 
 template <class Base>
-inline bool GreaterThanOrZero(const AD<Base> &x)
+CPPAD_INLINE bool GreaterThanOrZero(const AD<Base> &x)
 {	return GreaterThanOrZero(x.value_); }
 
 
@@ -160,7 +160,7 @@ inline bool LessThanZero(const double &x)
 {	return x < 0.; }
 
 template <class Base>
-inline bool LessThanZero(const AD<Base> &x)
+CPPAD_INLINE bool LessThanZero(const AD<Base> &x)
 {	return LessThanZero(x.value_); }
 
 // LessThanOrZero  ------------------------------------------------------------
@@ -172,7 +172,7 @@ inline bool LessThanOrZero(const double &x)
 {	return x <= 0.; }
 
 template <class Base>
-inline bool LessThanOrZero(const AD<Base> &x)
+CPPAD_INLINE bool LessThanOrZero(const AD<Base> &x)
 {	return LessThanOrZero(x.value_); }
 
 } // END CppAD namespace

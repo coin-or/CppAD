@@ -654,16 +654,17 @@ void VecAD_reference<Base>::operator=(const Base &y)
 
 // fold this case into AD<Base> case above
 template <class Base>
-inline void VecAD_reference<Base>::operator=(const VecAD_reference<Base> &y)
+CPPAD_INLINE void VecAD_reference<Base>::operator=
+(const VecAD_reference<Base> &y)
 {	*this = y.ADBase(); }
 
 // fold this case into Base case above
 template <class Base>
-inline void VecAD_reference<Base>::operator=(int y)
+CPPAD_INLINE void VecAD_reference<Base>::operator=(int y)
 {	*this = Base(y); }
 
 template <class Base>
-inline std::ostream& operator << (std::ostream &os, const VecAD<Base> &v)
+CPPAD_INLINE std::ostream& operator << (std::ostream &os, const VecAD<Base> &v)
 {
  	os << "vecAD( length = " << v.length_ 
 	   << ", offset = "      << v.offset_ << ")";

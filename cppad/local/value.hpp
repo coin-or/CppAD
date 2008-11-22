@@ -2,7 +2,7 @@
 # define CPPAD_VALUE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -15,7 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin Value$$
 $spell
-	inline
 	const
 $$
 
@@ -79,7 +78,7 @@ $end
 namespace CppAD {
 
 template <class Base>
-inline Base Value(const AD<Base> &x) 
+CPPAD_INLINE Base Value(const AD<Base> &x) 
 {	Base result;
 
 	CPPAD_ASSERT_KNOWN(

@@ -2,7 +2,7 @@
 # define CPPAD_INTEGER_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -20,7 +20,6 @@ $spell
 	VecAD
 	CppAD
 	namespace
-	inline
 	const
 	bool
 $$
@@ -109,11 +108,11 @@ namespace CppAD {
 	{	return static_cast<int>(x); }
 
 	template <class Base>
-	inline int Integer(const AD<Base> &x)
+	CPPAD_INLINE int Integer(const AD<Base> &x)
 	{	return Integer(x.value_); }
 
 	template <class Base>
-	inline int Integer(const VecAD_reference<Base> &x)
+	CPPAD_INLINE int Integer(const VecAD_reference<Base> &x)
 	{	return Integer( x.ADBase() ); }
 }
 # endif

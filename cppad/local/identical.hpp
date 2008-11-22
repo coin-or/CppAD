@@ -2,7 +2,7 @@
 # define CPPAD_IDENTICAL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -137,7 +137,7 @@ namespace CppAD {
 	inline bool IdenticalPar(const double &x)
 	{	return true; }
 	template <class Base>
-	inline bool IdenticalPar(const AD<Base> &x)
+	CPPAD_INLINE bool IdenticalPar(const AD<Base> &x)
 	{	return Parameter(x) && IdenticalPar(x.value_); }
 
 	// Zero -----------------------------------------------
@@ -146,7 +146,7 @@ namespace CppAD {
 	inline bool IdenticalZero(const double &x)
 	{	return (x == 0.); }
 	template <class Base>
-	inline bool IdenticalZero(const AD<Base> &x)
+	CPPAD_INLINE bool IdenticalZero(const AD<Base> &x)
 	{	return Parameter(x) && IdenticalZero(x.value_); }
 
 	// One -----------------------------------------------
@@ -155,7 +155,7 @@ namespace CppAD {
 	inline bool IdenticalOne(const double &x)
 	{	return (x == 1.); }
 	template <class Base>
-	inline bool IdenticalOne(const AD<Base> &x)
+	CPPAD_INLINE bool IdenticalOne(const AD<Base> &x)
 	{	return Parameter(x) && IdenticalOne(x.value_); }
 
 	// Equal -----------------------------------------------
@@ -164,7 +164,8 @@ namespace CppAD {
 	inline bool IdenticalEqualPar(const double &x, const double &y)
 	{	return (x == y); }
 	template <class Base>
-	inline bool IdenticalEqualPar(const AD<Base> &x, const AD<Base> &y)
+	CPPAD_INLINE bool IdenticalEqualPar
+	(const AD<Base> &x, const AD<Base> &y)
 	{	bool parameter;
 		parameter = ( Parameter(x) & Parameter(y) );
 		return parameter  && IdenticalEqualPar(x.value_, y.value_); 

@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_08$$
 $spell
+	inline
 	tanh
 	erf
 	nlp
@@ -47,6 +48,18 @@ This section contains a list of the changes to CppAD during 2008
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-21$$
+The Microsoft's Visual C++ Version 9.0 generates a warning of the form
+$codei warning C4396:%...%$$ 
+for every template function that is declared as a both a friend and inline
+(it thinks it is only doing this for specializations of template functions).
+The warnings are no longer generated because
+these $code inline$$ directives are converted to
+empty code when a Microsoft Visual C++ is used
+(see $cref/Microsoft Compiler/WishList/Optimization/Microsoft Compiler/$$
+wish list item).
+
 
 $head 11-20$$
 $index erf$$

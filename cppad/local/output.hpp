@@ -2,7 +2,7 @@
 # define CPPAD_OUTPUT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,7 +16,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin Output$$
 $spell
 	VecAD
-	inline
 	std
 	ostream
 	const
@@ -85,12 +84,14 @@ $end
 */
 
 namespace CppAD { 
+
 	template <class Base>
-	inline std::ostream& operator << (std::ostream &os, const AD<Base> &x)
+	CPPAD_INLINE std::ostream& operator << 
+	(std::ostream &os, const AD<Base> &x)
 	{ 	return (os << x.value_); }
 
 	template <class Base>
-	inline std::ostream& operator << 
+	CPPAD_INLINE std::ostream& operator << 
 	(std::ostream &os, const VecAD_reference<Base> &x)
 	{ 	return (os << x.ADBase()); }
 

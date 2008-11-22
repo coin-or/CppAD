@@ -176,7 +176,7 @@ namespace CppAD {
 // CompareType and ResultType are different for the forward and reverse
 // sparese calculations.
 template <class CompareType, class ResultType>
-inline ResultType CondExpTemplate( 
+CPPAD_INLINE ResultType CondExpTemplate( 
 	enum  CompareOp            cop ,
 	const CompareType        &left ,
 	const CompareType       &right , 
@@ -241,7 +241,7 @@ inline double CondExpOp(
 }
 
 template <class Base>
-inline AD<Base> CondExpOp(
+CPPAD_INLINE AD<Base> CondExpOp(
 	enum  CompareOp cop       ,
 	const AD<Base> &left      , 
 	const AD<Base> &right     , 
@@ -387,7 +387,7 @@ void ADTape<Base>::RecordCondExp(
 
 # define CPPAD_COND_EXP(Name)                                              \
 	template <class Base>                                              \
-	inline AD<Base> CondExp##Name(                                     \
+	CPPAD_INLINE AD<Base> CondExp##Name(                                     \
 		const AD<Base> &left      ,                                \
 		const AD<Base> &right     ,                                \
 		const AD<Base> &trueCase  ,                                \
@@ -404,7 +404,7 @@ CPPAD_COND_EXP(Eq)
 CPPAD_COND_EXP(Ge)
 CPPAD_COND_EXP(Gt)
 template <class Base>
-inline AD<Base> CondExp(
+CPPAD_INLINE AD<Base> CondExp(
 	const AD<Base> &flag      , 
 	const AD<Base> &trueCase  ,
 	const AD<Base> &falseCase )

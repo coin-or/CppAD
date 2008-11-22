@@ -10,6 +10,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	Microsoft
+	inline
 	std
 	tanh
 	cos
@@ -95,6 +97,7 @@ One could build a CppAD library for use with the type $code AD<double>$$.
 This would speed up compilation for the most common usage where
 the $italic Base$$ type is $code double$$.
 
+
 $head Multiple Arguments$$
 It has been suggested that computing and storing forward mode
 results for multiple argument values (and for multiple orders)
@@ -120,7 +123,25 @@ $xref/SeqProperty/$$.
 
 $head Optimization$$
 
-$subhead Remove Dead Code$$
+$subhead Expression Hashing$$
+Hash codes could be used to detect expressions that have already
+been computed (and avoid extra entries in the operation sequence).
+This would also involve has coding the constants and avoiding
+duplicate copies in the constant table.
+
+$subhead Microsoft Compiler$$
+The Microsoft's Visual C++ Version 9.0 generates a warning of the form
+$codei warning C4396:%...%$$ 
+for every template function that is declared as a both a friend and inline
+(it thinks it is only doing this for specializations of template functions).
+The $code CPPAD_INLINE$$ preprocessor symbol is used to convert
+these $code inline$$ directives to
+empty code (if a Microsoft Visual C++ is used).
+If it is shown to be faster and does not slow down CppAD with other compilers,
+non-friend functions should be used to map these operations
+to member functions so that both can be compiled inline.
+
+$subhead Remove Operations From Tape$$
 $index optimize, operation sequence$$
 $index tape, optimize$$
 $index sequence, optimize operations$$
@@ -128,12 +149,6 @@ $index operation, optimize sequence$$
 A single $cref/RevSparseJac/$$ sweep could be used to determine
 which parts of the operation sequence in an
 $cref/ADFun/FunConstruct/$$ object can be removed.
-
-$subhead Expression Hashing$$
-Hash codes could be used to detect expressions that have already
-been computed (and avoid extra entries in the operation sequence).
-This would also involve has coding the constants and avoiding
-duplicate copies in the constant table.
 
 $head Scripting Languages$$
 One could develop a
