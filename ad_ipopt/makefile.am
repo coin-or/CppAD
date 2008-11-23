@@ -19,8 +19,8 @@ else
 BOOST_INCLUDE =
 endif
 # 
-# Microsoft project files 
-EXTRA_DIST        = ad_ipopt.sln ad_ipopt.vcproj 
+# Microsoft project files (and ipopt install utility for Visual Studio)
+EXTRA_DIST        = ad_ipopt.sln ad_ipopt.vcproj  ad_ipopt_windows.bat
 #
 noinst_PROGRAMS   = ad_ipopt 
 #

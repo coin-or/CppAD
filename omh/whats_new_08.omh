@@ -49,6 +49,14 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-22$$
+The CppAD interface to the Ipopt nonlinear programming solver
+has been moved from $code example/ipopt_cppad_nlp$$ to 
+$cref|ad_ipopt/ad_ipopt_nlp|ad_ipopt_nlp|$$.
+Note that this requires a replacement of user code where
+$code ipopt_cppad$$ is replaced by $code ad_ipopt$$; as per the 
+$cref/warning/ad_ipopt_nlp/Warning/$$.
+
 $head 11-21$$
 The Microsoft's Visual C++ Version 9.0 generates a warning of the form
 $codei warning C4396:%...%$$ 

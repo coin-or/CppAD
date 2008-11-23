@@ -121,7 +121,7 @@ bool ad_ipopt_simple(void)
 	{	// Should ad_ipopt_nlp retape the operation sequence for
 		// every new x. Can test both true and false cases because 
 		// the operation sequence does not depend on x (for this case).
-		bool retape = bool(icase);
+		bool retape = icase != 0;
 
 		// object in derived class
 		FG_info fg_info(retape);

@@ -23,6 +23,7 @@ list="
 	cppad/PowInt.h
 	ad_ipopt/*.hpp
 	ad_ipopt/*.cpp
+	ad_ipopt/*.bat
 	cppad/*.hpp
 	cppad/local/*.hpp
 	cppad/speed/*.hpp

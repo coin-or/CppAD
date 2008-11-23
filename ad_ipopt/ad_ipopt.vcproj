@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..;..\..\..\install\VisualStudio-CoinAll\include"
+				AdditionalIncludeDirectories="..;include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -66,7 +66,7 @@
 				AdditionalDependencies="libipopt.lib"
 				OutputFile="$(OutDir)/ad_ipopt.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\..\..\install\VisualStudio-CoinAll\lib;..\..\..\install\VisualStudio-CoinAll\lib\ifort"
+				AdditionalLibraryDirectories="lib"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/ad_ipopt.pdb"
 				SubSystem="1"
@@ -121,7 +121,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..;..\..\..\install\VisualStudio-CoinAll\include"
+				AdditionalIncludeDirectories="..;include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -143,7 +143,7 @@
 				AdditionalDependencies="libipopt.lib"
 				OutputFile="$(OutDir)/ad_ipopt.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\..\..\install\VisualStudio-CoinAll\lib;..\..\..\install\VisualStudio-CoinAll\lib\ifort"
+				AdditionalLibraryDirectories="lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -191,7 +191,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="..;..\..\..\install\VisualStudio-CoinAll\include"
+						AdditionalIncludeDirectories="..;include"
 						UsePrecompiledHeader="0"
 						Detect64BitPortabilityProblems="false"
 					/>
@@ -205,7 +205,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="..;..\..\..\install\VisualStudio-CoinAll\include"
+						AdditionalIncludeDirectories="..;include"
 					/>
 				</FileConfiguration>
 			</File>
@@ -217,7 +217,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="..;..\..\..\install\VisualStudio-CoinAll\include"
+						AdditionalIncludeDirectories="..;include"
 					/>
 				</FileConfiguration>
 			</File>
@@ -229,7 +229,7 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories="..;..\..\..\install\VisualStudio-CoinAll\include"
+						AdditionalIncludeDirectories="..;include"
 					/>
 				</FileConfiguration>
 			</File>

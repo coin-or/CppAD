@@ -381,7 +381,7 @@ bool ad_ipopt_ode(void)
 	for(size_t icase = 0; icase <= 1; icase++)
 	{	// Retaping is slow, so only do icase = 0 for large values 
 		// of ns.
-		bool retape = bool(icase);
+		bool retape = icase != 0;
 
 		// object defining the objective f(x) and constraints g(x)
 		FG_info fg_info(retape);

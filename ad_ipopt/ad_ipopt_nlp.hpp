@@ -31,13 +31,13 @@ $spell
 	CppAD
 	
 $$
-$section Nonlinear Programming Using Ipopt and CppAD$$
+$section Nonlinear Programming Using the CppAD Interface to Ipopt$$
 
-$index nonlinear, programming$$
+$index nonlinear, programming CppAD$$
 $index programming, nonlinear$$
-$index AD, nonlinear programming$$
 $index CppAD, nonlinear programming$$
-$index Ipopt, with AD$$
+$index Ipopt, AD$$
+$index AD, Ipopt$$
 
 $head Syntax$$
 $codei%# include "ad_ipopt_nlp.hpp"
@@ -546,9 +546,14 @@ It is the final value of the objective function $latex f(x)$$.
 
 
 $children%
+	ad_ipopt/ad_ipopt_windows.bat%
 	ad_ipopt/ad_ipopt_simple.cpp%
 	ad_ipopt/ad_ipopt_ode.cpp
 %$$
+
+$head Visual Studio$$
+If you are using Visual Studio, see the special
+$cref/ad_ipopt_windows/$$ instructions.
 
 $head Example$$
 The file 
