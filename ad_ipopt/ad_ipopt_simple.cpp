@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 
-$begin ipopt_cppad.cpp$$
+$begin ad_ipopt_simple.cpp$$
 $spell
 	cppad_nlp
 	IpoptDir
@@ -24,7 +24,7 @@ $index ipopt, AD example$$
 $section Nonlinear Programming Using CppAD and Ipopt: Example and Test$$
 
 $head Purpose$$
-This example program demonstrates how to use the class ipopt_cppad_nlp to 
+This example program demonstrates how to use the class ad_ipopt_nlp to 
 solve the example problem in the Ipopt documentation; i.e., the problem
 $latex \[
 \begin{array}{lc}
@@ -45,18 +45,18 @@ the value $cref/IpoptDir/InstallUnix/IpoptDir/$$ is specified on the
 $cref/configure/InstallUnix/Configure/$$ command line.
 
 $code
-$verbatim%example/ipopt_cppad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%ad_ipopt/ad_ipopt_simple.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 // BEGIN PROGRAM
 
-# include "ipopt_cppad_nlp.hpp"
+# include "ad_ipopt_nlp.hpp"
 
 namespace {
 
-	class FG_info : public ipopt_cppad_fg_info
+	class FG_info : public ad_ipopt_fg_info
 	{
 	private:
 		bool retape_;
@@ -88,7 +88,7 @@ namespace {
 	};
 }
 	
-bool ipopt_cppad(void)
+bool ad_ipopt_simple(void)
 {	bool ok = true;
 	size_t j;
 
@@ -118,7 +118,7 @@ bool ipopt_cppad(void)
 
 	size_t icase;
 	for(icase = 0; icase <= 1; icase++)
-	{	// Should ipopt_cppad_nlp retape the operation sequence for
+	{	// Should ad_ipopt_nlp retape the operation sequence for
 		// every new x. Can test both true and false cases because 
 		// the operation sequence does not depend on x (for this case).
 		bool retape = bool(icase);
@@ -127,8 +127,8 @@ bool ipopt_cppad(void)
 		FG_info fg_info(retape);
 
 		// create the Ipopt interface
-		ipopt_cppad_solution solution;
-		Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new ipopt_cppad_nlp(
+		ad_ipopt_solution solution;
+		Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new ad_ipopt_nlp(
 		n, m, x_i, x_l, x_u, g_l, g_u, &fg_info, &solution
 		);
 
@@ -162,7 +162,7 @@ bool ipopt_cppad(void)
 		/*
  		Check some of the solution values
  		*/
-		ok &= solution.status == ipopt_cppad_solution::success;
+		ok &= solution.status == ad_ipopt_solution::success;
 		//
 		double check_x[]   = { 1.000000, 4.743000, 3.82115, 1.379408 };
 		double check_z_l[] = { 1.087871, 0.,       0.,      0.       };

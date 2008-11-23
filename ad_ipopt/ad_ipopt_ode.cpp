@@ -9,10 +9,10 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin ipopt_cppad_ode.cpp$$
+$begin ad_ipopt_ode.cpp$$
 $spell
 	CppAD
-	ipopt_cppad_nlp
+	ad_ipopt_nlp
 	eval_r
 	nd
 $$
@@ -22,12 +22,12 @@ $section Fitting an Ode Using the CppAD Interface to Ipopt$$
 
 $index optimizing, ODE solution using AD$$
 $index ODE, optimizing solution using AD$$
-$index example, ipopt_cppad_nlp$$
-$index ipopt_cppad_nlp, example$$
+$index example, ad_ipopt_nlp$$
+$index ad_ipopt_nlp, example$$
 
 $head Purpose$$
 The CppAD interface to Ipopt 
-$cref/ipopt_cppad_nlp/$$
+$cref/ad_ipopt_nlp/$$
 enables one to represent an optimization problem
 with a large number of variables and constraints in terms of functions
 with a few domain and range variables.
@@ -133,7 +133,7 @@ $head Source Code$$
 Almost all the code below is for the general problem but some of it
 for a specific case defined by the function $code y_one(t)$$.
 $code
-$verbatim%example/ipopt_cppad_ode.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%ad_ipopt/ad_ipopt_ode.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 
@@ -141,7 +141,7 @@ $end
 ------------------------------------------------------------------------------
 */
 // BEGIN PROGRAM
-# include "ipopt_cppad_nlp.hpp"
+# include "ad_ipopt_nlp.hpp"
 
 // include a definition for Number.
 typedef Ipopt::Number Number;
@@ -204,7 +204,7 @@ Scalar eval_H(size_t k, const Vector &y, const Vector &a)
 }
 
 // -----------------------------------------------------------------------------
-class FG_info : public ipopt_cppad_fg_info
+class FG_info : public ad_ipopt_fg_info
 {
 private:
 	bool retape_;
@@ -349,7 +349,7 @@ public:
 } // End empty namespace
 // ---------------------------------------------------------------------------
 
-bool ipopt_cppad_ode(void)
+bool ad_ipopt_ode(void)
 {	bool ok = true;
 	size_t j, I;
 
@@ -387,8 +387,8 @@ bool ipopt_cppad_ode(void)
 		FG_info fg_info(retape);
 
 		// create the CppAD Ipopt interface
-		ipopt_cppad_solution solution;
-		Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new ipopt_cppad_nlp(
+		ad_ipopt_solution solution;
+		Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new ad_ipopt_nlp(
 			n, m, x_i, x_l, x_u, g_l, g_u, &fg_info, &solution
 		);
 

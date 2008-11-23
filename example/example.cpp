@@ -80,8 +80,6 @@ extern bool Integer(void);
 extern bool Interface2C(void);
 extern bool interp_onetape(void);
 extern bool interp_retape(void);
-extern bool ipopt_cppad(void);
-extern bool ipopt_cppad_ode(void);
 extern bool JacLuDet(void);
 extern bool JacMinorDet(void);
 extern bool Jacobian(void);
@@ -277,10 +275,6 @@ int main(void)
 # ifdef CPPAD_ADOLC_EXAMPLES
 	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );
 	ok &= Run( ode_taylor_adolc,  "ode_taylor_adolc" );
-# endif
-# ifdef CPPAD_IPOPT_EXAMPLES
-	ok &= Run( ipopt_cppad,       "ipopt_cppad"      );
-	ok &= Run( ipopt_cppad_ode,   "ipopt_cppad_ode"  );
 # endif
 	
 

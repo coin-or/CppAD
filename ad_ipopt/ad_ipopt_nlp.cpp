@@ -8,7 +8,7 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# include "ipopt_cppad_nlp.hpp"
+# include "ad_ipopt_nlp.hpp"
 
 // define as 0 for false or 1 for true
 # define  CPPAD_NLP_TRACE 0
@@ -18,7 +18,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # endif
 
 /* Constructor. */
-ipopt_cppad_nlp::ipopt_cppad_nlp(
+ad_ipopt_nlp::ad_ipopt_nlp(
 	size_t                     n           , 
 	size_t                     m           , 
 	const NumberVector&        x_i         ,
@@ -26,8 +26,8 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 	const NumberVector&        x_u         ,
 	const NumberVector&        g_l         ,
 	const NumberVector&        g_u         ,
-	ipopt_cppad_fg_info*       fg_info     ,
-	ipopt_cppad_solution*      solution    )
+	ad_ipopt_fg_info*       fg_info     ,
+	ad_ipopt_solution*      solution    )
 	: n_ ( n ),
 	  m_ ( m ),
 	  x_i_ ( x_i ),
@@ -39,7 +39,7 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 	  solution_ (solution)
 {	size_t i, j, k;
 
-	// set information needed in ipopt_cppad_fg_info
+	// set information needed in ad_ipopt_fg_info
 	fg_info->set_n(n);
 	fg_info->set_m(m);
 
@@ -82,14 +82,14 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 		{	std::cerr << "k=" << k << ", ell=" << ell 
 			<< ", I[" << i << "]=" << I_[i] << std::endl;
 		 	CPPAD_ASSERT_KNOWN( I_[i] <= m,
-			"ipopt_cppad_nlp: invalid value in index vector I"
+			"ad_ipopt_nlp: invalid value in index vector I"
 			);
 		}
 		for( j = 0; j < q_[k]; j++) if( J_[j] >= n )
 		{	std::cerr << "k=" << k << ", ell=" << ell 
 			<< ", J[" << j << "]=" << J_[j] << std::endl;
 			CPPAD_ASSERT_KNOWN( J_[j] < n,
-			"ipopt_cppad_nlp: invalid value in index vector J"
+			"ad_ipopt_nlp: invalid value in index vector J"
 			);
 		}
 	}
@@ -151,8 +151,8 @@ ipopt_cppad_nlp::ipopt_cppad_nlp(
 }
 
 // static member function that records operation sequence
-void ipopt_cppad_nlp::record_r_fun( 
-	ipopt_cppad_fg_info*   fg_info  , 
+void ad_ipopt_nlp::record_r_fun( 
+	ad_ipopt_fg_info*   fg_info  , 
 	size_t                 k        ,
 	SizeVector&            p        ,
 	SizeVector&            q        ,
@@ -160,7 +160,7 @@ void ipopt_cppad_nlp::record_r_fun(
 	ADFunVector&           r_fun    )
 /*
 fg_info: input
-the ipopt_cppad_fg_info object that is used to information
+the ad_ipopt_fg_info object that is used to information
 about the representation of fg(x).
 
 k: input
@@ -188,7 +188,7 @@ seqeunce that was previously in r_fun[k] is deleted.)
 	// vector of dependent variables during function recording
 	ADVector r_ad = fg_info->eval_r(k, u_ad);
 	CPPAD_ASSERT_KNOWN( r_ad.size() == p[k] ,
-		"ipopt_cppad_nlp: eval_r return value size not equal to p[k]."
+		"ad_ipopt_nlp: eval_r return value size not equal to p[k]."
 	);
 	// stop the recording and store operation sequence in r_fun
 	r_fun[k].Dependent(u_ad, r_ad);
@@ -196,8 +196,8 @@ seqeunce that was previously in r_fun[k] is deleted.)
 
 // static member function that computes CppAD sparsity pattern for 
 // Jacobian of fg
-void ipopt_cppad_nlp::compute_index_jac_fg(
-	ipopt_cppad_fg_info*  fg_info        , 
+void ad_ipopt_nlp::compute_index_jac_fg(
+	ad_ipopt_fg_info*  fg_info        , 
 	SizeVector&           I              ,
 	SizeVector&           J              ,
 	size_t                K              ,
@@ -211,7 +211,7 @@ void ipopt_cppad_nlp::compute_index_jac_fg(
 	IndexMap&             index_jac_fg   )
 /*
 fg_info: input
-the ipopt_cppad_fg_info object that is used to compute 
+the ad_ipopt_fg_info object that is used to compute 
 information about the representation of fg(x).
 
 I: scratch space
@@ -313,7 +313,7 @@ then either i = 0 or the (i, j) entry in the Jacobian of fg is always zero.
 
 // static member function that computes index map from array indices
 // for Jacobian of fg
-void ipopt_cppad_nlp::compute_index_jac_fg(
+void ad_ipopt_nlp::compute_index_jac_fg(
 	size_t                m              ,
 	size_t                n              ,
 	const BoolVector&     pattern_jac_fg ,
@@ -350,8 +350,8 @@ then either i = 0 or the (i, j) entry in the Jacobian of fg is always zero.
 
 // static member function that computes CppAD sparsity pattern for 
 // Hessian of Lagragian
-void ipopt_cppad_nlp::compute_index_h_lag(
-	ipopt_cppad_fg_info  *fg_info        , 
+void ad_ipopt_nlp::compute_index_h_lag(
+	ad_ipopt_fg_info  *fg_info        , 
 	SizeVector&           I              ,
 	SizeVector&           J              ,
 	size_t                K              ,
@@ -365,7 +365,7 @@ void ipopt_cppad_nlp::compute_index_h_lag(
 	IndexMap&             index_h_lag    )
 /*
 fg_info: input
-the ipopt_cppad_fg_info object that is used to compute 
+the ad_ipopt_fg_info object that is used to compute 
 information about the representation of fg(x).
 
 I: scratch space
@@ -460,7 +460,7 @@ always zero.
 
 // static member function that computes index map from array indices
 // in Hessian of Lagragian
-void ipopt_cppad_nlp::compute_index_h_lag(
+void ad_ipopt_nlp::compute_index_h_lag(
 	size_t                m              ,
 	size_t                n              ,
 	const BoolVector&     pattern_h_lag  ,
@@ -497,7 +497,7 @@ always zero.
 
 // static member function that computes the Ipopt sparsity structure for 
 // Jacobian of g
-void ipopt_cppad_nlp::compute_structure_jac_g(
+void ad_ipopt_nlp::compute_structure_jac_g(
 	IndexMap&         index_jac_fg   , // const does not work
 	size_t            m              ,
 	size_t            n              ,
@@ -560,7 +560,7 @@ corresponding to each non-zero entry in the Jacobian of g.
 
 // static member function that computes the Ipopt sparsity structure for 
 // Hessian of Lagragian
-void ipopt_cppad_nlp::compute_structure_h_lag(
+void ad_ipopt_nlp::compute_structure_h_lag(
 	IndexMap&         index_h_lag    , // const does not work
 	size_t             m             ,
 	size_t             n             ,
@@ -622,10 +622,10 @@ corresponding to each non-zero entry in the Hessian of the Lagragian.
 	}
 }
 
-ipopt_cppad_nlp::~ipopt_cppad_nlp()
+ad_ipopt_nlp::~ad_ipopt_nlp()
 {}
 
-bool ipopt_cppad_nlp::get_nlp_info(Index& n, Index& m, Index& nnz_jac_g,
+bool ad_ipopt_nlp::get_nlp_info(Index& n, Index& m, Index& nnz_jac_g,
                          Index& nnz_h_lag, IndexStyleEnum& index_style)
 {
 	n = n_;
@@ -639,7 +639,7 @@ bool ipopt_cppad_nlp::get_nlp_info(Index& n, Index& m, Index& nnz_jac_g,
 	return true;
 }
 
-bool ipopt_cppad_nlp::get_bounds_info(Index n, Number* x_l, Number* x_u,
+bool ad_ipopt_nlp::get_bounds_info(Index n, Number* x_l, Number* x_u,
                             Index m, Number* g_l, Number* g_u)
 {	size_t i, j;
 	// here, the n and m we gave IPOPT in get_nlp_info are passed back 
@@ -659,7 +659,7 @@ bool ipopt_cppad_nlp::get_bounds_info(Index n, Number* x_l, Number* x_u,
 	return true;
 }
 
-bool ipopt_cppad_nlp::get_starting_point(Index n, bool init_x, Number* x,
+bool ad_ipopt_nlp::get_starting_point(Index n, bool init_x, Number* x,
                                bool init_z, Number* z_L, Number* z_U,
                                Index m, bool init_lambda,
                                Number* lambda)
@@ -677,7 +677,7 @@ bool ipopt_cppad_nlp::get_starting_point(Index n, bool init_x, Number* x,
 	return true;
 }
 
-bool ipopt_cppad_nlp::eval_f(
+bool ad_ipopt_nlp::eval_f(
 	Index n, const Number* x, bool new_x, Number& obj_value
 )
 {	// This routine is not efficient. It would be better if users version
@@ -718,13 +718,13 @@ bool ipopt_cppad_nlp::eval_f(
 # if CPPAD_NLP_TRACE
 	using std::printf;
 	for(j = 0; j < n_; j++)
-		printf("ipopt_cppad_nlp::eval_f::x[%d] = %20.14g\n", j, x[j]);
-	printf("ipopt_cppad_nlp::eval_f::obj_value = %20.14g\n", obj_value);
+		printf("ad_ipopt_nlp::eval_f::x[%d] = %20.14g\n", j, x[j]);
+	printf("ad_ipopt_nlp::eval_f::obj_value = %20.14g\n", obj_value);
 # endif
 	return true;
 }
 
-bool ipopt_cppad_nlp::eval_grad_f(
+bool ad_ipopt_nlp::eval_grad_f(
 	Index n, const Number* x, bool new_x, Number* grad_f
 )
 {	CPPAD_ASSERT_UNKNOWN(size_t(n) == n_ );
@@ -773,16 +773,16 @@ bool ipopt_cppad_nlp::eval_grad_f(
 # if CPPAD_NLP_TRACE
 	using std::printf;
 	for(j = 0; j < n_; j++) printf(
-	"ipopt_cppad_nlp::eval_grad_f::x[%d] = %20.14g\n", j, x[j]
+	"ad_ipopt_nlp::eval_grad_f::x[%d] = %20.14g\n", j, x[j]
 	);
 	for(j = 0; j < n_; j++) printf(
-	"ipopt_cppad_nlp::eval_grad_f::grad_f[%d] = %20.14g\n", j, grad_f[j]
+	"ad_ipopt_nlp::eval_grad_f::grad_f[%d] = %20.14g\n", j, grad_f[j]
 	);
 # endif
 	return true;
 }
 
-bool ipopt_cppad_nlp::eval_g(
+bool ad_ipopt_nlp::eval_g(
 	Index n, const Number* x, bool new_x, Index m, Number* g
 )
 {	CPPAD_ASSERT_UNKNOWN(size_t(n) == n_ );
@@ -823,14 +823,14 @@ bool ipopt_cppad_nlp::eval_g(
 # if CPPAD_NLP_TRACE
 	using std::printf;
 	for(j = 0; j < n_; j++)
-		printf("ipopt_cppad_nlp::eval_g::x[%d] = %20.14g\n", j, x[j]);
+		printf("ad_ipopt_nlp::eval_g::x[%d] = %20.14g\n", j, x[j]);
 	for(i = 0; i < m_; i++)
-		printf("ipopt_cppad_nlp::eval_g::g[%d] = %20.14g\n", i, g[i]);
+		printf("ad_ipopt_nlp::eval_g::g[%d] = %20.14g\n", i, g[i]);
 # endif
 	return true;
 }
 
-bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
+bool ad_ipopt_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
                        Index m, Index nele_jac, Index* iRow, Index *jCol,
                        Number* values)
 {	CPPAD_ASSERT_UNKNOWN(size_t(m) == m_ );
@@ -893,7 +893,7 @@ bool ipopt_cppad_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
   	return true;
 }
 
-bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
+bool ad_ipopt_nlp::eval_h(Index n, const Number* x, bool new_x,
                    Number obj_factor, Index m, const Number* lambda,
                    bool new_lambda, Index nele_hess, Index* iRow,
                    Index* jCol, Number* values)
@@ -963,7 +963,7 @@ bool ipopt_cppad_nlp::eval_h(Index n, const Number* x, bool new_x,
 	return true;
 }
 
-void ipopt_cppad_nlp::finalize_solution(
+void ad_ipopt_nlp::finalize_solution(
 	Ipopt::SolverReturn               status    ,
 	Index                             n         , 
 	const Number*                     x         , 
@@ -982,65 +982,65 @@ void ipopt_cppad_nlp::finalize_solution(
 	CPPAD_ASSERT_UNKNOWN(size_t(m) == m_ );
 
 	switch(status)
-	{	// convert status from Ipopt enum to ipopt_cppad_solution enum
+	{	// convert status from Ipopt enum to ad_ipopt_solution enum
 		case Ipopt::SUCCESS:
 		solution_->status = 
-			ipopt_cppad_solution::success;
+			ad_ipopt_solution::success;
 		break;
 
 		case Ipopt::MAXITER_EXCEEDED:
 		solution_->status = 
-			ipopt_cppad_solution::maxiter_exceeded;
+			ad_ipopt_solution::maxiter_exceeded;
 		break;
 
 		case Ipopt::STOP_AT_TINY_STEP:
 		solution_->status = 
-			ipopt_cppad_solution::stop_at_tiny_step;
+			ad_ipopt_solution::stop_at_tiny_step;
 		break;
 
 		case Ipopt::STOP_AT_ACCEPTABLE_POINT:
 		solution_->status = 
-			ipopt_cppad_solution::stop_at_acceptable_point;
+			ad_ipopt_solution::stop_at_acceptable_point;
 		break;
 
 		case Ipopt::LOCAL_INFEASIBILITY:
 		solution_->status = 
-			ipopt_cppad_solution::local_infeasibility;
+			ad_ipopt_solution::local_infeasibility;
 		break;
 
 		case Ipopt::USER_REQUESTED_STOP:
 		solution_->status = 
-			ipopt_cppad_solution::user_requested_stop;
+			ad_ipopt_solution::user_requested_stop;
 		break;
 
 		case Ipopt::DIVERGING_ITERATES:
 		solution_->status = 
-			ipopt_cppad_solution::diverging_iterates;
+			ad_ipopt_solution::diverging_iterates;
 		break;
 
 		case Ipopt::RESTORATION_FAILURE:
 		solution_->status = 
-			ipopt_cppad_solution::restoration_failure;
+			ad_ipopt_solution::restoration_failure;
 		break;
 
 		case Ipopt::ERROR_IN_STEP_COMPUTATION:
 		solution_->status = 
-			ipopt_cppad_solution::error_in_step_computation;
+			ad_ipopt_solution::error_in_step_computation;
 		break;
 
 		case Ipopt::INVALID_NUMBER_DETECTED:
 		solution_->status = 
-			ipopt_cppad_solution::invalid_number_detected;
+			ad_ipopt_solution::invalid_number_detected;
 		break;
 
 		case Ipopt::INTERNAL_ERROR:
 		solution_->status = 
-			ipopt_cppad_solution::internal_error;
+			ad_ipopt_solution::internal_error;
 		break;
 
 		default:
 		solution_->status = 
-			ipopt_cppad_solution::unknown;
+			ad_ipopt_solution::unknown;
 	}
 
 	solution_->x.resize(n_);

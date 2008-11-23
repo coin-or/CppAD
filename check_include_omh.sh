@@ -21,6 +21,8 @@ list="
 	doc.omh
 	dev.omh
 	cppad/PowInt.h
+	ad_ipopt/*.hpp
+	ad_ipopt/*.cpp
 	cppad/*.hpp
 	cppad/local/*.hpp
 	cppad/speed/*.hpp

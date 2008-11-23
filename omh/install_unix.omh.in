@@ -560,7 +560,7 @@ $syntax%
 %$$
 is a valid reference to $code IpIpoptApplication.hpp$$.
 In this case, 
-$cref/ipopt_cppad.cpp/$$ will be included in the example testing.
+$cref/ad_ipopt_simple.cpp/$$ will be included in the example testing.
 
 $head CompilerFlags$$
 $index compile, unix flags$$

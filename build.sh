@@ -461,6 +461,13 @@ then
 		introduction/get_started/get_started
 		test_more/test_more
 	"
+	if [ -e $IPOPT_DIR/include/coin/IpIpoptApplication.hpp ]
+	then
+		list="
+			ad_ipopt/ad_ipopt
+			$list
+		"
+	fi
 	for program in $list
 	do
 		echo "running $program"

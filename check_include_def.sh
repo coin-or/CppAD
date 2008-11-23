@@ -14,7 +14,12 @@ echo "Also make sure same ifndef not used by two different files."
 echo "-------------------------------------------------------------------"
 # note CPPAD_CPPAD_INCLUDED is a special case, see cppad/error_handler.hpp
 grep '^# *ifndef *CPPAD_[0-9a-zA-Z_]*_INCLUDED$' \
-cppad/*.hpp cppad/local/*.hpp cppad/speed/*.hpp example/*.hpp openmp/*.hpp \
+	ad_ipopt/*.hpp \
+	cppad/*.hpp \
+	cppad/local/*.hpp \
+	cppad/speed/*.hpp \
+	example/*.hpp \
+	openmp/*.hpp \
 	| sed \
 	-e 's|.*# *ifndef *CPPAD_\([0-9a-zA-Z_]*\)_INCLUDED$|\1|' \
 	-e '/^CPPAD$/d' \
@@ -23,7 +28,13 @@ cppad/*.hpp cppad/local/*.hpp cppad/speed/*.hpp example/*.hpp openmp/*.hpp \
 	| sort \
 	> junk.1
  
-ls cppad/*.hpp cppad/local/*.hpp cppad/speed/*.hpp example/*.hpp openmp/*.hpp \
+ls \
+	ad_ipopt/*.hpp \
+	cppad/*.hpp \
+	cppad/local/*.hpp \
+	cppad/speed/*.hpp \
+	example/*.hpp \
+	openmp/*.hpp \
 	| sed -e 's|.*/||' -e 's|\.hpp||' \
 	| sort -u \
 	> junk.2

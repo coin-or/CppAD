@@ -29,19 +29,6 @@ ADOLC_LIB_DIR     =
 ADOLC_FLAGS       =
 endif
 #
-if CppAD_IPOPT
-IPOPT_SRC_FILES   = ipopt_cppad_nlp.cpp ipopt_cppad.cpp ipopt_cppad_ode.cpp
-IPOPT_EXTRA_FILES =
-IPOPT_INCLUDE     = -I$(IPOPT_DIR)/include
-IPOPT_LIB         = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
-IPOPT_LIB_DIR     = -L$(IPOPT_DIR)/lib
-IPOPT_FLAGS       = -DCPPAD_IPOPT_EXAMPLES
-else
-IPOPT_SRC_FILES   = 
-IPOPT_EXTRA_FILES = ipopt_cppad_nlp.cpp ipopt_cppad.cpp ipopt_cppad_ode.cpp
-IPOPT_INCLUDE     =
-IPOPT_LIB         = 
-endif
 if CppAD_BOOSTVECTOR
 BOOST_INCLUDE = -I$(BOOST_DIR)
 else
@@ -50,25 +37,24 @@ endif
 # 
 # Microsoft project files
 EXTRA_DIST        = example.sln example.vcproj test_one.sh.in \
-	$(ADOLC_EXTRA_FILES) \
-	$(IPOPT_EXTRA_FILES)
+	$(ADOLC_EXTRA_FILES)
 #
 noinst_PROGRAMS   = example 
 #
-AM_CXXFLAGS       = -g $(CXX_FLAGS) $(ADOLC_FLAGS) $(IPOPT_FLAGS)
+AM_CXXFLAGS       = -g $(CXX_FLAGS) $(ADOLC_FLAGS) 
 #
 AM_CPPFLAGS       = -I. \
                    -I$(top_srcdir) \
                     $(BOOST_INCLUDE) \
-                    $(ADOLC_INCLUDE) \
-                    $(IPOPT_INCLUDE)
+                    $(ADOLC_INCLUDE)
+                    
 #
-LDADD             = $(ADOLC_LIB) $(IPOPT_LIB)
-AM_LDFLAGS        = $(ADOLC_LIB_DIR) $(IPOPT_LIB_DIR)
+LDADD             = $(ADOLC_LIB) 
+AM_LDFLAGS        = $(ADOLC_LIB_DIR) 
 #
 example_SOURCES   = \
 	$(ADOLC_SRC_FILES) \
-	$(IPOPT_SRC_FILES) \
+	 \
 	example.cpp \
 	abs.cpp \
 	acos.cpp \
@@ -110,7 +96,6 @@ example_SOURCES   = \
 	hes_minor_det.cpp \
 	hessian.cpp \
 	hes_times_dir.cpp \
-	ipopt_cppad_nlp.hpp \
 	independent.cpp \
 	integer.cpp \
 	interface_2c.cpp\

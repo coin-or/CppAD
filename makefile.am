@@ -230,7 +230,16 @@ else
 PRINTFOR =
 endif
 #
+# ---------------------------------------------------------------
+# Did user specify a value for IPOPT_DIR in configure command line 
+if CppAD_IPOPT
+AD_IPOPT = ad_ipopt
+else
+AD_IPOPT =
+endif
+#
 SUBDIRS = \
+	$(AD_IPOPT) \
 	$(EXAMPLE) \
 	$(INTRODUCTION) \
 	$(PRINTFOR) \

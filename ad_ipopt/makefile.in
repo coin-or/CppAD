@@ -30,64 +30,24 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-noinst_PROGRAMS = test_more$(EXEEXT)
-subdir = test_more
-DIST_COMMON = $(srcdir)/makefile.am $(srcdir)/makefile.in \
-	$(srcdir)/test_one.sh.in
+noinst_PROGRAMS = ad_ipopt$(EXEEXT)
+subdir = ad_ipopt
+DIST_COMMON = $(srcdir)/makefile.am $(srcdir)/makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/cppad/config.h
-CONFIG_CLEAN_FILES = test_one.sh
+CONFIG_CLEAN_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-am__test_more_SOURCES_DIST = base_adolc.cpp \
-	../ad_ipopt/ad_ipopt_nlp.cpp ad_ipopt.cpp test_more.cpp \
-	abs.cpp acos.cpp asin.cpp add.cpp add_eq.cpp add_zero.cpp \
-	atan.cpp atan_2.cpp compare.cpp compare_change.cpp \
-	cond_exp.cpp cond_exp_ad.cpp copy.cpp cos.cpp cosh.cpp \
-	dbl_epsilon.cpp div.cpp div_eq.cpp div_zero_one.cpp erf.cpp \
-	exp.cpp for_hess.cpp for_sparse_jac.cpp forward.cpp \
-	from_base.cpp fun_check.cpp jacobian.cpp log.cpp log_10.cpp \
-	mul.cpp mul_eq.cpp mul_zero_one.cpp near_equal_ext.cpp neg.cpp \
-	ode_err_control.cpp poly.cpp pow.cpp pow_int.cpp \
-	romberg_one.cpp rosen_34.cpp runge_45.cpp reverse.cpp \
-	rev_sparse_hes.cpp rev_sparse_jac.cpp rev_two.cpp \
-	simple_vector.cpp sin.cpp sin_cos.cpp sinh.cpp \
-	sparse_vec_ad.cpp sqrt.cpp std_math.cpp sub.cpp sub_eq.cpp \
-	sub_zero.cpp value.cpp vec_ad.cpp vec_ad_par.cpp vec_unary.cpp
-@CppAD_ADOLC_TRUE@am__objects_1 = base_adolc.$(OBJEXT)
-@CppAD_IPOPT_TRUE@am__objects_2 = ad_ipopt_nlp.$(OBJEXT) \
-@CppAD_IPOPT_TRUE@	ad_ipopt.$(OBJEXT)
-am_test_more_OBJECTS = $(am__objects_1) $(am__objects_2) \
-	test_more.$(OBJEXT) abs.$(OBJEXT) acos.$(OBJEXT) \
-	asin.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
-	add_zero.$(OBJEXT) atan.$(OBJEXT) atan_2.$(OBJEXT) \
-	compare.$(OBJEXT) compare_change.$(OBJEXT) cond_exp.$(OBJEXT) \
-	cond_exp_ad.$(OBJEXT) copy.$(OBJEXT) cos.$(OBJEXT) \
-	cosh.$(OBJEXT) dbl_epsilon.$(OBJEXT) div.$(OBJEXT) \
-	div_eq.$(OBJEXT) div_zero_one.$(OBJEXT) erf.$(OBJEXT) \
-	exp.$(OBJEXT) for_hess.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
-	forward.$(OBJEXT) from_base.$(OBJEXT) fun_check.$(OBJEXT) \
-	jacobian.$(OBJEXT) log.$(OBJEXT) log_10.$(OBJEXT) \
-	mul.$(OBJEXT) mul_eq.$(OBJEXT) mul_zero_one.$(OBJEXT) \
-	near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
-	ode_err_control.$(OBJEXT) poly.$(OBJEXT) pow.$(OBJEXT) \
-	pow_int.$(OBJEXT) romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) \
-	runge_45.$(OBJEXT) reverse.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
-	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
-	simple_vector.$(OBJEXT) sin.$(OBJEXT) sin_cos.$(OBJEXT) \
-	sinh.$(OBJEXT) sparse_vec_ad.$(OBJEXT) sqrt.$(OBJEXT) \
-	std_math.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
-	sub_zero.$(OBJEXT) value.$(OBJEXT) vec_ad.$(OBJEXT) \
-	vec_ad_par.$(OBJEXT) vec_unary.$(OBJEXT)
-test_more_OBJECTS = $(am_test_more_OBJECTS)
-test_more_LDADD = $(LDADD)
+am_ad_ipopt_OBJECTS = ad_ipopt.$(OBJEXT) ad_ipopt_nlp.$(OBJEXT) \
+	ad_ipopt_ode.$(OBJEXT) ad_ipopt_simple.$(OBJEXT)
+ad_ipopt_OBJECTS = $(am_ad_ipopt_OBJECTS)
+ad_ipopt_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
-@CppAD_IPOPT_TRUE@am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1) \
-@CppAD_IPOPT_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
-test_more_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_2)
+ad_ipopt_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -96,8 +56,12 @@ CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
-SOURCES = $(test_more_SOURCES)
-DIST_SOURCES = $(am__test_more_SOURCES_DIST)
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+SOURCES = $(ad_ipopt_SOURCES)
+DIST_SOURCES = $(ad_ipopt_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -216,110 +180,30 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@CppAD_ADOLC_FALSE@ADOLC_SRC_FILES = 
-#
-@CppAD_ADOLC_TRUE@ADOLC_SRC_FILES = base_adolc.cpp 
-@CppAD_ADOLC_FALSE@ADOLC_INCLUDE = 
-@CppAD_ADOLC_TRUE@ADOLC_INCLUDE = -I$(ADOLC_DIR)/include 
-@CppAD_ADOLC_FALSE@ADOLC_LIB = 
-@CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc
-@CppAD_ADOLC_FALSE@ADOLC_LIB_DIR = 
-@CppAD_ADOLC_TRUE@ADOLC_LIB_DIR = -L$(ADOLC_DIR)/lib
-@CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
-@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_TEST
-@CppAD_IPOPT_FALSE@IPOPT_SRC_FILES = 
-@CppAD_IPOPT_TRUE@IPOPT_SRC_FILES = ../ad_ipopt/ad_ipopt_nlp.cpp ad_ipopt.cpp
-@CppAD_IPOPT_FALSE@IPOPT_EXTRA_FILES = ad_ipopt.cpp
-@CppAD_IPOPT_TRUE@IPOPT_EXTRA_FILES = 
-@CppAD_IPOPT_FALSE@IPOPT_INCLUDE = 
-@CppAD_IPOPT_TRUE@IPOPT_INCLUDE = -I$(IPOPT_DIR)/include
-@CppAD_IPOPT_FALSE@IPOPT_LIB = 
-@CppAD_IPOPT_TRUE@IPOPT_LIB = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
-@CppAD_IPOPT_TRUE@IPOPT_LIB_DIR = -L$(IPOPT_DIR)/lib
-@CppAD_IPOPT_TRUE@IPOPT_FLAGS = -DCPPAD_IPOPT_TEST
 @CppAD_BOOSTVECTOR_FALSE@BOOST_INCLUDE = 
-@CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 #
-# Microsoft project files
-EXTRA_DIST = test_more.sln test_more.vcproj test_one.sh.in \
-	$(IPOPT_EXTRA_FILES)
-
+@CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
+# 
+# Microsoft project files 
+EXTRA_DIST = ad_ipopt.sln ad_ipopt.vcproj 
+#
+AM_CXXFLAGS = -g $(CXX_FLAGS) 
 #
 AM_CPPFLAGS = -I. \
-	-I$(top_srcdir) \
-	$(BOOST_INCLUDE) \
-	$(ADOLC_INCLUDE) \
-	$(IPOPT_INCLUDE)
+                   -I$(top_srcdir) \
+                     $(BOOST_INCLUDE) \
+                     -I$(IPOPT_DIR)/include
 
 #
-AM_CXXFLAGS = -g $(CXX_FLAGS) $(ADOLC_FLAGS) $(IPOPT_FLAGS)
+LDADD = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
+AM_LDFLAGS = -L$(IPOPT_DIR)/lib
 #
-LDADD = $(ADOLC_LIB) $(IPOPT_LIB)
-AM_LDFLAGS = $(ADOLC_LIB_DIR) $(IPOPT_LIB_DIR)
-#
-test_more_SOURCES = \
-	$(ADOLC_SRC_FILES) \
-	$(IPOPT_SRC_FILES) \
-	test_more.cpp \
-	abs.cpp \
-	acos.cpp \
-	asin.cpp \
-	add.cpp \
-	add_eq.cpp \
-	add_zero.cpp \
-	atan.cpp \
-	atan_2.cpp \
-	compare.cpp \
-	compare_change.cpp \
-	cond_exp.cpp \
-	cond_exp_ad.cpp \
-	copy.cpp \
-	cos.cpp \
-	cosh.cpp \
-	dbl_epsilon.cpp \
-	div.cpp \
-	div_eq.cpp \
-	div_zero_one.cpp \
-	erf.cpp \
-	exp.cpp \
-	for_hess.cpp \
-	for_sparse_jac.cpp \
-	forward.cpp \
-	from_base.cpp \
-	fun_check.cpp \
-	jacobian.cpp \
-	log.cpp \
-	log_10.cpp \
-	mul.cpp \
-	mul_eq.cpp \
-	mul_zero_one.cpp \
-	near_equal_ext.cpp \
-	neg.cpp \
-	ode_err_control.cpp \
-	poly.cpp \
-	pow.cpp \
-	pow_int.cpp \
-	romberg_one.cpp \
-	rosen_34.cpp \
-	runge_45.cpp \
-	reverse.cpp \
-	rev_sparse_hes.cpp \
-	rev_sparse_jac.cpp \
-	rev_two.cpp \
-	simple_vector.cpp \
-	sin.cpp \
-	sin_cos.cpp \
-	sinh.cpp \
-	sparse_vec_ad.cpp \
-	sqrt.cpp \
-	std_math.cpp \
-	sub.cpp \
-	sub_eq.cpp \
-	sub_zero.cpp \
-	value.cpp \
-	vec_ad.cpp \
-	vec_ad_par.cpp \
-	vec_unary.cpp 
+ad_ipopt_SOURCES = \
+	ad_ipopt.cpp \
+	ad_ipopt_nlp.cpp \
+	ad_ipopt_nlp.hpp \
+	ad_ipopt_ode.cpp \
+	ad_ipopt_simple.cpp
 
 all: all-am
 
@@ -334,9 +218,9 @@ $(srcdir)/makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  test_more/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  ad_ipopt/makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  test_more/makefile
+	  $(AUTOMAKE) --gnu  ad_ipopt/makefile
 .PRECIOUS: makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -354,14 +238,12 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-test_one.sh: $(top_builddir)/config.status $(srcdir)/test_one.sh.in
-	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 clean-noinstPROGRAMS:
 	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
-test_more$(EXEEXT): $(test_more_OBJECTS) $(test_more_DEPENDENCIES) 
-	@rm -f test_more$(EXEEXT)
-	$(CXXLINK) $(test_more_OBJECTS) $(test_more_LDADD) $(LIBS)
+ad_ipopt$(EXEEXT): $(ad_ipopt_OBJECTS) $(ad_ipopt_DEPENDENCIES) 
+	@rm -f ad_ipopt$(EXEEXT)
+	$(CXXLINK) $(ad_ipopt_OBJECTS) $(ad_ipopt_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -369,69 +251,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abs.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acos.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_ipopt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_ipopt_nlp.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add_eq.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add_zero.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/asin.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan_2.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base_adolc.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compare.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compare_change.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cond_exp.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cond_exp_ad.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/copy.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cos.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cosh.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dbl_epsilon.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div_eq.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div_zero_one.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/erf.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exp.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_hess.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/for_sparse_jac.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/forward.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/from_base.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fun_check.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/jacobian.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/log_10.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_eq.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_zero_one.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/near_equal_ext.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/neg.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_err_control.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow_int.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_hes.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_jac.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_two.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/romberg_one.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rosen_34.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runge_45.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simple_vector.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sin.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sin_cos.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sinh.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_vec_ad.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sqrt.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/std_math.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub_eq.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sub_zero.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_more.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/value.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_ad.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_ad_par.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_unary.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_ipopt_ode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_ipopt_simple.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -446,20 +269,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
-
-ad_ipopt_nlp.o: ../ad_ipopt/ad_ipopt_nlp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ad_ipopt_nlp.o -MD -MP -MF $(DEPDIR)/ad_ipopt_nlp.Tpo -c -o ad_ipopt_nlp.o `test -f '../ad_ipopt/ad_ipopt_nlp.cpp' || echo '$(srcdir)/'`../ad_ipopt/ad_ipopt_nlp.cpp
-@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/ad_ipopt_nlp.Tpo $(DEPDIR)/ad_ipopt_nlp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../ad_ipopt/ad_ipopt_nlp.cpp' object='ad_ipopt_nlp.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ad_ipopt_nlp.o `test -f '../ad_ipopt/ad_ipopt_nlp.cpp' || echo '$(srcdir)/'`../ad_ipopt/ad_ipopt_nlp.cpp
-
-ad_ipopt_nlp.obj: ../ad_ipopt/ad_ipopt_nlp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ad_ipopt_nlp.obj -MD -MP -MF $(DEPDIR)/ad_ipopt_nlp.Tpo -c -o ad_ipopt_nlp.obj `if test -f '../ad_ipopt/ad_ipopt_nlp.cpp'; then $(CYGPATH_W) '../ad_ipopt/ad_ipopt_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../ad_ipopt/ad_ipopt_nlp.cpp'; fi`
-@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/ad_ipopt_nlp.Tpo $(DEPDIR)/ad_ipopt_nlp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../ad_ipopt/ad_ipopt_nlp.cpp' object='ad_ipopt_nlp.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ad_ipopt_nlp.obj `if test -f '../ad_ipopt/ad_ipopt_nlp.cpp'; then $(CYGPATH_W) '../ad_ipopt/ad_ipopt_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../ad_ipopt/ad_ipopt_nlp.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
