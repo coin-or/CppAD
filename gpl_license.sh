@@ -67,6 +67,7 @@ list=`find . \
 	\( -name '*.am'  \) -or \
 	\( -name '*.ac'  \) -or \
 	\( -name '*.ac'  \) -or \
+	\( -name '*.bat' \) -or \
 	\( -name '*.sh'  \) -or \
 	\( -name '*.cpp' \) -or \
 	\( -name '*.hpp' \) -or \
@@ -81,33 +82,21 @@ for file in $list
 do
 	file=`echo $file | sed -e 's|^\./||'`
 	name=`echo $file | sed -e 's|.*\/||'`
-	if [ "$name" = "makefine.in" ] || [ "$name" == "config.h.in" ]
+	if grep "GNU General Public License" $dir/$file > /dev/null
 	then
-		if grep "Common Public License" $dir/$file > /dev/null
+		if [ "$name" != "doc.omh.in" ] && [ "$name" != "doc.omh" ]
 		then
-			echo "CPL license in $dir/$file"
+			echo "GPL license in initial $dir/$file"
 			exit 1
 		fi
-	else
-		if grep "GNU General Public License" $dir/$file > /dev/null
-		then
-		if [ "$name" != "doc.omh.in" ] && [ "$name" != "doc.omh" ]
-			then
-				echo "GPL license in initial $dir/$file"
-				exit 1
-			fi
-			head -20 $dir/$file | \
-			if grep "GNU General Public License" > /dev/null
-			then
-				echo "GPL license in initial $dir/$file"
-				exit 1
-			fi
-		fi
-		#
-		sed -i $dir/$file \
+	fi
+	#
+	sed -i $dir/$file \
 -e 's/Common Public License Version 1.0/GNU General Public License Version 2/' 
-		#
-		if ! grep "GNU General Public License" $dir/$file > /dev/null
+	#
+	if ! grep "GNU General Public License Version 2" $dir/$file > /dev/null
+	then
+		if [ "$name" != config.h.in ]
 		then
 			echo "Cannot change CPL to GPL for $dir/$file"
 			exit 1
