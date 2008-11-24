@@ -70,7 +70,7 @@ RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = ad_ipopt example introduction/get_started \
+DIST_SUBDIRS = ipopt_cppad example introduction/get_started \
 	introduction/exp_apx print_for speed/cppad speed/double \
 	speed/example speed/profile speed/adolc speed/fadbad \
 	speed/sacado test_more
@@ -396,14 +396,18 @@ nobase_myinclude_HEADERS = \
 # ----------------------------------------------------------------------
 # Did user specify --with-PrintFor
 @CppAD_PRINTFOR_TRUE@PRINTFOR = print_for
-@CppAD_IPOPT_FALSE@AD_IPOPT = 
+@CppAD_IPOPT_CPPAD_FALSE@IPOPT_CPPAD = 
 #
 # ---------------------------------------------------------------
 # Did user specify a value for IPOPT_DIR in configure command line 
-@CppAD_IPOPT_TRUE@AD_IPOPT = ad_ipopt
+#
+# ---------------------------------------------------------------
+# Did user specify a value for IPOPT_DIR in configure command line 
+@CppAD_IPOPT_CPPAD_TRUE@IPOPT_CPPAD = ipopt_cppad
 #
 SUBDIRS = \
-	$(AD_IPOPT) \
+	$(IPOPT_CPPAD) \
+	$(IPOPT_CPPAD) \
 	$(EXAMPLE) \
 	$(INTRODUCTION) \
 	$(PRINTFOR) \

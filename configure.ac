@@ -184,7 +184,7 @@ AC_MSG_CHECKING([IPOPT_DIR])
 AC_ARG_VAR(IPOPT_DIR,
 	[value of the configure prefix directory during Ipopt install]
 )
-AM_CONDITIONAL(CppAD_IPOPT, test "$IPOPT_DIR" != "")
+AM_CONDITIONAL(CppAD_IPOPT_CPPAD, test "$IPOPT_DIR" != "")
 if test "$IPOPT_DIR" != "" ; then
 	AC_MSG_RESULT([$IPOPT_DIR])
 else
@@ -299,7 +299,7 @@ AC_CONFIG_FILES([
 	omh/install_unix.omh
 	omh/install_windows.omh
 	makefile
-	ad_ipopt/makefile
+	ipopt_cppad/makefile
 	example/makefile 
 	introduction/get_started/makefile 
 	introduction/exp_apx/makefile

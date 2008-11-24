@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ipopt_cppad", "ipopt_cppad.vcproj", "{58A38136-9D39-4C4B-9D73-602DAAC51451}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58A38136-9D39-4C4B-9D73-602DAAC51451}.Debug|Win32.ActiveCfg = Debug|Win32
+		{58A38136-9D39-4C4B-9D73-602DAAC51451}.Debug|Win32.Build.0 = Debug|Win32
+		{58A38136-9D39-4C4B-9D73-602DAAC51451}.Release|Win32.ActiveCfg = Release|Win32
+		{58A38136-9D39-4C4B-9D73-602DAAC51451}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -232,14 +232,18 @@ endif
 #
 # ---------------------------------------------------------------
 # Did user specify a value for IPOPT_DIR in configure command line 
-if CppAD_IPOPT
-AD_IPOPT = ad_ipopt
+#
+# ---------------------------------------------------------------
+# Did user specify a value for IPOPT_DIR in configure command line 
+if CppAD_IPOPT_CPPAD
+IPOPT_CPPAD = ipopt_cppad
 else
-AD_IPOPT =
+IPOPT_CPPAD =
 endif
 #
 SUBDIRS = \
-	$(AD_IPOPT) \
+	$(IPOPT_CPPAD) \
+	$(IPOPT_CPPAD) \
 	$(EXAMPLE) \
 	$(INTRODUCTION) \
 	$(PRINTFOR) \

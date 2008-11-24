@@ -26,16 +26,16 @@ ADOLC_LIB     =
 ADOLC_LIB_DIR =
 ADOLC_FLAGS   =
 endif
-if CppAD_IPOPT
-IPOPT_SRC_FILES   = ../ad_ipopt/ad_ipopt_nlp.cpp ad_ipopt.cpp
+if CppAD_IPOPT_CPPAD
+IPOPT_SRC_FILES   = ../ipopt_cppad/ipopt_cppad_nlp.cpp ipopt_cppad.cpp
 IPOPT_EXTRA_FILES =
 IPOPT_INCLUDE     = -I$(IPOPT_DIR)/include
 IPOPT_LIB         = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
 IPOPT_LIB_DIR     = -L$(IPOPT_DIR)/lib
-IPOPT_FLAGS       = -DCPPAD_IPOPT_TEST
+IPOPT_FLAGS       = -DCPPAD_IPOPT_CPPAD_TEST
 else
 IPOPT_SRC_FILES   = 
-IPOPT_EXTRA_FILES = ad_ipopt.cpp
+IPOPT_EXTRA_FILES = ipopt_cppad.cpp
 IPOPT_INCLUDE     =
 IPOPT_LIB         = 
 endif

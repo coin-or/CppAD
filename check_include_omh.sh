@@ -21,9 +21,9 @@ list="
 	doc.omh
 	dev.omh
 	cppad/PowInt.h
-	ad_ipopt/*.hpp
-	ad_ipopt/*.cpp
-	ad_ipopt/*.bat
+	ipopt_cppad/*.hpp
+	ipopt_cppad/*.cpp
+	ipopt_cppad/*.bat
 	cppad/*.hpp
 	cppad/local/*.hpp
 	cppad/speed/*.hpp

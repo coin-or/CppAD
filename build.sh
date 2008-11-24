@@ -464,7 +464,7 @@ then
 	if [ -e $IPOPT_DIR/include/coin/IpIpoptApplication.hpp ]
 	then
 		list="
-			ad_ipopt/ad_ipopt
+			ipopt_cppad/ipopt_cppad
 			$list
 		"
 	fi
