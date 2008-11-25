@@ -30,8 +30,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-noinst_PROGRAMS = ad_ipopt$(EXEEXT)
-subdir = ad_ipopt
+noinst_PROGRAMS = ipopt_cppad$(EXEEXT)
+subdir = ipopt_cppad
 DIST_COMMON = $(srcdir)/makefile.am $(srcdir)/makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -41,12 +41,13 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-am_ad_ipopt_OBJECTS = ad_ipopt.$(OBJEXT) ad_ipopt_nlp.$(OBJEXT) \
-	ad_ipopt_ode.$(OBJEXT) ad_ipopt_simple.$(OBJEXT)
-ad_ipopt_OBJECTS = $(am_ad_ipopt_OBJECTS)
-ad_ipopt_LDADD = $(LDADD)
+am_ipopt_cppad_OBJECTS = ipopt_cppad.$(OBJEXT) \
+	ipopt_cppad_nlp.$(OBJEXT) ipopt_cppad_ode.$(OBJEXT) \
+	ipopt_cppad_simple.$(OBJEXT)
+ipopt_cppad_OBJECTS = $(am_ipopt_cppad_OBJECTS)
+ipopt_cppad_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
-ad_ipopt_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+ipopt_cppad_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -60,8 +61,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(ad_ipopt_SOURCES)
-DIST_SOURCES = $(ad_ipopt_SOURCES)
+SOURCES = $(ipopt_cppad_SOURCES)
+DIST_SOURCES = $(ipopt_cppad_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -185,7 +186,7 @@ top_srcdir = @top_srcdir@
 @CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 # 
 # Microsoft project files (and ipopt install utility for Visual Studio)
-EXTRA_DIST = ad_ipopt.sln ad_ipopt.vcproj  ad_ipopt_windows.bat
+EXTRA_DIST = ipopt_cppad.sln ipopt_cppad.vcproj  ipopt_cppad_windows.bat
 #
 AM_CXXFLAGS = -g $(CXX_FLAGS) 
 #
@@ -198,12 +199,12 @@ AM_CPPFLAGS = -I. \
 LDADD = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
 AM_LDFLAGS = -L$(IPOPT_DIR)/lib
 #
-ad_ipopt_SOURCES = \
-	ad_ipopt.cpp \
-	ad_ipopt_nlp.cpp \
-	ad_ipopt_nlp.hpp \
-	ad_ipopt_ode.cpp \
-	ad_ipopt_simple.cpp
+ipopt_cppad_SOURCES = \
+	ipopt_cppad.cpp \
+	ipopt_cppad_nlp.cpp \
+	ipopt_cppad_nlp.hpp \
+	ipopt_cppad_ode.cpp \
+	ipopt_cppad_simple.cpp
 
 all: all-am
 
@@ -218,9 +219,9 @@ $(srcdir)/makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  ad_ipopt/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  ipopt_cppad/makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  ad_ipopt/makefile
+	  $(AUTOMAKE) --gnu  ipopt_cppad/makefile
 .PRECIOUS: makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -241,9 +242,9 @@ $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 
 clean-noinstPROGRAMS:
 	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
-ad_ipopt$(EXEEXT): $(ad_ipopt_OBJECTS) $(ad_ipopt_DEPENDENCIES) 
-	@rm -f ad_ipopt$(EXEEXT)
-	$(CXXLINK) $(ad_ipopt_OBJECTS) $(ad_ipopt_LDADD) $(LIBS)
+ipopt_cppad$(EXEEXT): $(ipopt_cppad_OBJECTS) $(ipopt_cppad_DEPENDENCIES) 
+	@rm -f ipopt_cppad$(EXEEXT)
+	$(CXXLINK) $(ipopt_cppad_OBJECTS) $(ipopt_cppad_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -251,10 +252,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_ipopt.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_ipopt_nlp.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_ipopt_ode.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_ipopt_simple.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad_nlp.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad_ode.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad_simple.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
