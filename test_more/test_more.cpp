@@ -171,8 +171,8 @@ int main(void)
 # ifdef CPPAD_ADOLC_TEST
 	ok &= Run( base_adolc,      "base_adolc"     );
 # endif
-# ifdef CPPIPOPT_CPPAD_TEST
-	ok &= Run( ipopt_cppad,        "ipopt_cppad"       );
+# ifdef CPPAD_IPOPT_CPPAD_TEST
+	ok &= Run( ipopt_cppad,     "ipopt_cppad"    );
 # endif
 
 	// check for errors
