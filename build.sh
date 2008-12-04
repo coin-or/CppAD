@@ -443,7 +443,7 @@ then
 		exit 1
 	fi
 	sed ../make.log > make.log.$$ \
-		-e '/op_code.hpp:368 warining array subscript is above/d' \
+		-e '/op_code.hpp:368: warning: array subscript is above/d' \
 		-e '/stl_uninitialized.h:82: warning: .__cur. might be/d'
 	if grep 'warning:' make.log.$$
 	then

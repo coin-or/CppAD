@@ -548,7 +548,7 @@ It is the final value of the objective function $latex f(x)$$.
 $children%
 	ipopt_cppad/ipopt_cppad_windows.bat%
 	ipopt_cppad/ipopt_cppad_simple.cpp%
-	ipopt_cppad/ipopt_cppad_ode.cpp
+	omh/ipopt_cppad_ode1.omh
 %$$
 
 $head Visual Studio$$
@@ -557,13 +557,12 @@ $cref/ipopt_cppad_windows/$$ instructions.
 
 $head Example$$
 The file 
-$cref/ipopt_cppad_simple.cpp/$$ is an example and test of $code ipopt_cppad_nlp$$.
-that uses the 
+$cref/ipopt_cppad_simple.cpp/$$ is an example and test of 
+$code ipopt_cppad_nlp$$  that uses the 
 $cref/simple representation/ipopt_cppad_nlp/Simple Representation/$$.
-The file
-$cref/ipopt_cppad_ode.cpp/$$ is a more complex example that optimizes
-the solution of an ordinary differential equation.
-They return true if they succeed and false otherwise.
+It returns true if it succeeds and false otherwise.
+The section $cref/ipopt_cppad_ode/$$ discusses an example that
+uses a more complex representation.
 
 $end
 -----------------------------------------------------------------------------

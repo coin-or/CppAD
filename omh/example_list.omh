@@ -114,7 +114,7 @@ $rref FunCheck.cpp$$
 $rref get_started.cpp$$
 $rref ipopt_cppad_simple.cpp$$
 $rref ipopt_cppad_nlp$$
-$rref ipopt_cppad_ode.cpp$$
+$rref ipopt_cppad_ode$$
 $rref HesLagrangian.cpp$$
 $rref HesLuDet.cpp$$
 $rref HesMinorDet.cpp$$

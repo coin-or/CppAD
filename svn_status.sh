@@ -60,6 +60,7 @@ sed                                                           \
 	-e '/^[?] *speed\/cppad\/cppad$/d'                    \
 	-e '/^[?] *speed\/fadbad\/fadbad$/d'                  \
 	-e '/^[?] *speed\/profile\/profile$/d'                \
+	-e '/^[?] *ipopt_cppad\/ipopt_cppad$/d'               \
 	-e '/^[?] *ipopt_cppad\/include$/d'                      \
 	-e '/^[?] *ipopt_cppad\/lib$/d'                          \
 	-e '/cygwin_package$/d'

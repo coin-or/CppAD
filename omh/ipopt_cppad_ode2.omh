@@ -1,0 +1,400 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin ipopt_cppad_ode_forward$$
+
+$section An ODE Forward Problem Example$$
+$index ode, forward example$$
+$index forward, ode example$$
+$index example, ode forward$$
+
+$head Problem$$
+We consider the following ordinary differential equation:
+$latex \[
+\begin{array}{rcl}
+	\partial_t y_0 ( t , a ) & = & - a_1 * y_0 (t, a )  
+	\\
+	\partial_t y_1 (t , a ) & = & + a_1 * y_0 (t, a ) - a_2 * y_1 (t, a )
+\end{array}
+\] $$
+with the initial conditions
+$latex \[
+y_0 (0 , a) = F(a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right) 
+\] $$
+where $latex a \in \R^3 $$ is an unknown parameter vector
+and $latex F : \R^3 \rightarrow \R^2 $$ is defined by the equation above.
+Our forward problem is stated as follows: Given $latex a \in \R^3$$
+determine the value of $latex y ( t , a ) $$ for 
+various values  of $latex t $$.
+
+
+$head Numerical Procedure$$
+Our numerical procedure for solving the forward problem starts with 
+$latex \[
+	y^0 = y(0, a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right)
+\] $$
+Given an approximation value $latex y^M $$ for $latex y ( s_M , a )$$,
+the a trapezoidal method approximates $latex y ( s_{M+1} , a )$$
+(denoted by $latex y^{M+1}$$ ) by solving the equation
+$latex \[
+y^{M+1}  =  y^M + 
+\left[ G( y^M , a ) + G( y^{M+1} , a ) \right] * \frac{s_{M+1} - s_M }{ 2 }
+\] $$
+where $latex G : \R^2 \times \R^3 \rightarrow \R^2$$ is the
+function representing this ODE; i.e.
+$latex \[
+	G(y, a) = \left(  \begin{array}{c}
+		- a_1 * y_0
+		\\
+		+ a_1 * y_0 - a_2 * y_1
+	\end{array} \right)
+\] $$
+This $latex G(y, a)$$ is linear with respect to $latex y$$, hence
+the implicit equation defining $latex y^{M+1} $$ can be solved
+inverting the a set of linear equations.
+In the general case, 
+where $latex G(y, a)$$ is non-linear with respect to $latex y$$,
+an iterative procedure is used to calculate $latex y^{M+1}$$
+from $latex y^M$$.
+
+$end
+-------------------------------------------------------------------------------
+$begin ipopt_cppad_ode_inverse$$
+
+$section An ODE Inverse Problem Example$$
+$index ode, inverse example$$
+$index inverse, ode example$$
+$index example, ode inverse$$
+
+$head Problem$$
+We define $latex y : \R \times \R^3 \rightarrow \R^2$$ as the
+solution of our $cref/ode forward problem/ipopt_cppad_ode_forward/Problem/$$.
+Suppose we are also given measurement values $latex z_k \in \R$$
+for $latex k = 1, 2, 3, 4$$ that are modeled by
+$latex \[
+	z_k = y_1 ( s_k , a) + e_k
+\] $$
+where
+$latex s_k \in \R$$,
+$latex e_k \sim {\bf N} (0 , \sigma^2 ) $$,
+and $latex \sigma \in \R_+$$.
+The maximum likelihood estimate for $latex a$$ given 
+$latex ( z_1 , z_2 , z_3 , z_4 )$$ solves the following inverse problem
+$latex \[
+\begin{array}{rcl}
+{\rm minimize} \; 
+	& \sum_{k=1}^4 H_k [ y( s_k , a ) , a ] 
+	& \;{\rm w.r.t} \; a \in \R^3
+\end{array}
+\] $$
+where the function $latex H_k : \R^2 \times \R^3 \rightarrow \R$$ is
+defined by
+$latex \[
+	H_k (y, a) = ( z_k - y_1 )^2 
+\] $$
+
+$head Black Box Method$$
+A common approach to an inverse problem is to treat the forward problem
+as a black box (that we do not look inside of or try to understand).
+In this approach, for each value of the parameter vector $latex a$$
+one uses a 
+$cref/numerical procedure/ipopt_cppad_ode_forward/Numerical Procedure/$$
+to solve for $latex y_1 ( s_k , a )$$ for $latex k = 1 , 2 , 3, 4$$.
+
+$subhead Two levels of Iteration$$
+As noted above, this numerical procedure often involves iterative
+procedures for solving a set of equations.
+Thus, in this approach, there are two levels of iterations,
+one with respect to the parameter values and the other for solving
+the forward problem.
+
+$subhead Derivatives$$
+In addition, in the black box approach, differentiating the forward problem
+often involves differentiating an iterative procedure.
+Since the iterative procedure only returns an approximate solution,
+finite differences often lead to very inaccurate approximations
+for the derivatives 
+(which in turn create problems for the optimization process).
+On the other hand, 
+direct application of AD to compute the derivatives 
+requires a huge amount of memory and calculations to differentiate the 
+forward iterative procedure.
+(There are special techniques for applying AD to the solutions of iterative
+procedures, but that is outside the scope of this presentation).
+
+$head Simultaneous Method$$
+The simultaneous forward and inverse method 
+uses constraints to include the solution of 
+the forward problem in the inverse problem.
+To be specific for our example,
+$latex \[
+\begin{array}{rcl}
+{\rm minimize} 
+	& \sum_{k=1}^4 H_k( y^{k * ns} , a )
+	& \; {\rm w.r.t} \; y^1 \in \R^2 , \ldots , y^{4 * ns} \in \R^2 ,
+	\; a \in \R^3 
+\\
+{\rm subject \; to}
+	& y^{M+1}  =  y^M + 
+\left[ G( y^M , a ) + G( y^{M+1} , a ) \right] * \frac{ s_{M+1} - s_M }{ 2 }
+	& \; {\rm for} \; M = 0 , \ldots , 4 * ns - 1
+\\
+	& y^0 = F(a)
+\end{array}
+\] $$
+where $latex ns$$ is the number of time intervals 
+(used by the trapezoidal approximation)
+between each of the measurement times.
+Note that, in this form, the iterations of the optimization procedure
+also solve the forward problem equations.
+In addition, the functions that need to be differentiated
+do not involve an iterative procedure.
+
+$end
+-----------------------------------------------------------------------------
+$begin ipopt_cppad_ode_simulate$$
+
+$section Simulating ODE Measurement Values$$
+$index ode, simulate measurement$$
+$index simulate, ode measurement$$ 
+$index measurement, simulate ode$$
+
+$head Forward Analytic Solution$$
+The forward problem has the following closed form analytic solution
+$latex \[
+\begin{array}{rcl}
+	y_0 (t , a) & = & a_0 * \exp( - a_1 * t )
+	\\
+	y_1 (t , a) & = & 
+	a_0 * a_1 * \frac{\exp( - a_2 * t ) - \exp( -a_1 * t )}{ a_1 - a_2 }
+\end{array}
+\] $$
+
+$head Simulation Parameter Values$$
+$table
+$latex \bar{a}_0 = 1$$ $pre $$ $cnext 
+	initial value of $latex y_0 (t, a)$$ 
+$rnext
+$latex \bar{a}_1 = 2$$ $pre $$ $cnext 
+	transfer rate from compartment zero to compartment one
+$rnext
+$latex \bar{a}_2 = 1$$ $pre $$ $cnext 
+	transfer rate from compartment one to outside world
+$rnext
+$latex \sigma = 0$$ $pre $$ $cnext 
+	standard deviation of measurement noise
+$rnext
+$latex e_k = 0$$ $pre $$ $cnext
+	simulated measurement noise, $latex k = 1 , 2 , 3, 4$$
+$rnext
+$latex s_k = k * .5$$ $pre $$ $cnext 
+	time corresponding to the $th k$$ measurement,
+	$latex k = 1 , 2 , 3, 4$$
+$tend
+
+$head Measurement Values$$
+The simulated measurement values are given by the equation
+$latex \[
+\begin{array}{rcl}
+z_k 
+& = &  y_1 ( s_k , \bar{a} ) + e_k
+\\
+& = & 
+\bar{a}_0 * \bar{a}_1 * 
+	\frac{\exp( - \bar{a}_2 * s_k ) - \exp( -\bar{a}_1 * s_k )}
+		{ \bar{a}_1 - \bar{a}_2 }
+\end{array}
+\] $$
+for $latex k = 1, 2, 3, 4$$.
+
+$end
+-----------------------------------------------------------------------------
+$begin ipopt_cppad_ode_represent$$
+$spell
+	ipopt_cppad_nlp
+$$
+
+$section ipopt_cppad_nlp ODE Problem Representation$$
+$index representation, ipopt_cppad_nlp ode$$
+$index ipopt_cppad_nlp, ode representation$$
+$index ode, ipopt_cppad_nlp representation$$
+
+$head Purpose$$
+In this section we represent the objective and constraint functions,
+(in the simultaneous forward and reverse optimization problem)
+in terms of much simpler functions that are faster to differentiate
+(either by hand coding or by using AD).
+
+$head Trapezoidal Time Grid$$
+The discrete time grid, used for the trapezoidal approximation, is 
+denote by $latex \{ t_M \} $$. 
+For $latex k = 1 , 2 , 3, 4$$,
+and $latex \ell = 0 , \ldots , ns$$, we define
+$latex \[
+\begin{array}{rcl}
+	\Delta_k & = & ( s_k - s_{k-1} ) / ns
+	\\
+	t_{ (k-1) * ns + \ell } & = &  s_{k-1} + \Delta_k * \ell
+\end{array}
+\] $$
+Note that for $latex M = 1 , \ldots , 4 * ns $$,
+$latex y^M$$ denotes our approximation for $latex y( t_M , a )$$,
+$latex t_0$$ is equal to 0,
+and $latex t_{k*ns}$$ is equal to $latex s_k$$.
+
+$head Argument Vector$$
+The argument vector that we are optimizing with respect to
+( $latex x$$ in $cref/ipopt_cppad_nlp/$$ )
+has the following structure
+$latex \[
+	x = \left( \begin{array}{c}
+		y^0 \\ \vdots \\ y^{4 * ns} \\ a
+	\end{array} \right)
+\] $$  
+Note that $latex x \in \R^{2 *(4 * ns + 1) + 3}$$ and
+$latex \[
+\begin{array}{rcl}
+	y^M & = & ( x_{2 * M} , x_{2 * M + 1} )^\T
+	\\
+	a   & = & ( x_{8 * ns + 2} , x_{8 * ns + 3} , x_{8 * ns + 4} )^\T
+\end{array}
+\] $$
+
+$head Objective$$
+The objective function
+( $latex fg_0 (x)$$ in $cref/ipopt_cppad_nlp/$$ )
+has the following representation,
+$latex \[
+	fg_0 (x) 
+	= \sum_{k=1}^4 H_k ( y^{k * ns} , a ) 
+	= \sum_{k=0}^3 r^k ( u^{k,0} )
+\] $$
+where $latex r^k = H_{k+1}$$ and $latex u^{k,0} =   ( y^{k * ns} , a )$$
+for $latex k = 0, 1, 2, 3$$.
+The range index (in the vector $latex fg (x)$$ )
+corresponding to each term in the objective is 0.
+The domain components (in the vector $latex x$$)
+corresponding to the $th k$$ term are
+$latex \[
+(	x_{2 * k * ns} , 
+	x_{2 * k * ns + 1} , 
+	x_{8 * ns + 2} , 
+	x_{8 * ns + 3} , 
+	x_{8 * ns + 4} 
+) 
+= u^{k,0} 
+= ( y_0^{k * ns} , y_1^{k * ns} , a_0, a_1, a_2 ) 
+\] $$
+
+$head Initial Condition$$
+We define the function 
+$latex r^k : \R^2 \times \R^3 \rightarrow \R^2$$ for $latex k = 4$$ by
+$latex \[
+	r^k ( u ) = r^k ( y , a ) = y - F(a)
+\] $$
+where $latex u  = ( y , a)$$. 
+Using this notation,
+and the function $latex fg (x)$$ in $cref/ipopt_cppad_nlp/$$,
+the constraint becomes
+$latex \[
+\begin{array}{rcl}
+	fg_1 (x) & = & r_0^4 ( u^{4,0} ) = r_0^4 ( y^0 , a)
+	\\
+	fg_2 (x) & = & r_1^4 ( u^{4,0} ) = r_1^4 ( y^0 , a)
+\end{array}
+\] $$
+The range indices (in the vector $latex fg (x)$$ )
+corresponding to this constraint are $latex ( 1, 2 )$$.
+The domain components (in the vector $latex x$$)
+corresponding to this constraint are
+$latex \[
+(	x_0 , 
+	x_1 , 
+	x_{8 * ns + 2} , 
+	x_{8 * ns + 3} , 
+	x_{8 * ns + 4} 
+) 
+=
+u^{4,0}
+= 
+( y_0^0, y_1^0 , \ldots , y_0^{4*ns}, y_1^{4*ns}, a_0 , a_1 , a_2 ) 
+\] $$
+
+$head Trapezoidal Approximation$$
+For $latex k = 5 , 6, 7 , 8$$,
+and $latex \ell = 0 , \ldots , ns$$,
+define $latex M = (k - 5) * ns + \ell$$.
+The corresponding trapezoidal approximation is represented by the constraint
+$latex \[
+0 = y^{M+1}  -  y^{M} - 
+\left[ G( y^{M} , a ) + G( y^{M+1} , a ) \right] * \frac{\Delta_k }{ 2 }
+\] $$
+For $latex k = 5, 6, 7, 8$$, we define the function
+$latex r^k : \R^2 \times \R^2 \times \R^3 \rightarrow \R^2$$ by
+$latex \[
+r^k ( y , w , a ) = y - w  [ G( y , a ) + G( w , a ) ] * \frac{ \Delta_k }{ 2 }
+\] $$
+Using this notation, 
+(and the function $latex fg (x) $$ in $cref/ipopt_cppad_nlp/$$ )
+the constraint becomes
+$latex \[
+\begin{array}{rcl}
+fg_{2 * M + 3} (x)  & = & r_0 ( u^{k,\ell} ) = r_0^k ( y^M , y^{M+1} , a )
+\\
+fg_{2 * M + 4} (x)  & = & r_1 ( u^{k,\ell} ) = r_1^k ( y^M , y^{M+1} , a )
+\end{array} 
+\] $$
+where $latex M = (k - 5) * ns * \ell$$.
+The range indices (in the vector $latex fg (x)$$ )
+corresponding to this constraint are 
+$latex ( 2 * M + 3 , 2 * M + 4 )$$.
+The domain components (in the vector $latex x$$)
+corresponding to this constraint are
+$latex \[
+(	x_{2 * M} , 
+	x_{2 * M + 1} , 
+	x_{2 * M + 2} ,
+	x_{2 * M + 3} ,
+	x_{8 * ns + 2} , 
+	x_{8 * ns + 3} , 
+	x_{8 * ns + 4} 
+)
+= u^{k, \ell}
+= ( y_0^M, y_1^M , y_0^{M+1} , y_1^{M+1} , a_0 , a_1 , a_2 ) 
+\] $$
+
+$end 
+-----------------------------------------------------------------------------
+$begin ipopt_cppad_ode.cpp$$
+$spell
+	ipopt_cppad_nlp
+	nd
+	ny
+	na
+	ns
+$$
+
+$section ipopt_cppad_nlp ODE Example Source Code$$
+$index ipopt_cppad_nlp, ode example source$$
+$index ode, ipopt_cppad_nlp example source$$
+$index example, ipopt_cppad_nlp ode source$$
+$index source, ipopt_cppad_nlp ode example$$
+
+$head Source Code$$
+Almost all the code below is for the general problem 
+(where $code nd$$, $code ny$$, $code na$$, and $code ns$$ are arbitrary)
+but some of it for a specific case defined by the function $code y_one(t)$$
+and discussed in the previous sections.
+$code
+$verbatim%ipopt_cppad/ipopt_cppad_ode.cpp%0%$$
+$$
+
+$end
+------------------------------------------------------------------------------
