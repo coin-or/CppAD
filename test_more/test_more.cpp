@@ -48,6 +48,7 @@ extern bool jacobian(void);
 extern bool Log(void);
 extern bool Log10(void);
 extern bool Mul(void);
+extern bool mul_level(void);
 extern bool MulEq(void);
 extern bool MulZeroOne(void);
 extern bool NearEqualExt(void);
@@ -138,6 +139,7 @@ int main(void)
 	ok &= Run( Log,             "Log"            );
 	ok &= Run( Log10,           "Log10"          );
 	ok &= Run( Mul,             "Mul"            );
+	ok &= Run( mul_level,       "mul_level"      );
 	ok &= Run( MulEq,           "MulEq"          );
 	ok &= Run( MulZeroOne,      "MulZeroOne"     );
 	ok &= Run( NearEqualExt,    "NearEqualExt"   );

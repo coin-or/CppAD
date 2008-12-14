@@ -49,6 +49,10 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-14$$
+Added another test of $cref/mul_level/$$ calculations (in the 
+$code test_more$$ directory).
+
 $head 12-04$$
 Extensive explanation for the $cref/ipopt_cppad_ode.cpp/$$ example was
 provided in the section $cref/ipopt_cppad_ode/$$.
