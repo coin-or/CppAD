@@ -1,6 +1,6 @@
 # ! /bin/bash
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -64,6 +64,17 @@ then
 	omhelp ../doc.omh  \
                 -l http://www.coin-or.org/CppAD/ \
 		-noframe \
+		-xml \
+		-printable \
+		-debug
+	omhelp ../doc.omh  \
+                -l http://www.coin-or.org/CppAD/ \
+		-noframe \
+		-debug
+	omhelp ../doc.omh  \
+                -l http://www.coin-or.org/CppAD/ \
+		-noframe \
+		-printable \
 		-debug
 	cd ..
 fi

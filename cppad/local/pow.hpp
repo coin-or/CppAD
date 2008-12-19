@@ -2,7 +2,7 @@
 # define CPPAD_POW_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -275,11 +275,11 @@ pow(const VecAD_reference<double> &x, const double &y)
 // but let cppad/pow_int.hpp handle the cases where y is an int.
 // -------------------------------------------------------------------------
 template <class Base> AD<Base> pow
-(int x, const VecAD_reference<Base> &y)
+(const int &x, const VecAD_reference<Base> &y)
 {	return pow(AD<Base>(x), y.ADBase()); }
 
 template <class Base> AD<Base> pow
-(int x, const AD<Base> &y)
+(const int &x, const AD<Base> &y)
 {	return pow(AD<Base>(x), y); }
 
 } // END CppAD namespace

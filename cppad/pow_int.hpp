@@ -2,7 +2,7 @@
 # define CPPAD_POW_INT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -61,7 +61,7 @@ $syntax%
 $head y$$
 The argument $italic y$$ has prototype
 $syntax%
-	int %y%
+	const int &%y%
 %$$ 
 
 $head z$$

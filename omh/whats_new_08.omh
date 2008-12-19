@@ -49,6 +49,13 @@ This section contains a list of the changes to CppAD during 2008
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-19$$
+In the documentation for $cref/pow_int/$$ change the integer exponent
+from $codei%int %y%$$ to $codei%const int &%y%$$.
+In the implementation for $cref/pow/$$ make the integer base case 
+agree with the documentation; i.e., change
+from $codei%int %x%$$ to $codei%const int &%x%$$.
+
 $head 12-14$$
 Added another test of $cref/mul_level/$$ calculations (in the 
 $code test_more$$ directory).
