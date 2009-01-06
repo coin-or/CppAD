@@ -31,88 +31,101 @@ $index tape, stop recording$$
 $index recording, stop tape$$
 
 $head Syntax$$
-$syntax%ADFun<%Base%> %f%
+$codei%ADFun<%Base%> %f%
 %$$
-$syntax%ADFun<%Base%> %f%(%x%, %y%)
+$codei%ADFun<%Base%> %f%(%x%, %y%)
 %$$
 
 
 $head Purpose$$
-The $syntax%AD<%Base%>%$$ object $italic f$$ can 
-store an AD of $italic Base$$
+The $codei%AD<%Base%>%$$ object $icode f$$ can 
+store an AD of $icode Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$.
 It can then be used to calculate derivatives of the corresponding
 $xref/glossary/AD Function/AD function/$$
 $latex \[
 	F : B^n \rightarrow B^m
 \] $$
-where $latex B$$ is the space corresponding to objects of type $italic Base$$.
+where $latex B$$ is the space corresponding to objects of type $icode Base$$.
 
 $head x$$
-If the argument $italic x$$ is present,
-it must be the vector argument in the previous call to
+If the argument $icode x$$ is present, it has prototype
+$codei%
+	const %VectorAD% &%x%
+%$$
+It must be the vector argument in the previous call to
 $cref/Independent/$$.
 Neither its size, or any of its values, are allowed to change
 between calling
-$syntax%
+$codei%
 	Independent(%x%)
 %$$
 and 
-$syntax%
+$codei%
 	ADFun<%Base%> %f%(%x%, %y%)
 %$$.
 
 $head y$$
-The sequence of operations that map $italic x$$
-to $italic y$$ are stored in the AD function object $italic f$$.
+If the argument $icode y$$ is present, it has prototype
+$codei%
+	const %VectorAD% &%y%
+%$$
+The sequence of operations that map $icode x$$
+to $icode y$$ are stored in the AD function object $icode f$$.
 
+$head VectorAD$$
+The type $icode VectorAD$$ must be a $cref/SimpleVector/$$ class with
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$ 
+$codei%AD<%Base%>%$$.
+The routine $cref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
 
 $head Default Constructor$$
 The default constructor 
-$syntax%
+$codei%
 	ADFun<%Base%> %f%
 %$$
 creates an 
-$syntax%AD<%Base%>%$$ object with no corresponding operation sequence; i.e.,
-$syntax%
+$codei%AD<%Base%>%$$ object with no corresponding operation sequence; i.e.,
+$codei%
 	%f%.size_var()
 %$$
 returns the value zero (see $xref/SeqProperty/size_var/size_var/$$).
 
 $head Sequence Constructor$$
 The sequence constructor 
-$syntax%
+$codei%
 	ADFun<%Base%> %f%(%x%, %y%)
 %$$
-creates the $syntax%AD<%Base%>%$$ object $italic f$$,
-stops the recording of AD of $italic Base$$ operations
+creates the $codei%AD<%Base%>%$$ object $icode f$$,
+stops the recording of AD of $icode Base$$ operations
 corresponding to the call
-$syntax%
+$codei%
 	Independent(%x%)
 %$$
-and stores the corresponding operation sequence in the object $italic f$$.
+and stores the corresponding operation sequence in the object $icode f$$.
 It then stores the first order taylor_ coefficients 
-(corresponding to the value of $italic x$$) in $italic f$$.
+(corresponding to the value of $icode x$$) in $icode f$$.
 This is equivalent to the following steps using the default constructor:
 $list number$$
-Create $italic f$$ with the default constructor
-$syntax%
+Create $icode f$$ with the default constructor
+$codei%
 	ADFun<%Base%> %f%;
 %$$
 $lnext
 Stop the tape and storing the operation sequence using
-$syntax%
+$codei%
 	%f%.Dependent(%x%, %y%);
 %$$
 (see $xref/Dependent/$$).
 $lnext
 Calculating the first order taylor_ coefficients for all 
 the variables in the operation sequence using
-$syntax%
+$codei%
 	%f%.Forward(%p%, %x_p%)
 %$$
-with $italic p$$ equal to zero and the elements of $italic x_p$$
-equal to the corresponding elements of $italic x$$
+with $icode p$$ equal to zero and the elements of $icode x_p$$
+equal to the corresponding elements of $icode x$$
 (see $xref/Forward/$$).
 $lend
 
@@ -124,11 +137,11 @@ $index ADFun, OpenMP$$
 In the case of multi-threading with OpenMP,
 the call to $code Independent$$
 and the corresponding call to
-$syntax%
+$codei%
 	ADFun<%Base%> %f%( %x%, %y%)
 %$$
 or 
-$syntax%
+$codei%
 	%f%.Dependent( %x%, %y%)
 %$$
 must be preformed by the same thread.
