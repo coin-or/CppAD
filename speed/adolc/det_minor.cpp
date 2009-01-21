@@ -43,6 +43,7 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 
 # include <adolc/adouble.h>
+# include <adolc/taping.h>
 # include <adolc/interfaces.h>
 
 bool link_det_minor(

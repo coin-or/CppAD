@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_09$$
 $spell
 	CppAD
+	Adolc
 $$
 
 $section Changes and Additions to CppAD During 2009$$
@@ -26,5 +27,35 @@ assist you in learning about changes between various versions of CppAD.
 $head 01-06$$
 Made some minor improvements to the documentation in
 $cref/FunConstruct/$$.
+
+$head 01-18$$
+Sometimes an error occurs while taping AD operations.
+The $cref/abort_recording/$$ function has been added 
+to make it easier to recover in such cases.
+$pre
+
+$$
+Previously, CppAD speed and comparison tests used Adolc-1.10.2.
+The version used in the tests has been upgraded to
+$href%
+	http://www.math.tu-dresden.de/~adol-c/%
+	Adolc-2.0.0.
+%$$
+$pre
+
+$$
+A discussion has been added to the documentation for $cref/Jacobian/$$ 
+about its use of
+$cref/forward or reverse/Jacobian/Forward or Reverse/$$
+mode depending on which it estimates is more efficient.
+$pre
+
+$$
+A minor typo has been fixed in the description of
+$cref/W(t, u)/reverse_any/W(t, u)/$$ in $cref/reverse_any/$$.
+To be specific, 
+$latex o ( t^{p-1} ) * t^{1-p} \rightarrow 0$$
+has been replaced by
+$latex o ( t^{p-1} ) / t^{1-p} \rightarrow 0$$.
 
 $end

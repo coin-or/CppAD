@@ -2,7 +2,7 @@
 # define CPPAD_JACOBIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -48,7 +48,7 @@ $syntax%
 	ADFun<%Base%> %f%
 %$$
 Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$
-(see $xref/Jacobian/Jacobian Uses Forward/Jacobian uses Forward/$$ below).
+(see $cref/Forward or Reverse/Jacobian/Forward or Reverse/$$ below).
 
 $head x$$
 The argument $italic x$$ has prototype
@@ -87,12 +87,15 @@ $italic Base$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head Jacobian Uses Forward$$
+$head Forward or Reverse$$
+This will use order zero Forward mode and either
+order one Forward or order one Reverse to compute the Jacobian
+(depending on which it estimates will require less work).
 After each call to $xref/Forward/$$,
 the object $italic f$$ contains the corresponding 
 $xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
-After $code Jacobian$$,
-the previous calls to $xref/Forward/$$ are undefined.
+After each call to $code Jacobian$$,
+the previous calls to $xref/Forward/$$ are unspecified.
 
 $head Example$$
 $children%

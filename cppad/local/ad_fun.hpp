@@ -44,6 +44,7 @@ $childtable%
 	cppad/local/independent.hpp%
 	cppad/local/fun_construct.hpp%
 	cppad/local/dependent.hpp%
+	cppad/local/abort_recording.hpp%
 	omh/seq_property.omh%
 	cppad/local/fun_eval.hpp%
 	cppad/local/drivers.hpp%
@@ -278,6 +279,7 @@ private:
 # include <cppad/local/independent.hpp>
 # include <cppad/local/dependent.hpp>
 # include <cppad/local/fun_construct.hpp>
+# include <cppad/local/abort_recording.hpp>
 # include <cppad/local/fun_eval.hpp>
 # include <cppad/local/drivers.hpp>
 # include <cppad/local/fun_check.hpp>

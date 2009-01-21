@@ -48,6 +48,7 @@ $codep */
 # include <cppad/speed/sparse_evaluate.hpp>
 
 # include <adolc/adouble.h>
+# include <adolc/taping.h>
 # include <adolc/drivers/drivers.h>
 
 bool link_sparse_hessian(

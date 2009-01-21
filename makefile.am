@@ -71,6 +71,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/ad_fun.hpp \
 	cppad/local/ad_tape.hpp \
 	cppad/local/ad_valued.hpp \
+	cppad/local/abort_recording.hpp \
 	cppad/local/abs.hpp \
 	cppad/local/abs_op.hpp \
 	cppad/local/acos_op.hpp \

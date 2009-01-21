@@ -179,6 +179,7 @@ $end
 */
 // BEGIN PROGRAM
 # include <adolc/adouble.h>
+# include <adolc/taping.h>
 # include <adolc/drivers/drivers.h>
 
 // definitions not in Adolc distribution and required to use CppAD::AD<adouble>

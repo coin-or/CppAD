@@ -49,6 +49,7 @@ $codep */
 # include <cppad/vector.hpp>
 
 # include <adolc/adouble.h>
+# include <adolc/taping.h>
 # include <adolc/interfaces.h>
 
 bool link_poly(

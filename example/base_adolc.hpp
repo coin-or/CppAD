@@ -205,7 +205,7 @@ $codep */
 $head Integer$$
 $codep */
 	inline int Integer(const adouble &x)
-	{    return static_cast<int>( x.value() ); }
+	{    return static_cast<int>( x.getValue() ); }
 /* $$
 $end
 */

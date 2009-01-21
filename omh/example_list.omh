@@ -72,6 +72,7 @@ $comment
 $$
 
 $table
+$rref abort_recording.cpp$$
 $rref Abs.cpp$$
 $rref Acos.cpp$$
 $rref Add.cpp$$

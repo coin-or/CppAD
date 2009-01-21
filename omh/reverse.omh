@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -362,7 +362,7 @@ $latex \[
 \end{array}
 \] $$
 where 
-$latex o ( t^{p-1} ) * t^{1-p} \rightarrow 0$$ as $latex t \rightarrow 0$$.
+$latex o ( t^{p-1} ) / t^{1-p} \rightarrow 0$$ as $latex t \rightarrow 0$$.
 
 
 $head f$$

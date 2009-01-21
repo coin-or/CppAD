@@ -36,6 +36,7 @@ $end
 # include <cppad/cppad.hpp>
 
 // external complied tests
+extern bool abort_recording(void);
 extern bool Abs(void);
 extern bool Acos(void);
 extern bool Add(void);
@@ -168,6 +169,7 @@ int main(void)
 	// This line is used by test_one.sh
 
 	// external compiled tests
+	ok &= Run( abort_recording,   "abort_recording"  );
 	ok &= Run( Abs,               "Abs"              );
 	ok &= Run( Acos,              "Acos"             );
 	ok &= Run( Add,               "Add"              );

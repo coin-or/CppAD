@@ -70,6 +70,7 @@ $end
 */
 // BEGIN PROGRAM
 # include <adolc/adouble.h>
+# include <adolc/taping.h>
 # include <adolc/interfaces.h>
 
 // adouble definitions not in Adolc distribution and 
