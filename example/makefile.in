@@ -270,8 +270,9 @@ top_srcdir = @top_srcdir@
 EXTRA_DIST = example.sln example.vcproj test_one.sh.in \
 	$(ADOLC_EXTRA_FILES)
 
+@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -g $(CXX_FLAGS) $(ADOLC_FLAGS) 
 #
-AM_CXXFLAGS = -g $(CXX_FLAGS) $(ADOLC_FLAGS) 
+@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -g $(CXX_FLAGS) $(ADOLC_FLAGS) 
 #
 AM_CPPFLAGS = -I. \
                    -I$(top_srcdir) \

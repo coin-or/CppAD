@@ -11,7 +11,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20081123, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20090122, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -254,6 +254,14 @@ AC_PROG_RANLIB
 
 dnl AC_PROG_CXX([compiler-search-list]) outputs CXX as C++ compiler to use
 AC_PROG_CXX
+AC_MSG_CHECKING([whether using Microsoft C++ compiler])
+AM_CONDITIONAL(CppAD_MS_COMPILER, test "$CXX" == "cl" || test "$CXX" == "icl")
+if test "$CXX" == "cl" || test "$CXX" == "icl"; then
+	AC_MSG_RESULT([yes])
+else
+	AC_MSG_RESULT([no])
+fi
+
 
 dnl Have configure check source directory to see if cppad/CppAD.h is there
 AC_CONFIG_SRCDIR(cppad/CppAD.h)

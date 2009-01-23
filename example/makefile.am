@@ -41,7 +41,11 @@ EXTRA_DIST        = example.sln example.vcproj test_one.sh.in \
 #
 noinst_PROGRAMS   = example 
 #
+if CppAD_MS_COMPILER
+AM_CXXFLAGS       = -EHsc -g $(CXX_FLAGS) $(ADOLC_FLAGS) 
+else
 AM_CXXFLAGS       = -g $(CXX_FLAGS) $(ADOLC_FLAGS) 
+endif
 #
 AM_CPPFLAGS       = -I. \
                    -I$(top_srcdir) \
