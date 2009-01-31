@@ -355,14 +355,16 @@ const size_t NumVarTable[] = {
 	0, // StvvOp
 	1, // SubpvOp
 	1, // SubvpOp
-	1  // SubvvOp
+	1, // SubvvOp
+	0  // Not used: avoids warning by g++ 4.3.2 when pycppad builds
 };
 
 inline size_t NumVar(OpCode op)
-{
+{	// check ensuring conversion to size_t is as expected
 	CPPAD_ASSERT_UNKNOWN( size_t(SubvvOp) == 
-		sizeof(NumVarTable) / sizeof(NumVarTable[0]) - 1
+		sizeof(NumVarTable) / sizeof(NumVarTable[0]) - 2
 	);
+	// this test ensures that all indices are within the table
 	CPPAD_ASSERT_UNKNOWN( size_t(op) <= size_t(SubvvOp) );
 
 	return NumVarTable[(size_t) op];
