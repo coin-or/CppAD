@@ -9,9 +9,9 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-copy_from_trunk="keep"     # do (frist time), keep (use current), redo
-trunk_revision="1292"      # trunk revision number that stable corresponds to
-yyyy_mm_dd="2008-09-19"    # Date corresponding to this trunk revision
+copy_from_trunk="do"       # do (frist time), keep (use current), redo
+trunk_revision="1334"      # trunk revision number that stable corresponds to
+yyyy_mm_dd="2009-01-31"    # Date corresponding to this trunk revision
 # -----------------------------------------------------------------------------
 echo "copy_from_trunk=$copy_from_trunk"
 echo "trunk_revision=$trunk_revision"

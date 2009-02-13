@@ -11,10 +11,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin CppAD$$
 $comment default navigate command for all of CppAD documentation$$
 $navigate%
-	Across%Index%
-	Up%Up%
 	Prev%Prev%
 	Next%Next%
+	Across%Index%
+	Up%Up%
 	Down_up_3%_up_3%
 	Down_up_2%_up_2%
 	Down_up_1%_up_1%

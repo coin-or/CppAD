@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_09$$
 $spell
+	Prev
 	CppAD
 	Adolc
 	cppad
@@ -27,6 +28,12 @@ This section contains a list of the changes to CppAD during 2009
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-01$$
+Move the $code Prev$$ and $code Next$$ buttons at the top of the documentation
+to the beginning so that their position does not change between sections.
+This makes it easier to repeatedly select this links.
+
 
 $head 01-31$$
 Modify $code cppad/local/op_code.hpp$$ to avoid incorrect warning by
