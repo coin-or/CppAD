@@ -12,70 +12,65 @@
 #
 if [ "$1" != "doc" ] && [ "$1" != "dev" ]
 then
-	echo "run_omhelp.sh target: where target is doc or dev"
-	exit
+	echo "usage: run_omhelp.sh (doc|dev)  (htm|xml|clean) [printable]"
+	exit 1
 fi
-if [ "$1" = dev ]
+if [ "$2" != "htm" ] && [ "$2" != "xml" ] && [ "$2" != "clean" ]
 then
-	rm -r -f dev
-	#
-	echo "Building developer documentation"
-	mkdir dev
-	cd    dev
-	if ! omhelp ../dev.omh -noframe -xml -debug > ../omhelp_dev.log
-	then
-		grep "^OMhelp Error:" ../omhelp_dev.log
-		echo "OMhelp could not build developer documentation."
-		echo "See the complete error message in omhelp_dev.log"
-		exit 1
-	fi
-	if grep "^OMhelp Warning:" omhelp_dev.log
-	then
-		echo "See the complete warning messages in omhelp_dev.log."
-		exit 1
-	fi
-	omhelp ../dev.omh -noframe -debug
-	cd ..
+	echo "usage: run_omhelp.sh (doc|dev)  (htm|xml|clean) [printable]"
+	exit 1
 fi
-if [ "$1" = doc ]
+if [ "$3" != "" ] && [ "$3" != "printable" ]
 then
-	#
-	rm -r -f doc
-	echo "Building user documentation"
-	#
-	mkdir doc
-	cd    doc
-	if ! omhelp ../doc.omh > ../omhelp_doc.log \
-		-l http://www.coin-or.org/CppAD/ \
-		-noframe \
-		-xml \
-		-debug
-	then
-		grep "^OMhelp Error:" ../omhelp_doc.log
-		echo "OMhelp could not build user documentation."
-		echo "See the complete error message in omhelp_doc.log."
-		exit 1
-	fi
-	if grep "^OMhelp Warning:" omhelp_doc.log
-	then
-		echo "See the complete warning messages in omhelp_doc.log."
-		exit 1
-	fi
-	omhelp ../doc.omh  \
-                -l http://www.coin-or.org/CppAD/ \
-		-noframe \
-		-xml \
-		-printable \
-		-debug
-	omhelp ../doc.omh  \
-                -l http://www.coin-or.org/CppAD/ \
-		-noframe \
-		-debug
-	omhelp ../doc.omh  \
-                -l http://www.coin-or.org/CppAD/ \
-		-noframe \
-		-printable \
-		-debug
-	cd ..
+	echo "usage: run_omhelp.sh (doc|dev)  (htm|xml|clean) [printable]"
+	exit 1
 fi
+if [ "$2" == "clean" ]
+then
+	for target in dev doc
+	do
+		if [ "$1" == "$target" ]
+		then
+			rm -rf $target
+			exit 0
+		fi
+	done
+fi
+target="$1"
+ext="$2"
+#
+echo "Building $target/*.$ext $3"
+if [ ! -e $target ]
+then
+	mkdir $target
+fi 
+if ! cd $target
+then
+	echo "Cannot change into ./$target directory"
+	echo "Execute run_omhelp.sh $target clean first"
+	exit 1
+fi
+cmd="omhelp ../$target.omh -noframe -debug -l http://www.coin-or.org/CppAD/"
+if [ "$ext" == "xml" ]
+then
+	cmd="$cmd -xml"
+fi
+if [ "$3" == "printable" ]
+then
+	cmd="$cmd -printable"
+fi
+echo "$cmd > ../omhelp.$target.$ext.log"
+if ! $cmd > ../omhelp.$target.$ext.log
+then
+	grep "^OMhelp Error:" ../omhelp.$target.$ext.log
+	echo "OMhelp could not build $target/*.$ext documentation."
+	echo "See the complete error message in omhelp.$target.$ext.log"
+	exit 1
+fi
+if grep "^OMhelp Warning:" ../omhelp.$target.$ext.log
+then
+	echo "See the complete warning messages in omhelp.$target.$ext.log."
+	exit 1
+fi
+cd ..
 exit 0

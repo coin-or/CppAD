@@ -56,13 +56,18 @@ $cnext
 	One web page per Section $pre  $$ $cnext
 	All as one web page
 $rnext
+$cnext
+	(fast to load) $pre  $$ $cnext
+	(slow to load)
+$rnext
 Math displayed using Latex $pre  $$ $cnext
-	$href/cppad.htm/$$ $pre  $$ $cnext
-	$href/_printable.htm/$$
+$href%http://www.coin-or.org/CppAD/Doc/cppad.htm%cppad-today%$$
+$pre  $$ $cnext
+$href%http://www.coin-or.org/CppAD/Doc/_printable.htm%cppad-today%$$
 $rnext
 Math displayed using MathML $pre  $$ $cnext
-	$href/cppad.xml/$$ $pre  $$ $cnext
-	$href/_printable.xml/$$
+$href%cppad.xml%cppad-@VERSION@%$$ $pre  $$ $cnext
+$href%http://www.coin-or.org/CppAD/Doc/_printable.xml%cppad-today%$$
 $tend
 
 $head Syntax$$

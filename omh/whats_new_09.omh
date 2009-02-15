@@ -29,6 +29,13 @@ This section contains a list of the changes to CppAD during 2009
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-15$$
+Change the distribution
+$cref/tar files/InstallUnix/Download/Unix Tar Files/$$
+to only contain one copy of the documentation.
+Link to the current Internet documentation for the other three copies.
+
+
 $head 02-01$$
 Move the $code Prev$$ and $code Next$$ buttons at the top of the documentation
 to the beginning so that their position does not change between sections.

@@ -64,6 +64,7 @@ then
 fi
 #
 list=`find . \
+	\( -name 'COPYING' \) -or \
 	\( -name '*.am'  \) -or \
 	\( -name '*.ac'  \) -or \
 	\( -name '*.ac'  \) -or \
@@ -77,7 +78,7 @@ list=`find . \
 # change back up to original directory (to be safe)
 cd ..
 #
-echo "gpl_license.sh: changing license from CPL to GPL"
+echo "Changing license from CPL to GPL"
 for file in $list
 do
 	file=`echo $file | sed -e 's|^\./||'`
@@ -110,30 +111,37 @@ done
 #
 # change the COPYING file
 sed -n < COPYING > $dir/COPYING \
--e 's/Common Public License Version 1.0/GNU General Public License Version 2/' \
--e '/-\{70\}/,/-\{70\}/p'
+	-e '/-\{70\}/,/-\{70\}/p'
 cat gpl2.txt >> $dir/COPYING
 #
 # change the file cpl1.0.txt to the file gpl2.txt
 rm $dir/cpl1.0.txt
 cp gpl2.txt $dir/gpl2.txt
 #
-# change occorances of cpl1.0.txt to gpl2.txt
-sed < makefile.am > $dir/makefile.am  \
--e 's/Common Public License Version 1.0/GNU General Public License Version 2/' \
-	-e 's/cpl1.0.txt/gpl2.txt/'
-#
-sed < makefile.in > $dir/makefile.in \
--e 's/Common Public License Version 1.0/GNU General Public License Version 2/' \
-	-e 's/cpl1.0.txt/gpl2.txt/'
-#
-sed < omh/license.omh > $dir/omh/license.omh \
--e 's/Common Public License Version 1.0/GNU General Public License Version 2/' \
-	-e 's/$verbatim%cpl1.0.txt%$\$/$verbatim%gpl2.txt%$$/'
+list="
+	makefile.am
+	makefile.in
+	omh/license.omh
+"
+for file in $list
+do
+	if grep "gpl2.txt" $dir/$file > /dev/null
+	then
+		echo "gpl_license.sh: gpl2.txt in initial $dir/$file"
+		exit 1
+	fi
+	sed -i $dir/$file -e 's/cpl1.0.txt/gpl2.txt/'
+	if ! grep "gpl2.txt" $dir/$file > /dev/null
+	then
+		msg="gpl_license.sh: cannot change cpl1.0.txt to gpl2.txt"
+		echo "$msg for $dir/$file"
+		exit 1
+	fi
+done
 #
 # Rerun omhelp to change documentation version of license from CPL to GPL 
 cd $dir
-if ! ./run_omhelp.sh doc
+if ! ./run_omhelp.sh doc xml
 then
 	echo "gpl_license.sh: error running omhelp"
 	exit 1
@@ -142,6 +150,8 @@ if [ -e "doc/error.wrd" ]
 then
 	rm -rf doc/error.wrd
 fi
+# 
+
 cd ..
 #
 # create *.gpl.tgz file

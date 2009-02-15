@@ -257,43 +257,6 @@ then
 	chmod +x test_more/test_one.sh
 fi
 #
-# omhelp
-#
-if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
-then
-	if [ ! -e omh/install_unix.omh ] || [ ! -e omh/install_windows.omh ]
-	then
-		echo "First run ./configure to create the files"
-		echo "omh/install_unix.omh and omh/install_windows.omh"
-		exit 1
-	fi
-	echo "build.sh omhelp"
-	#
-	for user in doc dev
-	do
-		echo "run_omhelp.sh $user"
-		if ! ./run_omhelp.sh $user
-		then
-			exit 1
-		fi
-		if [ ! -e omhelp_$user.log ]
-		then
-			echo "omhelp_$user.log file is missing"
-			exit 1
-		fi
-		if grep 'OMhelp Warning:' omhelp_$user.log
-		then
-			echo "omhelp_$user.log has warnings in it"
-			exit 1
-		fi
-	done
-	#
-	if [ "$1" = "omhelp" ]
-	then
-		exit 0
-	fi
-fi
-#
 # make
 #
 if [ "$1" = "make" ] || [ "$1" = "all" ]
@@ -336,6 +299,20 @@ then
 		fi
 	done
 	#
+	# only build the *.xml version of the documentation for distribution
+	echo "./run_omhelp.sh doc clean"
+	if ! ./run_omhelp.sh doc clean
+	then
+		echo "./run_omhelp.sh doc clean failed."
+		exit 1
+	fi
+	echo "./run_omhelp.sh doc xml"
+	if ! ./run_omhelp.sh doc xml 
+	then
+		echo "./run_omhelp.sh doc xml failed."
+		exit 1
+	fi
+	#
 	echo "make dist"
 	if ! make dist
 	then
@@ -364,7 +341,8 @@ then
 fi
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
 then
-	speed_test_example_failed="false"
+	# -------------------------------------------------------------
+	# Extract the distribution
 	#
 	if [ -e cppad-$version ]
 	then
@@ -400,6 +378,7 @@ then
 	#
 	dir=`pwd`
 	cd cppad-$version
+	# -------------------------------------------------------------
 	#
 	# check example list
 	if ! ./check_example.sh >> $dir/build_test.log
@@ -424,16 +403,45 @@ then
 		echo "./check_include_omh.sh failed"
 		exit 1
 	fi
+	# -------------------------------------------------------------
+	# Configure
+	#
 	if ! ./build.sh configure test
 	then
 		echo "Error: build.sh configure test"  >> $dir/build_test.log
 		echo "Error: build.sh configure test" 
 		exit 1
 	fi
+	# -------------------------------------------------------------
+	# Test the help
+	if [ ! -e "doc/index.xml" ]
+	then
+		echo "Error: doc/index.xml missing" >> $dir/build_test.log
+		echo "Error: doc/index.xml missing"
+		exit 1
+	fi
+	for user in doc dev
+	do
+		for ext in htm xml
+		do
+			echo "./run_omhelp.sh $user $ext"
+			if ! ./run_omhelp.sh $user $ext
+			then
+				msg="Error: run_omhelp.sh $user $ext"
+				echo "$msg" >> $dir/build_test.log 
+				echo "$msg" 
+				exit 1
+			fi
+			msg="Ok: run_omhelp.sh $user $ext"
+			echo "$msg" >> $dir/build_test.log
+		done
+	done
+	# -------------------------------------------------------------
+	# Compile
+	#
 	# gcc 3.4.4 with optimization generates incorrect warning; see 
 	# 	http://cygwin.com/ml/cygwin-apps/2005-06/msg00161.html
 	# The sed commands below are intended to remove them.
-	#
 	echo "make >& $dir/make.log"
 	echo "You may use commmand below to view progress of command above"
 	echo "tail -f $dir/make.log"
@@ -454,6 +462,8 @@ then
 	fi
 	echo "Ok: make" 
 	echo "Ok: make" >> $dir/build_test.log
+	# ---------------------------------------------------------------
+	# Run execuables
 	#
 	list="
 		example/example
@@ -502,6 +512,7 @@ then
 	fi
 	seed="123"
 	retape="false"
+	speed_test_example_failed="false"
 	for name in $list
 	do
 		# Note that example does not use command line arguments,
@@ -534,15 +545,6 @@ then
 		exit 1
 	fi
 	echo "" >> $dir/build_test.log
-	#
-	if ! ./run_omhelp.sh doc
-	then
-		failed="run_omhelp.sh"
-		echo "Error: $failed failed."
-		echo "Error: $failed failed." >> $dir/build_test.log
-		exit 1
-	fi
-	cat omhelp_doc.log        >> $dir/build_test.log
 	#
 	if [ "$speed_test_example_failed" = "true" ]
 	then
@@ -666,7 +668,6 @@ echo "version        update configure.ac and doc.omh version number"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
 echo "configure      excludes --with-*"
 echo "configure test includes all the possible options except PREFIX_DIR"
-echo "omhelp         build all the documentation in doc & dev directories"
 echo "make           use make to build all of the requested targets"
 echo "dist           create the distribution file cppad-version.cpl.tgz"
 echo "test           unpack *.cpl.tgz, compile, tests, result in build_test.log"
