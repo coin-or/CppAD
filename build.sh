@@ -300,6 +300,15 @@ then
 	done
 	#
 	# only build the *.xml version of the documentation for distribution
+	if ! grep < doc.omh > /dev/null \
+		'This comment is used to remove the table below' 
+	then
+		echo "Error: Missing comment expected in doc.omh"
+		exit 1
+	fi
+	mv doc.omh doc.tmp
+	sed < doc.tmp > doc.omh \
+		-e '/This comment is used to remove the table below/,/$tend/d'
 	echo "./run_omhelp.sh doc clean"
 	if ! ./run_omhelp.sh doc clean
 	then
@@ -312,6 +321,7 @@ then
 		echo "./run_omhelp.sh doc xml failed."
 		exit 1
 	fi
+	mv doc.tmp doc.omh
 	#
 	echo "make dist"
 	if ! make dist
@@ -335,6 +345,30 @@ then
 	#
 	#
 	if [ "$1" = "dist" ]
+	then
+		exit 0
+	fi
+fi
+if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
+then
+	for flag in "printable" ""
+	do
+		for ext in htm xml
+		do
+			echo "./run_omhelp.sh doc $ext $flag"
+			if ! ./run_omhelp.sh doc $ext $flag
+			then
+				msg="Error: run_omhelp.sh doc $ext $flag"
+				echo "$msg" >> $dir/build_test.log 
+				echo "$msg" 
+				exit 1
+			fi
+			msg="Ok: run_omhelp.sh doc $ext $flag"
+			echo "$msg" >> $dir/build_test.log
+		done
+	done
+	#
+	if [ "$1" = "omhelp" ]
 	then
 		exit 0
 	fi
@@ -668,6 +702,7 @@ echo "version        update configure.ac and doc.omh version number"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
 echo "configure      excludes --with-*"
 echo "configure test includes all the possible options except PREFIX_DIR"
+echo "omhelp         build all the user documentation in all formats"
 echo "make           use make to build all of the requested targets"
 echo "dist           create the distribution file cppad-version.cpl.tgz"
 echo "test           unpack *.cpl.tgz, compile, tests, result in build_test.log"
