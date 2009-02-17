@@ -110,8 +110,7 @@ do
 done
 #
 # change the COPYING file
-sed -n < COPYING > $dir/COPYING \
-	-e '/-\{70\}/,/-\{70\}/p'
+sed -n -i $dir/COPYING -e '/-\{70\}/,/-\{70\}/p'
 cat gpl2.txt >> $dir/COPYING
 #
 # change the file cpl1.0.txt to the file gpl2.txt
