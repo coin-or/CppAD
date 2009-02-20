@@ -17,8 +17,8 @@ then
 	exit 1
 fi
 # determine the function name
-fun=`grep "^bool *[a-zA-Z_]*( *void *)" $1 | tail -1 | \
-	sed -e "s/^bool *\([a-zA-Z_]*\) *( *void *)/\1/"`
+fun=`grep "^bool *[a-zA-Z0-9_]*( *void *)" $1 | tail -1 | \
+	sed -e "s/^bool *\([a-zA-Z0-9_]*\) *( *void *)/\1/"`
 #
 if [ -e test_one.exe ]
 then

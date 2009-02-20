@@ -170,7 +170,8 @@ $rref reverse_two.cpp$$
 $rref RombergMul.cpp$$
 $rref RombergOne.cpp$$
 $rref Rosen34.cpp$$
-$rref Runge45.cpp$$
+$rref runge_45_1.cpp$$
+$rref runge_45_2.cpp$$
 $rref SeqProperty.cpp$$
 $rref SimpleVector.cpp$$
 $rref Sin.cpp$$

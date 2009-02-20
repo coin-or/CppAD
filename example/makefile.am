@@ -147,7 +147,8 @@ example_SOURCES   = \
 	romberg_mul.cpp \
 	romberg_one.cpp \
 	rosen_34.cpp \
-	runge_45.cpp \
+	runge_45_1.cpp \
+	runge_45_2.cpp \
 	seq_property.cpp \
 	simple_vector.cpp \
 	sin.cpp \

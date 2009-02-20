@@ -213,12 +213,20 @@ if this is not the case.
 
 $head Example$$
 $children%
-	example/runge_45.cpp
+	example/runge_45_1.cpp%
+	example/runge_45_2.cpp
 %$$
 The file
-$xref/Runge45.cpp/$$
-contains an example and test a test of using this routine.
+$cref/runge_45_1.cpp/$$
+contains a simple example and test of $code Runge45$$.
 It returns true if it succeeds and false otherwise.
+$pre
+
+$$
+The file
+$cref/runge_45_2.cpp/$$ contains an example using $code Runge45$$
+in the context of algorithmic differentiation.
+It also returns true if it succeeds and false otherwise.
 
 $head Source Code$$
 The source code for this routine is in the file

@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -10,7 +10,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Runge45.cpp$$
+$begin runge_45_1.cpp$$
 $spell
 	Runge
 $$
@@ -38,7 +38,7 @@ X_i '(t)   & = & (i+1) t^i = (i+1) X_{i-1} (t) & {\rm if \;} i > 0
 The example tests Runge45 using the relations above:
 
 $code
-$verbatim%example/runge_45.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/runge_45_1.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -79,7 +79,7 @@ namespace {
 	};
 }
 
-bool Runge45(void)
+bool runge_45_1(void)
 {	bool ok = true;     // initial return value
 	size_t i;           // temporary indices
 

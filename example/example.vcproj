@@ -372,7 +372,10 @@
 				RelativePath=".\rosen_34.cpp">
 			</File>
 			<File
-				RelativePath=".\runge_45.cpp">
+				RelativePath=".\runge_45_1.cpp">
+			</File>
+			<File
+				RelativePath=".\runge_45_2.cpp">
 			</File>
 			<File
 				RelativePath=".\seq_property.cpp">

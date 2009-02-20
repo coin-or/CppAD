@@ -65,11 +65,12 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	par_var.cpp poly.cpp pow.cpp pow_int.cpp reverse_any.cpp \
 	reverse_one.cpp reverse_two.cpp rev_one.cpp rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp rev_two.cpp romberg_mul.cpp romberg_one.cpp \
-	rosen_34.cpp runge_45.cpp seq_property.cpp simple_vector.cpp \
-	sin.cpp sinh.cpp sparse_hessian.cpp sparse_jacobian.cpp \
-	sqrt.cpp stack_machine.cpp sub.cpp sub_eq.cpp tan.cpp tanh.cpp \
-	tape_index.cpp track_new_del.cpp unary_minus.cpp \
-	unary_plus.cpp value.cpp var_2par.cpp vec_ad.cpp
+	rosen_34.cpp runge_45_1.cpp runge_45_2.cpp seq_property.cpp \
+	simple_vector.cpp sin.cpp sinh.cpp sparse_hessian.cpp \
+	sparse_jacobian.cpp sqrt.cpp stack_machine.cpp sub.cpp \
+	sub_eq.cpp tan.cpp tanh.cpp tape_index.cpp track_new_del.cpp \
+	unary_minus.cpp unary_plus.cpp value.cpp var_2par.cpp \
+	vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
@@ -105,14 +106,15 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	reverse_two.$(OBJEXT) rev_one.$(OBJEXT) \
 	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
 	rev_two.$(OBJEXT) romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) \
-	rosen_34.$(OBJEXT) runge_45.$(OBJEXT) seq_property.$(OBJEXT) \
-	simple_vector.$(OBJEXT) sin.$(OBJEXT) sinh.$(OBJEXT) \
-	sparse_hessian.$(OBJEXT) sparse_jacobian.$(OBJEXT) \
-	sqrt.$(OBJEXT) stack_machine.$(OBJEXT) sub.$(OBJEXT) \
-	sub_eq.$(OBJEXT) tan.$(OBJEXT) tanh.$(OBJEXT) \
-	tape_index.$(OBJEXT) track_new_del.$(OBJEXT) \
-	unary_minus.$(OBJEXT) unary_plus.$(OBJEXT) value.$(OBJEXT) \
-	var_2par.$(OBJEXT) vec_ad.$(OBJEXT)
+	rosen_34.$(OBJEXT) runge_45_1.$(OBJEXT) runge_45_2.$(OBJEXT) \
+	seq_property.$(OBJEXT) simple_vector.$(OBJEXT) sin.$(OBJEXT) \
+	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	sparse_jacobian.$(OBJEXT) sqrt.$(OBJEXT) \
+	stack_machine.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
+	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
+	track_new_del.$(OBJEXT) unary_minus.$(OBJEXT) \
+	unary_plus.$(OBJEXT) value.$(OBJEXT) var_2par.$(OBJEXT) \
+	vec_ad.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -375,7 +377,8 @@ example_SOURCES = \
 	romberg_mul.cpp \
 	romberg_one.cpp \
 	rosen_34.cpp \
-	runge_45.cpp \
+	runge_45_1.cpp \
+	runge_45_2.cpp \
 	seq_property.cpp \
 	simple_vector.cpp \
 	sin.cpp \
@@ -531,7 +534,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/romberg_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/romberg_one.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rosen_34.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runge_45.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runge_45_1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runge_45_2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/seq_property.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simple_vector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sin.Po@am__quote@
