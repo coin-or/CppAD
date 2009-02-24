@@ -32,7 +32,7 @@ $latex \[
 \begin{array}{rcl}
 X_j  (b, 0)   & = & b                                                     \\
 \partial_t X_j (b, t)   & = & b \left( \sum_{k=0}^{j-1} t^k / k ! \right) \\
-\partial_t X_j'(b, t)   & = & \left\{ \begin{array}{ll}
+\partial_t X_j (b, t)   & = & \left\{ \begin{array}{ll}
 	0               & {\rm if} \; j = 0  \\
 	X_{j-1} (b, t)  & {\rm otherwise}
 \end{array} \right.
