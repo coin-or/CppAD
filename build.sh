@@ -359,12 +359,11 @@ then
 			if ! ./run_omhelp.sh doc $ext $flag
 			then
 				msg="Error: run_omhelp.sh doc $ext $flag"
-				echo "$msg" >> $dir/build_test.log 
 				echo "$msg" 
 				exit 1
 			fi
 			msg="Ok: run_omhelp.sh doc $ext $flag"
-			echo "$msg" >> $dir/build_test.log
+			echo "$msg" 
 		done
 	done
 	#

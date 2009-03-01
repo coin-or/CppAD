@@ -100,5 +100,5 @@ do
 	diff $name $name.$$
 	rm   $name.$$
 done
-
-
+#
+rm svn_status.$$
