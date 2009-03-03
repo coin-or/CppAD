@@ -10,7 +10,8 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-if [ "$1" == "" ]
+flag="$1"
+if [ "$flag" == "" ]
 then
 	echo "./svn_status.sh <makefile.in flag>"
 	echo "where makefile.in flag is + or -"
@@ -65,7 +66,7 @@ sed                                                           \
 	-e '/^[?] *ipopt_cppad\/lib$/d'                          \
 	-e '/cygwin_package$/d'
 #
-if [ "$1" == "+" ]
+if [ "$flag" == "+" ]
 then
 	cat svn_status.$$
 else
