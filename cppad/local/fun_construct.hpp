@@ -236,7 +236,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	m = dep_taddr_.size();
 	for(i = 0; i < m; i++) CPPAD_ASSERT_KNOWN(
 		taylor_[dep_taddr_[i]] == y[i].value_,
-		"An independent variable is not equal its tape evaluation"
+		"A dependent variable is not equal its tape evaluation"
 		", it may be nan."
 	);
 }

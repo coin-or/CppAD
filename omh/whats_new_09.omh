@@ -29,6 +29,18 @@ This section contains a list of the changes to CppAD during 2009
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-03-24$$
+Added cross references in 
+the $cref/examples/ListAllExamples/$$ to occurrence of the following tokens:
+$cref/AD/$$,
+$cref/ADFun/FunConstruct/$$,
+$cref/CPPAD_TEST_VECTOR/test_vector/$$,
+$cref/Forward/$$,
+$cref/Independent/$$,
+$cref/Jacobian/$$
+$cref/NearEqual/$$,
+$cref/Reverse/$$.
+
 $head 02-20$$
 Demonstrate using AD to compute the derivative
 of the solution of an ODE with respect to a parameter

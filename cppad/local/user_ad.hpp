@@ -2,7 +2,7 @@
 # define CPPAD_USER_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,8 +44,7 @@ for the following base types:
 $code float$$, 
 $code double$$,
 $code std::complex<float>$$, 
-$code std::complex<double>$$, and
-$syntax%AD<%Other%>%$$.
+$code std::complex<double>$$.
 Otherwise, see $cref/base_require/$$.
 
 
