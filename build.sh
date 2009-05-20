@@ -375,6 +375,26 @@ fi
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
 then
 	# -------------------------------------------------------------
+	# Run automated checking of file names in original source directory
+	#
+	list="
+		check_example.sh
+		check_include_def.sh
+		check_include_file.sh
+		check_include_omh.sh
+		check_makefile.sh
+	"
+	for check in $list 
+	do
+		if ! ./$check >> build_test.log
+		then
+			echo "./$check failed"
+			exit 1
+		fi
+	done
+	# add a new line after last file check
+	echo ""                 >> build_test.log
+	#
 	# Extract the distribution
 	#
 	if [ -e cppad-$version ]
@@ -400,8 +420,6 @@ then
 		fi
 	fi
 	#
-	# add a new line after last include file check
-	echo ""                 >> build_test.log
 	#
 	echo "tar -xzf $dir/cppad-$version.cpl.tgz"
 	if ! tar -xzf $dir/cppad-$version.cpl.tgz
@@ -411,31 +429,6 @@ then
 	#
 	dir=`pwd`
 	cd cppad-$version
-	# -------------------------------------------------------------
-	#
-	# check example list
-	if ! ./check_example.sh >> $dir/build_test.log
-	then
-		echo "./check_example.sh failed"
-		exit 1
-	fi
-	#
-	# check include files
-	if ! ./check_include_def.sh  >> $dir/build_test.log
-	then
-		echo "./check_include_def.sh failed"
-		exit 1
-	fi
-	if ! ./check_include_file.sh >> $dir/build_test.log
-	then
-		echo "./check_include_file.sh failed"
-		exit 1
-	fi
-	if ! ./check_include_omh.sh  >> $dir/build_test.log
-	then
-		echo "./check_include_omh.sh failed"
-		exit 1
-	fi
 	# -------------------------------------------------------------
 	# Configure
 	#
