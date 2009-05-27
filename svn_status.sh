@@ -77,7 +77,6 @@ yyyy_mm_dd=`date +%G-%m-%d`
 #
 svn cat configure | sed > configure.$$ \
 	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $yyyymmdd/g" \
-	-e 's/CppAD [0-9]\{8\}[.0-9]*$/&./' \
 	-e "s/VERSION='[0-9]\{8\}[.0-9]*'/VERSION='$yyyymmdd'/g" \
 	-e "s/configure [0-9]\{8\}[.0-9]*/configure $yyyymmdd/g" \
 	-e "s/config.status [0-9]\{8\}[.0-9]*/config.status $yyyymmdd/g" \

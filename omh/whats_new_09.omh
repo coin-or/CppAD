@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_09$$
 $spell
+	svn
 	Prev
 	CppAD
 	Adolc
@@ -29,7 +30,12 @@ This section contains a list of the changes to CppAD during 2009
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 09-03-24$$
+$head 05-20$$
+A change was make to the trunk on 05-19 (svn revision 1361) that broke the
+$cref/Unix install/InstallUnix/$$ procedure.
+This was has been fixed (revision 1362).
+
+$head 03-24$$
 Added cross references in 
 the $cref/examples/ListAllExamples/$$ to occurrence of the following tokens:
 $cref/AD/$$,
