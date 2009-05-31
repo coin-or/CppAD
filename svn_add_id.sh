@@ -1,27 +1,15 @@
-# ! /bin/bash 
+#! /bin/bash
 # $Id$
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
-#
-# CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
-#                     Common Public License Version 1.0.
-#
-# A copy of this license is included in the COPYING file of this distribution.
-# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
-# -----------------------------------------------------------------------------
-#
+# ----------------------------------------------------------------------------
 # Each of the cases in ext_list and file_list must be handled by the
 #	case "$ext" in
 # statment in the script below.
 #
-# List of extensions that are handled by svn_add_id.sh.
-# Spaces must surround each entry.
+# List of extensions that are handled by svn_add_id.sh
 ext_list=" .sh .py .bat .c .h .cpp .hpp  .omh " 
 #
 # List of specific file names that are handled by svn_add_id.sh
-# Spaces must surround each entry.
-# No special grep pattern matching characters, except for '.', can be used.
+# (Assume no special grep pattern matching characters except for .) 
 file_list=" makefile.am configure.ac "
 #
 # ----------------------------------------------------------------------------
@@ -36,6 +24,9 @@ then
 	echo
 	echo "This command adds the Subversion keyword comamnd \$Id"
 	echo "to files in and below the specified directory."
+	echo "It also executes the command"
+	echo "	svn propset svn:keywords Id set on name"
+	echo "where name is the name of the file that was modified." 
 	echo
 	echo "If a file already has a Subversion \$Id comamnd, it is"
 	echo "not modified."
@@ -52,12 +43,13 @@ fi
 dir_list=`ls "$directory"`
 for name in $dir_list
 do
-	if [ -d "$directory/$name" ]
+	full_name="$directory/$name"
+	if [ -d "$full_name" ]
 	then
 		# This is a directory so run svn_add_id.sh on it
-		if ! $command "$directory/$name" "$dry_run"
+		if ! $command "$full_name" "$dry_run"
 		then
-			echo "Aborted $command $directory/$name $dry_run"
+			echo "Aborted $command $full_name $dry_run"
 			exit 1
 		fi
 		# do not process this file
@@ -70,7 +62,7 @@ do
 			# Not in extension list so do not process this file
 			ext=""
 		else
-			if grep '\$Id.*\$' $directory/$name > /dev/null
+			if grep '\$Id.*\$' $full_name > /dev/null
 			then
 				# $Id command is already in this file
 				# so do not process it
@@ -80,7 +72,7 @@ do
 		pattern=`echo "$name" | sed -e 's/\./[.]/g' -e 's/.*/ & /'`
 		if echo "$file_list" | grep "$pattern" > /dev/null
 		then
-			if grep '\$Id.*\$' $directory/$name > /dev/null
+			if grep '\$Id.*\$' $full_name > /dev/null
 			then
 				# $Id command is already in this file
 				# so do not process it
@@ -96,7 +88,7 @@ do
 			# Shell or python script file. Put Id command after 
 			# interpertor specification; e.g., ! /bin/bash
 			.sh | .py )
-			sed < $directory/$name > svn_add_id.$$ \
+			sed < $full_name > svn_add_id.$$ \
 				-e '1,1s/^[^!]*$/# $Id$\n&/' \
 				-e '1,1s/^# *!.*$/& \n# $Id$/'
 			;;
@@ -104,48 +96,52 @@ do
 			# Dos batch file
 		       .bat )
 			echo "rem \$Id\$" > svn_add_id.$$
-			cat "$directory/$name" >> svn_add_id.$$
+			cat "$full_name" >> svn_add_id.$$
 			;;
 
 			# C and C++ source code
 		       .c | .h | .cpp | .hpp )
 			echo "/* \$Id\$ */" > svn_add_id.$$
-			cat "$directory/$name" >> svn_add_id.$$
+			cat "$full_name" >> svn_add_id.$$
 			;;
 
 			# OMhelp files
 			.omh )
 			echo "\$Id\$" > svn_add_id.$$
-			cat "$directory/$name" >> svn_add_id.$$
+			cat "$full_name" >> svn_add_id.$$
 			;;
 
 			# Automake input files
 			makefile.am )
-			sed < $directory/$name > svn_add_id.$$ \
+			sed < $full_name > svn_add_id.$$ \
 				-e '1,1s/^.*$/# $Id$\n&/' 
 			;;
 
 			# Autoconf input files
 			configure.ac )
-			sed < $directory/$name > svn_add_id.$$ \
+			sed < $full_name > svn_add_id.$$ \
 				-e '1,1s/^.*$/dnl $Id$\n&/' 
 			;;
 
 		esac
 		# Must have matched one of the cases above because $ext is
 		# in $ext_list of $file_list
-		echo "$directory/$name"
-		if diff $directory/$name svn_add_id.$$
+		echo "$full_name"
+		if diff $full_name svn_add_id.$$
 		then
-			echo "Cannot add \$Id command to $directory/$name"
+			echo "Cannot add \$Id command to $full_name"
 			exit 1
 		fi
 		if [ "$dry_run" == "" ]
 		then
-			if ! mv svn_add_id.$$ $directory/$name
+			if ! mv svn_add_id.$$ $full_name
 			then
-				echo "Cannot modify $directory/$name"
+				echo "Cannot modify $full_name"
 				exit 1
+			fi
+			if ! svn propset svn:keywords Id set on $full_name
+			then
+				echo "Cannot set Id keyword on for $full_name"
 			fi
 		else
 			if ! rm svn_add_id.$$
