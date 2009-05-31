@@ -16,23 +16,24 @@ file_list=" makefile.am configure.ac "
 command="$0"
 directory="$1"
 dry_run="$2"
-if [ ! -d "$1" ] || ( [ "$2" != "" ] && [ "$2" != "--dry-run" ] )
+if [ ! -d "$1" ] || ( [ "$2" != "" ] && [ "$2" != "--not-dry-run" ] )
 then
 	echo "\"$directory\" is not a directory"
 	echo
-	echo "usage: svn_add_id.sh directory --dry-run"
+	echo "usage: svn_add_id.sh directory [--not-dry-run]"
 	echo
 	echo "This command adds the Subversion keyword comamnd \$Id"
 	echo "to files in and below the specified directory."
+	echo
 	echo "It also executes the command"
 	echo "	svn propset svn:keywords Id set on name"
 	echo "where name is the name of the file that was modified." 
 	echo
 	echo "If a file already has a Subversion \$Id comamnd, it is"
-	echo "not modified."
+	echo "not modified, but its properity will still be set."
 	echo
-	echo "If --dry-run is specified, proposed changes are listed,"
-	echo "but no action is taken."
+	echo "If --not-dry-run is missing, the proposed changes are listed,"
+	echo "but no action is taken (neither file edits or property setting)."
 	echo
 	echo "The shell variables ext_list and file_list determine which files"
 	echo "are checked; see the top of file $0" 
@@ -43,6 +44,7 @@ fi
 dir_list=`ls "$directory"`
 for name in $dir_list
 do
+	id_already="no"
 	full_name="$directory/$name"
 	if [ -d "$full_name" ]
 	then
@@ -66,7 +68,7 @@ do
 			then
 				# $Id command is already in this file
 				# so do not process it
-				ext=""
+				id_already="yes"
 			fi
 		fi
 		pattern=`echo "$name" | sed -e 's/\./[.]/g' -e 's/.*/ & /'`
@@ -76,12 +78,12 @@ do
 			then
 				# $Id command is already in this file
 				# so do not process it
-				ext=""
+				id_already="yes"
 			fi
 			ext="$name"
 		fi
 	fi
-	if [ "$ext" != "" ]
+	if [ "$ext" != "" ] && [ "$id_already" == "no" ]
 	then
 		# Separate by cases in $ext_list or $file_list
 		case "$ext" in
@@ -132,21 +134,29 @@ do
 			echo "Cannot add \$Id command to $full_name"
 			exit 1
 		fi
-		if [ "$dry_run" == "" ]
+		if [ "$dry_run" == "--not-dry-run" ]
 		then
 			if ! mv svn_add_id.$$ $full_name
 			then
 				echo "Cannot modify $full_name"
 				exit 1
 			fi
-			if ! svn propset svn:keywords Id set on $full_name
-			then
-				echo "Cannot set Id keyword on for $full_name"
-			fi
 		else
 			if ! rm svn_add_id.$$
 			then
 				echo "Cannot remove svn_add_id.$$"
+				exit 1
+			fi
+		fi
+	fi
+	if [ "$ext" != "" ]
+	then
+		echo "svn propset svn:keywords Id $full_name"
+		if [ "$dry_run" == "--not-dry-run" ]
+		then
+			if ! svn propset svn:keywords Id $full_name
+			then
+				echo "Cannot set Id keyword on for $full_name"
 				exit 1
 			fi
 		fi

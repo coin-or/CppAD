@@ -1,5 +1,5 @@
 #! /bin/bash
 # $Id$
-message="trunk: use svn_add_id.sh to add Id keyword and property to most files."
+message="trunk: Fix svn_add_id.sh and use it set Id property for some missed files."
 svn commit -m "$message" 
 
