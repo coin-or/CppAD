@@ -49,10 +49,12 @@ sed                                                           \
 	-e '/^[?] *dev$/d'                                    \
 	-e '/^[?] *config.status$/d'                          \
 	-e '/^[?] *doc$/d'                                    \
+	-e '/^[?] *doxydoc$/d'                                \
 	-e '/^[?] *dev$/d'                                    \
 	-e '/^[?] *aclocal.m4$/d'                             \
 	-e '/^[?] *cppad-[0-9]\{8\}.*$/d'                     \
 	-e '/^[?] *doc.omh$/d'                                \
+	-e '/^[?] *doxyfile$/d'                               \
 	-e '/^[?] *omh\/install_unix.omh$/d'                  \
 	-e '/^[?] *omh\/install_windows.omh$/d'               \
 	-e '/^[?] *example\/test_one.sh$/d'                   \

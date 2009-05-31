@@ -373,6 +373,65 @@ then
 		exit 0
 	fi
 fi
+if [ "$1" = "doxygen" ] || [ "$1" = "all" ]
+then
+	echo "--------------------------------------------------------------"
+	echo "doxygen doxyfile"
+	echo "--------------------------------------------------------------"
+	if ! doxygen doxyfile
+	then
+		echo "Error: doxygen doxyfile"
+		exit 1
+	fi
+	#
+	echo "--------------------------------------------------------------"
+	echo "pushd doxydoc/latex ; make"
+	echo "--------------------------------------------------------------"
+	if ! pushd doxydoc/latex 
+	then
+		echo "Error: pushd doxydoc/latex"
+		exit 1
+	fi
+	if ! make 
+	then
+		echo "Error: pushd doxydoc/latex ; make"
+		exit 1
+	fi
+	if ! popd 
+	then
+		echo "Error: pushd doxydoc/latex ; make ; popd"
+		exit 1
+	fi
+	echo "--------------------------------------------------------------"
+	echo "mv doxydoc/latex/refman.pdf doxydoc/html/cppad.pdf"
+	if ! mv doxydoc/latex/refman.pdf doxydoc/html/cppad.pdf
+	then
+		echo "Error: mv doxydoc/latex/refman.pdf doxydoc/html/cppad.pdf"
+		exit 1
+	fi
+	echo "mv doxydoc/html doxydoc"
+	if ! mv doxydoc doxydoc.$$
+	then
+		echo "Error: mv doxydoc doxydoc.$$"
+		exit 1
+	fi
+	if ! mv doxydoc.$$/html doxydoc
+	then
+		echo "Error: mv doxydoc.$$/html doxydoc"
+		exit 1
+	fi
+	if ! rm -r doxydoc.$$
+	then
+		echo "Error: rm -r doxydoc.$$"
+		exit 1
+	fi
+	#
+	if [ "$1" = "doxygen" ]
+	then
+		exit 0
+	fi
+fi
+
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
 then
 	# -------------------------------------------------------------
@@ -695,7 +754,8 @@ echo "version        update configure.ac and doc.omh version number"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
 echo "configure      excludes --with-*"
 echo "configure test includes all the possible options except PREFIX_DIR"
-echo "omhelp         build all the user documentation in all formats"
+echo "omhelp         build all formats for user documentation in doc/*"
+echo "doxygen        build developer documentation in doxydoc/*"
 echo "make           use make to build all of the requested targets"
 echo "dist           create the distribution file cppad-version.cpl.tgz"
 echo "test           unpack *.cpl.tgz, compile, tests, result in build_test.log"

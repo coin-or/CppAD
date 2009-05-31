@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20090122, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20090531, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -302,11 +302,13 @@ dnl -----------------------------------------------------------------------
 dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will 
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
+	doxyfile
 	example/test_one.sh
 	test_more/test_one.sh
 	doc.omh
 	omh/install_unix.omh
 	omh/install_windows.omh
+
 	makefile
 	ipopt_cppad/makefile
 	example/makefile 

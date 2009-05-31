@@ -32,9 +32,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(nobase_myinclude_HEADERS) \
-	$(srcdir)/doc.omh.in $(srcdir)/makefile.am \
-	$(srcdir)/makefile.in $(top_srcdir)/configure \
-	$(top_srcdir)/cppad/config.h.in \
+	$(srcdir)/doc.omh.in $(srcdir)/doxyfile.in \
+	$(srcdir)/makefile.am $(srcdir)/makefile.in \
+	$(top_srcdir)/configure $(top_srcdir)/cppad/config.h.in \
 	$(top_srcdir)/omh/install_unix.omh.in \
 	$(top_srcdir)/omh/install_windows.omh.in AUTHORS COPYING \
 	ChangeLog INSTALL NEWS depcomp install-sh missing
@@ -46,7 +46,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/cppad/config.h
-CONFIG_CLEAN_FILES = doc.omh omh/install_unix.omh \
+CONFIG_CLEAN_FILES = doxyfile doc.omh omh/install_unix.omh \
 	omh/install_windows.omh
 SOURCES =
 DIST_SOURCES =
@@ -188,6 +188,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
+# $Id: makefile.am 1369 2009-05-31 01:31:48Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 #
@@ -432,6 +433,8 @@ EXTRA_DIST = \
 	doc \
 	doc.omh \
 	doc.omh.in \
+	doxyfile \
+	doxyfile.in \
 	fix_aclocal.sh \
 	fix_makefile.sh \
 	omh \
@@ -499,6 +502,8 @@ $(top_srcdir)/cppad/config.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f cppad/config.h cppad/stamp-h1
+doxyfile: $(top_builddir)/config.status $(srcdir)/doxyfile.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
 doc.omh: $(top_builddir)/config.status $(srcdir)/doc.omh.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 omh/install_unix.omh: $(top_builddir)/config.status $(top_srcdir)/omh/install_unix.omh.in

@@ -1,4 +1,3 @@
-/* $Id$ */
 /* cppad/config.h.  Generated from config.h.in by configure.  */
 /* cppad/config.h.in.  Generated from configure.ac by autoheader.  */
 
@@ -24,16 +23,16 @@
 #define PACKAGE_NAME "CppAD"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "CppAD 20081123"
+#define PACKAGE_STRING "CppAD 20090531"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "cppad"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "20081123"
+#define PACKAGE_VERSION "20090531"
 
 /* Version number of package */
-#define VERSION "20081123"
+#define VERSION "20090531"
 
 /* Define to `__inline__' or `__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */
