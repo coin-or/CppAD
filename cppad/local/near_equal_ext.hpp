@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_NEAR_EQUAL_EXT_INCLUDED
 # define CPPAD_NEAR_EQUAL_EXT_INCLUDED
 

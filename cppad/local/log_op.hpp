@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_LOG_OP_INCLUDED
 # define CPPAD_LOG_OP_INCLUDED
 

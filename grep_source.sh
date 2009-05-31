@@ -1,4 +1,5 @@
-#! /bin/bash
+#! /bin/bash 
+# $Id$
 if [ "$1" == "" ]
 then
 	echo "Search CppAD source code for multiple text strings."

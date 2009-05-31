@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_SIN_COS_INCLUDED
 # define CPPAD_SIN_COS_INCLUDED
 

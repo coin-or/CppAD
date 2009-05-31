@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_BENDER_QUAD_INCLUDED
 # define CPPAD_BENDER_QUAD_INCLUDED
 

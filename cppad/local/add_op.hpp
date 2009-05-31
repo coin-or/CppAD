@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_ADD_OP_INCLUDED
 # define CPPAD_ADD_OP_INCLUDED
 

@@ -1,4 +1,5 @@
-#! /bin/bash
+#! /bin/bash 
+# $Id$
 #
 message="
 usage: adolc_usrparms.sh <dir> 

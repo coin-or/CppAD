@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_USER_AD_INCLUDED
 # define CPPAD_USER_AD_INCLUDED
 

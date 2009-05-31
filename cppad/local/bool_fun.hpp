@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_BOOL_FUN_INCLUDED
 # define CPPAD_BOOL_FUN_INCLUDED
 

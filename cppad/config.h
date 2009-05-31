@@ -1,3 +1,4 @@
+/* $Id$ */
 /* cppad/config.h.  Generated from config.h.in by configure.  */
 /* cppad/config.h.in.  Generated from configure.ac by autoheader.  */
 

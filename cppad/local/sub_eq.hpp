@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_SUB_EQ_INCLUDED
 # define CPPAD_SUB_EQ_INCLUDED
 

@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_OMP_MAX_THREAD_INCLUDED
 # define CPPAD_OMP_MAX_THREAD_INCLUDED
 

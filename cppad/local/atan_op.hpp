@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_ATAN_OP_INCLUDED
 # define CPPAD_ATAN_OP_INCLUDED
 

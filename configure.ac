@@ -1,3 +1,4 @@
+dnl $Id$
 dnl ---------------------------------------------------------------------------
 dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
 dnl

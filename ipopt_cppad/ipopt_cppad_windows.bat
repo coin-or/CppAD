@@ -1,3 +1,4 @@
+rem $Id$
 echo off 
 rem ---------------------------------------------------------------------------
 rem CppAD: Copyright (C) 2003-08 Bradley M. Bell

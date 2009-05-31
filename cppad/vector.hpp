@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_VECTOR_INCLUDED
 # define CPPAD_VECTOR_INCLUDED
 

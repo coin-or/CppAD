@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_IPOPT_CPPAD_NLP_INCLUDED
 # define CPPAD_IPOPT_CPPAD_NLP_INCLUDED
 /* --------------------------------------------------------------------------

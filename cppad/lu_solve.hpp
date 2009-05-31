@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_LU_SOLVE_INCLUDED
 # define CPPAD_LU_SOLVE_INCLUDED
 

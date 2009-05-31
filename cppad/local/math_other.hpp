@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_MATH_OTHER_INCLUDED
 # define CPPAD_MATH_OTHER_INCLUDED
 

@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_NAN_INCLUDED
 # define CPPAD_NAN_INCLUDED
 

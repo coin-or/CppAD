@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_DET_BY_MINOR_INCLUDED
 # define CPPAD_DET_BY_MINOR_INCLUDED
 

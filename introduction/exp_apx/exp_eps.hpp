@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_EXP_EPS_INCLUDED
 # define CPPAD_EXP_EPS_INCLUDED
 /* --------------------------------------------------------------------------

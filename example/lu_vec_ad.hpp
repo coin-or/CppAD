@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_LU_VEC_AD_INCLUDED
 # define CPPAD_LU_VEC_AD_INCLUDED
 /* --------------------------------------------------------------------------

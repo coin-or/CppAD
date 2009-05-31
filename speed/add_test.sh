@@ -1,4 +1,5 @@
-# ! /bin/bash
+# ! /bin/bash 
+# $Id$
 # Use this shell script when a new test is added to initially create 
 # the source code files */test_name.cpp which return false (for not available).
 #

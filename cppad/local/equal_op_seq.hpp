@@ -1,3 +1,4 @@
+/* $Id$ */
 # ifndef CPPAD_EQUAL_OP_SEQ_INCLUDED
 # define CPPAD_EQUAL_OP_SEQ_INCLUDED
 
