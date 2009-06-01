@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -255,6 +255,9 @@ SUBDIRS = \
 	$(SPEED_SACADO) \
 	$(TEST_MORE) 
 #
+# Note that doc.omh, omh/install_unix.omh, and omh/install_windows.omh 
+# are created by configure from corresponding *.in files. They are included
+# in the distrubution so that configure does not have to be run OMhelp.
 EXTRA_DIST = \
 	build.sh \
 	check_example.sh \
@@ -268,6 +271,7 @@ EXTRA_DIST = \
 	doc \
 	doc.omh \
 	doc.omh.in \
+	doxyfile.in \
 	fix_aclocal.sh \
 	fix_makefile.sh \
 	omh \
