@@ -78,13 +78,14 @@ for file in $add_list $change_list
 do
 	count=`expr $count + 1`
 	ext=`echo $file | sed -e "s/.*\././"`
+	name=`echo $file | sed -e "s|.*/||"`
 	# If you change the conditions below, you must also change the 
 	# conditions in the abort section (below in this script).
 	if \
 	[ -f $file            ]      &&   \
 	[ $file != "svn_commit.sh" ] &&   \
 	[ $file != "configure" ]     &&   \
-	[ $ext  != ".in"     ]       &&   \
+	[ $name != "makefile.in"  ]  &&   \
 	[ $ext  != ".sed"     ]      &&   \
 	[ $ext  != ".sln"     ]      &&   \
 	[ $ext  != ".vcproj"  ]
@@ -92,10 +93,7 @@ do
 		# automatic edits and backups
 		echo "cp $file junk.$count"
 		cp $file junk.$count
-		if [ "$file" != "configure" ]
-		then
-			sed -f svn_commit.sed < junk.$count > $file
-		fi
+		sed -f svn_commit.sed < junk.$count > $file
 		diff junk.$count $file
 		if [ "$ext" == ".sh" ]
 		then
@@ -126,11 +124,12 @@ then
 	do
 		count=`expr $count + 1`
 		ext=`echo $file | sed -e "s/.*\././"`
+		name=`echo $file | sed -e "s|.*/||"`
 		if \
 		[ -f $file            ]      &&   \
 		[ $file != "svn_commit.sh" ] &&   \
 		[ $file != "configure" ]     &&   \
-		[ $ext  != ".in"     ]       &&   \
+		[ $name != "makefile.in"  ]  &&   \
 		[ $ext  != ".sed"     ]      &&   \
 		[ $ext  != ".sln"     ]      &&   \
 		[ $ext  != ".vcproj"  ]
