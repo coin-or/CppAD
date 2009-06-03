@@ -1,9 +1,8 @@
 /* $Id$ */
 # ifndef CPPAD_CPPAD_INCLUDED
 # define CPPAD_CPPAD_INCLUDED
-
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -12,6 +11,14 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+/*!
+\file cppad.hpp
+\brief includes the entire CppAD package in the necessary order.
+
+\namespace CppAD
+\brief contains all the variables and functions defined by the CppAD package.
+*/
+
 # include <cppad/declare.hpp>            // forward declarations need by user
 // ---------------------------------------------------------------------------
 # include <cppad/local/base_complex.hpp> // allow form complex Base types

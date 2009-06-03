@@ -3,7 +3,7 @@
 # define CPPAD_OP_CODE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,75 +12,30 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-/*
-----------------------------------------------------------------------------
-$begin OpCode$$ $comment CppAD Developer Documentation$$
-$aindex subhead$$
-$spell
-	Addpv
-	Addvp
-	Addvv
-	Subpv
-	Subvp
-	Subvv
-	Mulpv
-	Mulvp
-	Mulvv
-	Divpv
-	Divvp
-	Divvv
-	namespace
-	Powvp
-	Powpv
-	Powvv
-	Prip
-	Priv
-	CExp
-	Stpp
-	Stvp
-	Inv
-	Ldv
-	Ldp
-	Stvp
-	Stpp
-	Stvv
-	Stpv
-	Sto
-	enum
-	Mul
-	Div
-	CondExp
-	Cos
-	Cosh
-	Ind
-	Acos
-	Asin
-	Atan
-	Sqrt
-	op
-	zs
-	zst
-	zt
-	xy
-	yy
-	Cpp
-$$
 
-$mindex tape operator$$
-$section The Tape Operator Codes$$
+/*! 
+\file op_code.hpp
+\brief Defines the OpCode enum type and functions related to it.
 
-$head Syntax$$
-$syntax%OpCode% %op%$$ $pre
-$$
-
-
-$head Description$$
-The value $italic op$$ is one of the following enum type values:
-$codep */
+*/
 
 namespace CppAD {
 
-	// alphabetical order (ignoring the Op at the end)
+/*!
+\brief Type used to distinguish different AD<Base> atomic operations.
+
+Each of the operators ends with the characters Op. Ignoring the Op at the end,
+the operators appear in alphabetical order. Binary operation where both
+operands have type AD<Base> use the following convention for thier endings:
+\verbatim
+    Ending  Left-Operand  Right-Operand
+      pvOp     parameter       variable  
+      vpOp      variable      parameter  
+      vvOp      variable       variable  
+\endverbatim
+For example, AddpvOp represents the addition operator where the left
+operand is a parameter and the right operand is a variable.
+*/
 	enum OpCode {
 		AbsOp,    //  abs(variable)
 		AcosOp,   // asin(variable)
@@ -124,136 +79,6 @@ namespace CppAD {
 		SubvvOp   //      variable   - variable
 	};
 }
-/* $$
-
-$end
------------------------------------------------------------------------- 
-$begin printOp$$ $comment CppAD Developer Documentation$$
-$spell
-	var
-	Num
-	ind
-	Op
-	std
-	ostream
-	const
-	nfz
-	fz
-	rz
-	nrz
-	Taylor
-$$
-
-$index printOp$$
-$index operator, print$$
-$index trace, tape operation$$
-$section Print the Information Corresponding to One Tape Operation$$
-
-$head Syntax$$
-$syntax%void printOp(
-	std::ostream &%os% ,
-	const player<%Base%> *%Rec% ,
-	size_t %i_var% ,
-	OpCode %op% ,
-	const size_t *%ind% ,
-	size_t %nfz% ,
-	const %Value% *%fz% ,
-	size_t %nrz% ,
-	const %Value% *%rz% )%$$
-
-
-$head Base$$
-Determines the type of tape we are printing from.
-
-$head Value$$
-Determines the type of the values that we are printing
-(expected to be either $italic Base$$ or $italic Pack$$ where
-$italic Pack$$ is the type used to pace sparsity patterns).
-
-$head os$$
-is the output stream that the information is printed on.
-
-$head Rec$$
-Is the entire recording for the tape that this operator is in.
-
-$head i_var$$
-is the variable index for the result of this operation
-(ignored if $syntax%NumVar(%op%) == 0%$$).
-
-$head op$$
-The operator code for this operation.
-
-$head ind$$
-is the vector of indices for this operation
-(must have  $syntax%NumInd(%op%)%$$ elements).
-
-$head nfz$$
-is the number of forward calculated values of type $italic Value$$
-that correspond to this operation
-(ignored if $syntax%NumVar(%op%) == 0%$$).
-
-$head fz$$
-points to the first forward calculated value
-that correspond to this operation
-(ignored if $syntax%NumVar(%op%) == 0%$$).
-
-$head nrz$$
-is the number of reverse calculated values of type $italic Value$$
-that correspond to this operation
-(ignored if $syntax%NumVar(%op%) == 0%$$).
-
-$head rz$$
-points to the first reverse calculated value
-that correspond to this operation
-(ignored if $syntax%NumVar(%op%) == 0%$$).
-
-$end
----------------------------------------------------------------------------
-$begin NumInd$$ $comment CppAD Developer Documentation$$
-$spell
-	NumInd
-	Op
-$$
-
-$index NumInd$$
-$section Number of Ind field Values Corresponding to an Op Code$$
-
-$head Syntax$$
-$syntax%size_t NumInd(OpCode %op%)%$$
-
-
-$head Description$$
-The syntax
-$syntax%
-	size_t NumInd(operator %op%)
-%$$
-returns the number of Ind field values corresponding to each operator value.
-
-$end
-------------------------------------------------------------------------
-$begin NumVar$$ $comment CppAD Developer Documentation$$
-$spell
-	NumVar
-	Op
-$$
-
-$index NumVar$$
-$section Number of Variables Corresponding to an Op Code$$
-
-$head Syntax$$
-$syntax%size_t NumVar(OpCode %op%)%$$
-
-
-$head Description$$
-The syntax
-$syntax%
-	size_t NumVar(operator %op%)
-%$$
-returns the number of variable
-field values corresponding to each operator value.
-
-$end
------------------------------------------------------------------------- */
 
 # include <string>
 # include <sstream>
@@ -261,7 +86,20 @@ $end
 
 namespace CppAD {
 
-// alphabetical order (ignoring the Op at the end)
+/*!
+Table containing number of indices for the corresponding operator.
+
+The i-th element in this table specifes the number of indices stored for each
+occurance of the operator that is the i-th value in the OpCode enum type.
+For example, for the first three OpCode enum values we have
+\verbatim
+OpCode   j   NumIndTable[j]  Meaning
+AbsOp    0                1  index of variable we are taking absolute value of
+AcosOp   1                1  index of variable we are taking cosine of
+AddpvOp  1                2  indices of parameter and variable we are adding
+\endverbatim
+Note that the meaning of the indices depends on the operator.
+*/
 const size_t NumIndTable[] = {
 	1, // AbsOp
 	1, // AcosOp
@@ -305,7 +143,13 @@ const size_t NumIndTable[] = {
 	2  // SubvvOp
 };
 
-inline size_t NumInd(OpCode op)
+/*!
+Returns the number of indices for the specified operator.
+
+\param op 
+Operator for which we are fetching the number of indices.
+*/
+inline size_t NumInd( OpCode op)
 {
 	CPPAD_ASSERT_UNKNOWN( size_t(SubvvOp) == 
 		sizeof(NumIndTable) / sizeof(NumIndTable[0]) - 1
@@ -315,6 +159,19 @@ inline size_t NumInd(OpCode op)
 	return NumIndTable[(size_t) op];
 }
 
+/*!
+Table containing number of variables resulting from the corresponding operation.
+
+The i-th element in this table specifes the number of varibles for each
+occurance of the operator that is the i-th value in the OpCode enum type.
+For example, for the first three OpCode enum values we have
+\verbatim
+OpCode   j   NumVarTable[j]  Meaning
+AbsOp    0                1  variable that is the result of the absolute value
+AcosOp   1                2  acos(x) and sqrt(1-x*x) are required for this op
+AddpvOp  1                1  variable that is the result of the addition
+\endverbatim
+*/
 // alphabetical order (ignoring the Op at the end)
 const size_t NumVarTable[] = {
 	1, // AbsOp
@@ -360,6 +217,12 @@ const size_t NumVarTable[] = {
 	0  // Not used: avoids warning by g++ 4.3.2 when pycppad builds
 };
 
+/*!
+Returns the number of variables resulting from the specified operation.
+
+\param op 
+Operator for which we are fetching the number of indices.
+*/
 inline size_t NumVar(OpCode op)
 {	// check ensuring conversion to size_t is as expected
 	CPPAD_ASSERT_UNKNOWN( size_t(SubvvOp) == 
@@ -371,6 +234,29 @@ inline size_t NumVar(OpCode op)
 	return NumVarTable[(size_t) op];
 }
 
+/*!
+Prints a single field corresponding to an operator.
+
+A specified leader is printed in front of the value
+and then the value is left justified in the following width character.
+
+\tparm Type
+is the type of the value we are printing.
+
+\param os
+is the stream that we are printing to.
+
+\param leader
+are characters printed before the value.
+
+\param value
+is the value being printed.
+
+\param width
+is the number of character to print the value in.
+If the value does not fit in the width, the value is replace
+by width '*' characters.
+*/
 template <class Type>
 void printOpField(
 	std::ostream      &os , 
@@ -413,6 +299,54 @@ void printOpField(
 		os << " "; 
 }
 
+/*!
+Prints a single operator, its operands, and the corresponding result values.
+
+\tparam Base
+Is the base type for these AD<Base> operations.
+
+\tparam Value
+Determines the type of the values that we are printing
+(expected to be either Base or Pack where
+Pack is the type used to pace sparsity patterns.
+
+\param os
+is the output stream that the information is printed on.
+
+\param Rec
+Is the entire recording for the tape that this operator is in.
+
+\param i_var
+is the index for the variable corresponding to the result of this operation
+(ignored if NumVar(op) == 0).
+
+\param op
+The operator code (OpCode) for this operation.
+
+\param ind
+is the vector of indices for this operation
+(must have NumInd(op) elements).
+
+\param nfz
+is the number of forward sweep calculated values of type Value
+that correspond to this operation
+(ignored if NumVar(op) == 0).
+
+\param fz
+points to the first forward calculated value
+that correspond to this operation
+(ignored if NumVar(op) == 0).
+
+\param nrz
+is the number of reverse sweep calculated values of type Value
+that correspond to this operation
+(ignored if NumVar(op) == 0).
+
+\param rz
+points to the first reverse calculated value
+that correspond to this operation
+(ignored if NumVar(op) == 0).
+*/
 template <class Base, class Value>
 void printOp(
 	std::ostream          &os     , 

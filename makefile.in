@@ -188,9 +188,9 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
-# $Id: makefile.am 1369 2009-05-31 01:31:48Z bradbell $
+# $Id: makefile.am 1375 2009-06-01 01:54:26Z bradbell $
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 

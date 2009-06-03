@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -376,23 +376,20 @@ fi
 if [ "$1" = "doxygen" ] || [ "$1" = "all" ]
 then
 	echo "--------------------------------------------------------------"
-	echo "doxygen doxyfile"
-	echo "--------------------------------------------------------------"
-	if ! doxygen doxyfile
+	echo "doxygen doxyfile >& doxygen.log"
+	if ! doxygen doxyfile >& doxygen.log
 	then
 		echo "Error: doxygen doxyfile"
 		exit 1
 	fi
 	#
-	echo "--------------------------------------------------------------"
-	echo "pushd doxydoc/latex ; make"
-	echo "--------------------------------------------------------------"
+	echo "pushd doxydoc/latex ; make >& ../../doxygen_tex.log"
 	if ! pushd doxydoc/latex 
 	then
 		echo "Error: pushd doxydoc/latex"
 		exit 1
 	fi
-	if ! make 
+	if ! make >& ../../doxygen_tex.log
 	then
 		echo "Error: pushd doxydoc/latex ; make"
 		exit 1
@@ -402,7 +399,6 @@ then
 		echo "Error: pushd doxydoc/latex ; make ; popd"
 		exit 1
 	fi
-	echo "--------------------------------------------------------------"
 	echo "mv doxydoc/latex/refman.pdf doxydoc/html/cppad.pdf"
 	if ! mv doxydoc/latex/refman.pdf doxydoc/html/cppad.pdf
 	then
@@ -430,6 +426,7 @@ then
 	then
 		exit 0
 	fi
+	echo "--------------------------------------------------------------"
 fi
 
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
