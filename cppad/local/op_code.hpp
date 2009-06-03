@@ -144,7 +144,10 @@ const size_t NumIndTable[] = {
 };
 
 /*!
-Returns the number of indices for the specified operator.
+Fetch the number of indices for a specified operator.
+
+\return
+Number of indices used by the specified operator.
 
 \param op 
 Operator for which we are fetching the number of indices.
@@ -218,10 +221,13 @@ const size_t NumVarTable[] = {
 };
 
 /*!
-Returns the number of variables resulting from the specified operation.
+Fetch the number of variables resulting from the specified operation.
+
+\return
+number of variables resulting from the specified operator.
 
 \param op 
-Operator for which we are fetching the number of indices.
+Operator for which we are fetching the number of result variables.
 */
 inline size_t NumVar(OpCode op)
 {	// check ensuring conversion to size_t is as expected
@@ -240,7 +246,7 @@ Prints a single field corresponding to an operator.
 A specified leader is printed in front of the value
 and then the value is left justified in the following width character.
 
-\tparm Type
+\tparam Type
 is the type of the value we are printing.
 
 \param os

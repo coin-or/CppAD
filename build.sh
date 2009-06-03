@@ -382,6 +382,11 @@ then
 		echo "Error: doxygen doxyfile"
 		exit 1
 	fi
+	if ! ./check_doxygen.sh
+	then
+		echo "Warnings of doxygen output."
+		exit 1
+	fi
 	#
 	echo "pushd doxydoc/latex ; make >& ../../doxygen_tex.log"
 	if ! pushd doxydoc/latex 

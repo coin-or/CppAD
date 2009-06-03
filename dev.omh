@@ -44,7 +44,6 @@ $contents%
 	cppad/local/identical.hpp%
 	cppad/local/tape_link.hpp%
 	cppad/local/recorder.hpp%
-	cppad/local/player.hpp%
 	cppad/local/ad_tape.hpp%
 	cppad/local/bool_fun_link.hpp%
 	cppad/local/op.hpp%

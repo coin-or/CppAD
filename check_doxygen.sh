@@ -1,14 +1,14 @@
 #! /bin/bash
 #
 list="
-	NumIndTable\[
-	NumInd(
-	NumVarTable\[
-	NumVar(
-	printOpField(
-	printOp(
+	op_code.hpp
+	player.hpp
 "
 for name in $list
 do
-	grep "$name" doxygen.log
+	if grep -i "$name.*warning" doxygen.log
+	then
+		echo "Unexpected doxygen error or warning for $name."
+		exit 1
+	fi
 done
