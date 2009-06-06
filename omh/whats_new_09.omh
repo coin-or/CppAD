@@ -31,6 +31,13 @@ This section contains a list of the changes to CppAD during 2009
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-06$$
+Using complex of an AD type (instead of AD of complex) was not working
+correctly in $cref/not_complex_ad.cpp/$$ because the 
+$cref/default/Default/$$ constructor for an AD object has an unspecified value.
+This has been fixed for the complex type by changing the default constructor
+to use value zero. 
+
 $head 05-20$$
 A change was make to the trunk on 05-19 (svn revision 1361) that broke the
 $cref/Unix install/InstallUnix/$$ procedure.

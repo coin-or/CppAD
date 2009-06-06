@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -57,8 +57,15 @@ bool not_complex_ad(void)
 
 	using CppAD::AD;
 	using CppAD::Poly;
-	typedef std::complex<double>              Complex; 
-	typedef std::complex< CppAD::AD<double> > ComplexAD; 
+	typedef std::complex<double>       Complex; 
+	typedef std::complex< AD<double> > ComplexAD; 
+
+	// The imaginary part in the following assignment will use
+	// the CppAD::AD<double> default constructor. Make sure it is zero.
+	AD<double> ad_zero = AD<double>(0);
+	AD<double> ad_two  = AD<double>(2);
+	ComplexAD  cad_two = ad_two;
+	ok                &= cad_two == ComplexAD(ad_two, ad_zero); 
 
 	// polynomial coefficients
 	CPPAD_TEST_VECTOR< Complex >   a   (deg + 1); // coefficients for p(z)
