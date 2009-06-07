@@ -15,14 +15,14 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*! 
 \file op_code.hpp
-\brief Defines the OpCode enum type and functions related to it.
+Defines the OpCode enum type and functions related to it.
 
 */
 
 namespace CppAD {
 
 /*!
-\brief Type used to distinguish different AD<Base> atomic operations.
+Type used to distinguish different AD<Base> atomic operations.
 
 Each of the operators ends with the characters Op. Ignoring the Op at the end,
 the operators appear in alphabetical order. Binary operation where both
@@ -163,7 +163,7 @@ inline size_t NumInd( OpCode op)
 }
 
 /*!
-Table containing number of variables resulting from the corresponding operation.
+Number of variables resulting from the corresponding operation.
 
 The i-th element in this table specifes the number of varibles for each
 occurance of the operator that is the i-th value in the OpCode enum type.

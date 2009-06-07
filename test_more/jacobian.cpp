@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -57,7 +57,7 @@ bool jacobian(void)
 	vector< CppAD::AD<double> > ad_g(m);
 
 	vector<double> x(n);
-	x[0] = 1.; x[2] = 5.0; x[2] = 5.0; x[3] = 1.0;
+	x[0] = 1.; x[1] = 5.0; x[2] = 5.0; x[3] = 1.0;
 	for(j = 0; j < n; j++)
 		ad_x[j] = x[j];
 	//
