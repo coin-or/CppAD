@@ -91,8 +91,8 @@ do
 			# interpertor specification; e.g., ! /bin/bash
 			.sh | .py )
 			sed < $full_name > svn_add_id.$$ \
-				-e '1,1s/^[^!]*$/# $Id$\n&/' \
-				-e '1,1s/^# *!.*$/& \n# $Id$/'
+				-e '1,1s/^[^!]*$/# \$Id\$\n&/' \
+				-e '1,1s/^# *!.*$/& \n# \$Id\$/'
 			;;
 
 			# Dos batch file
@@ -122,13 +122,13 @@ do
 			# Automake input files
 			makefile.am )
 			sed < $full_name > svn_add_id.$$ \
-				-e '1,1s/^.*$/# $Id$\n&/' 
+				-e '1,1s/^.*$/# \$Id\$\n&/' 
 			;;
 
 			# Autoconf input files
 			configure.ac )
 			sed < $full_name > svn_add_id.$$ \
-				-e '1,1s/^.*$/dnl $Id$\n&/' 
+				-e '1,1s/^.*$/dnl \$Id\$\n&/' 
 			;;
 
 		esac
