@@ -6,7 +6,7 @@
 # statment in the script below.
 #
 # List of extensions that are handled by svn_add_id.sh
-ext_list=" .sh .py .bat .c .h .cpp .hpp  .omh " 
+ext_list=" .sh .py .bat .c .h .cpp .hpp  .omh  .l .y " 
 #
 # List of specific file names that are handled by svn_add_id.sh
 # (Assume no special grep pattern matching characters except for .) 
@@ -103,6 +103,12 @@ do
 
 			# C and C++ source code
 		       .c | .h | .cpp | .hpp )
+			echo "/* \$Id\$ */" > svn_add_id.$$
+			cat "$full_name" >> svn_add_id.$$
+			;;
+
+			# .l and .y bison and flex source code
+		       .l | .y  )
 			echo "/* \$Id\$ */" > svn_add_id.$$
 			cat "$full_name" >> svn_add_id.$$
 			;;
