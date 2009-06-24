@@ -12,6 +12,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_09$$
 $spell
+	IpIpoptApplication
+	IpoptDir
+	autoconf
+	automake
+	config
 	jacobian
 	valgrind
 	svn
@@ -32,6 +37,30 @@ This section contains a list of the changes to CppAD during 2009
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 09-22$$
+Fix compiler warnings during the $cref openmp_run.sh$$ test.
+$pre
+
+$$
+Changed $cref speed_example.cpp$$ to omit the $code speed_test$$ from
+the correctness result.
+In stead, a message is printed explaining that timing tests need
+to be run without a lot of other demands on the system.
+
+$head 09-21$$
+The configure instructions for $cref/IpoptDir/InstallUnix/IpoptDir/$$
+had the wrong path for $code IpIpoptApplication.hpp$$.
+This has been fixed.
+
+$head 09-20$$
+Upgrade to from autoconf 2.61 to 2.63,
+and from automake 1.10.1 to 1.11.
+$pre
+
+$$
+Fix conflict between CppAD's use of config.h preprocessor symbols
+and other packages use of the same symbol names. 
 
 $head 06-06$$
 Using complex of an AD type (instead of AD of complex) was not working

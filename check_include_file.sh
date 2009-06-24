@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -29,11 +29,13 @@ grep '^# *include *<cppad/' \
 	test_more/*.cpp > junk.1
 #
 cat junk.1 | sed -e 's%[^<]*<%%'  -e 's%>.*$%%' | sort -u > junk.2
+# The file cppad/local/unary_op should never be included. 
+# All other files should.
 ls	cppad/config.h \
 	cppad/*.hpp \
 	cppad/local/*.hpp \
 	cppad/speed/*.hpp \
-	| sort > junk.3 
+	| sed -e '/cppad\/local\/unary_op.hpp/d' | sort > junk.3 
 if diff junk.2 junk.3
 then
 	different="no"

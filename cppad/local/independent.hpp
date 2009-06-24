@@ -3,7 +3,7 @@
 # define CPPAD_INDEPENDENT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -138,7 +138,7 @@ void ADTape<Base>::Independent(VectorAD &x)
 		n > 0,
 		"Indepdendent: the argument vector x has zero size"
 	);
-	CPPAD_ASSERT_UNKNOWN( Rec_.TotNumVar() == 0 );
+	CPPAD_ASSERT_UNKNOWN( Rec_.num_rec_var() == 0 );
 
 	// skip the first record (parameters use taddr zero)
 	CPPAD_ASSERT_UNKNOWN( NumVar(NonOp) == 1 );

@@ -3,7 +3,7 @@
 # define CPPAD_SPEED_TEST_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -152,13 +152,8 @@ $end
 
 # include <cppad/check_simple_vector.hpp>
 
-// undo preprocessor symbols that config.h needs to define
-# ifndef CPPAD_CPPAD_INCLUDED
-# include <cppad/local/preprocessor.hpp>
-# endif
-
 // use config.h to define CPPAD_GETIMEOFDAY preprocessor symbol
-# include <cppad/config.h>
+# include <cppad/configure.hpp>
 
 // Microsoft versions to not run autoconf, so CPPAD_GETTIMEOFDAY may not be
 // set to proper value.

@@ -3,7 +3,7 @@
 # define CPPAD_REVERSE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,7 +44,7 @@ namespace CppAD {
 
 template <typename Base>
 template <typename VectorBase>
-VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) const
+VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) 
 {	// temporary indices
 	size_t i, j, k;
 

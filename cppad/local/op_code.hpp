@@ -1,6 +1,7 @@
 /* $Id$ */
 # ifndef CPPAD_OP_CODE_INCLUDED
 # define CPPAD_OP_CODE_INCLUDED
+CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
@@ -19,7 +20,12 @@ Defines the OpCode enum type and functions related to it.
 
 */
 
-namespace CppAD {
+# include <string>
+# include <sstream>
+# include <iomanip>
+
+# include <cppad/local/define.hpp>
+
 
 /*!
 Type used to distinguish different AD<Base> atomic operations.
@@ -36,60 +42,53 @@ operands have type AD<Base> use the following convention for thier endings:
 For example, AddpvOp represents the addition operator where the left
 operand is a parameter and the right operand is a variable.
 */
-	enum OpCode {
-		AbsOp,    //  abs(variable)
-		AcosOp,   // asin(variable)
-		AddpvOp,  //      parameter  + variable
-		AddvpOp,  //      variable   + parameter
-		AddvvOp,  //      variable   + variable
-		AsinOp,   // asin(variable)
-		AtanOp,   // atan(variable)
-		CExpOp,   // CondExp(cop, left, right, trueCase, falseCase)
-		ComOp,    // Compare(cop, result, left, right)
-		CosOp,    //  cos(variable)
-		CoshOp,   // cosh(variable)
-		DisOp,    //  dis(variable,    index)
-		DivpvOp,  //      parameter  / variable
-		DivvpOp,  //      variable   / parameter
-		DivvvOp,  //      variable   / variable
-		ExpOp,    //  exp(variable)
-		LdpOp,    //    z[parameter]
-		LdvOp,    //    z[variable]
-		InvOp,    //                             independent variable
-		LogOp,    //  log(variable)
-		MulpvOp,  //      parameter  * variable
-		MulvpOp,  //      variable   * parameter
-		MulvvOp,  //      variable   * variable
-		NonOp,    //                             space holder
-		ParOp,    //      parameter
-		PowvpOp,  //  pow(variable,    parameter)
-		PowpvOp,  //  pow(parameter,   variable)
-		PowvvOp,  //  pow(variable,    variable)
-		PripOp,   //      text         parameter
-		PrivOp,   //      text         parameter
-		SinOp,    //  sin(variable)
-		SinhOp,   // sinh(variable)
-		SqrtOp,   // sqrt(variable)
-		StppOp,   //    z[parameter] = parameter
-		StvpOp,   //    z[variable]  = parameter
-		StpvOp,   //    z[parameter] = variable
-		StvvOp,   //    z[variable]  = variable
-		SubpvOp,  //      parameter  - variable
-		SubvpOp,  //      variable   - parameter
-		SubvvOp   //      variable   - variable
-	};
-}
-
-# include <string>
-# include <sstream>
-# include <iomanip>
-
-namespace CppAD {
+enum OpCode {
+	AbsOp,    //  abs(variable)
+	AcosOp,   // asin(variable)
+	AddpvOp,  //      parameter  + variable
+	AddvpOp,  //      variable   + parameter
+	AddvvOp,  //      variable   + variable
+	AsinOp,   // asin(variable)
+	AtanOp,   // atan(variable)
+	CExpOp,   // CondExp(cop, left, right, trueCase, falseCase)
+	ComOp,    // Compare(cop, result, left, right)
+	CosOp,    //  cos(variable)
+	CoshOp,   // cosh(variable)
+	DisOp,    //  dis(variable,    index)
+	DivpvOp,  //      parameter  / variable
+	DivvpOp,  //      variable   / parameter
+	DivvvOp,  //      variable   / variable
+	ExpOp,    //  exp(variable)
+	LdpOp,    //    z[parameter]
+	LdvOp,    //    z[variable]
+	InvOp,    //                             independent variable
+	LogOp,    //  log(variable)
+	MulpvOp,  //      parameter  * variable
+	MulvpOp,  //      variable   * parameter
+	MulvvOp,  //      variable   * variable
+	NonOp,    //                             space holder
+	ParOp,    //      parameter
+	PowvpOp,  //  pow(variable,    parameter)
+	PowpvOp,  //  pow(parameter,   variable)
+	PowvvOp,  //  pow(variable,    variable)
+	PripOp,   //      text         parameter
+	PrivOp,   //      text         parameter
+	SinOp,    //  sin(variable)
+	SinhOp,   // sinh(variable)
+	SqrtOp,   // sqrt(variable)
+	StppOp,   //    z[parameter] = parameter
+	StvpOp,   //    z[variable]  = parameter
+	StpvOp,   //    z[parameter] = variable
+	StvvOp,   //    z[variable]  = variable
+	SubpvOp,  //      parameter  - variable
+	SubvpOp,  //      variable   - parameter
+	SubvvOp   //      variable   - variable
+};
 
 /*!
-Table containing number of indices for the corresponding operator.
+Table containing number of arguments for the corresponding operator.
 
-The i-th element in this table specifes the number of indices stored for each
+The i-th element in this table specifes the number of arguments stored for each
 occurance of the operator that is the i-th value in the OpCode enum type.
 For example, for the first three OpCode enum values we have
 \verbatim
@@ -98,7 +97,7 @@ AbsOp    0                1  index of variable we are taking absolute value of
 AcosOp   1                1  index of variable we are taking cosine of
 AddpvOp  1                2  indices of parameter and variable we are adding
 \endverbatim
-Note that the meaning of the indices depends on the operator.
+Note that the meaning of the arguments depends on the operator.
 */
 const size_t NumIndTable[] = {
 	1, // AbsOp
@@ -144,13 +143,13 @@ const size_t NumIndTable[] = {
 };
 
 /*!
-Fetch the number of indices for a specified operator.
+Fetch the number of arguments for a specified operator.
 
 \return
-Number of indices used by the specified operator.
+Number of arguments corresponding to the specified operator.
 
 \param op 
-Operator for which we are fetching the number of indices.
+Operator for which we are fetching the number of arugments.
 */
 inline size_t NumInd( OpCode op)
 {
@@ -330,7 +329,7 @@ is the index for the variable corresponding to the result of this operation
 The operator code (OpCode) for this operation.
 
 \param ind
-is the vector of indices for this operation
+is the vector of argument indices for this operation
 (must have NumInd(op) elements).
 
 \param nfz
@@ -587,6 +586,5 @@ void printOp(
 	std::cout << std::endl;
 }
 
-} // END CppAD namespace
-
+CPPAD_END_NAMESPACE
 # endif

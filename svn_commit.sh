@@ -13,7 +13,7 @@
 # Define your subversion commit by editing the definition of 
 # log_entry, add_list, delete_list, and change_list below:
 # 
-log_entry="
+log_entry="Merge in changes from branches/sweep.
 " 
 add_list="
 "
@@ -23,6 +23,78 @@ old_list="
 "
 #
 change_list="
+	configure
+	svn_status.sh
+	check_doxygen.sh
+	AUTHORS
+	svn_commit.sh
+	check_include_file.sh
+	example/makefile.in
+	example/example.cpp
+	doc.omh.in
+	svn_merge.sh
+	test_more/makefile.in
+	test_more/test_more.cpp
+	test_more/ipopt_cppad.cpp
+	print_for/makefile.in
+	ipopt_cppad/makefile.in
+	ipopt_cppad/ipopt_cppad_ode.cpp
+	ipopt_cppad/ipopt_cppad_simple.cpp
+	configure.ac
+	build.sh
+	makefile.am
+	introduction/exp_apx/makefile.in
+	introduction/exp_apx/main.cpp
+	introduction/get_started/makefile.in
+	makefile.in
+	omh/whats_new_04.omh
+	omh/whats_new_06.omh
+	omh/whats_new_09.omh
+	omh/install_unix.omh.in
+	cppad/speed_test.hpp
+	cppad/local/ad_fun.hpp
+	cppad/local/player.hpp
+	cppad/local/abs_op.hpp
+	cppad/local/for_jac_sweep.hpp
+	cppad/local/reverse.hpp
+	cppad/local/rev_sparse_jac.hpp
+	cppad/local/unary_op.hpp
+	cppad/local/forward.hpp
+	cppad/local/op_code.hpp
+	cppad/local/rev_sparse_hes.hpp
+	cppad/local/config.h.in
+	cppad/local/forward0sweep.hpp
+	cppad/local/independent.hpp
+	cppad/local/recorder.hpp
+	cppad/local/forward_sweep.hpp
+	cppad/local/cppad_assert.hpp
+	cppad/local/rev_jac_sweep.hpp
+	cppad/local/vec_ad.hpp
+	cppad/local/define.hpp
+	cppad/local/fun_construct.hpp
+	cppad/local/rev_hes_sweep.hpp
+	cppad/local/dependent.hpp
+	cppad/local/op.hpp
+	cppad/local/reverse_sweep.hpp
+	cppad/config.h
+	cppad/configure.hpp.in
+	cppad/error_handler.hpp
+	cppad/cppad.hpp
+	cppad/configure.hpp
+	openmp/example_a11c.cpp
+	openmp/multi_newton.cpp
+	openmp/sum_i_inv.cpp
+	openmp/run.sh
+	speed/profile/makefile.in
+	speed/fadbad/makefile.in
+	speed/adolc/makefile.in
+	speed/main.cpp
+	speed/cppad/makefile.in
+	speed/double/makefile.in
+	speed/sacado/makefile.in
+	speed/example/makefile.in
+	speed/example/example.cpp
+	dev.omh
 "
 #
 # log_entry
@@ -30,11 +102,14 @@ change_list="
 #
 # add_list
 # List of files that will be added to the repository during this commit.
+# The corresponding files will have svn:keywords "Id" property set on.
 # Do not use add_list to add directories; use the following instead:
 # 	svn add --non-recursive dir
 # 	svn commit directory -m "adding directory dir" dir
 # where dir is replaced by the name of the directory. 
 # Then use add_list to add the files within that directory.
+# If you do not want the Id property set, use svn add before running this
+# script and then include the file in the svn_change list.
 #
 # delete_list
 # List of files that will be deleted from the repository during this commit.
@@ -103,7 +178,7 @@ do
 done
 for file in $add_list
 do
-	echo "svn add $file ?"
+	echo "svn add $file ; svn propset svn:keywords "Id" $file ?"
 done
 for file in $delete_list $old_list
 do
@@ -150,6 +225,7 @@ echo "continuing commit"
 for file in $add_list
 do
 	svn add $file
+	svn propset svn:keywords "Id" $file
 done
 for file in $delete_list
 do

@@ -3,7 +3,7 @@
 # define CPPAD_VEC_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -277,10 +277,10 @@ $xref/glossary/Parameter/parameters/$$).
 The effect of this can be seen by executing the following steps:
 
 $list number$$
-In the file $code cppad/local/forward0sweep.h$$,
-change the definition of $code CPPAD_FORWARD0SWEEP_TRACE$$ to
+In the file $code cppad/local/forward_sweep.h$$,
+change the definition of $code CPPAD_FORWARD_SWEEP_TRACE$$ to
 $codep
-	# define CPPAD_FORWARD0SWEEP_TRACE 1
+	# define CPPAD_FORWARD_SWEEP_TRACE 1
 $$
 $lnext
 In the $code Example$$ directory, execute the command

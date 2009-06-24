@@ -557,11 +557,17 @@ installed on your system, you can
 specify a value for $italic IpoptDir$$.
 It must be such that
 $syntax%
-	%IpoptDir%/include/IpIpoptApplication.hpp
+	%IpoptDir%/include/coin/IpIpoptApplication.hpp
 %$$
 is a valid reference to $code IpIpoptApplication.hpp$$.
-In this case, 
-$cref/ipopt_cppad_simple.cpp/$$ will be included in the example testing.
+In this case, the CppAD interface to Ipopt
+$cref/examples/ipopt_cppad_nlp/Example/$$ 
+will be built.
+Once the $code make$$ command
+has been executed, you can run these examples by executing the command
+$codep
+        ipopt_cppad/ipopt_cppad
+$$
 
 $head CompilerFlags$$
 $index compile, unix flags$$

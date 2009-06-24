@@ -3,7 +3,7 @@
 # define CPPAD_REV_HES_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,7 +38,7 @@ $head Syntax$$
 $syntax%void RevHesSweep(
 	size_t %npv%,
 	size_t %numvar%,
-	const player<%Base%> *%Rec%,
+	player<%Base%> *%Rec%,
 	size_t %TaylorColDim%,
 	const %Base% *%Taylor%,
 	const %Pack% *%ForJac%,
@@ -62,7 +62,7 @@ for the dependent variables with respect to the independent variables.
 $head numvar$$
 is the number of rows in the entire sparsity patterns
 $italic ForJac$$ and $italic RevHes$$.
-It must also be equal to $syntax%%Rec%->TotNumVar()%$$.
+It must also be equal to $syntax%%Rec%->num_rec_var()%$$.
 
 $head npv$$
 Is the number of elements of type $italic Pack$$
@@ -119,7 +119,7 @@ template <class Base, class Pack>
 void RevHesSweep(
 	size_t                npv,
 	size_t                numvar,
-	const player<Base>   *Rec,
+	player<Base>         *Rec,
 	size_t                TaylorColDim,
 	const Base           *Taylor,
 	const Pack           *ForJac,
@@ -130,7 +130,6 @@ void RevHesSweep(
 	OpCode           op;
 	size_t         i_op;
 	size_t        i_var;
-	size_t        i_ind;
 	size_t        n_var;
 	size_t        n_ind;
 
@@ -156,31 +155,20 @@ void RevHesSweep(
 	size_t             j;
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( Rec->TotNumVar() == numvar );
+	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 
 	// Initialize
-	i_op   = Rec->NumOp();
-	i_var  = Rec->TotNumVar();
-	i_ind  = Rec->NumInd();
-	op     = NonOp;         // phony operator that is not there
-
+	Rec->start_reverse();
+	i_op = 2;
 	while(i_op > 1)
-	{	--i_op;
-
+	{
 		// next op
-		op     = Rec->GetOp(i_op);
+		Rec->next_reverse(op, ind, i_op, i_var);
 
-		// corresponding varable
+		// corresponding number of varable and indices
 		n_var  = NumVar(op);
-		CPPAD_ASSERT_UNKNOWN( i_var >= n_var );
-		i_var -= n_var;
-
-		// corresponding index values
 		n_ind  = NumInd(op);
-		CPPAD_ASSERT_UNKNOWN( i_ind >= n_ind );
-		i_ind -= n_ind;
-		ind    = Rec->GetInd(n_ind, i_ind);
 
 		// sparsity for z corresponding to this op
 		Zf     = ForJac + i_var * npv;
@@ -456,7 +444,7 @@ void RevHesSweep(
 			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 			
 			CPPAD_ASSERT_UNKNOWN( ind[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumVecInd() );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->num_rec_vecad_ind() );
 
 			// ind[2] is variable corresponding to this load
 			if( ind[2] > 0 )
@@ -472,7 +460,7 @@ void RevHesSweep(
 			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
 			
 			CPPAD_ASSERT_UNKNOWN( ind[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->NumVecInd() );
+			CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->num_rec_vecad_ind() );
 
 			// ind[2] is variable corresponding to this load
 			if( ind[2] > 0 )

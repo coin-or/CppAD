@@ -2,7 +2,7 @@
 # ifndef CPPAD_ERROR_HANDLER_INCLUDED
 # define CPPAD_ERROR_HANDLER_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -127,12 +127,7 @@ $end
 # include <omp.h>
 # endif
 
-// undo preprocessor symbols that config.h needs to define
-# ifndef CPPAD_CPPAD_INCLUDED
-# include <cppad/local/preprocessor.hpp>
-# endif
-
-# include <cppad/config.h>
+# include <cppad/configure.hpp>
 # include <cassert>
 
 namespace CppAD { // BEGIN CppAD namespace
@@ -184,7 +179,7 @@ private:
 # pragma omp master
 # endif
 		{
-			cerr << PACKAGE_STRING;
+			cerr << CPPAD_PACKAGE_STRING;
 			if( known )
 				cerr << " error from a known source:" << endl;
 			else	cerr << " error from unknown source"  << endl;
@@ -214,10 +209,5 @@ private:
 } // END CppAD namespace
 
 
-
-// undo preprocessor symbols that do not begin with CppAD or CPPAD_
-# ifndef CPPAD_CPPAD_INCLUDED
-# include <cppad/local/preprocessor.hpp>
-# endif
 
 # endif

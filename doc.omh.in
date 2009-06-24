@@ -185,7 +185,8 @@ $index symbol, preprocessor CppAD$$
 $index preprocessor, symbol CppAD$$
 $index CppAD, preprocessor symbol$$
 All the preprocessor symbols used by CppAD begin with eight
-$code CppAD$$ or $code CPPAD_$$; see $cref preprocessor$$.
+$code CppAD$$ or $code CPPAD_$$; 
+see $cref/configure/$$ for the few exceptions to this rule.
 
 $head Namespace$$
 $index CppAD, namespace$$
@@ -218,8 +219,8 @@ $childtable%
 	cppad/local/user_ad.hpp%
 	cppad/local/ad_fun.hpp%
 	omh/library.omh%
-	cppad/local/preprocessor.hpp%
 	omh/example.omh%
+	cppad/configure.hpp%
 	omh/appendix.omh
 %$$
 

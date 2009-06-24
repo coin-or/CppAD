@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin example_a11c.cpp$$
 $spell
+	const
 $$
 $index OpenMP, example A.1.1c$$
 $index example, OpenMP A.1.1c$$
@@ -130,7 +131,7 @@ int main(int argc, char *argv[])
 	using std::endl;
 
 	// get command line arguments -----------------------------------
-	char *usage = "example_a11c n_thread repeat size";
+	const char *usage = "example_a11c n_thread repeat size";
 	if( argc != 4 )
 	{	std::cerr << usage << endl;
 		exit(1);

@@ -55,8 +55,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // definitions needed by rest of includes
 
 // definitions that come from the installation
-# include <cppad/local/preprocessor.hpp> // avoid possible conflict in config.h
-# include <cppad/config.h>
+# include <cppad/configure.hpp>
 
 // definitions that are local to the CppAD include files
 # include <cppad/local/define.hpp>
@@ -85,8 +84,5 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // undo definitions in Define.h
 # include <cppad/local/undef.hpp>   
-
-// undo preprocessor symbols that do not begin with CppAD or CPPAD_
-# include <cppad/local/preprocessor.hpp>
 
 # endif

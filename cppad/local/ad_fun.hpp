@@ -3,7 +3,7 @@
 # define CPPAD_AD_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -97,7 +97,7 @@ public:
 
 	// reverse mode sweep
 	template <typename VectorBase>
-	VectorBase Reverse(size_t p, const VectorBase &v) const;
+	VectorBase Reverse(size_t p, const VectorBase &v);
 
 	// forward mode Jacobian sparsity 
 	template <typename VectorBase>
@@ -105,15 +105,15 @@ public:
 
 	// reverse mode Jacobian sparsity 
 	template <typename VectorBase>
-	VectorBase RevSparseJac(size_t q, const VectorBase &Py) const;
+	VectorBase RevSparseJac(size_t q, const VectorBase &Py);
 
 	// reverse mode Hessian sparsity 
 	template <typename VectorBase>
-	VectorBase RevSparseHes(size_t q, const VectorBase &Py) const;
+	VectorBase RevSparseHes(size_t q, const VectorBase &Py);
 
 	// does this AD operation sequence use VecAD<Base>::reference operands
 	bool use_VecAD(void) const
-	{	return play_.NumVecInd() > 0; }
+	{	return play_.num_rec_vecad_ind() > 0; }
 
 	// number of variables in opertion sequence
 	size_t size_var(void) const

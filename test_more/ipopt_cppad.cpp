@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -77,7 +77,7 @@ bool ipopt_cppad_retape(void)
 	Ipopt::SmartPtr<IpoptApplication> app = new IpoptApplication();
 
 	// turn off any printing
-	app->Options()->SetIntegerValue("print_level", -2);
+	app->Options()->SetIntegerValue("print_level", 0);
 
 	// maximum number of iterations
 	app->Options()->SetIntegerValue("max_iter", 10);
@@ -239,7 +239,7 @@ bool ipopt_cppad_K_gt_1(void)
 		Ipopt::SmartPtr<IpoptApplication> app = new IpoptApplication();
 
 		// turn off any printing
-		app->Options()->SetIntegerValue("print_level", -2);
+		app->Options()->SetIntegerValue("print_level", 0);
 
 		// maximum number of iterations
 		app->Options()->SetIntegerValue("max_iter", 10);
@@ -399,7 +399,7 @@ bool ipopt_cppad_J_changes(void)
 	Ipopt::SmartPtr<IpoptApplication> app = new IpoptApplication();
 
 	// turn off any printing
-	app->Options()->SetIntegerValue("print_level", -2);
+	app->Options()->SetIntegerValue("print_level", 0);
 
 	// approximate accuracy in first order necessary conditions;
 	// see Mathematical Programming, Volume 106, Number 1,

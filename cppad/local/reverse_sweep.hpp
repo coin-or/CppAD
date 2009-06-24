@@ -3,7 +3,7 @@
 # define CPPAD_REVERSE_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -35,7 +35,7 @@ $head Syntax$$
 $syntax%void ReverseSweep(
 	size_t %d%,
 	size_t %numvar%,
-	const player<%Base%> *%Rec%,
+	player<%Base%> *%Rec%,
 	size_t %J%,
 	const Base *%Taylor%,
 	size_t %K%,
@@ -71,7 +71,7 @@ $latex u^{(j)}$$ for $latex j = 0 , \ldots , d$$.
 
 $head numvar$$
 is the number of rows in the matrices $italic Taylor$$ and $italic Partial$$.
-It must also be equal to $syntax%%Rec%->TotNumVar()%$$.
+It must also be equal to $syntax%%Rec%->num_rec_var()%$$.
 
 $head J$$
 Is the number of columns in the coefficient matrix $italic Taylor$$.
@@ -135,7 +135,7 @@ template <class Base>
 void ReverseSweep(
 	size_t                d,
 	size_t                numvar,
-	const player<Base>   *Rec,
+	player<Base>         *Rec,
 	size_t                J,
 	const Base           *Taylor,
 	size_t                K,
@@ -145,7 +145,6 @@ void ReverseSweep(
 	OpCode           op;
 	size_t         i_op;
 	size_t        i_var;
-	size_t        i_ind;
 	size_t        n_var;
 	size_t        n_ind;
 
@@ -171,31 +170,19 @@ void ReverseSweep(
 	const Base   zero = Base(0);
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( Rec->TotNumVar() == numvar );
+	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 
 	// Initialize
-	i_op   = Rec->NumOp();
-	i_var  = Rec->TotNumVar();
-	i_ind  = Rec->NumInd();
-	op     = NonOp;         // phony operator that is not there
-
+	Rec->start_reverse();
+	i_op   = 2;
 	while(i_op > 1)
-	{	--i_op;
+	{	// next op
+		Rec->next_reverse(op, ind, i_op, i_var);
 
-		// next op
-		op     = Rec->GetOp(i_op);
-
-		// corresponding varable
+		// corresponding number of varables and indices
 		n_var  = NumVar(op);
-		CPPAD_ASSERT_UNKNOWN( i_var >= n_var );
-		i_var -= n_var;
-
-		// corresponding index values
 		n_ind  = NumInd(op);
-		CPPAD_ASSERT_UNKNOWN( i_ind >= n_ind );
-		i_ind -= n_ind;
-		ind    = Rec->GetInd(n_ind, i_ind);
 
 		// value of Z and its partials for this op
 		Z   = Taylor + i_var * J;
@@ -221,13 +208,7 @@ void ReverseSweep(
 		{
 
 			case AbsOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			X  = Taylor  + ind[0] * J;
-			pX = Partial + ind[0] * K;
-			RevAbsOp(d, Z, X, pZ, pX);
+			reverse_abs_op(d, i_var, ind, J, Taylor, K, Partial);
 			break;
 			// --------------------------------------------------
 
@@ -603,14 +584,12 @@ void ReverseSweep(
 			case PripOp:
 			CPPAD_ASSERT_UNKNOWN( n_var == 0);
 			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( i_ind > n_ind );
 			break;
 			// --------------------------------------------------
 
 			case PrivOp:
 			CPPAD_ASSERT_UNKNOWN( n_var == 0);
 			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( i_ind > n_ind );
 			break;
 
 			// -------------------------------------------------

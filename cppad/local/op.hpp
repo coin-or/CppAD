@@ -3,7 +3,7 @@
 # define CPPAD_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -19,7 +19,6 @@ $begin Op$$ $comment CppAD Developer Documentation$$
 $section Compute Values and Derivatives for Taped Operations$$
 
 $childtable%
-	cppad/local/abs_op.hpp%
 	cppad/local/add_op.hpp%
 	cppad/local/acos_op.hpp%
 	cppad/local/asin_op.hpp%

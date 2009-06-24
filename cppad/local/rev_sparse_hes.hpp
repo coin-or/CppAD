@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_HES_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -197,7 +197,7 @@ namespace CppAD {
 
 template <class Base>
 template <class Vector>
-Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s) const
+Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 {
 	// type used to pack bits (must support standard bit operations)
 	typedef size_t Pack;

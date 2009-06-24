@@ -3,7 +3,7 @@
 # define CPPAD_CPPAD_ASSERT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -88,7 +88,6 @@ $end
 
 # include <cassert>
 # include <iostream>
-# include <cppad/config.h>
 # include <cppad/error_handler.hpp>
 
 # ifdef NDEBUG

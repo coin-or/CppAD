@@ -43,6 +43,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/CheckSimpleVector.h \
 	cppad/CheckNumericType.h \
 	cppad/config.h \
+	cppad/configure.hpp \
 	cppad/check_numeric_type.hpp \
 	cppad/check_simple_vector.hpp \
 	cppad/cppad.hpp \
@@ -134,7 +135,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/output.hpp \
 	cppad/local/par_var.hpp \
 	cppad/local/pow.hpp \
-	cppad/local/preprocessor.hpp \
 	cppad/local/print_for.hpp \
 	cppad/local/near_equal_ext.hpp \
 	cppad/local/reverse.hpp \
@@ -162,6 +162,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/unary_minus.hpp \
 	cppad/local/unary_plus.hpp \
 	cppad/local/vec_ad.hpp \
+	cppad/local/unary_op.hpp \
 	cppad/local/undef.hpp \
 	cppad/local/value.hpp \
 	cppad/local/var2par.hpp \
@@ -260,6 +261,7 @@ SUBDIRS = \
 # in the distrubution so that configure does not have to be run OMhelp.
 EXTRA_DIST = \
 	build.sh \
+	check_doxygen.sh \
 	check_example.sh \
 	check_include_file.sh \
 	check_include_omh.sh \

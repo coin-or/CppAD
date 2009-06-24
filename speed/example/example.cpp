@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,21 +44,23 @@ namespace {
 	// function that runs one test
 	static size_t Run_ok_count    = 0;
 	static size_t Run_error_count = 0;
-	bool Run(bool TestOk(void), const char *name)
-	{	bool ok = true;
-		using namespace std;
-	
+	bool Run(bool TestOk(void), std::string name)
+	{	bool ok      = true;
+		size_t width =  20;         
+		std::cout.width( width );
+		std::cout.setf( std::ios_base::left );
+		std::cout << name;
+		//
+		ok &= name.size() < width;
 		ok &= TestOk();
-	
 		if( ok )
-		{	std::cout << "Ok:    " << name << std::endl;
+		{	std::cout << "OK" << std::endl;
 			Run_ok_count++;
 		}
 		else
-		{	std::cout << "Error: " << name << std::endl;
+		{	std::cout << "Error" << std::endl;
 			Run_error_count++;
 		}
-	
 		return ok;
 	}
 }
@@ -66,14 +68,14 @@ namespace {
 // main program that runs all the tests
 int main(void)
 {	bool ok = true;
-	using namespace std;
+	using std::cout;
+	using std::endl;
 
 	ok &= Run(det_of_minor,          "det_of_minor"   );
 	ok &= Run(det_by_minor,         "det_by_minor"    );
 	ok &= Run(det_by_lu,               "det_by_lu"    );
 	ok &= Run(ode_evaluate,         "ode_evaluate"    );
 	ok &= Run(sparse_evaluate,   "sparse_evaluate"    );
-	ok &= Run(speed_test,             "speed_test"    );
 
 	// check for memory leak in previous calculations
 	if( CPPAD_TRACK_COUNT() != 0 )
@@ -81,8 +83,17 @@ int main(void)
 
 	assert( ok || (Run_error_count > 0) );
 	if( ok )
-		cout << "All " << int(Run_ok_count) << " tests passed." << endl;
-	else	cout << int(Run_error_count) << " tests failed." << endl;
+		cout << "The " << int(Run_ok_count) << " tests above passed.";
+	else	cout << int(Run_error_count) << " tests above failed.";
+	cout << endl;
+
+	bool speed_test_ok = speed_test();
+	if( speed_test_ok )
+		cout << "speed_test also passed correctness test" << endl;
+	else
+	{	cout << "speed_test failed its correctness test (OK if ";
+		cout << "other processes are running at same time)" << endl;
+	}
 
 	return static_cast<int>( ! ok );
 }

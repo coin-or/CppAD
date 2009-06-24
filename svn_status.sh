@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -20,6 +20,7 @@ then
 fi
 svn status | > svn_status.$$ \
 sed                                                           \
+	-e '/^. *cppad\/configure.hpp$/d'                     \
 	-e '/^[?].*\.[0-9]*$/d'                               \
 	-e '/^[?].*\.tmp$/d'                                  \
 	-e '/^[?].*\.out$/d'                                  \

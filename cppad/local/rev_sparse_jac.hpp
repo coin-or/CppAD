@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_JAC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -56,7 +56,7 @@ $code RevSparseJac$$ returns a sparsity pattern for the $latex J(x)$$.
 $head f$$
 The object $italic f$$ has prototype
 $syntax%
-	const ADFun<%Base%> %f%
+	ADFun<%Base%> %f%
 %$$
 
 $head x$$
@@ -171,7 +171,7 @@ namespace CppAD {
 
 template <class Base>
 template <class Vector>
-Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) const
+Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) 
 {
 	// type used to pack bits (must support standard bit operations)
 	typedef size_t Pack;

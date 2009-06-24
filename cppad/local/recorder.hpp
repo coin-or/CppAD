@@ -3,7 +3,7 @@
 # define CPPAD_RECORDER_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -146,16 +146,16 @@ and returns its index in this vector.
 This index starts at zero after each $code Erase$$ or default constructor
 and increments by one for each call to this function.
 
-$head TotNumVar$$
-$index recorder, TotNumVar$$
-$index TotNumVar, recorder$$
+$head num_rec_var$$
+$index recorder, num_rec_var$$
+$index num_rec_var, recorder$$
 If $icode n$$ has prototype
 $codei%
 	size_t %n%
 %$$
 the syntax
 $codei%
-	%n% = %rec%.TotNumVar()
+	%n% = %rec%.num_rec_var()
 %$$
 sets $icode n$$ to the number of variables that are in the 
 operation sequence.
@@ -274,7 +274,7 @@ public:
 	inline size_t PutTxt(const char *text);
 
 	// number of values
-	size_t TotNumVar(void) const
+	size_t num_rec_var(void) const
 	{	return TotalNumberVar_; }
 
 	// amount of memory used 

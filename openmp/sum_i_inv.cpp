@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
 	using std::endl;
 	using CppAD::vector;
 
-	char *usage = "sum_i_inv n_thread repeat mega_sum";
+	const char *usage = "sum_i_inv n_thread repeat mega_sum";
 	if( argc != 4 )
 	{	std::cerr << usage << endl;
 		exit(1);

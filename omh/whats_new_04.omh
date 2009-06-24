@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -156,7 +156,7 @@ $pre
 
 $$
 The specifications for 
-$xref/cppad/Preprocessor Symbols/preprocessor symbols/$$
+$cref/preprocessor symbols/configure/Preprocessor Symbols/$$
 state that all the CppAD preprocessor symbols
 begin with $code CppAD$$ 
 (so they do not conflict with other packages).

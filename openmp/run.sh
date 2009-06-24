@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -12,6 +12,7 @@
 # -----------------------------------------------------------------------------
 # $begin openmp_run.sh$$ $newlinech #$$
 # $spell
+#	Werror
 #	fi
 #	usr
 #	Dir
@@ -67,7 +68,7 @@ openmp_flag=""
 # $subhead Other Flag$$
 # The following other flags will be used during compilation:
 # $codep
-other_flags="-DNDEBUG -O2 -Wall"
+other_flags="-Werror -DNDEBUG -O2 -Wall"
 # $$
 #
 # $subhead Boost Directory$$

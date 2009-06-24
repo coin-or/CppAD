@@ -1,41 +1,40 @@
-/* cppad/config.h.  Generated from config.h.in by configure.  */
-/* cppad/config.h.in.  Generated from configure.ac by autoheader.  */
+/* cppad/local/config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* is CPPAD_TEST_VECTOR = boost vector (overriden if _MSC_VER defined) */
-#define CPPAD_BOOSTVECTOR 0
+#undef CPPAD_BOOSTVECTOR
 
 /* is CPPAD_TEST_VECTOR == CppAD::vector */
-#define CPPAD_CPPADVECTOR 1
+#undef CPPAD_CPPADVECTOR
 
 /* does system support gettimeofday (overriden if _MSC_VER defined) */
-#define CPPAD_GETTIMEOFDAY 1
+#undef CPPAD_GETTIMEOFDAY
 
 /* is CPPAD_TEST_VECTOR == std::vector */
-#define CPPAD_STDVECTOR 0
+#undef CPPAD_STDVECTOR
 
 /* Name of package */
-#define PACKAGE "cppad"
+#undef PACKAGE
 
 /* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "cppad@list.coin-or.org"
+#undef PACKAGE_BUGREPORT
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME "CppAD"
+#undef PACKAGE_NAME
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "CppAD 20090624"
+#undef PACKAGE_STRING
 
 /* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "cppad"
+#undef PACKAGE_TARNAME
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "20090624"
+#undef PACKAGE_VERSION
 
 /* Version number of package */
-#define VERSION "20090624"
+#undef VERSION
 
 /* Define to `__inline__' or `__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */
 #ifndef __cplusplus
-/* #undef inline */
+#undef inline
 #endif
