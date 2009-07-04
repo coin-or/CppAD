@@ -730,8 +730,9 @@ then
 fi
 if [ "$1" = "move" ] || [ "$1" = "all" ] 
 then
-	# move tarballs into doc directory
+	# move tarballs and developer documentation into doc directory
 	list="
+		doxydoc
 		cppad-$version.cpl.tgz
 		cppad-$version.gpl.tgz
 	"
@@ -789,7 +790,7 @@ echo "dist           create the distribution file cppad-version.cpl.tgz"
 echo "test           unpack *.cpl.tgz, compile, tests, result in build_test.log"
 echo "gpl            create *.gpl.tgz"
 echo "dos            create *.gpl.zip, and *.cpl.zip"
-echo "move           move *.tgz to doc directory"
+echo "move           move tarballs and developer documtnation to doc directory"
 echo
 echo "build.sh option_1 option_2 ..."
 echo "Where options are in list above, executes them in the specified order."

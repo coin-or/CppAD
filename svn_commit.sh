@@ -13,85 +13,16 @@
 # Define your subversion commit by editing the definition of 
 # log_entry, add_list, delete_list, and change_list below:
 # 
-log_entry="Merge in branches/sweep from revision 1404 to 1446.
+log_entry="
 " 
 add_list="
 "
 delete_list="
 "
 old_list="
-cppad/local/sin_cos.hpp
-cppad/local/unary_op.hpp
 "
 #
 change_list="
-.
-check_doxygen.sh
-check_include_file.sh
-example/cond_exp.cpp
-svn_merge.sh
-test_more/sub.cpp
-test_more/cond_exp.cpp
-test_more/div.cpp
-configure.ac
-build.sh
-makefile.am
-introduction/exp_apx/exp_eps_for2.cpp
-makefile.in
-omh/whats_new_09.omh
-cppad/local/exp_op.hpp
-cppad/local/sparse_op.hpp
-cppad/local/mul_op.hpp
-cppad/local/player.hpp
-cppad/local/ad_tape.hpp
-cppad/local/cond_exp.hpp
-cppad/local/pow_op.hpp
-cppad/local/prototype_op.hpp
-cppad/local/abs_op.hpp
-cppad/local/for_jac_sweep.hpp
-cppad/local/add_eq.hpp
-cppad/local/div_op.hpp
-cppad/local/div.hpp
-cppad/local/add.hpp
-cppad/local/asin_op.hpp
-cppad/local/sinh_op.hpp
-cppad/local/discrete.hpp
-cppad/local/op_code.hpp
-cppad/local/sub_eq.hpp
-cppad/local/atan_op.hpp
-cppad/local/mul_eq.hpp
-cppad/local/compare.hpp
-cppad/local/sqrt_op.hpp
-cppad/local/forward0sweep.hpp
-cppad/local/independent.hpp
-cppad/local/print_for.hpp
-cppad/local/recorder.hpp
-cppad/local/forward_sweep.hpp
-cppad/local/div_eq.hpp
-cppad/local/std_math_ad.hpp
-cppad/local/cppad_assert.hpp
-cppad/local/rev_jac_sweep.hpp
-cppad/local/vec_ad.hpp
-cppad/local/cond_op.hpp
-cppad/local/cos_op.hpp
-cppad/local/add_op.hpp
-cppad/local/sub.hpp
-cppad/local/cosh_op.hpp
-cppad/local/fun_construct.hpp
-cppad/local/mul.hpp
-cppad/local/rev_hes_sweep.hpp
-cppad/local/abs.hpp
-cppad/local/pow.hpp
-cppad/local/dependent.hpp
-cppad/local/op.hpp
-cppad/local/reverse_sweep.hpp
-cppad/local/log_op.hpp
-cppad/local/acos_op.hpp
-cppad/local/sub_op.hpp
-cppad/local/sin_op.hpp
-cppad/configure.hpp.in
-cppad/cppad.hpp
-dev.omh
 "
 #
 # log_entry
@@ -109,11 +40,12 @@ dev.omh
 # script and then include the file in the svn_change list.
 #
 # delete_list
-# List of files that will be deleted from the repository during this commit.
+# List of files that will be deleted from the local copy
+# and from the repository during this commit.
 #
 # old_list
-# List of old file names for files that have already been moved in local copy. 
-# The new file names must be in the change_list.
+# List of old file names for files that have already been deleted from the
+# local copy, but have not yet been deleted from the repository.
 #
 # change_list
 # List of files that are currently in repository and change during this commit.

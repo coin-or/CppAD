@@ -18,6 +18,9 @@ then
 	echo "where automake flag is either + or -"
 	exit 1
 fi
+yyyymmdd=`date +%G%m%d`
+yyyy_mm_dd=`date +%G-%m-%d`
+#
 svn status | > svn_status.$$ \
 sed                                                           \
 	-e '/^. *svn_status.sh$/d'                            \
@@ -101,8 +104,6 @@ else
 		-e '/ configure$/d' \
 		-e '/ cppad\/config.h/d' 
 fi
-yyyymmdd=`date +%G%m%d`
-yyyy_mm_dd=`date +%G-%m-%d`
 #
 svn cat AUTHORS | sed > AUTHORS.$$ \
 	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
