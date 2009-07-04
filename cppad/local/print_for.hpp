@@ -3,7 +3,7 @@
 # define CPPAD_PRINT_FOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -109,21 +109,21 @@ namespace CppAD {
 		);
 
 		if( Parameter(u) )
-		{	CPPAD_ASSERT_UNKNOWN( NumVar(PripOp) == 0 );
-			CPPAD_ASSERT_UNKNOWN( NumInd(PripOp) == 2 );
+		{	CPPAD_ASSERT_UNKNOWN( NumRes(PripOp) == 0 );
+			CPPAD_ASSERT_UNKNOWN( NumArg(PripOp) == 2 );
 			// put operand addresses in tape
 			size_t t = tape->Rec_.PutTxt(text);
 			size_t p = tape->Rec_.PutPar(u.value_);
-			tape->Rec_.PutInd(t, p);
+			tape->Rec_.PutArg(t, p);
 			// put operator in the tape
 			tape->Rec_.PutOp(PripOp);
 		}
 		else
-		{	CPPAD_ASSERT_UNKNOWN( NumVar(PrivOp) == 0 );
-			CPPAD_ASSERT_UNKNOWN( NumInd(PrivOp) == 2 );
+		{	CPPAD_ASSERT_UNKNOWN( NumRes(PrivOp) == 0 );
+			CPPAD_ASSERT_UNKNOWN( NumArg(PrivOp) == 2 );
 			// put operand addresses in tape
 			size_t t = tape->Rec_.PutTxt(text);
-			tape->Rec_.PutInd(t, u.taddr_);
+			tape->Rec_.PutArg(t, u.taddr_);
 			// put operator in the tape
 			tape->Rec_.PutOp(PrivOp);
 		}

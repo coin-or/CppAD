@@ -1,9 +1,10 @@
 /* $Id$ */
 # ifndef CPPAD_SUB_OP_INCLUDED
 # define CPPAD_SUB_OP_INCLUDED
+CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,176 +14,126 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin ForSubvvOp$$ $comment CppAD Developer Documentation$$
-$spell
-	Subpv
-	Subvp
-	Subvv
-	Taylor
-	const
-	inline
-	Op
-$$
-
-
-$index subtract, forward operator$$
-$index forward, subtract operator$$
-$index operator, subtract forward$$
-$index ForSub$$
-
-$section Forward Mode Subtraction Operators$$
-
-$head Syntax$$
-
-$syntax%inline void ForSubvvOp(size_t %d%,
-	%Base% *%z%, const %Base% *%x%, const %Base% *%y%)%$$
-$pre
-$$
-$syntax%inline void ForSubpvOp(size_t %d%,
-	%Base% *%z%, const %Base% *%p%, const %Base% *%y%)%$$
-$pre
-$$
-$syntax%inline void ForSubvpOp(size_t %d%,
-	%Base% *%z%, const %Base% *%x%, const %Base% *%p%)%$$
-
-
-$head Description$$
-Computes the $italic d$$ order Taylor coefficient for $latex Z$$ where
-$table
-Operation  $cnext Value  $rnext
-Subvv       $cnext $latex Z = X - Y$$ $rnext
-Subpv       $cnext $latex Z = P - Y$$ $rnext
-Subvp       $cnext $latex Z = X - P$$ 
-$tend
-
-$head x$$
-The vector $italic x$$ has length $latex d+1$$ and contains the
-$th d$$ order Taylor coefficient row vector for $italic X$$.
-
-$head y$$
-The vector $italic y$$ has length $latex d+1$$ and contains the
-$th d$$ order Taylor coefficient row vector for $italic Y$$.
-
-$head p$$
-The scalar $syntax%*%p%$$ contains the value of the parameter $italic P$$.
-
-$head z$$
-The vector $italic z$$ has length $latex d+1$$.
-On input it contains the
-$th d-1$$ order Taylor coefficient row vector for $italic Z$$.
-On output it contains the
-$th d$$ order Taylor coefficient row vector for $italic Z$$; i.e.,
-$syntax%%z%[%d%]%$$ is set equal to the $th d$$ Taylor coefficient for
-the function $italic Z$$.
-
-$end
-------------------------------------------------------------------------------
-$begin RevSubvvOp$$ $comment CppAD Developer Documentation$$
-$spell
-	Subpv
-	Subvp
-	Subvv
-	Taylor
-	const
-	inline
-	Op
-	px
-	py
-	pz
-$$
-
-$mindex RevSubvvOp reverse minus subtract$$
-$section Reverse Mode Subtraction Operator$$
-
-$head Syntax$$
-
-$syntax%inline void RevSubvvOp(size_t %d%,
-	const %Base% *%pz%, %Base% *%px%, %Base% *%py%)%$$
-
-$syntax%inline void RevSubpvOp(size_t %d%,
-	const %Base% *%pz%, %Base% *%py%)%$$
-
-$syntax%inline void RevSubvpOp(size_t %d%,
-	const %Base% *%pz%, %Base% *%px%)%$$
-
-$head Description$$
-We are given the partial derivatives for a function
-$latex G(z, x, y)$$ and we wish to compute the partial derivatives for
-the function
-$latex \[
-	H(x, y) = G [ Z(x, y) , x , y ]
-\]$$
-where $latex Z(x, y)$$ is defined as the 
-$th d$$ order Taylor coefficient row vector for $italic Z$$ as
-a function of the corresponding vectors for 
-$italic X$$ and $italic Y$$ where
-
-$table
-Operation  $cnext Value  $rnext
-Subvv       $cnext $latex Z = X - Y$$ $rnext
-Subpv       $cnext $latex Z = P - Y$$ $rnext
-Subvp       $cnext $latex Z = X - P$$ 
-$tend
-
-Note that $italic Z$$ has been used both the original subtraction 
-function and for the corresponding mapping of Taylor coefficients.
-
-$head pz$$
-The vector $italic pz$$ has length $latex d+1$$ and 
-$syntax%%pz%[%j%]%$$ contains the partial for $italic G$$
-with respect to the $th j$$ order Taylor coefficient for $italic Z$$.
-
-$head On Input$$
-
-$subhead px$$
-The vector $italic px$$ has length $latex d+1$$ and 
-$syntax%%px%[%j%]%$$ contains the partial for $italic G$$
-with respect to the $th j$$ order Taylor coefficient for $italic X$$.
-
-$subhead py$$
-The vector $italic py$$ has length $latex d+1$$ and 
-$syntax%%py%[%j%]%$$ contains the partial for $italic G$$
-with respect to the $th j$$ order Taylor coefficient for $italic Y$$.
-
-$head On Output$$
-
-$subhead px$$
-If present,
-the vector $italic px$$ has length $latex d+1$$ and 
-$syntax%%px%[%j%]%$$ contains the partial for $italic H$$
-with respect to the $th j$$ order Taylor coefficient for $italic X$$.
-
-$subhead py$$
-If present,
-the vector $italic py$$ has length $latex d+1$$ and 
-$syntax%%py%[%j%]%$$ contains the partial for $italic H$$
-with respect to the $th j$$ order Taylor coefficient for $italic Y$$.
-
-
-$end
-------------------------------------------------------------------------------
+/*!
+\file sub_op.hpp
+Forward and reverse mode calculations for z = x - y.
 */
 
-// BEGIN CppAD namespace
-namespace CppAD {
-
 // --------------------------- Subvv -----------------------------------------
+/*!
+Compute forward mode Taylor coefficients for result of op = SubvvOp.
+
+The C++ source code corespnding to this operation is
+\verbatim
+	z = x - y
+\endverbatim
+In the documentation below,
+this operations is for the case where both x and y are variables
+and the argument \a parameter is not used.
+
+\copydetails forward_binary_op
+*/
 
 template <class Base>
-inline void ForSubvvOp(size_t d, 
-	Base *z, const Base *x, const Base *y)
+inline void forward_subvv_op(
+	size_t        d           , 
+	size_t        i_z         ,
+	const size_t* arg         ,
+	const Base*   parameter   ,
+	size_t        nc_taylor   ,
+	Base*         taylor      )
 {
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+
+	// Taylor coefficients corresponding to arguments and result
+	Base* x = taylor + arg[0] * nc_taylor;
+	Base* y = taylor + arg[1] * nc_taylor;
+	Base* z = taylor + i_z    * nc_taylor;
+
 	z[d] = x[d] - y[d];
 }
 
+/*!
+Compute zero order forward mode Taylor coefficients for result of op = SubvvOp.
+
+The C++ source code corespnding to this operation is
+\verbatim
+	z = x - y
+\endverbatim
+In the documentation below,
+this operations is for the case where both x and y are variables
+and the argument \a parameter is not used.
+
+\copydetails forward_binary_op_0
+*/
+
 template <class Base>
-inline void RevSubvvOp(size_t d, 
-	const Base *pz, Base *px, Base *py)
+inline void forward_subvv_op_0(
+	size_t        i_z         ,
+	const size_t* arg         ,
+	const Base*   parameter   ,
+	size_t        nc_taylor   ,
+	Base*         taylor      )
 {
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+
+	// Taylor coefficients corresponding to arguments and result
+	Base* x = taylor + arg[0] * nc_taylor;
+	Base* y = taylor + arg[1] * nc_taylor;
+	Base* z = taylor + i_z    * nc_taylor;
+
+	z[0] = x[0] - y[0];
+}
+
+/*!
+Compute reverse mode partial derivatives for result of op = SubvvOp.
+
+The C++ source code corespnding to this operation is
+\verbatim
+	z = x - y
+\endverbatim
+In the documentation below,
+this operations is for the case where both x and y are variables
+and the argument \a parameter is not used.
+
+\copydetails reverse_binary_op
+*/
+
+template <class Base>
+inline void reverse_subvv_op(
+	size_t        d           , 
+	size_t        i_z         ,
+	const size_t* arg         ,
+	const Base*   parameter   ,
+	size_t        nc_taylor   ,
+	const Base*   taylor      ,
+	size_t        nc_partial  ,
+	Base*         partial     )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+
+	// Partial derivatives corresponding to arguments and result
+	Base* px = partial + arg[0] * nc_partial;
+	Base* py = partial + arg[1] * nc_partial;
+	Base* pz = partial + i_z    * nc_partial;
+
 	// number of indices to access
 	size_t i = d + 1;
-
 	while(i)
 	{	--i;
 		px[i] += pz[i];
@@ -191,24 +142,122 @@ inline void RevSubvvOp(size_t d,
 }
 
 // --------------------------- Subpv -----------------------------------------
+/*!
+Compute forward mode Taylor coefficients for result of op = SubpvOp.
+
+The C++ source code corespnding to this operation is
+\verbatim
+	z = x - y
+\endverbatim
+In the documentation below,
+this operations is for the case where x is a parameter and y is a variable.
+
+\copydetails forward_binary_op
+*/
 
 template <class Base>
-inline void ForSubpvOp(size_t d, 
-	Base *z, const Base *p, const Base *y)
+inline void forward_subpv_op(
+	size_t        d           , 
+	size_t        i_z         ,
+	const size_t* arg         ,
+	const Base*   parameter   ,
+	size_t        nc_taylor   ,
+	Base*         taylor      )
 {
-	if( d == 0 )
-		z[d] = (*p) - y[d];
-	else	z[d] = - y[d];
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(SubpvOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(SubpvOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 
+	// Taylor coefficients corresponding to arguments and result
+	Base* y = taylor + arg[1] * nc_taylor;
+	Base* z = taylor + i_z    * nc_taylor;
+
+# if CPPAD_USE_FORWARD0SWEEP
+	CPPAD_ASSERT_UNKNOWN( d > 0 );
+	z[d] = - y[d];
+# else
+	// Paraemter value
+	Base x = parameter[ arg[0] ];
+	if( d == 0 )
+		z[d] = x - y[d];
+	else	z[d] = - y[d];
+# endif
+}
+/*!
+Compute zero order forward mode Taylor coefficient for result of op = SubpvOp.
+
+The C++ source code corespnding to this operation is
+\verbatim
+	z = x - y
+\endverbatim
+In the documentation below,
+this operations is for the case where x is a parameter and y is a variable.
+
+\copydetails forward_binary_op_0
+*/
+
+template <class Base>
+inline void forward_subpv_op_0(
+	size_t        i_z         ,
+	const size_t* arg         ,
+	const Base*   parameter   ,
+	size_t        nc_taylor   ,
+	Base*         taylor      )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(SubpvOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(SubpvOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+
+	// Paraemter value
+	Base x = parameter[ arg[0] ];
+
+	// Taylor coefficients corresponding to arguments and result
+	Base* y = taylor + arg[1] * nc_taylor;
+	Base* z = taylor + i_z    * nc_taylor;
+
+	z[0] = x - y[0];
 }
 
+/*!
+Compute reverse mode partial derivative for result of op = SubpvOp.
+
+The C++ source code corespnding to this operation is
+\verbatim
+	z = x - y
+\endverbatim
+In the documentation below,
+this operations is for the case where x is a parameter and y is a variable.
+
+\copydetails reverse_binary_op
+*/
+
 template <class Base>
-inline void RevSubpvOp(size_t d, 
-	const Base *pz, Base *py)
+inline void reverse_subpv_op(
+	size_t        d           , 
+	size_t        i_z         ,
+	const size_t* arg         ,
+	const Base*   parameter   ,
+	size_t        nc_taylor   ,
+	const Base*   taylor      ,
+	size_t        nc_partial  ,
+	Base*         partial     )
 {
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+
+	// Partial derivatives corresponding to arguments and result
+	Base* py = partial + arg[1] * nc_partial;
+	Base* pz = partial + i_z    * nc_partial;
+
 	// number of indices to access
 	size_t i = d + 1;
-
 	while(i)
 	{	--i;
 		py[i] -= pz[i];
@@ -216,30 +265,129 @@ inline void RevSubpvOp(size_t d,
 }
 
 // --------------------------- Subvp -----------------------------------------
+/*!
+Compute forward mode Taylor coefficients for result of op = SubvvOp.
+
+The C++ source code corespnding to this operation is
+\verbatim
+	z = x - y
+\endverbatim
+In the documentation below,
+this operations is for the case where x is a variable and y is a parameter.
+
+\copydetails forward_binary_op
+*/
 
 template <class Base>
-inline void ForSubvpOp(size_t d, 
-	Base *z, const Base *x, const Base *p)
+inline void forward_subvp_op(
+	size_t        d           , 
+	size_t        i_z         ,
+	const size_t* arg         ,
+	const Base*   parameter   ,
+	size_t        nc_taylor   ,
+	Base*         taylor      )
 {
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(SubvpOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(SubvpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+
+	// Taylor coefficients corresponding to arguments and result
+	Base* x = taylor + arg[0] * nc_taylor;
+	Base* z = taylor + i_z    * nc_taylor;
+
+# if CPPAD_FORWARD0SWEEP
+	CPPAD_ASSERT_UNKNOWN( d > 0 );
+	z[d] = x[d];
+# else
+	// Parameter value
+	Base y = parameter[ arg[1] ];
 	if( d == 0 )
-		z[d] = x[d] - (*p);
+		z[d] = x[d] - y;
 	else	z[d] = x[d];
+# endif
 
 }
 
+/*!
+Compute zero order forward mode Taylor coefficients for result of op = SubvvOp.
+
+The C++ source code corespnding to this operation is
+\verbatim
+	z = x - y
+\endverbatim
+In the documentation below,
+this operations is for the case where x is a variable and y is a parameter.
+
+\copydetails forward_binary_op_0
+*/
+
 template <class Base>
-inline void RevSubvpOp(size_t d, 
-	const Base *pz, Base *px)
+inline void forward_subvp_op_0(
+	size_t        i_z         ,
+	const size_t* arg         ,
+	const Base*   parameter   ,
+	size_t        nc_taylor   ,
+	Base*         taylor      )
 {
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(SubvpOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(SubvpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+
+	// Parameter value
+	Base y = parameter[ arg[1] ];
+
+	// Taylor coefficients corresponding to arguments and result
+	Base* x = taylor + arg[0] * nc_taylor;
+	Base* z = taylor + i_z    * nc_taylor;
+
+	z[0] = x[0] - y;
+}
+
+/*!
+Compute reverse mode partial derivative for result of op = SubvpOp.
+
+The C++ source code corespnding to this operation is
+\verbatim
+	z = x - y
+\endverbatim
+In the documentation below,
+this operations is for the case where x is a variable and y is a parameter.
+
+\copydetails reverse_binary_op
+*/
+
+template <class Base>
+inline void reverse_subvp_op(
+	size_t        d           , 
+	size_t        i_z         ,
+	const size_t* arg         ,
+	const Base*   parameter   ,
+	size_t        nc_taylor   ,
+	const Base*   taylor      ,
+	size_t        nc_partial  ,
+	Base*         partial     )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(SubvpOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(SubvpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+
+	// Partial derivatives corresponding to arguments and result
+	Base* px = partial + arg[0] * nc_partial;
+	Base* pz = partial + i_z    * nc_partial;
+
 	// number of indices to access
 	size_t i = d + 1;
-
 	while(i)
 	{	--i;
 		px[i] += pz[i];
 	}
 }
 
-} // END CppAD namespace
-
+CPPAD_END_NAMESPACE
 # endif

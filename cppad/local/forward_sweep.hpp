@@ -170,29 +170,26 @@ size_t forward_sweep(
 	OpCode           op;
 	size_t         i_op;
 	size_t        i_var;
-	size_t        i_ind;
+	size_t        i_arg;
 
-	const size_t   *ind = 0;
-	const size_t *ind_0 = 0;
+	const size_t   *arg = 0;
+	const size_t *arg_0 = 0;
 	const Base       *P = 0;
 	const Base       *X = 0;
 	const Base       *Y = 0;
 
 	// used by CExp operator (left and right also used by Com operator)
-	const Base  *left = 0, *right = 0, *trueCase = 0, *falseCase = 0;
-	const Base  zero = Base(0);
+	const Base  *left = 0, *right = 0;
 
 	// used by Com operator
 	bool result;
 
 	Base             *Z = 0;
-	Base             *W = 0;
-	Base             *U = 0;
 
 	size_t            i;
 	size_t          len;
-	size_t        n_var = 0;
-	size_t        n_ind = 0;
+	size_t        n_res = 0;
+	size_t        n_arg = 0;
 
 
 	// initialize the comparision operator (ComOp) counter
@@ -218,19 +215,31 @@ size_t forward_sweep(
 	// set the number of operators
 	numop_m1 = Rec->num_rec_op() - 1;
 
+
+	// length of the parameter vector (used by CppAD assert macros)
+	const size_t num_par = Rec->num_rec_par();
+
+	// pointer to the beginning of the parameter vector
+	const Base* parameter = 0;
+	if( num_par > 0 )
+		parameter = Rec->GetPar(0);
+
 	// skip the NonOp at the beginning of the recording
-	Rec->start_forward(op, ind, i_op, i_var);
-	ind_0 = ind;
+	Rec->start_forward(op, arg, i_op, i_var);
+	arg_0 = arg;
+# if CPPAD_FORWARD_SWEEP_TRACE
+	std::cout << std::endl;
+# endif
 	while(i_op < numop_m1)
 	{
 		// this op
-		Rec->next_forward(op, ind, i_op, i_var);
+		Rec->next_forward(op, arg, i_op, i_var);
 
 		// number of variables
-		n_var  = NumVar(op);
+		n_res  = NumRes(op);
 
 		// index field values for this op
-		n_ind  = NumInd(op);
+		n_arg  = NumArg(op);
 
 		// value of z for this op
 		Z      = Taylor + i_var * J;
@@ -240,137 +249,70 @@ size_t forward_sweep(
 		switch( op )
 		{
 			case AbsOp:
-			forward_abs_op(d, i_var, ind, J, Taylor);
+			forward_abs_op(d, i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case AddvvOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
-
-			X = Taylor + ind[0] * J;
-			Y = Taylor + ind[1] * J;
-			ForAddvvOp(d, Z, X, Y);
+			forward_addvv_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case AddpvOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
-
-			P = Rec->GetPar( ind[0] );
-			Y = Taylor + ind[1] * J;
-			ForAddpvOp(d, Z, P, Y);
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			forward_addpv_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case AddvpOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			X = Taylor + ind[0] * J;
-			P = Rec->GetPar( ind[1] );
-			ForAddvpOp(d, Z, X, P);
+			CPPAD_ASSERT_UNKNOWN( arg[1] < num_par );
+			forward_addvp_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case AcosOp:
 			// variables: acos(x),  sqrt(1 - x * x) 
-			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( n_var == 2);
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
-
-			// use W for data stored in variable record
-			W = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForAcosOp(d, Z, W, X);
+			forward_acos_op(d, i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case AsinOp:
-			// variables: asin(x),  sqrt(1 - x * x) 
-			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			// results: asin(x),  sqrt(1 - x * x) 
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
-
-			// use W for data stored in variable record
-			W = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForAsinOp(d, Z, W, X);
+			forward_asin_op(d, i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case AtanOp:
-			// variables: atan(x),  1 + x * x 
-			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( n_var == 2);
+			// results: atan(x),  1 + x * x 
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
-
-			// use W for data stored in variable record
-			W = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForAtanOp(d, Z, W, X);
+			forward_atan_op(d, i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case CExpOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 6);
-			CPPAD_ASSERT_UNKNOWN( ind[1] != 0 );
-			if( ind[1] & 1 )
-				left = Taylor + ind[2] * J;
-			else	left = Rec->GetPar(ind[2]);
-			if( ind[1] & 2 )
-				right = Taylor + ind[3] * J;
-			else	right = Rec->GetPar(ind[3]);
-			if( d == 0 )
-			{	if( ind[1] & 4 )
-					trueCase = Taylor + ind[4] * J;
-				else	trueCase = Rec->GetPar(ind[4]);
-				if( ind[1] & 8 )
-					falseCase = Taylor + ind[5] * J;
-				else	falseCase = Rec->GetPar(ind[5]);
-			}
-			else
-			{	if( ind[1] & 4 )
-					trueCase = Taylor + ind[4] * J + d;
-				else	trueCase = &zero;
-				if( ind[1] & 8 )
-					falseCase = Taylor + ind[5] * J + d;
-				else	falseCase = &zero;
-			}
-			Z[d] = CondExpOp(
-				CompareOp( ind[0] ),
-				*left,
-				*right,
-				*trueCase,
-				*falseCase
+			forward_cond_op(
+				d, i_var, arg, num_par, parameter, J, Taylor
 			);
 			break;
 			// ---------------------------------------------------
 
 			case ComOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 0);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 4);
-			CPPAD_ASSERT_UNKNOWN( ind[1] > 1 );
+			CPPAD_ASSERT_UNKNOWN( n_res == 0);
+			CPPAD_ASSERT_UNKNOWN( n_arg == 4);
+			CPPAD_ASSERT_UNKNOWN( arg[1] > 1 );
 			if( d == 0 )
-			{	if( ind[1] & 1 )
+			{	if( arg[1] & 1 )
 					result = true;
 				else	result = false;
-				if( ind[1] & 2 )
-					left = Taylor + ind[2] * J;
-				else	left = Rec->GetPar(ind[2]);
-				if( ind[1] & 4 )
-					right = Taylor + ind[3] * J;
-				else	right = Rec->GetPar(ind[3]);
-				switch( CompareOp( ind[0] ) )
+				if( arg[1] & 2 )
+					left = Taylor + arg[2] * J;
+				else	left = Rec->GetPar(arg[2]);
+				if( arg[1] & 4 )
+					right = Taylor + arg[3] * J;
+				else	right = Rec->GetPar(arg[3]);
+				switch( CompareOp( arg[0] ) )
 				{	case CompareLt:
 					compareCount += ( result != 
 					LessThanZero(*left - *right) );
@@ -410,131 +352,95 @@ size_t forward_sweep(
 
 			case CosOp:
 			// variables: cos(x), sin(x)
-			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( n_var == 2);
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
-
-			// use W for data stored in variable record
-			W = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForTrigSinCos(d, W, Z, X);
+			forward_cos_op(d, i_var, arg[0], J, Taylor);
 			break;
 			// ---------------------------------------------------
 
 			case CoshOp:
 			// variables: cosh(x), sinh(x)
-			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( n_var == 2);
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
-
-			// use W for data stored in variable record
-			W = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForHypSinCos(d, W, Z, X);
+			forward_cosh_op(d, i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case DisOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
+			CPPAD_ASSERT_UNKNOWN( n_res == 1);
+			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
 			if( d == 0 ) 
-			{	X   = Taylor + ind[0] * J;
-				Z[0] = ADDiscrete<Base>::Eval(ind[1], X[0]);
+			{	X   = Taylor + arg[0] * J;
+				Z[0] = ADDiscrete<Base>::Eval(arg[1], X[0]);
 			}
 			else	Z[d] = Base(0);
 			break;
 			// -------------------------------------------------
 
 			case DivvvOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
-
-			X = Taylor + ind[0] * J;
-			Y = Taylor + ind[1] * J;
-			ForDivvvOp(d, Z, X, Y);
+			forward_divvv_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case DivpvOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
-
-			Y = Taylor + ind[1] * J;
-			P = Rec->GetPar( ind[0] );
-			ForDivpvOp(d, Z, P, Y);
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			forward_divpv_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case DivvpOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			P = Rec->GetPar( ind[1] );
-			X = Taylor + ind[0] * J;
-			ForDivvpOp(d, Z, X, P);
+			CPPAD_ASSERT_UNKNOWN( arg[1] < num_par );
+			forward_divvp_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case ExpOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			X = Taylor + ind[0] * J;
-			ForExpOp(d, Z, X);
+			forward_exp_op(d, i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case InvOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 0 );
+			CPPAD_ASSERT_UNKNOWN( n_res == 1);
+			CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
 			break;
 			// -------------------------------------------------
 
 			case LdpOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_res == 1);
+			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
 			
-			CPPAD_ASSERT_UNKNOWN( ind[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->num_rec_vecad_ind() );
+			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
 			CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
 			CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
 
 			if( d == 0 )
-			{	i   = ind[1];
+			{	i   = arg[1];
 				CPPAD_ASSERT_UNKNOWN( 
-					i < VectorInd[ind[0] - 1] 
+					i < VectorInd[arg[0] - 1] 
 				);
 				CPPAD_ASSERT_UNKNOWN( 
-					i + ind[0] < Rec->num_rec_vecad_ind() 
+					i + arg[0] < Rec->num_rec_vecad_ind() 
 				);
 
-				if( VectorVar[ i + ind[0] ] )
-				{	i     = VectorInd[ i + ind[0] ];
-					i_ind = ind - ind_0;
-					Rec->ReplaceInd(i_ind + 2, i);
+				if( VectorVar[ i + arg[0] ] )
+				{	i     = VectorInd[ i + arg[0] ];
+					i_arg = arg - arg_0;
+					Rec->ReplaceInd(i_arg + 2, i);
 					CPPAD_ASSERT_UNKNOWN(i > 0 );
 					CPPAD_ASSERT_UNKNOWN( i < i_var );
 					Y     = Taylor + i * J;
 					Z[d]  = Y[d];
 				}
 				else
-				{	i     = VectorInd[ i + ind[0] ];
-					i_ind = ind - ind_0;
-					Rec->ReplaceInd(i_ind + 2, 0);
+				{	i     = VectorInd[ i + arg[0] ];
+					i_arg = arg - arg_0;
+					Rec->ReplaceInd(i_arg + 2, 0);
 					Z[d] = *(Rec->GetPar(i));
 					i    = 0;
 				}
 			}
 			else
-			{	i = ind[2];
+			{	i = arg[2];
 				if( i > 0 )
 				{	CPPAD_ASSERT_UNKNOWN( i < i_var );
 					Y     = Taylor + i * J;
@@ -546,46 +452,46 @@ size_t forward_sweep(
 			// -------------------------------------------------
 
 			case LdvOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_res == 1);
+			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
 			
-			CPPAD_ASSERT_UNKNOWN( ind[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->num_rec_vecad_ind() );
+			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
 			CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
 			CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
 
 			if( d == 0 )
 			{
-				X   = Taylor + ind[1] * J;
+				X   = Taylor + arg[1] * J;
 				i   = Integer( X[0] );
-				len = VectorInd[ ind[0] - 1 ];
+				len = VectorInd[ arg[0] - 1 ];
 				CPPAD_ASSERT_KNOWN( 
 					i < len,
 					"VecAD index value >= vector length"
 				);
 				CPPAD_ASSERT_UNKNOWN( 
-					i + ind[0] < Rec->num_rec_vecad_ind() 
+					i + arg[0] < Rec->num_rec_vecad_ind() 
 				);
 
-				if( VectorVar[ i + ind[0] ] )
-				{	i     = VectorInd[ i + ind[0] ];
-					i_ind = ind - ind_0;
-					Rec->ReplaceInd(i_ind + 2, i);
+				if( VectorVar[ i + arg[0] ] )
+				{	i     = VectorInd[ i + arg[0] ];
+					i_arg = arg - arg_0;
+					Rec->ReplaceInd(i_arg + 2, i);
 					CPPAD_ASSERT_UNKNOWN(i > 0 );
 					CPPAD_ASSERT_UNKNOWN( i < i_var );
 					Y     = Taylor + i * J;
 					Z[d]  = Y[d];
 				}
 				else
-				{	i     = VectorInd[ i + ind[0] ];
-					i_ind = ind - ind_0;
-					Rec->ReplaceInd(i_ind + 2, 0);
+				{	i     = VectorInd[ i + arg[0] ];
+					i_arg = arg - arg_0;
+					Rec->ReplaceInd(i_arg + 2, 0);
 					Z[d] = *(Rec->GetPar(i));
 					i    = 0;
 				}
 			}
 			else
-			{	i = ind[2];
+			{	i = arg[2];
 				if( i > 0 )
 				{	CPPAD_ASSERT_UNKNOWN( i < i_var );
 					Y     = Taylor + i * J;
@@ -597,60 +503,38 @@ size_t forward_sweep(
 			// -------------------------------------------------
 
 			case LogOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			X = Taylor + ind[0] * J;
-			ForLogOp(d, Z, X);
+			forward_log_op(d, i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case MulvvOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
-
-			X = Taylor + ind[0] * J;
-			Y = Taylor + ind[1] * J;
-			ForMulvvOp(d, Z, X, Y);
+			forward_mulvv_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case MulpvOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
-
-			Y = Taylor + ind[1] * J;
-			P = Rec->GetPar( ind[0] );
-			ForMulpvOp(d, Z, P, Y);
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			forward_mulpv_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case MulvpOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			X = Taylor + ind[0] * J;
-			P = Rec->GetPar( ind[1] );
-			ForMulvpOp(d, Z, X, P);
+			CPPAD_ASSERT_UNKNOWN( arg[1] < num_par );
+			forward_mulvp_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case NonOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 0 );
+			CPPAD_ASSERT_UNKNOWN( n_res == 1);
+			CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
 			break;
 			// -------------------------------------------------
 
 			case ParOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
+			CPPAD_ASSERT_UNKNOWN( n_res == 1);
+			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
 
-			P = Rec->GetPar( ind[0] );
+			P = Rec->GetPar( arg[0] );
 			if( d == 0 )
 				Z[d] = *P;
 			else	Z[d] = Base(0); 
@@ -658,103 +542,42 @@ size_t forward_sweep(
 			// -------------------------------------------------
 
 			case PowvpOp:
-			// variables: pow(x, y), log(x), y * log(x)
-			CPPAD_ASSERT_UNKNOWN( n_var == 3);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var);
-			U = Z + J;
-			W = U + J;
-
-			// u = log(x)
-			X = Taylor + ind[0] * J;
-			ForLogOp(d, U, X);
-
-			// w = u * y
-			Y = Rec->GetPar( ind[1] );
-			ForMulvpOp(d, W, U, Y);
-
-			// z = exp(w)
-			// zero order case exactly same as Base type operation
-			if( d == 0 )
-				Z[0] = pow(X[0], Y[0]);
-			else	ForExpOp(d, Z, W);
-
+			CPPAD_ASSERT_UNKNOWN( arg[1] < num_par );
+			forward_powvp_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case PowpvOp:
-			// variables: pow(x, y), log(x), y * log(x)
-			CPPAD_ASSERT_UNKNOWN( n_var == 3);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var);
-			U = Z + J;
-			W = U + J;
-
-			// u = log(x)
-			X = Rec->GetPar(ind[0]);
-			if( d == 0 )
-				U[d] = log(X[d]);
-			else	U[d] = Base(0);
-
-			// w = u * y
-			Y   = Taylor + ind[1] * J;
-			ForMulpvOp(d, W, U, Y);
-
-			// z = exp(w)
-			// zero order case exactly same as Base type operation
-			if( d == 0 )
-				Z[0] = pow(X[0], Y[0]);
-			else	ForExpOp(d, Z, W);
-
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			forward_powpv_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case PowvvOp:
-			// variables: pow(x, y), log(x), y * log(x)
-			CPPAD_ASSERT_UNKNOWN( n_var == 3);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var);
-			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var);
-			U = Z + J;
-			W = U + J;
-
-			// u = log(x)
-			X = Taylor + ind[0] * J;
-			ForLogOp(d, U, X);
-
-			// w = u * y
-			Y   = Taylor + ind[1] * J;
-			ForMulvvOp(d, W, U, Y);
-
-			// z = exp(w)
-			// zero order case exactly same as Base type operation
-			if( d == 0 )
-				Z[0] = pow(X[0], Y[0]);
-			else	ForExpOp(d, Z, W);
-
+			forward_powvv_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case PripOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 0 );
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( n_res == 0 );
+			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
 			if( print & (d == 0) )
-			{	CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->num_rec_text() );
-				std::cout << Rec->GetTxt(ind[0]);
-				std::cout << *(Rec->GetPar(ind[1]));
+			{	CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_text() );
+				std::cout << Rec->GetTxt(arg[0]);
+				std::cout << *(Rec->GetPar(arg[1]));
 			}
 			break;
 			// -------------------------------------------------
 
 			case PrivOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 0);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
+			CPPAD_ASSERT_UNKNOWN( n_res == 0);
+			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
 			if( print & (d == 0) )
-			{	CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->num_rec_text() );
-				CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
+			{	CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_text() );
+				CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
 
-				X      = Taylor + ind[1] * J;
-				std::cout << Rec->GetTxt(ind[0]);
+				X      = Taylor + arg[1] * J;
+				std::cout << Rec->GetTxt(arg[0]);
 				std::cout << X[0];
 			}
 			break;
@@ -762,171 +585,135 @@ size_t forward_sweep(
 
 			case SinOp:
 			// variables: sin(x), cos(x)
-			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( n_var == 2);
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
-
-			// use W for data stored in second variable
-			W = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForTrigSinCos(d, Z, W, X);
+			forward_sin_op(d, i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case SinhOp:
 			// variables: sinh(x), cosh(x)
-			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( n_var == 2);
 			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
-
-			// use W for data stored in second variable
-			W = Taylor + (i_var+1) * J;
-			X   = Taylor + ind[0] * J;
-			ForHypSinCos(d, Z, W, X);
+			forward_sinh_op(d, i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case SqrtOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 1 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			X = Taylor + ind[0] * J;
-			ForSqrtOp(d, Z, X);
+			forward_sqrt_op(d, i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case StppOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 0);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_res == 0);
+			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
 
 			if( d == 0 )
 			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
 				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
-				CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->num_rec_vecad_ind() );
+				CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
 
-				i   = ind[1];
-				CPPAD_ASSERT_UNKNOWN(i < VectorInd[ind[0] - 1]);
+				i   = arg[1];
+				CPPAD_ASSERT_UNKNOWN(i < VectorInd[arg[0] - 1]);
 				CPPAD_ASSERT_UNKNOWN( 
-					i + ind[0] < Rec->num_rec_vecad_ind() 
+					i + arg[0] < Rec->num_rec_vecad_ind() 
 				);
-				VectorInd[ i + ind[0] ] = ind[2];
-				VectorVar[ i + ind[0] ] = false;
+				VectorInd[ i + arg[0] ] = arg[2];
+				VectorVar[ i + arg[0] ] = false;
 
-				Z[d] = *( Rec->GetPar( ind[2] ) );
+				Z[d] = *( Rec->GetPar( arg[2] ) );
 			}
 			break;
 			// -------------------------------------------------
 
 			case StpvOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 0);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_res == 0);
+			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
 
 			if( d == 0 )
 			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
 				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
-				CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->num_rec_vecad_ind() );
-				CPPAD_ASSERT_UNKNOWN( ind[2] < i_var );
+				CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
+				CPPAD_ASSERT_UNKNOWN( arg[2] < i_var );
 
-				i   = ind[1];
-				CPPAD_ASSERT_UNKNOWN(i < VectorInd[ind[0] - 1]);
+				i   = arg[1];
+				CPPAD_ASSERT_UNKNOWN(i < VectorInd[arg[0] - 1]);
 				CPPAD_ASSERT_UNKNOWN( 
-					i + ind[0] < Rec->num_rec_vecad_ind() 
+					i + arg[0] < Rec->num_rec_vecad_ind() 
 				);
-				VectorInd[ i + ind[0] ] = ind[2];
-				VectorVar[ i + ind[0] ] = true;
+				VectorInd[ i + arg[0] ] = arg[2];
+				VectorVar[ i + arg[0] ] = true;
 			}
 			break;
 			// -------------------------------------------------
 
 			case StvpOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 0);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_res == 0);
+			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
 
 			if( d == 0 )
 			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
 				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
-				CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->num_rec_vecad_ind() );
-				CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
+				CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
+				CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
 
-				X   = Taylor + ind[1] * J;
+				X   = Taylor + arg[1] * J;
 				i   = Integer( X[0] );
-				len = VectorInd[ ind[0] - 1 ];
+				len = VectorInd[ arg[0] - 1 ];
 				CPPAD_ASSERT_KNOWN( 
 					i < len,
 					"VecAD index value >= vector length"
 				);
 				CPPAD_ASSERT_UNKNOWN( 
-					i + ind[0] < Rec->num_rec_vecad_ind() 
+					i + arg[0] < Rec->num_rec_vecad_ind() 
 				);
-				VectorInd[ i + ind[0] ] = ind[2];
-				VectorVar[ i + ind[0] ] = false;
+				VectorInd[ i + arg[0] ] = arg[2];
+				VectorVar[ i + arg[0] ] = false;
 
-				Z[d] = *( Rec->GetPar( ind[2] ) );
+				Z[d] = *( Rec->GetPar( arg[2] ) );
 			}
 			break;
 			// -------------------------------------------------
 
 			case StvvOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 0);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 3 );
+			CPPAD_ASSERT_UNKNOWN( n_res == 0);
+			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
 
 			if( d == 0 )
 			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
 				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
-				CPPAD_ASSERT_UNKNOWN( ind[0] < Rec->num_rec_vecad_ind() );
-				CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
-				CPPAD_ASSERT_UNKNOWN( ind[2] < i_var );
+				CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
+				CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
+				CPPAD_ASSERT_UNKNOWN( arg[2] < i_var );
 
-				X   = Taylor + ind[1] * J;
+				X   = Taylor + arg[1] * J;
 				i   = Integer( X[0] );
-				len = VectorInd[ ind[0] - 1 ];
+				len = VectorInd[ arg[0] - 1 ];
 				CPPAD_ASSERT_KNOWN( 
 					i < len,
 					"VecAD index value >= vector length"
 				);
 				CPPAD_ASSERT_UNKNOWN( 
-					i + ind[0] < Rec->num_rec_vecad_ind() 
+					i + arg[0] < Rec->num_rec_vecad_ind() 
 				);
-				VectorInd[ i + ind[0] ] = ind[2];
-				VectorVar[ i + ind[0] ] = true;
+				VectorInd[ i + arg[0] ] = arg[2];
+				VectorVar[ i + arg[0] ] = true;
 			}
 			break;
 			// -------------------------------------------------
 
 			case SubvvOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
-
-			X = Taylor + ind[0] * J;
-			Y = Taylor + ind[1] * J;
-			ForSubvvOp(d, Z, X, Y);
+			forward_subvv_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case SubpvOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[1] < i_var );
-
-			P = Rec->GetPar( ind[0] );
-			Y = Taylor + ind[1] * J;
-			ForSubpvOp(d, Z, P, Y);
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			forward_subpv_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case SubvpOp:
-			CPPAD_ASSERT_UNKNOWN( n_var == 1);
-			CPPAD_ASSERT_UNKNOWN( n_ind == 2 );
-			CPPAD_ASSERT_UNKNOWN( ind[0] < i_var );
-
-			X = Taylor + ind[0] * J;
-			P = Rec->GetPar( ind[1] );
-			ForSubvpOp(d, Z, X, P);
+			CPPAD_ASSERT_UNKNOWN( arg[1] < num_par );
+			forward_subvp_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
@@ -934,14 +721,20 @@ size_t forward_sweep(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FORWARD_SWEEP_TRACE
+		size_t       i_tmp  = i_var;
+		Base*        Z_tmp  = Z;
+		if( op == PowvpOp || op == PowpvOp || op == PowvvOp )
+		{	i_tmp  += 2;
+			Z_tmp  += 2 * J;
+		}
 		printOp(
 			std::cout, 
 			Rec,
-			i_var,
+			i_tmp,
 			op, 
-			ind,
+			arg,
 			d + 1, 
-			Z, 
+			Z_tmp, 
 			0, 
 			(Base *) CPPAD_NULL
 		);
@@ -950,7 +743,7 @@ size_t forward_sweep(
 # else
 	}
 # endif
-	CPPAD_ASSERT_UNKNOWN( (i_var + n_var) == Rec->num_rec_var() );
+	CPPAD_ASSERT_UNKNOWN( (i_var + n_res) == Rec->num_rec_var() );
 	if( VectorInd != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC(VectorInd);
 	if( VectorVar != CPPAD_NULL )

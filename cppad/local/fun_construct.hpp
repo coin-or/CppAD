@@ -175,8 +175,7 @@ template <typename Base>
 template <typename VectorAD>
 ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 : total_num_var_(0), taylor_(CPPAD_NULL), for_jac_(CPPAD_NULL)
-{	size_t i, j, m, n;
-
+{
 	CPPAD_ASSERT_KNOWN(
 		x.size() > 0,
 		"ADFun<Base>: independent variable vector has size zero."
@@ -190,8 +189,10 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 		tape->size_independent_ == x.size(),
 		"ADFun<Base>: independent variable vector has been changed."
 	);
+	size_t j, n = x.size();
 # ifndef NDEBUG
-	for(j = 0; j < x.size(); j++)
+	size_t i, m = y.size();
+	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_KNOWN(
 		x[j].taddr_ == (j+1),
 		"ADFun<Base>: independent variable vector has been changed."
@@ -201,7 +202,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 		"ADFun<Base>: independent variable vector has been changed."
 		);
 	}
-	for(i = 0; i < y.size(); i++)
+	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_KNOWN(
 		CppAD::Parameter( y[i] ) | (y[i].id_ == x[0].id_) ,
 		"ADFun<Base>: dependent vector contains variables for"
@@ -219,8 +220,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	taylor_        = CPPAD_TRACK_NEW_VEC(total_num_var_, taylor_);
 
 	// set zero order coefficients corresponding to indpendent variables
-	n = ind_taddr_.size();
-	CPPAD_ASSERT_UNKNOWN( n == x.size() );
+	CPPAD_ASSERT_UNKNOWN( n == ind_taddr_.size() );
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
 		CPPAD_ASSERT_UNKNOWN( x[j].taddr_  == (j+1) );
@@ -240,13 +240,26 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 # endif
 	CPPAD_ASSERT_UNKNOWN( compare_change_ == 0 );
 
-	// check the dependent variable values
-	m = dep_taddr_.size();
-	for(i = 0; i < m; i++) CPPAD_ASSERT_KNOWN(
-		taylor_[dep_taddr_[i]] == y[i].value_,
-		"A dependent variable is not equal its tape evaluation"
-		", it may be nan."
-	);
+# ifndef NDEBUG
+	for(i = 0; i < m; i++) if( taylor_[dep_taddr_[i]] != y[i].value_ )
+	{	using std::endl;
+		std::ostringstream buf;
+		buf << "A dependent variable value is not equal to "
+		    << "its tape evaluation value," << endl
+		    << "perhaps it is nan." << endl
+		    << "Dependent variable value = " 
+		    <<  y[i].value_ << endl
+		    << "Tape evaluation value    = " 
+		    <<  taylor_[dep_taddr_[i]]  << endl
+		    << "Difference               = " 
+		    <<  y[i].value_ -  taylor_[dep_taddr_[i]]  << endl
+		;
+		CPPAD_ASSERT_KNOWN(
+			0,
+			buf.str().c_str()
+		);
+	}
+# endif
 }
 
 } // END CppAD namespace

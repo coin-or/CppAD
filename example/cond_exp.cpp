@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,11 +27,16 @@ $index test, CondExp$$
 $head Description$$
 Use $code CondExp$$ to compute
 $latex \[
-	f(x) = \sum_{j=0}^{m-1} \log( | x_j | )
+	f(x) = \sum_{j=0}^{m-1} x_j \log( x_j )
 \] $$
 and its derivative at various argument values
+( where $latex x_j \geq 0$$ )
 with out having to re-tape; i.e.,
 using only one $xref/ADFun/$$ object.
+Note that $latex x_j \log ( x_j ) \rightarrow 0 $$
+as $latex x_j \downarrow 0$$ and
+we need to handle the case $latex x_j = 0$$
+in a special way to avoid multiplying zero by infinity.
 
 $code
 $verbatim%example/cond_exp.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -42,11 +47,7 @@ $end
 // BEGIN PROGRAM
 
 # include <cppad/cppad.hpp>
-
-namespace {
-	double Infinity(double zero)
-	{	return 1. / zero; }
-}
+# include <limits>
 
 bool CondExp(void)
 {	bool ok = true;
@@ -55,6 +56,8 @@ bool CondExp(void)
 	using CppAD::NearEqual;
 	using CppAD::log; 
 	using CppAD::abs;
+	double eps  = 100. * std::numeric_limits<double>::epsilon();
+	double fmax = std::numeric_limits<double>::max();
 
 	// domain space vector
 	size_t n = 5;
@@ -66,20 +69,11 @@ bool CondExp(void)
 	// declare independent variables and start tape recording
 	CppAD::Independent(X);
 
-	// sum with respect to j of log of absolute value of X[j]
-	// sould be - infinity if any of the X[j] are zero
-	AD<double> MinusInfinity = - Infinity(0.);
-	AD<double> Sum           = 0.;
-	AD<double> Zero(0);
+	AD<double> Sum  = 0.;
+	AD<double> Zero = 0.;
 	for(j = 0; j < n; j++)
-	{	// if X[j] > 0
-		Sum += CppAD::CondExpGt(X[j], Zero, log(X[j]),     Zero);
-
-		// if X[j] < 0
-		Sum += CppAD::CondExpLt(X[j], Zero, log(-X[j]),    Zero);
-
-		// if X[j] == 0
-		Sum += CppAD::CondExpEq(X[j], Zero, MinusInfinity, Zero);
+	{	// if x_j > 0, add x_j * log( x_j ) to the sum
+		Sum += CppAD::CondExpGt(X[j], Zero, X[j] * log(X[j]),    Zero);
 	}
 
 	// range space vector 
@@ -96,50 +90,42 @@ bool CondExp(void)
 	CPPAD_TEST_VECTOR<double> w(m);   // function weights 
 	CPPAD_TEST_VECTOR<double> dw(n);  // derivative of weighted function
 
-	// a case where abs( x[j] ) > 0 for all j
+	// a case where x[j] > 0 for all j
 	double check  = 0.;
-	double sign   = 1.;
 	for(j = 0; j < n; j++)
-	{	sign *= -1.;
-		x[j] = sign * double(j + 1); 
-		check += log( abs( x[j] ) );
+	{	x[j]   = double(j + 1); 
+		check += x[j] * log( x[j] );
 	}
 
 	// function value 
 	y  = f.Forward(0, x);
-	ok &= ( y[0] == check );
+	ok &= NearEqual(y[0], check, eps, eps);
 
 	// compute derivative of y[0]
 	w[0] = 1.;
 	dw   = f.Reverse(1, w);
 	for(j = 0; j < n; j++)
-	{	if( x[j] > 0. )
-			ok &= NearEqual(dw[j], 1./abs( x[j] ), 1e-10, 1e-10); 
-		else	ok &= NearEqual(dw[j], -1./abs( x[j] ), 1e-10, 1e-10); 
-	}
+		ok &= NearEqual(dw[j], log(x[j]) + 1., eps, eps); 
 
-	// a case where x[0] is equal to zero
-	sign = 1.;
-	for(j = 0; j < n; j++)
-	{	sign *= -1.;
-		x[j] = sign * double(j); 
-	}
+	// a case where x[3] is equal to zero
+	check -= x[3] * log( x[3] );
+	x[3]   = 0.;
 
 	// function value 
 	y   = f.Forward(0, x);
-	ok &= ( y[0] == -Infinity(0.) );
+	ok &= NearEqual(y[0], check, eps, eps);
 
-	// compute derivative of y[0]
+	// check derivative of y[0]
 	w[0] = 1.;
 	dw   = f.Reverse(1, w);
 	for(j = 0; j < n; j++)
-	{	if( x[j] > 0. )
-			ok &= NearEqual(dw[j], 1./abs( x[j] ), 1e-10, 1e-10); 
-		else if( x[j] < 0. )
-			ok &= NearEqual(dw[j], -1./abs( x[j] ), 1e-10, 1e-10); 
+	{	if( x[j] > 0 )
+			ok &= NearEqual(dw[j], log(x[j]) + 1., eps, eps); 
 		else
-		{	// in this case computing dw[j] ends up multiplying 
-			// -infinity * zero and hence results in Nan
+		{	// In this case computing dw[j] is computed using 
+			//      log(x[j]) + x[j] / x[j] 
+			// which has limit minus infinity but computes as nan.
+			ok &= ( isnan( dw[j] ) || dw[j] <= -fmax );
 		}
 	}
 	

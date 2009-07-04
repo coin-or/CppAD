@@ -3,7 +3,7 @@
 # define CPPAD_SUB_EQ_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -49,11 +49,11 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 	if( var_left )
 	{	if( var_right )
 		{	// this = variable - variable
-			CPPAD_ASSERT_UNKNOWN( NumVar(SubvvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumInd(SubvvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(SubvvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumArg(SubvvOp) == 2 );
 
 			// put operand addresses in tape
-			tape->Rec_.PutInd(taddr_, right.taddr_);
+			tape->Rec_.PutArg(taddr_, right.taddr_);
 			// put operator in the tape
 			taddr_ = tape->Rec_.PutOp(SubvvOp);
 			// make this a variable
@@ -64,12 +64,12 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 		}
 		else
 		{	// this = variable - parameter
-			CPPAD_ASSERT_UNKNOWN( NumVar(SubvpOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumInd(SubvpOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(SubvpOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumArg(SubvpOp) == 2 );
 
 			// put operand addresses in tape
 			size_t p = tape->Rec_.PutPar(right.value_);
-			tape->Rec_.PutInd(taddr_, p);
+			tape->Rec_.PutArg(taddr_, p);
 			// put operator in the tape
 			taddr_ = tape->Rec_.PutOp(SubvpOp);
 			// make this a variable
@@ -78,12 +78,12 @@ AD<Base>& AD<Base>::operator -= (const AD<Base> &right)
 	}
 	else if( var_right  )
 	{	// this = parameter - variable
-		CPPAD_ASSERT_UNKNOWN( NumVar(SubpvOp) == 1 );
-		CPPAD_ASSERT_UNKNOWN( NumInd(SubpvOp) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumRes(SubpvOp) == 1 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(SubpvOp) == 2 );
 
 		// put operand addresses in tape
 		size_t p = tape->Rec_.PutPar(left);
-		tape->Rec_.PutInd(p, right.taddr_);
+		tape->Rec_.PutArg(p, right.taddr_);
 		// put operator in the tape
 		taddr_ = tape->Rec_.PutOp(SubpvOp);
 		// make this a variable

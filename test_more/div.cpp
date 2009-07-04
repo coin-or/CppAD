@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -157,6 +157,42 @@ bool DivTestTwo(void)
 		jfac *= (j + 1);
 		value = 0.;
 	}
+
+	return ok;
+}
+
+bool DivTestThree(void)
+{	bool ok = true;
+	using namespace CppAD;
+
+	// more testing of variable / variable case 
+	double x0 = 2.;
+	double x1 = 3.;
+	size_t n  = 2;
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	X[0]      = x0;
+	X[1]      = x1;
+	Independent(X);
+	size_t m  = 1;
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	Y[0]      = X[0] / X[1];
+	ADFun<double> f(X, Y);
+
+	CPPAD_TEST_VECTOR<double> dx(n), dy(m);
+	double check;
+	dx[0] = 1.;
+	dx[1] = 1.;
+	dy    = f.Forward(1, dx);
+	check = 1. / x1 - x0 / (x1 * x1); 
+	ok   &= NearEqual(dy[0], check, 1e-10 , 1e-10);
+
+	CPPAD_TEST_VECTOR<double> w(m), dw(n);
+	w[0]  = 1.;
+	dw    = f.Reverse(1, w);
+	check = 1. / x1;
+	ok   &= NearEqual(dw[0], check, 1e-10 , 1e-10);
+	check = - x0 / (x1 * x1);
+	ok   &= NearEqual(dw[1], check, 1e-10 , 1e-10);
 
 	return ok;
 }

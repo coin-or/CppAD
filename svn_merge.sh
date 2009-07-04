@@ -26,10 +26,10 @@ echo "DryRun = $DryRun"
 from_branch=branches/sweep
 #
 # Version of the repository corresponding to from_branch just before changes
-Start=1384
+Start=1404
 # 
 # Version of the repository corresponding to from_branch after the changes
-End=1400
+End=1446
 #
 # the svn merge command
 cmd="svn merge $DryRun -r $Start:$End"

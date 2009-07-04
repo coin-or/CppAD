@@ -14,12 +14,13 @@
 flag="$1"
 if [ "$flag" == "" ]
 then
-	echo "./svn_status.sh <makefile.in flag>"
-	echo "where makefile.in flag is + or -"
+	echo "./svn_status.sh <automake flag>"
+	echo "where automake flag is either + or -"
 	exit 1
 fi
 svn status | > svn_status.$$ \
 sed                                                           \
+	-e '/^. *svn_status.sh$/d'                            \
 	-e '/^. *cppad\/configure.hpp$/d'                     \
 	-e '/^[?].*\.[0-9]*$/d'                               \
 	-e '/^[?].*\.tmp$/d'                                  \
@@ -70,34 +71,44 @@ sed                                                           \
 	-e '/^[?] *ipopt_cppad\/lib$/d'                          \
 	-e '/cygwin_package$/d'
 #
+list="
+	AUTHORS
+	configure.ac
+"
 if [ "$flag" == "+" ]
 then
 	cat svn_status.$$
-else
-	cat svn_status.$$ | sed -e '/\/makefile.in$/d' -e '/ makefile\.in/d'
-fi
-yyyymmdd=`date +%G%m%d`
-yyyy_mm_dd=`date +%G-%m-%d`
-#
-svn cat configure | sed > configure.$$ \
+	#
+	svn cat configure | sed > configure.$$ \
 	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $yyyymmdd/g" \
 	-e "s/VERSION='[0-9]\{8\}[.0-9]*'/VERSION='$yyyymmdd'/g" \
 	-e "s/configure [0-9]\{8\}[.0-9]*/configure $yyyymmdd/g" \
 	-e "s/config.status [0-9]\{8\}[.0-9]*/config.status $yyyymmdd/g" \
 	-e "s/\$as_me [0-9]\{8\}[.0-9]*/\$as_me $yyyymmdd/g" 
+	#
+	svn cat cppad/config.h | sed > cppad/config.h.$$ \
+	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $yyyymmdd/g" \
+	-e "s/VERSION \"[0-9]\{8\}[.0-9]*\"/VERSION \"$yyyymmdd\"/g"
+	#
+	list="$list
+		configure
+		cppad/config.h
+	"
+else
+	cat svn_status.$$ | sed \
+		-e '/\/makefile.in$/d' \
+		-e '/ makefile\.in/d' \
+		-e '/ configure$/d' \
+		-e '/ cppad\/config.h/d' 
+fi
+yyyymmdd=`date +%G%m%d`
+yyyy_mm_dd=`date +%G-%m-%d`
+#
 svn cat AUTHORS | sed > AUTHORS.$$ \
 	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
 svn cat configure.ac | sed > configure.ac.$$\
 	-e "s/(CppAD, [0-9]\{8\}[.0-9]* *,/(CppAD, $yyyymmdd,/" 
-svn cat cppad/config.h | sed > cppad/config.h.$$ \
-	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $yyyymmdd/g" \
-	-e "s/VERSION \"[0-9]\{8\}[.0-9]*\"/VERSION \"$yyyymmdd\"/g"
-list="
-	configure
-	AUTHORS
-	configure.ac
-	cppad/config.h
-"
+#
 for name in $list
 do
 	echo "diff $name-local $name-subversion"

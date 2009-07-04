@@ -3,7 +3,7 @@
 # define CPPAD_POW_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -103,6 +103,10 @@ They returns true if they succeed and false otherwise.
 $end
 -------------------------------------------------------------------------------
 */
+// The pow function is a special case where the final result is the last,
+// instead of the first, of the multiple variables created.
+# define CPPAD_POW_FINAL_RESULT(address, op)  address +=  2
+
 //  BEGIN CppAD namespace
 namespace CppAD {
  
@@ -147,14 +151,15 @@ pow(const AD<Base> &x, const AD<Base> &y)
 	if( var_x )
 	{	if( var_y )
 		{	// result = variable^variable
-			CPPAD_ASSERT_UNKNOWN( NumVar(PowvvOp) == 3 );
-			CPPAD_ASSERT_UNKNOWN( NumInd(PowvvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
+			CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 
 			// put operand addresses in tape
-			tape->Rec_.PutInd(x.taddr_, y.taddr_);
+			tape->Rec_.PutArg(x.taddr_, y.taddr_);
 
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(PowvvOp);
+			CPPAD_POW_FINAL_RESULT(result.taddr_, PowvvOp);
 
 			// make result a variable
 			result.id_ = tape->id_;
@@ -164,15 +169,16 @@ pow(const AD<Base> &x, const AD<Base> &y)
 		}
 		else
 		{	// result = variable^parameter 
-			CPPAD_ASSERT_UNKNOWN( NumVar(PowvpOp) == 3 );
-			CPPAD_ASSERT_UNKNOWN( NumInd(PowvpOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
+			CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 
 			// put operand addresses in tape
 			size_t p = tape->Rec_.PutPar(y.value_);
-			tape->Rec_.PutInd(x.taddr_, p);
+			tape->Rec_.PutArg(x.taddr_, p);
 
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(PowvpOp);
+			CPPAD_POW_FINAL_RESULT(result.taddr_, PowvpOp);
 
 			// make result a variable
 			result.id_ = tape->id_;
@@ -184,15 +190,16 @@ pow(const AD<Base> &x, const AD<Base> &y)
 		}
 		else
 		{	// result = variable^parameter 
-			CPPAD_ASSERT_UNKNOWN( NumVar(PowpvOp) == 3 );
-			CPPAD_ASSERT_UNKNOWN( NumInd(PowpvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(PowpvOp) == 3 );
+			CPPAD_ASSERT_UNKNOWN( NumArg(PowpvOp) == 2 );
 
 			// put operand addresses in tape
 			size_t p = tape->Rec_.PutPar(x.value_);
-			tape->Rec_.PutInd(p, y.taddr_);
+			tape->Rec_.PutArg(p, y.taddr_);
 
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(PowpvOp);
+			CPPAD_POW_FINAL_RESULT(result.taddr_, PowpvOp);
 
 			// make result a variable
 			result.id_ = tape->id_;
@@ -285,4 +292,5 @@ template <class Base> AD<Base> pow
 
 } // END CppAD namespace
 
+# undef CPPAD_POW_FINAL_RESULT
 # endif 

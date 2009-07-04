@@ -17,140 +17,137 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*!
 \file abs_op.hpp
+Forward and reverse mode calculations for z = abs(x).
 */
 
 
 /*!
-Forward mode Taylor coefficient for result of op = AbsOp.
+Compute forward mode Taylor coefficient for result of op = AbsOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = abs(y)
+	z = abs(x)
 \endverbatim
 
-\copydetails forward_unary_op
+\copydetails forward_unary1_op
 */
 template <class Base>
 inline void forward_abs_op(
-	size_t p           ,
+	size_t j           ,
 	size_t i_z         ,
-	const size_t *arg  ,
+	size_t i_x         ,
 	size_t nc_taylor   , 
-	Base   *taylor     )
+	Base*  taylor      )
 {
+	size_t k;
 	static Base zero(0);
 
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumInd(AbsOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumVar(AbsOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( NumArg(AbsOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(AbsOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( j < nc_taylor );
 
-	// Taylor coefficients corresponding to argument
-	Base *y = taylor + arg[0] * nc_taylor;
-
-	// Taylor coefficients corresponding to result
-	Base *z = taylor + i_z * nc_taylor;
+	// Taylor coefficients corresponding to argument and result
+	Base* x = taylor + i_x * nc_taylor;
+	Base* z = taylor + i_z * nc_taylor;
 
 	// order that decides positive, negative or zero
-	size_t k;
 	k = 0;
-	while( (k < p) & (y[k] == zero) )
+	while( (k < j) & (x[k] == zero) )
 		k++; 
 
-	if( GreaterThanZero(y[k]) )
-		z[p]  = y[p];
-	else if( LessThanZero(y[k]) )
-		z[p] = -y[p]; 
-	else	z[p] = zero;
+	if( GreaterThanZero(x[k]) )
+		z[j]  = x[j];
+	else if( LessThanZero(x[k]) )
+		z[j] = -x[j]; 
+	else	z[j] = zero;
 }
 
 /*!
-Zero order forward mode Taylor coefficient for result of op = AbsOp.
+Compute zero order forward mode Taylor coefficient for result of op = AbsOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = abs(y)
+	z = abs(x)
 \endverbatim
 
-\copydetails forward_unary_op_0
+\copydetails forward_unary1_op_0
 */
 template <class Base>
 inline void forward_abs_op_0(
 	size_t i_z         ,
-	const size_t *arg  ,
+	size_t i_x         ,
 	size_t nc_taylor   , 
-	Base   *taylor     )
+	Base*  taylor      )
 {
 
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumInd(AbsOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumVar(AbsOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( NumArg(AbsOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(AbsOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < nc_taylor );
 
-	// Taylor coefficients corresponding to argument
-	Base y0 = *(taylor + arg[0] * nc_taylor);
-
-	// Taylor coefficients corresponding to result
-	Base *z = taylor + i_z * nc_taylor;
+	// Taylor coefficients corresponding to argument and result
+	Base y0 = *(taylor + i_x * nc_taylor);
+	Base* z = taylor + i_z * nc_taylor;
 
 	if( LessThanZero(y0) )
 		z[0]  = - y0;
 	else	z[0] = y0; 
 }
 /*!
-Reverse mode partial derivatives for result of op = AbsOp.
+Compute reverse mode partial derivatives for result of op = AbsOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = abs(y)
+	z = abs(x)
 \endverbatim
 
-\copydetails reverse_unary_op
+\copydetails reverse_unary1_op
 */
 
 template <class Base>
 inline void reverse_abs_op(
-	size_t p            ,
-	size_t i_z          ,
-	const size_t *arg   ,
-	size_t nc_taylor    , 
-	const Base  *taylor ,
-	size_t nc_partial   ,
-	Base   *partial     )
+	size_t      d            ,
+	size_t      i_z          ,
+	size_t      i_x          ,
+	size_t      nc_taylor    , 
+	const Base* taylor       ,
+	size_t      nc_partial   ,
+	Base*       partial      )
 {	size_t j, k;	
 	static Base zero(0);
 
 
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumInd(AbsOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumVar(AbsOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( p < nc_taylor );
-	CPPAD_ASSERT_UNKNOWN( p < nc_partial );
+	CPPAD_ASSERT_UNKNOWN( NumArg(AbsOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(AbsOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
 	// Taylor coefficients and partials corresponding to argument
-	const Base *y  = taylor  + arg[0] * nc_taylor;
-	Base *py       = partial + arg[0] * nc_partial;
+	const Base* x  = taylor  + i_x * nc_taylor;
+	Base* px       = partial + i_x * nc_partial;
 
 	// Taylor coefficients and partials corresponding to result
-	Base *pz       = partial +    i_z * nc_partial;
+	Base* pz       = partial +    i_z * nc_partial;
 
 	// order that decides positive, negative or zero
 	k = 0;
-	while( (k < p) & (y[k] == zero) )
+	while( (k < d) & (x[k] == zero) )
 		k++; 
 
-	if( GreaterThanZero(y[k]) )
+	if( GreaterThanZero(x[k]) )
 	{	// partial of z w.r.t y is +1
-		for(j = k; j <= p; j++)
-			py[j] += pz[j];
+		for(j = k; j <= d; j++)
+			px[j] += pz[j];
 	}
-	else if( LessThanZero(y[k]) )
+	else if( LessThanZero(x[k]) )
 	{	// partial of z w.r.t y is -1
-		for(j = k; j <= p; j++)
-			py[j] -= pz[j];
+		for(j = k; j <= d; j++)
+			px[j] -= pz[j];
 	}
 }
 

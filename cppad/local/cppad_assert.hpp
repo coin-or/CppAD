@@ -13,6 +13,11 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+/*!
+\file cppad_assert.hpp
+Define the CppAD error checking macros (all of which begin with CPPAD_ASSERT_)
+*/
+
 /*
 -------------------------------------------------------------------------------
 $begin cppad_assert$$
@@ -90,6 +95,20 @@ $end
 # include <iostream>
 # include <cppad/error_handler.hpp>
 
+
+/*!
+\def CPPAD_ASSERT_KNOWN(exp, msg)
+Check that \a exp is true, if not print \a msg and terminate execution.
+
+The C++ expression \a exp is expected to be true.
+If it is false,
+the CppAD use has made an error that is described by \a msg.
+If the preprocessor symbol \a NDEBUG is not defined,
+and \a exp is false,
+this macro will report the source code line number at
+which this expected result occurred.
+In addition, it will print the specified error message \a msg.
+*/
 # ifdef NDEBUG
 # define CPPAD_ASSERT_KNOWN(exp, msg)  // do nothing
 # else
@@ -104,6 +123,18 @@ $end
 }
 # endif
 
+/*!
+\def CPPAD_ASSERT_UNKNOWN(exp)
+Check that \a exp is true, if not terminate execution.
+
+The C++ expression \a exp is expected to be true.
+If it is false,
+CppAD has detected an error but does not know the cause of the error.
+If the preprocessor symbol \a NDEBUG is not defined,
+and \a exp is false,
+this macro will report the source code line number at
+which this expected result occurred.
+*/
 # ifdef NDEBUG
 # define CPPAD_ASSERT_UNKNOWN(exp)      // do nothing
 # else
@@ -117,5 +148,18 @@ $end
 		""         );                   \
 }
 # endif
+
+/*!
+\def CPPAD_ASSERT_NARG_NRES(op, n_arg, n_res)
+Check that operator \a op has the specified number of of arguments and results.
+
+If \a NDEBUG is not defined and either the number of arguments 
+or the number of results are not as expected,
+execution is terminated and the source code line number is reported.
+*/
+# define CPPAD_ASSERT_NARG_NRES(op, n_arg, n_res)   \
+	CPPAD_ASSERT_UNKNOWN( NumArg(op) == n_arg ) \
+	CPPAD_ASSERT_UNKNOWN( NumRes(op) == n_res ) 
+	
 
 # endif

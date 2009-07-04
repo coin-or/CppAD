@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -131,11 +131,37 @@ bool SubTestTwo(void)
 	return ok;
 }
 
+
+bool SubTestThree(void)
+{	bool ok = true;
+	using namespace CppAD;
+
+	// special cases where tests above check OK and SubpvOp 
+	// implementation is known to be worng. 
+	// Probably two minuses make a plus.
+	size_t n = 1;
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	X[0] = 1.;
+	Independent(X);
+	size_t m = 1;
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	Y[0] = 1. - X[0];
+	ADFun<double> f(X, Y); 
+	
+	CPPAD_TEST_VECTOR<double> w(m), dw(n);
+	w[0] = 1.;
+	dw = f.Reverse(1, w);
+	ok &= (dw[0] == -1.);
+
+	return ok;
+}
+
 } // END empty namespace
 
 bool Sub(void)
 {	bool ok = true;
 	ok &= SubTestOne();
 	ok &= SubTestTwo(); 
+	ok &= SubTestThree(); 
 	return ok;
 }

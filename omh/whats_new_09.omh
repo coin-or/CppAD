@@ -12,6 +12,15 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_09$$
 $spell
+	atan
+	asin
+	acos
+	sqrt
+	OMhelp
+	doxygen
+	exp_eps_apx
+	cos
+	tarball
 	IpIpoptApplication
 	IpoptDir
 	autoconf
@@ -27,6 +36,7 @@ $spell
 	hpp
 	op
 	pycppad
+	cond_exp
 $$
 
 $section Changes and Additions to CppAD During 2009$$
@@ -38,7 +48,70 @@ This section contains a list of the changes to CppAD during 2009
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 09-22$$
+$head 07-04$$
+$bold Begin Merge$$ 
+$pre
+$$
+of changes from the directory $code branches/sweep$$ 
+in the CppAD subversion repository.
+The subheading dates below represent when the correspond change was made in 
+$code branches/sweep$$.
+
+$subhead 07-04$$
+Fixed a bug in second or higher order reverse mode calculations
+that included $cref/conditional expressions/CondExp/$$.
+This bug was demonstrated by the test case $code SecondOrderReverse$$
+in the file $code test_more/cond_exp.cpp$$.
+$pre
+
+$$
+A simpler and useful example was provided for
+$cref/conditional expressions/CondExp/$$; 
+see $cref/CondExp.cpp/$$.
+
+
+$subhead 07-03$$
+Some minor improvements were made to the documentation for 
+$cref/CondExp/$$.
+To be specific, a newer OMhelp option was used to change the formatting
+of the syntax, some of the argument names were changed to be more descriptive.
+
+$subhead 07-02$$
+Add developer doxygen documentation of 
+tape evaluation for power (exponentiation) operators.
+
+$subhead 07-01$$
+Fix an example indexing error in 
+$code introduction/exp_apx/exp_eps_for2.cpp$$ (found by valgrind).
+$pre
+
+$$
+Add developer doxygen documentation of 
+tape evaluation for multiplication and division operators.
+
+$subhead 06-30$$
+Add developer doxygen documentation of 
+tape evaluation for addition and subtraction operators.
+
+$subhead 06-29$$
+Add developer doxygen documentation of 
+tape evaluation for sin, sinh, cos, and cosh.
+
+$subhead 06-28$$
+Add developer doxygen documentation of 
+tape evaluation for atan, asin, acos, sqrt, log.
+$pre
+$$
+$bold End Merge$$
+
+$head 06-25$$
+The tarball for most recent release (of the subversion trunk for CppAD) 
+was not being placed in the 
+$href%http://www.coin-or.org/download/source/CppAD/%download%$$ 
+directory.  
+This has been fixed.
+
+$head 06-22$$
 Fix compiler warnings during the $cref openmp_run.sh$$ test.
 $pre
 
@@ -48,12 +121,12 @@ the correctness result.
 In stead, a message is printed explaining that timing tests need
 to be run without a lot of other demands on the system.
 
-$head 09-21$$
+$head 06-21$$
 The configure instructions for $cref/IpoptDir/InstallUnix/IpoptDir/$$
 had the wrong path for $code IpIpoptApplication.hpp$$.
 This has been fixed.
 
-$head 09-20$$
+$head 06-20$$
 Upgrade to from autoconf 2.61 to 2.63,
 and from automake 1.10.1 to 1.11.
 $pre

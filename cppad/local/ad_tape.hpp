@@ -3,7 +3,7 @@
 # define CPPAD_AD_TAPE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -222,11 +222,11 @@ template <class Base>
 size_t ADTape<Base>::RecordParOp(const Base &z)
 {	size_t z_taddr;
 	size_t ind;
-	CPPAD_ASSERT_UNKNOWN( NumVar(ParOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( NumInd(ParOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(ParOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumArg(ParOp) == 1 );
 	z_taddr = Rec_.PutOp(ParOp);
 	ind     = Rec_.PutPar(z);
-	Rec_.PutInd(ind);
+	Rec_.PutArg(ind);
 
 	return z_taddr;
 }

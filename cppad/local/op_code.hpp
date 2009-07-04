@@ -28,11 +28,11 @@ Defines the OpCode enum type and functions related to it.
 
 
 /*!
-Type used to distinguish different AD<Base> atomic operations.
+Type used to distinguish different AD< \a Base > atomic operations.
 
 Each of the operators ends with the characters Op. Ignoring the Op at the end,
 the operators appear in alphabetical order. Binary operation where both
-operands have type AD<Base> use the following convention for thier endings:
+operands have type AD< \a Base > use the following convention for thier endings:
 \verbatim
     Ending  Left-Operand  Right-Operand
       pvOp     parameter       variable  
@@ -92,14 +92,14 @@ The i-th element in this table specifes the number of arguments stored for each
 occurance of the operator that is the i-th value in the OpCode enum type.
 For example, for the first three OpCode enum values we have
 \verbatim
-OpCode   j   NumIndTable[j]  Meaning
+OpCode   j   NumArgTable[j]  Meaning
 AbsOp    0                1  index of variable we are taking absolute value of
 AcosOp   1                1  index of variable we are taking cosine of
 AddpvOp  1                2  indices of parameter and variable we are adding
 \endverbatim
 Note that the meaning of the arguments depends on the operator.
 */
-const size_t NumIndTable[] = {
+const size_t NumArgTable[] = {
 	1, // AbsOp
 	1, // AcosOp
 	2, // AddpvOp
@@ -151,14 +151,14 @@ Number of arguments corresponding to the specified operator.
 \param op 
 Operator for which we are fetching the number of arugments.
 */
-inline size_t NumInd( OpCode op)
+inline size_t NumArg( OpCode op)
 {
 	CPPAD_ASSERT_UNKNOWN( size_t(SubvvOp) == 
-		sizeof(NumIndTable) / sizeof(NumIndTable[0]) - 1
+		sizeof(NumArgTable) / sizeof(NumArgTable[0]) - 1
 	);
 	CPPAD_ASSERT_UNKNOWN( size_t(op) <= size_t(SubvvOp) );
 
-	return NumIndTable[(size_t) op];
+	return NumArgTable[(size_t) op];
 }
 
 /*!
@@ -168,14 +168,14 @@ The i-th element in this table specifes the number of varibles for each
 occurance of the operator that is the i-th value in the OpCode enum type.
 For example, for the first three OpCode enum values we have
 \verbatim
-OpCode   j   NumVarTable[j]  Meaning
+OpCode   j   NumResTable[j]  Meaning
 AbsOp    0                1  variable that is the result of the absolute value
 AcosOp   1                2  acos(x) and sqrt(1-x*x) are required for this op
 AddpvOp  1                1  variable that is the result of the addition
 \endverbatim
 */
 // alphabetical order (ignoring the Op at the end)
-const size_t NumVarTable[] = {
+const size_t NumResTable[] = {
 	1, // AbsOp
 	2, // AcosOp
 	1, // AddpvOp
@@ -228,15 +228,15 @@ number of variables resulting from the specified operator.
 \param op 
 Operator for which we are fetching the number of result variables.
 */
-inline size_t NumVar(OpCode op)
+inline size_t NumRes(OpCode op)
 {	// check ensuring conversion to size_t is as expected
 	CPPAD_ASSERT_UNKNOWN( size_t(SubvvOp) == 
-		sizeof(NumVarTable) / sizeof(NumVarTable[0]) - 2
+		sizeof(NumResTable) / sizeof(NumResTable[0]) - 2
 	);
 	// this test ensures that all indices are within the table
 	CPPAD_ASSERT_UNKNOWN( size_t(op) <= size_t(SubvvOp) );
 
-	return NumVarTable[(size_t) op];
+	return NumResTable[(size_t) op];
 }
 
 /*!
@@ -308,11 +308,11 @@ void printOpField(
 Prints a single operator, its operands, and the corresponding result values.
 
 \tparam Base
-Is the base type for these AD<Base> operations.
+Is the base type for these AD< \a Base > operations.
 
 \tparam Value
 Determines the type of the values that we are printing
-(expected to be either Base or Pack where
+(expected to be either  \a Base  or Pack where
 Pack is the type used to pace sparsity patterns.
 
 \param os
@@ -323,34 +323,34 @@ Is the entire recording for the tape that this operator is in.
 
 \param i_var
 is the index for the variable corresponding to the result of this operation
-(ignored if NumVar(op) == 0).
+(ignored if NumRes(op) == 0).
 
 \param op
 The operator code (OpCode) for this operation.
 
 \param ind
 is the vector of argument indices for this operation
-(must have NumInd(op) elements).
+(must have NumArg(op) elements).
 
 \param nfz
 is the number of forward sweep calculated values of type Value
 that correspond to this operation
-(ignored if NumVar(op) == 0).
+(ignored if NumRes(op) == 0).
 
 \param fz
 points to the first forward calculated value
 that correspond to this operation
-(ignored if NumVar(op) == 0).
+(ignored if NumRes(op) == 0).
 
 \param nrz
 is the number of reverse sweep calculated values of type Value
 that correspond to this operation
-(ignored if NumVar(op) == 0).
+(ignored if NumRes(op) == 0).
 
 \param rz
 points to the first reverse calculated value
 that correspond to this operation
-(ignored if NumVar(op) == 0).
+(ignored if NumRes(op) == 0).
 */
 template <class Base, class Value>
 void printOp(
@@ -364,8 +364,9 @@ void printOp(
 	size_t                 nrz    ,
 	const  Value          *rz     )
 {	
-	static char *CompareOpName[] = { "Lt", "Le", "Eq", "Ge", "Gt", "Ne" };
-	static char *OpName[] = {
+	static const char *CompareOpName[] = 
+		{ "Lt", "Le", "Eq", "Ge", "Gt", "Ne" };
+	static const char *OpName[] = {
 		"Abs"   ,
 		"Acos"  ,
 		"Addpv" ,
@@ -428,40 +429,40 @@ void printOp(
 	switch( op )
 	{
 		case LdpOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, "  p=", *(Rec->GetPar(ind[1])), ncol);
 		break;
 
 		case LdvOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, "  v=", ind[1], ncol);
 		break;
 
 		case StppOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, " pl=", *(Rec->GetPar(ind[1])), ncol);
 		printOpField(os, " pr=", *(Rec->GetPar(ind[2])), ncol);
 		break;
 
 		case StpvOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, " pl=", *(Rec->GetPar(ind[1])), ncol);
 		printOpField(os, " vr=", ind[2], ncol);
 		break;
 
 		case StvpOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, " vl=", ind[1], ncol);
 		printOpField(os, " pr=", *(Rec->GetPar(ind[2])), ncol);
 		break;
 
 		case StvvOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 3 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, " vl=", ind[1], ncol);
 		printOpField(os, " vr=", ind[2], ncol);
@@ -472,7 +473,7 @@ void printOp(
 		case MulvvOp:
 		case PowvvOp:
 		case SubvvOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, " vl=", ind[0], ncol);
 		printOpField(os, " vr=", ind[1], ncol);
 		break;
@@ -482,7 +483,7 @@ void printOp(
 		case MulpvOp:
 		case PowpvOp:
 		case DivpvOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, " pl=", *(Rec->GetPar(ind[0])), ncol);
 		printOpField(os, " vr=", ind[1], ncol);
 		break;
@@ -492,7 +493,7 @@ void printOp(
 		case MulvpOp:
 		case PowvpOp:
 		case SubvpOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, " vl=", ind[0], ncol);
 		printOpField(os, " pr=", *(Rec->GetPar(ind[1])), ncol);
 		break;
@@ -508,34 +509,34 @@ void printOp(
 		case SinOp:
 		case SinhOp:
 		case SqrtOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 1 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 		printOpField(os, "  v=", ind[0], ncol);
 		break;
 
 		case ParOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 1 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 		printOpField(os, "  p=", *(Rec->GetPar(ind[0])), ncol);
 		break;
 
 		case PripOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, "txt=", *(Rec->GetTxt(ind[0])), ncol);
 		printOpField(os, "  p=", *(Rec->GetPar(ind[1])), ncol);
 		break;
 
 		case PrivOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, "txt=", *(Rec->GetTxt(ind[0])), ncol);
 		printOpField(os, "  v=", ind[1], ncol);
 		break;
 
 		case InvOp:
 		case NonOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 0 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
 		break;
 
 		case DisOp:
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 2 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, "  v=", ind[0], ncol);
 		printOpField(os, "  f=", ind[1], ncol);
 		break;
@@ -543,7 +544,7 @@ void printOp(
 
 		case CExpOp:
 		CPPAD_ASSERT_UNKNOWN(ind[1] != 0);
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 6 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 6 );
 		if( ind[1] & 1 )
 			printOpField(os, " vl=", ind[2], ncol);
 		else	printOpField(os, " pl=", *(Rec->GetPar(ind[2])), ncol);
@@ -560,7 +561,7 @@ void printOp(
 
 		case ComOp:
 		CPPAD_ASSERT_UNKNOWN(ind[1] != 0);
-		CPPAD_ASSERT_UNKNOWN( NumInd(op) == 4 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 4 );
 		if( ind[1] & 1 )
 			printOpField(os, "res=", 1, ncol);
 		else	printOpField(os, "res=", 0, ncol);
@@ -576,7 +577,7 @@ void printOp(
 		CPPAD_ASSERT_UNKNOWN(0);
 	}
 	size_t k;
-	if( NumVar(op) > 0 )
+	if( NumRes(op) > 0 )
 	{ 
 		for(k = 0; k < nfz; k++)
 			std::cout << "| fz[" << k << "]=" << fz[k];

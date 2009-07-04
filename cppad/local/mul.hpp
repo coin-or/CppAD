@@ -3,7 +3,7 @@
 # define CPPAD_MUL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -50,11 +50,11 @@ AD<Base> operator * (const AD<Base> &left , const AD<Base> &right)
 	if( var_left )
 	{	if( var_right )
 		{	// result = variable * variable
-			CPPAD_ASSERT_UNKNOWN( NumVar(MulvvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumInd(MulvvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(MulvvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumArg(MulvvOp) == 2 );
 
 			// put operand addresses in tape
-			tape->Rec_.PutInd(left.taddr_, right.taddr_);
+			tape->Rec_.PutArg(left.taddr_, right.taddr_);
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(MulvvOp);
 			// make result a variable
@@ -69,12 +69,12 @@ AD<Base> operator * (const AD<Base> &left , const AD<Base> &right)
 		}
 		else
 		{	// result = variable * parameter
-			CPPAD_ASSERT_UNKNOWN( NumVar(MulvpOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumInd(MulvpOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(MulvpOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumArg(MulvpOp) == 2 );
 
 			// put operand addresses in tape
 			size_t p = tape->Rec_.PutPar(right.value_);
-			tape->Rec_.PutInd(left.taddr_, p);
+			tape->Rec_.PutArg(left.taddr_, p);
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(MulvpOp);
 			// make result a variable
@@ -91,12 +91,12 @@ AD<Base> operator * (const AD<Base> &left , const AD<Base> &right)
 		}
 		else
 		{	// result = parameter * variable
-			CPPAD_ASSERT_UNKNOWN( NumVar(MulpvOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumInd(MulpvOp) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(MulpvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumArg(MulpvOp) == 2 );
 
 			// put operand addresses in tape
 			size_t p = tape->Rec_.PutPar(left.value_);
-			tape->Rec_.PutInd(p, right.taddr_);
+			tape->Rec_.PutArg(p, right.taddr_);
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(MulpvOp);
 			// make result a variable

@@ -14,13 +14,18 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+/*!
+\file player.hpp
+File used to define the player class.
+*/
+
 
 /*!
 Class used to store and play back an operation sequence recording.
 
 \tparam Base
-These were AD<Base> operations when recorded. Operations during playback
-are done using the type Base.
+These were AD< \a Base > operations when recorded. Operations during playback
+are done using the type  \a Base .
 */
 template <class Base>
 class player {
@@ -124,8 +129,8 @@ public:
 		// VecInd
 		num_rec_vecad_ind_  = rec.NumberVecInd_;
 
-		// Ind
-		num_rec_op_arg_     = rec.NumberInd_;
+		// Arg
+		num_rec_op_arg_     = rec.NumberArg_;
 
 		// Par
 		num_rec_par_        = rec.NumberPar_;
@@ -164,7 +169,7 @@ public:
 			rec_vecad_ind_[i] = rec.VecInd_[i];
 		i = num_rec_op_arg_;
 		while(i--)
-			rec_op_arg_[i] = rec.Ind_[i];
+			rec_op_arg_[i] = rec.Arg_[i];
 		i = num_rec_par_;
 		while(i--)
 			rec_par_[i] = rec.Par_[i];
@@ -370,9 +375,7 @@ public:
 	*/
 	void start_forward(
 	OpCode& op, const size_t*& op_arg, size_t& op_index, size_t& var_index)
-	{	using CppAD::NumVar;
-		using CppAD::NumInd;
-
+	{
 		op        = op_          = rec_op_[0]; 
 		op_arg_   = 0;
 		op_arg    = rec_op_arg_;
@@ -380,8 +383,8 @@ public:
 		var_index = var_index_   = 0;
 # ifndef NDEBUG
 		CPPAD_ASSERT_UNKNOWN( op_         == NonOp );
-		CPPAD_ASSERT_UNKNOWN( NumVar(op_) == 1     );
-		CPPAD_ASSERT_UNKNOWN( NumInd(op_) == 0     );
+		CPPAD_ASSERT_UNKNOWN( NumRes(op_) == 1     );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op_) == 0     );
 # endif
 		return;
 	}
@@ -413,20 +416,20 @@ public:
 
 	void next_forward(
 	OpCode& op, const size_t*& op_arg, size_t& op_index, size_t& var_index)
-	{	using CppAD::NumVar;
-		using CppAD::NumInd;
+	{	using CppAD::NumRes;
+		using CppAD::NumArg;
 
 		op_index    = ++op_index_;
-		op_arg_    += NumInd(op_);
-		var_index_ += NumVar(op_);
+		op_arg_    += NumArg(op_);
+		var_index_ += NumRes(op_);
 
 		op          = op_         = rec_op_[ op_index_ ];
 		op_arg      = op_arg_ + rec_op_arg_;
 		var_index   = var_index_;
 
 		CPPAD_ASSERT_UNKNOWN( op_index_  < num_rec_op_ );
-		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumInd(op) <= num_rec_op_arg_ );
-		CPPAD_ASSERT_UNKNOWN( var_index_ + NumVar(op) <= num_rec_var_ );
+		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= num_rec_op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( var_index_ + NumRes(op) <= num_rec_var_ );
 	}
 	/*!
 	Start a play back of the recording during a reverse sweep.
@@ -476,18 +479,18 @@ public:
 
 	void next_reverse(
 	OpCode& op, const size_t*& op_arg, size_t& op_index, size_t& var_index)
-	{	using CppAD::NumVar;
-		using CppAD::NumInd;
+	{	using CppAD::NumRes;
+		using CppAD::NumArg;
 
 		CPPAD_ASSERT_UNKNOWN( op_index_  > 0 );
 		op_index    = --op_index_;
 		op_         = rec_op_[ op_index_ ];
 
-		CPPAD_ASSERT_UNKNOWN( op_arg_ >= NumInd(op_)  );
-		op_arg_    -= NumInd(op_);
+		CPPAD_ASSERT_UNKNOWN( op_arg_ >= NumArg(op_)  );
+		op_arg_    -= NumArg(op_);
 
-		CPPAD_ASSERT_UNKNOWN( var_index_ >= NumVar(op_) );
-		var_index_ -= NumVar(op_);
+		CPPAD_ASSERT_UNKNOWN( var_index_ >= NumRes(op_) );
+		var_index_ -= NumRes(op_);
 
 		op          = op_;
 		op_arg      = op_arg_ + rec_op_arg_;

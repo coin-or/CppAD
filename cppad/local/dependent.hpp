@@ -201,7 +201,7 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	// set total number of variables in tape, parameter flag, 
 	// make a tape copy of dependent variables that are parameters, 
 	// and store tape address for each dependent variable
-	CPPAD_ASSERT_UNKNOWN( NumVar(ParOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(ParOp) == 1 );
 	dep_parameter_.resize(m);
 	dep_taddr_.resize(m);
 	total_num_var_ = tape->Rec_.num_rec_var();

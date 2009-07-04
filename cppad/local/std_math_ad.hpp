@@ -3,7 +3,7 @@
 # define CPPAD_STD_MATH_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -262,10 +262,10 @@ $end
         CPPAD_ASSERT_UNKNOWN( Parameter(result) );                \
                                                                   \
         if( Variable(*this) )                                     \
-        {   CPPAD_ASSERT_UNKNOWN( NumVar(Op) <= 2 );              \
-            CPPAD_ASSERT_UNKNOWN( NumInd(Op) == 1 );              \
+        {   CPPAD_ASSERT_UNKNOWN( NumRes(Op) <= 2 );              \
+            CPPAD_ASSERT_UNKNOWN( NumArg(Op) == 1 );              \
             ADTape<Base> *tape = tape_this();                     \
-            tape->Rec_.PutInd(taddr_);                             \
+            tape->Rec_.PutArg(taddr_);                             \
             result.taddr_ = tape->Rec_.PutOp(Op);                  \
             result.id_    = tape->id_;                            \
         }                                                         \

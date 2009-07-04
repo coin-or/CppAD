@@ -73,8 +73,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // ---------------------------------------------------------------------------
 
-# include <cppad/local/op.hpp>       // executes taped operations
 # include <cppad/local/user_ad.hpp>  // AD class methods available to the user
+// tape that tape for AD<Base> acts as a user of Base operations
+// so user_ad.hpp must come before op.hpp
+# include <cppad/local/op.hpp>       // executes taped operations
 # include <cppad/local/ad_fun.hpp>   // ADFun objects
 
 // ---------------------------------------------------------------------------

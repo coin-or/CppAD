@@ -1,9 +1,10 @@
 /* $Id$ */
 # ifndef CPPAD_ASIN_OP_INCLUDED
 # define CPPAD_ASIN_OP_INCLUDED
+CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,169 +14,50 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin ForAsinOp$$ $comment CppAD Developer Documentation$$
-$spell
-	sqrt
-	asin
-	Taylor
-	const
-	inline
-	Op
-$$
 
-$index asin, forward$$
-$index forward, asin$$
-$index ForAsinOp$$ 
-
-$section Forward Mode Asin Function$$
-
-$head Syntax$$
-
-$syntax%inline void ForAsinOp(size_t %d%,
-	%Base% *%z%, %Base% *%b%, const %Base% *%x%)%$$
-
-$head Description$$
-Computes the $italic d$$ order Taylor coefficient for 
-$latex Z$$ and $latex B$$ where
-$syntax%
-	%Z% = asin(%X%)
-	%B% = \sqrt{ 1 - %X% * %X% }
-%$$
-
-$head x$$
-The vector $italic x$$ has length $latex d+1$$ and contains the
-$th d$$ order Taylor coefficient row vector for $italic X$$.
-
-$head z$$
-The vector $italic z$$ has length $latex d+1$$.
-On input it contains the
-$th d-1$$ order Taylor coefficient row vector for $italic Z$$.
-On output it contains the
-$th d$$ order Taylor coefficient row vector for $italic Z$$; i.e.,
-$syntax%%z%[%d%]%$$ is set equal to the $th d$$ Taylor coefficient for
-the function $italic S$$.
-
-$head b$$
-The vector $italic c$$ has length $latex d+1$$.
-On input it contains the
-$th d-1$$ order Taylor coefficient row vector for $italic B$$.
-On output it contains the
-$th d$$ order Taylor coefficient row vector for $italic B$$; i.e.,
-$syntax%%b%[%d%]%$$ is set equal to the $th d$$ Taylor coefficient for
-the function $italic B$$.
-
-$end
-------------------------------------------------------------------------------
-$begin RevAsinOp$$ $comment CppAD Developer Documentation$$
-$spell
-	ps
-	Asin
-	pb
-	Sin
-	Taylor
-	const
-	inline
-	Op
-	px
-	py
-	pz
-$$
-
-$index reverse, asin$$
-$index asin, reverse$$
-$index RevAsinOp$$ 
-
-$section Reverse Mode Asin Function$$
-
-$head Syntax$$
-
-$syntax%inline void RevAsinOp(size_t %d%,
-	const %Base% *%z%, const %Base% *%b%, const %Base% *%x%,
-	 %Base% *%pz%, %Base% *%pb%, %Base% *%px%)%$$
-
-$head Description$$
-We are given the partial derivatives for a function
-$latex G(z, b, x)$$ and we wish to compute the partial derivatives for
-the function
-$latex \[
-	H(x) = G [ Z(x) , B(x) , x ]
-\] $$
-where $latex Z(x)$$ and $latex B(x)$$ are defined as the 
-$th d$$ order Taylor coefficient row vector for $latex \arcsin(x)$$
-and $latex 1 + x * x$$ 
-as a function of the corresponding row vector for $italic X$$; i.e.,
-$latex \[
-\begin{array}{rcl}
-	Z & = & \arcsin(X) \\
-	B & = & 1 + X * X
-\end{array}
-\]$$
-Note that $italic Z$$ and $latex B$$ have
-been used both the original 
-functions and for the corresponding mapping of Taylor coefficients.
-
-$head x$$
-The vector $italic x$$ has length $latex d+1$$ and contains the
-$th d$$ order Taylor coefficient row vector for $italic X$$.
-
-
-$head z$$
-The vector $italic z$$ has length $latex d+1$$ and contains
-$th d$$ order Taylor coefficient row vector for $italic z$$.
-
-$head b$$
-The vector $italic b$$ has length $latex d+1$$ and contains
-$th d$$ order Taylor coefficient row vector for $italic B$$.
-
-
-$head On Input$$
-
-$subhead px$$
-The vector $italic px$$ has length $latex d+1$$ and 
-$syntax%%px%[%j%]%$$ contains the partial for $italic G$$
-with respect to the $th j$$ order Taylor coefficient for $italic X$$.
-
-$subhead pz$$
-The vector $italic pz$$ has length $latex d+1$$ and 
-$syntax%%pz%[%j%]%$$ contains the partial for $italic G$$
-with respect to the $th j$$ order Taylor coefficient for $italic Z$$.
-
-$subhead pb$$
-The vector $italic pb$$ has length $latex d+1$$ and 
-$syntax%%pb%[%j%]%$$ contains the partial for $italic G$$
-with respect to the $th j$$ order Taylor coefficient for $italic B$$.
-
-$head On Output$$
-
-$subhead px$$
-The vector $italic px$$ has length $latex d+1$$ and 
-$syntax%%px%[%j%]%$$ contains the partial for $italic H$$
-with respect to the $th j$$ order Taylor coefficient for $italic X$$.
-
-$subhead pz$$
-The vector $italic ps$$ has length $latex d+1$$ and 
-its contents are no longer specified; i.e., it has
-been used for work space.
-
-$subhead pb$$
-The vector $italic pb$$ has length $latex d+1$$ and 
-its contents are no longer specified; i.e., it has
-been used for work space.
-
-$end
-------------------------------------------------------------------------------
+/*!
+\file asin_op.hpp
+Forward and reverse mode calculations for z = asin(x).
 */
 
-// BEGIN CppAD namespace
-namespace CppAD {
 
+/*!
+Compute forward mode Taylor coefficient for result of op = AsinOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = asin(x)
+\endverbatim
+The auxillary result is
+\verbatim
+	y = sqrt(1 - x * x)
+\endverbatim
+The value of y, and its derivatives, are computed along with the value
+and derivatives of z.
+
+\copydetails forward_unary2_op
+*/
 template <class Base>
-inline void ForAsinOp(size_t j, 
-	Base *z, Base *b, const Base *x)
-{	size_t k;
-	Base qj;
+inline void forward_asin_op(
+	size_t j           ,
+	size_t i_z         ,
+	size_t i_x         ,
+	size_t nc_taylor   , 
+	Base*  taylor      )
+{	
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(AsinOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(AsinOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( j < nc_taylor );
 
+	// Taylor coefficients corresponding to argument and result
+	Base* x = taylor + i_x * nc_taylor;
+	Base* z = taylor + i_z * nc_taylor;
+	Base* b = z      +       nc_taylor;  // called y in documentation
+
+	size_t k;
+	Base qj;
 	if( j == 0 )
 	{	z[j] = asin( x[0] );
 		qj   = Base(1) - x[0] * x[0];
@@ -202,15 +84,90 @@ inline void ForAsinOp(size_t j,
 	}
 }
 
+/*!
+Compute zero order forward mode Taylor coefficient for result of op = AsinOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = asin(x)
+\endverbatim
+The auxillary result is
+\verbatim
+	y = sqrt( 1 - x * x )
+\endverbatim
+The value of y is computed along with the value of z.
+
+\copydetails forward_unary2_op_0
+*/
 template <class Base>
-inline void RevAsinOp(size_t d, 
-	const Base  *z, const Base  *b, const Base *x,
-	      Base *pz,       Base *pb,       Base *px)
-{	size_t k;
+inline void forward_asin_op_0(
+	size_t i_z         ,
+	size_t i_x         ,
+	size_t nc_taylor   , 
+	Base*  taylor      )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(AsinOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(AsinOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( 0 < nc_taylor );
+
+	// Taylor coefficients corresponding to argument and result
+	Base* x = taylor + i_x * nc_taylor;
+	Base* z = taylor + i_z * nc_taylor;
+	Base* b = z      +       nc_taylor; // called y in documentation
+
+	z[0] = asin( x[0] );
+	b[0] = sqrt( Base(1) - x[0] * x[0] );
+}
+/*!
+Compute reverse mode partial derivatives for result of op = AsinOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = asin(x)
+\endverbatim
+The auxillary result is
+\verbatim
+	y = sqrt( 1 - x * x )
+\endverbatim
+The value of y is computed along with the value of z.
+
+\copydetails reverse_unary2_op
+*/
+
+template <class Base>
+inline void reverse_asin_op(
+	size_t      d            ,
+	size_t      i_z          ,
+	size_t      i_x          ,
+	size_t      nc_taylor    , 
+	const Base* taylor       ,
+	size_t      nc_partial   ,
+	Base*       partial      )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(AsinOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(AsinOp) == 2 );
+	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+
+	// Taylor coefficients and partials corresponding to argument
+	const Base* x  = taylor  + i_x * nc_taylor;
+	Base* px       = partial + i_x * nc_partial;
+
+	// Taylor coefficients and partials corresponding to first result
+	const Base* z  = taylor  + i_z * nc_taylor;
+	Base* pz       = partial + i_z * nc_partial;
+
+	// Taylor coefficients and partials corresponding to auxillary result
+	const Base* b  = z  + nc_taylor; // called y in documentation
+	Base* pb       = pz + nc_partial;
 
 	// number of indices to access
 	size_t j = d;
-
+	size_t k;
 	while(j)
 	{
 		// scale partials w.r.t b[j] by 1 / b[0]
@@ -248,6 +205,5 @@ inline void RevAsinOp(size_t d,
 	px[0] += ( pz[0] - pb[0] * x[0]) / b[0];
 }
 
-} // END CppAD namespace
-
+CPPAD_END_NAMESPACE
 # endif

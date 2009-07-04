@@ -13,6 +13,44 @@
 #
 # Bash script for building the CppAD distribution.
 #
+# check for multiple options case
+if [ "$1" != "" ] && [ "$1" != all ] && [ "$2" != "" ]
+then
+	list=" version automake config_none config_test"
+	list="$list omhelp doxygen make dist test gpl dos move "
+	for option in $*
+	do
+		if [ "$option" == "all" ]
+		then
+			echo "Error in build.sh command."
+			echo "If present, \"all\" must be first option"  
+			exit 1
+		fi
+		if ! echo "$list" | grep " $option " > /dev/null
+		then
+			# run invalid option for error message
+			./build.sh $option
+			exit 1
+		fi
+	done
+	for option in $*
+	do
+		echo "========================================================"
+		echo "./build.sh $option"
+		if ! ./build.sh $option
+		then
+			exit 1
+		fi
+	done
+fi
+if [ "$1" = "all" ] && [ "$2" != "" ] && [ "$2" != "test" ] && [ "$2" != "dos" ]
+then
+	echo "./build.sh $1 $2"
+	echo "is not a valid valid choice."
+	./build.sh
+	exit 1
+fi
+#
 # Default values used for arguments to configure during this script.
 # These defaults are development system dependent and can be changed.
 BOOST_DIR=/usr/include/boost-1_33_1
@@ -28,12 +66,6 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ADOLC_DIR/lib:$IPOPT_DIR/lib"
 version=`grep "^ *AC_INIT(" configure.ac | \
 	sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
 #
-if [ "$1" = "all" ] && [ "$2" != "" ] && [ "$2" != "test" ] && [ "$2" != "dos" ]
-then
-	echo "./build.sh $1 $2"
-	echo "is not valid, build.sh with no arguments lists valid choices."
-	exit 1
-fi
 #
 # Check if we are running all the test cases. 
 if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
@@ -179,59 +211,51 @@ fi
 #
 # configure
 #
-if [ "$1" = "configure" ] || [ "$1" = "all" ]
+TEST=""
+if [ "$1" = "config_test" ] 
 then
-	if [ "$2" = "test" ]
+	TEST="
+		--with-Introduction
+		--with-Example
+		--with-TestMore
+		--with-Speed
+		--with-PrintFor"
+	if [ -e doc/index.htm ]
 	then
-		echo "build.sh configure test"
-	else
-		echo "build.sh configure"
-	fi
-	#
-	TEST=""
-	if [ "$1" = "configure" ] && [ "$2" = "test" ]
-	then
-		TEST="
-			--with-Introduction
-			--with-Example
-			--with-TestMore
-			--with-Speed
-			--with-PrintFor"
-		if [ -e doc/index.htm ]
-		then
-			TEST="$TEST
-				--with-Documentation"
-		fi
 		TEST="$TEST
-			POSTFIX_DIR=coin"
-		if [ -e $BOOST_DIR/boost ]
-		then
-			TEST="$TEST 
-				BOOST_DIR=$BOOST_DIR"
-		fi
-		if [ -e $ADOLC_DIR/include/adolc ]
-		then
-			TEST="$TEST 
-				ADOLC_DIR=$ADOLC_DIR"
-		fi
-		if [ -e $FADBAD_DIR/FADBAD++ ]
-		then
-			TEST="$TEST 
-				FADBAD_DIR=$FADBAD_DIR"
-		fi
-		if [ -e $SACADO_DIR/include/Sacado.hpp ]
-		then
-			TEST="$TEST 
-				SACADO_DIR=$SACADO_DIR"
-		fi
-		if [ -e $IPOPT_DIR/include/coin/IpIpoptApplication.hpp ]
-		then
-			TEST="$TEST 
-				IPOPT_DIR=$IPOPT_DIR"
-		fi
+			--with-Documentation"
+	fi
+	TEST="$TEST
+		POSTFIX_DIR=coin"
+	if [ -e $BOOST_DIR/boost ]
+	then
+		TEST="$TEST 
+			BOOST_DIR=$BOOST_DIR"
+	fi
+	if [ -e $ADOLC_DIR/include/adolc ]
+	then
+		TEST="$TEST 
+			ADOLC_DIR=$ADOLC_DIR"
+	fi
+	if [ -e $FADBAD_DIR/FADBAD++ ]
+	then
+		TEST="$TEST 
+			FADBAD_DIR=$FADBAD_DIR"
+	fi
+	if [ -e $SACADO_DIR/include/Sacado.hpp ]
+	then
+		TEST="$TEST 
+			SACADO_DIR=$SACADO_DIR"
+	fi
+	if [ -e $IPOPT_DIR/include/coin/IpIpoptApplication.hpp ]
+	then
+		TEST="$TEST 
+			IPOPT_DIR=$IPOPT_DIR"
 	fi
 	TEST=`echo $TEST | sed -e 's|\t\t*| |g'`
-	#
+fi
+if [ "$1" = "config_test" ] || [ "$1" = "config_none" ] || [ "$1" = "all" ]
+then
 	echo "configure \\"
 	echo "$TEST" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
 	echo "	CXX_FLAGS=\"-Wall -ansi -pedantic-errors -std=c++98\""
@@ -246,16 +270,16 @@ then
 	echo "fix_makefile.sh"
 	./fix_makefile.sh
 	#
-	if [ "$1" = "configure" ]
-	then
-		exit 0
-	fi
-	#
 	# make shell scripts created by configure executable
 	echo "chmod +x example/test_one.sh"
 	chmod +x example/test_one.sh
 	echo "chmod +x test_more/test_one.sh"
 	chmod +x test_more/test_one.sh
+	#
+	if [ "$1" = "config_test" ] || [ "$1" = "config_none" ]
+	then
+		exit 0
+	fi
 fi
 #
 # make
@@ -497,10 +521,10 @@ then
 	# -------------------------------------------------------------
 	# Configure
 	#
-	if ! ./build.sh configure test
+	if ! ./build.sh config_test
 	then
-		echo "Error: build.sh configure test"  >> $dir/build_test.log
-		echo "Error: build.sh configure test" 
+		echo "Error: build.sh config_test"  >> $dir/build_test.log
+		echo "Error: build.sh config_test" 
 		exit 1
 	fi
 	# -------------------------------------------------------------
@@ -521,6 +545,7 @@ then
 				msg="Error: run_omhelp.sh $user $ext"
 				echo "$msg" >> $dir/build_test.log 
 				echo "$msg" 
+				mv omhelp.$user.$ext.log $dir
 				exit 1
 			fi
 			msg="OK: run_omhelp.sh $user $ext"
@@ -705,7 +730,7 @@ then
 fi
 if [ "$1" = "move" ] || [ "$1" = "all" ] 
 then
-	# copy tarballs into doc directory
+	# move tarballs into doc directory
 	list="
 		cppad-$version.cpl.tgz
 		cppad-$version.gpl.tgz
@@ -755,8 +780,8 @@ echo "option"
 echo "------"
 echo "version        update configure.ac and doc.omh version number"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
-echo "configure      excludes --with-*"
-echo "configure test includes all the possible options except PREFIX_DIR"
+echo "config_none    excludes all possible testing options"
+echo "config_test    includes all the possible testing options"
 echo "omhelp         build all formats for user documentation in doc/*"
 echo "doxygen        build developer documentation in doxydoc/*"
 echo "make           use make to build all of the requested targets"
@@ -766,16 +791,16 @@ echo "gpl            create *.gpl.tgz"
 echo "dos            create *.gpl.zip, and *.cpl.zip"
 echo "move           move *.tgz to doc directory"
 echo
+echo "build.sh option_1 option_2 ..."
+echo "Where options are in list above, executes them in the specified order."
+echo
 echo "build.sh all"
-echo "This command will execute all the options above in order with the"
-echo "exception that \"configue test\", \"test\", and \"dos\" are excluded."
+echo "Execute all options except config_test, test, and dos are excluded."
 echo
 echo "build.sh all dos"
-echo "This command will execute all the options above in order with the"
-echo "exception that \"configure test\" and \"test\" are excluded."
+echo "Execute all options except config_test, and test are excluded."
 echo
 echo "build.sh all test"
-echo "This command will execute all the options above in order with the"
-echo "exception that \"configure\",  \"dos\", and \"move\" are excluded."
+echo "Execute all options except config_none, and dos, are excluded."
 #
 exit 1

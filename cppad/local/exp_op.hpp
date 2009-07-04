@@ -1,9 +1,10 @@
 /* $Id$ */
 # ifndef CPPAD_EXP_OP_INCLUDED
 # define CPPAD_EXP_OP_INCLUDED
+CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,155 +14,121 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin ForExpOp$$ $comment CppAD Developer Documentation$$
-$spell
-	Exp
-	Taylor
-	const
-	inline
-	Op
-$$
 
-$index forward, exp$$
-$index exp, forward$$
-$index ForExpOp$$
-
-$section Forward Mode Exponential Function$$
-
-$head Syntax$$
-
-$syntax%inline void ForExpOp(size_t %d%,
-	%Base% *%z%, const %Base% *%x%)%$$
-
-$head Description$$
-Computes the $italic d$$ order Taylor coefficient for $latex Z$$ where
-$syntax%
-	%Z% = Exp(%X%)
-%$$
-
-$head x$$
-The vector $italic x$$ has length $latex d+1$$ and contains the
-$th d$$ order Taylor coefficient row vector for $italic X$$.
-
-$head z$$
-The vector $italic z$$ has length $latex d+1$$.
-On input it contains the
-$th d-1$$ order Taylor coefficient row vector for $italic Z$$.
-On output it contains the
-$th d$$ order Taylor coefficient row vector for $italic Z$$; i.e.,
-$syntax%%z%[%d%]%$$ is set equal to the $th d$$ Taylor coefficient for
-the function $italic Z$$.
-
-$end
-------------------------------------------------------------------------------
-$begin RevExpOp$$ $comment CppAD Developer Documentation$$
-$spell
-	Exp
-	Taylor
-	const
-	inline
-	Op
-	px
-	py
-	pz
-$$
-
-$index reverse, exp$$
-$index exp, reverse$$
-$index RevExpOp$$
-
-$section Reverse Mode Exponential Function$$
-
-$head Syntax$$
-
-$syntax%inline void RevExpOp(size_t %d%,
-	const %Base% *%z%, const %Base% *%x%,
-	 %Base% *%pz%, %Base% *%px%)%$$
-
-$head Description$$
-We are given the partial derivatives for a function
-$latex G(z, x)$$ and we wish to compute the partial derivatives for
-the function
-$latex \[
-	H(x) = G [ Z(x) , x ]
-\]$$
-where $latex Z(x)$$ is defined as the 
-$th d$$ order Taylor coefficient row vector for $italic Z$$ as
-a function of the corresponding row vector for $italic X$$ 
-and
-$latex \[
-	Z = Exp(X)
-\]$$
-Note that $italic Z$$ has been used both the original exponential 
-function and for the corresponding mapping of Taylor coefficients.
-
-$head x$$
-The vector $italic x$$ has length $latex d+1$$ and contains the
-$th d$$ order Taylor coefficient row vector for $italic X$$.
-
-
-$head z$$
-The vector $italic z$$ has length $latex d+1$$ and contains
-$th d$$ order Taylor coefficient row vector for $italic Z$$.
-
-
-$head On Input$$
-
-$subhead px$$
-The vector $italic px$$ has length $latex d+1$$ and 
-$syntax%%px%[%j%]%$$ contains the partial for $italic G$$
-with respect to the $th j$$ order Taylor coefficient for $italic X$$.
-
-$subhead pz$$
-The vector $italic pz$$ has length $latex d+1$$ and 
-$syntax%%pz%[%j%]%$$ contains the partial for $italic G$$
-with respect to the $th j$$ order Taylor coefficient for $italic Y$$.
-
-$head On Output$$
-
-$subhead px$$
-The vector $italic px$$ has length $latex d+1$$ and 
-$syntax%%px%[%j%]%$$ contains the partial for $italic H$$
-with respect to the $th j$$ order Taylor coefficient for $italic X$$.
-
-$subhead pz$$
-The vector $italic pz$$ has length $latex d+1$$ and 
-its contents are no longer specified; i.e., it has
-been used for work space.
-
-$end
-------------------------------------------------------------------------------
+/*!
+\file exp_op.hpp
+Forward and reverse mode calculations for z = exp(x).
 */
 
-// BEGIN CppAD namespace
-namespace CppAD {
 
+/*!
+Forward mode Taylor coefficient for result of op = ExpOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = exp(x)
+\endverbatim
+
+\copydetails forward_unary1_op
+*/
 template <class Base>
-inline void ForExpOp(size_t j, 
-	Base *z, const Base *x)
-{	size_t k;
+inline void forward_exp_op(
+	size_t j           ,
+	size_t i_z         ,
+	size_t i_x         ,
+	size_t nc_taylor   , 
+	Base*  taylor      )
+{	
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(ExpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(ExpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( j < nc_taylor );
 
+	// Taylor coefficients corresponding to argument and result
+	Base* x = taylor + i_x * nc_taylor;
+	Base* z = taylor + i_z * nc_taylor;
+
+	size_t k;
 	if( j == 0 )
-		z[j] = exp( x[0] );
+		z[0] = exp( x[0] );
 	else
 	{
-		z[j] = Base(0);
-		for(k = 1; k <= j; k++)
+		z[j] = x[1] * z[j-1];
+		for(k = 2; k <= j; k++)
 			z[j] += Base(k) * x[k] * z[j-k];
 		z[j] /= Base(j);
 	}
 }
 
+/*!
+Zero order forward mode Taylor coefficient for result of op = ExpOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = exp(x)
+\endverbatim
+
+\copydetails forward_unary1_op_0
+*/
 template <class Base>
-inline void RevExpOp(size_t d, 
-	const Base  *z, const Base *x,
-	      Base *pz,      Base *px)
-{	size_t k;
+inline void forward_exp_op_0(
+	size_t i_z         ,
+	size_t i_x         ,
+	size_t nc_taylor   , 
+	Base*  taylor      )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(ExpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(ExpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( 0 < nc_taylor );
 
-	// number of indices to access
-	size_t j = d;
+	// Taylor coefficients corresponding to argument and result
+	Base* x = taylor + i_x * nc_taylor;
+	Base* z = taylor + i_z * nc_taylor;
 
+	z[0] = exp( x[0] );
+}
+/*!
+Reverse mode partial derivatives for result of op = ExpOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = exp(x)
+\endverbatim
+
+\copydetails reverse_unary1_op
+*/
+
+template <class Base>
+inline void reverse_exp_op(
+	size_t      d            ,
+	size_t      i_z          ,
+	size_t      i_x          ,
+	size_t      nc_taylor    , 
+	const Base* taylor       ,
+	size_t      nc_partial   ,
+	Base*       partial      )
+{
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(ExpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(ExpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+
+	// Taylor coefficients and partials corresponding to argument
+	const Base* x  = taylor  + i_x * nc_taylor;
+	Base* px       = partial + i_x * nc_partial;
+
+	// Taylor coefficients and partials corresponding to result
+	const Base* z  = taylor  + i_z * nc_taylor;
+	Base* pz       = partial + i_z * nc_partial;
+
+	// lopp through orders in reverse
+	size_t j, k;
+	j = d;
 	while(j)
 	{	// scale partial w.r.t z[j]
 		pz[j] /= Base(j);
@@ -175,6 +142,5 @@ inline void RevExpOp(size_t d,
 	px[0] += pz[0] * z[0];
 }
 
-} // END CppAD namespace
-
+CPPAD_END_NAMESPACE
 # endif

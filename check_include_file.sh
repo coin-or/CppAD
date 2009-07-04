@@ -29,13 +29,13 @@ grep '^# *include *<cppad/' \
 	test_more/*.cpp > junk.1
 #
 cat junk.1 | sed -e 's%[^<]*<%%'  -e 's%>.*$%%' | sort -u > junk.2
-# The file cppad/local/unary_op should never be included. 
+# The file cppad/local/prototype_op should never be included. 
 # All other files should.
 ls	cppad/config.h \
 	cppad/*.hpp \
 	cppad/local/*.hpp \
 	cppad/speed/*.hpp \
-	| sed -e '/cppad\/local\/unary_op.hpp/d' | sort > junk.3 
+	| sed -e '/cppad\/local\/prototype_op.hpp/d' | sort > junk.3 
 if diff junk.2 junk.3
 then
 	different="no"

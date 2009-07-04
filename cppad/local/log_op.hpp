@@ -1,9 +1,10 @@
 /* $Id$ */
 # ifndef CPPAD_LOG_OP_INCLUDED
 # define CPPAD_LOG_OP_INCLUDED
+CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,143 +14,49 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin ForLogOp$$ $comment CppAD Developer Documentation$$
-$spell
-	Log
-	Taylor
-	const
-	inline
-	Op
-$$
-
-
-$index forward, log$$
-$index log, forward$$
-$index ForLogOp$$
-
-$section Forward Mode Logarithm Function$$
-
-$head Syntax$$
-
-$syntax%inline void ForLogOp(size_t %d%,
-	%Base% *%z%, const %Base% *%x%)%$$
-
-$head Description$$
-Computes the $italic d$$ order Taylor coefficient for $latex Z$$ where
-$syntax%
-	%Z% = Log(%X%)
-%$$
-
-$head x$$
-The vector $italic x$$ has length $latex d+1$$ and contains the
-$th d$$ order Taylor coefficient row vector for $italic X$$.
-
-$head z$$
-The vector $italic z$$ has length $latex d+1$$.
-On input it contains the
-$th d-1$$ order Taylor coefficient row vector for $italic Z$$.
-On output it contains the
-$th d$$ order Taylor coefficient row vector for $italic Z$$; i.e.,
-$syntax%%z%[%d%]%$$ is set equal to the $th d$$ Taylor coefficient for
-the function $italic Z$$.
-
-$end
-------------------------------------------------------------------------------
-$begin RevLogOp$$ $comment CppAD Developer Documentation$$
-$spell
-	Log
-	Taylor
-	const
-	inline
-	Op
-	px
-	py
-	pz
-$$
-
-
-$index reverse, log$$
-$index log, reverse$$
-$index RevLogOp$$
-
-$section Reverse Mode Logarithm Function$$
-
-$head Syntax$$
-
-$syntax%inline void RevLogOp(size_t %d%,
-	const %Base% *%z%, const %Base% *%x%,
-	 %Base% *%pz%, %Base% *%px%)%$$
-
-$head Description$$
-We are given the partial derivatives for a function
-$latex G(z, x)$$ and we wish to compute the partial derivatives for
-the function
-$latex \[
-	H(x) = G [ Z(x) , x ]
-\]$$
-where $latex Z(x)$$ is defined as the 
-$th d$$ order Taylor coefficient row vector for $italic Z$$ as
-a function of the corresponding row vector for $italic X$$ 
-and
-$latex \[
-	Z = Log(X)
-\]$$
-Note that $italic Z$$ has been used both the original logarithm 
-function and for the corresponding mapping of Taylor coefficients.
-
-$head x$$
-The vector $italic x$$ has length $latex d+1$$ and contains the
-$th d$$ order Taylor coefficient row vector for $italic X$$.
-
-
-$head z$$
-The vector $italic z$$ has length $latex d+1$$ and contains
-$th d$$ order Taylor coefficient row vector for $italic Z$$.
-
-
-$head On Input$$
-
-$subhead px$$
-The vector $italic px$$ has length $latex d+1$$ and 
-$syntax%%px%[%j%]%$$ contains the partial for $italic G$$
-with respect to the $th j$$ order Taylor coefficient for $italic X$$.
-
-$subhead pz$$
-The vector $italic pz$$ has length $latex d+1$$ and 
-$syntax%%pz%[%j%]%$$ contains the partial for $italic G$$
-with respect to the $th j$$ order Taylor coefficient for $italic Z$$.
-
-$head On Output$$
-
-$subhead px$$
-The vector $italic px$$ has length $latex d+1$$ and 
-$syntax%%px%[%j%]%$$ contains the partial for $italic H$$
-with respect to the $th j$$ order Taylor coefficient for $italic X$$.
-
-$subhead pz$$
-The vector $italic pz$$ has length $latex d+1$$ and 
-its contents are no longer specified; i.e., it has
-been used for work space.
-
-$end
-------------------------------------------------------------------------------
+/*!
+\file log_op.hpp
+Forward and reverse mode calculations for z = log(x).
 */
 
-// BEGIN CppAD namespace
-namespace CppAD {
+/*!
+Compute forward mode Taylor coefficient for result of op = LogOp.
 
+The C++ source code corresponding to this operation is
+\verbatim
+	z = log(x)
+\endverbatim
+
+\copydetails forward_unary1_op
+*/
 template <class Base>
-inline void ForLogOp(size_t j, 
-	Base *z, const Base *x)
-{	size_t k;
+inline void forward_log_op(
+	size_t j           ,
+	size_t i_z         ,
+	size_t i_x         ,
+	size_t nc_taylor   , 
+	Base*  taylor      )
+{	
+	size_t k;
+
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(LogOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(LogOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( j < nc_taylor );
+
+	// Taylor coefficients corresponding to argument and result
+	Base* x = taylor + i_x * nc_taylor;
+	Base* z = taylor + i_z * nc_taylor;
 
 	if( j == 0 )
-		z[j] = log( x[0] );
+		z[0] = log( x[0] );
+	else if ( j == 1 )
+		z[1] = x[1] / x[0];
 	else
 	{
-		z[j] = Base(0);
-		for(k = 1; k < j; k++)
+		z[j] = -z[1] * x[j-1];
+		for(k = 2; k < j; k++)
 			z[j] -= Base(k) * z[k] * x[j-k];
 		z[j] /= Base(j);
 		z[j] += x[j];
@@ -157,15 +64,75 @@ inline void ForLogOp(size_t j,
 	}
 }
 
+/*!
+Compute zero order forward mode Taylor coefficient for result of op = LogOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = log(x)
+\endverbatim
+
+\copydetails forward_unary1_op_0
+*/
 template <class Base>
-inline void RevLogOp(size_t d, 
-	const Base  *z, const Base *x,
-	      Base *pz,      Base *px)
-{	size_t k;
+inline void forward_log_op_0(
+	size_t i_z         ,
+	size_t i_x         ,
+	size_t nc_taylor   , 
+	Base*  taylor      )
+{
 
-	// number of indices to access
-	size_t j = d;
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(LogOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(LogOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( 0 < nc_taylor );
 
+	// Taylor coefficients corresponding to argument and result
+	Base* x = taylor + i_x * nc_taylor;
+	Base* z = taylor + i_z * nc_taylor;
+
+	z[0] = log( x[0] );
+}
+
+/*!
+Compute reverse mode partial derivatives for result of op = LogOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = log(x)
+\endverbatim
+
+\copydetails reverse_unary1_op
+*/
+
+template <class Base>
+inline void reverse_log_op(
+	size_t      d            ,
+	size_t      i_z          ,
+	size_t      i_x          ,
+	size_t      nc_taylor    , 
+	const Base* taylor       ,
+	size_t      nc_partial   ,
+	Base*       partial      )
+{	size_t j, k;	
+
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( NumArg(LogOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(LogOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
+
+	// Taylor coefficients and partials corresponding to argument
+	const Base* x  = taylor  + i_x * nc_taylor;
+	Base* px       = partial + i_x * nc_partial;
+
+	// Taylor coefficients and partials corresponding to result
+	const Base* z  = taylor  + i_z * nc_taylor;
+	Base* pz       = partial + i_z * nc_partial;
+
+	j = d;
 	while(j)
 	{	// scale partial w.r.t z[j]
 		pz[j]   /= x[0];
@@ -185,6 +152,5 @@ inline void RevLogOp(size_t d,
 	px[0] += pz[0] / x[0];
 }
 
-} // END CppAD namespace
-
+CPPAD_END_NAMESPACE
 # endif

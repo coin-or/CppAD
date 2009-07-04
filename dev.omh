@@ -45,7 +45,6 @@ $contents%
 	cppad/local/recorder.hpp%
 	cppad/local/ad_tape.hpp%
 	cppad/local/bool_fun_link.hpp%
-	cppad/local/op.hpp%
 	cppad/local/forward_sweep.hpp%
 	cppad/local/reverse_sweep.hpp%
 	cppad/local/for_jac_sweep.hpp%
