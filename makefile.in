@@ -235,7 +235,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
-# $Id: makefile.am 1401 2009-06-24 17:56:51Z bradbell $
+# $Id: makefile.am 1447 2009-07-04 19:15:09Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
@@ -326,6 +326,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/compare.hpp \
 	cppad/local/compute_assign.hpp \
 	cppad/local/cond_exp.hpp \
+	cppad/local/comp_op.hpp \
 	cppad/local/cond_op.hpp \
 	cppad/local/convert.hpp \
 	cppad/local/cos_op.hpp \

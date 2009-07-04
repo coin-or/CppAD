@@ -166,12 +166,6 @@ size_t forward0sweep(
 	const Base       *X = 0;
 	const Base       *Y = 0;
 
-	// used by CExp operator (left and right also used by Com operator)
-	const Base  *left = 0, *right = 0;
-
-	// used by Com operator
-	bool result;
-
 	Base             *Z = 0;
 
 	size_t          i;
@@ -290,54 +284,9 @@ size_t forward0sweep(
 			// ---------------------------------------------------
 
 			case ComOp:
-			n_res = 0;
-			n_arg = 4;
-			CPPAD_ASSERT_UNKNOWN( arg[1] > 1 );
-			// d == 0
-			{	if( arg[1] & 1 )
-					result = true;
-				else	result = false;
-				if( arg[1] & 2 )
-					left = Taylor + arg[2] * J;
-				else	left = CPPAD_GET_PAR(arg[2]);
-				if( arg[1] & 4 )
-					right = Taylor + arg[3] * J;
-				else	right = CPPAD_GET_PAR(arg[3]);
-				switch( CompareOp( arg[0] ) )
-				{	case CompareLt:
-					compareCount += ( result != 
-					LessThanZero(*left - *right) );
-					break;
-
-					case CompareLe:
-					compareCount += ( result !=
-					LessThanOrZero(*left - *right) );
-					break;
-
-					case CompareEq:
-					compareCount += ( result != 
-					(*left == *right) );
-					break;
-
-					case CompareGe:
-					compareCount += ( result !=
-					GreaterThanOrZero(*left - *right) );
-					break;
-
-					case CompareGt:
-					compareCount += ( result != 
-					GreaterThanZero(*left - *right) );
-					break;
-
-					case CompareNe:
-					compareCount += ( result != 
-					(*left != *right) );
-					break;
-
-					default:
-					CPPAD_ASSERT_UNKNOWN(0);
-				}
-			}
+			forward_comp_op_0(
+			compareCount, arg, num_par, parameter, J, Taylor
+			);
 			break;
 			// ---------------------------------------------------
 
