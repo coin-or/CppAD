@@ -49,6 +49,11 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 07-04$$
+Add developer documentation for the
+$cref/CompareChange/$$ operations during tape evaluation.
+$pre
+
+$$ 
 $bold Begin Merge$$ 
 $pre
 $$

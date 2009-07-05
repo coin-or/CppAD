@@ -160,6 +160,7 @@ size_t forward0sweep(
 	size_t        i_var;
 	size_t        i_arg;
 
+	size_t*         non_const_arg;
 	const size_t   *arg = 0;
 	const size_t *arg_0 = 0;
 	const Base       *P = 0;
@@ -344,40 +345,18 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case LdpOp:
-			n_res = 1;
-			n_arg = 3;
-			
-			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
-			CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
-			CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
-
-			// d == 0
-			{	i   = arg[1];
-				CPPAD_ASSERT_UNKNOWN( 
-					i < VectorInd[arg[0] - 1] 
-				);
-				CPPAD_ASSERT_UNKNOWN( 
-					i + arg[0] < Rec->num_rec_vecad_ind() 
-				);
-
-				if( VectorVar[ i + arg[0] ] )
-				{	i     = VectorInd[ i + arg[0] ];
-					i_arg = arg - arg_0;
-					Rec->ReplaceInd(i_arg + 2, i);
-					CPPAD_ASSERT_UNKNOWN(i > 0 );
-					CPPAD_ASSERT_UNKNOWN( i < i_var );
-					Y     = Taylor + i * J;
-					Z[0]  = Y[0];
-				}
-				else
-				{	i     = VectorInd[ i + arg[0] ];
-					i_arg = arg - arg_0;
-					Rec->ReplaceInd(i_arg + 2, 0);
-					Z[0] = *(CPPAD_GET_PAR(i));
-					i    = 0;
-				}
-			}
+			non_const_arg = Rec->forward_non_const_arg();
+			forward_load_p_op_0(
+				i_var, 
+				non_const_arg, 
+				num_par, 
+				parameter, 
+				J, 
+				Taylor,
+				Rec->num_rec_vecad_ind(),
+				VectorVar,
+				VectorInd
+			);
 			break;
 			// -------------------------------------------------
 

@@ -343,6 +343,9 @@ class VecAD_reference {
 	friend class VecAD<Base>;
 	friend class ADTape<Base>;
 
+private:
+	VecAD<Base>      *vec_;         // pointer to entire vector
+	mutable AD<Base>  x_;           // index for this element
 public:
 	VecAD_reference(VecAD<Base> *v, const AD<Base> &x) 
 		: vec_( v ) , x_(x)
@@ -364,7 +367,6 @@ public:
 	// AD<Base> constructor
 	AD<Base> ADBase(void) const
 	{	AD<Base> result;
-		CPPAD_ASSERT_UNKNOWN( Parameter(result) );
 
 		size_t i = static_cast<size_t>( Integer(x_) );
 		CPPAD_ASSERT_UNKNOWN( i < vec_->length_ );
@@ -374,8 +376,8 @@ public:
 
 		// this address will be recorded in tape and must be
 		// zero for parameters
-		if( Parameter(result) )
-			result.taddr_ = 0;
+		CPPAD_ASSERT_UNKNOWN( Parameter(result) );
+		result.taddr_ = 0;
 
 		// index corresponding to this element
 		if( Variable(*vec_) )
@@ -425,10 +427,6 @@ public:
 		}
 		return result;
 	}
-
-private:
-	VecAD<Base>      *vec_;         // pointer to entire vector
-	mutable AD<Base>  x_;           // index for this element
 };
 
 // VecAD
@@ -441,6 +439,18 @@ class VecAD {
 
 	friend std::ostream& operator << <Base>
 		(std::ostream &os, const VecAD<Base> &vec_);
+private:
+	// size of this VecAD vector
+	const  size_t   length_; 
+
+	// elements of this vector 
+	Base *data_; 
+
+	// offset in cummulate vector corresponding to this object
+	size_t offset_; 
+
+	// tape id corresponding to the offset
+	size_t id_;
 public:
 	// declare the user's view of this type here
 	typedef VecAD_reference<Base> reference;
@@ -531,18 +541,6 @@ public:
 		return VecAD_reference<Base>(this, x); 
 	}
 
-private:
-	// size of this VecAD vector
-	const  size_t   length_; 
-
-	// elements of this vector 
-	Base *data_; 
-
-	// offset in cummulate vector corresponding to this object
-	size_t offset_; 
-
-	// tape id corresponding to the offset
-	size_t id_;
 };
 
 

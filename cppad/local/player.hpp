@@ -255,24 +255,6 @@ public:
 
 	/*! 
 	\brief 
-	Fetch a subsequence of the argument indices from the recording.
-
-	\return 
-	the beginning of the subsequence of argument indices.
-
-	\param n
-	the number of argument indices in the subsequence.
-
-	\param i
-	the index where the subsequence begins. 
-	*/
-	const size_t *GetInd(size_t n, size_t i) const
-	{	CPPAD_ASSERT_UNKNOWN(i + n <= num_rec_op_arg_)
-		return rec_op_arg_ + i;
-	}
-
-	/*! 
-	\brief 
 	Fetch a '\\0' terminated string from the recording.
 
 	\return 
@@ -431,6 +413,16 @@ public:
 		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= num_rec_op_arg_ );
 		CPPAD_ASSERT_UNKNOWN( var_index_ + NumRes(op) <= num_rec_var_ );
 	}
+	/*!
+	Get a non-constant version of op_arg returned by previous next_forward
+
+	\return
+	The return value is equal to the return value of op_arg 
+	corresponding to the previous call to next_forward.
+	*/
+	size_t* forward_non_const_arg(void)
+	{	return op_arg_ + rec_op_arg_; }
+
 	/*!
 	Start a play back of the recording during a reverse sweep.
 

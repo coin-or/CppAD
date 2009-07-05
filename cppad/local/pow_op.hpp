@@ -67,7 +67,7 @@ inline void forward_powvv_op(
 		Base* y   = taylor + arg[1]  * nc_taylor;
 		Base* z_2 = taylor + (i_z+2) * nc_taylor;
 
-		z[0] = pow(x[0], y[0]);
+		z_2[0] = pow(x[0], y[0]);
 	}
 	else	forward_exp_op(d, i_z+2, i_z+1, nc_taylor, taylor);
 # endif

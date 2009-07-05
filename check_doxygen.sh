@@ -23,6 +23,7 @@ list="
 	cppad_assert.hpp
 	define.hpp
 	div_op.hpp
+	load_op.hpp
 	log_op.hpp
 	mul_op.hpp
 	op_code.hpp
