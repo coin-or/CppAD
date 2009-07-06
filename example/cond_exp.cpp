@@ -52,6 +52,7 @@ $end
 bool CondExp(void)
 {	bool ok = true;
 
+	using CppAD::isnan;
 	using CppAD::AD;
 	using CppAD::NearEqual;
 	using CppAD::log; 

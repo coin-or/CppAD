@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_09$$
 $spell
+	isnan
 	atan
 	asin
 	acos
@@ -61,7 +62,11 @@ Add developer documentation for tape evaluation of the
 VecAD load operations 
 (a load operation accesses an element of the vector but
 does not change it.)
+$pre
 
+$$
+Fix $code isnan$$ undefined in $code example/cond_exp.cpp$$ error 
+introduced on 07-04 change.
 
 $head 07-04$$
 Add developer documentation for the
