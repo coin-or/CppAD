@@ -37,6 +37,7 @@ $spell
 	op
 	pycppad
 	cond_exp
+	VecAD
 $$
 
 $section Changes and Additions to CppAD During 2009$$
@@ -47,6 +48,12 @@ This section contains a list of the changes to CppAD during 2009
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$subhead 07-06$$
+Fixed a bug in second or higher order reverse mode calculations
+that included $cref/VecAD/$$.
+This bug was demonstrated by the test case $code SecondOrderReverse$$
+in the file $code test_more/vec_ad.cpp$$.
 
 $head 07-04$$
 Add developer documentation for the

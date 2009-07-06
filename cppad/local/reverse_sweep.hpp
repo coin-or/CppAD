@@ -342,13 +342,9 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 			case LdpOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 1);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
-			CPPAD_ASSERT_UNKNOWN( arg[2] < i_var );
-			if( arg[2] > 0 )
-			{	pY     = Partial + arg[2] * K;
-				pY[d] += pZ[d];
-			}
+			reverse_load_p_op(
+				d, i_var, arg, J, Taylor, K, Partial
+			);
 			break;
 			// -------------------------------------------------
 

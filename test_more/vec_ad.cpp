@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -172,11 +172,66 @@ bool VecADTestTwo(void)
 	return ok;
 }
 
+# include <limits>
+bool SecondOrderReverse(void)
+{	// Bradley M. Bell 2009-07-06 
+	// Reverse mode for LdpOp was only modifying the highest order partial
+	// This test demonstrated the bug
+	bool ok = true;
+	using CppAD::AD;
+	using CppAD::NearEqual;
+	double eps = 10. * std::numeric_limits<double>::epsilon();
+
+	size_t n = 1;
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	X[0] = 2.;
+	CppAD::Independent(X);
+
+	size_t m = 1;
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+
+	// The LdpOp instruction corresponds to operations with VecAD vectors.
+	CppAD::VecAD<double> Z(1);
+	AD<double> zero = 0;
+	Z[zero] = X[0] + 1;
+
+	// Compute a function where the second order partial for y
+	// depends on the first order partials for z
+	// This will use the LdpOp instruction because the index
+	// access to z is the parameter zero.
+	Y[0] = Z[zero] * Z[zero];
+
+	CppAD::ADFun<double> f(X, Y);
+
+	// first order forward
+	CPPAD_TEST_VECTOR<double> dx(n);
+	size_t p = 1;
+	dx[0]    = 1.;
+	f.Forward(p, dx);
+
+	// second order reverse (test exp_if_true case)
+	CPPAD_TEST_VECTOR<double> w(m), dw(2 * n);
+	w[0] = 1.;
+	p    = 2;
+	dw = f.Reverse(p, w);
+
+	// check first derivative in dw
+	double check = 2. * (Value( X[0] ) + 1.);
+	ok &= NearEqual(dw[0], check, eps, eps); 
+
+	// check second derivative in dw
+	check = 2.;
+	ok &= NearEqual(dw[1], check, eps, eps); 
+
+	return ok;
+}
+
 } // END empty namespace
 
 bool VecAD(void)
 {	bool ok = true;
 	ok &= VecADTestOne();
 	ok &= VecADTestTwo(); 
+	ok &= SecondOrderReverse();
 	return ok;
 }

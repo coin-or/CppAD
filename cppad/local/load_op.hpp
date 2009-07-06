@@ -24,12 +24,12 @@ Zero order forward mode implementation of op = LdpOp
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = v[x]
+	z = x[a]
 \endverbatim
 where v is a VecAD<Base> vector and x is an AD<Base> index. 
 In the documentation below, we use the notation
 \verbatim
-	i_v_x = combined[ arg[0] + arg[1] ]
+	i_x_a = combined[ arg[0] + arg[1] ]
 \endverbatim
 
 \tparam Base
@@ -56,23 +56,23 @@ Is this index of this VecAD element with in this VecAD vector.
 \b Input: The input value of \a arg[2] does not matter.
 \n
 \b Output: 
-If v[x] is a parameter, \a arg[2] is set to zero 
+If x[a] is a parameter, \a arg[2] is set to zero 
 (which is not a valid variable index).
-If v[x] is a variable, 
-\a arg[2] is set to the variable index corresponding to v[x]; i.e.  i_v_x.
+If x[a] is a variable, 
+\a arg[2] is set to the variable index corresponding to x[a]; i.e.  i_x_a.
 
 \param num_par
 is the number of parameters in \a parameter.
 
 \param parameter
-\b Input: If v[x] is a parameter, \a parameter [ i_v_x ] is its value.
+\b Input: If x[a] is a parameter, \a parameter [ i_x_a ] is its value.
 
 \param nc_taylor
 number of columns in the matrix containing the Taylor coefficients.
 
 \param taylor
-\b Input: if v[x] is a variable, \a taylor[ i_v_x * nc_taylor + 0 ]
-is the zero order Taylor coefficient for v[x]
+\b Input: if x[a] is a variable, \a taylor[ i_x_a * nc_taylor + 0 ]
+is the zero order Taylor coefficient for x[a]
 \n
 \b Output: \a taylor[ i_z * nc_taylor + 0 ]
 is the zero order Taylor coefficient for the variable z.
@@ -82,19 +82,19 @@ is the total number of elements in the combined VecAD array.
 
 \param variable
 If \a variable [ \a arg[0] + \a arg[1] ] is true,
-v[x] is a variable.  Otherwise it is a parameter.
+x[a] is a variable.  Otherwise it is a parameter.
 
 \param combined
 \b Input: \a combined[ \a arg[0] - 1 ] 
 is the number of elements in the VecAD vector containing this element.
 \n
 \b Input: 
-if v[x] is a variable,
+if x[a] is a variable,
 \verbatim
-	i_v_x = combined[ arg[0] + arg[1] ] 
+	i_x_a = combined[ arg[0] + arg[1] ] 
 \endverbatim
 is its index in the Taylor coefficient array \a taylor.
-Otherwise, i_v_x is its index in parameter array \a parameter.
+Otherwise, i_x_a is its index in parameter array \a parameter.
 
 \par Checked Assertions where op is a binary operator:
 \li NumArg(LdpOp) == 3
@@ -102,8 +102,8 @@ Otherwise, i_v_x is its index in parameter array \a parameter.
 \li 0 <  \a \a arg[0]
 \li \a arg[0] + \a arg[1] < nc_combined
 \li \a arg[1] < combined[ \a arg[0] - 1 ]
-\li if v[x] is a parameter, i_v_x < num_par
-\li if v[x] is a variable, i_v_x < i_z
+\li if x[a] is a parameter, i_x_a < num_par
+\li if x[a] is a variable, i_x_a < i_z
 */
 
 template <class Base>
@@ -120,7 +120,7 @@ inline void forward_load_p_op_0(
 {
 
 	size_t combined_index = arg[0] + arg[1];
-	size_t i_v_x          = combined[ combined_index ];	
+	size_t i_x_a          = combined[ combined_index ];	
 	CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
@@ -130,16 +130,16 @@ inline void forward_load_p_op_0(
 	Base* z  = taylor + i_z * nc_taylor;
 
 	if( variable[ combined_index ] )
-	{	CPPAD_ASSERT_UNKNOWN( i_v_x < i_z );
-		Base* v_x = taylor + i_v_x * nc_taylor;
-		arg[2]    = i_v_x;
-		z[0]      = v_x[0];
+	{	CPPAD_ASSERT_UNKNOWN( i_x_a < i_z );
+		Base* x_a = taylor + i_x_a * nc_taylor;
+		arg[2]    = i_x_a;
+		z[0]      = x_a[0];
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( i_v_x < num_par );
-		Base v_x  = parameter[i_v_x];
+	{	CPPAD_ASSERT_UNKNOWN( i_x_a < num_par );
+		Base x_a  = parameter[i_x_a];
 		arg[2]    = 0;
-		z[0]      = v_x;
+		z[0]      = x_a;
 	}
 }
 
@@ -148,7 +148,7 @@ Forward mode, except for zero order, for op = LdpOp
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = v[x]
+	z = x[a]
 \endverbatim
 where v is a VecAD<Base> vector and x is an AD<Base> index. 
 
@@ -165,17 +165,17 @@ is the AD variable index corresponding to the variable z.
 
 \param arg
 \a arg[2]
-If v[x] is a parameter, \a arg[2] is zero 
+If x[a] is a parameter, \a arg[2] is zero 
 (which is not a valid variable index).
-If v[x] is a variable, 
-\a arg[2] is the variable index corresponding to v[x].
+If x[a] is a variable, 
+\a arg[2] is the variable index corresponding to x[a].
 
 \param nc_taylor
 number of columns in the matrix containing the Taylor coefficients.
 
 \param taylor
-\b Input: if v[x] is a variable, \a taylor[ \a arg[2] * nc_taylor + d ]
-is the d-order Taylor coefficient corresponding to v[x].
+\b Input: if x[a] is a variable, \a taylor[ \a arg[2] * nc_taylor + d ]
+is the d-order Taylor coefficient corresponding to x[a].
 \n
 \b Output: \a taylor[ i_z * nc_taylor + d ]
 is the d-order Taylor coefficient for the variable z.
@@ -203,10 +203,109 @@ inline void forward_load_p_op(
 
 	Base* z      = taylor + i_z * nc_taylor;
 	if( arg[2] > 0 )
-	{	Base* v_x = taylor + arg[2] * nc_taylor;
-		z[d]      = v_x[d];
+	{	Base* x_a = taylor + arg[2] * nc_taylor;
+		z[d]      = x_a[d];
 	}
 	else	z[d]      = Base(0);
+}
+
+/*!
+Reverse mode, except for zero order, for op = LdpOp
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = x[a]
+\endverbatim
+where v is a VecAD<Base> vector and x is an AD<Base> index. 
+
+This routine is given the partial derivatives of a function 
+G(z , x[a] , w , u ... )
+and it uses them to compute the partial derivatives of 
+\verbatim
+	H( x[a] , w , u , ... ) = G[ z( x[a] ) , x[a] , w , u , ... ]
+\endverbatim
+
+\tparam Base
+base type for the operator; i.e., this operation was recorded
+using AD< \a Base > and computations by this routine are done using type 
+\a Base.
+
+\param d
+highest order the Taylor coefficient that we are computing the partial
+derivative with respect to.
+
+\param i_z
+is the AD variable index corresponding to the variable z.
+
+\param arg
+\a arg[2]
+If x[a] is a parameter, \a arg[2] is zero 
+(which is not a valid variable index).
+If x[a] is a variable, 
+\a arg[2] is the variable index corresponding to x[a].
+
+\param nc_taylor
+number of columns in the matrix containing the Taylor coefficients
+(not used).
+
+\param taylor
+matrix of Taylor coefficients (not used).
+
+\param nc_partial
+number of colums in the matrix containing all the partial derivatives
+(not used if \a arg[2] is zero).
+
+\param partial
+If \a arg[0] is zero, x[a] is a parameter
+and no values need to be modified; i.e., \a partial is not used.
+Otherwise, x[a] is a variable and:
+\n
+\b Input: \a partial [ \a arg[2] * \a nc_partial + k ] 
+for k = 0 , ... , \a d
+is the partial derivative of G( z( x[a] ) , x[a], w , u , ... ) 
+with respect to the k-th order Taylor coefficient for x[a].
+\n
+\b Input: \a partial [ \a i_z * \a nc_partial + k ] 
+for k = 0 , ... , \a d
+is the partial derivative of G( z( x[a] ) , x[a] , w , u , ... ) 
+with respect to the k-th order Taylor coefficient for z.
+\n
+\b Output: \a partial [ \a arg[2] * \a nc_partial + k ]
+for k = 0 , ... , \a d
+is the partial derivative of H( x[a] , w , u , ... ) with respect to 
+the k-th order Taylor coefficient for x.
+
+\par Checked Assertions 
+\li NumArg(LdpOp) == 3
+\li NumRes(LdpOp) == 1
+\li 0 <= d < nc_partial
+\li arg[2] < i_z
+*/
+template <class Base>
+inline void reverse_load_p_op(
+	size_t         d           ,
+	size_t         i_z         ,
+	const size_t*  arg         , 
+	size_t         nc_taylor   ,
+	const Base*    taylor      ,
+	size_t         nc_partial  ,
+	Base*          partial     )
+{
+
+	CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( 0 <= d )
+	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
+	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+
+	if( arg[2] > 0 )
+	{
+		Base* pz   = partial + i_z    * nc_partial;
+		Base* px_a = partial + arg[2] * nc_partial;
+		size_t j = d + 1;
+		while(j--)
+			px_a[j]   += pz[j];
+	}
 }
 CPPAD_END_NAMESPACE
 # endif
