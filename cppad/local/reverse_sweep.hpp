@@ -152,7 +152,6 @@ void ReverseSweep(
 	const Base       *Z = 0;
 
 	Base            *pZ = 0;
-	Base            *pY = 0;
 
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
@@ -342,20 +341,16 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 			case LdpOp:
-			reverse_load_p_op(
+			reverse_load_op(
 				d, i_var, arg, J, Taylor, K, Partial
 			);
 			break;
 			// -------------------------------------------------
 
 			case LdvOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 1);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
-			CPPAD_ASSERT_UNKNOWN( arg[2] < i_var );
-			if( arg[2] > 0 )
-			{	pY     = Partial + arg[2] * K;
-				pY[d] += pZ[d];
-			}
+			reverse_load_op(
+				d, i_var, arg, J, Taylor, K, Partial
+			);
 			break;
 			// -------------------------------------------------
 

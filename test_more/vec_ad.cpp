@@ -187,19 +187,25 @@ bool SecondOrderReverse(void)
 	X[0] = 2.;
 	CppAD::Independent(X);
 
-	size_t m = 1;
+	size_t m = 2;
 	CPPAD_TEST_VECTOR< AD<double> > Y(m);
 
 	// The LdpOp instruction corresponds to operations with VecAD vectors.
-	CppAD::VecAD<double> Z(1);
+	CppAD::VecAD<double> Z(2);
 	AD<double> zero = 0;
 	Z[zero] = X[0] + 1;
+
+	// The LdvOp instruction corresponds to the index being a variable.
+	AD<double> one = X[0] - 1; // one in a variable here
+	Z[one]  = X[0] + 1.;
+	
 
 	// Compute a function where the second order partial for y
 	// depends on the first order partials for z
 	// This will use the LdpOp instruction because the index
 	// access to z is the parameter zero.
 	Y[0] = Z[zero] * Z[zero];
+	Y[1] = Z[one]  * Z[one];
 
 	CppAD::ADFun<double> f(X, Y);
 
@@ -209,14 +215,31 @@ bool SecondOrderReverse(void)
 	dx[0]    = 1.;
 	f.Forward(p, dx);
 
+	// Test LdpOp
 	// second order reverse (test exp_if_true case)
 	CPPAD_TEST_VECTOR<double> w(m), dw(2 * n);
 	w[0] = 1.;
+	w[1] = 0.;
 	p    = 2;
 	dw = f.Reverse(p, w);
 
 	// check first derivative in dw
 	double check = 2. * (Value( X[0] ) + 1.);
+	ok &= NearEqual(dw[0], check, eps, eps); 
+
+	// check second derivative in dw
+	check = 2.;
+	ok &= NearEqual(dw[1], check, eps, eps); 
+
+	// Test LdvOp
+	// second order reverse (test exp_if_true case)
+	w[0] = 0.;
+	w[1] = 1.;
+	p    = 2;
+	dw = f.Reverse(p, w);
+
+	// check first derivative in dw
+	check = 2. * (Value( X[0] ) + 1.);
 	ok &= NearEqual(dw[0], check, eps, eps); 
 
 	// check second derivative in dw

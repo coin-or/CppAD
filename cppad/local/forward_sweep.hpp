@@ -170,7 +170,6 @@ size_t forward_sweep(
 	OpCode           op;
 	size_t         i_op;
 	size_t        i_var;
-	size_t        i_arg;
 
 # if ! CPPAD_USE_FORWARD0SWEEP
 	size_t*         non_const_arg;
@@ -179,7 +178,6 @@ size_t forward_sweep(
 	const size_t *arg_0 = 0;
 	const Base       *P = 0;
 	const Base       *X = 0;
-	const Base       *Y = 0;
 
 	Base             *Z = 0;
 
@@ -363,7 +361,8 @@ size_t forward_sweep(
 			case LdpOp:
 # if ! CPPAD_USE_FORWARD0SWEEP
 			if( d == 0 )
-			{
+			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
+				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
 				non_const_arg = Rec->forward_non_const_arg();
 				forward_load_p_op_0(
 					i_var, 
@@ -379,58 +378,32 @@ size_t forward_sweep(
 			}
 			else
 # endif
-			{	forward_load_p_op( d, i_var, arg, J, Taylor);
+			{	forward_load_op( d, i_var, arg, J, Taylor);
 			}
 			break;
 			// -------------------------------------------------
 
 			case LdvOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 1);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
-			
-			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
-			CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
-			CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
-
+# if ! CPPAD_USE_FORWARD0SWEEP
 			if( d == 0 )
-			{
-				X   = Taylor + arg[1] * J;
-				i   = Integer( X[0] );
-				len = VectorInd[ arg[0] - 1 ];
-				CPPAD_ASSERT_KNOWN( 
-					i < len,
-					"VecAD index value >= vector length"
+			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
+				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
+				non_const_arg = Rec->forward_non_const_arg();
+				forward_load_v_op_0(
+					i_var, 
+					non_const_arg, 
+					num_par, 
+					parameter, 
+					J, 
+					Taylor,
+					Rec->num_rec_vecad_ind(),
+					VectorVar,
+					VectorInd
 				);
-				CPPAD_ASSERT_UNKNOWN( 
-					i + arg[0] < Rec->num_rec_vecad_ind() 
-				);
-
-				if( VectorVar[ i + arg[0] ] )
-				{	i     = VectorInd[ i + arg[0] ];
-					i_arg = arg - arg_0;
-					Rec->ReplaceInd(i_arg + 2, i);
-					CPPAD_ASSERT_UNKNOWN(i > 0 );
-					CPPAD_ASSERT_UNKNOWN( i < i_var );
-					Y     = Taylor + i * J;
-					Z[d]  = Y[d];
-				}
-				else
-				{	i     = VectorInd[ i + arg[0] ];
-					i_arg = arg - arg_0;
-					Rec->ReplaceInd(i_arg + 2, 0);
-					Z[d] = *(Rec->GetPar(i));
-					i    = 0;
-				}
 			}
 			else
-			{	i = arg[2];
-				if( i > 0 )
-				{	CPPAD_ASSERT_UNKNOWN( i < i_var );
-					Y     = Taylor + i * J;
-					Z[d]  = Y[d];
-				}
-				else	Z[d]  = Base(0);
+# endif
+			{	forward_load_op( d, i_var, arg, J, Taylor);
 			}
 			break;
 			// -------------------------------------------------

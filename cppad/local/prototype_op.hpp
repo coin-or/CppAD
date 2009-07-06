@@ -910,6 +910,123 @@ inline void reverse_pow_op(
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
 }
+// ====================  VecAD Operations     ==============================
+/*!
+Prototype for zero order forward mode implementation of op = LdpOp or LdvOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = y[x]
+\endverbatim
+where v is a VecAD<Base> vector and x is an AD<Base> index. 
+We define the index corresponding to y[x] by
+\verbatim
+	i_y_x = combined[ arg[0] + i_vec ]
+\endverbatim
+where i_vec is defined under the heading \a arg[1] below:
+
+\tparam Base
+base type for the operator; i.e., this operation was recorded
+using AD< \a Base > and computations by this routine are done using type 
+\a Base.
+
+\param i_z
+is the AD variable index corresponding to the variable z.
+
+\param arg
+\n
+\a arg[0]
+is the offset of this VecAD vector relative to the beginning 
+of the \a combined VecAD array.
+\n
+\n 
+\a arg[1] 
+\n
+If this is the LdpOp operation (load by parameter), i_vec is defined by
+\verbatim
+	i_vec = arg[1]
+\endverbatim
+If this is the LdvOp operation (load by variable), 
+the value i_vec is defined by
+\verbatim
+	i_vec = floor( taylor[ arg[1] * nc_taylor + 0 ] )
+\endverbatim
+where floor(c) is the greatest integer less that or equal c.
+\n
+\a arg[2]
+\b Input: The input value of \a arg[2] does not matter.
+\n
+\b Output: 
+If y[x] is a parameter, \a arg[2] is set to zero 
+(which is not a valid variable index).
+If y[x] is a variable, 
+\a arg[2] is set to the variable index corresponding to y[x]; i.e.  i_y_x.
+
+\param num_par
+is the number of parameters in \a parameter.
+
+\param parameter
+\b Input: If y[x] is a parameter, \a parameter [ i_y_x ] is its value.
+
+\param nc_taylor
+number of columns in the matrix containing the Taylor coefficients.
+
+\param taylor
+\b Input: in LdvOp case, \a taylor[ arg[1] * nc_taylor + 0 ]
+is used to compute the index in the definition of i_vec above
+\n
+\b Input: if y[x] is a variable, \a taylor[ i_y_x * nc_taylor + 0 ]
+is the zero order Taylor coefficient for y[x].
+\n
+\b Output: \a taylor[ i_z * nc_taylor + 0 ]
+is the zero order Taylor coefficient for the variable z.
+
+\param nc_combined
+is the total number of elements in the combined VecAD array.
+
+\param variable
+If \a variable [ \a arg[0] + i_vec ] is true,
+y[x] is a variable.  Otherwise it is a parameter.
+
+\param combined
+\b Input: \a combined[ \a arg[0] - 1 ] 
+is the number of elements in the VecAD vector containing this element.
+\n
+\b Input: \a combined[ \a arg[0] + i_vec ]
+if y[x] is a variable, i_y_x
+is its index in the Taylor coefficient array \a taylor.
+Otherwise, i_y_x is its index in parameter array \a parameter.
+
+\par Check User Errors
+\li In the LdvOp case check that the index is with in range; i.e.
+i_vec < combined[ \a arg[0] - 1 ] 
+
+\par Checked Assertions 
+\li NumArg(LdpOp) == 3
+\li NumRes(LdpOp) == 1
+\li 0 <  \a arg[0]
+\li \a arg[0] + i_vec < nc_combined
+\li In the LdpOp case, i_vec < combined[ \a arg[0] - 1 ] 
+\li if y[x] is a parameter, i_y_x < num_par
+\li if y[x] is a variable, i_y_x < i_z
+\li if x is a variable (LpvOp case), arg[1] < i_z
+*/
+template <class Base>
+inline void forward_load_op_0(
+	size_t         i_z         ,
+	size_t*        arg         , 
+	size_t         num_par     ,
+	const Base*    parameter   ,
+	size_t         nc_taylor   ,
+	Base*          taylor      ,
+	size_t         nc_combined ,
+	const bool*    variable    ,
+	const size_t*  combined    )
+{
+	// This routine is only for documentaiton, it should not be used
+	CPPAD_ASSERT_UNKNOWN( false );
+}
+
 // ==================== Sparsity Calculations ==============================
 /*!
 Prototype for reverse mode Hessian sparsity, unary operators with one result (not used). 

@@ -158,14 +158,12 @@ size_t forward0sweep(
 	OpCode           op;
 	size_t         i_op;
 	size_t        i_var;
-	size_t        i_arg;
 
 	size_t*         non_const_arg;
 	const size_t   *arg = 0;
 	const size_t *arg_0 = 0;
 	const Base       *P = 0;
 	const Base       *X = 0;
-	const Base       *Y = 0;
 
 	Base             *Z = 0;
 
@@ -345,6 +343,8 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case LdpOp:
+			CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
+			CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
 			non_const_arg = Rec->forward_non_const_arg();
 			forward_load_p_op_0(
 				i_var, 
@@ -361,44 +361,20 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case LdvOp:
-			n_res = 1;
-			n_arg = 3;
-			
-			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
 			CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
 			CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
-
-			// d == 0
-			{
-				X   = Taylor + arg[1] * J;
-				i   = Integer( X[0] );
-				len = VectorInd[ arg[0] - 1 ];
-				CPPAD_ASSERT_KNOWN( 
-					i < len,
-					"VecAD index value >= vector length"
-				);
-				CPPAD_ASSERT_UNKNOWN( 
-					i + arg[0] < Rec->num_rec_vecad_ind() 
-				);
-
-				if( VectorVar[ i + arg[0] ] )
-				{	i     = VectorInd[ i + arg[0] ];
-					i_arg = arg - arg_0;
-					Rec->ReplaceInd(i_arg + 2, i);
-					CPPAD_ASSERT_UNKNOWN(i > 0 );
-					CPPAD_ASSERT_UNKNOWN( i < i_var );
-					Y     = Taylor + i * J;
-					Z[0]  = Y[0];
-				}
-				else
-				{	i     = VectorInd[ i + arg[0] ];
-					i_arg = arg - arg_0;
-					Rec->ReplaceInd(i_arg + 2, 0);
-					Z[0] = *(CPPAD_GET_PAR(i));
-					i    = 0;
-				}
-			}
+			non_const_arg = Rec->forward_non_const_arg();
+			forward_load_v_op_0(
+				i_var, 
+				non_const_arg, 
+				num_par, 
+				parameter, 
+				J, 
+				Taylor,
+				Rec->num_rec_vecad_ind(),
+				VectorVar,
+				VectorInd
+			);
 			break;
 			// -------------------------------------------------
 

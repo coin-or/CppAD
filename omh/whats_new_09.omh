@@ -51,9 +51,17 @@ assist you in learning about changes between various versions of CppAD.
 
 $subhead 07-06$$
 Fixed a bug in second or higher order reverse mode calculations
-that included $cref/VecAD/$$.
+that used $cref/VecAD/$$.
 This bug was demonstrated by the test case $code SecondOrderReverse$$
 in the file $code test_more/vec_ad.cpp$$.
+$pre
+
+$$
+Add developer documentation for tape evaluation of the
+VecAD load operations 
+(a load operation accesses an element of the vector but
+does not change it.)
+
 
 $head 07-04$$
 Add developer documentation for the
