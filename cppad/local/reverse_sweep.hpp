@@ -342,14 +342,14 @@ void ReverseSweep(
 			// --------------------------------------------------
 			case LdpOp:
 			reverse_load_op(
-				d, i_var, arg, J, Taylor, K, Partial
+				op, d, i_var, arg, J, Taylor, K, Partial
 			);
 			break;
 			// -------------------------------------------------
 
 			case LdvOp:
 			reverse_load_op(
-				d, i_var, arg, J, Taylor, K, Partial
+				op, d, i_var, arg, J, Taylor, K, Partial
 			);
 			break;
 			// -------------------------------------------------
@@ -461,28 +461,18 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case StppOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 0);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
 			break;
 			// --------------------------------------------------
 
 			case StpvOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 0);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
-			CPPAD_ASSERT_UNKNOWN( arg[2] < i_var );
 			break;
 			// -------------------------------------------------
 
 			case StvpOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 0);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
 			break;
 			// -------------------------------------------------
 
 			case StvvOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 0);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 3 );
-			CPPAD_ASSERT_UNKNOWN( arg[2] < i_var );
 			break;
 			// --------------------------------------------------
 

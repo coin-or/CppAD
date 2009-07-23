@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -11,9 +11,20 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 repository="https://projects.coin-or.org/svn/CppAD"
-stable_version="20080826"
+stable_version="20090700"
 release="0"
 release_version="$stable_version.$release"
+# -----------------------------------------------------------------------------
+#
+# check initial working directory
+dir=`pwd | sed -e 's|.*/||'`
+if [ "$dir" != "trunk" ]
+then
+	echo "new_release.sh: must execute this script in the trunk"
+	exit 1
+fi
+echo "cd .."
+cd ..
 # -----------------------------------------------------------------------------
 rep_stable="$repository/stable/$stable_version"
 rep_release="$repository/releases/$release_version"
@@ -24,3 +35,33 @@ then
 	"Cannot create $rep_release"
 	exit 1
 fi
+# -----------------------------------------------------------------------------
+if [ -e conf ]
+then
+	echo "rm -rf conf"
+	if ! rm -rf conf
+	then
+		echo "new_release.sh: cannot remove old conf directory"
+		exit 1
+	fi
+fi
+echo "svn checkout $repository/conf conf"
+if ! svn checkout $repository/conf conf
+then
+	echo "new_release.sh: cannot checkout conf"
+	exit 1
+fi
+echo "cd conf"
+if ! cd conf
+then
+	echo "new_release.sh: cannot change into conf directory"
+	exit 1
+fi
+echo "Change stable and release numbers in projDesc.xml"
+sed -i projDesc.xml \
+	-e "/^ *<stable/,/^ *<\/stable/s/[0-9]\{8\}/$stable_version/" \
+	-e "/^ *<release/,/^ *<\/release/s/[0-9]\{8\}\.[0-9]*/$release_version/"
+#
+msg="Update stabel and release numbers in conf/projDesc.xml"
+echo "Use the command the following command to finish the process"
+echo "	svn commit -m \"$msg\" ../conf/projDesc.xml"

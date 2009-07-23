@@ -168,7 +168,6 @@ size_t forward0sweep(
 	Base             *Z = 0;
 
 	size_t          i;
-	size_t          len;
 	size_t          n_res = 0;
 	size_t          n_arg = 0;
 
@@ -477,100 +476,58 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case StppOp:
-			n_res = 0;
-			n_arg = 3;
-
-			// d == 0
-			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
-				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
-				CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
-
-				i   = arg[1];
-				CPPAD_ASSERT_UNKNOWN(i < VectorInd[arg[0] - 1]);
-				CPPAD_ASSERT_UNKNOWN( 
-					i + arg[0] < Rec->num_rec_vecad_ind() 
-				);
-				VectorInd[ i + arg[0] ] = arg[2];
-				VectorVar[ i + arg[0] ] = false;
-
-				Z[0] = *( CPPAD_GET_PAR(arg[2]) );
-			}
+			forward_store_pp_op_0(
+				i_var, 
+				arg, 
+				num_par, 
+				J, 
+				Taylor,
+				Rec->num_rec_vecad_ind(),
+				VectorVar,
+				VectorInd
+			);
 			break;
 			// -------------------------------------------------
 
 			case StpvOp:
-			n_res = 0;
-			n_arg = 3;
-
-			// d == 0
-			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
-				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
-				CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
-				CPPAD_ASSERT_UNKNOWN( arg[2] < i_var );
-
-				i   = arg[1];
-				CPPAD_ASSERT_UNKNOWN(i < VectorInd[arg[0] - 1]);
-				CPPAD_ASSERT_UNKNOWN( 
-					i + arg[0] < Rec->num_rec_vecad_ind() 
-				);
-				VectorInd[ i + arg[0] ] = arg[2];
-				VectorVar[ i + arg[0] ] = true;
-			}
+			forward_store_pv_op_0(
+				i_var, 
+				arg, 
+				num_par, 
+				J, 
+				Taylor,
+				Rec->num_rec_vecad_ind(),
+				VectorVar,
+				VectorInd
+			);
 			break;
 			// -------------------------------------------------
 
 			case StvpOp:
-			n_res = 0;
-			n_arg = 3;
-
-			// d == 0
-			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
-				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
-				CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
-				CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-				X   = Taylor + arg[1] * J;
-				i   = Integer( X[0] );
-				len = VectorInd[ arg[0] - 1 ];
-				CPPAD_ASSERT_KNOWN( 
-					i < len,
-					"VecAD index value >= vector length"
-				);
-				CPPAD_ASSERT_UNKNOWN( 
-					i + arg[0] < Rec->num_rec_vecad_ind() 
-				);
-				VectorInd[ i + arg[0] ] = arg[2];
-				VectorVar[ i + arg[0] ] = false;
-
-				Z[0] = *( CPPAD_GET_PAR(arg[2]) );
-			}
+			forward_store_vp_op_0(
+				i_var, 
+				arg, 
+				num_par, 
+				J, 
+				Taylor,
+				Rec->num_rec_vecad_ind(),
+				VectorVar,
+				VectorInd
+			);
 			break;
 			// -------------------------------------------------
 
 			case StvvOp:
-			n_res = 0;
-			n_arg = 3;
-
-			// d == 0
-			{	CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
-				CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
-				CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
-				CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-				CPPAD_ASSERT_UNKNOWN( arg[2] < i_var );
-
-				X   = Taylor + arg[1] * J;
-				i   = Integer( X[0] );
-				len = VectorInd[ arg[0] - 1 ];
-				CPPAD_ASSERT_KNOWN( 
-					i < len,
-					"VecAD index value >= vector length"
-				);
-				CPPAD_ASSERT_UNKNOWN( 
-					i + arg[0] < Rec->num_rec_vecad_ind() 
-				);
-				VectorInd[ i + arg[0] ] = arg[2];
-				VectorVar[ i + arg[0] ] = true;
-			}
+			forward_store_vv_op_0(
+				i_var, 
+				arg, 
+				num_par, 
+				J, 
+				Taylor,
+				Rec->num_rec_vecad_ind(),
+				VectorVar,
+				VectorInd
+			);
 			break;
 			// -------------------------------------------------
 

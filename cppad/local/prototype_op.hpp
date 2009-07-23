@@ -918,7 +918,7 @@ The C++ source code corresponding to this operation is
 \verbatim
 	z = y[x]
 \endverbatim
-where v is a VecAD<Base> vector and x is an AD<Base> index. 
+where y is a VecAD<Base> vector and x is an AD<Base> or Base index. 
 We define the index corresponding to y[x] by
 \verbatim
 	i_y_x = combined[ arg[0] + i_vec ]
@@ -942,12 +942,13 @@ of the \a combined VecAD array.
 \n 
 \a arg[1] 
 \n
-If this is the LdpOp operation (load by parameter), i_vec is defined by
+If this is the LdpOp operation 
+(the index x is a parameter), i_vec is defined by
 \verbatim
 	i_vec = arg[1]
 \endverbatim
-If this is the LdvOp operation (load by variable), 
-the value i_vec is defined by
+If this is the LdvOp operation 
+(the index x is a variable), i_vec is defined by
 \verbatim
 	i_vec = floor( taylor[ arg[1] * nc_taylor + 0 ] )
 \endverbatim
@@ -1002,11 +1003,13 @@ Otherwise, i_y_x is its index in parameter array \a parameter.
 i_vec < combined[ \a arg[0] - 1 ] 
 
 \par Checked Assertions 
+\li combined != CPPAD_NULL
+\li variable != CPPAD_NULL
 \li NumArg(LdpOp) == 3
 \li NumRes(LdpOp) == 1
 \li 0 <  \a arg[0]
 \li \a arg[0] + i_vec < nc_combined
-\li In the LdpOp case, i_vec < combined[ \a arg[0] - 1 ] 
+\li i_vec < combined[ \a arg[0] - 1 ] 
 \li if y[x] is a parameter, i_y_x < num_par
 \li if y[x] is a variable, i_y_x < i_z
 \li if x is a variable (LpvOp case), arg[1] < i_z
@@ -1022,6 +1025,114 @@ inline void forward_load_op_0(
 	size_t         nc_combined ,
 	const bool*    variable    ,
 	const size_t*  combined    )
+{
+	// This routine is only for documentaiton, it should not be used
+	CPPAD_ASSERT_UNKNOWN( false );
+}
+
+/*!
+Prototype zero order forward implementation of op is one the following:
+StppOp, StpvOp, StvpOp, or StvvOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	v[x] = y
+\endverbatim
+where v is a VecAD<Base> vector and x, y are AD<Base> or Base objects. 
+We define the index corresponding to v[x] by
+\verbatim
+	i_v_x = combined[ arg[0] + i_vec ]
+\endverbatim
+where i_vec is defined under the heading \a arg[1] below:
+
+\tparam Base
+base type for the operator; i.e., this operation was recorded
+using AD< \a Base > and computations by this routine are done using type 
+\a Base.
+
+\param i_z
+is the index corresponding to the next variable on the tape
+(only used for error checking).
+
+\param arg
+\n
+\a arg[0]
+is the offset of this VecAD vector relative to the beginning 
+of the \a combined VecAD array.
+\n
+\n 
+\a arg[1] 
+\n
+If this is a StppOp or StpvOp operation 
+(the index x is a parameter), i_vec is defined by
+\verbatim
+	i_vec = arg[1]
+\endverbatim
+If this is a StvpOp or StvvOp operation 
+(the index x is a variable), i_vec is defined by
+\verbatim
+	i_vec = floor( taylor[ arg[1] * nc_taylor + 0 ] )
+\endverbatim
+where floor(c) is the greatest integer less that or equal c.
+\n
+\n
+\a arg[2]
+\n
+index corresponding to the third operand for this operator;
+i.e. the index corresponding to y.
+
+\param num_par
+is the total number of parameters on the tape
+(only used for error checking).
+
+\param nc_taylor
+number of columns in the matrix containing the Taylor coefficients.
+
+\param taylor
+\b Input: in StvpOp and StvvOp cases, \a taylor[ arg[1] * nc_taylor + 0 ]
+is used to compute the index in the definition of i_vec above
+
+\param nc_combined
+is the total number of elements in the combined VecAD array.
+
+\param variable
+\b Output: If y is a varable (StpvOp or StvvOp), 
+\a variable [ \a arg[0] + i_vec ] is set to true.
+Otherwise y is a paraemter (StppOp or StvpOp) and 
+\a variable [ \a arg[0] + i_vec ] is set to false.
+
+\param combined
+\b Output: \a combined [ \a arg[0] + i_vec ]
+is set equal to \a arg[2].
+
+\par Check User Errors
+\li Check that the index is with in range; i.e.
+i_vec < combined[ \a arg[0] - 1 ]
+Note that, if x is a parameter, is the corresponding vector index
+and it does not change.
+In this case, the error above should be detected during tape recording.
+
+\par Checked Assertions 
+\li combined != CPPAD_NULL
+\li variable != CPPAD_NULL
+\li NumArg(op) == 3
+\li NumRes(op) == 0
+\li 0 <  \a arg[0]
+\li \a arg[0] + i_vec < nc_combined
+\li if y is a parameter, arg[2] < num_par
+\li if x is a variable, arg[1] < i_z
+\li if y is a variable, arg[2] < i_z
+*/
+template <class Base>
+inline void forward_store_op_0(
+	size_t         i_z         ,
+	const size_t*  arg         , 
+	size_t         num_par     ,
+	size_t         nc_taylor   ,
+	Base*          taylor      ,
+	size_t         nc_combined ,
+	bool*          variable    ,
+	size_t*        combined    )
 {
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );

@@ -24,6 +24,10 @@ $$
 
 $index print, forward mode$$
 $index forward, mode print$$
+$index text, output$$
+$index output, text$$
+$index debug, forward mode$$
+$index forward, debug$$
 
 $section Printing AD Values During Forward Mode$$ 
 

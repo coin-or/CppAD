@@ -17,7 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*!
 \file load_op.hpp
-Setting a VecAD element so that it corresponds to an AD variable address.
+Setting a variable so that it corresponds to current value of a VecAD element.
 */
 
 /*!
@@ -38,11 +38,17 @@ inline void forward_load_p_op_0(
 	const size_t*  combined    )
 {	size_t i_vec = arg[1];
 
+	// Because the index is a parameter, this indexing error should be
+	// caught and reported to the user at an when the tape is recording.
+	CPPAD_ASSERT_UNKNOWN( i_vec < combined[ arg[0] - 1 ] );
+
+
+	CPPAD_ASSERT_UNKNOWN( variable != CPPAD_NULL );
+	CPPAD_ASSERT_UNKNOWN( combined != CPPAD_NULL );
 	CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < nc_combined );
-	CPPAD_ASSERT_UNKNOWN( i_vec < combined[ arg[0] - 1 ] );
 
 	size_t combined_index = arg[0] + i_vec;
 	size_t i_y_x          = combined[ combined_index ];	
@@ -78,8 +84,10 @@ inline void forward_load_v_op_0(
 	const bool*    variable    ,
 	const size_t*  combined    )
 {
-	CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( variable != CPPAD_NULL );
+	CPPAD_ASSERT_UNKNOWN( combined != CPPAD_NULL );
+	CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
 
@@ -116,12 +124,16 @@ The C++ source code corresponding to this operation is
 \verbatim
 	z = y[x]
 \endverbatim
-where v is a VecAD<Base> vector and x is an AD<Base> index. 
+where y is a VecAD<Base> vector and x is an AD<Base> or Base index. 
 
 \tparam Base
 base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
+
+\param op
+is the code corresponding to this operator; i.e., LdpOp or LdvOp
+(only used for error checking).
 
 \param d
 is the order of the Taylor coefficient that we are computing.
@@ -147,13 +159,14 @@ is the d-order Taylor coefficient corresponding to y[x].
 is the d-order Taylor coefficient for the variable z.
 
 \par Checked Assertions 
-\li NumArg(LdpOp) == 3
-\li NumRes(LdpOp) == 1
+\li NumArg(op) == 3
+\li NumRes(op) == 1
 \li 0 < d < nc_taylor
 \li arg[2] < i_z
 */
 template <class Base>
 inline void forward_load_op(
+	OpCode         op          ,
 	size_t         d           ,
 	size_t         i_z         ,
 	const size_t*  arg         , 
@@ -161,8 +174,8 @@ inline void forward_load_op(
 	Base*          taylor      )
 {
 
-	CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( d > 0 )
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
@@ -182,7 +195,7 @@ The C++ source code corresponding to this operation is
 \verbatim
 	z = y[x]
 \endverbatim
-where v is a VecAD<Base> vector and x is an AD<Base> index. 
+where y is a VecAD<Base> vector and x is an AD<Base> or Base index. 
 
 This routine is given the partial derivatives of a function 
 G(z , y[x] , w , u ... )
@@ -195,6 +208,10 @@ and it uses them to compute the partial derivatives of
 base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
+
+\param op
+is the code corresponding to this operator; i.e., LdpOp or LdvOp
+(only used for error checking).
 
 \param d
 highest order the Taylor coefficient that we are computing the partial
@@ -242,13 +259,14 @@ is the partial derivative of H( y[x] , w , u , ... ) with respect to
 the k-th order Taylor coefficient for x.
 
 \par Checked Assertions 
-\li NumArg(LdpOp) == 3
-\li NumRes(LdpOp) == 1
-\li 0 <= d < nc_partial
+\li NumArg(op) == 3
+\li NumRes(op) == 1
+\li d < nc_taylor
 \li arg[2] < i_z
 */
 template <class Base>
 inline void reverse_load_op(
+	OpCode         op          ,
 	size_t         d           ,
 	size_t         i_z         ,
 	const size_t*  arg         , 
@@ -258,9 +276,8 @@ inline void reverse_load_op(
 	Base*          partial     )
 {
 
-	CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(LdpOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( 0 <= d )
+	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
 
