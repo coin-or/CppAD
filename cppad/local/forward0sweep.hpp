@@ -303,13 +303,7 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case DisOp:
-			n_res = 1;
-			n_arg = 2;
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			// d == 0
-			{	X   = Taylor + arg[0] * J;
-				Z[0] = ADDiscrete<Base>::Eval(arg[1], X[0]);
-			}
+			forward_dis_op_0(i_var, arg, J, Taylor);
 			break;
 			// -------------------------------------------------
 

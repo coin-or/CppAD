@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -305,7 +305,7 @@ to use $code set$$ and $code get$$ member functions.
 
 
 $head 11-22$$
-A much better $xref/VecAD.cpp//example/$$ for using $xref/VecAD/$$
+A much better $xref/vec_ad.cpp//example/$$ for using $xref/VecAD/$$
 vectors has been provided. In addition, a bug
 in the computation of derivatives using $code VecAD$$ vectors
 has been fixed. 

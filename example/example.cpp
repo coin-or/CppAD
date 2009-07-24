@@ -146,7 +146,7 @@ extern bool UnaryMinus(void);
 extern bool UnaryPlus(void);
 extern bool Value(void);
 extern bool Var2Par(void);
-extern bool VecAD(void);
+extern bool vec_ad(void);
 
 namespace {
 	// function that runs one test
@@ -284,7 +284,7 @@ int main(void)
 	ok &= Run( UnaryPlus,         "UnaryPlus"        );
 	ok &= Run( Value,             "Value"            );
 	ok &= Run( Var2Par,           "Var2Par"          );
-	ok &= Run( VecAD,             "VecAD"            );
+	ok &= Run( vec_ad,            "vec_ad"           );
 
 # ifdef CPPAD_ADOLC_EXAMPLES
 	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );

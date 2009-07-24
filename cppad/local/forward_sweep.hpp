@@ -171,7 +171,9 @@ size_t forward_sweep(
 	size_t         i_op;
 	size_t        i_var;
 
-# if ! CPPAD_USE_FORWARD0SWEEP
+# if CPPAD_USE_FORWARD0SWEEP
+	CPPAD_ASSERT_UNKNOWN( d > 0 );
+# else
 	size_t*         non_const_arg;
 # endif
 	const size_t   *arg = 0;
@@ -293,9 +295,7 @@ size_t forward_sweep(
 			// ---------------------------------------------------
 
 			case ComOp:
-# if USE_FORWARD0SWEEP 
-			CPPAD_ASSERT_UNKNOWN( d > 0 );
-# else
+# if ! USE_FORWARD0SWEEP 
 			if( d == 0 ) forward_comp_op_0(
 			compareCount, arg, num_par, parameter, J, Taylor
 			);
@@ -318,14 +318,13 @@ size_t forward_sweep(
 			// -------------------------------------------------
 
 			case DisOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 1);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			if( d == 0 ) 
-			{	X   = Taylor + arg[0] * J;
-				Z[0] = ADDiscrete<Base>::Eval(arg[1], X[0]);
+# if ! CPPAD_USE_FORWARD0SWEEP
+			if( d == 0 )
+				forward_dis_op_0(i_var, arg, J, Taylor);
+			else
+# endif
+			{	Z[d] = Base(0);
 			}
-			else	Z[d] = Base(0);
 			break;
 			// -------------------------------------------------
 

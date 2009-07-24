@@ -262,7 +262,7 @@ $children%
 	example/vec_ad.cpp
 %$$
 The file
-$xref/VecAD.cpp/$$
+$xref/vec_ad.cpp/$$
 contains an example and test using $code VecAD$$ vectors.
 It returns true if it succeeds and false otherwise.
 

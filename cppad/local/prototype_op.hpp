@@ -104,7 +104,7 @@ is the zero order Taylor coefficient corresponding to z.
 \li NumArg(op) == 1
 \li NumRes(op) == 1
 \li \a i_x < \a i_z 
-\li \a j < \a nc_taylor
+\li \a 0 < \a nc_taylor
 */
 template <class Base>
 inline void forward_unary1_op_0(

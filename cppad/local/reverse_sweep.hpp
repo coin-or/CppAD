@@ -306,8 +306,8 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case DisOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 1);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+			// Derivative of discrete operation is zero so no
+			// contribution passes through this operation. 
 			break;
 			// --------------------------------------------------
 

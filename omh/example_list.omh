@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -194,7 +194,7 @@ $rref UnaryMinus.cpp$$
 $rref UnaryPlus.cpp$$
 $rref Value.cpp$$
 $rref Var2Par.cpp$$
-$rref VecAD.cpp$$
+$rref vec_ad.cpp$$
 $rref vectorBool.cpp$$
 $tend
 

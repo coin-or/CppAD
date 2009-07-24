@@ -104,6 +104,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/define.hpp \
 	cppad/local/dependent.hpp \
 	cppad/local/discrete.hpp \
+	cppad/local/discrete_op.hpp \
 	cppad/local/div.hpp \
 	cppad/local/div_eq.hpp \
 	cppad/local/div_op.hpp \
