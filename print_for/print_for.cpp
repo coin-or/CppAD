@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -19,7 +19,7 @@ $spell
 	endl
 	namespace
 	newline
-	\nx
+	\nv
 	VecAD
 $$
 
@@ -40,37 +40,36 @@ int main(void)
 	using std::endl;
 
 	// independent variable vector
-	size_t n = 2;
+	size_t n = 1;
 	CPPAD_TEST_VECTOR< AD<double> > X(n);
-	X[0] = 0.; 
-	X[1] = 1.;
+	X[0] = 1.;
 	Independent(X);
 
-	// print a VecAD<double>::reference object
+	// print a VecAD<double>::reference object that is a parameter
 	VecAD<double> V(1);
 	AD<double> Zero(0);
-	V[Zero] = X[0];
-	PrintFor("x[0] = ", V[Zero]); 
+	V[Zero] = 0.;
+	PrintFor("v[0] = ", V[Zero]); 
 
 	// dependent variable vector 
 	size_t m = 1;
 	CPPAD_TEST_VECTOR< AD<double> > Y(m);
-	Y[0] = V[Zero] + X[1];
+	Y[0] = V[Zero] + X[0];
 
 	// First print a newline to separate this from previous output,
-	// then print an AD<double> object.
-	PrintFor(  "\nx[0] + x[1] = ", Y[0]); 
+	// then print an AD<double> object that is a variable.
+	PrintFor(  "\nv[0] + x[0] = ", Y[0]); 
 
 	// define f: x -> y and stop tape recording
 	ADFun<double> f(X, Y); 
 
-	// zero order forward with x[0] = 1 and x[1] = 1
+	// zero order forward with x[0] = 2 
 	CPPAD_TEST_VECTOR<double> x(n);
-	x[0] = 1.;
-	x[1] = 1.;
+	x[0] = 2.;
 
-	cout << "x[0] = 1" << endl; 
-	cout << "x[0] + x[1] = 2" << endl; 
+
+	cout << "v[0] = 0" << endl; 
+	cout << "v[0] + x[0] = 2" << endl; 
 	cout << "Test passes if two lines above repeat below:" << endl;
 	f.Forward(0, x);	
 
@@ -84,11 +83,11 @@ int main(void)
 $head Output$$
 Executing the program above generates the following output:
 $codep
-	x[0] = 1
-	x[0] + x[1] = 2
+	v[0] = 0
+	v[0] + x[0] = 2
 	Test passes if two lines above repeat below:
-	x[0] = 1
-	x[0] + x[1] = 2
+	v[0] = 0
+	v[0] + x[0] = 2
 $$
 $end
 */

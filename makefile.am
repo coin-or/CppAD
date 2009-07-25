@@ -142,6 +142,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/par_var.hpp \
 	cppad/local/pow.hpp \
 	cppad/local/print_for.hpp \
+	cppad/local/print_op.hpp \
 	cppad/local/near_equal_ext.hpp \
 	cppad/local/reverse.hpp \
 	cppad/local/rev_hes_sweep.hpp \

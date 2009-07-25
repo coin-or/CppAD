@@ -17,7 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*!
 \file discrete_op.hpp
-Forward and reverse calculations for z = f(x) where f is piecewise constant.
+Zero order forward mode for z = f(x) where f is piecewise constant.
 */
 
 

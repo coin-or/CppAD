@@ -22,18 +22,21 @@ list="
 	cosh_op.hpp
 	cppad_assert.hpp
 	define.hpp
+	discrete_op.hpp
 	div_op.hpp
 	load_op.hpp
 	log_op.hpp
 	mul_op.hpp
 	op_code.hpp
 	player.hpp
+	print_op.hpp
 	pow_op.hpp
 	prototype_op.hpp
 	sin_op.hpp
 	sinh_op.hpp
 	sparse_op.hpp
 	sqrt_op.hpp
+	store_op.hpp
 	sub_op.hpp
 "
 for name in $list

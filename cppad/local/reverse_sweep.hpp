@@ -424,15 +424,14 @@ void ReverseSweep(
 			);
 			break;
 			// --------------------------------------------------
+
 			case PripOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 0);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+			// no result so nothing to do
 			break;
 			// --------------------------------------------------
 
 			case PrivOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 0);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 2 );
+			// no result so nothing to do
 			break;
 
 			// -------------------------------------------------

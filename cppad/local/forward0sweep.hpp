@@ -163,7 +163,6 @@ size_t forward0sweep(
 	const size_t   *arg = 0;
 	const size_t *arg_0 = 0;
 	const Base       *P = 0;
-	const Base       *X = 0;
 
 	Base             *Z = 0;
 
@@ -188,7 +187,7 @@ size_t forward0sweep(
 		}
 	}
 
-	const Base     *P_0 = 0;
+	const Base     *P_0 = CPPAD_NULL;
 	if( Rec->num_rec_par() > 0 )
 		P_0   = Rec->GetPar(0);
 
@@ -203,10 +202,18 @@ size_t forward0sweep(
 	// length of the parameter vector (used by CppAD assert macros)
 	const size_t num_par = Rec->num_rec_par();
 
+        // length of the text vector (used by CppAD assert macros)
+        const size_t num_text = Rec->num_rec_text();
+
 	// pointer to the beginning of the parameter vector
-	const Base* parameter = 0;
+	const Base* parameter = CPPAD_NULL;
 	if( num_par > 0 )
 		parameter = Rec->GetPar(0);
+
+	// pointer to the beginning of the text vector
+	const char* text = CPPAD_NULL;
+	if( num_text > 0 )
+		text = Rec->GetTxt(0);
 
 	// skip the NonOp at the beginning of the recording
 	Rec->start_forward(op, arg, i_op, i_var);
@@ -426,27 +433,16 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case PripOp:
-			n_res = 0;
-			n_arg = 2;
-			if( print )
-			{	CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_text() );
-				std::cout << Rec->GetTxt(arg[0]);
-				std::cout << *(CPPAD_GET_PAR(arg[1]));
-			}
+			if( print ) forward_prip_0(
+				arg, num_text, text, num_par, parameter
+			);
 			break;
 			// -------------------------------------------------
 
 			case PrivOp:
-			n_res = 0;
-			n_arg = 2;
-			if( print )
-			{	CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_text() );
-				CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-				X      = Taylor + arg[1] * J;
-				std::cout << Rec->GetTxt(arg[0]);
-				std::cout << X[0];
-			}
+			if( print ) forward_priv_0(
+				i_var, arg, num_text, text, J, Taylor
+			);
 			break;
 			// -------------------------------------------------
 

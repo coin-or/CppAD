@@ -50,6 +50,12 @@ This section contains a list of the changes to CppAD during 2009
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-25$$
+Add developer documentation for $cref/PrintFor/$$ operations.
+
+$head 07-24$$
+Add developer documentation for $cref/Discrete/$$ operations.
+
 $head 07-23$$
 Add developer documentation for tape evaluation of $cref/VecAD/$$ store
 operations. (a store operation changes the value of a VecAD element).
