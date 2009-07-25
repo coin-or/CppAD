@@ -43,6 +43,7 @@ $index Taylor coefficient, forward$$
 $head Syntax$$
 $syntax%size_t forward0sweep(
 	bool %print%,
+	size_t %n%,
 	size_t %numvar%,
 	player<%Base%> *%Rec%,
 	size_t %J%,
@@ -68,6 +69,8 @@ If $italic print$$ is false,
 suppress the output that is otherwise generated 
 by the PripOp and PrivOp instructions.
 
+$head n$$
+is the number of independent variables on the tape.
 
 $head numvar$$
 is the number of rows in the matrix $italic Taylor$$.
@@ -147,6 +150,7 @@ namespace CppAD {
 template <class Base>
 size_t forward0sweep(
 	bool                  print,
+	size_t                n,
 	size_t                numvar,
 	player<Base>         *Rec,
 	size_t                J,
@@ -167,9 +171,6 @@ size_t forward0sweep(
 	Base             *Z = 0;
 
 	size_t          i;
-	size_t          n_res = 0;
-	size_t          n_arg = 0;
-
 
 	// initialize the comparision operator (ComOp) counter
 	size_t compareCount = 0;
@@ -217,17 +218,14 @@ size_t forward0sweep(
 
 	// skip the NonOp at the beginning of the recording
 	Rec->start_forward(op, arg, i_op, i_var);
+	CPPAD_ASSERT_UNKNOWN( op == NonOp );
 	arg_0 = arg;
 	while(i_op < numop_m1)
 	{
 		// this op
 		Rec->next_forward(op, arg, i_op, i_var);
-
-		// number of variables
-		n_res  = NumRes(op);
-
-		// index field values for this op
-		n_arg  = NumArg(op);
+		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
+		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
 
 		// value of z for this op
 		Z      = Taylor + i_var * J;
@@ -337,8 +335,6 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case InvOp:
-			n_res = 1;
-			n_arg = 0;
 			break;
 			// -------------------------------------------------
 
@@ -401,15 +397,14 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case NonOp:
-			n_res = 1;
-			n_arg = 0;
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			break;
 			// -------------------------------------------------
 
 			case ParOp:
-			n_res = 1;
-			n_arg = 1;
-
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 			P = CPPAD_GET_PAR(arg[0]);
 			Z[0] = *P;
 			break;
@@ -542,8 +537,9 @@ size_t forward0sweep(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 		// check not past last index value
-		CPPAD_ASSERT_UNKNOWN( arg + n_arg <= arg_0 + Rec->num_rec_op_arg() );
-
+		CPPAD_ASSERT_UNKNOWN( 
+			arg + NumArg(op) <= arg_0 + Rec->num_rec_op_arg() 
+		);
 # if CPPAD_FORWARD0SWEEP_TRACE
 		size_t       d      = 0;
 		size_t       i_tmp  = i_var;
@@ -568,11 +564,7 @@ size_t forward0sweep(
 # else
 	}
 # endif
-	// check last n_res and n_arg
-	CPPAD_ASSERT_UNKNOWN( n_res == NumRes(op) );
-	CPPAD_ASSERT_UNKNOWN( n_arg == NumArg(op) );
-
-	CPPAD_ASSERT_UNKNOWN( (i_var + n_res) == Rec->num_rec_var() );
+	CPPAD_ASSERT_UNKNOWN( (i_var + NumRes(op)) == Rec->num_rec_var() );
 	if( VectorInd != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC(VectorInd);
 	if( VectorVar != CPPAD_NULL )

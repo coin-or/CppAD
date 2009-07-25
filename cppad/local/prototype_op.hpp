@@ -1173,21 +1173,21 @@ the number of columns in the sparsity pattern matrices.
 
 \param jac_sparsity
 for k = 0 , ... , \a nc_sparsity - 1,
-jac_sparsitx[ \a i_x * \a nc_sparsity + k ]
+jac_sparsity[ \a i_x * \a nc_sparsity + k ]
 is the forward mode Jacobian sparsity pattern for the variable x. 
 
 \param hes_sparsity
-\b Input: hes_sparsitx[ \a i_z * \a nc_sparsity + k ]
+\b Input: hes_sparsity[ \a i_z * \a nc_sparsity + k ]
 for k = 0 , ... , \a nc_sparsity -1 
 is the Hessian sparsity pattern for the fucntion G
 where one of the partials derivative is with respect to z.
 \n
-\b Input: hes_sparsitx[ \a i_x * \a nc_sparsity + k ]
+\b Input: hes_sparsity[ \a i_x * \a nc_sparsity + k ]
 for k = 0 , ... , \a nc_sparsity -1 
 is the Hessian sparsity pattern for the fucntion G
 where one of the partials derivative is with respect to y.
 \n
-\b Output: hes_sparsitx[ \a i_x * \a nc_sparsity + k ]
+\b Output: hes_sparsity[ \a i_x * \a nc_sparsity + k ]
 for k = 0 , ... , \a nc_sparsity -1 
 is the Hessian sparsity pattern for the fucntion H
 where one of the partials derivative is with respect to y.

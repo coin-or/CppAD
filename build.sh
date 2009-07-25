@@ -572,8 +572,10 @@ then
 	# 	http://cygwin.com/ml/cygwin-apps/2005-06/msg00161.html
 	# The sed commands below are intended to remove them.
 	echo "make >& $dir/make.log"
-	echo "You may use commmand below to view progress of command above"
-	echo "tail -f $dir/make.log"
+	echo "The following will give an overview of progress of command above"
+	echo "	grep \"^Making all\" $dir/make.log"
+	echo "The following will give details of progress of command above"
+	echo "	tail -f $dir/make.log"
 	if ! make >&  ../make.log
 	then
 		echo "There are errors in $dir/make.log"

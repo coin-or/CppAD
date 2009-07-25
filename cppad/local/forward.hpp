@@ -79,15 +79,15 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 	// evaluate the derivatives
 # if CPPAD_USE_FORWARD0SWEEP
 	if( p == 0 ) compare_change_ = forward0sweep(
-		true, total_num_var_, &play_, taylor_col_dim_, taylor_
+		true, n, total_num_var_, &play_, taylor_col_dim_, taylor_
 	);
 	else 
 	forward_sweep(
-		true, p, total_num_var_, &play_, taylor_col_dim_, taylor_
+		true, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_
 	);
 # else
 	size_t compare_change = forward_sweep(
-		true, p, total_num_var_, &play_, taylor_col_dim_, taylor_
+		true, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_
 	);
 	if( p == 0 )
 		compare_change_ = compare_change;

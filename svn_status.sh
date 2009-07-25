@@ -65,13 +65,15 @@ sed                                                           \
 	-e '/^[?] *example\/test_one.sh$/d'                   \
 	-e '/^[?] *test_more\/test_one.sh$/d'                 \
 	-e '/^[?] *example\/example$/d'                       \
+	-e '/^[?] *ipopt_cppad\/ipopt_cppad$/d'               \
+	-e '/^[?] *print_for\/print_for$/d'                   \
 	-e '/^[?] *speed\/adolc\/adolc$/d'                    \
 	-e '/^[?] *speed\/cppad\/cppad$/d'                    \
 	-e '/^[?] *speed\/fadbad\/fadbad$/d'                  \
 	-e '/^[?] *speed\/profile\/profile$/d'                \
-	-e '/^[?] *ipopt_cppad\/ipopt_cppad$/d'               \
-	-e '/^[?] *ipopt_cppad\/include$/d'                      \
-	-e '/^[?] *ipopt_cppad\/lib$/d'                          \
+	-e '/^[?] *test_more\/test_more$/d'                   \
+	-e '/^[?] *ipopt_cppad\/include$/d'                   \
+	-e '/^[?] *ipopt_cppad\/lib$/d'                       \
 	-e '/cygwin_package$/d'
 #
 list="

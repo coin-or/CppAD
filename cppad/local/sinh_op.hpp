@@ -62,7 +62,7 @@ inline void forward_sinh_op(
 	size_t k;
 	if( j == 0 )
 	{	s[j] = sinh( x[0] );
-		c[j] = sinh( x[0] );
+		c[j] = cosh( x[0] );
 	}
 	else
 	{
