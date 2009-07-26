@@ -169,9 +169,13 @@ size_t forward_sweep(
 	Base                 *Taylor
 )
 {
-	size_t     numop_m1;
+	// op code for current instruction
 	OpCode           op;
+
+	// index for current instruction
 	size_t         i_op;
+
+	// next variables 
 	size_t        i_var;
 
 # if CPPAD_USE_FORWARD0SWEEP
@@ -180,10 +184,6 @@ size_t forward_sweep(
 	size_t*         non_const_arg;
 # endif
 	const size_t   *arg = 0;
-	const size_t *arg_0 = 0;
-	const Base       *P = 0;
-
-	Base             *Z = 0;
 
 	size_t            i;
 
@@ -203,13 +203,11 @@ size_t forward_sweep(
 		}
 	}
 
-
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
 
 	// set the number of operators
-	numop_m1 = Rec->num_rec_op() - 1;
-
+	const size_t numop_m1 = Rec->num_rec_op() - 1;
 
 	// length of the parameter vector (used by CppAD assert macros)
 	const size_t num_par = Rec->num_rec_par();
@@ -231,7 +229,6 @@ size_t forward_sweep(
 	// skip the NonOp at the beginning of the recording
 	Rec->start_forward(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == NonOp );
-	arg_0 = arg;
 # if CPPAD_FORWARD_SWEEP_TRACE
 	std::cout << std::endl;
 # endif
@@ -242,11 +239,7 @@ size_t forward_sweep(
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
 
-		// value of z for this op
-		Z      = Taylor + i_var * J;
-
-		// rest of information depends on the case
-
+		// action depends on the operator
 		switch( op )
 		{
 			case AbsOp:
@@ -328,7 +321,7 @@ size_t forward_sweep(
 				forward_dis_op_0(i_var, arg, J, Taylor);
 			else
 # endif
-			{	Z[d] = Base(0);
+			{	Taylor[ i_var * J + d] = Base(0);
 			}
 			break;
 			// -------------------------------------------------
@@ -435,12 +428,14 @@ size_t forward_sweep(
 			// -------------------------------------------------
 
 			case ParOp:
-			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
-			P = Rec->GetPar( arg[0] );
-			if( d == 0 )
-				Z[d] = *P;
-			else	Z[d] = Base(0); 
+# if ! CPPAD_USE_FORWARD0SWEEP
+			if( d == 0 ) forward_par_op_0(
+				i_var, arg, num_par, parameter, J, Taylor
+			);
+			else
+# endif
+			{	Taylor[ i_var * J + d] = Base(0); 
+			}
 			break;
 			// -------------------------------------------------
 
@@ -592,7 +587,7 @@ size_t forward_sweep(
 		}
 # if CPPAD_FORWARD_SWEEP_TRACE
 		size_t       i_tmp  = i_var;
-		Base*        Z_tmp  = Z;
+		Base*        Z_tmp  = Taylor + J * i_var;
 		if( op == PowvpOp || op == PowpvOp || op == PowvvOp )
 		{	i_tmp  += 2;
 			Z_tmp  += 2 * J;

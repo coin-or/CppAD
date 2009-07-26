@@ -139,6 +139,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/op_code.hpp \
 	cppad/local/ordered.hpp \
 	cppad/local/output.hpp \
+	cppad/local/parameter_op.hpp \
 	cppad/local/par_var.hpp \
 	cppad/local/pow.hpp \
 	cppad/local/print_for.hpp \

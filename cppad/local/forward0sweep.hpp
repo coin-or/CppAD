@@ -138,11 +138,6 @@ $end
 ------------------------------------------------------------------------------
 */
 # define CPPAD_FORWARD0SWEEP_TRACE 0
-# ifdef NDEBUG
-# define CPPAD_GET_PAR(i) (P_0 + i)
-# else
-# define CPPAD_GET_PAR(i) Rec->GetPar(i)
-# endif
 
 // BEGIN CppAD namespace
 namespace CppAD {
@@ -157,20 +152,19 @@ size_t forward0sweep(
 	Base                 *Taylor
 )
 {
-	// some constants
-	size_t     numop_m1;
+	// op code for current instruction
 	OpCode           op;
+
+	// index for current instruction
 	size_t         i_op;
+
+	// next variables 
 	size_t        i_var;
 
+	// constant and non-constant version of the operation argument indices
 	size_t*         non_const_arg;
 	const size_t   *arg = 0;
-	const size_t *arg_0 = 0;
-	const Base       *P = 0;
 
-	Base             *Z = 0;
-
-	size_t          i;
 
 	// initialize the comparision operator (ComOp) counter
 	size_t compareCount = 0;
@@ -178,7 +172,7 @@ size_t forward0sweep(
 	// This is an order zero calculation, initialize vector indices
 	size_t *VectorInd = CPPAD_NULL;  // address for each element
 	bool   *VectorVar = CPPAD_NULL;  // is element a variable
-	i = Rec->num_rec_vecad_ind();
+	size_t  i = Rec->num_rec_vecad_ind();
 	if( i > 0 )
 	{	VectorInd = CPPAD_TRACK_NEW_VEC(i, VectorInd);
 		VectorVar = CPPAD_TRACK_NEW_VEC(i, VectorVar);
@@ -188,17 +182,11 @@ size_t forward0sweep(
 		}
 	}
 
-	const Base     *P_0 = CPPAD_NULL;
-	if( Rec->num_rec_par() > 0 )
-		P_0   = Rec->GetPar(0);
-
-
-
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
 
 	// set the number of operators
-	numop_m1 = Rec->num_rec_op() - 1;
+	const size_t numop_m1 = Rec->num_rec_op() - 1;
 
 	// length of the parameter vector (used by CppAD assert macros)
 	const size_t num_par = Rec->num_rec_par();
@@ -219,7 +207,6 @@ size_t forward0sweep(
 	// skip the NonOp at the beginning of the recording
 	Rec->start_forward(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == NonOp );
-	arg_0 = arg;
 	while(i_op < numop_m1)
 	{
 		// this op
@@ -227,11 +214,7 @@ size_t forward0sweep(
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
 
-		// value of z for this op
-		Z      = Taylor + i_var * J;
-
-		// rest of information depends on the case
-
+		// action to take depends on the case
 		switch( op )
 		{
 			case AbsOp:
@@ -403,10 +386,9 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case ParOp:
-			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
-			P = CPPAD_GET_PAR(arg[0]);
-			Z[0] = *P;
+			forward_par_op_0(
+				i_var, arg, num_par, parameter, J, Taylor
+			);
 			break;
 			// -------------------------------------------------
 
@@ -536,14 +518,10 @@ size_t forward0sweep(
 			default:
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
-		// check not past last index value
-		CPPAD_ASSERT_UNKNOWN( 
-			arg + NumArg(op) <= arg_0 + Rec->num_rec_op_arg() 
-		);
 # if CPPAD_FORWARD0SWEEP_TRACE
 		size_t       d      = 0;
 		size_t       i_tmp  = i_var;
-		Base*        Z_tmp  = Z;
+		Base*        Z_tmp  = Taylor + i_var * J;
 		if( op == PowvpOp || op == PowpvOp || op == PowvvOp )
 		{	i_tmp  += 2;
 			Z_tmp  += 2 * J;
