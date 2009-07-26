@@ -95,6 +95,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 	// evaluate the derivatives
 	ReverseSweep(
 		p - 1,
+		n,
 		total_num_var_,
 		&play_,
 		taylor_col_dim_,

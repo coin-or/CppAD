@@ -1,6 +1,7 @@
 /* $Id$ */
 # ifndef CPPAD_REVERSE_SWEEP_INCLUDED
 # define CPPAD_REVERSE_SWEEP_INCLUDED
+CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
@@ -12,146 +13,137 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-/*
-$begin ReverseSweep$$ $comment CppAD Developer Documentation$$
-$spell
-	Var
-	numvar
-	Num
-	Len
-	Ind
-	const
-	Taylor
-	CppAD
-	zs
-	op
-	Ind
-$$
-
-$section Reverse Mode Computation of Derivatives of Taylor Coefficients$$
-$mindex ReverseSweep derivative Taylor coefficient$$
-
-$head Syntax$$
-$syntax%void ReverseSweep(
-	size_t %d%,
-	size_t %numvar%,
-	player<%Base%> *%Rec%,
-	size_t %J%,
-	const Base *%Taylor%,
-	size_t %K%,
-	Base *%Partial%
-)%$$
 
 
-
-$head Rec$$
-The information stored in $italic Rec$$
-is a recording of the operations corresponding to a function
-$latex \[
-	F : B^m \rightarrow B^n
-\] $$
-
-$head G$$
-Given the vector $latex v \in B^n$$ we define the function 
-$latex G : B^{m \times d} \rightarrow B$$ by
-$latex \[
-	G(u) = \frac{1}{d !} 
-		\sum_{i=1}^n v_i \left[
-		\frac{ \partial^p}{ \partial t^d}
-		F_i [ u^{(0)} + u^{(1)} t + \cdots + u^{(d)} t^d ]
-	\right]_{t=0}
-\] $$
-Note that the scale factor of $latex 1 / d !$$ converts
-$th d$$ order derivatives to $th d$$ order Taylor coefficients.
-The routine $code ReverseSweep$$ computes all the first order partial
-derivatives of $latex G$$ with respect to each of the Taylor coefficients
-for the independent variables 
-$latex u^{(j)}$$ for $latex j = 0 , \ldots , d$$.
-
-
-$head numvar$$
-is the number of rows in the matrices $italic Taylor$$ and $italic Partial$$.
-It must also be equal to $syntax%%Rec%->num_rec_var()%$$.
-
-$head J$$
-Is the number of columns in the coefficient matrix $italic Taylor$$.
-This must be greater than or equal $latex d+1$$.
-
-$head K$$
-Is the number of columns in the coefficient matrix $italic Partial$$.
-This must be greater than or equal $latex d+1$$.
-
-$head Taylor$$
-For $latex i = 1 , \ldots , numvar - 1$$ and $latex j <= d$$
-$syntax%%Taylor%[%i% * J + j]%$$ contains the 
-$th j$$ order Taylor coefficients
-for the variable corresponding to index $italic i$$.
-
-$head On Input$$
-
-$subhead Dependent Variables$$
-The vector $italic v$$ is stored in the 
-$th d$$ order components of the last $italic n$$ 
-variables in $italic Partial$$; i.e.,
-for $latex i = numvar-n , \ldots , numvar-1$$
-and for $latex j < d$$,
-$syntax%
-	%Partial%[%i% * %K% + %j%] == 0
-	%Partial%[%i% * %K% + %d%] == %v%[%numvar% - %i%]
-%$$
-
-$subhead Other Variables$$
-The other variable records come before and have initial partials of zero; 
-i.e., for $latex i = 1, \ldots , numvar-n-1$$ and 
-$latex j \leq d$$,
-$syntax%
-	%Partial%[%i% * %K% + %j%] ==  0
-%$$
-
-$head On Output$$
-
-$subhead Independent Variables$$
-For $latex i = 1, \ldots , m$$, and for $latex j \leq d$$,
-$syntax%%Partial%[%i% * %K% + %j%]%$$ 
-is the partial of $latex G$$ with respect to $latex u_i^{(j)}$$.
-
-$subhead Other Variables$$
-For $latex i = m+1, \ldots , numvar-1$$ and $latex j \leq d$$,
-$syntax%%Partial%[%i% * %K% + %j%]%$$ 
-is temporary work space and its
-output value is not specified.
-
-
-$end
-------------------------------------------------------------------------------
+/*!
+\file reverse_sweep.hpp
+Compute derivatives of arbitrary order Taylor coefficients.
 */
 
+/*!
+\def CPPAD_REVERSE_SWEEP_TRACE
+This value is either zero or one. 
+Zero is the normal operational value.
+If it is one, a trace of every reverse_sweep computation is printed.
+*/
 # define CPPAD_REVERSE_SWEEP_TRACE 0
 
-// BEGIN CppAD namespace
-namespace CppAD {
+/*!
+Compute derivative of arbitrary order forward mode Taylor coefficients.
 
+\tparam Base
+base type for the operator; i.e., this operation was recorded
+using AD< \a Base > and computations by this routine are done using type 
+\a Base.
+
+\param d
+is the highest order Taylor coefficients that 
+we are computing the derivative of.
+
+\param n
+is the number of independent variables on the tape.
+
+\param numvar
+is the total number of variables on the tape.
+This is also equal to the number of rows in the matrix \a Taylor; i.e.,
+Rec->num_rec_var().
+
+\param Rec
+The information stored in \a Rec
+is a recording of the operations corresponding to the function
+\f[
+	F : {\bf R}^n \rightarrow {\bf R}^m
+\f]
+where \f$ n \f$ is the number of independent variables and
+\f$ m \f$ is the number of dependent variables.
+We define the function 
+\f$ G : {\bf R}^{n \times d} \rightarrow {\bf R} \f$ by
+\f[
+G( u ) = \frac{1}{d !} \frac{ \partial^d }{ \partial t^d } 
+\left[ 
+	\sum_{i=1}^m w_i  F_i ( u^{(0)} + u^{(1)} t + \cdots + u^{(d)} t^d )
+\right]_{t=0}
+\f]
+Note that the scale factor  1 / a d  converts 
+the \a d-th partial derivative to the \a d-th order Taylor coefficient.
+This routine computes the derivative of \f$ G(u) \f$
+with respect to all the Taylor coefficients
+\f$ u^{(k)} \f$ for \f$ k = 0 , ... , d \f$.
+The vector \f$ w \in {\bf R}^m \f$, and
+value of \f$ u \in {\bf R}^{n \times d} \f$
+at which the derivative is computed,
+are defined below.
+\n
+\n
+The object \a Rec is effectly constant.
+There is an exception to this,
+while palying back the tape
+the object \a Rec holds information about the current location
+with in the tape and this changes during palyback. 
+
+\param J
+Is the number of columns in the coefficient matrix \a Taylor.
+This must be greater than or equal \a d + 1.
+
+\param Taylor
+For i = 1 , ... , \a numvar, and for k = 0 , ... , \a d,
+\a Taylor [ i * J + k ]
+is the k-th order Taylor coefficient corresponding to 
+variable with index i on the tape.
+The value \f$ u \in {\bf R}^{n \times d} \f$,
+at which the derivative is computed,
+is defined by
+\f$ u_j^{(k)} \f$ = \a Taylor [ j * J + k ]
+for j = 1 , ... , \a n, and for k = 0 , ... , \a d.
+
+\param K
+Is the number of columns in the partial derivative matrix \a Partial.
+It must be greater than or equal \a d + 1.
+
+\param Partial
+\b Input:
+The last \f$ m \f$ rows of \a Partial are inputs.
+The vector \f$ v \f$, used to define \f$ G(u) \f$,
+is specified by these rows. 
+For i = 0 , ... , m - 1, \a Partial [ ( \a numvar - m + i ) * K + d ] = v_i.
+For i = 0 , ... , m - 1 and for k = 0 , ... , d - 1, 
+\a Partial [ ( \a numvar - m + i ) * K + k ] = 0.
+\n
+\n
+\b Temporary:
+For i = n+1 , ... , \a numvar - 1 and for k = 0 , ... , d, 
+the value of \a Partial [ i * K + k ] is used for temporary work space
+and its output value is not defined. 
+\n
+\n
+\b Output:
+For j = 1 , ... , n and for k = 0 , ... , d, 
+\a Partial [ j * K + k ] 
+is the partial derivative of \f$ G( u ) \f$ with 
+respect to \f$ u_j^{(k)} \f$.
+
+\par Assumptions
+The first operator on the tape is a NonOp,
+and the next \a n operators are InvOp operations for the 
+corresponding independent variables.
+*/
 template <class Base>
 void ReverseSweep(
 	size_t                d,
+	size_t                n,
 	size_t                numvar,
-	player<Base>         *Rec,
+	player<Base>*         Rec,
 	size_t                J,
-	const Base           *Taylor,
+	const Base*           Taylor,
 	size_t                K,
-	Base                 *Partial
+	Base*                 Partial
 )
 {
 	OpCode           op;
 	size_t         i_op;
 	size_t        i_var;
-	size_t        n_res;
-	size_t        n_arg;
 
 	const size_t   *arg = 0;
-	const Base       *Z = 0;
-
-	Base            *pZ = 0;
 
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
@@ -174,20 +166,14 @@ void ReverseSweep(
 	while(i_op > 1)
 	{	// next op
 		Rec->next_reverse(op, arg, i_op, i_var);
-
-		// corresponding number of varables and indices
-		n_res  = NumRes(op);
-		n_arg  = NumArg(op);
-
-		// value of Z and its partials for this op
-		Z   = Taylor + i_var * J;
-		pZ  = Partial + i_var * K;
+		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
+		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
 
 		// rest of informaiton depends on the case
 # if CPPAD_REVERSE_SWEEP_TRACE
 		size_t       i_tmp  = i_var;
-		const Base*  Z_tmp  = Z;
-		const Base*  pZ_tmp = pZ;
+		const Base*  Z_tmp  = Taylor + i_var * J;
+		const Base*  pZ_tmp = Partial + i_var * K;
 
 		if( op == PowvpOp || op == PowpvOp || op == PowvvOp )
 		{	i_tmp  += 2;
@@ -283,9 +269,6 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case ComOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 0 );
-			CPPAD_ASSERT_UNKNOWN( n_arg == 4 );
-			CPPAD_ASSERT_UNKNOWN( arg[1] > 1 );
 			break;
 			// --------------------------------------------------
 
@@ -355,8 +338,6 @@ void ReverseSweep(
 			// -------------------------------------------------
 
 			case InvOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 1);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
 			break;
 			// --------------------------------------------------
 
@@ -391,14 +372,10 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case NonOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 1);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 0 );
 			break;
 			// --------------------------------------------------
 
 			case ParOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 1);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 1 );
 			break;
 			// --------------------------------------------------
 
@@ -510,8 +487,7 @@ void ReverseSweep(
 	CPPAD_ASSERT_UNKNOWN( i_var == NumRes(NonOp)  );
 }
 
-} // END CppAD namespace
-
 # undef CPPAD_REVERSE_SWEEP_TRACE
 
+CPPAD_END_NAMESPACE
 # endif

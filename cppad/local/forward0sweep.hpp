@@ -1,6 +1,7 @@
 /* $Id$ */
 # ifndef CPPAD_FORWARD0SWEEP_INCLUDED
 # define CPPAD_FORWARD0SWEEP_INCLUDED
+CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
@@ -13,134 +14,85 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin forward0sweep$$ $comment CppAD Developer Documentation$$
-$spell
-	Var
-	numvar
-	bool
-	Prip
-	Priv
-	Inv
-	Num
-	Len
-	const
-	Taylor
-	CppAD
-	zs
-	op
-	Ind
-$$
+/*!
+\file forward0sweep.hpp
+Compute zero order forward mode Taylor coefficients.
+*/
 
-$section Zero Order Forward Computation of Taylor Coefficients$$
-$index forward0sweep$$
-$index mode, forward$$
-$index forward, mode$$
-$index derivative, forward$$
-$index Taylor coefficient, forward$$
-
-
-$head Syntax$$
-$syntax%size_t forward0sweep(
-	bool %print%,
-	size_t %n%,
-	size_t %numvar%,
-	player<%Base%> *%Rec%,
-	size_t %J%,
-	Base *%Taylor%,
-)%$$
-
-
-$head Return Value$$
-The return value is equal to the number of
-$syntax%AD<%Base%>%$$ comparison operations have a different result
-from when the information in $italic Rec$$ was recorded.
-
-
-$head Rec$$
-The information stored in $italic Rec$$
-is a recording of the operations corresponding to a function
-$latex \[
-	F : B^n \rightarrow B^m
-\] $$
-
-$head print$$
-If $italic print$$ is false,
-suppress the output that is otherwise generated 
-by the PripOp and PrivOp instructions.
-
-$head n$$
-is the number of independent variables on the tape.
-
-$head numvar$$
-is the number of rows in the matrix $italic Taylor$$.
-It must also be equal to $syntax%%Rec%->num_rec_var()%$$.
-
-
-$head J$$
-Is the number of columns in the coefficient matrix $italic Taylor$$.
-This must be greater than or equal $latex 1$$.
-
-
-$head On Input$$
-
-$subhead Independent Variables and Operators$$
-The independent variable records come first.
-For $latex i = 1, \ldots , n$$ 
-$table
-	$bold field$$ $cnext 
-	$bold Value$$          
-$rnext
-	$syntax%%Taylor%[%0% * %J%]%$$      $cnext 
-	this index zero variable is not used
-$rnext
-	$syntax%%Rec%->GetOp(0)%$$                $cnext 
-	the operator with index zero must be a $code NonOp$$
-$rnext
-	$syntax%%Taylor%[%i% * %J%]%$$      $cnext 
-	zero order Taylor coefficient for independent variable 
-	with index $italic i$$   
-$rnext
-	$syntax%%Rec%->GetOp(%i%)%$$              $cnext 
-	the operator with index $italic i$$ must be a $code InvOp$$
-$tend
-
-$subhead Other Variables and Operators$$
-The other variables follow the independent variables.
-For $latex i = n+1, \ldots , numvar-1$$,
-$table
-	$bold field$$ $cnext 
-	$bold Value$$          
-$rnext
-	$syntax%%Taylor%[%i% * %J%]%$$      $cnext 
-	value of the variable with index $italic i$$     
-$rnext
-	$syntax%%Rec%->GetOp(%i%)%$$              $cnext 
-	any operator except for $code InvOp$$ 
-$tend
-
-$head On Output$$
-
-$subhead Rec$$
-None of the values stored in $italic Rec$$ are modified.
-
-$subhead Independent Variables$$
-For $latex i = 1, \ldots , n$$ and $latex j = 0 , \ldots , J-1$$,
-$syntax%%Taylor%[%i% * %J% + %j%]%$$ is not modified.
-
-$subhead Other Variables$$
-For $latex i = n+1, \ldots , numvar-1$$, 
-$syntax%%Taylor%[%i% * %J%]%$$ is set equal to the
-zero order Taylor coefficient for the variable with index $italic i$$.
-
-
-$end
-------------------------------------------------------------------------------
+/*!
+\def CPPAD_FORWARD0SWEEP_TRACE
+This value is either zero or one. 
+Zero is the normal operational value.
+If it is one, a trace of every forward0sweep computation is printed.
+(Note that forward0sweep is not used if CPPAD_USE_FORWARD0SWEEP is zero).
 */
 # define CPPAD_FORWARD0SWEEP_TRACE 0
 
-// BEGIN CppAD namespace
-namespace CppAD {
+/*!
+Compute zero order forward mode Taylor coefficients.
+
+\tparam Base
+base type for the operator; i.e., this operation was recorded
+using AD< \a Base > and computations by this routine are done using type 
+\a Base.
+
+\param print
+If \a print is false,
+suppress the output that is otherwise generated 
+by the PripOp and PrivOp instructions.
+
+\param n
+is the number of independent variables on the tape.
+
+\param numvar
+is the total number of variables on the tape.
+This is also equal to the number of rows in the matrix \a Taylor; i.e.,
+Rec->num_rec_var().
+
+\param Rec
+The information stored in \a Rec
+is a recording of the operations corresponding to the function
+\f[
+	F : {\bf R}^n \rightarrow {\bf R}^m
+\f]
+where \f$ n \f$ is the number of independent variables and
+\f$ m \f$ is the number of dependent variables.
+\n
+\n
+The object \a Rec is effectly constant.
+There are two exceptions to this.
+The first exception is that while palying back the tape
+the object \a Rec holds information about the current location
+with in the tape and this changes during palyback. 
+The second exception is the fact that the 
+zero order ( \a d = 0 ) versions of the VecAD operators LdpOp and LdvOp 
+modify the corresponding \a op_arg values returned by 
+\ref player::next_forward and \ref player::next_reverse; see the
+\link load_op.hpp LdpOp and LdvOp \endlink operations.
+
+\param J
+Is the number of columns in the coefficient matrix \a Taylor.
+This must be greater than or equal one.
+
+\param Taylor
+\b Input: For j = 1 , ... , \a n,
+\a Taylor [ j * J + 0 ]
+variable with index i on the tape 
+(independent variable with index (j-1) in the independent variable vector).
+\n
+\n
+\b Output: For i = \a n + 1, ... , \a numvar - 1,
+\a Taylor [ i * J + 0 ]
+is the zero order Taylor coefficient for the variable with 
+index i on the tape.
+
+\a return
+The return value is equal to the number of ComOp operations
+that have a different result from when the information in 
+\a Rec was recorded.
+(Note that if NDEBUG is true, there are no ComOp operations
+in Rec and hence this return value is always zero.)
+*/
 
 template <class Base>
 size_t forward0sweep(
@@ -151,7 +103,8 @@ size_t forward0sweep(
 	size_t                J,
 	Base                 *Taylor
 )
-{
+{	CPPAD_ASSERT_UNKNOWN( J >= 1 );
+
 	// op code for current instruction
 	OpCode           op;
 
@@ -207,6 +160,9 @@ size_t forward0sweep(
 	// skip the NonOp at the beginning of the recording
 	Rec->start_forward(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == NonOp );
+# if CPPAD_FORWARD0SWEEP_TRACE
+	std::cout << std::endl;
+# endif
 	while(i_op < numop_m1)
 	{
 		// this op
@@ -551,8 +507,7 @@ size_t forward0sweep(
 	return compareCount;
 }
 
-} // END CppAD namespace
-
 # undef CPPAD_FORWARD0SWEEP_TRACE
 
+CPPAD_END_NAMESPACE
 # endif

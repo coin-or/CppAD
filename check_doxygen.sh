@@ -24,6 +24,8 @@ list="
 	define.hpp
 	discrete_op.hpp
 	div_op.hpp
+	forward0sweep.hpp
+	forward_sweep.hpp
 	load_op.hpp
 	log_op.hpp
 	mul_op.hpp
@@ -32,6 +34,7 @@ list="
 	print_op.hpp
 	pow_op.hpp
 	prototype_op.hpp
+	reverse_sweep.hpp
 	sin_op.hpp
 	sinh_op.hpp
 	sparse_op.hpp
