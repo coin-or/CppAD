@@ -50,6 +50,10 @@ This section contains a list of the changes to CppAD during 2009
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-26$$
+Convert developer documentation from
+forward and reverse mode sweep routines from OMhelp to doxygen.
+
 $head 07-25$$
 Add developer documentation for $cref/PrintFor/$$ operations.
 
