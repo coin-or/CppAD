@@ -1140,7 +1140,7 @@ inline void forward_store_op_0(
 
 // ==================== Sparsity Calculations ==============================
 /*!
-Prototype for reverse mode Hessian sparsity, unary operators with one result (not used). 
+Prototype for reverse mode Hessian sparsity unary operators.
 
 This routine is given the forward mode Jacobian sparsity patterns for x.
 It is also given the reverse mode dependence of G on z.
@@ -1203,6 +1203,97 @@ inline void reverse_sparse_hessian_unary_op(
 	size_t      nc_sparsity   ,
 	const Pack* jac_sparsity  ,
 	Pack*       hes_sparsity  )
+{	
+	// This routine is only for documentaiton, it should not be used
+	CPPAD_ASSERT_UNKNOWN( false );
+}
+
+/*!
+Prototype for reverse mode Hessian sparsity binary operators.
+
+This routine is given the sparsity patterns the Hessian 
+of a function G(z, y, x, ... )
+and it uses them to compute the sparsity patterns for the Hessian of  
+\verbatim
+	H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
+\endverbatim
+
+\tparam Pack
+is the type used to pack the sparsity pattern bit values; i.e.,
+there is more that one bit per Pack value.
+
+\param i_z
+variable index corresponding to the result for this operation; 
+i.e. the row index in sparsity corresponding to z. 
+
+\param arg
+\a arg[0]
+variable index corresponding to the left operand for this operator;
+i.e. the row index in sparsity corresponding to x.
+\n
+\n arg[1]
+variable index corresponding to the right operand for this operator;
+i.e. the row index in sparsity corresponding to y.
+
+\param z_jac
+is all true (ones complement of 0) if the scalar valued 
+function we are computing the Hessian sparsity for 
+has a non-zero partial with respect to the variable z
+(actually may have a non-zero partial with respect to z).
+Otherwise it zero.
+(not used by add and subtract operators).
+
+\param nc_sparsity
+number of packed values corresponding to each variable; i.e.,
+the number of columns in the sparsity pattern matrix.
+
+\param jac_sparsity
+For j = 0 , ... , \a nc_sparsity - 1,
+jac_sparsity[ \a arg[0] * \a nc_sparsity + j ]
+is the forward mode Jacobiain sparsity pattern for the variable x.
+For j = 0 , ... , \a nc_sparsity - 1,
+jac_sparsity[ \a arg[1] * \a nc_sparsity + j ]
+is the forward mode Jacobiain sparsity pattern for the variable y.
+(These values are not used by add and subtract operators)
+
+\param hes_sparsity
+\b Input: for j = 0 , ... , \a nc_sparsity - 1,
+hes_sparsity [ \a i_z * \a nc_sparsity + j ]
+is the Hessian sparsity pattern for the function G
+where one of the partial derivatives is with respect to z.
+\n
+\b Input: for j = 0 , ... , \a nc_sparsity - 1,
+hes_sparsity [ \a arg[0] * \a nc_sparsity + j ]
+is the Hessian sparsity pattern for the function G
+where one of the partial derivatives is with respect to x.
+\n
+\b Input: for j = 0 , ... , \a nc_sparsity - 1,
+hes_sparsity [ \a arg[1] * \a nc_sparsity + j ]
+is the Hessian sparsity pattern for the function G
+where one of the partial derivatives is with respect to y.
+\n
+\b Output: for j = 0 , ... , \a nc_sparsity - 1,
+hes_sparsity [ \a arg[0] * \a nc_sparsity + j ]
+is the Hessian sparsity pattern for the function H
+where one of the partial derivatives is with respect to x.
+\n
+\b Output: for j = 0 , ... , \a nc_sparsity - 1,
+hes_sparsity [ \a arg[1] * \a nc_sparsity + j ]
+is the Hessian sparsity pattern for the function H
+where one of the partial derivatives is with respect to y.
+
+\par Checked Assertions:
+\li \a arg[0] < \a i_z 
+\li \a arg[1] < \a i_z 
+*/
+template <class Pack>
+inline void reverse_sparse_hessian_binary_op(
+	size_t            i_z           ,
+	const size_t*     arg           ,
+	Pack              z_jac         ,
+	size_t            nc_sparsity   ,
+	const Pack*       jac_sparsity  ,
+	Pack*             hes_sparsity  )
 {	
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );

@@ -188,5 +188,157 @@ inline void reverse_sparse_jacobian_binary_op(
 	return;
 }	
 
+/*!
+Reverse mode Hessian sparsity pattern for add and subtract operators. 
+
+The C++ source code corresponding to a unary operation has the form
+\verbatim
+	z = x op y
+\endverbatim
+where op is + or - and x, y are variables.
+
+\copydetails reverse_sparse_hessian_binary_op
+*/
+template <class Pack>
+inline void reverse_sparse_hessian_addsub_op(
+	size_t            i_z           ,
+	const size_t*     arg           ,
+	Pack              z_jac         ,
+	size_t            nc_sparsity   ,
+	const Pack*       jac_sparsity  ,
+	Pack*             hes_sparsity  )
+{	
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+
+	Pack* z_hes  = hes_sparsity + i_z * nc_sparsity;
+	Pack* x_hes  = hes_sparsity + arg[0] * nc_sparsity;
+	Pack* y_hes  = hes_sparsity + arg[1] * nc_sparsity;
+	size_t j = nc_sparsity;
+	while(j--)
+	{	x_hes[j] |= z_hes[j];
+		y_hes[j] |= z_hes[j];
+	}
+	return;
+}	
+
+/*!
+Reverse mode Hessian sparsity pattern for multiplication operator. 
+
+The C++ source code corresponding to a unary operation has the form
+\verbatim
+	z = x * y
+\endverbatim
+where x and y are variables.
+
+\copydetails reverse_sparse_hessian_binary_op
+*/
+template <class Pack>
+inline void reverse_sparse_hessian_mul_op(
+	size_t            i_z           ,
+	const size_t*     arg           ,
+	Pack              z_jac         ,
+	size_t            nc_sparsity   ,
+	const Pack*       jac_sparsity  ,
+	Pack*             hes_sparsity  )
+{	
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+
+	const Pack* x_jac  = jac_sparsity + arg[0] * nc_sparsity;
+	const Pack* y_jac  = jac_sparsity + arg[1] * nc_sparsity;
+
+	const Pack* z_hes  = hes_sparsity + i_z * nc_sparsity;
+	Pack* x_hes  = hes_sparsity + arg[0] * nc_sparsity;
+	Pack* y_hes  = hes_sparsity + arg[1] * nc_sparsity;
+
+	size_t j = nc_sparsity;
+	while(j--)
+	{	x_hes[j] |= z_hes[j] | (z_jac & y_jac[j]);
+		y_hes[j] |= z_hes[j] | (z_jac & x_jac[j]);
+	}
+	return;
+}	
+
+/*!
+Reverse mode Hessian sparsity pattern for division operator. 
+
+The C++ source code corresponding to a unary operation has the form
+\verbatim
+	z = x / y
+\endverbatim
+where x and y are variables.
+
+\copydetails reverse_sparse_hessian_binary_op
+*/
+template <class Pack>
+inline void reverse_sparse_hessian_div_op(
+	size_t            i_z           ,
+	const size_t*     arg           ,
+	Pack              z_jac         ,
+	size_t            nc_sparsity   ,
+	const Pack*       jac_sparsity  ,
+	Pack*             hes_sparsity  )
+{	
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+
+	const Pack* x_jac  = jac_sparsity + arg[0] * nc_sparsity;
+	const Pack* y_jac  = jac_sparsity + arg[1] * nc_sparsity;
+
+	const Pack* z_hes  = hes_sparsity + i_z * nc_sparsity;
+	Pack* x_hes  = hes_sparsity + arg[0] * nc_sparsity;
+	Pack* y_hes  = hes_sparsity + arg[1] * nc_sparsity;
+
+	size_t j = nc_sparsity;
+	while(j--)
+	{	x_hes[j] |= z_hes[j] | (z_jac & y_jac[j]);
+		y_hes[j] |= z_hes[j] | ( z_jac & (x_jac[j] | y_jac[j]) );
+	}
+	return;
+}	
+
+/*!
+Reverse mode Hessian sparsity pattern for power function. 
+
+The C++ source code corresponding to a unary operation has the form
+\verbatim
+	z = pow(x, y)
+\endverbatim
+where x and y are variables.
+
+\copydetails reverse_sparse_hessian_binary_op
+*/
+template <class Pack>
+inline void reverse_sparse_hessian_pow_op(
+	size_t            i_z           ,
+	const size_t*     arg           ,
+	Pack              z_jac         ,
+	size_t            nc_sparsity   ,
+	const Pack*       jac_sparsity  ,
+	Pack*             hes_sparsity  )
+{	
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+
+	const Pack* x_jac  = jac_sparsity + arg[0] * nc_sparsity;
+	const Pack* y_jac  = jac_sparsity + arg[1] * nc_sparsity;
+
+	const Pack* z_hes  = hes_sparsity + i_z * nc_sparsity;
+	Pack* x_hes  = hes_sparsity + arg[0] * nc_sparsity;
+	Pack* y_hes  = hes_sparsity + arg[1] * nc_sparsity;
+
+	size_t j = nc_sparsity;
+	while(j--)
+	{	x_hes[j] |= z_hes[j] | ( z_jac & (x_jac[j] | y_jac[j]) );
+		y_hes[j] |= z_hes[j] | ( z_jac & (x_jac[j] | y_jac[j]) );
+	}
+	return;
+}	
+
 CPPAD_END_NAMESPACE
 # endif
