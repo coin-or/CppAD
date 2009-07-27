@@ -79,7 +79,6 @@ is the sparsity bit pattern for z.
 \li \a arg[0] < \a i_z 
 \li \a arg[1] < \a i_z 
 */
-
 template <class Pack>
 inline void forward_sparse_jacobian_binary_op(
 	size_t            i_z           ,
@@ -97,6 +96,95 @@ inline void forward_sparse_jacobian_binary_op(
 	size_t j = nc_sparsity;
 	while(j--)
 		z[j] = x[j] | y[j];
+	return;
+}	
+
+/*!
+Reverse mode Jacobian sparsity pattern for all binary operators. 
+
+The C++ source code corresponding to a unary operation has the form
+\verbatim
+	z = fun(x, y)
+\endverbatim
+where fun is a C++ unary function and x and y are variables, 
+or it has the form
+\verbatim
+	z = x op y
+\endverbatim
+where op is a C++ bianry operator and x and y are variables.
+
+This routine is given the sparsity patterns
+for a function G(z, y, x, ... )
+and it uses them to compute the sparsity patterns for 
+\verbatim
+	H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
+\endverbatim
+
+\tparam Pack
+is the type used to pack the sparsity pattern bit values; i.e.,
+there is more that one bit per Pack value.
+
+\param i_z
+variable index corresponding to the result for this operation; 
+i.e. the row index in sparsity corresponding to z. 
+
+\param arg
+\a arg[0]
+variable index corresponding to the left operand for this operator;
+i.e. the row index in sparsity corresponding to x.
+\n
+\n arg[1]
+variable index corresponding to the right operand for this operator;
+i.e. the row index in sparsity corresponding to y.
+
+\param nc_sparsity
+number of packed values corresponding to each variable; i.e.,
+the number of columns in the sparsity pattern matrix.
+
+\param sparsity
+\b Input: \a sparsity [ \a i_z * \a nc_sparsity + j ]
+for j = 0 , ... , \a nc_sparsity - 1 
+is the sparsity bit pattern for G with respect to the variable z. 
+\n
+\b Input: \a sparsity [ \a arg[0] * \a nc_sparsity + j ]
+for j = 0 , ... , \a nc_sparsity - 1 
+is the sparsity bit pattern for G with respect to the variable x. 
+\n
+\b Input: \a sparsity [ \a arg[1] * \a nc_sparsity + j ]
+for j = 0 , ... , \a nc_sparsity - 1 
+is the sparsity bit pattern for G with respect to the variable y. 
+\n
+\b Output: \a sparsity [ \a arg[0] * \a nc_sparsity + j ] 
+for j = 0 , ... , \a nc_sparsity - 1 
+is the sparsity bit pattern for H with respect to the variable x.
+\n
+\b Output: \a sparsity [ \a arg[1] * \a nc_sparsity + j ] 
+for j = 0 , ... , \a nc_sparsity - 1 
+is the sparsity bit pattern for H with respect to the variable y.
+
+\par Checked Assertions:
+\li \a arg[0] < \a i_z 
+\li \a arg[1] < \a i_z 
+*/
+template <class Pack>
+inline void reverse_sparse_jacobian_binary_op(
+	size_t            i_z           ,
+	const size_t*     arg           ,
+	size_t            nc_sparsity   ,
+	Pack*             sparsity      )
+{	
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+
+	Pack* z  = sparsity + i_z * nc_sparsity;
+	Pack* x  = sparsity + arg[0] * nc_sparsity;
+	Pack* y  = sparsity + arg[1] * nc_sparsity;
+	size_t j = nc_sparsity;
+	while(j--)
+	{	x[j] |= z[j];
+		y[j] |= z[j];
+	}
 	return;
 }	
 

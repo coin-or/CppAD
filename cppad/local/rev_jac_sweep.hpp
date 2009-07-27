@@ -183,15 +183,9 @@ void RevJacSweep(
 
 			case AddvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-			X = RevJac + arg[0] * npv;
-			Y = RevJac + arg[1] * npv;
-			for(j = 0; j < npv; j++)
-			{	X[j] |= Z[j];
-				Y[j] |= Z[j];
-			}
+			reverse_sparse_jacobian_binary_op(
+				i_var, arg, npv, RevJac
+			);
 			break;
 			// -------------------------------------------------
 
@@ -312,15 +306,9 @@ void RevJacSweep(
 
 			case DivvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-			X = RevJac + arg[0] * npv;
-			Y = RevJac + arg[1] * npv;
-			for(j = 0; j < npv; j++)
-			{	X[j] |= Z[j];
-				Y[j] |= Z[j];
-			}
+			reverse_sparse_jacobian_binary_op(
+				i_var, arg, npv, RevJac
+			);
 			break;
 			// -------------------------------------------------
 
@@ -350,7 +338,6 @@ void RevJacSweep(
 
 			case InvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			// Z is already defined
 			break;
 			// -------------------------------------------------
 
@@ -394,15 +381,9 @@ void RevJacSweep(
 
 			case MulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-			X = RevJac + arg[0] * npv;
-			Y = RevJac + arg[1] * npv;
-			for(j = 0; j < npv; j++)
-			{	X[j] |= Z[j];
-				Y[j] |= Z[j];
-			}
+			reverse_sparse_jacobian_binary_op(
+				i_var, arg, npv, RevJac
+			);
 			break;
 			// -------------------------------------------------
 
@@ -457,17 +438,10 @@ void RevJacSweep(
 			case PowvvOp:
 			// Pow operator is a special case where final result
 			// comes at the end of the three variables
-			Z += 2 * npv;
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-			X = RevJac + arg[0] * npv;
-			Y = RevJac + arg[1] * npv;
-			for(j = 0; j < npv; j++)
-			{	X[j] |= Z[j]; 
-				Y[j] |= Z[j]; 
-			}
+			reverse_sparse_jacobian_binary_op(
+				i_var + 2, arg, npv, RevJac
+			);
 			break;
 			// -------------------------------------------------
 
