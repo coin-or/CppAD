@@ -1,0 +1,104 @@
+/* $Id$ */
+# ifndef CPPAD_SPARSE_BINARY_OP_INCLUDED
+# define CPPAD_SPARSE_BINARY_OP_INCLUDED
+CPPAD_BEGIN_NAMESPACE
+
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+
+/*!
+\file sparse_binary_op.hpp
+Forward and reverse mode sparsity patterns for binary operators.
+*/
+
+
+/*!
+Forward mode Jacobian sparsity pattern for all binary operators. 
+
+The C++ source code corresponding to a binary operation has the form
+\verbatim
+	z = fun(x, y)
+\endverbatim
+where fun is a C++ binary function and both x and y are variables, 
+or it has the form
+\verbatim
+	z = x op y
+\endverbatim
+where op is a C++ binary unary operator and both x and y are variables.
+
+\tparam Pack
+is the type used to pack the sparsity pattern bit values; i.e.,
+there is more that one bit per Pack value.
+
+\param i_z
+variable index corresponding to the result for this operation; 
+i.e. the row index in sparsity corresponding to z. 
+
+\param arg
+\a arg[0]
+variable index corresponding to the left operand for this operator;
+i.e. the row index in sparsity corresponding to x.
+\n
+\n arg[1]
+variable index corresponding to the right operand for this operator;
+i.e. the row index in sparsity corresponding to y.
+
+\param nc_sparsity
+number of packed values corresponding to each variable; i.e.,
+the number of columns in the sparsity pattern matrix.
+
+\param sparsity
+\b Input: \a sparsity [ \a arg[0] * \a nc_sparsity + j ]
+for j = 0 , ... , \a nc_sparsity - 1 
+is the sparsity bit pattern for x.
+This identifies which of the independent variables the variable x
+depends on. 
+\n
+\n
+\b Input: \a sparsity [ \a arg[1] * \a nc_sparsity + j ]
+for j = 0 , ... , \a nc_sparsity - 1 
+is the sparsity bit pattern for y.
+This identifies which of the independent variables the variable y
+depends on. 
+\n
+\n
+\b Output: \a sparsity [ \a i_z * \a nc_sparsity + j ] 
+for j = 0 , ... , \a nc_sparsity - 1 
+is the sparsity bit pattern for z.
+
+\par Checked Assertions:
+\li \a arg[0] < \a i_z 
+\li \a arg[1] < \a i_z 
+*/
+
+template <class Pack>
+inline void forward_sparse_jacobian_binary_op(
+	size_t            i_z           ,
+	const size_t*     arg           ,
+	size_t            nc_sparsity   ,
+	Pack*             sparsity      )
+{	
+	// check assumptions
+	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+
+	Pack* z  = sparsity + i_z * nc_sparsity;
+	Pack* x  = sparsity + arg[0] * nc_sparsity;
+	Pack* y  = sparsity + arg[1] * nc_sparsity;
+	size_t j = nc_sparsity;
+	while(j--)
+		z[j] = x[j] | y[j];
+	return;
+}	
+
+CPPAD_END_NAMESPACE
+# endif

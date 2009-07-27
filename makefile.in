@@ -391,6 +391,8 @@ nobase_myinclude_HEADERS = \
 	cppad/local/sparse.hpp \
 	cppad/local/sparse_hessian.hpp \
 	cppad/local/sparse_jacobian.hpp \
+	cppad/local/sparse_binary_op.hpp \
+	cppad/local/sparse_unary_op.hpp \
 	cppad/local/sqrt_op.hpp \
 	cppad/local/store_op.hpp \
 	cppad/local/std_math_ad.hpp \
@@ -417,7 +419,6 @@ nobase_myinclude_HEADERS = \
 	cppad/speed/det_of_minor.hpp \
 	cppad/speed/ode_evaluate.hpp \
 	cppad/speed/sparse_evaluate.hpp \
-	cppad/local/sparse_op.hpp \
 	cppad/speed/uniform_01.hpp
 
 @CppAD_INTRODUCTION_FALSE@INTRODUCTION = 

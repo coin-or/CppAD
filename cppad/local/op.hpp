@@ -36,7 +36,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/sinh_op.hpp>
 # include <cppad/local/sqrt_op.hpp>
 # include <cppad/local/sub_op.hpp>
-# include <cppad/local/sparse_op.hpp>
+# include <cppad/local/sparse_binary_op.hpp>
+# include <cppad/local/sparse_unary_op.hpp>
 # include <cppad/local/store_op.hpp>
 
 

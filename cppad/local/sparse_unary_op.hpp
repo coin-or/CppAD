@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_SPARSE_OP_INCLUDED
-# define CPPAD_SPARSE_OP_INCLUDED
+# ifndef CPPAD_SPARSE_UNARY_OP_INCLUDED
+# define CPPAD_SPARSE_UNARY_OP_INCLUDED
 CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
@@ -16,8 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 
 /*!
-\file sparse_op.hpp
-Forward and reverse mode Jacobian sparsity patterns.
+\file sparse_unary_op.hpp
+Forward and reverse mode sparsity patterns for unary operators.
 */
 
 

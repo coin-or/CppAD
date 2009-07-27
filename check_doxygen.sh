@@ -37,7 +37,8 @@ list="
 	reverse_sweep.hpp
 	sin_op.hpp
 	sinh_op.hpp
-	sparse_op.hpp
+	sparse_binary_op.hpp
+	sparse_unary_op.hpp
 	sqrt_op.hpp
 	store_op.hpp
 	sub_op.hpp

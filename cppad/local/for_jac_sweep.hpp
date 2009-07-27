@@ -154,7 +154,6 @@ void ForJacSweep(
 	const size_t   *arg = 0;
 	const size_t *arg_0 = 0;
 	const Pack       *X = 0;
-	const Pack       *Y = 0;
 
 	Pack             *Z = 0;
 
@@ -199,13 +198,9 @@ void ForJacSweep(
 
 			case AddvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-			X = ForJac + arg[0] * npv;
-			Y = ForJac + arg[1] * npv;
-			for(j = 0; j < npv; j++)
-				Z[j] = X[j] | Y[j];
+			forward_sparse_jacobian_binary_op(
+				i_var, arg, npv, ForJac
+			);
 			break;
 			// -------------------------------------------------
 
@@ -328,13 +323,9 @@ void ForJacSweep(
 
 			case DivvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-			X = ForJac + arg[0] * npv;
-			Y = ForJac + arg[1] * npv;
-			for(j = 0; j < npv; j++)
-				Z[j] = X[j] | Y[j];
+			forward_sparse_jacobian_binary_op(
+				i_var, arg, npv, ForJac
+			);
 			break;
 			// -------------------------------------------------
 
@@ -417,13 +408,9 @@ void ForJacSweep(
 
 			case MulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-			X = ForJac + arg[0] * npv;
-			Y = ForJac + arg[1] * npv;
-			for(j = 0; j < npv; j++)
-				Z[j] = X[j] | Y[j];
+			forward_sparse_jacobian_binary_op(
+				i_var, arg, npv, ForJac
+			);
 			break;
 			// -------------------------------------------------
 
@@ -479,15 +466,10 @@ void ForJacSweep(
 			case PowvvOp:
 			// Pow operator is a special case where final result
 			// comes at the end of the three variables
-			Z   += 2 * npv;
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-			X = ForJac + arg[0] * npv;
-			Y = ForJac + arg[1] * npv;
-			for(j = 0; j < npv; j++)
-				Z[j] = X[j] | Y[j];
+			forward_sparse_jacobian_binary_op(
+				i_var + 2, arg, npv, ForJac
+			);
 			break;
 			// -------------------------------------------------
 
@@ -553,13 +535,9 @@ void ForJacSweep(
 
 			case SubvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-			X = ForJac + arg[0] * npv;
-			Y = ForJac + arg[1] * npv;
-			for(j = 0; j < npv; j++)
-				Z[j] = X[j] | Y[j];
+			forward_sparse_jacobian_binary_op(
+				i_var, arg, npv, ForJac
+			);
 			break;
 			// -------------------------------------------------
 

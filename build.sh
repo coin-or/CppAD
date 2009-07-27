@@ -42,6 +42,8 @@ then
 			exit 1
 		fi
 	done
+	echo "========================================================"
+	exit 0
 fi
 if [ "$1" = "all" ] && [ "$2" != "" ] && [ "$2" != "test" ] && [ "$2" != "dos" ]
 then
@@ -400,10 +402,23 @@ fi
 if [ "$1" = "doxygen" ] || [ "$1" = "all" ]
 then
 	echo "--------------------------------------------------------------"
-	echo "doxygen doxyfile >& doxygen.log"
-	if ! doxygen doxyfile >& doxygen.log
+	# avoid warning in mid sentence of other log output by separating them
+	echo "doxygen doxyfile 1> doxygen.log 2> doxygen.$$"
+	if ! doxygen doxyfile 1> doxygen.log 2> doxygen.$$
 	then
-		echo "Error: doxygen doxyfile"
+		echo "Error: during doxygen"
+		exit 1
+	fi
+	echo "cat doxygen.$$ >> doxygen.log"
+	if ! cat doxygen.$$ >> doxygen.log
+	then
+		echo "Error: cannot add errors and warnings to doxygen.log"
+		exit 1
+	fi
+	echo "rm doxygen.$$"
+	if ! rm doxygen.$$
+	then
+		echo "Error: cannot remove doxygen.err"
 		exit 1
 	fi
 	if ! ./check_doxygen.sh
