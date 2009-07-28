@@ -13,17 +13,85 @@
 #
 # Bash script for building the CppAD distribution.
 #
-# check for multiple options case
-if [ "$1" != "" ] && [ "$1" != all ] && [ "$2" != "" ]
+# check for multiple options options
+option_divider=\
+"============================================================================="
+if [ "$1" == "all" ] || [ "$2" != "" ]
 then
+	if [ "$1" == "all" ] && [ "$2" == "" ]
+	then
+		options="
+			version 
+			automake 
+			config_none 
+			omhelp 
+			doxygen 
+			make
+			dist 
+			gpl 
+			move
+		"
+		if ! ./build.sh $options
+		then
+			echo "Error during \"build.sh all\" command"
+			exit 1
+		fi
+		exit 0
+	fi
+	if [ "$1" == "all" ] && [ "$2" == "dos" ]
+	then
+		options="
+			version 
+			automake 
+			config_none 
+			omhelp 
+			doxygen 
+			make
+			dist 
+			gpl 
+			dos 
+			move
+		"
+		if ! ./build.sh $options
+		then
+			echo "Error during \"build.sh all dos\" command"
+			exit 1
+		fi
+		exit 0
+	fi
+	if [ "$1" == "all" ] && [ "$2" == "test" ]
+	then
+		options="
+			version 
+			automake 
+			config_none 
+			omhelp 
+			doxygen 
+			make
+			dist 
+			test 
+			gpl 
+			move
+		"
+		if ! ./build.sh $options
+		then
+			echo "Error during \"build.sh all test\" command"
+			exit 1
+		fi
+		exit 0
+	fi
+	if [ "$1" == "all" ]
+	then
+		echo "build.sh: \"$2\" is invalid second arg when first is all."
+		exit 1
+	fi
 	list=" version automake config_none config_test"
 	list="$list omhelp doxygen make dist test gpl dos move "
 	for option in $*
 	do
 		if [ "$option" == "all" ]
 		then
-			echo "Error in build.sh command."
-			echo "If present, \"all\" must be first option"  
+			echo "build.sh: If present, all must be first option."  
 			exit 1
 		fi
 		if ! echo "$list" | grep " $option " > /dev/null
@@ -35,22 +103,15 @@ then
 	done
 	for option in $*
 	do
-		echo "========================================================"
+		echo "$option_divider"
 		echo "./build.sh $option"
 		if ! ./build.sh $option
 		then
 			exit 1
 		fi
 	done
-	echo "========================================================"
+	echo "$option_divider"
 	exit 0
-fi
-if [ "$1" = "all" ] && [ "$2" != "" ] && [ "$2" != "test" ] && [ "$2" != "dos" ]
-then
-	echo "./build.sh $1 $2"
-	echo "is not a valid valid choice."
-	./build.sh
-	exit 1
 fi
 #
 # Default values used for arguments to configure during this script.
@@ -68,20 +129,8 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ADOLC_DIR/lib:$IPOPT_DIR/lib"
 version=`grep "^ *AC_INIT(" configure.ac | \
 	sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
 #
-#
-# Check if we are running all the test cases. 
-if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
-then
-	date > build_test.log
-	if [ -e cppad-$version ]
-	then
-		rm -rf cppad-$version
-	fi
-fi
-#
-# version
-#
-if [ "$1" = "version" ] || [ "$1" = "all" ]
+# -----------------------------------------------------------------------------
+if [ "$1" = "version" ]
 then
 	echo "build.sh version"
 	#
@@ -125,15 +174,11 @@ then
 	# change Autoconf version to today
 	version=$yyyymmdd
 	#
-	if [ "$1" = "version" ]
-	then
-		exit 0
-	fi
+	exit 0
 fi
 #
-# automake
-#
-if [ "$1" = "automake" ] || [ "$1" = "all" ]
+# -----------------------------------------------------------------------------
+if [ "$1" = "automake" ] 
 then
 	echo "build.sh automake"
 	#
@@ -205,14 +250,11 @@ then
 		fi
 	done
 	#
-	if [ "$1" = "automake" ]
-	then
-		exit 0
-	fi
+	exit 0
 fi
 #
+# -----------------------------------------------------------------------------
 # configure
-#
 TEST=""
 if [ "$1" = "config_test" ] 
 then
@@ -256,7 +298,7 @@ then
 	fi
 	TEST=`echo $TEST | sed -e 's|\t\t*| |g'`
 fi
-if [ "$1" = "config_test" ] || [ "$1" = "config_none" ] || [ "$1" = "all" ]
+if [ "$1" = "config_test" ] || [ "$1" = "config_none" ] 
 then
 	echo "configure \\"
 	echo "$TEST" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
@@ -278,15 +320,11 @@ then
 	echo "chmod +x test_more/test_one.sh"
 	chmod +x test_more/test_one.sh
 	#
-	if [ "$1" = "config_test" ] || [ "$1" = "config_none" ]
-	then
-		exit 0
-	fi
+	exit 0
 fi
 #
-# make
-#
-if [ "$1" = "make" ] || [ "$1" = "all" ]
+# -----------------------------------------------------------------------------
+if [ "$1" = "make" ] 
 then
 	echo "build.sh make"
 	#
@@ -296,15 +334,10 @@ then
 		exit 1
 	fi
 	#
-	if [ "$1" = "make" ]
-	then
-		exit 0
-	fi
+	exit 0
 fi
-#
-# dist
-#
-if [ "$1" = "dist" ] || [ "$1" = "all" ]
+# -----------------------------------------------------------------------------
+if [ "$1" = "dist" ] 
 then
 	echo "build.sh dist"
 	#
@@ -371,12 +404,10 @@ then
 	fi
 	#
 	#
-	if [ "$1" = "dist" ]
-	then
-		exit 0
-	fi
+	exit 0
 fi
-if [ "$1" = "omhelp" ] || [ "$1" = "all" ]
+# -----------------------------------------------------------------------------
+if [ "$1" = "omhelp" ] 
 then
 	for flag in "printable" ""
 	do
@@ -394,14 +425,11 @@ then
 		done
 	done
 	#
-	if [ "$1" = "omhelp" ]
-	then
-		exit 0
-	fi
+	exit 0
 fi
-if [ "$1" = "doxygen" ] || [ "$1" = "all" ]
+# -----------------------------------------------------------------------------
+if [ "$1" = "doxygen" ] 
 then
-	echo "--------------------------------------------------------------"
 	# avoid warning in mid sentence of other log output by separating them
 	echo "doxygen doxyfile 1> doxygen.log 2> doxygen.$$"
 	if ! doxygen doxyfile 1> doxygen.log 2> doxygen.$$
@@ -469,15 +497,13 @@ then
 		exit 1
 	fi
 	#
-	if [ "$1" = "doxygen" ]
-	then
-		exit 0
-	fi
-	echo "--------------------------------------------------------------"
+	exit 0
 fi
-
-if [ "$1" = "test" ] || ( [ "$1" = "all" ] && [ "$2" = "test" ] )
+# -----------------------------------------------------------------------------
+if [ "$1" = "test" ] 
 then
+	# start log for this test
+	date > build_test.log
 	# -------------------------------------------------------------
 	# Run automated checking of file names in original source directory
 	#
@@ -687,17 +713,15 @@ then
 	echo "" >> $dir/build_test.log
 	#
 	cd ..
-	if [ "$1" = "test" ]
-	then
-		# end the build_test.log file with the date and time
-		date >> build_test.log
-		#
-		dir=`pwd`
-		echo "Check $dir/build_test.log for errors and warnings."
-		exit 0
-	fi
+	# end the build_test.log file with the date and time
+	date >> build_test.log
+	#
+	dir=`pwd`
+	echo "Check $dir/build_test.log for errors and warnings."
+	exit 0
 fi
-if [ "$1" = "gpl" ] || [ "$1" = "all" ]
+# -----------------------------------------------------------------------------
+if [ "$1" = "gpl" ] 
 then
 	# create GPL licensed version
 	echo "gpl_license.sh"
@@ -716,12 +740,10 @@ then
 			echo "OK: gpl_license.sh." >> build_test.log
 		fi
 	fi
-	if [ "$1" = "gpl" ]
-	then
-		exit 0
-	fi
+	exit 0
 fi
-if [ "$1" = "dos" ] || ( [ "$1" = "all" ] && [ "$2" == "dos" ] )
+# ----------------------------------------------------------------------------
+if [ "$1" = "dos" ]
 then
 	echo "./dos_format.sh"
 	if ! ./dos_format.sh
@@ -740,12 +762,9 @@ then
 		fi
 	fi
 	#
-	if [ "$1" = "dos" ]
-	then
-		exit 0
-	fi
+	exit 0
 fi
-if [ "$1" = "move" ] || [ "$1" = "all" ] 
+if [ "$1" = "move" ] 
 then
 	# move tarballs and developer documentation into doc directory
 	list="
@@ -753,12 +772,14 @@ then
 		cppad-$version.cpl.tgz
 		cppad-$version.gpl.tgz
 	"
-	if [ "$1" = "all" ] && [ "$2" == "dos" ] 
+	# check if dos files have been created
+	if [ -e cppad-$version.cpl.zip ]
 	then
-		list="$list
-			cppad-$version.cpl.zip
-			cppad-$version.gpl.zip
-		"
+		list="$list cppad-$version.cpl.zip"
+	fi
+	if [ -e cppad-$version.gpl.zip ]
+	then
+		list="$list cppad-$version.gpl.zip"
 	fi
 	for file in $list
 	do
@@ -773,29 +794,15 @@ then
 			exit 1
 		fi
 	done
-	if [ "$1" = "move" ]
-	then
-		exit 0
-	fi
-fi
-if [ "$1" = "all" ]
-then
-	if [ "$2" = "test" ]
-	then
-		# end the build_test.log file with the date and time
-		date >> build_test.log
-	fi
 	exit 0
 fi
 #
-if [ "$1" = "" ]
+if [ "$1" = "help" ]
 then
-	echo "usage: build.sh option (where valid options are listed below)" 
-else
-	echo "$1 is not a valid option (valid options are listed below)"
-fi
+echo "--------------------------------------------------------------------"
 echo "option"
 echo "------"
+echo "help           print this message"
 echo "version        update configure.ac and doc.omh version number"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
 echo "config_none    excludes all possible testing options"
@@ -807,18 +814,23 @@ echo "dist           create the distribution file cppad-version.cpl.tgz"
 echo "test           unpack *.cpl.tgz, compile, tests, result in build_test.log"
 echo "gpl            create *.gpl.tgz"
 echo "dos            create *.gpl.zip, and *.cpl.zip"
-echo "move           move tarballs and developer documtnation to doc directory"
+echo "move           move tarballs and developer documentation to doc directory"
 echo
 echo "build.sh option_1 option_2 ..."
 echo "Where options are in list above, executes them in the specified order."
 echo
 echo "build.sh all"
-echo "Execute all options except config_test, test, and dos are excluded."
+echo "Execute all options except help, config_test, test, dos, are excluded."
 echo
 echo "build.sh all dos"
-echo "Execute all options except config_test, and test are excluded."
+echo "Execute all options except help, config_test, test     , are excluded."
 echo
 echo "build.sh all test"
-echo "Execute all options except config_none, and dos, are excluded."
+echo "Execute all options except help, config_none,       dos, are excluded."
+echo "------------------------------------------------------------------------"
+exit 0
+fi
 #
+echo "build.sh: \"$1\" is an invalid option."
+./build.sh help
 exit 1
