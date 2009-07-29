@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -299,7 +299,8 @@ bool CondExpADTwo(void)
 	Py = f.ForSparseJac(n, Px);
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
-			ok &= ( Py[i * n + j] == (J[i * n + j] == 1.) );
+			// sparsity pattern works for both true and false cases.
+			ok &= ( Py[i * n + j] == (j > 0) );
 	}
 
 	// reverse mode computation of sparsity pattern

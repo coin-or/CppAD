@@ -146,7 +146,6 @@ void ForJacSweep(
 	Pack                 *ForJac
 )
 {
-	size_t     numop_m1;
 	OpCode           op;
 	size_t         i_op;
 	size_t        i_var;
@@ -159,20 +158,13 @@ void ForJacSweep(
 
 	size_t            j;
 
-	// used by CExp operator 
-	bool use_VecAD = Rec->num_rec_vecad_ind() > 0;
-	const Base  *left = 0, *right = 0;
-	const Pack  *trueCase = 0, *falseCase = 0;
-	Pack  *zero = CPPAD_NULL;
-	zero        = CPPAD_TRACK_NEW_VEC(npv, zero);
-	for(j = 0; j < npv; j++)
-		zero[j] = 0;
-	
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
 
 	// set the number of operators
-	numop_m1 = Rec->num_rec_op() - 1;
+	const size_t numop_m1 = Rec->num_rec_op() - 1;
+        // length of the parameter vector (used by CppAD assert macros)
+        const size_t num_par = Rec->num_rec_par();
 
 	// skip the NonOp at the beginning of the recording
         Rec->start_forward(op, arg, i_op, i_var);
@@ -251,39 +243,9 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case CExpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 6, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
-
-			if( arg[1] & 4 )
-				trueCase = ForJac + arg[4] * npv;
-			else	trueCase = zero;
-			if( arg[1] & 8 )
-				falseCase = ForJac + arg[5] * npv;
-			else	falseCase = zero;
-			if( ! use_VecAD )
-			{	// result valid for all independent var values
-				for(j = 0; j < npv; j++)
-					Z[j] = trueCase[j] | falseCase[j];
-			}
-			else
-			{	// result only valid for current values
-				if( arg[1] & 1 )
-					left = Taylor + arg[2] * TaylorColDim;
-				else	left = Rec->GetPar(arg[2]);
-				if( arg[1] & 2 )
-					right = Taylor + arg[3] * TaylorColDim;
-				else	right = Rec->GetPar(arg[3]);
-				for(j = 0; j < npv; j++)
-				{	Z[j] = CondExpTemplate(
-						CompareOp( arg[0] ),
-						*left,
-						*right,
-						trueCase[j],
-						falseCase[j]
-					);
-				}
-			}
-			break;
+			forward_sparse_jacobian_cond_op(
+				i_var, arg, num_par, npv, ForJac
+			);
 			break;
 			// ---------------------------------------------------
 
@@ -578,9 +540,6 @@ void ForJacSweep(
 	}
 # endif
 	CPPAD_ASSERT_UNKNOWN( (i_var + NumRes(op) ) == Rec->num_rec_var() );
-
-	// free vector of zeros
-	CPPAD_TRACK_DEL_VEC(zero);
 
 	return;
 }

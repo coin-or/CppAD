@@ -17,74 +17,16 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*!
 \file cond_op.hpp
-Forward and reverse mode for conditional expressions z = CondExpRel(v, w, x, y).
+Forward, reverse, and sparse operations for conditional expressions.
 */
 
 /*!
 Compute forward mode Taylor coefficients for op = CExpOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-	z = CondExpRel(y_0, y_1, y_2, y_3)
-\endverbatim
-
-\tparam Base
-base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
-\a Base.
+\copydetails conditional_exp_op
 
 \param d
-is the order of the Taylor coefficient of z that we are  computing.
-
-\param i_z
-variable index corresponding to the result for this operation; 
-i.e. the row index in \a taylor corresponding to z. 
-
-\param arg
-\n
-\a arg[0]
-is static cast to size_t from the enum type
-\verbatim
-	enum CompareOp {CompareLt, CompareLe, CompareEq, CompareGe, CompareGt}
-\endverbatim
-for this operation.
-\n
-\n 
-\a arg[1] & 1 
-\n
-If this expression is true, y_0 is a variable, otherwise it is a parameter.
-\n
-\n
-\a arg[1] & 2
-\n
-if this expression is true, y_1 is a variable, otherwise it is a parameter.
-\n
-\n
-\a arg[1] & 4
-\n
-if this expression is true, y_2 is a variable, otherwise it is a parameter.
-\n
-\n
-\a arg[1] & 8
-\n
-if this expression is true, y_3 is a variable, otherwise it is a parameter.
-\n
-\n
-\a arg[2+j ] for j = 0, 1, 2, 3 
-\n
-is the index corresponding to the operand y_j.
-
-\param num_par
-is the lenght of the \a parameter vector.
-This value is only used for checking assumptions mentioned below
-(and is not used at all when NDEBUG is defined).
-
-\param parameter
-For j = 0, 1, 2, 3, if y_j is a parameter then
-\a parameter [ \a arg[2+j] ] is its value.
-
-\param nc_taylor
-number of columns in the matrix containing the Taylor coefficients.
+is the order of the Taylor coefficient of z that we are computing.
 
 \param taylor
 \b Input:
@@ -100,14 +42,6 @@ is the k-th order Taylor coefficient corresponding to z.
 \b Output: \a taylor [ \a i_z * \a nc_taylor + \a d ] 
 is the \a d-th order Taylor coefficient corresponding to z. 
 
-\par Checked Assertions where op is a binary operator:
-\li NumArg(CExpOp) == 6
-\li NumRes(CExpOp) == 1
-\li  arg[0] <= static_cast<size_t>( CompareGt )
-\li arg[1] != 0 (not all of y_j are parameters)
-\li For j = 0, 1 ,2 ,3, if y_j is a variable, \a arg[2+j] < \a i_z
-\li For j = 0, 1, 2, 3, if y_j is a parameter, \a arg[2+j] < \a num_par
-
 */
 template <class Base>
 inline void forward_cond_op(
@@ -122,7 +56,7 @@ inline void forward_cond_op(
 	Base zero(0);
 	Base* z;
 
-	CPPAD_ASSERT_UNKNOWN( arg[0] <= static_cast<size_t> (CompareGt) );
+	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
@@ -191,65 +125,7 @@ inline void forward_cond_op(
 /*!
 Compute zero order forward mode Taylor coefficients for op = CExpOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-	z = CondExpRel(y_0, y_1, y_2, y_3)
-\endverbatim
-
-\tparam Base
-base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
-\a Base.
-
-\param i_z
-variable index corresponding to the result for this operation; 
-i.e. the row index in \a taylor corresponding to z. 
-
-\param arg
-\n
-\a arg[0]
-is static cast to size_t from the enum type
-\verbatim
-	enum CompareOp {CompareLt, CompareLe, CompareEq, CompareGe, CompareGt}
-\endverbatim
-for this operation.
-\n
-\n 
-\a arg[1] & 1 
-\n
-If this expression is true, y_0 is a variable, otherwise it is a parameter.
-\n
-\n
-\a arg[1] & 2
-\n
-if this expression is true, y_1 is a variable, otherwise it is a parameter.
-\n
-\n
-\a arg[1] & 4
-\n
-if this expression is true, y_2 is a variable, otherwise it is a parameter.
-\n
-\n
-\a arg[1] & 8
-\n
-if this expression is true, y_3 is a variable, otherwise it is a parameter.
-\n
-\n
-\a arg[2+j ] for j = 0, 1, 2, 3 
-\n
-is the index corresponding to the operand y_j.
-
-\param num_par
-is the lenght of the \a parameter vector.
-This value is only used for checking assumptions mentioned below
-(and is not used at all when NDEBUG is defined).
-
-\param parameter
-For j = 0, 1, 2, 3, if y_j is a parameter then
-\a parameter [ \a arg[2+j] ] is its value.
-
-\param nc_taylor
-number of columns in the matrix containing the Taylor coefficients.
+\copydetails conditional_exp_op
 
 \param taylor
 \b Input:
@@ -260,15 +136,6 @@ is the zero order Taylor coefficient corresponding to y_j.
 \n
 \b Output: \a taylor [ \a i_z * \a nc_taylor + 0 ] 
 is the zero order Taylor coefficient corresponding to z. 
-
-\par Checked Assertions where op is a binary operator:
-\li NumArg(CExpOp) == 6
-\li NumRes(CExpOp) == 1
-\li  arg[0] <= static_cast<size_t>( CompareGt )
-\li arg[1] != 0 (not all of y_j are parameters)
-\li For j = 0, 1 ,2 ,3, if y_j is a variable, \a arg[2+j] < \a i_z
-\li For j = 0, 1, 2, 3, if y_j is a parameter, \a arg[2+j] < \a num_par
-
 */
 template <class Base>
 inline void forward_cond_op_0(
@@ -281,7 +148,7 @@ inline void forward_cond_op_0(
 {	Base y_0, y_1, y_2, y_3;
 	Base* z;
 
-	CPPAD_ASSERT_UNKNOWN( arg[0] <= static_cast<size_t> (CompareGt) );
+	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
@@ -332,10 +199,7 @@ inline void forward_cond_op_0(
 /*!
 Compute reverse mode Taylor coefficients for op = CExpOp.
 
-The C++ source code corresponding to this operation is
-\verbatim
-	z = CondExpRel(y_0, y_1, y_2, y_3)
-\endverbatim
+\copydetails conditional_exp_op
 
 This routine is given the partial derivatives of a function 
 G( z , y , x , w , ... )
@@ -345,63 +209,8 @@ and it uses them to compute the partial derivatives of
 \endverbatim
 where y above represents y_0, y_1, y_2, y_3.
 
-\tparam Base
-base type for the operator; i.e., this operation was recorded
-using AD< \a Base > and computations by this routine are done using type 
-\a Base.
-
 \param d
 is the order of the Taylor coefficient of z that we are  computing.
-
-\param i_z
-variable index corresponding to the result for this operation; 
-i.e. the row index in \a taylor corresponding to z. 
-
-\param arg
-\n
-\a arg[0]
-is static cast to size_t from the enum type
-\verbatim
-	enum CompareOp {CompareLt, CompareLe, CompareEq, CompareGe, CompareGt}
-\endverbatim
-for this operation.
-\n
-\n 
-\a arg[1] & 1 
-\n
-If this expression is true, y_0 is a variable, otherwise it is a parameter.
-\n
-\n
-\a arg[1] & 2
-\n
-if this expression is true, y_1 is a variable, otherwise it is a parameter.
-\n
-\n
-\a arg[1] & 4
-\n
-if this expression is true, y_2 is a variable, otherwise it is a parameter.
-\n
-\n
-\a arg[1] & 8
-\n
-if this expression is true, y_3 is a variable, otherwise it is a parameter.
-\n
-\n
-\a arg[2+j ] for j = 0, 1, 2, 3 
-\n
-is the index corresponding to the operand y_j.
-
-\param num_par
-is the lenght of the \a parameter vector.
-This value is only used for checking assumptions mentioned below
-(and is not used at all when NDEBUG is defined).
-
-\param parameter
-For j = 0, 1, 2, 3, if y_j is a parameter then
-\a parameter [ \a arg[2+j] ] is its value.
-
-\param nc_taylor
-number of columns in the matrix containing the Taylor coefficients.
 
 \param taylor
 \b Input:
@@ -410,7 +219,7 @@ if y_j is a variable then
 \a taylor [ \a arg[2+j] * nc_taylor + k ]
 is the k-th order Taylor coefficient corresponding to y_j.
 \n
-\b Input: \a taylor [ \a i_z * \a nc_taylor + k ] 
+\a taylor [ \a i_z * \a nc_taylor + k ] 
 for k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to z.
 
@@ -437,14 +246,6 @@ if y_j is a variable then
 is the partial derivative of H( y , x , w , u , ... )
 with respect to the k-th order Taylor coefficient corresponding to y_j.
 
-\par Checked Assertions where op is a binary operator:
-\li NumArg(CExpOp) == 6
-\li NumRes(CExpOp) == 1
-\li  arg[0] <= static_cast<size_t>( CompareGt )
-\li arg[1] != 0 (not all of y_j are parameters)
-\li For j = 0, 1 ,2 ,3, if y_j is a variable, \a arg[2+j] < \a i_z
-\li For j = 0, 1, 2, 3, if y_j is a parameter, \a arg[2+j] < \a num_par
-
 */
 template <class Base>
 inline void reverse_cond_op(
@@ -463,7 +264,7 @@ inline void reverse_cond_op(
 	Base* py_2;
 	Base* py_3;
 
-	CPPAD_ASSERT_UNKNOWN( arg[0] <= static_cast<size_t> (CompareGt) );
+	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
@@ -511,6 +312,95 @@ inline void reverse_cond_op(
 				zero,
 				pz[j]
 			);
+		}
+	}
+	return;
+}
+
+/*!
+Compute forward Jacobian sparsity patterns for op = CExpOp.
+
+\copydetails sparse_conditional_exp_op
+
+\param sparsity
+\b Input:
+if y_2 is a variable,
+for k = 0 , ... , nc_sparsity-1,
+\a sparsity [ \a arg[4] * nc_sparsity + k ]
+is the sparsity bit pattern corresponding to y_2.
+\n
+\b Input:
+if y_3 is a variable,
+for k = 0 , ... , nc_sparsity-1,
+\a sparsity [ \a arg[5] * nc_sparsity + k ]
+is the sparsity bit pattern corresponding to y_3.
+\n
+\b Output: 
+for k = 0 , ... , nc_sparsity-1,
+\a sparsity [ \a i_z * \a nc_sparsity + k ] 
+is the sparsity bit pattern corresponding to z.
+*/
+template <class Pack>
+inline void forward_sparse_jacobian_cond_op(
+	size_t         i_z           ,
+	const size_t*  arg           , 
+	size_t         num_par       ,
+	size_t         nc_sparsity   ,
+	Pack*          sparsity      )
+{	// value with all it's bits false
+	static Pack zero(0);
+	
+	Pack* y_2 = CPPAD_NULL;
+	Pack* y_3 = CPPAD_NULL;	
+	Pack* z   = sparsity + i_z * nc_sparsity;
+
+	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
+	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
+
+# ifndef NDEBUG
+	if( arg[1] & 1 )
+	{	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( arg[2] < num_par );
+	}
+	if( arg[1] & 2 )
+	{	CPPAD_ASSERT_UNKNOWN( arg[3] < i_z );
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( arg[3] < num_par );
+	}
+# endif
+	size_t k = nc_sparsity;
+	if( arg[1] & 4 )
+	{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
+		y_2 = sparsity + arg[4] * nc_sparsity;
+		if( arg[1] & 8 )
+		{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
+			y_3 = sparsity + arg[5] * nc_sparsity;
+			while(k--)
+				z[k] = y_2[k] | y_3[k];
+		}
+		else
+		{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
+			while(k--)
+				z[k] = y_2[k];
+		}
+	}	
+	else
+	{	CPPAD_ASSERT_UNKNOWN( arg[4] < num_par );
+		if( arg[1] & 8 )
+		{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
+			y_3 = sparsity + arg[5] * nc_sparsity;
+			while(k--)
+				z[k] = y_3[k];
+		}
+		else
+		{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
+			while(k--)
+				z[k] = zero;
 		}
 	}
 	return;

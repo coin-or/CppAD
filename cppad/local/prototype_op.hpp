@@ -437,10 +437,10 @@ index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-\b Input: If x is a parameter, \a parameter [ \a arg[0] ] 
+If x is a parameter, \a parameter [ \a arg[0] ] 
 is the value corresponding to x.
 \n
-\b Input: If y is a parameter, \a parameter [ \a arg[1] ] 
+If y is a parameter, \a parameter [ \a arg[1] ] 
 is the value corresponding to y.
 
 \param nc_taylor
@@ -505,10 +505,10 @@ index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-\b Input: If x is a parameter, \a parameter [ \a arg[0] ] 
+If x is a parameter, \a parameter [ \a arg[0] ] 
 is the value corresponding to x.
 \n
-\b Input: If y is a parameter, \a parameter [ \a arg[1] ] 
+If y is a parameter, \a parameter [ \a arg[1] ] 
 is the value corresponding to y.
 
 \param nc_taylor
@@ -575,28 +575,27 @@ index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-\b Input: If x is a parameter, \a parameter [ \a arg[0] ] 
+If x is a parameter, \a parameter [ \a arg[0] ] 
 is the value corresponding to x.
 \n
-\b Input: If y is a parameter, \a parameter [ \a arg[1] ] 
+If y is a parameter, \a parameter [ \a arg[1] ] 
 is the value corresponding to y.
 
 \param nc_taylor
 number of colums in the matrix containing all the Taylor coefficients.
 
 \param taylor
-\b Input: \a taylor [ \a i_z * \a nc_taylor + k ] 
+\a taylor [ \a i_z * \a nc_taylor + k ] 
 for k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to z.
 \n
-\b Input: If x is a variable, \a taylor [ \a arg[0] * \a nc_taylor + k ] 
+If x is a variable, \a taylor [ \a arg[0] * \a nc_taylor + k ] 
 for k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to x.
 \n
-\b Input: If y is a variable, \a taylor [ \a arg[1] * \a nc_taylor + k ] 
+If y is a variable, \a taylor [ \a arg[1] * \a nc_taylor + k ] 
 for k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to y.
-\n
 
 \param nc_partial
 number of colums in the matrix containing all the partial derivatives.
@@ -684,10 +683,10 @@ index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-\b Input: If x is a parameter, \a parameter [ \a arg[0] ] 
+If x is a parameter, \a parameter [ \a arg[0] ] 
 is the value corresponding to x.
 \n
-\b Input: If y is a parameter, \a parameter [ \a arg[1] ] 
+If y is a parameter, \a parameter [ \a arg[1] ] 
 is the value corresponding to y.
 
 \param nc_taylor
@@ -758,10 +757,10 @@ index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-\b Input: If x is a parameter, \a parameter [ \a arg[0] ] 
+If x is a parameter, \a parameter [ \a arg[0] ] 
 is the value corresponding to x.
 \n
-\b Input: If y is a parameter, \a parameter [ \a arg[1] ] 
+If y is a parameter, \a parameter [ \a arg[1] ] 
 is the value corresponding to y.
 
 \param nc_taylor
@@ -835,28 +834,27 @@ index corresponding to the right operand for this operator;
 i.e. the index corresponding to y.
 
 \param parameter
-\b Input: If x is a parameter, \a parameter [ \a arg[0] ] 
+If x is a parameter, \a parameter [ \a arg[0] ] 
 is the value corresponding to x.
 \n
-\b Input: If y is a parameter, \a parameter [ \a arg[1] ] 
+If y is a parameter, \a parameter [ \a arg[1] ] 
 is the value corresponding to y.
 
 \param nc_taylor
 number of colums in the matrix containing all the Taylor coefficients.
 
 \param taylor
-\b Input: \a taylor [ \a (i_z + j) * \a nc_taylor + k ] 
+\a taylor [ \a (i_z + j) * \a nc_taylor + k ] 
 for j = 0, 1, 2 and k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to z_j.
 \n
-\b Input: If x is a variable, \a taylor [ \a arg[0] * \a nc_taylor + k ] 
+If x is a variable, \a taylor [ \a arg[0] * \a nc_taylor + k ] 
 for k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to x.
 \n
-\b Input: If y is a variable, \a taylor [ \a arg[1] * \a nc_taylor + k ] 
+If y is a variable, \a taylor [ \a arg[1] * \a nc_taylor + k ] 
 for k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to y.
-\n
 
 \param nc_partial
 number of colums in the matrix containing all the partial derivatives.
@@ -967,7 +965,7 @@ If y[x] is a variable,
 is the number of parameters in \a parameter.
 
 \param parameter
-\b Input: If y[x] is a parameter, \a parameter [ i_y_x ] is its value.
+If y[x] is a parameter, \a parameter [ i_y_x ] is its value.
 
 \param nc_taylor
 number of columns in the matrix containing the Taylor coefficients.
@@ -1296,6 +1294,178 @@ inline void reverse_sparse_hessian_binary_op(
 	Pack*             hes_sparsity  )
 {	
 	// This routine is only for documentaiton, it should not be used
+	CPPAD_ASSERT_UNKNOWN( false );
+}
+
+// ==================== Conditional Expressions ============================
+/*!
+Common documentation for conditional expressions forward and reverse mode.
+
+The C++ source code coresponding to this operation is
+\verbatim
+	z = CondExpRel(y_0, y_1, y_2, y_3)
+\endverbatim
+where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
+
+\tparam Base
+base type for the operator; i.e., this operation was recorded
+using AD< \a Base > and computations by this routine are done using type 
+\a Base.
+
+\param i_z
+is the AD variable index corresponding to the variable z.
+
+\param arg
+\n
+\a arg[0]
+is static cast to size_t from the enum type
+\verbatim
+	enum CompareOp {
+		CompareLt, 
+		CompareLe, 
+		CompareEq, 
+		CompareGe, 
+		CompareGt, 
+		CompareNe
+	}
+\endverbatim
+for this operation.
+Note that arg[0] cannot be equal to CompareNe.
+\n
+\n
+\a arg[1] & 1
+\n
+If this is zero, y_0 is a parameter. Otherwise it is a variable.
+\n
+\n
+\a arg[1] & 2
+\n
+If this is zero, y_1 is a parameter. Otherwise it is a variable.
+\n
+\n
+\a arg[1] & 4
+\n
+If this is zero, y_2 is a parameter. Otherwise it is a variable.
+\n
+\n
+\a arg[1] & 8
+\n
+If this is zero, y_3 is a parameter. Otherwise it is a variable.
+\n
+\n
+\a arg[2 + j ] for j = 0, 1, 2, 3
+\n
+is the index corresponding to y_j.
+
+\param num_par
+is the total number of values in the vector \a parameter.
+
+\param parameter
+For j = 0, 1, 2, 3,
+if y_j is a parameter, \a parameter [ arg[2 + j] ] is its value.
+
+\param nc_taylor
+number of columns in the matrix containing the Taylor coefficients.
+
+\par Checked Assertions
+\li NumArg(CExpOp) == 6
+\li NumRes(CExpOp) == 1
+\li arg[0] < static_cast<size_t> ( CompareNe )
+\li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
+\li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
+\li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
+*/
+template <class Base>
+inline void conditional_exp_op(
+	size_t         i_z         ,
+	const size_t*  arg         , 
+	size_t         num_par     ,
+	const Base*    parameter   ,
+	size_t         nc_taylor   )
+{	// This routine is only for documentation, it should never be used
+	CPPAD_ASSERT_UNKNOWN( false );
+}
+
+/*!
+Common documentation for conditional expression sparse operations.
+
+The C++ source code coresponding to this operation is
+\verbatim
+	z = CondExpRel(y_0, y_1, y_2, y_3)
+\endverbatim
+where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
+
+\tparam Pack
+is the type used to pack the sparsity pattern bit values; i.e.,
+there is more that one bit per Pack value.
+
+\param i_z
+is the AD variable index corresponding to the variable z.
+
+\param arg
+\n
+\a arg[0]
+is static cast to size_t from the enum type
+\verbatim
+	enum CompareOp {
+		CompareLt, 
+		CompareLe, 
+		CompareEq, 
+		CompareGe, 
+		CompareGt, 
+		CompareNe
+	}
+\endverbatim
+for this operation.
+Note that arg[0] cannot be equal to CompareNe.
+\n
+\n
+\a arg[1] & 1
+\n
+If this is zero, y_0 is a parameter. Otherwise it is a variable.
+\n
+\n
+\a arg[1] & 2
+\n
+If this is zero, y_1 is a parameter. Otherwise it is a variable.
+\n
+\n
+\a arg[1] & 4
+\n
+If this is zero, y_2 is a parameter. Otherwise it is a variable.
+\n
+\n
+\a arg[1] & 8
+\n
+If this is zero, y_3 is a parameter. Otherwise it is a variable.
+\n
+\n
+\a arg[2 + j ] for j = 0, 1, 2, 3
+\n
+is the index corresponding to y_j.
+
+\param num_par
+is the total number of values in the vector \a parameter.
+
+\param nc_sparsity
+number of packed values corresponding to each sparsity pattern; i.e.,
+the number of columns in the sparsity pattern matrices.
+
+\par Checked Assertions
+\li NumArg(CExpOp) == 6
+\li NumRes(CExpOp) == 1
+\li arg[0] < static_cast<size_t> ( CompareNe )
+\li arg[1] != 0; i.e., not all of y_0, y_1, y_2, y_3 are parameters.
+\li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
+\li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
+*/
+template <class Pack>
+inline void sparse_conditional_exp_op(
+	size_t         i_z           ,
+	const size_t*  arg           , 
+	size_t         num_par       ,
+	size_t         nc_sparsity   )
+{	// This routine is only for documentation, it should never be used
 	CPPAD_ASSERT_UNKNOWN( false );
 }
 
