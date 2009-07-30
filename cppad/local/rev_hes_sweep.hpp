@@ -146,11 +146,8 @@ void RevHesSweep(
 	const Pack       *Zh = 0;
 
 
-	// used by CExp operator 
-	const Base *left = 0, *right = 0;
-	Pack  *trueCaseh = 0;
-	Pack  *falseCaseh = 0;
-	Pack  zero(0);
+	// length of the parameter vector (used by CppAD assert macros)
+	const size_t num_par = Rec->num_rec_par();
 
 	size_t             j;
 
@@ -261,40 +258,9 @@ void RevHesSweep(
 			break;
 			// -------------------------------------------------
 			case CExpOp:
-			CPPAD_ASSERT_UNKNOWN( n_res == 1);
-			CPPAD_ASSERT_UNKNOWN( n_arg == 6);
-			CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
-
-			if( arg[1] & 1 )
-				left = Taylor + arg[2] * TaylorColDim;
-			else	left = Rec->GetPar(arg[2]);
-			if( arg[1] & 2 )
-				right = Taylor + arg[3] * TaylorColDim;
-			else	right = Rec->GetPar(arg[3]);
-			if( arg[1] & 4 )
-			{	trueCaseh = RevHes + arg[4] * npv;
-				for(j = 0; j < npv; j++)
-				{	trueCaseh[j] |= CondExpTemplate(
-						CompareOp( arg[0] ),
-						*left,
-						*right,
-						Zh[j],
-						zero
-					);
-				}
-			}
-			if( arg[1] & 8 )
-			{	falseCaseh = RevHes + arg[5] * npv;
-				for(j = 0; j < npv; j++)
-				{	falseCaseh[j] |= CondExpTemplate(
-						CompareOp( arg[0] ),
-						*left,
-						*right,
-						zero,
-						Zh[j]
-					);
-				}
-			}
+			reverse_sparse_hessian_cond_op(
+				i_var, arg, num_par, *Zr, npv, RevHes
+			);
 			break;
 			// ---------------------------------------------------
 

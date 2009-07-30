@@ -59,7 +59,7 @@ extern bool Poly(void);
 extern bool Pow(void);
 extern bool PowInt(void);
 extern bool Reverse(void);
-extern bool RevSparseHes(void);
+extern bool rev_sparse_hes(void);
 extern bool RevSparseJac(void);
 extern bool RevTwo(void);
 extern bool RombergOne(void);
@@ -152,7 +152,7 @@ int main(void)
 	ok &= Run( Pow,             "Pow"            );
 	ok &= Run( PowInt,          "PowInt"         );
 	ok &= Run( Reverse,         "Reverse"        );
-	ok &= Run( RevSparseHes,    "RevSparseHes"   );
+	ok &= Run( rev_sparse_hes,  "rev_sparse_hes" );
 	ok &= Run( RevSparseJac,    "RevSparseJac"   );
 	ok &= Run( RevTwo,          "RevTwo"         );
 	ok &= Run( RombergOne,      "RombergOne"     );

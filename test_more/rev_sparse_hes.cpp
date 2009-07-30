@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,9 +12,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 
 # include <cppad/cppad.hpp>
+ 
+namespace { // Begin empty namespace
 
-
-bool RevSparseHes(void)
+bool case_one(void)
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -51,9 +52,8 @@ bool RevSparseHes(void)
 
 	// CondExpLt(variable, variable, variable, variable)
 	sum += CondExpLt(X[1], X[2], sin(X[6]), cos(X[7]) );
-	if( X[1] < X[2] )
-		Check[6 * n + 6] = true;
-	else	Check[7 * n + 7] = true;
+	Check[6 * n + 6] = true;
+	Check[7 * n + 7] = true;
 	
 	// pow(variable, variable)
 	sum += pow(X[8], X[9]);
@@ -98,6 +98,80 @@ bool RevSparseHes(void)
 	Pxx = F.RevSparseHes(n, Py);
 	for(j = 0; j < n * n; j++)
 		ok &= (! Pxx[j]);  // Hessian is identically zero
+
+	return ok;
+}
+
+bool case_two(void)
+{	bool ok = true;
+	using namespace CppAD;
+
+	// dimension of the domain space
+	size_t n = 4; 
+
+	// dimension of the range space
+	size_t m = 1;
+
+	// temporary indices
+	size_t i, j;
+
+	// initialize check values to false
+	CPPAD_TEST_VECTOR<bool> Check(n * n);
+	for(j = 0; j < n * n; j++)
+		Check[j] = false;
+
+	// independent variable vector 
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	for(j = 0; j < n; j++)
+		X[j] = AD<double>(j);
+	Independent(X);
+
+	// Test the case where dependent variable is a non-linear function
+	// of the result of a conditional expression. 
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	Y[0] = CondExpLt(X[0], X[1], X[2], X[3]);
+	Y[0] = cos(Y[0]) + X[0] + X[1];
+
+	// Hessian with respect to x[0] and x[1] is zero.
+	// Hessian with respect to x[2] and x[3] is full
+	// (although we know that there are no cross terms, this is an
+	// inefficiency of the conditional expression operator).
+	Check[2 * n + 2] = Check[ 2 * n + 3 ] = true;
+	Check[3 * n + 2] = Check[ 3 * n + 3 ] = true;
+	
+	// create function object F : X -> Y
+	ADFun<double> F(X, Y);
+
+	// sparsity pattern for the identity function U(x) = x
+	CPPAD_TEST_VECTOR<bool> Px(n * n);
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			Px[ i * n + j ] = false;
+		Px[ i * n + i ] = true;
+	}
+
+	// compute sparsity pattern for Jacobian of F(U(x))
+	F.ForSparseJac(n, Px);
+
+	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
+	CPPAD_TEST_VECTOR<bool> Py(m);
+	Py[0] = true;
+	CPPAD_TEST_VECTOR<bool> Pxx(n * n);
+	Pxx = F.RevSparseHes(n, Py);
+
+	// check values
+	for(j = 0; j < n * n; j++)
+		ok &= (Pxx[j] == Check[j]);
+
+	return ok;
+}
+
+} // End of empty namespace
+
+bool rev_sparse_hes(void)
+{	bool ok = true;
+	// ok &= case_one();
+	ok &= case_two();
 
 	return ok;
 }

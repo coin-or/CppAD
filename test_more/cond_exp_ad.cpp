@@ -161,7 +161,7 @@ bool CondExpADOne(void)
 	Px = f.RevSparseJac(m, Py);
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
-			ok &= ( Px[i * n + j] == (J[i * n + j] == 1.) );
+			ok &= ( Px[i * n + j] == ( j > 0 ) );
 	}
 
 	return ok;
@@ -314,7 +314,7 @@ bool CondExpADTwo(void)
 	Px = f.RevSparseJac(m, Py);
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
-			ok &= ( Px[i * n + j] == (J[i * n + j] == 1.) );
+			ok &= ( Px[i * n + j] == (j > 0) );
 	}
 
 	return ok;

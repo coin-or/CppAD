@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -124,12 +124,12 @@ bool RevSparseJac(void)
 	index++;
 	Y[index] = CondExpLt(X[0], X[1], X[0], X[1]);
 	Check[index * n + 0] = true;
-	Check[index * n + 1] = false;
+	Check[index * n + 1] = true;
 	Check[index * n + 2] = false;
 	index++;
 	Y[index] = CondExpLt(X[0], X[1], AD<double>(3.), X[1]);
 	Check[index * n + 0] = false;
-	Check[index * n + 1] = false;
+	Check[index * n + 1] = true;
 	Check[index * n + 2] = false;
 	index++;
 

@@ -406,5 +406,188 @@ inline void forward_sparse_jacobian_cond_op(
 	return;
 }
 
+/*!
+Compute reverse Jacobian sparsity patterns for op = CExpOp.
+
+This routine is given the sparsity patterns
+for a function G(z, y, x, ... )
+and it uses them to compute the sparsity patterns for 
+\verbatim
+	H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
+\endverbatim
+where y represents the combination of y_0, y_1, y_2, and y_3.
+
+\copydetails sparse_conditional_exp_op
+
+\param sparsity
+If y_2 is a variable,
+for k = 0 , ... , nc_sparsity-1,
+\a sparsity [ \a arg[4] * nc_sparsity + k ]
+is the sparsity bit pattern corresponding to y_2.
+On input, this pattern corresponds to the function G.
+On ouput, it corresponds to the function H.
+\n
+\n
+If y_3 is a variable,
+for k = 0 , ... , nc_sparsity-1,
+\a sparsity [ \a arg[5] * nc_sparsity + k ]
+is the sparsity bit pattern corresponding to y_3.
+On input, this pattern corresponds to the function G.
+On ouput, it corresponds to the function H.
+\n
+\n
+For k = 0 , ... , nc_sparsity-1,
+\a sparsity [ \a i_z * nc_sparsity + k ]
+is the sparsity bit pattern corresponding to z.
+On input and output, this pattern corresponds to the function G.
+*/
+template <class Pack>
+inline void reverse_sparse_jacobian_cond_op(
+	size_t         i_z           ,
+	const size_t*  arg           , 
+	size_t         num_par       ,
+	size_t         nc_sparsity   ,
+	Pack*          sparsity      )
+{	
+	Pack* z   = sparsity + i_z * nc_sparsity;
+
+	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
+	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
+
+# ifndef NDEBUG
+	if( arg[1] & 1 )
+	{	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( arg[2] < num_par );
+	}
+	if( arg[1] & 2 )
+	{	CPPAD_ASSERT_UNKNOWN( arg[3] < i_z );
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( arg[3] < num_par );
+	}
+	if( ! ( arg[1] & 4 ) )
+	{	CPPAD_ASSERT_UNKNOWN( arg[4] < num_par );
+	}
+	if( ! ( arg[1] & 8 ) )
+	{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
+	}
+# endif
+	size_t k;
+	if( arg[1] & 4 )
+	{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
+		Pack* y_2 = sparsity + arg[4] * nc_sparsity;
+		k = nc_sparsity;
+		while(k--)
+			y_2[k] |= z[k];
+	}
+	if( arg[1] & 8 )
+	{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
+		Pack* y_3 = sparsity + arg[5] * nc_sparsity;
+		k = nc_sparsity;
+		while(k--)
+			y_3[k] |= z[k];
+	}
+	return;
+}
+
+/*!
+Compute reverse Hessian sparsity patterns for op = CExpOp.
+
+This routine is given the sparsity patterns
+for a function G(z, y, x, ... )
+and it uses them to compute the sparsity patterns for 
+\verbatim
+	H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
+\endverbatim
+where y represents the combination of y_0, y_1, y_2, and y_3.
+
+\copydetails sparse_conditional_exp_op
+
+\param z_jac
+is all true (ones complement of 0) if the scalar valued 
+function we are computing the Hessian sparsity for 
+has a non-zero partial with respect to the variable z
+(actually may have a non-zero partial with respect to z).
+Otherwise it zero.
+
+\param hes_sparsity
+For k = 0 , ... , nc_sparsity-1,
+\a sparsity [ \a i_z * nc_sparsity + k ]
+is the sparsity bit pattern corresponding to z.
+On input and output, this pattern corresponds to the function G.
+\n
+\n
+For k = 0 , ... , nc_sparsity-1,
+\a sparsity [ \a arg[4] * nc_sparsity + k ]
+is the sparsity bit pattern corresponding to y_2.
+On input, this pattern corresponds to the function G.
+On output, this pattern corresponds to the function H.
+\n
+\n
+For k = 0 , ... , nc_sparsity-1,
+\a sparsity [ \a arg[5] * nc_sparsity + k ]
+is the sparsity bit pattern corresponding to y_3.
+On input, this pattern corresponds to the function G.
+On output, this pattern corresponds to the function H.
+*/
+template <class Pack>
+inline void reverse_sparse_hessian_cond_op(
+	size_t         i_z           ,
+	const size_t*  arg           , 
+	size_t         num_par       ,
+	Pack           z_jac         ,
+	size_t         nc_sparsity   ,
+	Pack*          hes_sparsity  )
+{	
+
+	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
+	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
+
+	Pack* z_hes   = hes_sparsity + i_z * nc_sparsity;
+
+# ifndef NDEBUG
+	if( arg[1] & 1 )
+	{	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( arg[2] < num_par );
+	}
+	if( arg[1] & 2 )
+	{	CPPAD_ASSERT_UNKNOWN( arg[3] < i_z );
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( arg[3] < num_par );
+	}
+	if( ! ( arg[1] & 4 ) )
+	{	CPPAD_ASSERT_UNKNOWN( arg[4] < num_par );
+	}
+	if( ! ( arg[1] & 8 ) )
+	{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
+	}
+# endif
+	size_t k;
+	if( arg[1] & 4 )
+	{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
+		Pack* y_2_hes = hes_sparsity + arg[4] * nc_sparsity;
+		k = nc_sparsity;
+		while(k--)
+			y_2_hes[k] |= z_hes[k];
+	}
+	if( arg[1] & 8 )
+	{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
+		Pack* y_3_hes = hes_sparsity + arg[5] * nc_sparsity;
+		k = nc_sparsity;
+		while(k--)
+			y_3_hes[k] |= z_hes[k];
+	}
+	return;
+}
+
 CPPAD_END_NAMESPACE
 # endif

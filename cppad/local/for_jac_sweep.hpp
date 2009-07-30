@@ -163,6 +163,7 @@ void ForJacSweep(
 
 	// set the number of operators
 	const size_t numop_m1 = Rec->num_rec_op() - 1;
+
         // length of the parameter vector (used by CppAD assert macros)
         const size_t num_par = Rec->num_rec_par();
 

@@ -136,10 +136,8 @@ void RevJacSweep(
 
 	size_t            j;
 
-	// used by CExp operator 
-	const Base  *left = 0, *right = 0;
-	Pack        *trueCase = 0, *falseCase = 0;
-	Pack         zero(0);
+	// length of the parameter vector (used by CppAD assert macros)
+	const size_t num_par = Rec->num_rec_par();
 
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
@@ -236,39 +234,9 @@ void RevJacSweep(
 			// -------------------------------------------------
 
 			case CExpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 6, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
-
-			if( arg[1] & 1 )
-				left = Taylor + arg[2] * TaylorColDim;
-			else	left = Rec->GetPar(arg[2]);
-			if( arg[1] & 2 )
-				right = Taylor + arg[3] * TaylorColDim;
-			else	right = Rec->GetPar(arg[3]);
-			if( arg[1] & 4 )
-			{	trueCase = RevJac + arg[4] * npv;
-				for(j = 0; j < npv; j++)
-				{	trueCase[j] |= CondExpTemplate(
-						CompareOp( arg[0] ),
-						*left,
-						*right,
-						Z[j],
-						zero
-					);
-				}
-			}
-			if( arg[1] & 8 )
-			{	falseCase = RevJac + arg[5] * npv;
-				for(j = 0; j < npv; j++)
-				{	falseCase[j] |= CondExpTemplate(
-						CompareOp( arg[0] ),
-						*left,
-						*right,
-						zero,
-						Z[j]
-					);
-				}
-			}
+			reverse_sparse_jacobian_cond_op(
+				i_var, arg, num_par, npv, RevJac
+			);
 			break;
 			// ---------------------------------------------------
 
