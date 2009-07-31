@@ -44,6 +44,9 @@ private:
 	/// Number of VecAD indices in the recording. 
 	size_t    num_rec_vecad_ind_;
 
+	/// Number of VecAD vectors in the recording
+	size_t    num_rec_vecad_vec_;
+
 	/// The VecAD indices in the recording.
 	size_t   *rec_vecad_ind_;
 
@@ -78,6 +81,7 @@ public:
 		rec_op_            = CPPAD_NULL;
 
 		num_rec_vecad_ind_ = 0;
+		num_rec_vecad_vec_ = 0;
 		rec_vecad_ind_     = CPPAD_NULL;
 
 		num_rec_op_arg_    = 0;
@@ -176,6 +180,11 @@ public:
 		i = num_rec_text_;
 		while(i--)
 			rec_text_[i] = rec.Txt_[i];
+
+		// set the number of VecAD vectors
+		num_rec_vecad_vec_ = 0;
+		for(i = 0; i < num_rec_vecad_ind_; i += rec_vecad_ind_[i] + 1)
+			num_rec_vecad_vec_++;
 	}
 
 	/// Erase all information in an operation sequence player.
@@ -201,6 +210,7 @@ public:
 
 		num_rec_op_        = 0;
 		num_rec_vecad_ind_ = 0;
+		num_rec_vecad_vec_ = 0;
 		num_rec_op_arg_    = 0;
 		num_rec_par_       = 0;
 		num_rec_text_      = 0;
@@ -294,6 +304,10 @@ public:
 	/// Fetch number of VecAD indices in the recording.
 	size_t num_rec_vecad_ind(void) const
 	{	return num_rec_vecad_ind_; }
+
+	/// Fetch number of VecAD vectors in the recording
+	size_t num_rec_vecad_vec(void) const
+	{	return num_rec_vecad_vec_; }
 
 	/// Fetch number of argument indices in the recording.
 	size_t num_rec_op_arg(void) const

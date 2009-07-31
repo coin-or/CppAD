@@ -152,11 +152,11 @@ void ForJacSweep(
 
 	const size_t   *arg = 0;
 	const size_t *arg_0 = 0;
-	const Pack       *X = 0;
 
 	Pack             *Z = 0;
+	Pack             *Y = 0;
 
-	size_t            j;
+	size_t            i, j, k;
 
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
@@ -166,6 +166,35 @@ void ForJacSweep(
 
         // length of the parameter vector (used by CppAD assert macros)
         const size_t num_par = Rec->num_rec_par();
+
+	// vecad_pattern contains a sparsity pattern for each VecAD object.
+	// vecad maps a VecAD index (which corresponds to the beginning of the
+	// VecAD object) to the vecad_pattern index for the VecAD object.
+	size_t num_vecad_ind   = Rec->num_rec_vecad_ind();
+	size_t num_vecad_vec   = Rec->num_rec_vecad_vec();
+	Pack*  vecad_pattern   = CPPAD_NULL;
+	size_t* vecad          = CPPAD_NULL;
+	if( num_vecad_vec > 0 )
+	{	size_t length;
+		vecad_pattern = CPPAD_TRACK_NEW_VEC(
+			num_vecad_vec * npv, vecad_pattern
+		);
+		vecad         = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad);
+		j             = 0;
+		for(i = 0; i < num_vecad_vec; i++)
+		{	for(k = 0; k < npv; k++)
+				vecad_pattern[ i * npv + k ] = Pack(0);
+			// length of this VecAD
+			length   = Rec->GetVecInd(j);
+			// set to proper index for this VecAD
+			vecad[j] = i; 
+			for(k = 1; k <= length; k++)
+				vecad[j+k] = num_vecad_vec; // invalid index
+			// start of next VecAD
+			j       += length + 1;
+		}
+		CPPAD_ASSERT_UNKNOWN( j == Rec->num_rec_vecad_ind() );
+	}
 
 	// skip the NonOp at the beginning of the recording
         Rec->start_forward(op, arg, i_op, i_var);
@@ -324,40 +353,28 @@ void ForJacSweep(
 
 			case LdpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
-			
 			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_vecad_ind );
+			i = vecad[ arg[0] - 1 ];
+			CPPAD_ASSERT_UNKNOWN( i < num_vecad_vec );
 
-			// arg[2] is variable corresponding to this load
-			if( arg[2] > 0 )
-			{	X = ForJac + arg[2] * npv;
-				for(j = 0; j < npv; j++)
-					Z[j] = X[j];
-			}
-			else
-			{	for(j = 0; j < npv; j++)
-					Z[j] = 0;
-			}
+			// index corresponding to this VecAD vector
+			for(j = 0; j < npv; j++)
+				Z[j] = vecad_pattern[i * npv + j];
 			break;
 			// -------------------------------------------------
 
 			case LdvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
-			
 			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < Rec->num_rec_vecad_ind() );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_vecad_ind );
+			i = vecad[ arg[0] - 1 ];
+			CPPAD_ASSERT_UNKNOWN( i < num_vecad_vec );
 
-
-			// arg[2] is variable corresponding to this load
-			if( arg[2] > 0 )
-			{	X = ForJac + arg[2] * npv;
-				for(j = 0; j < npv; j++)
-					Z[j] = X[j];
-			}
-			else
-			{	for(j = 0; j < npv; j++)
-					Z[j] = 0;
-			}
+			// index corresponding to this VecAD vector
+			i = vecad[ arg[0] ];
+			for(j = 0; j < npv; j++)
+				Z[j] = vecad_pattern[i * npv + j];
 			break;
 			// -------------------------------------------------
 
@@ -478,21 +495,37 @@ void ForJacSweep(
 
 			case StppOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
+			// storing a parameter does not affect vector sparsity
 			break;
 			// -------------------------------------------------
 
 			case StpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
+			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_vecad_ind );
+			i  = vecad[ arg[0] - 1 ];
+			CPPAD_ASSERT_UNKNOWN(i < num_vecad_vec);
+			Y  = ForJac + arg[2] * npv;
+			for(j = 0; j < npv; j++)
+				vecad_pattern[i * npv + j] |= Y[j];
 			break;
 			// -------------------------------------------------
 
 			case StvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
+			// storing a parameter does not affect vector sparsity
 			break;
 			// -------------------------------------------------
 
 			case StvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
+			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_vecad_ind );
+			Y  = ForJac + arg[2] * npv;
+			i  = vecad[ arg[0] - 1 ];
+			CPPAD_ASSERT_UNKNOWN(i < num_vecad_vec);
+			for(j = 0; j < npv; j++)
+				vecad_pattern[i * npv + j] |= Y[j];
 			break;
 			// -------------------------------------------------
 
@@ -541,6 +574,11 @@ void ForJacSweep(
 	}
 # endif
 	CPPAD_ASSERT_UNKNOWN( (i_var + NumRes(op) ) == Rec->num_rec_var() );
+
+	if( vecad != CPPAD_NULL )
+		CPPAD_TRACK_DEL_VEC(vecad);
+	if( vecad_pattern != CPPAD_NULL )
+		CPPAD_TRACK_DEL_VEC(vecad_pattern);
 
 	return;
 }

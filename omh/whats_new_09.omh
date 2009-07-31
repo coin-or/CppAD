@@ -49,6 +49,14 @@ This section contains a list of the changes to CppAD during 2009
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+(Comments about developer documentation are only important if you are
+trying to read and understand the CppAD source code.)
+
+$head 07-31$$
+The $cref/forward/ForSparseJac/$$ and $cref/reverse/RevSparseJac/$$
+sparse Jacobian routines have been improved so the resulting sparsity
+patterns are valid for all values of the independent variables
+(even if you use $cref/CondExp/$$ or $cref/VecAD/$$).
 
 $head 07-26$$
 Convert developer documentation from

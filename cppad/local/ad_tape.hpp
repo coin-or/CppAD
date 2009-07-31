@@ -79,20 +79,6 @@ $syntax%
 	size_t %Tape%.AddVec(size_t  %length%, const %Base% *%data%)
 %$$
 adds a variable indexed array with the specified length and values to the tape.
-We use $italic i$$ to denote the value returned by $code AddVec$$.
-The value $italic length$$ is added to $italic Rec$$ as follows:
-$syntax%
-	%length% == %Rec%.GetVecInd(%i%)
-%$$
-Upon return, 
-the $italic Base$$ value of the elements of $italic data$$ 
-are stored in $italic Rec$$
-in the following way:
-for $latex j = 0 , \ldots , length-1$$,
-$syntax%
-	%data%[%j%] == %Rec%.GetVecInd(%i% + %j% + 1)
-%$$
-
 
 $end
 */

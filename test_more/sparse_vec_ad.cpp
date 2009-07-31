@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,17 +40,17 @@ bool SparseVecAD(void)
 	for(j = 0; j < n; j++)
 	{	J    = AD<double>(j);
 		Z[J] = X[j];
+
+		// y[i] depends on x[j] for j <= i
+		Y[j] = Z[J];
 	}
 
 	// compute dependent variables values
 	AD<double> P = 1;
 	J = AD<double>(0);
 	for(j = 0; j < n; j++)
-	{	P    = P * Z[J];
-		Y[j] = P;
-		for(i = 0; i < n; i++)
+	{	for(i = 0; i < n; i++)
 			Check[ i * n + j ] = (j <= i);
-		J = J + X[1];  // X[1] is equal to one
 	}
 	
 	// create function object F : X -> Y

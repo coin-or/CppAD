@@ -60,24 +60,9 @@ $syntax%
 %$$
 
 $head x$$
-If no $xref/VecAD/$$ objects are used by the
-AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$ 
-stored in $italic f$$,
-the sparsity pattern is valid for all values $latex x \in B^n$$.
-$pre
-
-$$
-If $xref/SeqProperty/use_VecAD/f.use_VecAD/$$ is true,
-the sparsity patter is only valid for the value of $italic x$$
-in the previous $xref/ForwardZero//zero order forward mode/$$ call
-$syntax%
-	%f%.Forward(0, %x%)
-%$$
-If there is no previous zero order forward mode call using $italic f$$,
-the value of the $xref/Independent//independent/$$ variables 
-during the recording of the AD sequence of operations is used
-for $italic x$$.
+the sparsity pattern is valid for all values of the independent 
+variables in $latex x \in B^n$$
+(even if you use $cref/CondExp/$$ or $cref/VecAD/$$).
 
 $head p$$
 The argument $italic p$$ has prototype

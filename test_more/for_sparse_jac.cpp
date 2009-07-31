@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -67,7 +67,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 	Check[index * n + 2] = false;  \
 	index++;
 
-bool ForSparseJac(void)
+
+namespace { // Begin empty namespace
+
+bool case_one(void)
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -164,5 +167,91 @@ bool ForSparseJac(void)
 			ok &= (Py[i * n + j] == Check[i * n + j]);
 	}	
 
+	return ok;
+}
+
+bool case_two(void)
+{	bool ok = true;
+	using namespace CppAD;
+
+	// dimension of the domain space
+	size_t n = 3; 
+
+	// dimension of the range space
+	size_t m = 2;
+
+	// inialize the vector as zero
+	CppAD::VecAD<double> Z(n - 1);
+	size_t k;
+	for(k = 0; k < n-1; k++)
+		Z[k] = 0.;
+
+	// independent variable vector 
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	X[0] = 0.; 
+	X[1] = 1.;
+	X[2] = 2.;
+	Independent(X);
+
+	// VecAD vector is going to depend on X[1] and X[2]
+	Z[ X[0] ] = X[1];
+	Z[ X[1] ] = X[2]; 
+
+	// dependent variable vector
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+
+	// check results vector
+	CPPAD_TEST_VECTOR< bool >       Check(m * n);
+
+	// initialize index into Y
+	size_t index = 0;
+
+	// First component only depends on X[0];
+	Y[index]             = X[0];
+	Check[index * n + 0] = true;
+	Check[index * n + 1] = false;
+	Check[index * n + 2] = false;
+	index++;
+	AD<double> zero(0);
+	Y[index]             = Z[zero];
+	Check[index * n + 0] = false;
+	Check[index * n + 1] = true;
+	Check[index * n + 2] = true;
+	index++;
+
+	// check final index
+	assert( index == m );
+
+	// create function object F : X -> Y
+	ADFun<double> F(X, Y);
+
+	// dependency matrix for the identity function W(x) = x
+	CPPAD_TEST_VECTOR< bool > Px(n * n);
+	size_t i, j;
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			Px[ i * n + j ] = false;
+		Px[ i * n + i ] = true;
+	}
+
+	// evaluate the dependency matrix for F(X(x))
+	CPPAD_TEST_VECTOR< bool > Py(m * n);
+	Py = F.ForSparseJac(n, Px);
+
+	// check values
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < n; j++)
+			ok &= (Py[i * n + j] == Check[i * n + j]);
+	}	
+
+	return ok;
+}
+
+} // End empty namespace
+
+bool for_sparse_jac(void)
+{	bool ok = true;
+	ok &= case_one();
+	ok &= case_two();
 	return ok;
 }
