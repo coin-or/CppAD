@@ -68,7 +68,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 	index++;
 
 
-bool RevSparseJac(void)
+bool rev_sparse_jac(void)
 {	bool ok = true;
 	using namespace CppAD;
 
