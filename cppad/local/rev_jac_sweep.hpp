@@ -346,7 +346,7 @@ void RevJacSweep(
 			CPPAD_ASSERT_UNKNOWN( i < num_vecad_vec );
 
 			for(j = 0; j < npv; j++)
-				vecad_pattern[j] |= Z[j];
+				vecad_pattern[i * npv + j] |= Z[j];
 			break;
 			// -------------------------------------------------
 
@@ -358,7 +358,7 @@ void RevJacSweep(
 			CPPAD_ASSERT_UNKNOWN( i < num_vecad_vec );
 
 			for(j = 0; j < npv; j++)
-				vecad_pattern[j] |= Z[j];
+				vecad_pattern[i * npv + j] |= Z[j];
 			break;
 			// -------------------------------------------------
 

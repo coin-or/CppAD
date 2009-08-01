@@ -52,6 +52,10 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 08-01$$
+Fix bug in reverse mode Jacobian $cref/sparsity/RevSparseJac/$$
+for $cref/VecAD/$$ objects. 
+
 $head 07-31$$
 The $cref/forward/ForSparseJac/$$ and $cref/reverse/RevSparseJac/$$
 sparse Jacobian routines have been improved so the resulting sparsity

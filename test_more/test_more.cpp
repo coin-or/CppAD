@@ -69,7 +69,7 @@ extern bool SimpleVector(void);
 extern bool Sin(void);
 extern bool SinCos(void);
 extern bool Sinh(void);
-extern bool SparseVecAD(void);
+extern bool sparse_vec_ad(void);
 extern bool Sqrt(void);
 extern bool std_math(void);
 extern bool Sub(void);
@@ -162,7 +162,7 @@ int main(void)
 	ok &= Run( Sin,             "Sin"            );
 	ok &= Run( SinCos,          "SinCos"         );
 	ok &= Run( Sinh,            "Sinh"           );
-	ok &= Run( SparseVecAD,     "SparseVecAD"    );
+	ok &= Run( sparse_vec_ad,   "sparse_vec_ad"  );
 	ok &= Run( Sqrt,            "Sqrt"           );
 	ok &= Run( std_math,        "std_math"       );
 	ok &= Run( Sub,             "Sub"            );
