@@ -173,19 +173,21 @@ template <class Pack>
 inline void reverse_sparse_hessian_linear_unary_op(
 	size_t      i_z           ,
 	size_t      i_x           ,
-	Pack        jac_z         ,
+	Pack*       jac_reverse   ,
 	size_t      nc_sparsity   ,
-	const Pack* jac_sparsity  ,
+	const Pack* jac_forward   ,
 	Pack*       hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 
-	Pack* hes_z  = hes_sparsity + i_z * nc_sparsity;
-	Pack* hes_x  = hes_sparsity + i_x * nc_sparsity;
+	Pack* z_hes  = hes_sparsity + i_z * nc_sparsity;
+	Pack* x_hes  = hes_sparsity + i_x * nc_sparsity;
 	size_t j = nc_sparsity;
 	while(j--)
-		hes_x[j] |= hes_z[j];
+		x_hes[j] |= z_hes[j];
+
+	jac_reverse[i_x] |= jac_reverse[i_z];
 	return;
 }
 
@@ -209,20 +211,22 @@ template <class Pack>
 inline void reverse_sparse_hessian_nonlinear_unary_op(
 	size_t      i_z           ,
 	size_t      i_x           ,
-	Pack        jac_z         ,
+	Pack*       jac_reverse   ,
 	size_t      nc_sparsity   ,
-	const Pack* jac_sparsity  ,
+	const Pack* jac_forward   ,
 	Pack*       hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 
-	const Pack* hes_z  = hes_sparsity + i_z * nc_sparsity;
-	const Pack* jac_x  = jac_sparsity + i_x * nc_sparsity;
-	Pack* hes_x         = hes_sparsity + i_x * nc_sparsity;
+	const Pack* z_hes  = hes_sparsity + i_z * nc_sparsity;
+	const Pack* x_for  = jac_forward  + i_x * nc_sparsity;
+	Pack* x_hes        = hes_sparsity + i_x * nc_sparsity;
 	size_t j = nc_sparsity;
 	while(j--)
-		hes_x[j] |= hes_z[j] | (jac_z & jac_x[j]);
+		x_hes[j] |= z_hes[j] | (jac_reverse[i_z] & x_for[j]);
+
+	jac_reverse[i_x] |= jac_reverse[i_z];
 	return;
 }
 

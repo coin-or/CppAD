@@ -49,7 +49,7 @@ bool sparse_vec_ad(void)
 
 		// y[i] depends on x[j] for j <= i
 		// (and is non-linear for j <= 1).
-		if( j <= 1 )
+		if( j == 1 )
 			Y[j] = Z[J] * Z[J];
 		else	Y[j] = Z[J];
 	}
@@ -92,23 +92,28 @@ bool sparse_vec_ad(void)
 			ok &= (Py[i * m + j] == Check[i * m + j]);
 	}	
 
-	// compute sparsity pattern for Hessian of F_m ( Identity(x) ) 
+	// test sparsity pattern for Hessian of F_2 ( Identity(x) ) 
 	CPPAD_TEST_VECTOR<bool> Hy(m);
 	for(i = 0; i < m; i++)
 		Hy[i] = false;
-	Hy[m-1] = true;
+	Hy[2] = true;
 	CPPAD_TEST_VECTOR<bool> Pxx(n * n);
 	Pxx = F.RevSparseHes(n, Hy);
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			ok &= (Pxx[i * n + j] == false );
+	}
 
-# if 0
-	// This test case demonstrates a bug in the current version of
-	// of the reverse Hessian sparsity pattern calculations. It will be
-	// fixed in the next commit.
+	// test sparsity pattern for Hessian of F_1 ( Identity(x) ) 
+	for(i = 0; i < m; i++)
+		Hy[i] = false;
+	Hy[1] = true;
+	Pxx = F.RevSparseHes(n, Hy);
 	for(i = 0; i < n; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Pxx[i * n + j] == ( (i <= 1) & (j <= 1) ) );
 	}
-# endif
+
 
 	return ok;
 }

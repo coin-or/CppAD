@@ -507,12 +507,25 @@ where y represents the combination of y_0, y_1, y_2, and y_3.
 
 \copydetails sparse_conditional_exp_op
 
-\param z_jac
-is all true (ones complement of 0) if the scalar valued 
-function we are computing the Hessian sparsity for 
-has a non-zero partial with respect to the variable z
-(actually may have a non-zero partial with respect to z).
-Otherwise it zero.
+\param jac_reverse
+\a jac_reverse[i_z] 
+is all zero (ones) if the Jacobian of G with respect to z is zero (non-zero).
+\n
+\n
+\a jac_reverse[ arg[4] ] 
+If y_2 is a variable,
+\a jac_reverse[ arg[4] ] 
+is all zero (ones) if the Jacobian with respect to y_2 is zero (non-zero).
+On input, it corresponds to the function G,
+and on output it corresponds to the function H.
+\n
+\n
+\a jac_reverse[ arg[5] ] 
+If y_3 is a variable,
+\a jac_reverse[ arg[5] ] 
+is all zero (ones) if the Jacobian with respect to y_3 is zero (non-zero).
+On input, it corresponds to the function G,
+and on output it corresponds to the function H.
 
 \param hes_sparsity
 For k = 0 , ... , nc_sparsity-1,
@@ -521,6 +534,7 @@ is the sparsity bit pattern corresponding to z.
 On input and output, this pattern corresponds to the function G.
 \n
 \n
+If y_2 is a variable,
 For k = 0 , ... , nc_sparsity-1,
 \a sparsity [ \a arg[4] * nc_sparsity + k ]
 is the sparsity bit pattern corresponding to y_2.
@@ -528,6 +542,7 @@ On input, this pattern corresponds to the function G.
 On output, this pattern corresponds to the function H.
 \n
 \n
+If y_3 is a variable,
 For k = 0 , ... , nc_sparsity-1,
 \a sparsity [ \a arg[5] * nc_sparsity + k ]
 is the sparsity bit pattern corresponding to y_3.
@@ -539,7 +554,7 @@ inline void reverse_sparse_hessian_cond_op(
 	size_t         i_z           ,
 	const size_t*  arg           , 
 	size_t         num_par       ,
-	Pack           z_jac         ,
+	Pack*          jac_reverse   ,
 	size_t         nc_sparsity   ,
 	Pack*          hes_sparsity  )
 {	
@@ -578,6 +593,8 @@ inline void reverse_sparse_hessian_cond_op(
 		k = nc_sparsity;
 		while(k--)
 			y_2_hes[k] |= z_hes[k];
+
+		jac_reverse[ arg[4] ] |= jac_reverse[i_z];
 	}
 	if( arg[1] & 8 )
 	{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
@@ -585,6 +602,8 @@ inline void reverse_sparse_hessian_cond_op(
 		k = nc_sparsity;
 		while(k--)
 			y_3_hes[k] |= z_hes[k];
+
+		jac_reverse[ arg[5] ] |= jac_reverse[i_z];
 	}
 	return;
 }

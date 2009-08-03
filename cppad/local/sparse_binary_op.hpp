@@ -203,9 +203,9 @@ template <class Pack>
 inline void reverse_sparse_hessian_addsub_op(
 	size_t            i_z           ,
 	const size_t*     arg           ,
-	Pack              z_jac         ,
+	Pack*             jac_reverse   ,
 	size_t            nc_sparsity   ,
-	const Pack*       jac_sparsity  ,
+	const Pack*       jac_forward   ,
 	Pack*             hes_sparsity  )
 {	
 	// check assumptions
@@ -220,6 +220,9 @@ inline void reverse_sparse_hessian_addsub_op(
 	{	x_hes[j] |= z_hes[j];
 		y_hes[j] |= z_hes[j];
 	}
+
+	jac_reverse[arg[0]] |= jac_reverse[i_z];
+	jac_reverse[arg[1]] |= jac_reverse[i_z];
 	return;
 }	
 
@@ -238,17 +241,17 @@ template <class Pack>
 inline void reverse_sparse_hessian_mul_op(
 	size_t            i_z           ,
 	const size_t*     arg           ,
-	Pack              z_jac         ,
+	Pack*             jac_reverse         ,
 	size_t            nc_sparsity   ,
-	const Pack*       jac_sparsity  ,
+	const Pack*       jac_forward   ,
 	Pack*             hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
 	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
 
-	const Pack* x_jac  = jac_sparsity + arg[0] * nc_sparsity;
-	const Pack* y_jac  = jac_sparsity + arg[1] * nc_sparsity;
+	const Pack* x_for  = jac_forward  + arg[0] * nc_sparsity;
+	const Pack* y_for  = jac_forward  + arg[1] * nc_sparsity;
 
 	const Pack* z_hes  = hes_sparsity + i_z * nc_sparsity;
 	Pack* x_hes  = hes_sparsity + arg[0] * nc_sparsity;
@@ -256,9 +259,12 @@ inline void reverse_sparse_hessian_mul_op(
 
 	size_t j = nc_sparsity;
 	while(j--)
-	{	x_hes[j] |= z_hes[j] | (z_jac & y_jac[j]);
-		y_hes[j] |= z_hes[j] | (z_jac & x_jac[j]);
+	{	x_hes[j] |= z_hes[j] | (jac_reverse[i_z] & y_for[j]);
+		y_hes[j] |= z_hes[j] | (jac_reverse[i_z] & x_for[j]);
 	}
+
+	jac_reverse[arg[0]] |= jac_reverse[i_z];
+	jac_reverse[arg[1]] |= jac_reverse[i_z];
 	return;
 }	
 
@@ -277,17 +283,17 @@ template <class Pack>
 inline void reverse_sparse_hessian_div_op(
 	size_t            i_z           ,
 	const size_t*     arg           ,
-	Pack              z_jac         ,
+	Pack*             jac_reverse         ,
 	size_t            nc_sparsity   ,
-	const Pack*       jac_sparsity  ,
+	const Pack*       jac_forward   ,
 	Pack*             hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
 	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
 
-	const Pack* x_jac  = jac_sparsity + arg[0] * nc_sparsity;
-	const Pack* y_jac  = jac_sparsity + arg[1] * nc_sparsity;
+	const Pack* x_for  = jac_forward  + arg[0] * nc_sparsity;
+	const Pack* y_for  = jac_forward  + arg[1] * nc_sparsity;
 
 	const Pack* z_hes  = hes_sparsity + i_z * nc_sparsity;
 	Pack* x_hes  = hes_sparsity + arg[0] * nc_sparsity;
@@ -295,9 +301,12 @@ inline void reverse_sparse_hessian_div_op(
 
 	size_t j = nc_sparsity;
 	while(j--)
-	{	x_hes[j] |= z_hes[j] | (z_jac & y_jac[j]);
-		y_hes[j] |= z_hes[j] | ( z_jac & (x_jac[j] | y_jac[j]) );
+	{	x_hes[j] |= z_hes[j] | (jac_reverse[i_z] & y_for[j]);
+		y_hes[j] |= z_hes[j] | ( jac_reverse[i_z] & (x_for[j] | y_for[j]) );
 	}
+
+	jac_reverse[arg[0]] |= jac_reverse[i_z];
+	jac_reverse[arg[1]] |= jac_reverse[i_z];
 	return;
 }	
 
@@ -316,17 +325,17 @@ template <class Pack>
 inline void reverse_sparse_hessian_pow_op(
 	size_t            i_z           ,
 	const size_t*     arg           ,
-	Pack              z_jac         ,
+	Pack*             jac_reverse         ,
 	size_t            nc_sparsity   ,
-	const Pack*       jac_sparsity  ,
+	const Pack*       jac_forward   ,
 	Pack*             hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
 	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
 
-	const Pack* x_jac  = jac_sparsity + arg[0] * nc_sparsity;
-	const Pack* y_jac  = jac_sparsity + arg[1] * nc_sparsity;
+	const Pack* x_for  = jac_forward  + arg[0] * nc_sparsity;
+	const Pack* y_for  = jac_forward  + arg[1] * nc_sparsity;
 
 	const Pack* z_hes  = hes_sparsity + i_z * nc_sparsity;
 	Pack* x_hes  = hes_sparsity + arg[0] * nc_sparsity;
@@ -334,9 +343,12 @@ inline void reverse_sparse_hessian_pow_op(
 
 	size_t j = nc_sparsity;
 	while(j--)
-	{	x_hes[j] |= z_hes[j] | ( z_jac & (x_jac[j] | y_jac[j]) );
-		y_hes[j] |= z_hes[j] | ( z_jac & (x_jac[j] | y_jac[j]) );
+	{	x_hes[j] |= z_hes[j] | ( jac_reverse[i_z] & (x_for[j] | y_for[j]) );
+		y_hes[j] |= z_hes[j] | ( jac_reverse[i_z] & (x_for[j] | y_for[j]) );
 	}
+
+	jac_reverse[arg[0]] |= jac_reverse[i_z];
+	jac_reverse[arg[1]] |= jac_reverse[i_z];
 	return;
 }	
 

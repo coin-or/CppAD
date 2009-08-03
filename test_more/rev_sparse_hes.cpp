@@ -166,12 +166,62 @@ bool case_two(void)
 	return ok;
 }
 
+bool case_three(void)
+{	bool ok = true;
+	using CppAD::AD;
+
+	// domain space vector
+	size_t n = 1; 
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	X[0] = 0.; 
+
+	// declare independent variables and start recording
+	CppAD::Independent(X);
+
+	// range space vector
+	size_t m = 1;
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+
+	// make sure reverse jacobian is propogating dependency to
+	// intermediate values (not just final ones).
+	Y[0] = X[0] * X[0] + 2;
+
+	// create f: X -> Y and stop tape recording
+	CppAD::ADFun<double> f(X, Y);
+
+	// sparsity pattern for the identity matrix
+	CppAD::vector<bool> r(n * n);
+	size_t i, j;
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			r[ i * n + j ] = false;
+		r[ i * n + i ] = true;
+	}
+
+	// compute sparsity pattern for J(x) = F^{(1)} (x)
+	f.ForSparseJac(n, r);
+
+	// compute sparsity pattern for H(x) = F_0^{(2)} (x)
+	CppAD::vector<bool> s(m);
+	for(i = 0; i < m; i++)
+		s[i] = false;
+	s[0] = true;
+	CppAD::vector<bool> h(n * n);
+	h    = f.RevSparseHes(n, s);
+
+	// check values
+	ok  &= (h[ 0 * n + 0 ] == true);  // second partial w.r.t x[0], x[0]
+
+	return ok;
+}
+
 } // End of empty namespace
 
 bool rev_sparse_hes(void)
 {	bool ok = true;
-	// ok &= case_one();
+	ok &= case_one();
 	ok &= case_two();
+	ok &= case_three();
 
 	return ok;
 }

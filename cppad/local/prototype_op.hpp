@@ -1161,34 +1161,38 @@ i.e. the row index in sparsity corresponding to z.
 variable index corresponding to the argument for this operator;
 i.e. the row index in sparsity corresponding to x.
 
-\param jac_z
-is all zero (ones) if the Jacobian of G with respect to z is 
-zero (non-zero).
+\param jac_reverse
+\a jac_reverse[i_z] 
+is all zero (ones) if the Jacobian of G with respect to z is zero (non-zero).
+\n
+\n
+\a jac_reverse[i_x] 
+is all zero (ones) if the Jacobian with respect to x is zero (non-zero).
+On input, it corresponds to the function G,
+and on output it corresponds to the function H.
 
 \param nc_sparsity
 number of packed values corresponding to each sparsity pattern; i.e.,
 the number of columns in the sparsity pattern matrices.
 
-\param jac_sparsity
+\param jac_forward
 for k = 0 , ... , \a nc_sparsity - 1,
-jac_sparsity[ \a i_x * \a nc_sparsity + k ]
+jac_forward[ \a i_x * \a nc_sparsity + k ]
 is the forward mode Jacobian sparsity pattern for the variable x. 
 
 \param hes_sparsity
-\b Input: hes_sparsity[ \a i_z * \a nc_sparsity + k ]
+hes_sparsity[ \a i_z * \a nc_sparsity + k ]
 for k = 0 , ... , \a nc_sparsity -1 
 is the Hessian sparsity pattern for the fucntion G
 where one of the partials derivative is with respect to z.
 \n
-\b Input: hes_sparsity[ \a i_x * \a nc_sparsity + k ]
-for k = 0 , ... , \a nc_sparsity -1 
-is the Hessian sparsity pattern for the fucntion G
-where one of the partials derivative is with respect to y.
 \n
-\b Output: hes_sparsity[ \a i_x * \a nc_sparsity + k ]
+hes_sparsity[ \a i_x * \a nc_sparsity + k ]
 for k = 0 , ... , \a nc_sparsity -1 
-is the Hessian sparsity pattern for the fucntion H
-where one of the partials derivative is with respect to y.
+is the Hessian sparsity pattern 
+where one of the partials derivative is with respect to x.
+On input, it corresonds to the function G,
+and on output it corresponds to the function H.
 
 \par Checked Assertions:
 \li \a i_x < \a i_z 
@@ -1197,9 +1201,9 @@ template <class Pack>
 inline void reverse_sparse_hessian_unary_op(
 	size_t      i_z           ,
 	size_t      i_x           ,
-	Pack        jac_z         ,
+	Pack*       jac_reverse   ,
 	size_t      nc_sparsity   ,
-	const Pack* jac_sparsity  ,
+	const Pack* jac_forward   ,
 	Pack*       hes_sparsity  )
 {	
 	// This routine is only for documentaiton, it should not be used
@@ -1233,52 +1237,55 @@ i.e. the row index in sparsity corresponding to x.
 variable index corresponding to the right operand for this operator;
 i.e. the row index in sparsity corresponding to y.
 
-\param z_jac
-is all true (ones complement of 0) if the scalar valued 
-function we are computing the Hessian sparsity for 
-has a non-zero partial with respect to the variable z
-(actually may have a non-zero partial with respect to z).
-Otherwise it zero.
-(not used by add and subtract operators).
+\param jac_reverse
+\a jac_reverse[i_z] 
+is all zero (ones) if the Jacobian of G with respect to z is zero (non-zero).
+\n
+\n
+\a jac_reverse[ \a arg[0] ] 
+is all zero (ones) if the Jacobian with respect to x is zero (non-zero).
+On input, it corresponds to the function G,
+and on output it corresponds to the function H.
+\n
+\n
+\a jac_reverse[ \a arg[1] ] 
+is all zero (ones) if the Jacobian with respect to y is zero (non-zero).
+On input, it corresponds to the function G,
+and on output it corresponds to the function H.
 
 \param nc_sparsity
 number of packed values corresponding to each variable; i.e.,
 the number of columns in the sparsity pattern matrix.
 
-\param jac_sparsity
+\param jac_forward
 For j = 0 , ... , \a nc_sparsity - 1,
-jac_sparsity[ \a arg[0] * \a nc_sparsity + j ]
+jac_forward[ \a arg[0] * \a nc_sparsity + j ]
 is the forward mode Jacobiain sparsity pattern for the variable x.
+\n
+\n
 For j = 0 , ... , \a nc_sparsity - 1,
-jac_sparsity[ \a arg[1] * \a nc_sparsity + j ]
+jac_forward[ \a arg[1] * \a nc_sparsity + j ]
 is the forward mode Jacobiain sparsity pattern for the variable y.
-(These values are not used by add and subtract operators)
 
 \param hes_sparsity
-\b Input: for j = 0 , ... , \a nc_sparsity - 1,
+For j = 0 , ... , \a nc_sparsity - 1,
 hes_sparsity [ \a i_z * \a nc_sparsity + j ]
 is the Hessian sparsity pattern for the function G
 where one of the partial derivatives is with respect to z.
 \n
-\b Input: for j = 0 , ... , \a nc_sparsity - 1,
+For j = 0 , ... , \a nc_sparsity - 1,
 hes_sparsity [ \a arg[0] * \a nc_sparsity + j ]
-is the Hessian sparsity pattern for the function G
+is the Hessian sparsity pattern 
 where one of the partial derivatives is with respect to x.
+On input, it corresponds to the function G,
+and on output it correspondst to H.
 \n
-\b Input: for j = 0 , ... , \a nc_sparsity - 1,
+For j = 0 , ... , \a nc_sparsity - 1,
 hes_sparsity [ \a arg[1] * \a nc_sparsity + j ]
-is the Hessian sparsity pattern for the function G
+is the Hessian sparsity pattern 
 where one of the partial derivatives is with respect to y.
-\n
-\b Output: for j = 0 , ... , \a nc_sparsity - 1,
-hes_sparsity [ \a arg[0] * \a nc_sparsity + j ]
-is the Hessian sparsity pattern for the function H
-where one of the partial derivatives is with respect to x.
-\n
-\b Output: for j = 0 , ... , \a nc_sparsity - 1,
-hes_sparsity [ \a arg[1] * \a nc_sparsity + j ]
-is the Hessian sparsity pattern for the function H
-where one of the partial derivatives is with respect to y.
+On input, it corresponds to the function G,
+and on output it correspondst to H.
 
 \par Checked Assertions:
 \li \a arg[0] < \a i_z 
@@ -1288,9 +1295,9 @@ template <class Pack>
 inline void reverse_sparse_hessian_binary_op(
 	size_t            i_z           ,
 	const size_t*     arg           ,
-	Pack              z_jac         ,
+	Pack*             jac_reverse   ,
 	size_t            nc_sparsity   ,
-	const Pack*       jac_sparsity  ,
+	const Pack*       jac_forward   ,
 	Pack*             hes_sparsity  )
 {	
 	// This routine is only for documentaiton, it should not be used

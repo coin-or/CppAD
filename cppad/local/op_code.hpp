@@ -431,7 +431,7 @@ void printOp(
 		case LdpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
-		printOpField(os, "  p=", *(Rec->GetPar(ind[1])), ncol);
+		printOpField(os, "idx=", ind[1], ncol);
 		break;
 
 		case LdvOp:
@@ -443,14 +443,14 @@ void printOp(
 		case StppOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
-		printOpField(os, " pl=", *(Rec->GetPar(ind[1])), ncol);
+		printOpField(os, "idx=", ind[1], ncol);
 		printOpField(os, " pr=", *(Rec->GetPar(ind[2])), ncol);
 		break;
 
 		case StpvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
-		printOpField(os, " pl=", *(Rec->GetPar(ind[1])), ncol);
+		printOpField(os, "idx=", ind[1], ncol);
 		printOpField(os, " vr=", ind[2], ncol);
 		break;
 

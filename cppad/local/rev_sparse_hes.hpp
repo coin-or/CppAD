@@ -258,9 +258,6 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 		}
 	}
 
-	// comput the reverse mode Jacobian sparsity
-	RevJacSweep(1, total_num_var_, &play_, taylor_col_dim_, taylor_, RevJac);
-
 	// compute the Hessian sparsity patterns
 	RevHesSweep(
 		npv,
