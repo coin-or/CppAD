@@ -52,6 +52,21 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 08-02$$
+Fix bug in new version of how $cref/ForSparseJac/$$ handles
+$cref/VecAD/$$ objects.
+$pre
+
+$$
+Fix bug in overnight build where HTML version and entire documentation 
+as one page versions of documentation were not being built.
+$pre
+
+$$
+Fix missing new line under 
+$cref/Using Value/SimpleVector/Element Access/Using Value/$$
+heading for simple vector documentation.
+
 $head 08-01$$
 Fix bug in reverse mode Jacobian $cref/sparsity/RevSparseJac/$$
 for $cref/VecAD/$$ objects. 

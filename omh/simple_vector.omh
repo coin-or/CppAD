@@ -1,7 +1,6 @@
 $Id$
-// BEGIN SHORT COPYRIGHT
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -10,7 +9,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 /*
 $begin SimpleVector$$
@@ -178,7 +176,7 @@ $subhead Using Value$$
 If $italic elementType$$ is not the same as $italic Scalar$$,
 the conversion operator
 $syntax%
-	static_cast<%Scalar%>(%x%[%i%])%
+	static_cast<%Scalar%>(%x%[%i%])
 %$$
 is used implicitly when $syntax%%x%[%i%]%$$ is used in an expression
 with values of type $italic Scalar$$.

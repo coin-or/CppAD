@@ -178,7 +178,7 @@ bool case_two(void)
 	size_t n = 3; 
 
 	// dimension of the range space
-	size_t m = 2;
+	size_t m = 3;
 
 	// inialize the vector as zero
 	CppAD::VecAD<double> Z(n - 1);
@@ -212,8 +212,17 @@ bool case_two(void)
 	Check[index * n + 1] = false;
 	Check[index * n + 2] = false;
 	index++;
+
+	// Second component depends on the vector Z
 	AD<double> zero(0);
-	Y[index]             = Z[zero];
+	Y[index]             = Z[zero]; // Load by a parameter
+	Check[index * n + 0] = false;
+	Check[index * n + 1] = true;
+	Check[index * n + 2] = true;
+	index++;
+
+	// Third component depends on the vector Z
+	Y[index]             = Z[ X[0] ]; // Load by a variable
 	Check[index * n + 0] = false;
 	Check[index * n + 1] = true;
 	Check[index * n + 2] = true;

@@ -916,7 +916,7 @@ The C++ source code corresponding to this operation is
 \verbatim
 	z = y[x]
 \endverbatim
-where y is a VecAD<Base> vector and x is an AD<Base> or Base index. 
+where y is a VecAD<Base> vector and x is an AD<Base> index. 
 We define the index corresponding to y[x] by
 \verbatim
 	i_y_x = combined[ arg[0] + i_vec ]
@@ -1023,6 +1023,91 @@ inline void forward_load_op_0(
 	size_t         nc_combined ,
 	const bool*    variable    ,
 	const size_t*  combined    )
+{
+	// This routine is only for documentaiton, it should not be used
+	CPPAD_ASSERT_UNKNOWN( false );
+}
+/*!
+Prototype sparsity operations corresponding to op = LdpOp or LdvOp.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	z = y[x]
+\endverbatim
+where y is a VecAD<Base> vector and x is an AD<Base> index. 
+
+\tparam Pack
+is the type used to pack the sparsity pattern bit values; i.e.,
+there is more that one bit per Pack value.
+
+\param op
+is the code corresponding to this operator; i.e., LdpOp or LdvOp
+(only used for error checking).
+
+\param i_z
+is the AD variable index corresponding to the variable z.
+
+\param arg
+\n
+\a arg[0]
+is the offset corresponding to this VecAD vector in the combined array.
+
+\param num_row
+is the total number of elements in the VecAD address array.
+
+\param row
+\a row[ \a arg[0] - 1 ]
+is the row number of this VecAD vector in the VecAD sparsity pattern matrix.
+We use the notation i_y below which is defined by
+\verbatim
+	i_y = row[ \a arg[0] - 1 ]
+\endverbatim
+
+\param num_vec
+is the number of VecAD vectors corresponding to the tape;
+this is also the number of rows in the VecAD sparsity pattern matrix.
+
+\param nc_sparsity
+number of packed values corresponding to each variable; i.e.,
+the number of columsn in the sparsity pattern matrices.
+
+\param var_sparsity
+\a var_sparsity[ \a i_z * \a nc_sparsity + j ]
+for j = 0 , ... , \a nc_sparsity - 1 
+is the sparsity bit pattern for z.
+It is output for forward mode operations, 
+and input for forward mode operations.
+
+\param vec_sparsity
+\a vec_sparsity[ \a i_y * \a nc_sparsity + j ]
+for j = 0 , ... , \a nc_sparsity - 1 
+is the sparsity bit pattern for the vector y.
+It is input for forward mode operations.
+For reverse mode operations:
+on input it corresponds to the
+function where z is included as an argument,
+on output it corresponds to the function
+where z has been expressed in terms of the other arguments.
+
+\n
+\par Checked Assertions 
+\li NumArg(op) == 3
+\li NumRes(op) == 1
+\li 0 <  \a arg[0]
+\li \a arg[0] < \a num_row
+\li i_y < \a num_vec
+*/
+template <class Pack>
+inline void sparse_load_op(
+	OpCode         op           ,
+	size_t         i_z          ,
+	const size_t*        arg    , 
+	size_t         num_row      ,
+	const size_t*  row          ,
+	size_t         num_vec      ,
+	size_t         nc_sparsity  ,
+	Pack*          var_sparsity ,
+	Pack*          vec_sparsity )
 {
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -1191,7 +1276,7 @@ hes_sparsity[ \a i_x * \a nc_sparsity + k ]
 for k = 0 , ... , \a nc_sparsity -1 
 is the Hessian sparsity pattern 
 where one of the partials derivative is with respect to x.
-On input, it corresonds to the function G,
+On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 \par Checked Assertions:

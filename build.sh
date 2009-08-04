@@ -24,10 +24,10 @@ then
 			version 
 			automake 
 			config_none 
+			make
+			dist
 			omhelp 
 			doxygen 
-			make
-			dist 
 			gpl 
 			move
 		"
@@ -44,12 +44,12 @@ then
 			version 
 			automake 
 			config_none 
+			make
+			dist
 			omhelp 
 			doxygen 
-			make
-			dist 
+			test
 			gpl 
-			dos 
 			move
 		"
 		if ! ./build.sh $options
@@ -65,10 +65,10 @@ then
 			version 
 			automake 
 			config_none 
-			omhelp 
-			doxygen 
 			make
 			dist 
+			omhelp 
+			doxygen 
 			test 
 			gpl 
 			move
@@ -808,10 +808,10 @@ echo "version        update configure.ac and doc.omh version number"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
 echo "config_none    excludes all possible testing options"
 echo "config_test    includes all the possible testing options"
-echo "omhelp         build all formats for user documentation in doc/*"
-echo "doxygen        build developer documentation in doxydoc/*"
 echo "make           use make to build all of the requested targets"
 echo "dist           create the distribution file cppad-version.cpl.tgz"
+echo "omhelp         build all formats for user documentation in doc/*"
+echo "doxygen        build developer documentation in doxydoc/*"
 echo "test           unpack *.cpl.tgz, compile, tests, result in build_test.log"
 echo "gpl            create *.gpl.tgz"
 echo "dos            create *.gpl.zip, and *.cpl.zip"

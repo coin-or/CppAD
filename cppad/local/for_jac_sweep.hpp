@@ -352,29 +352,32 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case LdpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_vecad_ind );
-			i = vecad[ arg[0] - 1 ];
-			CPPAD_ASSERT_UNKNOWN( i < num_vecad_vec );
-
-			// index corresponding to this VecAD vector
-			for(j = 0; j < npv; j++)
-				Z[j] = vecad_pattern[i * npv + j];
+			forward_sparse_load_op(
+				op,
+				i_var,
+				arg,
+				num_vecad_ind,
+				vecad,
+				num_vecad_vec,
+				npv,
+				ForJac,
+				vecad_pattern
+			);
 			break;
 			// -------------------------------------------------
 
 			case LdvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_vecad_ind );
-			i = vecad[ arg[0] - 1 ];
-			CPPAD_ASSERT_UNKNOWN( i < num_vecad_vec );
-
-			// index corresponding to this VecAD vector
-			i = vecad[ arg[0] ];
-			for(j = 0; j < npv; j++)
-				Z[j] = vecad_pattern[i * npv + j];
+			forward_sparse_load_op(
+				op,
+				i_var,
+				arg,
+				num_vecad_ind,
+				vecad,
+				num_vecad_vec,
+				npv,
+				ForJac,
+				vecad_pattern
+			);
 			break;
 			// -------------------------------------------------
 
@@ -558,14 +561,14 @@ void ForJacSweep(
 		}
 # if CPPAD_FOR_JAC_SWEEP_TRACE
 		printOp(
-			std::cout, 
+			std::cout,
 			Rec,
 			i_var,
-			op, 
+			op,
 			arg,
-			npv, 
-			Z, 
-			0, 
+			npv,
+			Z,
+			0,
 			(Pack *) CPPAD_NULL
 		);
 	}

@@ -243,20 +243,20 @@ If \a arg[0] is zero, y[x] is a parameter
 and no values need to be modified; i.e., \a partial is not used.
 Otherwise, y[x] is a variable and:
 \n
-\b Input: \a partial [ \a arg[2] * \a nc_partial + k ] 
-for k = 0 , ... , \a d
-is the partial derivative of G( z( y[x] ) , y[x], w , u , ... ) 
-with respect to the k-th order Taylor coefficient for y[x].
 \n
-\b Input: \a partial [ \a i_z * \a nc_partial + k ] 
+\a partial [ \a i_z * \a nc_partial + k ] 
 for k = 0 , ... , \a d
-is the partial derivative of G( z( y[x] ) , y[x] , w , u , ... ) 
+is the partial derivative of G
 with respect to the k-th order Taylor coefficient for z.
 \n
-\b Output: \a partial [ \a arg[2] * \a nc_partial + k ]
+\n
+If \a arg[0] is not zero,
+\a partial [ \a arg[2] * \a nc_partial + k ]
 for k = 0 , ... , \a d
-is the partial derivative of H( y[x] , w , u , ... ) with respect to 
+is the partial derivative with respect to 
 the k-th order Taylor coefficient for x.
+On input, it corresponds to the function G,
+and on output it corresponds to the the function H. 
 
 \par Checked Assertions 
 \li NumArg(op) == 3
@@ -290,5 +290,43 @@ inline void reverse_load_op(
 			py_x[j]   += pz[j];
 	}
 }
+
+
+/*!
+Forward mode sparsity operations for LdpOp and LdvOp
+
+\copydetails sparse_load_op
+*/
+template <class Pack>
+inline void forward_sparse_load_op(
+	OpCode         op           ,
+	size_t         i_z          ,
+	const size_t*  arg          , 
+	size_t         num_row      ,
+	const size_t*  row          ,
+	size_t         num_vec      ,
+	size_t         nc_sparsity  ,
+	Pack*          var_sparsity ,
+	Pack*          vec_sparsity )
+{
+	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
+	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+	CPPAD_ASSERT_UNKNOWN( arg[0] < num_row );
+	size_t i_y = row[ arg[0] - 1 ];
+	CPPAD_ASSERT_UNKNOWN( i_y < num_vec );
+
+	Pack* z = var_sparsity + nc_sparsity * i_z;
+	Pack* y = vec_sparsity + nc_sparsity * i_y;
+
+	size_t j = nc_sparsity;
+	while(j--)
+		z[j] = y[j];
+
+	return;
+}
+
+
+
 CPPAD_END_NAMESPACE
 # endif
