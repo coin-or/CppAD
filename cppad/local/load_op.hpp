@@ -302,8 +302,8 @@ inline void forward_sparse_load_op(
 	OpCode         op           ,
 	size_t         i_z          ,
 	const size_t*  arg          , 
-	size_t         num_row      ,
-	const size_t*  row          ,
+	size_t         num_combined ,
+	const size_t*  combined     ,
 	size_t         num_vec      ,
 	size_t         nc_sparsity  ,
 	Pack*          var_sparsity ,
@@ -312,8 +312,8 @@ inline void forward_sparse_load_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < num_row );
-	size_t i_y = row[ arg[0] - 1 ];
+	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
+	size_t i_y = combined[ arg[0] - 1 ];
 	CPPAD_ASSERT_UNKNOWN( i_y < num_vec );
 
 	Pack* z = var_sparsity + nc_sparsity * i_z;
@@ -337,8 +337,8 @@ inline void reverse_sparse_load_op(
 	OpCode         op           ,
 	size_t         i_z          ,
 	const size_t*  arg          , 
-	size_t         num_row      ,
-	const size_t*  row          ,
+	size_t         num_combined ,
+	const size_t*  combined     ,
 	size_t         num_vec      ,
 	size_t         nc_sparsity  ,
 	Pack*          var_sparsity ,
@@ -347,8 +347,8 @@ inline void reverse_sparse_load_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < num_row );
-	size_t i_y = row[ arg[0] - 1 ];
+	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
+	size_t i_y = combined[ arg[0] - 1 ];
 	CPPAD_ASSERT_UNKNOWN( i_y < num_vec );
 
 	Pack* z = var_sparsity + nc_sparsity * i_z;

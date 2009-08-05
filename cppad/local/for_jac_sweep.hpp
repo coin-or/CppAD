@@ -154,7 +154,6 @@ void ForJacSweep(
 	const size_t *arg_0 = 0;
 
 	Pack             *Z = 0;
-	Pack             *Y = 0;
 
 	size_t            i, j, k;
 
@@ -503,14 +502,17 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case StpvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_vecad_ind );
-			i  = vecad[ arg[0] - 1 ];
-			CPPAD_ASSERT_UNKNOWN(i < num_vecad_vec);
-			Y  = ForJac + arg[2] * npv;
-			for(j = 0; j < npv; j++)
-				vecad_pattern[i * npv + j] |= Y[j];
+			forward_sparse_store_op(
+				op,
+				arg,
+				num_vecad_ind,
+				vecad,
+				num_vecad_vec,
+				numvar,
+				npv,
+				ForJac,
+				vecad_pattern
+			);
 			break;
 			// -------------------------------------------------
 
@@ -521,14 +523,17 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case StvvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_vecad_ind );
-			Y  = ForJac + arg[2] * npv;
-			i  = vecad[ arg[0] - 1 ];
-			CPPAD_ASSERT_UNKNOWN(i < num_vecad_vec);
-			for(j = 0; j < npv; j++)
-				vecad_pattern[i * npv + j] |= Y[j];
+			forward_sparse_store_op(
+				op,
+				arg,
+				num_vecad_ind,
+				vecad,
+				num_vecad_vec,
+				numvar,
+				npv,
+				ForJac,
+				vecad_pattern
+			);
 			break;
 			// -------------------------------------------------
 
