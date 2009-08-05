@@ -73,6 +73,11 @@ do
 		echo "$file does not exist and is in add_list or change_list"
 		exit 1
 	fi
+	if [ "$file" == "svn_commit.sh" ]
+	then
+		echo "Cannot include svn_commit.sh in list of files to commit."
+		exit 1
+	fi
 done
 #
 this_branch=`pwd | sed -e "s|.*/CppAD/||"`
@@ -87,7 +92,6 @@ do
 	# conditions in the abort section (below in this script).
 	if \
 	[ -f $file            ]      &&   \
-	[ $file != "svn_commit.sh" ] &&   \
 	[ $file != "configure" ]     &&   \
 	[ $name != "makefile.in"  ]  &&   \
 	[ $ext  != ".sed"     ]      &&   \
