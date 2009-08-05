@@ -514,14 +514,17 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case StpvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_vecad_ind );
-			i  = vecad[ arg[0] - 1 ];
-			CPPAD_ASSERT_UNKNOWN(i < num_vecad_vec);
-			Yh  = RevHes + arg[2] * npv;
-			for(j = 0; j < npv; j++)
-				Yh[j] |= vecad_pattern[i * npv + j];
+			reverse_sparse_store_op(
+				op,
+				arg,
+				num_vecad_ind,
+				vecad,
+				num_vecad_vec,
+				numvar,
+				npv,
+				RevHes,
+				vecad_pattern
+			);
 			break;
 			// -------------------------------------------------
 
@@ -532,14 +535,17 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case StvvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
-			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_vecad_ind );
-			i  = vecad[ arg[0] - 1 ];
-			CPPAD_ASSERT_UNKNOWN(i < num_vecad_vec);
-			Yh  = RevHes + arg[2] * npv;
-			for(j = 0; j < npv; j++)
-				Yh[j] |= vecad_pattern[i * npv + j];
+			reverse_sparse_store_op(
+				op,
+				arg,
+				num_vecad_ind,
+				vecad,
+				num_vecad_vec,
+				numvar,
+				npv,
+				RevHes,
+				vecad_pattern
+			);
 			break;
 			// -------------------------------------------------
 

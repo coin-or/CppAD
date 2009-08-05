@@ -190,5 +190,40 @@ inline void forward_sparse_store_op(
 	return;
 }
 
+/*!
+Reverse mode sparsity operations for StpvOp and StvvOp
+
+\copydetails sparse_store_op
+*/
+template <class Pack>
+inline void reverse_sparse_store_op(
+	OpCode         op           ,
+	const size_t*  arg          , 
+	size_t         num_combined ,
+	const size_t*  combined     ,
+	size_t         num_vec      ,
+	size_t         num_var      ,
+	size_t         nc_sparsity  ,
+	Pack*          var_sparsity ,
+	Pack*          vec_sparsity )
+{
+	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
+	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
+	size_t i_v = combined[ arg[0] - 1 ];
+	CPPAD_ASSERT_UNKNOWN( i_v < num_vec );
+	CPPAD_ASSERT_UNKNOWN( arg[2] < num_var );
+
+	Pack* y = var_sparsity + nc_sparsity * arg[2];
+	Pack* v = vec_sparsity + nc_sparsity * i_v;
+
+	size_t j = nc_sparsity;
+	while(j--)
+		y[j] |= v[j];
+
+	return;
+}
+
 CPPAD_END_NAMESPACE
 # endif
