@@ -13,7 +13,11 @@
 # Define your subversion commit by editing the definition of 
 # log_entry, add_list, delete_list, and change_list below:
 # 
-log_entry="
+log_entry="Convert reverse sparse load operations to calculate in subroutine.
+
+load_op.hpp: add reverse sparse load routine to this file.
+rev_jac_sweep.hpp: use the new routine.
+rev_hes_sweep.hpp: use the new routine.
 " 
 add_list="
 "
@@ -23,6 +27,10 @@ old_list="
 "
 #
 change_list="
+	svn_commit.sh
+	cppad/local/load_op.hpp
+	cppad/local/rev_jac_sweep.hpp
+	cppad/local/rev_hes_sweep.hpp
 "
 #
 # log_entry

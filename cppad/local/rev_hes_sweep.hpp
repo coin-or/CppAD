@@ -356,26 +356,32 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case LdpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_vecad_ind );
-			i = vecad[ arg[0] - 1 ];
-			CPPAD_ASSERT_UNKNOWN( i < num_vecad_vec );
-
-			for(j = 0; j < npv; j++)
-				vecad_pattern[i * npv + j] |= Zh[j];
+			reverse_sparse_load_op(
+				op,
+				i_var,
+				arg,
+				num_vecad_ind,
+				vecad,
+				num_vecad_vec,
+				npv,
+				RevHes,
+				vecad_pattern
+			);
 			break;
 			// -------------------------------------------------
 
 			case LdvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[0] > 0 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_vecad_ind );
-			i = vecad[ arg[0] - 1 ];
-			CPPAD_ASSERT_UNKNOWN( i < num_vecad_vec );
-
-			for(j = 0; j < npv; j++)
-				vecad_pattern[i * npv + j] |= Zh[j];
+			reverse_sparse_load_op(
+				op,
+				i_var,
+				arg,
+				num_vecad_ind,
+				vecad,
+				num_vecad_vec,
+				npv,
+				RevHes,
+				vecad_pattern
+			);
 			break;
 			// -------------------------------------------------
 

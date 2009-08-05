@@ -327,6 +327,41 @@ inline void forward_sparse_load_op(
 }
 
 
+/*!
+Reverse mode sparsity operations for LdpOp and LdvOp
+
+\copydetails sparse_load_op
+*/
+template <class Pack>
+inline void reverse_sparse_load_op(
+	OpCode         op           ,
+	size_t         i_z          ,
+	const size_t*  arg          , 
+	size_t         num_row      ,
+	const size_t*  row          ,
+	size_t         num_vec      ,
+	size_t         nc_sparsity  ,
+	Pack*          var_sparsity ,
+	Pack*          vec_sparsity )
+{
+	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
+	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+	CPPAD_ASSERT_UNKNOWN( arg[0] < num_row );
+	size_t i_y = row[ arg[0] - 1 ];
+	CPPAD_ASSERT_UNKNOWN( i_y < num_vec );
+
+	Pack* z = var_sparsity + nc_sparsity * i_z;
+	Pack* y = vec_sparsity + nc_sparsity * i_y;
+
+	size_t j = nc_sparsity;
+	while(j--)
+		y[j] |= z[j];
+
+	return;
+}
+
+
 
 CPPAD_END_NAMESPACE
 # endif
