@@ -165,5 +165,11 @@ do
 	svn delete $file
 done
 #
-svn commit --username bradbell --file svn_commit.log \
+if ! svn commit --username bradbell --file svn_commit.log \
 	$add_list $change_list $delete_list $old_list
+then
+	echo "svn_commit.sh: error during commit."
+	exit 1
+fi
+echo "svn revert svn_commit.sh"
+svn_revert svn_commit.sh
