@@ -125,22 +125,22 @@ public:
 			CPPAD_TRACK_DEL_VEC(rec_text_);
 
 		// Var
-		num_rec_var_        = rec.TotalNumberVar_;
+		num_rec_var_        = rec.num_rec_var_;
 
 		// Op
-		num_rec_op_         = rec.NumberOp_;
+		num_rec_op_         = rec.num_rec_op_;
 
 		// VecInd
-		num_rec_vecad_ind_  = rec.NumberVecInd_;
+		num_rec_vecad_ind_  = rec.num_rec_vecad_ind_;
 
 		// Arg
-		num_rec_op_arg_     = rec.NumberArg_;
+		num_rec_op_arg_     = rec.num_rec_op_arg_;
 
 		// Par
-		num_rec_par_        = rec.NumberPar_;
+		num_rec_par_        = rec.num_rec_par_;
 
 		// Txt
-		num_rec_text_       = rec.NumberTxt_;
+		num_rec_text_       = rec.num_rec_text_;
 
 		// Allocate the memory
 		if( num_rec_op_ == 0 )
@@ -167,19 +167,19 @@ public:
 		// Copy the data
 		i = num_rec_op_;
 		while(i--)
-			rec_op_[i] = rec.Op_[i];
+			rec_op_[i] = rec.rec_op_[i];
 		i = num_rec_vecad_ind_;
 		while(i--)
-			rec_vecad_ind_[i] = rec.VecInd_[i];
+			rec_vecad_ind_[i] = rec.rec_vecad_ind_[i];
 		i = num_rec_op_arg_;
 		while(i--)
-			rec_op_arg_[i] = rec.Arg_[i];
+			rec_op_arg_[i] = rec.rec_op_arg_[i];
 		i = num_rec_par_;
 		while(i--)
-			rec_par_[i] = rec.Par_[i];
+			rec_par_[i] = rec.rec_par_[i];
 		i = num_rec_text_;
 		while(i--)
-			rec_text_[i] = rec.Txt_[i];
+			rec_text_[i] = rec.rec_text_[i];
 
 		// set the number of VecAD vectors
 		num_rec_vecad_vec_ = 0;
