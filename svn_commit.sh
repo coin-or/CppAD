@@ -172,4 +172,4 @@ then
 	exit 1
 fi
 echo "svn revert svn_commit.sh"
-svn_revert svn_commit.sh
+svn revert svn_commit.sh
