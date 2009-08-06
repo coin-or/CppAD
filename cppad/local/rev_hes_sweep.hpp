@@ -1,6 +1,7 @@
 /* $Id$ */
 # ifndef CPPAD_REV_HES_SWEEP_INCLUDED
 # define CPPAD_REV_HES_SWEEP_INCLUDED
+CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
@@ -13,117 +14,97 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin RevHesSweep$$ $comment CppAD Developer Documentation$$
-$spell
-	Hessian
-	RevHesSweep
-	npv
-	numvar
-	Num
-	Var
-	Op
-	Taylor
-	Inv
-$$
+/*!
+\file rev_hes_sweep.hpp
+Compute Reverse mode Hessian sparsity patterns.
+*/
 
-$section Reverse Computation of Hessian Sparsity Pattern$$
-$index RevHesSweep$$
-$index sparsity, reverse Hessian$$
-$index reverse, Hessian sparsity$$
-$index pattern, reverse Hessian$$
-$index bit pattern, Hessian$$
-
-$head Syntax$$
-$syntax%void RevHesSweep(
-	size_t %npv%,
-	size_t %numvar%,
-	player<%Base%> *%Rec%,
-	size_t %TaylorColDim%,
-	const %Base% *%Taylor%,
-	const %Pack% *%ForJac%,
-	const %Pack% *%RevJac%,
-	%Pack% *%RevHes%
-)%$$
-
-
-$head Rec$$
-The information stored in $italic Rec$$
-is a recording of the operations corresponding to a function
-$latex \[
-	F : B^n \rightarrow B^m
-\] $$
-
-$head Description$$
-Given the forward Jacobian sparsity pattern for all the variables
-$code RevHesSweep$$ computes the Hessian sparsity pattern
-for the dependent variables with respect to the independent variables.
-
-$head numvar$$
-is the number of rows in the entire sparsity patterns
-$italic ForJac$$ and $italic RevHes$$.
-It must also be equal to $syntax%%Rec%->num_rec_var()%$$.
-
-$head npv$$
-Is the number of elements of type $italic Pack$$
-(per variable) in the sparsity patterns 
-$itlaic ForJac$$ and $italic RevJac$$.
-(The sparsity pattern $italic RevJac$$ only has one element per variables
-and all of the bits in that element are the same.)
- 
-$head TaylorColDim$$
-Is the number of columns currently stored in the matrix $italic Taylor$$.
-
-$head Taylor$$
-For $latex i = 1 , \ldots , numvar$$,
-$syntax%%Taylor%[%i% * %TaylorColDim%]%$$
-is the value of the variable with index $italic i$$.
-
-
-$head ForJac$$
-For $latex i = 0, \ldots , numvar-1$$ (all the variables),
-and $latex j = 0, \ldots , npv-1$$,
-$syntax%%ForJac%[%i% * %npv% + %j%]%$$ 
-is the $th j$$ subset of the 
-the forward mode Jacobian sparsity pattern for 
-the variable with index $italic i$$.   
-
-$head RevJac$$
-On input,
-for $latex i = 1, \ldots , m$$ (the number of dependent variables),
-$syntax%%RevJac%[%numvar-i%]%$$ 
-is all true (ones complement of 0) if the function we are computing
-the Hessian for has non-zero Jacobian with respect to the 
-dependent variable with index $italic i$$.
-On output, this vecotr has been used for temporary storage.
-
-
-$head RevHes$$
-For $latex i = 1, \ldots , numvar-1$$ 
-and $latex j = 0 , \ldots , npv-1$$,
-$syntax%%RevHes%[%i% * %npv% + %j%]%$$ is the 
-Hessian sparsity pattern with for the partial of the 
-function we are computing the Hessian for 
-(usually one variable) with respect to
-the $th i$$ variable and with respect to all the variables
-corresponding to the columns of $italic ForJac$$.
-
-$end
-------------------------------------------------------------------------------
+/*!
+\def CPPAD_REV_HES_SWEEP_TRACE
+This value is either zero or one. 
+Zero is the normal operational value.
+If it is one, a trace of every rev_hes_sweep computation is printed.
 */
 # define CPPAD_REV_HES_SWEEP_TRACE 0
 
+/*!
+Given the forward Jacobian sparsity pattern for all the variables,
+and the reverse Jacobian sparsity pattern for the dependent variables,
+RevHesSweep computes the Hessian sparsity pattern for all the independent 
+variables.
 
-// BEGIN CppAD namespace
-namespace CppAD {
+\tparam Base
+base type for the operator; i.e., this operation was recorded
+using AD< \a Base > and computations by this routine are done using type 
+\a Base.
+
+\tparam Pack
+is the type used to pack the sparsity pattern bit values; i.e.,
+there is more that one bit per Pack value.
+
+\param n
+is the number of independent variables on the tape.
+
+\param npv
+Is the number of elements of type \a Pack
+(per variable) in the sparsity pattern \a RevHes.
+
+\param numvar
+is the total number of variables on the tape; i.e.,
+\a Rec->num_rec_var().
+This is also the number of rows in the entire sparsity pattern \a RevHes.
+
+\param Rec
+The information stored in \a Rec
+is a recording of the operations corresponding to a function
+\f[
+	F : {\bf R}^n \rightarrow {\bf R}^m
+\f]
+where \f$ n \f$ is the number of independent variables
+and \f$ m \f$ is the number of dependent variables.
+The object \a Rec is effectly constant.
+It is not declared const because while playing back the tape
+the object \a Rec holds information about the currentl location
+with in the tape and this changes during playback.
+
+\param ForJac
+For i = 0 , ... , \a numvar - 1 
+(for all the variables on the tape),
+the forward Jacobian sparsity pattern for the variable with index i
+on the tape is given by
+\a ForJac[ i * \a npv + k ] for k = 0 , ... , \a npv - 1.
+
+\param RevJac
+\b Input:
+For i = \a numvar - m , ... , \a numvar - 1 
+the if the independent variable with index (i - \a numvar + m ) is 
+is included in the Hessian, \a RevJac[ i ] is equal to all ones (~ \a Pack(0)),
+otherwise it is equal to zero. 
+For i = 0 , ... , \a numvar - m - 1,
+\a RevJac[i] is equal to zero.
+\n
+\n
+\b Output: The values in \a RevJac upon return are not specified; i.e.,
+it is used for temporary work space.
+
+\param RevHes
+\b Input: For i = 0 , ... , \a numvar - 1  and for k = 0 , ... , \a npv - 1,
+\a RevHes[ i * \a npv + k ] is zero.
+\n
+\n
+\b Output: For j = 1 , ... , \a n,
+the Hessian sparsity pattern for the dependent variable with index (j-1) 
+is given by \a RevHes[ j * \a npv + k ] for k = 0 , ... , \a npv - 1.
+The values in the rest of \a RevHes are not specified; i.e.,
+they are used for temporary work space
+*/
 
 template <class Base, class Pack>
 void RevHesSweep(
+	size_t                n,
 	size_t                npv,
 	size_t                numvar,
 	player<Base>         *Rec,
-	size_t                TaylorColDim,
-	const Base           *Taylor,
 	const Pack           *ForJac,
 	Pack                 *RevJac,
 	Pack                 *RevHes
@@ -194,6 +175,8 @@ void RevHesSweep(
 	{
 		// next op
 		Rec->next_reverse(op, arg, i_op, i_var);
+		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
+		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
 		// sparsity for z corresponding to this op
 		Zf     = ForJac + i_var * npv;
@@ -588,8 +571,7 @@ void RevHesSweep(
 	return;
 }
 
-} // END CppAD namespace
-
 # undef CPPAD_REV_HES_SWEEP_TRACE
 
+CPPAD_END_NAMESPACE
 # endif

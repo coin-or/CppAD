@@ -1,6 +1,7 @@
 /* $Id$ */
 # ifndef CPPAD_REV_JAC_SWEEP_INCLUDED
 # define CPPAD_REV_JAC_SWEEP_INCLUDED
+CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
@@ -13,115 +14,81 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin RevJacSweep$$ $comment CppAD Developer Documentation$$
-$spell
-	const
-	Jacobian
-	RevJacSweep
-	npv
-	numvar
-	Num
-	Var
-	Op
-	Taylor
-	Inv
-$$
+/*!
+\file rev_jac_sweep.hpp
+Compute Reverse mode Jacobian sparsity patterns.
+*/
 
-$section Reverse Computation of Jacobian Sparsity Pattern$$
-$index RevJacSweep$$
-$index sparsity, reverse Jacobian$$
-$index reverse, Jacobian sparsity$$
-$index pattern, reverse Jacobian$$
-$index bit pattern, Jacobian$$
-
-$head Syntax$$
-$syntax%void RevJacSweep(
-	size_t %npv%,
-	size_t %numvar%,
-	player<%Base%> *%Rec%,
-	size_t %TaylorColDim%,
-	const %Base% *%Taylor%,
-	%Pack% *%RevJac%
-)%$$
-
-
-$head Rec$$
-The information stored in $italic Rec$$
-is a recording of the operations corresponding to a function
-$latex \[
-	F : B^n \rightarrow B^m
-\] $$
-
-$head Description$$
-Given the Jacobian sparsity pattern for the dependent variables,
-$code RevJacSweep$$ computes the sparsity pattern for the dependent
-variables with respect to the independent variables.
-
-
-$head numvar$$
-is the number of rows in the entire sparsity pattern $italic RevJac$$.
-It must also be equal to $syntax%%Rec%->num_rec_var()%$$.
-
-
-$head npv$$
-Is the number of elements of type $italic Pack$$
-(per variable) in the sparsity pattern $italic RevJac$$.
- 
-$head TaylorColDim$$
-Is the number of columns currently stored in the matrix $italic Taylor$$.
-
-$head Taylor$$
-For $latex i = 1 , \ldots , numvar$$,
-$syntax%%Taylor%[%i% * %TaylorColDim%]%$$
-is the value of the variable with index $italic i$$.
-
-$head On Input$$
-
-$subhead Dependent Variables and Operators$$
-The dependent variable records come last.
-For $latex i = numvar-m, \ldots , numvar-1$$ 
-and $latex j = 0 , \ldots , npv$$,
-$syntax%%RevJac%[%i% * %npv% + %j%]%$$
-is the $th j$$ subset of the sparsity pattern for 
-variable with index $italic i$$.   
-
-$subhead Other Variables and Operators$$
-The other variables follow the independent variables.
-For $latex i = 0, \ldots , numvar-m-1$$,
-$latex j = 1 , \ldots , npv-1$$,
-$syntax%%RevJac%[%i% * %npv% + %j%]%$$
-is equal to zero (all false).
-
-$head On Output$$
-
-$subhead Dependent Variables$$
-For $latex i = numvar-m, \ldots , numvar-1$$ 
-and $latex j = 0 , \ldots , npv-1$$,
-$syntax%%RevJac%[%i% * %npv% + %j%]%$$ is not modified.
-
-
-$subhead Other Variables$$
-For $latex i = 1, \ldots , numvar-m-1$$ and $latex j = 0 , \ldots , npv-1$$,
-$syntax%%RevJac%[%i% * %npv% + %j%]%$$ is the
-$th j$$ subset of the sparsity pattern for the variable with index $italic i$$.
-
-$end
-------------------------------------------------------------------------------
+/*!
+\def CPPAD_REV_JAC_SWEEP_TRACE
+This value is either zero or one. 
+Zero is the normal operational value.
+If it is one, a trace of every rev_jac_sweep computation is printed.
 */
 # define CPPAD_REV_JAC_SWEEP_TRACE 0
 
+/*!
+Given the sparsity pattern for the dependent variables,
+RevJacSweep computes the sparsity pattern for all the independent variables.
 
-// BEGIN CppAD namespace
-namespace CppAD {
+\tparam Base
+base type for the operator; i.e., this operation was recorded
+using AD< \a Base > and computations by this routine are done using type 
+\a Base.
+
+\tparam Pack
+is the type used to pack the sparsity pattern bit values; i.e.,
+there is more that one bit per Pack value.
+
+\param n
+is the number of independent variables on the tape.
+
+\param npv
+Is the number of elements of type \a Pack
+(per variable) in the sparsity pattern \a RevJac.
+
+\param numvar
+is the total number of variables on the tape; i.e.,
+\a Rec->num_rec_var().
+This is also the number of rows in the entire sparsity pattern \a RevJac.
+
+\param Rec
+The information stored in \a Rec
+is a recording of the operations corresponding to a function
+\f[
+	F : {\bf R}^n \rightarrow {\bf R}^m
+\f]
+where \f$ n \f$ is the number of independent variables
+and \f$ m \f$ is the number of dependent variables.
+The object \a Rec is effectly constant.
+It is not declared const because while playing back the tape
+the object \a Rec holds information about the currentl location
+with in the tape and this changes during playback.
+
+\param RevJac
+\b Input: For i = \a numvar - m , ... , \a numvar - 1, 
+the sparsity pattern for the dependent variable with index 
+(i - \a numvar + m)
+is given by \a RevJac[ i * \a npv + k ] for k = 0 , ... , \a npv - 1.
+\n
+\n
+Input: For i = 0 , ... , \a numvar - m - 1,
+the sparsity pattern for the variable with index i on the tape
+is zero, i.e.,
+\a RevJac[ i * \a npv + k ] == 0 (all false) for k = 0 , ... , \a npv - 1.
+\n
+\n
+\b Output: For j = 1 , ... , \a n,
+the sparsity pattern for the dependent variable with index (j-1) 
+is given by \a RevJac[ j * \a npv + k ] for k = 0 , ... , \a npv - 1.
+*/
 
 template <class Base, class Pack>
 void RevJacSweep(
+	size_t                n,
 	size_t                npv,
 	size_t                numvar,
 	player<Base>         *Rec,
-	size_t                TaylorColDim,
-	Base                 *Taylor,
 	Pack                 *RevJac
 )
 {
@@ -179,6 +146,8 @@ void RevJacSweep(
 	{
 		// next op
 		Rec->next_reverse(op, arg, i_op, i_var);
+		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
+		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
 		// sparsity for z corresponding to this op
 		Z      = RevJac + i_var * npv;
@@ -568,8 +537,7 @@ void RevJacSweep(
 	return;
 }
 
-} // END CppAD namespace
-
 # undef CPPAD_REV_JAC_SWEEP_TRACE
 
+CPPAD_END_NAMESPACE
 # endif

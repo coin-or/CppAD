@@ -47,7 +47,7 @@ is the number of independent variables on the tape.
 \param numvar
 is the total number of variables on the tape.
 This is also equal to the number of rows in the matrix \a Taylor; i.e.,
-Rec->num_rec_var().
+\a Rec->num_rec_var().
 
 \param Rec
 The information stored in \a Rec

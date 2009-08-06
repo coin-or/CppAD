@@ -1,6 +1,7 @@
 /* $Id$ */
 # ifndef CPPAD_FOR_JAC_SWEEP_INCLUDED
 # define CPPAD_FOR_JAC_SWEEP_INCLUDED
+CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
@@ -13,136 +14,75 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin ForJacSweep$$ $comment CppAD Developer Documentation$$
-$spell
-	const
-	Jacobian
-	ForJacSweep
-	npv
-	numvar
-	Num
-	Var
-	Op
-	Taylor
-	Inv
-$$
+/*!
+\file for_jac_sweep.hpp
+Compute Forward mode Jacobian sparsity patterns.
+*/
 
-$section Forward Computation of Sparsity Pattern$$
-$index ForJacSweep$$
-$index sparsity, forward Jacobian$$
-$index forward, Jacobian sparsity$$
-$index pattern, forward Jacobian$$
-$index bit pattern, Jacobian$$
-
-$head Syntax$$
-$syntax%void ForJacSweep(
-	size_t %npv%,
-	size_t %numvar%,
-	const player<%Base%> *%Rec%,
-	size_t %TaylorColDim%,
-	const %Base% *%Taylor%,
-	%Pack% *%ForJac%
-)%$$
-
-
-$head Rec$$
-The information stored in $italic Rec$$
-is a recording of the operations corresponding to a function
-$latex \[
-	F : B^n \rightarrow B^m
-\] $$
-
-$head Description$$
-Given the sparsity pattern for the independent variables,
-$code ForJacSweep$$ computes the sparsity pattern
-for all the other variables.
-
-
-$head numvar$$
-is the number of rows in the entire sparsity pattern $italic ForJac$$.
-It must also be equal to $syntax%%Rec%->num_rec_var()%$$.
-
-$head npv$$
-Is the number of elements of type $italic Pack$$
-(per variable) in the sparsity pattern $italic ForJac$$.
-
-$head TaylorColDim$$
-Is the number of columns currently stored in the matrix $italic Taylor$$.
-
-$head Taylor$$
-For $latex i = 1 , \ldots , numvar$$,
-$syntax%%Taylor%[%i% * %TaylorColDim%]%$$
-is the value of the variable with index $italic i$$.
-
-
-$head On Input$$
-
-$subhead Independent Variables and Operators$$
-The independent variable records come first.
-For $latex i = 1, \ldots , n$$ and $latex j = 0 , \ldots , npv$$,
-$table
-	$bold field$$ $cnext 
-	$bold Value$$          
-$rnext
-	$syntax%%ForJac%[%0% * %npv% + %j%]%$$      $cnext 
-	the variable with index zero is not used
-$rnext
-	$syntax%%Rec%->GetOp(0)%$$                $cnext 
-	the operator with index zero must be a $code NonOp$$
-$rnext
-	$syntax%%ForJac%[%i% * %npv% + %j%]%$$      $cnext 
-	$th j$$ subset of sparsity pattern for variable with index $italic i$$
-$rnext
-	$syntax%%Rec%->GetOp(%i%)%$$              $cnext 
-	the operator with index $italic i$$ must be a $code InvOp$$
-$tend
-
-$subhead Other Variables and Operators$$
-The other variables follow the independent variables.
-For $latex i = n+1, \ldots , numvar-1$$,
-$latex j = 0 , \ldots , npv-1$$,
-and $latex k = n+1, \ldots ,$$ $syntax%%Rec%->num_rec_op() - 1%$$,
-$table
-	$bold field$$ $cnext 
-	$bold Value$$          
-$rnext
-	$syntax%%ForJac%[%i% * %npv% + %j%]%$$      $cnext 
-	$th j$$ set of sparsity pattern for variable with index $italic i$$     
-$rnext
-	$syntax%%Rec%->GetOp(%i%)%$$              $cnext 
-	any operator except for $code InvOp$$ 
-$tend
-
-$head On Output$$
-
-$subhead Independent Variables$$
-For $latex i = 1, \ldots , n$$ and $latex j = 0 , \ldots , npv-1$$,
-$syntax%%Taylor%[%i% * %npv% + %j%]%$$ is not modified.
-
-
-$subhead Other Variables$$
-For $latex i = m+1, \ldots , numvar-1$$ and $latex j = 0 , \ldots , npv-1$$,
-$syntax%%ForJac%[%i% * %npv% + %j%]%$$ is set equal to the
-$th j$$ set of sparsity pattern for the variable with index $italic i$$.
-
-
-$end
-------------------------------------------------------------------------------
+/*!
+\def CPPAD_FOR_JAC_SWEEP_TRACE
+This value is either zero or one. 
+Zero is the normal operational value.
+If it is one, a trace of every for_jac_sweep computation is printed.
 */
 # define CPPAD_FOR_JAC_SWEEP_TRACE 0
 
+/*!
+Given the sparsity pattern for the independent variables,
+ForJacSweep computes the sparsity pattern for all the other variables.
 
-// BEGIN CppAD namespace
-namespace CppAD {
+\tparam Base
+base type for the operator; i.e., this operation was recorded
+using AD< \a Base > and computations by this routine are done using type 
+\a Base.
+
+\tparam Pack
+is the type used to pack the sparsity pattern bit values; i.e.,
+there is more that one bit per Pack value.
+
+\param n
+is the number of independent variables on the tape.
+
+\param npv
+Is the number of elements of type \a Pack
+(per variable) in the sparsity pattern \a ForJac.
+
+\param numvar
+is the total number of variables on the tape; i.e.,
+\a Rec->num_rec_var().
+This is also the number of rows in the entire sparsity pattern \a ForJac.
+
+\param Rec
+The information stored in \a Rec
+is a recording of the operations corresponding to a function
+\f[
+	F : {\bf R}^n \rightarrow {\bf R}^m
+\f]
+where \f$ n \f$ is the number of independent variables
+and \f$ m \f$ is the number of dependent variables.
+The object \a Rec is effectly constant.
+It is not declared const because while playing back the tape
+the object \a Rec holds information about the currentl location
+with in the tape and this changes during playback.
+
+\param ForJac
+\b Input: For j = 1 , ... , \a n, 
+the sparsity pattern for the independent variable with index (j-1)
+is given by \a ForJac[ j * \a npv + k ] for k = 0 , ... , \a npv - 1.
+\n
+\n
+\b Output: For i = \a n + 1 , ... , \a numvar - 1,
+the sparsity pattern for the variable with index i on the tape
+is given by \a ForJac[ i * \a npv + k ] for k = 0 , ... , \a npv - 1.
+*/
+
 
 template <class Base, class Pack>
 void ForJacSweep(
+	size_t                n,
 	size_t                npv,
 	size_t                numvar,
 	player<Base>         *Rec,
-	size_t                TaylorColDim,
-	const Base           *Taylor,
 	Pack                 *ForJac
 )
 {
@@ -202,6 +142,8 @@ void ForJacSweep(
 	{
 		// this op
 		Rec->next_forward(op, arg, i_op, i_var);
+		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
+		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
 
 		// value of z for this op
 		Z      = ForJac + i_var * npv;
@@ -591,8 +533,7 @@ void ForJacSweep(
 	return;
 }
 
-} // END CppAD namespace
-
 # undef CPPAD_FOR_JAC_SWEEP_TRACE
 
+CPPAD_END_NAMESPACE
 # endif

@@ -44,9 +44,7 @@ $contents%
 	cppad/local/tape_link.hpp%
 	cppad/local/recorder.hpp%
 	cppad/local/ad_tape.hpp%
-	cppad/local/bool_fun_link.hpp%
-	cppad/local/for_jac_sweep.hpp%
-	cppad/local/rev_jac_sweep.hpp
+	cppad/local/bool_fun_link.hpp
 %$$
 
 

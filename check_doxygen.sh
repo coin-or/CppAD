@@ -26,6 +26,7 @@ list="
 	div_op.hpp
 	forward0sweep.hpp
 	forward_sweep.hpp
+	for_jac_sweep.hpp
 	load_op.hpp
 	log_op.hpp
 	mul_op.hpp
@@ -35,6 +36,8 @@ list="
 	pow_op.hpp
 	prototype_op.hpp
 	reverse_sweep.hpp
+	rev_hes_sweep.hpp
+	rev_jac_sweep.hpp
 	sin_op.hpp
 	sinh_op.hpp
 	sparse_binary_op.hpp

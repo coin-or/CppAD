@@ -217,11 +217,10 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s)
 
 	// evaluate the sparsity patterns
 	RevJacSweep(
+		n,
 		npv,
 		total_num_var_,
 		&play_,
-		taylor_col_dim_,
-		taylor_,
 		RevJac
 	);
 

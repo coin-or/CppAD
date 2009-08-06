@@ -260,11 +260,10 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 
 	// compute the Hessian sparsity patterns
 	RevHesSweep(
+		n,
 		npv,
 		total_num_var_,
 		&play_,
-		taylor_col_dim_,
-		taylor_,
 		for_jac_, 
 		RevJac,
 		RevHes
