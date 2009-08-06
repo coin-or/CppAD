@@ -35,6 +35,7 @@ list="
 	print_op.hpp
 	pow_op.hpp
 	prototype_op.hpp
+	recorder.hpp
 	reverse_sweep.hpp
 	rev_hes_sweep.hpp
 	rev_jac_sweep.hpp
@@ -48,6 +49,11 @@ list="
 "
 for name in $list
 do
+	if [ ! -e "cppad/local/$name" ] && [ ! -e "cppad/$name" ]
+	then
+		echo "check_doxygen.sh: cannot find file $name"
+		exit 1
+	fi
 	if grep -i "$name.*warning" doxygen.log
 	then
 		echo "Unexpected doxygen error or warning for $name."

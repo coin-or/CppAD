@@ -1,6 +1,7 @@
 /* $Id$ */
 # ifndef CPPAD_RECORDER_INCLUDED
 # define CPPAD_RECORDER_INCLUDED
+CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
@@ -12,185 +13,76 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-/*
-$begin recorder$$ $comment CppAD Developer Documentation$$
 
-$spell
-	var
-	Res
-	Arg
-	inline
-	VecInd
-	sizeof
-	Num
-	Cpp
-	const
-	Op
-$$
-
-$section Record a CppAD Operation Sequence$$
-$index tape, record$$
-$index record, tape$$
-$index recorder$$
-
-$head Syntax$$
-$codei%recorder<%Base%> %rec%$$
-
-
-$head Default Constructors$$
-The default constructor 
-$codei%
-	recorder<%Base%> %rec%
-%$$
-creates an empty operation sequence.
-
-$head Erase$$
-$index recorder, Erase$$
-$index Erase, recorder$$
-The syntax 
-$codei%
-	void %rec%.Erase()
-%$$
-erases the operation sequence store in $icode rec$$
-(the operation sequence is empty after this operation).
-The buffers used to store the tape information are returned
-to the system (so as to conserve on memory).
-
-$head PutOp$$
-$index PutOp$$
-If $icode op$$ and $icode i$$ have prototypes
-$codei%
-        OpCode %op%
-        size_t %i%
-%$$
-The syntax
-$codei%
-	%i% = %rec%.PutOp(%op%)
-%$$
-sets the code for the next operation in the sequence.
-The return value $icode i$$ is the index of the first variable 
-corresponding to the result of this operation. 
-The number of variables $icode n$$ 
-corresponding to the operation is given by
-$codei%
-	%n% = NumRes(%op%)
-%$$
-where $icode n$$ is a $code size_t$$ object.
-With each call to $code PutOp$$, 
-the return index increases by the number of variables corresponding
-to the previous call to $code PutOp$$.
-This index starts at zero after each $code Erase$$ or default constructor.
-
-$head PutArg$$
-$index PutArg$$
-If $icode arg_j$$ has prototype
-$codei%
-	size_t %arg_j%
-%$$
-for $icode j$$ equal to $icode 0$$, ... , $icode 5$$,
-The following syntax
-$codei%
-	%rec%.PutArg(%arg_0%)
-	%rec%.PutArg(%arg_0%, %arg_1%)
-	%.%
-	%.%
-	%.%
-	%rec%.PutArg(%arg_0%, %arg_1%, %...%, %arg_5%)
-%$$
-places the values passed to $codei PutArg$$ at the current end of the
-operation sequence index vector in the specified order, i.e., 
-$icode arg_0$$ comes before $icode arg_1$$ e.t.c.
-The proper number of indices $icode n$$ 
-corresponding to the operation $icode op$$ is given by
-$codei%
-	%n% = NumRes(%op%)
-%$$
-where $icode n$$ is a $code size_t$$ object and $icode op$$
-is an $code OpCode$$ object.
-The end of the operation sequence index vector starts at zero
-and increases by the number of indices placed in the vector
-by each call to $code PutArg$$.
-The end of the vector starts at zero after each $code Erase$$ 
-or default constructor. 
-
-$head PutPar$$
-$index PutPar$$
-If $icode p$$ and $icode i$$ have prototypes
-$codei%
-	const %Base% &%p%
-	size_t %i%
-%$$
-The syntax
-$codei%
-	%i% = %rec%.PutPar(%p%)
-%$$
-places the value $icode p$$ in the 
-operation sequence parameter vector
-and returns its index in the vector $icode i$$.
-This value is not necessarily placed at the end of the vector
-(because values that are identically equal can be reused).
-
-$head PutVecInd$$
-$index PutVecInd$$
-If $icode i$$ and $icode iv$$ have prototypes
-$codei%
-	size_t %i%
-	size_t %iv%
-%$$
-the syntax
-$codei%
-	%i% = %rec%.PutVecInd(%iv%)
-%$$
-places the value $icode iv$$ at the current end of the
-operation sequence vec_ind vector
-and returns its index in this vector.
-This index starts at zero after each $code Erase$$ or default constructor
-and increments by one for each call to this function.
-
-$head num_rec_var$$
-$index recorder, num_rec_var$$
-$index num_rec_var, recorder$$
-If $icode n$$ has prototype
-$codei%
-	size_t %n%
-%$$
-the syntax
-$codei%
-	%n% = %rec%.num_rec_var()
-%$$
-sets $icode n$$ to the number of variables that are in the 
-operation sequence.
-
-
-$head Memory$$
-$index recorder, Memory$$
-$index Memory, recorder$$
-If $icode n$$ has prototype
-$codei%
-	size_t %n%
-%$$
-the syntax
-$codei%
-	 %n% = %rec%.Memory()
-%$$
-sets $icode n$$ to the number of memory units ($code sizeof$$) 
-required to store the current operation sequence in $icode rec$$.
-
-
-$end
-------------------------------------------------------------------------------
+/*!
+\file recorder.hpp
+File used to define the recorder class.
 */
 
-//  BEGIN CppAD namespace
-namespace CppAD {
+/*!
+Class used to store an operation sequence while it is being recorded
+(the operation sequence is copied to the player class for playback).
 
+\tparam Base
+This is an AD< \a Base > operation sequence recording; i.e.,
+it records operations of type AD< \a Base >.
+*/
 template <class Base>
 class recorder {
-
 	friend class player<Base>;
 
+private:
+	/// Number of variables in the recording.
+	size_t    num_rec_var_;
+
+	/// Length of the operation vector rec_op_.
+	size_t    len_rec_op_;
+
+	/// Number of operators currently in the recording. 
+	size_t    num_rec_op_;
+
+	/// The operators in the recording.
+	OpCode   *rec_op_;
+
+	/// Length of the VecAD index vector rec_vecad_ind_
+	size_t    len_rec_vecad_ind_;
+
+	/// Number of VecAD indices currently in the recording. 
+	size_t    num_rec_vecad_ind_;
+
+	/// The VecAD indices in the recording.
+	size_t   *rec_vecad_ind_;
+
+	/// Length of operation argument index vector rec_op_arg_.
+	size_t    len_rec_op_arg_;
+
+	/// Number of operation arguments indices currently in the recording. 
+	size_t    num_rec_op_arg_;
+
+	/// The argument indices in the recording
+	size_t   *rec_op_arg_;
+
+	/// Length of parameter vector rec_par_.
+	size_t    len_rec_par_;
+
+	/// Number of parameters currently in the recording.
+	size_t    num_rec_par_;
+
+	/// The parameters in the recording.
+	Base     *rec_par_;
+
+	/// Length of text character vector rec_text_.
+	size_t    len_rec_text_;
+
+	/// Number of text characters currently in recording.
+	size_t    num_rec_text_;
+
+	/// Character strings ('\\0' terminated) in the recording.
+	char     *rec_text_;
+
+// ---------------------- Public Functions -----------------------------------
 public:
-	// default
+	/// Default constructor
 	recorder(void) 
 	{	
 		num_rec_var_         = 0;
@@ -217,7 +109,7 @@ public:
 
 	}
 
-	// destructor
+	/// Destructor
 	~recorder(void)
 	{	if( len_rec_op_ > 0 )
 			CPPAD_TRACK_DEL_VEC(rec_op_);
@@ -231,7 +123,14 @@ public:
 			CPPAD_TRACK_DEL_VEC(rec_text_);
 	}
 
-	// erase all information in recording
+	/*!
+	Erase all information in recording.
+
+	Erases the operation sequence store in this recording 
+	(the operation sequence is empty after this operation).
+	The buffers used to store the current recording are returned
+	to the system (so as to conserve on memory).
+	*/
 	void Erase(void)
 	{	
 		num_rec_var_          = 0;
@@ -258,27 +157,35 @@ public:
 		len_rec_par_          = 0;
 		len_rec_text_         = 0;
 	}
-
-	// add information to recording
+	/// Start recording the next operator in the operation sequence.
 	inline size_t PutOp(OpCode op);
-	inline size_t PutVecInd(size_t vecInd);
+	/// Add a value to the end of the current vector of VecAD indices.
+	inline size_t PutVecInd(size_t vec_ind);
+	/// Find or add a parameter to the current vector of parameters.
 	inline size_t PutPar(const Base &par);
+	/// Put one operation argument index in the recording
 	inline void PutArg(size_t arg0); 
+	/// Put two operation argument index in the recording
 	inline void PutArg(size_t arg0, size_t arg1); 
+	/// Put three operation argument index in the recording
 	inline void PutArg(size_t arg0, size_t arg1, size_t arg2); 
+	/// Put four operation argument index in the recording
 	inline void PutArg(size_t arg0, size_t arg1, size_t arg2, size_t arg3); 
+	/// Put five operation argument index in the recording
 	inline void PutArg(size_t arg0, size_t arg1, size_t arg2, size_t arg3,
 		size_t arg4);
+	/// Put six operation argument index in the recording
 	inline void PutArg(size_t arg0, size_t arg1, size_t arg2, size_t arg3,
 		size_t arg4, size_t arg5);
 
+	/// Put a character string in the text for this recording.
 	inline size_t PutTxt(const char *text);
 
-	// number of values
+	/// Number of variables currently stored in the recording.
 	size_t num_rec_var(void) const
 	{	return num_rec_var_; }
 
-	// amount of memory used 
+	/// Approximate amount of memory used by the recording 
 	size_t Memory(void) const
 	{	return len_rec_op_ * sizeof(OpCode) 
 		     + len_rec_vecad_ind_ * sizeof(size_t)
@@ -286,31 +193,35 @@ public:
 		     + len_rec_par_ * sizeof(Base)
 		     + len_rec_text_ * sizeof(char);
 	}
-
-private:
-	size_t    num_rec_var_;
-
-	size_t    num_rec_op_;
-	size_t    len_rec_op_;
-	OpCode   *rec_op_;
-
-	size_t    num_rec_vecad_ind_;
-	size_t    len_rec_vecad_ind_;
-	size_t   *rec_vecad_ind_;
-
-	size_t    num_rec_op_arg_;
-	size_t    len_rec_op_arg_;
-	size_t   *rec_op_arg_;
-
-	size_t    num_rec_par_;
-	size_t    len_rec_par_;
-	Base     *rec_par_;
-
-	size_t    num_rec_text_;
-	size_t    len_rec_text_;
-	char     *rec_text_;
 };
 
+/*!
+Start recording the next operator in the operation sequence.
+
+This sets the op code for the next operation in this recording.
+This call must be followed by putting the corresponding 
+\verbatim
+	NumArg(op)
+\endverbatim
+argument indices in the recording.
+
+\param op
+Is the op code corresponding to the the operation that is being
+recorded. 
+
+\return
+The return value is the index of the first variable 
+corresponding to the result of this operation. 
+The number of variables corresponding to the operation is given by
+\verbatim
+	NumRes(op)
+\endverbatim
+With each call to PutOp 
+the return index increases by the number of variables corresponding
+to the previous call to PutOp.
+This index starts at zero after the default constructor
+and after each call to Erase.
+*/
 template <class Base>
 inline size_t recorder<Base>::PutOp(OpCode op)
 {	size_t varIndex = num_rec_var_;
@@ -329,8 +240,26 @@ inline size_t recorder<Base>::PutOp(OpCode op)
 	return varIndex;
 }
 
+/*!
+Add a value to the end of the current vector of VecAD indices.
+
+For each VecAD vector, this routine is used to store the length
+of the vector followed by the parameter index corresponding to each
+value in the vector.
+This value for the elements of the VecAD vector corresponds to the
+beginning of the operation sequence.
+
+\param vec_ind
+is the index to be palced at the end of the vector of VecAD indices.
+
+\return
+is the index in the vector of VecAD indices corresponding to this value.
+This index starts at zero after the recorder default constructor
+and after each call to Erase.
+It increments by one for each call to PutVecInd..
+*/
 template <class Base>
-inline size_t recorder<Base>::PutVecInd(size_t vecInd)
+inline size_t recorder<Base>::PutVecInd(size_t vec_ind)
 {	
 	CPPAD_ASSERT_UNKNOWN( num_rec_vecad_ind_ <= len_rec_vecad_ind_ );
 	if( num_rec_vecad_ind_ == len_rec_vecad_ind_ )
@@ -340,11 +269,22 @@ inline size_t recorder<Base>::PutVecInd(size_t vecInd)
 		);
 	}
 	CPPAD_ASSERT_UNKNOWN( num_rec_vecad_ind_ < len_rec_vecad_ind_ );
-	rec_vecad_ind_[num_rec_vecad_ind_++] = vecInd;
+	rec_vecad_ind_[num_rec_vecad_ind_++] = vec_ind;
 
 	return num_rec_vecad_ind_ - 1;
 }
 
+/*!
+Find or add a parameter to the current vector of parameters.
+
+\param par
+is the parameter to be found or placed in the vector of parameters.
+
+\return
+is the index in the parameter vector corresponding to this parameter value.
+This value is not necessarily placed at the end of the vector
+(because values that are identically equal may be reused).
+*/
 template <class Base>
 inline size_t recorder<Base>::PutPar(const Base &par)
 {	size_t i;
@@ -373,7 +313,43 @@ inline size_t recorder<Base>::PutPar(const Base &par)
 
 	return num_rec_par_ - 1;
 }
- // -------------------------- PutArg --------------------------------------
+// -------------------------- PutArg --------------------------------------
+/*!
+Prototype for putting operation argument indices in the recording.
+
+The following syntax
+\verbatim
+	rec.PutArg(arg0)
+	rec.PutArg(arg0, arg1)
+	.
+	.
+	.
+	rec.PutArg(arg0, arg1, ..., arg5)
+\endverbatim
+places the values passed to PutArg at the current end of the
+operation argument indices for the recording.
+\a arg0 comes before \a arg1, etc.
+The proper number of operation argument indices 
+corresponding to the operation code op is given by
+\verbatim
+	NumArg(op)
+\endverbatim
+The number of the operation argument indices starts at zero
+after the default constructor and each call to Erase.
+It increases by the number of indices placed by each call to PutArg.
+*/
+inline void prototype_put_arg(void)
+{	// This routine should not be called
+	CPPAD_ASSERT_UNKNOWN(false);
+}
+/*!
+Put one operation argument index in the recording
+
+\param arg0
+The operation argument index
+
+\copydetails prototype_put_arg 
+*/
 template <class Base>
 inline void recorder<Base>::PutArg(size_t arg0)
 { 
@@ -387,6 +363,17 @@ inline void recorder<Base>::PutArg(size_t arg0)
 	CPPAD_ASSERT_UNKNOWN( num_rec_op_arg_ < len_rec_op_arg_ );
 	rec_op_arg_[num_rec_op_arg_++] = arg0;
 }
+/*!
+Put two operation argument index in the recording
+
+\param arg0
+First operation argument index.
+
+\param arg1
+Second operation argument index.
+
+\copydetails prototype_put_arg 
+*/
 template <class Base>
 inline void recorder<Base>::PutArg(size_t arg0, size_t arg1)
 { 
@@ -401,6 +388,20 @@ inline void recorder<Base>::PutArg(size_t arg0, size_t arg1)
 	rec_op_arg_[num_rec_op_arg_++] = arg0;
 	rec_op_arg_[num_rec_op_arg_++] = arg1;
 }
+/*!
+Put three operation argument index in the recording
+
+\param arg0
+First operation argument index.
+
+\param arg1
+Second operation argument index.
+
+\param arg2
+Third operation argument index.
+
+\copydetails prototype_put_arg 
+*/
 template <class Base>
 inline void recorder<Base>::PutArg(size_t arg0, size_t arg1, size_t arg2)
 { 
@@ -416,6 +417,23 @@ inline void recorder<Base>::PutArg(size_t arg0, size_t arg1, size_t arg2)
 	rec_op_arg_[num_rec_op_arg_++] = arg1;
 	rec_op_arg_[num_rec_op_arg_++] = arg2;
 }
+/*!
+Put four operation argument index in the recording
+
+\param arg0
+First operation argument index.
+
+\param arg1
+Second operation argument index.
+
+\param arg2
+Third operation argument index.
+
+\param arg3
+Fourth operation argument index.
+
+\copydetails prototype_put_arg 
+*/
 template <class Base>
 inline void recorder<Base>::PutArg(size_t arg0, size_t arg1, size_t arg2,
 	size_t arg3)
@@ -434,6 +452,26 @@ inline void recorder<Base>::PutArg(size_t arg0, size_t arg1, size_t arg2,
 	rec_op_arg_[num_rec_op_arg_++] = arg3;
 
 }
+/*!
+Put five operation argument index in the recording
+
+\param arg0
+First operation argument index.
+
+\param arg1
+Second operation argument index.
+
+\param arg2
+Third operation argument index.
+
+\param arg3
+Fourth operation argument index.
+
+\param arg4
+Fifth operation argument index.
+
+\copydetails prototype_put_arg 
+*/
 template <class Base>
 inline void recorder<Base>::PutArg(size_t arg0, size_t arg1, size_t arg2,
 	size_t arg3, size_t arg4)
@@ -453,6 +491,29 @@ inline void recorder<Base>::PutArg(size_t arg0, size_t arg1, size_t arg2,
 	rec_op_arg_[num_rec_op_arg_++] = arg4;
 
 }
+/*!
+Put six operation argument index in the recording
+
+\param arg0
+First operation argument index.
+
+\param arg1
+Second operation argument index.
+
+\param arg2
+Third operation argument index.
+
+\param arg3
+Fourth operation argument index.
+
+\param arg4
+Fifth operation argument index.
+
+\param arg5
+Sixth operation argument index.
+
+\copydetails prototype_put_arg 
+*/
 template <class Base>
 inline void recorder<Base>::PutArg(size_t arg0, size_t arg1, size_t arg2, 
 	size_t arg3, size_t arg4, size_t arg5)
@@ -472,7 +533,19 @@ inline void recorder<Base>::PutArg(size_t arg0, size_t arg1, size_t arg2,
 	rec_op_arg_[num_rec_op_arg_++] = arg4;
 	rec_op_arg_[num_rec_op_arg_++] = arg5;
 }
+// --------------------------------------------------------------------------
+/*!
+Put a character string in the text for this recording.
 
+\param text
+is a '\\0' terminated character string that is to be put in the
+vector of characters corresponding to this recording.
+The terminator '\\0' will be included.
+
+\return
+is the offset with in the text vector for this recording at which
+the character string starts.
+*/
 template <class Base>
 inline size_t recorder<Base>::PutTxt(const char *text)
 {	size_t i;
@@ -500,7 +573,8 @@ inline size_t recorder<Base>::PutTxt(const char *text)
 
 	return num_rec_text_ - n;
 }
+// -------------------------------------------------------------------------
 
-} // END CppAD namespace
 
+CPPAD_END_NAMESPACE
 # endif

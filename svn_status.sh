@@ -96,8 +96,10 @@ then
 	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $yyyymmdd/g" \
 	-e "s/VERSION \"[0-9]\{8\}[.0-9]*\"/VERSION \"$yyyymmdd\"/g"
 	#
-	list="$list
+	list="
 		configure
+		AUTHORS
+		configure.ac
 		cppad/config.h
 	"
 else

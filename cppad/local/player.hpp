@@ -50,10 +50,10 @@ private:
 	/// The VecAD indices in the recording.
 	size_t   *rec_vecad_ind_;
 
-	/// Number of arguments indices in the recording. 
+	/// Number of operation arguments indices in the recording. 
 	size_t    num_rec_op_arg_;
 
-	/// The argument indices in the recording
+	/// The operation argument indices in the recording
 	size_t   *rec_op_arg_;
 
 	/// Number of parameters in the recording.
@@ -62,11 +62,10 @@ private:
 	/// The parameters in the recording.
 	Base     *rec_par_;
 
-	/// Number of text characters 
-	/// (representing '\\0' terminated strings) in the recording.
+	/// Number of text characters in the recording.
 	size_t    num_rec_text_;
 
-	/// Character in the recording.
+	/// Character strings ('\\0' terminated) in the recording.
 	char     *rec_text_;
 
 
