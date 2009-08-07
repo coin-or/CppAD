@@ -27,6 +27,7 @@ list="
 	forward0sweep.hpp
 	forward_sweep.hpp
 	for_jac_sweep.hpp
+	hash_code.hpp
 	load_op.hpp
 	log_op.hpp
 	mul_op.hpp
