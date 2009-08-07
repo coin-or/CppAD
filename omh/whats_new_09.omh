@@ -52,6 +52,14 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 08-06$$
+Add hash table coding to reduce the number of copies of the same
+parameter value necessary in a tape recording.
+In addition, add the function 
+$cref/size_par/SeqProperty/size_par/$$ was added
+so that the user could see the number of parameters
+corresponding to an operation sequence.
+
 $head 08-02$$
 Fix bug in new version of how $cref/ForSparseJac/$$ handles
 $cref/VecAD/$$ objects.

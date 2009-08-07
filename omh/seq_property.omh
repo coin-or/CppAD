@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -36,20 +36,26 @@ $index use_VecAD, ADFun$$
 $index ADFun, size_var$$
 $index size_var, ADFun$$
 
+$index ADFun, size_par$$
+$index size_par, ADFun$$
+
 $head Syntax$$
-$syntax%%n% = %f%.Domain()%$$
+$icode%n% = %f%.Domain()%$$
 $pre
 $$
-$syntax%%m% = %f%.Range()%$$
+$icode%m% = %f%.Range()%$$
 $pre
 $$
-$syntax%%p% = %f%.Parameter(%i%)%$$
+$icode%p% = %f%.Parameter(%i%)%$$
 $pre
 $$
-$syntax%%u% = %f%.use_VecAD()%$$
+$icode%u% = %f%.use_VecAD()%$$
 $pre
 $$
-$syntax%%v% = %f%.size_var()%$$
+$icode%s% = %f%.size_var()%$$
+$pre
+$$
+$icode%s% = %f%.size_par()%$$
 
 
 
@@ -63,19 +69,19 @@ $code size_var$$ returns zero.)
 
 $head f$$
 The object $italic f$$ has prototype
-$syntax%
+$codei%
 	const ADFun<%Base%> %f%
 %$$
-(see $syntax%ADFun<%Base%>%$$ $xref/FunConstruct//constructor/$$).
+(see $codei%ADFun<%Base%>%$$ $xref/FunConstruct//constructor/$$).
 
 $head Domain$$
 The result $italic n$$ has prototype
-$syntax%
+$codei%
 	size_t %n%
 %$$
 and is the dimension of the domain space corresponding to $italic f$$.
 This is equal to the size of the vector $italic x$$ in the call
-$syntax%
+$codei%
 	Independent(%x%)
 %$$
 that starting recording the operation sequence 
@@ -84,16 +90,16 @@ currently stored in $italic f$$
 
 $head Range$$
 The result $italic m$$ has prototype
-$syntax%
+$codei%
 	size_t %m%
 %$$
 and is the dimension of the range space corresponding to $italic f$$.
 This is equal to the size of the vector $italic y$$ in syntax
-$syntax%
+$codei%
 	ADFun<%Base> %f%(%x%, %y%)
 %$$
 or
-$syntax%
+$codei%
 	%f%.Dependent(%y%)
 %$$
 depending on which stored the operation sequence currently in $italic f$$
@@ -101,12 +107,12 @@ depending on which stored the operation sequence currently in $italic f$$
 
 $head Parameter$$
 The argument $italic i$$ has prototype
-$syntax%
+$codei%
 	size_t %i%
 %$$
 and $latex 0 \leq i < m$$.
 The result $italic p$$ has prototype
-$syntax%
+$codei%
 	bool %p%
 %$$
 It is true if the $th i$$ component of range space for $latex F$$
@@ -121,7 +127,7 @@ for $latex j = 0 , \ldots , n-1$$ and all $latex x \in B^n$$.
 
 $head use_VecAD$$
 The result $italic u$$ has prototype
-$syntax%
+$codei%
 	bool %u%
 %$$
 If it is true, the
@@ -132,21 +138,31 @@ $xref/VecAD/VecAD<Base>::reference/$$ operands.
 Otherwise $italic u$$ is false.
 
 $head size_var$$
-The result $italic v$$ has prototype
-$syntax%
-	size_t %v%
+The result $italic s$$ has prototype
+$codei%
+	size_t %s%
 %$$
 and is the number of variables in the operation sequence plus the following:
 one for a phantom variable with tape address zero,
-one for each component of the domain that is a parameter.
+one for each component of the range that is a parameter.
 The amount of work and memory necessary for computing function values
-and derivatives using $italic f$$ is roughly proportional to $italic v$$.
+and derivatives using $italic f$$ is roughly proportional to $italic s$$.
 $pre
 
 $$
 If there is no operation sequence stored in $italic f$$,
 $code size_var$$ returns zero
 (see $xref/FunConstruct/Default Constructor/default constructor/$$).
+
+
+$head size_par$$
+The result $italic s$$ has prototype
+$codei%
+	size_t %s%
+%$$
+and is the number of parameters in the operation sequence.
+Parameters differ from variables in that only values
+(and not derivatives) need to be stored for each parameter.
 
 $head Example$$
 $children%

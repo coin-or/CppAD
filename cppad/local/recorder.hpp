@@ -1,8 +1,6 @@
 /* $Id$ */
 # ifndef CPPAD_RECORDER_INCLUDED
 # define CPPAD_RECORDER_INCLUDED
-CPPAD_BEGIN_NAMESPACE
-
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
@@ -13,6 +11,9 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/local/hash_code.hpp>
+CPPAD_BEGIN_NAMESPACE
+
 
 /*!
 \file recorder.hpp
@@ -286,19 +287,29 @@ This value is not necessarily placed at the end of the vector
 (because values that are identically equal may be reused).
 */
 template <class Base>
-inline size_t recorder<Base>::PutPar(const Base &par)
-{	size_t i;
+size_t recorder<Base>::PutPar(const Base &par)
+{	static size_t   hash_table[CPPAD_HASH_TABLE_SIZE];
+	static bool     init = true;
+	size_t          i;
+	unsigned short  code;
+	if( init )
+	{	// initialize hash table
+		for(i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
+			hash_table[i] = 4 * CPPAD_HASH_TABLE_SIZE;
+		init = false;
+	}
 	
 	CPPAD_ASSERT_UNKNOWN( num_rec_par_ <= len_rec_par_ );
 	
-	// check last three values to see if same one came up
-	if( num_rec_par_ >= 3 )
-	{	i = num_rec_par_;
-		while(i > num_rec_par_ - 3)
-		{	--i;
-			if( IdenticalEqualPar(rec_par_[i], par) )
-				return i;
-		}
+	// get hash code for this value
+	code = hash_code(par);
+	CPPAD_ASSERT_UNKNOWN( code < CPPAD_HASH_TABLE_SIZE );
+
+	// If we have a match, return the parameter index
+	i = hash_table[code];
+	if( i < num_rec_par_ )
+	{	if( IdenticalEqualPar(rec_par_[i], par) )
+			return i;
 	}
 	
 	// place a new value in the table
@@ -309,9 +320,14 @@ inline size_t recorder<Base>::PutPar(const Base &par)
 		);
 	}
 	CPPAD_ASSERT_UNKNOWN( num_rec_par_ < len_rec_par_ );
-	rec_par_[num_rec_par_++] = par;
+	i           = num_rec_par_++;
+	rec_par_[i] = par;
 
-	return num_rec_par_ - 1;
+	// make the hash code point to this new value
+	hash_table[code] = i;
+
+	// return the parameter index
+	return i;
 }
 // -------------------------- PutArg --------------------------------------
 /*!

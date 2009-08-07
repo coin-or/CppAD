@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -23,16 +23,19 @@ $index Domain, ADFun$$
 $index Range, ADFun$$
 $index Parameter, ADFun$$
 $index size_var, ADFun$$
+$index size_par, ADFun$$
 
 $index example, Domain$$
 $index example, Range$$
 $index example, Parameter$$
 $index example, size_var$$
+$index example, size_par$$
 
 $index test, Domain$$
 $index test, Range$$
 $index test, Parameter$$
 $index test, size_var$$
+$index test, size_par$$
 
 $code
 $verbatim%example/seq_property.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -48,9 +51,12 @@ bool SeqProperty(void)
 {	bool ok = true;
 	using CppAD::AD;
 
-	// Use nvar to tracks number of variables in the operation sequence.
+	// Use nvar to track the number of variables in the operation sequence.
 	// Start with one for the phantom variable at tape address zero.
 	size_t nvar = 1;
+
+	// Use npar to track the number of parameters in the operation sequence.
+	size_t npar = 0;
 
 	// domain space vector
 	size_t n = 2;
@@ -70,9 +76,11 @@ bool SeqProperty(void)
 	// range space vector
 	size_t m = 3;
 	CPPAD_TEST_VECTOR< AD<double> > y(m);
-	y[0]   = 1.;          // a parameter value   
-	y[1]   = u;           // use same variable as x[0]
-	y[2]   = w;           // use same variable as w
+	y[0]   = 1.;          // the parameter 1   
+	y[1]   = u;           // use same variable as u
+	y[2]   = w + 2.;      // new variable equal to w plus parameter 2
+	npar  += 2;
+	nvar  += 1;
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
@@ -84,6 +92,7 @@ bool SeqProperty(void)
 	ok &= f.Parameter(1) == false;
 	ok &= f.Parameter(2) == false;
 	ok &= f.use_VecAD()  == false;
+	ok &= f.size_par()   == npar;
 
 	// add one for each range component that is a parameter
 	size_t i;

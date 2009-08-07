@@ -355,6 +355,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/fun_check.hpp \
 	cppad/local/fun_eval.hpp \
 	cppad/local/fun_construct.hpp \
+	cppad/local/hash_code.hpp \
 	cppad/local/hessian.hpp \
 	cppad/local/identical.hpp \
 	cppad/local/independent.hpp \
