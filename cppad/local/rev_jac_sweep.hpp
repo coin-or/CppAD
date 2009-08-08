@@ -97,9 +97,6 @@ void RevJacSweep(
 	size_t        i_var;
 
 	const size_t   *arg = 0;
-	Pack             *X = 0;
-	Pack             *Y = 0;
-	const Pack       *Z = 0;
 
 	size_t            i, j, k;
 
@@ -149,9 +146,6 @@ void RevJacSweep(
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
-		// sparsity for z corresponding to this op
-		Z      = RevJac + i_var * npv;
-
 # if CPPAD_REV_JAC_SWEEP_TRACE
 		printOp(
 			std::cout, 
@@ -162,7 +156,7 @@ void RevJacSweep(
 			0, 
 			(Pack *) CPPAD_NULL,
 			npv, 
-			Z 
+			RevJac + i_var * npv
 		);
 # endif
 
@@ -493,15 +487,9 @@ void RevJacSweep(
 
 			case SubvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-			X = RevJac + arg[0] * npv;
-			Y = RevJac + arg[1] * npv;
-			for(j = 0; j < npv; j++)
-			{	X[j] |= Z[j];
-				Y[j] |= Z[j];
-			}
+			reverse_sparse_jacobian_binary_op(
+				i_var, arg, npv, RevJac
+			);
 			break;
 			// -------------------------------------------------
 

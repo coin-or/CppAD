@@ -35,8 +35,6 @@ $index pattern, reverse Jacobian$$
 
 $head Syntax$$
 $syntax%%r% = %F%.RevSparseJac(%p%, %s%)%$$
-$pre
-$$
 
 
 $head Purpose$$

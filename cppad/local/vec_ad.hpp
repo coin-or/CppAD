@@ -391,8 +391,9 @@ public:
 				CPPAD_ASSERT_UNKNOWN( NumArg(LdpOp) == 3 );
 
 				// put operand addresses in tape
+				// (value of third arugment does not matter)
 				tape->Rec_.PutArg(
-					vec_->offset_, i, result.taddr_
+					vec_->offset_, i, 0
 				);
 				// put operator in the tape, x_ is a parameter
 				result.taddr_ = tape->Rec_.PutOp(LdpOp);
@@ -416,8 +417,9 @@ public:
 				CPPAD_ASSERT_UNKNOWN( x_.taddr_ > 0 );
 
 				// put operand addresses in tape
+				// (value of third arugment does not matter)
 				tape->Rec_.PutArg(
-					vec_->offset_, x_.taddr_, result.taddr_
+					vec_->offset_, x_.taddr_, 0
 				);
 				// put operator in the tape, x_ is a variable
 				result.taddr_ = tape->Rec_.PutOp(LdvOp);

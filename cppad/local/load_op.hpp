@@ -239,7 +239,7 @@ number of colums in the matrix containing all the partial derivatives
 (not used if \a arg[2] is zero).
 
 \param partial
-If \a arg[0] is zero, y[x] is a parameter
+If \a arg[2] is zero, y[x] is a parameter
 and no values need to be modified; i.e., \a partial is not used.
 Otherwise, y[x] is a variable and:
 \n
@@ -250,7 +250,7 @@ is the partial derivative of G
 with respect to the k-th order Taylor coefficient for z.
 \n
 \n
-If \a arg[0] is not zero,
+If \a arg[2] is not zero,
 \a partial [ \a arg[2] * \a nc_partial + k ]
 for k = 0 , ... , \a d
 is the partial derivative with respect to 

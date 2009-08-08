@@ -37,8 +37,6 @@ $index pattern, reverse Hessian$$
 
 $head Syntax$$
 $syntax%%h% = %f%.RevSparseHes(%q%, %s%)%$$
-$pre
-$$
 
 
 $head Purpose$$

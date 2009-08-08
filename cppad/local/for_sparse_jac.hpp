@@ -34,8 +34,6 @@ $index pattern, forward Jacobian$$
 
 $head Syntax$$
 $syntax%%s% = %f%.ForSparseJac(%q%, %r%)%$$
-$pre
-$$
 
 
 $head Purpose$$
