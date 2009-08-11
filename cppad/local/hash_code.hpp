@@ -59,7 +59,7 @@ unsigned short hash_code(const Value& value)
 	unsigned short        code;
 
 	v    = reinterpret_cast<const unsigned short*>(& value);
-	i    = n;
+	i    = n - 1;
 	code = v[i];
 	while(i--)
 		code += v[i];
