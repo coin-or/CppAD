@@ -64,7 +64,7 @@ $index test, cppad speed$$
 $section Speed Testing Main Program$$
 
 $head Syntax$$
-$codei%speed/%package%/%package% %option% %seed% %retape%
+$codei%speed/%package%/%package% %test% %seed% %option_list% 
 %$$
 
 $head Purpose$$
@@ -96,11 +96,11 @@ In the special case where $icode package$$ is $code profile$$,
 the CppAD package is compiled and run with profiling to aid in determining
 where it is spending most of its time.
 
-$head option$$
-It the argument $icode option$$ specifies which test to run
+$head test$$
+It the argument $icode test$$ specifies which test to run
 and has the following possible values:
-$cref/correct/speed_main/option/correct/$$,
-$cref/speed/speed_main/option/speed/$$,
+$cref/correct/speed_main/test/correct/$$,
+$cref/speed/speed_main/test/speed/$$,
 $cref/det_minor/link_det_minor/$$,
 $cref/det_lu/link_det_lu/$$,
 $cref/ode/link_ode/$$,
@@ -108,11 +108,11 @@ $cref/poly/link_poly/$$,
 $cref/sparse_hessian/link_sparse_hessian/$$.
 
 $subhead correct$$
-If $icode option$$ is equal to $code correct$$,
+If $icode test$$ is equal to $code correct$$,
 all of the correctness tests are run.
 
 $subhead speed$$
-If $icode option$$ is equal to $code speed$$,
+If $icode test$$ is equal to $code speed$$,
 all of the speed tests are run.
 
 $head seed$$
@@ -125,16 +125,39 @@ $codei%
 %$$
 before any of the testing routines (listed above) are called.
 
-$head retape$$
-The command line argument $icode retape$$ is
-either $code true$$ or $code false$$.
-If it is true,
-the AD operation sequence is retaped for every test repetition
-of each speed test.
+$head option_list$$
+This is a list of options that follow $icode seed$$ value.
+The order of the options does not matter and the list can be empty.
+Each option in the list, must be separate 
+command line argument to the main program. 
+
+$subhead retape$$
+If the option $code retape$$ is present, the symbol
+$codep
+	extern bool global_retape
+$$
+is true and otherwise it is false.
+If this external symbol is true,
+every test must retape the AD operation sequence for each test repetition.
 If it is false,
 and the particular test has a fixed operation sequence,
 the AD package is allowed to use one taping of the operation
 sequence for all the repetitions of that speed test.
+The following tests have a fixed operation sequence:
+$code det_minor$$, $code ode$$, $code poly$$.
+
+$subhead optimize$$
+If the option code optimize is present, the symbol
+$codep
+	extern bool global_optimize
+$$
+is true and otherwise it is false.
+If this external symbol is true,
+and the AD package has an optional way to spend time optimizing
+the operation sequence,
+this optimization should be done before doing computations.
+If it is false,
+this optimization should not be done.
 
 $head Correctness Results$$
 An output line is generated for each correctness test
@@ -172,7 +195,8 @@ CPPAD_DECLARE_SPEED(poly);
 CPPAD_DECLARE_SPEED(sparse_hessian);
 CPPAD_DECLARE_SPEED(ode);
 
-bool   main_retape;
+bool   global_retape;
+bool   global_optimize;
 
 namespace {
 	using std::cout;
@@ -238,7 +262,7 @@ namespace {
 int main(int argc, char *argv[])
 {	bool ok = true;
 
-	const char *option[]= {
+	const char *test[]= {
 		"correct",
 		"det_lu",
 		"det_minor",
@@ -247,47 +271,50 @@ int main(int argc, char *argv[])
 		"sparse_hessian",
 		"speed"
 	};
-	const size_t n_option  = sizeof(option) / sizeof(option[0]);
-	const size_t option_correct        = 0;
-	const size_t option_det_lu         = 1;
-	const size_t option_det_minor      = 2;
-	const size_t option_ode            = 3;
-	const size_t option_poly           = 4;
-	const size_t option_sparse_hessian = 5;
-	const size_t option_speed          = 6;
-	assert( n_option == option_speed+1 );
+	const size_t n_test  = sizeof(test) / sizeof(test[0]);
+	const size_t test_correct        = 0;
+	const size_t test_det_lu         = 1;
+	const size_t test_det_minor      = 2;
+	const size_t test_ode            = 3;
+	const size_t test_poly           = 4;
+	const size_t test_sparse_hessian = 5;
+	const size_t test_speed          = 6;
+	assert( n_test == test_speed+1 );
 
 	size_t i;
-	size_t match = n_option;
+	size_t match = n_test;
 	int    iseed = 0;
-	bool   error = argc != 4;
+	bool   error = argc < 3;
 	if( ! error )
-	{	for(i = 0; i < n_option; i++)
-			if( strcmp(option[i], argv[1]) == 0 )
+	{	for(i = 0; i < n_test; i++)
+			if( strcmp(test[i], argv[1]) == 0 )
 				match = i;
-		error = match == n_option;
+		error = match == n_test;
 		iseed = std::atoi( argv[2] );
 		error |= iseed < 0;
-		if( strcmp(argv[3], "true") == 0 )
-			main_retape = true;
-		else if( strcmp(argv[3], "false") == 0 )
-			main_retape = false;
-		else	error = true;
-
+		global_retape   = false;
+		global_optimize = false;
+		for(i = 3; i < size_t(argc); i++)
+		{	if( strcmp(argv[i], "retape") == 0 )
+				global_retape = true;
+			else if( strcmp(argv[i], "optimize") == 0 )
+				global_optimize = true;
+			else
+				error = true;
+		}
 	}
 	if( error )
 	{	cout << "usage: ./" 
-		     << AD_PACKAGE << " option seed retape" << endl;
-		cout << "option choices: " << option[0];
-		for(i = 1; i < n_option; i++)
-			cout << ", " << option[i];
+		     << AD_PACKAGE << " test seed option_list" << endl;
+		cout << "test choices: " << test[0];
+		for(i = 1; i < n_test; i++)
+			cout << ", " << test[i];
 		cout << "." << endl << "seed choices: ";
 		cout << "a positive integer used as a random seed." << endl;
-		cout << "retape choices: either \"true\" or \"false\"." << endl;
-		cout << endl;
+		cout << "option choices: ";
+		cout << " \"retape\", \"optimize\"." << endl << endl;
 		return 1;
 	}
-
 
 	// initialize the random number simulator
 	CppAD::uniform_01(size_t(iseed));
@@ -302,7 +329,7 @@ int main(int argc, char *argv[])
 	for(i = 0; i < n_size; i++) 
 	{	size_det_lu[i]      = 3 * i + 1;
 		size_det_minor[i]   = i + 1;
-		size_ode[i]         = 2 * i + 1;
+		size_ode[i]         = i + 1;
 		size_poly[i]        = 8 * i + 1;
 		size_sparse_hessian[i] = 10 * (i + 1);
 	}
@@ -313,7 +340,7 @@ int main(int argc, char *argv[])
 	switch(match)
 	{
 		// run all the correctness tests
-		case option_correct:
+		case test_correct:
 		if( available_det_lu() ) ok &= run_correct(
 			correct_det_lu,    "det_lu"       
 		);
@@ -342,7 +369,7 @@ int main(int argc, char *argv[])
 		break;
 		// ---------------------------------------------------------
 		// run all the speed tests 
-		case option_speed:
+		case test_speed:
 		if( available_det_lu() ) Run_speed(
 		speed_det_lu,    size_det_lu,    "det_lu"
 		);
@@ -362,9 +389,9 @@ int main(int argc, char *argv[])
 		break;
 		// ---------------------------------------------------------
 
-		case option_det_lu:
+		case test_det_lu:
 		if( ! available_det_lu() )
-		{	cout << AD_PACKAGE << ": option " << argv[1] 
+		{	cout << AD_PACKAGE << ": test " << argv[1] 
 			     << " not available" << endl; 
 			exit(1);
 		}
@@ -373,9 +400,9 @@ int main(int argc, char *argv[])
 		break;
 		// ---------------------------------------------------------
 
-		case option_det_minor:
+		case test_det_minor:
 		if( ! available_det_minor() )
-		{	cout << AD_PACKAGE << ": option " << argv[1] 
+		{	cout << AD_PACKAGE << ": test " << argv[1] 
 			     << " not available" << endl; 
 			exit(1);
 		}
@@ -384,9 +411,9 @@ int main(int argc, char *argv[])
 		break;
 		// ---------------------------------------------------------
 
-		case option_ode:
+		case test_ode:
 		if( ! available_ode() )
-		{	cout << AD_PACKAGE << ": option " << argv[1] 
+		{	cout << AD_PACKAGE << ": test " << argv[1] 
 			     << " not available" << endl; 
 			exit(1);
 		}
@@ -395,9 +422,9 @@ int main(int argc, char *argv[])
 		break;
 		// ---------------------------------------------------------
 
-		case option_poly:
+		case test_poly:
 		if( ! available_poly() )
-		{	cout << AD_PACKAGE << ": option " << argv[1] 
+		{	cout << AD_PACKAGE << ": test " << argv[1] 
 			     << " not available" << endl; 
 			exit(1);
 		}
@@ -406,9 +433,9 @@ int main(int argc, char *argv[])
 		break;
 		// ---------------------------------------------------------
 
-		case option_sparse_hessian:
+		case test_sparse_hessian:
 		if( ! available_sparse_hessian() )
-		{	cout << AD_PACKAGE << ": option " << argv[1] 
+		{	cout << AD_PACKAGE << ": test " << argv[1] 
 			     << " not available" << endl; 
 			exit(1);
 		}

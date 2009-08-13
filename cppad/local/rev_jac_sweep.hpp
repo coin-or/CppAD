@@ -139,6 +139,9 @@ void RevJacSweep(
 	// Initialize
 	Rec->start_reverse();
 	i_op = 2;
+# if CPPAD_REV_JAC_SWEEP_TRACE
+	std::cout << std::endl;
+# endif
 	while(i_op > 1)
 	{
 		// next op

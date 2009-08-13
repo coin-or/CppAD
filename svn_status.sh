@@ -69,8 +69,11 @@ sed                                                           \
 	-e '/^[?] *print_for\/print_for$/d'                   \
 	-e '/^[?] *speed\/adolc\/adolc$/d'                    \
 	-e '/^[?] *speed\/cppad\/cppad$/d'                    \
+	-e '/^[?] *speed\/double\/double$/d'                  \
+	-e '/^[?] *speed\/example\/example$/d'                \
 	-e '/^[?] *speed\/fadbad\/fadbad$/d'                  \
 	-e '/^[?] *speed\/profile\/profile$/d'                \
+	-e '/^[?] *speed\/sacado\/sacado$/d'                  \
 	-e '/^[?] *test_more\/test_more$/d'                   \
 	-e '/^[?] *ipopt_cppad\/include$/d'                   \
 	-e '/^[?] *ipopt_cppad\/lib$/d'                       \

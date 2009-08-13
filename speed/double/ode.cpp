@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin double_ode.cpp$$
 $spell
+	Jacobian
 	CppAD
 	cppad
 	hpp
@@ -30,22 +31,17 @@ $index ode, speed double$$
 
 $head link_ode$$
 $index link_ode$$
-Routine that computes the gradient of determinant using CppAD:
 $codep */
 # include <cstring>
 # include <cppad/vector.hpp>
 # include <cppad/speed/ode_evaluate.hpp>
 # include <cppad/speed/uniform_01.hpp>
 
-// value can be true of false
-# define DOUBLE_COMPUTE_GRADIENT 0
-
 bool link_ode(
 	size_t                     size       ,
 	size_t                     repeat     ,
-	bool                       retape     ,
 	CppAD::vector<double>      &x         ,
-	CppAD::vector<double>      &gradient
+	CppAD::vector<double>      &jacobian
 )
 {	// -------------------------------------------------------------
 	// setup
@@ -54,11 +50,7 @@ bool link_ode(
 	assert( x.size() == n );
 
 	size_t m = 0;
-	CppAD::vector<double> f(1);
-# if DOUBLE_COMPUTE_GRADIENT
-	m = 1;
-	f.resize(n);
-# endif
+	CppAD::vector<double> f(n);
 
 	while(repeat--)
 	{ 	// choose next x value
@@ -68,10 +60,9 @@ bool link_ode(
 		CppAD::ode_evaluate(x, m, f);
 
 	}
-	gradient[0] = f[0];
-# if DOUBLE_COMPUTE_GRADIENT
-	gradient    = f;
-# endif
+	size_t i;
+	for(i = 0; i < n; i++)
+		jacobian[i] = f[i];
 	return true;
 }
 /* $$

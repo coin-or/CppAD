@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,9 +22,7 @@ $$
 
 $section Fadbad Speed: Sparse Hessian$$
 
-Indicate that this test is not available:
 $codep */
-
 // The fadbad version of this test is not yet available 
 bool link_sparse_hessian(
         size_t                     repeat     ,

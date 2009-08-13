@@ -257,10 +257,21 @@ public:
 	\param i
 	the index of the parameter in recording
 	*/
-	const Base *GetPar(size_t i) const
+	Base GetPar(size_t i) const
 	{	CPPAD_ASSERT_UNKNOWN(i < num_rec_par_);
-		return rec_par_ + i;
+		return rec_par_[i];
 	}
+
+	/*! 
+	\brief 
+	Fetch entire parameter vector from the recording.
+
+	\return 
+	the entire parameter vector.
+
+	*/
+	const Base* GetPar(void) const
+	{	return rec_par_; }
 
 	/*! 
 	\brief 

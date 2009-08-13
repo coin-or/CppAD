@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_09$$
 $spell
+	retape
 	isnan
 	atan
 	asin
@@ -51,6 +52,59 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
+
+$head 08_13$$
+Add an option to $cref/optimize/$$ an operation sequence.
+$pre
+
+$$ 
+$bold Begin Merge$$ 
+$pre
+$$
+of changes from the directory $code branches/optimize$$ 
+in the CppAD subversion repository.
+The subheading dates below represent when the correspond change was made in 
+$code branches/optimize$$.
+
+$subhead 08-13$$
+An automatic check of the $cref/ForwardZero/$$ results was added
+after each call to $cref/f.optimize()/optimize/$$
+(this $cref/check/optimize/Checking Optimization/$$ 
+is skipped when $code NDEBUG$$ is defined).
+In addition, all of the $codei%speed/cppad/%*%.cpp%$$ tests
+now check and use the speed test
+$cref/optimize/speed_main/option_list/optimize/$$ flag.
+
+$subhead 08-11$$
+Change the speed test $cref/main program/speed_main/$$ so
+that it uses a list of options instead of a boolean flag for each option.
+This will make it possible to add options in the future with out
+having to change all the existing tests because the options are now
+global variables instead of arguments to the speed test routines; for example,
+see $cref/retape/speed_main/option_list/retape/$$.
+
+$subhead 08-10$$
+The routine for $cref/optimizing/optimize/$$ the operation sequence
+has been added has been further tested using $code test_more/optimize.cpp$$.
+Some bugs have been fix and the routine can
+now be trusted to work correctly.
+$pre
+
+$$
+The function 
+$cref/size_VecAD/SeqProperty/size_VecAD/$$ function was added
+so that the user could see the $code VecAD$$ vectors 
+and elements corresponding to an operation sequence.
+
+$subhead 08-09$$
+A routine for $cref/optimizing/optimize/$$ the operation sequence
+has been added.
+This is a preliminary version and needs more testing before it can
+be trusted to work correctly.
+$pre
+$$
+$bold End Merge$$
+
 
 $head 08-06$$
 Add hash table coding to reduce the number of copies of the same

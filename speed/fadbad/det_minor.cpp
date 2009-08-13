@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -34,7 +34,6 @@ $index minor, speed fadbad$$
 
 $head link_det_minor$$
 $index link_det_minor$$
-Routine that computes the gradient of determinant using Fadbad:
 $codep */
 # include <FADBAD++/badiff.h>
 # include <cppad/speed/det_by_minor.hpp>
@@ -44,7 +43,6 @@ $codep */
 bool link_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	bool                       retape   ,
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &gradient )
 {

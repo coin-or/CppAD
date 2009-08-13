@@ -32,6 +32,7 @@ list="
 	log_op.hpp
 	mul_op.hpp
 	op_code.hpp
+	optimize.hpp
 	player.hpp
 	print_op.hpp
 	pow_op.hpp

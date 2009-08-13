@@ -155,6 +155,7 @@ $rref OdeStiff.cpp$$
 $rref ode_evaluate.cpp$$
 $rref ode_taylor.cpp$$
 $rref ode_taylor_adolc.cpp$$
+$rref optimize.cpp$$
 $rref Output.cpp$$
 $rref ParVar.cpp$$
 $rref Poly.cpp$$
@@ -173,7 +174,7 @@ $rref RombergOne.cpp$$
 $rref Rosen34.cpp$$
 $rref runge_45_1.cpp$$
 $rref runge_45_2.cpp$$
-$rref SeqProperty.cpp$$
+$rref seq_property.cpp$$
 $rref SimpleVector.cpp$$
 $rref Sin.cpp$$
 $rref Sinh.cpp$$

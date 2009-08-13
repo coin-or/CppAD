@@ -11,10 +11,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin SeqProperty.cpp$$
+$begin seq_property.cpp$$
 $spell
 	abs
 	var
+	VecAD
 $$
 
 $section ADFun Sequence Properties: Example and Test$$
@@ -24,18 +25,21 @@ $index Range, ADFun$$
 $index Parameter, ADFun$$
 $index size_var, ADFun$$
 $index size_par, ADFun$$
+$index size_VecAD, ADFun$$
 
 $index example, Domain$$
 $index example, Range$$
 $index example, Parameter$$
 $index example, size_var$$
 $index example, size_par$$
+$index example, size_VecAD$$
 
 $index test, Domain$$
 $index test, Range$$
 $index test, Parameter$$
 $index test, size_var$$
 $index test, size_par$$
+$index test, size_VecAD$$
 
 $code
 $verbatim%example/seq_property.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -47,7 +51,7 @@ $end
 
 # include <cppad/cppad.hpp>
 
-bool SeqProperty(void)
+bool seq_property(void)
 {	bool ok = true;
 	using CppAD::AD;
 
@@ -57,6 +61,15 @@ bool SeqProperty(void)
 
 	// Use npar to track the number of parameters in the operation sequence.
 	size_t npar = 0;
+
+	// Use nvecad to track the number of VecAD vectors, plus the number
+	// of VecAD vector elements, in the operation sequence.
+	size_t nvecad = 0;
+
+	// a VecAD vector
+	CppAD::VecAD<double> v(2);
+	v[0]     = 0; // requires the parameter 0, when becomes a variable
+	v[1]     = 1; // requires the parameter 1, when becomes a variable
 
 	// domain space vector
 	size_t n = 2;
@@ -68,6 +81,11 @@ bool SeqProperty(void)
 	CppAD::Independent(x); 
 	nvar    += n;
 
+	AD<double> I = 0;    // re-use the parameter 0
+	v[I]         = x[0];
+	nvecad      +=   3; // one vector with two elements 
+	npar        +=   2; // the parameters 0 and 1
+
 	AD<double> u = x[0];  // use same variable as x[0]
 	AD<double> w = x[1];  // use same variable as x[1]
 	w      = w * (u + w); // requires two new variables
@@ -76,10 +94,10 @@ bool SeqProperty(void)
 	// range space vector
 	size_t m = 3;
 	CPPAD_TEST_VECTOR< AD<double> > y(m);
-	y[0]   = 1.;          // the parameter 1   
+	y[0]   = 1.;          // re-use the parameter 1   
 	y[1]   = u;           // use same variable as u
-	y[2]   = w + 2.;      // new variable equal to w plus parameter 2
-	npar  += 2;
+	y[2]   = w + 2.;      // new variable equal to w, use the parameter 2
+	npar  += 1;           // new parameter is 2
 	nvar  += 1;
 
 	// create f: x -> y and stop tape recording
@@ -91,8 +109,9 @@ bool SeqProperty(void)
 	ok &= f.Parameter(0) == true;
 	ok &= f.Parameter(1) == false;
 	ok &= f.Parameter(2) == false;
-	ok &= f.use_VecAD()  == false;
+	ok &= f.use_VecAD()  == true;
 	ok &= f.size_par()   == npar;
+	ok &= f.size_VecAD() == nvecad;
 
 	// add one for each range component that is a parameter
 	size_t i;

@@ -138,6 +138,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/omp_max_thread.hpp \
 	cppad/local/op.hpp \
 	cppad/local/op_code.hpp \
+	cppad/local/optimize.hpp \
 	cppad/local/ordered.hpp \
 	cppad/local/output.hpp \
 	cppad/local/parameter_op.hpp \

@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -28,6 +28,30 @@ else
 fi
 rm check_makefile1.$$
 rm check_makefile2.$$
+echo "-------------------------------------------------------" 
+if [ "$ok" = "no" ]
+then
+	echo "Error: nothing should be between the two dashed lines above"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
+echo "Checking speed tests set for optimization and not debugging."
+echo "-------------------------------------------------------" 
+ok="yes"
+for dir in adolc cppad double fadbad sacado
+do
+	file="speed/$dir/makefile.am"
+	if ! grep '^[^#]*-DNDEBUG' $file > /dev/null
+	then
+		echo "Optimization flag is not defined in $file"
+		ok="no"
+	fi
+	if ! grep '^#.*-g' $file > /dev/null
+	then
+		echo "Debug flag is not commented out in $file"
+		ok="no"
+	fi
+done
 echo "-------------------------------------------------------" 
 if [ "$ok" = "yes" ]
 then

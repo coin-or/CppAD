@@ -150,7 +150,7 @@ size_t forward0sweep(
 	// pointer to the beginning of the parameter vector
 	const Base* parameter = CPPAD_NULL;
 	if( num_par > 0 )
-		parameter = Rec->GetPar(0);
+		parameter = Rec->GetPar();
 
 	// pointer to the beginning of the text vector
 	const char* text = CPPAD_NULL;

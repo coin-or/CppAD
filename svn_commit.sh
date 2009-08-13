@@ -13,7 +13,14 @@
 # Define your subversion commit by editing the definition of 
 # log_entry, add_list, delete_list, and change_list below:
 # 
-log_entry="
+log_entry="Merge in changes from brancehs/optimize.
+
+Made minor changes to these files:
+	cppad/local/optimize.hpp
+	cppad/local/cap_taylor.hpp
+	omh/forward.omh
+	omh/seq_property.omh
+	omh/whats_new_09.omh
 " 
 add_list="
 "
@@ -22,7 +29,69 @@ delete_list="
 old_list="
 "
 #
+# M     .
 change_list="
+	check_doxygen.sh
+	check_makefile.sh
+	example/makefile.am
+	example/makefile.in
+	example/seq_property.cpp
+	example/optimize.cpp
+	example/example.cpp
+	svn_merge.sh
+	test_more/makefile.am
+	test_more/makefile.in
+	test_more/test_more.cpp
+	test_more/optimize.cpp
+	build.sh
+	makefile.am
+	makefile.in
+	omh/forward.omh
+	omh/example_list.omh
+	omh/whats_new_06.omh
+	omh/whats_new_09.omh
+	omh/seq_property.omh
+	cppad/local/ad_fun.hpp
+	cppad/local/player.hpp
+	cppad/local/prototype_op.hpp
+	cppad/local/optimize.hpp
+	cppad/local/op_code.hpp
+	cppad/local/forward0sweep.hpp
+	cppad/local/cap_taylor.hpp
+	cppad/local/recorder.hpp
+	cppad/local/forward_sweep.hpp
+	cppad/local/rev_jac_sweep.hpp
+	cppad/local/fun_construct.hpp
+	cppad/local/sparse_unary_op.hpp
+	cppad/local/reverse_sweep.hpp
+	cppad/speed/ode_evaluate.hpp
+	speed/fadbad/det_minor.cpp
+	speed/fadbad/poly.cpp
+	speed/fadbad/ode.cpp
+	speed/fadbad/sparse_hessian.cpp
+	speed/link_poly.cpp
+	speed/adolc/det_minor.cpp
+	speed/adolc/poly.cpp
+	speed/adolc/ode.cpp
+	speed/adolc/sparse_hessian.cpp
+	speed/link_ode.cpp
+	speed/link_sparse_hessian.cpp
+	speed/main.cpp
+	speed/cppad/det_minor.cpp
+	speed/cppad/poly.cpp
+	speed/cppad/ode.cpp
+	speed/cppad/sparse_hessian.cpp
+	speed/cppad/det_lu.cpp
+	speed/double/det_minor.cpp
+	speed/double/poly.cpp
+	speed/double/ode.cpp
+	speed/double/sparse_hessian.cpp
+	speed/sacado/det_minor.cpp
+	speed/sacado/poly.cpp
+	speed/sacado/ode.cpp
+	speed/link_det_lu.cpp
+	speed/example/ode_evaluate.cpp
+	speed/link_det_minor.cpp
 "
 #
 # log_entry

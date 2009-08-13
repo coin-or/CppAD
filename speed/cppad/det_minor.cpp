@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,6 +24,10 @@ $spell
 	CPPAD_TEST_VECTOR
 	bool
 	srand
+	var
+	std
+	cout
+	endl
 $$
 
 $section CppAD Speed: Gradient of Determinant by Minor Expansion$$
@@ -34,7 +38,6 @@ $index minor, speed cppad$$
 
 $head link_det_minor$$
 $index link_det_minor$$
-Routine that computes the gradient of determinant using CppAD:
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_minor.hpp>
@@ -43,7 +46,6 @@ $codep */
 bool link_det_minor(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	bool                       retape   ,
 	CppAD::vector<double>     &matrix   ,
 	CppAD::vector<double>     &gradient )
 {
@@ -65,7 +67,14 @@ bool link_det_minor(
 	CppAD::vector<double> w(1);
 	w[0] = 1.;
 
-	if(retape) while(repeat--)
+	// the AD function object
+	CppAD::ADFun<double> f;
+
+	static bool printed = false;
+	bool print_this_time = (! printed) & (repeat > 1) & (size >= 3);
+
+	extern bool global_retape;
+	if( global_retape ) while(repeat--)
 	{
 		// choose a matrix
 		CppAD::uniform_01(n, matrix);
@@ -79,7 +88,24 @@ bool link_det_minor(
 		detA[0] = Det(A);
 	
 		// create function object f : A -> detA
-		CppAD::ADFun<double> f(A, detA);
+		f.Dependent(A, detA);
+
+		extern bool global_optimize;
+		if( global_optimize )
+		{	size_t before, after;
+			before = f.size_var();
+			f.optimize();
+			if( print_this_time ) 
+			{	after = f.size_var();
+				std::cout << "optimize: size = " << size
+				          << ": size_var() = "
+				          << before << "(before) " 
+				          << after << "(after) " 
+				          << std::endl;
+				printed         = true;
+				print_this_time = false;
+			}
+		}
 	
 		// get the next matrix
 		CppAD::uniform_01(n, matrix);
@@ -104,7 +130,25 @@ bool link_det_minor(
 		detA[0] = Det(A);
 	
 		// create function object f : A -> detA
-		CppAD::ADFun<double> f(A, detA);
+		CppAD::ADFun<double> f;
+		f.Dependent(A, detA);
+
+		extern bool global_optimize;
+		if( global_optimize )
+		{	size_t before, after;
+			before = f.size_var();
+			f.optimize();
+			if( print_this_time ) 
+			{	after = f.size_var();
+				std::cout << "optimize: size = " << size
+				          << ": size_var() = "
+				          << before << "(before) " 
+				          << after << "(after) " 
+				          << std::endl;
+				printed         = true;
+				print_this_time = false;
+			}
+		}
 	
 		// ------------------------------------------------------
 		while(repeat--)

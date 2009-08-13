@@ -683,7 +683,8 @@ then
 		list="$list sacado"
 	fi
 	seed="123"
-	retape="false"
+	for retape in "" retape
+	do
 	for name in $list
 	do
 		# Note that example does not use command line arguments,
@@ -701,6 +702,7 @@ then
 		fi
 		# add a new line between program outputs
 		echo ""  >> $dir/build_test.log
+	done
 	done
 	echo "openmp/run.sh"
 	echo "openmp/run.sh" >> $dir/build_test.log

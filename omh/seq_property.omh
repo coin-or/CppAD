@@ -39,24 +39,26 @@ $index size_var, ADFun$$
 $index ADFun, size_par$$
 $index size_par, ADFun$$
 
-$head Syntax$$
-$icode%n% = %f%.Domain()%$$
-$pre
-$$
-$icode%m% = %f%.Range()%$$
-$pre
-$$
-$icode%p% = %f%.Parameter(%i%)%$$
-$pre
-$$
-$icode%u% = %f%.use_VecAD()%$$
-$pre
-$$
-$icode%s% = %f%.size_var()%$$
-$pre
-$$
-$icode%s% = %f%.size_par()%$$
+$index ADFun, size_VecAD$$
+$index size_VecAD, ADFun$$
 
+$head Syntax$$
+$icode%n% = %f%.Domain()
+%$$
+$icode%m% = %f%.Range()
+%$$
+$icode%p% = %f%.Parameter(%i%)
+%$$
+$icode%u% = %f%.use_VecAD()
+%$$
+$icode%s% = %f%.size_var()
+%$$
+$icode%s% = %f%.size_par()
+%$$
+$icode%s% = %f%.size_VecAD()%$$
+
+$subhead See Also$$
+$cref/size_taylor/$$, $cref/capacity_taylor/$$.
 
 
 $head Purpose$$
@@ -154,7 +156,6 @@ If there is no operation sequence stored in $italic f$$,
 $code size_var$$ returns zero
 (see $xref/FunConstruct/Default Constructor/default constructor/$$).
 
-
 $head size_par$$
 The result $italic s$$ has prototype
 $codei%
@@ -164,12 +165,22 @@ and is the number of parameters in the operation sequence.
 Parameters differ from variables in that only values
 (and not derivatives) need to be stored for each parameter.
 
+$head size_VecAD$$
+The result $italic s$$ has prototype
+$codei%
+	size_t %s%
+%$$
+and is the number of $cref/VecAD/$$ vectors,
+plus the number of elements in the vectors.
+Only $code VecAD$$ vectors that depend on the 
+independent variables are stored in the operation sequence.
+
 $head Example$$
 $children%
 	example/seq_property.cpp
 %$$
 The file
-$xref/SeqProperty.cpp/$$ 
+$xref/seq_property.cpp/$$ 
 contains an example and test of these operations.
 It returns true if it succeeds and false otherwise.
 

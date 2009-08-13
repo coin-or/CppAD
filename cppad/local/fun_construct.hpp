@@ -215,9 +215,9 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	Dependent(tape, y);
 
 	// allocate memory for one zero order taylor_ coefficient
-	taylor_per_var_= 1;
+	taylor_per_var_  = 1;
 	taylor_col_dim_  = 1;
-	taylor_        = CPPAD_TRACK_NEW_VEC(total_num_var_, taylor_);
+	taylor_          = CPPAD_TRACK_NEW_VEC(total_num_var_, taylor_);
 
 	// set zero order coefficients corresponding to indpendent variables
 	CPPAD_ASSERT_UNKNOWN( n == ind_taddr_.size() );

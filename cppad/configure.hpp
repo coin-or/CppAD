@@ -1,4 +1,4 @@
-/* $Id: configure.hpp.in 1401 2009-06-24 17:56:51Z bradbell $ */
+/* $Id: configure.hpp.in 1447 2009-07-04 19:15:09Z bradbell $ */
 /* This file may be inclued multiple times so comment out ifndef and define
 # ifndef CPPAD_CONFIGURE_INCLUDED
 # define CPPAD_CONFIGURE_INCLUDED
@@ -60,7 +60,7 @@ yyyy is year, mm is month, and dd is day.
 \def CPPAD_PACKAGE_STRING
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 */
-# define CPPAD_PACKAGE_STRING "CppAD 20090704"
+# define CPPAD_PACKAGE_STRING "CppAD 20090813"
 
 /*
 $begin configure$$

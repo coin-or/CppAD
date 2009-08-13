@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -441,6 +441,8 @@ $section Number Taylor Coefficients, Per Variable, Currently Stored$$
 $head Syntax$$
 $syntax%%s% = %f%.size_taylor()%$$
 
+$subhead See Also$$
+$cref/SeqProperty/$$
 
 $head Purpose$$
 Determine the number of Taylor coefficients, per variable,
@@ -588,7 +590,10 @@ $head Restrictions$$
 $index NDEBUG, CompareChange$$
 Computation of this function requires extra operations in the tape.
 If $code NDEBUG$$ is defined,
+of if a tape $cref/optimization/optimize/$$ has been preformed,
 these operations are not included in the tape and
+the value of $icode c$$ is always zero (and does not correspond
+to the actual number of comparison changes).
 
 $head Example$$
 $children%

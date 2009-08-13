@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -39,9 +39,9 @@ bool ode_evaluate(void)
 
 	size_t n = 3;
 	CppAD::vector<double>       x(n);
-	CppAD::vector<double>       ym(n);
+	CppAD::vector<double>       ym(n * n);
 	CppAD::vector< AD<double> > X(n);
-	CppAD::vector< AD<double> > Ym(1);
+	CppAD::vector< AD<double> > Ym(n);
 
 	// choose x
 	size_t j;
@@ -63,11 +63,12 @@ bool ode_evaluate(void)
 
 	// use AD to evaluate derivative
 	CppAD::ADFun<double>   F(X, Ym);
-	CppAD::vector<double>  dy(n);
+	CppAD::vector<double>  dy(n * n);
 	dy = F.Jacobian(x);
 
-	for(j = 0; j < n; j++)
-		ok &= NearEqual(ym[j], dy[j] , 1e-10, 1e-10);
+	size_t k;
+	for(k = 0; k < n * n; k++)
+		ok &= NearEqual(ym[k], dy[k] , 1e-10, 1e-10);
  
 	return ok;
 }

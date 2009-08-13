@@ -295,7 +295,7 @@ size_t recorder<Base>::PutPar(const Base &par)
 	if( init )
 	{	// initialize hash table
 		for(i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
-			hash_table[i] = 4 * CPPAD_HASH_TABLE_SIZE;
+			hash_table[i] = 0;
 		init = false;
 	}
 	

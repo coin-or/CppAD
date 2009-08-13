@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -29,6 +29,10 @@ $spell
 	const
 	CPPAD_TEST_VECTOR
 	bool
+	var
+	std
+	cout
+	endl
 $$
 
 $section CppAD Speed: Second Derivative of a Polynomial$$
@@ -39,7 +43,6 @@ $index polynomial, speed cppad$$
 
 $head link_poly$$
 $index link_poly$$
-Routine that computes the second derivative of a polynomial using CppAD:
 $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/uniform_01.hpp>
@@ -47,7 +50,6 @@ $codep */
 bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	bool                       retape   ,
 	CppAD::vector<double>     &a        ,  // coefficients of polynomial
 	CppAD::vector<double>     &z        ,  // polynomial argument value
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  
@@ -76,9 +78,14 @@ bool link_poly(
 	dz[0]  = 1.;
 	ddz[0] = 0.;
 
+	// AD function object
 	CppAD::ADFun<double> f;
 
-	if( retape ) while(repeat--)
+	static bool printed = false;
+	bool print_this_time = (! printed) & (repeat > 1) & (size >= 10);
+
+	extern bool global_retape;
+	if( global_retape ) while(repeat--)
 	{
 		// choose an argument value
 		CppAD::uniform_01(1, z);
@@ -92,6 +99,23 @@ bool link_poly(
 
 		// create function object f : A -> detA
 		f.Dependent(Z, P);
+
+		extern bool global_optimize;
+		if( global_optimize )
+		{	size_t before, after;
+			before = f.size_var();
+			f.optimize();
+			if( print_this_time ) 
+			{	after = f.size_var();
+				std::cout << "optimize: size = " << size
+				          << ": size_var() = "
+				          << before << "(before) " 
+				          << after << "(after) " 
+				          << std::endl;
+				printed         = true;
+				print_this_time = false;
+			}
+		}
 
 		// pre-allocate memory for three forward mode calculations
 		f.capacity_taylor(3);
@@ -123,6 +147,23 @@ bool link_poly(
 
 		// create function object f : A -> detA
 		f.Dependent(Z, P);
+
+		extern bool global_optimize;
+		if( global_optimize )
+		{	size_t before, after;
+			before = f.size_var();
+			f.optimize();
+			if( print_this_time ) 
+			{	after = f.size_var();
+				std::cout << "optimize: size = " << size
+				          << ": size_var() = "
+				          << before << "(before) " 
+				          << after << "(after) " 
+				          << std::endl;
+				printed         = true;
+				print_this_time = false;
+			}
+		}
 
 		while(repeat--)
 		{	// sufficient memory is allocated by second repetition

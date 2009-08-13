@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,6 +22,10 @@ $spell
 	hpp
 	const
 	srand
+	var
+	std
+	cout
+	endl
 $$
 
 $section CppAD Speed: Gradient of Determinant Using Lu Factorization$$
@@ -58,13 +62,15 @@ bool link_det_lu(
 	size_t n = size * size; // number of independent variables
 	ADVector   A(n);        // AD domain space vector
 	ADVector   detA(m);     // AD range space vector
+	CppAD::ADFun<double> f; // AD function object
 	
 	// vectors of reverse mode weights 
 	CppAD::vector<double> w(1);
 	w[0] = 1.;
 
 	// ------------------------------------------------------
-
+	static bool printed = false;
+	bool print_this_time = (! printed) & (repeat > 1) & (size >= 10);
 	while(repeat--)
 	{	// get the next matrix
 		CppAD::uniform_01(n, matrix);
@@ -78,9 +84,27 @@ bool link_det_lu(
 		detA[0] = Det(A);
 
 		// create function object f : A -> detA
-		CppAD::ADFun<double> f(A, detA);
+		f.Dependent(A, detA);
+
+		extern bool global_optimize;
+		if( global_optimize )
+		{	size_t before, after;
+			before = f.size_var();
+			f.optimize();
+			if( print_this_time ) 
+			{	after = f.size_var();
+				std::cout << "optimize: size = " << size
+				          << ": size_var() = "
+				          << before << "(before) " 
+				          << after << "(after) " 
+				          << std::endl;
+				printed         = true;
+				print_this_time = false;
+			}
+		}
 
 		// evaluate and return gradient using reverse mode
+		f.Forward(0, matrix);
 		gradient = f.Reverse(1, w);
 	}
 	return true;

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -42,7 +42,6 @@ $index polynomial, speed fadbad$$
 
 $head link_poly$$
 $index link_poly$$
-Routine that computes the derivative of a polynomial using Fadbad:
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/poly.hpp>
@@ -52,7 +51,6 @@ $codep */
 bool link_poly(
 	size_t                     size     , 
 	size_t                     repeat   , 
-	bool                       retape   ,
 	CppAD::vector<double>     &a        ,  // coefficients of polynomial
 	CppAD::vector<double>     &z        ,  // polynomial argument value
 	CppAD::vector<double>     &ddp      )  // second derivative w.r.t z  

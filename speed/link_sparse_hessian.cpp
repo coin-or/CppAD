@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,7 +13,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin link_sparse_hessian$$
 $spell
-	retape
 	bool
 	CppAD
 $$
@@ -52,12 +51,6 @@ $latex f(x)$$ that the Hessian is computed for.
 Each function corresponds to a randomly chosen index vectors, i.e.,
 for each repetition a random choice is made for
 $latex i[k]$$ and $latex j[k]$$ for $latex k = 0 , \ldots , \ell-1$$.
-
-$head retape$$
-For this test, the operation sequence changes for each repetition.
-Thus the argument $cref/retape/speed_main/retape/$$ is not present
-because an AD package can not use one recording of the 
-operation sequence to compute the gradient for all of the repetitions.
 
 $head x$$
 The argument $icode x$$ has prototype
@@ -163,6 +156,8 @@ void speed_sparse_hessian(size_t n, size_t repeat)
 	CppAD::vector<double> x(n);
 	CppAD::vector<size_t> i(ell), j(ell);
 	CppAD::vector<double> hessian(n * n);
+
+	// note that cppad/sparse_hessian.cpp assumes that x.size() == size
 	link_sparse_hessian(repeat, x, i, j, hessian);
 	return;
 }

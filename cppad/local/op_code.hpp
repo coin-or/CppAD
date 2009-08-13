@@ -444,7 +444,7 @@ void printOp(
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, "idx=", ind[1], ncol);
-		printOpField(os, " pr=", *(Rec->GetPar(ind[2])), ncol);
+		printOpField(os, " pr=", Rec->GetPar(ind[2]), ncol);
 		break;
 
 		case StpvOp:
@@ -458,7 +458,7 @@ void printOp(
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
 		printOpField(os, " vl=", ind[1], ncol);
-		printOpField(os, " pr=", *(Rec->GetPar(ind[2])), ncol);
+		printOpField(os, " pr=", Rec->GetPar(ind[2]), ncol);
 		break;
 
 		case StvvOp:
@@ -484,7 +484,7 @@ void printOp(
 		case PowpvOp:
 		case DivpvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		printOpField(os, " pl=", *(Rec->GetPar(ind[0])), ncol);
+		printOpField(os, " pl=", Rec->GetPar(ind[0]), ncol);
 		printOpField(os, " vr=", ind[1], ncol);
 		break;
 
@@ -495,7 +495,7 @@ void printOp(
 		case SubvpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, " vl=", ind[0], ncol);
-		printOpField(os, " pr=", *(Rec->GetPar(ind[1])), ncol);
+		printOpField(os, " pr=", Rec->GetPar(ind[1]), ncol);
 		break;
 
 		case AbsOp:
@@ -515,13 +515,13 @@ void printOp(
 
 		case ParOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-		printOpField(os, "  p=", *(Rec->GetPar(ind[0])), ncol);
+		printOpField(os, "  p=", Rec->GetPar(ind[0]), ncol);
 		break;
 
 		case PripOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		printOpField(os, "txt=", *(Rec->GetTxt(ind[0])), ncol);
-		printOpField(os, "  p=", *(Rec->GetPar(ind[1])), ncol);
+		printOpField(os, "  p=", Rec->GetPar(ind[1]), ncol);
 		break;
 
 		case PrivOp:
@@ -547,16 +547,16 @@ void printOp(
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 6 );
 		if( ind[1] & 1 )
 			printOpField(os, " vl=", ind[2], ncol);
-		else	printOpField(os, " pl=", *(Rec->GetPar(ind[2])), ncol);
+		else	printOpField(os, " pl=", Rec->GetPar(ind[2]), ncol);
 		if( ind[1] & 2 )
 			printOpField(os, " vr=", ind[3], ncol);
-		else	printOpField(os, " pr=", *(Rec->GetPar(ind[3])), ncol);
+		else	printOpField(os, " pr=", Rec->GetPar(ind[3]), ncol);
 		if( ind[1] & 4 )
 			printOpField(os, " vt=", ind[4], ncol);
-		else	printOpField(os, " pt=", *(Rec->GetPar(ind[4])), ncol);
+		else	printOpField(os, " pt=", Rec->GetPar(ind[4]), ncol);
 		if( ind[1] & 8 )
 			printOpField(os, " vf=", ind[5], ncol);
-		else	printOpField(os, " pf=", *(Rec->GetPar(ind[5])), ncol);
+		else	printOpField(os, " pf=", Rec->GetPar(ind[5]), ncol);
 		break;
 
 		case ComOp:
@@ -567,10 +567,10 @@ void printOp(
 		else	printOpField(os, "res=", 0, ncol);
 		if( ind[1] & 2 )
 			printOpField(os, " vl=", ind[2], ncol);
-		else	printOpField(os, " pl=", *(Rec->GetPar(ind[2])), ncol);
+		else	printOpField(os, " pl=", Rec->GetPar(ind[2]), ncol);
 		if( ind[1] & 4 )
 			printOpField(os, " vr=", ind[3], ncol);
-		else	printOpField(os, " pr=", *(Rec->GetPar(ind[3])), ncol);
+		else	printOpField(os, " pr=", Rec->GetPar(ind[3]), ncol);
 		break;
 
 		default:

@@ -30,6 +30,9 @@ $section Controlling taylor_ Coefficients Memory Allocation$$
 $head Syntax$$
 $syntax%%f%.capacity_taylor(%c%)%$$
 
+$subhead See Also$$
+$cref/SeqProperty/$$
+
 $head Purpose$$
 The taylor_ coefficients calculated by Forward mode calculations
 are retained in an $xref/ADFun/$$ object for subsequent use during 

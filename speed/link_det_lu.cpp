@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,7 +13,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin link_det_lu$$
 $spell
-	retape
 	det_lu
 	bool
 	CppAD
@@ -54,12 +53,6 @@ is the number of rows and columns in the matrix.
 $head repeat$$
 The argument $icode repeat$$ is the number of different matrices
 that the gradient (or determinant) is computed for.
-
-$head retape$$
-For this test, the operation sequence changes for each repetition.
-Thus the argument $cref/retape/speed_main/retape/$$ is not present
-because an AD package can not use one recording of the 
-operation sequence to compute the gradient for all of the repetitions.
 
 $head matrix$$
 The argument $icode matrix$$ is a vector with $icode%size%*%size%$$ elements.

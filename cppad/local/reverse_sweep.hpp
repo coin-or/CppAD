@@ -155,7 +155,7 @@ void ReverseSweep(
 	// pointer to the beginning of the parameter vector
 	const Base* parameter = 0;
 	if( num_par > 0 )
-		parameter = Rec->GetPar(0);
+		parameter = Rec->GetPar();
 
 	// Initialize
 	Rec->start_reverse();

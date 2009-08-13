@@ -51,6 +51,7 @@ $childtable%
 	cppad/local/drivers.hpp%
 	cppad/local/fun_check.hpp%
 	cppad/local/omp_max_thread.hpp%
+	cppad/local/optimize.hpp%
 	omh/fun_deprecated.omh
 %$$
 
@@ -122,6 +123,10 @@ public:
 	// number of parameters in the operation sequence
 	size_t size_par(void) const
 	{	return play_.num_rec_par(); }
+
+	// number of VecAD indices in the operation sequence
+	size_t size_VecAD(void) const
+	{	return play_.num_rec_vecad_ind(); }
 
 	// number of taylor_ coefficients currently calculated (per variable)
 	size_t size_taylor(void) const
@@ -205,6 +210,8 @@ public:
 		const BaseVector &x, const BaseVector &w, const BoolVector &p
 	); 
 
+	// Optimize the tape
+	void optimize(void);
 	// ------------------- Deprecated -----------------------------
 
 	// number of variables in opertion sequence
@@ -290,5 +297,6 @@ private:
 # include <cppad/local/drivers.hpp>
 # include <cppad/local/fun_check.hpp>
 # include <cppad/local/omp_max_thread.hpp>
+# include <cppad/local/optimize.hpp> 
 
 # endif

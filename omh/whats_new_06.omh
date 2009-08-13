@@ -840,7 +840,7 @@ The member functions of $xref/ADFun/$$ that return properties of
 AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$
 have been grouped into the $xref/SeqProperty/$$ section.
-In addition, the $xref/SeqProperty.cpp/$$ example has been added.
+In addition, the $xref/seq_property.cpp/$$ example has been added.
 $pre
 
 $$

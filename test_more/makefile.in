@@ -55,7 +55,7 @@ am__test_more_SOURCES_DIST = base_adolc.cpp \
 	for_sparse_jac.cpp forward.cpp from_base.cpp fun_check.cpp \
 	jacobian.cpp log.cpp log_10.cpp mul.cpp mul_eq.cpp \
 	mul_level.cpp mul_zero_one.cpp near_equal_ext.cpp neg.cpp \
-	ode_err_control.cpp poly.cpp pow.cpp pow_int.cpp \
+	ode_err_control.cpp optimize.cpp poly.cpp pow.cpp pow_int.cpp \
 	romberg_one.cpp rosen_34.cpp runge_45.cpp reverse.cpp \
 	rev_sparse_hes.cpp rev_sparse_jac.cpp rev_two.cpp \
 	simple_vector.cpp sin.cpp sin_cos.cpp sinh.cpp \
@@ -77,15 +77,15 @@ am_test_more_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	jacobian.$(OBJEXT) log.$(OBJEXT) log_10.$(OBJEXT) \
 	mul.$(OBJEXT) mul_eq.$(OBJEXT) mul_level.$(OBJEXT) \
 	mul_zero_one.$(OBJEXT) near_equal_ext.$(OBJEXT) neg.$(OBJEXT) \
-	ode_err_control.$(OBJEXT) poly.$(OBJEXT) pow.$(OBJEXT) \
-	pow_int.$(OBJEXT) romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) \
-	runge_45.$(OBJEXT) reverse.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
-	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
-	simple_vector.$(OBJEXT) sin.$(OBJEXT) sin_cos.$(OBJEXT) \
-	sinh.$(OBJEXT) sparse_vec_ad.$(OBJEXT) sqrt.$(OBJEXT) \
-	std_math.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
-	sub_zero.$(OBJEXT) value.$(OBJEXT) vec_ad.$(OBJEXT) \
-	vec_ad_par.$(OBJEXT) vec_unary.$(OBJEXT)
+	ode_err_control.$(OBJEXT) optimize.$(OBJEXT) poly.$(OBJEXT) \
+	pow.$(OBJEXT) pow_int.$(OBJEXT) romberg_one.$(OBJEXT) \
+	rosen_34.$(OBJEXT) runge_45.$(OBJEXT) reverse.$(OBJEXT) \
+	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
+	rev_two.$(OBJEXT) simple_vector.$(OBJEXT) sin.$(OBJEXT) \
+	sin_cos.$(OBJEXT) sinh.$(OBJEXT) sparse_vec_ad.$(OBJEXT) \
+	sqrt.$(OBJEXT) std_math.$(OBJEXT) sub.$(OBJEXT) \
+	sub_eq.$(OBJEXT) sub_zero.$(OBJEXT) value.$(OBJEXT) \
+	vec_ad.$(OBJEXT) vec_ad_par.$(OBJEXT) vec_unary.$(OBJEXT)
 test_more_OBJECTS = $(am_test_more_OBJECTS)
 test_more_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -128,7 +128,7 @@ CYGPATH_W = @CYGPATH_W@
 
 # $Id: makefile.am 1370 2009-05-31 05:31:50Z bradbell $
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -305,6 +305,7 @@ test_more_SOURCES = \
 	near_equal_ext.cpp \
 	neg.cpp \
 	ode_err_control.cpp \
+	optimize.cpp \
 	poly.cpp \
 	pow.cpp \
 	pow_int.cpp \
@@ -418,6 +419,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/near_equal_ext.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/neg.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_err_control.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optimize.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow_int.Po@am__quote@
