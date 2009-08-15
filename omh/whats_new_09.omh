@@ -53,6 +53,10 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 08-14$$
+Add $cref/ad_in_c.cpp/$$
+an example of how to link CppAD to other languages.
+
 $head 08_13$$
 Add an option to $cref/optimize/$$ an operation sequence.
 $pre
