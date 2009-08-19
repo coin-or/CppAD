@@ -40,14 +40,29 @@ $end
 
 namespace { // Begin empty namespace *****************************************
 
+void debug_print(const char *label, double d)
+{	unsigned char *byte = reinterpret_cast<unsigned char *>(&d);
+	size_t n_byte = sizeof(d);
+	printf("%s", label);
+	for(size_t i = 0; i < n_byte; i++)
+		printf("%x", byte[i]);
+	printf("\n");
+}
+
 // type in C corresponding to an AD<double> object 
 typedef struct { void*  p_void; } cad;
 
 // type in C corresponding to a an ADFun<double> 
 typedef struct { void* p_void; } cad_fun;
 
-// type in C corresponding to an AD operator
-typedef enum { op_add, op_sub, op_mul, op_div } cad_op;
+// type in C corresponding to a C AD binary operator
+typedef enum { op_add, op_sub, op_mul, op_div } cad_binary_op;
+
+// type in C corresponding to a C AD unary operator
+typedef enum { 
+	op_abs, op_acos, op_asin, op_atan, op_cos, op_cosh, 
+	op_exp, op_log,  op_sin,  op_sinh, op_sqrt
+} cad_unary_op;
 
 // --------------------------------------------------------------------------
 // helper code not intended for use by C code  ------------------------------
@@ -114,8 +129,10 @@ inline void pop_allocated(void *p)
 // functions and operators to make a complete language link.
 //
 extern "C"
-bool cad_near_equal(double x, double y, double r, double a)
-{	return NearEqual(x, y, r, a); }
+bool cad_near_equal(double x, double y)
+{	double eps = 10. * std::numeric_limits<double>::epsilon();
+	return NearEqual(x, y, eps, 0.);
+}
 
 // create a C++ AD object
 // value is the value that the C++ AD object will have
@@ -154,9 +171,70 @@ double cad_value(cad* p_cad)
 	return Value( Var2Par(*p_ad) );
 }
 
-// perform an C AD binary operation
+// preform a C AD unary operation
 extern "C"
-void cad_binary_op(cad_op op, cad* p_left, cad* p_right, cad* p_result)
+void cad_unary(cad_unary_op op, cad* p_operand, cad* p_result) 
+{	AD<double> *operand, *result;
+	result  = reinterpret_cast< AD<double>* > (p_result->p_void);
+	operand = reinterpret_cast< AD<double>* > (p_operand->p_void);
+	switch(op)
+	{
+		case op_abs:
+		*result = abs( *operand );
+		break;
+
+		case op_acos:
+		*result = acos( *operand );
+		break;
+
+		case op_asin:
+		*result = asin( *operand );
+		break;
+
+		case op_atan:
+		*result = atan( *operand ); 
+		break;
+
+		case op_cos:
+		*result = cos( *operand );
+		break;
+
+		case op_cosh:
+		*result = cosh( *operand );
+		break;
+
+		case op_exp:
+		*result = exp( *operand );
+		break;
+
+		case op_log:
+		*result = log( *operand );
+		break;
+
+		case op_sin:
+		*result = sin( *operand );
+		break;
+
+		case op_sinh:
+		*result = sinh( *operand );
+		break;
+
+		case op_sqrt:
+		*result = sqrt( *operand );
+		break;
+
+		default:
+		// not a unary operator
+		assert(0);
+		break;
+
+	}
+	return;
+}
+
+// perform a C AD binary operation
+extern "C"
+void cad_binary(cad_binary_op op, cad* p_left, cad* p_right, cad* p_result)
 {	AD<double> *result, *left, *right; 
 	result = reinterpret_cast< AD<double>* > (p_result->p_void);
 	left   = reinterpret_cast< AD<double>* > (p_left->p_void);
@@ -183,6 +261,7 @@ void cad_binary_op(cad_op op, cad* p_left, cad* p_right, cad* p_result)
 		break;
 
 		default:
+		// not a binary operator
 		assert(0);
 	}
 	return;
@@ -219,16 +298,16 @@ cad_fun cad_new_fun(size_t n, size_t m, cad* px_cad, cad* py_cad)
 
 // delete an AD function object in C
 extern "C"
-void cad_del_fun(cad_fun fun)
+void cad_del_fun(cad_fun *fun)
 {	// make sure this pointer has been allocated
-	pop_allocated( fun.p_void );
+	pop_allocated( fun->p_void );
 
 	ADFun<double>* p_adfun 
-		= reinterpret_cast< ADFun<double>* > (fun.p_void);
+		= reinterpret_cast< ADFun<double>* > (fun->p_void);
 	delete p_adfun;
 
 	// special value for pointers that are not allocated
-	fun.p_void = 0;
+	fun->p_void = 0;
 }
 
 // evaluate the Jacobian corresponding to a function object
@@ -269,6 +348,11 @@ bool cad_allocated_empty(void)
 
 } // End empty namespace ****************************************************
 
+# include <math.h> // used to check results in c code below
+
+# define N 2       // number of independent variables in example
+# define M 5       // number of dependent variables in example
+
 // -------------------------------------------------------------------------
 // Here is the C code that uses the CppAD link above
 bool ad_in_c(void)
@@ -278,17 +362,17 @@ bool ad_in_c(void)
 
 	// x vector of AD objects in C
 	double value;
-	size_t j, n = 2;
-	cad X[2];
+	size_t j, n = N;
+	cad X[N];
 	for(j = 0; j < n; j++)
-	{	value       = (double) (j+1);
+	{	value       = (double) (j+1) / (double) n;
 		X[j].p_void = 0;
 		cad_new_ad(X + j, value);
 	}
 
 	// y vector of AD objects in C
-	size_t i, m = 4;
-	cad Y[4];
+	size_t i, m = M;
+	cad Y[M];
 	for(i = 0; i < m; i++)
 	{	value       = 0.; // required, but not used
 		Y[i].p_void = 0;
@@ -299,29 +383,49 @@ bool ad_in_c(void)
 	cad_independent(n, X);
 
 	// y[0] = x[0] + x[1]
-	cad_binary_op(op_add, X+0, X+1, Y+0);
-	ok &= cad_value(Y+0) == cad_value(X+0) + cad_value(X+1);
+	cad_binary(op_add, X+0, X+1, Y+0);
+	ok &= cad_near_equal( cad_value(Y+0), cad_value(X+0)+cad_value(X+1) );
 
 	// y[1] = x[0] - x[1]
-	cad_binary_op(op_sub, X+0, X+1, Y+1);
-	ok &= cad_value(Y+1) == cad_value(X+0) - cad_value(X+1);
+	cad_binary(op_sub, X+0, X+1, Y+1);
+	ok &= cad_near_equal( cad_value(Y+1), cad_value(X+0)-cad_value(X+1) );
 
 	// y[2] = x[0] * x[1]
-	cad_binary_op(op_mul, X+0, X+1, Y+2);
-	ok &= cad_value(Y+2) == cad_value(X+0) * cad_value(X+1);
+	cad_binary(op_mul, X+0, X+1, Y+2);
+	ok &= cad_near_equal( cad_value(Y+2), cad_value(X+0)*cad_value(X+1) );
 
 	// y[3] = x[0] * x[1]
-	cad_binary_op(op_div, X+0, X+1, Y+3);
-	ok &= cad_value(Y+3) == cad_value(X+0) / cad_value(X+1);
+	cad_binary(op_div, X+0, X+1, Y+3);
+	ok &= cad_near_equal( cad_value(Y+3), cad_value(X+0)/cad_value(X+1) );
+
+	// y[4] = sin(x[0]) + asin(sin(x[0]))
+	cad sin_x0 = { 0 };       // initialize p_void as zero
+	cad_new_ad( &sin_x0, 0.);
+	cad_unary(op_sin, X+0, &sin_x0);
+	ok &= cad_near_equal(cad_value(&sin_x0), sin(cad_value(X+0)) );
+
+	cad asin_sin_x0 = { 0 };  // initialize p_void as zero
+	cad_new_ad( &asin_sin_x0, 0.);
+	cad_unary(op_asin, &sin_x0, &asin_sin_x0);
+	ok &= cad_near_equal( 
+		cad_value(&asin_sin_x0), 
+		asin( cad_value(&sin_x0) )
+	);
+
+	cad_binary(op_add, &sin_x0, &asin_sin_x0, Y+4);
+	ok &= cad_near_equal(
+		cad_value(Y+4),
+		cad_value(&sin_x0) + cad_value(&asin_sin_x0)
+	);
 	
 	// declare y as the dependent variable vector and stop recording
 	// and store function object in f
 	cad_fun f = cad_new_fun(n, m, X, Y);
 
 	// now use the function object
-	double x[2], jac[2*4];
-	x[0] = 2.;
-	x[1] = 3.;
+	double x[N], jac[N * M];
+	x[0] = 1.;
+	x[1] = .5;
 
 	// compute the Jacobian
 	cad_jacobian(f, n, m, x, jac);
@@ -329,42 +433,48 @@ bool ad_in_c(void)
 	// check the Jacobian values
 	size_t k = 0;
 	// partial y[0] w.r.t. x[0]
-	ok &= cad_near_equal(jac[k++], 1., 1e-10, 1e-10);
+	ok &= cad_near_equal(jac[k++], 1.);
 	// partial y[0] w.r.t. x[1]
-	ok &= cad_near_equal(jac[k++], 1., 1e-10, 1e-10);
+	ok &= cad_near_equal(jac[k++], 1.);
 	// partial y[1] w.r.t. x[0]
-	ok &= cad_near_equal(jac[k++], 1., 1e-10, 1e-10);
+	ok &= cad_near_equal(jac[k++], 1.);
 	// partial y[1] w.r.t. x[1]
-	ok &= cad_near_equal(jac[k++], -1., 1e-10, 1e-10);
+	ok &= cad_near_equal(jac[k++], -1.);
 	// partial y[2] w.r.t. x[0]
-	ok &= cad_near_equal(jac[k++], x[1], 1e-10, 1e-10);
+	ok &= cad_near_equal(jac[k++], x[1]);
 	// partial y[2] w.r.t. x[1]
-	ok &= cad_near_equal(jac[k++], x[0], 1e-10, 1e-10);
+	ok &= cad_near_equal(jac[k++], x[0]);
 	// partial y[3] w.r.t. x[0]
-	ok &= cad_near_equal(jac[k++], 1./x[1], 1e-10, 1e-10);
+	ok &= cad_near_equal(jac[k++], 1./x[1]);
 	// partial y[3] w.r.t. x[1]
-	ok &= cad_near_equal(jac[k++], -x[0]/(x[1]*x[1]), 1e-10, 1e-10);
+	ok &= cad_near_equal(jac[k++], -x[0]/(x[1]*x[1]));
+	// partial y[4] w.r.t x[0]
+	ok &= cad_near_equal(jac[k++],  cos(x[0]) + 1.);
+	// partial y[4] w.r.t x[1]
+	ok &= cad_near_equal(jac[k++],  0.);
 
 	// evaluate the function f at a different x
 	size_t order = 0;
-	double y[4];
-	x[0] = 3.;
-	x[1] = 2.;
+	double y[M];
+	x[0] = .5;
+	x[1] = 1.;
 	cad_forward(f, order, n, m, x, y); 
 
 	// check the function values
-	ok &= y[0] == x[0] + x[1];
-	ok &= y[1] == x[0] - x[1];
-	ok &= y[2] == x[0] * x[1];
-	ok &= y[3] == x[0] / x[1];
+	ok &= cad_near_equal(y[0] , x[0] + x[1] );
+	ok &= cad_near_equal(y[1] , x[0] - x[1] );
+	ok &= cad_near_equal(y[2] , x[0] * x[1] );
+	ok &= cad_near_equal(y[3] , x[0] / x[1] );
+	ok &= cad_near_equal(y[4] , sin(x[0]) + asin(sin(x[0])) );
 
 	// delete All C++ copies of the AD objects
-	cad_del_fun(f);
+	cad_del_fun( &f );
+	cad_del_ad( &sin_x0 );
+	cad_del_ad( &asin_sin_x0 );
 	for(j = 0; j < n; j++)
 		cad_del_ad(X + j); 
 	for(i = 0; i < m; i++)
 		cad_del_ad(Y + i);
-
 
 	ok     &= cad_allocated_empty();
 	return ok;
