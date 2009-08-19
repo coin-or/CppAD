@@ -116,17 +116,6 @@ void RevHesSweep(
 
 	const size_t   *arg = 0;
 
-	const Pack       *Xf = 0;
-	Pack             *Xh = 0;
-
-	const Pack       *Yf = 0;
-	Pack             *Yh = 0;
-
-	const Pack       *Zf = 0;
-	const Pack       *Zr = 0;
-	const Pack       *Zh = 0;
-
-
 	// length of the parameter vector (used by CppAD assert macros)
 	const size_t num_par = Rec->num_rec_par();
 
@@ -178,12 +167,11 @@ void RevHesSweep(
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
-		// sparsity for z corresponding to this op
-		Zf     = ForJac + i_var * npv;
-		Zr     = RevJac + i_var;
-		Zh     = RevHes + i_var * npv;
-
 # if CPPAD_REV_HES_SWEEP_TRACE
+		// sparsity for z corresponding to this op
+		const Pack *Zf  = ForJac + i_var * npv;
+		const Pack *Zh  = RevHes + i_var * npv;
+
 		printOp(
 			std::cout, 
 			Rec,
@@ -435,20 +423,10 @@ void RevHesSweep(
 			case PowvvOp:
                         // Pow operator is a special case where final result
                         // comes at the end of the three variables
-			Zr += 2;
-			Zh += 2 * npv;
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3)
-			CPPAD_ASSERT_UNKNOWN( arg[0] < i_var );
-			CPPAD_ASSERT_UNKNOWN( arg[1] < i_var );
-
-			Xf = ForJac + arg[0] * npv;
-			Xh = RevHes + arg[0] * npv;
-			Yf = ForJac + arg[1] * npv;
-			Yh = RevHes + arg[1] * npv;
-			for(j = 0; j < npv; j++)
-			{	Xh[j] |= Zh[j] | (*Zr & (Xf[j] | Yf[j])); 
-				Yh[j] |= Zh[j] | (*Zr & (Xf[j] | Yf[j])); 
-			}
+                        reverse_sparse_hessian_pow_op(
+				i_var+2, arg, RevJac, npv, ForJac, RevHes
+			);
 			break;
 			// -------------------------------------------------
 

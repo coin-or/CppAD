@@ -343,10 +343,14 @@ inline void reverse_sparse_hessian_pow_op(
 
 	size_t j = nc_sparsity;
 	while(j--)
-	{	x_hes[j] |= z_hes[j] | ( jac_reverse[i_z] & (x_for[j] | y_for[j]) );
-		y_hes[j] |= z_hes[j] | ( jac_reverse[i_z] & (x_for[j] | y_for[j]) );
+	{	x_hes[j] |= z_hes[j] | 
+			( jac_reverse[i_z] & (x_for[j] | y_for[j]) );
+		y_hes[j] |= z_hes[j] | 
+			( jac_reverse[i_z] & (x_for[j] | y_for[j]) );
 	}
 
+	// I cannot think of a case where this is necessary, but it including
+	// it makes it like the other cases.
 	jac_reverse[arg[0]] |= jac_reverse[i_z];
 	jac_reverse[arg[1]] |= jac_reverse[i_z];
 	return;
