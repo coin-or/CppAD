@@ -30,6 +30,7 @@ example using the $cref/addition operator/ad_binary/$$.
 The examples list in this section are of a more general nature.
 
 $childtable%
+	example/ad_fun.cpp%
 	example/ad_in_c.cpp%
 	example/hes_minor_det.cpp%
 	example/hes_lu_det.cpp%
@@ -79,6 +80,7 @@ $rref Abs.cpp$$
 $rref Acos.cpp$$
 $rref Add.cpp$$
 $rref AddEq.cpp$$
+$rref ad_fun.cpp$$
 $rref ad_in_c.cpp$$
 $rref Asin.cpp$$
 $rref Atan.cpp$$

@@ -47,7 +47,7 @@ CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
 am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	example.cpp abort_recording.cpp abs.cpp acos.cpp add.cpp \
-	add_eq.cpp ad_in_c.cpp asin.cpp atan.cpp atan_2.cpp \
+	add_eq.cpp ad_fun.cpp ad_in_c.cpp asin.cpp atan.cpp atan_2.cpp \
 	base_adolc.hpp bender_quad.cpp bool_fun.cpp vector_bool.cpp \
 	check_numeric_type.cpp check_simple_vector.cpp compare.cpp \
 	compare_change.cpp complex_poly.cpp cond_exp.cpp copy_ad.cpp \
@@ -78,18 +78,18 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 @CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	abort_recording.$(OBJEXT) abs.$(OBJEXT) acos.$(OBJEXT) \
-	add.$(OBJEXT) add_eq.$(OBJEXT) ad_in_c.$(OBJEXT) \
-	asin.$(OBJEXT) atan.$(OBJEXT) atan_2.$(OBJEXT) \
-	bender_quad.$(OBJEXT) bool_fun.$(OBJEXT) vector_bool.$(OBJEXT) \
-	check_numeric_type.$(OBJEXT) check_simple_vector.$(OBJEXT) \
-	compare.$(OBJEXT) compare_change.$(OBJEXT) \
-	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) copy_ad.$(OBJEXT) \
-	copy_base.$(OBJEXT) cos.$(OBJEXT) cosh.$(OBJEXT) \
-	cppad_vector.$(OBJEXT) default.$(OBJEXT) div.$(OBJEXT) \
-	div_eq.$(OBJEXT) eq.$(OBJEXT) equal_op_seq.$(OBJEXT) \
-	erf.$(OBJEXT) error_handler.$(OBJEXT) exp.$(OBJEXT) \
-	for_one.$(OBJEXT) for_two.$(OBJEXT) forward.$(OBJEXT) \
-	for_sparse_jac.$(OBJEXT) fun_check.$(OBJEXT) \
+	add.$(OBJEXT) add_eq.$(OBJEXT) ad_fun.$(OBJEXT) \
+	ad_in_c.$(OBJEXT) asin.$(OBJEXT) atan.$(OBJEXT) \
+	atan_2.$(OBJEXT) bender_quad.$(OBJEXT) bool_fun.$(OBJEXT) \
+	vector_bool.$(OBJEXT) check_numeric_type.$(OBJEXT) \
+	check_simple_vector.$(OBJEXT) compare.$(OBJEXT) \
+	compare_change.$(OBJEXT) complex_poly.$(OBJEXT) \
+	cond_exp.$(OBJEXT) copy_ad.$(OBJEXT) copy_base.$(OBJEXT) \
+	cos.$(OBJEXT) cosh.$(OBJEXT) cppad_vector.$(OBJEXT) \
+	default.$(OBJEXT) div.$(OBJEXT) div_eq.$(OBJEXT) eq.$(OBJEXT) \
+	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) error_handler.$(OBJEXT) \
+	exp.$(OBJEXT) for_one.$(OBJEXT) for_two.$(OBJEXT) \
+	forward.$(OBJEXT) for_sparse_jac.$(OBJEXT) fun_check.$(OBJEXT) \
 	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
 	hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
 	hes_times_dir.$(OBJEXT) independent.$(OBJEXT) \
@@ -302,6 +302,7 @@ example_SOURCES = \
 	acos.cpp \
 	add.cpp \
 	add_eq.cpp \
+	ad_fun.cpp \
 	ad_in_c.cpp \
 	asin.cpp \
 	atan.cpp \
@@ -460,6 +461,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abort_recording.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abs.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acos.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_fun.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_in_c.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add_eq.Po@am__quote@
