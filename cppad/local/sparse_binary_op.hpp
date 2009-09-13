@@ -1,8 +1,6 @@
 /* $Id$ */
 # ifndef CPPAD_SPARSE_BINARY_OP_INCLUDED
 # define CPPAD_SPARSE_BINARY_OP_INCLUDED
-CPPAD_BEGIN_NAMESPACE
-
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
@@ -13,7 +11,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-
+# include <cppad/local/connection.hpp>
+CPPAD_BEGIN_NAMESPACE
 
 /*!
 \file sparse_binary_op.hpp
@@ -52,50 +51,42 @@ i.e. the row index in sparsity corresponding to x.
 variable index corresponding to the right operand for this operator;
 i.e. the row index in sparsity corresponding to y.
 
-\param nc_sparsity
-number of packed values corresponding to each variable; i.e.,
-the number of columns in the sparsity pattern matrix.
-
 \param sparsity
-\b Input: \a sparsity [ \a arg[0] * \a nc_sparsity + j ]
-for j = 0 , ... , \a nc_sparsity - 1 
-is the sparsity bit pattern for x.
+\b Input: The from node with index \a arg[0] in \a sparsity
+contains the sparsity bit pattern for x.
 This identifies which of the independent variables the variable x
 depends on. 
 \n
 \n
-\b Input: \a sparsity [ \a arg[1] * \a nc_sparsity + j ]
-for j = 0 , ... , \a nc_sparsity - 1 
-is the sparsity bit pattern for y.
+\b Input: The from node with index \a arg[1] in \a sparsity
+contains the sparsity bit pattern for y.
 This identifies which of the independent variables the variable y
 depends on. 
 \n
 \n
-\b Output: \a sparsity [ \a i_z * \a nc_sparsity + j ] 
-for j = 0 , ... , \a nc_sparsity - 1 
-is the sparsity bit pattern for z.
+\b Output: The from node with index \a i_z in \a sparsity
+contains the sparsity bit pattern for z.
+This identifies which of the independent variables the variable z
+depends on. 
 
 \par Checked Assertions:
 \li \a arg[0] < \a i_z 
 \li \a arg[1] < \a i_z 
 */
+
+
 template <class Pack>
 inline void forward_sparse_jacobian_binary_op(
 	size_t            i_z           ,
 	const size_t*     arg           ,
-	size_t            nc_sparsity   ,
-	Pack*             sparsity      )
+	connection<Pack>& sparsity      )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
 	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
 
-	Pack* z  = sparsity + i_z * nc_sparsity;
-	Pack* x  = sparsity + arg[0] * nc_sparsity;
-	Pack* y  = sparsity + arg[1] * nc_sparsity;
-	size_t j = nc_sparsity;
-	while(j--)
-		z[j] = x[j] | y[j];
+	sparsity.binary_union(i_z, arg[0], arg[1]);
+
 	return;
 }	
 

@@ -328,6 +328,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/cond_exp.hpp \
 	cppad/local/comp_op.hpp \
 	cppad/local/cond_op.hpp \
+	cppad/local/connection.hpp \
 	cppad/local/convert.hpp \
 	cppad/local/cos_op.hpp \
 	cppad/local/cosh_op.hpp \

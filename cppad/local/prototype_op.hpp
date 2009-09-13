@@ -57,7 +57,7 @@ is the k-th order Taylor coefficient corresponding to z.
 \b Output: \a taylor [ \a i_z * \a nc_taylor + j ] 
 is the j-th order Taylor coefficient corresponding to z. 
 
-\par Checked Assertions where op is a unary operator with one result:
+\par Checked Assertions
 \li NumArg(op) == 1
 \li NumRes(op) == 1
 \li \a i_x < \a i_z 
@@ -100,7 +100,7 @@ is the zero order Taylor coefficient corresponding to x.
 \b Output: \a taylor [ \a i_z * \a nc_taylor + 0 ] 
 is the zero order Taylor coefficient corresponding to z. 
 
-\par Checked Assertions where op is the unary operator with one result:
+\par Checked Assertions 
 \li NumArg(op) == 1
 \li NumRes(op) == 1
 \li \a i_x < \a i_z 
@@ -180,7 +180,7 @@ for k = 0 , ... , \a d
 may be used as work space; i.e., may change in an unspecified manner.
 
 
-\par Checked Assumptions where op is a unary operator with one result:
+\par Checked Assumptions
 \li NumArg(op) == 1
 \li NumRes(op) == 1
 \li \a i_x < \a i_z 
@@ -246,7 +246,7 @@ is the j-th order Taylor coefficient corresponding to z.
 is the j-th order Taylor coefficient corresponding to 
 the autillary result y.
 
-\par Checked Assertions where op is a unary operator with two results:
+\par Checked Assertions 
 \li NumArg(op) == 1
 \li NumRes(op) == 2
 \li \a i_x < \a i_z 
@@ -294,7 +294,7 @@ is the zero order Taylor coefficient corresponding to z.
 is the j-th order Taylor coefficient corresponding to 
 the autillary result y. 
 
-\par Checked Assertions where op is the unary operator with two result:
+\par Checked Assertions
 \li NumArg(op) == 1
 \li NumRes(op) == 2
 \li \a i_x < \a i_z 
@@ -390,7 +390,7 @@ for k = 0 , ... , \a d
 may be used as work space; i.e., may change in an unspecified manner.
 
 
-\par Checked Assumptions where op is a unary operator with one result:
+\par Checked Assumptions
 \li NumArg(op) == 1
 \li NumRes(op) == 2
 \li \a i_x < \a i_z 
@@ -462,7 +462,7 @@ is the k-th order Taylor coefficient corresponding to z.
 \b Output: \a taylor [ \a i_z * \a nc_taylor + \a d ] 
 is the \a d-th order Taylor coefficient corresponding to z. 
 
-\par Checked Assertions where op is a binary operator:
+\par Checked Assertions
 \li NumArg(op) == 2
 \li NumRes(op) == 1
 \li If x is a variable, \a arg[0] < \a i_z 
@@ -524,7 +524,7 @@ is the zero order Taylor coefficient corresponding to y.
 \b Output: \a taylor [ \a i_z * \a nc_taylor + 0 ] 
 is the zero order Taylor coefficient corresponding to z. 
 
-\par Checked Assertions where op is a binary operator:
+\par Checked Assertions
 \li NumArg(op) == 2
 \li NumRes(op) == 1
 \li If x is a variable, \a arg[0] < \a i_z 
@@ -627,7 +627,7 @@ for k = 0 , ... , \a d
 is the partial derivative of H( y , x , w , u , ... ) with respect to 
 the k-th order Taylor coefficient for y.
 
-\par Checked Assumptions where op is a binary operator with one result:
+\par Checked Assumptions
 \li NumArg(op) == 2
 \li NumRes(op) == 1
 \li \a If x is a variable, arg[0] < \a i_z 
@@ -708,7 +708,7 @@ is the k-th order Taylor coefficient corresponding to z_j.
 \b Output: \a taylor [ \a (i_z + j) * \a nc_taylor + \a d ] 
 is the \a d-th order Taylor coefficient corresponding to z_j.
 
-\par Checked Assertions where op is a binary operator:
+\par Checked Assertions
 \li NumArg(op) == 2
 \li NumRes(op) == 3
 \li If x is a variable, \a arg[0] < \a i_z 
@@ -776,7 +776,7 @@ is the k-th order Taylor coefficient corresponding to y.
 \b Output: \a taylor [ \a (i_z + j) * \a nc_taylor + 0 ] 
 is the zero order Taylor coefficient corresponding to z_j.
 
-\par Checked Assertions where op is a binary operator:
+\par Checked Assertions
 \li NumArg(op) == 2
 \li NumRes(op) == 3
 \li If x is a variable, \a arg[0] < \a i_z 
@@ -886,7 +886,7 @@ for k = 0 , ... , \a d
 is the partial derivative of H( y , x , w , u , ... ) with respect to 
 the k-th order Taylor coefficient for y.
 
-\par Checked Assumptions where op is a binary operator with one result:
+\par Checked Assumptions
 \li NumArg(op) == 2
 \li NumRes(op) == 3
 \li \a If x is a variable, arg[0] < \a i_z 

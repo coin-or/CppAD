@@ -1,8 +1,6 @@
 /* $Id$ */
 # ifndef CPPAD_FOR_JAC_SWEEP_INCLUDED
 # define CPPAD_FOR_JAC_SWEEP_INCLUDED
-CPPAD_BEGIN_NAMESPACE
-
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
@@ -13,6 +11,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/local/connection.hpp>
+CPPAD_BEGIN_NAMESPACE
 
 /*!
 \file for_jac_sweep.hpp
@@ -97,6 +97,9 @@ void ForJacSweep(
 
 	size_t            i, j, k;
 
+	// a connection object that uses same memrory as ForJac
+	connection<Pack> sparsity(numvar, npv, ForJac);
+
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
 
@@ -162,7 +165,7 @@ void ForJacSweep(
 			case AddvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_binary_op(
-				i_var, arg, npv, ForJac
+				i_var, arg, sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -257,7 +260,7 @@ void ForJacSweep(
 			case DivvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_binary_op(
-				i_var, arg, npv, ForJac
+				i_var, arg, sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -333,7 +336,7 @@ void ForJacSweep(
 			case MulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_binary_op(
-				i_var, arg, npv, ForJac
+				i_var, arg, sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -392,7 +395,7 @@ void ForJacSweep(
 			// comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
 			forward_sparse_jacobian_binary_op(
-				i_var + 2, arg, npv, ForJac
+				i_var + 2, arg, sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -482,7 +485,7 @@ void ForJacSweep(
 			case SubvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_binary_op(
-				i_var, arg, npv, ForJac
+				i_var, arg, sparsity
 			);
 			break;
 			// -------------------------------------------------
