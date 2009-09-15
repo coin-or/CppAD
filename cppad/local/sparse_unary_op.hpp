@@ -40,26 +40,25 @@ there is more that one bit per Pack value.
 
 \param i_z
 variable index corresponding to the result for this operation; 
-i.e. the row index in sparsity corresponding to z. 
+i.e. the from node index in sparsity corresponding to z. 
 
 \param i_x
 variable index corresponding to the argument for this operator;
-i.e. the row index in sparsity corresponding to x.
+i.e. the from node index in sparsity corresponding to x.
 
-\param nc_sparsity
-number of packed values corresponding to each variable; i.e.,
-the number of columns in the sparsity pattern matrix.
 
 \param sparsity
-\b Input: \a sparsity [ \a i_x * \a nc_sparsity + j ]
-for j = 0 , ... , \a nc_sparsity - 1 
-is the sparsity bit pattern for x.
+\b Input: The from node with index \a arg[0] in \a sparsity
+contains the sparsity bit pattern for x.
 This identifies which of the independent variables the variable x
 depends on. 
 \n
-\b Output: \a sparsity [ \a i_z * \a nc_sparsity + j ] 
-for j = 0 , ... , \a nc_sparsity - 1 
-is the sparsity bit pattern for z.
+\n
+\b Output: The from node with index \a i_z in \a sparsity
+contains the sparsity bit pattern for z.
+This identifies which of the independent variables the variable z
+depends on. 
+\n
 
 \par Checked Assertions:
 \li \a i_x < \a i_z 
@@ -67,20 +66,14 @@ is the sparsity bit pattern for z.
 
 template <class Pack>
 inline void forward_sparse_jacobian_unary_op(
-	size_t     i_z           ,
-	size_t     i_x           ,
-	size_t     nc_sparsity   ,
-	Pack*      sparsity      )
+	size_t            i_z           ,
+	size_t            i_x           ,
+	connection<Pack>& sparsity      )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 
-	Pack* z  = sparsity + i_z * nc_sparsity;
-	Pack* x  = sparsity + i_x * nc_sparsity;
-	size_t j = nc_sparsity;
-	while(j--)
-		z[j] = x[j];
-	return;
+	sparsity.assignment(i_z, i_x);
 }	
 
 /*!

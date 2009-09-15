@@ -40,7 +40,7 @@ there is more that one bit per Pack value.
 
 \param i_z
 variable index corresponding to the result for this operation; 
-i.e. the row index in sparsity corresponding to z. 
+i.e. the from node index in sparsity corresponding to z. 
 
 \param arg
 \a arg[0]
