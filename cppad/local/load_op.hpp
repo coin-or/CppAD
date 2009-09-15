@@ -295,19 +295,71 @@ inline void reverse_load_op(
 /*!
 Forward mode sparsity operations for LdpOp and LdvOp
 
-\copydetails sparse_load_op
+The C++ source code corresponding to this operation is
+\verbatim
+	z = y[x]
+\endverbatim
+where y is a VecAD<Base> vector and x is an AD<Base> index. 
+
+\tparam Pack
+is the type used to pack the sparsity pattern bit values; i.e.,
+there is more that one bit per Pack value.
+
+\param op
+is the code corresponding to this operator; i.e., LdpOp or LdvOp
+(only used for error checking).
+
+\param i_z
+is the AD variable index corresponding to the variable z.
+It is also the from node index for z in the \a var_sparsity connection.
+
+\param arg
+\n
+\a arg[0]
+is the offset corresponding to this VecAD vector in the combined array.
+
+\param num_combined
+is the total number of elements in the VecAD address array.
+
+\param combined
+\a combined[ \a arg[0] - 1 ]
+Is the from node index for the vector y in the \a vecad_sparsity connection.
+We use the notation i_y below which is defined by
+\verbatim
+	i_y = combined[ \a arg[0] - 1 ]
+\endverbatim
+
+\param num_vec
+is the number of VecAD vectors corresponding to the tape;
+this is also the number of rows in the VecAD sparsity pattern matrix.
+
+\param var_sparsity
+The from node with index \a i_z in \a var_sparsity
+contains the sparsity bit pattern for z.
+This is an output for this operation.
+
+\param vecad_sparsity
+The from node with index \a i_y in \a vecad_sparsity
+contains the sparsity bit pattern for the vector y.
+
+\par Checked Assertions 
+\li NumArg(op) == 3
+\li NumRes(op) == 1
+\li 0 <  \a arg[0]
+\li \a arg[0] < \a num_combined
+\li i_y < \a num_vec
+
 */
 template <class Pack>
 inline void forward_sparse_load_op(
-	OpCode         op           ,
-	size_t         i_z          ,
-	const size_t*  arg          , 
-	size_t         num_combined ,
-	const size_t*  combined     ,
-	size_t         num_vec      ,
-	size_t         nc_sparsity  ,
-	Pack*          var_sparsity ,
-	Pack*          vec_sparsity )
+	OpCode             op             ,
+	size_t             i_z            ,
+	const size_t*      arg            , 
+	size_t             num_combined   ,
+	const size_t*      combined       ,
+	size_t             num_vec        ,
+	connection<Pack>&  var_sparsity   ,
+	connection<Pack>&  vecad_sparsity )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
@@ -316,12 +368,7 @@ inline void forward_sparse_load_op(
 	size_t i_y = combined[ arg[0] - 1 ];
 	CPPAD_ASSERT_UNKNOWN( i_y < num_vec );
 
-	Pack* z = var_sparsity + nc_sparsity * i_z;
-	Pack* y = vec_sparsity + nc_sparsity * i_y;
-
-	size_t j = nc_sparsity;
-	while(j--)
-		z[j] = y[j];
+	var_sparsity.assignment(i_z, i_y, vecad_sparsity);
 
 	return;
 }

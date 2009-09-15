@@ -97,22 +97,32 @@ public:
 	// -----------------------------------------------------------------
 	/*! Set connections for one node equal those for another.
 
-	\param target
-	is the index of the from node for which we are setting the connections.
+	\param this_target
+	is the index of the from node in this connection object
+	for which we are setting the connections.
 
-	\param value
-	is the index of the from node containing the values that we are 
-	assigning to the target node.
+	\param other_value
+	is the index of the from node in the other connection object
+	containing the values that we are assigning to the target node.
+
+	\param other
+	is the other connection object (which may be the same as this
+	connection object).
 
 	\par Checked Assertions
-	\li target < n_from_
-	\li value  < n_from_
+	\li this_target  < n_from_
+	\li other_value  < other.n_from_
+	\li n_pack_     == other.n_pack_ 
  	*/
-	void assignment(size_t target, size_t value)
-	{	CPPAD_ASSERT_UNKNOWN( target < n_from_ );
-		CPPAD_ASSERT_UNKNOWN( value  < n_from_ );
-		Pack *t  = data_ + target * n_pack_;
-		Pack *v  = data_ + value  * n_pack_;
+	void assignment(
+		size_t this_target            , 
+		size_t other_value            , 
+		const connection<Pack>& other )
+	{	CPPAD_ASSERT_UNKNOWN( this_target  <   n_from_ );
+		CPPAD_ASSERT_UNKNOWN( other_value  <   other.n_from_ );
+		CPPAD_ASSERT_UNKNOWN( n_pack_      ==  other.n_pack_ );
+		Pack *t  = data_       + this_target * n_pack_;
+		Pack *v  = other.data_ + other_value * n_pack_;
 
 		size_t j = n_pack_;
 		while(j--)

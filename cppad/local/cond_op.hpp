@@ -374,14 +374,14 @@ inline void forward_sparse_jacobian_cond_op(
 		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
-			sparsity.assignment(i_z, arg[4]);
+			sparsity.assignment(i_z, arg[4], sparsity);
 		}
 	}	
 	else
 	{	CPPAD_ASSERT_UNKNOWN( arg[4] < num_par );
 		if( arg[1] & 8 )
 		{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
-			sparsity.assignment(i_z, arg[5]);
+			sparsity.assignment(i_z, arg[5], sparsity);
 		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );

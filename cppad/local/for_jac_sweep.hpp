@@ -98,7 +98,7 @@ void ForJacSweep(
 	size_t            i, j, k;
 
 	// a connection object that uses same memrory as ForJac
-	connection<Pack> sparsity(numvar, npv, ForJac);
+	connection<Pack> var_sparsity(numvar, npv, ForJac);
 
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
@@ -137,6 +137,7 @@ void ForJacSweep(
 		}
 		CPPAD_ASSERT_UNKNOWN( j == Rec->num_rec_vecad_ind() );
 	}
+	connection<Pack> vecad_sparsity(numvar, npv, vecad_pattern);
 
 	// skip the NonOp at the beginning of the recording
         Rec->start_forward(op, arg, i_op, i_var);
@@ -157,7 +158,7 @@ void ForJacSweep(
 			case AbsOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -165,7 +166,7 @@ void ForJacSweep(
 			case AddvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_binary_op(
-				i_var, arg, sparsity
+				i_var, arg, var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -173,7 +174,7 @@ void ForJacSweep(
 			case AddpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[1], sparsity
+				i_var, arg[1], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -181,7 +182,7 @@ void ForJacSweep(
 			case AddvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -191,7 +192,7 @@ void ForJacSweep(
 			// but ivar + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -201,7 +202,7 @@ void ForJacSweep(
 			// but ivar + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -211,14 +212,14 @@ void ForJacSweep(
 			// but ivar + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
 
 			case CExpOp:
 			forward_sparse_jacobian_cond_op(
-				i_var, arg, num_par, sparsity
+				i_var, arg, num_par, var_sparsity
 			);
 			break;
 			// ---------------------------------------------------
@@ -234,7 +235,7 @@ void ForJacSweep(
 			// but ivar + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// ---------------------------------------------------
@@ -244,7 +245,7 @@ void ForJacSweep(
 			// but ivar + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -260,7 +261,7 @@ void ForJacSweep(
 			case DivvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_binary_op(
-				i_var, arg, sparsity
+				i_var, arg, var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -268,7 +269,7 @@ void ForJacSweep(
 			case DivpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[1], sparsity
+				i_var, arg[1], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -276,7 +277,7 @@ void ForJacSweep(
 			case DivvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -284,7 +285,7 @@ void ForJacSweep(
 			case ExpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -303,9 +304,8 @@ void ForJacSweep(
 				num_vecad_ind,
 				vecad,
 				num_vecad_vec,
-				npv,
-				ForJac,
-				vecad_pattern
+				var_sparsity,
+				vecad_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -318,9 +318,8 @@ void ForJacSweep(
 				num_vecad_ind,
 				vecad,
 				num_vecad_vec,
-				npv,
-				ForJac,
-				vecad_pattern
+				var_sparsity,
+				vecad_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -328,7 +327,7 @@ void ForJacSweep(
 			case LogOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -336,7 +335,7 @@ void ForJacSweep(
 			case MulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_binary_op(
-				i_var, arg, sparsity
+				i_var, arg, var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -344,7 +343,7 @@ void ForJacSweep(
 			case MulpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[1], sparsity
+				i_var, arg[1], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -352,7 +351,7 @@ void ForJacSweep(
 			case MulvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -375,7 +374,7 @@ void ForJacSweep(
 			// comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
 			forward_sparse_jacobian_unary_op(
-				i_var + 2, arg[0], sparsity
+				i_var + 2, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -385,7 +384,7 @@ void ForJacSweep(
 			// comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
 			forward_sparse_jacobian_unary_op(
-				i_var + 2, arg[1], sparsity
+				i_var + 2, arg[1], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -395,7 +394,7 @@ void ForJacSweep(
 			// comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
 			forward_sparse_jacobian_binary_op(
-				i_var + 2, arg, sparsity
+				i_var + 2, arg, var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -417,7 +416,7 @@ void ForJacSweep(
 			// but ivar + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -427,7 +426,7 @@ void ForJacSweep(
 			// but ivar + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -435,7 +434,7 @@ void ForJacSweep(
 			case SqrtOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -485,7 +484,7 @@ void ForJacSweep(
 			case SubvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_binary_op(
-				i_var, arg, sparsity
+				i_var, arg, var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -493,7 +492,7 @@ void ForJacSweep(
 			case SubpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[1], sparsity
+				i_var, arg[1], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -501,7 +500,7 @@ void ForJacSweep(
 			case SubvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------

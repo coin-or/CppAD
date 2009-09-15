@@ -1256,7 +1256,7 @@ i.e. the index corresponding to y.
 is the total number of elements in the VecAD address array.
 
 \param combined
-\a combinedarg[0] - 1 ]
+\a combined [ arg[0] - 1 ]
 is the row number of this VecAD vector in the VecAD sparsity pattern matrix.
 We use the notation i_v below which is defined by
 \verbatim

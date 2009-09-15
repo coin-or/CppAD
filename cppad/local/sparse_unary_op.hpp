@@ -72,7 +72,7 @@ inline void forward_sparse_jacobian_unary_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 
-	sparsity.assignment(i_z, i_x);
+	sparsity.assignment(i_z, i_x, sparsity);
 }	
 
 /*!
