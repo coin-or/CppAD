@@ -1635,10 +1635,6 @@ is the index corresponding to y_j.
 \param num_par
 is the total number of values in the vector \a parameter.
 
-\param nc_sparsity
-number of packed values corresponding to each sparsity pattern; i.e.,
-the number of columns in the sparsity pattern matrices.
-
 \par Checked Assertions
 \li NumArg(CExpOp) == 6
 \li NumRes(CExpOp) == 1
@@ -1651,8 +1647,7 @@ template <class Pack>
 inline void sparse_conditional_exp_op(
 	size_t         i_z           ,
 	const size_t*  arg           , 
-	size_t         num_par       ,
-	size_t         nc_sparsity   )
+	size_t         num_par       )
 {	// This routine is only for documentation, it should never be used
 	CPPAD_ASSERT_UNKNOWN( false );
 }

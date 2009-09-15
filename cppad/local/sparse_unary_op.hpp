@@ -1,8 +1,6 @@
 /* $Id$ */
 # ifndef CPPAD_SPARSE_UNARY_OP_INCLUDED
 # define CPPAD_SPARSE_UNARY_OP_INCLUDED
-CPPAD_BEGIN_NAMESPACE
-
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
@@ -13,7 +11,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-
+# include <cppad/local/connection.hpp>
+CPPAD_BEGIN_NAMESPACE
 
 /*!
 \file sparse_unary_op.hpp

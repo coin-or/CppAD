@@ -45,11 +45,11 @@ i.e. the from node index in sparsity corresponding to z.
 \param arg
 \a arg[0]
 variable index corresponding to the left operand for this operator;
-i.e. the row index in sparsity corresponding to x.
+i.e. the from node index in sparsity corresponding to x.
 \n
 \n arg[1]
 variable index corresponding to the right operand for this operator;
-i.e. the row index in sparsity corresponding to y.
+i.e. the from node index in sparsity corresponding to y.
 
 \param sparsity
 \b Input: The from node with index \a arg[0] in \a sparsity

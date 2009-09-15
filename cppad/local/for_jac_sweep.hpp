@@ -218,7 +218,7 @@ void ForJacSweep(
 
 			case CExpOp:
 			forward_sparse_jacobian_cond_op(
-				i_var, arg, num_par, npv, ForJac
+				i_var, arg, num_par, sparsity
 			);
 			break;
 			// ---------------------------------------------------

@@ -76,6 +76,25 @@ public:
 	{ }
 
 	// -----------------------------------------------------------------
+	/*! Set connections for one node equal to the empty set.
+
+	\param target
+	is the index of the from node for which we are setting the connections.
+
+	\par Checked Assertions
+	\li target < n_from_
+ 	*/
+	void empty(size_t target)
+	{	// value with all its bits set to false
+		static Pack zero(0);
+		CPPAD_ASSERT_UNKNOWN( target < n_from_ );
+		Pack *t  = data_ + target * n_pack_;
+
+		size_t j = n_pack_;
+		while(j--)
+			*t++ = zero;
+	}
+	// -----------------------------------------------------------------
 	/*! Set connections for one node equal those for another.
 
 	\param target

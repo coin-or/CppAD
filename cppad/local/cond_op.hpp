@@ -1,8 +1,6 @@
 /* $Id$ */
 # ifndef CPPAD_COND_OP_INCLUDED
 # define CPPAD_COND_OP_INCLUDED
-CPPAD_BEGIN_NAMESPACE
-
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
@@ -13,7 +11,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-
+# include <cppad/local/connection.hpp>
+CPPAD_BEGIN_NAMESPACE
 
 /*!
 \file cond_op.hpp
@@ -324,36 +323,30 @@ Compute forward Jacobian sparsity patterns for op = CExpOp.
 
 \param sparsity
 \b Input:
-if y_2 is a variable,
-for k = 0 , ... , nc_sparsity-1,
-\a sparsity [ \a arg[4] * nc_sparsity + k ]
-is the sparsity bit pattern corresponding to y_2.
+if y_2 is a variable, the from node with index \a arg[4] contains
+the sparsity bit pattern corresponding to y_2.
+This identifies which of the independent variables the variable y_2
+depends on.
 \n
 \b Input:
-if y_3 is a variable,
-for k = 0 , ... , nc_sparsity-1,
-\a sparsity [ \a arg[5] * nc_sparsity + k ]
-is the sparsity bit pattern corresponding to y_3.
+if y_3 is a variable, the from node with index \a arg[5] contains
+the sparsity bit pattern corresponding to y_3.
+This identifies which of the independent variables the variable y_3
+depends on.
 \n
 \b Output: 
-for k = 0 , ... , nc_sparsity-1,
-\a sparsity [ \a i_z * \a nc_sparsity + k ] 
-is the sparsity bit pattern corresponding to z.
+The from node with index \a i_z containts
+the sparsity bit pattern corresponding to z.
+This identifies which of the independent variables the variable z
+depends on. 
 */
 template <class Pack>
 inline void forward_sparse_jacobian_cond_op(
-	size_t         i_z           ,
-	const size_t*  arg           , 
-	size_t         num_par       ,
-	size_t         nc_sparsity   ,
-	Pack*          sparsity      )
-{	// value with all it's bits false
-	static Pack zero(0);
-	
-	Pack* y_2 = CPPAD_NULL;
-	Pack* y_3 = CPPAD_NULL;	
-	Pack* z   = sparsity + i_z * nc_sparsity;
-
+	size_t             i_z           ,
+	const size_t*      arg           , 
+	size_t             num_par       ,
+	connection<Pack>&  sparsity      )
+{
 	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
@@ -373,34 +366,26 @@ inline void forward_sparse_jacobian_cond_op(
 	{	CPPAD_ASSERT_UNKNOWN( arg[3] < num_par );
 	}
 # endif
-	size_t k = nc_sparsity;
 	if( arg[1] & 4 )
 	{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
-		y_2 = sparsity + arg[4] * nc_sparsity;
 		if( arg[1] & 8 )
 		{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
-			y_3 = sparsity + arg[5] * nc_sparsity;
-			while(k--)
-				z[k] = y_2[k] | y_3[k];
+			sparsity.binary_union(i_z, arg[4], arg[5]);
 		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
-			while(k--)
-				z[k] = y_2[k];
+			sparsity.assignment(i_z, arg[4]);
 		}
 	}	
 	else
 	{	CPPAD_ASSERT_UNKNOWN( arg[4] < num_par );
 		if( arg[1] & 8 )
 		{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
-			y_3 = sparsity + arg[5] * nc_sparsity;
-			while(k--)
-				z[k] = y_3[k];
+			sparsity.assignment(i_z, arg[5]);
 		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
-			while(k--)
-				z[k] = zero;
+			sparsity.empty(i_z);
 		}
 	}
 	return;
@@ -418,6 +403,10 @@ and it uses them to compute the sparsity patterns for
 where y represents the combination of y_0, y_1, y_2, and y_3.
 
 \copydetails sparse_conditional_exp_op
+
+\param nc_sparsity
+number of packed values corresponding to each sparsity pattern; i.e.,
+the number of columns in the sparsity pattern matrices.
 
 \param sparsity
 If y_2 is a variable,
@@ -506,6 +495,10 @@ and it uses them to compute the sparsity patterns for
 where y represents the combination of y_0, y_1, y_2, and y_3.
 
 \copydetails sparse_conditional_exp_op
+
+\param nc_sparsity
+number of packed values corresponding to each sparsity pattern; i.e.,
+the number of columns in the sparsity pattern matrices.
 
 \param jac_reverse
 \a jac_reverse[i_z] 
