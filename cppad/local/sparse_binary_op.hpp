@@ -85,7 +85,7 @@ inline void forward_sparse_jacobian_binary_op(
 	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
 	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
 
-	sparsity.binary_union(i_z, arg[0], arg[1]);
+	sparsity.binary_union(i_z, arg[0], arg[1], sparsity);
 
 	return;
 }	

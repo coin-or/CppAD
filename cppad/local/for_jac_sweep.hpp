@@ -453,9 +453,8 @@ void ForJacSweep(
 				vecad,
 				num_vecad_vec,
 				numvar,
-				npv,
-				ForJac,
-				vecad_pattern
+				var_sparsity,
+				vecad_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -474,9 +473,8 @@ void ForJacSweep(
 				vecad,
 				num_vecad_vec,
 				numvar,
-				npv,
-				ForJac,
-				vecad_pattern
+				var_sparsity,
+				vecad_sparsity
 			);
 			break;
 			// -------------------------------------------------

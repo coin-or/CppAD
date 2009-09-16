@@ -370,7 +370,7 @@ inline void forward_sparse_jacobian_cond_op(
 	{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
 		if( arg[1] & 8 )
 		{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
-			sparsity.binary_union(i_z, arg[4], arg[5]);
+			sparsity.binary_union(i_z, arg[4], arg[5], sparsity);
 		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
