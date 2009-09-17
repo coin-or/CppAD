@@ -215,12 +215,12 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	}
 
 	// evaluate the sparsity patterns
+	connection<Pack> var_sparsity(total_num_var_, npv, for_jac_);
 	ForJacSweep(
 		n,
-		npv,
 		total_num_var_,
 		&play_,
-		for_jac_
+		var_sparsity
 	);
 
 	// return values corresponding to dependent variables

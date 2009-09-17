@@ -35,7 +35,7 @@ class connection {
 private:
 	/// Number of nodes that we are representing connections from
 	const size_t n_from_;
-	/// Number of packed values required to represent the to connections
+	/// Number of packed values used to represent connections for one node
 	const size_t n_pack_;
 	/// Pointer to the first packed value for all the connections.
 	Pack*        data_;
@@ -173,6 +173,14 @@ public:
 		while(j--)
 			*t++ = (*l++ | *r++);
 	}
+	// -----------------------------------------------------------------
+	/*! Fetch n_pack_ for this connection object  
+ 	
+	\return
+ 	Number of packed values use to represent connections for one node.
+	*/
+	size_t n_pack(void) const
+	{	return n_pack_; }
 };
 
 CPPAD_END_NAMESPACE

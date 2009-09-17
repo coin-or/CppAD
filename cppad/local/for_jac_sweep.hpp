@@ -43,14 +43,10 @@ there is more that one bit per Pack value.
 \param n
 is the number of independent variables on the tape.
 
-\param npv
-Is the number of elements of type \a Pack
-(per variable) in the sparsity pattern \a ForJac.
-
 \param numvar
 is the total number of variables on the tape; i.e.,
-\a Rec->num_rec_var().
-This is also the number of rows in the entire sparsity pattern \a ForJac.
+\a play->num_rec_var().
+This is also the number of from nodes in \a var_sparsity.
 
 \param Rec
 The information stored in \a Rec
@@ -65,26 +61,24 @@ It is not declared const because while playing back the tape
 the object \a Rec holds information about the currentl location
 with in the tape and this changes during playback.
 
-\param ForJac
+\param var_sparsity
 \b Input: For j = 1 , ... , \a n, 
 the sparsity pattern for the independent variable with index (j-1)
-is given by \a ForJac[ j * \a npv + k ] for k = 0 , ... , \a npv - 1.
+corresponds to the from node with index j in \a var_sparsity.
 \n
 \n
 \b Output: For i = \a n + 1 , ... , \a numvar - 1,
 the sparsity pattern for the variable with index i on the tape
-is given by \a ForJac[ i * \a npv + k ] for k = 0 , ... , \a npv - 1.
+corresponds to the from node with index i in \a var_sparsity.
 */
 
 
 template <class Base, class Pack>
 void ForJacSweep(
-	size_t                n,
-	size_t                npv,
-	size_t                numvar,
-	player<Base>         *Rec,
-	Pack                 *ForJac
-)
+	size_t                n            ,
+	size_t                numvar       ,
+	player<Base>*         Rec          ,
+	connection<Pack>&     var_sparsity )
 {
 	OpCode           op;
 	size_t         i_op;
@@ -93,12 +87,7 @@ void ForJacSweep(
 	const size_t   *arg = 0;
 	const size_t *arg_0 = 0;
 
-	Pack             *Z = 0;
-
 	size_t            i, j, k;
-
-	// a connection object that uses same memrory as ForJac
-	connection<Pack> var_sparsity(numvar, npv, ForJac);
 
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
@@ -112,6 +101,7 @@ void ForJacSweep(
 	// vecad_pattern contains a sparsity pattern for each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
 	// VecAD object) to the vecad_pattern index for the VecAD object.
+	size_t npv             = var_sparsity.n_pack();
 	size_t num_vecad_ind   = Rec->num_rec_vecad_ind();
 	size_t num_vecad_vec   = Rec->num_rec_vecad_vec();
 	Pack*  vecad_pattern   = CPPAD_NULL;
@@ -148,9 +138,6 @@ void ForJacSweep(
 		Rec->next_forward(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
-
-		// value of z for this op
-		Z      = ForJac + i_var * npv;
 
 		// rest of information depends on the case
 		switch( op )
@@ -252,9 +239,7 @@ void ForJacSweep(
 
 			case DisOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-
-			for(j = 0; j < npv; j++)
-				Z[j] = 0;
+			var_sparsity.empty(i_var);
 			break;
 			// -------------------------------------------------
 
@@ -292,7 +277,7 @@ void ForJacSweep(
 
 			case InvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			// Z is already defined
+			// sparsity pattern is already defined
 			break;
 			// -------------------------------------------------
 
@@ -358,14 +343,12 @@ void ForJacSweep(
 
 			case NonOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			for(j = 0; j < npv; j++)
-				Z[j] = 0;
+			var_sparsity.empty(i_var);
 			break;
 
 			case ParOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-			for(j = 0; j < npv; j++)
-				Z[j] = 0;
+			var_sparsity.empty(i_var);
 			break;
 			// -------------------------------------------------
 
@@ -401,8 +384,7 @@ void ForJacSweep(
 
 			case PripOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
-			for(j = 0; j < npv; j++)
-				Z[j] = 0;
+			var_sparsity.empty(i_var);
 			break;
 			// -------------------------------------------------
 
@@ -507,6 +489,11 @@ void ForJacSweep(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FOR_JAC_SWEEP_TRACE
+		// value of z for this op
+		// Z      = ForJac + i_var * npv;
+		// Z should correspond to the sparsity pattern for node
+		// with index i_var, but this is on its way to being converted
+		// to a standard set.
 		printOp(
 			std::cout,
 			Rec,
