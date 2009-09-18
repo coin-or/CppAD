@@ -385,7 +385,7 @@ inline void forward_sparse_jacobian_cond_op(
 		}
 		else
 		{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
-			sparsity.empty(i_z);
+			sparsity.clear(i_z);
 		}
 	}
 	return;

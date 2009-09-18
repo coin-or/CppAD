@@ -48,17 +48,17 @@ is the total number of variables on the tape; i.e.,
 \a play->num_rec_var().
 This is also the number of from nodes in \a var_sparsity.
 
-\param Rec
-The information stored in \a Rec
+\param play
+The information stored in \a play
 is a recording of the operations corresponding to a function
 \f[
 	F : {\bf R}^n \rightarrow {\bf R}^m
 \f]
 where \f$ n \f$ is the number of independent variables
 and \f$ m \f$ is the number of dependent variables.
-The object \a Rec is effectly constant.
+The object \a play is effectly constant.
 It is not declared const because while playing back the tape
-the object \a Rec holds information about the currentl location
+the object \a play holds information about the currentl location
 with in the tape and this changes during playback.
 
 \param var_sparsity
@@ -77,7 +77,7 @@ template <class Base, class Pack>
 void ForJacSweep(
 	size_t                n            ,
 	size_t                numvar       ,
-	player<Base>*         Rec          ,
+	player<Base>*         play         ,
 	connection<Pack>&     var_sparsity )
 {
 	OpCode           op;
@@ -90,20 +90,20 @@ void ForJacSweep(
 	size_t            i, j, k;
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
+	CPPAD_ASSERT_UNKNOWN( play->num_rec_var() == numvar );
 
 	// set the number of operators
-	const size_t numop_m1 = Rec->num_rec_op() - 1;
+	const size_t numop_m1 = play->num_rec_op() - 1;
 
         // length of the parameter vector (used by CppAD assert macros)
-        const size_t num_par = Rec->num_rec_par();
+        const size_t num_par = play->num_rec_par();
 
 	// vecad_pattern contains a sparsity pattern for each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
 	// VecAD object) to the vecad_pattern index for the VecAD object.
 	size_t npv             = var_sparsity.n_pack();
-	size_t num_vecad_ind   = Rec->num_rec_vecad_ind();
-	size_t num_vecad_vec   = Rec->num_rec_vecad_vec();
+	size_t num_vecad_ind   = play->num_rec_vecad_ind();
+	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	Pack*  vecad_pattern   = CPPAD_NULL;
 	size_t* vecad          = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
@@ -117,7 +117,7 @@ void ForJacSweep(
 		{	for(k = 0; k < npv; k++)
 				vecad_pattern[ i * npv + k ] = Pack(0);
 			// length of this VecAD
-			length   = Rec->GetVecInd(j);
+			length   = play->GetVecInd(j);
 			// set to proper index for this VecAD
 			vecad[j] = i; 
 			for(k = 1; k <= length; k++)
@@ -125,17 +125,17 @@ void ForJacSweep(
 			// start of next VecAD
 			j       += length + 1;
 		}
-		CPPAD_ASSERT_UNKNOWN( j == Rec->num_rec_vecad_ind() );
+		CPPAD_ASSERT_UNKNOWN( j == play->num_rec_vecad_ind() );
 	}
 	connection<Pack> vecad_sparsity(numvar, npv, vecad_pattern);
 
 	// skip the NonOp at the beginning of the recording
-        Rec->start_forward(op, arg, i_op, i_var);
+        play->start_forward(op, arg, i_op, i_var);
         arg_0 = arg;
 	while(i_op < numop_m1)
 	{
 		// this op
-		Rec->next_forward(op, arg, i_op, i_var);
+		play->next_forward(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
 
@@ -239,7 +239,7 @@ void ForJacSweep(
 
 			case DisOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			var_sparsity.empty(i_var);
+			var_sparsity.clear(i_var);
 			break;
 			// -------------------------------------------------
 
@@ -343,12 +343,12 @@ void ForJacSweep(
 
 			case NonOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			var_sparsity.empty(i_var);
+			var_sparsity.clear(i_var);
 			break;
 
 			case ParOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-			var_sparsity.empty(i_var);
+			var_sparsity.clear(i_var);
 			break;
 			// -------------------------------------------------
 
@@ -384,7 +384,7 @@ void ForJacSweep(
 
 			case PripOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
-			var_sparsity.empty(i_var);
+			var_sparsity.clear(i_var);
 			break;
 			// -------------------------------------------------
 
@@ -496,7 +496,7 @@ void ForJacSweep(
 		// to a standard set.
 		printOp(
 			std::cout,
-			Rec,
+			play,
 			i_var,
 			op,
 			arg,
@@ -510,7 +510,7 @@ void ForJacSweep(
 # else
 	}
 # endif
-	CPPAD_ASSERT_UNKNOWN( (i_var + NumRes(op) ) == Rec->num_rec_var() );
+	CPPAD_ASSERT_UNKNOWN( (i_var + NumRes(op) ) == play->num_rec_var() );
 
 	if( vecad != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC(vecad);

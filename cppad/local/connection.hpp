@@ -84,7 +84,7 @@ public:
 	\par Checked Assertions
 	\li target < n_from_
  	*/
-	void empty(size_t target)
+	void clear(size_t target)
 	{	// value with all its bits set to false
 		static Pack zero(0);
 		CPPAD_ASSERT_UNKNOWN( target < n_from_ );
