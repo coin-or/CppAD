@@ -101,22 +101,19 @@ void ForJacSweep(
 	// vecad_pattern contains a sparsity pattern for each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
 	// VecAD object) to the vecad_pattern index for the VecAD object.
-	size_t npv             = var_sparsity.n_pack();
+	size_t n_to            = var_sparsity.n_to();
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
-	Pack*  vecad_pattern   = CPPAD_NULL;
+	connection<Pack> vecad_sparsity;
+	vecad_sparsity.resize(numvar, n_to);
+	Pack*  vecad_pattern   = vecad_sparsity.data();
 	size_t* vecad          = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
-		vecad_pattern = CPPAD_TRACK_NEW_VEC(
-			num_vecad_vec * npv, vecad_pattern
-		);
 		vecad         = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad);
 		j             = 0;
 		for(i = 0; i < num_vecad_vec; i++)
-		{	for(k = 0; k < npv; k++)
-				vecad_pattern[ i * npv + k ] = Pack(0);
-			// length of this VecAD
+		{	// length of this VecAD
 			length   = play->GetVecInd(j);
 			// set to proper index for this VecAD
 			vecad[j] = i; 
@@ -127,7 +124,6 @@ void ForJacSweep(
 		}
 		CPPAD_ASSERT_UNKNOWN( j == play->num_rec_vecad_ind() );
 	}
-	connection<Pack> vecad_sparsity(numvar, npv, vecad_pattern);
 
 	// skip the NonOp at the beginning of the recording
         play->start_forward(op, arg, i_op, i_var);
@@ -491,6 +487,7 @@ void ForJacSweep(
 # if CPPAD_FOR_JAC_SWEEP_TRACE
 		// value of z for this op
 		// Z      = ForJac + i_var * npv;
+		// where npv = var_sparsity.n_pack();
 		// Z should correspond to the sparsity pattern for node
 		// with index i_var, but this is on its way to being converted
 		// to a standard set.

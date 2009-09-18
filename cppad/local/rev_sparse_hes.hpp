@@ -224,9 +224,12 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 		"RevSparseHes: s (third argument) length is not equal to\n"
 		"range dimension for ADFun object."
 	);
+
+	// number of bits per packed value
+	size_t n_bit = 8 * sizeof(Pack);
 	
 	// number of packed values per variable on the tape
-	size_t npv = 1 + (q - 1) / sizeof(Pack);
+	size_t npv = 1 + (q - 1) / n_bit;
 	CPPAD_ASSERT_UNKNOWN( npv <= for_jac_col_dim_ );
 
 	// array that will hold packed reverse Jacobian values
@@ -239,7 +242,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 
 	// update maximum memory requirement
 	// memoryMax = std::max( memoryMax, 
-	// 	Memory() + total_num_var_ * (npv + 1) * sizeof(Pack)
+	// 	Memory() + total_num_var_ * (npv + 1) * n_bit
 	// );
 
 	// initialize entire RevHes and RevJac matrix to false
@@ -280,8 +283,8 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 
 		// i is index corresponding to forward mode partial
 		for(i = 0; i < q; i++) 
-		{	k     = i / sizeof(Pack);
-			p     = i - k * sizeof(Pack);
+		{	k     = i / n_bit;
+			p     = i - k * n_bit;
 			mask  = Pack(1) << p;
 			mask &=	RevHes[ ind_taddr_[j] * npv + k ];
 			h[ i * n + j ] = (mask != 0);

@@ -53,6 +53,12 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 09-18$$
+A bug was found in all the $cref/Sparsity/Sparse/$$ calculations.
+The result was that eight times the necessary memory was being used
+during these calculations.  This has been fixed.
+
+
 $head 08-25$$
 Add $cref/ad_fun.cpp/$$
 an example of how to create your own interface to an $cref/ADFun/$$ object.

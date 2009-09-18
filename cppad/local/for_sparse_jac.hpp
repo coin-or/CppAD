@@ -162,7 +162,7 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	typedef size_t Pack;
 
 	// temporary indices
-	size_t i, j, k, p;
+	size_t i, j;
 
 	// check Vector is Simple Vector class with bool elements
 	CheckSimpleVector<bool, Vector>();
@@ -181,41 +181,32 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 		"ForSparseJac: r (second argument) length is not equal to\n"
 		"q (first argument) times domain dimension for ADFun object."
 	);
+	connection<Pack> var_sparsity;
+	var_sparsity.resize(total_num_var_, q);
 
 	// number of packed values per variable on the tape
-	size_t npv = 1 + (q - 1) / sizeof(Pack);
+	size_t npv = var_sparsity.n_pack();
 
 	// array that will hold packed values
-	if( for_jac_col_dim_ < npv )
-	{	if( for_jac_col_dim_ > 0 )
-			CPPAD_TRACK_DEL_VEC(for_jac_);
-		for_jac_ = CPPAD_TRACK_NEW_VEC(total_num_var_ * npv, for_jac_);
-		for_jac_col_dim_ = npv;
-	}
+	if( for_jac_col_dim_ > 0 )
+		CPPAD_TRACK_DEL_VEC(for_jac_);
+
+	for_jac_ = var_sparsity.data();
+	for_jac_col_dim_ = npv;
 
 	// set values corresponding to independent variables
-	Pack mask;
 	for(i = 0; i < n; i++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < total_num_var_ );
 		// ind_taddr_[i] is operator taddr for i-th independent variable
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
 
-		// initialize all bits as zero
-		for(k = 0; k < npv; k++)
-			for_jac_[ ind_taddr_[i] * npv + k ] = 0;
-
 		// set bits that are true
 		for(j = 0; j < q; j++) 
-		{	k    = j / sizeof(Pack);
-			p    = j - k * sizeof(Pack);
-			mask = Pack(1) << p;
 			if( r[ i * q + j ] )
-				for_jac_[ ind_taddr_[i] * npv + k ] |= mask;
-		}
+				var_sparsity.set_element( ind_taddr_[i], j);
 	}
 
 	// evaluate the sparsity patterns
-	connection<Pack> var_sparsity(total_num_var_, npv, for_jac_);
 	ForJacSweep(
 		n,
 		total_num_var_,
@@ -230,12 +221,8 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 
 		// set bits 
 		for(j = 0; j < q; j++) 
-		{	k     = j / sizeof(Pack);
-			p     = j - k * sizeof(Pack);
-			mask  = Pack(1) << p;
-			mask &=	for_jac_[ dep_taddr_[i] * npv + k ];
-			s[ i * q + j ] = (mask != 0);
-		}
+			s[ i * q + j ] = 
+				var_sparsity.get_element( dep_taddr_[i], j);
 	}
 
 	// update number of bits currently stored in for_jac_

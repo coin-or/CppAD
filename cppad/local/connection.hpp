@@ -33,47 +33,112 @@ represented by each value of type Pack.
 template <class Pack>
 class connection {
 private:
+	/// Number of bits per Pack value
+	const size_t n_bit_;
 	/// Number of nodes that we are representing connections from
-	const size_t n_from_;
-	/// Number of packed values used to represent connections for one node
-	const size_t n_pack_;
+	/// (set by constructor and resize).
+	size_t n_from_;
+	/// Number of nodes that we are representing connections to
+	/// (set by constructor and resize).
+	size_t n_to_;
+	/// Number of \a Pack values necessary to represent n_to_ bits.
+	/// (set by constructor and resize).
+	size_t n_pack_;
 	/// Pointer to the first packed value for all the connections.
 	Pack*        data_;
 public:
 	// -----------------------------------------------------------------
-	/*! Construct a connection object where memory is already allocated.
-
-	\param data
-	points to already allocate memory for the connection,
-	it's length must be \a n_from * \a n_pack;
-	This \c connection  is no longer valid
-	once the memory pointed to by \a data has been deallocated.
+	/*! Construct a connection object (with no nodes)
+ 	*/
+	connection(void)
+	: n_bit_(8 * sizeof(Pack)) ,n_from_(0), n_to_(0), n_pack_(0)
+	{	// check that there are 8 bits per character
+# ifndef NEDEBUG
+		unsigned char ch  = static_cast<char>(255);
+		size_t i          = static_cast<size_t>(ch);
+		CPPAD_ASSERT_UNKNOWN( i == 255 );
+		ch       = static_cast<char>(256);
+		i        = static_cast<char>(ch);
+		CPPAD_ASSERT_UNKNOWN( i == 0 );
+# endif
+		data_ = CPPAD_NULL; }
+	// -----------------------------------------------------------------
+	/*! Destructor 
+ 
+	for now this is done outside of connection object (must fix this)
+	~connection(void)
+	{	if( n_from_ * n_pack_ > 0 )
+			CPPAD_TRACK_DEL_VEC( data_ ); 
+	}
+	*/
+	// -----------------------------------------------------------------
+	/*! Change the number of nodes and initialize with no connections
 
 	\param n_from
-	is the the number of nodes that we are representing connections from.
+	is the number of nodes that we are representing connections from.
 
-	\param n_pack
-	is the number of Pack values required to represent one subset of the 
-	number of nodes we are representing connections to as bit true or
-	false values.  This should be given by
-	\code
-	n_pack = (n_to - 1) / (size_t(Pack) * 8) + 1
-	\endcode
-	where \c n_to is the number nodes we are representing connections to.
-
-	\param data
-	is a pointer to the data for all the connections. It must have length
-	\a n_from * n_pack. The set of connections for the "from" node \c i 
-	is represented by the true bits in the values
-	\code
-	data[ i * n_pack + 0 ] , ... , data [ i * npack + n_pack - 1 ]
-	\endcode
-	The values in \a data are affected by the use of the member functions
-	of the \c connection class.
+	\param n_to
+	is the number of nodes that we are representing connections to. 
 	*/
-	connection(size_t n_from, size_t n_pack, Pack* data)
-	: n_from_(n_from), n_pack_(n_pack), data_(data)
-	{ }
+	void resize(size_t n_from, size_t n_to) 
+	{	Pack zero(0);
+		size_t i = n_from_ * n_pack_;
+		if( i > 0 )
+			CPPAD_TRACK_DEL_VEC(data_);
+		n_from_  = n_from;
+		n_to_    = n_to;
+		n_pack_  = ( 1 + (n_to - 1) / n_bit_ );
+		i        = n_from_ * n_pack_;
+		if( i > 0 )
+			data_ = CPPAD_TRACK_NEW_VEC(i, data_);
+		while(i--)
+			data_[i] = zero;
+	}
+	// -----------------------------------------------------------------
+	/*! Set one connection element between a from and to node.
+
+	\param from
+	is the from node for this connection.
+
+	\param to
+	is the to node for this connection
+
+	\par Checked Assertions
+	\li from < n_from_
+	\li to   < n_to_
+	*/
+	void set_element(size_t from, size_t to)
+	{	static Pack one(1);
+		CPPAD_ASSERT_UNKNOWN( from < n_from_ );
+		CPPAD_ASSERT_UNKNOWN( to < n_to_ );
+		size_t j  = to / n_bit_;
+		size_t k  = to - j * n_bit_;
+		Pack mask = one << k;
+		data_[ from * n_pack_ + j] |= mask;
+	}
+	// -----------------------------------------------------------------
+	/*! Is there a connection between a from and to node.
+	
+	\param from
+	is the from node for this connection.
+
+	\param to
+	is the to node for this connection
+
+	\par Checked Assertions
+	\li from < n_from_
+	\li to   < n_to_
+	*/
+	bool get_element(size_t from, size_t to) const
+	{	static Pack one(1);
+		CPPAD_ASSERT_UNKNOWN( from < n_from_ );
+		CPPAD_ASSERT_UNKNOWN( to < n_to_ );
+		size_t j  = to / n_bit_;
+		size_t k  = to - j * n_bit_;
+		Pack mask = one << k;
+		mask     &= data_[ from * n_pack_ + j];
+		return (mask != 0);
+	}
 
 	// -----------------------------------------------------------------
 	/*! Set connections for one node equal to the empty set.
@@ -174,11 +239,17 @@ public:
 			*t++ = (*l++ | *r++);
 	}
 	// -----------------------------------------------------------------
-	/*! Fetch n_pack_ for this connection object  
+	/*! Fetch n_to for this connection object  
  	
 	\return
- 	Number of packed values use to represent connections for one node.
+ 	Number of to nodes for this connection object
 	*/
+	size_t n_to(void) const
+	{	return n_to_; }
+	// -----------------------------------------------------------------
+	// temporary for debugging
+	Pack* data(void)
+	{	return data_; }
 	size_t n_pack(void) const
 	{	return n_pack_; }
 };

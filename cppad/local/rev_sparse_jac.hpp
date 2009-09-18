@@ -180,9 +180,11 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s)
 		"p (first argument) times range dimension for ADFun object."
 	);
 
+	// number of bits per packed value
+	size_t n_bit = 8 * sizeof(Pack);
 	
 	// number of packed values per variable on the tape
-	size_t npv = 1 + (p - 1) / sizeof(Pack);
+	size_t npv = 1 + (p - 1) / n_bit;
 
 	// array that will hold packed values
 	Pack *RevJac = CPPAD_NULL;
@@ -190,7 +192,7 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s)
 
 	// update maximum memory requirement
 	// memoryMax = std::max( memoryMax, 
-	// 	Memory() + total_num_var_ * npv * sizeof(Pack)
+	// 	Memory() + total_num_var_ * npv * n_bit
 	// );
 
 	// initialize entire RevJac matrix as false
@@ -205,8 +207,8 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s)
 
 		// set bits that are true
 		for(i = 0; i < p; i++) 
-		{	k    = i / sizeof(Pack);
-			q    = i - k * sizeof(Pack);
+		{	k    = i / n_bit;
+			q    = i - k * n_bit;
 			mask = Pack(1) << q;
 			if( s[ i * m + j ] )
 				RevJac[ dep_taddr_[j] * npv + k ] |= mask;
@@ -231,8 +233,8 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s)
 
 		// set bits 
 		for(i = 0; i < p; i++) 
-		{	k     = i / sizeof(Pack);
-			q     = i - k * sizeof(Pack);
+		{	k     = i / n_bit;
+			q     = i - k * n_bit;
 			mask  = Pack(1) << q;
 			mask &=	RevJac[ ind_taddr_[j] * npv + k ];
 			r[ i * n + j ] = (mask != 0);
