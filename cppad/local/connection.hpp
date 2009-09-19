@@ -52,25 +52,19 @@ public:
  	*/
 	connection(void)
 	: n_bit_(8 * sizeof(Pack)) ,n_from_(0), n_to_(0), n_pack_(0)
-	{	// check that there are 8 bits per character
-# ifndef NEDEBUG
-		unsigned char ch  = static_cast<char>(255);
-		size_t i          = static_cast<size_t>(ch);
-		CPPAD_ASSERT_UNKNOWN( i == 255 );
-		ch       = static_cast<char>(256);
-		i        = static_cast<char>(ch);
-		CPPAD_ASSERT_UNKNOWN( i == 0 );
-# endif
-		data_ = CPPAD_NULL; }
+	{
+		CPPAD_ASSERT_UNKNOWN(
+			8 == std::numeric_limits<unsigned char>::digits
+		);
+		data_ = CPPAD_NULL; 
+	}
 	// -----------------------------------------------------------------
 	/*! Destructor 
- 
-	for now this is done outside of connection object (must fix this)
+ 	*/
 	~connection(void)
 	{	if( n_from_ * n_pack_ > 0 )
 			CPPAD_TRACK_DEL_VEC( data_ ); 
 	}
-	*/
 	// -----------------------------------------------------------------
 	/*! Change the number of nodes and initialize with no connections
 

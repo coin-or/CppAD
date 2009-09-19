@@ -174,7 +174,7 @@ namespace CppAD {
 template <typename Base>
 template <typename VectorAD>
 ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
-: total_num_var_(0), taylor_(CPPAD_NULL), for_jac_(CPPAD_NULL)
+: total_num_var_(0), taylor_(CPPAD_NULL)
 {
 	CPPAD_ASSERT_KNOWN(
 		x.size() > 0,

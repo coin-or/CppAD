@@ -720,9 +720,7 @@ void CppAD::ADFun<Base>::optimize(void)
 	total_num_var_ = rec.num_rec_var();
 
 	// free old sparse Jacobian memory
-	if( for_jac_ != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(for_jac_);
-	for_jac_         = CPPAD_NULL;
+	for_jac_sparsity_.resize(0, 0);
 	for_jac_bit_dim_ = 0;
 	for_jac_col_dim_ = 0;
 

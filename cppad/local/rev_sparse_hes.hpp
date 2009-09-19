@@ -265,7 +265,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 		npv,
 		total_num_var_,
 		&play_,
-		for_jac_, 
+		for_jac_sparsity_.data(), 
 		RevJac,
 		RevHes
 	);

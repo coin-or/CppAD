@@ -234,12 +234,10 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	// free old buffers
 	if( taylor_ != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC(taylor_);
-	if( for_jac_ != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(for_jac_);
+	for_jac_sparsity_.resize(0, 0);
 
 	// initialize buffers
 	taylor_  = CPPAD_NULL;
-	for_jac_  = CPPAD_NULL;
 
 	// initial row and column dimensions
 	// memoryMax  = 0;

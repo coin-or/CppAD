@@ -158,9 +158,6 @@ template <class Base>
 template <class Vector>
 Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 {
-	// type used to pack bits (must support standard bit operations)
-	typedef size_t Pack;
-
 	// temporary indices
 	size_t i, j;
 
@@ -181,17 +178,10 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 		"ForSparseJac: r (second argument) length is not equal to\n"
 		"q (first argument) times domain dimension for ADFun object."
 	);
-	connection<Pack> var_sparsity;
-	var_sparsity.resize(total_num_var_, q);
+	for_jac_sparsity_.resize(total_num_var_, q);
 
 	// number of packed values per variable on the tape
-	size_t npv = var_sparsity.n_pack();
-
-	// array that will hold packed values
-	if( for_jac_col_dim_ > 0 )
-		CPPAD_TRACK_DEL_VEC(for_jac_);
-
-	for_jac_ = var_sparsity.data();
+	size_t npv = for_jac_sparsity_.n_pack();
 	for_jac_col_dim_ = npv;
 
 	// set values corresponding to independent variables
@@ -201,9 +191,8 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
 
 		// set bits that are true
-		for(j = 0; j < q; j++) 
-			if( r[ i * q + j ] )
-				var_sparsity.set_element( ind_taddr_[i], j);
+		for(j = 0; j < q; j++) if( r[ i * q + j ] )
+			for_jac_sparsity_.set_element( ind_taddr_[i], j);
 	}
 
 	// evaluate the sparsity patterns
@@ -211,7 +200,7 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 		n,
 		total_num_var_,
 		&play_,
-		var_sparsity
+		for_jac_sparsity_
 	);
 
 	// return values corresponding to dependent variables
@@ -220,9 +209,8 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
 
 		// set bits 
-		for(j = 0; j < q; j++) 
-			s[ i * q + j ] = 
-				var_sparsity.get_element( dep_taddr_[i], j);
+		for(j = 0; j < q; j++) s[ i * q + j ] = 
+			for_jac_sparsity_.get_element( dep_taddr_[i], j);
 	}
 
 	// update number of bits currently stored in for_jac_

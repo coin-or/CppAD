@@ -156,9 +156,6 @@ template <class Base>
 template <class Vector>
 Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) 
 {
-	// type used to pack bits (must support standard bit operations)
-	typedef size_t Pack;
-
 	// temporary indices
 	size_t i, j, k, q;
 

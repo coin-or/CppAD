@@ -98,15 +98,15 @@ void ForJacSweep(
         // length of the parameter vector (used by CppAD assert macros)
         const size_t num_par = play->num_rec_par();
 
-	// vecad_pattern contains a sparsity pattern for each VecAD object.
+	// vecad_sparsity contains a sparsity pattern from each variable
+	// to each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
-	// VecAD object) to the vecad_pattern index for the VecAD object.
+	// VecAD object) to its 'to' index in vecad_sparsity
 	size_t n_to            = var_sparsity.n_to();
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	connection<Pack> vecad_sparsity;
 	vecad_sparsity.resize(numvar, n_to);
-	Pack*  vecad_pattern   = vecad_sparsity.data();
 	size_t* vecad          = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
@@ -511,8 +511,6 @@ void ForJacSweep(
 
 	if( vecad != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC(vecad);
-	if( vecad_pattern != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(vecad_pattern);
 
 	return;
 }

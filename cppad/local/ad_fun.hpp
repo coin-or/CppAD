@@ -70,7 +70,7 @@ class ADFun {
 public:
 	// default constructor
 	ADFun(void) 
-	: total_num_var_(0), taylor_(CPPAD_NULL), for_jac_(CPPAD_NULL)
+	: total_num_var_(0), taylor_(CPPAD_NULL)
 	{ }
 
 	// sequence constructor
@@ -81,8 +81,6 @@ public:
 	~ADFun(void)
 	{	if( taylor_ != CPPAD_NULL )
 			CPPAD_TRACK_DEL_VEC(taylor_);
-		if( for_jac_ != CPPAD_NULL )
-			CPPAD_TRACK_DEL_VEC(for_jac_);
 	}
 
 	// assign a new operation sequence
@@ -225,7 +223,7 @@ public:
 	// amount of memory for each variable 
 	size_t Memory(void) const
 	{	size_t pervar  = taylor_col_dim_ * sizeof(Base)
-		+ for_jac_col_dim_ * sizeof(Pack);
+		+ for_jac_sparsity_.n_pack() * sizeof(Pack);
 		size_t total   = total_num_var_ * pervar + play_.Memory();
 		return total;
 	}
@@ -270,8 +268,7 @@ private:
 	Base *taylor_;
 
 	// results of the forward mode Jacobian sparsity calculations
-	Pack *for_jac_;
-
+	connection<Pack> for_jac_sparsity_;
 
 	template <typename ADvector>
 	void Dependent(ADTape<Base> *tape, const ADvector &y);
