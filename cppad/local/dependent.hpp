@@ -242,8 +242,6 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	// initial row and column dimensions
 	// memoryMax  = 0;
 	taylor_per_var_   = 0;
-	for_jac_col_dim_  = 0;
-	for_jac_bit_dim_  = 0;
 	taylor_col_dim_   = 0;
 
 	// set tape address 

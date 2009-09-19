@@ -242,14 +242,8 @@ private:
 	// number of taylor_ coefficieint per variable (currently stored)
 	size_t taylor_per_var_;
 
-	// number of bits currently calculated per row of the for_jac_ array
-	size_t for_jac_bit_dim_; 
-
 	// number of columns currently allocated for taylor_ array
 	size_t taylor_col_dim_;
-
-	// number of columns currently allocated for for_jac_ array
-	size_t for_jac_col_dim_;
 
 	// number of rows (variables) in the recording (play_)
 	size_t total_num_var_;

@@ -68,6 +68,10 @@ public:
 	// -----------------------------------------------------------------
 	/*! Change the number of nodes and initialize with no connections
 
+	Any memory currently allocated for this object is freed. If both
+	\a n_from and \a n_to non-zero new memory is allocated, otherwise
+	no new memory is allocated for the object.
+
 	\param n_from
 	is the number of nodes that we are representing connections from.
 
@@ -233,7 +237,15 @@ public:
 			*t++ = (*l++ | *r++);
 	}
 	// -----------------------------------------------------------------
-	/*! Fetch n_to for this connection object  
+	/*! Fetch n_from for this connection object.
+ 	
+	\return
+ 	Number of from nodes for this connection object
+	*/
+	size_t n_from(void) const
+	{	return n_from_; }
+	// -----------------------------------------------------------------
+	/*! Fetch n_to for this connection object. 
  	
 	\return
  	Number of to nodes for this connection object
@@ -241,11 +253,35 @@ public:
 	size_t n_to(void) const
 	{	return n_to_; }
 	// -----------------------------------------------------------------
-	// temporary for debugging
-	Pack* data(void)
-	{	return data_; }
+	/*! Fetch n_pack for this connection object.
+
+	This is a temporary function for use during refactoring of source.
+ 	
+	\return
+ 	Number of Pack values per from node for this connection object
+	*/
 	size_t n_pack(void) const
 	{	return n_pack_; }
+	// -----------------------------------------------------------------
+	/*! Fetch n_bit for this connection object.
+ 	
+	This is a temporary function for use during refactoring of source.
+
+	\return
+ 	Number of bits per Pack values 
+	*/
+	size_t n_bit(void) const
+	{	return n_bit_; }
+	// -----------------------------------------------------------------
+	/*! Fetch data for this connection object.
+
+	This is a temporary function for use during refactoring of source.
+ 	
+	\return
+ 	Pointer to the raw data for this connection object
+	*/
+	Pack* data(void)
+	{	return data_; }
 };
 
 CPPAD_END_NAMESPACE

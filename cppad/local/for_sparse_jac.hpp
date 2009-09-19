@@ -178,11 +178,9 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 		"ForSparseJac: r (second argument) length is not equal to\n"
 		"q (first argument) times domain dimension for ADFun object."
 	);
-	for_jac_sparsity_.resize(total_num_var_, q);
 
-	// number of packed values per variable on the tape
-	size_t npv = for_jac_sparsity_.n_pack();
-	for_jac_col_dim_ = npv;
+	// allocate memory for the requested sparsity calculation
+	for_jac_sparsity_.resize(total_num_var_, q);
 
 	// set values corresponding to independent variables
 	for(i = 0; i < n; i++)
@@ -212,9 +210,6 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 		for(j = 0; j < q; j++) s[ i * q + j ] = 
 			for_jac_sparsity_.get_element( dep_taddr_[i], j);
 	}
-
-	// update number of bits currently stored in for_jac_
-	for_jac_bit_dim_ = q;
 
 	return s;
 }

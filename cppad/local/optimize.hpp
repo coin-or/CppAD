@@ -719,10 +719,9 @@ void CppAD::ADFun<Base>::optimize(void)
 	// number of variables in the recording
 	total_num_var_ = rec.num_rec_var();
 
-	// free old sparse Jacobian memory
+	// free memory allocated for sparse Jacobian calculation
+	// (the results are no longer valid)
 	for_jac_sparsity_.resize(0, 0);
-	for_jac_bit_dim_ = 0;
-	for_jac_col_dim_ = 0;
 
 	// free old Taylor coefficient memory
 	if( taylor_ != CPPAD_NULL )

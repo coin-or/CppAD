@@ -215,7 +215,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 		"RevSparseHes: q (first argument) is not greater than zero"
 	);
 	CPPAD_ASSERT_KNOWN(
-		q == for_jac_bit_dim_,
+		q == for_jac_sparsity_.n_to(),
 		"RevSparseHes: q (first argument) is not equal to its value"
 		" in the previous call to ForSparseJac with this ADFun object."
 	);
@@ -226,12 +226,11 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 	);
 
 	// number of bits per packed value
-	size_t n_bit = 8 * sizeof(Pack);
-	
-	// number of packed values per variable on the tape
-	size_t npv = 1 + (q - 1) / n_bit;
-	CPPAD_ASSERT_UNKNOWN( npv <= for_jac_col_dim_ );
+	size_t n_bit = for_jac_sparsity_.n_bit();
 
+	// number of packed values per from node
+	size_t npv = for_jac_sparsity_.n_pack();
+	
 	// array that will hold packed reverse Jacobian values
 	Pack *RevJac = CPPAD_NULL;
 	RevJac       = CPPAD_TRACK_NEW_VEC(total_num_var_, RevJac);	
@@ -239,11 +238,6 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 	// array that will hold packed reverse Hessain values
 	Pack *RevHes = CPPAD_NULL;
 	RevHes       = CPPAD_TRACK_NEW_VEC(total_num_var_ * npv, RevHes);	
-
-	// update maximum memory requirement
-	// memoryMax = std::max( memoryMax, 
-	// 	Memory() + total_num_var_ * (npv + 1) * n_bit
-	// );
 
 	// initialize entire RevHes and RevJac matrix to false
 	for(i = 0; i < total_num_var_; i++)
