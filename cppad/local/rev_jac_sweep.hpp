@@ -176,7 +176,7 @@ void RevJacSweep(
 			case AbsOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -192,7 +192,7 @@ void RevJacSweep(
 			case AddpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[1], npv, RevJac
+				i_var, arg[1], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -200,7 +200,7 @@ void RevJacSweep(
 			case AddvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -210,7 +210,7 @@ void RevJacSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -220,7 +220,7 @@ void RevJacSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -230,7 +230,7 @@ void RevJacSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -253,7 +253,7 @@ void RevJacSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// ---------------------------------------------------
@@ -263,7 +263,7 @@ void RevJacSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -285,7 +285,7 @@ void RevJacSweep(
 			case DivpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[1], npv, RevJac
+				i_var, arg[1], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -293,7 +293,7 @@ void RevJacSweep(
 			case DivvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -301,7 +301,7 @@ void RevJacSweep(
 			case ExpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -344,7 +344,7 @@ void RevJacSweep(
 			case LogOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -360,7 +360,7 @@ void RevJacSweep(
 			case MulpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[1], npv, RevJac
+				i_var, arg[1], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -368,7 +368,7 @@ void RevJacSweep(
 			case MulvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -390,7 +390,7 @@ void RevJacSweep(
 			// comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
 			reverse_sparse_jacobian_unary_op(
-				i_var + 2, arg[0], npv, RevJac
+				i_var + 2, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -400,7 +400,7 @@ void RevJacSweep(
 			// comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
 			reverse_sparse_jacobian_unary_op(
-				i_var + 2, arg[1], npv, RevJac
+				i_var + 2, arg[1], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -431,7 +431,7 @@ void RevJacSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -441,7 +441,7 @@ void RevJacSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -449,7 +449,7 @@ void RevJacSweep(
 			case SqrtOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -506,7 +506,7 @@ void RevJacSweep(
 			case SubpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[1], npv, RevJac
+				i_var, arg[1], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -514,7 +514,7 @@ void RevJacSweep(
 			case SubvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_unary_op(
-				i_var, arg[0], npv, RevJac
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------

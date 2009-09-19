@@ -1342,34 +1342,27 @@ i.e. the row index in sparsity corresponding to z.
 variable index corresponding to the argument for this operator;
 i.e. the row index in sparsity corresponding to x.
 
-\param jac_reverse
-\a jac_reverse[i_z] 
+\param rev_jacobian
+\a rev_jacobian[i_z] 
 is all zero (ones) if the Jacobian of G with respect to z is zero (non-zero).
 \n
 \n
-\a jac_reverse[i_x] 
+\a rev_jacobian[i_x] 
 is all zero (ones) if the Jacobian with respect to x is zero (non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
-\param nc_sparsity
-number of packed values corresponding to each sparsity pattern; i.e.,
-the number of columns in the sparsity pattern matrices.
-
-\param jac_forward
-for k = 0 , ... , \a nc_sparsity - 1,
-jac_forward[ \a i_x * \a nc_sparsity + k ]
+\param for_jac_sparsity
+The connections for the from node \a i_x
 is the forward mode Jacobian sparsity pattern for the variable x. 
 
-\param hes_sparsity
-hes_sparsity[ \a i_z * \a nc_sparsity + k ]
-for k = 0 , ... , \a nc_sparsity -1 
+\param rev_hes_sparsity
+The connections for the from node with from index \a i_z in \a rev_hes_sparsity
 is the Hessian sparsity pattern for the fucntion G
 where one of the partials derivative is with respect to z.
 \n
 \n
-hes_sparsity[ \a i_x * \a nc_sparsity + k ]
-for k = 0 , ... , \a nc_sparsity -1 
+The connections for the form node with index \a i_x in \a rev_hes_sparsity
 is the Hessian sparsity pattern 
 where one of the partials derivative is with respect to x.
 On input, it corresponds to the function G,
@@ -1380,12 +1373,11 @@ and on output it corresponds to the function H.
 */
 template <class Pack>
 inline void reverse_sparse_hessian_unary_op(
-	size_t      i_z           ,
-	size_t      i_x           ,
-	Pack*       jac_reverse   ,
-	size_t      nc_sparsity   ,
-	const Pack* jac_forward   ,
-	Pack*       hes_sparsity  )
+	size_t              i_z               ,
+	size_t              i_x               ,
+	const Pack*         rev_jacobian      ,
+	connection<Pack>&   for_jac_sparsity  ,
+	connection<Pack>&   rev_hes_sparsity  )
 {	
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );

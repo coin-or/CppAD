@@ -49,7 +49,7 @@ is the number of independent variables on the tape.
 is the total number of variables on the tape; i.e.,
 \a play->num_rec_var().
 This is also the number of rows in the entire sparsity pattern 
-\a rev_hes_sparsity.
+\a rev_hes_sparse.
 
 \param play
 The information stored in \a play
@@ -64,11 +64,11 @@ It is not declared const because while playing back the tape
 the object \a play holds information about the currentl location
 with in the tape and this changes during playback.
 
-\param for_jac_sparsity
+\param for_jac_sparse
 For i = 0 , ... , \a numvar - 1, 
 (for all the variables on the tape),
 the forward Jacobian sparsity pattern for the variable with index i
-corresponds to the from node with index i in \a for_jac_sparsity.
+corresponds to the from node with index i in \a for_jac_sparse.
 
 \param RevJac
 \b Input:
@@ -81,9 +81,9 @@ otherwise it is equal to zero.
 \b Output: The values in \a RevJac upon return are not specified; i.e.,
 it is used for temporary work space.
 
-\param rev_hes_sparsity
+\param rev_hes_sparse
 The reverse Hessian sparsity pattern for the variable with index i
-corresponds to the from node with index i in \a rev_hes_sparsity.
+corresponds to the from node with index i in \a rev_hes_sparse.
 \n
 \n
 \b Input: For i = 0 , ... , \a numvar - 1  
@@ -93,8 +93,8 @@ the reverse Hessian sparsity pattern for the variable with index i is empty.
 \b Output: For j = 1 , ... , \a n,
 the reverse Hessian sparsity pattern for the independent dependent variable 
 with index (j-1) is given by the from connections for the node with index j
-in \a rev_hes_sparsity. 
-The values in the rest of \a rev_hes_sparsity are not specified; i.e.,
+in \a rev_hes_sparse. 
+The values in the rest of \a rev_hes_sparse are not specified; i.e.,
 they are used for temporary work space.
 */
 
@@ -103,9 +103,9 @@ void RevHesSweep(
 	size_t                n,
 	size_t                numvar,
 	player<Base>         *play,
-	connection<Pack>&     for_jac_sparsity, // should be const
+	connection<Pack>&     for_jac_sparse, // should be const
 	Pack                 *RevJac,
-	connection<Pack>&     rev_hes_sparsity
+	connection<Pack>&     rev_hes_sparse
 )
 {
 	OpCode           op;
@@ -120,18 +120,18 @@ void RevHesSweep(
 	size_t             i, j, k;
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( play->num_rec_var()       == numvar );
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.n_from() == numvar );
-	CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.n_from() == numvar );
+	CPPAD_ASSERT_UNKNOWN( play->num_rec_var()     == numvar );
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_from() == numvar );
+	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.n_from() == numvar );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 
 	// number of to nodes in connections
-	size_t n_to   = rev_hes_sparsity.n_to();
-	CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.n_to() == n_to );
+	size_t n_to   = rev_hes_sparse.n_to();
+	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.n_to() == n_to );
 
 	// number of packed values per from node
-	size_t npv = rev_hes_sparsity.n_pack();
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.n_pack() == npv );
+	size_t npv = rev_hes_sparse.n_pack();
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_pack() == npv );
 
 	// vecad_pattern contains a sparsity pattern for each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
@@ -161,8 +161,8 @@ void RevHesSweep(
 
 	// create connection objects using existing memory
 	// (kludge for step by step conversion to using connection objects)
-	Pack* ForJac = for_jac_sparsity.data();
-	Pack* RevHes = rev_hes_sparsity.data();
+	Pack* ForJac = for_jac_sparse.data();
+	Pack* RevHes = rev_hes_sparse.data();
 
 	// Initialize
 	play->start_reverse();
@@ -181,8 +181,8 @@ void RevHesSweep(
 
 # if CPPAD_REV_HES_SWEEP_TRACE
 		for(j = 0; j < n_to; j++)
-		{	zf_value[j] = for_jac_sparsity.get_element(i_var, j);
-			zh_value[j] = for_jac_sparsity.get_element(i_var, j);
+		{	zf_value[j] = for_jac_sparse.get_element(i_var, j);
+			zh_value[j] = for_jac_sparse.get_element(i_var, j);
 		}
 
 		printOp(
@@ -204,7 +204,7 @@ void RevHesSweep(
 			case AbsOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
 			reverse_sparse_hessian_linear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -220,7 +220,7 @@ void RevHesSweep(
 			case AddpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_linear_unary_op(
-				i_var, arg[1], RevJac, npv, ForJac, RevHes
+			i_var, arg[1], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -228,7 +228,7 @@ void RevHesSweep(
 			case AddvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_linear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -238,7 +238,7 @@ void RevHesSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -248,7 +248,7 @@ void RevHesSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -258,7 +258,7 @@ void RevHesSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -280,7 +280,7 @@ void RevHesSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// ---------------------------------------------------
@@ -290,7 +290,7 @@ void RevHesSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -312,7 +312,7 @@ void RevHesSweep(
 			case DivpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var, arg[1], RevJac, npv, ForJac, RevHes
+			i_var, arg[1], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -320,7 +320,7 @@ void RevHesSweep(
 			case DivvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_linear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -328,7 +328,7 @@ void RevHesSweep(
 			case ExpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -372,7 +372,7 @@ void RevHesSweep(
 			case LogOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -388,7 +388,7 @@ void RevHesSweep(
 			case MulpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_linear_unary_op(
-				i_var, arg[1], RevJac, npv, ForJac, RevHes
+			i_var, arg[1], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -396,7 +396,7 @@ void RevHesSweep(
 			case MulvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_linear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -418,7 +418,7 @@ void RevHesSweep(
                         // comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var+2, arg[1], RevJac, npv, ForJac, RevHes
+			i_var+2, arg[1], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -428,7 +428,7 @@ void RevHesSweep(
                         // comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var+2, arg[0], RevJac, npv, ForJac, RevHes
+			i_var+2, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -458,7 +458,7 @@ void RevHesSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -468,7 +468,7 @@ void RevHesSweep(
 			// but i_var + 1 should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -476,7 +476,7 @@ void RevHesSweep(
 			case SqrtOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
 			reverse_sparse_hessian_nonlinear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -534,7 +534,7 @@ void RevHesSweep(
 			case SubpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_linear_unary_op(
-				i_var, arg[1], RevJac, npv, ForJac, RevHes
+			i_var, arg[1], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -542,7 +542,7 @@ void RevHesSweep(
 			case SubvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_linear_unary_op(
-				i_var, arg[0], RevJac, npv, ForJac, RevHes
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------

@@ -107,21 +107,17 @@ i.e. the row index in sparsity corresponding to z.
 variable index corresponding to the argument for this operator;
 i.e. the row index in sparsity corresponding to x.
 
-\param nc_sparsity
-number of packed values corresponding to each variable; i.e.,
-the number of columns in the sparsity pattern matrix.
-
 \param sparsity
-\b Input: \a sparsity [ \a i_z * \a nc_sparsity + j ]
-for j = 0 , ... , \a nc_sparsity - 1 
+\b Input: 
+The from node with index \a i_z in \a sparsity 
 is the sparsity bit pattern for G with respect to the variable z. 
 \n
-\b Input: \a sparsity [ \a i_x * \a nc_sparsity + j ]
-for j = 0 , ... , \a nc_sparsity - 1 
+\b Input: 
+The from node with index \a i_x in \a sparsity
 is the sparsity bit pattern for G with respect to the variable x. 
 \n
-\b Output: \a sparsity [ \a i_x * \a nc_sparsity + j ] 
-for j = 0 , ... , \a nc_sparsity - 1 
+\b Output: 
+The from node with index \a i_x in \a sparsity 
 is the sparsity bit pattern for H with respect to the variable x.
 
 \par Checked Assertions:
@@ -130,19 +126,15 @@ is the sparsity bit pattern for H with respect to the variable x.
 
 template <class Pack>
 inline void reverse_sparse_jacobian_unary_op(
-	size_t     i_z           ,
-	size_t     i_x           ,
-	size_t     nc_sparsity   ,
-	Pack*      sparsity      )
+	size_t     i_z                     ,
+	size_t     i_x                     ,
+	connection<Pack>&      sparsity    )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 
-	Pack* z  = sparsity + i_z * nc_sparsity;
-	Pack* x  = sparsity + i_x * nc_sparsity;
-	size_t j = nc_sparsity;
-	while(j--)
-		x[j] |= z[j];
+	sparsity.binary_union(i_x, i_x, i_z, sparsity);
+
 	return;
 }	
 
@@ -163,23 +155,18 @@ where op is a C++ binary operator and p is a parameter.
 */
 template <class Pack>
 inline void reverse_sparse_hessian_linear_unary_op(
-	size_t      i_z           ,
-	size_t      i_x           ,
-	Pack*       jac_reverse   ,
-	size_t      nc_sparsity   ,
-	const Pack* jac_forward   ,
-	Pack*       hes_sparsity  )
+	size_t              i_z               ,
+	size_t              i_x               ,
+	Pack*               rev_jacobian      ,
+	connection<Pack>&   for_jac_sparsity  ,
+	connection<Pack>&   rev_hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 
-	Pack* z_hes  = hes_sparsity + i_z * nc_sparsity;
-	Pack* x_hes  = hes_sparsity + i_x * nc_sparsity;
-	size_t j = nc_sparsity;
-	while(j--)
-		x_hes[j] |= z_hes[j];
+	rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
 
-	jac_reverse[i_x] |= jac_reverse[i_z];
+	rev_jacobian[i_x] |= rev_jacobian[i_z];
 	return;
 }
 
@@ -201,24 +188,20 @@ where p is a parameter.
 */
 template <class Pack>
 inline void reverse_sparse_hessian_nonlinear_unary_op(
-	size_t      i_z           ,
-	size_t      i_x           ,
-	Pack*       jac_reverse   ,
-	size_t      nc_sparsity   ,
-	const Pack* jac_forward   ,
-	Pack*       hes_sparsity  )
+	size_t              i_z               ,
+	size_t              i_x               ,
+	Pack*               rev_jacobian      ,
+	connection<Pack>&   for_jac_sparsity  ,
+	connection<Pack>&   rev_hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
 
-	const Pack* z_hes  = hes_sparsity + i_z * nc_sparsity;
-	const Pack* x_for  = jac_forward  + i_x * nc_sparsity;
-	Pack* x_hes        = hes_sparsity + i_x * nc_sparsity;
-	size_t j = nc_sparsity;
-	while(j--)
-		x_hes[j] |= z_hes[j] | (jac_reverse[i_z] & x_for[j]);
+	rev_hes_sparsity.binary_union(i_x, i_x, i_z, rev_hes_sparsity);
+	if( rev_jacobian[i_z] )
+		rev_hes_sparsity.binary_union(i_x, i_x, i_x, for_jac_sparsity);
 
-	jac_reverse[i_x] |= jac_reverse[i_z];
+	rev_jacobian[i_x] |= rev_jacobian[i_z];
 	return;
 }
 
