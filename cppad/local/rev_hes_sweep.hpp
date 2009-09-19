@@ -105,7 +105,7 @@ void RevHesSweep(
 	size_t                npv,
 	size_t                numvar,
 	player<Base>         *Rec,
-	const Pack           *ForJac,
+	Pack                 *ForJac, // must drop const to use connection
 	Pack                 *RevJac,
 	Pack                 *RevHes
 )
@@ -128,21 +128,19 @@ void RevHesSweep(
 	// vecad_pattern contains a sparsity pattern for each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
 	// VecAD object) to the vecad_pattern index for the VecAD object.
+	size_t n_to            = npv * 8 * sizeof(Pack);  // actually a bound
 	size_t num_vecad_ind   = Rec->num_rec_vecad_ind();
 	size_t num_vecad_vec   = Rec->num_rec_vecad_vec();
-	Pack*  vecad_pattern   = CPPAD_NULL;
+	connection<Pack> vecad_sparsity;
+	vecad_sparsity.resize(num_vecad_vec, n_to);
+	Pack* vecad_pattern = vecad_sparsity.data();
 	size_t* vecad          = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
-		vecad_pattern = CPPAD_TRACK_NEW_VEC(
-			num_vecad_vec * npv, vecad_pattern
-		);
 		vecad         = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad);
 		j             = 0;
 		for(i = 0; i < num_vecad_vec; i++)
-		{	for(k = 0; k < npv; k++)
-				vecad_pattern[ i * npv + k ] = Pack(0);
-			// length of this VecAD
+		{	// length of this VecAD
 			length   = Rec->GetVecInd(j);
 			// set to proper index for this VecAD
 			vecad[j] = i; 
@@ -153,6 +151,10 @@ void RevHesSweep(
 		}
 		CPPAD_ASSERT_UNKNOWN( j == Rec->num_rec_vecad_ind() );
 	}
+
+	// create connection objects using existing memory
+	// (kludge for step by step conversion to using connection objects)
+	connection<Pack> for_jac_sparsity(numvar, n_to, ForJac); 
 
 	// Initialize
 	Rec->start_reverse();
@@ -544,8 +546,6 @@ void RevHesSweep(
 
 	if( vecad != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC(vecad);
-	if( vecad_pattern != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(vecad_pattern);
 	return;
 }
 

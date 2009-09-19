@@ -98,15 +98,15 @@ void ForJacSweep(
         // length of the parameter vector (used by CppAD assert macros)
         const size_t num_par = play->num_rec_par();
 
-	// vecad_sparsity contains a sparsity pattern from each variable
-	// to each VecAD object.
+	// vecad_sparsity contains a sparsity pattern from each VecAD object
+	// to all the other variables.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
-	// VecAD object) to its 'to' index in vecad_sparsity
+	// VecAD object) to its from index in vecad_sparsity
 	size_t n_to            = var_sparsity.n_to();
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	connection<Pack> vecad_sparsity;
-	vecad_sparsity.resize(numvar, n_to);
+	vecad_sparsity.resize(num_vecad_vec, n_to);
 	size_t* vecad          = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
@@ -124,6 +124,11 @@ void ForJacSweep(
 		}
 		CPPAD_ASSERT_UNKNOWN( j == play->num_rec_vecad_ind() );
 	}
+
+# if CPPAD_FOR_JAC_SWEEP_TRACE
+	std::cout << std::endl;
+	CppAD::vector<bool> z_value(n_to);
+# endif
 
 	// skip the NonOp at the beginning of the recording
         play->start_forward(op, arg, i_op, i_var);
@@ -485,22 +490,19 @@ void ForJacSweep(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 # if CPPAD_FOR_JAC_SWEEP_TRACE
-		// value of z for this op
-		// Z      = ForJac + i_var * npv;
-		// where npv = var_sparsity.n_pack();
-		// Z should correspond to the sparsity pattern for node
-		// with index i_var, but this is on its way to being converted
-		// to a standard set.
+		// value for this variable
+		for(j = 0; j < n_to; j++)
+			z_value[j] = var_sparsity.get_element(i_var, j);
 		printOp(
 			std::cout,
 			play,
 			i_var,
 			op,
 			arg,
-			npv,
-			Z,
+			1,
+			&z_value,
 			0,
-			(Pack *) CPPAD_NULL
+			(CppAD::vector<bool> *) CPPAD_NULL
 		);
 	}
 	std::cout << std::endl;

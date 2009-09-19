@@ -18,6 +18,7 @@ list="
 	asin_op.hpp
 	cond_op.hpp
 	configure.hpp
+	connection.hpp
 	cos_op.hpp
 	cosh_op.hpp
 	cppad_assert.hpp

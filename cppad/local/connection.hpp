@@ -41,17 +41,56 @@ private:
 	/// Number of nodes that we are representing connections to
 	/// (set by constructor and resize).
 	size_t n_to_;
-	/// Number of \a Pack values necessary to represent n_to_ bits.
+	/// Number of \a Pack values necessary to represent \c n_to_ bits.
 	/// (set by constructor and resize).
 	size_t n_pack_;
+	/// Is the memory pointed to by \c data_ allocated by this object
+	/// (set by contructor and resize)
+	bool   data_allocated_;    
 	/// Pointer to the first packed value for all the connections.
-	Pack*        data_;
+	Pack*  data_;
 public:
 	// -----------------------------------------------------------------
 	/*! Construct a connection object (with no nodes)
- 	*/
-	connection(void)
-	: n_bit_(8 * sizeof(Pack)) ,n_from_(0), n_to_(0), n_pack_(0)
+	*/
+	connection(void) : 
+	n_bit_(8 * sizeof(Pack)) ,
+	n_from_(0)               , 
+	n_to_(0)                 , 
+	n_pack_(0)               ,
+	data_allocated_(false)
+	{
+		CPPAD_ASSERT_UNKNOWN(
+			8 == std::numeric_limits<unsigned char>::digits
+		);
+		data_ = CPPAD_NULL; 
+	}
+	// -----------------------------------------------------------------
+	/*! Construct a connection object where memory is already allocated
+
+	This is a kludge to be used during conversion of the source code
+	to use connection objects.
+
+	\param n_from
+	is the number of nodes that we are representing connections from.
+
+	\param n_to
+	is the number of nodes that we are representing connections to. 
+
+	\param data
+	points to \c n_from * \c n_pack \a Pack elements where \c n_pack is
+	given by
+	\code
+		n_bit   = 8 * sizeof(Pack);   
+		n_pack  = ( 1 + (n_to - 1) / n_bit );
+	\endcode
+	*/
+	connection(size_t n_from, size_t n_to, Pack* data) :
+	n_bit_( 8 * sizeof(Pack) )           ,
+	n_from_( n_from )                    ,
+	n_to_( n_to )                        ,
+	n_pack_( 1 + (n_to - 1) / n_bit_ )   ,
+	data_allocated_( false )
 	{
 		CPPAD_ASSERT_UNKNOWN(
 			8 == std::numeric_limits<unsigned char>::digits
@@ -60,9 +99,9 @@ public:
 	}
 	// -----------------------------------------------------------------
 	/*! Destructor 
- 	*/
+	*/
 	~connection(void)
-	{	if( n_from_ * n_pack_ > 0 )
+	{	if( data_allocated_ )
 			CPPAD_TRACK_DEL_VEC( data_ ); 
 	}
 	// -----------------------------------------------------------------
@@ -80,17 +119,20 @@ public:
 	*/
 	void resize(size_t n_from, size_t n_to) 
 	{	Pack zero(0);
-		size_t i = n_from_ * n_pack_;
-		if( i > 0 )
+		if( data_allocated_ )
 			CPPAD_TRACK_DEL_VEC(data_);
-		n_from_  = n_from;
-		n_to_    = n_to;
-		n_pack_  = ( 1 + (n_to - 1) / n_bit_ );
-		i        = n_from_ * n_pack_;
-		if( i > 0 )
-			data_ = CPPAD_TRACK_NEW_VEC(i, data_);
-		while(i--)
-			data_[i] = zero;
+
+		n_from_         = n_from;
+		n_to_           = n_to;
+		n_pack_         = ( 1 + (n_to - 1) / n_bit_ );
+		size_t i        = n_from_ * n_pack_;
+		data_allocated_ = i > 0;
+
+		if( data_allocated_ )
+		{	data_ = CPPAD_TRACK_NEW_VEC(i, data_);
+			while(i--)
+				data_[i] = zero;
+		}
 	}
 	// -----------------------------------------------------------------
 	/*! Set one connection element between a from and to node.
@@ -146,7 +188,7 @@ public:
 
 	\par Checked Assertions
 	\li target < n_from_
- 	*/
+	*/
 	void clear(size_t target)
 	{	// value with all its bits set to false
 		static Pack zero(0);
@@ -176,7 +218,7 @@ public:
 	\li this_target  < n_from_
 	\li other_value  < other.n_from_
 	\li n_pack_     == other.n_pack_ 
- 	*/
+	*/
 	void assignment(
 		size_t this_target            , 
 		size_t other_value            , 
@@ -217,7 +259,7 @@ public:
 	\li this_left   <  n_from_
 	\li other_right <  other.n_from_
 	\li n_pack_     == other.n_pack_ 
- 	*/
+	*/
 	void binary_union(
 		size_t this_target            , 
 		size_t this_left              , 
@@ -238,17 +280,17 @@ public:
 	}
 	// -----------------------------------------------------------------
 	/*! Fetch n_from for this connection object.
- 	
+	
 	\return
- 	Number of from nodes for this connection object
+	Number of from nodes for this connection object
 	*/
 	size_t n_from(void) const
 	{	return n_from_; }
 	// -----------------------------------------------------------------
 	/*! Fetch n_to for this connection object. 
- 	
+	
 	\return
- 	Number of to nodes for this connection object
+	Number of to nodes for this connection object
 	*/
 	size_t n_to(void) const
 	{	return n_to_; }
@@ -256,19 +298,19 @@ public:
 	/*! Fetch n_pack for this connection object.
 
 	This is a temporary function for use during refactoring of source.
- 	
+	
 	\return
- 	Number of Pack values per from node for this connection object
+	Number of Pack values per from node for this connection object
 	*/
 	size_t n_pack(void) const
 	{	return n_pack_; }
 	// -----------------------------------------------------------------
 	/*! Fetch n_bit for this connection object.
- 	
+	
 	This is a temporary function for use during refactoring of source.
 
 	\return
- 	Number of bits per Pack values 
+	Number of bits per Pack values 
 	*/
 	size_t n_bit(void) const
 	{	return n_bit_; }
@@ -276,9 +318,11 @@ public:
 	/*! Fetch data for this connection object.
 
 	This is a temporary function for use during refactoring of source.
- 	
+	
 	\return
- 	Pointer to the raw data for this connection object
+	Pointer to the raw data for this connection object.
+	This return value is not longer valid after the next call to
+	the resize member function.
 	*/
 	Pack* data(void)
 	{	return data_; }
