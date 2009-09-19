@@ -197,11 +197,8 @@ template <class Base>
 template <class Vector>
 Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 {
-	// type used to pack bits (must support standard bit operations)
-	typedef size_t Pack;
-
 	// temporary indices
-	size_t i, j, k, p;
+	size_t i, j;
 
 	// check Vector is Simple Vector class with bool elements
 	CheckSimpleVector<bool, Vector>();
@@ -210,10 +207,6 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 	size_t m = dep_taddr_.size();
 	size_t n = ind_taddr_.size();
 
-	CPPAD_ASSERT_KNOWN(
-		q > 0,
-		"RevSparseHes: q (first argument) is not greater than zero"
-	);
 	CPPAD_ASSERT_KNOWN(
 		q == for_jac_sparsity_.n_to(),
 		"RevSparseHes: q (first argument) is not equal to its value"
@@ -225,25 +218,17 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 		"range dimension for ADFun object."
 	);
 
-	// number of bits per packed value
-	size_t n_bit = for_jac_sparsity_.n_bit();
-
-	// number of packed values per from node
-	size_t npv = for_jac_sparsity_.n_pack();
-	
 	// array that will hold packed reverse Jacobian values
 	Pack *RevJac = CPPAD_NULL;
 	RevJac       = CPPAD_TRACK_NEW_VEC(total_num_var_, RevJac);	
 
-	// array that will hold packed reverse Hessain values
-	Pack *RevHes = CPPAD_NULL;
-	RevHes       = CPPAD_TRACK_NEW_VEC(total_num_var_ * npv, RevHes);	
+	// connection object that will hold packed reverse Hessain values
+	connection<Pack> rev_hes_sparsity;
+	rev_hes_sparsity.resize(total_num_var_, q);
 
-	// initialize entire RevHes and RevJac matrix to false
+	// initialize RevJac matrix to false
 	for(i = 0; i < total_num_var_; i++)
-	{	RevJac[i] = 0;
-		for(k = 0; k < npv; k++)
-			RevHes[ i * npv + k ] = 0;
+	{	RevJac[i] = Pack(0);
 	}
 	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
@@ -256,16 +241,14 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 	// compute the Hessian sparsity patterns
 	RevHesSweep(
 		n,
-		npv,
 		total_num_var_,
 		&play_,
-		for_jac_sparsity_.data(), 
+		for_jac_sparsity_, 
 		RevJac,
-		RevHes
+		rev_hes_sparsity
 	);
 
 	// return values corresponding to independent variables
-	Pack mask;
 	Vector h(n * q);
 
 	// j is index corresponding to reverse mode martial
@@ -273,21 +256,16 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < total_num_var_ );
 
 		// ind_taddr_[j] is operator taddr for j-th independent variable
+		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
 
 		// i is index corresponding to forward mode partial
-		for(i = 0; i < q; i++) 
-		{	k     = i / n_bit;
-			p     = i - k * n_bit;
-			mask  = Pack(1) << p;
-			mask &=	RevHes[ ind_taddr_[j] * npv + k ];
-			h[ i * n + j ] = (mask != 0);
-		}
+		for(i = 0; i < q; i++) h[ i * n + j ] = 
+			rev_hes_sparsity.get_element(j + 1, i);
 	}
 
 	// free memory used for the calculation
 	CPPAD_TRACK_DEL_VEC(RevJac);
-	CPPAD_TRACK_DEL_VEC(RevHes);
 
 	return h;
 }

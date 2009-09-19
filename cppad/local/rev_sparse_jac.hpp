@@ -157,7 +157,7 @@ template <class Vector>
 Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) 
 {
 	// temporary indices
-	size_t i, j, k, q;
+	size_t i, j;
 
 	// check Vector is Simple Vector class with bool elements
 	CheckSimpleVector<bool, Vector>();
@@ -177,69 +177,38 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s)
 		"p (first argument) times range dimension for ADFun object."
 	);
 
-	// number of bits per packed value
-	size_t n_bit = 8 * sizeof(Pack);
-	
-	// number of packed values per variable on the tape
-	size_t npv = 1 + (p - 1) / n_bit;
+	// connection object that will hold the results
+	connection<Pack> var_sparsity;
+	var_sparsity.resize(total_num_var_, p);
 
-	// array that will hold packed values
-	Pack *RevJac = CPPAD_NULL;
-	RevJac       = CPPAD_TRACK_NEW_VEC(total_num_var_ * npv, RevJac);
+	// set from node connections corresponding to dependent variables
+	for(i = 0; i < m; i++)
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
 
-	// update maximum memory requirement
-	// memoryMax = std::max( memoryMax, 
-	// 	Memory() + total_num_var_ * npv * n_bit
-	// );
-
-	// initialize entire RevJac matrix as false
-	for(i = 0; i < total_num_var_; i++)
-		for(k = 0; k < npv; k++)
-			RevJac[ i * npv + k ] = 0;
-
-	// set values corresponding to dependent variables
-	Pack mask;
-	for(j = 0; j < m; j++)
-	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[j] < total_num_var_ );
-
-		// set bits that are true
-		for(i = 0; i < p; i++) 
-		{	k    = i / n_bit;
-			q    = i - k * n_bit;
-			mask = Pack(1) << q;
-			if( s[ i * m + j ] )
-				RevJac[ dep_taddr_[j] * npv + k ] |= mask;
-		}
+		for(j = 0; j < p; j++) if( s[ i * m + j ] )
+			var_sparsity.set_element( dep_taddr_[i], j );
 	}
 
 	// evaluate the sparsity patterns
 	RevJacSweep(
 		n,
-		npv,
 		total_num_var_,
 		&play_,
-		RevJac
+		var_sparsity
 	);
 
 	// return values corresponding to dependent variables
 	Vector r(p * n);
 	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < total_num_var_ );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
+
 		// ind_taddr_[j] is operator taddr for j-th independent variable
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
 
 		// set bits 
 		for(i = 0; i < p; i++) 
-		{	k     = i / n_bit;
-			q     = i - k * n_bit;
-			mask  = Pack(1) << q;
-			mask &=	RevJac[ ind_taddr_[j] * npv + k ];
-			r[ i * n + j ] = (mask != 0);
-		}
+			r[ i * n + j ] = var_sparsity.get_element(j+1, i);
 	}
-
-	// done with buffer
-	CPPAD_TRACK_DEL_VEC(RevJac);
 
 	return r;
 }

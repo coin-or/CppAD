@@ -43,53 +43,50 @@ there is more that one bit per Pack value.
 \param n
 is the number of independent variables on the tape.
 
-\param npv
-Is the number of elements of type \a Pack
-(per variable) in the sparsity pattern \a RevJac.
-
 \param numvar
 is the total number of variables on the tape; i.e.,
-\a Rec->num_rec_var().
+\a play->num_rec_var().
 This is also the number of rows in the entire sparsity pattern \a RevJac.
 
-\param Rec
-The information stored in \a Rec
+\param play
+The information stored in \a play
 is a recording of the operations corresponding to a function
 \f[
 	F : {\bf R}^n \rightarrow {\bf R}^m
 \f]
 where \f$ n \f$ is the number of independent variables
 and \f$ m \f$ is the number of dependent variables.
-The object \a Rec is effectly constant.
+The object \a play is effectly constant.
 It is not declared const because while playing back the tape
-the object \a Rec holds information about the currentl location
+the object \a play holds information about the currentl location
 with in the tape and this changes during playback.
 
-\param RevJac
-\b Input: For i = \a numvar - m , ... , \a numvar - 1, 
-the sparsity pattern for the dependent variable with index 
-(i - \a numvar + m)
-is given by \a RevJac[ i * \a npv + k ] for k = 0 , ... , \a npv - 1.
-\n
-\n
-Input: For i = 0 , ... , \a numvar - m - 1,
-the sparsity pattern for the variable with index i on the tape
-is zero, i.e.,
-\a RevJac[ i * \a npv + k ] == 0 (all false) for k = 0 , ... , \a npv - 1.
+\param var_sparsity
+For i = 0 , ... , \a numvar - 1,
+(all the variables on the tape)
+the forward Jacobian sparsity pattern for variable i
+corresponds to the from node with index i in \a var_sparsity.
+\b
+\b
+\b Input: 
+For i = 0 , ... , \a numvar - 1,
+the forward Jacobian sparsity pattern for variable i is an input
+if i corresponds to a dependent variable.
+Otherwise the sparsity patten is empty. 
 \n
 \n
 \b Output: For j = 1 , ... , \a n,
 the sparsity pattern for the dependent variable with index (j-1) 
-is given by \a RevJac[ j * \a npv + k ] for k = 0 , ... , \a npv - 1.
+is given by the connections for the from node with index j in
+\a var_sparsity.
 */
 
 template <class Base, class Pack>
 void RevJacSweep(
 	size_t                n,
-	size_t                npv,
 	size_t                numvar,
-	player<Base>         *Rec,
-	Pack                 *RevJac
+	player<Base>         *play,
+	connection<Pack>&     var_sparsity
 )
 {
 	OpCode           op;
@@ -101,31 +98,38 @@ void RevJacSweep(
 	size_t            i, j, k;
 
 	// length of the parameter vector (used by CppAD assert macros)
-	const size_t num_par = Rec->num_rec_par();
+	const size_t num_par = play->num_rec_par();
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
+	CPPAD_ASSERT_UNKNOWN( play->num_rec_var()   == numvar );
+	CPPAD_ASSERT_UNKNOWN( var_sparsity.n_from() == numvar );
+
+	// number of to nodes in the connection
+	size_t n_to = var_sparsity.n_to();
+
+	// number of packed values per from node
+	size_t npv = var_sparsity.n_pack();
+
+	// pointer to raw data in var_sparsity
+	Pack *RevJac = var_sparsity.data();
 
 	// vecad_pattern contains a sparsity pattern for each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
 	// VecAD object) to the vecad_pattern index for the VecAD object.
-	size_t num_vecad_ind   = Rec->num_rec_vecad_ind();
-	size_t num_vecad_vec   = Rec->num_rec_vecad_vec();
-	Pack*  vecad_pattern   = CPPAD_NULL;
+	size_t num_vecad_ind   = play->num_rec_vecad_ind();
+	size_t num_vecad_vec   = play->num_rec_vecad_vec();
+	connection<Pack> vecad_sparsity;
+	vecad_sparsity.resize(num_vecad_vec, n_to);
+	Pack*  vecad_pattern   = vecad_sparsity.data();
 	size_t* vecad          = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
-		vecad_pattern = CPPAD_TRACK_NEW_VEC(
-			num_vecad_vec * npv, vecad_pattern
-		);
 		vecad         = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad);
 		j             = 0;
 		for(i = 0; i < num_vecad_vec; i++)
-		{	for(k = 0; k < npv; k++)
-				vecad_pattern[ i * npv + k ] = Pack(0);
-			// length of this VecAD
-			length   = Rec->GetVecInd(j);
+		{	// length of this VecAD
+			length   = play->GetVecInd(j);
 			// set to proper index for this VecAD
 			vecad[j] = i; 
 			for(k = 1; k <= length; k++)
@@ -133,33 +137,36 @@ void RevJacSweep(
 			// start of next VecAD
 			j       += length + 1;
 		}
-		CPPAD_ASSERT_UNKNOWN( j == Rec->num_rec_vecad_ind() );
+		CPPAD_ASSERT_UNKNOWN( j == play->num_rec_vecad_ind() );
 	}
 
 	// Initialize
-	Rec->start_reverse();
+	play->start_reverse();
 	i_op = 2;
 # if CPPAD_REV_JAC_SWEEP_TRACE
 	std::cout << std::endl;
+	CppAD::vector<bool> z_value(n_to);
 # endif
 	while(i_op > 1)
 	{
 		// next op
-		Rec->next_reverse(op, arg, i_op, i_var);
+		play->next_reverse(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
 # if CPPAD_REV_JAC_SWEEP_TRACE
+		for(j = 0; j < n_to; j++)
+			z_value[j] = var_sparsity.get_element(i_var, j);
 		printOp(
 			std::cout, 
-			Rec,
+			play,
 			i_var,
 			op, 
 			arg,
 			0, 
-			(Pack *) CPPAD_NULL,
-			npv, 
-			RevJac + i_var * npv
+			(CppAD::vector<bool> *) CPPAD_NULL,
+			1, 
+			&z_value
 		);
 # endif
 
@@ -517,11 +524,9 @@ void RevJacSweep(
 		}
 	}
 	CPPAD_ASSERT_UNKNOWN( i_op == 1 );
-	CPPAD_ASSERT_UNKNOWN( Rec->GetOp(i_op-1) == NonOp );
+	CPPAD_ASSERT_UNKNOWN( play->GetOp(i_op-1) == NonOp );
 	CPPAD_ASSERT_UNKNOWN( i_var == NumRes(NonOp)  );
 
-	if( vecad_pattern != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC( vecad_pattern );
 	if( vecad != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC( vecad );
 

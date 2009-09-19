@@ -453,10 +453,7 @@ then
 	if ! ./check_doxygen.sh
 	then
 		echo "Warnings of doxygen output."
-		if [ "$2" == "test" ]
-		then
-			exit 1
-		fi
+		exit 1
 	fi
 	#
 	echo "pushd doxydoc/latex ; make >& ../../doxygen_tex.log"

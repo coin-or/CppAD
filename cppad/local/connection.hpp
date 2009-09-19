@@ -66,38 +66,6 @@ public:
 		data_ = CPPAD_NULL; 
 	}
 	// -----------------------------------------------------------------
-	/*! Construct a connection object where memory is already allocated
-
-	This is a kludge to be used during conversion of the source code
-	to use connection objects.
-
-	\param n_from
-	is the number of nodes that we are representing connections from.
-
-	\param n_to
-	is the number of nodes that we are representing connections to. 
-
-	\param data
-	points to \c n_from * \c n_pack \a Pack elements where \c n_pack is
-	given by
-	\code
-		n_bit   = 8 * sizeof(Pack);   
-		n_pack  = ( 1 + (n_to - 1) / n_bit );
-	\endcode
-	*/
-	connection(size_t n_from, size_t n_to, Pack* data) :
-	n_bit_( 8 * sizeof(Pack) )           ,
-	n_from_( n_from )                    ,
-	n_to_( n_to )                        ,
-	n_pack_( 1 + (n_to - 1) / n_bit_ )   ,
-	data_allocated_( false )
-	{
-		CPPAD_ASSERT_UNKNOWN(
-			8 == std::numeric_limits<unsigned char>::digits
-		);
-		data_ = CPPAD_NULL; 
-	}
-	// -----------------------------------------------------------------
 	/*! Destructor 
 	*/
 	~connection(void)

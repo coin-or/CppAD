@@ -45,69 +45,67 @@ there is more that one bit per Pack value.
 \param n
 is the number of independent variables on the tape.
 
-\param npv
-Is the number of elements of type \a Pack
-(per variable) in the sparsity pattern \a RevHes.
-
 \param numvar
 is the total number of variables on the tape; i.e.,
-\a Rec->num_rec_var().
-This is also the number of rows in the entire sparsity pattern \a RevHes.
+\a play->num_rec_var().
+This is also the number of rows in the entire sparsity pattern 
+\a rev_hes_sparsity.
 
-\param Rec
-The information stored in \a Rec
+\param play
+The information stored in \a play
 is a recording of the operations corresponding to a function
 \f[
 	F : {\bf R}^n \rightarrow {\bf R}^m
 \f]
 where \f$ n \f$ is the number of independent variables
 and \f$ m \f$ is the number of dependent variables.
-The object \a Rec is effectly constant.
+The object \a play is effectly constant.
 It is not declared const because while playing back the tape
-the object \a Rec holds information about the currentl location
+the object \a play holds information about the currentl location
 with in the tape and this changes during playback.
 
-\param ForJac
-For i = 0 , ... , \a numvar - 1 
+\param for_jac_sparsity
+For i = 0 , ... , \a numvar - 1, 
 (for all the variables on the tape),
 the forward Jacobian sparsity pattern for the variable with index i
-on the tape is given by
-\a ForJac[ i * \a npv + k ] for k = 0 , ... , \a npv - 1.
+corresponds to the from node with index i in \a for_jac_sparsity.
 
 \param RevJac
 \b Input:
-For i = \a numvar - m , ... , \a numvar - 1 
-the if the independent variable with index (i - \a numvar + m ) is 
-is included in the Hessian, \a RevJac[ i ] is equal to all ones (~ \a Pack(0)),
+For i = 0, ... , \a numvar - 1 
+the if the variable with index i on the tape is an dependent variable and
+included in the Hessian, \a RevJac[ i ] is equal to all ones (~ \a Pack(0)),
 otherwise it is equal to zero. 
-For i = 0 , ... , \a numvar - m - 1,
-\a RevJac[i] is equal to zero.
 \n
 \n
 \b Output: The values in \a RevJac upon return are not specified; i.e.,
 it is used for temporary work space.
 
-\param RevHes
-\b Input: For i = 0 , ... , \a numvar - 1  and for k = 0 , ... , \a npv - 1,
-\a RevHes[ i * \a npv + k ] is zero.
+\param rev_hes_sparsity
+The reverse Hessian sparsity pattern for the variable with index i
+corresponds to the from node with index i in \a rev_hes_sparsity.
+\n
+\n
+\b Input: For i = 0 , ... , \a numvar - 1  
+the reverse Hessian sparsity pattern for the variable with index i is empty.
 \n
 \n
 \b Output: For j = 1 , ... , \a n,
-the Hessian sparsity pattern for the dependent variable with index (j-1) 
-is given by \a RevHes[ j * \a npv + k ] for k = 0 , ... , \a npv - 1.
-The values in the rest of \a RevHes are not specified; i.e.,
-they are used for temporary work space
+the reverse Hessian sparsity pattern for the independent dependent variable 
+with index (j-1) is given by the from connections for the node with index j
+in \a rev_hes_sparsity. 
+The values in the rest of \a rev_hes_sparsity are not specified; i.e.,
+they are used for temporary work space.
 */
 
 template <class Base, class Pack>
 void RevHesSweep(
 	size_t                n,
-	size_t                npv,
 	size_t                numvar,
-	player<Base>         *Rec,
-	Pack                 *ForJac, // must drop const to use connection
+	player<Base>         *play,
+	connection<Pack>&     for_jac_sparsity, // should be const
 	Pack                 *RevJac,
-	Pack                 *RevHes
+	connection<Pack>&     rev_hes_sparsity
 )
 {
 	OpCode           op;
@@ -117,20 +115,29 @@ void RevHesSweep(
 	const size_t   *arg = 0;
 
 	// length of the parameter vector (used by CppAD assert macros)
-	const size_t num_par = Rec->num_rec_par();
+	const size_t num_par = play->num_rec_par();
 
 	size_t             i, j, k;
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
+	CPPAD_ASSERT_UNKNOWN( play->num_rec_var()       == numvar );
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.n_from() == numvar );
+	CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.n_from() == numvar );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
+
+	// number of to nodes in connections
+	size_t n_to   = rev_hes_sparsity.n_to();
+	CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.n_to() == n_to );
+
+	// number of packed values per from node
+	size_t npv = rev_hes_sparsity.n_pack();
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.n_pack() == npv );
 
 	// vecad_pattern contains a sparsity pattern for each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
 	// VecAD object) to the vecad_pattern index for the VecAD object.
-	size_t n_to            = npv * 8 * sizeof(Pack);  // actually a bound
-	size_t num_vecad_ind   = Rec->num_rec_vecad_ind();
-	size_t num_vecad_vec   = Rec->num_rec_vecad_vec();
+	size_t num_vecad_ind   = play->num_rec_vecad_ind();
+	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	connection<Pack> vecad_sparsity;
 	vecad_sparsity.resize(num_vecad_vec, n_to);
 	Pack* vecad_pattern = vecad_sparsity.data();
@@ -141,7 +148,7 @@ void RevHesSweep(
 		j             = 0;
 		for(i = 0; i < num_vecad_vec; i++)
 		{	// length of this VecAD
-			length   = Rec->GetVecInd(j);
+			length   = play->GetVecInd(j);
 			// set to proper index for this VecAD
 			vecad[j] = i; 
 			for(k = 1; k <= length; k++)
@@ -149,41 +156,45 @@ void RevHesSweep(
 			// start of next VecAD
 			j       += length + 1;
 		}
-		CPPAD_ASSERT_UNKNOWN( j == Rec->num_rec_vecad_ind() );
+		CPPAD_ASSERT_UNKNOWN( j == play->num_rec_vecad_ind() );
 	}
 
 	// create connection objects using existing memory
 	// (kludge for step by step conversion to using connection objects)
-	connection<Pack> for_jac_sparsity(numvar, n_to, ForJac); 
+	Pack* ForJac = for_jac_sparsity.data();
+	Pack* RevHes = rev_hes_sparsity.data();
 
 	// Initialize
-	Rec->start_reverse();
+	play->start_reverse();
 	i_op = 2;
 # if CPPAD_REV_HES_SWEEP_TRACE
 	std::cout << std::endl;
+	CppAD::vector<bool> zf_value(n_to);
+	CppAD::vector<bool> zh_value(n_to);
 # endif
 	while(i_op > 1)
 	{
 		// next op
-		Rec->next_reverse(op, arg, i_op, i_var);
+		play->next_reverse(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
 # if CPPAD_REV_HES_SWEEP_TRACE
-		// sparsity for z corresponding to this op
-		const Pack *Zf  = ForJac + i_var * npv;
-		const Pack *Zh  = RevHes + i_var * npv;
+		for(j = 0; j < n_to; j++)
+		{	zf_value[j] = for_jac_sparsity.get_element(i_var, j);
+			zh_value[j] = for_jac_sparsity.get_element(i_var, j);
+		}
 
 		printOp(
 			std::cout, 
-			Rec,
+			play,
 			i_var,
 			op, 
 			arg,
-			npv, 
-			Zf, 
-			npv, 
-			Zh
+			1, 
+			&zf_value, 
+			1, 
+			&zh_value
 		);
 # endif
 
@@ -541,7 +552,7 @@ void RevHesSweep(
 		}
 	}
 	CPPAD_ASSERT_UNKNOWN( i_op == 1 );
-	CPPAD_ASSERT_UNKNOWN( Rec->GetOp(i_op-1) == NonOp );
+	CPPAD_ASSERT_UNKNOWN( play->GetOp(i_op-1) == NonOp );
 	CPPAD_ASSERT_UNKNOWN( i_var == NumRes(NonOp)  );
 
 	if( vecad != CPPAD_NULL )
