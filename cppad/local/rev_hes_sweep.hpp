@@ -263,7 +263,7 @@ void RevHesSweep(
 			// -------------------------------------------------
 			case CExpOp:
 			reverse_sparse_hessian_cond_op(
-				i_var, arg, num_par, RevJac, npv, RevHes
+				i_var, arg, num_par, RevJac, rev_hes_sparse
 			);
 			break;
 			// ---------------------------------------------------

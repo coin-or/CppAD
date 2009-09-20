@@ -404,42 +404,34 @@ where y represents the combination of y_0, y_1, y_2, and y_3.
 
 \copydetails sparse_conditional_exp_op
 
-\param nc_sparsity
-number of packed values corresponding to each sparsity pattern; i.e.,
-the number of columns in the sparsity pattern matrices.
 
 \param sparsity
-If y_2 is a variable,
-for k = 0 , ... , nc_sparsity-1,
-\a sparsity [ \a arg[4] * nc_sparsity + k ]
-is the sparsity bit pattern corresponding to y_2.
+if y_2 is a variable, the from node with index \a arg[4] contains
+the sparsity bit pattern corresponding to y_2.
+This identifies which of the dependent variables depend on the variable y_2.
 On input, this pattern corresponds to the function G.
 On ouput, it corresponds to the function H.
 \n
 \n
-If y_3 is a variable,
-for k = 0 , ... , nc_sparsity-1,
-\a sparsity [ \a arg[5] * nc_sparsity + k ]
-is the sparsity bit pattern corresponding to y_3.
+if y_3 is a variable, the from node with index \a arg[5] contains
+the sparsity bit pattern corresponding to y_3.
+This identifies which of the dependent variables depeond on the variable y_3.
 On input, this pattern corresponds to the function G.
 On ouput, it corresponds to the function H.
 \n
-\n
-For k = 0 , ... , nc_sparsity-1,
-\a sparsity [ \a i_z * nc_sparsity + k ]
-is the sparsity bit pattern corresponding to z.
+\b Output: 
+The from node with index \a i_z containts
+the sparsity bit pattern corresponding to z.
+This identifies which of the dependent variables depend on the variable z.
 On input and output, this pattern corresponds to the function G.
 */
 template <class Pack>
 inline void reverse_sparse_jacobian_cond_op(
-	size_t         i_z           ,
-	const size_t*  arg           , 
-	size_t         num_par       ,
-	size_t         nc_sparsity   ,
-	Pack*          sparsity      )
+	size_t              i_z           ,
+	const size_t*       arg           , 
+	size_t              num_par       ,
+	connection<Pack>&   sparsity      )
 {	
-	Pack* z   = sparsity + i_z * nc_sparsity;
-
 	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
@@ -465,20 +457,13 @@ inline void reverse_sparse_jacobian_cond_op(
 	{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
 	}
 # endif
-	size_t k;
 	if( arg[1] & 4 )
 	{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
-		Pack* y_2 = sparsity + arg[4] * nc_sparsity;
-		k = nc_sparsity;
-		while(k--)
-			y_2[k] |= z[k];
+		sparsity.binary_union(arg[4], arg[4], i_z, sparsity);
 	}
 	if( arg[1] & 8 )
 	{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
-		Pack* y_3 = sparsity + arg[5] * nc_sparsity;
-		k = nc_sparsity;
-		while(k--)
-			y_3[k] |= z[k];
+		sparsity.binary_union(arg[5], arg[5], i_z, sparsity);
 	}
 	return;
 }
@@ -496,9 +481,6 @@ where y represents the combination of y_0, y_1, y_2, and y_3.
 
 \copydetails sparse_conditional_exp_op
 
-\param nc_sparsity
-number of packed values corresponding to each sparsity pattern; i.e.,
-the number of columns in the sparsity pattern matrices.
 
 \param jac_reverse
 \a jac_reverse[i_z] 
@@ -521,43 +503,39 @@ On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 \param hes_sparsity
-For k = 0 , ... , nc_sparsity-1,
-\a sparsity [ \a i_z * nc_sparsity + k ]
-is the sparsity bit pattern corresponding to z.
-On input and output, this pattern corresponds to the function G.
+The connections in \a hes_sparsity for the from node with index \a i_z 
+are the Hessian sparsity pattern for the function G
+where one of the partials is with respect to z.
 \n
 \n
 If y_2 is a variable,
-For k = 0 , ... , nc_sparsity-1,
-\a sparsity [ \a arg[4] * nc_sparsity + k ]
-is the sparsity bit pattern corresponding to y_2.
+the connections in \a hes_sparsity for the from node with index \a arg[4] 
+are the Hessian sparsity pattern 
+where one of the partials is with respect to y_2.
 On input, this pattern corresponds to the function G.
 On output, this pattern corresponds to the function H.
 \n
 \n
 If y_3 is a variable,
-For k = 0 , ... , nc_sparsity-1,
-\a sparsity [ \a arg[5] * nc_sparsity + k ]
-is the sparsity bit pattern corresponding to y_3.
+the connections in \a hes_sparsity for the from node with index \a arg[5] 
+are the Hessian sparsity pattern 
+where one of the partials is with respect to y_3.
 On input, this pattern corresponds to the function G.
 On output, this pattern corresponds to the function H.
 */
 template <class Pack>
 inline void reverse_sparse_hessian_cond_op(
-	size_t         i_z           ,
-	const size_t*  arg           , 
-	size_t         num_par       ,
-	Pack*          jac_reverse   ,
-	size_t         nc_sparsity   ,
-	Pack*          hes_sparsity  )
+	size_t               i_z           ,
+	const size_t*        arg           , 
+	size_t               num_par       ,
+	Pack*                jac_reverse   ,
+	connection<Pack>&    hes_sparsity  )
 {	
 
 	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
-
-	Pack* z_hes   = hes_sparsity + i_z * nc_sparsity;
 
 # ifndef NDEBUG
 	if( arg[1] & 1 )
@@ -579,23 +557,16 @@ inline void reverse_sparse_hessian_cond_op(
 	{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
 	}
 # endif
-	size_t k;
 	if( arg[1] & 4 )
 	{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
-		Pack* y_2_hes = hes_sparsity + arg[4] * nc_sparsity;
-		k = nc_sparsity;
-		while(k--)
-			y_2_hes[k] |= z_hes[k];
 
+		hes_sparsity.binary_union(arg[4], arg[4], i_z, hes_sparsity);
 		jac_reverse[ arg[4] ] |= jac_reverse[i_z];
 	}
 	if( arg[1] & 8 )
 	{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
-		Pack* y_3_hes = hes_sparsity + arg[5] * nc_sparsity;
-		k = nc_sparsity;
-		while(k--)
-			y_3_hes[k] |= z_hes[k];
 
+		hes_sparsity.binary_union(arg[5], arg[5], i_z, hes_sparsity);
 		jac_reverse[ arg[5] ] |= jac_reverse[i_z];
 	}
 	return;

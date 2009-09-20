@@ -237,7 +237,7 @@ void RevJacSweep(
 
 			case CExpOp:
 			reverse_sparse_jacobian_cond_op(
-				i_var, arg, num_par, npv, RevJac
+				i_var, arg, num_par, var_sparsity
 			);
 			break;
 			// ---------------------------------------------------

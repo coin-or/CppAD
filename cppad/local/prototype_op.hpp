@@ -1404,11 +1404,11 @@ i.e. the row index in sparsity corresponding to z.
 \param arg
 \a arg[0]
 variable index corresponding to the left operand for this operator;
-i.e. the row index in sparsity corresponding to x.
+i.e. the from node index in the spasity patterns correspoding to x.
 \n
 \n arg[1]
 variable index corresponding to the right operand for this operator;
-i.e. the row index in sparsity corresponding to y.
+i.e. the row index in sparsity patterns corresponding to y.
 
 \param jac_reverse
 \a jac_reverse[i_z] 
@@ -1426,36 +1426,30 @@ is all zero (ones) if the Jacobian with respect to y is zero (non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
-\param nc_sparsity
-number of packed values corresponding to each variable; i.e.,
-the number of columns in the sparsity pattern matrix.
-
-\param jac_forward
-For j = 0 , ... , \a nc_sparsity - 1,
-jac_forward[ \a arg[0] * \a nc_sparsity + j ]
-is the forward mode Jacobiain sparsity pattern for the variable x.
+\param for_jac_sparsity
+The connections in \a for_jac_sparsity for the
+from node with index \a arg[0] are the forward sparsity pattern for x.
 \n
 \n
-For j = 0 , ... , \a nc_sparsity - 1,
-jac_forward[ \a arg[1] * \a nc_sparsity + j ]
-is the forward mode Jacobiain sparsity pattern for the variable y.
+The connections in \a for_jac_sparsity for the
+from node with index \a arg[1] are the forward sparsity pattern for y.
 
-\param hes_sparsity
-For j = 0 , ... , \a nc_sparsity - 1,
-hes_sparsity [ \a i_z * \a nc_sparsity + j ]
-is the Hessian sparsity pattern for the function G
+\param rev_hes_sparsity
+The connections in \a rev_hes_sparsity for the
+from node with index \a i_z are the Hessian sparsity pattern
+for the function G
 where one of the partial derivatives is with respect to z.
 \n
-For j = 0 , ... , \a nc_sparsity - 1,
-hes_sparsity [ \a arg[0] * \a nc_sparsity + j ]
-is the Hessian sparsity pattern 
+\n
+The connections in \a rev_hes_sparsity for the
+from node wiht index \a arg[0] are the Hessian sparsity pattern
 where one of the partial derivatives is with respect to x.
 On input, it corresponds to the function G,
 and on output it correspondst to H.
 \n
-For j = 0 , ... , \a nc_sparsity - 1,
-hes_sparsity [ \a arg[1] * \a nc_sparsity + j ]
-is the Hessian sparsity pattern 
+\n
+The connections in \a rev_hes_sparsity for the
+from node wiht index \a arg[1] are the Hessian sparsity pattern
 where one of the partial derivatives is with respect to y.
 On input, it corresponds to the function G,
 and on output it correspondst to H.
@@ -1466,12 +1460,11 @@ and on output it correspondst to H.
 */
 template <class Pack>
 inline void reverse_sparse_hessian_binary_op(
-	size_t            i_z           ,
-	const size_t*     arg           ,
-	Pack*             jac_reverse   ,
-	size_t            nc_sparsity   ,
-	const Pack*       jac_forward   ,
-	Pack*             hes_sparsity  )
+	size_t            i_z                ,
+	const size_t*     arg                ,
+	Pack*             jac_reverse        ,
+	connection<Pack>& for_jac_sparsity   ,
+	connection<Pack>& rev_hes_sparsity   )
 {	
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );

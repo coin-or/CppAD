@@ -66,11 +66,21 @@ public:
 		data_ = CPPAD_NULL; 
 	}
 	// -----------------------------------------------------------------
+	/*! Make use of copy constructor an error
+ 	*/
+	connection(const connection& c) : 
+	n_bit_(8 * sizeof(Pack)) 
+	{	// Error: probably connection arguement is passed by value
+		CPPAD_ASSERT_UNKNOWN(0); 
+	}
+	// -----------------------------------------------------------------
 	/*! Destructor 
 	*/
 	~connection(void)
 	{	if( data_allocated_ )
+		{	data_allocated_ = false;
 			CPPAD_TRACK_DEL_VEC( data_ ); 
+		}
 	}
 	// -----------------------------------------------------------------
 	/*! Change the number of nodes and initialize with no connections
@@ -88,16 +98,18 @@ public:
 	void resize(size_t n_from, size_t n_to) 
 	{	Pack zero(0);
 		if( data_allocated_ )
+		{	data_allocated_ = false;
 			CPPAD_TRACK_DEL_VEC(data_);
+		}
 
 		n_from_         = n_from;
 		n_to_           = n_to;
 		n_pack_         = ( 1 + (n_to - 1) / n_bit_ );
 		size_t i        = n_from_ * n_pack_;
-		data_allocated_ = i > 0;
 
-		if( data_allocated_ )
+		if( i > 0 )
 		{	data_ = CPPAD_TRACK_NEW_VEC(i, data_);
+			data_allocated_ = true;
 			while(i--)
 				data_[i] = zero;
 		}
