@@ -184,7 +184,7 @@ void RevJacSweep(
 			case AddvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_binary_op(
-				i_var, arg, npv, RevJac
+				i_var, arg, var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -277,7 +277,7 @@ void RevJacSweep(
 			case DivvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_binary_op(
-				i_var, arg, npv, RevJac
+				i_var, arg, var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -352,7 +352,7 @@ void RevJacSweep(
 			case MulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_binary_op(
-				i_var, arg, npv, RevJac
+				i_var, arg, var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -410,7 +410,7 @@ void RevJacSweep(
 			// comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
 			reverse_sparse_jacobian_binary_op(
-				i_var + 2, arg, npv, RevJac
+				i_var + 2, arg, var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -498,7 +498,7 @@ void RevJacSweep(
 			case SubvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			reverse_sparse_jacobian_binary_op(
-				i_var, arg, npv, RevJac
+				i_var, arg, var_sparsity
 			);
 			break;
 			// -------------------------------------------------

@@ -161,7 +161,6 @@ void RevHesSweep(
 
 	// create connection objects using existing memory
 	// (kludge for step by step conversion to using connection objects)
-	Pack* ForJac = for_jac_sparse.data();
 	Pack* RevHes = rev_hes_sparse.data();
 
 	// Initialize
@@ -212,7 +211,7 @@ void RevHesSweep(
 			case AddvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_addsub_op(
-				i_var, arg, RevJac, npv, ForJac, RevHes
+			i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -304,7 +303,7 @@ void RevHesSweep(
 			case DivvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_div_op(
-				i_var, arg, RevJac, npv, ForJac, RevHes
+			i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -380,7 +379,7 @@ void RevHesSweep(
 			case MulvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_mul_op(
-				i_var, arg, RevJac, npv, ForJac, RevHes
+			i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -438,7 +437,7 @@ void RevHesSweep(
                         // comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3)
                         reverse_sparse_hessian_pow_op(
-				i_var+2, arg, RevJac, npv, ForJac, RevHes
+			i_var+2, arg, RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -526,7 +525,7 @@ void RevHesSweep(
 			case SubvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_addsub_op(
-				i_var, arg, RevJac, npv, ForJac, RevHes
+			i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
