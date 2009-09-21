@@ -74,8 +74,8 @@ corresponds to the from node with index i in \a for_jac_sparse.
 \b Input:
 For i = 0, ... , \a numvar - 1 
 the if the variable with index i on the tape is an dependent variable and
-included in the Hessian, \a RevJac[ i ] is equal to all ones (~ \a Pack(0)),
-otherwise it is equal to zero. 
+included in the Hessian, \a RevJac[ i ] is equal to true,
+otherwise it is equal to false. 
 \n
 \n
 \b Output: The values in \a RevJac upon return are not specified; i.e.,
@@ -104,7 +104,7 @@ void RevHesSweep(
 	size_t                numvar,
 	player<Base>         *play,
 	connection<Pack>&     for_jac_sparse, // should be const
-	Pack                 *RevJac,
+	bool*                 RevJac,
 	connection<Pack>&     rev_hes_sparse
 )
 {
@@ -142,7 +142,7 @@ void RevHesSweep(
 	connection<Pack> vecad_sparse;
 	vecad_sparse.resize(num_vecad_vec, n_to);
 	size_t* vecad_ind   = CPPAD_NULL;
-	Pack*   vecad_jac   = CPPAD_NULL;
+	bool*   vecad_jac   = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
 		vecad_ind     = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad_ind);
@@ -159,7 +159,7 @@ void RevHesSweep(
 			// start of next VecAD
 			j       += length + 1;
 			// initialize this vector's reverse jacobian value 
-			vecad_jac[i] = Pack(0);
+			vecad_jac[i] = false;
 		}
 		CPPAD_ASSERT_UNKNOWN( j == play->num_rec_vecad_ind() );
 	}

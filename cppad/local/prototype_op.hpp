@@ -1320,7 +1320,8 @@ i.e. the row index in sparsity corresponding to x.
 
 \param rev_jacobian
 \a rev_jacobian[i_z] 
-is all zero (ones) if the Jacobian of G with respect to z is zero (non-zero).
+is all false (true) if the Jacobian of G with respect to z is alwyas zero 
+(may be non-zero).
 \n
 \n
 \a rev_jacobian[i_x] 
@@ -1351,7 +1352,7 @@ template <class Pack>
 inline void reverse_sparse_hessian_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
-	const Pack*         rev_jacobian      ,
+	bool*               rev_jacobian      ,
 	connection<Pack>&   for_jac_sparsity  ,
 	connection<Pack>&   rev_hes_sparsity  )
 {	
@@ -1388,17 +1389,20 @@ i.e. the row index in sparsity patterns corresponding to y.
 
 \param jac_reverse
 \a jac_reverse[i_z] 
-is all zero (ones) if the Jacobian of G with respect to z is zero (non-zero).
+is false (true) if the Jacobian of G with respect to z is always zero
+(may be non-zero).
 \n
 \n
 \a jac_reverse[ \a arg[0] ] 
-is all zero (ones) if the Jacobian with respect to x is zero (non-zero).
+is false (true) if the Jacobian with respect to x is always zero 
+(may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 \n
 \n
 \a jac_reverse[ \a arg[1] ] 
-is all zero (ones) if the Jacobian with respect to y is zero (non-zero).
+is false (true) if the Jacobian with respect to y is always zero 
+(may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
@@ -1438,7 +1442,7 @@ template <class Pack>
 inline void reverse_sparse_hessian_binary_op(
 	size_t            i_z                ,
 	const size_t*     arg                ,
-	Pack*             jac_reverse        ,
+	bool*             jac_reverse        ,
 	connection<Pack>& for_jac_sparsity   ,
 	connection<Pack>& rev_hes_sparsity   )
 {	

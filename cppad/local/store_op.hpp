@@ -230,11 +230,13 @@ and it uses them to compute the partial derivatives of
 
 \param var_jacobian
 \a var_jacobian[ \a arg[2] ] 
-is all zero (ones) if the Jacobian of G with respect to y is zero (non-zero).
+is false (true) if the Jacobian of G with respect to y is always zero 
+(may be non-zero).
 
 \param vecad_jacobian
 \a vecad_jacobian[i_v] 
-is all zero (ones) if the Jacobian with respect to x is zero (non-zero).
+is false (true) if the Jacobian with respect to x is always zero 
+(may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 */
@@ -246,8 +248,8 @@ inline void reverse_sparse_hessian_store_op(
 	const size_t*      combined     ,
 	connection<Pack>&  var_sparsity ,
 	connection<Pack>&  vecad_sparsity ,
-	Pack*              var_jacobian   ,
-	Pack*              vecad_jacobian )
+	bool*              var_jacobian   ,
+	bool*              vecad_jacobian )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );

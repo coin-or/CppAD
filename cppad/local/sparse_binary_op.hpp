@@ -184,7 +184,7 @@ template <class Pack>
 inline void reverse_sparse_hessian_addsub_op(
 	size_t               i_z                ,
 	const size_t*        arg                ,
-	Pack*                jac_reverse        ,
+	bool*                jac_reverse        ,
 	connection<Pack>&    for_jac_sparsity   ,
 	connection<Pack>&    rev_hes_sparsity   )
 {	
@@ -216,7 +216,7 @@ template <class Pack>
 inline void reverse_sparse_hessian_mul_op(
 	size_t               i_z                ,
 	const size_t*        arg                ,
-	Pack*                jac_reverse        ,
+	bool*                jac_reverse        ,
 	connection<Pack>&    for_jac_sparsity   ,
 	connection<Pack>&    rev_hes_sparsity   )
 {	
@@ -254,7 +254,7 @@ template <class Pack>
 inline void reverse_sparse_hessian_div_op(
 	size_t               i_z                ,
 	const size_t*        arg                ,
-	Pack*                jac_reverse        ,
+	bool*                jac_reverse        ,
 	connection<Pack>&    for_jac_sparsity   ,
 	connection<Pack>&    rev_hes_sparsity   )
 {	
@@ -294,7 +294,7 @@ template <class Pack>
 inline void reverse_sparse_hessian_pow_op(
 	size_t               i_z                ,
 	const size_t*        arg                ,
-	Pack*                jac_reverse        ,
+	bool*                jac_reverse        ,
 	connection<Pack>&    for_jac_sparsity   ,
 	connection<Pack>&    rev_hes_sparsity   )
 {	

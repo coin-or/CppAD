@@ -157,7 +157,7 @@ template <class Pack>
 inline void reverse_sparse_hessian_linear_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
-	Pack*               rev_jacobian      ,
+	bool*               rev_jacobian      ,
 	connection<Pack>&   for_jac_sparsity  ,
 	connection<Pack>&   rev_hes_sparsity  )
 {	
@@ -190,7 +190,7 @@ template <class Pack>
 inline void reverse_sparse_hessian_nonlinear_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
-	Pack*               rev_jacobian      ,
+	bool*               rev_jacobian      ,
 	connection<Pack>&   for_jac_sparsity  ,
 	connection<Pack>&   rev_hes_sparsity  )
 {	

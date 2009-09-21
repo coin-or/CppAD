@@ -484,13 +484,15 @@ where y represents the combination of y_0, y_1, y_2, and y_3.
 
 \param jac_reverse
 \a jac_reverse[i_z] 
-is all zero (ones) if the Jacobian of G with respect to z is zero (non-zero).
+is false (true) if the Jacobian of G with respect to z is always zero 
+(may be non-zero).
 \n
 \n
 \a jac_reverse[ arg[4] ] 
 If y_2 is a variable,
 \a jac_reverse[ arg[4] ] 
-is all zero (ones) if the Jacobian with respect to y_2 is zero (non-zero).
+is false (true) if the Jacobian with respect to y_2 is always zero 
+(may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 \n
@@ -498,7 +500,8 @@ and on output it corresponds to the function H.
 \a jac_reverse[ arg[5] ] 
 If y_3 is a variable,
 \a jac_reverse[ arg[5] ] 
-is all zero (ones) if the Jacobian with respect to y_3 is zero (non-zero).
+is false (true) if the Jacobian with respect to y_3 is always zero 
+(may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
@@ -528,7 +531,7 @@ inline void reverse_sparse_hessian_cond_op(
 	size_t               i_z           ,
 	const size_t*        arg           , 
 	size_t               num_par       ,
-	Pack*                jac_reverse   ,
+	bool*                jac_reverse   ,
 	connection<Pack>&    hes_sparsity  )
 {	
 

@@ -219,7 +219,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 	);
 
 	// array that will hold packed reverse Jacobian values
-	Pack *RevJac = CPPAD_NULL;
+	bool *RevJac = CPPAD_NULL;
 	RevJac       = CPPAD_TRACK_NEW_VEC(total_num_var_, RevJac);	
 
 	// connection object that will hold packed reverse Hessain values
@@ -228,14 +228,11 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 
 	// initialize RevJac matrix to false
 	for(i = 0; i < total_num_var_; i++)
-	{	RevJac[i] = Pack(0);
-	}
+		RevJac[i] = false;
+
 	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
-		if( s[i] )
-		{	// set all the bits to true
-			RevJac[ dep_taddr_[i] ] = ~ Pack(0);
-		}
+		RevJac[ dep_taddr_[i] ] = s[i];
 	}
 
 	// compute the Hessian sparsity patterns
