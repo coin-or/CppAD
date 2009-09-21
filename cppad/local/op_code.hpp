@@ -311,9 +311,7 @@ Prints a single operator, its operands, and the corresponding result values.
 Is the base type for these AD< \a Base > operations.
 
 \tparam Value
-Determines the type of the values that we are printing
-(expected to be either  \a Base  or Pack where
-Pack is the type used to pace sparsity patterns.
+Determines the type of the values that we are printing.
 
 \param os
 is the output stream that the information is printed on.

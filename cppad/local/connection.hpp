@@ -30,11 +30,12 @@ represented by each value of type Pack.
 
 # include <cppad/local/cppad_assert.hpp>
 
-template <class Pack>
 class connection {
 private:
+	/// type used to pack values
+	typedef size_t Pack;
 	/// Number of bits per Pack value
-	const size_t n_bit_;
+	static const size_t n_bit_ = std::numeric_limits<Pack>::digits;
 	/// Number of nodes that we are representing connections from
 	/// (set by constructor and resize).
 	size_t n_from_;
@@ -54,7 +55,6 @@ public:
 	/*! Construct a connection object (with no nodes)
 	*/
 	connection(void) : 
-	n_bit_(8 * sizeof(Pack)) ,
 	n_from_(0)               , 
 	n_to_(0)                 , 
 	n_pack_(0)               ,
@@ -68,9 +68,9 @@ public:
 	// -----------------------------------------------------------------
 	/*! Make use of copy constructor an error
  	*/
-	connection(const connection& c) : 
-	n_bit_(8 * sizeof(Pack)) 
-	{	// Error: probably connection arguement is passed by value
+	connection(const connection& c)
+	{	// Error: 
+		// Probably a connection argument has been passed by value
 		CPPAD_ASSERT_UNKNOWN(0); 
 	}
 	// -----------------------------------------------------------------
@@ -200,9 +200,9 @@ public:
 	\li n_pack_     == other.n_pack_ 
 	*/
 	void assignment(
-		size_t this_target            , 
-		size_t other_value            , 
-		const connection<Pack>& other )
+		size_t               this_target  , 
+		size_t               other_value  , 
+		const connection&    other        )
 	{	CPPAD_ASSERT_UNKNOWN( this_target  <   n_from_ );
 		CPPAD_ASSERT_UNKNOWN( other_value  <   other.n_from_ );
 		CPPAD_ASSERT_UNKNOWN( n_pack_      ==  other.n_pack_ );
@@ -241,10 +241,10 @@ public:
 	\li n_pack_     == other.n_pack_ 
 	*/
 	void binary_union(
-		size_t this_target            , 
-		size_t this_left              , 
-		size_t other_right            , 
-		const connection<Pack>& other )
+		size_t                  this_target  , 
+		size_t                  this_left    , 
+		size_t                  other_right  , 
+		const connection&       other        )
 	{	CPPAD_ASSERT_UNKNOWN( this_target < n_from_ );
 		CPPAD_ASSERT_UNKNOWN( this_left   < n_from_ );
 		CPPAD_ASSERT_UNKNOWN( other_right < other.n_from_ );
@@ -257,6 +257,15 @@ public:
 		size_t j = n_pack_;
 		while(j--)
 			*t++ = (*l++ | *r++);
+	}
+	// -----------------------------------------------------------------
+	/*! Amount of memory used by this object
+ 
+	/return
+	The amount of memory in units of type unsigned char memory.
+ 	*/
+	size_t memory(void) const
+	{	return n_from_ * n_pack_ * sizeof(Pack);
 	}
 	// -----------------------------------------------------------------
 	/*! Fetch n_from for this connection object.
@@ -292,7 +301,7 @@ public:
 	\return
 	Number of bits per Pack values 
 	*/
-	size_t n_bit(void) const
+	static size_t n_bit(void)
 	{	return n_bit_; }
 	// -----------------------------------------------------------------
 	/*! Fetch data for this connection object.

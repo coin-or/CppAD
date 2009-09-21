@@ -36,10 +36,6 @@ base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 
-\tparam Pack
-is the type used to pack the sparsity pattern bit values; i.e.,
-there is more that one bit per Pack value.
-
 \param n
 is the number of independent variables on the tape.
 
@@ -73,12 +69,12 @@ corresponds to the from node with index i in \a var_sparsity.
 */
 
 
-template <class Base, class Pack>
+template <class Base>
 void ForJacSweep(
 	size_t                n            ,
 	size_t                numvar       ,
 	player<Base>*         play         ,
-	connection<Pack>&     var_sparsity )
+	connection&           var_sparsity )
 {
 	OpCode           op;
 	size_t         i_op;
@@ -105,7 +101,7 @@ void ForJacSweep(
 	size_t n_to            = var_sparsity.n_to();
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
-	connection<Pack> vecad_sparsity;
+	connection       vecad_sparsity;
 	vecad_sparsity.resize(num_vecad_vec, n_to);
 	size_t* vecad_ind      = CPPAD_NULL;
 	if( num_vecad_vec > 0 )

@@ -1036,10 +1036,6 @@ The C++ source code corresponding to this operation is
 \endverbatim
 where v is a VecAD<Base> vector and x is an AD<Base> index. 
 
-\tparam Pack
-is the type used to pack the sparsity pattern bit values; i.e.,
-there is more that one bit per Pack value.
-
 \param op
 is the code corresponding to this operator; i.e., LdpOp or LdvOp
 (only used for error checking).
@@ -1088,15 +1084,14 @@ the sparsity pattern for z is added to the sparsity pattern for v.
 \li \a arg[0] < \a num_combined
 \li i_v       < \a vecad_sparsity.n_from()
 */
-template <class Pack>
 inline void sparse_load_op(
 	OpCode              op             ,
 	size_t              i_z            ,
 	const size_t*        arg           , 
 	size_t              num_combined   ,
 	const size_t*       combined       ,
-	connection<Pack>&   var_sparsity   ,
-	connection<Pack>&   vecad_sparsity )
+	connection&         var_sparsity   ,
+	connection&         vecad_sparsity )
 {
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -1225,10 +1220,6 @@ We define the index corresponding to v[x] by
 \endverbatim
 where i_vec is defined under the heading \a arg[1] below:
 
-\tparam Pack
-is the type used to pack the sparsity pattern bit values; i.e.,
-there is more that one bit per Pack value.
-
 \param op
 is the code corresponding to this operator; i.e., StpvOp or StvvOp
 (only used for error checking).
@@ -1279,7 +1270,6 @@ to the sparsity pattern for the vector v.
 \li \a arg[2] < \a var_sparsity.n_from()
 \li i_v       < \a vecad_sparsity.n_from()
 */
-template <class Pack>
 inline void sparse_store_op(
 	OpCode         op             ,
 	const size_t*  arg            , 
@@ -1305,10 +1295,6 @@ and it uses them to compute the sparsity patterns for
 \verbatim
 	H( x , w , u , ... ) = G[ z(x) , x , w , u , ... ]
 \endverbatim
-
-\tparam Pack
-is the type used to pack the sparsity pattern bit values; i.e.,
-there is more that one bit per Pack value.
 
 \param i_z
 variable index corresponding to the result for this operation; 
@@ -1348,13 +1334,12 @@ and on output it corresponds to the function H.
 \par Checked Assertions:
 \li \a i_x < \a i_z 
 */
-template <class Pack>
 inline void reverse_sparse_hessian_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
-	connection<Pack>&   for_jac_sparsity  ,
-	connection<Pack>&   rev_hes_sparsity  )
+	connection&         for_jac_sparsity  ,
+	connection&         rev_hes_sparsity  )
 {	
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -1369,10 +1354,6 @@ and it uses them to compute the sparsity patterns for the Hessian of
 \verbatim
 	H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
 \endverbatim
-
-\tparam Pack
-is the type used to pack the sparsity pattern bit values; i.e.,
-there is more that one bit per Pack value.
 
 \param i_z
 variable index corresponding to the result for this operation; 
@@ -1438,13 +1419,12 @@ and on output it correspondst to H.
 \li \a arg[0] < \a i_z 
 \li \a arg[1] < \a i_z 
 */
-template <class Pack>
 inline void reverse_sparse_hessian_binary_op(
 	size_t            i_z                ,
 	const size_t*     arg                ,
 	bool*             jac_reverse        ,
-	connection<Pack>& for_jac_sparsity   ,
-	connection<Pack>& rev_hes_sparsity   )
+	connection&       for_jac_sparsity   ,
+	connection&       rev_hes_sparsity   )
 {	
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -1548,10 +1528,6 @@ The C++ source code coresponding to this operation is
 \endverbatim
 where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
 
-\tparam Pack
-is the type used to pack the sparsity pattern bit values; i.e.,
-there is more that one bit per Pack value.
-
 \param i_z
 is the AD variable index corresponding to the variable z.
 
@@ -1608,7 +1584,6 @@ is the total number of values in the vector \a parameter.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
 \li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 */
-template <class Pack>
 inline void sparse_conditional_exp_op(
 	size_t         i_z           ,
 	const size_t*  arg           , 

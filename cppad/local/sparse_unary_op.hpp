@@ -63,11 +63,10 @@ depends on.
 \li \a i_x < \a i_z 
 */
 
-template <class Pack>
 inline void forward_sparse_jacobian_unary_op(
 	size_t            i_z           ,
 	size_t            i_x           ,
-	connection<Pack>& sparsity      )
+	connection&       sparsity      )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
@@ -95,10 +94,6 @@ and it uses them to compute the sparsity patterns for
 	H( x , w , u , ... ) = G[ z(x) , x , w , u , ... ]
 \endverbatim
 
-\tparam Pack
-is the type used to pack the sparsity pattern bit values; i.e.,
-there is more that one bit per Pack value.
-
 \param i_z
 variable index corresponding to the result for this operation; 
 i.e. the row index in sparsity corresponding to z. 
@@ -124,11 +119,10 @@ is the sparsity bit pattern for H with respect to the variable x.
 \li \a i_x < \a i_z 
 */
 
-template <class Pack>
 inline void reverse_sparse_jacobian_unary_op(
 	size_t     i_z                     ,
 	size_t     i_x                     ,
-	connection<Pack>&      sparsity    )
+	connection&            sparsity    )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
@@ -153,13 +147,12 @@ where op is a C++ binary operator and p is a parameter.
 
 \copydetails reverse_sparse_hessian_unary_op
 */
-template <class Pack>
 inline void reverse_sparse_hessian_linear_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
-	connection<Pack>&   for_jac_sparsity  ,
-	connection<Pack>&   rev_hes_sparsity  )
+	connection&         for_jac_sparsity  ,
+	connection&         rev_hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
@@ -186,13 +179,12 @@ where p is a parameter.
 
 \copydetails reverse_sparse_hessian_unary_op
 */
-template <class Pack>
 inline void reverse_sparse_hessian_nonlinear_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
-	connection<Pack>&   for_jac_sparsity  ,
-	connection<Pack>&   rev_hes_sparsity  )
+	connection&         for_jac_sparsity  ,
+	connection&         rev_hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );

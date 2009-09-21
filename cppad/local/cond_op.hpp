@@ -340,12 +340,11 @@ the sparsity bit pattern corresponding to z.
 This identifies which of the independent variables the variable z
 depends on. 
 */
-template <class Pack>
 inline void forward_sparse_jacobian_cond_op(
 	size_t             i_z           ,
 	const size_t*      arg           , 
 	size_t             num_par       ,
-	connection<Pack>&  sparsity      )
+	connection&        sparsity      )
 {
 	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
@@ -425,12 +424,11 @@ the sparsity bit pattern corresponding to z.
 This identifies which of the dependent variables depend on the variable z.
 On input and output, this pattern corresponds to the function G.
 */
-template <class Pack>
 inline void reverse_sparse_jacobian_cond_op(
 	size_t              i_z           ,
 	const size_t*       arg           , 
 	size_t              num_par       ,
-	connection<Pack>&   sparsity      )
+	connection&         sparsity      )
 {	
 	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
@@ -526,13 +524,12 @@ where one of the partials is with respect to y_3.
 On input, this pattern corresponds to the function G.
 On output, this pattern corresponds to the function H.
 */
-template <class Pack>
 inline void reverse_sparse_hessian_cond_op(
 	size_t               i_z           ,
 	const size_t*        arg           , 
 	size_t               num_par       ,
 	bool*                jac_reverse   ,
-	connection<Pack>&    hes_sparsity  )
+	connection&          hes_sparsity  )
 {	
 
 	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );

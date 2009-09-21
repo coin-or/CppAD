@@ -64,8 +64,6 @@ namespace CppAD {
 
 template <class Base>
 class ADFun {
-	// type used for packing sparsity patters
-	typedef size_t Pack;
 
 public:
 	// default constructor
@@ -223,7 +221,7 @@ public:
 	// amount of memory for each variable 
 	size_t Memory(void) const
 	{	size_t pervar  = taylor_col_dim_ * sizeof(Base)
-		+ for_jac_sparsity_.n_pack() * sizeof(Pack);
+		+ for_jac_sparsity_.memory();
 		size_t total   = total_num_var_ * pervar + play_.Memory();
 		return total;
 	}
@@ -262,7 +260,7 @@ private:
 	Base *taylor_;
 
 	// results of the forward mode Jacobian sparsity calculations
-	connection<Pack> for_jac_sparsity_;
+	connection       for_jac_sparsity_;
 
 	template <typename ADvector>
 	void Dependent(ADTape<Base> *tape, const ADvector &y);

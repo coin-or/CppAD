@@ -223,7 +223,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 	RevJac       = CPPAD_TRACK_NEW_VEC(total_num_var_, RevJac);	
 
 	// connection object that will hold packed reverse Hessain values
-	connection<Pack> rev_hes_sparsity;
+	connection       rev_hes_sparsity;
 	rev_hes_sparsity.resize(total_num_var_, q);
 
 	// initialize RevJac matrix to false

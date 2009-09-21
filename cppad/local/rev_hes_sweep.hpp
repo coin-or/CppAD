@@ -38,10 +38,6 @@ base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 
-\tparam Pack
-is the type used to pack the sparsity pattern bit values; i.e.,
-there is more that one bit per Pack value.
-
 \param n
 is the number of independent variables on the tape.
 
@@ -98,14 +94,14 @@ The values in the rest of \a rev_hes_sparse are not specified; i.e.,
 they are used for temporary work space.
 */
 
-template <class Base, class Pack>
+template <class Base>
 void RevHesSweep(
 	size_t                n,
 	size_t                numvar,
 	player<Base>         *play,
-	connection<Pack>&     for_jac_sparse, // should be const
+	connection&           for_jac_sparse, // should be const
 	bool*                 RevJac,
-	connection<Pack>&     rev_hes_sparse
+	connection&           rev_hes_sparse
 )
 {
 	OpCode           op;
@@ -139,7 +135,7 @@ void RevHesSweep(
 	// VecAD object) to the vecad_sparsity from index for the VecAD object.
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
-	connection<Pack> vecad_sparse;
+	connection       vecad_sparse;
 	vecad_sparse.resize(num_vecad_vec, n_to);
 	size_t* vecad_ind   = CPPAD_NULL;
 	bool*   vecad_jac   = CPPAD_NULL;

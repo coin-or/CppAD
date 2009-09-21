@@ -160,14 +160,13 @@ Forward mode sparsity operations for StpvOp and StvvOp
 
 \copydetails sparse_store_op
 */
-template <class Pack>
 inline void forward_sparse_store_op(
 	OpCode              op             ,
 	const size_t*       arg            , 
 	size_t              num_combined   ,
 	const size_t*       combined       ,
-	connection<Pack>&   var_sparsity   ,
-	connection<Pack>&   vecad_sparsity )
+	connection&         var_sparsity   ,
+	connection&         vecad_sparsity )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
@@ -194,14 +193,13 @@ and it uses them to compute the partial derivatives of
 
 \copydetails sparse_store_op
 */
-template <class Pack>
 inline void reverse_sparse_jacobian_store_op(
 	OpCode             op              ,
 	const size_t*      arg             , 
 	size_t             num_combined    ,
 	const size_t*      combined        ,
-	connection<Pack>&  var_sparsity    ,
-	connection<Pack>&  vecad_sparsity  )
+	connection&        var_sparsity    ,
+	connection&        vecad_sparsity  )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
@@ -240,14 +238,13 @@ is false (true) if the Jacobian with respect to x is always zero
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 */
-template <class Pack>
 inline void reverse_sparse_hessian_store_op(
 	OpCode             op           ,
 	const size_t*      arg          , 
 	size_t             num_combined ,
 	const size_t*      combined     ,
-	connection<Pack>&  var_sparsity ,
-	connection<Pack>&  vecad_sparsity ,
+	connection&        var_sparsity ,
+	connection&        vecad_sparsity ,
 	bool*              var_jacobian   ,
 	bool*              vecad_jacobian )
 {

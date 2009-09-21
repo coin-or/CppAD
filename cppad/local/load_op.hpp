@@ -297,15 +297,14 @@ Forward mode sparsity operations for LdpOp and LdvOp
 
 \copydetails sparse_load_op
 */
-template <class Pack>
 inline void forward_sparse_load_op(
 	OpCode             op             ,
 	size_t             i_z            ,
 	const size_t*      arg            , 
 	size_t             num_combined   ,
 	const size_t*      combined       ,
-	connection<Pack>&  var_sparsity   ,
-	connection<Pack>&  vecad_sparsity )
+	connection&        var_sparsity   ,
+	connection&        vecad_sparsity )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
@@ -325,15 +324,14 @@ Reverse mode Jacobian sparsity operations for LdpOp and LdvOp
 
 \copydetails sparse_load_op
 */
-template <class Pack>
 inline void reverse_sparse_jacobian_load_op(
 	OpCode             op             ,
 	size_t             i_z            ,
 	const size_t*      arg            , 
 	size_t             num_combined   ,
 	const size_t*      combined       ,
-	connection<Pack>&  var_sparsity   ,
-	connection<Pack>&  vecad_sparsity )
+	connection&        var_sparsity   ,
+	connection&        vecad_sparsity )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
@@ -373,15 +371,14 @@ On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 */
-template <class Pack>
 inline void reverse_sparse_hessian_load_op(
 	OpCode             op             ,
 	size_t             i_z            ,
 	const size_t*      arg            , 
 	size_t             num_combined   ,
 	const size_t*      combined       ,
-	connection<Pack>&  var_sparsity   ,
-	connection<Pack>&  vecad_sparsity ,
+	connection&        var_sparsity   ,
+	connection&        vecad_sparsity ,
 	bool*              var_jacobian   ,
 	bool*              vecad_jacobian )
 {
