@@ -130,46 +130,47 @@ void RevHesSweep(
 	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.n_to() == n_to );
 
 	// number of packed values per from node
-	size_t npv = rev_hes_sparse.n_pack();
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_pack() == npv );
+	CPPAD_ASSERT_UNKNOWN( 
+		for_jac_sparse.n_pack() == rev_hes_sparse.n_pack()
+	);
 
-	// vecad_pattern contains a sparsity pattern for each VecAD object.
-	// vecad maps a VecAD index (which corresponds to the beginning of the
-	// VecAD object) to the vecad_pattern index for the VecAD object.
+	// vecad_sparsity contains a sparsity pattern for each VecAD object.
+	// vecad_ind maps a VecAD index (the beginning of the
+	// VecAD object) to the vecad_sparsity from index for the VecAD object.
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
-	connection<Pack> vecad_sparsity;
-	vecad_sparsity.resize(num_vecad_vec, n_to);
-	Pack* vecad_pattern = vecad_sparsity.data();
-	size_t* vecad          = CPPAD_NULL;
+	connection<Pack> vecad_sparse;
+	vecad_sparse.resize(num_vecad_vec, n_to);
+	size_t* vecad_ind   = CPPAD_NULL;
+	Pack*   vecad_jac   = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
-		vecad         = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad);
+		vecad_ind     = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad_ind);
+		vecad_jac     = CPPAD_TRACK_NEW_VEC(num_vecad_vec, vecad_jac);
 		j             = 0;
 		for(i = 0; i < num_vecad_vec; i++)
 		{	// length of this VecAD
 			length   = play->GetVecInd(j);
-			// set to proper index for this VecAD
-			vecad[j] = i; 
+			// set vecad_ind to proper index for this VecAD
+			vecad_ind[j] = i; 
+			// make all other values for this vector invalid
 			for(k = 1; k <= length; k++)
-				vecad[j+k] = num_vecad_vec; // invalid index
+				vecad_ind[j+k] = num_vecad_vec;
 			// start of next VecAD
 			j       += length + 1;
+			// initialize this vector's reverse jacobian value 
+			vecad_jac[i] = Pack(0);
 		}
 		CPPAD_ASSERT_UNKNOWN( j == play->num_rec_vecad_ind() );
 	}
-
-	// create connection objects using existing memory
-	// (kludge for step by step conversion to using connection objects)
-	Pack* RevHes = rev_hes_sparse.data();
 
 	// Initialize
 	play->start_reverse();
 	i_op = 2;
 # if CPPAD_REV_HES_SWEEP_TRACE
 	std::cout << std::endl;
-	CppAD::vector<bool> zf_value(n_to);
-	CppAD::vector<bool> zh_value(n_to);
+	CppAD::vectorBool zf_value(n_to);
+	CppAD::vectorBool zh_value(n_to);
 # endif
 	while(i_op > 1)
 	{
@@ -181,9 +182,11 @@ void RevHesSweep(
 # if CPPAD_REV_HES_SWEEP_TRACE
 		for(j = 0; j < n_to; j++)
 		{	zf_value[j] = for_jac_sparse.get_element(i_var, j);
-			zh_value[j] = for_jac_sparse.get_element(i_var, j);
+			zh_value[j] = rev_hes_sparse.get_element(i_var, j);
 		}
 
+		// should also print RevJac[i_var], but printOp does not
+		// yet allow for this.
 		printOp(
 			std::cout, 
 			play,
@@ -339,31 +342,31 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case LdpOp:
-			reverse_sparse_load_op(
+			reverse_sparse_hessian_load_op(
 				op,
 				i_var,
 				arg,
 				num_vecad_ind,
-				vecad,
-				num_vecad_vec,
-				npv,
-				RevHes,
-				vecad_pattern
+				vecad_ind,
+				rev_hes_sparse,
+				vecad_sparse,
+				RevJac,
+				vecad_jac
 			);
 			break;
 			// -------------------------------------------------
 
 			case LdvOp:
-			reverse_sparse_load_op(
+			reverse_sparse_hessian_load_op(
 				op,
 				i_var,
 				arg,
 				num_vecad_ind,
-				vecad,
-				num_vecad_vec,
-				npv,
-				RevHes,
-				vecad_pattern
+				vecad_ind,
+				rev_hes_sparse,
+				vecad_sparse,
+				RevJac,
+				vecad_jac
 			);
 			break;
 			// -------------------------------------------------
@@ -487,16 +490,15 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case StpvOp:
-			reverse_sparse_store_op(
+			reverse_sparse_hessian_store_op(
 				op,
 				arg,
 				num_vecad_ind,
-				vecad,
-				num_vecad_vec,
-				numvar,
-				npv,
-				RevHes,
-				vecad_pattern
+				vecad_ind,
+				rev_hes_sparse,
+				vecad_sparse,
+				RevJac,
+				vecad_jac
 			);
 			break;
 			// -------------------------------------------------
@@ -508,16 +510,15 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case StvvOp:
-			reverse_sparse_store_op(
+			reverse_sparse_hessian_store_op(
 				op,
 				arg,
 				num_vecad_ind,
-				vecad,
-				num_vecad_vec,
-				numvar,
-				npv,
-				RevHes,
-				vecad_pattern
+				vecad_ind,
+				rev_hes_sparse,
+				vecad_sparse,
+				RevJac,
+				vecad_jac
 			);
 			break;
 			// -------------------------------------------------
@@ -554,8 +555,10 @@ void RevHesSweep(
 	CPPAD_ASSERT_UNKNOWN( play->GetOp(i_op-1) == NonOp );
 	CPPAD_ASSERT_UNKNOWN( i_var == NumRes(NonOp)  );
 
-	if( vecad != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(vecad);
+	if( vecad_jac != CPPAD_NULL )
+		CPPAD_TRACK_DEL_VEC(vecad_jac);
+	if( vecad_ind != CPPAD_NULL )
+		CPPAD_TRACK_DEL_VEC(vecad_ind);
 	return;
 }
 

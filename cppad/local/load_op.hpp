@@ -295,60 +295,7 @@ inline void reverse_load_op(
 /*!
 Forward mode sparsity operations for LdpOp and LdvOp
 
-The C++ source code corresponding to this operation is
-\verbatim
-	z = y[x]
-\endverbatim
-where y is a VecAD<Base> vector and x is an AD<Base> index. 
-
-\tparam Pack
-is the type used to pack the sparsity pattern bit values; i.e.,
-there is more that one bit per Pack value.
-
-\param op
-is the code corresponding to this operator; i.e., LdpOp or LdvOp
-(only used for error checking).
-
-\param i_z
-is the AD variable index corresponding to the variable z.
-It is also the from node index for z in the \a var_sparsity connection.
-
-\param arg
-\n
-\a arg[0]
-is the offset corresponding to this VecAD vector in the combined array.
-
-\param num_combined
-is the total number of elements in the VecAD address array.
-
-\param combined
-\a combined[ \a arg[0] - 1 ]
-Is the from node index for the vector y in the \a vecad_sparsity connection.
-We use the notation i_y below which is defined by
-\verbatim
-	i_y = combined[ \a arg[0] - 1 ]
-\endverbatim
-
-\param num_vec
-is the number of VecAD vectors corresponding to the tape;
-this is also the number of rows in the VecAD sparsity pattern matrix.
-
-\param var_sparsity
-The from node with index \a i_z in \a var_sparsity
-contains the sparsity bit pattern for z.
-This is an output for this operation.
-
-\param vecad_sparsity
-The from node with index \a i_y in \a vecad_sparsity
-contains the sparsity bit pattern for the vector y.
-
-\par Checked Assertions 
-\li NumArg(op) == 3
-\li NumRes(op) == 1
-\li 0 <  \a arg[0]
-\li \a arg[0] < \a num_combined
-\li i_y < \a num_vec
-
+\copydetails sparse_load_op
 */
 template <class Pack>
 inline void forward_sparse_load_op(
@@ -357,7 +304,6 @@ inline void forward_sparse_load_op(
 	const size_t*      arg            , 
 	size_t             num_combined   ,
 	const size_t*      combined       ,
-	size_t             num_vec        ,
 	connection<Pack>&  var_sparsity   ,
 	connection<Pack>&  vecad_sparsity )
 {
@@ -365,45 +311,88 @@ inline void forward_sparse_load_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
-	size_t i_y = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_y < num_vec );
+	size_t i_v = combined[ arg[0] - 1 ];
+	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_from() );
 
-	var_sparsity.assignment(i_z, i_y, vecad_sparsity);
+	var_sparsity.assignment(i_z, i_v, vecad_sparsity);
 
 	return;
 }
 
 
 /*!
-Reverse mode sparsity operations for LdpOp and LdvOp
+Reverse mode Jacobian sparsity operations for LdpOp and LdvOp
 
 \copydetails sparse_load_op
 */
 template <class Pack>
-inline void reverse_sparse_load_op(
-	OpCode         op           ,
-	size_t         i_z          ,
-	const size_t*  arg          , 
-	size_t         num_combined ,
-	const size_t*  combined     ,
-	size_t         num_vec      ,
-	size_t         nc_sparsity  ,
-	Pack*          var_sparsity ,
-	Pack*          vec_sparsity )
+inline void reverse_sparse_jacobian_load_op(
+	OpCode             op             ,
+	size_t             i_z            ,
+	const size_t*      arg            , 
+	size_t             num_combined   ,
+	const size_t*      combined       ,
+	connection<Pack>&  var_sparsity   ,
+	connection<Pack>&  vecad_sparsity )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
-	size_t i_y = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_y < num_vec );
+	size_t i_v = combined[ arg[0] - 1 ];
+	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_from() );
 
-	Pack* z = var_sparsity + nc_sparsity * i_z;
-	Pack* y = vec_sparsity + nc_sparsity * i_y;
+	vecad_sparsity.binary_union(i_v, i_v, i_z, var_sparsity);
 
-	size_t j = nc_sparsity;
-	while(j--)
-		y[j] |= z[j];
+	return;
+}
+
+
+/*!
+Reverse mode Hessian sparsity operations for LdpOp and LdvOp
+
+This routine is given the connections corresponding to
+G(z , v[x] , w , u ... )
+and it uses them to compute the connections corresponding to
+\verbatim
+	H( v[x] , w , u , ... ) = G[ z( v[x] ) , v[x] , w , u , ... ]
+\endverbatim
+
+\copydetails sparse_load_op
+
+\param var_jacobian
+\a var_jacobian[i_z] 
+is all zero (ones) if the Jacobian of G with respect to z is zero (non-zero).
+
+\param vecad_jacobian
+\a vecad_jacobian[i_v] 
+is all zero (ones) if the Jacobian with respect to x is zero (non-zero).
+On input, it corresponds to the function G,
+and on output it corresponds to the function H.
+
+*/
+template <class Pack>
+inline void reverse_sparse_hessian_load_op(
+	OpCode             op             ,
+	size_t             i_z            ,
+	const size_t*      arg            , 
+	size_t             num_combined   ,
+	const size_t*      combined       ,
+	connection<Pack>&  var_sparsity   ,
+	connection<Pack>&  vecad_sparsity ,
+	Pack*              var_jacobian   ,
+	Pack*              vecad_jacobian )
+{
+	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
+	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
+	size_t i_v = combined[ arg[0] - 1 ];
+	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_from() );
+
+	vecad_sparsity.binary_union(i_v, i_v, i_z, var_sparsity);
+
+	vecad_jacobian[i_v] |= var_jacobian[i_z];
 
 	return;
 }

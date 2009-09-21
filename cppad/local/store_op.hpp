@@ -158,86 +158,14 @@ inline void forward_store_vv_op_0(
 /*!
 Forward mode sparsity operations for StpvOp and StvvOp
 
-The C++ source code corresponding to this operation is
-\verbatim
-	v[x] = y
-\endverbatim
-where v is a VecAD<Base> vector, x is an AD<Base> object,
-and y is AD<Base> or Base objects. 
-We define the index corresponding to v[x] by
-\verbatim
-	i_v_x = combined[ arg[0] + i_vec ]
-\endverbatim
-where i_vec is defined under the heading \a arg[1] below:
-
-\tparam Pack
-is the type used to pack the sparsity pattern bit values; i.e.,
-there is more that one bit per Pack value.
-
-\param op
-is the code corresponding to this operator; i.e., StpvOp or StvvOp
-(only used for error checking).
-
-\param arg
-\n
-\a arg[0]
-is the offset corresponding to this VecAD vector in the combined array.
-\n
-\n 
-\a arg[2]
-\n
-is the AD variable index corresponding to the variable y.
-It is also the from node index for y in the \a var_sparsity connection.
-
-\param num_combined
-is the total number of elements in the VecAD address array.
-
-\param combined
-\a combined [ arg[0] - 1 ]
-is the from node index for the VecAD vector v 
-in the \a vecad_sparsity connection.
-We use the notation i_v below which is defined by
-\verbatim
-	i_v = combined[ \a arg[0] - 1 ]
-\endverbatim
-
-\param num_vec
-is the number of VecAD vectors corresponding to the tape;
-this is also the number of rows in the VecAD sparsity pattern matrix.
-
-\param num_var
-is the total number of variables in the tape. 
-This is also the number of row indices in the \a var_sparsity matrix.
-
-\param var_sparsity
-The from node with index \a arg[2] in \a var_sparsity
-contains the sparsity bit pattern for y.
-This is an input for this operation.
-The sparsity pattern for y is added to the spartisy pattern for v.
-
-\param vecad_sparsity
-The from node with index \a i_v in \a vecad_sparsity
-contains the sparsity bit pattern for the vector v.
-The sparsity pattern for y is added
-to the sparsity pattern for the vector v.
-
-\n
-\par Checked Assertions 
-\li NumArg(op) == 3
-\li NumRes(op) == 0
-\li 0 <  \a arg[0]
-\li \a arg[0] < \a num_combined
-\li \a arg[2] < \a num_var
-\li i_v < \a num_vec
+\copydetails sparse_store_op
 */
 template <class Pack>
 inline void forward_sparse_store_op(
-	OpCode         op                  ,
-	const size_t*  arg                 , 
-	size_t         num_combined        ,
-	const size_t*  combined            ,
-	size_t         num_vec             ,
-	size_t         num_var             ,
+	OpCode              op             ,
+	const size_t*       arg            , 
+	size_t              num_combined   ,
+	const size_t*       combined       ,
 	connection<Pack>&   var_sparsity   ,
 	connection<Pack>&   vecad_sparsity )
 {
@@ -246,8 +174,8 @@ inline void forward_sparse_store_op(
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_v < num_vec );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < num_var );
+	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_from() );
+	CPPAD_ASSERT_UNKNOWN( arg[2] < var_sparsity.n_from() );
 
 	vecad_sparsity.binary_union(i_v, i_v, arg[2], var_sparsity);
 
@@ -257,34 +185,81 @@ inline void forward_sparse_store_op(
 /*!
 Reverse mode sparsity operations for StpvOp and StvvOp
 
+This routine is given the connections corresponding to
+G(v[x], y , w , u ... )
+and it uses them to compute the partial derivatives of 
+\verbatim
+	H(y , w , u , ... ) = G[ v[x], y , w , u , ... ]
+\endverbatim
+
 \copydetails sparse_store_op
 */
 template <class Pack>
-inline void reverse_sparse_store_op(
-	OpCode         op           ,
-	const size_t*  arg          , 
-	size_t         num_combined ,
-	const size_t*  combined     ,
-	size_t         num_vec      ,
-	size_t         num_var      ,
-	size_t         nc_sparsity  ,
-	Pack*          var_sparsity ,
-	Pack*          vec_sparsity )
+inline void reverse_sparse_jacobian_store_op(
+	OpCode             op              ,
+	const size_t*      arg             , 
+	size_t             num_combined    ,
+	const size_t*      combined        ,
+	connection<Pack>&  var_sparsity    ,
+	connection<Pack>&  vecad_sparsity  )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_v < num_vec );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < num_var );
+	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_from() );
+	CPPAD_ASSERT_UNKNOWN( arg[2] < var_sparsity.n_from() );
 
-	Pack* y = var_sparsity + nc_sparsity * arg[2];
-	Pack* v = vec_sparsity + nc_sparsity * i_v;
+	var_sparsity.binary_union(arg[2], arg[2], i_v, vecad_sparsity);
 
-	size_t j = nc_sparsity;
-	while(j--)
-		y[j] |= v[j];
+	return;
+}
+
+/*!
+Reverse mode sparsity operations for StpvOp and StvvOp
+
+This routine is given the connections corresponding to
+G(v[x], y , w , u ... )
+and it uses them to compute the partial derivatives of 
+\verbatim
+	H(y , w , u , ... ) = G[ v[x], y , w , u , ... ]
+\endverbatim
+
+\copydetails sparse_store_op
+
+\param var_jacobian
+\a var_jacobian[ \a arg[2] ] 
+is all zero (ones) if the Jacobian of G with respect to y is zero (non-zero).
+
+\param vecad_jacobian
+\a vecad_jacobian[i_v] 
+is all zero (ones) if the Jacobian with respect to x is zero (non-zero).
+On input, it corresponds to the function G,
+and on output it corresponds to the function H.
+*/
+template <class Pack>
+inline void reverse_sparse_hessian_store_op(
+	OpCode             op           ,
+	const size_t*      arg          , 
+	size_t             num_combined ,
+	const size_t*      combined     ,
+	connection<Pack>&  var_sparsity ,
+	connection<Pack>&  vecad_sparsity ,
+	Pack*              var_jacobian   ,
+	Pack*              vecad_jacobian )
+{
+	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
+	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
+	size_t i_v = combined[ arg[0] - 1 ];
+	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_from() );
+	CPPAD_ASSERT_UNKNOWN( arg[2] < var_sparsity.n_from() );
+
+	var_sparsity.binary_union(arg[2], arg[2], i_v, vecad_sparsity);
+
+	var_jacobian[ arg[2] ] |= vecad_jacobian[i_v];
 
 	return;
 }

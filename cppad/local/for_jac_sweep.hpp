@@ -100,25 +100,25 @@ void ForJacSweep(
 
 	// vecad_sparsity contains a sparsity pattern from each VecAD object
 	// to all the other variables.
-	// vecad maps a VecAD index (which corresponds to the beginning of the
+	// vecad_ind maps a VecAD index (the beginning of the
 	// VecAD object) to its from index in vecad_sparsity
 	size_t n_to            = var_sparsity.n_to();
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	connection<Pack> vecad_sparsity;
 	vecad_sparsity.resize(num_vecad_vec, n_to);
-	size_t* vecad          = CPPAD_NULL;
+	size_t* vecad_ind      = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
-		vecad         = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad);
+		vecad_ind     = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad_ind);
 		j             = 0;
 		for(i = 0; i < num_vecad_vec; i++)
 		{	// length of this VecAD
 			length   = play->GetVecInd(j);
 			// set to proper index for this VecAD
-			vecad[j] = i; 
+			vecad_ind[j] = i; 
 			for(k = 1; k <= length; k++)
-				vecad[j+k] = num_vecad_vec; // invalid index
+				vecad_ind[j+k] = num_vecad_vec; // invalid index
 			// start of next VecAD
 			j       += length + 1;
 		}
@@ -288,8 +288,7 @@ void ForJacSweep(
 				i_var,
 				arg,
 				num_vecad_ind,
-				vecad,
-				num_vecad_vec,
+				vecad_ind,
 				var_sparsity,
 				vecad_sparsity
 			);
@@ -302,8 +301,7 @@ void ForJacSweep(
 				i_var,
 				arg,
 				num_vecad_ind,
-				vecad,
-				num_vecad_vec,
+				vecad_ind,
 				var_sparsity,
 				vecad_sparsity
 			);
@@ -433,9 +431,7 @@ void ForJacSweep(
 				op,
 				arg,
 				num_vecad_ind,
-				vecad,
-				num_vecad_vec,
-				numvar,
+				vecad_ind,
 				var_sparsity,
 				vecad_sparsity
 			);
@@ -453,9 +449,7 @@ void ForJacSweep(
 				op,
 				arg,
 				num_vecad_ind,
-				vecad,
-				num_vecad_vec,
-				numvar,
+				vecad_ind,
 				var_sparsity,
 				vecad_sparsity
 			);
@@ -511,8 +505,8 @@ void ForJacSweep(
 # endif
 	CPPAD_ASSERT_UNKNOWN( (i_var + NumRes(op) ) == play->num_rec_var() );
 
-	if( vecad != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(vecad);
+	if( vecad_ind != CPPAD_NULL )
+		CPPAD_TRACK_DEL_VEC(vecad_ind);
 
 	return;
 }

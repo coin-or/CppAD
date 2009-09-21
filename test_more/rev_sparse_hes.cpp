@@ -40,7 +40,7 @@ bool case_one(void)
 	Independent(X);
 
 	// accumulate sum here
-	AD<double> sum;
+	AD<double> sum(0.);
 
 	// variable * variable
 	sum += X[2] * X[3];
@@ -215,6 +215,82 @@ bool case_three(void)
 	return ok;
 }
 
+bool case_four(void)
+{	bool ok = true;
+	using namespace CppAD;
+
+	// dimension of the domain space
+	size_t n = 3; 
+
+	// dimension of the range space
+	size_t m = 1;
+
+	// inialize the vector as zero
+	CppAD::VecAD<double> Z(n - 1);
+	size_t k;
+	for(k = 0; k < n-1; k++)
+		Z[k] = 0.;
+
+	// independent variable vector 
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	X[0] = 0.; 
+	X[1] = 1.;
+	X[2] = 2.;
+	Independent(X);
+
+	// VecAD vector z depends on both x[1] and x[2]
+	// (component indices do not matter because they can change).
+	Z[ X[0] ] = X[1] * X[2];
+	Z[ X[1] ] = 0.; 
+
+	// dependent variable vector
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+
+	// check results vector
+	CPPAD_TEST_VECTOR< bool >       Check(n * n);
+
+	// y = z[j] where j might be zero or one.
+	Y[0]  =  Z[ X[1] ];
+
+	Check[0 * n + 0] = false; // partial w.r.t x[0], x[0]
+	Check[0 * n + 1] = false; // partial w.r.t x[0], x[1]
+	Check[0 * n + 2] = false; // partial w.r.t x[0], x[2]
+
+	Check[1 * n + 0] = false; // partial w.r.t x[1], x[0]
+	Check[1 * n + 1] = false; // partial w.r.t x[1], x[1]
+	Check[1 * n + 2] = true;  // partial w.r.t x[1], x[2]
+
+	Check[2 * n + 0] = false; // partial w.r.t x[2], x[0]
+	Check[2 * n + 1] = true;  // partial w.r.t x[2], x[1]
+	Check[2 * n + 2] = false; // partial w.r.t x[2], x[2]
+
+	// create function object F : X -> Y
+	ADFun<double> F(X, Y);
+
+	// compute the forward Jacobian sparsity pattern for F
+	CPPAD_TEST_VECTOR< bool > r(n * n);
+	size_t i, j;
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			r[ i * n + j ] = false;
+		r[ i * n + i ] = true;
+	}
+	F.ForSparseJac(n, r);
+
+	// compute the reverse Hessian sparsity pattern for F
+	CPPAD_TEST_VECTOR< bool > s(m), h(n * n);
+	s[0] = 1.;
+	h = F.RevSparseHes(n, s);
+
+	// check values
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			ok &= (h[i * n + j] == Check[i * n + j]);
+	}	
+
+	return ok;
+}
+
 } // End of empty namespace
 
 bool rev_sparse_hes(void)
@@ -222,6 +298,7 @@ bool rev_sparse_hes(void)
 	ok &= case_one();
 	ok &= case_two();
 	ok &= case_three();
+	ok &= case_four();
 
 	return ok;
 }

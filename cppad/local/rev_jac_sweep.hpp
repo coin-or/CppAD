@@ -108,32 +108,25 @@ void RevJacSweep(
 	// number of to nodes in the connection
 	size_t n_to = var_sparsity.n_to();
 
-	// number of packed values per from node
-	size_t npv = var_sparsity.n_pack();
-
-	// pointer to raw data in var_sparsity
-	Pack *RevJac = var_sparsity.data();
-
-	// vecad_pattern contains a sparsity pattern for each VecAD object.
-	// vecad maps a VecAD index (which corresponds to the beginning of the
-	// VecAD object) to the vecad_pattern index for the VecAD object.
+	// vecad_sparsity contains a sparsity pattern for each VecAD object.
+	// vecad_ind maps a VecAD index (the beginning of the
+	// VecAD object) to the vecad_sparsity from index for the VecAD object.
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	connection<Pack> vecad_sparsity;
 	vecad_sparsity.resize(num_vecad_vec, n_to);
-	Pack*  vecad_pattern   = vecad_sparsity.data();
-	size_t* vecad          = CPPAD_NULL;
+	size_t* vecad_ind      = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
-		vecad         = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad);
+		vecad_ind     = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad_ind);
 		j             = 0;
 		for(i = 0; i < num_vecad_vec; i++)
 		{	// length of this VecAD
 			length   = play->GetVecInd(j);
 			// set to proper index for this VecAD
-			vecad[j] = i; 
+			vecad_ind[j] = i; 
 			for(k = 1; k <= length; k++)
-				vecad[j+k] = num_vecad_vec; // invalid index
+				vecad_ind[j+k] = num_vecad_vec; // invalid index
 			// start of next VecAD
 			j       += length + 1;
 		}
@@ -312,31 +305,27 @@ void RevJacSweep(
 			// -------------------------------------------------
 
 			case LdpOp:
-			reverse_sparse_load_op(
+			reverse_sparse_jacobian_load_op(
 				op,
 				i_var,
 				arg,
 				num_vecad_ind,
-				vecad,
-				num_vecad_vec,
-				npv,
-				RevJac,
-				vecad_pattern
+				vecad_ind,
+				var_sparsity,
+				vecad_sparsity
 			);
 			break;
 			// -------------------------------------------------
 
 			case LdvOp:
-			reverse_sparse_load_op(
+			reverse_sparse_jacobian_load_op(
 				op,
 				i_var,
 				arg,
 				num_vecad_ind,
-				vecad,
-				num_vecad_vec,
-				npv,
-				RevJac,
-				vecad_pattern
+				vecad_ind,
+				var_sparsity,
+				vecad_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -461,16 +450,13 @@ void RevJacSweep(
 			// -------------------------------------------------
 
 			case StpvOp:
-			reverse_sparse_store_op(
+			reverse_sparse_jacobian_store_op(
 				op,
 				arg,
 				num_vecad_ind,
-				vecad,
-				num_vecad_vec,
-				numvar,
-				npv,
-				RevJac,
-				vecad_pattern
+				vecad_ind,
+				var_sparsity,
+				vecad_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -481,16 +467,13 @@ void RevJacSweep(
 			// -------------------------------------------------
 
 			case StvvOp:
-			reverse_sparse_store_op(
+			reverse_sparse_jacobian_store_op(
 				op,
 				arg,
 				num_vecad_ind,
-				vecad,
-				num_vecad_vec,
-				numvar,
-				npv,
-				RevJac,
-				vecad_pattern
+				vecad_ind,
+				var_sparsity,
+				vecad_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -527,8 +510,8 @@ void RevJacSweep(
 	CPPAD_ASSERT_UNKNOWN( play->GetOp(i_op-1) == NonOp );
 	CPPAD_ASSERT_UNKNOWN( i_var == NumRes(NonOp)  );
 
-	if( vecad != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC( vecad );
+	if( vecad_ind != CPPAD_NULL )
+		CPPAD_TRACK_DEL_VEC( vecad_ind);
 
 	return;
 }

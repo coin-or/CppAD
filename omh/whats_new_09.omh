@@ -53,6 +53,10 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 09-20$$
+Fixed a bug in the $cref/Hessian Sparsity/RevSparseHes/$$ calculations
+that included use of $cref/VecAD/$$ objects.
+
 $head 09-19$$
 Some more memory allocation improvements (related to those 
 on 09-18) were made. 

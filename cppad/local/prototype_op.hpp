@@ -1032,9 +1032,9 @@ Prototype sparsity operations corresponding to op = LdpOp or LdvOp.
 
 The C++ source code corresponding to this operation is
 \verbatim
-	z = y[x]
+	z = v[x]
 \endverbatim
-where y is a VecAD<Base> vector and x is an AD<Base> index. 
+where v is a VecAD<Base> vector and x is an AD<Base> index. 
 
 \tparam Pack
 is the type used to pack the sparsity pattern bit values; i.e.,
@@ -1045,65 +1045,58 @@ is the code corresponding to this operator; i.e., LdpOp or LdvOp
 (only used for error checking).
 
 \param i_z
-is the AD variable index corresponding to the variable z.
+is the AD variable index corresponding to the variable z; i.e.,
+it is the from node index for z in \a var_sparsity.
 
 \param arg
 \n
 \a arg[0]
-is the offset corresponding to this VecAD vector in the combined array.
+is the offset corresponding to this VecAD vector in the VecAD combined array.
 
 \param num_combined
-is the total number of elements in the VecAD address array.
+is the total number of elements in the VecAD combinded array.
 
 \param combined
+is the VecAD combined array.
+\n
+\n
 \a combined[ \a arg[0] - 1 ]
-is the row number of this VecAD vector in the VecAD sparsity pattern matrix.
-We use the notation i_y below which is defined by
+is the from node index for the vector v  in the \a vecad_sparsity
+connection object.
+We use the notation i_v for this value; i.e.,
 \verbatim
-	i_y = combined[ \a arg[0] - 1 ]
+	i_v = combined[ \a arg[0] - 1 ]
 \endverbatim
 
-\param num_vec
-is the number of VecAD vectors corresponding to the tape;
-this is also the number of rows in the VecAD sparsity pattern matrix.
-
-\param nc_sparsity
-number of packed values corresponding to each variable; i.e.,
-the number of columsn in the sparsity pattern matrices.
-
 \param var_sparsity
-\a var_sparsity[ \a i_z * \a nc_sparsity + j ]
-for j = 0 , ... , \a nc_sparsity - 1 
-is the sparsity bit pattern for z.
-It is output for forward mode operations,
-and input for reverse mode operations.
+The connections in \a var_sparsity with from node index \a i_z
+are the sparsity pattern for z.
+These connections are an output for forward mode operations,
+and an input for reverse mode operations.
 
-\param vec_sparsity
-\a vec_sparsity[ \a i_y * \a nc_sparsity + j ]
-for j = 0 , ... , \a nc_sparsity - 1 
-is the sparsity bit pattern for the vector y.
-It is input for forward mode operations.
+\param vecad_sparsity
+The connections in \a vecad_sparsity with from node index \a i_v
+are the sparsity bit pattern for the vector v.
+These connections are an input for forward mode operations.
 For reverse mode operations,
-the sparsity pattern for z is added to the sparsity pattern for y.
+the sparsity pattern for z is added to the sparsity pattern for v.
 
 \par Checked Assertions 
 \li NumArg(op) == 3
 \li NumRes(op) == 1
-\li 0 <  \a arg[0]
+\li 0         <  \a arg[0]
 \li \a arg[0] < \a num_combined
-\li i_y < \a num_vec
+\li i_v       < \a vecad_sparsity.n_from()
 */
 template <class Pack>
 inline void sparse_load_op(
-	OpCode         op           ,
-	size_t         i_z          ,
-	const size_t*        arg    , 
-	size_t         num_combined ,
-	const size_t*  combined     ,
-	size_t         num_vec      ,
-	size_t         nc_sparsity  ,
-	Pack*          var_sparsity ,
-	Pack*          vec_sparsity )
+	OpCode              op             ,
+	size_t              i_z            ,
+	const size_t*        arg           , 
+	size_t              num_combined   ,
+	const size_t*       combined       ,
+	connection<Pack>&   var_sparsity   ,
+	connection<Pack>&   vecad_sparsity )
 {
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -1249,7 +1242,7 @@ is the offset corresponding to this VecAD vector in the combined array.
 \a arg[2]
 \n
 index corresponding to the third operand for this operator;
-i.e. the index corresponding to y.
+It is lso the from index for y in the \a var_sparsity connection object.
 (Note that \a arg[2] > 0 because y is a variable.) 
 
 \param num_combined
@@ -1257,60 +1250,43 @@ is the total number of elements in the VecAD address array.
 
 \param combined
 \a combined [ arg[0] - 1 ]
-is the row number of this VecAD vector in the VecAD sparsity pattern matrix.
+is the from index for the VecAD vector v in the \a vecad_sparsity 
+connection object.
 We use the notation i_v below which is defined by
 \verbatim
 	i_v = combined[ \a arg[0] - 1 ]
 \endverbatim
 
-\param num_vec
-is the number of VecAD vectors corresponding to the tape;
-this is also the number of rows in the VecAD sparsity pattern matrix.
-
-\param num_var
-is the total number of variables in the tape. 
-This is also the number of row indices in the \a var_sparsity matrix.
-
-\param nc_sparsity
-number of packed values corresponding to each variable; i.e.,
-the number of columsn in the sparsity pattern matrices.
-
 \param var_sparsity
-\a var_sparsity[ \a arg[2] * \a nc_sparsity + j ]
-for j = 0 , ... , \a nc_sparsity - 1 
-is the sparsity bit pattern for y.
-It is input for forward mode operations.
+The connections in \a var_sparsity corresponding to the from index \a arg[2] 
+correspond to the variable y.
+These are an input for forward mode operations.
 For reverse mode operations:
 The sparsity pattern for v is added to the spartisy pattern for y.
 
-\param vec_sparsity
-\a vec_sparsity[ \a i_v * \a nc_sparsity + j ]
-for j = 0 , ... , \a nc_sparsity - 1 
-is the sparsity bit pattern for the vector v.
-It is input for reverse mode operations.
+\param vecad_sparsity
+The connections in \a vecad_sparsity corresponding to the from index \a i_v
+correspond to the vector v.
+These are an input for reverse mode operations.
 For forward mode operations, the sparsity pattern for y is added
 to the sparsity pattern for the vector v.
 
-\n
 \par Checked Assertions 
 \li NumArg(op) == 3
 \li NumRes(op) == 0
 \li 0 <  \a arg[0]
 \li \a arg[0] < \a num_combined
-\li \a arg[2] < \a num_var
-\li i_v < \a num_vec
+\li \a arg[2] < \a var_sparsity.n_from()
+\li i_v       < \a vecad_sparsity.n_from()
 */
 template <class Pack>
 inline void sparse_store_op(
-	OpCode         op           ,
-	const size_t*  arg          , 
-	size_t         num_combined ,
-	const size_t*  combined     ,
-	size_t         num_vec      ,
-	size_t         num_var      ,
-	size_t         nc_sparsity  ,
-	Pack*          var_sparsity ,
-	Pack*          vec_sparsity )
+	OpCode         op             ,
+	const size_t*  arg            , 
+	size_t         num_combined   ,
+	const size_t*  combined       ,
+	Pack*          var_sparsity   ,
+	Pack*          vecad_sparsity )
 {
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
