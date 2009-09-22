@@ -35,35 +35,35 @@ where op is a C++ binary unary operator and both x and y are variables.
 
 \param i_z
 variable index corresponding to the result for this operation; 
-i.e. the from node index in sparsity corresponding to z. 
+i.e., z. 
 
 \param arg
 \a arg[0]
 variable index corresponding to the left operand for this operator;
-i.e. the from node index in sparsity corresponding to x.
+i.e., x.
 \n
 \n arg[1]
 variable index corresponding to the right operand for this operator;
-i.e. the from node index in sparsity corresponding to y.
+i.e., y.
 
 \param sparsity
 \b Input: 
-The from node with index \a arg[0] in \a sparsity
-contains the sparsity bit pattern for x.
+The set with index \a arg[0] in \a sparsity
+is the sparsity bit pattern for x.
 This identifies which of the independent variables the variable x
 depends on. 
 \n
 \n
 \b Input: 
-The from node with index \a arg[1] in \a sparsity
-contains the sparsity bit pattern for y.
+The set with index \a arg[1] in \a sparsity
+is the sparsity bit pattern for y.
 This identifies which of the independent variables the variable y
 depends on. 
 \n
 \n
 \b Output: 
-The from node with index \a i_z in \a sparsity
-contains the sparsity bit pattern for z.
+The set with index \a i_z in \a sparsity
+is the sparsity bit pattern for z.
 This identifies which of the independent variables the variable z
 depends on. 
 
@@ -114,17 +114,17 @@ there is more that one bit per Pack value.
 
 \param i_z
 variable index corresponding to the result for this operation; 
-i.e., the from node index in sparsity pattern corresponding to z.
+i.e., z.
 
 \param arg
 \a arg[0]
 variable index corresponding to the left operand for this operator;
-i.e., the from node index in sparsity pattern corresponding to x.
+i.e., x.
 
 \n
 \n arg[1]
 variable index corresponding to the right operand for this operator;
-i.e., the from node index in sparsity pattern corresponding to y.
+i.e., y.
 
 \param sparsity
 The set with index \a i_z in \a sparsity 

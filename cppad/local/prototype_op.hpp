@@ -1042,7 +1042,8 @@ is the code corresponding to this operator; i.e., LdpOp or LdvOp
 
 \param i_z
 is the AD variable index corresponding to the variable z; i.e.,
-it is the from node index for z in \a var_sparsity.
+the set with index \a i_z in \a var_sparsity is the sparsity pattern
+correpsonding to z.
 
 \param arg
 \n
@@ -1359,7 +1360,8 @@ i.e. the row index in sparsity corresponding to z.
 \param arg
 \a arg[0]
 variable index corresponding to the left operand for this operator;
-i.e. the from node index in the spasity patterns correspoding to x.
+i.e. the set with index \a arg[0] in \a var_sparsity
+is the spasity pattern correspoding to x.
 \n
 \n arg[1]
 variable index corresponding to the right operand for this operator;

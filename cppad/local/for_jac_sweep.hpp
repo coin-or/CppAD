@@ -41,7 +41,6 @@ is the number of independent variables on the tape.
 \param numvar
 is the total number of variables on the tape; i.e.,
 \a play->num_rec_var().
-This is also the number of from nodes in \a var_sparsity.
 
 \param play
 The information stored in \a play
@@ -59,12 +58,16 @@ with in the tape and this changes during playback.
 \param var_sparsity
 \b Input: For j = 1 , ... , \a n, 
 the sparsity pattern for the independent variable with index (j-1)
-corresponds to the from node with index j in \a var_sparsity.
+corresponds to the set with index j in \a var_sparsity.
 \n
 \n
 \b Output: For i = \a n + 1 , ... , \a numvar - 1,
 the sparsity pattern for the variable with index i on the tape
-corresponds to the from node with index i in \a var_sparsity.
+corresponds to the set with index i in \a var_sparsity.
+
+\par Checked Assertions:
+\li numvar == var_sparsity.n_set()
+\li numvar == play->num_rec_var()
 */
 
 
@@ -85,7 +88,8 @@ void ForJacSweep(
 	size_t            i, j, k;
 
 	// check numvar argument
-	CPPAD_ASSERT_UNKNOWN( play->num_rec_var() == numvar );
+	CPPAD_ASSERT_UNKNOWN( play->num_rec_var()  == numvar );
+	CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == numvar );
 
 	// set the number of operators
 	const size_t numop_m1 = play->num_rec_op() - 1;

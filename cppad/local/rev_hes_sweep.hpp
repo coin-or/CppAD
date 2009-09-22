@@ -64,7 +64,7 @@ with in the tape and this changes during playback.
 For i = 0 , ... , \a numvar - 1, 
 (for all the variables on the tape),
 the forward Jacobian sparsity pattern for the variable with index i
-corresponds to the from node with index i in \a for_jac_sparse.
+corresponds to the set with index i in \a for_jac_sparse.
 
 \param RevJac
 \b Input:
@@ -79,7 +79,7 @@ it is used for temporary work space.
 
 \param rev_hes_sparse
 The reverse Hessian sparsity pattern for the variable with index i
-corresponds to the from node with index i in \a rev_hes_sparse.
+corresponds to the set with index i in \a rev_hes_sparse.
 \n
 \n
 \b Input: For i = 0 , ... , \a numvar - 1  
@@ -131,8 +131,8 @@ void RevHesSweep(
 	);
 
 	// vecad_sparsity contains a sparsity pattern for each VecAD object.
-	// vecad_ind maps a VecAD index (the beginning of the
-	// VecAD object) to the vecad_sparsity from index for the VecAD object.
+	// vecad_ind maps a VecAD index (beginning of the VecAD object) 
+	// to the index for the corresponding set in vecad_sparsity.
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	vector_pack      vecad_sparse;
