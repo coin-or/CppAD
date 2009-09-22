@@ -411,7 +411,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/unary_minus.hpp \
 	cppad/local/unary_plus.hpp \
 	cppad/local/vec_ad.hpp \
-	cppad/local/vector_set.hpp \
+	cppad/local/vector_pack.hpp \
 	cppad/local/undef.hpp \
 	cppad/local/value.hpp \
 	cppad/local/var2par.hpp \

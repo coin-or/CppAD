@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 // used by the sparse operators
-# include <cppad/local/vector_set.hpp>
+# include <cppad/local/vector_pack.hpp>
 
 # include <cppad/local/std_math_ad.hpp>
 # include <cppad/local/abs_op.hpp>

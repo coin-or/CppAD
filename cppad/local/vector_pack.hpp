@@ -1,5 +1,5 @@
-# ifndef CPPAD_VECTOR_SET_INCLUDED
-# define CPPAD_VECTOR_SET_INCLUDED
+# ifndef CPPAD_VECTOR_PACK_INCLUDED
+# define CPPAD_VECTOR_PACK_INCLUDED
 CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*!
-\file vector_set.hpp
+\file vector_pack.hpp
 Vector of sets of positive integers.
 */
 

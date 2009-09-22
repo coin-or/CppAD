@@ -48,7 +48,7 @@ list="
 	sqrt_op.hpp
 	store_op.hpp
 	sub_op.hpp
-	vector_set.hpp
+	vector_pack.hpp
 "
 for name in $list
 do
