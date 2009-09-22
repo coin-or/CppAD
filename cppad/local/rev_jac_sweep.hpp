@@ -144,7 +144,12 @@ void RevJacSweep(
 
 # if CPPAD_REV_JAC_SWEEP_TRACE
 		for(j = 0; j < limit; j++)
-			z_value[j] = var_sparsity.get_element(i_var, j);
+			z_value[j] = false;
+		j = var_sparsity.get_element(i_var, j);
+		while( j < limit )
+		{	z_value[j] = true;
+			j          = var_sparsity.get_element(i_var, j);
+		}
 		printOp(
 			std::cout, 
 			play,

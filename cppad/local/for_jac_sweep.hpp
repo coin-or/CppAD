@@ -101,11 +101,11 @@ void ForJacSweep(
 	// to all the other variables.
 	// vecad_ind maps a VecAD index (the beginning of the
 	// VecAD object) to its from index in vecad_sparsity
-	size_t n_to            = var_sparsity.limit();
+	size_t limit           = var_sparsity.limit();
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	vector_pack      vecad_sparsity;
-	vecad_sparsity.resize(num_vecad_vec, n_to);
+	vecad_sparsity.resize(num_vecad_vec, limit);
 	size_t* vecad_ind      = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
@@ -126,7 +126,7 @@ void ForJacSweep(
 
 # if CPPAD_FOR_JAC_SWEEP_TRACE
 	std::cout << std::endl;
-	CppAD::vector<bool> z_value(n_to);
+	CppAD::vector<bool> z_value(limit;
 # endif
 
 	// skip the NonOp at the beginning of the recording
@@ -484,8 +484,13 @@ void ForJacSweep(
 		}
 # if CPPAD_FOR_JAC_SWEEP_TRACE
 		// value for this variable
-		for(j = 0; j < n_to; j++)
-			z_value[j] = var_sparsity.get_element(i_var, j);
+		for(j = 0; j < limit j++)
+			z_value[j] = false;
+		j = var_sparsity.next_element(i_var);
+		while( j < limit )
+		{	z_value[j] = true;
+			j = var_sparsity.next_element(i_var);
+		}
 		printOp(
 			std::cout,
 			play,

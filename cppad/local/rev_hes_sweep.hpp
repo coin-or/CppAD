@@ -177,10 +177,19 @@ void RevHesSweep(
 
 # if CPPAD_REV_HES_SWEEP_TRACE
 		for(j = 0; j < limit; j++)
-		{	zf_value[j] = for_jac_sparse.get_element(i_var, j);
-			zh_value[j] = rev_hes_sparse.get_element(i_var, j);
+		{	zf_value[j] = false;
+			zh_value[j] = false;
 		}
-
+		j = for_jac_sparse.next_element(i_var);;
+		while( j < limit )
+		{	zf_value[j] = true;
+			j = for_jac_sparse.next_element(i_var);
+		}
+		j = rev_hes_sparse.next_element(i_var);;
+		while( j < limit )
+		{	zh_value[j] = true;
+			j = rev_hes_sparse.next_element(i_var);
+		}
 		// should also print RevJac[i_var], but printOp does not
 		// yet allow for this.
 		printOp(

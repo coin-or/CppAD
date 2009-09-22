@@ -190,7 +190,7 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 
 		// set bits that are true
 		for(j = 0; j < q; j++) if( r[ i * q + j ] )
-			for_jac_sparsity_.set_element( ind_taddr_[i], j);
+			for_jac_sparsity_.add_element( ind_taddr_[i], j);
 	}
 
 	// evaluate the sparsity patterns
@@ -207,8 +207,14 @@ Vector ADFun<Base>::ForSparseJac(size_t q, const Vector &r)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
 
 		// set bits 
-		for(j = 0; j < q; j++) s[ i * q + j ] = 
-			for_jac_sparsity_.get_element( dep_taddr_[i], j);
+		for(j = 0; j < q; j++)
+			s[ i * q + j ] = false;
+		CPPAD_ASSERT_UNKNOWN( for_jac_sparsity_.limit() == q );
+		j = for_jac_sparsity_.next_element( dep_taddr_[i] );
+		while( j < q )
+		{	s[i * q + j ] = true;
+			j = for_jac_sparsity_.next_element( dep_taddr_[i] );
+		}
 	}
 
 	return s;

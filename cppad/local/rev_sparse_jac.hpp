@@ -186,7 +186,7 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
 
 		for(j = 0; j < p; j++) if( s[ i * m + j ] )
-			var_sparsity.set_element( dep_taddr_[i], j );
+			var_sparsity.add_element( dep_taddr_[i], j );
 	}
 
 	// evaluate the sparsity patterns
@@ -207,7 +207,14 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s)
 
 		// set bits 
 		for(i = 0; i < p; i++) 
-			r[ i * n + j ] = var_sparsity.get_element(j+1, i);
+			r[ i * n + j ] = false;
+
+		CPPAD_ASSERT_UNKNOWN( var_sparsity.limit() == p );
+		i = var_sparsity.next_element(j+1);
+		while( i < p )
+		{	r[ i * n + j ] = true;
+			i              = var_sparsity.next_element(j+1);
+		}
 	}
 
 	return r;

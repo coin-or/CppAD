@@ -257,8 +257,15 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
 
 		// i is index corresponding to forward mode partial
-		for(i = 0; i < q; i++) h[ i * n + j ] = 
-			rev_hes_sparsity.get_element(j + 1, i);
+		for(i = 0; i < q; i++) 
+			h[ i * n + j ] = false;
+
+		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.limit() == q );
+		i = rev_hes_sparsity.next_element(j + 1);
+		while( i < q )
+		{	h[ i * n + j ] = true;
+			i = rev_hes_sparsity.next_element(j + 1);
+		}
 	}
 
 	// free memory used for the calculation
