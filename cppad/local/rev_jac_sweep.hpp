@@ -73,8 +73,7 @@ Otherwise the sparsity patten is empty.
 \n
 \b Output: For j = 1 , ... , \a n,
 the sparsity pattern for the dependent variable with index (j-1) 
-is given by the connections for the from node with index j in
-\a var_sparsity.
+is given by the set with index index j in \a var_sparsity.
 */
 
 template <class Base>
@@ -101,8 +100,8 @@ void RevJacSweep(
 	CPPAD_ASSERT_UNKNOWN( play->num_rec_var()   == numvar );
 	CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == numvar );
 
-	// number of to nodes in the connection
-	size_t n_to = var_sparsity.limit();
+	// upper limit (exclusive) for elements in the set
+	size_t limit = var_sparsity.limit();
 
 	// vecad_sparsity contains a sparsity pattern for each VecAD object.
 	// vecad_ind maps a VecAD index (the beginning of the
@@ -110,7 +109,7 @@ void RevJacSweep(
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	vector_pack      vecad_sparsity;
-	vecad_sparsity.resize(num_vecad_vec, n_to);
+	vecad_sparsity.resize(num_vecad_vec, limit);
 	size_t* vecad_ind      = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
@@ -134,7 +133,7 @@ void RevJacSweep(
 	i_op = 2;
 # if CPPAD_REV_JAC_SWEEP_TRACE
 	std::cout << std::endl;
-	CppAD::vector<bool> z_value(n_to);
+	CppAD::vector<bool> z_value(limit);
 # endif
 	while(i_op > 1)
 	{
@@ -144,7 +143,7 @@ void RevJacSweep(
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
 # if CPPAD_REV_JAC_SWEEP_TRACE
-		for(j = 0; j < n_to; j++)
+		for(j = 0; j < limit; j++)
 			z_value[j] = var_sparsity.get_element(i_var, j);
 		printOp(
 			std::cout, 

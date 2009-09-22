@@ -127,21 +127,22 @@ variable index corresponding to the right operand for this operator;
 i.e., the from node index in sparsity pattern corresponding to y.
 
 \param sparsity
-The (EDIT THIS) connections in \a sparsity for the
-from node with index \a i_z are the sparsity pattern for z 
-and corresponding ot the function G.
+The set with index \a i_z in \a sparsity 
+is the sparsity pattern for z corresponding ot the function G.
 \n
 \n
-The (EDIT THIS) connections in \a sparsity for the 
-from node with index \a arg[0] are the sparsity pattern for x.
-On input, they correspond to the function G,
-and on output they correspond to H.
+The set with index \a arg[0] in \a sparsity 
+is the sparsity pattern for x.
+On input, it corresponds to the function G,
+and on output it corresponds to H.
 \n
 \n
-The (EDIT THIS) connections in \a sparsity for the 
-from node with index \a arg[1] are the sparsity pattern for y.
-On input, they correspond to the function G,
-and on output they correspond to H.
+The set with index \a arg[1] in \a sparsity 
+is the sparsity pattern for y.
+On input, it corresponds to the function G,
+and on output it corresponds to H.
+\n
+\n
 
 \par Checked Assertions:
 \li \a arg[0] < \a i_z 

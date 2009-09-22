@@ -88,7 +88,7 @@ the reverse Hessian sparsity pattern for the variable with index i is empty.
 \n
 \b Output: For j = 1 , ... , \a n,
 the reverse Hessian sparsity pattern for the independent dependent variable 
-with index (j-1) is given by the from connections (EDIT THIS) for the node with index j
+with index (j-1) is given by the set with index j
 in \a rev_hes_sparse. 
 The values in the rest of \a rev_hes_sparse are not specified; i.e.,
 they are used for temporary work space.
@@ -121,7 +121,7 @@ void RevHesSweep(
 	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.n_set() == numvar );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 
-	// number of to nodes in (EDIT THIS) connections
+	// upper limit exclusive for set elements
 	size_t limit   = rev_hes_sparse.limit();
 	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.limit() == limit );
 

@@ -349,9 +349,9 @@ inline void reverse_sparse_jacobian_load_op(
 /*!
 Reverse mode Hessian sparsity operations for LdpOp and LdvOp
 
-This routine is given the (EDIT THIS) connections corresponding to
+This routine is given the sparsity patterns for 
 G(z , v[x] , w , u ... )
-and it uses them to compute the (EDIT THIS) connections corresponding to
+and it uses them to compute the sparsity patterns for
 \verbatim
 	H( v[x] , w , u , ... ) = G[ z( v[x] ) , v[x] , w , u , ... ]
 \endverbatim

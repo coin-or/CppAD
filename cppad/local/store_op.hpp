@@ -184,9 +184,9 @@ inline void forward_sparse_store_op(
 /*!
 Reverse mode sparsity operations for StpvOp and StvvOp
 
-This routine is given the (EDIT THIS) connections corresponding to
-G(v[x], y , w , u ... )
-and it uses them to compute the partial derivatives of 
+This routine is given the sparsity patterns for
+G(v[x], y , w , u ... ) and it uses them to compute the 
+sparsity patterns for  
 \verbatim
 	H(y , w , u , ... ) = G[ v[x], y , w , u , ... ]
 \endverbatim
@@ -217,9 +217,9 @@ inline void reverse_sparse_jacobian_store_op(
 /*!
 Reverse mode sparsity operations for StpvOp and StvvOp
 
-This routine is given the (EDIT THIS) connections corresponding to
+This routine is given the sparsity patterns for
 G(v[x], y , w , u ... )
-and it uses them to compute the partial derivatives of 
+and it uses them to compute the sparsity patterns for 
 \verbatim
 	H(y , w , u , ... ) = G[ v[x], y , w , u , ... ]
 \endverbatim

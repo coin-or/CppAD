@@ -503,22 +503,22 @@ On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 \param hes_sparsity
-The connections in \a hes_sparsity for the from node with index \a i_z 
-are the Hessian sparsity pattern for the function G
+The set with index \a i_z in \a hes_sparsity 
+is the Hessian sparsity pattern for the function G
 where one of the partials is with respect to z.
 \n
 \n
 If y_2 is a variable,
-the connections in \a hes_sparsity for the from node with index \a arg[4] 
-are the Hessian sparsity pattern 
+the set with index \a arg[4] in \a hes_sparsity 
+is the Hessian sparsity pattern 
 where one of the partials is with respect to y_2.
 On input, this pattern corresponds to the function G.
 On output, this pattern corresponds to the function H.
 \n
 \n
 If y_3 is a variable,
-the connections in \a hes_sparsity for the from node with index \a arg[5] 
-are the Hessian sparsity pattern 
+the set with index \a arg[5] in \a hes_sparsity 
+is the Hessian sparsity pattern 
 where one of the partials is with respect to y_3.
 On input, this pattern corresponds to the function G.
 On output, this pattern corresponds to the function H.

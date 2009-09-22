@@ -1057,23 +1057,20 @@ is the VecAD combined array.
 \n
 \n
 \a combined[ \a arg[0] - 1 ]
-is the from node index for the vector v  in the \a vecad_sparsity
-connection object.
+is the index of the set corresponding to the vector v  in \a vecad_sparsity.
 We use the notation i_v for this value; i.e.,
 \verbatim
 	i_v = combined[ \a arg[0] - 1 ]
 \endverbatim
 
 \param var_sparsity
-The connections (EDIT THIS) in \a var_sparsity with from node index \a i_z
-are the sparsity pattern for z.
-These connections (EDIT THIS) are an output for forward mode operations,
+The set with index \a i_z in \a var_sparsity is the sparsity pattern for z.
+This is an output for forward mode operations,
 and an input for reverse mode operations.
 
 \param vecad_sparsity
-The connections (EDIT THIS) in \a vecad_sparsity with from node index \a i_v
-are the sparsity bit pattern for the vector v.
-These connections (EDIT THIS) are an input for forward mode operations.
+The set with index \a i_v is the sparsity pattern for the vector v.
+This is an input for forward mode operations.
 For reverse mode operations,
 the sparsity pattern for z is added to the sparsity pattern for v.
 
@@ -1232,8 +1229,8 @@ is the offset corresponding to this VecAD vector in the combined array.
 \n 
 \a arg[2]
 \n
-index corresponding to the third operand for this operator;
-It is lso the from index for y in the \a var_sparsity connection object.
+The set with index \a arg[2] in \a var_sparsity 
+is the sparsity pattern corresponding to y.
 (Note that \a arg[2] > 0 because y is a variable.) 
 
 \param num_combined
@@ -1241,24 +1238,24 @@ is the total number of elements in the VecAD address array.
 
 \param combined
 \a combined [ arg[0] - 1 ]
-is the from index for the VecAD vector v in the \a vecad_sparsity 
-connection object.
+is the index of the set in \a vecad_sparsity corresponding
+to the sparsity pattern for the vector v.
 We use the notation i_v below which is defined by
 \verbatim
 	i_v = combined[ \a arg[0] - 1 ]
 \endverbatim
 
 \param var_sparsity
-The connections (EDIT THIS) in \a var_sparsity corresponding to the from index \a arg[2] 
-correspond to the variable y.
-These are an input for forward mode operations.
+The set  with index \a arg[2] in \a var_sparsity 
+is the sparsity pattern for y.
+This is an input for forward mode operations.
 For reverse mode operations:
 The sparsity pattern for v is added to the spartisy pattern for y.
 
 \param vecad_sparsity
-The connections (EDIT THIS) in \a vecad_sparsity corresponding to the from index \a i_v
-correspond to the vector v.
-These are an input for reverse mode operations.
+The set with index \a i_v in \a vecad_sparsity 
+is the sparsity pattern for v.
+This is an input for reverse mode operations.
 For forward mode operations, the sparsity pattern for y is added
 to the sparsity pattern for the vector v.
 
@@ -1316,16 +1313,16 @@ On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 \param for_jac_sparsity
-The connections (EDIT THIS) for the from node \a i_x
+The set with index \a i_x in for_jac_sparsity
 is the forward mode Jacobian sparsity pattern for the variable x. 
 
 \param rev_hes_sparsity
-The connections (EDIT THIS) for the from node with from index \a i_z in \a rev_hes_sparsity
+The set with index \a i_z in in \a rev_hes_sparsity
 is the Hessian sparsity pattern for the fucntion G
 where one of the partials derivative is with respect to z.
 \n
 \n
-The connections (EDIT THIS) for the form node with index \a i_x in \a rev_hes_sparsity
+The set with index \a i_x in \a rev_hes_sparsity
 is the Hessian sparsity pattern 
 where one of the partials derivative is with respect to x.
 On input, it corresponds to the function G,
@@ -1388,30 +1385,29 @@ On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 \param for_jac_sparsity
-The connections (EDIT THIS) in \a for_jac_sparsity for the
-from node with index \a arg[0] are the forward sparsity pattern for x.
+The set with index \a arg[0] in \a for_jac_sparsity for the
+is the forward Jacobian sparsity pattern for x.
 \n
 \n
-The connections (EDIT THIS) in \a for_jac_sparsity for the
-from node with index \a arg[1] are the forward sparsity pattern for y.
+The set with index \a arg[1] in \a for_jac_sparsity
+is the forward sparsity pattern for y.
 
 \param rev_hes_sparsity
-The connections (EDIT THIS) in \a rev_hes_sparsity for the
-from node with index \a i_z are the Hessian sparsity pattern
-for the function G
+The set wiht index \a i_x in \a rev_hes_sparsity 
+is the Hessian sparsity pattern for the function G
 where one of the partial derivatives is with respect to z.
 \n
 \n
-The connections (EDIT THIS) in \a rev_hes_sparsity for the
-from node wiht index \a arg[0] are the Hessian sparsity pattern
-where one of the partial derivatives is with respect to x.
+The set with index \a arg[0] in  \a rev_hes_sparsity 
+is the Hessian sparsity pattern where one of the 
+partial derivatives is with respect to x.
 On input, it corresponds to the function G,
 and on output it correspondst to H.
 \n
 \n
-The connections (EDIT THIS) in \a rev_hes_sparsity for the
-from node wiht index \a arg[1] are the Hessian sparsity pattern
-where one of the partial derivatives is with respect to y.
+The set with index \a arg[1] in \a rev_hes_sparsity 
+is the Hessian sparsity pattern where one of the 
+partial derivatives is with respect to y.
 On input, it corresponds to the function G,
 and on output it correspondst to H.
 

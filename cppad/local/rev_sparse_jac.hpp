@@ -177,11 +177,11 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s)
 		"p (first argument) times range dimension for ADFun object."
 	);
 
-	// connection object that will hold the results
+	// vector of sets that will hold the results
 	vector_pack      var_sparsity;
 	var_sparsity.resize(total_num_var_, p);
 
-	// set from node connections corresponding to dependent variables
+	// The sparsity pattern corresponding to the dependent variables
 	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
 
