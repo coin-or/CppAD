@@ -208,7 +208,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 	size_t n = ind_taddr_.size();
 
 	CPPAD_ASSERT_KNOWN(
-		q == for_jac_sparsity_.n_to(),
+		q == for_jac_sparsity_.limit(),
 		"RevSparseHes: q (first argument) is not equal to its value"
 		" in the previous call to ForSparseJac with this ADFun object."
 	);
@@ -223,7 +223,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 	RevJac       = CPPAD_TRACK_NEW_VEC(total_num_var_, RevJac);	
 
 	// connection object that will hold packed reverse Hessain values
-	connection       rev_hes_sparsity;
+	vector_pack      rev_hes_sparsity;
 	rev_hes_sparsity.resize(total_num_var_, q);
 
 	// initialize RevJac matrix to false

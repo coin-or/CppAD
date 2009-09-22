@@ -82,7 +82,7 @@ void RevJacSweep(
 	size_t                n,
 	size_t                numvar,
 	player<Base>         *play,
-	connection&           var_sparsity
+	vector_pack&          var_sparsity
 )
 {
 	OpCode           op;
@@ -99,17 +99,17 @@ void RevJacSweep(
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 	CPPAD_ASSERT_UNKNOWN( play->num_rec_var()   == numvar );
-	CPPAD_ASSERT_UNKNOWN( var_sparsity.n_from() == numvar );
+	CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == numvar );
 
 	// number of to nodes in the connection
-	size_t n_to = var_sparsity.n_to();
+	size_t n_to = var_sparsity.limit();
 
 	// vecad_sparsity contains a sparsity pattern for each VecAD object.
 	// vecad_ind maps a VecAD index (the beginning of the
 	// VecAD object) to the vecad_sparsity from index for the VecAD object.
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
-	connection       vecad_sparsity;
+	vector_pack      vecad_sparsity;
 	vecad_sparsity.resize(num_vecad_vec, n_to);
 	size_t* vecad_ind      = CPPAD_NULL;
 	if( num_vecad_vec > 0 )

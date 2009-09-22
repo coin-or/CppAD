@@ -178,7 +178,7 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s)
 	);
 
 	// connection object that will hold the results
-	connection       var_sparsity;
+	vector_pack      var_sparsity;
 	var_sparsity.resize(total_num_var_, p);
 
 	// set from node connections corresponding to dependent variables

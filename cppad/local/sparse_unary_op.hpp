@@ -11,7 +11,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# include <cppad/local/connection.hpp>
 CPPAD_BEGIN_NAMESPACE
 
 /*!
@@ -66,7 +65,7 @@ depends on.
 inline void forward_sparse_jacobian_unary_op(
 	size_t            i_z           ,
 	size_t            i_x           ,
-	connection&       sparsity      )
+	vector_pack&      sparsity      )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
@@ -122,7 +121,7 @@ is the sparsity bit pattern for H with respect to the variable x.
 inline void reverse_sparse_jacobian_unary_op(
 	size_t     i_z                     ,
 	size_t     i_x                     ,
-	connection&            sparsity    )
+	vector_pack&           sparsity    )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
@@ -151,8 +150,8 @@ inline void reverse_sparse_hessian_linear_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
-	connection&         for_jac_sparsity  ,
-	connection&         rev_hes_sparsity  )
+	vector_pack&        for_jac_sparsity  ,
+	vector_pack&        rev_hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
@@ -183,8 +182,8 @@ inline void reverse_sparse_hessian_nonlinear_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
-	connection&         for_jac_sparsity  ,
-	connection&         rev_hes_sparsity  )
+	vector_pack&        for_jac_sparsity  ,
+	vector_pack&        rev_hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );

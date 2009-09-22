@@ -165,16 +165,16 @@ inline void forward_sparse_store_op(
 	const size_t*       arg            , 
 	size_t              num_combined   ,
 	const size_t*       combined       ,
-	connection&         var_sparsity   ,
-	connection&         vecad_sparsity )
+	vector_pack&        var_sparsity   ,
+	vector_pack&        vecad_sparsity )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_from() );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < var_sparsity.n_from() );
+	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
+	CPPAD_ASSERT_UNKNOWN( arg[2] < var_sparsity.n_set() );
 
 	vecad_sparsity.binary_union(i_v, i_v, arg[2], var_sparsity);
 
@@ -184,7 +184,7 @@ inline void forward_sparse_store_op(
 /*!
 Reverse mode sparsity operations for StpvOp and StvvOp
 
-This routine is given the connections corresponding to
+This routine is given the (EDIT THIS) connections corresponding to
 G(v[x], y , w , u ... )
 and it uses them to compute the partial derivatives of 
 \verbatim
@@ -198,16 +198,16 @@ inline void reverse_sparse_jacobian_store_op(
 	const size_t*      arg             , 
 	size_t             num_combined    ,
 	const size_t*      combined        ,
-	connection&        var_sparsity    ,
-	connection&        vecad_sparsity  )
+	vector_pack&       var_sparsity    ,
+	vector_pack&       vecad_sparsity  )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_from() );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < var_sparsity.n_from() );
+	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
+	CPPAD_ASSERT_UNKNOWN( arg[2] < var_sparsity.n_set() );
 
 	var_sparsity.binary_union(arg[2], arg[2], i_v, vecad_sparsity);
 
@@ -217,7 +217,7 @@ inline void reverse_sparse_jacobian_store_op(
 /*!
 Reverse mode sparsity operations for StpvOp and StvvOp
 
-This routine is given the connections corresponding to
+This routine is given the (EDIT THIS) connections corresponding to
 G(v[x], y , w , u ... )
 and it uses them to compute the partial derivatives of 
 \verbatim
@@ -243,8 +243,8 @@ inline void reverse_sparse_hessian_store_op(
 	const size_t*      arg          , 
 	size_t             num_combined ,
 	const size_t*      combined     ,
-	connection&        var_sparsity ,
-	connection&        vecad_sparsity ,
+	vector_pack&       var_sparsity ,
+	vector_pack&       vecad_sparsity ,
 	bool*              var_jacobian   ,
 	bool*              vecad_jacobian )
 {
@@ -253,8 +253,8 @@ inline void reverse_sparse_hessian_store_op(
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_from() );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < var_sparsity.n_from() );
+	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
+	CPPAD_ASSERT_UNKNOWN( arg[2] < var_sparsity.n_set() );
 
 	var_sparsity.binary_union(arg[2], arg[2], i_v, vecad_sparsity);
 

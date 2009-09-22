@@ -11,7 +11,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# include <cppad/local/connection.hpp>
 CPPAD_BEGIN_NAMESPACE
 
 /*!
@@ -77,7 +76,7 @@ depends on.
 inline void forward_sparse_jacobian_binary_op(
 	size_t            i_z           ,
 	const size_t*     arg           ,
-	connection&       sparsity      )
+	vector_pack&      sparsity      )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
@@ -128,18 +127,18 @@ variable index corresponding to the right operand for this operator;
 i.e., the from node index in sparsity pattern corresponding to y.
 
 \param sparsity
-The connections in \a sparsity for the
+The (EDIT THIS) connections in \a sparsity for the
 from node with index \a i_z are the sparsity pattern for z 
 and corresponding ot the function G.
 \n
 \n
-The connections in \a sparsity for the 
+The (EDIT THIS) connections in \a sparsity for the 
 from node with index \a arg[0] are the sparsity pattern for x.
 On input, they correspond to the function G,
 and on output they correspond to H.
 \n
 \n
-The connections in \a sparsity for the 
+The (EDIT THIS) connections in \a sparsity for the 
 from node with index \a arg[1] are the sparsity pattern for y.
 On input, they correspond to the function G,
 and on output they correspond to H.
@@ -151,7 +150,7 @@ and on output they correspond to H.
 inline void reverse_sparse_jacobian_binary_op(
 	size_t              i_z           ,
 	const size_t*       arg           ,
-	connection&         sparsity      )
+	vector_pack&        sparsity      )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
@@ -178,8 +177,8 @@ inline void reverse_sparse_hessian_addsub_op(
 	size_t               i_z                ,
 	const size_t*        arg                ,
 	bool*                jac_reverse        ,
-	connection&          for_jac_sparsity   ,
-	connection&          rev_hes_sparsity   )
+	vector_pack&         for_jac_sparsity   ,
+	vector_pack&         rev_hes_sparsity   )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
@@ -209,8 +208,8 @@ inline void reverse_sparse_hessian_mul_op(
 	size_t               i_z                ,
 	const size_t*        arg                ,
 	bool*                jac_reverse        ,
-	connection&          for_jac_sparsity   ,
-	connection&          rev_hes_sparsity   )
+	vector_pack&         for_jac_sparsity   ,
+	vector_pack&         rev_hes_sparsity   )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
@@ -246,8 +245,8 @@ inline void reverse_sparse_hessian_div_op(
 	size_t               i_z                ,
 	const size_t*        arg                ,
 	bool*                jac_reverse        ,
-	connection&          for_jac_sparsity   ,
-	connection&          rev_hes_sparsity   )
+	vector_pack&         for_jac_sparsity   ,
+	vector_pack&         rev_hes_sparsity   )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
@@ -285,8 +284,8 @@ inline void reverse_sparse_hessian_pow_op(
 	size_t               i_z                ,
 	const size_t*        arg                ,
 	bool*                jac_reverse        ,
-	connection&          for_jac_sparsity   ,
-	connection&          rev_hes_sparsity   )
+	vector_pack&         for_jac_sparsity   ,
+	vector_pack&         rev_hes_sparsity   )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );

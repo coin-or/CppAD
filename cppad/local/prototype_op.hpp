@@ -1065,15 +1065,15 @@ We use the notation i_v for this value; i.e.,
 \endverbatim
 
 \param var_sparsity
-The connections in \a var_sparsity with from node index \a i_z
+The connections (EDIT THIS) in \a var_sparsity with from node index \a i_z
 are the sparsity pattern for z.
-These connections are an output for forward mode operations,
+These connections (EDIT THIS) are an output for forward mode operations,
 and an input for reverse mode operations.
 
 \param vecad_sparsity
-The connections in \a vecad_sparsity with from node index \a i_v
+The connections (EDIT THIS) in \a vecad_sparsity with from node index \a i_v
 are the sparsity bit pattern for the vector v.
-These connections are an input for forward mode operations.
+These connections (EDIT THIS) are an input for forward mode operations.
 For reverse mode operations,
 the sparsity pattern for z is added to the sparsity pattern for v.
 
@@ -1082,7 +1082,7 @@ the sparsity pattern for z is added to the sparsity pattern for v.
 \li NumRes(op) == 1
 \li 0         <  \a arg[0]
 \li \a arg[0] < \a num_combined
-\li i_v       < \a vecad_sparsity.n_from()
+\li i_v       < \a vecad_sparsity.n_set()
 */
 inline void sparse_load_op(
 	OpCode              op             ,
@@ -1090,8 +1090,8 @@ inline void sparse_load_op(
 	const size_t*        arg           , 
 	size_t              num_combined   ,
 	const size_t*       combined       ,
-	connection&         var_sparsity   ,
-	connection&         vecad_sparsity )
+	vector_pack&        var_sparsity   ,
+	vector_pack&        vecad_sparsity )
 {
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -1249,14 +1249,14 @@ We use the notation i_v below which is defined by
 \endverbatim
 
 \param var_sparsity
-The connections in \a var_sparsity corresponding to the from index \a arg[2] 
+The connections (EDIT THIS) in \a var_sparsity corresponding to the from index \a arg[2] 
 correspond to the variable y.
 These are an input for forward mode operations.
 For reverse mode operations:
 The sparsity pattern for v is added to the spartisy pattern for y.
 
 \param vecad_sparsity
-The connections in \a vecad_sparsity corresponding to the from index \a i_v
+The connections (EDIT THIS) in \a vecad_sparsity corresponding to the from index \a i_v
 correspond to the vector v.
 These are an input for reverse mode operations.
 For forward mode operations, the sparsity pattern for y is added
@@ -1267,8 +1267,8 @@ to the sparsity pattern for the vector v.
 \li NumRes(op) == 0
 \li 0 <  \a arg[0]
 \li \a arg[0] < \a num_combined
-\li \a arg[2] < \a var_sparsity.n_from()
-\li i_v       < \a vecad_sparsity.n_from()
+\li \a arg[2] < \a var_sparsity.n_set()
+\li i_v       < \a vecad_sparsity.n_set()
 */
 inline void sparse_store_op(
 	OpCode         op             ,
@@ -1316,16 +1316,16 @@ On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 \param for_jac_sparsity
-The connections for the from node \a i_x
+The connections (EDIT THIS) for the from node \a i_x
 is the forward mode Jacobian sparsity pattern for the variable x. 
 
 \param rev_hes_sparsity
-The connections for the from node with from index \a i_z in \a rev_hes_sparsity
+The connections (EDIT THIS) for the from node with from index \a i_z in \a rev_hes_sparsity
 is the Hessian sparsity pattern for the fucntion G
 where one of the partials derivative is with respect to z.
 \n
 \n
-The connections for the form node with index \a i_x in \a rev_hes_sparsity
+The connections (EDIT THIS) for the form node with index \a i_x in \a rev_hes_sparsity
 is the Hessian sparsity pattern 
 where one of the partials derivative is with respect to x.
 On input, it corresponds to the function G,
@@ -1338,8 +1338,8 @@ inline void reverse_sparse_hessian_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
-	connection&         for_jac_sparsity  ,
-	connection&         rev_hes_sparsity  )
+	vector_pack&        for_jac_sparsity  ,
+	vector_pack&        rev_hes_sparsity  )
 {	
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -1388,28 +1388,28 @@ On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
 \param for_jac_sparsity
-The connections in \a for_jac_sparsity for the
+The connections (EDIT THIS) in \a for_jac_sparsity for the
 from node with index \a arg[0] are the forward sparsity pattern for x.
 \n
 \n
-The connections in \a for_jac_sparsity for the
+The connections (EDIT THIS) in \a for_jac_sparsity for the
 from node with index \a arg[1] are the forward sparsity pattern for y.
 
 \param rev_hes_sparsity
-The connections in \a rev_hes_sparsity for the
+The connections (EDIT THIS) in \a rev_hes_sparsity for the
 from node with index \a i_z are the Hessian sparsity pattern
 for the function G
 where one of the partial derivatives is with respect to z.
 \n
 \n
-The connections in \a rev_hes_sparsity for the
+The connections (EDIT THIS) in \a rev_hes_sparsity for the
 from node wiht index \a arg[0] are the Hessian sparsity pattern
 where one of the partial derivatives is with respect to x.
 On input, it corresponds to the function G,
 and on output it correspondst to H.
 \n
 \n
-The connections in \a rev_hes_sparsity for the
+The connections (EDIT THIS) in \a rev_hes_sparsity for the
 from node wiht index \a arg[1] are the Hessian sparsity pattern
 where one of the partial derivatives is with respect to y.
 On input, it corresponds to the function G,
@@ -1423,8 +1423,8 @@ inline void reverse_sparse_hessian_binary_op(
 	size_t            i_z                ,
 	const size_t*     arg                ,
 	bool*             jac_reverse        ,
-	connection&       for_jac_sparsity   ,
-	connection&       rev_hes_sparsity   )
+	vector_pack&      for_jac_sparsity   ,
+	vector_pack&      rev_hes_sparsity   )
 {	
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );

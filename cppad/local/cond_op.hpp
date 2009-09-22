@@ -11,7 +11,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# include <cppad/local/connection.hpp>
 CPPAD_BEGIN_NAMESPACE
 
 /*!
@@ -344,7 +343,7 @@ inline void forward_sparse_jacobian_cond_op(
 	size_t             i_z           ,
 	const size_t*      arg           , 
 	size_t             num_par       ,
-	connection&        sparsity      )
+	vector_pack&       sparsity      )
 {
 	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
@@ -428,7 +427,7 @@ inline void reverse_sparse_jacobian_cond_op(
 	size_t              i_z           ,
 	const size_t*       arg           , 
 	size_t              num_par       ,
-	connection&         sparsity      )
+	vector_pack&        sparsity      )
 {	
 	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
@@ -529,7 +528,7 @@ inline void reverse_sparse_hessian_cond_op(
 	const size_t*        arg           , 
 	size_t               num_par       ,
 	bool*                jac_reverse   ,
-	connection&          hes_sparsity  )
+	vector_pack&         hes_sparsity  )
 {	
 
 	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );

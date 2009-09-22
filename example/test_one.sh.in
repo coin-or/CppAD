@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -15,6 +15,11 @@ then
 	echo "usage: test_one.sh file [extra]"
 	echo "file is the *.cpp file name with extension"
 	echo "and extra is extra options for g++ command"
+	exit 1
+fi
+if [ ! -e "$1" ]
+then
+	echo "Cannot find the file $1"
 	exit 1
 fi
 # determine the function name

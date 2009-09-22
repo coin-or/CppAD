@@ -11,7 +11,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-# include <cppad/local/connection.hpp>
 CPPAD_BEGIN_NAMESPACE
 
 /*!
@@ -74,7 +73,7 @@ void ForJacSweep(
 	size_t                n            ,
 	size_t                numvar       ,
 	player<Base>*         play         ,
-	connection&           var_sparsity )
+	vector_pack&          var_sparsity )
 {
 	OpCode           op;
 	size_t         i_op;
@@ -98,10 +97,10 @@ void ForJacSweep(
 	// to all the other variables.
 	// vecad_ind maps a VecAD index (the beginning of the
 	// VecAD object) to its from index in vecad_sparsity
-	size_t n_to            = var_sparsity.n_to();
+	size_t n_to            = var_sparsity.limit();
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
-	connection       vecad_sparsity;
+	vector_pack      vecad_sparsity;
 	vecad_sparsity.resize(num_vecad_vec, n_to);
 	size_t* vecad_ind      = CPPAD_NULL;
 	if( num_vecad_vec > 0 )

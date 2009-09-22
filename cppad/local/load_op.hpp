@@ -303,15 +303,15 @@ inline void forward_sparse_load_op(
 	const size_t*      arg            , 
 	size_t             num_combined   ,
 	const size_t*      combined       ,
-	connection&        var_sparsity   ,
-	connection&        vecad_sparsity )
+	vector_pack&       var_sparsity   ,
+	vector_pack&       vecad_sparsity )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_from() );
+	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 
 	var_sparsity.assignment(i_z, i_v, vecad_sparsity);
 
@@ -330,15 +330,15 @@ inline void reverse_sparse_jacobian_load_op(
 	const size_t*      arg            , 
 	size_t             num_combined   ,
 	const size_t*      combined       ,
-	connection&        var_sparsity   ,
-	connection&        vecad_sparsity )
+	vector_pack&       var_sparsity   ,
+	vector_pack&       vecad_sparsity )
 {
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_from() );
+	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 
 	vecad_sparsity.binary_union(i_v, i_v, i_z, var_sparsity);
 
@@ -349,9 +349,9 @@ inline void reverse_sparse_jacobian_load_op(
 /*!
 Reverse mode Hessian sparsity operations for LdpOp and LdvOp
 
-This routine is given the connections corresponding to
+This routine is given the (EDIT THIS) connections corresponding to
 G(z , v[x] , w , u ... )
-and it uses them to compute the connections corresponding to
+and it uses them to compute the (EDIT THIS) connections corresponding to
 \verbatim
 	H( v[x] , w , u , ... ) = G[ z( v[x] ) , v[x] , w , u , ... ]
 \endverbatim
@@ -377,8 +377,8 @@ inline void reverse_sparse_hessian_load_op(
 	const size_t*      arg            , 
 	size_t             num_combined   ,
 	const size_t*      combined       ,
-	connection&        var_sparsity   ,
-	connection&        vecad_sparsity ,
+	vector_pack&       var_sparsity   ,
+	vector_pack&       vecad_sparsity ,
 	bool*              var_jacobian   ,
 	bool*              vecad_jacobian )
 {
@@ -387,7 +387,7 @@ inline void reverse_sparse_hessian_load_op(
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
-	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_from() );
+	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 
 	vecad_sparsity.binary_union(i_v, i_v, i_z, var_sparsity);
 

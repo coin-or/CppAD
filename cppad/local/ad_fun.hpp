@@ -260,7 +260,7 @@ private:
 	Base *taylor_;
 
 	// results of the forward mode Jacobian sparsity calculations
-	connection       for_jac_sparsity_;
+	vector_pack      for_jac_sparsity_;
 
 	template <typename ADvector>
 	void Dependent(ADTape<Base> *tape, const ADvector &y);

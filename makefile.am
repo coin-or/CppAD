@@ -95,7 +95,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/cond_exp.hpp \
 	cppad/local/comp_op.hpp \
 	cppad/local/cond_op.hpp \
-	cppad/local/connection.hpp \
 	cppad/local/convert.hpp \
 	cppad/local/cos_op.hpp \
 	cppad/local/cosh_op.hpp \
@@ -179,6 +178,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/unary_minus.hpp \
 	cppad/local/unary_plus.hpp \
 	cppad/local/vec_ad.hpp \
+	cppad/local/vector_set.hpp \
 	cppad/local/undef.hpp \
 	cppad/local/value.hpp \
 	cppad/local/var2par.hpp \

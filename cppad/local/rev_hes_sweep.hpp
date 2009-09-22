@@ -88,7 +88,7 @@ the reverse Hessian sparsity pattern for the variable with index i is empty.
 \n
 \b Output: For j = 1 , ... , \a n,
 the reverse Hessian sparsity pattern for the independent dependent variable 
-with index (j-1) is given by the from connections for the node with index j
+with index (j-1) is given by the from connections (EDIT THIS) for the node with index j
 in \a rev_hes_sparse. 
 The values in the rest of \a rev_hes_sparse are not specified; i.e.,
 they are used for temporary work space.
@@ -99,9 +99,9 @@ void RevHesSweep(
 	size_t                n,
 	size_t                numvar,
 	player<Base>         *play,
-	connection&           for_jac_sparse, // should be const
+	vector_pack&          for_jac_sparse, // should be const
 	bool*                 RevJac,
-	connection&           rev_hes_sparse
+	vector_pack&          rev_hes_sparse
 )
 {
 	OpCode           op;
@@ -117,17 +117,17 @@ void RevHesSweep(
 
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( play->num_rec_var()     == numvar );
-	CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_from() == numvar );
-	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.n_from() == numvar );
+	CPPAD_ASSERT_UNKNOWN( for_jac_sparse.n_set() == numvar );
+	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.n_set() == numvar );
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 
-	// number of to nodes in connections
-	size_t n_to   = rev_hes_sparse.n_to();
-	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.n_to() == n_to );
+	// number of to nodes in (EDIT THIS) connections
+	size_t limit   = rev_hes_sparse.limit();
+	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.limit() == limit );
 
-	// number of packed values per from node
+	// check number of sets match
 	CPPAD_ASSERT_UNKNOWN( 
-		for_jac_sparse.n_pack() == rev_hes_sparse.n_pack()
+		for_jac_sparse.n_set() == rev_hes_sparse.n_set()
 	);
 
 	// vecad_sparsity contains a sparsity pattern for each VecAD object.
@@ -135,8 +135,8 @@ void RevHesSweep(
 	// VecAD object) to the vecad_sparsity from index for the VecAD object.
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
-	connection       vecad_sparse;
-	vecad_sparse.resize(num_vecad_vec, n_to);
+	vector_pack      vecad_sparse;
+	vecad_sparse.resize(num_vecad_vec, limit);
 	size_t* vecad_ind   = CPPAD_NULL;
 	bool*   vecad_jac   = CPPAD_NULL;
 	if( num_vecad_vec > 0 )
@@ -165,8 +165,8 @@ void RevHesSweep(
 	i_op = 2;
 # if CPPAD_REV_HES_SWEEP_TRACE
 	std::cout << std::endl;
-	CppAD::vectorBool zf_value(n_to);
-	CppAD::vectorBool zh_value(n_to);
+	CppAD::vectorBool zf_value(limit);
+	CppAD::vectorBool zh_value(limit);
 # endif
 	while(i_op > 1)
 	{
@@ -176,7 +176,7 @@ void RevHesSweep(
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
 # if CPPAD_REV_HES_SWEEP_TRACE
-		for(j = 0; j < n_to; j++)
+		for(j = 0; j < limit; j++)
 		{	zf_value[j] = for_jac_sparse.get_element(i_var, j);
 			zh_value[j] = rev_hes_sparse.get_element(i_var, j);
 		}
