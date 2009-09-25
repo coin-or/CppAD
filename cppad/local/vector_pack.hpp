@@ -1,6 +1,5 @@
 # ifndef CPPAD_VECTOR_PACK_INCLUDED
 # define CPPAD_VECTOR_PACK_INCLUDED
-CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
@@ -24,6 +23,7 @@ Vector of sets of postivie integers, each set stored as a packed boolean array.
 
 # include <cppad/local/cppad_assert.hpp>
 
+CPPAD_BEGIN_NAMESPACE
 class vector_pack {
 private:
 	/// type used to pack elements
