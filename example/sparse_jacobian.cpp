@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -35,7 +35,7 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // ---------------------------------------------------------
 // define the template function in empty namespace
-template <class BaseVector, class BoolVector> 
+template <class VectorBase, class VectorBool> 
 bool reverse_case()
 {	bool ok = true;
 	using CppAD::AD;
@@ -61,19 +61,19 @@ bool reverse_case()
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	BaseVector x(n);
+	VectorBase x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
 	// Jacobian of y without sparsity pattern
-	BaseVector jac(m * n);
+	VectorBase jac(m * n);
 	jac = f.SparseJacobian(x);
 	/*
 	      [ 1 1 0 0  ]
 	jac = [ 0 0 1 1  ]
 	      [ 1 1 1 x_3]
 	*/
-	BaseVector check(m * n);
+	VectorBase check(m * n);
 	check[0] = 1.; check[1] = 1.; check[2]  = 0.; check[3]  = 0.;
 	check[4] = 0.; check[5] = 0.; check[6]  = 1.; check[7]  = 1.;
 	check[8] = 1.; check[9] = 1.; check[10] = 1.; check[11] = x[3];
@@ -81,8 +81,8 @@ bool reverse_case()
 		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
 
 	// test passing sparsity pattern
-	BoolVector s(m * m);
-	BoolVector p(m * n);
+	VectorBool s(m * m);
+	VectorBool p(m * n);
 	for(i = 0; i < m; i++)
 	{	for(k = 0; k < m; k++)
 			s[i * m + k] = false;
@@ -96,7 +96,7 @@ bool reverse_case()
 	return ok;
 }
 
-template <class BaseVector, class BoolVector> 
+template <class VectorBase, class VectorBool> 
 bool forward_case()
 {	bool ok = true;
 	using CppAD::AD;
@@ -123,12 +123,12 @@ bool forward_case()
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	BaseVector x(n);
+	VectorBase x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
 	// Jacobian of y without sparsity pattern
-	BaseVector jac(m * n);
+	VectorBase jac(m * n);
 	jac = f.SparseJacobian(x);
 	/*
 	      [ 1 0 1   ]
@@ -136,7 +136,7 @@ bool forward_case()
 	      [ 0 1 1   ]
 	      [ 0 1 x_2 ]
 	*/
-	BaseVector check(m * n);
+	VectorBase check(m * n);
 	check[0] = 1.; check[1]  = 0.; check[2]  = 1.; 
 	check[3] = 1.; check[4]  = 0.; check[5]  = 1.;
 	check[6] = 0.; check[7]  = 1.; check[8]  = 1.; 
@@ -145,8 +145,8 @@ bool forward_case()
 		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
 
 	// test passing sparsity pattern
-	BoolVector r(n * n);
-	BoolVector p(m * n);
+	VectorBool r(n * n);
+	VectorBool p(m * n);
 	for(j = 0; j < n; j++)
 	{	for(k = 0; k < n; k++)
 			r[j * n + k] = false;
@@ -164,9 +164,9 @@ bool forward_case()
 # include <valarray>
 bool sparse_jacobian(void)
 {	bool ok = true;
-	// Run with BaseVector equal to three different cases
+	// Run with VectorBase equal to three different cases
 	// all of which are Simple Vectors with elements of type double.
-	// Also vary the type of vector for BoolVector.
+	// Also vary the type of vector for VectorBool.
 	ok &= forward_case< CppAD::vector<double>, CppAD::vectorBool   >();
 	ok &= reverse_case< CppAD::vector<double>, CppAD::vector<bool> >();
 	//

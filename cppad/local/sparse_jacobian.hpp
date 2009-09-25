@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_JACOBIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -56,9 +56,9 @@ Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const %BaseVector% &%x%
+	const %VectorBase% &%x%
 %$$
-(see $cref/BaseVector/sparse_jacobian/BaseVector/$$ below)
+(see $cref/VectorBase/sparse_jacobian/VectorBase/$$ below)
 and its size 
 must be equal to $icode n$$, the dimension of the
 $cref/domain/SeqProperty/Domain/$$ space for $icode f$$.
@@ -68,9 +68,9 @@ that point at which to evaluate the Jacobian.
 $head p$$
 The argument $icode p$$ is optional and has prototype
 $syntax%
-	const %BoolVector% &%p%
+	const %VectorBool% &%p%
 %$$
-(see $cref/BoolVector/sparse_jacobian/BoolVector/$$ below)
+(see $cref/VectorBool/sparse_jacobian/VectorBool/$$ below)
 and its size is $latex m * n$$.
 It specifies a 
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
@@ -89,7 +89,7 @@ pass this argument to $codei SparseJacobian$$.
 $head jac$$
 The result $icode jac$$ has prototype
 $codei%
-	%BaseVector% %jac%
+	%VectorBase% %jac%
 %$$
 and its size is $latex m * n$$.
 For $latex i = 0 , \ldots , m - 1$$,
@@ -98,15 +98,15 @@ $latex \[
 	jac [ i * n + j ] = \D{ F_i }{ x_j }
 \] $$
 
-$head BaseVector$$
-The type $icode BaseVector$$ must be a $cref/SimpleVector/$$ class with
+$head VectorBase$$
+The type $icode VectorBase$$ must be a $cref/SimpleVector/$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
 The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head BoolVector$$
-The type $icode BoolVector$$ must be a $xref/SimpleVector/$$ class with
+$head VectorBool$$
+The type $icode VectorBool$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
@@ -142,21 +142,21 @@ $end
 namespace CppAD {
 
 template <class Base>
-template <class BaseVector>
-BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x)
-{	typedef CppAD::vector<bool>   BoolVector;
+template <class VectorBase>
+VectorBase ADFun<Base>::SparseJacobian(const VectorBase &x)
+{	typedef CppAD::vector<bool>   VectorBool;
 
 	size_t m = Range();
 	size_t n = Domain();
 
 	// sparsity pattern for Jacobian
-	BoolVector p(n * m);
+	VectorBool p(n * m);
 
 	if( n <= m )
 	{	size_t j, k;
 
 		// use forward mode 
-		BoolVector r(n * n);
+		VectorBool r(n * n);
 		for(j = 0; j < n; j++)
 		{	for(k = 0; k < n; k++)
 				r[j * n + k] = false;
@@ -168,7 +168,7 @@ BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x)
 	{	size_t i, k;
 
 		// use reverse mode 
-		BoolVector s(m * m);
+		VectorBool s(m * m);
 		for(i = 0; i < m; i++)
 		{	for(k = 0; k < m; k++)
 				s[i * m + k] = false;
@@ -180,8 +180,8 @@ BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x)
 }
 
 template <class Base>
-template <class BaseVector, class BoolVector>
-BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x, const BoolVector &p)
+template <class VectorBase, class VectorBool>
+VectorBase ADFun<Base>::SparseJacobian(const VectorBase &x, const VectorBool &p)
 {
 	typedef CppAD::vector<size_t> SizeVector;
 	size_t i, j, k;
@@ -193,11 +193,11 @@ BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x, const BoolVector &p)
 	const Base zero(0);
 	const Base one(1);
 
-	// check BoolVector is Simple Vector class with bool elements
-	CheckSimpleVector<bool, BoolVector>();
+	// check VectorBool is Simple Vector class with bool elements
+	CheckSimpleVector<bool, VectorBool>();
 
-	// check BaseVector is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, BaseVector>();
+	// check VectorBase is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, VectorBase>();
 
 	CPPAD_ASSERT_KNOWN(
 		x.size() == n,
@@ -214,7 +214,7 @@ BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x, const BoolVector &p)
 	Forward(0, x);
 
 	// initialize the return value
-	BaseVector jac(m * n);
+	VectorBase jac(m * n);
 	for(i = 0; i < m; i++)
 		for(j = 0; j < n; j++)
 			jac[i * n + j] = zero;
@@ -230,7 +230,7 @@ BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x, const BoolVector &p)
 		// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
 		// Graph Coloring in Optimization Revisited by
 		// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
-		BoolVector    forbidden(n);
+		VectorBool    forbidden(n);
 		for(j = 0; j < n; j++)
 		{	// initial all colors as ok for this column
 			for(k = 0; k < n; k++)
@@ -254,10 +254,10 @@ BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x, const BoolVector &p)
 			n_color = std::max(n_color, color[k] + 1);
 
 		// direction vector for calls to forward
-		BaseVector dx(n);
+		VectorBase dx(n);
 
 		// location for return values from Reverse
-		BaseVector dy(m);
+		VectorBase dy(m);
 
 		// loop over colors
 		size_t c;
@@ -290,7 +290,7 @@ BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x, const BoolVector &p)
 		// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
 		// Graph Coloring in Optimization Revisited by
 		// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
-		BoolVector    forbidden(m);
+		VectorBool    forbidden(m);
 		for(i = 0; i < m; i++)
 		{	// initial all colors as ok for this row
 			for(k = 0; k < m; k++)
@@ -314,10 +314,10 @@ BaseVector ADFun<Base>::SparseJacobian(const BaseVector &x, const BoolVector &p)
 			n_color = std::max(n_color, color[k] + 1);
 
 		// weight vector for calls to reverse
-		BaseVector w(m);
+		VectorBase w(m);
 
 		// location for return values from Reverse
-		BaseVector dw(n);
+		VectorBase dw(n);
 
 		// loop over colors
 		size_t c;

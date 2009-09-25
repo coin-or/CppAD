@@ -111,9 +111,9 @@ $latex \[
 $head s$$
 The argument $italic s$$ has prototype
 $syntax%
-	const %Vector% &%s%
+	const %VectorBool% &%s%
 %$$
-(see $xref/RevSparseHes/Vector/Vector/$$ below)
+(see $xref/RevSparseHes/VectorBool/VectorBool/$$ below)
 and its size is $latex m$$.
 It specifies a 
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
@@ -126,9 +126,9 @@ $latex \[
 $head h$$
 The result $italic h$$ has prototype
 $syntax%
-	%Vector% &%h%
+	%VectorBool% &%h%
 %$$
-(see $xref/RevSparseHes/Vector/Vector/$$ below)
+(see $xref/RevSparseHes/VectorBool/VectorBool/$$ below)
 and its size is $latex q * n$$,
 It specifies a 
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
@@ -140,8 +140,8 @@ $latex \[
 	H(x)_{i,j} \neq 0 ; \Rightarrow \; h [ i * n + j ] = {\rm true}
 \] $$
 
-$head Vector$$
-The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
+$head VectorBool$$
+The type $italic VectorBool$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
@@ -194,14 +194,14 @@ $end
 namespace CppAD {
 
 template <class Base>
-template <class Vector>
-Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
+template <class VectorBool>
+VectorBool ADFun<Base>::RevSparseHes(size_t q,  const VectorBool &s)
 {
 	// temporary indices
 	size_t i, j;
 
-	// check Vector is Simple Vector class with bool elements
-	CheckSimpleVector<bool, Vector>();
+	// check Vector is Simple VectorBool class with bool elements
+	CheckSimpleVector<bool, VectorBool>();
 
 	// range and domain dimensions for F
 	size_t m = dep_taddr_.size();
@@ -246,7 +246,7 @@ Vector ADFun<Base>::RevSparseHes(size_t q,  const Vector &s)
 	);
 
 	// return values corresponding to independent variables
-	Vector h(n * q);
+	VectorBool h(n * q);
 
 	// j is index corresponding to reverse mode martial
 	for(j = 0; j < n; j++)

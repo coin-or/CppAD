@@ -101,12 +101,12 @@ public:
 	VectorBase ForSparseJac(size_t q, const VectorBase &Px);
 
 	// reverse mode Jacobian sparsity 
-	template <typename VectorBase>
-	VectorBase RevSparseJac(size_t q, const VectorBase &Py);
+	template <typename VectorBool>
+	VectorBool RevSparseJac(size_t q, const VectorBool &Py);
 
 	// reverse mode Hessian sparsity 
-	template <typename VectorBase>
-	VectorBase RevSparseHes(size_t q, const VectorBase &Py);
+	template <typename VectorBool>
+	VectorBool RevSparseHes(size_t q, const VectorBool &Py);
 
 	// does this AD operation sequence use VecAD<Base>::reference operands
 	bool use_VecAD(void) const
@@ -191,19 +191,19 @@ public:
 		const VectorSize_t &J );
 
 	// calculate sparse Jacobians 
-	template <typename BaseVector>
-	BaseVector SparseJacobian(const BaseVector &x); 
+	template <typename VectorBase>
+	VectorBase SparseJacobian(const VectorBase &x); 
 
-	template <typename BaseVector, typename BoolVector>
-	BaseVector SparseJacobian(const BaseVector &x, const BoolVector &p); 
+	template <typename VectorBase, typename VectorBool>
+	VectorBase SparseJacobian(const VectorBase &x, const VectorBool &p); 
 
 	// calculate sparse Hessians 
-	template <typename BaseVector>
-	BaseVector SparseHessian(const BaseVector &x, const BaseVector &w); 
+	template <typename VectorBase>
+	VectorBase SparseHessian(const VectorBase &x, const VectorBase &w); 
 
-	template <typename BaseVector, typename BoolVector>
-	BaseVector SparseHessian(
-		const BaseVector &x, const BaseVector &w, const BoolVector &p
+	template <typename VectorBase, typename VectorBool>
+	VectorBase SparseHessian(
+		const VectorBase &x, const VectorBase &w, const VectorBool &p
 	); 
 
 	// Optimize the tape

@@ -79,9 +79,9 @@ into groups that do not require to much memory.
 $head s$$
 The argument $italic s$$ has prototype
 $syntax%
-	const %Vector% &%s%
+	const %VectorBool% &%s%
 %$$
-(see $xref/RevSparseJac/Vector/Vector/$$ below)
+(see $xref/RevSparseJac/VectorBool/VectorBool/$$ below)
 and its size is $latex p * m$$.
 It specifies a 
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
@@ -94,9 +94,9 @@ $latex \[
 $head r$$
 The return value $italic r$$ has prototype
 $syntax%
-	%Vector% %r%
+	%VectorBool% %r%
 %$$
-(see $xref/RevSparseJac/Vector/Vector/$$ below)
+(see $xref/RevSparseJac/VectorBool/VectorBool/$$ below)
 and its size is $latex p * n$$.
 It specifies a 
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
@@ -108,8 +108,8 @@ $latex \[
 	J(x)_{i,j} \neq 0 ; \Rightarrow \; r [ i * n + j ] = {\rm true}
 \] $$
 
-$head Vector$$
-The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
+$head VectorBool$$
+The type $italic VectorBool$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
@@ -153,14 +153,14 @@ $end
 namespace CppAD {
 
 template <class Base>
-template <class Vector>
-Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s) 
+template <class VectorBool>
+VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &s) 
 {
 	// temporary indices
 	size_t i, j;
 
-	// check Vector is Simple Vector class with bool elements
-	CheckSimpleVector<bool, Vector>();
+	// check VectorBool is Simple Vector class with bool elements
+	CheckSimpleVector<bool, VectorBool>();
 
 	// range and domain dimensions for F
 	size_t m = dep_taddr_.size();
@@ -198,7 +198,7 @@ Vector ADFun<Base>::RevSparseJac(size_t p, const Vector &s)
 	);
 
 	// return values corresponding to dependent variables
-	Vector r(p * n);
+	VectorBool r(p * n);
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
 

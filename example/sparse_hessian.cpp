@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -35,7 +35,7 @@ $end
 # include <cppad/cppad.hpp>
 namespace { // ---------------------------------------------------------
 // define the template function in empty namespace
-template <class BaseVector, class BoolVector> 
+template <class VectorBase, class VectorBool> 
 bool Case()
 {	bool ok = true;
 	using CppAD::AD;
@@ -59,21 +59,21 @@ bool Case()
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	BaseVector x(n);
+	VectorBase x(n);
 	for(i = 0; i < n; i++)
 		x[i] = double(i);
 
 	// second derivative of y[1] 
-	BaseVector w(m);
+	VectorBase w(m);
 	w[0] = 1.;
-	BaseVector h( n * n );
+	VectorBase h( n * n );
 	h = f.SparseHessian(x, w);
 	/*
 	    [ 2 1 0 ]
 	h = [ 1 2 0 ]
             [ 0 0 2 ]
 	*/
-	BaseVector check(n * n);
+	VectorBase check(n * n);
 	check[0] = 2.; check[1] = 1.; check[2] = 0.;
 	check[3] = 1.; check[4] = 2.; check[5] = 0.;
 	check[6] = 0.; check[7] = 0.; check[8] = 2.;
@@ -81,7 +81,7 @@ bool Case()
 		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
 
 	// determine the sparsity pattern p for Hessian of w^T F
-        BoolVector r(n * n);
+        VectorBool r(n * n);
         for(j = 0; j < n; j++)
         {       for(k = 0; k < n; k++)
                         r[j * n + k] = false;
@@ -89,10 +89,10 @@ bool Case()
         }
         f.ForSparseJac(n, r);
         //
-        BoolVector s(m);
+        VectorBool s(m);
         for(i = 0; i < m; i++)
                 s[i] = w[i] != 0;
-        BoolVector p = f.RevSparseHes(n, s);
+        VectorBool p = f.RevSparseHes(n, s);
 
 	// test passing sparsity pattern
 	h = f.SparseHessian(x, w, p);
@@ -106,9 +106,9 @@ bool Case()
 # include <valarray>
 bool sparse_hessian(void)
 {	bool ok = true;
-	// Run with BaseVector equal to three different cases
+	// Run with VectorBase equal to three different cases
 	// all of which are Simple Vectors with elements of type double.
-	// Also vary the type of vector for BoolVector.
+	// Also vary the type of vector for VectorBool.
 	ok &= Case< CppAD::vector  <double>, CppAD::vectorBool   >();
 	ok &= Case< std::vector    <double>, CppAD::vector<bool> >();
 	ok &= Case< std::valarray  <double>, std::vector<bool>   >();

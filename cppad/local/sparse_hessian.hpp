@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_HESSIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -55,9 +55,9 @@ Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const %BaseVector% &%x%
+	const %VectorBase% &%x%
 %$$
-(see $cref/BaseVector/sparse_hessian/BaseVector/$$ below)
+(see $cref/VectorBase/sparse_hessian/VectorBase/$$ below)
 and its size 
 must be equal to $icode n$$, the dimension of the
 $cref/domain/SeqProperty/Domain/$$ space for $icode f$$.
@@ -67,7 +67,7 @@ that point at which to evaluate the Hessian.
 $head w$$
 The argument $icode w$$ has prototype
 $codei%
-	const %BaseVector% &%w%
+	const %VectorBase% &%w%
 %$$
 and size $latex m$$.
 It specifies the value of $latex w_i$$ in the expression 
@@ -79,9 +79,9 @@ the calculation of $icode hes$$ may be).
 $head p$$
 The argument $icode p$$ is optional and has prototype
 $syntax%
-	const %BoolVector% &%p%
+	const %VectorBool% &%p%
 %$$
-(see $cref/BoolVector/sparse_hessian/BoolVector/$$ below)
+(see $cref/VectorBool/sparse_hessian/VectorBool/$$ below)
 and its size is $latex n * n$$.
 It specifies a 
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
@@ -101,7 +101,7 @@ pass this argument to $codei SparseHessian$$.
 $head hes$$
 The result $icode hes$$ has prototype
 $codei%
-	%BaseVector% %hes%
+	%VectorBase% %hes%
 %$$
 and its size is $latex n * n$$.
 For $latex j = 0 , \ldots , n - 1 $$ 
@@ -110,15 +110,15 @@ $latex \[
 	hes [ j * n + \ell ] = \DD{ w^{\rm T} F }{ x_j }{ x_\ell } ( x )
 \] $$
 
-$head BaseVector$$
-The type $icode BaseVector$$ must be a $cref/SimpleVector/$$ class with
+$head VectorBase$$
+The type $icode VectorBase$$ must be a $cref/SimpleVector/$$ class with
 $cref/elements of type/SimpleVector/Elements of Specified Type/$$
 $icode Base$$.
 The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head BoolVector$$
-The type $icode BoolVector$$ must be a $xref/SimpleVector/$$ class with
+$head VectorBool$$
+The type $icode VectorBool$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
@@ -155,17 +155,17 @@ $end
 namespace CppAD {
 
 template <typename Base>
-template <typename BaseVector>
-BaseVector ADFun<Base>::SparseHessian(const BaseVector &x, const BaseVector &w)
+template <typename VectorBase>
+VectorBase ADFun<Base>::SparseHessian(const VectorBase &x, const VectorBase &w)
 {	size_t i, j, k;
 
-	typedef CppAD::vector<bool>   BoolVector;
+	typedef CppAD::vector<bool>   VectorBool;
 
 	size_t m = Range();
 	size_t n = Domain();
 
 	// determine the sparsity pattern p for Hessian of w^T F
-	BoolVector r(n * n);
+	VectorBool r(n * n);
 	for(j = 0; j < n; j++)
 	{	for(k = 0; k < n; k++)
 			r[j * n + k] = false;
@@ -173,21 +173,21 @@ BaseVector ADFun<Base>::SparseHessian(const BaseVector &x, const BaseVector &w)
 	}
 	ForSparseJac(n, r);
 	//
-	BoolVector s(m);
+	VectorBool s(m);
 	for(i = 0; i < m; i++)
 		s[i] = w[i] != 0;
-	BoolVector p = RevSparseHes(n, s);
+	VectorBool p = RevSparseHes(n, s);
 
 	// compute sparse Hessian
 	return SparseHessian(x, w, p);
 }
 
 template <typename Base>
-template <typename BaseVector, typename BoolVector>
-BaseVector ADFun<Base>::SparseHessian(
-	const BaseVector &x ,
-	const BaseVector &w ,
-	const BoolVector &p )
+template <typename VectorBase, typename VectorBool>
+VectorBase ADFun<Base>::SparseHessian(
+	const VectorBase &x ,
+	const VectorBase &w ,
+	const VectorBool &p )
 {
 	typedef CppAD::vector<size_t> SizeVector;
 	size_t j, k, l;
@@ -195,10 +195,10 @@ BaseVector ADFun<Base>::SparseHessian(
 	size_t n = Domain();
 
 	// check Vector is Simple Vector class with bool elements
-	CheckSimpleVector<bool, BoolVector>();
+	CheckSimpleVector<bool, VectorBool>();
 
 	// check Vector is Simple Vector class with Base type elements
-	CheckSimpleVector<Base, BaseVector>();
+	CheckSimpleVector<Base, VectorBase>();
 
 	CPPAD_ASSERT_KNOWN(
 		x.size() == n,
@@ -222,7 +222,7 @@ BaseVector ADFun<Base>::SparseHessian(
 	// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
 	// Graph Coloring in Optimization Revisited by
 	// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
-	BoolVector    forbidden(n);
+	VectorBool    forbidden(n);
 	for(j = 0; j < n; j++)
 	{	// initial all colors as ok for this column
 		for(k = 0; k < n; k++)
@@ -251,16 +251,16 @@ BaseVector ADFun<Base>::SparseHessian(
 	Forward(0, x);
 
 	// define the return value
-	BaseVector h(n * n);
+	VectorBase h(n * n);
 	for(j = 0; j < n; j++)
 		for(k = 0; k < n; k++)
 			h[j * n + k] = zero;
 
 	// direction vector for calls to forward
-	BaseVector u(n);
+	VectorBase u(n);
 
 	// location for return values from Reverse
-	BaseVector ddw(n * 2);
+	VectorBase ddw(n * 2);
 
 	// loop over colors
 	size_t c;
