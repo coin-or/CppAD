@@ -1036,6 +1036,10 @@ The C++ source code corresponding to this operation is
 \endverbatim
 where v is a VecAD<Base> vector and x is an AD<Base> index. 
 
+\tparam Vector_set
+is the type used for vectors of sets. It can be either
+\c vector_pack or \c vector_set.
+
 \param op
 is the code corresponding to this operator; i.e., LdpOp or LdvOp
 (only used for error checking).
@@ -1082,14 +1086,15 @@ the sparsity pattern for z is added to the sparsity pattern for v.
 \li \a arg[0] < \a num_combined
 \li i_v       < \a vecad_sparsity.n_set()
 */
+template <class Vector_set>
 inline void sparse_load_op(
 	OpCode              op             ,
 	size_t              i_z            ,
 	const size_t*        arg           , 
 	size_t              num_combined   ,
 	const size_t*       combined       ,
-	vector_pack&        var_sparsity   ,
-	vector_pack&        vecad_sparsity )
+	Vector_set&         var_sparsity   ,
+	Vector_set&         vecad_sparsity )
 {
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -1218,6 +1223,11 @@ We define the index corresponding to v[x] by
 \endverbatim
 where i_vec is defined under the heading \a arg[1] below:
 
+\tparam Vector_set
+is the type used for vectors of sets. It can be either
+\c vector_pack or \c vector_set.
+
+
 \param op
 is the code corresponding to this operator; i.e., StpvOp or StvvOp
 (only used for error checking).
@@ -1294,6 +1304,10 @@ and it uses them to compute the sparsity patterns for
 	H( x , w , u , ... ) = G[ z(x) , x , w , u , ... ]
 \endverbatim
 
+\tparam Vector_set
+is the type used for vectors of sets. It can be either
+\c vector_pack or \c vector_set.
+
 \param i_z
 variable index corresponding to the result for this operation; 
 i.e. the row index in sparsity corresponding to z. 
@@ -1332,12 +1346,14 @@ and on output it corresponds to the function H.
 \par Checked Assertions:
 \li \a i_x < \a i_z 
 */
+
+template <class Vector_set>
 inline void reverse_sparse_hessian_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
-	vector_pack&        for_jac_sparsity  ,
-	vector_pack&        rev_hes_sparsity  )
+	Vector_set&         for_jac_sparsity  ,
+	Vector_set&         rev_hes_sparsity  )
 {	
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -1352,6 +1368,10 @@ and it uses them to compute the sparsity patterns for the Hessian of
 \verbatim
 	H( y, x, w , u , ... ) = G[ z(x,y) , y , x , w , u , ... ]
 \endverbatim
+
+\tparam Vector_set
+is the type used for vectors of sets. It can be either
+\c vector_pack or \c vector_set.
 
 \param i_z
 variable index corresponding to the result for this operation; 
@@ -1417,12 +1437,13 @@ and on output it correspondst to H.
 \li \a arg[0] < \a i_z 
 \li \a arg[1] < \a i_z 
 */
+template <class Vector_set>
 inline void reverse_sparse_hessian_binary_op(
 	size_t            i_z                ,
 	const size_t*     arg                ,
 	bool*             jac_reverse        ,
-	vector_pack&      for_jac_sparsity   ,
-	vector_pack&      rev_hes_sparsity   )
+	Vector_set&       for_jac_sparsity   ,
+	Vector_set&       rev_hes_sparsity   )
 {	
 	// This routine is only for documentaiton, it should not be used
 	CPPAD_ASSERT_UNKNOWN( false );
@@ -1526,6 +1547,10 @@ The C++ source code coresponding to this operation is
 \endverbatim
 where Rel is one of the following: Lt, Le, Eq, Ge, Gt. 
 
+\tparam Vector_set
+is the type used for vectors of sets. It can be either
+\c vector_pack or \c vector_set.
+
 \param i_z
 is the AD variable index corresponding to the variable z.
 
@@ -1582,6 +1607,7 @@ is the total number of values in the vector \a parameter.
 \li For j = 0, 1, 2, 3 if y_j is a parameter, arg[2+j] < num_par.
 \li For j = 0, 1, 2, 3 if y_j is a variable, arg[2+j] < iz.
 */
+template <class Vector_set>
 inline void sparse_conditional_exp_op(
 	size_t         i_z           ,
 	const size_t*  arg           , 

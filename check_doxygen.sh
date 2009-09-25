@@ -49,6 +49,7 @@ list="
 	store_op.hpp
 	sub_op.hpp
 	vector_pack.hpp
+	vector_set.hpp
 "
 for name in $list
 do

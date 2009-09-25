@@ -38,6 +38,10 @@ base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 
+\tparam Vector_set
+is the type used for vectors of sets. It can be either
+\c vector_pack or \c vector_set.
+
 \param n
 is the number of independent variables on the tape.
 
@@ -94,14 +98,14 @@ The values in the rest of \a rev_hes_sparse are not specified; i.e.,
 they are used for temporary work space.
 */
 
-template <class Base>
+template <class Base, class Vector_set>
 void RevHesSweep(
 	size_t                n,
 	size_t                numvar,
 	player<Base>         *play,
-	vector_pack&          for_jac_sparse, // should be const
+	Vector_set&           for_jac_sparse, // should be const
 	bool*                 RevJac,
-	vector_pack&          rev_hes_sparse
+	Vector_set&           rev_hes_sparse
 )
 {
 	OpCode           op;
@@ -135,7 +139,7 @@ void RevHesSweep(
 	// to the index for the corresponding set in vecad_sparsity.
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
-	vector_pack      vecad_sparse;
+	Vector_set vecad_sparse;
 	vecad_sparse.resize(num_vecad_vec, limit);
 	size_t* vecad_ind   = CPPAD_NULL;
 	bool*   vecad_jac   = CPPAD_NULL;

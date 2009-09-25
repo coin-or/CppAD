@@ -35,6 +35,10 @@ base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 
+\tparam Vector_set
+is the type used for vectors of sets. It can be either
+\c vector_pack or \c vector_set.
+
 \param n
 is the number of independent variables on the tape.
 
@@ -71,12 +75,12 @@ corresponds to the set with index i in \a var_sparsity.
 */
 
 
-template <class Base>
+template <class Base, class Vector_set>
 void ForJacSweep(
 	size_t                n            ,
 	size_t                numvar       ,
 	player<Base>*         play         ,
-	vector_pack&          var_sparsity )
+	Vector_set&           var_sparsity )
 {
 	OpCode           op;
 	size_t         i_op;
@@ -104,7 +108,7 @@ void ForJacSweep(
 	size_t limit           = var_sparsity.limit();
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
-	vector_pack      vecad_sparsity;
+	Vector_set  vecad_sparsity;
 	vecad_sparsity.resize(num_vecad_vec, limit);
 	size_t* vecad_ind      = CPPAD_NULL;
 	if( num_vecad_vec > 0 )

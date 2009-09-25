@@ -32,9 +32,9 @@ where fun is a C++ unary function, or it has the form
 \endverbatim
 where op is a C++ binary unary operator and p is a parameter.
 
-\tparam Pack
-is the type used to pack the sparsity pattern bit values; i.e.,
-there is more that one bit per Pack value.
+\tparam Vector_set
+is the type used for vectors of sets. It can be either
+\c vector_pack or \c vector_set.
 
 \param i_z
 variable index corresponding to the result for this operation; 
@@ -62,10 +62,11 @@ depends on.
 \li \a i_x < \a i_z 
 */
 
+template <class Vector_set>
 inline void forward_sparse_jacobian_unary_op(
 	size_t            i_z           ,
 	size_t            i_x           ,
-	vector_pack&      sparsity      )
+	Vector_set&       sparsity      )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
@@ -93,6 +94,11 @@ and it uses them to compute the sparsity patterns for
 	H( x , w , u , ... ) = G[ z(x) , x , w , u , ... ]
 \endverbatim
 
+\tparam Vector_set
+is the type used for vectors of sets. It can be either
+\c vector_pack or \c vector_set.
+
+
 \param i_z
 variable index corresponding to the result for this operation; 
 i.e. the row index in sparsity corresponding to z. 
@@ -118,10 +124,11 @@ is the sparsity bit pattern for H with respect to the variable x.
 \li \a i_x < \a i_z 
 */
 
+template <class Vector_set>
 inline void reverse_sparse_jacobian_unary_op(
 	size_t     i_z                     ,
 	size_t     i_x                     ,
-	vector_pack&           sparsity    )
+	Vector_set&            sparsity    )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
@@ -146,12 +153,13 @@ where op is a C++ binary operator and p is a parameter.
 
 \copydetails reverse_sparse_hessian_unary_op
 */
+template <class Vector_set>
 inline void reverse_sparse_hessian_linear_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
-	vector_pack&        for_jac_sparsity  ,
-	vector_pack&        rev_hes_sparsity  )
+	Vector_set&         for_jac_sparsity  ,
+	Vector_set&         rev_hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
@@ -178,12 +186,13 @@ where p is a parameter.
 
 \copydetails reverse_sparse_hessian_unary_op
 */
+template <class Vector_set>
 inline void reverse_sparse_hessian_nonlinear_unary_op(
 	size_t              i_z               ,
 	size_t              i_x               ,
 	bool*               rev_jacobian      ,
-	vector_pack&        for_jac_sparsity  ,
-	vector_pack&        rev_hes_sparsity  )
+	Vector_set&         for_jac_sparsity  ,
+	Vector_set&         rev_hes_sparsity  )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
