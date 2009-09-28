@@ -69,7 +69,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace { // BEGIN empty namespace
 
-bool case_one(void)
+bool case_one(bool packed)
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -159,7 +159,7 @@ bool case_one(void)
 
 	// evaluate the dependency matrix for U(F(x))
 	CPPAD_TEST_VECTOR< bool > Px(m * n);
-	Px = F.RevSparseJac(m, Py);
+	Px = F.RevSparseJac(m, Py, packed);
 
 	// check values
 	for(i = 0; i < m; i++)
@@ -170,7 +170,7 @@ bool case_one(void)
 	return ok;
 }
 
-bool case_two(void)
+bool case_two(bool packed)
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -245,7 +245,7 @@ bool case_two(void)
 
 	// evaluate the dependency matrix for S [ F(x) ]
 	CPPAD_TEST_VECTOR< bool > Px(m * n);
-	Px = F.RevSparseJac(m, Py);
+	Px = F.RevSparseJac(m, Py, packed);
 
 	// check values
 	for(i = 0; i < m; i++)
@@ -261,8 +261,11 @@ bool case_two(void)
 bool rev_sparse_jac(void)
 {	bool ok = true;
 
-	ok &= case_one();
-	ok &= case_two();
+	ok &= case_one(true);
+	ok &= case_two(true);
+
+	ok &= case_one(false);
+	ok &= case_two(false);
 
 	return ok;
 }

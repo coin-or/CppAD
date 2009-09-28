@@ -64,7 +64,47 @@ namespace CppAD {
 
 template <class Base>
 class ADFun {
+public:
+// ------------------------------------------------------------
+private:
 
+	// debug checking number of comparision operations that changed
+	size_t compare_change_;
+
+	// number of taylor_ coefficieint per variable (currently stored)
+	size_t taylor_per_var_;
+
+	// number of columns currently allocated for taylor_ array
+	size_t taylor_col_dim_;
+
+	// number of rows (variables) in the recording (play_)
+	size_t total_num_var_;
+
+	// tape address for the independent variables
+	CppAD::vector<size_t> ind_taddr_;
+
+	// tape address and parameter flag for the dependent variables
+	CppAD::vector<size_t> dep_taddr_;
+
+	// which dependent variables are actually parameters
+	CppAD::vector<bool>   dep_parameter_;
+
+	// the operation sequence corresponding to this object
+	player<Base> play_;
+
+	// results of the forward mode calculations
+	Base *taylor_;
+
+	// results of the forward mode Jacobian sparsity calculations
+	// (n_set() for one of these two will always be zero)
+	vector_pack      for_jac_sparsity_;
+	vector_set       for_jac_sparse_set_;
+
+	// change the operation sequence corresponding to this object
+	template <typename ADvector>
+	void Dependent(ADTape<Base> *tape, const ADvector &y);
+
+// ------------------------------------------------------------
 public:
 	// default constructor
 	ADFun(void) 
@@ -97,13 +137,15 @@ public:
 	VectorBase Reverse(size_t p, const VectorBase &v);
 
 	// forward mode Jacobian sparsity 
-	template <typename VectorBase>
-	VectorBase ForSparseJac(size_t q, const VectorBase &Px);
-
+	template <typename VectorBool>
+	VectorBool ForSparseJac(
+		size_t q, const VectorBool &Px, bool packed = true
+	);
 	// reverse mode Jacobian sparsity 
 	template <typename VectorBool>
-	VectorBool RevSparseJac(size_t q, const VectorBool &Py);
-
+	VectorBool RevSparseJac(
+		size_t q, const VectorBool &Py, bool packed = true
+	);
 	// reverse mode Hessian sparsity 
 	template <typename VectorBool>
 	VectorBool RevSparseHes(size_t q, const VectorBool &Py);
@@ -229,41 +271,6 @@ public:
 	// number of taylor_ coefficients currently calculated (per variable)
 	size_t taylor_size(void) const
 	{	return taylor_per_var_; } 
-	// ------------------------------------------------------------
-private:
-	// maximum amount of memory required for this function object
-	// mutable size_t memoryMax;
-
-	// debug checking number of comparision operations that changed
-	size_t compare_change_;
-
-	// number of taylor_ coefficieint per variable (currently stored)
-	size_t taylor_per_var_;
-
-	// number of columns currently allocated for taylor_ array
-	size_t taylor_col_dim_;
-
-	// number of rows (variables) in the recording (play_)
-	size_t total_num_var_;
-
-	// tape address for the independent variables
-	CppAD::vector<size_t> ind_taddr_;
-
-	// tape address and parameter flag for the dependent variables
-	CppAD::vector<size_t> dep_taddr_;
-	CppAD::vector<bool>   dep_parameter_;
-
-	// the operations corresponding to this function
-	player<Base> play_;
-
-	// results of the forward mode calculations
-	Base *taylor_;
-
-	// results of the forward mode Jacobian sparsity calculations
-	vector_pack      for_jac_sparsity_;
-
-	template <typename ADvector>
-	void Dependent(ADTape<Base> *tape, const ADvector &y);
 };
 // ---------------------------------------------------------------------------
 

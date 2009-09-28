@@ -35,6 +35,9 @@ $index pattern, reverse Jacobian$$
 
 $head Syntax$$
 $syntax%%r% = %F%.RevSparseJac(%p%, %s%)%$$
+$pre
+$$
+$syntax%%r% = %F%.RevSparseJac(%p%, %s%, %packed%)%$$
 
 
 $head Purpose$$
@@ -90,6 +93,20 @@ for $latex i = 0 , \ldots , p-1$$ and $latex j = 0 , \ldots , m-1$$.
 $latex \[
 	S_{i,j} \neq 0 ; \Rightarrow \; s [ i * m + j ] = {\rm true}
 \] $$
+
+$head packed$$
+If $italic packed$$ is true,
+during the sparsity calculation sets of indices are represented
+as vectors of bits that packed into words and operations are done
+on multiple bits at a time (the number of bits in a word is unspecified).
+Otherwise, sets of indices are represents using a sparse structure
+that only includes the non-zero indices and operations are done
+one index at a time. 
+$pre
+
+$$
+The default value for $italic packed$$ is true; i.e.,
+the value used if it is not present.
 
 $head r$$
 The return value $italic r$$ has prototype
@@ -152,9 +169,15 @@ $end
 // BEGIN CppAD namespace
 namespace CppAD {
 
-template <class Base>
-template <class VectorBool>
-VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &s) 
+template <class Base, class VectorBool, class VectorSet> 
+void ForSparseJac(
+	size_t                 total_num_var    ,
+	size_t                 p                , 
+	const VectorBool&      s                ,
+	CppAD::vector<size_t>& dep_taddr        ,
+	CppAD::vector<size_t>& ind_taddr        ,
+	CppAD::player<Base>&   play             ,
+	VectorBool&            r                )
 {
 	// temporary indices
 	size_t i, j;
@@ -163,8 +186,8 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &s)
 	CheckSimpleVector<bool, VectorBool>();
 
 	// range and domain dimensions for F
-	size_t m = dep_taddr_.size();
-	size_t n = ind_taddr_.size();
+	size_t m = dep_taddr.size();
+	size_t n = ind_taddr.size();
 
 	CPPAD_ASSERT_KNOWN(
 		p > 0,
@@ -178,32 +201,32 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &s)
 	);
 
 	// vector of sets that will hold the results
-	vector_pack      var_sparsity;
-	var_sparsity.resize(total_num_var_, p);
+	VectorSet      var_sparsity;
+	var_sparsity.resize(total_num_var, p);
 
 	// The sparsity pattern corresponding to the dependent variables
 	for(i = 0; i < m; i++)
-	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < total_num_var );
 
 		for(j = 0; j < p; j++) if( s[ i * m + j ] )
-			var_sparsity.add_element( dep_taddr_[i], j );
+			var_sparsity.add_element( dep_taddr[i], j );
 	}
 
 	// evaluate the sparsity patterns
 	RevJacSweep(
 		n,
-		total_num_var_,
-		&play_,
+		total_num_var,
+		&play,
 		var_sparsity
 	);
 
 	// return values corresponding to dependent variables
-	VectorBool r(p * n);
+	CPPAD_ASSERT_UNKNOWN( r.size() == p * n );
 	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] == (j+1) );
 
-		// ind_taddr_[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		// ind_taddr[j] is operator taddr for j-th independent variable
+		CPPAD_ASSERT_UNKNOWN( play.GetOp( ind_taddr[j] ) == InvOp );
 
 		// set bits 
 		for(i = 0; i < p; i++) 
@@ -216,7 +239,39 @@ VectorBool ADFun<Base>::RevSparseJac(size_t p, const VectorBool &s)
 			i              = var_sparsity.next_element(j+1);
 		}
 	}
+}
 
+template <class Base>
+template <class VectorBool>
+VectorBool ADFun<Base>::RevSparseJac(
+	size_t              p      , 
+	const VectorBool&   s      ,
+	bool                packed ) 
+{	size_t n = ind_taddr_.size();
+	VectorBool r( p * n );
+
+	if( packed )
+	{	CppAD::ForSparseJac<Base, VectorBool, vector_pack>(
+			total_num_var_   ,
+			p                , 
+			s                ,
+			dep_taddr_       ,
+			ind_taddr_       ,
+			play_            ,
+			r
+		);
+	}
+	else
+	{	CppAD::ForSparseJac<Base, VectorBool, vector_set>(
+			total_num_var_   ,
+			p                , 
+			s                ,
+			dep_taddr_       ,
+			ind_taddr_       ,
+			play_            ,
+			r
+		);
+	}
 	return r;
 }
 

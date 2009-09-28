@@ -40,6 +40,8 @@ $spell
 	pycppad
 	cond_exp
 	VecAD
+	Jacobians
+	Jac
 $$
 
 $section Changes and Additions to CppAD During 2009$$
@@ -52,6 +54,19 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
+
+$head 09-26$$
+Added the $cref/packed/ForSparseJac/packed/$$ parameter to
+$cref/ForSparseJac/$$ and $cref/RevSparseJac/$$.
+If $icode packed$$ is false,
+a sparse instead of packed representation is used 
+during the calculations of sparsity patterns.
+The sparse representation
+should be faster, and use less memory, for very large sparse Jacobians.
+The functions $code ForSparseJac$$ and $code RevSparseJac$$
+return packed representations.
+The plan is to eventually provide new member functions that return
+sparse representations.
 
 $head 09-20$$
 Fixed a bug in the $cref/Hessian Sparsity/RevSparseHes/$$ calculations

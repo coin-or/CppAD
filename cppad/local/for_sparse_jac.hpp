@@ -34,7 +34,9 @@ $index pattern, forward Jacobian$$
 
 $head Syntax$$
 $syntax%%s% = %f%.ForSparseJac(%q%, %r%)%$$
-
+$pre
+$$
+$syntax%%s% = %f%.ForSparseJac(%q%, %r%, %packed%)%$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
@@ -95,6 +97,20 @@ $latex \[
 	R_{i,j} \neq 0 ; \Rightarrow \; r [ i * q + j ] = {\rm true}
 \] $$
 
+$head packed$$
+If $italic packed$$ is true,
+during the sparsity calculation sets of indices are represented
+as vectors of bits that packed into words and operations are done
+on multiple bits at a time (the number of bits in a word is unspecified).
+Otherwise, sets of indices are represents using a sparse structure
+that only includes the non-zero indices and operations are done
+one index at a time. 
+$pre
+
+$$
+The default value for $italic packed$$ is true; i.e.,
+the value used if it is not present.
+
 $head s$$
 The return value $italic s$$ has prototype
 $syntax%
@@ -154,9 +170,16 @@ $end
 // BEGIN CppAD namespace
 namespace CppAD {
 
-template <class Base>
-template <class VectorBool>
-VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &r)
+template <class Base, class VectorBool, class VectorSet> 
+void ForSparseJac(
+	size_t                 total_num_var    ,
+	size_t                 q                , 
+	const VectorBool&      r                ,
+	CppAD::vector<size_t>& dep_taddr        ,
+	CppAD::vector<size_t>& ind_taddr        ,
+	CppAD::player<Base>&   play             ,
+	VectorBool&            s                ,
+	VectorSet&             for_jac_sparsity )
 {
 	// temporary indices
 	size_t i, j;
@@ -165,8 +188,8 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &r)
 	CheckSimpleVector<bool, VectorBool>();
 
 	// range and domain dimensions for F
-	size_t m = dep_taddr_.size();
-	size_t n = ind_taddr_.size();
+	size_t m = dep_taddr.size();
+	size_t n = ind_taddr.size();
 
 	CPPAD_ASSERT_KNOWN(
 		q > 0,
@@ -180,43 +203,83 @@ VectorBool ADFun<Base>::ForSparseJac(size_t q, const VectorBool &r)
 	);
 
 	// allocate memory for the requested sparsity calculation
-	for_jac_sparsity_.resize(total_num_var_, q);
+	for_jac_sparsity.resize(total_num_var, q);
 
 	// set values corresponding to independent variables
 	for(i = 0; i < n; i++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[i] < total_num_var_ );
-		// ind_taddr_[i] is operator taddr for i-th independent variable
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[i] ) == InvOp );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[i] < total_num_var );
+		// ind_taddr[i] is operator taddr for i-th independent variable
+		CPPAD_ASSERT_UNKNOWN( play.GetOp( ind_taddr[i] ) == InvOp );
 
 		// set bits that are true
 		for(j = 0; j < q; j++) if( r[ i * q + j ] )
-			for_jac_sparsity_.add_element( ind_taddr_[i], j);
+			for_jac_sparsity.add_element( ind_taddr[i], j);
 	}
 
 	// evaluate the sparsity patterns
 	ForJacSweep(
 		n,
-		total_num_var_,
-		&play_,
-		for_jac_sparsity_
+		total_num_var,
+		&play,
+		for_jac_sparsity
 	);
 
 	// return values corresponding to dependent variables
-	VectorBool s(m * q);
+	CPPAD_ASSERT_UNKNOWN( s.size() == m * q );
 	for(i = 0; i < m; i++)
-	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < total_num_var );
 
 		// set bits 
 		for(j = 0; j < q; j++)
 			s[ i * q + j ] = false;
-		CPPAD_ASSERT_UNKNOWN( for_jac_sparsity_.limit() == q );
-		j = for_jac_sparsity_.next_element( dep_taddr_[i] );
+		CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.limit() == q );
+		j = for_jac_sparsity.next_element( dep_taddr[i] );
 		while( j < q )
 		{	s[i * q + j ] = true;
-			j = for_jac_sparsity_.next_element( dep_taddr_[i] );
+			j = for_jac_sparsity.next_element( dep_taddr[i] );
 		}
 	}
+}
 
+template <class Base>
+template <class VectorBool>
+VectorBool ADFun<Base>::ForSparseJac(
+	size_t             q      , 
+	const VectorBool&  r      ,
+	bool               packed )
+{	size_t m = dep_taddr_.size();
+	VectorBool s( m * q );
+
+	if( packed )
+	{	// free any results stored in for_jac_sparse_set_	
+		for_jac_sparse_set_.resize(0, 0);
+		// store results in for_jac_sparsity_
+		CppAD::ForSparseJac(
+			total_num_var_   ,
+			q                , 
+			r                ,
+			dep_taddr_       ,
+			ind_taddr_       ,
+			play_            ,
+			s                ,
+			for_jac_sparsity_ 
+		);
+	}
+	else
+	{	// free any results stored in for_jac_sparsity_
+		for_jac_sparsity_.resize(0, 0);
+		// store results in for_jac_sparse_set_
+		CppAD::ForSparseJac(
+			total_num_var_   ,
+			q                , 
+			r                ,
+			dep_taddr_       ,
+			ind_taddr_       ,
+			play_            ,
+			s                ,
+			for_jac_sparse_set_
+		);
+	}
 	return s;
 }
 
