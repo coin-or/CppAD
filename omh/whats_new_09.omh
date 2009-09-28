@@ -55,6 +55,15 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 09-28$$
+Changed $cref/RevSparseHes/$$ so that it uses a sparse
+representation when the corresponding call to 
+$cref/ForSparseJac/$$ used a sparse representation.
+This should have been included with the change on 09-26 
+because Hessian sparsity patters after $code ForSparseJac$$
+with $icode packed$$ did not work.
+Thus, this could be considered a bug fix.
+
 $head 09-26$$
 Added the $cref/packed/ForSparseJac/packed/$$ parameter to
 $cref/ForSparseJac/$$ and $cref/RevSparseJac/$$.

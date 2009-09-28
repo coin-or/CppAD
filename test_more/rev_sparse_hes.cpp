@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
  
 namespace { // Begin empty namespace
 
-bool case_one(void)
+bool case_one(bool packed)
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -79,7 +79,7 @@ bool case_one(void)
 	}
 
 	// compute sparsity pattern for Jacobian of F(U(x))
-	F.ForSparseJac(n, Px);
+	F.ForSparseJac(n, Px, packed);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
 	CPPAD_TEST_VECTOR<bool> Py(m);
@@ -102,7 +102,7 @@ bool case_one(void)
 	return ok;
 }
 
-bool case_two(void)
+bool case_two(bool packed)
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -151,7 +151,7 @@ bool case_two(void)
 	}
 
 	// compute sparsity pattern for Jacobian of F(U(x))
-	F.ForSparseJac(n, Px);
+	F.ForSparseJac(n, Px, packed);
 
 	// compute sparsity pattern for Hessian of F_0 ( U(x) ) 
 	CPPAD_TEST_VECTOR<bool> Py(m);
@@ -166,7 +166,7 @@ bool case_two(void)
 	return ok;
 }
 
-bool case_three(void)
+bool case_three(bool packed)
 {	bool ok = true;
 	using CppAD::AD;
 
@@ -199,7 +199,7 @@ bool case_three(void)
 	}
 
 	// compute sparsity pattern for J(x) = F^{(1)} (x)
-	f.ForSparseJac(n, r);
+	f.ForSparseJac(n, r, packed);
 
 	// compute sparsity pattern for H(x) = F_0^{(2)} (x)
 	CppAD::vector<bool> s(m);
@@ -215,7 +215,7 @@ bool case_three(void)
 	return ok;
 }
 
-bool case_four(void)
+bool case_four(bool packed)
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -275,7 +275,7 @@ bool case_four(void)
 			r[ i * n + j ] = false;
 		r[ i * n + i ] = true;
 	}
-	F.ForSparseJac(n, r);
+	F.ForSparseJac(n, r, packed);
 
 	// compute the reverse Hessian sparsity pattern for F
 	CPPAD_TEST_VECTOR< bool > s(m), h(n * n);
@@ -295,10 +295,16 @@ bool case_four(void)
 
 bool rev_sparse_hes(void)
 {	bool ok = true;
-	ok &= case_one();
-	ok &= case_two();
-	ok &= case_three();
-	ok &= case_four();
+
+	ok &= case_one(true);
+	ok &= case_two(true);
+	ok &= case_three(true);
+	ok &= case_four(true);
+
+	ok &= case_one(false);
+	ok &= case_two(false);
+	ok &= case_three(false);
+	ok &= case_four(false);
 
 	return ok;
 }

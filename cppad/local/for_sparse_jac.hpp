@@ -172,13 +172,13 @@ namespace CppAD {
 
 template <class Base, class VectorBool, class VectorSet> 
 void ForSparseJac(
-	size_t                 total_num_var    ,
 	size_t                 q                , 
 	const VectorBool&      r                ,
+	VectorBool&            s                ,
+	size_t                 total_num_var    ,
 	CppAD::vector<size_t>& dep_taddr        ,
 	CppAD::vector<size_t>& ind_taddr        ,
 	CppAD::player<Base>&   play             ,
-	VectorBool&            s                ,
 	VectorSet&             for_jac_sparsity )
 {
 	// temporary indices
@@ -255,13 +255,13 @@ VectorBool ADFun<Base>::ForSparseJac(
 		for_jac_sparse_set_.resize(0, 0);
 		// store results in for_jac_sparsity_
 		CppAD::ForSparseJac(
-			total_num_var_   ,
 			q                , 
 			r                ,
+			s                ,
+			total_num_var_   ,
 			dep_taddr_       ,
 			ind_taddr_       ,
 			play_            ,
-			s                ,
 			for_jac_sparsity_ 
 		);
 	}
@@ -270,13 +270,13 @@ VectorBool ADFun<Base>::ForSparseJac(
 		for_jac_sparsity_.resize(0, 0);
 		// store results in for_jac_sparse_set_
 		CppAD::ForSparseJac(
-			total_num_var_   ,
 			q                , 
 			r                ,
+			s                ,
+			total_num_var_   ,
 			dep_taddr_       ,
 			ind_taddr_       ,
 			play_            ,
-			s                ,
 			for_jac_sparse_set_
 		);
 	}

@@ -90,12 +90,27 @@ $syntax%
 It specifies the number of columns in the Jacobian $latex J(x)$$. 
 It must be the same value as in the previous $xref/ForSparseJac/$$ call 
 $syntax%
-	%f%.ForSparseJac(%q%, %r%)
+	%f%.ForSparseJac(%q%, %r%, %packed%)
 %$$
-Note that the memory required for the calculation is proportional
+Note that if $italic packed$$ was true,
+the memory required for the calculation is proportional
 to $latex q$$ times the total number of variables
 in the AD operation sequence corresponding to $italic f$$
 ($xref/SeqProperty/size_var/f.size_var/$$).
+
+$subhead packed$$
+If $italic packed$$ was true in the call to $code ForSparseJac$$,
+during the sparsity calculation sets of indices are represented
+as vectors of bits that packed into words and operations are done
+on multiple bits at a time (the number of bits in a word is unspecified).
+Otherwise, sets of indices are represents using a sparse structure
+that only includes the non-zero indices and operations are done
+one index at a time. 
+$pre
+
+$$
+The default value for $italic packed$$ is true; i.e.,
+the value used if it is not present.
 
 $head r$$
 The argument $italic r$$ in the previous call
@@ -193,9 +208,16 @@ $end
 // BEGIN CppAD namespace
 namespace CppAD {
 
-template <class Base>
-template <class VectorBool>
-VectorBool ADFun<Base>::RevSparseHes(size_t q,  const VectorBool &s)
+template <class Base, class VectorBool, class VectorSet>
+void RevSparseHes(
+	size_t                    q                 ,
+	const VectorBool&         s                 ,
+	VectorBool&               h                 ,
+	size_t                    total_num_var     ,
+	CppAD::vector<size_t>&    dep_taddr         ,
+	CppAD::vector<size_t>&    ind_taddr         ,
+	CppAD::player<Base>&      play              ,
+	VectorSet&                for_jac_sparsity  )
 {
 	// temporary indices
 	size_t i, j;
@@ -204,11 +226,11 @@ VectorBool ADFun<Base>::RevSparseHes(size_t q,  const VectorBool &s)
 	CheckSimpleVector<bool, VectorBool>();
 
 	// range and domain dimensions for F
-	size_t m = dep_taddr_.size();
-	size_t n = ind_taddr_.size();
+	size_t m = dep_taddr.size();
+	size_t n = ind_taddr.size();
 
 	CPPAD_ASSERT_KNOWN(
-		q == for_jac_sparsity_.limit(),
+		q == for_jac_sparsity.limit(),
 		"RevSparseHes: q (first argument) is not equal to its value"
 		" in the previous call to ForSparseJac with this ADFun object."
 	);
@@ -218,48 +240,48 @@ VectorBool ADFun<Base>::RevSparseHes(size_t q,  const VectorBool &s)
 		"range dimension for ADFun object."
 	);
 
-	// array that will hold packed reverse Jacobian values
+	// Array that will hold reverse Jacobian dependency flag.
+	// Initialize as true for the dependent variables.
 	bool *RevJac = CPPAD_NULL;
-	RevJac       = CPPAD_TRACK_NEW_VEC(total_num_var_, RevJac);	
+	RevJac       = CPPAD_TRACK_NEW_VEC(total_num_var, RevJac);	
+	for(i = 0; i < total_num_var; i++)
+		RevJac[i] = false;
+	for(i = 0; i < m; i++)
+	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[i] < total_num_var );
+		RevJac[ dep_taddr[i] ] = s[i];
+	}
+
 
 	// vector of sets that will hold packed reverse Hessain values
-	vector_pack      rev_hes_sparsity;
-	rev_hes_sparsity.resize(total_num_var_, q);
-
-	// initialize RevJac matrix to false
-	for(i = 0; i < total_num_var_; i++)
-		RevJac[i] = false;
-
-	for(i = 0; i < m; i++)
-	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
-		RevJac[ dep_taddr_[i] ] = s[i];
-	}
+	VectorSet      rev_hes_sparsity;
+	rev_hes_sparsity.resize(total_num_var, q);
 
 	// compute the Hessian sparsity patterns
 	RevHesSweep(
 		n,
-		total_num_var_,
-		&play_,
-		for_jac_sparsity_, 
+		total_num_var,
+		&play,
+		for_jac_sparsity, 
 		RevJac,
 		rev_hes_sparsity
 	);
 
 	// return values corresponding to independent variables
-	VectorBool h(n * q);
+	CPPAD_ASSERT_UNKNOWN( h.size() == n * q );
 
-	// j is index corresponding to reverse mode martial
+	// j is index corresponding to reverse mode partial
 	for(j = 0; j < n; j++)
-	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] < total_num_var_ );
+	{	CPPAD_ASSERT_UNKNOWN( ind_taddr[j] < total_num_var );
 
-		// ind_taddr_[j] is operator taddr for j-th independent variable
-		CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == j + 1 );
-		CPPAD_ASSERT_UNKNOWN( play_.GetOp( ind_taddr_[j] ) == InvOp );
+		// ind_taddr[j] is operator taddr for j-th independent variable
+		CPPAD_ASSERT_UNKNOWN( ind_taddr[j] == j + 1 );
+		CPPAD_ASSERT_UNKNOWN( play.GetOp( ind_taddr[j] ) == InvOp );
 
-		// i is index corresponding to forward mode partial
+		// set all bits false
 		for(i = 0; i < q; i++) 
 			h[ i * n + j ] = false;
 
+		// set bits that are true
 		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.limit() == q );
 		i = rev_hes_sparsity.next_element(j + 1);
 		while( i < q )
@@ -271,6 +293,43 @@ VectorBool ADFun<Base>::RevSparseHes(size_t q,  const VectorBool &s)
 	// free memory used for the calculation
 	CPPAD_TRACK_DEL_VEC(RevJac);
 
+	return;
+}
+
+template <class Base>
+template <class VectorBool>
+VectorBool ADFun<Base>::RevSparseHes(size_t q,  const VectorBool &s)
+{	size_t n = ind_taddr_.size();	
+	VectorBool h( n * q );
+
+	if( for_jac_sparsity_.n_set() > 0 )
+	{	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == 0 );
+		// use vector_pack for the calculation
+		CppAD::RevSparseHes( 
+			q                 ,
+			s                 ,
+			h                 ,
+			total_num_var_    ,
+			dep_taddr_        ,
+			ind_taddr_        ,
+			play_             ,
+			for_jac_sparsity_ 
+		);
+	}
+	else
+	{	CPPAD_ASSERT_UNKNOWN( for_jac_sparsity_.n_set() == 0 );
+		// use vector_pack for the calculation
+		CppAD::RevSparseHes( 
+			q                    ,
+			s                    ,
+			h                    ,
+			total_num_var_       ,
+			dep_taddr_           ,
+			ind_taddr_           ,
+			play_                ,
+			for_jac_sparse_set_
+		);
+	}
 	return h;
 }
 
