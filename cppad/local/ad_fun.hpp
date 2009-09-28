@@ -97,7 +97,7 @@ private:
 
 	// results of the forward mode Jacobian sparsity calculations
 	// (n_set() for one of these two will always be zero)
-	vector_pack      for_jac_sparsity_;
+	vector_pack      for_jac_sparse_pack_;
 	vector_set       for_jac_sparse_set_;
 
 	// change the operation sequence corresponding to this object
@@ -263,7 +263,8 @@ public:
 	// amount of memory for each variable 
 	size_t Memory(void) const
 	{	size_t pervar  = taylor_col_dim_ * sizeof(Base)
-		+ for_jac_sparsity_.memory();
+		+ for_jac_sparse_pack_.memory()
+		+ for_jac_sparse_set_.memory();
 		size_t total   = total_num_var_ * pervar + play_.Memory();
 		return total;
 	}

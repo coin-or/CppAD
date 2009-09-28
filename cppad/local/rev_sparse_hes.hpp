@@ -302,7 +302,7 @@ VectorBool ADFun<Base>::RevSparseHes(size_t q,  const VectorBool &s)
 {	size_t n = ind_taddr_.size();	
 	VectorBool h( n * q );
 
-	if( for_jac_sparsity_.n_set() > 0 )
+	if( for_jac_sparse_pack_.n_set() > 0 )
 	{	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == 0 );
 		// use vector_pack for the calculation
 		CppAD::RevSparseHes( 
@@ -313,11 +313,11 @@ VectorBool ADFun<Base>::RevSparseHes(size_t q,  const VectorBool &s)
 			dep_taddr_        ,
 			ind_taddr_        ,
 			play_             ,
-			for_jac_sparsity_ 
+			for_jac_sparse_pack_ 
 		);
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( for_jac_sparsity_.n_set() == 0 );
+	{	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == 0 );
 		// use vector_pack for the calculation
 		CppAD::RevSparseHes( 
 			q                    ,

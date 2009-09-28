@@ -234,7 +234,8 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	// free old buffers
 	if( taylor_ != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC(taylor_);
-	for_jac_sparsity_.resize(0, 0);
+	for_jac_sparse_pack_.resize(0, 0);
+	for_jac_sparse_set_.resize(0,0);
 
 	// initialize buffers
 	taylor_  = CPPAD_NULL;

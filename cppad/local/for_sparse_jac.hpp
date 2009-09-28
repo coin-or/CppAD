@@ -253,7 +253,7 @@ VectorBool ADFun<Base>::ForSparseJac(
 	if( packed )
 	{	// free any results stored in for_jac_sparse_set_	
 		for_jac_sparse_set_.resize(0, 0);
-		// store results in for_jac_sparsity_
+		// store results in for_jac_sparse_pack_
 		CppAD::ForSparseJac(
 			q                , 
 			r                ,
@@ -262,12 +262,12 @@ VectorBool ADFun<Base>::ForSparseJac(
 			dep_taddr_       ,
 			ind_taddr_       ,
 			play_            ,
-			for_jac_sparsity_ 
+			for_jac_sparse_pack_ 
 		);
 	}
 	else
-	{	// free any results stored in for_jac_sparsity_
-		for_jac_sparsity_.resize(0, 0);
+	{	// free any results stored in for_jac_sparse_pack_
+		for_jac_sparse_pack_.resize(0, 0);
 		// store results in for_jac_sparse_set_
 		CppAD::ForSparseJac(
 			q                , 
