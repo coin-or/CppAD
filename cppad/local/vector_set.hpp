@@ -33,16 +33,16 @@ private:
 	/// Number of sets that we are representing 
 	/// (set by constructor and resize).
 	size_t n_set_;
-	/// Possible elements in each set are 0, 1, ..., limit_ - 1
+	/// Possible elements in each set are 0, 1, ..., end_ - 1
 	/// (set by constructor and resize).
-	size_t limit_;
+	size_t end_;
 	/// The vector of sets
 	CppAD::vector<Set> data_;
-	/// Previous index for which we were retrieving next_element
-	/// (use n_set_ if no such previous index exists).
-	size_t previous_index_;
-	/// Next element that we should return using next_element
-	/// (use limit_ for no such element exists; i.e., past end of the set).
+	/// index for which we were retrieving next_element
+	/// (use n_set_ if no such index exists).
+	size_t next_index_;
+	/// Next element that we will return using next_element
+	/// (use end_ for no such element exists; i.e., past end of the set).
 	Set::iterator next_element_;
 public:
 	// -----------------------------------------------------------------
@@ -50,8 +50,8 @@ public:
 	*/
 	vector_set(void) : 
 	n_set_(0)                     , 
-	limit_(0)                     , 
-	previous_index_(0)
+	end_(0)                       , 
+	next_index_(0)
 	{ }
 	// -----------------------------------------------------------------
 	/*! Make use of copy constructor an error
@@ -70,7 +70,7 @@ public:
 	~vector_set(void)
 	{ } 
 	// -----------------------------------------------------------------
-	/*! Change number of sets, set limit, and initialize all sets as empty
+	/*! Change number of sets, set end, and initialize all sets as empty
 
 	Any memory currently allocated for this object is freed. If 
 	\a n_set is zero, no new memory is allocated for the set.
@@ -79,19 +79,19 @@ public:
 	\param n_set
 	is the number of sets in this vector of sets.
 
-	\param limit
+	\param end
 	is the maximum element plus one (the minimum element is 0).
 	*/
-	void resize(size_t n_set, size_t limit) 
+	void resize(size_t n_set, size_t end) 
 	{	n_set_          = n_set;
-		limit_          = limit;
+		end_            = end;
 		// free all memory connected with data_
 		data_.resize(0);
 		// now start a new vector with empty sets
 		data_.resize(n_set_);
 
 		// value that signfies past end of list
-		previous_index_   = n_set;
+		next_index_ = n_set;
 	}
 	// -----------------------------------------------------------------
 	/*! Add one element to a set.
@@ -104,43 +104,44 @@ public:
 
 	\par Checked Assertions
 	\li index    < n_set_
-	\li element  < limit_
+	\li element  < end_
 	*/
 	void add_element(size_t index, size_t element)
 	{
 		CPPAD_ASSERT_UNKNOWN( index   < n_set_ );
-		CPPAD_ASSERT_UNKNOWN( element < limit_ );
+		CPPAD_ASSERT_UNKNOWN( element < end_ );
 		data_[ index ].insert( element );
 	}
 	// -----------------------------------------------------------------
-	/*! Get the next element from a specific set
+	/*! Begin retrieving elements from one of the sets.
 	
 	\param index
-	is the index for this set in the vector of sets.
-	We start with the first element of the set when one of the following
-	conditions holds:
-	\li 
-	If \a index is not equal its value on the previous call 
-	to \c next_element.
-	\li If \c resize was called after the previous call 
-	to \c next_element
-	
-	\return
-	is the next element in the set with the specified index.
-	If no such element exists, \c this->limit is returned.
+	is the index for the set that is going to be retrieved.
+	The elements of the set are retrieved in increasing order.
 
 	\par Checked Assertions
 	\li index  < n_set_
 	*/
-	size_t next_element(size_t index)
+	void begin(size_t index)
 	{	// initialize element to search for in this set
 		CPPAD_ASSERT_UNKNOWN( index < n_set_ );
-		if( previous_index_ != index )
-		{	previous_index_   = index;
-			next_element_     = data_[index].begin(); 
-		}
-		if( next_element_ == data_[index].end() )
-			return limit_;
+		next_index_       = index;
+		next_element_     = data_[index].begin(); 
+
+		return;
+	}
+	// -----------------------------------------------------------------
+	/*! Get the next element from the current retrieval set.
+	
+	\return
+	is the next element in the set with index
+	specified by the previous call to \c begin.
+	If no such element exists, \c this->end() is returned.
+	*/
+	size_t next_element(void)
+	{
+		if( next_element_ == data_[next_index_].end() )
+			return end_;
 
 		return *next_element_++;
 	}
@@ -258,13 +259,13 @@ public:
 	size_t n_set(void) const
 	{	return n_set_; }
 	// -----------------------------------------------------------------
-	/*! Fetch limit for this vector of sets object. 
+	/*! Fetch end for this vector of sets object. 
 	
 	\return
 	is the maximum element value plus one (the minimum element value is 0).
 	*/
-	size_t limit(void) const
-	{	return limit_; }
+	size_t end(void) const
+	{	return end_; }
 };
 
 CPPAD_END_NAMESPACE

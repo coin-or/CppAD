@@ -105,7 +105,7 @@ void ForJacSweep(
 	// to all the other variables.
 	// vecad_ind maps a VecAD index (the beginning of the
 	// VecAD object) to its from index in vecad_sparsity
-	size_t limit           = var_sparsity.limit();
+	size_t limit           = var_sparsity.end();
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	Vector_set  vecad_sparsity;
@@ -490,10 +490,11 @@ void ForJacSweep(
 		// value for this variable
 		for(j = 0; j < limit j++)
 			z_value[j] = false;
-		j = var_sparsity.next_element(i_var);
+		var_sparsity.begin(i_var);
+		j = var_sparsity.next_element();
 		while( j < limit )
 		{	z_value[j] = true;
-			j = var_sparsity.next_element(i_var);
+			j = var_sparsity.next_element();
 		}
 		printOp(
 			std::cout,

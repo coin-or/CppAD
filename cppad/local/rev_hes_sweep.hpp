@@ -126,8 +126,8 @@ void RevHesSweep(
 	CPPAD_ASSERT_UNKNOWN( numvar > 0 );
 
 	// upper limit exclusive for set elements
-	size_t limit   = rev_hes_sparse.limit();
-	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.limit() == limit );
+	size_t limit   = rev_hes_sparse.end();
+	CPPAD_ASSERT_UNKNOWN( rev_hes_sparse.end() == limit );
 
 	// check number of sets match
 	CPPAD_ASSERT_UNKNOWN( 
@@ -184,15 +184,17 @@ void RevHesSweep(
 		{	zf_value[j] = false;
 			zh_value[j] = false;
 		}
-		j = for_jac_sparse.next_element(i_var);;
+		for_jac_sparse.begin(i_var);;
+		j = for_jac_sparse.next_element();;
 		while( j < limit )
 		{	zf_value[j] = true;
-			j = for_jac_sparse.next_element(i_var);
+			j = for_jac_sparse.next_element();
 		}
-		j = rev_hes_sparse.next_element(i_var);;
+		rev_hes_sparse.begin(i_var);;
+		j = rev_hes_sparse.next_element();;
 		while( j < limit )
 		{	zh_value[j] = true;
-			j = rev_hes_sparse.next_element(i_var);
+			j = rev_hes_sparse.next_element();
 		}
 		// should also print RevJac[i_var], but printOp does not
 		// yet allow for this.

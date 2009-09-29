@@ -105,7 +105,7 @@ void RevJacSweep(
 	CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == numvar );
 
 	// upper limit (exclusive) for elements in the set
-	size_t limit = var_sparsity.limit();
+	size_t limit = var_sparsity.end();
 
 	// vecad_sparsity contains a sparsity pattern for each VecAD object.
 	// vecad_ind maps a VecAD index (beginning of the VecAD object) 

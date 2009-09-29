@@ -33,10 +33,10 @@ private:
 	/// Number of sets that we are representing 
 	/// (set by constructor and resize).
 	size_t n_set_;
-	/// Possible elements in each set are 0, 1, ..., limit_ - 1
+	/// Possible elements in each set are 0, 1, ..., end_ - 1
 	/// (set by constructor and resize).
-	size_t limit_;
-	/// Number of \c Pack values necessary to represent \c limit_ bits.
+	size_t end_;
+	/// Number of \c Pack values necessary to represent \c end_ bits.
 	/// (set by constructor and resize).
 	size_t n_pack_;
 	/// Is the memory pointed to by \c data_ allocated by this object
@@ -44,24 +44,24 @@ private:
 	bool   allocated_;    
 	/// Pointer to the beginning of data for all the sets.
 	Pack*  data_;
-	/// Previous index for which we were retrieving next_element
-	/// (use n_set_ if no such previous index exists).
-	size_t previous_index_;
-	/// Previous element that we retrieved using next_element
-	/// (use limit_ for no such element exists; i.e., past end of the set).
-	size_t previous_element_;
+	/// index for which we were retrieving next_element
+	/// (use n_set_ if no such index exists).
+	size_t next_index_;
+	/// Next element to start search at 
+	/// (use end_ for no such element exists; i.e., past end of the set).
+	size_t next_element_;
 public:
 	// -----------------------------------------------------------------
 	/*! Default constructor (no sets)
 	*/
 	vector_pack(void) : 
 	n_set_(0)                     , 
-	limit_(0)                     , 
+	end_(0)                       , 
 	n_pack_(0)                    ,
 	allocated_(false)             ,
 	data_(CPPAD_NULL)             ,
-	previous_index_(0)            ,
-	previous_element_ (0)
+	next_index_(0)                ,
+	next_element_(0)
 	{ }
 	// -----------------------------------------------------------------
 	/*! Make use of copy constructor an error
@@ -84,19 +84,19 @@ public:
 		}
 	}
 	// -----------------------------------------------------------------
-	/*! Change number of sets, set limit, and initialize all sets as empty
+	/*! Change number of sets, set end, and initialize all sets as empty
 
 	Any memory currently allocated for this object is freed. If both
-	\a n_set and \a limit are non-zero new memory is allocated, otherwise
+	\a n_set and \a end are non-zero new memory is allocated, otherwise
 	no new memory is allocated for the object.
 
 	\param n_set
 	is the number of sets in this vector of sets.
 
-	\param limit
+	\param end
 	is the maximum element plus one (the minimum element is 0).
 	*/
-	void resize(size_t n_set, size_t limit) 
+	void resize(size_t n_set, size_t end) 
 	{	Pack zero(0);
 		if( allocated_ )
 		{	allocated_ = false;
@@ -104,8 +104,8 @@ public:
 		}
 
 		n_set_          = n_set;
-		limit_          = limit;
-		n_pack_         = ( 1 + (limit - 1) / n_bit_ );
+		end_            = end;
+		n_pack_         = ( 1 + (end - 1) / n_bit_ );
 		size_t i        = n_set_ * n_pack_;
 
 		if( i > 0 )
@@ -116,8 +116,8 @@ public:
 		}
 
 		// values that signify past end of list
-		previous_index_   = n_set;
-		previous_element_ = limit;
+		next_index_   = n_set;
+		next_element_ = end;
 	}
 	// -----------------------------------------------------------------
 	/*! Add one element to a set.
@@ -130,76 +130,72 @@ public:
 
 	\par Checked Assertions
 	\li index    < n_set_
-	\li element  < limit_
+	\li element  < end_
 	*/
 	void add_element(size_t index, size_t element)
 	{	static Pack one(1);
 		CPPAD_ASSERT_UNKNOWN( index   < n_set_ );
-		CPPAD_ASSERT_UNKNOWN( element < limit_ );
+		CPPAD_ASSERT_UNKNOWN( element < end_ );
 		size_t j  = element / n_bit_;
 		size_t k  = element - j * n_bit_;
 		Pack mask = one << k;
 		data_[ index * n_pack_ + j] |= mask;
 	}
 	// -----------------------------------------------------------------
-	/*! Get the next element from a specific set
+	/*! Begin retrieving elements from one of the sets.
 	
 	\param index
-	is the index for this set in the vector of sets.
-	We start with the first element of the set when one of the following
-	conditions holds:
-	\li 
-	If \a index is not equal its value on the previous call 
-	to \c next_element.
-	\li If \c resize was called after the previous call 
-	to \c next_element
-	
-	\return
-	is the next element in the set with the specified index.
-	If no such element exists, \c this->limit is returned.
+	is the index for the set that is going to be retrieved.
+	The elements of the set are retrieved in increasing order.
 
 	\par Checked Assertions
 	\li index  < n_set_
 	*/
-	size_t next_element(size_t index)
-	{	static Pack one(1);
-
-		// initialize element to search for in this set
-		size_t element;
+	void begin(size_t index)
+	{	// initialize element to search for in this set
 		CPPAD_ASSERT_UNKNOWN( index < n_set_ );
-		if( previous_index_ != index )
-		{	previous_index_ = index;
-			element         = 0; 
-		}
-		else if( previous_element_ == limit_ )
-			return limit_;
-		else	element         = previous_element_ + 1;
+		next_index_   = index;
+		next_element_ = 0; 
+	}
+	/*! Get the next element from the current retrieval set.
+	
+	\return
+	is the next element in the set with index
+	specified by the previous call to \c begin.
+	If no such element exists, \c this->end() is returned.
+	*/
+	size_t next_element(void)
+	{	static Pack one(1);
+		CPPAD_ASSERT_UNKNOWN( next_index_ < n_set_ );
+
+		if( next_element_ == end_ )
+			return end_;
 
 		// initialize packed data index
-		size_t j  = element / n_bit_;
+		size_t j  = next_element_ / n_bit_;
 
 		// initialize bit index
-		size_t k  = element - j * n_bit_;
+		size_t k  = next_element_ - j * n_bit_;
 
 		// search for next element of the set
-		Pack check = data_[ index * n_pack_ + j ];
-		while( element < limit_ )
+		Pack check = data_[ next_index_ * n_pack_ + j ];
+		while( next_element_ < end_ )
 		{	if( check & (one << k) )
-			{	previous_element_ = element;
-				return element;
+			{	next_element_++;
+				return next_element_ - 1;
 			}
-			element++;
+			next_element_++;
 			k++;
 			CPPAD_ASSERT_UNKNOWN( k <= n_bit_ );
 			if( k == n_bit_ )
 			{	k     = 0;
 				j++;
 				CPPAD_ASSERT_UNKNOWN( j < n_pack_ );
-				check = data_[ index * n_pack_ + j ];
+				check = data_[ next_index_ * n_pack_ + j ];
 			}
 		}
-		previous_element_ = limit_;
-		return limit_;
+		next_element_ = end_;
+		return end_;
 	}
 	// -----------------------------------------------------------------
 	/*! Assign the empty set to one of the sets.
@@ -316,13 +312,13 @@ public:
 	size_t n_set(void) const
 	{	return n_set_; }
 	// -----------------------------------------------------------------
-	/*! Fetch limit for this vector of sets object. 
+	/*! Fetch end for this vector of sets object. 
 	
 	\return
 	is the maximum element value plus one (the minimum element value is 0).
 	*/
-	size_t limit(void) const
-	{	return limit_; }
+	size_t end(void) const
+	{	return end_; }
 };
 
 CPPAD_END_NAMESPACE

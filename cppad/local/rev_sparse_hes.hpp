@@ -294,7 +294,7 @@ void RevSparseHes(
 	size_t n = ind_taddr.size();
 
 	CPPAD_ASSERT_KNOWN(
-		q == for_jac_sparsity.limit(),
+		q == for_jac_sparsity.end(),
 		"RevSparseHes: q (first argument) is not equal to its value"
 		" in the previous call to ForSparseJac with this ADFun object."
 	);
@@ -346,11 +346,12 @@ void RevSparseHes(
 			h[ i * n + j ] = false;
 
 		// set bits that are true
-		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.limit() == q );
-		i = rev_hes_sparsity.next_element(j + 1);
+		CPPAD_ASSERT_UNKNOWN( rev_hes_sparsity.end() == q );
+		rev_hes_sparsity.begin(j + 1);
+		i = rev_hes_sparsity.next_element();
 		while( i < q )
 		{	h[ i * n + j ] = true;
-			i = rev_hes_sparsity.next_element(j + 1);
+			i = rev_hes_sparsity.next_element();
 		}
 	}
 

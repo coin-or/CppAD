@@ -286,11 +286,12 @@ void ForSparseJac(
 		for(i = 0; i < p; i++) 
 			r[ i * n + j ] = false;
 
-		CPPAD_ASSERT_UNKNOWN( var_sparsity.limit() == p );
-		i = var_sparsity.next_element(j+1);
+		CPPAD_ASSERT_UNKNOWN( var_sparsity.end() == p );
+		var_sparsity.begin(j+1);
+		i = var_sparsity.next_element();
 		while( i < p )
 		{	r[ i * n + j ] = true;
-			i              = var_sparsity.next_element(j+1);
+			i              = var_sparsity.next_element();
 		}
 	}
 }

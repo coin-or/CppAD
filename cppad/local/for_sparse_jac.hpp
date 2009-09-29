@@ -226,7 +226,7 @@ pattern for.
 \param for_jac_sparsity
 the input value of \a for_jac_sparsity does not matter.
 On output, \a for_jac_sparsity.n_set() == \a total_num_var
-and \a for_jac_sparsity.limit() == \a q.
+and \a for_jac_sparsity.end() == \a q.
 It contains the forward sparsity pattern for all of the variables on the
 tape (given the sparsity pattern for the independent variables is \f$ R \f$).
 */
@@ -292,11 +292,12 @@ void ForSparseJac(
 		// set bits 
 		for(j = 0; j < q; j++)
 			s[ i * q + j ] = false;
-		CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.limit() == q );
-		j = for_jac_sparsity.next_element( dep_taddr[i] );
+		CPPAD_ASSERT_UNKNOWN( for_jac_sparsity.end() == q );
+		for_jac_sparsity.begin( dep_taddr[i] );
+		j = for_jac_sparsity.next_element();
 		while( j < q )
 		{	s[i * q + j ] = true;
-			j = for_jac_sparsity.next_element( dep_taddr[i] );
+			j = for_jac_sparsity.next_element();
 		}
 	}
 }
@@ -344,9 +345,9 @@ tape is stored in \c for_jac_sparse_pack__.
 In this case 
 \verbatim
 	for_jac_sparse_pack_.n_set() == total_num_var_
-	for_jac_sparse_pack_.limit() == q
+	for_jac_sparse_pack_.end() == q
 	for_jac_sparse_set_.n_set()  == 0
-	for_jac_sparse_set_.limit()  == 0
+	for_jac_sparse_set_.end()  == 0
 \endverbatim
 \n
 \n
@@ -356,9 +357,9 @@ tape is stored in \c for_jac_sparse_set__.
 In this case 
 \verbatim
 	for_jac_sparse_set_.n_set()   == total_num_var_
-	for_jac_sparse_set_.limit()   == q
+	for_jac_sparse_set_.end()   == q
 	for_jac_sparse_pack_.n_set()  == 0
-	for_jac_sparse_pack_.limit()  == 0
+	for_jac_sparse_pack_.end()  == 0
 \endverbatim
 */
 template <class Base>
