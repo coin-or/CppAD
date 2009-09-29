@@ -108,7 +108,11 @@ public:
 			CPPAD_TRACK_DEL_VEC(rec_text_);
 	}
 
-	/// Creating an operation sequence player from a recorder.
+	/*!  Creating an object that palys back an operation sequence.
+ 
+	\param rec
+	the object that was used to record the operation sequence.
+ 	*/
 	void operator=(const recorder<Base> &rec)
 	{	size_t i;
 

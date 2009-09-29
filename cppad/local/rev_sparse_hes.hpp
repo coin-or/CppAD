@@ -47,7 +47,7 @@ and a fixed $latex 1 \times m$$ matrix $latex S$$,
 the second partial of $latex S * F[ x + R * u ]$$
 with respect to $latex u$$ at $latex u = 0$$ and with respect to x
 $latex \[
-	H(x)  =  R^T * (S * F)^{(2)} ( x )
+	H(x)  =  R^T * (S * F)^{(2)} ( x ) * R
 \] $$
 where $latex (S * F)^{(2)} (x)$$ is the Hessian of the scalar
 valued function $latex S * F (x)$$.
@@ -87,7 +87,7 @@ The argument $italic q$$ has prototype
 $syntax%
 	size_t %q%
 %$$
-It specifies the number of columns in the Jacobian $latex J(x)$$. 
+It specifies the number of rows and columns in the Hessian $latex H(x)$$.
 It must be the same value as in the previous $xref/ForSparseJac/$$ call 
 $syntax%
 	%f%.ForSparseJac(%q%, %r%, %packed%)
@@ -205,8 +205,72 @@ $end
 */
 # include <algorithm>
 
-// BEGIN CppAD namespace
-namespace CppAD {
+CPPAD_BEGIN_NAMESPACE
+/*!
+\file rev_sparse_hes.hpp
+Reverse mode Hessian sparsity patterns.
+*/
+
+/*!
+Calculate Hessian sparsity patterns using reverse mode.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	h = f.RevSparseHes(q, s)
+\endverbatim
+
+\tparam Base
+is the base type for this recording.
+
+\tparam VectorBool
+is a simple vector with elements of type bool.
+
+\tparam VectorSet
+is either \c vector_pack or \c vector_set. 
+
+\param q
+is the value of \a q in the 
+by the previous call of the form 
+\verbatim
+	f.ForSparseJac(q, r, packed)
+\endverbatim
+The value \c r in this call is a sparsity pattern for the matrix \f$ R \f$.
+
+\param s
+is a vector with size \c m that specifies the sparsity pattern
+for the vector \f$ S \f$,
+where \c m is the number of dependent variables
+corresponding to the operation sequence stored in \a play. 
+
+\param h
+the input value of \a h must be a vector with size \c q*q.
+The input value of its elements does not matter.
+On output, \a h is the sparsity pattern for the matrix
+\f[
+	H(x) = R^T ( S * F)^{(2)} (x) * R
+\f]
+where \f$ F \f$ is the function corresponding to the operation sequence
+and \a x is any argument value.
+
+\param total_num_var
+is the total number of variables in this recording.
+
+\param dep_taddr
+maps dependendent variable index
+to the corresponding variable in the tape.
+
+\param ind_taddr
+maps independent variable index
+to the corresponding variable in the tape.
+
+\param play
+is the recording that defines the function we are computing the sparsity 
+pattern for.
+
+\param for_jac_sparsity
+is a  vector of sets containing the 
+the forward sparsity pattern for all of the variables on the tape. 
+*/
 
 template <class Base, class VectorBool, class VectorSet>
 void RevSparseHes(
@@ -296,6 +360,45 @@ void RevSparseHes(
 	return;
 }
 
+
+/*!
+User API for Hessian sparsity patterns using reverse mode.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	h = f.RevSparseHes(q, r, packed)
+\endverbatim
+
+\tparam Base
+is the base type for this recording.
+
+\tparam VectorBool
+is a simple vector with elements of type bool.
+
+\param q
+is the value of \a q in the 
+by the previous call of the form 
+\verbatim
+	f.ForSparseJac(q, r, packed)
+\endverbatim
+The value \c r in this call is a sparsity pattern for the matrix \f$ R \f$.
+
+\param s
+is a vector with size \c m that specifies the sparsity pattern
+for the vector \f$ S \f$,
+where \c m is the number of dependent variables
+corresponding to the operation sequence stored in \a play. 
+
+\return
+is a vector with size \c q*q.
+containing a sparsity pattern for the matrix
+\f[
+	H(x) = R^T ( S * F)^{(2)} (x) * R
+\f]
+where \f$ F \f$ is the function corresponding to the operation sequence
+and \a x is any argument value.
+*/
+
 template <class Base>
 template <class VectorBool>
 VectorBool ADFun<Base>::RevSparseHes(size_t q,  const VectorBool &s)
@@ -333,6 +436,5 @@ VectorBool ADFun<Base>::RevSparseHes(size_t q,  const VectorBool &s)
 	return h;
 }
 
-} // END CppAD namespace
-	
+CPPAD_END_NAMESPACE
 # endif

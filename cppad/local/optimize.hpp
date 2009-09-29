@@ -669,7 +669,6 @@ void optimize(
 		dep_taddr[i] = new_var[ dep_taddr[i] ];
 	}
 }
-CPPAD_END_NAMESPACE
 
 /*!
 Optimize a player object operation sequence
@@ -684,7 +683,7 @@ using AD< \a Base > and computations by this routine are done using type
 
 */
 template <class Base>
-void CppAD::ADFun<Base>::optimize(void)
+void ADFun<Base>::optimize(void)
 {	// place to store the optimized version of the recording
 	recorder<Base> rec;
 
@@ -750,4 +749,5 @@ void CppAD::ADFun<Base>::optimize(void)
 # endif
 }
 
+CPPAD_END_NAMESPACE
 # endif

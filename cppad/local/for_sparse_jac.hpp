@@ -166,10 +166,70 @@ It returns true if it succeeds and false otherwise.
 $end
 -----------------------------------------------------------------------------
 */
+CPPAD_BEGIN_NAMESPACE
 
-// BEGIN CppAD namespace
-namespace CppAD {
+/*!
+\file for_sparse_jac.hpp
+Forward mode Jacobian sparsity patterns.
+*/
 
+/*!
+Calculate Jacobian sparsity patterns using forward mode.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	s = f.ForSparseJac(q, r, packed)
+\endverbatim
+
+\tparam Base
+is the base type for this recording.
+
+\tparam VectorBool
+is a simple vector with elements of type bool.
+
+\tparam VectorSet
+is either \c vector_pack or \c vector_set. 
+
+\param q
+is the number of columns in the matrix \f$ R \f$.
+
+\param r
+is a sparsity pattern for the matrix \f$ R \f$.
+
+\param s
+the input value of \a s must be a vector with size \c m*q
+where \c m is the number of dependent variables
+corresponding to the operation sequence stored in \a play. 
+The input value of its elements does not matter.
+On output, the \a s is the sparsity pattern for the matrix
+\f[
+	J(x) = F^{(1)} (x) * R
+\f]
+where \f$ F \f$ is the function corresponding to the operation sequence
+and \a x is any argument value.
+
+\param total_num_var
+is the total number of variable in this recording.
+
+\param dep_taddr
+maps dependendent variable index
+to the corresponding variable in the tape.
+
+\param ind_taddr
+maps independent variable index
+to the corresponding variable in the tape.
+
+\param play
+is the recording that defines the function we are computing the sparsity 
+pattern for.
+
+\param for_jac_sparsity
+the input value of \a for_jac_sparsity does not matter.
+On output, \a for_jac_sparsity.n_set() == \a total_num_var
+and \a for_jac_sparsity.limit() == \a q.
+It contains the forward sparsity pattern for all of the variables on the
+tape (given the sparsity pattern for the independent variables is \f$ R \f$).
+*/
 template <class Base, class VectorBool, class VectorSet> 
 void ForSparseJac(
 	size_t                 q                , 
@@ -241,12 +301,72 @@ void ForSparseJac(
 	}
 }
 
+
+/*!
+User API for Jacobian sparsity patterns using forward mode.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	s = f.ForSparseJac(q, r, packed)
+\endverbatim
+
+\tparam Base
+is the base type for this recording.
+
+\tparam VectorBool
+is a simple vector with elements of type bool.
+
+\param q
+is the number of columns in the matrix \f$ R \f$.
+
+\param r
+is a sparsity pattern for the matrix \f$ R \f$.
+
+\param packed
+If \a packed is true, the type \c vector_pack is used for the calculations.
+Otherwise the type \c vector_set is used for the calculations.
+
+\return
+the return value \c s is a vector with size \c m*q
+where \c m is the number of dependent variables
+corresponding to the operation sequence stored in \c f. 
+The value of \a s is the sparsity pattern for the matrix
+\f[
+	J(x) = F^{(1)} (x) * R
+\f]
+where \f$ F \f$ is the function corresponding to the operation sequence
+and \a x is any argument value.
+
+\par Side Effects
+If \a packed is true,
+the forward sparsity pattern for all of the variables on the
+tape is stored in \c for_jac_sparse_pack__.
+In this case 
+\verbatim
+	for_jac_sparse_pack_.n_set() == total_num_var_
+	for_jac_sparse_pack_.limit() == q
+	for_jac_sparse_set_.n_set()  == 0
+	for_jac_sparse_set_.limit()  == 0
+\endverbatim
+\n
+\n
+If \a packed is false,
+the forward sparsity pattern for all of the variables on the
+tape is stored in \c for_jac_sparse_set__.
+In this case 
+\verbatim
+	for_jac_sparse_set_.n_set()   == total_num_var_
+	for_jac_sparse_set_.limit()   == q
+	for_jac_sparse_pack_.n_set()  == 0
+	for_jac_sparse_pack_.limit()  == 0
+\endverbatim
+*/
 template <class Base>
 template <class VectorBool>
 VectorBool ADFun<Base>::ForSparseJac(
-	size_t             q      , 
-	const VectorBool&  r      ,
-	bool               packed )
+	size_t             q             , 
+	const VectorBool&  r             ,
+	bool               packed        )
 {	size_t m = dep_taddr_.size();
 	VectorBool s( m * q );
 
@@ -283,6 +403,5 @@ VectorBool ADFun<Base>::ForSparseJac(
 	return s;
 }
 
-} // END CppAD namespace
-
+CPPAD_END_NAMESPACE
 # endif

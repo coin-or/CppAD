@@ -165,9 +165,63 @@ It returns true if it succeeds and false otherwise.
 $end
 -----------------------------------------------------------------------------
 */
+CPPAD_BEGIN_NAMESPACE
 
-// BEGIN CppAD namespace
-namespace CppAD {
+/*!
+\file rev_sparse_jac.hpp
+Reverse mode Jacobian sparsity patterns.
+*/
+
+/*!
+Calculate Jacobian sparsity patterns using reverse mode.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	s = f.RevSparseJac(q, r, packed)
+\endverbatim
+
+\tparam Base
+is the base type for this recording.
+
+\tparam VectorBool
+is a simple vector with elements of type bool.
+
+\tparam VectorSet
+is either \c vector_pack or \c vector_set. 
+
+\param p
+is the number of rows in the matrix \f$ S \f$.
+
+\param s
+is a sparsity pattern for the matrix \f$ S \f$.
+
+\param r
+the input value of \a r must be a vector with size \c p*n
+where \c n is the number of independent variables
+corresponding to the operation sequence stored in \a play. 
+The input value of its elements does not matter.
+On output, \a r is the sparsity pattern for the matrix
+\f[
+	J(x) = S * F^{(1)} (x)
+\f]
+where \f$ F \f$ is the function corresponding to the operation sequence
+and \a x is any argument value.
+
+\param total_num_var
+is the total number of variable in this recording.
+
+\param dep_taddr
+maps dependendent variable index
+to the corresponding variable in the tape.
+
+\param ind_taddr
+maps independent variable index
+to the corresponding variable in the tape.
+
+\param play
+is the recording that defines the function we are computing the sparsity 
+pattern for.
+*/
 
 template <class Base, class VectorBool, class VectorSet> 
 void ForSparseJac(
@@ -241,6 +295,41 @@ void ForSparseJac(
 	}
 }
 
+/*!
+User API for Jacobian sparsity patterns using reverse mode.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	s = f.RevSparseJac(q, r, packed)
+\endverbatim
+
+\tparam Base
+is the base type for this recording.
+
+\tparam VectorBool
+is a simple vector with elements of type bool.
+
+\param p
+is the number of rows in the matrix \f$ S \f$.
+
+\param s
+is a sparsity pattern for the matrix \f$ S \f$.
+
+\param packed
+If \a packed is true, the type \c vector_pack is used for the calculations.
+Otherwise the type \c vector_set is used for the calculations.
+
+\return
+the return value \c r is a vector with size \c p*n
+where \c n is the number of independent variables
+corresponding to the operation sequence stored in \c f. 
+The value of \a r is the sparsity pattern for the matrix
+\f[
+	J(x) = S * F^{(1)} (x)
+\f]
+where \f$ F \f$ is the function corresponding to the operation sequence
+and \a x is any argument value.
+*/
 template <class Base>
 template <class VectorBool>
 VectorBool ADFun<Base>::RevSparseJac(
@@ -275,7 +364,5 @@ VectorBool ADFun<Base>::RevSparseJac(
 	return r;
 }
 
-} // END CppAD namespace
-	
-
+CPPAD_END_NAMESPACE
 # endif

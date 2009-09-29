@@ -11,7 +11,15 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-list="
+# classes that have been completely documented
+class_list="
+	player
+	recorder
+	vector_pack
+	vector_set
+"
+# files that have been completely documented
+file_list="
 	abs_op.hpp
 	add_op.hpp
 	acos_op.hpp
@@ -27,6 +35,7 @@ list="
 	forward0sweep.hpp
 	forward_sweep.hpp
 	for_jac_sweep.hpp
+	for_sparse_jac.hpp
 	hash_code.hpp
 	load_op.hpp
 	log_op.hpp
@@ -41,6 +50,8 @@ list="
 	reverse_sweep.hpp
 	rev_hes_sweep.hpp
 	rev_jac_sweep.hpp
+	rev_sparse_hes.hpp
+	rev_sparse_jac.hpp
 	sin_op.hpp
 	sinh_op.hpp
 	sparse_binary_op.hpp
@@ -51,16 +62,26 @@ list="
 	vector_pack.hpp
 	vector_set.hpp
 "
-for name in $list
+# --------------------------------------------------------------------------
+for class in $class_list
 do
-	if [ ! -e "cppad/local/$name" ] && [ ! -e "cppad/$name" ]
+	if grep -i "warning:.*$class::" doxygen.log
 	then
-		echo "check_doxygen.sh: cannot find file $name"
+		echo "Unexpected doxygen error or warning for $file."
 		exit 1
 	fi
-	if grep -i "$name.*warning" doxygen.log
+done
+# --------------------------------------------------------------------------
+for file in $file_list
+do
+	if [ ! -e "cppad/local/$file" ] && [ ! -e "cppad/$file" ]
 	then
-		echo "Unexpected doxygen error or warning for $name."
+		echo "check_doxygen.sh: cannot find file $file"
+		exit 1
+	fi
+	if grep -i "$file.*warning" doxygen.log
+	then
+		echo "Unexpected doxygen error or warning for $file."
 		exit 1
 	fi
 done

@@ -65,6 +65,9 @@ public:
 	{ }
 	// -----------------------------------------------------------------
 	/*! Make use of copy constructor an error
+ 
+	\param v
+	vector that we are attempting to make a copy of.
  	*/
 	vector_pack(const vector_pack& v)
 	{	// Error: 

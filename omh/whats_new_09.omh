@@ -55,6 +55,11 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 09-29$$
+The documentation definition of the function $latex H(x)$$ in
+$cref/RevSparseHes/$$ was missing a factor of $latex R$$.
+This has been fixed.
+
 $head 09-28$$
 Changed $cref/RevSparseHes/$$ so that it uses a sparse
 representation when the corresponding call to 
