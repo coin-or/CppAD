@@ -47,8 +47,9 @@ PROGRAMS = $(noinst_PROGRAMS)
 am_adolc_OBJECTS = main.$(OBJEXT) link_ode.$(OBJEXT) ode.$(OBJEXT) \
 	link_det_lu.$(OBJEXT) link_det_minor.$(OBJEXT) \
 	link_poly.$(OBJEXT) link_sparse_hessian.$(OBJEXT) \
-	det_lu.$(OBJEXT) det_minor.$(OBJEXT) poly.$(OBJEXT) \
-	sparse_hessian.$(OBJEXT)
+	link_sparse_jacobian.$(OBJEXT) det_lu.$(OBJEXT) \
+	det_minor.$(OBJEXT) poly.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	sparse_jacobian.$(OBJEXT)
 adolc_OBJECTS = $(am_adolc_OBJECTS)
 adolc_LDADD = $(LDADD)
 adolc_DEPENDENCIES =
@@ -209,10 +210,12 @@ adolc_SOURCES = \
 	../link_det_minor.cpp \
 	../link_poly.cpp \
 	../link_sparse_hessian.cpp \
+	../link_sparse_jacobian.cpp \
 	det_lu.cpp \
 	det_minor.cpp \
 	poly.cpp \
-	sparse_hessian.cpp
+	sparse_hessian.cpp \
+	sparse_jacobian.cpp
 
 all: all-am
 
@@ -268,10 +271,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_poly.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_sparse_hessian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_sparse_jacobian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_jacobian.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -370,6 +375,20 @@ link_sparse_hessian.obj: ../link_sparse_hessian.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_sparse_hessian.cpp' object='link_sparse_hessian.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_sparse_hessian.obj `if test -f '../link_sparse_hessian.cpp'; then $(CYGPATH_W) '../link_sparse_hessian.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_sparse_hessian.cpp'; fi`
+
+link_sparse_jacobian.o: ../link_sparse_jacobian.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_sparse_jacobian.o -MD -MP -MF $(DEPDIR)/link_sparse_jacobian.Tpo -c -o link_sparse_jacobian.o `test -f '../link_sparse_jacobian.cpp' || echo '$(srcdir)/'`../link_sparse_jacobian.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_sparse_jacobian.Tpo $(DEPDIR)/link_sparse_jacobian.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_sparse_jacobian.cpp' object='link_sparse_jacobian.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_sparse_jacobian.o `test -f '../link_sparse_jacobian.cpp' || echo '$(srcdir)/'`../link_sparse_jacobian.cpp
+
+link_sparse_jacobian.obj: ../link_sparse_jacobian.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_sparse_jacobian.obj -MD -MP -MF $(DEPDIR)/link_sparse_jacobian.Tpo -c -o link_sparse_jacobian.obj `if test -f '../link_sparse_jacobian.cpp'; then $(CYGPATH_W) '../link_sparse_jacobian.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_sparse_jacobian.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_sparse_jacobian.Tpo $(DEPDIR)/link_sparse_jacobian.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_sparse_jacobian.cpp' object='link_sparse_jacobian.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_sparse_jacobian.obj `if test -f '../link_sparse_jacobian.cpp'; then $(CYGPATH_W) '../link_sparse_jacobian.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_sparse_jacobian.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

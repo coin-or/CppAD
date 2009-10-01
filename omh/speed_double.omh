@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -68,7 +68,8 @@ $contents%
 	speed/double/det_lu.cpp%
 	speed/double/ode.cpp%
 	speed/double/poly.cpp%
-	speed/double/sparse_hessian.cpp
+	speed/double/sparse_hessian.cpp%
+	speed/double/sparse_jacobian.cpp
 %$$
 
 $end

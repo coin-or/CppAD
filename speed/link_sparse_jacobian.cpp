@@ -11,51 +11,53 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin link_sparse_hessian$$
+$begin link_sparse_jacobian$$
 $spell
 	bool
 	CppAD
+	Jacobian
 $$
 
-$index link_sparse_hessian$$
+$index link_sparse_jacobian$$
 $index sparse, speed test$$
 $index speed, test sparse$$
 $index test, sparse speed$$
 
-$section Speed Testing Sparse Hessian$$
+$section Speed Testing Sparse Jacobian$$
 
 $head Prototype$$
-$codei%extern bool link_sparse_hessian(
+$codei%extern bool link_sparse_jacobian(
 	size_t                 %repeat%    ,
 	CppAD::vector<double> &%x%         ,
 	CppAD::vector<size_t> &%i%         ,
 	CppAD::vector<size_t> &%j%         , 
-	CppAD::vector<double> &%hessian%
+	CppAD::vector<double> &%jacobian%
 );
 %$$
 
 $head f$$
 Given a first index vector $latex i$$ and a second index vector $latex j$$,
 the corresponding function 
-$latex f : \R^n \rightarrow \R $$ is defined by $cref/sparse_evaluate/$$
+$latex g : \R^n \rightarrow \R^\ell $$ is defined by $cref/sparse_evaluate/$$
 and the index vectors $icode i$$ and $icode j$$.
-The non-zero entries in the Hessian of this function have 
-one of the following forms:
+The function $latex g(x)$$ is defined by
 $latex \[
-	\DD{f}{x[i[k]]}{x[i[k]]}
-	\; , \;
-	\DD{f}{x[i[k]]}{x[j[k]]}
-	\; , \;
-	\DD{f}{x[j[k]]}{x[i[k]]}
-	\; , \;
-	\DD{f}{x[j[k]]}{x[j[k]]}
+	g_k (x) = \D{f}{x_{i[k]}}
 \] $$
-for some \( k \) between zero and \( \ell-1 \).
-All the other terms of the Hessian are zero.
+The non-zero entries in the Jacobian of this function have the form
+$latex \[
+	\D{g_k}{x[j[k]]}
+\] $$
+or
+$latex \[
+	\D{g_k}{x[i[k]]}
+\] $$
+for some $latex k$$ between zero and $latex \ell-1 $$.
+All the other terms of the Jacobian are zero.
 
 $head repeat$$
 The argument $icode repeat$$ is the number of different functions
-$latex f(x)$$ that the Hessian is computed for.
+$latex g(x)$$ that the Jacobian is computed for.
 Each function corresponds to a randomly chosen index vectors, i.e.,
 for each repetition a random choice is made for
 $latex i[k]$$ and $latex j[k]$$ for $latex k = 0 , \ldots , \ell-1$$.
@@ -88,22 +90,23 @@ On output, it has been set the second index vector
 for the last repetition.
 All the elements of $icode i$$ must are between zero and $latex n-1$$.
 
-$head hessian$$
-The argument $icode hessian$$ is a vector with $latex n \times n$$ elements.
+$head jacobian$$
+The argument $icode jacobian$$ is a vector with $latex \ell \times n$$ elements.
 The input value of its elements does not matter. 
-The output value of its elements is the Hessian of the function $latex f(x)$$
+The output value of its elements is the Jacobian of the function $latex g(x)$$
 that corresponds to output values of $icode i$$, $icode j$$, and $icode x$$.
 To be more specific, for
-$latex k = 0 , \ldots , n-1$$,
+$latex k = 0 , \ldots , \ell - 1$$,
 $latex m = 0 , \ldots , n-1$$,
 $latex \[
-	\DD{f}{x[k]}{x[m]} (x) = hessian [ k * n + m ]
+	\D{g_k}{x[m]} (x) = jacobian [ k * \ell + m ]
 \] $$
 
 $subhead double$$
 In the case where $icode package$$ is $code double$$,
-only the first element of $icode hessian$$ is used and it is actually 
-the value of $latex f(x)$$ ($latex f^{(2)} (x)$$ is not computed).
+only the first $latex \ell$$ 
+elements of $icode jacobian$$ are used and they are set to
+the value of $latex g(x)$$ ($latex g'(x)$$ is not computed).
 
 $end 
 -----------------------------------------------------------------------------
@@ -113,59 +116,71 @@ $end
 # include <cppad/near_equal.hpp>
 
 
-extern bool link_sparse_hessian(
+extern bool link_sparse_jacobian(
 	size_t                     repeat     ,
 	CppAD::vector<double>      &x         ,
 	CppAD::vector<size_t>      &i         ,
 	CppAD::vector<size_t>      &j         , 
-	CppAD::vector<double>      &hessian
+	CppAD::vector<double>      &jacobian
 );
-bool available_sparse_hessian(void)
+bool available_sparse_jacobian(void)
 {	size_t n      = 10;
 	size_t repeat = 1;
 	size_t ell    = 3 * n;
 	CppAD::vector<double> x(n);
 	CppAD::vector<size_t> i(ell), j(ell); 
-	CppAD::vector<double> hessian(n * n);
+	CppAD::vector<double> jacobian(ell * n);
 
-	return link_sparse_hessian(repeat, x, i, j, hessian);
+	return link_sparse_jacobian(repeat, x, i, j, jacobian);
 }
-bool correct_sparse_hessian(bool is_package_double)
+bool correct_sparse_jacobian(bool is_package_double)
 {	size_t n      = 10;
 	size_t repeat = 1;
 	size_t ell    = 3 * n;
 	CppAD::vector<double> x(n);
 	CppAD::vector<size_t> i(ell), j(ell);
-	CppAD::vector<double> hessian(n * n);
+	CppAD::vector<double> jacobian(ell * n);
 
-	link_sparse_hessian(repeat, x, i, j, hessian);
+	link_sparse_jacobian(repeat, x, i, j, jacobian);
 
-	size_t m, size;
+	size_t order, size, m;
 	if( is_package_double)
-	{	m    = 0;  // check function value
-		size = 1;
+	{	order = 1;     // check g(x) using f'(x)
+		size  = n;
 	}
 	else
-	{	m = 2;     // check hessian value
-		size = n * n;
+	{	order = 2;     // check g'(x) using f''(x)
+		size  = n * n;
 	}
 	CppAD::vector<double> check(size);
-	CppAD::sparse_evaluate(x, i, j, m, check);
+	CppAD::sparse_evaluate(x, i, j, order, check);
 	bool ok = true;
 	size_t k;
-	for( k = 0; k < size; k++)
-		ok &= CppAD::NearEqual(check[k], hessian[k], 1e-10, 1e-10);
-
+	if( is_package_double )
+	{	for( k = 0; k < ell; k++)
+		{	double u = check[ i[k] ];
+			double v = jacobian[k];
+			ok &= CppAD::NearEqual(u, v, 1e-10, 1e-10);
+		}
+		return ok;
+	}
+	for(k = 0; k < ell; k++)
+	{	for(m = 0; m < n; m++)
+		{	double u = check[ i[k] * n + m ];
+			double v = jacobian[ k * n + m ];
+			ok &= CppAD::NearEqual(u, v, 1e-10, 1e-10);
+		}
+	}
 	return ok;
 }
-void speed_sparse_hessian(size_t n, size_t repeat)
+void speed_sparse_jacobian(size_t n, size_t repeat)
 {
 	size_t ell = 3 * n;
 	CppAD::vector<double> x(n);
 	CppAD::vector<size_t> i(ell), j(ell);
-	CppAD::vector<double> hessian(n * n);
+	CppAD::vector<double> jacobian(ell * n);
 
-	// note that cppad/sparse_hessian.cpp assumes that x.size() == size
-	link_sparse_hessian(repeat, x, i, j, hessian);
+	// note that cppad/sparse_jacobian.cpp assumes that x.size() == size
+	link_sparse_jacobian(repeat, x, i, j, jacobian);
 	return;
 }

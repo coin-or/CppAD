@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_EVALUATE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -42,11 +42,19 @@ $latex f(x)$$, $latex f^{(1)} (x)$$, or $latex f^{(2)} (x)$$
 where the Hessian $latex f^{(2)} (x)$$ is sparse.
 The function $latex f : \R^n \rightarrow \R$$ depends on the 
 index vectors $icode i$$ and $icode j$$. 
-The only non-zero entries in the Hessian of this function have the form
-\[
-	\DD{f}{x[k]]}{x[j[k]}
-\]
+The non-zero entries in the Hessian of this function have 
+one of the following forms:
+$latex \[
+	\DD{f}{x[i[k]]}{x[i[k]]}
+	\; , \;
+	\DD{f}{x[i[k]]}{x[j[k]]}
+	\; , \;
+	\DD{f}{x[j[k]]}{x[i[k]]}
+	\; , \;
+	\DD{f}{x[j[k]]}{x[j[k]]}
+\] $$
 for some \( k \) between zero and \( \ell-1 \).
+All the other terms of the Hessian are zero.
 
 $head Inclusion$$
 The template function $code sparse_evaluate$$ 

@@ -201,7 +201,7 @@ the input value of \a s must be a vector with size \c m*q
 where \c m is the number of dependent variables
 corresponding to the operation sequence stored in \a play. 
 The input value of its elements does not matter.
-On output, the \a s is the sparsity pattern for the matrix
+On output, \a s is the sparsity pattern for the matrix
 \f[
 	J(x) = F^{(1)} (x) * R
 \f]

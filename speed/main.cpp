@@ -55,6 +55,7 @@ $spell
 	CppAD
 	det
 	lu
+	Jacobian
 $$
 
 $index cppad, speed test$$
@@ -105,7 +106,8 @@ $cref/det_minor/link_det_minor/$$,
 $cref/det_lu/link_det_lu/$$,
 $cref/ode/link_ode/$$,
 $cref/poly/link_poly/$$,
-$cref/sparse_hessian/link_sparse_hessian/$$.
+$cref/sparse_hessian/link_sparse_hessian/$$,
+$cref/sparse_jacobian/link_sparse_jacobian/$$.
 
 $subhead correct$$
 If $icode test$$ is equal to $code correct$$,
@@ -177,6 +179,7 @@ $childtable%
 	speed/link_det_minor.cpp%
 	speed/link_poly.cpp%
 	speed/link_sparse_hessian.cpp%
+	speed/link_sparse_jacobian.cpp%
 	speed/link_ode.cpp
 %$$
 
@@ -191,9 +194,10 @@ $end
 
 CPPAD_DECLARE_SPEED(det_lu);
 CPPAD_DECLARE_SPEED(det_minor);
+CPPAD_DECLARE_SPEED(ode);
 CPPAD_DECLARE_SPEED(poly);
 CPPAD_DECLARE_SPEED(sparse_hessian);
-CPPAD_DECLARE_SPEED(ode);
+CPPAD_DECLARE_SPEED(sparse_jacobian);
 
 bool   global_retape;
 bool   global_optimize;
@@ -269,6 +273,7 @@ int main(int argc, char *argv[])
 		"ode",
 		"poly",
 		"sparse_hessian",
+		"sparse_jacobian",
 		"speed"
 	};
 	const size_t n_test  = sizeof(test) / sizeof(test[0]);
@@ -278,7 +283,8 @@ int main(int argc, char *argv[])
 	const size_t test_ode            = 3;
 	const size_t test_poly           = 4;
 	const size_t test_sparse_hessian = 5;
-	const size_t test_speed          = 6;
+	const size_t test_sparse_jacobian= 6;
+	const size_t test_speed          = 7;
 	assert( n_test == test_speed+1 );
 
 	size_t i;
@@ -306,10 +312,10 @@ int main(int argc, char *argv[])
 	if( error )
 	{	cout << "usage: ./" 
 		     << AD_PACKAGE << " test seed option_list" << endl;
-		cout << "test choices: " << test[0];
-		for(i = 1; i < n_test; i++)
-			cout << ", " << test[i];
-		cout << "." << endl << "seed choices: ";
+		cout << "test choices: " << endl;
+		for(i = 0; i < n_test; i++)
+			cout << "\t" << test[i] << endl;
+		cout << "seed choices: ";
 		cout << "a positive integer used as a random seed." << endl;
 		cout << "option choices: ";
 		cout << " \"retape\", \"optimize\"." << endl << endl;
@@ -326,12 +332,14 @@ int main(int argc, char *argv[])
 	CppAD::vector<size_t> size_ode(n_size);
 	CppAD::vector<size_t> size_poly(n_size);
 	CppAD::vector<size_t> size_sparse_hessian(n_size);
+	CppAD::vector<size_t> size_sparse_jacobian(n_size);
 	for(i = 0; i < n_size; i++) 
 	{	size_det_lu[i]      = 3 * i + 1;
 		size_det_minor[i]   = i + 1;
 		size_ode[i]         = i + 1;
 		size_poly[i]        = 8 * i + 1;
-		size_sparse_hessian[i] = 10 * (i + 1);
+		size_sparse_hessian[i]  = 30 * (i + 1);
+		size_sparse_jacobian[i] = 30 * (i + 1);
 	}
 # ifndef NDEBUG
 	size_t base_count = CPPAD_TRACK_COUNT();
@@ -355,6 +363,9 @@ int main(int argc, char *argv[])
 		);
 		if( available_sparse_hessian() ) ok &= run_correct(
 			correct_sparse_hessian, "sparse_hessian"         
+		);
+		if( available_sparse_jacobian() ) ok &= run_correct(
+			correct_sparse_jacobian, "sparse_jacobian"         
 		);
 		// summarize results
 		assert( ok || (Run_error_count > 0) );
@@ -383,7 +394,10 @@ int main(int argc, char *argv[])
 		speed_poly,      size_poly,      "poly"
 		);
 		if( available_sparse_hessian() ) Run_speed(
-		speed_sparse_hessian,  size_sparse_hessian,   "sparse_hessian"
+		speed_sparse_hessian,  size_sparse_hessian,  "sparse_hessian"
+		);
+		if( available_sparse_jacobian() ) Run_speed(
+		speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
 		);
 		ok = true;
 		break;
@@ -442,6 +456,19 @@ int main(int argc, char *argv[])
 		ok &= run_correct(correct_sparse_hessian, "sparse_hessian");
 		Run_speed(
 		speed_sparse_hessian, size_sparse_hessian,  "sparse_hessian");
+		break;
+		// ---------------------------------------------------------
+
+		case test_sparse_jacobian:
+		if( ! available_sparse_jacobian() )
+		{	cout << AD_PACKAGE << ": test " << argv[1] 
+			     << " not available" << endl; 
+			exit(1);
+		}
+		ok &= run_correct(correct_sparse_jacobian, "sparse_jacobian");
+		Run_speed(
+		speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
+		);
 		break;
 		// ---------------------------------------------------------
 		
