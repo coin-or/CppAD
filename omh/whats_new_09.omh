@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_09$$
 $spell
+	Microsoft
 	retape
 	isnan
 	atan
@@ -54,6 +55,14 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
+
+$head 10-03$$
+The Microsoft Visual Studio project files for 
+$cref/examples and testing/InstallWindows/Examples and Testing/$$
+and for
+$cref/more correctness testing/InstallWindows/More Correctness Testing/$$
+were not including some new tests in their builds.
+This has been fixed.
 
 $head 09-30$$
 Added the $cref/cppad_sparse_jacobian.cpp/$$ speed test

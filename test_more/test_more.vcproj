@@ -222,6 +222,9 @@
 				RelativePath=".\ode_err_control.cpp">
 			</File>
 			<File
+				RelativePath=".\optimize.cpp">
+			</File>
+			<File
 				RelativePath=".\poly.cpp">
 			</File>
 			<File

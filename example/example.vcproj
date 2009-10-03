@@ -123,6 +123,12 @@
 				RelativePath=".\acos.cpp">
 			</File>
 			<File
+				RelativePath=".\ad_fun.cpp">
+			</File>
+			<File
+				RelativePath=".\ad_in_c.cpp">
+			</File>
+			<File
 				RelativePath=".\add.cpp">
 			</File>
 			<File
@@ -325,6 +331,9 @@
 			</File>
 			<File
 				RelativePath=".\ode_taylor.cpp">
+			</File>
+			<File
+				RelativePath=".\optimize.cpp">
 			</File>
 			<File
 				RelativePath=".\output.cpp">
