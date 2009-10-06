@@ -37,7 +37,7 @@ using AD< \a Base > and computations by this routine are done using type
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c vector_pack or \c vector_set.
+\c sparse_pack or \c sparse_set.
 
 \param n
 is the number of independent variables on the tape.

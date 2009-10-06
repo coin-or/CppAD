@@ -35,7 +35,7 @@ where op is a C++ binary unary operator and both x and y are variables.
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c vector_pack or \c vector_set.
+\c sparse_pack or \c sparse_set.
 
 \param i_z
 variable index corresponding to the result for this operation; 
@@ -114,7 +114,7 @@ and it uses them to compute the sparsity patterns for
 
 \tparam Vector_set
 is the type used for vectors of sets. It can be either
-\c vector_pack or \c vector_set.
+\c sparse_pack or \c sparse_set.
 
 \param i_z
 variable index corresponding to the result for this operation; 

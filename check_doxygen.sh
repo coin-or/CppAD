@@ -15,8 +15,8 @@
 class_list="
 	player
 	recorder
-	vector_pack
-	vector_set
+	sparse_pack
+	sparse_set
 "
 # files that have been completely documented
 file_list="
@@ -59,8 +59,8 @@ file_list="
 	sqrt_op.hpp
 	store_op.hpp
 	sub_op.hpp
-	vector_pack.hpp
-	vector_set.hpp
+	sparse_pack.hpp
+	sparse_set.hpp
 "
 # --------------------------------------------------------------------------
 for class in $class_list

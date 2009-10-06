@@ -108,12 +108,12 @@ private:
 	/// packed results of the forward mode Jacobian sparsity calculations
 	/// (\c for_jac_sparse_pack_.n_set() != 0  implies
 	/// for_jac_sparse_set_.n_set() == 0)
-	vector_pack      for_jac_sparse_pack_;
+	sparse_pack      for_jac_sparse_pack_;
 
 	/// set results of the forward mode Jacobian sparsity calculations
 	/// (\c for_jac_sparse_set_.n_set() != 0  implies
 	/// for_jac_sparse_pack_.n_set() == 0)
-	vector_set       for_jac_sparse_set_;
+	sparse_set       for_jac_sparse_set_;
 
 	/// change the operation sequence corresponding to this object
 	template <typename ADvector>

@@ -186,8 +186,8 @@ is the base type for this recording.
 \tparam VectorBool
 is a simple vector with elements of type bool.
 
-\tparam VectorSet
-is either \c vector_pack or \c vector_set. 
+\tparam Sparsity
+is either \c sparse_pack or \c sparse_set. 
 
 \param p
 is the number of rows in the matrix \f$ S \f$.
@@ -223,7 +223,7 @@ is the recording that defines the function we are computing the sparsity
 pattern for.
 */
 
-template <class Base, class VectorBool, class VectorSet> 
+template <class Base, class VectorBool, class Sparsity> 
 void ForSparseJac(
 	size_t                 p                , 
 	const VectorBool&      s                ,
@@ -255,7 +255,7 @@ void ForSparseJac(
 	);
 
 	// vector of sets that will hold the results
-	VectorSet      var_sparsity;
+	Sparsity       var_sparsity;
 	var_sparsity.resize(total_num_var, p);
 
 	// The sparsity pattern corresponding to the dependent variables
@@ -317,8 +317,8 @@ is the number of rows in the matrix \f$ S \f$.
 is a sparsity pattern for the matrix \f$ S \f$.
 
 \param packed
-If \a packed is true, the type \c vector_pack is used for the calculations.
-Otherwise the type \c vector_set is used for the calculations.
+If \a packed is true, the type \c sparse_pack is used for the calculations.
+Otherwise the type \c sparse_set is used for the calculations.
 
 \return
 the return value \c r is a vector with size \c p*n
@@ -341,7 +341,7 @@ VectorBool ADFun<Base>::RevSparseJac(
 	VectorBool r( p * n );
 
 	if( packed )
-	{	CppAD::ForSparseJac<Base, VectorBool, vector_pack>(
+	{	CppAD::ForSparseJac<Base, VectorBool, sparse_pack>(
 			p                , 
 			s                ,
 			r                ,
@@ -352,7 +352,7 @@ VectorBool ADFun<Base>::RevSparseJac(
 		);
 	}
 	else
-	{	CppAD::ForSparseJac<Base, VectorBool, vector_set>(
+	{	CppAD::ForSparseJac<Base, VectorBool, sparse_set>(
 			p                , 
 			s                ,
 			r                ,

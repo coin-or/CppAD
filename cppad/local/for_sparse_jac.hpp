@@ -187,8 +187,8 @@ is the base type for this recording.
 \tparam VectorBool
 is a simple vector with elements of type bool.
 
-\tparam VectorSet
-is either \c vector_pack or \c vector_set. 
+\tparam Sparsity
+is either \c sparse_pack or \c sparse_set. 
 
 \param q
 is the number of columns in the matrix \f$ R \f$.
@@ -230,7 +230,7 @@ and \a for_jac_sparsity.end() == \a q.
 It contains the forward sparsity pattern for all of the variables on the
 tape (given the sparsity pattern for the independent variables is \f$ R \f$).
 */
-template <class Base, class VectorBool, class VectorSet> 
+template <class Base, class VectorBool, class Sparsity> 
 void ForSparseJac(
 	size_t                 q                , 
 	const VectorBool&      r                ,
@@ -239,7 +239,7 @@ void ForSparseJac(
 	CppAD::vector<size_t>& dep_taddr        ,
 	CppAD::vector<size_t>& ind_taddr        ,
 	CppAD::player<Base>&   play             ,
-	VectorSet&             for_jac_sparsity )
+	Sparsity&              for_jac_sparsity )
 {
 	// temporary indices
 	size_t i, j;
@@ -324,8 +324,8 @@ is the number of columns in the matrix \f$ R \f$.
 is a sparsity pattern for the matrix \f$ R \f$.
 
 \param packed
-If \a packed is true, the type \c vector_pack is used for the calculations.
-Otherwise the type \c vector_set is used for the calculations.
+If \a packed is true, the type \c sparse_pack is used for the calculations.
+Otherwise the type \c sparse_set is used for the calculations.
 
 \return
 the return value \c s is a vector with size \c m*q

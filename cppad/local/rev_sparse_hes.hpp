@@ -225,8 +225,8 @@ is the base type for this recording.
 \tparam VectorBool
 is a simple vector with elements of type bool.
 
-\tparam VectorSet
-is either \c vector_pack or \c vector_set. 
+\tparam Sparsity
+is either \c sparse_pack or \c sparse_set. 
 
 \param q
 is the value of \a q in the 
@@ -272,7 +272,7 @@ is a  vector of sets containing the
 the forward sparsity pattern for all of the variables on the tape. 
 */
 
-template <class Base, class VectorBool, class VectorSet>
+template <class Base, class VectorBool, class Sparsity>
 void RevSparseHes(
 	size_t                    q                 ,
 	const VectorBool&         s                 ,
@@ -281,7 +281,7 @@ void RevSparseHes(
 	CppAD::vector<size_t>&    dep_taddr         ,
 	CppAD::vector<size_t>&    ind_taddr         ,
 	CppAD::player<Base>&      play              ,
-	VectorSet&                for_jac_sparsity  )
+	Sparsity&                 for_jac_sparsity  )
 {
 	// temporary indices
 	size_t i, j;
@@ -317,7 +317,7 @@ void RevSparseHes(
 
 
 	// vector of sets that will hold packed reverse Hessain values
-	VectorSet      rev_hes_sparsity;
+	Sparsity       rev_hes_sparsity;
 	rev_hes_sparsity.resize(total_num_var, q);
 
 	// compute the Hessian sparsity patterns
@@ -408,7 +408,7 @@ VectorBool ADFun<Base>::RevSparseHes(size_t q,  const VectorBool &s)
 
 	if( for_jac_sparse_pack_.n_set() > 0 )
 	{	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_set_.n_set() == 0 );
-		// use vector_pack for the calculation
+		// use sparse_pack for the calculation
 		CppAD::RevSparseHes( 
 			q                 ,
 			s                 ,
@@ -422,7 +422,7 @@ VectorBool ADFun<Base>::RevSparseHes(size_t q,  const VectorBool &s)
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( for_jac_sparse_pack_.n_set() == 0 );
-		// use vector_pack for the calculation
+		// use sparse_pack for the calculation
 		CppAD::RevSparseHes( 
 			q                    ,
 			s                    ,
