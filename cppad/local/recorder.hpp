@@ -292,6 +292,13 @@ size_t recorder<Base>::PutPar(const Base &par)
 	static bool     init = true;
 	size_t          i;
 	unsigned short  code;
+	CPPAD_ASSERT_UNKNOWN( 
+		std::numeric_limits<unsigned short>::max()
+		==
+		(CPPAD_HASH_TABLE_SIZE-1)
+	);
+	CPPAD_ASSERT_UNKNOWN( num_rec_par_ <= len_rec_par_ );
+
 	if( init )
 	{	// initialize hash table
 		for(i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
@@ -299,11 +306,8 @@ size_t recorder<Base>::PutPar(const Base &par)
 		init = false;
 	}
 	
-	CPPAD_ASSERT_UNKNOWN( num_rec_par_ <= len_rec_par_ );
-	
 	// get hash code for this value
 	code = hash_code(par);
-	CPPAD_ASSERT_UNKNOWN( code < CPPAD_HASH_TABLE_SIZE );
 
 	// If we have a match, return the parameter index
 	i = hash_table[code];
