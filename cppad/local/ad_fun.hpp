@@ -76,8 +76,8 @@ template <class Base>
 class ADFun {
 public:
 // ------------------------------------------------------------
+// Private member variables
 private:
-
 	/// debug checking number of comparision operations that changed
 	size_t compare_change_;
 
@@ -115,10 +115,70 @@ private:
 	/// for_jac_sparse_pack_.n_set() == 0)
 	sparse_set       for_jac_sparse_set_;
 
+// ------------------------------------------------------------
+// Private member functions
+
 	/// change the operation sequence corresponding to this object
 	template <typename ADvector>
 	void Dependent(ADTape<Base> *tape, const ADvector &y);
 
+	// ------------------------------------------------------------
+	// vector of bool version of ForSparseJac
+	// (see doxygen in for_sparse_jac.hpp)
+	template <class VectorSet>
+	void ForSparseJacCase(
+		bool               set_type  ,
+		size_t             q         ,
+		const VectorSet&   r         ,  
+		VectorSet&         s
+	);
+	// vector of std::set<size_t> version of ForSparseJac
+	// (see doxygen in for_sparse_jac.hpp)
+	template <class VectorSet>
+	void ForSparseJacCase(
+		const std::set<size_t>&  set_type  ,
+		size_t                   q         ,
+		const VectorSet&         r         ,  
+		VectorSet&               s
+	);
+	// ------------------------------------------------------------
+	// vector of bool version of RevSparseJac
+	// (see doxygen in rev_sparse_jac.hpp)
+	template <class VectorSet>
+	void RevSparseJacCase(
+		bool               set_type  ,
+		size_t             p         ,
+		const VectorSet&   s         ,  
+		VectorSet&         r
+	);
+	// vector of std::set<size_t> version of RevSparseJac
+	// (see doxygen in rev_sparse_jac.hpp)
+	template <class VectorSet>
+	void RevSparseJacCase(
+		const std::set<size_t>&  set_type  ,
+		size_t                   p         ,
+		const VectorSet&         s         ,  
+		VectorSet&               r
+	);
+	// ------------------------------------------------------------
+	// vector of bool version of RevSparseHes
+	// (see doxygen in rev_sparse_hes.hpp)
+	template <class VectorSet>
+	void RevSparseHesCase(
+		bool               set_type  ,
+		size_t             q         ,
+		const VectorSet&   s         ,  
+		VectorSet&         h
+	);
+	// vector of std::set<size_t> version of RevSparseHes
+	// (see doxygen in rev_sparse_hes.hpp)
+	template <class VectorSet>
+	void RevSparseHesCase(
+		const std::set<size_t>&  set_type  ,
+		size_t                   q         ,
+		const VectorSet&         s         ,  
+		VectorSet&               h
+	);
 // ------------------------------------------------------------
 public:
 	/// default constructor
@@ -154,20 +214,22 @@ public:
 
 	// forward mode Jacobian sparsity 
 	// (see doxygen documentation in for_sparse_jac.hpp)
-	template <typename VectorBool>
-	VectorBool ForSparseJac(
-		size_t q, const VectorBool &Px, bool packed = true
+	template <typename VectorSet>
+	VectorSet ForSparseJac(
+		size_t q, const VectorSet &r
 	);
 	// reverse mode Jacobian sparsity 
-	// (see doxygen documentation in rev_sparse_hes.hpp)
-	template <typename VectorBool>
-	VectorBool RevSparseJac(
-		size_t q, const VectorBool &Py, bool packed = true
+	// (see doxygen documentation in rev_sparse_jac.hpp)
+	template <typename VectorSet>
+	VectorSet RevSparseJac(
+		size_t q, const VectorSet &s
 	);
-	/// reverse mode Hessian sparsity 
-	template <typename VectorBool>
-	VectorBool RevSparseHes(size_t q, const VectorBool &Py);
-
+	// reverse mode Hessian sparsity 
+	// (see doxygen documentation in rev_sparse_hes.hpp)
+	template <typename VectorSet>
+	VectorSet RevSparseHes(
+		size_t q, const VectorSet &s
+	);
 	/// does this AD operation sequence use VecAD<Base>::reference operands
 	bool use_VecAD(void) const
 	{	return play_.num_rec_vecad_ind() > 0; }

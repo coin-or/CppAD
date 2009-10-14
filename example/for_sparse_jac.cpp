@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -34,11 +34,13 @@ $end
 */
 // BEGIN PROGRAM
 
+# include <set>
 # include <cppad/cppad.hpp>
+
 namespace { // -------------------------------------------------------------
-// define the template function ForSparseJacCases<Vector> in empty namespace
-template <typename Vector> 
-bool ForSparseJacCases(void)
+// define the template function BoolCases<Vector> 
+template <typename Vector>  // vector class, elements of type bool
+bool BoolCases(void)
 {	bool ok = true;
 	using CppAD::AD;
 
@@ -84,6 +86,67 @@ bool ForSparseJacCases(void)
 
 	return ok;
 }
+// define the template function SetCases<Vector> 
+template <typename Vector>  // vector class, elements of type std::set<size_t>
+bool SetCases(void)
+{	bool ok = true;
+	using CppAD::AD;
+
+	// domain space vector
+	size_t n = 2; 
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	X[0] = 0.; 
+	X[1] = 1.;
+
+	// declare independent variables and start recording
+	CppAD::Independent(X);
+
+	// range space vector
+	size_t m = 3;
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	Y[0] = X[0];
+	Y[1] = X[0] * X[1];
+	Y[2] = X[1];
+
+	// create f: X -> Y and stop tape recording
+	CppAD::ADFun<double> f(X, Y);
+
+	// sparsity pattern for the identity matrix
+	Vector r(n);
+	size_t i;
+	for(i = 0; i < n; i++)
+	{	assert( r[i].empty() );
+		r[i].insert(i);
+	}
+
+	// sparsity pattern for F'(x)
+	Vector s(m);
+	s = f.ForSparseJac(n, r);
+
+	// an interator to a standard set
+	std::set<size_t>::iterator itr;
+	bool found;
+
+	// Y[0] does     depend on X[0]
+	found = s[0].find(0) != s[0].end();  ok &= ( found == true );  
+
+	// Y[0] does not depend on X[1]
+	found = s[0].find(1) != s[0].end();  ok &= ( found == false ); 
+
+	// Y[1] does     depend on X[0]
+	found = s[1].find(0) != s[1].end();  ok &= ( found == true );  
+
+	// Y[1] does     depend on X[1]
+	found = s[1].find(1) != s[1].end();  ok &= ( found == true );  
+
+	// Y[2] does not depend on X[0]
+	found = s[2].find(0) != s[2].end();  ok &= ( found == false );  
+
+	// Y[2] does     depend on X[1]
+	found = s[2].find(1) != s[2].end();  ok &= ( found == true );  
+
+	return ok;
+}
 } // End empty namespace
 # include <vector>
 # include <valarray>
@@ -91,10 +154,17 @@ bool ForSparseJac(void)
 {	bool ok = true;
 	// Run with Vector equal to four different cases
 	// all of which are Simple Vectors with elements of type bool.
-	ok &= ForSparseJacCases< CppAD::vectorBool     >();
-	ok &= ForSparseJacCases< CppAD::vector  <bool> >();
-	ok &= ForSparseJacCases< std::vector    <bool> >(); 
-	ok &= ForSparseJacCases< std::valarray  <bool> >(); 
+	ok &= BoolCases< CppAD::vectorBool     >();
+	ok &= BoolCases< CppAD::vector  <bool> >();
+	ok &= BoolCases< std::vector    <bool> >(); 
+	ok &= BoolCases< std::valarray  <bool> >(); 
+
+	// Run with Vector equal to three different cases all of which are 
+	// Simple Vectors with elements of type std::set<size_t>
+	typedef std::set<size_t> set;
+	ok &= SetCases< CppAD::vector  <set> >();
+	ok &= SetCases< std::vector    <set> >(); 
+	ok &= SetCases< std::valarray  <set> >(); 
 
 	return ok;
 }

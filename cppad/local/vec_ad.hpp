@@ -151,8 +151,8 @@ AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$,
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ calculations
 ($xref/Sparse/$$)
-are only valid for the current independent variable values,
-instead of valid for all independent variables.
+are less efficient because the dependence of different
+elements of the vector cannot be separated.
 
 $lend
 

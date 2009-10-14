@@ -70,7 +70,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace { // Begin empty namespace
 
-bool case_one(bool packed)
+bool case_one()
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -148,6 +148,7 @@ bool case_one(bool packed)
 	// create function object F : X -> Y
 	ADFun<double> F(X, Y);
 
+	// ---------------------------------------------------------
 	// dependency matrix for the identity function W(x) = x
 	CPPAD_TEST_VECTOR< bool > Px(n * n);
 	size_t i, j;
@@ -159,7 +160,7 @@ bool case_one(bool packed)
 
 	// evaluate the dependency matrix for F(X(x))
 	CPPAD_TEST_VECTOR< bool > Py(m * n);
-	Py = F.ForSparseJac(n, Px, packed);
+	Py = F.ForSparseJac(n, Px);
 
 	// check values
 	for(i = 0; i < m; i++)
@@ -167,10 +168,31 @@ bool case_one(bool packed)
 			ok &= (Py[i * n + j] == Check[i * n + j]);
 	}	
 
+	// ---------------------------------------------------------
+	// dependency matrix for the identity function W(x) = x
+	CPPAD_TEST_VECTOR< std::set<size_t> > Sx(n);
+	for(i = 0; i < n; i++)
+	{	assert( Sx[i].empty() );
+		Sx[i].insert(i);
+	}
+
+	// evaluate the dependency matrix for F(X(x))
+	CPPAD_TEST_VECTOR< std::set<size_t> > Sy(m);
+	Sy = F.ForSparseJac(n, Sx);
+
+	// check values
+	bool found;
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < n; j++)
+		{	found = Sy[i].find(j) != Sy[i].end();
+			ok &= (found == Check[i * n + j]);
+		}
+	}	
+
 	return ok;
 }
 
-bool case_two(bool packed)
+bool case_two()
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -234,6 +256,7 @@ bool case_two(bool packed)
 	// create function object F : X -> Y
 	ADFun<double> F(X, Y);
 
+	// -----------------------------------------------------------------
 	// dependency matrix for the identity function W(x) = x
 	CPPAD_TEST_VECTOR< bool > Px(n * n);
 	size_t i, j;
@@ -245,12 +268,33 @@ bool case_two(bool packed)
 
 	// evaluate the dependency matrix for F(X(x))
 	CPPAD_TEST_VECTOR< bool > Py(m * n);
-	Py = F.ForSparseJac(n, Px, packed);
+	Py = F.ForSparseJac(n, Px);
 
 	// check values
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Py[i * n + j] == Check[i * n + j]);
+	}	
+
+	// ---------------------------------------------------------
+	// dependency matrix for the identity function W(x) = x
+	CPPAD_TEST_VECTOR< std::set<size_t> > Sx(n);
+	for(i = 0; i < n; i++)
+	{	assert( Sx[i].empty() );
+		Sx[i].insert(i);
+	}
+
+	// evaluate the dependency matrix for F(X(x))
+	CPPAD_TEST_VECTOR< std::set<size_t> > Sy(m);
+	Sy = F.ForSparseJac(n, Sx);
+
+	// check values
+	bool found;
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < n; j++)
+		{	found = Sy[i].find(j) != Sy[i].end();
+			ok &= (found == Check[i * n + j]);
+		}
 	}	
 
 	return ok;
@@ -261,11 +305,8 @@ bool case_two(bool packed)
 bool for_sparse_jac(void)
 {	bool ok = true;
 
-	ok &= case_one(true);
-	ok &= case_two(true);
-
-	ok &= case_one(false);
-	ok &= case_two(false);
+	ok &= case_one();
+	ok &= case_two();
 
 	return ok;
 }

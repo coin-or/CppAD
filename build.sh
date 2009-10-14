@@ -447,12 +447,13 @@ then
 	echo "rm doxygen.$$"
 	if ! rm doxygen.$$
 	then
-		echo "Error: cannot remove doxygen.err"
+		echo "Error: cannot remove doxygen.$$"
 		exit 1
 	fi
 	if ! ./check_doxygen.sh
 	then
-		echo "Warnings of doxygen output."
+		dir=`pwd`
+		echo "Error: check_doxygen.sh failed; see $dir/doxygen.log."
 		exit 1
 	fi
 	#
@@ -592,15 +593,29 @@ then
 		done
 	done
 	# Test developer documentation ---------------------------------------
-	echo "doxygen doxyfile >& doxygen.log"
-	if ! doxygen doxyfile >& doxygen.log
+	# avoid warning in mid sentence of other log output by separating them
+	echo "doxygen doxyfile 1> doxygen.log 2> doxygen.$$"
+	if ! doxygen doxyfile 1> doxygen.log 2> doxygen.$$
 	then
-		echo "Error: doxygen doxyfile"
+		echo "Error: during doxygen"
+		exit 1
+	fi
+	echo "cat doxygen.$$ >> doxygen.log"
+	if ! cat doxygen.$$ >> doxygen.log
+	then
+		echo "Error: cannot add errors and warnings to doxygen.log"
+		exit 1
+	fi
+	echo "rm doxygen.$$"
+	if ! rm doxygen.$$
+	then
+		echo "Error: cannot remove doxygen.$$"
 		exit 1
 	fi
 	if ! ./check_doxygen.sh
 	then
-		echo "Warnings of doxygen output; see doxygen.log."
+		dir=`pwd`
+		echo "Error: check_doxygen.sh failed, see $dir/doxygen.log."
 		exit 1
 	fi
 	echo "OK: doxygen doxyfile" >> $dir/build_test.log

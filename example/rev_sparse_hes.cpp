@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -37,9 +37,22 @@ $end
 
 # include <cppad/cppad.hpp>
 namespace { // -------------------------------------------------------------
-// define the template function RevSparseHesCases<Vector> in empty namespace
+
+// expected sparsity pattern
+bool check_f0[] = {
+	false, false, false,  // partials w.r.t x0 and (x0, x1, x2)
+	false, false, false,  // partials w.r.t x1 and (x0, x1, x2)
+	false, false, true    // partials w.r.t x2 and (x0, x1, x2)
+};
+bool check_f1[] = {
+	false,  true, false,  // partials w.r.t x0 and (x0, x1, x2)
+	true,  false, false,  // partials w.r.t x1 and (x0, x1, x2)
+	false, false, false   // partials w.r.t x2 and (x0, x1, x2)
+};
+
+// define the template function BoolCases<Vector> in empty namespace
 template <typename Vector> // vector class, elements of type bool
-bool RevSparseHesCases(void)
+bool BoolCases(void)
 {	bool ok = true;
 	using CppAD::AD;
 
@@ -83,17 +96,9 @@ bool RevSparseHesCases(void)
 	h    = f.RevSparseHes(n, s);
 
 	// check values
-	ok &= (h[ 0 * n + 0 ] == false);  // second partial w.r.t X[0], X[0]
-	ok &= (h[ 0 * n + 1 ] == false);  // second partial w.r.t X[0], X[1]
-	ok &= (h[ 0 * n + 2 ] == false);  // second partial w.r.t X[0], X[2]
-
-	ok &= (h[ 1 * n + 0 ] == false);  // second partial w.r.t X[1], X[0]
-	ok &= (h[ 1 * n + 1 ] == false);  // second partial w.r.t X[1], X[1]
-	ok &= (h[ 1 * n + 2 ] == false);  // second partial w.r.t X[1], X[2]
-
-	ok &= (h[ 2 * n + 0 ] == false);  // second partial w.r.t X[2], X[0]
-	ok &= (h[ 2 * n + 1 ] == false);  // second partial w.r.t X[2], X[1]
-	ok &= (h[ 2 * n + 2 ] == true);   // second partial w.r.t X[2], X[2]
+	for(i = 0; i < n; i++)
+		for(j = 0; j < n; j++) 
+			ok &= (h[ i * n + j ] == check_f0[ i * n + j ] );
 
 	// compute sparsity pattern for H(x) = F_1^{(2)} (x)
 	for(i = 0; i < m; i++)
@@ -102,17 +107,78 @@ bool RevSparseHesCases(void)
 	h    = f.RevSparseHes(n, s);
 
 	// check values
-	ok &= (h[ 0 * n + 0 ] == false);  // second partial w.r.t X[0], X[0]
-	ok &= (h[ 0 * n + 1 ] == true);   // second partial w.r.t X[0], X[1]
-	ok &= (h[ 0 * n + 2 ] == false);  // second partial w.r.t X[0], X[2]
+	for(i = 0; i < n; i++)
+		for(j = 0; j < n; j++) 
+			ok &= (h[ i * n + j ] == check_f1[ i * n + j ] );
 
-	ok &= (h[ 1 * n + 0 ] == true);   // second partial w.r.t X[1], X[0]
-	ok &= (h[ 1 * n + 1 ] == false);  // second partial w.r.t X[1], X[1]
-	ok &= (h[ 1 * n + 2 ] == false);  // second partial w.r.t X[1], X[2]
+	return ok;
+}
+// define the template function SetCases<Vector> in empty namespace
+template <typename Vector> // vector class, elements of type std::set<size_t>
+bool SetCases(void)
+{	bool ok = true;
+	using CppAD::AD;
 
-	ok &= (h[ 2 * n + 0 ] == false);  // second partial w.r.t X[2], X[0]
-	ok &= (h[ 2 * n + 1 ] == false);  // second partial w.r.t X[2], X[1]
-	ok &= (h[ 2 * n + 2 ] == false);  // second partial w.r.t X[2], X[2]
+	// domain space vector
+	size_t n = 3; 
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	X[0] = 0.; 
+	X[1] = 1.;
+	X[2] = 2.;
+
+	// declare independent variables and start recording
+	CppAD::Independent(X);
+
+	// range space vector
+	size_t m = 2;
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	Y[0] = sin( X[2] );
+	Y[1] = X[0] * X[1];
+
+	// create f: X -> Y and stop tape recording
+	CppAD::ADFun<double> f(X, Y);
+
+	// sparsity pattern for the identity matrix
+	Vector r(n);
+	size_t i;
+	for(i = 0; i < n; i++)
+	{	assert( r[i].empty() );
+		r[i].insert(i);
+	}
+
+	// compute sparsity pattern for J(x) = F^{(1)} (x)
+	f.ForSparseJac(n, r);
+
+	// compute sparsity pattern for H(x) = F_0^{(2)} (x)
+	Vector s(1);
+	assert( s[0].empty() );
+	s[0].insert(0);
+	Vector h(n);
+	h    = f.RevSparseHes(n, s);
+
+	// check values
+	std::set<size_t>::iterator itr;
+	size_t j;
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+		{	bool found = h[i].find(j) != h[i].end();
+			ok        &= (found == check_f0[i * n + j]);
+		}
+	}
+
+	// compute sparsity pattern for H(x) = F_1^{(2)} (x)
+	s[0].clear();
+	assert( s[0].empty() );
+	s[0].insert(1);
+	h    = f.RevSparseHes(n, s);
+
+	// check values
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+		{	bool found = h[i].find(j) != h[i].end();
+			ok        &= (found == check_f1[i * n + j]);
+		}
+	}
 
 	return ok;
 }
@@ -124,10 +190,17 @@ bool RevSparseHes(void)
 {	bool ok = true;
 	// Run with Vector equal to four different cases
 	// all of which are Simple Vectors with elements of type bool.
-	ok &= RevSparseHesCases< CppAD::vector  <bool> >();
-	ok &= RevSparseHesCases< CppAD::vectorBool     >();
-	ok &= RevSparseHesCases< std::vector    <bool> >(); 
-	ok &= RevSparseHesCases< std::valarray  <bool> >(); 
+	ok &= BoolCases< CppAD::vector  <bool> >();
+	ok &= BoolCases< CppAD::vectorBool     >();
+	ok &= BoolCases< std::vector    <bool> >(); 
+	ok &= BoolCases< std::valarray  <bool> >(); 
+
+	// Run with Vector equal to three different cases all of which are 
+	// Simple Vectors with elements of type std::set<size_t>
+	typedef std::set<size_t> set;
+	ok &= SetCases< CppAD::vector  <set> >();
+	ok &= SetCases< std::vector    <set> >(); 
+	ok &= SetCases< std::valarray  <set> >(); 
 
 	return ok;
 }

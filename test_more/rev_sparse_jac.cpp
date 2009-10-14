@@ -69,7 +69,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace { // BEGIN empty namespace
 
-bool case_one(bool packed)
+bool case_one()
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -148,6 +148,7 @@ bool case_one(bool packed)
 	// create function object F : X -> Y
 	ADFun<double> F(X, Y);
 
+	// --------------------------------------------------------
 	// dependency matrix for the identity function U(y) = y
 	CPPAD_TEST_VECTOR< bool > Py(m * m);
 	size_t i, j;
@@ -159,18 +160,39 @@ bool case_one(bool packed)
 
 	// evaluate the dependency matrix for U(F(x))
 	CPPAD_TEST_VECTOR< bool > Px(m * n);
-	Px = F.RevSparseJac(m, Py, packed);
+	Px = F.RevSparseJac(m, Py);
 
 	// check values
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Px[i * n + j] == Check[i * n + j]);
 	}	
+	// --------------------------------------------------------
+	// dependency matrix for the identity function U(y) = y
+	CPPAD_TEST_VECTOR< std::set<size_t> > Sy(m);
+	for(i = 0; i < m; i++)
+	{	assert( Sy[i].empty() );
+		Sy[i].insert(i);
+	}
+
+	// evaluate the dependency matrix for U(F(x))
+	CPPAD_TEST_VECTOR< std::set<size_t> > Sx(m);
+	Sx = F.RevSparseJac(m, Sy);
+
+	// check values
+	std::set<size_t>::iterator itr;
+	bool found;
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < n; j++)
+		{	found = Sx[i].find(j) != Sx[i].end();
+		 	ok    &= (found == Check[i * n + j]);
+		}
+	}	
 
 	return ok;
 }
 
-bool case_two(bool packed)
+bool case_two()
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -245,12 +267,33 @@ bool case_two(bool packed)
 
 	// evaluate the dependency matrix for S [ F(x) ]
 	CPPAD_TEST_VECTOR< bool > Px(m * n);
-	Px = F.RevSparseJac(m, Py, packed);
+	Px = F.RevSparseJac(m, Py);
 
 	// check values
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < n; j++)
 			ok &= (Px[i * n + j] == Check[i * n + j]);
+	}	
+	// --------------------------------------------------------
+	// dependency matrix for the identity function U(y) = y
+	CPPAD_TEST_VECTOR< std::set<size_t> > Sy(m);
+	for(i = 0; i < m; i++)
+	{	assert( Sy[i].empty() );
+		Sy[i].insert(i);
+	}
+
+	// evaluate the dependency matrix for U(F(x))
+	CPPAD_TEST_VECTOR< std::set<size_t> > Sx(m);
+	Sx = F.RevSparseJac(m, Sy);
+
+	// check values
+	std::set<size_t>::iterator itr;
+	bool found;
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < n; j++)
+		{	found = Sx[i].find(j) != Sx[i].end();
+		 	ok    &= (found == Check[i * n + j]);
+		}
 	}	
 
 	return ok;
@@ -261,11 +304,8 @@ bool case_two(bool packed)
 bool rev_sparse_jac(void)
 {	bool ok = true;
 
-	ok &= case_one(true);
-	ok &= case_two(true);
-
-	ok &= case_one(false);
-	ok &= case_two(false);
+	ok &= case_one();
+	ok &= case_two();
 
 	return ok;
 }

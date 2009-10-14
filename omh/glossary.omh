@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin glossary$$
 $aindex head subhead$$
 $spell
+	std
 	Vec
 	cos
 	bool
@@ -141,19 +142,68 @@ $head Sparsity Pattern$$
 $index sparsity, pattern$$
 $index pattern, sparsity$$
 $index efficient, sparsity$$
+CppAD describes a sparse matrix as a vector of sets with each
+vector component corresponding to a row 
+and the elements of the set corresponding to the possibly non-zero columns.
+A vector of $code bool$$
+can represent a vector of sets using one bit per element.
+(Some vectors of $code bool$$ use one byte per element but
+$cref/vectorBool/CppAD_vector/vectorBool/$$ is an example class that
+uses one bit per element.)
+The problem is that this representation uses one bit for both the elements 
+that are there and the ones that are not.
+$pre
+
+$$
+A vector of $code std::set<size_t>$$ does not
+represent the elements that are not present,
+but it uses about three $code size_t$$ values
+for each element that is present.
+For example, if $code size_t$$ uses 32 bits, 
+a vector of $code std::set<size_t>$$ uses
+about 100 bits for each element that is present in the 
+vector of sets.
+Thus, a vector of $code std::set<size_t>$$ should be more efficient for 
+very sparse matrix representations.
+
+$subhead Vector of Boolean$$
 Given a matrix 
 $latex A \in B^{m \times n}$$,
-a boolean valued $latex m \times n$$ matrix $latex P$$ is a 
-sparsity pattern for $latex A$$ if 
+a vector of $code bool$$ $latex B$$ of length $latex m \times n$$ 
+is a sparsity pattern for $latex A$$ if 
 for $latex i = 0, \ldots , m-1$$ and $latex j = 0 , \ldots n-1$$,
 $latex \[
 A_{i,j} \neq 0  
 \; \Rightarrow \; 
-P_{i,j} = {\rm true}
+B_{i * n + j} = {\rm true}
 \] $$
-Given two sparsity patterns $latex P$$ and $italic Q$$ 
-for a matrix $italic A$$, we say that $italic P$$ is more efficient than
-$italic Q$$ if $italic P$$ has fewer true elements than $italic Q$$.
+Given two sparsity patterns $latex B$$ and $italic C$$ 
+for a matrix $italic A$$, we say that $italic B$$ is more efficient than
+$italic C$$ if $italic B$$ has fewer true elements than $italic C$$.
+For example, if $latex A$$ is the identity matrix,
+$latex \[
+	B_{i * n + j} = (i = j)
+\] $$
+defines an efficient sparsity pattern for $latex A$$.
+
+$subhead Vector of Sets$$
+Given a matrix 
+$latex A \in B^{m \times n}$$,
+a vector of sets $latex S$$ of length $latex m$$ is a 
+sparsity pattern for $latex A$$ if 
+for $latex i = 0, \ldots , m-1$$ 
+$latex \[
+A_{i,j} \neq 0  
+\; \Rightarrow \; j \in S_i 
+\] $$
+Given two sparsity patterns $latex S$$ and $italic T$$ 
+for a matrix $italic A$$, we say that $italic S$$ is more efficient than
+$italic T$$ if $italic S$$ has fewer elements than $italic T$$.
+For example, if $latex A$$ is the identity matrix,
+$latex \[
+	S_i =  \{ j \}
+\] $$
+defines an efficient sparsity pattern for $latex A$$.
 
 $head Tape$$
 
