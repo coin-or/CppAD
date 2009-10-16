@@ -34,9 +34,7 @@ $end
 
 # include <cppad/cppad.hpp>
 namespace { // ---------------------------------------------------------
-// define the template function in empty namespace
-template <class VectorBase, class VectorBool> 
-bool reverse_case()
+bool reverse()
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
@@ -61,43 +59,50 @@ bool reverse_case()
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	CPPAD_TEST_VECTOR<double> x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
 	// Jacobian of y without sparsity pattern
-	VectorBase jac(m * n);
+	CPPAD_TEST_VECTOR<double> jac(m * n);
 	jac = f.SparseJacobian(x);
 	/*
 	      [ 1 1 0 0  ]
 	jac = [ 0 0 1 1  ]
 	      [ 1 1 1 x_3]
 	*/
-	VectorBase check(m * n);
+	CPPAD_TEST_VECTOR<double> check(m * n);
 	check[0] = 1.; check[1] = 1.; check[2]  = 0.; check[3]  = 0.;
 	check[4] = 0.; check[5] = 0.; check[6]  = 1.; check[7]  = 1.;
 	check[8] = 1.; check[9] = 1.; check[10] = 1.; check[11] = x[3];
 	for(k = 0; k < 12; k++)
 		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
 
-	// test passing sparsity pattern
-	VectorBool s(m * m);
-	VectorBool p(m * n);
+	// using packed boolean sparsity patterns
+	CppAD::vectorBool s_b(m * m), p_b(m * n);
 	for(i = 0; i < m; i++)
 	{	for(k = 0; k < m; k++)
-			s[i * m + k] = false;
-		s[i * m + i] = true;
+			s_b[i * m + k] = false;
+		s_b[i * m + i] = true;
 	}
-	p   = f.RevSparseJac(m, s);
-	jac = f.SparseJacobian(x);
+	p_b   = f.RevSparseJac(m, s_b);
+	jac   = f.SparseJacobian(x, p_b);
+	for(k = 0; k < 12; k++)
+		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+
+	// using vector of sets sparsity patterns
+	std::vector< std::set<size_t> > s_s(m),  p_s(m);
+	for(i = 0; i < m; i++)
+		s_s[i].insert(i);
+	p_s   = f.RevSparseJac(m, s_s);
+	jac   = f.SparseJacobian(x, p_s);
 	for(k = 0; k < 12; k++)
 		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
 
 	return ok;
 }
 
-template <class VectorBase, class VectorBool> 
-bool forward_case()
+bool forward()
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
@@ -123,12 +128,12 @@ bool forward_case()
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	CPPAD_TEST_VECTOR<double> x(n);
 	for(j = 0; j < n; j++)
 		x[j] = double(j);
 
 	// Jacobian of y without sparsity pattern
-	VectorBase jac(m * n);
+	CPPAD_TEST_VECTOR<double> jac(m * n);
 	jac = f.SparseJacobian(x);
 	/*
 	      [ 1 0 1   ]
@@ -136,7 +141,7 @@ bool forward_case()
 	      [ 0 1 1   ]
 	      [ 0 1 x_2 ]
 	*/
-	VectorBase check(m * n);
+	CPPAD_TEST_VECTOR<double> check(m * n);
 	check[0] = 1.; check[1]  = 0.; check[2]  = 1.; 
 	check[3] = 1.; check[4]  = 0.; check[5]  = 1.;
 	check[6] = 0.; check[7]  = 1.; check[8]  = 1.; 
@@ -144,38 +149,36 @@ bool forward_case()
 	for(k = 0; k < 12; k++)
 		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
 
-	// test passing sparsity pattern
-	VectorBool r(n * n);
-	VectorBool p(m * n);
+	// test using packed boolean vectors for sparsity pattern
+	CppAD::vectorBool r_b(n * n), p_b(m * n);
 	for(j = 0; j < n; j++)
 	{	for(k = 0; k < n; k++)
-			r[j * n + k] = false;
-		r[j * n + j] = true;
+			r_b[j * n + k] = false;
+		r_b[j * n + j] = true;
 	}
-	p   = f.ForSparseJac(n, r);
-	jac = f.SparseJacobian(x);
+	p_b = f.ForSparseJac(n, r_b);
+	jac = f.SparseJacobian(x, p_b);
+	for(k = 0; k < 12; k++)
+		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
+
+	// test using vector of sets for sparsity pattern
+	std::vector< std::set<size_t> > r_s(n), p_s(m);
+	for(j = 0; j < n; j++)
+		r_s[j].insert(j);
+	p_s = f.ForSparseJac(n, r_s);
+	jac = f.SparseJacobian(x, p_s);
 	for(k = 0; k < 12; k++)
 		ok &=  NearEqual(check[k], jac[k], 1e-10, 1e-10 );
 
 	return ok;
 }
 } // End empty namespace 
-# include <vector>
-# include <valarray>
+
 bool sparse_jacobian(void)
 {	bool ok = true;
-	// Run with VectorBase equal to three different cases
-	// all of which are Simple Vectors with elements of type double.
-	// Also vary the type of vector for VectorBool.
-	ok &= forward_case< CppAD::vector<double>, CppAD::vectorBool   >();
-	ok &= reverse_case< CppAD::vector<double>, CppAD::vector<bool> >();
-	//
-	ok &= forward_case< std::vector<double>,   std::vector<bool>   >();
-	ok &= reverse_case< std::vector<double>,   std::valarray<bool> >();
-	//
-	ok &= forward_case< std::valarray<double>, CppAD::vectorBool   >();
-	ok &= reverse_case< std::valarray<double>, CppAD::vector<bool> >();
-	//
+	ok &= forward();
+	ok &= reverse();
+
 	return ok;
 }
 // END PROGRAM

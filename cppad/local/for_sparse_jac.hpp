@@ -37,7 +37,7 @@ $head Syntax$$
 $icode%s% = %f%.ForSparseJac(%q%, %r%)%$$
 
 $head Purpose$$
-We use $latex F : \R^n \rightarrow B^m$$ to denote the
+We use $latex F : \R^n \rightarrow R^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $icode f$$.
 For a fixed $latex n \times q$$ matrix $latex R$$,
 the Jacobian of $latex F[ x + R * u ]$$
@@ -108,7 +108,9 @@ for the matrix $latex J(x)$$.
 $head VectorSet$$
 The type $icode VectorSet$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type/$$
-$code bool$$ or $code std::set<size_t>$$.
+$code bool$$ or $code std::set<size_t>$$;
+see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
+of the difference.
 
 $head Entire Sparsity Pattern$$
 Suppose that $latex q = n$$ and
@@ -491,7 +493,7 @@ applies.
 
 \param set_type
 is a \c bool value. This argument is used to dispatch to the proper source
-code depending on the value of \c VectroSet::value_type.
+code depending on the value of \c VectorSet::value_type.
 
 \param q
 See \c ForSparseJac(q, r).
@@ -510,7 +512,7 @@ void ADFun<Base>::ForSparseJacCase(
 	size_t              q             ,
 	const VectorSet&    r             ,
 	VectorSet&          s             )
-{	size_t m = dep_taddr_.size();
+{	size_t m = Range();
 
 	// dimension size of result vector
 	s.resize( m * q );
@@ -559,7 +561,7 @@ void ADFun<Base>::ForSparseJacCase(
 	size_t                     q             ,
 	const VectorSet&           r             ,
 	VectorSet&                 s             )
-{	size_t m = dep_taddr_.size();
+{	size_t m = Range();
 
 	// dimension size of result vector
 	s.resize( m );

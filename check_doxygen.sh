@@ -18,6 +18,12 @@ class_list="
 	sparse_pack
 	sparse_set
 "
+#
+# member functions names that begin with the following have been documented
+# (but the corresponding class has not yet been completely documented).
+member_list="
+	SparseJacobian
+"
 # files that have been completely documented
 file_list="
 	abs_op.hpp
@@ -59,6 +65,7 @@ file_list="
 	sqrt_op.hpp
 	store_op.hpp
 	sub_op.hpp
+	sparse_jacobian.hpp
 	sparse_pack.hpp
 	sparse_set.hpp
 "
@@ -66,6 +73,15 @@ file_list="
 for class in $class_list
 do
 	if grep -i "warning:.*$class::" doxygen.log
+	then
+		echo "Unexpected doxygen error or warning for $file."
+		exit 1
+	fi
+done
+# --------------------------------------------------------------------------
+for member in $member_list
+do
+	if grep -i "warning:.*member.*$member" doxygen.log
 	then
 		echo "Unexpected doxygen error or warning for $file."
 		exit 1

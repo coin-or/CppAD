@@ -49,7 +49,7 @@ Vector eval_jac_g(const Vector&  x)
 bool jacobian(void)
 {	bool ok = true;
 	using CppAD::vector;
-	size_t j, k;
+	size_t i, j, k;
 
 	size_t n = 4;
 	size_t m = 2;
@@ -68,13 +68,33 @@ bool jacobian(void)
 	vector<double> check(m * n);
 	check = eval_jac_g(x);
 
+	// regular jacobian
 	vector<double> jac_g = fun_g.Jacobian(x);
-
 	for(k = 0; k < m *n; k++)
 		ok &= CppAD::NearEqual(jac_g[k], check[k], 1e-10, 1e-10);
 
+	// one argument sparse jacobian 
 	jac_g = fun_g.SparseJacobian(x);
+	for(k = 0; k < m *n; k++)
+		ok &= CppAD::NearEqual(jac_g[k], check[k], 1e-10, 1e-10);
 
+	// sparse jacobian using bool vectors
+	CPPAD_TEST_VECTOR<bool> p_b(m * n) , r_b(n * n);
+	for(i = 0; i < n; i++)
+		for(j = 0; j < n; j++)
+			r_b[i * n + j] = (i == j);
+	p_b = fun_g.ForSparseJac(n, r_b);
+	jac_g = fun_g.SparseJacobian(x, p_b);
+	for(k = 0; k < m *n; k++)
+		ok &= CppAD::NearEqual(jac_g[k], check[k], 1e-10, 1e-10);
+
+	// sparse jacobian using vectors of sets
+	std::vector< std::set<size_t> > p_s(m) , r_s(n);
+	for(i = 0; i < n; i++)
+		for(j = 0; j < n; j++)
+			r_s[i].insert(j);
+	p_s = fun_g.ForSparseJac(n, r_s);
+	jac_g = fun_g.SparseJacobian(x, p_s);
 	for(k = 0; k < m *n; k++)
 		ok &= CppAD::NearEqual(jac_g[k], check[k], 1e-10, 1e-10);
 

@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sparse_jacobian$$
 $spell
+	std
+	CppAD
 	Bool
 	jac
 	Jacobian
@@ -33,16 +35,18 @@ $codei%%jac% = %f%.SparseJacobian(%x%)
 $codei%%jac% = %f%.SparseJacobian(%x%, %p%)%$$
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ do denote the
+We use $latex F : \R^n \rightarrow \R^m$$ do denote the
 $cref/AD function/glossary/AD Function/$$
 corresponding to $icode f$$. 
 The syntax above sets $icode jac$$ to the Jacobian 
 $latex \[
 	jac = F^{(1)} (x) 
 \] $$
-This is a preliminary implementation of a method for using the fact
-that the matrix is sparse to reduce the amount of computation necessary.
-One should use speed tests to verify that results are computed faster
+This routine assumes
+that the matrix $latex F^{(1)} (x) \in \R^{m \times n}$$
+is uses this assumption to reduce the amount of computation necessary.
+One should use speed tests (e.g. $cref/speed_test/$$)
+to verify that results are computed faster
 than when using the routine $cref/Jacobian/$$.
 
 $head f$$
@@ -56,7 +60,7 @@ Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const %VectorBase% &%x%
+	const %VectorBase%& %x%
 %$$
 (see $cref/VectorBase/sparse_jacobian/VectorBase/$$ below)
 and its size 
@@ -68,23 +72,31 @@ that point at which to evaluate the Jacobian.
 $head p$$
 The argument $icode p$$ is optional and has prototype
 $syntax%
-	const %VectorBool% &%p%
+	const %VectorSet%& %p%
 %$$
-(see $cref/VectorBool/sparse_jacobian/VectorBool/$$ below)
-and its size is $latex m * n$$.
+(see $cref/VectorSet/sparse_jacobian/VectorSet/$$ below).
+If it has elements of type $code bool$$,
+its size is $latex m * n$$.
+If it has elements of type $code std::set<size_t>$$,
+its size is $latex m$$ and all its set elements are between
+zero and $latex n - 1$$.
 It specifies a 
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
-for the Jacobian; i.e.,
-for $latex i = 0 , \ldots , m-1$$ and $latex j = 0 , \ldots , n-1$$.
-$latex \[
-	\D{ F_i }{ x_j } \neq 0 ; \Rightarrow \; p [ i * n + j ] = {\rm true}
-\] $$
+for the Jacobian $latex F^{(1)} (x)$$.
 $pre
 
 $$
 If this sparsity pattern does not change between calls to 
-$codei SparseJacobian$$, it should be faster to calculate $icode p$$ once and
-pass this argument to $codei SparseJacobian$$.
+$codei SparseJacobian$$, it should be faster to calculate $icode p$$ once 
+(using $cref/ForSparseJac/$$ or $cref/RevSparseJac/$$)
+and then pass $icode p$$ to $codei SparseJacobian$$.
+In addition,
+if you specify $icode p$$, CppAD will use the same
+type of sparsity representation 
+(vectors of $code bool$$ or vectors of $code std::set<size_t>$$)
+for its internal calculations.
+Otherwise the representation
+for the internal calculations is unspecified.
 
 $head jac$$
 The result $icode jac$$ has prototype
@@ -95,7 +107,7 @@ and its size is $latex m * n$$.
 For $latex i = 0 , \ldots , m - 1$$,
 and $latex j = 0 , \ldots , n - 1 $$ 
 $latex \[
-	jac [ i * n + j ] = \D{ F_i }{ x_j }
+	jac [ i * n + j ] = \D{ F_i }{ x_j } (x)
 \] $$
 
 $head VectorBase$$
@@ -105,15 +117,12 @@ $icode Base$$.
 The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head VectorBool$$
-The type $icode VectorBool$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
-if this is not the case.
-In order to save memory, 
-you may want to use a class that packs multiple elements into one
-storage location; for example,
-$cref/vectorBool/CppAD_vector/vectorBool/$$.
+$head VectorSet$$
+The type $icode VectorSet$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+$code bool$$ or $code std::set<size_t>$$;
+see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
+of the difference.
 
 $head Uses Forward$$
 After each call to $cref/Forward/$$,
@@ -134,56 +143,45 @@ It return $code true$$, if it succeeds and $code false$$ otherwise.
 $end
 -----------------------------------------------------------------------------
 */
+CPPAD_BEGIN_NAMESPACE
 
+/*!
+\file sparse_jacobian.hpp
+Computing sparse Jacobians.
+*/
 
+/*!
+Private helper function for SparseJacobian(x, p).
 
+All of the description in the public member function SparseJacobian(x, p)
+applies.
 
-//  BEGIN CppAD namespace
-namespace CppAD {
+\param set_type
+is a \c bool value. This argument is used to dispatch to the proper souce
+code depending on the vlaue of \c VectorSet::value_type.
 
+\param x
+See \c SparseJacobian(x, p).
+
+\param p
+See \c SparseJacobian(x, p).
+
+\param jac
+is the return value for the corresponding call to \c SparseJacobian(x, p).
+On input it must have size equalt to the domain times range dimension
+for this ADFun<Base> object.
+On return, it will contain the Jacobian.
+*/
 template <class Base>
-template <class VectorBase>
-VectorBase ADFun<Base>::SparseJacobian(const VectorBase &x)
-{	typedef CppAD::vector<bool>   VectorBool;
-
-	size_t m = Range();
-	size_t n = Domain();
-
-	// sparsity pattern for Jacobian
-	VectorBool p(n * m);
-
-	if( n <= m )
-	{	size_t j, k;
-
-		// use forward mode 
-		VectorBool r(n * n);
-		for(j = 0; j < n; j++)
-		{	for(k = 0; k < n; k++)
-				r[j * n + k] = false;
-			r[j * n + j] = true;
-		}
-		p = ForSparseJac(n, r);
-	}
-	else
-	{	size_t i, k;
-
-		// use reverse mode 
-		VectorBool s(m * m);
-		for(i = 0; i < m; i++)
-		{	for(k = 0; k < m; k++)
-				s[i * m + k] = false;
-			s[i * m + i] = true;
-		}
-		p = RevSparseJac(m, s);
-	}
-	return SparseJacobian(x, p);
-}
-
-template <class Base>
-template <class VectorBase, class VectorBool>
-VectorBase ADFun<Base>::SparseJacobian(const VectorBase &x, const VectorBool &p)
+template <class VectorBase, class VectorSet>
+void ADFun<Base>::SparseJacobianCase(
+	bool               set_type        ,
+	const VectorBase&  x               , 
+	const VectorSet&   p               ,
+	VectorBase&        jac             )
 {
 	typedef CppAD::vector<size_t> SizeVector;
+	typedef CppAD::vectorBool     VectorBool;
 	size_t i, j, k;
 
 	size_t m = Range();
@@ -193,8 +191,8 @@ VectorBase ADFun<Base>::SparseJacobian(const VectorBase &x, const VectorBool &p)
 	const Base zero(0);
 	const Base one(1);
 
-	// check VectorBool is Simple Vector class with bool elements
-	CheckSimpleVector<bool, VectorBool>();
+	// check VectorSet is Simple Vector class with bool elements
+	CheckSimpleVector<bool, VectorSet>();
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
@@ -203,18 +201,17 @@ VectorBase ADFun<Base>::SparseJacobian(const VectorBase &x, const VectorBool &p)
 		x.size() == n,
 		"SparseJacobian: size of x not equal domain dimension for f"
 	); 
-
 	CPPAD_ASSERT_KNOWN(
 		p.size() == m * n,
-		"SparseJacobian: size of p not equal domain dimension times "
-		" range dimension for f"
+		"SparseJacobian: size of p not equal range dimension times "
+		" domain dimension for f"
 	); 
+	CPPAD_ASSERT_UNKNOWN(jac.size() == m * n); 
 
 	// point at which we are evaluating the Jacobian
 	Forward(0, x);
 
 	// initialize the return value
-	VectorBase jac(m * n);
 	for(i = 0; i < m; i++)
 		for(j = 0; j < n; j++)
 			jac[i * n + j] = zero;
@@ -230,7 +227,7 @@ VectorBase ADFun<Base>::SparseJacobian(const VectorBase &x, const VectorBool &p)
 		// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
 		// Graph Coloring in Optimization Revisited by
 		// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
-		VectorBool    forbidden(n);
+		VectorBool forbidden(n);
 		for(j = 0; j < n; j++)
 		{	// initial all colors as ok for this column
 			for(k = 0; k < n; k++)
@@ -290,7 +287,7 @@ VectorBase ADFun<Base>::SparseJacobian(const VectorBase &x, const VectorBool &p)
 		// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
 		// Graph Coloring in Optimization Revisited by
 		// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
-		VectorBool    forbidden(m);
+		VectorBool forbidden(m);
 		for(i = 0; i < m; i++)
 		{	// initial all colors as ok for this row
 			for(k = 0; k < m; k++)
@@ -339,9 +336,340 @@ VectorBase ADFun<Base>::SparseJacobian(const VectorBase &x, const VectorBool &p)
 			}
 		}
 	}
+}
+
+/*!
+Private helper function for SparseJacobian(x, p).
+
+All of the description in the public member function SparseJacobian(x, p)
+applies.
+
+\param set_type
+is a \c std::set<size_t> value.
+This argument is used to dispatch to the proper souce
+code depending on the vlaue of \c VectorSet::value_type.
+
+\param x
+See \c SparseJacobian(x, p).
+
+\param p
+See \c SparseJacobian(x, p).
+
+\param jac
+is the return value for the corresponding call to \c SparseJacobian(x, p).
+On input it must have size equalt to the domain times range dimension
+for this ADFun<Base> object.
+On return, it will contain the Jacobian.
+*/
+template <class Base>
+template <class VectorBase, class VectorSet>
+void ADFun<Base>::SparseJacobianCase(
+	const std::set<size_t>&  set_type        ,
+	const VectorBase&        x               , 
+	const VectorSet&         p               ,
+	VectorBase&              jac             )
+{
+	typedef CppAD::vector<size_t> SizeVector;
+	typedef CppAD::vectorBool     VectorBool;
+	size_t i, j, k;
+
+	size_t m = Range();
+	size_t n = Domain();
+
+	// some values
+	const Base zero(0);
+	const Base one(1);
+
+	// cannot use CheckSimpleVector when vector elements are sets
+	// because cannot assign an integer to a set.
+	// CheckSimpleVector<std::set<size_t>, VectorSet>();
+
+	// check VectorBase is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, VectorBase>();
+
+	CPPAD_ASSERT_KNOWN(
+		x.size() == n,
+		"SparseJacobian: size of x not equal domain dimension for f"
+	); 
+	CPPAD_ASSERT_KNOWN(
+		p.size() == m,
+		"SparseJacobian: size of p not equal range dimension for f"
+	); 
+	CPPAD_ASSERT_UNKNOWN(jac.size() == m * n); 
+
+	// point at which we are evaluating the Jacobian
+	Forward(0, x);
+
+	// initialize the return value
+	for(i = 0; i < m; i++)
+		for(j = 0; j < n; j++)
+			jac[i * n + j] = zero;
+
+	// create a copy of the transpose sparsity pattern
+	VectorSet q(n);
+	std::set<size_t>::iterator itr_i, itr_j;
+	for(i = 0; i < m; i++)
+	{	for(itr_j = p[i].begin(); itr_j != p[i].end(); itr_j++)
+		{	j = *itr_j;
+			q[j].insert(i);
+		}
+	}	
+
+	if( n <= m )
+	{	// use forward mode ----------------------------------------
+	
+		// initial coloring
+		SizeVector color(n);
+		for(j = 0; j < n; j++)
+			color[j] = j;
+
+		// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
+		// Graph Coloring in Optimization Revisited by
+		// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
+		VectorBool forbidden(n);
+		for(j = 0; j < n; j++)
+		{	// initial all colors as ok for this column
+			for(k = 0; k < n; k++)
+				forbidden[k] = false;
+
+			// for each row connected to column j
+			for(itr_i = q[j].begin(); itr_i != q[j].end(); itr_i++)
+			{	i = *itr_i;
+				// for each column connected to row i
+				for(	itr_j = p[i].begin();
+					itr_j != p[i].end();
+					itr_j++
+				)
+				{	// if this is not j, forbid it
+					k = *itr_j;
+					forbidden[ color[k] ] = (k != j);
+				}
+			}
+			k = 0;
+			while( forbidden[k] && k < n )
+			{	k++;
+				CPPAD_ASSERT_UNKNOWN( k < n );
+			}
+			color[j] = k;
+		}
+		size_t n_color = 1;
+		for(k = 0; k < n; k++) 
+			n_color = std::max(n_color, color[k] + 1);
+
+		// direction vector for calls to forward
+		VectorBase dx(n);
+
+		// location for return values from Reverse
+		VectorBase dy(m);
+
+		// loop over colors
+		size_t c;
+		for(c = 0; c < n_color; c++)
+		{	// determine all the colums with this color
+			for(j = 0; j < n; j++)
+			{	if( color[j] == c )
+					dx[j] = one;
+				else	dx[j] = zero;
+			}
+			// call forward mode for all these columns at once
+			dy = Forward(1, dx);
+
+			// set the corresponding components of the result
+			for(j = 0; j < n; j++) if( color[j] == c )
+			{	for(
+					itr_i = q[j].begin();
+					itr_i != q[j].end();
+					itr_i++
+				)
+				{	i = *itr_i;
+					jac[i * n + j] = dy[i];
+				}
+			}
+		}
+	}
+	else
+	{	// use reverse mode ----------------------------------------
+	
+		// initial coloring
+		SizeVector color(m);
+		for(i = 0; i < m; i++)
+			color[i] = i;
+
+		// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
+		// Graph Coloring in Optimization Revisited by
+		// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
+		VectorBool forbidden(m);
+		for(i = 0; i < m; i++)
+		{	// initial all colors as ok for this row
+			for(k = 0; k < m; k++)
+				forbidden[k] = false;
+
+			// for each column connected to row i
+			for(itr_j = p[i].begin(); itr_j != p[i].end(); itr_j++)
+			{	j = *itr_j;	
+				// for each row connected to column j
+				for(	itr_i = q[j].begin();
+					itr_i != q[j].end();
+					itr_i++
+				)
+				{	// if this is not i, forbid it
+					k = *itr_i;
+					forbidden[ color[k] ] = (k != i);
+				}
+			}
+			k = 0;
+			while( forbidden[k] && k < m )
+			{	k++;
+				CPPAD_ASSERT_UNKNOWN( k < n );
+			}
+			color[i] = k;
+		}
+		size_t n_color = 1;
+		for(k = 0; k < m; k++) 
+			n_color = std::max(n_color, color[k] + 1);
+
+		// weight vector for calls to reverse
+		VectorBase w(m);
+
+		// location for return values from Reverse
+		VectorBase dw(n);
+
+		// loop over colors
+		size_t c;
+		for(c = 0; c < n_color; c++)
+		{	// determine all the rows with this color
+			for(i = 0; i < m; i++)
+			{	if( color[i] == c )
+					w[i] = one;
+				else	w[i] = zero;
+			}
+			// call reverse mode for all these rows at once
+			dw = Reverse(1, w);
+
+			// set the corresponding components of the result
+			for(i = 0; i < m; i++) if( color[i] == c )
+			{	for(
+					itr_j = p[i].begin();
+					itr_j != p[i].end();
+					itr_j++
+				)
+				{	j = *itr_j;
+					jac[i * n + j] = dw[j];
+				}
+			}
+		}
+	}
+}
+
+/*!
+Compute a sparse Jacobian.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	jac = SparseJacobian(x, p)
+\endverbatim
+
+\tparam Base
+is the base type for the recording that is stored in this
+ADFun<Base object.
+
+\tparam VectorBase
+is a simple vector class with elements of the \a Base.
+
+\tparam VectorSet
+is a simple vector class with elements of type 
+\c bool or \c std::set<size_t>.
+
+\param x
+is a vector specifing the point at which to compute the Jacobian.
+
+\param p
+is the sparsity pattern for the Jacobian that we are calculating.
+
+\return
+Will be a vector if size \c m * n containing the Jacobian at the
+specified point (in row major order).
+*/
+template <class Base>
+template <class VectorBase, class VectorSet>
+VectorBase ADFun<Base>::SparseJacobian(
+	const VectorBase& x, const VectorSet& p
+)
+{	size_t m = Range();
+	size_t n = Domain();
+	VectorBase jac(m * n);
+
+	typedef typename VectorSet::value_type Set_type;
+	SparseJacobianCase( Set_type(), x, p, jac);
+
+	return jac;
+} 
+
+/*!
+Compute a sparse Jacobian.
+
+The C++ source code corresponding to this operation is
+\verbatim
+	jac = SparseJacobian(x)
+\endverbatim
+
+\tparam Base
+is the base type for the recording that is stored in this
+ADFun<Base object.
+
+\tparam VectorBase
+is a simple vector class with elements of the \a Base.
+
+\param x
+is a vector specifing the point at which to compute the Jacobian.
+
+\return
+Will be a vector if size \c m * n containing the Jacobian at the
+specified point (in row major order).
+*/
+template <class Base>
+template <class VectorBase>
+VectorBase ADFun<Base>::SparseJacobian( const VectorBase& x )
+{	typedef CppAD::vector<bool>   VectorBool;
+
+	size_t m = Range();
+	size_t n = Domain();
+
+	// sparsity pattern for Jacobian
+	VectorBool p(m * n);
+
+	// return result
+	VectorBase jac(m * n);
+
+	if( n <= m )
+	{	size_t j, k;
+
+		// use forward mode 
+		VectorBool r(n * n);
+		for(j = 0; j < n; j++)
+		{	for(k = 0; k < n; k++)
+				r[j * n + k] = false;
+			r[j * n + j] = true;
+		}
+		p = ForSparseJac(n, r);
+	}
+	else
+	{	size_t i, k;
+
+		// use reverse mode 
+		VectorBool s(m * m);
+		for(i = 0; i < m; i++)
+		{	for(k = 0; k < m; k++)
+				s[i * m + k] = false;
+			s[i * m + i] = true;
+		}
+		p = RevSparseJac(m, s);
+	}
+	bool set_type = true; // only type is used (to dispatch to proper case)
+	SparseJacobianCase(set_type, x, p, jac);
 	return jac;
 }
 
-} // END CppAD namespace
 
+CPPAD_END_NAMESPACE
 # endif

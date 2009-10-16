@@ -42,7 +42,7 @@ $icode%r% = %F%.RevSparseJac(%p%, %s%, %packed%)%$$
 
 
 $head Purpose$$
-We use $latex F : \R^n \rightarrow B^m$$ to denote the
+We use $latex F : \R^n \rightarrow R^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $icode f$$.
 For a fixed $latex p \times m$$ matrix $latex S$$,
 the Jacobian of $latex S * F( x )$$
@@ -107,7 +107,9 @@ for the matrix $latex J(x)$$.
 $head VectorSet$$
 The type $icode VectorSet$$ must be a $xref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type/$$
-$code bool$$ or $code std::set<size_t>$$.
+$code bool$$ or $code std::set<size_t>$$;
+see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
+of the difference.
 
 $head Entire Sparsity Pattern$$
 Suppose that $latex p = m$$ and
@@ -467,7 +469,7 @@ void ADFun<Base>::RevSparseJacCase(
 	size_t              p                 ,
 	const VectorSet&    s                 ,
 	VectorSet&          r                 )
-{	size_t n = ind_taddr_.size();
+{	size_t n = Domain();
 
 	// dimension of the result vector
 	r.resize( p * n );

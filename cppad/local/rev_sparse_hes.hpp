@@ -123,7 +123,9 @@ for the matrix $latex H(x)$$.
 $head VectorSet$$
 The type $icode VectorSet$$ must be a $cref/SimpleVector/$$ class with
 $xref/SimpleVector/Elements of Specified Type/elements of type/$$
-$code bool$$ or $code std::set<size_t>$$.
+$code bool$$ or $code std::set<size_t>$$;
+see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
+of the difference.
 The type of the elements of
 $cref/VectorSet/RevSparseHes/VectorSet/$$ must be the 
 same as the type of the elements of $icode r$$.
@@ -554,7 +556,7 @@ void ADFun<Base>::RevSparseHesCase(
 	size_t            q                ,  
 	const VectorSet&  s                ,
 	VectorSet&        h                )
-{	size_t n = ind_taddr_.size(); 	
+{	size_t n = Domain(); 	
 	h.resize(q * n );
 
 	CPPAD_ASSERT_KNOWN( 

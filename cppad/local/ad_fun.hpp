@@ -179,6 +179,25 @@ private:
 		const VectorSet&         s         ,  
 		VectorSet&               h
 	);
+	// ------------------------------------------------------------
+	// vector of bool version of SparseJacobian
+	// (see doxygen in sparse_jacobian.hpp)
+	template <class VectorBase, class VectorSet>
+	void SparseJacobianCase(
+		bool                     set_type    ,
+		const VectorBase&        x           ,
+		const VectorSet&         p           ,
+		VectorBase&              jac
+	);
+	// vector of std::set<size_t> version of SparseJacobian
+	// (see doxygen in sparse_jacobian.hpp)
+	template <class VectorBase, class VectorSet>
+	void SparseJacobianCase(
+		const std::set<size_t>&  set_type    ,
+		const VectorBase&        x           ,
+		const VectorSet&         p           ,
+		VectorBase&              jac
+	);
 // ------------------------------------------------------------
 public:
 	/// default constructor
@@ -317,8 +336,8 @@ public:
 	VectorBase SparseJacobian(const VectorBase &x); 
 
 	/// calculate sparse Jacobians 
-	template <typename VectorBase, typename VectorBool>
-	VectorBase SparseJacobian(const VectorBase &x, const VectorBool &p); 
+	template <typename VectorBase, typename VectorSet>
+	VectorBase SparseJacobian(const VectorBase &x, const VectorSet &p); 
 
 	/// calculate sparse Hessians 
 	template <typename VectorBase>
