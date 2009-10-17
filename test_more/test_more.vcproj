@@ -267,6 +267,9 @@
 				RelativePath=".\sinh.cpp">
 			</File>
 			<File
+				RelativePath=".\sparse_jacobian.cpp">
+			</File>
+			<File
 				RelativePath=".\sparse_vec_ad.cpp">
 			</File>
 			<File

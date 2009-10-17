@@ -87,13 +87,13 @@ namespace {
 	static size_t Run_ok_count    = 0;
 	static size_t Run_error_count = 0;
 	bool Run(bool TestOk(void), std::string name)
-	{	bool ok      = true;
-		size_t width =  20;         
+	{	bool ok               = true;
+		std::streamsize width =  20;         
 		std::cout.width( width );
 		std::cout.setf( std::ios_base::left );
 		std::cout << name;
 		//
-		ok &= name.size() < width;
+		ok &= name.size() < size_t(width);
 		ok &= TestOk();
 		if( ok )
 		{	std::cout << "OK" << std::endl;

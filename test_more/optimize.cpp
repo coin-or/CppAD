@@ -23,7 +23,7 @@ namespace {
 		opt      = 0;
 
 		// unary operator where operand is arg[0]
-		a = abs(x[0]); 
+		a = CppAD::abs(x[0]); 
 		if( a < 1. )
 			y[0] = sin(x[0]);
 		else	y[0] = cos(x[0]); 

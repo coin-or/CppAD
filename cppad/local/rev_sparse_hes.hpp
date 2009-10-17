@@ -392,7 +392,7 @@ void RevSparseHesSet(
 {
 	// temporary indices
 	size_t i, j;
-	std::set<size_t>::iterator itr;
+	std::set<size_t>::const_iterator itr;
 
 
 	// cannot use CheckSimpleVector when vector elements are sets
@@ -420,8 +420,9 @@ void RevSparseHesSet(
 	RevJac       = CPPAD_TRACK_NEW_VEC(total_num_var, RevJac);	
 	for(i = 0; i < total_num_var; i++)
 		RevJac[i] = false;
-	for( itr = s[0].begin(); itr != s[0].end(); itr++)
-	{	i = *itr;
+	itr = s[0].begin();
+	while( itr != s[0].end() )
+	{	i = *itr++;
 		CPPAD_ASSERT_KNOWN(
 			i < m,
 			"RevSparseHes: an element of the set s[0] has value "

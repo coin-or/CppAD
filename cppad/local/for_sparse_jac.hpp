@@ -338,7 +338,7 @@ void ForSparseJacSet(
 {
 	// temporary indices
 	size_t i, j;
-	std::set<size_t>::iterator itr;
+	std::set<size_t>::const_iterator itr;
 
 	// cannot use CheckSimpleVector when vector elements are sets
 	// because cannot assign an integer to a set.
@@ -369,8 +369,9 @@ void ForSparseJacSet(
 		CPPAD_ASSERT_UNKNOWN( play.GetOp( ind_taddr[i] ) == InvOp );
 
 		// add the elements that are present
-		for( itr = r[i].begin(); itr != r[i].end(); itr++)
-		{	j = *itr;
+		itr = r[i].begin();
+		while( itr != r[i].end() )
+		{	j = *itr++;
 			CPPAD_ASSERT_KNOWN(
 				j < q,
 				"ForSparseJac: an element of the set r[i] "

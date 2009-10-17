@@ -407,10 +407,11 @@ void ADFun<Base>::SparseJacobianCase(
 
 	// create a copy of the transpose sparsity pattern
 	VectorSet q(n);
-	std::set<size_t>::iterator itr_i, itr_j;
+	std::set<size_t>::const_iterator itr_i, itr_j;
 	for(i = 0; i < m; i++)
-	{	for(itr_j = p[i].begin(); itr_j != p[i].end(); itr_j++)
-		{	j = *itr_j;
+	{	itr_j = p[i].begin();
+		while( itr_j != p[i].end() )
+		{	j = *itr_j++;
 			q[j].insert(i);
 		}
 	}	
@@ -433,15 +434,14 @@ void ADFun<Base>::SparseJacobianCase(
 				forbidden[k] = false;
 
 			// for each row connected to column j
-			for(itr_i = q[j].begin(); itr_i != q[j].end(); itr_i++)
-			{	i = *itr_i;
+			itr_i = q[j].begin();
+			while( itr_i != q[j].end() )
+			{	i = *itr_i++;
 				// for each column connected to row i
-				for(	itr_j = p[i].begin();
-					itr_j != p[i].end();
-					itr_j++
-				)
+				itr_j = p[i].begin();
+				while( itr_j != p[i].end() )
 				{	// if this is not j, forbid it
-					k = *itr_j;
+					k = *itr_j++;
 					forbidden[ color[k] ] = (k != j);
 				}
 			}
@@ -476,12 +476,9 @@ void ADFun<Base>::SparseJacobianCase(
 
 			// set the corresponding components of the result
 			for(j = 0; j < n; j++) if( color[j] == c )
-			{	for(
-					itr_i = q[j].begin();
-					itr_i != q[j].end();
-					itr_i++
-				)
-				{	i = *itr_i;
+			{	itr_i = q[j].begin();
+				while( itr_i != q[j].end() )
+				{	i = *itr_i++;
 					jac[i * n + j] = dy[i];
 				}
 			}
@@ -505,15 +502,14 @@ void ADFun<Base>::SparseJacobianCase(
 				forbidden[k] = false;
 
 			// for each column connected to row i
-			for(itr_j = p[i].begin(); itr_j != p[i].end(); itr_j++)
-			{	j = *itr_j;	
+			itr_j = p[i].begin();
+			while( itr_j != p[i].end() )
+			{	j = *itr_j++;	
 				// for each row connected to column j
-				for(	itr_i = q[j].begin();
-					itr_i != q[j].end();
-					itr_i++
-				)
+				itr_i = q[j].begin();
+				while( itr_i != q[j].end() )
 				{	// if this is not i, forbid it
-					k = *itr_i;
+					k = *itr_i++;
 					forbidden[ color[k] ] = (k != i);
 				}
 			}
@@ -548,12 +544,9 @@ void ADFun<Base>::SparseJacobianCase(
 
 			// set the corresponding components of the result
 			for(i = 0; i < m; i++) if( color[i] == c )
-			{	for(
-					itr_j = p[i].begin();
-					itr_j != p[i].end();
-					itr_j++
-				)
-				{	j = *itr_j;
+			{	itr_j = p[i].begin();
+				while( itr_j != p[i].end() )
+				{	j = *itr_j++;
 					jac[i * n + j] = dw[j];
 				}
 			}

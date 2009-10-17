@@ -158,11 +158,12 @@ $end
 // Microsoft versions to not run autoconf, so CPPAD_GETTIMEOFDAY may not be
 // set to proper value.
 # ifdef _MSC_VER
-# undef  CPPAD_GETTIMEOFDAY
-# define CPPAD_GETTIMEOFDAY 0
+# define CPPAD_NOT_MICROSOFT 0
+# else
+# define CPPAD_NOT_MICROSOFT 1
 # endif
 
-# if CPPAD_GETTIMEOFDAY
+# if CPPAD_GETTIMEOFDAY & CPPAD_NO_MICROSOFT
 # include <sys/time.h>
 # else
 # include <ctime>
@@ -176,7 +177,7 @@ namespace CppAD { // BEGIN CppAD namespace
 
 inline double speed_test_second(void)
 {
-# if CPPAD_GETTIMEOFDAY
+# if CPPAD_GETTIMEOFDAY & CPPAD_NOT_MICOROSOFT
 	struct timeval value;
 	gettimeofday(&value, CPPAD_NULL);
 	return double(value.tv_sec) + double(value.tv_usec) * 1e-6;

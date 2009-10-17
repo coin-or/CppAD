@@ -320,7 +320,7 @@ void RevSparseJacSet(
 {
 	// temporary indices
 	size_t i, j;
-	std::set<size_t>::iterator itr;
+	std::set<size_t>::const_iterator itr;
 
 	// cannot use CheckSimpleVector when vector elements are sets
 	// because cannot assign an integer to a set.
@@ -347,8 +347,9 @@ void RevSparseJacSet(
 
 	// The sparsity pattern corresponding to the dependent variables
 	for(i = 0; i < p; i++)
-	{	for( itr = s[i].begin(); itr != s[i].end(); itr++)
-		{	j = *itr; 
+	{	itr = s[i].begin();
+		while(itr != s[i].end())
+		{	j = *itr++; 
 			CPPAD_ASSERT_KNOWN(
 				j < m,
 				"RevSparseJac: an element of the set s[i] "
