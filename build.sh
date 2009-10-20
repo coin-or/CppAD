@@ -632,8 +632,11 @@ then
 			echo "Error: check_doxygen.sh failed; see $file."
 			exit 1
 		fi
+		msg="Warning: doxygen version is too old to check for warnings"
+	else
+		msg="OK: doxygen doxyfile"
 	fi
-	echo "OK: doxygen doxyfile" >> $dir/build_test.log
+ 	echo "$msg" >> $dir/build_test.log
 	# -------------------------------------------------------------
 	# Compile
 	#
