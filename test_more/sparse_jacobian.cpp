@@ -263,8 +263,9 @@ bool forward_set()
 # include <valarray>
 bool sparse_jacobian(void)
 {	bool ok = true;
-	typedef std::vector< std::set<size_t> >   vector_set;
-	typedef std::valarray< std::set<size_t> > valarray_set;
+	typedef std::vector< std::set<size_t> >   std_vector_set;
+	typedef std::valarray< std::set<size_t> > std_valarray_set;
+	typedef CppAD::vector< std::set<size_t> > cppad_vector_set;
 	// ---------------------------------------------------------------
 	// vector of bool cases
 	ok &= forward_bool< CppAD::vector<double>, CppAD::vectorBool   >();
@@ -277,14 +278,17 @@ bool sparse_jacobian(void)
 	ok &= reverse_bool< std::valarray<double>, CppAD::vector<bool> >();
 	// ---------------------------------------------------------------
 	// vector of set cases
-	ok &= forward_set< CppAD::vector<double>, vector_set   >();
-	ok &= reverse_set< CppAD::vector<double>, valarray_set >();
+	ok &= forward_set< CppAD::vector<double>, std_vector_set   >();
+	ok &= reverse_set< std::valarray<double>, std_vector_set   >();
 	//
-	ok &= forward_set< std::vector<double>,   vector_set   >();
-	ok &= reverse_set< std::vector<double>,   valarray_set >();
+	ok &= forward_set< std::vector<double>,   cppad_vector_set >();
+	ok &= reverse_set< CppAD::vector<double>, cppad_vector_set >();
 	//
-	ok &= forward_set< std::valarray<double>, vector_set   >();
-	ok &= reverse_set< std::valarray<double>, valarray_set >();
+# ifndef _MSC_VER
+	// there appears to be a bug in valarray on Microsoft compilers
+	ok &= forward_set< std::valarray<double>, std_valarray_set >();
+	ok &= reverse_set< std::valarray<double>, std_valarray_set >();
+# endif
 	// ---------------------------------------------------------------
 	return ok;
 }

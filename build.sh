@@ -113,6 +113,13 @@ then
 	echo "$option_divider"
 	exit 0
 fi
+# ============================================================================
+# check of doxygen version is >= 1.5.7.1 and set doxygen_ver_ok = "0" or "1"
+doxygen_ver=`doxygen --version | sed -e 's/\([^.]*\)\./\1*100 +/'`
+doxygen_ver=`echo $doxygen_ver     | sed -e 's/\([^.]*\)\./(\1)*100 +/'`
+doxygen_ver=`echo $doxygen_ver     | sed -e 's/\([^.]*\)\./(\1)*100 +/'`
+doxygen_ver=$((doxygen_ver))
+doxygen_ver_ok=$((doxygen_ver >= 1050700))
 #
 # Default values used for arguments to configure during this script.
 # These defaults are development system dependent and can be changed.
@@ -452,9 +459,13 @@ then
 	fi
 	if ! ./check_doxygen.sh
 	then
-		dir=`pwd`
-		echo "Error: check_doxygen.sh failed; see $dir/doxygen.log."
-		exit 1
+		if [ "$doxygen_ver_ok" == 1 ]
+		then
+			dir=`pwd`
+			file="$dir/doxygen.log"
+			echo "Error: check_doxygen.sh failed; see $file."
+			exit 1
+		fi
 	fi
 	#
 	echo "pushd doxydoc/latex ; make >& ../../doxygen_tex.log"
@@ -614,9 +625,13 @@ then
 	fi
 	if ! ./check_doxygen.sh
 	then
-		dir=`pwd`
-		echo "Error: check_doxygen.sh failed, see $dir/doxygen.log."
-		exit 1
+		if [ "$doxygen_ver_ok" == 1 ]
+		then
+			dir=`pwd`
+			file="$dir/doxygen.log"
+			echo "Error: check_doxygen.sh failed; see $file."
+			exit 1
+		fi
 	fi
 	echo "OK: doxygen doxyfile" >> $dir/build_test.log
 	# -------------------------------------------------------------
