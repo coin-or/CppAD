@@ -138,6 +138,9 @@
 				RelativePath=".\atan_2.cpp">
 			</File>
 			<File
+				RelativePath=".\check_simple_vector.cpp">
+			</File>
+			<File
 				RelativePath=".\compare.cpp">
 			</File>
 			<File
