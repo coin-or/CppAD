@@ -48,9 +48,9 @@ PROGRAMS = $(noinst_PROGRAMS)
 am__test_more_SOURCES_DIST = base_adolc.cpp \
 	../ipopt_cppad/ipopt_cppad_nlp.cpp ipopt_cppad.cpp \
 	test_more.cpp abs.cpp acos.cpp asin.cpp add.cpp add_eq.cpp \
-	add_zero.cpp atan.cpp atan_2.cpp compare.cpp \
-	compare_change.cpp cond_exp.cpp cond_exp_ad.cpp copy.cpp \
-	cos.cpp cosh.cpp dbl_epsilon.cpp div.cpp div_eq.cpp \
+	add_zero.cpp atan.cpp atan_2.cpp check_simple_vector.cpp \
+	compare.cpp compare_change.cpp cond_exp.cpp cond_exp_ad.cpp \
+	copy.cpp cos.cpp cosh.cpp dbl_epsilon.cpp div.cpp div_eq.cpp \
 	div_zero_one.cpp erf.cpp exp.cpp for_hess.cpp \
 	for_sparse_jac.cpp forward.cpp from_base.cpp fun_check.cpp \
 	jacobian.cpp log.cpp log_10.cpp mul.cpp mul_eq.cpp \
@@ -69,7 +69,8 @@ am_test_more_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	test_more.$(OBJEXT) abs.$(OBJEXT) acos.$(OBJEXT) \
 	asin.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
 	add_zero.$(OBJEXT) atan.$(OBJEXT) atan_2.$(OBJEXT) \
-	compare.$(OBJEXT) compare_change.$(OBJEXT) cond_exp.$(OBJEXT) \
+	check_simple_vector.$(OBJEXT) compare.$(OBJEXT) \
+	compare_change.$(OBJEXT) cond_exp.$(OBJEXT) \
 	cond_exp_ad.$(OBJEXT) copy.$(OBJEXT) cos.$(OBJEXT) \
 	cosh.$(OBJEXT) dbl_epsilon.$(OBJEXT) div.$(OBJEXT) \
 	div_eq.$(OBJEXT) div_zero_one.$(OBJEXT) erf.$(OBJEXT) \
@@ -279,6 +280,7 @@ test_more_SOURCES = \
 	add_zero.cpp \
 	atan.cpp \
 	atan_2.cpp \
+	check_simple_vector.cpp \
 	compare.cpp \
 	compare_change.cpp \
 	cond_exp.cpp \
@@ -392,6 +394,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan_2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base_adolc.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_simple_vector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compare.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compare_change.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cond_exp.Po@am__quote@

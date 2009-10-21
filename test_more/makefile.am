@@ -75,6 +75,7 @@ test_more_SOURCES  = \
 	add_zero.cpp \
 	atan.cpp \
 	atan_2.cpp \
+	check_simple_vector.cpp \
 	compare.cpp \
 	compare_change.cpp \
 	cond_exp.cpp \

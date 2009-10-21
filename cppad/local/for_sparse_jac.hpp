@@ -340,9 +340,15 @@ void ForSparseJacSet(
 	size_t i, j;
 	std::set<size_t>::const_iterator itr;
 
-	// cannot use CheckSimpleVector when vector elements are sets
-	// because cannot assign an integer to a set.
-	// CheckSimpleVector<std::set<size_t>, VectorSet>();
+	// check VectorSet is Simple Vector class with sets for elements
+	static std::set<size_t> two, three;
+	if( two.empty() )
+	{	two.insert(2);
+		three.insert(3);
+	}
+	CPPAD_ASSERT_UNKNOWN( two.size() == 1 );
+	CPPAD_ASSERT_UNKNOWN( three.size() == 1 );
+	CheckSimpleVector<std::set<size_t>, VectorSet>(two, three);
 
 	// range and domain dimensions for F
 	size_t m = dep_taddr.size();

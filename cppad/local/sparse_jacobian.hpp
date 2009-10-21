@@ -123,6 +123,8 @@ $xref/SimpleVector/Elements of Specified Type/elements of type/$$
 $code bool$$ or $code std::set<size_t>$$;
 see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
 of the difference.
+The routine $cref/CheckSimpleVector/$$ will generate an error message
+if this is not the case.
 
 $head Uses Forward$$
 After each call to $cref/Forward/$$,
@@ -380,9 +382,15 @@ void ADFun<Base>::SparseJacobianCase(
 	const Base zero(0);
 	const Base one(1);
 
-	// cannot use CheckSimpleVector when vector elements are sets
-	// because cannot assign an integer to a set.
-	// CheckSimpleVector<std::set<size_t>, VectorSet>();
+	// check VectorSet is Simple Vector class with sets for elements
+	static std::set<size_t> two, three;
+	if( two.empty() )
+	{	two.insert(2);
+		three.insert(3);
+	}
+	CPPAD_ASSERT_UNKNOWN( two.size() == 1 );
+	CPPAD_ASSERT_UNKNOWN( three.size() == 1 );
+	CheckSimpleVector<std::set<size_t>, VectorSet>(two, three);
 
 	// check VectorBase is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();

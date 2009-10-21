@@ -58,6 +58,13 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 10-21$$
+The $cref/CheckSimpleVector/$$ function was extended so that
+it can check simple vectors where the elements of the vector
+can not be assigned to integer values.
+This was done by adding the $cref/x, y/CheckSimpleVector/x, y/$$
+arguments to $code CheckSimpleVector$$.
+
 $head 10-16$$
 The $cref/sparse_jacobian/$$ routine was extended so the user can now choose
 between vectors of sets and boolean vectors for representing
