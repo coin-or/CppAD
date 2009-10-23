@@ -31,12 +31,8 @@ $$
 $end
 */
 // BEGIN PROGRAM
-
 # include <cppad/cppad.hpp>
-namespace { // ---------------------------------------------------------
-// define the template function in empty namespace
-template <class VectorBase, class VectorBool> 
-bool Case()
+bool sparse_hessian(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
@@ -59,59 +55,65 @@ bool Case()
 	CppAD::ADFun<double> f(X, Y);
 
 	// new value for the independent variable vector
-	VectorBase x(n);
+	CPPAD_TEST_VECTOR<double> x(n);
 	for(i = 0; i < n; i++)
 		x[i] = double(i);
 
 	// second derivative of y[1] 
-	VectorBase w(m);
+	CPPAD_TEST_VECTOR<double> w(m);
 	w[0] = 1.;
-	VectorBase h( n * n );
+	CPPAD_TEST_VECTOR<double> h( n * n );
 	h = f.SparseHessian(x, w);
 	/*
 	    [ 2 1 0 ]
 	h = [ 1 2 0 ]
             [ 0 0 2 ]
 	*/
-	VectorBase check(n * n);
+	CPPAD_TEST_VECTOR<double> check(n * n);
 	check[0] = 2.; check[1] = 1.; check[2] = 0.;
 	check[3] = 1.; check[4] = 2.; check[5] = 0.;
 	check[6] = 0.; check[7] = 0.; check[8] = 2.;
 	for(k = 0; k < n * n; k++)
 		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
 
+	// use vectors of bools to compute sparse hessian -------------------
 	// determine the sparsity pattern p for Hessian of w^T F
-        VectorBool r(n * n);
+        CPPAD_TEST_VECTOR<bool> r_bool(n * n);
         for(j = 0; j < n; j++)
         {       for(k = 0; k < n; k++)
-                        r[j * n + k] = false;
-                r[j * n + j] = true;
+                        r_bool[j * n + k] = false;
+                r_bool[j * n + j] = true;
         }
-        f.ForSparseJac(n, r);
+        f.ForSparseJac(n, r_bool);
         //
-        VectorBool s(m);
+        CPPAD_TEST_VECTOR<bool> s_bool(m);
         for(i = 0; i < m; i++)
-                s[i] = w[i] != 0;
-        VectorBool p = f.RevSparseHes(n, s);
+                s_bool[i] = w[i] != 0;
+        CPPAD_TEST_VECTOR<bool> p_bool = f.RevSparseHes(n, s_bool);
 
 	// test passing sparsity pattern
-	h = f.SparseHessian(x, w, p);
+	h = f.SparseHessian(x, w, p_bool);
 	for(k = 0; k < n * n; k++)
 		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
 
-	return ok;
-}
-} // End empty namespace 
-# include <vector>
-# include <valarray>
-bool sparse_hessian(void)
-{	bool ok = true;
-	// Run with VectorBase equal to three different cases
-	// all of which are Simple Vectors with elements of type double.
-	// Also vary the type of vector for VectorBool.
-	ok &= Case< CppAD::vector  <double>, CppAD::vectorBool   >();
-	ok &= Case< std::vector    <double>, CppAD::vector<bool> >();
-	ok &= Case< std::valarray  <double>, std::vector<bool>   >();
+	// use vectors of sets to compute sparse hessian ------------------
+	// determine the sparsity pattern p for Hessian of w^T F
+        CPPAD_TEST_VECTOR< std::set<size_t> > r_set(n);
+        for(j = 0; j < n; j++)
+                r_set[j].insert(j);
+        f.ForSparseJac(n, r_set);
+        //
+        CPPAD_TEST_VECTOR< std::set<size_t> > s_set(1);
+        for(i = 0; i < m; i++)
+		if( w[i] != 0. )
+			s_set[0].insert(i);
+        CPPAD_TEST_VECTOR< std::set<size_t> > p_set = f.RevSparseHes(n, s_set);
+
+	// test passing sparsity pattern
+	h = f.SparseHessian(x, w, p_set);
+	for(k = 0; k < n * n; k++)
+		ok &=  NearEqual(check[k], h[k], 1e-10, 1e-10 );
+
 	return ok;
 }
 // END PROGRAM

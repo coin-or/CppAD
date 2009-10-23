@@ -58,6 +58,11 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 10-23$$
+The $cref/sparse_hessian/$$ routine was extended so the user can now choose
+between vectors of sets and boolean vectors for representing
+$cref/sparsity patterns/glossary/Sparsity Pattern/$$.
+
 $head 10-21$$
 The $cref/CheckSimpleVector/$$ function was extended so that
 it can check simple vectors where the elements of the vector

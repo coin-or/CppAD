@@ -71,6 +71,7 @@ extern bool SimpleVector(void);
 extern bool Sin(void);
 extern bool SinCos(void);
 extern bool Sinh(void);
+extern bool sparse_hessian(void);
 extern bool sparse_jacobian(void);
 extern bool sparse_vec_ad(void);
 extern bool Sqrt(void);
@@ -167,6 +168,7 @@ int main(void)
 	ok &= Run( Sin,             "Sin"            );
 	ok &= Run( SinCos,          "SinCos"         );
 	ok &= Run( Sinh,            "Sinh"           );
+	ok &= Run( sparse_hessian,  "sparse_hessian" );
 	ok &= Run( sparse_jacobian, "sparse_jacobian");
 	ok &= Run( sparse_vec_ad,   "sparse_vec_ad"  );
 	ok &= Run( Sqrt,            "Sqrt"           );

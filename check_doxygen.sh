@@ -66,6 +66,7 @@ file_list="
 	store_op.hpp
 	sub_op.hpp
 	sparse_jacobian.hpp
+	sparse_hessian.hpp
 	sparse_pack.hpp
 	sparse_set.hpp
 "

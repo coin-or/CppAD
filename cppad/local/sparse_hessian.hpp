@@ -16,6 +16,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sparse_hessian$$
 $spell
+	CppAD
+	valarray
+	std
 	Bool
 	hes
 	const
@@ -32,15 +35,15 @@ $codei%%hes% = %f%.SparseHessian(%x%, %w%)
 $codei%%hes% = %f%.SparseHessian(%x%, %w%, %p%)%$$
 
 $head Purpose$$
-We use $latex F : B^n \rightarrow B^m$$ do denote the
+We use $latex F : \R^n \rightarrow \R^m$$ do denote the
 $cref/AD function/glossary/AD Function/$$
 corresponding to $icode f$$. 
 The syntax above sets $icode hes$$ to the Hessian 
 $latex \[
 	hes = \dpow{2}{x} \sum_{i=1}^m w_i F_i (x) 
 \] $$
-This is a preliminary implementation of a method for using the fact
-that the matrix is sparse to reduce the amount of computation necessary.
+This routine assumes  that the matrix $icode hes$$ is sparse
+and uses this assumption sparse to reduce the amount of computation necessary.
 One should use speed tests to verify that results are computed faster
 than when using the routine $cref/Hessian/$$.
 
@@ -55,7 +58,7 @@ Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$
 $head x$$
 The argument $icode x$$ has prototype
 $codei%
-	const %VectorBase% &%x%
+	const %VectorBase%& %x%
 %$$
 (see $cref/VectorBase/sparse_hessian/VectorBase/$$ below)
 and its size 
@@ -67,36 +70,42 @@ that point at which to evaluate the Hessian.
 $head w$$
 The argument $icode w$$ has prototype
 $codei%
-	const %VectorBase% &%w%
+	const %VectorBase%& %w%
 %$$
 and size $latex m$$.
 It specifies the value of $latex w_i$$ in the expression 
 for $icode hes$$.
 The more components of $latex w$$ that are identically zero,
-the more spares the resulting Hessian may be (and hence the more efficient
+the more sparse the resulting Hessian may be (and hence the more efficient
 the calculation of $icode hes$$ may be).
 
 $head p$$
 The argument $icode p$$ is optional and has prototype
-$syntax%
-	const %VectorBool% &%p%
+$codei%
+	const %VectorSet%& %p%
 %$$
-(see $cref/VectorBool/sparse_hessian/VectorBool/$$ below)
-and its size is $latex n * n$$.
-It specifies a 
+(see $cref/VectorSet/sparse_hessian/VectorSet/$$ below)
+If it has elements of type $code bool$$,
+its size is $latex n * n$$.
+If it has elements of type $code std::set<size_t>$$,
+its size is $latex n$$ and all its set elements are between
+zero and $latex n - 1$$.
+It specifies a
 $cref/sparsity pattern/glossary/Sparsity Pattern/$$ 
-for the Hessian; i.e.,
-for $latex j = 0 , \ldots , n-1$$ and $latex k = 0 , \ldots , n-1$$.
-$latex \[
-	\sum_i w_i \DD{ F_i }{ x_j }{ x_k } \neq 0 
-		; \Rightarrow \; p [ j * n + k ] = {\rm true}
-\] $$
+for the Hessian $icode hes$$.
 $pre
 
 $$
 If this sparsity pattern does not change between calls to 
 $codei SparseHessian$$, it should be faster to calculate $icode p$$ once and
 pass this argument to $codei SparseHessian$$.
+In addition,
+if you specify $icode p$$, CppAD will use the same
+type of sparsity representation
+(vectors of $code bool$$ or vectors of $code std::set<size_t>$$)
+for its internal calculations.
+Otherwise, the representation
+for the internal calculations is unspecified.
 
 $head hes$$
 The result $icode hes$$ has prototype
@@ -117,15 +126,22 @@ $icode Base$$.
 The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head VectorBool$$
-The type $icode VectorBool$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type bool/$$.
+$head VectorSet$$
+The type $icode VectorSet$$ must be a $xref/SimpleVector/$$ class with
+$xref/SimpleVector/Elements of Specified Type/elements of type/$$
+$code bool$$ or $code std::set<size_t>$$;
+see $cref/sparsity pattern/glossary/Sparsity Pattern/$$ for a discussion
+of the difference.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
-In order to save memory, 
-you may want to use a class that packs multiple elements into one
-storage location; for example,
-$cref/vectorBool/CppAD_vector/vectorBool/$$.
+
+$subhead Restrictions$$
+If $icode VectorSet$$ has elements of $code std::set<size_t>$$,
+then $icode%p%[%i%]%$$ must return a reference (not a copy) to the 
+corresponding set.
+According to section 26.3.2.3 of the 1998 C++ standard,
+$code std::valarray< std::set<size_t> >$$ does not satisfy
+this condition. 
 
 $head Uses Forward$$
 After each call to $cref/Forward/$$,
@@ -147,55 +163,57 @@ It return $code true$$, if it succeeds and $code false$$ otherwise.
 $end
 -----------------------------------------------------------------------------
 */
+CPPAD_BEGIN_NAMESPACE
 
+#
+/*!
+\file sparse_hessian.hpp
+Sparse Hessian driver routine and helper functions.
+*/
 
+/*!
+Private helper function for SparseHessian(x, w, p).
 
+All of the description in the public member function SparseHessian(x, w, p)
+applies.
 
-//  BEGIN CppAD namespace
-namespace CppAD {
+\param set_type
+is a \c bool value. This argument is used to dispatch to the proper source
+code depending on the value of \c VectorSet::value_type.
 
-template <typename Base>
-template <typename VectorBase>
-VectorBase ADFun<Base>::SparseHessian(const VectorBase &x, const VectorBase &w)
-{	size_t i, j, k;
+\param x
+See \c SparseHessian(x, w, p).
 
-	typedef CppAD::vector<bool>   VectorBool;
+\param w
+See \c SparseHessian(x, w, p).
 
-	size_t m = Range();
-	size_t n = Domain();
+\param p
+See \c SparseHessian(x, w, p).
 
-	// determine the sparsity pattern p for Hessian of w^T F
-	VectorBool r(n * n);
-	for(j = 0; j < n; j++)
-	{	for(k = 0; k < n; k++)
-			r[j * n + k] = false;
-		r[j * n + j] = true;
-	}
-	ForSparseJac(n, r);
-	//
-	VectorBool s(m);
-	for(i = 0; i < m; i++)
-		s[i] = w[i] != 0;
-	VectorBool p = RevSparseHes(n, s);
+\param hes
+is the return value for the corresponding call to \c SparseHessian(x, w, p).
+On input, it must have size equal to the domain times range dimension
+for this ADFun<Base> object.
+On return, it will contain the Hessian.
+*/
 
-	// compute sparse Hessian
-	return SparseHessian(x, w, p);
-}
-
-template <typename Base>
-template <typename VectorBase, typename VectorBool>
-VectorBase ADFun<Base>::SparseHessian(
-	const VectorBase &x ,
-	const VectorBase &w ,
-	const VectorBool &p )
+template <class Base>
+template <class VectorBase, class VectorSet>
+void ADFun<Base>::SparseHessianCase(
+	bool               set_type         ,
+	const VectorBase&  x                ,
+	const VectorBase&  w                ,
+	const VectorSet&   p                ,
+	VectorBase&        hes              )
 {
 	typedef CppAD::vector<size_t> SizeVector;
+	typedef CppAD::vectorBool     VectorBool;
 	size_t j, k, l;
 
 	size_t n = Domain();
 
 	// check Vector is Simple Vector class with bool elements
-	CheckSimpleVector<bool, VectorBool>();
+	CheckSimpleVector<bool, VectorSet>();
 
 	// check Vector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();
@@ -210,8 +228,8 @@ VectorBase ADFun<Base>::SparseHessian(
 	);
 	CPPAD_ASSERT_KNOWN(
 		p.size() == n * n,
-		"SparseHessian: size of p not equal square of"
-		" domain dimension for f"
+		"SparseHessian: using bool values and size of p "
+		"not equal square of domain dimension for f"
 	);
 	
 	// initial coloring
@@ -222,7 +240,7 @@ VectorBase ADFun<Base>::SparseHessian(
 	// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
 	// Graph Coloring in Optimization Revisited by
 	// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
-	VectorBool    forbidden(n);
+	VectorBool forbidden(n);
 	for(j = 0; j < n; j++)
 	{	// initial all colors as ok for this column
 		for(k = 0; k < n; k++)
@@ -250,11 +268,10 @@ VectorBase ADFun<Base>::SparseHessian(
 	// point at which we are evaluating the Hessian
 	Forward(0, x);
 
-	// define the return value
-	VectorBase h(n * n);
+	// initialize the return value
 	for(j = 0; j < n; j++)
 		for(k = 0; k < n; k++)
-			h[j * n + k] = zero;
+			hes[j * n + k] = zero;
 
 	// direction vector for calls to forward
 	VectorBase u(n);
@@ -281,12 +298,271 @@ VectorBase ADFun<Base>::SparseHessian(
 		for(j = 0; j < n; j++) if( color[j] == c )
 		{	for(l = 0; l < n; l++) 
 				if( p[ l * n + j ] )
-					h[l * n + j] = ddw[l * 2 + 1];
+					hes[l * n + j] = ddw[l * 2 + 1];
 		}
 	}
-	return h;
+}
+/*!
+Private helper function for SparseHessian(x, w, p).
+
+All of the description in the public member function SparseHessian(x, w, p)
+applies.
+
+\param set_type
+is a \c std::set<size_t> value.
+This argument is used to dispatch to the proper source
+code depending on the value of \c VectorSet::value_type.
+
+\param x
+See \c SparseHessian(x, w, p).
+
+\param w
+See \c SparseHessian(x, w, p).
+
+\param p
+See \c SparseHessian(x, w, p).
+
+\param hes
+is the return value for the corresponding call to \c SparseHessian(x, w, p).
+On input, it must have size equal to the domain times range dimension
+for this ADFun<Base> object.
+On return, it will contain the Hessian.
+*/
+
+template <class Base>
+template <class VectorBase, class VectorSet>
+void ADFun<Base>::SparseHessianCase(
+	const std::set<size_t>&  set_type         ,
+	const VectorBase&        x                ,
+	const VectorBase&        w                ,
+	const VectorSet&         p                ,
+	VectorBase&              hes              )
+{
+	typedef CppAD::vector<size_t> SizeVector;
+	typedef CppAD::vectorBool     VectorBool;
+	size_t j, k, l;
+
+	size_t n = Domain();
+
+	// check VectorSet is Simple Vector class with sets for elements
+	static std::set<size_t> two, three;
+	if( two.empty() )
+	{	two.insert(2);
+		three.insert(3);
+	}
+	CPPAD_ASSERT_UNKNOWN( two.size() == 1 );
+	CPPAD_ASSERT_UNKNOWN( three.size() == 1 );
+	CheckSimpleVector<std::set<size_t>, VectorSet>(two, three);
+
+	// check Vector is Simple Vector class with Base type elements
+	CheckSimpleVector<Base, VectorBase>();
+
+	CPPAD_ASSERT_KNOWN(
+		x.size() == n,
+		"SparseHessian: size of x not equal domain dimension for f"
+	); 
+	CPPAD_ASSERT_KNOWN(
+		w.size() == Range(),
+		"SparseHessian: size of w not equal range dimension for f"
+	);
+	CPPAD_ASSERT_KNOWN(
+		p.size() == n,
+		"SparseHessian: using set values and size of p "
+		"not equal domain dimension for f"
+	);
+	
+	// initial coloring
+	SizeVector color(n);
+	for(j = 0; j < n; j++)
+		color[j] = j;
+
+	// See GreedyPartialD2Coloring Algorithm Section 3.6.2 of
+	// Graph Coloring in Optimization Revisited by
+	// Assefaw Gebremedhin, Fredrik Maane, Alex Pothen
+	VectorBool forbidden(n);
+	std::set<size_t>::const_iterator itr_k, itr_l;
+	for(j = 0; j < n; j++)
+	{	// initial all colors as ok for this column
+		for(k = 0; k < n; k++)
+			forbidden[k] = false;
+
+		// for each row that is connected to column j
+		itr_l = p[j].begin();
+		while( itr_l != p[j].end() )
+		{	l = *itr_l++;
+			// for each column that is connected to row l
+			// (same as each row that is connect to column l)
+			itr_k = p[l].begin();
+			while( itr_k != p[l].end() )
+			{	k = *itr_k++;
+				forbidden[ color[k] ] = (j != k);
+			}
+		}
+		k = 0;
+		while( forbidden[k] && k < n )
+		{	k++;
+			CPPAD_ASSERT_UNKNOWN( k < n );
+		}
+		color[j] = k;
+	}
+	size_t n_color = 1;
+	for(k = 0; k < n; k++) n_color = std::max(n_color, color[k] + 1);
+
+	// some values
+	const Base zero(0);
+	const Base one(1);
+
+	// point at which we are evaluating the Hessian
+	Forward(0, x);
+
+	// initialize the return value
+	for(j = 0; j < n; j++)
+		for(k = 0; k < n; k++)
+			hes[j * n + k] = zero;
+
+	// direction vector for calls to forward
+	VectorBase u(n);
+
+	// location for return values from Reverse
+	VectorBase ddw(n * 2);
+
+	// loop over colors
+	size_t c;
+	for(c = 0; c < n_color; c++)
+	{	// determine all the colums with this color
+		for(j = 0; j < n; j++)
+		{	if( color[j] == c )
+				u[j] = one;
+			else	u[j] = zero;
+		}
+		// call forward mode for all these columns at once
+		Forward(1, u);
+
+		// evaluate derivative of w^T * F'(x) * u
+		ddw = Reverse(2, w);
+
+		// set the corresponding components of the result
+		for(j = 0; j < n; j++) if( color[j] == c )
+		{	itr_l = p[j].begin();
+			while( itr_l != p[j].end() )
+			{	l = *itr_l++;
+				hes[l * n + j] = ddw[l * 2 + 1];
+			}
+		}
+	}
 }
 
-} // END CppAD namespace
+/*!
+Compute a sparse Hessian.
 
+The C++ source code coresponding to this operation is
+\verbatim
+	hes = SparseHessian(x, w)
+\endverbatim
+
+
+\tparam Base
+is the base type for the recording that is stored in this
+ADFun<Base object.
+
+\tparam VectorBase
+is a simple vector class with elements of the \a Base.
+
+\tparam VectorSet
+is a simple vector class with elements of type
+\c bool or \c std::set<size_t>.
+
+\param x
+is a vector specifing the point at which to compute the Hessian.
+
+\param w
+The Hessian is computed for a weighted sum of the components
+of the function corresponding to this ADFun<Base> object.
+The argument \a w specifies the weights for each component.
+It must have size equal to the range dimension for this ADFun<Base> object.
+
+\param p
+is a sparsity pattern for the Hessian.
+
+\return
+Will be a vector of size \c n * n containing the Hessian of 
+at the point specified by \a x
+(where \c n is the domain dimension for this ADFun<Base> object).
+*/
+template <class Base>
+template <class VectorBase, class VectorSet>
+VectorBase ADFun<Base>::SparseHessian(
+	const VectorBase& x, const VectorBase& w, const VectorSet& p
+)
+{	size_t n = Domain();
+	VectorBase hes(n * n);
+
+	typedef typename VectorSet::value_type Set_type;
+	SparseHessianCase(Set_type(), x, w, p, hes);
+
+	return hes;
+}
+
+/*!
+Compute a sparse Hessian
+
+The C++ source code coresponding to this operation is
+\verbatim
+	hes = SparseHessian(x, w)
+\endverbatim
+
+
+\tparam Base
+is the base type for the recording that is stored in this
+ADFun<Base object.
+
+\tparam VectorBase
+is a simple vector class with elements of the \a Base.
+
+\param x
+is a vector specifing the point at which to compute the Hessian.
+
+\param w
+The Hessian is computed for a weighted sum of the components
+of the function corresponding to this ADFun<Base> object.
+The argument \a w specifies the weights for each component.
+It must have size equal to the range dimension for this ADFun<Base> object.
+
+\return
+Will be a vector of size \c n * n containing the Hessian of 
+at the point specified by \a x
+(where \c n is the domain dimension for this ADFun<Base> object).
+*/
+template <class Base>
+template <class VectorBase>
+VectorBase ADFun<Base>::SparseHessian(const VectorBase &x, const VectorBase &w)
+{	size_t i, j, k;
+	typedef CppAD::vectorBool VectorBool;
+
+	size_t m = Range();
+	size_t n = Domain();
+
+	// determine the sparsity pattern p for Hessian of w^T F
+	VectorBool r(n * n);
+	for(j = 0; j < n; j++)
+	{	for(k = 0; k < n; k++)
+			r[j * n + k] = false;
+		r[j * n + j] = true;
+	}
+	ForSparseJac(n, r);
+	//
+	VectorBool s(m);
+	for(i = 0; i < m; i++)
+		s[i] = w[i] != 0;
+	VectorBool p = RevSparseHes(n, s);
+
+	// compute sparse Hessian
+	VectorBase hes(n * n);
+	bool set_type = true; // only used to dispatch compiler to proper case
+	SparseHessianCase(set_type, x, w, p, hes);
+
+	return hes;
+}
+
+CPPAD_END_NAMESPACE
 # endif

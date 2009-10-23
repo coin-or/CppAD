@@ -198,6 +198,27 @@ private:
 		const VectorSet&         p           ,
 		VectorBase&              jac
 	);
+	// ------------------------------------------------------------
+	// vector of bool version of SparseHessian
+	// (see doxygen in sparse_hessian.hpp)
+	template <class VectorBase, class VectorSet>
+	void SparseHessianCase(
+		bool                     set_type    ,
+		const VectorBase&        x           ,
+		const VectorBase&        w           ,
+		const VectorSet&         p           ,
+		VectorBase&              hes
+	);
+	// vector of std::set<size_t> version of SparseHessian
+	// (see doxygen in sparse_hessian.hpp)
+	template <class VectorBase, class VectorSet>
+	void SparseHessianCase(
+		const std::set<size_t>&  set_type    ,
+		const VectorBase&        x           ,
+		const VectorBase&        w           ,
+		const VectorSet&         p           ,
+		VectorBase&              hes
+	);
 // ------------------------------------------------------------
 public:
 	/// default constructor

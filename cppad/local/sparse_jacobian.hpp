@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin sparse_jacobian$$
 $spell
+	valarray
 	std
 	CppAD
 	Bool
@@ -43,8 +44,8 @@ $latex \[
 	jac = F^{(1)} (x) 
 \] $$
 This routine assumes
-that the matrix $latex F^{(1)} (x) \in \R^{m \times n}$$
-is uses this assumption to reduce the amount of computation necessary.
+that the matrix $latex F^{(1)} (x) \in \R^{m \times n}$$ is sparse
+and uses this assumption to reduce the amount of computation necessary.
 One should use speed tests (e.g. $cref/speed_test/$$)
 to verify that results are computed faster
 than when using the routine $cref/Jacobian/$$.
@@ -95,7 +96,7 @@ if you specify $icode p$$, CppAD will use the same
 type of sparsity representation 
 (vectors of $code bool$$ or vectors of $code std::set<size_t>$$)
 for its internal calculations.
-Otherwise the representation
+Otherwise, the representation
 for the internal calculations is unspecified.
 
 $head jac$$
@@ -126,6 +127,14 @@ of the difference.
 The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
+$subhead Restrictions$$
+If $icode VectorSet$$ has elements of $code std::set<size_t>$$,
+then $icode%p%[%i%]%$$ must return a reference (not a copy) to the 
+corresponding set.
+According to section 26.3.2.3 of the 1998 C++ standard,
+$code std::valarray< std::set<size_t> >$$ does not satisfy
+this condition. 
+
 $head Uses Forward$$
 After each call to $cref/Forward/$$,
 the object $icode f$$ contains the corresponding 
@@ -149,7 +158,7 @@ CPPAD_BEGIN_NAMESPACE
 
 /*!
 \file sparse_jacobian.hpp
-Computing sparse Jacobians.
+Sparse Jacobian driver routine and helper functions.
 */
 
 /*!
@@ -160,7 +169,7 @@ applies.
 
 \param set_type
 is a \c bool value. This argument is used to dispatch to the proper souce
-code depending on the vlaue of \c VectorSet::value_type.
+code depending on the value of \c VectorSet::value_type.
 
 \param x
 See \c SparseJacobian(x, p).
@@ -170,7 +179,7 @@ See \c SparseJacobian(x, p).
 
 \param jac
 is the return value for the corresponding call to \c SparseJacobian(x, p).
-On input it must have size equalt to the domain times range dimension
+On input, it must have size equal to the domain times range dimension
 for this ADFun<Base> object.
 On return, it will contain the Jacobian.
 */
@@ -205,8 +214,8 @@ void ADFun<Base>::SparseJacobianCase(
 	); 
 	CPPAD_ASSERT_KNOWN(
 		p.size() == m * n,
-		"SparseJacobian: size of p not equal range dimension times "
-		" domain dimension for f"
+		"SparseJacobian: using bool values and size of p "
+		" not equal range dimension times domain dimension for f"
 	); 
 	CPPAD_ASSERT_UNKNOWN(jac.size() == m * n); 
 
@@ -401,7 +410,8 @@ void ADFun<Base>::SparseJacobianCase(
 	); 
 	CPPAD_ASSERT_KNOWN(
 		p.size() == m,
-		"SparseJacobian: size of p not equal range dimension for f"
+		"SparseJacobian: using sets and size of p "
+		"not equal range dimension for f"
 	); 
 	CPPAD_ASSERT_UNKNOWN(jac.size() == m * n); 
 
@@ -575,7 +585,7 @@ is the base type for the recording that is stored in this
 ADFun<Base object.
 
 \tparam VectorBase
-is a simple vector class with elements of the \a Base.
+is a simple vector class with elements of type \a Base.
 
 \tparam VectorSet
 is a simple vector class with elements of type 
@@ -625,13 +635,13 @@ is a simple vector class with elements of the \a Base.
 is a vector specifing the point at which to compute the Jacobian.
 
 \return
-Will be a vector if size \c m * n containing the Jacobian at the
+Will be a vector of size \c m * n containing the Jacobian at the
 specified point (in row major order).
 */
 template <class Base>
 template <class VectorBase>
 VectorBase ADFun<Base>::SparseJacobian( const VectorBase& x )
-{	typedef CppAD::vector<bool>   VectorBool;
+{	typedef CppAD::vectorBool   VectorBool;
 
 	size_t m = Range();
 	size_t n = Domain();
@@ -666,7 +676,7 @@ VectorBase ADFun<Base>::SparseJacobian( const VectorBase& x )
 		}
 		p = RevSparseJac(m, s);
 	}
-	bool set_type = true; // only type is used (to dispatch to proper case)
+	bool set_type = true; // only used to dispatch compiler to proper case
 	SparseJacobianCase(set_type, x, p, jac);
 	return jac;
 }
