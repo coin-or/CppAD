@@ -58,6 +58,18 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 10-24$$
+Added the $cref/assignment operator/FunConstruct/Assignment Operator/$$
+to the $code ADFun$$ object class.
+This makes a copy of the entire operation sequence in another 
+function object.
+The intention is that the two functions objects can do calculations in
+parallel.
+In addition,
+CppAD now check for the $code ADFun$$ 
+$cref/copy constructor/FunConstruct/Copy Constructor/$$
+and generates an error message if it is used.
+
 $head 10-23$$
 The $cref/sparse_hessian/$$ routine was extended so the user can now choose
 between vectors of sets and boolean vectors for representing

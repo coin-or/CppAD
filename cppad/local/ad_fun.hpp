@@ -118,6 +118,13 @@ private:
 // ------------------------------------------------------------
 // Private member functions
 
+# ifdef NDEBUG
+	// disable use of the copy constructor
+	// private if NDEBUG is defined, and public otherwise
+	inline ADFun(const ADFun &f)
+	{	CPPAD_ASSERT_UNKNOWN(false); }
+# endif
+
 	/// change the operation sequence corresponding to this object
 	template <typename ADvector>
 	void Dependent(ADTape<Base> *tape, const ADvector &y);
@@ -221,10 +228,25 @@ private:
 	);
 // ------------------------------------------------------------
 public:
-	/// default constructor
-	ADFun(void) 
+# ifndef NDEBUG
+	/// copy constructor
+	// priviate if NDEBUG is defined, and public otherwise
+	ADFun(const ADFun& g) 
 	: total_num_var_(0), taylor_(CPPAD_NULL)
-	{ }
+	{	CPPAD_ASSERT_KNOWN(
+		false,
+		"Attempting to use the ADFun<Base> copy constructor.\n"
+		"Perhaps you are passing an ADFun<Base> object "
+		"by value instead of by reference."
+		);
+	 }
+# endif
+	/// default constructor
+	ADFun(void); 
+
+	// assignment operator
+	// (see doxygen in fun_construct.hpp)
+	void operator=(const ADFun& f);
 
 	/// sequence constructor
 	template <typename ADvector>

@@ -108,7 +108,10 @@ public:
 			CPPAD_TRACK_DEL_VEC(rec_text_);
 	}
 
-	/*!  Creating an object that palys back an operation sequence.
+	// ===============================================================
+	// Begin two functions with idential code but different argument types.
+	/*!  
+ 	Moving an operation sequence from a recorder to a player
  
 	\param rec
 	the object that was used to record the operation sequence.
@@ -189,6 +192,91 @@ public:
 		for(i = 0; i < num_rec_vecad_ind_; i += rec_vecad_ind_[i] + 1)
 			num_rec_vecad_vec_++;
 	}
+
+	/*!  
+ 	Copying an operation sequence from one player to another
+ 
+	\param play
+	the object that contains the operatoion sequence to copy.
+ 	*/
+	void operator=(const player& play)
+	{	size_t i;
+
+		if( num_rec_op_ > 0 )
+			CPPAD_TRACK_DEL_VEC(rec_op_);
+		if( num_rec_vecad_ind_ > 0 )
+			CPPAD_TRACK_DEL_VEC(rec_vecad_ind_);
+		if( num_rec_op_arg_ > 0 )
+			CPPAD_TRACK_DEL_VEC(rec_op_arg_);
+		if( num_rec_par_ > 0 )
+			CPPAD_TRACK_DEL_VEC(rec_par_);
+		if( num_rec_text_ > 0 )
+			CPPAD_TRACK_DEL_VEC(rec_text_);
+
+		// Var
+		num_rec_var_        = play.num_rec_var_;
+
+		// Op
+		num_rec_op_         = play.num_rec_op_;
+
+		// VecInd
+		num_rec_vecad_ind_  = play.num_rec_vecad_ind_;
+
+		// Arg
+		num_rec_op_arg_     = play.num_rec_op_arg_;
+
+		// Par
+		num_rec_par_        = play.num_rec_par_;
+
+		// Txt
+		num_rec_text_       = play.num_rec_text_;
+
+		// Allocate the memory
+		if( num_rec_op_ == 0 )
+			rec_op_ = CPPAD_NULL;
+		else	rec_op_ = 
+			CPPAD_TRACK_NEW_VEC(num_rec_op_,        rec_op_);
+		if( num_rec_vecad_ind_ == 0 )
+			rec_vecad_ind_ = CPPAD_NULL;
+		else	rec_vecad_ind_ = 
+			CPPAD_TRACK_NEW_VEC(num_rec_vecad_ind_, rec_vecad_ind_);
+		if( num_rec_op_arg_ == 0 )
+			rec_op_arg_ = CPPAD_NULL;
+		else	rec_op_arg_ = 
+			CPPAD_TRACK_NEW_VEC(num_rec_op_arg_,    rec_op_arg_);
+		if( num_rec_par_ == 0 )
+			rec_par_ = CPPAD_NULL;
+		else	rec_par_ = 
+			CPPAD_TRACK_NEW_VEC(num_rec_par_,       rec_par_);
+		if( num_rec_text_ == 0 )
+			rec_text_ = CPPAD_NULL;
+		else	rec_text_ = 
+			CPPAD_TRACK_NEW_VEC(num_rec_text_,      rec_text_);
+
+		// Copy the data
+		i = num_rec_op_;
+		while(i--)
+			rec_op_[i] = play.rec_op_[i];
+		i = num_rec_vecad_ind_;
+		while(i--)
+			rec_vecad_ind_[i] = play.rec_vecad_ind_[i];
+		i = num_rec_op_arg_;
+		while(i--)
+			rec_op_arg_[i] = play.rec_op_arg_[i];
+		i = num_rec_par_;
+		while(i--)
+			rec_par_[i] = play.rec_par_[i];
+		i = num_rec_text_;
+		while(i--)
+			rec_text_[i] = play.rec_text_[i];
+
+		// set the number of VecAD vectors
+		num_rec_vecad_vec_ = 0;
+		for(i = 0; i < num_rec_vecad_ind_; i += rec_vecad_ind_[i] + 1)
+			num_rec_vecad_vec_++;
+	}
+	// End two functions with idential code but different argument types.
+	// ===============================================================
 
 	/// Erase all information in an operation sequence player.
 	void Erase(void)

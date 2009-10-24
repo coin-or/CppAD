@@ -42,6 +42,7 @@ file_list="
 	forward_sweep.hpp
 	for_jac_sweep.hpp
 	for_sparse_jac.hpp
+	fun_construct.hpp
 	hash_code.hpp
 	load_op.hpp
 	log_op.hpp

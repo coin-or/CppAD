@@ -32,9 +32,11 @@ $index tape, stop recording$$
 $index recording, stop tape$$
 
 $head Syntax$$
-$codei%ADFun<%Base%> %f%
+$codei%ADFun<%Base%> %f%, %g%
 %$$
 $codei%ADFun<%Base%> %f%(%x%, %y%)
+%$$
+$icode%g% = %f%
 %$$
 
 
@@ -72,7 +74,7 @@ $codei%
 	const %VectorAD% &%y%
 %$$
 The sequence of operations that map $icode x$$
-to $icode y$$ are stored in the AD function object $icode f$$.
+to $icode y$$ are stored in the ADFun object $icode f$$.
 
 $head VectorAD$$
 The type $icode VectorAD$$ must be a $cref/SimpleVector/$$ class with
@@ -82,6 +84,9 @@ The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
 $head Default Constructor$$
+$index default, ADFun constructor$$
+$index ADFun, default constructor$$
+$index constructor, ADFun constructor$$
 The default constructor 
 $codei%
 	ADFun<%Base%> %f%
@@ -94,6 +99,10 @@ $codei%
 returns the value zero (see $xref/SeqProperty/size_var/size_var/$$).
 
 $head Sequence Constructor$$
+$index sequence, ADFun constructor$$
+$index ADFun, sequence constructor$$
+$index constructor, ADFun sequence$$
+The default constructor 
 The sequence constructor 
 $codei%
 	ADFun<%Base%> %f%(%x%, %y%)
@@ -108,6 +117,7 @@ and stores the corresponding operation sequence in the object $icode f$$.
 It then stores the first order taylor_ coefficients 
 (corresponding to the value of $icode x$$) in $icode f$$.
 This is equivalent to the following steps using the default constructor:
+
 $list number$$
 Create $icode f$$ with the default constructor
 $codei%
@@ -129,6 +139,40 @@ with $icode p$$ equal to zero and the elements of $icode x_p$$
 equal to the corresponding elements of $icode x$$
 (see $xref/Forward/$$).
 $lend
+
+$head Copy Constructor$$
+$index copy, ADFun constructor$$
+$index ADFun, copy constructor$$
+$index constructor, ADFun copy$$
+It is an error to attempt to use the $code%ADFun<%Base%>%$$ copy constructor;
+i.e., the following syntax is not allowed:
+$codei%
+	ADFun<%Base%> g(f)
+%$$
+where $icode f$$ is an $code%ADFun<%Base%>%$$ object.
+Use its $cref/default constructor/FunConstruct/Default Constructor/$$ instead
+and its assignment operator.
+
+$head Assignment Operator$$
+$index ADFun, assignment operator$$
+$index assignment, ADFun operator$$
+$index operator, ADFun assignment$$
+The $codei%ADFun<%Base%>%$$ assignment operation
+$codei%
+	%g% = %f%
+%$$.
+makes a copy of the operation sequence currently stored in $icode f$$
+in the object $icode g$$.
+The object $icode f$$ is not affected by this operation and
+can be $code const$$.
+Any operation sequence or other information in $icode g$$ is lost.
+Directly after this operation, no Taylor coefficients are
+stored in $icode g$$; i.e.,
+$codei%
+	%g%.size_taylor()
+%$$
+is zero (see $cref/size_taylor/$$).
+
 
 $head OpenMP$$
 $index OpenMP, Dependent$$
@@ -164,13 +208,125 @@ $xref/HesLagrangian.cpp/$$
 contain an examples and tests using the default constructor.
 They return true if they succeed and false otherwise.
 
+$children%
+	example/fun_assign.cpp
+%$$
+$subhead Assignment Operator$$
+The file 
+$cref/fun_assign.cpp/$$
+contains an example and test of the $codei%ADFun<%Base%>%$$
+assignment operator.
+It returns true if it succeeds and false otherwise.
+
 $end
+----------------------------------------------------------------------------
+*/
+CPPAD_BEGIN_NAMESPACE
+
+/*!
+\file fun_construct.hpp
+ADFun function constructors and assignment operator.
 */
 
+/*!
+ADFun default constructor
 
-// BEGIN CppAD namespace
-namespace CppAD {
+The C++ syntax for this operation is
+\verbatim
+	ADFun<Base> f
+\endverbatim
+An empty ADFun object is created. 
+The Dependent member function,
+or the ADFun<Base> assingment operator,
+can then be used to put an operation sequence in this ADFun object.
 
+\tparam Base
+is the base for the recording that can be stored in this ADFun object;
+i.e., operation sequences that were recorded using the type \c AD<Base>.
+*/
+template <typename Base>
+ADFun<Base>::ADFun(void)
+: total_num_var_(0), taylor_(CPPAD_NULL)
+{ }
+
+/*!
+ADFun assignment operator
+
+The C++ syntax for this operation is
+\verbatim
+	g = f
+\endverbatim
+where \c g and \c f are ADFun<Base> ADFun objects.
+A copy of the the operation sequence currently stored in \c f 
+is placed in this ADFun object (called \c g above).
+Any information currently stored in this ADFun object is lost.
+
+\tparam Base
+is the base for the recording that can be stored in this ADFun object;
+i.e., operation sequences that were recorded using the type \c AD<Base>.
+
+\param f
+ADFun object containing the operation sequence to be copied.
+*/
+template <typename Base>
+void ADFun<Base>::operator=(const ADFun<Base>& f)
+{	size_t m = f.Range();
+	size_t n = f.Domain();
+
+	// go through member variables in order
+	// (see ad_fun.hpp for meaning of each variable)
+	compare_change_            = 0;
+	taylor_per_var_            = 0;
+	taylor_col_dim_            = 0;
+	total_num_var_             = f.total_num_var_;
+	ind_taddr_.resize(n);
+	ind_taddr_                 = f.ind_taddr_;
+	dep_taddr_.resize(m);
+	dep_taddr_                 = f.dep_taddr_;
+	dep_parameter_.resize(m);
+	dep_parameter_             = f.dep_parameter_;
+	play_                      = f.play_;
+	if( taylor_ != CPPAD_NULL )
+		CPPAD_TRACK_DEL_VEC(taylor_);
+	taylor_                    = CPPAD_NULL;
+	for_jac_sparse_pack_.resize(0, 0);
+	for_jac_sparse_set_.resize(0, 0);
+}
+
+/*!
+ADFun constructor from an operation sequence.
+
+The C++ syntax for this operation is
+\verbatim
+	ADFun<Base> f(x, y)
+\endverbatim
+The operation sequence that started with the previous call
+\c Independent(x), and that ends with this operation, is stored
+in this \c ADFun<Base> object \c f.
+
+\tparam Base
+is the base for the recording that will be stored in the object \c f;
+i.e., the operations were recorded using the type \c AD<Base>.
+
+\tparam VectorAD
+is a simple vector class with elements of typea \c AD<Base>.
+
+\param x
+is the independent variable vector for this ADFun object.
+The domain dimension of this object will be the size of \a x.
+
+\param y
+is the dependent variable vector for this ADFun object.
+The range dimension of this object will be the size of \a y.
+
+\par Taylor Coefficients
+A zero order forward mode sweep is done,
+and if NDEBUG is not defined the resulting values for the
+depenedent variables are checked against the values in \a y.
+Thus, the zero order Taylor coefficients
+corresponding to the value of the \a x vector
+are stored in this ADFun object. 
+*/
 template <typename Base>
 template <typename VectorAD>
 ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
@@ -262,6 +418,5 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 # endif
 }
 
-} // END CppAD namespace
-
+CPPAD_END_NAMESPACE
 # endif

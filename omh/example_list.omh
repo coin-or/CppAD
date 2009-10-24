@@ -116,6 +116,7 @@ $rref ForOne.cpp$$
 $rref ForTwo.cpp$$
 $rref Forward.cpp$$
 $rref ForSparseJac.cpp$$
+$rref fun_assign.cpp$$
 $rref FunCheck.cpp$$
 $rref get_started.cpp$$
 $rref ipopt_cppad_simple.cpp$$
