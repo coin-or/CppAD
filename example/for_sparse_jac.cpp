@@ -159,12 +159,15 @@ bool ForSparseJac(void)
 	ok &= BoolCases< std::vector    <bool> >(); 
 	ok &= BoolCases< std::valarray  <bool> >(); 
 
-	// Run with Vector equal to three different cases all of which are 
+	// Run with Vector equal to two different cases both of which are 
 	// Simple Vectors with elements of type std::set<size_t>
 	typedef std::set<size_t> set;
 	ok &= SetCases< CppAD::vector  <set> >();
 	ok &= SetCases< std::vector    <set> >(); 
-	ok &= SetCases< std::valarray  <set> >(); 
+
+	// Do not use valarray because its element access in the const case
+	// returns a copy instead of a reference
+	// ok &= SetCases< std::valarray  <set> >(); 
 
 	return ok;
 }

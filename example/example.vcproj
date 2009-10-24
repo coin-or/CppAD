@@ -222,6 +222,9 @@
 				RelativePath=".\forward.cpp">
 			</File>
 			<File
+				RelativePath=".\fun_assign.cpp">
+			</File>
+			<File
 				RelativePath=".\fun_check.cpp">
 			</File>
 			<File
