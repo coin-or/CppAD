@@ -45,8 +45,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
 am_ipopt_cppad_OBJECTS = ipopt_cppad.$(OBJEXT) \
-	ipopt_cppad_nlp.$(OBJEXT) ipopt_cppad_ode.$(OBJEXT) \
-	ipopt_cppad_simple.$(OBJEXT)
+	ipopt_cppad_nlp.$(OBJEXT) ipopt_get_started.$(OBJEXT) \
+	ipopt_ode_fast.$(OBJEXT) ipopt_ode_simple.$(OBJEXT)
 ipopt_cppad_OBJECTS = $(am_ipopt_cppad_OBJECTS)
 ipopt_cppad_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -209,8 +209,9 @@ ipopt_cppad_SOURCES = \
 	ipopt_cppad.cpp \
 	ipopt_cppad_nlp.cpp \
 	ipopt_cppad_nlp.hpp \
-	ipopt_cppad_ode.cpp \
-	ipopt_cppad_simple.cpp
+	ipopt_get_started.cpp \
+	ipopt_ode_fast.cpp \
+	ipopt_ode_simple.cpp 
 
 all: all-am
 
@@ -261,8 +262,9 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad_nlp.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad_ode.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad_simple.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_get_started.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_ode_fast.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_ode_simple.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

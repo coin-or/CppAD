@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 /*
 
-$begin ipopt_cppad_simple.cpp$$
+$begin ipopt_get_started.cpp$$
 $spell
 	cppad_nlp
 	IpoptDir
@@ -46,7 +46,7 @@ the value $cref/IpoptDir/InstallUnix/IpoptDir/$$ is specified on the
 $cref/configure/InstallUnix/Configure/$$ command line.
 
 $code
-$verbatim%ipopt_cppad/ipopt_cppad_simple.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%ipopt_cppad/ipopt_get_started.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -89,7 +89,7 @@ namespace {
 	};
 }
 	
-bool ipopt_cppad_simple(void)
+bool ipopt_get_started(void)
 {	bool ok = true;
 	size_t j;
 

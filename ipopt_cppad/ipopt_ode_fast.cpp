@@ -208,7 +208,7 @@ public:
 } // End empty namespace
 // ---------------------------------------------------------------------------
 
-bool ipopt_cppad_ode(void)
+bool ipopt_ode_fast(void)
 {	bool ok = true;
 	size_t j, I;
 

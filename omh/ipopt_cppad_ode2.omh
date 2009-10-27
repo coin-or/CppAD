@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -373,7 +373,7 @@ $latex \[
 
 $end 
 -----------------------------------------------------------------------------
-$begin ipopt_cppad_ode.cpp$$
+$begin ipopt_ode_simple.cpp$$
 $spell
 	ipopt_cppad_nlp
 	nd
@@ -389,12 +389,42 @@ $index example, ipopt_cppad_nlp ode source$$
 $index source, ipopt_cppad_nlp ode example$$
 
 $head Source Code$$
+This example uses the a simple representation of the objective
+an constraints to solve the ODE fitting problem.
 Almost all the code below is for the general problem 
 (where $code nd$$, $code ny$$, $code na$$, and $code ns$$ are arbitrary)
 but some of it for a specific case defined by the function $code y_one(t)$$
 and discussed in the previous sections.
 $code
-$verbatim%ipopt_cppad/ipopt_cppad_ode.cpp%0%$$
+$verbatim%ipopt_cppad/ipopt_ode_simple.cpp%0%$$
+$$
+
+$end
+-----------------------------------------------------------------------------
+$begin ipopt_ode_fast.cpp$$
+$spell
+	ipopt_cppad_nlp
+	nd
+	ny
+	na
+	ns
+$$
+
+$section ipopt_cppad_nlp ODE Example Source Code$$
+$index ipopt_cppad_nlp, ode example source$$
+$index ode, ipopt_cppad_nlp example source$$
+$index example, ipopt_cppad_nlp ode source$$
+$index source, ipopt_cppad_nlp ode example$$
+
+$head Source Code$$
+This example uses the a decomposed representation of the objective
+an constraints to solve the ODE fitting problem.
+Almost all the code below is for the general problem 
+(where $code nd$$, $code ny$$, $code na$$, and $code ns$$ are arbitrary)
+but some of it for a specific case defined by the function $code y_one(t)$$
+and discussed in the previous sections.
+$code
+$verbatim%ipopt_cppad/ipopt_ode_fast.cpp%0%$$
 $$
 
 $end

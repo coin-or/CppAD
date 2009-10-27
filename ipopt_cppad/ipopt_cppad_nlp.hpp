@@ -2,7 +2,7 @@
 # ifndef CPPAD_IPOPT_CPPAD_NLP_INCLUDED
 # define CPPAD_IPOPT_CPPAD_NLP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -548,7 +548,7 @@ It is the final value of the objective function $latex f(x)$$.
 
 $children%
 	ipopt_cppad/ipopt_cppad_windows.bat%
-	ipopt_cppad/ipopt_cppad_simple.cpp%
+	ipopt_cppad/ipopt_get_started.cpp%
 	omh/ipopt_cppad_ode1.omh
 %$$
 
@@ -558,7 +558,7 @@ $cref/ipopt_cppad_windows/$$ instructions.
 
 $head Example$$
 The file 
-$cref/ipopt_cppad_simple.cpp/$$ is an example and test of 
+$cref/ipopt_get_started.cpp/$$ is an example and test of 
 $code ipopt_cppad_nlp$$  that uses the 
 $cref/simple representation/ipopt_cppad_nlp/Simple Representation/$$.
 It returns true if it succeeds and false otherwise.

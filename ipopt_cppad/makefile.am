@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -39,5 +39,6 @@ ipopt_cppad_SOURCES   = \
 	ipopt_cppad.cpp \
 	ipopt_cppad_nlp.cpp \
 	ipopt_cppad_nlp.hpp \
-	ipopt_cppad_ode.cpp \
-	ipopt_cppad_simple.cpp
+	ipopt_get_started.cpp \
+	ipopt_ode_fast.cpp \
+	ipopt_ode_simple.cpp 

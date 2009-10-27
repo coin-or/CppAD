@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -20,8 +20,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/cppad.hpp>
 
 // external complied tests
-extern bool ipopt_cppad_ode(void);
-extern bool ipopt_cppad_simple(void);
+extern bool ipopt_get_started(void);
+extern bool ipopt_ode_fast(void);
+extern bool ipopt_ode_simple(void);
 
 namespace {
 	// function that runs one test
@@ -47,8 +48,9 @@ int main(void)
 {	bool ok = true;
 
 	// external compiled tests
-	ok &= Run( ipopt_cppad_ode,      "ipopt_cppad_ode"     );
-	ok &= Run( ipopt_cppad_simple,   "ipopt_cppad_simple"  );
+	ok &= Run( ipopt_get_started,   "ipopt_get_started"  );
+	ok &= Run( ipopt_ode_fast,      "ipopt_ode_fast"     );
+	ok &= Run( ipopt_ode_simple,    "ipopt_ode_simple"   );
 	
 	// check for errors
 	using std::cout;
