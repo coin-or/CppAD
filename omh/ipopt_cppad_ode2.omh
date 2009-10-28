@@ -29,11 +29,13 @@ with the initial conditions
 $latex \[
 y_0 (0 , a) = F(a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right) 
 \] $$
-where $latex a \in \R^3 $$ is an unknown parameter vector
-and $latex F : \R^3 \rightarrow \R^2 $$ is defined by the equation above.
-Our forward problem is stated as follows: Given $latex a \in \R^3$$
-determine the value of $latex y ( t , a ) $$ for 
-various values  of $latex t $$.
+where $latex Na = 3$$ and $latex a \in \R^{Na} $$ 
+is an unknown parameter vector.
+The function and $latex F : \R^{Na} \rightarrow \R^{Ny} $$ 
+is defined by the equation above (where $latex Ny = 2$$).
+Our forward problem is stated as follows: Given $latex a \in \R^{Na}$$
+determine the value of $latex y ( t , a ) $$, for $latex t \in R$$, that 
+solves the initial value problem above. 
 
 
 $head Numerical Procedure$$
@@ -41,14 +43,14 @@ Our numerical procedure for solving the forward problem starts with
 $latex \[
 	y^0 = y(0, a) = \left( \begin{array}{c} a_0 \\ 0 \end{array} \right)
 \] $$
-Given an approximation value $latex y^M $$ for $latex y ( s_M , a )$$,
-the a trapezoidal method approximates $latex y ( s_{M+1} , a )$$
-(denoted by $latex y^{M+1}$$ ) by solving the equation
+Given an approximation value $latex y^{i-1} $$ for $latex y ( t_{i-1} , a )$$,
+the a trapezoidal method approximates $latex y ( t_i , a )$$
+(denoted by $latex y^i$$ ) by solving the equation
 $latex \[
-y^{M+1}  =  y^M + 
-\left[ G( y^M , a ) + G( y^{M+1} , a ) \right] * \frac{s_{M+1} - s_M }{ 2 }
+y^i  =  y^{i-1} + 
+\left[ G( y^i , a ) + G( y^{i-1} , a ) \right] * \frac{t_i - t_{i-1} }{ 2 }
 \] $$
-where $latex G : \R^2 \times \R^3 \rightarrow \R^2$$ is the
+where $latex G : \R^{Ny} \times \R^{Na} \rightarrow \R^{Ny}$$ is the
 function representing this ODE; i.e.
 $latex \[
 	G(y, a) = \left(  \begin{array}{c}
@@ -58,12 +60,12 @@ $latex \[
 	\end{array} \right)
 \] $$
 This $latex G(y, a)$$ is linear with respect to $latex y$$, hence
-the implicit equation defining $latex y^{M+1} $$ can be solved
+the implicit equation defining $latex y^i $$ can be solved
 inverting the a set of linear equations.
 In the general case, 
 where $latex G(y, a)$$ is non-linear with respect to $latex y$$,
-an iterative procedure is used to calculate $latex y^{M+1}$$
-from $latex y^M$$.
+an iterative procedure is used to calculate $latex y^i$$
+from $latex y^{i-1}$$.
 
 $end
 -------------------------------------------------------------------------------
@@ -75,30 +77,30 @@ $index inverse, ode example$$
 $index example, ode inverse$$
 
 $head Problem$$
-We define $latex y : \R \times \R^3 \rightarrow \R^2$$ as the
+We define $latex y : \R \times \R^{Na} \rightarrow \R^{Ny}$$ as the
 solution of our $cref/ode forward problem/ipopt_cppad_ode_forward/Problem/$$.
-Suppose we are also given measurement values $latex z_k \in \R$$
-for $latex k = 1, 2, 3, 4$$ that are modeled by
+Suppose we are also given measurement values $latex z \in \R^{Nz}$$
+and for $latex i = 1, \ldots, Nz$$, the component 
 $latex \[
-	z_k = y_1 ( s_k , a) + e_k
+	z_i = y_1 ( s_i , a) + e_i
 \] $$
-where
-$latex s_k \in \R$$,
-$latex e_k \sim {\bf N} (0 , \sigma^2 ) $$,
-and $latex \sigma \in \R_+$$.
-The maximum likelihood estimate for $latex a$$ given 
-$latex ( z_1 , z_2 , z_3 , z_4 )$$ solves the following inverse problem
+where $latex s_i \in \R$$ is the time for the $th i$$ measurement,
+$latex e_i \sim {\bf N} (0 , \sigma^2 ) $$ is the corresponding noise,
+and $latex \sigma \in \R_+$$ is the corresponding standard deviation.
+The maximum likelihood estimate for $latex a$$ given $latex z$$
+solves the following inverse problem
 $latex \[
 \begin{array}{rcl}
 {\rm minimize} \; 
-	& \sum_{k=1}^4 H_k [ y( s_k , a ) , a ] 
-	& \;{\rm w.r.t} \; a \in \R^3
+	& \sum_{i=1}^{Nz} H_i [ y( s_i , a ) , a ] 
+	& \;{\rm w.r.t} \; a \in \R^{Na}
 \end{array}
 \] $$
-where the function $latex H_k : \R^2 \times \R^3 \rightarrow \R$$ is
+where the functions
+$latex H_i : \R^{Ny} \times \R^{Na} \rightarrow \R$$ is
 defined by
 $latex \[
-	H_k (y, a) = ( z_k - y_1 )^2 
+	H_i (y, a) = ( z_i - y_1 )^2 
 \] $$
 
 $head Black Box Method$$
@@ -107,7 +109,7 @@ as a black box (that we do not look inside of or try to understand).
 In this approach, for each value of the parameter vector $latex a$$
 one uses a 
 $cref/numerical procedure/ipopt_cppad_ode_forward/Numerical Procedure/$$
-to solve for $latex y_1 ( s_k , a )$$ for $latex k = 1 , 2 , 3, 4$$.
+to solve for $latex y_1 ( s_i , a )$$ for $latex i = 1 , \ldots , Nz$$.
 
 $subhead Two levels of Iteration$$
 As noted above, this numerical procedure often involves iterative
@@ -138,21 +140,22 @@ To be specific for our example,
 $latex \[
 \begin{array}{rcl}
 {\rm minimize} 
-	& \sum_{k=1}^4 H_k( y^{k * ns} , a )
-	& \; {\rm w.r.t} \; y^1 \in \R^2 , \ldots , y^{4 * ns} \in \R^2 ,
-	\; a \in \R^3 
+& \sum_{i=1}^{Nz} H_i ( y^{N(i)} , a )
+& \; {\rm w.r.t} \; y^1 \in \R^{Ny} , \ldots , y^{S(Nz)} \in \R^{Ny} ,
+  \; a \in \R^{Na} 
 \\
 {\rm subject \; to}
-	& y^{M+1}  =  y^M + 
-\left[ G( y^M , a ) + G( y^{M+1} , a ) \right] * \frac{ s_{M+1} - s_M }{ 2 }
-	& \; {\rm for} \; M = 0 , \ldots , 4 * ns - 1
+	& y^j  =  y^{j-1} + 
+\left[ G( y^{j-1} , a ) + G( y^j , a ) \right] * \frac{ t_j - t_{j-1} }{ 2 }
+	& \; {\rm for} \; j = 1 , \ldots , S(Nz)
 \\
 	& y^0 = F(a)
 \end{array}
 \] $$
-where $latex ns$$ is the number of time intervals 
-(used by the trapezoidal approximation)
-between each of the measurement times.
+where for $latex i = 1, \ldots , Nz$$,
+$latex N(i)$$ is the number of time intervals between
+$latex s_{i-1}$$ and $latex s_i$$ (with $latex s_0 = 0$$)
+and $latex S(i) = N(1) + \ldots + N(i)$$.
 Note that, in this form, the iterations of the optimization procedure
 also solve the forward problem equations.
 In addition, the functions that need to be differentiated
@@ -192,240 +195,323 @@ $rnext
 $latex \sigma = 0$$ $pre $$ $cnext 
 	standard deviation of measurement noise
 $rnext
-$latex e_k = 0$$ $pre $$ $cnext
-	simulated measurement noise, $latex k = 1 , 2 , 3, 4$$
+$latex e_i = 0$$ $pre $$ $cnext
+	simulated measurement noise, $latex i = 1 , \ldots , Nz$$
 $rnext
-$latex s_k = k * .5$$ $pre $$ $cnext 
-	time corresponding to the $th k$$ measurement,
-	$latex k = 1 , 2 , 3, 4$$
+$latex s_i = i * .5$$ $pre $$ $cnext 
+	time corresponding to the $th i$$ measurement,
+	$latex i = 1 , \ldots , Nz$$
 $tend
 
 $head Measurement Values$$
 The simulated measurement values are given by the equation
 $latex \[
 \begin{array}{rcl}
-z_k 
-& = &  y_1 ( s_k , \bar{a} ) + e_k
+z_i 
+& = &  y_1 ( s_i , \bar{a} ) + e_i
 \\
 & = & 
 \bar{a}_0 * \bar{a}_1 * 
-	\frac{\exp( - \bar{a}_2 * s_k ) - \exp( -\bar{a}_1 * s_k )}
+	\frac{\exp( - \bar{a}_2 * s_i ) - \exp( -\bar{a}_1 * s_i )}
 		{ \bar{a}_1 - \bar{a}_2 }
 \end{array}
 \] $$
-for $latex k = 1, 2, 3, 4$$.
+for $latex k = 1, \ldots , Nz$$.
 
 $end
 -----------------------------------------------------------------------------
-$begin ipopt_cppad_ode_represent$$
+$begin ipopt_ode_simple$$
 $spell
 	ipopt_cppad_nlp
 $$
 
-$section ipopt_cppad_nlp ODE Problem Representation$$
-$index representation, ipopt_cppad_nlp ode$$
-$index ipopt_cppad_nlp, ode representation$$
-$index ode, ipopt_cppad_nlp representation$$
+$section ODE Fitting Using Simple Representation$$
+
+$index ipopt_cppad_nlp, ode simple representation$$
+$index ode, ipopt_cppad_nlp simple representation$$
+$index simple, ipopt_cppad_nlp ode representation$$
 
 $head Purpose$$
 In this section we represent the objective and constraint functions,
 (in the simultaneous forward and reverse optimization problem)
-in terms of much simpler functions that are faster to differentiate
-(either by hand coding or by using AD).
+using the $cref/simple representation/ipopt_cppad_nlp/Simple Representation/$$
+in the sense of $code ipopt_cppad_nlp$$.
 
 $head Trapezoidal Time Grid$$
 The discrete time grid, used for the trapezoidal approximation, is 
-denote by $latex \{ t_M \} $$. 
-For $latex k = 1 , 2 , 3, 4$$,
-and $latex \ell = 0 , \ldots , ns$$, we define
+denoted by $latex \{ t_i \} $$ which is defined by:
+$latex t_0 = 0$$ and
+for $latex i = 1 , \ldots , Nz$$ and for $latex j = 1 , \ldots , N(i)$$, 
 $latex \[
 \begin{array}{rcl}
-	\Delta_k & = & ( s_k - s_{k-1} ) / ns
+	\Delta t_i & = & ( s_i - s_{i-1} ) / N(i)
 	\\
-	t_{ (k-1) * ns + \ell } & = &  s_{k-1} + \Delta_k * \ell
+	t_{S(i-1)+j} & = & s_{i-1} + \Delta t_i * j
 \end{array}
 \] $$
-Note that for $latex M = 1 , \ldots , 4 * ns $$,
-$latex y^M$$ denotes our approximation for $latex y( t_M , a )$$,
-$latex t_0$$ is equal to 0,
-and $latex t_{k*ns}$$ is equal to $latex s_k$$.
+where $latex s_0 = 0$$,
+$latex N(i)$$ is the number of time grid points between
+$latex s_{i-1}$$ and $latex s_i$$,
+$latex S(0) = 0$$, and
+$latex S(i) = N(1) + \ldots + N(i)$$.
+Note that for $latex i = 0 , \ldots , S(Nz)  $$,
+$latex y^i$$ denotes our approximation for $latex y( t_i , a )$$
+and $latex t_{S(i)}$$ is equal to $latex s_i$$.
 
 $head Argument Vector$$
 The argument vector that we are optimizing with respect to
 ( $latex x$$ in $cref/ipopt_cppad_nlp/$$ )
 has the following structure
 $latex \[
-	x = \left( \begin{array}{c}
-		y^0 \\ \vdots \\ y^{4 * ns} \\ a
-	\end{array} \right)
+x = ( y^0 , \cdots , y^{S(Nz)} , a )
 \] $$  
-Note that $latex x \in \R^{2 *(4 * ns + 1) + 3}$$ and
+Note that $latex x \in \R^{S(Nz) + Na}$$ and
 $latex \[
 \begin{array}{rcl}
-	y^M & = & ( x_{2 * M} , x_{2 * M + 1} )^\T
+	y^i & = & ( x_{Ny * i} , \ldots ,  x_{Ny * i + Ny - 1} )
 	\\
-	a   & = & ( x_{8 * ns + 2} , x_{8 * ns + 3} , x_{8 * ns + 4} )^\T
+	a   & = & ( x_{Ny *S(Nz) + Ny} , \ldots , x_{Ny * S(Nz) + Na - 1} )
 \end{array}
 \] $$
 
-$head Objective$$
+$head Objective Function$$
 The objective function
 ( $latex fg_0 (x)$$ in $cref/ipopt_cppad_nlp/$$ )
 has the following representation,
 $latex \[
-	fg_0 (x) 
-	= \sum_{k=1}^4 H_k ( y^{k * ns} , a ) 
-	= \sum_{k=0}^3 r^k ( u^{k,0} )
-\] $$
-where $latex r^k = H_{k+1}$$ and $latex u^{k,0} =   ( y^{k * ns} , a )$$
-for $latex k = 0, 1, 2, 3$$.
-The range index (in the vector $latex fg (x)$$ )
-corresponding to each term in the objective is 0.
-The domain components (in the vector $latex x$$)
-corresponding to the $th k$$ term are
-$latex \[
-(	x_{2 * k * ns} , 
-	x_{2 * k * ns + 1} , 
-	x_{8 * ns + 2} , 
-	x_{8 * ns + 3} , 
-	x_{8 * ns + 4} 
-) 
-= u^{k,0} 
-= ( y_0^{k * ns} , y_1^{k * ns} , a_0, a_1, a_2 ) 
+	fg_0 (x) = \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a ) 
 \] $$
 
-$head Initial Condition$$
-We define the function 
-$latex r^k : \R^2 \times \R^3 \rightarrow \R^2$$ for $latex k = 4$$ by
+$head Initial Condition Constraint$$
+For $latex i = 1 , \ldots , Ny$$,
+we define the component functions $latex fg_i (x)$$,
+and corresponding constraint equations, by
 $latex \[
-	r^k ( u ) = r^k ( y , a ) = y - F(a)
-\] $$
-where $latex u  = ( y , a)$$. 
-Using this notation,
-and the function $latex fg (x)$$ in $cref/ipopt_cppad_nlp/$$,
-the constraint becomes
-$latex \[
-\begin{array}{rcl}
-	fg_1 (x) & = & r_0^4 ( u^{4,0} ) = r_0^4 ( y^0 , a)
-	\\
-	fg_2 (x) & = & r_1^4 ( u^{4,0} ) = r_1^4 ( y^0 , a)
-\end{array}
-\] $$
-The range indices (in the vector $latex fg (x)$$ )
-corresponding to this constraint are $latex ( 1, 2 )$$.
-The domain components (in the vector $latex x$$)
-corresponding to this constraint are
-$latex \[
-(	x_0 , 
-	x_1 , 
-	x_{8 * ns + 2} , 
-	x_{8 * ns + 3} , 
-	x_{8 * ns + 4} 
-) 
-=
-u^{4,0}
-= 
-( y_0^0, y_1^0 , \ldots , y_0^{4*ns}, y_1^{4*ns}, a_0 , a_1 , a_2 ) 
+	0 = fg_i ( x ) = y_i^0 - F_i (a)
 \] $$
 
-$head Trapezoidal Approximation$$
-For $latex k = 5 , 6, 7 , 8$$,
-and $latex \ell = 0 , \ldots , ns$$,
-define $latex M = (k - 5) * ns + \ell$$.
-The corresponding trapezoidal approximation is represented by the constraint
+$head Trapezoidal Approximation Constraint$$
+For $latex i = 1, \ldots , S(Nz)$$,
+and for $latex j = 1 , \ldots , Ny$$,
+we define the component functions $latex fg_{Ny*i + j} (x)$$,
+and corresponding constraint equations, by
 $latex \[
-0 = y^{M+1}  -  y^{M} - 
-\left[ G( y^{M} , a ) + G( y^{M+1} , a ) \right] * \frac{\Delta_k }{ 2 }
+0 = fg_{Ny*i + j } = y_j^{i}  -  y_j^{i-1} - 
+	\left[ G_j ( y^i , a ) + G_j ( y^{i-1} , a ) \right] * 
+		\frac{t_i - t_{i-1} }{ 2 }
 \] $$
-For $latex k = 5, 6, 7, 8$$, we define the function
-$latex r^k : \R^2 \times \R^2 \times \R^3 \rightarrow \R^2$$ by
-$latex \[
-r^k ( y , w , a ) = y - w  [ G( y , a ) + G( w , a ) ] * \frac{ \Delta_k }{ 2 }
-\] $$
-Using this notation, 
-(and the function $latex fg (x) $$ in $cref/ipopt_cppad_nlp/$$ )
-the constraint becomes
-$latex \[
-\begin{array}{rcl}
-fg_{2 * M + 3} (x)  & = & r_0 ( u^{k,\ell} ) = r_0^k ( y^M , y^{M+1} , a )
-\\
-fg_{2 * M + 4} (x)  & = & r_1 ( u^{k,\ell} ) = r_1^k ( y^M , y^{M+1} , a )
-\end{array} 
-\] $$
-where $latex M = (k - 5) * ns * \ell$$.
-The range indices (in the vector $latex fg (x)$$ )
-corresponding to this constraint are 
-$latex ( 2 * M + 3 , 2 * M + 4 )$$.
-The domain components (in the vector $latex x$$)
-corresponding to this constraint are
-$latex \[
-(	x_{2 * M} , 
-	x_{2 * M + 1} , 
-	x_{2 * M + 2} ,
-	x_{2 * M + 3} ,
-	x_{8 * ns + 2} , 
-	x_{8 * ns + 3} , 
-	x_{8 * ns + 4} 
-)
-= u^{k, \ell}
-= ( y_0^M, y_1^M , y_0^{M+1} , y_1^{M+1} , a_0 , a_1 , a_2 ) 
-\] $$
+
+$children%
+	ipopt_cppad/ipopt_ode_simple.cpp
+%$$
+$head Source$$
+The file $cref ipopt_ode_simple.cpp$$
+contains the source code for this example.
 
 $end 
 -----------------------------------------------------------------------------
-$begin ipopt_ode_simple.cpp$$
+$begin ipopt_ode_fast$$
 $spell
 	ipopt_cppad_nlp
-	nd
-	ny
-	na
-	ns
 $$
 
-$section ipopt_cppad_nlp ODE Example Source Code$$
-$index ipopt_cppad_nlp, ode example source$$
-$index ode, ipopt_cppad_nlp example source$$
-$index example, ipopt_cppad_nlp ode source$$
-$index source, ipopt_cppad_nlp ode example$$
+$section ODE Fitting Using Fast Representation$$
 
-$head Source Code$$
-This example uses the a simple representation of the objective
-an constraints to solve the ODE fitting problem.
-Almost all the code below is for the general problem 
-(where $code nd$$, $code ny$$, $code na$$, and $code ns$$ are arbitrary)
-but some of it for a specific case defined by the function $code y_one(t)$$
-and discussed in the previous sections.
-$code
-$verbatim%ipopt_cppad/ipopt_ode_simple.cpp%0%$$
-$$
+$index representation, ipopt_cppad_nlp ode$$
+$index ipopt_cppad_nlp, ode representation$$
+$index ode, ipopt_cppad_nlp representation$$
 
-$end
------------------------------------------------------------------------------
-$begin ipopt_ode_fast.cpp$$
-$spell
-	ipopt_cppad_nlp
-	nd
-	ny
-	na
-	ns
-$$
+$head Purpose$$
+In this section we represent a more complex representation of the 
+simultaneous forward and reverse ODE fitting problem (described above).
+The representation defines the problem using
+simpler functions that are faster to differentiate
+(either by hand coding or by using AD).
 
-$section ipopt_cppad_nlp ODE Example Source Code$$
-$index ipopt_cppad_nlp, ode example source$$
-$index ode, ipopt_cppad_nlp example source$$
-$index example, ipopt_cppad_nlp ode source$$
-$index source, ipopt_cppad_nlp ode example$$
+$head Objective Function$$
+We use the following representation for the
+$cref/objective function/ipopt_ode_simple/Objective Function/$$:
+For $latex k = 0 , \ldots , Nz - 1$$,
+we define the function $latex r^k : \R^{Ny+Na} \rightarrow \R$$
+by
+$latex \[
+\begin{array}{rcl}
+fg_0 (x) & = & \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a ) 
+\\
+fg_0 (x) & = & \sum_{k=0}^{Nz-1} r^k ( u^{k,0} )
+\end{array}
+\] $$
+where for $latex k = 0 , \ldots , Nz-1$$,
+$latex u^{k,0} \in \R^{Ny + Na}$$ is defined by
+$latex u^{k,0} =   ( y^{S(k+1)} , a )$$
 
-$head Source Code$$
-This example uses the a decomposed representation of the objective
-an constraints to solve the ODE fitting problem.
-Almost all the code below is for the general problem 
-(where $code nd$$, $code ny$$, $code na$$, and $code ns$$ are arbitrary)
-but some of it for a specific case defined by the function $code y_one(t)$$
-and discussed in the previous sections.
-$code
-$verbatim%ipopt_cppad/ipopt_ode_fast.cpp%0%$$
-$$
+$subhead Range Indices I(k,0)$$
+For $latex k = 0 , \ldots , Nz - 1$$,
+the range index in the vector $latex fg (x)$$ 
+corresponding to $latex r^k ( u^{k,0} ) $$ is 0.
+Thus, the range indices are given by
+$latex I(k,0) = \{ 0 \}$$ for $latex k = 0 , \ldots , Nz-1$$.
 
-$end
+$subhead Domain Indices J(k,0)$$
+For $latex k = 0 , \ldots , Nz - 1$$,
+the components of the vector $latex x$$
+corresponding to the vector $latex u^{k,0}$$ are
+$latex \[
+\begin{array}{rcl}
+u^{k,0} & = & ( y^{S(k+1} , a )
+\\
+& = &
+(	x_{Ny * S(k+1)} \; , \; 
+	\ldots \; , \;
+	x_{Ny * S(k+1) + Ny - 1} \; , \; 
+	x_{Ny * S(Nz) + Ny } \; , \; 
+	\ldots \; , \;
+	x_{Ny * S(Nz) + Ny + Na - 1} 
+) 
+\end{array}
+\] $$
+Thus, the domain indices are given by
+$latex \[
+J(k,0) = \{ 
+	Ny * S(k+1) \; , \; 
+	\ldots  \; , \; 
+	Ny * S(k+1) + Ny - 1 \; , \; 
+	Ny * S(Nz) + Ny \; , \; 
+	\ldots  \; , \;
+	Ny * S(Nz) + Ny + Na - 1 
+\}
+\] $$
+
+$head Initial Condition$$
+We use the following representation for the
+$cref/initial condition constraint/
+	ipopt_ode_simple/Initial Condition Constraint/$$:
+For $latex k = Nz$$ we define the function 
+$latex r^k : \R^{Ny} \times \R^{Na + Ny}$$ by
+$latex \[
+\begin{array}{rcl}
+	0 & = & fg_i ( x ) = y_i^0 - F_i (a)
+	\\
+	0 & = & r_{i-1}^k ( u^{k,0} ) = y_i^0 - F_i(a)
+\end{array}
+\] $$
+where $latex i = 1 , \ldots , Ny$$ and
+where $latex u^{k,0} \in \R^{Ny + Na}$$ is defined by
+$latex u^{k,0}  = ( y^0 , a)$$. 
+
+$subhead Range Indices I(k,0)$$
+For $latex k = Nz$$,
+the range index in the vector $latex fg (x)$$ 
+corresponding to $latex r^k ( u^{k,0} ) $$ are
+$latex I(k,0) = \{ 1 , \ldots , Ny \}$$.
+
+$subhead Domain Indices J(k,0)$$
+For $latex k = Nz$$,
+the components of the vector $latex x$$
+corresponding to the vector $latex u^{k,0}$$ are
+$latex \[
+\begin{array}{rcl}
+u^{k,0} & = & ( y^0 , a) 
+\\
+& = &
+(	x_0 \; , \; 
+	\ldots \; , \;
+	x_{Ny-1} \; , \; 
+	x_{Ny * S(Nz) + Ny } \; , \; 
+	\ldots \; , \;
+	x_{Ny * S(Nz) + Ny + Na - 1} 
+) 
+\end{array}
+\] $$
+Thus, the domain indices are given by
+$latex \[
+J(k,0) = \{ 
+	0 \; , \; 
+	\ldots  \; , \; 
+	Ny - 1 \; , \; 
+	Ny * S(Nz) + Ny \; , \; 
+	\ldots  \; , \;
+	Ny * S(Nz) + Ny + Na - 1 
+\}
+\] $$
+
+$head Trapezoidal Approximation$$
+We use the following representation for the
+$cref/trapezoidal approximation constraint/
+	ipopt_ode_simple/Trapezoidal Approximation Constraint/$$:
+For $latex k = 1 , \ldots , Nz$$,
+we define the function $latex r^{Nz+k} : \R^{2*Ny+Na} \rightarrow \R^{Ny}$$ by
+$latex \[
+r^{Nz+k} ( y , w , a ) 
+= 
+y - w  [ G( y , a ) + G( w , a ) ] * \frac{ \Delta t_k }{ 2 }
+\] $$
+For $latex \ell = 0 , \ldots , N(k)-1$$,
+using the notation $latex i = Ny * S(k-1) + \ell + 1$$,
+the corresponding trapezoidal approximation is represented by 
+$latex \[
+\begin{array}{rcl}
+0 & = & fg_{Ny+i} (x) 
+\\
+& = &
+y^i  -  y^{i-1} - 
+\left[ G( y^i , a ) + G( y^{i-1} , a ) \right] * \frac{\Delta t_k }{ 2 }
+\\
+& = &
+r^{Nz+k} ( u^{Nz+k , \ell} )
+\end{array}
+\] $$
+where $latex u^{Nz+k,\ell} \in \R^{2*Ny + Na}$$ is defined by
+$latex u^{Nz+k,\ell}  = ( y^{i-1} , y^i , a)$$. 
+
+$subhead Range Indices I(k,0)$$
+For $latex k = Nz + 1, \ldots , 2*Nz$$,
+and $latex \ell = 0 , \ldots , N(k)-1$$,
+the range index in the vector $latex fg (x)$$ 
+corresponding to $latex r^k ( u^{k,\ell} ) $$ are
+$latex I(k,\ell) = \{ Ny + i , \ldots , 2*Ny + i - 1  \}$$
+where $latex i = Ny * S(k-1) + \ell + 1$$.
+
+$subhead Domain Indices J(k,0)$$
+For $latex k = Nz + 1, \ldots , 2*Nz$$,
+and $latex \ell = 0 , \ldots , N(k)-1$$,
+define $latex i = Ny * S(k-1) + \ell + 1$$.
+The components of the vector $latex x$$
+corresponding to the vector $latex u^{k,\ell}$$ are
+(and the function $latex fg (x) $$ in $cref/ipopt_cppad_nlp/$$ )
+$latex \[
+\begin{array}{rcl}
+u^{k, \ell} & = & ( y^{i-1} , y^i , a )
+\\
+& = &
+(	x_{Ny * (i-1)} \; , \; 
+	\ldots \; , \;
+	x_{Ny * (i+1) - 1} \; , \; 
+	x_{Ny * S(Nz) + Ny } \; , \; 
+	\ldots \; , \;
+	x_{Ny * S(Nz) + Ny + Na - 1} 
+)
+\end{array}
+\] $$
+Thus, the domain indices are given by
+$latex \[
+J(k,\ell) = \{ 
+	Ny * (i-1) \; , \; 
+	\ldots  \; , \; 
+	Ny * (i+1) - 1 \; , \; 
+	Ny * S(Nz) + Ny \; , \; 
+	\ldots  \; , \;
+	Ny * S(Nz) + Ny + Na - 1 
+\}
+\] $$
+
+$children%
+	ipopt_cppad/ipopt_ode_fast.cpp
+%$$
+$head Source$$
+The file $cref ipopt_ode_fast.cpp$$
+contains the source code for this example.
+
+ 
+$end 
 ------------------------------------------------------------------------------
