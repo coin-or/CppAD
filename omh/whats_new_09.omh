@@ -58,6 +58,10 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 10-28$$
+Improve the documentation for $cref ipopt_ode_simple$$ and 
+$cref ipopt_ode_fast$$.
+
 $head 10-27$$
 Created the example $cref/ipopt_ode_simple.cpp/$$ and moved
 $code ipopt_cppad_simple.cpp$$ to $cref/ipopt_get_started.cpp/$$,
