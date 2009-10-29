@@ -21,7 +21,10 @@ BOOST_INCLUDE =
 endif
 # 
 # Microsoft project files (and ipopt install utility for Visual Studio)
-EXTRA_DIST        = ipopt_cppad.sln ipopt_cppad.vcproj  ipopt_cppad_windows.bat
+EXTRA_DIST        = \
+	ipopt_cppad.sln \
+	ipopt_cppad.vcproj  \
+	ipopt_cppad_windows.bat
 #
 noinst_PROGRAMS   = ipopt_cppad 
 #
@@ -40,5 +43,7 @@ ipopt_cppad_SOURCES   = \
 	ipopt_cppad_nlp.cpp \
 	ipopt_cppad_nlp.hpp \
 	ipopt_get_started.cpp \
-	ipopt_ode_fast.cpp \
-	ipopt_ode_simple.cpp 
+	ipopt_ode_fast.hpp \
+	ipopt_ode_problem.hpp \
+	ipopt_ode_simple.hpp  \
+	ipopt_ode_run.cpp

@@ -62,7 +62,7 @@ Added another test of $cref/mul_level/$$ calculations (in the
 $code test_more$$ directory).
 
 $head 12-04$$
-Extensive explanation for the $cref/ipopt_ode_fast.cpp/$$ example was
+Extensive explanation for the $code ipopt_cppad/ipopt_cppad_ode$$ example was
 provided in the section $cref/ipopt_cppad_ode/$$.
 
 $head 11-22$$
@@ -102,15 +102,15 @@ The down side to this is that the new version
 is not as accurate (see $cref/method/erf/Method/$$).
 
 $head 10-27$$
-Change prototypes for $cref/ipopt_ode_fast.cpp/$$ helper routines
+Change prototypes for $code ipopt_cppad/ipopt_cppad_ode$$ helper routines
 to use $code const$$ (where appropriate).
 
 $head 10-17$$
-Major improvements to the $cref/ipopt_ode_fast.cpp/$$ example.
+Major improvements to the $code ipopt_cppad/ipopt_cppad_ode$$ example.
 
 $head 10-16$$
 Minor improvement to description of optimization argument in 
-$cref/ipopt_ode_fast.cpp/$$.
+$code ipopt_cppad/ipopt_cppad_ode$$.
 
 $head 09-30$$
 Add or modify some wish list entries; see
@@ -125,24 +125,24 @@ Use parenthesis and brackets to group terms of the form
 $latex m \times I$$ to make the documentation of
 $cref/ipopt_cppad_nlp/$$ easier to read.
 
-Changed $cref/ipopt_ode_fast.cpp/$$ to use $latex y(t)$$ for
+Changed $code ipopt_cppad/ipopt_cppad_ode$$ to use $latex y(t)$$ for
 the solution of the ODE to distinguish it for $latex x$$,
 the vector we are optimizing with respect to.
 
 $head 09-18$$
-Changed $cref/ipopt_ode_fast.cpp/$$ to a case where $latex x(t)$$
+Changed $code ipopt_cppad/ipopt_cppad_ode$$ to a case where $latex x(t)$$
 is a pair of exponential functions instead of a linear and quadratic.
 Fixed some of the comments in this example and included the source
 code in the documentation (which was missing by mistake).
 
 $head 09-17$$
-Changed $cref/ipopt_ode_fast.cpp/$$ to a case where there are
+Changed $code ipopt_cppad/ipopt_cppad_ode$$ to a case where there are
 two components in the ODE (instead of one).
 Also removed an initialization section that was only intended for tests
 with a specific initial value.
 
 $head 09-16$$
-Add $cref/ipopt_ode_fast.cpp/$$, an example and test
+Add $code ipopt_cppad/ipopt_cppad_ode$$, an example and test
 that optimizes the solution of an ODE.
 Change $code r_eval$$ to $code eval_r$$ in $cref/ipopt_cppad_nlp/$$.
 Fix a dimension of $code u_ad$$ error in $code ipopt_cppad_nlp$$.

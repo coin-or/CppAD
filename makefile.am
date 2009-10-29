@@ -275,7 +275,7 @@ SUBDIRS = \
 #
 # Note that doc.omh, omh/install_unix.omh, and omh/install_windows.omh 
 # are created by configure from corresponding *.in files. They are included
-# in the distrubution so that configure does not have to be run OMhelp.
+# in the distrubution so that configure does not have to run OMhelp.
 EXTRA_DIST = \
 	build.sh \
 	check_doxygen.sh \

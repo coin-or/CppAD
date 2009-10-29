@@ -46,7 +46,7 @@ CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
 am_ipopt_cppad_OBJECTS = ipopt_cppad.$(OBJEXT) \
 	ipopt_cppad_nlp.$(OBJEXT) ipopt_get_started.$(OBJEXT) \
-	ipopt_ode_fast.$(OBJEXT) ipopt_ode_simple.$(OBJEXT)
+	ipopt_ode_run.$(OBJEXT)
 ipopt_cppad_OBJECTS = $(am_ipopt_cppad_OBJECTS)
 ipopt_cppad_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -192,7 +192,11 @@ top_srcdir = @top_srcdir@
 @CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 # 
 # Microsoft project files (and ipopt install utility for Visual Studio)
-EXTRA_DIST = ipopt_cppad.sln ipopt_cppad.vcproj  ipopt_cppad_windows.bat
+EXTRA_DIST = \
+	ipopt_cppad.sln \
+	ipopt_cppad.vcproj  \
+	ipopt_cppad_windows.bat
+
 #
 AM_CXXFLAGS = -g $(CXX_FLAGS) 
 #
@@ -210,8 +214,10 @@ ipopt_cppad_SOURCES = \
 	ipopt_cppad_nlp.cpp \
 	ipopt_cppad_nlp.hpp \
 	ipopt_get_started.cpp \
-	ipopt_ode_fast.cpp \
-	ipopt_ode_simple.cpp 
+	ipopt_ode_fast.hpp \
+	ipopt_ode_problem.hpp \
+	ipopt_ode_simple.hpp  \
+	ipopt_ode_run.cpp
 
 all: all-am
 
@@ -263,8 +269,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad_nlp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_get_started.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_ode_fast.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_ode_simple.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_ode_run.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
