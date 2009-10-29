@@ -173,3 +173,18 @@ then
 fi
 echo "svn revert svn_commit.sh"
 svn revert svn_commit.sh
+#
+response=""
+while [ "$response" != "y" ] && [ "$response" != "n" ]
+do
+	read -p "run ./check_svn_dist.sh [y/n] ? " response
+done
+if [ "$response" = "y" ]
+then
+	if ! ./check_svn_dist.sh
+	then
+		echo "svn_commit.sh: error running ./check_svn_dist.sh."
+		exit 1
+	fi
+fi
+exit 0
