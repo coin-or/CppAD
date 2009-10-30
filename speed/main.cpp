@@ -246,8 +246,8 @@ namespace {
 	// function that runs one speed case
 	void Run_speed(
 		void speed_case(size_t size, size_t repeat) , 
-		CppAD::vector<size_t>              size_vec ,
-		std::string                       case_name )
+		const CppAD::vector<size_t>&       size_vec ,
+		const std::string&                case_name )
 	{	double time_min = 1.;
 		cout << AD_PACKAGE << "_" << case_name << "_size = ";
 		output(size_vec);

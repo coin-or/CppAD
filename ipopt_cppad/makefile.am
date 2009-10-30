@@ -26,7 +26,10 @@ EXTRA_DIST        = \
 	ipopt_cppad.vcproj  \
 	ipopt_cppad_windows.bat
 #
-noinst_PROGRAMS   = ipopt_cppad 
+noinst_PROGRAMS   = \
+	ipopt_cppad \
+	ipopt_ode_speed
+
 #
 AM_CXXFLAGS       = -g $(CXX_FLAGS) 
 #
@@ -46,4 +49,13 @@ ipopt_cppad_SOURCES   = \
 	ipopt_ode_fast.hpp \
 	ipopt_ode_problem.hpp \
 	ipopt_ode_simple.hpp  \
-	ipopt_ode_run.cpp
+	ipopt_ode_run.cpp \
+	ipopt_ode_run.hpp
+#
+ipopt_ode_speed_SOURCES   = \
+	ipopt_ode_speed.cpp \
+	ipopt_cppad_nlp.cpp \
+	ipopt_cppad_nlp.hpp \
+	ipopt_ode_fast.hpp \
+	ipopt_ode_problem.hpp \
+	ipopt_ode_simple.hpp  

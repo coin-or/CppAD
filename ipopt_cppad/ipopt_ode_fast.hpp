@@ -35,8 +35,6 @@ $end
 # include "ipopt_ode_problem.hpp"
 
 namespace {
-	typedef CppAD::vector<size_t> SizeVector;
-
 	class FG_fast : public ipopt_cppad_fg_info
 	{
 	private:

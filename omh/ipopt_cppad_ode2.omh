@@ -533,12 +533,3 @@ and constraints.
  
 $end 
 ------------------------------------------------------------------------------
-$begin ipopt_ode_run.cpp$$
-
-$section Program That Runs Both Simple and Fast Representations$$
-
-$code
-$verbatim%ipopt_cppad/ipopt_ode_run.cpp%$$
-$$
-
-$end

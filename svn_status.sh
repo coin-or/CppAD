@@ -21,9 +21,7 @@ fi
 yyyymmdd=`date +%G%m%d`
 yyyy_mm_dd=`date +%G-%m-%d`
 #
-svn status | > svn_status.$$ \
-sed                                                           \
-	-e '/^. *svn_status.sh$/d'                            \
+svn status | sed > svn_status.$$ \
 	-e '/^. *cppad\/configure.hpp$/d'                     \
 	-e '/^[?].*\.[0-9]*$/d'                               \
 	-e '/^[?].*\.tmp$/d'                                  \
@@ -60,12 +58,14 @@ sed                                                           \
 	-e '/^[?] *cppad-[0-9]\{8\}.*$/d'                     \
 	-e '/^[?] *doc.omh$/d'                                \
 	-e '/^[?] *doxyfile$/d'                               \
+	-e '/^[?] *svn_dist$/d'                               \
 	-e '/^[?] *omh\/install_unix.omh$/d'                  \
 	-e '/^[?] *omh\/install_windows.omh$/d'               \
 	-e '/^[?] *example\/test_one.sh$/d'                   \
 	-e '/^[?] *test_more\/test_one.sh$/d'                 \
 	-e '/^[?] *example\/example$/d'                       \
 	-e '/^[?] *ipopt_cppad\/ipopt_cppad$/d'               \
+	-e '/^[?] *ipopt_cppad\/ipopt_ode_speed$/d'           \
 	-e '/^[?] *print_for\/print_for$/d'                   \
 	-e '/^[?] *speed\/adolc\/adolc$/d'                    \
 	-e '/^[?] *speed\/cppad\/cppad$/d'                    \

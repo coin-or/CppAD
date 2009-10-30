@@ -32,7 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-noinst_PROGRAMS = ipopt_cppad$(EXEEXT)
+noinst_PROGRAMS = ipopt_cppad$(EXEEXT) ipopt_ode_speed$(EXEEXT)
 subdir = ipopt_cppad
 DIST_COMMON = $(srcdir)/makefile.am $(srcdir)/makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -52,6 +52,12 @@ ipopt_cppad_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
 ipopt_cppad_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
+am_ipopt_ode_speed_OBJECTS = ipopt_ode_speed.$(OBJEXT) \
+	ipopt_cppad_nlp.$(OBJEXT)
+ipopt_ode_speed_OBJECTS = $(am_ipopt_ode_speed_OBJECTS)
+ipopt_ode_speed_LDADD = $(LDADD)
+ipopt_ode_speed_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -65,8 +71,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(ipopt_cppad_SOURCES)
-DIST_SOURCES = $(ipopt_cppad_SOURCES)
+SOURCES = $(ipopt_cppad_SOURCES) $(ipopt_ode_speed_SOURCES)
+DIST_SOURCES = $(ipopt_cppad_SOURCES) $(ipopt_ode_speed_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -89,7 +95,7 @@ CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id: makefile.am 1565 2009-10-27 15:00:55Z bradbell $
+# $Id: makefile.am 1568 2009-10-29 15:31:17Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
@@ -197,6 +203,7 @@ EXTRA_DIST = \
 	ipopt_cppad.vcproj  \
 	ipopt_cppad_windows.bat
 
+
 #
 AM_CXXFLAGS = -g $(CXX_FLAGS) 
 #
@@ -217,7 +224,17 @@ ipopt_cppad_SOURCES = \
 	ipopt_ode_fast.hpp \
 	ipopt_ode_problem.hpp \
 	ipopt_ode_simple.hpp  \
-	ipopt_ode_run.cpp
+	ipopt_ode_run.cpp \
+	ipopt_ode_run.hpp
+
+#
+ipopt_ode_speed_SOURCES = \
+	ipopt_ode_speed.cpp \
+	ipopt_cppad_nlp.cpp \
+	ipopt_cppad_nlp.hpp \
+	ipopt_ode_fast.hpp \
+	ipopt_ode_problem.hpp \
+	ipopt_ode_simple.hpp  
 
 all: all-am
 
@@ -259,6 +276,9 @@ clean-noinstPROGRAMS:
 ipopt_cppad$(EXEEXT): $(ipopt_cppad_OBJECTS) $(ipopt_cppad_DEPENDENCIES) 
 	@rm -f ipopt_cppad$(EXEEXT)
 	$(CXXLINK) $(ipopt_cppad_OBJECTS) $(ipopt_cppad_LDADD) $(LIBS)
+ipopt_ode_speed$(EXEEXT): $(ipopt_ode_speed_OBJECTS) $(ipopt_ode_speed_DEPENDENCIES) 
+	@rm -f ipopt_ode_speed$(EXEEXT)
+	$(CXXLINK) $(ipopt_ode_speed_OBJECTS) $(ipopt_ode_speed_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -270,6 +290,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad_nlp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_get_started.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_ode_run.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_ode_speed.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

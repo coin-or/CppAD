@@ -71,6 +71,8 @@ $cref ipopt_ode_fast.hpp$$,
 and 
 $cref ipopt_ode_run.cpp$$.
 
+$head 10-30$$
+Add the speed testing problem $code ipopt_cppad/ipopt_ode_speed.cpp$$.
 
 $head 10-28$$
 Improve the documentation for $cref ipopt_ode_simple$$ and 

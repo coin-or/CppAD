@@ -125,6 +125,7 @@ $rref ipopt_ode_fast.hpp$$
 $rref ipopt_ode_problem.hpp$$
 $rref ipopt_ode_run.cpp$$
 $rref ipopt_ode_simple.hpp$$
+$rref ipopt_ode_speed.cpp$$
 $rref HesLagrangian.cpp$$
 $rref HesLuDet.cpp$$
 $rref HesMinorDet.cpp$$

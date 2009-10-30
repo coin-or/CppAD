@@ -40,8 +40,6 @@ $end
 
 // define in the empty namespace
 namespace {
-	typedef CppAD::vector<size_t> SizeVector;
-
 	class FG_simple : public ipopt_cppad_fg_info
 	{
 	private:
