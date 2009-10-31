@@ -66,8 +66,7 @@ namespace {
 			// # of constraints (range dimension of g)
 			size_t m = ny_inx;
 			// # of components in x (domain dimension for f and g)
-			size_t n = ny_inx + Na;
-			assert ( x.size() == n );
+			assert ( x.size() == ny_inx + Na );
 			// vector for return value
 			ADVector fg(m + 1);
 			// vector of parameters
