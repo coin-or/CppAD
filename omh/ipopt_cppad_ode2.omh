@@ -114,10 +114,10 @@ The simulated measurement values are given by the equation
 $latex \[
 \begin{array}{rcl}
 z_i 
-& = &  y_1 ( s_i , \bar{a} ) + e_i
+& = &  e_i + y_1 ( s_i , \bar{a} )
 \\
 & = & 
-\bar{a}_0 * \bar{a}_1 * 
+e_i + \bar{a}_0 * \bar{a}_1 * 
 	\frac{\exp( - \bar{a}_2 * s_i ) - \exp( -\bar{a}_1 * s_i )}
 		{ \bar{a}_1 - \bar{a}_2 }
 \end{array}
@@ -461,7 +461,7 @@ we define the function $latex r^{Nz+k} : \R^{2*Ny+Na} \rightarrow \R^{Ny}$$ by
 $latex \[
 r^{Nz+k} ( y , w , a ) 
 = 
-y - w  [ G( y , a ) + G( w , a ) ] * \frac{ \Delta t_k }{ 2 }
+y - w -  [ G( y , a ) + G( w , a ) ] * \frac{ \Delta t_k }{ 2 }
 \] $$
 For $latex \ell = 0 , \ldots , N(k)-1$$,
 using the notation $latex i = Ny * S(k-1) + \ell + 1$$,
