@@ -58,6 +58,12 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 10-30$$
+Make program that check Ipopt ODE example correctness
+a separate file $cref ipopt_ode_check.cpp$$
+Split out Ipopt driver for ODE example $cref/ipopt_ode_run.hpp/$$.
+Add the speed testing problem $code ipopt_cppad/ipopt_ode_speed.cpp$$.
+
 $head 10-29$$
 Split out the 
 $cref/ode inverse problem/ipopt_ode_problem/$$,
@@ -69,10 +75,7 @@ $cref ipopt_ode_problem.hpp$$,
 $cref ipopt_ode_simple.hpp$$,
 $cref ipopt_ode_fast.hpp$$,
 and 
-$cref ipopt_ode_run.cpp$$.
-
-$head 10-30$$
-Add the speed testing problem $code ipopt_cppad/ipopt_ode_speed.cpp$$.
+$cref ipopt_ode_check.cpp$$.
 
 $head 10-28$$
 Improve the documentation for $cref ipopt_ode_simple$$ and 
@@ -82,7 +85,7 @@ $head 10-27$$
 Moved old $code ipopt_cppad_simple.cpp$$ to $cref/ipopt_get_started.cpp/$$,
 created the example $cref/ipopt_ode_simple.hpp/$$,
 and split and $code ipopt_cppad_ode.cpp$$ 
-into $cref/ipopt_ode_fast.hpp/$$ and $cref/ipopt_ode_run.cpp/$$.
+into $cref/ipopt_ode_fast.hpp/$$ and $cref/ipopt_ode_check.cpp/$$.
 
 $head 10-24$$
 Added the $cref/assignment operator/FunConstruct/Assignment Operator/$$

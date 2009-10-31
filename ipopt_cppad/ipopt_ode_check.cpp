@@ -10,12 +10,12 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin ipopt_ode_run.cpp$$
+$begin ipopt_ode_check.cpp$$
 
 $section Correctness Check for Both Simple and Fast Representations$$
 
 $code
-$verbatim%ipopt_cppad/ipopt_ode_run.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%ipopt_cppad/ipopt_ode_check.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -25,7 +25,7 @@ $end
 
 namespace { // Begin empty namespace
 bool check_solution(const SizeVector& N, const NumberVector& x)
-{	bool ok;
+{	bool ok = true;
 	size_t i, j;
 
 	// number of components of x corresponding to values for y
@@ -105,7 +105,7 @@ bool check_solution(const SizeVector& N, const NumberVector& x)
 }
 } // End empty namespace
 
-bool ipopt_ode_run(void)
+bool ipopt_ode_check(void)
 {	bool ok = true;
 	bool retape;
 	size_t i;

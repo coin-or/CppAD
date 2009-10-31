@@ -12,6 +12,22 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+/*
+$begin ipopt_ode_run.hpp$$
+$spell
+	Ipopt
+$$
+
+$section Driver for Running the Ipopt ODE Example$$
+
+$code
+$verbatim%ipopt_cppad/ipopt_ode_run.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$$
+
+$end
+*/
+
+// BEGIN PROGRAM
 # include "ipopt_ode_simple.hpp"
 # include "ipopt_ode_fast.hpp"
 
@@ -105,5 +121,7 @@ void ipopt_ode_case(
 	return;
 }
 } // END empty namespace ----------------------------------------------------
+// END PROGRAM
 
 # endif
+

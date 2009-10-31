@@ -123,7 +123,8 @@ $rref ipopt_cppad_nlp$$
 $rref ipopt_get_started.cpp$$
 $rref ipopt_ode_fast.hpp$$
 $rref ipopt_ode_problem.hpp$$
-$rref ipopt_ode_run.cpp$$
+$rref ipopt_ode_check.cpp$$
+$rref ipopt_ode_run.hpp$$
 $rref ipopt_ode_simple.hpp$$
 $rref ipopt_ode_speed.cpp$$
 $rref HesLagrangian.cpp$$

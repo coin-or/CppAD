@@ -21,7 +21,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 // external complied tests
 extern bool ipopt_get_started(void);
-extern bool ipopt_ode_run(void);
+extern bool ipopt_ode_check(void);
 
 namespace {
 	// function that runs one test
@@ -48,7 +48,7 @@ int main(void)
 
 	// external compiled tests
 	ok &= Run( ipopt_get_started,   "ipopt_get_started"  );
-	ok &= Run( ipopt_ode_run,       "ipopt_ode_run"      );
+	ok &= Run( ipopt_ode_check,     "ipopt_ode_check"      );
 	
 	// check for errors
 	using std::cout;

@@ -31,7 +31,8 @@ noinst_PROGRAMS   = \
 	ipopt_ode_speed
 
 #
-AM_CXXFLAGS       = -g $(CXX_FLAGS) 
+ipopt_cppad_CXXFLAGS       = -g $(CXX_FLAGS) 
+ipopt_ode_speed_CXXFLAGS   = -O2 -DNDEBUG $(CXX_FLAGS)
 #
 AM_CPPFLAGS       = -I. \
                    -I$(top_srcdir) \
@@ -49,7 +50,7 @@ ipopt_cppad_SOURCES   = \
 	ipopt_ode_fast.hpp \
 	ipopt_ode_problem.hpp \
 	ipopt_ode_simple.hpp  \
-	ipopt_ode_run.cpp \
+	ipopt_ode_check.cpp \
 	ipopt_ode_run.hpp
 #
 ipopt_ode_speed_SOURCES   = \

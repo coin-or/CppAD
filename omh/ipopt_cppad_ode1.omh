@@ -15,7 +15,8 @@ $section Example Simultaneous Solution of Forward and Inverse Problem$$
 
 $contents%
 	omh/ipopt_cppad_ode2.omh%
-	ipopt_cppad/ipopt_ode_run.cpp%
+	ipopt_cppad/ipopt_ode_run.hpp%
+	ipopt_cppad/ipopt_ode_check.cpp%
 	ipopt_cppad/ipopt_ode_speed.cpp
 %$$
 	
