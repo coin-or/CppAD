@@ -14,6 +14,14 @@ repository="https://projects.coin-or.org/svn/CppAD"
 stable_version="20090700"
 release="0"
 release_version="$stable_version.$release"
+msg="Creating releases/$release_version"
+# -----------------------------------------------------------------------------
+if ! grep "AC_INIT(CppAD.*, $stable_version.$release" configure.ac >> /dev/null
+then
+	echo "Must change version number in build.sh,"
+	echo "then run build.sh all test, and check in changes."
+	exit 1
+fi
 # -----------------------------------------------------------------------------
 #
 # check initial working directory
@@ -28,7 +36,6 @@ cd ..
 # -----------------------------------------------------------------------------
 rep_stable="$repository/stable/$stable_version"
 rep_release="$repository/releases/$release_version"
-msg="Creating releases/$release_version"
 echo "svn copy $rep_stable $rep_release -m \"$msg\""
 if ! svn copy $rep_stable $rep_release -m "$msg"
 then

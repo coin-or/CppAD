@@ -394,6 +394,52 @@ bool case_four()
 	return ok;
 }
 
+bool case_five(void)
+{	bool ok = true;
+	using CppAD::AD;
+	size_t i, j, k;
+
+	size_t n = 2;
+	CPPAD_TEST_VECTOR< AD<double> > X(n); 
+	X[0] = 1.;
+	X[1] = 2.;
+	CppAD::Independent(X);
+
+	size_t m = 2;
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	Y[0] = pow(X[0], 2.);
+	Y[1] = pow(2., X[0]);
+
+	// create function object F : X -> Y
+	CppAD::ADFun<double> F(X, Y);
+
+	// sparsity pattern for the identity function U(x) = x
+	CPPAD_TEST_VECTOR<bool> Px(n * n);
+	for(i = 0; i < n; i++)
+		for(j = 0; j < n; j++)
+			Px[ i * n + j ] = (i == j);
+
+	// compute sparsity pattern for Jacobian of F(U(x))
+	F.ForSparseJac(n, Px);
+
+	// compute sparsity pattern for Hessian of F_k ( U(x) ) 
+	CPPAD_TEST_VECTOR<bool> Py(m);
+	CPPAD_TEST_VECTOR<bool> Pxx(n * n);
+	for(k = 0; k < m; k++)
+	{	for(i = 0; i < m; i++)
+			Py[i] = (i == k);
+		Pxx = F.RevSparseHes(n, Py);
+		// check values
+		for(i = 0; i < n; i++)
+		{	for(j = 0; j < n; j++)
+			{	bool check = (i == 0) & (j == 0);
+				ok        &= Pxx[i * n + j] == check;
+			}
+		}
+	}
+	return ok;
+}
+
 } // End of empty namespace
 
 bool rev_sparse_hes(void)
@@ -403,6 +449,7 @@ bool rev_sparse_hes(void)
 	ok &= case_two();
 	ok &= case_three();
 	ok &= case_four();
+	ok &= case_five();
 
 	return ok;
 }
