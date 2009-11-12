@@ -234,10 +234,8 @@ namespace {
 
 bool optimize(void)
 {	bool ok = true;
-# if 0
 	ok     &= CaseOne();
 	ok     &= CaseTwo();
-# endif
 	ok     &= CaseThree();
 
 	return ok;
