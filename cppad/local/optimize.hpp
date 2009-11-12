@@ -264,6 +264,8 @@ void optimize(
 		switch( op )
 		{
 			// Unary operator where operand is arg[0]
+			case PowvpOp:
+			i_var = CPPAD_POW_FINAL_RESULT(i_var, op);
 			case AbsOp:
 			case AddvpOp:
 			case AcosOp:
@@ -276,7 +278,6 @@ void optimize(
 			case ExpOp:
 			case LogOp:
 			case MulvpOp:
-			case PowvpOp:
 			case SinOp:
 			case SinhOp:
 			case SqrtOp:
@@ -285,20 +286,22 @@ void optimize(
 			break;
 
 			// Unary operator where operand is arg[1]
+			case PowpvOp:
+			i_var = CPPAD_POW_FINAL_RESULT(i_var, op);
 			case AddpvOp:
 			case DivpvOp:
 			case MulpvOp:
-			case PowpvOp:
 			case SubpvOp:
 			case PrivOp:
 			connected[ arg[1] ] |= connected[ i_var ];
 			break;
 
 			// Binary operator where operands are arg[0], arg[1]
+			case PowvvOp:
+			i_var = CPPAD_POW_FINAL_RESULT(i_var, op);
 			case AddvvOp:
 			case DivvvOp:
 			case MulvvOp:
-			case PowvvOp:
 			case SubvvOp:
 			connected[ arg[0] ] |= connected[ i_var ];
 			connected[ arg[1] ] |= connected[ i_var ];
@@ -439,6 +442,11 @@ void optimize(
 			keep = vecad_connected[i];
 			break;
 
+			case PowpvOp:
+			case PowvpOp:
+			case PowvvOp:
+			i_var = CPPAD_POW_FINAL_RESULT(i_var, op);
+
 			default:
 			keep = connected[i_var];
 			break;
@@ -473,7 +481,6 @@ void optimize(
 			case AddvpOp:
 			case DivvpOp:
 			case MulvpOp:
-			case PowvpOp:
 			case SubvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			new_arg[0] = new_var[ arg[0] ];
@@ -484,12 +491,23 @@ void optimize(
 			new_var[ i_var ] = rec->PutOp(op);
 			break;
 
+			case PowvpOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
+			new_arg[0] = new_var[ arg[0] ];
+			new_arg[1] = rec->PutPar( play->GetPar( arg[1] ) );
+			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
+
+			rec->PutArg( new_arg[0], new_arg[1] );
+			new_var[ i_var ] = rec->PutOp(op);
+			new_var[ i_var ] = 
+				CPPAD_POW_FINAL_RESULT(new_var[ i_var ], op);
+			break;
+
 			// Binary operators where left operand is a parameter
 			// and right operand is a variable
 			case AddpvOp:
 			case DivpvOp:
 			case MulpvOp:
-			case PowpvOp:
 			case SubpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			new_arg[0] = rec->PutPar( play->GetPar( arg[0] ) );
@@ -500,11 +518,22 @@ void optimize(
 			new_var[ i_var ] = rec->PutOp(op);
 			break;
 
+			case PowpvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
+			new_arg[0] = rec->PutPar( play->GetPar( arg[0] ) );
+			new_arg[1] = new_var[ arg[1] ];
+			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
+
+			rec->PutArg( new_arg[0], new_arg[1] );
+			new_var[ i_var ] = rec->PutOp(op);
+			new_var[ i_var ] = 
+				CPPAD_POW_FINAL_RESULT(new_var[ i_var ], op);
+			break;
+
 			// Binary operator where both operators are variables
 			case AddvvOp:
 			case DivvvOp:
 			case MulvvOp:
-			case PowvvOp:
 			case SubvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			new_arg[0] = new_var[ arg[0] ];
@@ -514,6 +543,19 @@ void optimize(
 
 			rec->PutArg( new_arg[0], new_arg[1] );
 			new_var[ i_var ] = rec->PutOp(op);
+			break;
+
+			case PowvvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
+			new_arg[0] = new_var[ arg[0] ];
+			new_arg[1] = new_var[ arg[1] ];
+			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
+			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
+
+			rec->PutArg( new_arg[0], new_arg[1] );
+			new_var[ i_var ] = rec->PutOp(op);
+			new_var[ i_var ] = 
+				CPPAD_POW_FINAL_RESULT(new_var[ i_var ], op);
 			break;
 
 			// Conditional expression operators

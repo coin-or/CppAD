@@ -103,9 +103,6 @@ They returns true if they succeed and false otherwise.
 $end
 -------------------------------------------------------------------------------
 */
-// The pow function is a special case where the final result is the last,
-// instead of the first, of the multiple variables created.
-# define CPPAD_POW_FINAL_RESULT(address, op)  address +=  2
 
 //  BEGIN CppAD namespace
 namespace CppAD {
@@ -159,7 +156,8 @@ pow(const AD<Base> &x, const AD<Base> &y)
 
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(PowvvOp);
-			CPPAD_POW_FINAL_RESULT(result.taddr_, PowvvOp);
+			result.taddr_ =
+				CPPAD_POW_FINAL_RESULT(result.taddr_, PowvvOp);
 
 			// make result a variable
 			result.id_ = tape->id_;
@@ -178,7 +176,8 @@ pow(const AD<Base> &x, const AD<Base> &y)
 
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(PowvpOp);
-			CPPAD_POW_FINAL_RESULT(result.taddr_, PowvpOp);
+			result.taddr_ =
+				CPPAD_POW_FINAL_RESULT(result.taddr_, PowvpOp);
 
 			// make result a variable
 			result.id_ = tape->id_;
@@ -199,7 +198,8 @@ pow(const AD<Base> &x, const AD<Base> &y)
 
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(PowpvOp);
-			CPPAD_POW_FINAL_RESULT(result.taddr_, PowpvOp);
+			result.taddr_ =
+				CPPAD_POW_FINAL_RESULT(result.taddr_, PowpvOp);
 
 			// make result a variable
 			result.id_ = tape->id_;
@@ -292,5 +292,4 @@ template <class Base> AD<Base> pow
 
 } // END CppAD namespace
 
-# undef CPPAD_POW_FINAL_RESULT
 # endif 

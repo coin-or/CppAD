@@ -197,12 +197,48 @@ namespace {
 		
 		return ok;
 	}
+	bool CaseThree(void)
+	{	// Power function is a special case for optimize
+		bool ok = true;
+		using CppAD::AD;
+		using CppAD::vector;
+
+		size_t n = 3;
+		size_t j;
+	
+		vector< AD<double> >    X(n), Y(n);
+		vector<double>          x(n), y(n); 
+	
+		for(j = 0; j < n; j++)
+			X[j] = x[j] = double(j+1);
+	
+		CppAD::Independent(X);
+	                
+		Y[0] = pow(X[0], 2.0);
+		Y[1] = pow(2.0, X[1]);
+		Y[2] = pow(X[0], X[1]);
+	
+		CppAD::ADFun<double> F(X, Y);
+		F.optimize();
+		y = F.Forward(0, x);
+
+		// Use identically equal because the result of the operations
+		// have been stored as double and gaurd bits have been dropped.
+		// (This may not be true for some compiler in the future).
+		for(j = 0; j < n; j++)
+			ok &= ( y[j] == Value(Y[j]) );
+	
+		return ok;
+	}
 }
 
 bool optimize(void)
 {	bool ok = true;
+# if 0
 	ok     &= CaseOne();
 	ok     &= CaseTwo();
+# endif
+	ok     &= CaseThree();
 
 	return ok;
 }
