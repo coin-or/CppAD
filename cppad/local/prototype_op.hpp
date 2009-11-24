@@ -215,9 +215,9 @@ using AD< \a Base > and computations by this routine are done using type
 order of the Taylor coefficients that we are computing.
 
 \param i_z
-variable index corresponding to the first result for this operation; 
+variable index corresponding to the last (primary) result for this operation; 
 i.e. the row index in \a taylor corresponding to z. 
-The auxillary result is called y has index \a i_z + 1.
+The auxillary result is called y has index \a i_z - 1.
 
 \param i_x
 variable index corresponding to the argument for this operator;
@@ -235,21 +235,21 @@ is the k-th order Taylor coefficient corresponding to x.
 for k = 0 , ... , \a j - 1
 is the k-th order Taylor coefficient corresponding to z.
 \n
-\b Input: \a taylor [ ( \a i_z + 1) * \a nc_taylor + k ] 
+\b Input: \a taylor [ ( \a i_z - 1) * \a nc_taylor + k ] 
 for k = 0 , ... , \a j - 1
 is the k-th order Taylor coefficient corresponding to the auxillary result y.
 \n
 \b Output: \a taylor [ \a i_z * \a nc_taylor + j ] 
 is the j-th order Taylor coefficient corresponding to z. 
 \n
-\b Output: \a taylor [ ( \a i_z + 1 ) * \a nc_taylor + j ] 
+\b Output: \a taylor [ ( \a i_z - 1 ) * \a nc_taylor + j ] 
 is the j-th order Taylor coefficient corresponding to 
 the autillary result y.
 
 \par Checked Assertions 
 \li NumArg(op) == 1
 \li NumRes(op) == 2
-\li \a i_x < \a i_z 
+\li \a i_x + 1 < \a i_z 
 \li \a j < \a nc_taylor
 */
 template <class Base>
@@ -272,9 +272,9 @@ using AD< \a Base > and computations by this routine are done using type
 \a Base .
 
 \param i_z
-variable index corresponding to the result for this operation; 
+variable index corresponding to the last (primary) result for this operation; 
 i.e. the row index in \a taylor corresponding to z. 
-The auxillary result is called y and has index \a i_z + 1.
+The auxillary result is called y and has index \a i_z - 1.
 
 \param i_x
 variable index corresponding to the argument for this operator;
@@ -290,14 +290,14 @@ is the zero order Taylor coefficient corresponding to x.
 \b Output: \a taylor [ \a i_z * \a nc_taylor + 0 ] 
 is the zero order Taylor coefficient corresponding to z. 
 \n
-\b Output: \a taylor [ ( \a i_z + 1 ) * \a nc_taylor + j ] 
+\b Output: \a taylor [ ( \a i_z - 1 ) * \a nc_taylor + j ] 
 is the j-th order Taylor coefficient corresponding to 
 the autillary result y. 
 
 \par Checked Assertions
 \li NumArg(op) == 1
 \li NumRes(op) == 2
-\li \a i_x < \a i_z 
+\li \a i_x + 1 < \a i_z 
 \li \a j < \a nc_taylor
 */
 template <class Base>
@@ -331,9 +331,9 @@ highest order Taylor coefficient that
 we are computing the partial derivatives with respect to.
 
 \param i_z
-variable index corresponding to the result for this operation; 
+variable index corresponding to the last (primary) result for this operation; 
 i.e. the row index in \a taylor to z. 
-The auxillary result is called y and has index \a i_z + 1.
+The auxillary result is called y and has index \a i_z - 1.
 
 \param i_x
 variable index corresponding to the argument for this operation;
@@ -351,7 +351,7 @@ is the k-th order Taylor coefficient corresponding to x.
 for k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to z.
 \n
-\a taylor [ ( \a i_z + 1) * \a nc_taylor + k ] 
+\a taylor [ ( \a i_z - 1) * \a nc_taylor + k ] 
 for k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to 
 the auxillary variable y.
@@ -371,7 +371,7 @@ for k = 0 , ... , \a d
 is the partial derivative of G( z , y , x , w , u , ... ) with respect to 
 the k-th order Taylor coefficient for z.
 \n
-\b Input: \a partial [ ( \a i_z + 1) * \a nc_partial + k ] 
+\b Input: \a partial [ ( \a i_z - 1) * \a nc_partial + k ] 
 for k = 0 , ... , \a d
 is the partial derivative of G( z , x , w , u , ... ) with respect to 
 the k-th order Taylor coefficient for the auxillary variable y.
@@ -381,19 +381,15 @@ for k = 0 , ... , \a d
 is the partial derivative of H( x , w , u , ... ) with respect to 
 the k-th order Taylor coefficient for x.
 \n
-\b Output: \a partial [ \a i_z * \a nc_partial + k ]
-for k = 0 , ... , \a d 
-may be used as work space; i.e., may change in an unspecified manner.
-\n
-\b Output: \a partial [ ( \a i_z + 1) * \a nc_partial + k ]
-for k = 0 , ... , \a d 
+\b Output: \a partial [ \a ( i_z - j ) * \a nc_partial + k ]
+for j = 0 , 1 , and for k = 0 , ... , \a d 
 may be used as work space; i.e., may change in an unspecified manner.
 
 
 \par Checked Assumptions
 \li NumArg(op) == 1
 \li NumRes(op) == 2
-\li \a i_x < \a i_z 
+\li \a i_x + 1 < \a i_z 
 \li \a d < \a nc_taylor
 \li \a d < \a nc_partial
 */
@@ -626,6 +622,10 @@ the k-th order Taylor coefficient for x.
 for k = 0 , ... , \a d 
 is the partial derivative of H( y , x , w , u , ... ) with respect to 
 the k-th order Taylor coefficient for y.
+\n
+\b Output: \a partial [ \a i_z * \a nc_partial + k ]
+for k = 0 , ... , \a d 
+may be used as work space; i.e., may change in an unspecified manner.
 
 \par Checked Assumptions
 \li NumArg(op) == 2
@@ -662,7 +662,7 @@ using AD< \a Base > and computations by this routine are done using type
 order of the Taylor coefficient that we are computing.
 
 \param i_z
-variable index corresponding to the first result for this operation; 
+variable index corresponding to the last (primary) result for this operation; 
 i.e. the row index in \a taylor corresponding to z. 
 Note that there are three results for this operation,
 below they are referred to as z_0, z_1, z_2 and correspond to
@@ -671,7 +671,7 @@ below they are referred to as z_0, z_1, z_2 and correspond to
 	z_1 = z0 * y
 	z_2 = exp(z1)
 \endverbatim
-It follows that the last result is equal to z; i.e., z = z_2 = pow(x, y). 
+It follows that the final result is equal to z; i.e., z = z_2 = pow(x, y). 
 
 \param arg
 \a arg[0]
@@ -701,18 +701,18 @@ is the k-th order Taylor coefficient corresponding to x.
 for k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to y.
 \n
-\b Input: \a taylor [ \a (i_z + j) * \a nc_taylor + k ] 
+\b Input: \a taylor [ \a (i_z - 2 + j) * \a nc_taylor + k ] 
 for j = 0, 1, 2 , and for k = 0 , ... , \a d - 1
 is the k-th order Taylor coefficient corresponding to z_j.
 \n
-\b Output: \a taylor [ \a (i_z + j) * \a nc_taylor + \a d ] 
+\b Output: \a taylor [ \a (i_z - 2 + j) * \a nc_taylor + \a d ] 
 is the \a d-th order Taylor coefficient corresponding to z_j.
 
 \par Checked Assertions
 \li NumArg(op) == 2
 \li NumRes(op) == 3
-\li If x is a variable, \a arg[0] < \a i_z 
-\li If y is a variable, \a arg[1] < \a i_z 
+\li If x is a variable, \a arg[0] < \a i_z - 2 
+\li If y is a variable, \a arg[1] < \a i_z - 2
 \li \a d < \a nc_taylor
 */
 template <class Base>
@@ -736,7 +736,7 @@ using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param i_z
-variable index corresponding to the first result for this operation; 
+variable index corresponding to the last (primary) result for this operation; 
 i.e. the row index in \a taylor corresponding to z. 
 Note that there are three results for this operation,
 below they are referred to as z_0, z_1, z_2 and correspond to
@@ -745,7 +745,7 @@ below they are referred to as z_0, z_1, z_2 and correspond to
 	z_1 = z0 * y
 	z_2 = exp(z1)
 \endverbatim
-It follows that the last result is equal to z; i.e., z = z_2 = pow(x, y). 
+It follows that the final result is equal to z; i.e., z = z_2 = pow(x, y). 
 
 \param arg
 \a arg[0]
@@ -773,14 +773,14 @@ is the zero order Taylor coefficient corresponding to x.
 \b Input: If y is a variable, \a taylor [ \a arg[1] * \a nc_taylor + 0 ] 
 is the k-th order Taylor coefficient corresponding to y.
 \n
-\b Output: \a taylor [ \a (i_z + j) * \a nc_taylor + 0 ] 
+\b Output: \a taylor [ \a (i_z - 2 + j) * \a nc_taylor + 0 ] 
 is the zero order Taylor coefficient corresponding to z_j.
 
 \par Checked Assertions
 \li NumArg(op) == 2
 \li NumRes(op) == 3
-\li If x is a variable, \a arg[0] < \a i_z 
-\li If y is a variable, \a arg[1] < \a i_z 
+\li If x is a variable, \a arg[0] < \a i_z - 2 
+\li If y is a variable, \a arg[1] < \a i_z - 2
 */
 template <class Base>
 inline void forward_pow_op_0(
@@ -813,7 +813,7 @@ highest order Taylor coefficient that
 we are computing the partial derivatives with respect to.
 
 \param i_z
-variable index corresponding to the first result for this operation; 
+variable index corresponding to the last (primary) result for this operation; 
 i.e. the row index in \a taylor corresponding to z. 
 Note that there are three results for this operation,
 below they are referred to as z_0, z_1, z_2 and correspond to
@@ -822,7 +822,7 @@ below they are referred to as z_0, z_1, z_2 and correspond to
 	z_1 = z0 * y
 	z_2 = exp(z1)
 \endverbatim
-It follows that the last result is equal to z; i.e., z = z_2 = pow(x, y). 
+It follows that the final result is equal to z; i.e., z = z_2 = pow(x, y). 
 
 \param arg
 \a arg[0]
@@ -844,7 +844,7 @@ is the value corresponding to y.
 number of colums in the matrix containing all the Taylor coefficients.
 
 \param taylor
-\a taylor [ \a (i_z + j) * \a nc_taylor + k ] 
+\a taylor [ \a (i_z - 2 + j) * \a nc_taylor + k ] 
 for j = 0, 1, 2 and k = 0 , ... , \a d
 is the k-th order Taylor coefficient corresponding to z_j.
 \n
@@ -860,7 +860,7 @@ is the k-th order Taylor coefficient corresponding to y.
 number of colums in the matrix containing all the partial derivatives.
 
 \param partial
-\b Input: \a partial [ \a (i_z + j) * \a nc_partial + k ] 
+\b Input: \a partial [ \a (i_z - 2 + j) * \a nc_partial + k ] 
 for j = 0, 1, 2, and k = 0 , ... , \a d
 is the partial derivative of 
 G( z , y , x , w , u , ... ) 
@@ -885,12 +885,16 @@ the k-th order Taylor coefficient for x.
 for k = 0 , ... , \a d 
 is the partial derivative of H( y , x , w , u , ... ) with respect to 
 the k-th order Taylor coefficient for y.
+\n
+\b Output: \a partial [ \a ( i_z - j ) * \a nc_partial + k ]
+for j = 0 , 1 , 2 and for k = 0 , ... , \a d 
+may be used as work space; i.e., may change in an unspecified manner.
 
 \par Checked Assumptions
 \li NumArg(op) == 2
 \li NumRes(op) == 3
-\li \a If x is a variable, arg[0] < \a i_z 
-\li \a If y is a variable, arg[1] < \a i_z 
+\li \a If x is a variable, arg[0] < \a i_z - 2
+\li \a If y is a variable, arg[1] < \a i_z - 2
 \li \a d < \a nc_taylor
 \li \a d < \a nc_partial
 */
@@ -1122,7 +1126,7 @@ using AD< \a Base > and computations by this routine are done using type
 \a Base.
 
 \param i_z
-is the index corresponding to the next variable on the tape
+is the index corresponding to the previous variable on the tape
 (only used for error checking).
 
 \param arg
@@ -1191,8 +1195,8 @@ In this case, the error above should be detected during tape recording.
 \li 0 <  \a arg[0]
 \li \a arg[0] + i_vec < nc_combined
 \li if y is a parameter, arg[2] < num_par
-\li if x is a variable, arg[1] < i_z
-\li if y is a variable, arg[2] < i_z
+\li if x is a variable, arg[1] <= i_z
+\li if y is a variable, arg[2] <= i_z
 */
 template <class Base>
 inline void forward_store_op_0(

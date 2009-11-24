@@ -300,6 +300,99 @@ bool case_two()
 	return ok;
 }
 
+bool case_three()
+{	bool ok = true;
+	using namespace CppAD;
+
+	// dimension of the domain space
+	size_t n = 2; 
+
+	// dimension of the range space
+	size_t m = 3;
+
+	// independent variable vector 
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	X[0] = 2.; 
+	X[1] = 3.;
+	Independent(X);
+
+	// dependent variable vector
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+
+	// check results vector
+	CPPAD_TEST_VECTOR< bool >       Check(m * n);
+
+	// initialize index into Y
+	size_t index = 0;
+
+	// Y[0] only depends on X[0];
+	Y[index]             = pow(X[0], 2.);
+	Check[index * n + 0] = true;
+	Check[index * n + 1] = false;
+	index++;
+
+	// Y[1] depends on X[1]
+	Y[index]             = pow(2., X[1]);
+	Check[index * n + 0] = false;
+	Check[index * n + 1] = true;
+	index++;
+
+	// Y[2] depends on X[0] and X[1]
+	Y[index]             = pow(X[0], X[1]);
+	Check[index * n + 0] = true;
+	Check[index * n + 1] = true;
+	index++;
+
+	// check final index
+	assert( index == m );
+
+	// create function object F : X -> Y
+	ADFun<double> F(X, Y);
+
+	// -----------------------------------------------------------------
+	// dependency matrix for the identity function
+	CPPAD_TEST_VECTOR< bool > Px(n * n);
+	size_t i, j;
+	for(i = 0; i < n; i++)
+	{	for(j = 0; j < n; j++)
+			Px[ i * n + j ] = false;
+		Px[ i * n + i ] = true;
+	}
+
+	// evaluate the dependency matrix for F(X(x))
+	CPPAD_TEST_VECTOR< bool > Py(m * n);
+	Py = F.ForSparseJac(n, Px);
+
+	// check values
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < n; j++)
+			ok &= (Py[i * n + j] == Check[i * n + j]);
+	}	
+
+	// ---------------------------------------------------------
+	// dependency matrix for the identity function 
+	CPPAD_TEST_VECTOR< std::set<size_t> > Sx(n);
+	for(i = 0; i < n; i++)
+	{	assert( Sx[i].empty() );
+		Sx[i].insert(i);
+	}
+
+	// evaluate the dependency matrix for F(X(x))
+	CPPAD_TEST_VECTOR< std::set<size_t> > Sy(m);
+	Sy = F.ForSparseJac(n, Sx);
+
+	// check values
+	bool found;
+	for(i = 0; i < m; i++)
+	{	for(j = 0; j < n; j++)
+		{	found = Sy[i].find(j) != Sy[i].end();
+			ok &= (found == Check[i * n + j]);
+		}
+	}	
+
+	return ok;
+}
+
 } // End empty namespace
 
 bool for_sparse_jac(void)
@@ -307,6 +400,7 @@ bool for_sparse_jac(void)
 
 	ok &= case_one();
 	ok &= case_two();
+	ok &= case_three();
 
 	return ok;
 }

@@ -156,8 +156,6 @@ pow(const AD<Base> &x, const AD<Base> &y)
 
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(PowvvOp);
-			result.taddr_ =
-				CPPAD_POW_FINAL_RESULT(result.taddr_, PowvvOp);
 
 			// make result a variable
 			result.id_ = tape->id_;
@@ -176,8 +174,6 @@ pow(const AD<Base> &x, const AD<Base> &y)
 
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(PowvpOp);
-			result.taddr_ =
-				CPPAD_POW_FINAL_RESULT(result.taddr_, PowvpOp);
 
 			// make result a variable
 			result.id_ = tape->id_;
@@ -198,8 +194,6 @@ pow(const AD<Base> &x, const AD<Base> &y)
 
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(PowpvOp);
-			result.taddr_ =
-				CPPAD_POW_FINAL_RESULT(result.taddr_, PowpvOp);
 
 			// make result a variable
 			result.id_ = tape->id_;

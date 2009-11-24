@@ -235,8 +235,9 @@ void optimize(
 	CPPAD_ASSERT_UNKNOWN( j == num_vecad_ind );
 
 	// Initialize a reverse mode sweep through the operation sequence
-	play->start_reverse();
-	size_t i_op = 2;
+	size_t i_op;
+	play->start_reverse(op, arg, i_op, i_var);
+	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	size_t mask;
 # if CPPAD_OPTIMIZE_TRACE
 	std::cout << std::endl;
@@ -264,8 +265,6 @@ void optimize(
 		switch( op )
 		{
 			// Unary operator where operand is arg[0]
-			case PowvpOp:
-			i_var = CPPAD_POW_FINAL_RESULT(i_var, op);
 			case AbsOp:
 			case AddvpOp:
 			case AcosOp:
@@ -278,6 +277,7 @@ void optimize(
 			case ExpOp:
 			case LogOp:
 			case MulvpOp:
+			case PowvpOp:
 			case SinOp:
 			case SinhOp:
 			case SqrtOp:
@@ -286,22 +286,20 @@ void optimize(
 			break;
 
 			// Unary operator where operand is arg[1]
-			case PowpvOp:
-			i_var = CPPAD_POW_FINAL_RESULT(i_var, op);
 			case AddpvOp:
 			case DivpvOp:
 			case MulpvOp:
 			case SubpvOp:
+			case PowpvOp:
 			case PrivOp:
 			connected[ arg[1] ] |= connected[ i_var ];
 			break;
 
 			// Binary operator where operands are arg[0], arg[1]
-			case PowvvOp:
-			i_var = CPPAD_POW_FINAL_RESULT(i_var, op);
 			case AddvvOp:
 			case DivvvOp:
 			case MulvvOp:
+			case PowvvOp:
 			case SubvvOp:
 			connected[ arg[0] ] |= connected[ i_var ];
 			connected[ arg[1] ] |= connected[ i_var ];
@@ -321,9 +319,10 @@ void optimize(
 			}
 
 			// Operations where there is noting to do
+			case BeginOp:
 			case ComOp:
+			case EndOp:
 			case InvOp:
-			case NonOp:
 			case ParOp:
 			case PripOp:
 			case StppOp:
@@ -406,10 +405,11 @@ void optimize(
 	// start playing the operations in the forward direction
 	play->start_forward(op, arg, i_op, i_var);
 
-	// put the beginning NonOp in the recording
-	CPPAD_ASSERT_UNKNOWN( op == NonOp );
-	CPPAD_ASSERT_NARG_NRES(NonOp, 0, 1);
-	new_var[ i_var ] = rec->PutOp(NonOp);
+	// playing forward skips BeginOp at the beginning, but not EndOp at
+	// the end.  Put BeginOp at beginning of recording
+	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
+	CPPAD_ASSERT_NARG_NRES(BeginOp, 0, 1);
+	new_var[ i_var ] = rec->PutOp(BeginOp);
 
 	// temporary buffer for new argument values
 	size_t new_arg[6];
@@ -430,6 +430,7 @@ void optimize(
 			break;
 
 			case InvOp:
+			case EndOp:
 			keep = true;
 			break;
 
@@ -441,11 +442,6 @@ void optimize(
 			i = vecad[ arg[0] - 1 ];
 			keep = vecad_connected[i];
 			break;
-
-			case PowpvOp:
-			case PowvpOp:
-			case PowvvOp:
-			i_var = CPPAD_POW_FINAL_RESULT(i_var, op);
 
 			default:
 			keep = connected[i_var];
@@ -499,8 +495,6 @@ void optimize(
 
 			rec->PutArg( new_arg[0], new_arg[1] );
 			new_var[ i_var ] = rec->PutOp(op);
-			new_var[ i_var ] = 
-				CPPAD_POW_FINAL_RESULT(new_var[ i_var ], op);
 			break;
 
 			// Binary operators where left operand is a parameter
@@ -526,8 +520,6 @@ void optimize(
 
 			rec->PutArg( new_arg[0], new_arg[1] );
 			new_var[ i_var ] = rec->PutOp(op);
-			new_var[ i_var ] = 
-				CPPAD_POW_FINAL_RESULT(new_var[ i_var ], op);
 			break;
 
 			// Binary operator where both operators are variables
@@ -554,8 +546,6 @@ void optimize(
 
 			rec->PutArg( new_arg[0], new_arg[1] );
 			new_var[ i_var ] = rec->PutOp(op);
-			new_var[ i_var ] = 
-				CPPAD_POW_FINAL_RESULT(new_var[ i_var ], op);
 			break;
 
 			// Conditional expression operators
@@ -587,9 +577,13 @@ void optimize(
 			new_var[ i_var ] = rec->PutOp(op);
 			break;
 
+			// Operations with no arguments and no results
+			case EndOp:
+			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
+			break;
+
 			// Operations with no arguments and one result
 			case InvOp:
-			case NonOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			new_var[ i_var ] = rec->PutOp(op);
 			break;

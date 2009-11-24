@@ -211,7 +211,7 @@ Is the op code corresponding to the the operation that is being
 recorded. 
 
 \return
-The return value is the index of the first variable 
+The return value is the index of the primary (last) variable 
 corresponding to the result of this operation. 
 The number of variables corresponding to the operation is given by
 \verbatim
@@ -219,14 +219,13 @@ The number of variables corresponding to the operation is given by
 \endverbatim
 With each call to PutOp 
 the return index increases by the number of variables corresponding
-to the previous call to PutOp.
+to this call to PutOp.
 This index starts at zero after the default constructor
 and after each call to Erase.
 */
 template <class Base>
 inline size_t recorder<Base>::PutOp(OpCode op)
-{	size_t varIndex = num_rec_var_;
-	
+{
 	CPPAD_ASSERT_UNKNOWN( num_rec_op_ <= len_rec_op_ );
 	if( num_rec_op_ == len_rec_op_ )
 	{	len_rec_op_ = 2 * len_rec_op_ + 8;
@@ -238,7 +237,10 @@ inline size_t recorder<Base>::PutOp(OpCode op)
 	rec_op_[num_rec_op_++]  = op;
 	num_rec_var_ += NumRes(op);
 
-	return varIndex;
+	// first operator should be a BeginOp and NumRes( BeginOp ) > 0
+	CPPAD_ASSERT_UNKNOWN( num_rec_var_ > 0 );
+
+	return num_rec_var_ - 1;
 }
 
 /*!

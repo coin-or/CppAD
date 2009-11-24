@@ -48,13 +48,13 @@ inline void forward_sinh_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SinhOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SinhOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( j < nc_taylor );
 
 	// Taylor coefficients corresponding to argument and result
 	Base* x = taylor + i_x * nc_taylor;
 	Base* s = taylor + i_z * nc_taylor;
-	Base* c = s      +       nc_taylor;
+	Base* c = s      -       nc_taylor;
 
 
 	// rest of this routine is identical for the following cases:
@@ -102,13 +102,13 @@ inline void forward_sinh_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SinhOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SinhOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < nc_taylor );
 
 	// Taylor coefficients corresponding to argument and result
 	Base* x = taylor + i_x * nc_taylor;
 	Base* s = taylor + i_z * nc_taylor;  // called z in documentation
-	Base* c = s      +       nc_taylor;  // called y in documentation
+	Base* c = s      -       nc_taylor;  // called y in documentation
 
 	s[0] = sinh( x[0] );
 	c[0] = cosh( x[0] );
@@ -142,7 +142,7 @@ inline void reverse_sinh_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(SinhOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(SinhOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -155,8 +155,8 @@ inline void reverse_sinh_op(
 	Base* ps       = partial + i_z * nc_partial;
 
 	// Taylor coefficients and partials corresponding to auxillary result
-	const Base* c  = s  + nc_taylor; // called y in documentation
-	Base* pc       = ps + nc_partial;
+	const Base* c  = s  - nc_taylor; // called y in documentation
+	Base* pc       = ps - nc_partial;
 
 	// rest of this routine is identical for the following cases:
 	// reverse_sin_op, reverse_cos_op, reverse_sinh_op, reverse_cosh_op.

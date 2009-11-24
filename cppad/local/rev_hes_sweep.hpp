@@ -165,7 +165,8 @@ void RevHesSweep(
 	}
 
 	// Initialize
-	play->start_reverse();
+	play->start_reverse(op, arg, i_op, i_var);
+	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	i_op = 2;
 # if CPPAD_REV_HES_SWEEP_TRACE
 	std::cout << std::endl;
@@ -179,37 +180,6 @@ void RevHesSweep(
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
-# if CPPAD_REV_HES_SWEEP_TRACE
-		for(j = 0; j < limit; j++)
-		{	zf_value[j] = false;
-			zh_value[j] = false;
-		}
-		for_jac_sparse.begin(i_var);;
-		j = for_jac_sparse.next_element();;
-		while( j < limit )
-		{	zf_value[j] = true;
-			j = for_jac_sparse.next_element();
-		}
-		rev_hes_sparse.begin(i_var);;
-		j = rev_hes_sparse.next_element();;
-		while( j < limit )
-		{	zh_value[j] = true;
-			j = rev_hes_sparse.next_element();
-		}
-		// should also print RevJac[i_var], but printOp does not
-		// yet allow for this.
-		printOp(
-			std::cout, 
-			play,
-			i_var,
-			op, 
-			arg,
-			1, 
-			&zf_value, 
-			1, 
-			&zh_value
-		);
-# endif
 
 		// rest of information depends on the case
 		switch( op )
@@ -275,6 +245,12 @@ void RevHesSweep(
 			);
 			break;
 			// -------------------------------------------------
+
+			case BeginOp:
+			CPPAD_ASSERT_NARG_NRES(op, 0, 0)
+			break;
+			// -------------------------------------------------
+
 			case CExpOp:
 			reverse_sparse_hessian_cond_op(
 				i_var, arg, num_par, RevJac, rev_hes_sparse
@@ -290,7 +266,7 @@ void RevHesSweep(
 
 			case CosOp:
 			// cosine and sine must come in pairs
-			// but i_var + 1 should only be used here
+			// but i_var should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
 			reverse_sparse_hessian_nonlinear_unary_op(
 			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
@@ -300,7 +276,7 @@ void RevHesSweep(
 
 			case CoshOp:
 			// hyperbolic cosine and sine must come in pairs
-			// but i_var + 1 should only be used here
+			// but i_var should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
 			reverse_sparse_hessian_nonlinear_unary_op(
 			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
@@ -414,12 +390,6 @@ void RevHesSweep(
 			break;
 			// -------------------------------------------------
 
-			case NonOp:
-			CPPAD_ASSERT_NARG_NRES(op, 0, 1)
-
-			break;
-			// -------------------------------------------------
-
 			case ParOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
 
@@ -427,31 +397,25 @@ void RevHesSweep(
 			// -------------------------------------------------
 
 			case PowpvOp:
-                        // Pow operator is a special case where final result
-                        // comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3)
 			reverse_sparse_hessian_nonlinear_unary_op(
-			i_var+2, arg[1], RevJac, for_jac_sparse, rev_hes_sparse
+			i_var, arg[1], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
 
 			case PowvpOp:
-                        // Pow operator is a special case where final result
-                        // comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3)
 			reverse_sparse_hessian_nonlinear_unary_op(
-			i_var+2, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
 
 			case PowvvOp:
-                        // Pow operator is a special case where final result
-                        // comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3)
                         reverse_sparse_hessian_pow_op(
-			i_var+2, arg, RevJac, for_jac_sparse, rev_hes_sparse
+			i_var, arg, RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------
@@ -468,7 +432,7 @@ void RevHesSweep(
 
 			case SinOp:
 			// sine and cosine must come in pairs
-			// but i_var + 1 should only be used here
+			// but i_var should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
 			reverse_sparse_hessian_nonlinear_unary_op(
 			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
@@ -478,7 +442,7 @@ void RevHesSweep(
 
 			case SinhOp:
 			// sine and cosine must come in pairs
-			// but i_var + 1 should only be used here
+			// but i_var should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
 			reverse_sparse_hessian_nonlinear_unary_op(
 			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
@@ -561,10 +525,41 @@ void RevHesSweep(
 			default:
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
+# if CPPAD_REV_HES_SWEEP_TRACE
+		for(j = 0; j < limit; j++)
+		{	zf_value[j] = false;
+			zh_value[j] = false;
+		}
+		for_jac_sparse.begin(i_var);;
+		j = for_jac_sparse.next_element();;
+		while( j < limit )
+		{	zf_value[j] = true;
+			j = for_jac_sparse.next_element();
+		}
+		rev_hes_sparse.begin(i_var);;
+		j = rev_hes_sparse.next_element();;
+		while( j < limit )
+		{	zh_value[j] = true;
+			j = rev_hes_sparse.next_element();
+		}
+		// should also print RevJac[i_var], but printOp does not
+		// yet allow for this.
+		printOp(
+			std::cout, 
+			play,
+			i_var,
+			op, 
+			arg,
+			1, 
+			&zf_value, 
+			1, 
+			&zh_value
+		);
+# endif
 	}
 	CPPAD_ASSERT_UNKNOWN( i_op == 1 );
-	CPPAD_ASSERT_UNKNOWN( play->GetOp(i_op-1) == NonOp );
-	CPPAD_ASSERT_UNKNOWN( i_var == NumRes(NonOp)  );
+	CPPAD_ASSERT_UNKNOWN( play->GetOp(i_op-1) == BeginOp );
+	CPPAD_ASSERT_UNKNOWN( i_var == NumRes(BeginOp)  );
 
 	if( vecad_jac != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC(vecad_jac);

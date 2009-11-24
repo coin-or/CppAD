@@ -50,6 +50,7 @@ enum OpCode {
 	AddvvOp,  //      variable   + variable
 	AsinOp,   // asin(variable)
 	AtanOp,   // atan(variable)
+	BeginOp,  // used to mark the beginning of the tape
 	CExpOp,   // CondExp(cop, left, right, trueCase, falseCase)
 	ComOp,    // Compare(cop, result, left, right)
 	CosOp,    //  cos(variable)
@@ -58,6 +59,7 @@ enum OpCode {
 	DivpvOp,  //      parameter  / variable
 	DivvpOp,  //      variable   / parameter
 	DivvvOp,  //      variable   / variable
+	EndOp,    //  used to mark the end of the tape
 	ExpOp,    //  exp(variable)
 	LdpOp,    //    z[parameter]
 	LdvOp,    //    z[variable]
@@ -66,7 +68,6 @@ enum OpCode {
 	MulpvOp,  //      parameter  * variable
 	MulvpOp,  //      variable   * parameter
 	MulvvOp,  //      variable   * variable
-	NonOp,    //                             space holder
 	ParOp,    //      parameter
 	PowvpOp,  //  pow(variable,    parameter)
 	PowpvOp,  //  pow(parameter,   variable)
@@ -107,6 +108,7 @@ const size_t NumArgTable[] = {
 	2, // AddvvOp
 	1, // AsinOp
 	1, // AtanOp
+	0, // BeginOp
 	6, // CExpOp
 	4, // ComOp
 	1, // CosOp
@@ -115,6 +117,7 @@ const size_t NumArgTable[] = {
 	2, // DivpvOp
 	2, // DivvpOp
 	2, // DivvvOp
+	0, // EndOp
 	1, // ExpOp
 	3, // LdpOp
 	3, // LdvOp
@@ -123,7 +126,6 @@ const size_t NumArgTable[] = {
 	2, // MulvvOp
 	2, // MulpvOp
 	2, // MulvpOp
-	0, // NonOp
 	1, // ParOp
 	2, // PowvpOp
 	2, // PowpvOp
@@ -183,6 +185,7 @@ const size_t NumResTable[] = {
 	1, // AddvvOp
 	2, // AsinOp
 	2, // AtanOp
+	1, // BeginOp  offsets first variable to have index one (not zero)
 	1, // CExpOp
 	0, // ComOp
 	2, // CosOp
@@ -191,6 +194,7 @@ const size_t NumResTable[] = {
 	1, // DivpvOp
 	1, // DivvpOp
 	1, // DivvvOp
+	0, // EndOp
 	1, // ExpOp
 	1, // LdpOp
 	1, // LdvOp
@@ -199,7 +203,6 @@ const size_t NumResTable[] = {
 	1, // MulvvOp
 	1, // MulpvOp
 	1, // MulvpOp
-	1, // NonOp
 	1, // ParOp
 	3, // PowvpOp
 	3, // PowpvOp
@@ -372,6 +375,7 @@ void printOp(
 		"Addvv" ,
 		"Asin"  ,
 		"Atan"  ,
+		"Begin" ,
 		"CExp"  ,
 		"Com"   ,
 		"Cos"   ,
@@ -380,6 +384,7 @@ void printOp(
 		"Divpv" ,
 		"Divvp" ,
 		"Divvv" ,
+		"End"   ,
 		"Exp"   ,
 		"Ldp"   ,
 		"Ldv"   ,
@@ -388,7 +393,6 @@ void printOp(
 		"Mulpv" ,
 		"Mulvp" ,
 		"Mulvv" ,
-		"Non"   ,
 		"Par"   ,
 		"Powvp" ,
 		"Powpv" ,
@@ -528,8 +532,9 @@ void printOp(
 		printOpField(os, "  v=", ind[1], ncol);
 		break;
 
+		case BeginOp:
+		case EndOp:
 		case InvOp:
-		case NonOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
 		break;
 

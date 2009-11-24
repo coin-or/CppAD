@@ -157,9 +157,9 @@ size_t forward0sweep(
 	if( num_text > 0 )
 		text = Rec->GetTxt(0);
 
-	// skip the NonOp at the beginning of the recording
+	// skip the BeginOp at the beginning of the recording
 	Rec->start_forward(op, arg, i_op, i_var);
-	CPPAD_ASSERT_UNKNOWN( op == NonOp );
+	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 # if CPPAD_FORWARD0SWEEP_TRACE
 	std::cout << std::endl;
 # endif
@@ -196,22 +196,22 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case AcosOp:
-			// results: acos(x),  sqrt(1 - x * x) 
-			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
+			// results: sqrt(1 - x * x), acos(x) 
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_acos_op_0(i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case AsinOp:
-			// results: asin(x),  sqrt(1 - x * x) 
-			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
+			// results: sqrt(1 - x * x), asin(x) 
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_asin_op_0(i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case AtanOp:
-			// results: atan(x),  1 + x * x 
-			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
+			// results: 1 + x * x, atan(x) 
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_atan_op_0(i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
@@ -233,15 +233,15 @@ size_t forward0sweep(
 			// ---------------------------------------------------
 
 			case CosOp:
-			// results: cos(x), sin(x)
-			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
+			// results: sin(x), cos(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_cos_op_0(i_var, arg[0], J, Taylor);
 			break;
 			// ---------------------------------------------------
 
 			case CoshOp:
-			// variables: cosh(x), sinh(x)
-			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
+			// variables: sinh(x), cosh(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_cosh_op_0(i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
@@ -265,6 +265,11 @@ size_t forward0sweep(
 			case DivvpOp:
 			CPPAD_ASSERT_UNKNOWN( arg[1] < num_par );
 			forward_divvp_op_0(i_var, arg, parameter, J, Taylor);
+			break;
+			// -------------------------------------------------
+
+			case EndOp:
+			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
 			break;
 			// -------------------------------------------------
 
@@ -335,12 +340,6 @@ size_t forward0sweep(
 			break;
 			// -------------------------------------------------
 
-			case NonOp:
-			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
-			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
-			break;
-			// -------------------------------------------------
-
 			case ParOp:
 			forward_par_op_0(
 				i_var, arg, num_par, parameter, J, Taylor
@@ -380,15 +379,15 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case SinOp:
-			// variables: sin(x), cos(x)
-			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
+			// variables: cos(x), sin(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_sin_op_0(i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case SinhOp:
-			// variables: sinh(x), cosh(x)
-			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar  );
+			// variables: cosh(x), sinh(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_sinh_op_0(i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
@@ -478,10 +477,7 @@ size_t forward0sweep(
 		size_t       d      = 0;
 		size_t       i_tmp  = i_var;
 		Base*        Z_tmp  = Taylor + i_var * J;
-		if( op == PowvpOp || op == PowpvOp || op == PowvvOp )
-		{	i_tmp  += 2;
-			Z_tmp  += 2 * J;
-		}
+
 		printOp(
 			std::cout, 
 			Rec,
@@ -498,7 +494,8 @@ size_t forward0sweep(
 # else
 	}
 # endif
-	CPPAD_ASSERT_UNKNOWN( (i_var + NumRes(op)) == Rec->num_rec_var() );
+	CPPAD_ASSERT_UNKNOWN( i_var + 1 == Rec->num_rec_var() );
+
 	if( VectorInd != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC(VectorInd);
 	if( VectorVar != CPPAD_NULL )

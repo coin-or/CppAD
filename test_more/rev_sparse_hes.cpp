@@ -408,7 +408,7 @@ bool case_five(void)
 	size_t m = 2;
 	CPPAD_TEST_VECTOR< AD<double> > Y(m);
 	Y[0] = pow(X[0], 2.);
-	Y[1] = pow(2., X[0]);
+	Y[1] = pow(2., X[1]);
 
 	// create function object F : X -> Y
 	CppAD::ADFun<double> F(X, Y);
@@ -432,7 +432,7 @@ bool case_five(void)
 		// check values
 		for(i = 0; i < n; i++)
 		{	for(j = 0; j < n; j++)
-			{	bool check = (i == 0) & (j == 0);
+			{	bool check = (i == k) & (j == k);
 				ok        &= Pxx[i * n + j] == check;
 			}
 		}

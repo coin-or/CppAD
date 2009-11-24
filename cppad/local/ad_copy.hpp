@@ -3,7 +3,7 @@
 # define CPPAD_AD_COPY_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -94,7 +94,7 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-# if 0
+/*
 // use default copy constructor and assignment operator
 // because they may be optimized better by the compiler
 template <class Base>
@@ -119,7 +119,7 @@ inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
 
 	return *this;
 }
-# endif
+*/
 
 // constructor and assignment from Base type
 // (if id_ is 1, taddr_ is not used, set anyway to avoid compile warning)

@@ -123,7 +123,7 @@ is the partial derivative of \f$ G( u ) \f$ with
 respect to \f$ u_j^{(k)} \f$.
 
 \par Assumptions
-The first operator on the tape is a NonOp,
+The first operator on the tape is a BeginOp,
 and the next \a n operators are InvOp operations for the 
 corresponding independent variables.
 */
@@ -158,7 +158,8 @@ void ReverseSweep(
 		parameter = Rec->GetPar();
 
 	// Initialize
-	Rec->start_reverse();
+	Rec->start_reverse(op, arg, i_op, i_var);
+	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	i_op   = 2;
 # if CPPAD_REVERSE_SWEEP_TRACE
 	std::cout << std::endl;
@@ -175,11 +176,6 @@ void ReverseSweep(
 		const Base*  Z_tmp  = Taylor + i_var * J;
 		const Base*  pZ_tmp = Partial + i_var * K;
 
-		if( op == PowvpOp || op == PowpvOp || op == PowvvOp )
-		{	i_tmp  += 2;
-			Z_tmp  += 2 * J;
-			pZ_tmp += 2 * K;
-		}
 		printOp(
 			std::cout, 
 			Rec,
@@ -227,8 +223,8 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case AcosOp:
-                        // results: acos(x),  sqrt(1 - x * x) 
-			CPPAD_ASSERT_UNKNOWN( i_var < numvar - 1 );
+                        // results: sqrt(1 - x * x), acos(x) 
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_acos_op(
 				d, i_var, arg[0], J, Taylor, K, Partial
 			);
@@ -236,8 +232,8 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case AsinOp:
-                        // results: sin(x),  sqrt(1 - x * x) 
-			CPPAD_ASSERT_UNKNOWN( i_var < numvar - 1 );
+                        // results: sqrt(1 - x * x), sin(x) 
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_asin_op(
 				d, i_var, arg[0], J, Taylor, K, Partial
 			);
@@ -245,13 +241,18 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case AtanOp:
-                        // results: atan(x),  1 + x * x 
-			CPPAD_ASSERT_UNKNOWN( i_var < numvar - 1 );
+                        // results: 1 + x * x, atan(x) 
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_atan_op(
 				d, i_var, arg[0], J, Taylor, K, Partial
 			);
 			break;
 			// -------------------------------------------------
+
+			case BeginOp:
+			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
+			break;
+			// --------------------------------------------------
 
 			case CExpOp:
 			reverse_cond_op(
@@ -273,7 +274,7 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case CosOp:
-			CPPAD_ASSERT_UNKNOWN( i_var < numvar - 1 );
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_cos_op(
 				d, i_var, arg[0], J, Taylor, K, Partial
 			);
@@ -281,7 +282,7 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case CoshOp:
-			CPPAD_ASSERT_UNKNOWN( i_var < numvar - 1 );
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_cosh_op(
 				d, i_var, arg[0], J, Taylor, K, Partial
 			);
@@ -371,10 +372,6 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
-			case NonOp:
-			break;
-			// --------------------------------------------------
-
 			case ParOp:
 			break;
 			// --------------------------------------------------
@@ -414,7 +411,7 @@ void ReverseSweep(
 			// -------------------------------------------------
 
 			case SinOp:
-			CPPAD_ASSERT_UNKNOWN( i_var < numvar - 1 );
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_sin_op(
 				d, i_var, arg[0], J, Taylor, K, Partial
 			);
@@ -422,7 +419,7 @@ void ReverseSweep(
 			// -------------------------------------------------
 
 			case SinhOp:
-			CPPAD_ASSERT_UNKNOWN( i_var < numvar - 1 );
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_sinh_op(
 				d, i_var, arg[0], J, Taylor, K, Partial
 			);
@@ -483,8 +480,8 @@ void ReverseSweep(
 	std::cout << std::endl;
 # endif
 	CPPAD_ASSERT_UNKNOWN( i_op == 1 );
-	CPPAD_ASSERT_UNKNOWN( Rec->GetOp(i_op-1) == NonOp );
-	CPPAD_ASSERT_UNKNOWN( i_var == NumRes(NonOp)  );
+	CPPAD_ASSERT_UNKNOWN( Rec->GetOp(i_op-1) == BeginOp );
+	CPPAD_ASSERT_UNKNOWN( i_var == NumRes(BeginOp)  );
 }
 
 # undef CPPAD_REVERSE_SWEEP_TRACE

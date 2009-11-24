@@ -39,6 +39,9 @@ inline void forward_powvv_op(
 	size_t        nc_taylor   ,
 	Base*         taylor      )
 {
+	// convert from final result to first result
+	i_z -= 2; // NumRes(PowvvOp) - 1;
+
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
@@ -95,6 +98,9 @@ inline void forward_powvv_op_0(
 	size_t        nc_taylor   ,
 	Base*         taylor      )
 {
+	// convert from final result to first result
+	i_z -= 2; // NumRes(PowvvOp) - 1;
+
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
@@ -139,6 +145,9 @@ inline void reverse_powvv_op(
 	size_t        nc_partial  ,
 	Base*         partial     )
 {
+	// convert from final result to first result
+	i_z -= 2; // NumRes(PowvvOp) - 1;
+
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
@@ -189,6 +198,9 @@ inline void forward_powpv_op(
 	size_t        nc_taylor   ,
 	Base*         taylor      )
 {
+	// convert from final result to first result
+	i_z -= 2; // NumRes(PowpvOp) - 1;
+
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowpvOp) == 3 );
@@ -248,6 +260,9 @@ inline void forward_powpv_op_0(
 	size_t        nc_taylor   ,
 	Base*         taylor      )
 {
+	// convert from final result to first result
+	i_z -= 2; // NumRes(PowpvOp) - 1;
+
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowpvOp) == 3 );
@@ -297,6 +312,9 @@ inline void reverse_powpv_op(
 	size_t        nc_partial  ,
 	Base*         partial     )
 {
+	// convert from final result to first result
+	i_z -= 2; // NumRes(PowpvOp) - 1;
+
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
@@ -344,6 +362,9 @@ inline void forward_powvp_op(
 	size_t        nc_taylor   ,
 	Base*         taylor      )
 {
+	// convert from final result to first result
+	i_z -= 2; // NumRes(PowvpOp) - 1;
+
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
@@ -397,6 +418,9 @@ inline void forward_powvp_op_0(
 	size_t        nc_taylor   ,
 	Base*         taylor      )
 {
+	// convert from final result to first result
+	i_z -= 2; // NumRes(PowvpOp) - 1;
+
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
@@ -446,6 +470,9 @@ inline void reverse_powvp_op(
 	size_t        nc_partial  ,
 	Base*         partial     )
 {
+	// convert from final result to first result
+	i_z -= 2; // NumRes(PowvpOp) - 1;
+
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );

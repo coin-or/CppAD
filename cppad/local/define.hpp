@@ -20,19 +20,6 @@ Define processor symbols and macros that are used by CppAD.
 */
 
 /*!
-\def CPPAD_POW_FINAL_RESULT
-The pow function is a special case where the final result is the last,
-instead of the first, of the multiple variables created.
-This macro maps the first result address to the address that corresponds
-to the primary pow function result.
-This is a kludge so that the log, exp, and mul functions can be used as
-operators to create the power function. 
-The kludge can be fixed by making the final result the primay result
-for all operators.
-*/
-# define CPPAD_POW_FINAL_RESULT(address, op)  (address +  2)
-
-/*!
 \def CPPAD_USE_FORWARD0SWEEP
 If ture, use compute zero order sweeps using a specialized routine.
 

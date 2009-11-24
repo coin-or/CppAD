@@ -79,7 +79,7 @@ inline void forward_store_pv_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(StpvOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < nc_combined );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[2] <= i_z );
 
 	variable[ arg[0] + i_vec ] = true;
 	combined[ arg[0] + i_vec ] = arg[2];
@@ -101,7 +101,7 @@ inline void forward_store_vp_op_0(
 	bool*          variable    ,
 	size_t*        combined    )
 {	
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[1] <= i_z );
 	size_t i_vec = Integer( taylor[ arg[1] * nc_taylor + 0 ] );
 	CPPAD_ASSERT_KNOWN( 
 		i_vec < combined[ arg[0] - 1 ] ,
@@ -136,7 +136,7 @@ inline void forward_store_vv_op_0(
 	bool*          variable    ,
 	size_t*        combined    )
 {	
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[1] <= i_z );
 	size_t i_vec = Integer( taylor[ arg[1] * nc_taylor + 0 ] );
 	CPPAD_ASSERT_KNOWN( 
 		i_vec < combined[ arg[0] - 1 ] ,
@@ -149,7 +149,7 @@ inline void forward_store_vv_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < nc_combined );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	CPPAD_ASSERT_UNKNOWN( arg[2] <= i_z );
 
 	variable[ arg[0] + i_vec ] = true;
 	combined[ arg[0] + i_vec ] = arg[2];

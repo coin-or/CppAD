@@ -3,7 +3,7 @@
 # define CPPAD_DET_BY_LU_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -172,13 +172,13 @@ public:
 		signdet = CppAD::LuSolve(
 			n, m, A, B, X, logdet);
 
-# if 0
+/*
 		// Do not do this for speed test because it makes floating 
 		// point operation sequence very simple.
 		if( signdet == 0 )
 			det = 0;
 		else	det =  Scalar( signdet ) * exp( logdet );
-# endif
+*/
 
 		// convert to determinant
 		det     = Scalar( signdet ) * exp( logdet ); 

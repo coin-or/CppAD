@@ -130,11 +130,12 @@ void ForJacSweep(
 
 # if CPPAD_FOR_JAC_SWEEP_TRACE
 	std::cout << std::endl;
-	CppAD::vector<bool> z_value(limit;
+	CppAD::vector<bool> z_value(limit);
 # endif
 
-	// skip the NonOp at the beginning of the recording
+	// skip the BeginOp at the beginning of the recording
         play->start_forward(op, arg, i_op, i_var);
+	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
         arg_0 = arg;
 	while(i_op < numop_m1)
 	{
@@ -223,7 +224,7 @@ void ForJacSweep(
 
 			case CosOp:
 			// cosine and sine must come in pairs
-			// but ivar + 1 should only be used here
+			// but ivar should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
@@ -233,7 +234,7 @@ void ForJacSweep(
 
 			case CoshOp:
 			// hyperbolic cosine and sine must come in pairs
-			// but ivar + 1 should only be used here
+			// but ivar should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
@@ -268,6 +269,11 @@ void ForJacSweep(
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
 			);
+			break;
+			// -------------------------------------------------
+
+			case EndOp:
+			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
 			break;
 			// -------------------------------------------------
 
@@ -343,11 +349,6 @@ void ForJacSweep(
 			break;
 			// -------------------------------------------------
 
-			case NonOp:
-			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			var_sparsity.clear(i_var);
-			break;
-
 			case ParOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
 			var_sparsity.clear(i_var);
@@ -355,31 +356,25 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case PowvpOp:
-			// Pow operator is a special case where final result
-			// comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
 			forward_sparse_jacobian_unary_op(
-				i_var + 2, arg[0], var_sparsity
+				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
 
 			case PowpvOp:
-			// Pow operator is a special case where final result
-			// comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
 			forward_sparse_jacobian_unary_op(
-				i_var + 2, arg[1], var_sparsity
+				i_var, arg[1], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
 
 			case PowvvOp:
-			// Pow operator is a special case where final result
-			// comes at the end of the three variables
 			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
 			forward_sparse_jacobian_binary_op(
-				i_var + 2, arg, var_sparsity
+				i_var, arg, var_sparsity
 			);
 			break;
 			// -------------------------------------------------
@@ -397,7 +392,7 @@ void ForJacSweep(
 
 			case SinOp:
 			// sine and cosine must come in pairs
-			// but ivar + 1 should only be used here
+			// but ivar should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
@@ -407,7 +402,7 @@ void ForJacSweep(
 
 			case SinhOp:
 			// hyperbolic sine and cosine must come in pairs
-			// but ivar + 1 should only be used here
+			// but ivar should only be used here
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
@@ -488,7 +483,7 @@ void ForJacSweep(
 		}
 # if CPPAD_FOR_JAC_SWEEP_TRACE
 		// value for this variable
-		for(j = 0; j < limit j++)
+		for(j = 0; j < limit; j++)
 			z_value[j] = false;
 		var_sparsity.begin(i_var);
 		j = var_sparsity.next_element();
@@ -512,7 +507,7 @@ void ForJacSweep(
 # else
 	}
 # endif
-	CPPAD_ASSERT_UNKNOWN( (i_var + NumRes(op) ) == play->num_rec_var() );
+	CPPAD_ASSERT_UNKNOWN( i_var + 1 == play->num_rec_var() );
 
 	if( vecad_ind != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC(vecad_ind);

@@ -48,13 +48,13 @@ inline void forward_cosh_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(CoshOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CoshOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( j < nc_taylor );
 
 	// Taylor coefficients corresponding to argument and result
 	Base* x = taylor + i_x * nc_taylor;
 	Base* c = taylor + i_z * nc_taylor;
-	Base* s = c      +       nc_taylor;
+	Base* s = c      -       nc_taylor;
 
 	// rest of this routine is identical for the following cases:
 	// forward_sin_op, forward_cos_op, forward_sinh_op, forward_cosh_op.
@@ -101,13 +101,13 @@ inline void forward_cosh_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(CoshOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CoshOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < nc_taylor );
 
 	// Taylor coefficients corresponding to argument and result
 	Base* x = taylor + i_x * nc_taylor;
 	Base* c = taylor + i_z * nc_taylor;  // called z in documentation
-	Base* s = c      +       nc_taylor;  // called y in documentation
+	Base* s = c      -       nc_taylor;  // called y in documentation
 
 	c[0] = cosh( x[0] );
 	s[0] = sinh( x[0] );
@@ -141,7 +141,7 @@ inline void reverse_cosh_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(CoshOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CoshOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -154,8 +154,8 @@ inline void reverse_cosh_op(
 	Base* pc       = partial + i_z * nc_partial;
 
 	// Taylor coefficients and partials corresponding to auxillary result
-	const Base* s  = c  + nc_taylor; // called y in documentation
-	Base* ps       = pc + nc_partial;
+	const Base* s  = c  - nc_taylor; // called y in documentation
+	Base* ps       = pc - nc_partial;
 
 	// rest of this routine is identical for the following cases:
 	// reverse_sin_op, reverse_cos_op, reverse_sinh_op, reverse_cosh_op.

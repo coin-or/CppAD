@@ -48,13 +48,13 @@ inline void forward_acos_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AcosOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AcosOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( j < nc_taylor );
 
 	// Taylor coefficients corresponding to argument and result
 	Base* x = taylor + i_x * nc_taylor;
 	Base* z = taylor + i_z * nc_taylor;
-	Base* b = z      +       nc_taylor;  // called y in documentation
+	Base* b = z      -       nc_taylor;  // called y in documentation
 
 	size_t k;
 	Base qj;
@@ -109,13 +109,13 @@ inline void forward_acos_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AcosOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AcosOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < nc_taylor );
 
 	// Taylor coefficients corresponding to argument and result
 	Base* x = taylor + i_x * nc_taylor;
 	Base* z = taylor + i_z * nc_taylor;
-	Base* b = z      +       nc_taylor; // called y in documentation
+	Base* b = z      -       nc_taylor; // called y in documentation
 
 	z[0] = acos( x[0] );
 	b[0] = sqrt( Base(1) - x[0] * x[0] );
@@ -149,7 +149,7 @@ inline void reverse_acos_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AcosOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(AcosOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( i_x < i_z );
+	CPPAD_ASSERT_UNKNOWN( i_x + 1 < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -162,8 +162,8 @@ inline void reverse_acos_op(
 	Base* pz       = partial + i_z * nc_partial;
 
 	// Taylor coefficients and partials corresponding to auxillary result
-	const Base* b  = z  + nc_taylor; // called y in documentation
-	Base* pb       = pz + nc_partial;
+	const Base* b  = z  - nc_taylor; // called y in documentation
+	Base* pb       = pz - nc_partial;
 
 	// number of indices to access
 	size_t j = d;

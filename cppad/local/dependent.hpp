@@ -204,21 +204,24 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	CPPAD_ASSERT_UNKNOWN( NumRes(ParOp) == 1 );
 	dep_parameter_.resize(m);
 	dep_taddr_.resize(m);
-	total_num_var_ = tape->Rec_.num_rec_var();
 	for(i = 0; i < m; i++)
 	{	dep_parameter_[i] = CppAD::Parameter(y[i]);
 		if( dep_parameter_[i] )
-		{	y_taddr = tape->RecordParOp( y[i].value_ );
-			total_num_var_++;
-		}
+			y_taddr = tape->RecordParOp( y[i].value_ );
 		else	y_taddr = y[i].taddr_;
 
 		CPPAD_ASSERT_UNKNOWN( y_taddr > 0 );
-		CPPAD_ASSERT_UNKNOWN( y_taddr < total_num_var_ );
 		dep_taddr_[i] = y_taddr;
 	}
 
+	// put an EndOp at the end of the tape
+	tape->Rec_.PutOp(EndOp);
+
+	// total number of variables on the tape
+	total_num_var_ = tape->Rec_.num_rec_var();
+
 	// now that each dependent variable has a place in the tape,
+	// and there is a EndOp at the end of the tape,
 	// we can make a copy for this function and erase the tape.
 	play_ = tape->Rec_;
 
