@@ -10,6 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+# include <limits>
 # include <cppad/cppad.hpp>
 
 namespace {
@@ -210,7 +211,7 @@ namespace {
 		vector<double>          x(n), y(n); 
 	
 		for(j = 0; j < n; j++)
-			X[j] = x[j] = double(j+1);
+			X[j] = x[j] = double(j+2);
 	
 		CppAD::Independent(X);
 	                
@@ -227,6 +228,23 @@ namespace {
 		// (This may not be true for some compiler in the future).
 		for(j = 0; j < n; j++)
 			ok &= ( y[j] == Value(Y[j]) );
+
+		// check reverse mode derivative
+		vector<double>   w(n), dw(n); 
+		w[0] = 0.;
+		w[1] = 0.;
+		w[2] = 1.;
+		dw = F.Reverse(1, w);
+
+		double eps = 20. * std::numeric_limits<double>::epsilon();
+		double check = x[1] * pow( x[0], x[1] - 1. );
+		ok &= CppAD::NearEqual( dw[0], check, eps, eps );
+
+		check = log( x[0] ) * pow( x[0], x[1] );
+		ok &= CppAD::NearEqual( dw[1], check, eps, eps );
+
+		check = 0.;
+		ok &= CppAD::NearEqual( dw[2], check, eps, eps );
 	
 		return ok;
 	}

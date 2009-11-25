@@ -160,15 +160,18 @@ void ReverseSweep(
 	// Initialize
 	Rec->start_reverse(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
-	i_op   = 2;
 # if CPPAD_REVERSE_SWEEP_TRACE
 	std::cout << std::endl;
 # endif
-	while(i_op > 1)
+	while(op != BeginOp )
 	{	// next op
 		Rec->next_reverse(op, arg, i_op, i_var);
-		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
-		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
+# ifndef NDEBUG
+		if( i_op <= n )
+		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
+		}
+		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
+# endif
 
 		// rest of informaiton depends on the case
 # if CPPAD_REVERSE_SWEEP_TRACE
@@ -250,7 +253,7 @@ void ReverseSweep(
 			// -------------------------------------------------
 
 			case BeginOp:
-			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
+			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			break;
 			// --------------------------------------------------
 
@@ -479,9 +482,9 @@ void ReverseSweep(
 # if CPPAD_REVERSE_SWEEP_TRACE
 	std::cout << std::endl;
 # endif
-	CPPAD_ASSERT_UNKNOWN( i_op == 1 );
-	CPPAD_ASSERT_UNKNOWN( Rec->GetOp(i_op-1) == BeginOp );
-	CPPAD_ASSERT_UNKNOWN( i_var == NumRes(BeginOp)  );
+	// values corresponding to BeginOp
+	CPPAD_ASSERT_UNKNOWN( i_op == 0 );
+	CPPAD_ASSERT_UNKNOWN( i_var == 0 );
 }
 
 # undef CPPAD_REVERSE_SWEEP_TRACE

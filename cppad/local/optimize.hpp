@@ -191,9 +191,6 @@ void optimize(
 	// number of variables in the player
 	const size_t num_var = play->num_rec_var(); 
 
-	// set the number of operators
-	const size_t numop_m1 = play->num_rec_op() - 1;
-
 	// number of  VecAD indices 
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 
@@ -242,11 +239,15 @@ void optimize(
 # if CPPAD_OPTIMIZE_TRACE
 	std::cout << std::endl;
 # endif
-	while(i_op > 1 )
+	while(op != BeginOp)
 	{	// next op
 		play->next_reverse(op, arg, i_op, i_var);
-		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
-		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
+# ifndef NDEBUG
+		if( i_op <= n )
+		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
+		}
+		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
+# endif
 
 # if CPPAD_OPTIMIZE_TRACE
 		printOp(
@@ -359,6 +360,8 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
 	}
+	// values corresponding to BeginOp
+	CPPAD_ASSERT_UNKNOWN( i_op == 0 && i_var == 0 );
 # if CPPAD_OPTIMIZE_TRACE
 	for(i = 0; i < num_vecad_vec; i++) 
 	{	std::cout << "VecAD: off=" << std::setw(5) << vecad_offset[i];
@@ -414,7 +417,7 @@ void optimize(
 	// temporary buffer for new argument values
 	size_t new_arg[6];
 
-	while(i_op < numop_m1 )
+	while(op != EndOp)
 	{	// next op
 		play->next_forward(op, arg, i_op, i_var);
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
@@ -580,6 +583,7 @@ void optimize(
 			// Operations with no arguments and no results
 			case EndOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
+			rec->PutOp(op);
 			break;
 
 			// Operations with no arguments and one result

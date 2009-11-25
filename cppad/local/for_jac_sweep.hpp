@@ -95,9 +95,6 @@ void ForJacSweep(
 	CPPAD_ASSERT_UNKNOWN( play->num_rec_var()  == numvar );
 	CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == numvar );
 
-	// set the number of operators
-	const size_t numop_m1 = play->num_rec_op() - 1;
-
         // length of the parameter vector (used by CppAD assert macros)
         const size_t num_par = play->num_rec_par();
 
@@ -137,7 +134,7 @@ void ForJacSweep(
         play->start_forward(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
         arg_0 = arg;
-	while(i_op < numop_m1)
+	while(op != EndOp)
 	{
 		// this op
 		play->next_forward(op, arg, i_op, i_var);

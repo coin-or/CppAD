@@ -138,9 +138,6 @@ size_t forward0sweep(
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
 
-	// set the number of operators
-	const size_t numop_m1 = Rec->num_rec_op() - 1;
-
 	// length of the parameter vector (used by CppAD assert macros)
 	const size_t num_par = Rec->num_rec_par();
 
@@ -163,12 +160,16 @@ size_t forward0sweep(
 # if CPPAD_FORWARD0SWEEP_TRACE
 	std::cout << std::endl;
 # endif
-	while(i_op < numop_m1)
+	while(op != EndOp)
 	{
 		// this op
 		Rec->next_forward(op, arg, i_op, i_var);
-		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );  
-		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );  
+# ifndef NDEBUG
+		if( i_op <= n )
+		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
+		}
+		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
+# endif
 
 		// action to take depends on the case
 		switch( op )

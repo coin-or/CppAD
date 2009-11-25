@@ -135,18 +135,20 @@ void RevJacSweep(
 	// Initialize
 	play->start_reverse(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
-	i_op = 2;
 # if CPPAD_REV_JAC_SWEEP_TRACE
 	std::cout << std::endl;
 	CppAD::vector<bool> z_value(limit);
 # endif
-	while(i_op > 1)
+	while(op != BeginOp )
 	{
 		// next op
 		play->next_reverse(op, arg, i_op, i_var);
-		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
-		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
-
+# ifndef NDEBUG
+		if( i_op <= n )
+		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
+		}
+		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
+# endif
 
 		// rest of information depends on the case
 		switch( op )
@@ -214,7 +216,7 @@ void RevJacSweep(
 			// -------------------------------------------------
 
 			case BeginOp:
-			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
+			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			break;
 			// -------------------------------------------------
 
@@ -504,9 +506,9 @@ void RevJacSweep(
 		);
 # endif
 	}
-	CPPAD_ASSERT_UNKNOWN( i_op == 1 );
-	CPPAD_ASSERT_UNKNOWN( play->GetOp(i_op-1) == BeginOp );
-	CPPAD_ASSERT_UNKNOWN( i_var == NumRes(BeginOp)  );
+	// values corresponding to BeginOp
+	CPPAD_ASSERT_UNKNOWN( i_op == 0 );
+	CPPAD_ASSERT_UNKNOWN( i_var == 0 );
 
 	if( vecad_ind != CPPAD_NULL )
 		CPPAD_TRACK_DEL_VEC( vecad_ind);
