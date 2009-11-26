@@ -41,18 +41,22 @@ the value that we are generating a hash code for.
 \return
 is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
-\par Restrictions
-It is assumed (and checked when NDEBUG is not defined) that the 
-$codei%sizeof(%Value%)%$$ is even and that
-$code sizeof(unsigned short)$$ is equal to two.
+\par Checked Assertions
+\li \c std::numeric_limits<unsigned short>::max() == CPPAD_HASH_TABLE_SIZE - 1
+\li \c sizeof(value) is even 
+\li \c sizeof(unsigned short)  == 2
 */
-
 
 template <class Value>
 unsigned short hash_code(const Value& value)
-{	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
+{	CPPAD_ASSERT_UNKNOWN( 
+		std::numeric_limits<unsigned short>::max()
+		==
+		(CPPAD_HASH_TABLE_SIZE-1)
+	);
+	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
+	CPPAD_ASSERT_UNKNOWN( sizeof(value) % 2  == 0 );
 	static unsigned short n   = sizeof(value) / 2;
-	CPPAD_ASSERT_UNKNOWN( sizeof(value) == 2 * n );
 
 	const unsigned short* v;
 	size_t                i;
@@ -66,6 +70,56 @@ unsigned short hash_code(const Value& value)
 
 	return code;
 }
-		
+
+/*!
+Returns a hash code for an arbitrary CppAD operator.
+
+\param op
+is the operator that we are computing a hash code for.
+
+\param arg
+is a vector of length \c NumArg(op) containing the argument
+indices for this operator.
+
+\return
+is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
+
+\par Checked Assertions
+\li \c std::numeric_limits<unsigned short>::max() == CPPAD_HASH_TABLE_SIZE - 1
+\li \c size_t(op) < CPPAD_HASH_TABLE_SIZE
+\li \c sizeof(size_t) is even 
+\li \c sizeof(unsigned short)  == 2
+*/
+
+inline unsigned short hash_code(OpCode op, const size_t* arg)
+{	static size_t half_table_size = CPPAD_HASH_TABLE_SIZE / 2;
+
+	CPPAD_ASSERT_UNKNOWN( 
+		std::numeric_limits<unsigned short>::max()
+		==
+		(CPPAD_HASH_TABLE_SIZE-1)
+	);
+	CPPAD_ASSERT_UNKNOWN( size_t (op) < CPPAD_HASH_TABLE_SIZE );
+	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
+	CPPAD_ASSERT_UNKNOWN( sizeof(size_t) % 2  == 0 );
+
+	// number of shorts per size_t value
+	size_t n   = sizeof(size_t) / 2;
+
+	// number of shorts corresponding to the arg vector
+	n = n * NumArg(op);
+
+	unsigned short code = static_cast<unsigned short>(op);
+	if( code > 0 ) while( code < half_table_size )
+		code *= 2;
+
+	const unsigned short* v
+		= reinterpret_cast<const unsigned short*>(arg);
+	while(n--)
+		code += v[n];
+
+	return code;
+}
+
 CPPAD_END_NAMESPACE
 # endif

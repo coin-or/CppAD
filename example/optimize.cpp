@@ -32,16 +32,25 @@ $end
 namespace {
 	template <class Float>
 	Float fun(const Float& x)
-	{	// return value
-		Float y;
+	{	using CppAD::exp;
 
 	 	// This variable is optimized out because it is only used
 	 	// in the comparision operation
 		Float a = 1. / x;
 
+		// create a new variable used in result
+		Float b = exp(x);
+
+		Float c;
 		if( a < x )  
-			y = x + 3.; // only one variable created by this choice
-		else	y = x + 2.;
+			c = b + 3.; // only one variable created by this choice
+		else	c = b + 2.;
+
+		// create another copy of sin(x) (is optimized out)
+		Float d = exp(x);
+
+		// use d so that it is connected to result
+		Float y = c + d; 
 
 		return y;
 	}
@@ -68,11 +77,11 @@ bool optimize(void)
 	CppAD::ADFun<double> F(X, Y);
 
 	// Check the number of variables in original operation sequence:
-	// NonOp: at the beginning of every operation sequence.
-	// X[0]:  the independent variable.
-	// a:     the temporary variable inside the function fun.
-	// y:     the return value for the function fun and dependent variable.
-	ok &= (F.size_var() == 4);
+	// BeginOp: at the beginning of every operation sequence.
+	// X[0]:     the independent variable.
+	// a,b,c,d:  four temporary variables inside the function fun.
+	// y:        return value for the function fun and dependent variable.
+	ok &= (F.size_var() == 7);
 
 	// Check zero order forward mode on the original operation sequence
 	CPPAD_TEST_VECTOR<double> x(n), y(m), check(m);
@@ -84,10 +93,11 @@ bool optimize(void)
 	F.optimize();
 
 	// Check the number of variables in original operation sequence:
-	// NonOp: at the beginning of every operation sequence.
-	// X[0]:  the independent variable.
-	// y:     the return value for the function fun and dependent variable.
-	ok &= (F.size_var() == 3);
+	// BeginOp: at the beginning of every operation sequence.
+	// X[0]:    the independent variable.
+	// b, c:    temporay variable in the function fun.
+	// y:       return value for the function fun and dependent variable.
+	ok &= (F.size_var() == 5);
 
 	// Check result for a zero order calculation.
 	// This has already been checked if NDEBUG is not defined.

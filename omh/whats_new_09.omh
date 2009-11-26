@@ -58,6 +58,10 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 11-26$$
+Improve $cref/optimize/$$ command so that it removes some duplicate
+expressions from the tape (more of this is planned).
+
 $head 10-30$$
 Make program that check Ipopt ODE example correctness
 a separate file $cref ipopt_ode_check.cpp$$

@@ -15,8 +15,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 namespace {
 
+	// -------------------------------------------------------------------
+	// Test the reverse dependency analysis optimization
 	template <class Vector>
-	void fun(const Vector& x, Vector& y, size_t& original, size_t& opt)
+	void FunOne(const Vector& x, Vector& y, size_t& original, size_t& opt)
 	{	typedef typename Vector::value_type Scalar;
 		Scalar a;
 		Scalar one(1), two(2), three(3), four(4);
@@ -96,7 +98,7 @@ namespace {
 		// range space vector 
 		size_t m = n;
 		CPPAD_TEST_VECTOR< AD<double> > Y(m);
-		fun(X, Y, original, opt);
+		FunOne(X, Y, original, opt);
 	
 		// create f: X -> Y and stop tape recording
 		CppAD::ADFun<double> F;
@@ -106,7 +108,7 @@ namespace {
 		for(j = 0; j < n; j++)
 			x[j] = Value(X[j]);
 		y = F.Forward(0, x);
-		fun(x, check, original, opt);
+		FunOne(x, check, original, opt);
 		for(i = 0; i < m; i++)
 			ok &= (y[i] == check[i]);
 	
@@ -248,6 +250,114 @@ namespace {
 	
 		return ok;
 	}
+	// -------------------------------------------------------------------
+	// Test duplicate operation analysis
+
+	template <class Vector>
+	void fun_one(const Vector& x, Vector& y, size_t& original, size_t& opt)
+	{	typedef typename Vector::value_type Scalar;
+		original = 0;
+		opt      = 0;
+
+		// unary operator where operand is arg[0] and one result
+		Scalar a1 = CppAD::exp(x[0]); 
+		original += 1;
+		opt      += 1;
+
+		// unary operator where operand is arg[0] and two results
+		Scalar b1 = CppAD::sin(x[1]);
+		original += 2;
+		opt      += 2;
+
+		// non-communative binary operator where left is a variable
+		// and right is a parameter
+		Scalar c1 = x[2] - 3.;
+		original += 1;
+		opt      += 1;
+
+		// non-communative binary operator where left is a parameter
+		// and right is a variable
+		Scalar d1 = 3. / x[3];
+		original += 1;
+		opt      += 1;
+
+		// non-communative binary operator where left is a variable
+		// and right is a variable
+		Scalar e1 = pow(x[3], x[4]);
+		original += 3;
+		opt      += 3;
+
+		// duplicate variables
+		Scalar a2 = CppAD::exp(x[0]);
+		Scalar b2 = CppAD::sin(x[1]);  // counts for 2 variables
+		Scalar c2 = x[2] - 3.;
+		Scalar d2 = 3. / x[3];
+		Scalar e2 = pow(x[3], x[4]);   // counts for 3 variables
+		original += 8;
+
+		// result vector
+		y[0] = a1 + a2;
+		y[1] = b1 + b2;
+		y[2] = c1 + c2;
+		y[3] = d1 + d2;
+		y[4] = e1 + e2;
+		original += 5;
+		opt      += 5;
+
+		return;
+	}
+	bool case_one(void)
+	{
+		bool ok = true;
+		using CppAD::AD;
+		size_t original;
+		size_t opt;
+		size_t i, j;
+	
+		// domain space vector
+		size_t n  = 5;
+		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		for(j = 0; j < n; j++)
+			X[j] = 1. / double(j + 1); 
+	
+		// declare independent variables and start tape recording
+		CppAD::Independent(X);
+	
+		// range space vector 
+		size_t m = n;
+		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		fun_one(X, Y, original, opt);
+	
+		// create f: X -> Y and stop tape recording
+		CppAD::ADFun<double> F;
+		F.Dependent(X, Y); 
+	
+		CPPAD_TEST_VECTOR<double> x(n), y(m), check(m);
+		for(j = 0; j < n; j++)
+			x[j] = Value(X[j]);
+		y = F.Forward(0, x);
+		fun_one(x, check, original, opt);
+		for(i = 0; i < m; i++)
+			ok &= (y[i] == check[i]);
+	
+		// Check size before optimization
+		ok &= F.size_var() == (n + 1 + original);
+	
+		// Optimize the operation sequence
+		F.optimize();
+	
+		// Check size after optimization
+		ok &= F.size_var() == (n + 1 + opt);
+	
+		// check result now
+		// (should have already been checked if NDEBUG not defined)
+		y = F.Forward(0, x);
+		for(i = 0; i < m; i++)
+			ok &= (y[i] == check[i]);
+	
+		return ok;
+	}
+	// -------------------------------------------------------------------
 }
 
 bool optimize(void)
@@ -256,5 +366,7 @@ bool optimize(void)
 	ok     &= CaseTwo();
 	ok     &= CaseThree();
 
+	// ------------------
+	ok     &= case_one();
 	return ok;
 }

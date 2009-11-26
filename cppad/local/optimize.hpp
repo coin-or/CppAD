@@ -374,6 +374,15 @@ void optimize(
 	// Erase all information in the recording
 	rec->Erase();
 
+	// initilaize table mapping operator to hash code information
+	CppAD::vector<OpCode>        hash_table_op (CPPAD_HASH_TABLE_SIZE);
+	CppAD::vector<size_t>        hash_table_var(CPPAD_HASH_TABLE_SIZE);
+	CppAD::vector<const size_t*> hash_table_arg(CPPAD_HASH_TABLE_SIZE);
+	for(i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
+	{	hash_table_op[i]  = BeginOp;      // will not match 
+		hash_table_var[i] = num_var;      // should not be used
+		hash_table_arg[i] = CPPAD_NULL;   // null pointer
+	}
 
 	// initialize mapping from old variable index to new variable index
 	CppAD::vector<size_t> new_var(num_var);
@@ -451,6 +460,12 @@ void optimize(
 			break;
 		}
 
+		// start check if get a match in the hash table
+		unsigned short code      = hash_code(op, arg);
+		size_t         hash_var  = hash_table_var[code];
+		const size_t*  hash_arg  = hash_table_arg[code];
+		bool           match     = false;
+		Base           par, hash_par;
 		if( keep ) switch( op )
 		{
 			// Unary operator where operand is arg[0]
@@ -470,28 +485,96 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0  );
 			new_arg[0] = new_var[ arg[0] ];
 			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
-
-			rec->PutArg( new_arg[0] );
-			new_var[ i_var ] = rec->PutOp(op);
+			if( op == hash_table_op[code] )
+				match = new_arg[0] == new_var[ hash_arg[0] ];
+			if( match )
+				new_var[ i_var ] = new_var[ hash_var ];
+			else
+			{	rec->PutArg( new_arg[0] );
+				new_var[ i_var ] = rec->PutOp(op);
+			}
 			break;
-
-			// Binary operators where left operand is a variable
-			// and right operand is a parameter
-			case AddvpOp:
+			// ---------------------------------------------------
+			// Non-communative binary operators where 
+			// left is a variable and right is a parameter
 			case DivvpOp:
-			case MulvpOp:
-			case SubvpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			new_arg[0] = new_var[ arg[0] ];
-			new_arg[1] = rec->PutPar( play->GetPar( arg[1] ) );
-			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
-
-			rec->PutArg( new_arg[0], new_arg[1] );
-			new_var[ i_var ] = rec->PutOp(op);
-			break;
-
 			case PowvpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
+			case SubvpOp:
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
+			new_arg[0] = new_var[ arg[0] ];
+			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
+			par        = play->GetPar( arg[1] );
+			if( op == hash_table_op[code] )
+			{	match   = (new_arg[0] == new_var[hash_arg[0]]);
+				hash_par= play->GetPar( hash_arg[1] );
+				match  &= IdenticalEqualPar(par, hash_par); 
+			}
+			if( match )
+				new_var[ i_var ] = new_var[ hash_var ];
+			else
+			{
+				new_arg[1] = rec->PutPar(par);
+				rec->PutArg( new_arg[0], new_arg[1] );
+				new_var[ i_var ] = rec->PutOp(op);
+			}
+			break;
+			// ---------------------------------------------------
+			// Non-communative binary operators where 
+			// left is a parameter and right is a variable
+			case DivpvOp:
+			case PowpvOp:
+			case SubpvOp:
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
+			par        = play->GetPar( arg[0] );
+			new_arg[1] = new_var[ arg[1] ];
+			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
+			if( op == hash_table_op[code] )
+			{	match   = (new_arg[1] == new_var[hash_arg[1]]);
+				hash_par= play->GetPar( hash_arg[0] );
+				match  &= IdenticalEqualPar(par, hash_par); 
+			}
+			if( match )
+				new_var[ i_var ] = new_var[ hash_var ];
+			else
+			{
+				new_arg[0] = rec->PutPar(par);
+				rec->PutArg( new_arg[0], new_arg[1] );
+				new_var[ i_var ] = rec->PutOp(op);
+			}
+			break;
+			// ---------------------------------------------------
+			// Non-communative binary operator where 
+			// both operators are variables
+			case DivvvOp:
+			case PowvvOp:
+			case SubvvOp:
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
+			new_arg[0] = new_var[ arg[0] ];
+			new_arg[1] = new_var[ arg[1] ];
+			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
+			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
+			if( op == hash_table_op[code] )
+			{	match  = (new_arg[0] == new_var[hash_arg[0]]);
+				match &= (new_arg[1] == new_var[hash_arg[1]]);
+			}
+			if( match )
+				new_var[ i_var ] = new_var[ hash_var ];
+			else
+			{	rec->PutArg( new_arg[0], new_arg[1] );
+				new_var[ i_var ] = rec->PutOp(op);
+			}
+			break;
+// STOPPED COMMON EXPRESSION REMOVAL HERE
+			// ---------------------------------------------------
+			// Communative binary operators where 
+			// left is a variable and right is a parameter
+			case AddvpOp:
+			case MulvpOp:
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
 			new_arg[0] = new_var[ arg[0] ];
 			new_arg[1] = rec->PutPar( play->GetPar( arg[1] ) );
 			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
@@ -499,14 +582,13 @@ void optimize(
 			rec->PutArg( new_arg[0], new_arg[1] );
 			new_var[ i_var ] = rec->PutOp(op);
 			break;
-
-			// Binary operators where left operand is a parameter
-			// and right operand is a variable
+			// ---------------------------------------------------
+			// Communative binary operators where 
+			// left is a parameter and right is a variable
 			case AddpvOp:
-			case DivpvOp:
 			case MulpvOp:
-			case SubpvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
 			new_arg[0] = rec->PutPar( play->GetPar( arg[0] ) );
 			new_arg[1] = new_var[ arg[1] ];
 			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
@@ -514,23 +596,13 @@ void optimize(
 			rec->PutArg( new_arg[0], new_arg[1] );
 			new_var[ i_var ] = rec->PutOp(op);
 			break;
-
-			case PowpvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
-			new_arg[0] = rec->PutPar( play->GetPar( arg[0] ) );
-			new_arg[1] = new_var[ arg[1] ];
-			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
-
-			rec->PutArg( new_arg[0], new_arg[1] );
-			new_var[ i_var ] = rec->PutOp(op);
-			break;
-
-			// Binary operator where both operators are variables
+			// ---------------------------------------------------
+			// Communative binary operator where 
+			// both operators are variables
 			case AddvvOp:
-			case DivvvOp:
 			case MulvvOp:
-			case SubvvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
 			new_arg[0] = new_var[ arg[0] ];
 			new_arg[1] = new_var[ arg[1] ];
 			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
@@ -539,18 +611,7 @@ void optimize(
 			rec->PutArg( new_arg[0], new_arg[1] );
 			new_var[ i_var ] = rec->PutOp(op);
 			break;
-
-			case PowvvOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 3);
-			new_arg[0] = new_var[ arg[0] ];
-			new_arg[1] = new_var[ arg[1] ];
-			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
-			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
-
-			rec->PutArg( new_arg[0], new_arg[1] );
-			new_var[ i_var ] = rec->PutOp(op);
-			break;
-
+			// ---------------------------------------------------
 			// Conditional expression operators
 			case CExpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 6, 1);
@@ -579,19 +640,19 @@ void optimize(
 			);
 			new_var[ i_var ] = rec->PutOp(op);
 			break;
-
+			// ---------------------------------------------------
 			// Operations with no arguments and no results
 			case EndOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 0);
 			rec->PutOp(op);
 			break;
-
+			// ---------------------------------------------------
 			// Operations with no arguments and one result
 			case InvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			new_var[ i_var ] = rec->PutOp(op);
 			break;
- 
+ 			// ---------------------------------------------------
 			// Operations with one argument that is a parameter
 			case ParOp:
 			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
@@ -600,7 +661,7 @@ void optimize(
 			rec->PutArg( new_arg[0] );
 			new_var[ i_var ] = rec->PutOp(op);
 			break;
-
+			// ---------------------------------------------------
 			// Load using a parameter index
 			case LdpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
@@ -614,7 +675,7 @@ void optimize(
 			);
 			new_var[ i_var ] = rec->PutOp(op);
 			break;
-
+			// ---------------------------------------------------
 			// Load using a variable index
 			case LdvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
@@ -629,7 +690,7 @@ void optimize(
 			);
 			new_var[ i_var ] = rec->PutOp(op);
 			break;
-
+			// ---------------------------------------------------
 			// Store a parameter using a parameter index
 			case StppOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
@@ -644,7 +705,7 @@ void optimize(
 			);
 			rec->PutOp(op);
 			break;
-
+			// ---------------------------------------------------
 			// Store a parameter using a variable index
 			case StvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
@@ -660,7 +721,7 @@ void optimize(
 			);
 			rec->PutOp(op);
 			break;
-
+			// ---------------------------------------------------
 			// Store a variable using a parameter index
 			case StpvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
@@ -677,7 +738,7 @@ void optimize(
 			);
 			rec->PutOp(op);
 			break;
-
+			// ---------------------------------------------------
 			// Store a variable using a variable index
 			case StvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
@@ -694,12 +755,17 @@ void optimize(
 			);
 			rec->PutOp(op);
 			break;
-
-
+			// ---------------------------------------------------
 			// all cases should be handled above
 			default:
-			CPPAD_ASSERT_UNKNOWN(0);
+			CPPAD_ASSERT_UNKNOWN(false);
 
+		}
+		if( ! match )
+		{	// put most recent match for this code in hash table
+			hash_table_op[code]  = op;
+			hash_table_var[code] = i_var;
+			hash_table_arg[code] = arg; 
 		}
 
 	}

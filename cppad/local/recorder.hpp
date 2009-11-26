@@ -294,11 +294,6 @@ size_t recorder<Base>::PutPar(const Base &par)
 	static bool     init = true;
 	size_t          i;
 	unsigned short  code;
-	CPPAD_ASSERT_UNKNOWN( 
-		std::numeric_limits<unsigned short>::max()
-		==
-		(CPPAD_HASH_TABLE_SIZE-1)
-	);
 	CPPAD_ASSERT_UNKNOWN( num_rec_par_ <= len_rec_par_ );
 
 	if( init )
