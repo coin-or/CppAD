@@ -58,6 +58,10 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 11-27$$
+Remove duplicate expressions for the commutative binary operators; i.e.,
+addition and multiplication.
+
 $head 11-26$$
 Improve $cref/optimize/$$ command so that it removes some duplicate
 expressions from the tape (more of this is planned).

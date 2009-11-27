@@ -38,7 +38,7 @@ namespace {
 	 	// in the comparision operation
 		Float a = 1. / x;
 
-		// create a new variable used in result
+		// create a new variable that is used by the result
 		Float b = exp(x);
 
 		Float c;
@@ -46,7 +46,7 @@ namespace {
 			c = b + 3.; // only one variable created by this choice
 		else	c = b + 2.;
 
-		// create another copy of sin(x) (is optimized out)
+		// create a duplicate copy of exp(x) (which is optimized out)
 		Float d = exp(x);
 
 		// use d so that it is connected to result
@@ -95,7 +95,7 @@ bool optimize(void)
 	// Check the number of variables in original operation sequence:
 	// BeginOp: at the beginning of every operation sequence.
 	// X[0]:    the independent variable.
-	// b, c:    temporay variable in the function fun.
+	// b, c:    temporay variables in the function fun.
 	// y:       return value for the function fun and dependent variable.
 	ok &= (F.size_var() == 5);
 

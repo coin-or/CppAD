@@ -287,13 +287,27 @@ namespace {
 		original += 3;
 		opt      += 3;
 
+		// communative binary operator where  left is a variable
+		// and right is a parameter
+		Scalar f1 = x[5] * 5.;
+		original += 1;
+		opt      += 1;
+
+		// communative binary operator where  left is a variable
+		// and right is a variable
+		Scalar g1 = x[5] + x[6];
+		original += 1;
+		opt      += 1;
+
 		// duplicate variables
 		Scalar a2 = CppAD::exp(x[0]);
 		Scalar b2 = CppAD::sin(x[1]);  // counts for 2 variables
 		Scalar c2 = x[2] - 3.;
 		Scalar d2 = 3. / x[3];
 		Scalar e2 = pow(x[3], x[4]);   // counts for 3 variables
-		original += 8;
+		Scalar f2 = 5. * x[5];
+		Scalar g2 = x[6] + x[5];
+		original += 10;
 
 		// result vector
 		y[0] = a1 + a2;
@@ -301,8 +315,10 @@ namespace {
 		y[2] = c1 + c2;
 		y[3] = d1 + d2;
 		y[4] = e1 + e2;
-		original += 5;
-		opt      += 5;
+		y[5] = f1 + f2;
+		y[6] = g1 + g2;
+		original += 7;
+		opt      += 7;
 
 		return;
 	}
@@ -315,7 +331,7 @@ namespace {
 		size_t i, j;
 	
 		// domain space vector
-		size_t n  = 5;
+		size_t n  = 7;
 		CPPAD_TEST_VECTOR< AD<double> > X(n);
 		for(j = 0; j < n; j++)
 			X[j] = 1. / double(j + 1); 
@@ -358,15 +374,146 @@ namespace {
 		return ok;
 	}
 	// -------------------------------------------------------------------
+	bool case_two(void)
+	{	// test that duplicate expression removal is relative to
+		// new and not just old argument indices.
+		bool ok = true;
+		using CppAD::AD;
+		size_t i, j;
+
+		// domain space vector
+		size_t n  = 1;
+		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		for(j = 0; j < n; j++)
+			X[j] = double(j + 2); 
+
+		// range space vector
+		size_t m = 1;
+		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+
+		// declare independent variables and start tape recording
+		CppAD::Independent(X);
+
+		// create a new variable
+		AD<double> A1 = X[0] - 2.;
+
+		// create a duplicate variable
+		AD<double> A2 = X[0] - 2.;
+
+		// create a new variable using first version of duplicate
+		AD<double> B1 = A1 / 2.;
+
+		// create a duplicate that can only be dectected using new
+		// argument indices
+		AD<double> B2 = A2 / 2.; 
+
+		// Make a new variable for result 
+		// and make it depend on all the variables
+		Y[0] = B1 + B2;
+
+		// create f: X -> Y and stop tape recording
+		// Y[ X[0] ] = X[1] and other components of Y are zero. 
+		CppAD::ADFun<double> F;
+		F.Dependent(X, Y); 
+
+		// check number of variables in original function
+		ok &= (F.size_var() ==  1 + n + m + 4 ); 
+	
+		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		for(j = 0; j < n; j++)
+			x[j] = double(j + 2);
+
+		y   = F.Forward(0, x);
+		for(i = 0; i < m; i++)
+			ok &= ( y[i] == Value( Y[i] ) );
+
+		F.optimize();
+
+		// check number of variables  in optimized version
+		ok &= (F.size_var() == 1 + n + m + 2 ); 
+
+		y   = F.Forward(0, x);
+		for(i = 0; i < m; i++)
+			ok &= ( y[i] == Value( Y[i] ) );
+
+		return ok;
+	}
+	// -------------------------------------------------------------------
+	bool case_three(void)
+	{	// test that duplicate expression removal is relative to
+		// new and not just old argument indices (commutative case).
+		bool ok = true;
+		using CppAD::AD;
+		size_t i, j;
+
+		// domain space vector
+		size_t n  = 1;
+		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		for(j = 0; j < n; j++)
+			X[j] = double(j + 2); 
+
+		// range space vector
+		size_t m = 1;
+		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+
+		// declare independent variables and start tape recording
+		CppAD::Independent(X);
+
+		// create a new variable
+		AD<double> A1 = X[0] + 2.;
+
+		// create a duplicate variable
+		AD<double> A2 = 2. + X[0];
+
+		// create a new variable using first version of duplicate
+		AD<double> B1 = A1 * 2.;
+
+		// create a duplicate that can only be dectected using new
+		// argument indices
+		AD<double> B2 = 2. * A2; 
+
+		// Make a new variable for result 
+		// and make it depend on all the variables
+		Y[0] = B1 + B2;
+
+		// create f: X -> Y and stop tape recording
+		// Y[ X[0] ] = X[1] and other components of Y are zero. 
+		CppAD::ADFun<double> F;
+		F.Dependent(X, Y); 
+
+		// check number of variables in original function
+		ok &= (F.size_var() ==  1 + n + m + 4 ); 
+	
+		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		for(j = 0; j < n; j++)
+			x[j] = double(j + 2);
+
+		y   = F.Forward(0, x);
+		for(i = 0; i < m; i++)
+			ok &= ( y[i] == Value( Y[i] ) );
+
+		F.optimize();
+
+		// check number of variables  in optimized version
+		ok &= (F.size_var() == 1 + n + m + 2 ); 
+
+		y   = F.Forward(0, x);
+		for(i = 0; i < m; i++)
+			ok &= ( y[i] == Value( Y[i] ) );
+
+		return ok;
+	}
 }
 
 bool optimize(void)
 {	bool ok = true;
+	// check reverse dependency analysis optimization
 	ok     &= CaseOne();
 	ok     &= CaseTwo();
 	ok     &= CaseThree();
-
-	// ------------------
+	// check removal of duplicate expressions
 	ok     &= case_one();
+	ok     &= case_two();
+	ok     &= case_three();
 	return ok;
 }
