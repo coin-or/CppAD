@@ -34,22 +34,24 @@ namespace {
 	Float fun(const Float& x)
 	{	using CppAD::exp;
 
-	 	// This variable is optimized out because it is only used
-	 	// in the comparision operation
+	 	// Create a variable that is optimized out because 
+	 	// it is only used in the comparision operation.
 		Float a = 1. / x;
 
-		// create a new variable that is used by the result
-		Float b = exp(x);
+		// Create a variable that is used by the result
+		Float b = x * 5.;
 
 		Float c;
 		if( a < x )  
 			c = b + 3.; // only one variable created by this choice
 		else	c = b + 2.;
 
-		// create a duplicate copy of exp(x) (which is optimized out)
-		Float d = exp(x);
+		// Create a variable that is optimized out because it
+		// will always have the same value as b
+		Float d = 5. * x;
 
-		// use d so that it is connected to result
+		// Note that the operation sequence connects b, c, and d with y
+		// (but a is not connected).
 		Float y = c + d; 
 
 		return y;
@@ -77,10 +79,10 @@ bool optimize(void)
 	CppAD::ADFun<double> F(X, Y);
 
 	// Check the number of variables in original operation sequence:
-	// BeginOp: at the beginning of every operation sequence.
-	// X[0]:     the independent variable.
-	// a,b,c,d:  four temporary variables inside the function fun.
-	// y:        return value for the function fun and dependent variable.
+	// BeginOp:  one phantom variable at beginning of operation sequence
+	// X[0]:     the independent variable
+	// a,b,c,d:  four temporary variables inside the function fun
+	// y:        return value for the function fun and dependent variable
 	ok &= (F.size_var() == 7);
 
 	// Check zero order forward mode on the original operation sequence

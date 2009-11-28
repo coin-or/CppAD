@@ -523,6 +523,7 @@ then
 		check_include_file.sh
 		check_include_omh.sh
 		check_makefile.sh
+		check_if_0.sh
 	"
 	for check in $list 
 	do
