@@ -86,22 +86,24 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
 \par Checked Assertions
 \li \c std::numeric_limits<unsigned short>::max() == CPPAD_HASH_TABLE_SIZE - 1
-\li \c size_t(op) < CPPAD_HASH_TABLE_SIZE
+\li \c size_t(op) <= size_t(SubvvOp) < CPPAD_HASH_TABLE_SIZE
 \li \c sizeof(size_t) is even 
 \li \c sizeof(unsigned short)  == 2
 */
 
 inline unsigned short hash_code(OpCode op, const size_t* arg)
-{	static size_t half_table_size = CPPAD_HASH_TABLE_SIZE / 2;
-
-	CPPAD_ASSERT_UNKNOWN( 
+{	CPPAD_ASSERT_UNKNOWN( 
 		std::numeric_limits<unsigned short>::max()
 		==
 		(CPPAD_HASH_TABLE_SIZE-1)
 	);
-	CPPAD_ASSERT_UNKNOWN( size_t (op) < CPPAD_HASH_TABLE_SIZE );
+	CPPAD_ASSERT_UNKNOWN( size_t (op) <= size_t(SubvvOp) );
 	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
 	CPPAD_ASSERT_UNKNOWN( sizeof(size_t) % 2  == 0 );
+	static unsigned short op_fac = static_cast<unsigned short> (
+	CPPAD_HASH_TABLE_SIZE / ( 1 + static_cast<unsigned short>(SubvvOp) ) 
+	);
+	CPPAD_ASSERT_UNKNOWN( op_fac > 0 );
 
 	// number of shorts per size_t value
 	size_t n   = sizeof(size_t) / 2;
@@ -109,10 +111,12 @@ inline unsigned short hash_code(OpCode op, const size_t* arg)
 	// number of shorts corresponding to the arg vector
 	n = n * NumArg(op);
 
-	unsigned short code = static_cast<unsigned short>(op);
-	if( code > 0 ) while( code < half_table_size )
-		code *= 2;
+	// initialize with value that separates operators as much as possible
+	unsigned short code = static_cast<unsigned short>(
+		static_cast<unsigned short>(op) * op_fac
+	);
 
+	// now code in the operands
 	const unsigned short* v
 		= reinterpret_cast<const unsigned short*>(arg);
 	while(n--)

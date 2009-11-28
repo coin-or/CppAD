@@ -66,8 +66,7 @@ bool BoolCases(void)
 	size_t i, j;
 	for(i = 0; i < m; i++)
 	{	for(j = 0; j < m; j++)
-			s[ i * m + j ] = false;
-		s[ i * m + i ] = true;
+			s[ i * m + j ] = (i == j);
 	}
 
 	// sparsity pattern for F'(x)

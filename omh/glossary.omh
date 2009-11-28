@@ -201,7 +201,7 @@ for a matrix $italic A$$, we say that $italic S$$ is more efficient than
 $italic T$$ if $italic S$$ has fewer elements than $italic T$$.
 For example, if $latex A$$ is the identity matrix,
 $latex \[
-	S_i =  \{ j \}
+	S_i =  \{ i \}
 \] $$
 defines an efficient sparsity pattern for $latex A$$.
 
