@@ -398,7 +398,7 @@ void optimize(
 	for(i = 0; i < num_vecad_vec; i++)
 	{	// length of this VecAD
 		size_t length = play->GetVecInd(j);
-		if( connected[i] )
+		if( vecad_connected[i] )
 		{	// Put this VecAD vector in new recording
 			CPPAD_ASSERT_UNKNOWN(length < num_vecad_ind);
 			new_vecad_ind[j] = rec->PutVecInd(length);

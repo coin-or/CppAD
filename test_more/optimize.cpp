@@ -146,26 +146,30 @@ namespace {
 		size_t m = 3;
 		CPPAD_TEST_VECTOR< AD<double> > Y(m);
 
-		CppAD::VecAD<double> U(n);
-		CppAD::VecAD<double> V(m);
-		for(j = 0; j < n; j++)
-			U[j] = 0;
+		CppAD::VecAD<double> U(m);
+		CppAD::VecAD<double> V(n);
 		for(i = 0; i < m; i++)
-			V[i] = 0;
+			U[i] = 0;
+		for(j = 0; j < n; j++)
+			V[j] = 0;
 	
 		// declare independent variables and start tape recording
 		CppAD::Independent(X);
 
-		// make U a variable
+		// first vecad vector that is a variable
 		U[ X[0] ] = X[1];
 
-		// make V a variable
+		// second vecad vector that is a variable
 		V[ X[0] ] = X[1];
 
-		// Y only depend on V (and not on U)
+		// Make dependency for vecad vectors different that for
+		// variables because original code used worng dependency info.
+		// Y does not depend on the first variable in the tape; i.e.
+		// the one corresponding to the BeginOp. So make it depend
+		// on the first vecad vector in the tape.
 		for(i = 0; i < m; i++)
 		{	AD<double> I(i);
-			Y[i] = V[I];
+			Y[i] = U[I];
 		}
 	
 		// create f: X -> Y and stop tape recording

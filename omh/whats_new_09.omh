@@ -58,6 +58,9 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 11-28$$
+Fix bug in tape optimization with $cref/VecAD/$$ objects.
+
 $head 11-27$$
 Remove duplicate expressions for the commutative binary operators; i.e.,
 addition and multiplication.
