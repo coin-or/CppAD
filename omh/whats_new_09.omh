@@ -58,6 +58,10 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 12-01$$
+Fix minor grammatical error in the Purpose heading
+for $cref/conditional expressions/CondExp/Purpose/$$. 
+
 $head 11-28$$
 Fix bug in tape optimization with $cref/VecAD/$$ objects.
 
