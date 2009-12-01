@@ -49,7 +49,7 @@ $head Purpose$$
 Record, 
 as part of an AD of $icode Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$,
-a the conditional result of the form 
+the conditional result 
 $codei%
 	if( %left% %Cop% %right% )
 		%result% = %exp_if_true%

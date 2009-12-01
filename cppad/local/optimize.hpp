@@ -143,6 +143,36 @@ dependent variables.
 
 CPPAD_BEGIN_NAMESPACE
 /*!
+Structure used by \c optimize to hold information about one variable.
+This \c struct would be local inside of \c optimize, 
+but the current C++ standard does not support local template parameters.
+*/
+struct optimize_variable {
+	/// Operator for which this variable is the result, \c NumRes(op) > 0.
+	/// (Set by the reverse sweep at beginning of optimization.)
+	OpCode         op;       
+	/// Pointer to first argument (child) for this operator.
+	/// (Set by the reverse sweep at beginning of optimization.)
+	const size_t*  arg;
+	/*!
+	Information about the parrents for this variable. 
+
+	\li
+	If \c parrent == 0, this variable has no parrents
+	\li
+	If \c 0 < parrent < num_var, then \c parrent is the only parrent.
+	\li
+	If \c parrent == num_var, this variable has more than one parrent.
+
+	(Set by the reverse sweep at beginning of optimization.)
+	*/
+	size_t         parrent; 
+	/// Index of this variable in the optimized operation sequence.
+	/// (Set by the forward sweep at end of optimization.)
+	size_t         new_var;  
+};
+
+/*!
 Convert a player object to an optimized recorder object
 
 \tparam Base
@@ -198,28 +228,36 @@ void optimize(
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 
 	// -------------------------------------------------------------
-	// Determine which variables are connected to the dependent variables. 
+	// data structure that maps variable index in original operation
+	// sequence to corresponding operator information
+	CppAD::vector<struct optimize_variable> tape(num_var);
+	// -------------------------------------------------------------
+	// Determine parrent value for each variable
 
-	// initialize all except the dependent variables as not connected. 
-	CppAD::vector<bool> connected(num_var);
+	// initialize all variables has having no parrent
 	for(i = 0; i < num_var; i++)
-		connected[i] = false;
+		tape[i].parrent = 0;
+
 	for(j = 0; j < m; j++)
-	{	CPPAD_ASSERT_UNKNOWN( dep_taddr[j] < num_var );
-		connected[ dep_taddr[j] ] = true;
+	{	// mark dependent variables as having multiple parents
+		tape[ dep_taddr[j] ].parrent = num_var;
 	}
 
-	// vecad_connected contains a flag for each VecAD object.
+	// vecad_parrent contains a flag for each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
-	// VecAD object) to the vecad_connected index for the VecAD object.
-	CppAD::vector<bool>   vecad_connected(num_vecad_vec);
+	// VecAD object) to the vecad_parrent falg for the VecAD object.
+# if CPPAD_OPTIMIZE_TRACE
 	CppAD::vector<size_t> vecad_offset(num_vecad_vec);
+# endif
+	CppAD::vector<bool>   vecad_parrent(num_vecad_vec);
 	CppAD::vector<size_t> vecad(num_vecad_ind);
 	j = 0;
 	for(i = 0; i < num_vecad_vec; i++)
-	{	vecad_connected[i] = false;
-		// offset for this VecAD
-		vecad_offset[i] = j + 1;
+	{	vecad_parrent[i] = false;
+# if CPPAD_OPTIMIZE_TRACE
+		// offset for this VecAD object
+		vecad_offset[i]  = j + 1;
+# endif
 		// length of this VecAD
 		size_t length = play->GetVecInd(j);
 		// set to proper index for this VecAD
@@ -242,6 +280,12 @@ void optimize(
 	while(op != BeginOp)
 	{	// next op
 		play->next_reverse(op, arg, i_op, i_var);
+		// This if is not necessary becasue last assignment
+		// with this value of i_var will have NumRes(op) > 0
+		if( NumRes(op) > 0 )
+		{	tape[i_var].op = op;
+			tape[i_var].arg = arg;
+		}
 # ifndef NDEBUG
 		if( i_op <= n )
 		{	CPPAD_ASSERT_UNKNOWN((op == InvOp) | (op == BeginOp));
@@ -283,7 +327,11 @@ void optimize(
 			case SinhOp:
 			case SqrtOp:
 			case SubvpOp:
-			connected[ arg[0] ] |= connected[ i_var ];
+			if( tape[i_var].parrent > 0 )
+			{	if( tape[arg[0]].parrent == 0 )
+					tape[arg[0]].parrent = i_var;
+				else	tape[arg[0]].parrent = num_var;
+			}
 			break;
 
 			// Unary operator where operand is arg[1]
@@ -293,7 +341,11 @@ void optimize(
 			case SubpvOp:
 			case PowpvOp:
 			case PrivOp:
-			connected[ arg[1] ] |= connected[ i_var ];
+			if( tape[i_var].parrent > 0 )
+			{	if( tape[arg[1]].parrent == 0 )
+					tape[arg[1]].parrent = i_var;
+				else	tape[arg[1]].parrent = num_var;
+			}
 			break;
 
 			// Binary operator where operands are arg[0], arg[1]
@@ -302,19 +354,26 @@ void optimize(
 			case MulvvOp:
 			case PowvvOp:
 			case SubvvOp:
-			connected[ arg[0] ] |= connected[ i_var ];
-			connected[ arg[1] ] |= connected[ i_var ];
+			if( tape[i_var].parrent > 0 )
+			{	if( tape[arg[0]].parrent == 0 )
+					tape[arg[0]].parrent = i_var;
+				else	tape[arg[0]].parrent = num_var;
+				if( tape[arg[1]].parrent == 0 )
+					tape[arg[1]].parrent = i_var;
+				else	tape[arg[1]].parrent = num_var;
+			}
 			break;
 
 			// Conditional expression operators
 			case CExpOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-			mask = 1;
-			for(i = 2; i < 6; i++)
-			{	if( arg[1] & mask )
+			if( tape[i_var].parrent > 0 )
+			{	mask = 1;
+				for(i = 2; i < 6; i++) if( arg[1] & mask )
 				{	CPPAD_ASSERT_UNKNOWN( arg[i] < i_var );
-					connected[ arg[i] ] |= 
-						connected[ i_var ];
+					if( tape[arg[i]].parrent == 0 )
+						tape[arg[i]].parrent = i_var;
+					else	tape[arg[i]].parrent = num_var;
 				}
 				mask = mask << 1;
 			}
@@ -331,28 +390,44 @@ void optimize(
 
 			// Load using a parameter index
 			case LdpOp:
-			i = vecad[ arg[0] - 1 ];
-			vecad_connected[i] |= connected[ i_var ];
+			if( tape[i_var].parrent > 0 )
+			{	i = vecad[ arg[0] - 1 ];
+				vecad_parrent[i] = true;
+			}
 			break;
 
 			// Load using a variable index
 			case LdvOp:
-			i = vecad[ arg[0] - 1 ];
-			vecad_connected[i]  |= connected[ i_var ];
-			connected[ arg[1] ] |= connected[ i_var ];
+			if( tape[i_var].parrent > 0 )
+			{	i = vecad[ arg[0] - 1 ];
+				vecad_parrent[i] = true;
+				if( tape[arg[1]].parrent == 0 )
+					tape[arg[1]].parrent = i_var;
+				else	tape[arg[1]].parrent = num_var;
+			}
 			break;
 
 			// Store a variable using a parameter index
 			case StpvOp:
 			i = vecad[ arg[0] - 1 ];
-			connected[ arg[2] ] |= vecad_connected[i];
+			if( vecad_parrent[i] )
+			{	if( tape[arg[2]].parrent == 0 )
+					tape[arg[2]].parrent = i_var;
+				else	tape[arg[2]].parrent = num_var;
+			}
 			break;
 
 			// Store a variable using a variable index
 			case StvvOp:
 			i = vecad[ arg[0] - 1 ];
-			connected[ arg[1] ] |= vecad_connected[i];
-			connected[ arg[2] ] |= vecad_connected[i];
+			if( vecad_parrent[i] )
+			{	if( tape[arg[1]].parrent == 0 )
+					tape[arg[1]].parrent = i_var;
+				else	tape[arg[1]].parrent = num_var;
+				if( tape[arg[2]].parrent == 0 )
+					tape[arg[2]].parrent = i_var;
+				else	tape[arg[2]].parrent = num_var;
+			}
 			break;
 
 			// all cases should be handled above
@@ -361,12 +436,13 @@ void optimize(
 		}
 	}
 	// values corresponding to BeginOp
-	CPPAD_ASSERT_UNKNOWN( i_op == 0 && i_var == 0 );
+	CPPAD_ASSERT_UNKNOWN( i_op == 0 && i_var == 0 && op == BeginOp );
+	tape[i_var].op = op;
 # if CPPAD_OPTIMIZE_TRACE
+	std::cout << "VecAD information:" << std::endl;
 	for(i = 0; i < num_vecad_vec; i++) 
-	{	std::cout << "VecAD: off=" << std::setw(5) << vecad_offset[i];
-		std::cout << "connected = " << vecad_connected[i];
-		std::cout << std::endl; 
+	{	std::cout << "offset  = " << vecad_offset[i];
+		std::cout << ", parrent = " << vecad_parrent[i] << std::endl;
 	}
 # endif
 	// -------------------------------------------------------------
@@ -374,31 +450,28 @@ void optimize(
 	// Erase all information in the recording
 	rec->Erase();
 
-	// initilaize table mapping operator to hash code information
-	CppAD::vector<OpCode>        hash_table_op (CPPAD_HASH_TABLE_SIZE);
-	CppAD::vector<size_t>        hash_table_var(CPPAD_HASH_TABLE_SIZE);
-	CppAD::vector<const size_t*> hash_table_arg(CPPAD_HASH_TABLE_SIZE);
+	// Initilaize table mapping hash code to variable index in tape
+	// as pointing to the BeginOp at the beginning of the tape
+	CppAD::vector<size_t>  hash_table_var(CPPAD_HASH_TABLE_SIZE);
 	for(i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
-	{	hash_table_op[i]  = BeginOp;      // will not match 
-		hash_table_var[i] = num_var;      // should not be used
-		hash_table_arg[i] = CPPAD_NULL;   // null pointer
-	}
+		hash_table_var[i] = 0;
+	CPPAD_ASSERT_UNKNOWN( tape[0].op == BeginOp );
 
 	// initialize mapping from old variable index to new variable index
-	CppAD::vector<size_t> new_var(num_var);
 	for(i = 0; i < num_var; i++)
-		new_var[i] = num_var; // initialize as an invalid value
+		tape[i].new_var = num_var; // invalid index
+	
 
-	// Put the necessary VecAD objects in the tape
+	// initialize mapping from old VecAD index to new VecAD index
 	CppAD::vector<size_t> new_vecad_ind(num_vecad_ind);
 	for(i = 0; i < num_vecad_ind; i++)
-		new_vecad_ind[i] = num_vecad_ind; // an invalid value 
+		new_vecad_ind[i] = num_vecad_ind; // invalid index 
 
 	j = 0;     // index into the old set of indices
 	for(i = 0; i < num_vecad_vec; i++)
 	{	// length of this VecAD
 		size_t length = play->GetVecInd(j);
-		if( vecad_connected[i] )
+		if( vecad_parrent[i] )
 		{	// Put this VecAD vector in new recording
 			CPPAD_ASSERT_UNKNOWN(length < num_vecad_ind);
 			new_vecad_ind[j] = rec->PutVecInd(length);
@@ -421,7 +494,7 @@ void optimize(
 	// the end.  Put BeginOp at beginning of recording
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
 	CPPAD_ASSERT_NARG_NRES(BeginOp, 0, 1);
-	new_var[ i_var ] = rec->PutOp(BeginOp);
+	tape[i_var].new_var = rec->PutOp(BeginOp);
 
 	// temporary buffer for new argument values
 	size_t new_arg[6];
@@ -452,20 +525,21 @@ void optimize(
 			case StvvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			i = vecad[ arg[0] - 1 ];
-			keep = vecad_connected[i];
+			keep = vecad_parrent[i];
 			break;
 
 			default:
-			keep = connected[i_var];
+			keep = (tape[i_var].parrent > 0);
 			break;
 		}
 
 		// start check if get a match in the hash table
 		unsigned short code      = hash_code(EndOp, arg);
-		size_t         hash_var  = hash_table_var[code];
-		const size_t*  hash_arg  = hash_table_arg[code];
 		bool           match     = false;
-		Base           par, hash_par;
+		size_t         hash_var;
+		const size_t*  hash_arg;
+		Base           hash_par;
+		Base           par;
 		if( keep ) switch( op )
 		{
 			// Unary operator where operand is arg[0]
@@ -483,19 +557,19 @@ void optimize(
 			case SqrtOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0  );
-			new_arg[0] = new_var[ arg[0] ];
+			new_arg[0] = tape[arg[0]].new_var;
 			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
 			code       = hash_code(op, new_arg);
 			hash_var   = hash_table_var[code];
-			hash_arg   = hash_table_arg[code];
+			hash_arg   = tape[hash_var].arg;
 			//
-			if( op == hash_table_op[code] )
-				match = new_arg[0] == new_var[ hash_arg[0] ];
+			if( op == tape[hash_var].op )
+				match = new_arg[0] == tape[hash_arg[0]].new_var;
 			if( match )
-				new_var[ i_var ] = new_var[ hash_var ];
+				tape[i_var].new_var = tape[hash_var].new_var;
 			else
 			{	rec->PutArg( new_arg[0] );
-				new_var[ i_var ] = rec->PutOp(op);
+				tape[i_var].new_var = rec->PutOp(op);
 			}
 			break;
 			// ---------------------------------------------------
@@ -506,26 +580,28 @@ void optimize(
 			case SubvpOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
-			new_arg[0] = new_var[ arg[0] ];
+			new_arg[0] = tape[arg[0]].new_var;
 			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
 			new_arg[1] = arg[1];
 			code       = hash_code(op, new_arg);
 			hash_var   = hash_table_var[code];
-			hash_arg   = hash_table_arg[code];
+			hash_arg   = tape[hash_var].arg;
 			//
 			par        = play->GetPar( arg[1] );
-			if( op == hash_table_op[code] )
-			{	match   = (new_arg[0] == new_var[hash_arg[0]]);
+			if( op == tape[hash_var].op )
+			{	match   = (
+					new_arg[0] == tape[hash_arg[0]].new_var
+				);
 				hash_par= play->GetPar( hash_arg[1] );
 				match  &= IdenticalEqualPar(par, hash_par); 
 			}
 			if( match )
-				new_var[ i_var ] = new_var[ hash_var ];
+				tape[i_var].new_var = tape[hash_var].new_var;
 			else
 			{
 				new_arg[1] = rec->PutPar(par);
 				rec->PutArg( new_arg[0], new_arg[1] );
-				new_var[ i_var ] = rec->PutOp(op);
+				tape[i_var].new_var = rec->PutOp(op);
 			}
 			break;
 			// ---------------------------------------------------
@@ -536,26 +612,28 @@ void optimize(
 			case SubpvOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
-			new_arg[1] = new_var[ arg[1] ];
+			new_arg[1] = tape[arg[1]].new_var;
 			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
 			new_arg[0] = arg[0];
 			code       = hash_code(op, new_arg);
 			hash_var   = hash_table_var[code];
-			hash_arg   = hash_table_arg[code];
+			hash_arg   = tape[hash_var].arg;
 			//
 			par        = play->GetPar( arg[0] );
-			if( op == hash_table_op[code] )
-			{	match   = (new_arg[1] == new_var[hash_arg[1]]);
+			if( op == tape[hash_var].op )
+			{	match   = (
+					new_arg[1] == tape[hash_arg[1]].new_var
+				);
 				hash_par= play->GetPar( hash_arg[0] );
 				match  &= IdenticalEqualPar(par, hash_par); 
 			}
 			if( match )
-				new_var[ i_var ] = new_var[ hash_var ];
+				tape[i_var].new_var = tape[hash_var].new_var;
 			else
 			{
 				new_arg[0] = rec->PutPar(par);
 				rec->PutArg( new_arg[0], new_arg[1] );
-				new_var[ i_var ] = rec->PutOp(op);
+				tape[i_var].new_var = rec->PutOp(op);
 			}
 			break;
 			// ---------------------------------------------------
@@ -566,23 +644,27 @@ void optimize(
 			case SubvvOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
-			new_arg[0] = new_var[ arg[0] ];
-			new_arg[1] = new_var[ arg[1] ];
+			new_arg[0] = tape[arg[0]].new_var;
+			new_arg[1] = tape[arg[1]].new_var;
 			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
 			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
 			code       = hash_code(op, new_arg);
 			hash_var   = hash_table_var[code];
-			hash_arg   = hash_table_arg[code];
+			hash_arg   = tape[hash_var].arg;
 			//
-			if( op == hash_table_op[code] )
-			{	match  = (new_arg[0] == new_var[hash_arg[0]]);
-				match &= (new_arg[1] == new_var[hash_arg[1]]);
+			if( op == tape[hash_var].op )
+			{	match  = (
+					new_arg[0] == tape[hash_arg[0]].new_var
+				);
+				match &= (
+					new_arg[1] == tape[hash_arg[1]].new_var
+				);
 			}
 			if( match )
-				new_var[ i_var ] = new_var[ hash_var ];
+				tape[i_var].new_var = tape[hash_var].new_var;
 			else
 			{	rec->PutArg( new_arg[0], new_arg[1] );
-				new_var[ i_var ] = rec->PutOp(op);
+				tape[i_var].new_var = rec->PutOp(op);
 			}
 			break;
 			// ---------------------------------------------------
@@ -592,16 +674,18 @@ void optimize(
 			case MulvpOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
-			new_arg[0] = new_var[ arg[0] ];
+			new_arg[0] = tape[arg[0]].new_var;
 			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
 			new_arg[1] = arg[1];
 			code       = hash_code(op, new_arg);
 			hash_var   = hash_table_var[code];
-			hash_arg   = hash_table_arg[code];
+			hash_arg   = tape[hash_var].arg;
 			//
 			par        = play->GetPar( arg[1] );
-			if( op == hash_table_op[code] )
-			{	match   = (new_arg[0] == new_var[hash_arg[0]]);
+			if( op == tape[hash_var].op )
+			{	match   = (
+					new_arg[0] == tape[hash_arg[0]].new_var
+				);
 				hash_par= play->GetPar( hash_arg[1] );
 				match  &= IdenticalEqualPar(par, hash_par); 
 			}
@@ -614,22 +698,24 @@ void optimize(
 				tmp_arg[1] = new_arg[0];
 				unsigned short tmp_code = 
 					hash_code( tmp_op, tmp_arg );
-				if( tmp_op == hash_table_op[tmp_code] )
-				{
 				hash_var = hash_table_var[tmp_code];
-				hash_arg = hash_table_arg[tmp_code];
-				match    = new_arg[0] == new_var[hash_arg[1]];
+				if( tmp_op == tape[hash_var].op )
+				{
+				hash_arg = tape[hash_var].arg;
+				match    = (
+					new_arg[0] == tape[hash_arg[1]].new_var
+				);
 				hash_par = play->GetPar( hash_arg[0] );
 				match   &= IdenticalEqualPar(par, hash_par);
 				}
 			}
 			if( match )
-				new_var[ i_var ] = new_var[ hash_var ];
+				tape[i_var].new_var = tape[hash_var].new_var;
 			else
 			{
 				new_arg[1] = rec->PutPar(par);
 				rec->PutArg( new_arg[0], new_arg[1] );
-				new_var[ i_var ] = rec->PutOp(op);
+				tape[i_var].new_var = rec->PutOp(op);
 			}
 			break;
 			// ---------------------------------------------------
@@ -639,16 +725,18 @@ void optimize(
 			case MulpvOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
-			new_arg[1] = new_var[ arg[1] ];
+			new_arg[1] = tape[arg[1]].new_var;
 			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
 			new_arg[0] = arg[0];
 			code       = hash_code(op, new_arg);
 			hash_var   = hash_table_var[code];
-			hash_arg   = hash_table_arg[code];
+			hash_arg   = tape[hash_var].arg;
 			//
 			par        = play->GetPar( arg[0] );
-			if( op == hash_table_op[code] )
-			{	match   = (new_arg[1] == new_var[hash_arg[1]]);
+			if( op == tape[hash_var].op )
+			{	match   = (
+					new_arg[1] == tape[hash_arg[1]].new_var
+				);
 				hash_par= play->GetPar( hash_arg[0] );
 				match  &= IdenticalEqualPar(par, hash_par); 
 			}
@@ -661,22 +749,24 @@ void optimize(
 				tmp_arg[1] = new_arg[0];
 				unsigned short tmp_code = 
 					hash_code( tmp_op, tmp_arg );
-				if( tmp_op == hash_table_op[tmp_code] )
-				{
 				hash_var = hash_table_var[tmp_code];
-				hash_arg = hash_table_arg[tmp_code];
-				match    = new_arg[1] == new_var[hash_arg[0]];
+				if( tmp_op == tape[hash_var].op )
+				{
+				hash_arg = tape[hash_var].arg;
+				match    = (
+					new_arg[1] == tape[hash_arg[0]].new_var
+				);
 				hash_par = play->GetPar( hash_arg[1] );
 				match   &= IdenticalEqualPar(par, hash_par);
 				}
 			}
 			if( match )
-				new_var[ i_var ] = new_var[ hash_var ];
+				tape[i_var].new_var = tape[hash_var].new_var;
 			else
 			{
 				new_arg[0] = rec->PutPar(par);
 				rec->PutArg( new_arg[0], new_arg[1] );
-				new_var[ i_var ] = rec->PutOp(op);
+				tape[i_var].new_var = rec->PutOp(op);
 			}
 			break;
 			// ---------------------------------------------------
@@ -686,17 +776,21 @@ void optimize(
 			case MulvvOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
-			new_arg[0] = new_var[ arg[0] ];
-			new_arg[1] = new_var[ arg[1] ];
+			new_arg[0] = tape[arg[0]].new_var;
+			new_arg[1] = tape[arg[1]].new_var;
 			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_var );
 			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
 			code       = hash_code(op, new_arg);
 			hash_var   = hash_table_var[code];
-			hash_arg   = hash_table_arg[code];
+			hash_arg   = tape[hash_var].arg;
 			//
-			if( op == hash_table_op[code] )
-			{	match   = (new_arg[0] == new_var[hash_arg[0]]);
-				match  &= (new_arg[1] == new_var[hash_arg[1]]);
+			if( op == tape[hash_var].op )
+			{	match   = (
+					new_arg[0] == tape[hash_arg[0]].new_var
+				);
+				match  &= (
+					new_arg[1] == tape[hash_arg[1]].new_var
+				);
 			}
 			if(! match )
 			{	size_t tmp_arg[2];
@@ -704,20 +798,24 @@ void optimize(
 				tmp_arg[1] = new_arg[0];
 				unsigned short tmp_code = 
 					hash_code(op, tmp_arg );
-				if( op == hash_table_op[tmp_code] )
-				{
 				hash_var = hash_table_var[tmp_code];
-				hash_arg = hash_table_arg[tmp_code];
-				match    = new_arg[0] == new_var[hash_arg[1]];
-				match   &= new_arg[1] == new_var[hash_arg[0]];
+				if( op == tape[hash_var].op )
+				{
+				hash_arg = tape[hash_var].arg;
+				match    = (
+					new_arg[0] == tape[hash_arg[1]].new_var
+				);
+				match   &= (
+					new_arg[1] == tape[hash_arg[0]].new_var
+				);
 				}
 			}
 			if( match )
-				new_var[ i_var ] = new_var[ hash_var ];
+				tape[i_var].new_var = tape[hash_var].new_var;
 			else
 			{
 				rec->PutArg( new_arg[0], new_arg[1] );
-				new_var[ i_var ] = rec->PutOp(op);
+				tape[i_var].new_var = rec->PutOp(op);
 			}
 			break;
 			// ---------------------------------------------------
@@ -729,7 +827,7 @@ void optimize(
 			mask = 1;
 			for(i = 2; i < 6; i++)
 			{	if( arg[1] & mask )
-				{	new_arg[i] = new_var[ arg[i] ];
+				{	new_arg[i] = tape[arg[i]].new_var;
 					CPPAD_ASSERT_UNKNOWN( 
 						new_arg[i] < num_var 
 					);
@@ -747,7 +845,7 @@ void optimize(
 				new_arg[4] ,
 				new_arg[5] 
 			);
-			new_var[ i_var ] = rec->PutOp(op);
+			tape[i_var].new_var = rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
 			// Operations with no arguments and no results
@@ -759,7 +857,7 @@ void optimize(
 			// Operations with no arguments and one result
 			case InvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
-			new_var[ i_var ] = rec->PutOp(op);
+			tape[i_var].new_var = rec->PutOp(op);
 			break;
  			// ---------------------------------------------------
 			// Operations with one argument that is a parameter
@@ -768,7 +866,7 @@ void optimize(
 			new_arg[0] = rec->PutPar( play->GetPar(arg[0] ) );
 
 			rec->PutArg( new_arg[0] );
-			new_var[ i_var ] = rec->PutOp(op);
+			tape[i_var].new_var = rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
 			// Load using a parameter index
@@ -782,14 +880,14 @@ void optimize(
 				new_arg[1], 
 				0
 			);
-			new_var[ i_var ] = rec->PutOp(op);
+			tape[i_var].new_var = rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
 			// Load using a variable index
 			case LdvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
-			new_arg[1] = new_var[ arg[1] ];
+			new_arg[1] = tape[arg[1]].new_var;
 			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_vecad_ind );
 			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
 			rec->PutArg( 
@@ -797,7 +895,7 @@ void optimize(
 				new_arg[1], 
 				0
 			);
-			new_var[ i_var ] = rec->PutOp(op);
+			tape[i_var].new_var = rec->PutOp(op);
 			break;
 			// ---------------------------------------------------
 			// Store a parameter using a parameter index
@@ -819,7 +917,7 @@ void optimize(
 			case StvpOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
-			new_arg[1] = new_var[ arg[1] ];
+			new_arg[1] = tape[arg[1]].new_var;
 			new_arg[2] = rec->PutPar( play->GetPar(arg[2]) );
 			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_vecad_ind );
 			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
@@ -836,7 +934,7 @@ void optimize(
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
-			new_arg[2] = new_var[ arg[2] ];
+			new_arg[2] = tape[arg[2]].new_var;
 			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_vecad_ind );
 			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
 			CPPAD_ASSERT_UNKNOWN( new_arg[2] < num_var );
@@ -852,8 +950,8 @@ void optimize(
 			case StvvOp:
 			CPPAD_ASSERT_NARG_NRES(op, 3, 0);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
-			new_arg[1] = new_var[ arg[1] ];
-			new_arg[2] = new_var[ arg[2] ];
+			new_arg[1] = tape[arg[1]].new_var;
+			new_arg[2] = tape[arg[2]].new_var;
 			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_vecad_ind );
 			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
 			CPPAD_ASSERT_UNKNOWN( new_arg[2] < num_var );
@@ -870,18 +968,16 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN(false);
 
 		}
-		if( ! match )
+		if( keep & (! match) & (NumRes(op) > 0) )
 		{	// put most recent match for this code in hash table
-			hash_table_op[code]  = op;
 			hash_table_var[code] = i_var;
-			hash_table_arg[code] = arg; 
 		}
 
 	}
 	// modify the dependent variable vector to new indices
 	for(i = 0; i < dep_taddr.size(); i++ )
-	{	CPPAD_ASSERT_UNKNOWN( new_var[ dep_taddr[i] ] < num_var );
-		dep_taddr[i] = new_var[ dep_taddr[i] ];
+	{	CPPAD_ASSERT_UNKNOWN( tape[ dep_taddr[i] ].new_var < num_var );
+		dep_taddr[i] = tape[ dep_taddr[i] ].new_var;
 	}
 }
 

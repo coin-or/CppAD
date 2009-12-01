@@ -59,8 +59,9 @@ namespace {
 		original += 2;
 		opt      += 1;
 
-		// a conditional expression that will be optimized out
+		// this conditional expression that will be optimized out
 		a = CppAD::CondExpLt(x[0], x[1], x[2], x[3]);
+		// 1 of the following 2 conditional expressions will be kept
 		if( a < 5. )
 			y[4] = CppAD::CondExpLt(x[4], one, two, three);
 		else	y[4] = CppAD::CondExpLt(x[4], two, three, four);
