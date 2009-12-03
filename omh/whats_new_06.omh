@@ -393,7 +393,7 @@ $pre
 
 $$
 Correct some references to $code var_size$$ that should have been
-$cref/size_var/SeqProperty/size_var/$$.
+$cref/size_var/seq_property/size_var/$$.
 
 $head 11-04$$
 Put text written to standard output in the documentation for the
@@ -759,7 +759,7 @@ and $xref/Hessian/$$.
 
 
 $head 04-08$$
-In the case where $xref/SeqProperty/use_VecAD/use_VecAD/$$ is true,
+In the case where $xref/FunDeprecated/use_VecAD/use_VecAD/$$ is true,
 the $xref/ForSparseJac/$$ calculation in only for the current
 independent variable values.
 In this case, the sparsity pattern can be (and has been) 
@@ -795,13 +795,13 @@ documentation and examples were improved.
 $pre
 
 $$
-The $xref/SeqProperty/use_VecAD/useVecAD/$$ 
+The $xref/FunDeprecated/use_VecAD/useVecAD/$$ 
 member function was added to $xref/ADFun/$$ objects.
 $pre
 
 $$
 The $code var_size$$ member function was changed to 
-$xref/SeqProperty/size_var/size_var/$$ 
+$xref/seq_property/size_var/size_var/$$ 
 (this is not backward compatible, but $code var_size$$ was just added on 
 $xref/whats_new_06/04-03/04-03/$$).
 
@@ -839,7 +839,7 @@ $head 04-02$$
 The member functions of $xref/ADFun/$$ that return properties of
 AD of $italic Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$
-have been grouped into the $xref/SeqProperty/$$ section.
+have been grouped into the $xref/seq_property/$$ section.
 In addition, the $xref/seq_property.cpp/$$ example has been added.
 $pre
 

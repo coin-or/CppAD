@@ -3,7 +3,7 @@
 # define CPPAD_FOR_TWO_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -67,7 +67,7 @@ $syntax%
 (see $xref/ForTwo/VectorBase/VectorBase/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
+$xref/seq_property/Domain/domain/$$ space for $italic f$$.
 It specifies
 that point at which to evaluate the partial derivatives listed above.
 

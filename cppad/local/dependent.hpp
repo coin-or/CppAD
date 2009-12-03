@@ -50,9 +50,9 @@ $latex \[
 \] $$
 where $latex B$$ is the space corresponding to objects of type $italic Base$$.
 The value $latex n$$ is the dimension of the 
-$xref/SeqProperty/Domain/domain/$$ space for the operation sequence.
+$xref/seq_property/Domain/domain/$$ space for the operation sequence.
 The value $latex m$$ is the dimension of the 
-$xref/SeqProperty/Range/range/$$ space for the operation sequence
+$xref/seq_property/Range/range/$$ space for the operation sequence
 (which is determined by the size of $italic y$$).
 
 $head f$$

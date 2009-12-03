@@ -425,11 +425,12 @@ public:
 
 	/// Fetch a rough measure of amount of memory used by the recording. 
 	size_t Memory(void) const
-	{	return num_rec_op_ * sizeof(OpCode) 
+	{	return num_rec_op_        * sizeof(OpCode) 
+		     + num_rec_op_arg_    * sizeof(size_t)
+		     + num_rec_par_       * sizeof(Base)
+		     + num_rec_text_      * sizeof(char)
 		     + num_rec_vecad_ind_ * sizeof(size_t)
-		     + num_rec_op_arg_ * sizeof(size_t)
-		     + num_rec_par_ * sizeof(Base)
-		     + num_rec_text_ * sizeof(char);
+		;
 	}
 
 // ------------- Variables used for new methog of playing back a recording ---

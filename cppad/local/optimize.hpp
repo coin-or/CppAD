@@ -38,7 +38,7 @@ $icode%f%.optimize()%$$
 $head Purpose$$
 The operation sequence corresponding to an $cref/ADFun/$$ object can
 be very large and involve many operations; see the
-size functions in $cref/SeqProperty/$$.
+size functions in $cref/seq_property/$$.
 This enables one to reduce the number of operations
 and thereby reduce the time and the memory required to
 compute function and derivative values using an $code ADFun$$ object.
@@ -51,7 +51,7 @@ $icode%
 
 $head Improvements$$
 You can see the reduction in number of variables in the operation sequence
-by calling the function $cref/f.size_var()/SeqProperty/size_var/$$
+by calling the function $cref/f.size_var()/seq_property/size_var/$$
 before and after the optimization procedure.
 Given that the optimization procedure takes time,
 it may be faster to skip this optimize procedure and just compute
@@ -78,7 +78,7 @@ replaced by any integer in the commands above.
 $head Efficiency$$
 The $code optimize$$ member function
 may greatly reduce the number of variables 
-in the operation sequence; see $cref/size_var/SeqProperty/size_var/$$.
+in the operation sequence; see $cref/size_var/seq_property/size_var/$$.
 If a $cref/zero order forward/ForwardZero/$$ calculation is done during
 the construction of f, it will require more memory
 and time that after the optimization procedure.

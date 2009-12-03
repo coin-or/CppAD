@@ -96,7 +96,7 @@ $codei%AD<%Base%>%$$ object with no corresponding operation sequence; i.e.,
 $codei%
 	%f%.size_var()
 %$$
-returns the value zero (see $xref/SeqProperty/size_var/size_var/$$).
+returns the value zero (see $xref/seq_property/size_var/size_var/$$).
 
 $head Sequence Constructor$$
 $index sequence, ADFun constructor$$

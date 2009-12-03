@@ -3,7 +3,7 @@
 # define CPPAD_HESSIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -63,7 +63,7 @@ $syntax%
 (see $xref/Hessian/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
+$xref/seq_property/Domain/domain/$$ space for $italic f$$.
 It specifies
 that point at which to evaluate the Hessian.
 
@@ -73,7 +73,7 @@ $syntax%
 	size_t %l%
 %$$
 and is less than $italic m$$, the dimension of the
-$xref/SeqProperty/Range/range/$$ space for $italic f$$.
+$xref/seq_property/Range/range/$$ space for $italic f$$.
 It specifies the component of $italic F$$
 for which we are evaluating the Hessian.
 To be specific, in the case where the argument $italic l$$ is present,

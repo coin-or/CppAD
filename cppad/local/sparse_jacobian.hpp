@@ -66,7 +66,7 @@ $codei%
 (see $cref/VectorBase/sparse_jacobian/VectorBase/$$ below)
 and its size 
 must be equal to $icode n$$, the dimension of the
-$cref/domain/SeqProperty/Domain/$$ space for $icode f$$.
+$cref/domain/seq_property/Domain/$$ space for $icode f$$.
 It specifies
 that point at which to evaluate the Jacobian.
 

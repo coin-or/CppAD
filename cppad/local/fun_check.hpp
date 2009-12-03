@@ -3,7 +3,7 @@
 # define CPPAD_FUN_CHECK_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -79,7 +79,7 @@ $syntax%
 (see $xref/FunCheck/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
+$xref/seq_property/Domain/domain/$$ space for $italic f$$.
 
 $head y$$
 The $italic g$$ result $italic y$$ has prototype
@@ -89,7 +89,7 @@ $syntax%
 and its value is $latex G(x)$$.
 The size of $italic y$$ 
 is equal to $italic m$$, the dimension of the
-$xref/SeqProperty/Range/range/$$ space for $italic f$$.
+$xref/seq_property/Range/range/$$ space for $italic f$$.
 
 $head x$$
 The $code FunCheck$$ argument $italic x$$ has prototype
@@ -98,7 +98,7 @@ $syntax%
 %$$
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
+$xref/seq_property/Domain/domain/$$ space for $italic f$$.
 This specifies that point at which to compare the values
 calculated by $italic f$$ and $italic G$$. 
 

@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -193,7 +193,7 @@ Each call to $xref/Reverse/$$ computes the derivative of one
 range direction with respect to all the domain directions.
 The times required for (speed of) 
 calls $code Forward$$ and $code Reverse$$ are about equal.  
-The $xref/SeqProperty/Parameter/Parameter/$$ 
+The $xref/seq_property/Parameter/Parameter/$$ 
 function can be used to quickly determine that 
 some range directions have derivative zero.
 

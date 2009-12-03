@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,6 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin FunDeprecated$$
 $spell 
+	bool
+	VecAD
 	CppAD
 	const
 	Taylor
@@ -21,83 +23,82 @@ $$
 $section ADFun Object Deprecated Member Functions$$
 
 $head Syntax$$
-$syntax%%f%.Dependent(%y%)
+$icode%f%.Dependent(%y%)
 %$$
-$syntax%%o% = %f%.Order()
+$icode%o% = %f%.Order()
 %$$
-$syntax%%m% = %f%.Memory()
+$icode%m% = %f%.Memory()
 %$$
-$syntax%%s% = %f%.Size()
+$icode%s% = %f%.Size()
 %$$
-$syntax%%t% = %f%.taylor_size()%$$
+$icode%t% = %f%.taylor_size()
+%$$
+$icode%u% = %f%.use_VecAD()
+%$$
 
 
 $head Purpose$$
-The $syntax%ADFun<%Base%>%$$ functions documented here have been deprecated;
+The $codei%ADFun<%Base%>%$$ functions documented here have been deprecated;
 i.e., they are no longer approved of and may be removed from some future
 version of CppAD.
 
 $head Dependent$$
-$index ADFun, Dependent deprecated$$
-$index Dependent, ADFun deprecated$$
-$index deprecated, Dependent ADFun$$
-A recording of and AD of $italic Base$$
+$index ADFun, Dependent$$
+$index Dependent, ADFun$$
+A recording of and AD of $icode Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$
 is started by a call of the form
-$syntax%
+$codei%
 	Independent(%x%)
 %$$ 
 If there is only one such recording at the current time,
-you can use $syntax%%f%.Dependent(%y%)%$$ in place of
-$syntax%
+you can use $icode%f%.Dependent(%y%)%$$ in place of
+$codei%
 	%f%.Dependent(%x%, %y%)
 %$$
 See $cref/Dependent/$$ for a description of this operation.
 
 $subhead Deprecated$$
 This syntax was deprecated when CppAD was extended to allow
-for more than one $syntax%AD<%Base%>%$$ recording to be
+for more than one $codei%AD<%Base%>%$$ recording to be
 active at one time. 
 This was necessary to allow for multiple threading applications.
 
-
 $head Order$$
-$index ADFun, Order deprecated$$
-$index Order, ADFun deprecated$$
-$index deprecated, Order ADFun$$
-The result $italic o$$ has prototype 
-$syntax%
+$index ADFun, Order$$
+$index Order, ADFun$$
+The result $icode o$$ has prototype 
+$codei%
 	size_t %o%
 %$$
 and is the order of the previous forward operation
-using the function $italic f$$.
+using the function $icode f$$.
 This is the highest order of the 
 $xref/glossary/Taylor Coefficient/Taylor coefficients/$$
-that are currently stored in $italic f$$.
+that are currently stored in $icode f$$.
 
 $subhead Deprecated$$
-Zero order corresponds to function values being stored in $italic f$$.
+Zero order corresponds to function values being stored in $icode f$$.
 In the future, we would like to be able to erase the function
-values so that $italic f$$ uses less memory. 
+values so that $icode f$$ uses less memory. 
 In this case, the return value of $code Order$$ would not make sense.
 Use $xref/size_taylor/$$ to obtain 
 the number of Taylor coefficients currently stored
-in the ADFun object $italic f$$ 
+in the ADFun object $icode f$$ 
 (which is equal to the order plus one).
 
 
 $head Memory$$
-$index ADFun, Memory deprecated$$
-$index Memory, ADFun deprecated$$
-$index deprecated, Memory ADFun$$
+$index ADFun, Memory$$
+$index Memory, ADFun$$
 The result 
-$syntax%
+$codei%
 	size_t %m%
 %$$
 and is the number of memory units ($code sizeof$$) required for the
-information currently stored in $italic f$$.
+information currently stored in $icode f$$.
 This memory is returned to the system when the destructor for 
-$italic f$$ is called.
+$icode f$$ is called.
 
 $subhead Deprecated$$
 It used to be the case that an ADFun object just kept increasing its
@@ -109,46 +110,59 @@ when it no longer needs the values stored in that memory.
 Thus the $code Memory$$ function is no longer well defined.
 
 $head Size$$
-$index ADFun, Size deprecated$$
-$index Size, ADFun deprecated$$
-$index deprecated, Size ADFun$$
-The result $italic s$$ has prototype
-$syntax%
+$index ADFun, Size$$
+$index Size, ADFun$$
+The result $icode s$$ has prototype
+$codei%
 	size_t %s%
 %$$
 and is the number of variables in the operation sequence plus the following:
 one for a phantom variable with tape address zero,
 one for each component of the domain that is a parameter.
 The amount of work and memory necessary for computing function values
-and derivatives using $italic f$$ is roughly proportional to $italic s$$.
+and derivatives using $icode f$$ is roughly proportional to $italic s$$.
 
 $subhead Deprecated$$
 There are other sizes attached to an ADFun object, for example,
 the number of operations in the sequence.
 In order to avoid confusion with these other sizes,
-use $xref/SeqProperty/size_var/size_var/$$ to obtain 
+use $xref/seq_property/size_var/size_var/$$ to obtain 
 the number of variables in the operation sequence.
 
 $head taylor_size$$
-$index ADFun, taylor_size deprecated$$
-$index taylor_size, ADFun deprecated$$
-$index deprecated, taylor_size ADFun$$
-The result $italic t$$ has prototype
-$syntax%
+$index ADFun, taylor_size$$
+$index taylor_size, ADFun$$
+The result $icode t$$ has prototype
+$codei%
 	size_t %t%
 %$$
 and is the number of Taylor coefficients, 
 per variable in the AD operation sequence,
-currently calculated and stored in the ADFun object $italic f$$.
+currently calculated and stored in the ADFun object $icode f$$.
 
 $subhead Deprecated$$
 For the purpose of uniform naming,
 this function has been replaced by $xref/size_taylor/$$.
 
-$head Example$$
-The file
-$xref/Forward.cpp/$$
-contains an example and test of this operation.
-It returns true if it succeeds and false otherwise.
+$head use_VecAD$$
+$index ADFun, use_VecAD$$
+$index use_VecAD, ADFun$$
+The result $icode u$$ has prototype
+$codei%
+	bool %u%
+%$$
+If it is true, the
+AD of $icode Base$$
+$xref/glossary/Operation/Sequence/operation sequence/1/$$
+stored in $icode f$$ contains 
+$xref/VecAD/VecAD<Base>::reference/$$ operands.
+Otherwise $icode u$$ is false.
+
+$subhead Deprecated$$
+You can instead use
+$codei%
+	%u% = %f%.size_VecAD() > 0
+%$$
+
 
 $end

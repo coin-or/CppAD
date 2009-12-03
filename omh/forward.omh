@@ -60,7 +60,7 @@ $syntax%
 (see $xref/ForwardZero/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
+$xref/seq_property/Domain/domain/$$ space for $italic f$$.
 
 $head y$$
 The result $italic y$$ has prototype
@@ -71,7 +71,7 @@ $syntax%
 and its value is $latex F(x)$$.
 The size of $italic y$$ 
 is equal to $italic m$$, the dimension of the
-$xref/SeqProperty/Range/range/$$ space for $italic f$$.
+$xref/seq_property/Range/range/$$ space for $italic f$$.
 
 $head Vector$$
 The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
@@ -150,7 +150,7 @@ $syntax%
 (see $xref/ForwardOne/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
+$xref/seq_property/Domain/domain/$$ space for $italic f$$.
 
 $head dy$$
 The result $italic dy$$ has prototype
@@ -161,7 +161,7 @@ $syntax%
 and its value is $latex F^{(1)} (x) * dx$$.
 The size of $italic dy$$ 
 is equal to $italic m$$, the dimension of the
-$xref/SeqProperty/Range/range/$$ space for $italic f$$.
+$xref/seq_property/Range/range/$$ space for $italic f$$.
 
 $head Vector$$
 The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
@@ -295,7 +295,7 @@ $syntax%
 (see $xref/ForwardAny/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
+$xref/seq_property/Domain/domain/$$ space for $italic f$$.
 The $th p$$ order Taylor coefficient for $latex X(t)$$ 
 is defined by this value; i.e., $latex x^{(p)} = x\_p$$.
 (The lower order Taylor coefficients for $latex X(t)$$ are
@@ -312,7 +312,7 @@ The $th p$$ order Taylor coefficient for $latex Y(t)$$; i.e.,
 $latex y^{(p)} = y\_p$$. 
 The size of $italic y_p$$ 
 is equal to $italic m$$, the dimension of the
-$xref/SeqProperty/Range/range/$$ space for $italic f$$.
+$xref/seq_property/Range/range/$$ space for $italic f$$.
 
 $head Vector$$
 The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
@@ -442,7 +442,7 @@ $head Syntax$$
 $syntax%%s% = %f%.size_taylor()%$$
 
 $subhead See Also$$
-$cref/SeqProperty/$$
+$cref/seq_property/$$
 
 $head Purpose$$
 Determine the number of Taylor coefficients, per variable,
@@ -493,7 +493,7 @@ the variables in the operation sequence corresponding to $italic f$$.
 Thus there are $latex p + 1$$ (order zero through $italic p$$)
 Taylor coefficients per variable.
 (You can determine the number of variables in the operation sequence
-using the $xref/SeqProperty/size_var/size_var/$$ function.)
+using the $xref/seq_property/size_var/size_var/$$ function.)
 
 $head capacity_taylor$$
 If the number of Taylor coefficients

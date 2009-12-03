@@ -292,9 +292,6 @@ public:
 	VectorSet RevSparseHes(
 		size_t q, const VectorSet &s
 	);
-	/// does this AD operation sequence use VecAD<Base>::reference operands
-	bool use_VecAD(void) const
-	{	return play_.num_rec_vecad_ind() > 0; }
 
 	/// number of variables in opertion sequence
 	size_t size_var(void) const
@@ -304,9 +301,25 @@ public:
 	size_t size_par(void) const
 	{	return play_.num_rec_par(); }
 
+	/// number of operators in the operation sequence
+	size_t size_op(void) const
+	{	return play_.num_rec_op(); }
+
+	/// number of operator arguments in the operation sequence
+	size_t size_op_arg(void) const
+	{	return play_.num_rec_op_arg(); }
+
+	/// number of characters in the operation sequence
+	size_t size_text(void) const
+	{	return play_.num_rec_text(); }
+
 	/// number of VecAD indices in the operation sequence
 	size_t size_VecAD(void) const
 	{	return play_.num_rec_vecad_ind(); }
+
+	/// amount of memory required for the operation sequence
+	size_t size_op_seq(void) const
+	{	return play_.Memory(); }
 
 	/// number of taylor_ coefficients currently calculated (per variable)
 	size_t size_taylor(void) const
@@ -405,7 +418,7 @@ public:
 	size_t Order(void) const
 	{	return taylor_per_var_ - 1; }
 
-	/// deprecated: amount of memory for each variable 
+	/// deprecated: amount of memory for this object 
 	size_t Memory(void) const
 	{	size_t pervar  = taylor_col_dim_ * sizeof(Base)
 		+ for_jac_sparse_pack_.memory()
@@ -417,6 +430,11 @@ public:
 	/// deprecated: # taylor_ coefficients stored (per variable)
 	size_t taylor_size(void) const
 	{	return taylor_per_var_; } 
+
+	/// deprecated: Does this AD operation sequence use 
+	//VecAD<Base>::reference operands
+	bool use_VecAD(void) const
+	{	return play_.num_rec_vecad_ind() > 0; }
 };
 // ---------------------------------------------------------------------------
 

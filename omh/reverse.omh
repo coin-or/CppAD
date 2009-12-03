@@ -74,7 +74,7 @@ $syntax%
 (see $xref/reverse_one/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic m$$, the dimension of the
-$xref/SeqProperty/Range/range/$$ space for $italic f$$.
+$xref/seq_property/Range/range/$$ space for $italic f$$.
 
 $head dw$$
 The result $italic dw$$ has prototype
@@ -85,7 +85,7 @@ $syntax%
 and its value is the derivative $latex W^{(1)} (x)$$.
 The size of $italic dw$$ 
 is equal to $italic n$$, the dimension of the
-$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
+$xref/seq_property/Domain/domain/$$ space for $italic f$$.
 
 $head Vector$$
 The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
@@ -190,7 +190,7 @@ $syntax%
 (see $xref/reverse_two/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic m$$, the dimension of the
-$xref/SeqProperty/Range/range/$$ space for $italic f$$.
+$xref/seq_property/Range/range/$$ space for $italic f$$.
 
 $head dw$$
 The result $italic dw$$ has prototype
@@ -203,7 +203,7 @@ $latex W^{(1)} (x)$$ and the derivative $latex U^{(1)} (x)$$.
 The size of $italic dw$$ 
 is equal to $latex n \times 2$$, 
 where $latex n$$ is the dimension of the
-$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
+$xref/seq_property/Domain/domain/$$ space for $italic f$$.
 
 $subhead First Order Partials$$
 For $latex j = 0 , \ldots , n - 1$$,
@@ -394,7 +394,7 @@ $syntax%
 (see $xref/reverse_any/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic m$$, the dimension of the
-$xref/SeqProperty/Range/range/$$ space for $italic f$$.
+$xref/seq_property/Range/range/$$ space for $italic f$$.
 It specifies the weighting vector $italic w$$
 in the definition of $latex W(t, x)$$ above.
 

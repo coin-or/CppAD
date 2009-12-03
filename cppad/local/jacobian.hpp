@@ -59,7 +59,7 @@ $syntax%
 (see $xref/Jacobian/Vector/Vector/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
+$xref/seq_property/Domain/domain/$$ space for $italic f$$.
 It specifies
 that point at which to evaluate the Jacobian.
 
@@ -70,9 +70,9 @@ $syntax%
 %$$
 (see $xref/Jacobian/Vector/Vector/$$ below)
 and its size is $latex m * n$$; i.e., the product of the
-$xref/SeqProperty/Domain/domain/$$
+$xref/seq_property/Domain/domain/$$
 and
-$xref/SeqProperty/Range/range/$$
+$xref/seq_property/Range/range/$$
 dimensions for $italic f$$.
 For $latex i = 0 , \ldots , m - 1 $$ 
 and $latex j = 0 , \ldots , n - 1$$

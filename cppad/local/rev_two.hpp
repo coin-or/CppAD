@@ -3,7 +3,7 @@
 # define CPPAD_REV_TWO_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -67,7 +67,7 @@ $syntax%
 (see $xref/RevTwo/VectorBase/VectorBase/$$ below)
 and its size 
 must be equal to $italic n$$, the dimension of the
-$xref/SeqProperty/Domain/domain/$$ space for $italic f$$.
+$xref/seq_property/Domain/domain/$$ space for $italic f$$.
 It specifies
 that point at which to evaluate the partial derivatives listed above.
 
@@ -80,7 +80,7 @@ $syntax%
 We use $italic p$$ to denote the size of the vector $italic i$$.
 All of the indices in $italic i$$ 
 must be less than $italic m$$, the dimension of the
-$xref/SeqProperty/Range/range/$$ space for $italic f$$; i.e.,
+$xref/seq_property/Range/range/$$ space for $italic f$$; i.e.,
 for $latex \ell = 0 , \ldots , p-1$$, $latex i[ \ell ]  < m$$.
 
 $head j$$

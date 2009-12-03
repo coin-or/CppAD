@@ -3,7 +3,7 @@
 # define CPPAD_CAP_TAYLOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -31,7 +31,7 @@ $head Syntax$$
 $syntax%%f%.capacity_taylor(%c%)%$$
 
 $subhead See Also$$
-$cref/SeqProperty/$$
+$cref/seq_property/$$
 
 $head Purpose$$
 The taylor_ coefficients calculated by Forward mode calculations
@@ -64,7 +64,7 @@ uses the lower order taylor_ coefficients and
 computes the $th p$$ order taylor_ coefficients for all
 the variables in the operation sequence corresponding to $italic f$$.
 (You can determine the number of variables in the operation sequence
-using the $xref/SeqProperty/size_var/size_var/$$ function.)
+using the $xref/seq_property/size_var/size_var/$$ function.)
 
 $subhead Pre-Allocating Memory$$
 If you plan to make calls to $code Forward$$ with the maximum value of 

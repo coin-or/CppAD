@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_09$$
 $spell
+	arg
 	std
 	bool
 	Microsoft
@@ -58,9 +59,19 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
-$head 12-01$$
+$head 12-02$$
 Fix minor grammatical error in the Purpose heading
 for $cref/conditional expressions/CondExp/Purpose/$$. 
+$pre
+
+$$
+Add the following functions: 
+$cref/size_op/seq_property/size_op/$$,
+$cref/size_op_arg/seq_property/size_op_arg/$$,
+and
+$cref/size_op_seq/seq_property/size_op_seq/$$.
+In addition, improve and extend the 
+$cref/seq_property.cpp/$$ example. 
 
 $head 11-28$$
 Fix bug in tape optimization with $cref/VecAD/$$ objects.
@@ -244,7 +255,7 @@ $pre
 
 $$
 The function 
-$cref/size_VecAD/SeqProperty/size_VecAD/$$ function was added
+$cref/size_VecAD/seq_property/size_VecAD/$$ function was added
 so that the user could see the $code VecAD$$ vectors 
 and elements corresponding to an operation sequence.
 
@@ -262,7 +273,7 @@ $head 08-06$$
 Add hash table coding to reduce the number of copies of the same
 parameter value necessary in a tape recording.
 In addition, add the function 
-$cref/size_par/SeqProperty/size_par/$$ was added
+$cref/size_par/seq_property/size_par/$$ was added
 so that the user could see the number of parameters
 corresponding to an operation sequence.
 
