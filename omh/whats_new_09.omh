@@ -59,6 +59,11 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 12-04$$
+Change hash coding of parameter values as part of operators
+during the $cref/optimize/$$ process.
+This should leads to more detection and removal of duplicate operations.
+
 $head 12-02$$
 Fix minor grammatical error in the Purpose heading
 for $cref/conditional expressions/CondExp/Purpose/$$. 

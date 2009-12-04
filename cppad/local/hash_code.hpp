@@ -81,6 +81,16 @@ is the operator that we are computing a hash code for.
 is a vector of length \c NumArg(op) containing the argument
 indices for this operator.
 
+\param npar
+is the number of parameters corresponding to this operation sequence.
+
+\param par
+is a vector of length \a npar containing the parameters
+for this operation sequence; i.e.,
+given a parameter index of \c i, the corresponding parameter value is
+\a par[i].
+
+
 \return
 is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
@@ -88,10 +98,17 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 \li \c std::numeric_limits<unsigned short>::max() == CPPAD_HASH_TABLE_SIZE - 1
 \li \c size_t(op) <= size_t(SubvvOp) < CPPAD_HASH_TABLE_SIZE
 \li \c sizeof(size_t) is even 
+\li \c sizeof(Base) is even 
 \li \c sizeof(unsigned short)  == 2
+\li if the j-th argument for this operation is a parameter, arg[j] < npar.
 */
 
-inline unsigned short hash_code(OpCode op, const size_t* arg)
+template <class Base>
+unsigned short hash_code(
+	OpCode        op      , 
+	const size_t* arg     , 
+	size_t npar           , 
+	const Base* par       )
 {	CPPAD_ASSERT_UNKNOWN( 
 		std::numeric_limits<unsigned short>::max()
 		==
@@ -100,16 +117,17 @@ inline unsigned short hash_code(OpCode op, const size_t* arg)
 	CPPAD_ASSERT_UNKNOWN( size_t (op) <= size_t(SubvvOp) );
 	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
 	CPPAD_ASSERT_UNKNOWN( sizeof(size_t) % 2  == 0 );
+	CPPAD_ASSERT_UNKNOWN( sizeof(Base) % 2  == 0 );
 	static unsigned short op_fac = static_cast<unsigned short> (
 	CPPAD_HASH_TABLE_SIZE / ( 1 + static_cast<unsigned short>(SubvvOp) ) 
 	);
 	CPPAD_ASSERT_UNKNOWN( op_fac > 0 );
 
 	// number of shorts per size_t value
-	size_t n   = sizeof(size_t) / 2;
+	size_t short_size_t   = sizeof(size_t) / 2;
 
-	// number of shorts corresponding to the arg vector
-	n = n * NumArg(op);
+	// number of shorts per Base value
+	size_t short_base     = sizeof(Base) /  2;
 
 	// initialize with value that separates operators as much as possible
 	unsigned short code = static_cast<unsigned short>(
@@ -117,10 +135,66 @@ inline unsigned short hash_code(OpCode op, const size_t* arg)
 	);
 
 	// now code in the operands
-	const unsigned short* v
-		= reinterpret_cast<const unsigned short*>(arg);
-	while(n--)
-		code += v[n];
+	size_t i;
+	const unsigned short* v;
+
+	// first argument
+	switch(op)
+	{	// Hash code binary operator parameters by value instead of
+		// by index for two reasons. One, it gives better separation.
+		// Two, different indices can be same parameter value.
+		case AddpvOp:
+		case DivpvOp:
+		case MulpvOp:
+		case PowpvOp:
+		case SubpvOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) >= 1 );
+		v = reinterpret_cast<const unsigned short*>(par + arg[0]);
+		i = short_base;
+		while(i--)
+			code += v[i];
+		break;
+
+		default:
+		if( NumArg(op) >= 1 )
+		{	v = reinterpret_cast<const unsigned short*>(arg + 0);
+			i = short_size_t;
+			while(i--)
+				code += v[i];
+		}
+		break;
+	}
+
+	// second argument
+	switch(op)
+	{	case AddvpOp:
+		case DivvpOp:
+		case MulvpOp:
+		case PowvpOp:
+		case SubvpOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) >= 2 );
+		v = reinterpret_cast<const unsigned short*>(par + arg[1]);
+		i = short_base;
+		while(i--)
+			code += v[i];
+		break;
+
+		default:
+		if( NumArg(op) >= 2 )
+		{	v = reinterpret_cast<const unsigned short*>(arg + 1);
+			i = short_size_t;
+			while(i--)
+				code += v[i];
+		}
+		break;
+	}
+
+	if( NumArg(op) >= 3 )
+	{	v = reinterpret_cast<const unsigned short*>(arg + 2);
+		i = short_base * (NumArg(op) - 2);
+		while(i)
+			code += v[i];
+	}
 
 	return code;
 }
