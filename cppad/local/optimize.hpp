@@ -163,6 +163,7 @@ struct optimize_variable {
 	If \c 0 < parrent < num_var, then \c parrent is the only parrent.
 	\li
 	If \c parrent == num_var, this variable has more than one parrent.
+	(note that num_var is also equal to tape.size()).
 
 	Set by the reverse sweep at beginning of optimization.
 	May be changed during the forward sweep when a variable is 
@@ -178,20 +179,37 @@ struct optimize_variable {
 Check a unary operator for a complete match with a previous operator.
 
 A complete match means that the result of the previous operator
-can be used inplace of the result for this operator.
+can be used inplace of the result for current operator.
 
-\param old_res
+\param tape
+is a vector that maps a variable index, in the old operation sequence,
+to the corresponding \c optimze_variable information.
+
+\li tape[i].op 
+For \c i < \c tape.size(), \c tape[i].op
+is the operator in the old operation sequence
+corresponding to the old variable index \c i.
+Assertion: NumRes(tape[i].op) > 0.
+
+\li tape[i].arg 
+For \c i < \c tape.size() and 
+j < NumArg( tape[i].op ),
+tape[i].arg[j] is the j-th the argument, in the old operation sequence,
+corresponding to the old variable index \c i.
+Assertion: tape[i].arg[j] < i.
+
+\li \c tape[i].new_var
+For \c i < \a current,
+\c tape[i].new_var is the variable in the new operation sequence
+corresponding to the old variable index \c i.
+Assertion: tape[i].new_var < current.
+
+\param current
 is the index in the old operation sequence for 
-the variable corresponding to the result for this operator.
-
-\param op
-is the unary operator that we are checking a match for.
-Assertion: NumArg(op) == 1 and NumRes(op) > 0.
-
-\param old_arg
-the value \c old_arg[0] is the argument for this unary operator
-in the old operation sequence.
-Assertion: old_arg[0] < old_res.
+the variable corresponding to the result for the current operator.
+Assertion: current < tape.size(),
+NumArg( tape[current].op ) == 1,
+NumRes( tape[current].op ) > 0.
 
 \param npar
 is the number of paraemters corresponding to this operation sequence.
@@ -208,28 +226,6 @@ that maps a hash code to the corresponding
 variable index in the old operation sequence.
 All the values in this table must be less than \c old_res.
 
-\param tape
-is a vector that maps a variable index, in the old operation sequence,
-to the corresponding \c optimze_variable information.
-For indices \c i less than \c old_res, 
-the following must be true of \c tape[i]:
-
-\li tape[i].op 
-is the operator in the old operation sequence
-corresponding to the old variable index \c i.
-Assertion: NumRes(tape[i].op) > 0.
-
-\li tape[i].arg 
-For j < NumArg( tape[i].op ),
-tape[i].arg[j] is the j-th the argument, in the old operation sequence,
-corresponding to the old variable index \c i.
-Assertion: tape[i].arg[j] < i.
-
-\li \c tape[i].new_var
-is the variable in the new operation sequence
-corresponding to the old variable index \c i.
-Assertion: tape[i].new_var < old_res.
-
 \param code
 The input value of \c code does not matter.
 The output value of \c code is the hash code corresponding to
@@ -243,22 +239,22 @@ it is the index of a new variable that can be used to replace the
 old variable.
 */
 template <class Base>
-inline size_t optimize_unary_match(
-	size_t                                         old_res        ,
-	OpCode                                         op             ,
-	const size_t*                                  old_arg        ,
+size_t optimize_unary_match(
+	const CppAD::vector<struct optimize_variable>& tape           ,
+	size_t                                         current        ,
 	size_t                                         npar           ,
 	const Base*                                    par            ,
 	const CppAD::vector<size_t>&                   hash_table_var ,
-	const CppAD::vector<struct optimize_variable>& tape           ,
 	unsigned short&                                code           )
-{	size_t new_arg[1];
+{	const size_t *old_arg = tape[current].arg;
+	OpCode             op = tape[current].op;
+	size_t new_arg[1];
 	
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0  );
-	CPPAD_ASSERT_UNKNOWN( old_arg[0] < old_res );
+	CPPAD_ASSERT_UNKNOWN( old_arg[0] < current );
 	new_arg[0] = tape[old_arg[0]].new_var;
-	CPPAD_ASSERT_UNKNOWN( new_arg[0] < old_res );
+	CPPAD_ASSERT_UNKNOWN( new_arg[0] < current );
 	code = hash_code(
 		op                  , 
 		new_arg             ,
@@ -266,7 +262,7 @@ inline size_t optimize_unary_match(
 		par
 	);
 	size_t  i               = hash_table_var[code];
-	CPPAD_ASSERT_UNKNOWN( i < old_res );
+	CPPAD_ASSERT_UNKNOWN( i < current );
 	if( op == tape[i].op )
 	{	size_t k = tape[i].arg[0];
 		CPPAD_ASSERT_UNKNOWN( k < i );
@@ -512,7 +508,7 @@ void optimize(
 		tape[i].parrent = 0;
 
 	for(j = 0; j < m; j++)
-	{	// mark dependent variables as having multiple parents
+	{	// mark dependent variables as having multiple parrents
 		tape[ dep_taddr[j] ].parrent = num_var;
 	}
 
@@ -830,13 +826,11 @@ void optimize(
 			case SinhOp:
 			case SqrtOp:
 			match_var = optimize_unary_match(
-				i_var               ,  // inputs
-				op                  ,
-				arg                 ,
+				tape                ,  // inputs 
+				i_var               ,
 				play->num_rec_par() ,
 				play->GetPar()      ,
 				hash_table_var      ,
-				tape                , 
 				code                  // outputs
 			);
 			if( match_var > 0 )
