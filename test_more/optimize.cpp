@@ -274,31 +274,31 @@ namespace {
 		original += 2;
 		opt      += 2;
 
-		// non-communative binary operator where left is a variable
+		// non-commutative binary operator where left is a variable
 		// and right is a parameter
 		Scalar c1 = x[2] - 3.;
 		original += 1;
 		opt      += 1;
 
-		// non-communative binary operator where left is a parameter
+		// non-commutative binary operator where left is a parameter
 		// and right is a variable
 		Scalar d1 = 3. / x[3];
 		original += 1;
 		opt      += 1;
 
-		// non-communative binary operator where left is a variable
+		// non-commutative binary operator where left is a variable
 		// and right is a variable
 		Scalar e1 = pow(x[3], x[4]);
 		original += 3;
 		opt      += 3;
 
-		// communative binary operator where  left is a variable
+		// commutative binary operator where  left is a variable
 		// and right is a parameter
 		Scalar f1 = x[5] * 5.;
 		original += 1;
 		opt      += 1;
 
-		// communative binary operator where  left is a variable
+		// commutative binary operator where  left is a variable
 		// and right is a variable
 		Scalar g1 = x[5] + x[6];
 		original += 1;
