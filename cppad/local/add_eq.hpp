@@ -60,15 +60,16 @@ AD<Base>& AD<Base>::operator += (const AD<Base> &right)
 			CPPAD_ASSERT_UNKNOWN( id_ = tape->id_ );
 		}
 		else if( ! IdenticalZero( right.value_ ) )
-		{	// this = variable + parameter
-			CPPAD_ASSERT_UNKNOWN( NumRes(AddvpOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(AddvpOp) == 2 );
+		{	// this = variable  + parameter
+			//      = parameter + variable
+			CPPAD_ASSERT_UNKNOWN( NumRes(AddpvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumArg(AddpvOp) == 2 );
 
 			// put operand addresses in tape
 			size_t p = tape->Rec_.PutPar(right.value_);
-			tape->Rec_.PutArg(taddr_, p);
+			tape->Rec_.PutArg(p, taddr_);
 			// put operator in the tape
-			taddr_ = tape->Rec_.PutOp(AddvpOp);
+			taddr_ = tape->Rec_.PutOp(AddpvOp);
 			// make this a variable
 			CPPAD_ASSERT_UNKNOWN( id_ == tape->id_);
 		}

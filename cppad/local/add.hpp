@@ -65,15 +65,16 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 			result.make_variable(left.id_, left.taddr_);
 		}
 		else
-		{	// result = variable + parameter
-			CPPAD_ASSERT_UNKNOWN( NumRes(AddvpOp) == 1 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(AddvpOp) == 2 );
+		{	// result = variable  + parameter
+			//        = parameter + variable
+			CPPAD_ASSERT_UNKNOWN( NumRes(AddpvOp) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumArg(AddpvOp) == 2 );
 
 			// put operand addresses in tape
 			size_t p = tape->Rec_.PutPar(right.value_);
-			tape->Rec_.PutArg(left.taddr_, p);
+			tape->Rec_.PutArg(p, left.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(AddvpOp);
+			result.taddr_ = tape->Rec_.PutOp(AddpvOp);
 			// make result a variable
 			result.id_ = tape->id_;
 		}

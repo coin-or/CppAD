@@ -167,9 +167,8 @@ unsigned short hash_code(
 
 	// second argument
 	switch(op)
-	{	case AddvpOp:
+	{
 		case DivvpOp:
-		case MulvpOp:
 		case PowvpOp:
 		case SubvpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) >= 2 );

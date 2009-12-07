@@ -222,8 +222,9 @@ inline void forward_powpv_op(
 # endif
 	// z_1 = z_0 * y
 	size_t adr[2];
-	adr[0] = i_z * nc_taylor;
-	adr[1] = arg[1];
+	adr[0] = i_z * nc_taylor; // offset of z_0[0] in taylor
+	adr[1] = arg[1];          // variable index of y in taylor
+	// use taylor both for parameter and variable values
 	forward_mulpv_op(d, i_z+1, adr, taylor, nc_taylor, taylor);
 
 	// z_2 = exp(z_1)
@@ -329,8 +330,9 @@ inline void reverse_powpv_op(
 
 	// z_1 = z_0 * y
 	size_t adr[2];
-	adr[0] = i_z * nc_taylor; 
-	adr[1] = arg[1];
+	adr[0] = i_z * nc_taylor; // offset of z_0[0] in taylor 
+	adr[1] = arg[1];          // index of y in taylor and partial
+	// use taylor both for parameter and variable values
 	reverse_mulpv_op(
 		d, i_z+1, adr, taylor, nc_taylor, taylor, nc_partial, partial
 	);
@@ -374,11 +376,11 @@ inline void forward_powvp_op(
 	// z_0 = log(x)
 	forward_log_op(d, i_z, arg[0], nc_taylor, taylor);
 
-	// z_1 = z_0 * y
+	// z_1 = y * z_0
 	size_t adr[2];
-	adr[0] = i_z;
-	adr[1] = arg[1];
-	forward_mulvp_op(d, i_z+1, adr, parameter, nc_taylor, taylor);
+	adr[0] = arg[1];
+	adr[1] = i_z;
+	forward_mulpv_op(d, i_z+1, adr, parameter, nc_taylor, taylor);
 
 	// z_2 = exp(z_1)
 	// zero order case exactly same as Base type operation
@@ -485,11 +487,11 @@ inline void reverse_powvp_op(
 		d, i_z+2, i_z+1, nc_taylor, taylor, nc_partial, partial
 	);
 
-	// z_1 = z_0 * y
+	// z_1 = y * z_0
 	size_t adr[2];
-	adr[0] = i_z;
-	adr[1] = arg[1];
-	reverse_mulvp_op(
+	adr[0] = arg[1];
+	adr[1] = i_z;
+	reverse_mulpv_op(
 	d, i_z+1, adr, parameter, nc_taylor, taylor, nc_partial, partial
 	);
 

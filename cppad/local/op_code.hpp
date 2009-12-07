@@ -46,7 +46,6 @@ enum OpCode {
 	AbsOp,    //  abs(variable)
 	AcosOp,   // asin(variable)
 	AddpvOp,  //      parameter  + variable
-	AddvpOp,  //      variable   + parameter
 	AddvvOp,  //      variable   + variable
 	AsinOp,   // asin(variable)
 	AtanOp,   // atan(variable)
@@ -66,7 +65,6 @@ enum OpCode {
 	InvOp,    //                             independent variable
 	LogOp,    //  log(variable)
 	MulpvOp,  //      parameter  * variable
-	MulvpOp,  //      variable   * parameter
 	MulvvOp,  //      variable   * variable
 	ParOp,    //      parameter
 	PowvpOp,  //  pow(variable,    parameter)
@@ -104,7 +102,6 @@ const size_t NumArgTable[] = {
 	1, // AbsOp
 	1, // AcosOp
 	2, // AddpvOp
-	2, // AddvpOp
 	2, // AddvvOp
 	1, // AsinOp
 	1, // AtanOp
@@ -125,7 +122,6 @@ const size_t NumArgTable[] = {
 	1, // LogOp
 	2, // MulvvOp
 	2, // MulpvOp
-	2, // MulvpOp
 	1, // ParOp
 	2, // PowvpOp
 	2, // PowpvOp
@@ -181,7 +177,6 @@ const size_t NumResTable[] = {
 	1, // AbsOp
 	2, // AcosOp
 	1, // AddpvOp
-	1, // AddvpOp
 	1, // AddvvOp
 	2, // AsinOp
 	2, // AtanOp
@@ -202,7 +197,6 @@ const size_t NumResTable[] = {
 	1, // LogOp
 	1, // MulvvOp
 	1, // MulpvOp
-	1, // MulvpOp
 	1, // ParOp
 	3, // PowvpOp
 	3, // PowpvOp
@@ -490,9 +484,7 @@ void printOp(
 		printOpField(os, " vr=", ind[1], ncol);
 		break;
 
-		case AddvpOp:
 		case DivvpOp:
-		case MulvpOp:
 		case PowvpOp:
 		case SubvpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );

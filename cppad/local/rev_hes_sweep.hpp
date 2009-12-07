@@ -210,14 +210,6 @@ void RevHesSweep(
 			break;
 			// -------------------------------------------------
 
-			case AddvpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-			reverse_sparse_hessian_linear_unary_op(
-			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
-			);
-			break;
-			// -------------------------------------------------
-
 			case AcosOp:
 			// acos(x) and sqrt(1 - x * x) are computed in pairs
 			// but i_var + 1 should only be used here
@@ -380,14 +372,6 @@ void RevHesSweep(
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
 			reverse_sparse_hessian_linear_unary_op(
 			i_var, arg[1], RevJac, for_jac_sparse, rev_hes_sparse
-			);
-			break;
-			// -------------------------------------------------
-
-			case MulvpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-			reverse_sparse_hessian_linear_unary_op(
-			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
 			);
 			break;
 			// -------------------------------------------------

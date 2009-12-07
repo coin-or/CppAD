@@ -197,12 +197,6 @@ size_t forward_sweep(
 			break;
 			// -------------------------------------------------
 
-			case AddvpOp:
-			CPPAD_ASSERT_UNKNOWN( arg[1] < num_par );
-			forward_addvp_op(d, i_var, arg, parameter, J, Taylor);
-			break;
-			// -------------------------------------------------
-
 			case AcosOp:
 			// variables: sqrt(1 - x * x), acos(x) 
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
@@ -356,12 +350,6 @@ size_t forward_sweep(
 			case MulpvOp:
 			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
 			forward_mulpv_op(d, i_var, arg, parameter, J, Taylor);
-			break;
-			// -------------------------------------------------
-
-			case MulvpOp:
-			CPPAD_ASSERT_UNKNOWN( arg[1] < num_par );
-			forward_mulvp_op(d, i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 

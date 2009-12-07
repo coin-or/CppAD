@@ -286,8 +286,7 @@ the variable corresponding to the result for this operator.
 \param op
 is the unary operator that we are checking a match for.
 The value of op be the same for a match; i.e., the commutative case
-of an AddpvOp matching an AddvpOp or MulpvOp matching a MulvpOp
-is not checked for.
+of matching by switching operator order is not checked for.
 Assertion: NumArg(op) == 2, NumRes(op) > 0, and \a op 
 is AddxxOp, DivxxOp, MulxxOp, PowxxOp, or SubxxOp
 where xx is 
@@ -377,9 +376,7 @@ inline size_t optimize_binary_match(
 		parameter[1] = false;
 		break;
 
-		case AddvpOp:
 		case DivvpOp:
-		case MulvpOp:
 		case PowvpOp:
 		case SubvpOp:
 		parameter[0] = false;
@@ -580,7 +577,6 @@ void optimize(
 		{
 			// Unary operator where operand is arg[0]
 			case AbsOp:
-			case AddvpOp:
 			case AcosOp:
 			case AsinOp:
 			case AtanOp:
@@ -590,7 +586,6 @@ void optimize(
 			case DivvpOp:
 			case ExpOp:
 			case LogOp:
-			case MulvpOp:
 			case PowvpOp:
 			case SinOp:
 			case SinhOp:
@@ -932,54 +927,6 @@ void optimize(
 			break;
 			// ---------------------------------------------------
 			// Commutative binary operators where 
-			// left is a variable and right is a parameter
-			case AddvpOp:
-			case MulvpOp:
-			match_var = optimize_binary_match(
-				i_var               ,  // inputs
-				op                  ,
-				arg                 ,
-				play->num_rec_par() ,
-				play->GetPar()      ,
-				hash_table_var      ,
-				tape                , 
-				code                  // outputs
-			);
-			if( match_var == 0 )
-			{	OpCode tmp_op = AddpvOp;
-				if(op == MulvpOp) 
-					tmp_op = MulpvOp;
-				size_t tmp_arg[2];
-				tmp_arg[0] = arg[1];
-				tmp_arg[1] = arg[0];
-				unsigned short tmp_code;
-				match_var = optimize_binary_match(
-					i_var               ,  // inputs
-					tmp_op              ,
-					tmp_arg             ,
-					play->num_rec_par() ,
-					play->GetPar()      ,
-					hash_table_var      ,
-					tape                , 
-					tmp_code              // outputs
-				);
-			}
-			if( match_var > 0 )
-				tape[i_var].new_var = match_var;
-			else
-			{
-				new_arg[0] = tape[arg[0]].new_var;
-				new_arg[1] = rec->PutPar(
-					play->GetPar( arg[1] )
-				);
-				rec->PutArg( new_arg[0], new_arg[1] );
-				i                   = rec->PutOp(op);
-				tape[i_var].new_var = i;
-				CPPAD_ASSERT_UNKNOWN( new_arg[0] < i );
-			}
-			break;
-			// ---------------------------------------------------
-			// Commutative binary operators where 
 			// left is a parameter and right is a variable
 			case AddpvOp:
 			case MulpvOp:
@@ -993,25 +940,6 @@ void optimize(
 				tape                , 
 				code                  // outputs
 			);
-			if( match_var == 0 )
-			{	OpCode tmp_op = AddvpOp;
-				if(op == MulpvOp) 
-					tmp_op = MulvpOp;
-				size_t tmp_arg[2];
-				tmp_arg[0] = arg[1];
-				tmp_arg[1] = arg[0];
-				unsigned short tmp_code;
-				match_var = optimize_binary_match(
-					i_var               ,  // inputs
-					tmp_op              ,
-					tmp_arg             ,
-					play->num_rec_par() ,
-					play->GetPar()      ,
-					hash_table_var      ,
-					tape                , 
-					tmp_code              // outputs
-				);
-			}
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else

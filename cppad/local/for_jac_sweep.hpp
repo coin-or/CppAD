@@ -168,14 +168,6 @@ void ForJacSweep(
 			break;
 			// -------------------------------------------------
 
-			case AddvpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], var_sparsity
-			);
-			break;
-			// -------------------------------------------------
-
 			case AcosOp:
 			// acos(x) and sqrt(1 - x * x) are computed in pairs
 			// but ivar + 1 should only be used here
@@ -334,14 +326,6 @@ void ForJacSweep(
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[1], var_sparsity
-			);
-			break;
-			// -------------------------------------------------
-
-			case MulvpOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-			forward_sparse_jacobian_unary_op(
-				i_var, arg[0], var_sparsity
 			);
 			break;
 			// -------------------------------------------------
