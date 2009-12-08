@@ -12,10 +12,11 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+CPPAD_BEGIN_NAMESPACE
 
 /*!
-file hash_code.cpp
-A General Purpose hashing utility.
+\file hash_code.hpp
+CppAD hashing utility.
 */
 
 /*!
@@ -25,9 +26,8 @@ minus one.
 */
 # define CPPAD_HASH_TABLE_SIZE 65536
 
-CPPAD_BEGIN_NAMESPACE
 /*!
-Returns a hash code for an arbitrary value.
+General purpose hash code for an arbitrary value.
 
 \tparam Value
 is the type of the argument being hash coded.
@@ -72,14 +72,29 @@ unsigned short hash_code(const Value& value)
 }
 
 /*!
-Returns a hash code for an arbitrary CppAD operator.
+Specialized hash code for a CppAD operator and its arguments.
 
 \param op
 is the operator that we are computing a hash code for.
+If it is not one of the following operartors, the operator is not
+hash coded and zero is returned:
+
+\li unary operators:
+AbsOp, AcosOp, AsinOp, AtanOp, CosOp, CoshOp, DisOp,
+ExpOp, LogOp, SinOp, SinhOp, SqrtOp
+
+\li binary operators where first argument is a parameter:
+AddpvOp, DivpvOp, MulpvOp, PowpvOp, SubpvOp, 
+
+\li binary operators where second argument is a parameter:
+DivvpOp, PowvpOp, SubvpOp
+
+\li binary operators where both arguments are parameters:
+AddvvOp, DivvvOp, MulvvOp, PowvvOp, SubvvOp
 
 \param arg
-is a vector of length \c NumArg(op) containing the argument
-indices for this operator.
+is a vector of length \c NumArg(op) or 2 (which ever is smaller),
+containing the corresponding argument indices for this operator.
 
 \param npar
 is the number of parameters corresponding to this operation sequence.
@@ -95,11 +110,12 @@ given a parameter index of \c i, the corresponding parameter value is
 is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
 \par Checked Assertions
+\c op must be one of the operators specified above. In addition,
 \li \c std::numeric_limits<unsigned short>::max() == CPPAD_HASH_TABLE_SIZE - 1
-\li \c size_t(op) <= size_t(SubvvOp) < CPPAD_HASH_TABLE_SIZE
 \li \c sizeof(size_t) is even 
 \li \c sizeof(Base) is even 
 \li \c sizeof(unsigned short)  == 2
+\li \c size_t(op) <= size_t(SubvvOp) < CPPAD_HASH_TABLE_SIZE
 \li if the j-th argument for this operation is a parameter, arg[j] < npar.
 */
 
@@ -140,7 +156,8 @@ unsigned short hash_code(
 
 	// first argument
 	switch(op)
-	{	// Hash code binary operator parameters by value instead of
+	{	// Binary operators where first arugment is a parameter.
+		// Code parameters by value instead of
 		// by index for two reasons. One, it gives better separation.
 		// Two, different indices can be same parameter value.
 		case AddpvOp:
@@ -148,51 +165,67 @@ unsigned short hash_code(
 		case MulpvOp:
 		case PowpvOp:
 		case SubpvOp:
-		CPPAD_ASSERT_UNKNOWN( NumArg(op) >= 1 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		v = reinterpret_cast<const unsigned short*>(par + arg[0]);
 		i = short_base;
 		while(i--)
 			code += v[i];
+		v = reinterpret_cast<const unsigned short*>(arg + 1);
+		i = short_size_t;
+		while(i--)
+			code += v[i];
 		break;
 
-		default:
-		if( NumArg(op) >= 1 )
-		{	v = reinterpret_cast<const unsigned short*>(arg + 0);
-			i = short_size_t;
-			while(i--)
-				code += v[i];
-		}
+		// Binary operators where both arguments are variables
+		case AddvvOp:
+		case DivvvOp:
+		case MulvvOp:
+		case PowvvOp:
+		case SubvvOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+		v = reinterpret_cast<const unsigned short*>(arg + 0);
+		i = 2 * short_size_t;
+		while(i--)
+			code += v[i];
 		break;
-	}
 
-	// second argument
-	switch(op)
-	{
+		// Binary operators where second arugment is a parameter.
 		case DivvpOp:
 		case PowvpOp:
 		case SubvpOp:
-		CPPAD_ASSERT_UNKNOWN( NumArg(op) >= 2 );
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
+		v = reinterpret_cast<const unsigned short*>(arg + 0);
+		i = short_size_t;
+		while(i--)
+			code += v[i];
 		v = reinterpret_cast<const unsigned short*>(par + arg[1]);
 		i = short_base;
 		while(i--)
 			code += v[i];
 		break;
 
-		default:
-		if( NumArg(op) >= 2 )
-		{	v = reinterpret_cast<const unsigned short*>(arg + 1);
-			i = short_size_t;
-			while(i--)
-				code += v[i];
-		}
-		break;
-	}
-
-	if( NumArg(op) >= 3 )
-	{	v = reinterpret_cast<const unsigned short*>(arg + 2);
-		i = short_base * (NumArg(op) - 2);
-		while(i)
+		// Unary operators
+		case AbsOp:
+		case AcosOp:
+		case AsinOp:
+		case AtanOp:
+		case CosOp:
+		case CoshOp:
+		case DisOp:
+		case ExpOp:
+		case LogOp:
+		case SinOp:
+		case SinhOp:
+		case SqrtOp:
+		v = reinterpret_cast<const unsigned short*>(arg + 0);
+		i = short_size_t;
+		while(i--)
 			code += v[i];
+		break;
+
+		// return zero if not one of the cases above
+		default:
+		CPPAD_ASSERT_UNKNOWN(false);
 	}
 
 	return code;

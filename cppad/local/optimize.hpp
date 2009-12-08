@@ -151,9 +151,11 @@ struct optimize_variable {
 	/// Operator for which this variable is the result, \c NumRes(op) > 0.
 	/// Set by the reverse sweep at beginning of optimization.
 	OpCode         op;       
+
 	/// Pointer to first argument (child) for this operator.
 	/// Set by the reverse sweep at beginning of optimization.
 	const size_t*  arg;
+
 	/*!
 	Information about the parrents for this variable. 
 
@@ -170,6 +172,7 @@ struct optimize_variable {
 	optimized out and its \c parrent is set to zero.
 	*/
 	size_t         parrent; 
+
 	/// Index of this variable in the optimized operation sequence.
 	/// Set by the forward sweep at end of optimization.
 	size_t         new_var;  
@@ -186,22 +189,21 @@ is a vector that maps a variable index, in the old operation sequence,
 to the corresponding \c optimze_variable information.
 
 \li tape[i].op 
-For \c i < \c tape.size(), \c tape[i].op
+For i < tape.size(), tape[i].op
 is the operator in the old operation sequence
-corresponding to the old variable index \c i.
+corresponding to the old variable index i.
 Assertion: NumRes(tape[i].op) > 0.
 
 \li tape[i].arg 
-For \c i < \c tape.size() and 
-j < NumArg( tape[i].op ),
+For i < tape.size() and j < NumArg( tape[i].op ),
 tape[i].arg[j] is the j-th the argument, in the old operation sequence,
-corresponding to the old variable index \c i.
+corresponding to the old variable index i.
 Assertion: tape[i].arg[j] < i.
 
-\li \c tape[i].new_var
-For \c i < \a current,
-\c tape[i].new_var is the variable in the new operation sequence
-corresponding to the old variable index \c i.
+\li tape[i].new_var
+For i < current,
+tape[i].new_var is the variable in the new operation sequence
+corresponding to the old variable index i.
 Assertion: tape[i].new_var < current.
 
 \param current
@@ -217,18 +219,18 @@ is the number of paraemters corresponding to this operation sequence.
 \param par
 is a vector of length \a npar containing the parameters
 for this operation sequence; i.e.,
-given a parameter index \c i, the corresponding parameter value is
+given a parameter index i, the corresponding parameter value is
 \a par[i].
 
 \param hash_table_var
 is a vector with size CPPAD_HASH_TABLE_SIZE
 that maps a hash code to the corresponding 
 variable index in the old operation sequence.
-All the values in this table must be less than \c old_res.
+All the values in this table must be less than old_res.
 
 \param code
-The input value of \c code does not matter.
-The output value of \c code is the hash code corresponding to
+The input value of code does not matter.
+The output value of code is the hash code corresponding to
 this operation in the new operation sequence.
 
 \return
@@ -246,14 +248,14 @@ size_t optimize_unary_match(
 	const Base*                                    par            ,
 	const CppAD::vector<size_t>&                   hash_table_var ,
 	unsigned short&                                code           )
-{	const size_t *old_arg = tape[current].arg;
-	OpCode             op = tape[current].op;
+{	const size_t *arg = tape[current].arg;
+	OpCode        op  = tape[current].op;
 	size_t new_arg[1];
 	
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0  );
-	CPPAD_ASSERT_UNKNOWN( old_arg[0] < current );
-	new_arg[0] = tape[old_arg[0]].new_var;
+	CPPAD_ASSERT_UNKNOWN( arg[0] < current );
+	new_arg[0] = tape[arg[0]].new_var;
 	CPPAD_ASSERT_UNKNOWN( new_arg[0] < current );
 	code = hash_code(
 		op                  , 
@@ -272,140 +274,83 @@ size_t optimize_unary_match(
 	return 0;
 } 
 
-
 /*!
-Check a binary operator for a complete match with a previous operator.
+Check a binary operator for a complete match with a previous operator,
 
-A complete match means that the result of the previous operator
-can be used inplace of the result for this operator.
+\copydetails optimize_unary_match
 
-\param old_res
-is the index in the old operation sequence for 
-the variable corresponding to the result for this operator.
-
-\param op
-is the unary operator that we are checking a match for.
-The value of op be the same for a match; i.e., the commutative case
-of matching by switching operator order is not checked for.
-Assertion: NumArg(op) == 2, NumRes(op) > 0, and \a op 
-is AddxxOp, DivxxOp, MulxxOp, PowxxOp, or SubxxOp
-where xx is 
-vp (variable op parameter), 
-pv (parameter op variable), 
-vv (variable op variable).
-
-\param old_arg
-For j = 0, 1, if the corresponding argument is a parameter,
-old_arg[j] is the index of the j-th operand in \a par vector and
-old_arg[j] < npar.
-For j = 0, 1, if the corresponding argument is a variable,
-old_arg[j] is the index of the j-th operand in the old operation sequence and
-old_arg[j] < old_res.
-
-\param npar
-is the number of paraemters corresponding to this operation sequence.
-
-\param par
-is a vector of length \a npar containing the parameters
-for this operation sequence; i.e.,
-given a parameter index \c i, the corresponding parameter value is
-\a par[i].
-
-\param hash_table_var
-is a vector with size CPPAD_HASH_TABLE_SIZE
-that maps a hash code to the corresponding 
-variable index in the old operation sequence.
-All the values in this table must be less than \c old_res.
-
-\param tape
-is a vector that maps a variable index, in the old operation sequence,
-to the corresponding \c optimze_variable information.
-For indices \c i less than \c old_res, 
-the following must be true of \c tape[i]:
-
-\li tape[i].op 
-is the operator in the old operation sequence
-corresponding to the old variable index \c i.
-Assertion: NumRes(tape[i].op) > 0.
-
-\li tape[i].arg 
-For j < NumArg( tape[i].op ),
-tape[i].arg[j] is the j-th the operand, in the old operation sequence,
-corresponding to the old variable index \c i.
-Assertion: tape[i].arg[j] < i.
-
-\li \c tape[i].new_var
-is the variable in the new operation sequence
-corresponding to the old variable index \c i.
-Assertion: tape[i].new_var < old_res.
-
-\param code
-The input value of \c code does not matter.
-The output value of \c code is the hash code corresponding to
-this operation in the new operation sequence.
-
-\return
-If the return value is zero,
-no match was found.
-If the return value is greater than zero,
-it is the index of a new variable that can be used to replace the 
-old variable.
+\par Restrictions:
+The binary operator must be an addition, subtraction, multiplication, division
+or power operator.
 */
 template <class Base>
 inline size_t optimize_binary_match(
-	size_t                                         old_res        ,
-	OpCode                                         op             ,
-	const size_t*                                  old_arg        ,
+	const CppAD::vector<struct optimize_variable>& tape           ,
+	size_t                                         current        ,
 	size_t                                         npar           ,
 	const Base*                                    par            ,
 	const CppAD::vector<size_t>&                   hash_table_var ,
-	const CppAD::vector<struct optimize_variable>& tape           ,
 	unsigned short&                                code           )
-{	size_t new_arg[2];
-	bool   parameter[2];
+{	OpCode        op         = tape[current].op;
+	const size_t* arg        = tape[current].arg;
+	size_t        new_arg[2];
+	bool          parameter[2];
+
+	// initialize return value
+	size_t  match_var = 0;
 
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) >  0 );
 	switch(op)
-	{	case AddpvOp:
-		case DivpvOp:
+	{	// parameter op variable ----------------------------------
+		case AddpvOp:
 		case MulpvOp:
+		case DivpvOp:
 		case PowpvOp:
 		case SubpvOp:
+		// arg[0]
 		parameter[0] = true;
+		new_arg[0]   = arg[0];
+		CPPAD_ASSERT_UNKNOWN( arg[0] < npar );
+		// arg[1]
 		parameter[1] = false;
+		new_arg[1]   = tape[arg[1]].new_var;
+		CPPAD_ASSERT_UNKNOWN( arg[1] < current );
 		break;
 
+		// variable op parameter -----------------------------------
 		case DivvpOp:
 		case PowvpOp:
 		case SubvpOp:
+		// arg[0]
 		parameter[0] = false;
+		new_arg[0]   = tape[arg[0]].new_var;
+		CPPAD_ASSERT_UNKNOWN( arg[0] < current );
+		// arg[1]
 		parameter[1] = true;
+		new_arg[1]   = arg[1];
+		CPPAD_ASSERT_UNKNOWN( arg[1] < npar );
 		break;
 
+		// variable op variable -----------------------------------
 		case AddvvOp:
-		case DivvvOp:
 		case MulvvOp:
+		case DivvvOp:
 		case PowvvOp:
 		case SubvvOp:
+		// arg[0]
 		parameter[0] = false;
+		new_arg[0]   = tape[arg[0]].new_var;
+		CPPAD_ASSERT_UNKNOWN( arg[0] < current );
+		// arg[1]
 		parameter[1] = false;
+		new_arg[1]   = tape[arg[1]].new_var;
+		CPPAD_ASSERT_UNKNOWN( arg[1] < current );
 		break;
 
+		// must be one of the cases above
 		default:
 		CPPAD_ASSERT_UNKNOWN(false);
-	}
-	size_t j;
-	for(j = 0; j < 2; j++)
-	{	if( parameter[j] )
-		{	CPPAD_ASSERT_UNKNOWN( old_arg[j] < npar );
-			new_arg[j] = old_arg[j];
-		}
-		else
-		{	CPPAD_ASSERT_UNKNOWN( old_arg[j] < old_res );
-			new_arg[j] = tape[old_arg[j]].new_var;
-			CPPAD_ASSERT_UNKNOWN( new_arg[j] < old_res );
-		}
 	}
 	code = hash_code(
 		op                  , 
@@ -414,22 +359,49 @@ inline size_t optimize_binary_match(
 		par
 	);
 	size_t  i  = hash_table_var[code];
-	CPPAD_ASSERT_UNKNOWN( i < old_res );
-	size_t  match_var = 0;
+	CPPAD_ASSERT_UNKNOWN( i < current );
 	if( op == tape[i].op )
 	{	bool match = true;
+		size_t j;
 		for(j = 0; j < 2; j++)
 		{	size_t k = tape[i].arg[j];
 			if( parameter[j] )
 			{	CPPAD_ASSERT_UNKNOWN( k < npar );
 				match &= IdenticalEqualPar(
-					par[ old_arg[j] ], par[k]
+					par[ arg[j] ], par[k]
 				);
 			}
 			else
 			{	CPPAD_ASSERT_UNKNOWN( k < i );
 				match &= (new_arg[j] == tape[k].new_var);
 			}
+		}
+		if( match )
+			match_var = tape[i].new_var;
+	}
+	if( (match_var > 0) | ( (op != AddvvOp) & (op != MulvvOp ) ) )
+		return match_var;
+
+	// check for match with argument order switched ----------------------
+	CPPAD_ASSERT_UNKNOWN( op == AddvvOp || op == MulvvOp );
+	i          = new_arg[0];
+	new_arg[0] = new_arg[1];
+	new_arg[1] = i;
+	unsigned short code_switch = hash_code(
+		op                  , 
+		new_arg             ,
+		npar                ,
+		par
+	);
+	i  = hash_table_var[code_switch];
+	CPPAD_ASSERT_UNKNOWN( i < current );
+	if( op == tape[i].op )
+	{	bool match = true;
+		size_t j;
+		for(j = 0; j < 2; j++)
+		{	size_t k = tape[i].arg[j];
+			CPPAD_ASSERT_UNKNOWN( k < i );
+			match &= (new_arg[j] == tape[k].new_var);
 		}
 		if( match )
 			match_var = tape[i].new_var;
@@ -797,14 +769,9 @@ void optimize(
 			break;
 		}
 
-		// start check if get a match in the hash table
-		unsigned short code      = hash_code(
-			EndOp               , 
-			arg                 ,
-			play->num_rec_par() ,
-			play->GetPar()
-		);
-		size_t match_var = 0;
+		size_t         match_var    = 0;
+		unsigned short code         = 0;
+		bool           replace_hash = false;
 		if( keep ) switch( op )
 		{
 			// Unary operator where operand is arg[0]
@@ -831,7 +798,9 @@ void optimize(
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
-			{	new_arg[0] = tape[ arg[0] ].new_var;
+			{
+				replace_hash = true;
+				new_arg[0]   = tape[ arg[0] ].new_var;
 				rec->PutArg( new_arg[0] );
 				i                   = rec->PutOp(op);
 				tape[i_var].new_var = i;
@@ -839,27 +808,26 @@ void optimize(
 			}
 			break;
 			// ---------------------------------------------------
-			// Non-commutative binary operators where 
+			// Binary operators where 
 			// left is a variable and right is a parameter
 			case DivvpOp:
 			case PowvpOp:
 			case SubvpOp:
 			match_var = optimize_binary_match(
-				i_var               ,  // inputs
-				op                  ,
-				arg                 ,
+				tape                ,  // inputs 
+				i_var               ,
 				play->num_rec_par() ,
 				play->GetPar()      ,
 				hash_table_var      ,
-				tape                , 
 				code                  // outputs
 			);
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
 			{
-				new_arg[0] = tape[ arg[0] ].new_var;
-				new_arg[1] = rec->PutPar(
+				replace_hash = true;
+				new_arg[0]   = tape[ arg[0] ].new_var;
+				new_arg[1]   = rec->PutPar(
 					play->GetPar( arg[1] )
 				);
 				rec->PutArg( new_arg[0], new_arg[1] );
@@ -869,28 +837,30 @@ void optimize(
 			}
 			break;
 			// ---------------------------------------------------
-			// Non-commutative binary operators where 
+			// Binary operators where 
 			// left is a parameter and right is a variable
+			case AddpvOp:
 			case DivpvOp:
+			case MulpvOp:
 			case PowpvOp:
 			case SubpvOp:
 			match_var = optimize_binary_match(
-				i_var               ,  // inputs
-				op                  ,
-				arg                 ,
+				tape                ,  // inputs 
+				i_var               ,
 				play->num_rec_par() ,
 				play->GetPar()      ,
 				hash_table_var      ,
-				tape                , 
 				code                  // outputs
 			);
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
-			{	new_arg[0] = rec->PutPar(
+			{
+				replace_hash = true;
+				new_arg[0]   = rec->PutPar(
 					play->GetPar( arg[0] )
 				);
-				new_arg[1] = tape[ arg[1] ].new_var;
+				new_arg[1]   = tape[ arg[1] ].new_var;
 				rec->PutArg( new_arg[0], new_arg[1] );
 				i                   = rec->PutOp(op);
 				tape[i_var].new_var = i;
@@ -898,104 +868,32 @@ void optimize(
 			}
 			break;
 			// ---------------------------------------------------
-			// Non-commutative binary operator where 
+			// Binary operator where 
 			// both operators are variables
+			case AddvvOp:
 			case DivvvOp:
+			case MulvvOp:
 			case PowvvOp:
 			case SubvvOp:
 			match_var = optimize_binary_match(
-				i_var               ,  // inputs
-				op                  ,
-				arg                 ,
+				tape                ,  // inputs 
+				i_var               ,
 				play->num_rec_par() ,
 				play->GetPar()      ,
 				hash_table_var      ,
-				tape                , 
 				code                  // outputs
 			);
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
 			{
-				new_arg[0] = tape[ arg[0] ].new_var;
-				new_arg[1] = tape[ arg[1] ].new_var;
+				replace_hash = true;
+				new_arg[0]   = tape[ arg[0] ].new_var;
+				new_arg[1]   = tape[ arg[1] ].new_var;
 				rec->PutArg( new_arg[0], new_arg[1] );
 				i                   = rec->PutOp(op);
 				tape[i_var].new_var = i;
 				CPPAD_ASSERT_UNKNOWN( new_arg[0] < i );
-			}
-			break;
-			// ---------------------------------------------------
-			// Commutative binary operators where 
-			// left is a parameter and right is a variable
-			case AddpvOp:
-			case MulpvOp:
-			match_var = optimize_binary_match(
-				i_var               ,  // inputs
-				op                  ,
-				arg                 ,
-				play->num_rec_par() ,
-				play->GetPar()      ,
-				hash_table_var      ,
-				tape                , 
-				code                  // outputs
-			);
-			if( match_var > 0 )
-				tape[i_var].new_var = match_var;
-			else
-			{
-				new_arg[0] = rec->PutPar(
-					play->GetPar( arg[0] )
-				);
-				new_arg[1] = tape[arg[1]].new_var;
-				rec->PutArg( new_arg[0], new_arg[1] );
-				i                   = rec->PutOp(op);
-				tape[i_var].new_var = i;
-				CPPAD_ASSERT_UNKNOWN( new_arg[1] < i );
-			}
-			break;
-			// ---------------------------------------------------
-			// Commutative binary operator where 
-			// both operators are variables
-			case AddvvOp:
-			case MulvvOp:
-			match_var = optimize_binary_match(
-				i_var               ,  // inputs
-				op                  ,
-				arg                 ,
-				play->num_rec_par() ,
-				play->GetPar()      ,
-				hash_table_var      ,
-				tape                , 
-				code                  // outputs
-			);
-			if( match_var == 0 )
-			{	size_t tmp_arg[2];
-				tmp_arg[0] = arg[1];
-				tmp_arg[1] = arg[0];
-				unsigned short tmp_code;
-				match_var = optimize_binary_match(
-					i_var               ,  // inputs
-					op                  ,
-					tmp_arg             ,
-					play->num_rec_par() ,
-					play->GetPar()      ,
-					hash_table_var      ,
-					tape                , 
-					tmp_code              // outputs
-				);
-			}
-			if( match_var > 0 )
-				tape[i_var].new_var = match_var;
-			else
-			{
-				new_arg[0] = tape[arg[0]].new_var;
-				new_arg[1] = tape[arg[1]].new_var;
-				rec->PutArg( new_arg[0], new_arg[1] );
-				i                   = rec->PutOp(op);
-				tape[i_var].new_var = i;
-				CPPAD_ASSERT_UNKNOWN( new_arg[0] < i );
-				CPPAD_ASSERT_UNKNOWN( new_arg[1] < i );
 			}
 			break;
 			// ---------------------------------------------------
@@ -1148,8 +1046,10 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN(false);
 
 		}
-		if( keep & (match_var == 0) & (NumRes(op) > 0) )
-		{	// this variable did not match so put it in hash table
+		if( replace_hash )
+		{	// The old variable index i_var corresponds to the 
+			// new variable index tape[i_var].new_var. In addition
+			// this is the most recent variable that has this code.
 			hash_table_var[code] = i_var;
 		}
 
