@@ -131,17 +131,26 @@ $end
 Routines for optimizing a tape
 */
 
-/*!
-\def CPPAD_OPTIMIZE_TRACE
-This value is either zero or one.
-Zero is the normal operation value.
-If it is one, a trace of the reverse sweep is printed.
-This sweep determines which variables are connected to the 
-dependent variables.
-*/
-# define CPPAD_OPTIMIZE_TRACE 0
-
 CPPAD_BEGIN_NAMESPACE
+
+/*!
+State for this variable set during reverse sweep.
+*/
+enum optimize_connection {
+	/// There is no operation that connects this variable to the
+	/// independent variables.
+	not_connected     ,
+
+	/// There is one or more operations that connects this variable to the
+	/// independent variables.
+	yes_connected      ,
+
+	/// There is only one operation that connects this variable to the
+	/// independent variables and it is an AddvvOp operation.
+	add_connected 
+};
+
+
 /*!
 Structure used by \c optimize to hold information about one variable.
 This \c struct would be local inside of \c optimize, 
@@ -150,68 +159,58 @@ but the current C++ standard does not support local template parameters.
 struct optimize_variable {
 	/// Operator for which this variable is the result, \c NumRes(op) > 0.
 	/// Set by the reverse sweep at beginning of optimization.
-	OpCode         op;       
+	OpCode              op;       
 
 	/// Pointer to first argument (child) for this operator.
 	/// Set by the reverse sweep at beginning of optimization.
-	const size_t*  arg;
+	const size_t*       arg;
 
-	/*!
-	Information about the parrents for this variable. 
+	/// How is this variable connected to the independent variables
+	optimize_connection connect; 
 
-	\li
-	If \c parrent == 0, this variable has no parrents.
-	\li
-	If \c 0 < parrent < num_var, then \c parrent is the only parrent.
-	\li
-	If \c parrent == num_var, this variable has more than one parrent.
-	(note that num_var is also equal to tape.size()).
-
-	Set by the reverse sweep at beginning of optimization.
-	May be changed during the forward sweep when a variable is 
-	optimized out and its \c parrent is set to zero.
-	*/
-	size_t         parrent; 
-
-	/// Index of this variable in the optimized operation sequence.
-	/// Set by the forward sweep at end of optimization.
-	size_t         new_var;  
+	/// Set during forward sweep to the index in the
+	/// new operation sequence corresponding to this old varable.
+	size_t new_var;
 };
 
 /*!
-Check a unary operator for a complete match with a previous operator.
-
-A complete match means that the result of the previous operator
-can be used inplace of the result for current operator.
+Documents arguments that are common to optimization helper functions
+(should not be called).
 
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to the corresponding \c optimze_variable information.
+to an <tt>optimize_variable</tt> information record.
+Note that the index for this vector must be between zero and 
+<tt>tape.size()</tt>.
 
-\li tape[i].op 
-For i < tape.size(), tape[i].op
+\li <tt>tape[i].op</tt> 
 is the operator in the old operation sequence
-corresponding to the old variable index i.
-Assertion: NumRes(tape[i].op) > 0.
+corresponding to the old variable index \c i.
+Assertion: <tt>NumRes(tape[i].op) > 0</tt>.
 
-\li tape[i].arg 
-For i < tape.size() and j < NumArg( tape[i].op ),
-tape[i].arg[j] is the j-th the argument, in the old operation sequence,
-corresponding to the old variable index i.
-Assertion: tape[i].arg[j] < i.
+\li <tt>tape[i].arg</tt> 
+for <tt>j < NumArg( tape[i].op ), tape[i].arg[j]</tt>
+is the j-th the argument, in the old operation sequence,
+corresponding to the old variable index \c i.
+Assertion: <tt>tape[i].arg[j] < i</tt>.
 
-\li tape[i].new_var
-For i < current,
-tape[i].new_var is the variable in the new operation sequence
-corresponding to the old variable index i.
-Assertion: tape[i].new_var < current.
+\li <tt>tape[i].new_var</tt>
+For <tt>i <= current, j < NumArg( tape[i].op ), and k = tape[i].arg[j]</tt>,
+the value <tt>tape[k].new_var</tt>
+is the variable in the new operation sequence corresponding to the 
+old variable index \c k.
+This means that the \c new_var value has been set
+for all the possible arguments that come before \a current.
 
 \param current
 is the index in the old operation sequence for 
 the variable corresponding to the result for the current operator.
-Assertion: current < tape.size(),
+Assertions: 
+<tt>
+current < tape.size(),
 NumArg( tape[current].op ) == 1,
 NumRes( tape[current].op ) > 0.
+</tt>
 
 \param npar
 is the number of paraemters corresponding to this operation sequence.
@@ -219,14 +218,30 @@ is the number of paraemters corresponding to this operation sequence.
 \param par
 is a vector of length \a npar containing the parameters
 for this operation sequence; i.e.,
-given a parameter index i, the corresponding parameter value is
-\a par[i].
+given a parameter index \c i, the corresponding parameter value is
+<tt>par[i]</tt>.
+*/
+template <class Base>
+void optimize_prototype(
+	const CppAD::vector<struct optimize_variable>& tape           ,
+	size_t                                         current        ,
+	size_t                                         npar           ,
+	const Base*                                    par            )
+{	CPPAD_ASSERT_UNKNOWN(false); }
+
+/*!
+Check a unary operator for a complete match with a previous operator.
+
+A complete match means that the result of the previous operator
+can be used inplace of the result for current operator.
+
+\copydetails optimize_prototype
 
 \param hash_table_var
 is a vector with size CPPAD_HASH_TABLE_SIZE
 that maps a hash code to the corresponding 
 variable index in the old operation sequence.
-All the values in this table must be less than old_res.
+All the values in this table must be less than \a current.
 
 \param code
 The input value of code does not matter.
@@ -409,6 +424,163 @@ inline size_t optimize_binary_match(
 	return match_var;
 } 
 
+/*!
+Record an operation of the form (parameter op variable).
+
+\copydetails optimize_prototype
+
+\param rec
+is the object that will record the operations.
+
+\param op
+is the operator that we are recording which must be one of the following:
+AddpvOp, DivpvOp, MulpvOp, PowvpOp, SubpvOp.
+ 
+\param arg
+is the vector of arguments for this operator.
+
+\return
+the result value is the index corresponding to the current
+operation in the new operation sequence.
+*/
+template <class Base>
+size_t optimize_record_pv(
+	const CppAD::vector<struct optimize_variable>& tape           ,
+	size_t                                         current        ,
+	size_t                                         npar           ,
+	const Base*                                    par            ,
+	recorder<Base>*                                rec            ,
+	OpCode                                         op             ,
+	const size_t*                                  arg            )
+{
+# ifndef NDEBUG
+	switch(op)
+	{	case AddpvOp:
+		case DivpvOp:
+		case MulpvOp:
+		case PowpvOp:
+		case SubpvOp:
+		break;
+
+		default:
+		CPPAD_ASSERT_UNKNOWN(false);
+	}
+# endif
+	CPPAD_ASSERT_UNKNOWN( arg[0] < npar    );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < current );
+	size_t new_arg[2];
+	new_arg[0]   = rec->PutPar( par[arg[0]] );
+	new_arg[1]   = tape[ arg[1] ].new_var;
+	rec->PutArg( new_arg[0], new_arg[1] );
+	size_t i     = rec->PutOp(op);
+	CPPAD_ASSERT_UNKNOWN( new_arg[0] < i );
+	return i;
+}
+
+
+/*!
+Record an operation of the form (variable op parameter).
+
+\copydetails optimize_prototype
+
+\param rec
+is the object that will record the operations.
+
+\param op
+is the operator that we are recording which must be one of the following:
+DivvpOp, PowvpOp, SubvpOp.
+ 
+\param arg
+is the vector of arguments for this operator.
+
+\return
+the result value is the index corresponding to the current
+operation in the new operation sequence.
+*/
+template <class Base>
+size_t optimize_record_vp(
+	const CppAD::vector<struct optimize_variable>& tape           ,
+	size_t                                         current        ,
+	size_t                                         npar           ,
+	const Base*                                    par            ,
+	recorder<Base>*                                rec            ,
+	OpCode                                         op             ,
+	const size_t*                                  arg            )
+{
+# ifndef NDEBUG
+	switch(op)
+	{	case DivvpOp:
+		case PowvpOp:
+		case SubvpOp:
+		break;
+
+		default:
+		CPPAD_ASSERT_UNKNOWN(false);
+	}
+# endif
+	CPPAD_ASSERT_UNKNOWN( arg[0] < current );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < npar    );
+	size_t new_arg[2];
+	new_arg[0]   = tape[ arg[0] ].new_var;
+	new_arg[1]   = rec->PutPar( par[arg[1]] );
+	rec->PutArg( new_arg[0], new_arg[1] );
+	size_t i     = rec->PutOp(op);
+	CPPAD_ASSERT_UNKNOWN( new_arg[0] < i );
+	return i;
+}
+
+/*!
+Record an operation of the form (variable op variable).
+
+\copydetails optimize_prototype
+
+\param rec
+is the object that will record the operations.
+
+\param op
+is the operator that we are recording which must be one of the following:
+AddvvOp, DivvvOp, MulvvOp, PowvpOp, SubvvOp.
+ 
+\param arg
+is the vector of arguments for this operator.
+
+\return
+the result value is the index corresponding to the current
+operation in the new operation sequence.
+*/
+template <class Base>
+size_t optimize_record_vv(
+	const CppAD::vector<struct optimize_variable>& tape           ,
+	size_t                                         current        ,
+	size_t                                         npar           ,
+	const Base*                                    par            ,
+	recorder<Base>*                                rec            ,
+	OpCode                                         op             ,
+	const size_t*                                  arg            )
+{
+# ifndef NDEBUG
+	switch(op)
+	{	case AddvvOp:
+		case DivvvOp:
+		case MulvvOp:
+		case PowvvOp:
+		case SubvvOp:
+		break;
+
+		default:
+		CPPAD_ASSERT_UNKNOWN(false);
+	}
+# endif
+	CPPAD_ASSERT_UNKNOWN( arg[0] < current );
+	CPPAD_ASSERT_UNKNOWN( arg[1] < current );
+	size_t new_arg[2];
+	new_arg[0]   = tape[ arg[0] ].new_var;
+	new_arg[1]   = tape[ arg[1] ].new_var;
+	rec->PutArg( new_arg[0], new_arg[1] );
+	size_t i     = rec->PutOp(op);
+	CPPAD_ASSERT_UNKNOWN( new_arg[0] < i );
+	return i;
+}
 
 /*!
 Convert a player object to an optimized recorder object
@@ -470,32 +642,25 @@ void optimize(
 	// sequence to corresponding operator information
 	CppAD::vector<struct optimize_variable> tape(num_var);
 	// -------------------------------------------------------------
-	// Determine parrent value for each variable
+	// Determine how each variable is connected to the dependent variables
 
-	// initialize all variables has having no parrent
+	// initialize all variables has having no connections
 	for(i = 0; i < num_var; i++)
-		tape[i].parrent = 0;
+		tape[i].connect = not_connected;
 
 	for(j = 0; j < m; j++)
-	{	// mark dependent variables as having multiple parrents
-		tape[ dep_taddr[j] ].parrent = num_var;
+	{	// mark dependent variables as having one or more connections
+		tape[ dep_taddr[j] ].connect = yes_connected;
 	}
 
-	// vecad_parrent contains a flag for each VecAD object.
+	// vecad_connect contains a value for each VecAD object.
 	// vecad maps a VecAD index (which corresponds to the beginning of the
-	// VecAD object) to the vecad_parrent falg for the VecAD object.
-# if CPPAD_OPTIMIZE_TRACE
-	CppAD::vector<size_t> vecad_offset(num_vecad_vec);
-# endif
-	CppAD::vector<bool>   vecad_parrent(num_vecad_vec);
+	// VecAD object) to the vecad_connect falg for the VecAD object.
+	CppAD::vector<optimize_connection>   vecad_connect(num_vecad_vec);
 	CppAD::vector<size_t> vecad(num_vecad_ind);
 	j = 0;
 	for(i = 0; i < num_vecad_vec; i++)
-	{	vecad_parrent[i] = false;
-# if CPPAD_OPTIMIZE_TRACE
-		// offset for this VecAD object
-		vecad_offset[i]  = j + 1;
-# endif
+	{	vecad_connect[i] = not_connected;
 		// length of this VecAD
 		size_t length = play->GetVecInd(j);
 		// set to proper index for this VecAD
@@ -512,9 +677,6 @@ void optimize(
 	play->start_reverse(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	size_t mask;
-# if CPPAD_OPTIMIZE_TRACE
-	std::cout << std::endl;
-# endif
 	while(op != BeginOp)
 	{	// next op
 		play->next_reverse(op, arg, i_op, i_var);
@@ -530,21 +692,6 @@ void optimize(
 		}
 		else	CPPAD_ASSERT_UNKNOWN((op != InvOp) & (op != BeginOp));
 # endif
-
-# if CPPAD_OPTIMIZE_TRACE
-		printOp(
-			std::cout, 
-			play,
-			i_var,
-			op, 
-			arg,
-			0, 
-			(bool *) CPPAD_NULL,
-			1, 
-			& connected[i_var]
-		);
-# endif
-
 		switch( op )
 		{
 			// Unary operator where operand is arg[0]
@@ -563,11 +710,8 @@ void optimize(
 			case SinhOp:
 			case SqrtOp:
 			case SubvpOp:
-			if( tape[i_var].parrent > 0 )
-			{	if( tape[arg[0]].parrent == 0 )
-					tape[arg[0]].parrent = i_var;
-				else	tape[arg[0]].parrent = num_var;
-			}
+			if( tape[i_var].connect != not_connected )
+				tape[arg[0]].connect = yes_connected;
 			break;
 
 			// Unary operator where operand is arg[1]
@@ -577,41 +721,50 @@ void optimize(
 			case SubpvOp:
 			case PowpvOp:
 			case PrivOp:
-			if( tape[i_var].parrent > 0 )
-			{	if( tape[arg[1]].parrent == 0 )
-					tape[arg[1]].parrent = i_var;
-				else	tape[arg[1]].parrent = num_var;
-			}
+			if( tape[i_var].connect != not_connected )
+				tape[arg[1]].connect = yes_connected;
 			break;
 
-			// Binary operator where operands are arg[0], arg[1]
+		
+			// Special case for AddvvOp
 			case AddvvOp:
+			if( tape[i_var].connect != not_connected )
+			{
+				if( tape[arg[0]].connect == not_connected )
+					tape[arg[0]].connect = add_connected;
+				else
+					tape[arg[0]].connect = yes_connected;
+
+				if( tape[arg[1]].connect == not_connected )
+					tape[arg[1]].connect = add_connected;
+				else
+					tape[arg[1]].connect = yes_connected;
+			}
+
+			// Binary operator (not AddvvOp)
+			// where operands are arg[0], arg[1]
 			case DivvvOp:
 			case MulvvOp:
 			case PowvvOp:
 			case SubvvOp:
-			if( tape[i_var].parrent > 0 )
-			{	if( tape[arg[0]].parrent == 0 )
-					tape[arg[0]].parrent = i_var;
-				else	tape[arg[0]].parrent = num_var;
-				if( tape[arg[1]].parrent == 0 )
-					tape[arg[1]].parrent = i_var;
-				else	tape[arg[1]].parrent = num_var;
+			if( tape[i_var].connect != not_connected )
+			{
+				tape[arg[0]].connect = yes_connected;
+				tape[arg[1]].connect = yes_connected;
 			}
 			break;
 
 			// Conditional expression operators
 			case CExpOp:
 			CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
-			if( tape[i_var].parrent > 0 )
-			{	mask = 1;
+			if( tape[i_var].connect != not_connected )
+			{
+				mask = 1;
 				for(i = 2; i < 6; i++) if( arg[1] & mask )
 				{	CPPAD_ASSERT_UNKNOWN( arg[i] < i_var );
-					if( tape[arg[i]].parrent == 0 )
-						tape[arg[i]].parrent = i_var;
-					else	tape[arg[i]].parrent = num_var;
+					tape[arg[i]].connect = yes_connected;
+					mask = mask << 1;
 				}
-				mask = mask << 1;
 			}
 
 			// Operations where there is noting to do
@@ -626,43 +779,36 @@ void optimize(
 
 			// Load using a parameter index
 			case LdpOp:
-			if( tape[i_var].parrent > 0 )
-			{	i = vecad[ arg[0] - 1 ];
-				vecad_parrent[i] = true;
+			if( tape[i_var].connect != not_connected )
+			{
+				i                = vecad[ arg[0] - 1 ];
+				vecad_connect[i] = yes_connected;
 			}
 			break;
 
 			// Load using a variable index
 			case LdvOp:
-			if( tape[i_var].parrent > 0 )
-			{	i = vecad[ arg[0] - 1 ];
-				vecad_parrent[i] = true;
-				if( tape[arg[1]].parrent == 0 )
-					tape[arg[1]].parrent = i_var;
-				else	tape[arg[1]].parrent = num_var;
+			if( tape[i_var].connect != not_connected )
+			{
+				i                    = vecad[ arg[0] - 1 ];
+				vecad_connect[i]     = yes_connected;
+				tape[arg[1]].connect = yes_connected;
 			}
 			break;
 
 			// Store a variable using a parameter index
 			case StpvOp:
 			i = vecad[ arg[0] - 1 ];
-			if( vecad_parrent[i] )
-			{	if( tape[arg[2]].parrent == 0 )
-					tape[arg[2]].parrent = i_var;
-				else	tape[arg[2]].parrent = num_var;
-			}
+			if( vecad_connect[i] != not_connected )
+				tape[arg[2]].connect = yes_connected;
 			break;
 
 			// Store a variable using a variable index
 			case StvvOp:
 			i = vecad[ arg[0] - 1 ];
-			if( vecad_parrent[i] )
-			{	if( tape[arg[1]].parrent == 0 )
-					tape[arg[1]].parrent = i_var;
-				else	tape[arg[1]].parrent = num_var;
-				if( tape[arg[2]].parrent == 0 )
-					tape[arg[2]].parrent = i_var;
-				else	tape[arg[2]].parrent = num_var;
+			if( vecad_connect[i] )
+			{	tape[arg[1]].connect = yes_connected;
+				tape[arg[2]].connect = yes_connected;
 			}
 			break;
 
@@ -674,13 +820,6 @@ void optimize(
 	// values corresponding to BeginOp
 	CPPAD_ASSERT_UNKNOWN( i_op == 0 && i_var == 0 && op == BeginOp );
 	tape[i_var].op = op;
-# if CPPAD_OPTIMIZE_TRACE
-	std::cout << "VecAD information:" << std::endl;
-	for(i = 0; i < num_vecad_vec; i++) 
-	{	std::cout << "offset  = " << vecad_offset[i];
-		std::cout << ", parrent = " << vecad_parrent[i] << std::endl;
-	}
-# endif
 	// -------------------------------------------------------------
 
 	// Erase all information in the recording
@@ -707,7 +846,7 @@ void optimize(
 	for(i = 0; i < num_vecad_vec; i++)
 	{	// length of this VecAD
 		size_t length = play->GetVecInd(j);
-		if( vecad_parrent[i] )
+		if( vecad_connect[i] != not_connected )
 		{	// Put this VecAD vector in new recording
 			CPPAD_ASSERT_UNKNOWN(length < num_vecad_ind);
 			new_vecad_ind[j] = rec->PutVecInd(length);
@@ -741,7 +880,8 @@ void optimize(
 		CPPAD_ASSERT_UNKNOWN( (i_op > n)  | (op == InvOp) );
 		CPPAD_ASSERT_UNKNOWN( (i_op <= n) | (op != InvOp) );
 
-		// determine if we should keep this operator
+		// determine if we should keep this operation in the new
+		// operation sequence
 		bool keep;
 		switch( op )
 		{	case ComOp:
@@ -761,11 +901,11 @@ void optimize(
 			case StvvOp:
 			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 			i = vecad[ arg[0] - 1 ];
-			keep = vecad_parrent[i];
+			keep = vecad_connect[i] != not_connected;
 			break;
 
 			default:
-			keep = (tape[i_var].parrent > 0);
+			keep = tape[i_var].connect != not_connected;
 			break;
 		}
 
@@ -824,16 +964,16 @@ void optimize(
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
-			{
-				replace_hash = true;
-				new_arg[0]   = tape[ arg[0] ].new_var;
-				new_arg[1]   = rec->PutPar(
-					play->GetPar( arg[1] )
+			{	tape[i_var].new_var = optimize_record_vp(
+					tape                , // inputs
+					i_var               ,
+					play->num_rec_par() ,
+					play->GetPar()      ,
+					rec                 ,
+					op                  ,
+					arg
 				);
-				rec->PutArg( new_arg[0], new_arg[1] );
-				i                   = rec->PutOp(op);
-				tape[i_var].new_var = i;
-				CPPAD_ASSERT_UNKNOWN( new_arg[0] < i );
+				replace_hash = true;
 			}
 			break;
 			// ---------------------------------------------------
@@ -855,16 +995,16 @@ void optimize(
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
-			{
-				replace_hash = true;
-				new_arg[0]   = rec->PutPar(
-					play->GetPar( arg[0] )
+			{	tape[i_var].new_var = optimize_record_pv(
+					tape                , // inputs
+					i_var               ,
+					play->num_rec_par() ,
+					play->GetPar()      ,
+					rec                 ,
+					op                  ,
+					arg
 				);
-				new_arg[1]   = tape[ arg[1] ].new_var;
-				rec->PutArg( new_arg[0], new_arg[1] );
-				i                   = rec->PutOp(op);
-				tape[i_var].new_var = i;
-				CPPAD_ASSERT_UNKNOWN( new_arg[1] < i );
+				replace_hash = true;
 			}
 			break;
 			// ---------------------------------------------------
@@ -886,14 +1026,16 @@ void optimize(
 			if( match_var > 0 )
 				tape[i_var].new_var = match_var;
 			else
-			{
+			{	tape[i_var].new_var = optimize_record_vv(
+					tape                , // inputs
+					i_var               ,
+					play->num_rec_par() ,
+					play->GetPar()      ,
+					rec                 ,
+					op                  ,
+					arg
+				);
 				replace_hash = true;
-				new_arg[0]   = tape[ arg[0] ].new_var;
-				new_arg[1]   = tape[ arg[1] ].new_var;
-				rec->PutArg( new_arg[0], new_arg[1] );
-				i                   = rec->PutOp(op);
-				tape[i_var].new_var = i;
-				CPPAD_ASSERT_UNKNOWN( new_arg[0] < i );
 			}
 			break;
 			// ---------------------------------------------------
