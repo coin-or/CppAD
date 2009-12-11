@@ -146,7 +146,7 @@ enum optimize_connection {
 	yes_connected      ,
 
 	/// There is only one operation that connects this variable to the
-	/// independent variables and it is an AddvvOp operation.
+	/// independent variables and it is an AddvvOp or AddpvOp.
 	add_connected 
 };
 
@@ -712,10 +712,9 @@ void optimize(
 			case SubvpOp:
 			if( tape[i_var].connect != not_connected )
 				tape[arg[0]].connect = yes_connected;
-			break;
+			break; // --------------------------------------------
 
 			// Unary operator where operand is arg[1]
-			case AddpvOp:
 			case DivpvOp:
 			case MulpvOp:
 			case SubpvOp:
@@ -723,7 +722,19 @@ void optimize(
 			case PrivOp:
 			if( tape[i_var].connect != not_connected )
 				tape[arg[1]].connect = yes_connected;
-			break;
+			break; // --------------------------------------------
+
+		
+			// Special case for AddpvOp
+			case AddpvOp:
+			if( tape[i_var].connect != not_connected )
+			{
+				if( tape[arg[1]].connect == not_connected )
+					tape[arg[1]].connect = add_connected;
+				else
+					tape[arg[1]].connect = yes_connected;
+			}
+			break; // --------------------------------------------
 
 		
 			// Special case for AddvvOp
@@ -740,6 +751,7 @@ void optimize(
 				else
 					tape[arg[1]].connect = yes_connected;
 			}
+			break; // --------------------------------------------
 
 			// Binary operator (not AddvvOp)
 			// where operands are arg[0], arg[1]
@@ -752,7 +764,7 @@ void optimize(
 				tape[arg[0]].connect = yes_connected;
 				tape[arg[1]].connect = yes_connected;
 			}
-			break;
+			break; // --------------------------------------------
 
 			// Conditional expression operators
 			case CExpOp:
@@ -766,6 +778,7 @@ void optimize(
 					mask = mask << 1;
 				}
 			}
+			break;  // --------------------------------------------
 
 			// Operations where there is noting to do
 			case BeginOp:
@@ -775,7 +788,7 @@ void optimize(
 			case ParOp:
 			case PripOp:
 			case StppOp:
-			break; 
+			break;  // --------------------------------------------
 
 			// Load using a parameter index
 			case LdpOp:
@@ -784,7 +797,7 @@ void optimize(
 				i                = vecad[ arg[0] - 1 ];
 				vecad_connect[i] = yes_connected;
 			}
-			break;
+			break; // --------------------------------------------
 
 			// Load using a variable index
 			case LdvOp:
@@ -794,14 +807,14 @@ void optimize(
 				vecad_connect[i]     = yes_connected;
 				tape[arg[1]].connect = yes_connected;
 			}
-			break;
+			break; // --------------------------------------------
 
 			// Store a variable using a parameter index
 			case StpvOp:
 			i = vecad[ arg[0] - 1 ];
 			if( vecad_connect[i] != not_connected )
 				tape[arg[2]].connect = yes_connected;
-			break;
+			break; // --------------------------------------------
 
 			// Store a variable using a variable index
 			case StvvOp:
@@ -810,7 +823,7 @@ void optimize(
 			{	tape[arg[1]].connect = yes_connected;
 				tape[arg[2]].connect = yes_connected;
 			}
-			break;
+			break; // --------------------------------------------
 
 			// all cases should be handled above
 			default:

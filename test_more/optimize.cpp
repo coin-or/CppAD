@@ -18,7 +18,8 @@ namespace {
 	// -------------------------------------------------------------------
 	// Test the reverse dependency analysis optimization
 	template <class Vector>
-	void FunOne(const Vector& x, Vector& y, size_t& original, size_t& opt)
+	void depend_fun
+	(const Vector& x, Vector& y, size_t& original, size_t& opt)
 	{	typedef typename Vector::value_type Scalar;
 		Scalar a;
 		Scalar one(1), two(2), three(3), four(4);
@@ -79,7 +80,7 @@ namespace {
 		return;
 	}
 
-	bool CaseOne(void)
+	bool depend_one(void)
 	{	// Test all except for VecAD operations
 		bool ok = true;
 		using CppAD::AD;
@@ -99,7 +100,7 @@ namespace {
 		// range space vector 
 		size_t m = n;
 		CPPAD_TEST_VECTOR< AD<double> > Y(m);
-		FunOne(X, Y, original, opt);
+		depend_fun(X, Y, original, opt);
 	
 		// create f: X -> Y and stop tape recording
 		CppAD::ADFun<double> F;
@@ -109,7 +110,7 @@ namespace {
 		for(j = 0; j < n; j++)
 			x[j] = Value(X[j]);
 		y = F.Forward(0, x);
-		FunOne(x, check, original, opt);
+		depend_fun(x, check, original, opt);
 		for(i = 0; i < m; i++)
 			ok &= (y[i] == check[i]);
 	
@@ -131,7 +132,7 @@ namespace {
 		return ok;
 	}
 
-	bool CaseTwo(void)
+	bool depend_two(void)
 	{	// Test VecAD operations
 		bool ok = true;
 		using CppAD::AD;
@@ -205,7 +206,7 @@ namespace {
 		
 		return ok;
 	}
-	bool CaseThree(void)
+	bool depend_three(void)
 	{	// Power function is a special case for optimize
 		bool ok = true;
 		using CppAD::AD;
@@ -259,7 +260,8 @@ namespace {
 	// Test duplicate operation analysis
 
 	template <class Vector>
-	void fun_one(const Vector& x, Vector& y, size_t& original, size_t& opt)
+	void duplicate_fun
+	(const Vector& x, Vector& y, size_t& original, size_t& opt)
 	{	typedef typename Vector::value_type Scalar;
 		original = 0;
 		opt      = 0;
@@ -327,7 +329,7 @@ namespace {
 
 		return;
 	}
-	bool case_one(void)
+	bool duplicate_one(void)
 	{
 		bool ok = true;
 		using CppAD::AD;
@@ -347,7 +349,7 @@ namespace {
 		// range space vector 
 		size_t m = n;
 		CPPAD_TEST_VECTOR< AD<double> > Y(m);
-		fun_one(X, Y, original, opt);
+		duplicate_fun(X, Y, original, opt);
 	
 		// create f: X -> Y and stop tape recording
 		CppAD::ADFun<double> F;
@@ -357,7 +359,7 @@ namespace {
 		for(j = 0; j < n; j++)
 			x[j] = Value(X[j]);
 		y = F.Forward(0, x);
-		fun_one(x, check, original, opt);
+		duplicate_fun(x, check, original, opt);
 		for(i = 0; i < m; i++)
 			ok &= (y[i] == check[i]);
 	
@@ -379,7 +381,7 @@ namespace {
 		return ok;
 	}
 	// -------------------------------------------------------------------
-	bool case_two(void)
+	bool duplicate_two(void)
 	{	// test that duplicate expression removal is relative to
 		// new and not just old argument indices.
 		bool ok = true;
@@ -444,7 +446,7 @@ namespace {
 		return ok;
 	}
 	// -------------------------------------------------------------------
-	bool case_three(void)
+	bool duplicate_three(void)
 	{	// test that duplicate expression removal is relative to
 		// new and not just old argument indices (commutative case).
 		bool ok = true;
@@ -513,12 +515,12 @@ namespace {
 bool optimize(void)
 {	bool ok = true;
 	// check reverse dependency analysis optimization
-	ok     &= CaseOne();
-	ok     &= CaseTwo();
-	ok     &= CaseThree();
+	ok     &= depend_one();
+	ok     &= depend_two();
+	ok     &= depend_three();
 	// check removal of duplicate expressions
-	ok     &= case_one();
-	ok     &= case_two();
-	ok     &= case_three();
+	ok     &= duplicate_one();
+	ok     &= duplicate_two();
+	ok     &= duplicate_three();
 	return ok;
 }
