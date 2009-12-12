@@ -245,6 +245,30 @@ void RevHesSweep(
 			break;
 			// -------------------------------------------------
 
+			case CAddOp:
+			// add x to the cummulative summation
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0)
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar );
+			reverse_sparse_hessian_linear_unary_op(
+			i_var+1, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
+			);
+			break;
+
+			case CSubOp:
+			// subtract x from the cummulative summation
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0)
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar );
+			reverse_sparse_hessian_linear_unary_op(
+			i_var+1, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
+			);
+			break;
+
+			case CSumOp:
+			// end of a cummulative summation
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
+			break;
+			// -------------------------------------------------
+
 			case CExpOp:
 			reverse_sparse_hessian_cond_op(
 				i_var, arg, num_par, RevJac, rev_hes_sparse

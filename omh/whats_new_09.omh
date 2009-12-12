@@ -59,6 +59,11 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 12-12$$
+Detection of a sequence of additions that can be converted to one variable
+during the $cref/optimize/$$ process.
+This leads to a significant improvement in the tape size and speed.
+
 $head 12-04$$
 Change hash coding of parameter values as part of operators
 during the $cref/optimize/$$ process.

@@ -118,9 +118,12 @@ size_t forward0sweep(
 	size_t*         non_const_arg;
 	const size_t   *arg = 0;
 
-
 	// initialize the comparision operator (ComOp) counter
 	size_t compareCount = 0;
+
+	// value used for cummulative summations
+	Base zero(0);
+	Base csum(zero);
 
 	// This is an order zero calculation, initialize vector indices
 	size_t *VectorInd = CPPAD_NULL;  // address for each element
@@ -211,6 +214,28 @@ size_t forward0sweep(
 			break;
 			// -------------------------------------------------
 
+			case CAddOp:
+			// add x to the cummulative summation
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			csum += Taylor[ arg[0] * J + 0 ];
+			break;
+
+			case CSubOp:
+			// subtract x from the cummulative summation
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			csum -= Taylor[ arg[0] * J + 0 ];
+			break;
+
+			case CSumOp:
+			// complete the cummulative summation
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+			Taylor[ i_var * J + 0 ] = csum + parameter[ arg[0] ];
+
+			// initialize for next summation
+			csum = zero;
+			break;
+
+			// -------------------------------------------------
 			case CExpOp:
 			// Use the general case with d == 0 
 			// (could create an optimzied verison for this case)
@@ -219,7 +244,6 @@ size_t forward0sweep(
 			);
 			break;
 			// ---------------------------------------------------
-
 			case ComOp:
 			forward_comp_op_0(
 			compareCount, arg, num_par, parameter, J, Taylor

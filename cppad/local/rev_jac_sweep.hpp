@@ -212,6 +212,30 @@ void RevJacSweep(
 			break;
 			// -------------------------------------------------
 
+			case CAddOp:
+			// add x to the cummulative summation
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar );
+			reverse_sparse_jacobian_unary_op(
+				i_var+1, arg[0], var_sparsity
+			);
+			break;
+
+			case CSubOp:
+			// subtract x from the cummulative summation
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar );
+			reverse_sparse_jacobian_unary_op(
+				i_var+1, arg[0], var_sparsity
+			);
+			break;
+
+			case CSumOp:
+			// end of a cummulative summation
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+			break;
+			// -------------------------------------------------
+
 			case CExpOp:
 			reverse_sparse_jacobian_cond_op(
 				i_var, arg, num_par, var_sparsity

@@ -50,10 +50,13 @@ enum OpCode {
 	AsinOp,   // asin(variable)
 	AtanOp,   // atan(variable)
 	BeginOp,  // used to mark the beginning of the tape
+	CAddOp,   // add a variable to the current cummulation summation
 	CExpOp,   // CondExp(cop, left, right, trueCase, falseCase)
 	ComOp,    // Compare(cop, result, left, right)
 	CosOp,    //  cos(variable)
 	CoshOp,   // cosh(variable)
+	CSubOp,   // subtract a variable from the current cummulation summation
+	CSumOp,   // add a prameter and terminate current cummulative summation
 	DisOp,    //  dis(variable,    index)
 	DivpvOp,  //      parameter  / variable
 	DivvpOp,  //      variable   / parameter
@@ -106,10 +109,13 @@ const size_t NumArgTable[] = {
 	1, // AsinOp
 	1, // AtanOp
 	0, // BeginOp
+	1, // CAddOp
 	6, // CExpOp
 	4, // ComOp
 	1, // CosOp
 	1, // CoshOp
+	1, // CSubOp
+	1, // CSumOp
 	2, // DisOp
 	2, // DivpvOp
 	2, // DivvpOp
@@ -181,10 +187,13 @@ const size_t NumResTable[] = {
 	2, // AsinOp
 	2, // AtanOp
 	1, // BeginOp  offsets first variable to have index one (not zero)
+	0, // CAddOp
 	1, // CExpOp
 	0, // ComOp
 	2, // CosOp
 	2, // CoshOp
+	0, // CSubOp
+	1, // CSumOp
 	1, // DisOp
 	1, // DivpvOp
 	1, // DivvpOp
@@ -369,10 +378,13 @@ void printOp(
 		"Asin"  ,
 		"Atan"  ,
 		"Begin" ,
+		"CAdd"  ,
 		"CExp"  ,
 		"Com"   ,
 		"Cos"   ,
 		"Cosh"  ,
+		"CSub"  ,
+		"CSum"  ,
 		"DisOp" ,
 		"Divpv" ,
 		"Divvp" ,
@@ -494,8 +506,10 @@ void printOp(
 		case AcosOp:
 		case AsinOp:
 		case AtanOp:
+		case CAddOp:
 		case CosOp:
 		case CoshOp:
+		case CSubOp:
 		case ExpOp:
 		case LogOp:
 		case SinOp:
@@ -506,6 +520,7 @@ void printOp(
 		break;
 
 		case ParOp:
+		case CSumOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 		printOpField(os, "  p=", Rec->GetPar(ind[0]), ncol);
 		break;

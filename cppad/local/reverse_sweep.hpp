@@ -142,6 +142,7 @@ void ReverseSweep(
 	OpCode           op;
 	size_t         i_op;
 	size_t        i_var;
+	size_t            k;
 
 	const size_t   *arg = 0;
 
@@ -248,6 +249,33 @@ void ReverseSweep(
 			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
 			break;
 			// --------------------------------------------------
+
+			case CAddOp:
+			// add x to the cummulative summation
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar );
+			for(k = 0; k <= d; k++)
+				Partial[ arg[0] * K + k ] +=
+					Partial[ (i_var+1) * K + k ];
+			break;
+
+			case CSubOp:
+			// subtract x from the cummulative summation
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar );
+			for(k = 0; k <= d; k++)
+				Partial[ arg[0] * K + k ] -=
+					Partial[ (i_var+1) * K + k ];
+			break;
+
+			case CSumOp:
+			// end of a cummulative summation
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
+			break;
+			// -------------------------------------------------
 
 			case CExpOp:
 			reverse_cond_op(

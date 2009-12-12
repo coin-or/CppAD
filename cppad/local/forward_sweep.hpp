@@ -132,6 +132,10 @@ size_t forward_sweep(
 	// initialize the comparision operator (ComOp) counter
 	size_t compareCount = 0;
 
+	// value used for cummulative summations
+	Base zero(0);
+	Base csum(zero);
+
 	// if this is an order zero calculation, initialize vector indices
 	size_t *VectorInd = CPPAD_NULL;  // address for each element
 	bool   *VectorVar = CPPAD_NULL;  // is element a variable
@@ -215,6 +219,34 @@ size_t forward_sweep(
 			// results: 1 + x * x, atan(x) 
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_atan_op(d, i_var, arg[0], J, Taylor);
+			break;
+			// -------------------------------------------------
+
+			case CAddOp:
+			// add x to the cummulative summation
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
+			csum += Taylor[ arg[0] * J + d ];
+			break;
+
+			case CSubOp:
+			// subtract x from the cummulative summation
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
+			csum -= Taylor[ arg[0] * J + d ];
+			break;
+
+			case CSumOp:
+			// complete the cummulative summation
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
+			Taylor[i_var * J + d] = csum;
+# if ! CPPAD_USE_FORWARD0SWEEP
+			if( d == 0 )
+				Taylor[i_var * J + d] += parameter[arg[0]];
+# endif
+			// initialize for next summation
+			csum = zero;
 			break;
 			// -------------------------------------------------
 

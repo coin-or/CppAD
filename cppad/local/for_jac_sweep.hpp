@@ -98,11 +98,16 @@ void ForJacSweep(
         // length of the parameter vector (used by CppAD assert macros)
         const size_t num_par = play->num_rec_par();
 
+	// cum_sparsity accumulates sparsity pattern a cummulative sum
+	size_t limit = var_sparsity.end();
+	Vector_set  csum_sparsity;
+	csum_sparsity.resize(1, limit);
+	csum_sparsity.clear(0);   // initialize as empty
+
 	// vecad_sparsity contains a sparsity pattern from each VecAD object
 	// to all the other variables.
 	// vecad_ind maps a VecAD index (the beginning of the
 	// VecAD object) to its from index in vecad_sparsity
-	size_t limit           = var_sparsity.end();
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	Vector_set  vecad_sparsity;
@@ -196,6 +201,44 @@ void ForJacSweep(
 				i_var, arg[0], var_sparsity
 			);
 			break;
+			// -------------------------------------------------
+
+			case CAddOp:
+			// add x to the cummulative summation
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar );
+			csum_sparsity.binary_union(
+				0,           // index in csum for result
+				0,           // index in csum for left operand
+				arg[0],      // index for right operand
+				var_sparsity // right operand vector
+			);
+			break;
+
+			case CSubOp:
+			// subtract x from the cummulative summation
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar );
+			csum_sparsity.binary_union(
+				0,           // index in csum for result
+				0,           // index in csum for left operand
+				arg[0],      // index for right operand
+				var_sparsity // right operand vector
+			);
+			break;
+
+			case CSumOp:
+			// end of a cummulative summation
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+			var_sparsity.assignment(
+				i_var,         // target index in var_sparsity 
+				0,             // index in csum
+				csum_sparsity  // vector version of csum
+			);
+			break;
+
+			// initialize for next summation
+			csum_sparsity.clear(0);
 			// -------------------------------------------------
 
 			case CExpOp:

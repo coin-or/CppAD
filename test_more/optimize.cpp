@@ -317,13 +317,13 @@ namespace {
 		original += 10;
 
 		// result vector
-		y[0] = a1 + a2;
-		y[1] = b1 + b2;
-		y[2] = c1 + c2;
-		y[3] = d1 + d2;
-		y[4] = e1 + e2;
-		y[5] = f1 + f2;
-		y[6] = g1 + g2;
+		y[0] = a1 * a2;
+		y[1] = b1 * b2;
+		y[2] = c1 * c2;
+		y[3] = d1 * d2;
+		y[4] = e1 * e2;
+		y[5] = f1 * f2;
+		y[6] = g1 * g2;
 		original += 7;
 		opt      += 7;
 
@@ -510,6 +510,342 @@ namespace {
 
 		return ok;
 	}
+	// -------------------------------------------------------------------
+	bool cummulative_sum(void)
+	{	// test conversion of a sequence of additions and subtraction
+		// to a cummulative summation sequence.
+		bool ok = true;
+		using CppAD::AD;
+		size_t i, j;
+
+		// domain space vector
+		size_t n  = 7;
+		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		for(j = 0; j < n; j++)
+			X[j] = double(j + 2); 
+
+		size_t n_original = 1 + n;
+		size_t n_optimize = 1 + n;
+
+		// range space vector
+		size_t m = 2;
+		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+
+		// declare independent variables and start tape recording
+		CppAD::Independent(X);
+
+		// Operations inside of optimize_cadd
+		Y[0] = 5. + (X[0] + X[1]) + (X[1] - X[2]) // Addvv, Subvv
+		     + (X[2] - 1.) + (2. - X[3])   // Subvp, Subpv
+		     + (X[4] + 3.) + (4. + X[5]);  // Addpv, Addpv (no Addvp)
+		n_original += 12;
+		n_optimize += 1;
+
+
+		// Operations inside of optimize_csub
+		Y[1] = 5. - (X[1] + X[2]) - (X[2] - X[3]) // Addvv, Subvv
+		     - (X[3] - 1.) - (2. - X[4])   // Subvp, Subpv
+		     - (X[5] + 3.) - (4. + X[6]);  // Addpv, Addpv (no Addvp)
+		n_original += 12;
+		n_optimize += 1;
+
+		CppAD::ADFun<double> F;
+		F.Dependent(X, Y); 
+
+		// check number of variables in original function
+		ok &= (F.size_var() ==  n_original ); 
+	
+		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		for(j = 0; j < n; j++)
+			x[j] = double(j + 2);
+
+		y   = F.Forward(0, x);
+		for(i = 0; i < m; i++)
+			ok &= ( y[i] == Value( Y[i] ) );
+
+		F.optimize();
+
+		// check number of variables  in optimized version
+		ok &= (F.size_var() == n_optimize ); 
+
+		y   = F.Forward(0, x);
+		for(i = 0; i < m; i++)
+			ok &= ( y[i] == Value( Y[i] ) );
+
+		return ok;
+	}
+	// -------------------------------------------------------------------
+	bool forward_csum(void)
+	{	bool ok = true;
+	
+		using namespace CppAD;
+	
+		// independent variable vector 
+		CPPAD_TEST_VECTOR< AD<double> > X(2);
+		X[0] = 0.; 
+		X[1] = 1.;
+		Independent(X);
+	
+		// compute sum of elements in X
+		CPPAD_TEST_VECTOR< AD<double> > Y(1);
+		Y[0] = X[0] + X[0] + X[1];
+	
+		// create function object F : X -> Y
+		ADFun<double> F(X, Y);
+	
+		// now optimize the operation sequence
+		F.optimize();
+	
+		// use zero order to evaluate F[ (3, 4) ] 
+		CPPAD_TEST_VECTOR<double>  x0( F.Domain() );
+		CPPAD_TEST_VECTOR<double>  y0( F.Range() );
+		x0[0]    = 3.;
+		x0[1]    = 4.;
+		y0       = F.Forward(0, x0);
+		ok      &= NearEqual(y0[0] , x0[0]+x0[0]+x0[1], 1e-10, 1e-10);
+	
+		// evaluate derivative of F in X[0] direction
+		CPPAD_TEST_VECTOR<double> x1( F.Domain() );
+		CPPAD_TEST_VECTOR<double> y1( F.Range() );
+		x1[0]    = 1.;
+		x1[1]    = 0.;
+		y1       = F.Forward(1, x1);
+		ok      &= NearEqual(y1[0] , x1[0]+x1[0]+x1[1], 1e-10, 1e-10);
+	
+		// evaluate second derivative of F in X[0] direction
+		CPPAD_TEST_VECTOR<double> x2( F.Domain() );
+		CPPAD_TEST_VECTOR<double> y2( F.Range() );
+		x2[0]       = 0.;
+		x2[1]       = 0.;
+		y2          = F.Forward(2, x2);
+		double F_00 = 2. * y2[0];
+		ok         &= NearEqual(F_00, 0., 1e-10, 1e-10);
+	
+		return ok;
+	}
+	// -------------------------------------------------------------------
+	bool reverse_csum(void)
+	{	bool ok = true;
+	
+		using namespace CppAD;
+	
+		// independent variable vector 
+		CPPAD_TEST_VECTOR< AD<double> > X(2);
+		X[0] = 0.; 
+		X[1] = 1.;
+		Independent(X);
+	
+		// compute sum of elements in X
+		CPPAD_TEST_VECTOR< AD<double> > Y(1);
+		Y[0] = X[0] - (X[0] - X[1]);
+	
+		// create function object F : X -> Y
+		ADFun<double> F(X, Y);
+	
+		// now optimize the operation sequence
+		F.optimize();
+	
+		// use zero order to evaluate F[ (3, 4) ] 
+		CPPAD_TEST_VECTOR<double>  x0( F.Domain() );
+		CPPAD_TEST_VECTOR<double>  y0( F.Range() );
+		x0[0]    = 3.;
+		x0[1]    = 4.;
+		y0       = F.Forward(0, x0);
+		ok      &= NearEqual(y0[0] , x0[0]-x0[0]+x0[1], 1e-10, 1e-10);
+	
+		// evaluate derivative of F 
+		CPPAD_TEST_VECTOR<double> dF( F.Domain() );
+		CPPAD_TEST_VECTOR<double> w( F.Range() );
+		w[0]    = 1.;
+		dF      = F.Reverse(1, w);
+		ok     &= NearEqual(dF[0] , 0., 1e-10, 1e-10);
+		ok     &= NearEqual(dF[1] , 1., 1e-10, 1e-10);
+	
+		return ok;
+	}
+	bool forward_sparse_jacobian_csum()
+	{	bool ok = true;
+		using namespace CppAD;
+	
+		// dimension of the domain space
+		size_t n = 3; 
+	
+		// dimension of the range space
+		size_t m = 2;
+	
+		// independent variable vector 
+		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		X[0] = 2.; 
+		X[1] = 3.;
+		Independent(X);
+	
+		// dependent variable vector
+		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	
+		// check results vector
+		CPPAD_TEST_VECTOR< bool >       Check(m * n);
+	
+		// initialize index into Y
+		size_t index = 0;
+	
+		// Y[0] 
+		Y[index]             = X[0] + X[1] + 5.;
+		Check[index * n + 0] = true;
+		Check[index * n + 1] = true;
+		Check[index * n + 2] = false;
+		index++;
+	
+		// Y[1] 
+		Y[index]             = Y[0] - (X[1] + X[2]);
+		Check[index * n + 0] = true;
+		Check[index * n + 1] = true;
+		Check[index * n + 2] = true;
+		index++;
+	
+		// check final index
+		assert( index == m );
+	
+		// create function object F : X -> Y
+		ADFun<double> F(X, Y);
+		F.optimize();
+	
+		// ---------------------------------------------------------
+		// dependency matrix for the identity function 
+		CPPAD_TEST_VECTOR< std::set<size_t> > Sx(n);
+		size_t i, j;
+		for(i = 0; i < n; i++)
+		{	assert( Sx[i].empty() );
+			Sx[i].insert(i);
+		}
+	
+		// evaluate the dependency matrix for F(x)
+		CPPAD_TEST_VECTOR< std::set<size_t> > Sy(m);
+		Sy = F.ForSparseJac(n, Sx);
+	
+		// check values
+		bool found;
+		for(i = 0; i < m; i++)
+		{	for(j = 0; j < n; j++)
+			{	found = Sy[i].find(j) != Sy[i].end();
+				ok &= (found == Check[i * n + j]);
+			}
+		}	
+	
+		return ok;
+	}
+	bool reverse_sparse_jacobian_csum()
+	{	bool ok = true;
+		using namespace CppAD;
+	
+		// dimension of the domain space
+		size_t n = 3; 
+	
+		// dimension of the range space
+		size_t m = 2;
+	
+		// independent variable vector 
+		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		X[0] = 2.; 
+		X[1] = 3.;
+		Independent(X);
+	
+		// dependent variable vector
+		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	
+		// check results vector
+		CPPAD_TEST_VECTOR< bool >       Check(m * n);
+	
+		// initialize index into Y
+		size_t index = 0;
+	
+		// Y[0] 
+		Y[index]             = X[0] + X[1] + 5.;
+		Check[index * n + 0] = true;
+		Check[index * n + 1] = true;
+		Check[index * n + 2] = false;
+		index++;
+	
+		// Y[1] 
+		Y[index]             = Y[0] - (X[1] + X[2]);
+		Check[index * n + 0] = true;
+		Check[index * n + 1] = true;
+		Check[index * n + 2] = true;
+		index++;
+	
+		// check final index
+		assert( index == m );
+	
+		// create function object F : X -> Y
+		ADFun<double> F(X, Y);
+		F.optimize();
+	
+		// ----------------------------------------------------------
+		// dependency matrix for the identity function
+		CPPAD_TEST_VECTOR< bool > Py(m * m);
+		size_t i, j;
+		for(i = 0; i < m; i++)
+		{	for(j = 0; j < m; j++)
+				Py[ i * m + j ] = (i == j);
+		}
+	
+		// evaluate the dependency matrix for F(x)
+		CPPAD_TEST_VECTOR< bool > Px(m * n);
+		Px = F.RevSparseJac(m, Py);
+	
+		// check values
+		for(i = 0; i < m; i++)
+		{	for(j = 0; j < n; j++)
+				ok &= (Px[i * n + j] == Check[i * n + j]);
+		}	
+	
+		return ok;
+	}
+	bool reverse_sparse_hessian_csum(void)
+	{	bool ok = true;
+		using CppAD::AD;
+		size_t i, j;
+	
+		size_t n = 2;
+		CPPAD_TEST_VECTOR< AD<double> > X(n); 
+		X[0] = 1.;
+		X[1] = 2.;
+		CppAD::Independent(X);
+	
+		size_t m = 1;
+		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		Y[0] = (2. + X[0] + X[1] + 3.) * X[0];
+	
+		CPPAD_TEST_VECTOR<bool> check(n * n);
+		check[0 * n + 0] = true;  // partial w.r.t. x[0], x[0]
+		check[0 * n + 1] = true;  //                x[0], x[1]
+		check[1 * n + 0] = true;  //                x[1], x[0]
+		check[1 * n + 1] = false; //                x[1], x[1]
+	
+		// create function object F : X -> Y
+		CppAD::ADFun<double> F(X, Y);
+		F.optimize();
+	
+		// sparsity pattern for the identity function U(x) = x
+		CPPAD_TEST_VECTOR<bool> Px(n * n);
+		for(i = 0; i < n; i++)
+			for(j = 0; j < n; j++)
+				Px[ i * n + j ] = (i == j);
+	
+		// compute sparsity pattern for Jacobian of F(U(x))
+		CPPAD_TEST_VECTOR<bool> P_jac(m * n);
+		P_jac = F.ForSparseJac(n, Px);
+	
+		// compute sparsity pattern for Hessian of F_k ( U(x) ) 
+		CPPAD_TEST_VECTOR<bool> Py(m);
+		CPPAD_TEST_VECTOR<bool> Pxx(n * n);
+		Py[0] = true;
+		Pxx = F.RevSparseHes(n, Py);
+		// check values
+		for(i = 0; i < n * n; i++)
+			ok &= (Pxx[i] == check[i]);
+	
+		return ok;
+	}
 }
 
 bool optimize(void)
@@ -522,5 +858,12 @@ bool optimize(void)
 	ok     &= duplicate_one();
 	ok     &= duplicate_two();
 	ok     &= duplicate_three();
+	// convert sequence of additions to cummulative summation
+	ok     &= cummulative_sum();
+	ok     &= forward_csum();
+	ok     &= reverse_csum();
+	ok     &= forward_sparse_jacobian_csum();
+	ok     &= reverse_sparse_jacobian_csum();
+	ok     &= reverse_sparse_hessian_csum();
 	return ok;
 }
