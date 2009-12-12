@@ -31,30 +31,39 @@ $end
 # include <cppad/cppad.hpp>
 namespace {
 	template <class Float>
-	Float fun(const Float& x)
+	void fun(const Float& x, Float& y, size_t& n_var, size_t& n_opt)
 	{	using CppAD::exp;
 
 	 	// Create a variable that is optimized out because 
 	 	// it is only used in the comparision operation.
 		Float a = 1. / x;
+		n_var += 1;
+		n_opt += 0;
 
 		// Create a variable that is used by the result
 		Float b = x * 5.;
+		n_var += 1;
+		n_opt += 1;
 
 		Float c;
 		if( a < x )  
-			c = b + 3.; // only one variable created by this choice
-		else	c = b + 2.;
+			c = b / 3.; // only one variable created by this choice
+		else	c = b / 2.;
+		n_var += 1;
+		n_opt += 1;
 
 		// Create a variable that is optimized out because it
 		// will always have the same value as b
 		Float d = 5. * x;
+		n_var += 1;
+		n_opt += 0;
 
-		// Note that the operation sequence connects b, c, and d with y
-		// (but a is not connected).
-		Float y = c + d; 
-
-		return y;
+		// Create three variables that will be converted to one
+		// cumulative summation. Note that a is not connected to 
+		// the result y (in the operation sequence).
+		y      = 1. + b + c + d; 
+		n_var += 3;
+		n_opt += 1;
 	}
 }
 
@@ -69,42 +78,36 @@ bool optimize(void)
 
 	// declare independent variables and start tape recording
 	CppAD::Independent(X);
+	size_t n_var = 1 + n; // one phantom variable at the beginning
+	size_t n_opt = 1 + n; // and one for each independent variable
 
 	// range space vector 
 	size_t m = 1;
 	CPPAD_TEST_VECTOR< AD<double> > Y(m);
-	Y[0] = fun(X[0]);
+	fun(X[0], Y[0], n_var, n_opt);
 
 	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> F(X, Y);
-
-	// Check the number of variables in original operation sequence:
-	// BeginOp:  one phantom variable at beginning of operation sequence
-	// X[0]:     the independent variable
-	// a,b,c,d:  four temporary variables inside the function fun
-	// y:        return value for the function fun and dependent variable
-	ok &= (F.size_var() == 7);
+	ok &= (F.size_var() == n_var);
 
 	// Check zero order forward mode on the original operation sequence
-	CPPAD_TEST_VECTOR<double> x(n), y(m), check(m);
+	CPPAD_TEST_VECTOR<double> x(n), y(m);
 	x[0] = Value(X[0]);
-	y = F.Forward(0, x);
-	ok &= y[0] == fun(x[0]);
+	size_t i = 0; // temporary variable (we do not use value)
+	double check;
+	fun(x[0], check, i, i);
+	y   = F.Forward(0, x);
+	ok &= (y[0] == check);
 
 	// Optimize the operation sequence
 	F.optimize();
-
-	// Check the number of variables in original operation sequence:
-	// BeginOp: at the beginning of every operation sequence.
-	// X[0]:    the independent variable.
-	// b, c:    temporay variables in the function fun.
-	// y:       return value for the function fun and dependent variable.
-	ok &= (F.size_var() == 5);
+	ok &= (F.size_var() == n_opt);
 
 	// Check result for a zero order calculation.
 	// This has already been checked if NDEBUG is not defined.
-	y = F.Forward(0, x);
-	ok &= y[0] == fun(x[0]);
+	fun(x[0], check, i, i);
+	ok &= (y[0] == check);
+	y   = F.Forward(0, x);
 	return ok;
 }
 
