@@ -125,6 +125,7 @@ It returns true if it succeeds and false otherwise.
 $end
 -----------------------------------------------------------------------------
 */
+# include <stack>
 
 /*!
 \file optimize.hpp
@@ -150,21 +151,19 @@ enum optimize_connection {
 	///  AddvvOp, AddpvOp, SubpvOp, SubvpOp, or SubvvOp.
 	sum_connected      ,
 
-	/// There is only one parent operation that connects this variable 
-	/// to the independent variables. Both this operation, and the parent
-	/// are one of the following:
+	/// Satisfies sum_connected and in addition 
+	/// the parrent operation is one of the following:
 	///  AddvvOp, AddpvOp, SubpvOp, SubvpOp, or SubvvOp.
-	csum_connected  
+	csum_connected
 
 };
 
 
 /*!
 Structure used by \c optimize to hold information about one variable.
-This \c struct would be local inside of \c optimize, 
-but the current C++ standard does not support local template parameters.
+in the old operation seqeunce.
 */
-struct optimize_variable {
+struct optimize_old_variable {
 	/// Operator for which this variable is the result, \c NumRes(op) > 0.
 	/// Set by the reverse sweep at beginning of optimization.
 	OpCode              op;       
@@ -182,12 +181,29 @@ struct optimize_variable {
 };
 
 /*!
+Structure used by \c optimize_record_csum
+to hold information about one variable.
+*/
+struct optimize_csum_variable {
+	/// Operator for which this variable is the result, \c NumRes(op) > 0.
+	OpCode              op;       
+
+	/// Pointer to first argument (child) for this operator.
+	/// Set by the reverse sweep at beginning of optimization.
+	const size_t*       arg;
+
+	/// Is this variable added to the summation
+	/// (if not it is subtracted)
+	bool                add;
+};
+
+/*!
 Documents arguments that are common to optimization helper functions
 (should not be called).
 
 \param tape
 is a vector that maps a variable index, in the old operation sequence,
-to an <tt>optimize_variable</tt> information record.
+to an <tt>optimize_old_variable</tt> information record.
 Note that the index for this vector must be greater than or equal zero and 
 less than <tt>tape.size()</tt>.
 
@@ -232,10 +248,10 @@ given a parameter index \c i, the corresponding parameter value is
 */
 template <class Base>
 void optimize_prototype(
-	const CppAD::vector<struct optimize_variable>& tape           ,
-	size_t                                         current        ,
-	size_t                                         npar           ,
-	const Base*                                    par            )
+	const CppAD::vector<struct optimize_old_variable>& tape           ,
+	size_t                                             current        ,
+	size_t                                             npar           ,
+	const Base*                                        par            )
 {	CPPAD_ASSERT_UNKNOWN(false); }
 
 /*!
@@ -269,12 +285,12 @@ NumArg( tape[current].op ) == 1
 */
 template <class Base>
 size_t optimize_unary_match(
-	const CppAD::vector<struct optimize_variable>& tape           ,
-	size_t                                         current        ,
-	size_t                                         npar           ,
-	const Base*                                    par            ,
-	const CppAD::vector<size_t>&                   hash_table_var ,
-	unsigned short&                                code           )
+	const CppAD::vector<struct optimize_old_variable>& tape           ,
+	size_t                                             current        ,
+	size_t                                             npar           ,
+	const Base*                                        par            ,
+	const CppAD::vector<size_t>&                       hash_table_var ,
+	unsigned short&                                    code           )
 {	const size_t *arg = tape[current].arg;
 	OpCode        op  = tape[current].op;
 	size_t new_arg[1];
@@ -312,12 +328,12 @@ or power operator.
 */
 template <class Base>
 inline size_t optimize_binary_match(
-	const CppAD::vector<struct optimize_variable>& tape           ,
-	size_t                                         current        ,
-	size_t                                         npar           ,
-	const Base*                                    par            ,
-	const CppAD::vector<size_t>&                   hash_table_var ,
-	unsigned short&                                code           )
+	const CppAD::vector<struct optimize_old_variable>& tape           ,
+	size_t                                             current        ,
+	size_t                                             npar           ,
+	const Base*                                        par            ,
+	const CppAD::vector<size_t>&                       hash_table_var ,
+	unsigned short&                                    code           )
 {	OpCode        op         = tape[current].op;
 	const size_t* arg        = tape[current].arg;
 	size_t        new_arg[2];
@@ -457,13 +473,13 @@ operation in the new operation sequence.
 */
 template <class Base>
 size_t optimize_record_pv(
-	const CppAD::vector<struct optimize_variable>& tape           ,
-	size_t                                         current        ,
-	size_t                                         npar           ,
-	const Base*                                    par            ,
-	recorder<Base>*                                rec            ,
-	OpCode                                         op             ,
-	const size_t*                                  arg            )
+	const CppAD::vector<struct optimize_old_variable>& tape           ,
+	size_t                                             current        ,
+	size_t                                             npar           ,
+	const Base*                                        par            ,
+	recorder<Base>*                                    rec            ,
+	OpCode                                             op             ,
+	const size_t*                                      arg            )
 {
 # ifndef NDEBUG
 	switch(op)
@@ -511,13 +527,13 @@ operation in the new operation sequence.
 */
 template <class Base>
 size_t optimize_record_vp(
-	const CppAD::vector<struct optimize_variable>& tape           ,
-	size_t                                         current        ,
-	size_t                                         npar           ,
-	const Base*                                    par            ,
-	recorder<Base>*                                rec            ,
-	OpCode                                         op             ,
-	const size_t*                                  arg            )
+	const CppAD::vector<struct optimize_old_variable>& tape           ,
+	size_t                                             current        ,
+	size_t                                             npar           ,
+	const Base*                                        par            ,
+	recorder<Base>*                                    rec            ,
+	OpCode                                             op             ,
+	const size_t*                                      arg            )
 {
 # ifndef NDEBUG
 	switch(op)
@@ -562,13 +578,13 @@ operation in the new operation sequence.
 */
 template <class Base>
 size_t optimize_record_vv(
-	const CppAD::vector<struct optimize_variable>& tape           ,
-	size_t                                         current        ,
-	size_t                                         npar           ,
-	const Base*                                    par            ,
-	recorder<Base>*                                rec            ,
-	OpCode                                         op             ,
-	const size_t*                                  arg            )
+	const CppAD::vector<struct optimize_old_variable>& tape           ,
+	size_t                                             current        ,
+	size_t                                             npar           ,
+	const Base*                                        par            ,
+	recorder<Base>*                                    rec            ,
+	OpCode                                             op             ,
+	const size_t*                                      arg            )
 {
 # ifndef NDEBUG
 	switch(op)
@@ -596,322 +612,6 @@ size_t optimize_record_vv(
 
 // ==========================================================================
 
-// We need to declare optimize_record_csub because it uses and is used
-// by optimize_record_cadd.
-template <class Base>
-void optimize_record_csub(
-	Base& sum_par                                                 ,
-	const CppAD::vector<struct optimize_variable>& tape           ,
-	size_t                                         current        ,
-	size_t                                         npar           ,
-	const Base*                                    par            ,
-	recorder<Base>*                                rec
-);
-
-/*!
-Add current node, and its csum_connected children, to a cummulative sum.
-
-\param sum_par
-Instead of recording parameter additions and subtractions in the 
-new operation sequence, they are accumulated in \a sum_par.
-The final parameter value must be added at the end of the cummulative
-summation.
-
-\copydetails optimize_prototype
-
-\copydetails optimize_prototype
-
-\param rec
-is the object that will record the operations.
-
-\par Exception
-<tt>tape[i].new_var</tt>
-is not yet defined for any node \c i that is \c csum_connected
-to the \a current node.
-For example; suppose that index \c j corresponds to a variable
-in the current operator,
-<tt>i = tape[current].arg[j]</tt>,
-and 
-<tt>tape[arg[j]].connect == csum_connected</tt>.
-It then follows that
-<tt>tape[i].new_var == tape.size()</tt>.
-
-\par Restriction:
-\li <tt>tape[current].op</tt> 
-must be one of AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
-
-*/
-template <class Base>
-void optimize_record_cadd(
-	Base& sum_par                                                 ,
-	const CppAD::vector<struct optimize_variable>& tape           ,
-	size_t                                         current        ,
-	size_t                                         npar           ,
-	const Base*                                    par            ,
-	recorder<Base>*                                rec            )
-{	OpCode        op  = tape[current].op;
-	const size_t* arg = tape[current].arg;
-	size_t i, j, new_arg;
-	switch(op)
-	{	case AddpvOp:
-		CPPAD_ASSERT_UNKNOWN( arg[0] < npar );
-		sum_par += par[arg[0]];
-		if( tape[arg[1]].connect == csum_connected )
-		{	CPPAD_ASSERT_UNKNOWN(
-				tape[arg[1]].new_var == tape.size()
-			);
-			optimize_record_cadd(
-				sum_par, tape, arg[1], npar, par, rec
-			);
-		}
-		else
-		{	new_arg = tape[arg[1]].new_var;
-			rec->PutArg(new_arg);
-			i = rec->PutOp(CAddOp);
-			CPPAD_ASSERT_UNKNOWN(new_arg <= i);
-		}
-		break;
-
-		case AddvvOp:
-		for(j = 0; j < 2; j++)
-		{	if( tape[arg[j]].connect == csum_connected )
-			{	CPPAD_ASSERT_UNKNOWN(
-					tape[arg[j]].new_var == tape.size()
-				);
-				optimize_record_cadd(
-					sum_par, tape, arg[j], npar, par, rec
-				);
-			}
-			else
-			{	new_arg = tape[arg[j]].new_var;
-				rec->PutArg(new_arg);
-				i = rec->PutOp(CAddOp);
-				CPPAD_ASSERT_UNKNOWN(new_arg <= i);
-			}
-		}
-		break;
-
-		case SubpvOp:
-		CPPAD_ASSERT_UNKNOWN( arg[0] < npar );
-		sum_par += par[arg[0]];
-		if( tape[arg[1]].connect == csum_connected )
-		{	CPPAD_ASSERT_UNKNOWN(
-				tape[arg[1]].new_var == tape.size()
-			);
-			optimize_record_csub(
-				sum_par, tape, arg[1], npar, par, rec
-			);
-		}
-		else
-		{	new_arg = tape[arg[1]].new_var;
-			rec->PutArg(new_arg);
-			i = rec->PutOp(CSubOp);
-			CPPAD_ASSERT_UNKNOWN(new_arg <= i);
-		}
-		break;
-
-		case SubvpOp:
-		CPPAD_ASSERT_UNKNOWN( arg[1] < npar );
-		sum_par -= par[arg[1]];
-		if( tape[arg[0]].connect == csum_connected )
-		{	CPPAD_ASSERT_UNKNOWN(
-				tape[arg[0]].new_var == tape.size()
-			);
-			optimize_record_cadd(
-				sum_par, tape, arg[0], npar, par, rec
-			);
-		}
-		else
-		{	new_arg = tape[arg[0]].new_var;
-			rec->PutArg(new_arg);
-			i = rec->PutOp(CAddOp);
-			CPPAD_ASSERT_UNKNOWN(new_arg <= i);
-		}
-		break;
-
-		case SubvvOp:
-		for(j = 0; j < 2; j++)
-		{	if( tape[arg[j]].connect == csum_connected )
-			{	CPPAD_ASSERT_UNKNOWN(
-					tape[arg[j]].new_var == tape.size()
-				);
-				if( j == 0 )
-					 optimize_record_cadd(
-					sum_par, tape, arg[j], npar, par, rec
-				);
-				else
-					optimize_record_csub(
-					sum_par, tape, arg[j], npar, par, rec
-				);
-			}
-			else
-			{	new_arg = tape[arg[j]].new_var;
-				rec->PutArg(new_arg);
-				if( j == 0 )
-					i = rec->PutOp(CAddOp);
-				else	i = rec->PutOp(CSubOp);
-				CPPAD_ASSERT_UNKNOWN(new_arg <= i);
-			}
-		}
-		break;
-
-		default:
-		CPPAD_ASSERT_UNKNOWN(0);
-	}
-}
-
-/*!
-Subtract current node, and its csum_connected children, from a cummulative sum.
-
-\param sum_par
-Instead of recording parameter additions and subtractions in the 
-new operation sequence, they are accumulated in \a sum_par.
-The final parameter value must be added at the end of the cummulative
-summation.
-
-\copydetails optimize_prototype
-
-\param rec
-is the object that will record the operations.
-
-\par Exception
-<tt>tape[i].new_var</tt>
-is not yet defined for any node \c i that is \c csum_connected
-to the \a current node.
-For example; suppose that index \c j corresponds to a variable
-in the current operator,
-<tt>i = tape[current].arg[j]</tt>,
-and 
-<tt>tape[arg[j]].connect == csum_connected</tt>.
-It then follows that
-<tt>tape[i].new_var == tape.size()</tt>.
-
-\par Restriction:
-\li <tt>tape[current].op</tt> 
-must be one of AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
-
-*/
-
-template <class Base>
-void optimize_record_csub(
-	Base& sum_par                                                 ,
-	const CppAD::vector<struct optimize_variable>& tape           ,
-	size_t                                         current        ,
-	size_t                                         npar           ,
-	const Base*                                    par            ,
-	recorder<Base>*                                rec            )
-{	OpCode        op  = tape[current].op;
-	const size_t* arg = tape[current].arg;
-	size_t i, j, new_arg;
-	switch(op)
-	{	case AddpvOp:
-		CPPAD_ASSERT_UNKNOWN( arg[0] < npar );
-		sum_par -= par[arg[0]];
-		if( tape[arg[1]].connect == csum_connected )
-		{	CPPAD_ASSERT_UNKNOWN(
-				tape[arg[1]].new_var == tape.size()
-			);
-			optimize_record_csub(
-				sum_par, tape, arg[1], npar, par, rec
-			);
-		}
-		else
-		{	new_arg = tape[arg[1]].new_var;
-			rec->PutArg(new_arg);
-			i = rec->PutOp(CSubOp);
-			CPPAD_ASSERT_UNKNOWN(new_arg <= i);
-		}
-		break;
-
-		case AddvvOp:
-		for(j = 0; j < 2; j++)
-		{	if( tape[arg[j]].connect == csum_connected )
-			{	CPPAD_ASSERT_UNKNOWN(
-					tape[arg[j]].new_var == tape.size()
-				);
-				optimize_record_csub(
-					sum_par, tape, arg[j], npar, par, rec
-				);
-			}
-			else
-			{	new_arg = tape[arg[j]].new_var;
-				rec->PutArg(new_arg);
-				i = rec->PutOp(CSubOp);
-				CPPAD_ASSERT_UNKNOWN(new_arg <= i);
-			}
-		}
-		break;
-
-		case SubpvOp:
-		CPPAD_ASSERT_UNKNOWN( arg[0] < npar );
-		sum_par -= par[arg[0]];
-		if( tape[arg[1]].connect == csum_connected )
-		{	CPPAD_ASSERT_UNKNOWN(
-				tape[arg[1]].new_var == tape.size()
-			);
-			optimize_record_cadd(
-				sum_par, tape, arg[1], npar, par, rec
-			);
-		}
-		else
-		{	new_arg = tape[arg[1]].new_var;
-			rec->PutArg(new_arg);
-			i = rec->PutOp(CAddOp);
-			CPPAD_ASSERT_UNKNOWN(new_arg <= i);
-		}
-		break;
-
-		case SubvpOp:
-		CPPAD_ASSERT_UNKNOWN( arg[1] < npar );
-		sum_par += par[arg[1]];
-		if( tape[arg[0]].connect == csum_connected )
-		{	CPPAD_ASSERT_UNKNOWN(
-				tape[arg[0]].new_var == tape.size()
-			);
-			optimize_record_csub(
-				sum_par, tape, arg[0], npar, par, rec
-			);
-		}
-		else
-		{	new_arg = tape[arg[0]].new_var;
-			rec->PutArg(new_arg);
-			i = rec->PutOp(CSubOp);
-			CPPAD_ASSERT_UNKNOWN(new_arg <= i);
-		}
-		break;
-
-		case SubvvOp:
-		for(j = 0; j < 2; j++)
-		{	if( tape[arg[j]].connect == csum_connected )
-			{	CPPAD_ASSERT_UNKNOWN(
-					tape[arg[j]].new_var == tape.size()
-				);
-				if( j == 0 )
-					 optimize_record_csub(
-					sum_par, tape, arg[j], npar, par, rec
-				);
-				else
-					optimize_record_cadd(
-					sum_par, tape, arg[j], npar, par, rec
-				);
-			}
-			else
-			{	new_arg = tape[arg[j]].new_var;
-				rec->PutArg(new_arg);
-				if( j == 0 )
-					i = rec->PutOp(CSubOp);
-				else	i = rec->PutOp(CAddOp);
-				CPPAD_ASSERT_UNKNOWN(new_arg <= i);
-			}
-		}
-		break;
-
-
-		default:
-		CPPAD_ASSERT_UNKNOWN(0);
-	}
-}
-
 /*!
 Recording a cummulative cummulative summation starting at its highest parrent.
 
@@ -920,6 +620,13 @@ Recording a cummulative cummulative summation starting at its highest parrent.
 \param rec
 is the object that will record the operations.
 
+\param work
+Is used for computaiton. On input and output,
+<tt>work.empty()</tt> is true.
+	This stack is passed in so that elements can be allocated once
+	and then the elements can be reused with different values
+(for speed).
+
 \par Exception
 <tt>tape[i].new_var</tt>
 is not yet defined for any node \c i that is \c csum_connected
@@ -934,37 +641,122 @@ It then follows that
 
 \par Restriction:
 \li <tt>tape[current].op</tt> 
-must be one of AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp.
+must be one of <tt>AddpvOp, AddvvOp, SubpvOp, SubvpOp, SubvvOp</tt>.
+
+\li <tt>tape[current].connect</tt> must be \c yes_connected.
 */
+
 
 template <class Base>
 size_t optimize_record_csum(
-	const CppAD::vector<struct optimize_variable>& tape           ,
-	size_t                                         current        ,
-	size_t                                         npar           ,
-	const Base*                                    par            ,
-	recorder<Base>*                                rec            )
+	const CppAD::vector<struct optimize_old_variable>& tape           ,
+	size_t                                             current        ,
+	size_t                                             npar           ,
+	const Base*                                        par            ,
+	recorder<Base>*                                    rec            ,
+	std::stack<struct optimize_csum_variable>&         work           )
 {
-# ifndef NDEBUG
-	switch( tape[current].op )
-	{	case AddpvOp:
-		case AddvvOp:
-		case SubpvOp:
-		case SubvpOp:
-		case SubvvOp:
-		break;
+	CPPAD_ASSERT_UNKNOWN( work.empty() );
 
-		default:
-		CPPAD_ASSERT_UNKNOWN(false);
-	}
-# endif
-	size_t new_arg, i;
+	size_t                        i;
+	size_t                        new_arg;
+	OpCode                        op;
+	const size_t*                 arg;
+	bool                          add;
+	struct optimize_csum_variable var;
+
+	CPPAD_ASSERT_UNKNOWN( tape[current].connect == yes_connected );
+	var.op  = tape[current].op;
+	var.arg = tape[current].arg;
+	var.add = true; 
+	work.push( var );
 	Base sum_par(0);
-	optimize_record_cadd(sum_par, tape, current, npar, par, rec);
+	while( ! work.empty() )
+	{	var     = work.top();
+		work.pop();
+		op      = var.op;
+		arg     = var.arg;
+		add     = var.add;
+		// process first argument to this operator
+		switch(op)
+		{	case AddpvOp:
+			case SubpvOp:
+			CPPAD_ASSERT_UNKNOWN( arg[0] < npar );
+			if( add )
+				sum_par += par[arg[0]];
+			else	sum_par -= par[arg[0]];
+			break;
+
+			case AddvvOp:
+			case SubvpOp:
+			case SubvvOp:
+			if( tape[arg[0]].connect == csum_connected )
+			{	CPPAD_ASSERT_UNKNOWN(
+					tape[arg[0]].new_var == tape.size()
+				);
+				var.op  = tape[arg[0]].op;
+				var.arg = tape[arg[0]].arg;
+				var.add = add; 
+				work.push( var );
+			}
+			else
+			{	new_arg = tape[arg[0]].new_var;
+				rec->PutArg(new_arg);
+				if( add )
+					i = rec->PutOp(CAddOp);
+				else	i = rec->PutOp(CSubOp);
+				CPPAD_ASSERT_UNKNOWN(new_arg <= i);
+			}
+			break;
+
+			default:
+			CPPAD_ASSERT_UNKNOWN(false);
+		}
+		// process second argument to this operator
+		switch(op)
+		{
+			case SubvpOp:
+			CPPAD_ASSERT_UNKNOWN( arg[1] < npar );
+			if( add )
+				sum_par -= par[arg[1]];
+			else	sum_par += par[arg[1]];
+			break;
+
+			case SubvvOp:
+			case SubpvOp:
+			add = ! add;
+
+			case AddvvOp:
+			case AddpvOp:
+			if( tape[arg[1]].connect == csum_connected )
+			{	CPPAD_ASSERT_UNKNOWN(
+					tape[arg[1]].new_var == tape.size()
+				);
+				var.op   = tape[arg[1]].op;
+				var.arg  = tape[arg[1]].arg;
+				var.add  = add;
+				work.push( var );
+			}
+			else
+			{	new_arg = tape[arg[1]].new_var;
+				rec->PutArg(new_arg);
+				if( add )
+					i = rec->PutOp(CAddOp);
+				else	i = rec->PutOp(CSubOp);
+				CPPAD_ASSERT_UNKNOWN(new_arg <= i);
+			}
+			break;
+
+			default:
+			CPPAD_ASSERT_UNKNOWN(false);
+		}
+	}
+	// add in the parameter value at the end
 	new_arg = rec->PutPar(sum_par);
 	rec->PutArg(new_arg);
 	i =rec->PutOp(CSumOp);
 	CPPAD_ASSERT_UNKNOWN(new_arg < tape.size());
+
 	return i;
 }
 // ==========================================================================
@@ -1026,7 +818,7 @@ void optimize(
 	// -------------------------------------------------------------
 	// data structure that maps variable index in original operation
 	// sequence to corresponding operator information
-	CppAD::vector<struct optimize_variable> tape(num_var);
+	CppAD::vector<struct optimize_old_variable> tape(num_var);
 	// -------------------------------------------------------------
 	// Determine how each variable is connected to the dependent variables
 
@@ -1288,6 +1080,10 @@ void optimize(
 	// temporary buffer for new argument values
 	size_t new_arg[6];
 
+	// temporary work space used by optimize_record_csum
+	// (decalared here to avoid realloaction of memory)
+	std::stack<struct optimize_csum_variable> csum_work;
+
 	while(op != EndOp)
 	{	// next op
 		play->next_forward(op, arg, i_op, i_var);
@@ -1382,7 +1178,8 @@ void optimize(
 					i_var               ,
 					play->num_rec_par() ,
 					play->GetPar()      ,
-					rec
+					rec                 ,
+					csum_work
 				);
 				// abort rest of this case
 				break;
@@ -1425,7 +1222,8 @@ void optimize(
 					i_var               ,
 					play->num_rec_par() ,
 					play->GetPar()      ,
-					rec
+					rec                 ,
+					csum_work
 				);
 				// abort rest of this case
 				break;
@@ -1471,7 +1269,8 @@ void optimize(
 					i_var               ,
 					play->num_rec_par() ,
 					play->GetPar()      ,
-					rec
+					rec                 ,
+					csum_work
 				);
 				// abort rest of this case
 				break;

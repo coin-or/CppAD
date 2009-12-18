@@ -59,6 +59,13 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 12-18$$
+It turns out that detection of a sequence of additions makes the optimization
+longer. This was simplified and makes slightly faster by converting two
+jointly recursive routines to one non-recursive routine that uses a
+stack for the necessary information.
+More work is planned to make this optimization faster.
+
 $head 12-12$$
 Detection of a sequence of additions that can be converted to one variable
 during the $cref/optimize/$$ process.
