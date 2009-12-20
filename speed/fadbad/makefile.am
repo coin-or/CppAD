@@ -28,7 +28,7 @@ AM_CPPFLAGS   = -I$(top_srcdir) -I$(FADBAD_DIR) $(BOOST_INCLUDE)
 # BEGIN OPTIMIZE
 # Note that Fadbad will not compile with the -pedantic-errors flag,
 # so we are leaving CXX_FLAGS out of this complilation.
-AM_CXXFLAGS   = -O2 -DNDEBUG -Wno-deprecated -DFADBAD
+AM_CXXFLAGS   = -O2 -DNDEBUG -Wno-deprecated -DFADBAD $(CXX_FLAGS)
 # END OPTIMIZE
 #
 # BEGIN DEBUG

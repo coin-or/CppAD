@@ -43,9 +43,9 @@ EXTRA_DIST        = example.sln example.vcproj test_one.sh.in \
 noinst_PROGRAMS   = example 
 #
 if CppAD_MS_COMPILER
-AM_CXXFLAGS       = -EHsc -g $(CXX_FLAGS) $(ADOLC_FLAGS) 
+AM_CXXFLAGS       = -EHsc -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 else
-AM_CXXFLAGS       = -g $(CXX_FLAGS) $(ADOLC_FLAGS) 
+AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 endif
 #
 AM_CPPFLAGS       = -I. \
