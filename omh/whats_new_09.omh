@@ -59,6 +59,11 @@ assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
 
+$head 12-22$$
+Convert the optimization of a sequence of additions from multiple operators 
+to one operator with a varying number of arguments. This improved the speed 
+for forward and reverse mode computations of an optimized tape.
+
 $head 12-18$$
 It turns out that detection of a sequence of additions makes the optimization
 longer. This was simplified and makes slightly faster by converting two

@@ -50,13 +50,11 @@ enum OpCode {
 	AsinOp,   // asin(variable)
 	AtanOp,   // atan(variable)
 	BeginOp,  // used to mark the beginning of the tape
-	CAddOp,   // add a variable to the current cummulation summation
 	CExpOp,   // CondExp(cop, left, right, trueCase, falseCase)
 	ComOp,    // Compare(cop, result, left, right)
 	CosOp,    //  cos(variable)
 	CoshOp,   // cosh(variable)
-	CSubOp,   // subtract a variable from the current cummulation summation
-	CSumOp,   // add a prameter and terminate current cummulative summation
+	CSumOp,   // Cummulative summation (has variable number of arguments)
 	DisOp,    //  dis(variable,    index)
 	DivpvOp,  //      parameter  / variable
 	DivvpOp,  //      variable   / parameter
@@ -109,13 +107,11 @@ const size_t NumArgTable[] = {
 	1, // AsinOp
 	1, // AtanOp
 	0, // BeginOp
-	1, // CAddOp
 	6, // CExpOp
 	4, // ComOp
 	1, // CosOp
 	1, // CoshOp
-	1, // CSubOp
-	1, // CSumOp
+	0, // CSumOp   (actually has a variable number of arguments, not zero)
 	2, // DisOp
 	2, // DivpvOp
 	2, // DivvpOp
@@ -187,12 +183,10 @@ const size_t NumResTable[] = {
 	2, // AsinOp
 	2, // AtanOp
 	1, // BeginOp  offsets first variable to have index one (not zero)
-	0, // CAddOp
 	1, // CExpOp
 	0, // ComOp
 	2, // CosOp
 	2, // CoshOp
-	0, // CSubOp
 	1, // CSumOp
 	1, // DisOp
 	1, // DivpvOp
@@ -367,7 +361,8 @@ void printOp(
 	const  Value          *fz     ,
 	size_t                 nrz    ,
 	const  Value          *rz     )
-{	
+{	size_t i;
+	
 	static const char *CompareOpName[] = 
 		{ "Lt", "Le", "Eq", "Ge", "Gt", "Ne" };
 	static const char *OpName[] = {
@@ -378,12 +373,10 @@ void printOp(
 		"Asin"  ,
 		"Atan"  ,
 		"Begin" ,
-		"CAdd"  ,
 		"CExp"  ,
 		"Com"   ,
 		"Cos"   ,
 		"Cosh"  ,
-		"CSub"  ,
 		"CSum"  ,
 		"DisOp" ,
 		"Divpv" ,
@@ -434,6 +427,23 @@ void printOp(
 	size_t ncol = 5;
 	switch( op )
 	{
+		case CSumOp:
+		/*
+		ind[0] = number of addition variables in summation
+		ind[1] = number of subtraction variables in summation
+		ind[2] = index of parameter that initializes summation
+		ind[3], ... , ind[2+ind[0]] = index for positive variables
+		ind[3+ind[0]], ..., ind[2+ind[0]+ind[1]] = negative variables 
+		ind[3+ind[0]+ind[1]] = ind[0] + ind[1]
+		*/
+		CPPAD_ASSERT_UNKNOWN( ind[3+ind[0]+ind[1]] == ind[0]+ind[1] );
+		printOpField(os, " pr=", Rec->GetPar(ind[2]), ncol);
+		for(i = 0; i < ind[0]; i++)
+			 printOpField(os, " +v=", ind[3+i], ncol);
+		for(i = 0; i < ind[1]; i++)
+			 printOpField(os, " -v=", ind[3+ind[0]+i], ncol);
+		break;
+
 		case LdpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 		printOpField(os, "off=", ind[0], ncol);
@@ -506,10 +516,8 @@ void printOp(
 		case AcosOp:
 		case AsinOp:
 		case AtanOp:
-		case CAddOp:
 		case CosOp:
 		case CoshOp:
-		case CSubOp:
 		case ExpOp:
 		case LogOp:
 		case SinOp:
@@ -520,7 +528,6 @@ void printOp(
 		break;
 
 		case ParOp:
-		case CSumOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 		printOpField(os, "  p=", Rec->GetPar(ind[0]), ncol);
 		break;

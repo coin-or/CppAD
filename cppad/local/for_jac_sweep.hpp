@@ -100,9 +100,6 @@ void ForJacSweep(
 
 	// cum_sparsity accumulates sparsity pattern a cummulative sum
 	size_t limit = var_sparsity.end();
-	Vector_set  csum_sparsity;
-	csum_sparsity.resize(1, limit);
-	csum_sparsity.clear(0);   // initialize as empty
 
 	// vecad_sparsity contains a sparsity pattern from each VecAD object
 	// to all the other variables.
@@ -203,42 +200,15 @@ void ForJacSweep(
 			break;
 			// -------------------------------------------------
 
-			case CAddOp:
-			// add x to the cummulative summation
-			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar );
-			csum_sparsity.binary_union(
-				0,           // index in csum for result
-				0,           // index in csum for left operand
-				arg[0],      // index for right operand
-				var_sparsity // right operand vector
-			);
-			break;
-
-			case CSubOp:
-			// subtract x from the cummulative summation
-			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar );
-			csum_sparsity.binary_union(
-				0,           // index in csum for result
-				0,           // index in csum for left operand
-				arg[0],      // index for right operand
-				var_sparsity // right operand vector
-			);
-			break;
-
 			case CSumOp:
-			// end of a cummulative summation
-			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-			var_sparsity.assignment(
-				i_var,         // target index in var_sparsity 
-				0,             // index in csum
-				csum_sparsity  // vector version of csum
+			// CSumOp has a variable number of arguments and
+			// next_forward thinks it one has one argument.
+			// we must inform next_forward of this special case.
+			play->forward_csum(op, arg, i_op, i_var);
+			forward_sparse_jacobian_csum_op(
+				i_var, arg, var_sparsity
 			);
 			break;
-
-			// initialize for next summation
-			csum_sparsity.clear(0);
 			// -------------------------------------------------
 
 			case CExpOp:

@@ -10,6 +10,8 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+doxygen_version=`doxygen --version  | sed -e 's|\.|*100+|' -e's|\.|*10+|'`
+let doxygen_version=$doxygen_version
 #
 # classes that have been completely documented
 class_list="
@@ -34,6 +36,7 @@ file_list="
 	configure.hpp
 	cos_op.hpp
 	cosh_op.hpp
+	csum_op.hpp
 	cppad_assert.hpp
 	define.hpp
 	discrete_op.hpp
@@ -77,7 +80,12 @@ do
 	if grep -i "warning:.*$class::" doxygen.log
 	then
 		echo "Unexpected doxygen error or warning for $file."
-		exit 1
+		if (( $doxygen_version > 155 ))
+		then
+			exit 1
+		else
+			exit 0
+		fi
 	fi
 done
 # --------------------------------------------------------------------------
@@ -86,7 +94,12 @@ do
 	if grep -i "warning:.*member.*$member" doxygen.log
 	then
 		echo "Unexpected doxygen error or warning for $file."
-		exit 1
+		if (( $doxygen_version > 155 ))
+		then
+			exit 1
+		else
+			exit 0
+		fi
 	fi
 done
 # --------------------------------------------------------------------------
@@ -100,6 +113,11 @@ do
 	if grep -i "$file.*warning" doxygen.log
 	then
 		echo "Unexpected doxygen error or warning for $file."
-		exit 1
+		if (( $doxygen_version > 155 ))
+		then
+			exit 1
+		else
+			exit 0
+		fi
 	fi
 done

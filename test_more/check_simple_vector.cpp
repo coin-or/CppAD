@@ -10,9 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-# include <cppad/configure.hpp>
-# include <cppad/vector.hpp>
-# include <cppad/check_simple_vector.hpp>
+# include <cppad/cppad.hpp>
 # include <set>
 # include <vector>
 # include <valarray>
@@ -26,7 +24,7 @@ namespace {
 		CheckSimpleVector<Scalar, std::vector<Scalar>   > (x, y);
 		CheckSimpleVector<Scalar, std::valarray<Scalar> > (x, y);
 # if CPPAD_BOOSTVECTOR
-		typedef boost_vector boost::numeric::ublas::vector<Scalar>;
+		typedef boost::numeric::ublas::vector<Scalar> boost_vector;
 		CheckSimpleVector<Scalar, boost_vector > (x, y);
 # endif
 	}

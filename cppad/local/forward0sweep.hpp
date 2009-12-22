@@ -121,10 +121,6 @@ size_t forward0sweep(
 	// initialize the comparision operator (ComOp) counter
 	size_t compareCount = 0;
 
-	// value used for cummulative summations
-	Base zero(0);
-	Base csum(zero);
-
 	// This is an order zero calculation, initialize vector indices
 	size_t *VectorInd = CPPAD_NULL;  // address for each element
 	bool   *VectorVar = CPPAD_NULL;  // is element a variable
@@ -214,25 +210,14 @@ size_t forward0sweep(
 			break;
 			// -------------------------------------------------
 
-			case CAddOp:
-			// add x to the cummulative summation
-			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			csum += Taylor[ arg[0] * J + 0 ];
-			break;
-
-			case CSubOp:
-			// subtract x from the cummulative summation
-			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
-			csum -= Taylor[ arg[0] * J + 0 ];
-			break;
-
 			case CSumOp:
-			// complete the cummulative summation
-			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
-			Taylor[ i_var * J + 0 ] = csum + parameter[ arg[0] ];
-
-			// initialize for next summation
-			csum = zero;
+			// CSumOp has a variable number of arguments and
+			// next_forward thinks it one has one argument.
+			// we must inform next_forward of this special case.
+			Rec->forward_csum(op, arg, i_op, i_var);
+			forward_csum_op(
+				0, i_var, arg, num_par, parameter, J, Taylor
+			);
 			break;
 
 			// -------------------------------------------------

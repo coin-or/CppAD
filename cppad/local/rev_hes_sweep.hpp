@@ -245,27 +245,14 @@ void RevHesSweep(
 			break;
 			// -------------------------------------------------
 
-			case CAddOp:
-			// add x to the cummulative summation
-			CPPAD_ASSERT_NARG_NRES(op, 1, 0)
-			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar );
-			reverse_sparse_hessian_linear_unary_op(
-			i_var+1, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
-			);
-			break;
-
-			case CSubOp:
-			// subtract x from the cummulative summation
-			CPPAD_ASSERT_NARG_NRES(op, 1, 0)
-			CPPAD_ASSERT_UNKNOWN( (i_var+1) < numvar );
-			reverse_sparse_hessian_linear_unary_op(
-			i_var+1, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
-			);
-			break;
-
 			case CSumOp:
-			// end of a cummulative summation
-			CPPAD_ASSERT_NARG_NRES(op, 1, 1)
+			// CSumOp has a variable number of arguments and
+			// next_reverse thinks it one has one argument.
+			// We must inform next_reverse of this special case.
+			play->reverse_csum(op, arg, i_op, i_var);
+			reverse_sparse_hessian_csum_op(
+				i_var, arg, RevJac, rev_hes_sparse
+			);
 			break;
 			// -------------------------------------------------
 

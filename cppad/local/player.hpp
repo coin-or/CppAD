@@ -496,6 +496,9 @@ public:
 	\param op
 	The input value of op does not matter. Its output value is the
 	next operator in the recording.
+	For speed, \c next_forward does not check for the special case
+	of <tt>op == CSumOp</tt>. In this case, the other return values
+	from \c next_forward must be corrected by a call to \c forward_csum.
 
 	\param op_arg
 	The input value of *op_arg does not matter. Its output value is the
@@ -529,6 +532,50 @@ public:
 
 		// index for last result for next operator
 		var_index   = var_index_ += NumRes(op);
+
+		CPPAD_ASSERT_UNKNOWN( op_index_  < num_rec_op_ );
+		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= num_rec_op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
+	}
+	/*!
+	Correct \c next_forward return values when <tt>op == CSumOp</tt>.
+
+	\param op
+	The input value of op must be the return value from the previous
+	call to \c next_forward and must be \c CSumOp.
+
+	\param op_arg
+	The input value of *op_arg must be the return value from the 
+	previous call to \c next_forward. Its output value is the
+	beginning of the vector of argument indices for this operation.
+
+	\param op_index
+	The input value of op_index does must be the return value from the
+	previous call to \c next_forward. Its output value
+	is the index of this operator in the recording. 
+
+	\param var_index
+	The input value of var_index must be the return value from the
+	previous call to \c next_forward. Its output value is the
+	index of the primary (last) result corresponding to this.
+	*/
+	void forward_csum(
+	OpCode& op, const size_t*& op_arg, size_t& op_index, size_t& var_index)
+	{	using CppAD::NumRes;
+		using CppAD::NumArg;
+		CPPAD_ASSERT_UNKNOWN( op == CSumOp );
+		CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+		CPPAD_ASSERT_UNKNOWN(
+		op_arg[0] + op_arg[1] == op_arg[ 3 + op_arg[0] + op_arg[1] ]
+		);
+		/*
+		The only thing that really needs fixing is op_arg_.
+		Actual number of arugments for this operator is
+			op_arg[0] + op_arg[1] + 4.
+ 		We must change op_arg_ so that when you add NumArg(CSumOp)
+		you get first argument for next operator in sequence.
+		*/
+		op_arg_    += op_arg[0] + op_arg[1] + 4;
 
 		CPPAD_ASSERT_UNKNOWN( op_index_  < num_rec_op_ );
 		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= num_rec_op_arg_ );
@@ -602,6 +649,10 @@ public:
 	beginning of the vector of argument indices for this operation.
 	The last operator sets op_arg equal to the beginning of the 
 	argument indices for the entire recording.
+	For speed, \c next_reverse does not check for the special case
+	of <tt>op == CSumOp</tt>. In this case, the other return values
+	from \c next_reverse must be corrected by a call to \c reverse_csum.
+
 
 	\param op_index
 	The input value of op_index does not matter. Its output value
@@ -637,6 +688,50 @@ public:
 		CPPAD_ASSERT_UNKNOWN( op_arg_ >= NumArg(op)  );
 		op_arg_    -= NumArg(op);                            // index
 		op_arg      = op_arg_ + rec_op_arg_;                 // pointer
+	}
+	/*!
+	Correct \c next_reverse return values when <tt>op == CSumOp</tt>.
+
+	\param op
+	The input value of op must be the return value from the previous
+	call to \c next_reverse and must be \c CSumOp.
+
+	\param op_arg
+	The input value of *op_arg must be the return value from the 
+	previous call to \c next_reverse. Its output value is the
+	beginning of the vector of argument indices for this operation.
+
+	\param op_index
+	The input value of op_index must be the return value from the
+	previous call to \c next_reverse. Its output value
+	is the index of the this operator in the recording. 
+
+	\param var_index
+	The input value of var_index must be the return value from the 
+	previous call to \c next_reverse. Its output value is the
+	index of the primary (last) result corresponding to this operator.
+	*/
+
+	void reverse_csum(
+	OpCode& op, const size_t*& op_arg, size_t& op_index, size_t& var_index)
+	{	using CppAD::NumRes;
+		using CppAD::NumArg;
+		CPPAD_ASSERT_UNKNOWN( op == CSumOp );
+		CPPAD_ASSERT_UNKNOWN( NumArg(CSumOp) == 0 );
+		/*
+		The things needs fixing are op_arg_ and op_arg. Currently, 
+		op_arg points first arugment for the previous operator.
+		*/
+		--op_arg;
+		op_arg_    -= (op_arg[0] + 4);
+		op_arg      = op_arg_ + rec_op_arg_;
+
+		CPPAD_ASSERT_UNKNOWN(
+		op_arg[0] + op_arg[1] == op_arg[ 3 + op_arg[0] + op_arg[1] ]
+		);
+		CPPAD_ASSERT_UNKNOWN( op_index_  < num_rec_op_ );
+		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= num_rec_op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
 	}
 
 };

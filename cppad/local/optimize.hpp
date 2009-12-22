@@ -181,7 +181,7 @@ struct optimize_old_variable {
 };
 
 /*!
-Structure used by \c optimize_record_csum
+Structures used by \c optimize_record_csum
 to hold information about one variable.
 */
 struct optimize_csum_variable {
@@ -196,6 +196,15 @@ struct optimize_csum_variable {
 	/// (if not it is subtracted)
 	bool                add;
 };
+struct optimize_csum_stacks {
+	/// stack of operations in the cummulative summation 
+	std::stack<struct optimize_csum_variable>   op_stack;
+	/// stack of variables to be added
+	std::stack<size_t >                         add_stack;
+	/// stack of variables to be subtracted
+	std::stack<size_t >                         sub_stack;
+};
+
 
 /*!
 Documents arguments that are common to optimization helper functions
@@ -622,10 +631,12 @@ is the object that will record the operations.
 
 \param work
 Is used for computaiton. On input and output,
-<tt>work.empty()</tt> is true.
-	This stack is passed in so that elements can be allocated once
-	and then the elements can be reused with different values
-(for speed).
+<tt>work.op_stack.empty()</tt>,
+<tt>work.add_stack.empty()</tt>, and
+<tt>work.sub_stack.empty()</tt>,
+are all true true.
+These stacks are passed in so that elements can be allocated once
+and then the elements can be reused with calls to \c optimize_record_csum.
 
 \par Exception
 <tt>tape[i].new_var</tt>
@@ -654,26 +665,28 @@ size_t optimize_record_csum(
 	size_t                                             npar           ,
 	const Base*                                        par            ,
 	recorder<Base>*                                    rec            ,
-	std::stack<struct optimize_csum_variable>&         work           )
+	optimize_csum_stacks&                              work           )
 {
-	CPPAD_ASSERT_UNKNOWN( work.empty() );
+	
+	CPPAD_ASSERT_UNKNOWN( work.op_stack.empty() );
+	CPPAD_ASSERT_UNKNOWN( work.add_stack.empty() );
+	CPPAD_ASSERT_UNKNOWN( work.sub_stack.empty() );
+	CPPAD_ASSERT_UNKNOWN( tape[current].connect == yes_connected );
 
 	size_t                        i;
-	size_t                        new_arg;
 	OpCode                        op;
 	const size_t*                 arg;
 	bool                          add;
 	struct optimize_csum_variable var;
 
-	CPPAD_ASSERT_UNKNOWN( tape[current].connect == yes_connected );
 	var.op  = tape[current].op;
 	var.arg = tape[current].arg;
 	var.add = true; 
-	work.push( var );
+	work.op_stack.push( var );
 	Base sum_par(0);
-	while( ! work.empty() )
-	{	var     = work.top();
-		work.pop();
+	while( ! work.op_stack.empty() )
+	{	var     = work.op_stack.top();
+		work.op_stack.pop();
 		op      = var.op;
 		arg     = var.arg;
 		add     = var.add;
@@ -697,16 +710,11 @@ size_t optimize_record_csum(
 				var.op  = tape[arg[0]].op;
 				var.arg = tape[arg[0]].arg;
 				var.add = add; 
-				work.push( var );
+				work.op_stack.push( var );
 			}
-			else
-			{	new_arg = tape[arg[0]].new_var;
-				rec->PutArg(new_arg);
-				if( add )
-					i = rec->PutOp(CAddOp);
-				else	i = rec->PutOp(CSubOp);
-				CPPAD_ASSERT_UNKNOWN(new_arg <= i);
-			}
+			else if( add )
+				work.add_stack.push(arg[0]);
+			else	work.sub_stack.push(arg[0]);
 			break;
 
 			default:
@@ -735,26 +743,43 @@ size_t optimize_record_csum(
 				var.op   = tape[arg[1]].op;
 				var.arg  = tape[arg[1]].arg;
 				var.add  = add;
-				work.push( var );
+				work.op_stack.push( var );
 			}
-			else
-			{	new_arg = tape[arg[1]].new_var;
-				rec->PutArg(new_arg);
-				if( add )
-					i = rec->PutOp(CAddOp);
-				else	i = rec->PutOp(CSubOp);
-				CPPAD_ASSERT_UNKNOWN(new_arg <= i);
-			}
+			else if( add )
+				work.add_stack.push(arg[1]);
+			else	work.sub_stack.push(arg[1]);
 			break;
 
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);
 		}
 	}
-	// add in the parameter value at the end
-	new_arg = rec->PutPar(sum_par);
-	rec->PutArg(new_arg);
-	i =rec->PutOp(CSumOp);
+	// number of variables in this cummulative sum operator
+	size_t n_add = work.add_stack.size();
+	size_t n_sub = work.sub_stack.size();
+	size_t old_arg, new_arg;
+	rec->PutArg(n_add);                // arg[0]
+	rec->PutArg(n_sub);                // arg[1]
+	new_arg = rec->PutPar( sum_par );
+	rec->PutArg(new_arg);              // arg[2]
+	for(i = 0; i < n_add; i++)
+	{	CPPAD_ASSERT_UNKNOWN( ! work.add_stack.empty() );
+		old_arg = work.add_stack.top();
+		new_arg = tape[old_arg].new_var;
+		CPPAD_ASSERT_UNKNOWN( new_arg < tape.size() );
+		rec->PutArg(new_arg);      // arg[3+i]
+		work.add_stack.pop();
+	}
+	for(i = 0; i < n_sub; i++)
+	{	CPPAD_ASSERT_UNKNOWN( ! work.sub_stack.empty() );
+		old_arg = work.sub_stack.top();
+		new_arg = tape[old_arg].new_var;
+		CPPAD_ASSERT_UNKNOWN( new_arg < tape.size() );
+		rec->PutArg(new_arg);      // arg[3 + arg[0] + i]
+		work.sub_stack.pop();
+	}
+	rec->PutArg(n_add + n_sub);        // arg[3 + arg[0] + arg[1]]
+	i = rec->PutOp(CSumOp);
 	CPPAD_ASSERT_UNKNOWN(new_arg < tape.size());
 
 	return i;
@@ -1082,7 +1107,7 @@ void optimize(
 
 	// temporary work space used by optimize_record_csum
 	// (decalared here to avoid realloaction of memory)
-	std::stack<struct optimize_csum_variable> csum_work;
+	optimize_csum_stacks csum_work;
 
 	while(op != EndOp)
 	{	// next op

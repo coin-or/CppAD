@@ -1322,12 +1322,13 @@ i.e. the row index in sparsity corresponding to x.
 
 \param rev_jacobian
 \a rev_jacobian[i_z] 
-is all false (true) if the Jacobian of G with respect to z is alwyas zero 
+is all false (true) if the Jacobian of G with respect to z must be zero 
 (may be non-zero).
 \n
 \n
 \a rev_jacobian[i_x] 
-is all zero (ones) if the Jacobian with respect to x is zero (non-zero).
+is all false (true) if the Jacobian with respect to x must be zero 
+(may be non-zero).
 On input, it corresponds to the function G,
 and on output it corresponds to the function H.
 
