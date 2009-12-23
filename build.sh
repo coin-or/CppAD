@@ -114,16 +114,9 @@ then
 	exit 0
 fi
 # ============================================================================
-# check of doxygen version is >= 1.5.7.1 and set doxygen_ver_ok = "0" or "1"
-doxygen_ver=`doxygen --version | sed -e 's/\([^.]*\)\./\1*100 +/'`
-doxygen_ver=`echo $doxygen_ver     | sed -e 's/\([^.]*\)\./(\1)*100 +/'`
-doxygen_ver=`echo $doxygen_ver     | sed -e 's/\([^.]*\)\./(\1)*100 +/'`
-doxygen_ver=$((doxygen_ver))
-doxygen_ver_ok=$((doxygen_ver >= 1050700))
-#
 # Default values used for arguments to configure during this script.
 # These defaults are development system dependent and can be changed.
-BOOST_DIR=/usr/include/boost-1_33_1
+BOOST_DIR=/usr/include
 ADOLC_DIR=$HOME/prefix/adolc
 FADBAD_DIR=$HOME/prefix/fadbad
 SACADO_DIR=$HOME/prefix/sacado
@@ -459,13 +452,10 @@ then
 	fi
 	if ! ./check_doxygen.sh
 	then
-		if [ "$doxygen_ver_ok" == 1 ]
-		then
-			dir=`pwd`
-			file="$dir/doxygen.log"
-			echo "Error: check_doxygen.sh failed; see $file."
-			exit 1
-		fi
+		dir=`pwd`
+		file="$dir/doxygen.log"
+		echo "Error: check_doxygen.sh failed; see $file."
+		exit 1
 	fi
 	#
 	echo "pushd doxydoc/latex ; make >& ../../doxygen_tex.log"
@@ -626,14 +616,10 @@ then
 	fi
 	if ! ./check_doxygen.sh
 	then
-		if [ "$doxygen_ver_ok" == 1 ]
-		then
-			dir=`pwd`
-			file="$dir/doxygen.log"
-			echo "Error: check_doxygen.sh failed; see $file."
-			exit 1
-		fi
-		msg="Warning: doxygen version is too old to check for warnings"
+		dir=`pwd`
+		file="$dir/doxygen.log"
+		echo "Error: check_doxygen.sh failed; see $file."
+		exit 1
 	else
 		msg="OK: doxygen doxyfile"
 	fi

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -152,7 +152,7 @@ bool mul_level_adolc(void)
 
 	// compute the d/dx of f'(x) * v = f''(x) * v
 	size_t m      = n;                     // # dependent in f'(x)
-	double *v, *ddf_v;
+	double *v = 0, *ddf_v = 0;
 	v     = CPPAD_TRACK_NEW_VEC(m, v);     // track v = new double[m]
 	ddf_v = CPPAD_TRACK_NEW_VEC(n, ddf_v); // track ddf_v = new double[n]
 	for(j = 0; j < n; j++)

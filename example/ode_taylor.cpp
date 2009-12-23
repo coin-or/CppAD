@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -297,7 +297,10 @@ bool ode_taylor(void)
 	}
 
 	// evaluate the Jacobian of h at a
-	CPPAD_TEST_VECTOR<double> jac = f.Jacobian(x);
+	CPPAD_TEST_VECTOR<double> jac ( f.Jacobian(x) );
+	// There appears to be a bug in g++ version 4.4.2 becasue it generates
+	// a warning for the equivalent form
+	// CPPAD_TEST_VECTOR<double> jac = f.Jacobian(x);
 
 	// check Jacobian 
 	for(i = 0; i < n; i++)

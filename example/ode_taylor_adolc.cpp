@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -295,7 +295,7 @@ bool ode_taylor_adolc(void)
 	size_t i, j;
 
 	// parameter vector in both double and ADdouble
-	double *x;
+	double *x = 0;
 	x = CPPAD_TRACK_NEW_VEC(n, x);  // track x = new double[n];
 	CPPAD_TEST_VECTOR<ADdouble> X(n);
 	for(i = 0; i < n; i++)
@@ -324,7 +324,7 @@ bool ode_taylor_adolc(void)
 
 	// declare the differentiable fucntion f : A -> Y_FINAL
 	// (corresponding to the tape of adouble operations)
-	double *y_final;
+	double *y_final= 0;
 	y_final = CPPAD_TRACK_NEW_VEC(n, y_final); // y_final= new double[m]
 	for(i = 0; i < n; i++)
 		Y_FINAL[i] >>= y_final[i];
@@ -339,9 +339,9 @@ bool ode_taylor_adolc(void)
 	}
 
 	// memory where Jacobian will be returned
-	double *jac_;
+	double *jac_= 0;
 	jac_ = CPPAD_TRACK_NEW_VEC(n * n, jac_); // jac_ = new double[n*n]
-	double **jac;
+	double **jac = 0;
 	jac  = CPPAD_TRACK_NEW_VEC(n, jac);      // jac = new (*double)[n]
 	for(i = 0; i < n; i++)
 		jac[i] = jac_ + i * n;

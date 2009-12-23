@@ -35,13 +35,16 @@ $$
 $end
 */
 // BEGIN PROGRAM
+# include <cstdio>
 # include <cppad/cppad.hpp>
 # include <list>
 
 namespace { // Begin empty namespace *****************************************
 
 void debug_print(const char *label, double d)
-{	unsigned char *byte = reinterpret_cast<unsigned char *>(&d);
+{	using std::printf;
+
+	unsigned char *byte = reinterpret_cast<unsigned char *>(&d);
 	size_t n_byte = sizeof(d);
 	printf("%s", label);
 	for(size_t i = 0; i < n_byte; i++)

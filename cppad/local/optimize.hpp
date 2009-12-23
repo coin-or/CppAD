@@ -196,6 +196,11 @@ struct optimize_csum_variable {
 	/// (if not it is subtracted)
 	bool                add;
 };
+
+/*!
+Structure used to pass work space from \c optimize to \c optimize_record_csum
+(so that stacks do not start from zero size every time).
+*/
 struct optimize_csum_stacks {
 	/// stack of operations in the cummulative summation 
 	std::stack<struct optimize_csum_variable>   op_stack;

@@ -63,7 +63,7 @@ bool base_adolc(void)
 	trace_off();
 
 	// arrays for Adolc zos_forward
-	double *x, *y;
+	double *x = 0, *y = 0;
 	x = CPPAD_TRACK_NEW_VEC(n, x);
 	y = CPPAD_TRACK_NEW_VEC(m, y);
 

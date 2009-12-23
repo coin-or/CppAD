@@ -85,7 +85,7 @@ CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id: makefile.am 1537 2009-10-01 03:52:53Z bradbell $
+# $Id: makefile.am 1611 2009-12-20 15:50:31Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
@@ -193,7 +193,7 @@ AM_CPPFLAGS = -I$(top_srcdir) -I$(FADBAD_DIR) $(BOOST_INCLUDE)
 # BEGIN OPTIMIZE
 # Note that Fadbad will not compile with the -pedantic-errors flag,
 # so we are leaving CXX_FLAGS out of this complilation.
-AM_CXXFLAGS = -O2 -DNDEBUG -Wno-deprecated -DFADBAD
+AM_CXXFLAGS = -O2 -DNDEBUG -Wno-deprecated -DFADBAD $(CXX_FLAGS)
 # END OPTIMIZE
 #
 # BEGIN DEBUG

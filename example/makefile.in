@@ -161,7 +161,7 @@ CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id: makefile.am 1561 2009-10-24 15:46:25Z bradbell $
+# $Id: makefile.am 1611 2009-12-20 15:50:31Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
@@ -280,9 +280,9 @@ top_srcdir = @top_srcdir@
 EXTRA_DIST = example.sln example.vcproj test_one.sh.in \
 	$(ADOLC_EXTRA_FILES)
 
-@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -g $(CXX_FLAGS) $(ADOLC_FLAGS) 
+@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
-@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -g $(CXX_FLAGS) $(ADOLC_FLAGS) 
+@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
 AM_CPPFLAGS = -I. \
                    -I$(top_srcdir) \

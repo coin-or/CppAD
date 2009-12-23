@@ -47,7 +47,7 @@ is the number of addition variables in this cummulative summation; i.e.,
 is the number of subtraction variables in this cummulative summation; i.e.,
 \c m.
 \n
-<tt>\parameter[ arg[2] ]</tt>
+<tt>parameter[ arg[2] ]</tt>
 is the parameter value \c p in this cummunative summation.
 \n
 <tt>arg[2+i]</tt>
@@ -155,7 +155,7 @@ is the number of addition variables in this cummulative summation; i.e.,
 is the number of subtraction variables in this cummulative summation; i.e.,
 \c m.
 \n
-<tt>\parameter[ arg[2] ]</tt>
+<tt>parameter[ arg[2] ]</tt>
 is the parameter value \c p in this cummunative summation.
 \n
 <tt>arg[2+i]</tt>
@@ -261,7 +261,7 @@ is the number of addition variables in this cummulative summation; i.e.,
 is the number of subtraction variables in this cummulative summation; i.e.,
 \c m.
 \n
-<tt>\parameter[ arg[2] ]</tt>
+<tt>parameter[ arg[2] ]</tt>
 is the parameter value \c p in this cummunative summation.
 \n
 <tt>arg[2+i]</tt>
@@ -339,7 +339,7 @@ is the number of addition variables in this cummulative summation; i.e.,
 is the number of subtraction variables in this cummulative summation; i.e.,
 \c m.
 \n
-<tt>\parameter[ arg[2] ]</tt>
+<tt>parameter[ arg[2] ]</tt>
 is the parameter value \c p in this cummunative summation.
 \n
 <tt>arg[2+i]</tt>
@@ -415,7 +415,7 @@ is the number of addition variables in this cummulative summation; i.e.,
 is the number of subtraction variables in this cummulative summation; i.e.,
 \c m.
 \n
-<tt>\parameter[ arg[2] ]</tt>
+<tt>parameter[ arg[2] ]</tt>
 is the parameter value \c p in this cummunative summation.
 \n
 <tt>arg[2+i]</tt>

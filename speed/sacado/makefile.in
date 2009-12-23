@@ -86,7 +86,7 @@ CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id: makefile.am 1537 2009-10-01 03:52:53Z bradbell $
+# $Id: makefile.am 1611 2009-12-20 15:50:31Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
@@ -192,8 +192,8 @@ top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I$(top_srcdir) -I$(SACADO_DIR)/include $(BOOST_INCLUDE)
 #
 # BEGIN OPTIMIZE
-AM_CXXFLAGS = -O2 -DNDEBUG  $(CXX_FLAGS) -DSACADO \
- 	-DRAD_EQ_ALIAS -DRAD_AUTO_AD_Const
+AM_CXXFLAGS = -O2 -DNDEBUG -DSACADO \
+ 	-DRAD_EQ_ALIAS -DRAD_AUTO_AD_Const $(CXX_FLAGS)
 
 # END OPTIMIZE
 #

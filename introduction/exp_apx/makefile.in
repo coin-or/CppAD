@@ -90,9 +90,9 @@ CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id: makefile.am 1369 2009-05-31 01:31:48Z bradbell $
+# $Id: makefile.am 1611 2009-12-20 15:50:31Z bradbell $
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -201,7 +201,7 @@ EXTRA_DIST = \
 
 #
 AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
-AM_CXXFLAGS = -g $(CPP_ERROR_WARN)
+AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
 exp_apx_SOURCES = \
 	main.cpp \
