@@ -33,51 +33,76 @@ bool fun_assign(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
+	size_t i, j;
 
 	// ten times machine percision
 	double eps = 10. * std::numeric_limits<double>::epsilon();
 
 	// two ADFun<double> objects
-	CppAD::ADFun<double> f, g;
+	CppAD::ADFun<double> g;
 
 	// domain space vector
-	size_t n  = 1;
+	size_t n  = 3;
 	CPPAD_TEST_VECTOR< AD<double> > x(n);
-	x[0]      = .5; 
+	for(j = 0; j < n; j++)
+		x[j] = AD<double>(j + 2);
 
 	// declare independent variables and start tape recording
 	CppAD::Independent(x);
 
 	// range space vector 
-	size_t m = 1;
+	size_t m = 2;
 	CPPAD_TEST_VECTOR< AD<double> > y(m);
-	y[0] = 1. + 2. * x[0] + 3. * x[0] * x[0];
+	y[0] = x[0] + x[0] * x[1];
+	y[1] = x[1] * x[2] + x[2];
 
-	// store operation sequence in f
-	f.Dependent(x, y);
+	// Store operation sequence, and order zero forward results, in f.
+	CppAD::ADFun<double> f(x, y);
+
+	// sparsity pattern for the identity matrix
+	CPPAD_TEST_VECTOR< std::set<size_t> > r(n);
+	for(j = 0; j < n; j++)
+		r[j].insert(j);
+
+	// Store forward mode sparsity pattern in f
+	f.ForSparseJac(n, r); 
 
 	// make a copy in g
 	g = f;
 
-	// zero order forward mode at two different points
-	// (this could be useful if f and g were executed in parallel)
-	CPPAD_TEST_VECTOR<double> x_f(n), x_g(n), y_f(m), y_g(m);
-	x_f[0] = 1.;
-	x_g[0] = 2.;
-	y_f    = f.Forward(0, x_f);
-	y_g    = g.Forward(0, x_g);
-	ok   &= NearEqual(y_f[0], 1.+2.*x_f[0]+3.*x_f[0]*x_f[0], eps, eps);
-	ok   &= NearEqual(y_g[0], 1.+2.*x_g[0]+3.*x_g[0]*x_g[0], eps, eps);
+	// check values that should be equal
+	ok &= ( g.size_taylor()       == f.size_taylor() );
+	ok &= ( g.size_forward_bool() == f.size_forward_bool() );
+	ok &= ( g.size_forward_set()  == f.size_forward_set() );
 
-	// first order reverse mode 
-	// (this could be useful if f and g were executed in parallel)
-	CPPAD_TEST_VECTOR<double> wf(m), wg(m), dy_f(n), dy_g(n);
-	wf[0] = 1.;
-	wg[0] = 1.;
-	dy_f  = f.Reverse(1, wf);
-	dy_g  = g.Reverse(1, wg);
-	ok   &= NearEqual(dy_f[0], 2.+6.*x_f[0], eps, eps);
-	ok   &= NearEqual(dy_g[0], 2.+6.*x_g[0], eps, eps);
+	// Use zero order Taylor coefficient from f for first order
+	// calculation using g.
+	CPPAD_TEST_VECTOR<double> dx(n), dy(m);
+	for(i = 0; i < n; i++)
+		dx[i] = 0.;
+	dx[1] = 1;
+	dy    = g.Forward(1, dx);
+	ok &= NearEqual(dy[0], x[0], eps, eps); // partial y[0] w.r.t x[1] 
+	ok &= NearEqual(dy[1], x[2], eps, eps); // partial y[1] w.r.t x[1] 
+
+	// Use forward Jacobian sparsity pattern from f to calculate
+	// Hessian sparsity pattern using g.
+	CPPAD_TEST_VECTOR< std::set<size_t> > s(1), h(n);
+	s[0].insert(0); // Compute sparsity pattern for Hessian of y[0]
+	h =  f.RevSparseHes(n, s);
+
+	// check sparsity pattern for Hessian of y[0] = x[0] + x[0] * x[1] 
+	ok  &= ( h[0].find(0) == h[0].end() ); // zero     w.r.t x[0], x[0] 
+	ok  &= ( h[0].find(1) != h[0].end() ); // non-zero w.r.t x[0], x[1] 
+	ok  &= ( h[0].find(2) == h[0].end() ); // zero     w.r.t x[0], x[2] 
+
+	ok  &= ( h[1].find(0) != h[1].end() ); // non-zero w.r.t x[1], x[0] 
+	ok  &= ( h[1].find(1) == h[1].end() ); // zero     w.r.t x[1], x[1] 
+	ok  &= ( h[1].find(2) == h[1].end() ); // zero     w.r.t x[1], x[2] 
+
+	ok  &= ( h[2].find(0) == h[2].end() ); // zero     w.r.t x[2], x[0] 
+	ok  &= ( h[2].find(1) == h[2].end() ); // zero     w.r.t x[2], x[1] 
+	ok  &= ( h[2].find(2) == h[2].end() ); // zero     w.r.t x[2], x[2] 
 
 	return ok;
 }

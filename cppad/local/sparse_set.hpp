@@ -187,7 +187,7 @@ public:
 	}
 
 	// -----------------------------------------------------------------
-	/*! Assing a set equal to the union of two other sets.
+	/*! Assign a set equal to the union of two other sets.
 
 	\param this_target
 	is the index (in this \c sparse_set object) of the set being assinged.
@@ -236,18 +236,16 @@ public:
 		
 	}
 	// -----------------------------------------------------------------
-	/*! Amount of memory used by this vector of sets
+	/*! Sum over all sets of the number of elements
  
 	/return
-	The amount of memory in units of type unsigned char memory.
-
-	This is just counts the memory for the set elements, not for any
-	of the supporting information.
+	The the total number of elements
  	*/
-	size_t memory(void) const
+	size_t number_elements(void) const
 	{	size_t i, count;
+		count = 0;
 		for(i = 0; i < n_set_; i++)
-			count += sizeof(size_t) * data_[i].size();
+			count += data_[i].size();
 		return count;
 	}
 	// -----------------------------------------------------------------

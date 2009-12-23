@@ -15,10 +15,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin FunConstruct$$
 $spell 
+	Jac
+	bool
 	taylor_
 	var
 	ADvector
 	const
+	Jacobian
 $$
 
 $spell
@@ -166,13 +169,25 @@ in the object $icode g$$.
 The object $icode f$$ is not affected by this operation and
 can be $code const$$.
 Any operation sequence or other information in $icode g$$ is lost.
-Directly after this operation, no Taylor coefficients are
-stored in $icode g$$; i.e.,
-$codei%
-	%g%.size_taylor()
-%$$
-is zero (see $cref/size_taylor/$$).
 
+$subhead Taylor Coefficients$$
+The Taylor coefficient information currently stored in $icode f$$ 
+(computed by $cref/f.Forward/Forward/$$) is 
+copied to $icode g$$.
+Hence, directly after this operation
+$codei%
+	%g%.size_taylor() == %f%.size_taylor()
+%$$
+
+$subhead Sparsity Patterns$$
+The forward Jacobian sparsity pattern currently stored in $icode f$$ 
+(computed by $cref/f.ForSparseJac/ForSparseJac/$$) is 
+copied to $icode g$$.
+Hence, directly after this operation
+$codei%
+	%g%.size_forward_bool() == %f%.size_forward_bool()
+	%g%.size_forward_set()  == %f%.size_forward_set()
+%$$
 
 $head OpenMP$$
 $index OpenMP, Dependent$$
@@ -291,6 +306,50 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	taylor_                    = CPPAD_NULL;
 	for_jac_sparse_pack_.resize(0, 0);
 	for_jac_sparse_set_.resize(0, 0);
+
+	// allocate and copy the Taylor coefficients
+	taylor_per_var_     = f.taylor_per_var_;
+	taylor_col_dim_     = f.taylor_col_dim_;
+	size_t length       = total_num_var_ * taylor_col_dim_;
+	if( length > 0 ) taylor_   = CPPAD_TRACK_NEW_VEC(length, taylor_);
+	size_t i, j;
+	for(i = 0; i < total_num_var_; i++)
+	{	for(j = 0; j < taylor_per_var_; j++)
+		{	taylor_[ i * taylor_col_dim_ + j ] =
+				f.taylor_[ i * taylor_col_dim_ + j ];
+		}
+	}
+
+	// allocate and copy the forward sparsity information
+	size_t n_set = f.for_jac_sparse_pack_.n_set();
+	size_t end   = f.for_jac_sparse_pack_.end();
+	if( n_set > 0 )
+	{	CPPAD_ASSERT_UNKNOWN( n_set == total_num_var_ );
+		CPPAD_ASSERT_UNKNOWN( f.for_jac_sparse_set_.n_set() == 0 );
+		for_jac_sparse_pack_.resize(n_set, end);
+		for(i = 0; i < total_num_var_ ; i++)
+		{	for_jac_sparse_pack_.assignment(
+				i                       ,
+				i                       ,
+				f.for_jac_sparse_pack_
+			);
+		}
+	}
+	n_set = f.for_jac_sparse_set_.n_set();
+	end   = f.for_jac_sparse_set_.end();
+	if( n_set > 0 )
+	{	CPPAD_ASSERT_UNKNOWN( n_set == total_num_var_ );
+		CPPAD_ASSERT_UNKNOWN( f.for_jac_sparse_pack_.n_set() == 0 );
+		for_jac_sparse_set_.resize(n_set, end);
+		for(i = 0; i < total_num_var_; i++)
+		{	for_jac_sparse_set_.assignment(
+				i                       ,
+				i                       ,
+				f.for_jac_sparse_set_
+			);
+		}
+	}
+
 }
 
 /*!

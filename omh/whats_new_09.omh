@@ -46,6 +46,7 @@ $spell
 	VecAD
 	Jacobians
 	Jac
+	Taylor
 $$
 
 $section Changes and Additions to CppAD During 2009$$
@@ -58,6 +59,20 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 (Comments about developer documentation are only important if you are
 trying to read and understand the CppAD source code.)
+
+$head 12-23$$
+Change the 
+$code ADFun$$ $cref/assignment operator/FunConstruct/Assignment Operator/$$
+was changed so that it now copies forward mode
+Taylor coefficients and sparsity pattern information.
+(This assignment operator was added on $cref/10-24/whats_new_09/10-24/$$.)
+You can use $cref/capacity_taylor/$$ to delete the Taylor coefficients
+before copying them.
+Two new functions were added so that you can query and delete the
+forward mode sparsity information;
+see
+$cref/size_forward_bool/ForSparseJac/f/size_forward_bool/$$ and
+$cref/size_forward_set/ForSparseJac/f/size_forward_set/$$.
 
 $head 12-22$$
 Convert the optimization of a sequence of additions from multiple operators 

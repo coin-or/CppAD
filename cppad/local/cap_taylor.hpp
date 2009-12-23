@@ -145,8 +145,8 @@ void ADFun<Base>::capacity_taylor(size_t c)
 
 	// copy the old data into the new matrix
 	CPPAD_ASSERT_UNKNOWN( (taylor_per_var_ == 0) | (taylor_ != CPPAD_NULL) );
-	for(j = 0; j < p; j++)
-	{	for(i = 0; i < total_num_var_; i++)
+	for(i = 0; i < total_num_var_; i++)
+	{	for(j = 0; j < p; j++)
 		{	newptr[i * c + j]  = taylor_[i * taylor_col_dim_ + j];
 		}
 	}

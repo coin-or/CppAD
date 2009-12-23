@@ -297,7 +297,7 @@ public:
 	// -----------------------------------------------------------------
 	/*! Amount of memory used by this vector of sets
  
-	/return
+	\return
 	The amount of memory in units of type unsigned char memory.
  	*/
 	size_t memory(void) const

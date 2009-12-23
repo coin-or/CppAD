@@ -293,13 +293,31 @@ public:
 		size_t q, const VectorSet &s
 	);
 
-	/// number of variables in opertion sequence
-	size_t size_var(void) const
-	{	return total_num_var_; }
+	/// amount of memeory used for Jacobain sparsity pattern
+	size_t size_forward_bool(void) const
+	{	return for_jac_sparse_pack_.memory(); }
 
-	/// number of parameters in the operation sequence
-	size_t size_par(void) const
-	{	return play_.num_rec_par(); }
+	/// free memeory used for Jacobain sparsity pattern
+	void size_forward_bool(size_t zero) 
+	{	CPPAD_ASSERT_KNOWN(
+			zero == 0,
+			"size_forward_bool: argument not equal to zero"
+		);
+		for_jac_sparse_pack_.resize(0, 0); 
+	}
+
+	/// total number of elements used for Jacobian sparsity pattern
+	size_t size_forward_set(void) const
+	{	return for_jac_sparse_set_.number_elements(); }
+
+	/// free memeory used for Jacobain sparsity pattern
+	void size_forward_set(size_t zero)
+	{	CPPAD_ASSERT_KNOWN(
+			zero == 0,
+			"size_forward_bool: argument not equal to zero"
+		);
+		for_jac_sparse_set_.resize(0, 0); 
+	}
 
 	/// number of operators in the operation sequence
 	size_t size_op(void) const
@@ -309,21 +327,29 @@ public:
 	size_t size_op_arg(void) const
 	{	return play_.num_rec_op_arg(); }
 
-	/// number of characters in the operation sequence
-	size_t size_text(void) const
-	{	return play_.num_rec_text(); }
-
-	/// number of VecAD indices in the operation sequence
-	size_t size_VecAD(void) const
-	{	return play_.num_rec_vecad_ind(); }
-
 	/// amount of memory required for the operation sequence
 	size_t size_op_seq(void) const
 	{	return play_.Memory(); }
 
+	/// number of parameters in the operation sequence
+	size_t size_par(void) const
+	{	return play_.num_rec_par(); }
+
 	/// number of taylor_ coefficients currently calculated (per variable)
 	size_t size_taylor(void) const
 	{	return taylor_per_var_; } 
+
+	/// number of characters in the operation sequence
+	size_t size_text(void) const
+	{	return play_.num_rec_text(); }
+
+	/// number of variables in opertion sequence
+	size_t size_var(void) const
+	{	return total_num_var_; }
+
+	/// number of VecAD indices in the operation sequence
+	size_t size_VecAD(void) const
+	{	return play_.num_rec_vecad_ind(); }
 
 	/// set number of coefficients currently allocated (per variable)
 	void capacity_taylor(size_t per_var);   
@@ -418,11 +444,12 @@ public:
 	size_t Order(void) const
 	{	return taylor_per_var_ - 1; }
 
-	/// deprecated: amount of memory for this object 
+	/// Deprecated: amount of memory for this object 
+	/// Note that an approximation is used for the std::set<size_t> memory
 	size_t Memory(void) const
 	{	size_t pervar  = taylor_col_dim_ * sizeof(Base)
 		+ for_jac_sparse_pack_.memory()
-		+ for_jac_sparse_set_.memory();
+		+ 3 * sizeof(size_t) * for_jac_sparse_set_.number_elements();
 		size_t total   = total_num_var_ * pervar + play_.Memory();
 		return total;
 	}

@@ -59,7 +59,47 @@ Note that the $xref/ADFun/$$ object $icode f$$ is not $code const$$.
 After this the sparsity pattern
 for each of the variables in the operation sequence
 is stored in the object $icode f$$.
-
+These sparsity patterns are stored with elements of type $code bool$$
+or elements of type $code std::set<size_t>$$
+(see $xref/ForSparseJac/VectorSet/VectorSet/$$ below).
+ 
+$subhead size_forward_bool$$
+After this operation, if $icode s$$ has is a $code size_t$$ object, 
+$codei%
+	%s% = %f%.size_forward_bool()
+%$$
+will set $icode s$$ to the amount of memory (in unsigned character units)
+used to store the sparsity pattern with elements of type $code bool$$.
+If the sparsity patterns for this operation use elements of type $code bool$$,
+the return value for $code size_forward_bool$$ will be non-zero.
+Otherwise, its return value will be zero.
+This sparsity pattern is stored for use by $cref/RevSparseHes/$$.
+When it is not longer needed, it can be deleted (and the corresponding memory
+freed) by the function call
+$code%
+	%f%size_forward_bool(0)
+%$$
+After this call, $icode%f%.size_forward_bool()%$$ will return zero.
+ 
+$subhead size_forward_set$$
+After this operation, if $icode s$$ has is a $code size_t$$ object, 
+$codei%
+	%s% = %f%.size_forward_set()
+%$$
+will set $icode s$$ to the 
+total number of elements in all the sets corresponding
+to the sparsity pattern stored in $icode f$$.
+If the sparsity patterns for this operation use elements of type $code bool$$,
+the return value for $code size_forward_set$$ will be zero.
+Otherwise, its return value will be non-zero
+(unless the entire sparsity pattern is false).
+This sparsity pattern is stored for use by $cref/RevSparseHes/$$.
+When it is not longer needed, it can be deleted (and the corresponding memory
+freed) by the function call
+$code%
+	%f%size_forward_set(0)
+%$$
+After this call, $icode%f%.size_forward_set()%$$ will return zero.
 
 $head x$$
 the sparsity pattern is valid for all values of the independent 

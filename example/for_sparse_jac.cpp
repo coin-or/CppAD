@@ -83,6 +83,13 @@ bool BoolCases(void)
 	ok &= (s[ 2 * n + 0 ] == false); // Y[2] does not depend on X[0]
 	ok &= (s[ 2 * n + 1 ] == true);  // Y[2] does     depend on X[1]
 
+	// check that values are stored
+	ok &= (f.size_forward_bool() > 0);
+
+	// free values from forward calculation
+	f.size_forward_bool(0);
+	ok &= (f.size_forward_bool() == 0);
+
 	return ok;
 }
 // define the template function SetCases<Vector> 
