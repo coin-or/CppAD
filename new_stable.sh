@@ -11,8 +11,8 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 copy_from_trunk="keep"     # do (frist time), keep (use current), redo
-trunk_revision="1349"      # trunk revision number that stable corresponds to
-yyyy_mm_dd="2009-03-03"    # Date corresponding to this trunk revision
+trunk_revision="1615"      # trunk revision number that stable corresponds to
+yyyy_mm_dd="2010-01-01"    # Date corresponding to this trunk revision
 # -----------------------------------------------------------------------------
 echo "copy_from_trunk=$copy_from_trunk"
 echo "trunk_revision=$trunk_revision"
@@ -49,7 +49,7 @@ fi
 if [ "$copy_from_trunk" = "do" ] || [ "$copy_from_trunk" = "redo" ]
 then
 	#
-	# create the new stable verison
+	# create the new stable version
 	temp_1="Create stable/$stable_version"
 	temp_2="from trunk revision $trunk_revision."
 	msg="$temp_1 $temp_2"
@@ -78,7 +78,7 @@ then
 	fi
 fi
 #
-# retrieve stable verison from repository ------------------------------------
+# retrieve stable version from repository ------------------------------------
 #
 echo "svn checkout --quiet -r $stable_revision $rep_stable stable/$stable_version"
 if ! svn checkout --quiet -r $stable_revision $rep_stable stable/$stable_version
@@ -87,7 +87,7 @@ then
 	exit 1
 fi
 #
-# make sure that new_stable.sh corresponds to this verison 
+# make sure that new_stable.sh corresponds to this version 
 # (may not be same as verion in repository that was copied).
 echo "trunk/new_stable.sh stable/$stable_version/new_stable.sh"
 if ! cp trunk/new_stable.sh stable/$stable_version/new_stable.sh
@@ -117,8 +117,9 @@ sed -i build.sh \
 #
 # remove version adjustment and always check makefiles in svn_status.sh
 sed -i svn_status.sh \
-	-e '/^yyyymmdd=/,$d' \
-	-e 's/flag=.*/flag="+"/'
+	-e 's/^flag=.*/flag="+"/' \
+	-e "s/yyyymmdd=.*/yyyymmdd=\"$release_version\"/" \
+	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/" 
 #
 # use web for download of this release version
 dir="http://www.coin-or.org/download/source/CppAD"
@@ -148,28 +149,6 @@ sed -i svn_commit.sh \
 	-e 's|\(change_list="\)|\1\n\tsvn_status.sh|' \
 	-e 's|\(change_list="\)|\1\n\tconfigure|'
 #
-# Sources automatically changed by build.sh -------------------------------- 
-echo "./build.sh version"
-if ! ./build.sh version
-then
-	echo "new_stable.sh: Error during ./build.sh version"
-	exit 1
-fi
-#
-echo "./build.sh automake"
-if ! ./build.sh automake
-then
-	echo "new_stable.sh: Error during ./build.sh automake"
-	exit 1
-fi
-#
-echo "./build.sh configure"
-if ! ./build.sh configure
-then
-	echo "new_stable.sh: Error during ./build.sh configure"
-	exit 1
-fi
-#
 # Instructions --------------------------------------------------------------
 #
 echo "1: In the directory stable/$stable_version, review differences using"
@@ -177,19 +156,15 @@ echo "       ./svn_status.sh"
 echo "   All changed files should be present (except for svn_commit.sh) in"
 echo "       ./svn_commit.sh"
 echo "2: If not correct, fix trunk/new_stable.sh and re-run it and goto 1."
-echo "3: In stable/$stable_version run the following commands:"
-echo "      ./build.sh omhelp"
-echo "      ./build.sh dist"
-echo "      ./build.sh test"
-echo "4: If errors occur, fix trunk/new_stable.sh and goto 1."
-echo "5: Commit changes using"
-echo "      ./svn_commit.sh"
-echo "6: Check did all necessary commits in stable/$version with command"
-echo "      ./svn_status.sh"
-echo "7: In stable/$stable_version run the command"
+echo "3: In stable/$stable_version run the following command:"
 echo "      ./build.sh all test"
-echo "8: If errors occur, fix stable/$stable_version and goto 5."
-echo "9: In stable/$stable_version check first, then run the script"
+echo "4: If errors occur, fix trunk/new_stable.sh and goto 1."
+echo "5: Commit changes to trunk/new_stable.sh."
+echo "6: In stable/$stable_version commit changes using"
+echo "      ./svn_commit.sh"
+echo "7: Make sure commited all necessary changes in stable/$stable_version"
+echo "      ./svn_status.sh"
+echo "8: In stable/$stable_version check first, then run the script"
 echo "      ./new_release.sh"	
 echo
 exit 0
