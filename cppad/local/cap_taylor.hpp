@@ -25,7 +25,7 @@ $index capacity_taylor$$
 $index capacity, Forward$$
 $index memory, control$$
 
-$section Controlling taylor_ Coefficients Memory Allocation$$
+$section Controlling Taylor Coefficients Memory Allocation$$
 
 $head Syntax$$
 $syntax%%f%.capacity_taylor(%c%)%$$
@@ -34,7 +34,7 @@ $subhead See Also$$
 $cref/seq_property/$$
 
 $head Purpose$$
-The taylor_ coefficients calculated by Forward mode calculations
+The Taylor coefficients calculated by $cref/Forward/$$ mode calculations
 are retained in an $xref/ADFun/$$ object for subsequent use during 
 $xref/Reverse/$$ mode or higher order Forward mode calculations.
 This operation allow you to control that amount of memory
@@ -52,7 +52,7 @@ The argument $italic c$$ has prototype
 $syntax%
 	size_t %c%
 %$$
-It specifies the number of taylor_ coefficients that are allocated for
+It specifies the number of Taylor coefficients that are allocated for
 each variable in the AD operation sequence corresponding to $italic f$$.
 
 $head Discussion$$
@@ -60,8 +60,8 @@ A call to $xref/ForwardAny//Forward/$$ with the syntax
 $syntax%
         %y_p% = %f%.Forward(%p%, %x_p%)
 %$$
-uses the lower order taylor_ coefficients and 
-computes the $th p$$ order taylor_ coefficients for all
+uses the lower order Taylor coefficients and 
+computes the $th p$$ order Taylor coefficients for all
 the variables in the operation sequence corresponding to $italic f$$.
 (You can determine the number of variables in the operation sequence
 using the $xref/seq_property/size_var/size_var/$$ function.)
@@ -84,7 +84,7 @@ connected to the function object and sets the corresponding
 taylor capacity to zero.
 
 $subhead Freeing Memory$$
-If you no longer need the taylor_ coefficients of order $italic q$$
+If you no longer need the Taylor coefficients of order $italic q$$
 and higher (that are stored in $italic f$$), 
 you can reduce the memory allocated to $italic f$$ using
 $syntax%

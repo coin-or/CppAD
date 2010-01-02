@@ -61,7 +61,7 @@ assist you in learning about changes between various versions of CppAD.
 trying to read and understand the CppAD source code.)
 
 $head 12-23$$
-Change the 
+The 
 $code ADFun$$ $cref/assignment operator/FunConstruct/Assignment Operator/$$
 was changed so that it now copies forward mode
 Taylor coefficients and sparsity pattern information.

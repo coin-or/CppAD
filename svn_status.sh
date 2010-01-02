@@ -18,8 +18,8 @@ then
 	echo "where automake flag is either + or -"
 	exit 1
 fi
-yyyymmdd=`date +%G%m%d`
-yyyy_mm_dd=`date +%G-%m-%d`
+yyyy_mm_dd=`date +%F`
+yyyymmdd=`echo $yyyy_mm_dd | sed -e 's|-||g'`
 #
 svn status | sed > svn_status.$$ \
 	-e '/^. *cppad\/configure.hpp$/d'                     \
