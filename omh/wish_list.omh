@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	bools
 	Microsoft
 	inline
 	std
@@ -58,20 +59,11 @@ valid for complex types by comparing real parts.
 In addition, use this change to extend $xref/LuRatio/$$ so 
 that it works with complex AD types.
 
-$head Exceptions$$
-When the function
-$xref/Independent/$$ is called,  
-a new tape is created.
-If an exception occurs before the call to the corresponding
-$xref/ADFun/$$ constructor or $cref/Dependent/$$, 
-the tape recording will never stop.
-Thus, there should be a way to abort a tape recording.
-
-
 $head Ipopt$$
 $list number$$
-A speed test for $cref/ipopt_cppad_nlp/$$ should be added.
-Then changes should be made to improve its speed.
+The vector of sets $cref/sparsity pattern/glossary/Sparsity Pattern/$$
+could be compared for speed with of vector of bools
+(and used instead if it is faster).
 
 $lnext
 Perhaps it would help to cache the solution of the sparse Jacobian
@@ -125,10 +117,10 @@ $xref/seq_property/$$.
 $head Optimization$$
 
 $subhead Expression Hashing$$
-Hash codes could be used to detect expressions that have already
-been computed (and avoid extra entries in the operation sequence).
-This would also involve has coding the constants and avoiding
-duplicate copies in the constant table.
+During expression sequence $cref/optimization/optimize/$$,
+hash codes are used to detect expressions that have already
+been computed.
+Perhaps this should be done during the original forward mode recording. 
 
 $subhead Microsoft Compiler$$
 The Microsoft's Visual C++ Version 9.0 generates a warning of the form
@@ -141,27 +133,6 @@ empty code (if a Microsoft Visual C++ is used).
 If it is shown to be faster and does not slow down CppAD with other compilers,
 non-friend functions should be used to map these operations
 to member functions so that both can be compiled inline.
-
-$subhead Remove Operations From Tape$$
-$index optimize, operation sequence$$
-$index tape, optimize$$
-$index sequence, optimize operations$$
-$index operation, optimize sequence$$
-A single $cref/RevSparseJac/$$ sweep could be used to determine
-which parts of the operation sequence in an
-$cref/ADFun/FunConstruct/$$ object can be removed.
-
-$head Scripting Languages$$
-One could develop a
-SWIG compatible interface to $code AD<double>$$ and $code ADFun<double>$$ that 
-would make it easy to connect the SWIG languages, e.g., Python, see, 
-$href%http://www.swig.org/%SWIG%$$ for a description of SWIG
-and a list of the languages.
-This could also be used for faster evaluation of algorithms
-that have a fixed $cref/operation sequence/glossary/Operation/Sequence/$$.
-This would require the $cref/library/WishList/Library/$$ wish list 
-entry to be implemented.
-
 
 $head Software Guidelines$$
 
@@ -185,26 +156,10 @@ Use spaces rather than tabs.
 
 $lend
 
-$head Sparse Jacobians and Hessians$$
-Testing $cref/cppad_sparse_hessian.cpp/$$ 
-with $code USE_CPPAD_SPARSE_HESSIAN$$ equal to 
-$code 1$$ (true) and $code 0$$ (false) 
-indicates that $code sparse_hessian$$ is more efficient
-than $cref/Hessian/$$ (for large sparse cases).
-Create an implementation of $cref/sparse_hessian/$$ 
-that is more efficient
-(the initial implementation was only meant as a demonstration).
-For example, use arrays of index sets where for each row (column) the
-index contains the non-zero column (row) indices.
-(Also see $cref/Ipopt/WishList/Ipopt/$$ wish list.)
-
 $head Sparsity Patterns$$
-Add option to use index sets for each variable 
-(instead of a boolean array)
-for the computation of sparsity patterns.
-This should be more efficient for very large problems.
-When using arrays of booleans, use OpenMP to parallelize 
-the computation of the sparsity patterns.
+When using arrays of booleans for
+$cref/sparsity patterns/glossary/Sparsity Pattern/$$, 
+use OpenMP to parallelize the computation of the sparsity patterns.
 
 
 $head Speed Testing$$
@@ -226,11 +181,8 @@ $latex \[
 \] $$
 see $cref/standard math functions/ForwardTheory/Standard Math Functions/$$.
 
-
 $head Tracing$$
-Add forward and reverse mode operation tracing to the developer documentation
-(perhaps it will eventually become part of 
-the user interface and documentation).
+Add operation sequence tracing to the user API and documentation.
 
 $head VecAD$$
 Make assignment operation in $cref/VecAD/$$ like

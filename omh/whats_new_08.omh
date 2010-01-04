@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -116,8 +116,8 @@ $head 09-30$$
 Add or modify some wish list entries; see
 $cref/Ipopt/WishList/Ipopt/$$,
 $cref/multiple arguments/WishList/Multiple Arguments/$$,
-$cref/sparse Jacobians and Hessians/WishList/Sparse Jacobians and Hessians/$$,
-$cref/sparsity patterns/WishList/Sparsity Patterns/$$.
+and sparsity patterns
+($cref/sparsity patterns/glossary/Sparsity Pattern/$$ has been fulfilled). 
 
 
 $head 09-26$$
@@ -362,8 +362,9 @@ $head 03-27$$
 Corrected $cref/cppad_sparse_hessian.cpp/$$
 so that it uses the sparse case when 
 $code USE_CPPAD_SPARSE_HESSIAN$$ is $code 1$$.
-Also added a wish list 
-$cref/sparse Hessian/WishList/Sparse Jacobians and Hessians/$$ entry.
+Also added a wish list sparsity pattern entry
+(the $cref/sparsity pattern/glossary/Sparsity Pattern/$$ entry
+has been fulfilled). 
 $pre
 
 $$
@@ -394,10 +395,10 @@ $$
 Remove computed assignment entry from wish list
 (it was fixed on $cref/2007-05-26/whats_new_07/05-26/$$).
 Add 
-$cref/expression hashing/WishList/Optimization/Expression Hashing/$$,
-$cref/library/WishList/Library/$$,
-and $cref/scripting languages/WishList/Scripting Languages/$$
-entries to the wish list.
+$cref/expression hashing/WishList/Optimization/Expression Hashing/$$
+to the wish list.
+Add Library and Scripting Languages to the wish list
+(this has since been fulfilled by the example $cref/ad_in_c.cpp/$$).
 
 $head 01-26$$
 The $cref/LuFactor/$$ routine gave a misleading error message 

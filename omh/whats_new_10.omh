@@ -1,0 +1,57 @@
+$Id$
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin whats_new_10$$
+$spell
+	CppAD
+$$
+
+$section Changes and Additions to CppAD During 2010$$
+
+$head Introduction$$
+This section contains a list of the changes to CppAD during 2010
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+
+$head 01-04$$
+The following items have been fulfilled and
+hence were removed for the $cref/WishList/$$:
+$list number$$
+If an exception occurs before the call to the corresponding
+$xref/ADFun/$$ constructor or $cref/Dependent/$$, 
+the tape recording can be stopped using $cref/abort_recording/$$.
+
+$lnext
+A speed test for $cref/ipopt_cppad_nlp/$$ was added; see
+$cref/ipopt_ode_speed.cpp/$$.
+
+$lnext
+The $cref/optimize/$$ command uses hash coding to check
+when an expression is already in the tape and can be reused.
+
+$lnext
+The $cref/optimize/$$ command removes operations that
+are not used by any of the dependent variables.
+
+$lnext
+The $cref/ad_in_c.cpp/$$ example demonstrates how to connect
+CppAD to an arbitrary scripting language.
+
+$lnext
+The vector of sets option has been added to sparsity calculations; 
+see $cref/sparsity pattern/glossary/Sparsity Pattern/$$.
+
+$lend
+
+
+$end
