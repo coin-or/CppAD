@@ -1,7 +1,7 @@
 rem $Id$
 echo off 
 rem ---------------------------------------------------------------------------
-rem CppAD: Copyright (C) 2003-08 Bradley M. Bell
+rem CppAD: Copyright (C) 2003-10 Bradley M. Bell
 rem
 rem CppAD is distributed under multiple licenses. This distribution is under
 rem the terms of the 

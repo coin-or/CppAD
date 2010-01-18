@@ -2,7 +2,7 @@
 # ifndef CPPAD_IPOPT_CPPAD_NLP_INCLUDED
 # define CPPAD_IPOPT_CPPAD_NLP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -547,9 +547,10 @@ It is the final value of the objective function $latex f(x)$$.
 
 
 $children%
-	ipopt_cppad/ipopt_cppad_windows.bat%
-	ipopt_cppad/ipopt_get_started.cpp%
-	omh/ipopt_cppad_ode1.omh
+	ipopt_cppad/example/example_windows.bat%
+	ipopt_cppad/example/get_started.cpp%
+	ipopt_cppad/example/ode1.omh%
+	ipopt_cppad/speed/ode_speed.cpp
 %$$
 
 $head Visual Studio$$

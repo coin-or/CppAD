@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -15,7 +15,7 @@ echo "Also make sure same ifndef not used by two different files."
 echo "-------------------------------------------------------------------"
 # note CPPAD_CPPAD_INCLUDED is a special case, see cppad/error_handler.hpp
 grep '^# *ifndef *CPPAD_[0-9a-zA-Z_]*_INCLUDED$' \
-	ipopt_cppad/*.hpp \
+	ipopt_cppad/*/*.hpp \
 	cppad/*.hpp \
 	cppad/local/*.hpp \
 	cppad/speed/*.hpp \
@@ -28,7 +28,7 @@ grep '^# *ifndef *CPPAD_[0-9a-zA-Z_]*_INCLUDED$' \
 	> junk.1
  
 ls \
-	ipopt_cppad/*.hpp \
+	ipopt_cppad/*/*.hpp \
 	cppad/*.hpp \
 	cppad/local/*.hpp \
 	cppad/speed/*.hpp \

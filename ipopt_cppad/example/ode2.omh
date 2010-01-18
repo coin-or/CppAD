@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -249,7 +249,7 @@ In addition, the functions that need to be differentiated
 do not involve an iterative procedure.
 
 $children%
-	ipopt_cppad/ipopt_ode_problem.hpp
+	ipopt_cppad/example/ode_problem.hpp
 %$$
 $head Source$$
 The file $cref ipopt_ode_problem.hpp$$ contains 
@@ -318,7 +318,7 @@ $latex \[
 \] $$
 
 $children%
-	ipopt_cppad/ipopt_ode_simple.hpp
+	ipopt_cppad/example/ode_simple.hpp
 %$$
 $head Source$$
 The file $cref ipopt_ode_simple.hpp$$
@@ -523,7 +523,7 @@ J(k,\ell) = \{
 \] $$
 
 $children%
-	ipopt_cppad/ipopt_ode_fast.hpp
+	ipopt_cppad/example/ode_fast.hpp
 %$$
 $head Source$$
 The file $cref ipopt_ode_fast.hpp$$

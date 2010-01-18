@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -28,7 +28,7 @@ ADOLC_LIB_DIR =
 ADOLC_FLAGS   =
 endif
 if CppAD_IPOPT_CPPAD
-IPOPT_SRC_FILES   = ../ipopt_cppad/ipopt_cppad_nlp.cpp ipopt_cppad.cpp
+IPOPT_SRC_FILES   = ../ipopt_cppad/src/ipopt_cppad_nlp.cpp ipopt_cppad.cpp
 IPOPT_EXTRA_FILES =
 IPOPT_INCLUDE     = -I$(IPOPT_DIR)/include
 IPOPT_LIB         = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)

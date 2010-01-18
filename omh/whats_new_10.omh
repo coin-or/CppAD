@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_10$$
 $spell
+	ipopt_cppad/src
 	CppAD
 $$
 
@@ -22,6 +23,14 @@ This section contains a list of the changes to CppAD during 2010
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-18$$
+The $code ipopt_cppad$$ subdirectory of the distribution
+has been split into an $code src$$, $code example$$, and $code speed$$
+subdirectories.
+The $code example$$ ($code speed$$)
+subdirectory is where one builds the $cref%ipopt_cppad_nlp%$$ examples
+($cref%speed tests%ipopt_ode_speed.cpp%$$).
 
 $head 01-04$$
 The following items have been fulfilled and

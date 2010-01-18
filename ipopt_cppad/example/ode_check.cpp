@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -15,13 +15,13 @@ $begin ipopt_ode_check.cpp$$
 $section Correctness Check for Both Simple and Fast Representations$$
 
 $code
-$verbatim%ipopt_cppad/ipopt_ode_check.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%ipopt_cppad/example/ode_check.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 // BEGIN PROGRAM
-# include "ipopt_ode_run.hpp"
+# include "ode_run.hpp"
 
 namespace { // Begin empty namespace
 bool check_solution(const SizeVector& N, const NumberVector& x)

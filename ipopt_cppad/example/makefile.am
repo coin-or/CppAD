@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -22,17 +22,15 @@ endif
 # 
 # Microsoft project files (and ipopt install utility for Visual Studio)
 EXTRA_DIST        = \
-	ipopt_cppad.sln \
-	ipopt_cppad.vcproj  \
-	ipopt_cppad_windows.bat
+	example.sln \
+	example.vcproj  \
+	example_windows.bat \
+	ode1.omh \
+	ode2.omh
 #
-noinst_PROGRAMS   = \
-	ipopt_cppad \
-	ipopt_ode_speed
-
+noinst_PROGRAMS   = example
 #
-ipopt_cppad_CXXFLAGS       = -g $(CXX_FLAGS) 
-ipopt_ode_speed_CXXFLAGS   = -O2 -DNDEBUG $(CXX_FLAGS)
+AM_CXXFLAGS       = -g $(CXX_FLAGS) 
 #
 AM_CPPFLAGS       = -I. \
                    -I$(top_srcdir) \
@@ -42,21 +40,13 @@ AM_CPPFLAGS       = -I. \
 LDADD             = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
 AM_LDFLAGS        = -L$(IPOPT_DIR)/lib
 #
-ipopt_cppad_SOURCES   = \
-	ipopt_cppad.cpp \
-	ipopt_cppad_nlp.cpp \
-	ipopt_cppad_nlp.hpp \
-	ipopt_get_started.cpp \
-	ipopt_ode_fast.hpp \
-	ipopt_ode_problem.hpp \
-	ipopt_ode_simple.hpp  \
-	ipopt_ode_check.cpp \
-	ipopt_ode_run.hpp
-#
-ipopt_ode_speed_SOURCES   = \
-	ipopt_ode_speed.cpp \
-	ipopt_cppad_nlp.cpp \
-	ipopt_cppad_nlp.hpp \
-	ipopt_ode_fast.hpp \
-	ipopt_ode_problem.hpp \
-	ipopt_ode_simple.hpp  
+example_SOURCES   = \
+	example.cpp \
+	../src/ipopt_cppad_nlp.cpp \
+	../src/ipopt_cppad_nlp.hpp \
+	get_started.cpp \
+	ode_fast.hpp \
+	ode_problem.hpp \
+	ode_simple.hpp  \
+	ode_check.cpp \
+	ode_run.hpp

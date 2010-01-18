@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -22,9 +22,10 @@ list="
 	doc.omh
 	dev.omh
 	cppad/PowInt.h
-	ipopt_cppad/*.hpp
-	ipopt_cppad/*.cpp
-	ipopt_cppad/*.bat
+	ipopt_cppad/*/*.hpp
+	ipopt_cppad/*/*.cpp
+	ipopt_cppad/*/*.bat
+	ipopt_cppad/*/*.omh
 	cppad/*.hpp
 	cppad/local/*.hpp
 	cppad/speed/*.hpp
@@ -46,6 +47,8 @@ list="
 for file in $list
 do
 	# assume $childtable, ... , $verbatim use % for delimiter
+	# also assume verbatim commands use one line (would be nice to allow
+	# multiple line verbatim commands).
 	sed -n < $file >> junk.1 \
 		-e 's/^#[ \t][ \t]*//' \
 		-e '/$childtable%/,/%$\$/p' \

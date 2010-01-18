@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -14,8 +14,8 @@
 echo "Checking difference between C++ include directives and file names."
 echo "-------------------------------------------------------------------"
 grep '^# *include *<cppad/' \
-	ipopt_cppad/*.hpp \
-	ipopt_cppad/*.cpp \
+	ipopt_cppad/*/*.hpp \
+	ipopt_cppad/*/*.cpp \
 	cppad/*.hpp \
 	cppad/local/*.hpp \
 	cppad/speed/*.hpp \

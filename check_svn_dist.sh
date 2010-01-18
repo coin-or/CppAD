@@ -32,7 +32,7 @@ then
 fi
 # ----------------------------------------------------------------------------
 dir=`pwd`
-for name in example test_more ipopt_cppad
+for name in example test_more ipopt_cppad/example ipopt_cppad/speed
 do
 	echo "cd $name"
 	if ! cd $name

@@ -1,9 +1,9 @@
 /* $Id$ */
-# ifndef CPPAD_IPOPT_ODE_SIMPLE_INCLUDED
-# define CPPAD_IPOPT_ODE_SIMPLE_INCLUDED
+# ifndef CPPAD_ODE_SIMPLE_INCLUDED
+# define CPPAD_ODE_SIMPLE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -29,14 +29,14 @@ $index example, ipopt_cppad_nlp ode source$$
 $index source, ipopt_cppad_nlp ode example$$
 
 $code
-$verbatim%ipopt_cppad/ipopt_ode_simple.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%ipopt_cppad/example/ode_simple.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 
 // BEGIN PROGRAM
-# include "ipopt_ode_problem.hpp"
+# include "ode_problem.hpp"
 
 // define in the empty namespace
 namespace {

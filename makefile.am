@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -258,7 +258,7 @@ endif
 # ---------------------------------------------------------------
 # Did user specify a value for IPOPT_DIR in configure command line 
 if CppAD_IPOPT_CPPAD
-IPOPT_CPPAD = ipopt_cppad
+IPOPT_CPPAD = ipopt_cppad/example ipopt_cppad/speed
 else
 IPOPT_CPPAD =
 endif

@@ -1,8 +1,8 @@
 /* $Id$ */
-# ifndef CPPAD_IPOPT_ODE_RUN_INCLUDED
-# define CPPAD_IPOPT_ODE_RUN_INCLUDED
+# ifndef CPPAD_ODE_RUN_INCLUDED
+# define CPPAD_ODE_RUN_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -21,15 +21,15 @@ $$
 $section Driver for Running the Ipopt ODE Example$$
 
 $code
-$verbatim%ipopt_cppad/ipopt_ode_run.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%ipopt_cppad/example/ode_run.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 
 // BEGIN PROGRAM
-# include "ipopt_ode_simple.hpp"
-# include "ipopt_ode_fast.hpp"
+# include "ode_simple.hpp"
+# include "ode_fast.hpp"
 
 namespace { // BEGIN empty namespace -----------------------------------------
 

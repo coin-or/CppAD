@@ -1,8 +1,8 @@
 /* $Id$ */
-# ifndef CPPAD_IPOPT_ODE_FAST_INCLUDED
-# define CPPAD_IPOPT_ODE_FAST_INCLUDED
+# ifndef CPPAD_ODE_FAST_INCLUDED
+# define CPPAD_ODE_FAST_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -25,14 +25,14 @@ $index example, ipopt_cppad_nlp ode source$$
 $index source, ipopt_cppad_nlp ode example$$
 
 $code
-$verbatim%ipopt_cppad/ipopt_ode_fast.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%ipopt_cppad/example/ode_fast.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 
 // BEGIN PROGRAM
-# include "ipopt_ode_problem.hpp"
+# include "ode_problem.hpp"
 
 namespace {
 	class FG_fast : public ipopt_cppad_fg_info

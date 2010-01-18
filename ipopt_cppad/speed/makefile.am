@@ -1,0 +1,41 @@
+# $Id$
+# -----------------------------------------------------------------------------
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+#
+# CppAD is distributed under multiple licenses. This distribution is under
+# the terms of the 
+#                     Common Public License Version 1.0.
+#
+# A copy of this license is included in the COPYING file of this distribution.
+# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+# automake input file
+#
+# CppAD pusts all it's preprocessor definitions in the cppad/config.h file
+DEFS          =
+#
+if CppAD_BOOSTVECTOR
+BOOST_INCLUDE = -I$(BOOST_DIR)
+else
+BOOST_INCLUDE =
+endif
+# 
+noinst_PROGRAMS   = ode_speed
+#
+AM_CXXFLAGS       = -O2 -DNDEBUG $(CXX_FLAGS)
+#
+AM_CPPFLAGS       = -I. \
+                   -I$(top_srcdir) \
+                     $(BOOST_INCLUDE) \
+                     -I$(IPOPT_DIR)/include
+#
+LDADD             = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
+AM_LDFLAGS        = -L$(IPOPT_DIR)/lib
+#
+ode_speed_SOURCES   = \
+	ode_speed.cpp \
+	../src/ipopt_cppad_nlp.cpp \
+	../src/ipopt_cppad_nlp.hpp \
+	../example/ode_fast.hpp \
+	../example/ode_problem.hpp \
+	../example/ode_simple.hpp  

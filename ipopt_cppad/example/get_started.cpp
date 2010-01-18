@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -46,14 +46,14 @@ the value $cref/IpoptDir/InstallUnix/IpoptDir/$$ is specified on the
 $cref/configure/InstallUnix/Configure/$$ command line.
 
 $code
-$verbatim%ipopt_cppad/ipopt_get_started.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%ipopt_cppad/example/get_started.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 // BEGIN PROGRAM
 
-# include "ipopt_cppad_nlp.hpp"
+# include "../src/ipopt_cppad_nlp.hpp"
 
 namespace {
 

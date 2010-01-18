@@ -49,8 +49,8 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/cppad/config.h
-CONFIG_CLEAN_FILES = doxyfile doc.omh omh/install_unix.omh \
-	omh/install_windows.omh cppad/configure.hpp
+CONFIG_CLEAN_FILES = cppad/configure.hpp doxyfile doc.omh \
+	omh/install_unix.omh omh/install_windows.omh
 CONFIG_CLEAN_VPATH_FILES =
 SOURCES =
 DIST_SOURCES =
@@ -91,10 +91,10 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
 	distdir dist dist-all distcheck
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = ipopt_cppad example introduction/get_started \
-	introduction/exp_apx print_for speed/cppad speed/double \
-	speed/example speed/profile speed/adolc speed/fadbad \
-	speed/sacado test_more
+DIST_SUBDIRS = ipopt_cppad/example ipopt_cppad/speed example \
+	introduction/get_started introduction/exp_apx print_for \
+	speed/cppad speed/double speed/example speed/profile \
+	speed/adolc speed/fadbad speed/sacado test_more
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -472,7 +472,7 @@ nobase_myinclude_HEADERS = \
 #
 # ---------------------------------------------------------------
 # Did user specify a value for IPOPT_DIR in configure command line 
-@CppAD_IPOPT_CPPAD_TRUE@IPOPT_CPPAD = ipopt_cppad
+@CppAD_IPOPT_CPPAD_TRUE@IPOPT_CPPAD = ipopt_cppad/example ipopt_cppad/speed
 #
 SUBDIRS = \
 	$(IPOPT_CPPAD) \
@@ -573,6 +573,8 @@ $(top_srcdir)/cppad/config.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f cppad/config.h cppad/stamp-h1
+cppad/configure.hpp: $(top_builddir)/config.status $(top_srcdir)/cppad/configure.hpp.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
 doxyfile: $(top_builddir)/config.status $(srcdir)/doxyfile.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 doc.omh: $(top_builddir)/config.status $(srcdir)/doc.omh.in
@@ -580,8 +582,6 @@ doc.omh: $(top_builddir)/config.status $(srcdir)/doc.omh.in
 omh/install_unix.omh: $(top_builddir)/config.status $(top_srcdir)/omh/install_unix.omh.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 omh/install_windows.omh: $(top_builddir)/config.status $(top_srcdir)/omh/install_windows.omh.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-cppad/configure.hpp: $(top_builddir)/config.status $(top_srcdir)/cppad/configure.hpp.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 install-nobase_myincludeHEADERS: $(nobase_myinclude_HEADERS)
 	@$(NORMAL_INSTALL)

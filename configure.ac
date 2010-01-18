@@ -1,6 +1,6 @@
 dnl $Id$
 dnl ---------------------------------------------------------------------------
-dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 dnl
 dnl CppAD is distributed under multiple licenses. This distribution is under
 dnl the terms of the
@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20090813, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20100118, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -302,17 +302,18 @@ dnl -----------------------------------------------------------------------
 dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will 
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
+	cppad/configure.hpp
 	doxyfile
-	example/test_one.sh
-	test_more/test_one.sh
 	doc.omh
+	example/test_one.sh
 	omh/install_unix.omh
 	omh/install_windows.omh
-	cppad/configure.hpp
+	test_more/test_one.sh
 
 	makefile
-	ipopt_cppad/makefile
 	example/makefile 
+	ipopt_cppad/example/makefile
+	ipopt_cppad/speed/makefile
 	introduction/get_started/makefile 
 	introduction/exp_apx/makefile
 	print_for/makefile
