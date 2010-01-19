@@ -22,35 +22,42 @@ $end
 */
 
 // BEGIN PROGRAM
-// system include files used for I/O
-# include <iostream>
 # include "../example/ode_run.hpp"
+# include <cassert>
 
+# if CPPAD_GETTIMEOFDAY & CPPAD_NO_MICROSOFT
+# include <sys/time.h>
+# else
+# include <ctime>
+# endif
 
 namespace {
 	double current_second(void)
-	{	return (double) clock() / (double) CLOCKS_PER_SEC;
-	}
-	void output(
-		bool        simple          , 
-		size_t      retape          , 
-		double      s0              , 
-		double      s1              )
-	{	using std::cout;
-		if( simple )
-			cout << "representation simple";
-		else	cout << "representation fast  ";
-		if( retape )
-			cout << " retape yes,";
-		else	cout << " retape no, ";
-		cout << " seconds = " << s1 - s0;
-		cout << std::endl;
+	{
+# if CPPAD_GETTIMEOFDAY & CPPAD_NOT_MICOROSOFT
+		struct timeval value;
+		gettimeofday(&value, 0);
+		return double(value.tv_sec) + double(value.tv_usec) * 1e-6;
+# else
+		return (double) clock() / (double) CLOCKS_PER_SEC;
+# endif
 	}
 }
 
+double ode_speed(const std::string& name)
+{
+	// determine simple and retape flags
+	bool simple = true, retape = true;
+	if( name == "simple_retape_no" )
+	{	simple = true; retape = false; }
+	else if( name == "simple_retape_yes" )
+	{	simple = true; retape = true; }
+	else if( name == "fast_retape_no" )
+	{	simple = false; retape = false; }
+	else if( name == "fast_retape_yes" )
+	{	simple = false; retape = true; }
+	else	assert(false);
 
-int main(void)
-{	bool simple, retape;
 	size_t i;
         double s0, s1;
 
@@ -58,46 +65,19 @@ int main(void)
 	NumberVector x;
 
 	// number of time grid intervals between measurement values
-	size_t n = 0;
 	SizeVector N(Nz + 1);
 	N[0] = 0;
 	for(i = 1; i <= Nz; i++)
 	{	N[i] = 7;
-		n   += N[i] * Ny;
+		// n   += N[i] * Ny;
 	}
-	n += Na;
-	std::cout << "ipopt_ode: number of variables = " << n << std::endl;
+	// n += Na;
 
 	s0              = current_second();
-	simple          = false;
-	retape          = false;
-	ipopt_ode_case<FG_fast>(retape, N, x);
+	if( simple )
+		ipopt_ode_case<FG_simple>(retape, N, x);
+	else	ipopt_ode_case<FG_fast>(retape, N, x);
 	s1              = current_second();
-	output(simple, retape, s0, s1);
-
-	s0              = current_second();
-	simple          = false;
-	retape          = true;
-	ipopt_ode_case<FG_fast>(retape, N, x);
-	s1              = current_second();
-	output(simple, retape, s0, s1);
-
-	s0              = current_second();
-	simple          = true;
-	retape          = false;
-	ipopt_ode_case<FG_simple>(retape, N, x);
-	s1              = current_second();
-	output(simple, retape, s0, s1);
-
-	s0              = current_second();
-	simple          = true;
-	retape          = true;
-	ipopt_ode_case<FG_simple>(retape, N, x);
-	s1              = current_second();
-	output(simple, retape, s0, s1);
- 
- 
- 
-	return 0;
+	return s1 - s0;
 }
 // END PROGRAM

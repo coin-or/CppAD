@@ -20,7 +20,7 @@ else
 BOOST_INCLUDE =
 endif
 # 
-noinst_PROGRAMS   = ode_speed
+noinst_PROGRAMS   = speed
 #
 AM_CXXFLAGS       = -O2 -DNDEBUG $(CXX_FLAGS)
 #
@@ -32,7 +32,8 @@ AM_CPPFLAGS       = -I. \
 LDADD             = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
 AM_LDFLAGS        = -L$(IPOPT_DIR)/lib
 #
-ode_speed_SOURCES   = \
+speed_SOURCES   = \
+	speed.cpp \
 	ode_speed.cpp \
 	../src/ipopt_cppad_nlp.cpp \
 	../src/ipopt_cppad_nlp.hpp \

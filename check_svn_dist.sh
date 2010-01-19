@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-program="check_svn_dist.sh"
+script="check_svn_dist.sh"
 repository="https://projects.coin-or.org/svn/CppAD"
 branch=`pwd | sed -e 's|.*/CppAD/||'`
 #! /bin/bash
@@ -9,7 +9,7 @@ then
 	echo "rm -rf svn_dist"
 	if ! rm -rf svn_dist
 	then
-		echo "$program: cannot remove old svn_dist directory"
+		echo "$script: cannot remove old svn_dist directory"
 		exit 1
 	fi
 fi
@@ -20,38 +20,39 @@ svn checkout $repository/$branch svn_dist
 echo "cd svn_dist"
 if ! cd svn_dist
 then
-	echo "$program: cannot change into svn_dist directory"
+	echo "$script: cannot change into svn_dist directory"
 	exit 1
 fi
 #
 echo "./build.sh conf_test"
 if ! ./build.sh config_test
 then
-	echo "$program: error durring ./build.sh config_test in ./svn_dist"
+	echo "$script: error durring ./build.sh config_test in ./svn_dist"
 	exit 1
 fi
 # ----------------------------------------------------------------------------
 dir=`pwd`
 for name in example test_more ipopt_cppad/example ipopt_cppad/speed
 do
-	echo "cd $name"
-	if ! cd $name
+	echo "cd $dir/$name"
+	if ! cd $dir/$name
 	then
-		echo "$program: cannot change into $dir/$name directory"
+		echo "$script: cannot change into $dir/$name directory"
 		exit 1
 	fi
 	echo "make"
 	if ! make
 	then
-		echo "$program: $dir/$name/make failed"
+		echo "$script: $dir/$name/make failed"
 		exit 1
 	fi
-	echo "./$name"
-	if ! ./$name
+	program=`echo $name | sed -e 's|.*/||'`
+	echo "./$program"
+	if ! ./$program
 	then
-		echo "$program: $dir/$name/$name failed"
+		echo "$script: $dir/$name/$program failed"
 		exit 1
 	fi
-	echo "cd .."
-	cd ..
+	echo "cd $dir"
+	cd $dir
 done
