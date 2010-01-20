@@ -12,6 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_10$$
 $spell
+	hpp
+	ifdef
+	nlp
 	ipopt_cppad/src
 	CppAD
 $$
@@ -24,12 +27,22 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-20$$
+We plan to split up the 
+$code ipopt_cppad/src/ipopt_cppad_nlp.hpp$$ include file.
+In preparation,
+the example $code ipopt_cppad$$ has been changed to $code cppad_ipopt$$.
+This will facilitate using $code CPPAD_IPOPT_*$$ for the
+$code # ifdef$$ commands in the new include files
+(note that they must begin with $code CPPAD$$).
+
+
 $head 01-18$$
 The $code ipopt_cppad$$ subdirectory of the distribution
 has been split into an $code src$$, $code example$$, and $code speed$$
 subdirectories.
 The $code example$$ ($code speed$$)
-subdirectory is where one builds the $cref%ipopt_cppad_nlp%$$ examples
+subdirectory is where one builds the $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ examples
 ($cref%speed tests%ipopt_ode_speed.cpp%$$).
 
 $head 01-04$$
@@ -41,7 +54,7 @@ $xref/ADFun/$$ constructor or $cref/Dependent/$$,
 the tape recording can be stopped using $cref/abort_recording/$$.
 
 $lnext
-A speed test for $cref/ipopt_cppad_nlp/$$ was added; see
+A speed test for $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ was added; see
 $cref/ipopt_ode_speed.cpp/$$.
 
 $lnext

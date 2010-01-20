@@ -10,11 +10,11 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-# include "../ipopt_cppad/src/ipopt_cppad_nlp.hpp"
+# include "../cppad_ipopt/src/cppad_ipopt_nlp.hpp"
 
 namespace { // Begin empty namespace
 // ---------------------------------------------------------------------------
-class FG_retape : public ipopt_cppad_fg_info
+class FG_retape : public cppad_ipopt_fg_info
 {
 public:
 	// derived class part of constructor
@@ -38,7 +38,7 @@ public:
 	{	return true; }
 }; 
 
-bool ipopt_cppad_retape(void)
+bool cppad_ipopt_retape(void)
 {	bool ok = true;
 	size_t j;
 
@@ -64,11 +64,11 @@ bool ipopt_cppad_retape(void)
 
 	// object in derived class
 	FG_retape fg_retape;
-	ipopt_cppad_fg_info *fg_info = &fg_retape;  
+	cppad_ipopt_fg_info *fg_info = &fg_retape;  
 
 	// create the Ipopt interface
-	ipopt_cppad_solution solution;
-	Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new ipopt_cppad_nlp(
+	cppad_ipopt_solution solution;
+	Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new cppad_ipopt_nlp(
 		n, m, x_i, x_l, x_u, g_l, g_u, fg_info, &solution
 	);
 
@@ -102,7 +102,7 @@ bool ipopt_cppad_retape(void)
 	/*
  	Check some of the solution values
  	*/
-	ok &= solution.status == ipopt_cppad_solution::success;
+	ok &= solution.status == cppad_ipopt_solution::success;
 	//
 	double check_x[]   = { -1., 0. };
 	double rel_tol     = 1e-6;  // relative tolerance
@@ -118,10 +118,10 @@ bool ipopt_cppad_retape(void)
 // ---------------------------------------------------------------------------
 /*
 This solve the same problem as 
-../ipopt_cppad/ipopt_cppad_simple.cpp (repository revision 
+../cppad_ipopt/cppad_ipopt_simple.cpp (repository revision 
 1276) in a convoluted way in order to test the representation code.
 */
-class FG_K_gt_1 : public ipopt_cppad_fg_info
+class FG_K_gt_1 : public cppad_ipopt_fg_info
 {
 private:
 	bool retape_;
@@ -180,7 +180,7 @@ public:
 	}
 };
 	
-bool ipopt_cppad_K_gt_1(void)
+bool cppad_ipopt_K_gt_1(void)
 {	bool ok = true;
 	size_t j;
 
@@ -213,7 +213,7 @@ bool ipopt_cppad_K_gt_1(void)
 
 	size_t icase;
 	for(icase = 0; icase <= 1; icase++)
-	{	// Should ipopt_cppad_nlp retape the operation sequence for
+	{	// Should cppad_ipopt_nlp retape the operation sequence for
 		// every new x. Can test both true and false cases because 
 		// the operation sequence does not depend on x (for this case).
 		bool retape = bool(icase);
@@ -226,11 +226,11 @@ bool ipopt_cppad_K_gt_1(void)
 
 		// object in derived class
 		FG_K_gt_1 my_fg_info(retape);
-		ipopt_cppad_fg_info *fg_info = &my_fg_info;  
+		cppad_ipopt_fg_info *fg_info = &my_fg_info;  
 
 		// create the Ipopt interface
-		ipopt_cppad_solution solution;
-		Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new ipopt_cppad_nlp(
+		cppad_ipopt_solution solution;
+		Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new cppad_ipopt_nlp(
 		n, m, x_i, x_l, x_u, g_l, g_u, fg_info, &solution
 		);
 
@@ -264,7 +264,7 @@ bool ipopt_cppad_K_gt_1(void)
 		/*
  		Check some of the solution values
  		*/
-		ok &= solution.status == ipopt_cppad_solution::success;
+		ok &= solution.status == cppad_ipopt_solution::success;
 		//
 		double check_z_l[] = { 1.087871, 0.,       0.,      0.       };
 		double check_z_u[] = { 0.,       0.,       0.,      0.       };
@@ -300,7 +300,7 @@ The solution is x[1] = 0 and x[0] arbitrary.
 
 namespace
 {
-class FG_J_changes : public ipopt_cppad_fg_info
+class FG_J_changes : public cppad_ipopt_fg_info
 {
 private:
 	bool retape_;
@@ -359,7 +359,7 @@ public:
 };
 }
 
-bool ipopt_cppad_J_changes(void)
+bool cppad_ipopt_J_changes(void)
 {
 	bool ok = true;
 	// number of independent variables (domain dimension for f and g)
@@ -387,10 +387,10 @@ bool ipopt_cppad_J_changes(void)
 	// object for evaluating function
 	bool retape = false;
 	FG_J_changes my_fg_info(retape);
-	ipopt_cppad_fg_info *fg_info = &my_fg_info;
+	cppad_ipopt_fg_info *fg_info = &my_fg_info;
 
-	ipopt_cppad_solution solution;
-	Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new ipopt_cppad_nlp(
+	cppad_ipopt_solution solution;
+	Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new cppad_ipopt_nlp(
 		n, m, x_i, x_l, x_u, g_l, g_u, fg_info, &solution
 	);
 
@@ -418,7 +418,7 @@ bool ipopt_cppad_J_changes(void)
 	/*
 	 Check solution status
 	 */
-	ok &= solution.status == ipopt_cppad_solution::success;
+	ok &= solution.status == cppad_ipopt_solution::success;
 	ok &= CppAD::NearEqual(solution.x[1], 0., 1e-6, 1e-6);
 
 	return ok;
@@ -427,10 +427,10 @@ bool ipopt_cppad_J_changes(void)
 
 } // End empty namespace
 
-bool ipopt_cppad(void)
+bool cppad_ipopt(void)
 {	bool ok = true;
-	ok &= ipopt_cppad_retape();
-	ok &= ipopt_cppad_K_gt_1();
-	ok &= ipopt_cppad_J_changes();
+	ok &= cppad_ipopt_retape();
+	ok &= cppad_ipopt_K_gt_1();
+	ok &= cppad_ipopt_J_changes();
 	return ok;
 }

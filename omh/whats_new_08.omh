@@ -63,12 +63,13 @@ $code test_more$$ directory).
 
 $head 12-04$$
 Extensive explanation for the $code ipopt_cppad/ipopt_cppad_ode$$ example was
-provided in the section $cref/ipopt_cppad_ode/$$.
+provided in the section $cref/ipopt_cppad_ode/cppad_ipopt_ode/$$.
 
 $head 11-22$$
 The CppAD interface to the Ipopt nonlinear programming solver
+$cref/cppad_ipopt_nlp/$$
 has been moved from $code example/ipopt_cppad_nlp$$ to 
-$cref|ipopt_cppad/ipopt_cppad_nlp|ipopt_cppad_nlp|$$.
+$code ipopt_cppad/ipopt_cppad_nlp$$.
 
 $head 11-21$$
 The Microsoft's Visual C++ Version 9.0 generates a warning of the form
@@ -123,7 +124,7 @@ and sparsity patterns
 $head 09-26$$
 Use parenthesis and brackets to group terms of the form
 $latex m \times I$$ to make the documentation of
-$cref/ipopt_cppad_nlp/$$ easier to read.
+$cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ easier to read.
 
 Changed $code ipopt_cppad/ipopt_cppad_ode$$ to use $latex y(t)$$ for
 the solution of the ODE to distinguish it for $latex x$$,
@@ -144,47 +145,47 @@ with a specific initial value.
 $head 09-16$$
 Add $code ipopt_cppad/ipopt_cppad_ode$$, an example and test
 that optimizes the solution of an ODE.
-Change $code r_eval$$ to $code eval_r$$ in $cref/ipopt_cppad_nlp/$$.
+Change $code r_eval$$ to $code eval_r$$ in $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$.
 Fix a dimension of $code u_ad$$ error in $code ipopt_cppad_nlp$$.
 
 $head 09-12$$
 Converted from storing full Hessian and Jacobian to a sparse data structure
-in $cref/ipopt_cppad_nlp/$$.
+in $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$.
 This greatly reduced the memory requirements (and increased the speed)
 for sparse problems.
 
 $head 09-10$$
-Fixed more indexing bugs in $cref/ipopt_cppad_nlp/$$
+Fixed more indexing bugs in $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$
 that effected cases where the domain index vector $latex J_{k, \ell}$$
 was different for different values of $latex k$$ and $latex \ell$$.
 $pre
 
 $$
-In $cref/ipopt_cppad_nlp/$$,
+In $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$,
 combined $icode%fg_info%->domain_index()%$$ and 
 $icode%fg_info%->range_index()%$$ into a single function called
 $icode%fg_info%->index()%$$.
 Also added more error checking (if $code NDEBUG$$ is not defined). 
 
 $head 09-09$$
-Fixed an indexing bug in $cref/ipopt_cppad_nlp/$$.
+Fixed an indexing bug in $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$.
 (This effected cases where the domain index vector $latex J_{k, \ell}$$
 was different for different values of $latex k$$ and $latex \ell$$.)
 
 $head 09-07$$
-Change $cref/ipopt_cppad_nlp/$$ so that object and constraints
+Change $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ so that object and constraints
 are expressed as the double summation of simpler functions.
 This is more versatile that the single summation representation.
 
 $head 09-06$$
-Checked in a major change to $cref/ipopt_cppad_nlp/$$
+Checked in a major change to $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$
 whereby the object and constraints can be expressed as the
 sum of simpler functions. 
 This is the first step in what will eventually be a more versatile
 representation.
 
 $head 09-05$$
-Fix bug in $cref/ipopt_cppad_nlp/$$ (not recording the function
+Fix bug in $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ (not recording the function
 at the proper location. Here is the difference that occurred 
 multiple places in the $code ipopt_cppad/ipopt_cppad_nlp.cpp$$ source:
 $codep
@@ -202,15 +203,15 @@ Changed $code eval_grad_f$$ in $code ipopt_cppad_nlp.cpp$$
 to be more efficient.
 
 $head 09-04$$
-The $cref/ipopt_cppad_nlp/$$ interface has been changed to use
+The $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ interface has been changed to use
 a derived class object instead of a pointer to a function.
 
 $head 09-03$$
-The $cref/ipopt_cppad_nlp/$$ interface has been changed to use
+The $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ interface has been changed to use
 $code size_t$$ instead of $code Ipopt::Index$$.
 
 $head 09-01$$
-Back out the changes made to $cref/ipopt_cppad_nlp/$$ on 08-29
+Back out the changes made to $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ on 08-29
 (because testing proved the change to be less efficient in the case
 that motivated the change).
 
@@ -230,10 +231,10 @@ $pre
 
 $$
 $index ipopt_cppad_nlp$$
-The $cref/ipopt_cppad_nlp/$$ example has been extended
+The $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ example has been extended
 so that it allows for both scalar and vector evaluation of the
 objective and constraints; see the argument $icode fg_vector$$ in
-$cref/ipopt_cppad_nlp/$$.
+$cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$.
 In the case where there is not a lot of common terms
 between the functions, the scalar evaluation may be more efficient.
 
@@ -244,7 +245,8 @@ This makes it easy to accumulate multiple scalars and
 $cref/simple vectors/SimpleVector/$$ into one large $code CppAD::vector$$.
 
 $head 08-08$$
-There was an indexing bug in the $cref/Ipopt/ipopt_cppad_nlp/$$ example
+There was an indexing bug in the 
+$cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$ example
 that affected the $icode retape$$ equal to $code false$$ case.
 This has been fixed.
 In addition, the missing 
@@ -255,7 +257,7 @@ Extend $cref/configure/InstallUnix/Configure/$$ command to check for
 extras libraries that are necessary for linking the ipopt example.
 
 $head 06-18$$
-Add specifications for the Ipopt class $cref/ipopt_cppad_nlp/$$.
+Add specifications for the Ipopt class $cref/ipopt_cppad_nlp/cppad_ipopt_nlp/$$.
 This is only an example class it may change with future 
 versions of CppAD.
 

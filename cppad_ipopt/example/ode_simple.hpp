@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin ipopt_ode_simple.hpp$$
 $spell
-	ipopt_cppad_nlp
+	cppad_ipopt_nlp
 	Nz
 	Ny
 	Na
@@ -23,13 +23,13 @@ $$
 
 $section ODE Fitting Using Simple Representation$$
 
-$index ipopt_cppad_nlp, ode example source$$
-$index ode, ipopt_cppad_nlp example source$$
-$index example, ipopt_cppad_nlp ode source$$
-$index source, ipopt_cppad_nlp ode example$$
+$index cppad_ipopt_nlp, ode example source$$
+$index ode, cppad_ipopt_nlp example source$$
+$index example, cppad_ipopt_nlp ode source$$
+$index source, cppad_ipopt_nlp ode example$$
 
 $code
-$verbatim%ipopt_cppad/example/ode_simple.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%cppad_ipopt/example/ode_simple.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -40,7 +40,7 @@ $end
 
 // define in the empty namespace
 namespace {
-	class FG_simple : public ipopt_cppad_fg_info
+	class FG_simple : public cppad_ipopt_fg_info
 	{
 	private:
 		bool       retape_;

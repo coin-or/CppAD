@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_IPOPT_CPPAD_NLP_INCLUDED
-# define CPPAD_IPOPT_CPPAD_NLP_INCLUDED
+# ifndef CPPAD_IPOPT_NLP_INCLUDED
+# define CPPAD_IPOPT_NLP_INCLUDED
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
@@ -12,7 +12,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin ipopt_cppad_nlp$$
+$begin cppad_ipopt_nlp$$
 $spell
 	cppad
 	bool
@@ -26,7 +26,7 @@ $spell
 	obj
 	const
 	optimizer
-	ipopt_cppad_nlp.hpp
+	cppad_ipopt_nlp.hpp
 	fg_info.eval
 	retape
 	CppAD
@@ -41,16 +41,16 @@ $index Ipopt, AD$$
 $index AD, Ipopt$$
 
 $head Syntax$$
-$codei%# include "ipopt_cppad_nlp.hpp"
+$codei%# include "cppad_ipopt_nlp.hpp"
 %$$
-$codei%# ipopt_cppad_solution %solution%;
+$codei%# cppad_ipopt_solution %solution%;
 %$$
-$codei%ipopt_cppad_nlp %cppad_nlp%(
+$codei%cppad_ipopt_nlp %cppad_nlp%(
 	%n%, %m%, %x_i%, %x_l%, %x_u%, %g_l%, %g_u%, &%fg_info%, &%solution%
 )%$$
 
 $head Purpose$$
-The class $code ipopt_cppad_nlp$$ is used to solve nonlinear programming
+The class $code cppad_ipopt_nlp$$ is used to solve nonlinear programming
 problems of the form
 $latex \[
 \begin{array}{rll}
@@ -158,24 +158,24 @@ and $latex J_{0,0} = (0 , \ldots , n-1)$$.
 
 $head SizeVector$$
 The type $codei SizeVector$$ is defined by the 
-$codei ipopt_cppad_nlp.hpp$$ include file to be a 
+$codei cppad_ipopt_nlp.hpp$$ include file to be a 
 $cref/SimpleVector/$$ class with elements of type
 $code size_t$$.
 
 $head NumberVector$$
 The type $codei NumberVector$$ is defined by the 
-$codei ipopt_cppad_nlp.hpp$$ include file to be a 
+$codei cppad_ipopt_nlp.hpp$$ include file to be a 
 $cref/SimpleVector/$$ class with elements of type
 $code Ipopt::Number$$.
 
 $head ADNumber$$
 The type $codei ADNumber$$ is defined by the 
-$codei ipopt_cppad_nlp.hpp$$ include file to be a 
+$codei cppad_ipopt_nlp.hpp$$ include file to be a 
 an AD type that can be used to compute derivatives.
 
 $head ADVector$$
 The type $codei ADVector$$ is defined by the 
-$codei ipopt_cppad_nlp.hpp$$ include file to be a 
+$codei cppad_ipopt_nlp.hpp$$ include file to be a 
 $cref/SimpleVector/$$ class with elements of type
 $code ADNumber$$. 
 
@@ -245,7 +245,7 @@ $codei%
 	%FG_info fg_info%
 %$$
 where the class $icode FG_info$$ is derived from the 
-base class $code ipopt_cppad_fg_info$$.
+base class $code cppad_ipopt_fg_info$$.
 Certain virtual member functions of $icode fg_info$$ are used to 
 compute the value of $latex fg(x)$$.
 The specifications for these member functions are given below:
@@ -253,7 +253,7 @@ The specifications for these member functions are given below:
 $subhead fg_info.number_functions$$
 This member function has prototype
 $codei%
-	virtual size_t ipopt_cppad_fg_info::number_functions(void)
+	virtual size_t cppad_ipopt_fg_info::number_functions(void)
 %$$
 If $icode K$$ has type $code size_t$$, the syntax
 $codei%
@@ -261,18 +261,18 @@ $codei%
 %$$
 sets $icode K$$ to the number of functions used in the
 representation of $latex fg(x)$$; i.e., $latex K$$ in
-the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
+the $cref/representation/cppad_ipopt_nlp/fg(x)/Representation/$$ above.
 $pre
 
 $$
-The $code ipopt_cppad_fg_info$$ implementation of this function
+The $code cppad_ipopt_fg_info$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.
 $icode%K% = 1%$$.
 
 $subhead fg_info.eval_r$$
 This member function has the prototype
 $codei%
-virtual ADVector ipopt_cppad_fg_info::eval_r(size_t %k%, const ADVector& %u%) = 0;
+virtual ADVector cppad_ipopt_fg_info::eval_r(size_t %k%, const ADVector& %u%) = 0;
 %$$
 Thus it is a pure virtual function and must be defined in the 
 derived class $icode FG_info$$.
@@ -280,7 +280,7 @@ $pre
 
 $$
 This function computes the value of $latex r_k (u)$$
-used in the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$
+used in the $cref/representation/cppad_ipopt_nlp/fg(x)/Representation/$$
 for $latex fg(x)$$.
 If $icode k$$ in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
 $icode u$$ is an $code ADVector$$ of size $icode q(k)$$ 
@@ -294,7 +294,7 @@ set $icode r$$ to the vector $latex r_k (u)$$.
 $subhead fg_info.retape$$
 This member function has the prototype
 $codei%
-	virtual bool ipopt_cppad_fg_info::retape(size_t %k%)
+	virtual bool cppad_ipopt_fg_info::retape(size_t %k%)
 %$$
 If $icode k$$ in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
 and $icode retape$$ has type $code bool$$,
@@ -304,24 +304,24 @@ $codei%
 %$$
 sets $icode retape$$ to true or false.
 If $icode retape$$ is true, 
-$code ipopt_cppad_nlp$$ will retape the operation sequence 
+$code cppad_ipopt_nlp$$ will retape the operation sequence 
 corresponding to $latex r_k (u)$$ for
 every value of $icode u$$. 
-An $code ipopt_cppad_nlp$$ object
+An $code cppad_ipopt_nlp$$ object
 should use much less memory and run faster if $icode retape$$ is false.
 You can test both the true and false cases to make sure 
 the operation sequence does not depend on $icode u$$.
 $pre
 
 $$
-The $code ipopt_cppad_fg_info$$ implementation of this function
+The $code cppad_ipopt_fg_info$$ implementation of this function
 sets $icode retape$$ to true 
 (while slower it is also safer to always retape).
 
 $subhead fg_info.domain_size$$
 This member function has prototype
 $codei%
-	virtual size_t ipopt_cppad_fg_info::domain_size(size_t %k%)
+	virtual size_t cppad_ipopt_fg_info::domain_size(size_t %k%)
 %$$
 If $icode k$$ in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
 and $icode q$$ has type $code size_t$$, the syntax
@@ -330,19 +330,19 @@ $codei%
 %$$
 sets $icode q$$ to the dimension of the domain space for $latex r_k (u)$$;
 i.e., $latex q(k)$$ in
-the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
+the $cref/representation/cppad_ipopt_nlp/fg(x)/Representation/$$ above.
 
 $pre
 
 $$
-The $code ipopt_cppad_h_base$$ implementation of this function
+The $code cppad_ipopt_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
 $latex q = n$$.
 
 $subhead fg_info.range_size$$
 This member function has prototype
 $codei%
-	virtual size_t ipopt_cppad_fg_info::range_size(size_t %k%)
+	virtual size_t cppad_ipopt_fg_info::range_size(size_t %k%)
 %$$
 If $icode k$$ in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
 and $icode p$$ has type $code size_t$$, the syntax
@@ -351,18 +351,18 @@ $codei%
 %$$
 sets $icode p$$ to the dimension of the range space for $latex r_k (u)$$;
 i.e., $latex p(k)$$ in
-the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
+the $cref/representation/cppad_ipopt_nlp/fg(x)/Representation/$$ above.
 $pre
 
 $$
-The $code ipopt_cppad_h_base$$ implementation of this function
+The $code cppad_ipopt_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
 $latex p = m+1$$.
 
 $subhead fg_info.number_terms$$
 This member function has prototype
 $codei%
-	virtual size_t ipopt_cppad_fg_info::number_terms(size_t %k%)
+	virtual size_t cppad_ipopt_fg_info::number_terms(size_t %k%)
 %$$
 If $icode k$$ in $latex \{0 , \ldots , K-1 \}$$ has type $code size_t$$,
 and $icode L$$ has type $code size_t$$, the syntax
@@ -372,18 +372,18 @@ $codei%
 sets $icode L$$ to the number of terms in representation
 for this value of $icode k$$;
 i.e., $latex L(k)$$ in
-the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
+the $cref/representation/cppad_ipopt_nlp/fg(x)/Representation/$$ above.
 $pre
 
 $$
-The $code ipopt_cppad_h_base$$ implementation of this function
+The $code cppad_ipopt_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
 $latex L = 1$$.
 
 $subhead fg_info.index$$
 This member function has prototype
 $codei%
-	virtual void ipopt_cppad_fg_info::index(
+	virtual void cppad_ipopt_fg_info::index(
 		size_t %k%, size_t %ell%, SizeVector& %I%, SizeVector& %J%
 	)
 %$$ 
@@ -408,7 +408,7 @@ The input value of the elements of $icode I$$ does not matter.
 The output value of
 the first $latex p(k)$$ elements of $icode I$$ 
 must be the corresponding elements of $latex I_{k,ell}$$ 
-in the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
+in the $cref/representation/cppad_ipopt_nlp/fg(x)/Representation/$$ above.
 The argument 
 $icode%
 	J
@@ -418,11 +418,11 @@ The input value of the elements of $icode J$$ does not matter.
 The output value of 
 the first $latex q(k)$$ elements of $icode J$$ 
 must be the corresponding elements of $latex J_{k,ell}$$ 
-in the $cref/representation/ipopt_cppad_nlp/fg(x)/Representation/$$ above.
+in the $cref/representation/cppad_ipopt_nlp/fg(x)/Representation/$$ above.
 $pre
 
 $$
-The $code ipopt_cppad_h_base$$ implementation of this function
+The $code cppad_ipopt_h_base$$ implementation of this function
 corresponds to the simple representation mentioned above; i.e.,
 for $latex i = 0 , \ldots , m$$,
 $icode%I%[%i%] = %i%$$,
@@ -436,7 +436,7 @@ the following information:
 $subhead status$$
 The $icode status$$ field of $icode solution$$ has prototype
 $codei%
-	ipopt_cppad_solution::solution_status %solution%.status
+	cppad_ipopt_solution::solution_status %solution%.status
 %$$
 It is the final Ipopt status for the optimizer. 
 Here is a list of the possible values for the status:
@@ -445,7 +445,7 @@ $table
 $icode status$$ $cnext Meaning
 $rnext
 not_defined $cnext
-The optimizer did not return a final status to this $code ipopt_cppad_nlp$$
+The optimizer did not return a final status to this $code cppad_ipopt_nlp$$
 object.
 $rnext
 unknown $cnext
@@ -547,23 +547,23 @@ It is the final value of the objective function $latex f(x)$$.
 
 
 $children%
-	ipopt_cppad/example/example_windows.bat%
-	ipopt_cppad/example/get_started.cpp%
-	ipopt_cppad/example/ode1.omh%
-	ipopt_cppad/speed/ode_speed.cpp
+	cppad_ipopt/example/example_windows.bat%
+	cppad_ipopt/example/get_started.cpp%
+	cppad_ipopt/example/ode1.omh%
+	cppad_ipopt/speed/ode_speed.cpp
 %$$
 
 $head Visual Studio$$
 If you are using Visual Studio, see the special
-$cref/ipopt_cppad_windows/$$ instructions.
+$cref/cppad_ipopt_windows/$$ instructions.
 
 $head Example$$
 The file 
 $cref/ipopt_get_started.cpp/$$ is an example and test of 
-$code ipopt_cppad_nlp$$  that uses the 
-$cref/simple representation/ipopt_cppad_nlp/Simple Representation/$$.
+$code cppad_ipopt_nlp$$  that uses the 
+$cref/simple representation/cppad_ipopt_nlp/Simple Representation/$$.
 It returns true if it succeeds and false otherwise.
-The section $cref/ipopt_cppad_ode/$$ discusses an example that
+The section $cref/cppad_ipopt_ode/$$ discusses an example that
 uses a more complex representation.
 
 $end
@@ -583,9 +583,9 @@ typedef CppAD::vector<ADNumber>        ADVector;
 /*
 Class for return solution values.
 */
-class ipopt_cppad_fg_info
+class cppad_ipopt_fg_info
 {
-	friend class ipopt_cppad_nlp;
+	friend class cppad_ipopt_nlp;
 private:
 	size_t n_;
 	size_t m_;
@@ -597,7 +597,7 @@ private:
 
 public:
 	// make destructor virtual so that derived class destructor gets called
-	virtual ~ipopt_cppad_fg_info(void)
+	virtual ~cppad_ipopt_fg_info(void)
 	{ }
 	// number_functions: for simple representation 
 	virtual size_t number_functions(void)
@@ -627,7 +627,7 @@ public:
 	}
 };
 
-class ipopt_cppad_solution 
+class cppad_ipopt_solution 
 {
 public:
 	enum solution_status {
@@ -654,7 +654,7 @@ public:
 	NumberVector      lambda;
 	Ipopt::Number     obj_value;
 
-	ipopt_cppad_solution(void)
+	cppad_ipopt_solution(void)
 	{	status = not_defined; }
 };
 
@@ -662,7 +662,7 @@ public:
 Class for interfacing a problem to IPOPT and using CppAD for derivative 
 and sparsity pattern calculations.
 */
-class ipopt_cppad_nlp : public Ipopt::TNLP
+class cppad_ipopt_nlp : public Ipopt::TNLP
 {
 	typedef Ipopt::Number                         Number;
 	typedef Ipopt::Index                          Index;
@@ -674,7 +674,7 @@ class ipopt_cppad_nlp : public Ipopt::TNLP
 	typedef CppAD::vector< std::map<size_t,size_t> > IndexMap;
 public:
 	// constructor 
-	ipopt_cppad_nlp(
+	cppad_ipopt_nlp(
 		size_t n                         , 
 		size_t m                         ,
 		const NumberVector    &x_i       ,
@@ -682,13 +682,13 @@ public:
 		const NumberVector    &x_u       ,
 		const NumberVector    &g_l       ,
 		const NumberVector    &g_u       ,
-		ipopt_cppad_fg_info*   fg_info   ,
-		ipopt_cppad_solution*  solution
+		cppad_ipopt_fg_info*   fg_info   ,
+		cppad_ipopt_solution*  solution
   	);
 
 
 	// default destructor 
-	virtual ~ipopt_cppad_nlp();
+	virtual ~cppad_ipopt_nlp();
 
 	// return info about the nlp
 	virtual bool get_nlp_info(
@@ -809,9 +809,9 @@ private:
 	const NumberVector              g_l_;
 	const NumberVector              g_u_;
 	// Users function that evaluates f and g
-	ipopt_cppad_fg_info* const      fg_info_;
+	cppad_ipopt_fg_info* const      fg_info_;
 	// object for storing final solution results
-	ipopt_cppad_solution* const     solution_;
+	cppad_ipopt_solution* const     solution_;
 	// values determined by fg_info
 	size_t                 K_;      // number terms in summation
 	BoolVector             retape_; // for operations sequence of r_k (u) 
@@ -843,12 +843,12 @@ private:
  	Methods
 	*/
 	// Methods to block default compiler methods.
-	ipopt_cppad_nlp(const ipopt_cppad_nlp&);
-	ipopt_cppad_nlp& operator=(const ipopt_cppad_nlp&);
+	cppad_ipopt_nlp(const cppad_ipopt_nlp&);
+	cppad_ipopt_nlp& operator=(const cppad_ipopt_nlp&);
 
 	// Methods used by public methods
 	static void record_r_fun(
-		ipopt_cppad_fg_info  *fg_info    , 
+		cppad_ipopt_fg_info  *fg_info    , 
 		size_t                k          ,
 		SizeVector&           p          ,
 		SizeVector&           q          ,
@@ -856,7 +856,7 @@ private:
 		ADFunVector&          r_fun
 	);
 	static void compute_index_jac_fg(
-		ipopt_cppad_fg_info  *fg_info        , 
+		cppad_ipopt_fg_info  *fg_info        , 
 		SizeVector&           I              ,
 		SizeVector&           J              ,
 		size_t                K              ,
@@ -870,7 +870,7 @@ private:
 		IndexMap&             index_jac_fg 
 	);
 	static void compute_index_h_lag(
-		ipopt_cppad_fg_info  *fg_info        , 
+		cppad_ipopt_fg_info  *fg_info        , 
 		SizeVector&           I              ,
 		SizeVector&           J              ,
 		size_t                K              ,

@@ -74,7 +74,7 @@ these colorings would not have to be recomputed.
 $lnext
 In the case where $codei%retape(%k%)%$$ is true for some $icode k$$,
 one can still use the structure of the representation to compute a 
-sparsity structure. Currently $code ipopt_cppad_nlp$$ uses a dense 
+sparsity structure. Currently $code cppad_ipopt_nlp$$ uses a dense 
 sparsity structure for this case
 
 $lnext

@@ -11,13 +11,13 @@ rem A copy of this license is included in the COPYING file of this distribution.
 rem visit http://www.coin-or.org/CppAD/ for information on other licenses.
 rem ---------------------------------------------------------------------------
 goto SKIP_COMMENT
-$begin ipopt_cppad_windows$$
+$begin cppad_ipopt_windows$$
 $spell
 	CppAD
 	tarball
 	cppad
 	yyyymmdd
-	ipopt_cppad.sln
+	cppad_ipopt.sln
 $$
 $escape $$ $comment so that backslash can appear in codei commands$$
 
@@ -52,13 +52,13 @@ your version of CppAD.
 $lnext
 Execute the dos command
 $codei%
-	ipopt_cppad\ipopt_cppad_windows.bat %from_directory%
+	cppad_ipopt\cppad_ipopt_windows.bat %from_directory%
 %$$
 
 $lnext
 In Visual Studio open the project file
 $codep
-	ipopt_cppad\ipopt_cppad.sln
+	cppad_ipopt\cppad_ipopt.sln
 $$
 and build the $code Release$$ version of the project
 (the $code Debug$$ version is not supported by the CoinAll binary).
@@ -66,12 +66,12 @@ and build the $code Release$$ version of the project
 $lnext
 In the Dos shell window, execute the command
 $codep
-	ipopt_cppad\Release\ipopt_cppad
+	cppad_ipopt\Release\cppad_ipopt
 $$
 It should generate the following output:
 $codep
-	Ok:    ipopt_cppad_ode
-	Ok:    ipopt_cppad_simple
+	Ok:    cppad_ipopt_ode
+	Ok:    cppad_ipopt_simple
 	Ok:    No memory leak detected
 	All 3 tests passed.
 $$
@@ -81,30 +81,30 @@ $end
 : SKIP_COMMENT
 rem ---------------------------------------------------------------------------
 rem
-echo Dos script for linking ipopt to ipopt_cppad examples
+echo Dos script for linking ipopt to cppad_ipopt examples
 rem
 if not exist "%1\VisualStudio-Coinall"  goto ERROR_MESSAGE
-if not exist ipopt_cppad                   goto ERROR_MESSAGE
+if not exist cppad_ipopt                   goto ERROR_MESSAGE
 rem
-echo "creating ipopt_cppad\include\coin directory"
-mkdir ipopt_cppad\include\coin
-echo "creating ipopt_cppad\lib directry"
-mkdir ipopt_cppad\lib
+echo "creating cppad_ipopt\include\coin directory"
+mkdir cppad_ipopt\include\coin
+echo "creating cppad_ipopt\lib directry"
+mkdir cppad_ipopt\lib
 rem
-echo "copying necessary ipopt include files to ipopt_cppad\include\coin directory"
-copy %1\VisualStudio-Coinall\include\coin\config_ipopt.h  ipopt_cppad\include\coin
-copy %1\VisualStudio-Coinall\include\coin\Ip*.hpp         ipopt_cppad\include\coin
-copy %1\VisualStudio-Coinall\include\coin\Ip*.h           ipopt_cppad\include\coin
+echo "copying necessary ipopt include files to cppad_ipopt\include\coin directory"
+copy %1\VisualStudio-Coinall\include\coin\config_ipopt.h  cppad_ipopt\include\coin
+copy %1\VisualStudio-Coinall\include\coin\Ip*.hpp         cppad_ipopt\include\coin
+copy %1\VisualStudio-Coinall\include\coin\Ip*.h           cppad_ipopt\include\coin
 rem
-echo "copying ipopt library to ipopt_cppad\lib directory"
-copy %1\VisualStudio-Coinall\lib\libipopt.lib ipopt_cppad\lib
+echo "copying ipopt library to cppad_ipopt\lib directory"
+copy %1\VisualStudio-Coinall\lib\libipopt.lib cppad_ipopt\lib
 rem
-echo "copying ifort libraries to ipopt_cppad\lib directory"
-copy %1\VisualStudio-Coinall\lib\ifort\* ipopt_cppad\lib
+echo "copying ifort libraries to cppad_ipopt\lib directory"
+copy %1\VisualStudio-Coinall\lib\ifort\* cppad_ipopt\lib
 rem
 goto DONE
 : ERROR_MESSAGE
-echo usage: ipopt_cppad\ipopt_cppad_windows from_directory
+echo usage: cppad_ipopt\cppad_ipopt_windows from_directory
 echo where from_directory contains the sub-directory VisualStudio-Coinall
 echo which in an unzipped version of CoinAll-1.2-VisualStudio.zip
 echo which comes from http://www.coin-or.org/download/binary/CoinAll.

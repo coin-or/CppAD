@@ -561,12 +561,12 @@ $syntax%
 %$$
 is a valid reference to $code IpIpoptApplication.hpp$$.
 In this case, the CppAD interface to Ipopt
-$cref/examples/ipopt_cppad_nlp/Example/$$ 
+$cref/examples/cppad_ipopt_nlp/Example/$$ 
 will be built.
 Once the $code make$$ command
 has been executed, you can run these examples by executing the command
 $codep
-        ipopt_cppad/ipopt_cppad
+        cppad_ipopt/cppad_ipopt
 $$
 
 $head CompilerFlags$$

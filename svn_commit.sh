@@ -13,7 +13,10 @@
 # Define your subversion commit by editing the definition of 
 # log_entry, add_list, delete_list, and change_list below:
 # 
-log_entry="
+log_entry="Move ipopt_cppad* to cppad_ipopt*.
+
+This is to facillitate splitting up cppad_ipopt_nlp.* into multiple
+files and having CPPAD; see whats_new_10.omh entry for 01-20.
 " 
 add_list="
 "
@@ -23,6 +26,93 @@ old_list="
 "
 #
 change_list="
+configure
+svn_status.sh
+check_include_file.sh
+check_include_omh.sh
+test_more/makefile.am
+M       test_more/makefile.in
+M       test_more/test_more.cpp
+A  +    test_more/cppad_ipopt.cpp
+D       test_more/ipopt_cppad.cpp
+D       ipopt_cppad
+D       ipopt_cppad/speed
+D       ipopt_cppad/speed/speed.cpp
+D       ipopt_cppad/speed/makefile.in
+D       ipopt_cppad/speed/ode_speed.cpp
+D       ipopt_cppad/speed/makefile.am
+D       ipopt_cppad/src
+D       ipopt_cppad/src/ipopt_cppad_nlp.hpp
+D       ipopt_cppad/src/ipopt_cppad_nlp.cpp
+D       ipopt_cppad/example
+D       ipopt_cppad/example/ode_run.hpp
+D       ipopt_cppad/example/makefile.in
+D       ipopt_cppad/example/ode_check.cpp
+D       ipopt_cppad/example/example.sln
+D       ipopt_cppad/example/get_started.cpp
+D       ipopt_cppad/example/ode_simple.hpp
+D       ipopt_cppad/example/makefile.am
+D       ipopt_cppad/example/example_windows.bat
+D       ipopt_cppad/example/ode1.omh
+D       ipopt_cppad/example/ode_fast.hpp
+D       ipopt_cppad/example/ode2.omh
+D       ipopt_cppad/example/example.cpp
+D       ipopt_cppad/example/example.vcproj
+D       ipopt_cppad/example/ode_problem.hpp
+A  +    cppad_ipopt
+M  +    cppad_ipopt/speed/speed.cpp
+M  +    cppad_ipopt/speed/makefile.in
+M  +    cppad_ipopt/speed/ode_speed.cpp
+M  +    cppad_ipopt/speed/makefile.am
+D  +    cppad_ipopt/src/ipopt_cppad_nlp.hpp
+A  +    cppad_ipopt/src/cppad_ipopt_nlp.hpp
+D  +    cppad_ipopt/src/ipopt_cppad_nlp.cpp
+A  +    cppad_ipopt/src/cppad_ipopt_nlp.cpp
+M  +    cppad_ipopt/example/ode_run.hpp
+M  +    cppad_ipopt/example/makefile.in
+M  +    cppad_ipopt/example/ode_check.cpp
+M  +    cppad_ipopt/example/get_started.cpp
+M  +    cppad_ipopt/example/ode_simple.hpp
+M  +    cppad_ipopt/example/makefile.am
+M  +    cppad_ipopt/example/example_windows.bat
+M  +    cppad_ipopt/example/ode1.omh
+M  +    cppad_ipopt/example/ode_fast.hpp
+M  +    cppad_ipopt/example/ode2.omh
+M  +    cppad_ipopt/example/ode_problem.hpp
+M       configure.ac
+M       check_include_def.sh
+M       build.sh
+M       makefile.am
+M       makefile.in
+M       omh/whats_new_10.omh
+M       omh/wish_list.omh
+M       omh/example_list.omh
+M       omh/whats_new_08.omh
+M       omh/install_unix.omh.in
+M       cppad/local/cppad_assert.hpp
+M       cppad/config.h
+M       check_svn_dist.sh
+M       check_example.sh
+diff configure-local configure-subversion
+5690c5690
+< ac_config_files="$ac_config_files cppad/configure.hpp doxyfile doc.omh example/test_one.sh omh/install_unix.omh omh/install_windows.omh test_more/test_one.sh makefile example/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile introduction/get_started/makefile introduction/exp_apx/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/sacado/makefile test_more/makefile"
+---
+> ac_config_files="$ac_config_files cppad/configure.hpp doxyfile doc.omh example/test_one.sh omh/install_unix.omh omh/install_windows.omh test_more/test_one.sh makefile example/makefile ipopt_cppad/example/makefile ipopt_cppad/speed/makefile introduction/get_started/makefile introduction/exp_apx/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/sacado/makefile test_more/makefile"
+6443,6444c6443,6444
+<     "cppad_ipopt/example/makefile") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/example/makefile" ;;
+<     "cppad_ipopt/speed/makefile") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/speed/makefile" ;;
+---
+>     "ipopt_cppad/example/makefile") CONFIG_FILES="$CONFIG_FILES ipopt_cppad/example/makefile" ;;
+>     "ipopt_cppad/speed/makefile") CONFIG_FILES="$CONFIG_FILES ipopt_cppad/speed/makefile" ;;
+diff AUTHORS-local AUTHORS-subversion
+diff configure.ac-local configure.ac-subversion
+315,316c315,316
+< 	cppad_ipopt/example/makefile
+< 	cppad_ipopt/speed/makefile
+---
+> 	ipopt_cppad/example/makefile
+> 	ipopt_cppad/speed/makefile
+diff cppad/config.h-local cppad/config.h-subversion
 "
 #
 # log_entry

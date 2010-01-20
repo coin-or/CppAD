@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin ipopt_ode_problem.hpp$$
 $spell
-	ipopt_cppad_nlp
+	cppad_ipopt_nlp
 	Nz
 	Ny
 	Na
@@ -27,14 +27,14 @@ $index inverse, ode example$$
 $index example, ode inverse$$ 
 
 $code
-$verbatim%ipopt_cppad/example/ode_problem.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%cppad_ipopt/example/ode_problem.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 ------------------------------------------------------------------------------
 */
 // BEGIN PROGRAM
-# include "../src/ipopt_cppad_nlp.hpp"
+# include "../src/cppad_ipopt_nlp.hpp"
 
 namespace {
 	//------------------------------------------------------------------

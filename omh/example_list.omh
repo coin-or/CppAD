@@ -34,7 +34,7 @@ $childtable%
 	example/ad_in_c.cpp%
 	example/hes_minor_det.cpp%
 	example/hes_lu_det.cpp%
-	ipopt_cppad/src/ipopt_cppad_nlp.hpp%
+	cppad_ipopt/src/cppad_ipopt_nlp.hpp%
 	example/interface_2c.cpp%
 	example/jac_minor_det.cpp%
 	example/jac_lu_det.cpp%
@@ -119,7 +119,7 @@ $rref ForSparseJac.cpp$$
 $rref fun_assign.cpp$$
 $rref FunCheck.cpp$$
 $rref get_started.cpp$$
-$rref ipopt_cppad_nlp$$
+$rref cppad_ipopt_nlp$$
 $rref ipopt_get_started.cpp$$
 $rref ipopt_ode_fast.hpp$$
 $rref ipopt_ode_problem.hpp$$

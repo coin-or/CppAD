@@ -12,7 +12,7 @@
 # -----------------------------------------------------------------------------
 echo "Checking that all examples are in omh/example_list.omh"
 echo "-------------------------------------------------------" 
-file_list="example/*.cpp example/*.hpp ipopt_cppad/*/*.cpp ipopt_cppad/*/*.hpp"
+file_list="example/*.cpp example/*.hpp cppad_ipopt/*/*.cpp cppad_ipopt/*/*.hpp"
 sed < omh/example_list.omh > check_example.$$ \
 	-n -e '/\$begin ListAllExamples\$\$/,/\$end/p' 
 ok="yes"

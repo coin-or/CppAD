@@ -60,7 +60,7 @@ yyyy is year, mm is month, and dd is day.
 \def CPPAD_PACKAGE_STRING
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 */
-# define CPPAD_PACKAGE_STRING "CppAD 20090813"
+# define CPPAD_PACKAGE_STRING "CppAD 20100120"
 
 /*
 $begin configure$$

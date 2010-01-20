@@ -21,7 +21,7 @@ $$
 $section Driver for Running the Ipopt ODE Example$$
 
 $code
-$verbatim%ipopt_cppad/example/ode_run.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%cppad_ipopt/example/ode_run.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -79,8 +79,8 @@ void ipopt_ode_case(
 	FG_info fg_info(retape, N);
 
 	// create the CppAD Ipopt interface
-	ipopt_cppad_solution solution;
-	Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new ipopt_cppad_nlp(
+	cppad_ipopt_solution solution;
+	Ipopt::SmartPtr<Ipopt::TNLP> cppad_nlp = new cppad_ipopt_nlp(
 		n, m, x_i, x_l, x_u, g_l, g_u, &fg_info, &solution
 	);
 

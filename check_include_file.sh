@@ -14,8 +14,8 @@
 echo "Checking difference between C++ include directives and file names."
 echo "-------------------------------------------------------------------"
 grep '^# *include *<cppad/' \
-	ipopt_cppad/*/*.hpp \
-	ipopt_cppad/*/*.cpp \
+	cppad_ipopt/*/*.hpp \
+	cppad_ipopt/*/*.cpp \
 	cppad/*.hpp \
 	cppad/local/*.hpp \
 	cppad/speed/*.hpp \

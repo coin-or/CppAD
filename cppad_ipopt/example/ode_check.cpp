@@ -15,7 +15,7 @@ $begin ipopt_ode_check.cpp$$
 $section Correctness Check for Both Simple and Fast Representations$$
 
 $code
-$verbatim%ipopt_cppad/example/ode_check.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%cppad_ipopt/example/ode_check.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

@@ -249,7 +249,7 @@ In addition, the functions that need to be differentiated
 do not involve an iterative procedure.
 
 $children%
-	ipopt_cppad/example/ode_problem.hpp
+	cppad_ipopt/example/ode_problem.hpp
 %$$
 $head Source$$
 The file $cref ipopt_ode_problem.hpp$$ contains 
@@ -259,24 +259,24 @@ $end
 -----------------------------------------------------------------------------
 $begin ipopt_ode_simple$$
 $spell
-	ipopt_cppad_nlp
+	cppad_ipopt_nlp
 $$
 
 $section ODE Fitting Using Simple Representation$$
 
-$index ipopt_cppad_nlp, ode simple representation$$
-$index ode, ipopt_cppad_nlp simple representation$$
-$index simple, ipopt_cppad_nlp ode representation$$
+$index cppad_ipopt_nlp, ode simple representation$$
+$index ode, cppad_ipopt_nlp simple representation$$
+$index simple, cppad_ipopt_nlp ode representation$$
 
 $head Purpose$$
 In this section we represent the objective and constraint functions,
 (in the simultaneous forward and reverse optimization problem)
-using the $cref/simple representation/ipopt_cppad_nlp/Simple Representation/$$
-in the sense of $code ipopt_cppad_nlp$$.
+using the $cref/simple representation/cppad_ipopt_nlp/Simple Representation/$$
+in the sense of $code cppad_ipopt_nlp$$.
 
 $head Argument Vector$$
 The argument vector that we are optimizing with respect to
-( $latex x$$ in $cref/ipopt_cppad_nlp/$$ )
+( $latex x$$ in $cref/cppad_ipopt_nlp/$$ )
 has the following structure
 $latex \[
 x = ( y^0 , \cdots , y^{S(Nz)} , a )
@@ -292,7 +292,7 @@ $latex \[
 
 $head Objective Function$$
 The objective function
-( $latex fg_0 (x)$$ in $cref/ipopt_cppad_nlp/$$ )
+( $latex fg_0 (x)$$ in $cref/cppad_ipopt_nlp/$$ )
 has the following representation,
 $latex \[
 	fg_0 (x) = \sum_{i=1}^{Nz} H_i ( y^{S(i)} , a ) 
@@ -318,7 +318,7 @@ $latex \[
 \] $$
 
 $children%
-	ipopt_cppad/example/ode_simple.hpp
+	cppad_ipopt/example/ode_simple.hpp
 %$$
 $head Source$$
 The file $cref ipopt_ode_simple.hpp$$
@@ -329,14 +329,14 @@ $end
 -----------------------------------------------------------------------------
 $begin ipopt_ode_fast$$
 $spell
-	ipopt_cppad_nlp
+	cppad_ipopt_nlp
 $$
 
 $section ODE Fitting Using Fast Representation$$
 
-$index representation, ipopt_cppad_nlp ode$$
-$index ipopt_cppad_nlp, ode representation$$
-$index ode, ipopt_cppad_nlp representation$$
+$index representation, cppad_ipopt_nlp ode$$
+$index cppad_ipopt_nlp, ode representation$$
+$index ode, cppad_ipopt_nlp representation$$
 
 $head Purpose$$
 In this section we represent a more complex representation of the 
@@ -495,7 +495,7 @@ and $latex \ell = 0 , \ldots , N(k)-1$$,
 define $latex i = Ny * S(k-1) + \ell + 1$$.
 The components of the vector $latex x$$
 corresponding to the vector $latex u^{k,\ell}$$ are
-(and the function $latex fg (x) $$ in $cref/ipopt_cppad_nlp/$$ )
+(and the function $latex fg (x) $$ in $cref/cppad_ipopt_nlp/$$ )
 $latex \[
 \begin{array}{rcl}
 u^{k, \ell} & = & ( y^{i-1} , y^i , a )
@@ -523,7 +523,7 @@ J(k,\ell) = \{
 \] $$
 
 $children%
-	ipopt_cppad/example/ode_fast.hpp
+	cppad_ipopt/example/ode_fast.hpp
 %$$
 $head Source$$
 The file $cref ipopt_ode_fast.hpp$$

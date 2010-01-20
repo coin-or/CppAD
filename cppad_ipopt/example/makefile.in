@@ -32,8 +32,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-noinst_PROGRAMS = speed$(EXEEXT)
-subdir = ipopt_cppad/speed
+noinst_PROGRAMS = example$(EXEEXT)
+subdir = cppad_ipopt/example
 DIST_COMMON = $(srcdir)/makefile.am $(srcdir)/makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -44,12 +44,12 @@ CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-am_speed_OBJECTS = speed.$(OBJEXT) ode_speed.$(OBJEXT) \
-	ipopt_cppad_nlp.$(OBJEXT)
-speed_OBJECTS = $(am_speed_OBJECTS)
-speed_LDADD = $(LDADD)
+am_example_OBJECTS = example.$(OBJEXT) cppad_ipopt_nlp.$(OBJEXT) \
+	get_started.$(OBJEXT) ode_check.$(OBJEXT)
+example_OBJECTS = $(am_example_OBJECTS)
+example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
-speed_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+example_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -64,8 +64,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(speed_SOURCES)
-DIST_SOURCES = $(speed_SOURCES)
+SOURCES = $(example_SOURCES)
+DIST_SOURCES = $(example_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -189,8 +189,17 @@ top_srcdir = @top_srcdir@
 @CppAD_BOOSTVECTOR_FALSE@BOOST_INCLUDE = 
 #
 @CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
+# 
+# Microsoft project files (and ipopt install utility for Visual Studio)
+EXTRA_DIST = \
+	example.sln \
+	example.vcproj  \
+	example_windows.bat \
+	ode1.omh \
+	ode2.omh
+
 #
-AM_CXXFLAGS = -O2 -DNDEBUG $(CXX_FLAGS)
+AM_CXXFLAGS = -g $(CXX_FLAGS) 
 #
 AM_CPPFLAGS = -I. \
                    -I$(top_srcdir) \
@@ -201,14 +210,16 @@ AM_CPPFLAGS = -I. \
 LDADD = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
 AM_LDFLAGS = -L$(IPOPT_DIR)/lib
 #
-speed_SOURCES = \
-	speed.cpp \
-	ode_speed.cpp \
-	../src/ipopt_cppad_nlp.cpp \
-	../src/ipopt_cppad_nlp.hpp \
-	../example/ode_fast.hpp \
-	../example/ode_problem.hpp \
-	../example/ode_simple.hpp  
+example_SOURCES = \
+	example.cpp \
+	../src/cppad_ipopt_nlp.cpp \
+	../src/cppad_ipopt_nlp.hpp \
+	get_started.cpp \
+	ode_fast.hpp \
+	ode_problem.hpp \
+	ode_simple.hpp  \
+	ode_check.cpp \
+	ode_run.hpp
 
 all: all-am
 
@@ -223,9 +234,9 @@ $(srcdir)/makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu ipopt_cppad/speed/makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu cppad_ipopt/example/makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu ipopt_cppad/speed/makefile
+	  $(AUTOMAKE) --gnu cppad_ipopt/example/makefile
 .PRECIOUS: makefile
 makefile: $(srcdir)/makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -247,9 +258,9 @@ $(am__aclocal_m4_deps):
 
 clean-noinstPROGRAMS:
 	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
-speed$(EXEEXT): $(speed_OBJECTS) $(speed_DEPENDENCIES) 
-	@rm -f speed$(EXEEXT)
-	$(CXXLINK) $(speed_OBJECTS) $(speed_LDADD) $(LIBS)
+example$(EXEEXT): $(example_OBJECTS) $(example_DEPENDENCIES) 
+	@rm -f example$(EXEEXT)
+	$(CXXLINK) $(example_OBJECTS) $(example_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -257,9 +268,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ipopt_cppad_nlp.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_speed.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speed.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_ipopt_nlp.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/example.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_check.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -275,19 +287,19 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-ipopt_cppad_nlp.o: ../src/ipopt_cppad_nlp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ipopt_cppad_nlp.o -MD -MP -MF $(DEPDIR)/ipopt_cppad_nlp.Tpo -c -o ipopt_cppad_nlp.o `test -f '../src/ipopt_cppad_nlp.cpp' || echo '$(srcdir)/'`../src/ipopt_cppad_nlp.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ipopt_cppad_nlp.Tpo $(DEPDIR)/ipopt_cppad_nlp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/ipopt_cppad_nlp.cpp' object='ipopt_cppad_nlp.o' libtool=no @AMDEPBACKSLASH@
+cppad_ipopt_nlp.o: ../src/cppad_ipopt_nlp.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cppad_ipopt_nlp.o -MD -MP -MF $(DEPDIR)/cppad_ipopt_nlp.Tpo -c -o cppad_ipopt_nlp.o `test -f '../src/cppad_ipopt_nlp.cpp' || echo '$(srcdir)/'`../src/cppad_ipopt_nlp.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/cppad_ipopt_nlp.Tpo $(DEPDIR)/cppad_ipopt_nlp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/cppad_ipopt_nlp.cpp' object='cppad_ipopt_nlp.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ipopt_cppad_nlp.o `test -f '../src/ipopt_cppad_nlp.cpp' || echo '$(srcdir)/'`../src/ipopt_cppad_nlp.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cppad_ipopt_nlp.o `test -f '../src/cppad_ipopt_nlp.cpp' || echo '$(srcdir)/'`../src/cppad_ipopt_nlp.cpp
 
-ipopt_cppad_nlp.obj: ../src/ipopt_cppad_nlp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ipopt_cppad_nlp.obj -MD -MP -MF $(DEPDIR)/ipopt_cppad_nlp.Tpo -c -o ipopt_cppad_nlp.obj `if test -f '../src/ipopt_cppad_nlp.cpp'; then $(CYGPATH_W) '../src/ipopt_cppad_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/ipopt_cppad_nlp.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ipopt_cppad_nlp.Tpo $(DEPDIR)/ipopt_cppad_nlp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/ipopt_cppad_nlp.cpp' object='ipopt_cppad_nlp.obj' libtool=no @AMDEPBACKSLASH@
+cppad_ipopt_nlp.obj: ../src/cppad_ipopt_nlp.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cppad_ipopt_nlp.obj -MD -MP -MF $(DEPDIR)/cppad_ipopt_nlp.Tpo -c -o cppad_ipopt_nlp.obj `if test -f '../src/cppad_ipopt_nlp.cpp'; then $(CYGPATH_W) '../src/cppad_ipopt_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/cppad_ipopt_nlp.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/cppad_ipopt_nlp.Tpo $(DEPDIR)/cppad_ipopt_nlp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/cppad_ipopt_nlp.cpp' object='cppad_ipopt_nlp.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ipopt_cppad_nlp.obj `if test -f '../src/ipopt_cppad_nlp.cpp'; then $(CYGPATH_W) '../src/ipopt_cppad_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/ipopt_cppad_nlp.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cppad_ipopt_nlp.obj `if test -f '../src/cppad_ipopt_nlp.cpp'; then $(CYGPATH_W) '../src/cppad_ipopt_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/cppad_ipopt_nlp.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

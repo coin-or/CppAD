@@ -22,10 +22,10 @@ list="
 	doc.omh
 	dev.omh
 	cppad/PowInt.h
-	ipopt_cppad/*/*.hpp
-	ipopt_cppad/*/*.cpp
-	ipopt_cppad/*/*.bat
-	ipopt_cppad/*/*.omh
+	cppad_ipopt/*/*.hpp
+	cppad_ipopt/*/*.cpp
+	cppad_ipopt/*/*.bat
+	cppad_ipopt/*/*.omh
 	cppad/*.hpp
 	cppad/local/*.hpp
 	cppad/speed/*.hpp

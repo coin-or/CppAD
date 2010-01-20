@@ -16,7 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // external complied tests
 extern double ode_speed(const std::string& name);
 
-// main program that runs all the ipopt_cppad speed tests
+// main program that runs all the cppad_ipopt speed tests
 int main(void)
 {	using std::cout;
 	using std::endl;

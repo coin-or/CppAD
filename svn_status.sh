@@ -64,8 +64,8 @@ svn status | sed > svn_status.$$ \
 	-e '/^[?] *example\/test_one.sh$/d'                   \
 	-e '/^[?] *test_more\/test_one.sh$/d'                 \
 	-e '/^[?] *example\/example$/d'                       \
-	-e '/^[?] *ipopt_cppad\/ipopt_cppad$/d'               \
-	-e '/^[?] *ipopt_cppad\/ipopt_ode_speed$/d'           \
+	-e '/^[?] *cppad_ipopt\/cppad_ipopt$/d'               \
+	-e '/^[?] *cppad_ipopt\/ipopt_ode_speed$/d'           \
 	-e '/^[?] *print_for\/print_for$/d'                   \
 	-e '/^[?] *speed\/adolc\/adolc$/d'                    \
 	-e '/^[?] *speed\/cppad\/cppad$/d'                    \
@@ -75,8 +75,8 @@ svn status | sed > svn_status.$$ \
 	-e '/^[?] *speed\/profile\/profile$/d'                \
 	-e '/^[?] *speed\/sacado\/sacado$/d'                  \
 	-e '/^[?] *test_more\/test_more$/d'                   \
-	-e '/^[?] *ipopt_cppad\/include$/d'                   \
-	-e '/^[?] *ipopt_cppad\/lib$/d'                       \
+	-e '/^[?] *cppad_ipopt\/include$/d'                   \
+	-e '/^[?] *cppad_ipopt\/lib$/d'                       \
 	-e '/cygwin_package$/d'
 #
 list="

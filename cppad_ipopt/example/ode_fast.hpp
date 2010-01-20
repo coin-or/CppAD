@@ -14,18 +14,18 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin ipopt_ode_fast.hpp$$
 $spell
-	ipopt_cppad_nlp
+	cppad_ipopt_nlp
 $$
 
 $section ODE Fitting Using Fast Representation$$
 
-$index ipopt_cppad_nlp, ode example source$$
-$index ode, ipopt_cppad_nlp example source$$
-$index example, ipopt_cppad_nlp ode source$$
-$index source, ipopt_cppad_nlp ode example$$
+$index cppad_ipopt_nlp, ode example source$$
+$index ode, cppad_ipopt_nlp example source$$
+$index example, cppad_ipopt_nlp ode source$$
+$index source, cppad_ipopt_nlp ode example$$
 
 $code
-$verbatim%ipopt_cppad/example/ode_fast.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%cppad_ipopt/example/ode_fast.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -35,7 +35,7 @@ $end
 # include "ode_problem.hpp"
 
 namespace {
-	class FG_fast : public ipopt_cppad_fg_info
+	class FG_fast : public cppad_ipopt_fg_info
 	{
 	private:
 		bool       retape_;

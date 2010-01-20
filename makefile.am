@@ -258,7 +258,7 @@ endif
 # ---------------------------------------------------------------
 # Did user specify a value for IPOPT_DIR in configure command line 
 if CppAD_IPOPT_CPPAD
-IPOPT_CPPAD = ipopt_cppad/example ipopt_cppad/speed
+IPOPT_CPPAD = cppad_ipopt/example cppad_ipopt/speed
 else
 IPOPT_CPPAD =
 endif
