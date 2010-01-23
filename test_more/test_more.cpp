@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,7 +22,6 @@ extern bool Acos(void);
 extern bool Add(void);
 extern bool AddEq(void);
 extern bool AddZero(void);
-extern bool cppad_ipopt(void);
 extern bool Asin(void);
 extern bool Atan(void);
 extern bool Atan2(void);
@@ -183,9 +182,6 @@ int main(void)
 
 # ifdef CPPAD_ADOLC_TEST
 	ok &= Run( base_adolc,      "base_adolc"     );
-# endif
-# ifdef CPPAD_IPOPT_CPPAD_TEST
-	ok &= Run( cppad_ipopt,     "cppad_ipopt"    );
 # endif
 
 	// check for errors

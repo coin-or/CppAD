@@ -91,9 +91,9 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
 	distdir dist dist-all distcheck
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = cppad_ipopt/example cppad_ipopt/speed example \
-	introduction/get_started introduction/exp_apx print_for \
-	speed/cppad speed/double speed/example speed/profile \
+DIST_SUBDIRS = cppad_ipopt/example cppad_ipopt/speed cppad_ipopt/test \
+	example introduction/get_started introduction/exp_apx \
+	print_for speed/cppad speed/double speed/example speed/profile \
 	speed/adolc speed/fadbad speed/sacado test_more
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
@@ -472,7 +472,7 @@ nobase_myinclude_HEADERS = \
 #
 # ---------------------------------------------------------------
 # Did user specify a value for IPOPT_DIR in configure command line 
-@CppAD_IPOPT_CPPAD_TRUE@IPOPT_CPPAD = cppad_ipopt/example cppad_ipopt/speed
+@CppAD_IPOPT_CPPAD_TRUE@IPOPT_CPPAD = cppad_ipopt/example cppad_ipopt/speed cppad_ipopt/test
 #
 SUBDIRS = \
 	$(IPOPT_CPPAD) \

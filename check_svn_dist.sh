@@ -32,7 +32,14 @@ then
 fi
 # ----------------------------------------------------------------------------
 dir=`pwd`
-for name in example test_more cppad_ipopt/example cppad_ipopt/speed
+list="
+	example
+	test_more
+	cppad_ipopt/example
+	cppad_ipopt/speed
+	cppad_ipopt/test
+"
+for name in $list
 do
 	echo "cd $dir/$name"
 	if ! cd $dir/$name

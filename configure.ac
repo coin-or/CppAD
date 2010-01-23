@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20100120, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20100123, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -314,6 +314,7 @@ AC_CONFIG_FILES([
 	example/makefile 
 	cppad_ipopt/example/makefile
 	cppad_ipopt/speed/makefile
+	cppad_ipopt/test/makefile
 	introduction/get_started/makefile 
 	introduction/exp_apx/makefile
 	print_for/makefile

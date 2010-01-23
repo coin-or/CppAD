@@ -27,22 +27,6 @@ ADOLC_LIB     =
 ADOLC_LIB_DIR =
 ADOLC_FLAGS   =
 endif
-if CppAD_IPOPT_CPPAD
-IPOPT_SRC_FILES   = \
-	../cppad_ipopt/src/cppad_ipopt_nlp.cpp \
-	../cppad_ipopt/src/sparse_map2vec.cpp \
-	cppad_ipopt.cpp
-IPOPT_EXTRA_FILES =
-IPOPT_INCLUDE     = -I$(IPOPT_DIR)/include
-IPOPT_LIB         = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
-IPOPT_LIB_DIR     = -L$(IPOPT_DIR)/lib
-IPOPT_FLAGS       = -DCPPAD_IPOPT_CPPAD_TEST
-else
-IPOPT_SRC_FILES   = 
-IPOPT_EXTRA_FILES = cppad_ipopt.cpp
-IPOPT_INCLUDE     =
-IPOPT_LIB         = 
-endif
 if CppAD_BOOSTVECTOR
 BOOST_INCLUDE = -I$(BOOST_DIR)
 else
@@ -50,25 +34,22 @@ BOOST_INCLUDE =
 endif
 #
 # Microsoft project files
-EXTRA_DIST        = test_more.sln test_more.vcproj test_one.sh.in \
-	$(IPOPT_EXTRA_FILES)
+EXTRA_DIST        = test_more.sln test_more.vcproj test_one.sh.in 
 #
 noinst_PROGRAMS   = test_more
 #
 AM_CPPFLAGS       = -I. \
 	-I$(top_srcdir) \
 	$(BOOST_INCLUDE) \
-	$(ADOLC_INCLUDE) \
-	$(IPOPT_INCLUDE)
+	$(ADOLC_INCLUDE) 
 #
-AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(IPOPT_FLAGS) $(CXX_FLAGS)
+AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
-LDADD             = $(ADOLC_LIB) $(IPOPT_LIB)
-AM_LDFLAGS        = $(ADOLC_LIB_DIR) $(IPOPT_LIB_DIR)
+LDADD             = $(ADOLC_LIB) 
+AM_LDFLAGS        = $(ADOLC_LIB_DIR)
 #
 test_more_SOURCES  = \
 	$(ADOLC_SRC_FILES) \
-	$(IPOPT_SRC_FILES) \
 	test_more.cpp \
 	abs.cpp \
 	acos.cpp \

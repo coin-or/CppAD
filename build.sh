@@ -205,7 +205,11 @@ then
 	do
 		if [ ! -e $name ]
 		then
-			echo "$name is not in subversion repository"
+			echo "$name"
+			echo "is not in subversion repository."
+			echo "Check it in after making this change."
+			echo "This error won't occur when you re-run build.sh"
+			touch $name
 			exit 1
 		fi
 	done
@@ -665,6 +669,8 @@ then
 	then
 		list="
 			cppad_ipopt/example/example
+			cppad_ipopt/speed/speed
+			cppad_ipopt/test/test
 			$list
 		"
 	fi
