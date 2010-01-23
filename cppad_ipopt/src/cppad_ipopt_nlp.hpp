@@ -891,14 +891,6 @@ private:
 		SizeVector&           iRow_jac_g     ,
 		SizeVector&           jCol_jac_g
 	);
-	static void compute_structure_h_lag(
-		IndexMap&             index_h_lag    , // const does not work
-		size_t                m              ,
-		size_t                n              ,
-		size_t&               nnz_h_lag      ,
-		SizeVector&           iRow_h_lag     ,
-		SizeVector&           jCol_h_lag
-	);
 	static void compute_index_jac_fg(
 		size_t                m              ,
 		size_t                n              ,

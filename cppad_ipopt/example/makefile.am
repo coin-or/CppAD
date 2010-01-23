@@ -44,6 +44,8 @@ example_SOURCES   = \
 	example.cpp \
 	../src/cppad_ipopt_nlp.cpp \
 	../src/cppad_ipopt_nlp.hpp \
+	../src/sparse_map2vec.cpp \
+	../src/sparse_map2vec.hpp \
 	get_started.cpp \
 	ode_fast.hpp \
 	ode_problem.hpp \

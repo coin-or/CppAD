@@ -10,6 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include "cppad_ipopt_nlp.hpp"
+# include "sparse_map2vec.hpp"
 
 // define as 0 for false or 1 for true
 # define  CPPAD_NLP_TRACE 0
@@ -144,8 +145,8 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 	);
 
 	// Compute Ipopt sparsity structure for Hessian of Lagragian
-	compute_structure_h_lag(
-		index_h_lag_, m, n,                   // inputs
+	sparse_map2vec(
+		index_h_lag_,                         // inputs
 		nnz_h_lag_, iRow_h_lag_, jCol_h_lag_  // outputs
 	);
 
@@ -553,70 +554,6 @@ corresponding to each non-zero entry in the Jacobian of g.
 			if( index_ij != index_jac_fg[i].end() )
 			{	iRow_jac_g[l] = i - 1;
 				jCol_jac_g[l] = j;
-				l++;
-			}
-		}
-	}
-}
-
-// static member function that computes the Ipopt sparsity structure for 
-// Hessian of Lagragian
-void cppad_ipopt_nlp::compute_structure_h_lag(
-	IndexMap&         index_h_lag    , // const does not work
-	size_t             m             ,
-	size_t             n             ,
-	size_t&           nnz_h_lag      ,
-	SizeVector&       iRow_h_lag     ,
-	SizeVector&       jCol_h_lag     )
-/*
-index_h_lag:
-is the index mapping from (i, j) in the Hessian of the Lagragian
-to the corresponding values array index in Ipopt. 
-If index_h_lag[i].find(j) == index_h_lag[i].end(),
-then either i < j or the (i, j) entry in the Hessian of the Lagragian is
-always zero.
-
-m: input
-The number of components in the constraint function g.
-
-n: input
-Number of indpendent variables.
-
-nnz_h_lag: output
-The number of possibly non-zero entries in the Hessian of the Lagragian.
-
-iRow_h_lag: output
-The input size of this vector does not matter.
-On output it has size nnz_h_lag.
-It specifies the C row index (i.e. base one) 
-corresponding to each non-zero entry in the Hessian of the Lagragian.
-
-jCol_h_lag: output
-The input size of this vector does not matter.
-On output it has size nnz_h_lag.
-It specifies the C column index (i.e. base one) 
-corresponding to each non-zero entry in the Hessian of the Lagragian.
-*/
-{	size_t i, j, l;
-	std::map<size_t,size_t>::iterator index_ij;
-
-	nnz_h_lag = 0;
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j <= i; j++)
-		{	index_ij = index_h_lag[i].find(j);
-			if( index_ij != index_h_lag[i].end() )
-				++nnz_h_lag;
-		}
-	}
-	iRow_h_lag.resize( nnz_h_lag );
-	jCol_h_lag.resize( nnz_h_lag );
-	l = 0;
-	for(i = 0; i < n; i++)
-	{	for(j = 0; j <= i; j++)
-		{	index_ij = index_h_lag[i].find(j);
-			if( index_ij != index_h_lag[i].end() )
-			{	iRow_h_lag[l] = i;
-				jCol_h_lag[l] = j;
 				l++;
 			}
 		}

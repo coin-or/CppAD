@@ -45,7 +45,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
 am_speed_OBJECTS = speed.$(OBJEXT) ode_speed.$(OBJEXT) \
-	cppad_ipopt_nlp.$(OBJEXT)
+	cppad_ipopt_nlp.$(OBJEXT) sparse_map2vec.$(OBJEXT)
 speed_OBJECTS = $(am_speed_OBJECTS)
 speed_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -206,6 +206,8 @@ speed_SOURCES = \
 	ode_speed.cpp \
 	../src/cppad_ipopt_nlp.cpp \
 	../src/cppad_ipopt_nlp.hpp \
+	../src/sparse_map2vec.cpp \
+	../src/sparse_map2vec.hpp \
 	../example/ode_fast.hpp \
 	../example/ode_problem.hpp \
 	../example/ode_simple.hpp  
@@ -259,6 +261,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_ipopt_nlp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_speed.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_map2vec.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speed.Po@am__quote@
 
 .cpp.o:
@@ -288,6 +291,20 @@ cppad_ipopt_nlp.obj: ../src/cppad_ipopt_nlp.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/cppad_ipopt_nlp.cpp' object='cppad_ipopt_nlp.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cppad_ipopt_nlp.obj `if test -f '../src/cppad_ipopt_nlp.cpp'; then $(CYGPATH_W) '../src/cppad_ipopt_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/cppad_ipopt_nlp.cpp'; fi`
+
+sparse_map2vec.o: ../src/sparse_map2vec.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sparse_map2vec.o -MD -MP -MF $(DEPDIR)/sparse_map2vec.Tpo -c -o sparse_map2vec.o `test -f '../src/sparse_map2vec.cpp' || echo '$(srcdir)/'`../src/sparse_map2vec.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sparse_map2vec.Tpo $(DEPDIR)/sparse_map2vec.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/sparse_map2vec.cpp' object='sparse_map2vec.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sparse_map2vec.o `test -f '../src/sparse_map2vec.cpp' || echo '$(srcdir)/'`../src/sparse_map2vec.cpp
+
+sparse_map2vec.obj: ../src/sparse_map2vec.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sparse_map2vec.obj -MD -MP -MF $(DEPDIR)/sparse_map2vec.Tpo -c -o sparse_map2vec.obj `if test -f '../src/sparse_map2vec.cpp'; then $(CYGPATH_W) '../src/sparse_map2vec.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/sparse_map2vec.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sparse_map2vec.Tpo $(DEPDIR)/sparse_map2vec.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/sparse_map2vec.cpp' object='sparse_map2vec.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sparse_map2vec.obj `if test -f '../src/sparse_map2vec.cpp'; then $(CYGPATH_W) '../src/sparse_map2vec.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/sparse_map2vec.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

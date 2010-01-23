@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -72,6 +72,8 @@ file_list="
 	sin_op.hpp
 	sinh_op.hpp
 	sparse_binary_op.hpp
+	sparse_map2vec.cpp
+	sparse_map2vec.hpp
 	sparse_unary_op.hpp
 	sqrt_op.hpp
 	store_op.hpp
@@ -102,7 +104,15 @@ done
 # --------------------------------------------------------------------------
 for file in $file_list
 do
-	if [ ! -e "cppad/local/$file" ] && [ ! -e "cppad/$file" ]
+	found="no"
+	for dir in cppad cppad/local cppad_ipopt/src
+	do
+		if [ -e $dir/$file ]
+		then
+			found="yes"
+		fi
+	done
+	if [ $found == "no" ]
 	then
 		echo "check_doxygen.sh: cannot find file $file"
 		exit 1

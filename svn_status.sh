@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -64,7 +64,8 @@ svn status | sed > svn_status.$$ \
 	-e '/^[?] *example\/test_one.sh$/d'                   \
 	-e '/^[?] *test_more\/test_one.sh$/d'                 \
 	-e '/^[?] *example\/example$/d'                       \
-	-e '/^[?] *cppad_ipopt\/cppad_ipopt$/d'               \
+	-e '/^[?] *cppad_ipopt\/example\/example$/d'          \
+	-e '/^[?] *cppad_ipopt\/speed\/speed$/d'              \
 	-e '/^[?] *cppad_ipopt\/ipopt_ode_speed$/d'           \
 	-e '/^[?] *print_for\/print_for$/d'                   \
 	-e '/^[?] *speed\/adolc\/adolc$/d'                    \

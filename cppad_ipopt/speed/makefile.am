@@ -37,6 +37,8 @@ speed_SOURCES   = \
 	ode_speed.cpp \
 	../src/cppad_ipopt_nlp.cpp \
 	../src/cppad_ipopt_nlp.hpp \
+	../src/sparse_map2vec.cpp \
+	../src/sparse_map2vec.hpp \
 	../example/ode_fast.hpp \
 	../example/ode_problem.hpp \
 	../example/ode_simple.hpp  

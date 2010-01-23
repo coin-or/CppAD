@@ -28,7 +28,10 @@ ADOLC_LIB_DIR =
 ADOLC_FLAGS   =
 endif
 if CppAD_IPOPT_CPPAD
-IPOPT_SRC_FILES   = ../cppad_ipopt/src/cppad_ipopt_nlp.cpp cppad_ipopt.cpp
+IPOPT_SRC_FILES   = \
+	../cppad_ipopt/src/cppad_ipopt_nlp.cpp \
+	../cppad_ipopt/src/sparse_map2vec.cpp \
+	cppad_ipopt.cpp
 IPOPT_EXTRA_FILES =
 IPOPT_INCLUDE     = -I$(IPOPT_DIR)/include
 IPOPT_LIB         = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)

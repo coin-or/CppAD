@@ -2,7 +2,7 @@
 #
 script="check_svn_dist.sh"
 repository="https://projects.coin-or.org/svn/CppAD"
-branch=`pwd | sed -e 's|.*/CppAD/||'`
+branch=`pwd | sed -e 's|.*/CppAD/||' -e 's|.*/cppad/||'`
 #! /bin/bash
 if [ -e "svn_dist" ]
 then
