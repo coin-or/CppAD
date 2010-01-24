@@ -43,8 +43,11 @@ AM_LDFLAGS        = -L../src -L$(IPOPT_DIR)/lib
 example_SOURCES   = \
 	example.cpp \
 	get_started.cpp \
+	ode_check.cpp \
+	ode_check.hpp \
+	ode_fast_check.cpp \
 	ode_fast.hpp \
 	ode_problem.hpp \
-	ode_simple.hpp  \
-	ode_check.cpp \
-	ode_run.hpp
+	ode_run.hpp \
+	ode_simple_check.cpp \
+	ode_simple.hpp

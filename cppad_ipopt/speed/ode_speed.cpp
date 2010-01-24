@@ -23,6 +23,8 @@ $end
 
 // BEGIN PROGRAM
 # include "../example/ode_run.hpp"
+# include "../example/ode_simple.hpp"
+# include "../example/ode_fast.hpp"
 # include <cassert>
 
 # if CPPAD_GETTIMEOFDAY & CPPAD_NO_MICROSOFT
@@ -68,7 +70,7 @@ double ode_speed(const std::string& name)
 	SizeVector N(Nz + 1);
 	N[0] = 0;
 	for(i = 1; i <= Nz; i++)
-	{	N[i] = 7;
+	{	N[i] = 10;
 		// n   += N[i] * Ny;
 	}
 	// n += Na;

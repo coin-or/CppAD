@@ -23,8 +23,7 @@ $end
 // BEGIN PROGRAM
 # include "ode_run.hpp"
 
-namespace { // Begin empty namespace
-bool check_solution(const SizeVector& N, const NumberVector& x)
+bool ode_check(const SizeVector& N, const NumberVector& x)
 {	bool ok = true;
 	size_t i, j;
 
@@ -101,32 +100,6 @@ bool check_solution(const SizeVector& N, const NumberVector& x)
 	Number obj_value = obj_value;
 	ok &= CppAD::NearEqual(check, obj_value, rel_tol, abs_tol);
 
-	return ok;
-}
-} // End empty namespace
-
-bool ipopt_ode_check(void)
-{	bool ok = true;
-	bool retape;
-	size_t i;
-
-	// solution vector
-	NumberVector x;
-
-	// number of time grid intervals between measurement values
-	SizeVector N(Nz + 1);
-	N[0] = 0;
-	for(i = 1; i <= Nz; i++)
-		N[i] = 5;
-
-	for(i = 0; i < 2; i++)
-	{	retape = bool(i);
-		ipopt_ode_case<FG_simple>(retape, N, x);
-		ok &= check_solution(N, x);
-		ipopt_ode_case<FG_fast>(retape, N, x);
-		ok &= check_solution(N, x);
-	}
- 
 	return ok;
 }
 // END PROGRAM

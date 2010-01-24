@@ -28,8 +28,7 @@ $end
 */
 
 // BEGIN PROGRAM
-# include "ode_simple.hpp"
-# include "ode_fast.hpp"
+# include "ode_problem.hpp"
 
 namespace { // BEGIN empty namespace -----------------------------------------
 

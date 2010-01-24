@@ -35,6 +35,7 @@ dir=`pwd`
 list="
 	example
 	test_more
+	cppad_ipopt/src
 	cppad_ipopt/example
 	cppad_ipopt/speed
 	cppad_ipopt/test
@@ -54,12 +55,16 @@ do
 		exit 1
 	fi
 	program=`echo $name | sed -e 's|.*/||'`
-	echo "./$program"
-	if ! ./$program
-	then
-		echo "$script: $dir/$name/$program failed"
-		exit 1
+	# src directories create libraries
+	if [ "$program" != "$src" ]
+	then 
+		echo "./$program"
+		if ! ./$program
+		then
+			echo "$script: $dir/$name/$program failed"
+			exit 1
+		fi
+		echo "cd $dir"
+		cd $dir
 	fi
-	echo "cd $dir"
-	cd $dir
 done

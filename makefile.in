@@ -40,8 +40,7 @@ DIST_COMMON = README $(am__configure_deps) $(nobase_myinclude_HEADERS) \
 	$(top_srcdir)/cppad/configure.hpp.in \
 	$(top_srcdir)/omh/install_unix.omh.in \
 	$(top_srcdir)/omh/install_windows.omh.in AUTHORS COPYING \
-	ChangeLog INSTALL NEWS config.guess config.sub depcomp \
-	install-sh ltmain.sh missing
+	ChangeLog INSTALL NEWS depcomp install-sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -237,7 +236,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
-# $Id: makefile.am 1633 2010-01-23 14:48:12Z bradbell $
+# $Id: makefile.am 1634 2010-01-24 08:44:17Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #

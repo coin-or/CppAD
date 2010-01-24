@@ -45,7 +45,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
 am_example_OBJECTS = example.$(OBJEXT) get_started.$(OBJEXT) \
-	ode_check.$(OBJEXT)
+	ode_check.$(OBJEXT) ode_fast_check.$(OBJEXT) \
+	ode_simple_check.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -88,7 +89,7 @@ CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id: makefile.am 1632 2010-01-23 12:19:08Z bradbell $
+# $Id: makefile.am 1634 2010-01-24 08:44:17Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -213,11 +214,14 @@ AM_LDFLAGS = -L../src -L$(IPOPT_DIR)/lib
 example_SOURCES = \
 	example.cpp \
 	get_started.cpp \
+	ode_check.cpp \
+	ode_check.hpp \
+	ode_fast_check.cpp \
 	ode_fast.hpp \
 	ode_problem.hpp \
-	ode_simple.hpp  \
-	ode_check.cpp \
-	ode_run.hpp
+	ode_run.hpp \
+	ode_simple_check.cpp \
+	ode_simple.hpp
 
 all: all-am
 
@@ -269,6 +273,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/example.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_started.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_check.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_fast_check.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_simple_check.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
