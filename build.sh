@@ -141,6 +141,10 @@ then
 	#
 	# automatically change version for certain files
 	# (the [.0-9]* is for using build.sh in CppAD/stable/* directories)
+	#
+	# libtool does not seem to support version by date
+	# sed < cppad_ipopt/src/makefile.am > cppad_ipopt/src/makefile.am.$$ \
+	#	-e "s/\(-version-info\) *[0-9]\{8\}[.0-9]*/\1 $yyyymmdd/"
 	sed < AUTHORS > AUTHORS.$$ \
 		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
 	sed < configure.ac > configure.ac.$$\
@@ -163,6 +167,7 @@ then
 		configure.ac
 		configure
 		cppad/config.h
+		cppad_ipopt/src/makefile.am
 	"
 	for name in $list
 	do
@@ -189,9 +194,8 @@ then
         	-n \
         	-e '/END AC_CONFIG_FILES/,$d' \
         	-e '1,/AC_CONFIG_FILES/d' \
-        	-e 's/makefile/&.in/' \
-        	-e 's/^[ \t]*//' \
-        	-e '/makefile/p'`
+        	-e 's|/makefile$|&.in|' \
+        	-e '/\/makefile.in/p'`
 	auto_output="
 		depcomp 
 		install-sh 
@@ -228,6 +232,13 @@ then
 	then
 		exit 1
 	fi
+	#
+	echo "skipping libtoolize"
+	# echo "libtoolize -c -f -i"
+	# if ! libtoolize -c -f -i
+	# then
+	# 	exit 1
+	# fi
 	#
 	echo "autoconf"
 	if ! autoconf

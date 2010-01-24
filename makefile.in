@@ -40,7 +40,8 @@ DIST_COMMON = README $(am__configure_deps) $(nobase_myinclude_HEADERS) \
 	$(top_srcdir)/cppad/configure.hpp.in \
 	$(top_srcdir)/omh/install_unix.omh.in \
 	$(top_srcdir)/omh/install_windows.omh.in AUTHORS COPYING \
-	ChangeLog INSTALL NEWS depcomp install-sh missing
+	ChangeLog INSTALL NEWS config.guess config.sub depcomp \
+	install-sh ltmain.sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -91,10 +92,11 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
 	distdir dist dist-all distcheck
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = cppad_ipopt/example cppad_ipopt/speed cppad_ipopt/test \
-	example introduction/get_started introduction/exp_apx \
-	print_for speed/cppad speed/double speed/example speed/profile \
-	speed/adolc speed/fadbad speed/sacado test_more
+DIST_SUBDIRS = cppad_ipopt/src cppad_ipopt/example cppad_ipopt/speed \
+	cppad_ipopt/test example introduction/get_started \
+	introduction/exp_apx print_for speed/cppad speed/double \
+	speed/example speed/profile speed/adolc speed/fadbad \
+	speed/sacado test_more
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -235,7 +237,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
-# $Id: makefile.am 1628 2010-01-20 15:04:49Z bradbell $
+# $Id: makefile.am 1633 2010-01-23 14:48:12Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -472,7 +474,12 @@ nobase_myinclude_HEADERS = \
 #
 # ---------------------------------------------------------------
 # Did user specify a value for IPOPT_DIR in configure command line 
-@CppAD_IPOPT_CPPAD_TRUE@IPOPT_CPPAD = cppad_ipopt/example cppad_ipopt/speed cppad_ipopt/test
+@CppAD_IPOPT_CPPAD_TRUE@IPOPT_CPPAD = \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/src \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/example \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/speed \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/test
+
 #
 SUBDIRS = \
 	$(IPOPT_CPPAD) \

@@ -32,13 +32,13 @@ AM_CPPFLAGS       = -I. \
 LDADD             = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
 AM_LDFLAGS        = -L$(IPOPT_DIR)/lib
 #
+# Cannot use ../src/libcppad_ipopt.a becasue it is compiled for debugging
+# so build an optimized version here to use here. 
 speed_SOURCES   = \
 	speed.cpp \
-	ode_speed.cpp \
 	../src/cppad_ipopt_nlp.cpp \
-	../src/cppad_ipopt_nlp.hpp \
+	../src/hes_fg_map.cpp \
+	../src/jac_g_map.cpp \
 	../src/sparse_map2vec.cpp \
-	../src/sparse_map2vec.hpp \
-	../example/ode_fast.hpp \
-	../example/ode_problem.hpp \
-	../example/ode_simple.hpp  
+	../src/vec_fun_pattern.cpp \
+	ode_speed.cpp 

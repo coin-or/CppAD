@@ -44,8 +44,7 @@ CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-am_test_OBJECTS = test.$(OBJEXT) cppad_ipopt_nlp.$(OBJEXT) \
-	sparse_map2vec.$(OBJEXT) k_gt_one.$(OBJEXT) \
+am_test_OBJECTS = test.$(OBJEXT) k_gt_one.$(OBJEXT) \
 	multiple_solution.$(OBJEXT) retape.$(OBJEXT)
 test_OBJECTS = $(am_test_OBJECTS)
 test_LDADD = $(LDADD)
@@ -61,10 +60,6 @@ CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-CCLD = $(CC)
-LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(test_SOURCES)
 DIST_SOURCES = $(test_SOURCES)
 ETAGS = etags
@@ -89,7 +84,7 @@ CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id: makefile.am 1632 2010-01-23 12:19:08Z bradbell $
+# $Id: makefile.am 1633 2010-01-23 14:48:12Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -199,15 +194,11 @@ AM_CPPFLAGS = -I. \
                      -I$(IPOPT_DIR)/include
 
 #
-LDADD = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
-AM_LDFLAGS = -L$(IPOPT_DIR)/lib
+LDADD = -lcppad_ipopt -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
+AM_LDFLAGS = -L../src -L$(IPOPT_DIR)/lib
 #
 test_SOURCES = \
 	test.cpp \
-	../src/cppad_ipopt_nlp.cpp \
-	../src/cppad_ipopt_nlp.hpp \
-	../src/sparse_map2vec.cpp \
-	../src/sparse_map2vec.hpp \
 	k_gt_one.cpp \
 	multiple_solution.cpp \
 	retape.cpp
@@ -259,11 +250,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_ipopt_nlp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k_gt_one.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multiple_solution.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/retape.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_map2vec.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test.Po@am__quote@
 
 .cpp.o:
@@ -279,34 +268,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
-
-cppad_ipopt_nlp.o: ../src/cppad_ipopt_nlp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cppad_ipopt_nlp.o -MD -MP -MF $(DEPDIR)/cppad_ipopt_nlp.Tpo -c -o cppad_ipopt_nlp.o `test -f '../src/cppad_ipopt_nlp.cpp' || echo '$(srcdir)/'`../src/cppad_ipopt_nlp.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/cppad_ipopt_nlp.Tpo $(DEPDIR)/cppad_ipopt_nlp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/cppad_ipopt_nlp.cpp' object='cppad_ipopt_nlp.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cppad_ipopt_nlp.o `test -f '../src/cppad_ipopt_nlp.cpp' || echo '$(srcdir)/'`../src/cppad_ipopt_nlp.cpp
-
-cppad_ipopt_nlp.obj: ../src/cppad_ipopt_nlp.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cppad_ipopt_nlp.obj -MD -MP -MF $(DEPDIR)/cppad_ipopt_nlp.Tpo -c -o cppad_ipopt_nlp.obj `if test -f '../src/cppad_ipopt_nlp.cpp'; then $(CYGPATH_W) '../src/cppad_ipopt_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/cppad_ipopt_nlp.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/cppad_ipopt_nlp.Tpo $(DEPDIR)/cppad_ipopt_nlp.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/cppad_ipopt_nlp.cpp' object='cppad_ipopt_nlp.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cppad_ipopt_nlp.obj `if test -f '../src/cppad_ipopt_nlp.cpp'; then $(CYGPATH_W) '../src/cppad_ipopt_nlp.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/cppad_ipopt_nlp.cpp'; fi`
-
-sparse_map2vec.o: ../src/sparse_map2vec.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sparse_map2vec.o -MD -MP -MF $(DEPDIR)/sparse_map2vec.Tpo -c -o sparse_map2vec.o `test -f '../src/sparse_map2vec.cpp' || echo '$(srcdir)/'`../src/sparse_map2vec.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sparse_map2vec.Tpo $(DEPDIR)/sparse_map2vec.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/sparse_map2vec.cpp' object='sparse_map2vec.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sparse_map2vec.o `test -f '../src/sparse_map2vec.cpp' || echo '$(srcdir)/'`../src/sparse_map2vec.cpp
-
-sparse_map2vec.obj: ../src/sparse_map2vec.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sparse_map2vec.obj -MD -MP -MF $(DEPDIR)/sparse_map2vec.Tpo -c -o sparse_map2vec.obj `if test -f '../src/sparse_map2vec.cpp'; then $(CYGPATH_W) '../src/sparse_map2vec.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/sparse_map2vec.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sparse_map2vec.Tpo $(DEPDIR)/sparse_map2vec.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../src/sparse_map2vec.cpp' object='sparse_map2vec.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sparse_map2vec.obj `if test -f '../src/sparse_map2vec.cpp'; then $(CYGPATH_W) '../src/sparse_map2vec.cpp'; else $(CYGPATH_W) '$(srcdir)/../src/sparse_map2vec.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

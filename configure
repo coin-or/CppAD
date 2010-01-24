@@ -4019,6 +4019,7 @@ fi
 
 
 
+
 if test -n "$ac_tool_prefix"; then
   # Extract the first word of "${ac_tool_prefix}ranlib", so it can be a program name with args.
 set dummy ${ac_tool_prefix}ranlib; ac_word=$2
@@ -5687,7 +5688,7 @@ else
 fi
 
 
-ac_config_files="$ac_config_files cppad/configure.hpp doxyfile doc.omh example/test_one.sh omh/install_unix.omh omh/install_windows.omh test_more/test_one.sh makefile example/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile introduction/get_started/makefile introduction/exp_apx/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/sacado/makefile test_more/makefile"
+ac_config_files="$ac_config_files cppad/configure.hpp doxyfile doc.omh example/test_one.sh omh/install_unix.omh omh/install_windows.omh test_more/test_one.sh makefile example/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile introduction/get_started/makefile introduction/exp_apx/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/sacado/makefile test_more/makefile"
 
 ac_config_commands="$ac_config_commands default-1"
 
@@ -6440,6 +6441,7 @@ do
     "test_more/test_one.sh") CONFIG_FILES="$CONFIG_FILES test_more/test_one.sh" ;;
     "makefile") CONFIG_FILES="$CONFIG_FILES makefile" ;;
     "example/makefile") CONFIG_FILES="$CONFIG_FILES example/makefile" ;;
+    "cppad_ipopt/src/makefile") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/src/makefile" ;;
     "cppad_ipopt/example/makefile") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/example/makefile" ;;
     "cppad_ipopt/speed/makefile") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/speed/makefile" ;;
     "cppad_ipopt/test/makefile") CONFIG_FILES="$CONFIG_FILES cppad_ipopt/test/makefile" ;;

@@ -72,7 +72,6 @@ file_list="
 	sin_op.hpp
 	sinh_op.hpp
 	sparse_binary_op.hpp
-	sparse_map2vec.cpp
 	sparse_map2vec.hpp
 	sparse_unary_op.hpp
 	sqrt_op.hpp
@@ -82,6 +81,11 @@ file_list="
 	sparse_hessian.hpp
 	sparse_pack.hpp
 	sparse_set.hpp
+
+	hes_fg_map.cpp
+	jac_g_map.cpp
+	sparse_map2vec.cpp
+	vec_fun_pattern.cpp
 "
 # --------------------------------------------------------------------------
 for class in $class_list

@@ -29,15 +29,11 @@ AM_CPPFLAGS       = -I. \
                      $(BOOST_INCLUDE) \
                      -I$(IPOPT_DIR)/include
 #
-LDADD             = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
-AM_LDFLAGS        = -L$(IPOPT_DIR)/lib
+LDADD             = -lcppad_ipopt -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
+AM_LDFLAGS        = -L../src -L$(IPOPT_DIR)/lib
 #
 test_SOURCES   = \
 	test.cpp \
-	../src/cppad_ipopt_nlp.cpp \
-	../src/cppad_ipopt_nlp.hpp \
-	../src/sparse_map2vec.cpp \
-	../src/sparse_map2vec.hpp \
 	k_gt_one.cpp \
 	multiple_solution.cpp \
 	retape.cpp

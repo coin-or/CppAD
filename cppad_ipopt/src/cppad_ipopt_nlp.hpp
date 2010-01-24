@@ -832,7 +832,7 @@ private:
 	SizeVector                       jCol_jac_g_;
 	// mapping from array indices to Ipopt sparsity structure
 	IndexMap                         index_jac_g_;
-	IndexMap                         index_h_lag_;
+	IndexMap                         index_hes_fg_;
 	// Ipopt sparsity structure for Hessian of Lagragian
 	size_t                           nnz_h_lag_;
 	SizeVector                       iRow_h_lag_;
@@ -854,46 +854,6 @@ private:
 		SizeVector&           q          ,
 		ADVector&             u_ad       , 
 		ADFunVector&          r_fun
-	);
-	static void compute_index_jac_g(
-		cppad_ipopt_fg_info  *fg_info        , 
-		SizeVector&           I              ,
-		SizeVector&           J              ,
-		size_t                K              ,
-		SizeVector&           L              ,
-		size_t                m              ,
-		size_t                n              ,
-		SizeVector&           p              ,
-		SizeVector&           q              ,
-		ADFunVector&          r_fun          ,
-		BoolVectorVector&     pattern_jac_r  ,
-		IndexMap&             index_jac_g  
-	);
-	static void compute_index_h_lag(
-		cppad_ipopt_fg_info  *fg_info        , 
-		SizeVector&           I              ,
-		SizeVector&           J              ,
-		size_t                K              ,
-		SizeVector&           L              ,
-		size_t                m              ,
-		size_t                n              ,
-		SizeVector&           p              ,
-		SizeVector&           q              ,
-		ADFunVector&          r_fun          ,
-		BoolVectorVector&     pattern_r_lag  , 
-		IndexMap&             index_h_hag 
-	);
-	static void compute_index_jac_g(
-		size_t                m              ,
-		size_t                n              ,
-		const BoolVector&     pattern_jac_fg ,
-		IndexMap&             index_jac_g
-	);
-	static void compute_index_h_lag(
-		size_t                m              ,
-		size_t                n              ,
-		const BoolVector&     pattern_h_lag  ,
-		IndexMap&             index_h_lag
 	);
 
 };

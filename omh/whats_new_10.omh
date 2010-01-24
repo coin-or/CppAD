@@ -27,6 +27,12 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-23$$
+Improve the sparsity patterns and reduce the amount of memory
+required for large sparse problems using $cref/cppad_ipopt_nlp/$$.
+The speed test $code cppad_ipopt/speed$$ showed significant improvement.
+
+
 $head 01-20$$
 We plan to split up the 
 $code ipopt_cppad/src/ipopt_cppad_nlp.hpp$$ include file.

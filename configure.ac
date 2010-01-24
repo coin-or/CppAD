@@ -250,6 +250,9 @@ dnl Run any macros required for proper operation of generated makefiles
 dnl nostdinc: Do not define standard include directories in generated makefiles
 AM_INIT_AUTOMAKE(nostdinc)
 
+dnl Use LIBTOOL for cppad_ipopt ?
+dnl AC_PROG_LIBTOOL
+
 dnl Determine if ranlib is present and where it is if present (set RANLIB)
 AC_PROG_RANLIB
 
@@ -312,6 +315,7 @@ AC_CONFIG_FILES([
 
 	makefile
 	example/makefile 
+	cppad_ipopt/src/makefile
 	cppad_ipopt/example/makefile
 	cppad_ipopt/speed/makefile
 	cppad_ipopt/test/makefile

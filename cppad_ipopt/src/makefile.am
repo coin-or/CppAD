@@ -20,31 +20,24 @@ else
 BOOST_INCLUDE =
 endif
 # 
-# Microsoft project files (and ipopt install utility for Visual Studio)
-EXTRA_DIST        = \
-	example.sln \
-	example.vcproj  \
-	example_windows.bat \
-	ode1.omh \
-	ode2.omh
+lib_LIBRARIES           = libcppad_ipopt.a
 #
-noinst_PROGRAMS   = example
+AM_CXXFLAGS               = -g $(CXX_FLAGS) 
 #
-AM_CXXFLAGS       = -g $(CXX_FLAGS) 
+AM_CPPFLAGS               = \
+	-I. \
+	-I$(top_srcdir) \
+	$(BOOST_INCLUDE) \
+	-I$(IPOPT_DIR)/include
 #
-AM_CPPFLAGS       = -I. \
-                   -I$(top_srcdir) \
-                     $(BOOST_INCLUDE) \
-                     -I$(IPOPT_DIR)/include
-#
-LDADD             = -lcppad_ipopt -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
-AM_LDFLAGS        = -L../src -L$(IPOPT_DIR)/lib
-#
-example_SOURCES   = \
-	example.cpp \
-	get_started.cpp \
-	ode_fast.hpp \
-	ode_problem.hpp \
-	ode_simple.hpp  \
-	ode_check.cpp \
-	ode_run.hpp
+libcppad_ipopt_a_SOURCES = \
+	cppad_ipopt_nlp.cpp \
+	cppad_ipopt_nlp.hpp \
+	jac_g_map.cpp \
+	jac_g_map.hpp \
+	hes_fg_map.cpp \
+	hes_fg_map.hpp \
+	sparse_map2vec.cpp \
+	sparse_map2vec.hpp \
+	vec_fun_pattern.cpp  \
+	vec_fun_pattern.hpp 
