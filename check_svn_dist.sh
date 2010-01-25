@@ -56,7 +56,7 @@ do
 	fi
 	program=`echo $name | sed -e 's|.*/||'`
 	# src directories create libraries
-	if [ "$program" != "$src" ]
+	if [ "$program" != "src" ]
 	then 
 		echo "./$program"
 		if ! ./$program

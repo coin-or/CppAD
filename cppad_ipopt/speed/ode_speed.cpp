@@ -26,6 +26,7 @@ $end
 # include "../example/ode_simple.hpp"
 # include "../example/ode_fast.hpp"
 # include <cassert>
+# include <cstring>
 
 # if CPPAD_GETTIMEOFDAY & CPPAD_NO_MICROSOFT
 # include <sys/time.h>
@@ -46,22 +47,23 @@ namespace {
 	}
 }
 
-double ode_speed(const std::string& name)
+double ode_speed(const char* name, size_t& count)
 {
 	// determine simple and retape flags
 	bool simple = true, retape = true;
-	if( name == "simple_retape_no" )
+	if( std::strcmp(name, "simple_retape_no") == 0 )
 	{	simple = true; retape = false; }
-	else if( name == "simple_retape_yes" )
+	else if( std::strcmp(name, "simple_retape_yes") == 0 )
 	{	simple = true; retape = true; }
-	else if( name == "fast_retape_no" )
+	else if( std::strcmp(name, "fast_retape_no") == 0 )
 	{	simple = false; retape = false; }
-	else if( name == "fast_retape_yes" )
+	else if( std::strcmp(name, "fast_retape_yes") == 0 )
 	{	simple = false; retape = true; }
 	else	assert(false);
 
 	size_t i;
         double s0, s1;
+	size_t  c0, c1;
 
 	// solution vector
 	NumberVector x;
@@ -76,10 +78,13 @@ double ode_speed(const std::string& name)
 	// n += Na;
 
 	s0              = current_second();
+	c0              = count_eval_r();
 	if( simple )
 		ipopt_ode_case<FG_simple>(retape, N, x);
 	else	ipopt_ode_case<FG_fast>(retape, N, x);
 	s1              = current_second();
+	c1              = count_eval_r();
+	count           = c1 - c0 - 1;
 	return s1 - s0;
 }
 // END PROGRAM

@@ -62,6 +62,10 @@ CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(speed_SOURCES)
 DIST_SOURCES = $(speed_SOURCES)
 ETAGS = etags
@@ -204,6 +208,7 @@ AM_LDFLAGS = -L$(IPOPT_DIR)/lib
 speed_SOURCES = \
 	speed.cpp \
 	../src/cppad_ipopt_nlp.cpp \
+	../src/fun_record.hpp \
 	../src/hes_fg_map.cpp \
 	../src/jac_g_map.cpp \
 	../src/sparse_map2vec.cpp \

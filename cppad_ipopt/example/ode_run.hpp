@@ -100,9 +100,8 @@ void ipopt_ode_case(
 
 	// Derivative testing is very slow for large problems
 	// so comment this out if you use a large value for N[].
-	app->Options()-> SetStringValue(
-		"derivative_test", "second-order"
-	);
+	app->Options()-> SetStringValue( "derivative_test", "second-order");
+	app->Options()-> SetNumericValue( "point_perturbation_radius", 0.);
 
 	// Initialize the application and process the options
 	Ipopt::ApplicationReturnStatus status = app->Initialize();

@@ -10,30 +10,34 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-# include <iostream>  // system include files used for I/O
-# include <string>    // std::string
+# include <cstdio>  // system include files used for I/O
+# include <string>  // std::string
 
 // external complied tests
-extern double ode_speed(const std::string& name);
+extern double ode_speed(const char* name, size_t& count);
 
 // main program that runs all the cppad_ipopt speed tests
 int main(void)
-{	using std::cout;
-	using std::endl;
-	std::string name;
+{	using std::printf;
+	const char* name;
 	double      seconds;
+	size_t      count;
 
-	seconds = ode_speed("simple_retape_yes");
-	cout << "ode simple_retape_yes: seconds = " << seconds << std::endl;
+	name    = "simple_retape_yes";
+	seconds = ode_speed(name, count);
+	printf("ode %20s: seconds = %5.2f: count = %d\n", name, seconds, count);
 
-	seconds = ode_speed("simple_retape_no");
-	cout << "ode simple_retape_no:  seconds = " << seconds << std::endl;
+	name    = "simple_retape_no";
+	seconds = ode_speed(name, count);
+	printf("ode %20s: seconds = %5.2f: count = %d\n", name, seconds, count);
 
-	seconds = ode_speed("fast_retape_yes");
-	cout << "ode fast_retape_yes:   seconds = " << seconds << std::endl;
+	name    = "fast_retape_yes";
+	seconds = ode_speed(name, count);
+	printf("ode %20s: seconds = %5.2f: count = %d\n", name, seconds, count);
 
-	seconds = ode_speed("fast_retape_no");
-	cout << "ode fast_retape_no:    seconds = " << seconds << std::endl;
+	name    = "fast_retape_no";
+	seconds = ode_speed(name, count);
+	printf("ode %20s: seconds = %5.2f: count = %d\n", name, seconds, count);
 	
 	return 0;
 }

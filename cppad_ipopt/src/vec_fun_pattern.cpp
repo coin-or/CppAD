@@ -50,7 +50,7 @@ For <tt>k = 0 , ... , K-1</tt>,
 if <tt>retape[k]</tt> is true, <tt>r_fun[k]</tt> is not used.
 If <tt>retape[k]</tt> is false, <tt>r_fun[k]</tt> is not used.
 is a CppAD function object correspopnding to the function
-\f$ r_k : {\bf R}^{q[k]} \rightarrow {\bf R}^{p[k]} \f$$.
+\f$ r_k : {\bf R}^{q[k]} \rightarrow {\bf R}^{p[k]} \f$.
 The following non-constant member functions will be called:
 \verbatim
 	r_fun[k].ForSparseJac(q[k], pattern_domain)
@@ -75,7 +75,7 @@ and the value of its elements does not matter.
 On output it is a CppAD sparsity pattern for the Hessian of 
 \f$ R : {\bf R}^{q[k]} \rightarrow {\bf R} \f$ which is defined by
 \f[
-	R(u) = \sum_{i=1}^{p[k]} r_k (u)_i
+	R(u) = \sum_{i=0}^{p[k]-1} r_k (u)_i
 \f]
 */
 void vec_fun_pattern(

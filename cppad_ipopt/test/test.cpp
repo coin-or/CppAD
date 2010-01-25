@@ -22,7 +22,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // external complied tests
 extern bool k_gt_one(void);
 extern bool multiple_solution(void);
-extern bool retape(void);
+extern bool retape_k1_l1(void);
+extern bool retape_k1_l2(void);
 
 namespace {
 	// function that runs one test
@@ -50,7 +51,8 @@ int main(void)
 	// external compiled tests
 	ok &= Run( k_gt_one,            "k_get_one"          );
 	ok &= Run( multiple_solution,   "multiple_solution"  );
-	ok &= Run( retape,              "retape"             );
+	ok &= Run( retape_k1_l1,        "retape_k1_l1"       );
+	ok &= Run( retape_k1_l2,        "retape_k1_l2"       );
 	
 	// check for errors
 	using std::cout;

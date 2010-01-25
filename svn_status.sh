@@ -66,6 +66,7 @@ svn status | sed > svn_status.$$ \
 	-e '/^[?] *example\/example$/d'                       \
 	-e '/^[?] *cppad_ipopt\/example\/example$/d'          \
 	-e '/^[?] *cppad_ipopt\/speed\/speed$/d'              \
+	-e '/^[?] *cppad_ipopt\/test\/test$/d'                \
 	-e '/^[?] *cppad_ipopt\/ipopt_ode_speed$/d'           \
 	-e '/^[?] *print_for\/print_for$/d'                   \
 	-e '/^[?] *speed\/adolc\/adolc$/d'                    \

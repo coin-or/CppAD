@@ -36,4 +36,5 @@ test_SOURCES   = \
 	test.cpp \
 	k_gt_one.cpp \
 	multiple_solution.cpp \
-	retape.cpp
+	retape_k1_l1.cpp \
+	retape_k1_l2.cpp

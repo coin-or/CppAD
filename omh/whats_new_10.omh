@@ -12,6 +12,12 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_10$$
 $spell
+	iostream
+	obj_value
+	std::cout
+	endl
+	gcc
+	retape
 	hpp
 	ifdef
 	nlp
@@ -26,6 +32,32 @@ This section contains a list of the changes to CppAD during 2010
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-24$$
+It appears that in $cref/cppad_ipopt_nlp/$$, when $code retape[k]$$ was true,
+and $code L[k] > 1$$, it was possible to use the wrong operation sequence
+in the calculations (though a test case that demonstrated this could not be 
+produced). This is because the argument value to $latex r_k (u)$$ depends
+on the value of $latex \ell$$ in the expression
+$latex \[
+	r_k \circ [ J_{k, \ell} \otimes n ] (x)
+\] $$
+(even when the value of $latex x$$ does not change).
+$pre
+
+$$
+There was a bug in the $cref/ipopt_ode_check.cpp/$$ program,
+for a long time,  that did not show up until now. Basically,
+the check had code of the form:
+$codep
+	# include <iostream>
+	int main()
+	{	double obj_value = obj_value;
+		std::cout << "obj_value = " << obj_value << std::endl;
+	} 
+$$
+The value of $code obj_value$$ is unspecified,
+but gcc 4.4.2 (and previous versions) did not give any indication of this.
 
 $head 01-23$$
 Improve the sparsity patterns and reduce the amount of memory

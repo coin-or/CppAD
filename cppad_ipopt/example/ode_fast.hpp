@@ -57,7 +57,9 @@ namespace {
 		size_t number_functions(void)
 		{	return Nz + 1 + Nz; }
 		ADVector eval_r(size_t k, const ADVector &u)
-		{	size_t j;
+		{	count_eval_r();
+
+			size_t j;
 			ADVector y(Ny), a(Na);
 			// objective function --------------------------------
 			if( k < Nz )

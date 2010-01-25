@@ -59,7 +59,9 @@ namespace {
 		// Evaluation of the objective f(x), and constraints g(x)
 		// using an Algorithmic Differentiation (AD) class.
 		ADVector eval_r(size_t not_used, const ADVector&  x)
-		{	// temporary indices
+		{	count_eval_r();
+
+			// temporary indices
 			size_t i, j, k;
 			// # of components of x corresponding to values for y
 			size_t ny_inx = (S_[Nz] + 1) * Ny;

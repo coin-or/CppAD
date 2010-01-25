@@ -151,6 +151,9 @@ bool ipopt_get_started(void)
 		// derivative testing
 		app->Options()->
 		SetStringValue("derivative_test", "second-order");
+		app->Options()-> SetNumericValue(
+			"point_perturbation_radius", 0.
+		);
 
 		// Initialize the IpoptApplication and process the options
 		Ipopt::ApplicationReturnStatus status = app->Initialize();

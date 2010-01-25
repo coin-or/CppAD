@@ -70,7 +70,7 @@ ARFLAGS = cru
 libcppad_ipopt_a_AR = $(AR) $(ARFLAGS)
 libcppad_ipopt_a_LIBADD =
 am_libcppad_ipopt_a_OBJECTS = cppad_ipopt_nlp.$(OBJEXT) \
-	jac_g_map.$(OBJEXT) hes_fg_map.$(OBJEXT) \
+	hes_fg_map.$(OBJEXT) jac_g_map.$(OBJEXT) \
 	sparse_map2vec.$(OBJEXT) vec_fun_pattern.$(OBJEXT)
 libcppad_ipopt_a_OBJECTS = $(am_libcppad_ipopt_a_OBJECTS)
 DEFAULT_INCLUDES = 
@@ -226,10 +226,11 @@ AM_CPPFLAGS = \
 libcppad_ipopt_a_SOURCES = \
 	cppad_ipopt_nlp.cpp \
 	cppad_ipopt_nlp.hpp \
-	jac_g_map.cpp \
-	jac_g_map.hpp \
+	fun_record.hpp \
 	hes_fg_map.cpp \
 	hes_fg_map.hpp \
+	jac_g_map.cpp \
+	jac_g_map.hpp \
 	sparse_map2vec.cpp \
 	sparse_map2vec.hpp \
 	vec_fun_pattern.cpp  \

@@ -37,6 +37,7 @@ AM_LDFLAGS        = -L$(IPOPT_DIR)/lib
 speed_SOURCES   = \
 	speed.cpp \
 	../src/cppad_ipopt_nlp.cpp \
+	../src/fun_record.hpp \
 	../src/hes_fg_map.cpp \
 	../src/jac_g_map.cpp \
 	../src/sparse_map2vec.cpp \

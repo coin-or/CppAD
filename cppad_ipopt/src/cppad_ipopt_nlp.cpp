@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include "jac_g_map.hpp"
 # include "hes_fg_map.hpp"
 # include "vec_fun_pattern.hpp"
+# include "fun_record.hpp"
 
 // define as 0 for false or 1 for true
 # define  CPPAD_NLP_TRACE 0
@@ -42,28 +43,29 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 	  g_u_ ( g_u ),
 	  fg_info_ ( fg_info ) ,
 	  solution_ (solution)
-{	size_t j, k;
+{	size_t k;
 
 	// set information needed in cppad_ipopt_fg_info
-	fg_info->set_n(n);
-	fg_info->set_m(m);
+	fg_info_->set_n(n);
+	fg_info_->set_m(m);
 
 	// get information from derived class version of fg_info
-	K_ = fg_info->number_functions();
+	K_ = fg_info_->number_functions();
 	L_.resize(K_);
 	p_.resize(K_);
 	q_.resize(K_);
 	r_fun_.resize(K_);
 	retape_.resize(K_);
+	tape_ok_.resize(K_);
 	pattern_jac_r_.resize(K_);
 	pattern_r_lag_.resize(K_);
 	size_t max_p      = 0;
 	size_t max_q      = 0;
 	for(k = 0; k < K_; k++)
-	{	L_[k]       = fg_info->number_terms(k);
-		p_[k]       = fg_info->range_size(k);
-		q_[k]       = fg_info->domain_size(k);
-		retape_[k]  = fg_info->retape(k);
+	{	L_[k]       = fg_info_->number_terms(k);
+		p_[k]       = fg_info_->range_size(k);
+		q_[k]       = fg_info_->domain_size(k);
+		retape_[k]  = fg_info_->retape(k);
 		max_p       = std::max(max_p, p_[k]);
 		max_q       = std::max(max_q, q_[k]);
 		pattern_jac_r_[k].resize( p_[k] * q_[k] );
@@ -72,7 +74,7 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 	I_.resize(max_p);
 	J_.resize(max_q);
 # ifndef NDEBUG
-	size_t i, ell;
+	size_t i, j, ell;
 	// check for valid range and domain indices
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
 	{
@@ -80,7 +82,7 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 			I_[i] = m+1; // an invalid range index
 		for( j = 0; j < q_[k]; j++)
 			J_[j] = n; // an invalid domain index
-		fg_info->index(k, ell, I_, J_);	
+		fg_info_->index(k, ell, I_, J_);	
 		for( i = 0; i < p_[k]; i++) if( I_[i] > m )
 		{	std::cerr << "k=" << k << ", ell=" << ell 
 			<< ", I[" << i << "]=" << I_[i] << std::endl;
@@ -98,17 +100,24 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 	}
 # endif
 	// record r[k] for functions that do not need retaping
-	for(k = 0; k < K_; k++) if( ! retape_[k] )
-	{	// Record r_k (u): operation sequence does not depend on value 
-		// of u but record at initial value to make debugging easier.
-		fg_info->index(k, 0, I_, J_);
-		ADVector u_ad(q_[k]);
-		for(j = 0; j < q_[k]; j++)
-			u_ad[j] = x_i[ J_[j] ];
-		record_r_fun(
-			fg_info_, k, p_, q_, u_ad, // inputs
-			r_fun_                     // outputs
-		);
+	for(k = 0; k < K_; k++)
+	{	tape_ok_[k] = false;
+		 if( ! retape_[k] )
+		{	// Operation sequence does not depend on value 
+			// of u so record it once here in the constructor.
+			fg_info_->index(k, 0, I_, J_);
+			fun_record(
+				fg_info_        ,   // inputs
+				k               ,
+				p_              ,
+				q_              ,
+				n_              ,
+				x_i_            ,
+				J_              ,
+				r_fun_              // output
+			);
+			tape_ok_[k] = true;
+		}
 	}
 
 	// compute a sparsity patterns for each r_k (u)
@@ -143,50 +152,6 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 		nnz_h_lag_, iRow_h_lag_, jCol_h_lag_  // outputs
 	);
 
-}
-
-// static member function that records operation sequence
-void cppad_ipopt_nlp::record_r_fun( 
-	cppad_ipopt_fg_info*   fg_info  , 
-	size_t                 k        ,
-	SizeVector&            p        ,
-	SizeVector&            q        ,
-	ADVector&              u_ad     ,
-	ADFunVector&           r_fun    )
-/*
-fg_info: input
-the cppad_ipopt_fg_info object that is used to information
-about the representation of fg(x).
-
-k: input
-index of the function r_k (u)
-
-p: input
-p[k] is number of components in the range space for r_k (u).
-
-q: input
-q[k] number of components in domain space for r_k (u).
-
-u_ad: input
-vector of independent variable values at which to record r_k (u).
-This is an input except for 
-the fact that its CppAD private data changes.
-
-r_fun: output 
-The CppAD operation sequence corresponding to the value of u_ad,
-and the algorithm used by fg_info, is stored in r_fun[k]. (Any operation
-seqeunce that was previously in r_fun[k] is deleted.)
-*/
-{	CPPAD_ASSERT_UNKNOWN( u_ad.size() == size_t(q[k]) );
-	// start the recording
-	CppAD::Independent(u_ad);
-	// vector of dependent variables during function recording
-	ADVector r_ad = fg_info->eval_r(k, u_ad);
-	CPPAD_ASSERT_KNOWN( r_ad.size() == p[k] ,
-		"cppad_ipopt_nlp: eval_r return value size not equal to p[k]."
-	);
-	// stop the recording and store operation sequence in r_fun
-	r_fun[k].Dependent(u_ad, r_ad);
 }
 
 cppad_ipopt_nlp::~cppad_ipopt_nlp()
@@ -257,20 +222,30 @@ bool cppad_ipopt_nlp::eval_f(
 	// initialize summation
 	obj_value = 0.;
 
+	// update tape_ok_ flag
+	for(k = 0; k < K_; k++) 
+	{	if( new_x && retape_[k] )
+			tape_ok_[k] = false;
+	}
+
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
 	{	fg_info_->index(k, ell, I_, J_);
 		for(iobj = 0; iobj < p_[k]; iobj++) if( I_[iobj] == 0 )
-		{	if( (new_x || K_ > 1)  && retape_[k] )
+		{	if( ! tape_ok_[k] )
 			{	// Record r_k for value of u corresponding to x
-				ADVector u_ad(q_[k]);
-				for(j = 0; j < q_[k]; j++)
-				{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
-					u_ad[j] = x[ J_[j] ];
-				}
-				record_r_fun(
-					fg_info_, k, p_, q_, u_ad,  // inputs
-					r_fun_                      // outputs
+				fun_record(
+					fg_info_        ,   // inputs
+					k               ,
+					p_              ,
+					q_              ,
+					n_              ,
+					x               ,
+					J_              ,
+					r_fun_             // output
 				);
+				if( retape_[k] )
+					tape_ok_[k] = L_[k] <= 1;
+				else	tape_ok_[k] = true;
 			}
 			NumberVector u(q_[k]);
 			NumberVector r(p_[k]);
@@ -302,22 +277,30 @@ bool cppad_ipopt_nlp::eval_grad_f(
 	for(j = 0; j < n_; j++)
 		grad_f[j] = 0.;
 
+	// update tape_ok_ flag
+	for(k = 0; k < K_; k++) 
+	{	if( new_x && retape_[k] )
+			tape_ok_[k] = false;
+	}
+
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
 	{	fg_info_->index(k, ell, I_, J_);
 		for(iobj = 0; iobj < p_[k]; iobj++) if( I_[iobj] == 0 )
-		{	if( (new_x || K_ > 1)  && retape_[k] )
+		{	if( ! tape_ok_[k] )
 			{	// Record r_k for value of u corresponding to x
-				// If we has stored all recordings in f_eval
-				// we might not need to do this over again.
-				ADVector u_ad(q_[k]);
-				for(j = 0; j < q_[k]; j++)
-				{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
-					u_ad[j] = x[ J_[j] ];
-				}
-				record_r_fun(
-					fg_info_, k, p_, q_, u_ad,  // inputs
-					r_fun_                      // outputs
+				fun_record(
+					fg_info_        ,   // inputs
+					k               ,
+					p_              ,
+					q_              ,
+					n_              ,
+					x               ,
+					J_              ,
+					r_fun_              // output
 				);
+				if( retape_[k] )
+					tape_ok_[k] = L_[k] <= 1;
+				else	tape_ok_[k] = true;
 			}
 			NumberVector u(q_[k]);
 			NumberVector w(p_[k]);
@@ -360,20 +343,30 @@ bool cppad_ipopt_nlp::eval_g(
 	for(i = 0; i < m_; i++)
 		g[i] = 0.;
 
+	// update tape_ok_ flag
+	for(k = 0; k < K_; k++) 
+	{	if( new_x && retape_[k] )
+			tape_ok_[k] = false;
+	}
+
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
 	{	fg_info_->index(k, ell, I_, J_);
-		if( (new_x || K_ > 1)  && retape_[k] )
+		if( ! tape_ok_[k] )
 		{	// Record r_k for value of u corresponding to x
-			ADVector     u_ad(q_[k]);
-			for(j = 0; j < q_[k]; j++)
-			{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
-				u_ad[j] = x[ J_[j] ];
-			}
-			record_r_fun(
-				fg_info_, k, p_, q_, u_ad,  // inputs
-				r_fun_                      // outputs
+			fun_record(
+				fg_info_        ,   // inputs
+				k               ,
+				p_              ,
+				q_              ,
+				n_              ,
+				x               ,
+				J_              ,
+				r_fun_              // output
 			);
 		}
+		if( retape_[k] )
+			tape_ok_[k] = L_[k] <= 1;
+		else	tape_ok_[k] = true;
 		NumberVector u(q_[k]);
 		NumberVector r(p_[k]);
 		for(j = 0; j < q_[k]; j++)
@@ -420,20 +413,30 @@ bool cppad_ipopt_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 	while(l--)
 		values[l] = 0.;
 
+	// update tape_ok_ flag
+	for(k = 0; k < K_; k++) 
+	{	if( new_x && retape_[k] )
+			tape_ok_[k] = false;
+	}
+
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
 	{	fg_info_->index(k, ell, I_, J_);
-		if( (new_x || K_ > 1)  && retape_[k] )
+		if( ! tape_ok_[k] )
 		{	// Record r_k for value of u corresponding to x
-			ADVector     u_ad(q_[k]);
-			for(j = 0; j < q_[k]; j++)
-			{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
-				u_ad[j] = x[ J_[j] ];
-			}
-			record_r_fun(
-				fg_info_, k, p_, q_, u_ad,  // inputs
-				r_fun_                      // outputs
+			fun_record(
+				fg_info_        ,   // inputs
+				k               ,
+				p_              ,
+				q_              ,
+				n_              ,
+				x               ,
+				J_              ,
+				r_fun_              // output
 			);
 		}
+		if( retape_[k] )
+			tape_ok_[k] = L_[k] <= 1;
+		else	tape_ok_[k] = true;
 		NumberVector u(q_[k]);
 		NumberVector jac_r(p_[k] * q_[k]);
 		for(j = 0; j < q_[k]; j++)
@@ -483,19 +486,29 @@ bool cppad_ipopt_nlp::eval_h(Index n, const Number* x, bool new_x,
 	while(l--)
 		values[l] = 0.;
 
+	// update tape_ok_ flag
+	for(k = 0; k < K_; k++) 
+	{	if( new_x && retape_[k] )
+			tape_ok_[k] = false;
+	}
+
 	for(k = 0; k < K_; k++) for(ell = 0; ell < L_[k]; ell++)
 	{	fg_info_->index(k, ell, I_, J_);
-		if( (new_x || K_ > 1)  && retape_[k] )
+		if( ! tape_ok_[k] )
 		{	// Record r_k for value of u corresponding to x
-			ADVector     u_ad(q_[k]);
-			for(j = 0; j < q_[k]; j++)
-			{	CPPAD_ASSERT_UNKNOWN( J_[j] < n_ );
-				u_ad[j] = x[ J_[j] ];
-			}
-			record_r_fun(
-				fg_info_, k, p_, q_, u_ad,  // inputs
-				r_fun_                      // outputs
+			fun_record(
+				fg_info_        ,   // inputs
+				k               ,
+				p_              ,
+				q_              ,
+				n_              ,
+				x               ,
+				J_              ,
+				r_fun_              // output
 			);
+		if( retape_[k] )
+			tape_ok_[k] = L_[k] <= 1;
+		else	tape_ok_[k] = true;
 		}
 		NumberVector w(p_[k]);
 		NumberVector r_hes(q_[k] * q_[k]);

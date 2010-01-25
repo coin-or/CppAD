@@ -33,10 +33,11 @@ AM_CPPFLAGS               = \
 libcppad_ipopt_a_SOURCES = \
 	cppad_ipopt_nlp.cpp \
 	cppad_ipopt_nlp.hpp \
-	jac_g_map.cpp \
-	jac_g_map.hpp \
+	fun_record.hpp \
 	hes_fg_map.cpp \
 	hes_fg_map.hpp \
+	jac_g_map.cpp \
+	jac_g_map.hpp \
 	sparse_map2vec.cpp \
 	sparse_map2vec.hpp \
 	vec_fun_pattern.cpp  \

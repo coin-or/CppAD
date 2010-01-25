@@ -815,6 +815,7 @@ private:
 	// values determined by fg_info
 	size_t                 K_;      // number terms in summation
 	BoolVector             retape_; // for operations sequence of r_k (u) 
+	BoolVector             tape_ok_;// tape is ok for current value of x
 	SizeVector             q_;      // dimension of domain for r_k (u)
 	SizeVector             p_;      // dimension of range for r_k (u)
 	SizeVector             L_;      // number of r_k (u) terms
@@ -845,16 +846,6 @@ private:
 	// Methods to block default compiler methods.
 	cppad_ipopt_nlp(const cppad_ipopt_nlp&);
 	cppad_ipopt_nlp& operator=(const cppad_ipopt_nlp&);
-
-	// Methods used by public methods
-	static void record_r_fun(
-		cppad_ipopt_fg_info  *fg_info    , 
-		size_t                k          ,
-		SizeVector&           p          ,
-		SizeVector&           q          ,
-		ADVector&             u_ad       , 
-		ADFunVector&          r_fun
-	);
 
 };
 

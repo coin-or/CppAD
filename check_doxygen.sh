@@ -82,6 +82,7 @@ file_list="
 	sparse_pack.hpp
 	sparse_set.hpp
 
+	fun_record.hpp
 	hes_fg_map.cpp
 	jac_g_map.cpp
 	sparse_map2vec.cpp

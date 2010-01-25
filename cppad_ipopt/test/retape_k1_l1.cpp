@@ -39,7 +39,7 @@ public:
 }; 
 } // end of empty namespace
 
-bool retape(void)
+bool retape_k1_l1(void)
 {	bool ok = true;
 	size_t j;
 

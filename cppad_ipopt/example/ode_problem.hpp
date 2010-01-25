@@ -92,6 +92,12 @@ namespace {
 		Scalar diff = z[i] - y[1];
 	 	return diff * diff;
 	}
+	// function used to count the number of calls to eval_r
+	size_t count_eval_r(void)
+	{	static size_t count = 0;
+		++count;
+		return count;
+	}
 }
 // END PROGRAM
 # endif

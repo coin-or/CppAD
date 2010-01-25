@@ -97,7 +97,7 @@ bool ode_check(const SizeVector& N, const NumberVector& x)
 			y_i[j] =  x[S[k+1] * Ny + j];
 		check += eval_H<Number>(k + 1, y_i, a);
 	}
-	Number obj_value = obj_value;
+	Number obj_value = 0.; // optimal object (no noise in simulation)
 	ok &= CppAD::NearEqual(check, obj_value, rel_tol, abs_tol);
 
 	return ok;

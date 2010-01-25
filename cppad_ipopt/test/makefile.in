@@ -45,7 +45,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
 am_test_OBJECTS = test.$(OBJEXT) k_gt_one.$(OBJEXT) \
-	multiple_solution.$(OBJEXT) retape.$(OBJEXT)
+	multiple_solution.$(OBJEXT) retape_k1_l1.$(OBJEXT) \
+	retape_k1_l2.$(OBJEXT)
 test_OBJECTS = $(am_test_OBJECTS)
 test_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -201,7 +202,8 @@ test_SOURCES = \
 	test.cpp \
 	k_gt_one.cpp \
 	multiple_solution.cpp \
-	retape.cpp
+	retape_k1_l1.cpp \
+	retape_k1_l2.cpp
 
 all: all-am
 
@@ -252,7 +254,8 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/k_gt_one.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multiple_solution.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/retape.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/retape_k1_l1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/retape_k1_l2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test.Po@am__quote@
 
 .cpp.o:

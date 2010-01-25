@@ -35,7 +35,7 @@ where for \f$ k = 0 , \ldots , K-1\f$,
 We define the function 
 \f$ F : {\bf R}^n \rightarrow {\bf R} \f$ by
 \f[
-	F(x) = \sum_{i=1}^{m+1} fg(x)_i
+	F(x) = \sum_{i=0}^m fg(x)_i
 \f]
 
 \param fg_info
@@ -95,7 +95,7 @@ is a vector with size \c K.
 For <tt>k = 0 , ... , K-1, pattern_jac_r[k]</tt>
 is a CppAD sparsity pattern for the Hessian of the function 
 \f[
-	R(u) = \sum_{i=1}^{p[k]} r_k (u)_i
+	R(u) = \sum_{i=0}^{p[k]-1} r_k (u)_i
 \f]
 As such, <tt>pattern_hes_r[k].size() == q[k] * q[k]</tt>.
 
