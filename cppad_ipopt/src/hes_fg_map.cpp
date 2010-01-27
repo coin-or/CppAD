@@ -22,16 +22,8 @@ Create mapping from CppAD to Ipopt sparse representations of Hessian of F(x).
 
 The functions 
 \f$ f : {\bf R}^n \rightarrow {\bf R} \f$ and
-\f$ g : {\bf R}^n \rightarrow {\bf R}^m \f$ are defined by
-\f[
-\left( \begin{array}{c} f(x) \\ g(x) \end{array} \right)
-=
-\sum_{k=0}^{K-1} \; \sum_{\ell=0}^{L(k) - 1} 
-[ (m+1) \otimes I_{k,\ell} ] \; \circ
-	 \; r_k \; \circ \; [ J_{k,\ell} \otimes n ] \; (x)
-\f]
-where for \f$ k = 0 , \ldots , K-1\f$,
-\f$ r_k : {\bf R}^{q(k)} \rightarrow {\bf R}^{p(k)} \f$.
+\f$ g : {\bf R}^n \rightarrow {\bf R}^m \f$ are defined by the 
+\ref Users_Representation.
 We define the function 
 \f$ F : {\bf R}^n \rightarrow {\bf R} \f$ by
 \f[

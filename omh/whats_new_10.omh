@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_10$$
 $spell
+	Lagragian
 	iostream
 	obj_value
 	std::cout
@@ -33,6 +34,11 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-26$$
+Another speed improvement was made to $cref/cppad_ipopt_nlp/$$.
+To be specific, the Lagragian multipliers where checked and components
+that were zero were excluded form the Hessian evaluation.
+
 $head 01-24$$
 It appears that in $cref/cppad_ipopt_nlp/$$, when $code retape[k]$$ was true,
 and $code L[k] > 1$$, it was possible to use the wrong operation sequence
@@ -48,16 +54,8 @@ $pre
 $$
 There was a bug in the $cref/ipopt_ode_check.cpp/$$ program,
 for a long time,  that did not show up until now. Basically,
-the check had code of the form:
-$codep
-	# include <iostream>
-	int main()
-	{	double obj_value = obj_value;
-		std::cout << "obj_value = " << obj_value << std::endl;
-	} 
-$$
-The value of $code obj_value$$ is unspecified,
-but gcc 4.4.2 (and previous versions) did not give any indication of this.
+the check had code of the was using an undefined value.
+This has been fixed.
 
 $head 01-23$$
 Improve the sparsity patterns and reduce the amount of memory

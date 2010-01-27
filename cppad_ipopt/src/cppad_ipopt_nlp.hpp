@@ -566,57 +566,90 @@ It returns true if it succeeds and false otherwise.
 The section $cref/cppad_ipopt_ode/$$ discusses an example that
 uses a more complex representation.
 
+$head Wish List$$
+This is a list of possible future improvements to 
+$code cppad_ipopt_nlp$$ that would require changed to the user interface:
+$list number$$
+The routine $codei%fg_info.eval_r(%k%, %u%)%$$ should also support 
+$codei NumberVector$$ for the type of the argument $code u$$
+(this would certainly be more efficient when 
+$codei%fg_info.retape(%k%)%$$ is true and $latex L(k) > 1$$).
+It could be an option for the user to provide this as well as
+the necessary $code ADVector$$ definition.
+$lnext
+There should a $cref/Discrete/$$ routine that the user can call
+to determine the value of $latex \ell$$ during the evaluation of
+$codei%fg_info.eval_r(%k%, %u%)%$$.
+This way data, which does not affect the derivative values,
+can be included in the function recording and evaluation.
+$lend
+
 $end
 -----------------------------------------------------------------------------
 */
-
-
 # include <cppad/cppad.hpp>
 # include <coin/IpIpoptApplication.hpp>
 # include <coin/IpTNLP.hpp>
 
-typedef CppAD::AD<Ipopt::Number>       ADNumber;
-typedef CppAD::vector<size_t>          SizeVector;
-typedef CppAD::vector<Ipopt::Number>   NumberVector;
-typedef CppAD::vector<ADNumber>        ADVector;
+/*!
+\file cppad_ipopt_nlp.hpp
+\brief CppAD interface to Ipopt
+*/
 
-/*
-Class for return solution values.
+
+/// A scalar value used to record operation sequence.
+typedef CppAD::AD<Ipopt::Number>       ADNumber;
+/// A simple vector of values used to record operation sequence
+typedef CppAD::vector<ADNumber>        ADVector;
+/// A simple vector of size_t values.
+typedef CppAD::vector<size_t>          SizeVector;
+/// A simple vector of values used by Ipopt
+typedef CppAD::vector<Ipopt::Number>   NumberVector;
+
+/*!
+Abstract base class user derives from to define the funcitons in the problem.
 */
 class cppad_ipopt_fg_info
 {
+	/// allow cppad_ipopt_nlp class complete access to this class
 	friend class cppad_ipopt_nlp;
 private:
+	/// domain space dimension for the functions f(x), g(x)
 	size_t n_;
+	/// range space dimension for the function g(x)
 	size_t m_;
-
+	/// the cppad_ipopt_nlp constructor uses this method to set n_
 	void set_n(size_t n)
 	{	n_ = n; }
+	/// the cppad_ipopt_nlp constructor uses this method to set m_
 	void set_m(size_t m)
 	{	m_ = m; }
 
 public:
-	// make destructor virtual so that derived class destructor gets called
+	/// destructor virtual so user derived class destructor gets called
 	virtual ~cppad_ipopt_fg_info(void)
 	{ }
-	// number_functions: for simple representation 
+	/// number_functions; i.e. K (simple representation uses 1)
 	virtual size_t number_functions(void)
 	{	return 1; }
-	// eval_r: pure virtual so that it must be defined by derived class
+	/// function that evaluates the users representation for f(x) and
+	/// and g(x) is pure virtual so user must define it in derived class
 	virtual ADVector eval_r(size_t k, const ADVector& u) = 0;
-	// retape: default definition 
+	/// should the function r_k (u) be retaped when ever the arguemnt
+	/// u changes (default is true which is safe but slow)
 	virtual bool retape(size_t k)
 	{	return true; }
-	// domain_size: for simple representation 
+	/// domain_size q[k] for r_k (u) (simple representation uses n)
 	virtual size_t domain_size(size_t k)
 	{	return n_; }
-	// range_size: for simple representation 
+	/// range_size p[k] for r_k (u) (simple representation uses m+1)
 	virtual size_t range_size(size_t k)
 	{	return m_ + 1; }
-	// number_terms: for simple representation
+	/// number_terms that use r_k (u) (simple represenation uses 1)
 	virtual size_t number_terms(size_t k)
 	{	return 1; }
-	// index: for simple representation
+	/// return the index vectors I_{k,ell} and J_{k,ell}
+	/// (simple representation uses I[i] = i and J[j] = j)
 	virtual void index(size_t k, size_t ell, SizeVector& I, SizeVector& J)
 	{	assert( I.size() >= m_ + 1 );
 		assert( J.size() >= n_ );
@@ -627,9 +660,55 @@ public:
 	}
 };
 
+/*!
+Class that contains information about the problem solution
+
+\section Nonlinear_Programming_Problem Nonlinear Programming Problem
+We are give smooth functions 
+\f$ f : {\bf R}^n \rightarrow {\bf R} \f$
+and
+\f$ g : {\bf R}^n \rightarrow {\bf R}^m \f$
+and wish to solve the problem
+\f[
+\begin{array}{rcl}
+{\rm minimize} & f(x) & {\rm w.r.t.} \; x \in {\bf R}^n
+\\
+{\rm subject \; to} & g^l \leq g(x) \leq g^u 
+\\
+& x^l \leq x \leq x^u
+\end{array}
+\f]
+
+
+\section Users_Representation Users Representation
+The functions 
+\f$ f : {\bf R}^n \rightarrow {\bf R} \f$ and
+\f$ g : {\bf R}^n \rightarrow {\bf R}^m \f$ are defined by
+\f[
+\left( \begin{array}{c} f(x) \\ g(x) \end{array} \right)
+=
+\sum_{k=0}^{K-1} \; \sum_{\ell=0}^{L(k) - 1} 
+[ (m+1) \otimes I_{k,\ell} ] \; \circ
+	 \; r_k \; \circ \; [ J_{k,\ell} \otimes n ] \; (x)
+\f]
+where for \f$ k = 0 , \ldots , K-1\f$,
+\f$ r_k : {\bf R}^{q(k)} \rightarrow {\bf R}^{p(k)} \f$.
+
+\section Evaluation_Methods Evaluation Methods
+The set of evaluation methods for this class is
+\verbatim
+	{ eval_f, eval_grad_f, eval_g, eval_jac_g, eval_h }
+\endverbatim
+Note that the \c bool return flag for the evaluations methods 
+does not appear in the Ipopt documentation.
+Looking at the code, it seems to be a flag telling Ipopt to abort
+when the flag is false.
+
+*/
 class cppad_ipopt_solution 
 {
 public:
+	/// possible values for he solution status
 	enum solution_status {
 		not_defined,
 		success,
@@ -647,33 +726,195 @@ public:
 		internal_error,
 		unknown
 	}  status;
+	/// the approximation solution
 	NumberVector      x;
+	/// Lagrange multipliers corresponding to lower bounds on x
 	NumberVector      z_l;
+	/// Lagrange multipliers corresponding to upper bounds on x
 	NumberVector      z_u;
+	/// value of g(x)
 	NumberVector      g;
+	/// Lagrange multipliers correspondiing constraints on g(x)
 	NumberVector      lambda;
+	/// value of f(x)
 	Ipopt::Number     obj_value;
-
+	/// constructor initializes solution status as not yet defined
 	cppad_ipopt_solution(void)
 	{	status = not_defined; }
 };
 
-/* 
-Class for interfacing a problem to IPOPT and using CppAD for derivative 
-and sparsity pattern calculations.
+/*! 
+Class connects Ipopt to CppAD for derivative and sparsity pattern calculations.
 */
 class cppad_ipopt_nlp : public Ipopt::TNLP
 {
+private:
+	/// A Scalar value used by Ipopt
 	typedef Ipopt::Number                         Number;
+	/// An index value used by Ipopt 
 	typedef Ipopt::Index                          Index;
+	/// Indexing style used in Ipopt sparsity structure 
 	typedef Ipopt::TNLP::IndexStyleEnum           IndexStyleEnum;
+	/// A simple vector of boolean values
 	typedef CppAD::vectorBool                     BoolVector;
+	/// A simple vector of AD function objects
 	typedef CppAD::vector< CppAD::ADFun<Number> > ADFunVector;
+	/// A simple vector of simple vectors of boolean values
 	typedef CppAD::vector<BoolVector>             BoolVectorVector;
-
+	/// A mapping that is dense in i, sparse in j, and maps (i, j)
+	/// to the corresponding sparsity index in Ipopt.
 	typedef CppAD::vector< std::map<size_t,size_t> > IndexMap;
+
+	// ------------------------------------------------------------------
+ 	// Values directly passed in to constuctor
+	// ------------------------------------------------------------------
+	/// dimension of the domain space for f(x) and g(x)
+	/// (passed to ctor)
+	const size_t                    n_;
+	/// dimension of the range space for g(x)
+	/// (passed to ctor)
+	const size_t                    m_;
+	/// dimension of the range space for g(x)
+	/// (passed to ctor)
+	const NumberVector              x_i_;
+	/// lower limit for x 
+	/// (size n_), (passed to ctor)
+	const NumberVector              x_l_;
+	/// upper limit for x 
+	/// (size n_) (passed to ctor)
+	const NumberVector              x_u_;
+	/// lower limit for g(x)
+	/// (size m_) (passed to ctor)
+	const NumberVector              g_l_;
+	/// upper limit for g(x)
+	/// (size m_) (passed to ctor)
+	const NumberVector              g_u_;
+	/// pointer to base class version of derived class object used to get 
+	/// information about the user's representation for f(x) and g(x)
+	/// (passed to ctor)
+	cppad_ipopt_fg_info* const      fg_info_;
+	/// pointer to object where final results are stored
+	/// (passed to ctor)
+	cppad_ipopt_solution* const     solution_;
+
+	// ------------------------------------------------------------------
+	// Effectively const values determined during constructor using calls 
+	// to fg_info:
+	// ------------------------------------------------------------------
+	/// The value of \f$ K \f$ in the representation.
+	/// (effectively const)
+	size_t                 K_;
+	/// Does operation sequence for \f$ r_k (u) \f$ depend on \f$ u \f$.
+	/// (size K_) (effectively const)
+	BoolVector             retape_;
+	/// <tt>q_[k]</tt> is the domain space dimension for \f$ r_k (u) \f$
+	/// (size K_) (effectively const)
+	SizeVector             q_;
+	/// <tt>p_[k]</tt> is the range space dimension for \f$ r_k (u) \f$
+	/// (size K_) (effectively const)
+	SizeVector             p_;
+	/// <tt>L_[k]</tt> is number of times \f$ r_k (u) \f$ appears in
+	/// the representation summation
+	/// (size K_) (effectively const)
+	SizeVector             L_; 
+	// -------------------------------------------------------------------
+	// Other effectively const values determined by the constructor:
+	// -------------------------------------------------------------------
+	/*!
+ 	CppAD sparsity patterns for \f$ \{ r_k^{(1)} (u) \} \f$ (set by ctor).
+
+	For <tt>k = 0 , ... , K_-1, pattern_jac_r_[k]</tt> 
+	is a CppAD sparsity pattern for the Jacobian of \f$ r_k (u) \f$ 
+	and as such it has size <tt>p_[k]*q_[k]</tt>.
+	(effectively const)
+	*/
+	BoolVectorVector                 pattern_jac_r_;
+
+	/*!
+ 	CppAD sparsity patterns for \f$ \{ r_k^{(2)} (u) \} \f$ (set by ctor).
+
+	For <tt>k = 0 , ... , K_-1, pattern_jac_r_[k]</tt> 
+	is a CppAD sparsity pattern for the Hessian of 
+	\f[
+		R(u) = \sum_{i=0}^{p[k]-1}  r_k (u)_i
+	\f]
+	and as such it has size <tt>q_[k]*q_[k]</tt>.
+	(effectively const)
+	*/
+	BoolVectorVector                 pattern_hes_r_;
+
+	/// number non-zero is Ipopt sparsity structor for Jacobian of g(x)
+	/// (effectively const)
+	size_t                           nnz_jac_g_;
+	/// row indices in Ipopt sparsity structor for Jacobian of g(x)
+	/// (effectively const)
+	SizeVector                       iRow_jac_g_;
+	/// column indices in Ipopt sparsity structor for Jacobian of g(x)
+	/// (effectively const)
+	SizeVector                       jCol_jac_g_;
+
+	/// number non-zero is Ipopt sparsity structor for Hessian of Lagragian
+	/// (effectively const)
+	size_t                           nnz_h_lag_;
+	/// row indices in Ipopt sparsity structor for Hessian of Lagragian
+	/// (effectively const)
+	SizeVector                       iRow_h_lag_;
+	/// column indices in Ipopt sparsity structor for Hessian of Lagragian
+	/// (effectively const)
+	SizeVector                       jCol_h_lag_;
+
+	/*!
+	Mapping from (i, j) in Jacobian of g(x) to Ipopt sparsity structure
+
+	For <tt>i = 0 , ... , m_-1, index_jac_g_[i]</tt>
+	is a standard map from column index values \c j to the corresponding
+	index in the Ipopt sparsity structure for the Jacobian of g(x). 
+ 	*/ 
+	IndexMap                         index_jac_g_;
+
+	/*!
+	Mapping from (i, j) in Hessian of fg(x) to Ipopt sparsity structure
+
+	For <tt>i = 0 , ... , n_-1, index_hes_fg_[i]</tt>
+	is a standard map from column index values \c j to the corresponding
+	index in the Ipopt sparsity structure for the Hessian of the Lagragian.
+ 	*/ 
+	IndexMap                         index_hes_fg_;
+	// -----------------------------------------------------------------
+	// Values that are changed by routine other than the constructor:
+	// -----------------------------------------------------------------
+
+	/// For <tt>k = 0 , ... , K_-1, r_fun_[k]</tt> 
+	/// is a the CppAD function object corresponding to \f$ r_k (u) \f$.
+	ADFunVector                      r_fun_;
+	/*!
+ 	Is r_fun[k] OK for current x.
+ 
+	For <tt>k = 0 , ... , K_-1, tape_ok_[k]</tt> 
+	is true if current operations sequence in <tt>r_fun_[k]</tt> 
+	OK for this value of \f$ x \f$. 
+	Note that \f$ u = [ J_{k,\ell} \otimes n ] (x) \f$ may depend on the
+	value of \f$ \ell \f$.
+	*/
+	BoolVector             tape_ok_;
+
+	/// work space of size equal maximum of <tt>q[k]</tt> w.r.t \c k.
+	SizeVector             J_;
+	/// work space of size equal maximum of <tt>p[k]</tt> w.r.t \c k.
+	SizeVector             I_; 
+	// ------------------------------------------------------------
+ 	// Private Methods
+	// ------------------------------------------------------------
+	/// block the default constructor from use
+	cppad_ipopt_nlp(const cppad_ipopt_nlp&);
+	/// blocks the assignment operator from use
+	cppad_ipopt_nlp& operator=(const cppad_ipopt_nlp&);
 public:
-	// constructor 
+	// ----------------------------------------------------------------
+	// See cppad_ipopt_nlp.hpp for doxygen documentation of these methods
+	// ----------------------------------------------------------------
+
+	/// only constructor for cppad_ipopot_nlp
 	cppad_ipopt_nlp(
 		size_t n                         , 
 		size_t m                         ,
@@ -686,8 +927,7 @@ public:
 		cppad_ipopt_solution*  solution
   	);
 
-
-	// default destructor 
+	// use virtual so that derived class destructor gets called.
 	virtual ~cppad_ipopt_nlp();
 
 	// return info about the nlp
@@ -793,59 +1033,6 @@ public:
 		const Ipopt::IpoptData*           ip_data    ,
 		Ipopt::IpoptCalculatedQuantities* ip_cq
 	);
-private:
-	/*
- 	Values passed in by user
-	*/
-	// dimension of the domain space
-	const size_t                    n_;
-	// number of components in g
-	const size_t                    m_;
-	// initial x
-	const NumberVector              x_i_;
-	// limits for x and g
-	const NumberVector              x_l_;
-	const NumberVector              x_u_;
-	const NumberVector              g_l_;
-	const NumberVector              g_u_;
-	// Users function that evaluates f and g
-	cppad_ipopt_fg_info* const      fg_info_;
-	// object for storing final solution results
-	cppad_ipopt_solution* const     solution_;
-	// values determined by fg_info
-	size_t                 K_;      // number terms in summation
-	BoolVector             retape_; // for operations sequence of r_k (u) 
-	BoolVector             tape_ok_;// tape is ok for current value of x
-	SizeVector             q_;      // dimension of domain for r_k (u)
-	SizeVector             p_;      // dimension of range for r_k (u)
-	SizeVector             L_;      // number of r_k (u) terms
-	SizeVector             J_;      // index vector for domain
-	SizeVector             I_;      // index vector for range
-	/*
- 	Computed values
-	*/
-	// CppAD sparsity patterns
-	BoolVectorVector                 pattern_jac_r_;
-	BoolVectorVector                 pattern_r_lag_;
-	// Ipopt sparsity structure for Jacobian of g
-	size_t                           nnz_jac_g_;
-	SizeVector                       iRow_jac_g_;
-	SizeVector                       jCol_jac_g_;
-	// mapping from array indices to Ipopt sparsity structure
-	IndexMap                         index_jac_g_;
-	IndexMap                         index_hes_fg_;
-	// Ipopt sparsity structure for Hessian of Lagragian
-	size_t                           nnz_h_lag_;
-	SizeVector                       iRow_h_lag_;
-	SizeVector                       jCol_h_lag_;
-	// CppAD function object for both f and g as one function
-	ADFunVector                      r_fun_;
-	/*
- 	Methods
-	*/
-	// Methods to block default compiler methods.
-	cppad_ipopt_nlp(const cppad_ipopt_nlp&);
-	cppad_ipopt_nlp& operator=(const cppad_ipopt_nlp&);
 
 };
 

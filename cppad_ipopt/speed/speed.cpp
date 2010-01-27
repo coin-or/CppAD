@@ -25,19 +25,23 @@ int main(void)
 
 	name    = "simple_retape_yes";
 	seconds = ode_speed(name, count);
-	printf("ode %20s: seconds = %5.2f: count = %d\n", name, seconds, count);
+	printf("ode %20s: seconds = %5.2f: eval_r_count = %d\n", 
+		name, seconds, count);
 
 	name    = "simple_retape_no";
 	seconds = ode_speed(name, count);
-	printf("ode %20s: seconds = %5.2f: count = %d\n", name, seconds, count);
+	printf("ode %20s: seconds = %5.2f: eval_r_count = %d\n",
+		name, seconds, count);
 
 	name    = "fast_retape_yes";
 	seconds = ode_speed(name, count);
-	printf("ode %20s: seconds = %5.2f: count = %d\n", name, seconds, count);
+	printf("ode %20s: seconds = %5.2f: eval_r_count = %d\n",
+		name, seconds, count);
 
 	name    = "fast_retape_no";
 	seconds = ode_speed(name, count);
-	printf("ode %20s: seconds = %5.2f: count = %d\n", name, seconds, count);
+	printf("ode %20s: seconds = %5.2f: eval_r_count = %d\n",
+		name, seconds, count);
 	
 	return 0;
 }

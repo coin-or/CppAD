@@ -10,6 +10,11 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+if [ ! -e "doxygen.err" ]
+then
+	echo "check_doxygen.sh: cannot find doxygen.err"
+	exit 1
+fi
 doxygen_version=`doxygen --version  | sed -e 's|\.|*100+|' -e's|\.|*10+|'`
 let doxygen_version=$doxygen_version
 if (( $doxygen_version <= 155 ))
@@ -19,112 +24,10 @@ then
 	echo "Hence it is to old to check for warnings or errors."
 	exit 0
 fi
-#
-# classes that have been completely documented
-class_list="
-	player
-	recorder
-	sparse_pack
-	sparse_set
-"
-#
-# member functions names that begin with the following have been documented
-# (but the corresponding class has not yet been completely documented).
-member_list="
-	SparseJacobian
-"
-# files that have been completely documented
-file_list="
-	abs_op.hpp
-	add_op.hpp
-	acos_op.hpp
-	asin_op.hpp
-	cond_op.hpp
-	configure.hpp
-	cos_op.hpp
-	cosh_op.hpp
-	csum_op.hpp
-	cppad_assert.hpp
-	define.hpp
-	discrete_op.hpp
-	div_op.hpp
-	forward0sweep.hpp
-	forward_sweep.hpp
-	for_jac_sweep.hpp
-	for_sparse_jac.hpp
-	fun_construct.hpp
-	hash_code.hpp
-	load_op.hpp
-	log_op.hpp
-	mul_op.hpp
-	op_code.hpp
-	optimize.hpp
-	player.hpp
-	print_op.hpp
-	pow_op.hpp
-	prototype_op.hpp
-	recorder.hpp
-	reverse_sweep.hpp
-	rev_hes_sweep.hpp
-	rev_jac_sweep.hpp
-	rev_sparse_hes.hpp
-	rev_sparse_jac.hpp
-	sin_op.hpp
-	sinh_op.hpp
-	sparse_binary_op.hpp
-	sparse_map2vec.hpp
-	sparse_unary_op.hpp
-	sqrt_op.hpp
-	store_op.hpp
-	sub_op.hpp
-	sparse_jacobian.hpp
-	sparse_hessian.hpp
-	sparse_pack.hpp
-	sparse_set.hpp
-
-	fun_record.hpp
-	hes_fg_map.cpp
-	jac_g_map.cpp
-	sparse_map2vec.cpp
-	vec_fun_pattern.cpp
-"
-# --------------------------------------------------------------------------
-for class in $class_list
-do
-	if grep -i "warning:.*$class::" doxygen.log
-	then
-		echo "Unexpected doxygen error or warning for $file."
-		exit 1
-	fi
-done
-# --------------------------------------------------------------------------
-for member in $member_list
-do
-	if grep -i "warning:.*member.*$member" doxygen.log
-	then
-		echo "Unexpected doxygen error or warning for $file."
-		exit 1
-	fi
-done
-# --------------------------------------------------------------------------
-for file in $file_list
-do
-	found="no"
-	for dir in cppad cppad/local cppad_ipopt/src
-	do
-		if [ -e $dir/$file ]
-		then
-			found="yes"
-		fi
-	done
-	if [ $found == "no" ]
-	then
-		echo "check_doxygen.sh: cannot find file $file"
-		exit 1
-	fi
-	if grep -i "$file.*warning" doxygen.log
-	then
-		echo "Unexpected doxygen error or warning for $file."
-		exit 1
-	fi
-done
+list=`head doxygen.err`
+if [ "$list" == "" ]
+then
+	exit 0
+fi
+echo "check_doxygen.sh: Doxygen errors or warnings; see doxygen.err"
+exit 1

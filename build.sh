@@ -446,23 +446,37 @@ fi
 # -----------------------------------------------------------------------------
 if [ "$1" = "doxygen" ] 
 then
-	# avoid warning in mid sentence of other log output by separating them
-	echo "doxygen doxyfile 1> doxygen.log 2> doxygen.$$"
-	if ! doxygen doxyfile 1> doxygen.log 2> doxygen.$$
+	echo "build.sh doxygen"
+	# remove old error or warning file, check_doxygen.sh will make sure 
+	# a new one is created.
+	list="
+		doxygen.err
+		doxydoc
+	"
+	for name in $list 
+	do
+		if [ -e $name ]
+		then
+			if ! rm -r $name
+			then
+				echo "Error: cannot remove old $name"
+				exit 1
+			fi
+		fi
+	done
+	# create doxydoc directory to avoid warning
+	mkdir doxydoc
+	#
+	echo "doxygen doxyfile > doxygen.log "
+	if ! doxygen doxyfile > doxygen.log
 	then
-		echo "Error: during doxygen"
+		echo "Error: during doxygen; see doxygen.err"
 		exit 1
 	fi
-	echo "cat doxygen.$$ >> doxygen.log"
-	if ! cat doxygen.$$ >> doxygen.log
+	echo "cat doxygen.err >> doxygen.log"
+	if ! cat doxygen.err >> doxygen.log
 	then
 		echo "Error: cannot add errors and warnings to doxygen.log"
-		exit 1
-	fi
-	echo "rm doxygen.$$"
-	if ! rm doxygen.$$
-	then
-		echo "Error: cannot remove doxygen.$$"
 		exit 1
 	fi
 	if ! ./check_doxygen.sh
@@ -610,23 +624,35 @@ then
 		done
 	done
 	# Test developer documentation ---------------------------------------
-	# avoid warning in mid sentence of other log output by separating them
-	echo "doxygen doxyfile 1> doxygen.log 2> doxygen.$$"
-	if ! doxygen doxyfile 1> doxygen.log 2> doxygen.$$
+	# remove old error or warning file, check_doxygen.sh will make sure 
+	# a new one is created.
+	list="
+		doxygen.err
+		doxydoc
+	"
+	for name in $list 
+	do
+		if [ -e $name ]
+		then
+			if ! rm -r $name
+			then
+				echo "Error: cannot remove old $name"
+				exit 1
+			fi
+		fi
+	done
+	# create doxydoc directory to avoid warning
+	mkdir doxydoc
+	echo "doxygen doxyfile > doxygen.log"
+	if ! doxygen doxyfile > doxygen.log
 	then
-		echo "Error: during doxygen"
+		echo "Error: during doxygen; see doxygen.err"
 		exit 1
 	fi
-	echo "cat doxygen.$$ >> doxygen.log"
-	if ! cat doxygen.$$ >> doxygen.log
+	echo "cat doxygen.err >> doxygen.log"
+	if ! cat doxygen.err >> doxygen.log
 	then
 		echo "Error: cannot add errors and warnings to doxygen.log"
-		exit 1
-	fi
-	echo "rm doxygen.$$"
-	if ! rm doxygen.$$
-	then
-		echo "Error: cannot remove doxygen.$$"
 		exit 1
 	fi
 	if ! ./check_doxygen.sh
