@@ -145,6 +145,7 @@ then
 	# libtool does not seem to support version by date
 	# sed < cppad_ipopt/src/makefile.am > cppad_ipopt/src/makefile.am.$$ \
 	#	-e "s/\(-version-info\) *[0-9]\{8\}[.0-9]*/\1 $yyyymmdd/"
+	#
 	sed < AUTHORS > AUTHORS.$$ \
 		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
 	sed < configure.ac > configure.ac.$$\
@@ -167,7 +168,6 @@ then
 		configure.ac
 		configure
 		cppad/config.h
-		cppad_ipopt/src/makefile.am
 	"
 	for name in $list
 	do
