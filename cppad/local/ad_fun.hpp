@@ -3,7 +3,7 @@
 # define CPPAD_AD_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -118,13 +118,6 @@ private:
 // ------------------------------------------------------------
 // Private member functions
 
-# ifdef NDEBUG
-	// disable use of the copy constructor
-	// private if NDEBUG is defined, and public otherwise
-	inline ADFun(const ADFun &f)
-	{	CPPAD_ASSERT_UNKNOWN(false); }
-# endif
-
 	/// change the operation sequence corresponding to this object
 	template <typename ADvector>
 	void Dependent(ADTape<Base> *tape, const ADvector &y);
@@ -228,19 +221,20 @@ private:
 	);
 // ------------------------------------------------------------
 public:
-# ifndef NDEBUG
 	/// copy constructor
-	// priviate if NDEBUG is defined, and public otherwise
 	ADFun(const ADFun& g) 
 	: total_num_var_(0), taylor_(CPPAD_NULL)
-	{	CPPAD_ASSERT_KNOWN(
-		false,
+	{	CppAD::ErrorHandler::Call(
+		true,
+		__LINE__,
+		__FILE__,
+		"ADFun(const ADFun& g)",
 		"Attempting to use the ADFun<Base> copy constructor.\n"
 		"Perhaps you are passing an ADFun<Base> object "
 		"by value instead of by reference."
 		);
 	 }
-# endif
+
 	/// default constructor
 	ADFun(void); 
 

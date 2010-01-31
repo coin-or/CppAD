@@ -3,7 +3,7 @@
 # define CPPAD_ABORT_RECORDING_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -15,9 +15,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin abort_recording$$
 $spell 
-$$
-
-$spell
 $$
 
 $section Abort Recording of an Operation Sequence$$
@@ -38,8 +35,9 @@ $codei%
 	Independent(%x%)
 %$$
 If such a recording is currently in progress,
-this operation will stop the recording and delete the
+$code abort_recording$$ will stop the recording and delete the
 corresponding information.
+Otherwise, $code abort_recording$$ has no effect.
 
 $children%
 	example/abort_recording.cpp

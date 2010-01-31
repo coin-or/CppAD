@@ -3,7 +3,7 @@
 # define CPPAD_INDEPENDENT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -166,8 +166,9 @@ inline void Independent(VectorAD &x)
 	typedef typename ADBase::value_type   Base;
 	CPPAD_ASSERT_KNOWN(
 		ADBase::tape_ptr() == CPPAD_NULL,
-		"Independent: cannot create a new tape because"
-		"\na previous tape is still active (for this thread)."
+		"Independent: cannot create a new tape because\n"
+		"a previous tape is still active (for this thread).\n"
+		"AD<Base>::abort_recording() would abort this previous recording."
 	);
 	size_t id = ADBase::tape_new();
 
