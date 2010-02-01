@@ -3,7 +3,7 @@
 # define CPPAD_OPTIMIZE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -127,12 +127,12 @@ $end
 */
 # include <stack>
 
+CPPAD_BEGIN_NAMESPACE
 /*!
 \file optimize.hpp
 Routines for optimizing a tape
 */
 
-CPPAD_BEGIN_NAMESPACE
 
 /*!
 State for this variable set during reverse sweep.

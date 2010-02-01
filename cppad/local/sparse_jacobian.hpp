@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_JACOBIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -154,8 +154,8 @@ It return $code true$$, if it succeeds and $code false$$ otherwise.
 $end
 -----------------------------------------------------------------------------
 */
-CPPAD_BEGIN_NAMESPACE
 
+CPPAD_BEGIN_NAMESPACE
 /*!
 \file sparse_jacobian.hpp
 Sparse Jacobian driver routine and helper functions.

@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_JAC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -130,8 +130,8 @@ It returns true if it succeeds and false otherwise.
 $end
 -----------------------------------------------------------------------------
 */
-CPPAD_BEGIN_NAMESPACE
 
+CPPAD_BEGIN_NAMESPACE
 /*!
 \file rev_sparse_jac.hpp
 Reverse mode Jacobian sparsity patterns.

@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include "cppad_ipopt_nlp.hpp"
 # include "hes_fg_map.hpp"
+
 CPPAD_BEGIN_NAMESPACE
 /*!
 \file hes_fg_map.cpp

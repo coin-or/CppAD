@@ -2,7 +2,7 @@
 # define CPPAD_SPARSE_PACK_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,7 +11,9 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <cppad/local/cppad_assert.hpp>
 
+CPPAD_BEGIN_NAMESPACE
 /*!
 \file sparse_pack.hpp
 Vector of sets of positive integers.
@@ -21,9 +23,7 @@ Vector of sets of positive integers.
 Vector of sets of postivie integers, each set stored as a packed boolean array.
 */
 
-# include <cppad/local/cppad_assert.hpp>
 
-CPPAD_BEGIN_NAMESPACE
 class sparse_pack {
 private:
 	/// type used to pack elements

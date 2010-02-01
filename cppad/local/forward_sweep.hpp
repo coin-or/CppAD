@@ -1,10 +1,9 @@
 /* $Id$ */
 # ifndef CPPAD_FORWARD_SWEEP_INCLUDED
 # define CPPAD_FORWARD_SWEEP_INCLUDED
-CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -14,6 +13,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
+CPPAD_BEGIN_NAMESPACE
 /*!
 \file forward_sweep.hpp
 Compute zero order forward mode Taylor coefficients.

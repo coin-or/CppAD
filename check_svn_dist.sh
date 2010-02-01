@@ -38,7 +38,7 @@ fi
 dir=`pwd`
 echo "make test >& $dir/make.log"
 echo "The following will give an overview of progress of command above"
-echo "	$dir/cat test.log"
+echo "	cat $dir/test.log"
 echo "The following will give details of progress of command above"
 echo "	tail -f $dir/make.log"
 if ! make test >&  make.log
@@ -56,5 +56,7 @@ then
 	echo "$dir/make.log"
 	exit 1
 fi
-cat test.log
 echo "OK: make test" 
+#
+echo "openmp/run.sh"
+openmp/run.sh 

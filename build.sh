@@ -695,6 +695,9 @@ then
 	fi
 	echo "OK: make test" 
 	echo "OK: make test" >> $dir/build_test.log
+	#
+	echo "openmp/run.sh"
+	openmp/run.sh >> $dir/build_test.log
 	# ===================================================================
 	cd ..
 	# end the build_test.log file with the date and time

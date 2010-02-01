@@ -1,10 +1,9 @@
 /* $Id$ */
 # ifndef CPPAD_OP_CODE_INCLUDED
 # define CPPAD_OP_CODE_INCLUDED
-CPPAD_BEGIN_NAMESPACE
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,18 +12,18 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-
-/*! 
-\file op_code.hpp
-Defines the OpCode enum type and functions related to it.
-
-*/
-
 # include <string>
 # include <sstream>
 # include <iomanip>
 
 # include <cppad/local/define.hpp>
+
+CPPAD_BEGIN_NAMESPACE
+/*! 
+\file op_code.hpp
+Defines the OpCode enum type and functions related to it.
+
+*/
 
 
 /*!

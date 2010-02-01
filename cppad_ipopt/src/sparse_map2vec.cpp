@@ -11,8 +11,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include "cppad_ipopt_nlp.hpp"
 # include "sparse_map2vec.hpp"
-CPPAD_BEGIN_NAMESPACE
 
+CPPAD_BEGIN_NAMESPACE
 /*!
 \file sparse_map2vec.cpp
 \brief Create a two vector sparsity representation from a vector of maps.

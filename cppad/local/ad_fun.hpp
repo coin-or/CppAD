@@ -57,8 +57,8 @@ $childtable%
 
 $end
 */
-CPPAD_BEGIN_NAMESPACE
 
+CPPAD_BEGIN_NAMESPACE
 /*!
 \file ad_fun.hpp
 File used to define the ADFun<Base> class.

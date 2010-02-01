@@ -2,7 +2,7 @@
 # ifndef CPPAD_RECORDER_INCLUDED
 # define CPPAD_RECORDER_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,9 +12,8 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <cppad/local/hash_code.hpp>
+
 CPPAD_BEGIN_NAMESPACE
-
-
 /*!
 \file recorder.hpp
 File used to define the recorder class.

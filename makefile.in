@@ -236,7 +236,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
-# $Id: makefile.am 1634 2010-01-24 08:44:17Z bradbell $
+# $Id: makefile.am 1640 2010-02-01 12:39:53Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -1074,8 +1074,6 @@ test:
 	) done
 	chmod +x test.sh
 	./test.sh
-	openmp/run.sh > openmp/test.log
-	cat openmp/test.log >> test.log
 	cat test.log
 #
 #
