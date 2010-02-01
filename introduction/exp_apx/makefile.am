@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -50,3 +50,6 @@ exp_apx_SOURCES   = \
 	exp_eps_for0.cpp \
 	exp_eps_rev1.cpp \
 	exp_eps_rev2.cpp
+
+test: exp_apx$(EXEEXT)
+	./exp_apx | tee test.log

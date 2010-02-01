@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -91,8 +91,8 @@ int main(void)
 	if( speed_test_ok )
 		cout << "speed_test also passed correctness test" << endl;
 	else
-	{	cout << "speed_test failed its correctness test (OK if ";
-		cout << "other processes are running at same time)" << endl;
+	{	cout << "speed_test failed its correctness test" << endl;
+		cout << "(expected if other processes are running)" << endl;
 	}
 
 	return static_cast<int>( ! ok );

@@ -31,40 +31,30 @@ then
 	exit 1
 fi
 # ----------------------------------------------------------------------------
+# Build and run all the tests
+# gcc 3.4.4 with optimization generates incorrect warning; see 
+#	http://cygwin.com/ml/cygwin-apps/2005-06/msg00161.html
+# The sed commands below are intended to remove them.
 dir=`pwd`
-list="
-	example
-	test_more
-	cppad_ipopt/src
-	cppad_ipopt/example
-	cppad_ipopt/speed
-	cppad_ipopt/test
-"
-for name in $list
-do
-	echo "cd $dir/$name"
-	if ! cd $dir/$name
-	then
-		echo "$script: cannot change into $dir/$name directory"
-		exit 1
-	fi
-	echo "make"
-	if ! make
-	then
-		echo "$script: $dir/$name/make failed"
-		exit 1
-	fi
-	program=`echo $name | sed -e 's|.*/||'`
-	# src directories create libraries
-	if [ "$program" != "src" ]
-	then 
-		echo "./$program"
-		if ! ./$program
-		then
-			echo "$script: $dir/$name/$program failed"
-			exit 1
-		fi
-		echo "cd $dir"
-		cd $dir
-	fi
-done
+echo "make test >& $dir/make.log"
+echo "The following will give an overview of progress of command above"
+echo "	$dir/cat test.log"
+echo "The following will give details of progress of command above"
+echo "	tail -f $dir/make.log"
+if ! make test >&  make.log
+then
+	echo "There are errors in $dir/make.log"
+	exit 1
+fi
+sed -i make.log \
+	-e '/op_code.hpp:368: warning: array subscript is above/d' \
+	-e '/stl_uninitialized.h:82: warning: .__cur. might be/d'
+if grep 'warning:' make.log
+then
+	tmp=`pwd`
+	echo "Stopping because there are unexpected warnings in"
+	echo "$dir/make.log"
+	exit 1
+fi
+cat test.log
+echo "OK: make test" 

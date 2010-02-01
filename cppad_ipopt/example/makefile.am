@@ -51,3 +51,6 @@ example_SOURCES   = \
 	ode_run.hpp \
 	ode_simple_check.cpp \
 	ode_simple.hpp
+
+test: example$(EXEEXT)
+	./example | tee test.log

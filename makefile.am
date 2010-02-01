@@ -307,6 +307,34 @@ EXTRA_DIST = \
 	openmp/run.sh \
 	run_omhelp.sh \
 	uw_copy_040507.html
+
+test_directory_list = \
+	$(INTRODUCTION) \
+	$(IPOPT_CPPAD) \
+	$(SPEED_CPPAD) \
+	$(SPEED_ADOLC) \
+	$(SPEED_FADBAD) \
+	$(SPEED_SACADO) \
+	$(EXAMPLE) \
+	$(TEST_MORE) 
+
+test: 
+	rm -f test.log
+	touch test.log
+	rm -f test.sh
+	echo "#! /bin/sh"                                         >  test.sh
+	for dir in $(test_directory_list) ; do ( \
+		echo "echo $$dir >> test.log ; pushd $$dir "         >> test.sh ; \
+		echo "if ! make test ; then exit 1 ; fi "            >> test.sh ; \
+		echo "cat test.log >> $(abs_top_builddir)/test.log"  >> test.sh ; \
+		echo "popd ; echo >> test.log"                       >> test.sh ; \
+	) done
+	chmod +x test.sh
+	./test.sh
+	openmp/run.sh > openmp/test.log
+	cat openmp/test.log >> test.log
+	cat test.log
+#
 #
 dist-hook:
 	rm -rf `find $(distdir)/omh $(distdir)/openmp -name .svn`

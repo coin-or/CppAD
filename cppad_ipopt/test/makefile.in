@@ -32,7 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-noinst_PROGRAMS = test$(EXEEXT)
+noinst_PROGRAMS = test_more$(EXEEXT)
 subdir = cppad_ipopt/test
 DIST_COMMON = $(srcdir)/makefile.am $(srcdir)/makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -44,13 +44,13 @@ CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-am_test_OBJECTS = test.$(OBJEXT) k_gt_one.$(OBJEXT) \
+am_test_more_OBJECTS = test_more.$(OBJEXT) k_gt_one.$(OBJEXT) \
 	multiple_solution.$(OBJEXT) retape_k1_l1.$(OBJEXT) \
 	retape_k1_l2.$(OBJEXT)
-test_OBJECTS = $(am_test_OBJECTS)
-test_LDADD = $(LDADD)
+test_more_OBJECTS = $(am_test_more_OBJECTS)
+test_more_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
-test_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+test_more_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -61,8 +61,8 @@ CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 CXXLD = $(CXX)
 CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 	-o $@
-SOURCES = $(test_SOURCES)
-DIST_SOURCES = $(test_SOURCES)
+SOURCES = $(test_more_SOURCES)
+DIST_SOURCES = $(test_more_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -198,8 +198,8 @@ AM_CPPFLAGS = -I. \
 LDADD = -lcppad_ipopt -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
 AM_LDFLAGS = -L../src -L$(IPOPT_DIR)/lib
 #
-test_SOURCES = \
-	test.cpp \
+test_more_SOURCES = \
+	test_more.cpp \
 	k_gt_one.cpp \
 	multiple_solution.cpp \
 	retape_k1_l1.cpp \
@@ -242,9 +242,9 @@ $(am__aclocal_m4_deps):
 
 clean-noinstPROGRAMS:
 	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
-test$(EXEEXT): $(test_OBJECTS) $(test_DEPENDENCIES) 
-	@rm -f test$(EXEEXT)
-	$(CXXLINK) $(test_OBJECTS) $(test_LDADD) $(LIBS)
+test_more$(EXEEXT): $(test_more_OBJECTS) $(test_more_DEPENDENCIES) 
+	@rm -f test_more$(EXEEXT)
+	$(CXXLINK) $(test_more_OBJECTS) $(test_more_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -256,7 +256,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multiple_solution.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/retape_k1_l1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/retape_k1_l2.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_more.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -467,6 +467,9 @@ uninstall-am:
 	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
 	uninstall-am
 
+
+test: test_more$(EXEEXT)
+	./test_more | tee test.log
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

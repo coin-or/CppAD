@@ -43,3 +43,6 @@ speed_SOURCES   = \
 	../src/sparse_map2vec.cpp \
 	../src/vec_fun_pattern.cpp \
 	ode_speed.cpp 
+
+test: speed$(EXEEXT)
+	./speed | tee test.log

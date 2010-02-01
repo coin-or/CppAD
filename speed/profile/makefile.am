@@ -51,3 +51,6 @@ profile_SOURCES = \
 	../cppad/poly.cpp \
 	../cppad/sparse_hessian.cpp \
 	../cppad/sparse_jacobian.cpp
+
+test: profile$(EXEEXT)
+	./profile correct 123 | tee test.log

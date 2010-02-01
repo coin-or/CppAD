@@ -20,6 +20,7 @@ if [ "$1" == "all" ] || [ "$2" != "" ]
 then
 	if [ "$1" == "all" ] && [ "$2" == "" ]
 	then
+		echo "./build.sh all"
 		options="
 			version 
 			automake 
@@ -40,6 +41,7 @@ then
 	fi
 	if [ "$1" == "all" ] && [ "$2" == "dos" ]
 	then
+		echo "./build.sh all dos"
 		options="
 			version 
 			automake 
@@ -61,6 +63,7 @@ then
 	fi
 	if [ "$1" == "all" ] && [ "$2" == "test" ]
 	then
+		echo "./build.sh all test"
 		options="
 			version 
 			automake 
@@ -589,7 +592,7 @@ then
 	#
 	dir=`pwd`
 	cd cppad-$version
-	# -------------------------------------------------------------
+	# ===================================================================
 	# Configure
 	#
 	if ! ./build.sh config_test
@@ -666,17 +669,16 @@ then
 	fi
  	echo "$msg" >> $dir/build_test.log
 	# -------------------------------------------------------------
-	# Compile
-	#
+	# Build and run all the tests
 	# gcc 3.4.4 with optimization generates incorrect warning; see 
-	# 	http://cygwin.com/ml/cygwin-apps/2005-06/msg00161.html
+	#	http://cygwin.com/ml/cygwin-apps/2005-06/msg00161.html
 	# The sed commands below are intended to remove them.
-	echo "make >& $dir/make.log"
+	echo "make test >& $dir/make.log"
 	echo "The following will give an overview of progress of command above"
-	echo "	grep \"^Making all\" $dir/make.log"
+	echo "	cat $dir/cppad-$version/test.log"
 	echo "The following will give details of progress of command above"
 	echo "	tail -f $dir/make.log"
-	if ! make >&  ../make.log
+	if ! make test >&  ../make.log
 	then
 		echo "There are errors in $dir/make.log"
 		exit 1
@@ -691,90 +693,9 @@ then
 		echo "$dir/make.log"
 		exit 1
 	fi
-	echo "OK: make" 
-	echo "OK: make" >> $dir/build_test.log
-	# ---------------------------------------------------------------
-	# Run execuables
-	#
-	list="
-		example/example
-		introduction/exp_apx/exp_apx
-		introduction/get_started/get_started
-		test_more/test_more
-	"
-	if [ -e $IPOPT_DIR/include/coin/IpIpoptApplication.hpp ]
-	then
-		list="
-			cppad_ipopt/example/example
-			cppad_ipopt/speed/speed
-			cppad_ipopt/test/test
-			$list
-		"
-	fi
-	for program in $list
-	do
-		echo "running $program"
-		echo "$program"   >> $dir/build_test.log
-		if ! ./$program   >> $dir/build_test.log
-		then
-			echo "Error: $program failed."
-			echo "Error: $program failed." >> $dir/build_test.log
-			exit 1
-		fi
-		# add a new line between program outputs
-		echo ""  >> $dir/build_test.log
-	done
-	list="
-		cppad
-		double
-		example
-		profile
-	"
-	if [ -e $ADOLC_DIR/include/adolc ]
-	then
-        	list="$list adolc"
-	fi
-	if [ -e $FADBAD_DIR/FADBAD++ ]
-	then
-        	list="$list fadbad"
-	fi
-	if [ -e $SACADO_DIR/include/Sacado.hpp ]
-	then
-		list="$list sacado"
-	fi
-	seed="123"
-	for retape in "" retape
-	do
-	for name in $list
-	do
-		# Note that example does not use command line arguments,
-		# but it does not currently care about their presence.
-		echo "running speed/$name/$name correct $seed $retape"
-		echo "./speed/$name/$name correct $seed $retape" \
-			>> $dir/build_test.log
-		if ! ./speed/$name/$name correct  $seed $retape \
-			>> $dir/build_test.log
-		then
-			program="speed/$name/$name"
-			echo "Error: $program failed."
-			echo "Error: $program failed." >> $dir/build_test.log
-			exit 1
-		fi
-		# add a new line between program outputs
-		echo ""  >> $dir/build_test.log
-	done
-	done
-	echo "openmp/run.sh"
-	echo "openmp/run.sh" >> $dir/build_test.log
-	if !  openmp/run.sh >> $dir/build_test.log
-	then
-		failed="openmp/run.sh $program"
-		echo "Error: $failed failed."
-		echo "Error: $failed failed." >> $dir/build_test.log
-		exit 1
-	fi
-	echo "" >> $dir/build_test.log
-	#
+	echo "OK: make test" 
+	echo "OK: make test" >> $dir/build_test.log
+	# ===================================================================
 	cd ..
 	# end the build_test.log file with the date and time
 	date >> build_test.log

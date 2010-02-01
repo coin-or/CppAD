@@ -49,3 +49,6 @@ double_SOURCES = \
 	poly.cpp \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
+
+test: double$(EXEEXT)
+	./double correct 123 | tee test.log

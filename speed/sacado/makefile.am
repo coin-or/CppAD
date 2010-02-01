@@ -51,3 +51,6 @@ sacado_SOURCES = \
 	poly.cpp \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
+
+test: sacado$(EXEEXT)
+	./sacado correct 123 | tee test.log

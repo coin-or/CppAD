@@ -42,3 +42,6 @@ libcppad_ipopt_a_SOURCES = \
 	sparse_map2vec.hpp \
 	vec_fun_pattern.cpp  \
 	vec_fun_pattern.hpp 
+
+test: libcppad_ipopt.a
+	echo "cppad_ipopt/src: Done building libcppad_ipopt.a" > test.log

@@ -49,25 +49,27 @@ svn status | sed > svn_status.$$ \
 	-e '/^[?] *junk$/d'                                   \
 	-e '/^[?].*\/junk\.[0-9a-zA-Z]*$/d'                   \
 	-e '/^[?] *junk\.[0-9a-zA-Z]*$/d'                     \
-	-e '/^[?] *dev$/d'                                    \
-	-e '/^[?] *config.status$/d'                          \
-	-e '/^[?] *doc$/d'                                    \
-	-e '/^[?] *doxydoc$/d'                                \
-	-e '/^[?] *dev$/d'                                    \
 	-e '/^[?] *aclocal.m4$/d'                             \
 	-e '/^[?] *cppad-[0-9]\{8\}.*$/d'                     \
+	-e '/^[?] *config.status$/d'                          \
+	-e '/^[?] *dev$/d'                                    \
+	-e '/^[?] *doc$/d'                                    \
 	-e '/^[?] *doc.omh$/d'                                \
+	-e '/^[?] *doxydoc$/d'                                \
 	-e '/^[?] *doxyfile$/d'                               \
+	-e '/^[?] *doxygen.err$/d'                            \
 	-e '/^[?] *svn_dist$/d'                               \
+	-e '/^[?] *test.sh$/d'                                \
 	-e '/^[?] *omh\/install_unix.omh$/d'                  \
 	-e '/^[?] *omh\/install_windows.omh$/d'               \
-	-e '/^[?] *example\/test_one.sh$/d'                   \
-	-e '/^[?] *test_more\/test_one.sh$/d'                 \
-	-e '/^[?] *example\/example$/d'                       \
 	-e '/^[?] *cppad_ipopt\/example\/example$/d'          \
 	-e '/^[?] *cppad_ipopt\/speed\/speed$/d'              \
-	-e '/^[?] *cppad_ipopt\/test\/test$/d'                \
+	-e '/^[?] *cppad_ipopt\/test\/test_more$/d'           \
 	-e '/^[?] *cppad_ipopt\/ipopt_ode_speed$/d'           \
+	-e '/^[?] *example\/test_one.sh$/d'                   \
+	-e '/^[?] *example\/example$/d'                       \
+	-e '/^[?] *introduction\/exp_apx\/exp_apx$/d'         \
+	-e '/^[?] *introduction\/get_started\/get_started$/d' \
 	-e '/^[?] *print_for\/print_for$/d'                   \
 	-e '/^[?] *speed\/adolc\/adolc$/d'                    \
 	-e '/^[?] *speed\/cppad\/cppad$/d'                    \
@@ -77,6 +79,7 @@ svn status | sed > svn_status.$$ \
 	-e '/^[?] *speed\/profile\/profile$/d'                \
 	-e '/^[?] *speed\/sacado\/sacado$/d'                  \
 	-e '/^[?] *test_more\/test_more$/d'                   \
+	-e '/^[?] *test_more\/test_one.sh$/d'                 \
 	-e '/^[?] *cppad_ipopt\/include$/d'                   \
 	-e '/^[?] *cppad_ipopt\/lib$/d'                       \
 	-e '/cygwin_package$/d'

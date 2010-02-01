@@ -642,6 +642,9 @@ uninstall-am:
 	uninstall-am
 
 
+test: test_more$(EXEEXT)
+	./test_more | tee test.log
+
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

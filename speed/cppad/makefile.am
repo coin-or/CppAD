@@ -49,3 +49,14 @@ cppad_SOURCES = \
 	poly.cpp \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
+
+test: cppad$(EXEEXT)
+	echo "./cppad correct 123" > test.log
+	./cppad correct 123 | tee test.tmp
+	cat test.tmp >> test.log
+	echo "./cppad correct 123 retape" >> test.log
+	./cppad correct 123 retape | tee test.tmp
+	cat test.tmp >> test.log
+	echo "./cppad correct 123 optimize" >> test.log
+	./cppad correct 123 optimize | tee test.tmp
+	cat test.tmp >> test.log

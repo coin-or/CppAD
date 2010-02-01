@@ -20,7 +20,7 @@ else
 BOOST_INCLUDE =
 endif
 # 
-noinst_PROGRAMS   = test
+noinst_PROGRAMS   = test_more
 #
 AM_CXXFLAGS       = -g $(CXX_FLAGS) 
 #
@@ -32,9 +32,12 @@ AM_CPPFLAGS       = -I. \
 LDADD             = -lcppad_ipopt -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
 AM_LDFLAGS        = -L../src -L$(IPOPT_DIR)/lib
 #
-test_SOURCES   = \
-	test.cpp \
+test_more_SOURCES   = \
+	test_more.cpp \
 	k_gt_one.cpp \
 	multiple_solution.cpp \
 	retape_k1_l1.cpp \
 	retape_k1_l2.cpp
+
+test: test_more$(EXEEXT)
+	./test_more | tee test.log

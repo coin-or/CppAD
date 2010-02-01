@@ -50,3 +50,11 @@ adolc_SOURCES = \
 	poly.cpp \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
+
+test: adolc$(EXEEXT)
+	echo "./adolc correct 123" > test.log
+	./adolc correct 123 | tee test.tmp
+	cat test.tmp >> test.log
+	echo "./adolc correct 123 retape" >> test.log
+	./adolc correct 123 retape | tee test.tmp
+	cat test.tmp >> test.log

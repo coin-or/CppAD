@@ -49,3 +49,6 @@ fadbad_SOURCES = \
 	poly.cpp \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
+
+test: fadbad$(EXEEXT)
+	./fadbad correct 123 | tee test.log
