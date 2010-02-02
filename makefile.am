@@ -331,8 +331,6 @@ test:
 	) done
 	chmod +x test.sh
 	./test.sh
-	openmp/run.sh > openmp/test.log
-	cat openmp/test.log >> test.log
 	cat test.log
 #
 #
