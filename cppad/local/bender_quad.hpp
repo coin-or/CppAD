@@ -3,7 +3,7 @@
 # define CPPAD_BENDER_QUAD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -39,6 +39,9 @@ $head Syntax$$
 $syntax%%
 %# include <cppad/cppad.hpp>
 BenderQuad(%x%, %y%, %fun%, %g%, %gx%, %gxx%)%$$  
+
+$head See Also$$
+$cref/opt_val_hes/$$
 
 $head Problem$$
 The type $cref/ADvector/BenderQuad/ADvector/$$ cannot be determined
@@ -362,10 +365,13 @@ void BenderQuad(
 	gtilde = fun.f(vx, vy);
 
 	// AD function object that corresponds to G~ (x)
-	ADFun<Base> Gtilde(vx, gtilde); 
+	// We will make heavy use of this tape, so optimize it
+	ADFun<Base> Gtilde;
+	Gtilde.Dependent(vx, gtilde); 
+	Gtilde.optimize();
 
 	// value of G(x)
-	g[0] = Value( gtilde[0] );
+	g = Gtilde.Forward(0, x);
 
 	// initial forward direction vector as zero
 	BAvector dx(n);
@@ -375,6 +381,7 @@ void BenderQuad(
 	// weight, first and second order derivative values
 	BAvector dg(1), w(1), ddw(2 * n);
 	w[0] = 1.;
+
 
 	// Jacobian and Hessian of G(x) is equal Jacobian and Hessian of Gtilde
 	for(j = 0; j < n; j++)

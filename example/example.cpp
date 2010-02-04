@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -114,6 +114,7 @@ extern bool OdeGearControl(void);
 extern bool OdeStiff(void);
 extern bool ode_taylor(void);
 extern bool ode_taylor_adolc(void);
+extern bool opt_val_hes(void);
 extern bool optimize(void);
 extern bool Output(void);
 extern bool ParVar(void);
@@ -256,6 +257,7 @@ int main(void)
 	ok &= Run( OdeGearControl,    "OdeGearControl"   );
 	ok &= Run( OdeStiff,          "OdeStiff"         );
 	ok &= Run( ode_taylor,        "ode_taylor"       );
+	ok &= Run( opt_val_hes,       "opt_val_hes"      );
 	ok &= Run( optimize,          "optimize"         );
 	ok &= Run( Output,            "Output"           );
 	ok &= Run( ParVar,            "ParVar"           );

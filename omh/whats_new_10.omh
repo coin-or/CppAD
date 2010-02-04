@@ -34,6 +34,16 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-03$$
+Fix a mistakes in the test $cref/BenderQuad.cpp/$$.
+In addition, the $cref/optimize/$$ routine was used to reduce the 
+tape before doing the calculations.
+$pre
+
+$$
+The routine $cref/opt_val_hes/$$ was added as an alternative to
+$cref/BenderQuad/$$.
+
 $head 01-26$$
 Another speed improvement was made to $cref/cppad_ipopt_nlp/$$.
 To be specific, the Lagragian multipliers where checked and components

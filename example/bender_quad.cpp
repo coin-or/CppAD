@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -71,44 +71,46 @@ $end
 # include <cppad/cppad.hpp>
 
 namespace {
-	template <class Type>   // Type can be either double or AD<double>
+	using CppAD::AD;
+	typedef CPPAD_TEST_VECTOR<double>         BAvector;
+	typedef CPPAD_TEST_VECTOR< AD<double> >   ADvector;
+
 	class Fun {
-	typedef CPPAD_TEST_VECTOR<double> BAvector;
-	typedef CPPAD_TEST_VECTOR<Type>   ADvector;
 	private:
-		BAvector t; // measurement times
-		BAvector z; // measurement values
+		BAvector t_; // measurement times
+		BAvector z_; // measurement values
 	public:
 		// constructor
-		Fun(const BAvector &t_, const BAvector &z_)
+		Fun(const BAvector &t, const BAvector &z)
+		: t_(t), z_(z)
 		{ }
 		// Fun.f(x, y) = F(x, y)
 		ADvector f(const ADvector &x, const ADvector &y)
 		{	size_t i;
-			size_t N = z.size();
+			size_t N = z_.size();
 
 			ADvector f(1);
-			f[0] = Type(0);
+			f[0] = 0.;
 
-			Type residual;
+			AD<double> residual;
 			for(i = 0; i < N; i++)
-			{	residual = y[0] * sin( x[0] * t[i] ) - z[i];
-				f[0]    += residual * residual;
+			{	residual = y[0] * sin( x[0] * t_[i] ) - z_[i];
+				f[0]    += .5 * residual * residual;
 			}
 			return f;
 		}
 		// Fun.h(x, y) = H(x, y) = F_y (x, y)
 		ADvector h(const ADvector &x, const BAvector &y)
 		{	size_t i;
-			size_t N = z.size();
+			size_t N = z_.size();
 
 			ADvector fy(1);
-			fy[0] = Type(0);
+			fy[0] = 0.;
 
-			Type residual;
+			AD<double> residual;
 			for(i = 0; i < N; i++)
-			{	residual = y[0] * sin( x[0] * t[i] ) - z[i];
-				fy[0]   += residual * sin( x[0] * t[i] );
+			{	residual = y[0] * sin( x[0] * t_[i] ) - z_[i];
+				fy[0]   += residual * sin( x[0] * t_[i] );
 			}
 			return fy;
 		}
@@ -119,36 +121,40 @@ namespace {
 			const BAvector &y , 
 			const ADvector &h )
 		{	size_t i;
-			size_t N = z.size();
+			size_t N = z_.size();
 
 			ADvector dy(1);
-			Type fyy = Type(0);
+			AD<double> fyy = 0.;
 
 			for(i = 0; i < N; i++)
-			{	fyy += sin( x[0] * t[i] ) * sin( x[0] * t[i] );
+			{	fyy += sin( x[0] * t_[i] ) * sin( x[0] * t_[i] );
 			}
 			dy[0] = - h[0] / fyy;
 
 			return dy;
 		}
-		// Fun.Y(x) = Y(x)  (only used for testing results)
-		BAvector Y(const BAvector &x )
-		{	size_t i;
-			size_t N = z.size();
-
-			BAvector y(1);
-			double num = 0.;
-			double den = 0.;
-
-			for(i = 0; i < N; i++)
-			{	num += z[i] * sin( x[0] * t[i] );
-				den += sin( x[0] * t[i] ) * sin( x[0] * t[i] );
-			}
-			y[0] = num / den;
-
-			return y;
-		}
 	};
+
+	// Used to test calculation of Hessian of G
+	AD<double> G(const ADvector& x, const BAvector& t, const BAvector& z)
+	{	// compute Y(x)
+		AD<double> numerator = 0.;
+		AD<double> denominator = 0.;
+		size_t k;
+		for(k = 0; k < t.size(); k++)
+		{	numerator   += sin( x[0] * t[k] ) * z[k];
+			denominator += sin( x[0] * t[k] ) * sin( x[0] * t[k] ); 	
+		}
+		AD<double> y = numerator / denominator;
+
+		// V(x) = F[x, Y(x)]
+		AD<double> sum = 0;
+		for(k = 0; k < t.size(); k++)
+		{	AD<double> residual = y * sin( x[0] * t[k] ) - z[k];
+			sum += .5 * residual * residual;
+		}
+		return sum;
+	}
 }
 
 bool BenderQuad(void)
@@ -157,55 +163,55 @@ bool BenderQuad(void)
 	using CppAD::NearEqual;
 
 	// temporary indices
-	size_t i;
+	size_t i, j;
 
 	// x space vector
 	size_t n = 1;
-	CPPAD_TEST_VECTOR<double> x(n);
+	BAvector x(n);
 	x[0] = 2. * 3.141592653;
 
 	// y space vector
 	size_t m = 1;
-	CPPAD_TEST_VECTOR<double> y(m);
+	BAvector y(m);
 	y[0] = 1.;
 
 	// t and z vectors
 	size_t N = 10;
-	CPPAD_TEST_VECTOR<double> t(N);
-	CPPAD_TEST_VECTOR<double> z(N);
+	BAvector t(N);
+	BAvector z(N);
 	for(i = 0; i < N; i++)
-	{	t[i] = double(i) / double(N);       // time or measurement
+	{	t[i] = double(i) / double(N);       // time of measurement
 		z[i] = y[0] * sin( x[0] * t[i] );   // data without noise
 	}
 
-	// construct the function object with Type = AD<double>
-	Fun< AD<double> > fun(z, t);
-
-	// construct the function object with Type = double
-	Fun<double>       fun_test(z, t);       
+	// construct the function object 
+	Fun fun(t, z);
 
 	// evaluate the G(x), G'(x) and G''(x)
-	CPPAD_TEST_VECTOR<double> g(1), gx(n), gxx(n * n);
-	BenderQuad(x, y, fun, g, gx, gxx);
+	BAvector g(1), gx(n), gxx(n * n);
+	CppAD::BenderQuad(x, y, fun, g, gx, gxx);
 
-	// Evaluate G(x) at nearby points
-	double              step(1e-5);
-	CPPAD_TEST_VECTOR<double> g0 = fun_test.f(x, fun_test.Y(x) );
-	x[0] = x[0] + 1. * step;
-	CPPAD_TEST_VECTOR<double> gp = fun_test.f(x, fun_test.Y(x) );
-	x[0] = x[0] - 2. * step;
-	CPPAD_TEST_VECTOR<double> gm = fun_test.f(x, fun_test.Y(x) );
 
-	// check function value
-	double check = g0[0];
-	ok          &= NearEqual(check, g[0], 1e-10, 1e-10);
+	// create ADFun object Gfun corresponding to G(x)
+	ADvector a_x(n), a_g(1);
+	for(j = 0; j < n; j++)
+		a_x[j] = x[j];
+	Independent(a_x);
+	a_g[0] = G(a_x, t, z);
+	CppAD::ADFun<double> Gfun(a_x, a_g);
 
-	// check derivative value
-	check        = (gp[0] - gm[0]) / (2. * step);
-	ok          &= NearEqual(check, gx[0], 1e-10, 1e-10);
+	// accuracy for checks
+	double eps = 10. * std::numeric_limits<double>::epsilon();
 
-	check        = (gp[0] - 2. * g0[0] + gm[0]) / (step * step);
-	ok          &= NearEqual(check, gxx[0], 1e-10, 1e-10);
+	// check Jacobian
+	BAvector check_gx = Gfun.Jacobian(x);
+	for(j = 0; j < n; j++)
+		ok &= NearEqual(gx[j], check_gx[j], eps, eps);
+
+	// check Hessian
+	BAvector check_gxx = Gfun.Hessian(x, 0);
+	for(j = 0; j < n*n; j++)
+		ok &= NearEqual(gxx[j], check_gxx[j], eps, eps);
 
 	return ok;
 }
