@@ -24,10 +24,10 @@ then
 	exit 1
 fi
 #
-echo "./build.sh conf_test"
-if ! ./build.sh config_test
+echo "./build.sh configure"
+if ! ./build.sh configure
 then
-	echo "$script: error durring ./build.sh config_test in ./svn_dist"
+	echo "$script: error durring ./build.sh configure in ./svn_dist"
 	exit 1
 fi
 # ----------------------------------------------------------------------------
@@ -46,9 +46,6 @@ then
 	echo "There are errors in $dir/make.log"
 	exit 1
 fi
-sed -i make.log \
-	-e '/op_code.hpp:368: warning: array subscript is above/d' \
-	-e '/stl_uninitialized.h:82: warning: .__cur. might be/d'
 if grep 'warning:' make.log
 then
 	tmp=`pwd`

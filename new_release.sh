@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -18,7 +18,7 @@ msg="Creating releases/$release_version"
 # -----------------------------------------------------------------------------
 if ! grep "AC_INIT(CppAD.*, $stable_version.$release" configure.ac >> /dev/null
 then
-	echo "Must change version number in build.sh,"
+	echo "Must change version number in configure.ac,"
 	echo "then run build.sh all test, and check in changes."
 	exit 1
 fi

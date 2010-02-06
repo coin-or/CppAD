@@ -641,9 +641,6 @@ then
  	echo "$msg" >> $dir/build_test.log
 	# -------------------------------------------------------------
 	# Build and run all the tests
-	# gcc 3.4.4 with optimization generates incorrect warning; see 
-	#	http://cygwin.com/ml/cygwin-apps/2005-06/msg00161.html
-	# The sed commands below are intended to remove them.
 	echo "make test >& $dir/make.log"
 	echo "The following will give an overview of progress of command above"
 	echo "	cat $dir/cppad-$version/test.log"
@@ -654,10 +651,7 @@ then
 		make_test_result="error"
 		echo "There are errors in $dir/make.log"
 	else
-		sed ../make.log > make.log.$$ \
-		-e '/op_code.hpp:368: warning: array subscript is above/d' \
-		-e '/stl_uninitialized.h:82: warning: .__cur. might be/d'
-		if grep 'warning:' make.log.$$
+		if grep 'warning:' make.log
 		then
 			make_test_resuult="warn"
 			echo "There are warnings in $dir/make.log"
