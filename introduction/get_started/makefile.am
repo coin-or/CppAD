@@ -24,7 +24,7 @@ endif
 # Microsoft project files
 EXTRA_DIST          = get_started.sln get_started.vcproj
 #
-noinst_PROGRAMS     = get_started 
+check_PROGRAMS      = get_started 
 #
 AM_CPPFLAGS         = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
 AM_CXXFLAGS         = -g $(CXX_FLAGS)

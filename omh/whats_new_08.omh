@@ -424,7 +424,7 @@ $head 01-11$$
 The CppAD correctness tests assume that machine epsilon is less
 than $code 1e-13$$. A test for this has been added to the
 $code test_more/test_more$$ program; see 
-$cref/--with-Testing/InstallUnix/--with-TestMore/$$ 
+$cref/--with-Testing/InstallUnix/More Testing/$$ 
 in Unix install instructions or
 $cref/more correctness testing/InstallWindows/More Correctness Testing/$$
 in Windows install instructions.

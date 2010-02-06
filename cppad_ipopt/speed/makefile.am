@@ -20,7 +20,7 @@ else
 BOOST_INCLUDE =
 endif
 # 
-noinst_PROGRAMS   = speed
+check_PROGRAMS    = speed
 #
 AM_CXXFLAGS       = -O2 -DNDEBUG $(CXX_FLAGS)
 #

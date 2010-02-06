@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20100128, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20100206, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -25,26 +25,69 @@ AC_PREFIX_DEFAULT(${HOME})
 dnl cygwin end delete:
 dnl cygwin replace: AC_PREFIX_DEFAULT(/usr)
 
-AC_MSG_NOTICE([******** Begin Checking Command Line arguments ***************])
+AC_MSG_NOTICE([*** Check command line arguments that are longer used ****])
 
+dnl ---------------- Check for arugments that have been removed ----------
 if test "$CPP_ERROR_WARN" != "" ; then
     AC_MSG_ERROR([The CPP_ERROR_WARN configure option is now CXX_FLAGS])
 fi
+dnl
 AC_ARG_WITH(SpeedExample, AC_HELP_STRING(
-	[--with-SpeedExample], [is now part of the --with-Speed option]),
+	[--with-SpeedExample], [is not necessary, see install instructions.]),
 	[SpeedExample="yes"], [SpeedExample="no"]
 )
 if test "$SpeedExample" = "yes" ; then
-    AC_MSG_ERROR([--with-SpeedExample is now part of --with-Speed option])
+    AC_MSG_ERROR([--with-SpeedExample not necessary, see install instructions.])
 fi
+dnl
 AC_ARG_WITH(profiling, AC_HELP_STRING(
-	[--with-profiling], [is now part of the --with-Speed option]),
+	[--with-profiling], [is not necessary, see install instructions.]),
 	[profiling="yes"], [profiling="no"]
 )
 if test "$profiling" = "yes" ; then
-    AC_MSG_ERROR([--with-profiling is now part of --with-Speed option])
+    AC_MSG_ERROR([--with-profiling not necessary, see install instructions.])
 fi
-
+dnl 
+AC_ARG_WITH(Speed, AC_HELP_STRING(
+	[--with-Speed], [is not necessary, see install instructions.]),
+	[Speed="yes"], [Speed="no"]
+)
+if test "$Speed" = "yes" ; then
+    AC_MSG_ERROR([--with-Speed not necessary, see install instructions.])
+fi
+dnl 
+AC_ARG_WITH(Introduction, AC_HELP_STRING(
+	[--with-Introduction], [is not necessary, see install instructions.]),
+	[Introduction="yes"], [Introduction="no"]
+)
+if test "$Introduction" = "yes" ; then
+    AC_MSG_ERROR([--with-Introduction not necessary, see install instructions.])
+fi
+dnl 
+AC_ARG_WITH(Example, AC_HELP_STRING(
+	[--with-Example], [is not necessary, see install instructions.]),
+	[Example="yes"], [Example="no"]
+)
+if test "$Example" = "yes" ; then
+    AC_MSG_ERROR([--with-Example not necessary, see install instructions.])
+fi
+dnl 
+AC_ARG_WITH(TestMore, AC_HELP_STRING(
+	[--with-TestMore], [is not necessary, see install instructions.]),
+	[TestMore="yes"], [TestMore="no"]
+)
+if test "$TestMore" = "yes" ; then
+    AC_MSG_ERROR([--with-TestMore not necessary, see install instructions.])
+fi
+dnl 
+AC_ARG_WITH(PrintFor, AC_HELP_STRING(
+	[--with-PrintFor], [is not necessary, see install instructions.]),
+	[PrintFor="yes"], [PrintFor="no"]
+)
+if test "$PrintFor" = "yes" ; then
+    AC_MSG_ERROR([--with-PrintFor not necessary, see install instructions.])
+fi
+AC_MSG_NOTICE([******  Check command line arguments that are used ***********])
 dnl the prefix directory corresponding to CppAD -------------------------
 dnl The following seems to work but NONE is not in autoconf specifications
 AC_MSG_CHECKING([--prefix])
@@ -66,57 +109,6 @@ AM_CONDITIONAL(CppAD_DOCUMENTATION, test "$Documentation" = "yes")
 AC_MSG_RESULT([$Documentation])
 dnl cygwin end delete:
 dnl cygwin replace: AM_CONDITIONAL(CppAD_DOCUMENTATION, test "yes" = "yes")
-
-
-dnl Are we building the Introduction directory ---------------------------
-AC_MSG_CHECKING([--with-Introduction])
-AC_ARG_WITH(Introduction, 
-	AC_HELP_STRING([--with-Introduction], [default is no]),
-	[Introduction="yes"],
-	[Introduction="no"]
-)
-AM_CONDITIONAL(CppAD_INTRODUCTION, test "$Introduction" = "yes")
-AC_MSG_RESULT([$Introduction])
-
-dnl Are we building the Example directory --------------------------------
-AC_MSG_CHECKING([--with-Example])
-AC_ARG_WITH(Example, 
-	AC_HELP_STRING([--with-Example], [default is no]),
-	[Example="yes"],
-	[Example="no"]
-)
-AM_CONDITIONAL(CppAD_EXAMPLE, test "$Example" = "yes")
-AC_MSG_RESULT([$Example])
-
-dnl Are we building the TestMore directory -------------------------------
-AC_MSG_CHECKING([--with-TestMore])
-AC_ARG_WITH(TestMore, 
-	AC_HELP_STRING([--with-TestMore], [default is no]),
-	[TestMore="yes"],
-	[TestMore="no"]
-)
-AM_CONDITIONAL(CppAD_TEST_MORE, test "$TestMore" = "yes")
-AC_MSG_RESULT([$TestMore])
-
-dnl Are we building the Speed directory ----------------------------------
-AC_MSG_CHECKING([--with-Speed])
-AC_ARG_WITH(Speed, 
-	AC_HELP_STRING([--with-Speed], [default is no]),
-	[Speed="yes"],
-	[Speed="no"]
-)
-AM_CONDITIONAL(CppAD_SPEED, test "$Speed" = "yes")
-AC_MSG_RESULT([$Speed])
-
-dnl Are we building the PrintFor directory --------------------------------
-AC_MSG_CHECKING([--with-PrintFor])
-AC_ARG_WITH(PrintFor, 
-	AC_HELP_STRING([--with-PrintFor], [default is no]),
-	[PrintFor="yes"],
-	[PrintFor="no"]
-)
-AM_CONDITIONAL(CppAD_PRINTFOR, test "$PrintFor" = "yes")
-AC_MSG_RESULT([$PrintFor])
 
 dnl Are we using standard vectors ----------------------------------------
 AC_MSG_CHECKING([--with-stdvector])

@@ -23,7 +23,7 @@ endif
 #
 EXTRA_DIST       = gprof.sed
 #
-noinst_PROGRAMS  = profile 
+check_PROGRAMS   = profile 
 #
 AM_CPPFLAGS   = -I$(top_srcdir) $(BOOST_INCLUDE)
 #

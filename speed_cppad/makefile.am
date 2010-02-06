@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -25,7 +25,7 @@ AM_CPPFLAGS      = $(BOOST_INCLUDE) -I. -I$(top_srcdir) -DNDEBUG
 #
 # speed
 #
-noinst_PROGRAMS  = speed_cppad
+check_PROGRAMS   = speed_cppad
 speed_cppad_CXXFLAGS   = -O2 $(CXX_FLAGS)
 speed_cppad_SOURCES    = \
 	speed_cppad.cpp \
@@ -38,7 +38,7 @@ speed_cppad_SOURCES    = \
 # speed_cppad_p
 #
 if CppAD_PROFILING
-noinst_PROGRAMS  += speed_cppad_p
+check_PROGRAMS  += speed_cppad_p
 speed_cppad_p_CXXFLAGS = -O2 -pg $(CXX_FLAGS)
 speed_cppad_p_LDFLAGS  = -pg 
 speed_cppad_p_SOURCES  = $(speed_cppad_SOURCES)

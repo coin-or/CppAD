@@ -533,14 +533,14 @@ void printOp(
 
 		case PripOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		printOpField(os, "txt=", *(Rec->GetTxt(ind[0])), ncol);
-		printOpField(os, "  p=", Rec->GetPar(ind[1]), ncol);
+		os << "txt=\"" << Rec->GetTxt(ind[0]);
+		os << "\"  p=" << Rec->GetPar(ind[1]);
 		break;
 
 		case PrivOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		printOpField(os, "txt=", *(Rec->GetTxt(ind[0])), ncol);
-		printOpField(os, "  v=", ind[1], ncol);
+		os << "txt=\"" << Rec->GetTxt(ind[0]);
+		os << "\"  v=" << ind[1];
 		break;
 
 		case BeginOp:

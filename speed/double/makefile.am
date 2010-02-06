@@ -23,7 +23,7 @@ endif
 #
 EXTRA_DIST       = double.sln double.vcproj
 #
-noinst_PROGRAMS  = double 
+check_PROGRAMS   = double 
 #
 AM_CPPFLAGS   = -I$(top_srcdir) $(BOOST_INCLUDE)
 #

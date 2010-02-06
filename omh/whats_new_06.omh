@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -99,7 +99,7 @@ $pre
 $$
 Move the exponential example to the subdirectory
 $code introduction/exp_apx$$ and change the
-$cref/--with-Introduction/InstallUnix/--with-Introduction/$$ 
+$code --with-Introduction$$ 
 unix configure option
 to build both the $cref/get_started.cpp/$$ and $cref/exp_apx_main.cpp/$$
 example programs.
@@ -199,7 +199,7 @@ $cref|speed/cppad|speed_cppad|$$
 	$cnext CppAD drivers for the template functions  $rnext
 $cref|speed/fadbad|speed_fadbad|$$
 	$cnext Fadbad drivers for the template functions $rnext
-$cref|speed/profile|InstallUnix|--with-Speed|profile|$$
+$cref|speed/profile|InstallUnix|Profiling CppAD|$$
 	$cnext profiling version of CppAD drivers        
 $tend
 
@@ -363,8 +363,8 @@ its dependence on the rest of CppAD was removed
 
 $head 11-12$$
 The 
-$cref/example/InstallUnix/--with-Example/$$ and 
-$cref/test_more/InstallUnix/--with-TestMore/$$ 
+$cref/example/InstallUnix/CppAD Examples/$$ and 
+$cref/test_more/InstallUnix/More Testing/$$ 
 programs were
 changed to print out the number of tests that passed or failed instead
 of just "All the tests passed" or "At least one of the tests failed".
@@ -1183,7 +1183,7 @@ file $code cppad/local/CppADError.h$$).
 
 $head 01-02$$
 Add the sed script $code Speed/gprof.sed$$ to aid in the display of the
-$cref/profiling/InstallUnix/--with-Speed/profile/$$ output.
+$cref/profiling/InstallUnix/Profiling CppAD/$$ output.
 $pre
 
 $$

@@ -24,8 +24,7 @@ then
 		options="
 			version 
 			automake 
-			config_none 
-			make
+			configure 
 			dist
 			omhelp 
 			doxygen 
@@ -45,8 +44,7 @@ then
 		options="
 			version 
 			automake 
-			config_none 
-			make
+			configure 
 			dist
 			omhelp 
 			doxygen 
@@ -67,8 +65,7 @@ then
 		options="
 			version 
 			automake 
-			config_none 
-			make
+			configure 
 			dist 
 			omhelp 
 			doxygen 
@@ -88,8 +85,8 @@ then
 		echo "build.sh: \"$2\" is invalid second arg when first is all."
 		exit 1
 	fi
-	list=" version automake config_none config_test"
-	list="$list omhelp doxygen make dist test gpl dos move "
+	list=" version automake configure"
+	list="$list omhelp doxygen dist test gpl dos move "
 	for option in $*
 	do
 		if [ "$option" == "all" ]
@@ -274,56 +271,43 @@ fi
 #
 # -----------------------------------------------------------------------------
 # configure
-TEST=""
-if [ "$1" = "config_test" ] 
+if [ "$1" == "configure" ]
 then
-	TEST="
-		--with-Introduction
-		--with-Example
-		--with-TestMore
-		--with-Speed
-		--with-PrintFor"
-	if [ -e doc/index.htm ]
-	then
-		TEST="$TEST
-			--with-Documentation"
-	fi
-	TEST="$TEST
-		POSTFIX_DIR=coin"
+	options="
+		--with-Documentation
+		POSTFIX_DIR=coin
+	"
 	if [ -e $BOOST_DIR/boost ]
 	then
-		TEST="$TEST 
+		options="$options 
 			BOOST_DIR=$BOOST_DIR"
 	fi
 	if [ -e $ADOLC_DIR/include/adolc ]
 	then
-		TEST="$TEST 
+		options="$options 
 			ADOLC_DIR=$ADOLC_DIR"
 	fi
 	if [ -e $FADBAD_DIR/FADBAD++ ]
 	then
-		TEST="$TEST 
+		options="$options 
 			FADBAD_DIR=$FADBAD_DIR"
 	fi
 	if [ -e $SACADO_DIR/include/Sacado.hpp ]
 	then
-		TEST="$TEST 
+		options="$options 
 			SACADO_DIR=$SACADO_DIR"
 	fi
 	if [ -e $IPOPT_DIR/include/coin/IpIpoptApplication.hpp ]
 	then
-		TEST="$TEST 
-			IPOPT_DIR=$IPOPT_DIR"
+		options="$options 
+		IPOPT_DIR=$IPOPT_DIR"
 	fi
-	TEST=`echo $TEST | sed -e 's|\t\t*| |g'`
-fi
-if [ "$1" = "config_test" ] || [ "$1" = "config_none" ] 
-then
+	options=`echo $options | sed -e 's|\t\t*| |g'`
 	echo "configure \\"
-	echo "$TEST" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
+	echo "$options" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
 	echo "	CXX_FLAGS=\"-Wall -ansi -pedantic-errors -std=c++98\""
 	#
-	if ! ./configure $TEST \
+	if ! ./configure $options \
 		CXX_FLAGS="-Wall -ansi -pedantic-errors -std=c++98"
 	then
 		exit 1
@@ -342,19 +326,6 @@ then
 	exit 0
 fi
 #
-# -----------------------------------------------------------------------------
-if [ "$1" = "make" ] 
-then
-	echo "build.sh make"
-	#
-	echo "make"
-	if ! make
-	then
-		exit 1
-	fi
-	#
-	exit 0
-fi
 # -----------------------------------------------------------------------------
 if [ "$1" = "dist" ] 
 then
@@ -595,10 +566,10 @@ then
 	# ===================================================================
 	# Configure
 	#
-	if ! ./build.sh config_test
+	if ! ./build.sh configure
 	then
-		echo "Error: build.sh config_test"  >> $dir/build_test.log
-		echo "Error: build.sh config_test" 
+		echo "Error: build.sh configure"  >> $dir/build_test.log
+		echo "Error: build.sh configure" 
 		exit 1
 	fi
 	# -------------------------------------------------------------
@@ -680,24 +651,36 @@ then
 	echo "	tail -f $dir/make.log"
 	if ! make test >&  ../make.log
 	then
+		make_test_result="error"
 		echo "There are errors in $dir/make.log"
-		exit 1
-	fi
-	sed ../make.log > make.log.$$ \
+	else
+		sed ../make.log > make.log.$$ \
 		-e '/op_code.hpp:368: warning: array subscript is above/d' \
 		-e '/stl_uninitialized.h:82: warning: .__cur. might be/d'
-	if grep 'warning:' make.log.$$
+		if grep 'warning:' make.log.$$
+		then
+			make_test_resuult="warn"
+			echo "There are warnings in $dir/make.log"
+		else
+			make_test_result="ok"
+		fi
+	fi
+	echo "copying $dir/cppad-$version/test.log to $dir/test.log"
+	cp $dir/cppad-$version/test.log $dir/test.log
+	#
+	if [ "$make_test_result" != "ok" ]
 	then
-		tmp=`pwd`
-		echo "Stopping because there are unexpected warnings in"
-		echo "$dir/make.log"
 		exit 1
 	fi
-	echo "OK: make test" 
-	echo "OK: make test" >> $dir/build_test.log
+	echo "OK: make test, see test.log" 
+	echo "OK: make test, see test.log" >> $dir/build_test.log
 	#
 	echo "openmp/run.sh"
-	openmp/run.sh >> $dir/build_test.log
+	if ! openmp/run.sh  >> $dir/build_test.log
+	then
+		echo "openmp/run.sh failed"
+		exit 1
+	fi
 	# ===================================================================
 	cd ..
 	# end the build_test.log file with the date and time
@@ -792,9 +775,7 @@ echo "------"
 echo "help           print this message"
 echo "version        update configure.ac and doc.omh version number"
 echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
-echo "config_none    excludes all possible testing options"
-echo "config_test    includes all the possible testing options"
-echo "make           use make to build all of the requested targets"
+echo "configure      run configure"
 echo "dist           create the distribution file cppad-version.cpl.tgz"
 echo "omhelp         build all formats for user documentation in doc/*"
 echo "doxygen        build developer documentation in doxydoc/*"
@@ -807,13 +788,13 @@ echo "build.sh option_1 option_2 ..."
 echo "Where options are in list above, executes them in the specified order."
 echo
 echo "build.sh all"
-echo "Execute all options except help, config_test, test, dos, are excluded."
+echo "Execute all options except help, test, and dos, are excluded."
 echo
 echo "build.sh all dos"
-echo "Execute all options except help, config_test, test     , are excluded."
+echo "Execute all options except help, and test, are excluded."
 echo
 echo "build.sh all test"
-echo "Execute all options except help, config_none,       dos, are excluded."
+echo "Execute all options except help, and dos, are excluded."
 echo "------------------------------------------------------------------------"
 exit 0
 fi

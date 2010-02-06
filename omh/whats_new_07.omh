@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -180,7 +180,7 @@ $pre
 $$
 The $cref/unix install/InstallUnix/$$ procedure has been modified
 so that the one configure flag
-$cref/--with-Speed/InstallUnix/--with-Speed/$$
+$code --with-Speed$$
 builds all the possible executables related to the speed testing.
 
 $head 11-03$$
@@ -225,10 +225,8 @@ in order to set the correct version number for her (or his) installation.
 $pre
 
 $$
-Add the correctness tests
-$cref/return status/InstallUnix/Testing Return Status/$$
-to the documentation.
-
+Add the return status for all the correctness tests
+to the documentation; see $cref/make test/InstallUnix/make test/$$. 
 
 $head 10-30$$
 The download instructions did not update current version number
@@ -537,9 +535,9 @@ $code adouble$$ and for the $cref/Base/base_require/$$ type.
 $pre
 
 $$
-The $cref/get_started/InstallUnix/--with-Introduction/get_started/$$ 
+The $cref/get_started/InstallUnix/Introduction/Getting Started/$$ 
 example did not build when
-the $code -with-Introduction$$ and 
+the $code --with-Introduction$$ and 
 $code BOOST_DIR$$ options were included on the 
 $cref/configure/InstallUnix/Configure/$$ command line.
 In fact, some of the $cref/speed/$$ tests also had compilation errors
@@ -948,7 +946,7 @@ This has been fixed.
 
 $head 02-02$$
 Fix minor errors and improve
-$cref/profiling/InstallUnix/--with-Speed/profile/$$ documentation.
+$cref/profiling/InstallUnix/Profiling CppAD/$$ documentation.
 Also change the problem sizes used for the $cref/speed/$$ tests.
 
 $head 02-01$$

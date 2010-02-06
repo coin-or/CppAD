@@ -132,6 +132,12 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\ode_evaluate.cpp">
+			</File>
+			<File
+				RelativePath=".\sparse_evaluate.cpp">
+			</File>
+			<File
 				RelativePath=".\speed_test.cpp">
 			</File>
 		</Filter>

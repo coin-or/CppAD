@@ -21,7 +21,7 @@ else
 BOOST_INCLUDE =
 endif
 #
-noinst_PROGRAMS  = adolc 
+check_PROGRAMS   = adolc 
 #
 AM_CPPFLAGS   = -I$(top_srcdir) -I$(ADOLC_DIR)/include $(BOOST_INCLUDE)
 #

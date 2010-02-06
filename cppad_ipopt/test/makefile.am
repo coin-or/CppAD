@@ -20,7 +20,7 @@ else
 BOOST_INCLUDE =
 endif
 # 
-noinst_PROGRAMS   = test_more
+check_PROGRAMS    = test_more
 #
 AM_CXXFLAGS       = -g $(CXX_FLAGS) 
 #

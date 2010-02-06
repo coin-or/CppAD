@@ -336,6 +336,9 @@
 				RelativePath=".\ode_taylor.cpp">
 			</File>
 			<File
+				RelativePath=".\opt_val_hes.cpp">
+			</File>
+			<File
 				RelativePath=".\optimize.cpp">
 			</File>
 			<File

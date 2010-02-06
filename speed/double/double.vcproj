@@ -121,13 +121,37 @@
 				RelativePath=".\det_minor.cpp">
 			</File>
 			<File
+				RelativePath="..\link_det_lu.cpp">
+			</File>
+			<File
+				RelativePath="..\link_det_minor.cpp">
+			</File>
+			<File
+				RelativePath="..\link_ode.cpp">
+			</File>
+			<File
+				RelativePath="..\link_poly.cpp">
+			</File>
+			<File
+				RelativePath="..\link_sparse_hessian.cpp">
+			</File>
+			<File
+				RelativePath="..\link_sparse_jacobian.cpp">
+			</File>
+			<File
 				RelativePath="..\main.cpp">
+			</File>
+			<File
+				RelativePath=".\ode.cpp">
 			</File>
 			<File
 				RelativePath=".\poly.cpp">
 			</File>
 			<File
 				RelativePath=".\sparse_hessian.cpp">
+			</File>
+			<File
+				RelativePath=".\sparse_jacobian.cpp">
 			</File>
 		</Filter>
 		<Filter

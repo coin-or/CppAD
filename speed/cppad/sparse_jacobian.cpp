@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -122,11 +122,9 @@ bool link_sparse_jacobian(
 			g.optimize();
 			if( print_this_time ) 
 			{	after = g.size_var();
-				std::cout << "optimize: size = " << n
-				          << ": size_var() = "
-				          << before << "(before) " 
-				          << after << "(after) " 
-				          << std::endl;
+				std::cout << "cppad_sparse_jacobian_optimize_size_" 
+				          << int(n) << " = [ " << int(before) 
+				          << ", " << int(after) << "]" << std::endl;
 				printed         = true;
 				print_this_time = false;
 			}

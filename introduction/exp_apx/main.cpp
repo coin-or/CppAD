@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -55,13 +55,13 @@ namespace {
 	static size_t Run_ok_count    = 0;
 	static size_t Run_error_count = 0;
 	bool Run(bool TestOk(void), std::string name)
-	{	bool ok      = true;
-		size_t width =  20;         
+	{	bool ok               = true;
+		std::streamsize width =  20;         
 		std::cout.width( width );
 		std::cout.setf( std::ios_base::left );
-		std::cout << name;
+		std::cout << name.c_str();
 		//
-		ok &= name.size() < width;
+		ok &= name.size() < size_t(width);
 		ok &= TestOk();
 		if( ok )
 		{	std::cout << "OK" << std::endl;

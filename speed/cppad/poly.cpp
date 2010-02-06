@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -107,11 +107,9 @@ bool link_poly(
 			f.optimize();
 			if( print_this_time ) 
 			{	after = f.size_var();
-				std::cout << "optimize: size = " << size
-				          << ": size_var() = "
-				          << before << "(before) " 
-				          << after << "(after) " 
-				          << std::endl;
+				std::cout << "cppad_poly_optimize_size_" 
+				          << int(size) << " = [ " << int(before) 
+				          << ", " << int(after) << "]" << std::endl;
 				printed         = true;
 				print_this_time = false;
 			}

@@ -21,7 +21,7 @@ else
 BOOST_INCLUDE =
 endif
 #
-noinst_PROGRAMS  = fadbad 
+check_PROGRAMS   = fadbad 
 #
 AM_CPPFLAGS   = -I$(top_srcdir) -I$(FADBAD_DIR) $(BOOST_INCLUDE)
 #

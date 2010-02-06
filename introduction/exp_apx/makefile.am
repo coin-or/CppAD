@@ -27,7 +27,7 @@ EXTRA_DIST        = \
 	exp_2.omh \
 	exp_eps.omh
 #
-noinst_PROGRAMS   = exp_apx 
+check_PROGRAMS    = exp_apx 
 #
 AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
 AM_CXXFLAGS       = -g $(CXX_FLAGS)

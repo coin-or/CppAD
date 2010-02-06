@@ -22,7 +22,7 @@ endif
 #
 EXTRA_DIST        = example.sln example.vcproj speed_program.cpp
 #
-noinst_PROGRAMS   = example 
+check_PROGRAMS    = example 
 #
 AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
 #

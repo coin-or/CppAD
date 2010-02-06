@@ -21,7 +21,7 @@ else
 BOOST_INCLUDE =
 endif
 #
-noinst_PROGRAMS  = sacado 
+check_PROGRAMS   = sacado 
 #
 AM_CPPFLAGS   = -I$(top_srcdir) -I$(SACADO_DIR)/include $(BOOST_INCLUDE)
 #

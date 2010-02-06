@@ -36,11 +36,11 @@ else
 BOOST_INCLUDE =
 endif
 # 
-# Microsoft project files
+# Microsoft project files an script to run a single test
 EXTRA_DIST        = example.sln example.vcproj test_one.sh.in \
 	$(ADOLC_EXTRA_FILES)
 #
-noinst_PROGRAMS   = example 
+check_PROGRAMS    = example 
 #
 if CppAD_MS_COMPILER
 AM_CXXFLAGS       = -EHsc -g $(ADOLC_FLAGS) $(CXX_FLAGS)

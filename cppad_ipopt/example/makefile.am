@@ -28,7 +28,7 @@ EXTRA_DIST        = \
 	ode1.omh \
 	ode2.omh
 #
-noinst_PROGRAMS   = example
+check_PROGRAMS    = example
 #
 AM_CXXFLAGS       = -g $(CXX_FLAGS) 
 #

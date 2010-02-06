@@ -33,10 +33,10 @@ else
 BOOST_INCLUDE =
 endif
 #
-# Microsoft project files
+# Microsoft project files and script to run a single test
 EXTRA_DIST        = test_more.sln test_more.vcproj test_one.sh.in 
 #
-noinst_PROGRAMS   = test_more
+check_PROGRAMS    = test_more
 #
 AM_CPPFLAGS       = -I. \
 	-I$(top_srcdir) \

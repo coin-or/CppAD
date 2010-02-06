@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin PrintFor.cpp$$
 $spell
+	makefile
 	CppAD
 	cppad.hpp
 	std::cout
@@ -70,6 +71,7 @@ int main(void)
 
 	cout << "v[0] = 0" << endl; 
 	cout << "v[0] + x[0] = 2" << endl; 
+	// Developer Note: ./makefile.am "Test passes" to begin next output line
 	cout << "Test passes if two lines above repeat below:" << endl;
 	f.Forward(0, x);	
 

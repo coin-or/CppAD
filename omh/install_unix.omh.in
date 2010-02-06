@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -127,32 +127,28 @@ $tend
 
 $subhead Tar File Extraction$$
 Use the unix command
-$syntax%
+$codei%
 	tar -xvzf cppad-@VERSION@.%license%.tgz
 %$$
-(where $italic license$$ is $code cpl$$ or $code gpl$$)
+(where $icode license$$ is $code cpl$$ or $code gpl$$)
 to decompress and extract the unix format version
 into the distribution directory
-$syntax%
+$codei%
 	cppad-@VERSION@
 %$$
 To see if this has been done correctly, check for the following file:
-$syntax%
+$codei%
 	cppad-@VERSION@/cppad/cppad.hpp
 %$$
 
 $head Configure$$
 $index configure$$
-Enter the directory created by the extraction and execute the command:
-$syntax%
+Enter the $icode distribution_directory$$
+(the directory created by the extraction) and execute the command:
+$codei%
 	./configure                            \
 	--prefix=%PrefixDir%                     \
 	--with-Documentation                   \
-	--with-Introduction                    \
-	--with-Example                         \
-	--with-TestMore                        \
-	--with-Speed                           \
-	--with-PrintFor                        \
 	--with-stdvector                       \  
 	POSTFIX_DIR=%PostfixDir%                 \
 	ADOLC_DIR=%AdolcDir%                     \
@@ -166,160 +162,108 @@ where only the $code configure$$ command need appear.
 The entries one each of the other lines are optional
 and the text in italic is replaced values that you choose.
 
-$head Testing Return Status$$
-$index status, test return$$
-$index test, return status$$
-All of the test programs mentioned below
-(with the exception of $cref/print_for/InstallUnix/--with-PrintFor/$$)
-return a status of zero, if all correctness tests pass, and one for an error.
-For example, 
-if $cref/--with-Example/InstallUnix/--with-Example/$$ 
-is included in the $code configure$$ command, 
-$codep
-	if ! example/example
-	then
-		echo "example failed its test"
-		echo exit 1
-	fi
-$$
-could be used abort the a bash shell script when the test failed.
+$head make test$$
+You can run all of the CppAD correctness tests by executing the 
+command $code make test$$ in the $icode distribution_directory$$.
+A description of the tests, and instructions for running individual tests,
+are described below.
 
-$head PrefixDir$$
-$index configure, prefix directory$$
-$index prefix, configure directory$$
-$index directory, configure prefix$$
-The default value for prefix directory is $code ^HOME$$
-i.e., by default the CppAD include files 
-will $cref/install/InstallUnix/make install/$$ below $code ^HOME$$.
-If you want to install elsewhere, you will have to use this option.
-As an example of using the $syntax%--prefix=%PrefixDir%$$ option,
-if you specify
-$codep
-	./configure --prefix=/usr/local
-$$ 
-the CppAD include files will be installed in the directory
-$syntax%
-	/usr/local/include/cppad
-%$$
-If $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
-is specified, the CppAD documentation files will be installed in the directory
-$syntax%
-	/usr/local/share/doc/cppad-@VERSION@
-%$$
+$head Introduction$$
 
-$head --with-Documentation$$
-$index documentation, install$$
-$index install, documentation$$
-If the command line argument $code --with-Documentation$$ is specified,
-the CppAD documentation HTML and XML files are copied to the directory
-$syntax%
-	%PrefixDir%/share/doc/%PostfixDir%/cppad-@VERSION@
+$subhead Getting Started$$
+$index get_started, run$$
+$index run, get_started$$
+You can run the CppAD getting started example / test 
+by executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/introduction/get_started
 %$$
-(see $cref/PostfixDir/InstallUnix/PostfixDir/$$).
-The top of the CppAD HTML documentation tree 
-(with mathematics displayed as LaTex command) will be located at
-$syntax%
-	%PrefixDir%/share/doc/%PostfixDir%/cppad-@VERSION@/cppad.htm
-%$$
-and the top of the XML documentation tree
-(with mathematics displayed as MathML) will be located at
-$syntax%
-	%PrefixDir%/share/doc/%PostfixDir%/cppad-@VERSION@/cppad.xml
-%$$
-
-$head --with-Introduction$$
-$index introduction, unix$$
-$index unix, introduction$$
-
-$subhead get_started$$
-$index get_started, unix$$
-$index unix, get_started$$
-If the command line argument $code --with-Introduction$$ is specified,
-the $xref/get_started.cpp/$$ example will be built.
-Once the $code make$$ command 
-has been executed, you can run this example by executing the command 
-$codep
-	introduction/get_started/get_started
-$$
 
 $subhead exp_apx$$
-$index exp_apx, unix$$
-$index unix, exp_apx$$
-If the command line argument $code --with-Introduction$$ is specified,
-the $cref/exp_apx_main.cpp/$$ program
-(verifies calculations in the $cref/Introduction/$$ $code exp_apx$$ example) 
-will be built.
-Once the $code make$$ command
-has been executed, you can run these examples by executing the command
-$codep
-	introduction/exp_apx/exp_apx
-$$
-
-$head --with-Example$$
-$index example, unix$$
-$index test, unix$$
-If the command line argument $code --with-Example$$ is specified,
-the $xref/Example.cpp/$$ program 
-(an extensive set of examples and correctness tests) will be built.
-Once the $code make$$ command 
-has been executed, you can run these examples by executing the command 
-$codep
-	example/example
-$$
-
-$head --with-TestMore$$
-$index test more, unix$$
-$index unix, test more$$
-If the command line argument $code --with-TestMore$$ is specified,
-another extensive set of correctness tests will be compiled by the
-$xref/InstallUnix/make/make/$$ command. Once the $code make$$ command 
-has been executed, you can run these tests by executing the command 
-$codep
-	test_more/test_more
-$$
-
-$head --with-Speed$$
-$index speed, test unix$$
-$index test, unix speed$$
-$index unix, speed test$$
-If the command line argument $code --with-Speed$$ is specified,
-a set of speed tests will built.
-
-$subhead cppad$$
-$index speed, cppad test$$
-$index cppad, test speed$$
-$index test, cppad speed$$
-After you execute the $xref/InstallUnix/make/make/$$ command,
-you can run the $cref/speed_main/$$ program with the command
-$syntax%
-	speed/cppad/cppad %option% %seed%
+$index exp_apx, run$$
+$index run, exp_apx$$
+$index introduction, AD$$
+$index AD, introduction$$
+You can run the examples / tests for the $code exp_apx$$ function 
+(used in the $cref/Introduction/$$)
+by executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/introduction/exp_apx
 %$$
 
-$subhead double$$
-$index speed, double test$$
-$index double, test speed$$
-$index test, double speed$$
-After you execute the $xref/InstallUnix/make/make/$$ command,
-you can run the $cref/speed_main/$$ program with the command
-$syntax%
-	speed/double/double %option% %seed%
+$head CppAD Examples$$
+$index example, CppAD$$
+$index CppAD, example$$
+You can run a large number of the examples / tests showing how to use CppAD
+by executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/example
+%$$
+See $cref/ListAllExamples/$$ for a list of all the CppAD examples.
+
+$head More Testing$$
+$index test, more$$
+$index more, testing$$
+You can run a large number of tests (that are not intended to be examples)
+by executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/test_more
 %$$
 
-$subhead profile$$
+$head Speed Testing$$
+
+$subhead CppAD Derivative Speed Tests$$
+$index speed, CppAD check test$$
+$index check, CppAD speed test$$
+A set of CppAD derivative value $cref/speed/speed_cppad/$$ tests 
+are included with this distribution. 
+You can test that the results computed during these tests are correct
+by executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/speed/cppad
+%$$
+After executing $code make test$$, you can run the CppAD derivative speed tests 
+by executing the command $code ./cppad$$ (see $cref/speed_main/$$).
+
+$subhead Function Speed Tests$$
+$index speed, function check test$$
+$index check, function speed test$$
+A set of functions value $cref/speed/speed_double/$$ tests 
+are included (to compare with derivative values speeds).
+You can test that the results computed during these tests are correct
+by executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/speed/double
+%$$
+After executing $code make test$$, you can run the function value speed tests 
+by executing the command $code ./double$$ (see $cref/speed_main/$$).
+
+$subhead Examples For Speed Tests$$
+$index speed, utility example$$
+$index example, speed utility$$
+$index utility, speed example$$
+The speed tests use some utilities that have their own set of 
+examples / tests.
+You can test that the results computed by this utilities are correct
+by executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/speed/example
+%$$
+
+$head Profiling CppAD$$
 $index speed, profile cppad$$
 $index profile, cppad speed$$
 $index cppad, profile speed$$
-The C++ compiler flags used to build the profile speed tests are
-$code
-$verbatim%speed/profile/makefile.am%5%# BEGIN OPTIMIZE%# END OPTIMIZE%$$
-$$
-After you execute the $xref/InstallUnix/make/make/$$ command,
-you can run the $cref/speed_main/$$ program with the command
-$syntax%
-	speed/profile/profile %option% %seed%
+The CppAD derivative speed tests mentioned above can be profiled.
+You can test that the results computed during this profiling are correct
+by executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/speed/profile
 %$$
+After executing $code make test$$, you can run the profile tests 
+by executing the command $code ./profile$$ (see $cref/speed_main/$$).
 You can then obtain the profiling results with
-$syntax%
+$codei%
 	gprof -b speed/profile/profile
 %$$ 
 If you are using a windows operating system with Cygwin or MinGW, 
@@ -343,31 +287,57 @@ $codep
 	gprof -b speed/profile/profile.exe | sed -f speed/profile/gprof.sed
 $$
 
-$subhead example$$
-$index speed, utility example$$
-$index example, speed utility$$
-$index utility, speed example$$
-After you execute the $xref/InstallUnix/make/make/$$ command,
-you can run the $cref/speed_utility/$$ examples with the command
-$syntax%
-	speed/example/example
-%$$
-
-$head --with-PrintFor$$
+$head PrintFor$$
 $index print, forward mode$$
 $index forward, print$$
-If the command line argument $code --with-PrintFor$$ is specified,
-the $xref/PrintFor.cpp/$$ example will be built.
-Once the $code make$$ command 
-has been executed, you can run this example by executing the command 
+You can test the $cref/PrintFor/$$ command
+by executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/print_for
+%$$
+
+$head PrefixDir$$
+$index configure, prefix directory$$
+$index prefix, configure directory$$
+$index directory, configure prefix$$
+The default value for prefix directory is $code ^HOME$$
+i.e., by default the CppAD include files 
+will $cref/install/InstallUnix/make install/$$ below $code ^HOME$$.
+If you want to install elsewhere, you will have to use this option.
+As an example of using the $codei%--prefix=%PrefixDir%$$ option,
+if you specify
 $codep
-	print_for/print_for
-$$
-Unlike the other programs listed in this section,
-$code print_for$$ does not automatically check for correctness 
-and return a corresponding
-$cref/status/InstallUnix/Testing Return Status/$$.
-Instead, it displays what it's output should be.
+	./configure --prefix=/usr/local
+$$ 
+the CppAD include files will be installed in the directory
+$codei%
+	/usr/local/include/cppad
+%$$
+If $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
+is specified, the CppAD documentation files will be installed in the directory
+$codei%
+	/usr/local/share/doc/cppad-@VERSION@
+%$$
+
+$head --with-Documentation$$
+$index documentation, install$$
+$index install, documentation$$
+If the command line argument $code --with-Documentation$$ is specified,
+the CppAD documentation HTML and XML files are copied to the directory
+$codei%
+	%PrefixDir%/share/doc/%PostfixDir%/cppad-@VERSION@
+%$$
+(see $cref/PostfixDir/InstallUnix/PostfixDir/$$).
+The top of the CppAD HTML documentation tree 
+(with mathematics displayed as LaTex command) will be located at
+$codei%
+	%PrefixDir%/share/doc/%PostfixDir%/cppad-@VERSION@/cppad.htm
+%$$
+and the top of the XML documentation tree
+(with mathematics displayed as MathML) will be located at
+$codei%
+	%PrefixDir%/share/doc/%PostfixDir%/cppad-@VERSION@/cppad.xml
+%$$
 
 $head --with-stdvector$$
 $index std::vector, unix$$
@@ -379,7 +349,7 @@ the default definition this template class is replaced by
 $codep
 	std::vector
 $$
-(In this case $italic BoostDir$$ must not also be specified.)
+(In this case $icode BoostDir$$ must not also be specified.)
 
 $head PostfixDir$$
 $index configure, postfix directory$$
@@ -387,22 +357,21 @@ $index postfix, configure directory$$
 $index directory, configure postfix$$
 By default, the postfix directory is empty; i.e., there
 is no postfix directory.
-As an example of using the $syntax%POSTFIX_DIR=%PostfixDir%$$ option,
+As an example of using the $codei%POSTFIX_DIR=%PostfixDir%$$ option,
 if you specify
 $codep
 	./configure --prefix=/usr/local POSTFIX_DIR=coin
 $$ 
 the CppAD include files will be 
 $cref/installed/InstallUnix/make install/$$ in the directory
-$syntax%
+$codei%
 	/usr/local/include/coin/cppad
 %$$
 If $cref/--with-Documentation/InstallUnix/--with-Documentation/$$
 is specified, the CppAD documentation files will be installed in the directory
-$syntax%
+$codei%
 	/usr/local/share/doc/coin/cppad-@VERSION@
 %$$
-
 
 $head AdolcDir$$
 $index Adolc, unix$$
@@ -412,51 +381,26 @@ $href%
 	Adolc 1.10.2
 %$$
 installed on your system, you can 
-specify a value for $italic AdolcDir$$ in the 
+specify a value for $icode AdolcDir$$ in the 
 $xref/InstallUnix/Configure/configure/$$ command line.
-The value of $italic AdolcDir$$ must be such that
-$syntax%
+The value of $icode AdolcDir$$ must be such that
+$codei%
 	%AdolcDir%/include/adolc/adouble.h
 %$$
 is a valid way to reference $code adouble.h$$.
-If $cref/--with-Speed/InstallUnix/--with-Speed/$$ is also specified,
-after you execute the $xref/InstallUnix/make/make/$$ command,
-you can run the $cref/speed_main/$$ program with the command
-$syntax%
-	speed/%package%/%package% %option% %seed%
+In this case, you can run the Adolc speed correctness tests by 
+executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/speed/adolc
 %$$
-where $italic package$$ is equal to $code adolc$$.
-
-$subhead Fix Adolc$$
-Some compilers will complain about Adolc use for a $code const char*$$
-as a $code char*$$. This can be fixed by changing the following
-routine in the file $code adolc/avector.h$$:
-$codep
-	class ADOLC_DLL_EXPORT err_retu {
-	char* message;
-	public:
-		err_retu(char* x) {
-		printf("%s \n",x);
-		};
-	};
-$$
-to be as follows
-$codep
-	class ADOLC_DLL_EXPORT err_retu {
-	char* message;
-	public:
-		err_retu(const char* x) {
-		printf("%s \n",x);
-		};
-	};
-$$
-
+After executing $code make test$$, you can run the Adolc speed tests 
+by executing the command $code ./adolc$$ (see $cref/speed_main/$$).
 
 $subhead Linux$$
 If you are using Linux, 
 you will have to add to following lines to the file
 $code .bash_profile$$ in your home directory:
-$syntax%
+$codei%
 	LD_LIBRARY_PATH=%AdolcDir%/lib:^{LD_LIBRARY_PATH}
 	export LD_LIBRARY_PATH
 %$$
@@ -466,16 +410,16 @@ $subhead Cygwin$$
 If you are using Cygwin, 
 you will have to add to following lines to the file
 $code .bash_profile$$ in your home directory:
-$syntax%
+$codei%
 	PATH=%AdolcDir%/bin:^{PATH}
 	export PATH
 %$$
 in order for Adolc to run properly.
-If $italic AdolcDir$$ begins with a disk specification,
+If $icode AdolcDir$$ begins with a disk specification,
 you must use the Cygwin format for the disk specification.
 For example, 
 if $code d:/adolc_base$$ is the proper directory,
-$code /cygdrive/d/adolc_base$$ should be used for $italic AdolcDir$$.
+$code /cygdrive/d/adolc_base$$ should be used for $icode AdolcDir$$.
 
 $head FadbadDir$$
 $index Fadbad, unix$$
@@ -485,19 +429,21 @@ $href%
 	Fadbad 2.1
 %$$
 installed on your system, you can 
-specify a value for $italic FadbadDir$$.
+specify a value for $icode FadbadDir$$.
 It must be such that
-$syntax%
+$codei%
 	%FadbadDir%/FADBAD++/badiff.h
 %$$
 is a valid reference to $code badiff.h$$.
-If $cref/--with-Speed/InstallUnix/--with-Speed/$$ is also specified,
-after you execute the $xref/InstallUnix/make/make/$$ command,
-you can run the $cref/speed_main/$$ program with the command
-$syntax%
-	speed/%package%/%package% %option% %seed%
+
+In this case, you can run the Fadbad speed correctness tests by 
+executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/speed/fadbad
 %$$
-where $italic package$$ is equal to $code fadbad$$.
+After executing $code make test$$, you can run the Fadbad speed tests 
+by executing the command $code ./fadbad$$ (see $cref/speed_main/$$).
+
 
 $head SacadoDir$$
 $index Sacado, unix$$
@@ -507,19 +453,21 @@ $href%
 	Sacado
 %$$
 installed on your system, you can 
-specify a value for $italic SacadoDir$$.
+specify a value for $icode SacadoDir$$.
 It must be such that
-$syntax%
+$codei%
 	%SacadoDir%/include/Sacado.hpp
 %$$
 is a valid reference to $code Sacado.hpp$$.
-If $cref/--with-Speed/InstallUnix/--with-Speed/$$ is also specified,
-after you execute the $xref/InstallUnix/make/make/$$ command,
-you can run the $cref/speed_main/$$ program with the command
-$syntax%
-	speed/%package%/%package% %option% %seed%
+
+In this case, you can run the Sacado speed correctness tests by 
+executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/speed/sacado
 %$$
-where $italic package$$ is equal to $code sacado$$.
+After executing $code make test$$, you can run the Sacado speed tests 
+by executing the command $code ./sacado$$ (see $cref/speed_main/$$).
+
 
 $head BoostDir$$
 $index boost, unix$$
@@ -529,11 +477,11 @@ template class is used for extensive examples and testing of CppAD.
 The default definition for $code CPPAD_TEST_VECTOR$$ is
 $xref/CppAD_vector//CppAD::vector/$$.
 If the command line argument
-$syntax%
+$codei%
 	BOOST_DIR=%BoostDir%
 %$$
 is present, it must be such that
-$syntax%
+$codei%
 	%BoostDir%/boost/numeric/ublas/vector.hpp
 %$$
 is a valid reference to the file $code vector.hpp$$.
@@ -543,7 +491,7 @@ $codep
 	boost::numeric::ublas::vector
 $$
 (see $href%http://www.boost.org%boost%$$).
-If $italic BoostDir$$ is present, the argument $code --with-stdvector$$
+If $icode BoostDir$$ is present, the argument $code --with-stdvector$$
 must not be present.
 
 $head IpoptDir$$
@@ -554,28 +502,37 @@ $href%
 	Ipopt
 %$$
 installed on your system, you can 
-specify a value for $italic IpoptDir$$.
+specify a value for $icode IpoptDir$$.
 It must be such that
-$syntax%
+$codei%
 	%IpoptDir%/include/coin/IpIpoptApplication.hpp
 %$$
 is a valid reference to $code IpIpoptApplication.hpp$$.
 In this case, the CppAD interface to Ipopt
-$cref/examples/cppad_ipopt_nlp/Example/$$ 
-will be built.
-Once the $code make$$ command
-has been executed, you can run these examples by executing the command
-$codep
-        cppad_ipopt/cppad_ipopt
-$$
+$cref/examples/cppad_ipopt_nlp/Example/$$ can be built and tested
+by executing the command $code make test$$ in the directory
+$codei%
+	%distribution_directory%/cppad_ipopt/example
+%$$
+You can do more testing of this interface by executing $code make test$$
+in the directories
+$codei%
+	%distribution_directory%/cppad_ipopt/test
+	%distribution_directory%/cppad_ipopt/speed
+%$$
+Once this has been done, you can execute the program
+$codei%
+	%distribution_directory%/cppad_ipopt/speed/speed
+%$$
+see $cref/ipopt_ode_speed.cpp/$$.
 
 $head CompilerFlags$$
 $index compile, unix flags$$
 $index flags, unix compile$$
-If the command line argument $italic CompilerFlags$$ is present,
+If the command line argument $icode CompilerFlags$$ is present,
 it specifies compiler flags.
 For example,
-$syntax%
+$codei%
 	CXX_FLAGS="-Wall -ansi"
 %$$
 would specify that warning flags $code -Wall$$
@@ -583,27 +540,9 @@ and $code -ansi$$ should be included
 in all the C++ compile commands.
 The error and warning flags chosen must be valid options
 for the C++ compiler.
-The default value for $italic CompilerFlags$$ is the
+The default value for $icode CompilerFlags$$ is the
 empty string.
 
-
-$head make$$
-The command
-$codep
-	make
-$$
-will compile all of the examples and tests.  
-An extensive set of examples and tests can be run as described under
-the headings
-$xref/InstallUnix/--with-Introduction/--with-Introduction/$$,
-$xref/InstallUnix/--with-Example/--with-Example/$$,
-$xref/InstallUnix/--with-TestMore/--with-TestMore/$$,
-$xref/InstallUnix/--with-Speed/--with-Speed/$$,
-$xref/InstallUnix/--with-PrintFor/--with-PrintFor/$$,
-$xref/InstallUnix/AdolcDir/AdolcDir/$$, 
-$xref/InstallUnix/FadbadDir/FadbadDir/$$,
-$xref/InstallUnix/SacadoDir/SacadoDir/$$,
-and $xref/InstallUnix/IpoptDir/IpoptDir/$$ above.
 
 $head make install$$
 Once you are satisfied that the tests are giving correct results,
@@ -613,10 +552,10 @@ $codep
 $$
 This will install CppAD in the location specified by 
 $cref/PrefixDir/InstallUnix/PrefixDir/$$.
-You must have permission to write in the $italic PrefixDir$$
+You must have permission to write in the $icode PrefixDir$$
 directory to execute this command. 
 You may optionally specify a destination directory for the install; i.e.,
-$syntax%
+$codei%
 	make install DESTDIR=%DestinationDirectory%
 %$$
 

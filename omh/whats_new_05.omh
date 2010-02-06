@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -561,7 +561,7 @@ The $xref/std_math_ad//AD standard math unary functions/$$
 $code sinh$$, and $code cosh$$ have been added. 
 In addition, more correctness testing 
 (
-$xref/InstallUnix/--with-TestMore/unix/$$ , 
+$cref/More Testing/InstallUnix/More Testing/$$ , 
 $xref/InstallWindows/More Correctness Testing/windows/$$ 
 )
 has been added for the $code sin$$ and $code cos$$ functions.
@@ -864,7 +864,7 @@ During the process above, the function $xref/ParVar//Variable/$$ was added.
 
 
 $head 04-20$$
-Add $cref/profiling/InstallUnix/--with-Speed/profile/$$
+Add $cref/profiling/InstallUnix/Profiling CppAD/$$
 to the speed tests.
 
 $head 04-19$$

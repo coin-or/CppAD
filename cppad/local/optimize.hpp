@@ -60,10 +60,9 @@ derivatives using the original operation sequence.
 $subhead Testing$$
 You can run the CppAD $cref/speed/speed_main/$$ tests and see
 the corresponding changes in number of variables and execution time.
-This will require that you specify the 
-$cref/--with-Speed/InstallUnix/--with-Speed/$$ option when you 
-configure CppAD.
-In this case, you can run the speed tests with optimization 
+After the $cref/make test/InstallUnix/make test/$$ command
+is run in the $code speed/cppad$$ directory,
+you can run the speed tests with optimization 
 using the command
 $codep
 	speed/cppad/cppad speed 123 optimize
@@ -325,7 +324,7 @@ size_t optimize_unary_match(
 	if( op == tape[i].op )
 	{	size_t k = tape[i].arg[0];
 		CPPAD_ASSERT_UNKNOWN( k < i );
-		if (new_arg[0] == tape[k].new_var );
+		if (new_arg[0] == tape[k].new_var )
 			return tape[i].new_var;
 	}
 	return 0;

@@ -23,7 +23,7 @@ endif
 #
 EXTRA_DIST       = cppad.sln cppad.vcproj
 #
-noinst_PROGRAMS  = cppad 
+check_PROGRAMS   = cppad 
 #
 AM_CPPFLAGS   = -I$(top_srcdir) $(BOOST_INCLUDE)
 #

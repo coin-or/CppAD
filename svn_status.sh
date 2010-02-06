@@ -71,6 +71,7 @@ svn status | sed > svn_status.$$ \
 	-e '/^[?] *introduction\/exp_apx\/exp_apx$/d'         \
 	-e '/^[?] *introduction\/get_started\/get_started$/d' \
 	-e '/^[?] *print_for\/print_for$/d'                   \
+	-e '/^[?] *print_for\/test.sh$/d'                     \
 	-e '/^[?] *speed\/adolc\/adolc$/d'                    \
 	-e '/^[?] *speed\/cppad\/cppad$/d'                    \
 	-e '/^[?] *speed\/double\/double$/d'                  \
