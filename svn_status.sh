@@ -85,6 +85,8 @@ svn status | sed > svn_status.$$ \
 	-e '/^[?] *cppad_ipopt\/lib$/d'                       \
 	-e '/cygwin_package$/d'
 #
+# Check if automatically edited files really changed
+#
 list="
 	AUTHORS
 	configure.ac

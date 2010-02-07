@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -256,7 +256,7 @@ namespace {
 	
 		return ok;
 	}
-	// -------------------------------------------------------------------
+	// ===================================================================
 	// Test duplicate operation analysis
 
 	template <class Vector>
@@ -419,7 +419,6 @@ namespace {
 		Y[0] = B1 + B2;
 
 		// create f: X -> Y and stop tape recording
-		// Y[ X[0] ] = X[1] and other components of Y are zero. 
 		CppAD::ADFun<double> F;
 		F.Dependent(X, Y); 
 
@@ -484,7 +483,6 @@ namespace {
 		Y[0] = B1 + B2;
 
 		// create f: X -> Y and stop tape recording
-		// Y[ X[0] ] = X[1] and other components of Y are zero. 
 		CppAD::ADFun<double> F;
 		F.Dependent(X, Y); 
 
@@ -511,6 +509,55 @@ namespace {
 		return ok;
 	}
 	// -------------------------------------------------------------------
+	bool duplicate_four(void)
+	{	// Check that unary expression matching not only checks hash code,
+		// and operator, but also operand (old bug that has been fixed).
+		bool ok = true;
+		using CppAD::AD;
+		size_t j;
+
+		// domain space vector
+		size_t n  = 1;
+		CPPAD_TEST_VECTOR< AD<double> > X(n);
+		X[0] = 1.;
+
+		// range space vector
+		size_t m = 1;
+		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+
+		// declare independent variables and start tape recording
+		CppAD::Independent(X);
+
+		// check a huge number of same operation with different operands 
+		size_t n_operations = size_t(CPPAD_HASH_TABLE_SIZE) + 5;
+		Y[0] = X[0];
+		for(j = 0; j < n_operations; j++)
+			Y[0] = abs(Y[0]);
+
+		// create f: X -> Y and stop tape recording
+		CppAD::ADFun<double> F;
+		F.Dependent(X, Y); 
+
+		// check number of variables in original function
+		ok &= (F.size_var() ==  1 + n + n_operations ); 
+	
+		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		x[0] = 1.;
+
+		y   = F.Forward(0, x);
+		ok &= ( y[0] == Value( Y[0] ) );
+
+		F.optimize();
+
+		// check same number of variables in optimized version
+		ok &= (F.size_var() == 1 + n + n_operations ); 
+
+		y   = F.Forward(0, x);
+		ok &= ( y[0] == Value( Y[0] ) );
+
+		return ok;
+	}
+	// ====================================================================
 	bool cummulative_sum(void)
 	{	// test conversion of a sequence of additions and subtraction
 		// to a cummulative summation sequence.
@@ -858,6 +905,7 @@ bool optimize(void)
 	ok     &= duplicate_one();
 	ok     &= duplicate_two();
 	ok     &= duplicate_three();
+	ok     &= duplicate_four();
 	// convert sequence of additions to cummulative summation
 	ok     &= cummulative_sum();
 	ok     &= forward_csum();

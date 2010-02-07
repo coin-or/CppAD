@@ -35,8 +35,27 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-06$$
+The Microsoft project files for the speed tests were extended 
+so that the worked properly for the Release (as well as the Debug)
+configuration, see
+$cref/cppad speed test/InstallWindows/CppAD Speed Test/$$,
+$cref/double speed test/InstallWindows/Double Speed Test/$$, and
+$cref/speed utility example/InstallWindows/Speed Utility Example/$$.
+(This required conversion from Visual Studio Version 7 to Visual Studio 2008
+format.)
+$pre
+
+$$
+Add an automated check for $cref/optimize/$$ bug 
+fixed on $code 02-05$$. 
+(Automatic checking for $cref/PrintFor/$$ bug was added on $code 02-05$$.)
+
 $head 02-05$$
 $list number$$
+Simplify running all the tests by adding the
+$cref/make test/InstallUnix/make test/$$ command.
+$lnext
 Simplify the $cref/configure/InstallUnix/Configure/$$ command by removing
 need for:
 $code --with-Speed$$,

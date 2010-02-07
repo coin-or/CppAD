@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -116,10 +116,17 @@ sed -i build.sh \
 	-e '/if ! grep < doc.omh > \/dev\/null/,/fi/d'
 #
 # remove version adjustment and always check makefiles in svn_status.sh
+if ! grep '# Check if automatically edited files really changed' \
+	svn_status.sh >> /dev/null
+then
+	echo "svn_status.sh no longer has an expected comment line"
+	exit 1
+fi
 sed -i svn_status.sh \
 	-e 's/^flag=.*/flag="+"/' \
 	-e "s/yyyymmdd=.*/yyyymmdd=\"$release_version\"/" \
-	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/" 
+	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/"  \
+	-e '/^# Check if automatically edited files really changed/,$d'
 #
 # use web for download of this release version
 dir="http://www.coin-or.org/download/source/CppAD"
