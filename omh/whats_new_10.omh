@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_10$$
 $spell
+	libcppad_ipopt.a
 	Microsoft
 	Lagragian
 	iostream
@@ -34,6 +35,13 @@ This section contains a list of the changes to CppAD during 2010
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 02-08$$
+A bug was introduced in the $cref/02-05/whats_new_10/02-05/$$
+change whereby the $code make$$ command tried to build the
+$code libcppad_ipopt.a$$ library even if $code IPOPT_DIR$$ was
+not specified on the $cref/configure/InstallUnix/Configure/$$ command line.
+This has been fixed.
 
 $head 02-06$$
 The Microsoft project files for the speed tests were extended 

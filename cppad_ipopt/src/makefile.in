@@ -69,9 +69,16 @@ AR = ar
 ARFLAGS = cru
 libcppad_ipopt_a_AR = $(AR) $(ARFLAGS)
 libcppad_ipopt_a_LIBADD =
-am_libcppad_ipopt_a_OBJECTS = cppad_ipopt_nlp.$(OBJEXT) \
-	hes_fg_map.$(OBJEXT) jac_g_map.$(OBJEXT) \
-	sparse_map2vec.$(OBJEXT) vec_fun_pattern.$(OBJEXT)
+am__libcppad_ipopt_a_SOURCES_DIST = cppad_ipopt_nlp.cpp \
+	cppad_ipopt_nlp.hpp fun_record.hpp hes_fg_map.cpp \
+	hes_fg_map.hpp jac_g_map.cpp jac_g_map.hpp sparse_map2vec.cpp \
+	sparse_map2vec.hpp vec_fun_pattern.cpp vec_fun_pattern.hpp
+@CppAD_IPOPT_CPPAD_TRUE@am_libcppad_ipopt_a_OBJECTS =  \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt_nlp.$(OBJEXT) \
+@CppAD_IPOPT_CPPAD_TRUE@	hes_fg_map.$(OBJEXT) \
+@CppAD_IPOPT_CPPAD_TRUE@	jac_g_map.$(OBJEXT) \
+@CppAD_IPOPT_CPPAD_TRUE@	sparse_map2vec.$(OBJEXT) \
+@CppAD_IPOPT_CPPAD_TRUE@	vec_fun_pattern.$(OBJEXT)
 libcppad_ipopt_a_OBJECTS = $(am_libcppad_ipopt_a_OBJECTS)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -87,7 +94,7 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(libcppad_ipopt_a_SOURCES)
-DIST_SOURCES = $(libcppad_ipopt_a_SOURCES)
+DIST_SOURCES = $(am__libcppad_ipopt_a_SOURCES_DIST)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -212,7 +219,6 @@ top_srcdir = @top_srcdir@
 #
 @CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 # 
-lib_LIBRARIES = libcppad_ipopt.a
 #
 AM_CXXFLAGS = -g $(CXX_FLAGS) 
 #
@@ -223,18 +229,20 @@ AM_CPPFLAGS = \
 	-I$(IPOPT_DIR)/include
 
 #
-libcppad_ipopt_a_SOURCES = \
-	cppad_ipopt_nlp.cpp \
-	cppad_ipopt_nlp.hpp \
-	fun_record.hpp \
-	hes_fg_map.cpp \
-	hes_fg_map.hpp \
-	jac_g_map.cpp \
-	jac_g_map.hpp \
-	sparse_map2vec.cpp \
-	sparse_map2vec.hpp \
-	vec_fun_pattern.cpp  \
-	vec_fun_pattern.hpp 
+# make building the library conditional on having IPOPT_DIR specified
+@CppAD_IPOPT_CPPAD_TRUE@lib_LIBRARIES = libcppad_ipopt.a
+@CppAD_IPOPT_CPPAD_TRUE@libcppad_ipopt_a_SOURCES = \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt_nlp.cpp \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt_nlp.hpp \
+@CppAD_IPOPT_CPPAD_TRUE@	fun_record.hpp \
+@CppAD_IPOPT_CPPAD_TRUE@	hes_fg_map.cpp \
+@CppAD_IPOPT_CPPAD_TRUE@	hes_fg_map.hpp \
+@CppAD_IPOPT_CPPAD_TRUE@	jac_g_map.cpp \
+@CppAD_IPOPT_CPPAD_TRUE@	jac_g_map.hpp \
+@CppAD_IPOPT_CPPAD_TRUE@	sparse_map2vec.cpp \
+@CppAD_IPOPT_CPPAD_TRUE@	sparse_map2vec.hpp \
+@CppAD_IPOPT_CPPAD_TRUE@	vec_fun_pattern.cpp  \
+@CppAD_IPOPT_CPPAD_TRUE@	vec_fun_pattern.hpp 
 
 all: all-am
 

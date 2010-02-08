@@ -20,7 +20,6 @@ else
 BOOST_INCLUDE =
 endif
 # 
-lib_LIBRARIES           = libcppad_ipopt.a
 #
 AM_CXXFLAGS               = -g $(CXX_FLAGS) 
 #
@@ -30,6 +29,9 @@ AM_CPPFLAGS               = \
 	$(BOOST_INCLUDE) \
 	-I$(IPOPT_DIR)/include
 #
+# make building the library conditional on having IPOPT_DIR specified
+if CppAD_IPOPT_CPPAD
+lib_LIBRARIES            = libcppad_ipopt.a
 libcppad_ipopt_a_SOURCES = \
 	cppad_ipopt_nlp.cpp \
 	cppad_ipopt_nlp.hpp \
@@ -42,6 +44,7 @@ libcppad_ipopt_a_SOURCES = \
 	sparse_map2vec.hpp \
 	vec_fun_pattern.cpp  \
 	vec_fun_pattern.hpp 
+endif
 
 test: libcppad_ipopt.a
 	echo "cppad_ipopt/src: Done building libcppad_ipopt.a" > test.log
