@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/I ../.. /D CPPAD"
+				AdditionalOptions="/I ../.. /D SPEED_CPPAD"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -222,6 +222,10 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\microsoft_timer.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\ode.cpp"

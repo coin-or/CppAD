@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -141,6 +141,11 @@ done
 #
 # Rerun omhelp to change documentation version of license from CPL to GPL 
 cd $dir
+if ! ./configure > /dev/null
+then
+	echo "gpl_license.sh: $dir/configure failed."
+	exit 1
+fi
 if ! ./run_omhelp.sh doc xml
 then
 	echo "gpl_license.sh: error running omhelp"

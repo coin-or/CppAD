@@ -33,6 +33,7 @@ example_SOURCES   = \
 	det_by_lu.cpp \
 	det_by_minor.cpp \
 	det_of_minor.cpp \
+	elapsed_seconds.cpp \
 	ode_evaluate.cpp \
 	sparse_evaluate.cpp \
 	speed_test.cpp

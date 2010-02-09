@@ -3,7 +3,7 @@
 # define CPPAD_SPEED_TEST_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -136,11 +136,12 @@ $codep
 $$
 in the context of the standard $code <ctime>$$ definitions.
 
-$head Example$$
 $children%
+	cppad/elapsed_seconds.hpp%
 	speed/example/speed_test.cpp
 %$$
-The section $xref/speed_test.cpp/$$ contains an example and test
+$head Example$$
+The routine $xref/speed_test.cpp/$$ is an example and test
 of $code speed_test$$.
 
 $end
@@ -151,40 +152,10 @@ $end
 # include <cmath>
 
 # include <cppad/check_simple_vector.hpp>
+# include <cppad/elapsed_seconds.hpp>
 
-// use config.h to define CPPAD_GETIMEOFDAY preprocessor symbol
-# include <cppad/configure.hpp>
-
-// Microsoft versions to not run autoconf, so CPPAD_GETTIMEOFDAY may not be
-// set to proper value.
-# ifdef _MSC_VER
-# define CPPAD_NOT_MICROSOFT 0
-# else
-# define CPPAD_NOT_MICROSOFT 1
-# endif
-
-# if CPPAD_GETTIMEOFDAY & CPPAD_NO_MICROSOFT
-# include <sys/time.h>
-# else
-# include <ctime>
-# endif
-
-# ifndef CPPAD_NULL
-# define CPPAD_NULL	0
-# endif
 
 namespace CppAD { // BEGIN CppAD namespace
-
-inline double speed_test_second(void)
-{
-# if CPPAD_GETTIMEOFDAY & CPPAD_NOT_MICOROSOFT
-	struct timeval value;
-	gettimeofday(&value, CPPAD_NULL);
-	return double(value.tv_sec) + double(value.tv_usec) * 1e-6;
-# else
-	return (double) clock() / (double) CLOCKS_PER_SEC;
-# endif
-}
 
 // implemented as an inline so that can include in multiple link modules
 // with this same file
@@ -203,13 +174,13 @@ inline Vector speed_test(
 	for(i = 0; i < n; i++)
 	{	size_t size   = size_vec[i];
 		size_t repeat = 1;
-		double s0     = speed_test_second();
-		double s1     = speed_test_second();
+		double s0     = elapsed_seconds();
+		double s1     = elapsed_seconds();
 		while( s1 - s0 < time_min )
 		{	repeat = 2 * repeat;
-			s0     = speed_test_second();
+			s0     = elapsed_seconds();
 			test(size, repeat);
-			s1     = speed_test_second();
+			s1     = elapsed_seconds();
 		}
 		rate_vec[i] = (size_t)(.5 + repeat / (s1 - s0));
 	}
@@ -365,7 +336,7 @@ $head Example$$
 $children%
 	speed/example/speed_program.cpp
 %$$
-The section $xref/speed_program.cpp/$$ contains an example usage
+The program $xref/speed_program.cpp/$$ is an example usage
 of $code SpeedTest$$.
 
 $end
@@ -445,13 +416,13 @@ inline void SpeedTest(
 	while(  (inc > 0 && size <= last) || (inc < 0 && size >= last) )
 	{
 		repeat = 1;
-		s0     = speed_test_second();
-		s1     = speed_test_second();
+		s0     = elapsed_seconds();
+		s1     = elapsed_seconds();
 		while( s1 - s0 < 1. )
 		{	repeat = 2 * repeat;
-			s0     = speed_test_second();
+			s0     = elapsed_seconds();
 			name   = Test(size, repeat);
-			s1     = speed_test_second();
+			s1     = elapsed_seconds();
 		}
 		rate = (size_t)(.5 + repeat / (s1 - s0));
 		

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,22 +22,22 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/poly.hpp>
 
-# ifdef ADOLC
+# ifdef SPEED_ADOLC
 # define AD_PACKAGE "adolc"
 # endif
-# ifdef CPPAD
+# ifdef SPEED_CPPAD
 # define AD_PACKAGE "cppad"
 # endif
-# ifdef DOUBLE
+# ifdef SPEED_DOUBLE
 # define AD_PACKAGE "double"
 # endif
-# ifdef FADBAD
+# ifdef SPEED_FADBAD
 # define AD_PACKAGE "fadbad"
 # endif
-# ifdef PROFILE
+# ifdef SPEED_PROFILE
 # define AD_PACKAGE "profile"
 # endif
-# ifdef SACADO
+# ifdef SPEED_SACADO
 # define AD_PACKAGE "sacado"
 # endif
 
@@ -227,7 +227,7 @@ namespace {
 	bool run_correct(bool correct_case(bool), const char *case_name)
 	{	bool ok;
 		cout << AD_PACKAGE << "_" << case_name << "_ok = ";
-# ifdef DOUBLE
+# ifdef SPEED_DOUBLE
 		ok = correct_case(true);
 # else
 		ok = correct_case(false);

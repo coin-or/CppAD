@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\elapsed_seconds.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\example.cpp"
 				>
 				<FileConfiguration
@@ -201,6 +205,10 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\microsoft_timer.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\ode_evaluate.cpp"

@@ -278,6 +278,7 @@ nobase_myinclude_HEADERS = \
 	cppad/check_simple_vector.hpp \
 	cppad/cppad.hpp \
 	cppad/declare.hpp \
+	cppad/elapsed_seconds.hpp \
 	cppad/vector.hpp \
 	cppad/error_handler.hpp \
 	cppad/lu_factor.hpp \
@@ -465,9 +466,6 @@ SUBDIRS = \
 	test_more 
 
 #
-# Note that doc.omh, omh/install_unix.omh, and omh/install_windows.omh 
-# are created by configure from corresponding *.in files. They are included
-# in the distrubution so that configure does not have to run OMhelp.
 EXTRA_DIST = \
 	build.sh \
 	check_doxygen.sh \
@@ -481,7 +479,6 @@ EXTRA_DIST = \
 	cpl1.0.txt \
 	dev.omh \
 	doc \
-	doc.omh \
 	doc.omh.in \
 	doxyfile.in \
 	fix_aclocal.sh \
@@ -493,6 +490,7 @@ EXTRA_DIST = \
 	openmp/sum_i_inv.cpp \
 	openmp/run.sh \
 	run_omhelp.sh \
+	speed/microsoft_timer.cpp \
 	uw_copy_040507.html
 
 test_directory_list = \

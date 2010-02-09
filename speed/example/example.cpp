@@ -36,6 +36,7 @@ $end
 extern bool det_of_minor(void);
 extern bool det_by_lu(void);
 extern bool det_by_minor(void);
+extern bool elapsed_seconds(void);
 extern bool ode_evaluate(void);
 extern bool sparse_evaluate(void);
 extern bool speed_test(void);
@@ -74,6 +75,7 @@ int main(void)
 	ok &= Run(det_of_minor,          "det_of_minor"   );
 	ok &= Run(det_by_minor,         "det_by_minor"    );
 	ok &= Run(det_by_lu,               "det_by_lu"    );
+	ok &= Run(elapsed_seconds,   "eplased_seconds"    );
 	ok &= Run(ode_evaluate,         "ode_evaluate"    );
 	ok &= Run(sparse_evaluate,   "sparse_evaluate"    );
 
