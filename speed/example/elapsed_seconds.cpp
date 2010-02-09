@@ -50,7 +50,11 @@ bool elapsed_seconds(void)
 		s2 = CppAD::elapsed_seconds();
 
 	}
+# ifdef CPPAD_DEBUG_NEW_TESTS
+	std::cout << "max_diff = " << max_diff << std::endl;
+# else
 	ok &= 0. < max_diff && max_diff < .02;
+# endif
 	return ok;
 }
 
