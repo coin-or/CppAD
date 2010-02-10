@@ -42,10 +42,11 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_example_OBJECTS = example.$(OBJEXT) det_by_lu.$(OBJEXT) \
-	det_by_minor.$(OBJEXT) det_of_minor.$(OBJEXT) \
-	elapsed_seconds.$(OBJEXT) ode_evaluate.$(OBJEXT) \
-	sparse_evaluate.$(OBJEXT) speed_test.$(OBJEXT)
+am_example_OBJECTS = microsoft_timer.$(OBJEXT) example.$(OBJEXT) \
+	det_by_lu.$(OBJEXT) det_by_minor.$(OBJEXT) \
+	det_of_minor.$(OBJEXT) elapsed_seconds.$(OBJEXT) \
+	ode_evaluate.$(OBJEXT) sparse_evaluate.$(OBJEXT) \
+	speed_test.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 DEFAULT_INCLUDES = 
@@ -190,6 +191,7 @@ AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
 AM_CXXFLAGS = -g $(CXX_FLAGS)
 #
 example_SOURCES = \
+	../microsoft_timer.cpp \
 	example.cpp \
 	det_by_lu.cpp \
 	det_by_minor.cpp \
@@ -251,6 +253,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_of_minor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/elapsed_seconds.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/example.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/microsoft_timer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_evaluate.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_evaluate.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/speed_test.Po@am__quote@
@@ -268,6 +271,20 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+microsoft_timer.o: ../microsoft_timer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT microsoft_timer.o -MD -MP -MF $(DEPDIR)/microsoft_timer.Tpo -c -o microsoft_timer.o `test -f '../microsoft_timer.cpp' || echo '$(srcdir)/'`../microsoft_timer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/microsoft_timer.Tpo $(DEPDIR)/microsoft_timer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../microsoft_timer.cpp' object='microsoft_timer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o microsoft_timer.o `test -f '../microsoft_timer.cpp' || echo '$(srcdir)/'`../microsoft_timer.cpp
+
+microsoft_timer.obj: ../microsoft_timer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT microsoft_timer.obj -MD -MP -MF $(DEPDIR)/microsoft_timer.Tpo -c -o microsoft_timer.obj `if test -f '../microsoft_timer.cpp'; then $(CYGPATH_W) '../microsoft_timer.cpp'; else $(CYGPATH_W) '$(srcdir)/../microsoft_timer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/microsoft_timer.Tpo $(DEPDIR)/microsoft_timer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../microsoft_timer.cpp' object='microsoft_timer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o microsoft_timer.obj `if test -f '../microsoft_timer.cpp'; then $(CYGPATH_W) '../microsoft_timer.cpp'; else $(CYGPATH_W) '$(srcdir)/../microsoft_timer.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

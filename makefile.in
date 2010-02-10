@@ -490,7 +490,6 @@ EXTRA_DIST = \
 	openmp/sum_i_inv.cpp \
 	openmp/run.sh \
 	run_omhelp.sh \
-	speed/microsoft_timer.cpp \
 	uw_copy_040507.html
 
 test_directory_list = \

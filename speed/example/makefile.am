@@ -29,6 +29,7 @@ AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
 AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #
 example_SOURCES   = \
+	../microsoft_timer.cpp \
 	example.cpp \
 	det_by_lu.cpp \
 	det_by_minor.cpp \

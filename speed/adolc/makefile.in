@@ -42,11 +42,12 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_adolc_OBJECTS = main.$(OBJEXT) link_ode.$(OBJEXT) ode.$(OBJEXT) \
+am_adolc_OBJECTS = main.$(OBJEXT) link_ode.$(OBJEXT) \
 	link_det_lu.$(OBJEXT) link_det_minor.$(OBJEXT) \
 	link_poly.$(OBJEXT) link_sparse_hessian.$(OBJEXT) \
-	link_sparse_jacobian.$(OBJEXT) det_lu.$(OBJEXT) \
-	det_minor.$(OBJEXT) poly.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	link_sparse_jacobian.$(OBJEXT) microsoft_timer.$(OBJEXT) \
+	det_lu.$(OBJEXT) det_minor.$(OBJEXT) ode.$(OBJEXT) \
+	poly.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT)
 adolc_OBJECTS = $(am_adolc_OBJECTS)
 adolc_LDADD = $(LDADD)
@@ -203,14 +204,15 @@ AM_LDFLAGS = -L$(ADOLC_DIR)/lib
 adolc_SOURCES = \
 	../main.cpp \
 	../link_ode.cpp \
-	ode.cpp \
 	../link_det_lu.cpp \
 	../link_det_minor.cpp \
 	../link_poly.cpp \
 	../link_sparse_hessian.cpp \
 	../link_sparse_jacobian.cpp \
+	../microsoft_timer.cpp \
 	det_lu.cpp \
 	det_minor.cpp \
+	ode.cpp \
 	poly.cpp \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
@@ -271,6 +273,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_sparse_hessian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_sparse_jacobian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/microsoft_timer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
@@ -387,6 +390,20 @@ link_sparse_jacobian.obj: ../link_sparse_jacobian.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_sparse_jacobian.cpp' object='link_sparse_jacobian.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_sparse_jacobian.obj `if test -f '../link_sparse_jacobian.cpp'; then $(CYGPATH_W) '../link_sparse_jacobian.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_sparse_jacobian.cpp'; fi`
+
+microsoft_timer.o: ../microsoft_timer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT microsoft_timer.o -MD -MP -MF $(DEPDIR)/microsoft_timer.Tpo -c -o microsoft_timer.o `test -f '../microsoft_timer.cpp' || echo '$(srcdir)/'`../microsoft_timer.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/microsoft_timer.Tpo $(DEPDIR)/microsoft_timer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../microsoft_timer.cpp' object='microsoft_timer.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o microsoft_timer.o `test -f '../microsoft_timer.cpp' || echo '$(srcdir)/'`../microsoft_timer.cpp
+
+microsoft_timer.obj: ../microsoft_timer.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT microsoft_timer.obj -MD -MP -MF $(DEPDIR)/microsoft_timer.Tpo -c -o microsoft_timer.obj `if test -f '../microsoft_timer.cpp'; then $(CYGPATH_W) '../microsoft_timer.cpp'; else $(CYGPATH_W) '$(srcdir)/../microsoft_timer.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/microsoft_timer.Tpo $(DEPDIR)/microsoft_timer.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../microsoft_timer.cpp' object='microsoft_timer.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o microsoft_timer.obj `if test -f '../microsoft_timer.cpp'; then $(CYGPATH_W) '../microsoft_timer.cpp'; else $(CYGPATH_W) '$(srcdir)/../microsoft_timer.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
