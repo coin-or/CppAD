@@ -36,6 +36,13 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-11$$
+The $code speed$$ directory has been reorganized and the
+common part of the $cref/link functions/speed_main/Link Functions/$$,
+as well as the $cref/microsoft_timer/$$,
+have been moved to the subdirectory $code speed/src$$
+where a library is built.
+
 $head 02-08$$
 A bug was introduced in the $cref/02-05/whats_new_10/02-05/$$
 change whereby the $code make$$ command tried to build the

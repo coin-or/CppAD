@@ -232,7 +232,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
-# $Id: makefile.am 1652 2010-02-09 12:26:20Z bradbell $
+# $Id: makefile.am 1654 2010-02-10 04:27:46Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -448,9 +448,9 @@ nobase_myinclude_HEADERS = \
 # No objects or executables are required to install CppAD.
 # See 'make test' below for building the tests.
 SUBDIRS = \
-	cppad_ipopt/src \
 	cppad_ipopt/example \
 	cppad_ipopt/speed \
+	cppad_ipopt/src \
 	cppad_ipopt/test \
 	example \
 	introduction/get_started \
@@ -463,6 +463,7 @@ SUBDIRS = \
 	speed/fadbad \
 	speed/profile \
 	speed/sacado \
+	speed/src \
 	test_more 
 
 #
@@ -481,7 +482,6 @@ EXTRA_DIST = \
 	doc \
 	doc.omh.in \
 	doxyfile.in \
-	fix_aclocal.sh \
 	fix_makefile.sh \
 	omh \
 	openmp/example_a11c.cpp \
@@ -497,6 +497,7 @@ test_directory_list = \
 	introduction/get_started \
 	introduction/exp_apx \
 	print_for \
+	speed/src \
 	speed/cppad \
 	speed/double \
 	speed/example \
@@ -1042,8 +1043,9 @@ test:
 	rm -f test.sh
 	echo "#! /bin/sh"                                         >  test.sh
 	for dir in $(test_directory_list) ; do ( \
-		echo "echo $$dir >> test.log ; pushd $$dir "         >> test.sh ; \
-		echo "if ! make test ; then exit 1 ; fi "            >> test.sh ; \
+		echo "echo $$dir >> test.log"                        >> test.sh ; \
+		echo "if ! pushd $$dir ; then exit 1 ; fi"           >> test.sh ; \
+		echo "if ! make test ; then exit 1 ; fi"             >> test.sh ; \
 		echo "cat test.log >> $(abs_top_builddir)/test.log"  >> test.sh ; \
 		echo "popd ; echo >> test.log"                       >> test.sh ; \
 	) done

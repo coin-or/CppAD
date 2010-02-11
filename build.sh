@@ -218,14 +218,11 @@ then
 		fi
 	done
 	#
-	echo "---------------------------------------------------------"
-	echo "If aclocal generates warning messages, run ./fix_aclocal.sh"
 	echo "aclocal"
 	if ! aclocal
 	then
 		exit 1
 	fi
-	echo "---------------------------------------------------------"
 	#
 	echo "autoheader"
 	if ! autoheader

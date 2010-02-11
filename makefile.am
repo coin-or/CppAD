@@ -225,9 +225,9 @@ endif
 # No objects or executables are required to install CppAD.
 # See 'make test' below for building the tests.
 SUBDIRS =  \
-	cppad_ipopt/src \
 	cppad_ipopt/example \
 	cppad_ipopt/speed \
+	cppad_ipopt/src \
 	cppad_ipopt/test \
 	example \
 	introduction/get_started \
@@ -240,6 +240,7 @@ SUBDIRS =  \
 	speed/fadbad \
 	speed/profile \
 	speed/sacado \
+	speed/src \
 	test_more 
 #
 EXTRA_DIST = \
@@ -257,7 +258,6 @@ EXTRA_DIST = \
 	doc \
 	doc.omh.in \
 	doxyfile.in \
-	fix_aclocal.sh \
 	fix_makefile.sh \
 	omh \
 	openmp/example_a11c.cpp \
@@ -273,6 +273,7 @@ test_directory_list = \
 	introduction/get_started \
 	introduction/exp_apx \
 	print_for \
+	speed/src \
 	speed/cppad \
 	speed/double \
 	speed/example \
@@ -289,8 +290,9 @@ test:
 	rm -f test.sh
 	echo "#! /bin/sh"                                         >  test.sh
 	for dir in $(test_directory_list) ; do ( \
-		echo "echo $$dir >> test.log ; pushd $$dir "         >> test.sh ; \
-		echo "if ! make test ; then exit 1 ; fi "            >> test.sh ; \
+		echo "echo $$dir >> test.log"                        >> test.sh ; \
+		echo "if ! pushd $$dir ; then exit 1 ; fi"           >> test.sh ; \
+		echo "if ! make test ; then exit 1 ; fi"             >> test.sh ; \
 		echo "cat test.log >> $(abs_top_builddir)/test.log"  >> test.sh ; \
 		echo "popd ; echo >> test.log"                       >> test.sh ; \
 	) done

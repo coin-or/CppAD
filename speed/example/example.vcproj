@@ -207,7 +207,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\microsoft_timer.cpp"
+				RelativePath="..\src\microsoft_timer.cpp"
 				>
 			</File>
 			<File

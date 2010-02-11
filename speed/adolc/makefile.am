@@ -33,18 +33,11 @@ AM_CXXFLAGS   = -O2 -DNDEBUG -DSPEED_ADOLC $(CXX_FLAGS)
 # AM_CXXFLAGS   = -g $(CXX_FLAGS) -DSPEED_ADOLC
 # END DEBUG
 #
-LDADD            = -ladolc
-AM_LDFLAGS       = -L$(ADOLC_DIR)/lib
+LDADD            = -lspeed -ladolc
+AM_LDFLAGS       = -L../src -L$(ADOLC_DIR)/lib
 #
 adolc_SOURCES = \
 	../main.cpp \
-	../link_ode.cpp \
-	../link_det_lu.cpp \
-	../link_det_minor.cpp \
-	../link_poly.cpp \
-	../link_sparse_hessian.cpp \
-	../link_sparse_jacobian.cpp \
-	../microsoft_timer.cpp \
 	det_lu.cpp \
 	det_minor.cpp \
 	ode.cpp \

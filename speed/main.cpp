@@ -174,14 +174,28 @@ printed on the third line.
 The rate is the number of times per second that the calculation was repeated.
 
 
-$childtable%
-	speed/link_det_lu.cpp%
-	speed/link_det_minor.cpp%
-	speed/link_poly.cpp%
-	speed/link_sparse_hessian.cpp%
-	speed/link_sparse_jacobian.cpp%
-	speed/link_ode.cpp
+$children%
+	speed/src/link_det_lu.cpp%
+	speed/src/link_det_minor.cpp%
+	speed/src/link_ode.cpp%
+	speed/src/link_poly.cpp%
+	speed/src/link_sparse_hessian.cpp%
+	speed/src/link_sparse_jacobian.cpp%
+	speed/src/microsoft_timer.cpp
 %$$
+
+$head Link Functions$$
+Each speed test defines it's own version of one of the following 
+functions that link the speed test to the main program described above:
+$table
+$rref link_det_lu$$
+$rref link_det_minor$$
+$rref link_ode$$
+$rref link_poly$$
+$rref link_sparse_hessian$$
+$rref link_sparse_jacobian$$
+$tend
+
 
 $end 
 -----------------------------------------------------------------------------

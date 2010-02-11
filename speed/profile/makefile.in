@@ -42,14 +42,12 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_profile_OBJECTS = main.$(OBJEXT) link_ode.$(OBJEXT) ode.$(OBJEXT) \
-	link_det_lu.$(OBJEXT) link_det_minor.$(OBJEXT) \
-	link_poly.$(OBJEXT) link_sparse_hessian.$(OBJEXT) \
-	link_sparse_jacobian.$(OBJEXT) microsoft_timer.$(OBJEXT) \
-	det_lu.$(OBJEXT) det_minor.$(OBJEXT) poly.$(OBJEXT) \
-	sparse_hessian.$(OBJEXT) sparse_jacobian.$(OBJEXT)
+am_profile_OBJECTS = main.$(OBJEXT) ode.$(OBJEXT) det_lu.$(OBJEXT) \
+	det_minor.$(OBJEXT) poly.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	sparse_jacobian.$(OBJEXT)
 profile_OBJECTS = $(am_profile_OBJECTS)
 profile_LDADD = $(LDADD)
+profile_DEPENDENCIES =
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -83,7 +81,7 @@ CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id: makefile.am 1652 2010-02-09 12:26:20Z bradbell $
+# $Id: makefile.am 1654 2010-02-10 04:27:46Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -195,21 +193,15 @@ AM_CXXFLAGS = -pg -O2 -DSPEED_PROFILE -DNDEBUG $(CXX_FLAGS)
 # END OPTIMIZE
 #
 # BEGIN DEBUG
-# AM_CXXFLAGS   = -g $(CXX_FLAGS) -DSPEED_PROFILE
+# AM_CXXFLAGS = -g $(CXX_FLAGS) -DSPEED_PROFILE
 # END DEBUG
 #
-AM_LDFLAGS = -pg
+LDADD = -lspeed
+AM_LDFLAGS = -L../src -pg
 #
 profile_SOURCES = \
 	../main.cpp \
-	../link_ode.cpp \
 	../cppad/ode.cpp \
-	../link_det_lu.cpp \
-	../link_det_minor.cpp \
-	../link_poly.cpp \
-	../link_sparse_hessian.cpp \
-	../link_sparse_jacobian.cpp \
-	../microsoft_timer.cpp \
 	../cppad/det_lu.cpp  \
 	../cppad/det_minor.cpp  \
 	../cppad/poly.cpp \
@@ -265,14 +257,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_lu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_minor.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_det_lu.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_det_minor.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_ode.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_poly.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_sparse_hessian.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_sparse_jacobian.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/microsoft_timer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
@@ -306,20 +291,6 @@ main.obj: ../main.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o main.obj `if test -f '../main.cpp'; then $(CYGPATH_W) '../main.cpp'; else $(CYGPATH_W) '$(srcdir)/../main.cpp'; fi`
 
-link_ode.o: ../link_ode.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_ode.o -MD -MP -MF $(DEPDIR)/link_ode.Tpo -c -o link_ode.o `test -f '../link_ode.cpp' || echo '$(srcdir)/'`../link_ode.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_ode.Tpo $(DEPDIR)/link_ode.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_ode.cpp' object='link_ode.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_ode.o `test -f '../link_ode.cpp' || echo '$(srcdir)/'`../link_ode.cpp
-
-link_ode.obj: ../link_ode.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_ode.obj -MD -MP -MF $(DEPDIR)/link_ode.Tpo -c -o link_ode.obj `if test -f '../link_ode.cpp'; then $(CYGPATH_W) '../link_ode.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_ode.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_ode.Tpo $(DEPDIR)/link_ode.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_ode.cpp' object='link_ode.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_ode.obj `if test -f '../link_ode.cpp'; then $(CYGPATH_W) '../link_ode.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_ode.cpp'; fi`
-
 ode.o: ../cppad/ode.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT ode.o -MD -MP -MF $(DEPDIR)/ode.Tpo -c -o ode.o `test -f '../cppad/ode.cpp' || echo '$(srcdir)/'`../cppad/ode.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/ode.Tpo $(DEPDIR)/ode.Po
@@ -333,90 +304,6 @@ ode.obj: ../cppad/ode.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../cppad/ode.cpp' object='ode.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o ode.obj `if test -f '../cppad/ode.cpp'; then $(CYGPATH_W) '../cppad/ode.cpp'; else $(CYGPATH_W) '$(srcdir)/../cppad/ode.cpp'; fi`
-
-link_det_lu.o: ../link_det_lu.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_det_lu.o -MD -MP -MF $(DEPDIR)/link_det_lu.Tpo -c -o link_det_lu.o `test -f '../link_det_lu.cpp' || echo '$(srcdir)/'`../link_det_lu.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_det_lu.Tpo $(DEPDIR)/link_det_lu.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_det_lu.cpp' object='link_det_lu.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_det_lu.o `test -f '../link_det_lu.cpp' || echo '$(srcdir)/'`../link_det_lu.cpp
-
-link_det_lu.obj: ../link_det_lu.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_det_lu.obj -MD -MP -MF $(DEPDIR)/link_det_lu.Tpo -c -o link_det_lu.obj `if test -f '../link_det_lu.cpp'; then $(CYGPATH_W) '../link_det_lu.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_det_lu.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_det_lu.Tpo $(DEPDIR)/link_det_lu.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_det_lu.cpp' object='link_det_lu.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_det_lu.obj `if test -f '../link_det_lu.cpp'; then $(CYGPATH_W) '../link_det_lu.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_det_lu.cpp'; fi`
-
-link_det_minor.o: ../link_det_minor.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_det_minor.o -MD -MP -MF $(DEPDIR)/link_det_minor.Tpo -c -o link_det_minor.o `test -f '../link_det_minor.cpp' || echo '$(srcdir)/'`../link_det_minor.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_det_minor.Tpo $(DEPDIR)/link_det_minor.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_det_minor.cpp' object='link_det_minor.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_det_minor.o `test -f '../link_det_minor.cpp' || echo '$(srcdir)/'`../link_det_minor.cpp
-
-link_det_minor.obj: ../link_det_minor.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_det_minor.obj -MD -MP -MF $(DEPDIR)/link_det_minor.Tpo -c -o link_det_minor.obj `if test -f '../link_det_minor.cpp'; then $(CYGPATH_W) '../link_det_minor.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_det_minor.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_det_minor.Tpo $(DEPDIR)/link_det_minor.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_det_minor.cpp' object='link_det_minor.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_det_minor.obj `if test -f '../link_det_minor.cpp'; then $(CYGPATH_W) '../link_det_minor.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_det_minor.cpp'; fi`
-
-link_poly.o: ../link_poly.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_poly.o -MD -MP -MF $(DEPDIR)/link_poly.Tpo -c -o link_poly.o `test -f '../link_poly.cpp' || echo '$(srcdir)/'`../link_poly.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_poly.Tpo $(DEPDIR)/link_poly.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_poly.cpp' object='link_poly.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_poly.o `test -f '../link_poly.cpp' || echo '$(srcdir)/'`../link_poly.cpp
-
-link_poly.obj: ../link_poly.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_poly.obj -MD -MP -MF $(DEPDIR)/link_poly.Tpo -c -o link_poly.obj `if test -f '../link_poly.cpp'; then $(CYGPATH_W) '../link_poly.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_poly.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_poly.Tpo $(DEPDIR)/link_poly.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_poly.cpp' object='link_poly.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_poly.obj `if test -f '../link_poly.cpp'; then $(CYGPATH_W) '../link_poly.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_poly.cpp'; fi`
-
-link_sparse_hessian.o: ../link_sparse_hessian.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_sparse_hessian.o -MD -MP -MF $(DEPDIR)/link_sparse_hessian.Tpo -c -o link_sparse_hessian.o `test -f '../link_sparse_hessian.cpp' || echo '$(srcdir)/'`../link_sparse_hessian.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_sparse_hessian.Tpo $(DEPDIR)/link_sparse_hessian.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_sparse_hessian.cpp' object='link_sparse_hessian.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_sparse_hessian.o `test -f '../link_sparse_hessian.cpp' || echo '$(srcdir)/'`../link_sparse_hessian.cpp
-
-link_sparse_hessian.obj: ../link_sparse_hessian.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_sparse_hessian.obj -MD -MP -MF $(DEPDIR)/link_sparse_hessian.Tpo -c -o link_sparse_hessian.obj `if test -f '../link_sparse_hessian.cpp'; then $(CYGPATH_W) '../link_sparse_hessian.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_sparse_hessian.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_sparse_hessian.Tpo $(DEPDIR)/link_sparse_hessian.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_sparse_hessian.cpp' object='link_sparse_hessian.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_sparse_hessian.obj `if test -f '../link_sparse_hessian.cpp'; then $(CYGPATH_W) '../link_sparse_hessian.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_sparse_hessian.cpp'; fi`
-
-link_sparse_jacobian.o: ../link_sparse_jacobian.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_sparse_jacobian.o -MD -MP -MF $(DEPDIR)/link_sparse_jacobian.Tpo -c -o link_sparse_jacobian.o `test -f '../link_sparse_jacobian.cpp' || echo '$(srcdir)/'`../link_sparse_jacobian.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_sparse_jacobian.Tpo $(DEPDIR)/link_sparse_jacobian.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_sparse_jacobian.cpp' object='link_sparse_jacobian.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_sparse_jacobian.o `test -f '../link_sparse_jacobian.cpp' || echo '$(srcdir)/'`../link_sparse_jacobian.cpp
-
-link_sparse_jacobian.obj: ../link_sparse_jacobian.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT link_sparse_jacobian.obj -MD -MP -MF $(DEPDIR)/link_sparse_jacobian.Tpo -c -o link_sparse_jacobian.obj `if test -f '../link_sparse_jacobian.cpp'; then $(CYGPATH_W) '../link_sparse_jacobian.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_sparse_jacobian.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/link_sparse_jacobian.Tpo $(DEPDIR)/link_sparse_jacobian.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../link_sparse_jacobian.cpp' object='link_sparse_jacobian.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o link_sparse_jacobian.obj `if test -f '../link_sparse_jacobian.cpp'; then $(CYGPATH_W) '../link_sparse_jacobian.cpp'; else $(CYGPATH_W) '$(srcdir)/../link_sparse_jacobian.cpp'; fi`
-
-microsoft_timer.o: ../microsoft_timer.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT microsoft_timer.o -MD -MP -MF $(DEPDIR)/microsoft_timer.Tpo -c -o microsoft_timer.o `test -f '../microsoft_timer.cpp' || echo '$(srcdir)/'`../microsoft_timer.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/microsoft_timer.Tpo $(DEPDIR)/microsoft_timer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../microsoft_timer.cpp' object='microsoft_timer.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o microsoft_timer.o `test -f '../microsoft_timer.cpp' || echo '$(srcdir)/'`../microsoft_timer.cpp
-
-microsoft_timer.obj: ../microsoft_timer.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT microsoft_timer.obj -MD -MP -MF $(DEPDIR)/microsoft_timer.Tpo -c -o microsoft_timer.obj `if test -f '../microsoft_timer.cpp'; then $(CYGPATH_W) '../microsoft_timer.cpp'; else $(CYGPATH_W) '$(srcdir)/../microsoft_timer.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/microsoft_timer.Tpo $(DEPDIR)/microsoft_timer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../microsoft_timer.cpp' object='microsoft_timer.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o microsoft_timer.obj `if test -f '../microsoft_timer.cpp'; then $(CYGPATH_W) '../microsoft_timer.cpp'; else $(CYGPATH_W) '$(srcdir)/../microsoft_timer.cpp'; fi`
 
 det_lu.o: ../cppad/det_lu.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT det_lu.o -MD -MP -MF $(DEPDIR)/det_lu.Tpo -c -o det_lu.o `test -f '../cppad/det_lu.cpp' || echo '$(srcdir)/'`../cppad/det_lu.cpp

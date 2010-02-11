@@ -35,15 +35,11 @@ AM_CXXFLAGS   = -O2 -DNDEBUG -Wno-deprecated -DSPEED_FADBAD $(CXX_FLAGS)
 # AM_CXXFLAGS   = -g $(CXX_FLAGS) -DSPEED_FADBAD
 # END DEBUG
 #
+LDADD           = -lspeed
+AM_LDFLAGS      = -L../src
+#
 fadbad_SOURCES = \
 	../main.cpp \
-	../link_ode.cpp \
-	../link_det_lu.cpp \
-	../link_det_minor.cpp \
-	../link_poly.cpp \
-	../link_sparse_hessian.cpp \
-	../link_sparse_jacobian.cpp \
-	../microsoft_timer.cpp \
 	det_lu.cpp  \
 	det_minor.cpp  \
 	ode.cpp \

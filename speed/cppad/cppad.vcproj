@@ -187,27 +187,27 @@
 				>
 			</File>
 			<File
-				RelativePath="..\link_det_lu.cpp"
+				RelativePath="..\src\link_det_lu.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\link_det_minor.cpp"
+				RelativePath="..\src\link_det_minor.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\link_ode.cpp"
+				RelativePath="..\src\link_ode.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\link_poly.cpp"
+				RelativePath="..\src\link_poly.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\link_sparse_hessian.cpp"
+				RelativePath="..\src\link_sparse_hessian.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\link_sparse_jacobian.cpp"
+				RelativePath="..\src\link_sparse_jacobian.cpp"
 				>
 			</File>
 			<File
@@ -224,7 +224,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\microsoft_timer.cpp"
+				RelativePath="..\src\microsoft_timer.cpp"
 				>
 			</File>
 			<File

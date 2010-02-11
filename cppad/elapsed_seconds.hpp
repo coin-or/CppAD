@@ -33,9 +33,9 @@ $icode%s% = elapsed_seconds()%$$
 $head Purpose$$
 This routine is accurate to within .02 seconds
 (see $cref/elapsed_seconds.cpp/$$).
-It does not necessary work for time intervals that are less than a day.
+It does not necessary work for time intervals that are greater than a day.
 $list number$$
-If running under the Microsoft system, it uses 
+If running under the Microsoft compiler, it uses 
 $code ::GetSystemTime$$ for timing.
 $lnext
 Otherwise, if $code gettimeofday$$ is available, it is used.
@@ -53,7 +53,6 @@ you will need to link in the external routine
 called $cref/microsoft_timer/$$.
 
 $children%
-	speed/microsoft_timer.cpp%
 	speed/example/elapsed_seconds.cpp
 %$$
 $head Example$$

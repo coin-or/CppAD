@@ -24,19 +24,20 @@ $icode%s% = microsoft_timer()%$$
 
 $head Purpose$$
 This routine is accurate to within .02 seconds
-(see $cref/elapsed_seconds.cpp/$$).
-It does not necessary work for time intervals that are less than a day.
+(see $cref/elapsed_seconds.cpp/$$ which uses this routine when 
+the preprocessor symbol $code _MSC_VER$$ is defined).
+It does not necessary work for time intervals that are greater than a day.
 It uses $code ::GetSystemTime$$ for timing.
 
 $head s$$
 is a $code double$$ equal to the 
-number of seconds since the first call to $code elapsed_seconds$$.
+number of seconds since the first call to $code microsoft_timer$$.
 
 $head Linking$$
 The source code for this routine is located in 
 $code speed/microsoft_timer.cpp$$.
 The preprocessor symbol $code _MSC_VER$$ must
-be defined when this routine is compiled.
+be defined, or this routine is not compiled.
 
 $end
 -----------------------------------------------------------------------
