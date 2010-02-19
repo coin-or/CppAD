@@ -1043,11 +1043,12 @@ test:
 	rm -f test.sh
 	echo "#! /bin/sh"                                         >  test.sh
 	for dir in $(test_directory_list) ; do ( \
+		echo "#"                                             >> test.sh ; \
 		echo "echo $$dir >> test.log"                        >> test.sh ; \
-		echo "if ! pushd $$dir ; then exit 1 ; fi"           >> test.sh ; \
+		echo "if ! cd $$dir ; then exit 1 ; fi"              >> test.sh ; \
 		echo "if ! make test ; then exit 1 ; fi"             >> test.sh ; \
+		echo "if ! cd $(abs_top_builddir); then exit 1; fi"  >> test.sh ; \
 		echo "cat test.log >> $(abs_top_builddir)/test.log"  >> test.sh ; \
-		echo "popd ; echo >> test.log"                       >> test.sh ; \
 	) done
 	echo "exit 0"                                             >> test.sh
 	chmod +x test.sh
