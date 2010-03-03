@@ -26,7 +26,8 @@ Vector of sets of postivie integers, each set stored as a packed boolean array.
 
 class sparse_pack {
 private:
-	/// type used to pack elements
+	/// Type used to pack elements (should be the same as corresponding
+	/// typedef in multiple_n_bit() in test_more/sparse_hacobian.cpp)
 	typedef size_t Pack;
 	/// Number of bits per Pack value
 	static const size_t n_bit_ = std::numeric_limits<Pack>::digits;
@@ -167,6 +168,7 @@ public:
 	size_t next_element(void)
 	{	static Pack one(1);
 		CPPAD_ASSERT_UNKNOWN( next_index_ < n_set_ );
+		CPPAD_ASSERT_UNKNOWN( next_element_ <= end_ );
 
 		if( next_element_ == end_ )
 			return end_;
@@ -177,24 +179,31 @@ public:
 		// initialize bit index
 		size_t k  = next_element_ - j * n_bit_;
 
-		// search for next element of the set
+		// start search at this packed value
 		Pack check = data_[ next_index_ * n_pack_ + j ];
-		while( next_element_ < end_ )
-		{	if( check & (one << k) )
-			{	next_element_++;
-				return next_element_ - 1;
-			}
+		while( true )
+		{	// increment next element before checking this one
 			next_element_++;
+			// check if this element is in the set
+			if( check & (one << k) )
+				return next_element_ - 1;
+			// check if no more elements in the set
+			if( next_element_ == end_ )
+				return end_;
+			// increment bit index in Pack value so corresponds to 
+			// next element
 			k++;
 			CPPAD_ASSERT_UNKNOWN( k <= n_bit_ );
 			if( k == n_bit_ )
-			{	k     = 0;
+			{	// get next packed value
+				k     = 0;
 				j++;
 				CPPAD_ASSERT_UNKNOWN( j < n_pack_ );
 				check = data_[ next_index_ * n_pack_ + j ];
 			}
 		}
-		next_element_ = end_;
+		// should never get here
+		CPPAD_ASSERT_UNKNOWN(false);
 		return end_;
 	}
 	// -----------------------------------------------------------------

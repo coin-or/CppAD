@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -258,6 +258,50 @@ bool forward_set()
 
 	return ok;
 }
+
+bool multiple_of_n_bit()
+{	bool ok = true;
+	using CppAD::AD;
+	using CppAD::vector;
+	size_t i, j;
+
+	// should be the same as the corresponding typedef in 
+	// cppad/local/sparse_pack.hpp
+	typedef size_t Pack;
+
+	// number of bits per packed value
+	size_t n_bit = std::numeric_limits<Pack>::digits;
+
+	// check case where number of variables is equal to n_bit
+	vector< AD<double> > x(n_bit);
+	vector< AD<double> > y(n_bit);
+
+	// create an AD function with domain and range dimension equal to n_bit
+	CppAD::Independent(x);
+	for(i = 0; i < n_bit; i++)
+		y[i] = x[n_bit - i - 1];
+	CppAD::ADFun<double> f(x, y);
+
+	// Jacobian sparsity patterns
+	vector<bool> r(n_bit * n_bit);
+	vector<bool> s(n_bit * n_bit);
+	for(i = 0; i < n_bit; i++)
+	{	for(j = 0; j < n_bit; j++)
+			r[ i * n_bit + j ] = (i == j);
+	}
+	s = f.ForSparseJac(n_bit, r);
+
+	// check the result
+	for(i = 0; i < n_bit; i++)
+	{	for(j = 0; j < n_bit; j++)
+		{	if( i == n_bit - j - 1 )
+				ok = ok & s[ i * n_bit + j ];
+			else	ok = ok & (! s[i * n_bit + j] );
+		}
+	}
+
+	return ok;
+}
 } // End empty namespace 
 # include <vector>
 # include <valarray>
@@ -290,5 +334,7 @@ bool sparse_jacobian(void)
 	// ok &= forward_set< std::valarray<double>, std_valarray_set >();
 	// ok &= reverse_set< std::valarray<double>, std_valarray_set >();
 	// ---------------------------------------------------------------
+	//
+	ok &= multiple_of_n_bit();
 	return ok;
 }

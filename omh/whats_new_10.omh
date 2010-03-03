@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_10$$
 $spell
+	sizeof
 	libcppad_ipopt.a
 	Microsoft
 	Lagragian
@@ -35,6 +36,13 @@ This section contains a list of the changes to CppAD during 2010
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-03$$
+Fixed a bug in handling
+$cref/vector of boolean/glossary/Sparsity Pattern/Vector of Boolean/$$ 
+sparsity patterns.
+(when the number of elements per set was a multiple of
+$code sizeof(size_t))$$.
 
 $head 02-11$$
 The $code speed$$ directory has been reorganized and the
