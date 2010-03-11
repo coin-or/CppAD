@@ -124,6 +124,7 @@ extern bool Pow(void);
 extern bool pow_int(void);
 extern bool reverse_any(void);
 extern bool reverse_one(void);
+extern bool reverse_three(void);
 extern bool reverse_two(void);
 extern bool RevOne(void);
 extern bool RevSparseHes(void);
@@ -268,6 +269,7 @@ int main(void)
 	ok &= Run( pow_int,           "pow_int"          );
 	ok &= Run( reverse_any,       "reverse_any"      );
 	ok &= Run( reverse_one,       "reverse_one"      );
+	ok &= Run( reverse_three,     "reverse_three"    );
 	ok &= Run( reverse_two,       "reverse_two"      );
 	ok &= Run( RevOne,            "RevOne"           );
 	ok &= Run( RevSparseHes,      "RevSparseHes"     );

@@ -180,6 +180,7 @@ $rref RevSparseJac.cpp$$
 $rref RevTwo.cpp$$
 $rref reverse_any.cpp$$
 $rref reverse_one.cpp$$
+$rref reverse_three.cpp$$
 $rref reverse_two.cpp$$
 $rref RombergMul.cpp$$
 $rref RombergOne.cpp$$

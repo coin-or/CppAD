@@ -378,6 +378,9 @@
 				RelativePath=".\reverse_one.cpp">
 			</File>
 			<File
+				RelativePath=".\reverse_three.cpp">
+			</File>
+			<File
 				RelativePath=".\reverse_two.cpp">
 			</File>
 			<File

@@ -499,18 +499,22 @@ if this is not the case.
 
 $head Example$$
 $children%
+	example/reverse_three.cpp%
 	example/reverse_any.cpp%
 	example/checkpoint.cpp
 %$$
-The file
-$cref/reverse_any.cpp/$$
-contains an example and test of this operation.
-It returns true if they succeeds and false otherwise.
-The file 
-$cref/checkpoint.cpp/$$
-contains an application of this operation 
-to checkpointing; i.e.
+
+$list number$$
+The file $cref/reverse_three.cpp/$$
+contains an example and test of using reverse mode
+to compute third order derivatives.
+$lnext
+The file $cref/reverse_any.cpp/$$
+contains an example and test of the general reverse mode case.
+$lnext
+The file $cref/checkpoint.cpp/$$
+contains an example and test of checkpointing; i.e.
 splitting a reverse mode calculation at a function composition point.
+$lend
 
 $end
-

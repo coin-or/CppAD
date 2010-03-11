@@ -146,6 +146,7 @@ example_SOURCES   = \
 	pow_int.cpp \
 	reverse_any.cpp \
 	reverse_one.cpp \
+	reverse_three.cpp \
 	reverse_two.cpp \
 	rev_one.cpp \
 	rev_sparse_hes.cpp \

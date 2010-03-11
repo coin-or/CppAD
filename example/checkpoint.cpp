@@ -21,9 +21,6 @@ $section Checkpoint and Function Composition: Example and Test$$
 $index checkpoint, example$$
 $index example, checkpoint$$
 $index test, checkpoint$$
-$index composition, example$$
-$index example, composition$$
-$index test, composition$$ 
 
 $head Purpose$$
 Break a large computation into pieces and only store values at the 
@@ -40,6 +37,8 @@ $latex \[
 	\; , \;
 	G(y) = \left( \begin{array}{c} y_0 - y_1 \\ y_1  y_0   \end{array} \right) 
 \] $$
+
+$head Processing Steps$$
 We apply reverse mode to compute the derivative of
 $latex H : \R^2 \rightarrow \R$$
 is defined by
@@ -71,48 +70,50 @@ $latex \[
 \end{array}
 \] $$
 Here are the processing steps:
+
 $list number$$
-Forward mode on $latex F(x)$$ is used to compute 
-$latex y^{(0)}$$ and $latex y^{(1)}$$ 
-$lnext
-Forward mode on $latex G(y)$$ is used to compute 
-$latex z^{(0)}$$ and $latex z^{(1)}$$ 
-$lnext
-Reverse mode is used to compute the derivative of 
-$latex h^{(0)}$$ with respect to
+Use forward mode on $latex F(x)$$ to compute 
 $latex y^{(0)}$$ and $latex y^{(1)}$$.
 $lnext
-Reverse mode is used to compute the derivative of
+Free some, or all, of the memory corresponding to $latex F(x)$$.
+$lnext
+Use forward mode on $latex G(y)$$ to compute 
+$latex z^{(0)}$$ and $latex z^{(1)}$$ 
+$lnext
+Use reverse mode on $latex G(y)$$ to compute the derivative of 
+$latex h^{(1)}$$ with respect to
+$latex y^{(0)}$$ and $latex y^{(1)}$$.
+$lnext
+Free all the memory corresponding to $latex G(y)$$.
+$lnext
+Use reverse mode on $latex F(x)$$ to compute the derivative of
 $latex h^{(1)}$$ with respect to
 $latex x^{(0)}$$ and $latex x^{(1)}$$.
 $lend
-This uses the relation the following values for 
-$latex k = 0 , 1$$:
+This uses the following relations:
 $latex \[
 \begin{array}{rcl}
-	\partial_{x(0)} h^{(k)} [ x^{(0)} , x^{(1)} ]
+	\partial_{x(0)} h^{(1)} [ x^{(0)} , x^{(1)} ]
 	& = &
-	\partial_{y(0)} h^{(k)} [ y^{(0)} , y^{(1)} ]
+	\partial_{y(0)} h^{(1)} [ y^{(0)} , y^{(1)} ]
 	\partial_{x(0)} y^{(0)} [ x^{(0)} , x^{(1)} ]
 	\\
 	& + &
-	\partial_{y(1)} h^{(k)} [ y^{(0)} , y^{(1)} ]
+	\partial_{y(1)} h^{(1)} [ y^{(0)} , y^{(1)} ]
 	\partial_{x(0)} y^{(1)} [ x^{(0)} , x^{(1)} ]
 	\\
-	\partial_{x(1)} h^{(k)} [ x^{(0)} , x^{(1)} ]
+	\partial_{x(1)} h^{(1)} [ x^{(0)} , x^{(1)} ]
 	& = &
-	\partial_{y(0)} h^{(k)} [ y^{(0)} , y^{(1)} ]
+	\partial_{y(0)} h^{(1)} [ y^{(0)} , y^{(1)} ]
 	\partial_{x(1)} y^{(0)} [ x^{(0)} , x^{(1)} ]
 	\\
 	& + &
-	\partial_{y(1)} h^{(k)} [ y^{(0)} , y^{(1)} ]
+	\partial_{y(1)} h^{(1)} [ y^{(0)} , y^{(1)} ]
 	\partial_{x(1)} y^{(1)} [ x^{(0)} , x^{(1)} ]
 \end{array}
 \] $$
 where $latex \partial_{x(0)}$$ denotes the partial with respect
 to $latex x^{(0)}$$.
-
-
 
 $code
 $verbatim%example/checkpoint.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -142,123 +143,125 @@ namespace {
 	}
 }
 
+namespace {
+	bool checkpoint_case(bool free_all)
+	{	bool ok = true;
+     	double eps = 10. * std::numeric_limits<double>::epsilon();
+
+		using CppAD::AD;
+		using CppAD::NearEqual;
+		CppAD::ADFun<double> f, g, empty;
+
+		// specify the Taylor coefficients for X(t)
+		size_t n    = 2;
+		CPPAD_TEST_VECTOR<double> x0(n), x1(n);
+		x0[0] = 1.; x0[1] = 2.;
+		x1[0] = 3.; x1[1] = 4.;
+
+		// record the function F(x)
+		CPPAD_TEST_VECTOR< AD<double> > X(n), Y(n);
+		size_t i;
+		for(i = 0; i < n; i++)
+			X[i] = x0[i];
+		CppAD::Independent(X);
+		Y = F(X);
+		f.Dependent(X, Y);
+
+		// a fucntion object with an almost empty operation sequence
+		CppAD::Independent(X);
+		empty.Dependent(X, X);
+
+		// compute the Taylor coefficients for Y(t)
+		CPPAD_TEST_VECTOR<double> y0(n), y1(n);
+		y0 = f.Forward(0, x0);
+		y1 = f.Forward(1, x1);
+		if( free_all )
+			f = empty;
+		else	
+		{	// free all the Taylor coefficients stored in f
+			f.capacity_taylor(0);
+		}
+
+		// record the function G(x)
+		CPPAD_TEST_VECTOR< AD<double> > Z(n);
+		CppAD::Independent(Y);
+		Z = G(Y);
+		g.Dependent(Y, Z);
+
+		// compute the Taylor coefficients for Z(t)
+		CPPAD_TEST_VECTOR<double> z0(n), z1(n);
+		z0 = g.Forward(0, y0);
+		z1 = g.Forward(1, y1);
+
+		// check zero order Taylor coefficient for h^0 = z_0^0 + z_1^0
+		double check = x0[0] * x0[1] * (1. - x0[0] + x0[1]) - x0[1] + x0[0];
+		double h0    = z0[0] + z0[1];
+		ok          &= NearEqual(h0, check, eps, eps);
+
+		// check first order Taylor coefficient h^1
+		check     = x0[0] * x0[1] * (- x1[0] + x1[1]) - x1[1] + x1[0];
+		check    += x1[0] * x0[1] * (1. - x0[0] + x0[1]);
+		check    += x0[0] * x1[1] * (1. - x0[0] + x0[1]);
+		double h1 = z1[0] + z1[1];
+		ok       &= NearEqual(h1, check, eps, eps);
+	
+		// compute the derivative with respect to y^0 and y^0 of h^1
+		size_t p = 2;
+		CPPAD_TEST_VECTOR<double> w(n*p), dw(n*p);
+		w[0*p+0] = 0.; // coefficient for z_0^0
+		w[0*p+1] = 1.; // coefficient for z_0^1
+		w[1*p+0] = 0.; // coefficient for z_1^0
+		w[1*p+1] = 1.; // coefficient for z_1^1
+		dw       = g.Reverse(p, w);
+
+		// We are done using g, so we can free its memory.
+		g = empty;
+		// We need to use f next. 
+		if( free_all )
+		{	// we must again record the operation sequence for F(x)
+			CppAD::Independent(X);
+			Y = F(X);
+			f.Dependent(X, Y);
+		}
+		// now recompute the Taylor coefficients corresponding to F(x)
+		// (we already know the result; i.e., y0 and y1).
+		f.Forward(0, x0);
+		f.Forward(1, x1);
+
+		// compute the derivative with respect to x^0 and x^0 of
+		//	h^1 = z_0^1 + z_1^1
+		CPPAD_TEST_VECTOR<double> dv(n*p);
+		dv   = f.Reverse(p, dw); 
+
+		// check partial of h^1 w.r.t x^0_0
+		check  = x0[1] * (- x1[0] + x1[1]);
+		check -= x1[0] * x0[1];
+		check += x1[1] * (1. - x0[0] + x0[1]) - x0[0] * x1[1];
+		ok    &= NearEqual(dv[0*p+0], check, eps, eps);
+
+		// check partial of h^1 w.r.t x^0_1
+		check  = x0[0] * (- x1[0] + x1[1]);
+		check += x1[0] * (1. - x0[0] + x0[1]) + x1[0] * x0[1]; 
+		check += x0[0] * x1[1];
+		ok    &= NearEqual(dv[1*p+0], check, eps, eps);
+
+		// check partial of h^1 w.r.t x^1_0
+		check  = 1. - x0[0] * x0[1];
+		check += x0[1] * (1. - x0[0] + x0[1]);
+		ok    &= NearEqual(dv[0*p+1], check, eps, eps);
+
+		// check partial of h^1 w.r.t x^1_1
+		check  = x0[0] * x0[1] - 1.;
+		check += x0[0] * (1. - x0[0] + x0[1]);
+		ok    &= NearEqual(dv[1*p+1], check, eps, eps);
+
+		return ok;
+	}
+}
 bool checkpoint(void)
 {	bool ok = true;
-     double eps = 10. * std::numeric_limits<double>::epsilon();
-
-	using CppAD::AD;
-	using CppAD::NearEqual;
-	CppAD::ADFun<double> f, g;
-
-	// Record the function F(x)
-	size_t n    = 2;
-	CPPAD_TEST_VECTOR< AD<double> > X(n), Y(n);
-	X[0] = X[1] = 0.;
-	CppAD::Independent(X);
-	Y = F(X);
-	f.Dependent(X, Y);
-
-	// Record the function G(x)
-	CPPAD_TEST_VECTOR< AD<double> > Z(n);
-	Y[0] = Y[1] = 0.;
-	CppAD::Independent(Y);
-	Z = G(Y);
-	g.Dependent(Y, Z);
-
-	// argument and function values
-	CPPAD_TEST_VECTOR<double> x0(n), y0(n), z0(n);
-	x0[0] = 1.;
-	x0[1] = 2.;
-	y0    = f.Forward(0, x0);
-	z0    = g.Forward(0, y0);
-
-	// check function value
-	double check = x0[0] * x0[1] * (1. - x0[0] + x0[1]) - x0[1] + x0[0];
-	double h0    = z0[0] + z0[1];
-	ok          &= NearEqual(h0, check, eps, eps);
-
-	// first order Taylor coefficients
-	CPPAD_TEST_VECTOR<double> x1(n), y1(n), z1(n);
-	x1[0] = 3.;
-	x1[1] = 4.;
-	y1    = f.Forward(1, x1);
-	z1    = g.Forward(1, y1);
-
-	// check first order Taylor coefficients
-	check     = x0[0] * x0[1] * (- x1[0] + x1[1]) - x1[1] + x1[0];
-	check    += x1[0] * x0[1] * (1. - x0[0] + x0[1]);
-	check    += x0[0] * x1[1] * (1. - x0[0] + x0[1]);
-	double h1 = z1[0] + z1[1];
-	ok       &= NearEqual(h1, check, eps, eps);
-
-	// ----------------------------------------------------------------
-	// dw^0 (y) = \partial_y^0 h^0 (y)
-	// dw^1 (y) = \partial_y^1 h^0 (y)
-	size_t p = 2;
-	CPPAD_TEST_VECTOR<double> w(n*p), dw(n*p);
-	w[0*p+0] = 1.; // coefficient for z^0_0
-	w[1*p+0] = 1.; // coefficient for z^0_1
-	w[0*p+1] = 0.; // coefficient for z^1_0
-	w[1*p+1] = 0.; // coefficient for z^1_1 
-	dw       = g.Reverse(p, w);
-
-	// dv^0 = dw^0 * \partial_x^0 y^0 (x) + dw^1 * \partial_x^0 y^1 (x)  
-	// dv^1 = dw^0 * \partial_x^1 y^0 (x) + dw^1 * \partial_x^1 y^1 (x)  
-	CPPAD_TEST_VECTOR<double> dv(n*p);
-	dv   = f.Reverse(p, dw); 
-
-	// check partial of h^0 w.r.t x^0_0
-	check  = x0[1] * (1. - x0[0] + x0[1]) + 1.;
-	check -= x0[0] * x0[1];
-	ok    &= NearEqual(dv[0*p+0], check, eps, eps);
-
-	// check partial of h^0 w.r.t x^0_1
-	check  = x0[0] * (1. - x0[0] + x0[1]) - 1.;
-	check += x0[0] * x0[1];
-	ok    &= NearEqual(dv[1*p+0], check, eps, eps);
-
-	// check partial of h^0 w.r.t x^1_0 and x^1_1
-	check  = 0.;
-	ok    &= NearEqual(dv[0*p+1], check, eps, eps);
-	ok    &= NearEqual(dv[1*p+1], check, eps, eps);
-
-	// ----------------------------------------------------------------
-	// dw^0 (y) = \partial_y^0 h^1 (y)
-	// dw^1 (y) = \partial_y^1 h^1 (y)
-	w[0*p+0] = 0.; // coefficient for z^0_0
-	w[1*p+0] = 0.; // coefficient for z^0_1
-	w[0*p+1] = 1.; // coefficient for z^1_0
-	w[1*p+1] = 1.; // coefficient for z^1_1 
-	dw       = g.Reverse(p, w);
-
-	// dv^0 = dw^0 * \partial_x^0 y^0 (x) + dw^1 * \partial_x^0 y^1 (x)  
-	// dv^1 = dw^0 * \partial_x^1 y^0 (x) + dw^1 * \partial_x^1 y^1 (x)  
-	dv   = f.Reverse(p, dw); 
-
-	// check partial of h^1 w.r.t x^0_0
-	check  = x0[1] * (- x1[0] + x1[1]);
-	check -= x1[0] * x0[1];
-	check += x1[1] * (1. - x0[0] + x0[1]) - x0[0] * x1[1];
-	ok    &= NearEqual(dv[0*p+0], check, eps, eps);
-
-	// check partial of h^1 w.r.t x^0_1
-	check  = x0[0] * (- x1[0] + x1[1]);
-	check += x1[0] * (1. - x0[0] + x0[1]) + x1[0] * x0[1]; 
-	check += x0[0] * x1[1];
-	ok    &= NearEqual(dv[1*p+0], check, eps, eps);
-
-	// check partial of h^1 w.r.t x^1_0
-	// (by reverse mode identity is equal to partial h^0 w.r.t. x^0_0)
-	check  = 1. - x0[0] * x0[1];
-	check += x0[1] * (1. - x0[0] + x0[1]);
-	ok    &= NearEqual(dv[0*p+1], check, eps, eps);
-
-	// check partial of h^1 w.r.t x^1_1
-	// (by reverse mode identity is equal to partial h^0 w.r.t. x^0_1)
-	check  = x0[0] * x0[1] - 1.;
-	check += x0[0] * (1. - x0[0] + x0[1]);
-	ok    &= NearEqual(dv[1*p+1], check, eps, eps);
-
+	ok     &= checkpoint_case(true);
+	ok     &= checkpoint_case(false);
 	return ok;
 }
 

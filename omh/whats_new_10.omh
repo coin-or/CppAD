@@ -38,6 +38,11 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-11$$
+The old $cref/reverse_any/$$ example was moved to $cref/reverse_three.cpp/$$,
+the old checkpoint example is now the general case reverse example,
+and a better $cref/checkpointing/checkpoint.cpp/$$ example was created.
+
 $head 03-10$$
 The $cref/optimize/$$ routine would mistakenly remove some
 expressions that depended on the independent variables and that 
