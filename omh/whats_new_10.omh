@@ -38,6 +38,12 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-10$$
+The $cref/optimize/$$ routine would mistakenly remove some
+expressions that depended on the independent variables and that 
+affected the result of certain $cref/CondExp/$$ operations.
+This has been fixed. 
+
 $head 03-09$$
 Extend $cref/reverse_any/$$ so that it can be used for 
 $cref/checkpointing/checkpoint.cpp/$$; i.e.,

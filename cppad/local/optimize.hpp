@@ -994,9 +994,11 @@ void optimize(
 			if( tape[i_var].connect != not_connected )
 			{
 				mask = 1;
-				for(i = 2; i < 6; i++) if( arg[1] & mask )
-				{	CPPAD_ASSERT_UNKNOWN( arg[i] < i_var );
-					tape[arg[i]].connect = yes_connected;
+				for(i = 2; i < 6; i++)
+				{	if( arg[1] & mask )
+					{	CPPAD_ASSERT_UNKNOWN( arg[i] < i_var );
+						tape[arg[i]].connect = yes_connected;
+					}
 					mask = mask << 1;
 				}
 			}

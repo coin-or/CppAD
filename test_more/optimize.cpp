@@ -893,6 +893,49 @@ namespace {
 	
 		return ok;
 	}
+	// check that CondExp properly detects dependencies
+	bool cond_exp_depend(void)
+	{	bool ok = true;
+		using CppAD::AD;
+
+		AD<double> zero(0.), one(1.), two(2.), three(3.);
+	
+		size_t n = 4;
+		CPPAD_TEST_VECTOR< AD<double> > X(n); 
+		X[0] = zero;
+		X[1] = one;
+		X[2] = two;
+		X[3] = three;
+		CppAD::Independent(X);
+	
+		size_t m = 4;
+		CPPAD_TEST_VECTOR< AD<double> > Y(m);
+		Y[0] = CondExpLt(X[0] + .5,  one,  two, three);
+		Y[1] = CondExpLt(zero, X[1] + .5,  two, three);
+		Y[2] = CondExpLt(zero,  one, X[2] + .5, three);
+		Y[3] = CondExpLt(zero,  one,  two,  X[3] + .5);
+
+		CppAD::ADFun<double> f(X, Y);
+		f.optimize();
+
+		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		size_t i;
+		for(i = 0; i < n; i++)
+			x[i] = double(n - i);
+		y    = f.Forward(0, x);
+
+		if( x[0] + .5 < 1. )
+			ok  &= y[0] == 2.;
+		else	ok  &= y[0] == 3.;
+		if( 0. < x[1] + .5 )
+			ok  &= y[1] == 2.;
+		else	ok  &= y[1] == 3.;
+		ok  &= y[2] == x[2] + .5;;
+		ok  &= y[3] == 2.;
+
+		return ok;
+	}
+
 }
 
 bool optimize(void)
@@ -913,5 +956,8 @@ bool optimize(void)
 	ok     &= forward_sparse_jacobian_csum();
 	ok     &= reverse_sparse_jacobian_csum();
 	ok     &= reverse_sparse_hessian_csum();
+	// check that CondExp properly detects dependencies
+	ok     &= cond_exp_depend();
+
 	return ok;
 }
