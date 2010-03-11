@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin reverse_any.cpp$$
 $spell
+	Taylor
 	Cpp
 $$
 
@@ -21,6 +22,20 @@ $section Any Order Reverse Mode: Example and Test$$
 $index reverse, any order$$
 $index example, reverse any order$$
 $index test, reverse any order$$
+
+$head Taylor Coefficients$$
+$latex \[
+\begin{array}{rcl}
+	X(t) & = & x^{(0)} + x^{(1)} t + x^{(2)} t^2
+	\\
+	X^{(1)} (t) & = &  x^{(1)} + 2 x^{(2)} t
+	\\
+	X^{(2)} (t) & = &   2 x^{(2)}
+\end{array}
+\] $$
+Thus, we need to be careful to properly account for the fact that
+$latex X^{(2)} (0) = 2 x^{(2)}$$ 
+(and similarly $latex Y^{(2)} (0) = 2 y^{(2)}$$).
 
 $code
 $verbatim%example/reverse_any.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -34,16 +49,16 @@ namespace { // ----------------------------------------------------------
 // define the template function reverse_any_cases<Vector> in empty namespace
 template <typename Vector> 
 bool reverse_any_cases(void)
-{	bool ok = true;
+{	bool ok    = true;
+	double eps = 10. * std::numeric_limits<double>::epsilon();
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
 	// domain space vector
-	size_t n = 3;
+	size_t n = 2;
 	CPPAD_TEST_VECTOR< AD<double> > X(n);
 	X[0] = 0.; 
 	X[1] = 1.;
-	X[2] = 2.;
 
 	// declare independent variables and start recording
 	CppAD::Independent(X);
@@ -51,66 +66,75 @@ bool reverse_any_cases(void)
 	// range space vector
 	size_t m = 1;
 	CPPAD_TEST_VECTOR< AD<double> > Y(m);
-	Y[0] = X[0] * X[1] * X[2];
+	Y[0] = X[0] * X[1];
 
 	// create f : X -> Y and stop recording
 	CppAD::ADFun<double> f(X, Y);
 
-	// define W(t, u) = (u_0 + dx_0*t)*(u_1 + dx_1*t)*(u_2 + dx_2*t)
-	// use zero order forward to evaluate W0(u) = W(0, u)
-	Vector u(n), W0(m);
-	u[0]    = 2.;
-	u[1]    = 3.;
-	u[2]    = 4.;
-	W0      = f.Forward(0, u);
+	// define x^0 and compute y^0 using user zero order forward 
+	Vector x0(n), y0(m);
+	x0[0]    = 2.;
+	x0[1]    = 3.;
+	y0       = f.Forward(0, x0);
+
+	// y^0 = F(x^0) 
 	double check;
-	check   =  u[0]*u[1]*u[2];
-	ok     &= NearEqual(W0[0] , check, 1e-10, 1e-10);
+	check    =  x0[0] * x0[1];
+	ok      &= NearEqual(y0[0] , check, eps, eps);
 
-	// define W_t(t, u) = partial W(t, u) w.r.t t
-	// W_t(t, u)  = (u_0 + dx_0*t)*(u_1 + dx_1*t)*dx_2
-	//            + (u_0 + dx_0*t)*(u_2 + dx_2*t)*dx_1
-	//            + (u_1 + dx_1*t)*(u_2 + dx_2*t)*dx_0
-	// use first order forward mode to evaluate W1(u) = W_t(0, u)
-	Vector dx(n), W1(m);
-	dx[0] = .2;
-	dx[1] = .3;
-	dx[2] = .4;
-	W1    = f.Forward(1, dx);
-        check =  u[0]*u[1]*dx[2] + u[0]*u[2]*dx[1] + u[1]*u[2]*dx[0];
-	ok   &= NearEqual(W1[0], check, 1e-10, 1e-10);
+	// define x^1 and compute y^1 using first order forward mode 
+	Vector x1(n), y1(m);
+	x1[0] = 4.;
+	x1[1] = 5.;
+	y1    = f.Forward(1, x1);
 
-	// define W_tt (t, u) = partial W_t(t, u) w.r.t t
-	// W_tt(t, u) = 2*(u_0 + dx_0*t)*dx_1*dx_2
-	//            + 2*(u_1 + dx_1*t)*dx_0*dx_2
-	//            + 2*(u_3 + dx_3*t)*dx_0*dx_1
-	// use second order forward to evaluate W2(u) = 1/2 * W_tt(0, u)
-	Vector ddx(n), W2(m);
-	ddx[0] = ddx[1] = ddx[2] = 0.;
-        W2     = f.Forward(2, ddx);
-        check  =  u[0]*dx[1]*dx[2] + u[1]*dx[0]*dx[2] + u[2]*dx[0]*dx[1];
-	ok    &= NearEqual(W2[0], check, 1e-10, 1e-10);
+	// Y^1 (x) = partial_t F( x^0 + x^1 * t )
+	// y^1     = Y^1 (0)
+	check = x1[0] * x0[1] + x0[0] * x1[1];
+	ok   &= NearEqual(y1[0], check, eps, eps);
 
-	// use third order reverse mode to evaluate derivatives
+	// define x^2 and compute y^2 using second order forward mode
+	Vector x2(n), y2(m);
+	x2[0] = 6.;
+	x2[1] = 7.;
+	y2    = f.Forward(2, x2);
+
+	// Y^2 (x) = partial_tt F( x^0 + x^1 * t + x^2 * t^2 )
+	// y^2     = (1/2) *  Y^2 (0)
+	check  = x2[0] * x0[1] + x1[0] * x1[1] + x0[0] * x2[1];
+	ok    &= NearEqual(y2[0], check, eps, eps);
+
+	// W(x)  = Y^0 (x) + 2 * Y^1 (x) + 3 * (1/2) * Y^2 (x)
 	size_t p = 3;
-	Vector w(m), dw(n * p);
-	w[0]   = 1.;
-	dw     = f.Reverse(p, w);
+	Vector dw(n*p), w(m*p);
+	w[0] = 1.;
+	w[1] = 2.;
+	w[2] = 3.;
+	dw   = f.Reverse(p, w);
 
-	// check derivative of W0(u) w.r.t. u
-	ok    &= NearEqual(dw[0*p+0], u[1]*u[2], 1e-10, 1e-10);
-	ok    &= NearEqual(dw[1*p+0], u[0]*u[2], 1e-10, 1e-10);
-	ok    &= NearEqual(dw[2*p+0], u[0]*u[1], 1e-10, 1e-10);
+	// check partial w.r.t x^0_0 of W(x)
+	check = x0[1] + 2. * x1[1] + 3. * x2[1];
+	ok   &= NearEqual(dw[0*p+0], check, eps, eps);
 
-	// check derivative of W1(u) w.r.t. u
-	ok    &= NearEqual(dw[0*p+1], u[1]*dx[2] + u[2]*dx[1], 1e-10, 1e-10);
-	ok    &= NearEqual(dw[1*p+1], u[0]*dx[2] + u[2]*dx[0], 1e-10, 1e-10);
-	ok    &= NearEqual(dw[2*p+1], u[0]*dx[1] + u[1]*dx[0], 1e-10, 1e-10);
+	// check partial w.r.t x^0_1 of W(x)
+	check = x0[0] + 2. * x1[0] + 3. * x2[0];
+	ok   &= NearEqual(dw[1*p+0], check, eps, eps);
 
-	// check derivative of W2(u) w.r.t u
-	ok    &= NearEqual(dw[0*p+2], dx[1]*dx[2], 1e-10, 1e-10);
-	ok    &= NearEqual(dw[1*p+2], dx[0]*dx[2], 1e-10, 1e-10);
-	ok    &= NearEqual(dw[2*p+2], dx[0]*dx[1], 1e-10, 1e-10);
+	// check partial w.r.t x^1_0 of W(x)
+	check = 2. * x0[1] + 3. * x1[1];
+	ok   &= NearEqual(dw[0*p+1], check, eps, eps);
+
+	// check partial w.r.t x^1_1 of W(x)
+	check = 2. * x0[0] + 3. * x1[0];
+	ok   &= NearEqual(dw[1*p+1], check, eps, eps);
+
+	// check partial w.r.t x^2_0 of W(x)
+	check = 3. * x0[1]; 
+	ok   &= NearEqual(dw[0*p+2], check, eps, eps);
+
+	// check partial w.r.t x^2_1 of W(x)
+	check = 3. * x0[0]; 
+	ok   &= NearEqual(dw[1*p+2], check, eps, eps);
 
 	return ok;
 }

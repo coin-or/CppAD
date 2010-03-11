@@ -32,7 +32,7 @@ If it is one, a trace of every reverse_sweep computation is printed.
 Compute derivative of arbitrary order forward mode Taylor coefficients.
 
 \tparam Base
-base type for the operator; i.e., this operation was recorded
+base type for the operator; i.e., this operation sequence was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 

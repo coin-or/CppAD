@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_10$$
 $spell
+	checkpointing
 	sizeof
 	libcppad_ipopt.a
 	Microsoft
@@ -36,6 +37,12 @@ This section contains a list of the changes to CppAD during 2010
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-09$$
+Extend $cref/reverse_any/$$ so that it can be used for 
+$cref/checkpointing/checkpoint.cpp/$$; i.e.,
+splitting reverse mode calculations at function composition points.
+
 
 $head 03-03$$
 Fixed a bug in handling

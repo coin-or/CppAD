@@ -706,8 +706,8 @@ $head 04-17$$
 Add a paragraph to $cref/reverse_identity/$$ explaining
 how it relates to $cref/reverse_any/$$ calculations.
 Add description of 
-$cref/first/reverse_any/dw/First Order/$$ and
-$cref/second order/reverse_any/dw/Second Order/$$ 
+$cref/first/reverse_any/First Order/$$ and
+$cref/second order/reverse_any/Second Order/$$ 
 results in $cref/reverse_any/$$.
 
 $head 04-14$$

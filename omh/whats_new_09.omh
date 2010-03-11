@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -548,7 +548,7 @@ $pre
 
 $$
 A minor typo has been fixed in the description of
-$cref/W(t, u)/reverse_any/W(t, u)/$$ in $cref/reverse_any/$$.
+$code W(t, u)$$ in $cref/reverse_any/$$.
 To be specific, 
 $latex o ( t^{p-1} ) * t^{1-p} \rightarrow 0$$
 has been replaced by

@@ -59,7 +59,7 @@ extern bool optimize(void);
 extern bool Poly(void);
 extern bool Pow(void);
 extern bool PowInt(void);
-extern bool Reverse(void);
+extern bool reverse(void);
 extern bool rev_sparse_hes(void);
 extern bool rev_sparse_jac(void);
 extern bool RevTwo(void);
@@ -156,7 +156,7 @@ int main(void)
 	ok &= Run( Poly,            "Poly"           );
 	ok &= Run( Pow,             "Pow"            );
 	ok &= Run( PowInt,          "PowInt"         );
-	ok &= Run( Reverse,         "Reverse"        );
+	ok &= Run( reverse,         "reverse"        );
 	ok &= Run( rev_sparse_hes,  "rev_sparse_hes" );
 	ok &= Run( rev_sparse_jac,  "rev_sparse_jac" );
 	ok &= Run( RevTwo,          "RevTwo"         );

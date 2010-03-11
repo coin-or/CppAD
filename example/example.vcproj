@@ -156,6 +156,9 @@
 				RelativePath=".\check_simple_vector.cpp">
 			</File>
 			<File
+				RelativePath=".\checkpoint.cpp">
+			</File>
+			<File
 				RelativePath=".\compare.cpp">
 			</File>
 			<File

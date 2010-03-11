@@ -591,7 +591,7 @@ void printOp(
 		CPPAD_ASSERT_UNKNOWN(0);
 	}
 	size_t k;
-	if( NumRes(op) > 0 )
+	if( NumRes(op) > 0 && (op != BeginOp) )
 	{ 
 		for(k = 0; k < nfz; k++)
 			std::cout << "| fz[" << k << "]=" << fz[k];

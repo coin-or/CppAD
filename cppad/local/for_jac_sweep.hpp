@@ -31,7 +31,7 @@ Given the sparsity pattern for the independent variables,
 ForJacSweep computes the sparsity pattern for all the other variables.
 
 \tparam Base
-base type for the operator; i.e., this operation was recorded
+base type for the operator; i.e., this operation sequence was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 

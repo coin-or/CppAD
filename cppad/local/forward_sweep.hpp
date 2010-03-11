@@ -31,7 +31,7 @@ If it is one, a trace of every forward_sweep computation is printed.
 Compute arbitrary order forward mode Taylor coefficients.
 
 \tparam Base
-base type for the operator; i.e., this operation was recorded
+base type for the operator; i.e., this operation sequence was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base.
 

@@ -54,6 +54,7 @@ extern bool BenderQuad(void);
 extern bool BoolFun(void);
 extern bool vectorBool(void);
 extern bool CheckNumericType(void);
+extern bool checkpoint(void);
 extern bool CheckSimpleVector(void);
 extern bool Compare(void);
 extern bool CompareChange(void);
@@ -199,6 +200,7 @@ int main(void)
 	ok &= Run( BoolFun,           "BoolFun"          );
 	ok &= Run( vectorBool,        "vectorBool"       );
 	ok &= Run( CheckNumericType,  "CheckNumericType" );
+	ok &= Run( checkpoint,        "checkpoint"       );
 	ok &= Run( CheckSimpleVector, "CheckSimpleVector");
 	ok &= Run( Compare,           "Compare"          );
 	ok &= Run( CompareChange,     "CompareChange"    );
