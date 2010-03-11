@@ -90,6 +90,7 @@ $rref base_complex.hpp$$
 $rref BenderQuad.cpp$$
 $rref BoolFun.cpp$$
 $rref CheckNumericType.cpp$$
+$rref checkpoint.cpp$$
 $rref CheckSimpleVector.cpp$$
 $rref Compare.cpp$$
 $rref CompareChange.cpp$$
