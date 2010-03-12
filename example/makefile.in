@@ -65,14 +65,14 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	ode_gear_control.cpp ode_stiff.cpp ode_taylor.cpp \
 	opt_val_hes.cpp optimize.cpp output.cpp par_var.cpp poly.cpp \
 	pow.cpp pow_int.cpp reverse_any.cpp reverse_one.cpp \
-	reverse_two.cpp rev_one.cpp rev_sparse_hes.cpp \
-	rev_sparse_jac.cpp rev_two.cpp romberg_mul.cpp romberg_one.cpp \
-	rosen_34.cpp runge_45_1.cpp runge_45_2.cpp seq_property.cpp \
-	simple_vector.cpp sin.cpp sinh.cpp sparse_hessian.cpp \
-	sparse_jacobian.cpp sqrt.cpp stack_machine.cpp sub.cpp \
-	sub_eq.cpp tan.cpp tanh.cpp tape_index.cpp track_new_del.cpp \
-	unary_minus.cpp unary_plus.cpp value.cpp var_2par.cpp \
-	vec_ad.cpp
+	reverse_three.cpp reverse_two.cpp rev_one.cpp \
+	rev_sparse_hes.cpp rev_sparse_jac.cpp rev_two.cpp \
+	romberg_mul.cpp romberg_one.cpp rosen_34.cpp runge_45_1.cpp \
+	runge_45_2.cpp seq_property.cpp simple_vector.cpp sin.cpp \
+	sinh.cpp sparse_hessian.cpp sparse_jacobian.cpp sqrt.cpp \
+	stack_machine.cpp sub.cpp sub_eq.cpp tan.cpp tanh.cpp \
+	tape_index.cpp track_new_del.cpp unary_minus.cpp \
+	unary_plus.cpp value.cpp var_2par.cpp vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
@@ -108,10 +108,11 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	optimize.$(OBJEXT) output.$(OBJEXT) par_var.$(OBJEXT) \
 	poly.$(OBJEXT) pow.$(OBJEXT) pow_int.$(OBJEXT) \
 	reverse_any.$(OBJEXT) reverse_one.$(OBJEXT) \
-	reverse_two.$(OBJEXT) rev_one.$(OBJEXT) \
-	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
-	rev_two.$(OBJEXT) romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) \
-	rosen_34.$(OBJEXT) runge_45_1.$(OBJEXT) runge_45_2.$(OBJEXT) \
+	reverse_three.$(OBJEXT) reverse_two.$(OBJEXT) \
+	rev_one.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
+	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
+	romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) \
+	runge_45_1.$(OBJEXT) runge_45_2.$(OBJEXT) \
 	seq_property.$(OBJEXT) simple_vector.$(OBJEXT) sin.$(OBJEXT) \
 	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sqrt.$(OBJEXT) \
@@ -161,7 +162,7 @@ CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id: makefile.am 1659 2010-03-11 03:48:31Z bradbell $
+# $Id: makefile.am 1662 2010-03-11 18:31:11Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -383,6 +384,7 @@ example_SOURCES = \
 	pow_int.cpp \
 	reverse_any.cpp \
 	reverse_one.cpp \
+	reverse_three.cpp \
 	reverse_two.cpp \
 	rev_one.cpp \
 	rev_sparse_hes.cpp \
@@ -551,6 +553,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_two.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_any.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_one.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_three.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reverse_two.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/romberg_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/romberg_one.Po@am__quote@
