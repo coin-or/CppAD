@@ -126,7 +126,7 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ADOLC_DIR/lib:$IPOPT_DIR/lib"
 #
 # get version currently in configure.ac file
 # (in a way that works when version is not a date)
-version=`grep "^ *AC_INIT(" configure.ac | \
+configure_ac_version=`grep "^ *AC_INIT(" configure.ac | \
 	sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
 #
 # -----------------------------------------------------------------------------

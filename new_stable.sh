@@ -109,9 +109,10 @@ fi
 sed -i new_release.sh \
 	-e "s/stable_version=.*/stable_version=\"$stable_version\"/"
 #
-# set the first release version number for this stable version 
+# set the stable version number to the one in configure.ac
+# fix the date at the original stable date
 sed -i build.sh \
-	-e "s/yyyymmdd=.*/yyyymmdd=\"$release_version\"/" \
+	-e 's/yyyymmdd=.*/yyyymmdd="$configure_ac_version"/' \
 	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/"  \
 	-e '/if ! grep < doc.omh > \/dev\/null/,/fi/d'
 #
@@ -124,9 +125,10 @@ then
 fi
 sed -i svn_status.sh \
 	-e 's/^flag=.*/flag="+"/' \
-	-e "s/yyyymmdd=.*/yyyymmdd=\"$release_version\"/" \
-	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/"  \
-	-e '/^# Check if automatically edited files really changed/,$d'
+	-e "/yyyymmdd=.*/d" \
+	-e "/configure.hpp/d" \
+	-e 's/sed > svn_status.$\$/sed/' \
+	-e '/list=.*/,$d'
 #
 # use web for download of this release version
 dir="http://www.coin-or.org/download/source/CppAD"

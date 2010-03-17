@@ -20,7 +20,9 @@ echo "svn revert configure.ac"
 svn revert configure.ac
 if ! grep "AC_INIT(CppAD.*, $stable_version.$release" configure.ac >> /dev/null
 then
-	echo "Fix version number in configure.ac and commit."
+	echo "Fix version number in configure.ac, then execute."
+	echo "	./build.sh version"
+	echo "then commit the changes."
 	exit 1
 fi
 echo "svn revert cppad/config.h"
@@ -28,7 +30,8 @@ svn revert cppad/config.h
 if ! grep "PACKAGE_STRING.*CppAD.*$stable_version.$release" \
 	cppad/config.h >> /dev/null
 then
-	echo "Fix version number in cppad/config.h and commit."
+	echo "Fix version number in cppad/config.h does not match configure.ac."
+	echo "Must execute build.sh"
 	exit 1
 fi
 echo "svn revert cppad/configure.hpp"
@@ -36,7 +39,8 @@ svn revert cppad/configure.hpp
 if ! grep "PACKAGE_STRING.*CppAD.*$stable_version.$release" \
 	cppad/configure.hpp >> /dev/null
 then
-	echo "Fix version number in cppad/configure.hpp and commit."
+	echo "Fix version number in cppad/config.h does not match configure.ac."
+	echo "Must execute build.sh"
 	exit 1
 fi
 # -----------------------------------------------------------------------------
