@@ -51,8 +51,6 @@ then
 	echo "new_release.sh: can only execute in stable/$stable_version"
 	exit 1
 fi
-echo "cd .."
-cd ..
 # -----------------------------------------------------------------------------
 rep_stable="$repository/stable/$stable_version"
 rep_release="$repository/releases/$release_version"
@@ -63,6 +61,8 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
+echo "cd ../.."
+cd ../..
 if [ -e conf ]
 then
 	echo "rm -rf conf"
