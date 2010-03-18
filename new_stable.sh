@@ -115,8 +115,9 @@ sed -i new_release.sh \
 sed -i build.sh \
 	-e 's/yyyymmdd=.*/yyyymmdd="$configure_ac_version"/' \
 	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/"  \
-	-e '/"./build.sh all"/,/.build.sh/s/omhelp//' \
-	-e '/"./build.sh all"/,/.build.sh/s/doxygen//'
+	-e '/".[/]build.sh all"/,/.build.sh/s/omhelp//' \
+	-e '/".[/]build.sh all"/,/.build.sh/s/doxygen//' \
+	-e '/"move"/,/^fi/s/doxydoc//'
 #
 # remove version adjustment and always check makefiles in svn_status.sh
 if ! grep '# Check if automatically edited files really changed' \
