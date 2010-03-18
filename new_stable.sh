@@ -109,12 +109,14 @@ fi
 sed -i new_release.sh \
 	-e "s/stable_version=.*/stable_version=\"$stable_version\"/"
 #
-# set the stable version number to the one in configure.ac
-# fix the date at the original stable date
+# Set the stable version number to the one in configure.ac.
+# Fix the date at the original stable date.
+# Remove "doxygen" and "omhelp" for "all" case.
 sed -i build.sh \
 	-e 's/yyyymmdd=.*/yyyymmdd="$configure_ac_version"/' \
 	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/"  \
-	-e '/if ! grep < doc.omh > \/dev\/null/,/fi/d'
+	-e '/"./build.sh all"/,/.build.sh/s/omhelp//' \
+	-e '/"./build.sh all"/,/.build.sh/s/doxygen//'
 #
 # remove version adjustment and always check makefiles in svn_status.sh
 if ! grep '# Check if automatically edited files really changed' \
