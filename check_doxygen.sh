@@ -30,4 +30,8 @@ then
 	exit 0
 fi
 echo "check_doxygen.sh: Doxygen errors or warnings; see doxygen.err"
+if [ "$USER" != "bradbell" ]
+then
+	exit 0
+fi
 exit 1
