@@ -21,7 +21,13 @@ BOOST_INCLUDE =
 endif
 # 
 #
-AM_CXXFLAGS               = -g $(CXX_FLAGS) 
+# BEGIN OPTIMIZE
+AM_CXXFLAGS   = -O2 -DNDEBUG $(CXX_FLAGS)
+# END OPTIMIZE
+#
+# BEGIN DEBUG
+# AM_CXXFLAGS   = -g $(CXX_FLAGS) 
+# END DEBUG
 #
 AM_CPPFLAGS               = \
 	-I. \

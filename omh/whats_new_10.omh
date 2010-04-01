@@ -38,6 +38,12 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-01$$
+Some of the $cref/speed_utility/$$ library
+(in $code speed/src$$) was being compiled for debugging.
+This has been changed and they are now compiled with debugging off
+and optimization on.
+
 $head 03-11$$
 The old $cref/reverse_any/$$ example was moved to $cref/reverse_three.cpp/$$,
 the old checkpoint example is now the general case reverse example,
