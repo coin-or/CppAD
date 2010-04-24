@@ -79,7 +79,7 @@ inline void forward_powvv_op(
 /*!
 Compute zero order forward mode Taylor coefficients for result of op = PowvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = pow(x, y)
 \endverbatim
@@ -123,7 +123,7 @@ inline void forward_powvv_op_0(
 /*!
 Compute reverse mode partial derivatives for result of op = PowvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = pow(x, y)
 \endverbatim
@@ -179,7 +179,7 @@ inline void reverse_powvv_op(
 /*!
 Compute forward mode Taylor coefficients for result of op = PowpvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = pow(x, y)
 \endverbatim
@@ -243,7 +243,7 @@ inline void forward_powpv_op(
 /*!
 Compute zero order forward mode Taylor coefficient for result of op = PowpvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = pow(x, y)
 \endverbatim
@@ -292,7 +292,7 @@ inline void forward_powpv_op_0(
 /*!
 Compute reverse mode partial derivative for result of op = PowpvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = pow(x, y)
 \endverbatim
@@ -345,7 +345,7 @@ inline void reverse_powpv_op(
 /*!
 Compute forward mode Taylor coefficients for result of op = PowvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = pow(x, y)
 \endverbatim
@@ -402,7 +402,7 @@ inline void forward_powvp_op(
 /*!
 Compute zero order forward mode Taylor coefficients for result of op = PowvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = pow(x, y)
 \endverbatim
@@ -451,7 +451,7 @@ inline void forward_powvp_op_0(
 /*!
 Compute reverse mode partial derivative for result of op = PowvpOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = pow(x, y)
 \endverbatim

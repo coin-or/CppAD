@@ -23,7 +23,7 @@ Forward and reverse mode calculations for z = x - y.
 /*!
 Compute forward mode Taylor coefficients for result of op = SubvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x - y
 \endverbatim
@@ -61,7 +61,7 @@ inline void forward_subvv_op(
 /*!
 Compute zero order forward mode Taylor coefficients for result of op = SubvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x - y
 \endverbatim
@@ -97,7 +97,7 @@ inline void forward_subvv_op_0(
 /*!
 Compute reverse mode partial derivatives for result of op = SubvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x - y
 \endverbatim
@@ -145,7 +145,7 @@ inline void reverse_subvv_op(
 /*!
 Compute forward mode Taylor coefficients for result of op = SubpvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x - y
 \endverbatim
@@ -188,7 +188,7 @@ inline void forward_subpv_op(
 /*!
 Compute zero order forward mode Taylor coefficient for result of op = SubpvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x - y
 \endverbatim
@@ -224,7 +224,7 @@ inline void forward_subpv_op_0(
 /*!
 Compute reverse mode partial derivative for result of op = SubpvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x - y
 \endverbatim
@@ -268,7 +268,7 @@ inline void reverse_subpv_op(
 /*!
 Compute forward mode Taylor coefficients for result of op = SubvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x - y
 \endverbatim
@@ -313,7 +313,7 @@ inline void forward_subvp_op(
 /*!
 Compute zero order forward mode Taylor coefficients for result of op = SubvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x - y
 \endverbatim
@@ -349,7 +349,7 @@ inline void forward_subvp_op_0(
 /*!
 Compute reverse mode partial derivative for result of op = SubvpOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x - y
 \endverbatim

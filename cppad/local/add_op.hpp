@@ -23,7 +23,7 @@ Forward and reverse mode calculations for z = x + y.
 /*!
 Compute forward mode Taylor coefficients for result of op = AddvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x + y
 \endverbatim
@@ -61,7 +61,7 @@ inline void forward_addvv_op(
 /*!
 Compute zero order forward mode Taylor coefficients for result of op = AddvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x + y
 \endverbatim
@@ -97,7 +97,7 @@ inline void forward_addvv_op_0(
 /*!
 Compute reverse mode partial derivatives for result of op = AddvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x + y
 \endverbatim
@@ -145,7 +145,7 @@ inline void reverse_addvv_op(
 /*!
 Compute forward mode Taylor coefficients for result of op = AddpvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x + y
 \endverbatim
@@ -188,7 +188,7 @@ inline void forward_addpv_op(
 /*!
 Compute zero order forward mode Taylor coefficient for result of op = AddpvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x + y
 \endverbatim
@@ -224,7 +224,7 @@ inline void forward_addpv_op_0(
 /*!
 Compute reverse mode partial derivative for result of op = AddpvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x + y
 \endverbatim

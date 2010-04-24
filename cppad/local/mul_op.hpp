@@ -23,7 +23,7 @@ Forward and reverse mode calculations for z = x * y.
 /*!
 Compute forward mode Taylor coefficients for result of op = MulvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x * y
 \endverbatim
@@ -64,7 +64,7 @@ inline void forward_mulvv_op(
 /*!
 Compute zero order forward mode Taylor coefficients for result of op = MulvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x * y
 \endverbatim
@@ -100,7 +100,7 @@ inline void forward_mulvv_op_0(
 /*!
 Compute reverse mode partial derivatives for result of op = MulvvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x * y
 \endverbatim
@@ -156,7 +156,7 @@ inline void reverse_mulvv_op(
 /*!
 Compute forward mode Taylor coefficients for result of op = MulpvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x * y
 \endverbatim
@@ -193,7 +193,7 @@ inline void forward_mulpv_op(
 /*!
 Compute zero order forward mode Taylor coefficient for result of op = MulpvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x * y
 \endverbatim
@@ -229,7 +229,7 @@ inline void forward_mulpv_op_0(
 /*!
 Compute reverse mode partial derivative for result of op = MulpvOp.
 
-The C++ source code corespnding to this operation is
+The C++ source code corresponding to this operation is
 \verbatim
 	z = x * y
 \endverbatim
