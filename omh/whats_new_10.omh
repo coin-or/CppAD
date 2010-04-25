@@ -12,6 +12,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_10$$
 $spell
+	op
+	arg
 	checkpointing
 	sizeof
 	libcppad_ipopt.a
@@ -37,6 +39,21 @@ This section contains a list of the changes to CppAD during 2010
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 04-24$$
+There was a bug in the error checking done by $code cppad/local/sub_op.hpp$$
+that caused the following improper abort:
+$codei%
+Error detected by false result for
+    arg[1] < i_z
+at line 337 in the file
+    %...%/include/cppad/local/sub_op.hpp
+%$$
+This was fixed in the trunk.
+It was also fixed in the release with version number $code 20100101.3$$
+which can be downloaded from the CppAD
+$href%http://www.coin-or.org/download/source/CppAD/%download directory%$$. 
+
 
 $head 04-01$$
 Some of the $cref/speed_utility/$$ library
