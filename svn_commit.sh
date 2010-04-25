@@ -80,7 +80,7 @@ do
 	fi
 done
 #
-this_branch=`pwd | sed -e "s|.*/CppAD/||"`
+this_branch=`pwd | sed -e "s|.*/[Cc][Pp][Pp][Aa][Dd]/||"`
 echo "$this_branch: $log_entry" > svn_commit.log
 count=0
 for file in $add_list $change_list
