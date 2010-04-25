@@ -11,8 +11,8 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 repository="https://projects.coin-or.org/svn/CppAD"
-stable_version="20090700"
-release="0"
+stable_version="20100101"
+release="3"
 release_version="$stable_version.$release"
 msg="Creating releases/$release_version"
 # -----------------------------------------------------------------------------
@@ -21,7 +21,7 @@ svn revert configure.ac
 if ! grep "AC_INIT(CppAD.*, $stable_version.$release" configure.ac >> /dev/null
 then
 	echo "Fix version number in configure.ac, then execute."
-	echo "	./build.sh version"
+	echo "	./build.sh version automake config_none"
 	echo "then commit the changes."
 	exit 1
 fi
@@ -45,7 +45,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 # check initial working directory
-dir=`pwd | sed -e 's|.*/\([^/]*/[*/]*\)|\1|'`
+dir=`pwd | sed -e 's|.*/[Cc][Pp][Pp][Aa][Dd]/||'`
 if [ "$dir" != "stable/$stable_version" ]
 then
 	echo "new_release.sh: can only execute in stable/$stable_version"
