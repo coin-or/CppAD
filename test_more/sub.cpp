@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -18,7 +18,7 @@ Two old Sub examples now used just for valiadation testing
 
 namespace { // BEGIN empty namespace
 
-bool SubTestOne(void)
+bool One(void)
 {	bool ok = true;
 
 	using namespace CppAD;
@@ -74,7 +74,7 @@ bool SubTestOne(void)
 
 }
 
-bool SubTestTwo(void)
+bool Two(void)
 {	bool ok = true;
 
 	using namespace CppAD;
@@ -131,8 +131,7 @@ bool SubTestTwo(void)
 	return ok;
 }
 
-
-bool SubTestThree(void)
+bool Three(void)
 {	bool ok = true;
 	using namespace CppAD;
 
@@ -156,12 +155,44 @@ bool SubTestThree(void)
 	return ok;
 }
 
+bool Four(void)
+{	bool ok = true;
+	using namespace CppAD;
+
+	// special cases where parameter number is equal to
+	// variable index in result.
+	size_t n = 1;
+	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	X[0] = 1.;
+	Independent(X);
+	size_t m = 1;
+	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	if( 0. < X[0] && X[0] < 10. )
+		Y[0] = X[0] - 2.;
+	else	Y[0] = X[0] - 2.;
+	ADFun<double> f(X, Y); 
+	
+	CPPAD_TEST_VECTOR<double> y(m), x(n);
+	x[0] = 1.;
+	y    = f.Forward(0, x);
+	ok  &= (y[0] == -1.);
+	
+	CPPAD_TEST_VECTOR<double> dy(m), dx(n);
+	dx[0] = 1.;
+	dy    = f.Forward(1, dx);
+	ok  &= (dy[0] == 1.);
+
+	return ok;
+}
+
+
 } // END empty namespace
 
 bool Sub(void)
 {	bool ok = true;
-	ok &= SubTestOne();
-	ok &= SubTestTwo(); 
-	ok &= SubTestThree(); 
+	ok &= One();
+	ok &= Two(); 
+	ok &= Three(); 
+	ok &= Four();
 	return ok;
 }
