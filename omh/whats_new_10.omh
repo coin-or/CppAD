@@ -12,6 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_10$$
 $spell
+	Linpack
+	Blas
+	makefile
 	op
 	arg
 	checkpointing
@@ -39,6 +42,17 @@ This section contains a list of the changes to CppAD during 2010
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 04-26$$
+Include Blas and Linpack libraries in makefile links for
+$cref cppad_ipopt_nlp$$ examples.
+This removes the need to use get.Blas when building Ipopt.
+$pre
+
+$$
+The speed test in $code cppad_ipopt/speed$$ was missing
+a link to the library $code ../src/libcppad_ipopt.a$$.
+This has been fixed.
 
 $head 04-24$$
 There was a bug in the error checking done by $code cppad/local/sub_op.hpp$$

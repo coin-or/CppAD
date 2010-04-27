@@ -127,6 +127,7 @@ PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
 PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
+PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 POSTFIX_DIR = @POSTFIX_DIR@
@@ -193,7 +194,15 @@ AM_CPPFLAGS = -I. \
                      -I$(IPOPT_DIR)/include
 
 #
-LDADD = -lcppad_ipopt -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
+LDADD = \
+                    -lcppad_ipopt \
+                    -lipopt \
+                    -llapack \
+                    -lblas \
+                    $(FCLIBS) \
+                    $(PTHREAD_LIB) \
+                    $(DL_LIB)
+
 AM_LDFLAGS = -L../src -L$(IPOPT_DIR)/lib
 #
 test_more_SOURCES = \

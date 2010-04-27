@@ -733,27 +733,23 @@ then
 		doxydoc
 		cppad-$version.cpl.tgz
 		cppad-$version.gpl.tgz
+		cppad-$version.cpl.zip
+		cppad-$version.gpl.zip
 	"
-	# check if dos files have been created
-	if [ -e cppad-$version.cpl.zip ]
-	then
-		list="$list cppad-$version.cpl.zip"
-	fi
-	if [ -e cppad-$version.gpl.zip ]
-	then
-		list="$list cppad-$version.gpl.zip"
-	fi
 	for file in $list
 	do
-		echo "mv $file doc/$file"
-		if ! mv $file doc/$file
+		if [ -e "$file" ]
 		then
-			echo "Error: mv $file doc."
-			if [ "$2" = "test" ]
+			echo "mv $file doc/$file"
+			if ! mv $file doc/$file
 			then
-				echo "Error: mv $file doc." >> build_test.log
+				echo "Error: mv $file doc."
+				if [ "$2" = "test" ]
+				then
+					echo "Error: mv $file doc." >> build_test.log
+				fi
+				exit 1
 			fi
-			exit 1
 		fi
 	done
 	exit 0

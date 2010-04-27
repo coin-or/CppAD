@@ -29,8 +29,15 @@ AM_CPPFLAGS       = -I. \
                      $(BOOST_INCLUDE) \
                      -I$(IPOPT_DIR)/include
 #
-LDADD             = -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
-AM_LDFLAGS        = -L$(IPOPT_DIR)/lib
+LDADD             = \
+                    -lcppad_ipopt \
+                    -lipopt \
+                    -llapack \
+                    -lblas \
+                    $(FCLIBS) \
+                    $(PTHREAD_LIB) \
+                    $(DL_LIB)
+AM_LDFLAGS        = -L../src -L$(IPOPT_DIR)/lib
 #
 # Cannot use ../src/libcppad_ipopt.a becasue it is compiled for debugging
 # so build an optimized version here to use here. 

@@ -37,7 +37,14 @@ AM_CPPFLAGS       = -I. \
                      $(BOOST_INCLUDE) \
                      -I$(IPOPT_DIR)/include
 #
-LDADD             = -lcppad_ipopt -lipopt $(FCLIBS) $(PTHREAD_LIB) $(DL_LIB)
+LDADD             = \
+                    -lcppad_ipopt \
+                    -lipopt \
+                    -llapack \
+                    -lblas \
+                    $(FCLIBS) \
+                    $(PTHREAD_LIB) \
+                    $(DL_LIB)
 AM_LDFLAGS        = -L../src -L$(IPOPT_DIR)/lib
 #
 example_SOURCES   = \

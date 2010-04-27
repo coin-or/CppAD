@@ -111,13 +111,16 @@ sed -i new_release.sh \
 #
 # Set the stable version number to the one in configure.ac.
 # Fix the date at the original stable date.
-# Remove "doxygen" and "omhelp" for "all" case.
+# Remove "doxygen" and "omhelp" from "all" cases.
 sed -i build.sh \
-	-e 's/yyyymmdd=.*/yyyymmdd="$configure_ac_version"/' \
-	-e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/"  \
-	-e '/".[/]build.sh all"/,/.build.sh/s/omhelp//' \
-	-e '/".[/]build.sh all"/,/.build.sh/s/doxygen//' \
-	-e '/"move"/,/^fi/s/doxydoc//'
+     -e 's/yyyymmdd=.*/yyyymmdd="$configure_ac_version"/' \
+     -e "s/yyyy_mm_dd=.*/yyyy_mm_dd=\"$yyyy_mm_dd\"/"  \
+     -e '/echo *".[/]build.sh all *"/,/^[\t ]*" *$/s/^[\t ]*omhelp *$//' \
+     -e '/echo *".[/]build.sh all *"/,/^[\t ]*" *$/s/^[\t ]*doxygen *$//' \
+     -e '/echo *".[/]build.sh all dos *"/,/^[\t ]*" *$/s/^[\t ]*omhelp *$//' \
+     -e '/echo *".[/]build.sh all dos *"/,/^[\t ]*" *$/s/^[\t ]*doxygen *$//' \
+     -e '/echo *".[/]build.sh all test *"/,/^[\t ]*" *$/s/^[\t ]*omhelp *$//' \
+     -e '/echo *".[/]build.sh all test *"/,/^[\t ]*" *$/s/^[\t ]*doxygen *$//' 
 #
 # remove version adjustment and always check makefiles in svn_status.sh
 if ! grep '# Check if automatically edited files really changed' \
