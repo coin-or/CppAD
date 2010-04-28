@@ -50,6 +50,7 @@ speed_OBJECTS = $(am_speed_OBJECTS)
 speed_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
 speed_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -76,6 +77,7 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+BLAS_LIB = @BLAS_LIB@
 BOOST_DIR = @BOOST_DIR@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
@@ -88,7 +90,7 @@ CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id: makefile.am 1644 2010-02-06 19:56:43Z bradbell $
+# $Id: makefile.am 1693 2010-04-27 03:04:53Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -109,16 +111,19 @@ ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EXEEXT = @EXEEXT@
+F77 = @F77@
 FADBAD_DIR = @FADBAD_DIR@
 FC = @FC@
 FCFLAGS = @FCFLAGS@
 FCLIBS = @FCLIBS@
+FFLAGS = @FFLAGS@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 IPOPT_DIR = @IPOPT_DIR@
+LAPACK_LIB = @LAPACK_LIB@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -149,6 +154,7 @@ abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
+ac_ct_F77 = @ac_ct_F77@
 ac_ct_FC = @ac_ct_FC@
 am__include = @am__include@
 am__leading_dot = @am__leading_dot@
@@ -202,8 +208,8 @@ AM_CPPFLAGS = -I. \
 LDADD = \
                     -lcppad_ipopt \
                     -lipopt \
-                    -llapack \
-                    -lblas \
+                    $(LAPACK_LIB) \
+                    $(BLAS_LIB) \
                     $(FCLIBS) \
                     $(PTHREAD_LIB) \
                     $(DL_LIB)

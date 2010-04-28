@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20100211, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20100427, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -275,6 +275,9 @@ AC_C_INLINE
 dnl determine FCLIBS, flags necessary for linking C++ with modern fortran
 AC_FC_LIBRARY_LDFLAGS
 
+dnl --------------------------------------------------------------------------
+dnl Check for C libraries
+
 dnl check for pthread library
 AC_SUBST(PTHREAD_LIB, "")
 AC_CHECK_LIB(
@@ -284,7 +287,7 @@ AC_CHECK_LIB(
 	[PTHREAD_LIB=""]
 )
 
-dnl check for pthread library
+dnl check for dl library
 AC_SUBST(DL_LIB, "")
 AC_CHECK_LIB(
 	[dl],
@@ -292,6 +295,31 @@ AC_CHECK_LIB(
 	[DL_LIB="-ldl"],
 	[DL_LIB=""]
 )
+
+
+dnl check for blas library
+AC_SUBST(BLAS_LIB, "")
+AC_LANG_PUSH([Fortran 77])
+AC_CHECK_LIB(
+	[blas],
+	[ddot],
+	[BLAS_LIB="-lblas"],
+	[BLAS_LIB=""]
+)
+AC_LANG_POP([Fortran 77])
+
+dnl check for lapack library
+AC_SUBST(LAPACK_LIB, "")
+AC_LANG_PUSH([Fortran 77])
+AC_CHECK_LIB(
+	[lapack],
+	[dgesv],
+	[LAPACK_LIB="-llapack"],
+	[LAPACK_LIB=""]
+)
+AC_LANG_POP([Fortran 77])
+
+
 
 dnl -----------------------------------------------------------------------
 dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will 
