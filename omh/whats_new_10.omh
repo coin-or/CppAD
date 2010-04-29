@@ -43,6 +43,11 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-28$$
+Change the multi-level taping examples
+$cref mul_level.cpp$$ and $cref mul_level_adolc.cpp$$
+to be more efficient.
+
 $head 04-26$$
 Include Blas and Linpack libraries in makefile links for
 $cref cppad_ipopt_nlp$$ examples.

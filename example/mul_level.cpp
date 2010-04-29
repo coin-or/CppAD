@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -25,18 +25,24 @@ $index level, multiple AD$$
 $index AD, multiple level$$
 
 $head Purpose$$
-This is an example and test of using the $code AD<double>$$ type,
-together with the $code AD< AD<double> >$$ type,
-for multiple levels of taping.
-The example computes
-the value
+In this example, we use $code AD< AD<double> >$$ (level two taping),
+the compute values of the function $latex f : \R^n \rightarrow \R$$ where 
 $latex \[
-	\frac{d}{dx} \left[ f^{(1)} (x) * v \right]
+	f(x) = \frac{1}{2} \left( x_0^2 + \cdots + x_{n-1}^2 \right)
 \] $$
-where $latex f : \R^n \rightarrow \R$$ and
-$latex v \in \R^n$$.
-The example $xref/HesTimesDir.cpp/$$ computes the same value using only
-one level of taping (more efficient) and the identity
+We then use $code AD<double>$$ (level one taping) to compute
+the directional derivative
+$latex \[
+f^{(1)} (x) * v  = x_0 v_0 + \cdots + x_{n-1} v_{n-1}
+\] $$.
+where $latex v \in \R^n$$.
+We then use $code double$$ (no taping) to compute
+$latex \[
+\frac{d}{dx} \left[ f^{(1)} (x) * v \right] = v
+\] $$
+This is only meant as an example of multiple levels of taping.
+The example $xref/HesTimesDir.cpp/$$ computes the same value more
+efficiently by using the identity:
 $latex \[
 	\frac{d}{dx} \left[ f^{(1)} (x) * v \right] = f^{(2)} (x) * v
 \] $$
@@ -53,24 +59,17 @@ $end
 
 # include <cppad/cppad.hpp>
 
-namespace { // put this function in the empty namespace
-	// f(x) = |x|^2 = .5 * ( x[0]^2 + ... + x[n-1]^2 + .5 )
+namespace { 
+	// f(x) = |x|^2 / 2 = .5 * ( x[0]^2 + ... + x[n-1]^2 )
 	template <class Type>
 	Type f(CPPAD_TEST_VECTOR<Type> &x)
 	{	Type sum;
 
-		// check assignment of AD< AD<double> > = double
-		sum  = .5;
-		sum += .5;
-
+		sum  = 0.;
 		size_t i = x.size();
-		while(i--)
+		for(i = 0; i < x.size(); i++)
 			sum += x[i] * x[i];
 
-		// check computed assignment AD< AD<double> > -= int
-		sum -= 1; 
-	
-		// check double * AD< AD<double> > 
 		return .5 * sum;
 	} 
 }
@@ -87,43 +86,46 @@ bool mul_level(void)
 	CPPAD_TEST_VECTOR<ADdouble>   a_x(n);
 	CPPAD_TEST_VECTOR<ADDdouble> aa_x(n);
 
-	// value of the independent variables
+	// Values for the independent variables while taping the function f(x)
 	for(j = 0; j < n; j++)
-		a_x[j] = x[j] = double(j); // x[j] = j
-	Independent(a_x);                  // a_x is indedendent for ADdouble
+		aa_x[j] = double(j);
+	// Declare the independent variable for taping f(x)
+	CppAD::Independent(aa_x); 
+
+	// Use AD< AD<double> > to tape the evaluation of f(x)
+	CPPAD_TEST_VECTOR<ADDdouble> aa_f(1); 
+	aa_f[0] = f(aa_x); 
+
+	// Declare a_F as the corresponding ADFun< AD<double> > function f(x)
+	// (make sure we do not run zero order forward during constructor)
+	CppAD::ADFun<ADdouble> a_F;
+	a_F.Dependent(aa_x, aa_f);
+
+	// Values for the independent variables while taping f'(x) * v
 	for(j = 0; j < n; j++)
-		aa_x[j] = a_x[j];          // track how aa_x depends on a_x
-	CppAD::Independent(aa_x);          // aa_x is independent for ADDdouble
+		a_x[j] = double(j);
+	// Declare the independent variable for taping f'(x) * v
+	CppAD::Independent(a_x); 
+	// set the argument value x for computing f'(x) * v
+	a_F.Forward(0, a_x);
+	// compute f'(x) * v
+	CPPAD_TEST_VECTOR<ADdouble> a_v(n);
+	CPPAD_TEST_VECTOR<ADdouble> a_df(1);
+	for(j = 0; j < n; j++)
+		a_v[j] = double(n - j);
+	a_df = a_F.Forward(1, a_v); 
 
-	// compute function
-	CPPAD_TEST_VECTOR<ADDdouble> aa_f(1);    // scalar valued function
-	aa_f[0] = f(aa_x);                 // has only one component
-
-	// declare inner function (corresponding to ADDdouble calculation)
-	CppAD::ADFun<ADdouble> a_F(aa_x, aa_f);
-
-	// compute f'(x) 
-	size_t p = 1;                        // order of derivative of a_F
-	CPPAD_TEST_VECTOR<ADdouble> a_w(1);  // weight vector for a_F
-	CPPAD_TEST_VECTOR<ADdouble> a_df(n); // value of derivative
-	a_w[0] = 1;                          // weighted function same as a_F
-	a_df   = a_F.Reverse(p, a_w);        // gradient of f
-
-	// declare outter function (corresponding to ADdouble calculation)
+	// declare dF as ADFun<double> function corresponding to f'(x) * v
 	CppAD::ADFun<double> df(a_x, a_df);
 
 	// compute the d/dx of f'(x) * v = f''(x) * v
-	CPPAD_TEST_VECTOR<double> v(n);
-	CPPAD_TEST_VECTOR<double> ddf_v(n);
-	for(j = 0; j < n; j++)
-		v[j] = double(n - j);
-	ddf_v = df.Reverse(p, v);
+	CPPAD_TEST_VECTOR<double> w(1);
+	CPPAD_TEST_VECTOR<double> dw(n);
+	w[0] = 1.;
+	dw   = df.Reverse(1, w);
 
-	// f(x)       = .5 * ( x[0]^2 + x[1]^2 + ... + x[n-1]^2 )
-	// f'(x)      = (x[0], x[1], ... , x[n-1])
-	// f''(x) * v = ( v[0], v[1],  ... , x[n-1] )
 	for(j = 0; j < n; j++)
-		ok &= CppAD::NearEqual(ddf_v[j], v[j], 1e-10, 1e-10);
+		ok &= CppAD::NearEqual(dw[j], a_v[j], 1e-10, 1e-10);
 
 	return ok;
 }

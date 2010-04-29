@@ -39,7 +39,7 @@ cmd="g++ test_one.cpp $*
 	-std=c++98 -DCPPAD_ADOLC_TEST
 	-I.. -I/usr/include/boost-1_33_1
 "
-if [ -e @ADOLD_DIR@/include/adolc/adouble.h ]
+if [ -e @ADOLC_DIR@/include/adolc/adouble.h ]
 then
 	cmd="$cmd -I@ADOLC_DIR@/include -L@ADOLC_DIR@/lib -ladolc"
 fi
