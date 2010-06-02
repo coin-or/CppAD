@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_10$$
 $spell
+	const
 	Linpack
 	Blas
 	makefile
@@ -42,6 +43,17 @@ This section contains a list of the changes to CppAD during 2010
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 06-01$$
+In the case where the preprocessor symbol $code NDEBUG$$ was defined 
+(see $cref/speed/Faq/Speed/$$),
+the function
+$codei%
+	CheckSimpleVector(const %Scalar%& %x%, const %Scalar%& %y%)
+%$$
+was not defined; see
+$href%http://list.coin-or.org/pipermail/cppad/2010q2/000166.html%bug report%$$.
+This has been fixed.
 
 $head 04-28$$
 Change the multi-level taping examples

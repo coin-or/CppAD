@@ -3,7 +3,7 @@
 # define CPPAD_CHECK_SIMPLE_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -101,6 +101,9 @@ $end
 namespace CppAD {
 
 # ifdef NDEBUG
+	template <class Scalar, class Vector>
+	inline void CheckSimpleVector(const Scalar& x, const Scalar& y)
+	{ }
 	template <class Scalar, class Vector>
 	inline void CheckSimpleVector(void)
 	{ }

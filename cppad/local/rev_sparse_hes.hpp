@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_HES_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -405,7 +405,9 @@ void RevSparseHesSet(
 	CheckSimpleVector<std::set<size_t>, VectorSet>(two, three);
 
 	// range and domain dimensions for F
+# ifndef NDEBUG
 	size_t m = dep_taddr.size();
+# endif
 	size_t n = ind_taddr.size();
 
 	CPPAD_ASSERT_KNOWN(
