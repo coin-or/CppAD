@@ -214,7 +214,7 @@ LDADD = \
                     $(PTHREAD_LIB) \
                     $(DL_LIB)
 
-AM_LDFLAGS = -L../src -L$(IPOPT_DIR)/lib
+AM_LDFLAGS = -L../src -L$(IPOPT_DIR)/lib -L$(IPOPT_DIR)/lib/coin
 #
 # Cannot use ../src/libcppad_ipopt.a becasue it is compiled for debugging
 # so build an optimized version here to use here. 

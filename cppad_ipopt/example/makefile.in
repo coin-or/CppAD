@@ -222,7 +222,7 @@ LDADD = \
                     $(PTHREAD_LIB) \
                     $(DL_LIB)
 
-AM_LDFLAGS = -L../src -L$(IPOPT_DIR)/lib
+AM_LDFLAGS = -L../src -L$(IPOPT_DIR)/lib -L$(IPOPT_DIR)/lib/coin
 #
 example_SOURCES = \
 	example.cpp \

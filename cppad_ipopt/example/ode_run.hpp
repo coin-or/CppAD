@@ -44,7 +44,7 @@ void ipopt_ode_case(
 	assert( N.size() == Nz + 1);
 	assert( N[0] == 0 );
 	SizeVector S(Nz+1);
-	S[0] = 0.;
+	S[0] = 0;
 	for(i = 1; i <= Nz; i++)
 		S[i] = S[i-1] + N[i];
 	

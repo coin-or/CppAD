@@ -33,7 +33,7 @@ bool ode_check(const SizeVector& N, const NumberVector& x)
 	// compute the partial sums of the number of grid points
 	// and the maximum step size for the trapezoidal approximation
 	SizeVector S(Nz+1);
-	S[0] = 0.;
+	S[0] = 0;
 	double max_step = 0.;
 	for(i = 1; i <= Nz; i++)
 	{	S[i] = S[i-1] + N[i];
