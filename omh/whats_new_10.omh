@@ -12,6 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_10$$
 $spell
+	pkg-config
+	Dir
+	libipopt
 	const
 	Linpack
 	Blas
@@ -43,6 +46,24 @@ This section contains a list of the changes to CppAD during 2010
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-14$$
+The new versions of ipopt use $code pkg-config$$ to record the location
+where its necessary libraries are stored on the system.
+The cppad $cref/configure/InstallUnix/Configure/$$ command has
+been improved so that it can work both with versions of ipopt that use
+$code pkg-config$$ and ones that don't.
+
+$head 07-11$$
+Old versions of the ipopt library were located in 
+$icode%IpoptDir%/lib/libipopt.%*%$$
+(see $cref/IpoptDir/InstallUnix/IpoptDir/$$),
+but newer versions will be located in 
+$icode%IpoptDir%/lib/coin/libipopt.%*%$$.
+The directory $icode%IpoptDir%/lib/coin%$$ has been added to the library
+search path so that the 
+$cref/cppad_ipopt_nlp examples/cppad_ipopt_nlp/Example/$$
+work with both old and new versions of ipopt.
 
 $head 06-01$$
 In the case where the preprocessor symbol $code NDEBUG$$ was defined 

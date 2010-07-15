@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20100427, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20100714, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -276,6 +276,11 @@ dnl determine FCLIBS, flags necessary for linking C++ with modern fortran
 AC_FC_LIBRARY_LDFLAGS
 
 dnl --------------------------------------------------------------------------
+dnl Check for programs
+
+AC_CHECK_PROG(HAVE_PKG_CONFIG, [pkg-config], [yes], [no])
+
+dnl --------------------------------------------------------------------------
 dnl Check for C libraries
 
 dnl check for pthread library
@@ -296,31 +301,51 @@ AC_CHECK_LIB(
 	[DL_LIB=""]
 )
 
-
-dnl check for blas library
-AC_SUBST(BLAS_LIB, "")
-AC_LANG_PUSH([Fortran 77])
-AC_CHECK_LIB(
-	[blas],
-	[ddot],
-	[BLAS_LIB="-lblas"],
-	[BLAS_LIB=""]
-)
-AC_LANG_POP([Fortran 77])
-
-dnl check for lapack library
-AC_SUBST(LAPACK_LIB, "")
-AC_LANG_PUSH([Fortran 77])
-AC_CHECK_LIB(
-	[lapack],
-	[dgesv],
-	[LAPACK_LIB="-llapack"],
-	[LAPACK_LIB=""]
-)
-AC_LANG_POP([Fortran 77])
-
-
-
+dnl --------------------------------------------------------------------------
+dnl Determine link line for ipopt
+if test "$HAVE_PKG_CONFIG" == "yes"; then
+	dnl set CPPAD_IPOPT_LIBS
+	PKG_CHECK_MODULES(CPPAD_IPOPT, 
+		[ipopt], 
+		[HAVE_CPPAD_IPOPT_LIBS="yes"],
+		[HAVE_CPPAD_IPOPT_LIBS="no"]
+	)
+	if test "$HAVE_CPPAD_IPOPT_LIBS" == "no"; then
+		CPPAD_IPOPT_LIBS="-lipopt"
+		dnl
+		dnl check for blas library
+		AC_LANG_PUSH([Fortran 77])
+		AC_CHECK_LIB(
+			[blas],
+			[ddot],
+			[CPPAD_IPOPT_LIBS="$CPPAD_IPOPT_LIBS -lblas"],
+		)
+		dnl check for lapack library
+		AC_CHECK_LIB(
+			[lapack],
+			[dgesv],
+			[CPPAD_IPOPT_LIBS="$CPPAD_IPOPT_LIBS -llapack"],
+		)
+		AC_LANG_POP([Fortran 77])
+	fi
+else
+	CPPAD_IPOPT_LIBS="-lipopt"
+	dnl check for blas library
+	AC_LANG_PUSH([Fortran 77])
+	AC_CHECK_LIB(
+		[blas],
+		[ddot],
+		[CPPAD_IPOPT_LIBS="$CPPAD_IPOPT_LIBS -lblas"],
+	)
+	dnl check for lapack library
+	AC_CHECK_LIB(
+		[lapack],
+		[dgesv],
+		[CPPAD_IPOPT_LIBS="$CPPAD_IPOPT_LIBS -llapack"],
+	)
+	AC_LANG_POP([Fortran 77])
+fi
+AC_MSG_RESULT([cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS])
 dnl -----------------------------------------------------------------------
 dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will 
 dnl read file.in, do its substitutions, and create file

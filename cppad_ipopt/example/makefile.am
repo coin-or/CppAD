@@ -39,9 +39,7 @@ AM_CPPFLAGS       = -I. \
 #
 LDADD             = \
                     -lcppad_ipopt \
-                    -lipopt \
-                    $(LAPACK_LIB) \
-                    $(BLAS_LIB) \
+                    $(CPPAD_IPOPT_LIBS) \
                     $(FCLIBS) \
                     $(PTHREAD_LIB) \
                     $(DL_LIB)
