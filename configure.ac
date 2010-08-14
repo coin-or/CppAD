@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20100714, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20100814, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -303,14 +303,13 @@ AC_CHECK_LIB(
 
 dnl --------------------------------------------------------------------------
 dnl Determine link line for ipopt
+AC_SUBST(CPPAD_IPOPT_LIBS, "")
 if test "$HAVE_PKG_CONFIG" == "yes"; then
 	dnl set CPPAD_IPOPT_LIBS
-	PKG_CHECK_MODULES(CPPAD_IPOPT, 
-		[ipopt], 
-		[HAVE_CPPAD_IPOPT_LIBS="yes"],
-		[HAVE_CPPAD_IPOPT_LIBS="no"]
-	)
-	if test "$HAVE_CPPAD_IPOPT_LIBS" == "no"; then
+	export PKG_CONFIG_PATH="$IPOPT_DIR/lib/pkgconfig"
+	if pkg-config --libs ipopt >& /dev/null ; then
+		CPPAD_IPOPT_LIBS=`pkg-config --libs ipopt`
+	else
 		CPPAD_IPOPT_LIBS="-lipopt"
 		dnl
 		dnl check for blas library
