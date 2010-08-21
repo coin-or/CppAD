@@ -35,7 +35,7 @@ LDADD             = \
                     $(FCLIBS) \
                     $(PTHREAD_LIB) \
                     $(DL_LIB)
-AM_LDFLAGS        = -L../src -L$(IPOPT_DIR)/lib -L$(IPOPT_DIR)/lib/coin
+AM_LDFLAGS        = -L../src 
 #
 test_more_SOURCES   = \
 	test_more.cpp \

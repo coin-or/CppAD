@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20100814, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20100821, cppad@list.coin-or.org)
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -303,17 +303,15 @@ AC_CHECK_LIB(
 
 dnl --------------------------------------------------------------------------
 dnl Determine link line for ipopt
-AC_SUBST(CPPAD_IPOPT_LIBS, "")
+AC_SUBST(CPPAD_IPOPT_LIBS, "-L $IPOPT_DIR/lib -lipopt")
 if test "$HAVE_PKG_CONFIG" == "yes"; then
 	dnl set CPPAD_IPOPT_LIBS
 	export PKG_CONFIG_PATH="$IPOPT_DIR/lib/pkgconfig"
 	if pkg-config --libs ipopt >& /dev/null ; then
 		CPPAD_IPOPT_LIBS=`pkg-config --libs ipopt`
 	else
-		CPPAD_IPOPT_LIBS="-lipopt"
-		dnl
 		dnl check for blas library
-		AC_LANG_PUSH([Fortran 77])
+		AC_LANG_PUSH([Fortran])
 		AC_CHECK_LIB(
 			[blas],
 			[ddot],
@@ -325,12 +323,11 @@ if test "$HAVE_PKG_CONFIG" == "yes"; then
 			[dgesv],
 			[CPPAD_IPOPT_LIBS="$CPPAD_IPOPT_LIBS -llapack"],
 		)
-		AC_LANG_POP([Fortran 77])
+		AC_LANG_POP([Fortran])
 	fi
 else
-	CPPAD_IPOPT_LIBS="-lipopt"
 	dnl check for blas library
-	AC_LANG_PUSH([Fortran 77])
+	AC_LANG_PUSH([Fortran])
 	AC_CHECK_LIB(
 		[blas],
 		[ddot],
@@ -342,7 +339,7 @@ else
 		[dgesv],
 		[CPPAD_IPOPT_LIBS="$CPPAD_IPOPT_LIBS -llapack"],
 	)
-	AC_LANG_POP([Fortran 77])
+	AC_LANG_POP([Fortran])
 fi
 AC_MSG_RESULT([cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS])
 dnl -----------------------------------------------------------------------
