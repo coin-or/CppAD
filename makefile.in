@@ -33,10 +33,11 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = .
-DIST_COMMON = README $(am__configure_deps) $(nobase_myinclude_HEADERS) \
-	$(srcdir)/doc.omh.in $(srcdir)/doxyfile.in \
-	$(srcdir)/makefile.am $(srcdir)/makefile.in \
-	$(top_srcdir)/configure $(top_srcdir)/cppad/config.h.in \
+DIST_COMMON = README $(am__configure_deps) $(myinclude_HEADERS) \
+	$(nobase_myinclude_HEADERS) $(srcdir)/doc.omh.in \
+	$(srcdir)/doxyfile.in $(srcdir)/makefile.am \
+	$(srcdir)/makefile.in $(top_srcdir)/configure \
+	$(top_srcdir)/cppad/config.h.in \
 	$(top_srcdir)/cppad/configure.hpp.in \
 	$(top_srcdir)/omh/install_unix.omh.in \
 	$(top_srcdir)/omh/install_windows.omh.in AUTHORS COPYING \
@@ -82,8 +83,9 @@ am__nobase_list = $(am__nobase_strip_setup); \
 am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
-am__installdirs = "$(DESTDIR)$(myincludedir)"
-HEADERS = $(nobase_myinclude_HEADERS)
+am__installdirs = "$(DESTDIR)$(myincludedir)" \
+	"$(DESTDIR)$(myincludedir)"
+HEADERS = $(myinclude_HEADERS) $(nobase_myinclude_HEADERS)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
@@ -254,6 +256,11 @@ top_srcdir = @top_srcdir@
 #
 @CppAD_POSTFIX_TRUE@postfix_dir = $(POSTFIX_DIR)
 myincludedir = $(includedir)/$(postfix_dir)
+#
+myinclude_HEADERS = \
+	cppad_ipopt/src/cppad_ipopt_nlp.hpp
+
+#
 nobase_myinclude_HEADERS = \
 	cppad/TrackNewDel.h \
 	cppad/SpeedTest.h \
@@ -578,6 +585,26 @@ omh/install_unix.omh: $(top_builddir)/config.status $(top_srcdir)/omh/install_un
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 omh/install_windows.omh: $(top_builddir)/config.status $(top_srcdir)/omh/install_windows.omh.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
+install-myincludeHEADERS: $(myinclude_HEADERS)
+	@$(NORMAL_INSTALL)
+	test -z "$(myincludedir)" || $(MKDIR_P) "$(DESTDIR)$(myincludedir)"
+	@list='$(myinclude_HEADERS)'; test -n "$(myincludedir)" || list=; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(myincludedir)'"; \
+	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(myincludedir)" || exit $$?; \
+	done
+
+uninstall-myincludeHEADERS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(myinclude_HEADERS)'; test -n "$(myincludedir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	test -n "$$files" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(myincludedir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(myincludedir)" && rm -f $$files
 install-nobase_myincludeHEADERS: $(nobase_myinclude_HEADERS)
 	@$(NORMAL_INSTALL)
 	test -z "$(myincludedir)" || $(MKDIR_P) "$(DESTDIR)$(myincludedir)"
@@ -920,7 +947,7 @@ check: check-recursive
 all-am: makefile $(HEADERS)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(myincludedir)"; do \
+	for dir in "$(DESTDIR)$(myincludedir)" "$(DESTDIR)$(myincludedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -970,7 +997,8 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-nobase_myincludeHEADERS
+install-data-am: install-myincludeHEADERS \
+	install-nobase_myincludeHEADERS
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-recursive
@@ -1017,7 +1045,8 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-nobase_myincludeHEADERS
+uninstall-am: uninstall-myincludeHEADERS \
+	uninstall-nobase_myincludeHEADERS
 
 .MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) ctags-recursive \
 	install-am install-data-am install-strip tags-recursive
@@ -1032,12 +1061,13 @@ uninstall-am: uninstall-nobase_myincludeHEADERS
 	install-data install-data-am install-data-hook install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-man \
-	install-nobase_myincludeHEADERS install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs installdirs-am maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
-	pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
-	uninstall-nobase_myincludeHEADERS
+	install-myincludeHEADERS install-nobase_myincludeHEADERS \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am tags \
+	tags-recursive uninstall uninstall-am \
+	uninstall-myincludeHEADERS uninstall-nobase_myincludeHEADERS
 
 
 test: 

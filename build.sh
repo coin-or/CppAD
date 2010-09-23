@@ -273,6 +273,7 @@ if [ "$1" == "configure" ]
 then
 	options="
 		--with-Documentation
+		--prefix=$HOME/prefix/cppad
 		POSTFIX_DIR=coin
 	"
 	if [ -e $BOOST_DIR/boost ]

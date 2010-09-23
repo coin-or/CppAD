@@ -34,7 +34,6 @@ $childtable%
 	example/ad_in_c.cpp%
 	example/hes_minor_det.cpp%
 	example/hes_lu_det.cpp%
-	cppad_ipopt/src/cppad_ipopt_nlp.hpp%
 	example/interface_2c.cpp%
 	example/jac_minor_det.cpp%
 	example/jac_lu_det.cpp%

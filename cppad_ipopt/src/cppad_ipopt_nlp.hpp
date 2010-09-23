@@ -73,11 +73,6 @@ $href%
 %$$
 Algorithmic Differentiation package.
 
-$head Warning$$
-This is only an example use of CppAD.
-It is expected that this class will be improved and that
-its user interface may change in ways that are not backward compatible.
-
 $head fg(x)$$
 The function $latex fg : \R^n \rightarrow \R^{m+1}$$ is defined by
 $latex \[

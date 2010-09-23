@@ -21,6 +21,10 @@ else
 postfix_dir  = .
 endif
 myincludedir = $(includedir)/$(postfix_dir)
+#
+myinclude_HEADERS = \
+	cppad_ipopt/src/cppad_ipopt_nlp.hpp
+#
 nobase_myinclude_HEADERS =  \
 	cppad/TrackNewDel.h \
 	cppad/SpeedTest.h \

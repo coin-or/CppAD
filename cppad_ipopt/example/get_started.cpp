@@ -53,7 +53,7 @@ $end
 */
 // BEGIN PROGRAM
 
-# include "../src/cppad_ipopt_nlp.hpp"
+# include <cppad_ipopt_nlp.hpp>
 
 namespace {
 

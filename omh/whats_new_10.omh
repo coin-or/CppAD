@@ -47,6 +47,12 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-22$$
+Promote $cref/cppad_ipopt_nlp/$$ from an example to a library
+that gets installed 
+(provided that the $cref/ipopt prefix/InstallUnix/IpoptDir/$$
+is specified on the $code configure$$ command line).
+
 $head 08-21$$
 Fix problems with linking of $cref/cppad_ipopt_nlp/$$ test with
 both older and newer versions of $code ipopt$$. 
