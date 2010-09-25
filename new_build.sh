@@ -349,7 +349,8 @@ then
 	do
 		if [ ! -e work/$file ]
 		then
-			echo "new_build.sh: must run configure before omhelp"
+			echo "new_build.sh: cannot find work/$file."
+			echo "must run configure before omhelp"
 			exit 1
 		fi
 		echo "cp work/$file $file"
@@ -379,6 +380,47 @@ then
 	exit 0
 fi
 # -----------------------------------------------------------------------------
+if [ "$1" = "doxygen" ]
+then
+	if [ -e doxygen.err ]
+	then
+		echo "rm doxygen.err"
+		rm doxygen.err
+	fi
+	#
+	if [ -e doxydoc ]
+	then
+		echo "rm -r doxydoc"
+		rm -r doxydoc
+	fi
+	#
+	echo "mkdir doxydoc"
+	mkdir doxydoc
+	#
+	if [ ! -e cp work/doxyfile ]
+	then
+		echo "new_build.sh: cannot find work/doxyfile."
+		echo "must run configure before doxygen"
+	fi
+	#
+	echo "cp work/doxyfile doxyfile"
+	cp work/doxyfile doxyfile
+	#
+	echo "doxygen doxyfile > doxygen.log"
+	doxygen doxyfile > doxygen.log
+	#
+	echo "cat doxygen.err >> doxygen.log"
+	cat doxygen.err >> doxygen.log
+	#
+	echo "./check_doxygen.sh"
+	./check_doxygen.sh
+	#
+	echo "rm doxyfile"
+	rm doxyfile
+	#
+	exit 0
+fi
+# -----------------------------------------------------------------------------
 # report new_build.sh usage error
 if [ "$1" != "" ]
 then
@@ -393,7 +435,9 @@ options
 version:   update version in AUTHORS, configure.ac, configure, config.h
 automake:  run the tools required by autoconf and automake.
 configure: run the configure script in the work directory.
-dist:      create the distribution file cppad-version.cpl.tgz
+dist:      create the distribution file work/cppad-version.cpl.tgz
+omhelp:    build all formats of user documentation in doc/*
+doxygen:   build developer documentation in doxydoc/*
 EOF
 #
 exit 1
