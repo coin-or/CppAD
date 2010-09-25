@@ -1,5 +1,5 @@
 # ! /bin/bash 
-# $Id: build.sh 1705 2010-09-23 11:46:10Z bradbell $
+# $Id: new_build.sh 1705 2010-09-23 11:46:10Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -29,32 +29,33 @@ if [ "$2" != "" ]
 then
      for option in $*
      do
-          ./build.sh $option
+		echo "=============================================================="
+		echo "begin: new_build.sh $option"
+          ./new_build.sh $option
+		echo "end: new_build.sh $option"
      done
      exit 0
 fi
 # -----------------------------------------------------------------------------
 if [ ! -e work ]
 then
-	echo "build.sh: mkdir work"
+	echo "new_build.sh: mkdir work"
 	mkdir work
 fi
+# -----------------------------------------------------------------------------
+# Today's date in yyyy-mm-dd decimal digit format where 
+# yy is year in century, mm is month in year, dd is day in month.
+yyyy_mm_dd=`date +%F`
+#
+# Version of cppad that corresponds to today.
+version=`echo $yyyy_mm_dd | sed -e 's|-||g'`
 # -----------------------------------------------------------------------------
 # change version to current date
 if [ "$1" = "version" ]
 then
-	echo "=================================================================="
-	echo "begin: build.sh version"
-	#
-	# Today's date in yyyy-mm-dd decimal digit format where 
-	# yy is year in century, mm is month in year, dd is day in month.
-	yyyy_mm_dd=`date +%F`
-	#
-	# Version of cppad that corresponds to today.
-	version=`echo $yyyy_mm_dd | sed -e 's|-||g'`
 	#
 	# automatically change version for certain files
-	# (the [.0-9]* is for using build.sh in CppAD/stable/* directories)
+	# (the [.0-9]* is for using new_build.sh in CppAD/stable/* directories)
 	#
 	# libtool does not seem to support version by date
 	# sed < cppad_ipopt/src/makefile.am > cppad_ipopt/src/makefile.am.$$ \
@@ -91,25 +92,22 @@ then
 	for name in $list
 	do
 		echo "-------------------------------------------------------------"
-		echo "build.sh: diff $name.old $name"
+		echo "new_build.sh: diff $name.old $name"
 		if diff $name.old $name
 		then
 			echo "	no difference was found"
 		fi
 		#
-		echo "build.sh: rm $name.old"
+		echo "new_build.sh: rm $name.old"
 		rm $name.old
 	done
 	echo "-------------------------------------------------------------"
 	#
-	echo "end: build.sh version"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
 if [ "$1" = "automake" ] 
 then
-	echo "=================================================================="
-	echo "begin: build.sh automake"
 	#
 	# check that autoconf and automake output are in original version
 	makefile_in=`sed configure.ac \
@@ -142,7 +140,7 @@ then
 	done
 	if [ "$missing" != "" ]
 	then
-		echo "build.sh: The following files:"
+		echo "new_build.sh: The following files:"
 		echo "	$missing"
 		echo "are not in subversion repository."
 		echo "Check them in when this command is done completes."
@@ -182,16 +180,12 @@ then
 		fi
 	done
 	#
-	echo "end: build.sh automake"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
 # configure
 if [ "$1" == "configure" ]
 then
-	echo "=================================================================="
-	echo "begin: build.sh configure"
-	#
 	echo "cd work"
 	cd work
 	#
@@ -247,19 +241,121 @@ then
 	#
 	exit 0
 fi
+#
 # -----------------------------------------------------------------------------
-# report build.sh usage error
+if [ "$1" = "dist" ] 
+then
+	echo "cd work"
+	cd work
+	#
+	if [ -e cppad-$version ]
+	then
+		echo "rm -f -r cppad-$version"
+		rm -f -r cppad-$version
+	fi
+	for file in cppad-*.tgz cppad-*.zip
+	do
+		if [ -e $file ]
+		then
+			echo "rm $file"
+			rm $file
+		fi
+	done
+	#
+	echo "Only build the *.xml version of the documentation for distribution"
+	if ! grep < doc.omh > /dev/null \
+		'This comment is used to remove the table below' 
+	then
+		echo "new_build.sh: Missing comment expected in doc.omh"
+		echo "Try re-running .sh configure to generate it from doc.omh.in"
+		exit 1
+	fi
+	echo "sed -i.save doc.omh ..."
+	sed -i.save doc.omh \
+		-e '/This comment is used to remove the table below/,/$tend/d'
+	#
+	configure_omh_files="
+		doc.omh
+		omh/install_unix.omh
+		omh/install_windows.omh
+	"
+	for file in $configure_omh_files
+	do
+		echo "cp $file ../$file"
+		cp $file ../$file
+	done
+	#
+	if [ -e doc ]
+	then
+		echo "rm -r doc"
+		rm -r doc
+	fi
+	#
+	echo "mkdir doc"
+	mkdir doc
+	#
+	echo "cd doc"
+	cd doc
+	#
+	log_file="../../omhelp.doc.xml"
+	home_page="http://www.coin-or.org/CppAD/"
+	echo "omhelp ../../doc.omh -noframe -debug -l $home_page -xml \\"
+	echo "	> $log_file"
+	if ! omhelp ../../doc.omh -noframe -debug -l $home_page -xml > $log_file
+	then
+		grep "^OMhelp Error:" $log_file
+		exit 1
+	fi
+	#
+	if grep "^OMhelp Warning:" $log_file
+	then
+		exit 1
+	fi
+	#
+	echo "cd .."
+	cd ..
+	#
+	for file in $configure_omh_files
+	do
+		echo "rm ../$file"
+		rm ../$file
+	done
+	#
+	echo "mv doc.omh.save doc.omh"
+	mv doc.omh.save doc.omh
+	#
+	echo "make dist"
+	make dist
+	#
+	if [ ! -e cppad-$version.tar.gz ]
+	then
+		echo "cppad-$version.tar.gz does not exist"
+		echo "perhaps version is out of date"
+		#
+		exit 1
+	fi
+	# change *.tgz to *.cpl.tgz
+	echo "mv cppad-$version.tar.gz cppad-$version.cpl.tgz"
+	mv cppad-$version.tar.gz cppad-$version.cpl.tgz
+	#
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+# report new_build.sh usage error
 if [ "$1" != "" ]
 then
      echo "$1 is not a valid option"
 fi
+#
 cat << EOF
-usage: build.sh option_1 option_2 ...
+usage: new_build.sh option_1 option_2 ...
 
 options
 -------
 version:   update version in AUTHORS, configure.ac, configure, config.h
 automake:  run the tools required by autoconf and automake.
 configure: run the configure script in the work directory.
+dist:      create the distribution file cppad-version.cpl.tgz
 EOF
+#
 exit 1
