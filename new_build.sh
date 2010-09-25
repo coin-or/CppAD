@@ -49,6 +49,13 @@ yyyy_mm_dd=`date +%F`
 #
 # Version of cppad that corresponds to today.
 version=`echo $yyyy_mm_dd | sed -e 's|-||g'`
+#
+# OMhelp files that are created by the cppad configure command
+omhelp_configure_files="
+	doc.omh
+	omh/install_unix.omh
+	omh/install_windows.omh
+"
 # -----------------------------------------------------------------------------
 # change version to current date
 if [ "$1" = "version" ]
@@ -274,12 +281,7 @@ then
 	sed -i.save doc.omh \
 		-e '/This comment is used to remove the table below/,/$tend/d'
 	#
-	configure_omh_files="
-		doc.omh
-		omh/install_unix.omh
-		omh/install_windows.omh
-	"
-	for file in $configure_omh_files
+	for file in $omhelp_configure_files
 	do
 		echo "cp $file ../$file"
 		cp $file ../$file
@@ -315,7 +317,7 @@ then
 	echo "cd .."
 	cd ..
 	#
-	for file in $configure_omh_files
+	for file in $omhelp_configure_files
 	do
 		echo "rm ../$file"
 		rm ../$file
@@ -337,6 +339,42 @@ then
 	# change *.tgz to *.cpl.tgz
 	echo "mv cppad-$version.tar.gz cppad-$version.cpl.tgz"
 	mv cppad-$version.tar.gz cppad-$version.cpl.tgz
+	#
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+if [ "$1" = "omhelp" ] 
+then
+	for file in $omhelp_configure_files
+	do
+		if [ ! -e work/$file ]
+		then
+			echo "new_build.sh: must run configure before omhelp"
+			exit 1
+		fi
+		echo "cp work/$file $file"
+		cp work/$file $file
+	done
+	if ! grep < doc.omh > /dev/null \
+		'This comment is used to remove the table below'
+	then
+		echo "new_build.sh doc.omh is missing a table."
+		echo "Try re-running configure and then run omhelp again."
+	fi
+	for flag in "printable" ""
+	do
+		for ext in htm xml
+		do
+			echo "begin: ./run_omhelp.sh doc $ext $flag"
+			./run_omhelp.sh doc $ext $flag
+			echo="end: ./run_omhelp.sh doc $ext $flag"
+		done
+	done
+	for file in $omhelp_configure_files
+	do
+		echo "rm $file"
+		rm $file
+	done
 	#
 	exit 0
 fi
