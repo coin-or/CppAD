@@ -100,6 +100,86 @@ then
 	exit 0
 fi
 # -----------------------------------------------------------------------------
+if [ "$1" = "automake" ] 
+then
+	echo "=================================================================="
+	echo "begin: build.sh automake"
+	#
+	# check that autoconf and automake output are in original version
+	makefile_in=`sed configure.ac \
+        	-n \
+        	-e '/END AC_CONFIG_FILES/,$d' \
+        	-e '1,/AC_CONFIG_FILES/d' \
+        	-e 's|/makefile$|&.in|' \
+        	-e '/\/makefile.in/p'`
+	auto_output="
+		depcomp 
+		install-sh 
+		missing 
+		configure 
+		cppad/config.h 
+		cppad/config.h.in 
+		$makefile_in
+	"
+	missing=""
+	for name in $auto_output
+	do
+		if [ ! -e $name ]
+		then
+			if [ "$missing" != "" ]
+			then
+				missing="$missing, $name"
+			else
+				missing="$name"
+			fi
+		fi
+	done
+	if [ "$missing" != "" ]
+	then
+		echo "build.sh: The following files:"
+		echo "	$missing"
+		echo "are not in subversion repository."
+		echo "Check them in when this command is done completes."
+	fi
+	#
+	echo "aclocal"
+	aclocal
+	#
+	echo "autoheader"
+	autoheader
+	#
+	echo "skipping libtoolize"
+	# echo "libtoolize -c -f -i"
+	# if ! libtoolize -c -f -i
+	# then
+	# 	exit 1
+	# fi
+	#
+	echo "autoconf"
+	autoconf
+	#
+	echo "automake --add-missing"
+	automake --add-missing
+	#
+	link_list="missing install-sh depcomp"
+	for name in $link_list
+	do
+		if [ -h "$name" ]
+		then
+			echo "Converting $name from a link to a regular file"
+			#
+			echo "cp $name $name.$$"
+			cp $name $name.$$
+			#
+			echo "mv $name.$$ $name"
+			mv $name.$$ $name
+		fi
+	done
+	#
+	echo "end: build.sh version"
+	exit 0
+fi
+# -----------------------------------------------------------------------------
 # report build.sh usage error
 if [ "$1" != "" ]
 then
@@ -111,5 +191,6 @@ usage: build.sh option_1 option_2 ...
 options
 -------
 version:   update version in AUTHORS, configure.ac, configure, config.h
+automake:  run the tools required by autoconf and automake.
 EOF
 exit 1
