@@ -10,8 +10,8 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# These values can be changed.
-CPPAD_DIR=$HOME/prefix/cppad
+# prefix directories for the corresponding packages
+CPPAD_DIR=$HOME/prefix/cppad  
 BOOST_DIR=/usr/include
 ADOLC_DIR=$HOME/prefix/adolc
 FADBAD_DIR=$HOME/prefix/fadbad
@@ -32,6 +32,12 @@ then
           ./build.sh $option
      done
      exit 0
+fi
+# -----------------------------------------------------------------------------
+if [ ! -e work ]
+then
+	echo "build.sh: mkdir work"
+	mkdir work
 fi
 # -----------------------------------------------------------------------------
 # change version to current date
@@ -176,7 +182,69 @@ then
 		fi
 	done
 	#
-	echo "end: build.sh version"
+	echo "end: build.sh automake"
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+# configure
+if [ "$1" == "configure" ]
+then
+	echo "=================================================================="
+	echo "begin: build.sh configure"
+	#
+	echo "cd work"
+	cd work
+	#
+	dir_list="
+		--prefix=$CPPAD_DIR
+		POSTFIX_DIR=coin
+	"
+	if [ -e $BOOST_DIR/boost ]
+	then
+		dir_list="$dir_list 
+			BOOST_DIR=$BOOST_DIR"
+	fi
+	if [ -e $ADOLC_DIR/include/adolc ]
+	then
+		dir_list="$dir_list 
+			ADOLC_DIR=$ADOLC_DIR"
+	fi
+	if [ -e $FADBAD_DIR/FADBAD++ ]
+	then
+		dir_list="$dir_list 
+			FADBAD_DIR=$FADBAD_DIR"
+	fi
+	if [ -e $SACADO_DIR/include/Sacado.hpp ]
+	then
+		dir_list="$dir_list 
+			SACADO_DIR=$SACADO_DIR"
+	fi
+	if [ -e $IPOPT_DIR/include/coin/IpIpoptApplication.hpp ]
+	then
+		dir_list="$dir_list 
+		IPOPT_DIR=$IPOPT_DIR"
+	fi
+	dir_list=`echo $dir_list | sed -e 's|\t\t*| |g'`
+	echo "../configure \\"
+	echo "$dir_list" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
+	echo "	CXX_FLAGS=\"-Wall -ansi -pedantic-errors -std=c++98\"\\"
+	echo "	--with-Documentation"
+	#
+	../configure $dir_list \
+		CXX_FLAGS="-Wall -ansi -pedantic-errors -std=c++98" \
+		--with-Documentation
+	#
+	# Fix makefile for what appears to be a bug in gzip under cygwin
+	echo "../fix_makefile.sh"
+	../fix_makefile.sh
+	#
+	# make shell scripts created by configure executable
+	echo "chmod +x example/test_one.sh"
+	chmod +x example/test_one.sh
+	#
+	echo "chmod +x test_more/test_one.sh"
+	chmod +x test_more/test_one.sh
+	#
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -192,5 +260,6 @@ options
 -------
 version:   update version in AUTHORS, configure.ac, configure, config.h
 automake:  run the tools required by autoconf and automake.
+configure: run the configure script in the work directory.
 EOF
 exit 1
