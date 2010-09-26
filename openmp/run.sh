@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -138,11 +138,15 @@ sum_i_inv_mega_sum="1"
 #
 # $end
 # ****************************************************************************
+# exit on any error
+set -e
+#
 if [ ! -e openmp/run.sh ]
 then
 	echo "must execute this program from the CppAD distribution directory"
 	exit 1
 fi
+echo "cd openmp"
 cd openmp
 #
 cmd="$compiler $version_flag"
@@ -175,11 +179,12 @@ do
 	# Run without OpenMP
 	cmd="./${name}_no_openmp 0 $n_repeat $args"
 	echo "$cmd"
-	if ! $cmd
-	then
-		echo "Error in ${name}_no_openmp."
-		exit 1
-	fi
+	$cmd
+	#
+	# clean up (this is source directory)
+	echo "rm ${name}_no_openmp"
+	rm ${name}_no_openmp
+	#
 	echo "" # newline
 	if [ "$openmp_flag" != "" ]
 	then
@@ -194,17 +199,16 @@ do
 		$cmd
 		#
 		# Run without OpenMP
-		#
 		for n_thread in $n_thread_set
 		do
 			cmd="./${name}_yes_openmp $n_thread $n_repeat $args"
 			echo "$cmd"
-			if ! $cmd
-			then
-				echo "Error in ${name}_yes_openmp."
-				exit 1
-			fi
+			$cmd
 			echo "" # newline
 		done
+		#
+		# clean up (this is source directory)
+		echo "rm ${name}_yes_openmp"
+		rm ${name}_no_openmp
 	fi
 done

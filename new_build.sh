@@ -10,6 +10,8 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+# 1. Change ./new_build.sh doxygen to put output in doxygen.log
+# -----------------------------------------------------------------------------
 # prefix directories for the corresponding packages
 CPPAD_DIR=$HOME/prefix/cppad  
 BOOST_DIR=/usr/include
@@ -266,10 +268,10 @@ then
 	#
 	if [ -e cppad-$version ]
 	then
-		echo "rm -f -r cppad-$version"
-		rm -f -r cppad-$version
+		echo "rm -r cppad-$version"
+		rm -r cppad-$version
 	fi
-	for file in cppad-*.tgz cppad-*.zip
+	for file in cppad-*.tgz 
 	do
 		if [ -e $file ]
 		then
@@ -431,20 +433,8 @@ then
 	fi
 	#
 	# create distribution directory
-	if [ -e "cppad-$version.cpl.tgz" ]
-	then
-		dir="."
-	else
-		if [ -e "doc/cppad-$version.cpl.tgz" ]
-		then
-			dir="doc"
-		else
-			echo "cannot find cppad-$version.cpl.tgz"
-			exit 1
-		fi
-	fi
-	echo "tar -xzf $dir/cppad-$version.cpl.tgz"
-	tar -xzf $dir/cppad-$version.cpl.tgz
+	echo "tar -xzf cppad-$version.cpl.tgz"
+	tar -xzf cppad-$version.cpl.tgz
 	#
 	# -----------------------------------------------------------------------
 	echo "cd cppad-$version"
@@ -478,7 +468,7 @@ then
 	echo "cat make_test.log        >> $log_file"                            
 	cat make_test.log              >> $log_file                            
 	#
-	if grep 'warning:' make.log
+	if grep 'warning:' make_test.log
 	then
 		echo "There are warnings in $dir/make.log"
 		exit 1
@@ -486,10 +476,7 @@ then
 	#
 	echo "cat test.log             >> $log_file"
 	cat test.log                   >> $log_file
-	#
-	echo "openmp/run.sh            >> $log_file"
-	openmp/run.sh                  >> $log_file
-	# ===================================================================
+	# --------------------------------------------------------------------
 	echo "cd ../../.."
 	cd ../../..
 	# end the build_test.log file with the date and time
@@ -497,7 +484,64 @@ then
 	#
 	dir=`pwd`
 	echo "Check $dir/build_test.log for errors and warnings."
+	#
 	exit 0
+fi
+# -----------------------------------------------------------------------------
+if [ "$1" == "openmp" ]
+then
+	echo "openmp/run.sh  | tee openmp.log"
+	openmp/run.sh        | tee openmp.log
+	#
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+if [ "$1" = "gpl" ] 
+then
+	# create GPL licensed version
+	echo "./gpl_license.sh"
+	./gpl_license.sh
+	#
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+if [ "$1" = "doc" ] 
+then
+	if [ -e doc ]
+	then
+		echo "rm -r doc"
+		rm -r doc
+	fi
+	echo "cp -r work/doc doc"
+	cp -r work/doc doc
+	#
+	for ext in cpl gpl
+	do
+		echo "cp work/cppad-$version.cpl.tgz doc/cppad-$version.cpl.tgz"
+		cp work/cppad-$version.cpl.tgz doc/cppad-$version.cpl.tgz
+	done
+	echo "cp -r doxydoc doc/doxydoc"
+	cp -r doxydoc doc/doxydoc
+	#
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+if [ "$1" == "all" ]
+then
+	list="
+		version
+		automake
+		configure
+		dist
+		omhelp
+		doxygen
+		test
+		openmp
+		gpl
+		doc
+	"
+	echo "./new_build.sh $list"
+	./new_build.sh $list
 fi
 # -----------------------------------------------------------------------------
 # report new_build.sh usage error
@@ -517,7 +561,12 @@ configure: run the configure script in the work directory.
 dist:      create the distribution file work/cppad-version.cpl.tgz
 omhelp:    build all formats of user documentation in doc/*
 doxygen:   build developer documentation in doxydoc/*
-test:      unpack *.cpl.tgz, run all tests and put result in build_test.log
+test:      unpack work/*.cpl.tgz, run make test, put result in build_test.log
+openmp:    run the openmp tests and put results in openmp.log
+gpl:       create work/*.gpl.zip and work/*.cpl.zip       
+doc:       create ./doc with tarballs and developer documentation
+
+all:       run all the options above in order
 EOF
 #
 exit 1

@@ -25,8 +25,8 @@ check_PROGRAMS    = test_more
 AM_CXXFLAGS       = -g $(CXX_FLAGS) 
 #
 AM_CPPFLAGS       = -I. \
-                   -I../src \
                    -I$(top_srcdir) \
+                   -I$(top_srcdir)/cppad_ipopt/src \
                      $(BOOST_INCLUDE) \
                      -I$(IPOPT_DIR)/include
 #

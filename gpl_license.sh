@@ -18,7 +18,20 @@
 #
 version=`grep "^ *AC_INIT(" configure.ac | \
         sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
+root_dir=`pwd`
 dir="cppad-$version"
+#
+# start from the *.cpl.tgz file
+if [ -e work/$dir.cpl.tgz ]
+then
+	cd work
+fi
+if [ ! -e $dir.cpl.tgz ]
+then
+	echo "gpl_license.sh: cannot find $dir.cpl.tgz"
+	echo "or work/$dir.cpl.tgz"
+	exit 1
+fi
 #
 # delete old version of *.gpl.tgz and *.gpl.zip
 for file in $dir.gpl.tgz $dir.gpl.zip
@@ -33,13 +46,6 @@ do
 		fi
 	fi
 done
-#
-# start from the *.cpl.tgz file
-if [ ! -e $dir.cpl.tgz ]
-then
-	echo "gpl_license.sh: cannot find $dir.cpl.tgz"
-	exit 1
-fi
 #
 # delete old version of directory (if it exists)
 if [ -e $dir ]
@@ -112,11 +118,11 @@ done
 #
 # change the COPYING file
 sed -n -i $dir/COPYING -e '/-\{70\}/,/-\{70\}/p'
-cat gpl2.txt >> $dir/COPYING
+cat $root_dir/gpl2.txt >> $dir/COPYING
 #
 # change the file cpl1.0.txt to the file gpl2.txt
 rm $dir/cpl1.0.txt
-cp gpl2.txt $dir/gpl2.txt
+cp $root_dir/gpl2.txt $dir/gpl2.txt
 #
 list="
 	makefile.am
@@ -156,7 +162,6 @@ then
 	rm -rf doc/error.wrd
 fi
 # 
-
 cd ..
 #
 # create *.gpl.tgz file

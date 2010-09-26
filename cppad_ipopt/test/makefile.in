@@ -84,7 +84,7 @@ CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id: makefile.am 1704 2010-08-21 16:54:40Z bradbell $
+# $Id: makefile.am 1706 2010-09-23 12:43:59Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -191,8 +191,8 @@ top_srcdir = @top_srcdir@
 AM_CXXFLAGS = -g $(CXX_FLAGS) 
 #
 AM_CPPFLAGS = -I. \
-                   -I../src \
                    -I$(top_srcdir) \
+                   -I$(top_srcdir)/cppad_ipopt/src \
                      $(BOOST_INCLUDE) \
                      -I$(IPOPT_DIR)/include
 

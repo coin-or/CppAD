@@ -65,7 +65,6 @@ svn status | sed > svn_status.$$ \
 	-e '/^[?] *cppad_ipopt\/example\/example$/d'          \
 	-e '/^[?] *cppad_ipopt\/speed\/speed$/d'              \
 	-e '/^[?] *cppad_ipopt\/test\/test_more$/d'           \
-	-e '/^[?] *cppad_ipopt\/ipopt_ode_speed$/d'           \
 	-e '/^[?] *example\/test_one.sh$/d'                   \
 	-e '/^[?] *example\/example$/d'                       \
 	-e '/^[?] *introduction\/exp_apx\/exp_apx$/d'         \
@@ -81,8 +80,7 @@ svn status | sed > svn_status.$$ \
 	-e '/^[?] *speed\/sacado\/sacado$/d'                  \
 	-e '/^[?] *test_more\/test_more$/d'                   \
 	-e '/^[?] *test_more\/test_one.sh$/d'                 \
-	-e '/^[?] *cppad_ipopt\/include$/d'                   \
-	-e '/^[?] *cppad_ipopt\/lib$/d'                       \
+	-e '/^[?] *work$/d'                                   \
 	-e '/cygwin_package$/d'
 #
 # Check if automatically edited files really changed

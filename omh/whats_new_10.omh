@@ -47,6 +47,16 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-26$$
+There was a bug 
+(introduced on 09-22)
+in $cref/make test/InstallUnix/make test/$$
+when the $code configure$$ command was executed from a directory
+other than the distribution directory
+(the $cref/cppad_ipopt_nlp/$$ did not build).
+This has been fixed.
+
+
 $head 09-22$$
 Promote $cref/cppad_ipopt_nlp/$$ from an example to a library
 that gets installed 
