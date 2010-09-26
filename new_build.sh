@@ -52,55 +52,13 @@ version=`echo $yyyy_mm_dd | sed -e 's|-||g'`
 #
 # temporary source directory files that are created by the configure command 
 configure_file_list="
+	cppad/config.h
+	cppad/configure.hpp
 	doxyfile
 	doc.omh
 	omh/install_unix.omh
 	omh/install_windows.omh
 "
-#
-# make temporary copy of the files built by configure
-function copy_configure_files {
-	cwd=`pwd`
-	if [ -d work ]
-	then
-		dir="."
-	else
-		dir=`echo $cwd | sed -e 's|.*/work/*||' -e 's|[^/][^/]*|..|g'`
-		dir="../$dir"
-	fi
-	for file in $configure_file_list
-	do
-		if [ ! -e $dir/work/$file ]
-		then
-			echo "new_build.sh: pwd=$cwd"
-			echo "Cannot find the file $dir/work/$file."
-			echo "Try running new_build.sh configure."
-			exit 1
-		fi
-		echo "cp $dir/work/$file $dir/$file"
-		cp $dir/work/$file $dir/$file 
-	done
-}
-#
-# erase temporary copy of the files built by configure
-function uncopy_configure_files {
-	cwd=`pwd`
-	if [ -d work ]
-	then
-		dir="."
-	else
-		dir=`echo $cwd | sed -e 's|.*/work/*||' -e 's|[^/][^/]*|..|g'`
-		dir="../$dir"
-	fi
-	for file in $configure_file_list
-	do
-		if [ -e $dir/$file ]
-		then
-			echo "rm $dir/$file"
-			rm $dir/$file 
-		fi
-	done
-}
 # -----------------------------------------------------------------------------
 # change version to current date
 if [ "$1" = "version" ]
@@ -291,6 +249,12 @@ then
 	echo "chmod +x test_more/test_one.sh"
 	chmod +x test_more/test_one.sh
 	#
+	for file in $configure_file_list
+	do
+		echo "cp $file ../$file"
+		cp $file ../$file
+	done
+	#
 	exit 0
 fi
 #
@@ -338,7 +302,6 @@ then
 	echo "cd doc"
 	cd doc
 	#
-	copy_configure_files
 	log_file="../../omhelp.doc.xml"
 	home_page="http://www.coin-or.org/CppAD/"
 	echo "omhelp ../../doc.omh -noframe -debug -l $home_page -xml \\"
@@ -346,10 +309,8 @@ then
 	if ! omhelp ../../doc.omh -noframe -debug -l $home_page -xml > $log_file
 	then
 		grep "^OMhelp Error:" $log_file
-		uncopy_configure_files
 		exit 1
 	fi
-	uncopy_configure_files
 	#
 	if grep "^OMhelp Warning:" $log_file
 	then
@@ -381,8 +342,6 @@ fi
 # -----------------------------------------------------------------------------
 if [ "$1" = "omhelp" ] 
 then
-	copy_configure_files
-	#
 	if ! grep < doc.omh > /dev/null \
 		'This comment is used to remove the table below'
 	then
@@ -399,14 +358,11 @@ then
 		done
 	done
 	#
-	uncopy_configure_files
 	exit 0
 fi
 # -----------------------------------------------------------------------------
 if [ "$1" = "doxygen" ]
 then
-	copy_configure_files
-	#
 	if [ -e doxygen.err ]
 	then
 		echo "rm doxygen.err"
@@ -431,7 +387,6 @@ then
 	echo "./check_doxygen.sh"
 	./check_doxygen.sh
 	#
-	uncopy_configure_files
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -443,10 +398,8 @@ then
 	echo "date > $log_file"
 	date       > $log_file
 	#
-	copy_configure_files
 	echo "./check_include_omh.sh >> $log_file"
 	./check_include_omh.sh       >> $log_file
-	uncopy_configure_files
 	# -------------------------------------------------------------
 	# Run automated checking of file names in original source directory
 	#
@@ -501,8 +454,6 @@ then
 	echo "./new_build.sh configure >> $log_file"
 	./new_build.sh configure       >> $log_file
 	#
-	copy_configure_files
-	#
 	# test user documentation
 	echo "./run_omhelp.sh doc xml  >> $log_file"
 	./run_omhelp.sh doc xml        >> $log_file
@@ -510,8 +461,6 @@ then
 	# test developer documentation
 	echo "./new_build.sh doxygen   >> $log_file"
 	./new_build.sh doxygen         >> $log_file
-	#
-	uncopy_configure_files
 	#
 	# -----------------------------------------------------------------------
 	echo "cd work"
