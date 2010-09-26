@@ -50,12 +50,57 @@ yyyy_mm_dd=`date +%F`
 # Version of cppad that corresponds to today.
 version=`echo $yyyy_mm_dd | sed -e 's|-||g'`
 #
-# OMhelp files that are created by the cppad configure command
-omhelp_configure_files="
+# temporary source directory files that are created by the configure command 
+configure_file_list="
+	doxyfile
 	doc.omh
 	omh/install_unix.omh
 	omh/install_windows.omh
 "
+#
+# make temporary copy of the files built by configure
+function copy_configure_files {
+	cwd=`pwd`
+	if [ -d work ]
+	then
+		dir="."
+	else
+		dir=`echo $cwd | sed -e 's|.*/work/*||' -e 's|[^/][^/]*|..|g'`
+		dir="../$dir"
+	fi
+	for file in $configure_file_list
+	do
+		if [ ! -e $dir/work/$file ]
+		then
+			echo "new_build.sh: pwd=$cwd"
+			echo "Cannot find the file $dir/work/$file."
+			echo "Try running new_build.sh configure."
+			exit 1
+		fi
+		echo "cp $dir/work/$file $dir/$file"
+		cp $dir/work/$file $dir/$file 
+	done
+}
+#
+# erase temporary copy of the files built by configure
+function uncopy_configure_files {
+	cwd=`pwd`
+	if [ -d work ]
+	then
+		dir="."
+	else
+		dir=`echo $cwd | sed -e 's|.*/work/*||' -e 's|[^/][^/]*|..|g'`
+		dir="../$dir"
+	fi
+	for file in $configure_file_list
+	do
+		if [ -e $dir/$file ]
+		then
+			echo "rm $dir/$file"
+			rm $dir/$file 
+		fi
+	done
+}
 # -----------------------------------------------------------------------------
 # change version to current date
 if [ "$1" = "version" ]
@@ -274,18 +319,12 @@ then
 		'This comment is used to remove the table below' 
 	then
 		echo "new_build.sh: Missing comment expected in doc.omh"
-		echo "Try re-running .sh configure to generate it from doc.omh.in"
+		echo "Try re-running new_build.sh configure to generate it."
 		exit 1
 	fi
 	echo "sed -i.save doc.omh ..."
 	sed -i.save doc.omh \
 		-e '/This comment is used to remove the table below/,/$tend/d'
-	#
-	for file in $omhelp_configure_files
-	do
-		echo "cp $file ../$file"
-		cp $file ../$file
-	done
 	#
 	if [ -e doc ]
 	then
@@ -299,6 +338,7 @@ then
 	echo "cd doc"
 	cd doc
 	#
+	copy_configure_files
 	log_file="../../omhelp.doc.xml"
 	home_page="http://www.coin-or.org/CppAD/"
 	echo "omhelp ../../doc.omh -noframe -debug -l $home_page -xml \\"
@@ -306,8 +346,10 @@ then
 	if ! omhelp ../../doc.omh -noframe -debug -l $home_page -xml > $log_file
 	then
 		grep "^OMhelp Error:" $log_file
+		uncopy_configure_files
 		exit 1
 	fi
+	uncopy_configure_files
 	#
 	if grep "^OMhelp Warning:" $log_file
 	then
@@ -316,12 +358,6 @@ then
 	#
 	echo "cd .."
 	cd ..
-	#
-	for file in $omhelp_configure_files
-	do
-		echo "rm ../$file"
-		rm ../$file
-	done
 	#
 	echo "mv doc.omh.save doc.omh"
 	mv doc.omh.save doc.omh
@@ -345,22 +381,13 @@ fi
 # -----------------------------------------------------------------------------
 if [ "$1" = "omhelp" ] 
 then
-	for file in $omhelp_configure_files
-	do
-		if [ ! -e work/$file ]
-		then
-			echo "new_build.sh: cannot find work/$file."
-			echo "must run configure before omhelp"
-			exit 1
-		fi
-		echo "cp work/$file $file"
-		cp work/$file $file
-	done
+	copy_configure_files
+	#
 	if ! grep < doc.omh > /dev/null \
 		'This comment is used to remove the table below'
 	then
-		echo "new_build.sh doc.omh is missing a table."
-		echo "Try re-running configure and then run omhelp again."
+		echo "new_build.sh: doc.omh is missing a table."
+		echo "Try re-running new_build.sh configure."
 	fi
 	for flag in "printable" ""
 	do
@@ -371,17 +398,15 @@ then
 			echo="end: ./run_omhelp.sh doc $ext $flag"
 		done
 	done
-	for file in $omhelp_configure_files
-	do
-		echo "rm $file"
-		rm $file
-	done
 	#
+	uncopy_configure_files
 	exit 0
 fi
 # -----------------------------------------------------------------------------
 if [ "$1" = "doxygen" ]
 then
+	copy_configure_files
+	#
 	if [ -e doxygen.err ]
 	then
 		echo "rm doxygen.err"
@@ -397,27 +422,132 @@ then
 	echo "mkdir doxydoc"
 	mkdir doxydoc
 	#
-	if [ ! -e cp work/doxyfile ]
-	then
-		echo "new_build.sh: cannot find work/doxyfile."
-		echo "must run configure before doxygen"
-	fi
+	echo "doxygen doxyfile"
+	doxygen doxyfile
 	#
-	echo "cp work/doxyfile doxyfile"
-	cp work/doxyfile doxyfile
-	#
-	echo "doxygen doxyfile > doxygen.log"
-	doxygen doxyfile > doxygen.log
-	#
-	echo "cat doxygen.err >> doxygen.log"
-	cat doxygen.err >> doxygen.log
+	echo "cat doxygen.err"
+	cat doxygen.err 
 	#
 	echo "./check_doxygen.sh"
 	./check_doxygen.sh
 	#
-	echo "rm doxyfile"
-	rm doxyfile
+	uncopy_configure_files
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+if [ "$1" = "test" ] 
+then
+	log_file="build_test.log"
 	#
+	# start log for this test
+	echo "date > $log_file"
+	date       > $log_file
+	#
+	copy_configure_files
+	echo "./check_include_omh.sh >> $log_file"
+	./check_include_omh.sh       >> $log_file
+	uncopy_configure_files
+	# -------------------------------------------------------------
+	# Run automated checking of file names in original source directory
+	#
+	list="
+		check_example.sh
+		check_include_def.sh
+		check_include_file.sh
+		check_makefile.sh
+		check_if_0.sh
+	"
+	for check in $list 
+	do
+		echo "./$check >> $log_file"
+		./$check       >> $log_file
+	done
+	# add a new line after last file check
+	echo ""             >> $log_file
+	#
+	# -----------------------------------------------------------------------
+	echo "cd work"
+	cd work
+	log_file="../$log_file"
+	#
+	# erase old distribution directory
+	if [ -e cppad-$version ]
+	then
+		echo "rm -r cppad-$version"
+		rm -r cppad-$version
+	fi
+	#
+	# create distribution directory
+	if [ -e "cppad-$version.cpl.tgz" ]
+	then
+		dir="."
+	else
+		if [ -e "doc/cppad-$version.cpl.tgz" ]
+		then
+			dir="doc"
+		else
+			echo "cannot find cppad-$version.cpl.tgz"
+			exit 1
+		fi
+	fi
+	echo "tar -xzf $dir/cppad-$version.cpl.tgz"
+	tar -xzf $dir/cppad-$version.cpl.tgz
+	#
+	# -----------------------------------------------------------------------
+	echo "cd cppad-$version"
+	cd cppad-$version
+	log_file="../$log_file"
+	#
+	echo "./new_build.sh configure >> $log_file"
+	./new_build.sh configure       >> $log_file
+	#
+	copy_configure_files
+	#
+	# test user documentation
+	echo "./run_omhelp.sh doc xml  >> $log_file"
+	./run_omhelp.sh doc xml        >> $log_file
+	# 
+	# test developer documentation
+	echo "./new_build.sh doxygen   >> $log_file"
+	./new_build.sh doxygen         >> $log_file
+	#
+	uncopy_configure_files
+	#
+	# -----------------------------------------------------------------------
+	echo "cd work"
+	cd work
+	log_file="../$log_file"
+	#
+	dir=`pwd` 
+	echo "Use: tail -f $dir/make_test.log"
+	echo "to follow the progress of the following command:"
+	#
+	# build and run all the tests
+	echo "make test                >& make_test.log"
+	make test                      >& make_test.log
+	#
+	echo "cat make_test.log        >> $log_file"                            
+	cat make_test.log              >> $log_file                            
+	#
+	if grep 'warning:' make.log
+	then
+		echo "There are warnings in $dir/make.log"
+		exit 1
+	fi
+	#
+	echo "cat test.log             >> $log_file"
+	cat test.log                   >> $log_file
+	#
+	echo "openmp/run.sh            >> $log_file"
+	openmp/run.sh                  >> $log_file
+	# ===================================================================
+	echo "cd ../../.."
+	cd ../../..
+	# end the build_test.log file with the date and time
+	date >> build_test.log
+	#
+	dir=`pwd`
+	echo "Check $dir/build_test.log for errors and warnings."
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -438,6 +568,7 @@ configure: run the configure script in the work directory.
 dist:      create the distribution file work/cppad-version.cpl.tgz
 omhelp:    build all formats of user documentation in doc/*
 doxygen:   build developer documentation in doxydoc/*
+test:      unpack *.cpl.tgz, run all tests and put result in build_test.log
 EOF
 #
 exit 1
