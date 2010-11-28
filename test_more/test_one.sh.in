@@ -50,6 +50,10 @@ then
 	cmd="$cmd @FCLIBS@ @PTHREAD_LIB@ @DL_LIB@"
 	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@IPOPT_DIR@/lib"
 fi
+if [ "$1" == 'ndebug.cpp' ]
+then
+	cmd="$cmd -DNDEBUG"
+fi
 echo $cmd
 $cmd
 echo "./test_one.exe"
@@ -58,4 +62,3 @@ then
 	exit 1
 fi
 exit 0
-

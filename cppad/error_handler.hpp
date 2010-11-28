@@ -2,7 +2,7 @@
 # ifndef CPPAD_ERROR_HANDLER_INCLUDED
 # define CPPAD_ERROR_HANDLER_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -129,6 +129,7 @@ $end
 
 # include <cppad/configure.hpp>
 # include <cassert>
+# include <cstdlib>
 
 namespace CppAD { // BEGIN CppAD namespace
 
@@ -194,7 +195,10 @@ private:
 # endif
 
 			// terminate program execution
-			assert(0);
+			assert(false);
+
+			// termination when NDEBUG is defined
+			std::exit(1);
 		}
 // pragma omp master
 	}

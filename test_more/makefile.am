@@ -85,6 +85,7 @@ test_more_SOURCES  = \
 	mul_eq.cpp \
 	mul_level.cpp \
 	mul_zero_one.cpp \
+	ndebug.cpp \
 	near_equal_ext.cpp \
 	neg.cpp \
 	ode_err_control.cpp \
@@ -115,6 +116,9 @@ test_more_SOURCES  = \
 	vec_ad.cpp \
 	vec_ad_par.cpp \
 	vec_unary.cpp 
+
+ndebug.$(OBJEXT): ndebug.cpp
+	$(CXXCOMPILE) -DNDEBUG -c ndebug.cpp -o ndebug.$(OBJEXT)
 
 test: test_more$(EXEEXT)
 	./test_more | tee test.log

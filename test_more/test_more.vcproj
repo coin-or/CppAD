@@ -216,6 +216,9 @@
 				RelativePath=".\mul_zero_one.cpp">
 			</File>
 			<File
+				RelativePath=".\ndebug.cpp">
+			</File>
+			<File
 				RelativePath=".\near_equal_ext.cpp">
 			</File>
 			<File

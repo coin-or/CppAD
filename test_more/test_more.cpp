@@ -52,6 +52,7 @@ extern bool Mul(void);
 extern bool mul_level(void);
 extern bool MulEq(void);
 extern bool MulZeroOne(void);
+extern bool ndebug(void);
 extern bool NearEqualExt(void);
 extern bool Neg(void);
 extern bool ode_err_control(void);
@@ -149,6 +150,7 @@ int main(void)
 	ok &= Run( mul_level,       "mul_level"      );
 	ok &= Run( MulEq,           "MulEq"          );
 	ok &= Run( MulZeroOne,      "MulZeroOne"     );
+	ok &= Run( ndebug,          "ndebug"         );
 	ok &= Run( NearEqualExt,    "NearEqualExt"   );
 	ok &= Run( Neg,             "Neg"            );
 	ok &= Run( ode_err_control, "ode_err_control");

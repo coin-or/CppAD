@@ -47,6 +47,13 @@ This section contains a list of the changes to CppAD during 2010
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-27$$
+If $code NDEBUB$$ was defined,
+the default CppAD $cref/error handler/ErrorHandler/$$ would return
+because its $code assert$$ had no effect in this case.
+This has been fixed by placing a call to $code std::exit(1)$$
+after its assert.
+
 $head 09-26$$
 There was a bug 
 (introduced on 09-22)
