@@ -122,7 +122,7 @@ CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
 CYGPATH_W = @CYGPATH_W@
 
-# $Id: makefile.am 1644 2010-02-06 19:56:43Z bradbell $
+# $Id: makefile.am 1717 2010-11-28 05:19:17Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -648,7 +648,8 @@ uninstall-am:
 
 
 ndebug.$(OBJEXT): ndebug.cpp
-	$(CXXCOMPILE) -DNDEBUG -c ndebug.cpp -o ndebug.$(OBJEXT)
+	$(CXXCOMPILE) \
+	-DNDEBUG -c $(top_srcdir)/test_more/ndebug.cpp -o ndebug.$(OBJEXT)
 
 test: test_more$(EXEEXT)
 	./test_more | tee test.log

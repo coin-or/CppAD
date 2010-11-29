@@ -118,7 +118,8 @@ test_more_SOURCES  = \
 	vec_unary.cpp 
 
 ndebug.$(OBJEXT): ndebug.cpp
-	$(CXXCOMPILE) -DNDEBUG -c ndebug.cpp -o ndebug.$(OBJEXT)
+	$(CXXCOMPILE) \
+	-DNDEBUG -c $(top_srcdir)/test_more/ndebug.cpp -o ndebug.$(OBJEXT)
 
 test: test_more$(EXEEXT)
 	./test_more | tee test.log
