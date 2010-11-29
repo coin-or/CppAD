@@ -12,43 +12,54 @@
 # -----------------------------------------------------------------------------
 repository="https://projects.coin-or.org/svn/CppAD"
 stable_version="20100101"
-release="3"
+release="0"
 release_version="$stable_version.$release"
 msg="Creating releases/$release_version"
 # -----------------------------------------------------------------------------
+# Check release version
+if svn list $repository/releases | grep "$release_version" > /dev/null
+then
+	echo "new_release.sh: Release number $release_version already exists."
+	echo "You must first change the assigment"
+	echo "	release=$release"
+	echo "in file new_release.sh to a higher release number."
+	exit 1
+fi
 echo "svn revert configure.ac"
 svn revert configure.ac
-if ! grep "AC_INIT(CppAD.*, $stable_version.$release" configure.ac >> /dev/null
+if ! grep "AC_INIT(CppAD.*, $release_version" configure.ac > /dev/null
 then
-	echo "Fix version number in configure.ac, then execute."
-	echo "	./build.sh version automake config_none"
+	echo "new_release.sh: Change version number in configure.ac to be"
+	echo "$release_version, then execute"
+	echo "	./build.sh version automake configure"
 	echo "then commit the changes."
 	exit 1
 fi
 echo "svn revert cppad/config.h"
 svn revert cppad/config.h
-if ! grep "PACKAGE_STRING.*CppAD.*$stable_version.$release" \
-	cppad/config.h >> /dev/null
+if ! grep "PACKAGE_STRING.*CppAD.*$release_version" cppad/config.h > /dev/null
 then
-	echo "Fix version number in cppad/config.h does not match configure.ac."
-	echo "Must execute build.sh"
+	echo "new_release.sh: Version in cppad/config.h not $release_version."
+	echo "	./build.sh version automake configure"
+	echo "should fix this."
 	exit 1
 fi
 echo "svn revert cppad/configure.hpp"
 svn revert cppad/configure.hpp
-if ! grep "PACKAGE_STRING.*CppAD.*$stable_version.$release" \
-	cppad/configure.hpp >> /dev/null
+if ! grep "PACKAGE_STRING.*CppAD.*$release_version" \
+	cppad/configure.hpp > /dev/null
 then
-	echo "Fix version number in cppad/config.h does not match configure.ac."
-	echo "Must execute build.sh"
+	echo "new_release.sh: Version in cppad/configure.hpp not $release_version."
+	echo "	./build.sh version automake configure"
+	echo "should fix this."
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-# check initial working directory
+# check stable version 
 dir=`pwd | sed -e 's|.*/[Cc][Pp][Pp][Aa][Dd]/||'`
 if [ "$dir" != "stable/$stable_version" ]
 then
-	echo "new_release.sh: can only execute in stable/$stable_version"
+	echo "new_release.sh: must execute this command in stable/$stable_version"
 	exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -57,7 +68,7 @@ rep_release="$repository/releases/$release_version"
 echo "svn copy $rep_stable $rep_release -m \"$msg\""
 if ! svn copy $rep_stable $rep_release -m "$msg"
 then
-	"Cannot create $rep_release"
+	"new_release.sh Cannot create $rep_release"
 	exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -84,11 +95,11 @@ then
 	echo "new_release.sh: cannot change into conf directory"
 	exit 1
 fi
-echo "Change stable and release numbers in projDesc.xml"
+msg="Update stable and release numbers in projDesc.xml"
+echo "new_release.sh: $msg"
 sed -i projDesc.xml \
 	-e "/^ *<stable/,/^ *<\/stable/s/[0-9]\{8\}/$stable_version/" \
 	-e "/^ *<release/,/^ *<\/release/s/[0-9]\{8\}\.[0-9]*/$release_version/"
 #
-msg="Update stable and release numbers in conf/projDesc.xml"
 echo "Use the command the following command to finish the process"
 echo "	svn commit -m \"$msg\" ../conf/projDesc.xml"
