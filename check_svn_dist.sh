@@ -17,6 +17,8 @@ fi
 echo "svn checkout $repository/$branch svn_dist"
 svn checkout $repository/$branch svn_dist
 # ----------------------------------------------------------------------------
+# Things to do in the svn_dist directory
+# ----------------------------------------------------------------------
 echo "cd svn_dist"
 if ! cd svn_dist
 then
@@ -30,30 +32,40 @@ then
 	echo "$script: error durring ./build.sh configure in ./svn_dist"
 	exit 1
 fi
-# ----------------------------------------------------------------------------
-# Build and run all the tests
-# gcc 3.4.4 with optimization generates incorrect warning; see 
-#	http://cygwin.com/ml/cygwin-apps/2005-06/msg00161.html
-# The sed commands below are intended to remove them.
-dir=`pwd`
-echo "make test >& $dir/make.log"
-echo "The following will give an overview of progress of command above"
-echo "	cat $dir/test.log"
-echo "The following will give details of progress of command above"
-echo "	tail -f $dir/make.log"
-if ! make test >&  make.log
-then
-	echo "There are errors in $dir/make.log"
-	exit 1
-fi
-if grep 'warning:' make.log
-then
-	tmp=`pwd`
-	echo "Stopping because there are unexpected warnings in"
-	echo "$dir/make.log"
-	exit 1
-fi
-echo "OK: make test" 
 #
 echo "openmp/run.sh"
 openmp/run.sh 
+# ----------------------------------------------------------------------
+# Things to do in the svn_dist/work directory
+# ----------------------------------------------------------------------
+log_dir=`pwd`
+echo "cd work"
+if ! cd work
+then
+	echo "build.sh $1: Cannot change into svn_dist/work directory"
+	exit 1
+fi
+#
+echo "make test >& svn_dist/make.log"
+echo "The following will give details of progress of command above"
+echo "	tail -f svn_dist/make.log"
+#
+if ! make test >&  $log_dir/make.log
+then
+	echo "There are errors in svn_dist/make.log"
+	exit 1
+fi
+if grep 'warning:' $log_dir/make.log
+then
+	tmp=`pwd`
+	echo "Stopping because there are warnings in svn_dist/make.log"
+	exit 1
+fi
+#
+if ! mv test.log $log_dir
+then
+	tmp=`pwd`
+	echo "Cannot $tmp/test.log to $log_dir/test.log"
+	exit 1
+fi
+echo "OK: make test, results are in svn_dist/test.log" 
