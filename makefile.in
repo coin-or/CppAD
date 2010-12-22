@@ -237,7 +237,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
-# $Id: makefile.am 1716 2010-09-26 13:46:57Z bradbell $
+# $Id: makefile.am 1733 2010-12-22 18:55:11Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -493,7 +493,7 @@ EXTRA_DIST = \
 	doc.omh.in \
 	doxyfile.in \
 	fix_makefile.sh \
-	new_build.sh \
+	old_build.sh \
 	omh \
 	openmp/example_a11c.cpp \
 	openmp/multi_newton.cpp \

@@ -10,6 +10,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+#
 # prefix directories for the corresponding packages
 BOOST_DIR=/usr/include
 CPPAD_DIR=$HOME/prefix/cppad  
@@ -23,6 +24,15 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ADOLC_DIR/lib:$IPOPT_DIR/lib"
 # -----------------------------------------------------------------------------
 if [ "$2" != "" ]
 then
+	# when running multiple options, start by removing old log files
+	touch junk.log
+	list=`ls *.log`
+	for log in $list
+	do
+		echo "rm $log"
+		rm $log
+	done
+	#
 	# run multiple options in order
      for option in $*
      do
@@ -207,7 +217,6 @@ then
 	#
 	dir_list="
 		--prefix=$CPPAD_DIR
-		POSTFIX_DIR=coin
 	"
 	if [ -e $BOOST_DIR/boost ]
 	then

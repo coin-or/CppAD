@@ -79,6 +79,10 @@ CPPAD_BEGIN_NAMESPACE
 \brief Function that returns the elapsed seconds from first call.
 */
 
+# ifndef CPPAD_NULL
+# define CPPAD_NULL	0
+# endif
+
 /*!
 Returns the elapsed number since the first call to this function.
 
@@ -94,17 +98,11 @@ Otherwise, \c std::clock() is used.
 \return
 The number of seconds since the first call to \c elapsed_seconds.
 */
-
-# ifndef CPPAD_NULL
-# define CPPAD_NULL	0
-# endif
-
-# ifdef _MSC_VER
 inline double elapsed_seconds(void)
+# ifdef _MSC_VER
 {	return microsoft_timer(); }
 
 # elif CPPAD_GETTIMEOFDAY 
-inline double elapsed_seconds(void)
 {	static bool           first_ = true;
 	static struct timeval tv_;		
 	struct timeval        tv;
@@ -123,7 +121,6 @@ inline double elapsed_seconds(void)
 	return diff;
 }
 # else
-inline double elapsed_seconds(void)
 {	static bool    first_ = true;
 	static double  tic_;
 	double  tic;

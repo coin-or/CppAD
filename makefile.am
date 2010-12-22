@@ -263,7 +263,7 @@ EXTRA_DIST = \
 	doc.omh.in \
 	doxyfile.in \
 	fix_makefile.sh \
-	new_build.sh \
+	old_build.sh \
 	omh \
 	openmp/example_a11c.cpp \
 	openmp/multi_newton.cpp \

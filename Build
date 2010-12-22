@@ -1,10 +1,20 @@
 #! /bin/bash -e
+set -e
 # Old build file name as link to new build routine.
 # 
-echo "./build.sh version automake configure dist omhelp doxygen gpl copy2doc"
-./build.sh version automake configure dist omhelp doxygen gpl copy2doc
+options="version automake configure dist omhelp doxygen gpl copy2doc"
+echo "./build.sh $options"
+./build.sh $options
 #
 # move documentation to old directory for right place on web
 # (do in a way that works on Cygwin)
+if [ -e "Doc" ]
+then
+	echo "rm -rf Doc"
+	rm -rf Doc
+fi
+echo "mv doc doc_"
 mv doc doc_
+#
+echo "mv doc_ Doc"
 mv doc_ Doc
