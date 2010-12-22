@@ -1082,3 +1082,25 @@ void cppad_ipopt_nlp::finalize_solution(
 	solution_->obj_value = obj_value;
 	return;
 }
+
+// This routine is defined, but not yet used
+// (trying to figure out a problem with Ipopt-3.9.1 and dismod4).
+bool cppad_ipopt_nlp::intermediate_callback(
+	Ipopt::AlgorithmMode              mode,
+	Index                             iter, 
+	Number                            obj_value,
+	Number                            inf_pr, 
+	Number                            inf_du,
+	Number                            mu, 
+	Number                            d_norm,
+	Number                            regularization_size,
+	Number                            alpha_du, 
+	Number                            alpha_pr,
+	Index                             ls_trials,
+	const Ipopt::IpoptData*           ip_data,
+	Ipopt::IpoptCalculatedQuantities* ip_cq
+)
+{
+	// std::cout << "intermediate_callback called" << std::endl;
+	return true;
+}

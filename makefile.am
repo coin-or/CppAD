@@ -318,7 +318,7 @@ doc_package = $(DESTDIR)$(datadir)/doc/$(postfix_dir)/$(PACKAGE)-$(VERSION)
 install-data-hook:
 	if [ ! -e $(doc_postfix) ] ; then mkdir -p $(doc_postfix) ; fi
 	if [ -e $(doc_package) ] ; then rm -rf $(doc_package) ; fi
-	cp -a $(top_builddir)/doc $(doc_package)
+	cp -a $(top_srcdir)/doc $(doc_package)
 	chmod -R a-w $(doc_package)
 	chmod -R u+w $(doc_package)
 	chmod -R a+r $(doc_package)

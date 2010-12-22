@@ -1,5 +1,5 @@
-# ! /bin/bash 
-# $Id$
+# ! /bin/bash -e
+# $Id: build.sh 1705 2010-09-23 11:46:10Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -10,138 +10,67 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-#
-# Bash script for building the CppAD distribution.
-#
-# check for multiple options options
-option_divider=\
-"============================================================================="
-if [ "$1" == "all" ] || [ "$2" != "" ]
-then
-	if [ "$1" == "all" ] && [ "$2" == "" ]
-	then
-		echo "./build.sh all"
-		options="
-			version 
-			automake 
-			configure 
-			dist
-			omhelp 
-			doxygen 
-			gpl 
-			copy
-		"
-		if ! ./build.sh $options
-		then
-			echo "Error during \"build.sh all\" command"
-			exit 1
-		fi
-		exit 0
-	fi
-	if [ "$1" == "all" ] && [ "$2" == "test" ]
-	then
-		echo "./build.sh all test"
-		options="
-			version 
-			automake 
-			configure 
-			dist 
-			omhelp 
-			doxygen 
-			test 
-			gpl 
-			copy
-		"
-		if ! ./build.sh $options
-		then
-			echo "Error during \"build.sh all test\" command"
-			exit 1
-		fi
-		exit 0
-	fi
-	if [ "$1" == "all" ]
-	then
-		echo "build.sh: \"$2\" is invalid second arg when first is all."
-		exit 1
-	fi
-	list=" version automake configure"
-	list="$list omhelp doxygen dist test gpl dos copy "
-	for option in $*
-	do
-		if [ "$option" == "all" ]
-		then
-			echo "build.sh: If present, all must be first option."  
-			exit 1
-		fi
-		if ! echo "$list" | grep " $option " > /dev/null
-		then
-			# run invalid option for error message
-			./build.sh $option
-			exit 1
-		fi
-	done
-	for option in $*
-	do
-		echo "$option_divider"
-		echo "./build.sh $option"
-		if ! ./build.sh $option
-		then
-			exit 1
-		fi
-	done
-	echo "$option_divider"
-	exit 0
-fi
-# ============================================================================
-# Default values used for arguments to configure during this script.
-# These defaults are development system dependent and can be changed.
+# prefix directories for the corresponding packages
 BOOST_DIR=/usr/include
+CPPAD_DIR=$HOME/prefix/cppad  
 ADOLC_DIR=$HOME/prefix/adolc
 FADBAD_DIR=$HOME/prefix/fadbad
 SACADO_DIR=$HOME/prefix/sacado
 IPOPT_DIR=$HOME/prefix/ipopt
+#
+# library path for the ipopt and adolc
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ADOLC_DIR/lib:$IPOPT_DIR/lib"
 # -----------------------------------------------------------------------------
-#
-# get version currently in configure.ac file
-# (in a way that works when version is not a date)
-configure_ac_version=`grep "^ *AC_INIT(" configure.ac | \
-	sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
-#
+if [ "$2" != "" ]
+then
+	# run multiple options in order
+     for option in $*
+     do
+		echo "=============================================================="
+		echo "begin: build.sh $option"
+          ./build.sh $option
+     done
+	echo "=============================================================="
+     exit 0
+fi
 # -----------------------------------------------------------------------------
+if [ ! -e work ]
+then
+	echo "mkdir work"
+	mkdir work
+fi
+# -----------------------------------------------------------------------------
+# Today's date in yyyy-mm-dd decimal digit format where 
+# yy is year in century, mm is month in year, dd is day in month.
+yyyy_mm_dd=`date +%F`
+#
+# Version of cppad that corresponds to today.
+version=`echo $yyyy_mm_dd | sed -e 's|-||g'`
+#
+# Files are created by the configure command and coppied to the source tree
+configure_file_list="
+	cppad/config.h
+	cppad/configure.hpp
+	doc.omh
+	doxyfile
+	example/test_one.sh
+	omh/install_unix.omh
+	omh/install_windows.omh
+	test_more/test_one.sh
+"
+# -----------------------------------------------------------------------------
+# change version to current date
 if [ "$1" = "version" ]
 then
-	echo "build.sh version"
-	#
-	# Today's date in yy-mm-dd decimal digit format where 
-	# yy is year in century, mm is month in year, dd is day in month.
-	yyyy_mm_dd=`date +%F`
-	yyyymmdd=`echo $yyyy_mm_dd | sed -e 's|-||g'`
 	#
 	# automatically change version for certain files
 	# (the [.0-9]* is for using build.sh in CppAD/stable/* directories)
 	#
 	# libtool does not seem to support version by date
 	# sed < cppad_ipopt/src/makefile.am > cppad_ipopt/src/makefile.am.$$ \
-	#	-e "s/\(-version-info\) *[0-9]\{8\}[.0-9]*/\1 $yyyymmdd/"
+	#	-e "s/\(-version-info\) *[0-9]\{8\}[.0-9]*/\1 $version/"
 	#
-	sed < AUTHORS > AUTHORS.$$ \
-		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
-	sed < configure.ac > configure.ac.$$\
-		-e "s/(CppAD, [0-9]\{8\}[.0-9]* *,/(CppAD, $yyyymmdd,/" 
 	#
-	sed < configure > configure.$$ \
-	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $yyyymmdd/g" \
-	-e "s/VERSION='[0-9]\{8\}[.0-9]*'/VERSION='$yyyymmdd'/g" \
-	-e "s/configure [0-9]\{8\}[.0-9]*/configure $yyyymmdd/g" \
-	-e "s/config.status [0-9]\{8\}[.0-9]*/config.status $yyyymmdd/g" \
-	-e "s/\$as_me [0-9]\{8\}[.0-9]*/\$as_me $yyyymmdd/g" \
-        -e "s/Generated by GNU Autoconf.*$yyyymmdd/&./"
-	#
-	chmod +x configure.$$
-	sed < cppad/config.h > cppad/config.h.$$ \
-		-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $yyyymmdd/g" \
-		-e "s/VERSION \"[0-9]\{8\}[.0-9]*\"/VERSION \"$yyyymmdd\"/g"
 	list="
 		AUTHORS
 		configure.ac
@@ -150,26 +79,52 @@ then
 	"
 	for name in $list
 	do
-		echo "diff $name $name.$$"
-		diff $name $name.$$
-		echo "mv   $name.$$ $name"
-		mv   $name.$$ $name
+		svn revert $name
 	done
+	
+	echo "sed -i.old AUTHORS ..."
+	sed -i.old AUTHORS \
+		-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/"
 	#
-	# change Autoconf version to today
-	configure_ac_version=$yyyymmdd
+	echo "sed -i.old configure.ac ..."
+	sed -i.old configure.ac \
+		-e "s/(CppAD, [0-9]\{8\}[.0-9]* *,/(CppAD, $version,/" 
 	#
+	echo "sed -i.old configure ..."
+	sed -i.old configure \
+		-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $version/g" \
+		-e "s/VERSION='[0-9]\{8\}[.0-9]*'/VERSION='$version'/g" \
+		-e "s/configure [0-9]\{8\}[.0-9]*/configure $version/g" \
+		-e "s/config.status [0-9]\{8\}[.0-9]*/config.status $version/g" \
+		-e "s/\$as_me [0-9]\{8\}[.0-9]*/\$as_me $version/g" \
+        	-e "s/Generated by GNU Autoconf.*$version/&./"
+	#
+	echo "sed -i.old cppad/config.h ..."
+	sed -i.old cppad/config.h \
+		-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $version/g" \
+		-e "s/VERSION \"[0-9]\{8\}[.0-9]*\"/VERSION \"$version\"/g"
+	for name in $list
+	do
+		echo "-------------------------------------------------------------"
+		echo "diff $name.old $name"
+		if diff $name.old $name
+		then
+			echo "	no difference was found"
+		fi
+		#
+		echo "rm $name.old"
+		rm $name.old
+	done
+	echo "-------------------------------------------------------------"
+	#
+	echo "OK: build.sh version"
 	exit 0
 fi
-version="$configure_ac_version"
-#
 # -----------------------------------------------------------------------------
 if [ "$1" = "automake" ] 
 then
-	echo "build.sh automake"
 	#
 	# check that autoconf and automake output are in original version
-	#
 	makefile_in=`sed configure.ac \
         	-n \
         	-e '/END AC_CONFIG_FILES/,$d' \
@@ -185,30 +140,32 @@ then
 		cppad/config.h.in 
 		$makefile_in
 	"
+	missing=""
 	for name in $auto_output
 	do
 		if [ ! -e $name ]
 		then
-			echo "$name"
-			echo "is not in subversion repository."
-			echo "Check it in after making this change."
-			echo "This error won't occur when you re-run build.sh"
-			touch $name
-			exit 1
+			if [ "$missing" != "" ]
+			then
+				missing="$missing, $name"
+			else
+				missing="$name"
+			fi
 		fi
 	done
+	if [ "$missing" != "" ]
+	then
+		echo "The following files:"
+		echo "	$missing"
+		echo "are not in subversion repository."
+		echo "Check them in when this command is done completes."
+	fi
 	#
 	echo "aclocal"
-	if ! aclocal
-	then
-		exit 1
-	fi
+	aclocal
 	#
 	echo "autoheader"
-	if ! autoheader
-	then
-		exit 1
-	fi
+	autoheader
 	#
 	echo "skipping libtoolize"
 	# echo "libtoolize -c -f -i"
@@ -218,94 +175,74 @@ then
 	# fi
 	#
 	echo "autoconf"
-	if ! autoconf
-	then
-		exit 1
-	fi
+	autoconf
 	#
 	echo "automake --add-missing"
-	if ! automake --add-missing
-	then
-		exit 1
-	fi
+	automake --add-missing
+	#
 	link_list="missing install-sh depcomp"
 	for name in $link_list
 	do
 		if [ -h "$name" ]
 		then
 			echo "Converting $name from a link to a regular file"
+			#
+			echo "cp $name $name.$$"
 			cp $name $name.$$
-			if ! mv $name.$$ $name
-			then
-				echo "Cannot convert $name"
-				exit 1
-			fi
+			#
+			echo "mv $name.$$ $name"
+			mv $name.$$ $name
 		fi
 	done
 	#
+	echo "OK: build.sh automake"
 	exit 0
 fi
-#
 # -----------------------------------------------------------------------------
 # configure
 if [ "$1" == "configure" ]
 then
-	if [ ! -e work ]
-	then
-		echo "mkdir work"
-		mkdir work
-	fi
 	echo "cd work"
-	if ! cd work
-	then
-		dir=`pwd`
-		echo "build.sh $1: Cannot change into $dir/work directory"
-		exit 1
-	fi
-	options="
-		--with-Documentation
-		--prefix=$HOME/prefix/cppad
+	cd work
+	#
+	dir_list="
+		--prefix=$CPPAD_DIR
 		POSTFIX_DIR=coin
 	"
 	if [ -e $BOOST_DIR/boost ]
 	then
-		options="$options 
+		dir_list="$dir_list 
 			BOOST_DIR=$BOOST_DIR"
 	fi
 	if [ -e $ADOLC_DIR/include/adolc ]
 	then
-		options="$options 
+		dir_list="$dir_list 
 			ADOLC_DIR=$ADOLC_DIR"
 	fi
 	if [ -e $FADBAD_DIR/FADBAD++ ]
 	then
-		options="$options 
+		dir_list="$dir_list 
 			FADBAD_DIR=$FADBAD_DIR"
 	fi
 	if [ -e $SACADO_DIR/include/Sacado.hpp ]
 	then
-		options="$options 
+		dir_list="$dir_list 
 			SACADO_DIR=$SACADO_DIR"
 	fi
 	if [ -e $IPOPT_DIR/include/coin/IpIpoptApplication.hpp ]
 	then
-		options="$options 
+		dir_list="$dir_list 
 		IPOPT_DIR=$IPOPT_DIR"
 	fi
-	options=`echo $options | sed -e 's|\t\t*| |g'`
+	dir_list=`echo $dir_list | sed -e 's|\t\t*| |g'`
 	echo "../configure \\"
-	echo "$options" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
-	echo "	CXX_FLAGS=\"-Wall -ansi -pedantic-errors -std=c++98\""
+	echo "$dir_list" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
+	echo "	CXX_FLAGS=\"-Wall -ansi -pedantic-errors -std=c++98\"\\"
+	echo "	--with-Documentation"
 	#
-	if ! ../configure $options \
-		CXX_FLAGS="-Wall -ansi -pedantic-errors -std=c++98"
-	then
-		exit 1
-	fi
-	#
-	# Fix makefile for what appears to be a bug in gzip under cygwin
-	echo "fix_makefile.sh"
-	./fix_makefile.sh
+	../configure $dir_list \
+		CXX_FLAGS="-Wall -ansi -pedantic-errors -std=c++98" \
+		--with-Documentation
 	#
 	# make shell scripts created by configure executable
 	echo "chmod +x example/test_one.sh"
@@ -314,77 +251,56 @@ then
 	echo "chmod +x test_more/test_one.sh"
 	chmod +x test_more/test_one.sh
 	#
-	# files that are coppied to the source tree directory
-	list="
-		cppad/configure.hpp
-		cppad/config.h
-		doc.omh 
-		doxyfile
-		example/test_one.sh 
-		omh/install_unix.omh
-		omh/install_windows.omh
-		test_more/test_one.sh 
-	"
-	for file in $list
+	for file in $configure_file_list
 	do
 		echo "cp $file ../$file"
 		cp $file ../$file
 	done
 	#
+	echo "OK: build.sh configure"
 	exit 0
 fi
-#
 # -----------------------------------------------------------------------------
 if [ "$1" = "dist" ] 
 then
-	echo "build.sh dist"
 	# ----------------------------------------------------------------------
 	# Things to do in the distribution directory
 	# ----------------------------------------------------------------------
-	# only build the *.xml version of the documentation for distribution
+	echo "Only include the *.xml version of the documentation in distribution"
 	if ! grep < doc.omh > /dev/null \
 		'This comment is used to remove the table below' 
 	then
-		echo "Error: Missing comment expected in doc.omh"
+		echo "Missing comment expected in doc.omh"
+		echo "Try re-running build.sh configure to generate it."
 		exit 1
 	fi
-	mv doc.omh doc.tmp
-	sed < doc.tmp > doc.omh \
+	echo "sed -i.save doc.omh ..."
+	sed -i.save doc.omh \
 		-e '/This comment is used to remove the table below/,/$tend/d'
-	echo "./run_omhelp.sh doc clean"
-	if ! ./run_omhelp.sh doc clean
+	#
+	if [ -e doc ]
 	then
-		echo "./run_omhelp.sh doc clean failed."
-		exit 1
+		echo "rm -r doc"
+		rm -r doc
 	fi
+	#
 	echo "./run_omhelp.sh doc xml"
-	if ! ./run_omhelp.sh doc xml 
-	then
-		echo "./run_omhelp.sh doc xml failed."
-		exit 1
-	fi
-	mv doc.tmp doc.omh
+	./run_omhelp.sh doc xml
+	#
+	echo "mv doc.omh.save doc.omh"
+	mv doc.omh.save doc.omh
 	# ----------------------------------------------------------------------
 	# Things to do in the work directory
 	# ----------------------------------------------------------------------
 	echo "cd work"
-	if ! cd work
-	then
-		dir=`pwd`
-		echo "build.sh $1: Cannot change into $dir/work directory"
-		exit 1
-	fi
+	cd work
 	#
 	if [ -e cppad-$version ]
 	then
-		echo "rm -f -r cppad-$version"
-		if ! rm -f -r cppad-$version
-		then
-			echo "Build: cannot remove old cppad-$version"
-			exit 1
-		fi
+		echo "rm -r cppad-$version"
+		rm -r cppad-$version
 	fi
-	for file in cppad-*.tgz cppad-*.zip
+	for file in cppad-*.tgz 
 	do
 		if [ -e $file ]
 		then
@@ -394,10 +310,7 @@ then
 	done
 	#
 	echo "make dist"
-	if ! make dist
-	then
-		exit 1
-	fi
+	make dist
 	#
 	if [ ! -e cppad-$version.tar.gz ]
 	then
@@ -407,131 +320,80 @@ then
 		exit 1
 	fi
 	# change *.tgz to *.cpl.tgz
-	if ! mv cppad-$version.tar.gz cppad-$version.cpl.tgz
-	then
-		echo "cannot move cppad-$version.tar.gz to cppad-$version.tgz"
-		exit 1
-	fi
+	echo "mv cppad-$version.tar.gz cppad-$version.cpl.tgz"
+	mv cppad-$version.tar.gz cppad-$version.cpl.tgz
 	#
+	echo "OK: build.sh dist"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
+# omhelp comes after dist becasue dist only includes one help output
 if [ "$1" = "omhelp" ] 
 then
+	if ! grep < doc.omh > /dev/null \
+		'This comment is used to remove the table below'
+	then
+		echo "doc.omh is missing a table."
+		echo "Try re-running build.sh configure."
+	fi
 	for flag in "printable" ""
 	do
 		for ext in htm xml
 		do
-			echo "./run_omhelp.sh doc $ext $flag"
-			if ! ./run_omhelp.sh doc $ext $flag
-			then
-				msg="Error: run_omhelp.sh doc $ext $flag"
-				echo "$msg" 
-				exit 1
-			fi
-			msg="OK: run_omhelp.sh doc $ext $flag"
-			echo "$msg" 
+			echo "begin: ./run_omhelp.sh doc $ext $flag"
+			./run_omhelp.sh doc $ext $flag
+			echo="end: ./run_omhelp.sh doc $ext $flag"
 		done
 	done
 	#
+	echo "OK: build.sh omhelp"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
-if [ "$1" = "doxygen" ] 
+if [ "$1" = "doxygen" ]
 then
-	echo "build.sh doxygen"
-	# remove old error or warning file, check_doxygen.sh will make sure 
-	# a new one is created.
-	list="
-		doxygen.err
-		doxydoc
-	"
-	for name in $list 
-	do
-		if [ -e $name ]
-		then
-			if ! rm -r $name
-			then
-				echo "Error: cannot remove old $name"
-				exit 1
-			fi
-		fi
-	done
-	# create doxydoc directory to avoid warning
+	if [ -e doxygen.err ]
+	then
+		echo "rm doxygen.err"
+		rm doxygen.err
+	fi
+	#
+	if [ -e doxydoc ]
+	then
+		echo "rm -r doxydoc"
+		rm -r doxydoc
+	fi
+	#
+	echo "mkdir doxydoc"
 	mkdir doxydoc
 	#
-	echo "doxygen doxyfile > doxygen.log "
-	if ! doxygen doxyfile > doxygen.log
-	then
-		echo "Error: during doxygen; see doxygen.err"
-		exit 1
-	fi
-	echo "cat doxygen.err >> doxygen.log"
-	if ! cat doxygen.err >> doxygen.log
-	then
-		echo "Error: cannot add errors and warnings to doxygen.log"
-		exit 1
-	fi
-	if ! ./check_doxygen.sh
-	then
-		dir=`pwd`
-		file="$dir/doxygen.log"
-		echo "Error: check_doxygen.sh failed; see $file."
-		exit 1
-	fi
+	echo "doxygen doxyfile"
+	doxygen doxyfile
 	#
-	echo "pushd doxydoc/latex ; make >& ../../doxygen_tex.log"
-	if ! pushd doxydoc/latex 
-	then
-		echo "Error: pushd doxydoc/latex"
-		exit 1
-	fi
-	if ! make >& ../../doxygen_tex.log
-	then
-		echo "Error: pushd doxydoc/latex ; make"
-		exit 1
-	fi
-	if ! popd 
-	then
-		echo "Error: pushd doxydoc/latex ; make ; popd"
-		exit 1
-	fi
-	echo "mv doxydoc/latex/refman.pdf doxydoc/html/cppad.pdf"
-	if ! mv doxydoc/latex/refman.pdf doxydoc/html/cppad.pdf
-	then
-		echo "Error: mv doxydoc/latex/refman.pdf doxydoc/html/cppad.pdf"
-		exit 1
-	fi
-	echo "mv doxydoc/html doxydoc"
-	if ! mv doxydoc doxydoc.$$
-	then
-		echo "Error: mv doxydoc doxydoc.$$"
-		exit 1
-	fi
-	if ! mv doxydoc.$$/html doxydoc
-	then
-		echo "Error: mv doxydoc.$$/html doxydoc"
-		exit 1
-	fi
-	if ! rm -r doxydoc.$$
-	then
-		echo "Error: rm -r doxydoc.$$"
-		exit 1
-	fi
+	echo "cat doxygen.err"
+	cat doxygen.err 
 	#
+	echo "./check_doxygen.sh"
+	./check_doxygen.sh
+	#
+	echo "OK: build.sh doxygen"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
 if [ "$1" = "test" ] 
 then
 	log_dir=`pwd`
+	log_file="build_test.log"
+	# --------------------------------------------------------------
+	# Things to do in the distribution directory
+	# --------------------------------------------------------------
 	#
 	# start log for this test
-	echo "date > build_test.log"
-	date > $log_dir/build_test.log
-	# ----------------------------------------------------------------------
-	# Things to do in the distribution directory
-	# ----------------------------------------------------------------------
+	echo "date > $log_file"
+	date       > $log_dir/$log_file
+	#
+	# Run automated checking of file names in original source directory
+	#
 	list="
 		check_example.sh
 		check_include_def.sh
@@ -542,265 +404,151 @@ then
 	"
 	for check in $list 
 	do
-		echo "./$check >> build_test.log"
-		if ! ./$check >> $log_dir/build_test.log
-		then
-			echo "./$check failed"
-			exit 1
-		fi
+		echo "./$check >> $log_file"
+		./$check       >> $log_dir/$log_file
 	done
 	# add a new line after last file check
-	echo ""                 >> $log_dir/build_test.log
+	echo ""             >> $log_dir/$log_file
 	# ----------------------------------------------------------------------
 	# Things to do in the work directory
 	# ----------------------------------------------------------------------
 	echo "cd work"
-	if ! cd work
-	then
-		dir=`pwd`
-		echo "build.sh $1: Cannot change into $dir/work directory"
-		exit 1
-	fi
+	cd work
 	#
-	# Extract the distribution
-	#
+	# erase old distribution directory
 	if [ -e cppad-$version ]
 	then
-		echo "rm -f -r cppad-$version"
-		if ! rm -f -r cppad-$version
-		then
-			echo "Build: cannot remove old cppad-$version"
-			exit 1
-		fi
+		echo "rm -r cppad-$version"
+		rm -r cppad-$version
 	fi
 	#
-	if [ -e "cppad-$version.cpl.tgz" ]
-	then
-		dir="."
-	else
-		if [ -e "doc/cppad-$version.cpl.tgz" ]
-		then
-			dir="doc"
-		else
-			echo "cannot find cppad-$version.cpl.tgz"
-			exit 1
-		fi
-	fi
+	# create distribution directory
+	echo "tar -xzf cppad-$version.cpl.tgz"
+	tar -xzf cppad-$version.cpl.tgz
 	#
-	#
-	echo "tar -xzf $dir/cppad-$version.cpl.tgz"
-	if ! tar -xzf $dir/cppad-$version.cpl.tgz
-	then
-		exit 1
-	fi
-	#
-	cd cppad-$version
-	# ===================================================================
-	# Configure
-	#
-	if ! ./build.sh configure
-	then
-		echo "Error: build.sh configure"  >> $log_dir/build_test.log
-		echo "Error: build.sh configure" 
-		exit 1
-	fi
-	# -------------------------------------------------------------
-	# Test user documentation 
-	if [ ! -e "doc/index.xml" ]
-	then
-		echo "Error: doc/index.xml missing" >> $log_dir/build_test.log
-		echo "Error: doc/index.xml missing"
-		exit 1
-	fi
-	for user in doc dev
-	do
-		for ext in htm xml
-		do
-			echo "./run_omhelp.sh $user $ext"
-			if ! ./run_omhelp.sh $user $ext
-			then
-				msg="Error: run_omhelp.sh $user $ext"
-				echo "$msg" >> $log_dir/build_test.log 
-				echo "$msg" 
-				mv omhelp.$user.$ext.log $log_dir
-				exit 1
-			fi
-			msg="OK: run_omhelp.sh $user $ext"
-			echo "$msg" >> $log_dir/build_test.log
-		done
-	done
-	# Test developer documentation ---------------------------------------
-	# remove old error or warning file, check_doxygen.sh will make sure 
-	# a new one is created.
-	list="
-		doxygen.err
-		doxydoc
-	"
-	for name in $list 
-	do
-		if [ -e $name ]
-		then
-			if ! rm -r $name
-			then
-				echo "Error: cannot remove old $name"
-				exit 1
-			fi
-		fi
-	done
-	# create doxydoc directory to avoid warning
-	mkdir doxydoc
-	echo "doxygen doxyfile > doxygen.log"
-	if ! doxygen doxyfile > $log_dir/doxygen.log
-	then
-		echo "Error: during doxygen; see doxygen.err"
-		exit 1
-	fi
-	echo "cat doxygen.err >> doxygen.log"
-	if ! cat doxygen.err >> $log_dir/doxygen.log
-	then
-		echo "Error: cannot add errors and warnings to doxygen.log"
-		exit 1
-	fi
-	if ! ./check_doxygen.sh
-	then
-		echo "Error: check_doxygen.sh failed; see doxygen.log"
-		exit 1
-	else
-		msg="OK: doxygen doxyfile"
-	fi
- 	echo "$msg" >> $log_dir/build_test.log
-	#
-	echo "openmp/run.sh"
-	if ! openmp/run.sh  >> $log_dir/build_test.log
-	then
-		echo "openmp/run.sh failed"
-		exit 1
-	fi
 	# ----------------------------------------------------------------------
-	# Things to do in the work directory
+	# Things to do in the work/disribution directory
+	# ----------------------------------------------------------------------
+	echo "cd cppad-$version"
+	cd cppad-$version
+	#
+	echo "./build.sh configure >> $log_file" 
+	./build.sh configure       >> $log_dir/$log_file
+	#
+	# test user documentation
+	echo "./run_omhelp.sh doc xml  >> $log_file"
+	./run_omhelp.sh doc xml        >> $log_dir/$log_file
+	# 
+	# test developer documentation
+	echo "./build.sh doxygen   >> $log_file"
+	./build.sh doxygen         >> $log_dir/$log_file
+	#
+	# openmp test script
+	echo "openmp/run.sh            >> $log_file"
+	openmp/run.sh                  >> $log_dir/$log_file
+	# ----------------------------------------------------------------------
+	# Things to do in the work/disribution/work directory
 	# ----------------------------------------------------------------------
 	echo "cd work"
-	if ! cd work
+	cd work
+	#
+	dir=`pwd` 
+	echo "Use: tail -f $dir/make_test.log"
+	echo "to follow the progress of the following command:"
+	#
+	# build and run all the tests
+	echo "make test                >& make_test.log"
+	make test                      >& make_test.log
+	#
+	echo "cat make_test.log        >> $log_file"
+	cat make_test.log              >> $log_dir/$log_file
+	#
+	if grep 'warning:' make_test.log
 	then
-		dir=`pwd`
-		echo "build.sh $1: Cannot change into $dir/work directory"
+		echo "There are warnings in $dir/make.log"
 		exit 1
 	fi
-	# Build and run all the tests
-	dir=`pwd`
-	echo "make test >& make.log"
-	echo "The following will give an overview of progress of command above"
-	echo "	cat $dir/test.log"
-	echo "The following will give details of progress of command above"
-	echo "	tail -f make.log"
-	if ! make test >&  $log_dir/make.log
-	then
-		make_test_result="error"
-		echo "There are errors in make.log"
-	else
-		if grep 'warning:' $log_dir/make.log
-		then
-			make_test_resuult="warn"
-			echo "There are warnings in make.log"
-		else
-			make_test_result="ok"
-		fi
-	fi
-	echo "cat $dir/test.log >> build_test.log"
-	cat test.log >> $log_dir/build_test.log
 	#
-	if [ "$make_test_result" != "ok" ]
-	then
-		exit 1
-	fi
-	echo "OK: make test" 
-	echo "OK: make test" >> $log_dir/build_test.log
-	#
+	echo "cat test.log             >> $log_file"
+	cat test.log                   >> $log_dir/$log_file
+	# --------------------------------------------------------------------
+	echo "cd ../../.."
+	cd ../../..
 	# end the build_test.log file with the date and time
-	date >> $log_dir/build_test.log
+	echo "date >> $log_file"
+	date       >> $log_dir/$log_file
 	#
-	echo "Check $log_dir/build_test.log for errors and warnings."
+	echo "Check build_test.log for errors and warnings."
+	#
+	echo "OK: build.sh test"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
 if [ "$1" = "gpl" ] 
 then
 	# create GPL licensed version
-	echo "gpl_license.sh"
-	if ! ./gpl_license.sh
-	then
-		echo "Error: gpl_license.sh failed."
-		if [ "$2" = "test" ]
-		then
-			echo "Error: gpl_license.sh failed." >> build_test.log
-		fi
-		exit 1
-	else
-		echo "OK: gpl_license.sh."
-		if [ "$2" = "test" ]
-		then
-			echo "OK: gpl_license.sh." >> build_test.log
-		fi
-	fi
+	echo "./gpl_license.sh"
+	./gpl_license.sh
+	#
+	echo "OK: build.sh gpl"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
-if [ "$1" = "copy" ] 
+if [ "$1" = "copy2doc" ] 
 then
-	# copy tarballs into doc directory
-	list="
-		doxydoc
-		cppad-$version.cpl.tgz
-		cppad-$version.gpl.tgz
-	"
-	for file in $list
+	for ext in cpl gpl
 	do
-		if [ -e "work/$file" ]
-		then
-			echo "cp work/$file doc/$file"
-			if ! cp work/$file doc/$file
-			then
-				echo "Error: cp work/$file doc/$file."
-				if [ "$2" = "test" ]
-				then
-					echo "Error: cp work/$file doc/$file." \
-						>> build_test.log
-				fi
-				exit 1
-			fi
-		fi
+		echo "cp work/cppad-$version.cpl.tgz doc/cppad-$version.cpl.tgz"
+		cp work/cppad-$version.cpl.tgz doc/cppad-$version.cpl.tgz
 	done
+	echo "cp -r doxydoc doc/doxydoc"
+	cp -r doxydoc doc/doxydoc
+	#
+	echo "OK: build.sh copy2doc"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
-if [ "$1" = "help" ]
+if [ "$1" == "all" ]
 then
-echo "--------------------------------------------------------------------"
-echo "option"
-echo "------"
-echo "help           print this message"
-echo "version        update configure.ac and doc.omh version number"
-echo "automake       run aclocal,autoheader,autoconf,automake -> configure"
-echo "configure      run configure"
-echo "dist           create the distribution file cppad-version.cpl.tgz"
-echo "omhelp         build all formats for user documentation in doc/*"
-echo "doxygen        build developer documentation in doxydoc/*"
-echo "test           unpack *.cpl.tgz, compile, tests, result in build_test.log"
-echo "gpl            create *.gpl.tgz"
-echo "copy           copy tarballs form work to doc directory"
-echo
-echo "build.sh option_1 option_2 ..."
-echo "Where options are in list above, executes them in the specified order."
-echo
-echo "build.sh all"
-echo "Execute all options except that help and test are excluded."
-echo
-echo "build.sh all test"
-echo "Execute all options except that help is excluded."
-echo "------------------------------------------------------------------------"
-exit 0
+	list="
+		version
+		automake
+		configure
+		dist
+		omhelp
+		doxygen
+		test
+		gpl
+		copy2doc
+	"
+	echo "./build.sh $list"
+	./build.sh $list
+	echo "OK: build.sh all"
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+# report build.sh usage error
+if [ "$1" != "" ]
+then
+     echo "$1 is not a valid option"
 fi
 #
-echo "build.sh: \"$1\" is an invalid option."
-./build.sh help
+cat << EOF
+usage: build.sh option_1 option_2 ...
+
+options
+-------
+version:   update version in AUTHORS, configure.ac, configure, config.h
+automake:  run the tools required by autoconf and automake.
+configure: run the configure script in the work directory.
+dist:      create the distribution file work/cppad-version.cpl.tgz
+omhelp:    build all formats of user documentation in doc/*
+doxygen:   build developer documentation in doxydoc/*
+test:      unpack work/*.cpl.tgz, run make test, put result in build_test.log
+gpl:       create work/*.gpl.zip and work/*.cpl.zip       
+copy2doc:  copy tarballs and doxygen output into doc directory
+
+all:       run all the options above in order
+EOF
+#
 exit 1
