@@ -2,12 +2,19 @@
 #
 # replacement text for this commit
 cat << EOF > commit.$$
-This is a template file for making commits to the ckbs repository.
-Lines with no 'at' characters, are general comments not connected to 
-a specifi file. Lines containing an 'at' character are "file name" 
-followed by comment. Next line must be empty for ./commit.sh files to work.
+Replace svn_commit.sh and svn_status.sh by commit.sh. This is a simpler
+procedure for commits that is also used by other projects.
 
-commit.sh@ For this example, commit.sh is the only file committed.
+AUTHORS@  undate version number to current date.
+commit.sh@
+configure@  undate version number to current date.
+configure.ac@  undate version number to current date.
+cppad/config.h@  undate version number to current date.
+cppad/configure.hpp@  undate version number to current date.
+only_date.sh@ check if only the date (version number) has changed.
+new_stable.sh@ remove automatic editing of to svn_commit.sh and svn_status.sh.
+svn_commit.sh@ replace by commit.sh.
+svn_status.sh@ replace by commit.sh.
 EOF
 # -----------------------------------------------------------------------
 if [ "$1" == 'files' ]
