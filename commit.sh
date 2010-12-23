@@ -20,13 +20,16 @@ then
 	list=`cat list.$$`
 	for file in $list
 	do
-		sed -f svn_commit.sed $file > commit.$$
-		if ! diff $file commit.$$ > /dev/null
+		if [ -e "$file" ]
 		then
-			echo "abort commit.sh: suggest following changes to $file:"
-			diff $file commit.$$
-			rm commit.$$
-			exit 1
+			sed -f svn_commit.sed $file > commit.$$
+			if ! diff $file commit.$$ > /dev/null
+			then
+				echo "commit.sh aborting: suggest changes to $file:"
+				diff $file commit.$$
+				rm commit.$$
+				exit 1
+			fi
 		fi
 	done
 	#
