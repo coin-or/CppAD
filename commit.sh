@@ -12,8 +12,23 @@ EOF
 # -----------------------------------------------------------------------
 if [ "$1" == 'files' ]
 then
-	echo "rm commit.[0-9]*"
-	rm commit.[0-9]*
+	# -------------------------------------------------
+	./status.sh | sed -n -e '/^[ADMRC] /p' | \
+		sed -e 's/^[ADMRC] [+ ]*//'| \
+		sort -u >> list.$$
+	# -------------------------------------------------
+	list=`cat list.$$`
+	for file in $list
+	do
+		sed -f svn_commit.sed $file > commit.$$
+		if ! diff $file commit.$$ > /dev/null
+		then
+			echo "abort commit.sh: suggest following changes to $file:"
+			diff $file commit.$$
+			rm commit.$$
+			exit 1
+		fi
+	done
 	#
 	echo "cp commit.sh commit.old"
 	cp commit.sh commit.old
@@ -21,16 +36,16 @@ then
 	echo "svn revert commit.sh"
 	svn revert commit.sh
 	#
-	sed -n -e '1,/^$/p' < commit.sh > commit.$$ 
-	./status.sh | sed -n -e '/^[ADMRC] /p' | \
-		sed -e 's/^[ADMR] [+ ]*//' -e 's/$/@/' | \
-		sort -u >> commit.$$
+	sed -n -e '1,/^$/p'   < commit.sh >  commit.$$ 
+	sed list.$$ -e 's/$/@/'           >> commit.$$ 
+	rm  list.$$
 	sed -n -e '/^EOF/,$p' < commit.sh >> commit.$$ 
 	#
 	echo "diff commit.sh commit.$$"
 	if diff commit.sh commit.$$
 	then
 		echo "commit.sh: exiting because commit.sh has not changed"
+		rm commit.$$
 		exit 1
 	fi
 	#
