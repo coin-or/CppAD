@@ -237,7 +237,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
-# $Id: makefile.am 1733 2010-12-22 18:55:11Z bradbell $
+# $Id: makefile.am 1734 2010-12-22 22:22:32Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #

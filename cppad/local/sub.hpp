@@ -3,7 +3,7 @@
 # define CPPAD_SUB_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -19,29 +19,21 @@ namespace CppAD {
 template <class Base>
 AD<Base> operator - (const AD<Base> &left , const AD<Base> &right)
 {	ADTape<Base> *tape = AD<Base>::tape_ptr();
-	bool var_left, var_right;
-# ifdef NDEBUG
-	if( tape == CPPAD_NULL )
-	{	var_left =  false;
-		var_right = false;
-	}
-	else
-	{
-		var_left  = left.id_  == tape->id_;
-		var_right = right.id_ == tape->id_;
-	}
-# else
-	var_left  = Variable(left);
-	var_right = Variable(right);
+	size_t tape_id = 0;
+	if( tape != CPPAD_NULL )
+		tape_id = tape->id_;
+
+	// id_ == 1 is initial setting for parameters so cannot match 0
+	bool var_left  = left.id_  == tape_id;
+	bool var_right = right.id_ == tape_id;
 	CPPAD_ASSERT_KNOWN(
-		(! var_left) || left.id_ == tape->id_ ,
-		"- left operand is a variable for a different thread"
+		Parameter(left) || var_left ,
+		"-: left operand is a variable for a different thread"
 	);
 	CPPAD_ASSERT_KNOWN(
-		(! var_right) || right.id_ == tape->id_ ,
-		"- right operand is a variable for a different thread"
+		Parameter(right) || var_right ,
+		"-: right operand is a variable for a different thread"
 	);
-# endif
 
 	AD<Base> result;
 	result.value_  = left.value_ - right.value_;
@@ -58,7 +50,7 @@ AD<Base> operator - (const AD<Base> &left , const AD<Base> &right)
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(SubvvOp);
 			// make result a variable
-			result.id_ = tape->id_;
+			result.id_ = tape_id;
 		}
 		else if( IdenticalZero(right.value_) )
 		{	// result = variable - 0
@@ -75,7 +67,7 @@ AD<Base> operator - (const AD<Base> &left , const AD<Base> &right)
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(SubvpOp);
 			// make result a variable
-			result.id_ = tape->id_;
+			result.id_ = tape_id;
 		}
 	}
 	else if( var_right )
@@ -89,7 +81,7 @@ AD<Base> operator - (const AD<Base> &left , const AD<Base> &right)
 		// put operator in the tape
 		result.taddr_ = tape->Rec_.PutOp(SubpvOp);
 		// make result a variable
-		result.id_ = tape->id_;
+		result.id_ = tape_id;
 	}
 	return result;
 }

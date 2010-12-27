@@ -3,7 +3,7 @@
 # define CPPAD_POW_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -118,29 +118,22 @@ inline double pow(const double &x, const double &y)
 template <class Base> AD<Base> 
 pow(const AD<Base> &x, const AD<Base> &y)
 {	ADTape<Base> *tape = AD<Base>::tape_ptr();
-	bool var_x, var_y;
-# ifdef NDEBUG
-	if( tape == CPPAD_NULL )
-	{	var_x =  false;
-		var_y = false;
-	}
-	else
-	{
-		var_x = x.id_ == tape->id_;
-		var_y = y.id_ == tape->id_;
-	}
-# else
-	var_x  = Variable(x);
-	var_y = Variable(y);
+	size_t tape_id = 0;
+	if( tape != CPPAD_NULL )
+		tape_id = tape->id_;
+
+	// id_ == 1 is initial setting for parameters so cannot match 0
+	bool var_x = x.id_  == tape_id;
+	bool var_y = y.id_ == tape_id;
 	CPPAD_ASSERT_KNOWN(
-		(! var_x) || x.id_ == tape->id_ ,
-		"pow first operand is a variable for a different thread"
+		Parameter(x) || var_x ,
+		"pow: first argument is a variable for a different thread"
 	);
 	CPPAD_ASSERT_KNOWN(
-		(! var_y) || y.id_ == tape->id_ ,
-		"pow second operand is a variable for a different thread"
+		Parameter(y) || var_y ,
+		"pow: second argument is a variable for a different thread"
 	);
-# endif
+
 	AD<Base> result;
 	result.value_  = pow(x.value_, y.value_);
 	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
@@ -158,7 +151,7 @@ pow(const AD<Base> &x, const AD<Base> &y)
 			result.taddr_ = tape->Rec_.PutOp(PowvvOp);
 
 			// make result a variable
-			result.id_ = tape->id_;
+			result.id_ = tape_id;
 		}
 		else if( IdenticalZero( y.value_ ) )
 		{	// result = variable^0
@@ -176,7 +169,7 @@ pow(const AD<Base> &x, const AD<Base> &y)
 			result.taddr_ = tape->Rec_.PutOp(PowvpOp);
 
 			// make result a variable
-			result.id_ = tape->id_;
+			result.id_ = tape_id;
 		}
 	}
 	else if( var_y )
@@ -196,7 +189,7 @@ pow(const AD<Base> &x, const AD<Base> &y)
 			result.taddr_ = tape->Rec_.PutOp(PowpvOp);
 
 			// make result a variable
-			result.id_ = tape->id_;
+			result.id_ = tape_id;
 		}
 	}
 	return result;
