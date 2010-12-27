@@ -2,28 +2,22 @@
 #
 # replacement text for this commit
 cat << EOF > commit.$$
-Replace svn_commit.sh and svn_status.sh by commit.sh. This is a simpler
-procedure for commits that is also used by other projects.
+This is a template file for making commits to the ckbs repository.
+Lines with no 'at' characters, are general comments not connected to 
+a specifi file. Lines containing an 'at' character are "file name" 
+followed by comment. Next line must be empty for ./commit.sh files to work.
 
-AUTHORS@  undate version number to current date.
-commit.sh@
-configure@  undate version number to current date.
-configure.ac@  undate version number to current date.
-cppad/config.h@  undate version number to current date.
-cppad/configure.hpp@  undate version number to current date.
-only_date.sh@ check if only the date (version number) has changed.
-new_stable.sh@ remove automatic editing of to svn_commit.sh and svn_status.sh.
-svn_commit.sh@ replace by commit.sh.
-svn_status.sh@ replace by commit.sh.
+commit.sh@ For this example, commit.sh is the only file committed.
 EOF
 # -----------------------------------------------------------------------
 if [ "$1" == 'files' ]
 then
 	# -------------------------------------------------
 	svn status | sed -n -e '/^[ADMRC] /p' | \
-		sed -e 's/^[ADMRC] [+ ]*//'| \
+		sed -e 's/^[ADMRC] [+ ]*//' -e '/^commit.sh$/d' | \
 		sort -u >> list.$$
 	# -------------------------------------------------
+	abort="no"
 	list=`cat list.$$`
 	for file in $list
 	do
@@ -32,13 +26,26 @@ then
 			sed -f svn_commit.sed $file > commit.$$
 			if ! diff $file commit.$$ > /dev/null
 			then
-				echo "commit.sh aborting: suggest changes to $file:"
-				diff $file commit.$$
+				echo "---------------------------------------"
+				echo "commit.sh: suggest changes to $file:"
+				if diff $file commit.$$
+				then
+					echo "commit.sh: program error"
+					exit 1
+				fi
 				rm commit.$$
-				exit 1
+				if [ "$file" != "cppad/config.h" ]
+				then
+					abort="yes"
+				fi
 			fi
 		fi
 	done
+	if [ "$abort" == "yes" ]
+	then
+		echo "commit.sh: aborting because of suggested changes above"
+		exit 1
+	fi
 	#
 	echo "cp commit.sh commit.old"
 	cp commit.sh commit.old
