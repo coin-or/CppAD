@@ -69,7 +69,18 @@ then
 	echo "mv commit.$$ commit.sh"
 	mv commit.$$ commit.sh
 	#
+	echo "chmod +x commit.sh"
 	chmod +x commit.sh
+	#
+	sed -f svn_commit.sed cppad/config.h > commit.$$
+	if ! diff cppad/config.h commit.$$ > /dev/null
+	then
+		echo "------------------------------"
+		echo "commit.sh: either remove cppad/config.h from list in commit.sh"
+		echo "or make the following change to cppad/config.h"
+		diff cppad/config.h commit.$$
+		exit 1
+	fi
 	exit 0
 fi
 # -----------------------------------------------------------------------
