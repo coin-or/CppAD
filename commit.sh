@@ -14,8 +14,8 @@ if [ "$1" == 'files' ]
 then
 	# -------------------------------------------------
 	svn status | sed -n -e '/^[ADMRC] /p' | \
-		sed -e 's/^[ADMRC] [+ ]*//' -e '/^commit.sh$/d' | \
-		sort -u >> list.$$
+	sed -e 's/^[ADMRC] [+ ]*//' -e '/^commit.sh$/d' -e '/^cppad/config.h/d' | \
+	sort -u >> list.$$
 	# -------------------------------------------------
 	abort="no"
 	list=`cat list.$$`
@@ -47,8 +47,8 @@ then
 		exit 1
 	fi
 	#
-	echo "cp commit.sh commit.old"
-	cp commit.sh commit.old
+	echo "mv commit.sh commit.sh.old"
+	mv commit.sh commit.sh.old
 	#
 	echo "svn revert commit.sh"
 	svn revert commit.sh
@@ -58,29 +58,19 @@ then
 	rm  list.$$
 	sed -n -e '/^EOF/,$p' < commit.sh >> commit.$$ 
 	#
-	echo "diff commit.sh commit.$$"
-	if diff commit.sh commit.$$
-	then
-		echo "commit.sh: exiting because commit.sh has not changed"
-		rm commit.$$
-		exit 1
-	fi
-	#
 	echo "mv commit.$$ commit.sh"
 	mv commit.$$ commit.sh
+	#
+	echo "diff commit.sh.old commit.sh"
+	if diff commit.sh.old commit.sh
+	then
+		echo "commit.sh: exiting because commit.sh has not changed"
+		exit 1
+	fi
 	#
 	echo "chmod +x commit.sh"
 	chmod +x commit.sh
 	#
-	sed -f svn_commit.sed cppad/config.h > commit.$$
-	if ! diff cppad/config.h commit.$$ > /dev/null
-	then
-		echo "------------------------------"
-		echo "commit.sh: either remove cppad/config.h from list in commit.sh"
-		echo "or make the following change to cppad/config.h"
-		diff cppad/config.h commit.$$
-		exit 1
-	fi
 	exit 0
 fi
 # -----------------------------------------------------------------------
