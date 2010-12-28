@@ -9,14 +9,10 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# This file is used with pkg-config to include CppAD after it is installed
-
-# Location of include files depends on POSTFIX_DIR, see trunk/makefile.am
-@CppAD_POSTFIX_TRUE@  myincludedir=@prefix@/include/@POSTFIX_DIR@
-@CppAD_POSTFIX_FALSE@ myincludedir=@prefix@/include
+# This file is used with pkg-config to include CppAD before it is installed.
 
 Name:         CppAD
 Description:  Differentiaiton of C++ Algorithms
 Version:      @PACKAGE_VERSION@
 URL:          http://www.coin-or.org/CppAD
-Cflags:       -I${myincludedir}
+Cflags:       -I@ABS_TOP_SRCDIR@

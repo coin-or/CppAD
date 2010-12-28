@@ -1,4 +1,4 @@
-/* $Id: configure.hpp.in 1447 2009-07-04 19:15:09Z bradbell $ */
+/* $Id: configure.hpp.in 1748 2010-12-28 19:07:58Z bradbell $ */
 /* This file may be inclued multiple times so comment out ifndef and define
 # ifndef CPPAD_CONFIGURE_INCLUDED
 # define CPPAD_CONFIGURE_INCLUDED

@@ -35,8 +35,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(myinclude_HEADERS) \
-	$(nobase_myinclude_HEADERS) $(srcdir)/cppad.pc.in \
-	$(srcdir)/cppad_test.pc.in $(srcdir)/doc.omh.in \
+	$(nobase_myinclude_HEADERS) $(srcdir)/cppad-uninstalled.pc.in \
+	$(srcdir)/cppad.pc.in $(srcdir)/doc.omh.in \
 	$(srcdir)/doxyfile.in $(srcdir)/makefile.am \
 	$(srcdir)/makefile.in $(top_srcdir)/configure \
 	$(top_srcdir)/cppad/config.h.in \
@@ -52,7 +52,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/cppad/config.h
-CONFIG_CLEAN_FILES = cppad.pc cppad_test.pc cppad/configure.hpp \
+CONFIG_CLEAN_FILES = cppad.pc cppad-uninstalled.pc cppad/configure.hpp \
 	doxyfile doc.omh omh/install_unix.omh omh/install_windows.omh
 CONFIG_CLEAN_VPATH_FILES =
 SOURCES =
@@ -164,7 +164,6 @@ FADBAD_DIR = @FADBAD_DIR@
 FC = @FC@
 FCFLAGS = @FCFLAGS@
 FCLIBS = @FCLIBS@
-HAVE_PKG_CONFIG = @HAVE_PKG_CONFIG@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -215,6 +214,7 @@ datarootdir = @datarootdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
+have_pkg_config = @have_pkg_config@
 host_alias = @host_alias@
 htmldir = @htmldir@
 includedir = @includedir@
@@ -241,7 +241,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
-# $Id: makefile.am 1743 2010-12-28 05:55:37Z bradbell $
+# $Id: makefile.am 1748 2010-12-28 19:07:58Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -583,7 +583,7 @@ distclean-hdr:
 	-rm -f cppad/config.h cppad/stamp-h1
 cppad.pc: $(top_builddir)/config.status $(srcdir)/cppad.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
-cppad_test.pc: $(top_builddir)/config.status $(srcdir)/cppad_test.pc.in
+cppad-uninstalled.pc: $(top_builddir)/config.status $(srcdir)/cppad-uninstalled.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 cppad/configure.hpp: $(top_builddir)/config.status $(top_srcdir)/cppad/configure.hpp.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@

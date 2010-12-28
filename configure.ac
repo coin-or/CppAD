@@ -276,14 +276,15 @@ dnl determine FCLIBS, flags necessary for linking C++ with modern fortran
 AC_FC_LIBRARY_LDFLAGS
 
 dnl absolute path corresponding to top_srcdir in makefile.am
-dnl (used by cppad_test.pc.in).
+dnl (used by cppad-uninstalled.pc.in).
 abs_top_srcdir=`cd $srcdir ; pwd`
 AC_SUBST(ABS_TOP_SRCDIR, "$abs_top_srcdir")
 
 dnl --------------------------------------------------------------------------
 dnl Check for programs
 
-AC_CHECK_PROG(HAVE_PKG_CONFIG, [pkg-config], [yes], [no])
+AC_CHECK_PROG(have_pkg_config, [pkg-config], [yes], [no])
+AM_CONDITIONAL(CppAD_PKG_CONFIG, test "$have_pkg_config" = "yes")
 
 dnl --------------------------------------------------------------------------
 dnl Check for C libraries
@@ -309,7 +310,7 @@ AC_CHECK_LIB(
 dnl --------------------------------------------------------------------------
 dnl Determine link line for ipopt
 AC_SUBST(CPPAD_IPOPT_LIBS, "-L $IPOPT_DIR/lib -lipopt")
-if test "$HAVE_PKG_CONFIG" == "yes"; then
+if test "$have_pkg_config" == "yes"; then
 	dnl set CPPAD_IPOPT_LIBS
 	export PKG_CONFIG_PATH="$IPOPT_DIR/lib/pkgconfig"
 	if pkg-config --libs ipopt >& /dev/null ; then
@@ -352,7 +353,7 @@ dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
 	cppad.pc
-	cppad_test.pc
+	cppad-uninstalled.pc
 	cppad/configure.hpp
 	doxyfile
 	doc.omh

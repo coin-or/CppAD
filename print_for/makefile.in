@@ -105,7 +105,6 @@ FADBAD_DIR = @FADBAD_DIR@
 FC = @FC@
 FCFLAGS = @FCFLAGS@
 FCLIBS = @FCLIBS@
-HAVE_PKG_CONFIG = @HAVE_PKG_CONFIG@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -156,6 +155,7 @@ datarootdir = @datarootdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
+have_pkg_config = @have_pkg_config@
 host_alias = @host_alias@
 htmldir = @htmldir@
 includedir = @includedir@
@@ -183,11 +183,15 @@ top_srcdir = @top_srcdir@
 @CppAD_BOOSTVECTOR_FALSE@BOOST_INCLUDE = 
 #
 @CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
+@CppAD_PKG_CONFIG_FALSE@CPPAD_INCLUDE = -I$(top_srcdir)
+#
+# Make sure that ../cppad-uninstalled.pc works for determining cflags
+@CppAD_PKG_CONFIG_TRUE@CPPAD_INCLUDE = `(export PKG_CONFIG_PATH='..' ; pkg-config --cflags cppad)`
 #
 # Microsoft project files
 EXTRA_DIST = print_for.sln print_for.vcproj
 #
-AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
+AM_CPPFLAGS = -I. $(CPPAD_INCLUDE) $(BOOST_INCLUDE)
 #
 AM_CXXFLAGS = -g $(CXX_FLAGS)
 #

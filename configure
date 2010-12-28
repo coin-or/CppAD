@@ -565,7 +565,9 @@ LIBOBJS
 CPPAD_IPOPT_LIBS
 DL_LIB
 PTHREAD_LIB
-HAVE_PKG_CONFIG
+CppAD_PKG_CONFIG_FALSE
+CppAD_PKG_CONFIG_TRUE
+have_pkg_config
 ABS_TOP_SRCDIR
 FCLIBS
 ac_ct_FC
@@ -5145,11 +5147,11 @@ ABS_TOP_SRCDIR="$abs_top_srcdir"
 set dummy pkg-config; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
-if test "${ac_cv_prog_HAVE_PKG_CONFIG+set}" = set; then :
+if test "${ac_cv_prog_have_pkg_config+set}" = set; then :
   $as_echo_n "(cached) " >&6
 else
-  if test -n "$HAVE_PKG_CONFIG"; then
-  ac_cv_prog_HAVE_PKG_CONFIG="$HAVE_PKG_CONFIG" # Let the user override the test.
+  if test -n "$have_pkg_config"; then
+  ac_cv_prog_have_pkg_config="$have_pkg_config" # Let the user override the test.
 else
 as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
 for as_dir in $PATH
@@ -5158,7 +5160,7 @@ do
   test -z "$as_dir" && as_dir=.
     for ac_exec_ext in '' $ac_executable_extensions; do
   if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_prog_HAVE_PKG_CONFIG="yes"
+    ac_cv_prog_have_pkg_config="yes"
     $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
     break 2
   fi
@@ -5166,18 +5168,26 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_prog_HAVE_PKG_CONFIG" && ac_cv_prog_HAVE_PKG_CONFIG="no"
+  test -z "$ac_cv_prog_have_pkg_config" && ac_cv_prog_have_pkg_config="no"
 fi
 fi
-HAVE_PKG_CONFIG=$ac_cv_prog_HAVE_PKG_CONFIG
-if test -n "$HAVE_PKG_CONFIG"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $HAVE_PKG_CONFIG" >&5
-$as_echo "$HAVE_PKG_CONFIG" >&6; }
+have_pkg_config=$ac_cv_prog_have_pkg_config
+if test -n "$have_pkg_config"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $have_pkg_config" >&5
+$as_echo "$have_pkg_config" >&6; }
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
 fi
 
+
+ if test "$have_pkg_config" = "yes"; then
+  CppAD_PKG_CONFIG_TRUE=
+  CppAD_PKG_CONFIG_FALSE='#'
+else
+  CppAD_PKG_CONFIG_TRUE='#'
+  CppAD_PKG_CONFIG_FALSE=
+fi
 
 
 
@@ -5275,7 +5285,7 @@ fi
 
 CPPAD_IPOPT_LIBS="-L $IPOPT_DIR/lib -lipopt"
 
-if test "$HAVE_PKG_CONFIG" == "yes"; then
+if test "$have_pkg_config" == "yes"; then
 		export PKG_CONFIG_PATH="$IPOPT_DIR/lib/pkgconfig"
 	if pkg-config --libs ipopt >& /dev/null ; then
 		CPPAD_IPOPT_LIBS=`pkg-config --libs ipopt`
@@ -5415,7 +5425,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS" >&5
 $as_echo "cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS" >&6; }
-ac_config_files="$ac_config_files cppad.pc cppad_test.pc cppad/configure.hpp doxyfile doc.omh example/test_one.sh omh/install_unix.omh omh/install_windows.omh test_more/test_one.sh makefile example/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile introduction/get_started/makefile introduction/exp_apx/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/sacado/makefile speed/src/makefile test_more/makefile"
+ac_config_files="$ac_config_files cppad.pc cppad-uninstalled.pc cppad/configure.hpp doxyfile doc.omh example/test_one.sh omh/install_unix.omh omh/install_windows.omh test_more/test_one.sh makefile example/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile introduction/get_started/makefile introduction/exp_apx/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/sacado/makefile speed/src/makefile test_more/makefile"
 
 ac_config_commands="$ac_config_commands default-1"
 
@@ -5575,6 +5585,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${CppAD_MS_COMPILER_TRUE}" && test -z "${CppAD_MS_COMPILER_FALSE}"; then
   as_fn_error $? "conditional \"CppAD_MS_COMPILER\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${CppAD_PKG_CONFIG_TRUE}" && test -z "${CppAD_PKG_CONFIG_FALSE}"; then
+  as_fn_error $? "conditional \"CppAD_PKG_CONFIG\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 
@@ -6179,7 +6193,7 @@ do
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "cppad/config.h") CONFIG_HEADERS="$CONFIG_HEADERS cppad/config.h" ;;
     "cppad.pc") CONFIG_FILES="$CONFIG_FILES cppad.pc" ;;
-    "cppad_test.pc") CONFIG_FILES="$CONFIG_FILES cppad_test.pc" ;;
+    "cppad-uninstalled.pc") CONFIG_FILES="$CONFIG_FILES cppad-uninstalled.pc" ;;
     "cppad/configure.hpp") CONFIG_FILES="$CONFIG_FILES cppad/configure.hpp" ;;
     "doxyfile") CONFIG_FILES="$CONFIG_FILES doxyfile" ;;
     "doc.omh") CONFIG_FILES="$CONFIG_FILES doc.omh" ;;

@@ -1,7 +1,0 @@
-# This file is used with pkg-config to include CppAD before it is installed.
-
-Name:         CppAD
-Description:  Differentiaiton of C++ Algorithms
-Version:      @PACKAGE_VERSION@
-URL:          http://www.coin-or.org/CppAD
-Cflags:       -I@ABS_TOP_SRCDIR@
