@@ -2,7 +2,7 @@
 #
 # replacement text for this commit
 cat << EOF > commit.$$
-This is a template file for making commits to the ckbs repository.
+This is a template file for making commits to the cppad repository.
 Lines with no 'at' characters, are general comments not connected to 
 a specifi file. Lines containing an 'at' character are "file name" 
 followed by comment. Next line must be empty for ./commit.sh files to work.
