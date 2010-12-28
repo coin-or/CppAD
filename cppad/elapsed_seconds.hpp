@@ -89,7 +89,7 @@ Returns the elapsed number since the first call to this function.
 This routine tries is accurate to within .02 seconds.
 It does not necessary work for time intervals that are less than a day.
 \li
-If running under the Microsoft system, it uses \c ::GetSystemTime for timing.
+If running under the Microsoft system, it uses \c ::%GetSystemTime for timing.
 \li
 Otherwise, if \c gettimeofday is available, it is used.
 \li

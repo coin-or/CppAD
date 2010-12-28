@@ -1,4 +1,4 @@
-# ! /bin/bash -e 
+#! /bin/bash -e 
 # $Id: dos_format.sh 1370 2009-05-31 05:31:50Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell

@@ -1,4 +1,4 @@
-# ! /bin/bash -e
+#! /bin/bash -e
 # $Id: build.sh 1705 2010-09-23 11:46:10Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell

@@ -251,19 +251,17 @@ EXTRA_DIST = \
 	build.sh \
 	check_doxygen.sh \
 	check_example.sh \
+	check_if_0.sh \
+	check_include_def.sh \
 	check_include_file.sh \
 	check_include_omh.sh \
-	check_include_def.sh \
 	check_makefile.sh \
-	check_if_0.sh \
-	clean_cppad.sh \
+	check_svn_dist.sh \
 	cpl1.0.txt \
 	dev.omh \
 	doc \
 	doc.omh.in \
 	doxyfile.in \
-	fix_makefile.sh \
-	old_build.sh \
 	omh \
 	openmp/example_a11c.cpp \
 	openmp/multi_newton.cpp \
