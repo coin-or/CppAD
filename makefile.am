@@ -324,3 +324,5 @@ install-data-hook:
 	chmod -R a+r $(doc_package)
 endif
 #
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = cppad.pc
