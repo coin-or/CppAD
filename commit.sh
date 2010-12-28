@@ -102,6 +102,25 @@ EOF
 	exit 0
 fi
 # -----------------------------------------------------------------------
+echo "mv cppad/config.h cppad/config.h.old"
+mv cppad/config.h cppad/config.h.old
+#
+echo "sed -f svn_commit.sed cppad/config.h.old > cppad/config.h"
+sed -f svn_commit.sed cppad/config.h.old > cppad/config.h
+#
+if ! diff cppad/config.h.old cppad/config.h > /dev/null
+then
+	echo "commit.sh: automatically made following changes to cppad/config.h"
+	echo "-----------------------------------------------------------------"
+	if diff cppad/config.h.old cppad/config.h
+	then
+		echo "commit.sh: unexpected return from diff"
+		exit 1
+	fi
+	echo "-----------------------------------------------------------------"
+	echo "to complete this change, rexecute the command: ./commit.sh run"
+	exit 1
+fi
 list=`sed -e '/@/! d' -e 's/@.*//' commit.$$`
 msg=`sed -e '/@ *$/d' -e 's|.*/\([^/]*@\)|\1|' -e 's|@|:|' commit.$$`
 rm commit.$$
