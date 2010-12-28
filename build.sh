@@ -82,8 +82,6 @@ then
 	#
 	#
 	list="
-		AUTHORS
-		configure.ac
 		configure
 		cppad/config.h
 	"
@@ -113,6 +111,12 @@ then
 	sed -i.old cppad/config.h \
 		-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $version/g" \
 		-e "s/VERSION \"[0-9]\{8\}[.0-9]*\"/VERSION \"$version\"/g"
+	list="
+		AUTHORS
+		configure.ac
+		configure
+		cppad/config.h
+	"
 	for name in $list
 	do
 		echo "-------------------------------------------------------------"

@@ -275,6 +275,11 @@ AC_C_INLINE
 dnl determine FCLIBS, flags necessary for linking C++ with modern fortran
 AC_FC_LIBRARY_LDFLAGS
 
+dnl absolute path corresponding to top_srcdir in makefile.am
+dnl (used by cppad_test.pc.in).
+abs_top_srcdir=`cd $srcdir ; pwd`
+AC_SUBST(ABS_TOP_SRCDIR, "$abs_top_srcdir")
+
 dnl --------------------------------------------------------------------------
 dnl Check for programs
 
@@ -346,6 +351,8 @@ dnl -----------------------------------------------------------------------
 dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will 
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
+	cppad.pc
+	cppad_test.pc
 	cppad/configure.hpp
 	doxyfile
 	doc.omh

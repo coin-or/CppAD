@@ -35,7 +35,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(myinclude_HEADERS) \
-	$(nobase_myinclude_HEADERS) $(srcdir)/doc.omh.in \
+	$(nobase_myinclude_HEADERS) $(srcdir)/cppad.pc.in \
+	$(srcdir)/cppad_test.pc.in $(srcdir)/doc.omh.in \
 	$(srcdir)/doxyfile.in $(srcdir)/makefile.am \
 	$(srcdir)/makefile.in $(top_srcdir)/configure \
 	$(top_srcdir)/cppad/config.h.in \
@@ -51,8 +52,8 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/cppad/config.h
-CONFIG_CLEAN_FILES = cppad/configure.hpp doxyfile doc.omh \
-	omh/install_unix.omh omh/install_windows.omh
+CONFIG_CLEAN_FILES = cppad.pc cppad_test.pc cppad/configure.hpp \
+	doxyfile doc.omh omh/install_unix.omh omh/install_windows.omh
 CONFIG_CLEAN_VPATH_FILES =
 SOURCES =
 DIST_SOURCES =
@@ -132,6 +133,7 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
+ABS_TOP_SRCDIR = @ABS_TOP_SRCDIR@
 ACLOCAL = @ACLOCAL@
 ADOLC_DIR = @ADOLC_DIR@
 AMTAR = @AMTAR@
@@ -239,7 +241,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
-# $Id: makefile.am 1734 2010-12-22 22:22:32Z bradbell $
+# $Id: makefile.am 1743 2010-12-28 05:55:37Z bradbell $
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -581,6 +583,10 @@ $(top_srcdir)/cppad/config.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f cppad/config.h cppad/stamp-h1
+cppad.pc: $(top_builddir)/config.status $(srcdir)/cppad.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+cppad_test.pc: $(top_builddir)/config.status $(srcdir)/cppad_test.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
 cppad/configure.hpp: $(top_builddir)/config.status $(top_srcdir)/cppad/configure.hpp.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 doxyfile: $(top_builddir)/config.status $(srcdir)/doxyfile.in

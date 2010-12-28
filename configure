@@ -566,6 +566,7 @@ CPPAD_IPOPT_LIBS
 DL_LIB
 PTHREAD_LIB
 HAVE_PKG_CONFIG
+ABS_TOP_SRCDIR
 FCLIBS
 ac_ct_FC
 FCFLAGS
@@ -5135,6 +5136,10 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
+abs_top_srcdir=`cd $srcdir ; pwd`
+ABS_TOP_SRCDIR="$abs_top_srcdir"
+
+
 
 # Extract the first word of "pkg-config", so it can be a program name with args.
 set dummy pkg-config; ac_word=$2
@@ -5410,7 +5415,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS" >&5
 $as_echo "cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS" >&6; }
-ac_config_files="$ac_config_files cppad/configure.hpp doxyfile doc.omh example/test_one.sh omh/install_unix.omh omh/install_windows.omh test_more/test_one.sh makefile example/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile introduction/get_started/makefile introduction/exp_apx/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/sacado/makefile speed/src/makefile test_more/makefile"
+ac_config_files="$ac_config_files cppad.pc cppad_test.pc cppad/configure.hpp doxyfile doc.omh example/test_one.sh omh/install_unix.omh omh/install_windows.omh test_more/test_one.sh makefile example/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile introduction/get_started/makefile introduction/exp_apx/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/sacado/makefile speed/src/makefile test_more/makefile"
 
 ac_config_commands="$ac_config_commands default-1"
 
@@ -6173,6 +6178,8 @@ do
   case $ac_config_target in
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "cppad/config.h") CONFIG_HEADERS="$CONFIG_HEADERS cppad/config.h" ;;
+    "cppad.pc") CONFIG_FILES="$CONFIG_FILES cppad.pc" ;;
+    "cppad_test.pc") CONFIG_FILES="$CONFIG_FILES cppad_test.pc" ;;
     "cppad/configure.hpp") CONFIG_FILES="$CONFIG_FILES cppad/configure.hpp" ;;
     "doxyfile") CONFIG_FILES="$CONFIG_FILES doxyfile" ;;
     "doc.omh") CONFIG_FILES="$CONFIG_FILES doc.omh" ;;
