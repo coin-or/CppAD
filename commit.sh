@@ -14,7 +14,7 @@ if [ "$1" == 'files' ]
 then
 	# -------------------------------------------------
 	svn status | sed -n -e '/^[ADMRC] /p' | \
-	sed -e 's/^[ADMRC] [+ ]*//' -e '/^commit.sh$/d' -e '/^cppad/config.h/d' | \
+	sed -e 's/^[ADMRC] [+ ]*//' -e '/^commit.sh$/d' |\
 	sort -u >> list.$$
 	# -------------------------------------------------
 	abort="no"
@@ -50,16 +50,11 @@ then
 	echo "mv commit.sh commit.sh.old"
 	mv commit.sh commit.sh.old
 	#
-	echo "svn revert commit.sh"
-	svn revert commit.sh
-	#
-	sed -n -e '1,/^$/p'   < commit.sh >  commit.$$ 
-	sed list.$$ -e 's/$/@/'           >> commit.$$ 
+	echo "creating new ./commit.sh"
+	sed -n -e '1,/@/p' commit.sh.old | sed -e '/@/d' > commit.sh
+	sed list.$$ -e 's/$/@/'                         >> commit.sh
 	rm  list.$$
-	sed -n -e '/^EOF/,$p' < commit.sh >> commit.$$ 
-	#
-	echo "mv commit.$$ commit.sh"
-	mv commit.$$ commit.sh
+	sed -n -e '/^EOF/,$p' commit.sh.old             >> commit.sh
 	#
 	echo "diff commit.sh.old commit.sh"
 	if diff commit.sh.old commit.sh
@@ -80,10 +75,11 @@ cat << EOF
 usage: ./commit.sh files
        ./commit.sh run
 
-The first from changes the list of files at the beginning of commit.sh 
-so that it all the files that have changed status.
-You should then edit commit.sh by hand (as per the instructions at the 
-beginning of commit.sh) before running the second form.
+The first from puts a list, at the beginning of commit.sh, of the files
+the have changed (according to svn). In addition, it displays the changes 
+to commit.sh. This will include the new files in the list since the last 
+edit of commit.sh. You should then edit commit.sh by hand, to add comments
+about the changes, before running the second form.
 
 The second form actually commits the list of files (provided that you reply
 y to the [y/n] prompt that commit.sh generates).
@@ -92,27 +88,18 @@ EOF
 	exit 0
 fi
 # -----------------------------------------------------------------------
-echo "mv cppad/config.h cppad/config.h.old"
-mv cppad/config.h cppad/config.h.old
-#
-echo "sed -f svn_commit.sed cppad/config.h.old > cppad/config.h"
-sed -f svn_commit.sed cppad/config.h.old > cppad/config.h
-#
-if ! diff cppad/config.h.old cppad/config.h > /dev/null
-then
-	echo "commit.sh: automatically made following changes to cppad/config.h"
-	echo "-----------------------------------------------------------------"
-	if diff cppad/config.h.old cppad/config.h
-	then
-		echo "commit.sh: unexpected return from diff"
-		exit 1
-	fi
-	echo "-----------------------------------------------------------------"
-	echo "to complete this change, rexecute the command: ./commit.sh run"
-	exit 1
-fi
 list=`sed -e '/@/! d' -e 's/@.*//' commit.$$`
 msg=`sed -e '/@ *$/d' -e 's|.*/\([^/]*@\)|\1|' -e 's|@|:|' commit.$$`
+# if cppad/config.h is in the list of files to be commited
+if (echo $list | grep 'cppad/config.h' > /dev/null)
+then
+	# and CPPAD_CPPADVECTOR is not defined as one
+	if ! grep '^# *define  *CPPAD_CPPADVECTOR  *1 *$' > /dev/null
+	then
+		echo "commit.sh run: CPPAD_CPPADVECTOR is not 1 in cppad/config.h"
+		exit 1
+	fi
+fi
 rm commit.$$
 echo "svn commit -m \""
 echo "$msg"
