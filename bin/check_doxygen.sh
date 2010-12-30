@@ -1,4 +1,4 @@
-#! /bin/bash 
+#! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
@@ -10,9 +10,15 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+if [ $0 != "bin/check_doxygen.sh" ]
+then
+	echo "bin/check_doxygen.sh: must be executed from its parent directory"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
 if [ ! -e "doxygen.err" ]
 then
-	echo "check_doxygen.sh: cannot find doxygen.err"
+	echo "bin/check_doxygen.sh: cannot find doxygen.err"
 	exit 1
 fi
 doxygen_version=`doxygen --version  | sed -e 's|\.|*100+|' -e's|\.|*10+|'`
@@ -29,7 +35,7 @@ if [ "$list" == "" ]
 then
 	exit 0
 fi
-echo "check_doxygen.sh: Doxygen errors or warnings; see doxygen.err"
+echo bin/"check_doxygen.sh: Doxygen errors or warnings; see doxygen.err"
 if [ "$USER" != "bradbell" ]
 then
 	exit 0

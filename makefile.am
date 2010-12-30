@@ -249,7 +249,10 @@ SUBDIRS =  \
 #
 EXTRA_DIST = \
 	build.sh \
-	check_doxygen.sh \
+	bin/check_doxygen.sh \
+	bin/commit.sh \
+	bin/move2bin.sh \
+	bin/only_date.sh \
 	check_example.sh \
 	check_if_0.sh \
 	check_include_def.sh \

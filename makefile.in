@@ -241,7 +241,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @CppAD_POSTFIX_FALSE@postfix_dir = .
 
-# $Id: makefile.am 1748 2010-12-28 19:07:58Z bradbell $
+# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -483,7 +483,10 @@ SUBDIRS = \
 #
 EXTRA_DIST = \
 	build.sh \
-	check_doxygen.sh \
+	bin/check_doxygen.sh \
+	bin/commit.sh \
+	bin/move2bin.sh \
+	bin/only_date.sh \
 	check_example.sh \
 	check_if_0.sh \
 	check_include_def.sh \

@@ -1,5 +1,5 @@
 #! /bin/bash -e
-# $Id: build.sh 1705 2010-09-23 11:46:10Z bradbell $
+# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -386,8 +386,8 @@ then
 	echo "cat doxygen.err"
 	cat doxygen.err 
 	#
-	echo "./check_doxygen.sh"
-	./check_doxygen.sh
+	echo "bin/check_doxygen.sh"
+	bin/check_doxygen.sh
 	#
 	echo "OK: build.sh doxygen"
 	exit 0

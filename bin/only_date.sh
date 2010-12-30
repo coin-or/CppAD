@@ -54,6 +54,7 @@ check_difference configure
 list="$list configure.ac"
 svn cat configure.ac | sed > bin/only_date.$$ \
      -e "s/(CppAD, [0-9]\{8\}[.0-9]* *,/(CppAD, $version,/"
+check_difference configure.ac
 # ---------------------------------------------------------------------
 list="$list cppad/config.h"
 # svn_commit.sed will make sure config.h has these values
