@@ -1,5 +1,5 @@
-#! /bin/bash -e 
-# $Id: dos_format.sh 1370 2009-05-31 05:31:50Z bradbell $
+#! /bin/bash -e
+# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -9,6 +9,12 @@
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+if [ $0 != "bin/only_date.sh" ]
+then
+	echo "bin/only_date.sh: must be executed from its parent directory"
+	exit 1
+fi
 # -----------------------------------------------------------------------------
 version=`cat configure.ac | grep "^ *AC_INIT(" | 
         sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
@@ -56,4 +62,3 @@ do
 		diff $file.$$ $file
 	fi
 done
-mv cppad/config.h.save config.h
