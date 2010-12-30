@@ -310,8 +310,8 @@ then
 	#
 	if [ -e cppad-$version ]
 	then
-		echo "rm -r cppad-$version"
-		rm -r cppad-$version
+		echo "rm -rf cppad-$version"
+		rm -rf cppad-$version
 	fi
 	for file in cppad-*.tgz 
 	do
@@ -411,6 +411,7 @@ then
 		check_example.sh
 		check_if_0.sh
 		check_include_def.sh
+		check_include_file.sh
 	"
 	for check in $list 
 	do
@@ -419,7 +420,6 @@ then
 	done
 	#
 	list="
-		check_include_file.sh
 		check_include_omh.sh
 		check_makefile.sh
 	"
