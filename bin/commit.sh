@@ -4,7 +4,7 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Common Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -50,12 +50,12 @@ then
 					rm bin/commit.$$
 					exit 1
 				fi
-				rm bin/commit.$$
 				if [ "$file" != "cppad/config.h" ]
 				then
 					abort="yes"
 				fi
 			fi
+			rm bin/commit.$$
 		fi
 	done
 	if [ "$abort" == "yes" ]
@@ -74,12 +74,14 @@ then
 	rm  list.$$
 	sed -n -e '/^EOF/,$p' bin/commit.sh.old             >> bin/commit.sh
 	#
+	echo "------------------------------------"
 	echo "diff bin/commit.sh.old bin/commit.sh"
 	if diff    bin/commit.sh.old bin/commit.sh
 	then
 		echo "bin/commit.sh: exiting because bin/commit.sh has not changed"
 		exit 1
 	fi
+	echo "------------------------------------"
 	#
 	echo "chmod +x bin/commit.sh"
 	chmod +x bin/commit.sh
