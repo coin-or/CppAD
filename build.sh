@@ -412,6 +412,7 @@ then
 		check_if_0.sh
 		check_include_def.sh
 		check_include_file.sh
+		check_include_omh.sh
 	"
 	for check in $list 
 	do
@@ -420,7 +421,6 @@ then
 	done
 	#
 	list="
-		check_include_omh.sh
 		check_makefile.sh
 	"
 	for check in $list 

@@ -1,62 +1,56 @@
-#! /bin/bash 
+#! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Common Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-#
+if [ $0 != "bin/check_include_omh.sh" ]
+then
+	echo "bin/check_include_omh.sh: must be executed from its parent directory"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
+# Make sure omhelp, under cygwin, has not matched file names with wrong case.
 echo "Checking difference between OMhelp include directives and file names."
 echo "----------------------------------------------------------------------"
-if [ -e junk.1 ]
-then
-	rm junk.1
-fi
+# super list of file names that are referenced by omhelp commands
+find . \( -name '*.cpp' \) -or \
+       \( -name '*.hpp' \) -or \
+       \( -name '*.omh' \) -or \
+       \( -name '*.am' \) |
+	sed -e 's|./||' > bin/check_include_omh.1.$$
 list="
 	cpl1.0.txt
+	cppad/PowInt.h
+	cppad_ipopt/example/example_windows.bat
 	doc.omh
 	dev.omh
-	cppad/PowInt.h
-	cppad_ipopt/*/*.hpp
-	cppad_ipopt/*/*.cpp
-	cppad_ipopt/*/*.bat
-	cppad_ipopt/*/*.omh
-	cppad/*.hpp
-	cppad/local/*.hpp
-	cppad/speed/*.hpp
-	example/*.cpp
-	example/*.hpp
-	introduction/get_started/*.cpp
-	introduction/exp_apx/*.cpp
-	introduction/exp_apx/*.hpp
-	introduction/exp_apx/*.omh
-	openmp/*.hpp
-	openmp/*.cpp
-	openmp/*.sh
-	print_for/*.cpp
-	speed/*.cpp
-	speed/*/*.cpp
-	speed/*/makefile.am
-	omh/*.omh
+	gpl2.txt
+	openmp/run.sh
 "
 for file in $list
+do
+	echo $file >> bin/check_include_omh.1.$$
+done
+for file in `cat bin/check_include_omh.1.$$`
 do
 	# assume $childtable, ... , $verbatim use % for delimiter
 	# also assume verbatim commands use one line (would be nice to allow
 	# multiple line verbatim commands).
-	sed -n < $file >> junk.1 \
+	sed -n < $file >> bin/check_include_omh.2.$$ \
 		-e 's/^#[ \t][ \t]*//' \
 		-e '/$childtable%/,/%$\$/p' \
 		-e '/$children%/,/%$\$/p' \
 		-e '/$contents%/,/%$\$/p' \
 		-e '/$verbatim%/p' 
 done
-sed < junk.1 > junk.2 \
+sed < bin/check_include_omh.2.$$ > bin/check_include_omh.3.$$ \
 	-e 's/$childtable//' \
 	-e 's/$children//' \
 	-e 's/$contents//' \
@@ -67,16 +61,18 @@ sed < junk.1 > junk.2 \
 	-e 's/^[ 	]*//' \
 	-e 's|\\|/|g'
 #
-ls $list > junk.3
-#
 different="no"
-for file in `cat junk.2`
+for file in `cat bin/check_include_omh.3.$$`
 do
-	if [ "`grep $file junk.3`" == "" ]
+	if [ "`grep $file bin/check_include_omh.1.$$`" == "" ]
 	then
 		echo $file
 		different="yes"
 	fi
+done
+for index in 1 2 3
+do
+	rm bin/check_include_omh.$index.$$
 done
 #
 echo "-------------------------------------------------------------------"
