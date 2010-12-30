@@ -1,4 +1,4 @@
-#! /bin/bash 
+#! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
@@ -10,10 +10,16 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+if [ $0 != "bin/check_example.sh" ]
+then
+	echo "bin/check_example.sh: must be executed from its parent directory"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
 echo "Checking that all examples are in omh/example_list.omh"
 echo "-------------------------------------------------------" 
 file_list="example/*.cpp example/*.hpp cppad_ipopt/*/*.cpp cppad_ipopt/*/*.hpp"
-sed < omh/example_list.omh > check_example.$$ \
+sed < omh/example_list.omh > bin/check_example.$$ \
 	-n -e '/\$begin ListAllExamples\$\$/,/\$end/p' 
 ok="yes"
 for file in $file_list
@@ -21,14 +27,14 @@ do
 	name=`grep '$begin' $file | sed -e 's/.*$begin *//' -e 's/ *$$.*//'`
 	if [ "$name" != "" ]
 	then
-		if ! grep "$name" check_example.$$ > /dev/null
+		if ! grep "$name" bin/check_example.$$ > /dev/null
 		then
 			echo "$name is missing from omh/example_list.omh"
 			ok="no"
 		fi
 	fi
 done
-rm check_example.$$
+rm bin/check_example.$$
 echo "-------------------------------------------------------" 
 if [ "$ok" = "yes" ]
 then

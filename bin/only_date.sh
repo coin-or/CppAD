@@ -4,7 +4,7 @@
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Common Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
@@ -74,3 +74,5 @@ svn cat cppad/configure.hpp | sed > bin/only_date.$$ \
 	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $version/g"
 check_difference cppad/configure.hpp
 # ---------------------------------------------------------------------
+rm bin/only_date.$$
+

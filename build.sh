@@ -409,11 +409,19 @@ then
 	#
 	list="
 		check_example.sh
+		check_if_0.sh
 		check_include_def.sh
+	"
+	for check in $list 
+	do
+		echo "bin/$check >> $log_file"
+		bin/$check       >> $log_dir/$log_file
+	done
+	#
+	list="
 		check_include_file.sh
 		check_include_omh.sh
 		check_makefile.sh
-		check_if_0.sh
 	"
 	for check in $list 
 	do

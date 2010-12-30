@@ -1,4 +1,4 @@
-#! /bin/bash 
+#! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
@@ -10,32 +10,32 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+if [ $0 != "bin/check_if_0.sh" ]
+then
+	echo "bin/check_if_0.sh: must be executed from its parent directory"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
 # CppAD uses preprocessor '# if 0' comment blocks for temporary changes
 # that will to be removed before testing for check in.
 echo "Checking for '# if 0' comments blocks in source code"
 echo "-------------------------------------------------------" 
 ok="yes"
-for dir in \
-	example \
-	test_more \
-	cppad \
-	cppad/speed \
-	cppad/local \
-	speed \
-	speed/adolc \
-	speed/cppad \
-	speed/example \
-	speed/profile \
-	speed/sacado
+for ext in .cpp .hpp
 do
-	list=`ls $dir/*.cpp $dir/*.hpp 2> /dev/null`
-	for file in $list
+	dir_list=`find . -name "*$ext" | \
+		sed -e 's|^\./||' -e '/^work/d' -e 's|/[^/]*$||' | sort -u`  
+	for dir in $dir_list 
 	do
-		if grep '^# *if *0 *$' $file > /dev/null
-		then
-			echo "$file has an '# if 0' comment block"
-			ok="no"
-		fi
+		list=`ls $dir/*$ext`
+		for file in $list
+		do
+			if grep '^# *if *0 *$' $file > /dev/null
+			then
+				echo "$file has an '# if 0' comment block"
+				ok="no"
+			fi
+		done
 	done
 done
 echo "-------------------------------------------------------" 

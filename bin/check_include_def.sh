@@ -1,14 +1,20 @@
-#! /bin/bash 
+#! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Common Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+if [ $0 != "bin/check_include_def.sh" ]
+then
+	echo "bin/check_include_def.sh: must be executed from its parent directory"
+	exit 1
+fi
 # -----------------------------------------------------------------------------
 echo "Differences between include file names and ifndef at top directives."
 echo "Also make sure same ifndef not used by two different files."
@@ -25,7 +31,7 @@ grep '^# *ifndef *CPPAD_[0-9a-zA-Z_]*_INCLUDED$' \
 	-e 's|.*# *ifndef *CPPAD_\([0-9a-zA-Z_]*\)_INCLUDED$|\1.HPP|' \
 	| tr [a-zA-Z] [A-Za-z] \
 	| sort \
-	> junk.1
+	> bin/check_include_def.1.$$
  
 ls \
 	cppad_ipopt/*/*.hpp \
@@ -36,13 +42,15 @@ ls \
 	openmp/*.hpp \
 	| sed -e 's|.*/||' -e 's|^cppad_||' \
 	| sort -u \
-	> junk.2
-if diff junk.1 junk.2
+	> bin/check_include_def.2.$$
+if diff bin/check_include_def.1.$$ bin/check_include_def.2.$$
 then
 	different="no"
 else
 	different="yes"
 fi
+rm bin/check_include_def.1.$$
+rm bin/check_include_def.2.$$
 #
 echo "-------------------------------------------------------------------"
 if [ $different = "yes" ]
