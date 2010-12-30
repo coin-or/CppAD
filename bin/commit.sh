@@ -1,5 +1,5 @@
 #! /bin/bash -e
-# $Id:$
+# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -10,14 +10,6 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/commit.sh" ]
-then
-	echo "bin/commit.sh: must be executed from its parent directory"
-	exit 1
-fi
-# -----------------------------------------------------------------------------
-#! /bin/bash -e
-#
 # replacement text for this commit
 cat << EOF > bin/commit.$$
 This is a template file for making commits to the cppad repository.
@@ -27,6 +19,12 @@ followed by comment. Next line must be empty for commit.sh files to work.
 
 bin/commit.sh@ For this example, bin/commit.sh is the only file committed.
 EOF
+# -----------------------------------------------------------------------------
+if [ $0 != "bin/commit.sh" ]
+then
+	echo "bin/commit.sh: must be executed from its parent directory"
+	exit 1
+fi
 # -----------------------------------------------------------------------
 if [ "$1" == 'files' ]
 then
@@ -132,6 +130,14 @@ if [ "$response" != "y" ]
 then
 	exit 1
 fi
+for file in $list
+do
+	if [ -f $file ]
+	then
+		echo "svn propset svn:keywords \"Id\" $file"
+		svn propset svn:keywords "Id" $file
+	fi
+done
 #
 if ! svn commit -m "$msg" $list
 then
