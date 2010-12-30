@@ -1,7 +1,7 @@
-#! /bin/bash 
+#! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -9,6 +9,12 @@
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+if [ $0 != "bin/cygwin_package.sh" ]
+then
+	echo "bin/cygwin_package.sh: must be executed from its parent directory"
+	exit 1
+fi
 # -----------------------------------------------------------------------------
 # experimental script for cygwin packaging of CppAD 
 #
@@ -540,5 +546,5 @@ fi
 #
 # Done
 #
-echo "cygwin_package.sh: passed all its tests"
+echo bin/"cygwin_package.sh: passed all its tests"
 exit 0

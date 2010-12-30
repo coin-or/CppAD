@@ -413,20 +413,12 @@ then
 		check_include_def.sh
 		check_include_file.sh
 		check_include_omh.sh
+		check_makefile.sh
 	"
 	for check in $list 
 	do
 		echo "bin/$check >> $log_file"
 		bin/$check       >> $log_dir/$log_file
-	done
-	#
-	list="
-		check_makefile.sh
-	"
-	for check in $list 
-	do
-		echo "./$check >> $log_file"
-		./$check       >> $log_dir/$log_file
 	done
 	# add a new line after last file check
 	echo ""             >> $log_dir/$log_file

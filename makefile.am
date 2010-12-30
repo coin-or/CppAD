@@ -250,8 +250,6 @@ SUBDIRS =  \
 EXTRA_DIST = \
 	build.sh \
 	bin \
-	check_makefile.sh \
-	check_svn_dist.sh \
 	cpl1.0.txt \
 	dev.omh \
 	doc \
