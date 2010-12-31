@@ -11,7 +11,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # replacement text for this commit
-cat << EOF > bin/commit.$$
+cat << EOF > bin/commit.1.$$
 This is a template file for making commits to the cppad repository.
 Lines with no 'at' characters, are general comments not connected to 
 a specifi file. Lines containing an 'at' character are "file name" 
@@ -26,28 +26,58 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------
-if [ "$1" == 'files' ]
+if [ "$1" != 'list' ] && [ "$1" != 'edit' ] && [ "$1" != 'run' ]
+then
+cat << EOF
+usage: bin/commit.sh list
+       bin/commit.sh edit
+       bin/commit.sh run
+
+list:
+output a list of the files that have changes svn knows about.
+
+edit:
+Edit the file list in bin/commit.sh to be the same as the files
+command would output.  In addition, it displays the changes 
+to bin/commit.sh. This will include the new files in the list since the last 
+edit of bin/commit.sh. You should then hand edit bin/commit.sh by hand, to add 
+comments about the changes, before running the second form.
+
+run:
+commits the list of files (provided that you reply y to the [y/n] prompt 
+that bin/commit.sh generates).
+EOF
+	exit 1
+fi
+# -----------------------------------------------------------------------
+if [ "$1" == 'list' ] || [ "$1" == 'edit' ]
 then
 	# -------------------------------------------------
 	svn status | sed -n -e '/^[ADMRC] /p' | \
-	sed -e 's/^[ADMRC] [+ ]*//' -e '/^bin\/commit.sh$/d' |\
-	sort -u >> list.$$
+		sed -e 's/^[ADMRC] [+ ]*//' -e '/^bin\/commit.sh$/d' |\
+		sort -u > bin/commit.1.$$
 	# -------------------------------------------------
+	if [ "$1" == 'list' ]
+	then
+		cat bin/commit.1.$$
+		rm bin/commit.1.$$
+		exit 0
+	fi
 	abort="no"
-	list=`cat list.$$`
+	list=`cat bin/commit.1.$$`
 	for file in $list
 	do
 		if [ -f "$file" ]
 		then
-			sed -f svn_commit.sed $file > bin/commit.$$
-			if ! diff $file bin/commit.$$ > /dev/null
+			sed -f svn_commit.sed $file > bin/commit.2.$$
+			if ! diff $file bin/commit.2.$$ > /dev/null
 			then
 				echo "---------------------------------------"
 				echo "bin/commit.sh: suggest changes to $file:"
-				if diff $file bin/commit.$$
+				if diff $file bin/commit.2.$$
 				then
 					echo "bin/commit.sh: program error"
-					rm bin/commit.$$
+					rm bin/commit.2.$$
 					exit 1
 				fi
 				if [ "$file" != "cppad/config.h" ]
@@ -55,7 +85,7 @@ then
 					abort="yes"
 				fi
 			fi
-			rm bin/commit.$$
+			rm bin/commit.2.$$
 		fi
 	done
 	if [ "$abort" == "yes" ]
@@ -70,9 +100,9 @@ then
 	#
 	echo "creating new bin/commit.sh"
 	sed -n -e '1,/@/p' bin/commit.sh.old | sed -e '/@/d' > bin/commit.sh
-	sed list.$$ -e 's/$/@/'                             >> bin/commit.sh
-	rm  list.$$
+	sed bin/commit.1.$$ -e 's/$/@/'                     >> bin/commit.sh
 	sed -n -e '/^EOF/,$p' bin/commit.sh.old             >> bin/commit.sh
+	rm  bin/commit.1.$$
 	#
 	echo "------------------------------------"
 	echo "diff bin/commit.sh.old bin/commit.sh"
@@ -82,47 +112,25 @@ then
 		exit 1
 	fi
 	echo "------------------------------------"
-	#
-	echo "chmod +x bin/commit.sh"
-	chmod +x bin/commit.sh
-	#
+     chmod +x bin/commit.sh
 	exit 0
 fi
 # -----------------------------------------------------------------------
-if [ "$1" != 'run' ]
-then
-cat << EOF
-usage: bin/commit.sh files
-       bin/commit.sh run
-
-The first from puts a list, at the beginning of bin/commit.sh, of the files
-the have changed (according to svn). In addition, it displays the changes 
-to bin/commit.sh. This will include the new files in the list since the last 
-edit of bin/commit.sh. You should then edit bin/commit.sh by hand, to add 
-comments about the changes, before running the second form.
-
-The second form actually commits the list of files (provided that you reply
-y to the [y/n] prompt that bin/commit.sh generates).
-EOF
-	rm bin/commit.$$
-	exit 0
-fi
-# -----------------------------------------------------------------------
-list=`sed -e '/@/! d' -e 's/@.*//' bin/commit.$$`
-msg=`sed -e '/@ *$/d' -e 's|.*/\([^/]*@\)|\1|' -e 's|@|:|' bin/commit.$$`
+list=`sed -e '/@/! d' -e 's/@.*//' bin/commit.1.$$`
+msg=`sed -e '/@ *$/d' -e 's|.*/\([^/]*@\)|\1|' -e 's|@|:|' bin/commit.1.$$`
 # if cppad/config.h is in the list of files to be commited
-if (echo $list | grep '^cppad/config.h@' bin/commit.$$ > /dev/null)
+if (echo $list | grep '^cppad/config.h@' bin/commit.1.$$ > /dev/null)
 then
 	# and CPPAD_CPPADVECTOR is not defined as one
 	if ! grep '^# *define  *CPPAD_CPPADVECTOR  *1 *$' cppad/config.h \
 		>  /dev/null
 	then
 		echo "bin/commit.sh run: CPPAD_CPPADVECTOR is not 1 in cppad/config.h"
-		rm bin/commit.$$
+		rm bin/commit.1.$$
 		exit 1
 	fi
 fi
-rm bin/commit.$$
+rm bin/commit.1.$$
 echo "svn commit -m \""
 echo "$msg"
 echo "\" \\"
