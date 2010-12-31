@@ -1,29 +1,35 @@
-#! /bin/bash 
+#! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Common Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+if [ $0 != "bin/run_omhelp.sh" ]
+then
+	echo "bin/run_omhelp.sh: must be executed from its parent directory"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
 #
 if [ "$1" != "doc" ] && [ "$1" != "dev" ]
 then
-	echo "usage: run_omhelp.sh (doc|dev)  (htm|xml|clean) [printable]"
+	echo "usage: bin/run_omhelp.sh (doc|dev)  (htm|xml|clean) [printable]"
 	exit 1
 fi
 if [ "$2" != "htm" ] && [ "$2" != "xml" ] && [ "$2" != "clean" ]
 then
-	echo "usage: run_omhelp.sh (doc|dev)  (htm|xml|clean) [printable]"
+	echo "usage: bin/run_omhelp.sh (doc|dev)  (htm|xml|clean) [printable]"
 	exit 1
 fi
 if [ "$3" != "" ] && [ "$3" != "printable" ]
 then
-	echo "usage: run_omhelp.sh (doc|dev)  (htm|xml|clean) [printable]"
+	echo "usage: bin/run_omhelp.sh (doc|dev)  (htm|xml|clean) [printable]"
 	exit 1
 fi
 if [ "$2" == "clean" ]
@@ -32,7 +38,8 @@ then
 	do
 		if [ "$1" == "$target" ]
 		then
-			rm -rf $target
+			echo "rm -rf $target"
+			      rm -rf $target
 			exit 0
 		fi
 	done
@@ -43,12 +50,14 @@ ext="$2"
 echo "Building $target/*.$ext $3"
 if [ ! -e $target ]
 then
-	mkdir $target
+	echo "mkdir $target"
+	      mkdir $target
 fi 
-if ! cd $target
+echo "cd $target"
+if !  cd $target
 then
 	echo "Cannot change into ./$target directory"
-	echo "Execute run_omhelp.sh $target clean first"
+	echo "Execute bin/run_omhelp.sh $target clean first"
 	exit 1
 fi
 cmd="omhelp ../$target.omh -noframe -debug -l http://www.coin-or.org/CppAD/"
@@ -61,7 +70,7 @@ then
 	cmd="$cmd -printable"
 fi
 echo "$cmd > ../omhelp.$target.$ext.log"
-if ! $cmd > ../omhelp.$target.$ext.log
+if !  $cmd > ../omhelp.$target.$ext.log
 then
 	grep "^OMhelp Error:" ../omhelp.$target.$ext.log
 	echo "OMhelp could not build $target/*.$ext documentation."
@@ -73,5 +82,4 @@ then
 	echo "See the complete warning messages in omhelp.$target.$ext.log."
 	exit 1
 fi
-cd ..
 exit 0

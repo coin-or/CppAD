@@ -495,7 +495,6 @@ EXTRA_DIST = \
 	openmp/multi_newton.hpp \
 	openmp/sum_i_inv.cpp \
 	openmp/run.sh \
-	run_omhelp.sh \
 	uw_copy_040507.html
 
 test_directory_list = \

@@ -142,8 +142,8 @@ cd $dir
 echo "./configure > /dev/null"
 ./configure > /dev/null
 #
-echo "./run_omhelp.sh doc xml"
-./run_omhelp.sh doc xml
+echo "bin/run_omhelp.sh doc xml"
+bin/run_omhelp.sh doc xml
 #
 if [ -e "doc/error.wrd" ]
 then

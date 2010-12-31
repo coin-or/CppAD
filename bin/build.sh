@@ -254,8 +254,8 @@ then
 	dir_list=`echo $dir_list | sed -e 's|\t\t*| |g'`
 	echo "../configure \\"
 	echo "$dir_list" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
-	echo "	CXX_FLAGS=\"-Wall -ansi -pedantic-errors -std=c++98\"\\"
-	echo "	--with-Documentation"
+	echo "CXX_FLAGS=\"-Wall -ansi -pedantic-errors -std=c++98\"\\"
+	echo "--with-Documentation"
 	#
 	../configure $dir_list \
 		CXX_FLAGS="-Wall -ansi -pedantic-errors -std=c++98" \
@@ -301,8 +301,8 @@ then
 		rm -r doc
 	fi
 	#
-	echo "./run_omhelp.sh doc xml"
-	./run_omhelp.sh doc xml
+	echo "bin/run_omhelp.sh doc xml"
+	      bin/run_omhelp.sh doc xml
 	#
 	echo "mv doc.omh.save doc.omh"
 	mv doc.omh.save doc.omh
@@ -357,9 +357,9 @@ then
 	do
 		for ext in htm xml
 		do
-			echo "begin: ./run_omhelp.sh doc $ext $flag"
-			./run_omhelp.sh doc $ext $flag
-			echo="end: ./run_omhelp.sh doc $ext $flag"
+			echo "begin: bin/run_omhelp.sh doc $ext $flag"
+			             bin/run_omhelp.sh doc $ext $flag
+			echo="end:   bin/run_omhelp.sh doc $ext $flag"
 		done
 	done
 	#
@@ -400,7 +400,7 @@ fi
 if [ "$1" = "test" ] 
 then
 	log_dir=`pwd`
-	log_file="bin/build_test.log"
+	log_file="build_test.log"
 	# --------------------------------------------------------------
 	# Things to do in the distribution directory
 	# --------------------------------------------------------------
@@ -453,8 +453,8 @@ then
 	bin/build.sh configure       >> $log_dir/$log_file
 	#
 	# test user documentation
-	echo "./run_omhelp.sh doc xml  >> $log_file"
-	./run_omhelp.sh doc xml        >> $log_dir/$log_file
+	echo "bin/run_omhelp.sh doc xml  >> $log_file"
+	      bin/run_omhelp.sh doc xml  >> $log_dir/$log_file
 	# 
 	# test developer documentation
 	echo "bin/build.sh doxygen   >> $log_file"
