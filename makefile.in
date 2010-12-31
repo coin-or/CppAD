@@ -483,7 +483,6 @@ SUBDIRS = \
 #
 # note that bin/gpl_license.sh is deleted by dist-hook
 EXTRA_DIST = \
-	build.sh \
 	bin \
 	cpl1.0.txt \
 	dev.omh \

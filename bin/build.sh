@@ -10,7 +10,6 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-#
 # prefix directories for the corresponding packages
 BOOST_DIR=/usr/include
 CPPAD_DIR=$HOME/prefix/cppad  
@@ -22,6 +21,11 @@ IPOPT_DIR=$HOME/prefix/ipopt
 # library path for the ipopt and adolc
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ADOLC_DIR/lib:$IPOPT_DIR/lib"
 # -----------------------------------------------------------------------------
+if [ $0 != "bin/build.sh" ]
+then
+	echo "bin/build.sh: must be executed from its parent directory"
+	exit 1
+fi
 if [ "$2" != "" ]
 then
 	# when running multiple options, start by removing old log files
@@ -37,8 +41,8 @@ then
      for option in $*
      do
 		echo "=============================================================="
-		echo "begin: build.sh $option"
-          ./build.sh $option
+		echo "begin: bin/build.sh $option"
+          bin/build.sh $option
      done
 	echo "=============================================================="
      exit 0
@@ -131,7 +135,7 @@ then
 	done
 	echo "-------------------------------------------------------------"
 	#
-	echo "OK: build.sh version"
+	echo "OK: bin/build.sh version"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -209,7 +213,7 @@ then
 		fi
 	done
 	#
-	echo "OK: build.sh automake"
+	echo "OK: bin/build.sh automake"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -270,7 +274,7 @@ then
 		cp $file ../$file
 	done
 	#
-	echo "OK: build.sh configure"
+	echo "OK: bin/build.sh configure"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -336,7 +340,7 @@ then
 	echo "mv cppad-$version.tar.gz cppad-$version.cpl.tgz"
 	mv cppad-$version.tar.gz cppad-$version.cpl.tgz
 	#
-	echo "OK: build.sh dist"
+	echo "OK: bin/build.sh dist"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -359,7 +363,7 @@ then
 		done
 	done
 	#
-	echo "OK: build.sh omhelp"
+	echo "OK: bin/build.sh omhelp"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -389,14 +393,14 @@ then
 	echo "bin/check_doxygen.sh"
 	bin/check_doxygen.sh
 	#
-	echo "OK: build.sh doxygen"
+	echo "OK: bin/build.sh doxygen"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
 if [ "$1" = "test" ] 
 then
 	log_dir=`pwd`
-	log_file="build_test.log"
+	log_file="bin/build_test.log"
 	# --------------------------------------------------------------
 	# Things to do in the distribution directory
 	# --------------------------------------------------------------
@@ -445,16 +449,16 @@ then
 	echo "cd cppad-$version"
 	cd cppad-$version
 	#
-	echo "./build.sh configure >> $log_file" 
-	./build.sh configure       >> $log_dir/$log_file
+	echo "bin/build.sh configure >> $log_file" 
+	bin/build.sh configure       >> $log_dir/$log_file
 	#
 	# test user documentation
 	echo "./run_omhelp.sh doc xml  >> $log_file"
 	./run_omhelp.sh doc xml        >> $log_dir/$log_file
 	# 
 	# test developer documentation
-	echo "./build.sh doxygen   >> $log_file"
-	./build.sh doxygen         >> $log_dir/$log_file
+	echo "bin/build.sh doxygen   >> $log_file"
+	bin/build.sh doxygen         >> $log_dir/$log_file
 	#
 	# openmp test script
 	echo "openmp/run.sh            >> $log_file"
@@ -493,7 +497,7 @@ then
 	#
 	echo "Check build_test.log for errors and warnings."
 	#
-	echo "OK: build.sh test"
+	echo "OK: bin/build.sh test"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -503,7 +507,7 @@ then
 	echo "bin/gpl_license.sh"
 	bin/gpl_license.sh
 	#
-	echo "OK: build.sh gpl"
+	echo "OK: bin/build.sh gpl"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -517,7 +521,7 @@ then
 	echo "cp -r doxydoc doc/doxydoc"
 	cp -r doxydoc doc/doxydoc
 	#
-	echo "OK: build.sh copy2doc"
+	echo "OK: bin/build.sh copy2doc"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -534,9 +538,9 @@ then
 		gpl
 		copy2doc
 	"
-	echo "./build.sh $list"
-	./build.sh $list
-	echo "OK: build.sh all"
+	echo "bin/build.sh $list"
+	bin/build.sh $list
+	echo "OK: bin/build.sh all"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -547,7 +551,7 @@ then
 fi
 #
 cat << EOF
-usage: build.sh option_1 option_2 ...
+usage: bin/build.sh option_1 option_2 ...
 
 options
 -------
