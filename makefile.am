@@ -247,6 +247,7 @@ SUBDIRS =  \
 	speed/src \
 	test_more 
 #
+# note that bin/gpl_license.sh is deleted by dist-hook
 EXTRA_DIST = \
 	build.sh \
 	bin \
@@ -302,6 +303,7 @@ test:
 dist-hook:
 	rm -rf `find $(distdir)/omh $(distdir)/openmp -name .svn`
 	rm $(distdir)/doc/error.wrd
+	rm $(distdir)/bin/gpl_license.sh
 #
 if CppAD_DOCUMENTATION
 doc_postfix = $(DESTDIR)$(datadir)/doc/$(postfix_dir)

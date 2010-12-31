@@ -500,8 +500,8 @@ fi
 if [ "$1" = "gpl" ] 
 then
 	# create GPL licensed version
-	echo "./gpl_license.sh"
-	./gpl_license.sh
+	echo "bin/gpl_license.sh"
+	bin/gpl_license.sh
 	#
 	echo "OK: build.sh gpl"
 	exit 0

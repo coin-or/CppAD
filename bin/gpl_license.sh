@@ -1,14 +1,20 @@
-#! /bin/bash 
+#! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
+# the terms of the
 #                     Common Public License Version 1.0.
 #
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+# -----------------------------------------------------------------------------
+if [ $0 != "bin/gpl_license.sh" ]
+then
+	echo "bin/gpl_license.sh: must be executed from its parent directory"
+	exit 1
+fi
 # -----------------------------------------------------------------------------
 #
 # Bradley M. Bell has given COIN-OR permission to use this script to generate 
@@ -21,41 +27,25 @@ version=`grep "^ *AC_INIT(" configure.ac | \
 root_dir=`pwd`
 dir="cppad-$version"
 #
-# start from the *.cpl.tgz file
-if [ -e work/$dir.cpl.tgz ]
-then
-	cd work
-fi
-if [ ! -e $dir.cpl.tgz ]
-then
-	echo "gpl_license.sh: cannot find $dir.cpl.tgz"
-	echo "or work/$dir.cpl.tgz"
-	exit 1
-fi
+echo "cd work"
+cd work
 #
-# delete old version of *.gpl.tgz and *.gpl.zip
-for file in $dir.gpl.tgz $dir.gpl.zip
-do
-	if [ -e $file ]
-	then
-        	echo "rm -f $file"
-        	if ! rm -f $file
-        	then
-			echo "gpl_license.sh: cannot remove old $file"
-        		exit 1
-		fi
-	fi
-done
+# delete old version of *.gpl.tgz 
+if [ -e $dir.gpl.tgz ]
+then
+	echo "rm -f $dir.gpl.tgz"
+	rm -f $dir.gpl.tgz
+fi
 #
 # delete old version of directory (if it exists)
 if [ -e $dir ]
 then
-	echo "rm -f -r $dir"
-	rm -f -r $dir
+	echo "rm -rf $dir"
+	rm -rf $dir
 fi
 if [ -e $dir ]
 then
-	echo "gpl_license.sh: cannot remove old $dir directory"
+	echo "bin/gpl_license.sh: cannot remove old $dir directory"
 	exit 1
 fi
 #
@@ -64,12 +54,10 @@ echo "tar -xzf $dir.cpl.tgz"
 tar -xzf $dir.cpl.tgz
 #
 # make sure can change into new directory 
-if ! cd $dir
-then
-	echo "gpl_license.sh: cannot make new $dir working directory"
-	exit 1
-fi
+echo "cd $dir"
+cd $dir
 #
+# files that need changing
 list=`find . \
 	\( -name 'COPYING' \) -or \
 	\( -name '*.am'  \) -or \
@@ -83,6 +71,7 @@ list=`find . \
 	\( -name '*.omh' \)`
 #
 # change back up to original directory (to be safe)
+echo "cd .."
 cd ..
 #
 echo "Changing license from CPL to GPL"
@@ -90,6 +79,7 @@ for file in $list
 do
 	file=`echo $file | sed -e 's|^\./||'`
 	name=`echo $file | sed -e 's|.*\/||'`
+	ext=`echo $name  | sed -e 's|.*\.|\.|'`
 	if grep "GNU General Public License" $dir/$file > /dev/null
 	then
 		if [ "$name" != "doc.omh.in" ] && [ "$name" != "doc.omh" ]
@@ -133,35 +123,35 @@ for file in $list
 do
 	if grep "gpl2.txt" $dir/$file > /dev/null
 	then
-		echo "gpl_license.sh: gpl2.txt in initial $dir/$file"
+		echo bin/"gpl_license.sh: gpl2.txt in initial $dir/$file"
 		exit 1
 	fi
 	sed -i $dir/$file -e 's/cpl1.0.txt/gpl2.txt/'
 	if ! grep "gpl2.txt" $dir/$file > /dev/null
 	then
-		msg="gpl_license.sh: cannot change cpl1.0.txt to gpl2.txt"
+		msg=bin/"gpl_license.sh: cannot change cpl1.0.txt to gpl2.txt"
 		echo "$msg for $dir/$file"
 		exit 1
 	fi
 done
 #
 # Rerun omhelp to change documentation version of license from CPL to GPL 
+echo "cd $dir"
 cd $dir
-if ! ./configure > /dev/null
-then
-	echo "gpl_license.sh: $dir/configure failed."
-	exit 1
-fi
-if ! ./run_omhelp.sh doc xml
-then
-	echo "gpl_license.sh: error running omhelp"
-	exit 1
-fi
+#
+echo "./configure > /dev/null"
+./configure > /dev/null
+#
+echo "./run_omhelp.sh doc xml"
+./run_omhelp.sh doc xml
+#
 if [ -e "doc/error.wrd" ]
 then
+	echo "rm -rf doc/error.wrd"
 	rm -rf doc/error.wrd
 fi
 # 
+echo "cd .."
 cd ..
 #
 # create *.gpl.tgz file

@@ -481,6 +481,7 @@ SUBDIRS = \
 	test_more 
 
 #
+# note that bin/gpl_license.sh is deleted by dist-hook
 EXTRA_DIST = \
 	build.sh \
 	bin \
@@ -1116,6 +1117,7 @@ test:
 dist-hook:
 	rm -rf `find $(distdir)/omh $(distdir)/openmp -name .svn`
 	rm $(distdir)/doc/error.wrd
+	rm $(distdir)/bin/gpl_license.sh
 @CppAD_DOCUMENTATION_TRUE@install-data-hook:
 @CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(doc_postfix) ] ; then mkdir -p $(doc_postfix) ; fi
 @CppAD_DOCUMENTATION_TRUE@	if [ -e $(doc_package) ] ; then rm -rf $(doc_package) ; fi
