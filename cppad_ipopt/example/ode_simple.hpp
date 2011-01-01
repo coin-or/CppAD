@@ -3,7 +3,7 @@
 # define CPPAD_ODE_SIMPLE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -48,8 +48,8 @@ namespace {
 		SizeVector S_;
 	public:
 		// derived class part of constructor
-		FG_simple(bool retape, const SizeVector& N)
-		: retape_ (retape), N_(N)
+		FG_simple(bool retape_in, const SizeVector& N)
+		: retape_ (retape_in), N_(N)
 		{	assert( N_[0] == 0 );
 			S_.resize( N.size() );
 			S_[0] = 0;
@@ -100,20 +100,20 @@ namespace {
 				// integration step size
 				Number dt = T / Number( N_[k+1] );
 				for(j = 0; j < N_[k+1]; j++)
-				{	size_t index = (j + S_[k]) * Ny;
+				{	size_t Index = (j + S_[k]) * Ny;
 				 	// y(t) at end of last step
 					ym = y;
 					// G(y, a) at end of last step
 					Gm = G;
 					// value of y(t) at end of this step
 					for(i = 0; i < Ny; i++)
-						y[i] = x[Ny + index + i];
+						y[i] = x[Ny + Index + i];
 					// G(y, a) at end of this step
 					G = eval_G(y, a);
 					// trapezoidal approximation residual
 					for(i = 0; i < Ny; i++)
 					{	dy = (G[i] + Gm[i]) * dt / 2;
-						fg[1+Ny+index+i] =
+						fg[1+Ny+Index+i] =
 							y[i] - ym[i] - dy;
 					}
 				}

@@ -23,7 +23,7 @@
 #define PACKAGE_NAME "CppAD"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "CppAD 20101231"
+#define PACKAGE_STRING "CppAD 20110101"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "cppad"
@@ -32,10 +32,10 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "20101231"
+#define PACKAGE_VERSION "20110101"
 
 /* Version number of package */
-#define VERSION "20101231"
+#define VERSION "20110101"
 
 /* Define to `__inline__' or `__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */

@@ -2,7 +2,7 @@
 # define CPPAD_SPARSE_PACK_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -88,25 +88,25 @@ public:
 	/*! Change number of sets, set end, and initialize all sets as empty
 
 	Any memory currently allocated for this object is freed. If both
-	\a n_set and \a end are non-zero new memory is allocated, otherwise
+	\a n_set_in and \a end_in are non-zero new memory is allocated, otherwise
 	no new memory is allocated for the object.
 
-	\param n_set
+	\param n_set_in
 	is the number of sets in this vector of sets.
 
-	\param end
+	\param end_in
 	is the maximum element plus one (the minimum element is 0).
 	*/
-	void resize(size_t n_set, size_t end) 
+	void resize(size_t n_set_in, size_t end_in) 
 	{	Pack zero(0);
 		if( allocated_ )
 		{	allocated_ = false;
 			CPPAD_TRACK_DEL_VEC(data_);
 		}
 
-		n_set_          = n_set;
-		end_            = end;
-		n_pack_         = ( 1 + (end - 1) / n_bit_ );
+		n_set_          = n_set_in;
+		end_            = end_in;
+		n_pack_         = ( 1 + (end_ - 1) / n_bit_ );
 		size_t i        = n_set_ * n_pack_;
 
 		if( i > 0 )
@@ -117,8 +117,8 @@ public:
 		}
 
 		// values that signify past end of list
-		next_index_   = n_set;
-		next_element_ = end;
+		next_index_   = n_set_;
+		next_element_ = end_;
 	}
 	// -----------------------------------------------------------------
 	/*! Add one element to a set.

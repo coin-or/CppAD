@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -100,12 +100,12 @@ namespace {
 			this->Ode(T[0], X, F);
 
 			// define AD function object
-			ADFun<double> Fun(T, F);
+			ADFun<double> fun(T, F);
 
 			// compute partial of f w.r.t t
 			CPPAD_TEST_VECTOR<double> dt(1);
 			dt[0] = 1.;
-			f_t = Fun.Forward(1, dt);
+			f_t = fun.Forward(1, dt);
 		}
 
 		// compute partial of f(t, x) w.r.t. x using AD
@@ -133,7 +133,7 @@ namespace {
 			this->Ode(T[0], X, F);
 
 			// define AD function object
-			ADFun<double> Fun(X, F);
+			ADFun<double> fun(X, F);
 
 			// compute partial of f w.r.t x
 			CPPAD_TEST_VECTOR<double> dx(n);
@@ -142,7 +142,7 @@ namespace {
 				dx[j] = 0.;
 			for(j = 0; j < n; j++)
 			{	dx[j] = 1.;
-				df = Fun.Forward(1, dx);
+				df = fun.Forward(1, dx);
 				for(i = 0; i < n; i++)
 					f_x [i * n + j] = df[i];
 				dx[j] = 0.;

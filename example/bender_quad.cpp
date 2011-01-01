@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -89,15 +89,15 @@ namespace {
 		{	size_t i;
 			size_t N = z_.size();
 
-			ADvector f(1);
-			f[0] = 0.;
+			ADvector F(1);
+			F[0] = 0.;
 
 			AD<double> residual;
 			for(i = 0; i < N; i++)
 			{	residual = y[0] * sin( x[0] * t_[i] ) - z_[i];
-				f[0]    += .5 * residual * residual;
+				F[0]    += .5 * residual * residual;
 			}
-			return f;
+			return F;
 		}
 		// Fun.h(x, y) = H(x, y) = F_y (x, y)
 		ADvector h(const ADvector &x, const BAvector &y)
@@ -119,19 +119,19 @@ namespace {
 		ADvector dy(
 			const BAvector &x , 
 			const BAvector &y , 
-			const ADvector &h )
+			const ADvector &H )
 		{	size_t i;
 			size_t N = z_.size();
 
-			ADvector dy(1);
+			ADvector Dy(1);
 			AD<double> fyy = 0.;
 
 			for(i = 0; i < N; i++)
 			{	fyy += sin( x[0] * t_[i] ) * sin( x[0] * t_[i] );
 			}
-			dy[0] = - h[0] / fyy;
+			Dy[0] = - H[0] / fyy;
 
-			return dy;
+			return Dy;
 		}
 	};
 

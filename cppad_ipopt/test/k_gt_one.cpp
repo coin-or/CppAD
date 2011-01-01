@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -25,8 +25,8 @@ private:
 	bool retape_;
 public:
 	// derived class part of constructor
-	FG_K_gt_one(bool retape)
-	: retape_ (retape)
+	FG_K_gt_one(bool retape_in)
+	: retape_ (retape_in)
 	{ }
 	// Evaluation of the objective f(x), and constraints g(x)
 	// using an Algorithmic Differentiation (AD) class.

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -128,7 +128,6 @@ bool link_det_minor(
 		detA[0] = Det(A);
 	
 		// create function object f : A -> detA
-		CppAD::ADFun<double> f;
 		f.Dependent(A, detA);
 
 		extern bool global_optimize;

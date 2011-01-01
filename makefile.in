@@ -246,7 +246,7 @@ top_srcdir = @top_srcdir@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -521,7 +521,7 @@ test_directory_list = \
 @CppAD_DOCUMENTATION_TRUE@doc_package = $(DESTDIR)$(datadir)/doc/$(postfix_dir)/$(PACKAGE)-$(VERSION)
 #
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = cppad.pc
+pkgconfig_DATA = pkgconfig/cppad.pc
 all: all-recursive
 
 .SUFFIXES:

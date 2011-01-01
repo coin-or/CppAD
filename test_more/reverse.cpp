@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -28,18 +28,18 @@ bool Reverse(void)
 	Independent(U);
 
 	// compute sum and product of elements in U
-	AD<double> sum  = 0.;
-	AD<double> prod = 1.;
+	AD<double> Sum  = 0.;
+	AD<double> Prod = 1.;
 	size_t i;
 	for(i = 0; i < 3; i++)
-	{	sum  += U[i];
-		prod *= U[i];
+	{	Sum  += U[i];
+		Prod *= U[i];
 	}
 
 	// dependent variable vector 
 	CPPAD_TEST_VECTOR< AD<double> > V(2);
-	V[0] = sum;
-	V[1] = prod;
+	V[0] = Sum;
+	V[1] = Prod;
 
 	// V = f(U)
 	ADFun<double> f(U, V);

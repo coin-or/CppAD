@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -254,11 +254,11 @@ then
 	dir_list=`echo $dir_list | sed -e 's|\t\t*| |g'`
 	echo "../configure \\"
 	echo "$dir_list" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
-	echo "CXX_FLAGS=\"-Wall -ansi -pedantic-errors -std=c++98\"\\"
+	echo "CXX_FLAGS=\"-Wall -ansi -pedantic-errors -std=c++98 -Wshadow\"\\"
 	echo "--with-Documentation"
 	#
 	../configure $dir_list \
-		CXX_FLAGS="-Wall -ansi -pedantic-errors -std=c++98" \
+		CXX_FLAGS="-Wall -ansi -pedantic-errors -std=c++98 -Wshadow" \
 		--with-Documentation
 	#
 	for file in $configure_file_list

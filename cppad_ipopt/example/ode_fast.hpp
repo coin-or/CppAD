@@ -2,7 +2,7 @@
 # ifndef CPPAD_ODE_FAST_INCLUDED
 # define CPPAD_ODE_FAST_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -43,8 +43,8 @@ namespace {
 		SizeVector S_;
 	public:
 		// derived class part of constructor
-		FG_fast(bool retape, const SizeVector& N)
-		: retape_ (retape), N_(N)
+		FG_fast(bool retape_in, const SizeVector& N)
+		: retape_ (retape_in), N_(N)
 		{	assert( N_[0] == 0 );
 			S_.resize( N_.size() );
 			S_[0] = 0;
@@ -65,7 +65,6 @@ namespace {
 			if( k < Nz )
 			{	// used for measurement with index k+1
 				ADVector r(1); // return value is a scalar
-				size_t j;
 				// u is [y( s[k+1] ) , a] 
 				for(j = 0; j < Ny; j++)
 					y[j] = u[j];

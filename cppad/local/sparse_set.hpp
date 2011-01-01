@@ -2,7 +2,7 @@
 # define CPPAD_SPARSE_SET_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -73,25 +73,25 @@ public:
 	/*! Change number of sets, set end, and initialize all sets as empty
 
 	Any memory currently allocated for this object is freed. If 
-	\a n_set is zero, no new memory is allocated for the set.
+	\a n_set_in is zero, no new memory is allocated for the set.
 	Otherwise, new memory may be allocated for the sets.
 
-	\param n_set
+	\param n_set_in
 	is the number of sets in this vector of sets.
 
-	\param end
+	\param end_in
 	is the maximum element plus one (the minimum element is 0).
 	*/
-	void resize(size_t n_set, size_t end) 
-	{	n_set_          = n_set;
-		end_            = end;
+	void resize(size_t n_set_in, size_t end_in) 
+	{	n_set_          = n_set_in;
+		end_            = end_in;
 		// free all memory connected with data_
 		data_.resize(0);
 		// now start a new vector with empty sets
 		data_.resize(n_set_);
 
 		// value that signfies past end of list
-		next_index_ = n_set;
+		next_index_ = n_set_;
 	}
 	// -----------------------------------------------------------------
 	/*! Add one element to a set.
