@@ -17,9 +17,10 @@ ADOLC_DIR=$HOME/prefix/adolc
 FADBAD_DIR=$HOME/prefix/fadbad
 SACADO_DIR=$HOME/prefix/sacado
 IPOPT_DIR=$HOME/prefix/ipopt
-#
 # library path for the ipopt and adolc
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ADOLC_DIR/lib:$IPOPT_DIR/lib"
+# version type is one of "trunk" or "stable"
+version_type="trunk"
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/build.sh" ]
 then
@@ -59,7 +60,15 @@ fi
 yyyy_mm_dd=`date +%F`
 #
 # Version of cppad that corresponds to today.
-version=`echo $yyyy_mm_dd | sed -e 's|-||g'`
+if [ "$version_type" == "trunk" ]
+then
+	version=`echo $yyyy_mm_dd | sed -e 's|-||g'`
+else
+	version=`grep '^ *AC_INIT(' configure.ac | 
+		sed -e 's/[^,]*, *\([^ ,]*\).*/\1/'`
+	yyyy_mm_dd=`echo $version | 
+		sed -e 's|\..*||' -e 's|\(....\)\(..\)|\1-\2-|'`
+fi
 #
 # Files are created by the configure command and coppied to the source tree
 configure_file_list="
@@ -531,6 +540,11 @@ then
 		gpl
 		copy2doc
 	"
+	if [ "$version_type" != "trunk" ]
+	then
+		# only use the help built during the build.sh dist command
+		list=`echo $list | sed -e 's|omhelp||'`
+	fi
 	echo "bin/build.sh $list"
 	bin/build.sh $list
 	echo "OK: bin/build.sh all"
@@ -543,6 +557,12 @@ then
      echo "$1 is not a valid option"
 fi
 #
+if [ "$version_type" == "trunk" ]
+then
+	all_cases="run all the options above in order"
+else
+	all_cases="run all the options above in order with exception of omhelp"
+fi
 cat << EOF
 usage: bin/build.sh option_1 option_2 ...
 
@@ -558,7 +578,7 @@ test:      unpack work/*.cpl.tgz, run make test, put result in build_test.log
 gpl:       create work/*.gpl.zip and work/*.cpl.zip       
 copy2doc:  copy tarballs and doxygen output into doc directory
 
-all:       run all the options above in order
+all:       $all_cases
 EOF
 #
 exit 1
