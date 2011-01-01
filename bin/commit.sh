@@ -12,10 +12,13 @@
 # -----------------------------------------------------------------------------
 # replacement text for this commit
 cat << EOF > bin/commit.1.$$
-This is a template file for making commits to the cppad repository.
+This is a template file for making commits to the CppAD repository.
 Lines with no 'at' characters, are general comments not connected to 
-a specifi file. Lines containing an 'at' character are "file name" 
-followed by comment. Next line must be empty for commit.sh files to work.
+a specific file. Lines containing an 'at' character are "file name" 
+followed by comment. Lines before the first 'at' character are preserved
+during
+	bin/commit.sh edit 
+for example this entire paragraph is preserved.
 
 bin/commit.sh@ For this example, bin/commit.sh is the only file committed.
 EOF
@@ -54,7 +57,8 @@ if [ "$1" == 'list' ] || [ "$1" == 'edit' ]
 then
 	# -------------------------------------------------
 	svn status | sed -n -e '/^[ADMRC] /p' | \
-		sed -e 's/^[ADMRC] [+ ]*//' -e '/^bin\/commit.sh$/d' |\
+		sed -e 's/^[ADMRC] [+ ]*//' \
+			-e '/^bin\/commit.sh$/d' -e '/^bin\/commit.sed$/d' | \
 		sort -u > bin/commit.1.$$
 	# -------------------------------------------------
 	if [ "$1" == 'list' ]
@@ -69,7 +73,7 @@ then
 	do
 		if [ -f "$file" ]
 		then
-			sed -f svn_commit.sed $file > bin/commit.2.$$
+			sed -f bin/commit.sed $file > bin/commit.2.$$
 			if ! diff $file bin/commit.2.$$ > /dev/null
 			then
 				echo "---------------------------------------"
@@ -108,11 +112,11 @@ then
 	echo "diff bin/commit.sh.old bin/commit.sh"
 	if diff    bin/commit.sh.old bin/commit.sh
 	then
-		echo "bin/commit.sh: exiting because bin/commit.sh has not changed"
-		exit 1
+		echo "bin/commit.sh edit: no changes to bin/commit.sh"
 	fi
 	echo "------------------------------------"
-     chmod +x bin/commit.sh
+     echo "chmod +x bin/commit.sh"
+           chmod +x bin/commit.sh
 	exit 0
 fi
 # -----------------------------------------------------------------------
@@ -125,7 +129,14 @@ then
 	if ! grep '^# *define  *CPPAD_CPPADVECTOR  *1 *$' cppad/config.h \
 		>  /dev/null
 	then
-		echo "bin/commit.sh run: CPPAD_CPPADVECTOR is not 1 in cppad/config.h"
+		echo "bin/commit.sh run: CPPAD_CPPADVECTOR is 1 in cppad/config.h"
+		rm bin/commit.1.$$
+		exit 1
+	fi
+	if ! grep '^# *define  *CPPAD_BOOSTVECTOR  *0 *$' cppad/config.h \
+		>  /dev/null
+	then
+		echo "bin/commit.sh run: CPPAD_BOOSTVECTOR not 0 in cppad/config.h"
 		rm bin/commit.1.$$
 		exit 1
 	fi
