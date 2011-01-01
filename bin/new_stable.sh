@@ -17,7 +17,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 copy_from_trunk="keep"     # do (frist time), keep (use current), redo
-trunk_revision="1772"      # trunk revision number that stable corresponds to
+trunk_revision="1773"      # trunk revision number that stable corresponds to
 yyyy_mm_dd="2011-01-01"    # Date corresponding to this trunk revision
 # -----------------------------------------------------------------------------
 echo "copy_from_trunk=$copy_from_trunk"
@@ -89,7 +89,7 @@ sed -i bin/new_release.sh \
 #
 # Inform build.sh that this is a stable version
 echo "automatic editing: $stable_version/bin/build.sh"
-sed -i build.sh -e 's/^version_type=.*/version_type="stable"/'
+sed -i bin/build.sh -e 's/^version_type=.*/version_type="stable"/'
 #
 # Set web for download of corresponding release version
 echo "automatic editing: $stable_version/omh/install_windows.omh.in"
@@ -103,20 +103,22 @@ sed -i omh/install_unix.omh.in \
 	-e "s|cppad-@VERSION@.[cg]pl.tgz|\n$dir/&%\n&|" 
 #
 # Instructions --------------------------------------------------------------
-#
-echo "1: In the directory stable/$stable_version, review differences using"
-echo "       ./commit.sh files"
-echo "   All changed files should be present. Check differences.
-echo "2: If not correct, fix trunk/new_stable.sh and re-run it and goto 1."
-echo "3: In stable/$stable_version run the following command:"
-echo "      ./build.sh all test"
-echo "4: If errors occur, fix trunk/new_stable.sh and goto 1."
-echo "5: Commit changes to trunk/new_stable.sh."
-echo "6: In stable/$stable_version commit changes using"
-echo "      ./commit.sh run"
-echo "7: Make sure commited all necessary changes in stable/$stable_version"
-echo "      ./commit.sh files"
-echo "8: In stable/$stable_version check first, then run the script"
-echo "      ./new_release.sh"	
-echo
+cat << EOF
+1: In the directory stable/$stable_version, review differences using
+       bin/commit.sh list
+   All changed files should be present. Review the differences.
+2: If you find problems, fix trunk/bin/new_stable.sh, re-run it, and goto 1.
+3: In stable/$stable_version run the following command:
+      bin/build.sh all
+4: If errors occur, fix trunk/bin/new_stable.sh, re-run it, and goto 1.
+5: Commit changes to trunk/bin/new_stable.sh.
+6: In stable/$stable_version commit changes using
+	bin/commit.sh edit
+   then edit bin/commit.sh to change the comments and then run
+      bin/commit.sh run
+7: Make sure commited all necessary changes in stable/$stable_version
+      bin/commit.sh list
+8: In stable/$stable_version check first, then run the script
+      bin/new_release.sh	
+EOF
 exit 0
