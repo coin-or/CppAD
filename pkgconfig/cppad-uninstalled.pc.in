@@ -1,4 +1,4 @@
-# $Id:$
+# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -11,8 +11,8 @@
 # -----------------------------------------------------------------------------
 # This file is used with pkg-config to include CppAD before it is installed.
 
-Name:         CppAD
-Description:  Differentiaiton of C++ Algorithms
+Name:         @PACKAGE_NAME@
+Description:  @PACKAGE_DESCRIPTION@
 Version:      @PACKAGE_VERSION@
-URL:          http://www.coin-or.org/CppAD
+URL:          @PACKAGE_URL@
 Cflags:       -I@ABS_TOP_SRCDIR@

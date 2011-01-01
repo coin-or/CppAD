@@ -1,7 +1,7 @@
 CppAD is available with both the CPL and GPL licenses; see the CppAD home page.
 
 http://www.coin-or.org/CppAD
-This is the CppAD home page.
+is the CppAD home page.
 
 cppad@list.coin-or.org
 This mailing list is used for CppAD discussion and bug reporting. Only members 
@@ -9,42 +9,47 @@ of the mailing list can post messages (this avoids spam on the mailing list).
 You can join the mailing list using its general information page
 	http://list.coin-or.org/mailman/listinfo/CppAD
 
+doc/index.htm
+is the top level file for the user documentation of this version of CppAD.
+This version of the documentation has the mathematics displayed as latex.
 
-File        Description
-==========  ===========
-AUTHORS     Statement of authorship and copyright.
-COPYING     Statement of user license to use software.
-ChangeLog   Pointer to log of recent changes.
-INSTALL     Pointer to installation instructions.
-NEWS        Pointer to log of recent changes.
-README      This file
-cpl1.0.txt  A copy of the CPL license.
-gpl2.txt    A copy of the GPL license.
-configure   The script file used (on Unix systems) to configure CppAD 
-*.sh        Bash shell scripts used for CppAD development
+doc/index.xml
+is another top level file for the user documentation of this version of CppAD.
+This version of the documentation has the mathematics displayed using MathML.
 
-doc
-sub-directory containing the documentation for this version of CppAD.
+Directories    Description
+===========    ===========
+bin            Shell and sed scripts used for CppAD development.
+cppad          CppAD include directory (will be copied to prefix/include)
+cppad_ipopt    The CppAD interface to the Ipopt optimizer.
+doc            Directory containing the CppAD user documentation.
+example        Most all the CppAD example files are here.
+introduction   Contains an introduction to Algorithmic Differentiation.
+omh            Files for user documentation only (in OMhelp input format).
+openmp         OpenMp support files.
+pkgconfig      pkg-config support files.
+print_for      Example printing during forward mode, pkg-config support files.
+speed          Speed comparison tests for CppAD and other AD packages.
+speed_cppad    Old (no longer used) CppAD speed tests.
+test_more      Extra tests that are not intended as examples.
+uw_copy*.html  UW policy on intellectual property.
 
-doc/*.htm
-Files in the doc directory with with the .htm extension
-represent mathematics using LaTex, for example see doc/poly.htm.
 
-doc/*.xml
-Files in the doc directory with with the .xml extension
-represent mathematics using LaTex, for example see doc/poly.xml.
-
-doc/(cppad.xml or cppad.htm)
-Is the top (root) of the documentation tree for CppAD.
-
-doc/(getstarted.cpp.xml or getstarted.cpp.htm)
-Contains an example for getting started using CppAD.
-
-doc/(introduction.xml or introduction.htm)
-Contains an introduction by example to Algorithmic Differentiation.
-
-doc/(whats_new.xml or whats_new.htm)
-Contains a list of changes and additions to CppAD in reverse order by date.
-
-doc/(install.xml or install.htm)
-Contains documentation for downloading and installing CppAD.
+Files          Description
+==========     ===========
+AUTHORS        Statement of authorship and copyright.
+Build          Script used by coin-or for nightly builds
+ChangeLog      Pointer to log of recent changes.
+configure.ac   CppAD autoconf input file.
+COPYING        Statement of user license to use software.
+cpl1.0.txt     A copy of the CPL license version 1.0.
+doc.omh.in     Root input file for CppAD user documentation tree.
+doxyfile.in    Control file for CppAD developer documentation.
+gpl2.txt       A copy of the GPL license version 2.
+INSTALL        Points to README file.
+install-sh     A Gnu installation helper script.
+LICENSE        License for this version of CppAD.
+makefile.am    Top level automake input file.
+makefile.in    Top level autoconf/automake output file.
+missing        A Gnu installation helper script.
+NEWS           Pointer to release notes; i.e., whats new in this version.

@@ -646,6 +646,7 @@ CppAD_DOCUMENTATION_TRUE
 MAINT
 MAINTAINER_MODE_FALSE
 MAINTAINER_MODE_TRUE
+PACKAGE_DESCRIPTION
 target_alias
 host_alias
 build_alias
@@ -2114,6 +2115,10 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
+
+PACKAGE_URL="http://www.coin-or.org/CppAD"
+
+PACKAGE_DESCRIPTION="Differentiation of C++ Algorithms"
 
 
 
@@ -5425,7 +5430,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS" >&5
 $as_echo "cppad_ipopt_nlp libraries: $CPPAD_IPOPT_LIBS" >&6; }
-ac_config_files="$ac_config_files cppad.pc cppad-uninstalled.pc cppad/configure.hpp doxyfile doc.omh example/test_one.sh omh/install_unix.omh omh/install_windows.omh test_more/test_one.sh makefile example/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile introduction/get_started/makefile introduction/exp_apx/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/sacado/makefile speed/src/makefile test_more/makefile"
+ac_config_files="$ac_config_files cppad/configure.hpp doxyfile doc.omh example/test_one.sh omh/install_unix.omh omh/install_windows.omh pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc test_more/test_one.sh makefile example/makefile cppad_ipopt/src/makefile cppad_ipopt/example/makefile cppad_ipopt/speed/makefile cppad_ipopt/test/makefile introduction/get_started/makefile introduction/exp_apx/makefile print_for/makefile speed/adolc/makefile speed/cppad/makefile speed/double/makefile speed/example/makefile speed/fadbad/makefile speed/profile/makefile speed/sacado/makefile speed/src/makefile test_more/makefile"
 
 ac_config_commands="$ac_config_commands default-1"
 
@@ -6192,14 +6197,14 @@ do
   case $ac_config_target in
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "cppad/config.h") CONFIG_HEADERS="$CONFIG_HEADERS cppad/config.h" ;;
-    "cppad.pc") CONFIG_FILES="$CONFIG_FILES cppad.pc" ;;
-    "cppad-uninstalled.pc") CONFIG_FILES="$CONFIG_FILES cppad-uninstalled.pc" ;;
     "cppad/configure.hpp") CONFIG_FILES="$CONFIG_FILES cppad/configure.hpp" ;;
     "doxyfile") CONFIG_FILES="$CONFIG_FILES doxyfile" ;;
     "doc.omh") CONFIG_FILES="$CONFIG_FILES doc.omh" ;;
     "example/test_one.sh") CONFIG_FILES="$CONFIG_FILES example/test_one.sh" ;;
     "omh/install_unix.omh") CONFIG_FILES="$CONFIG_FILES omh/install_unix.omh" ;;
     "omh/install_windows.omh") CONFIG_FILES="$CONFIG_FILES omh/install_windows.omh" ;;
+    "pkgconfig/cppad.pc") CONFIG_FILES="$CONFIG_FILES pkgconfig/cppad.pc" ;;
+    "pkgconfig/cppad-uninstalled.pc") CONFIG_FILES="$CONFIG_FILES pkgconfig/cppad-uninstalled.pc" ;;
     "test_more/test_one.sh") CONFIG_FILES="$CONFIG_FILES test_more/test_one.sh" ;;
     "makefile") CONFIG_FILES="$CONFIG_FILES makefile" ;;
     "example/makefile") CONFIG_FILES="$CONFIG_FILES example/makefile" ;;

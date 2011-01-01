@@ -1,0 +1,71 @@
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin pkgconfig$$
+$spell
+	CppAD
+	pkg-config
+	Cflags
+	Dir
+	builddir
+	prefixdir
+	cppad
+	pkgconfig
+	uninstalled
+$$
+
+$section CppAD pkg-config Files$$
+$index pkg-config, files$$
+$index files, pkg-config$$
+$index pc, pkg-config$$
+
+$head Purpose$$
+The $code pkg-config$$ package helps with the use of installed libraries; 
+see its
+$href%http://people.freedesktop.org/~dbn/pkg-config-guide.html%guide%$$
+for more information.
+
+$head Defined Fields$$
+$table
+$icode Name$$ $cnext
+	A human-readable name for the CppAD package.
+$rnext
+$icode Description$$ $cnext
+	A brief description of the CppAD package.
+$rnext
+$icode URL$$ $cnext
+	A URL where people can get more information about the CppAD package.
+$rnext
+$icode Version$$ $cnext
+	A string specifically defining the version of the CppAD package.
+$rnext
+$icode Cflags$$ $cnext
+	The necessary flags for using any of the CppAD include files.
+$tend
+
+$head CppAD Configuration Files$$
+In the table below, 
+$icode builddir$$ is the build directory; i.e., the directory where
+the CppAD
+$cref/Configure/InstallUnix/Configure/$$ command is execute.
+The directory $icode prefixdir$$ is the value of
+$cref/PrefixDir/InstallUnix/PrefixDir/$$ during configuration.
+The following configuration files contain the information above
+$table
+$icode File$$             $cnext 
+	$icode Description$$ $rnext
+$icode%prefixdir%/lib/pkgconfig/cppad.pc%$$              $cnext 
+	for use after $cref/make install/InstallUnix/make install/$$ 
+$rnext
+$icode%builddir%/pkgconfig/cppad-uninstalled.pc%$$       $cnext 
+	for testing before $code make install$$                      
+$tend
+
+$end

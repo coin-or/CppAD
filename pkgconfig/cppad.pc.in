@@ -1,4 +1,4 @@
-# $Id:$
+# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #
@@ -15,8 +15,8 @@
 @CppAD_POSTFIX_TRUE@  myincludedir=@prefix@/include/@POSTFIX_DIR@
 @CppAD_POSTFIX_FALSE@ myincludedir=@prefix@/include
 
-Name:         CppAD
-Description:  Differentiaiton of C++ Algorithms
+Name:         @PACKAGE_NAME@
+Description:  @PACKAGE_DESCRIPTION@
 Version:      @PACKAGE_VERSION@
-URL:          http://www.coin-or.org/CppAD
+URL:          @PACKAGE_URL@
 Cflags:       -I${myincludedir}

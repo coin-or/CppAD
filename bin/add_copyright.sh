@@ -48,6 +48,7 @@ EOF
 
 	sh)
 	cat << EOF  > bin/add_copyright.$$
+#! /bin/bash -e
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
 #

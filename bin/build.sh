@@ -261,13 +261,6 @@ then
 		CXX_FLAGS="-Wall -ansi -pedantic-errors -std=c++98" \
 		--with-Documentation
 	#
-	# make shell scripts created by configure executable
-	echo "chmod +x example/test_one.sh"
-	chmod +x example/test_one.sh
-	#
-	echo "chmod +x test_more/test_one.sh"
-	chmod +x test_more/test_one.sh
-	#
 	for file in $configure_file_list
 	do
 		echo "cp $file ../$file"

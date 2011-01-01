@@ -13,6 +13,8 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
 AC_INIT(CppAD, 20101231, cppad@list.coin-or.org)
+AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
+AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
 dnl By defalut disable maintainer mode when running configure;
 dnl --enable-maintainer-mode will enable it.
@@ -352,14 +354,14 @@ dnl -----------------------------------------------------------------------
 dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will 
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
-	cppad.pc
-	cppad-uninstalled.pc
 	cppad/configure.hpp
 	doxyfile
 	doc.omh
 	example/test_one.sh
 	omh/install_unix.omh
 	omh/install_windows.omh
+	pkgconfig/cppad.pc
+	pkgconfig/cppad-uninstalled.pc
 	test_more/test_one.sh
 
 	makefile
