@@ -22,6 +22,15 @@ release="0"
 release_version="$stable_version.$release"
 msg="Creating releases/$release_version"
 # -----------------------------------------------------------------------------
+# check initial working directory
+dir=`pwd | sed -e 's|.*/[Cc][Pp][Pp][Aa][Dd]/||'`
+check="stable/$stable_version"
+if [ "$dir" != "$check" ]
+then
+	echo bin/"new_stable.sh: must execute this script in $check"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
 # Check release version
 if svn list $repository/releases | grep "$release_version" > /dev/null
 then
@@ -37,7 +46,7 @@ if ! grep "AC_INIT(CppAD.*, $release_version" configure.ac > /dev/null
 then
 	echo bin/"new_release.sh: Change version number in configure.ac to be"
 	echo "$release_version, then execute"
-	echo "	./build.sh version automake configure"
+	echo "	bin/build.sh version automake configure"
 	echo "then commit the changes."
 	exit 1
 fi
@@ -46,7 +55,7 @@ echo "svn revert cppad/config.h"
 if ! grep "PACKAGE_STRING.*CppAD.*$release_version" cppad/config.h > /dev/null
 then
 	echo bin/"new_release.sh: Version in cppad/config.h not $release_version."
-	echo "	./build.sh version automake configure"
+	echo "	bin/build.sh version automake configure"
 	echo "should fix this."
 	exit 1
 fi
@@ -56,7 +65,7 @@ if ! grep "PACKAGE_STRING.*CppAD.*$release_version" \
 	cppad/configure.hpp > /dev/null
 then
 	echo bin/"new_release.sh: Version in cppad/configure.hpp not $release_version."
-	echo "	./build.sh version automake configure"
+	echo "	bin/build.sh version automake configure"
 	echo "should fix this."
 	exit 1
 fi
@@ -95,4 +104,4 @@ sed -i projDesc.xml \
 	-e "/^ *<release/,/^ *<\/release/s/[0-9]\{8\}\.[0-9]*/$release_version/"
 #
 echo "Use the command the following command to finish the process"
-echo "	svn commit -m \"$msg\" ../conf/projDesc.xml"
+echo "	svn commit -m \"$msg\" ../../conf/projDesc.xml"

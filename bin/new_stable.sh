@@ -30,7 +30,7 @@ release_version="$stable_version.0"
 repository="https://projects.coin-or.org/svn/CppAD"
 rep_trunk="$repository/trunk"
 rep_stable="$repository/stable/$stable_version"
-#
+# -----------------------------------------------------------------------------
 # check initial working directory
 dir=`pwd | sed -e 's|.*/||'`
 if [ "$dir" != "trunk" ]
@@ -38,6 +38,7 @@ then
 	echo bin/"new_stable.sh: must execute this script in the trunk"
 	exit 1
 fi
+# -----------------------------------------------------------------------------
 echo "cd .."
 cd ..
 #
