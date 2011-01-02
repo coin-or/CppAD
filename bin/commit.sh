@@ -20,7 +20,6 @@ during
 	bin/commit.sh edit 
 for example this entire paragraph is preserved.
 
-bin/commit.sh@ For this example, bin/commit.sh is the only file committed.
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/commit.sh" ]
