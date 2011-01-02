@@ -19,7 +19,7 @@ This version of the documentation has the mathematics displayed using MathML.
 
 Directories    Description
 ===========    ===========
-bin            Shell and sed scripts used for CppAD development.
+bin            Helper shell and sed scripts used for CppAD development.
 cppad          CppAD include directory (will be copied to prefix/include)
 cppad_ipopt    The CppAD interface to the Ipopt optimizer.
 doc            Directory containing the CppAD user documentation.
@@ -39,6 +39,7 @@ Files          Description
 ==========     ===========
 AUTHORS        Statement of authorship and copyright.
 Build          Script used by coin-or for nightly builds
+build.sh       Main shell script used for CppAD development.
 ChangeLog      Pointer to log of recent changes.
 configure.ac   CppAD autoconf input file.
 COPYING        Statement of user license to use software.

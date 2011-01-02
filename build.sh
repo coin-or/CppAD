@@ -22,9 +22,9 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ADOLC_DIR/lib:$IPOPT_DIR/lib"
 # version type is one of "trunk" or "stable"
 version_type="trunk"
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/build.sh" ]
+if [ $0 != "./build.sh" ]
 then
-	echo "bin/build.sh: must be executed from its parent directory"
+	echo "./build.sh: must be executed in the directory that contians it"
 	exit 1
 fi
 if [ "$2" != "" ]
@@ -42,8 +42,8 @@ then
      for option in $*
      do
 		echo "=============================================================="
-		echo "begin: bin/build.sh $option"
-          bin/build.sh $option
+		echo "begin: ./build.sh $option"
+          ./build.sh $option
      done
 	echo "=============================================================="
      exit 0
@@ -144,7 +144,7 @@ then
 	done
 	echo "-------------------------------------------------------------"
 	#
-	echo "OK: bin/build.sh version"
+	echo "OK: ./build.sh version"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -222,7 +222,7 @@ then
 		fi
 	done
 	#
-	echo "OK: bin/build.sh automake"
+	echo "OK: ./build.sh automake"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -276,7 +276,7 @@ then
 		cp $file ../$file
 	done
 	#
-	echo "OK: bin/build.sh configure"
+	echo "OK: ./build.sh configure"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -342,7 +342,7 @@ then
 	echo "mv cppad-$version.tar.gz cppad-$version.cpl.tgz"
 	mv cppad-$version.tar.gz cppad-$version.cpl.tgz
 	#
-	echo "OK: bin/build.sh dist"
+	echo "OK: ./build.sh dist"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -365,7 +365,7 @@ then
 		done
 	done
 	#
-	echo "OK: bin/build.sh omhelp"
+	echo "OK: ./build.sh omhelp"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -395,7 +395,54 @@ then
 	echo "bin/check_doxygen.sh"
 	bin/check_doxygen.sh
 	#
-	echo "OK: bin/build.sh doxygen"
+	echo "OK: ./build.sh doxygen"
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+if [ "$1" = "gpl" ] 
+then
+	# create GPL licensed version
+	echo "bin/gpl_license.sh"
+	bin/gpl_license.sh
+	#
+	echo "OK: ./build.sh gpl"
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+if [ "$1" = "copy2doc" ] 
+then
+	for ext in cpl gpl
+	do
+		echo "cp work/cppad-$version.cpl.tgz doc/cppad-$version.cpl.tgz"
+		cp work/cppad-$version.cpl.tgz doc/cppad-$version.cpl.tgz
+	done
+	echo "cp -r doxydoc doc/doxydoc"
+	cp -r doxydoc doc/doxydoc
+	#
+	echo "OK: ./build.sh copy2doc"
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+if [ "$1" == "all" ]
+then
+	list="
+		version
+		automake
+		configure
+		dist
+		omhelp
+		doxygen
+		gpl
+		copy2doc
+	"
+	if [ "$version_type" != "trunk" ]
+	then
+		# only use the help built during the build.sh dist command
+		list=`echo $list | sed -e 's|omhelp||'`
+	fi
+	echo "./build.sh $list"
+	./build.sh $list
+	echo "OK: ./build.sh all"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -437,8 +484,8 @@ then
 	# erase old distribution directory
 	if [ -e cppad-$version ]
 	then
-		echo "rm -r cppad-$version"
-		rm -r cppad-$version
+		echo "rm -rf cppad-$version"
+		rm -rf cppad-$version
 	fi
 	#
 	# create distribution directory
@@ -451,16 +498,16 @@ then
 	echo "cd cppad-$version"
 	cd cppad-$version
 	#
-	echo "bin/build.sh configure >> $log_file" 
-	bin/build.sh configure       >> $log_dir/$log_file
+	echo "./build.sh configure >> $log_file" 
+	./build.sh configure       >> $log_dir/$log_file
 	#
 	# test user documentation
 	echo "bin/run_omhelp.sh doc xml  >> $log_file"
 	      bin/run_omhelp.sh doc xml  >> $log_dir/$log_file
 	# 
 	# test developer documentation
-	echo "bin/build.sh doxygen   >> $log_file"
-	bin/build.sh doxygen         >> $log_dir/$log_file
+	echo "./build.sh doxygen   >> $log_file"
+	./build.sh doxygen         >> $log_dir/$log_file
 	#
 	# openmp test script
 	echo "openmp/run.sh            >> $log_file"
@@ -497,57 +544,9 @@ then
 	echo "date >> $log_file"
 	date       >> $log_dir/$log_file
 	#
-	echo "Check build_test.log for errors and warnings."
+	echo "No errors or warnings found; see build_test.log."
 	#
-	echo "OK: bin/build.sh test"
-	exit 0
-fi
-# -----------------------------------------------------------------------------
-if [ "$1" = "gpl" ] 
-then
-	# create GPL licensed version
-	echo "bin/gpl_license.sh"
-	bin/gpl_license.sh
-	#
-	echo "OK: bin/build.sh gpl"
-	exit 0
-fi
-# -----------------------------------------------------------------------------
-if [ "$1" = "copy2doc" ] 
-then
-	for ext in cpl gpl
-	do
-		echo "cp work/cppad-$version.cpl.tgz doc/cppad-$version.cpl.tgz"
-		cp work/cppad-$version.cpl.tgz doc/cppad-$version.cpl.tgz
-	done
-	echo "cp -r doxydoc doc/doxydoc"
-	cp -r doxydoc doc/doxydoc
-	#
-	echo "OK: bin/build.sh copy2doc"
-	exit 0
-fi
-# -----------------------------------------------------------------------------
-if [ "$1" == "all" ]
-then
-	list="
-		version
-		automake
-		configure
-		dist
-		omhelp
-		doxygen
-		test
-		gpl
-		copy2doc
-	"
-	if [ "$version_type" != "trunk" ]
-	then
-		# only use the help built during the build.sh dist command
-		list=`echo $list | sed -e 's|omhelp||'`
-	fi
-	echo "bin/build.sh $list"
-	bin/build.sh $list
-	echo "OK: bin/build.sh all"
+	echo "OK: ./build.sh test"
 	exit 0
 fi
 # -----------------------------------------------------------------------------
@@ -564,21 +563,21 @@ else
 	all_cases="run all the options above in order with exception of omhelp"
 fi
 cat << EOF
-usage: bin/build.sh option_1 option_2 ...
+usage: ./build.sh option_1 option_2 ...
 
-options
--------
-version:   update version in AUTHORS, configure.ac, configure, config.h
+options                                                               requires
+-------                                                               --------
+version:   set version in AUTHORS, configure.ac, configure, config.h.
 automake:  run the tools required by autoconf and automake.
-configure: run the configure script in the work directory.
-dist:      create the distribution file work/cppad-version.cpl.tgz
-omhelp:    build all formats of user documentation in doc/*
-doxygen:   build developer documentation in doxydoc/*
-test:      unpack work/*.cpl.tgz, run make test, put result in build_test.log
-gpl:       create work/*.gpl.zip and work/*.cpl.zip       
-copy2doc:  copy tarballs and doxygen output into doc directory
+configure: run the configure script in the work directory.            automake
+dist:      create the distribution file work/cppad-version.cpl.tgz.   configure
+omhelp:    build all formats of user documentation in doc/*.          configure
+doxygen:   build developer documentation in doxydoc/*.                configure
+gpl:       create work/*.gpl.zip and work/*.cpl.zip.                  dist
+copy2doc:  copy tarballs and doxygen output into doc directory.       gpl
 
 all:       $all_cases
+test:      use tarball to make test and put result in build_test.log. dist
 EOF
 #
 exit 1
