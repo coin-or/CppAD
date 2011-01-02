@@ -20,6 +20,7 @@ during
 	bin/commit.sh edit 
 for example this entire paragraph is preserved.
 
+bin/commit.sh@ For this example, bin/commit.sh is the only file committed.
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/commit.sh" ]
@@ -39,15 +40,20 @@ list:
 output a list of the files that have changes svn knows about.
 
 edit:
-Edit the file list in bin/commit.sh to be the same as the files
-command would output.  In addition, it displays the changes 
-to bin/commit.sh. This will include the new files in the list since the last 
-edit of bin/commit.sh. You should then hand edit bin/commit.sh by hand, to add 
-comments about the changes, before running the second form.
+Edit the file list of files at the top of bin/commit.sh to be the same as 
+	bin/commit.sh list
+would output.  In addition, it displays the changes to bin/commit.sh. This 
+will include the new files in the list since the last edit of bin/commit.sh. 
+You should then edit bin/commit.sh by hand, to add comments about the changes, 
+(and remove bin/commit.sh from the list) before running the command
+	bin/commit.sh run
 
 run:
-commits the list of files (provided that you reply y to the [y/n] prompt 
-that bin/commit.sh generates).
+commits changes to the list of files in bin/commit.sh 
+(provided that you reply y to the [y/n] prompt that bin/commit.sh generates).
+The files bin/commit.sh and bin/commit.sed cannot be commited this way; use
+	svn commit -m "your log message" bin/commit.sh bin/commit.sed
+for commits to these files.
 EOF
 	exit 1
 fi
@@ -122,7 +128,19 @@ fi
 list=`sed -e '/@/! d' -e 's/@.*//' bin/commit.1.$$`
 msg=`sed -e '/@ *$/d' -e 's|.*/\([^/]*@\)|\1|' -e 's|@|:|' bin/commit.1.$$`
 # if cppad/config.h is in the list of files to be commited
-if (echo $list | grep '^cppad/config.h@' bin/commit.1.$$ > /dev/null)
+if (echo $list | grep '^bin/commit.sh$' > /dev/null)
+then
+	echo "bin/commit.sh: cannot be used to commit changes to itself."
+	echo "remove it from the list of files in bin/commit.sh"
+	exit 1
+fi
+if (echo $list | grep '^bin/commit.sed$' > /dev/null)
+then
+	echo "bin/commit.sh: cannot be used to commit changes to bin/commit.sed"
+	echo "remove it from the list of files in bin/commit.sh"
+	exit 1
+fi
+if (echo $list | grep '^cppad/config.h$' bin/commit.1.$$ > /dev/null)
 then
 	# and CPPAD_CPPADVECTOR is not defined as one
 	if ! grep '^# *define  *CPPAD_CPPADVECTOR  *1 *$' cppad/config.h \
