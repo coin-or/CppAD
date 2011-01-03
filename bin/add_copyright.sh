@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -34,7 +34,7 @@ case $ext in
 	cpp | hpp | omh)
 	cat << EOF  > bin/add_copyright.$$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -50,7 +50,7 @@ EOF
 	cat << EOF  > bin/add_copyright.$$
 #! /bin/bash -e
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -60,6 +60,8 @@ EOF
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 EOF
+	echo "chmod +x bin/add_copyright.$$"
+	      chmod +x bin/add_copyright.$$
 	;;
 
 	*)
@@ -67,11 +69,23 @@ EOF
 	exit 1
 esac
 #
+# Add check for exection directory to scripts in bin/*.sh files
+if ( echo $file_name | grep 'bin/[^.]*\.sh$' > /dev/null )
+then
+	cat << EOF >> bin/add_copyright.$$
+if [ \$0 != "$file_name" ]
+then
+	echo "$file_name: must be executed from its parent directory"
+	exit 1
+fi
+EOF
+fi
+#
 echo "cat $file_name >> bin/add_copyright.$$"
-cat $file_name >> bin/add_copyright.$$
+      cat $file_name >> bin/add_copyright.$$
 #
 echo "mv $file_name ~/trash"
-mv $file_name ~/trash
+      mv $file_name ~/trash
 #
 echo "mv bin/add_copyright.$$ $file_name"
-mv bin/add_copyright.$$ $file_name
+      mv bin/add_copyright.$$ $file_name

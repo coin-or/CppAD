@@ -413,8 +413,8 @@ if [ "$1" = "copy2doc" ]
 then
 	for ext in cpl gpl
 	do
-		echo "cp work/cppad-$version.cpl.tgz doc/cppad-$version.cpl.tgz"
-		cp work/cppad-$version.cpl.tgz doc/cppad-$version.cpl.tgz
+		echo "cp work/cppad-$version.$ext.tgz doc/cppad-$version.$ext.tgz"
+		cp work/cppad-$version.$ext.tgz doc/cppad-$version.$ext.tgz
 	done
 	echo "cp -r doxydoc doc/doxydoc"
 	cp -r doxydoc doc/doxydoc
