@@ -26,6 +26,7 @@ EOF
 if [ $0 != "bin/commit.sh" ]
 then
 	echo "bin/commit.sh: must be executed from its parent directory"
+	rm bin/commit.1.$$
 	exit 1
 fi
 # -----------------------------------------------------------------------
@@ -55,6 +56,7 @@ The files bin/commit.sh and bin/commit.sed cannot be commited this way; use
 	svn commit -m "your log message" bin/commit.sh bin/commit.sed
 for commits to these files.
 EOF
+	rm bin/commit.1.$$
 	exit 1
 fi
 # -----------------------------------------------------------------------
