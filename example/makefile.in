@@ -143,6 +143,7 @@ DIST_SOURCES = $(am__example_SOURCES_DIST)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+ABS_TOP_BUILDDIR = @ABS_TOP_BUILDDIR@
 ABS_TOP_SRCDIR = @ABS_TOP_SRCDIR@
 ACLOCAL = @ACLOCAL@
 ADOLC_DIR = @ADOLC_DIR@
@@ -166,7 +167,7 @@ CYGPATH_W = @CYGPATH_W@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -177,7 +178,7 @@ CYGPATH_W = @CYGPATH_W@
 # -----------------------------------------------------------------------------
 # automake input file
 #
-# CppAD pusts all it's preprocessor definitions in the cppad/config.h file
+# CppAD puts all it's preprocessor definitions in the cppad/config.h file
 DEFS = 
 DEPDIR = @DEPDIR@
 DL_LIB = @DL_LIB@

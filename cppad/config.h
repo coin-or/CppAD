@@ -2,10 +2,10 @@
 /* cppad/config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* is CPPAD_TEST_VECTOR = boost vector (overriden if _MSC_VER defined) */
-#define CPPAD_BOOSTVECTOR 0
+#define CPPAD_BOOSTVECTOR 1
 
 /* is CPPAD_TEST_VECTOR == CppAD::vector */
-#define CPPAD_CPPADVECTOR 1
+#define CPPAD_CPPADVECTOR 0
 
 /* does system support gettimeofday (overriden if _MSC_VER defined) */
 #define CPPAD_GETTIMEOFDAY 1
@@ -23,7 +23,7 @@
 #define PACKAGE_NAME "CppAD"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "CppAD 20110101"
+#define PACKAGE_STRING "CppAD 20110109"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "cppad"
@@ -32,10 +32,10 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "20110101"
+#define PACKAGE_VERSION "20110109"
 
 /* Version number of package */
-#define VERSION "20110101"
+#define VERSION "20110109"
 
 /* Define to `__inline__' or `__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */

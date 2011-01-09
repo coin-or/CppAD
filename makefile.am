@@ -290,8 +290,8 @@ test:
 		echo "echo $$dir >> test.log"                        >> test.sh ; \
 		echo "if ! cd $$dir ; then exit 1 ; fi"              >> test.sh ; \
 		echo "if ! make test ; then exit 1 ; fi"             >> test.sh ; \
-		echo "cat test.log >> $(abs_top_builddir)/test.log"  >> test.sh ; \
-		echo "if ! cd $(abs_top_builddir); then exit 1; fi"  >> test.sh ; \
+		echo "cat test.log >> $(ABS_TOP_BUILDDIR)/test.log"  >> test.sh ; \
+		echo "if ! cd $(ABS_TOP_BUILDDIR); then exit 1; fi"  >> test.sh ; \
 	) done
 	echo "exit 0"                                             >> test.sh
 	chmod +x test.sh

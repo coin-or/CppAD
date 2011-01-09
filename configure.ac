@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20110101, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20110109, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -277,8 +277,10 @@ AC_C_INLINE
 dnl determine FCLIBS, flags necessary for linking C++ with modern fortran
 AC_FC_LIBRARY_LDFLAGS
 
-dnl absolute path corresponding to top_srcdir in makefile.am
+dnl absolute path corresponding to top_builddig and top_srcdir in makefile.am
 dnl (used by cppad-uninstalled.pc.in).
+abs_top_builddir=`pwd`
+AC_SUBST(ABS_TOP_BUILDDIR, "$abs_top_builddir")
 abs_top_srcdir=`cd $srcdir ; pwd`
 AC_SUBST(ABS_TOP_SRCDIR, "$abs_top_srcdir")
 
