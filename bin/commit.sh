@@ -78,7 +78,9 @@ then
 	list=`cat bin/commit.1.$$`
 	for file in $list
 	do
-		if [ -f "$file" ]
+		# exclude */makefile.in from edits in bin/commit.sed
+		local_file=`echo $file | sed -e 's|.*/||'`
+		if [ -f "$file" ] && [ "$local_file" != "makefile.in" ]
 		then
 			sed -f bin/commit.sed $file > bin/commit.2.$$
 			if ! diff $file bin/commit.2.$$ > /dev/null
