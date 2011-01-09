@@ -46,7 +46,7 @@ if ! grep "AC_INIT(CppAD.*, $release_version" configure.ac > /dev/null
 then
 	echo bin/"new_release.sh: Change version number in configure.ac to be"
 	echo "$release_version, then execute"
-	echo "	bin/build.sh version automake configure"
+	echo "	./build.sh version automake configure"
 	echo "then commit the changes."
 	exit 1
 fi
@@ -55,7 +55,7 @@ echo "svn revert cppad/config.h"
 if ! grep "PACKAGE_STRING.*CppAD.*$release_version" cppad/config.h > /dev/null
 then
 	echo bin/"new_release.sh: Version in cppad/config.h not $release_version."
-	echo "	bin/build.sh version automake configure"
+	echo "	./build.sh version automake configure"
 	echo "should fix this."
 	exit 1
 fi
@@ -65,7 +65,7 @@ if ! grep "PACKAGE_STRING.*CppAD.*$release_version" \
 	cppad/configure.hpp > /dev/null
 then
 	echo bin/"new_release.sh: Version in cppad/configure.hpp not $release_version."
-	echo "	bin/build.sh version automake configure"
+	echo "	./build.sh version automake configure"
 	echo "should fix this."
 	exit 1
 fi
