@@ -34,11 +34,11 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 subdir = .
-DIST_COMMON = README $(am__configure_deps) $(myinclude_HEADERS) \
-	$(nobase_myinclude_HEADERS) $(srcdir)/doc.omh.in \
-	$(srcdir)/doxyfile.in $(srcdir)/makefile.am \
-	$(srcdir)/makefile.in $(top_srcdir)/configure \
-	$(top_srcdir)/cppad/config.h.in \
+DIST_COMMON = README $(am__configure_deps) \
+	$(am__myinclude_HEADERS_DIST) $(nobase_myinclude_HEADERS) \
+	$(srcdir)/doc.omh.in $(srcdir)/doxyfile.in \
+	$(srcdir)/makefile.am $(srcdir)/makefile.in \
+	$(top_srcdir)/configure $(top_srcdir)/cppad/config.h.in \
 	$(top_srcdir)/cppad/configure.hpp.in \
 	$(top_srcdir)/omh/install_unix.omh.in \
 	$(top_srcdir)/omh/install_windows.omh.in \
@@ -90,6 +90,7 @@ am__base_list = \
 am__installdirs = "$(DESTDIR)$(pkgconfigdir)" \
 	"$(DESTDIR)$(myincludedir)" "$(DESTDIR)$(myincludedir)"
 DATA = $(pkgconfig_DATA)
+am__myinclude_HEADERS_DIST = cppad_ipopt/src/cppad_ipopt_nlp.hpp
 HEADERS = $(myinclude_HEADERS) $(nobase_myinclude_HEADERS)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
@@ -263,10 +264,32 @@ top_srcdir = @top_srcdir@
 # the configure script but rather use the project files 
 #
 @CppAD_POSTFIX_TRUE@postfix_dir = $(POSTFIX_DIR)
+#
+# Did user specify a value for ADOLC_DIR in configure command line
+@CppAD_ADOLC_TRUE@SPEED_ADOLC = speed/adolc
+#
+# Did user specify a value for FADBAD_DIR in configure command line
+@CppAD_FADBAD_TRUE@SPEED_FADBAD = speed/fadbad
+#
+# Did user specify a value for SACADO_DIR in configure command line
+@CppAD_SACADO_TRUE@SPEED_SACADO = speed/sacado
+@CppAD_IPOPT_CPPAD_FALSE@IPOPT_CPPAD = 
+#
+# Did user specify a value for IPOPT_DIR in configure command line 
+@CppAD_IPOPT_CPPAD_TRUE@IPOPT_CPPAD = \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/src \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/example \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/speed \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/test
+
+@CppAD_IPOPT_CPPAD_TRUE@IPOPT_HEADER = \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/src/cppad_ipopt_nlp.hpp
+
+# ---------------------------------------------------------------------------
 myincludedir = $(includedir)/$(postfix_dir)
 #
 myinclude_HEADERS = \
-	cppad_ipopt/src/cppad_ipopt_nlp.hpp
+	$(IPOPT_HEADER)
 
 #
 nobase_myinclude_HEADERS = \
@@ -444,24 +467,7 @@ nobase_myinclude_HEADERS = \
 	cppad/speed/uniform_01.hpp
 
 # End nobase_myinclude_HEADERS (check_makefile.sh uses this comment) 
-#
-# Did user specify a value for ADOLC_DIR in configure command line
-@CppAD_ADOLC_TRUE@SPEED_ADOLC = speed/adolc
-#
-# Did user specify a value for FADBAD_DIR in configure command line
-@CppAD_FADBAD_TRUE@SPEED_FADBAD = speed/fadbad
-#
-# Did user specify a value for SACADO_DIR in configure command line
-@CppAD_SACADO_TRUE@SPEED_SACADO = speed/sacado
-@CppAD_IPOPT_CPPAD_FALSE@IPOPT_CPPAD = 
 # ---------------------------------------------------------------
-# Did user specify a value for IPOPT_DIR in configure command line 
-@CppAD_IPOPT_CPPAD_TRUE@IPOPT_CPPAD = \
-@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/src \
-@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/example \
-@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/speed \
-@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/test
-
 #
 # No objects or executables are required to install CppAD.
 # See 'make test' below for building the tests.

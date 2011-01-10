@@ -1,6 +1,6 @@
-# $Id: makefile.am 1651 2010-02-08 13:54:06Z bradbell $
+# $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -35,7 +35,7 @@ AM_CPPFLAGS               = \
 	$(BOOST_INCLUDE) 
 #
 # make building the library conditional on having IPOPT_DIR specified
-lib_LIBRARIES            = libspeed.a
+noinst_LIBRARIES   = libspeed.a
 libspeed_a_SOURCES = \
 	link_det_lu.cpp \
 	link_det_minor.cpp \
