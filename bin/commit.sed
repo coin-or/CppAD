@@ -1,4 +1,5 @@
-# Changs to be made at each commit
+# Changes to be made at each commit (with the exception of */makefile.in)
+# Note that bin/commit.sh and bin/commit.sed are also excluded.
 #
 # Make sure config.h has certian default values (Used by Microsoft install)
 s/^# *define *CPPAD_BOOSTVECTOR *1 *$/#define CPPAD_BOOSTVECTOR 0/
