@@ -146,7 +146,7 @@ then
 	echo "remove it from the list of files in bin/commit.sh"
 	exit 1
 fi
-if (echo $list | grep '^cppad/config.h$' bin/commit.1.$$ > /dev/null)
+if (echo $list | grep '^cppad/config.h$' > /dev/null)
 then
 	# and CPPAD_CPPADVECTOR is not defined as one
 	if ! grep '^# *define  *CPPAD_CPPADVECTOR  *1 *$' cppad/config.h \
