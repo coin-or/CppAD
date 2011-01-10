@@ -91,6 +91,7 @@ then
 				then
 					echo "bin/commit.sh: program error"
 					rm bin/commit.2.$$
+					rm bin/commit.1.$$
 					exit 1
 				fi
 				if [ "$file" != "cppad/config.h" ]
@@ -105,6 +106,7 @@ then
 	then
 		echo "bin/commit.sh: aborting because of suggested changes above"
 		echo "with exception of changes to cppad/config.h"
+		rm bin/commit.1.$$
 		exit 1
 	fi
 	#
