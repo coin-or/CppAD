@@ -299,14 +299,14 @@ test: all
 	rm -f test.log
 	touch test.log
 	rm -f test.sh
-	echo "#! /bin/sh"                                         >  test.sh
+	echo "#! /bin/sh -e"                                      >  test.sh
 	for dir in $(test_directory_list) ; do ( \
 		echo "#"                                             >> test.sh ; \
-		echo "echo $$dir >> test.log"                        >> test.sh ; \
-		echo "if ! cd $$dir ; then exit 1 ; fi"              >> test.sh ; \
-		echo "if ! make test ; then exit 1 ; fi"             >> test.sh ; \
+		echo "echo \"cd $$dir\" >> test.log"                >> test.sh ; \
+		echo "cd $$dir "                                     >> test.sh ; \
+		echo "make test "                                    >> test.sh ; \
 		echo "cat test.log >> $(ABS_TOP_BUILDDIR)/test.log"  >> test.sh ; \
-		echo "if ! cd $(ABS_TOP_BUILDDIR); then exit 1; fi"  >> test.sh ; \
+		echo "cd $(ABS_TOP_BUILDDIR)"                        >> test.sh ; \
 	) done
 	echo "exit 0"                                             >> test.sh
 	chmod +x test.sh

@@ -540,9 +540,6 @@ then
 		echo "There are warnings in $dir/make.log"
 		exit 1
 	fi
-	#
-	echo "cat test.log             >> $log_file"
-	      cat test.log             >> $log_dir/$log_file
 	# --------------------------------------------------------------------
 	echo "cd ../../.."
 	cd ../../..
