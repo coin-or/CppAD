@@ -457,7 +457,7 @@ then
 	#
 	# start log for this test
 	echo "date > $log_file"
-	date       > $log_dir/$log_file
+	      date > $log_dir/$log_file
 	#
 	# Run automated checking of file names in original source directory
 	#
@@ -472,7 +472,7 @@ then
 	for check in $list 
 	do
 		echo "bin/$check >> $log_file"
-		bin/$check       >> $log_dir/$log_file
+		      bin/$check >> $log_dir/$log_file
 	done
 	# add a new line after last file check
 	echo ""             >> $log_dir/$log_file
@@ -480,27 +480,31 @@ then
 	# Things to do in the work directory
 	# ----------------------------------------------------------------------
 	echo "cd work"
-	cd work
+	echo "cd work" >> $log_dir/$log_file
+	      cd work
 	#
 	# erase old distribution directory
 	if [ -e cppad-$version ]
 	then
 		echo "rm -rf cppad-$version"
-		rm -rf cppad-$version
+		echo "rm -rf cppad-$version" >> $log_dir/$log_file
+		      rm -rf cppad-$version
 	fi
 	#
 	# create distribution directory
 	echo "tar -xzf cppad-$version.cpl.tgz"
-	tar -xzf cppad-$version.cpl.tgz
+	echo "tar -xzf cppad-$version.cpl.tgz" >> $log_dir/$log_file
+	      tar -xzf cppad-$version.cpl.tgz
 	#
 	# ----------------------------------------------------------------------
 	# Things to do in the work/disribution directory
 	# ----------------------------------------------------------------------
 	echo "cd cppad-$version"
-	cd cppad-$version
+	echo "cd cppad-$version" >> $log_dir/$log_file
+	      cd cppad-$version
 	#
 	echo "./build.sh configure >> $log_file" 
-	./build.sh configure       >> $log_dir/$log_file
+	      ./build.sh configure >> $log_dir/$log_file
 	#
 	# test user documentation
 	echo "bin/run_omhelp.sh doc xml  >> $log_file"
@@ -508,16 +512,17 @@ then
 	# 
 	# test developer documentation
 	echo "./build.sh doxygen   >> $log_file"
-	./build.sh doxygen         >> $log_dir/$log_file
+	      ./build.sh doxygen   >> $log_dir/$log_file
 	#
 	# openmp test script
-	echo "openmp/run.sh            >> $log_file"
-	openmp/run.sh                  >> $log_dir/$log_file
+	echo "openmp/run.sh       >> $log_file"
+	      openmp/run.sh       >> $log_dir/$log_file
 	# ----------------------------------------------------------------------
 	# Things to do in the work/disribution/work directory
 	# ----------------------------------------------------------------------
 	echo "cd work"
-	cd work
+	echo "cd work" >> $log_dir/$log_file
+	      cd work
 	#
 	dir=`pwd` 
 	echo "Use: tail -f $dir/make_test.log"
@@ -525,10 +530,10 @@ then
 	#
 	# build and run all the tests
 	echo "make test                >& make_test.log"
-	make test                      >& make_test.log
+	      make test                >& make_test.log
 	#
 	echo "cat make_test.log        >> $log_file"
-	cat make_test.log              >> $log_dir/$log_file
+	      cat make_test.log        >> $log_dir/$log_file
 	#
 	if grep 'warning:' make_test.log
 	then
@@ -537,13 +542,13 @@ then
 	fi
 	#
 	echo "cat test.log             >> $log_file"
-	cat test.log                   >> $log_dir/$log_file
+	      cat test.log             >> $log_dir/$log_file
 	# --------------------------------------------------------------------
 	echo "cd ../../.."
 	cd ../../..
 	# end the build_test.log file with the date and time
 	echo "date >> $log_file"
-	date       >> $log_dir/$log_file
+	      date >> $log_dir/$log_file
 	#
 	echo "No errors or warnings found; see build_test.log."
 	#
