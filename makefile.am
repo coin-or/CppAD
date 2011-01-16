@@ -10,8 +10,6 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-# automake input file
-#
 # Note that config.h is needed by VC++; i.e., for users that do not run
 # the configure script but rather use the project files 
 #
@@ -23,30 +21,60 @@ endif
 #
 # Did user specify a value for ADOLC_DIR in configure command line
 if CppAD_ADOLC
-SPEED_ADOLC    = speed/adolc
+SPEED_ADOLC_TESTS   = speed/adolc
+else
+SPEED_ADOLC_TESTS   = 
 endif
 #
 # Did user specify a value for FADBAD_DIR in configure command line
 if CppAD_FADBAD
-SPEED_FADBAD = speed/fadbad
+SPEED_FADBAD_TESTS  = speed/fadbad
+else
+SPEED_FADBAD_TESTS  = 
 endif
 #
 # Did user specify a value for SACADO_DIR in configure command line
 if CppAD_SACADO
-SPEED_SACADO = speed/sacado
+SPEED_SACADO_TESTS  = speed/sacado
+else
+SPEED_SACADO_TESTS  = 
 endif
 #
 # Did user specify a value for IPOPT_DIR in configure command line 
 if CppAD_IPOPT_CPPAD
-IPOPT_CPPAD = \
-	cppad_ipopt/src \
+IPOPT_TESTS = \
 	cppad_ipopt/example \
 	cppad_ipopt/speed \
 	cppad_ipopt/test
+#
+IPOPT_DIRS = \
+	cppad_ipopt/src \
+	$(IPOPT_TESTS) 
+#
 IPOPT_HEADER = \
 	cppad_ipopt/src/cppad_ipopt_nlp.hpp
 else
-IPOPT_CPPAD =
+IPOPT_TESTS  =
+IPOPT_DIRS   =
+IPOPT_HEADER =
+endif
+#
+# Is the library archiving program present
+if CppAD_HAVE_AR
+SPEED_TESTS = \
+	$(SPEED_ADOLC_TESTS)  \
+	speed/cppad \
+	speed/double \
+	speed/example \
+	$(SPEED_FADBAD_TESTS) \
+	speed/profile \
+	$(SPEED_SACADO_TESTS)
+#
+SPEED_DIRS = \
+	speed/src \
+	$(SPEED_TESTS)
+else
+	SPEED_DIRS =
 endif
 # ---------------------------------------------------------------------------
 myincludedir = $(includedir)/$(postfix_dir)
@@ -233,22 +261,12 @@ nobase_myinclude_HEADERS =  \
 # No objects or executables are required to install CppAD.
 # See 'make test' below for building the tests.
 SUBDIRS =  \
-	cppad_ipopt/example \
-	cppad_ipopt/speed \
-	cppad_ipopt/src \
-	cppad_ipopt/test \
+	$(IPOPT_DIRS) \
 	example \
 	introduction/get_started \
 	introduction/exp_apx \
 	print_for \
-	speed/adolc \
-	speed/cppad \
-	speed/double \
-	speed/example \
-	speed/fadbad \
-	speed/profile \
-	speed/sacado \
-	speed/src \
+	$(SPEED_DIRS) \
 	test_more 
 #
 # note that bin/gpl_license.sh is deleted by dist-hook
@@ -272,19 +290,12 @@ test_directory_list = \
 	example \
 	introduction/get_started \
 	introduction/exp_apx \
+	$(IPOPT_TESTS) \
 	print_for \
-	speed/src \
-	speed/cppad \
-	speed/double \
-	speed/example \
-	speed/profile \
-	test_more \
-	$(IPOPT_CPPAD) \
-	$(SPEED_ADOLC) \
-	$(SPEED_FADBAD) \
-	$(SPEED_SACADO) 
+	$(SPEED_TESTS) \
+	test_more 
 
-test: 
+test: all 
 	rm -f test.log
 	touch test.log
 	rm -f test.sh
@@ -314,7 +325,7 @@ doc_package = $(DESTDIR)$(datadir)/doc/$(postfix_dir)/$(PACKAGE)-$(VERSION)
 install-data-hook:
 	if [ ! -e $(doc_postfix) ] ; then mkdir -p $(doc_postfix) ; fi
 	if [ -e $(doc_package) ] ; then rm -rf $(doc_package) ; fi
-	cp -a $(top_srcdir)/doc $(doc_package)
+	cp -a $(top_builddir)/doc $(doc_package)
 	chmod -R a-w $(doc_package)
 	chmod -R u+w $(doc_package)
 	chmod -R a+r $(doc_package)

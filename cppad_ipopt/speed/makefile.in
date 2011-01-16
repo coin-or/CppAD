@@ -89,6 +89,7 @@ CXX = @CXX@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
+CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 
 # $Id$
@@ -167,6 +168,7 @@ datarootdir = @datarootdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
+have_ar = @have_ar@
 have_pkg_config = @have_pkg_config@
 host_alias = @host_alias@
 htmldir = @htmldir@

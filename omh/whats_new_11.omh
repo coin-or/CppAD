@@ -1,0 +1,81 @@
+$Id$
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin whats_new_11$$
+$spell
+	Fadbad
+	Wshadow
+	omh
+	dir
+	libspeed
+	cppad_ipopt_nlp.hpp
+	automake
+	makefile
+	builddir
+	gpl
+	http://www.coin-or.org/download/source/CppAD/cppad-20110101.0.cpl.tgz
+$$
+
+$section Changes and Additions to CppAD During 2011$$
+
+$head Introduction$$
+This section contains a list of the changes to CppAD during 2011
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+
+$head 01-16$$
+The following have been fixed:
+$list number$$
+The install of the documentation failed
+when it was done from a directory other than the top source directory.
+$lnext
+The GPL distribution had the output of the 
+$cref/configure/InstallUnix/Configure/$$ command in it.
+$lnext
+Since the change on 01-09, the file 
+$code omh/whats_new_11.omh$$ has been required to build the 
+documentation (and it has been missing from the distribution).
+$lnext
+Fadbad was generating warnings due to the $code -Wshadow$$ flag
+with the $code g++$$ compiler.
+The Fadbad $cref/speed/speed_fadbad/$$ tests have a special
+flag with this warning removed from the
+$cref/compiler flags/InstallUnix/CompilerFlags/$$.
+$lend
+
+$head 01-09$$
+There were some problems running $code make test$$ in the releases
+$codei%
+http://www.coin-or.org/download/source/CppAD/cppad-20110101.0.%license%.tgz
+%$$
+where $icode license$$ is $code gpl$$ or $code cpl$$.
+$list number$$
+The version of automake used to build the corresponding
+$code makefile.in$$ files did not define $code abs_top_builddir$$.
+$lnext
+The include file $code cppad_ipopt_nlp.hpp$$ was always installed, even if 
+$cref/IpoptDir/InstallUnix/IpoptDir/$$ was not defined on the 
+$code configure$$ command line.
+$lnext
+The speed test library $code libspeed.a$$ was being installed
+(it is only intended for testing).
+$lend
+These problems are fixed in the trunk 
+and these fixes will be copied to the corresponding stable and 
+release versions; i.e.,
+$codei%
+http://www.coin-or.org/download/source/CppAD/cppad-20110101.1.%license%.tgz
+%$$
+will not have this problem.
+
+$end

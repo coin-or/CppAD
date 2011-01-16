@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20110109, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20110116, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -27,9 +27,23 @@ AC_PREFIX_DEFAULT(${HOME})
 dnl cygwin end delete:
 dnl cygwin replace: AC_PREFIX_DEFAULT(/usr)
 
+dnl --------------------------------------------------------------------------
+dnl Check for programs
+
+AC_CHECK_PROG(have_pkg_config, [pkg-config], [yes], [no])
+AM_CONDITIONAL(CppAD_PKG_CONFIG, test "$have_pkg_config" = "yes")
+
+AC_CHECK_PROG(have_ar, [ar], [yes], [no])
+AM_CONDITIONAL(CppAD_HAVE_AR, test "$have_ar" = "yes")
+if test "$have_ar" = "no"; then
+	AC_MSG_WARN(
+	[cannot build any libraries because ar is missing, speed/* is not used] 
+	)
+fi
+
+dnl ----------------------------------------------------------------------
 AC_MSG_NOTICE([*** Check command line arguments that are longer used ****])
 
-dnl ---------------- Check for arugments that have been removed ----------
 if test "$CPP_ERROR_WARN" != "" ; then
     AC_MSG_ERROR([The CPP_ERROR_WARN configure option is now CXX_FLAGS])
 fi
@@ -89,6 +103,7 @@ AC_ARG_WITH(PrintFor, AC_HELP_STRING(
 if test "$PrintFor" = "yes" ; then
     AC_MSG_ERROR([--with-PrintFor not necessary, see install instructions.])
 fi
+dnl --------------------------------------------------------------------------
 AC_MSG_NOTICE([******  Check command line arguments that are used ***********])
 dnl the prefix directory corresponding to CppAD -------------------------
 dnl The following seems to work but NONE is not in autoconf specifications
@@ -146,6 +161,9 @@ AC_ARG_VAR(ADOLC_DIR,
 AM_CONDITIONAL(CppAD_ADOLC, test "$ADOLC_DIR" != "")
 if test "$ADOLC_DIR" != "" ; then
 	AC_MSG_RESULT([$ADOLC_DIR])
+	if test "$have_ar" = "no"; then
+		AC_MSG_ERROR([ar is missing and ADOLC_DIR is present])
+	fi
 else
 	AC_MSG_RESULT([no])
 fi
@@ -158,6 +176,9 @@ AC_ARG_VAR(FADBAD_DIR,
 AM_CONDITIONAL(CppAD_FADBAD, test "$FADBAD_DIR" != "")
 if test "$FADBAD_DIR" != "" ; then
 	AC_MSG_RESULT([$FADBAD_DIR])
+	if test "$have_ar" = "no"; then
+		AC_MSG_ERROR([ar is missing and FADBAD_DIR is present])
+	fi
 else
 	AC_MSG_RESULT([no])
 fi
@@ -170,6 +191,9 @@ AC_ARG_VAR(SACADO_DIR,
 AM_CONDITIONAL(CppAD_SACADO, test "$SACADO_DIR" != "")
 if test "$SACADO_DIR" != "" ; then
 	AC_MSG_RESULT([$SACADO_DIR])
+	if test "$have_ar" = "no"; then
+		AC_MSG_ERROR([ar is missing and SACADO_DIR is present])
+	fi
 else
 	AC_MSG_RESULT([no])
 fi
@@ -182,6 +206,9 @@ AC_ARG_VAR(IPOPT_DIR,
 AM_CONDITIONAL(CppAD_IPOPT_CPPAD, test "$IPOPT_DIR" != "")
 if test "$IPOPT_DIR" != "" ; then
 	AC_MSG_RESULT([$IPOPT_DIR])
+	if test "$have_ar" = "no"; then
+		AC_MSG_ERROR([ar is missing and IPOPT_DIR is present])
+	fi
 else
 	AC_MSG_RESULT([no])
 fi
@@ -205,16 +232,20 @@ else
 fi
 
 dnl The C++ compiler flags CXX_FLAGS -------------------------------------
+AC_SUBST(CXXFLAGS, "")
+#
 AC_MSG_CHECKING([CXX_FLAGS])
 AC_ARG_VAR(CXX_FLAGS,
-	[ CXXFLAGS is ignored, use this for compiler flags]
+	[ CXXFLAGS is ignored, use CXX_FLAGS for compiler flags]
 )
 if test "$CXX_FLAGS" != "" ; then
 	AC_MSG_RESULT([$CXX_FLAGS]) 
+	cxx_flags_fadbad=`echo "$CXX_FLAGS" | sed -e 's|-Wshadow||'`
 else
 	AC_MSG_RESULT([no])
+	cxx_flags_fadbad=""
 fi 
-AC_SUBST(CXXFLAGS, "")
+AC_SUBST(CXX_FLAGS_FADBAD, "$cxx_flags_fadbad")
 AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
 
 dnl Check which definition we are using for CPPAD_TEST_VECTOR
@@ -283,13 +314,6 @@ abs_top_builddir=`pwd`
 AC_SUBST(ABS_TOP_BUILDDIR, "$abs_top_builddir")
 abs_top_srcdir=`cd $srcdir ; pwd`
 AC_SUBST(ABS_TOP_SRCDIR, "$abs_top_srcdir")
-
-dnl --------------------------------------------------------------------------
-dnl Check for programs
-
-AC_CHECK_PROG(have_pkg_config, [pkg-config], [yes], [no])
-AM_CONDITIONAL(CppAD_PKG_CONFIG, test "$have_pkg_config" = "yes")
-
 dnl --------------------------------------------------------------------------
 dnl Check for C libraries
 

@@ -70,7 +70,8 @@ else
 		sed -e 's|\..*||' -e 's|\(....\)\(..\)|\1-\2-|'`
 fi
 #
-# Files are created by the configure command and coppied to the source tree
+# Files are created by the configure command and copied to the source tree
+# (This list is also in the gpl_license.sh file.)
 configure_file_list="
 	cppad/config.h
 	cppad/configure.hpp

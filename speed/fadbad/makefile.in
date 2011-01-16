@@ -82,11 +82,12 @@ CXX = @CXX@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
+CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -161,6 +162,7 @@ datarootdir = @datarootdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
+have_ar = @have_ar@
 have_pkg_config = @have_pkg_config@
 host_alias = @host_alias@
 htmldir = @htmldir@
@@ -193,13 +195,12 @@ top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I$(top_srcdir) -I$(FADBAD_DIR) $(BOOST_INCLUDE)
 #
 # BEGIN OPTIMIZE
-# Note that Fadbad will not compile with the -pedantic-errors flag,
-# so we are leaving CXX_FLAGS out of this complilation.
-AM_CXXFLAGS = -O2 -DNDEBUG -Wno-deprecated -DSPEED_FADBAD $(CXX_FLAGS)
+# Use special version of CXX_FLAGS with -Wshadow removed (if present).
+AM_CXXFLAGS = -O2 -DNDEBUG -DSPEED_FADBAD $(CXX_FLAGS_FADBAD)
 # END OPTIMIZE
 #
 # BEGIN DEBUG
-# AM_CXXFLAGS   = -g $(CXX_FLAGS) -DSPEED_FADBAD
+# AM_CXXFLAGS   = -g -DSPEED_FADBAD $(CXX_FLAGS_FADBAD)
 # END DEBUG
 #
 LDADD = -lspeed

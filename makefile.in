@@ -99,7 +99,11 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
 	distdir dist dist-all distcheck
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = $(SUBDIRS)
+DIST_SUBDIRS = cppad_ipopt/src cppad_ipopt/example cppad_ipopt/speed \
+	cppad_ipopt/test example introduction/get_started \
+	introduction/exp_apx print_for speed/src speed/adolc \
+	speed/cppad speed/double speed/example speed/fadbad \
+	speed/profile speed/sacado test_more
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -156,6 +160,7 @@ CXX = @CXX@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CXX_FLAGS = @CXX_FLAGS@
+CXX_FLAGS_FADBAD = @CXX_FLAGS_FADBAD@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
@@ -219,6 +224,7 @@ datarootdir = @datarootdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
+have_ar = @have_ar@
 have_pkg_config = @have_pkg_config@
 host_alias = @host_alias@
 htmldir = @htmldir@
@@ -258,32 +264,56 @@ top_srcdir = @top_srcdir@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-# automake input file
-#
 # Note that config.h is needed by VC++; i.e., for users that do not run
 # the configure script but rather use the project files 
 #
 @CppAD_POSTFIX_TRUE@postfix_dir = $(POSTFIX_DIR)
+@CppAD_ADOLC_FALSE@SPEED_ADOLC_TESTS = 
 #
 # Did user specify a value for ADOLC_DIR in configure command line
-@CppAD_ADOLC_TRUE@SPEED_ADOLC = speed/adolc
+@CppAD_ADOLC_TRUE@SPEED_ADOLC_TESTS = speed/adolc
+@CppAD_FADBAD_FALSE@SPEED_FADBAD_TESTS = 
 #
 # Did user specify a value for FADBAD_DIR in configure command line
-@CppAD_FADBAD_TRUE@SPEED_FADBAD = speed/fadbad
+@CppAD_FADBAD_TRUE@SPEED_FADBAD_TESTS = speed/fadbad
+@CppAD_SACADO_FALSE@SPEED_SACADO_TESTS = 
 #
 # Did user specify a value for SACADO_DIR in configure command line
-@CppAD_SACADO_TRUE@SPEED_SACADO = speed/sacado
-@CppAD_IPOPT_CPPAD_FALSE@IPOPT_CPPAD = 
+@CppAD_SACADO_TRUE@SPEED_SACADO_TESTS = speed/sacado
+@CppAD_IPOPT_CPPAD_FALSE@IPOPT_TESTS = 
 #
 # Did user specify a value for IPOPT_DIR in configure command line 
-@CppAD_IPOPT_CPPAD_TRUE@IPOPT_CPPAD = \
-@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/src \
+@CppAD_IPOPT_CPPAD_TRUE@IPOPT_TESTS = \
 @CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/example \
 @CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/speed \
 @CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/test
 
+@CppAD_IPOPT_CPPAD_FALSE@IPOPT_DIRS = 
+#
+@CppAD_IPOPT_CPPAD_TRUE@IPOPT_DIRS = \
+@CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/src \
+@CppAD_IPOPT_CPPAD_TRUE@	$(IPOPT_TESTS) 
+
+@CppAD_IPOPT_CPPAD_FALSE@IPOPT_HEADER = 
+#
 @CppAD_IPOPT_CPPAD_TRUE@IPOPT_HEADER = \
 @CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/src/cppad_ipopt_nlp.hpp
+
+#
+# Is the library archiving program present
+@CppAD_HAVE_AR_TRUE@SPEED_TESTS = \
+@CppAD_HAVE_AR_TRUE@	$(SPEED_ADOLC_TESTS)  \
+@CppAD_HAVE_AR_TRUE@	speed/cppad \
+@CppAD_HAVE_AR_TRUE@	speed/double \
+@CppAD_HAVE_AR_TRUE@	speed/example \
+@CppAD_HAVE_AR_TRUE@	$(SPEED_FADBAD_TESTS) \
+@CppAD_HAVE_AR_TRUE@	speed/profile \
+@CppAD_HAVE_AR_TRUE@	$(SPEED_SACADO_TESTS)
+
+#
+@CppAD_HAVE_AR_TRUE@SPEED_DIRS = \
+@CppAD_HAVE_AR_TRUE@	speed/src \
+@CppAD_HAVE_AR_TRUE@	$(SPEED_TESTS)
 
 # ---------------------------------------------------------------------------
 myincludedir = $(includedir)/$(postfix_dir)
@@ -472,22 +502,12 @@ nobase_myinclude_HEADERS = \
 # No objects or executables are required to install CppAD.
 # See 'make test' below for building the tests.
 SUBDIRS = \
-	cppad_ipopt/example \
-	cppad_ipopt/speed \
-	cppad_ipopt/src \
-	cppad_ipopt/test \
+	$(IPOPT_DIRS) \
 	example \
 	introduction/get_started \
 	introduction/exp_apx \
 	print_for \
-	speed/adolc \
-	speed/cppad \
-	speed/double \
-	speed/example \
-	speed/fadbad \
-	speed/profile \
-	speed/sacado \
-	speed/src \
+	$(SPEED_DIRS) \
 	test_more 
 
 #
@@ -512,17 +532,10 @@ test_directory_list = \
 	example \
 	introduction/get_started \
 	introduction/exp_apx \
+	$(IPOPT_TESTS) \
 	print_for \
-	speed/src \
-	speed/cppad \
-	speed/double \
-	speed/example \
-	speed/profile \
-	test_more \
-	$(IPOPT_CPPAD) \
-	$(SPEED_ADOLC) \
-	$(SPEED_FADBAD) \
-	$(SPEED_SACADO) 
+	$(SPEED_TESTS) \
+	test_more 
 
 #
 @CppAD_DOCUMENTATION_TRUE@doc_postfix = $(DESTDIR)$(datadir)/doc/$(postfix_dir)
@@ -1103,8 +1116,9 @@ uninstall-am: uninstall-myincludeHEADERS \
 	uninstall-myincludeHEADERS uninstall-nobase_myincludeHEADERS \
 	uninstall-pkgconfigDATA
 
+@CppAD_HAVE_AR_FALSE@	SPEED_DIRS =
 
-test: 
+test: all 
 	rm -f test.log
 	touch test.log
 	rm -f test.sh
@@ -1130,7 +1144,7 @@ dist-hook:
 @CppAD_DOCUMENTATION_TRUE@install-data-hook:
 @CppAD_DOCUMENTATION_TRUE@	if [ ! -e $(doc_postfix) ] ; then mkdir -p $(doc_postfix) ; fi
 @CppAD_DOCUMENTATION_TRUE@	if [ -e $(doc_package) ] ; then rm -rf $(doc_package) ; fi
-@CppAD_DOCUMENTATION_TRUE@	cp -a $(top_srcdir)/doc $(doc_package)
+@CppAD_DOCUMENTATION_TRUE@	cp -a $(top_builddir)/doc $(doc_package)
 @CppAD_DOCUMENTATION_TRUE@	chmod -R a-w $(doc_package)
 @CppAD_DOCUMENTATION_TRUE@	chmod -R u+w $(doc_package)
 @CppAD_DOCUMENTATION_TRUE@	chmod -R a+r $(doc_package)
