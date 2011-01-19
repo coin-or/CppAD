@@ -75,6 +75,13 @@ then
 		exit 0
 	fi
 	abort="no"
+	config_changed="no"
+	if grep 'cppad/config\.h' bin/commit.1.$$ > /dev/null
+	then
+		config_changed="yes"
+		# remove cppad/config.h from the list
+		sed -i bin/commit.1.$$ -e '/cppad\/config\.h/d'
+	fi
 	list=`cat bin/commit.1.$$`
 	for file in $list
 	do
@@ -94,18 +101,14 @@ then
 					rm bin/commit.1.$$
 					exit 1
 				fi
-				if [ "$file" != "cppad/config.h" ]
-				then
-					abort="yes"
-				fi
+				abort="yes"
 			fi
 			rm bin/commit.2.$$
 		fi
 	done
 	if [ "$abort" == "yes" ]
 	then
-		echo "bin/commit.sh: aborting because of suggested changes above"
-		echo "with exception of changes to cppad/config.h"
+		echo "bin/commit.sh: aborting because of suggested changes above."
 		rm bin/commit.1.$$
 		exit 1
 	fi
@@ -128,6 +131,12 @@ then
 	echo "------------------------------------"
      echo "chmod +x bin/commit.sh"
            chmod +x bin/commit.sh
+	#
+	if [ "$config_changed" = "yes" ]
+	then
+		echo "Not sure changes to cppad/config.h should be commited."
+		echo "You must include it yourself (by hand) if they should."
+	fi
 	exit 0
 fi
 # -----------------------------------------------------------------------
