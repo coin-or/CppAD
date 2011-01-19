@@ -541,7 +541,7 @@ test_directory_list = \
 @CppAD_DOCUMENTATION_TRUE@doc_postfix = $(DESTDIR)$(datadir)/doc/$(postfix_dir)
 @CppAD_DOCUMENTATION_TRUE@doc_package = $(DESTDIR)$(datadir)/doc/$(postfix_dir)/$(PACKAGE)-$(VERSION)
 #
-pkgconfigdir = $(libdir)/pkgconfig
+pkgconfigdir = $(datadir)/pkgconfig
 pkgconfig_DATA = pkgconfig/cppad.pc
 all: all-recursive
 
@@ -1125,7 +1125,7 @@ test: all
 	echo "#! /bin/sh -e"                                      >  test.sh
 	for dir in $(test_directory_list) ; do ( \
 		echo "#"                                             >> test.sh ; \
-		echo "echo \"cd $$dir\" >> test.log"                >> test.sh ; \
+		echo "echo \"cd $$dir\" >> test.log"                 >> test.sh ; \
 		echo "cd $$dir "                                     >> test.sh ; \
 		echo "make test "                                    >> test.sh ; \
 		echo "cat test.log >> $(ABS_TOP_BUILDDIR)/test.log"  >> test.sh ; \
@@ -1134,7 +1134,6 @@ test: all
 	echo "exit 0"                                             >> test.sh
 	chmod +x test.sh
 	./test.sh
-	cat test.log
 #
 #
 dist-hook:
