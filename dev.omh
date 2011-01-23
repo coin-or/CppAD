@@ -40,7 +40,6 @@ $contents%
 	omh/distribute.omh%
 	omh/new_feature.omh%
 	cppad/local/ordered.hpp%
-	cppad/local/identical.hpp%
 	cppad/local/ad_tape.hpp
 %$$
 

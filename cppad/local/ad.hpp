@@ -49,12 +49,6 @@ class AD {
 		(const AD<Base>    &u);
 	friend bool Variable           <Base> 
 		(const VecAD<Base> &u);
-	friend bool IdenticalPar       <Base> 
-		(const AD<Base>    &u);
-	friend bool IdenticalZero      <Base> 
-		(const AD<Base>    &u);
-	friend bool IdenticalOne       <Base> 
-		(const AD<Base>    &u);
 	friend int  Integer            <Base> 
 		(const AD<Base>    &u);
 	friend AD   Var2Par            <Base>
@@ -64,9 +58,12 @@ class AD {
 	friend AD pow <Base>
 		(const AD<Base> &x, const AD<Base> &y);
 
-	// IdenticalEqualPar function
+	// The identical property functions
+	friend bool IdenticalPar      <Base> (const AD<Base> &x);
+	friend bool IdenticalZero     <Base> (const AD<Base> &x);
+	friend bool IdenticalOne      <Base> (const AD<Base> &x);
 	friend bool IdenticalEqualPar <Base> 
-		(const AD<Base> &u, const AD<Base> &v);
+		(const AD<Base> &x, const AD<Base> &y);
 
 	// EqualOpSeq function
 	friend bool EqualOpSeq <Base> 
