@@ -193,7 +193,7 @@ public:
 	// These functions declared public so can be accessed by user through
 	// a macro interface and are not intended for direct use.
 	// The macro interface is documented in bool_fun.hpp.
-	// Developer documentation for these fucntions is in  bool_fun_link.hpp
+	// Developer documentation for these fucntions is in  bool_fun.hpp
 	static inline bool UnaryBool(
 		bool FunName(const Base &x),
 		const AD<Base> &x

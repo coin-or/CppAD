@@ -41,8 +41,7 @@ $contents%
 	omh/new_feature.omh%
 	cppad/local/ordered.hpp%
 	cppad/local/identical.hpp%
-	cppad/local/ad_tape.hpp%
-	cppad/local/bool_fun_link.hpp
+	cppad/local/ad_tape.hpp
 %$$
 
 

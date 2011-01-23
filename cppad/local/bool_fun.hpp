@@ -3,7 +3,7 @@
 # define CPPAD_BOOL_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -154,23 +154,101 @@ $code CPPAD_BOOL_UNARY$$ and $code CPPAD_BOOL_BINARY$$ respectively
 $end
 */
 
-# include <cppad/local/bool_fun_link.hpp>
+CPPAD_BEGIN_NAMESPACE
+/*!
+\file bool_fun.hpp
+Routines and macros that implement functions from AD<Base> to bool
+\ref bool_fun_hpp.
 
+\defgroup bool_fun_hpp bool_fun.hpp
+*/
+/* \{ */
+
+/*!
+Macro that defines a unary function <tt>bool F(AD<Base> x)</tt> 
+using <tt>bool F(Base x)</tt>.
+
+\param Base
+base for the AD type of arguments to this unary bool valued function.
+
+\param unary_name
+name of this unary function; i.e., \c F.
+*/
 # define CPPAD_BOOL_UNARY(Base, unary_name)                        \
-	inline bool unary_name (const CppAD::AD<Base> &x)          \
-	{                                                          \
-		return CppAD::AD<Base>::UnaryBool(unary_name, x);               \
-	}
+     inline bool unary_name (const CppAD::AD<Base> &x)             \
+     {                                                             \
+          return CppAD::AD<Base>::UnaryBool(unary_name, x);        \
+     }
 
-# define CPPAD_BOOL_BINARY(Base, binary_name)                         \
-	inline bool binary_name (                                     \
-		const CppAD::AD<Base> &x, const CppAD::AD<Base> &y)   \
-	{                                                             \
-		return CppAD::AD<Base>::BinaryBool(binary_name, x, y);\
-	}
-
+/*!
+Deprecated name for CPPAD_BOOL_UNARY
+*/
 # define CppADCreateUnaryBool  CPPAD_BOOL_UNARY
+
+/*!
+Link a function name, and AD value pair to function call with base argument
+and bool retrun value.
+
+\param FunName
+is the name of the function that we are linking.
+
+\param x
+is the argument where we are evaluating the function.
+*/
+template <class Base>
+inline bool AD<Base>::UnaryBool(
+	bool FunName(const Base &x),
+	const AD<Base> &x
+) 
+{
+	return FunName(x.value_);
+}
+
+/*!
+Macro that defines a binary function <tt>bool F(AD<Base> x, AD<Base> y)</tt> 
+using <tt>bool F(Base x, Base y)</tt>.
+
+\param Base
+base for the AD type of arguments to this binary bool valued function.
+
+\param binary_name
+name of this binary function; i.e., \c F.
+*/
+
+# define CPPAD_BOOL_BINARY(Base, binary_name)                      \
+     inline bool binary_name (                                     \
+          const CppAD::AD<Base> &x, const CppAD::AD<Base> &y)      \
+     {                                                             \
+          return CppAD::AD<Base>::BinaryBool(binary_name, x, y);   \
+     }
+/*!
+Deprecated name for CPPAD_BOOL_BINARY
+*/
 # define CppADCreateBinaryBool CPPAD_BOOL_BINARY
 
 
+/*!
+Link a function name, and two AD values to function call with base arguments
+and bool retrun value.
+
+\param FunName
+is the name of the function that we are linking.
+
+\param x
+is the first argument where we are evaluating the function at.
+
+\param y
+is the second argument where we are evaluating the function at.
+*/
+template <class Base>
+inline bool AD<Base>::BinaryBool(
+	bool FunName(const Base &x, const Base &y),
+	const AD<Base> &x, const AD<Base> &y
+) 
+{
+	return FunName(x.value_, y.value_);
+}
+
+/* \} */
+CPPAD_END_NAMESPACE
 # endif
