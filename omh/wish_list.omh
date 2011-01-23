@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -60,6 +60,7 @@ In addition, use this change to extend $xref/LuRatio/$$ so
 that it works with complex AD types.
 
 $head Ipopt$$
+$index cppad_ipopt_nlp$$
 $list number$$
 The vector of sets $cref/sparsity pattern/glossary/Sparsity Pattern/$$
 could be compared for speed with of vector of bools
@@ -86,12 +87,16 @@ argument values, this would require forward mode at multiple argument values
 $lend
 
 $head Library$$
+$index compile, speed AD<double>$$
+$index speed, compile AD<double>$$
+$index AD<double>, compile speed$$
 One could build a CppAD library for use with the type $code AD<double>$$.
 This would speed up compilation for the most common usage where
 the $italic Base$$ type is $code double$$.
 
 
 $head Multiple Arguments$$
+$index speed, improve$$
 It has been suggested that computing and storing forward mode
 results for multiple argument values (and for multiple orders)
 is faster for Adolc. 
@@ -99,6 +104,8 @@ Perhaps CppAD should allow for forward mode at multiple argument values
 (perhaps multiple orders).
 
 $head Numeric Limits$$
+$index testing, machine epsilon$$
+$index machine epsilon, testing$$
 Use a multiple of $code std::numeric_limits<double>::epsilon()$$ instead
 $code 1e-10$$ for a small number in correctness checks; e.g.,
 see $cref/tan.cpp/$$.
@@ -115,6 +122,8 @@ This could be returned as an extra
 $xref/seq_property/$$.
 
 $head Optimization$$
+$index optimize, tape$$
+$index tape, optimize$$
 
 $subhead Expression Hashing$$
 During expression sequence $cref/optimization/optimize/$$,
@@ -157,18 +166,25 @@ Use spaces rather than tabs.
 $lend
 
 $head Sparsity Patterns$$
+$index sparsity, pattern parallel$$
+$index pattern, sparsity parallel$$
+$index parallel, sparsity pattern$$
 When using arrays of booleans for
 $cref/sparsity patterns/glossary/Sparsity Pattern/$$, 
 use OpenMP to parallelize the computation of the sparsity patterns.
 
 
 $head Speed Testing$$
+$index speed, extend tests$$
+$index MS Windows, extend speed tests$$
 Extend the speed tests for Adolc, Fadbad, and Sacado
 to run under MS Windows.
 Run the CppAD $cref/speed/$$ tests on a set of different machines
 and operating systems.
 
 $head Tan and Tanh$$
+$index tanh$$
+$index tan$$
 The AD $code tan$$ and $code tanh$$ functions
 are implemented using the AD $code sin$$, $code cos$$, $code sinh$$
 and $code cosh$$ functions.
@@ -182,9 +198,23 @@ $latex \[
 see $cref/standard math functions/ForwardTheory/Standard Math Functions/$$.
 
 $head Tracing$$
+$index operation, sequence tracing$$
+$index sequence, operation tracing$$
+$index tracing, operation sequence$$
 Add operation sequence tracing to the user API and documentation.
 
+$head User Defined Atomic Operations$$
+$index atomic, user defined operation$$
+$index user, defined atomic operation$$
+$index operation, atomic user defined$$
+Provide an interface,
+similar to the $cref/Discrete/$$ functions,
+whereby a user could define
+$cref/atomic/glossary/Operation/Atomic/$$
+operations that have derivatives computed by the users code.
+
 $head VecAD$$
+$index VecAD, improve assignment$$
 Make assignment operation in $cref/VecAD/$$ like
 assignment in $cref/ad_copy/$$.
 This will fix slicing to $code int$$ when assigning
