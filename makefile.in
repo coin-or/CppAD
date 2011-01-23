@@ -389,7 +389,6 @@ nobase_myinclude_HEADERS = \
 	cppad/local/base_complex.hpp \
 	cppad/local/bender_quad.hpp \
 	cppad/local/bool_fun.hpp \
-	cppad/local/bool_fun_link.hpp \
 	cppad/local/bool_valued.hpp \
 	cppad/local/cap_taylor.hpp \
 	cppad/local/compare.hpp \
