@@ -3,7 +3,7 @@
 # define CPPAD_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -23,8 +23,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/player.hpp>
 # include <cppad/local/ad_tape.hpp>
 
-//  BEGIN CppAD namespace
-namespace CppAD {
+CPPAD_BEGIN_NAMESPACE
 
 template <class Base>
 class AD {
@@ -247,7 +246,7 @@ private:
 }; 
 // ---------------------------------------------------------------------------
 
-} // END CppAD namespace
+CPPAD_END_NAMESPACE
 
 // tape linking private functions
 # include <cppad/local/tape_link.hpp>

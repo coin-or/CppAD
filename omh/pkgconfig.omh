@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -61,7 +61,7 @@ The following configuration files contain the information above
 $table
 $icode File$$             $cnext 
 	$icode Description$$ $rnext
-$icode%prefixdir%/lib/pkgconfig/cppad.pc%$$              $cnext 
+$icode%prefixdir%/share/pkgconfig/cppad.pc%$$              $cnext 
 	for use after $cref/make install/InstallUnix/make install/$$ 
 $rnext
 $icode%builddir%/pkgconfig/cppad-uninstalled.pc%$$       $cnext 
