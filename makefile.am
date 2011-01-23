@@ -273,7 +273,6 @@ EXTRA_DIST = \
 	bin \
 	build.sh \
 	cpl1.0.txt \
-	dev.omh \
 	doc \
 	doc.omh.in \
 	doxyfile.in \

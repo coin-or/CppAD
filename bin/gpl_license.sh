@@ -153,8 +153,8 @@ echo "rm -r work"
       rm -r work
 #
 # Now rebuild the documentation (so that it has GPL instead of CPL)
-echo "bin/run_omhelp.sh doc xml"
-      bin/run_omhelp.sh doc xml
+echo "bin/run_omhelp.sh xml"
+      bin/run_omhelp.sh xml
 #
 if [ -e "doc/error.wrd" ]
 then

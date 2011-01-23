@@ -301,24 +301,24 @@ then
 	if [ -e doc ]
 	then
 		echo "rm -r doc"
-		rm -r doc
+		      rm -r doc
 	fi
 	#
-	echo "bin/run_omhelp.sh doc xml"
-	      bin/run_omhelp.sh doc xml
+	echo "bin/run_omhelp.sh xml"
+	      bin/run_omhelp.sh xml
 	#
 	echo "mv doc.omh.save doc.omh"
-	mv doc.omh.save doc.omh
+	      mv doc.omh.save doc.omh
 	# ----------------------------------------------------------------------
 	# Things to do in the work directory
 	# ----------------------------------------------------------------------
 	echo "cd work"
-	cd work
+	      cd work
 	#
 	if [ -e cppad-$version ]
 	then
 		echo "rm -rf cppad-$version"
-		rm -rf cppad-$version
+		      rm -rf cppad-$version
 	fi
 	for file in cppad-*.tgz 
 	do
@@ -330,7 +330,7 @@ then
 	done
 	#
 	echo "make dist"
-	make dist
+	      make dist
 	#
 	if [ ! -e cppad-$version.tar.gz ]
 	then
@@ -341,7 +341,7 @@ then
 	fi
 	# change *.tgz to *.cpl.tgz
 	echo "mv cppad-$version.tar.gz cppad-$version.cpl.tgz"
-	mv cppad-$version.tar.gz cppad-$version.cpl.tgz
+	      mv cppad-$version.tar.gz cppad-$version.cpl.tgz
 	#
 	echo "OK: ./build.sh dist"
 	exit 0
@@ -360,9 +360,9 @@ then
 	do
 		for ext in htm xml
 		do
-			echo "begin: bin/run_omhelp.sh doc $ext $flag"
-			             bin/run_omhelp.sh doc $ext $flag
-			echo="end:   bin/run_omhelp.sh doc $ext $flag"
+			echo "begin: bin/run_omhelp.sh $ext $flag"
+			             bin/run_omhelp.sh $ext $flag
+			echo="end:   bin/run_omhelp.sh $ext $flag"
 		done
 	done
 	#
@@ -507,8 +507,8 @@ then
 	      ./build.sh configure >> $log_dir/$log_file
 	#
 	# test user documentation
-	echo "bin/run_omhelp.sh doc xml  >> $log_file"
-	      bin/run_omhelp.sh doc xml  >> $log_dir/$log_file
+	echo "bin/run_omhelp.sh xml  >> $log_file"
+	      bin/run_omhelp.sh xml  >> $log_dir/$log_file
 	# 
 	# test developer documentation
 	echo "./build.sh doxygen   >> $log_file"

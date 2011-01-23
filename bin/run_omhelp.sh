@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -17,69 +17,52 @@ then
 fi
 # -----------------------------------------------------------------------------
 #
-if [ "$1" != "doc" ] && [ "$1" != "dev" ]
+if [ "$1" != "htm" ] && [ "$1" != "xml" ] && [ "$1" != "clean" ]
 then
-	echo "usage: bin/run_omhelp.sh (doc|dev)  (htm|xml|clean) [printable]"
+	echo "usage: bin/run_omhelp.sh (htm|xml|clean) [printable]"
 	exit 1
 fi
-if [ "$2" != "htm" ] && [ "$2" != "xml" ] && [ "$2" != "clean" ]
+if [ "$2" != "" ] && [ "$2" != "printable" ]
 then
-	echo "usage: bin/run_omhelp.sh (doc|dev)  (htm|xml|clean) [printable]"
+	echo "usage: bin/run_omhelp.sh (htm|xml|clean) [printable]"
 	exit 1
 fi
-if [ "$3" != "" ] && [ "$3" != "printable" ]
+if [ "$1" == "clean" ]
 then
-	echo "usage: bin/run_omhelp.sh (doc|dev)  (htm|xml|clean) [printable]"
-	exit 1
+	echo "rm -rf doc"
+           rm -rf doc
+	exit 0
 fi
-if [ "$2" == "clean" ]
-then
-	for target in dev doc
-	do
-		if [ "$1" == "$target" ]
-		then
-			echo "rm -rf $target"
-			      rm -rf $target
-			exit 0
-		fi
-	done
-fi
-target="$1"
-ext="$2"
+ext="$1"
 #
-echo "Building $target/*.$ext $3"
-if [ ! -e $target ]
+echo "Building doc/*.$ext $2"
+if [ ! -e doc ]
 then
-	echo "mkdir $target"
-	      mkdir $target
+	echo "mkdir doc"
+	      mkdir doc
 fi 
-echo "cd $target"
-if !  cd $target
-then
-	echo "Cannot change into ./$target directory"
-	echo "Execute bin/run_omhelp.sh $target clean first"
-	exit 1
-fi
-cmd="omhelp ../$target.omh -noframe -debug -l http://www.coin-or.org/CppAD/"
+echo "cd doc"
+      cd doc
+cmd="omhelp ../doc.omh -noframe -debug -l http://www.coin-or.org/CppAD/"
 if [ "$ext" == "xml" ]
 then
 	cmd="$cmd -xml"
 fi
-if [ "$3" == "printable" ]
+if [ "$2" == "printable" ]
 then
 	cmd="$cmd -printable"
 fi
-echo "$cmd > ../omhelp.$target.$ext.log"
-if !  $cmd > ../omhelp.$target.$ext.log
+echo "$cmd > ../omhelp.$ext.log"
+if !  $cmd > ../omhelp.$ext.log
 then
-	grep "^OMhelp Error:" ../omhelp.$target.$ext.log
-	echo "OMhelp could not build $target/*.$ext documentation."
-	echo "See the complete error message in omhelp.$target.$ext.log"
+	grep "^OMhelp Error:" ../omhelp.$ext.log
+	echo "OMhelp could not build doc/*.$ext documentation."
+	echo "See the complete error message in omhelp.$ext.log"
 	exit 1
 fi
-if grep "^OMhelp Warning:" ../omhelp.$target.$ext.log
+if grep "^OMhelp Warning:" ../omhelp.$ext.log
 then
-	echo "See the complete warning messages in omhelp.$target.$ext.log."
+	echo "See the complete warning messages in omhelp.$ext.log."
 	exit 1
 fi
 exit 0
