@@ -3,7 +3,7 @@
 # define CPPAD_AD_FUN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -68,8 +68,8 @@ File used to define the ADFun<Base> class.
 Class used to hold function objects
 
 \tparam Base
-This function object case recorded using AD< \a Base > operations.
-It does it calculations using \a Base operations.
+A function object has a recording of <tt>AD<Base></tt> operations.
+It does it calculations using \c Base operations.
 */
 
 template <class Base>

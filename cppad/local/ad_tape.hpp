@@ -3,7 +3,7 @@
 # define CPPAD_AD_TAPE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,99 +12,32 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-/*
-$begin ADTape$$ $comment CppAD Developer Documentation$$
-$aindex head$$
+# include <cppad/local/define.hpp>
 
-$spell
-	taddr_
-	inline
-	Var
-	Prip
-	Priv
-	Ldp
-	Ldv
-	Stpv
-	Stvv
-	Stpp
-	Stvp
-	Inv
-	Vec
-	Sto
-	VecInd
-	Inv
-	Ind
-	Num
-	Op
-	Cpp
-	const
-	bool
-	Len
-	xy
-	xx
-	yy
-$$
+CPPAD_BEGIN_NAMESPACE
 
-$section ADTape: The CppAD Tape$$
+/*!
+Class used to hold tape that records AD<Base> operations.
 
-$head Syntax$$
-$syntax%ADTape<%Base%> %Tape%$$
-
-
-$head Description$$
-For each $italic Base$$ that is used in connection with
-$syntax%AD<%Base%>%$$, 
-there must be one and only one $italic id$$ such that
-$syntax%ADBase<%Base%>::tape_active(%id%)%$$ is true.
-This object is used to record 
-$syntax%AD<%Base%>%$$ operations and compute derivatives.
-
-$head Rec$$
-the $code recorder$$ object $syntax%%Tape%.Rec%$$ contains
-the currently recorded information.
-This information is recorded using the following functions:
-
-$subhead Parameter$$
-The procedure call
-$syntax%
-	size_t %Tape%.RecordParOp(const %Base% &%z%)
-%$$
-creates a $code ParOp$$ record with the value 
-specified by $italic z$$.
-The return value is the taddr of this operation in the tape.
-
-$subhead Variable Indexed Arrays$$
-The procedure call
-$syntax%
-	size_t %Tape%.AddVec(size_t  %length%, const %Base% *%data%)
-%$$
-adds a variable indexed array with the specified length and values to the tape.
-
-$end
+\tparam Base
+An <tt>AD<Base></tt> object is used to recording <tt>AD<Base></tt> operations.
 */
-
-//  BEGIN CppAD namespace
-namespace CppAD {
-
 
 template <class Base>
 class ADTape {
+	// Friends =============================================================
 
-	// classes
+	// classes -------------------------------------------------------------
 	friend class AD<Base>;
 	friend class ADFun<Base>;
 	friend class ADDiscrete<Base>;
 	friend class VecAD<Base>;
 	friend class VecAD_reference<Base>;
 
-	//
-	// functions
-	//
-
+	// functions -----------------------------------------------------------
 	// PrintFor
 	friend void PrintFor <Base>
 		(const char *text, const AD<Base> &x);
-
 	// CondExpOp
 	friend AD<Base> CondExpOp <Base> (
 		enum CompareOp  cop          ,
@@ -113,7 +46,16 @@ class ADTape {
 		const AD<Base> &trueCase     , 
 		const AD<Base> &falseCase 
 	);
-
+	// pow
+	friend AD<Base> pow <Base>
+		(const AD<Base> &x, const AD<Base> &y);
+	// Parameter
+	friend bool Parameter     <Base> 
+		(const AD<Base> &u);
+	// Variable
+	friend bool Variable      <Base> 
+		(const AD<Base> &u);
+	// operators -----------------------------------------------------------
 	// arithematic binary operators
 	friend AD<Base> operator + <Base>
 		(const AD<Base> &left, const AD<Base> &right);
@@ -137,42 +79,27 @@ class ADTape {
 		(const AD<Base> &left, const AD<Base> &right);
 	friend bool operator != <Base>
 		(const AD<Base> &left, const AD<Base> &right);
+	// ======================================================================
 
-
-	// pow
-	friend AD<Base> pow <Base>
-		(const AD<Base> &x, const AD<Base> &y);
-
-	// Parameter
-	friend bool Parameter     <Base> 
-		(const AD<Base> &u);
-	// Variable
-	friend bool Variable      <Base> 
-		(const AD<Base> &u);
-
-public:
-	// constructor
-	ADTape(size_t id) : id_(id)
-	{ }
-
-	// destructor
-	~ADTape(void)
-	{	Rec_.Erase(); }
-
-	// public function only used by CppAD::Independent
-	template <typename VectorADBase>
-	void Independent(VectorADBase &u);
-
+// --------------------------------------------------------------------------
 private:
+	// ----------------------------------------------------------------------
 	// private data
-	size_t                       id_;
-	size_t         size_independent_;
-	recorder<Base>              Rec_;
-
-	/*
-	Private functions
+	/*!
+	Unique identifier for this tape.  It is always greater than 
+	CPPAD_MAX_NUM_THREADS, and different for every tape (even ones that have 
+	been deleted). In addition, id_ % CPPAD_MAX_NUM_THREADS is the thread 
+	number for this tape. Set by Independent and effectively const
 	*/
-
+	size_t                       id_;
+	/// Number of independent variables in this tapes reconding.
+	/// Set by Independent and effectively const
+	size_t         size_independent_;
+	/// This is where the information is recorded.
+	recorder<Base>              Rec_;
+	// ----------------------------------------------------------------------
+	// private functions
+	//
 	// add a parameter to the tape
 	size_t RecordParOp(const Base &x);
 	
@@ -194,16 +121,46 @@ private:
 		const AD<Base> &right
 	);
 
+	// place a VecAD object in the tape
 	size_t AddVec(
 		size_t        length,
 		const Base   *data
 	);
+
+public:
+	// constructor
+	ADTape(size_t id) : id_(id)
+	{ }
+
+	// destructor
+	~ADTape(void)
+	{	Rec_.Erase(); }
+
+	// public function only used by CppAD::Independent
+	template <typename VectorADBase>
+	void Independent(VectorADBase &u);
 
 };
 // ---------------------------------------------------------------------------
 // Private functions
 //
 
+/*!
+Place a parameter in the tape.
+
+On rare occations it is necessary to place a parameter in the tape; e.g.,
+when it is one of the dependent variabes.
+
+\param z
+value of the parameter that we are placing in the tape.
+
+\return 
+variable index (for this recording) correpsonding to the parameter.
+
+\par Wish List
+All these operates are preformed in \c Rec_, so we should
+move this routine from <tt>ADTape<Base></tt> to <tt>recorder<Base></tt>.
+*/
 template <class Base>
 size_t ADTape<Base>::RecordParOp(const Base &z)
 {	size_t z_taddr;
@@ -217,6 +174,23 @@ size_t ADTape<Base>::RecordParOp(const Base &z)
 	return z_taddr;
 }
 
+/*!
+Put initialization for a VecAD<Base> object in the tape.
+
+This routine should be called once for each VecAD object when just
+before it changes from a parameter to a variable.
+
+\param length
+size of the <tt>VecAD<Base></tt> object.
+
+\param data
+initial values for the <tt>VecAD<Base></tt> object
+(values before it becomes a variable).
+
+\par Wish List
+All these operates are preformed in \c Rec_, so we should
+move this routine from <tt>ADTape<Base></tt> to <tt>recorder<Base></tt>.
+*/
 template <class Base>
 size_t ADTape<Base>::AddVec(size_t length, const Base *data)
 {	CPPAD_ASSERT_UNKNOWN( length > 0 );
@@ -237,7 +211,6 @@ size_t ADTape<Base>::AddVec(size_t length, const Base *data)
 	return start;
 }
 
-
-} // END CppAD namespace
+CPPAD_END_NAMESPACE
 
 # endif

@@ -3,7 +3,7 @@
 # define CPPAD_COMPARE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -135,6 +135,8 @@ namespace CppAD {
 template <class Base>
 
 // -------------- RecordCompare(cop, result, left, right) --------------------
+/// All these operations are done in \c Rec_, so we should move this
+/// routine to <tt>recorder<Base></tt>.
 void ADTape<Base>::RecordCompare(
 	enum CompareOp  cop   ,
 	bool           result ,

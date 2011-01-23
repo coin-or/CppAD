@@ -3,7 +3,7 @@
 # define CPPAD_COND_EXP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -319,6 +319,8 @@ CPPAD_INLINE AD<Base> CondExpOp(
 
 // --- RecordCondExp(cop, returnValue, left, right, exp_if_true, exp_if_false) -----
 
+/// All these operations are done in \c Rec_, so we should move this
+/// routine to <tt>recorder<Base></tt>.
 template <class Base>
 void ADTape<Base>::RecordCondExp(
 	enum CompareOp  cop         ,
