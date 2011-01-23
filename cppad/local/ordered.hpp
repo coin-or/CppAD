@@ -3,7 +3,7 @@
 # define CPPAD_ORDERED_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,170 +13,172 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
----------------------------------------------------------------------------
-$begin GreaterThanZero$$ $comment CppAD Developer Documentation$$
-$spell
-	inline
-	const
-	bool
-$$
+# include <cppad/local/define.hpp>
 
-$index >$$
-$index GreaterThanZero$$
-$index positive$$
-$section Check if a Value is Greater Than Zero$$
+CPPAD_BEGIN_NAMESPACE
 
-$head Syntax$$
-$syntax%inline bool GreaterThanZero(const %Type% &%x%)%$$
-
-$head Description$$
-If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
-$italic x$$ is greater than zero if and only if
-$syntax%%x%.value_%$$ is greater than zero.
-If $italic Type$$ is not $syntax%AD<%Base%>%$$ for some $italic Base$$,
-$italic x$$ is greater than zero if and only if
-$syntax%
-	%x% > 0.
-%$$
-
-$end 
----------------------------------------------------------------------------
-$begin GreaterThanOrZero$$ $comment CppAD Developer Documentation$$
-$spell
-	inline
-	const
-	bool
-$$
-
-$index >=$$
-$index GreaterThanOrZero$$
-$index positive$$
-$section Check if a Value is Greater Than Or Equal Zero$$
-
-$head Syntax$$
-$syntax%inline bool GreaterThanZero(const %Type% &%x%)%$$
-
-$head Description$$
-If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
-$italic x$$ is greater than or equal zero if and only if
-$syntax%%x%.value_%$$ is greater than zero.
-If $italic Type$$ is not $syntax%AD<%Base%>%$$ for some $italic Base$$,
-$italic x$$ is greater than zero if and only if
-$syntax%
-	%x% >= 0.
-%$$
-
-$end 
----------------------------------------------------------------------------
-$begin LessThanZero$$ $comment CppAD Developer Documentation$$
-$spell
-	inline
-	const
-	bool
-$$
-
-$index >$$
-$index LessThanZero$$
-$index negative$$
-$section Check if a Value is Less Than Zero$$
-
-$head Syntax$$
-$syntax%inline bool LessThanZero(const %Type% &%x%)%$$
-
-$head Description$$
-If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
-$italic x$$ is less than zero if and only if
-$syntax%%x%.value_%$$ is less than zero.
-If $italic Type$$ is not $syntax%AD<%Base%>%$$ for some $italic Base$$,
-$italic x$$ is less than zero if and only if
-$syntax%
-	%x% < 0.
-%$$
-
-$end 
----------------------------------------------------------------------------
-$begin LessThanOrZero$$ $comment CppAD Developer Documentation$$
-$spell
-	inline
-	const
-	bool
-$$
-
-$index >=$$
-$index LessThanOrZero$$
-$index negative$$
-$section Check if a Value is Less Than Or Equal Zero$$
-
-$head Syntax$$
-$syntax%inline bool LessThanOrZero(const %Type% &%x%)%$$
-
-$head Description$$
-If $italic Type$$ is $syntax%AD<%Base%>%$$ for some $italic Base$$,
-$italic x$$ is less than or equal zero if and only if
-$syntax%%x%.value_%$$ is less than zero.
-If $italic Type$$ is not $syntax%AD<%Base%>%$$ for some $italic Base$$,
-$italic x$$ is less than or equal zero if and only if
-$syntax%
-	%x% <= 0.
-%$$
-
-$end 
-------------------------------------------------------------------------------
+/*!
+\file ordered.hpp
+Check and AD values ordering properties relative to zero.
 */
 
+// GreaterThanZero ============================================================
+/*!
+Check if a float is greater than zero, 
+used by <tt>GreaterThanZero(AD<float>)</tt>.
 
-namespace CppAD { // BEGIN CppAD namespace
+\param x
+value we are checking.
 
-// GreaterThanZero ------------------------------------------------------------
+\return
+returns true iff the \c x is greater than zero.
+*/
 inline bool GreaterThanZero(const float &x)
 {	return x > 0.; }
+// ---------------------------------------------------------------------------
+/*!
+Check if a double is greater than zero, 
+used by <tt>GreaterThanZero(AD<double>)</tt>.
 
+\param x
+value we are checking.
+
+\return
+returns true iff the \c x is greater than zero.
+*/
 inline bool GreaterThanZero(const double &x)
 {	return x > 0.; }
+// ---------------------------------------------------------------------------
+/*!
+Check if an AD<Base> is greater than zero.
 
+\param x
+value we are checking.
+
+\return
+returns true iff the \c x is greater than zero.
+*/
 template <class Base>
 CPPAD_INLINE bool GreaterThanZero(const AD<Base> &x)
 {	return GreaterThanZero(x.value_); }
+// GreaterThanOrZero =========================================================
+/*!
+Check if a float is greater than or equal zero, 
+used by <tt>GreaterThanOrZero(AD<float>)</tt>.
 
+\param x
+value we are checking.
 
-// GreaterThanOrZero ---------------------------------------------------------
+\return
+returns true iff the \c x is greater than or equal zero.
+*/
 inline bool GreaterThanOrZero(const float &x)
 {	return x >= 0.; }
+// ---------------------------------------------------------------------------
+/*!
+Check if a double is greater than or equal zero, 
+used by <tt>GreaterThanOrZero(AD<double>)</tt>.
 
+\param x
+value we are checking.
+
+\return
+returns true iff the \c x is greater than or equal zero.
+*/
 inline bool GreaterThanOrZero(const double &x)
 {	return x >= 0.; }
+// ---------------------------------------------------------------------------
+/*!
+Check if an AD<Base> is greater than or equal zero.
 
+\param x
+value we are checking.
+
+\return
+returns true iff the \c x is greater than or equal zero.
+*/
 template <class Base>
 CPPAD_INLINE bool GreaterThanOrZero(const AD<Base> &x)
 {	return GreaterThanOrZero(x.value_); }
+// LessThanZero ============================================================
+/*!
+Check if a float is less than zero, 
+used by <tt>LessThanZero(AD<float>)</tt>.
 
+\param x
+value we are checking.
 
-// LessThanZero  ------------------------------------------------------------
-
+\return
+returns true iff the \c x is less than zero.
+*/
 inline bool LessThanZero(const float &x)
 {	return x < 0.; }
+// ---------------------------------------------------------------------------
+/*!
+Check if a double is less than zero, 
+used by <tt>LessThanZero(AD<double>)</tt>.
 
+\param x
+value we are checking.
+
+\return
+returns true iff the \c x is less than zero.
+*/
 inline bool LessThanZero(const double &x)
 {	return x < 0.; }
+// ---------------------------------------------------------------------------
+/*!
+Check if an AD<Base> is less than zero.
 
+\param x
+value we are checking.
+
+\return
+returns true iff the \c x is less than zero.
+*/
 template <class Base>
 CPPAD_INLINE bool LessThanZero(const AD<Base> &x)
 {	return LessThanZero(x.value_); }
+// LessThanOrZero =========================================================
+/*!
+Check if a float is less than or equal zero, 
+used by <tt>LessThanOrZero(AD<float>)</tt>.
 
-// LessThanOrZero  ------------------------------------------------------------
+\param x
+value we are checking.
 
+\return
+returns true iff the \c x is less than or equal zero.
+*/
 inline bool LessThanOrZero(const float &x)
 {	return x <= 0.; }
+// ---------------------------------------------------------------------------
+/*!
+Check if a double is less than or equal zero, 
+used by <tt>LessThanOrZero(AD<double>)</tt>.
 
+\param x
+value we are checking.
+
+\return
+returns true iff the \c x is less than or equal zero.
+*/
 inline bool LessThanOrZero(const double &x)
 {	return x <= 0.; }
+// ---------------------------------------------------------------------------
+/*!
+Check if an AD<Base> is less than or equal zero.
 
+\param x
+value we are checking.
+
+\return
+returns true iff the \c x is less than or equal zero.
+*/
 template <class Base>
 CPPAD_INLINE bool LessThanOrZero(const AD<Base> &x)
 {	return LessThanOrZero(x.value_); }
-
-} // END CppAD namespace
-
+// ============================================================================
+CPPAD_END_NAMESPACE
 # endif
 

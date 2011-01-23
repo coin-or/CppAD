@@ -33,14 +33,6 @@ class AD {
 	friend void Independent(VectorAD &x);
 
 	// one argument functions
-	friend bool GreaterThanZero    <Base> 
-		(const AD<Base>    &u);
-	friend bool LessThanZero       <Base> 
-		(const AD<Base>    &u);
-	friend bool LessThanOrZero     <Base> 
-		(const AD<Base>    &u);
-	friend bool GreaterThanOrZero  <Base> 
-		(const AD<Base>    &u);
 	friend bool Parameter          <Base> 
 		(const AD<Base>    &u);
 	friend bool Parameter          <Base>
@@ -58,7 +50,13 @@ class AD {
 	friend AD pow <Base>
 		(const AD<Base> &x, const AD<Base> &y);
 
-	// The identical property functions
+	// order determining functions, see ordered.hpp
+	friend bool GreaterThanZero   <Base> (const AD<Base> &x);
+	friend bool GreaterThanOrZero <Base> (const AD<Base> &x);
+	friend bool LessThanZero      <Base> (const AD<Base> &x);
+	friend bool LessThanOrZero    <Base> (const AD<Base> &x);
+
+	// The identical property functions, see identical.hpp
 	friend bool IdenticalPar      <Base> (const AD<Base> &x);
 	friend bool IdenticalZero     <Base> (const AD<Base> &x);
 	friend bool IdenticalOne      <Base> (const AD<Base> &x);

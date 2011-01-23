@@ -39,7 +39,6 @@ CppAD user, are documented in $href%../Doc/cppad.xml%$$.
 $contents%
 	omh/distribute.omh%
 	omh/new_feature.omh%
-	cppad/local/ordered.hpp%
 	cppad/local/ad_tape.hpp
 %$$
 
