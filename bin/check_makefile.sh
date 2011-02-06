@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -21,9 +21,14 @@ echo "-------------------------------------------------------"
 ls cppad/*.h cppad/*.hpp cppad/local/*.hpp cppad/speed/*.hpp  | \
 	sort > check_makefile1.$$
 #
-sed < makefile.am -n -e \
-	'/^nobase_myinclude_HEADERS *=/,/^# End nobase_myinclude_HEADERS/p' |
-	sed -e '/nobase_myinclude_HEADERS/d' -e 's/^\t//' -e 's/ *\\$//' |
+sed < makefile.am -n \
+	-e '/^nobase_myinclude_HEADERS *=/,/^# End nobase_myinclude_HEADERS/p' | \
+	sed \
+		-e '/nobase_myinclude_HEADERS/d' \
+		-e 's/^\t//' \
+		-e 's/ *\\$//' \
+		-e 's/ *$//' \
+		-e '/^$/d'  |
 	sort > check_makefile2.$$
 #
 if diff check_makefile1.$$ check_makefile2.$$

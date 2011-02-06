@@ -323,65 +323,48 @@ myinclude_HEADERS = \
 
 #
 nobase_myinclude_HEADERS = \
-	cppad/TrackNewDel.h \
-	cppad/SpeedTest.h \
-	cppad/Runge45.h \
-	cppad/Rosen34.h \
-	cppad/RombergOne.h \
-	cppad/RombergMul.h \
-	cppad/PowInt.h \
-	cppad/Poly.h \
+	cppad/CheckNumericType.h \
+	cppad/CheckSimpleVector.h \
+	cppad/config.h \
+	cppad/CppAD.h \
+	cppad/CppAD_vector.h \
+	cppad/ErrorHandler.h \
+	cppad/LuFactor.h \
+	cppad/LuInvert.h \
+	cppad/LuSolve.h \
+	cppad/NearEqual.h \
+	cppad/OdeErrControl.h \
 	cppad/OdeGearControl.h \
 	cppad/OdeGear.h \
-	cppad/OdeErrControl.h \
-	cppad/NearEqual.h \
-	cppad/LuSolve.h \
-	cppad/LuInvert.h \
-	cppad/LuFactor.h \
-	cppad/ErrorHandler.h \
-	cppad/CppAD_vector.h \
-	cppad/CppAD.h \
-	cppad/CheckSimpleVector.h \
-	cppad/CheckNumericType.h \
-	cppad/config.h \
-	cppad/configure.hpp \
+	cppad/Poly.h \
+	cppad/PowInt.h \
+	cppad/RombergMul.h \
+	cppad/RombergOne.h \
+	cppad/Rosen34.h \
+	cppad/Runge45.h \
+	cppad/SpeedTest.h \
+	cppad/TrackNewDel.h \
+	\
 	cppad/check_numeric_type.hpp \
 	cppad/check_simple_vector.hpp \
+	cppad/configure.hpp \
 	cppad/cppad.hpp \
 	cppad/declare.hpp \
 	cppad/elapsed_seconds.hpp \
-	cppad/vector.hpp \
 	cppad/error_handler.hpp \
-	cppad/lu_factor.hpp \
-	cppad/lu_invert.hpp \
-	cppad/lu_solve.hpp \
-	cppad/nan.hpp \
-	cppad/near_equal.hpp \
-	cppad/ode_err_control.hpp \
-	cppad/ode_gear.hpp \
-	cppad/ode_gear_control.hpp \
-	cppad/poly.hpp \
-	cppad/pow_int.hpp \
-	cppad/romberg_one.hpp \
-	cppad/romberg_mul.hpp \
-	cppad/rosen_34.hpp \
-	cppad/runge_45.hpp \
-	cppad/speed_test.hpp \
-	cppad/std_math_unary.hpp \
-	cppad/track_new_del.hpp \
-	cppad/local/ad.hpp \
-	cppad/local/ad_binary.hpp \
-	cppad/local/ad_copy.hpp \
-	cppad/local/ad_fun.hpp \
-	cppad/local/ad_tape.hpp \
-	cppad/local/ad_valued.hpp \
 	cppad/local/abort_recording.hpp \
 	cppad/local/abs.hpp \
 	cppad/local/abs_op.hpp \
 	cppad/local/acos_op.hpp \
-	cppad/local/add.hpp \
+	cppad/local/ad_binary.hpp \
+	cppad/local/ad_copy.hpp \
 	cppad/local/add_eq.hpp \
+	cppad/local/add.hpp \
 	cppad/local/add_op.hpp \
+	cppad/local/ad_fun.hpp \
+	cppad/local/ad.hpp \
+	cppad/local/ad_tape.hpp \
+	cppad/local/ad_valued.hpp \
 	cppad/local/arithmetic.hpp \
 	cppad/local/asin_op.hpp \
 	cppad/local/atan2.hpp \
@@ -392,38 +375,38 @@ nobase_myinclude_HEADERS = \
 	cppad/local/bool_valued.hpp \
 	cppad/local/cap_taylor.hpp \
 	cppad/local/compare.hpp \
+	cppad/local/comp_op.hpp \
 	cppad/local/compute_assign.hpp \
 	cppad/local/cond_exp.hpp \
-	cppad/local/comp_op.hpp \
 	cppad/local/cond_op.hpp \
 	cppad/local/convert.hpp \
-	cppad/local/cos_op.hpp \
 	cppad/local/cosh_op.hpp \
-	cppad/local/csum_op.hpp \
+	cppad/local/cos_op.hpp \
 	cppad/local/cppad_assert.hpp \
+	cppad/local/csum_op.hpp \
 	cppad/local/declare_ad.hpp \
 	cppad/local/default.hpp \
 	cppad/local/define.hpp \
 	cppad/local/dependent.hpp \
 	cppad/local/discrete.hpp \
 	cppad/local/discrete_op.hpp \
-	cppad/local/div.hpp \
 	cppad/local/div_eq.hpp \
+	cppad/local/div.hpp \
 	cppad/local/div_op.hpp \
 	cppad/local/drivers.hpp \
 	cppad/local/equal_op_seq.hpp \
 	cppad/local/erf.hpp \
 	cppad/local/exp_op.hpp \
-	cppad/local/for_one.hpp \
-	cppad/local/for_two.hpp \
 	cppad/local/for_jac_sweep.hpp \
+	cppad/local/for_one.hpp \
 	cppad/local/for_sparse_jac.hpp \
+	cppad/local/for_two.hpp \
+	cppad/local/forward0sweep.hpp \
 	cppad/local/forward.hpp \
 	cppad/local/forward_sweep.hpp \
-	cppad/local/forward0sweep.hpp \
 	cppad/local/fun_check.hpp \
-	cppad/local/fun_eval.hpp \
 	cppad/local/fun_construct.hpp \
+	cppad/local/fun_eval.hpp \
 	cppad/local/hash_code.hpp \
 	cppad/local/hessian.hpp \
 	cppad/local/identical.hpp \
@@ -434,58 +417,73 @@ nobase_myinclude_HEADERS = \
 	cppad/local/log_op.hpp \
 	cppad/local/lu_ratio.hpp \
 	cppad/local/math_other.hpp \
-	cppad/local/mul.hpp \
 	cppad/local/mul_eq.hpp \
+	cppad/local/mul.hpp \
 	cppad/local/mul_op.hpp \
+	cppad/local/near_equal_ext.hpp \
 	cppad/local/omp_max_thread.hpp \
-	cppad/local/op.hpp \
 	cppad/local/op_code.hpp \
-	cppad/local/opt_val_hes.hpp \
+	cppad/local/op.hpp \
 	cppad/local/optimize.hpp \
+	cppad/local/opt_val_hes.hpp \
 	cppad/local/ordered.hpp \
 	cppad/local/output.hpp \
 	cppad/local/parameter_op.hpp \
 	cppad/local/par_var.hpp \
+	cppad/local/player.hpp \
 	cppad/local/pow.hpp \
+	cppad/local/pow_op.hpp \
 	cppad/local/print_for.hpp \
 	cppad/local/print_op.hpp \
-	cppad/local/near_equal_ext.hpp \
+	cppad/local/prototype_op.hpp \
+	cppad/local/recorder.hpp \
 	cppad/local/reverse.hpp \
+	cppad/local/reverse_sweep.hpp \
 	cppad/local/rev_hes_sweep.hpp \
 	cppad/local/rev_jac_sweep.hpp \
 	cppad/local/rev_one.hpp \
-	cppad/local/rev_sparse_jac.hpp \
 	cppad/local/rev_sparse_hes.hpp \
+	cppad/local/rev_sparse_jac.hpp \
 	cppad/local/rev_two.hpp \
-	cppad/local/reverse_sweep.hpp \
-	cppad/local/sin_op.hpp \
 	cppad/local/sinh_op.hpp \
-	cppad/local/sparse.hpp \
-	cppad/local/sparse_hessian.hpp \
-	cppad/local/sparse_jacobian.hpp \
+	cppad/local/sin_op.hpp \
 	cppad/local/sparse_binary_op.hpp \
-	cppad/local/sparse_unary_op.hpp \
-	cppad/local/sqrt_op.hpp \
-	cppad/local/store_op.hpp \
-	cppad/local/std_math_ad.hpp \
-	cppad/local/sub.hpp \
-	cppad/local/sub_eq.hpp \
-	cppad/local/sub_op.hpp \
-	cppad/local/tape_link.hpp \
-	cppad/local/recorder.hpp \
-	cppad/local/player.hpp \
-	cppad/local/pow_op.hpp \
-	cppad/local/prototype_op.hpp \
-	cppad/local/test_vector.hpp \
-	cppad/local/user_ad.hpp \
-	cppad/local/unary_minus.hpp \
-	cppad/local/unary_plus.hpp \
-	cppad/local/vec_ad.hpp \
+	cppad/local/sparse_hessian.hpp \
+	cppad/local/sparse.hpp \
+	cppad/local/sparse_jacobian.hpp \
 	cppad/local/sparse_pack.hpp \
 	cppad/local/sparse_set.hpp \
+	cppad/local/sparse_unary_op.hpp \
+	cppad/local/sqrt_op.hpp \
+	cppad/local/std_math_ad.hpp \
+	cppad/local/store_op.hpp \
+	cppad/local/sub_eq.hpp \
+	cppad/local/sub.hpp \
+	cppad/local/sub_op.hpp \
+	cppad/local/tape_link.hpp \
+	cppad/local/test_vector.hpp \
+	cppad/local/unary_minus.hpp \
+	cppad/local/unary_plus.hpp \
 	cppad/local/undef.hpp \
+	cppad/local/user_ad.hpp \
+	cppad/local/user_atomic.hpp \
 	cppad/local/value.hpp \
 	cppad/local/var2par.hpp \
+	cppad/local/vec_ad.hpp \
+	cppad/lu_factor.hpp \
+	cppad/lu_invert.hpp \
+	cppad/lu_solve.hpp \
+	cppad/nan.hpp \
+	cppad/near_equal.hpp \
+	cppad/ode_err_control.hpp \
+	cppad/ode_gear_control.hpp \
+	cppad/ode_gear.hpp \
+	cppad/poly.hpp \
+	cppad/pow_int.hpp \
+	cppad/romberg_mul.hpp \
+	cppad/romberg_one.hpp \
+	cppad/rosen_34.hpp \
+	cppad/runge_45.hpp \
 	cppad/speed/det_33.hpp \
 	cppad/speed/det_by_lu.hpp \
 	cppad/speed/det_by_minor.hpp \
@@ -493,7 +491,11 @@ nobase_myinclude_HEADERS = \
 	cppad/speed/det_of_minor.hpp \
 	cppad/speed/ode_evaluate.hpp \
 	cppad/speed/sparse_evaluate.hpp \
-	cppad/speed/uniform_01.hpp
+	cppad/speed_test.hpp \
+	cppad/speed/uniform_01.hpp \
+	cppad/std_math_unary.hpp \
+	cppad/track_new_del.hpp \
+	cppad/vector.hpp
 
 # End nobase_myinclude_HEADERS (check_makefile.sh uses this comment) 
 # ---------------------------------------------------------------

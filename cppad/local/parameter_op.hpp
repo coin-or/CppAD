@@ -3,7 +3,7 @@
 # define CPPAD_PARAMETER_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -76,8 +76,8 @@ inline void forward_par_op_0(
 	Base*         taylor      )
 {	
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
-	CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumArg(ParOp) == 1 );
+	CPPAD_ASSERT_UNKNOWN( NumRes(ParOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
 	CPPAD_ASSERT_UNKNOWN( 0 < nc_taylor );
 

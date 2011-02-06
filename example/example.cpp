@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -151,6 +151,7 @@ extern bool TapeIndex(void);
 extern bool TrackNewDel(void);
 extern bool UnaryMinus(void);
 extern bool UnaryPlus(void);
+extern bool user_atomic(void);
 extern bool Value(void);
 extern bool Var2Par(void);
 extern bool vec_ad(void);
@@ -296,6 +297,7 @@ int main(void)
 	ok &= Run( TrackNewDel,       "TrackNewDel"      );
 	ok &= Run( UnaryMinus,        "UnaryMinus"       );
 	ok &= Run( UnaryPlus,         "UnaryPlus"        );
+	ok &= Run( user_atomic,       "user_atomic"      );
 	ok &= Run( Value,             "Value"            );
 	ok &= Run( Var2Par,           "Var2Par"          );
 	ok &= Run( vec_ad,            "vec_ad"           );

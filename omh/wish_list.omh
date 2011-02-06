@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	iterator
 	bools
 	Microsoft
 	inline
@@ -169,9 +170,17 @@ $head Sparsity Patterns$$
 $index sparsity, pattern parallel$$
 $index pattern, sparsity parallel$$
 $index parallel, sparsity pattern$$
+
+$subhead OpenMP$$
 When using arrays of booleans for
 $cref/sparsity patterns/glossary/Sparsity Pattern/$$, 
 use OpenMP to parallelize the computation of the sparsity patterns.
+
+$subhead Faster Set Operations$$
+The sparse set $code add_element$$ operation could be made faster
+by cashing the iterator where the $code std::set$$ inserts the 
+previous element. See the $code add_element$$ routine in the file
+$code sparse_set.hpp$$. 
 
 
 $head Speed Testing$$

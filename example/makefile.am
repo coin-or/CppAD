@@ -173,6 +173,7 @@ example_SOURCES   = \
 	track_new_del.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
+	user_atomic.cpp \
 	value.cpp \
 	var_2par.cpp \
 	vec_ad.cpp 

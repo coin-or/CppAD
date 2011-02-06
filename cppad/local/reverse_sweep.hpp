@@ -3,7 +3,7 @@
 # define CPPAD_REVERSE_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -156,6 +156,26 @@ void ReverseSweep(
 	const Base* parameter = 0;
 	if( num_par > 0 )
 		parameter = Rec->GetPar();
+
+	// work space used by UserOp.
+	const size_t user_k  = d;    // order of this forward mode calculation
+	const size_t user_k1 = d+1;  // number of orders for this calculation
+	vector<size_t> user_ix;      // variable indices for argument vector
+	vector<Base> user_tx;        // argument vector Taylor coefficients
+	vector<Base> user_ty;        // result vector Taylor coefficients
+	vector<Base> user_px;        // partials w.r.t argument vector
+	vector<Base> user_py;        // partials w.r.t. result vector
+	size_t user_index = 0;       // indentifier for this user_atomic operation
+	size_t user_id    = 0;       // user identifier for this call to operator
+	size_t user_i     = 0;       // index in result vector
+	size_t user_j     = 0;       // index in argument vector
+	size_t user_m     = 0;       // size of result vector
+	size_t user_n     = 0;       // size of arugment vector
+	// next expected operator in a UserOp sequence
+	enum { user_start, user_arg, user_ret, user_end } user_state = user_end;
+
+	// temporary indices
+	size_t j, ell;
 
 	// Initialize
 	Rec->start_reverse(op, arg, i_op, i_var);
@@ -471,8 +491,116 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
+			case UserOp:
+			// start or end an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );
+			CPPAD_ASSERT_UNKNOWN( NumArg( UserOp ) == 4 );
+			if( user_state == user_end )
+			{	user_index = arg[0];
+				user_id    = arg[1];
+				user_n     = arg[2];
+				user_m     = arg[3];
+				if(user_ix.size() < user_n)
+					user_ix.resize(user_n);
+				if(user_tx.size() < user_n * user_k1)
+				{	user_tx.resize(user_n * user_k1);
+					user_px.resize(user_n * user_k1);
+				}
+				if(user_ty.size() < user_m * user_k1)
+				{	user_ty.resize(user_m * user_k1);
+					user_py.resize(user_m * user_k1);
+				}
+				user_j     = user_n;
+				user_i     = user_m;
+				user_state = user_ret;
+			}
+			else
+			{	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
+				CPPAD_ASSERT_UNKNOWN( user_index == arg[0] );
+				CPPAD_ASSERT_UNKNOWN( user_id    == arg[1] );
+				CPPAD_ASSERT_UNKNOWN( user_n     == arg[2] );
+				CPPAD_ASSERT_UNKNOWN( user_m     == arg[3] );
+				user_state = user_start;
+				user_state = user_end;
+
+				// call users function for this operation
+				user_atomic<Base>::reverse(user_index, user_id,
+					user_k, user_n, user_m, user_tx, user_ty,
+					user_px, user_py
+				);
+				for(j = 0; j < user_n; j++) if( user_ix[j] > 0 )
+				{	for(ell = 0; ell < user_k1; ell++)
+						Partial[user_ix[j] * K + ell] +=
+							user_px[j * user_k1 + ell];
+				}
+			}
+			break;
+
+			case UsrapOp:
+			// parameter argument in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			--user_j;
+			user_ix[user_j] = 0;
+			user_tx[user_j * user_k1 + 0] = parameter[ arg[0]];
+			for(ell = 1; ell < user_k1; ell++)
+				user_tx[user_j * user_k1 + ell] = Base(0.);
+			
+			if( user_j == 0 )
+				user_state = user_start;
+			break;
+
+			case UsravOp:
+			// variable argument in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( arg[0] <= i_var );
+			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+			--user_j;
+			user_ix[user_j] = arg[0];
+			for(ell = 0; ell < user_k1; ell++)
+				user_tx[user_j*user_k1 + ell] = Taylor[ arg[0] * J + ell];
+			if( user_j == 0 )
+				user_state = user_start;
+			break;
+
+			case UsrrpOp:
+			// parameter result in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			--user_i;
+			for(ell = 0; ell < user_k1; ell++)
+			{	user_py[user_i * user_k1 + ell] = Base(0.);
+				user_ty[user_i * user_k1 + ell] = Base(0.);
+			}
+			user_ty[user_i * user_k1 + 0] = parameter[ arg[0] ];
+			if( user_i == 0 )
+				user_state = user_arg;
+			break;
+
+			case UsrrvOp:
+			// variable result in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
+			--user_i;
+			for(ell = 0; ell < user_k1; ell++)
+			{	user_py[user_i * user_k1 + ell] =
+						Partial[i_var * K + ell];
+				user_ty[user_i * user_k1 + ell] =
+						Taylor[i_var * J + ell];
+			}
+			if( user_i == 0 )
+				user_state = user_arg;
+			break;
+			// ------------------------------------------------------------
+
 			default:
-			CPPAD_ASSERT_UNKNOWN(0);
+			CPPAD_ASSERT_UNKNOWN(false);
 		}
 	}
 # if CPPAD_REVERSE_SWEEP_TRACE

@@ -3,7 +3,7 @@
 # define CPPAD_REV_SPARSE_HES_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -47,7 +47,7 @@ We define the matrix $latex H(x) \in \R^{q \times n}$$
 as the partial with respect to $latex x$$,
 of the partial with respect to $latex u$$ (at $latex u = 0$$),
 of $latex S * F[ x + R * u ]$$ where
-$latex R \in \R^{q \times n}$$ and $latex S \in \R^{1 \times m}$$; i.e.,
+$latex R \in \R^{n \times q}$$ and $latex S \in \R^{1 \times m}$$; i.e.,
 $latex \[
 	H(x)  =  R^\T (S * F)^{(2)} ( x )
 \] $$
@@ -72,7 +72,7 @@ The argument $icode q$$ has prototype
 $codei%
 	size_t %q%
 %$$
-It specifies the number of columns in $latex R \in \R{n \times q}$$
+It specifies the number of columns in $latex R \in \R^{n \times q}$$
 and the number of rows in 
 $latex H(x) \in \R^{q \times n}$$.
 It must be the same value as in the previous $xref/ForSparseJac/$$ call 

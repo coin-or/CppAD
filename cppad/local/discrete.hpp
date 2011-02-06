@@ -3,7 +3,7 @@
 # define CPPAD_DISCRETE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -32,92 +32,92 @@ $index discrete, AD function$$
 $index function, discrete AD$$
 
 $head Syntax$$
-$syntax%CPPAD_DISCRETE_FUNCTION(%Base%, %name%)
+$codei%CPPAD_DISCRETE_FUNCTION(%Base%, %name%)
 %$$
-$syntax%%v% = %name%(%u%)
+$icode%y%  = %name%(%x%)
 %$$
-$syntax%%y% = %name%(%x%)
+$icode%ay% = %name%(%ax%)
 %$$
 
 
 $head Purpose$$
 Record the evaluation of a discrete function as part
-of an $syntax%AD<%Base%>%$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+of an $codei%AD<%Base%>%$$
+$cref/operation sequence/glossary/Operation/Sequence/$$.
 The value of a discrete function can depend on the
 $cref/independent variables/glossary/Tape/Independent Variable/$$,
 but its derivative is identically zero.
 For example, suppose that the integer part of 
-a $cref/variable/glossary/Variable/$$ $italic x$$ is the 
+a $cref/variable/glossary/Variable/$$ $icode x$$ is the 
 index into an array of values. 
 
 $head Base$$
 This is the 
 $cref/base type/base_require/$$
 corresponding to the operations sequence;
-i.e., use of the $italic name$$ with arguments of type
-$syntax%AD<%Base%>%$$ can be recorded in an operation sequence.
+i.e., use of the $icode name$$ with arguments of type
+$codei%AD<%Base%>%$$ can be recorded in an operation sequence.
 
 $head name$$
 This is the name of the function (as it is used in the source code).
-The user must provide a version of $italic name$$
-where the argument has type $italic Base$$.
-CppAD uses this to create a version of $italic name$$
-where the argument has type $syntax%AD<%Base%>%$$.
-
-$head u$$
-The argument $italic u$$ has prototype
-$syntax%
-	const %Base% &%u%
-%$$
-It is the value at which the user provided version of $italic name$$
-is to be evaluated.
-
-$head v$$
-The result $italic v$$ has prototype
-$syntax%
-	%Base% %v%
-%$$
-It is the return value for the user provided version of $italic name$$.
+The user must provide a version of $icode name$$
+where the argument has type $icode Base$$.
+CppAD uses this to create a version of $icode name$$
+where the argument has type $codei%AD<%Base%>%$$.
 
 $head x$$
-The argument $italic x$$ has prototype
-$syntax%
-	const AD<%Base%> &%x%
+The argument $icode x$$ has prototype
+$codei%
+	const %Base%& %x%
 %$$
-It is the value at which the CppAD provided version of $italic name$$
+It is the value at which the user provided version of $icode name$$
 is to be evaluated.
 
 $head y$$
-The result $italic y$$ has prototype
-$syntax%
-	AD<%Base%> %v%
+The result $icode y$$ has prototype
+$codei%
+	%Base% %y%
 %$$
-It is the return value for the CppAD provided version of $italic name$$.
+It is the return value for the user provided version of $icode name$$.
+
+$head ax$$
+The argument $icode ax$$ has prototype
+$codei%
+	const AD<%Base%>& %ax%
+%$$
+It is the value at which the CppAD provided version of $icode name$$
+is to be evaluated.
+
+$head ay$$
+The result $icode ay$$ has prototype
+$codei%
+	AD<%Base%> %ay%
+%$$
+It is the return value for the CppAD provided version of $icode name$$.
 
 
 $head Create AD Version$$
 $index CPPAD_DISCRETE_FUNCTION$$
 The preprocessor macro invocation
-$syntax%
+$codei%
 	CPPAD_DISCRETE_FUNCTION(%Base%, %name%)
 %$$ 
-defines the $syntax%AD<%Base%>%$$ version of $italic name$$.
+defines the $codei%AD<%Base%>%$$ version of $icode name$$.
 This can be with in a namespace (not the $code CppAD$$ namespace) 
 but must be outside of any routine.
 
 $head Operation Sequence$$
-This is an AD of $italic Base$$
-$xref/glossary/Operation/Atomic/atomic operation/1/$$
+This is an AD of $icode Base$$
+$cref/atomic operation/glossary/Operation/Atomic/$$
 and hence is part of the current
-AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Derivatives$$
-During a zero order $xref/Forward//Forward/$$ operation,
-an $xref/ADFun/$$ object will compute the value of $italic name$$
-using the user provided $italic Base$$ version of this routine.
-All the derivatives of $italic name$$ will be evaluated as zero.
+During a zero order $cref/Forward/$$ operation,
+an $cref/ADFun/$$ object will compute the value of $icode name$$
+using the user provided $icode Base$$ version of this routine.
+All the derivatives of $icode name$$ will be evaluated as zero.
 
 $head Example$$
 $children%
@@ -126,15 +126,15 @@ $children%
 	example/interp_retape.cpp
 %$$
 The file
-$xref/TapeIndex.cpp/$$
+$cref/TapeIndex.cpp/$$
 contains an example and test that uses a discrete function 
 to vary an array index during $cref/Forward/$$ mode calculations.
 The file
-$xref/interp_onetape.cpp/$$
+$cref/interp_onetape.cpp/$$
 contains an example and test that uses discrete
 functions to avoid retaping a calculation that requires interpolation.
 (The file
-$xref/interp_retape.cpp/$$
+$cref/interp_retape.cpp/$$
 shows how interpolation can be done with retaping.)
 
 $head Deprecated$$
@@ -147,70 +147,134 @@ but its use is deprecated.
 $end
 ------------------------------------------------------------------------------
 */
-
-# define CPPAD_DISCRETE_FUNCTION(Base, FunName)            \
-inline CppAD::AD<Base> FunName (const CppAD::AD<Base> &x)  \
-{                                                          \
-	static CppAD::ADDiscrete<Base> Fun(FunName);       \
-                                                           \
-	return Fun.Eval(x);                                \
-}                                      
-
-# define CppADCreateDiscrete CPPAD_DISCRETE_FUNCTION
-
 # include <vector>
 
-// Begin CppAD namespace
-namespace CppAD {
+CPPAD_BEGIN_NAMESPACE
+/*!
+\file discrete.hpp
+user define discrete functions
+*/
 
+/*!
+\def CPPAD_DISCRETE_FUNCTION(Base, name)
+Defines the function <code>name(ax, ay)</code>  
+where \c ax and \c ay are vectors with <code>AD<Base></code> elements.
+
+\par Base
+is the base type for the discrete function.
+
+\par name 
+is the name of the user defined function that corresponding to this operation.
+*/
+
+# define CPPAD_DISCRETE_FUNCTION(Base, name)            \
+inline CppAD::AD<Base> name (const CppAD::AD<Base>& ax) \
+{                                                       \
+     static CppAD::discrete<Base> fun(#name, name);     \
+                                                        \
+     return fun.ad(ax);                                 \
+}                                      
+# define CppADCreateDiscrete CPPAD_DISCRETE_FUNCTION
+
+
+/*
+Class that acutally implemnets the <code>ay = name(ax)</code> call.
+
+A new discrete function is generated for ech time the user invokes
+the CPPAD_DISCRETE_FUNCTION macro; see static object in that macro.
+*/
 template <class Base>
-class ADDiscrete {
-	typedef Base (*F) (const Base &x);
+class discrete {
+	/// type for the uer routine that computes function values
+	typedef Base (*F) (const Base& x);
+private:
+	/// name of this user defined function
+	const std::string name_;
+	/// user's implementation of the function for Base operations
+	const F              f_;
+	/// index of this objec in the vector of all objects for this class
+	const size_t     index_;
+
+	/*!
+	List of all objects in this class.
+
+	Can use CppAD::vector for debugging, but it will appear that 
+	there is a memory leak because this list is not distroyed before
+	CPPAD_TRACK_COUNT is called by the test routines.
+	*/
+	static std::vector<discrete *>& List(void)
+	{	static std::vector<discrete *> list;
+		return list;
+	}
 public:
-	ADDiscrete(F f) : f_(f), f_index_( List()->size() )
-	{	List()->push_back(this); }
+	/*!
+	Constructor called for each invocation of CPPAD_DISCRETE_FUNCTION.
 
-	// used during the recording process
-	AD<Base> Eval(const AD<Base> &x) const
-	{	AD<Base> result;
+	Put this objec in the list of all objects for this class and set
+	the constant private data name_, f_, and index_.
 
-		result.value_ = f_(x.value_);
-		if( Variable(x) )
-		{	ADTape<Base> *tape = x.tape_this();
+	\param Name
+	is the user's name for this discrete function.
+
+	\param f
+	user routine that implements this function for \c Base class.
+	*/
+	discrete(const char* Name, F f) : 
+	name_(Name)
+	, f_(f) 
+	, index_( List().size() )
+	{	List().push_back(this); }
+
+	/*!
+ 	Implement the user call to <code>ay = name(ax)</code>.
+
+	\param ax
+	is the argument for this call.
+
+	\return
+	the return value is called \c ay above.
+	*/
+	AD<Base> ad(const AD<Base> &ax) const
+	{	AD<Base> ay;
+
+		ay.value_ = f_(ax.value_);
+		if( Variable(ax) )
+		{	ADTape<Base> *tape = ax.tape_this();
 			CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
 			CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
 
 			// put operand addresses in the tape
-			tape->Rec_.PutArg(x.taddr_, f_index_);
+			tape->Rec_.PutArg(index_, ax.taddr_);
 			// put operator in the tape
-			result.taddr_ = tape->Rec_.PutOp(DisOp);
+			ay.taddr_ = tape->Rec_.PutOp(DisOp);
 			// make result a variable
-			result.id_ = tape->id_;
+			ay.id_    = tape->id_;
 
-			CPPAD_ASSERT_UNKNOWN( Variable(result) );
+			CPPAD_ASSERT_UNKNOWN( Variable(ay) );
 		} 
-		return result;
+		return ay;
 	}
 
-	// used to evaluate from the recording
-	static Base Eval(size_t f_index, const Base &x)
+	/// Name corresponding to a discrete object
+	static const char* name(size_t index)
+	{	return List()[index]->name_.c_str(); }
+
+	/*!
+ 	Link from forward mode sweep to users routine
+
+	\param index
+	index for this function in the list of all discrete object 
+
+	\param x
+	argument value at which to evaluate this function
+	*/
+	static Base eval(size_t index, const Base& x)
 	{
-		CPPAD_ASSERT_UNKNOWN(f_index < List()->size() );
+		CPPAD_ASSERT_UNKNOWN(index < List().size() );
 
-		return (*List())[f_index]->f_(x);
+		return List()[index]->f_(x);
 	}
-
-private:
-	const F            f_;
-	const size_t f_index_;
-
-	static std::vector<ADDiscrete *> *List(void)
-	{	static std::vector<ADDiscrete *> list;
-		return &list;
-	}
-		
 };
 
-} // END CppAD namespace
-
+CPPAD_END_NAMESPACE
 # endif

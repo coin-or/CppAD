@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -29,13 +29,13 @@ echo "DryRun = $DryRun"
 # script to help in execution of svn merge command
 #
 # Name of the directory where the changes have been committed
-from_branch=branches/multiple_result
+from_branch=branches/user_atomic
 #
 # Version of the repository corresponding to from_branch just before changes
-Start=1583
+Start=1836
 # 
 # Version of the repository corresponding to from_branch after the changes
-End=1587
+End=1864
 #
 # the svn merge command
 cmd="svn merge $DryRun -r $Start:$End"

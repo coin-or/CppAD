@@ -3,7 +3,7 @@
 # define CPPAD_OP_CODE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -54,7 +54,7 @@ enum OpCode {
 	CosOp,    //  cos(variable)
 	CoshOp,   // cosh(variable)
 	CSumOp,   // Cummulative summation (has variable number of arguments)
-	DisOp,    //  dis(variable,    index)
+	DisOp,    //  discrete::eval(index, variable)
 	DivpvOp,  //      parameter  / variable
 	DivvpOp,  //      variable   / parameter
 	DivvvOp,  //      variable   / variable
@@ -81,7 +81,13 @@ enum OpCode {
 	StvvOp,   //    z[variable]  = variable
 	SubpvOp,  //      parameter  - variable
 	SubvpOp,  //      variable   - parameter
-	SubvvOp   //      variable   - variable
+	SubvvOp,  //      variable   - variable
+	// user atomic operation codes (note yet implemented)
+	UsrapOp,  //  this user atomic argument is a parameter
+	UsravOp,  //  this user atomic argument is a variable
+	UserOp,   //  start of a user atomic operaiton
+	UsrrpOp,  //  this user atomic result is a parameter
+	UsrrvOp   //  this user atomic result is a variable
 };
 
 /*!
@@ -138,7 +144,12 @@ const size_t NumArgTable[] = {
 	3, // StvvOp
 	2, // SubpvOp
 	2, // SubvpOp
-	2  // SubvvOp
+	2, // SubvvOp
+	1, // UsrapOp
+	1, // UsravOp
+	4, // UserOp
+	1, // UsrrpOp
+	0  // UsrrvOp
 };
 
 /*!
@@ -152,10 +163,10 @@ Operator for which we are fetching the number of arugments.
 */
 inline size_t NumArg( OpCode op)
 {
-	CPPAD_ASSERT_UNKNOWN( size_t(SubvvOp) == 
+	CPPAD_ASSERT_UNKNOWN( size_t(UsrrvOp) == 
 		sizeof(NumArgTable) / sizeof(NumArgTable[0]) - 1
 	);
-	CPPAD_ASSERT_UNKNOWN( size_t(op) <= size_t(SubvvOp) );
+	CPPAD_ASSERT_UNKNOWN( size_t(op) <= size_t(UsrrvOp) );
 
 	return NumArgTable[(size_t) op];
 }
@@ -215,6 +226,11 @@ const size_t NumResTable[] = {
 	1, // SubpvOp
 	1, // SubvpOp
 	1, // SubvvOp
+	0, // UsrapOp
+	0, // UsravOp
+	0, // UserOp
+	0, // UsrrpOp
+	1, // UsrrvOp
 	0  // Not used: avoids warning by g++ 4.3.2 when pycppad builds
 };
 
@@ -229,11 +245,11 @@ Operator for which we are fetching the number of result variables.
 */
 inline size_t NumRes(OpCode op)
 {	// check ensuring conversion to size_t is as expected
-	CPPAD_ASSERT_UNKNOWN( size_t(SubvvOp) == 
+	CPPAD_ASSERT_UNKNOWN( size_t(UsrrvOp) == 
 		sizeof(NumResTable) / sizeof(NumResTable[0]) - 2
 	);
 	// this test ensures that all indices are within the table
-	CPPAD_ASSERT_UNKNOWN( size_t(op) <= size_t(SubvvOp) );
+	CPPAD_ASSERT_UNKNOWN( size_t(op) <= size_t(UsrrvOp) );
 
 	return NumResTable[(size_t) op];
 }
@@ -404,10 +420,15 @@ void printOp(
 		"Stvv"  ,
 		"Subpv" ,
 		"Subvp" ,
-		"Subvv"
+		"Subvv" ,
+		"Usrap" ,
+		"Usrav" ,
+		"User"  ,
+		"Usrrp" ,
+		"Usrrv"
 	};
 	CPPAD_ASSERT_UNKNOWN( 
-		size_t(SubvvOp) == sizeof(OpName) / sizeof(OpName[0]) - 1
+		size_t(UsrrvOp) == sizeof(OpName) / sizeof(OpName[0]) - 1
 	);
 
 	// print operator
@@ -522,13 +543,26 @@ void printOp(
 		case SinOp:
 		case SinhOp:
 		case SqrtOp:
+		case UsravOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 		printOpField(os, "  v=", ind[0], ncol);
 		break;
 
 		case ParOp:
+		case UsrapOp:
+		case UsrrpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 		printOpField(os, "  p=", Rec->GetPar(ind[0]), ncol);
+		break;
+
+		case UserOp:
+		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 4 );
+		{	const char* name = user_atomic<Base>::name(ind[0]);
+			printOpField(os, " f=",   name, ncol);
+			printOpField(os, " i=", ind[1], ncol);
+			printOpField(os, " n=", ind[2], ncol);
+			printOpField(os, " m=", ind[3], ncol);
+		}
 		break;
 
 		case PripOp:
@@ -546,13 +580,16 @@ void printOp(
 		case BeginOp:
 		case EndOp:
 		case InvOp:
+		case UsrrvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 0 );
 		break;
 
 		case DisOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		printOpField(os, "  v=", ind[0], ncol);
-		printOpField(os, "  f=", ind[1], ncol);
+		{	const char* name = discrete<Base>::name(ind[0]);
+			printOpField(os, " f=", name, ncol);
+			printOpField(os, " x=", ind[1], ncol);
+		}
 		break;
 	
 

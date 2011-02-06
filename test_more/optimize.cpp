@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -935,7 +935,149 @@ namespace {
 
 		return ok;
 	}
+	// -------------------------------------------------------------------
+	void my_union(
+		std::set<size_t>&         result  ,
+		const std::set<size_t>&   left    ,
+		const std::set<size_t>&   right   )
+	{	std::set<size_t> temp;
+		std::set_union(
+			left.begin()              ,
+			left.end()                ,
+			right.begin()             ,
+			right.end()               ,
+			std::inserter(temp, temp.begin())
+		);
+		result.swap(temp);
+	}
 
+	bool user_atomic_forward(
+		size_t                         id ,
+		size_t                          k , 
+		size_t                          n ,
+		size_t                          m ,
+		const CppAD::vector<bool>&     vx ,
+		CppAD::vector<bool>&           vy ,
+		const CppAD::vector<double>&   tx , 
+		CppAD::vector<double>&         ty )
+	{	assert(n == 3 && m == 2);
+		if( k > 0 ) 
+			return false;
+
+		// y[0] = x[0] + x[1]
+		ty[0] = tx[0] + tx[1];
+
+		// y[1] = x[1] + x[2]
+		ty[1] = tx[1] + tx[2];
+		
+		if( vy.size() > 0 )
+		{	vy[0] = (vx[0] | vx[1]);
+			vy[1] = (vx[1] | vx[2]);
+		}
+		return true; 
+	}
+
+	bool user_atomic_reverse(
+		size_t                         id ,
+		size_t                          k , 
+		size_t                          n , 
+		size_t                          m , 
+		const CppAD::vector<double>&   tx , 
+		const CppAD::vector<double>&   ty ,
+		CppAD::vector<double>&         px ,
+		const CppAD::vector<double>&   py )
+	{	return false; }
+
+	bool user_atomic_for_jac_sparse(
+		size_t                                  id ,
+		size_t                                   n ,
+		size_t                                   m ,
+		size_t                                   q ,
+		const CppAD::vector< std::set<size_t> >& r ,
+		CppAD::vector< std::set<size_t>  >&      s )
+	{	return false; }
+
+	bool user_atomic_rev_jac_sparse(
+		size_t                                  id ,
+		size_t                                   n ,
+		size_t                                   m ,
+		size_t                                   q ,
+		CppAD::vector< std::set<size_t> >&       r ,
+		const CppAD::vector< std::set<size_t> >& s )
+	{	assert(n == 3 && m == 2);
+		r[0].clear();
+		r[1].clear();
+		r[2].clear();
+		// y[0] = x[0] + x[1]
+		my_union(r[0], r[0], s[0]);
+		my_union(r[1], r[1], s[0]);
+		// y[1] = x[1] + x[2]
+		my_union(r[1], r[1], s[1]);
+		my_union(r[2], r[2], s[1]);
+
+		return true; 
+	}
+
+	bool user_atomic_rev_hes_sparse(
+		size_t                                  id ,
+		size_t                                   n ,
+		size_t                                   m ,
+		size_t                                   q ,
+		const CppAD::vector< std::set<size_t> >& r ,
+		const CppAD::vector<bool>&               s ,
+		CppAD::vector<bool>&                     t ,
+		const CppAD::vector< std::set<size_t> >& u ,
+		CppAD::vector< std::set<size_t> >&       v )
+	{	return false; }
+
+	CPPAD_USER_ATOMIC(
+		my_user_atomic             ,
+		CPPAD_TEST_VECTOR          ,
+		double                     ,
+		user_atomic_forward        ,
+		user_atomic_reverse        ,
+		user_atomic_for_jac_sparse ,
+		user_atomic_rev_jac_sparse ,
+		user_atomic_rev_hes_sparse 
+	)
+
+	bool user_atomic_test(void)
+	{	bool ok = true;
+
+		using CppAD::AD;
+		size_t j;
+		size_t n = 3;
+		size_t m = 2;
+		CPPAD_TEST_VECTOR< AD<double> > ax(n), ay(m), az(m);
+		for(j = 0; j < n; j++)
+			ax[j] = AD<double>(j + 1);
+		CppAD::Independent(ax);
+
+		size_t id = 0;
+		// first call should stay in the tape
+		my_user_atomic(id++, ax, ay);
+		// second call will not get used
+		my_user_atomic(id++, ax, az);
+		// create function
+		CppAD::ADFun<double> g(ax, ay);
+		// should have 1 + n + m + m varaibles
+		ok &= g.size_var() == (1 + n + m + m);
+		g.optimize();
+		// should have 1 + n + m varaibles
+		ok &= g.size_var() == (1 + n + m);
+
+		// now test that the optimized function gives same results
+		CPPAD_TEST_VECTOR<double> x(n), y(m);
+		for(j = 0; j < n; j++)
+			x[j] = (j + 1) * (j + 1);
+		y = g.Forward(0, x);
+		// y[0] = x[0] + x[1]
+		ok &= (y[0] == x[0] + x[1]);
+		// y[1] = x[1] + x[2]
+		ok &= (y[0] == x[0] + x[1]);
+
+		return ok;
+	}
 }
 
 bool optimize(void)
@@ -958,6 +1100,9 @@ bool optimize(void)
 	ok     &= reverse_sparse_hessian_csum();
 	// check that CondExp properly detects dependencies
 	ok     &= cond_exp_depend();
+	// check user_atomic functions
+	ok     &= user_atomic_test();
 
+	CppAD::user_atomic<double>::clear();
 	return ok;
 }

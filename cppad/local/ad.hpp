@@ -88,8 +88,9 @@ class AD {
 
 	// classes
 	friend class ADTape<Base>;
-	friend class ADDiscrete<Base>;
 	friend class ADFun<Base>;
+	friend class discrete<Base>;
+	friend class user_atomic<Base>;
 	friend class VecAD<Base>;
 	friend class VecAD_reference<Base>;
 

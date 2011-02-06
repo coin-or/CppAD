@@ -3,7 +3,7 @@
 # define CPPAD_OPTIMIZE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -838,6 +838,11 @@ void optimize(
 	// number of variables in the player
 	const size_t num_var = play->num_rec_var(); 
 
+# ifndef NDEBUG
+	// number of paraemters in the player
+	const size_t num_par = play->num_rec_par();
+# endif
+
 	// number of  VecAD indices 
 	size_t num_vecad_ind   = play->num_rec_vecad_ind();
 
@@ -879,11 +884,27 @@ void optimize(
 	}
 	CPPAD_ASSERT_UNKNOWN( j == num_vecad_ind );
 
+	// work space used by UserOp.
+	typedef std::set<size_t> size_set;
+	size_t user_q     = 0;       // maximum set element plus one
+	vector< size_set > user_r;   // sparsity pattern for the argument x
+	vector< size_set > user_s;   // sparisty pattern for the result y
+	size_t user_index = 0;       // indentifier for this user_atomic operation
+	size_t user_id    = 0;       // user identifier for this call to operator
+	size_t user_i     = 0;       // index in result vector
+	size_t user_j     = 0;       // index in argument vector
+	size_t user_m     = 0;       // size of result vector
+	size_t user_n     = 0;       // size of arugment vector
+	// next expected operator in a UserOp sequence
+	enum { user_start, user_arg, user_ret, user_end } user_state;
+	std::stack<bool> user_keep;
+
 	// Initialize a reverse mode sweep through the operation sequence
 	size_t i_op;
 	play->start_reverse(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == EndOp );
 	size_t mask;
+	user_state = user_end;
 	while(op != BeginOp)
 	{	// next op
 		play->next_reverse(op, arg, i_op, i_var);
@@ -908,7 +929,6 @@ void optimize(
 			case AtanOp:
 			case CosOp:
 			case CoshOp:
-			case DisOp:
 			case DivvpOp:
 			case ExpOp:
 			case LogOp:
@@ -921,6 +941,7 @@ void optimize(
 			break; // --------------------------------------------
 
 			// Unary operator where operand is arg[1]
+			case DisOp:
 			case DivpvOp:
 			case MulpvOp:
 			case PowpvOp:
@@ -1047,7 +1068,98 @@ void optimize(
 			{	tape[arg[1]].connect = yes_connected;
 				tape[arg[2]].connect = yes_connected;
 			}
-			break; // --------------------------------------------
+			break; 
+			// ============================================================
+			case UserOp:
+			// start or end atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );
+			CPPAD_ASSERT_UNKNOWN( NumArg( UserOp ) == 4 );
+			if( user_state == user_end )
+			{	user_index = arg[0];
+				user_id    = arg[1];
+				user_n     = arg[2];
+				user_m     = arg[3];
+				user_q     = 1;
+				if(user_r.size() < user_n )
+					user_r.resize(user_n);
+				if(user_s.size() < user_m )
+					user_s.resize(user_m);
+				user_j     = user_n;
+				user_i     = user_m;
+				user_state = user_ret;
+				user_keep.push(false);
+			}
+			else
+			{	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
+				CPPAD_ASSERT_UNKNOWN( user_index == arg[0] );
+				CPPAD_ASSERT_UNKNOWN( user_id    == arg[1] );
+				CPPAD_ASSERT_UNKNOWN( user_n     == arg[2] );
+				CPPAD_ASSERT_UNKNOWN( user_m     == arg[3] );
+				user_state = user_end;
+               }
+			break;
+
+			case UsrapOp:
+			// parameter argument in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			--user_j;
+			if( user_j == 0 )
+				user_state = user_start;
+			break;
+
+			case UsravOp:
+			// variable argument in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( arg[0] <= i_var );
+			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
+			--user_j;
+			if( ! user_r[user_j].empty() )
+			{	tape[arg[0]].connect = yes_connected;
+				user_keep.top() = true;
+			}
+			if( user_j == 0 )
+				user_state = user_start;
+			break;
+
+			case UsrrpOp:
+			// parameter result in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
+			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			--user_i;
+			user_s[user_i].clear();
+			if( user_i == 0 )
+			{	// call users function for this operation
+				user_atomic<Base>::rev_jac_sparse(user_index, user_id,
+					user_n, user_m, user_q, user_r, user_s
+				);
+				user_state = user_arg;
+			}
+			break;
+
+			case UsrrvOp:
+			// variable result in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
+			--user_i;
+			user_s[user_i].clear();
+			if( tape[i_var].connect != not_connected )
+				user_s[user_i].insert(0);
+			if( user_i == 0 )
+			{	// call users function for this operation
+				user_atomic<Base>::rev_jac_sparse(user_index, user_id,
+					user_n, user_m, user_q, user_r, user_s
+				);
+				user_state = user_arg;
+			}
+			break;
+			// ============================================================
 
 			// all cases should be handled above
 			default:
@@ -1115,6 +1227,7 @@ void optimize(
 	// (decalared here to avoid realloaction of memory)
 	optimize_csum_stacks csum_work;
 
+	user_state = user_start;
 	while(op != EndOp)
 	{	// next op
 		play->next_forward(op, arg, i_op, i_var);
@@ -1154,6 +1267,14 @@ void optimize(
 			keep &= tape[i_var].connect != csum_connected;
 			break; 
 
+			case UserOp:
+			case UsrapOp:
+			case UsravOp:
+			case UsrrpOp:
+			case UsrrvOp:
+			keep = user_keep.top();
+			break;
+
 			default:
 			keep = tape[i_var].connect != not_connected;
 			break;
@@ -1171,7 +1292,6 @@ void optimize(
 			case AtanOp:
 			case CosOp:
 			case CoshOp:
-			case DisOp:
 			case ExpOp:
 			case LogOp:
 			case SinOp:
@@ -1476,7 +1596,48 @@ void optimize(
 			);
 			rec->PutOp(op);
 			break;
+
+			// -----------------------------------------------------------
+			case UserOp:
+			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
+			if( user_state == user_start )
+				user_state = user_arg;
+			else
+			{	user_state = user_start;
+				user_keep.pop();	
+			}
+			// user_index, user_id, user_n, user_m
+			rec->PutArg(arg[0], arg[1], arg[2], arg[3]);
+			rec->PutOp(UserOp);
+			break;
+
+			case UsrapOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
+			rec->PutArg(new_arg[0]);
+			rec->PutOp(UsrapOp);
+			break;
+
+			case UsravOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			new_arg[0] = tape[arg[0]].new_var;
+			rec->PutArg(new_arg[0]);
+			rec->PutOp(UsravOp);
+			break;
+
+			case UsrrpOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 0);
+			new_arg[0] = rec->PutPar( play->GetPar(arg[0]) );
+			rec->PutArg(new_arg[0]);
+			rec->PutOp(UsrrpOp);
+			break;
+			
+			case UsrrvOp:
+			CPPAD_ASSERT_NARG_NRES(op, 0, 1);
+			tape[i_var].new_var = rec->PutOp(UsrrvOp);
+			break;
 			// ---------------------------------------------------
+
 			// all cases should be handled above
 			default:
 			CPPAD_ASSERT_UNKNOWN(false);

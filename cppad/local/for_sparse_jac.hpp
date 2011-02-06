@@ -3,7 +3,7 @@
 # define CPPAD_FOR_SPARSE_JAC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -37,18 +37,18 @@ $head Syntax$$
 $icode%s% = %f%.ForSparseJac(%q%, %r%)%$$
 
 $head Purpose$$
-We use $latex F : \R^n \rightarrow R^m$$ to denote the
+We use $latex F : B^n \rightarrow B^m$$ to denote the
 $xref/glossary/AD Function/AD function/$$ corresponding to $icode f$$.
 For a fixed $latex n \times q$$ matrix $latex R$$,
 the Jacobian of $latex F[ x + R * u ]$$
 with respect to $latex u$$ at $latex u = 0$$ is
 $latex \[
-	J(x) = F^{(1)} ( x ) * R
+	S(x) = F^{(1)} ( x ) * R
 \] $$
 Given a
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
 for $latex R$$,
-$code ForSparseJac$$ returns a sparsity pattern for the $latex J(x)$$.
+$code ForSparseJac$$ returns a sparsity pattern for the $latex S(x)$$.
 
 $head f$$
 The object $icode f$$ has prototype
@@ -56,54 +56,55 @@ $codei%
 	ADFun<%Base%> %f%
 %$$
 Note that the $xref/ADFun/$$ object $icode f$$ is not $code const$$.
-After this the sparsity pattern
+After a call to $code ForSparseJac$$, the sparsity pattern
 for each of the variables in the operation sequence
-is stored in the object $icode f$$.
+is held in $icode f$$ (for possible later use by $cref/RevSparseHes/$$).
 These sparsity patterns are stored with elements of type $code bool$$
 or elements of type $code std::set<size_t>$$
 (see $xref/ForSparseJac/VectorSet/VectorSet/$$ below).
  
 $subhead size_forward_bool$$
-After this operation, if $icode s$$ has is a $code size_t$$ object, 
+After $code ForSparseJac$$, if $icode k$$ is a $code size_t$$ object, 
 $codei%
-	%s% = %f%.size_forward_bool()
+	%k% = %f%.size_forward_bool()
 %$$
-will set $icode s$$ to the amount of memory (in unsigned character units)
-used to store the sparsity pattern with elements of type $code bool$$.
-If the sparsity patterns for this operation use elements of type $code bool$$,
+sets $icode k$$ to the amount of memory (in unsigned character units)
+used to store the sparsity pattern with elements of type $code bool$$
+in the function object $icode f$$.
+If the sparsity patterns for the previous $code ForSparseJac$$ used
+elements of type $code bool$$,
 the return value for $code size_forward_bool$$ will be non-zero.
 Otherwise, its return value will be zero.
-This sparsity pattern is stored for use by $cref/RevSparseHes/$$.
-When it is not longer needed, it can be deleted (and the corresponding memory
-freed) by the function call
-$code%
-	%f%size_forward_bool(0)
+This sparsity pattern is stored for use by $cref/RevSparseHes/$$ and
+when it is not longer needed, it can be deleted 
+(and the corresponding memory freed) using 
+$codei%
+	%f%.size_forward_bool(0)
 %$$
 After this call, $icode%f%.size_forward_bool()%$$ will return zero.
  
 $subhead size_forward_set$$
-After this operation, if $icode s$$ has is a $code size_t$$ object, 
+After $code ForSparseJac$$, if $icode k$$ is a $code size_t$$ object, 
 $codei%
-	%s% = %f%.size_forward_set()
+	%k% = %f%.size_forward_set()
 %$$
-will set $icode s$$ to the 
-total number of elements in all the sets corresponding
-to the sparsity pattern stored in $icode f$$.
+sets $icode s$$ to the total number of elements in all the sets corresponding
+to the sparsity pattern stored in the function object $icode f$$.
 If the sparsity patterns for this operation use elements of type $code bool$$,
 the return value for $code size_forward_set$$ will be zero.
 Otherwise, its return value will be non-zero
 (unless the entire sparsity pattern is false).
-This sparsity pattern is stored for use by $cref/RevSparseHes/$$.
-When it is not longer needed, it can be deleted (and the corresponding memory
-freed) by the function call
-$code%
-	%f%size_forward_set(0)
+This sparsity pattern is stored for use by $cref/RevSparseHes/$$ and
+when it is not longer needed, it can be deleted 
+(and the corresponding memory freed) using
+$codei%
+	%f%.size_forward_set(0)
 %$$
 After this call, $icode%f%.size_forward_set()%$$ will return zero.
 
 $head x$$
 the sparsity pattern is valid for all values of the independent 
-variables in $latex x \in \R^n$$
+variables in $latex x \in B^n$$
 (even if it has $cref/CondExp/$$ or $cref/VecAD/$$ operations).
 
 $head q$$
@@ -112,8 +113,8 @@ $codei%
 	size_t %q%
 %$$
 It specifies the number of columns in 
-$latex R \in \R^{n \times q}$$ and the Jacobian 
-$latex J(x) \in \R^{m \times q}$$. 
+$latex R \in B^{n \times q}$$ and the Jacobian 
+$latex S(x) \in B^{m \times q}$$. 
 
 $head r$$
 The argument $icode r$$ has prototype
@@ -125,7 +126,7 @@ If it has elements of type $code bool$$,
 its size is $latex n * q$$.
 If it has elements of type $code std::set<size_t>$$,
 its size is $latex n$$ and all the set elements must be between
-zero and $icode%q%-1%$$.
+zero and $icode%q%-1%$$ inclusive.
 It specifies a 
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
 for the matrix $icode R$$.
@@ -140,10 +141,10 @@ If it has elements of type $code bool$$,
 its size is $latex m * q$$.
 If it has elements of type $code std::set<size_t>$$,
 its size is $latex m$$ and all its set elements are between
-zero and $icode%q%-1%$$.
+zero and $icode%q%-1%$$ inclusive.
 It specifies a 
 $xref/glossary/Sparsity Pattern/sparsity pattern/$$ 
-for the matrix $latex J(x)$$.
+for the matrix $latex S(x)$$.
 
 $head VectorSet$$
 The type $icode VectorSet$$ must be a $xref/SimpleVector/$$ class with
@@ -157,7 +158,7 @@ Suppose that $latex q = n$$ and
 $latex R$$ is the $latex n \times n$$ identity matrix.
 In this case, 
 the corresponding value for $icode s$$ is a 
-sparsity pattern for the Jacobian $latex J(x) = F^{(1)} ( x )$$.
+sparsity pattern for the Jacobian $latex S(x) = F^{(1)} ( x )$$.
 
 $head Example$$
 $children%
@@ -208,7 +209,7 @@ corresponding to the operation sequence stored in \a play.
 The input value of the components of \c s does not matter.
 On output, \a s is the sparsity pattern for the matrix
 \f[
-	J(x) = F^{(1)} (x) * R
+	S(x) = F^{(1)} (x) * R
 \f]
 where \f$ F \f$ is the function corresponding to the operation sequence
 and \a x is any argument value.
@@ -337,7 +338,7 @@ corresponding to the operation sequence stored in \a play.
 On input, each element of \a s must be an empty set.
 On output, \a s is the sparsity pattern for the matrix
 \f[
-	J(x) = F^{(1)} (x) * R
+	S(x) = F^{(1)} (x) * R
 \f]
 where \f$ F \f$ is the function corresponding to the operation sequence
 and \a x is any argument value.
@@ -485,7 +486,7 @@ the return value \c s is a vector of sets with size \c m
 and with all its elements between zero and \a q - 1.
 The value of \a s is the sparsity pattern for the matrix
 \f[
-	J(x) = F^{(1)} (x) * R
+	S(x) = F^{(1)} (x) * R
 \f]
 where \f$ F \f$ is the function corresponding to the operation sequence
 and \a x is any argument value.

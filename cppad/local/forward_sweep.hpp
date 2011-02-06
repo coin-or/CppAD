@@ -3,7 +3,7 @@
 # define CPPAD_FORWARD_SWEEP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -127,7 +127,8 @@ size_t forward_sweep(
 # endif
 	const size_t   *arg = 0;
 
-	size_t            i;
+	// temporary indices
+	size_t i, ell;
 
 	// initialize the comparision operator (ComOp) counter
 	size_t compareCount = 0;
@@ -144,6 +145,20 @@ size_t forward_sweep(
 			VectorVar[i] = false;
 		}
 	}
+
+	// work space used by UserOp.
+	const size_t user_k  = d;    // order of this forward mode calculation
+	const size_t user_k1 = d+1;  // number of orders for this calculation
+	vector<Base> user_tx;        // argument vector Taylor coefficients 
+	vector<Base> user_ty;        // result vector Taylor coefficients 
+	size_t user_index = 0;       // indentifier for this user_atomic operation
+	size_t user_id    = 0;       // user identifier for this call to operator
+	size_t user_i     = 0;       // index in result vector
+	size_t user_j     = 0;       // index in argument vector
+	size_t user_m     = 0;       // size of result vector
+	size_t user_n     = 0;       // size of arugment vector
+	// next expected operator in a UserOp sequence
+	enum { user_start, user_arg, user_ret, user_end } user_state = user_start;
 
 	// check numvar argument
 	CPPAD_ASSERT_UNKNOWN( Rec->num_rec_var() == numvar );
@@ -519,6 +534,88 @@ size_t forward_sweep(
 			break;
 			// -------------------------------------------------
 
+			case UserOp:
+			// start or end an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );
+			CPPAD_ASSERT_UNKNOWN( NumArg( UserOp ) == 4 );
+			if( user_state == user_start )
+			{	user_index = arg[0];
+				user_id    = arg[1];
+				user_n     = arg[2];
+				user_m     = arg[3];
+				if(user_tx.size() < user_n * user_k1)
+					user_tx.resize(user_n * user_k1);
+				if(user_ty.size() < user_m * user_k1)
+					user_ty.resize(user_m * user_k1);
+				user_j     = 0;
+				user_i     = 0;
+				user_state = user_arg;
+			}
+			else
+			{	CPPAD_ASSERT_UNKNOWN( user_state == user_end );
+				CPPAD_ASSERT_UNKNOWN( user_index == arg[0] );
+				CPPAD_ASSERT_UNKNOWN( user_id    == arg[1] );
+				CPPAD_ASSERT_UNKNOWN( user_n     == arg[2] );
+				CPPAD_ASSERT_UNKNOWN( user_m     == arg[3] );
+				user_state = user_start;
+			}
+			break;
+
+			case UsrapOp:
+			// parameter argument in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
+			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			user_tx[user_j * user_k1 + 0] = parameter[ arg[0]];
+			for(ell = 1; ell < user_k1; ell++)
+				user_tx[user_j * user_k1 + ell] = Base(0);
+			++user_j;
+			if( user_j == user_n )
+			{	// call users function for this operation
+				user_atomic<Base>::forward(user_index, user_id,
+					user_k, user_n, user_m, user_tx, user_ty
+				);
+				user_state = user_ret;
+			}
+			break;
+
+			case UsravOp:
+			// variable argument in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
+			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
+			CPPAD_ASSERT_UNKNOWN( arg[0] <= i_var );
+			for(ell = 0; ell < user_k1; ell++)
+				user_tx[user_j * user_k1 + ell] = Taylor[ arg[0] * J + ell];
+			++user_j;
+			if( user_j == user_n )
+			{	// call users function for this operation
+				user_atomic<Base>::forward(user_index, user_id,
+					user_k, user_n, user_m, user_tx, user_ty
+				);
+				user_state = user_ret;
+			}
+			break;
+
+			case UsrrpOp:
+			// parameter result in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
+			user_i++;
+			if( user_i == user_m )
+				user_state = user_end;
+			break;
+
+			case UsrrvOp:
+			// variable result in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
+			Taylor[i_var * J + user_k] = user_ty[user_i * user_k1 + user_k];
+			++user_i;
+			if( user_i == user_m )
+				user_state = user_end;
+			break;
+			// -------------------------------------------------
+
 			default:
 			CPPAD_ASSERT_UNKNOWN(0);
 		}
@@ -541,6 +638,7 @@ size_t forward_sweep(
 # else
 	}
 # endif
+	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
 	CPPAD_ASSERT_UNKNOWN( i_var + 1 == Rec->num_rec_var() );
 
 	if( VectorInd != CPPAD_NULL )

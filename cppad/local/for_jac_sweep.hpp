@@ -2,7 +2,7 @@
 # ifndef CPPAD_FOR_JAC_SWEEP_INCLUDED
 # define CPPAD_FOR_JAC_SWEEP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,6 +11,7 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <set>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -74,7 +75,6 @@ corresponds to the set with index i in \a var_sparsity.
 \li numvar == play->num_rec_var()
 */
 
-
 template <class Base, class Vector_set>
 void ForJacSweep(
 	size_t                n            ,
@@ -126,6 +126,22 @@ void ForJacSweep(
 		}
 		CPPAD_ASSERT_UNKNOWN( j == play->num_rec_vecad_ind() );
 	}
+
+	// work space used by UserOp.
+	typedef std::set<size_t> size_set;
+	const size_t user_q = limit; // maximum element plus one
+	size_set::iterator set_itr;  // iterator for a standard set
+	size_set::iterator set_end;  // end of iterator sequence
+	vector< size_set > user_r;   // sparsity pattern for the argument x
+	vector< size_set > user_s;   // sparisty pattern for the result y
+	size_t user_index = 0;       // indentifier for this user_atomic operation
+	size_t user_id    = 0;       // user identifier for this call to operator
+	size_t user_i     = 0;       // index in result vector
+	size_t user_j     = 0;       // index in argument vector
+	size_t user_m     = 0;       // size of result vector
+	size_t user_n     = 0;       // size of arugment vector
+	// next expected operator in a UserOp sequence
+	enum { user_start, user_arg, user_ret, user_end } user_state = user_start;
 
 # if CPPAD_FOR_JAC_SWEEP_TRACE
 	std::cout << std::endl;
@@ -469,6 +485,98 @@ void ForJacSweep(
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
 			);
+			break;
+			// -------------------------------------------------
+
+			case UserOp:
+			// start or end an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );
+			CPPAD_ASSERT_UNKNOWN( NumArg( UserOp ) == 4 );
+			if( user_state == user_start )
+			{	user_index = arg[0];
+				user_id    = arg[1];
+				user_n     = arg[2];
+				user_m     = arg[3];
+				if(user_r.size() < user_n )
+					user_r.resize(user_n);
+				if(user_s.size() < user_m )
+					user_s.resize(user_m);
+				user_j     = 0;
+				user_i     = 0;
+				user_state = user_arg;
+			}
+			else
+			{	CPPAD_ASSERT_UNKNOWN( user_state == user_end );
+				CPPAD_ASSERT_UNKNOWN( user_index == arg[0] );
+				CPPAD_ASSERT_UNKNOWN( user_id    == arg[1] );
+				CPPAD_ASSERT_UNKNOWN( user_n     == arg[2] );
+				CPPAD_ASSERT_UNKNOWN( user_m     == arg[3] );
+				user_state = user_start;
+			}
+			break;
+
+			case UsrapOp:
+			// parameter argument in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
+			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
+			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			// parameters have an empty sparsity pattern
+			user_r[user_j].clear();
+			++user_j;
+			if( user_j == user_n )
+			{	// call users function for this operation
+				user_atomic<Base>::for_jac_sparse(user_index, user_id,
+					user_n, user_m, user_q, user_r, user_s
+				);
+				user_state = user_ret;
+			}
+			break;
+
+			case UsravOp:
+			// variable argument in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
+			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
+			CPPAD_ASSERT_UNKNOWN( arg[0] <= i_var );
+			// set user_r[user_j] to sparsity pattern for variable arg[0]
+			user_r[user_j].clear();
+			var_sparsity.begin(arg[0]);
+			i = var_sparsity.next_element();
+			while( i < user_q )
+			{	user_r[user_j].insert(i);
+				i = var_sparsity.next_element();
+			}
+			++user_j;
+			if( user_j == user_n )
+			{	// call users function for this operation
+				user_atomic<Base>::for_jac_sparse(user_index, user_id,
+					user_n, user_m, user_q, user_r, user_s
+				);
+				user_state = user_ret;
+			}
+			break;
+
+			case UsrrpOp:
+			// parameter result in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
+			user_i++;
+			if( user_i == user_m )
+				user_state = user_end;
+			break;
+
+			case UsrrvOp:
+			// variable result in an atomic operation sequence
+			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
+			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
+			// It might be faster if we add set union to var_sparsity
+			// where one of the sets is not in var_sparsity
+			set_itr = user_s[user_i].begin();
+			set_end = user_s[user_i].end();
+			while( set_itr != set_end )
+				var_sparsity.add_element(i_var, *set_itr++);
+			user_i++;
+			if( user_i == user_m )
+				user_state = user_end;
 			break;
 			// -------------------------------------------------
 

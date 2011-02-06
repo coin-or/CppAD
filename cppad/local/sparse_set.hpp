@@ -107,7 +107,10 @@ public:
 	\li element  < end_
 	*/
 	void add_element(size_t index, size_t element)
-	{
+	{	// This routine should use the std::insert operator
+		// that cashes the iterator of previous insertion for when
+		// insertions occur in order. We should speed test that this
+		// actually makes things faster.
 		CPPAD_ASSERT_UNKNOWN( index   < n_set_ );
 		CPPAD_ASSERT_UNKNOWN( element < end_ );
 		data_[ index ].insert( element );

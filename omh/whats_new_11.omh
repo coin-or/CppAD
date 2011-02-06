@@ -35,6 +35,17 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-06$$
+The documentation for $cref/RevSparseHes/$$ had a dimension error.
+This has been fixed.
+
+$head 02-02$$
+The documentation for $cref/ForSparseJac/$$ had some formatting errors.
+The errors have been fix and the documentation has been improved.
+
+$head 02-01$$
+The $cref/subversion/$$ install instructions were brought up to date.
+
 $head 01-19$$
 The directory where the $cref pkgconfig$$ file $code cppad.pc$$ 
 is stored has been moved from 
