@@ -20,7 +20,7 @@ during
 	bin/commit.sh edit 
 for example this entire paragraph is preserved.
 
-bin/commit.sh@ For this example, bin/commit.sh is the only file committed.
+dir/file.ext@ optional comment about this file.
 EOF
 # -----------------------------------------------------------------------------
 if [ $0 != "bin/commit.sh" ]
@@ -109,6 +109,7 @@ then
 	if [ "$abort" == "yes" ]
 	then
 		echo "bin/commit.sh: aborting because of suggested changes above."
+		echo "The script bin/edit_commit.sh can make these changes."
 		rm bin/commit.1.$$
 		exit 1
 	fi
