@@ -212,16 +212,6 @@ $index sequence, operation tracing$$
 $index tracing, operation sequence$$
 Add operation sequence tracing to the user API and documentation.
 
-$head User Defined Atomic Operations$$
-$index atomic, user defined operation$$
-$index user, defined atomic operation$$
-$index operation, atomic user defined$$
-Provide an interface,
-similar to the $cref/Discrete/$$ functions,
-whereby a user could define
-$cref/atomic/glossary/Operation/Atomic/$$
-operations that have derivatives computed by the users code.
-
 $head VecAD$$
 $index VecAD, improve assignment$$
 Make assignment operation in $cref/VecAD/$$ like

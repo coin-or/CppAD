@@ -36,8 +36,19 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 02-06$$
+$list number$$
+The use can now define complex $cref/atomic/user_atomic/$$ operations
+and store them in a CppAD $cref/ADFun/$$ object.
+This item has been remove from the
+$cref/wish list/WishList/$$.
+$lnext
 The documentation for $cref/RevSparseHes/$$ had a dimension error.
 This has been fixed.
+$lnext
+A $cref/faster set operations/
+	WishList/Sparsity Patterns/Faster Set Operations/$$
+item has been added to the wish list.
+$lend
 
 $head 02-02$$
 The documentation for $cref/ForSparseJac/$$ had some formatting errors.
