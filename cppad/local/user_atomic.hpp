@@ -36,14 +36,15 @@ $spell
 $$
 
 $section User Defined Atomic AD Functions$$
-
 $index atomic, user function$$
 $index user, atomic function$$
 $index operation, user atomic$$
 $index function, user atomic$$
 
 $head Syntax$$
-$codei%CPPAD_USER_ATOMIC(%Tvector%, %Base%, %afun%, %forward%, %reverse%)
+$codei%CPPAD_USER_ATOMIC(%afun%, %Tvector%, %Base%, 
+	%forward%, %reverse%, %for_jac_sparse%, %rev_jac_sparse%, %rev_hes_sparse%
+)
 %$$
 $icode%afun%(%id%, %ax%, %ay%)
 %$$
@@ -61,28 +62,28 @@ $codei%user_atomic<%Base%>::clear()%$$
 
 $head Purpose$$
 In some cases, the user knows how to compute the derivative
-of a function $latex y = f(x)$$ where
+of a function 
 $latex \[
-	f : B^n \rightarrow B^m 
+	y = f(x) \; {\rm where} \; f : B^n \rightarrow B^m 
 \] $$
 more efficiently than by coding it $codei%AD<%Base%>%$$ 
 $cref/atomic/glossary/Operation/Atomic/$$ operations
 and letting CppAD do the calculations.
 In this case, $code CPPAD_USER_ATOMIC$$ can be used
-make add the user code for $latex f(x)$$ and its derivatives
+make add the user code for $latex f(x)$$, and its derivatives,
 to the set of $codei%AD<%Base%>%$$ atomic operations. 
 
 $head Partial Implementation$$
 The routines 
-$icode forward$$,
-$icode reverse$$,
-$icode for_jac_spares$$ 
-$icode rev_jac_sparse$$, and
-$icode rev_hes_sparse$$,
+$cref/forward/user_atomic/forward/$$,
+$cref/reverse/user_atomic/reverse/$$,
+$cref/for_jac_sparse/user_atomic/for_jac_sparse/$$,
+$cref/rev_jac_sparse/user_atomic/rev_jac_sparse/$$, and
+$cref/rev_hes_sparse/user_atomic/rev_hes_sparse/$$,
 must be defined by the user.
-For $icode forward$$, the case $icode k = 0$$ must be implemented.
+For $icode forward$$, the case $icode%k%= 0%$$ must be implemented.
 Functions with the correct prototype,
-and that just return $icode false$$, 
+that just return $icode false$$, 
 can be used for the other cases 
 (unless they are required by your calculations). 
 For example, you need not implement
@@ -91,9 +92,11 @@ forward mode calculation of second derivatives.
 
 $head CPPAD_USER_ATOMIC$$
 $index CPPAD_USER_ATOMIC$$
-The macro invocation
+The macro 
 $codei%
-	CPPAD_USER_ATOMIC(%Tvector%, %Base%, %afun%, %forward%, %reverse%)
+CPPAD_USER_ATOMIC(%afun%, %Tvector%, %Base%, 
+	%forward%, %reverse%, %for_jac_sparse%, %rev_jac_sparse%, %rev_hes_sparse%
+)
 %$$ 
 defines the $codei%AD<%Base%>%$$ version of $icode afun$$.
 This macro can be placed within a namespace 
@@ -108,8 +111,9 @@ $subhead Base$$
 The macro argument $icode Base$$ is the 
 $cref/base type/base_require/$$
 corresponding to the operations sequence;
-i.e., we are adding $icode afun$$, 
-with arguments and results of type $codei%AD<%Base%>%$$,
+we defining the function $icode afun$$, 
+with arguments and results that are vectors with 
+elements of type $codei%AD<%Base%>%$$,
 to the list of available atomic operations.
 
 $head ok$$
@@ -127,9 +131,10 @@ the argument $icode id$$ has prototype
 $codei%
 	size_t %id%
 %$$
-It can be used to identify a call,
-or properties of a call,
-the routine $icode afun$$.
+Its value in all the other calls is the same as in the corresponding
+call to $icode afun$$; i.e., it can be used to identify 
+extra (non $codei%AD%<Base>%$$) inputs 
+for a call to $icode afun$$ that are not in the vector $icode ax$$.
 
 $head k$$
 For all routines documented below, the argument $icode k$$ has prototype
@@ -146,7 +151,7 @@ $codei%
 	size_t %n%
 %$$
 It is the size of the vector $icode ax$$ in the corresponding call to
-$icode%afun%(%ax%, %ay%)%$$.
+$icode%afun%(%id%, %ax%, %ay%)%$$.
 
 $head m$$
 For all routines documented below, the argument $icode m$$ has prototype
@@ -154,7 +159,7 @@ $codei%
 	size_t %m%
 %$$
 It is the size of the vector $icode ay$$ in the corresponding call to
-$icode%afun%(%ax%, %ay%)%$$.
+$icode%afun%(%id%, %ax%, %ay%)%$$.
 
 $head tx$$
 For all routines documented below, 
@@ -181,8 +186,7 @@ the argument $icode ty$$ has prototype
 $codei%
 	CppAD::vector<%Base%>& %ty%
 %$$
-while during $cref/reverse mode/user_atomic/reverse/$$
-it has prototype
+but during $cref/reverse mode/user_atomic/reverse/$$ it has prototype
 $codei%
 	const CppAD::vector<%Base%>& %ty%
 %$$
@@ -202,9 +206,9 @@ $head afun$$
 The macro argument $icode afun$$,
 is the name of the AD function corresponding to this atomic
 operation (as it is used in the source code).
-CppAD uses the functions $icode forward$$ and $icode reverse$$,
+CppAD uses the other functions,
 where the arguments are vectors with elements of type $icode Base$$,
-to create the function call
+to create the function 
 $codei%
 	%afun%(%id%, %ax%, %ay%)
 %$$
@@ -217,8 +221,8 @@ $codei%
 %$$
 It is the argument value at which the $codei%AD<%Base%>%$$ version of 
 $latex y = f(x)$$ is to be evaluated.
-The size of this vector,
-(the dimension of the domain space for $latex f$$)
+The size of this vector; i.e.,
+the dimension of the domain space for $latex f$$,
 may depend on the call to $icode afun$$.
 
 $subhead ay$$
@@ -228,8 +232,8 @@ $codei%
 %$$
 It is the result of the evaluation of the $codei%AD<%Base%>%$$ version of 
 $latex y = f(x)$$.
-The size of this vector,
-(the dimension of the range space for $latex f$$)
+The size of this vector; i.e.,
+the dimension of the range space for $latex f$$,
 may depend on the call to $icode afun$$.
 
 $head forward$$
@@ -264,14 +268,10 @@ $codei%
 %$$
 If $icode%vx%.size() == 0%$$, it should not be used.
 Otherwise, 
-$icode%k% == 0%$$, 
-$icode%vx%.size() >= %n%$$, 
-$icode%vy%.size() >= %n%$$, 
-and
+$icode%k% == 0%$$, $icode%vx%.size() >= %n%$$, and
 for $latex j = 0 , \ldots , n-1$$,
-If the value of $icode%ax%[%j%]%$$ may depend on the current 
-$cref/Independent/$$ variables (it is a variable),
-$icode%vx%[%j%]%$$ is true.
+$icode%vx%[%j%]%$$ is true if and only if
+$icode%ax%[%j%]%$$ is a $cref/variable/glossary/Variable/$$.
 
 $subhead vy$$
 The $icode forward$$ argument $icode vy$$ has prototype
@@ -280,16 +280,12 @@ $codei%
 %$$
 If $icode%vy%.size() == 0%$$, it should not be used.
 Otherwise, 
-$icode%k% == 0%$$, 
-$icode%vx%.size() >= %n%$$, 
-$icode%vy%.size() >= %m%$$, 
-and
-the input value of the elements of $icode vy$$ does not matter.
-For $latex j = 0 , \ldots , m-1$$,
-if the value of $icode%ay%[%j%]%$$ may depend on the current 
-$cref/Independent/$$ variables (it is a variable),
-$icode%vy%[%j%]%$$ is true
-(the fewer true components the more efficiently derivatives will be computed).
+$icode%k% == 0%$$ and $icode%vy%.size() >= %m%$$.
+The input value of the elements of $icode vy$$ does not matter.
+Upon return, for $latex j = 0 , \ldots , m-1$$,
+$icode%vy%[%i%]%$$ is true if and only if
+$icode%ay%[%j%]%$$ is a variable
+(CppAD uses this information to reduce the necessary computations).
 
 $head reverse$$
 The macro argument $icode reverse$$
@@ -297,7 +293,7 @@ is a user defined function
 $codei%
 	%ok% = %reverse%(%id%, %k%, %n%, %m%, %tx%, %ty%, %px%, %py%)
 %$$
-that is used to compute results during a $cref/reverse/Reverse/$$ mode sweep. 
+that computes results during a $cref/reverse/Reverse/$$ mode sweep. 
 The input value of the vectors $icode tx$$ and $icode ty$$
 contain Taylor coefficient up to order $icode k$$.
 We use
@@ -342,7 +338,7 @@ $latex \[
 	px [ i * (k + 1) + k ] & = & \partial h / \partial x_j^\ell
 	\\
 	& = & 
-	( \partial g / \partial y^\ell ) ( \partial y / \partial x_j^\ell )
+	( \partial g / \partial y ) ( \partial y / \partial x_j^\ell )
 \end{array}
 \] $$
 i.e., the partial derivative of a scalar valued function $latex h$$
@@ -356,7 +352,7 @@ is a user defined function
 $codei%
 	%ok% = %for_jac_sparse%(%id%, %n%, %m%, %q%, %r%, %s%)
 %$$
-that is used to compute results during a $cref/ForSparseJac/$$ sweep.
+that is used to compute results during a forward Jacobian sparsity sweep.
 For a fixed $latex n \times q$$ matrix $latex R$$,
 the Jacobian of $latex f( x + R * u)$$ with respect to $latex u \in B^q$$ is
 $latex \[
@@ -404,7 +400,7 @@ is a user defined function
 $codei%
 	%ok% = %rev_jac_sparse%(%id%, %n%, %m%, %q%, %r%, %s%)
 %$$
-that is used to compute results during a $cref/RevSparseJac/$$ sweep.
+that is used to compute results during a reverse Jacobian sparsity sweep.
 For a fixed $latex q \times m$$ matrix $latex S$$,
 the Jacobian of $latex S * f( x )$$ with respect to $latex x \in B^n$$ is
 $latex \[
@@ -425,7 +421,7 @@ $codei%
 %$$
 It specifies the number of rows in 
 $latex S \in B^{q \times m}$$ and the Jacobian 
-$latex R(x) \in B^{q \times m}$$. 
+$latex R(x) \in B^{q \times n}$$. 
 
 $subhead s$$
 The $icode rev_jac_sparse$$ argument $icode s$$ has prototype
@@ -435,7 +431,7 @@ $codei%
 Its size is $icode m$$ and all the set elements are between
 zero and $icode%q%-1%$$ inclusive.
 It specifies a sparsity pattern
-for the matrix $icode S$$.
+for the matrix $icode S^\T$$.
 
 $head r$$
 The $icode rev_jac_sparse$$ return value $icode r$$ has prototype
@@ -446,7 +442,7 @@ and its size is $icode n$$.
 The input values of its sets do not matter,
 upon return all of its set elements are between
 zero and $icode%q%-1%$$ inclusive and
-it specifies a sparsity pattern for the matrix $latex R(x)$$.
+it specifies a sparsity pattern for the matrix $latex R(x)^\T$$.
 
 $head rev_hes_sparse$$
 The macro argument $icode rev_hes_sparse$$
@@ -479,7 +475,7 @@ $codei%
 Its size is $icode n$$ and all the set elements are between
 zero and $icode%q%-1%$$ inclusive.
 It specifies a sparsity pattern for the matrix 
-$icode R \in B^{n \times q}$$.
+$latex R \in B^{n \times q}$$.
 
 $subhead s$$
 The $icode rev_hes_sparse$$ argument $icode s$$ has prototype
@@ -532,7 +528,7 @@ The input value of its elements does not matter.
 Upon return,
 all the set elements are between zero and $icode%q%-1%$$ inclusive
 and it is a sparsity pattern
-for the matrix $icode U(x)$$ defined by
+for the matrix $icode V(x)$$ defined by
 $latex \[
 \begin{array}{rcl}
 V(x) 
@@ -580,8 +576,8 @@ user defined atomic operations.
 \def CPPAD_USER_ATOMIC(afun, Tvector, 
 	forward, reverse, for_jac_sparse, rev_jac_sparse, rev_hes_sparse 
 )
-Defines the function <tt>afun(ax, ay)</tt>  
-where \c ax and \c ay are vectors with <tt>AD<Base></tt> elements.
+Defines the function <tt>afun(id, ax, ay)</tt>  
+where \c id is \c ax and \c ay are vectors with <tt>AD<Base></tt> elements.
 
 \par Tvector
 the Simple Vector template class for this function.

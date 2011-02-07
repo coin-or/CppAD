@@ -27,10 +27,12 @@ $end
 // BEGIN PROGRAM
 # include <cppad/cppad.hpp>
 
+// Define matrix multply an an atomic AD<double> operation
 namespace { // Empty namespace 
-
 	using CppAD::vector;
 
+	// ------------------- Static Variables ------------------------------
+	// Information we will attach to each matrix multiply call
 	struct matrix_size {
 		size_t nr_result;
 		size_t n_middle;
@@ -47,6 +49,7 @@ namespace { // Empty namespace
 	// number of columns in the result matrix
 	size_t nc_result_;
 
+	// -------------- Helper Functions -----------------------------------
 	// index in tx of Taylor coefficient of order ell for left[i,j]
 	size_t left(size_t i, size_t j, size_t ell)
 	{	assert( i < nr_result_ );
@@ -134,6 +137,7 @@ namespace { // Empty namespace
 		result.swap(temp);
 	}
 
+	// ----------------------------------------------------------------------
 	// forward mode routine called by CppAD
 	bool forward_mat_mul(
 		size_t                   id ,
@@ -194,6 +198,7 @@ namespace { // Empty namespace
 		return true;
 	}
 
+	// ----------------------------------------------------------------------
 	// reverse mode routine called by CppAD
 	bool reverse_mat_mul(
 		size_t                   id ,
@@ -230,6 +235,7 @@ namespace { // Empty namespace
 		return true;
 	}
 
+	// ----------------------------------------------------------------------
 	// forward Jacobian sparsity routine called by CppAD
 	bool for_jac_sparse_mat_mul(
 		size_t                               id ,             
@@ -265,6 +271,7 @@ namespace { // Empty namespace
 		return true;
 	}
 
+	// ----------------------------------------------------------------------
 	// reverse Jacobian sparsity routine called by CppAD
 	bool rev_jac_sparse_mat_mul(
 		size_t                               id ,             
@@ -302,6 +309,7 @@ namespace { // Empty namespace
 		return true;
 	}
 
+	// ----------------------------------------------------------------------
 	// reverse Hessian sparsity routine called by CppAD
 	bool rev_hes_sparse_mat_mul(
 		size_t                               id ,             
@@ -357,7 +365,8 @@ namespace { // Empty namespace
 		return true;
 	}
 
-	// declare the AD<double> routine mat_mul(id, ax, ay)
+	// ----------------------------------------------------------------------
+	// Declare the AD<double> routine mat_mul(id, ax, ay)
 	CPPAD_USER_ATOMIC(
 		mat_mul                 , 
 		CPPAD_TEST_VECTOR       ,
@@ -371,16 +380,18 @@ namespace { // Empty namespace
 
 } // End empty namespace
 
+// ---------------------------------------------------------------------------
+// Test the above implementation
 bool user_atomic(void)
 {	bool ok = true;
 	using CppAD::AD;
 
-	// matrix sizes for this multiplication
+	// matrix sizes for this test
 	size_t nr_result = 2;
 	size_t n_middle  = 2;
 	size_t nc_result = 2;
 	
-	// ax and ay must use CppAD::vector
+	// declare the AD<double> vectors ax and ay and X 
 	size_t n = nr_result * n_middle + n_middle * nc_result;
 	size_t m = nr_result * nc_result;
 	CPPAD_TEST_VECTOR< AD<double> > X(4), ax(n), ay(m);
@@ -388,6 +399,7 @@ bool user_atomic(void)
 	for(j = 0; j < X.size(); j++)
 		X[j] = (j + 1);
 
+	// X is the vector of independent variables
 	CppAD::Independent(X);
 	// left matrix
 	ax[0]  = X[0];  // left[0,0]   = x[0] = 1
