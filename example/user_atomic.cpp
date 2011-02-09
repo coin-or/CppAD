@@ -33,23 +33,37 @@ namespace { // Empty namespace
 
 	// ------------------- Static Variables ------------------------------
 	// Information we will attach to each matrix multiply call
-	struct matrix_size {
+	struct call_info {
 		size_t nr_result;
 		size_t n_middle;
 		size_t nc_result;
+		vector<bool>  vx;
 	};
-	vector<matrix_size> info_;
+	vector<call_info> info_;
 
 	// number of orders for this operation (k + 1)
-	size_t n_order_;
+	size_t n_order_ = 0;
 	// number of rows in the result matrix
-	size_t nr_result_;
+	size_t nr_result_ = 0;
 	// number of columns in left matrix and number of rows in right matrix
-	size_t n_middle_;
+	size_t n_middle_ = 0;
 	// number of columns in the result matrix
-	size_t nc_result_;
+	size_t nc_result_ = 0;
+	// which components of x are variables
+	vector<bool>* vx_ = 0;
 
 	// -------------- Helper Functions -----------------------------------
+	// get the information corresponding to this call
+	void get_info(size_t id, size_t k, size_t n, size_t m)
+	{	n_order_   = k + 1;	
+		nr_result_ = info_[id].nr_result; 
+		n_middle_  = info_[id].n_middle;
+		nc_result_ = info_[id].nc_result;
+		vx_        = &(info_[id].vx);
+
+		assert(n == nr_result_ * n_middle_ + n_middle_ * nc_result_);
+		assert(m ==  nr_result_ * nc_result_);
+	}
 	// index in tx of Taylor coefficient of order ell for left[i,j]
 	size_t left(size_t i, size_t j, size_t ell)
 	{	assert( i < nr_result_ );
@@ -139,7 +153,7 @@ namespace { // Empty namespace
 
 	// ----------------------------------------------------------------------
 	// forward mode routine called by CppAD
-	bool forward_mat_mul(
+	bool mat_mul_forward(
 		size_t                   id ,
 		size_t                    k ,
 		size_t                    n ,
@@ -150,19 +164,20 @@ namespace { // Empty namespace
 		vector<double>&          ty
 	)
 	{	size_t i, j, ell;
-		n_order_   = k + 1;	
-		nr_result_ = info_[id].nr_result; 
-		n_middle_  = info_[id].n_middle;
-		nc_result_ = info_[id].nc_result;
+		get_info(id, k, n, m);
 
-		// check total number of components in ax and ay
-		assert( nr_result_ * n_middle_ + n_middle_ * nc_result_  == n );
-		assert( nr_result_ * nc_result_ == m );
-
-		// check if we are computing vy
-		if( vy.size() > 0 )
+		// check if this is during the call to mat_mul(id, ax, ay)
+		if( vx.size() > 0 )
 		{	assert( k == 0 && vx.size() > 0 );
-			// multiply left times right
+
+			// store the vx information in info_
+			assert( vx_->size() == 0 );
+			info_[id].vx.resize(n);
+			for(j = 0; j < n; j++)
+				info_[id].vx[j] = vx[j];
+			assert( vx_->size() == n );
+			
+			// now compute vy
 			for(i = 0; i < nr_result_; i++)
 			{	for(j = 0; j < nc_result_; j++)
 				{	// compute vy[ result(i, j, 0) ]
@@ -200,7 +215,7 @@ namespace { // Empty namespace
 
 	// ----------------------------------------------------------------------
 	// reverse mode routine called by CppAD
-	bool reverse_mat_mul(
+	bool mat_mul_reverse(
 		size_t                   id ,
 		size_t                    k ,
 		size_t                    n ,
@@ -210,14 +225,7 @@ namespace { // Empty namespace
 		vector<double>&          px ,
 		const vector<double>&    py
 	)
-	{	n_order_   = k + 1;	
-		nr_result_ = info_[id].nr_result; 
-		n_middle_  = info_[id].n_middle;
-		nc_result_ = info_[id].nc_result;
-
-		// check total number of components in ax and ay
-		assert( nr_result_ * n_middle_ + n_middle_ * nc_result_  == n );
-		assert( nr_result_ * nc_result_ == m );
+	{	get_info(id, k, n, m);
 
 		size_t ell = n * n_order_;
 		while(ell--)
@@ -237,28 +245,24 @@ namespace { // Empty namespace
 
 	// ----------------------------------------------------------------------
 	// forward Jacobian sparsity routine called by CppAD
-	bool for_jac_sparse_mat_mul(
+	bool mat_mul_for_jac_sparse(
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                q ,
 		const vector< std::set<size_t> >&     r ,
 		vector< std::set<size_t> >&           s )
-	{	size_t i, j, im_left, middle, mj_right, ij_result, order;
+	{	size_t i, j, k, im_left, middle, mj_right, ij_result;
+		k = 0;
+		get_info(id, k, n, m);
 	
-		n_order_   = 1;
-		nr_result_ = info_[id].nr_result; 
-		n_middle_  = info_[id].n_middle;
-		nc_result_ = info_[id].nc_result;
-
-		order = 0;
 		for(i = 0; i < nr_result_; i++)
 		{	for(j = 0; j < nc_result_; j++)
-			{	ij_result = result(i, j, order);
+			{	ij_result = result(i, j, k);
 				s[ij_result].clear();
 				for(middle = 0; middle < n_middle_; middle++)
-				{	im_left   = left(i, middle, order);
-					mj_right  = right(middle, j, order);
+				{	im_left   = left(i, middle, k);
+					mj_right  = right(middle, j, k);
 
 					// s[ij_result] = union( s[ij_result], r[im_left] )
 					my_union(s[ij_result], s[ij_result], r[im_left]);
@@ -273,30 +277,26 @@ namespace { // Empty namespace
 
 	// ----------------------------------------------------------------------
 	// reverse Jacobian sparsity routine called by CppAD
-	bool rev_jac_sparse_mat_mul(
+	bool mat_mul_rev_jac_sparse(
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
 		size_t                                q ,
 		vector< std::set<size_t> >&           r ,
 		const vector< std::set<size_t> >&     s )
-	{	size_t i, j, im_left, middle, mj_right, ij_result, order;
+	{	size_t i, j, k, im_left, middle, mj_right, ij_result;
+		k = 0;
+		get_info(id, k, n, m);
 	
-		n_order_   = 1;
-		nr_result_ = info_[id].nr_result; 
-		n_middle_  = info_[id].n_middle;
-		nc_result_ = info_[id].nc_result;
-
 		for(j = 0; j < n; j++)
 			r[j].clear();
 
-		order = 0;
 		for(i = 0; i < nr_result_; i++)
 		{	for(j = 0; j < nc_result_; j++)
-			{	ij_result = result(i, j, order);
+			{	ij_result = result(i, j, k);
 				for(middle = 0; middle < n_middle_; middle++)
-				{	im_left   = left(i, middle, order);
-					mj_right  = right(middle, j, order);
+				{	im_left   = left(i, middle, k);
+					mj_right  = right(middle, j, k);
 
 					// r[im_left] = union( r[im_left], s[ij_result] )
 					my_union(r[im_left], r[im_left], s[ij_result]);
@@ -311,7 +311,7 @@ namespace { // Empty namespace
 
 	// ----------------------------------------------------------------------
 	// reverse Hessian sparsity routine called by CppAD
-	bool rev_hes_sparse_mat_mul(
+	bool mat_mul_rev_hes_sparse(
 		size_t                               id ,             
 		size_t                                n ,
 		size_t                                m ,
@@ -321,39 +321,37 @@ namespace { // Empty namespace
 		vector<bool>&                         t ,
 		const vector< std::set<size_t> >&     u ,
 		vector< std::set<size_t> >&           v )
-	{	size_t i, j, im_left, middle, mj_right, ij_result, order;
+	{	size_t i, j, k, im_left, middle, mj_right, ij_result;
+		k = 0;
+		get_info(id, k, n, m);
 	
-		n_order_   = 1;
-		nr_result_ = info_[id].nr_result; 
-		n_middle_  = info_[id].n_middle;
-		nc_result_ = info_[id].nc_result;
-
 		for(j = 0; j < n; j++)
 		{	t[j] = false;	
 			v[j].clear();
 		}
 
-		order = 0;
+		assert( vx_->size() == n );
 		for(i = 0; i < nr_result_; i++)
 		{	for(j = 0; j < nc_result_; j++)
-			{	ij_result = result(i, j, order);
+			{	ij_result = result(i, j, k);
 				for(middle = 0; middle < n_middle_; middle++)
-				{	im_left   = left(i, middle, order);
-					mj_right  = right(middle, j, order);
+				{	im_left   = left(i, middle, k);
+					mj_right  = right(middle, j, k);
 
 					// back propogate Jacobian sparsity
 					t[im_left]   |= s[ij_result];
 					t[mj_right]  |= s[ij_result];
 
 					// back propotate Hessian sparsity 
-					// v[im_left] = union( v[im_left], u[ij_result] )
-					my_union(v[im_left], v[im_left], u[ij_result]);
+					// v[im_left]  = union( v[im_left],  u[ij_result] )
 					// v[mj_right] = union( v[mj_right], u[ij_result] )
+					my_union(v[im_left],  v[im_left],  u[ij_result] );
 					my_union(v[mj_right], v[mj_right], u[ij_result] );
 
-					// Check for reverse Jacobian times non-zero
-					// forward Jacobian (giving a Hessian result)
-					if( s[ij_result] )
+					// Check for case where the (i,j) result element
+					// is in reverse Jacobian and both left and right
+					// operands in multiplication are variables 
+					if(s[ij_result] & (*vx_)[im_left] & (*vx_)[mj_right])
 					{	// v[im_left] = union( v[im_left], r[mj_right] )
 						my_union(v[im_left], v[im_left], r[mj_right] );
 						// v[mj_right] = union( v[mj_right], r[im_left] )
@@ -371,11 +369,11 @@ namespace { // Empty namespace
 		mat_mul                 , 
 		CPPAD_TEST_VECTOR       ,
 		double                  , 
-		forward_mat_mul         , 
-		reverse_mat_mul         ,
-		for_jac_sparse_mat_mul  ,
-		rev_jac_sparse_mat_mul  ,
-		rev_hes_sparse_mat_mul  
+		mat_mul_forward         , 
+		mat_mul_reverse         ,
+		mat_mul_for_jac_sparse  ,
+		mat_mul_rev_jac_sparse  ,
+		mat_mul_rev_hes_sparse  
 	)
 
 } // End empty namespace
@@ -416,14 +414,16 @@ bool user_atomic(void)
 	[ 5  , 6 ]    [ x3 , 8 ]   [ 5*x2  + 6*x3  , 5*7 + 6*8 ]
 	*/
 
-	// This routine has to know the dimensions of the matrices.
+	// The call back routines need to know the dimensions of the matrices.
 	// Store information about the matrix multiply for this call to mat_mul.
-	matrix_size sizes;
-	sizes.nr_result = nr_result;
-	sizes.n_middle  = n_middle;
-	sizes.nc_result = nc_result;
-	size_t id       = info_.size();
-	info_.push_back(sizes);
+	call_info info;
+	info.nr_result = nr_result;
+	info.n_middle  = n_middle;
+	info.nc_result = nc_result;
+	// info.vx gets set by forward during call to mat_mul below
+	assert( info.vx.size() == 0 ); 
+	size_t id      = info_.size();
+	info_.push_back(info);
 
 	// user defined AD<double> version of matrix multiply
 	mat_mul(id, ax, ay);
