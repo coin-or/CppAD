@@ -42,12 +42,18 @@ $index operation, user atomic$$
 $index function, user atomic$$
 
 $head Syntax$$
+
+$subhead Define Function$$
 $codei%CPPAD_USER_ATOMIC(%afun%, %Tvector%, %Base%, 
 	%forward%, %reverse%, %for_jac_sparse%, %rev_jac_sparse%, %rev_hes_sparse%
 )
 %$$
+
+$subhead Use Function$$
 $icode%afun%(%id%, %ax%, %ay%)
 %$$
+
+$subhead Callback Routines$$
 $icode%ok% = %forward%(%id%, %k%, %n%, %m%, %vx%, %vy%, %tx%, %ty%)
 %$$
 $icode%ok% = %reverse%(%id%, %k%, %n%, %m%, %tx%, %ty%, %px%, %py%)
@@ -58,6 +64,8 @@ $icode%ok% = %rev_jac_sparse%(%id%, %n%, %m%, %q%, %r%, %s%)
 %$$
 $icode%ok% = %rev_hes_sparse%(%id%, %n%, %m%, %q%, %r%, %s%, %t%, %u%, %v%)
 %$$
+
+$subhead Free Static Memory$$
 $codei%user_atomic<%Base%>::clear()%$$
 
 $head Purpose$$
@@ -241,7 +249,8 @@ $codei%
 It is the argument vector $latex x \in B^n$$ 
 at which the $codei%AD<%Base%>%$$ version of 
 $latex y = f(x)$$ is to be evaluated.
-The size of this vector determines $cref/n/user_atomic/n/$$; i.e.,
+The size of this vector
+must be greater than zero and determines $cref/n/user_atomic/n/$$; i.e.,
 the dimension of the domain space for $latex y = f (x)$$.
 This size may depend on the call to $icode afun$$.
 
@@ -253,7 +262,8 @@ $codei%
 The input value of its elements does not matter.
 Upon return, it is the $codei%AD<%Base%>%$$ version of the 
 result vector $latex y = f(x)$$.
-The size of this vector determines $cref/m/user_atomic/n/$$; i.e.,
+The size of this vector 
+must be greater than zero and determines $cref/m/user_atomic/n/$$; i.e.,
 the dimension of the range space for $latex y = f (x)$$.
 This size may depend on the call to $icode afun$$.
 
@@ -301,14 +311,25 @@ The $icode forward$$ argument $icode vx$$ has prototype
 $codei%
 	const CppAD::vector<bool>& %vx%
 %$$
-If $icode%vx%.size() == 0%$$, it should not be used.
-Otherwise, this call to $icode forward$$ is being made during
-the corresponding call to $icode afun$$,
+The case $icode%vx%.size() > 0%$$ occurs 
+once for each call to $icode afun$$,
+during the call,
+and before any of the other callbacks corresponding to that call.
+Hence such a call can be used to cache information attached to 
+the corresponding $icode id$$
+(such as the elements of $icode vx$$).
+If $icode%vx%.size() > 0%$$ then
 $icode%k% == 0%$$, 
 $icode%vx%.size() >= %n%$$, and
 for $latex j = 0 , \ldots , n-1$$,
 $icode%vx%[%j%]%$$ is true if and only if
 $icode%ax%[%j%]%$$ is a $cref/variable/glossary/Variable/$$.
+$pre
+
+$$
+If $icode%vx%.size() == 0%$$, 
+then $icode%vy%.size() == 0%$$ and neither of these vectors
+should be used.
 
 $subhead vy$$
 The $icode forward$$ argument $icode vy$$ has prototype
@@ -494,7 +515,7 @@ $codei%
 Its size is $icode m$$ and all the set elements are between
 zero and $icode%q%-1%$$ inclusive.
 It specifies a sparsity pattern
-for the matrix $icode S^\T$$.
+for the matrix $latex S^\T$$.
 
 $head r$$
 The $icode rev_jac_sparse$$ return value $icode r$$ has prototype
@@ -852,6 +873,10 @@ public:
 	{	size_t i, j, k;
 		size_t n = ax.size();
 		size_t m = ay.size();
+# ifndef NDEBUG
+		bool ok;
+		std::string msg = "user_atomoc: ";
+# endif
 		//
 		if( x_.size() < n )
 		{	x_.resize(n);
@@ -872,22 +897,27 @@ public:
 			{	tape    = ax[j].tape_this();
 				tape_id = ax[j].id_;
 			}
-			if( (tape_id != 0) & Variable(ax[j]) & (tape_id != ax[j].id_) )
-			{	std::string msg = name_ + 
+# ifndef NDEBUG
+			ok = (tape_id == 0) | Parameter(ax[j]) | (tape_id == ax[j].id_);
+			if( ! ok )
+			{	msg = msg + name_ + 
 				": ax contains variables from different OpenMP threads.";
 				CPPAD_ASSERT_KNOWN(false, msg.c_str());
 			}
+# endif
 		}
 		// Use zero order forward mode to compute values
 		k  = 0;
-		bool ok = f_(id, k, n, m, vx_, vy_, x_, y_);  
+# if NDEBUG
+		f_(id, k, n, m, vx_, vy_, x_, y_);  
+# else
+		ok = f_(id, k, n, m, vx_, vy_, x_, y_);  
 		if( ! ok )
-		{	std::stringstream ss;
-			ss << k;
-			std::string msg = name_ + ": ok returned false from "
+		{	msg = msg + name_ + ": ok returned false from "
 				"zero order forward mode calculation.";
 			CPPAD_ASSERT_KNOWN(false, msg.c_str());
 		}
+# endif
 		// pass back values
 		for(i = 0; i < m; i++)
 			ay[i].value_ = y_[i];
@@ -997,8 +1027,9 @@ public:
 		if( ! ok )
 		{	std::stringstream ss;
 			ss << k;
-			std::string msg = op->name_ + ": ok returned false from "
-				+ ss.str() + " order forward mode calculation";
+			std::string msg = "user_atomic: ";
+			msg = msg + op->name_ + ": ok returned false from " + ss.str()
+			    + " order forward mode calculation";
 			CPPAD_ASSERT_KNOWN(false, msg.c_str());
 		}
 	}
@@ -1061,8 +1092,9 @@ public:
 		if( ! ok )
 		{	std::stringstream ss;
 			ss << k;
-			std::string msg = op->name_ + ": ok returned false from "
-				+ ss.str() + " order reverse mode calculation";
+			std::string msg = "user_atomic: ";
+			msg = op->name_ + ": ok returned false from " + ss.str() 
+			    + " order reverse mode calculation";
 			CPPAD_ASSERT_KNOWN(false, msg.c_str());
 		}
 	}
@@ -1109,8 +1141,9 @@ public:
 
 		bool ok = op->fjs_(id, n, m, q, r, s);
 		if( ! ok )
-		{	std::string msg = op->name_ + 
-				": ok returned false from for_jac_sparse calculation";
+		{	std::string msg = "user_atomic: ";
+			msg = msg + op->name_ 
+			    + ": ok returned false from for_jac_sparse calculation";
 			CPPAD_ASSERT_KNOWN(false, msg.c_str());
 		}
 	}
@@ -1157,8 +1190,9 @@ public:
 
 		bool ok = op->rjs_(id, n, m, q, r, s);
 		if( ! ok )
-		{	std::string msg = op->name_ + 
-				": ok returned false from rev_jac_sparse calculation";
+		{	std::string msg = "user_atomic: ";
+			msg = msg + op->name_ 
+			    + ": ok returned false from rev_jac_sparse calculation";
 			CPPAD_ASSERT_KNOWN(false, msg.c_str());
 		}
 	}
@@ -1220,8 +1254,9 @@ public:
 
 		bool ok = op->rhs_(id, n, m, q, r, s, t, u, v);
 		if( ! ok )
-		{	std::string msg = op->name_ + 
-				": ok returned false from rev_jac_sparse calculation";
+		{	std::string msg = "user_atomic: ";
+			msg = msg + op->name_ 
+			    + ": ok returned false from rev_jac_sparse calculation";
 			CPPAD_ASSERT_KNOWN(false, msg.c_str());
 		}
 	}
