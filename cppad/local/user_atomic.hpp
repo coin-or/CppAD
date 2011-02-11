@@ -249,23 +249,21 @@ $codei%
 It is the argument vector $latex x \in B^n$$ 
 at which the $codei%AD<%Base%>%$$ version of 
 $latex y = f(x)$$ is to be evaluated.
-The size of this vector
-must be greater than zero and determines $cref/n/user_atomic/n/$$; i.e.,
-the dimension of the domain space for $latex y = f (x)$$.
-This size may depend on the call to $icode afun$$.
+The dimension of the domain space for $latex y = f (x)$$
+is specified by $cref/n/user_atomic/n/$$ $codei%= %ax%.size()%$$,
+which must be greater than zero.
 
 $subhead ay$$
 The $icode afun$$ result $icode ay$$ has prototype
 $codei%
 	%Tvector%< AD<%Base%> >& %ay%
 %$$
-The input value of its elements does not matter.
+The input values of its elements do not matter.
 Upon return, it is the $codei%AD<%Base%>%$$ version of the 
 result vector $latex y = f(x)$$.
-The size of this vector 
-must be greater than zero and determines $cref/m/user_atomic/n/$$; i.e.,
-the dimension of the range space for $latex y = f (x)$$.
-This size may depend on the call to $icode afun$$.
+The dimension of the range space for $latex y = f (x)$$
+is specified by $cref/m/user_atomic/m/$$ $codei%= %ay%.size()%$$,
+which must be greater than zero.
 
 $head forward$$
 The macro argument $icode forward$$ is a
@@ -353,14 +351,28 @@ $codei%
 %$$
 that computes results during a $cref/reverse/Reverse/$$ mode sweep. 
 The input value of the vectors $icode tx$$ and $icode ty$$
-contain Taylor coefficient up to order $icode k$$.
-We use
-$latex G : B^{m \cdot k} \rightarrow B$$
-to denote an arbitrary function of the Taylor coefficients for 
-$latex Y(t)$$; i.e.,
+contain Taylor coefficient, up to order $icode k$$,
+for $latex X(t)$$ and $latex Y(t)$$ respectively.
+We use the $latex \{ x_j^\ell \}$$ and $latex \{ y_i^\ell \}$$
+to denote these Taylor coefficients where the implicit range indices are
+$latex i = 0 , \ldots , m-1$$,
+$latex j = 0 , \ldots , n-1$$,
+$latex \ell = 0 , \ldots , k$$.
+Using the calculations done by $cref/forward/user_atomic/forward/$$,
+the Taylor coefficients $latex \{ y_i^\ell \}$$ are a function of the Taylor
+coefficients for $latex \{ x_j^\ell \}$$; i.e., given $latex y = f(x)$$
+we define the function
+$latex F : B^{n \times (k+1)} \rightarrow B^{m \times (k+1)}$$ by
 $latex \[
-z = G( y_0^0 , \cdots , y_0^k , \cdots , y_{m-1}^0 , \ldots , y_{m-1}^k )
+y_i^\ell =  F_i^\ell ( \{ x_j^\ell \} )
 \] $$
+We use $latex G : B^{m \times (k+1)} \rightarrow B$$
+to denote an arbitrary scalar valued function of the Taylor coefficients for 
+$latex Y(t)$$ and write  $latex z = G( \{ y_i^\ell \} )$$.
+The $code reverse$$ routine
+is given the derivative of $latex z$$ with respect to
+$latex \{ y_i^\ell \}$$ and computes its derivative with respect
+to $latex \{ x_j^\ell \}$$.
 
 $subhead Usage$$
 This routine is used,
@@ -377,29 +389,13 @@ For $latex i = 0 , \ldots , m-1$$ and $latex \ell = 0 , \ldots , k$$,
 $latex \[
 	py[ i * (k + 1 ) + \ell ] = \partial G / \partial y_i^\ell
 \] $$
-i.e., the partial derivative of the scalar valued function $latex G(y)$$ 
-with respect to the Taylor coefficient $latex y_i^\ell$$.
 If $icode%py%.size() > (%k% + 1) * %m%$$,
 the other components of $icode py$$ are not specified and should not be used.
 
 $subhead px$$
-Using the calculations from forward mode,
-the Taylor coefficients for $latex Y(t)$$ are a function of the Taylor
-coefficients for $latex X(t)$$; so we write 
+We define the function 
 $latex \[
-\begin{array}{rcl}
-y_i^k
-& = & 
-F_i^k ( x_0^0 , \cdots , x_0^k , \cdots , x_{n-1}^0 , \ldots , x_{n-1}^k )
-\\
-y & = & F( x ) 
-\end{array}
-\] $$
-and define the function 
-$latex \[
-H ( x_0^0 , \cdots , x_0^k , \cdots , x_{n-1}^0 , \ldots , x_{n-1}^k )
-=
-G[ F(x) ]
+H ( \{ x_j^\ell \} ) = G[ F( \{ x_j^\ell \} ) ]
 \] $$
 The $icode reverse$$ argument $icode px$$ has prototype
 $codei%
@@ -414,7 +410,8 @@ $latex \[
 px [ j * (k + 1) + \ell ] & = & \partial H / \partial x_j^\ell
 \\
 & = & 
-( \partial G / \partial y ) ( \partial y / \partial x_j^\ell )
+( \partial G / \partial \{ y_i^\ell \} ) 
+	( \partial \{ y_i^\ell \} / \partial x_j^\ell )
 \\
 & = & 
 \sum_{i=0}^{m-1} \sum_{\ell=0}^k
@@ -422,11 +419,9 @@ px [ j * (k + 1) + \ell ] & = & \partial H / \partial x_j^\ell
 \\
 & = & 
 \sum_{i=0}^{m-1} \sum_{\ell=0}^k
-py[ i * (k + 1 ) + \ell ] ( \partial y_i^\ell / \partial x_j^\ell )
+py[ i * (k + 1 ) + \ell ] ( \partial F_i^\ell / \partial x_j^\ell )
 \end{array}
 \] $$
-This is the partial derivative of a scalar valued function $latex H$$
-with respect to the Taylor coefficient $latex x_j^\ell$$.
 If $icode%px%.size() > (%k% + 1) * %n%$$,
 the other components of $icode px$$ are not specified and should not be used.
 
@@ -462,21 +457,23 @@ The $icode for_jac_sparse$$ argument $icode r$$ has prototype
 $codei%
      const CppAD::vector< std::set<size_t> >& %r%
 %$$
-Its size is $icode n$$ and all the set elements are between
+and $icode%r%.size() >= %n%$$.
+For $latex j = 0 , \ldots , n-1$$,
+all the elements of $icode%r%[%j%]%$$ are between
 zero and $icode%q%-1%$$ inclusive.
-It specifies a sparsity pattern
-for the matrix $icode R$$.
+This specifies a sparsity pattern for the matrix $latex R$$.
 
 $head s$$
 The $icode for_jac_sparse$$ return value $icode s$$ has prototype
 $codei%
 	CppAD::vector< std::set<size_t> >& %s%
 %$$
-and its size is $icode m$$.
-The input values of its sets do not matter,
-upon return all of its set elements are between
-zero and $icode%q%-1%$$ inclusive and
-it specifies a sparsity pattern for the matrix $latex S(x)$$.
+and $icode%s%.size() >= %m%%$$.
+The input values of its sets do not matter. Upon return 
+for $latex i = 0 , \ldots , m-1$$,
+all the elements of $icode%s%[%i%]%$$ are between
+zero and $icode%q%-1%$$ inclusive.
+This represents a sparsity pattern for the matrix $latex S(x)$$.
 
 $head rev_jac_sparse$$
 The macro argument $icode rev_jac_sparse$$
@@ -512,21 +509,23 @@ The $icode rev_jac_sparse$$ argument $icode s$$ has prototype
 $codei%
      const CppAD::vector< std::set<size_t> >& %s%
 %$$
-Its size is $icode m$$ and all the set elements are between
-zero and $icode%q%-1%$$ inclusive.
-It specifies a sparsity pattern
-for the matrix $latex S^\T$$.
+and $icode%s%.size() >= %m%$$.
+For $latex i = 0 , \ldots , m-1$$, 
+all the elements of $icode%s%[%i%}%$$
+are between zero and $icode%q%-1%$$ inclusive.
+This specifies a sparsity pattern for the matrix $latex S^\T$$.
 
 $head r$$
 The $icode rev_jac_sparse$$ return value $icode r$$ has prototype
 $codei%
 	CppAD::vector< std::set<size_t> >& %r%
 %$$
-and its size is $icode n$$.
-The input values of its sets do not matter,
-upon return all of its set elements are between
-zero and $icode%q%-1%$$ inclusive and
-it specifies a sparsity pattern for the matrix $latex R(x)^\T$$.
+and $icode%r%.size() >= %n%$$.
+The input values of its sets do not matter.
+Upon return for $latex j = 0 , \ldots , n-1$$,
+all the elements of $icode%r%[%j%]%$$
+are between zero and $icode%q%-1%$$ inclusive.
+This represents a sparsity pattern for the matrix $latex R(x)^\T$$.
 
 $head rev_hes_sparse$$
 The macro argument $icode rev_hes_sparse$$
@@ -536,7 +535,9 @@ $codei%
 %$$
 There is an unspecified scalar valued function 
 $latex g : B^m \rightarrow B$$.
-This routine computes the sparsity pattern for
+Given a sparsity pattern for $latex R$$
+and information about the function $latex z = g(y)$$,
+this routine computes the sparsity pattern for
 $latex \[
 	V(x) = (g \circ f)^{(2)}( x ) R
 \] $$
@@ -552,42 +553,46 @@ $codei%
 It specifies the number of columns in the sparsity patterns.
 
 $subhead r$$
-The $icode rev_hes_sparse$$ argument $icode r$$ has prototype
+The $icode for_jac_sparse$$ argument $icode r$$ has prototype
 $codei%
      const CppAD::vector< std::set<size_t> >& %r%
 %$$
-Its size is $icode n$$ and all the set elements are between
+and $icode%r%.size() >= %n%$$.
+For $latex j = 0 , \ldots , n-1$$,
+all the elements of $icode%r%[%j%]%$$ are between
 zero and $icode%q%-1%$$ inclusive.
-It specifies a sparsity pattern for the matrix 
-$latex R \in B^{n \times q}$$.
+This specifies a sparsity pattern for the matrix $latex R \in B^{n \times q}$$.
 
 $subhead s$$
 The $icode rev_hes_sparse$$ argument $icode s$$ has prototype
 $codei%
      const CppAD::vector<bool> >& %s%
 %$$
-Its size is $icode m$$ and it is a sparsity pattern for the 
-vector $latex S(x) = g^{(1)} (y)$$.
+and $icode%s%.size() >= %m%$$.
+This specifies a sparsity pattern for the matrix 
+$latex S(x) = g^{(1)} (y) \in B^{1 \times m}$$.
 
 $subhead t$$
 The $icode rev_hes_sparse$$ argument $icode t$$ has prototype
 $codei%
      CppAD::vector<bool> >& %t%
 %$$
-and its size is $icode n$$.
-The input value of its elements does not matter.
-Upon return it is a sparsity pattern for the vector 
-$latex T(x) = (g \circ f)^{(1)} (x)$$.
+and $icode%t%.size() >= %n%$$.
+The input values of its elements do not matter.
+Upon return it represents a sparsity pattern for the matrix 
+$latex T(x) = (g \circ f)^{(1)} (x) \in B^{1 \times n}$$.
 
 $subhead u$$
 The $icode rev_hes_sparse$$ argument $icode u$$ has prototype
 $codei%
      const CppAD::vector< std::set<size_t> >& %u%
 %$$
-is a vector of size $icode m$$ and
-all the set elements are between zero and $icode%q%-1%$$ inclusive.
-It specifies a sparsity pattern
-for the matrix $icode U(x)$$ defined by
+and $icode%u%.size() >= %m%$$.
+For $latex i = 0 , \ldots , m-1$$,
+all the elements of $icode%u%[%i%]%$$
+are between zero and $icode%q%-1%$$ inclusive.
+This specifies a sparsity pattern
+for the matrix $latex U(x) \in B^{m \times q}$$ defined by
 $latex \[
 \begin{array}{rcl}
 U(x) 
@@ -598,21 +603,22 @@ U(x)
 \partial_u \{ g^{(1)} [ y + f^{(1)} (x) R u ] \}_{u=0}
 \\
 & = &
-g^{(2)} [ f (x) ] f^{(1)} (x) R
+g^{(2)} (y) f^{(1)} (x) R
 \end{array}
 \] $$
 
-$subhead V$$
+$subhead v$$
 The $icode rev_hes_sparse$$ argument $icode v$$ has prototype
 $codei%
      CppAD::vector< std::set<size_t> >& %v%
 %$$
-is a vector of size $icode n$$.
-The input value of its elements does not matter.
-Upon return,
-all the set elements are between zero and $icode%q%-1%$$ inclusive
-and it is a sparsity pattern
-for the matrix $icode V(x)$$ defined by
+and $icode%v%.size() >= %n%$$.
+The input values of its elements do not matter.
+Upon return, for $latex j = 0, \ldots , n-1$$,
+all the elements of $icode%v%[%j%]%$$
+are between zero and $icode%q%-1%$$ inclusive.
+This represents a sparsity pattern for the matrix 
+$latex V(x) \in B^{n \times q}$$ defined by
 $latex \[
 \begin{array}{rcl}
 V(x) 
@@ -628,8 +634,8 @@ V(x)
 \] $$
 
 $head clear$$
-User atomic functions hold onto static work space vectors in order to
-increase speed by avoiding memory allocation calls.
+User atomic functions hold onto static work space in order to
+increase speed by avoiding system memory allocation calls.
 The function call $codei%
 	user_atomic<%Base%>::clear()
 %$$ 
