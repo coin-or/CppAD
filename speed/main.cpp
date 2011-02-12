@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -279,37 +279,42 @@ namespace {
 // main program that runs all the tests
 int main(int argc, char *argv[])
 {	bool ok = true;
-
-	const char *test[]= {
-		"correct",
-		"det_lu",
-		"det_minor",
-		"ode",
-		"poly",
-		"sparse_hessian",
-		"sparse_jacobian",
-		"speed"
+	enum test_enum {
+		test_correct,
+		test_speed,
+		test_det_lu,
+		test_det_minor,
+		test_ode,
+		test_poly,
+		test_sparse_hessian,
+		test_sparse_jacobian,
+		test_error
 	};
-	const size_t n_test  = sizeof(test) / sizeof(test[0]);
-	const size_t test_correct        = 0;
-	const size_t test_det_lu         = 1;
-	const size_t test_det_minor      = 2;
-	const size_t test_ode            = 3;
-	const size_t test_poly           = 4;
-	const size_t test_sparse_hessian = 5;
-	const size_t test_sparse_jacobian= 6;
-	const size_t test_speed          = 7;
-	assert( n_test == test_speed+1 );
+	struct test_struct {
+		const char       *name;
+		const test_enum  index;
+	}; 
+	const test_struct test_list[]= {
+		{ "correct",            test_correct }, 
+		{ "speed",              test_speed},
+		{ "det_lu",             test_det_lu },
+		{ "det_minor",          test_det_minor },
+		{ "ode",                test_ode},
+		{ "poly",               test_poly},
+		{ "sparse_hessian",     test_sparse_hessian},
+		{ "sparse_jacobian",    test_sparse_jacobian}
+	};
+	const size_t n_test  = sizeof(test_list) / sizeof(test_list[0]);
 
 	size_t i;
-	size_t match = n_test;
+	test_enum match = test_error;
 	int    iseed = 0;
 	bool   error = argc < 3;
 	if( ! error )
 	{	for(i = 0; i < n_test; i++)
-			if( strcmp(test[i], argv[1]) == 0 )
-				match = i;
-		error = match == n_test;
+			if( strcmp(test_list[i].name, argv[1]) == 0 )
+				match = test_list[i].index;
+		error = match == test_error;
 		iseed = std::atoi( argv[2] );
 		error |= iseed < 0;
 		global_retape   = false;
@@ -328,7 +333,7 @@ int main(int argc, char *argv[])
 		     << AD_PACKAGE << " test seed option_list" << endl;
 		cout << "test choices: " << endl;
 		for(i = 0; i < n_test; i++)
-			cout << "\t" << test[i] << endl;
+			cout << "\t" << test_list[i].name << endl;
 		cout << "seed choices: ";
 		cout << "a positive integer used as a random seed." << endl;
 		cout << "option choices: ";
