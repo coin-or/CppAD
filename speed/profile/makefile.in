@@ -43,8 +43,8 @@ CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am_profile_OBJECTS = main.$(OBJEXT) ode.$(OBJEXT) det_lu.$(OBJEXT) \
-	det_minor.$(OBJEXT) poly.$(OBJEXT) sparse_hessian.$(OBJEXT) \
-	sparse_jacobian.$(OBJEXT)
+	det_minor.$(OBJEXT) mat_mul.$(OBJEXT) poly.$(OBJEXT) \
+	sparse_hessian.$(OBJEXT) sparse_jacobian.$(OBJEXT)
 profile_OBJECTS = $(am_profile_OBJECTS)
 profile_LDADD = $(LDADD)
 profile_DEPENDENCIES =
@@ -212,6 +212,7 @@ profile_SOURCES = \
 	../cppad/ode.cpp \
 	../cppad/det_lu.cpp  \
 	../cppad/det_minor.cpp  \
+	../cppad/mat_mul.cpp  \
 	../cppad/poly.cpp \
 	../cppad/sparse_hessian.cpp \
 	../cppad/sparse_jacobian.cpp
@@ -266,6 +267,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_lu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_minor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@
@@ -340,6 +342,20 @@ det_minor.obj: ../cppad/det_minor.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../cppad/det_minor.cpp' object='det_minor.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o det_minor.obj `if test -f '../cppad/det_minor.cpp'; then $(CYGPATH_W) '../cppad/det_minor.cpp'; else $(CYGPATH_W) '$(srcdir)/../cppad/det_minor.cpp'; fi`
+
+mat_mul.o: ../cppad/mat_mul.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mat_mul.o -MD -MP -MF $(DEPDIR)/mat_mul.Tpo -c -o mat_mul.o `test -f '../cppad/mat_mul.cpp' || echo '$(srcdir)/'`../cppad/mat_mul.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/mat_mul.Tpo $(DEPDIR)/mat_mul.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../cppad/mat_mul.cpp' object='mat_mul.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mat_mul.o `test -f '../cppad/mat_mul.cpp' || echo '$(srcdir)/'`../cppad/mat_mul.cpp
+
+mat_mul.obj: ../cppad/mat_mul.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mat_mul.obj -MD -MP -MF $(DEPDIR)/mat_mul.Tpo -c -o mat_mul.obj `if test -f '../cppad/mat_mul.cpp'; then $(CYGPATH_W) '../cppad/mat_mul.cpp'; else $(CYGPATH_W) '$(srcdir)/../cppad/mat_mul.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/mat_mul.Tpo $(DEPDIR)/mat_mul.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../cppad/mat_mul.cpp' object='mat_mul.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mat_mul.obj `if test -f '../cppad/mat_mul.cpp'; then $(CYGPATH_W) '../cppad/mat_mul.cpp'; else $(CYGPATH_W) '$(srcdir)/../cppad/mat_mul.cpp'; fi`
 
 poly.o: ../cppad/poly.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT poly.o -MD -MP -MF $(DEPDIR)/poly.Tpo -c -o poly.o `test -f '../cppad/poly.cpp' || echo '$(srcdir)/'`../cppad/poly.cpp
