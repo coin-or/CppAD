@@ -43,8 +43,9 @@ CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am_fadbad_OBJECTS = main.$(OBJEXT) det_lu.$(OBJEXT) \
-	det_minor.$(OBJEXT) ode.$(OBJEXT) poly.$(OBJEXT) \
-	sparse_hessian.$(OBJEXT) sparse_jacobian.$(OBJEXT)
+	det_minor.$(OBJEXT) mat_mul.$(OBJEXT) ode.$(OBJEXT) \
+	poly.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	sparse_jacobian.$(OBJEXT)
 fadbad_OBJECTS = $(am_fadbad_OBJECTS)
 fadbad_LDADD = $(LDADD)
 fadbad_DEPENDENCIES =
@@ -210,6 +211,7 @@ fadbad_SOURCES = \
 	../main.cpp \
 	det_lu.cpp  \
 	det_minor.cpp  \
+	mat_mul.cpp  \
 	ode.cpp \
 	poly.cpp \
 	sparse_hessian.cpp \
@@ -265,6 +267,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_lu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/det_minor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/poly.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sparse_hessian.Po@am__quote@

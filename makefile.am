@@ -249,6 +249,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/speed/det_by_minor.hpp \
 	cppad/speed/det_grad_33.hpp \
 	cppad/speed/det_of_minor.hpp \
+	cppad/speed/mat_sum_sq.hpp \
 	cppad/speed/ode_evaluate.hpp \
 	cppad/speed/sparse_evaluate.hpp \
 	cppad/speed_test.hpp \

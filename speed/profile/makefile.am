@@ -43,6 +43,7 @@ profile_SOURCES = \
 	../cppad/ode.cpp \
 	../cppad/det_lu.cpp  \
 	../cppad/det_minor.cpp  \
+	../cppad/mat_mul.cpp  \
 	../cppad/poly.cpp \
 	../cppad/sparse_hessian.cpp \
 	../cppad/sparse_jacobian.cpp

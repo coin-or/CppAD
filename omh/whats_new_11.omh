@@ -35,6 +35,13 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-15$$
+A matrix multiply speed test has been added.
+So far, this has only implemented for the
+$cref/cppad/cppad_mat_mul.cpp/$$ and $cref/double/double_mat_mul.cpp/$$ cases.
+(For the time being this test is not available for the other
+speed comparison cases.)
+
 $head 02-09$$
 A variable in $code user_atomic.hpp$$ was declare of type $icode Base$$
 when it should have been declared of type $code size_t$$.

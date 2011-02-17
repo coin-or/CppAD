@@ -65,4 +65,5 @@ then
 	echo "See the complete warning messages in omhelp.$ext.log."
 	exit 1
 fi
+echo "OK: omhelp $*"
 exit 0

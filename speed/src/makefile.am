@@ -39,6 +39,7 @@ noinst_LIBRARIES   = libspeed.a
 libspeed_a_SOURCES = \
 	link_det_lu.cpp \
 	link_det_minor.cpp \
+	link_mat_mul.cpp \
 	link_ode.cpp \
 	link_poly.cpp \
 	link_sparse_hessian.cpp \

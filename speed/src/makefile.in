@@ -48,7 +48,7 @@ ARFLAGS = cru
 libspeed_a_AR = $(AR) $(ARFLAGS)
 libspeed_a_LIBADD =
 am_libspeed_a_OBJECTS = link_det_lu.$(OBJEXT) link_det_minor.$(OBJEXT) \
-	link_ode.$(OBJEXT) link_poly.$(OBJEXT) \
+	link_mat_mul.$(OBJEXT) link_ode.$(OBJEXT) link_poly.$(OBJEXT) \
 	link_sparse_hessian.$(OBJEXT) link_sparse_jacobian.$(OBJEXT) \
 	microsoft_timer.$(OBJEXT)
 libspeed_a_OBJECTS = $(am_libspeed_a_OBJECTS)
@@ -215,6 +215,7 @@ noinst_LIBRARIES = libspeed.a
 libspeed_a_SOURCES = \
 	link_det_lu.cpp \
 	link_det_minor.cpp \
+	link_mat_mul.cpp \
 	link_ode.cpp \
 	link_poly.cpp \
 	link_sparse_hessian.cpp \
@@ -271,6 +272,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_det_lu.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_det_minor.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_ode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_poly.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/link_sparse_hessian.Po@am__quote@

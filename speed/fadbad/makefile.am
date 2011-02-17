@@ -41,6 +41,7 @@ fadbad_SOURCES = \
 	../main.cpp \
 	det_lu.cpp  \
 	det_minor.cpp  \
+	mat_mul.cpp  \
 	ode.cpp \
 	poly.cpp \
 	sparse_hessian.cpp \

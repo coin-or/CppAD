@@ -177,6 +177,7 @@ The rate is the number of times per second that the calculation was repeated.
 $children%
 	speed/src/link_det_lu.cpp%
 	speed/src/link_det_minor.cpp%
+	speed/src/link_mat_mul.cpp%
 	speed/src/link_ode.cpp%
 	speed/src/link_poly.cpp%
 	speed/src/link_sparse_hessian.cpp%
@@ -201,13 +202,14 @@ $end
 -----------------------------------------------------------------------------
 */
 
-# define CPPAD_DECLARE_SPEED(name)                          \
-	extern bool available_##name(void);                 \
-	extern bool correct_##name(bool is_package_double); \
-	extern void speed_##name(size_t size, size_t repeat)
+# define CPPAD_DECLARE_SPEED(name)                       \
+     extern bool available_##name(void);                 \
+     extern bool correct_##name(bool is_package_double); \
+     extern void speed_##name(size_t size, size_t repeat)
 
 CPPAD_DECLARE_SPEED(det_lu);
 CPPAD_DECLARE_SPEED(det_minor);
+CPPAD_DECLARE_SPEED(mat_mul);
 CPPAD_DECLARE_SPEED(ode);
 CPPAD_DECLARE_SPEED(poly);
 CPPAD_DECLARE_SPEED(sparse_hessian);
@@ -258,7 +260,7 @@ namespace {
 	}
 	// ----------------------------------------------------------------
 	// function that runs one speed case
-	void Run_speed(
+	void run_speed(
 		void speed_case(size_t size, size_t repeat) , 
 		const CppAD::vector<size_t>&       size_vec ,
 		const std::string&                case_name )
@@ -284,6 +286,7 @@ int main(int argc, char *argv[])
 		test_speed,
 		test_det_lu,
 		test_det_minor,
+		test_mat_mul,
 		test_ode,
 		test_poly,
 		test_sparse_hessian,
@@ -295,14 +298,15 @@ int main(int argc, char *argv[])
 		const test_enum  index;
 	}; 
 	const test_struct test_list[]= {
-		{ "correct",            test_correct }, 
-		{ "speed",              test_speed},
-		{ "det_lu",             test_det_lu },
-		{ "det_minor",          test_det_minor },
-		{ "ode",                test_ode},
-		{ "poly",               test_poly},
-		{ "sparse_hessian",     test_sparse_hessian},
-		{ "sparse_jacobian",    test_sparse_jacobian}
+		{ "correct",            test_correct         }, 
+		{ "speed",              test_speed           },
+		{ "det_lu",             test_det_lu          },
+		{ "det_minor",          test_det_minor       },
+		{ "mat_mul",            test_mat_mul         },
+		{ "ode",                test_ode             },
+		{ "poly",               test_poly            },
+		{ "sparse_hessian",     test_sparse_hessian  },
+		{ "sparse_jacobian",    test_sparse_jacobian }
 	};
 	const size_t n_test  = sizeof(test_list) / sizeof(test_list[0]);
 
@@ -348,6 +352,7 @@ int main(int argc, char *argv[])
 	size_t n_size   = 5;
 	CppAD::vector<size_t> size_det_lu(n_size);
 	CppAD::vector<size_t> size_det_minor(n_size);
+	CppAD::vector<size_t> size_mat_mul(n_size);
 	CppAD::vector<size_t> size_ode(n_size);
 	CppAD::vector<size_t> size_poly(n_size);
 	CppAD::vector<size_t> size_sparse_hessian(n_size);
@@ -355,6 +360,7 @@ int main(int argc, char *argv[])
 	for(i = 0; i < n_size; i++) 
 	{	size_det_lu[i]      = 3 * i + 1;
 		size_det_minor[i]   = i + 1;
+		size_mat_mul[i]     = 10 * (i + 1);
 		size_ode[i]         = i + 1;
 		size_poly[i]        = 8 * i + 1;
 		size_sparse_hessian[i]  = 30 * (i + 1);
@@ -369,19 +375,22 @@ int main(int argc, char *argv[])
 		// run all the correctness tests
 		case test_correct:
 		if( available_det_lu() ) ok &= run_correct(
-			correct_det_lu,    "det_lu"       
+			correct_det_lu,           "det_lu"       
 		);
 		if( available_det_minor() ) ok &= run_correct(
-			correct_det_minor, "det_minor"    
+			correct_det_minor,        "det_minor"    
+		);
+		if( available_mat_mul() ) ok &= run_correct(
+			correct_mat_mul,          "mat_mul"    
 		);
 		if( available_ode() ) ok &= run_correct(
-			correct_ode,      "ode"         
+			correct_ode,             "ode"         
 		);
 		if( available_poly() ) ok &= run_correct(
-			correct_poly,      "poly"         
+			correct_poly,            "poly"         
 		);
 		if( available_sparse_hessian() ) ok &= run_correct(
-			correct_sparse_hessian, "sparse_hessian"         
+			correct_sparse_hessian,  "sparse_hessian"         
 		);
 		if( available_sparse_jacobian() ) ok &= run_correct(
 			correct_sparse_jacobian, "sparse_jacobian"         
@@ -400,22 +409,25 @@ int main(int argc, char *argv[])
 		// ---------------------------------------------------------
 		// run all the speed tests 
 		case test_speed:
-		if( available_det_lu() ) Run_speed(
-		speed_det_lu,    size_det_lu,    "det_lu"
+		if( available_det_lu() ) run_speed(
+		speed_det_lu,          size_det_lu,          "det_lu"
 		);
-		if( available_det_minor() ) Run_speed(
-		speed_det_minor, size_det_minor, "det_minor"
+		if( available_det_minor() ) run_speed(
+		speed_det_minor,       size_det_minor,       "det_minor"
 		);
-		if( available_ode() ) Run_speed(
-		speed_ode,       size_ode,       "ode"
+		if( available_mat_mul() ) run_speed(
+		speed_mat_mul,           size_mat_mul,       "det_minor"
 		);
-		if( available_poly() ) Run_speed(
-		speed_poly,      size_poly,      "poly"
+		if( available_ode() ) run_speed(
+		speed_ode,             size_ode,             "ode"
 		);
-		if( available_sparse_hessian() ) Run_speed(
+		if( available_poly() ) run_speed(
+		speed_poly,            size_poly,            "poly"
+		);
+		if( available_sparse_hessian() ) run_speed(
 		speed_sparse_hessian,  size_sparse_hessian,  "sparse_hessian"
 		);
-		if( available_sparse_jacobian() ) Run_speed(
+		if( available_sparse_jacobian() ) run_speed(
 		speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
 		);
 		ok = true;
@@ -429,7 +441,7 @@ int main(int argc, char *argv[])
 			exit(1);
 		}
 		ok &= run_correct(correct_det_lu,           "det_lu");
-		Run_speed(speed_det_lu,    size_det_lu,     "det_lu");
+		run_speed(speed_det_lu,    size_det_lu,     "det_lu");
 		break;
 		// ---------------------------------------------------------
 
@@ -440,7 +452,18 @@ int main(int argc, char *argv[])
 			exit(1);
 		}
 		ok &= run_correct(correct_det_minor,       "det_minor");
-		Run_speed(speed_det_minor, size_det_minor, "det_minor");
+		run_speed(speed_det_minor, size_det_minor, "det_minor");
+		break;
+		// ---------------------------------------------------------
+
+		case test_mat_mul:
+		if( ! available_mat_mul() )
+		{	cout << AD_PACKAGE << ": test " << argv[1] 
+			     << " not available" << endl; 
+			exit(1);
+		}
+		ok &= run_correct(correct_mat_mul,     "mat_mul");
+		run_speed(speed_mat_mul, size_mat_mul, "mat_mul");
 		break;
 		// ---------------------------------------------------------
 
@@ -451,7 +474,7 @@ int main(int argc, char *argv[])
 			exit(1);
 		}
 		ok &= run_correct(correct_ode,           "ode");
-		Run_speed(speed_ode,      size_ode,      "ode");
+		run_speed(speed_ode,      size_ode,      "ode");
 		break;
 		// ---------------------------------------------------------
 
@@ -462,7 +485,7 @@ int main(int argc, char *argv[])
 			exit(1);
 		}
 		ok &= run_correct(correct_poly,            "poly");
-		Run_speed(speed_poly,      size_poly,      "poly");
+		run_speed(speed_poly,      size_poly,      "poly");
 		break;
 		// ---------------------------------------------------------
 
@@ -473,7 +496,7 @@ int main(int argc, char *argv[])
 			exit(1);
 		}
 		ok &= run_correct(correct_sparse_hessian, "sparse_hessian");
-		Run_speed(
+		run_speed(
 		speed_sparse_hessian, size_sparse_hessian,  "sparse_hessian");
 		break;
 		// ---------------------------------------------------------
@@ -485,7 +508,7 @@ int main(int argc, char *argv[])
 			exit(1);
 		}
 		ok &= run_correct(correct_sparse_jacobian, "sparse_jacobian");
-		Run_speed(
+		run_speed(
 		speed_sparse_jacobian, size_sparse_jacobian, "sparse_jacobian"
 		);
 		break;

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -57,7 +57,7 @@ The argument $icode repeat$$ is the number of different argument values
 that the second derivative (or just the polynomial) will be computed at. 
 
 $head a$$
-The argument $icode a$$ is a vector with $icode%size%*%size%$$ elements.
+The argument $icode a$$ is a vector with $icode%size%$$ elements.
 The input value of its elements does not matter. 
 The output value of its elements is the coefficients of the 
 polynomial that is differentiated
