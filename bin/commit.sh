@@ -63,6 +63,20 @@ fi
 if [ "$1" == 'list' ] || [ "$1" == 'edit' ]
 then
 	# -------------------------------------------------
+	unknown=`svn status | sed -n \
+		-e '/[/ ]junk\./d'  \
+		-e '/^[?].*\.am$/p'  \
+		-e '/^[?].*\.in$/p'  \
+		-e '/^[?].*\.cpp$/p'  \
+		-e '/^[?].*\.hpp$/p'  \
+		-e '/^[?].*\.sh$/p'`
+	if [ "$unknown" != "" ]
+	then
+		echo "bin/commit.sh: abort because following are unknown to svn"
+		echo $unknown
+		exit 1
+	fi
+	# -------------------------------------------------
 	svn status | sed -n -e '/^[ADMRC] /p' | \
 		sed -e 's/^[ADMRC] [+ ]*//' \
 			-e '/^bin\/commit.sh$/d' -e '/^bin\/commit.sed$/d' | \
