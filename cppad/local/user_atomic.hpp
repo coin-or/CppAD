@@ -677,7 +677,8 @@ the base type for the atomic operation.
 
 \par afun 
 name of the CppAD defined function that corresponding to this operation.
-Note that \c #afun is a version of afun with quotes arround it.
+Note that \c afun, preceeded by a pound sign, 
+is a version of \c afun with quotes arround it.
 
 \par forward
 name of the user defined function that computes corresponding

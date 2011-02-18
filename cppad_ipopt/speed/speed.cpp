@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -26,22 +26,22 @@ int main(void)
 	name    = "simple_retape_yes";
 	seconds = ode_speed(name, count);
 	printf("ode %20s: seconds = %5.2f: eval_r_count = %d\n", 
-		name, seconds, count);
+		name, seconds, int(count) );
 
 	name    = "simple_retape_no";
 	seconds = ode_speed(name, count);
 	printf("ode %20s: seconds = %5.2f: eval_r_count = %d\n",
-		name, seconds, count);
+		name, seconds, int(count) );
 
 	name    = "fast_retape_yes";
 	seconds = ode_speed(name, count);
 	printf("ode %20s: seconds = %5.2f: eval_r_count = %d\n",
-		name, seconds, count);
+		name, seconds, int(count) );
 
 	name    = "fast_retape_no";
 	seconds = ode_speed(name, count);
 	printf("ode %20s: seconds = %5.2f: eval_r_count = %d\n",
-		name, seconds, count);
+		name, seconds, int(count) );
 	
 	return 0;
 }

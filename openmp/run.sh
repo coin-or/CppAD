@@ -1,7 +1,7 @@
 # ! /bin/bash 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -58,8 +58,9 @@ version_flag="--version"
 #
 # $subhead OpenMP Flag$$
 # The following compiler flag requests openmp support
-# You can run these tests with a compiler that does not support OpenMP
-# by setting this flag to "".
+# For the g++ compiler, you can use $code "-fopenmp"$$ for this flag.
+# You can run these tests without multi-threading by setting this flag to 
+# $code ""$$.
 # $codep
 openmp_flag=""
 # $$
@@ -209,6 +210,6 @@ do
 		#
 		# clean up (this is source directory)
 		echo "rm ${name}_yes_openmp"
-		rm ${name}_no_openmp
+		rm ${name}_yes_openmp
 	fi
 done

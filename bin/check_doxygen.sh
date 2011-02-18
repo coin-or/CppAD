@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -21,7 +21,8 @@ then
 	echo "bin/check_doxygen.sh: cannot find doxygen.err"
 	exit 1
 fi
-doxygen_version=`doxygen --version  | sed -e 's|\.|*100+|' -e's|\.|*10+|'`
+doxygen_version=`doxygen --version  | 
+	sed -e 's|\.|*100+|' -e 's|\.|*10+|' -e 's|\..*||'`
 let doxygen_version=$doxygen_version
 if (( $doxygen_version <= 155 ))
 then
