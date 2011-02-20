@@ -203,8 +203,10 @@ private:
 	// value_ corresponding to this object
 	Base value_;
 
-	// tape identifier corresponding to taddr
+	// Tape identifier corresponding to taddr
 	// This is a variable if and only if id_ == *id_handle()
+	// For parameters id_ is CPPAD_MAX_NUM_THREADS, so that following hold
+	// id_ != 0 , id_ % CPPAD_MAX_NUM_THREADS == 0, id_ != *id_handle().
 	size_t id_;
 
 	// taddr_ in tape for this variable 
@@ -214,7 +216,7 @@ private:
 	//
 	void make_parameter(void)
 	{	CPPAD_ASSERT_UNKNOWN( Variable(*this) );  // currently a var
-		id_ = 0;
+		id_ = CPPAD_MAX_NUM_THREADS;
 	}
 	//
 	// Make this parameter a new variable 

@@ -3,7 +3,7 @@
 # define CPPAD_AD_COPY_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -121,15 +121,20 @@ inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
 }
 */
 
-// constructor and assignment from Base type
-// (if id_ is 1, taddr_ is not used, set anyway to avoid compile warning)
+// Constructor and assignment from Base type
+// Initilaize id_ to CPPAD_MAX_NUM_THREADS, so that following conditions hold 
+// id_ != 0 , id_ % CPPAD_MAX_NUM_THREADS == 0, id_ != any recording tape id.
+// taddr_ is not used, set anyway to avoid compile warning.
 template <class Base>
-inline AD<Base>::AD(const Base &b) : value_(b), id_(1), taddr_(0)
+inline AD<Base>::AD(const Base &b) 
+: value_(b)
+, id_(CPPAD_MAX_NUM_THREADS)
+, taddr_(0)
 { }	
 template <class Base>
 inline AD<Base>& AD<Base>::operator=(const Base &b)
 {	value_ = b;
-	id_    = 1;
+	id_    = CPPAD_MAX_NUM_THREADS;
 
 	// check that this is a parameter
 	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
@@ -146,10 +151,13 @@ inline AD<Base>& AD<Base>::operator=(const VecAD_reference<Base> &x)
 {	return *this = x.ADBase(); }
 
 // constructor and assignment from any other type 
-// (if id_ is 1, taddr_ is not used, set anyway to avoid compile warning)
+// taddr_ is not used, set anyway to avoid compile warning.
 template <class Base>
 template <class T>
-inline AD<Base>::AD(const T &t) : value_(Base(t)), id_(1), taddr_(0)
+inline AD<Base>::AD(const T &t) 
+: value_(Base(t))
+, id_(CPPAD_MAX_NUM_THREADS)
+, taddr_(0)
 { }
 template <class Base>
 template <class T>

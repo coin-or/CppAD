@@ -3,7 +3,7 @@
 # define CPPAD_POW_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -122,7 +122,7 @@ pow(const AD<Base> &x, const AD<Base> &y)
 	if( tape != CPPAD_NULL )
 		tape_id = tape->id_;
 
-	// id_ == 1 is initial setting for parameters so cannot match 0
+	// id_ setting for parameters cannot match 0
 	bool var_x = x.id_  == tape_id;
 	bool var_y = y.id_ == tape_id;
 	CPPAD_ASSERT_KNOWN(

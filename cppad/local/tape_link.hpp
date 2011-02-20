@@ -56,8 +56,8 @@ If <tt>*r == 0</tt>, there is no tape currently recording for this thread.
 \li
 If <tt>*r != 0</tt>, there current is a tape recording for this thread.
 Furthermore the identifier satisfies the conditions
-<tt>*r > CPPAD_MAX_NUM_THREAD</tt> , and
-<tt>*r % CPPAD_MAX_NUM_THREAD == thread</tt>. 
+<tt>*r > CPPAD_MAX_NUM_THREADS</tt> , and
+<tt>*r % CPPAD_MAX_NUM_THREADS == thread</tt>. 
 \li
 The value of <tt>*r</tt> must increase each time it is changed.
 */

@@ -3,7 +3,7 @@
 # define CPPAD_DEFAULT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -53,10 +53,15 @@ namespace CppAD {
 
 // default constructor
 //
-// If id_==1, taddr_ is not used, it is set anyway to avoid a compile warning.
+// Initilaize id_ to CPPAD_MAX_NUM_THREADS, so that following conditions hold 
+// id_ != 0 , id_ % CPPAD_MAX_NUM_THREADS == 0, id_ != any recording tape id.
+// taddr_ is not used, set anyway to avoid compile warning.
 // value_ = 0 so complex of AD will work, see comments in not_complex_ad.cpp.
 template <class Base>
-inline AD<Base>::AD(void) : value_(Base(0)), id_(1), taddr_(0)
+inline AD<Base>::AD(void) 
+: value_(Base(0))
+, id_(CPPAD_MAX_NUM_THREADS)
+, taddr_(0)
 { }	
 
 } // END CppAD namespace

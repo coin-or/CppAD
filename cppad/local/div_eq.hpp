@@ -3,7 +3,7 @@
 # define CPPAD_DIV_EQ_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -23,7 +23,7 @@ AD<Base>& AD<Base>::operator /= (const AD<Base> &right)
 	if( tape != CPPAD_NULL )
 		tape_id = tape->id_;
 
-	// id_ == 1 is initial setting for parameters so cannot match 0
+	// id_ setting for parameters cannot match 0
 	bool var_left  = id_       == tape_id;
 	bool var_right = right.id_ == tape_id;
 	CPPAD_ASSERT_KNOWN(
@@ -50,7 +50,7 @@ AD<Base>& AD<Base>::operator /= (const AD<Base> &right)
 			// put operator in the tape
 			taddr_ = tape->Rec_.PutOp(DivvvOp);
 			// make this a variable
-			CPPAD_ASSERT_UNKNOWN( id_ = tape_id );
+			CPPAD_ASSERT_UNKNOWN( id_ == tape_id );
 		}
 		else if( IdenticalOne( right.value_ ) )
 		{	// this = variable * 1
