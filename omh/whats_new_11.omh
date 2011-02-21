@@ -36,6 +36,13 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-22$$
+Add the $cref/atomic/speed_main/option_list/atomic/$$ option to the 
+speed test program and use 
+$cref/mat_mul.hpp/$$ during the
+$cref cppad_mat_mul.cpp$$ speed test when the atomic option is specified.
+
+
 $head 02-19$$
 There was a bug when $cref/omp_max_thread/$$ was set to one,
 and $code NDEBUG$$ was not defined,

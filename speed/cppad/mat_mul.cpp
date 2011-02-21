@@ -12,6 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin cppad_mat_mul.cpp$$
 $spell
+	info info
+	nr
+	nc
 	cppad
 	mul
 	hpp
@@ -43,6 +46,7 @@ $codep */
 # include <cppad/cppad.hpp>
 # include <cppad/speed/mat_sum_sq.hpp>
 # include <cppad/speed/uniform_01.hpp>
+# include "../../example/mat_mul.hpp"
 
 bool link_mat_mul(
 	size_t                           size     , 
@@ -73,6 +77,16 @@ bool link_mat_mul(
 	static bool printed = false;
 	bool print_this_time = (! printed) & (repeat > 1) & (size >= 10);
 
+	// user atomic information
+	extern bool global_atomic;
+	CPPAD_TEST_VECTOR<ADScalar> ax(2 * n), ay(n);
+	call_info info;
+	info.nr_result = size;
+	info.n_middle  = size;
+	info.nc_result = size;
+	size_t   info_id = info_.size();  
+	
+
 	extern bool global_retape;
 	if( global_retape ) while(repeat--)
 	{	// get the next matrix
@@ -84,8 +98,20 @@ bool link_mat_mul(
 		Independent(X);
 
 		// do computations
-		mat_sum_sq(size, X, Y, Z);
-	
+		if( ! global_atomic )
+			mat_sum_sq(size, X, Y, Z);
+		else
+		{	info_.push_back(info);
+			for(j = 0; j < n; j++)
+			{	ax[j]   = X[j];
+				ax[j+n] = X[j];
+			}
+			// Y = X * X
+			mat_mul(info_id, ax, ay);
+			Z[0] = 0.;
+			for(j = 0; j < n; j++)
+				Z[0] += ay[j];
+		} 
 		// create function object f : X -> Z
 		f.Dependent(X, Z);
 
@@ -118,7 +144,20 @@ bool link_mat_mul(
 		Independent(X);
 
 		// do computations
-		mat_sum_sq(size, X, Y, Z);
+		if( ! global_atomic )
+			mat_sum_sq(size, X, Y, Z);
+		else
+		{	info_.push_back(info);
+			for(j = 0; j < n; j++)
+			{	ax[j]   = X[j];
+				ax[j+n] = X[j];
+			}
+			// Y = X * X
+			mat_mul(info_id, ax, ay);
+			Z[0] = 0.;
+			for(j = 0; j < n; j++)
+				Z[0] += ay[j];
+		} 
 	
 		// create function object f : X -> Z
 		f.Dependent(X, Z);

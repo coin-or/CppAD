@@ -44,6 +44,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin speed_main$$
 $spell
+	mat_mul
 	retaped
 	retape
 	bool
@@ -146,10 +147,10 @@ and the particular test has a fixed operation sequence,
 the AD package is allowed to use one taping of the operation
 sequence for all the repetitions of that speed test.
 The following tests have a fixed operation sequence:
-$code det_minor$$, $code ode$$, $code poly$$.
+$code det_minor$$, $code mat_mul$$, $code ode$$, $code poly$$.
 
 $subhead optimize$$
-If the option code optimize is present, the symbol
+If the option $code optimize$$ is present, the symbol
 $codep
 	extern bool global_optimize
 $$
@@ -160,6 +161,18 @@ the operation sequence,
 this optimization should be done before doing computations.
 If it is false,
 this optimization should not be done.
+
+$subhead atomic$$
+If the option $code atomic$$ is present, the symbol
+$codep
+	extern bool global_atomic
+$$
+is true and otherwise it is false.
+If this external symbol is true,
+and the AD package has a way to speed up the processing
+by adding $cref user_atomic$$ operations,
+this should be included in computations.
+If it is false, user defined atomic operations should not be done.
 
 $head Correctness Results$$
 An output line is generated for each correctness test
@@ -217,6 +230,7 @@ CPPAD_DECLARE_SPEED(sparse_jacobian);
 
 bool   global_retape;
 bool   global_optimize;
+bool   global_atomic;
 
 namespace {
 	using std::cout;
@@ -323,11 +337,14 @@ int main(int argc, char *argv[])
 		error |= iseed < 0;
 		global_retape   = false;
 		global_optimize = false;
+		global_atomic   = false;
 		for(i = 3; i < size_t(argc); i++)
 		{	if( strcmp(argv[i], "retape") == 0 )
 				global_retape = true;
 			else if( strcmp(argv[i], "optimize") == 0 )
 				global_optimize = true;
+			else if( strcmp(argv[i], "atomic") == 0 )
+				global_atomic = true;
 			else
 				error = true;
 		}
