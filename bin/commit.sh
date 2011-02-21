@@ -65,6 +65,7 @@ then
 	# -------------------------------------------------
 	unknown=`svn status | sed -n \
 		-e '/[/ ]junk\./d'  \
+		-e '/[/]test_one.cpp/d' \
 		-e '/[/]test_one.sh/d' \
 		-e '/^[?].*\.am$/p'  \
 		-e '/^[?].*\.in$/p'  \
