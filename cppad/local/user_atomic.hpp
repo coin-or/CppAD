@@ -644,12 +644,13 @@ $cref/CPPAD_COUNT_TRACK/TrackNewDel/TrackCount/$$ to check for
 a memory leak.
 
 $children%
-	example/user_atomic.cpp
+	example/mat_mul.cpp
 %$$
 $head Example$$
-The file $cref/user_atomic.cpp/$$ contains an example and test
+The routine  $cref/mat_mul.cpp/$$ is an example and test
 using $code CPPAD_USER_ATOMIC$$.
-It returns true if the test passes and false otherwise.
+It returns true if the test passes 
+and false otherwise.
 
 $end
 ------------------------------------------------------------------------------

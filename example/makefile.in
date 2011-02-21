@@ -59,10 +59,10 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	jac_lu_det.cpp jac_minor_det.cpp jacobian.cpp log.cpp \
 	log_10.cpp lu_factor.cpp lu_invert.cpp lu_ratio.cpp \
 	lu_solve.cpp lu_vec_ad.cpp lu_vec_ad.hpp lu_vec_ad_ok.cpp \
-	mul.cpp mul_eq.cpp mul_level.cpp nan.cpp near_equal.cpp \
-	near_equal_ext.cpp not_complex_ad.cpp numeric_type.cpp \
-	ode_err_control.cpp ode_err_maxabs.cpp ode_gear.cpp \
-	ode_gear_control.cpp ode_stiff.cpp ode_taylor.cpp \
+	mat_mul.cpp mat_mul.hpp mul.cpp mul_eq.cpp mul_level.cpp \
+	nan.cpp near_equal.cpp near_equal_ext.cpp not_complex_ad.cpp \
+	numeric_type.cpp ode_err_control.cpp ode_err_maxabs.cpp \
+	ode_gear.cpp ode_gear_control.cpp ode_stiff.cpp ode_taylor.cpp \
 	opt_val_hes.cpp optimize.cpp output.cpp par_var.cpp poly.cpp \
 	pow.cpp pow_int.cpp reverse_any.cpp reverse_one.cpp \
 	reverse_three.cpp reverse_two.cpp rev_one.cpp \
@@ -72,8 +72,7 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	sinh.cpp sparse_hessian.cpp sparse_jacobian.cpp sqrt.cpp \
 	stack_machine.cpp sub.cpp sub_eq.cpp tan.cpp tanh.cpp \
 	tape_index.cpp track_new_del.cpp unary_minus.cpp \
-	unary_plus.cpp user_atomic.cpp value.cpp var_2par.cpp \
-	vec_ad.cpp
+	unary_plus.cpp value.cpp var_2par.cpp vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
@@ -100,28 +99,28 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	jacobian.$(OBJEXT) log.$(OBJEXT) log_10.$(OBJEXT) \
 	lu_factor.$(OBJEXT) lu_invert.$(OBJEXT) lu_ratio.$(OBJEXT) \
 	lu_solve.$(OBJEXT) lu_vec_ad.$(OBJEXT) lu_vec_ad_ok.$(OBJEXT) \
-	mul.$(OBJEXT) mul_eq.$(OBJEXT) mul_level.$(OBJEXT) \
-	nan.$(OBJEXT) near_equal.$(OBJEXT) near_equal_ext.$(OBJEXT) \
-	not_complex_ad.$(OBJEXT) numeric_type.$(OBJEXT) \
-	ode_err_control.$(OBJEXT) ode_err_maxabs.$(OBJEXT) \
-	ode_gear.$(OBJEXT) ode_gear_control.$(OBJEXT) \
-	ode_stiff.$(OBJEXT) ode_taylor.$(OBJEXT) opt_val_hes.$(OBJEXT) \
-	optimize.$(OBJEXT) output.$(OBJEXT) par_var.$(OBJEXT) \
-	poly.$(OBJEXT) pow.$(OBJEXT) pow_int.$(OBJEXT) \
-	reverse_any.$(OBJEXT) reverse_one.$(OBJEXT) \
-	reverse_three.$(OBJEXT) reverse_two.$(OBJEXT) \
-	rev_one.$(OBJEXT) rev_sparse_hes.$(OBJEXT) \
-	rev_sparse_jac.$(OBJEXT) rev_two.$(OBJEXT) \
-	romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) rosen_34.$(OBJEXT) \
-	runge_45_1.$(OBJEXT) runge_45_2.$(OBJEXT) \
+	mat_mul.$(OBJEXT) mul.$(OBJEXT) mul_eq.$(OBJEXT) \
+	mul_level.$(OBJEXT) nan.$(OBJEXT) near_equal.$(OBJEXT) \
+	near_equal_ext.$(OBJEXT) not_complex_ad.$(OBJEXT) \
+	numeric_type.$(OBJEXT) ode_err_control.$(OBJEXT) \
+	ode_err_maxabs.$(OBJEXT) ode_gear.$(OBJEXT) \
+	ode_gear_control.$(OBJEXT) ode_stiff.$(OBJEXT) \
+	ode_taylor.$(OBJEXT) opt_val_hes.$(OBJEXT) optimize.$(OBJEXT) \
+	output.$(OBJEXT) par_var.$(OBJEXT) poly.$(OBJEXT) \
+	pow.$(OBJEXT) pow_int.$(OBJEXT) reverse_any.$(OBJEXT) \
+	reverse_one.$(OBJEXT) reverse_three.$(OBJEXT) \
+	reverse_two.$(OBJEXT) rev_one.$(OBJEXT) \
+	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
+	rev_two.$(OBJEXT) romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) \
+	rosen_34.$(OBJEXT) runge_45_1.$(OBJEXT) runge_45_2.$(OBJEXT) \
 	seq_property.$(OBJEXT) simple_vector.$(OBJEXT) sin.$(OBJEXT) \
 	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sqrt.$(OBJEXT) \
 	stack_machine.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
 	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
 	track_new_del.$(OBJEXT) unary_minus.$(OBJEXT) \
-	unary_plus.$(OBJEXT) user_atomic.$(OBJEXT) value.$(OBJEXT) \
-	var_2par.$(OBJEXT) vec_ad.$(OBJEXT)
+	unary_plus.$(OBJEXT) value.$(OBJEXT) var_2par.$(OBJEXT) \
+	vec_ad.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -370,6 +369,8 @@ example_SOURCES = \
 	lu_vec_ad.cpp \
 	lu_vec_ad.hpp \
 	lu_vec_ad_ok.cpp \
+	mat_mul.cpp \
+	mat_mul.hpp \
 	mul.cpp \
 	mul_eq.cpp \
 	mul_level.cpp \
@@ -420,7 +421,6 @@ example_SOURCES = \
 	track_new_del.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
-	user_atomic.cpp \
 	value.cpp \
 	var_2par.cpp \
 	vec_ad.cpp 
@@ -534,6 +534,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lu_solve.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lu_vec_ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lu_vec_ad_ok.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mat_mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mul_level.Po@am__quote@
@@ -586,7 +587,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/track_new_del.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unary_minus.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unary_plus.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/user_atomic.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/value.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/var_2par.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_ad.Po@am__quote@

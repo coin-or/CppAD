@@ -147,6 +147,8 @@ $rref LuInvert.cpp$$
 $rref LuRatio.cpp$$
 $rref LuSolve.cpp$$
 $rref LuVecADOk.cpp$$
+$rref mat_mul.cpp$$
+$rref mat_mul.hpp$$
 $rref Mul.cpp$$
 $rref MulEq.cpp$$
 $rref mul_level.cpp$$
@@ -205,7 +207,6 @@ $rref TapeIndex.cpp$$
 $rref TrackNewDel.cpp$$
 $rref UnaryMinus.cpp$$
 $rref UnaryPlus.cpp$$
-$rref user_atomic.cpp$$
 $rref Value.cpp$$
 $rref Var2Par.cpp$$
 $rref vec_ad.cpp$$

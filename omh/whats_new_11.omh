@@ -65,7 +65,7 @@ This has been fixed.
 $pre
 
 $$
-The $cref/user_atomic.cpp/$$ example has been improved by 
+The $cref/mat_mul.hpp/$$ example has been improved by 
 caching the $latex x$$ variable information and using it during
 $cref/reverse Hessian sparsity/user_atomic/rev_hes_sparse/$$ calculations. 
 $pre

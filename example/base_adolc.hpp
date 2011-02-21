@@ -2,7 +2,7 @@
 # ifndef CPPAD_BASE_ADOLC_INCLUDED
 # define CPPAD_BASE_ADOLC_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -50,7 +50,7 @@ $index adouble, as Base$$
 $section Enable use of AD<Base> where Base is Adolc's adouble Type$$
 
 $head Syntax$$
-This file in located in the $code example$$ directory. 
+This file is located in the $code example$$ directory. 
 It can be copied into the current working directory and
 included with the command:
 $syntax%

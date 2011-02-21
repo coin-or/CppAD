@@ -123,6 +123,8 @@ example_SOURCES   = \
 	lu_vec_ad.cpp \
 	lu_vec_ad.hpp \
 	lu_vec_ad_ok.cpp \
+	mat_mul.cpp \
+	mat_mul.hpp \
 	mul.cpp \
 	mul_eq.cpp \
 	mul_level.cpp \
@@ -173,7 +175,6 @@ example_SOURCES   = \
 	track_new_del.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
-	user_atomic.cpp \
 	value.cpp \
 	var_2par.cpp \
 	vec_ad.cpp 
