@@ -1,3 +1,4 @@
+// $Id$
 # ifndef CPPAD_SPARSE_SET_INCLUDED
 # define CPPAD_SPARSE_SET_INCLUDED
 

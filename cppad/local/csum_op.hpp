@@ -1,8 +1,9 @@
+// $Id$
 # ifndef CPPAD_CSUM_OP_INCLUDED
 # define CPPAD_CSUM_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
