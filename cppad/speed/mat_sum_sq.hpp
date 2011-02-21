@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin mat_sum_sq$$
 $spell
+	sq
 	namespace
 	const
 	CppAD
@@ -112,8 +113,27 @@ The element type must support
 addition, multiplication, and assignment to both its own type 
 and to a double value.
 
+$children%
+	speed/example/mat_sum_sq.cpp%
+	omh/mat_sum_sq_hpp.omh
+%$$
+
+
+$head Example$$
+The file
+$cref/mat_sum_sq.cpp/$$ 
+contains an example and test of $code mat_sum_sq.hpp$$.
+It returns true if it succeeds and false otherwise.
+
 $head Source Code$$
-$codep */
+The file
+$xref/mat_sum_sq.hpp/$$ 
+contains the source for this template function.
+
+$end
+------------------------------------------------------------------------------
+*/
+// BEGIN PROGRAM
 namespace CppAD {
 	template <class Vector>
 	void mat_sum_sq(size_t n, Vector& x , Vector& y , Vector& z)
@@ -135,7 +155,5 @@ namespace CppAD {
 	}
 
 }
-/* $$
-$end
-*/
+// END PROGRAM
 # endif

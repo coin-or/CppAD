@@ -1,0 +1,36 @@
+$Id$
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin mat_sum_sq.hpp$$
+$spell
+	sq
+	ifndef
+	endif
+$$
+
+$section Source: mat_sum_sq$$
+
+$index mat_sum_sq, source$$
+$index source, mat_sum_sq$$
+
+$code
+# ifndef CPPAD_MAT_SUM_SQ_INCLUDED 
+$pre
+$$
+# define CPPAD_MAT_SUM_SQ_INCLUDED 
+
+$verbatim%cppad/speed/mat_sum_sq.hpp%0%// BEGIN PROGRAM%// END PROGRAM%$$
+
+# endif
+$$
+
+$end

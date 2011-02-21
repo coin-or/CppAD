@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -37,6 +37,7 @@ extern bool det_of_minor(void);
 extern bool det_by_lu(void);
 extern bool det_by_minor(void);
 extern bool elapsed_seconds(void);
+extern bool mat_sum_sq(void);
 extern bool ode_evaluate(void);
 extern bool sparse_evaluate(void);
 extern bool speed_test(void);
@@ -76,6 +77,7 @@ int main(void)
 	ok &= Run(det_by_minor,         "det_by_minor"    );
 	ok &= Run(det_by_lu,               "det_by_lu"    );
 	ok &= Run(elapsed_seconds,   "eplased_seconds"    );
+	ok &= Run(mat_sum_sq,             "mat_sum_sq"    );
 	ok &= Run(ode_evaluate,         "ode_evaluate"    );
 	ok &= Run(sparse_evaluate,   "sparse_evaluate"    );
 

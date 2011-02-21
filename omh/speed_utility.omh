@@ -41,6 +41,7 @@ $rref det_by_minor$$
 $rref det_of_minor$$
 $rref det_33$$
 $rref det_grad_33$$
+$rref mat_sum_sq$$
 $rref sparse_evaluate$$
 $rref uniform_01$$
 $tend 
@@ -62,6 +63,7 @@ $rref det_of_minor.hpp$$
 $rref lu_factor.hpp$$
 $rref lu_invert.hpp$$
 $rref lu_solve.hpp$$
+$rref mat_sum_sq.hpp$$
 $rref poly.hpp$$
 $rref sparse_evaluate.hpp$$
 $rref uniform_01.hpp$$
