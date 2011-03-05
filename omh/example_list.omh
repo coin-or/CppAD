@@ -32,6 +32,7 @@ The examples list in this section are of a more general nature.
 $childtable%
 	example/ad_fun.cpp%
 	example/ad_in_c.cpp%
+	example/conj_grad.cpp%
 	example/hes_minor_det.cpp%
 	example/hes_lu_det.cpp%
 	example/interface_2c.cpp%
@@ -95,6 +96,7 @@ $rref Compare.cpp$$
 $rref CompareChange.cpp$$
 $rref ComplexPoly.cpp$$
 $rref CondExp.cpp$$
+$rref conj_grad.cpp$$
 $rref CopyAD.cpp$$
 $rref CopyBase.cpp$$
 $rref Cos.cpp$$

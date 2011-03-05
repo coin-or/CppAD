@@ -60,6 +60,7 @@ extern bool Compare(void);
 extern bool CompareChange(void);
 extern bool complex_poly(void);
 extern bool CondExp(void);
+extern bool conj_grad(void);
 extern bool CopyAD(void);
 extern bool CopyBase(void);
 extern bool Cos(void);
@@ -208,6 +209,7 @@ int main(void)
 	ok &= Run( CompareChange,     "CompareChange"    );
 	ok &= Run( complex_poly,      "complex_poly"     );
 	ok &= Run( CondExp,           "CondExp"          );
+	ok &= Run( conj_grad,         "conj_grad"        );
 	ok &= Run( CopyAD,            "CopyAD"           );
 	ok &= Run( CopyBase,          "CopyBase"         );
 	ok &= Run( Cos,               "Cos"              );

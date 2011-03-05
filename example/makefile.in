@@ -49,18 +49,19 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	base_adolc.hpp bender_quad.cpp bool_fun.cpp vector_bool.cpp \
 	check_numeric_type.cpp check_simple_vector.cpp checkpoint.cpp \
 	compare.cpp compare_change.cpp complex_poly.cpp cond_exp.cpp \
-	copy_ad.cpp copy_base.cpp cos.cpp cosh.cpp cppad_vector.cpp \
-	default.cpp div.cpp div_eq.cpp eq.cpp equal_op_seq.cpp erf.cpp \
-	error_handler.cpp exp.cpp for_one.cpp for_two.cpp forward.cpp \
-	for_sparse_jac.cpp fun_assign.cpp fun_check.cpp \
-	hes_lagrangian.cpp hes_lu_det.cpp hes_minor_det.cpp \
-	hessian.cpp hes_times_dir.cpp independent.cpp integer.cpp \
-	interface_2c.cpp interp_onetape.cpp interp_retape.cpp \
-	jac_lu_det.cpp jac_minor_det.cpp jacobian.cpp log.cpp \
-	log_10.cpp lu_factor.cpp lu_invert.cpp lu_ratio.cpp \
-	lu_solve.cpp lu_vec_ad.cpp lu_vec_ad.hpp lu_vec_ad_ok.cpp \
-	mat_mul.cpp mat_mul.hpp mul.cpp mul_eq.cpp mul_level.cpp \
-	nan.cpp near_equal.cpp near_equal_ext.cpp not_complex_ad.cpp \
+	conj_grad.cpp copy_ad.cpp copy_base.cpp cos.cpp cosh.cpp \
+	cppad_vector.cpp default.cpp div.cpp div_eq.cpp eq.cpp \
+	equal_op_seq.cpp erf.cpp error_handler.cpp exp.cpp for_one.cpp \
+	for_two.cpp forward.cpp for_sparse_jac.cpp fun_assign.cpp \
+	fun_check.cpp hes_lagrangian.cpp hes_lu_det.cpp \
+	hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
+	independent.cpp integer.cpp interface_2c.cpp \
+	interp_onetape.cpp interp_retape.cpp jac_lu_det.cpp \
+	jac_minor_det.cpp jacobian.cpp log.cpp log_10.cpp \
+	lu_factor.cpp lu_invert.cpp lu_ratio.cpp lu_solve.cpp \
+	lu_vec_ad.cpp lu_vec_ad.hpp lu_vec_ad_ok.cpp mat_mul.cpp \
+	mat_mul.hpp mul.cpp mul_eq.cpp mul_level.cpp nan.cpp \
+	near_equal.cpp near_equal_ext.cpp not_complex_ad.cpp \
 	numeric_type.cpp ode_err_control.cpp ode_err_maxabs.cpp \
 	ode_gear.cpp ode_gear_control.cpp ode_stiff.cpp ode_taylor.cpp \
 	opt_val_hes.cpp optimize.cpp output.cpp par_var.cpp poly.cpp \
@@ -83,15 +84,16 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	vector_bool.$(OBJEXT) check_numeric_type.$(OBJEXT) \
 	check_simple_vector.$(OBJEXT) checkpoint.$(OBJEXT) \
 	compare.$(OBJEXT) compare_change.$(OBJEXT) \
-	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) copy_ad.$(OBJEXT) \
-	copy_base.$(OBJEXT) cos.$(OBJEXT) cosh.$(OBJEXT) \
-	cppad_vector.$(OBJEXT) default.$(OBJEXT) div.$(OBJEXT) \
-	div_eq.$(OBJEXT) eq.$(OBJEXT) equal_op_seq.$(OBJEXT) \
-	erf.$(OBJEXT) error_handler.$(OBJEXT) exp.$(OBJEXT) \
-	for_one.$(OBJEXT) for_two.$(OBJEXT) forward.$(OBJEXT) \
-	for_sparse_jac.$(OBJEXT) fun_assign.$(OBJEXT) \
-	fun_check.$(OBJEXT) hes_lagrangian.$(OBJEXT) \
-	hes_lu_det.$(OBJEXT) hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
+	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) conj_grad.$(OBJEXT) \
+	copy_ad.$(OBJEXT) copy_base.$(OBJEXT) cos.$(OBJEXT) \
+	cosh.$(OBJEXT) cppad_vector.$(OBJEXT) default.$(OBJEXT) \
+	div.$(OBJEXT) div_eq.$(OBJEXT) eq.$(OBJEXT) \
+	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) error_handler.$(OBJEXT) \
+	exp.$(OBJEXT) for_one.$(OBJEXT) for_two.$(OBJEXT) \
+	forward.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
+	fun_assign.$(OBJEXT) fun_check.$(OBJEXT) \
+	hes_lagrangian.$(OBJEXT) hes_lu_det.$(OBJEXT) \
+	hes_minor_det.$(OBJEXT) hessian.$(OBJEXT) \
 	hes_times_dir.$(OBJEXT) independent.$(OBJEXT) \
 	integer.$(OBJEXT) interface_2c.$(OBJEXT) \
 	interp_onetape.$(OBJEXT) interp_retape.$(OBJEXT) \
@@ -328,6 +330,7 @@ example_SOURCES = \
 	compare_change.cpp \
 	complex_poly.cpp \
 	cond_exp.cpp \
+	conj_grad.cpp \
 	copy_ad.cpp \
 	copy_base.cpp \
 	cos.cpp \
@@ -493,6 +496,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/compare_change.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/complex_poly.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cond_exp.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conj_grad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/copy_ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/copy_base.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cos.Po@am__quote@
