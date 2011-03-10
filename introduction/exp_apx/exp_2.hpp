@@ -15,7 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin exp_2$$
 $spell
-	cppad-%yy%-%mm%-%dd%
+	cppad-%yyyymmdd%
 	hpp
 	Apx
 	cpp
@@ -57,9 +57,9 @@ $latex \[
 $head include$$
 The include command in the syntax is relative to 
 $syntax%
-	cppad-%yy%-%mm%-%dd%/introduction/exp_apx
+	cppad-%yyyymmdd%/introduction/exp_apx
 %$$
-where $syntax%cppad-%yy%-%mm%-%dd%$$ is the distribution directory
+where $syntax%cppad-%yyyymmdd%$$ is the distribution directory
 created during the beginning steps of the
 $cref%installation%Install%$$ of CppAD.
 
