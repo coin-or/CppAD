@@ -32,10 +32,10 @@ $index algorithm, example$$
 $index exp, example$$
 
 $head Syntax$$
-$syntax%# include "exp_2.hpp"%$$
+$codei%# include "exp_2.hpp"%$$
 $pre
 $$
-$syntax%%y% = exp_2(%x%)%$$
+$icode%y% = exp_2(%x%)%$$
 
 
 $head Purpose$$
@@ -56,55 +56,55 @@ $latex \[
 
 $head include$$
 The include command in the syntax is relative to 
-$syntax%
+$codei%
 	cppad-%yyyymmdd%/introduction/exp_apx
 %$$
-where $syntax%cppad-%yyyymmdd%$$ is the distribution directory
+where $codei%cppad-%yyyymmdd%$$ is the distribution directory
 created during the beginning steps of the
 $cref%installation%Install%$$ of CppAD.
 
 $head x$$
-The argument $italic x$$ has prototype
-$syntax%
+The argument $icode x$$ has prototype
+$codei%
 	const %Type% &%x%
 %$$
-(see $italic Type$$ below).
+(see $icode Type$$ below).
 It specifies the point at which to evaluate the 
 approximation for the second order exponential approximation.
 
 $head y$$
-The result $italic y$$ has prototype
-$syntax%
+The result $icode y$$ has prototype
+$codei%
 	%Type% %y%
 %$$
 It is the value of the exponential function 
 approximation defined above.
 
 $head Type$$
-If $italic u$$ and $italic v$$ are $italic Type$$ objects and $italic i$$
+If $icode u$$ and $italic v$$ are $italic Type$$ objects and $italic i$$
 is an $code int$$: 
 
 $table
 $bold Operation$$  $cnext $bold Result Type$$ $cnext $bold Description$$
 $rnext
-$syntax%%Type%(%i%)%$$ 
-	$cnext $italic Type$$
-	$cnext object with value equal to $italic i$$ 
+$icode%Type%(%i%)%$$ 
+	$cnext $icode Type$$
+	$cnext object with value equal to $icode i$$ 
 $rnext
-$syntax%%u% = %v%$$
-	$cnext $italic Type$$ 
-	$cnext new $italic u$$ (and result) is value of $italic v$$
+$icode%u% = %v%$$
+	$cnext $icode Type$$ 
+	$cnext new $icode u$$ (and result) is value of $italic v$$
 $rnext
-$syntax%%u% * %v%$$
-	$cnext $italic Type$$
+$icode%u% * %v%$$
+	$cnext $icode Type$$
 	$cnext result is value of $latex u * v$$
 $rnext
-$syntax%%u% / %v%$$
-	$cnext $italic Type$$
+$icode%u% / %v%$$
+	$cnext $icode Type$$
 	$cnext result is value of $latex u / v$$
 $rnext
-$syntax%%u% + %v%$$
-	$cnext $italic Type$$
+$icode%u% + %v%$$
+	$cnext $icode Type$$
 	$cnext result is value of $latex u + v$$
 $tend
 
@@ -115,11 +115,11 @@ $childtable%
 
 
 $head Implementation$$
-The file $xref/exp_2.hpp/$$
+The file $cref/exp_2.hpp/$$
 contains a C++ implementation of this function.
 
 $head Test$$
-The file $xref/exp_2.cpp/$$ 
+The file $cref/exp_2.cpp/$$ 
 contains a test of this implementation.
 It returns true for success and false for failure.
 
