@@ -25,6 +25,14 @@ $index Automatic Differentiation, introduction$$
 
 $section An Introduction by Example to Algorithmic Differentiation$$
 
+$head Purpose$$
+This is an introduction by example
+to Algorithmic Differentiation.
+Its purpose is to aid in understand what AD calculates,
+how the calculations are preformed,
+and the amount of computation and memory required 
+for a forward or reverse sweep.
+
 
 $head Preface$$
 
@@ -64,14 +72,6 @@ if you calculate a determinant using LU factorization,
 AD will use the LU representation for
 the derivative of the determinant
 (which is faster than using the definition of the determinant).
-
-$head Purpose$$
-This is an introduction by example
-to Algorithmic Differentiation.
-Its purpose is to aid in understand what AD calculates,
-how the calculations are preformed,
-and the amount of computation and memory required 
-for a forward or reverse sweep.
 
 $head Outline$$
 $list Alpha$$
