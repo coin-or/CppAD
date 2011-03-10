@@ -118,6 +118,10 @@ $icode%Type%(%i%)%$$
 	$cnext $icode Type$$
 	$cnext object with value equal to $icode i$$ 
 $rnext
+$icode%Type u %=% v%$$ 
+	$cnext $icode Type$$
+	$cnext construct $icode u$$ with value equal to $icode v$$ 
+$rnext
 $icode%u% > %v%$$
 	$cnext $code bool$$
 	$cnext true,
