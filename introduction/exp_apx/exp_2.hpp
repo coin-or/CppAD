@@ -89,11 +89,11 @@ $bold Operation$$  $cnext $bold Result Type$$ $cnext $bold Description$$
 $rnext
 $icode%Type%(%i%)%$$ 
 	$cnext $icode Type$$
-	$cnext object with value equal to $icode i$$ 
+	$cnext construct object with value equal to $icode i$$ 
 $rnext
-$icode%u% = %v%$$
-	$cnext $icode Type$$ 
-	$cnext new $icode u$$ (and result) is value of $italic v$$
+$icode%Type u %=% v%$$ 
+	$cnext $icode Type$$
+	$cnext construct $icode u$$ with value equal to $icode v$$ 
 $rnext
 $icode%u% * %v%$$
 	$cnext $icode Type$$
