@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	hes
 	openmp
 	prefixdir
 	pkgconfig
@@ -35,6 +36,14 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-11$$
+The vector of sets argument 
+$cref/r/user_atomic/rev_hes_sparse/r/$$
+to the $code user_atomic$$ function $icode rev_hes_sparse$$
+must have size greater than or equal to $icode n$$.
+There was a check that its size was greater than or equal $icode q$$.
+This was incorrect and has been fixed.
 
 $head 03-05$$
 Add the $cref/conjugate gradient/conj_grad.cpp/$$ example.

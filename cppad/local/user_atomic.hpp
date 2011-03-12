@@ -463,7 +463,7 @@ all the elements of $icode%r%[%j%]%$$ are between
 zero and $icode%q%-1%$$ inclusive.
 This specifies a sparsity pattern for the matrix $latex R$$.
 
-$head s$$
+$subhead s$$
 The $icode for_jac_sparse$$ return value $icode s$$ has prototype
 $codei%
 	CppAD::vector< std::set<size_t> >& %s%
@@ -515,7 +515,7 @@ all the elements of $icode%s%[%i%}%$$
 are between zero and $icode%q%-1%$$ inclusive.
 This specifies a sparsity pattern for the matrix $latex S^\T$$.
 
-$head r$$
+$subhead r$$
 The $icode rev_jac_sparse$$ return value $icode r$$ has prototype
 $codei%
 	CppAD::vector< std::set<size_t> >& %r%
@@ -553,7 +553,7 @@ $codei%
 It specifies the number of columns in the sparsity patterns.
 
 $subhead r$$
-The $icode for_jac_sparse$$ argument $icode r$$ has prototype
+The $icode rev_hes_sparse$$ argument $icode r$$ has prototype
 $codei%
      const CppAD::vector< std::set<size_t> >& %r%
 %$$
@@ -1253,7 +1253,7 @@ public:
 		vector< std::set<size_t> >&           v )
 	{
 		CPPAD_ASSERT_UNKNOWN(index < List().size() );
-		CPPAD_ASSERT_UNKNOWN( r.size() >= q );
+		CPPAD_ASSERT_UNKNOWN( r.size() >= n );
 		CPPAD_ASSERT_UNKNOWN( s.size() >= m );
 		CPPAD_ASSERT_UNKNOWN( t.size() >= n );
 		CPPAD_ASSERT_UNKNOWN( u.size() >= m );

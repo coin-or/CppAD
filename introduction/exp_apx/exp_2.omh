@@ -1,6 +1,6 @@
 $Id$
 -----------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -287,9 +287,9 @@ for the corresponding variable in the operation sequence; i.e.,
 $latex \[
 	v_j (t) = v_j^{(0)} + v_j^{(1)} t
 \] $$
-We use $latex x^{(0)} = 1$$ so that differentiation
+We use $latex x^{(1)} = 1$$ so that differentiation
 with respect to $latex t$$,
-at $latex t = 0$$, is the same partial differentiation 
+at $latex t = 0$$, is the same as partial differentiation 
 with respect to $latex x$$ at $latex x = x^{(0)}$$.
 
 
