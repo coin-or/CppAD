@@ -1138,7 +1138,7 @@ test: all
 #
 #
 dist-hook:
-	rm -rf `find $(distdir)/omh $(distdir)/openmp -name .svn`
+	rm -rf `find . -name .svn`
 	rm $(distdir)/doc/error.wrd
 	rm $(distdir)/bin/gpl_license.sh
 @CppAD_DOCUMENTATION_TRUE@install-data-hook:
