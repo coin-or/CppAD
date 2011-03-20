@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	svn
 	hes
 	openmp
 	prefixdir
@@ -36,6 +37,12 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-19$$
+The subversion write protected directory 
+$code bin/.svn$$ was mistakenly part of the
+$cref/Unix Tar File/InstallUnix/Download/Unix Tar Files/$$ distribution.
+It has been removed.
 
 $head 03-11$$
 The vector of sets argument 

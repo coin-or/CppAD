@@ -37,7 +37,7 @@ then
 	echo bin/"new_release.sh: Release number $release_version already exists."
 	echo "You must first change the assigment"
 	echo "	release=$release"
-	echo "in filebin/ new_release.sh to a higher release number."
+	echo "in file bin/new_release.sh to a higher release number."
 	exit 1
 fi
 echo "svn revert configure.ac"
