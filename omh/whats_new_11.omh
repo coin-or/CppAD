@@ -38,6 +38,10 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-19$$
+The $icode use_ad$$ option was added to the 
+$cref/multi_newton.cpp/$$ test case.
+
 $head 03-19$$
 The subversion write protected directory 
 $code bin/.svn$$ was mistakenly part of the

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,7 +24,7 @@ $index program, OpenMP example$$
 $section Multi-Threaded Newton's Method Main Program$$
 
 $head Syntax$$
-$syntax%multi_newton %n_thread% %repeat% %n_zero% %n_grid% %n_sum%$$
+$syntax%multi_newton %n_thread% %repeat% %n_zero% %n_grid% %n_sum% %use_ad%$$ 
 
 $head Purpose$$
 Runs a timing test of the $cref/multi_newton/$$ routine.
@@ -76,6 +76,12 @@ where $italic n_sum$$ is a positive integer.
 The larger the value of $italic n_sum$$,
 the more computation is required to calculate the function.
 
+$head use_ad$$
+If $icode use_ad$$ is $code true$$,
+then derivatives will be computed using algorithmic differentiation.
+If $icode use_ad$$ is $code false$$, 
+derivatives will be computed using a hand coded routine.
+
 $head Subroutines$$
 $children%
 	openmp/multi_newton.hpp
@@ -105,19 +111,57 @@ $end
 
 
 namespace { // empty namespace
-	size_t n_sum;  // larger values make fun(x) take longer to calculate
-        size_t n_zero; // number of zeros of fun(x) in the total interval
+	size_t n_sum;  // larger values make f(x) take longer to calculate
+	size_t n_zero; // number of zeros of f(x) in the total interval
+	bool   use_ad; // compute derivatives using AD
 }
 
-// A slow version of the sine function
-CppAD::AD<double> fun(const CppAD::AD<double> &x)
-{	CppAD::AD<double> sum = 0.;
+// A slow version of the sine function 
+template <class Float>
+Float f_eval(Float x)
+{	Float sum = 0.;
 	size_t i;
 	for(i = 0; i < n_sum; i++)
 		sum += sin(x);
 
+	return sum / Float(n_sum);
+}
+// Direct calculation of derivative
+double df_direct(double x)
+{	double sum = 0.;
+	size_t i;
+	for(i = 0; i < n_sum; i++)
+		sum += cos(x);
+
 	return sum / double(n_sum);
 }
+// AD calculation of detivative
+void fun_ad(double x, double& f, double& df)
+{	using CppAD::vector;
+	using CppAD::AD;	
+	vector< AD<double> > X(1), Y(1);
+	X[0] = x;
+	CppAD::Independent(X);
+	Y[0] = f_eval(X[0]);
+	CppAD::ADFun<double> F(X, Y);
+	vector<double> dx(1), dy(1);
+	dx[0] = 1.;
+	dy    = F.Forward(1, dx);
+	f     = Value( Y[0] );
+	df    = dy[0];
+	return;
+} 
+
+void fun(double x, double& f, double& df) 
+{	if( use_ad )
+		fun_ad(x, f, df);
+	else
+	{	f  = f_eval(x);
+		df = df_direct(x);
+	}
+	return;
+}
+	
 
 void test_once(CppAD::vector<double> &xout, size_t n_grid)
 {	assert( n_zero > 1 );
@@ -153,8 +197,9 @@ int main(int argc, char *argv[])
 	using std::endl;
 	using CppAD::vector;
 
-	const char *usage = "multi_newton n_thread repeat n_zero n_grid n_sum";
-	if( argc != 6 )
+	const char *usage = 
+		"multi_newton n_thread repeat n_zero n_grid n_sum use_ad";
+	if( argc != 7 )
 	{	std::cerr << usage << endl;
 		exit(1);
 	}
@@ -188,6 +233,15 @@ int main(int argc, char *argv[])
 	// n_sum command line argument 
 	assert( std::atoi(*argv) > 0 );
 	n_sum = std::atoi(*argv++);
+
+	// use_ad
+	if( std::strcmp(*argv, "true") == 0 )
+		use_ad = true;
+	else if( std::strcmp(*argv, "false") == 0 )
+		use_ad = false;
+	else
+		std::cerr << "multi_newton: use_ad is not true or false" << endl;
+	argv++;
 
 	// minimum time for test (repeat until this much time)
 	double time_min = 1.;

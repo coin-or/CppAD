@@ -118,6 +118,7 @@ example_a11c_size="10000"
 multi_newton_n_zero="10"
 multi_newton_n_grid="40"
 multi_newton_n_sum="10"
+multi_newton_use_ad="true"
 # $$
 #
 # $subhead sum_i_inv$$
@@ -165,6 +166,7 @@ do
 	;;
 	multi_newton )
 	args="$multi_newton_n_zero $multi_newton_n_grid $multi_newton_n_sum"
+	args="$args $multi_newton_use_ad"
 	;;
 	sum_i_inv )
 	args="$sum_i_inv_mega_sum"

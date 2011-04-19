@@ -3,7 +3,7 @@
 # define CPPAD_MULTI_NEWTON_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin multi_newton$$
 $spell
+	df
 	xout
 	xlow
 	xup
@@ -31,8 +32,8 @@ $index example, OpenMP Newton's method$$
 $section Multi-Threaded Newton's Method Routine$$
 
 $head Syntax$$
-$syntax%multi_newton(%
-	xout%, %fun%, %n_grid%, %xlow%, %xup%, %epsilon%, %max_itr%)%$$
+$codei%multi_newton(
+	%xout%, %fun%, %n_grid%, %xlow%, %xup%, %epsilon%, %max_itr%)%$$
 
 
 $head Purpose$$
@@ -57,74 +58,76 @@ and at most one zero is found for each interval.
 
 
 $head xout$$
-The argument $italic xout$$ has the prototype
-$syntax%
+The argument $icode xout$$ has the prototype
+$codei%
 	CppAD::vector<double> &%xout%
 %$$
-The input size and value of the elements of $italic xout$$ do not matter.
+The input size and value of the elements of $icode xout$$ do not matter.
 Upon return from $code multi_newton$$,
-the size of $italic xout$$ is less than $latex n$$ and
+the size of $icode xout$$ is less than $latex n$$ and
 $latex \[
 	| f( xout[i] ) | \leq epsilon
 \] $$ 
-for each valid index $italic i$$.
+for each valid index $icode i$$.
 Two $latex x$$ solutions are considered equal (and joined as one) if
 the absolute difference between the solutions is less than
 $latex (b - a) / n$$.
 
 $head fun$$
-The argument $italic fun$$ has prototype
-$syntax%
+The argument $icode fun$$ has prototype
+$codei%
 	%Fun% &%fun%
 %$$
-This argument must evaluate the function $latex f(x)$$ 
+This argument must evaluate the function $latex f(x)$$,
+and its derivative $latex f^{(1)} (x)$$, 
 using the syntax
-$syntax%
-	%f% = %fun%(%x%)
+$codei%
+	%fun%(%x%, %f%, %df%)
 %$$
-where the argument $italic x$$ and the result $italic f$$
-have the prototypes
-$syntax%
-	const AD<double> &%x% 
-	AD<double>        %f%
+where the arguments have the prototypes
+$codei%
+	double    %x% 
+	double&   %f%
+	double&   %df%
 %$$.
-
+The input values of $icode f$$ and $icode df$$ do not matter.
+Upon return they are $latex f(x)$$ and $latex f^{(1)} (x)$$ respectively.
 
 $head n_grid$$
-The argument $italic n_grid$$ has prototype
-$syntax%
+The argument $icode n_grid$$ has prototype
+$codei%
 	size_t %n_grid%
 %$$
 It specifies the number of grid points; i.e., $latex n$$ 
 in the $cref/method/multi_newton/Method/$$ above.
 
 $head xlow$$
-The argument $italic xlow$$ has prototype
-$syntax%
+The argument $icode xlow$$ has prototype
+$codei%
 	double %xlow%
 %$$
 It specifies the lower limit for the entire search; i.e., $latex a$$
 in the $cref/method/multi_newton/Method/$$ above.
 
 $head xup$$
-The argument $italic xup$$ has prototype
-$syntax%
+The argument $icode xup$$ has prototype
+$codei%
 	double %xup%
 %$$
 It specifies the upper limit for the entire search; i.e., $latex b$$
 in the $cref/method/multi_newton/Method/$$ above.
 
 $head epsilon$$
-The argument $italic epsilon$$ has prototype
-$syntax%
+The argument $icode epsilon$$ has prototype
+$codei%
 	double %epsilon%
 %$$
 It specifies the convergence criteria for Newton's method in terms
 of how small the function value must be.
 
 $head max_itr$$
-The argument $italic max_itr$$ has prototype
-$syntax%
+The argument $icode max_itr$$ has prototype
+$codei%
 	size_t %max_itr%
 %$$
 It specifies the maximum number of iterations of Newton's method to try
@@ -162,37 +165,17 @@ $end
 namespace { // BEGIN CppAD namespace
 
 template <class Fun>
-void one_newton(double &fcur, double &xcur, Fun &fun, 
+void one_newton(Fun& fun, double &fcur, double &xcur,
 	double xlow, double xin, double xup, double epsilon, size_t max_itr)
 {	using CppAD::AD;
 	using CppAD::vector;
 	using CppAD::abs;
 
-	// domain space vector
-	size_t n = 1;
-	vector< AD<double> > X(n);
-	// range space vector
-	size_t m = 1;
-	vector< AD<double> > Y(m);
-	// domain and range differentials
-	vector<double> dx(n), dy(m);
-
 	size_t itr;
 	xcur = xin;
+	double dfcur = 0.;
 	for(itr = 0; itr < max_itr; itr++)
-	{	// domain space vector
-		X[0] = xcur;
-		CppAD::Independent(X);
-		// range space vector
-		Y[0] = fun(X[0]);
-		// F : X -> Y
-		CppAD::ADFun<double> F(X, Y);
-		// fcur = F(xcur)
-		fcur  = Value(Y[0]);
-		// evaluate dfcur = F'(xcur)
-		dx[0] = 1;
-		dy = F.Forward(1, dx);
-		double dfcur = dy[0];
+	{	fun(xcur, fcur, dfcur);
 		// check end of iterations
 		if( abs(fcur) <= epsilon )
 			return;
@@ -203,12 +186,10 @@ void one_newton(double &fcur, double &xcur, Fun &fun,
 		if( dfcur == 0. )
 			return;
 		// next Newton iterate
-		double delta_x = - fcur / dfcur;
-		if( xlow - xcur >= delta_x )
-			xcur = xlow;
-		else if( xup - xcur <= delta_x )
-			xcur = xup;
-		else	xcur = xcur + delta_x;
+		xcur = xcur - fcur / dfcur;
+		// keep in bounds
+		xcur = std::max(xcur, xlow);
+		xcur = std::min(xcur, xup);
 	}
 	return;
 }
@@ -248,9 +229,9 @@ void multi_newton(
 # endif
 	for(i = 0; i < n; i++) 
 	{	one_newton(
+			fun       , 
 			fcur[i]   ,
 			xcur[i]   ,
-			fun       , 
 			grid[i]   , 
 			xmid[i]   , 
 			grid[i+1] , 
