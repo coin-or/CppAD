@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -137,11 +137,18 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	argv++;
-	// n_thread 
+	// n_thread command line argument
 	int n_thread;
 	if( std::strcmp(*argv, "automatic") == 0 )
 		n_thread = 0;
-	else	n_thread = std::atoi(*argv);
+	else
+	{	n_thread = std::atoi(*argv);
+		if( n_thread == 0 )
+		{	cout << "example_a11c: n_thread is equal to zero" << endl;
+			cout << "perhaps you want n_thread equal to automatic" << endl;
+			exit(1);
+		}
+	}
 	argv++;
 	// repeat 
 	size_t repeat;
@@ -150,6 +157,11 @@ int main(int argc, char *argv[])
 	else
 	{	assert( std::atoi(*argv) > 0 );
 		repeat = std::atoi(*argv);
+		if( repeat == 0 )
+		{	cout << "example_a11c: repeat is equal to zero" << endl;
+			cout << "perhaps you want repeat equal to automatic" << endl;
+			exit(1);
+		}
 	}
 	argv++;
 	// size 
@@ -169,13 +181,14 @@ int main(int argc, char *argv[])
 	assert( n_thread > 0 );
 	
 	// inform the user of the maximum number of threads
-	cout << "OpenMP: version = "         << _OPENMP;
-	cout << ", max number of threads = " << n_thread << endl;
+	cout << "OpenMP="  << _OPENMP;
 # else
-	cout << "_OPENMP is not defined, ";
-	cout << "running in single tread mode" << endl;
+	cout << "OPENMP=\"\"";
 	n_thread = 1;
 # endif
+	cout << ", n_thread=" << n_thread;
+	cout << ", size="     << size;
+	cout << endl;
 	// Correctness check (store result in ok)
 	size_t i;
 	float *a = new float[size];
@@ -204,12 +217,11 @@ int main(int argc, char *argv[])
 			CppAD::speed_test(test, size_vec, time_min);
 
 		// report results
-		cout << "size             = " << size_vec[0] << endl;
 		cout << "repeats per sec  = " << rate_vec[0] << endl;
 	}
 	if( ok )
-		cout << "Correctness Test Passed" << endl;
-	else	cout << "Correctness Test Failed" << endl;
+		cout << "Correctness Test = OK" << endl;
+	else	cout << "Correctness Test = Error" << endl;
 
 	return static_cast<int>( ! ok );
 }

@@ -42,6 +42,7 @@ $head 04-20$$
 The $cref/openmp run.sh/openmp_run.sh/$$ script what changed
 to take an argument that specifies which tests is run
 (it no longer runs all the tests).
+Also improve the openmp test program output formatting.
 
 $head 04-19$$
 The $icode use_ad$$ option was added to the 

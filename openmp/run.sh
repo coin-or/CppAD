@@ -107,7 +107,7 @@ n_repeat="automatic"
 # $cref/openmp_flag/openmp_run.sh/Parameters/OpenMP Flag/$$ is equal to "",
 # this setting is not used.
 # $codep
-n_thread_set="0 1 2 3 4"
+n_thread_set="automatic 1 2 3 4"
 # $$
 #
 # $subhead example_a11c$$
@@ -195,7 +195,7 @@ echo "$cmd"
 $cmd
 #
 # Run without OpenMP
-cmd="./${test_name}_no_openmp 0 $n_repeat $args"
+cmd="./${test_name}_no_openmp automatic $n_repeat $args"
 echo "$cmd"
 $cmd
 #

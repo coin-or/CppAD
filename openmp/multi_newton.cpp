@@ -209,7 +209,14 @@ int main(int argc, char *argv[])
 	int n_thread;
 	if( std::strcmp(*argv, "automatic") == 0 )
 		n_thread = 0;
-	else	n_thread = std::atoi(*argv);
+	else
+	{	n_thread = std::atoi(*argv);
+		if( n_thread == 0 )
+		{	cout << "multi_newton: n_thread is equal to zero" << endl;
+			cout << "perhaps you want n_thread equal to automatic" << endl;
+			exit(1);
+		}
+	}
 	argv++;
 
 	// repeat command line argument
@@ -219,6 +226,11 @@ int main(int argc, char *argv[])
 	else
 	{	assert( std::atoi(*argv) > 0 );
 		repeat = std::atoi(*argv);
+		if( repeat == 0 )
+		{	cout << "multi_newton: repeat is equal to zero" << endl;
+			cout << "perhaps you want repeat equal to automatic" << endl;
+			exit(1);
+		}
 	}
 	argv++;
 
@@ -260,13 +272,17 @@ int main(int argc, char *argv[])
 	CppAD::AD<double>::omp_max_thread(size_t(n_thread));
 
 	// inform the user of the maximum number of threads
-	cout << "OpenMP: version = "         << _OPENMP;
-	cout << ", max number of threads = " << n_thread << endl;
+	cout << "OpenMP="     << _OPENMP;
 # else
-	cout << "_OPENMP is not defined, ";
-	cout << "running in single tread mode" << endl;
+	cout << "OPENMP=\"\"";
 	n_thread = 1;
 # endif
+	cout << ", n_thread=" << n_thread;
+	cout << ", n_zero="   << n_zero;
+	cout << ", n_grid="   << n_grid;
+	cout << ", n_sum="    << n_sum;
+	cout << ", use_ad="   << use_ad;
+	cout << endl;
 	// initialize flag
 	bool ok = true;
 
@@ -299,7 +315,6 @@ int main(int argc, char *argv[])
 		CppAD::speed_test(test_repeat, size_vec, time_min);
 
 		// report results
-		cout << "n_grid           = " << size_vec[0] << endl;
 		cout << "repeats per sec  = " << rate_vec[0] << endl;
 	}
 	// check all the threads for a CppAD memory leak
@@ -308,8 +323,8 @@ int main(int argc, char *argv[])
 		cout << "Error: memory leak detected" << endl;
 	}
 	if( ok )
-		cout << "Correctness Test Passed" << endl;
-	else	cout << "Correctness Test Failed" << endl;
+		cout << "Correctness Test = OK" << endl;
+	else	cout << "Correctness Test = Error" << endl;
 
 	return static_cast<int>( ! ok );
 }
