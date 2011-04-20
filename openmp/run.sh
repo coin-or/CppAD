@@ -35,11 +35,17 @@
 # $section Compile and Run the OpenMP Test$$
 #
 # $head Syntax$$
-# $code openmp/run.sh$$
+# $codei%openmp/run.sh %test_name%$$
 #
 # $head Purpose$$
-# This script file, $code openmp/run.sh$$, compiles and runs the 
-# speed and correctness tests for using OpenMP.
+# This script file, $code openmp/run.sh$$, compiles and runs the specified
+# speed and correctness test for using OpenMP.
+# The possible values for $icode test_name$$ are:
+# $cref/example_a11c/example_a11c.cpp/$$,
+# $cref/sum_i_inv/sum_i_inv.cpp/$$, and
+# $cref/multi_newton/multi_newton.cpp/$$.
+#
+# $head Parameters$$
 # The following are a list of parameters in this file that can
 # be changed by directly editing the file
 # (there are no command line parameters to the script):
@@ -77,9 +83,9 @@ other_flags="-Werror -DNDEBUG -O2 -Wall"
 # $cref/configure/InstallUnix/Configure/$$ command line,
 # you must add the corresponding include directory; e.g.,
 # $codep
-if [ -d /usr/include/boost-1_33_1 ]
+if [ -d /usr/include/boost ]
 then
-	other_flags="-DNDEBUG -O2 -Wall -I/usr/include/boost-1_33_1"
+	other_flags="-DNDEBUG -O2 -Wall -I/usr/include"
 fi
 # $$
 #
@@ -98,7 +104,7 @@ n_repeat="automatic"
 # Each value in the set must be a positive integer or zero
 # (the value zero is used for dynamic thread adjustment).
 # If the
-# $cref/openmp_flag/openmp_run.sh/Purpose/OpenMP Flag/$$ is equal to "",
+# $cref/openmp_flag/openmp_run.sh/Parameters/OpenMP Flag/$$ is equal to "",
 # this setting is not used.
 # $codep
 n_thread_set="0 1 2 3 4"
@@ -111,21 +117,21 @@ n_thread_set="0 1 2 3 4"
 example_a11c_size="10000"
 # $$
 #
-# $subhead multi_newton$$
-# The following settings determine the corresponding command line
-# arguments for the $cref/multi_newton/$$ program:
-# $codep
-multi_newton_n_zero="10"
-multi_newton_n_grid="40"
-multi_newton_n_sum="10"
-multi_newton_use_ad="true"
-# $$
-#
 # $subhead sum_i_inv$$
 # The following setting determine the corresponding command line
 # arguments for the $cref/sum_i_inv.cpp/$$ program:
 # $codep
 sum_i_inv_mega_sum="1"
+# $$
+#
+# $subhead multi_newton$$
+# The following settings determine the corresponding command line
+# arguments for the $cref/multi_newton/$$ program:
+# $codep
+multi_newton_n_zero="10"
+multi_newton_n_grid="48"
+multi_newton_n_sum="5000"
+multi_newton_use_ad="true"
 # $$
 #
 # $head Restrictions$$
@@ -134,8 +140,8 @@ sum_i_inv_mega_sum="1"
 #
 # $childtable%
 #	openmp/example_a11c.cpp%
-#	openmp/multi_newton.cpp%
-#	openmp/sum_i_inv.cpp
+#	openmp/sum_i_inv.cpp%
+#	openmp/multi_newton.cpp
 # %$$
 #
 # $end
@@ -148,6 +154,20 @@ then
 	echo "must execute this program from the CppAD distribution directory"
 	exit 1
 fi
+case "$1" in
+	example_a11c)
+	;;
+	sum_i_inv)
+	;;
+	multi_newton)
+	;;
+	*)
+	echo "usage: openmp/run.sh test_name"
+	echo "where test_name is example_a11c, sum_i_inv, or multi_newton"
+	exit 1
+	;;
+esac
+test_name="$1"
 echo "cd openmp"
 cd openmp
 #
@@ -155,12 +175,7 @@ cmd="$compiler $version_flag"
 echo "$cmd"
 $cmd
 #
-for name in \
-	example_a11c \
-	multi_newton \
-	sum_i_inv 
-do
-	case "$name" in
+case "$test_name" in
 	example_a11c )
 	args="$example_a11c_size"
 	;;
@@ -171,47 +186,46 @@ do
 	sum_i_inv )
 	args="$sum_i_inv_mega_sum"
 	;;
-	esac
+esac
+#
+# Compile without OpenMP
+#
+cmd="$compiler $test_name.cpp -o ${test_name}_no_openmp -I.. $other_flags"
+echo "$cmd"
+$cmd
+#
+# Run without OpenMP
+cmd="./${test_name}_no_openmp 0 $n_repeat $args"
+echo "$cmd"
+$cmd
+#
+# clean up (this is source directory)
+echo "rm ${test_name}_no_openmp"
+rm ${test_name}_no_openmp
+#
+echo "" # newline
+if [ "$openmp_flag" != "" ]
+then
 	#
-	# Compile without OpenMP
+	# Compile with OpenMP
 	#
-	cmd="$compiler $name.cpp -o ${name}_no_openmp -I.. $other_flags"
+	cmd="$compiler $test_name.cpp \
+		-o ${test_name}_yes_openmp \
+		$openmp_flag -I.. $other_flags"
+	cmd=`echo $cmd | sed -e 's|[ \t][ \t]*| |'`
 	echo "$cmd"
 	$cmd
 	#
 	# Run without OpenMP
-	cmd="./${name}_no_openmp 0 $n_repeat $args"
-	echo "$cmd"
-	$cmd
-	#
-	# clean up (this is source directory)
-	echo "rm ${name}_no_openmp"
-	rm ${name}_no_openmp
-	#
-	echo "" # newline
-	if [ "$openmp_flag" != "" ]
-	then
-		#
-		# Compile with OpenMP
-		#
-		cmd="$compiler $name.cpp \
-			-o ${name}_yes_openmp \
-			$openmp_flag -I.. $other_flags"
-		cmd=`echo $cmd | sed -e 's|[ \t][ \t]*| |'`
+	for n_thread in $n_thread_set
+	do
+		cmd="./${test_name}_yes_openmp $n_thread $n_repeat $args"
 		echo "$cmd"
 		$cmd
-		#
-		# Run without OpenMP
-		for n_thread in $n_thread_set
-		do
-			cmd="./${name}_yes_openmp $n_thread $n_repeat $args"
-			echo "$cmd"
-			$cmd
-			echo "" # newline
-		done
-		#
-		# clean up (this is source directory)
-		echo "rm ${name}_yes_openmp"
-		rm ${name}_yes_openmp
-	fi
-done
+		echo "" # newline
+	done
+	#
+	# clean up (this is source directory)
+	echo "rm ${test_name}_yes_openmp"
+	rm ${test_name}_yes_openmp
+fi

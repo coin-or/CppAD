@@ -516,8 +516,11 @@ then
 	      ./build.sh doxygen   >> $log_dir/$log_file
 	#
 	# openmp test script
-	echo "openmp/run.sh       >> $log_file"
-	      openmp/run.sh       >> $log_dir/$log_file
+	for name in example_a11c sum_i_inv multi_newton
+	do
+		echo "openmp/run.sh $name >> $log_file"
+		      openmp/run.sh $name >> $log_dir/$log_file
+	done
 	# ----------------------------------------------------------------------
 	# Things to do in the work/disribution/work directory
 	# ----------------------------------------------------------------------

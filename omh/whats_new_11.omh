@@ -38,6 +38,11 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-20$$
+The $cref/openmp run.sh/openmp_run.sh/$$ script what changed
+to take an argument that specifies which tests is run
+(it no longer runs all the tests).
+
 $head 04-19$$
 The $icode use_ad$$ option was added to the 
 $cref/multi_newton.cpp/$$ test case.
@@ -77,7 +82,7 @@ This has been fixed.
 $head 02-17$$
 There was a mistake in $code openmp/run.sh$$ where it attempted
 to remove a non-existent file in the case where 
-$cref/openmp_flag/openmp_run.sh/Purpose/OpenMP Flag/$$ was not $code ""$$.
+$cref/openmp_flag/openmp_run.sh/Parameters/OpenMP Flag/$$ was not $code ""$$.
 This has been fixed.
 
 $head 02-15$$
