@@ -195,6 +195,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\link_mat_mul.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\link_ode.cpp"
 				>
 			</File>
@@ -222,6 +226,10 @@
 						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\mat_mul.cpp"
+				>
 			</File>
 			<File
 				RelativePath="..\src\microsoft_timer.cpp"

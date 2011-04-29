@@ -1,109 +1,172 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.10"
+	Version="9.00"
 	Name="example"
 	ProjectGUID="{05B3DA7B-B675-4C92-8C40-042076654033}"
-	Keyword="Win32Proj">
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="1"
-			CharacterSet="2">
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/I &quot;..&quot;"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
-				MinimalRebuild="TRUE"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="5"
-				UsePrecompiledHeader="2"
+				RuntimeLibrary="1"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="FALSE"
-				DebugInformationFormat="4"/>
+				Detect64BitPortabilityProblems="false"
+				DebugInformationFormat="4"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)/example.exe"
 				LinkIncremental="2"
-				GenerateDebugInformation="TRUE"
+				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/example.pdb"
 				SubSystem="1"
-				TargetMachine="1"/>
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
+			/>
 			<Tool
-				Name="VCMIDLTool"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="1"
-			CharacterSet="2">
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="4"
-				UsePrecompiledHeader="3"
+				RuntimeLibrary="0"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="3"/>
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)/example.exe"
 				LinkIncremental="1"
-				GenerateDebugInformation="TRUE"
+				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				TargetMachine="1"/>
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
+			/>
 			<Tool
-				Name="VCMIDLTool"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -112,362 +175,488 @@
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
 			<File
-				RelativePath=".\abort_recording.cpp">
+				RelativePath=".\abort_recording.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\abs.cpp">
+				RelativePath=".\abs.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\acos.cpp">
+				RelativePath=".\acos.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\ad_fun.cpp">
+				RelativePath=".\ad_fun.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\ad_in_c.cpp">
+				RelativePath=".\ad_in_c.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\add.cpp">
+				RelativePath=".\add.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\add_eq.cpp">
+				RelativePath=".\add_eq.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\asin.cpp">
+				RelativePath=".\asin.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\atan.cpp">
+				RelativePath=".\atan.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\atan_2.cpp">
+				RelativePath=".\atan_2.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\bender_quad.cpp">
+				RelativePath=".\bender_quad.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\bool_fun.cpp">
+				RelativePath=".\bool_fun.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\check_numeric_type.cpp">
+				RelativePath=".\check_numeric_type.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\check_simple_vector.cpp">
+				RelativePath=".\check_simple_vector.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\checkpoint.cpp">
+				RelativePath=".\checkpoint.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\compare.cpp">
+				RelativePath=".\compare.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\compare_change.cpp">
+				RelativePath=".\compare_change.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\complex_poly.cpp">
+				RelativePath=".\complex_poly.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\cond_exp.cpp">
+				RelativePath=".\cond_exp.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\copy_ad.cpp">
+				RelativePath=".\conj_grad.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\copy_base.cpp">
+				RelativePath=".\copy_ad.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\cos.cpp">
+				RelativePath=".\copy_base.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\cosh.cpp">
+				RelativePath=".\cos.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\cppad_vector.cpp">
+				RelativePath=".\cosh.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\default.cpp">
+				RelativePath=".\cppad_vector.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\div.cpp">
+				RelativePath=".\default.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\div_eq.cpp">
+				RelativePath=".\div.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\eq.cpp">
+				RelativePath=".\div_eq.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\equal_op_seq.cpp">
+				RelativePath=".\eq.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\erf.cpp">
+				RelativePath=".\equal_op_seq.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\error_handler.cpp">
+				RelativePath=".\erf.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\example.cpp">
+				RelativePath=".\error_handler.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\exp.cpp">
+				RelativePath=".\example.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\for_one.cpp">
+				RelativePath=".\exp.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\for_sparse_jac.cpp">
+				RelativePath=".\for_one.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\for_two.cpp">
+				RelativePath=".\for_sparse_jac.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\forward.cpp">
+				RelativePath=".\for_two.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\fun_assign.cpp">
+				RelativePath=".\forward.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\fun_check.cpp">
+				RelativePath=".\fun_assign.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\hes_lagrangian.cpp">
+				RelativePath=".\fun_check.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\hes_lu_det.cpp">
+				RelativePath=".\hes_lagrangian.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\hes_minor_det.cpp">
+				RelativePath=".\hes_lu_det.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\hes_times_dir.cpp">
+				RelativePath=".\hes_minor_det.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\hessian.cpp">
+				RelativePath=".\hes_times_dir.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\independent.cpp">
+				RelativePath=".\hessian.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\integer.cpp">
+				RelativePath=".\independent.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\interface_2c.cpp">
+				RelativePath=".\integer.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\interp_onetape.cpp">
+				RelativePath=".\interface_2c.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\interp_retape.cpp">
+				RelativePath=".\interp_onetape.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\jac_lu_det.cpp">
+				RelativePath=".\interp_retape.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\jac_minor_det.cpp">
+				RelativePath=".\jac_lu_det.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\jacobian.cpp">
+				RelativePath=".\jac_minor_det.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\log.cpp">
+				RelativePath=".\jacobian.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\log_10.cpp">
+				RelativePath=".\log.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\lu_factor.cpp">
+				RelativePath=".\log_10.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\lu_invert.cpp">
+				RelativePath=".\lu_factor.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\lu_ratio.cpp">
+				RelativePath=".\lu_invert.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\lu_solve.cpp">
+				RelativePath=".\lu_ratio.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\lu_vec_ad.cpp">
+				RelativePath=".\lu_solve.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\lu_vec_ad.hpp">
+				RelativePath=".\lu_vec_ad.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\lu_vec_ad_ok.cpp">
+				RelativePath=".\lu_vec_ad.hpp"
+				>
 			</File>
 			<File
-				RelativePath=".\mul.cpp">
+				RelativePath=".\lu_vec_ad_ok.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\mul_eq.cpp">
+				RelativePath=".\mat_mul.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\mul_level.cpp">
+				RelativePath=".\mul.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\nan.cpp">
+				RelativePath=".\mul_eq.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\near_equal.cpp">
+				RelativePath=".\mul_level.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\near_equal_ext.cpp">
+				RelativePath=".\nan.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\not_complex_ad.cpp">
+				RelativePath=".\near_equal.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\numeric_type.cpp">
+				RelativePath=".\near_equal_ext.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\ode_err_control.cpp">
+				RelativePath=".\not_complex_ad.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\ode_err_maxabs.cpp">
+				RelativePath=".\numeric_type.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\ode_gear.cpp">
+				RelativePath=".\ode_err_control.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\ode_gear_control.cpp">
+				RelativePath=".\ode_err_maxabs.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\ode_stiff.cpp">
+				RelativePath=".\ode_gear.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\ode_taylor.cpp">
+				RelativePath=".\ode_gear_control.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\opt_val_hes.cpp">
+				RelativePath=".\ode_stiff.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\optimize.cpp">
+				RelativePath=".\ode_taylor.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\output.cpp">
+				RelativePath=".\opt_val_hes.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\par_var.cpp">
+				RelativePath=".\optimize.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\poly.cpp">
+				RelativePath=".\output.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\pow.cpp">
+				RelativePath=".\par_var.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\pow_int.cpp">
+				RelativePath=".\poly.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\rev_one.cpp">
+				RelativePath=".\pow.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\rev_sparse_hes.cpp">
+				RelativePath=".\pow_int.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\rev_sparse_jac.cpp">
+				RelativePath=".\rev_one.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\rev_two.cpp">
+				RelativePath=".\rev_sparse_hes.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\reverse_any.cpp">
+				RelativePath=".\rev_sparse_jac.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\reverse_one.cpp">
+				RelativePath=".\rev_two.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\reverse_three.cpp">
+				RelativePath=".\reverse_any.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\reverse_two.cpp">
+				RelativePath=".\reverse_one.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\romberg_mul.cpp">
+				RelativePath=".\reverse_three.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\romberg_one.cpp">
+				RelativePath=".\reverse_two.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\rosen_34.cpp">
+				RelativePath=".\romberg_mul.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\runge_45_1.cpp">
+				RelativePath=".\romberg_one.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\runge_45_2.cpp">
+				RelativePath=".\rosen_34.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\seq_property.cpp">
+				RelativePath=".\runge_45_1.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\simple_vector.cpp">
+				RelativePath=".\runge_45_2.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sin.cpp">
+				RelativePath=".\seq_property.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sinh.cpp">
+				RelativePath=".\simple_vector.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sparse_hessian.cpp">
+				RelativePath=".\sin.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sparse_jacobian.cpp">
+				RelativePath=".\sinh.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sqrt.cpp">
+				RelativePath=".\sparse_hessian.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\stack_machine.cpp">
+				RelativePath=".\sparse_jacobian.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sub.cpp">
+				RelativePath=".\sqrt.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sub_eq.cpp">
+				RelativePath=".\stack_machine.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\tan.cpp">
+				RelativePath=".\sub.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\tanh.cpp">
+				RelativePath=".\sub_eq.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\tape_index.cpp">
+				RelativePath=".\tan.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\track_new_del.cpp">
+				RelativePath=".\tanh.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\unary_minus.cpp">
+				RelativePath=".\tape_index.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\unary_plus.cpp">
+				RelativePath=".\track_new_del.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\value.cpp">
+				RelativePath=".\unary_minus.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\var_2par.cpp">
+				RelativePath=".\unary_plus.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\vec_ad.cpp">
+				RelativePath=".\value.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\vector_bool.cpp">
+				RelativePath=".\var_2par.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\vec_ad.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\vector_bool.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
 		</Filter>
 	</Files>
 	<Globals>

@@ -1,109 +1,172 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.10"
+	Version="9.00"
 	Name="test_more"
 	ProjectGUID="{D42DA86E-7D53-4948-BF21-9EB3EA5707DC}"
-	Keyword="Win32Proj">
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="1"
-			CharacterSet="2">
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/I &quot;..&quot;"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
-				MinimalRebuild="TRUE"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="5"
-				UsePrecompiledHeader="2"
+				RuntimeLibrary="1"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="4"/>
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="4"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)/test_more.exe"
 				LinkIncremental="2"
-				GenerateDebugInformation="TRUE"
+				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/test_more.pdb"
 				SubSystem="1"
-				TargetMachine="1"/>
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
+			/>
 			<Tool
-				Name="VCMIDLTool"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="1"
-			CharacterSet="2">
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="4"
-				UsePrecompiledHeader="3"
+				RuntimeLibrary="0"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="3"/>
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)/test_more.exe"
 				LinkIncremental="1"
-				GenerateDebugInformation="TRUE"
+				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				TargetMachine="1"/>
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
+			/>
 			<Tool
-				Name="VCMIDLTool"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
-			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -112,215 +175,284 @@
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
 			<File
-				RelativePath=".\abs.cpp">
+				RelativePath=".\abs.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\acos.cpp">
+				RelativePath=".\acos.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\add.cpp">
+				RelativePath=".\add.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\add_eq.cpp">
+				RelativePath=".\add_eq.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\add_zero.cpp">
+				RelativePath=".\add_zero.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\asin.cpp">
+				RelativePath=".\asin.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\atan.cpp">
+				RelativePath=".\atan.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\atan_2.cpp">
+				RelativePath=".\atan_2.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\check_simple_vector.cpp">
+				RelativePath=".\check_simple_vector.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\compare.cpp">
+				RelativePath=".\compare.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\compare_change.cpp">
+				RelativePath=".\compare_change.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\cond_exp.cpp">
+				RelativePath=".\cond_exp.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\cond_exp_ad.cpp">
+				RelativePath=".\cond_exp_ad.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\copy.cpp">
+				RelativePath=".\copy.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\cos.cpp">
+				RelativePath=".\cos.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\cosh.cpp">
+				RelativePath=".\cosh.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\dbl_epsilon.cpp">
+				RelativePath=".\dbl_epsilon.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\div.cpp">
+				RelativePath=".\div.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\div_eq.cpp">
+				RelativePath=".\div_eq.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\div_zero_one.cpp">
+				RelativePath=".\div_zero_one.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\erf.cpp">
+				RelativePath=".\erf.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\exp.cpp">
+				RelativePath=".\exp.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\for_hess.cpp">
+				RelativePath=".\for_hess.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\for_sparse_jac.cpp">
+				RelativePath=".\for_sparse_jac.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\forward.cpp">
+				RelativePath=".\forward.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\from_base.cpp">
+				RelativePath=".\from_base.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\fun_check.cpp">
+				RelativePath=".\fun_check.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\jacobian.cpp">
+				RelativePath=".\jacobian.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\log.cpp">
+				RelativePath=".\log.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\log_10.cpp">
+				RelativePath=".\log_10.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\mul.cpp">
+				RelativePath=".\mul.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\mul_eq.cpp">
+				RelativePath=".\mul_eq.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\mul_level.cpp">
+				RelativePath=".\mul_level.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\mul_zero_one.cpp">
+				RelativePath=".\mul_zero_one.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\ndebug.cpp">
+				RelativePath=".\ndebug.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\near_equal_ext.cpp">
+				RelativePath=".\near_equal_ext.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\neg.cpp">
+				RelativePath=".\neg.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\ode_err_control.cpp">
+				RelativePath=".\ode_err_control.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\optimize.cpp">
+				RelativePath=".\optimize.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\poly.cpp">
+				RelativePath=".\poly.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\pow.cpp">
+				RelativePath=".\pow.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\pow_int.cpp">
+				RelativePath=".\pow_int.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\rev_sparse_hes.cpp">
+				RelativePath=".\rev_sparse_hes.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\rev_sparse_jac.cpp">
+				RelativePath=".\rev_sparse_jac.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\rev_two.cpp">
+				RelativePath=".\rev_two.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\reverse.cpp">
+				RelativePath=".\reverse.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\romberg_one.cpp">
+				RelativePath=".\romberg_one.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\rosen_34.cpp">
+				RelativePath=".\rosen_34.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\runge_45.cpp">
+				RelativePath=".\runge_45.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\simple_vector.cpp">
+				RelativePath=".\simple_vector.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sin.cpp">
+				RelativePath=".\sin.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sin_cos.cpp">
+				RelativePath=".\sin_cos.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sinh.cpp">
+				RelativePath=".\sinh.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sparse_hessian.cpp">
+				RelativePath=".\sparse_hessian.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sparse_jacobian.cpp">
+				RelativePath=".\sparse_jacobian.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sparse_vec_ad.cpp">
+				RelativePath=".\sparse_vec_ad.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sqrt.cpp">
+				RelativePath=".\sqrt.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\std_math.cpp">
+				RelativePath=".\std_math.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sub.cpp">
+				RelativePath=".\sub.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sub_eq.cpp">
+				RelativePath=".\sub_eq.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\sub_zero.cpp">
+				RelativePath=".\sub_zero.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\test_more.cpp">
+				RelativePath=".\test_more.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\value.cpp">
+				RelativePath=".\value.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\vec_ad.cpp">
+				RelativePath=".\vec_ad.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\vec_ad_par.cpp">
+				RelativePath=".\vec_ad_par.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\vec_unary.cpp">
+				RelativePath=".\vec_unary.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
 		</Filter>
 	</Files>
 	<Globals>

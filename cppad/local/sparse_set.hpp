@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <set>
 # include <algorithm>
+# include <iterator>
 # include <cppad/local/cppad_assert.hpp>
 
 

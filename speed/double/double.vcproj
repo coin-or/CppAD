@@ -196,6 +196,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\link_mat_mul.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\link_ode.cpp"
 				>
 			</File>
@@ -213,6 +217,10 @@
 			</File>
 			<File
 				RelativePath="..\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\mat_mul.cpp"
 				>
 			</File>
 			<File

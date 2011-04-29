@@ -392,8 +392,12 @@ $codep */
 					mj_right  = right(middle, j, k);
 
 					// back propagate Jacobian sparsity
-					t[im_left]   |= s[ij_result];
-					t[mj_right]  |= s[ij_result];
+					t[im_left]   = (t[im_left] | s[ij_result]);
+					t[mj_right]  = (t[mj_right] | s[ij_result]);
+					// Visual Studio C++ 2008 warns unsafe mix of int and
+					// bool if we use the following code directly above:
+					// t[im_left]  |= s[ij_result];
+					// t[mj_right] |= s[ij_result];
 
 					// back propagate Hessian sparsity 
 					// v[im_left]  = union( v[im_left],  u[ij_result] )

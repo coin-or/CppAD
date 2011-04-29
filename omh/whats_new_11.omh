@@ -12,6 +12,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	instantiation
+	Microsoft
 	svn
 	hes
 	openmp
@@ -37,6 +39,26 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 04-29$$
+$list number$$
+The Microsoft Visual Studio 2003 project files 
+for the $cref/InstallWindows/$$ examples and tests no longer worked because
+the current version of CppAD uses local types in template instantiation; see
+$href%
+	http://msdn.microsoft.com/en-us/library/bh44f2cb(v=vs.71).aspx%
+	Compiler Error C2918
+%$$.
+These project files were converted to Visual Studio 2008 where they do work
+(if you use a later version, Visual Studio should automatically
+convert them for you).
+
+$lnext
+The old speed test directory was moved to $code speed_cppad$$
+before the new $cref speed$$ test organization was created on 2006-12-11
+(revision 715 of the repository).
+The old speed tests have not been used for years and so have been deleted.
+$lend
 
 $head 04-20$$
 The $cref/openmp run.sh/openmp_run.sh/$$ script what changed

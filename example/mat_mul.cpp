@@ -143,7 +143,7 @@ bool mat_mul(void)
 	//----------------------------------------------------------------------
 	// Test second order reverse mode 
 	CPPAD_TEST_VECTOR<double> w(m), dw(2 *  X.size() );
-	for(i = 0.; i < m; i++)
+	for(i = 0; i < m; i++)
 		w[i] = 0.;
 	w[0] = 1.;
 	dw = G.Reverse(2, w);

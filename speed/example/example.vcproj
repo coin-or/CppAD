@@ -207,6 +207,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\mat_sum_sq.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\microsoft_timer.cpp"
 				>
 			</File>

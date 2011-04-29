@@ -199,8 +199,6 @@ top_srcdir = @top_srcdir@
 # 
 # Microsoft project files (and ipopt install utility for Visual Studio)
 EXTRA_DIST = \
-	example.sln \
-	example.vcproj  \
 	example_windows.bat \
 	ode1.omh \
 	ode2.omh
