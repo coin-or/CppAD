@@ -791,6 +791,8 @@ private:
 	/// pointer to object where final results are stored
 	/// (passed to ctor)
 	cppad_ipopt_solution* const     solution_;
+	/// plus infinity as a value of type Number
+	const Number                    infinity_;
 
 	// ------------------------------------------------------------------
 	// Effectively const values determined during constructor using calls 

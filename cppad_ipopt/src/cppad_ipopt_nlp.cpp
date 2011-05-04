@@ -9,6 +9,8 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <limits>
+
 # include "cppad_ipopt_nlp.hpp"
 # include "sparse_map2vec.hpp"
 # include "jac_g_map.hpp"
@@ -117,7 +119,8 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 	  g_l_ ( g_l ),
 	  g_u_ ( g_u ),
 	  fg_info_ ( fg_info ) ,
-	  solution_ (solution)
+	  solution_ (solution) ,
+	  infinity_ ( std::numeric_limits<Number>::infinity() )
 {	size_t k;
 
 	// set information needed in cppad_ipopt_fg_info
@@ -449,6 +452,12 @@ bool cppad_ipopt_nlp::eval_f(
 		printf("cppad_ipopt_nlp::eval_f::x[%d] = %20.14g\n", j, x[j]);
 	printf("cppad_ipopt_nlp::eval_f::obj_value = %20.14g\n", obj_value);
 # endif
+# ifndef NDEBUG
+	CPPAD_ASSERT_KNOWN(
+		(-infinity_ < obj_value) && (obj_value < infinity_),
+		"cppad_ipopt_nlp::eval_f:: objective value is not finite"
+	);
+# endif
 	return true;
 }
 
@@ -538,6 +547,12 @@ bool cppad_ipopt_nlp::eval_grad_f(
 	"cppad_ipopt_nlp::eval_grad_f::grad_f[%d] = %20.14g\n", j, grad_f[j]
 	);
 # endif
+# ifndef NDEBUG
+	for(j = 0; j < n_; j++) CPPAD_ASSERT_KNOWN(
+		(-infinity_ < grad_f[j]) && (grad_f[j] < infinity_),
+		"cppad_ipopt_nlp::grad_f:: gradient of objective is not finite"
+	);
+# endif
 	return true;
 }
 
@@ -621,6 +636,12 @@ bool cppad_ipopt_nlp::eval_g(
 		printf("cppad_ipopt_nlp::eval_g::x[%d] = %20.14g\n", j, x[j]);
 	for(i = 0; i < m_; i++)
 		printf("cppad_ipopt_nlp::eval_g::g[%d] = %20.14g\n", i, g[i]);
+# endif
+# ifndef NDEBUG
+	for(i = 0; i < m_; i++) CPPAD_ASSERT_KNOWN(
+		(-infinity_ < g[i]) && (g[i] < infinity_),
+		"cppad_ipopt_nlp::eval_g:: not all constraints are not finite"
+	);
 # endif
 	return true;
 }
@@ -750,6 +771,14 @@ bool cppad_ipopt_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 			}
 		}
 	}
+# ifndef NDEBUG
+	for(l = 0; l < nnz_jac_g_; l++) CPPAD_ASSERT_KNOWN(
+		(-infinity_ < values[l]) && (values[l] < infinity_),
+		"cppad_ipopt_nlp::eval_jac_g:: a component of "
+		"gradient of g is not finite"
+	);
+# endif
+
   	return true;
 }
 
@@ -915,6 +944,13 @@ bool cppad_ipopt_nlp::eval_h(Index n, const Number* x, bool new_x,
 			}
 		}
 	}
+# ifndef NDEBUG
+	for(l = 0; l < nnz_h_lag_; l++) CPPAD_ASSERT_KNOWN(
+		(-infinity_ < values[l]) && (values[l] < infinity_),
+		"cppad_ipopt_nlp::eval_h:: a component of "
+		"Hessian of Lagragian is not finite"
+	);
+# endif
 	return true;
 }
 

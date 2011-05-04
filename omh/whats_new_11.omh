@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	hasnan
 	instantiation
 	Microsoft
 	svn
@@ -39,6 +40,24 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-03$$
+$list number$$
+If $code NDEBUG$$ is not defined,
+the $cref/hasnan/nan/$$ function is used to make sure that the 
+results of any $cref/Forward/$$ operation does not contain a 
+nan (not a number).
+If so, an error message is generated and the program terminates.
+This error message and termination can be caught; see $cref/ErrorHandler/$$.
+
+$lnext
+In the event that the 
+$cref cppad_ipopt_nlp$$ objective function, the constraints,
+or their derivatives are infinite, 
+an error message is generated and the program terminates
+(proved that $code NDEBUG$$ is not defined and the default error 
+handler has not been replaced).
+$lend
 
 $head 04-29$$
 $list number$$

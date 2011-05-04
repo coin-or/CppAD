@@ -456,7 +456,8 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	CPPAD_ASSERT_UNKNOWN( compare_change_ == 0 );
 
 # ifndef NDEBUG
-	for(i = 0; i < m; i++) if( taylor_[dep_taddr_[i]] != y[i].value_ )
+	for(i = 0; i < m; i++) 
+	if( taylor_[dep_taddr_[i]] != y[i].value_ || isnan( y[i].value_ ) )
 	{	using std::endl;
 		std::ostringstream buf;
 		buf << "A dependent variable value is not equal to "

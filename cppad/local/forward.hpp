@@ -3,7 +3,7 @@
 # define CPPAD_FORWARD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -77,21 +77,21 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 	}
 
 	// evaluate the derivatives
-# if CPPAD_USE_FORWARD0SWEEP
-	if( p == 0 ) compare_change_ = forward0sweep(
-		true, n, total_num_var_, &play_, taylor_col_dim_, taylor_
-	);
-	else 
-	forward_sweep(
-		true, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_
-	);
-# else
-	size_t compare_change = forward_sweep(
-		true, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_
-	);
 	if( p == 0 )
-		compare_change_ = compare_change;
+	{
+# if CPPAD_USE_FORWARD0SWEEP
+		compare_change_ = forward0sweep(
+			true, n, total_num_var_, &play_, taylor_col_dim_, taylor_
+		);
+# else
+		compare_change_ = forward_sweep(
+		true, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_
+		);
 # endif
+	}
+	else forward_sweep(
+		true, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_
+	);
 
 	// return the p-th order taylor_ coefficients for dependent variables
 	Vector vp(m);
@@ -99,6 +99,22 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 	{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
 		vp[i] = taylor_[dep_taddr_[i] * taylor_col_dim_ + p];
 	}
+# ifndef NDEBUG
+	if( hasnan(vp) )
+	{	if( p == 0 )
+		{	CPPAD_ASSERT_KNOWN(false,
+				"y_p = f.Forward(p, x_p): has a nan in y_p for p = 0."
+			);  
+		}
+		else
+		{	CPPAD_ASSERT_KNOWN(false,
+				"y_p = f.Forward(p, x_p): has a nan in y_p for p > 0\n"
+				"but not for p = 0."
+			);
+		}
+	}
+# endif
+
 
 	// now we have p + 1  taylor_ coefficients per variable
 	taylor_per_var_ = p + 1;

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -181,15 +181,59 @@ bool ForwardOlder(void)
 
 	return ok;
 }
+
+void my_error_handler(
+	bool known           ,
+	int  line            ,
+	const char *file     ,
+	const char *exp      ,
+	const char *msg      )
+{	// error hander must not return, so throw an exception
+	throw std::string(msg);
+}
+
+bool forward_nan(void)
+{	
+
+	using CppAD::vector;
+	using CppAD::AD;
+
+	size_t n = 2, m = 1;
+	vector< AD<double> > a_x(n), a_y(m);
+	a_x[0] = 1.;
+	a_x[1] = 2.;
+	Independent(a_x);
+	a_y[0] = a_x[0] / a_x[1];
+	CppAD::ADFun<double> f(a_x, a_y);
+	//
+	vector<double> x(n), y(m);
+	x[0] = 0.;
+	x[1] = 0.;
+
+	// replace the default CppAD error handler
+	CppAD::ErrorHandler info(my_error_handler);
+
+	bool ok = false;
+	try {
+		y    = f.Forward(0, x);
+	}
+	catch( std::string msg )
+	{	// check that the message contains "nan"
+		ok = msg.find("nan") != std::string::npos;
+	}
+
+	return ok;
+}
 } // END empty namespace 
 
 # include <vector>
 # include <valarray>
 bool Forward(void)
 {	bool ok = true;
-	ok &= ForwardOlder();
 	ok &= ForwardCases< CppAD::vector  <double> >();
 	ok &= ForwardCases< std::vector    <double> >();
 	ok &= ForwardCases< std::valarray  <double> >();
+	ok &= ForwardOlder();
+	ok &= forward_nan();
 	return ok;
 }
