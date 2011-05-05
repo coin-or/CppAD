@@ -529,8 +529,9 @@ then
 	      cd work
 	#
 	dir=`pwd` 
-	echo "Use: tail -f $dir/make_test.log"
-	echo "to follow the progress of the following command:"
+	echo "log=$dir/make_test.log"
+	echo "grep OK \$log # Gives a summary of progress for make command below"
+	echo "tail -f \$log # Follows the progress for make command below"
 	#
 	# build and run all the tests
 	echo "make test                >& make_test.log"

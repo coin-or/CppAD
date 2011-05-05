@@ -2,7 +2,7 @@
 # ifndef CPPAD_BASE_COMPLEX_INCLUDED
 # define CPPAD_BASE_COMPLEX_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -14,6 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_complex.hpp$$
 $spell
+	gcc
+	isnan
 	cppad.hpp
 	sqrt
 	exp
@@ -63,6 +65,25 @@ $codep */
 # include <complex>
 # include <cppad/declare.hpp>
 # include <cppad/error_handler.hpp>
+/* $$
+
+$head isnan$$
+The gcc 4.1.1 complier defines the function
+$codei%
+	int std::complex<double>::isnan( std::complex<double> %z% )
+%$$
+(which is not specified in the C++ 1998 standard ISO/IEC 14882).
+This causes an ambiguity between the function above and the CppAD
+$cref/isnan/nan/$$ template function.
+We avoid this ambiguity by defining a non-template version of
+this function in the CppAD namespace.
+$codep */
+# include <cppad/nan.hpp>
+namespace CppAD {
+	inline bool isnan(const std::complex<double> & z)
+	{	return isnan< std::complex<double> >(z); }
+}
+
 /* $$
 
 $head CondExpOp$$
