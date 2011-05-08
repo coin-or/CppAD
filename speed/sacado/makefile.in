@@ -499,8 +499,10 @@ uninstall-am:
 	uninstall-am
 
 
-test: sacado$(EXEEXT)
-	./sacado correct 123 | tee test.log
+test.sh: sacado$(EXEEXT)
+	echo "#! /bin/sh -e"                 > test.sh
+	echo "./sacado correct 123"         >> test.sh
+	chmod +x test.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
