@@ -45,6 +45,3 @@ libspeed_a_SOURCES = \
 	link_sparse_hessian.cpp \
 	link_sparse_jacobian.cpp \
 	microsoft_timer.cpp
-
-test: libspeed.a
-	echo "speed/src: Done building libspeed.a" > test.log

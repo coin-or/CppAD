@@ -48,5 +48,7 @@ double_SOURCES = \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
 
-test: double$(EXEEXT)
-	./double correct 123 | tee test.log
+test.sh: double$(EXEEXT)
+	echo "#! /bin/sh -e"            > test.sh
+	echo "./double correct 123"    >> test.sh
+	chmod +x test.sh

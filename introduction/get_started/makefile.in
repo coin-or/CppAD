@@ -84,7 +84,7 @@ CYGPATH_W = @CYGPATH_W@
 
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -456,8 +456,10 @@ uninstall-am:
 	uninstall-am
 
 #
-test: get_started$(EXEEXT)
-	./get_started | tee test.log
+test.sh: get_started$(EXEEXT)
+	echo "#! /bin/sh -e"  > test.sh
+	echo "./get_started" >> test.sh
+	chmod +x test.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

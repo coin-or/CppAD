@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -37,6 +37,8 @@ $end
 # include <algorithm>
 # include <cmath>
 
+# define CPPAD_DEBUG_ELAPSED_SECONDS 0
+
 bool elapsed_seconds(void)
 {	bool ok = true;
 
@@ -50,11 +52,10 @@ bool elapsed_seconds(void)
 		s2 = CppAD::elapsed_seconds();
 
 	}
-# ifdef CPPAD_DEBUG_NEW_TESTS
+# if CPPAD_DEBUG_ELAPSED_SECONDS
 	std::cout << "max_diff = " << max_diff << std::endl;
-# else
-	ok &= 0. < max_diff && max_diff < .02;
 # endif
+	ok &= 0. < max_diff && max_diff < .04;
 	return ok;
 }
 

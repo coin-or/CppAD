@@ -496,13 +496,11 @@ uninstall-am:
 	uninstall-am
 
 
-test: adolc$(EXEEXT)
-	echo "./adolc correct 123" > test.log
-	./adolc correct 123 | tee test.tmp
-	cat test.tmp >> test.log
-	echo "./adolc correct 123 retape" >> test.log
-	./adolc correct 123 retape | tee test.tmp
-	cat test.tmp >> test.log
+test.sh: adolc$(EXEEXT)
+	echo "#! /bin/sh -e"               > test.sh
+	echo "./adolc correct 123"        >> test.sh
+	echo "./adolc correct 123 retape" >> test.sh
+	chmod +x test.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

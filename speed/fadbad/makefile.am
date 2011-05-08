@@ -47,5 +47,7 @@ fadbad_SOURCES = \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
 
-test: fadbad$(EXEEXT)
-	./fadbad correct 123 | tee test.log
+test.sh: fadbad$(EXEEXT)
+	echo "#! /bin/sh -e"                 > test.sh
+	echo "./fadbad correct 123"         >> test.sh
+	chmod +x test.sh

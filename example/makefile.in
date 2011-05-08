@@ -807,8 +807,10 @@ uninstall-am:
 	uninstall-am
 
 
-test: example$(EXEEXT)
-	./example | tee test.log
+test.sh: example$(EXEEXT)
+	echo "#! /bin/sh -e"  > test.sh
+	echo "./example "    >> test.sh 
+	chmod +x test.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

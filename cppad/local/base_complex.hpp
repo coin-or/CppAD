@@ -80,8 +80,8 @@ this function in the CppAD namespace.
 $codep */
 # include <cppad/nan.hpp>
 namespace CppAD {
-	inline bool isnan(const std::complex<double> & z)
-	{	return isnan< std::complex<double> >(z); }
+	inline bool isnan(const std::complex<double>& z)
+	{	return CppAD::isnan< std::complex<double> >(z); }
 }
 
 /* $$

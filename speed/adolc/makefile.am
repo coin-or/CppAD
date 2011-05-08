@@ -46,10 +46,8 @@ adolc_SOURCES = \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
 
-test: adolc$(EXEEXT)
-	echo "./adolc correct 123" > test.log
-	./adolc correct 123 | tee test.tmp
-	cat test.tmp >> test.log
-	echo "./adolc correct 123 retape" >> test.log
-	./adolc correct 123 retape | tee test.tmp
-	cat test.tmp >> test.log
+test.sh: adolc$(EXEEXT)
+	echo "#! /bin/sh -e"               > test.sh
+	echo "./adolc correct 123"        >> test.sh
+	echo "./adolc correct 123 retape" >> test.sh
+	chmod +x test.sh

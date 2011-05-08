@@ -41,5 +41,7 @@ example_SOURCES   = \
 	sparse_evaluate.cpp \
 	speed_test.cpp
 
-test: example$(EXEEXT)
-	./example | tee test.log
+test.sh: example$(EXEEXT)
+	echo "#! /bin/sh -e"  > test.sh
+	echo "./example"     >> test.sh
+	chmod +x test.sh

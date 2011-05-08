@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -45,5 +45,7 @@ test_more_SOURCES   = \
 	retape_k1_l1.cpp \
 	retape_k1_l2.cpp
 
-test: test_more$(EXEEXT)
-	./test_more | tee test.log
+test.sh: test_more$(EXEEXT)
+	echo "#! /bin/sh -e"  > test.sh
+	echo "./test_more"   >> test.sh
+	chmod +x test.sh

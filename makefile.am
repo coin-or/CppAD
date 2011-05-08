@@ -300,16 +300,17 @@ test: all
 	rm -f test.log
 	touch test.log
 	rm -f test.sh
-	echo "#! /bin/sh -e"                                      >  test.sh
-	for dir in $(test_directory_list) ; do ( \
-		echo "#"                                             >> test.sh ; \
-		echo "echo \"cd $$dir\" >> test.log"                 >> test.sh ; \
-		echo "cd $$dir "                                     >> test.sh ; \
-		echo "make test "                                    >> test.sh ; \
-		echo "cat test.log >> $(ABS_TOP_BUILDDIR)/test.log"  >> test.sh ; \
-		echo "cd $(ABS_TOP_BUILDDIR)"                        >> test.sh ; \
+	echo "#! /bin/sh -e"                               >  test.sh
+	for dir in $(test_directory_list) ; do (                        \
+		rm -f $$dir/test.sh                                        \
+		echo "#"                                      >> test.sh ; \
+		echo "cd $$dir "                              >> test.sh ; \
+		echo "make test.sh"                           >> test.sh ; \
+		echo "echo \"Running test.sh in $$dir\""      >> test.sh ; \
+		echo "./test.sh"                              >> test.sh ; \
+		echo "cd $(ABS_TOP_BUILDDIR)"                 >> test.sh ; \
 	) done
-	echo "exit 0"                                             >> test.sh
+	echo "exit 0"                                      >> test.sh
 	chmod +x test.sh
 	./test.sh
 #

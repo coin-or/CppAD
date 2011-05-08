@@ -47,5 +47,7 @@ sacado_SOURCES = \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
 
-test: sacado$(EXEEXT)
-	./sacado correct 123 | tee test.log
+test.sh: sacado$(EXEEXT)
+	echo "#! /bin/sh -e"                 > test.sh
+	echo "./sacado correct 123"         >> test.sh
+	chmod +x test.sh
