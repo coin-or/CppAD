@@ -57,5 +57,6 @@ speed_SOURCES   = \
 
 test.sh: speed$(EXEEXT)
 	echo "#! /bin/sh -e"  > test.sh
+	echo "export LD_LIBRARY_PATH=\"$(CPPAD_IPOPT_LD_PATH)\"" >> test.sh
 	echo "./speed"       >> test.sh
 	chmod +x test.sh

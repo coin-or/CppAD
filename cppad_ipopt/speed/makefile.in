@@ -83,6 +83,7 @@ CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
+CPPAD_IPOPT_LD_PATH = @CPPAD_IPOPT_LD_PATH@
 CPPAD_IPOPT_LIBS = @CPPAD_IPOPT_LIBS@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -571,6 +572,7 @@ uninstall-am:
 
 test.sh: speed$(EXEEXT)
 	echo "#! /bin/sh -e"  > test.sh
+	echo "export LD_LIBRARY_PATH=\"$(CPPAD_IPOPT_LD_PATH)\"" >> test.sh
 	echo "./speed"       >> test.sh
 	chmod +x test.sh
 

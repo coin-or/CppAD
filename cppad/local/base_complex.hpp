@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_complex.hpp$$
 $spell
+	imag
 	gcc
 	isnan
 	cppad.hpp
@@ -62,6 +63,7 @@ so it is necessary to define the error handler
 in addition to including
 $cref/declare.hpp/base_require/declare.hpp/$$
 $codep */
+# include <limits>
 # include <complex>
 # include <cppad/declare.hpp>
 # include <cppad/error_handler.hpp>
@@ -78,10 +80,11 @@ $cref/isnan/nan/$$ template function.
 We avoid this ambiguity by defining a non-template version of
 this function in the CppAD namespace.
 $codep */
-# include <cppad/nan.hpp>
 namespace CppAD {
 	inline bool isnan(const std::complex<double>& z)
-	{	return CppAD::isnan< std::complex<double> >(z); }
+	{	static double nan = std::numeric_limits<double>::quiet_NaN();
+		return (z != z) | (z.real() == nan) | (z.imag() == nan);
+	}
 }
 
 /* $$

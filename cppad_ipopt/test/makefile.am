@@ -47,5 +47,6 @@ test_more_SOURCES   = \
 
 test.sh: test_more$(EXEEXT)
 	echo "#! /bin/sh -e"  > test.sh
+	echo "export LD_LIBRARY_PATH=\"$(CPPAD_IPOPT_LD_PATH)\"" >> test.sh
 	echo "./test_more"   >> test.sh
 	chmod +x test.sh

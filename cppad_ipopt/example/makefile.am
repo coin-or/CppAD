@@ -58,5 +58,6 @@ example_SOURCES   = \
 
 test.sh: example$(EXEEXT)
 	echo "#! /bin/sh -e"  > test.sh
+	echo "export LD_LIBRARY_PATH=\"$(CPPAD_IPOPT_LD_PATH)\"" >> test.sh
 	echo "./example"     >> test.sh
 	chmod +x test.sh

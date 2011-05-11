@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20110419, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20110511, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -336,8 +336,17 @@ AC_CHECK_LIB(
 )
 
 dnl --------------------------------------------------------------------------
-dnl Determine link line for ipopt
-AC_SUBST(CPPAD_IPOPT_LIBS, "-L $IPOPT_DIR/lib -lipopt")
+dnl Library directories
+if test -e $IPOPT_DIR/lib/coin ; then
+	IPOPT_LIBS="-L $IPOPT_DIR/lib/coin -L $IPOPT_DIR/lib/coin/ThirdParty"
+	IPOPT_LD_PATH="$IPOPT_DIR/lib/coin:$IPOPT_DIR/lib/coin/ThirdParty"
+else
+	IPOPT_LIBS="-L $IPOPT_DIR/lib"
+	IPOPT_LD_PATH="$IPOPT_DIR/lib"
+fi
+AC_SUBST(CPPAD_IPOPT_LD_PATH, "$IPOPT_LD_PATH")
+#
+AC_SUBST(CPPAD_IPOPT_LIBS, "$IPOPT_LIBS -lipopt")
 if test "$have_pkg_config" == "yes"; then
 	dnl set CPPAD_IPOPT_LIBS
 	PKG_CONFIG_PATH="$IPOPT_DIR/lib/pkgconfig:$IPOPT_DIR/share/pkgconfig"
