@@ -160,32 +160,32 @@ fi
 list=`sed -e '/@/! d' -e 's/@.*//' bin/commit.1.$$`
 msg=`sed -e '/@ *$/d' -e 's|.*/\([^/]*@\)|\1|' -e 's|@|:|' bin/commit.1.$$`
 # if cppad/config.h is in the list of files to be commited
-if (echo $list | grep '^bin/commit.sh$' > /dev/null)
+if (echo $list | grep 'bin/commit.sh$' > /dev/null)
 then
 	echo "bin/commit.sh: cannot be used to commit changes to itself."
 	echo "remove it from the list of files in bin/commit.sh"
 	exit 1
 fi
-if (echo $list | grep '^bin/commit.sed$' > /dev/null)
+if (echo $list | grep 'bin/commit.sed$' > /dev/null)
 then
 	echo "bin/commit.sh: cannot be used to commit changes to bin/commit.sed"
 	echo "remove it from the list of files in bin/commit.sh"
 	exit 1
 fi
-if (echo $list | grep '^cppad/config.h$' > /dev/null)
+if (echo $list | grep 'cppad/config.h$' > /dev/null)
 then
 	# and CPPAD_CPPADVECTOR is not defined as one
 	if ! grep '^# *define  *CPPAD_CPPADVECTOR  *1 *$' cppad/config.h \
 		>  /dev/null
 	then
-		echo "bin/commit.sh run: CPPAD_CPPADVECTOR is 1 in cppad/config.h"
+		echo "bin/commit.sh run: CPPAD_CPPADVECTOR != 1 in cppad/config.h"
 		rm bin/commit.1.$$
 		exit 1
 	fi
 	if ! grep '^# *define  *CPPAD_BOOSTVECTOR  *0 *$' cppad/config.h \
 		>  /dev/null
 	then
-		echo "bin/commit.sh run: CPPAD_BOOSTVECTOR not 0 in cppad/config.h"
+		echo "bin/commit.sh run: CPPAD_BOOSTVECTOR != 0 in cppad/config.h"
 		rm bin/commit.1.$$
 		exit 1
 	fi
