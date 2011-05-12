@@ -43,9 +43,15 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 05-05$$
+$head 05-11$$
+$list number$$
 Avoid ambiguity in the definition of the 
 $cref/complex isnan/base_complex.hpp/isnan/$$ function.
+$lnext
+Errors during $cref/make test/InstallUnix/make test/$$ were not 
+being detected.
+This has been fixed.
+$lend
 
 $head 05-03$$
 $list number$$

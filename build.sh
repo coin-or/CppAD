@@ -17,8 +17,6 @@ ADOLC_DIR=$HOME/prefix/adolc
 FADBAD_DIR=$HOME/prefix/fadbad
 SACADO_DIR=$HOME/prefix/sacado
 IPOPT_DIR=$HOME/prefix/ipopt
-# library path for the ipopt and adolc
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ADOLC_DIR/lib:$IPOPT_DIR/lib"
 # version type is one of "trunk" or "stable"
 version_type="trunk"
 # -----------------------------------------------------------------------------

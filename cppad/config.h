@@ -2,10 +2,10 @@
 /* cppad/config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* is CPPAD_TEST_VECTOR = boost vector (overriden if _MSC_VER defined) */
-#define CPPAD_BOOSTVECTOR 1
+#define CPPAD_BOOSTVECTOR 0
 
 /* is CPPAD_TEST_VECTOR == CppAD::vector */
-#define CPPAD_CPPADVECTOR 0
+#define CPPAD_CPPADVECTOR 1
 
 /* does system support gettimeofday (overriden if _MSC_VER defined) */
 #define CPPAD_GETTIMEOFDAY 1
