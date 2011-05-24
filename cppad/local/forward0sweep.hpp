@@ -122,12 +122,12 @@ size_t forward0sweep(
 	size_t compareCount = 0;
 
 	// This is an order zero calculation, initialize vector indices
-	size_t *VectorInd = CPPAD_NULL;  // address for each element
-	bool   *VectorVar = CPPAD_NULL;  // is element a variable
+	pod_vector<size_t> VectorInd;  // address for each element
+	pod_vector<bool>   VectorVar;  // is element a variable
 	size_t  i = Rec->num_rec_vecad_ind();
 	if( i > 0 )
-	{	VectorInd = CPPAD_TRACK_NEW_VEC(i, VectorInd);
-		VectorVar = CPPAD_TRACK_NEW_VEC(i, VectorVar);
+	{	VectorInd.extend(i);
+		VectorVar.extend(i);
 		while(i--)
 		{	VectorInd[i] = Rec->GetVecInd(i);
 			VectorVar[i] = false;
@@ -300,8 +300,8 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case LdpOp:
-			CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
-			CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
+			CPPAD_ASSERT_UNKNOWN( VectorInd.size() != 0 );
+			CPPAD_ASSERT_UNKNOWN( VectorVar.size() != 0 );
 			non_const_arg = Rec->forward_non_const_arg();
 			forward_load_p_op_0(
 				i_var, 
@@ -311,15 +311,15 @@ size_t forward0sweep(
 				J, 
 				Taylor,
 				Rec->num_rec_vecad_ind(),
-				VectorVar,
-				VectorInd
+				VectorVar.data(),
+				VectorInd.data()
 			);
 			break;
 			// -------------------------------------------------
 
 			case LdvOp:
-			CPPAD_ASSERT_UNKNOWN( VectorInd != CPPAD_NULL );
-			CPPAD_ASSERT_UNKNOWN( VectorVar != CPPAD_NULL );
+			CPPAD_ASSERT_UNKNOWN( VectorInd.size() != 0 );
+			CPPAD_ASSERT_UNKNOWN( VectorVar.size() != 0 );
 			non_const_arg = Rec->forward_non_const_arg();
 			forward_load_v_op_0(
 				i_var, 
@@ -329,8 +329,8 @@ size_t forward0sweep(
 				J, 
 				Taylor,
 				Rec->num_rec_vecad_ind(),
-				VectorVar,
-				VectorInd
+				VectorVar.data(),
+				VectorInd.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -416,8 +416,8 @@ size_t forward0sweep(
 				J, 
 				Taylor,
 				Rec->num_rec_vecad_ind(),
-				VectorVar,
-				VectorInd
+				VectorVar.data(),
+				VectorInd.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -430,8 +430,8 @@ size_t forward0sweep(
 				J, 
 				Taylor,
 				Rec->num_rec_vecad_ind(),
-				VectorVar,
-				VectorInd
+				VectorVar.data(),
+				VectorInd.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -444,8 +444,8 @@ size_t forward0sweep(
 				J, 
 				Taylor,
 				Rec->num_rec_vecad_ind(),
-				VectorVar,
-				VectorInd
+				VectorVar.data(),
+				VectorInd.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -458,8 +458,8 @@ size_t forward0sweep(
 				J, 
 				Taylor,
 				Rec->num_rec_vecad_ind(),
-				VectorVar,
-				VectorInd
+				VectorVar.data(),
+				VectorInd.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -583,11 +583,6 @@ size_t forward0sweep(
 # endif
 	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
 	CPPAD_ASSERT_UNKNOWN( i_var + 1 == Rec->num_rec_var() );
-
-	if( VectorInd != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(VectorInd);
-	if( VectorVar != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(VectorVar);
 
 	return compareCount;
 }

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -76,13 +76,17 @@ bool CppAD_vector(void)
 	str = buf.str();
 	ok &= (str == correct);
 
-	// test of push_back scalar
+	// test of push_back scalar and capacity
 	size_t i;
 	size_t N = 100;
 	x.resize(0);
 	for(i = 0; i < N; i++)
+	{	size_t old_capacity = x.capacity();	
 		x.push_back( Type(i) );
-	ok &= (x.size() == N);
+		ok &= (i+1) == x.size();
+		ok &= i < x.capacity();
+		ok &= (i == old_capacity) || old_capacity == x.capacity(); 
+	}
 	for(i = 0; i < N; i++)
 		ok &= ( x[i] == Type(i) );
 

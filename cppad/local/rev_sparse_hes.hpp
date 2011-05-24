@@ -160,6 +160,7 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <algorithm>
+# include <cppad/local/pod_vector.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -263,8 +264,8 @@ void RevSparseHesBool(
 
 	// Array that will hold reverse Jacobian dependency flag.
 	// Initialize as true for the dependent variables.
-	bool *RevJac = CPPAD_NULL;
-	RevJac       = CPPAD_TRACK_NEW_VEC(total_num_var, RevJac);	
+	pod_vector<bool> RevJac;
+	RevJac.extend(total_num_var);	
 	for(i = 0; i < total_num_var; i++)
 		RevJac[i] = false;
 	for(i = 0; i < m; i++)
@@ -283,7 +284,7 @@ void RevSparseHesBool(
 		total_num_var,
 		&play,
 		for_jac_sparsity, 
-		RevJac,
+		RevJac.data(),
 		rev_hes_sparsity
 	);
 
@@ -309,9 +310,6 @@ void RevSparseHesBool(
 			i = rev_hes_sparsity.next_element();
 		}
 	}
-
-	// free local memory used for the calculation
-	CPPAD_TRACK_DEL_VEC(RevJac);
 
 	return;
 }
@@ -422,8 +420,8 @@ void RevSparseHesSet(
 
 	// Array that will hold reverse Jacobian dependency flag.
 	// Initialize as true for the dependent variables.
-	bool *RevJac = CPPAD_NULL;
-	RevJac       = CPPAD_TRACK_NEW_VEC(total_num_var, RevJac);	
+	pod_vector<bool> RevJac;
+	RevJac.extend(total_num_var);	
 	for(i = 0; i < total_num_var; i++)
 		RevJac[i] = false;
 	itr = s[0].begin();
@@ -449,7 +447,7 @@ void RevSparseHesSet(
 		total_num_var,
 		&play,
 		for_jac_sparsity, 
-		RevJac,
+		RevJac.data(),
 		rev_hes_sparsity
 	);
 
@@ -471,9 +469,6 @@ void RevSparseHesSet(
 			i = rev_hes_sparsity.next_element();
 		}
 	}
-
-	// free local memory used for the calculation
-	CPPAD_TRACK_DEL_VEC(RevJac);
 
 	return;
 }

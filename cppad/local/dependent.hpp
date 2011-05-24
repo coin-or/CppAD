@@ -3,7 +3,7 @@
 # define CPPAD_DEPENDENT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -235,16 +235,11 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	CPPAD_ASSERT_UNKNOWN( total_num_var_ > 0 );
 
 	// free old buffers
-	if( taylor_ != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(taylor_);
 	for_jac_sparse_pack_.resize(0, 0);
 	for_jac_sparse_set_.resize(0,0);
 
-	// initialize buffers
-	taylor_  = CPPAD_NULL;
-
 	// initial row and column dimensions
-	// memoryMax  = 0;
+	taylor_.erase();
 	taylor_per_var_   = 0;
 	taylor_col_dim_   = 0;
 

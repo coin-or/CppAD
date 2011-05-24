@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_sparse_hessian.cpp$$
 $spell
+	omp_alloc
 	arg
 	cppad
 	adouble
@@ -68,24 +69,24 @@ bool link_sparse_hessian(
 	size_t ell = i.size();    // number of indices in i and j
 	double f;                 // function value
 
+	// set up for omp_alloc memory allocator (fast and checks for leaks)
+	using CppAD::omp_alloc; // the allocator
+	size_t capacity;        // capacity of an allocation
+
 	typedef CppAD::vector<double>  DblVector;
 	typedef CppAD::vector<adouble> ADVector;
 	typedef CppAD::vector<size_t>  SizeVector;
 
 	ADVector   X(n);    // AD domain space vector
-	double       *x;    // double domain space vector
-	double      **H;    // Hessian 
 	ADVector   Y(1);    // AD range space value
 	DblVector tmp(2 * ell);       // double temporary vector
 
-	x = 0;
-	x = CPPAD_TRACK_NEW_VEC(n, x);
-	H = 0;
-	H = CPPAD_TRACK_NEW_VEC(n, H);
+	// double version of domain space vector
+	double* x  = omp_alloc::create_array<double>(n, capacity);
+	// Hessian as computed by adolc
+	double** H = omp_alloc::create_array<double*>(n, capacity);
 	for(k = 0; k < n; k++)
-	{	H[k] = 0;
-		H[k] = CPPAD_TRACK_NEW_VEC(n, H[k]);
-	}
+		H[k] = omp_alloc::create_array<double>(n, capacity);
 
 	// choose a value for x 
 	CppAD::uniform_01(n, x);
@@ -125,10 +126,10 @@ bool link_sparse_hessian(
 		{	h[ k * n + m] = H[k][m];
 			h[ m * n + k] = H[k][m];
 		}
-		CPPAD_TRACK_DEL_VEC(H[k]);
+		omp_alloc::delete_array(H[k]);
 	}
-	CPPAD_TRACK_DEL_VEC(H);
-	CPPAD_TRACK_DEL_VEC(x);
+	omp_alloc::delete_array(H);
+	omp_alloc::delete_array(x);
 	return true;
 }
 /* $$

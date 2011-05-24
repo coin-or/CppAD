@@ -345,7 +345,7 @@ then
 	exit 0
 fi
 # -----------------------------------------------------------------------------
-# omhelp comes after dist becasue dist only includes one help output
+# omhelp comes after dist because dist only includes one help output
 if [ "$1" = "omhelp" ] 
 then
 	if ! grep < doc.omh > /dev/null \

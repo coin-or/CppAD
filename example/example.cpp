@@ -117,6 +117,7 @@ extern bool OdeGearControl(void);
 extern bool OdeStiff(void);
 extern bool ode_taylor(void);
 extern bool ode_taylor_adolc(void);
+extern bool omp_alloc(void);
 extern bool opt_val_hes(void);
 extern bool optimize(void);
 extern bool Output(void);
@@ -150,7 +151,6 @@ extern bool SubEq(void);
 extern bool Tan(void);
 extern bool Tanh(void);
 extern bool TapeIndex(void);
-extern bool TrackNewDel(void);
 extern bool UnaryMinus(void);
 extern bool UnaryPlus(void);
 extern bool Value(void);
@@ -179,6 +179,21 @@ namespace {
 			Run_error_count++;
 		}
 		return ok;
+	}
+	// function that checks for memrory leaks after all the tests
+	bool memory_leak(void)
+	{	bool leak = false;
+
+		// dump the memory pool being held for this thread
+		using CppAD::omp_alloc;
+		size_t thread = omp_alloc::get_thread_num();
+		omp_alloc::free_available(thread);
+	
+		leak |= CPPAD_TRACK_COUNT() != 0;
+		leak |= omp_alloc::available(thread) != 0;
+		leak |= omp_alloc::inuse(thread) != 0;
+
+		return leak;
 	}
 }
 
@@ -264,6 +279,7 @@ int main(void)
 	ok &= Run( OdeGearControl,    "OdeGearControl"   );
 	ok &= Run( OdeStiff,          "OdeStiff"         );
 	ok &= Run( ode_taylor,        "ode_taylor"       );
+	ok &= Run( omp_alloc,         "omp_alloc"        );
 	ok &= Run( opt_val_hes,       "opt_val_hes"      );
 	ok &= Run( optimize,          "optimize"         );
 	ok &= Run( Output,            "Output"           );
@@ -297,7 +313,6 @@ int main(void)
 	ok &= Run( Tan,               "Tan"              );
 	ok &= Run( Tanh,              "Tanh"             );
 	ok &= Run( TapeIndex,         "TapeIndex"        );
-	ok &= Run( TrackNewDel,       "TrackNewDel"      );
 	ok &= Run( UnaryMinus,        "UnaryMinus"       );
 	ok &= Run( UnaryPlus,         "UnaryPlus"        );
 	ok &= Run( Value,             "Value"            );
@@ -314,14 +329,14 @@ int main(void)
 	using std::cout;
 	using std::endl;
 	assert( ok || (Run_error_count > 0) );
-	if( CPPAD_TRACK_COUNT() == 0 )
-	{	Run_ok_count++;
-		cout << "Ok:    " << "No memory leak detected" << endl;
-	}
-	else
+	if( memory_leak() )
 	{	ok = false;
 		Run_error_count++;
 		cout << "Error: " << "memory leak detected" << endl;
+	}
+	else
+	{	Run_ok_count++;
+		cout << "Ok:    " << "No memory leak detected" << endl;
 	}
 	// convert int(size_t) to avoid warning on _MSC_VER systems
 	if( ok )

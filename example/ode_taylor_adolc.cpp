@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -149,22 +149,11 @@ The file $cref/base_adolc.hpp/$$ is implements the
 $cref/Base type requirements/base_require/$$ where $italic Base$$
 is $code adolc$$.
 
-
-$head Tracking New and Delete$$
+$head Memory Management$$
 Adolc uses raw memory arrays that depend on the number of 
-dependent and independent variables, hence $code new$$ and $code delete$$
-are used to allocate this memory.
-The preprocessor macros 
-$small
-$cref/CPPAD_TRACK_NEW_VEC/TrackNewDel/TrackNewVec/$$ 
-$$
-and
-$small
-$cref/CPPAD_TRACK_DEL_VEC/TrackNewDel/TrackDelVec/$$ 
-$$
-are used to check for errors in the
-use of $code new$$ and $code delete$$ when the example is compiled for
-debugging (when $code NDEBUG$$ is not defined).
+dependent and independent variables.
+The memory management utility $cref/omp_alloc/$$ 
+is used to manage this memory allocation.
 
 $head Configuration Requirement$$
 This example will be compiled and tested provided that
@@ -294,9 +283,13 @@ bool ode_taylor_adolc(void)
 	// some temporary indices
 	size_t i, j;
 
-	// parameter vector in both double and ADdouble
-	double *x = 0;
-	x = CPPAD_TRACK_NEW_VEC(n, x);  // track x = new double[n];
+	// set up for omp_alloc memory allocator
+	using CppAD::omp_alloc; // the allocator
+	size_t capacity;        // capacity of an allocation
+
+	// the vector x with lenght n (or greater) in double 
+	double* x = omp_alloc::create_array<double>(n, capacity);
+	// the vector x with lenght n in ADouble
 	CPPAD_TEST_VECTOR<ADdouble> X(n);
 	for(i = 0; i < n; i++)
 		X[i] = x[i] = double(i + 1);
@@ -324,8 +317,7 @@ bool ode_taylor_adolc(void)
 
 	// declare the differentiable fucntion f : A -> Y_FINAL
 	// (corresponding to the tape of adouble operations)
-	double *y_final= 0;
-	y_final = CPPAD_TRACK_NEW_VEC(n, y_final); // y_final= new double[m]
+	double* y_final = omp_alloc::create_array<double>(n, capacity);
 	for(i = 0; i < n; i++)
 		Y_FINAL[i] >>= y_final[i];
 	trace_off();
@@ -339,10 +331,8 @@ bool ode_taylor_adolc(void)
 	}
 
 	// memory where Jacobian will be returned
-	double *jac_= 0;
-	jac_ = CPPAD_TRACK_NEW_VEC(n * n, jac_); // jac_ = new double[n*n]
-	double **jac = 0;
-	jac  = CPPAD_TRACK_NEW_VEC(n, jac);      // jac = new (*double)[n]
+	double* jac_ = omp_alloc::create_array<double>(n * n, capacity); 
+	double** jac = omp_alloc::create_array<double*>(n, capacity);
 	for(i = 0; i < n; i++)
 		jac[i] = jac_ + i * n;
 
@@ -360,10 +350,11 @@ bool ode_taylor_adolc(void)
 		}
 	}
 
-	CPPAD_TRACK_DEL_VEC(x);        // check usage of delete
-	CPPAD_TRACK_DEL_VEC(y_final);
-	CPPAD_TRACK_DEL_VEC(jac_);
-	CPPAD_TRACK_DEL_VEC(jac);
+	// make memroy avaiable for other use by this thread
+	omp_alloc::delete_array(x);
+	omp_alloc::delete_array(y_final);
+	omp_alloc::delete_array(jac_);
+	omp_alloc::delete_array(jac);
 	return ok;
 }
 

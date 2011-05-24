@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -42,6 +42,21 @@ namespace {
 		}
 		return ok;
 	}
+	// function that checks for memrory leaks after all the tests
+	bool memory_leak(void)
+	{	bool leak = false;
+
+		// dump the memory pool being held for this thread
+		using CppAD::omp_alloc;
+		size_t thread = omp_alloc::get_thread_num();
+		omp_alloc::free_available(thread);
+	
+		leak |= CPPAD_TRACK_COUNT() != 0;
+		leak |= omp_alloc::available(thread) != 0;
+		leak |= omp_alloc::inuse(thread) != 0;
+
+		return leak;
+	}
 }
 
 // main program that runs all the tests
@@ -58,14 +73,15 @@ int main(void)
 	using std::cout;
 	using std::endl;
 	assert( ok || (Run_error_count > 0) );
-	if( CPPAD_TRACK_COUNT() == 0 )
-	{	Run_ok_count++;
-		cout << "Ok:    " << "No memory leak detected" << endl;
-	}
-	else
+
+	if( memory_leak() )
 	{	ok = false;
 		Run_error_count++;
 		cout << "Error: " << "memory leak detected" << endl;
+	}
+	else
+	{	Run_ok_count++;
+		cout << "Ok:    " << "No memory leak detected" << endl;
 	}
 	// convert int(size_t) to avoid warning on _MSC_VER systems
 	if( ok )

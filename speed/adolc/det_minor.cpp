@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_det_minor.cpp$$
 $spell
+	omp_alloc
 	retape
 	cppad
 	zos
@@ -41,6 +42,7 @@ $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/det_by_minor.hpp>
 # include <cppad/speed/uniform_01.hpp>
+# include <cppad/track_new_del.hpp>
 
 # include <adolc/adouble.h>
 # include <adolc/taping.h>
@@ -61,6 +63,10 @@ bool link_det_minor(
 	double f;             // function value
 	int j;                // temporary index
 
+	// set up for omp_alloc memory allocator (fast and checks for leaks)
+	using CppAD::omp_alloc; // the allocator
+	size_t capacity;        // capacity of an allocation
+
 	// object for computing determinant
 	typedef adouble    ADScalar;
 	typedef ADScalar*  ADVector;
@@ -70,22 +76,17 @@ bool link_det_minor(
 	ADScalar   detA;
 
 	// AD version of matrix
-	ADVector   A = 0;
-	A            = CPPAD_TRACK_NEW_VEC(n, A);
+	ADVector A  = omp_alloc::create_array<ADScalar>(n, capacity);
 	
 	// vectors of reverse mode weights 
-	double *u = 0;
-	u         = CPPAD_TRACK_NEW_VEC(m, u);
+	double* u   = omp_alloc::create_array<double>(m, capacity);
 	u[0] = 1.;
 
 	// vector with matrix value
-	double *mat = 0;
-	mat         = CPPAD_TRACK_NEW_VEC(n, mat);
+	double* mat  = omp_alloc::create_array<double>(n, capacity);
 
 	// vector to receive gradient result
-	double *grad = 0;
-	grad         = CPPAD_TRACK_NEW_VEC(n, grad);
-
+	double* grad = omp_alloc::create_array<double>(n, capacity);
 
 	extern bool global_retape;
 	if( global_retape ) while(repeat--)
@@ -150,10 +151,10 @@ bool link_det_minor(
 	}
 
 	// tear down
-	CPPAD_TRACK_DEL_VEC(grad);
-	CPPAD_TRACK_DEL_VEC(mat);
-	CPPAD_TRACK_DEL_VEC(u);
-	CPPAD_TRACK_DEL_VEC(A);
+	omp_alloc::delete_array(grad);
+	omp_alloc::delete_array(mat);
+	omp_alloc::delete_array(u);
+	omp_alloc::delete_array(A);
 	return true;
 }
 /* $$

@@ -3,7 +3,7 @@
 # define CPPAD_CAP_TAYLOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -121,42 +121,35 @@ void ADFun<Base>::capacity_taylor(size_t c)
 {	// temporary indices
 	size_t i, j, p;
 
-		// taylor_per_var_,
-
 	if( c == taylor_col_dim_ )
 		return;
 
 	if( c == 0 )
-	{	if( taylor_ != CPPAD_NULL )
-			CPPAD_TRACK_DEL_VEC(taylor_);
-		taylor_ = CPPAD_NULL;
+	{	taylor_.erase();
 		taylor_per_var_ = 0;
 		taylor_col_dim_ = 0;
 		return;
 	}
 	
 	// Allocate new matrix will requested number of columns 
-	size_t newlen   = c * total_num_var_;
-	Base *newptr    = CPPAD_NULL;
-	newptr          = CPPAD_TRACK_NEW_VEC(newlen, newptr);
+	size_t new_len   = c * total_num_var_;
+	pod_vector<Base> new_taylor;
+	new_taylor.extend(new_len);
 
 	// number of columns to copy
 	p = std::min(taylor_per_var_, c);
 
 	// copy the old data into the new matrix
-	CPPAD_ASSERT_UNKNOWN( (taylor_per_var_ == 0) | (taylor_ != CPPAD_NULL) );
+	CPPAD_ASSERT_UNKNOWN( (taylor_per_var_ == 0) | (taylor_.size() != 0) );
 	for(i = 0; i < total_num_var_; i++)
 	{	for(j = 0; j < p; j++)
-		{	newptr[i * c + j]  = taylor_[i * taylor_col_dim_ + j];
+		{	new_taylor[i * c + j]  = taylor_[i * taylor_col_dim_ + j];
 		}
 	}
-	// free the old memory
-	if( taylor_ != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(taylor_);
 
-	// use the new pointer
-	taylor_         = newptr;
-	taylor_col_dim_   = c;
+	// replace taylor_ by new_taylor
+	taylor_.swap(new_taylor);
+	taylor_col_dim_ = c;
 	taylor_per_var_ = p;
 
 	return;

@@ -432,6 +432,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/parameter_op.hpp \
 	cppad/local/par_var.hpp \
 	cppad/local/player.hpp \
+	cppad/local/pod_vector.hpp \
 	cppad/local/pow.hpp \
 	cppad/local/pow_op.hpp \
 	cppad/local/print_for.hpp \
@@ -479,6 +480,7 @@ nobase_myinclude_HEADERS = \
 	cppad/ode_err_control.hpp \
 	cppad/ode_gear_control.hpp \
 	cppad/ode_gear.hpp \
+	cppad/omp_alloc.hpp \
 	cppad/poly.hpp \
 	cppad/pow_int.hpp \
 	cppad/romberg_mul.hpp \

@@ -3,7 +3,7 @@
 # define CPPAD_REVERSE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,6 +38,7 @@ $end
 -----------------------------------------------------------------------------
 */
 # include <algorithm>
+# include <cppad/local/pod_vector.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -113,7 +114,10 @@ for the independent variables as specified by previous calls to Forward.
 template <typename Base>
 template <typename VectorBase>
 VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w) 
-{	// temporary indices
+{	// constants
+	const Base zero(0);
+
+	// temporary indices
 	size_t i, j, k;
 
 	// number of independent variables
@@ -122,8 +126,8 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 	// number of dependent variables
 	size_t m = dep_taddr_.size();
 
-	Base *Partial = CPPAD_NULL;
-	Partial       = CPPAD_TRACK_NEW_VEC(total_num_var_ * p, Partial);
+	pod_vector<Base> Partial;
+	Partial.extend(total_num_var_ * p);
 
 	// update maximum memory requirement
 	// memoryMax = std::max( memoryMax, 
@@ -151,7 +155,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 	// initialize entire Partial matrix to zero
 	for(i = 0; i < total_num_var_; i++)
 		for(j = 0; j < p; j++)
-			Partial[i * p + j] = Base(0);
+			Partial[i * p + j] = zero;
 
 	// set the dependent variable direction
 	// (use += because two dependent variables can point to same location)
@@ -161,6 +165,7 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 			Partial[dep_taddr_[i] * p + p - 1] += w[i];
 		else
 		{	for(k = 0; k < p; k++)
+				// ? should use += here, first make test to demonstrate bug
 				Partial[ dep_taddr_[i] * p + k ] = w[i * p + k ];
 		}
 	}
@@ -172,9 +177,9 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 		total_num_var_,
 		&play_,
 		taylor_col_dim_,
-		taylor_,
+		taylor_.data(),
 		p,
-		Partial
+		Partial.data()
 	);
 
 	// return the derivative values
@@ -199,9 +204,6 @@ VectorBase ADFun<Base>::Reverse(size_t p, const VectorBase &w)
 					Partial[ind_taddr_[j] * p + k];
 		}
 	}
-
-	// done with the Partial array
-	CPPAD_TRACK_DEL_VEC(Partial);
 
 	return value;
 }

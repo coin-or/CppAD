@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_poly.cpp$$
 $spell
+	omp_alloc
 	retape
 	coef
 	cppad
@@ -47,6 +48,7 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/poly.hpp>
 # include <cppad/vector.hpp>
+# include <cppad/track_new_del.hpp>
 
 # include <adolc/adouble.h>
 # include <adolc/taping.h>
@@ -69,6 +71,10 @@ bool link_poly(
 	double f;      // function value
 	int i;         // temporary index
 
+	// set up for omp_alloc memory allocator (fast and checks for leaks)
+	using CppAD::omp_alloc; // the allocator
+	size_t capacity;        // capacity of an allocation
+
 	// choose a vector of polynomial coefficients
 	CppAD::uniform_01(size, a);
 
@@ -81,22 +87,15 @@ bool link_poly(
 	adouble Z, P;
 
 	// allocate arguments to hos_forward
-	double *x0 = 0;
-	x0         = CPPAD_TRACK_NEW_VEC(n, x0);
-	double *y0 = 0;
-	y0         = CPPAD_TRACK_NEW_VEC(m, y0);
-	double **x = 0;
-	x          = CPPAD_TRACK_NEW_VEC(n, x);
-	double **y = 0;
-	y          = CPPAD_TRACK_NEW_VEC(m, y);
+	double* x0 = omp_alloc::create_array<double>(n, capacity);
+	double* y0 = omp_alloc::create_array<double>(m, capacity);
+	double** x = omp_alloc::create_array<double*>(n, capacity);
+	double** y = omp_alloc::create_array<double*>(m, capacity);
 	for(i = 0; i < n; i++)
-	{	x[i] = 0;
-		x[i] = CPPAD_TRACK_NEW_VEC(d, x[i]);
-	}
+		x[i] = omp_alloc::create_array<double>(d, capacity);
 	for(i = 0; i < m; i++)
-	{	y[i] = 0;
-		y[i] = CPPAD_TRACK_NEW_VEC(d, y[i]);
-	}
+		y[i] = omp_alloc::create_array<double>(d, capacity);
+
 	// Taylor coefficient for argument
 	x[0][0] = 1.;  // first order
 	x[0][1] = 0.;  // second order
@@ -157,14 +156,14 @@ bool link_poly(
 	}
 	// ------------------------------------------------------
 	// tear down
-	CPPAD_TRACK_DEL_VEC(x0);
-	CPPAD_TRACK_DEL_VEC(y0);
+	omp_alloc::delete_array(x0);
+	omp_alloc::delete_array(y0);
 	for(i = 0; i < n; i++)
-		CPPAD_TRACK_DEL_VEC(x[i]);
+		omp_alloc::delete_array(x[i]);
 	for(i = 0; i < m; i++)
-		CPPAD_TRACK_DEL_VEC(y[i]);
-	CPPAD_TRACK_DEL_VEC(x);
-	CPPAD_TRACK_DEL_VEC(y);
+		omp_alloc::delete_array(y[i]);
+	omp_alloc::delete_array(x);
+	omp_alloc::delete_array(y);
 
 	return true;
 }

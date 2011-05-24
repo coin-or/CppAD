@@ -13,6 +13,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <cppad/local/cppad_assert.hpp>
+# include <cppad/local/pod_vector.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -41,11 +42,8 @@ private:
 	/// Number of \c Pack values necessary to represent \c end_ bits.
 	/// (set by constructor and resize).
 	size_t n_pack_;
-	/// Is the memory pointed to by \c data_ allocated by this object
-	/// (set by contructor and resize)
-	bool   allocated_;    
-	/// Pointer to the beginning of data for all the sets.
-	Pack*  data_;
+	/// Data for all the sets.
+	pod_vector<Pack>  data_;
 	/// index for which we were retrieving next_element
 	/// (use n_set_ if no such index exists).
 	size_t next_index_;
@@ -60,8 +58,6 @@ public:
 	n_set_(0)                     , 
 	end_(0)                       , 
 	n_pack_(0)                    ,
-	allocated_(false)             ,
-	data_(CPPAD_NULL)             ,
 	next_index_(0)                ,
 	next_element_(0)
 	{ }
@@ -80,11 +76,7 @@ public:
 	/*! Destructor 
 	*/
 	~sparse_pack(void)
-	{	if( allocated_ )
-		{	allocated_ = false;
-			CPPAD_TRACK_DEL_VEC( data_ ); 
-		}
-	}
+	{ }
 	// -----------------------------------------------------------------
 	/*! Change number of sets, set end, and initialize all sets as empty
 
@@ -100,10 +92,7 @@ public:
 	*/
 	void resize(size_t n_set_in, size_t end_in) 
 	{	Pack zero(0);
-		if( allocated_ )
-		{	allocated_ = false;
-			CPPAD_TRACK_DEL_VEC(data_);
-		}
+		data_.erase();
 
 		n_set_          = n_set_in;
 		end_            = end_in;
@@ -111,8 +100,7 @@ public:
 		size_t i        = n_set_ * n_pack_;
 
 		if( i > 0 )
-		{	data_      = CPPAD_TRACK_NEW_VEC(i, data_);
-			allocated_ = true;
+		{	data_.extend(i);
 			while(i--)
 				data_[i] = zero;
 		}
@@ -220,11 +208,11 @@ public:
 	{	// value with all its bits set to false
 		static Pack zero(0);
 		CPPAD_ASSERT_UNKNOWN( target < n_set_ );
-		Pack *t  = data_ + target * n_pack_;
+		size_t t = target * n_pack_;
 
 		size_t j = n_pack_;
 		while(j--)
-			*t++ = zero;
+			data_[t++] = zero;
 	}
 	// -----------------------------------------------------------------
 	/*! Assign one set equal to another set.
@@ -252,12 +240,12 @@ public:
 	{	CPPAD_ASSERT_UNKNOWN( this_target  <   n_set_        );
 		CPPAD_ASSERT_UNKNOWN( other_value  <   other.n_set_  );
 		CPPAD_ASSERT_UNKNOWN( n_pack_      ==  other.n_pack_ );
-		Pack *t  = data_       + this_target * n_pack_;
-		Pack *v  = other.data_ + other_value * n_pack_;
+		size_t t = this_target * n_pack_;
+		size_t v = other_value * n_pack_;
 
 		size_t j = n_pack_;
 		while(j--)
-			*t++ = *v++;
+			data_[t++] = other.data_[v++];
 	}
 
 	// -----------------------------------------------------------------
@@ -296,13 +284,13 @@ public:
 		CPPAD_ASSERT_UNKNOWN( other_right < other.n_set_   );
 		CPPAD_ASSERT_UNKNOWN( n_pack_    ==  other.n_pack_ );
 
-		Pack *t  = data_       + this_target * n_pack_;
-		Pack *l  = data_       + this_left   * n_pack_;
-		Pack *r  = other.data_ + other_right * n_pack_;
+		size_t t = this_target * n_pack_;
+		size_t l  = this_left  * n_pack_;
+		size_t r  = other_right * n_pack_;
 
 		size_t j = n_pack_;
 		while(j--)
-			*t++ = (*l++ | *r++);
+			data_[t++] = ( data_[l++] | other.data_[r++] );
 	}
 	// -----------------------------------------------------------------
 	/*! Amount of memory used by this vector of sets

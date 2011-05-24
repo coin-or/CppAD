@@ -307,6 +307,7 @@ $lend
 $end
 ------------------------------------------------------------------------ 
 */
+# include <cppad/local/pod_vector.hpp>
 
 # define CPPAD_VEC_AD_COMPUTED_ASSIGNMENT(op, name)                     \
 VecAD_reference& operator op (const VecAD_reference<Base> &right)       \
@@ -372,7 +373,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( i < vec_->length_ );
 
 		// AD<Base> value corresponding to this element
-		result.value_ = *(vec_->data_ + i);
+		result.value_ = vec_->data_[i];
 
 		// this address will be recorded in tape and must be
 		// zero for parameters
@@ -446,7 +447,7 @@ private:
 	const  size_t   length_; 
 
 	// elements of this vector 
-	Base *data_; 
+	pod_vector<Base> data_; 
 
 	// offset in cummulate vector corresponding to this object
 	size_t offset_; 
@@ -461,7 +462,6 @@ public:
 	// initialize id_ same as for default constructor; see default.hpp
 	VecAD(void) 
 	: length_(0) 
-	, data_(CPPAD_NULL)
 	, offset_(0)
 	, id_(CPPAD_MAX_NUM_THREADS)
 	{	CPPAD_ASSERT_UNKNOWN( Parameter(*this) ); }
@@ -472,11 +472,10 @@ public:
 	: length_(n)
 	, offset_(0)
 	, id_(CPPAD_MAX_NUM_THREADS)
-	{	data_  = CPPAD_NULL;
-		if( length_ > 0 )
+	{	if( length_ > 0 )
 		{	size_t i;
 			Base zero(0);
-			data_  = CPPAD_TRACK_NEW_VEC(length_, data_);
+			data_.extend(length_);
 
 			// Initialize data to zero so all have same value.
 			// This uses less memory and avoids a valgrind error
@@ -489,9 +488,7 @@ public:
 
 	// destructor
 	~VecAD(void)
-	{	if( data_ != CPPAD_NULL )
-			CPPAD_TRACK_DEL_VEC(data_); 
-	}
+	{ }
 
 	// size
 	size_t size(void)
@@ -589,7 +586,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
 	CPPAD_ASSERT_UNKNOWN( i < vec_->length_ );
 
 	// assign value for this element (as an AD<Base> object) 
-	*(vec_->data_ + i) = y.value_;
+	vec_->data_[i] = y.value_;
 
 	// record the setting of this array element
 	CPPAD_ASSERT_UNKNOWN( vec_->offset_ > 0 );
@@ -622,8 +619,8 @@ void VecAD_reference<Base>::operator=(const Base &y)
 	size_t i = static_cast<size_t>( Integer(x_) );
 	CPPAD_ASSERT_UNKNOWN( i < vec_->length_ );
 
-	// assign value for this element (target is an AD<Base> object) 
-	*(vec_->data_ + i) = y;
+	// assign value for this element 
+	vec_->data_[i] = y;
 
 	// check if this ADVec object is a parameter
 	if( Parameter(*vec_) )

@@ -114,10 +114,10 @@ void RevJacSweep(
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	Vector_set  vecad_sparsity;
 	vecad_sparsity.resize(num_vecad_vec, limit);
-	size_t* vecad_ind      = CPPAD_NULL;
+	pod_vector<size_t> vecad_ind;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
-		vecad_ind     = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad_ind);
+		vecad_ind.extend(num_vecad_ind);
 		j             = 0;
 		for(i = 0; i < num_vecad_vec; i++)
 		{	// length of this VecAD
@@ -321,7 +321,7 @@ void RevJacSweep(
 				i_var,
 				arg,
 				num_vecad_ind,
-				vecad_ind,
+				vecad_ind.data(),
 				var_sparsity,
 				vecad_sparsity
 			);
@@ -334,7 +334,7 @@ void RevJacSweep(
 				i_var,
 				arg,
 				num_vecad_ind,
-				vecad_ind,
+				vecad_ind.data(),
 				var_sparsity,
 				vecad_sparsity
 			);
@@ -444,7 +444,7 @@ void RevJacSweep(
 				op,
 				arg,
 				num_vecad_ind,
-				vecad_ind,
+				vecad_ind.data(),
 				var_sparsity,
 				vecad_sparsity
 			);
@@ -461,7 +461,7 @@ void RevJacSweep(
 				op,
 				arg,
 				num_vecad_ind,
-				vecad_ind,
+				vecad_ind.data(),
 				var_sparsity,
 				vecad_sparsity
 			);
@@ -615,9 +615,6 @@ void RevJacSweep(
 	// values corresponding to BeginOp
 	CPPAD_ASSERT_UNKNOWN( i_op == 0 );
 	CPPAD_ASSERT_UNKNOWN( i_var == 0 );
-
-	if( vecad_ind != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC( vecad_ind);
 
 	return;
 }

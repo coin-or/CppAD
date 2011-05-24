@@ -141,12 +141,12 @@ void RevHesSweep(
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	Vector_set vecad_sparse;
 	vecad_sparse.resize(num_vecad_vec, limit);
-	size_t* vecad_ind   = CPPAD_NULL;
-	bool*   vecad_jac   = CPPAD_NULL;
+	pod_vector<size_t> vecad_ind;
+	pod_vector<bool>   vecad_jac;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
-		vecad_ind     = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad_ind);
-		vecad_jac     = CPPAD_TRACK_NEW_VEC(num_vecad_vec, vecad_jac);
+		vecad_ind.extend(num_vecad_ind);
+		vecad_jac.extend(num_vecad_vec);
 		j             = 0;
 		for(i = 0; i < num_vecad_vec; i++)
 		{	// length of this VecAD
@@ -360,11 +360,11 @@ void RevHesSweep(
 				i_var,
 				arg,
 				num_vecad_ind,
-				vecad_ind,
+				vecad_ind.data(),
 				rev_hes_sparse,
 				vecad_sparse,
 				RevJac,
-				vecad_jac
+				vecad_jac.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -375,11 +375,11 @@ void RevHesSweep(
 				i_var,
 				arg,
 				num_vecad_ind,
-				vecad_ind,
+				vecad_ind.data(),
 				rev_hes_sparse,
 				vecad_sparse,
 				RevJac,
-				vecad_jac
+				vecad_jac.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -487,11 +487,11 @@ void RevHesSweep(
 				op,
 				arg,
 				num_vecad_ind,
-				vecad_ind,
+				vecad_ind.data(),
 				rev_hes_sparse,
 				vecad_sparse,
 				RevJac,
-				vecad_jac
+				vecad_jac.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -507,11 +507,11 @@ void RevHesSweep(
 				op,
 				arg,
 				num_vecad_ind,
-				vecad_ind,
+				vecad_ind.data(),
 				rev_hes_sparse,
 				vecad_sparse,
 				RevJac,
-				vecad_jac
+				vecad_jac.data()
 			);
 			break;
 			// -------------------------------------------------
@@ -691,10 +691,6 @@ void RevHesSweep(
 	CPPAD_ASSERT_UNKNOWN( i_op == 0 );
 	CPPAD_ASSERT_UNKNOWN( i_var == 0 );
 
-	if( vecad_jac != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(vecad_jac);
-	if( vecad_ind != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(vecad_ind);
 	return;
 }
 

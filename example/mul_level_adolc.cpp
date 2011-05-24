@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the
@@ -48,22 +48,11 @@ $latex \[
 The example $cref/mul_level.cpp/$$ computes the same values using
 $code AD< AD<double> >$$ and $code AD<double>$$.
 
-$head Tracking New and Delete$$
+$head Memory Management$$
 Adolc uses raw memory arrays that depend on the number of 
-dependent and independent variables, hence $code new$$ and $code delete$$
-are used to allocate this memory.
-The preprocessor macros 
-$small
-$cref/CPPAD_TRACK_NEW_VEC/TrackNewDel/TrackNewVec/$$ 
-$$
-and
-$small
-$cref/CPPAD_TRACK_DEL_VEC/TrackNewDel/TrackDelVec/$$ 
-$$
-are used to check for errors in the
-use of $code new$$ and $code delete$$ when the example is compiled for
-debugging (when $code NDEBUG$$ is not defined).
-
+dependent and independent variables.
+The memory management utility $cref/omp_alloc/$$ 
+is used to manage this memory allocation.
 
 $head Configuration Requirement$$
 This example will be compiled and tested provided that
@@ -103,7 +92,8 @@ namespace {
 }
 
 bool mul_level_adolc(void) 
-{	bool ok = true;                         // initialize test result
+{	bool ok = true;                // initialize test result
+	using CppAD::omp_alloc;        // The CppAD memory allocator
 
 	typedef adouble             ADdouble;  // for first level of taping
 	typedef CppAD::AD<ADdouble> ADDdouble; // for second level of taping
@@ -153,9 +143,13 @@ bool mul_level_adolc(void)
 
 	// compute the d/dx of f'(x) * v = f''(x) * v
 	size_t m      = 1;                     // # dependent in f'(x) * v
-	double *w = 0, *dw = 0;
-	w     = CPPAD_TRACK_NEW_VEC(m, w);     // track w  = new double[m]
-	dw    = CPPAD_TRACK_NEW_VEC(n, dw);    // track dw = new double[n]
+
+	// w = new double[capacity] where capacity >= m
+	size_t capacity;
+	double* w  = omp_alloc::create_array<double>(m, capacity);
+	// w = new double[capacity] where capacity >= n
+	double* dw = omp_alloc::create_array<double>(n, capacity);
+
 	w[0]  = 1.;
 	fos_reverse(tag, int(m), int(n), w, dw);
 
@@ -164,8 +158,9 @@ bool mul_level_adolc(void)
 		ok &= CppAD::NearEqual(dw[j], vj, 1e-10, 1e-10);
 	}
 
-	CPPAD_TRACK_DEL_VEC(w);                 // check usage of delete
-	CPPAD_TRACK_DEL_VEC(dw);
+	// make memory avaialble for other use by this thread
+	omp_alloc::delete_array(w);
+	omp_alloc::delete_array(dw);
 	return ok;
 }
 // END PROGRAM

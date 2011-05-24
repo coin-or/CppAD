@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,7 +24,7 @@ $index example, delete$$
 $index test, delete$$
 
 $code
-$verbatim%example/track_new_del.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%test_more/track_new_del.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -33,7 +33,7 @@ $end
 
 # include <cppad/track_new_del.hpp>
 
-bool TrackNewDel(void)
+bool track_new_del(void)
 {	bool ok = true;
 
 	// initial count

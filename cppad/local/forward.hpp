@@ -81,16 +81,16 @@ Vector ADFun<Base>::Forward(size_t p, const Vector &up)
 	{
 # if CPPAD_USE_FORWARD0SWEEP
 		compare_change_ = forward0sweep(
-			true, n, total_num_var_, &play_, taylor_col_dim_, taylor_
+			true, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
 		);
 # else
 		compare_change_ = forward_sweep(
-		true, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_
+		true, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
 		);
 # endif
 	}
 	else forward_sweep(
-		true, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_
+		true, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
 	);
 
 	// return the p-th order taylor_ coefficients for dependent variables

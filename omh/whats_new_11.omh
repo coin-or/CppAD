@@ -12,6 +12,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	vec
+	Bool
+	op
+	omp_alloc
 	isnan
 	gcc
 	hasnan
@@ -42,6 +46,46 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-22$$
+$list number$$
+The old memory tracking routines $cref/TrackNewDel/$$ have been deprecated.
+Their use should be replaced using the $cref/omp_alloc/$$
+a memory allocator which is designed to work well in a multi-threading OpenMP 
+environment; see $cref/purpose/omp_alloc/Purpose/$$.
+$lnext
+The replacement of $code TrackNewDel$$ by $code omp_alloc$$
+has been throughout the CppAD source code, including the examples
+that used $code TrackNewDel$$; namely,
+$cref/mul_level_adolc.cpp/$$, $cref/ode_taylor_adolc.cpp/$$.
+$lnext
+The CppAD vector template class
+and the $cref/vectorBool/CppAD_vector/vectorBool/$$ class
+were modified to use the $code omp_alloc$$
+$cref/memory/CppAD_vector/Memory/$$ manager.
+This should improves its speed of memory allocation
+$cref/in_parallel/$$ sections of a program.
+$lnext
+The $cref/speed_test/$$ argument
+$cref/size_vec/speed_test/size_vec/$$ call was by value,
+instead of by reference (as documented).
+This has been fixed and the call is now by reference.
+$lnext
+The $cref/capacity/CppAD_vector/capacity/$$ function has been added
+to the CppAD vector class.
+$lnext
+The simple vector 
+$cref/
+	element constructor and destructor/
+	SimpleVector/
+	Element Constructor and Destructor
+/$$
+description has been changed to explicitly specify that the
+default constructor is used to initialize elements of the array.
+$lnext
+The $cref/size_op_seq/seq_property/size_op_seq/$$ documentation
+has been improved to mention that the allocated memory may be larger.
+$lend
 
 $head 05-11$$
 $list number$$

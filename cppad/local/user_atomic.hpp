@@ -639,9 +639,10 @@ increase speed by avoiding system memory allocation calls.
 The function call $codei%
 	user_atomic<%Base%>::clear()
 %$$ 
-frees this work space. It should be called before using
-$cref/CPPAD_COUNT_TRACK/TrackNewDel/TrackCount/$$ to check for
-a memory leak.
+makes to work space available to $cref/omp_alloc/$$
+for other uses by the same thread.
+This should be called when you are done using the 
+user atomic functions for a specific value of $icode Base$$.
 
 $children%
 	example/mat_mul.cpp

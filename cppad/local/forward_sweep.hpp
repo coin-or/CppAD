@@ -134,12 +134,12 @@ size_t forward_sweep(
 	size_t compareCount = 0;
 
 	// if this is an order zero calculation, initialize vector indices
-	size_t *VectorInd = CPPAD_NULL;  // address for each element
-	bool   *VectorVar = CPPAD_NULL;  // is element a variable
+	pod_vector<size_t> VectorInd;  // address for each element
+	pod_vector<bool>   VectorVar;  // is element a variable
 	i = Rec->num_rec_vecad_ind();
 	if( i > 0 )
-	{	VectorInd = CPPAD_TRACK_NEW_VEC(i, VectorInd);
-		VectorVar = CPPAD_TRACK_NEW_VEC(i, VectorVar);
+	{	VectorInd.extend(i);
+		VectorVar.extend(i);
 		while(i--)
 		{	VectorInd[i] = Rec->GetVecInd(i);
 			VectorVar[i] = false;
@@ -329,8 +329,8 @@ size_t forward_sweep(
 					J, 
 					Taylor,
 					Rec->num_rec_vecad_ind(),
-					VectorVar,
-					VectorInd
+					VectorVar.data(),
+					VectorInd.data()
 				);
 			}
 			else
@@ -352,8 +352,8 @@ size_t forward_sweep(
 					J, 
 					Taylor,
 					Rec->num_rec_vecad_ind(),
-					VectorVar,
-					VectorInd
+					VectorVar.data(),
+					VectorInd.data()
 				);
 			}
 			else
@@ -455,8 +455,8 @@ size_t forward_sweep(
 					J, 
 					Taylor,
 					Rec->num_rec_vecad_ind(),
-					VectorVar,
-					VectorInd
+					VectorVar.data(),
+					VectorInd.data()
 				);
 			}
 # endif
@@ -473,8 +473,8 @@ size_t forward_sweep(
 					J, 
 					Taylor,
 					Rec->num_rec_vecad_ind(),
-					VectorVar,
-					VectorInd
+					VectorVar.data(),
+					VectorInd.data()
 				);
 			}
 # endif
@@ -491,8 +491,8 @@ size_t forward_sweep(
 					J, 
 					Taylor,
 					Rec->num_rec_vecad_ind(),
-					VectorVar,
-					VectorInd
+					VectorVar.data(),
+					VectorInd.data()
 				);
 			}
 # endif
@@ -509,8 +509,8 @@ size_t forward_sweep(
 					J, 
 					Taylor,
 					Rec->num_rec_vecad_ind(),
-					VectorVar,
-					VectorInd
+					VectorVar.data(),
+					VectorInd.data()
 				);
 			}
 # endif
@@ -640,11 +640,6 @@ size_t forward_sweep(
 # endif
 	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
 	CPPAD_ASSERT_UNKNOWN( i_var + 1 == Rec->num_rec_var() );
-
-	if( VectorInd != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(VectorInd);
-	if( VectorVar != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(VectorVar);
 
 	return compareCount;
 }

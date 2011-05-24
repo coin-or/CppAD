@@ -200,7 +200,7 @@ private:
 
 	Can use CppAD::vector for debugging, but it will appear that 
 	there is a memory leak because this list is not distroyed before
-	CPPAD_TRACK_COUNT is called by the test routines.
+	omp_alloc::free_available(thread) is called by the test routines.
 	*/
 	static std::vector<discrete *>& List(void)
 	{	static std::vector<discrete *> list;

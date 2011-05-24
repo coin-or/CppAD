@@ -12,6 +12,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 # include <set>
+# include <cppad/local/pod_vector.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -109,10 +110,10 @@ void ForJacSweep(
 	size_t num_vecad_vec   = play->num_rec_vecad_vec();
 	Vector_set  vecad_sparsity;
 	vecad_sparsity.resize(num_vecad_vec, limit);
-	size_t* vecad_ind      = CPPAD_NULL;
+	pod_vector<size_t> vecad_ind;
 	if( num_vecad_vec > 0 )
 	{	size_t length;
-		vecad_ind     = CPPAD_TRACK_NEW_VEC(num_vecad_ind, vecad_ind);
+		vecad_ind.extend(num_vecad_ind);
 		j             = 0;
 		for(i = 0; i < num_vecad_vec; i++)
 		{	// length of this VecAD
@@ -315,7 +316,7 @@ void ForJacSweep(
 				i_var,
 				arg,
 				num_vecad_ind,
-				vecad_ind,
+				vecad_ind.data(),
 				var_sparsity,
 				vecad_sparsity
 			);
@@ -328,7 +329,7 @@ void ForJacSweep(
 				i_var,
 				arg,
 				num_vecad_ind,
-				vecad_ind,
+				vecad_ind.data(),
 				var_sparsity,
 				vecad_sparsity
 			);
@@ -439,7 +440,7 @@ void ForJacSweep(
 				op,
 				arg,
 				num_vecad_ind,
-				vecad_ind,
+				vecad_ind.data(),
 				var_sparsity,
 				vecad_sparsity
 			);
@@ -457,7 +458,7 @@ void ForJacSweep(
 				op,
 				arg,
 				num_vecad_ind,
-				vecad_ind,
+				vecad_ind.data(),
 				var_sparsity,
 				vecad_sparsity
 			);
@@ -610,9 +611,6 @@ void ForJacSweep(
 	}
 # endif
 	CPPAD_ASSERT_UNKNOWN( i_var + 1 == play->num_rec_var() );
-
-	if( vecad_ind != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(vecad_ind);
 
 	return;
 }

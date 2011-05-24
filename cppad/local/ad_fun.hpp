@@ -103,7 +103,7 @@ private:
 	player<Base> play_;
 
 	/// results of the forward mode calculations
-	Base *taylor_;
+	pod_vector<Base> taylor_;
 
 	/// packed results of the forward mode Jacobian sparsity calculations
 	/// (\c for_jac_sparse_pack_.n_set() != 0  implies
@@ -223,7 +223,7 @@ private:
 public:
 	/// copy constructor
 	ADFun(const ADFun& g) 
-	: total_num_var_(0), taylor_(CPPAD_NULL)
+	: total_num_var_(0)
 	{	CppAD::ErrorHandler::Call(
 		true,
 		__LINE__,
@@ -248,9 +248,7 @@ public:
 
 	/// destructor
 	~ADFun(void)
-	{	if( taylor_ != CPPAD_NULL )
-			CPPAD_TRACK_DEL_VEC(taylor_);
-	}
+	{ }
 
 	/// deprecated: assign a new operation sequence
 	template <typename ADvector>

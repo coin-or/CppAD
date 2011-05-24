@@ -1712,9 +1712,7 @@ void ADFun<Base>::optimize(void)
 	for_jac_sparse_set_.resize(0,0);
 
 	// free old Taylor coefficient memory
-	if( taylor_ != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(taylor_);
-	taylor_         = CPPAD_NULL;
+	taylor_.erase();
 	taylor_per_var_ = 0;
 	taylor_col_dim_ = 0;
 

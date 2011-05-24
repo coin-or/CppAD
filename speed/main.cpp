@@ -21,6 +21,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/speed_test.hpp>
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/poly.hpp>
+# include <cppad/track_new_del.hpp>
+# include <cppad/omp_alloc.hpp>
 
 # ifdef SPEED_ADOLC
 # define AD_PACKAGE "adolc"
@@ -290,6 +292,21 @@ namespace {
 		cout << endl;
 		return;
 	}
+	// function that checks for memrory leaks after all the tests
+	bool memory_leak(void)
+	{	bool leak = false;
+
+		// dump the memory pool being held for this thread
+		using CppAD::omp_alloc;
+		size_t thread = omp_alloc::get_thread_num();
+		omp_alloc::free_available(thread);
+	
+		leak |= CPPAD_TRACK_COUNT() != 0;
+		leak |= omp_alloc::available(thread) != 0;
+		leak |= omp_alloc::inuse(thread) != 0;
+
+		return leak;
+	}
 }
 
 // main program that runs all the tests
@@ -383,9 +400,6 @@ int main(int argc, char *argv[])
 		size_sparse_hessian[i]  = 30 * (i + 1);
 		size_sparse_jacobian[i] = 30 * (i + 1);
 	}
-# ifndef NDEBUG
-	size_t base_count = CPPAD_TRACK_COUNT();
-# endif
 
 	switch(match)
 	{
@@ -535,15 +549,24 @@ int main(int argc, char *argv[])
 		assert(0);
 	}
 # ifndef NDEBUG
-	if( CPPAD_TRACK_COUNT() == base_count )
-	{	Run_ok_count++;
-		cout << "No memory leak detected" << endl;
-	}
-	else
+	// return memory for vectors that are still in scope
+	size_det_lu.resize(0);
+	size_det_minor.resize(0);
+	size_mat_mul.resize(0);
+	size_ode.resize(0);
+	size_poly.resize(0);
+	size_sparse_hessian.resize(0);
+	size_sparse_jacobian.resize(0);
+	// now check for a memory leak
+	if( memory_leak() )
 	{	ok = false;
 		Run_error_count++;
 		cout << "Memory leak detected" << endl;
-        }
+	}
+	else
+	{	Run_ok_count++;
+		cout << "No memory leak detected" << endl;
+	}
 # endif
 	return static_cast<int>( ! ok );
 }

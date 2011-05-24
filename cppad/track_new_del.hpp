@@ -3,7 +3,7 @@
 # define CPPAD_TRACK_NEW_DEL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -30,6 +30,12 @@ $index new, track$$
 $index delete, track$$
 $index track, new and delete$$
 $index memory, track$$
+
+$head Deprecated$$
+$index deprecated, track memory$$
+This routine has been deprecated.
+You should use the $cref/omp_alloc/$$ memory allocator instead
+(which works better in both a single thread and multi-threading environment).
 
 $head Syntax$$
 $syntax%# include <cppad/track_new_del.hpp>
@@ -262,7 +268,7 @@ when this routine is called.
 
 $head Example$$
 $children%
-	example/track_new_del.cpp
+	test_more/track_new_del.cpp
 %$$
 The file $xref/TrackNewDel.cpp/$$
 contains an example and test of these functions.

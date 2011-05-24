@@ -3,7 +3,7 @@
 # define CPPAD_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin CppAD_vector$$
 $spell
+	omp_alloc
 	cppad.hpp
 	Bool
 	resize
@@ -38,8 +39,6 @@ $section The CppAD::vector Template Class$$
 $head Syntax$$
 $code # include <cppad/vector.hpp>$$
 
-
-
 $head Description$$
 The include file $code cppad/vector.hpp$$ defines the
 vector template class $code CppAD::vector$$.
@@ -50,6 +49,19 @@ $head Include$$
 The file $code cppad/vector.hpp$$ is included by $code cppad/cppad.hpp$$
 but it can also be included separately with out the rest of the 
 CppAD include files.
+
+$head capacity$$
+If $icode x$$ is a $codei%CppAD::vector<%Scalar%>%$$,
+and $icode cap$$ is a $code size_t$$ object,
+$codei%
+	%cap% = %x%.capacity()
+%$$
+set $icode cap$$ to the number of $icode Scalar$$ objects that
+could fit in the memory currently allocated for $icode x$$.
+Note that
+$codei%
+	%x%.size() <= %x%.capacity()
+%$$
 
 $head Assignment$$
 $index assignment, CppAD vector$$
@@ -157,7 +169,8 @@ $head resize$$
 If the $code resize$$ member function is called with argument
 value zero, all memory allocated for the vector will be freed.
 The can be useful when using very large vectors
-and when checking for memory leaks (and there are global vectors).
+and when checking for memory leaks (and there are global vectors)
+see the $cref/memory/CppAD_vector/Memory/$$ discussion.
 
 $head vectorBool$$
 $index vectorBool$$
@@ -197,6 +210,17 @@ $codei%
 %$$
 is valid.
 
+$head Memory$$
+$index omp_alloc, vector$$
+$index vector, omp_alloc$$
+These vectors use the OpenMP fast memory allocator $cref/omp_alloc/$$,
+thus using them affects the amount of memory $cref/inuse/$$ and 
+$cref/available/$$.
+Calling $cref/resize/CppAD_vector/resize/$$ with a zero argument,
+makes the corresponding memory available (though $code omp_alloc$$)
+to the current thread.
+It can then be completely freed using $cref/free_available/$$.
+
 $lend
 
 $head Example$$
@@ -233,135 +257,196 @@ $end
 # include <iostream>
 # include <limits>
 # include <cppad/local/cppad_assert.hpp>
-# include <cppad/track_new_del.hpp>
 # include <cppad/check_simple_vector.hpp>
+# include <cppad/omp_alloc.hpp>
 
-# ifndef CPPAD_NULL
-# define CPPAD_NULL 0
-# endif
+CPPAD_BEGIN_NAMESPACE
+/*!
+\file vector.hpp
+File used to define CppAD::vector and CppAD::vectorBool
+*/
 
-namespace CppAD { //  BEGIN CppAD namespace
-
-// ------------------ CppAD::vector<Type> ----------------------------------
-
+// ---------------------------------------------------------------------------
+/*!
+The CppAD Simple Vector template class.
+*/
 template <class Type>
 class vector {
 private:
-	size_t capacity;
-	size_t length;
-	Type   * data;
+	/// maximum number of Type elements current allocation can hold
+	size_t capacity_;
+	/// number of Type elements currently in this vector
+	size_t length_;
+	/// pointer to the first type elements 
+	/// (not defined and should not be used when capacity_ = 0)
+	Type   * data_;
 public:
-	// type of the elements in the vector
+	/// type of the elements in the vector
 	typedef Type value_type;
 
-	// default constructor
-	inline vector(void) : capacity(0), length(0) , data(CPPAD_NULL)
+	/// default constructor sets capacity_ = length_ = data_ = 0
+	inline vector(void) 
+	: capacity_(0), length_(0), data_(0)
 	{ }
-	// constructor with a specified size
-	inline vector(size_t n) : capacity(n), length(n)
-	{
-		data = CPPAD_NULL;
-		if( length > 0 )
-			data = CPPAD_TRACK_NEW_VEC(capacity, data);
+	/// sizing constructor
+	inline vector(
+		/// number of elements in this vector
+		size_t n
+	) : capacity_(0), length_(n), data_(0)
+	{	if( length_ > 0 )
+		{	// set capacity and data
+			data_ = omp_alloc::create_array<Type>(length_, capacity_); 
+		}
 	}
-	// copy constructor
-	inline vector(const vector &x) : capacity(x.length), length(x.length)
-	{	size_t i;
-		data = CPPAD_NULL;
-		if( length > 0 )
-			data = CPPAD_TRACK_NEW_VEC(capacity, data);
+	/// copy constructor
+	inline vector(
+		/// the *this vector will be a copy of \c x
+		const vector& x
+	) : capacity_(0), length_(x.length_), data_(0)
+	{	if( length_ > 0 )
+		{	// set capacity and data	
+			data_ = omp_alloc::create_array<Type>(length_, capacity_); 
 
-		for(i = 0; i < length; i++)
-			data[i] = x.data[i];
+			// copy values using assignment operator
+			size_t i;
+			for(i = 0; i < length_; i++)
+				data_[i] = x.data_[i];
+		}
 	}
-	// destructor
+	/// destructor
 	~vector(void)
-	{	if( data != CPPAD_NULL )
-			CPPAD_TRACK_DEL_VEC(data); 
+	{	if( capacity_ > 0 )
+			omp_alloc::delete_array(data_); 
 	}
 
-	// size function
+	/// maximum number of elements current allocation can store
+	inline size_t capacity(void) const
+	{	return capacity_; }
+
+	/// number of elements currently in this vector.
 	inline size_t size(void) const
-	{	return length; }
+	{	return length_; }
 
-	// resize function
-	inline void resize(size_t n)
-	{	length = n;
-		if( (capacity >= n) & (n > 0)  )
+	/// change the number of elements in this vector.
+	inline void resize(
+		/// new number of elements for this vector, if zero
+		/// make sure the memory is returned to omp_alloc.
+		size_t n
+	)
+	{	length_ = n;
+		// check if we can use current memory
+		if( (capacity_ >= length_) & (length_ > 0)  )
 			return;
-		if( data != CPPAD_NULL  )
-			CPPAD_TRACK_DEL_VEC(data);
-		capacity = n;
-		if( capacity == 0 )
-			data = CPPAD_NULL;
-		else	data = CPPAD_TRACK_NEW_VEC(capacity, data);
+		// check if there is old memory to be freed
+		if( capacity_ > 0 )
+			omp_alloc::delete_array(data_);
+		// check if we need new memory 
+		if( length_ == 0 )
+			capacity_ = 0;
+		else
+		{	// get new memory and set capacity
+			data_ = omp_alloc::create_array<Type>(length_, capacity_);
+		}
 	}
-	// assignment operator
-	inline vector & operator=(const vector &x)
+	/// vector assignment operator
+	inline vector& operator=(
+		/// right hand size of the assingment operation
+		const vector& x
+	)
 	{	size_t i;
 		CPPAD_ASSERT_KNOWN(
-			length == x.length ,
-			"size miss match in assignment operation"
+			length_ == x.length_ ,
+			"vector: size miss match in assignment operation"
 		);
-		for(i = 0; i < length; i++)
-			data[i] = x.data[i];
+		for(i = 0; i < length_; i++)
+			data_[i] = x.data_[i];
 		return *this;
 	}
-	// non-constant element access
-	Type & operator[](size_t i)
+	/// non-constant element access; i.e., we can change this element value
+	Type& operator[](
+		/// element index, must be less than length
+		size_t i
+	)
 	{	CPPAD_ASSERT_KNOWN(
-			i < length,
-			"vector index greater than or equal vector size"
+			i < length_,
+			"vector: index greater than or equal vector size"
 		);
-		return data[i]; 
+		return data_[i]; 
 	}
-	// constant element access
-	const Type & operator[](size_t i) const
+	/// constant element access; i.e., we cannot change this element value
+	const Type& operator[](
+		/// element index, must be less than length
+		size_t i
+	) const
 	{	CPPAD_ASSERT_KNOWN(
-			i < length,
-			"vector index greater than or equal vector size"
+			i < length_,
+			"vector: index greater than or equal vector size"
 		);
-		return data[i]; 
+		return data_[i]; 
 	}
-	// add scalar to the back of the array
-	void push_back(const Type &s)
-	{	CPPAD_ASSERT_UNKNOWN( length <= capacity );
-		if( length + 1 > capacity )
-		{	// allocate more capacity
-			if( capacity == 0 )
-				capacity = 2;
-			else	capacity = 2 * length;
-			data = CPPAD_TRACK_EXTEND(capacity, length, data);
+	/// add an element to the back of this vector
+	void push_back(
+		/// value of the element
+		const Type& s
+	)
+	{	CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
+		if( length_ + 1 > capacity_ )
+		{	// store old capacity and data values
+			size_t old_capacity = capacity_;
+			Type*  old_data     = data_;
+			// set new capacity and data values
+			data_ = omp_alloc::create_array<Type>(length_ + 1, capacity_);
+			// copy old data values
+			size_t i;
+			for(i = 0; i < length_; i++)
+				data_[i] = old_data[i];
+			// free old data
+			if( old_capacity > 0 )
+				omp_alloc::delete_array(old_data);
 		}
-		data[length++] = s;
-		CPPAD_ASSERT_UNKNOWN( length <= capacity );
+		data_[length_++] = s;
+		CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
 	}
 
-	// add vector to the back of the array
-	// (Cannot use push_back becasue MS V++ 7.1 does not resolve
-	// to non-template member function when scalar is used.)
+	/*! add vector to the back of this vector
+	(we could not use push_back becasue MS V++ 7.1 did not resolve
+	to non-template member function when scalar is used.)
+	*/
 	template <class Vector>
-	void push_vector(const Vector &v)
+	void push_vector(
+		/// value of the vector that we are adding
+		const Vector& v
+	)
 	{	CheckSimpleVector<Type, Vector>();
+		CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
 		size_t m = v.size();
-		CPPAD_ASSERT_UNKNOWN( length <= capacity );
-		if( length + m > capacity )
-		{	// allocate more capacity
-			capacity = length + m;
-			data     = CPPAD_TRACK_EXTEND(capacity, length, data);
-		}
 		size_t i;
+		if( length_ + m > capacity_ )
+		{	// store old capacity and data values
+			size_t old_capacity = capacity_;
+			Type*  old_data     = data_;
+			// set new capacity and data values
+			data_ = omp_alloc::create_array<Type>(length_ + m, capacity_);
+			// copy old data values
+			for(i = 0; i < length_; i++)
+				data_[i] = old_data[i];
+			// free old data
+			if( old_capacity > 0 )
+				omp_alloc::delete_array(old_data);
+		}
 		for(i = 0; i < m; i++)
-			data[length++] = v[i];
-		CPPAD_ASSERT_UNKNOWN( length <= capacity );
+			data_[length_++] = v[i];
+		CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
 	}
 };
 
-// output operator
+/// output a vector
 template <class Type>
 inline std::ostream& operator << (
-	std::ostream              &os  , 
-	const CppAD::vector<Type> &vec )
+	/// stream to write the vector to
+	std::ostream&              os  , 
+	/// vector that is output
+	const CppAD::vector<Type>& vec )
 {	size_t i = 0;
 	size_t n = vec.size();
 
@@ -375,185 +460,279 @@ inline std::ostream& operator << (
 	return os;
 }
 
-/*
---------------------------- vectorBool -------------------------------------
+// ---------------------------------------------------------------------------
+/*!
+Class that is used to hold a non-constant element of a vector.
 */
 class vectorBoolElement {
+	/// the boolean data is packed with sizeof(UnitType) bits per value
 	typedef size_t UnitType;
 private:
-	UnitType *unit;
-	UnitType mask;
+	/// pointer to the UnitType value holding this eleemnt
+	UnitType* unit_;
+	/// mask for the bit corresponding to this element
+	/// (all zero except for bit that corresponds to this element)
+	UnitType mask_;
 public:
-	vectorBoolElement(UnitType *unit_, UnitType mask_)
-	: unit(unit_) , mask(mask_)
+	/// constructor from member values
+	vectorBoolElement(
+		/// unit for this element
+		UnitType* unit , 
+		/// mask for this element
+		UnitType mask  )
+	: unit_(unit) , mask_(mask)
 	{ }
-	vectorBoolElement(const vectorBoolElement &e)
-	: unit(e.unit) , mask(e.mask)
+	/// constuctor from another element
+	vectorBoolElement(
+		/// other element
+		const vectorBoolElement& e )
+	: unit_(e.unit_) , mask_(e.mask_)
 	{ }
+	/// conversion to a boolean value
 	operator bool() const
-	{	return (*unit & mask) != 0; }
-	vectorBoolElement& operator=(bool bit)
+	{	return (*unit_ & mask_) != 0; }
+	/// assignment of this element to a bool
+	vectorBoolElement& operator=(
+		/// right hand side for assignment
+		bool bit
+	)
 	{	if(bit)
-			*unit |= mask;
-		else	*unit &= ~mask;
+			*unit_ |= mask_;
+		else	*unit_ &= ~mask_;
 		return *this;
 	} 
-	vectorBoolElement& operator=(const vectorBoolElement &e)
-	{	if( *(e.unit) & e.mask )
-			*unit |= mask;
-		else	*unit &= ~mask;
+	/// assignment of this element to another element
+	vectorBoolElement& operator=(const vectorBoolElement& e)
+	{	if( *(e.unit_) & e.mask_ )
+			*unit_ |= mask_;
+		else	*unit_ &= ~mask_;
 		return *this;
 	} 
 };
 
 class vectorBool {
+	/// the boolean data is packed with sizeof(UnitType) bits per value
 	typedef size_t UnitType;
 private:
-	static const  size_t BitPerUnit 
+	/// number of bits packed into each UnitType value in data_
+	static const  size_t bit_per_unit_ 
 		= std::numeric_limits<UnitType>::digits;
-	size_t    nunit;
-	size_t    length;
-	UnitType *data;
+	/// number of UnitType values in data_
+	size_t    n_unit_;
+	/// number of bits currently stored in this vector
+	size_t    length_;
+	/// pointer to where the bits are stored
+	UnitType *data_;
+
+	/// minimum number of UnitType values that can store length_ bits
+	/// (note that this is really a function of length_)
+	size_t unit_min(void)
+	{	if( length_ == 0 )
+			return 0;
+		return (length_ - 1) / bit_per_unit_ + 1;
+	}
 public:
-	// type of the elements in the vector
+	/// type corresponding to the elements of this vector
+	/// (note that non-const elements actually use vectorBoolElement)
 	typedef bool value_type;
 
-	// default constructor
-	inline vectorBool(void) : nunit(0), length(0), data(CPPAD_NULL)
+	/// default constructor (sets all member data to zero)
+	inline vectorBool(void) : n_unit_(0), length_(0), data_(0)
 	{ }
-	// constructor with a specified size
-	inline vectorBool(size_t n) : nunit(0), length(0), data(CPPAD_NULL)
-	{	if( n == 0 )
-			data = CPPAD_NULL;
-		else 
-		{	nunit    = (n - 1) / BitPerUnit + 1;
-			length   = n;
-			data     = CPPAD_TRACK_NEW_VEC(nunit, data);
+	/// sizing constructor
+	inline vectorBool(
+		/// number of bits in this vector
+		size_t n
+	) : n_unit_(0), length_(n), data_(0)
+	{	if( length_ > 0 )
+		{	// set n_unit and data
+			size_t min_unit = unit_min();
+			data_ = omp_alloc::create_array<UnitType>(min_unit, n_unit_);
 		}
 	}
-	// copy constructor
-	inline vectorBool(const vectorBool &v) 
-	: nunit(v.nunit), length(v.length)
-	{	size_t i;
-		data = CPPAD_NULL;
-		if( nunit > 0 )
-			data = CPPAD_TRACK_NEW_VEC(nunit, data);
+	/// copy constructor
+	inline vectorBool(
+		/// the *this vector will be a copy of \c v
+		const vectorBool& v
+	) : n_unit_(0), length_(v.length_), data_(0)
+	{	if( length_ > 0 )
+		{	// set n_unit and data
+			size_t min_unit = unit_min();
+			data_ = omp_alloc::create_array<UnitType>(min_unit, n_unit_);
 
-		for(i = 0; i < nunit; i++)
-			data[i] = v.data[i];
+			// copy values using UnitType assignment operator
+			CPPAD_ASSERT_UNKNOWN( min_unit <= v.n_unit_ ); 
+			size_t i;
+			for(i = 0; i < min_unit; i++)
+				data_[i] = v.data_[i];
+		}
 	}
-	// destructor
+	/// destructor
 	~vectorBool(void)
-	{	if( data != CPPAD_NULL )
-			CPPAD_TRACK_DEL_VEC(data);
+	{	if( n_unit_ > 0 )
+			omp_alloc::delete_array(data_);
 	}
 
-	// size function
+	/// number of elements in this vector
 	inline size_t size(void) const
-	{	return length; }
+	{	return length_; }
 
-	// resize function
-	inline void resize(size_t n)
-	{	length = n;
-		if( (nunit * BitPerUnit >= n) & (n > 0) )
+	/// maximum number of elements current allocation can store
+	inline size_t capacity(void) const
+	{	return n_unit_ * bit_per_unit_; }
+
+
+	/// change number of elements in this vector
+	inline void resize(
+		/// new number of elements for this vector, if zero
+		/// make sure the memory is returned to omp_alloc.
+		size_t n
+	)
+	{	length_ = n;
+		// check if we can use the current memory
+		size_t min_unit = unit_min();
+		if( (n_unit_ >= min_unit) & (length_ > 0) )
 			return;
-		if( data != CPPAD_NULL )
-			CPPAD_TRACK_DEL_VEC(data);
-		if( n == 0 )
-		{	nunit = 0;
-			data = CPPAD_NULL;
-		}
+		// check if there is old memory to be freed
+		if( n_unit_ > 0 )
+			omp_alloc::delete_array(data_);
+		// check if we need new memory
+		if( length_ == 0 )
+			n_unit_ = 0;
 		else
-		{	nunit    = (n - 1) / BitPerUnit + 1;
-			data     = CPPAD_TRACK_NEW_VEC(nunit, data);
+		{	// get new memory and set n_unit
+			data_ = omp_alloc::create_array<UnitType>(min_unit, n_unit_);
 		}
 	}
-	// assignment operator
-	inline vectorBool & operator=(const vectorBool &v)
+	/// vector assignment operator
+	inline vectorBool& operator=(
+		/// right hand size of the assingment operation
+		const vectorBool& v
+	)
 	{	size_t i;
 		CPPAD_ASSERT_KNOWN(
-			length == v.length ,
-			"size miss match in assignment operation"
+			length_ == v.length_ ,
+			"vectorBool: size miss match in assignment operation"
 		);
-		CPPAD_ASSERT_UNKNOWN( nunit == v.nunit );
-		for(i = 0; i < nunit; i++)
-			data[i] = v.data[i];
+		size_t min_unit = unit_min();
+		CPPAD_ASSERT_UNKNOWN( min_unit <= n_unit_ );
+		CPPAD_ASSERT_UNKNOWN( min_unit <= v.n_unit_ );
+		for(i = 0; i < min_unit; i++)
+			data_[i] = v.data_[i];
 		return *this;
 	}
-	// non-constant element access
-	vectorBoolElement operator[](size_t k)
+	/// non-constant element access; i.e., we can change this element value
+	vectorBoolElement operator[](
+		/// element index, must be less than length
+		size_t k
+	)
 	{	size_t i, j;
 		CPPAD_ASSERT_KNOWN(
-			k < length,
-			"vector index greater than or equal vector size"
+			k < length_,
+			"vectorBool: index greater than or equal vector size"
 		);
-		i    = k / BitPerUnit;
-		j    = k - i * BitPerUnit;
-		return vectorBoolElement(data + i , UnitType(1) << j );
+		i    = k / bit_per_unit_;
+		j    = k - i * bit_per_unit_;
+		return vectorBoolElement(data_ + i , UnitType(1) << j );
 	}
-	// constant element access
+	/// constant element access; i.e., we cannot change this element value
 	bool operator[](size_t k) const
 	{	size_t i, j;
-		UnitType unit;
-		UnitType mask;
+		UnitType unit, mask;
 		CPPAD_ASSERT_KNOWN(
-			k < length,
-			"vector index greater than or equal vector size"
+			k < length_,
+			"vectorBool: index greater than or equal vector size"
 		);
-		i    = k / BitPerUnit;
-		j    = k - i * BitPerUnit;
-		unit = data[i];
+		i    = k / bit_per_unit_;
+		j    = k - i * bit_per_unit_;
+		unit = data_[i];
 		mask = UnitType(1) << j;
 		return (unit & mask) != 0;
 	}
-	// add to the back of the array
-	void push_back(bool bit)
-	{	size_t i, j;
+	/// add an element to the back of this vector
+	void push_back(
+		/// value of the element
+		bool bit
+	)
+	{	CPPAD_ASSERT_UNKNOWN( unit_min() <= n_unit_ );
+		size_t i, j;
 		UnitType mask;
-		CPPAD_ASSERT_UNKNOWN( length <= nunit * BitPerUnit );
-		if( length == nunit * BitPerUnit )
-		{	// allocate another unit
-			data = CPPAD_TRACK_EXTEND(nunit+1, nunit, data);
-			nunit++;
+		if( length_ + 1 > n_unit_ * bit_per_unit_ )
+		{	CPPAD_ASSERT_UNKNOWN( unit_min() == n_unit_ );
+			// store old n_unit and data values
+			size_t    old_n_unit = n_unit_;
+			UnitType* old_data   = data_;
+			// set new n_unit and data values
+			data_ = omp_alloc::create_array<UnitType>(n_unit_+1, n_unit_);
+			// copy old data values
+			for(i = 0; i < old_n_unit; i++)
+				data_[i] = old_data[i]; 
+			// free old data
+			if( old_n_unit > 0 )
+				omp_alloc::delete_array(old_data);
 		}
-		i    = length / BitPerUnit;
-		j    = length - i * BitPerUnit;
+		i    = length_ / bit_per_unit_;
+		j    = length_ - i * bit_per_unit_;
 		mask = UnitType(1) << j;
 		if( bit )
-			data[i] |= mask;
-		else	data[i] &= ~mask;
-		length++;
+			data_[i] |= mask;
+		else	data_[i] &= ~mask;
+		length_++;
 	}
-	// add vector to back of array
-	void push_vector(const vectorBool &v)
-	{	size_t i, j, k;
+	/// add vector to the back of this vector
+	template <class Vector>
+	void push_vector(
+		/// value of the vector that we are adding
+		const Vector& v
+	)
+	{	 CheckSimpleVector<bool, Vector>();
+		size_t min_unit = unit_min();
+		CPPAD_ASSERT_UNKNOWN( length_ <= n_unit_ * bit_per_unit_ );
+		// some temporaries
+		size_t i, j, k, ell;
 		UnitType mask;
 		bool bit;
-		CPPAD_ASSERT_UNKNOWN( length <= nunit * BitPerUnit );
-		CPPAD_ASSERT_UNKNOWN( v.length <= v.nunit * BitPerUnit );
-		if( length + v.length >= nunit * BitPerUnit )
-		{	// allocate enough space
-			data = CPPAD_TRACK_EXTEND(nunit+v.nunit, nunit, data);
-			nunit += v.nunit;
+		// store old length
+		size_t old_length = length_;
+		// new length and minium number of units;
+		length_    = length_ + v.size();
+		min_unit   = unit_min();
+		if( length_ >= n_unit_ * bit_per_unit_ )
+		{	// store old n_unit and data value
+			size_t  old_n_unit = n_unit_;
+			UnitType* old_data = data_;
+			// set new n_unit and data values
+			data_ = omp_alloc::create_array<UnitType>(min_unit, n_unit_);
+			// copy old data values
+			for(i = 0; i < old_n_unit; i++)
+				data_[i] = old_data[i]; 
+			// free old data
+			if( old_n_unit > 0 )
+				omp_alloc::delete_array(old_data);
 		}
+		ell = old_length;
 		for(k = 0; k < v.size(); k++)
-		{	i    = length / BitPerUnit;
-			j    = length - i * BitPerUnit;
+		{
+			i    = ell / bit_per_unit_;
+			j    = ell - i * bit_per_unit_;
 			bit  = v[k];
 			mask = UnitType(1) << j;
 			if( bit )
-				data[i] |= mask;
-			else	data[i] &= ~mask;
-			length++;
+				data_[i] |= mask;
+			else	data_[i] &= ~mask;
+			ell++;
 		}
-		CPPAD_ASSERT_UNKNOWN( length <= nunit * BitPerUnit );
+		CPPAD_ASSERT_UNKNOWN( length_ == ell );
+		CPPAD_ASSERT_UNKNOWN( length_ <= n_unit_ * bit_per_unit_ );
 	}
 };
 
-// output operator
+/// output a vector
 inline std::ostream& operator << (
-	std::ostream     &os  , 
-	const vectorBool &v   )
+	/// steam to write the vector to
+	std::ostream&      os  , 
+	/// vector that is output
+	const vectorBool&  v   )
 {	size_t i = 0;
 	size_t n = v.size();
 
@@ -562,7 +741,5 @@ inline std::ostream& operator << (
 	return os;
 }
 
-} // END CppAD namespace
-
-
+CPPAD_END_NAMESPACE
 # endif

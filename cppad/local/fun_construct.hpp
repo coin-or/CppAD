@@ -3,7 +3,7 @@
 # define CPPAD_FUN_CONSTRUCT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -261,7 +261,7 @@ i.e., operation sequences that were recorded using the type \c AD<Base>.
 */
 template <typename Base>
 ADFun<Base>::ADFun(void)
-: total_num_var_(0), taylor_(CPPAD_NULL)
+: total_num_var_(0)
 { }
 
 /*!
@@ -291,8 +291,11 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	// go through member variables in order
 	// (see ad_fun.hpp for meaning of each variable)
 	compare_change_            = 0;
+
+	taylor_.erase();
 	taylor_per_var_            = 0;
 	taylor_col_dim_            = 0;
+
 	total_num_var_             = f.total_num_var_;
 	ind_taddr_.resize(n);
 	ind_taddr_                 = f.ind_taddr_;
@@ -301,9 +304,6 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	dep_parameter_.resize(m);
 	dep_parameter_             = f.dep_parameter_;
 	play_                      = f.play_;
-	if( taylor_ != CPPAD_NULL )
-		CPPAD_TRACK_DEL_VEC(taylor_);
-	taylor_                    = CPPAD_NULL;
 	for_jac_sparse_pack_.resize(0, 0);
 	for_jac_sparse_set_.resize(0, 0);
 
@@ -311,7 +311,8 @@ void ADFun<Base>::operator=(const ADFun<Base>& f)
 	taylor_per_var_     = f.taylor_per_var_;
 	taylor_col_dim_     = f.taylor_col_dim_;
 	size_t length       = total_num_var_ * taylor_col_dim_;
-	if( length > 0 ) taylor_   = CPPAD_TRACK_NEW_VEC(length, taylor_);
+	if( length > 0 )
+		taylor_.extend(length);
 	size_t i, j;
 	for(i = 0; i < total_num_var_; i++)
 	{	for(j = 0; j < taylor_per_var_; j++)
@@ -389,7 +390,7 @@ are stored in this ADFun object.
 template <typename Base>
 template <typename VectorAD>
 ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
-: total_num_var_(0), taylor_(CPPAD_NULL)
+: total_num_var_(0)
 {
 	CPPAD_ASSERT_KNOWN(
 		x.size() > 0,
@@ -432,7 +433,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	// allocate memory for one zero order taylor_ coefficient
 	taylor_per_var_  = 1;
 	taylor_col_dim_  = 1;
-	taylor_          = CPPAD_TRACK_NEW_VEC(total_num_var_, taylor_);
+	taylor_.extend(total_num_var_);
 
 	// set zero order coefficients corresponding to indpendent variables
 	CPPAD_ASSERT_UNKNOWN( n == ind_taddr_.size() );
@@ -445,12 +446,12 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	// use independent variable values to fill in values for others
 # if CPPAD_USE_FORWARD0SWEEP
 	compare_change_ = forward0sweep(
-		false, n, total_num_var_, &play_, taylor_col_dim_, taylor_
+		false, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
 	);
 # else
 	size_t p = 0;
 	compare_change_ = forward_sweep(
-		false, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_
+		false, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
 	);
 # endif
 	CPPAD_ASSERT_UNKNOWN( compare_change_ == 0 );

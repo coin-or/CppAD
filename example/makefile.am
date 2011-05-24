@@ -140,6 +140,7 @@ example_SOURCES   = \
 	ode_gear_control.cpp\
 	ode_stiff.cpp \
 	ode_taylor.cpp \
+	omp_alloc.cpp \
 	opt_val_hes.cpp \
 	optimize.cpp \
 	output.cpp \
@@ -173,7 +174,6 @@ example_SOURCES   = \
 	tan.cpp \
 	tanh.cpp \
 	tape_index.cpp \
-	track_new_del.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
 	value.cpp \

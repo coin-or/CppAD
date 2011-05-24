@@ -3,7 +3,7 @@
 # define CPPAD_SPEED_TEST_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -98,7 +98,7 @@ It specifies the number of times to repeat the test.
 $head size_vec$$
 The $code speed_test$$ argument $italic size_vec$$ has prototype
 $syntax%
-	const %Vector% &%size_vec%
+	const %Vector%& %size_vec%
 %$$
 This vector determines the size for each of the tests problems.
 
@@ -162,7 +162,7 @@ namespace CppAD { // BEGIN CppAD namespace
 template <class Vector>
 inline Vector speed_test( 
 	void test(size_t size, size_t repeat),
-	Vector size_vec                      ,
+	const Vector& size_vec               ,
 	double time_min                      )
 {
 	// check that size_vec is a simple vector with size_t elements

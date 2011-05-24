@@ -3,7 +3,7 @@
 # define CPPAD_PLAYER_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -35,78 +35,35 @@ private:
 	/// Number of variables in the recording.
 	size_t    num_rec_var_;
 
-	/// Number of operators in the recording. 
-	size_t    num_rec_op_;
-
 	/// The operators in the recording.
-	OpCode   *rec_op_;
-
-	/// Number of VecAD indices in the recording. 
-	size_t    num_rec_vecad_ind_;
+	pod_vector<OpCode> rec_op_;
 
 	/// Number of VecAD vectors in the recording
 	size_t    num_rec_vecad_vec_;
 
 	/// The VecAD indices in the recording.
-	size_t   *rec_vecad_ind_;
-
-	/// Number of operation arguments indices in the recording. 
-	size_t    num_rec_op_arg_;
+	pod_vector<size_t> rec_vecad_ind_;
 
 	/// The operation argument indices in the recording
-	size_t   *rec_op_arg_;
-
-	/// Number of parameters in the recording.
-	size_t    num_rec_par_;
+	pod_vector<size_t> rec_op_arg_;
 
 	/// The parameters in the recording.
-	Base     *rec_par_;
-
-	/// Number of text characters in the recording.
-	size_t    num_rec_text_;
+	/// Note that Base may not be plain old data, so use false in consructor.
+	pod_vector<Base> rec_par_;
 
 	/// Character strings ('\\0' terminated) in the recording.
-	char     *rec_text_;
+	pod_vector<char> rec_text_;
 
 
 // --------------- Functions used to create and maniplate a recording -------
 public:
 	/// Default constructor
-	player(void) 
-	{	
-		num_rec_var_       = 0;
-
-		num_rec_op_        = 0;
-		rec_op_            = CPPAD_NULL;
-
-		num_rec_vecad_ind_ = 0;
-		num_rec_vecad_vec_ = 0;
-		rec_vecad_ind_     = CPPAD_NULL;
-
-		num_rec_op_arg_    = 0;
-		rec_op_arg_        = CPPAD_NULL;
-
-		num_rec_par_       = 0;
-		rec_par_           = CPPAD_NULL;
-
-		num_rec_text_      = 0;
-		rec_text_          = CPPAD_NULL;
-
-	}
+	player(void) : num_rec_var_(0), num_rec_vecad_vec_(0)
+	{ }
 
 	/// Destructor
 	~player(void)
-	{	if( num_rec_op_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_op_);
-		if( num_rec_vecad_ind_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_vecad_ind_);
-		if( num_rec_op_arg_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_op_arg_);
-		if( num_rec_par_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_par_);
-		if( num_rec_text_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_text_);
-	}
+	{ }
 
 	// ===============================================================
 	// Begin two functions with idential code but different argument types.
@@ -119,78 +76,31 @@ public:
 	void operator=(const recorder<Base> &rec)
 	{	size_t i;
 
-		if( num_rec_op_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_op_);
-		if( num_rec_vecad_ind_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_vecad_ind_);
-		if( num_rec_op_arg_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_op_arg_);
-		if( num_rec_par_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_par_);
-		if( num_rec_text_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_text_);
-
 		// Var
 		num_rec_var_        = rec.num_rec_var_;
 
 		// Op
-		num_rec_op_         = rec.num_rec_op_;
+		rec_op_             = rec.rec_op_;
 
 		// VecInd
-		num_rec_vecad_ind_  = rec.num_rec_vecad_ind_;
+		rec_vecad_ind_      = rec.rec_vecad_ind_;
 
 		// Arg
-		num_rec_op_arg_     = rec.num_rec_op_arg_;
+		rec_op_arg_         = rec.rec_op_arg_;
 
 		// Par
-		num_rec_par_        = rec.num_rec_par_;
+		rec_par_            = rec.rec_par_;
 
 		// Txt
-		num_rec_text_       = rec.num_rec_text_;
-
-		// Allocate the memory
-		if( num_rec_op_ == 0 )
-			rec_op_ = CPPAD_NULL;
-		else	rec_op_ = 
-			CPPAD_TRACK_NEW_VEC(num_rec_op_,        rec_op_);
-		if( num_rec_vecad_ind_ == 0 )
-			rec_vecad_ind_ = CPPAD_NULL;
-		else	rec_vecad_ind_ = 
-			CPPAD_TRACK_NEW_VEC(num_rec_vecad_ind_, rec_vecad_ind_);
-		if( num_rec_op_arg_ == 0 )
-			rec_op_arg_ = CPPAD_NULL;
-		else	rec_op_arg_ = 
-			CPPAD_TRACK_NEW_VEC(num_rec_op_arg_,    rec_op_arg_);
-		if( num_rec_par_ == 0 )
-			rec_par_ = CPPAD_NULL;
-		else	rec_par_ = 
-			CPPAD_TRACK_NEW_VEC(num_rec_par_,       rec_par_);
-		if( num_rec_text_ == 0 )
-			rec_text_ = CPPAD_NULL;
-		else	rec_text_ = 
-			CPPAD_TRACK_NEW_VEC(num_rec_text_,      rec_text_);
-
-		// Copy the data
-		i = num_rec_op_;
-		while(i--)
-			rec_op_[i] = rec.rec_op_[i];
-		i = num_rec_vecad_ind_;
-		while(i--)
-			rec_vecad_ind_[i] = rec.rec_vecad_ind_[i];
-		i = num_rec_op_arg_;
-		while(i--)
-			rec_op_arg_[i] = rec.rec_op_arg_[i];
-		i = num_rec_par_;
-		while(i--)
-			rec_par_[i] = rec.rec_par_[i];
-		i = num_rec_text_;
-		while(i--)
-			rec_text_[i] = rec.rec_text_[i];
+		rec_text_           = rec.rec_text_;
 
 		// set the number of VecAD vectors
 		num_rec_vecad_vec_ = 0;
-		for(i = 0; i < num_rec_vecad_ind_; i += rec_vecad_ind_[i] + 1)
+		for(i = 0; i < rec_vecad_ind_.size(); i += rec_vecad_ind_[i] + 1)
 			num_rec_vecad_vec_++;
+		// rec_vecad_ind_ contains size of each VecAD followed by
+		// the parameter indices used to iniialize it.
+		CPPAD_ASSERT_UNKNOWN( i == rec_vecad_ind_.size() );
 	}
 
 	/*!  
@@ -200,80 +110,25 @@ public:
 	the object that contains the operatoion sequence to copy.
  	*/
 	void operator=(const player& play)
-	{	size_t i;
-
-		if( num_rec_op_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_op_);
-		if( num_rec_vecad_ind_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_vecad_ind_);
-		if( num_rec_op_arg_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_op_arg_);
-		if( num_rec_par_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_par_);
-		if( num_rec_text_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_text_);
-
+	{	
 		// Var
 		num_rec_var_        = play.num_rec_var_;
 
 		// Op
-		num_rec_op_         = play.num_rec_op_;
+		rec_op_             = play.rec_op_;
 
 		// VecInd
-		num_rec_vecad_ind_  = play.num_rec_vecad_ind_;
+		num_rec_vecad_vec_  = play.num_rec_vecad_vec_;
+		rec_vecad_ind_      = play.rec_vecad_ind_;
 
 		// Arg
-		num_rec_op_arg_     = play.num_rec_op_arg_;
+		rec_op_arg_         = play.rec_op_arg_;
 
 		// Par
-		num_rec_par_        = play.num_rec_par_;
+		rec_par_            = play.rec_par_;
 
 		// Txt
-		num_rec_text_       = play.num_rec_text_;
-
-		// Allocate the memory
-		if( num_rec_op_ == 0 )
-			rec_op_ = CPPAD_NULL;
-		else	rec_op_ = 
-			CPPAD_TRACK_NEW_VEC(num_rec_op_,        rec_op_);
-		if( num_rec_vecad_ind_ == 0 )
-			rec_vecad_ind_ = CPPAD_NULL;
-		else	rec_vecad_ind_ = 
-			CPPAD_TRACK_NEW_VEC(num_rec_vecad_ind_, rec_vecad_ind_);
-		if( num_rec_op_arg_ == 0 )
-			rec_op_arg_ = CPPAD_NULL;
-		else	rec_op_arg_ = 
-			CPPAD_TRACK_NEW_VEC(num_rec_op_arg_,    rec_op_arg_);
-		if( num_rec_par_ == 0 )
-			rec_par_ = CPPAD_NULL;
-		else	rec_par_ = 
-			CPPAD_TRACK_NEW_VEC(num_rec_par_,       rec_par_);
-		if( num_rec_text_ == 0 )
-			rec_text_ = CPPAD_NULL;
-		else	rec_text_ = 
-			CPPAD_TRACK_NEW_VEC(num_rec_text_,      rec_text_);
-
-		// Copy the data
-		i = num_rec_op_;
-		while(i--)
-			rec_op_[i] = play.rec_op_[i];
-		i = num_rec_vecad_ind_;
-		while(i--)
-			rec_vecad_ind_[i] = play.rec_vecad_ind_[i];
-		i = num_rec_op_arg_;
-		while(i--)
-			rec_op_arg_[i] = play.rec_op_arg_[i];
-		i = num_rec_par_;
-		while(i--)
-			rec_par_[i] = play.rec_par_[i];
-		i = num_rec_text_;
-		while(i--)
-			rec_text_[i] = play.rec_text_[i];
-
-		// set the number of VecAD vectors
-		num_rec_vecad_vec_ = 0;
-		for(i = 0; i < num_rec_vecad_ind_; i += rec_vecad_ind_[i] + 1)
-			num_rec_vecad_vec_++;
+		rec_text_           = play.rec_text_;
 	}
 	// End two functions with idential code but different argument types.
 	// ===============================================================
@@ -282,29 +137,13 @@ public:
 	void Erase(void)
 	{	
 		num_rec_var_       = 0;
-		num_rec_op_        = 0;
-		num_rec_vecad_ind_ = 0;
-		num_rec_op_arg_    = 0;
-		num_rec_par_       = 0;
-		num_rec_text_      = 0;
-
-		if( num_rec_op_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_op_);
-		if( num_rec_vecad_ind_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_vecad_ind_);
-		if( num_rec_op_arg_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_op_arg_);
-		if( num_rec_par_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_par_);
-		if( num_rec_text_ > 0 )
-			CPPAD_TRACK_DEL_VEC(rec_text_);
-
-		num_rec_op_        = 0;
-		num_rec_vecad_ind_ = 0;
 		num_rec_vecad_vec_ = 0;
-		num_rec_op_arg_    = 0;
-		num_rec_par_       = 0;
-		num_rec_text_      = 0;
+
+		rec_op_.erase();
+		rec_vecad_ind_.erase();
+		rec_op_arg_.erase();
+		rec_par_.erase();
+		rec_text_.erase();
 	}
 
 // ------------------ Old method of palying back a recording -----------------
@@ -320,9 +159,7 @@ public:
 	the index of the operator in recording
 	*/
 	OpCode GetOp (size_t i) const
-	{	CPPAD_ASSERT_UNKNOWN(i < num_rec_op_);
-		return rec_op_[i];
-	}
+	{	return rec_op_[i]; }
 
 	/*! 
 	\brief 
@@ -335,9 +172,7 @@ public:
 	the index of the VecAD index in recording
 	*/
 	size_t GetVecInd (size_t i) const
-	{	CPPAD_ASSERT_UNKNOWN(i < num_rec_vecad_ind_);
-		return rec_vecad_ind_[i];
-	}
+	{	return rec_vecad_ind_[i]; }
 
 	/*! 
 	\brief 
@@ -350,9 +185,7 @@ public:
 	the index of the parameter in recording
 	*/
 	Base GetPar(size_t i) const
-	{	CPPAD_ASSERT_UNKNOWN(i < num_rec_par_);
-		return rec_par_[i];
-	}
+	{	return rec_par_[i]; }
 
 	/*! 
 	\brief 
@@ -363,7 +196,7 @@ public:
 
 	*/
 	const Base* GetPar(void) const
-	{	return rec_par_; }
+	{	return rec_par_.data(); }
 
 	/*! 
 	\brief 
@@ -376,8 +209,8 @@ public:
 	the index where the string begins. 
 	*/
 	const char *GetTxt(size_t i) const
-	{	CPPAD_ASSERT_UNKNOWN(i < num_rec_text_);
-		return rec_text_ + i;
+	{	CPPAD_ASSERT_UNKNOWN(i < rec_text_.size() );
+		return rec_text_.data() + i;
 	}
 	
 	/*!
@@ -391,9 +224,7 @@ public:
 	is the new normal index value.
 	*/
 	void ReplaceInd(size_t i, size_t value)
-	{	CPPAD_ASSERT_UNKNOWN( i < num_rec_op_arg_);
-		rec_op_arg_[i] = value;
-	}
+	{	rec_op_arg_[i] = value; }
 
 	/// Fetch number of variables in the recording.
 	size_t num_rec_var(void) const
@@ -401,11 +232,11 @@ public:
 
 	/// Fetch number of operators in the recording.
 	size_t num_rec_op(void) const
-	{	return num_rec_op_; }
+	{	return rec_op_.size(); }
 
 	/// Fetch number of VecAD indices in the recording.
 	size_t num_rec_vecad_ind(void) const
-	{	return num_rec_vecad_ind_; }
+	{	return rec_vecad_ind_.size(); }
 
 	/// Fetch number of VecAD vectors in the recording
 	size_t num_rec_vecad_vec(void) const
@@ -413,23 +244,24 @@ public:
 
 	/// Fetch number of argument indices in the recording.
 	size_t num_rec_op_arg(void) const
-	{	return num_rec_op_arg_; }
+	{	return rec_op_arg_.size(); }
 
 	/// Fetch number of parameters in the recording.
 	size_t num_rec_par(void) const
-	{	return num_rec_par_; }
+	{	return rec_par_.size(); }
 
 	/// Fetch number of characters (representing strings) in the recording.
 	size_t num_rec_text(void) const
-	{	return num_rec_text_; }
+	{	return rec_text_.size(); }
 
-	/// Fetch a rough measure of amount of memory used by the recording. 
+	/// Fetch a rough measure of amount of memory used to store recording
+	/// (just lengths, not capacities). 
 	size_t Memory(void) const
-	{	return num_rec_op_        * sizeof(OpCode) 
-		     + num_rec_op_arg_    * sizeof(size_t)
-		     + num_rec_par_       * sizeof(Base)
-		     + num_rec_text_      * sizeof(char)
-		     + num_rec_vecad_ind_ * sizeof(size_t)
+	{	return rec_op_.size()        * sizeof(OpCode) 
+		     + rec_op_arg_.size()    * sizeof(size_t)
+		     + rec_par_.size()       * sizeof(Base)
+		     + rec_text_.size()      * sizeof(char)
+		     + rec_vecad_ind_.size() * sizeof(size_t)
 		;
 	}
 
@@ -441,7 +273,7 @@ private:
 	/// Index in recording corresponding to current operator
 	size_t    op_index_;
 
-	/// Current offser of the argument indices in rec_op_arg_ 
+	/// Current offset of the argument indices in rec_op_arg_ 
 	size_t    op_arg_;
 
 	/// Index for primary (last) variable corresponding to current operator
@@ -477,7 +309,7 @@ public:
 	{
 		op        = op_          = rec_op_[0]; 
 		op_arg_   = 0;
-		op_arg    = rec_op_arg_;
+		op_arg    = rec_op_arg_.data();
 		op_index  = op_index_    = 0;
 		var_index = var_index_   = 0;
 
@@ -524,8 +356,8 @@ public:
 		op_index    = ++op_index_;
 
 		// first argument for next operator 
-		op_arg_    += NumArg(op_);            // index
-		op_arg      = op_arg_ + rec_op_arg_;  // pointer
+		op_arg_    += NumArg(op_);                   // index
+		op_arg      = op_arg_ + rec_op_arg_.data();  // pointer
 
 		// next operator
 		op          = op_         = rec_op_[ op_index_ ];
@@ -533,8 +365,7 @@ public:
 		// index for last result for next operator
 		var_index   = var_index_ += NumRes(op);
 
-		CPPAD_ASSERT_UNKNOWN( op_index_  < num_rec_op_ );
-		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= num_rec_op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= rec_op_arg_.size() );
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
 	}
 	/*!
@@ -577,8 +408,7 @@ public:
 		*/
 		op_arg_    += op_arg[0] + op_arg[1] + 4;
 
-		CPPAD_ASSERT_UNKNOWN( op_index_  < num_rec_op_ );
-		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= num_rec_op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= rec_op_arg_.size() );
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
 	}
 	/*!
@@ -589,7 +419,7 @@ public:
 	corresponding to the previous call to next_forward.
 	*/
 	size_t* forward_non_const_arg(void)
-	{	return op_arg_ + rec_op_arg_; }
+	{	return op_arg_ + rec_op_arg_.data(); }
 
 	/*!
 	Start a play back of the recording during a reverse sweep.
@@ -620,10 +450,10 @@ public:
 	void start_reverse(
 	OpCode& op, const size_t*& op_arg, size_t& op_index, size_t& var_index)
 	{
-		op_arg_     = num_rec_op_arg_;                // index
-		op_arg      = op_arg_ + rec_op_arg_;          // pointer
+		op_arg_     = rec_op_arg_.size();                // index
+		op_arg      = op_arg_ + rec_op_arg_.data();      // pointer
 
-		op_index    = op_index_   = num_rec_op_ - 1; 
+		op_index    = op_index_   = rec_op_.size() - 1; 
 		var_index   = var_index_  = num_rec_var_ - 1;
 
 		op          = op_         = rec_op_[ op_index_ ];
@@ -687,7 +517,7 @@ public:
 		// first argument for next operator
 		CPPAD_ASSERT_UNKNOWN( op_arg_ >= NumArg(op)  );
 		op_arg_    -= NumArg(op);                            // index
-		op_arg      = op_arg_ + rec_op_arg_;                 // pointer
+		op_arg      = op_arg_ + rec_op_arg_.data();          // pointer
 	}
 	/*!
 	Correct \c next_reverse return values when <tt>op == CSumOp</tt>.
@@ -724,13 +554,13 @@ public:
 		*/
 		--op_arg;
 		op_arg_    -= (op_arg[0] + 4);
-		op_arg      = op_arg_ + rec_op_arg_;
+		op_arg      = op_arg_ + rec_op_arg_.data();
 
 		CPPAD_ASSERT_UNKNOWN(
 		op_arg[0] + op_arg[1] == op_arg[ 3 + op_arg[0] + op_arg[1] ]
 		);
-		CPPAD_ASSERT_UNKNOWN( op_index_  < num_rec_op_ );
-		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= num_rec_op_arg_ );
+		CPPAD_ASSERT_UNKNOWN( op_index_  < rec_op_.size() );
+		CPPAD_ASSERT_UNKNOWN( op_arg_ + NumArg(op) <= rec_op_arg_.size() );
 		CPPAD_ASSERT_UNKNOWN( var_index_  < num_rec_var_ );
 	}
 
