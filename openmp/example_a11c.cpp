@@ -54,13 +54,13 @@ The argument $italic size$$ is the length of the arrays in the example code.
 
 $head Example Source$$
 $spell
+	hpp
 	test test
 	ifdef
 	endif
 	omp
 	cmath
 	http://www.coin-or.org/CppAD/Doc/cppad_vector.htm
-	cppad.hpp
 	pragma omp
 	for for
 	argc

@@ -53,6 +53,7 @@ $children%
 	cppad/std_math_unary.hpp%
 	cppad/vector.hpp%
 	omh/omp_alloc.omh%
+	cppad/memory_leak.hpp%
 
 	cppad/track_new_del.hpp
 %$$

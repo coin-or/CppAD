@@ -82,22 +82,6 @@ $end
 
 namespace { // empty namespace
 	int n_thread;
-
-	// function that checks for memrory leaks after all the tests
-	bool memory_leak(void)
-	{	bool leak = false;
-
-		// dump the memory pool being held for this thread
-		using CppAD::omp_alloc;
-		size_t thread = omp_alloc::get_thread_num();
-		omp_alloc::free_available(thread);
-	
-		leak |= CPPAD_TRACK_COUNT() != 0;
-		leak |= omp_alloc::available(thread) != 0;
-		leak |= omp_alloc::inuse(thread) != 0;
-
-		return leak;
-	}
 }
 
 double sum_using_one_thread(int start, int stop)
@@ -257,7 +241,7 @@ int main(int argc, char *argv[])
 		cout << "repeats per sec  = " << rate_vec[0] << endl;
 	}
 	// check all the threads for a CppAD memory leak
-	if( memory_leak() )
+	if( CppAD::memory_leak() )
 	{	ok = false;
 		cout << "Error: memory leak detected" << endl;
 	}

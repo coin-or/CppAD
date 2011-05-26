@@ -23,6 +23,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/poly.hpp>
 # include <cppad/track_new_del.hpp>
 # include <cppad/omp_alloc.hpp>
+# include <cppad/memory_leak.hpp>
 
 # ifdef SPEED_ADOLC
 # define AD_PACKAGE "adolc"
@@ -292,21 +293,6 @@ namespace {
 		cout << endl;
 		return;
 	}
-	// function that checks for memrory leaks after all the tests
-	bool memory_leak(void)
-	{	bool leak = false;
-
-		// dump the memory pool being held for this thread
-		using CppAD::omp_alloc;
-		size_t thread = omp_alloc::get_thread_num();
-		omp_alloc::free_available(thread);
-	
-		leak |= CPPAD_TRACK_COUNT() != 0;
-		leak |= omp_alloc::available(thread) != 0;
-		leak |= omp_alloc::inuse(thread) != 0;
-
-		return leak;
-	}
 }
 
 // main program that runs all the tests
@@ -558,7 +544,7 @@ int main(int argc, char *argv[])
 	size_sparse_hessian.resize(0);
 	size_sparse_jacobian.resize(0);
 	// now check for a memory leak
-	if( memory_leak() )
+	if( CppAD::memory_leak() )
 	{	ok = false;
 		Run_error_count++;
 		cout << "Memory leak detected" << endl;

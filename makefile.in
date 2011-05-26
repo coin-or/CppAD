@@ -475,6 +475,7 @@ nobase_myinclude_HEADERS = \
 	cppad/lu_factor.hpp \
 	cppad/lu_invert.hpp \
 	cppad/lu_solve.hpp \
+	cppad/memory_leak.hpp \
 	cppad/nan.hpp \
 	cppad/near_equal.hpp \
 	cppad/ode_err_control.hpp \
