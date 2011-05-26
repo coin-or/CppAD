@@ -268,7 +268,11 @@ Some of the $cref/omp_alloc/$$ allocation routines have a thread number.
 This routine enables you to determine the current thread.
 
 $head thread$$
-The return value $icode thread$$ is the currently executing thread number.
+The return value $icode thread$$ has prototype
+$codei%
+	size_t %thread%
+%$$
+and is the currently executing thread number.
 If $code _OPENMP$$ is not defined, $icode thread$$ is zero.
 
 $head Example$$

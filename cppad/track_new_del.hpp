@@ -278,13 +278,9 @@ $end
 ------------------------------------------------------------------------------
 */
 # include <cppad/local/cppad_assert.hpp>
+# include <cppad/omp_alloc.hpp>
 # include <sstream>
 # include <string>
-
-# ifdef _OPENMP
-# include <omp.h>
-# endif
-
 
 # ifndef CPPAD_NULL
 # define CPPAD_NULL	0
@@ -298,7 +294,9 @@ $end
 # endif
 # endif
 
-# define CPPAD_TRACK_DEBUG 0
+# ifndef CPPAD_TRACK_DEBUG
+# define CPPAD_TRACK_DEBUG 1
+# endif 
 
 // -------------------------------------------------------------------------
 # define CPPAD_TRACK_NEW_VEC(newlen, oldptr) \
@@ -348,12 +346,7 @@ public:
 
 	// There is only one tracking list and it starts it here
 	static TrackElement *Root(void)
-	{
-# ifdef _OPENMP
-		size_t thread = static_cast<size_t> ( omp_get_thread_num() );
-# else
-		size_t thread = 0;
-# endif
+	{	size_t thread = omp_alloc::get_thread_num();
 		CPPAD_ASSERT_KNOWN(
 			thread < CPPAD_MAX_NUM_THREADS,
 			"TrackNewDel: too many OpenMP threads are active."
@@ -361,7 +354,19 @@ public:
 		return root_for(thread); 
 	}
 
-	// Print the linked list
+	// Print one tracking element
+	static void Print(const TrackElement* E)
+	{	using std::cout;
+		using std::endl;
+		cout << "E = "         << E;
+		cout << ", E->next = " << E->next;
+		cout << ", E->ptr  = " << E->ptr;
+		cout << ", E->line = " << E->line;
+		cout << ", E->file = " << E->file;
+		cout << endl;
+	}
+
+	// Print the linked list for a thread
 	static void Print(size_t thread)
 	{	using std::cout;
 		using std::endl;
@@ -370,11 +375,7 @@ public:
 		cout << "Begin Track List for thread " << int(thread) << endl;
 		while( E->next != CPPAD_NULL )
 		{	E = E->next;
-			cout << "next = " << E->next;
-			cout << ", ptr  = " << E->ptr;
-			cout << ", line = " << E->line;
-			cout << ", file = " << E->file;
-			cout << endl;
+			Print(E);
 		}
 		cout << "End Track List for thread " << int(thread) << endl;
 		cout << endl;
@@ -445,6 +446,11 @@ Type *TrackNewVec(
 	E->next    = root->next;  
 	root->next = E;
 
+# if CPPAD_TRACK_DEBUG
+	std::cout << "TrackNewVec: ";
+	TrackElement::Print(E);
+# endif
+
 	return newptr;
 }
 
@@ -483,6 +489,11 @@ void TrackDelVec(
 		"Invalid value for the argument oldptr.\n"
 		"Possible linking of debug and NDEBUG compliations of CppAD."
 	); 
+
+# if CPPAD_TRACK_DEBUG
+	std::cout << "TrackDelVec: ";
+	TrackElement::Print(E);
+# endif
 
 	// remove tracking element from list
 	P->next = E->next;
@@ -537,10 +548,6 @@ inline size_t TrackCount(const char *file, int line)
 	for(thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
 	{
 		TrackElement *E = TrackElement::root_for(thread);
-# if CPPAD_TRACK_DEBUG
-		if( E->next != CPPAD_NULL )
-			TrackElement::Print(thread);
-# endif
 
 		while( E->next != CPPAD_NULL ) 
 		{	++count;
