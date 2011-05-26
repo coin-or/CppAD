@@ -120,6 +120,7 @@ $table
 $rref std_math_unary$$
 $rref CppAD_vector$$
 $rref omp_alloc$$
+$rref memory_leak$$
 $tend
 
 $head Deprecated Library routines$$

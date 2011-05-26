@@ -486,6 +486,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\omp_alloc.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\opt_val_hes.cpp"
 				>
 			</File>
@@ -615,10 +619,6 @@
 			</File>
 			<File
 				RelativePath=".\tape_index.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\track_new_del.cpp"
 				>
 			</File>
 			<File

@@ -426,6 +426,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\track_new_del.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\value.cpp"
 				>
 			</File>

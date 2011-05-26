@@ -16,7 +16,17 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <sstream>
 # include <limits>
 # include <memory>
+
+# ifdef _OPENMP
 # include <omp.h>
+# endif
+
+# ifdef _MSC_VER
+// Supress warning that Microsoft compiler changed its behavior and is now 
+// doing the correct thing at the statement:
+//			new(array + i) Type();
+# pragma warning(disable:4345)
+# endif
 
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/local/define.hpp>
@@ -259,7 +269,7 @@ This routine enables you to determine the current thread.
 
 $head thread$$
 The return value $icode thread$$ is the currently executing thread number.
-If $code OPENMP_$$ is not defined, $icode thread$$ is zero.
+If $code _OPENMP$$ is not defined, $icode thread$$ is zero.
 
 $head Example$$
 $cref/omp_alloc.cpp/$$

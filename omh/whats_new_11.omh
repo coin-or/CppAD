@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	initializer
 	vec
 	Bool
 	op
@@ -46,6 +47,16 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 05-26$$
+Fix Visual Studio project files that were broken during the change on 05-22. 
+In addition, in the file $code cppad/omp_alloc.hpp$$,
+suppress the following Microsoft Visual Studio warning
+$codep
+	warning C4345: behavior change: an object of POD type constructed with 
+	an initializer of the form () will be default-initialized
+$$
+
 
 $head 05-22$$
 $list number$$
