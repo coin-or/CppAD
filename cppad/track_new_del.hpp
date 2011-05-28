@@ -298,6 +298,18 @@ $end
 # define CPPAD_TRACK_DEBUG 1
 # endif 
 
+# if CPPAD_TRACK_DEBUG
+# define CPPAD_TRACK_FIRST(routine) \
+	static bool first = true; \
+	if( first ) \
+	{	std::cout << "first call to " << routine << std::endl; \
+		first = false; \
+	}
+	
+# else
+# define CPPAD_TRACK_FIRST(routine)
+# endif
+
 // -------------------------------------------------------------------------
 # define CPPAD_TRACK_NEW_VEC(newlen, oldptr) \
 	CppAD::TrackNewVec(__FILE__, __LINE__, newlen, oldptr)
@@ -413,7 +425,9 @@ inline void TrackError(
 template <class Type>
 inline Type *TrackNewVec(
 	const char *file, int line, size_t len, Type * /* oldptr */ )
-{	return (new Type[len]); 
+{
+	CPPAD_TRACK_FIRST("NDEBUG: TrackNewVec")
+	return (new Type[len]); 
 }
 
 # else
@@ -460,7 +474,9 @@ Type *TrackNewVec(
 # ifdef NDEBUG
 template <class Type>
 inline void TrackDelVec(const char *file, int line, Type *oldptr)
-{	 delete [] oldptr; 
+{
+	CPPAD_TRACK_FIRST("NDEBUG: TrackDelVec")
+	 delete [] oldptr; 
 }
 
 # else
