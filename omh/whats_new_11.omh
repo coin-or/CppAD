@@ -48,6 +48,14 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 05-28$$
+$list number$$
+Add the $cref/efficient/$$ routine to the $cref/omp_alloc/$$ system.
+$lnext
+Improve the $code omp_alloc$$ tracing so it prints the same pointer
+as returned to the user (not an offset version of that pointer).
+$lend
+
 $head 05-26$$
 Fix Visual Studio project files that were broken during the change on 05-22. 
 In addition, in the file $code cppad/omp_alloc.hpp$$,
