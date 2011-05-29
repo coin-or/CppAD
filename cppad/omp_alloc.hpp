@@ -104,14 +104,14 @@ class omp_alloc{
 private:
 	/// extra information (currently only used by create and delete array)
 	size_t             extra_;
-	/// index in the root_list correspondinig to a memory allocation
-	size_t             index_;
-	/// pointer to the next memory allocation with the same index
+	/// an index that uniquely idenfifies both thread and capacity
+	size_t             tc_index_;
+	/// pointer to the next memory allocation with the the same tc_index_
 	void*              next_;
 	// ---------------------------------------------------------------------
 	/// make default constructor private. It is only used by the constructor
 	/// for \c root arrays below.
-	omp_alloc(void) : extra_(0), index_(0), next_(0) 
+	omp_alloc(void) : extra_(0), tc_index_(0), next_(0) 
 	{ }
 	// ---------------------------------------------------------------------
 	static const omp_alloc_capacity* capacity_info(void)
@@ -430,17 +430,17 @@ $end
 		using std::endl;
 
 		// determine the capacity for this request
-		size_t cap       = 0;
+		size_t c_index   = 0;
 		const size_t* capacity_vec = capacity_info()->value;
-		while( capacity_vec[cap] < min_bytes )
-		{	++cap;	
-			CPPAD_ASSERT_UNKNOWN(cap < num_cap );
+		while( capacity_vec[c_index] < min_bytes )
+		{	++c_index;	
+			CPPAD_ASSERT_UNKNOWN(c_index < num_cap );
 		}
-		cap_bytes = capacity_vec[cap];
+		cap_bytes = capacity_vec[c_index];
 
-		// determine the thread and index
-		size_t thread = get_thread_num();
-		size_t index  = thread * num_cap + cap;
+		// determine the thread and capacity index
+		size_t thread    = get_thread_num();
+		size_t tc_index  = thread * num_cap + c_index;
 
 # ifndef NDEBUG
 		// trace allocation
@@ -454,24 +454,26 @@ $end
 		}
 
 		// Root nodes for both lists. Note these are different for different 
-		// threads because index is different for different threads.
-		omp_alloc* inuse_root     = root_inuse() + index;
+		// threads because tc_index is different for different threads.
+		omp_alloc* inuse_root     = root_inuse() + tc_index;
 # endif
-		omp_alloc* available_root = root_available() + index;
+		omp_alloc* available_root = root_available() + tc_index;
 
 		// check if we already have a node we can use
-		void* v_ptr               = available_root->next_;
-		omp_alloc* node           = reinterpret_cast<omp_alloc*>(v_ptr);
+		void* v_node              = available_root->next_;
+		omp_alloc* node           = reinterpret_cast<omp_alloc*>(v_node);
 		if( node != 0 )
-		{	CPPAD_ASSERT_UNKNOWN( node->index_ == index );
+		{	CPPAD_ASSERT_UNKNOWN( node->tc_index_ == tc_index );
 
 			// remove node from available list
 			available_root->next_ = node->next_;
 
+			// return value for get_memory
+			void* v_ptr = reinterpret_cast<void*>(node + 1);
 # ifndef NDEBUG
 			// add node to inuse list
 			node->next_           = inuse_root->next_;
-			inuse_root->next_     = v_ptr;
+			inuse_root->next_     = v_node;
 
 			// trace allocation
 			if(	cap_bytes == CPPAD_TRACE_CAPACITY && 
@@ -484,20 +486,21 @@ $end
 			dec_available(cap_bytes, thread);
 
 			// return pointer to memory, do not inclue omp_alloc information
-			return reinterpret_cast<void*>(node + 1);
+			return v_ptr;
 		}
 
 		// Create a new node with omp_alloc information at front.
 		// This uses the system allocator, which is thread safe, but slower,
 		// because the thread might wait for a lock on the allocator.
-		v_ptr           = ::operator new(sizeof(omp_alloc) + cap_bytes);
-		node            = reinterpret_cast<omp_alloc*>(v_ptr);
-		node->index_    = index;
+		v_node          = ::operator new(sizeof(omp_alloc) + cap_bytes);
+		node            = reinterpret_cast<omp_alloc*>(v_node);
+		node->tc_index_ = tc_index;
+		void* v_ptr     = reinterpret_cast<void*>(node + 1);
 
 # ifndef NDEBUG
 		// add node to inuse list
 		node->next_       = inuse_root->next_;
-		inuse_root->next_ = v_ptr;
+		inuse_root->next_ = v_node;
 
 		// trace allocation
 		if( cap_bytes == CPPAD_TRACE_CAPACITY && 
@@ -508,7 +511,7 @@ $end
 		// adjust counts
 		inc_inuse(cap_bytes, thread);
 
-		return reinterpret_cast<void*>(node + 1);
+		return v_ptr;
 	}
 
 /* -----------------------------------------------------------------------
@@ -575,11 +578,10 @@ $end
 	{	size_t num_cap   = capacity_info()->number;
 
 		omp_alloc* node  = reinterpret_cast<omp_alloc*>(v_ptr) - 1;
-		v_ptr            = reinterpret_cast<void*>(node);
-		size_t index     = node->index_;
-		size_t thread    = index / num_cap;
-		size_t cap       = index % num_cap;
-		size_t capacity  = capacity_info()->value[cap];
+		size_t tc_index  = node->tc_index_;
+		size_t thread    = tc_index / num_cap;
+		size_t c_index   = tc_index % num_cap;
+		size_t capacity  = capacity_info()->value[c_index];
 
 		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS );
 		CPPAD_ASSERT_KNOWN( 
@@ -590,13 +592,14 @@ $end
 
 # ifndef NDEBUG
 		// remove node from inuse list
-		omp_alloc* inuse_root     = root_inuse() + index;
+		void* v_node              = reinterpret_cast<void*>(node);
+		omp_alloc* inuse_root     = root_inuse() + tc_index;
 		omp_alloc* previous       = inuse_root;
-		while( (previous->next_ != 0) & (previous->next_ != v_ptr) )
+		while( (previous->next_ != 0) & (previous->next_ != v_node) )
 			previous = reinterpret_cast<omp_alloc*>(previous->next_);	
 
 		// check that v_ptr is valid
-		if( previous->next_ != v_ptr )
+		if( previous->next_ != v_node )
 		{	using std::endl;
 			std::ostringstream oss;
 			oss << "return_memory: attempt to return memory not in use";
@@ -617,13 +620,157 @@ $end
 		previous->next_  = node->next_;
 # endif
 		// add node to available list
-		omp_alloc* available_root = root_available() + index;
+		omp_alloc* available_root = root_available() + tc_index;
 		node->next_               = available_root->next_;
 		available_root->next_     = reinterpret_cast<void*>(node);
 
 		// adjust counts
 		dec_inuse(capacity, thread);
 		inc_available(capacity, thread);
+	}
+/* -----------------------------------------------------------------------
+$begin efficient$$
+$spell
+	omp_alloc
+	ptr
+	num
+	bool
+	const
+$$
+
+$section Check If A Memory Allocation is Efficient Another Number of Bytes$$
+
+$index efficient, omp_alloc$$
+$index omp_alloc, efficient$$
+$index memory, reuse$$
+$index reuse, memory$$
+
+$head Syntax$$
+$codei%flag% = omp_alloc::efficient(%v_ptr%, %num_bytes%)%$$
+
+$head Purpose$$
+Check if memory that is currently in use is an efficient 
+allocation for a specified number of bytes.
+
+$head v_ptr$$
+This argument has prototype
+$codei%
+	const void* %v_ptr%
+%$$.
+It must be a pointer to memory that is currently in use; i.e.
+obtained by a previous call to $cref/get_memory/$$ and not yet returned.
+
+$head num_bytes$$
+This argument has prototype
+$codei%
+	size_t %num_bytes%
+%$$
+It specifies the number of bytes of the memory allocated by $icode v_ptr$$ 
+that we want to use.
+
+$head flag$$
+The return value has prototype
+$codei%
+	bool %flag%
+%$$
+It is true, 
+a call to $code get_memory$$ with 
+$cref/min_bytes/get_memory/min_bytes/$$
+equal to $icode num_bytes$$ would result in a value for
+$cref/cap_bytes/get_memory/cap_bytes/$$ that is the same as when $code v_ptr$$
+was returned by $code get_memory$$; i.e.,
+$icode v_ptr$$ is an efficient memory block for $icode num_bytes$$
+bytes of information.
+
+$head Thread$$
+Either the $cref/current thread/get_thread_num/$$ must be the same as during
+the corresponding call to $cref/get_memory/$$,
+or the current execution mode must be sequential 
+(not $cref/parallel/in_parallel/$$).
+
+$head NDEBUG$$
+If $code NDEBUG$$ is defined, $icode v_ptr$$ is not checked (this is faster).
+Otherwise, a list of in use pointers is searched to make sure
+that $icode v_ptr$$ is in the list. 
+
+$children%
+	example/efficient.cpp
+%$$
+$head Example$$
+The file $cref/efficient.cpp/$$ contains an example and test of
+$code efficient$$.
+It returns true if it succeeds and false otherwise.
+
+$end
+*/
+	/*!
+	Check if memory that is currently in use is an efficient 
+	allocation for a specified number of bytes.
+
+	\param v_ptr [in]
+	Value of the pointer returned by \c get_memory and still in use.
+
+	\param num_bytes [in]
+	specifies the number of bytes of the memory allocated by \c v_ptr
+	that we want to use.
+
+	\par
+	We must either be in sequential (not parallel) execution mode,
+	or the current thread must be the same as for the corresponding call
+	to \c get_memory.
+
+	\return
+	If true, a call to \c get_memory with \c min_bytes equal to \c num_bytes
+	would result in a value for \c cap_bytes that is the same as when 
+	\c v_ptr was returned by \c get_memory; i.e.,
+	\c v_ptr is an efficient memory block for \c num_bytes bytes 
+	of information.
+ 	*/
+	static bool efficient(void* v_ptr, size_t num_bytes)
+	{	size_t num_cap             = capacity_info()->number;
+		const size_t* capacity_vec = capacity_info()->value;
+
+		omp_alloc* node  = reinterpret_cast<omp_alloc*>(v_ptr) - 1;
+		size_t tc_index  = node->tc_index_;
+		size_t c_index   = tc_index % num_cap;
+		CPPAD_ASSERT_KNOWN(
+			c_index < num_cap,
+			"efficient: v_ptr was not returned by get_memory"
+		);
+		size_t  capacity  = capacity_vec[c_index];
+		bool flag         = num_bytes <= capacity;
+		if( c_index > 0 )
+			flag        &= capacity_vec[c_index-1] < num_bytes;
+# ifndef NDEBUG
+		size_t thread    = tc_index / num_cap;
+		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS );
+		CPPAD_ASSERT_KNOWN( 
+			thread == get_thread_num() || (! in_parallel()),
+			"Attempt to return memory for a different thread "
+			"while in parallel mode"
+		);
+		void* v_node           = reinterpret_cast<void*>(node);
+		omp_alloc* inuse_root  = root_inuse() + tc_index;
+		omp_alloc* previous    = inuse_root;
+		while( (previous->next_ != 0) & (previous->next_ != v_node) )
+			previous = reinterpret_cast<omp_alloc*>(previous->next_);	
+
+		// check that v_ptr is valid
+		if( previous->next_ != v_node )
+		{	using std::endl;
+			std::ostringstream oss;
+			oss << "efficient: attempt to v_ptr is not in use";
+			oss << endl;
+			oss << "v_ptr    = " << v_ptr    << endl;   
+			oss << "thread   = " << thread   << endl;   
+			oss << "capacity = " << capacity << endl;   
+			oss << "See CPPAD_TRACE_THREAD & CPPAD_TRACE_CAPACITY in";
+			oss << endl << "# include <cppad/omp_alloc.hpp>" << endl;
+			CPPAD_ASSERT_KNOWN(false, oss.str().c_str()	); 
+		}
+
+# endif
+		return flag;
 	}
 /* -----------------------------------------------------------------------
 $begin free_available$$
@@ -683,11 +830,11 @@ $end
 		if( num_cap == 0 )
 			return;
 		const size_t*     capacity_vec  = capacity_info()->value;
-		size_t cap, index;
-		for(cap = 0; cap < num_cap; cap++)
-		{	size_t capacity = capacity_vec[cap];
-			index                     = thread * num_cap + cap;
-			omp_alloc* available_root = root_available() + index;
+		size_t c_index, tc_index;
+		for(c_index = 0; c_index < num_cap; c_index++)
+		{	size_t capacity = capacity_vec[c_index];
+			tc_index                  = thread * num_cap + c_index;
+			omp_alloc* available_root = root_available() + tc_index;
 			void* v_ptr               = available_root->next_;
 			while( v_ptr != 0 )
 			{	omp_alloc* node = reinterpret_cast<omp_alloc*>(v_ptr); 

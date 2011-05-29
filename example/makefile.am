@@ -91,6 +91,7 @@ example_SOURCES   = \
 	default.cpp \
 	div.cpp \
 	div_eq.cpp \
+	efficient.cpp \
 	eq.cpp \
 	equal_op_seq.cpp \
 	erf.cpp \
