@@ -131,7 +131,7 @@ void ADFun<Base>::capacity_taylor(size_t c)
 		return;
 	}
 	
-	// Allocate new matrix will requested number of columns 
+	// Allocate new matrix with requested number of columns 
 	size_t new_len   = c * total_num_var_;
 	pod_vector<Base> new_taylor;
 	new_taylor.extend(new_len);

@@ -204,17 +204,12 @@ public:
 		/// right hand size of the assingment operation
 		const pod_vector& x
 	)
-	{	size_t i;
-		if( capacity_ == x.capacity_ )
-			length_ = x.length_;
-		else
-		{	// free old memory and get new memory of sufficient length
-			erase();
-			extend( x.length_ );
-			// In both cases should be first omp_alloc capacity >= length 
-			CPPAD_ASSERT_UNKNOWN( capacity_ == x.capacity_ );
-		}
-		CPPAD_ASSERT_UNKNOWN( length_ == x.length_ );
+	{	// free old memory and get new memory of sufficient length
+		erase();
+		extend( x.length_ );
+		CPPAD_ASSERT_UNKNOWN( capacity_ == x.capacity_ );
+		CPPAD_ASSERT_UNKNOWN( length_   == x.length_ );
+		size_t i;
 		for(i = 0; i < length_; i++)
 		{	data_[i] = x.data_[i]; }
 	}

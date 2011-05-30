@@ -15,6 +15,25 @@ then
 	echo "bin/speed_compare.sh: must be executed from its parent directory"
 	exit 1
 fi
+options=""
+if [ "$1" == "retape" ] || [ "$1" == "optimize" ]
+then
+	options="_$1"
+elif [ "$1" != "none" ]
+then
+	echo "usage: bin/speed_compare.sh option_1 option_2"
+	echo "       where the option choices are: 'none', 'retape', 'optimize'"
+	exit 1
+fi
+if [ "$2" == "retape" ] || [ "$2" == "optimize" ]
+then
+	options="_$1_$2"
+elif [ "$2" != "none" ]
+then
+	echo "usage: bin/speed_compare.sh option_1 option_2"
+	echo "       where the option choices are: 'none', 'retape', 'optimize'"
+	exit 1
+fi
 if [ ! -d cppad/new ]
 then
 	echo "speed_comapre.sh: the directory cppad/new does not exist."
@@ -37,8 +56,7 @@ then
 fi
 # -------------------------------------------------------------------------
 #
-# check if we already have results for current version
-if [ ! -e work/speed/cppad/speed_cur.out ]
+if [ ! -e work/speed/cppad/speed_cur$options.out ]
 then
 	echo "svn list cppad"
 	list_cppad=`svn list cppad`
@@ -77,8 +95,9 @@ then
 	cd ../cppad; make clean; make test.sh
 	#
 	# run speed test for the current version
-	echo "./cppad speed 123 retape > speed_cur.out"
-	./cppad speed 123 retape > speed_cur.out
+	opt=`echo $options | sed -e 's|_||g'`
+	echo "./cppad speed 123 $opt > speed_cur$options.out"
+	./cppad speed 123 $opt > speed_cur$options.out
 	#
 	echo "cd ../../.."
 	cd ../../..
@@ -98,23 +117,36 @@ do
 	cp cppad/local/new/$file cppad/local/$file
 done
 #
-# compile and link the new version
-echo "cd work/speed/src; make clean; make"
-cd work/speed/src; make clean; make
-#
-echo "cd ../cppad; make clean; make test.sh"
-cd ../cppad; make clean; make test.sh
-#
-# run speed test for the new version
-echo "./cppad speed 123 retape > speed_new.out"
-./cppad speed 123 retape > speed_new.out
-#
+if [ ! -e work/speed/cppad/speed_new$options.out ]
+then
+	#
+	# compile and link the new version
+	echo "cd work/speed/src; make clean; make"
+	cd work/speed/src; make clean; make
+	#
+	echo "cd ../cppad; make clean; make test.sh"
+	cd ../cppad; make clean; make test.sh
+	#
+	#
+	# run speed test for the new version
+	opt=`echo $options | sed -e 's|_||g'`
+	echo "./cppad speed 123 $opt > speed_new$options.out"
+	./cppad speed 123 $opt > speed_new$options.out
+	#
+	echo "cd ../../.."
+	cd ../../..
+fi
 # compare versions
-echo "sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' < speed_cur.out > run.out"
-sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' < speed_cur.out > run.out
+echo "cd work/speed/cppad"
+cd work/speed/cppad
 #
-echo "sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' < speed_new.out >> run.out"
-sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' < speed_new.out >> run.out
+echo "sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' \\"
+echo "	speed_cur$options.out > run.out"
+sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' speed_cur$options.out > run.out
+#
+echo "sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' \\"
+echo "	speed_new$options.out >> run.out"
+sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' speed_new$options.out >> run.out
 #
 echo "cat run.out | sort -u"
 cat run.out | sort -u
