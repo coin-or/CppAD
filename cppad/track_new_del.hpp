@@ -298,18 +298,6 @@ $end
 # define CPPAD_TRACK_DEBUG 1
 # endif 
 
-# if CPPAD_TRACK_DEBUG
-# define CPPAD_TRACK_FIRST(routine) \
-	static bool first = true; \
-	if( first ) \
-	{	std::cout << "first call to " << routine << std::endl; \
-		first = false; \
-	}
-	
-# else
-# define CPPAD_TRACK_FIRST(routine)
-# endif
-
 // -------------------------------------------------------------------------
 # define CPPAD_TRACK_NEW_VEC(newlen, oldptr) \
 	CppAD::TrackNewVec(__FILE__, __LINE__, newlen, oldptr)
@@ -369,13 +357,12 @@ public:
 	// Print one tracking element
 	static void Print(const TrackElement* E)
 	{	using std::cout;
-		using std::endl;
 		cout << "E = "         << E;
 		cout << ", E->next = " << E->next;
 		cout << ", E->ptr  = " << E->ptr;
 		cout << ", E->line = " << E->line;
 		cout << ", E->file = " << E->file;
-		cout << endl;
+		cout << std::endl;
 	}
 
 	// Print the linked list for a thread
@@ -426,7 +413,13 @@ template <class Type>
 inline Type *TrackNewVec(
 	const char *file, int line, size_t len, Type * /* oldptr */ )
 {
-	CPPAD_TRACK_FIRST("NDEBUG: TrackNewVec")
+# if CPPAD_TRACK_DEBUG
+	static bool first = true;
+	if( first )
+	{	std::cout << "NDEBUG is defined for TrackNewVec" << std::endl;
+		first = false;
+	}
+# endif
 	return (new Type[len]); 
 }
 
@@ -475,7 +468,13 @@ Type *TrackNewVec(
 template <class Type>
 inline void TrackDelVec(const char *file, int line, Type *oldptr)
 {
-	CPPAD_TRACK_FIRST("NDEBUG: TrackDelVec")
+# if CPPAD_TRACK_DEBUG
+	static bool first = true;
+	if( first )
+	{	std::cout << "NDEBUG is defined in TrackDelVec" << std::endl;
+		first = false;
+	}
+# endif
 	 delete [] oldptr; 
 }
 
@@ -534,6 +533,16 @@ Type *TrackExtend(
 	size_t      ncopy   ,
 	Type       *oldptr  ) 
 {	// check size of ncopy
+
+# if CPPAD_TRACK_DEBUG
+	using std::cout;
+	cout << "TrackExtend: file = " << file;
+	cout << ", line = = " << line;
+	cout << ", newlen = = " << newlen;
+	cout << ", ncopy = = " << ncopy;
+	cout << ", oldptr = = " << oldptr;
+	cout << std::endl;
+# endif
 	CPPAD_ASSERT_KNOWN( 
 		ncopy <= newlen,
 		"TrackExtend: ncopy is greater than newlen."

@@ -49,7 +49,8 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 05-29$$
-Fix bug where constructor might not be called (but required) when the
+Fix bug (introduced on $cref/05-22/whats_new_11/05-22/$$)
+whereby constructor might not be called (but required) when the
 $cref/base type/base_require/$$ is not plain old data.
 
 $head 05-28$$

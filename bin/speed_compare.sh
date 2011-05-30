@@ -56,7 +56,7 @@ then
 fi
 # -------------------------------------------------------------------------
 #
-if [ ! -e work/speed/cppad/speed_cur$options.out ]
+if [ ! -e work/speed/cppad/cur_speed$options.out ]
 then
 	echo "svn list cppad"
 	list_cppad=`svn list cppad`
@@ -96,8 +96,8 @@ then
 	#
 	# run speed test for the current version
 	opt=`echo $options | sed -e 's|_||g'`
-	echo "./cppad speed 123 $opt > speed_cur$options.out"
-	./cppad speed 123 $opt > speed_cur$options.out
+	echo "./cppad speed 123 $opt > cur_speed$options.out"
+	./cppad speed 123 $opt > cur_speed$options.out
 	#
 	echo "cd ../../.."
 	cd ../../..
@@ -117,7 +117,7 @@ do
 	cp cppad/local/new/$file cppad/local/$file
 done
 #
-if [ ! -e work/speed/cppad/speed_new$options.out ]
+if [ ! -e work/speed/cppad/new_speed$options.out ]
 then
 	#
 	# compile and link the new version
@@ -130,8 +130,8 @@ then
 	#
 	# run speed test for the new version
 	opt=`echo $options | sed -e 's|_||g'`
-	echo "./cppad speed 123 $opt > speed_new$options.out"
-	./cppad speed 123 $opt > speed_new$options.out
+	echo "./cppad speed 123 $opt > new_speed$options.out"
+	./cppad speed 123 $opt > new_speed$options.out
 	#
 	echo "cd ../../.."
 	cd ../../..
@@ -141,12 +141,12 @@ echo "cd work/speed/cppad"
 cd work/speed/cppad
 #
 echo "sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' \\"
-echo "	speed_cur$options.out > run.out"
-sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' speed_cur$options.out > run.out
+echo "	cur_speed$options.out > run.out"
+sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' cur_speed$options.out > run.out
 #
 echo "sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' \\"
-echo "	speed_new$options.out >> run.out"
-sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' speed_new$options.out >> run.out
+echo "	new_speed$options.out >> run.out"
+sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' new_speed$options.out >> run.out
 #
 echo "cat run.out | sort -u"
 cat run.out | sort -u

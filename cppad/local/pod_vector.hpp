@@ -46,10 +46,10 @@ or destructors when Type is Plain Old Data (pod).
 template <class Type>
 class pod_vector {
 private:
-	/// maximum number of Type elements current allocation can hold
-	size_t capacity_;
 	/// number of elements currently in this vector
 	size_t length_;
+	/// maximum number of Type elements current allocation can hold
+	size_t capacity_;
 	/// pointer to the first type elements 
 	/// (not defined and should not be used when capacity_ = 0)
 	Type   *data_;
@@ -59,7 +59,7 @@ private:
 public:
 	/// Constructors set capacity, length, and data to zero.
 	inline pod_vector(void) 
-	: capacity_(0), length_(0), data_(0)
+	: length_(0), capacity_(0), data_(0)
 	{ }
 	// ----------------------------------------------------------------------
 	/// Destructor: returns allocated memory to \c omp_alloc; see \c extend.
@@ -72,7 +72,7 @@ public:
 			if( ! is_pod<Type>::value )
 			{	// call destructor for each element
 				size_t i;
-				for(i = 0; i < length_; i++)
+				for(i = 0; i < capacity_; i++)
 					(data_ + i)->~Type();
 			}
 			omp_alloc::return_memory(v_ptr); 
@@ -117,14 +117,7 @@ public:
 		length_            += n;
 		// check if we can use current memory
 		if( capacity_ >= length_ )
-		{	if( ! is_pod<Type>::value )
-			{	// call constructor for each new element
-				size_t i;
-				for(i = old_length; i < length_; i++)
-					new(data_ + i) Type();
-			}
 			return old_length;
-		}
 
 		// save old memory pointer
 		Type* old_data      = data_;
@@ -140,7 +133,7 @@ public:
 		size_t i;
 		if( ! is_pod<Type>::value )
 		{	// call constructor for each new element
-			for(i = 0; i < length_; i++)
+			for(i = 0; i < capacity_; i++)
 				new(data_ + i) Type();
 		}
 		
@@ -151,6 +144,10 @@ public:
 		// return old memory to available pool
 		if( old_capacity > 0 )
 		{	v_ptr = reinterpret_cast<void*>( old_data );
+			if( ! is_pod<Type>::value )
+			{	for(i = 0; i < old_capacity; i++)
+					(data_ + i)->~Type();
+			} 
 			omp_alloc::return_memory(v_ptr); 
 		}
 
@@ -191,7 +188,7 @@ public:
 			if( ! is_pod<Type>::value )
 			{	// call destructor for each element
 				size_t i;
-				for(i = 0; i < length_; i++)
+				for(i = 0; i < capacity_; i++)
 					(data_ + i)->~Type();
 			}
 			omp_alloc::return_memory(v_ptr); 
