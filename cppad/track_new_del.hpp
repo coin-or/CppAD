@@ -537,10 +537,10 @@ Type *TrackExtend(
 # if CPPAD_TRACK_DEBUG
 	using std::cout;
 	cout << "TrackExtend: file = " << file;
-	cout << ", line = = " << line;
-	cout << ", newlen = = " << newlen;
-	cout << ", ncopy = = " << ncopy;
-	cout << ", oldptr = = " << oldptr;
+	cout << ", line = " << line;
+	cout << ", newlen = " << newlen;
+	cout << ", ncopy = " << ncopy;
+	cout << ", oldptr = " << oldptr;
 	cout << std::endl;
 # endif
 	CPPAD_ASSERT_KNOWN( 
@@ -552,11 +552,9 @@ Type *TrackExtend(
 	Type *newptr = TrackNewVec(file, line, newlen, oldptr);
 
 	// copy the data
-	size_t i = ncopy;
-	while(i)
-	{	--i;
+	size_t i;
+	for(i = 0; i < ncopy; i++)
 		newptr[i] = oldptr[i];
-	}
 
 	// delete the old vector 
 	if( ncopy > 0 )

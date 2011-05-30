@@ -66,8 +66,7 @@ public:
 	/// If this is not plain old data, 
 	/// the destructor for each element is called.
 	~pod_vector(void)
-	{
-		if( capacity_ > 0 )
+	{	if( capacity_ > 0 )
 		{	void* v_ptr = reinterpret_cast<void*>( data_ );
 			if( ! is_pod<Type>::value )
 			{	// call destructor for each element
@@ -98,10 +97,10 @@ public:
 	Increase the number of elements the end of this vector. 
 
 	\param n
-	is the number of elements to add to this vector.
+	is the number of elements to add to end of this vector.
 
 	\return
-	is the number  of elements in the vector before it was extended.
+	is the number  of elements in the vector before \c extend was extended.
 
 	- If \c Type is plain old data, new elements are not initialized; 
 	i.e., their constructor is not called. Otherwise, the constructor
@@ -113,13 +112,13 @@ public:
 	*/
 	inline size_t extend(size_t n)
 	{	size_t old_length   = length_;
-		size_t old_capacity = capacity_;
 		length_            += n;
 		// check if we can use current memory
 		if( capacity_ >= length_ )
 			return old_length;
 
-		// save old memory pointer
+		// save more old information
+		size_t old_capacity = capacity_;
 		Type* old_data      = data_;
 
 		// get new memory and set capacity
@@ -174,26 +173,12 @@ public:
 	}
 	// ----------------------------------------------------------------------
 	/*!
- 	Erase all the information in this vector.
+ 	Remove all the elements from this vector but leave the capacity
+	and data pointer as is.
 
-	- size and capacity of this vector are set to zero
-
-	- if not plain old data, the destructor for each element is called
-
-	- the memory allocated for this vector is returned to \c omp_alloc
 	*/
 	void erase(void)
-	{	if( capacity_ > 0 )
-		{	void* v_ptr = reinterpret_cast<void*>( data_ );
-			if( ! is_pod<Type>::value )
-			{	// call destructor for each element
-				size_t i;
-				for(i = 0; i < capacity_; i++)
-					(data_ + i)->~Type();
-			}
-			omp_alloc::return_memory(v_ptr); 
-		}
-		capacity_ = length_ = 0;
+	{	length_ = 0;
 		return;
 	}	
 	/// vector assignment operator
@@ -201,12 +186,27 @@ public:
 		/// right hand size of the assingment operation
 		const pod_vector& x
 	)
-	{	// free old memory and get new memory of sufficient length
-		erase();
-		extend( x.length_ );
-		CPPAD_ASSERT_UNKNOWN( capacity_ == x.capacity_ );
+	{	size_t i;
+	
+		if( x.length_ <= capacity_ )
+		{	// use existing allocation for this vector
+			length_ = x.length_;
+		}
+		else
+		{	// free old memory and get new memory of sufficient length
+			if( capacity_ > 0 )
+			{	void* v_ptr = reinterpret_cast<void*>( data_ );
+				if( ! is_pod<Type>::value )
+				{	// call destructor for each element
+					for(i = 0; i < capacity_; i++)
+						(data_ + i)->~Type();
+				}
+				omp_alloc::return_memory(v_ptr); 
+			}
+			length_ = capacity_ = 0;
+			extend( x.length_ );
+		}
 		CPPAD_ASSERT_UNKNOWN( length_   == x.length_ );
-		size_t i;
 		for(i = 0; i < length_; i++)
 		{	data_[i] = x.data_[i]; }
 	}
