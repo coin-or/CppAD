@@ -295,7 +295,7 @@ $end
 # endif
 
 # ifndef CPPAD_TRACK_DEBUG
-# define CPPAD_TRACK_DEBUG 1
+# define CPPAD_TRACK_DEBUG 0
 # endif 
 
 // -------------------------------------------------------------------------
