@@ -679,6 +679,7 @@ CPPAD_INLINE std::ostream& operator << (std::ostream &os, const VecAD<Base> &v)
 
 } // END CppAD namespace
 
+// preprocessor symbols that are local to this file
 # undef CPPAD_VEC_AD_COMPUTED_ASSIGNMENT
 
 # endif

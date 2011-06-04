@@ -587,7 +587,9 @@ size_t forward0sweep(
 	return compareCount;
 }
 
+CPPAD_END_NAMESPACE
+
+// preprocessor symbols that are local to this file
 # undef CPPAD_FORWARD0SWEEP_TRACE
 
-CPPAD_END_NAMESPACE
 # endif

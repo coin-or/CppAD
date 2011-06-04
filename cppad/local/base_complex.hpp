@@ -226,7 +226,6 @@ namespace CppAD {
 	CPPAD_USER_MACRO(sinh)
 	CPPAD_USER_MACRO(sqrt)
 }
-# undef CPPAD_USER_MACRO
 /* $$
 
 $subhead Invalid Complex Functions$$
@@ -237,6 +236,7 @@ are not defined for complex types
 Hence we make it an error to use them.
 (Note that the standard math functions are not defined in the CppAD namespace.)
 $codep */
+# undef  CPPAD_USER_MACRO
 # define CPPAD_USER_MACRO(function)                                          \
 inline std::complex<double> function(const std::complex<double> &x)          \
 {      CppAD::ErrorHandler::Call(                                            \
@@ -252,7 +252,6 @@ namespace CppAD {
 	CPPAD_USER_MACRO(asin)
 	CPPAD_USER_MACRO(atan)
 }
-# undef CPPAD_USER_MACRO
 /* $$
 $end
 */
@@ -355,6 +354,10 @@ namespace CppAD {
 	CPPAD_INVALID_COMPLEX_CASE(atan)
 	CPPAD_INVALID_COMPLEX_CASE(erf)
 }
+
+// preprocessor symbols that are local to this file
+# undef CPPAD_USER_MACRO
+# undef CPPAD_VALID_COMPLEX_CASE
 # undef CPPAD_INVALID_COMPLEX_CASE
 
 # endif

@@ -615,7 +615,9 @@ void ForJacSweep(
 	return;
 }
 
+CPPAD_END_NAMESPACE
+
+// preprocessor symbols that are local to this file
 # undef CPPAD_FOR_JAC_SWEEP_TRACE
 
-CPPAD_END_NAMESPACE
 # endif

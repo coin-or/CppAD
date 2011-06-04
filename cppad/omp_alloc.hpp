@@ -1165,4 +1165,10 @@ $end
 };
 
 CPPAD_END_NAMESPACE
+
+// preprocessor symbols local to this file
+# undef CPPAD_MAX_NUM_CAPACITY
+# undef CPPAD_MIN_DOUBLE_CAPACITY
+# undef CPPAD_TRACE_CAPACITY
+# undef CPPAD_TRACE_THREAD
 # endif

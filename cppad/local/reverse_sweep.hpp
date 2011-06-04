@@ -611,7 +611,9 @@ void ReverseSweep(
 	CPPAD_ASSERT_UNKNOWN( i_var == 0 );
 }
 
+CPPAD_END_NAMESPACE
+
+// preprocessor symbols that are local to this file
 # undef CPPAD_REVERSE_SWEEP_TRACE
 
-CPPAD_END_NAMESPACE
 # endif

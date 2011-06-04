@@ -583,6 +583,7 @@ inline size_t TrackCount(const char *file, int line)
 
 } // End CppAD namespace
 
-# undef CppADDebugTrack
+// preprocessor symbols local to this file
+# undef CPPAD_TRACK_DEBUG
 
 # endif
