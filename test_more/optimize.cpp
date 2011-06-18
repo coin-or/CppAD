@@ -529,7 +529,10 @@ namespace {
 		CppAD::Independent(X);
 
 		// check a huge number of same operation with different operands 
-		size_t n_operations = size_t(CPPAD_HASH_TABLE_SIZE) + 5;
+		size_t n_operations = std::min(
+			size_t(CPPAD_HASH_TABLE_SIZE) + 5,
+			size_t(std::numeric_limits<CPPAD_TAPE_ADDR_TYPE>::max()) - 5
+		);
 		Y[0] = X[0];
 		for(j = 0; j < n_operations; j++)
 			Y[0] = abs(Y[0]);

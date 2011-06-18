@@ -12,7 +12,7 @@
 #
 # automake input file
 #
-# CppAD pusts all it's preprocessor definitions in the cppad/config.h file
+# CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
 if CppAD_BOOSTVECTOR
@@ -34,7 +34,7 @@ AM_CXXFLAGS   = -O2 -DNDEBUG -DSPEED_ADOLC $(CXX_FLAGS)
 # END DEBUG
 #
 LDADD            = -lspeed -ladolc
-AM_LDFLAGS       = -L../src -L$(ADOLC_DIR)/lib
+AM_LDFLAGS       = -L../src -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 #
 adolc_SOURCES = \
 	../main.cpp \

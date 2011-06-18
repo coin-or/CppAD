@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -45,8 +45,7 @@ cat bin/check_include_file.1.$$ | \
 	sort -u > bin/check_include_file.2.$$
 # The file cppad/local/prototype_op.hpp should never be included. 
 # All other files should.
-ls	cppad/config.h \
-	cppad/*.hpp \
+ls	cppad/*.hpp \
 	cppad/local/*.hpp \
 	cppad/speed/*.hpp | \
 		sed -e '/cppad\/local\/prototype_op.hpp/d' | \

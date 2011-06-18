@@ -92,7 +92,7 @@ void RevJacSweep(
 	size_t         i_op;
 	size_t        i_var;
 
-	const size_t   *arg = 0;
+	const addr_t*   arg = 0;
 
 	size_t            i, j, k;
 
@@ -511,10 +511,10 @@ void RevJacSweep(
 			}
 			else
 			{	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
-				CPPAD_ASSERT_UNKNOWN( user_index == arg[0] );
-				CPPAD_ASSERT_UNKNOWN( user_id    == arg[1] );
-				CPPAD_ASSERT_UNKNOWN( user_n     == arg[2] );
-				CPPAD_ASSERT_UNKNOWN( user_m     == arg[3] );
+				CPPAD_ASSERT_UNKNOWN( user_index == size_t(arg[0]) );
+				CPPAD_ASSERT_UNKNOWN( user_id    == size_t(arg[1]) );
+				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
+				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
 				user_state = user_end;
                }
 			break;
@@ -524,7 +524,7 @@ void RevJacSweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			--user_j;
 			if( user_j == 0 )
 				user_state = user_start;
@@ -535,7 +535,7 @@ void RevJacSweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] <= i_var );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			--user_j;
 			// It might be faster if we add set union to var_sparsity
@@ -553,7 +553,7 @@ void RevJacSweep(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			--user_i;
 			user_s[user_i].clear();
 			if( user_i == 0 )

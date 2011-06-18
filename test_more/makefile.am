@@ -11,21 +11,21 @@
 # -----------------------------------------------------------------------------
 # automake input file
 #
-# CppAD pusts all it's preprocessor definitions in the cppad/config.h file
+# CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
 if CppAD_ADOLC
 ADOLC_SRC_FILES   = base_adolc.cpp 
-ADOLC_INCLUDE = -I$(ADOLC_DIR)/include 
-ADOLC_LIB     = -ladolc
-ADOLC_LIB_DIR = -L$(ADOLC_DIR)/lib
-ADOLC_FLAGS   = -DCPPAD_ADOLC_TEST
+ADOLC_INCLUDE     = -I$(ADOLC_DIR)/include 
+ADOLC_LIB         = -ladolc
+ADOLC_LIB_DIRS    = -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
+ADOLC_FLAGS       = -DCPPAD_ADOLC_TEST
 else
 ADOLC_SRC_FILES   =
-ADOLC_INCLUDE =
-ADOLC_LIB     =
-ADOLC_LIB_DIR =
-ADOLC_FLAGS   =
+ADOLC_INCLUDE     =
+ADOLC_LIB         =
+ADOLC_LIB_DIRS    =
+ADOLC_FLAGS       =
 endif
 if CppAD_BOOSTVECTOR
 BOOST_INCLUDE = -I$(BOOST_DIR)
@@ -46,7 +46,7 @@ AM_CPPFLAGS       = -I. \
 AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
 LDADD             = $(ADOLC_LIB) 
-AM_LDFLAGS        = $(ADOLC_LIB_DIR)
+AM_LDFLAGS        = $(ADOLC_LIB_DIRS)
 #
 test_more_SOURCES  = \
 	$(ADOLC_SRC_FILES) \

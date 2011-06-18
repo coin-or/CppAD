@@ -48,6 +48,10 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-12$$
+The function $cref/size_op_seq/seq_property/size_op_seq/$$ results uses
+$code CppAD_TAPE_ADDR_TYPE$$ where it used to use $code size_t$$.
+
 $head 05-29$$
 Fix bug (introduced on $cref/05-22/whats_new_11/05-22/$$)
 whereby constructor might not be called (but required) when the

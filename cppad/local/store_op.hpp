@@ -3,7 +3,7 @@
 # define CPPAD_STORE_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,7 +27,7 @@ Zero order forward mode implementation of op = StppOp.
 template <class Base>
 inline void forward_store_pp_op_0(
 	size_t         i_z         ,
-	const size_t*  arg         , 
+	const addr_t*  arg         , 
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
@@ -46,7 +46,7 @@ inline void forward_store_pp_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(StppOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < nc_combined );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < num_par );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 
 	variable[ arg[0] + i_vec ] = false;
 	combined[ arg[0] + i_vec ] = arg[2];
@@ -60,7 +60,7 @@ Zero order forward mode implementation of op = StpvOp.
 template <class Base>
 inline void forward_store_pv_op_0(
 	size_t         i_z         ,
-	const size_t*  arg         , 
+	const addr_t*  arg         , 
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
@@ -79,7 +79,7 @@ inline void forward_store_pv_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(StpvOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < nc_combined );
-	CPPAD_ASSERT_UNKNOWN( arg[2] <= i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= i_z );
 
 	variable[ arg[0] + i_vec ] = true;
 	combined[ arg[0] + i_vec ] = arg[2];
@@ -93,7 +93,7 @@ Zero order forward mode implementation of op = StvpOp.
 template <class Base>
 inline void forward_store_vp_op_0(
 	size_t         i_z         ,
-	const size_t*  arg         , 
+	const addr_t*  arg         , 
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
@@ -101,7 +101,7 @@ inline void forward_store_vp_op_0(
 	bool*          variable    ,
 	size_t*        combined    )
 {	
-	CPPAD_ASSERT_UNKNOWN( arg[1] <= i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= i_z );
 	size_t i_vec = Integer( taylor[ arg[1] * nc_taylor + 0 ] );
 	CPPAD_ASSERT_KNOWN( 
 		i_vec < combined[ arg[0] - 1 ] ,
@@ -114,7 +114,7 @@ inline void forward_store_vp_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < nc_combined );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < num_par );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 
 	variable[ arg[0] + i_vec ] = false;
 	combined[ arg[0] + i_vec ] = arg[2];
@@ -128,7 +128,7 @@ Zero order forward mode implementation of op = StvvOp.
 template <class Base>
 inline void forward_store_vv_op_0(
 	size_t         i_z         ,
-	const size_t*  arg         , 
+	const addr_t*  arg         , 
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
@@ -136,7 +136,7 @@ inline void forward_store_vv_op_0(
 	bool*          variable    ,
 	size_t*        combined    )
 {	
-	CPPAD_ASSERT_UNKNOWN( arg[1] <= i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= i_z );
 	size_t i_vec = Integer( taylor[ arg[1] * nc_taylor + 0 ] );
 	CPPAD_ASSERT_KNOWN( 
 		i_vec < combined[ arg[0] - 1 ] ,
@@ -149,7 +149,7 @@ inline void forward_store_vv_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumRes(StvpOp) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 	CPPAD_ASSERT_UNKNOWN( arg[0] + i_vec < nc_combined );
-	CPPAD_ASSERT_UNKNOWN( arg[2] <= i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) <= i_z );
 
 	variable[ arg[0] + i_vec ] = true;
 	combined[ arg[0] + i_vec ] = arg[2];
@@ -163,7 +163,7 @@ Forward mode sparsity operations for StpvOp and StvvOp
 template <class Vector_set>
 inline void forward_sparse_store_op(
 	OpCode              op             ,
-	const size_t*       arg            , 
+	const addr_t*       arg            , 
 	size_t              num_combined   ,
 	const size_t*       combined       ,
 	Vector_set&         var_sparsity   ,
@@ -172,10 +172,10 @@ inline void forward_sparse_store_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < var_sparsity.n_set() );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < var_sparsity.n_set() );
 
 	vecad_sparsity.binary_union(i_v, i_v, arg[2], var_sparsity);
 
@@ -197,7 +197,7 @@ sparsity patterns for
 template <class Vector_set>
 inline void reverse_sparse_jacobian_store_op(
 	OpCode             op              ,
-	const size_t*      arg             , 
+	const addr_t*      arg             , 
 	size_t             num_combined    ,
 	const size_t*      combined        ,
 	Vector_set&        var_sparsity    ,
@@ -206,10 +206,10 @@ inline void reverse_sparse_jacobian_store_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < var_sparsity.n_set() );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < var_sparsity.n_set() );
 
 	var_sparsity.binary_union(arg[2], arg[2], i_v, vecad_sparsity);
 
@@ -243,7 +243,7 @@ and on output it corresponds to the function H.
 template <class Vector_set>
 inline void reverse_sparse_hessian_store_op(
 	OpCode             op           ,
-	const size_t*      arg          , 
+	const addr_t*      arg          , 
 	size_t             num_combined ,
 	const size_t*      combined     ,
 	Vector_set&        var_sparsity ,
@@ -254,10 +254,10 @@ inline void reverse_sparse_hessian_store_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 0 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < var_sparsity.n_set() );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < var_sparsity.n_set() );
 
 	var_sparsity.binary_union(arg[2], arg[2], i_v, vecad_sparsity);
 

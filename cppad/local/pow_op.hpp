@@ -3,7 +3,7 @@
 # define CPPAD_POW_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -34,7 +34,7 @@ template <class Base>
 inline void forward_powvv_op(
 	size_t        d           , 
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
@@ -45,15 +45,15 @@ inline void forward_powvv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 
 	// z_0 = log(x)
 	forward_log_op(d, i_z, arg[0], nc_taylor, taylor);
 
 	// z_1 = z_0 * y
-	size_t adr[2];
+	addr_t adr[2];
 	adr[0] = i_z;
 	adr[1] = arg[1];
 	forward_mulvv_op(d, i_z+1, adr, parameter, nc_taylor, taylor);
@@ -93,7 +93,7 @@ and the argument \a parameter is not used.
 template <class Base>
 inline void forward_powvv_op_0(
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
@@ -104,8 +104,8 @@ inline void forward_powvv_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* x   = taylor + arg[0] * nc_taylor;
@@ -138,7 +138,7 @@ template <class Base>
 inline void reverse_powvv_op(
 	size_t        d           , 
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	const Base*   taylor      ,
@@ -151,8 +151,8 @@ inline void reverse_powvv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -162,7 +162,7 @@ inline void reverse_powvv_op(
 	);
 
 	// z_1 = z_0 * y
-	size_t adr[2];
+	addr_t adr[2];
 	adr[0] = i_z;
 	adr[1] = arg[1];
 	reverse_mulvv_op(
@@ -193,7 +193,7 @@ template <class Base>
 inline void forward_powpv_op(
 	size_t        d           , 
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
@@ -204,7 +204,7 @@ inline void forward_powpv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowpvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 
 	// Taylor coefficients corresponding to arguments and result
@@ -221,7 +221,7 @@ inline void forward_powpv_op(
 	else	z_0[d] = Base(0);
 # endif
 	// z_1 = z_0 * y
-	size_t adr[2];
+	addr_t adr[2];
 	adr[0] = i_z * nc_taylor; // offset of z_0[0] in taylor
 	adr[1] = arg[1];          // variable index of y in taylor
 	// use taylor both for parameter and variable values
@@ -256,7 +256,7 @@ this operations is for the case where x is a parameter and y is a variable.
 template <class Base>
 inline void forward_powpv_op_0(
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
@@ -267,7 +267,7 @@ inline void forward_powpv_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowpvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	// Paraemter value
 	Base x = parameter[ arg[0] ];
@@ -306,7 +306,7 @@ template <class Base>
 inline void reverse_powpv_op(
 	size_t        d           , 
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	const Base*   taylor      ,
@@ -319,7 +319,7 @@ inline void reverse_powpv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvvOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -329,7 +329,7 @@ inline void reverse_powpv_op(
 	);
 
 	// z_1 = z_0 * y
-	size_t adr[2];
+	addr_t adr[2];
 	adr[0] = i_z * nc_taylor; // offset of z_0[0] in taylor 
 	adr[1] = arg[1];          // index of y in taylor and partial
 	// use taylor both for parameter and variable values
@@ -359,7 +359,7 @@ template <class Base>
 inline void forward_powvp_op(
 	size_t        d           , 
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
@@ -370,14 +370,14 @@ inline void forward_powvp_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 
 	// z_0 = log(x)
 	forward_log_op(d, i_z, arg[0], nc_taylor, taylor);
 
 	// z_1 = y * z_0
-	size_t adr[2];
+	addr_t adr[2];
 	adr[0] = arg[1];
 	adr[1] = i_z;
 	forward_mulpv_op(d, i_z+1, adr, parameter, nc_taylor, taylor);
@@ -415,7 +415,7 @@ this operations is for the case where x is a variable and y is a parameter.
 template <class Base>
 inline void forward_powvp_op_0(
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
@@ -426,7 +426,7 @@ inline void forward_powvp_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 
 	// Paraemter value
 	Base y = parameter[ arg[1] ];
@@ -465,7 +465,7 @@ template <class Base>
 inline void reverse_powvp_op(
 	size_t        d           , 
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	const Base*   taylor      ,
@@ -478,7 +478,7 @@ inline void reverse_powvp_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(PowvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(PowvpOp) == 3 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -488,7 +488,7 @@ inline void reverse_powvp_op(
 	);
 
 	// z_1 = y * z_0
-	size_t adr[2];
+	addr_t adr[2];
 	adr[0] = arg[1];
 	adr[1] = i_z;
 	reverse_mulpv_op(

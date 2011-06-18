@@ -38,8 +38,7 @@ DIST_COMMON = README $(am__configure_deps) \
 	$(am__myinclude_HEADERS_DIST) $(nobase_myinclude_HEADERS) \
 	$(srcdir)/doc.omh.in $(srcdir)/doxyfile.in \
 	$(srcdir)/makefile.am $(srcdir)/makefile.in \
-	$(top_srcdir)/configure $(top_srcdir)/cppad/config.h.in \
-	$(top_srcdir)/cppad/configure.hpp.in \
+	$(top_srcdir)/configure $(top_srcdir)/cppad/configure.hpp.in \
 	$(top_srcdir)/omh/install_unix.omh.in \
 	$(top_srcdir)/omh/install_windows.omh.in \
 	$(top_srcdir)/pkgconfig/cppad-uninstalled.pc.in \
@@ -52,7 +51,6 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
-CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES = cppad/configure.hpp doxyfile doc.omh \
 	omh/install_unix.omh omh/install_windows.omh \
 	pkgconfig/cppad.pc pkgconfig/cppad-uninstalled.pc
@@ -154,8 +152,14 @@ CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
+CPPAD_BOOSTVECTOR = @CPPAD_BOOSTVECTOR@
+CPPAD_CPPADVECTOR = @CPPAD_CPPADVECTOR@
+CPPAD_GETTIMEOFDAY = @CPPAD_GETTIMEOFDAY@
 CPPAD_IPOPT_LD_PATH = @CPPAD_IPOPT_LD_PATH@
 CPPAD_IPOPT_LIBS = @CPPAD_IPOPT_LIBS@
+CPPAD_SIZE_T_SAME_UNSIGNED_INT = @CPPAD_SIZE_T_SAME_UNSIGNED_INT@
+CPPAD_STDVECTOR = @CPPAD_STDVECTOR@
+CPPAD_TAPE_ADDR_TYPE = @CPPAD_TAPE_ADDR_TYPE@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
 CXXDEPMODE = @CXXDEPMODE@
@@ -169,11 +173,13 @@ DL_LIB = @DL_LIB@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
+EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 FADBAD_DIR = @FADBAD_DIR@
 FC = @FC@
 FCFLAGS = @FCFLAGS@
 FCLIBS = @FCLIBS@
+GREP = @GREP@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -204,6 +210,7 @@ SACADO_DIR = @SACADO_DIR@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+TAPE_ADDR_TYPE = @TAPE_ADDR_TYPE@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
@@ -265,7 +272,7 @@ top_srcdir = @top_srcdir@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-# Note that config.h is needed by VC++; i.e., for users that do not run
+# Note that configure.hpp is needed by VC++; i.e., for users that do not run
 # the configure script but rather use the project files 
 #
 @CppAD_POSTFIX_TRUE@postfix_dir = $(POSTFIX_DIR)
@@ -326,7 +333,6 @@ myinclude_HEADERS = \
 nobase_myinclude_HEADERS = \
 	cppad/CheckNumericType.h \
 	cppad/CheckSimpleVector.h \
-	cppad/config.h \
 	cppad/CppAD.h \
 	cppad/CppAD_vector.h \
 	cppad/ErrorHandler.h \
@@ -585,23 +591,6 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	$(am__cd) $(srcdir) && $(ACLOCAL) $(ACLOCAL_AMFLAGS)
 $(am__aclocal_m4_deps):
-
-cppad/config.h: cppad/stamp-h1
-	@if test ! -f $@; then \
-	  rm -f cppad/stamp-h1; \
-	  $(MAKE) $(AM_MAKEFLAGS) cppad/stamp-h1; \
-	else :; fi
-
-cppad/stamp-h1: $(top_srcdir)/cppad/config.h.in $(top_builddir)/config.status
-	@rm -f cppad/stamp-h1
-	cd $(top_builddir) && $(SHELL) ./config.status cppad/config.h
-$(top_srcdir)/cppad/config.h.in: @MAINTAINER_MODE_TRUE@ $(am__configure_deps) 
-	($(am__cd) $(top_srcdir) && $(AUTOHEADER))
-	rm -f cppad/stamp-h1
-	touch $@
-
-distclean-hdr:
-	-rm -f cppad/config.h cppad/stamp-h1
 cppad/configure.hpp: $(top_builddir)/config.status $(top_srcdir)/cppad/configure.hpp.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 doxyfile: $(top_builddir)/config.status $(srcdir)/doxyfile.in
@@ -1034,7 +1023,7 @@ clean-am: clean-generic mostlyclean-am
 distclean: distclean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -f makefile
-distclean-am: clean-am distclean-generic distclean-hdr distclean-tags
+distclean-am: clean-am distclean-generic distclean-tags
 
 dvi: dvi-recursive
 
@@ -1106,12 +1095,12 @@ uninstall-am: uninstall-myincludeHEADERS \
 	all all-am am--refresh check check-am clean clean-generic \
 	ctags ctags-recursive dist dist-all dist-bzip2 dist-gzip \
 	dist-hook dist-lzma dist-shar dist-tarZ dist-xz dist-zip \
-	distcheck distclean distclean-generic distclean-hdr \
-	distclean-tags distcleancheck distdir distuninstallcheck dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-data-hook install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
+	distcheck distclean distclean-generic distclean-tags \
+	distcleancheck distdir distuninstallcheck dvi dvi-am html \
+	html-am info info-am install install-am install-data \
+	install-data-am install-data-hook install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-man \
 	install-myincludeHEADERS install-nobase_myincludeHEADERS \
 	install-pdf install-pdf-am install-pkgconfigDATA install-ps \
 	install-ps-am install-strip installcheck installcheck-am \

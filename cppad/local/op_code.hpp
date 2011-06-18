@@ -160,13 +160,28 @@ Number of arguments corresponding to the specified operator.
 
 \param op 
 Operator for which we are fetching the number of arugments.
+
+- Check that \c UsrrvOp is the last defined operator.
+- Check that \c CPPAD_OP_CODE_TYPE can support all the operator codes.
+- Check that \c op is a valid operator value.
 */
 inline size_t NumArg( OpCode op)
 {
-	CPPAD_ASSERT_UNKNOWN( size_t(UsrrvOp) == 
-		sizeof(NumArgTable) / sizeof(NumArgTable[0]) - 1
-	);
+# ifndef NDEBUG
+	// only do these checks once to save time
+	static bool first = true;
+	if( first )
+	{	CPPAD_ASSERT_UNKNOWN( size_t(UsrrvOp) == 
+			sizeof(NumArgTable) / sizeof(NumArgTable[0]) - 1
+		);
+		CPPAD_ASSERT_UNKNOWN( size_t(UsrrvOp) <=
+			std::numeric_limits<CPPAD_OP_CODE_TYPE>::max()
+		);
+		first = false;
+	}
+	// do this check every time
 	CPPAD_ASSERT_UNKNOWN( size_t(op) <= size_t(UsrrvOp) );
+# endif
 
 	return NumArgTable[(size_t) op];
 }

@@ -3,7 +3,7 @@
 # define CPPAD_ODE_EVALUATE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -268,16 +268,16 @@ void ode_evaluate(
 	else	ell = n + n * n;
 
 	// set up the case we are integrating
-	Float  ti   = 0.;
-	Float  tf   = 1.;
-	Float  smin = 1e-5;
+	Float ti    = 0.;
+	Float tf    = 1.;
+	Float smin  = 1e-3;
 	Float smax  = 1.;
 	Float scur  = 1.;
 	Float erel  = 0.;
 	vector<Float> yi(ell), eabs(ell);
 	size_t i, j;
 	for(i = 0; i < ell; i++)
-	{	eabs[i] = 1e-10;
+	{	eabs[i] = 1e-7;
 		if( i < n )
 			yi[i] = 1.;
 		else	yi[i]  = 0.;

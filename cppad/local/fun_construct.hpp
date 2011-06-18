@@ -410,7 +410,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	size_t i, m = y.size();
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_KNOWN(
-		x[j].taddr_ == (j+1),
+		size_t(x[j].taddr_) == (j+1),
 		"ADFun<Base>: independent variable vector has been changed."
 		);
 		CPPAD_ASSERT_KNOWN(
@@ -439,7 +439,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 	CPPAD_ASSERT_UNKNOWN( n == ind_taddr_.size() );
 	for(j = 0; j < n; j++)
 	{	CPPAD_ASSERT_UNKNOWN( ind_taddr_[j] == (j+1) );
-		CPPAD_ASSERT_UNKNOWN( x[j].taddr_  == (j+1) );
+		CPPAD_ASSERT_UNKNOWN( size_t(x[j].taddr_) == (j+1) );
 		taylor_[ ind_taddr_[j] ]  = x[j].value_;
 	}
 

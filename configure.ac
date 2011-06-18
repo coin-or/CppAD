@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20110528, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20110618, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -135,9 +135,9 @@ AC_ARG_WITH(stdvector,
 	[stdvector="no"]
 )
 if test "$stdvector" = "yes" ; then
-	AC_DEFINE(CPPAD_STDVECTOR, 1, [is CPPAD_TEST_VECTOR == std::vector])
+	AC_SUBST(CPPAD_STDVECTOR, 1)
 else
-	AC_DEFINE(CPPAD_STDVECTOR, 0, [is CPPAD_TEST_VECTOR == std::vector])
+	AC_SUBST(CPPAD_STDVECTOR, 0)
 fi
 AC_MSG_RESULT([$stdvector])
 
@@ -220,14 +220,10 @@ AC_ARG_VAR(BOOST_DIR,
 )
 AM_CONDITIONAL(CppAD_BOOSTVECTOR, test "$BOOST_DIR" != "")
 if test "$BOOST_DIR" != "" ; then
-	AC_DEFINE(CPPAD_BOOSTVECTOR, 1, 
-	[is CPPAD_TEST_VECTOR = boost vector (overriden if _MSC_VER defined)]
-	)
+	AC_SUBST(CPPAD_BOOSTVECTOR, 1)
 	AC_MSG_RESULT([$BOOST_DIR])
 else
-	AC_DEFINE(CPPAD_BOOSTVECTOR, 0, 
-	[is CPPAD_TEST_VECTOR = boost vector (overriden if _MSC_VER defined)]
-	)
+	AC_SUBST(CPPAD_BOOSTVECTOR, 0)
 	AC_MSG_RESULT([no])
 fi
 
@@ -246,13 +242,54 @@ else
 	cxx_flags_fadbad=""
 fi 
 AC_SUBST(CXX_FLAGS_FADBAD, "$cxx_flags_fadbad")
+
+dnl The type used for addresses in AD tapes [ default = unsigned int ] ---
+AC_MSG_CHECKING([TAPE_ADDR_TYPE])
+AC_ARG_VAR(TAPE_ADDR_TYPE, [type used for addresses in AD tapes])
+if test "$TAPE_ADDR_TYPE" == "" ; then
+	addr_t="unsigned int"
+else
+	addr_t="$TAPE_ADDR_TYPE"
+fi
+AC_SUBST(CPPAD_TAPE_ADDR_TYPE, [$addr_t])
+AC_MSG_RESULT([$addr_t])
+ok="no"
+if test "$addr_t" == "size_t" ; then
+	ok="yes"
+fi
+if test "$addr_t" == "int" ; then
+	AC_MSG_WARN(
+		[TAPE_ADDR_TYPE=int is for CppAD developers (not users)]
+	)
+	ok="yes"
+fi
+if test "$addr_t" == "unsigned int" ; then
+	ok="yes"
+fi
+if test "$addr_t" == "unsigned short int" ; then
+	ok="yes"
+fi
+if test "$ok" == "no" ; then
+  	AC_MSG_ERROR(
+		[$addr_t is not a valid choice for TAPE_ADDR_TYPE]
+	)
+fi
 AC_MSG_NOTICE([********** End Checking Command Line arguments ***************])
 
-dnl Check which definition we are using for CPPAD_TEST_VECTOR
+dnl Determine if size_t has same size as unsigned int 
+AC_CHECK_SIZEOF([size_t])
+AC_CHECK_SIZEOF([unsigned int])
+if test "$ac_cv_size_t" == "$ac_cv_unsigned_int" ; then
+	AC_SUBST(CPPAD_SIZE_T_SAME_UNSIGNED_INT, 1)
+else
+	AC_SUBST(CPPAD_SIZE_T_SAME_UNSIGNED_INT, 0)
+fi
+
+dnl Determine which definition we are using for CPPAD_TEST_VECTOR
 if test "$stdvector$BOOST_DIR" = "no" ; then
-	AC_DEFINE(CPPAD_CPPADVECTOR, 1, [is CPPAD_TEST_VECTOR == CppAD::vector])
+	AC_SUBST(CPPAD_CPPADVECTOR, 1)
 else 
-	AC_DEFINE(CPPAD_CPPADVECTOR, 0, [is CPPAD_TEST_VECTOR == CppAD::vector])
+	AC_SUBST(CPPAD_CPPADVECTOR, 0)
 fi
 
 dnl the gettimeofday check automatically generates a yes / no configure msg
@@ -262,13 +299,9 @@ AC_CHECK_FUNC(
 	[gettimeofday="no"]
 )
 if test "$gettimeofday" = "yes" ; then
-	AC_DEFINE(CPPAD_GETTIMEOFDAY, 1, 
-	[does system support gettimeofday (overriden if _MSC_VER defined)]
-	)
+	AC_SUBST(CPPAD_GETTIMEOFDAY, 1)
 else
-	AC_DEFINE(CPPAD_GETTIMEOFDAY, 0, 
-	[does system support gettimeofday (overriden if _MSC_VER defined)]
-	)
+	AC_SUBST(CPPAD_GETTIMEOFDAY, 0)
 fi
 
 dnl Run any macros required for proper operation of generated makefiles
@@ -294,9 +327,6 @@ fi
 
 dnl Have configure check source directory to see if cppad/CppAD.h is there
 AC_CONFIG_SRCDIR(cppad/CppAD.h)
-
-dnl Use config.h instead of make file command line arguments
-AC_CONFIG_HEADER(cppad/config.h)
 
 dnl AC_PROG_CP outputs CPP as command to run C preprocessor
 AC_PROG_CPP

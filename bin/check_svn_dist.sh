@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -41,8 +41,11 @@ then
 	exit 1
 fi
 #
-echo "openmp/run.sh"
-openmp/run.sh 
+for name in example_a11c sum_i_inv multi_newton
+do
+	echo "openmp/run.sh $name"
+	openmp/run.sh $name
+done
 # ----------------------------------------------------------------------
 # Things to do in the svn_dist/work directory
 # ----------------------------------------------------------------------

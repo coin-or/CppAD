@@ -41,6 +41,8 @@ $icode%s% = %f%.size_op()
 %$$
 $icode%s% = %f%.size_op_arg()
 %$$
+$icode%s% = %f%.size_text()
+%$$
 $icode%s% = %f%.size_VecAD()
 %$$
 $icode%s% = %f%.size_op_seq()
@@ -212,10 +214,10 @@ and is the amount of memory required to store the operation sequence
 For the current version of CppAD, this is given by
 $codei%
 	%s% = %f%.size_op()     * sizeof(CppAD::OpCode)
-	    + %f%.size_op_arg() * sizeof(size_t)
+	    + %f%.size_op_arg() * sizeof(CPPAD_TAPE_ADDR_TYPE)
 	    + %f%.size_par()    * sizeof(%Base%)
 	    + %f%.size_text()   * sizeof(char)
-	    + %f%.size_VecAD()  * sizeof(size_t)
+	    + %f%.size_VecAD()  * sizeof(CPPAD_TAPE_ADDR_TYPE)
 %$$
 Note that this is the minimal amount of memory that can hold
 the information corresponding to an operation sequence.

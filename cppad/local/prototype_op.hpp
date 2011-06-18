@@ -3,7 +3,7 @@
 # define CPPAD_PROTOTYPE_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -469,7 +469,7 @@ template <class Base>
 inline void forward_binary_op(
 	size_t         d         ,
 	size_t        i_z        ,
-	const size_t* arg        ,
+	const addr_t* arg        ,
 	const Base*   parameter  ,
 	size_t        nc_taylor  , 
 	Base*         taylor     )
@@ -529,7 +529,7 @@ is the zero order Taylor coefficient corresponding to z.
 template <class Base>
 inline void forward_binary_op_0(
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   , 
 	Base*         taylor      )
@@ -639,7 +639,7 @@ template <class Base>
 inline void reverse_binary_op(
 	size_t      d            ,
 	size_t      i_z          ,
-	size_t*     arg          ,
+	addr_t*     arg          ,
 	const Base* parameter    ,
 	size_t      nc_taylor    , 
 	const Base* taylor       ,
@@ -719,7 +719,7 @@ template <class Base>
 inline void forward_pow_op(
 	size_t        d          ,
 	size_t        i_z        ,
-	const size_t* arg        ,
+	const addr_t* arg        ,
 	const Base*   parameter  ,
 	size_t        nc_taylor  , 
 	Base*         taylor     )
@@ -785,7 +785,7 @@ is the zero order Taylor coefficient corresponding to z_j.
 template <class Base>
 inline void forward_pow_op_0(
 	size_t        i_z        ,
-	const size_t* arg        ,
+	const addr_t* arg        ,
 	const Base*   parameter  ,
 	size_t        nc_taylor  , 
 	Base*         taylor     )
@@ -902,7 +902,7 @@ template <class Base>
 inline void reverse_pow_op(
 	size_t      d            ,
 	size_t      i_z          ,
-	size_t*     arg          ,
+	addr_t*     arg          ,
 	const Base* parameter    ,
 	size_t      nc_taylor    , 
 	const Base* taylor       ,
@@ -1019,7 +1019,7 @@ i_vec < combined[ \a arg[0] - 1 ]
 template <class Base>
 inline void forward_load_op_0(
 	size_t         i_z         ,
-	size_t*        arg         , 
+	addr_t*        arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         nc_taylor   ,
@@ -1094,7 +1094,7 @@ template <class Vector_set>
 inline void sparse_load_op(
 	OpCode              op             ,
 	size_t              i_z            ,
-	const size_t*        arg           , 
+	const addr_t*        arg           , 
 	size_t              num_combined   ,
 	const size_t*       combined       ,
 	Vector_set&         var_sparsity   ,
@@ -1201,7 +1201,7 @@ In this case, the error above should be detected during tape recording.
 template <class Base>
 inline void forward_store_op_0(
 	size_t         i_z         ,
-	const size_t*  arg         , 
+	const addr_t*  arg         , 
 	size_t         num_par     ,
 	size_t         nc_taylor   ,
 	Base*          taylor      ,
@@ -1284,7 +1284,7 @@ to the sparsity pattern for the vector v.
 */
 inline void sparse_store_op(
 	OpCode         op             ,
-	const size_t*  arg            , 
+	const addr_t*  arg            , 
 	size_t         num_combined   ,
 	const size_t*  combined       ,
 	Pack*          var_sparsity   ,
@@ -1445,7 +1445,7 @@ and on output it correspondst to H.
 template <class Vector_set>
 inline void reverse_sparse_hessian_binary_op(
 	size_t            i_z                ,
-	const size_t*     arg                ,
+	const addr_t*     arg                ,
 	bool*             jac_reverse        ,
 	Vector_set&       for_jac_sparsity   ,
 	Vector_set&       rev_hes_sparsity   )
@@ -1535,7 +1535,7 @@ number of columns in the matrix containing the Taylor coefficients.
 template <class Base>
 inline void conditional_exp_op(
 	size_t         i_z         ,
-	const size_t*  arg         , 
+	const addr_t*  arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         nc_taylor   )
@@ -1615,7 +1615,7 @@ is the total number of values in the vector \a parameter.
 template <class Vector_set>
 inline void sparse_conditional_exp_op(
 	size_t         i_z           ,
-	const size_t*  arg           , 
+	const addr_t*  arg           , 
 	size_t         num_par       )
 {	// This routine is only for documentation, it should never be used
 	CPPAD_ASSERT_UNKNOWN( false );

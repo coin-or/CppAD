@@ -956,7 +956,7 @@ public:
 				}
 				else
 				{	// information for an arugment that is parameter
-					size_t p = tape->Rec_.PutPar(ax[j].value_);
+					addr_t p = tape->Rec_.PutPar(ax[j].value_);
 					tape->Rec_.PutArg(p);
 					tape->Rec_.PutOp(UsrapOp);
 				}
@@ -973,7 +973,7 @@ public:
 					ay[i].id_    = tape_id;
 				}
 				else
-				{	size_t p = tape->Rec_.PutPar(ay[i].value_);
+				{	addr_t p = tape->Rec_.PutPar(ay[i].value_);
 					tape->Rec_.PutArg(p);
 					tape->Rec_.PutOp(UsrrpOp);
 				}

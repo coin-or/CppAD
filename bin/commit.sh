@@ -60,6 +60,18 @@ EOF
 	exit 1
 fi
 # -----------------------------------------------------------------------
+for file  in bin/commit.sed bin/commit.sh
+do
+	abort=`svn status $file`
+	if [ "$abort" != "" ]
+	then
+		echo "svn status $file"
+		svn status $file
+		echo "bin/commit.sh: aborting because $file changed"
+		exit 1
+	fi
+done
+# -----------------------------------------------------------------------
 if [ "$1" == 'list' ] || [ "$1" == 'edit' ]
 then
 	# -------------------------------------------------
@@ -90,14 +102,8 @@ then
 		rm bin/commit.1.$$
 		exit 0
 	fi
+	# -------------------------------------------------
 	abort="no"
-	config_changed="no"
-	if grep 'cppad/config\.h' bin/commit.1.$$ > /dev/null
-	then
-		config_changed="yes"
-		# remove cppad/config.h from the list
-		sed -i bin/commit.1.$$ -e '/cppad\/config\.h/d'
-	fi
 	list=`cat bin/commit.1.$$`
 	for file in $list
 	do
@@ -109,7 +115,7 @@ then
 			if ! diff $file bin/commit.2.$$ > /dev/null
 			then
 				echo "---------------------------------------"
-				echo "bin/commit.sh: suggest changes to $file:"
+				echo "bin/commit.sh: automatic changes to $file:"
 				if diff $file bin/commit.2.$$
 				then
 					echo "bin/commit.sh: program error"
@@ -118,14 +124,14 @@ then
 					exit 1
 				fi
 				abort="yes"
+				mv bin/commit.2.$$ $file
 			fi
-			rm bin/commit.2.$$
 		fi
 	done
 	if [ "$abort" == "yes" ]
 	then
-		echo "bin/commit.sh: aborting because of suggested changes above."
-		echo "The script bin/edit_commit.sh can make these changes."
+		echo "bin/commit.sh: aborting because of automatic edits above."
+		echo "If these edits are ok, rerun bin/commit.sh edit" 
 		rm bin/commit.1.$$
 		exit 1
 	fi
@@ -149,48 +155,36 @@ then
      echo "chmod +x bin/commit.sh"
            chmod +x bin/commit.sh
 	#
-	if [ "$config_changed" = "yes" ]
-	then
-		echo "Not sure changes to cppad/config.h should be commited."
-		echo "You must include it yourself (by hand) if they should."
-	fi
 	exit 0
 fi
 # -----------------------------------------------------------------------
 list=`sed -e '/@/! d' -e 's/@.*//' bin/commit.1.$$`
 msg=`sed -e '/@ *$/d' -e 's|.*/\([^/]*@\)|\1|' -e 's|@|:|' bin/commit.1.$$`
-# if cppad/config.h is in the list of files to be commited
+#
 if (echo $list | grep 'bin/commit.sh$' > /dev/null)
 then
 	echo "bin/commit.sh: cannot be used to commit changes to itself."
 	echo "remove it from the list of files in bin/commit.sh"
 	exit 1
 fi
+#
 if (echo $list | grep 'bin/commit.sed$' > /dev/null)
 then
 	echo "bin/commit.sh: cannot be used to commit changes to bin/commit.sed"
 	echo "remove it from the list of files in bin/commit.sh"
 	exit 1
 fi
-if (echo $list | grep 'cppad/config.h$' > /dev/null)
+#
+sed -f bin/commit.sed cppad/configure.hpp > bin/commit.2.$$
+if ! diff cppad/configure.hpp bin/commit.2.$$
 then
-	# and CPPAD_CPPADVECTOR is not defined as one
-	if ! grep '^# *define  *CPPAD_CPPADVECTOR  *1 *$' cppad/config.h \
-		>  /dev/null
-	then
-		echo "bin/commit.sh run: CPPAD_CPPADVECTOR != 1 in cppad/config.h"
-		rm bin/commit.1.$$
-		exit 1
-	fi
-	if ! grep '^# *define  *CPPAD_BOOSTVECTOR  *0 *$' cppad/config.h \
-		>  /dev/null
-	then
-		echo "bin/commit.sh run: CPPAD_BOOSTVECTOR != 0 in cppad/config.h"
-		rm bin/commit.1.$$
-		exit 1
-	fi
+	echo "bin/commit.sh run: unexpected values in cppad/configure.hpp"
+	rm bin/commit.1.$$
+	rm bin/commit.2.$$
+	exit 1
 fi
 rm bin/commit.1.$$
+rm bin/commit.2.$$
 echo "svn commit -m \""
 echo "$msg"
 echo "\" \\"

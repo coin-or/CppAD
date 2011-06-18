@@ -3,7 +3,7 @@
 # define CPPAD_DIV_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -38,7 +38,7 @@ template <class Base>
 inline void forward_divvv_op(
 	size_t        d           , 
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
@@ -46,8 +46,8 @@ inline void forward_divvv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(DivvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 
 	// Taylor coefficients corresponding to arguments and result
@@ -83,7 +83,7 @@ and the argument \a parameter is not used.
 template <class Base>
 inline void forward_divvv_op_0(
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
@@ -91,8 +91,8 @@ inline void forward_divvv_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(DivvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	// Taylor coefficients corresponding to arguments and result
 	Base* x = taylor + arg[0] * nc_taylor;
@@ -120,7 +120,7 @@ template <class Base>
 inline void reverse_divvv_op(
 	size_t        d           , 
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	const Base*   taylor      ,
@@ -130,8 +130,8 @@ inline void reverse_divvv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(DivvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -182,7 +182,7 @@ template <class Base>
 inline void forward_divpv_op(
 	size_t        d           , 
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
@@ -190,7 +190,7 @@ inline void forward_divpv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(DivpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivpvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 
 	// Taylor coefficients corresponding to arguments and result
@@ -232,7 +232,7 @@ this operations is for the case where x is a parameter and y is a variable.
 template <class Base>
 inline void forward_divpv_op_0(
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
@@ -240,7 +240,7 @@ inline void forward_divpv_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(DivpvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivpvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	// Paraemter value
 	Base x = parameter[ arg[0] ];
@@ -269,7 +269,7 @@ template <class Base>
 inline void reverse_divpv_op(
 	size_t        d           , 
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	const Base*   taylor      ,
@@ -279,7 +279,7 @@ inline void reverse_divpv_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(DivvvOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivvvOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 
@@ -329,7 +329,7 @@ template <class Base>
 inline void forward_divvp_op(
 	size_t        d           , 
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
@@ -337,7 +337,7 @@ inline void forward_divvp_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(DivvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivvpOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 
 	// Taylor coefficients corresponding to arguments and result
@@ -369,7 +369,7 @@ this operations is for the case where x is a variable and y is a parameter.
 template <class Base>
 inline void forward_divvp_op_0(
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
@@ -377,7 +377,7 @@ inline void forward_divvp_op_0(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(DivvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivvpOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 
 	// Parameter value
 	Base y = parameter[ arg[1] ];
@@ -406,7 +406,7 @@ template <class Base>
 inline void reverse_divvp_op(
 	size_t        d           , 
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	const Base*   taylor      ,
@@ -416,7 +416,7 @@ inline void reverse_divvp_op(
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(DivvpOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DivvpOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
 	CPPAD_ASSERT_UNKNOWN( d < nc_partial );
 

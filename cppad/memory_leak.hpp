@@ -46,7 +46,7 @@ Otherwise it returns true unless one of the conditions below occurs.
 $head inuse$$
 When this routine is called, it is assumed that no memory
 should be $cref/inuse/$$ for the current thread.
-If it is, an message is printed and this routine returns false.
+If it is, a message is printed and this routine returns false.
 
 $head available$$
 This routine calls $cref/free_available/$$ for the current thread
@@ -60,8 +60,8 @@ if $cref/TrackCount/TrackNewDel/TrackCount/$$ returns a non-zero value,
 this routine returns false.
 
 $head Error Message$$
-If this routine returns false, it first prints a message
-describing the error condition.
+If this routine returns false, it prints a message
+to standard output describing the condition before returning false.
 
 $end
 */

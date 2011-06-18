@@ -3,7 +3,7 @@
 # define CPPAD_LOAD_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -28,7 +28,7 @@ Zero order forward mode implementation of op = LdpOp.
 template <class Base>
 inline void forward_load_p_op_0(
 	size_t         i_z         ,
-	size_t*        arg         , 
+	addr_t*        arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         nc_taylor   ,
@@ -75,7 +75,7 @@ Zero order forward mode implementation of op = LdvOp.
 template <class Base>
 inline void forward_load_v_op_0(
 	size_t         i_z         ,
-	size_t*        arg         , 
+	addr_t*        arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         nc_taylor   ,
@@ -89,7 +89,7 @@ inline void forward_load_v_op_0(
 	CPPAD_ASSERT_UNKNOWN( NumArg(LdvOp) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	size_t i_vec = Integer( taylor[ arg[1] * nc_taylor + 0 ] );
 	CPPAD_ASSERT_KNOWN( 
@@ -162,14 +162,14 @@ is the d-order Taylor coefficient for the variable z.
 \li NumArg(op) == 3
 \li NumRes(op) == 1
 \li 0 < d < nc_taylor
-\li arg[2] < i_z
+\li size_t(arg[2]) < i_z
 */
 template <class Base>
 inline void forward_load_op(
 	OpCode         op          ,
 	size_t         d           ,
 	size_t         i_z         ,
-	const size_t*  arg         , 
+	const addr_t*  arg         , 
 	size_t         nc_taylor   ,
 	Base*          taylor      )
 {
@@ -178,7 +178,7 @@ inline void forward_load_op(
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( d > 0 )
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
 
 	Base* z      = taylor + i_z * nc_taylor;
 	if( arg[2] > 0 )
@@ -262,14 +262,14 @@ and on output it corresponds to the the function H.
 \li NumArg(op) == 3
 \li NumRes(op) == 1
 \li d < nc_taylor
-\li arg[2] < i_z
+\li size_t(arg[2]) < i_z
 */
 template <class Base>
 inline void reverse_load_op(
 	OpCode         op          ,
 	size_t         d           ,
 	size_t         i_z         ,
-	const size_t*  arg         , 
+	const addr_t*  arg         , 
 	size_t         nc_taylor   ,
 	const Base*    taylor      ,
 	size_t         nc_partial  ,
@@ -279,7 +279,7 @@ inline void reverse_load_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( d < nc_taylor );
-	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
 
 	if( arg[2] > 0 )
 	{
@@ -301,7 +301,7 @@ template <class Vector_set>
 inline void forward_sparse_load_op(
 	OpCode             op             ,
 	size_t             i_z            ,
-	const size_t*      arg            , 
+	const addr_t*      arg            , 
 	size_t             num_combined   ,
 	const size_t*      combined       ,
 	Vector_set&        var_sparsity   ,
@@ -310,7 +310,7 @@ inline void forward_sparse_load_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 
@@ -329,7 +329,7 @@ template <class Vector_set>
 inline void reverse_sparse_jacobian_load_op(
 	OpCode             op             ,
 	size_t             i_z            ,
-	const size_t*      arg            , 
+	const addr_t*      arg            , 
 	size_t             num_combined   ,
 	const size_t*      combined       ,
 	Vector_set&        var_sparsity   ,
@@ -338,7 +338,7 @@ inline void reverse_sparse_jacobian_load_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 
@@ -377,7 +377,7 @@ template <class Vector_set>
 inline void reverse_sparse_hessian_load_op(
 	OpCode             op             ,
 	size_t             i_z            ,
-	const size_t*      arg            , 
+	const addr_t*      arg            , 
 	size_t             num_combined   ,
 	const size_t*      combined       ,
 	Vector_set&        var_sparsity   ,
@@ -388,7 +388,7 @@ inline void reverse_sparse_hessian_load_op(
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 3 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < num_combined );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_combined );
 	size_t i_v = combined[ arg[0] - 1 ];
 	CPPAD_ASSERT_UNKNOWN( i_v < vecad_sparsity.n_set() );
 

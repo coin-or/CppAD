@@ -2,7 +2,7 @@
 # ifndef CPPAD_SPARSE_BINARY_OP_INCLUDED
 # define CPPAD_SPARSE_BINARY_OP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -79,12 +79,12 @@ depends on.
 template <class Vector_set>
 inline void forward_sparse_jacobian_binary_op(
 	size_t            i_z           ,
-	const size_t*     arg           ,
+	const addr_t*     arg           ,
 	Vector_set&       sparsity      )
 {	
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	sparsity.binary_union(i_z, arg[0], arg[1], sparsity);
 
@@ -155,12 +155,12 @@ and on output it corresponds to H.
 template <class Vector_set>
 inline void reverse_sparse_jacobian_binary_op(
 	size_t              i_z           ,
-	const size_t*       arg           ,
+	const addr_t*       arg           ,
 	Vector_set&         sparsity      )
 {	
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	sparsity.binary_union(arg[0], arg[0], i_z, sparsity);
 	sparsity.binary_union(arg[1], arg[1], i_z, sparsity);
@@ -182,14 +182,14 @@ where op is + or - and x, y are variables.
 template <class Vector_set>
 inline void reverse_sparse_hessian_addsub_op(
 	size_t               i_z                ,
-	const size_t*        arg                ,
+	const addr_t*        arg                ,
 	bool*                jac_reverse        ,
 	Vector_set&          for_jac_sparsity   ,
 	Vector_set&          rev_hes_sparsity   )
 {	
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	rev_hes_sparsity.binary_union(arg[0], arg[0], i_z, rev_hes_sparsity);
 	rev_hes_sparsity.binary_union(arg[1], arg[1], i_z, rev_hes_sparsity);
@@ -214,14 +214,14 @@ where x and y are variables.
 template <class Vector_set>
 inline void reverse_sparse_hessian_mul_op(
 	size_t               i_z                ,
-	const size_t*        arg                ,
+	const addr_t*        arg                ,
 	bool*                jac_reverse        ,
 	Vector_set&          for_jac_sparsity   ,
 	Vector_set&          rev_hes_sparsity   )
 {	
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	rev_hes_sparsity.binary_union(arg[0], arg[0], i_z, rev_hes_sparsity);
 	rev_hes_sparsity.binary_union(arg[1], arg[1], i_z, rev_hes_sparsity);
@@ -252,14 +252,14 @@ where x and y are variables.
 template <class Vector_set>
 inline void reverse_sparse_hessian_div_op(
 	size_t               i_z                ,
-	const size_t*        arg                ,
+	const addr_t*        arg                ,
 	bool*                jac_reverse        ,
 	Vector_set&          for_jac_sparsity   ,
 	Vector_set&          rev_hes_sparsity   )
 {	
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	rev_hes_sparsity.binary_union(arg[0], arg[0], i_z, rev_hes_sparsity);
 	rev_hes_sparsity.binary_union(arg[1], arg[1], i_z, rev_hes_sparsity);
@@ -292,14 +292,14 @@ where x and y are variables.
 template <class Vector_set>
 inline void reverse_sparse_hessian_pow_op(
 	size_t               i_z                ,
-	const size_t*        arg                ,
+	const addr_t*        arg                ,
 	bool*                jac_reverse        ,
 	Vector_set&          for_jac_sparsity   ,
 	Vector_set&          rev_hes_sparsity   )
 {	
 	// check assumptions
-	CPPAD_ASSERT_UNKNOWN( arg[0] < i_z );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 
 	rev_hes_sparsity.binary_union(arg[0], arg[0], i_z, rev_hes_sparsity);
 	rev_hes_sparsity.binary_union(arg[1], arg[1], i_z, rev_hes_sparsity);

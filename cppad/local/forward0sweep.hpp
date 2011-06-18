@@ -115,8 +115,8 @@ size_t forward0sweep(
 	size_t        i_var;
 
 	// constant and non-constant version of the operation argument indices
-	size_t*         non_const_arg;
-	const size_t   *arg = 0;
+	addr_t*         non_const_arg;
+	const addr_t*   arg = 0;
 
 	// initialize the comparision operator (ComOp) counter
 	size_t compareCount = 0;
@@ -197,7 +197,7 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case AddpvOp:
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			forward_addpv_op_0(i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
@@ -274,13 +274,13 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case DivpvOp:
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			forward_divpv_op_0(i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case DivvpOp:
-			CPPAD_ASSERT_UNKNOWN( arg[1] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
 			forward_divvp_op_0(i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
@@ -346,7 +346,7 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case MulpvOp:
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			forward_mulpv_op_0(i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
@@ -359,13 +359,13 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case PowvpOp:
-			CPPAD_ASSERT_UNKNOWN( arg[1] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
 			forward_powvp_op_0(i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case PowpvOp:
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			forward_powpv_op_0(i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
@@ -470,13 +470,13 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case SubpvOp:
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			forward_subpv_op_0(i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case SubvpOp:
-			CPPAD_ASSERT_UNKNOWN( arg[1] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
 			forward_subvp_op_0(i_var, arg, parameter, J, Taylor);
 			break;
 			// -------------------------------------------------
@@ -500,10 +500,10 @@ size_t forward0sweep(
 			}
 			else
 			{	CPPAD_ASSERT_UNKNOWN( user_state == user_end );
-				CPPAD_ASSERT_UNKNOWN( user_index == arg[0] );
-				CPPAD_ASSERT_UNKNOWN( user_id    == arg[1] );
-				CPPAD_ASSERT_UNKNOWN( user_n     == arg[2] );
-				CPPAD_ASSERT_UNKNOWN( user_m     == arg[3] );
+				CPPAD_ASSERT_UNKNOWN( user_index == size_t(arg[0]) );
+				CPPAD_ASSERT_UNKNOWN( user_id    == size_t(arg[1]) );
+				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
+				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
 				user_state = user_start;
 			}
 			break;
@@ -512,7 +512,7 @@ size_t forward0sweep(
 			// parameter argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			user_tx[user_j++] = parameter[ arg[0] ];
 			if( user_j == user_n )
 			{	// call users function for this operation
@@ -527,7 +527,7 @@ size_t forward0sweep(
 			// variable argument in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
 			CPPAD_ASSERT_UNKNOWN( user_j < user_n );
-			CPPAD_ASSERT_UNKNOWN( arg[0] <= i_var );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			user_tx[user_j++] = Taylor[ arg[0] * J + 0 ];
 			if( user_j == user_n )
 			{	// call users function for this operation

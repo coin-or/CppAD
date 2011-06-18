@@ -27,7 +27,7 @@ then
 fi
 if [ "$2" == "retape" ] || [ "$2" == "optimize" ]
 then
-	options="_$1_$2"
+	options="${options}_$2"
 elif [ "$2" != "none" ]
 then
 	echo "usage: bin/speed_compare.sh option_1 option_2"
@@ -141,12 +141,18 @@ echo "cd work/speed/cppad"
 cd work/speed/cppad
 #
 echo "sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' \\"
+echo "       -e 's|::available|::available_cur|' -e '/::available/p' \\"
 echo "	cur_speed$options.out > run.out"
-sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' cur_speed$options.out > run.out
+sed -n -e 's|_rate|_rate_cur|' -e '/_rate_/p' \
+	-e 's|::available|::available_cur|' -e '/::available/p' \
+	cur_speed$options.out > run.out
 #
 echo "sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' \\"
+echo "       -e 's|::available|::available_new|' -e '/::available/p' \\"
 echo "	new_speed$options.out >> run.out"
-sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' new_speed$options.out >> run.out
+sed -n -e 's|_rate|_rate_new|' -e '/_rate_/p' \
+	-e 's|::available|::available_new|' -e '/::available/p' \
+	new_speed$options.out >> run.out
 #
 echo "cat run.out | sort -u"
 cat run.out | sort -u

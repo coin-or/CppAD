@@ -3,7 +3,7 @@
 # define CPPAD_HASH_CODE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -122,7 +122,7 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 template <class Base>
 unsigned short hash_code(
 	OpCode        op      , 
-	const size_t* arg     , 
+	const addr_t* arg     , 
 	size_t npar           , 
 	const Base* par       )
 {	CPPAD_ASSERT_UNKNOWN( 
@@ -132,15 +132,15 @@ unsigned short hash_code(
 	);
 	CPPAD_ASSERT_UNKNOWN( size_t (op) <= size_t(SubvvOp) );
 	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
-	CPPAD_ASSERT_UNKNOWN( sizeof(size_t) % 2  == 0 );
+	CPPAD_ASSERT_UNKNOWN( sizeof(addr_t) % 2  == 0 );
 	CPPAD_ASSERT_UNKNOWN( sizeof(Base) % 2  == 0 );
 	static unsigned short op_fac = static_cast<unsigned short> (
 	CPPAD_HASH_TABLE_SIZE / ( 1 + static_cast<unsigned short>(SubvvOp) ) 
 	);
 	CPPAD_ASSERT_UNKNOWN( op_fac > 0 );
 
-	// number of shorts per size_t value
-	size_t short_size_t   = sizeof(size_t) / 2;
+	// number of shorts per addr_t value
+	size_t short_addr_t   = sizeof(addr_t) / 2;
 
 	// number of shorts per Base value
 	size_t short_base     = sizeof(Base) /  2;
@@ -171,7 +171,7 @@ unsigned short hash_code(
 		while(i--)
 			code += v[i];
 		v = reinterpret_cast<const unsigned short*>(arg + 1);
-		i = short_size_t;
+		i = short_addr_t;
 		while(i--)
 			code += v[i];
 		break;
@@ -184,7 +184,7 @@ unsigned short hash_code(
 		case SubvvOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		v = reinterpret_cast<const unsigned short*>(arg + 0);
-		i = 2 * short_size_t;
+		i = 2 * short_addr_t;
 		while(i--)
 			code += v[i];
 		break;
@@ -195,7 +195,7 @@ unsigned short hash_code(
 		case SubvpOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
 		v = reinterpret_cast<const unsigned short*>(arg + 0);
-		i = short_size_t;
+		i = short_addr_t;
 		while(i--)
 			code += v[i];
 		v = reinterpret_cast<const unsigned short*>(par + arg[1]);
@@ -218,7 +218,7 @@ unsigned short hash_code(
 		case SinhOp:
 		case SqrtOp:
 		v = reinterpret_cast<const unsigned short*>(arg + 0);
-		i = short_size_t;
+		i = short_addr_t;
 		while(i--)
 			code += v[i];
 		break;

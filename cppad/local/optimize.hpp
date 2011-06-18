@@ -169,14 +169,14 @@ struct optimize_old_variable {
 
 	/// Pointer to first argument (child) for this operator.
 	/// Set by the reverse sweep at beginning of optimization.
-	const size_t*       arg;
+	const addr_t*       arg;
 
 	/// How is this variable connected to the independent variables
 	optimize_connection connect; 
 
 	/// Set during forward sweep to the index in the
 	/// new operation sequence corresponding to this old varable.
-	size_t new_var;
+	addr_t new_var;
 };
 
 /*!
@@ -189,7 +189,7 @@ struct optimize_csum_variable {
 
 	/// Pointer to first argument (child) for this operator.
 	/// Set by the reverse sweep at beginning of optimization.
-	const size_t*       arg;
+	const addr_t*       arg;
 
 	/// Is this variable added to the summation
 	/// (if not it is subtracted)
@@ -304,15 +304,15 @@ size_t optimize_unary_match(
 	const Base*                                        par            ,
 	const CppAD::vector<size_t>&                       hash_table_var ,
 	unsigned short&                                    code           )
-{	const size_t *arg = tape[current].arg;
+{	const addr_t* arg = tape[current].arg;
 	OpCode        op  = tape[current].op;
-	size_t new_arg[1];
+	addr_t new_arg[1];
 	
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) > 0  );
-	CPPAD_ASSERT_UNKNOWN( arg[0] < current );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
 	new_arg[0] = tape[arg[0]].new_var;
-	CPPAD_ASSERT_UNKNOWN( new_arg[0] < current );
+	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < current );
 	code = hash_code(
 		op                  , 
 		new_arg             ,
@@ -348,8 +348,8 @@ inline size_t optimize_binary_match(
 	const CppAD::vector<size_t>&                       hash_table_var ,
 	unsigned short&                                    code           )
 {	OpCode        op         = tape[current].op;
-	const size_t* arg        = tape[current].arg;
-	size_t        new_arg[2];
+	const addr_t* arg        = tape[current].arg;
+	addr_t        new_arg[2];
 	bool          parameter[2];
 
 	// initialize return value
@@ -367,11 +367,11 @@ inline size_t optimize_binary_match(
 		// arg[0]
 		parameter[0] = true;
 		new_arg[0]   = arg[0];
-		CPPAD_ASSERT_UNKNOWN( arg[0] < npar );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < npar );
 		// arg[1]
 		parameter[1] = false;
 		new_arg[1]   = tape[arg[1]].new_var;
-		CPPAD_ASSERT_UNKNOWN( arg[1] < current );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
 		break;
 
 		// variable op parameter -----------------------------------
@@ -381,11 +381,11 @@ inline size_t optimize_binary_match(
 		// arg[0]
 		parameter[0] = false;
 		new_arg[0]   = tape[arg[0]].new_var;
-		CPPAD_ASSERT_UNKNOWN( arg[0] < current );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
 		// arg[1]
 		parameter[1] = true;
 		new_arg[1]   = arg[1];
-		CPPAD_ASSERT_UNKNOWN( arg[1] < npar );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < npar );
 		break;
 
 		// variable op variable -----------------------------------
@@ -397,11 +397,11 @@ inline size_t optimize_binary_match(
 		// arg[0]
 		parameter[0] = false;
 		new_arg[0]   = tape[arg[0]].new_var;
-		CPPAD_ASSERT_UNKNOWN( arg[0] < current );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
 		// arg[1]
 		parameter[1] = false;
 		new_arg[1]   = tape[arg[1]].new_var;
-		CPPAD_ASSERT_UNKNOWN( arg[1] < current );
+		CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
 		break;
 
 		// must be one of the cases above
@@ -492,7 +492,7 @@ size_t optimize_record_pv(
 	const Base*                                        par            ,
 	recorder<Base>*                                    rec            ,
 	OpCode                                             op             ,
-	const size_t*                                      arg            )
+	const addr_t*                                      arg            )
 {
 # ifndef NDEBUG
 	switch(op)
@@ -507,14 +507,14 @@ size_t optimize_record_pv(
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
 # endif
-	CPPAD_ASSERT_UNKNOWN( arg[0] < npar    );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < current );
-	size_t new_arg[2];
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < npar    );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
+	addr_t new_arg[2];
 	new_arg[0]   = rec->PutPar( par[arg[0]] );
 	new_arg[1]   = tape[ arg[1] ].new_var;
 	rec->PutArg( new_arg[0], new_arg[1] );
 	size_t i     = rec->PutOp(op);
-	CPPAD_ASSERT_UNKNOWN( new_arg[0] < i );
+	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < i );
 	return i;
 }
 
@@ -546,7 +546,7 @@ size_t optimize_record_vp(
 	const Base*                                        par            ,
 	recorder<Base>*                                    rec            ,
 	OpCode                                             op             ,
-	const size_t*                                      arg            )
+	const addr_t*                                      arg            )
 {
 # ifndef NDEBUG
 	switch(op)
@@ -559,14 +559,14 @@ size_t optimize_record_vp(
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
 # endif
-	CPPAD_ASSERT_UNKNOWN( arg[0] < current );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < npar    );
-	size_t new_arg[2];
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < npar    );
+	addr_t new_arg[2];
 	new_arg[0]   = tape[ arg[0] ].new_var;
 	new_arg[1]   = rec->PutPar( par[arg[1]] );
 	rec->PutArg( new_arg[0], new_arg[1] );
 	size_t i     = rec->PutOp(op);
-	CPPAD_ASSERT_UNKNOWN( new_arg[0] < i );
+	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < i );
 	return i;
 }
 
@@ -597,7 +597,7 @@ size_t optimize_record_vv(
 	const Base*                                        par            ,
 	recorder<Base>*                                    rec            ,
 	OpCode                                             op             ,
-	const size_t*                                      arg            )
+	const addr_t*                                      arg            )
 {
 # ifndef NDEBUG
 	switch(op)
@@ -612,14 +612,14 @@ size_t optimize_record_vv(
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
 # endif
-	CPPAD_ASSERT_UNKNOWN( arg[0] < current );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < current );
-	size_t new_arg[2];
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < current );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < current );
+	addr_t new_arg[2];
 	new_arg[0]   = tape[ arg[0] ].new_var;
 	new_arg[1]   = tape[ arg[1] ].new_var;
 	rec->PutArg( new_arg[0], new_arg[1] );
 	size_t i     = rec->PutOp(op);
-	CPPAD_ASSERT_UNKNOWN( new_arg[0] < i );
+	CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < i );
 	return i;
 }
 
@@ -679,7 +679,7 @@ size_t optimize_record_csum(
 
 	size_t                        i;
 	OpCode                        op;
-	const size_t*                 arg;
+	const addr_t*                 arg;
 	bool                          add;
 	struct optimize_csum_variable var;
 
@@ -698,7 +698,7 @@ size_t optimize_record_csum(
 		switch(op)
 		{	case AddpvOp:
 			case SubpvOp:
-			CPPAD_ASSERT_UNKNOWN( arg[0] < npar );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < npar );
 			if( add )
 				sum_par += par[arg[0]];
 			else	sum_par -= par[arg[0]];
@@ -709,7 +709,7 @@ size_t optimize_record_csum(
 			case SubvvOp:
 			if( tape[arg[0]].connect == csum_connected )
 			{	CPPAD_ASSERT_UNKNOWN(
-					tape[arg[0]].new_var == tape.size()
+					size_t(tape[arg[0]].new_var) == tape.size()
 				);
 				var.op  = tape[arg[0]].op;
 				var.arg = tape[arg[0]].arg;
@@ -728,7 +728,7 @@ size_t optimize_record_csum(
 		switch(op)
 		{
 			case SubvpOp:
-			CPPAD_ASSERT_UNKNOWN( arg[1] < npar );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < npar );
 			if( add )
 				sum_par -= par[arg[1]];
 			else	sum_par += par[arg[1]];
@@ -742,7 +742,7 @@ size_t optimize_record_csum(
 			case AddpvOp:
 			if( tape[arg[1]].connect == csum_connected )
 			{	CPPAD_ASSERT_UNKNOWN(
-					tape[arg[1]].new_var == tape.size()
+					size_t(tape[arg[1]].new_var) == tape.size()
 				);
 				var.op   = tape[arg[1]].op;
 				var.arg  = tape[arg[1]].arg;
@@ -829,7 +829,7 @@ void optimize(
 
 	// temporary variables
 	OpCode        op;   // current operator
-	const size_t *arg;  // operator arguments
+	const addr_t* arg;  // operator arguments
 	size_t        i_var;  // index of first result for current operator
 
 	// range and domain dimensions for F
@@ -1017,7 +1017,7 @@ void optimize(
 				mask = 1;
 				for(i = 2; i < 6; i++)
 				{	if( arg[1] & mask )
-					{	CPPAD_ASSERT_UNKNOWN( arg[i] < i_var );
+					{	CPPAD_ASSERT_UNKNOWN( size_t(arg[i]) < i_var );
 						tape[arg[i]].connect = yes_connected;
 					}
 					mask = mask << 1;
@@ -1091,10 +1091,10 @@ void optimize(
 			}
 			else
 			{	CPPAD_ASSERT_UNKNOWN( user_state == user_start );
-				CPPAD_ASSERT_UNKNOWN( user_index == arg[0] );
-				CPPAD_ASSERT_UNKNOWN( user_id    == arg[1] );
-				CPPAD_ASSERT_UNKNOWN( user_n     == arg[2] );
-				CPPAD_ASSERT_UNKNOWN( user_m     == arg[3] );
+				CPPAD_ASSERT_UNKNOWN( user_index == size_t(arg[0]) );
+				CPPAD_ASSERT_UNKNOWN( user_id    == size_t(arg[1]) );
+				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
+				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
 				user_state = user_end;
                }
 			break;
@@ -1104,7 +1104,7 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			--user_j;
 			if( user_j == 0 )
 				user_state = user_start;
@@ -1115,7 +1115,7 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_arg );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_j && user_j <= user_n );
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] <= i_var );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) <= i_var );
 			CPPAD_ASSERT_UNKNOWN( 0 < arg[0] );
 			--user_j;
 			if( ! user_r[user_j].empty() )
@@ -1131,7 +1131,7 @@ void optimize(
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( 0 < user_i && user_i <= user_m );
 			CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
-			CPPAD_ASSERT_UNKNOWN( arg[0] < num_par );
+			CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < num_par );
 			--user_i;
 			user_s[user_i].clear();
 			if( user_i == 0 )
@@ -1221,7 +1221,7 @@ void optimize(
 	tape[i_var].new_var = rec->PutOp(BeginOp);
 
 	// temporary buffer for new argument values
-	size_t new_arg[6];
+	addr_t new_arg[6];
 
 	// temporary work space used by optimize_record_csum
 	// (decalared here to avoid realloaction of memory)
@@ -1314,7 +1314,7 @@ void optimize(
 				rec->PutArg( new_arg[0] );
 				i                   = rec->PutOp(op);
 				tape[i_var].new_var = i;
-				CPPAD_ASSERT_UNKNOWN( new_arg[0] < i );
+				CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < i );
 			}
 			break;
 			// ---------------------------------------------------
@@ -1463,7 +1463,7 @@ void optimize(
 			{	if( arg[1] & mask )
 				{	new_arg[i] = tape[arg[i]].new_var;
 					CPPAD_ASSERT_UNKNOWN( 
-						new_arg[i] < num_var 
+						size_t(new_arg[i]) < num_var 
 					);
 				}
 				else	new_arg[i] = rec->PutPar( 
@@ -1508,7 +1508,7 @@ void optimize(
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = arg[1];
-			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_vecad_ind );
+			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
 			rec->PutArg( 
 				new_arg[0], 
 				new_arg[1], 
@@ -1522,8 +1522,8 @@ void optimize(
 			CPPAD_ASSERT_NARG_NRES(op, 3, 1);
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = tape[arg[1]].new_var;
-			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_vecad_ind );
-			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
+			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
 			rec->PutArg( 
 				new_arg[0], 
 				new_arg[1], 
@@ -1538,7 +1538,7 @@ void optimize(
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
 			new_arg[2] = rec->PutPar( play->GetPar(arg[2]) );
-			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_vecad_ind );
+			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
 			rec->PutArg(
 				new_arg[0], 
 				new_arg[1], 
@@ -1553,8 +1553,8 @@ void optimize(
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = tape[arg[1]].new_var;
 			new_arg[2] = rec->PutPar( play->GetPar(arg[2]) );
-			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_vecad_ind );
-			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
+			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
 			rec->PutArg(
 				new_arg[0], 
 				new_arg[1], 
@@ -1569,9 +1569,9 @@ void optimize(
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = rec->PutPar( play->GetPar(arg[1]) );
 			new_arg[2] = tape[arg[2]].new_var;
-			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_vecad_ind );
-			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
-			CPPAD_ASSERT_UNKNOWN( new_arg[2] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
+			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[2]) < num_var );
 			rec->PutArg(
 				new_arg[0], 
 				new_arg[1], 
@@ -1586,9 +1586,9 @@ void optimize(
 			new_arg[0] = new_vecad_ind[ arg[0] ];
 			new_arg[1] = tape[arg[1]].new_var;
 			new_arg[2] = tape[arg[2]].new_var;
-			CPPAD_ASSERT_UNKNOWN( new_arg[0] < num_vecad_ind );
-			CPPAD_ASSERT_UNKNOWN( new_arg[1] < num_var );
-			CPPAD_ASSERT_UNKNOWN( new_arg[2] < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[0]) < num_vecad_ind );
+			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[1]) < num_var );
+			CPPAD_ASSERT_UNKNOWN( size_t(new_arg[2]) < num_var );
 			rec->PutArg(
 				new_arg[0], 
 				new_arg[1], 
@@ -1653,7 +1653,7 @@ void optimize(
 	}
 	// modify the dependent variable vector to new indices
 	for(i = 0; i < dep_taddr.size(); i++ )
-	{	CPPAD_ASSERT_UNKNOWN( tape[ dep_taddr[i] ].new_var < num_var );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(tape[ dep_taddr[i] ].new_var) < num_var );
 		dep_taddr[i] = tape[ dep_taddr[i] ].new_var;
 	}
 }

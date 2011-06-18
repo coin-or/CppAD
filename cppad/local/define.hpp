@@ -19,6 +19,30 @@ Define processor symbols and macros that are used by CppAD.
 */
 
 /*!
+\def CPPAD_OP_CODE_TYPE
+Is the type used to store enum OpCode values. If not the same as OpCode, then 
+<code>sizeof(CPPAD_OP_CODE_TYPE) <= sizeof( enum OpCode )</code>
+to conserve memory.
+This type must support \c std::numeric_limits,
+the \c <= operator,
+and conversion to \c size_t.
+Make sure that the type chosen returns true for is_pod<CPPAD_OP_CODE_TYPE>
+in pod_vector.hpp.
+*/
+# define CPPAD_OP_CODE_TYPE unsigned char
+
+/*!
+\def CPPAD_TAPE_ID_TYPE
+Is the type used to store tape identifies on the tape. If not size_t, then 
+<code>sizeof(CPPAD_TAPE_ID_TYPE) <= sizeof( size_t )</code>
+to conserve memory.
+This type must support \c std::numeric_limits,
+the \c <= operator,
+and conversion to \c size_t.
+*/
+# define CPPAD_TAPE_ID_TYPE unsigned int
+
+/*!
 \def CPPAD_USE_FORWARD0SWEEP
 If ture, use compute zero order sweeps using a specialized routine.
 

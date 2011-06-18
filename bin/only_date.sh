@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -62,21 +62,6 @@ svn cat configure.ac | sed > bin/only_date.1.$$ \
      -e "s/(CppAD, [0-9]\{8\}[.0-9]* *,/(CppAD, $version,/" \
 	-e '/$Id:.*$/d'
 check_difference configure.ac
-# ---------------------------------------------------------------------
-list="$list cppad/config.h"
-# svn_commit.sed will make sure config.h has these values
-sed -i.save cppad/config.h \
-	-e 's/\(^# *define *CPPAD_BOOSTVECTOR *\) 1 *$/\1 0/' \
-	-e 's/\(^# *define *CPPAD_CPPADVECTOR *\) 0 *$/\1 1/' \
-	-e 's/\(^# *define *CPPAD_STDVECTOR *\) 1 *$/\1 0/' \
-	-e '/$Id:.*$/d'
-#
-svn cat cppad/config.h | sed > bin/only_date.1.$$ \
-	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $version/g" \
-	-e "s/VERSION \"[0-9]\{8\}[.0-9]*\"/VERSION \"$version\"/g" \
-	-e '/$Id:.*$/d'
-check_difference cppad/config.h
-mv cppad/config.h.save cppad/config.h
 # ---------------------------------------------------------------------
 list="$list cppad/configure.hpp"
 svn cat cppad/configure.hpp | sed > bin/only_date.1.$$ \

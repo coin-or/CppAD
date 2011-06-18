@@ -337,7 +337,7 @@ void ADTape<Base>::RecordCondExp(
 	returnValue_taddr = Rec_.PutOp(CExpOp);
 
 	// ind[0] = cop
-	ind0 = size_t( cop );
+	ind0 = addr_t( cop );
 
 	// ind[1] = base 2 representaion of the value
 	// [Var(left), Var(right), Var(exp_if_true), Var(exp_if_false)]

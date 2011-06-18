@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -68,7 +68,7 @@ bool ode_evaluate(void)
 
 	size_t k;
 	for(k = 0; k < n * n; k++)
-		ok &= NearEqual(ym[k], dy[k] , 1e-10, 1e-10);
+		ok &= NearEqual(ym[k], dy[k] , 1e-7, 1e-7);
  
 	return ok;
 }

@@ -159,7 +159,7 @@ void ADFun<Base>::Dependent(const ADvector &x, const ADvector &y)
 	size_t i, j;
 	for(j = 0; j < x.size(); j++)
 	{	CPPAD_ASSERT_KNOWN(
-		x[j].taddr_ == (j+1),
+		size_t(x[j].taddr_) == (j+1),
 		"ADFun<Base>: independent variable vector has been changed."
 		);
 		CPPAD_ASSERT_KNOWN(

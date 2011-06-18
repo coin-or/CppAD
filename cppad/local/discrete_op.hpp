@@ -70,14 +70,14 @@ is the zero order Taylor coefficient corresponding to z.
 template <class Base>
 inline void forward_dis_op_0(
 	size_t        i_z         ,
-	const size_t* arg         ,
+	const addr_t* arg         ,
 	size_t        nc_taylor   , 
 	Base*         taylor      )
 {	
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(DisOp) == 2 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(DisOp) == 1 );
-	CPPAD_ASSERT_UNKNOWN( arg[1] < i_z );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < i_z );
 	CPPAD_ASSERT_UNKNOWN( 0 < nc_taylor );
 
 	// Taylor coefficients corresponding to argument and result

@@ -2,7 +2,7 @@
 # ifndef CPPAD_COND_OP_INCLUDED
 # define CPPAD_COND_OP_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -45,7 +45,7 @@ template <class Base>
 inline void forward_cond_op(
 	size_t         d           ,
 	size_t         i_z         ,
-	const size_t*  arg         , 
+	const addr_t*  arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         nc_taylor   ,
@@ -54,25 +54,25 @@ inline void forward_cond_op(
 	Base zero(0);
 	Base* z;
 
-	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
 		y_0 = taylor[ arg[2] * nc_taylor + 0 ];
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[2] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 		y_0 = parameter[ arg[2] ];
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[3] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
 		y_1 = taylor[ arg[3] * nc_taylor + 0 ];
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[3] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
 		y_1 = parameter[ arg[3] ];
 	}
 # if CPPAD_USE_FORWARD0SWEEP
@@ -80,31 +80,31 @@ inline void forward_cond_op(
 # else
 	if( d == 0 )
 	{	if( arg[1] & 4 )
-		{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
 			y_2 = taylor[ arg[4] * nc_taylor + 0 ];
 		}
 		else
-		{	CPPAD_ASSERT_UNKNOWN( arg[4] < num_par );
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
 			y_2 = parameter[ arg[4] ];
 		}
 		if( arg[1] & 8 )
-		{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
 			y_3 = taylor[ arg[5] * nc_taylor + 0 ];
 		}
 		else
-		{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
 			y_3 = parameter[ arg[5] ];
 		}
 	}
 	else
 # endif
 	{	if( arg[1] & 4 )
-		{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
 			y_2 = taylor[ arg[4] * nc_taylor + d];
 		}
 		else	y_2 = zero;
 		if( arg[1] & 8 )
-		{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
 			y_3 = taylor[ arg[5] * nc_taylor + d];
 		}
 		else	y_3 = zero;
@@ -138,7 +138,7 @@ is the zero order Taylor coefficient corresponding to z.
 template <class Base>
 inline void forward_cond_op_0(
 	size_t         i_z         ,
-	const size_t*  arg         , 
+	const addr_t*  arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         nc_taylor   ,
@@ -146,41 +146,41 @@ inline void forward_cond_op_0(
 {	Base y_0, y_1, y_2, y_3;
 	Base* z;
 
-	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
 		y_0 = taylor[ arg[2] * nc_taylor + 0 ];
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[2] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 		y_0 = parameter[ arg[2] ];
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[3] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
 		y_1 = taylor[ arg[3] * nc_taylor + 0 ];
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[3] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
 		y_1 = parameter[ arg[3] ];
 	}
 	if( arg[1] & 4 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
 		y_2 = taylor[ arg[4] * nc_taylor + 0 ];
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[4] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
 		y_2 = parameter[ arg[4] ];
 	}
 	if( arg[1] & 8 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
 		y_3 = taylor[ arg[5] * nc_taylor + 0 ];
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
 		y_3 = parameter[ arg[5] ];
 	}
 	z = taylor + i_z * nc_taylor;
@@ -249,7 +249,7 @@ template <class Base>
 inline void reverse_cond_op(
 	size_t         d           ,
 	size_t         i_z         ,
-	const size_t*  arg         , 
+	const addr_t*  arg         , 
 	size_t         num_par     ,
 	const Base*    parameter   ,
 	size_t         nc_taylor   ,
@@ -262,30 +262,30 @@ inline void reverse_cond_op(
 	Base* py_2;
 	Base* py_3;
 
-	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 
 	pz = partial + i_z * nc_partial + 0;
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
 		y_0 = taylor[ arg[2] * nc_taylor + 0 ];
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[2] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 		y_0 = parameter[ arg[2] ];
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[3] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
 		y_1 = taylor[ arg[3] * nc_taylor + 0 ];
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[3] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
 		y_1 = parameter[ arg[3] ];
 	}
 	if( arg[1] & 4 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
 		py_2 = partial + arg[4] * nc_partial;
 		size_t j = d + 1;
 		while(j--)
@@ -299,7 +299,7 @@ inline void reverse_cond_op(
 		}
 	}
 	if( arg[1] & 8 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
 		py_3 = partial + arg[5] * nc_partial;
 		size_t j = d + 1;
 		while(j--)
@@ -342,48 +342,48 @@ depends on.
 template <class Vector_set>
 inline void forward_sparse_jacobian_cond_op(
 	size_t             i_z           ,
-	const size_t*      arg           , 
+	const addr_t*      arg           , 
 	size_t             num_par       ,
 	Vector_set&        sparsity      )
 {
-	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 
 # ifndef NDEBUG
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[2] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[3] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[3] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
 	}
 # endif
 	if( arg[1] & 4 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
 		if( arg[1] & 8 )
-		{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
 			sparsity.binary_union(i_z, arg[4], arg[5], sparsity);
 		}
 		else
-		{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
 			sparsity.assignment(i_z, arg[4], sparsity);
 		}
 	}	
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[4] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
 		if( arg[1] & 8 )
-		{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
 			sparsity.assignment(i_z, arg[5], sparsity);
 		}
 		else
-		{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
+		{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
 			sparsity.clear(i_z);
 		}
 	}
@@ -427,41 +427,41 @@ On input and output, this pattern corresponds to the function G.
 template <class Vector_set>
 inline void reverse_sparse_jacobian_cond_op(
 	size_t              i_z           ,
-	const size_t*       arg           , 
+	const addr_t*       arg           , 
 	size_t              num_par       ,
 	Vector_set&         sparsity      )
 {	
-	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 
 # ifndef NDEBUG
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[2] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[3] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[3] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
 	}
 	if( ! ( arg[1] & 4 ) )
-	{	CPPAD_ASSERT_UNKNOWN( arg[4] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
 	}
 	if( ! ( arg[1] & 8 ) )
-	{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
 	}
 # endif
 	if( arg[1] & 4 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
 		sparsity.binary_union(arg[4], arg[4], i_z, sparsity);
 	}
 	if( arg[1] & 8 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
 		sparsity.binary_union(arg[5], arg[5], i_z, sparsity);
 	}
 	return;
@@ -528,45 +528,45 @@ On output, this pattern corresponds to the function H.
 template <class Vector_set>
 inline void reverse_sparse_hessian_cond_op(
 	size_t               i_z           ,
-	const size_t*        arg           , 
+	const addr_t*        arg           , 
 	size_t               num_par       ,
 	bool*                jac_reverse   ,
 	Vector_set&          hes_sparsity  )
 {	
 
-	CPPAD_ASSERT_UNKNOWN( arg[0] < static_cast<size_t> (CompareNe) );
+	CPPAD_ASSERT_UNKNOWN( size_t(arg[0]) < static_cast<size_t> (CompareNe) );
 	CPPAD_ASSERT_UNKNOWN( NumArg(CExpOp) == 6 );
 	CPPAD_ASSERT_UNKNOWN( NumRes(CExpOp) == 1 );
 	CPPAD_ASSERT_UNKNOWN( arg[1] != 0 );
 
 # ifndef NDEBUG
 	if( arg[1] & 1 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[2] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < i_z );
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[2] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[2]) < num_par );
 	}
 	if( arg[1] & 2 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[3] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < i_z );
 	}
 	else
-	{	CPPAD_ASSERT_UNKNOWN( arg[3] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[3]) < num_par );
 	}
 	if( ! ( arg[1] & 4 ) )
-	{	CPPAD_ASSERT_UNKNOWN( arg[4] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_par );
 	}
 	if( ! ( arg[1] & 8 ) )
-	{	CPPAD_ASSERT_UNKNOWN( arg[5] < num_par );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < num_par );
 	}
 # endif
 	if( arg[1] & 4 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[4] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < i_z );
 
 		hes_sparsity.binary_union(arg[4], arg[4], i_z, hes_sparsity);
 		jac_reverse[ arg[4] ] |= jac_reverse[i_z];
 	}
 	if( arg[1] & 8 )
-	{	CPPAD_ASSERT_UNKNOWN( arg[5] < i_z );
+	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[5]) < i_z );
 
 		hes_sparsity.binary_union(arg[5], arg[5], i_z, hes_sparsity);
 		jac_reverse[ arg[5] ] |= jac_reverse[i_z];

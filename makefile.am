@@ -10,7 +10,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-# Note that config.h is needed by VC++; i.e., for users that do not run
+# Note that configure.hpp is needed by VC++; i.e., for users that do not run
 # the configure script but rather use the project files 
 #
 if CppAD_POSTFIX
@@ -85,7 +85,6 @@ myinclude_HEADERS = \
 nobase_myinclude_HEADERS =  \
 	cppad/CheckNumericType.h \
 	cppad/CheckSimpleVector.h \
-	cppad/config.h \
 	cppad/CppAD.h \
 	cppad/CppAD_vector.h \
 	cppad/ErrorHandler.h \

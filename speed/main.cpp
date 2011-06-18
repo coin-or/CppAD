@@ -534,6 +534,10 @@ int main(int argc, char *argv[])
 		default:
 		assert(0);
 	}
+	// print how much memory was used during the tests
+	using CppAD::omp_alloc;
+	size_t thread = omp_alloc::get_thread_num();
+	cout << "omp_alloc::available = " << omp_alloc::available(thread) << endl;
 # ifndef NDEBUG
 	// return memory for vectors that are still in scope
 	size_det_lu.resize(0);
@@ -543,7 +547,7 @@ int main(int argc, char *argv[])
 	size_poly.resize(0);
 	size_sparse_hessian.resize(0);
 	size_sparse_jacobian.resize(0);
-	// now check for a memory leak
+	// check for memory leak
 	if( CppAD::memory_leak() )
 	{	ok = false;
 		Run_error_count++;

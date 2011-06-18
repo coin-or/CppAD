@@ -39,7 +39,6 @@ am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
-CONFIG_HEADER = $(top_builddir)/cppad/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am_sacado_OBJECTS = main.$(OBJEXT) det_lu.$(OBJEXT) \
@@ -77,8 +76,14 @@ CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
+CPPAD_BOOSTVECTOR = @CPPAD_BOOSTVECTOR@
+CPPAD_CPPADVECTOR = @CPPAD_CPPADVECTOR@
+CPPAD_GETTIMEOFDAY = @CPPAD_GETTIMEOFDAY@
 CPPAD_IPOPT_LD_PATH = @CPPAD_IPOPT_LD_PATH@
 CPPAD_IPOPT_LIBS = @CPPAD_IPOPT_LIBS@
+CPPAD_SIZE_T_SAME_UNSIGNED_INT = @CPPAD_SIZE_T_SAME_UNSIGNED_INT@
+CPPAD_STDVECTOR = @CPPAD_STDVECTOR@
+CPPAD_TAPE_ADDR_TYPE = @CPPAD_TAPE_ADDR_TYPE@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
 CXXDEPMODE = @CXXDEPMODE@
@@ -101,18 +106,20 @@ CYGPATH_W = @CYGPATH_W@
 #
 # automake input file
 #
-# CppAD pusts all it's preprocessor definitions in the cppad/config.h file
+# CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS = 
 DEPDIR = @DEPDIR@
 DL_LIB = @DL_LIB@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
+EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 FADBAD_DIR = @FADBAD_DIR@
 FC = @FC@
 FCFLAGS = @FCFLAGS@
 FCLIBS = @FCLIBS@
+GREP = @GREP@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -143,6 +150,7 @@ SACADO_DIR = @SACADO_DIR@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+TAPE_ADDR_TYPE = @TAPE_ADDR_TYPE@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@

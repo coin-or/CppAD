@@ -207,10 +207,10 @@ private:
 	// This is a variable if and only if id_ == *id_handle()
 	// For parameters id_ is CPPAD_MAX_NUM_THREADS, so that following hold
 	// id_ != 0 , id_ % CPPAD_MAX_NUM_THREADS == 0, id_ != *id_handle().
-	size_t id_;
+	CPPAD_TAPE_ID_TYPE id_;
 
 	// taddr_ in tape for this variable 
-	size_t taddr_;
+	addr_t taddr_;
 	//
 	// Make this variable a parameter
 	//

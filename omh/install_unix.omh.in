@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -13,6 +13,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin InstallUnix$$
 $dollar ^$$
 $spell
+	Addr
+	sizeof
+	op_arg
 	err_retu
 	const
 	printf
@@ -156,7 +159,8 @@ $codei%
 	SADADO_DIR=%SacadoDir%                   \
 	BOOST_DIR=%BoostDir%                     \
 	IPOPT_DIR=%IpoptDir%                     \
-	CXX_FLAGS=%CompilerFlags% 
+	CXX_FLAGS=%CompilerFlags%                \
+	TAPE_ADDR_TYPE=%TapeAddrType%
 %$$
 where only the $code configure$$ command need appear.
 The entries one each of the other lines are optional
@@ -542,6 +546,29 @@ The error and warning flags chosen must be valid options
 for the C++ compiler.
 The default value for $icode CompilerFlags$$ is the
 empty string.
+
+$head TapeAddrType$$
+$index memory, usage$$
+$index memory, tape$$
+$index tape, memory$$
+If the command line argument $icode TapeAddrType$$ is present,
+it specifies the type used for address in the AD recordings (tapes).
+The valid values for this argument are
+$code unsigned short int$$,
+$code unsigned int$$,
+$code size_t$$.
+The smaller the value of $icode%sizeof(%TapeAddrType%)%$$,
+the less memory is used.
+On the other hand, the value
+$codei%
+	std::numeric_limits<%TapeAddrType%>::max()
+%$$
+must be larger than any of the following:
+$cref/size_op/seq_property/size_op/$$,
+$cref/size_op_arg/seq_property/size_op_arg/$$,
+$cref/size_par/seq_property/size_text/$$,
+$cref/size_par/seq_property/size_par/$$,
+$cref/size_par/seq_property/size_VecAD/$$.
 
 
 $head make install$$

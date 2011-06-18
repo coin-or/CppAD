@@ -11,7 +11,7 @@
 # -----------------------------------------------------------------------------
 # automake input file
 #
-# CppAD puts all it's preprocessor definitions in the cppad/config.h file
+# CppAD puts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
 if CppAD_ADOLC
@@ -19,14 +19,14 @@ ADOLC_SRC_FILES     = mul_level_adolc.cpp ode_taylor_adolc.cpp
 ADOLC_EXTRA_FILES  =
 ADOLC_INCLUDE      = -I$(ADOLC_DIR)/include 
 ADOLC_LIB          = -ladolc
-ADOLC_LIB_DIR      = -L$(ADOLC_DIR)/lib
+ADOLC_LIB_DIRS     = -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 ADOLC_FLAGS        = -DCPPAD_ADOLC_EXAMPLES
 else
 ADOLC_SRC_FILES   =
 ADOLC_EXTRA_FILES =  mul_level_adolc.cpp ode_taylor_adolc.cpp
 ADOLC_INCLUDE     =
 ADOLC_LIB         =
-ADOLC_LIB_DIR     =
+ADOLC_LIB_DIRS    =
 ADOLC_FLAGS       =
 endif
 #
@@ -55,7 +55,7 @@ AM_CPPFLAGS       = -I. \
                     
 #
 LDADD             = $(ADOLC_LIB) 
-AM_LDFLAGS        = $(ADOLC_LIB_DIR) 
+AM_LDFLAGS        = $(ADOLC_LIB_DIRS) 
 #
 example_SOURCES   = \
 	$(ADOLC_SRC_FILES) \

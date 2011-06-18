@@ -142,7 +142,7 @@ void ADTape<Base>::RecordCompare(
 	bool           result ,
 	const AD<Base> &left  ,
 	const AD<Base> &right )
-{	size_t ind0, ind1, ind2, ind3;
+{	addr_t ind0, ind1, ind2, ind3;
 
 	// ind[1] = base 2 representation of [result, Var(left), Var(right])
 	ind1 = 0;

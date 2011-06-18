@@ -63,7 +63,7 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 			CPPAD_ASSERT_UNKNOWN( NumArg(AddpvOp) == 2 );
 
 			// put operand addresses in tape
-			size_t p = tape->Rec_.PutPar(right.value_);
+			addr_t p = tape->Rec_.PutPar(right.value_);
 			tape->Rec_.PutArg(p, left.taddr_);
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(AddpvOp);
@@ -82,7 +82,7 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 			CPPAD_ASSERT_UNKNOWN( NumArg(AddpvOp) == 2 );
 
 			// put operand addresses in tape
-			size_t p = tape->Rec_.PutPar(left.value_);
+			addr_t p = tape->Rec_.PutPar(left.value_);
 			tape->Rec_.PutArg(p, right.taddr_);
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(AddpvOp);
