@@ -60,7 +60,7 @@ EOF
 	exit 1
 fi
 # -----------------------------------------------------------------------
-for file  in bin/commit.sed bin/commit.sh
+for file  in bin/commit.sed
 do
 	abort=`svn status $file`
 	if [ "$abort" != "" ]
@@ -68,6 +68,7 @@ do
 		echo "svn status $file"
 		svn status $file
 		echo "bin/commit.sh: aborting because $file changed"
+		rm bin/commit.1.$$
 		exit 1
 	fi
 done
@@ -88,6 +89,7 @@ then
 	then
 		echo "bin/commit.sh: abort because following are unknown to svn"
 		echo $unknown
+		rm bin/commit.1.$$
 		exit 1
 	fi
 	# -------------------------------------------------
@@ -143,7 +145,6 @@ then
 	sed -n -e '1,/@/p' bin/commit.sh.old | sed -e '/@/d' > bin/commit.sh
 	sed bin/commit.1.$$ -e 's/$/@/'                     >> bin/commit.sh
 	sed -n -e '/^EOF/,$p' bin/commit.sh.old             >> bin/commit.sh
-	rm  bin/commit.1.$$
 	#
 	echo "------------------------------------"
 	echo "diff bin/commit.sh.old bin/commit.sh"
@@ -155,6 +156,7 @@ then
      echo "chmod +x bin/commit.sh"
            chmod +x bin/commit.sh
 	#
+	rm bin/commit.1.$$
 	exit 0
 fi
 # -----------------------------------------------------------------------
@@ -165,6 +167,7 @@ if (echo $list | grep 'bin/commit.sh$' > /dev/null)
 then
 	echo "bin/commit.sh: cannot be used to commit changes to itself."
 	echo "remove it from the list of files in bin/commit.sh"
+	rm bin/commit.1.$$
 	exit 1
 fi
 #
@@ -172,6 +175,7 @@ if (echo $list | grep 'bin/commit.sed$' > /dev/null)
 then
 	echo "bin/commit.sh: cannot be used to commit changes to bin/commit.sed"
 	echo "remove it from the list of files in bin/commit.sh"
+	rm bin/commit.1.$$
 	exit 1
 fi
 #
@@ -185,6 +189,7 @@ then
 fi
 rm bin/commit.1.$$
 rm bin/commit.2.$$
+#
 echo "svn commit -m \""
 echo "$msg"
 echo "\" \\"
@@ -214,3 +219,5 @@ mv       bin/commit.sh commit.sh.old
 #
 echo "svn revert bin/commit.sh"
 svn revert bin/commit.sh
+#
+exit 0
