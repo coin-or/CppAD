@@ -12,6 +12,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	Addr
+	sizeof
+	undefine
+	config
+	adolc
 	initializer
 	vec
 	Bool
@@ -48,9 +53,23 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 06-12$$
+$head 06-18$$
+$list number$$
+The $cref/TapeAddrType/InstallUnix/TapeAddrType/$$ option was added
+to the $cref/configure/InstallUnix/Configure/$$ command line.
+$lnext
 The function $cref/size_op_seq/seq_property/size_op_seq/$$ results uses
-$code CppAD_TAPE_ADDR_TYPE$$ where it used to use $code size_t$$.
+$code sizeof(CppAD_TAPE_ADDR_TYPE)$$ 
+where it used to use $code sizeof(size_t)$$.
+$lnext
+Remove $code cppad/config.h$$ from CppAD distribution,
+(put the information in $code cppad/configure.hpp$$.)
+This removes the need to undefine symbols that were
+defined by $code cppad/config.h$$ and that did not begin with $code CPPAD_$$.
+$lnext
+Change $cref/adolc/InstallUnix/AdolcDir/$$ library linkage so it
+works with version $code ADOL-C-2.2.0$$.
+$lend
 
 $head 05-29$$
 Fix bug (introduced on $cref/05-22/whats_new_11/05-22/$$)

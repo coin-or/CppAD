@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin seq_property$$
 $spell 
+	Addr
 	CppAD
 	sizeof
 	op
@@ -214,11 +215,12 @@ and is the amount of memory required to store the operation sequence
 For the current version of CppAD, this is given by
 $codei%
 	%s% = %f%.size_op()     * sizeof(CppAD::OpCode)
-	    + %f%.size_op_arg() * sizeof(CPPAD_TAPE_ADDR_TYPE)
+	    + %f%.size_op_arg() * sizeof(%TapeAddrType%)
 	    + %f%.size_par()    * sizeof(%Base%)
 	    + %f%.size_text()   * sizeof(char)
-	    + %f%.size_VecAD()  * sizeof(CPPAD_TAPE_ADDR_TYPE)
+	    + %f%.size_VecAD()  * sizeof(%TapeAddrType%)
 %$$
+see $cref/TapeAddrType/InstallUnix/TapeAddrType/$$.
 Note that this is the minimal amount of memory that can hold
 the information corresponding to an operation sequence.
 The actual amount of memory allocated ($cref/inuse/$$)
