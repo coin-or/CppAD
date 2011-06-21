@@ -65,7 +65,7 @@ check_difference configure.ac
 # ---------------------------------------------------------------------
 list="$list cppad/configure.hpp"
 svn cat cppad/configure.hpp | sed > bin/only_date.1.$$ \
-	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $version/g" \
+	-e "s/cppad-[0-9]\{8\}[.0-9]*/cppad-$version/g" \
 	-e '/$Id:.*$/d'
 check_difference cppad/configure.hpp
 # ---------------------------------------------------------------------
