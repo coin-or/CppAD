@@ -206,13 +206,13 @@ namespace { // empty namespace
 	{	if( std::strcmp(arg, "automatic") == 0 )
 		{	if( automatic_ok )
 				return 0;
-			std::cout << error_msg << std::endl;
+			std::cerr << error_msg << std::endl;
 			exit(1);
 		}
 		int i = std::atoi(arg);
 		if( i >= limit )
 			return size_t(i);
-		std::cout << error_msg << std::endl;
+		std::cerr << error_msg << std::endl;
 		exit(1);
 	}
 
@@ -286,17 +286,16 @@ int main(int argc, char *argv[])
 	CppAD::AD<double>::omp_max_thread(n_thread);
 
 	// inform the user of the maximum number of threads
-	cout << "OpenMP="     << _OPENMP;
+	cout << "_OPENMP  = '" << #_OPENMP << "'" << endl;;
 # else
-	cout << "OPENMP=\"\"";
+	cout << "_OPENMP  = ''" << endl;;
 	n_thread = 1;
 # endif
-	cout << ", n_thread=" << n_thread;
-	cout << ", n_zero="   << n_zero;
-	cout << ", n_grid="   << n_grid;
-	cout << ", n_sum="    << n_sum;
-	cout << ", use_ad="   << use_ad;
-	cout << endl;
+	cout << "n_thread = " << n_thread << endl;
+	cout << "n_zero   = " << n_zero   << endl;
+	cout << "n_grid   = " << n_grid   << endl;
+	cout << "n_sum    = " << n_sum    << endl;
+	cout << "use_ad   = " << use_ad   << endl;
 
 	// check that no memory is in use or avialable at start
 	bool ok = true;
@@ -325,10 +324,10 @@ int main(int argc, char *argv[])
 		CppAD::speed_test(test_repeat, size_vec, time_min);
 
 		// report results
-		cout << "repeats per sec  = " << rate_vec[0] << endl;
+		cout << "repeats_per_sec  = " << rate_vec[0] << endl;
 	}
 	// print amount of memory each thread used
-	cout << "omp_alloc::available = [ ";
+	cout << "omp_alloc_available = [ ";
 	for(thread = 0; thread < n_thread; thread++)
 	{	cout << CppAD::omp_alloc::available(thread);
 		if( thread + 1 < n_thread )
@@ -353,11 +352,12 @@ int main(int argc, char *argv[])
 	// check all the threads for a CppAD memory leak
 	if( CppAD::memory_leak() )
 	{	ok = false;
-		cout << "Error: memory leak detected" << endl;
+		cout << "memory_leak = " << true << endl;
 	}
+	else	cout << "memory_leak = " << false << endl;
 	if( ok )
-		cout << "Correctness Test = OK" << endl;
-	else	cout << "Correctness Test = Error" << endl;
+		cout << "correctness_test = 'OK'" << endl;
+	else	cout << "correctness_test = 'Error'" << endl;
 
 	return static_cast<int>( ! ok );
 }

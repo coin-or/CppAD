@@ -127,6 +127,7 @@ void test(size_t size, size_t repeat)
 // main program
 int main(int argc, char *argv[])
 {
+	using std::cerr;
 	using std::cout;
 	using std::endl;
 
@@ -144,8 +145,8 @@ int main(int argc, char *argv[])
 	else
 	{	n_thread = std::atoi(*argv);
 		if( n_thread == 0 )
-		{	cout << "example_a11c: n_thread is equal to zero" << endl;
-			cout << "perhaps you want n_thread equal to automatic" << endl;
+		{	cerr << "example_a11c: n_thread is equal to zero" << endl;
+			cerr << "perhaps you want n_thread equal to automatic" << endl;
 			exit(1);
 		}
 	}
@@ -158,8 +159,8 @@ int main(int argc, char *argv[])
 	{	assert( std::atoi(*argv) > 0 );
 		repeat = std::atoi(*argv);
 		if( repeat == 0 )
-		{	cout << "example_a11c: repeat is equal to zero" << endl;
-			cout << "perhaps you want repeat equal to automatic" << endl;
+		{	cerr << "example_a11c: repeat is equal to zero" << endl;
+			cerr << "perhaps you want repeat equal to automatic" << endl;
 			exit(1);
 		}
 	}
@@ -181,14 +182,13 @@ int main(int argc, char *argv[])
 	assert( n_thread > 0 );
 	
 	// inform the user of the maximum number of threads
-	cout << "OpenMP="  << _OPENMP;
+	cout << "_OPENMP  = '" << #_OPENMP << "'" << endl;
 # else
-	cout << "OPENMP=\"\"";
+	cout << "_OPENMP  = ''" << endl;
 	n_thread = 1;
 # endif
-	cout << ", n_thread=" << n_thread;
-	cout << ", size="     << size;
-	cout << endl;
+	cout << "n_thread = " << n_thread << endl;
+	cout << "size     = " << size << endl;
 	// Correctness check (store result in ok)
 	size_t i;
 	float *a = new float[size];
@@ -217,11 +217,11 @@ int main(int argc, char *argv[])
 			CppAD::speed_test(test, size_vec, time_min);
 
 		// report results
-		cout << "repeats per sec  = " << rate_vec[0] << endl;
+		cout << "repeats_per_sec  = " << rate_vec[0] << endl;
 	}
 	if( ok )
-		cout << "Correctness Test = OK" << endl;
-	else	cout << "Correctness Test = Error" << endl;
+		cout << "correctness_test = 'OK'" << endl;
+	else	cout << "correctness_test = 'Error'" << endl;
 
 	return static_cast<int>( ! ok );
 }

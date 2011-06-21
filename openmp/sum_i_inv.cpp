@@ -141,6 +141,7 @@ void test_repeat(size_t size, size_t repeat)
 
 int main(int argc, char *argv[])
 {
+	using std::cerr;
 	using std::cout;
 	using std::endl;
 	using CppAD::vector;
@@ -157,8 +158,8 @@ int main(int argc, char *argv[])
 	else
 	{	n_thread = std::atoi(*argv);
 		if( n_thread == 0 )
-		{	cout << "sum_i_inv: n_thread is equal to zero" << endl;
-			cout << "perhaps you want n_thread equal to automatic" << endl;
+		{	cerr << "sum_i_inv: n_thread is equal to zero" << endl;
+			cerr << "perhaps you want n_thread equal to automatic" << endl;
 			exit(1);
 		}
 	}
@@ -172,8 +173,8 @@ int main(int argc, char *argv[])
 	{	assert( std::atoi(*argv) > 0 );
 		repeat = std::atoi(*argv);
 		if( repeat == 0 )
-		{	cout << "sum_i_inv: repeat is equal to zero" << endl;
-			cout << "perhaps you want repeat equal to automatic" << endl;
+		{	cerr << "sum_i_inv: repeat is equal to zero" << endl;
+			cerr << "perhaps you want repeat equal to automatic" << endl;
 			exit(1);
 		}
 	}
@@ -201,14 +202,13 @@ int main(int argc, char *argv[])
 	CppAD::AD<double>::omp_max_thread(size_t(n_thread));
 
 	// inform the user of the maximum number of threads
-	cout << "OpenMP="         << _OPENMP;
+	cout << "OPENMP   = '" << #_OPENMP << "'" << endl;
 # else
-	cout << "OPENMP=\"\"";
+	cout << "OPENMP   = ''" << endl;
 	n_thread = 1;
 # endif
-	cout << ", n_thread=" << n_thread;
-	cout << ", mega_sum=" << mega_sum;
-	cout << endl;
+	cout << "n_thread = " << n_thread << endl;
+	cout << "mega_sum = " << mega_sum << endl;
 	// initialize flag
 	bool ok = true;
 
@@ -243,11 +243,12 @@ int main(int argc, char *argv[])
 	// check all the threads for a CppAD memory leak
 	if( CppAD::memory_leak() )
 	{	ok = false;
-		cout << "Error: memory leak detected" << endl;
+		cout << "memory_leak = " << true << endl;
 	}
+	else	cout << "memory_leak = " << false << endl;
 	if( ok )
-		cout << "Correctness Test = OK" << endl;
-	else	cout << "Correctness Test = Error" << endl;
+		cout << "correctness_test = 'OK'" << endl;
+	else	cout << "correctness_test = 'Error'" << endl;
 
 	return static_cast<int>( ! ok );
 }
