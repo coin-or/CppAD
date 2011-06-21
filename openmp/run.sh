@@ -18,7 +18,6 @@
 #	Dir
 #	mega
 #	inv
-#       automatic automatic
 #	openmp
 #	vec
 #	exe
@@ -93,10 +92,10 @@ fi
 # The following specifies the number of times to repeat
 # the calculation corresponding to one timing test. 
 # If this 
-# is equal to "automatic", the number of repeats is determined automatically.
-# If it is not equal to "automatic", it must be a positive integer.
+# is equal to 0, the number of repeats is determined automatically.
+# If it is not equal to 0, it must be a positive integer.
 # $codep
-n_repeat="automatic"
+n_repeat="0"
 # $$
 #
 # $subhead Number of Threads$$
@@ -107,7 +106,7 @@ n_repeat="automatic"
 # $cref/openmp_flag/openmp_run.sh/Parameters/OpenMP Flag/$$ is equal to "",
 # this setting is not used.
 # $codep
-n_thread_set="automatic 1 2 3 4"
+n_thread_set="1 2 3 4 0"
 # $$
 #
 # $subhead example_a11c$$
@@ -173,7 +172,7 @@ cd openmp
 #
 cmd="$compiler $version_flag"
 echo "$cmd"
-$cmd
+eval $cmd
 #
 case "$test_name" in
 	example_a11c )
@@ -192,18 +191,21 @@ esac
 #
 cmd="$compiler $test_name.cpp -o ${test_name}_no_openmp -I.. $other_flags"
 echo "$cmd"
-$cmd
+eval $cmd
 #
 # Run without OpenMP
-cmd="./${test_name}_no_openmp automatic $n_repeat $args"
+n_thread=0
+cmd="./${test_name}_no_openmp $n_thread $n_repeat $args"
 echo "$cmd"
-$cmd
+eval $cmd | tee temp.$$
+no_openmp=`cat temp.$$ | grep 'repeats_per_sec' | sed -e 's|.*=||'`
 #
 # clean up (this is source directory)
-echo "rm ${test_name}_no_openmp"
+# echo "rm ${test_name}_no_openmp"
 rm ${test_name}_no_openmp
 #
 echo "" # newline
+yes_openmp_set=""
 if [ "$openmp_flag" != "" ]
 then
 	#
@@ -214,18 +216,31 @@ then
 		$openmp_flag -I.. $other_flags"
 	cmd=`echo $cmd | sed -e 's|[ \t][ \t]*| |'`
 	echo "$cmd"
-	$cmd
+	eval $cmd 
 	#
-	# Run without OpenMP
+	# Run with OpenMP
 	for n_thread in $n_thread_set
 	do
 		cmd="./${test_name}_yes_openmp $n_thread $n_repeat $args"
 		echo "$cmd"
-		$cmd
+		eval $cmd | tee temp.$$
+		temp=`cat temp.$$ | grep 'repeats_per_sec' | sed -e 's|.*=||'`
+		yes_openmp_set="$yes_openmp_set $temp"
 		echo "" # newline
 	done
 	#
 	# clean up (this is source directory)
-	echo "rm ${test_name}_yes_openmp"
+	# echo "rm ${test_name}_yes_openmp"
 	rm ${test_name}_yes_openmp
+fi
+# more cleanup
+# echo "rm temp.$$"
+rm temp.$$
+#
+# summary
+echo "${test_name}_repeats_per_sec_no_openmp  = $no_openmp"
+if [ "$openmp_flag" != "" ]
+then
+	echo "${test_name}_n_thread_yes_openmp        = [ $n_thread_set ]"
+	echo "${test_name}_repeats_per_sec_yes_openmp = [ $yes_openmp_set ]"
 fi

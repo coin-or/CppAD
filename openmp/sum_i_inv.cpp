@@ -36,20 +36,20 @@ $syntax%
 where $syntax%%n_sum% = 1,000,000 * %mega_sum%$$
 
 $head n_thread$$
-If the argument $italic n_thread$$ is equal to $code automatic$$, 
+If the argument $italic n_thread$$ is equal to zero, 
 dynamic thread adjustment is used.
 Otherwise, $italic n_thread$$ must be a positive number
 specifying the number of OpenMP threads to use.
 
 $head repeat$$
-If the argument $italic repeat$$ is equal to $code automatic$$,
+If the argument $italic repeat$$ is equal to zero,
 the number of times to repeat the calculation of the number of zeros
 in total interval is automatically determined.
 In this case, the rate of execution of the total solution is reported.
 $pre
 
 $$
-If the argument $italic repeat$$ is not equal to $italic automatic$$,
+If the argument $italic repeat$$ is not equal to zero,
 it must be a positive integer.
 In this case $italic repeat$$ determination of the number of times 
 the calculation of the summation above.
@@ -152,31 +152,19 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	argv++;
-	// n_thread command line argument
-	if( std::strcmp(*argv, "automatic") == 0 )
-		n_thread = 0;
-	else
-	{	n_thread = std::atoi(*argv);
-		if( n_thread == 0 )
-		{	cerr << "sum_i_inv: n_thread is equal to zero" << endl;
-			cerr << "perhaps you want n_thread equal to automatic" << endl;
-			exit(1);
-		}
+	// n_thread command line argument (store in empty namespace variable)
+	n_thread = std::atoi(*argv);
+	if( std::atoi(*argv) < 0 )
+	{	cerr << "sum_i_inv: n_thread is less than zero" << endl;
+		exit(1);
 	}
 	argv++;
 
 	// repeat command line argument
-	size_t repeat;
-	if( std::strcmp(*argv, "automatic") == 0 )
-		repeat = 0;
-	else
-	{	assert( std::atoi(*argv) > 0 );
-		repeat = std::atoi(*argv);
-		if( repeat == 0 )
-		{	cerr << "sum_i_inv: repeat is equal to zero" << endl;
-			cerr << "perhaps you want repeat equal to automatic" << endl;
-			exit(1);
-		}
+	size_t repeat = std::atoi(*argv);
+	if( std::atoi(*argv) < 0 )
+	{	cerr << "sum_i_inv: repeat is less than zero" << endl;
+		exit(1);
 	}
 	argv++;
 
@@ -202,7 +190,7 @@ int main(int argc, char *argv[])
 	CppAD::AD<double>::omp_max_thread(size_t(n_thread));
 
 	// inform the user of the maximum number of threads
-	cout << "OPENMP   = '" << #_OPENMP << "'" << endl;
+	cout << "OPENMP   = '" << _OPENMP << "'" << endl;
 # else
 	cout << "OPENMP   = ''" << endl;
 	n_thread = 1;
@@ -238,7 +226,7 @@ int main(int argc, char *argv[])
 		CppAD::speed_test(test_repeat, size_vec, time_min);
 
 		// report results
-		cout << "repeats per sec  = " << rate_vec[0] << endl;
+		cout << "repeats_per_sec  = " << rate_vec[0] << endl;
 	}
 	// check all the threads for a CppAD memory leak
 	if( CppAD::memory_leak() )

@@ -29,20 +29,20 @@ $head Purpose$$
 Runs a timing test of Example A.1.1.1c of the OpenMP 2.5 standard document.
 
 $head n_thread$$
-If the argument $italic n_thread$$ is equal to $code automatic$$, 
+If the argument $italic n_thread$$ is equal to zero, 
 dynamic thread adjustment is used.
 Otherwise, $italic n_thread$$ must be a positive number
 specifying the number of OpenMP threads to use.
 
 $head repeat$$
-If the argument $italic repeat$$ is equal to $code automatic$$,
+If the argument $italic repeat$$ is equal to zero,
 the number of times to repeat the calculation of the number of zeros
 in total interval is automatically determined.
 In this case, the rate of execution of the total solution is reported.
 $pre
 
 $$
-If the argument $italic repeat$$ is not equal to $italic automatic$$,
+If the argument $italic repeat$$ is not equal to zero,
 it must be a positive integer.
 In this case $italic repeat$$ determination of the number of times 
 the calculation of the zeros in the total interval is repeated.
@@ -139,31 +139,12 @@ int main(int argc, char *argv[])
 	}
 	argv++;
 	// n_thread command line argument
-	int n_thread;
-	if( std::strcmp(*argv, "automatic") == 0 )
-		n_thread = 0;
-	else
-	{	n_thread = std::atoi(*argv);
-		if( n_thread == 0 )
-		{	cerr << "example_a11c: n_thread is equal to zero" << endl;
-			cerr << "perhaps you want n_thread equal to automatic" << endl;
-			exit(1);
-		}
-	}
+	assert( std::atoi(*argv) >= 0 );
+	size_t n_thread = std::atoi(*argv);
 	argv++;
 	// repeat 
-	size_t repeat;
-	if( std::strcmp(*argv, "automatic") == 0 )
-		repeat = 0;
-	else
-	{	assert( std::atoi(*argv) > 0 );
-		repeat = std::atoi(*argv);
-		if( repeat == 0 )
-		{	cerr << "example_a11c: repeat is equal to zero" << endl;
-			cerr << "perhaps you want repeat equal to automatic" << endl;
-			exit(1);
-		}
-	}
+	assert( std::atoi(*argv) >= 0 );
+	size_t repeat = std::atoi(*argv);
 	argv++;
 	// size 
 	assert( std::atoi(*argv) > 1 );
@@ -182,7 +163,7 @@ int main(int argc, char *argv[])
 	assert( n_thread > 0 );
 	
 	// inform the user of the maximum number of threads
-	cout << "_OPENMP  = '" << #_OPENMP << "'" << endl;
+	cout << "_OPENMP  = '" << _OPENMP << "'" << endl;
 # else
 	cout << "_OPENMP  = ''" << endl;
 	n_thread = 1;

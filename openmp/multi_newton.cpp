@@ -34,20 +34,20 @@ CppAD is used to calculate the derivatives required by Newton's method.
 OpenMP is used to parallelize the calculation on the different sub-intervals.
 
 $head n_thread$$
-If the argument $icode n_thread$$ is equal to $code automatic$$, 
+If the argument $icode n_thread$$ is equal to zero, 
 dynamic thread adjustment is used.
 Otherwise, $icode n_thread$$ must be a positive number
 specifying the number of OpenMP threads to use.
 
 $head repeat$$
-If the argument $icode repeat$$ is equal to $code automatic$$,
+If the argument $icode repeat$$ is equal to zero,
 the number of times to repeat the calculation of the number of zeros
 in total interval is automatically determined.
 In this case, the rate of execution of the total solution is reported.
 $pre
 
 $$
-If the argument $icode repeat$$ is not equal to $italic automatic$$,
+If the argument $icode repeat$$ is not equal to zero,
 it must be a positive integer.
 In this case $icode repeat$$ determination of the number of times 
 the calculation of the zeros in the total interval is repeated.
@@ -200,16 +200,9 @@ namespace { // empty namespace
 
 	size_t arg2size_t(
 		const char* arg       , 
-		bool automatic_ok     ,
 		int limit             , 
 		const char* error_msg )
-	{	if( std::strcmp(arg, "automatic") == 0 )
-		{	if( automatic_ok )
-				return 0;
-			std::cerr << error_msg << std::endl;
-			exit(1);
-		}
-		int i = std::atoi(arg);
+	{	int i = std::atoi(arg);
 		if( i >= limit )
 			return size_t(i);
 		std::cerr << error_msg << std::endl;
@@ -233,33 +226,28 @@ int main(int argc, char *argv[])
 	argv++;
 
 	// n_thread command line argument
-	size_t n_thread = arg2size_t( *argv++, true, 1, 
-		"multi_newton: n_thread is less than or equal zero\n"
-		"perhaps you want n_thread equal automatic"
+	size_t n_thread = arg2size_t( *argv++, 0, 
+		"multi_newton: n_thread is less than zero"
 	);
 
 	// repeat command line argument
-	size_t repeat = arg2size_t( *argv++, true, 1,
-		"multi_newton: repeat is less than or equal zero\n"
-		"perhaps you want repeat equal to automatic"
+	size_t repeat = arg2size_t( *argv++, 0,
+		"multi_newton: repeat is less than zero"
 	);
 
 	// n_zero command line argument 
-	n_zero = arg2size_t( *argv++, false, 2,
-		"multi_newton: n_zero is less than or equal one\n"
-		"or it is equal to automatic"
+	n_zero = arg2size_t( *argv++, 2,
+		"multi_newton: n_zero is less than two"
 	);
 
 	// n_grid command line argument
-	size_t n_grid = arg2size_t( *argv++, false, 1,
-		"multi_newton: n_grid is less than or equal zero\n"
-		"or it is equal to automatic"
+	size_t n_grid = arg2size_t( *argv++, 1,
+		"multi_newton: n_grid is less than one"
 	);
        
 	// n_sum command line argument 
-	n_sum = arg2size_t( *argv++, false, 1,
-		"multi_netwon: n_sum is less than or equal zero\n"
-		"or it si equal to automatic"
+	n_sum = arg2size_t( *argv++, 1,
+		"multi_netwon: n_sum is less than one"
 	);
 
 	// use_ad
@@ -286,7 +274,7 @@ int main(int argc, char *argv[])
 	CppAD::AD<double>::omp_max_thread(n_thread);
 
 	// inform the user of the maximum number of threads
-	cout << "_OPENMP  = '" << #_OPENMP << "'" << endl;;
+	cout << "_OPENMP  = '" << _OPENMP << "'" << endl;;
 # else
 	cout << "_OPENMP  = ''" << endl;;
 	n_thread = 1;
