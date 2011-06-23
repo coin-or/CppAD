@@ -50,9 +50,7 @@ $childtable%
 	cppad/local/fun_eval.hpp%
 	cppad/local/drivers.hpp%
 	cppad/local/fun_check.hpp%
-	cppad/local/omp_max_thread.hpp%
-	cppad/local/optimize.hpp%
-	omh/fun_deprecated.omh
+	cppad/local/optimize.hpp
 %$$
 
 $end

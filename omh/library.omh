@@ -53,9 +53,7 @@ $children%
 	cppad/std_math_unary.hpp%
 	cppad/vector.hpp%
 	omh/omp_alloc.omh%
-	cppad/memory_leak.hpp%
-
-	cppad/track_new_del.hpp
+	cppad/memory_leak.hpp
 %$$
 
 $head Error Handler$$
@@ -122,9 +120,5 @@ $rref CppAD_vector$$
 $rref omp_alloc$$
 $rref memory_leak$$
 $tend
-
-$head Deprecated Library routines$$
-The memory management routine $cref/TrackNewDel/$$ has been deprecated,
-use $cref/omp_alloc/$$ instead.
 
 $end

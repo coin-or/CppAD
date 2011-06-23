@@ -183,8 +183,8 @@ public:
 	// abort current AD<Base> recording
 	static void        abort_recording(void);   
 
-	// set the maximum number of OpenMP threads that will be active
-	static size_t      omp_max_thread(size_t number);
+	// set the maximum number of OpenMP threads (deprecated)
+	static void        omp_max_thread(size_t number);
 
 	// These functions declared public so can be accessed by user through
 	// a macro interface and are not intended for direct use.

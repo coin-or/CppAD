@@ -82,7 +82,10 @@ public:
 	omp_alloc_capacity(void)
 	{
 # ifdef _OPENMP
-		CPPAD_ASSERT_UNKNOWN( ! omp_in_parallel() );
+		CPPAD_ASSERT_KNOWN( 
+		! omp_in_parallel() ,
+		"omp_alloc: parallel mode and max_num_threads has not been called."
+		);
 # endif
 		number           = 0;
 		size_t capacity  = CPPAD_MIN_DOUBLE_CAPACITY * sizeof(double);
@@ -245,6 +248,139 @@ private:
 // ============================================================================
 public:
 /* -----------------------------------------------------------------------
+$begin in_parallel$$
+
+$section Is The Current Execution in OpenMP Parallel Mode$$
+$spell
+	omp_alloc
+	bool
+$$
+
+$index in_parallel, omp_alloc$$
+$index omp_alloc, in_parallel$$
+$index parallel, execution$$
+$index execution, parallel$$
+$index sequential, execution$$
+
+$head Syntax$$
+$icode%flag% = omp_alloc::in_parallel()%$$
+
+$head Purpose$$
+Some of the $cref/omp_alloc/$$ allocation routines have different
+specifications for parallel (not sequential) execution mode.
+This routine enables you to determine if the current execution mode
+is sequential or parallel.
+
+$head flag$$
+The return value has prototype
+$codei%
+	bool %flag%
+%$$
+It is true if the current execution is in parallel mode 
+(possibly multi-threaded) and false otherwise (sequential mode).
+
+$head Example$$
+$cref/omp_alloc.cpp/$$
+
+$end
+*/
+	/// Are we in a parallel execution state; i.e., is it possible that
+	/// other threads are currently executing.
+	static bool in_parallel(void)
+	{
+# ifdef _OPENMP
+		return static_cast<bool>( omp_in_parallel() );
+# else
+		return false;
+# endif
+	}
+
+/* -----------------------------------------------------------------------
+$begin max_num_threads$$
+$spell
+	inv
+	CppAD
+	num
+	omp_alloc
+$$
+$section Set Maximum Number of Threads for CppAD OpenMP Memory Allocator$$
+
+$index max_num_threads, omp_alloc$$
+$index omp_alloc, max_num_threads$$
+
+$index OpenMP, initialize memory$$
+$index memory, initialize OpenMP$$
+$index initialize, OpenMP memory$$
+
+$head Syntax$$
+$codei%omp_alloc::max_num_threads(%number%)%$$
+
+$head Purpose$$
+By default there is only one thread and all execution is in sequential mode
+(not $cref/parallel/in_parallel/$$).
+
+$head number$$
+The argument $icode number$$ has prototype
+$icode%
+	size_t %number%
+%$$ 
+It must be greater than zero and specifies the maximum number of 
+OpenMP threads that will be active at one time.
+
+$head Restrictions$$
+This function must be called before the program enters 
+$cref/parallel/in_parallel/$$ execution mode.
+
+$head Example$$
+The routine
+$cref/sum_i_inv.cpp/$$
+is an example, speed test, and correctness test,
+that uses $code omp_alloc$$.
+If the preprocessor symbol $code _OPENMP$$ is defined,
+it uses parallel execution mode.
+As per the specifications above,
+$code sum_i_inv.cpp$$ calls $code omp_alloc::max_num_threads$$
+before doing using parallel mode.
+
+$end
+*/
+	/// Inform omp_alloc of the maximum number of OpenMP threads.
+	///
+	/// \param new_number [in]
+	/// If \c number is zero, we are only retreiving the current maximum
+	/// number of threads. Otherwise, we are setting and retreiving
+	/// maximum number of OpenMP threads.
+	///
+	/// \return
+	/// the previous value for the maximum number of threads
+	/// (directly before this call to max_num_threads).
+	static size_t max_num_threads(size_t new_number)
+	{	static size_t number = 1;
+
+		/// not part of the user max_num_threads API
+		if( new_number == 0 )
+			return number;
+
+		/// user version of max_num_threads
+		CPPAD_ASSERT_KNOWN( 
+			new_number <= CPPAD_MAX_NUM_THREADS ,
+			"max_num_threads: number is too large"
+		);
+		CPPAD_ASSERT_KNOWN( 
+			! in_parallel() ,
+			"max_num_threads: must be called before parallel execution."
+		);
+		// Make sure that constructor for static variables in 
+		// capacity_info routine is called in sequential mode.	
+		capacity_info();
+
+		// return value for this call
+		size_t old_number = number;
+		number            = new_number;
+		return old_number;
+	}
+
+/* -----------------------------------------------------------------------
 $begin get_thread_num$$
 $spell
 	CppAD
@@ -292,54 +428,6 @@ $end
 		return thread;
 # else
 		return 0;
-# endif
-	}
-
-/* -----------------------------------------------------------------------
-$begin in_parallel$$
-
-$section Is The Current Execution in OpenMP Parallel Mode$$
-$spell
-	omp_alloc
-	bool
-$$
-
-$index in_parallel, omp_alloc$$
-$index omp_alloc, in_parallel$$
-$index parallel, execution$$
-$index execution, parallel$$
-$index sequential, execution$$
-
-$head Syntax$$
-$icode%flag% = omp_alloc::in_parallel()%$$
-
-$head Purpose$$
-Some of the $cref/omp_alloc/$$ allocation routines have different
-specifications for parallel (not sequential) execution mode.
-This routine enables you to determine if the current execution mode
-is sequential or parallel.
-
-$head flag$$
-The return value has prototype
-$codei%
-	bool %flag%
-%$$
-It is true if the current execution is in parallel mode 
-(possibly multi-threaded) and false otherwise (sequential mode).
-
-$head Example$$
-$cref/omp_alloc.cpp/$$
-
-$end
-*/
-	/// Are we in a parallel execution state; i.e., is it possible that
-	/// other threads are currently executing.
-	static bool in_parallel(void)
-	{
-# ifdef _OPENMP
-		return static_cast<bool>( omp_in_parallel() );
-# else
-		return false;
 # endif
 	}
 /* -----------------------------------------------------------------------

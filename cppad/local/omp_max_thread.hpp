@@ -3,7 +3,7 @@
 # define CPPAD_OMP_MAX_THREAD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -22,11 +22,11 @@ $$
 
 $section OpenMP Maximum Thread Number$$
 
-$index omp_max_thread$$
-$index thread, multiple$$
-$index multiple, thread$$
-$index OpenMP, CppAD$$
-$index CppAD, OpenMP$$
+$head Deprecated$$
+$index depreciated, omp_max_thread$$
+$index omp_max_thread, depreciated$$
+This routine has been deprecated.
+You should instead use the $cref/max_num_threads/$$ function.
 
 $head Syntax$$
 $syntax%AD<%Base%>::omp_max_thread(%number%)
@@ -81,24 +81,21 @@ $end
 namespace CppAD {
 
 template <class Base>
-size_t AD<Base>::omp_max_thread(size_t number)
-{	static size_t max_thread = 1;
+void AD<Base>::omp_max_thread(size_t number)
+{
+	CPPAD_ASSERT_KNOWN( 
+		number > 0 ,
+		"omp_max_thread: argument is zero.\n"
+		"This routine has been deprecated, use omp_alloc::max_num_threads."
+	);
+	
+	CPPAD_ASSERT_KNOWN(
+		number <= CPPAD_MAX_NUM_THREADS,
+		"omp_max_thread argument is too large.\n"
+		"This routine has been deprecated, use omp_alloc::max_num_threads."
+	);
 
-	// number equal zero case is not part of user interface
-	if( number > 0 )
-	{
-# ifndef NDEBUG
-		CPPAD_ASSERT_KNOWN(
-			number <= CPPAD_MAX_NUM_THREADS,
-			"omp_max_thread argument is too large."
-		);
-# endif
-
-		max_thread = number;
-	}
-
-	// the return value is not part of the user interface
-	return max_thread;
+	omp_alloc::max_num_threads(number);
 }
 
 } // END CppAD namespace

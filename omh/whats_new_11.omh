@@ -54,6 +54,24 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 06-23$$
+$list number$$
+Fix a bug whereby the assert
+$codei%
+	Error detected by false result for
+		! omp_in_parallel()
+	at line %n% in the file
+	%prefix%/include/cppad/omp_alloc.hpp
+%$$
+sometimes occurred.
+$lnext
+The routine $cref/omp_max_thread/$$ was deprecated, 
+use the routine $cref/max_num_threads/$$ instead.
+$lnext
+The deprecated routines have been grouped together in the
+$cref/deprecated/$$ section of the CppAD manual.
+$lend
+
 $head 06-21$$
 The $code openmp_run.sh$$ routine was changed to use zero,
 instead of $code automatic$$, for automatic choice of

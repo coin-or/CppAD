@@ -269,9 +269,8 @@ int main(int argc, char *argv[])
 	n_thread = size_t( omp_get_max_threads() );
 	assert( n_thread > 0 );
 
-	// No tapes are currently active,
-	// so we can inform CppAD of the maximum number of threads
-	CppAD::AD<double>::omp_max_thread(n_thread);
+	// Inform the CppAD OpenMP memory allocator about number of threads
+	CppAD::omp_alloc::max_num_threads(n_thread);
 
 	// inform the user of the maximum number of threads
 	cout << "_OPENMP  = '" << _OPENMP << "'" << endl;;
