@@ -81,14 +81,27 @@ then
 		-e '/[/]test_one.cpp/d' \
 		-e '/[/]test_one.sh/d' \
 		-e '/^[?].*\.am$/p'  \
-		-e '/^[?].*\.in$/p'  \
 		-e '/^[?].*\.cpp$/p'  \
 		-e '/^[?].*\.hpp$/p'  \
-		-e '/^[?].*\.sh$/p'`
-	if [ "$unknown" != "" ]
+		-e '/^[?].*\.in$/p'  \
+		-e '/^[?].*\.omh$/p'  \
+		-e '/^[?].*\.sh$/p'   | sed -e 's/^[?]//'`
+	msg="aborting because the following files are unknown to svn"
+	print_msg="no"
+	for file in $unknown
+	do
+		if [ ! -e "$file.in" ]
+		then
+			if [ "$print_msg" == "no" ]
+			then
+				echo "bin/commit.sh: $msg"
+				print_msg="yes"
+			fi
+			echo $file
+		fi
+	done
+	if [ "$print_msg" == "yes" ]
 	then
-		echo "bin/commit.sh: abort because following are unknown to svn"
-		echo $unknown
 		rm bin/commit.1.$$
 		exit 1
 	fi
@@ -126,7 +139,15 @@ then
 					exit 1
 				fi
 				abort="yes"
-				mv bin/commit.2.$$ $file
+				if [ -x $file ]
+				then
+					mv bin/commit.2.$$ $file
+					chmod +x $file
+				else
+					mv bin/commit.2.$$ $file
+				fi
+			else
+				rm bin/commit.2.$$
 			fi
 		fi
 	done
