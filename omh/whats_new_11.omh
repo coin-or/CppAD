@@ -73,13 +73,24 @@ $cref/deprecated/$$ section of the CppAD manual.
 $lend
 
 $head 06-21$$
-The $code openmp_run.sh$$ routine was changed to use zero,
+$list number$$
+The $code openmp/run.sh$$ routine was changed to use zero,
 instead of $code automatic$$, for automatic choice of
 $cref/number of repeats/openmp_run.sh/Parameters/Number of Repeats/$$,
 and 
 $cref/number of threads/openmp_run.sh/Parameters/Number of Threads/$$.
-In addition, the output of each of the OpenMP examples
+
+$lnext
+The output of each of the OpenMP examples / speed tests
+(run by $code openmp/run.sh$$) 
 was changed to be valid matlab / octave assignment statements.
+
+$lnext
+In the case where OpenMP is enabled during compilation,
+a summary for the different number of threads as added at the end of
+the $code openmp/run.sh$$ output.
+
+$lend
 
 $head 06-18$$
 $list number$$
