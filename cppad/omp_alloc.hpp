@@ -118,20 +118,23 @@ private:
 	{ }
 	// ---------------------------------------------------------------------
 	static const omp_alloc_capacity* capacity_info(void)
-	{	static omp_alloc_capacity capacity;
+	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+		static omp_alloc_capacity capacity;
 		return &capacity;
 	}
 	// ---------------------------------------------------------------------
 	/// number of bytes of memory that are currently in use for each thread
 	static size_t* inuse_vector(void)
-	{	static size_t inuse[CPPAD_MAX_NUM_THREADS];
+	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+		static size_t inuse[CPPAD_MAX_NUM_THREADS];
 		return inuse;
 	}
 	// ---------------------------------------------------------------------
 	/// number of bytes that are currrently available for each thread; i.e.,
 	/// have been obtained for each thread and not yet returned to the system.
 	static size_t* available_vector(void)
-	{	static size_t available[CPPAD_MAX_NUM_THREADS];
+	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+		static size_t available[CPPAD_MAX_NUM_THREADS];
 		return available;
 	}
 
@@ -231,8 +234,9 @@ private:
 	/// Vector of length CPPAD_MAX_NUM_THREADS times CPPAD_MAX_NUM_CAPACITIES 
 	/// for use as root nodes of inuse lists.
 	static omp_alloc* root_inuse(void)
-	{	static omp_alloc  
-		root[CPPAD_MAX_NUM_THREADS * CPPAD_MAX_NUM_CAPACITY];
+	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+		static omp_alloc  
+			root[CPPAD_MAX_NUM_THREADS * CPPAD_MAX_NUM_CAPACITY];
 		return root;
 	}
 
@@ -240,8 +244,9 @@ private:
 	/// Vector of length CPPAD_MAX_NUM_THREADS times CPPAD_MAX_NUM_CAPACITIES 
 	/// for use as root nodes of available lists.
 	static omp_alloc* root_available(void)
-	{	static omp_alloc  
-		root[CPPAD_MAX_NUM_THREADS * CPPAD_MAX_NUM_CAPACITY];
+	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+		static omp_alloc  
+			root[CPPAD_MAX_NUM_THREADS * CPPAD_MAX_NUM_CAPACITY];
 		return root;
 	}
 
@@ -355,24 +360,35 @@ $end
 	/// the previous value for the maximum number of threads
 	/// (directly before this call to max_num_threads).
 	static size_t max_num_threads(size_t new_number)
-	{	static size_t number = 1;
-
-		/// not part of the user max_num_threads API
-		if( new_number == 0 )
-			return number;
-
-		/// user version of max_num_threads
+	{
 		CPPAD_ASSERT_KNOWN( 
 			new_number <= CPPAD_MAX_NUM_THREADS ,
 			"max_num_threads: number is too large"
 		);
 		CPPAD_ASSERT_KNOWN( 
-			! in_parallel() ,
+			// new_number == 0 is not part of user API for max_num_threads
+			! in_parallel() || (new_number == 0),
 			"max_num_threads: must be called before parallel execution."
 		);
-		// Make sure that constructor for static variables in 
-		// capacity_info routine is called in sequential mode.	
+		static size_t number = 1;
+		/// not part of user API for max_num_threads 
+		if( new_number == 0 )
+			return number;
+		/// rest is user API for max_num_threads
+
+		// Make sure that constructors for all static variables in this file 
+		// are called in sequential mode.	
 		capacity_info();
+		inuse_vector();
+		available_vector();
+		root_inuse();
+		root_available();
+		size_t cap_bytes;
+		void* v_ptr = get_memory(0, cap_bytes);
+
+		// free memory allocated by call to get_memory above
+		return_memory(v_ptr);
+		free_available( get_thread_num() );
 
 		// return value for this call
 		size_t old_number = number;
@@ -513,7 +529,10 @@ $end
 	pointer to the beginning of the memory allocted for use.
  	*/
 	static void* get_memory(size_t min_bytes, size_t& cap_bytes)
-	{	size_t num_cap = capacity_info()->number;
+	{	// see first_trace below	
+		CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+
+		size_t num_cap = capacity_info()->number;
 		using std::cout;
 		using std::endl;
 

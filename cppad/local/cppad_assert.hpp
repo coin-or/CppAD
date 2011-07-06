@@ -3,7 +3,7 @@
 # define CPPAD_ASSERT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -35,9 +35,9 @@ $index macro, error assert$$
 $section CppAD Assertions During Execution$$
 
 $head Syntax$$
-$syntax%CPPAD_ASSERT_KNOWN(%exp%, %msg%)
+$codei%CPPAD_ASSERT_KNOWN(%exp%, %msg%)
 %$$
-$syntax%CPPAD_ASSERT_UNKNOWN(%exp%)%$$
+$codei%CPPAD_ASSERT_UNKNOWN(%exp%)%$$
 
 
 $head Purpose$$
@@ -67,20 +67,20 @@ occurred; for example, the user may have written past the end
 of an allocated array.
 
 $head Exp$$
-The argument $italic exp$$ is a C++ source code expression
+The argument $icode exp$$ is a C++ source code expression
 that results in a $code bool$$ value that should be true.
 If it is false, an error has occurred.
 This expression may be execute any number of times 
 (including zero times) so it must have not side effects.
 
 $head Msg$$
-The argument $italic msg$$ has prototype
-$syntax%
+The argument $icode msg$$ has prototype
+$codei%
 	const char *%msg%
 %$$
 and contains a $code '\0'$$ terminated character string.
 This string is a description of the error 
-corresponding to $italic exp$$ being false.
+corresponding to $icode exp$$ being false.
 
 $head Error Handler$$
 These macros use the 
@@ -160,6 +160,31 @@ execution is terminated and the source code line number is reported.
 # define CPPAD_ASSERT_NARG_NRES(op, n_arg, n_res)   \
 	CPPAD_ASSERT_UNKNOWN( NumArg(op) == n_arg ) \
 	CPPAD_ASSERT_UNKNOWN( NumRes(op) == n_res ) 
-	
+
+/*!
+\def CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+Check that the first call to a routine is not during OpenMP parallel execution
+mode. 
+
+If \c NDEBUG is defined, this macro has no effect
+(not even the definition of (\c assert_first_call).
+Otherwise, the variable 
+\code
+	static bool assert_first_call
+\endcode
+is defined and if the first call is executed in OpenMP parallel mode,
+execution is terminated and the source code line number is reported.
+*/
+# ifdef NDEBUG
+# define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# else
+# define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL                 \
+	static bool assert_first_call = true;                    \
+	CPPAD_ASSERT_KNOWN(                                      \
+		! (omp_alloc::in_parallel() && assert_first_call ), \
+		"First call to this routine is in parallel mode."   \
+	);                                                       \
+	assert_first_call = false;
+# endif
 
 # endif
