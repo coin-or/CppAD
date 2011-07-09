@@ -265,6 +265,13 @@ The dimension of the range space for $latex y = f (x)$$
 is specified by $cref/m/user_atomic/m/$$ $codei%= %ay%.size()%$$,
 which must be greater than zero.
 
+$subhead OpenMP$$
+The first call to 
+$codei%
+	%afun%(%id%, %ax%, %ay%)
+%$$
+must not be in $cref/in_parallel/$$ execution mode.
+
 $head forward$$
 The macro argument $icode forward$$ is a
 user defined function
@@ -657,6 +664,7 @@ $end
 ------------------------------------------------------------------------------
 */
 # include <set>
+# include <cppad/local/cppad_assert.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -722,7 +730,8 @@ inline void afun (                                                    \
      const Tvector< CppAD::AD<Base> >&    ax ,                        \
      Tvector< CppAD::AD<Base> >&          ay                          \
 )                                                                     \
-{    static CppAD::user_atomic<Base> fun(                             \
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;                            \
+	static CppAD::user_atomic<Base> fun(                             \
           #afun          ,                                            \
           forward        ,                                            \
           reverse        ,                                            \
@@ -818,7 +827,8 @@ private:
 
 	/// List of all objects in this class.
 	static std::vector<user_atomic *>& List(void)
-	{	static std::vector<user_atomic *> list;
+	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+		static std::vector<user_atomic *> list;
 		return list;
 	}
 public:

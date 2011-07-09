@@ -42,7 +42,6 @@ The $code ADFun$$ object can then be used to calculate function values,
 derivative values, and other values related to the corresponding function.
 
 $childtable%
-	cppad/local/parallel_ad.hpp%
 	cppad/local/independent.hpp%
 	cppad/local/fun_construct.hpp%
 	cppad/local/dependent.hpp%

@@ -1,8 +1,6 @@
 /* $Id$ */
-/* This file may be inclued multiple times so comment out ifndef and define
 # ifndef CPPAD_CONFIGURE_INCLUDED
 # define CPPAD_CONFIGURE_INCLUDED
-*/
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
@@ -44,7 +42,7 @@ Replacement for config.h so that all preprocessor symbols begin with CPPAD_
 \def CPPAD_PACKAGE_STRING
 cppad-yyyymmdd as a C string where yyyy is year, mm is month, and dd is day.
 */
-# define CPPAD_PACKAGE_STRING "cppad-20110619"
+# define CPPAD_PACKAGE_STRING "cppad-20110709"
 
 /*!
 \def CPPAD_BOOSTVECTOR
@@ -101,3 +99,5 @@ in pod_vector.hpp.
 This type is later defined as \c addr_t in the CppAD namespace.
 */
 # define CPPAD_TAPE_ADDR_TYPE unsigned int
+
+# endif
