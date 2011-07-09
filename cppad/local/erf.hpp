@@ -3,7 +3,7 @@
 # define CPPAD_ERF_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -81,13 +81,15 @@ It returns true if it succeeds and false otherwise.
 $end
 -------------------------------------------------------------------------------
 */
+# include <cppad/local/cppad_assert.hpp>
 
 // BEGIN CppAD namespace
 namespace CppAD {   
 
 template <class Type>
 Type erf_template(const Type &x)
-{	using CppAD::exp;
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+	using CppAD::exp;
 	static Type a = static_cast<Type>(993./880.);
 	static Type b = static_cast<Type>(89./880.); 
 

@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_complex.hpp$$
 $spell
+	omp_alloc
 	imag
 	gcc
 	isnan
@@ -67,6 +68,8 @@ $codep */
 # include <complex>
 # include <cppad/declare.hpp>
 # include <cppad/error_handler.hpp>
+# include <cppad/omp_alloc.hpp>
+# include <cppad/local/cppad_assert.hpp>
 /* $$
 
 $head isnan$$
@@ -82,7 +85,8 @@ this function in the CppAD namespace.
 $codep */
 namespace CppAD {
 	inline bool isnan(const std::complex<double>& z)
-	{	static double nan = std::numeric_limits<double>::quiet_NaN();
+	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;	
+		static double nan = std::numeric_limits<double>::quiet_NaN();
 		return (z != z) | (z.real() == nan) | (z.imag() == nan);
 	}
 }

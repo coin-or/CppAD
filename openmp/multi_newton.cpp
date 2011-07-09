@@ -272,6 +272,9 @@ int main(int argc, char *argv[])
 	// Inform the CppAD OpenMP memory allocator about number of threads
 	CppAD::omp_alloc::max_num_threads(n_thread);
 
+	// enable use of AD<double> in parallel mode
+	CppAD::parallel_ad<double>();
+
 	// inform the user of the maximum number of threads
 	cout << "_OPENMP  = '" << _OPENMP << "'" << endl;;
 # else

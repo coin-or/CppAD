@@ -93,7 +93,7 @@ inline void forward_csum_op(
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	Base*         taylor      )
-{	static Base zero(0);
+{	Base zero(0);
 
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumRes(CSumOp) == 1 );

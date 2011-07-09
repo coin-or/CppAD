@@ -17,6 +17,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <iomanip>
 
 # include <cppad/local/define.hpp>
+# include <cppad/local/cppad_assert.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*! 
@@ -166,7 +167,7 @@ Operator for which we are fetching the number of arugments.
 - Check that \c op is a valid operator value.
 */
 inline size_t NumArg( OpCode op)
-{
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 # ifndef NDEBUG
 	// only do these checks once to save time
 	static bool first = true;
@@ -393,6 +394,10 @@ void printOp(
 	const  Value          *rz     )
 {	size_t i;
 	
+	CPPAD_ASSERT_KNOWN(
+		! omp_alloc::in_parallel() ,
+		"cannot print trace of AD operations in parallel mode"
+	);
 	static const char *CompareOpName[] = 
 		{ "Lt", "Le", "Eq", "Ge", "Gt", "Ne" };
 	static const char *OpName[] = {

@@ -28,29 +28,20 @@ File used to define pod_vector class
 A list of which Types pod_vector<Type> consideres to be plain old data
 */
 /// default value is false
-template <class Type> struct is_pod { static const bool value = false; };
+template <class Type> inline bool is_pod(void)           { return false; }   
 /// system pod types so far:
-template <> struct is_pod<bool>                        // bool
-	{ static const bool value = true; };
-template <> struct is_pod<char>                        // char
-	{ static const bool value = true; };
-template <> struct is_pod<float>                       // float
-	{ static const bool value = true; };
-template <> struct is_pod<double>                      // double
-	{ static const bool value = true; };
-template <> struct is_pod<unsigned char>               // unsigned char
-	{ static const bool value = true; };
-template <> struct is_pod<unsigned short int>          // unsigned short int
-	{ static const bool value = true; };
-template <> struct is_pod<unsigned int>                // unsigned int      
-	{ static const bool value = true; };
+template <> inline bool is_pod<bool>(void)               { return true; }
+template <> inline bool is_pod<char>(void)               { return true; }
+template <> inline bool is_pod<float>(void)              { return true; }
+template <> inline bool is_pod<double>(void)             { return true; }
+template <> inline bool is_pod<unsigned char>(void)      { return true; }
+template <> inline bool is_pod<unsigned short int>(void) { return true; }
+template <> inline bool is_pod<unsigned int>(void)       { return true; }
 # if ! CPPAD_SIZE_T_SAME_UNSIGNED_INT
-template <> struct is_pod<size_t>                      // size_t
-	{ static const bool value = true; };
+template <> inline bool is_pod<size_t>(void)             { return true; }
 # endif
 /// CppAD pod types so far: 
-template <> struct is_pod<OpCode>
-	{ static const bool value = true; };
+template <> inline bool is_pod<OpCode>(void)             { return true; }
 
 // ---------------------------------------------------------------------------
 /*!
@@ -89,7 +80,7 @@ public:
 	~pod_vector(void)
 	{	if( capacity_ > 0 )
 		{	void* v_ptr = reinterpret_cast<void*>( data_ );
-			if( ! is_pod<Type>::value )
+			if( ! is_pod<Type>() )
 			{	// call destructor for each element
 				size_t i;
 				for(i = 0; i < capacity_; i++)
@@ -159,7 +150,7 @@ public:
 		CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
 
 		size_t i;
-		if( ! is_pod<Type>::value )
+		if( ! is_pod<Type>() )
 		{	// call constructor for each new element
 			for(i = 0; i < capacity_; i++)
 				new(data_ + i) Type();
@@ -172,7 +163,7 @@ public:
 		// return old memory to available pool
 		if( old_capacity > 0 )
 		{	v_ptr = reinterpret_cast<void*>( old_data );
-			if( ! is_pod<Type>::value )
+			if( ! is_pod<Type>() )
 			{	for(i = 0; i < old_capacity; i++)
 					(data_ + i)->~Type();
 			} 
@@ -233,7 +224,7 @@ public:
 		{	// free old memory and get new memory of sufficient length
 			if( capacity_ > 0 )
 			{	void* v_ptr = reinterpret_cast<void*>( data_ );
-				if( ! is_pod<Type>::value )
+				if( ! is_pod<Type>() )
 				{	// call destructor for each element
 					for(i = 0; i < capacity_; i++)
 						(data_ + i)->~Type();

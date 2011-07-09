@@ -3,7 +3,7 @@
 # define CPPAD_ABS_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -40,7 +40,7 @@ inline void forward_abs_op(
 	Base*  taylor      )
 {
 	size_t k;
-	static Base zero(0);
+	Base zero(0.);
 
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AbsOp) == 1 );
@@ -117,8 +117,7 @@ inline void reverse_abs_op(
 	size_t      nc_partial   ,
 	Base*       partial      )
 {	size_t j, k;	
-	static Base zero(0);
-
+	Base zero(0.);
 
 	// check assumptions
 	CPPAD_ASSERT_UNKNOWN( NumArg(AbsOp) == 1 );

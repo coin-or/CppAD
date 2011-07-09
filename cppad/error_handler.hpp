@@ -2,7 +2,7 @@
 # ifndef CPPAD_ERROR_HANDLER_INCLUDED
 # define CPPAD_ERROR_HANDLER_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -128,12 +128,20 @@ $end
 # endif
 
 # include <cppad/configure.hpp>
+# include <cppad/local/cppad_assert.hpp>
 # include <cassert>
 # include <cstdlib>
+
+# ifdef _OPENMP
+# include <omp.h>
+# endif
+
 
 namespace CppAD { // BEGIN CppAD namespace
 
 class ErrorHandler {
+	template <class Base>
+	friend void parallel_ad(void);
 public:
 	typedef void (*Handler) 
 		(bool, int, const char *, const char *, const char *);
@@ -205,7 +213,16 @@ private:
 
 	// current error handler
 	static Handler &Current(void)
-	{	static Handler current = Default;
+	{	// cannot use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL because it uses
+		// the error handler.
+# ifndef NDEBUG
+# ifdef _OPENMP
+		static bool first_call = true;
+		assert( ! ( omp_in_parallel() && first_call ) );
+		first_call = false; 
+# endif
+# endif
+		static Handler current = Default;
 		return current;
 	}
 };

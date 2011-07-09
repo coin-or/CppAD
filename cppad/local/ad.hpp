@@ -27,6 +27,9 @@ CPPAD_BEGIN_NAMESPACE
 
 template <class Base>
 class AD {
+	// enable use of AD<Base> in parallel mode
+	template <class Type>
+	friend void parallel_ad(void);
 
 	// template friend functions where template parameter is not bound
 	template <class VectorAD>

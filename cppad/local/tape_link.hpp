@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <cppad/local/define.hpp>
 # include <cppad/omp_alloc.hpp>
+# include <cppad/local/cppad_assert.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -60,7 +61,8 @@ The value of <tt>*r</tt> must increase each time it is changed.
 */
 template <class Base>
 inline size_t * AD<Base>::id_handle(size_t thread)
-{	// Section 3.6.2 of the 1998 C++ standard specifies that storage for
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+	// Section 3.6.2 of the 1998 C++ standard specifies that storage for
 	// static objects will be zero initalized.
 	static size_t id_table[CPPAD_MAX_NUM_THREADS];
 
@@ -95,7 +97,8 @@ recording AD<Base> operations for the specified thread.
 */
 template <class Base>
 inline ADTape<Base> ** AD<Base>::tape_handle(size_t thread)
-{	static ADTape<Base> *tape_table[CPPAD_MAX_NUM_THREADS];
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+	static ADTape<Base> *tape_table[CPPAD_MAX_NUM_THREADS];
 	CPPAD_ASSERT_UNKNOWN( thread < omp_alloc::max_num_threads(0) );
 	return tape_table + thread;
 }

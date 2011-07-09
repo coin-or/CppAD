@@ -148,6 +148,7 @@ $end
 ------------------------------------------------------------------------------
 */
 # include <vector>
+# include <cppad/local/cppad_assert.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -185,7 +186,11 @@ the CPPAD_DISCRETE_FUNCTION macro; see static object in that macro.
 */
 template <class Base>
 class discrete {
-	/// type for the uer routine that computes function values
+	/// parallel_ad needs to call List to initialize static
+	template <class Type>
+	friend void parallel_ad(void);
+
+	/// type for the user routine that computes function values
 	typedef Base (*F) (const Base& x);
 private:
 	/// name of this user defined function
@@ -203,7 +208,8 @@ private:
 	omp_alloc::free_available(thread) is called by the test routines.
 	*/
 	static std::vector<discrete *>& List(void)
-	{	static std::vector<discrete *> list;
+	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+		static std::vector<discrete *> list;
 		return list;
 	}
 public:

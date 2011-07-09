@@ -56,7 +56,7 @@ unsigned short hash_code(const Value& value)
 	);
 	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
 	CPPAD_ASSERT_UNKNOWN( sizeof(value) % 2  == 0 );
-	static unsigned short n   = sizeof(value) / 2;
+	unsigned short n   = sizeof(value) / 2;
 
 	const unsigned short* v;
 	size_t                i;
@@ -134,7 +134,7 @@ unsigned short hash_code(
 	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
 	CPPAD_ASSERT_UNKNOWN( sizeof(addr_t) % 2  == 0 );
 	CPPAD_ASSERT_UNKNOWN( sizeof(Base) % 2  == 0 );
-	static unsigned short op_fac = static_cast<unsigned short> (
+	unsigned short op_fac = static_cast<unsigned short> (
 	CPPAD_HASH_TABLE_SIZE / ( 1 + static_cast<unsigned short>(SubvvOp) ) 
 	);
 	CPPAD_ASSERT_UNKNOWN( op_fac > 0 );

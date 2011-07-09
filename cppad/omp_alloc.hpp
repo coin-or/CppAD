@@ -290,7 +290,7 @@ $cref/omp_alloc.cpp/$$
 $end
 */
 	/// Are we in a parallel execution state; i.e., is it possible that
-	/// other threads are currently executing.
+	/// other threads are currently executing. 
 	static bool in_parallel(void)
 	{
 # ifdef _OPENMP
@@ -312,6 +312,9 @@ $section Set Maximum Number of Threads for CppAD OpenMP Memory Allocator$$
 
 $index max_num_threads, omp_alloc$$
 $index omp_alloc, max_num_threads$$
+$index parallel, max_num_threads$$
+$index threads, number of$$
+
 
 $index OpenMP, initialize memory$$
 $index memory, initialize OpenMP$$
@@ -339,26 +342,28 @@ $cref/parallel/in_parallel/$$ execution mode.
 $head Example$$
 The routine
 $cref/sum_i_inv.cpp/$$
-is an example, speed test, and correctness test,
-that uses $code omp_alloc$$.
+is an example, speed test, and correctness test.
 If the preprocessor symbol $code _OPENMP$$ is defined,
 it uses parallel execution mode.
 As per the specifications above,
 $code sum_i_inv.cpp$$ calls $code omp_alloc::max_num_threads$$
-before doing using parallel mode.
+before using parallel mode.
 
 $end
 */
-	/// Inform omp_alloc of the maximum number of OpenMP threads.
-	///
-	/// \param new_number [in]
-	/// If \c number is zero, we are only retreiving the current maximum
-	/// number of threads. Otherwise, we are setting and retreiving
-	/// maximum number of OpenMP threads.
-	///
-	/// \return
-	/// the previous value for the maximum number of threads
-	/// (directly before this call to max_num_threads).
+	/*!
+	Inform omp_alloc of the maximum number of OpenMP threads and enable 
+	parallel execution mode by initializing all statics in this file.
+
+	\param new_number [in]
+	If \c number is zero, we are only retreiving the current maximum
+	number of threads. Otherwise, we are setting and retreiving
+	maximum number of OpenMP threads.
+
+	\return
+	the previous value for the maximum number of threads
+	(directly before this call to max_num_threads).
+	*/
 	static size_t max_num_threads(size_t new_number)
 	{
 		CPPAD_ASSERT_KNOWN( 

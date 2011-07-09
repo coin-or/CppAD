@@ -42,6 +42,7 @@ The $code ADFun$$ object can then be used to calculate function values,
 derivative values, and other values related to the corresponding function.
 
 $childtable%
+	cppad/local/parallel_ad.hpp%
 	cppad/local/independent.hpp%
 	cppad/local/fun_construct.hpp%
 	cppad/local/dependent.hpp%
@@ -466,6 +467,7 @@ CPPAD_END_NAMESPACE
 # include <cppad/local/rev_hes_sweep.hpp>
 
 // user interfaces
+# include <cppad/local/parallel_ad.hpp>
 # include <cppad/local/independent.hpp>
 # include <cppad/local/dependent.hpp>
 # include <cppad/local/fun_construct.hpp>

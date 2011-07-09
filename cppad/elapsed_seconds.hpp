@@ -3,7 +3,7 @@
 # define CPPAD_ELAPSED_SECONDS_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -64,6 +64,13 @@ $end
 -----------------------------------------------------------------------
 */
 
+// For some unknown reason under Fedora (which needs to be understood), 
+// if you move this include for cppad_assert.hpp below include for define.hpp, 
+//		cd work/speed/example
+//		make test.sh
+// fails with the error message 'gettimeofday' not defined.
+# include <cppad/local/cppad_assert.hpp>
+
 # ifdef _MSC_VER
 extern double microsoft_timer(void);
 # elif CPPAD_GETTIMEOFDAY 
@@ -103,7 +110,8 @@ inline double elapsed_seconds(void)
 {	return microsoft_timer(); }
 
 # elif CPPAD_GETTIMEOFDAY 
-{	static bool           first_ = true;
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+	static bool           first_ = true;
 	static struct timeval tv_;		
 	struct timeval        tv;
 	if( first_ )
@@ -121,7 +129,8 @@ inline double elapsed_seconds(void)
 	return diff;
 }
 # else
-{	static bool    first_ = true;
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+	static bool    first_ = true;
 	static double  tic_;
 	double  tic;
 	if( first_ )
