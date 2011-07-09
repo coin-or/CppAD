@@ -95,6 +95,10 @@ $end
 # include <iostream>
 # include <cppad/error_handler.hpp>
 
+# ifdef _OPENMP
+# include <omp.h>
+# endif
+
 
 /*!
 \def CPPAD_ASSERT_KNOWN(exp, msg)
@@ -178,13 +182,17 @@ execution is terminated and the source code line number is reported.
 # ifdef NDEBUG
 # define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # else
+# ifndef _OPENMP
+# define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# else
 # define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL                 \
 	static bool assert_first_call = true;                    \
 	CPPAD_ASSERT_KNOWN(                                      \
-		! (omp_alloc::in_parallel() && assert_first_call ), \
+		! (omp_in_parallel() && assert_first_call ),        \
 		"First call to this routine is in parallel mode."   \
 	);                                                       \
 	assert_first_call = false;
-# endif
+# endif  // _OPENMP
+# endif  // _NDEBUG
 
 # endif
