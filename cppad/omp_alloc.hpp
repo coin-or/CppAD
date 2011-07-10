@@ -119,7 +119,7 @@ private:
 	// ---------------------------------------------------------------------
 	static const omp_alloc_capacity* capacity_info(void)
 	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-		static omp_alloc_capacity capacity;
+		static const omp_alloc_capacity capacity;
 		return &capacity;
 	}
 	// ---------------------------------------------------------------------
@@ -562,7 +562,8 @@ $end
 		{	cout << endl;	
 			cout << "omp_alloc: Trace for Thread = " << thread;
 			cout << " and capacity = " << cap_bytes << endl;
-			first_trace = false;
+			if( first_trace )
+				first_trace = false;
 		}
 
 		// Root nodes for both lists. Note these are different for different 

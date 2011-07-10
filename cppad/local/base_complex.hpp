@@ -86,7 +86,7 @@ $codep */
 namespace CppAD {
 	inline bool isnan(const std::complex<double>& z)
 	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;	
-		static double nan = std::numeric_limits<double>::quiet_NaN();
+		static const double nan = std::numeric_limits<double>::quiet_NaN();
 		return (z != z) | (z.real() == nan) | (z.imag() == nan);
 	}
 }

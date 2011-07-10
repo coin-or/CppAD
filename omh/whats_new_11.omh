@@ -54,6 +54,9 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-10$$
+Add link to $tref Discrete$$ in $cref/omp_parallel/$$.
+
 $head 07-09$$
 All the OpenMP parallel execution requirements
 have been grouped in the section $cref/omp_parallel/$$.

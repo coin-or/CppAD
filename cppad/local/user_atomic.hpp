@@ -855,6 +855,11 @@ public:
 
 	\param rhs
 	user routine that does reverse Hessian sparsity calculations.
+
+	\par
+	This constructor can not be used in parallel mode because
+	the object it constructs is static. In addition, it changes the
+	static object \c List.
 	*/
 	user_atomic(const char* afun, F f, R r, FJS fjs, RJS rjs, RHS rhs) : 
 	name_(afun)
@@ -864,7 +869,13 @@ public:
 	, rjs_(rjs)
 	, rhs_(rhs)
 	, index_( List().size() )
-	{	List().push_back(this); }
+	{
+		CPPAD_ASSERT_KNOWN(
+			! omp_alloc::in_parallel() ,
+			"First call to this user atomic function is in parallel mode."
+		);
+		List().push_back(this);
+	}
 
 	/*!
  	Implement the user call to <tt>afun(id, ax, ay)</tt>.
@@ -1034,7 +1045,12 @@ public:
 		size_t                    m , 
 		const vector<Base>&      tx ,
 		vector<Base>&            ty )
-	{	static vector<bool> empty(0);
+	{	
+# ifdef _OPENMP
+		vector<bool> empty(0);
+# else
+		static vector<bool> empty(0);
+# endif
 		
 		CPPAD_ASSERT_UNKNOWN( tx.size() >= n * k );
 		CPPAD_ASSERT_UNKNOWN( ty.size() >= m * k );

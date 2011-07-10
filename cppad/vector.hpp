@@ -515,7 +515,7 @@ class vectorBool {
 	typedef size_t UnitType;
 private:
 	/// number of bits packed into each UnitType value in data_
-	static const  size_t bit_per_unit_ 
+	static const size_t bit_per_unit_ 
 		= std::numeric_limits<UnitType>::digits;
 	/// number of UnitType values in data_
 	size_t    n_unit_;

@@ -33,11 +33,15 @@ $table
 $rref max_num_threads$$
 $rref parallel_ad$$
 $cref/OpenMP/Independent/OpenMP/$$  $cnext
-	$tref Independent$$ $rnext
+	$title Independent$$ $rnext
 $cref/OpenMP/FunConstruct/OpenMP/$$  $cnext
-	$tref FunConstruct$$ $rnext
+	$title FunConstruct$$ $rnext
+$cref/OpenMP/Discrete/OpenMP/$$  $cnext
+	$title Discrete$$ $rnext
 $cref/OpenMP/user_atomic/afun/OpenMP/$$  $cnext
-	$tref user_atomic$$
+	$title user_atomic$$ $rnext
+$cref/OpenMP/ErrorHandler/Constructor/OpenMP/$$ $cnext
+	$title ErrorHandler$$ $rnext
 $tend
 
 $end

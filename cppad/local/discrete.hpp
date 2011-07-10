@@ -119,6 +119,14 @@ an $cref/ADFun/$$ object will compute the value of $icode name$$
 using the user provided $icode Base$$ version of this routine.
 All the derivatives of $icode name$$ will be evaluated as zero.
 
+$head OpenMP$$
+The first call to 
+$codei%
+	%ay% = %name%(%ax%)
+%$$
+must not be in $cref/in_parallel/$$ execution mode.
+	
+
 $head Example$$
 $children%
 	example/tape_index.cpp%
@@ -224,12 +232,22 @@ public:
 
 	\param f
 	user routine that implements this function for \c Base class.
+
+	\par
+	This constructor can ont be used in parallel mode because it changes
+	the static object \c List.
 	*/
 	discrete(const char* Name, F f) : 
 	name_(Name)
 	, f_(f) 
 	, index_( List().size() )
-	{	List().push_back(this); }
+	{	
+		CPPAD_ASSERT_KNOWN(
+			! omp_alloc::in_parallel() ,
+			"First call to this discrete function is in parallel mode."
+		);
+		List().push_back(this);
+	}
 
 	/*!
  	Implement the user call to <code>ay = name(ax)</code>.

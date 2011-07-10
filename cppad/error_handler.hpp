@@ -30,16 +30,21 @@ $index assert, error handler$$
 $index exception, error handler$$
 
 $head Syntax$$
-$syntax%ErrorHandler %info%(%handler%)%$$
-$pre
-$$
-$syntax%ErrorHandler::Call(%known%, %line%, %file%, %exp%, %msg%)%$$
-
+$codei%ErrorHandler %info%(%handler%)
+%$$
+$codei%ErrorHandler::Call(%known%, %line%, %file%, %exp%, %msg%)
+%$$
 
 $head Constructor$$
 When you construct a $code ErrorHandler$$ object,
-the current CppAD error handler is replaced by $italic handler$$.
+the current CppAD error handler is replaced by $icode handler$$.
 When the object is destructed, the previous CppAD error handler is restored.
+
+$subhead OpenMP$$
+The $code ErrorHandler$$ constructor and destructor cannot be called
+$cref/in_parallel/$$ execution mode.
+Furthermore, this rule is not abided by, a raw C++ $code assert$$,
+instead of one that uses this error handler, will be generated.
 
 $head Call$$
 When $code ErrorHandler::Call$$ is called,
@@ -48,60 +53,60 @@ This starts out as a default error handler and can be replaced
 using the $code ErrorHandler$$ constructor. 
 
 $head info$$
-The object $italic info$$ is used to store information
+The object $icode info$$ is used to store information
 that is necessary to restore the previous CppAD error handler.
-This is done when the destructor for $italic info$$ is called.
+This is done when the destructor for $icode info$$ is called.
 
 
 $head handler$$
-The argument $italic handler$$ has prototype
-$syntax%
+The argument $icode handler$$ has prototype
+$codei%
 	void (*%handler%) 
 		(bool, int, const char *, const char *, const char *);
 %$$
 When an error is detected,
 it is called with the syntax
-$syntax%
+$codei%
 	%handler% (%known%, %line%, %file%, %exp%, %msg%)
 %$$
 This routine should not return; i.e., upon detection of the error,
-the routine calling $italic handler$$ does not know how to proceed.
+the routine calling $icode handler$$ does not know how to proceed.
 
 $head known$$
-The $italic handler$$ argument $italic known$$ has prototype
-$syntax%
+The $icode handler$$ argument $italic known$$ has prototype
+$codei%
 	bool %known%
 %$$
 If it is true, the error being reported is from a know problem.
 
 $head line$$
-The $italic handler$$ argument $italic line$$ has prototype
-$syntax%
+The $icode handler$$ argument $italic line$$ has prototype
+$codei%
 	int %line%
 %$$
 It reports the source code line number where the error is detected. 
 
 $head file$$
-The $italic handler$$ argument $italic file$$ has prototype
-$syntax%
+The $icode handler$$ argument $italic file$$ has prototype
+$codei%
 	const char *%file%
 %$$
 and is a $code '\0'$$ terminated character vector.
 It reports the source code file where the error is detected. 
 
 $head exp$$
-The $italic handler$$ argument $italic exp$$ has prototype
-$syntax%
+The $icode handler$$ argument $italic exp$$ has prototype
+$codei%
 	const char *%exp%
 %$$
 and is a $code '\0'$$ terminated character vector.
 It is a source code boolean expression that should have been true, 
 but is false,
-and thereby causes this call to $italic handler$$.
+and thereby causes this call to $icode handler$$.
 
 $head msg$$
-The $italic handler$$ argument $italic msg$$ has prototype
-$syntax%
+The $icode handler$$ argument $italic msg$$ has prototype
+$codei%
 	const char *%msg%
 %$$
 and is a $code '\0'$$ terminated character vector.
@@ -113,7 +118,7 @@ $children%
 %$$
 $head Example$$
 The file
-$xref/ErrorHandler.cpp/$$
+$cref/ErrorHandler.cpp/$$
 contains an example and test a test of using this routine.
 It returns true if it succeeds and false otherwise.
 
@@ -132,10 +137,15 @@ $end
 # include <cassert>
 # include <cstdlib>
 
+// Cannot use the CPPAD_ASSERT_* macros here because they inturn use the
+// error handler. So this code generates a raw assert.
 # ifdef _OPENMP
 # include <omp.h>
+# define CPPAD_ASSERT_NOT_PARALLEL \
+		assert( ! omp_in_parallel() );
+# else
+# define CPPAD_ASSERT_NOT_PARALLEL
 # endif
-
 
 namespace CppAD { // BEGIN CppAD namespace
 
@@ -149,11 +159,15 @@ public:
 
 	// construct an handler
 	ErrorHandler(Handler handler) : previous( Current() )
-	{	Current() = handler; }
+	{	CPPAD_ASSERT_NOT_PARALLEL;
+		Current() = handler;
+	}
 
 	// destructor for an error handler
 	~ErrorHandler(void)
-	{	Current() = previous; }
+	{	CPPAD_ASSERT_NOT_PARALLEL;
+		Current() = previous;
+	}
 	
 	// report an error
 	static void Call(
@@ -183,43 +197,38 @@ private:
 		int thread_num = omp_get_thread_num();
 # endif
 
-// if OpenMP multi-threading, only run output on master thread
+		cerr << CPPAD_PACKAGE_STRING;
+		if( known )
+			cerr << " error from a known source:" << endl;
+		else	cerr << " error from unknown source"  << endl;
+		if( msg[0] != '\0' )
+			cerr << msg << endl;
+		cerr << "Error detected by false result for"  << endl;
+		cerr << "    "     << exp                     << endl;
+		cerr << "at line " << line << " in the file " << endl;
+		cerr << "    "     << file                    << endl;
 # ifdef _OPENMP
-# pragma omp master
-# endif
-		{
-			cerr << CPPAD_PACKAGE_STRING;
-			if( known )
-				cerr << " error from a known source:" << endl;
-			else	cerr << " error from unknown source"  << endl;
-			if( msg[0] != '\0' )
-				cerr << msg << endl;
-			cerr << "Error detected by false result for"  << endl;
-			cerr << "    "     << exp                     << endl;
-			cerr << "at line " << line << " in the file " << endl;
-			cerr << "    "     << file                    << endl;
-# ifdef _OPENMP
-			cerr << "OpenMP: thread_num = " << thread_num << endl;
+		cerr << "OpenMP: thread_num = " << thread_num << endl;
 # endif
 
-			// terminate program execution
-			assert(false);
+		// terminate program execution
+		assert(false);
 
-			// termination when NDEBUG is defined
-			std::exit(1);
-		}
-// pragma omp master
+		// termination when NDEBUG is defined
+		std::exit(1);
 	}
 
 	// current error handler
 	static Handler &Current(void)
-	{	// cannot use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL because it uses
-		// the error handler.
+	{
 # ifndef NDEBUG
 # ifdef _OPENMP
+		// This assert would be a CppAD error (not user error)
 		static bool first_call = true;
-		assert( ! ( omp_in_parallel() && first_call ) );
-		first_call = false; 
+		if( first_call )
+		{	assert( ! omp_in_parallel() );
+			first_call = false; 
+		}
 # endif
 # endif
 		static Handler current = Default;
