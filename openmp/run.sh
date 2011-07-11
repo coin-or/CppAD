@@ -1,4 +1,4 @@
-# ! /bin/bash 
+# ! /bin/bash -e 
 # $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
@@ -10,8 +10,10 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-# $begin openmp_run.sh$$ $newlinech #$$
-# $spell
+# $OMhelpKeyCharacter=@
+# @begin openmp_run.sh@@ @newlinech #@@
+# @spell
+#	num
 #	Werror
 #	fi
 #	usr
@@ -26,127 +28,135 @@
 #	true true
 #	fopenmp
 #	cpp
-# $$
-# $index OpenMP, compile example$$
-# $index compile, OpenMP example$$
-# $index example, compile OpenMP$$
+# @@
+# @index OpenMP, compile example@@
+# @index compile, OpenMP example@@
+# @index example, compile OpenMP@@
 #
-# $section Compile and Run the OpenMP Test$$
+# @section Compile and Run the OpenMP Test@@
 #
-# $head Syntax$$
-# $codei%openmp/run.sh %test_name%$$
+# @head Syntax@@
+# @codei%openmp/run.sh %test_name%@@
 #
-# $head Purpose$$
-# This script file, $code openmp/run.sh$$, compiles and runs the specified
+# @head Purpose@@
+# This script file, @code openmp/run.sh@@, compiles and runs the specified
 # speed and correctness test for using OpenMP.
-# The possible values for $icode test_name$$ are:
-# $cref/example_a11c/example_a11c.cpp/$$,
-# $cref/sum_i_inv/sum_i_inv.cpp/$$, and
-# $cref/multi_newton/multi_newton.cpp/$$.
+# The possible values for @icode test_name@@ are:
+# @cref/example_a11c/example_a11c.cpp/@@,
+# @cref/sum_i_inv/sum_i_inv.cpp/@@, and
+# @cref/multi_newton/multi_newton.cpp/@@.
 #
-# $head Parameters$$
+# @head Parameters@@
 # The following are a list of parameters in this file that can
 # be changed by directly editing the file
 # (there are no command line parameters to the script):
 #
-# $subhead Compiler Command$$
+# @subhead Compiler Command@@
 # The following sets the name of the C++ compiler command:
-# $codep
+# @codep
 compiler="g++"
-# $$
+# @@
 #
-# $subhead Version Flag$$
+# @subhead Version Flag@@
 # The following compiler flag requests its version information:
-# $codep
+# @codep
 version_flag="--version"
-# $$
+# @@
 #
-# $subhead OpenMP Flag$$
+# @subhead OpenMP Flag@@
 # The following compiler flag requests openmp support
-# For the g++ compiler, you can use $code "-fopenmp"$$ for this flag.
+# For the g++ compiler, you can use @code "-fopenmp"@@ for this flag.
 # You can run these tests without multi-threading by setting this flag to 
-# $code ""$$.
-# $codep
+# @code ""@@.
+# @codep
 openmp_flag=""
-# $$
+# @@
 # For g++ version 4.1 and higher, you can use "-fopenmp" for this flag.
 #
-# $subhead Other Flag$$
+# @subhead Other Flag@@
 # The following other flags will be used during compilation:
-# $codep
+# @codep
 other_flags="-Werror -DNDEBUG -O2 -Wall"
-# $$
+# @@
 #
-# $subhead Boost Directory$$
-# If the $cref/BoostDir/InstallUnix/BoostDir/$$ is specified on the 
-# $cref/configure/InstallUnix/Configure/$$ command line,
+# @subhead Boost Directory@@
+# If the @cref/BoostDir/InstallUnix/BoostDir/@@ is specified on the 
+# @cref/configure/InstallUnix/Configure/@@ command line,
 # you must add the corresponding include directory; e.g.,
-# $codep
+# @codep
 if [ -d /usr/include/boost ]
 then
 	other_flags="-DNDEBUG -O2 -Wall -I/usr/include"
 fi
-# $$
+# @@
 #
-# $subhead Number of Repeats$$
+# @subhead Number of Repeats@@
 # The following specifies the number of times to repeat
 # the calculation corresponding to one timing test. 
 # If this 
 # is equal to 0, the number of repeats is determined automatically.
 # If it is not equal to 0, it must be a positive integer.
-# $codep
+# @codep
 n_repeat="0"
-# $$
+# @@
 #
-# $subhead Number of Threads$$
-# The following determines a set of number of threads to test.
-# Each value in the set must be a positive integer or zero
+# @subhead Number of Threads@@
+# The following determines the maximum number of threads to test.
+# This value must be a non-negative integer.
+# Each number of threads between zero and this value is run as a test case
 # (the value zero is used for dynamic thread adjustment).
 # If the
-# $cref/openmp_flag/openmp_run.sh/Parameters/OpenMP Flag/$$ is equal to "",
+# @cref/openmp_flag/openmp_run.sh/Parameters/OpenMP Flag/@@ is equal to "",
 # this setting is not used.
-# $codep
-n_thread_set="1 2 3 4 0"
-# $$
+# @codep
+max_num_threads="2"
+# @@
 #
-# $subhead example_a11c$$
+# @subhead example_a11c@@
 # The following setting determine the corresponding command line
-# arguments for the $cref/example_a11c.cpp/$$ program:
-# $codep
+# arguments for the @cref/example_a11c.cpp/@@ program:
+# @codep
 example_a11c_size="10000"
-# $$
+# @@
 #
-# $subhead sum_i_inv$$
+# @subhead sum_i_inv@@
 # The following setting determine the corresponding command line
-# arguments for the $cref/sum_i_inv.cpp/$$ program:
-# $codep
+# arguments for the @cref/sum_i_inv.cpp/@@ program:
+# @codep
 sum_i_inv_mega_sum="1"
-# $$
+# @@
 #
-# $subhead multi_newton$$
+# @subhead multi_newton@@
 # The following settings determine the corresponding command line
-# arguments for the $cref/multi_newton/$$ program:
-# $codep
-multi_newton_n_zero="10"
-multi_newton_n_grid="48"
-multi_newton_n_sum="5000"
+# arguments for the @cref/multi_newton/@@ program:
+# @codep
+multi_newton_n_zero="20"
+multi_newton_n_sum="500"
 multi_newton_use_ad="true"
-# $$
+let multi_newton_n_grid="$max_num_threads*15"
+# @@
 #
-# $head Restrictions$$
+# @head Restrictions@@
 # Current this script only runs under the bash shell; e.g., it will not
 # run in an MSDOS box.
 #
-# $childtable%
+# @childtable%
 #	openmp/example_a11c.cpp%
 #	openmp/sum_i_inv.cpp%
 #	openmp/multi_newton.cpp
-# %$$
+# %@@
 #
-# $end
+# @end
 # ****************************************************************************
-# exit on any error
-set -e
+#
+# n_thread_set = 1 2 ... max_num_threads
+n_thread_set=""
+n_thread=1
+while (($n_thread <= "$max_num_threads" ))
+do
+	n_thread_set="$n_thread_set $n_thread"
+	let n_thread=$n_thread+1
+done
 #
 if [ ! -e openmp/run.sh ]
 then
@@ -200,12 +210,13 @@ echo "$cmd"
 eval $cmd | tee temp.$$
 no_openmp=`cat temp.$$ | grep 'repeats_per_sec' | sed -e 's|.*=||'`
 #
-# clean up (this is source directory)
-# echo "rm ${test_name}_no_openmp"
+# clean up (this is a source directory)
+echo "rm ${test_name}_no_openmp"
 rm ${test_name}_no_openmp
 #
 echo "" # newline
 yes_openmp_set=""
+ok_set=""
 if [ "$openmp_flag" != "" ]
 then
 	#
@@ -218,6 +229,13 @@ then
 	echo "$cmd"
 	eval $cmd 
 	#
+	n_thread="0"
+	cmd="./${test_name}_yes_openmp $n_thread $n_repeat $args"
+	echo "$cmd"
+	eval $cmd | tee temp.$$
+	dynamic_openmp=`cat temp.$$ | grep 'repeats_per_sec' | sed -e 's|.*=||'`
+	dynamic_n_thread=`cat temp.$$ | grep 'n_thread' | sed -e 's|.*=||'`
+	#
 	# Run with OpenMP
 	for n_thread in $n_thread_set
 	do
@@ -225,7 +243,11 @@ then
 		echo "$cmd"
 		eval $cmd | tee temp.$$
 		temp=`cat temp.$$ | grep 'repeats_per_sec' | sed -e 's|.*=||'`
-		yes_openmp_set="$yes_openmp_set $temp"
+		if [ "$temp" != "" ]
+		then
+			yes_openmp_set="$yes_openmp_set $temp"
+			ok_set="$ok_set $n_thread"
+		fi
 		echo "" # newline
 	done
 	#
@@ -234,13 +256,15 @@ then
 	rm ${test_name}_yes_openmp
 fi
 # more cleanup
-# echo "rm temp.$$"
+echo "rm temp.$$"
 rm temp.$$
 #
 # summary
-echo "${test_name}_repeats_per_sec_no_openmp  = $no_openmp"
+echo "repeats_per_sec_${test_name}_no_openmp  = $no_openmp"
 if [ "$openmp_flag" != "" ]
 then
-	echo "${test_name}_n_thread_yes_openmp        = [ $n_thread_set ]"
-	echo "${test_name}_repeats_per_sec_yes_openmp = [ $yes_openmp_set ]"
+	echo "n_thread_${test_name}_dynamic_openmp        = $dynamic_n_thread"
+	echo "repeats_pre_sec_${test_name}_dynamic_openmp = $dynamic_openmp"
+	echo "n_thread_${test_name}_yes_openmp            = [ $ok_set ]"
+	echo "repeats_per_sec_${test_name}_yes_openmp     = [ $yes_openmp_set ]"
 fi

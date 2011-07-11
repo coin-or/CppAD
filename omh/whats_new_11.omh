@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	executables
 	matlab
 	Addr
 	sizeof
@@ -53,6 +54,34 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-11$$
+Change the upper limit for 
+$cref/max_num_threads/$$ from 32 to 48.
+$pre
+
+$$
+The following changes were made to $subhead openmp/run.sh$$:
+$list number$$
+$lnext
+Change the maximum
+$cref/number of threads/openmp_run.sh/Parameters/Number of Threads/$$
+instead of specifying the entire set of values to be tested.
+$lnext
+Change settings for 
+$cref/multi_newton/openmp_run.sh/Parameters/multi_newton/$$
+so that $code n_gird$$ is a multiple of the maximum number of threads.
+$lnext
+Report dynamic number of thread
+results as a separate result in the summary output line.
+$lnext
+Fix automatic removal of executables from $code openmp$$ directory
+(was commented out).
+$lnext
+The documentation for $code openmp/run.sh$$ was moved to the
+$cref/omp_parallel/$$ section.
+$lend
+ 
 
 $head 07-10$$
 $list number$$

@@ -66,13 +66,6 @@ $head Restriction$$
 No tapes can be 
 $cref/active/glossary/Tape/Active/$$ when this function is called.
 
-$head Example and Tests$$
-$children%
-	openmp/run.sh
-%$$
-The shell script $cref/openmp_run.sh/$$ can be used to 
-compile and run the OpenMP examples and tests.
-
 $end
 -----------------------------------------------------------------------------
 */

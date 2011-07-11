@@ -26,7 +26,8 @@ $cref/in_parallel/$$ execution mode.
 This section collects this information in one place.
 
 $children%
-	cppad/local/parallel_ad.hpp
+	cppad/local/parallel_ad.hpp%
+	openmp/run.sh
 %$$
 
 $table
@@ -44,6 +45,8 @@ $cref/OpenMP/ErrorHandler/Constructor/OpenMP/$$ $cnext
 	$title ErrorHandler$$ $rnext
 $tend
 
-$end
+$head Example and Tests$$
+The shell script $cref/openmp_run.sh/$$ can be used to 
+compile and run the OpenMP examples and tests.
 
 $end

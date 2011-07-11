@@ -115,7 +115,7 @@ CPPAD_MAX_NUM_THREADS one. Otheriwse it is 32.
 */
 # ifndef CPPAD_MAX_NUM_THREADS
 # ifdef _OPENMP
-# define CPPAD_MAX_NUM_THREADS 32
+# define CPPAD_MAX_NUM_THREADS 48
 # else
 # define CPPAD_MAX_NUM_THREADS 1
 # endif
