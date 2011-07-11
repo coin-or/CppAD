@@ -35,18 +35,19 @@ $head Deprecated$$
 $index deprecated, track memory$$
 This routine has been deprecated.
 You should use the $cref/omp_alloc/$$ memory allocator instead
-(which works better in both a single thread and multi-threading environment).
+(which works better in both a single thread and 
+properly in multi-threading environment).
 
 $head Syntax$$
-$syntax%# include <cppad/track_new_del.hpp>
+$codei%# include <cppad/track_new_del.hpp>
 %$$
-$syntax%%newptr% = TrackNewVec(%file%, %line%, %newlen%, %oldptr%)
+$icode%newptr% = TrackNewVec(%file%, %line%, %newlen%, %oldptr%)
 %$$
-$syntax%TrackDelVec(%file%, %line%, %oldptr%)
+$codei%TrackDelVec(%file%, %line%, %oldptr%)
 %$$
-$syntax%%newptr% = TrackExtend(%file%, %line%, %newlen%, %ncopy%, %oldptr%)
+$icode%newptr% = TrackExtend(%file%, %line%, %newlen%, %ncopy%, %oldptr%)
 %$$
-$syntax%%count% = TrackCount(%file%, %line%)%$$
+$icode%count% = TrackCount(%file%, %line%)%$$
 
 
 $head Purpose$$
@@ -62,8 +63,8 @@ CppAD include files.
 
 
 $head file$$
-The argument $italic file$$ has prototype
-$syntax%
+The argument $icode file$$ has prototype
+$codei%
 	const char *%file%
 %$$
 It should be the source code file name 
@@ -72,8 +73,8 @@ The best way to accomplish this is the use the preprocessor symbol
 $code __FILE__$$ for this argument.
 
 $head line$$
-The argument $italic line$$ has prototype
-$syntax%
+The argument $icode line$$ has prototype
+$codei%
 	int %line%
 %$$
 It should be the source code file line number 
@@ -82,72 +83,62 @@ The best way to accomplish this is the use the preprocessor symbol
 $code __LINE__$$ for this argument.
 
 $head oldptr$$
-The argument $italic oldptr$$ has prototype
-$syntax%
+The argument $icode oldptr$$ has prototype
+$codei%
 	%Type% *%oldptr%
 %$$
-This argument is used to identify the type $italic Type$$.
-
-$subhead OpenMP$$
-$index OpenMP, TrackNewDel$$
-$index TrackNewDel, OpenMP$$ 
-In the case of multi-threading with OpenMP,
-calls with the argument $italic oldptr$$ must be made with the
-same thread as when $italic oldptr$$ was created
-(except for $code TrackNewVec$$ where the value of $italic oldptr$$
-does not matter).
-
+This argument is used to identify the type $icode Type$$.
 
 $head newlen$$
-The argument $italic newlen$$ has prototype
-$syntax%
+The argument $icode newlen$$ has prototype
+$codei%
 	size_t %newlen%
 %$$
 
 $head head newptr$$
-The return value $italic newptr$$ has prototype
-$syntax%
+The return value $icode newptr$$ has prototype
+$codei%
 	%Type% *%newptr%
 %$$
 It points to the newly allocated vector of objects
 that were allocated using
-$syntax%
+$codei%
 	new Type[%newlen%]
 %$$
 
 $head ncopy$$
-The argument $italic ncopy$$ has prototype
-$syntax%
+The argument $icode ncopy$$ has prototype
+$codei%
         size_t %ncopy%
 %$$
 This specifies the number of elements that are copied from
 the old array to the new array.
-The value of $italic ncopy$$ 
-must be less than or equal $italic newlen$$.
+The value of $icode ncopy$$ 
+must be less than or equal $icode newlen$$.
 
 $head TrackNewVec$$
 $index TrackNewVec$$
 $index NDEBUG$$
 If $code NDEBUG$$ is defined, this routine only sets
-$syntax%
+$codei%
 	%newptr% = %Type% new[%newlen%]
 %$$
-The value of $italic oldptr$$ does not matter 
-(except that it is used to identify $italic Type$$).
+The value of $icode oldptr$$ does not matter 
+(except that it is used to identify $icode Type$$).
 If $code NDEBUG$$ is not defined, $code TrackNewVec$$ also
 tracks the this memory allocation.
 In this case, if memory cannot be allocated
-$xref/ErrorHandler/$$ is used to generate a message
+$cref/ErrorHandler/$$ is used to generate a message
 stating that there was not sufficient memory.
 
 $subhead Macro$$
 $index CPPAD_TRACK_NEW_VEC$$
 The preprocessor macro call
-$syntax%
+$codei%
 	CPPAD_TRACK_NEW_VEC(%newlen%, %oldptr%)
 %$$
 expands to
-$syntax%
+$codei%
 	CppAD::TrackNewVec(__FILE__, __LINE__, %newlen%, %oldptr%)
 %$$
 
@@ -164,23 +155,23 @@ $index TrackDelVec$$
 This routine is used to a vector of objects 
 that have been allocated using $code TrackNew$$ or $code TrackExtend$$.
 If $code NDEBUG$$ is defined, this routine only frees memory with
-$syntax%
+$codei%
 	delete [] %oldptr%
 %$$
 If $code NDEBUG$$ is not defined, $code TrackDelete$$ also checks that
-$italic oldptr$$ was allocated by $code TrackNew$$ or $code TrackExtend$$
+$icode oldptr$$ was allocated by $code TrackNew$$ or $code TrackExtend$$
 and has not yet been freed.
 If this is not the case,
-$xref/ErrorHandler/$$ is used to generate an error message.
+$cref/ErrorHandler/$$ is used to generate an error message.
 
 $subhead Macro$$
 $index CPPAD_TRACK_DEL_VEC$$
 The preprocessor macro call
-$syntax%
+$codei%
 	CPPAD_TRACK_DEL_VEC(%oldptr%)
 %$$
 expands to
-$syntax%
+$codei%
 	CppAD::TrackDelVec(__FILE__, __LINE__, %oldptr%)
 %$$
 
@@ -196,11 +187,11 @@ $head TrackExtend$$
 $index TrackExtend$$
 This routine is used to 
 allocate a new vector (using $code TrackNewVec$$),
-copy $italic ncopy$$ elements from the old vector to the new vector.
-If $italic ncopy$$ is greater than zero, $italic oldptr$$ 
+copy $icode ncopy$$ elements from the old vector to the new vector.
+If $icode ncopy$$ is greater than zero, $italic oldptr$$ 
 must have been allocated using $code TrackNewVec$$ or $code TrackExtend$$.
-In this case, the vector pointed to by $italic oldptr$$ 
-must be have at least $italic ncopy$$ elements
+In this case, the vector pointed to by $icode oldptr$$ 
+must be have at least $icode ncopy$$ elements
 and it will be deleted (using $code TrackDelVec$$).
 Note that the dependence of $code TrackExtend$$ on $code NDEBUG$$
 is indirectly through the routines $code TrackNewVec$$ and 
@@ -209,11 +200,11 @@ $code TrackDelVec$$.
 $subhead Macro$$
 $index CPPAD_TRACK_EXTEND$$
 The preprocessor macro call
-$syntax%
+$codei%
 	CPPAD_TRACK_EXTEND(%newlen%, %ncopy%, %oldptr%)
 %$$
 expands to
-$syntax%
+$codei%
 	CppAD::TrackExtend(__FILE__, __LINE__, %newlen%, %ncopy%, %oldptr%)
 %$$
 
@@ -227,11 +218,11 @@ not be used.
 
 $head TrackCount$$
 $index TrackCount$$
-The return value $italic count$$ has prototype
-$syntax%
+The return value $icode count$$ has prototype
+$codei%
 	size_t %count%
 %$$
-If $code NDEBUG$$ is defined, $italic count$$ will be zero.
+If $code NDEBUG$$ is defined, $icode count$$ will be zero.
 Otherwise, it will be
 the number of vectors that 
 have been allocated
@@ -242,11 +233,11 @@ and not yet freed
 $subhead Macro$$
 $index CPPAD_TRACK_COUNT$$
 The preprocessor macro call
-$syntax%
+$codei%
 	CPPAD_TRACK_COUNT()
 %$$
 expands to
-$syntax%
+$codei%
 	CppAD::TrackCount(__FILE__, __LINE__)
 %$$
 
@@ -258,19 +249,18 @@ It has been deprecated; i.e.,
 it is still defined in the CppAD distribution, but it should
 not be used.
 
-$subhead OpenMP$$
+$head OpenMP$$
 $index OpenMP, TrackCount$$
 $index TrackCount, OpenMP$$
-In the case of multi-threading with OpenMP,
-the information for all of the threads is checked 
-so only one thread can be running
-when this routine is called.
+These routines cannot be used $cref/in_parallel/$$
+execution mode.
+Use the $cref/omp_alloc/$$ routines instead.
 
 $head Example$$
 $children%
 	test_more/track_new_del.cpp
 %$$
-The file $xref/TrackNewDel.cpp/$$
+The file $cref/TrackNewDel.cpp/$$
 contains an example and test of these functions.
 It returns true, if it succeeds, and false otherwise.
 
@@ -284,14 +274,6 @@ $end
 
 # ifndef CPPAD_NULL
 # define CPPAD_NULL	0
-# endif
-
-# ifndef CPPAD_MAX_NUM_THREADS
-# ifdef _OPENMP
-# define CPPAD_MAX_NUM_THREADS 32
-# else
-# define CPPAD_MAX_NUM_THREADS 1
-# endif
 # endif
 
 # ifndef CPPAD_TRACK_DEBUG
@@ -338,25 +320,17 @@ public:
 	}
 
 	// There is only one tracking list and it starts it here
-	static TrackElement *root_for(size_t thread)
-	{	static TrackElement root[CPPAD_MAX_NUM_THREADS];
-		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS );
-		return root + thread;
-	}
-
-	// There is only one tracking list and it starts it here
 	static TrackElement *Root(void)
-	{	size_t thread = omp_alloc::get_thread_num();
-		CPPAD_ASSERT_KNOWN(
-			thread < CPPAD_MAX_NUM_THREADS,
-			"TrackNewDel: too many OpenMP threads are active."
-		);
-		return root_for(thread); 
+	{	CPPAD_ASSERT_UNKNOWN( ! omp_alloc::in_parallel() );
+		static TrackElement root;
+		return &root; 
 	}
 
 	// Print one tracking element
-	static void Print(const TrackElement* E)
-	{	using std::cout;
+	static void Print(TrackElement* E)
+	{
+		CPPAD_ASSERT_UNKNOWN( ! omp_alloc::in_parallel() );
+		using std::cout;
 		cout << "E = "         << E;
 		cout << ", E->next = " << E->next;
 		cout << ", E->ptr  = " << E->ptr;
@@ -366,17 +340,19 @@ public:
 	}
 
 	// Print the linked list for a thread
-	static void Print(size_t thread)
-	{	using std::cout;
+	static void Print(void)
+	{
+		CPPAD_ASSERT_UNKNOWN( ! omp_alloc::in_parallel() );
+		using std::cout;
 		using std::endl;
 		TrackElement *E = Root();
 		// convert int(size_t) to avoid warning on _MSC_VER systems
-		cout << "Begin Track List for thread " << int(thread) << endl;
+		cout << "Begin Track List" << endl;
 		while( E->next != CPPAD_NULL )
 		{	E = E->next;
 			Print(E);
 		}
-		cout << "End Track List for thread " << int(thread) << endl;
+		cout << "End Track List:" << endl;
 		cout << endl;
 	}
 }; 
@@ -389,6 +365,7 @@ inline void TrackError(
 	int         line,
 	const char *msg )
 {
+	CPPAD_ASSERT_UNKNOWN( ! omp_alloc::in_parallel() );
 	std::ostringstream buf;
 	buf << routine
 	    << ": at line "
@@ -432,6 +409,10 @@ Type *TrackNewVec(
 	size_t      len           ,
 	Type       * /* oldptr */ )
 {
+	CPPAD_ASSERT_KNOWN(
+		! omp_alloc::in_parallel() ,
+		"attempt to use TrackNewVec in parallel execution mode."
+	);
 	// try to allocate the new memrory
 	Type *newptr = CPPAD_NULL;
 	try
@@ -486,6 +467,10 @@ void TrackDelVec(
 	int         line    ,
 	Type       *oldptr  )
 {
+	CPPAD_ASSERT_KNOWN(
+		! omp_alloc::in_parallel() ,
+		"attempt to use TrackDelVec in parallel execution mode."
+	);
 	TrackElement        *P;
 	TrackElement        *E;
 
@@ -532,7 +517,11 @@ Type *TrackExtend(
 	size_t      newlen  , 
 	size_t      ncopy   ,
 	Type       *oldptr  ) 
-{	// check size of ncopy
+{	
+	CPPAD_ASSERT_KNOWN(
+		! omp_alloc::in_parallel() ,
+		"attempt to use TrackExtend in parallel execution mode."
+	);
 
 # if CPPAD_TRACK_DEBUG
 	using std::cout;
@@ -566,16 +555,15 @@ Type *TrackExtend(
 // TrackCount --------------------------------------------------------------
 inline size_t TrackCount(const char *file, int line)
 {
+	CPPAD_ASSERT_KNOWN(
+		! omp_alloc::in_parallel() ,
+		"attempt to use TrackCount in parallel execution mode."
+	);
 	size_t count = 0;
-	size_t thread;
-	for(thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
-	{
-		TrackElement *E = TrackElement::root_for(thread);
-
-		while( E->next != CPPAD_NULL ) 
-		{	++count;
-			E = E->next;
-		}
+	TrackElement *E = TrackElement::Root();
+	while( E->next != CPPAD_NULL ) 
+	{	++count;
+		E = E->next;
 	}
 	return count;
 }

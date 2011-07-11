@@ -45,12 +45,12 @@ Otherwise it returns true unless one of the conditions below occurs.
 
 $head inuse$$
 When this routine is called, it is assumed that no memory
-should be $cref/inuse/$$ for the current thread.
+should be $cref/inuse/$$ for any thread.
 If it is, a message is printed and this routine returns false.
 
 $head available$$
-This routine calls $cref/free_available/$$ for the current thread
-and then checks that no memory is left $cref/available/$$ for this thread;
+This routine calls $cref/free_available/$$ for all the threads
+and then checks that no memory is left $cref/available/$$ for any thread;
 i.e., it all has been returned to the system.
 If there is memory still available for this thread,
 this routine returns false. 
@@ -62,6 +62,10 @@ this routine returns false.
 $head Error Message$$
 If this routine returns false, it prints a message
 to standard output describing the condition before returning false.
+
+$head OpenMP$$
+This routine cannot be used $cref/in_parallel/$$
+execution mode.
 
 $end
 */
@@ -89,29 +93,37 @@ If an error is detected, diagnostic information is printed to standard
 output.
 */
 inline bool memory_leak(void)
-{	bool leak = false;
+{
+	CPPAD_ASSERT_KNOWN(
+		! omp_alloc::in_parallel(),
+		"attempt to use memory_leak in parallel execution mode."
+	);
+	bool leak = false;
+	using std::cout;
+	using std::endl;
 
-	// dump the memory pool being held for this thread
 	using CppAD::omp_alloc;
-	size_t thread = omp_alloc::get_thread_num();
-	omp_alloc::free_available(thread);
+	size_t thread;
+	for(thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
+	{
+		// check that no memory is currently in use for this thread
+		size_t num_bytes = omp_alloc::inuse(thread);
+		if( num_bytes != 0 )
+		{	leak = true;
+			cout << "omp_alloc::inuse(thread) = " << num_bytes << endl;
+		}
+		// dump the available memory pool being held for this thread
+		omp_alloc::free_available(thread);
+		num_bytes = omp_alloc::available(thread);
+		if( num_bytes != 0 )
+		{	leak = true;
+			cout << "omp_alloc::available(thread) = " << num_bytes << endl;
+		}
+	}
 
 	if( CPPAD_TRACK_COUNT() != 0 )
 	{	leak = true;
-		CppAD::TrackElement::Print(thread);
-	}
-
-	using std::cout;
-	using std::endl;
-	size_t num_bytes = omp_alloc::available(thread);
-	if( num_bytes != 0 )
-	{	leak = true;
-		cout << "omp_alloc::available(thread) = " << num_bytes << endl;
-	}
-	num_bytes = omp_alloc::inuse(thread);
-	if( num_bytes != 0 )
-	{	leak = true;
-		cout << "omp_alloc::inuse(thread) = " << num_bytes << endl;
+		CppAD::TrackElement::Print();
 	}
 
 	return leak;

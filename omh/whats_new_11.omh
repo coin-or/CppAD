@@ -55,7 +55,17 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 07-10$$
+$list number$$
 Add link to $tref Discrete$$ in $cref/omp_parallel/$$.
+$lnext
+Make use of the $cref/TrackNewDel/$$ routines
+$cref/in_parallel/$$ execution mode an error (it never worked properly); 
+see $cref/TrackNewDel OpenMP/TrackNewDel/OpenMP/$$.
+$lnext
+Change $cref/memory_leak/$$ so that it checks for a leak in all threads.
+This is what $cref/multi_newton.cpp/$$ and $cref/sum_i_inv.cpp/$$
+assumed was being done.
+$lend
 
 $head 07-09$$
 All the OpenMP parallel execution requirements
