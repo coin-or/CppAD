@@ -465,6 +465,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/sparse_unary_op.hpp \
 	cppad/local/sqrt_op.hpp \
 	cppad/local/std_math_ad.hpp \
+	cppad/local/std_set.hpp \
 	cppad/local/store_op.hpp \
 	cppad/local/sub_eq.hpp \
 	cppad/local/sub.hpp \

@@ -51,6 +51,8 @@ $end
 -----------------------------------------------------------------------------
 */
 
+# include <cppad/local/std_set.hpp>
+
 // BEGIN CppAD namespace
 namespace CppAD {
 
@@ -71,6 +73,8 @@ void parallel_ad(void)
 	ErrorHandler::Current();
 	isnan( std::complex<double>(0.) );
 	NumArg(BeginOp);
+	one_element_std_set<size_t>();
+	two_element_std_set<size_t>();
 
 	// statics that depend on the value of Base
 	AD<Base>::id_handle(0);

@@ -33,6 +33,9 @@ class recorder {
 	friend class player<Base>;
 
 private:
+	/// offset for this thread in the static hash table
+	const size_t thread_offset_;
+
 	/// Number of variables in the recording.
 	size_t    num_rec_var_;
 
@@ -51,21 +54,17 @@ private:
 
 	/// Character strings ('\\0' terminated) in the recording.
 	pod_vector<char> rec_text_;
-
-	/// offset for this thread in the static hash table
-	const size_t thread_offset_;
-
 // ---------------------- Public Functions -----------------------------------
 public:
 	/// Default constructor
 	recorder(void) : 
+	thread_offset_( omp_alloc::get_thread_num() * CPPAD_MAX_NUM_THREADS ) ,
 	num_rec_var_(0)                                      ,
 	rec_op_( std::numeric_limits<addr_t>::max() )        ,
 	rec_vecad_ind_( std::numeric_limits<addr_t>::max() ) ,
 	rec_op_arg_( std::numeric_limits<addr_t>::max() )    ,
 	rec_par_( std::numeric_limits<addr_t>::max() )       ,
-	rec_text_( std::numeric_limits<addr_t>::max() )      ,
-	thread_offset_( omp_alloc::get_thread_num() * CPPAD_MAX_NUM_THREADS )
+	rec_text_( std::numeric_limits<addr_t>::max() )
 	{ }
 
 	/// Destructor

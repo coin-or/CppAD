@@ -3,7 +3,7 @@
 # define CPPAD_SPARSE_HESSIAN_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -163,6 +163,7 @@ It return $code true$$, if it succeeds and $code false$$ otherwise.
 $end
 -----------------------------------------------------------------------------
 */
+# include <cppad/local/std_set.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -344,14 +345,9 @@ void ADFun<Base>::SparseHessianCase(
 	size_t n = Domain();
 
 	// check VectorSet is Simple Vector class with sets for elements
-	static std::set<size_t> two, three;
-	if( two.empty() )
-	{	two.insert(2);
-		three.insert(3);
-	}
-	CPPAD_ASSERT_UNKNOWN( two.size() == 1 );
-	CPPAD_ASSERT_UNKNOWN( three.size() == 1 );
-	CheckSimpleVector<std::set<size_t>, VectorSet>(two, three);
+	CheckSimpleVector<std::set<size_t>, VectorSet>(
+		one_element_std_set<size_t>(), two_element_std_set<size_t>()
+	);
 
 	// check Vector is Simple Vector class with Base type elements
 	CheckSimpleVector<Base, VectorBase>();

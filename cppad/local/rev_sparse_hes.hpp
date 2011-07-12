@@ -161,6 +161,7 @@ $end
 */
 # include <algorithm>
 # include <cppad/local/pod_vector.hpp>
+# include <cppad/local/std_set.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -393,14 +394,9 @@ void RevSparseHesSet(
 	std::set<size_t>::const_iterator itr;
 
 	// check VectorSet is Simple Vector class with sets for elements
-	static std::set<size_t> two, three;
-	if( two.empty() )
-	{	two.insert(2);
-		three.insert(3);
-	}
-	CPPAD_ASSERT_UNKNOWN( two.size() == 1 );
-	CPPAD_ASSERT_UNKNOWN( three.size() == 1 );
-	CheckSimpleVector<std::set<size_t>, VectorSet>(two, three);
+	CheckSimpleVector<std::set<size_t>, VectorSet>(
+		one_element_std_set<size_t>(), two_element_std_set<size_t>()
+	);
 
 	// range and domain dimensions for F
 # ifndef NDEBUG
