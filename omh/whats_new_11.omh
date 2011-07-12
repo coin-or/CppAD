@@ -12,6 +12,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	Rosen
+	Runge
 	executables
 	matlab
 	Addr
@@ -56,11 +58,11 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 07-11$$
-$list number
+$list number$$
 Change the upper limit for 
 $cref/max_num_threads/$$ from 32 to 48.
 $lnext
-Add $cref/OpenMP/omp_pararrel/$$ documentation for,
+Add $cref/OpenMP/omp_parallel/$$ documentation for,
 $cref/nan/nan/OpenMP/$$,
 $cref/Rosen34/Rosen34/OpenMP/$$, and
 $cref/Runge45/Runge45/OpenMP/$$.
@@ -71,7 +73,7 @@ $lend
 
 
 $subhead openmp/run.sh$$
-The following changes were made to $subhead openmp/run.sh$$:
+The following changes were made to $code openmp/run.sh$$:
 $list number$$
 $lnext
 Change the maximum
