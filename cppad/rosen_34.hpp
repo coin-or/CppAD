@@ -3,7 +3,7 @@
 # define CPPAD_ROSEN_34_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,28 +44,28 @@ $index equation, differential$$
 $section A 3rd and 4th Order Rosenbrock ODE Solver$$
 
 $head Syntax$$
-$syntax%# include <cppad/rosen_34.hpp>
+$codei%# include <cppad/rosen_34.hpp>
 %$$
-$syntax%%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%)
+$icode%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%)
 %$$
-$syntax%%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%, %e%)
+$icode%xf% = Rosen34(%F%, %M%, %ti%, %tf%, %xi%, %e%)
 %$$
 
 
 $head Description$$
 This is an embedded 3rd and 4th order Rosenbrock ODE solver 
-(see Section 16.6 of $xref/Bib/Numerical Recipes/Numerical Recipes/$$
+(see Section 16.6 of $cref/Numerical Recipes/Bib/Numerical Recipes/$$
 for a description of Rosenbrock ODE solvers).
 In particular, we use the formulas taken from page 100 of
-$xref/Bib/Shampine, L.F./Shampine, L.F./$$
+$cref/Shampine, L.F./Bib/Shampine, L.F./$$
 (except that the fraction 98/108 has been correction to be 97/108).
 $pre
 
 $$
-We use $latex n$$ for the size of the vector $italic xi$$.
+We use $latex n$$ for the size of the vector $icode xi$$.
 Let $latex \R$$ denote the real numbers
 and let $latex F : \R \times \R^n \rightarrow \R^n$$ be a smooth function.
-The return value $italic xf$$ contains a 5th order
+The return value $icode xf$$ contains a 5th order
 approximation for the value $latex X(tf)$$ where 
 $latex X : [ti , tf] \rightarrow \R^n$$ is defined by 
 the following initial value problem:
@@ -76,7 +76,7 @@ $latex \[
 \end{array}
 \] $$
 If your set of  ordinary differential equations are not stiff
-an explicit method may be better (perhaps $xref/Runge45/$$.)
+an explicit method may be better (perhaps $cref/Runge45/$$.)
 
 $head Include$$
 The file $code cppad/rosen_34.hpp$$ is included by $code cppad/cppad.hpp$$
@@ -84,27 +84,27 @@ but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 
 $head xf$$
-The return value $italic xf$$ has the prototype
-$syntax%
+The return value $icode xf$$ has the prototype
+$codei%
 	%Vector% %xf%
 %$$
-and the size of $italic xf$$ is equal to $italic n$$ 
-(see description of $xref/Rosen34/Vector/Vector/$$ below).
+and the size of $icode xf$$ is equal to $italic n$$ 
+(see description of $cref/Vector/Rosen34/Vector/$$ below).
 $latex \[
 	X(tf) = xf + O( h^5 )
 \] $$
 where $latex h = (tf - ti) / M$$ is the step size.
-If $italic xf$$ contains not a number $cref/nan/$$,
+If $icode xf$$ contains not a number $cref/nan/$$,
 see the discussion of $cref/f/Rosen34/Fun/Nan/$$.
 
 $head Fun$$
-The class $italic Fun$$ 
-and the object $italic F$$ satisfy the prototype
-$syntax%
+The class $icode Fun$$ 
+and the object $icode F$$ satisfy the prototype
+$codei%
 	%Fun% &%F%
 %$$
 This must support the following set of calls
-$syntax%
+$codei%
 	%F%.Ode(%t%, %x%, %f%)
 	%F%.Ode_ind(%t%, %x%, %f_t%)
 	%F%.Ode_dep(%t%, %x%, %f_x%)
@@ -112,161 +112,169 @@ $syntax%
 
 $subhead t$$
 In all three cases, 
-the argument $italic t$$ has prototype
-$syntax%
+the argument $icode t$$ has prototype
+$codei%
 	const %Scalar% &%t%
 %$$
-(see description of $xref/Rosen34/Scalar/Scalar/$$ below). 
+(see description of $cref/Scalar/Rosen34/Scalar/$$ below). 
 
 $subhead x$$
 In all three cases,
-the argument $italic x$$ has prototype
-$syntax%
+the argument $icode x$$ has prototype
+$codei%
 	const %Vector% &%x%
 %$$
-and has size $italic n$$
-(see description of $xref/Rosen34/Vector/Vector/$$ below). 
+and has size $icode n$$
+(see description of $cref/Vector/Rosen34/Vector/$$ below). 
 
 $subhead f$$
-The argument $italic f$$ to $syntax%%F%.Ode%$$ has prototype
-$syntax%
+The argument $icode f$$ to $icode%F%.Ode%$$ has prototype
+$codei%
 	%Vector% &%f%
 %$$
-On input and output, $italic f$$ is a vector of size $italic n$$
-and the input values of the elements of $italic f$$ do not matter.
+On input and output, $icode f$$ is a vector of size $italic n$$
+and the input values of the elements of $icode f$$ do not matter.
 On output,
-$italic f$$ is set equal to $latex F(t, x)$$
-(see $italic F(t, x)$$ in $xref/Rosen34/Description/Description/$$). 
+$icode f$$ is set equal to $latex F(t, x)$$
+(see $icode F(t, x)$$ in $cref/Description/Rosen34/Description/$$). 
 
 $subhead f_t$$
-The argument $italic f_t$$ to $syntax%%F%.Ode_ind%$$ has prototype
-$syntax%
+The argument $icode f_t$$ to $icode%F%.Ode_ind%$$ has prototype
+$codei%
 	%Vector% &%f_t%
 %$$
-On input and output, $italic f_t$$ is a vector of size $italic n$$
-and the input values of the elements of $italic f_t$$ do not matter.
+On input and output, $icode f_t$$ is a vector of size $italic n$$
+and the input values of the elements of $icode f_t$$ do not matter.
 On output, the $th i$$ element of
-$italic f_t$$ is set equal to $latex \partial_t F_i (t, x)$$ 
-(see $italic F(t, x)$$ in $xref/Rosen34/Description/Description/$$). 
+$icode f_t$$ is set equal to $latex \partial_t F_i (t, x)$$ 
+(see $icode F(t, x)$$ in $cref/Description/Rosen34/Description/$$). 
 
 $subhead f_x$$
-The argument $italic f_x$$ to $syntax%%F%.Ode_dep%$$ has prototype
-$syntax%
+The argument $icode f_x$$ to $icode%F%.Ode_dep%$$ has prototype
+$codei%
 	%Vector% &%f_x%
 %$$
-On input and output, $italic f_x$$ is a vector of size $syntax%%n%*%n%$$
-and the input values of the elements of $italic f_x$$ do not matter.
-On output, the [$syntax%%i%*%n%+%j%$$] element of
-$italic f_x$$ is set equal to $latex \partial_{x(j)} F_i (t, x)$$ 
-(see $italic F(t, x)$$ in $xref/Rosen34/Description/Description/$$). 
+On input and output, $icode f_x$$ is a vector of size $icode%n%*%n%$$
+and the input values of the elements of $icode f_x$$ do not matter.
+On output, the [$icode%i%*%n%+%j%$$] element of
+$icode f_x$$ is set equal to $latex \partial_{x(j)} F_i (t, x)$$ 
+(see $icode F(t, x)$$ in $cref/Description/Rosen34/Description/$$). 
 
 $subhead Nan$$
-If any of the elements of $italic f$$, $italic f_t$$, or $italic f_x$$
+If any of the elements of $icode f$$, $italic f_t$$, or $italic f_x$$
 have the value not a number $code nan$$,
 the routine $code Rosen34$$ returns with all the
-elements of $italic xf$$ and $italic e$$ equal to $code nan$$.
+elements of $icode xf$$ and $italic e$$ equal to $code nan$$.
 
 $subhead Warning$$
-The arguments $italic f$$, $italic f_t$$, and $italic f_x$$
+The arguments $icode f$$, $italic f_t$$, and $italic f_x$$
 must have a call by reference in their prototypes; i.e.,
 do not forget the $code &$$ in the prototype for 
-$italic f$$, $italic f_t$$ and $italic f_x$$.
+$icode f$$, $italic f_t$$ and $italic f_x$$.
 
 $subhead Optimization$$
 Every call of the form 
-$syntax%
+$codei%
 	%F%.Ode_ind(%t%, %x%, %f_t%)
 %$$
 is directly followed by a call of the form 
-$syntax%
+$codei%
 	%F%.Ode_dep(%t%, %x%, %f_x%)
 %$$
-where the arguments $italic t$$ and $italic x$$ have not changed between calls.
-In many cases it is faster to compute the values of $italic f_t$$
-and $italic f_x$$ together and then pass them back one at a time.
+where the arguments $icode t$$ and $italic x$$ have not changed between calls.
+In many cases it is faster to compute the values of $icode f_t$$
+and $icode f_x$$ together and then pass them back one at a time.
 
 $head M$$
-The argument $italic M$$ has prototype
-$syntax%
+The argument $icode M$$ has prototype
+$codei%
 	size_t %M%
 %$$
 It specifies the number of steps
 to use when solving the differential equation.
 This must be greater than or equal one.
 The step size is given by $latex h = (tf - ti) / M$$, thus
-the larger $italic M$$, the more accurate the
-return value $italic xf$$ is as an approximation
+the larger $icode M$$, the more accurate the
+return value $icode xf$$ is as an approximation
 for $latex X(tf)$$.
 
 $head ti$$
-The argument $italic ti$$ has prototype
-$syntax%
+The argument $icode ti$$ has prototype
+$codei%
 	const %Scalar% &%ti%
 %$$
-(see description of $xref/Rosen34/Scalar/Scalar/$$ below). 
-It specifies the initial time for $italic t$$ in the 
+(see description of $cref/Scalar/Rosen34/Scalar/$$ below). 
+It specifies the initial time for $icode t$$ in the 
 differential equation; i.e., 
-the time corresponding to the value $italic xi$$.
+the time corresponding to the value $icode xi$$.
 
 $head tf$$
-The argument $italic tf$$ has prototype
-$syntax%
+The argument $icode tf$$ has prototype
+$codei%
 	const %Scalar% &%tf%
 %$$
-It specifies the final time for $italic t$$ in the 
+It specifies the final time for $icode t$$ in the 
 differential equation; i.e., 
-the time corresponding to the value $italic xf$$.
+the time corresponding to the value $icode xf$$.
 
 $head xi$$
-The argument $italic xi$$ has the prototype
-$syntax%
+The argument $icode xi$$ has the prototype
+$codei%
 	const %Vector% &%xi%
 %$$
-and the size of $italic xi$$ is equal to $italic n$$.
+and the size of $icode xi$$ is equal to $italic n$$.
 It specifies the value of $latex X(ti)$$
 
 $head e$$
-The argument $italic e$$ is optional and has the prototype
-$syntax%
+The argument $icode e$$ is optional and has the prototype
+$codei%
 	%Vector% &%e%
 %$$
-If $italic e$$ is present,
-the size of $italic e$$ must be equal to $italic n$$.
-The input value of the elements of $italic e$$ does not matter.
+If $icode e$$ is present,
+the size of $icode e$$ must be equal to $italic n$$.
+The input value of the elements of $icode e$$ does not matter.
 On output
 it contains an element by element
-estimated bound for the absolute value of the error in $italic xf$$
+estimated bound for the absolute value of the error in $icode xf$$
 $latex \[
 	e = O( h^4 )
 \] $$
 where $latex h = (tf - ti) / M$$ is the step size.
 
 $head Scalar$$
-The type $italic Scalar$$ must satisfy the conditions
-for a $xref/NumericType/$$ type.
-The routine $xref/CheckNumericType/$$ will generate an error message
+The type $icode Scalar$$ must satisfy the conditions
+for a $cref/NumericType/$$ type.
+The routine $cref/CheckNumericType/$$ will generate an error message
 if this is not the case.
 In addition, the following operations must be defined for 
-$italic Scalar$$ objects $italic a$$ and $italic b$$:
+$icode Scalar$$ objects $italic a$$ and $italic b$$:
 
 $table
 $bold Operation$$ $cnext $bold Description$$  $rnext
-$syntax%%a% < %b%$$ $cnext
+$icode%a% < %b%$$ $cnext
 	less than operator (returns a $code bool$$ object)
 $tend
 
 $head Vector$$
-The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type Scalar/$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
+The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+$cref/elements of type Scalar/SimpleVector/Elements of Specified Type/$$.
+The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
+
+$head OpenMP$$
+For each value of 
+$cref/Scalar/Rosen34/Scalar/$$, 
+$cref/Vector/Rosen34/Vector/$$, and
+$cref/Fun/Rosen34/Fun/$$, 
+the first call to $code Rosen34$$
+must not be $cref/in_parallel/$$ execution mode.
 
 $head Example$$
 $children%
 	example/rosen_34.cpp
 %$$
 The file
-$xref/Rosen34.cpp/$$
+$cref/Rosen34.cpp/$$
 contains an example and test a test of using this routine.
 It returns true if it succeeds and false otherwise.
 
@@ -308,6 +316,8 @@ Vector Rosen34(
 	const Vector &xi ,
 	Vector       &e )
 {
+	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+
 	// check numeric type specifications
 	CheckNumericType<Scalar>();
 

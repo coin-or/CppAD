@@ -43,6 +43,12 @@ $cref/OpenMP/user_atomic/afun/OpenMP/$$  $cnext
 	$title user_atomic$$ $rnext
 $cref/OpenMP/ErrorHandler/Constructor/OpenMP/$$ $cnext
 	$title ErrorHandler$$ $rnext
+$cref/OpenMP/nan/OpenMP/$$ $cnext
+	$title nan$$ $rnext
+$cref/OpenMP/Rosen34/OpenMP/$$ $cnext
+	$title Rosen34$$ $rnext
+$cref/OpenMP/Runge45/OpenMP/$$ $cnext
+	$title Runge45$$ $rnext
 $tend
 
 $head Example and Tests$$

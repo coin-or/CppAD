@@ -56,11 +56,21 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 07-11$$
+$list number
 Change the upper limit for 
 $cref/max_num_threads/$$ from 32 to 48.
-$pre
+$lnext
+Add $cref/OpenMP/omp_pararrel/$$ documentation for,
+$cref/nan/nan/OpenMP/$$,
+$cref/Rosen34/Rosen34/OpenMP/$$, and
+$cref/Runge45/Runge45/OpenMP/$$.
+$lnext
+Fix $cref CheckNumericType$$ and $cref CheckSimpleVector$$
+so they work properly when used $cref/in_parallel/$$ execution mode.
+$lend
 
-$$
+
+$subhead openmp/run.sh$$
 The following changes were made to $subhead openmp/run.sh$$:
 $list number$$
 $lnext

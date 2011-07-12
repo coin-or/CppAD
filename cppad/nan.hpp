@@ -24,26 +24,26 @@ $spell
 	const
 $$
 
-$section Obtain Nan and Determine if a Value is Nan$$
+$section Obtain Nan or Determine if a Value is Nan$$
 
 $index isnan$$
 $index hasnan$$
 $index nan$$
 
 $head Syntax$$
-$syntax%# include <cppad/nan.hpp>
+$codei%# include <cppad/nan.hpp>
 %$$
-$syntax%%s% = nan(%z%)
+$icode%s% = nan(%z%)
 %$$
-$syntax%%b% = isnan(%s%)
+$icode%b% = isnan(%s%)
 %$$
-$syntax%%b% = hasnan(%v%)%$$
+$icode%b% = hasnan(%v%)%$$
 
 $head Purpose$$
 It obtain and check for the value not a number $code nan$$.
-The IEEE standard specifies that a floating point value $italic a$$ 
+The IEEE standard specifies that a floating point value $icode a$$ 
 is $code nan$$ if and only if the following returns true
-$syntax%
+$codei%
 	%a% != %a%
 %$$ 
 Some systems do not get this correct, so we also use the fact that
@@ -67,19 +67,19 @@ These preprocessor symbols will no longer be defined after
 this file is included. 
 
 $head nan$$
-This routine returns a $code nan$$ with the same type as $italic z$$.
+This routine returns a $code nan$$ with the same type as $icode z$$.
 
 $subhead z$$
-The argument $italic z$$ has prototype
-$syntax%
+The argument $icode z$$ has prototype
+$codei%
 	const %Scalar% &%z% 
 %$$
 and its value is zero
-(see $cref/Scalar/nan/Scalar/$$ for the definition of $italic Scalar$$).
+(see $cref/Scalar/nan/Scalar/$$ for the definition of $icode Scalar$$).
 
 $subhead s$$
-The return value $italic s$$ has prototype
-$syntax%
+The return value $icode s$$ has prototype
+$codei%
 	%Scalar% %s%
 %$$
 It is the value $code nan$$ for this floating point type.
@@ -88,56 +88,65 @@ $head isnan$$
 This routine determines if a scalar value is $code nan$$.
 
 $subhead s$$
-The argument $italic s$$ has prototype
-$syntax%
+The argument $icode s$$ has prototype
+$codei%
 	const %Scalar% %s%
 %$$
 
 $subhead b$$
-The return value $italic b$$ has prototype
-$syntax%
+The return value $icode b$$ has prototype
+$codei%
 	bool %b%
 %$$
-It is true if the value $italic s$$ is $code nan$$.
+It is true if the value $icode s$$ is $code nan$$.
 
 $head hasnan$$
 This routine determines if a 
 $cref/SimpleVector/$$ has an element that is $code nan$$.
 
 $subhead v$$
-The argument $italic v$$ has prototype
-$syntax%
+The argument $icode v$$ has prototype
+$codei%
 	const %Vector% &%v%
 %$$
-(see $cref/Vector/nan/Vector/$$ for the definition of $italic Vector$$).
+(see $cref/Vector/nan/Vector/$$ for the definition of $icode Vector$$).
 
 $subhead b$$
-The return value $italic b$$ has prototype
-$syntax%
+The return value $icode b$$ has prototype
+$codei%
 	bool %b%
 %$$
-It is true if the vector $italic v$$ has a $code nan$$.
+It is true if the vector $icode v$$ has a $code nan$$.
 
 $head Scalar$$
-The type $italic Scalar$$ must support the following operations;
+The type $icode Scalar$$ must support the following operations;
 $table
 $bold Operation$$ $cnext $bold Description$$  $rnext
-$syntax%%a% / %b%$$ $cnext
-	division operator (returns a $italic Scalar$$ object)
+$icode%a% / %b%$$ $cnext
+	division operator (returns a $icode Scalar$$ object)
 $rnext
-$syntax%%a% == %b%$$ $cnext
+$icode%a% == %b%$$ $cnext
 	equality operator (returns a $code bool$$ object)
 $rnext
-$syntax%%a% != %b%$$ $cnext
+$icode%a% != %b%$$ $cnext
 	not equality operator (returns a $code bool$$ object)
 $tend
-Note that the division operator will be used with $italic a$$ and $italic b$$
+Note that the division operator will be used with $icode a$$ and $italic b$$
 equal to zero. For some types (e.g. $code int$$) this may generate
 an exception. No attempt is made to catch any such exception.
 
 $head Vector$$
-The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
-elements of type $italic Scalar$$.
+The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+elements of type $icode Scalar$$.
+
+$head OpenMP$$
+For each value of $icode Scalar$$,
+the first call to
+$codei%
+	%b% = isnan(%s%)
+%$$
+must not be $cref/in_parallel/$$ execution mode; 
+see $code isnan$$ in $cref/parallel_ad/parallel_ad/isnan/$$.
 
 $children%
 	example/nan.cpp
@@ -151,6 +160,7 @@ $end
 */
 
 # include <cstddef>
+# include <cppad/local/cppad_assert.hpp>
 
 # ifdef nan
 # undef nan
@@ -168,7 +178,8 @@ inline Scalar nan(const Scalar &zero)
 
 template <class Scalar>
 inline bool isnan(const Scalar &s)
-{	static Scalar scalar_nan = nan( Scalar(0) );	
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;	
+	static Scalar scalar_nan = nan( Scalar(0) );	
 	return (s != s) | (s == scalar_nan);
 }
 

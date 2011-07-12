@@ -3,7 +3,7 @@
 # define CPPAD_CHECK_SIMPLE_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -96,7 +96,10 @@ $end
 ---------------------------------------------------------------------------
 */
 
+# include <cstddef>
 # include <cppad/local/cppad_assert.hpp>
+# include <cppad/local/define.hpp>
+# include <cppad/omp_alloc.hpp>
 
 namespace CppAD {
 
@@ -116,11 +119,14 @@ namespace CppAD {
 
 	template <class Scalar, class Vector>
 	void CheckSimpleVector(const Scalar& x, const Scalar& y)
-	{	// only need execute once per value Scalar, Vector pair
-		static bool runOnce = false;
-		if( runOnce )
+	{	// Section 3.6.2 of ISO/IEC 14882:1998(E) states: "The storage for 
+		// objects with static storage duration (3.7.1) shall be zero-
+		// initialized (8.5) before any other initialization takes place."
+		static size_t count[CPPAD_MAX_NUM_THREADS];
+		size_t thread = omp_alloc::get_thread_num();
+		if( count[thread] > 0  )
 			return;
-		runOnce = true;
+		count[thread]++;
 
 		// value_type must be type of elements of Vector
 		typedef typename Vector::value_type value_type;

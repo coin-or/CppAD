@@ -14,6 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin parallel_ad$$
 $spell
+	isnan
+	std
 $$
 
 $section Enable Parallel Mode AD Calculations$$
@@ -35,6 +37,15 @@ before using it in using $cref/parallel/in_parallel/$$ execution mode
 $head Restriction$$
 This function must be called before any $codei%AD<%Base%.%$$ objects are used
 in $cref/parallel/in_parallel/$$ execution mode.
+
+$head isnan$$
+This routine has the side effect of calling
+$codei%
+	%b% = isnan(%s%)
+%$$
+where $icode s$$ has type 
+$icode%Base%$$, $codei%AD<%Base%>%$$, and
+$codei%std::complex<double>%$$.
 
 $end
 -----------------------------------------------------------------------------

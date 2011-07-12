@@ -3,7 +3,7 @@
 # define CPPAD_CHECK_NUMERIC_TYPE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -62,23 +62,26 @@ $end
 ---------------------------------------------------------------------------
 */
 
-
+# include <cstddef>
+# include <cppad/omp_alloc.hpp>
 
 namespace CppAD {
 
 # ifdef NDEBUG
 	template <class NumericType>
-	inline void CheckNumericType(void)
+	void CheckNumericType(void)
 	{ }
 # else
 	template <class NumericType>
 	NumericType CheckNumericType(void)
-	{	// only need execute once per value NumericType type
-		static bool runOnce = false;
-		if( runOnce )
+	{	// Section 3.6.2 of ISO/IEC 14882:1998(E) states: "The storage for 
+		// objects with static storage duration (3.7.1) shall be zero-
+		// initialized (8.5) before any other initialization takes place."
+		static size_t count[CPPAD_MAX_NUM_THREADS];
+		size_t thread = omp_alloc::get_thread_num();
+		if( count[thread] > 0  )
 			return NumericType(0);
-		runOnce = true;
-
+		count[thread]++;
 		/*
 		contructors
 		*/

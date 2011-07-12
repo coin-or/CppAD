@@ -3,7 +3,7 @@
 # define CPPAD_RUNGE_45_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -212,6 +212,15 @@ $xref/SimpleVector/Elements of Specified Type/elements of type Scalar/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
+$head OpenMP$$
+For each value of 
+$cref/Scalar/Runge45/Scalar/$$, 
+$cref/Vector/Runge45/Vector/$$, and
+$cref/Fun/Runge45/Fun/$$, 
+the first call to $code Runge45$$
+must not be $cref/in_parallel/$$ execution mode.
+
+
 $head Example$$
 $children%
 	example/runge_45_1.cpp%
@@ -264,6 +273,8 @@ Vector Runge45(
 	const Vector &xi ,
 	Vector       &e )
 {
+	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+
 	// check numeric type specifications
 	CheckNumericType<Scalar>();
 
