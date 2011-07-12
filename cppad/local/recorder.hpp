@@ -52,6 +52,9 @@ private:
 	/// Character strings ('\\0' terminated) in the recording.
 	pod_vector<char> rec_text_;
 
+	/// offset for this thread in the static hash table
+	const size_t thread_offset_;
+
 // ---------------------- Public Functions -----------------------------------
 public:
 	/// Default constructor
@@ -61,7 +64,8 @@ public:
 	rec_vecad_ind_( std::numeric_limits<addr_t>::max() ) ,
 	rec_op_arg_( std::numeric_limits<addr_t>::max() )    ,
 	rec_par_( std::numeric_limits<addr_t>::max() )       ,
-	rec_text_( std::numeric_limits<addr_t>::max() )
+	rec_text_( std::numeric_limits<addr_t>::max() )      ,
+	thread_offset_( omp_alloc::get_thread_num() * CPPAD_MAX_NUM_THREADS )
 	{ }
 
 	/// Destructor
@@ -202,27 +206,24 @@ This value is not necessarily placed at the end of the vector
 */
 template <class Base>
 size_t recorder<Base>::PutPar(const Base &par)
-{	static size_t   hash_table[CPPAD_HASH_TABLE_SIZE];
-	static bool     init = true;
+{	static size_t   hash_table[CPPAD_HASH_TABLE_SIZE * CPPAD_MAX_NUM_THREADS];
 	size_t          i;
-	unsigned short  code;
+	size_t          code;
 
-	if( init )
-	{	// initialize hash table
-		for(i = 0; i < CPPAD_HASH_TABLE_SIZE; i++)
-			hash_table[i] = 0;
-		init = false;
-	}
-	
+	CPPAD_ASSERT_UNKNOWN( 
+		thread_offset_ / CPPAD_HASH_TABLE_SIZE
+		== 
+		omp_alloc::get_thread_num() 
+	);
+
 	// get hash code for this value
-	code = hash_code(par);
+	code = static_cast<size_t>( hash_code(par) );
+	CPPAD_ASSERT_UNKNOWN( code < CPPAD_HASH_TABLE_SIZE );
 
 	// If we have a match, return the parameter index
-	i = hash_table[code];
-	if( i < rec_par_.size() )
-	{	if( IdenticalEqualPar(rec_par_[i], par) )
+	i = hash_table[code + thread_offset_];
+	if( i < rec_par_.size() && IdenticalEqualPar(rec_par_[i], par) )
 			return i;
-	}
 	
 	// place a new value in the table
 	i           = rec_par_.extend(1);
@@ -230,7 +231,7 @@ size_t recorder<Base>::PutPar(const Base &par)
 	CPPAD_ASSERT_UNKNOWN( rec_par_.size() == i + 1 );
 
 	// make the hash code point to this new value
-	hash_table[code] = i;
+	hash_table[code + thread_offset_] = i;
 
 	// return the parameter index
 	return i;

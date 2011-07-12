@@ -90,6 +90,7 @@ test_more_SOURCES  = \
 	neg.cpp \
 	ode_err_control.cpp \
 	optimize.cpp \
+	parameter.cpp \
 	poly.cpp \
 	pow.cpp \
 	pow_int.cpp \

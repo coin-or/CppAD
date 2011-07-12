@@ -57,6 +57,11 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-12$$
+There was one static hash code table that was used by multiple threads
+during $cref/in_parallel/$$ execution mode.
+This bug has been fixed.
+
 $head 07-11$$
 $list number$$
 Change the upper limit for 

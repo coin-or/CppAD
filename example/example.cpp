@@ -322,7 +322,7 @@ int main(void)
 	}
 	else
 	{	Run_ok_count++;
-		cout << "Ok:    " << "No memory leak detected" << endl;
+		cout << "OK:    " << "No memory leak detected" << endl;
 	}
 	// convert int(size_t) to avoid warning on _MSC_VER systems
 	if( ok )

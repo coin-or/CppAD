@@ -24,7 +24,7 @@ CppAD hashing utility.
 the codes retruned by hash_code are between zero and CPPAD_HASH_TABLE_SIZE 
 minus one. 
 */
-# define CPPAD_HASH_TABLE_SIZE 65536
+# define CPPAD_HASH_TABLE_SIZE 10000
 
 /*!
 General purpose hash code for an arbitrary value.
@@ -42,7 +42,7 @@ the value that we are generating a hash code for.
 is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
 \par Checked Assertions
-\li \c std::numeric_limits<unsigned short>::max() == CPPAD_HASH_TABLE_SIZE - 1
+\li \c std::numeric_limits<unsigned short>::max() >= CPPAD_HASH_TABLE_SIZE
 \li \c sizeof(value) is even 
 \li \c sizeof(unsigned short)  == 2
 */
@@ -51,8 +51,8 @@ template <class Value>
 unsigned short hash_code(const Value& value)
 {	CPPAD_ASSERT_UNKNOWN( 
 		std::numeric_limits<unsigned short>::max()
-		==
-		(CPPAD_HASH_TABLE_SIZE-1)
+		>=
+		CPPAD_HASH_TABLE_SIZE
 	);
 	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
 	CPPAD_ASSERT_UNKNOWN( sizeof(value) % 2  == 0 );
@@ -68,7 +68,7 @@ unsigned short hash_code(const Value& value)
 	while(i--)
 		code += v[i];
 
-	return code;
+	return code % CPPAD_HASH_TABLE_SIZE;
 }
 
 /*!
@@ -111,7 +111,7 @@ is a hash code that is between zero and CPPAD_HASH_TABLE_SIZE - 1.
 
 \par Checked Assertions
 \c op must be one of the operators specified above. In addition,
-\li \c std::numeric_limits<unsigned short>::max() == CPPAD_HASH_TABLE_SIZE - 1
+\li \c std::numeric_limits<unsigned short>::max() >= CPPAD_HASH_TABLE_SIZE 
 \li \c sizeof(size_t) is even 
 \li \c sizeof(Base) is even 
 \li \c sizeof(unsigned short)  == 2
@@ -127,8 +127,8 @@ unsigned short hash_code(
 	const Base* par       )
 {	CPPAD_ASSERT_UNKNOWN( 
 		std::numeric_limits<unsigned short>::max()
-		==
-		(CPPAD_HASH_TABLE_SIZE-1)
+		>=
+		CPPAD_HASH_TABLE_SIZE
 	);
 	CPPAD_ASSERT_UNKNOWN( size_t (op) <= size_t(SubvvOp) );
 	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
@@ -228,7 +228,7 @@ unsigned short hash_code(
 		CPPAD_ASSERT_UNKNOWN(false);
 	}
 
-	return code;
+	return code % CPPAD_HASH_TABLE_SIZE;
 }
 
 CPPAD_END_NAMESPACE
