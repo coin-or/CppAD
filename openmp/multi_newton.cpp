@@ -212,7 +212,7 @@ namespace { // empty namespace
 }
 
 int main(int argc, char *argv[])
-{
+{	bool ok = true;
 	using std::cout;
 	using std::endl;
 	using CppAD::vector;
@@ -220,7 +220,8 @@ int main(int argc, char *argv[])
 	const char *usage = 
 	"usage: multi_newton n_thread repeat n_zero n_grid n_sum use_ad";
 	if( argc != 7 )
-	{	std::cerr << usage << endl;
+	{	std::cerr << "argc = " << argc << endl;	
+		std::cerr << usage << endl;
 		exit(1);
 	}
 	argv++;
@@ -268,13 +269,6 @@ int main(int argc, char *argv[])
 	// now determine the maximum number of threads
 	n_thread = size_t( omp_get_max_threads() );
 	assert( n_thread > 0 );
-
-	// Inform the CppAD of the maximum number of threads that will be used
-	CppAD::omp_alloc::max_num_threads(n_thread);
-
-	// enable use of AD<double> in parallel mode
-	CppAD::parallel_ad<double>();
-
 	// inform the user of the maximum number of threads
 	cout << "_OPENMP  = '" << _OPENMP << "'" << endl;;
 # else
@@ -287,13 +281,16 @@ int main(int argc, char *argv[])
 	cout << "n_sum    = " << n_sum    << endl;
 	cout << "use_ad   = " << use_ad   << endl;
 
+	// Inform the CppAD of the maximum number of threads that will be used
+	CppAD::omp_alloc::max_num_threads(n_thread);
 	// check that no memory is in use or avialable at start
-	bool ok = true;
 	size_t thread;
 	for(thread = 0; thread < n_thread; thread++)
 	{	ok &= CppAD::omp_alloc::inuse(thread) == 0; 
 		ok &= CppAD::omp_alloc::available(thread) == 0; 
 	}
+	// enable use of AD<double> in parallel mode
+	CppAD::parallel_ad<double>();
 
 	if( repeat > 0 )
 	{	// run the calculation the requested number of times

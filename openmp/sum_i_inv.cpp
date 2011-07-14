@@ -183,10 +183,6 @@ int main(int argc, char *argv[])
 	// now determine the maximum number of threads
 	n_thread = omp_get_max_threads();
 	assert( n_thread > 0 );
-	
-	// Inform CppAD OpenMP memory allocator about number of threads
-	CppAD::omp_alloc::max_num_threads(size_t(n_thread));
-
 	// inform the user of the maximum number of threads
 	cout << "OPENMP   = '" << _OPENMP << "'" << endl;
 # else
@@ -197,6 +193,9 @@ int main(int argc, char *argv[])
 	cout << "mega_sum = " << mega_sum << endl;
 	// initialize flag
 	bool ok = true;
+	
+	// Inform CppAD OpenMP memory allocator about number of threads
+	CppAD::omp_alloc::max_num_threads(size_t(n_thread));
 
 	// Correctness check
 	double sum;

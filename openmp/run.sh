@@ -1,4 +1,4 @@
-# ! /bin/bash -e 
+#! /bin/bash -e 
 # $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
@@ -67,11 +67,11 @@ compiler="g++"
 # The variable @code openmp_flag@@ is a compiler flag
 # that requests openmp support.
 # If it is equal to @code ""@@, the tests will be run without OpenMP.
-# @codep
-openmp_flag=""
-# @@
 # For g++ version 4.1 and higher, 
 # if it is equal to "-fopenmp", will compile the program with OpenMP support.
+# @codep
+openmp_flag="-fopenmp"
+# @@
 #
 # @head Other Flag@@
 # The variable @code speed_flags@@ specifies the other compiler flags
@@ -178,6 +178,8 @@ test_name="$1"
 #
 echo "cd openmp"
 cd openmp
+#
+error_occurred="no"
 # ----------------------------------------------------------------------------
 # Compile without OpenMP
 #
@@ -191,7 +193,11 @@ args_plus="$n_thread $args"
 # Run without OpenMP
 cmd="./${test_name}_no_openmp $args_plus"
 echo "$cmd"
-eval $cmd | tee temp.$$
+if ! $cmd > temp.$$
+then
+	error_occurred="yes"
+fi
+cat temp.$$
 no_openmp=`cat temp.$$ | grep 'repeats_per_sec' | sed -e 's|.*=||'`
 #
 # clean up (this is a source directory)
@@ -199,7 +205,10 @@ no_openmp=`cat temp.$$ | grep 'repeats_per_sec' | sed -e 's|.*=||'`
 rm ${test_name}_no_openmp
 # echo "rm temp.$$"
 rm temp.$$
-#
+if [ "$error_occurred" = "yes" ]
+then
+	exit 1
+fi
 if [ "$openmp_flag" == "" ]
 then
 	exit 0
@@ -215,17 +224,27 @@ eval $cmd
 #
 cmd="./${test_name}_yes_openmp $args_plus"
 echo "$cmd"
-eval $cmd | tee temp.$$
+if ! $cmd > temp.$$
+then
+	error_occurred="yes"
+fi
+cat temp.$$
 dynamic_openmp=`cat temp.$$ | grep 'repeats_per_sec' | sed -e 's|.*=||'`
 dynamic_n_thread=`cat temp.$$ | grep 'n_thread' | sed -e 's|.*=||'`
 #
-if [ "$test_name" == "parallel_ad" ] || [ "$test_name" == "example_a11c" ]
+if [ "$test_name" == "parallel_ad" ]  || \
+   [ "$test_name" == "example_a11c" ] || \
+   [ "$error_occurred" == "yes" ]
 then
 	# clean up (this is a source directory)
 	# echo "rm ${test_name}_yes_openmp"
 	rm ${test_name}_yes_openmp
 	# echo "rm temp.$$"
 	rm temp.$$
+	if [ "$error_occurred" = "yes" ]
+	then
+		exit 1
+	fi
 	exit 0
 fi
 # ---------------------------------------------------------------------------
@@ -248,7 +267,21 @@ for n_thread in $n_thread_set
 do
 	cmd="./${test_name}_yes_openmp $n_thread $args"
 	echo "$cmd"
-	eval $cmd | tee temp.$$
+	if ! $cmd > temp.$$
+	then
+		error_occurred="yes"
+	fi
+	cat temp.$$
+	if [ "$error_occurred" = "yes" ]
+	then
+		#
+		# clean up (this is source directory)
+		# echo "rm ${test_name}_yes_openmp"
+		rm ${test_name}_yes_openmp
+		# echo "rm temp.$$"
+		rm temp.$$
+		exit 1
+	fi
 	temp=`cat temp.$$ | grep 'repeats_per_sec' | sed -e 's|.*=||'`
 	if [ "$temp" != "" ]
 	then

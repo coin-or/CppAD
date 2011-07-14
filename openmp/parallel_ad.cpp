@@ -74,7 +74,8 @@ namespace {
 
 // main program
 int main(int argc, char *argv[])
-{	using CppAD::AD;
+{	bool all_ok = true;
+	using CppAD::AD;
 	using CppAD::NearEqual;
 	using std::cerr;
 	using std::cout;
@@ -108,16 +109,22 @@ int main(int argc, char *argv[])
 	assert( n_thread > 0 );
 	// ---------------------------------------------------------------
 
+	// Inform the CppAD of the maximum number of threads that will be used
+	CppAD::omp_alloc::max_num_threads(n_thread);
+	// check that no memory is in use or avialable at start
+	size_t thread;
+	for(thread = 0; thread < n_thread; thread++)
+	{	all_ok &= CppAD::omp_alloc::inuse(thread) == 0; 
+		all_ok &= CppAD::omp_alloc::available(thread) == 0; 
+	}
+	// enable use of AD<double> in parallel mode
+	CppAD::parallel_ad<double>();
+	
+
 	const double pi = 4. * atan(1.);
 	int k, n_k = 20;
 	CPPAD_TEST_VECTOR<bool> ok(n_k);
 
-	// Inform the CppAD of the maximum number of threads that will be used
-	CppAD::omp_alloc::max_num_threads(n_thread);
-
-	// enable use of AD<double> in parallel mode
-	CppAD::parallel_ad<double>();
-	
 # ifdef _OPENMP
 # pragma omp parallel for
 # endif
@@ -141,7 +148,6 @@ int main(int argc, char *argv[])
 		ok[k]  = NearEqual(d_z[0], 0., 1e-10, 1e-10);
 	}
 	// summarize results
-	bool all_ok = true;
 	for(k = 0; k < n_k; k++)
 		all_ok &= ok[k];
 
