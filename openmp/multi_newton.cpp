@@ -269,7 +269,7 @@ int main(int argc, char *argv[])
 	n_thread = size_t( omp_get_max_threads() );
 	assert( n_thread > 0 );
 
-	// Inform the CppAD OpenMP memory allocator about number of threads
+	// Inform the CppAD of the maximum number of threads that will be used
 	CppAD::omp_alloc::max_num_threads(n_thread);
 
 	// enable use of AD<double> in parallel mode

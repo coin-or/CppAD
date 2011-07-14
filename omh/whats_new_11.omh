@@ -57,14 +57,16 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 07-12$$
+$head 07-13$$
 $list number$$
-There was one static hash code table that was used by multiple threads
-during $cref/in_parallel/$$ execution mode.
-This bug has been fixed.
+static hash code data that was begin used by multiple threads
+when recording $codei%AD<%Base%>%$$ operations 
+$cref/in_parallel/$$ execution mode. This has been fixed.
 $lnext
 Make the $cref/sparsity/Sparse/$$ calculations safe
-for parallel execution.
+for use during $cref/in_parallel/$$ execution mode.
+$lnext
+Add the $cref/parallel_ad.cpp/$$ example.
 $lend
 
 $head 07-11$$

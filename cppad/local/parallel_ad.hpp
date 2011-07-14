@@ -47,6 +47,16 @@ where $icode s$$ has type
 $icode%Base%$$, $codei%AD<%Base%>%$$, and
 $codei%std::complex<double>%$$.
 
+$head Example$$
+$children%
+	example/parallel_ad.cpp
+%$$
+The file
+$cref/parallel_ad.cpp/$$
+contains an example and test of this function.   
+It returns true if it succeeds and false otherwise.
+
+
 $end
 -----------------------------------------------------------------------------
 */
@@ -68,13 +78,22 @@ void parallel_ad(void)
 		"parallel_ad: must be called before parallel execution."
 	);
 
-	// ensure statics in following routines are initialized
+	// ensure statics in following functions are initialized
 	elapsed_seconds();
 	ErrorHandler::Current();
 	isnan( std::complex<double>(0.) );
 	NumArg(BeginOp);
 	one_element_std_set<size_t>();
 	two_element_std_set<size_t>();
+
+	// the sparse_pack class has member functions with static data
+	sparse_pack sp;
+	sp.resize(1, 1);       // so can call add_element
+	sp.add_element(0, 0);  // has static data
+	sp.begin(0);           // so can call next_element
+	sp.next_element();     // has static data
+	sp.clear(0);           // has static data
+
 
 	// statics that depend on the value of Base
 	AD<Base>::id_handle(0);
