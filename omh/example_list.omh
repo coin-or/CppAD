@@ -113,6 +113,7 @@ $rref Eq.cpp$$
 $rref EqualOpSeq.cpp$$
 $rref Erf.cpp$$
 $rref ErrorHandler.cpp$$
+$rref example_a11c.cpp$$
 $rref Example.cpp$$
 $rref Exp.cpp$$
 $rref ForOne.cpp$$
@@ -206,6 +207,7 @@ $rref Sqrt.cpp$$
 $rref StackMachine.cpp$$
 $rref Sub.cpp$$
 $rref SubEq.cpp$$
+$rref sum_i_inv.cpp$$
 $rref Tan.cpp$$
 $rref Tanh.cpp$$
 $rref TapeIndex.cpp$$

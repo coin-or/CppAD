@@ -145,7 +145,6 @@ example_SOURCES   = \
 	opt_val_hes.cpp \
 	optimize.cpp \
 	output.cpp \
-	parallel_ad.cpp \
 	par_var.cpp \
 	poly.cpp \
 	pow.cpp \

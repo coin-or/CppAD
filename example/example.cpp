@@ -122,7 +122,6 @@ extern bool omp_alloc(void);
 extern bool opt_val_hes(void);
 extern bool optimize(void);
 extern bool Output(void);
-extern bool parallel_ad(void);
 extern bool ParVar(void);
 extern bool Poly(void);
 extern bool Pow(void);
@@ -270,7 +269,6 @@ int main(void)
 	ok &= Run( opt_val_hes,       "opt_val_hes"      );
 	ok &= Run( optimize,          "optimize"         );
 	ok &= Run( Output,            "Output"           );
-	ok &= Run( parallel_ad,       "parallel_ad"      );
 	ok &= Run( ParVar,            "ParVar"           );
 	ok &= Run( Pow,               "Poly"             );
 	ok &= Run( Pow,               "Pow"              );

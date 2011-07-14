@@ -57,6 +57,17 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-14$$
+$list number$$
+Move $cref/parallel_ad.cpp/$$ from $code example$$ directory
+to $code openmp$$ directory (and convert it from a function to a program).
+$lnext
+Simplify $cref/example_a11c.cpp/$$ by making it just a correctness test.
+$lnext
+Change $cref/openmp_run.sh/$$ so that it runs correctness tests with
+the compiler debugging flags.
+$lend
+
 $head 07-13$$
 $list number$$
 static hash code data that was begin used by multiple threads
@@ -67,6 +78,9 @@ Make the $cref/sparsity/Sparse/$$ calculations safe
 for use during $cref/in_parallel/$$ execution mode.
 $lnext
 Add the $cref/parallel_ad.cpp/$$ example.
+$lnext
+Change $cref/example_a11c.cpp/$$ example so that is just a correctness
+(not speed) test.
 $lend
 
 $head 07-11$$
@@ -88,12 +102,12 @@ $subhead openmp/run.sh$$
 The following changes were made to $code openmp/run.sh$$:
 $list number$$
 $lnext
-Change the maximum
-$cref/number of threads/openmp_run.sh/Parameters/Number of Threads/$$
+Change the 
+$cref/maximum number of threads/openmp_run.sh/Maximum Number of Threads/$$
 instead of specifying the entire set of values to be tested.
 $lnext
 Change settings for 
-$cref/multi_newton/openmp_run.sh/Parameters/multi_newton/$$
+$cref/multi_newton/openmp_run.sh/multi_newton/$$
 so that $code n_gird$$ is a multiple of the maximum number of threads.
 $lnext
 Report dynamic number of thread
@@ -150,9 +164,9 @@ $head 06-21$$
 $list number$$
 The $code openmp/run.sh$$ routine was changed to use zero,
 instead of $code automatic$$, for automatic choice of
-$cref/number of repeats/openmp_run.sh/Parameters/Number of Repeats/$$,
+$cref/number of repeats/openmp_run.sh/Number of Repeats/$$,
 and 
-$cref/number of threads/openmp_run.sh/Parameters/Number of Threads/$$.
+$cref/maximum number of threads/openmp_run.sh/Maximum Number of Threads/$$.
 
 $lnext
 The output of each of the OpenMP examples / speed tests
@@ -340,7 +354,7 @@ This has been fixed.
 $head 02-17$$
 There was a mistake in $code openmp/run.sh$$ where it attempted
 to remove a non-existent file in the case where 
-$cref/openmp_flag/openmp_run.sh/Parameters/OpenMP Flag/$$ was not $code ""$$.
+$cref/openmp_flag/openmp_run.sh/OpenMP Flag/$$ was not $code ""$$.
 This has been fixed.
 
 $head 02-15$$

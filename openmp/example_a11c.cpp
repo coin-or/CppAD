@@ -19,81 +19,37 @@ $index OpenMP, example A.1.1c$$
 $index example, OpenMP A.1.1c$$
 $index A.1.1c, OpenMP example$$
 
-
-$section A Simple Parallel Loop$$
+$section A Simple Parallel Loop Example and Test$$
 
 $head Syntax$$
-$syntax%example_a11c %n_thread% %repeat% %size%$$
+$codei%example_a11c %n_thread%$$
 
 $head Purpose$$
 Runs a timing test of Example A.1.1.1c of the OpenMP 2.5 standard document.
 
 $head n_thread$$
-If the argument $italic n_thread$$ is equal to zero, 
+If the argument $icode n_thread$$ is equal to zero, 
 dynamic thread adjustment is used.
-Otherwise, $italic n_thread$$ must be a positive number
+Otherwise, $icode n_thread$$ must be a positive number
 specifying the number of OpenMP threads to use.
 
-$head repeat$$
-If the argument $italic repeat$$ is equal to zero,
-the number of times to repeat the calculation of the number of zeros
-in total interval is automatically determined.
-In this case, the rate of execution of the total solution is reported.
-$pre
-
+$head Source Code$$
+$code
+$verbatim%openmp/example_a11c.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
-If the argument $italic repeat$$ is not equal to zero,
-it must be a positive integer.
-In this case $italic repeat$$ determination of the number of times 
-the calculation of the zeros in the total interval is repeated.
-The rate of execution is not reported (it is assumed that the
-program execution time is being calculated some other way).
-
-$head size$$
-The argument $italic size$$ is the length of the arrays in the example code.
-
-$head Example Source$$
-$spell
-	hpp
-	test test
-	ifdef
-	endif
-	omp
-	cmath
-	http://www.coin-or.org/CppAD/Doc/cppad_vector.htm
-	pragma omp
-	for for
-	argc
-	argv
-	std 
-	cout
-	endl
-	cerr
-	strcmp
-	atoi
-	num
-	CppAD
-	bool
-	fabs
-	vec
-	cstring
-	cstdlib
-$$
-$codep */
-
+$end
+----------------------------------------------------------------------------
+*/
+// BEGIN PROGRAM
 # ifdef _OPENMP
 # include <omp.h>
 # endif
 
+# include <iostream>
 # include <cmath>
 # include <cstring>
 # include <cstdlib>
-
-// see http://www.coin-or.org/CppAD/Doc/cppad_vector.htm
-# include <cppad/vector.hpp>
-
-// see http://www.coin-or.org/CppAD/Doc/speed_test.htm
-# include <cppad/speed_test.hpp>
+# include <cassert>
 
 // Beginning of Example A.1.1.1c of OpenMP 2.5 standard document ---------
 void a1(int n, float *a, float *b)
@@ -105,24 +61,6 @@ void a1(int n, float *a, float *b)
 		b[i] = (a[i] + a[i-1]) / 2.0;
 }
 // End of Example A.1.1.1c of OpenMP 2.5 standard document ---------------
-		
-// routine that is called to repeat the example a number of times
-void test(size_t size, size_t repeat)
-{	// setup
-	size_t i;
-	float *a = new float[size];
-	float *b = new float[size];
-	for(i = 0; i < size; i++)
-		a[i] = float(i);
-	int n = int(size);
-	// run test
-	for(i = 0; i < repeat; i++)
-		a1(n, a, b);
-	// tear down
-	delete [] a;
-	delete [] b;
-	return;
-}
 
 // main program
 int main(int argc, char *argv[])
@@ -132,27 +70,15 @@ int main(int argc, char *argv[])
 	using std::endl;
 
 	// get command line arguments -----------------------------------
-	const char *usage = "example_a11c n_thread repeat size";
-	if( argc != 4 )
+	const char *usage = "example_a11c n_thread";
+	if( argc != 2 )
 	{	std::cerr << usage << endl;
 		exit(1);
 	}
-	argv++;
 	// n_thread command line argument
-	assert( std::atoi(*argv) >= 0 );
-	size_t n_thread = std::atoi(*argv);
-	argv++;
-	// repeat 
-	assert( std::atoi(*argv) >= 0 );
-	size_t repeat = std::atoi(*argv);
-	argv++;
-	// size 
-	assert( std::atoi(*argv) > 1 );
-	size_t size = std::atoi(*argv++);
+	assert( std::atoi(argv[0]) >= 0 );
+	size_t n_thread = std::atoi(argv[0]);
 	// ---------------------------------------------------------------
-
-	// minimum time for test (repeat until this much time)
-	double time_min = 1.;
 # ifdef _OPENMP
 	if( n_thread > 0 )
 	{	omp_set_dynamic(0);            // off dynamic thread adjust
@@ -161,51 +87,33 @@ int main(int argc, char *argv[])
 	// now determine the maximum number of threads
 	n_thread = omp_get_max_threads();
 	assert( n_thread > 0 );
-	
-	// inform the user of the maximum number of threads
+	// inform the user of openmp version
 	cout << "_OPENMP  = '" << _OPENMP << "'" << endl;
 # else
 	cout << "_OPENMP  = ''" << endl;
 	n_thread = 1;
 # endif
 	cout << "n_thread = " << n_thread << endl;
-	cout << "size     = " << size << endl;
+	assert( n_thread > 0 );
+	// ---------------------------------------------------------------
+
 	// Correctness check (store result in ok)
-	size_t i;
-	float *a = new float[size];
-	float *b = new float[size];
-	for(i = 0; i < size; i++)
+	int i, n = 1000;
+	float *a = new float[n];
+	float *b = new float[n];
+	for(i = 0; i < n; i++)
 		a[i] = float(i);
-	int n = size;
 	a1(n, a, b);
 	bool ok = true;
-	for(i = 1; i < size ; i++)
+	for(i = 1; i < n ; i++)
 		ok &= std::fabs( 2. * b[i] - a[i] - a[i-1] ) <= 1e-6; 
 	delete [] a;
 	delete [] b;
 
-	if( repeat > 0 )
-	{	// user specified the number of times to repeat the test
-		test(size, repeat);
-	}
-	else
-	{	// automatic determination of number of times to repeat test
-
-	 	// speed test uses a SimpleVector with size_t elements
-		CppAD::vector<size_t> size_vec(1);
-		size_vec[0] = size;
-		CppAD::vector<size_t> rate_vec =
-			CppAD::speed_test(test, size_vec, time_min);
-
-		// report results
-		cout << "repeats_per_sec  = " << rate_vec[0] << endl;
-	}
 	if( ok )
 		cout << "correctness_test = 'OK'" << endl;
 	else	cout << "correctness_test = 'Error'" << endl;
 
 	return static_cast<int>( ! ok );
 }
-/* $$
-$end
-*/
+// END PROGRAM

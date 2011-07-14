@@ -68,7 +68,6 @@ $$
 $end
 */
 // BEGIN PROGRAM
-# include <cppad/cppad.hpp>
 # ifdef _OPENMP
 # include <omp.h>
 # endif
@@ -79,6 +78,7 @@ $end
 # endif
 
 # include <cstring>
+# include <cppad/cppad.hpp>
 
 namespace { // empty namespace
 	int n_thread;
@@ -99,7 +99,7 @@ double sum_using_multiple_threads(int n_sum)
 	assert( n_sum >= n_thread );   // assume n_sum / n_thread > 1
 
 	// limit holds start and stop values for each thread
-	int    limit[n_thread + 1];
+	CppAD::vector<int> limit(n_thread + 1);
 	int i;
 	for(i = 1; i < n_thread; i++)
 		limit[i] = (n_sum * i ) / n_thread;
@@ -107,7 +107,7 @@ double sum_using_multiple_threads(int n_sum)
 	limit[n_thread]  = n_sum + 1;
 
 	// compute sum_one[i] = 1/limit[i] + ... + 1/(limit[i+1} - 1)
-	double sum_one[n_thread];
+	CppAD::vector<double> sum_one(n_thread);
 //--------------------------------------------------------------------------
 # ifdef _OPENMP
 # pragma omp parallel for 
@@ -144,7 +144,6 @@ int main(int argc, char *argv[])
 	using std::cerr;
 	using std::cout;
 	using std::endl;
-	using CppAD::vector;
 
 	const char *usage = "sum_i_inv n_thread repeat mega_sum";
 	if( argc != 4 )
@@ -217,11 +216,11 @@ int main(int argc, char *argv[])
 	{	// actually time the calculation	 
 
 		// size of the one test case
-		vector<size_t> size_vec(1);
+		CppAD::vector<size_t> size_vec(1);
 		size_vec[0] = mega_sum;
 
 		// run the test case
-		vector<size_t> rate_vec =
+		CppAD::vector<size_t> rate_vec =
 		CppAD::speed_test(test_repeat, size_vec, time_min);
 
 		// report results

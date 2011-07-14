@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -18,7 +18,13 @@ fi
 # -----------------------------------------------------------------------------
 echo "Checking that all examples are in omh/example_list.omh"
 echo "-------------------------------------------------------" 
-file_list="example/*.cpp example/*.hpp cppad_ipopt/*/*.cpp cppad_ipopt/*/*.hpp"
+file_list="
+	example/*.cpp 
+	example/*.hpp 
+	cppad_ipopt/*/*.cpp 
+	cppad_ipopt/*/*.hpp
+	openmp/*.cpp
+"
 sed < omh/example_list.omh > bin/check_example.$$ \
 	-n -e '/\$begin ListAllExamples\$\$/,/\$end/p' 
 ok="yes"

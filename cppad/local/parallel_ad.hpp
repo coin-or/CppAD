@@ -48,14 +48,8 @@ $icode%Base%$$, $codei%AD<%Base%>%$$, and
 $codei%std::complex<double>%$$.
 
 $head Example$$
-$children%
-	example/parallel_ad.cpp
-%$$
-The file
-$cref/parallel_ad.cpp/$$
+The file $cref/parallel_ad.cpp/$$
 contains an example and test of this function.   
-It returns true if it succeeds and false otherwise.
-
 
 $end
 -----------------------------------------------------------------------------
