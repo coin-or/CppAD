@@ -58,7 +58,7 @@ private:
 public:
 	/// Default constructor
 	recorder(void) : 
-	thread_offset_( omp_alloc::get_thread_num() * CPPAD_MAX_NUM_THREADS ) ,
+	thread_offset_( omp_alloc::get_thread_num() * CPPAD_HASH_TABLE_SIZE ) ,
 	num_rec_var_(0)                                      ,
 	rec_op_( std::numeric_limits<addr_t>::max() )        ,
 	rec_vecad_ind_( std::numeric_limits<addr_t>::max() ) ,
