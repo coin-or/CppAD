@@ -222,11 +222,11 @@ then
 	dir_list="
 		--prefix=$CPPAD_DIR
 	"
-	if [ -e $BOOST_DIR/boost ]
-	then
-		dir_list="$dir_list 
-			BOOST_DIR=$BOOST_DIR"
-	fi
+#_build_test_only:	if [ -e $BOOST_DIR/boost ]
+#_build_test_only:	then
+#_build_test_only:		dir_list="$dir_list 
+#_build_test_only:			BOOST_DIR=$BOOST_DIR"
+#_build_test_only:	fi
 	if [ -e $ADOLC_DIR/include/adolc ]
 	then
 		dir_list="$dir_list 
@@ -249,17 +249,18 @@ then
 	fi
 	# Use TAPE_ADDR_TYPE=int (a signed type) to do more checking for 
 	# slicing from size_t to addr_t.
+	tape_addr_type=""
+#_build_test_only:	tape_addr_type="TAPE_ADDR_TYPE=int"
+	#
 	dir_list=`echo $dir_list | sed -e 's|\t\t*| |g'`
 	echo "../configure \\"
 	echo "$dir_list" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
 	echo "	CXX_FLAGS=\"-Wall -ansi -pedantic-errors -std=c++98 -Wshadow\"\\"
-	echo "	TAPE_ADDR_TYPE=\"int\"\\"
-	echo "--with-Documentation"
+	echo "	$tape_addr_type --with-Documentation"
 	#
 	../configure $dir_list \
 		CXX_FLAGS="-Wall -ansi -pedantic-errors -std=c++98 -Wshadow" \
-		TAPE_ADDR_TYPE="int" \
-		--with-Documentation
+		$tape_addr_type --with-Documentation
 	#
 	for file in $configure_file_list
 	do
@@ -493,6 +494,10 @@ then
 	echo "cd cppad-$version"
 	echo "cd cppad-$version" >> $log_dir/$log_file
 	      cd cppad-$version
+	#
+	# build_test_only configuration
+	echo "sed -i -e 's|^#_build_test_only:||' build.sh"
+	sed -i -e 's|^#_build_test_only:||' build.sh
 	#
 	echo "./build.sh configure >> $log_file" 
 	      ./build.sh configure >> $log_dir/$log_file
