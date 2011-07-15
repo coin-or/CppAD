@@ -83,18 +83,6 @@ speed_flags="-DNDEBUG -O2 -Wall -ansi -pedantic-errors -std=c++98 -Wshadow"
 correct_flags="-g -Wall -ansi -pedantic-errors -std=c++98 -Wshadow"
 # @@
 #
-# @head Boost Directory@@
-# If the @cref/BoostDir/InstallUnix/BoostDir/@@ is specified on the 
-# @cref/configure/InstallUnix/Configure/@@ command line,
-# you must add the corresponding include directory; e.g.,
-# @codep
-if [ -d /usr/include/boost ]
-then
-	speed_flags="$speed_flags -I/usr/include"
-	correct_flags="$correct_flags -I/usr/include"
-fi
-# @@
-#
 # @head Number of Repeats@@
 # The variable @code n_repeat@@ specifies the number of times to repeat
 # the test (only used for the speed tests).

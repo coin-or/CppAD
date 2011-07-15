@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -363,8 +363,8 @@ its dependence on the rest of CppAD was removed
 
 $head 11-12$$
 The 
-$cref/example/InstallUnix/CppAD Examples/$$ and 
-$cref/test_more/InstallUnix/More Testing/$$ 
+$cref/example.cpp/$$ and 
+$cref/test_more/InstallUnix/make/More Testing/$$ 
 programs were
 changed to print out the number of tests that passed or failed instead
 of just "All the tests passed" or "At least one of the tests failed".
@@ -398,7 +398,7 @@ $cref/size_var/seq_property/size_var/$$.
 $head 11-04$$
 Put text written to standard output in the documentation for the
 $cref/get_started.cpp/get_started.cpp/Output/$$ and 
-$cref/PrintFor.cpp/PrintFor.cpp/Output/$$ examples.
+$cref/print_for.cpp/print_for.cpp/Output/$$ examples.
 (Now documentation can be built from a subversion checkout with out
 needing to execute automake.)
 The $code PrintFor.cpp$$ and 

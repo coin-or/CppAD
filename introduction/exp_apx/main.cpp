@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -18,12 +18,23 @@ $spell
 	apx
 $$
 
-$section Run the exp_2 and exp_eps Tests$$
+$section Correctness Tests For Exponential Approximation in Introduction$$
 
 $index exp_apx, main test$$
 $index run, exp_apx test$$
 $index test, exp_apx main$$
 
+$head Running Tests$$
+To build this program and run its correctness tests,
+execute the following commands starting in the
+$cref/work directory/InstallUnix/Download/Work Directory/$$:
+$codei%
+	cd introduction/exp_apx
+	make test.sh
+	./test.sh
+%$$
+
+$head main.cpp$$
 $code
 $verbatim%introduction/exp_apx/main.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$

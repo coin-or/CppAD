@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin PrintFor.cpp$$
+$begin print_for.cpp$$
 $spell
 	makefile
 	CppAD
@@ -30,7 +30,17 @@ $index forward, mode print$$
 $index example, print forward mode$$
 $index print, example forward mode$$
 
-$head Program$$
+$head Running$$
+To build this program and run its correctness test,
+execute the following commands starting in the
+$cref/work directory/InstallUnix/Download/Work Directory/$$:
+$codei%
+	cd print_for
+	make test.sh
+	./test.sh
+%$$
+
+$head Source Code$$
 $codep */
 # include <cppad/cppad.hpp>
 

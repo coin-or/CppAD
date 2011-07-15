@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -420,7 +420,7 @@ so that $code CppAD::vector<bool>$$ does not pack one bit per value
 $head 10-12$$
 Change the 
 $xref/InstallUnix/Configure/configure/$$ script so that compilation of the
-$xref/get_started.cpp/$$ and $xref/PrintFor.cpp/$$ examples are optional.
+$xref/get_started.cpp/$$ and $xref/print_for.cpp/$$ examples are optional.
 $pre
 
 $$
@@ -561,7 +561,7 @@ The $xref/std_math_ad//AD standard math unary functions/$$
 $code sinh$$, and $code cosh$$ have been added. 
 In addition, more correctness testing 
 (
-$cref/More Testing/InstallUnix/More Testing/$$ , 
+$cref/More Testing/InstallUnix/make/More Testing/$$ , 
 $xref/InstallWindows/More Correctness Testing/windows/$$ 
 )
 has been added for the $code sin$$ and $code cos$$ functions.

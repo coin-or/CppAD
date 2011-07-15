@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -226,7 +226,7 @@ $pre
 
 $$
 Add the return status for all the correctness tests
-to the documentation; see $cref/make test/InstallUnix/make test/$$. 
+to the documentation; see $code make test$$. 
 
 $head 10-30$$
 The download instructions did not update current version number
@@ -535,7 +535,7 @@ $code adouble$$ and for the $cref/Base/base_require/$$ type.
 $pre
 
 $$
-The $cref/get_started/InstallUnix/Introduction/Getting Started/$$ 
+The $cref/get_started.cpp/$$ 
 example did not build when
 the $code --with-Introduction$$ and 
 $code BOOST_DIR$$ options were included on the 

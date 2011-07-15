@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -28,8 +28,9 @@ $spell
       cout
 $$
 
-$section A Simple Program Using CppAD to Compute Derivatives$$
-$index getstarted$$
+$section Getting Started Using CppAD to Compute Derivatives$$
+$index getting, started$$
+$index started, getting$$
 $index simple, example$$
 $index example, simple$$
 $index start, using CppAD$$
@@ -153,5 +154,16 @@ Executing the program above will generate the following output:
 $codep
 	f'(3) computed by CppAD = 142
 $$
+
+$head Running$$
+To build and run this program,
+execute the following commands starting in the
+$cref/work directory/InstallUnix/Download/Work Directory/$$:
+$codei%
+	cd introduction/get_started
+	make test.sh
+	./test.sh
+%$$
+
 $end
 */

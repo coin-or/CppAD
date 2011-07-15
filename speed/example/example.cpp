@@ -20,7 +20,18 @@ $index program, speed example$$
 $index example, speed program$$
 
 
-$section Program That Runs the Speed Examples$$
+$section Run the Speed Examples$$
+
+$head Running Tests$$
+To build this program and run its correctness tests,
+execute the following commands starting in the
+$cref/work directory/InstallUnix/Download/Work Directory/$$:
+$codei%
+	cd speed/example
+	make test.sh
+	./test.sh
+%$$
+
 
 $code
 $verbatim%speed/example/example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$

@@ -114,7 +114,7 @@ $rref EqualOpSeq.cpp$$
 $rref Erf.cpp$$
 $rref ErrorHandler.cpp$$
 $rref example_a11c.cpp$$
-$rref Example.cpp$$
+$rref example.cpp$$
 $rref Exp.cpp$$
 $rref ForOne.cpp$$
 $rref ForTwo.cpp$$
@@ -180,7 +180,7 @@ $rref ParVar.cpp$$
 $rref Poly.cpp$$
 $rref Pow.cpp$$
 $rref pow_int.cpp$$
-$rref PrintFor.cpp$$
+$rref print_for.cpp$$
 $rref RevOne.cpp$$
 $rref RevSparseHes.cpp$$
 $rref RevSparseJac.cpp$$

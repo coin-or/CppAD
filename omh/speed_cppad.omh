@@ -36,26 +36,21 @@ certain changes improve its execution speed
 This section links to the source code the CppAD speed tests
 (any suggestions to make the CppAD results faster are welcome).
 
-
-$head Speed$$
-To run these tests, you must include the
-$code --with-Speed$$ command line option during the
-$cref/install configure/InstallUnix/Configure/$$ command. 
-After the $cref/make test/InstallUnix/make test/$$ command
-has been execute in the $code speed/cppad$$ directory, 
-you can then run the CppAD speed tests 
-with the following commands (relative to the distribution directory):
-$syntax%
-	speed/cppad/cppad correct %seed%
+$head Running Tests$$
+To build these speed tests, and run their correctness tests,
+execute the following commands starting in the
+$cref/work directory/InstallUnix/Download/Work Directory/$$:
+$codei%
+	cd speed/cppad
+	make test.sh
+	./test.sh
 %$$
-where $italic seed$$ is a positive integer see for the
-random number generator $cref/uniform_01/$$.
-This will check that the speed tests have been built correctly.
-You can run the command
-$syntax%
-	speed/cppad/cppad speed %seed%
+You can then run the corresponding speed tests 
+with the following command
+$codei%
+	./cppad speed %seed%
 %$$
-to see the results of all the speed tests.
+where $icode seed$$ is a positive integer.
 See $cref/speed_main/$$ for more options.
 
 $head C++ Compiler Flags$$

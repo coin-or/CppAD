@@ -33,13 +33,14 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 check_PROGRAMS = profile$(EXEEXT)
 subdir = speed/profile
-DIST_COMMON = $(srcdir)/makefile.am $(srcdir)/makefile.in
+DIST_COMMON = $(srcdir)/gprof.sed.in $(srcdir)/makefile.am \
+	$(srcdir)/makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = gprof.sed
 CONFIG_CLEAN_VPATH_FILES =
 am_profile_OBJECTS = main.$(OBJEXT) ode.$(OBJEXT) det_lu.$(OBJEXT) \
 	det_minor.$(OBJEXT) mat_mul.$(OBJEXT) poly.$(OBJEXT) \
@@ -260,6 +261,8 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+gprof.sed: $(top_builddir)/config.status $(srcdir)/gprof.sed.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)

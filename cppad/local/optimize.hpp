@@ -59,20 +59,9 @@ derivatives using the original operation sequence.
 
 $subhead Testing$$
 You can run the CppAD $cref/speed/speed_main/$$ tests and see
-the corresponding changes in number of variables and execution time.
-After the $cref/make test/InstallUnix/make test/$$ command
-is run in the $code speed/cppad$$ directory,
-you can run the speed tests with optimization 
-using the command
-$codep
-	speed/cppad/cppad speed 123 optimize
-$$ 
-and without optimization using the command
-$codep
-	speed/cppad/cppad speed 123 
-$$
-Note that $code 123$$ is used for a random number seed and can be
-replaced by any integer in the commands above.
+the corresponding changes in number of variables and execution time; see
+the speed tests in the install instructions
+$cref/Examples and Tests/InstallUnix/make/Examples and Tests/$$ list.
 
 $head Efficiency$$
 The $code optimize$$ member function

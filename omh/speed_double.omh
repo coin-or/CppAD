@@ -27,37 +27,32 @@ $index speed, test double$$
 $index test, double speed$$
 $index double, speed test$$
 
-$section Speed Test Functions in Double$$
+$section Speed Test of Functions in Double$$
 
 $head Purpose$$
 CppAD has a set of speed tests for just calculating functions
 (in double precision instead of an AD type).
 This section links to the source code the function value speed tests.
 
-
-$head Speed$$
-To run these tests, you must include the
-$code --with-Speed$$ command line option during the
-$cref/install configure/InstallUnix/Configure/$$ command. 
-After the $cref/make test/InstallUnix/make test/$$ command
-is run in the $code speed/double$$ directory, 
-you can then run the function value speed tests 
-with the following commands (relative to the distribution directory):
-$syntax%
-	speed/double/double correct %seed%
+$head Running Tests$$
+To build these speed tests, and run their correctness tests,
+execute the following commands starting in the
+$cref/work directory/InstallUnix/Download/Work Directory/$$:
+$codei%
+	cd speed/double
+	make test.sh
+	./test.sh
 %$$
-where $italic seed$$ is a positive integer see for the
-random number generator $cref/uniform_01/$$.
-This will check that the speed tests have been built correctly.
-You can run the command
-$syntax%
-	speed/double/double speed %seed%
+You can then run the corresponding speed tests 
+with the following command
+$codei%
+	./double speed %seed%
 %$$
-to see the results of all the speed tests.
+where $icode seed$$ is a positive integer.
 See $cref/speed_main/$$ for more options.
 
 $head C++ Compiler Flags$$
-The C++ compiler flags used to build the $code double$$ speed tests are
+The C++ compiler flags used to build the $code double$$ program are
 $code
 $verbatim%speed/double/makefile.am%5%# BEGIN OPTIMIZE%# END OPTIMIZE%$$
 $$

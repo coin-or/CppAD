@@ -93,7 +93,7 @@ $children%
 	print_for/print_for.cpp
 %$$
 The program
-$xref/PrintFor.cpp/$$
+$xref/print_for.cpp/$$
 is an example and test of this operation.
 The output of this program
 states the conditions for passing and failing the test.

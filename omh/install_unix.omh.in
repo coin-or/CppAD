@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 $begin InstallUnix$$
+$escape $$
 $dollar ^$$
 $spell
 	Addr
@@ -144,10 +145,13 @@ $codei%
 	cppad-@VERSION@/cppad/cppad.hpp
 %$$
 
+$subhead Work Directory$$
+Create the directory $code cppad-@VERSION@/work$$,
+which will be referred to as the work directory below.
+
 $head Configure$$
+Execute the following command in the work directory:
 $index configure$$
-Enter the $icode distribution_directory$$
-(the directory created by the extraction) and execute the command:
 $codei%
 	./configure                            \
 	--prefix=%PrefixDir%                     \
@@ -162,96 +166,65 @@ $codei%
 	CXX_FLAGS=%CompilerFlags%                \
 	TAPE_ADDR_TYPE=%TapeAddrType%
 %$$
-where only the $code configure$$ command need appear.
-The entries one each of the other lines are optional
-and the text in italic is replaced values that you choose.
+where only the $code configure$$ line need appear; i.e.,
+the entries one each of the other lines are optional.
+The text in italic is replaced values that you choose;
+see discussion below.
 
-$head make test$$
-You can run all of the CppAD correctness tests by executing the 
-command $code make test$$ in the $icode distribution_directory$$.
-A description of the tests, and instructions for running individual tests,
-are described below.
-
-$head Introduction$$
-
-$subhead Getting Started$$
-$index get_started, run$$
-$index run, get_started$$
-You can run the CppAD getting started example / test 
-by executing the command $code make test$$ in the directory
+$head make$$
+CppAD has some object libraries that are used for its correctness tests.
+(Currently, none of these libraries get installed.)
+You can build these libraries by executing the command
 $codei%
-	%distribution_directory%/introduction/get_started
-%$$
+	make 
+%$$ 
+in the work directory.
 
-$subhead exp_apx$$
-$index exp_apx, run$$
-$index run, exp_apx$$
-$index introduction, AD$$
-$index AD, introduction$$
-You can run the examples / tests for the $code exp_apx$$ function 
-(used in the $cref/Introduction/$$)
-by executing the command $code make test$$ in the directory
-$codei%
-	%distribution_directory%/introduction/exp_apx
-%$$
+$subhead Examples and Tests$$
+Once you have executed the $code make$$ command,
+you can run the following correctness and speed tests:
+$table
+$cref/get_started/get_started.cpp/Running/$$  
+	$cnext $title get_started.cpp$$ 
+$rnext
+$cref/exp_apx_main/exp_apx_main.cpp/Running Tests/$$  
+	$cnext $title exp_apx_main.cpp$$ 
+$rnext
+$cref/example/example.cpp/Running Tests/$$  
+	$cnext $title example.cpp$$ 
+$rnext
+$cref/print_for/print_for.cpp/Running/$$  
+	$cnext $title print_for.cpp$$ 
+$rnext
+$cref/speed_example/speed_example.cpp/Running Tests/$$  
+	$cnext $title speed_example.cpp$$ 
+$rnext
+$cref/speed_double/speed_double/Running Tests/$$  
+	$cnext $title speed_double$$ 
+$rnext
+$cref/speed_adolc/speed_adolc/Running Tests/$$  
+	$cnext $title speed_adolc$$ 
+$rnext
+$cref/speed_cppad/speed_cppad/Running Tests/$$  
+	$cnext $title speed_cppad$$ 
+$rnext
+$cref/speed_fadbad/speed_fadbad/Running Tests/$$  
+	$cnext $title speed_fadbad$$ 
+$rnext
+$cref/speed_sacado/speed_sacado/Running Tests/$$  
+	$cnext $title speed_sacado$$ 
+$tend
 
-$head CppAD Examples$$
-$index example, CppAD$$
-$index CppAD, example$$
-You can run a large number of the examples / tests showing how to use CppAD
-by executing the command $code make test$$ in the directory
-$codei%
-	%distribution_directory%/example
-%$$
-See $cref/ListAllExamples/$$ for a list of all the CppAD examples.
-
-$head More Testing$$
+$subhead More Testing$$
 $index test, more$$
 $index more, testing$$
-You can run a large number of tests (that are not intended to be examples)
-by executing the command $code make test$$ in the directory
+You can run a large number of correctness tests 
+(that are not intended to be examples)
+by executing the following commands starting in the work directory:
 $codei%
-	%distribution_directory%/test_more
-%$$
-
-$head Speed Testing$$
-
-$subhead CppAD Derivative Speed Tests$$
-$index speed, CppAD check test$$
-$index check, CppAD speed test$$
-A set of CppAD derivative value $cref/speed/speed_cppad/$$ tests 
-are included with this distribution. 
-You can test that the results computed during these tests are correct
-by executing the command $code make test$$ in the directory
-$codei%
-	%distribution_directory%/speed/cppad
-%$$
-After executing $code make test$$, you can run the CppAD derivative speed tests 
-by executing the command $code ./cppad$$ (see $cref/speed_main/$$).
-
-$subhead Function Speed Tests$$
-$index speed, function check test$$
-$index check, function speed test$$
-A set of functions value $cref/speed/speed_double/$$ tests 
-are included (to compare with derivative values speeds).
-You can test that the results computed during these tests are correct
-by executing the command $code make test$$ in the directory
-$codei%
-	%distribution_directory%/speed/double
-%$$
-After executing $code make test$$, you can run the function value speed tests 
-by executing the command $code ./double$$ (see $cref/speed_main/$$).
-
-$subhead Examples For Speed Tests$$
-$index speed, utility example$$
-$index example, speed utility$$
-$index utility, speed example$$
-The speed tests use some utilities that have their own set of 
-examples / tests.
-You can test that the results computed by this utilities are correct
-by executing the command $code make test$$ in the directory
-$codei%
-	%distribution_directory%/speed/example
+	cd test_more
+	make test.sh
+	./test.sh
 %$$
 
 $head Profiling CppAD$$
@@ -260,21 +233,29 @@ $index profile, cppad speed$$
 $index cppad, profile speed$$
 The CppAD derivative speed tests mentioned above can be profiled.
 You can test that the results computed during this profiling are correct
-by executing the command $code make test$$ in the directory
+by executing the following commands starting in the work directory:
 $codei%
-	%distribution_directory%/speed/profile
+	cd speed/profile
+	make test.sh
+	./test.sh
 %$$
-After executing $code make test$$, you can run the profile tests 
-by executing the command $code ./profile$$ (see $cref/speed_main/$$).
-You can then obtain the profiling results with
+After executing $code make test.sh$$, you can run a profile speed test 
+by executing the command $code ./profile$$;
+see $cref/speed_main/$$ for the meaning of the command line
+options to this program.
+$pre
+
+$$
+After you have run a profiling speed test,
+you can then obtain the profiling results with
 $codei%
-	gprof -b speed/profile/profile
+	gprof -b profile
 %$$ 
 If you are using a windows operating system with Cygwin or MinGW, 
 you may have to replace $code profile$$ by $code profile.exe$$
 in the $code gprof$$ command above; i.e.,
 $codep
-	gprof -b speed/profile/profile.exe
+	gprof -b profile.exe
 $$
 In C++, template parameters and argument types become part of a 
 routines's name.
@@ -283,22 +264,13 @@ This can make the $code gprof$$ output hard to read
 You can remove the template parameters and argument types from the 
 routine names by executing the following command
 $codep
-	gprof -b speed/profile/profile | sed -f speed/profile/gprof.sed
+	gprof -b profile | sed -f gprof.sed
 $$
 If you are using a windows operating system with Cygwin or MinGW, 
 you would need to use
 $codep
-	gprof -b speed/profile/profile.exe | sed -f speed/profile/gprof.sed
+	gprof -b profile.exe | sed -f gprof.sed
 $$
-
-$head PrintFor$$
-$index print, forward mode$$
-$index forward, print$$
-You can test the $cref/PrintFor/$$ command
-by executing the command $code make test$$ in the directory
-$codei%
-	%distribution_directory%/print_for
-%$$
 
 $head PrefixDir$$
 $index configure, prefix directory$$
@@ -392,13 +364,17 @@ $codei%
 	%AdolcDir%/include/adolc/adouble.h
 %$$
 is a valid way to reference $code adouble.h$$.
-In this case, you can run the Adolc speed correctness tests by 
-executing the command $code make test$$ in the directory
+In this case, you can run the Adolc speed correctness tests 
+by executing the following commands starting in the work directory:
 $codei%
-	%distribution_directory%/speed/adolc
+	cd speed/adolc
+	make test.sh
+	./test.sh
 %$$
-After executing $code make test$$, you can run the Adolc speed tests 
-by executing the command $code ./adolc$$ (see $cref/speed_main/$$).
+After executing $code make test.sh$$, you can run an Adolc speed tests 
+by executing the command $code ./adolc$$;
+see $cref/speed_main/$$ for the meaning of the command line
+options to this program.
 
 $subhead Linux$$
 If you are using Linux, 
@@ -439,14 +415,17 @@ $codei%
 	%FadbadDir%/FADBAD++/badiff.h
 %$$
 is a valid reference to $code badiff.h$$.
-
-In this case, you can run the Fadbad speed correctness tests by 
-executing the command $code make test$$ in the directory
+In this case, you can run the Fadbad speed correctness tests
+by executing the following commands starting in the work directory:
 $codei%
-	%distribution_directory%/speed/fadbad
+	cd speed/fadbad
+	make test.sh
+	./test.sh
 %$$
-After executing $code make test$$, you can run the Fadbad speed tests 
-by executing the command $code ./fadbad$$ (see $cref/speed_main/$$).
+After executing $code make test.sh$$, you can run a Fadbad speed tests 
+by executing the command $code ./fadbad$$;
+see $cref/speed_main/$$ for the meaning of the command line
+options to this program.
 
 
 $head SacadoDir$$
@@ -463,14 +442,17 @@ $codei%
 	%SacadoDir%/include/Sacado.hpp
 %$$
 is a valid reference to $code Sacado.hpp$$.
-
-In this case, you can run the Sacado speed correctness tests by 
-executing the command $code make test$$ in the directory
+In this case, you can run the Sacado speed correctness tests
+by executing the following commands starting in the work directory:
 $codei%
-	%distribution_directory%/speed/sacado
+	cd speed/sacado
+	make test.sh
+	./test.sh
 %$$
-After executing $code make test$$, you can run the Sacado speed tests 
-by executing the command $code ./sacado$$ (see $cref/speed_main/$$).
+After executing $code make test$$, you can run a Sacado speed tests 
+by executing the command $code ./sacado$$;
+see $cref/speed_main/$$ for the meaning of the command line
+options to this program.
 
 
 $head BoostDir$$
@@ -479,7 +461,7 @@ The
 $small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$
 template class is used for extensive examples and testing of CppAD.
 The default definition for $code CPPAD_TEST_VECTOR$$ is
-$xref/CppAD_vector//CppAD::vector/$$.
+$cref/CppAD::vector/CppAD_vector/$$.
 If the command line argument
 $codei%
 	BOOST_DIR=%BoostDir%
@@ -514,20 +496,24 @@ $codei%
 is a valid reference to $code IpIpoptApplication.hpp$$.
 In this case, the CppAD interface to Ipopt
 $cref/examples/cppad_ipopt_nlp/Example/$$ can be built and tested
-by executing the command $code make test$$ in the directory
+by executing the following commands starting in the work directory:
 $codei%
-	%distribution_directory%/cppad_ipopt/example
-%$$
-You can do more testing of this interface by executing $code make test$$
-in the directories
-$codei%
-	%distribution_directory%/cppad_ipopt/test
-	%distribution_directory%/cppad_ipopt/speed
+	make
+	#
+	cd cppad_ipopt/example
+	make test.sh
+	./test.sh
+	#
+	cd ../test
+	make test.sh
+	./test.sh
+	#
+	cd ../speed
+	make test.sh
+	./test.sh
 %$$
 Once this has been done, you can execute the program
-$codei%
-	%distribution_directory%/cppad_ipopt/speed/speed
-%$$
+$code ./speed$$ in the $code work/cppad_ipopt/speed$$ directory;
 see $cref/ipopt_ode_speed.cpp/$$.
 
 $head CompilerFlags$$

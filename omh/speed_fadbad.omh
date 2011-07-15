@@ -35,21 +35,22 @@ $syntax%
 	FADBAD_DIR=%FadbadDir%
 %$$
 during $cref/installation/InstallUnix/FadbadDir/$$.
-After the $cref/make test/InstallUnix/make test/$$ command
-has been run in the $code speed/fadbad$$ directory, 
-you can then run the Fadbad speed tests 
-with the following commands (relative to the distribution directory):
-$syntax%
-	speed/fadbad/fadbad correct %seed%
+
+$head Running Tests$$
+To build these speed tests, and run their correctness tests,
+execute the following commands starting in the
+$cref/work directory/InstallUnix/Download/Work Directory/$$:
+$codei%
+	cd speed/double
+	make test.sh
+	./test.sh
 %$$
-where $italic seed$$ is a positive integer see for the
-random number generator $cref/uniform_01/$$.
-This will check that the speed tests have been built correctly.
-You can run the command
-$syntax%
-	speed/fadbad/fadbad speed %seed%
+You can then run the corresponding speed tests 
+with the following command
+$codei%
+	./double speed %seed%
 %$$
-to see the results of all the speed tests.
+where $icode seed$$ is a positive integer.
 See $cref/speed_main/$$ for more options.
 
 $head C++ Compiler Flags$$

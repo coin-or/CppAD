@@ -59,6 +59,11 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 07-14$$
 $list number$$
+The $cref/InstallUnix/$$ instructions for running the individual
+correctness and speed tests were out of date. 
+This has been fixed; see 
+$cref/example and tests/InstallUnix/make/Examples and Tests/$$.
+$lnext
 Move $cref/parallel_ad.cpp/$$ from $code example$$ directory
 to $code openmp$$ directory (and convert it from a function to a program).
 $lnext
@@ -266,7 +271,7 @@ $list number$$
 Avoid ambiguity in the definition of the 
 $cref/complex isnan/base_complex.hpp/isnan/$$ function.
 $lnext
-Errors during $cref/make test/InstallUnix/make test/$$ were not 
+Errors during $code make test$$ were not 
 being detected.
 This has been fixed.
 $lend

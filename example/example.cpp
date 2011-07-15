@@ -11,13 +11,26 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Example.cpp$$
+$begin example.cpp$$
 $spell
 	Cpp
 $$
 
-$section Program That Runs the CppAD Examples$$
-$index example, run all$$
+$section CppAD Examples and Tests$$
+$index example, CppAD$$
+$index test, CppAD$$
+
+$head Running Tests$$
+To build this program and run its correctness tests,
+execute the following commands starting in the
+$cref/work directory/InstallUnix/Download/Work Directory/$$:
+$codei%
+	cd example
+	make test.sh
+	./test.sh
+%$$
+There are a lot of tests, so this may take a while to compile.
+
 
 $code
 $verbatim%example/example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
