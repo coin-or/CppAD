@@ -204,7 +204,7 @@ $latex \[
 	\tanh^{(1)} (x) & = & 1 - \tanh (x)^2
 \end{array}
 \] $$
-see $cref/standard math functions/ForwardTheory/Standard Math Functions/$$.
+see $cref/tan_forward/$$ and  $cref/tan_reverse/$$.
 
 $head Tracing$$
 $index operation, sequence tracing$$

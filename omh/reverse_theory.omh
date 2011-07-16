@@ -1,7 +1,6 @@
 $Id$
-// BEGIN SHORT COPYRIGHT 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -10,7 +9,6 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-// END SHORT COPYRIGHT
 
 $begin ReverseTheory$$
 $spell
@@ -171,26 +169,15 @@ $latex \[
 \] $$
 
 
-$children%
+$childtable%
 	omh/exp_reverse.omh%
 	omh/log_reverse.omh%
 	omh/sqrt_reverse.omh%
 	omh/sin_cos_reverse.omh%
 	omh/atan_reverse.omh%
 	omh/asin_reverse.omh%
-	omh/acos_reverse.omh
+	omh/acos_reverse.omh%
+	omh/tan_reverse.omh
 %$$
-
-$table
-
-$tref ExpReverse$$     $rnext
-$tref LogReverse$$     $rnext
-$tref SqrtReverse$$    $rnext
-$tref SinCosReverse$$  $rnext
-$tref AtanReverse$$    $rnext
-$tref AsinReverse$$    $rnext
-$tref AcosReverse$$
-
-$tend
 
 $end

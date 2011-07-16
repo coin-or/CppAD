@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -502,7 +502,7 @@ The forward mode recursion formulas for each of the
 $xref/
 	ForwardTheory/
 	Standard Math Functions/
-	Recursion Formula for Specific Cases/
+	Cases that Apply Recursion Above/
 	standard math functions/
 	1
 /$$
