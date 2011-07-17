@@ -13,9 +13,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin user_tan.cpp$$
 $spell
+	Tanh
 $$
 
-$section Tan as User Atomic Operations: Example and Test$$
+$section Tan and Tanh as User Atomic Operations: Example and Test$$
 
 $index tan, user_atomic$$
 $index user, atomic tan$$
@@ -23,6 +24,11 @@ $index atomic, tan$$
 $index test, user_atomic$$
 $index user_atomic, example$$
 $index example, user_atomic$$
+
+$head Theory$$
+The code below uses the $cref/tan_forward/$$ and $cref/tan_reverse/$$
+to implement the tangent ($icode%id% == 0%$$) and hyperbolic tangent
+($icode%id% == 1%$$) functions as user atomic operations.
 
 $code
 $verbatim%example/user_tan.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -50,6 +56,7 @@ namespace { // Begin empty namespace
 	)
 	{	assert( n == 1 );
 		assert( m == 2 );
+		assert( id == 0 || id == 1 );
 
 		// check if this is during the call to user_tan(id, ax, ay)
 		if( vx.size() > 0 )
@@ -72,16 +79,23 @@ namespace { // Begin empty namespace
 		// ty[kp + ell]   y^{(ell)}
 
 		if( k == 0 )
-		{	// z^{(0)} = tan( x^{(0)} )
-			ty[0]      = tan( tx[0] );
+		{	// z^{(0)} = tan( x^{(0)} ) or tanh( x^{(0)} )
+			if( id == 0 )
+				ty[0] = tan( tx[0] );
+			else	ty[0] = tanh( tx[0] );
+
 			// y^{(0)} = z^{(0)} * z^{(0)}
 			ty[kp + 0] = ty[0] * ty[0];
 		}
 		else
-		{	// z^{(j)} = x^{(j)} + sum_{k=1}^j k x^{(k)} y^{(j-k)} / j
+		{	// z^{(j)} = x^{(j)} +- sum_{k=1}^j k x^{(k)} y^{(j-k)} / j
+			double k_inv = 1. / double(k);
+			if( id == 1 )
+				k_inv = - k_inv;
+
 			ty[k] = tx[k];  
 			for(ell = 1; ell < kp; ell++)
-				ty[k] += ell * tx[ell] * ty[kp + k - ell] / k;
+				ty[k] += ell * tx[ell] * ty[kp + k - ell] * k_inv;
 
 			// y^{(j)} = sum_{k=0}^j z^{(k)} z^{(j-k)}
 			ty[kp + k] = 0.;
@@ -168,44 +182,57 @@ bool user_tan(void)
 	CppAD::Independent(x);
 
 	// range space vector 
-	size_t m = 1;
-	CPPAD_TEST_VECTOR< AD<double> > y(1);
+	size_t m = 2;
+	CPPAD_TEST_VECTOR< AD<double> > y(m);
 
-	// user_tan computes both tan(x) and tan(x)^2
+	// temporary vector for user_tan computations
+	// (user_tan computes tan or tanh and its square)
 	CPPAD_TEST_VECTOR< AD<double> > z(2);
 
-	// call user tan function
+	// call user tan function and store tan(x) in y[0] (ignore tan(x)^2)
 	size_t id = 0;
 	user_tan(id, x, z);
-
-	// we are only interested in tan(x)
 	y[0] = z[0];
+
+	// call user tanh function and store tanh(x) in y[1] (ignore tanh(x)^2)
+	id = 1;
+	user_tan(id, x, z);
+	y[1] = z[0];
 
 	// create f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(x, y); 
 
 	// check value 
-	double fx = std::tan(x0);
-	ok &= NearEqual(y[0] , fx,  eps, eps);
+	double tan = std::tan(x0);
+	ok &= NearEqual(y[0] , tan,  eps, eps);
+	double tanh = std::tanh(x0);
+	ok &= NearEqual(y[1] , tanh,  eps, eps);
 
 	// compute first partial of f w.r.t. x[0] using forward mode
 	CPPAD_TEST_VECTOR<double> dx(n), dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 
-	// f'(x) = 1 + tan(x) * tan(x) = 1 + f(x)^2
-	double fpx = 1. + fx * fx; 
-	ok   &= NearEqual(dy[0], fpx, eps, eps);
+	// tan'(x)   = 1 + tan(x)  * tan(x) 
+	// tanh'(x)  = 1 - tanh(x) * tanh(x) 
+	double tanp = 1. + tan * tan; 
+	ok   &= NearEqual(dy[0], tanp, eps, eps);
+	double tanhp = 1. - tanh * tanh; 
+	ok   &= NearEqual(dy[1], tanhp, eps, eps);
 
 	// compue second partial of f w.r.t. x[0] using forward mode
 	CPPAD_TEST_VECTOR<double> ddx(n), ddy(m);
 	ddx[0] = 0.;
 	ddy    = f.Forward(2, ddx);
 
-	// f''(x) = 2 * f(x) * f'(x)
-	// Note that the second order Taylor coefficient for y is f''(x) / 2.
-	double fppx = 2. * fx * fpx;
-	ok   &= NearEqual(2. * ddy[0], fppx, eps, eps);
+	// tan''(x)   = 2 *  tan(x) * tan'(x) 
+	// tanh''(x)  = - 2 * tanh(x) * tanh'(x) 
+	// Note that second order Taylor coefficient for y half the
+	// corresponding second derivative.
+	double tanpp = 2. * tan * tanp;
+	ok   &= NearEqual(2. * ddy[0], tanpp, eps, eps);
+	double tanhpp = - 2. * tanh * tanhp;
+	ok   &= NearEqual(2. * ddy[1], tanhpp, eps, eps);
 
 	// --------------------------------------------------------------------
 	// Free temporary work space. (If there are future calls to 

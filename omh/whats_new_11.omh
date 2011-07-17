@@ -67,12 +67,13 @@ of order less than $icode k$$,
 were not passed into the $code user_atomic$$ 
 $cref/forward/user_atomic/forward/$$ callback function.
 $lnext
-Derive the $cref/tan_forward/$$ and $cref/tan_reverse/$$ theory; see
-the wish list item $cref/Tan and Tanh/WishList/Tan and Tanh/$$.
+Derive the theory for including the tangent and hyperbolic tangent
+as CppAD atomic operations $cref/tan_forward/$$ and $cref/tan_reverse/$$; 
+see the wish list item $cref/Tan and Tanh/WishList/Tan and Tanh/$$.
 $lnext
 Implement and test forward mode calculation of derivative for
-the tangent functions; see the new $cref/user_atomic/$$
-example $cref/user_tan.cpp/$$.
+the tangent and hyperbolic tangent functions; 
+see the new $cref/user_atomic/$$ example $cref/user_tan.cpp/$$.
 $lend
 
 $head 07-14$$
