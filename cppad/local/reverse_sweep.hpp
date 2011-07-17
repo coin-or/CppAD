@@ -520,7 +520,6 @@ void ReverseSweep(
 				CPPAD_ASSERT_UNKNOWN( user_id    == size_t(arg[1]) );
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
-				user_state = user_start;
 				user_state = user_end;
 
 				// call users function for this operation

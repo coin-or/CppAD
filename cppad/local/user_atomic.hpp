@@ -652,13 +652,18 @@ This should be called when you are done using the
 user atomic functions for a specific value of $icode Base$$.
 
 $children%
+	example/user_tan.cpp%
 	example/mat_mul.cpp
 %$$
 $head Example$$
-The routine  $cref/mat_mul.cpp/$$ is an example and test
-using $code CPPAD_USER_ATOMIC$$.
-It returns true if the test passes 
-and false otherwise.
+
+$subhead Tangent Function$$
+The file $cref/user_tan.cpp/$$ contains an example and test
+implementation of the tangent function as a user atomic operation.
+
+$subhead Matrix Multiplication$$
+The file  $cref/mat_mul.cpp/$$ contains an example and test
+implementation of matrix multiplication a a user atomic operation.
 
 $end
 ------------------------------------------------------------------------------

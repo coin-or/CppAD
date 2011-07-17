@@ -177,6 +177,7 @@ example_SOURCES   = \
 	tape_index.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
+	user_tan.cpp \
 	value.cpp \
 	var_2par.cpp \
 	vec_ad.cpp 

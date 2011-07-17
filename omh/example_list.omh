@@ -213,6 +213,7 @@ $rref Tanh.cpp$$
 $rref TapeIndex.cpp$$
 $rref UnaryMinus.cpp$$
 $rref UnaryPlus.cpp$$
+$rref user_tan.cpp$$
 $rref Value.cpp$$
 $rref Var2Par.cpp$$
 $rref vec_ad.cpp$$

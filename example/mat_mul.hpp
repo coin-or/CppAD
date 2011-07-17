@@ -44,7 +44,7 @@ $spell
 $$
 
 
-$section Define A User Atomic Matrix Multiply Operation$$
+$section Define Matrix Multiply as a User Atomic Operation$$
 
 $index mat_mul, define$$
 $index matrix, multiply$$

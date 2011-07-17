@@ -167,6 +167,7 @@ extern bool Tanh(void);
 extern bool TapeIndex(void);
 extern bool UnaryMinus(void);
 extern bool UnaryPlus(void);
+extern bool user_tan(void);
 extern bool Value(void);
 extern bool Var2Par(void);
 extern bool vec_ad(void);
@@ -314,6 +315,7 @@ int main(void)
 	ok &= Run( TapeIndex,         "TapeIndex"        );
 	ok &= Run( UnaryMinus,        "UnaryMinus"       );
 	ok &= Run( UnaryPlus,         "UnaryPlus"        );
+	ok &= Run( user_tan,           "user_tan"        );
 	ok &= Run( Value,             "Value"            );
 	ok &= Run( Var2Par,           "Var2Par"          );
 	ok &= Run( vec_ad,            "vec_ad"           );

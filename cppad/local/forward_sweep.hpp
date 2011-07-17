@@ -151,6 +151,7 @@ size_t forward_sweep(
 	const size_t user_k1 = d+1;  // number of orders for this calculation
 	vector<Base> user_tx;        // argument vector Taylor coefficients 
 	vector<Base> user_ty;        // result vector Taylor coefficients 
+	vector<size_t> user_iy;      // variable indices for results vector
 	size_t user_index = 0;       // indentifier for this user_atomic operation
 	size_t user_id    = 0;       // user identifier for this call to operator
 	size_t user_i     = 0;       // index in result vector
@@ -547,6 +548,8 @@ size_t forward_sweep(
 					user_tx.resize(user_n * user_k1);
 				if(user_ty.size() < user_m * user_k1)
 					user_ty.resize(user_m * user_k1);
+				if(user_iy.size() < user_m)
+					user_iy.resize(user_m);
 				user_j     = 0;
 				user_i     = 0;
 				user_state = user_arg;
@@ -558,6 +561,14 @@ size_t forward_sweep(
 				CPPAD_ASSERT_UNKNOWN( user_n     == size_t(arg[2]) );
 				CPPAD_ASSERT_UNKNOWN( user_m     == size_t(arg[3]) );
 				user_state = user_start;
+
+				// call users function for this operation
+				user_atomic<Base>::forward(user_index, user_id,
+					user_k, user_n, user_m, user_tx, user_ty
+				);
+				for(i = 0; i < user_m; i++) if( user_iy[i] > 0 )
+					Taylor[ user_iy[i] * J + user_k ] = 
+						user_ty[ i * user_k1 + user_k ];
 			}
 			break;
 
@@ -571,12 +582,7 @@ size_t forward_sweep(
 				user_tx[user_j * user_k1 + ell] = Base(0);
 			++user_j;
 			if( user_j == user_n )
-			{	// call users function for this operation
-				user_atomic<Base>::forward(user_index, user_id,
-					user_k, user_n, user_m, user_tx, user_ty
-				);
 				user_state = user_ret;
-			}
 			break;
 
 			case UsravOp:
@@ -588,18 +594,17 @@ size_t forward_sweep(
 				user_tx[user_j * user_k1 + ell] = Taylor[ arg[0] * J + ell];
 			++user_j;
 			if( user_j == user_n )
-			{	// call users function for this operation
-				user_atomic<Base>::forward(user_index, user_id,
-					user_k, user_n, user_m, user_tx, user_ty
-				);
 				user_state = user_ret;
-			}
 			break;
 
 			case UsrrpOp:
 			// parameter result in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
+			user_iy[user_i] = 0;
+			user_ty[user_i * user_k1 + 0] = parameter[ arg[0]];
+			for(ell = 1; ell < user_k; ell++)
+				user_ty[user_i * user_k1 + ell] = Base(0);
 			user_i++;
 			if( user_i == user_m )
 				user_state = user_end;
@@ -609,8 +614,10 @@ size_t forward_sweep(
 			// variable result in an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( user_state == user_ret );
 			CPPAD_ASSERT_UNKNOWN( user_i < user_m );
-			Taylor[i_var * J + user_k] = user_ty[user_i * user_k1 + user_k];
-			++user_i;
+			user_iy[user_i] = i_var;
+			for(ell = 0; ell < user_k; ell++)
+				user_ty[user_i * user_k1 + ell] = Taylor[ i_var * J + ell];
+			user_i++;
 			if( user_i == user_m )
 				user_state = user_end;
 			break;

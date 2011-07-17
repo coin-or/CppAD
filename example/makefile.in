@@ -71,8 +71,8 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	runge_45_2.cpp seq_property.cpp simple_vector.cpp sin.cpp \
 	sinh.cpp sparse_hessian.cpp sparse_jacobian.cpp sqrt.cpp \
 	stack_machine.cpp sub.cpp sub_eq.cpp tan.cpp tanh.cpp \
-	tape_index.cpp unary_minus.cpp unary_plus.cpp value.cpp \
-	var_2par.cpp vec_ad.cpp
+	tape_index.cpp unary_minus.cpp unary_plus.cpp user_tan.cpp \
+	value.cpp var_2par.cpp vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
@@ -120,8 +120,8 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sqrt.$(OBJEXT) \
 	stack_machine.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
 	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
-	unary_minus.$(OBJEXT) unary_plus.$(OBJEXT) value.$(OBJEXT) \
-	var_2par.$(OBJEXT) vec_ad.$(OBJEXT)
+	unary_minus.$(OBJEXT) unary_plus.$(OBJEXT) user_tan.$(OBJEXT) \
+	value.$(OBJEXT) var_2par.$(OBJEXT) vec_ad.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -434,6 +434,7 @@ example_SOURCES = \
 	tape_index.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
+	user_tan.cpp \
 	value.cpp \
 	var_2par.cpp \
 	vec_ad.cpp 
@@ -602,6 +603,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tape_index.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unary_minus.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unary_plus.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/user_tan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/value.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/var_2par.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vec_ad.Po@am__quote@

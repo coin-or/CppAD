@@ -12,6 +12,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	Taylor
+	Tanh
 	Rosen
 	Runge
 	executables
@@ -56,6 +58,22 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-17$$
+$list number$$
+Fix bug in $cref/user_atomic/$$ functions.
+To be specific, the Taylor coefficients for $latex y$$,
+of order less than $icode k$$,
+were not passed into the $code user_atomic$$ 
+$cref/forward/user_atomic/forward/$$ callback function.
+$lnext
+Derive the $cref/tan_forward/$$ and $cref/tan_reverse/$$ theory; see
+the wish list item $cref/Tan and Tanh/WishList/Tan and Tanh/$$.
+$lnext
+Implement and test forward mode calculation of derivative for
+the tangent functions; see the new $cref/user_atomic/$$
+example $cref/user_tan.cpp/$$.
+$lend
 
 $head 07-14$$
 $list number$$

@@ -16,7 +16,7 @@ $spell
 	mul
 $$
 
-$section Define User Atomic Operations: Example and Test$$
+$section Matrix Multiply as a User Atomic Operation: Example and Test$$
 
 $index user_atomic, example$$
 $index user_atomic, test$$
