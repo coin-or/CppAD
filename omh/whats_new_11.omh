@@ -59,6 +59,11 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-18$$
+The reverse mode formulas for $latex Z(t)$$ need to involve 
+the lower order Taylor coefficients for $latex Y(t)$$.
+This has been fixed in $cref tan_reverse$$.
+
 $head 07-17$$
 $list number$$
 Fix bug in $cref/user_atomic/$$ functions.

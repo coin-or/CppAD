@@ -29,16 +29,14 @@ definition for the functions $latex H$$ and $latex G$$.
 In addition, we use the forward mode notation in $cref/tan_forward/$$ for
 $latex X(t)$$, $latex Y(t)$$ and $latex Z(t)$$.
 
-$head Eliminate Y(t)$$
-We first compute the reverse mode formulas for eliminating 
-the Taylor coefficients for $latex Y(t)$$.
+$head Eliminating Y(t)$$
 The forward mode coefficients are given by
 $latex \[
 y^{(j)} = \sum_{k=0}^j z^{(k)} z^{(j-k)}
 \] $$
-Suppose that $latex H$$ is the same as $latex G$$ except that
-$latex y^{(j)}$$ is replaced as a function of the Taylor coefficients
-for $latex Z(t)$$.
+Fix $latex j$$ and suppose that $latex H$$ is the same as $latex G$$ 
+except that $latex y^{(j)}$$ is replaced as a function of the Taylor 
+coefficients for $latex Z(t)$$.
 To be specific, for $latex k = 0 , \ldots , j$$,
 $latex \[
 \begin{array}{rcl}
@@ -52,7 +50,45 @@ $latex \[
 \] $$
 
 
-$head Order Zero$$
+$head Positive Orders Z(t)$$
+For order $latex j > 0$$,
+suppose that $latex H$$ is the same as $latex G$$ except that
+$latex z^{(j)}$$ is expressed as a function of 
+the coefficients for $latex X(t)$$, and the
+lower order Taylor coefficients for $latex Y(t)$$, $latex Z(t)$$.
+$latex \[
+z^{(j)}
+=
+x^{(j)} \pm \frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}
+\] $$
+The partial of $latex H$$ with respect to $latex x^{(k)}$$
+for $latex k = 0 , \ldots , j$$ is given by
+$latex \[
+\begin{array}{rcl}
+\D{H}{ x^{(k)} } & = & 
+\D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
+\\
+& = &
+\D{G}{ x^{(k)} } + 
+\delta ( j - k ) \pm \D{G}{ z^{(j)} }\frac{k}{j} y^{(j-k)}
+\end{array}
+\] $$ 
+where $latex \delta ( j - k )$$ is one if $latex j = k$$ and zero
+otherwise.
+The partial of $latex H$$ with respect to $latex y^{k}$$,
+for $latex k = 0 , \ldots ,  j - 1$$ is given by
+$latex \[
+\begin{array}{rcl}
+\D{H}{ y^{(k)} } & = & 
+\D{G}{ y^{(k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ y^{(k)} }
+\\
+& = &
+\D{G}{ y^{(k)} } \pm \D{G}{ z^{(j)} }\frac{j-k}{j} x^{(j-k)}
+\end{array}
+\] $$ 
+
+
+$head Order Zero Z(t)$$
 The order zero coefficients for the tangent and hyperbolic tangent are
 $latex \[
 \begin{array}{rcl}
@@ -76,33 +112,5 @@ $latex \[
 \D{G}{ x^{(0)} } + \D{G}{ z^{(0)} } ( 1 \pm y^{(0)} )
 \end{array}
 \] $$
-
-$head Positive Orders$$
-For order $latex j > 0$$,
-suppose that $latex H$$ is the same as $latex G$$ except that
-$latex z^{(j)}$$ is expressed as a function of the Taylor coefficients
-for $latex Z(t)$$, and the coefficients for $latex X(t)$$.
-The Taylor coefficients for $latex Y(t)$$ have already been removed
-and are treated as constants in this context.
-In this case,
-$latex \[
-z^{(j)}
-=
-x^{(j)} \pm \frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}
-\] $$
-The partial of $latex H$$ with respect to $latex x^{(k)}$$
-for $latex k = 0 , \ldots , j$$ is given by
-$latex \[
-\begin{array}{rcl}
-\D{H}{ x^{(k)} } & = & 
-\D{G}{ x^{(k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ x^{(k)} }
-\\
-\D{ z^{(j)} }{ x^{(k)} }
-& = &
-\delta ( j - k ) \pm \D{G}{ z^{(j)} }\frac{k}{j} y^{(j-k)}
-\end{array}
-\] $$ 
-where $latex \delta ( j - k )$$ is one if $latex j = k$$ and zero
-otherwise.
 
 $end
