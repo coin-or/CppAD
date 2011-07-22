@@ -50,16 +50,16 @@ namespace { // Begin empty namespace
 		size_t                    n ,
 		size_t                    m ,
 		const vector<bool>&      vx ,
-		vector<bool>&            vy ,
+		vector<bool>&           vzy ,
 		const vector<double>&    tx ,
-		vector<double>&          ty
+		vector<double>&         tzy
 	)
 	{
 		assert( n == 1 );
 		assert( m == 2 );
 		assert( id == 0 || id == 1 );
 		assert( tx.size() >= (order+1) * n );
-		assert( ty.size() >= (order+1) * m );
+		assert( tzy.size() >= (order+1) * m );
 
 		size_t n_order = order + 1;
 		size_t j = order;
@@ -69,21 +69,21 @@ namespace { // Begin empty namespace
 		if( vx.size() > 0 )
 		{	assert( vx[0] == true  );
 			assert( vx.size() >= n );
-			assert( vy.size() >= m );
+			assert( vzy.size() >= m );
 			
-			// now set vy
-			vy[0] = true;
-			vy[1] = true;
+			// now setvzy
+			vzy[0] = true;
+			vzy[1] = true;
 		}
 
 		if( j == 0 )
 		{	// z^{(0)} = tan( x^{(0)} ) or tanh( x^{(0)} )
 			if( id == 0 )
-				ty[0] = tan( tx[0] );
-			else	ty[0] = tanh( tx[0] );
+				tzy[0] = tan( tx[0] );
+			else	tzy[0] = tanh( tx[0] );
 
 			// y^{(0)} = z^{(0)} * z^{(0)}
-			ty[n_order + 0] = ty[0] * ty[0];
+			tzy[n_order + 0] = tzy[0] * tzy[0];
 		}
 		else
 		{	double j_inv = 1. / double(j);
@@ -91,14 +91,14 @@ namespace { // Begin empty namespace
 				j_inv = - j_inv;
 
 			// z^{(j)} = x^{(j)} +- sum_{k=1}^j k x^{(k)} y^{(j-k)} / j
-			ty[j] = tx[j];  
+			tzy[j] = tx[j];  
 			for(k = 1; k <= j; k++)
-				ty[j] += tx[k] * ty[n_order + j-k] * k * j_inv;
+				tzy[j] += tx[k] * tzy[n_order + j-k] * k * j_inv;
 
 			// y^{(j)} = sum_{k=0}^j z^{(k)} z^{(j-k)}
-			ty[n_order + j] = 0.;
+			tzy[n_order + j] = 0.;
 			for(k = 0; k <= j; k++)
-				ty[n_order + j] += ty[k] * ty[j-k];
+				tzy[n_order + j] += tzy[k] * tzy[j-k];
 		}
 			
 		// All orders are implemented and there are no possible errors
@@ -112,23 +112,23 @@ namespace { // Begin empty namespace
 		size_t                    n ,
 		size_t                    m ,
 		const vector<double>&    tx ,
-		const vector<double>&    ty ,
+		const vector<double>&   tzy ,
 		vector<double>&          px ,
-		const vector<double>&    py
+		const vector<double>&   pzy
 	)
 	{	assert( n == 1 );
 		assert( m == 2 );
 		assert( id == 0 || id == 1 );
 		assert( tx.size() >= (order+1) * n );
-		assert( ty.size() >= (order+1) * m );
+		assert( tzy.size() >= (order+1) * m );
 		assert( px.size() >= (order+1) * n );
-		assert( py.size() >= (order+1) * m );
+		assert( pzy.size() >= (order+1) * m );
 
 		size_t n_order = order + 1;
 		size_t j, k;
 
 		// copy because partials w.r.t. y and z need to change
-		vector<double> qy = py;
+		vector<double> qzy = pzy;
 
 		// initialize accumultion of reverse mode partials
 		for(k = 0; k < n_order; k++)
@@ -141,24 +141,24 @@ namespace { // Begin empty namespace
 				j_inv = - j_inv;
 
 			// H_{x^{(k)}} += delta(j-k) +- H_{z^{(j)} y^{(j-k)} * k / j
-			px[j] += qy[j];
+			px[j] += qzy[j];
 			for(k = 1; k <= j; k++)
-				px[k] += qy[j] * ty[n_order + j-k] * k * j_inv;  
+				px[k] += qzy[j] * tzy[n_order + j-k] * k * j_inv;  
 
 			// H_{y^{j-k)} += +- H_{z^{(j)} x^{(k)} * k / j
 			for(k = 1; k <= j; k++)
-				qy[n_order + j-k] += qy[j] * tx[k] * k * j_inv;  
+				qzy[n_order + j-k] += qzy[j] * tx[k] * k * j_inv;  
 
 			// H_{z^{(k)}} += H_{y^{(j-1)}} * z^{(j-k-1)} * 2. 
 			for(k = 0; k < j; k++)
-				qy[k] += qy[n_order + j-1] * ty[j-k-1] * 2.; 
+				qzy[k] += qzy[n_order + j-1] * tzy[j-k-1] * 2.; 
 		}
 
 		// eliminate order zero
 		if( id == 0 )
-			px[0] += qy[0] * (1. + ty[n_order + 0]);
+			px[0] += qzy[0] * (1. + tzy[n_order + 0]);
 		else
-			px[0] += qy[0] * (1. - ty[n_order + 0]);
+			px[0] += qzy[0] * (1. - tzy[n_order + 0]);
 
 		return true; 
 	}
