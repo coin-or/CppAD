@@ -30,22 +30,22 @@ In addition, we use the forward mode notation in $cref/tan_forward/$$ for
 $latex X(t)$$, $latex Y(t)$$ and $latex Z(t)$$.
 
 $head Eliminating Y(t)$$
-The forward mode coefficients are given by
+For $latex j > 0$$, the forward mode coefficients are given by
 $latex \[
-y^{(j)} = \sum_{k=0}^j z^{(k)} z^{(j-k)}
+y^{(j-1)} = \sum_{k=0}^{j-1} z^{(k)} z^{(j-k-1)}
 \] $$
-Fix $latex j$$ and suppose that $latex H$$ is the same as $latex G$$ 
-except that $latex y^{(j)}$$ is replaced as a function of the Taylor 
+Fix $latex j > 0$$ and suppose that $latex H$$ is the same as $latex G$$ 
+except that $latex y^{(j-1)}$$ is replaced as a function of the Taylor 
 coefficients for $latex Z(t)$$.
-To be specific, for $latex k = 0 , \ldots , j$$,
+To be specific, for $latex k = 0 , \ldots , j-1$$,
 $latex \[
 \begin{array}{rcl}
 \D{H}{ z^{(k)} }  
 & = & 
-\D{G}{ z^{(k)} } + \D{G}{ y^{(j)} } \D{ y^{(j)} }{ z^{(k)} }
+\D{G}{ z^{(k)} } + \D{G}{ y^{(j-1)} } \D{ y^{(j-1)} }{ z^{(k)} }
 \\
 & = & 
-\D{G}{ z^{(k)} } + \D{G}{ y^{(j)} } 2 z^{(j-k)}
+\D{G}{ z^{(k)} } + \D{G}{ y^{(j-1)} } 2 z^{(j-k-1)}
 \end{array}
 \] $$
 
@@ -61,8 +61,8 @@ z^{(j)}
 =
 x^{(j)} \pm \frac{1}{j}  \sum_{k=1}^j k x^{(k)} y^{(j-k)}
 \] $$
-The partial of $latex H$$ with respect to $latex x^{(k)}$$
-for $latex k = 0 , \ldots , j$$ is given by
+For $latex k = 1 , \ldots , j$$,
+the partial of $latex H$$ with respect to $latex x^{(k)}$$ is given by
 $latex \[
 \begin{array}{rcl}
 \D{H}{ x^{(k)} } & = & 
@@ -70,20 +70,22 @@ $latex \[
 \\
 & = &
 \D{G}{ x^{(k)} } + 
-\delta ( j - k ) \pm \D{G}{ z^{(j)} }\frac{k}{j} y^{(j-k)}
+\D{G}{ z^{(j)} }
+\left[ \delta ( j - k ) \pm \D{G}{ z^{(j)} }\frac{k}{j} y^{(j-k)} \right]
 \end{array}
 \] $$ 
 where $latex \delta ( j - k )$$ is one if $latex j = k$$ and zero
 otherwise.
-The partial of $latex H$$ with respect to $latex y^{k}$$,
-for $latex k = 0 , \ldots ,  j - 1$$ is given by
+For $latex k = 1 , \ldots ,  j$$ 
+The partial of $latex H$$ with respect to $latex y^{j-k}$$,
+is given by
 $latex \[
 \begin{array}{rcl}
-\D{H}{ y^{(k)} } & = & 
-\D{G}{ y^{(k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ y^{(k)} }
+\D{H}{ y^{(j-k)} } & = & 
+\D{G}{ y^{(j-k)} } + \D{G}{ z^{(j)} } \D{ z^{(j)} }{ y^{(j-k)} }
 \\
 & = &
-\D{G}{ y^{(k)} } \pm \D{G}{ z^{(j)} }\frac{j-k}{j} x^{(j-k)}
+\D{G}{ y^{(j-k)} } \pm \D{G}{ z^{(j)} }\frac{k}{j} x^{k}
 \end{array}
 \] $$ 
 

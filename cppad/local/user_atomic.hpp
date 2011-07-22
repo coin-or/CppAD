@@ -209,6 +209,7 @@ while in calls to $cref/reverse/user_atomic/reverse/$$ it has prototype
 $codei%
 	const CppAD::vector<%Base%>& %ty%
 %$$
+For all calls, $icode%tx%.size() >= (%k% + 1) * %m%$$.
 For $latex i = 0 , \ldots , m-1$$ and $latex \ell = 0 , \ldots , k$$,
 we use the Taylor coefficient notation
 $latex \[

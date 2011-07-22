@@ -46,7 +46,7 @@ namespace { // Begin empty namespace
 	// forward mode routine called by CppAD
 	bool user_tan_forward(
 		size_t                   id ,
-		size_t                    k ,
+		size_t                order ,
 		size_t                    n ,
 		size_t                    m ,
 		const vector<bool>&      vx ,
@@ -54,9 +54,16 @@ namespace { // Begin empty namespace
 		const vector<double>&    tx ,
 		vector<double>&          ty
 	)
-	{	assert( n == 1 );
+	{
+		assert( n == 1 );
 		assert( m == 2 );
 		assert( id == 0 || id == 1 );
+		assert( tx.size() >= (order+1) * n );
+		assert( ty.size() >= (order+1) * m );
+
+		size_t n_order = order + 1;
+		size_t j = order;
+		size_t k;
 
 		// check if this is during the call to user_tan(id, ax, ay)
 		if( vx.size() > 0 )
@@ -68,39 +75,30 @@ namespace { // Begin empty namespace
 			vy[0] = true;
 			vy[1] = true;
 		}
-		size_t ell, kp = k + 1;
 
-		// Notational conversion table;
-		// user_tan       tan_forward.xml
-		// k              j
-		// ell            k
-		// tx[ell]        x^{(ell}}
-		// ty[ell]        z^{(ell)}
-		// ty[kp + ell]   y^{(ell)}
-
-		if( k == 0 )
+		if( j == 0 )
 		{	// z^{(0)} = tan( x^{(0)} ) or tanh( x^{(0)} )
 			if( id == 0 )
 				ty[0] = tan( tx[0] );
 			else	ty[0] = tanh( tx[0] );
 
 			// y^{(0)} = z^{(0)} * z^{(0)}
-			ty[kp + 0] = ty[0] * ty[0];
+			ty[n_order + 0] = ty[0] * ty[0];
 		}
 		else
-		{	// z^{(j)} = x^{(j)} +- sum_{k=1}^j k x^{(k)} y^{(j-k)} / j
-			double k_inv = 1. / double(k);
+		{	double j_inv = 1. / double(j);
 			if( id == 1 )
-				k_inv = - k_inv;
+				j_inv = - j_inv;
 
-			ty[k] = tx[k];  
-			for(ell = 1; ell < kp; ell++)
-				ty[k] += ell * tx[ell] * ty[kp + k - ell] * k_inv;
+			// z^{(j)} = x^{(j)} +- sum_{k=1}^j k x^{(k)} y^{(j-k)} / j
+			ty[j] = tx[j];  
+			for(k = 1; k <= j; k++)
+				ty[j] += tx[k] * ty[n_order + j-k] * k * j_inv;
 
 			// y^{(j)} = sum_{k=0}^j z^{(k)} z^{(j-k)}
-			ty[kp + k] = 0.;
-			for(ell = 0; ell < kp; ell++)
-				ty[kp + k] += ty[ell] * ty[k - ell];
+			ty[n_order + j] = 0.;
+			for(k = 0; k <= j; k++)
+				ty[n_order + j] += ty[k] * ty[j-k];
 		}
 			
 		// All orders are implemented and there are no possible errors
@@ -110,7 +108,7 @@ namespace { // Begin empty namespace
 	// reverse mode routine called by CppAD
 	bool user_tan_reverse(
 		size_t                   id ,
-		size_t                    k ,
+		size_t                order ,
 		size_t                    n ,
 		size_t                    m ,
 		const vector<double>&    tx ,
@@ -118,7 +116,52 @@ namespace { // Begin empty namespace
 		vector<double>&          px ,
 		const vector<double>&    py
 	)
-	{	return false; }
+	{	assert( n == 1 );
+		assert( m == 2 );
+		assert( id == 0 || id == 1 );
+		assert( tx.size() >= (order+1) * n );
+		assert( ty.size() >= (order+1) * m );
+		assert( px.size() >= (order+1) * n );
+		assert( py.size() >= (order+1) * m );
+
+		size_t n_order = order + 1;
+		size_t j, k;
+
+		// copy because partials w.r.t. y and z need to change
+		vector<double> qy = py;
+
+		// initialize accumultion of reverse mode partials
+		for(k = 0; k < n_order; k++)
+			px[k] = 0.;
+
+		// eliminate positive orders
+		for(j = order; j > 0; j--)
+		{	double j_inv = 1. / double(j);
+			if( id == 1 )
+				j_inv = - j_inv;
+
+			// H_{x^{(k)}} += delta(j-k) +- H_{z^{(j)} y^{(j-k)} * k / j
+			px[j] += qy[j];
+			for(k = 1; k <= j; k++)
+				px[k] += qy[j] * ty[n_order + j-k] * k * j_inv;  
+
+			// H_{y^{j-k)} += +- H_{z^{(j)} x^{(k)} * k / j
+			for(k = 1; k <= j; k++)
+				qy[n_order + j-k] += qy[j] * tx[k] * k * j_inv;  
+
+			// H_{z^{(k)}} += H_{y^{(j-1)}} * z^{(j-k-1)} * 2. 
+			for(k = 0; k < j; k++)
+				qy[k] += qy[n_order + j-1] * ty[j-k-1] * 2.; 
+		}
+
+		// eliminate order zero
+		if( id == 0 )
+			px[0] += qy[0] * (1. + ty[n_order + 0]);
+		else
+			px[0] += qy[0] * (1. - ty[n_order + 0]);
+
+		return true; 
+	}
 	// ----------------------------------------------------------------------
 	// forward Jacobian sparsity routine called by CppAD
 	bool user_tan_for_jac_sparse(
@@ -213,26 +256,39 @@ bool user_tan(void)
 	dx[0] = 1.;
 	dy    = f.Forward(1, dx);
 
+	// compute derivative of tan - tanh using reverse mode
+	CPPAD_TEST_VECTOR<double> w(m), dw(n);
+	w[0]  = 1.;
+	w[1]  = 1.;
+	dw    = f.Reverse(1, w);
+
 	// tan'(x)   = 1 + tan(x)  * tan(x) 
 	// tanh'(x)  = 1 - tanh(x) * tanh(x) 
-	double tanp = 1. + tan * tan; 
-	ok   &= NearEqual(dy[0], tanp, eps, eps);
+	double tanp  = 1. + tan * tan; 
 	double tanhp = 1. - tanh * tanh; 
+	ok   &= NearEqual(dy[0], tanp, eps, eps);
 	ok   &= NearEqual(dy[1], tanhp, eps, eps);
+	ok   &= NearEqual(dw[0], w[0]*tanp + w[1]*tanhp, eps, eps);
 
-	// compue second partial of f w.r.t. x[0] using forward mode
+	// compute second partial of f w.r.t. x[0] using forward mode
 	CPPAD_TEST_VECTOR<double> ddx(n), ddy(m);
 	ddx[0] = 0.;
 	ddy    = f.Forward(2, ddx);
+
+	// compute second derivative of tan - tanh using reverse mode
+	CPPAD_TEST_VECTOR<double> ddw(2);
+	ddw   = f.Reverse(2, w);
 
 	// tan''(x)   = 2 *  tan(x) * tan'(x) 
 	// tanh''(x)  = - 2 * tanh(x) * tanh'(x) 
 	// Note that second order Taylor coefficient for y half the
 	// corresponding second derivative.
-	double tanpp = 2. * tan * tanp;
-	ok   &= NearEqual(2. * ddy[0], tanpp, eps, eps);
+	double tanpp  =   2. * tan * tanp;
 	double tanhpp = - 2. * tanh * tanhp;
+	ok   &= NearEqual(2. * ddy[0], tanpp, eps, eps);
 	ok   &= NearEqual(2. * ddy[1], tanhpp, eps, eps);
+	ok   &= NearEqual(ddw[0], w[0]*tanp  + w[1]*tanhp , eps, eps);
+	ok   &= NearEqual(ddw[1], w[0]*tanpp + w[1]*tanhpp, eps, eps);
 
 	// --------------------------------------------------------------------
 	// Free temporary work space. (If there are future calls to 
