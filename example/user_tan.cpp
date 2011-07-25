@@ -171,7 +171,12 @@ namespace { // Begin empty namespace
 		size_t                                q ,
 		const vector< std::set<size_t> >&     r ,
 		vector< std::set<size_t> >&           s )
-	{	return false; }
+	{	// sparsity for z and y are the same as for x
+		s[0] = r[0];
+		s[1] = r[0];
+
+		return true;
+	}
 	// ----------------------------------------------------------------------
 	// reverse Jacobian sparsity routine called by CppAD
 	bool user_tan_rev_jac_sparse(
@@ -225,36 +230,39 @@ bool user_tan(void)
 	CppAD::Independent(x);
 
 	// range space vector 
-	size_t m = 2;
-	CPPAD_TEST_VECTOR< AD<double> > y(m);
+	size_t m = 3;
+	CPPAD_TEST_VECTOR< AD<double> > u(m);
 
 	// temporary vector for user_tan computations
 	// (user_tan computes tan or tanh and its square)
 	CPPAD_TEST_VECTOR< AD<double> > z(2);
 
-	// call user tan function and store tan(x) in y[0] (ignore tan(x)^2)
+	// call user tan function and store tan(x) in u[0] (ignore tan(x)^2)
 	size_t id = 0;
 	user_tan(id, x, z);
-	y[0] = z[0];
+	u[0] = z[0];
 
-	// call user tanh function and store tanh(x) in y[1] (ignore tanh(x)^2)
+	// call user tanh function and store tanh(x) in u[1] (ignore tanh(x)^2)
 	id = 1;
 	user_tan(id, x, z);
-	y[1] = z[0];
+	u[1] = z[0];
 
-	// create f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(x, y); 
+	// put a constant in u[2] (for sparsity pattern testing)
+	u[2] = 1.; 
+
+	// create f: x -> u and stop tape recording
+	CppAD::ADFun<double> f(x, u); 
 
 	// check value 
 	double tan = std::tan(x0);
-	ok &= NearEqual(y[0] , tan,  eps, eps);
+	ok &= NearEqual(u[0] , tan,  eps, eps);
 	double tanh = std::tanh(x0);
-	ok &= NearEqual(y[1] , tanh,  eps, eps);
+	ok &= NearEqual(u[1] , tanh,  eps, eps);
 
 	// compute first partial of f w.r.t. x[0] using forward mode
-	CPPAD_TEST_VECTOR<double> dx(n), dy(m);
+	CPPAD_TEST_VECTOR<double> dx(n), du(m);
 	dx[0] = 1.;
-	dy    = f.Forward(1, dx);
+	du    = f.Forward(1, dx);
 
 	// compute derivative of tan - tanh using reverse mode
 	CPPAD_TEST_VECTOR<double> w(m), dw(n);
@@ -266,14 +274,14 @@ bool user_tan(void)
 	// tanh'(x)  = 1 - tanh(x) * tanh(x) 
 	double tanp  = 1. + tan * tan; 
 	double tanhp = 1. - tanh * tanh; 
-	ok   &= NearEqual(dy[0], tanp, eps, eps);
-	ok   &= NearEqual(dy[1], tanhp, eps, eps);
+	ok   &= NearEqual(du[0], tanp, eps, eps);
+	ok   &= NearEqual(du[1], tanhp, eps, eps);
 	ok   &= NearEqual(dw[0], w[0]*tanp + w[1]*tanhp, eps, eps);
 
 	// compute second partial of f w.r.t. x[0] using forward mode
-	CPPAD_TEST_VECTOR<double> ddx(n), ddy(m);
+	CPPAD_TEST_VECTOR<double> ddx(n), ddu(m);
 	ddx[0] = 0.;
-	ddy    = f.Forward(2, ddx);
+	ddu    = f.Forward(2, ddx);
 
 	// compute second derivative of tan - tanh using reverse mode
 	CPPAD_TEST_VECTOR<double> ddw(2);
@@ -281,18 +289,29 @@ bool user_tan(void)
 
 	// tan''(x)   = 2 *  tan(x) * tan'(x) 
 	// tanh''(x)  = - 2 * tanh(x) * tanh'(x) 
-	// Note that second order Taylor coefficient for y half the
+	// Note that second order Taylor coefficient for u half the
 	// corresponding second derivative.
 	double tanpp  =   2. * tan * tanp;
 	double tanhpp = - 2. * tanh * tanhp;
-	ok   &= NearEqual(2. * ddy[0], tanpp, eps, eps);
-	ok   &= NearEqual(2. * ddy[1], tanhpp, eps, eps);
+	ok   &= NearEqual(2. * ddu[0], tanpp, eps, eps);
+	ok   &= NearEqual(2. * ddu[1], tanhpp, eps, eps);
 	ok   &= NearEqual(ddw[0], w[0]*tanp  + w[1]*tanhp , eps, eps);
 	ok   &= NearEqual(ddw[1], w[0]*tanpp + w[1]*tanhpp, eps, eps);
 
+	// Compute the sparsity pattern for f.
+	size_t q = n;
+	CppAD::vectorBool r(q); // user vectorBool because m and n are small
+	r[0] = true;
+	CppAD::vectorBool s(m);
+	s    = f.ForSparseJac(q, r);
+	ok  &= (s[0] == true);
+	ok  &= (s[1] == true);
+	ok  &= (s[2] == false);
+
 	// --------------------------------------------------------------------
-	// Free temporary work space. (If there are future calls to 
-	// user_tan they would create new temporary work space.)
+	// Free all temporary work space associated with user_atomic objects. 
+	// (If there are future calls to user atomic functions, they will 
+	// create new temporary work space.)
 	CppAD::user_atomic<double>::clear();
 
 	return ok;
