@@ -42,6 +42,22 @@ $end
 namespace { // Begin empty namespace 
 	using CppAD::vector;
 
+	// a utility to compute the union of two sets.
+	void my_union(
+		std::set<size_t>&         result  ,
+		const std::set<size_t>&   left    ,
+		const std::set<size_t>&   right   )
+	{	std::set<size_t> temp;
+		std::set_union(
+			left.begin()              ,
+			left.end()                ,
+			right.begin()             ,
+			right.end()               ,
+			std::inserter(temp, temp.begin())
+		);
+		result.swap(temp);
+	}
+
 	// ----------------------------------------------------------------------
 	// forward mode routine called by CppAD
 	bool user_tan_forward(
@@ -186,7 +202,11 @@ namespace { // Begin empty namespace
 		size_t                                q ,
 		vector< std::set<size_t> >&           r ,
 		const vector< std::set<size_t> >&     s )
-	{	return false; }
+	{	// note that, if the users code only uses z, and not y,
+		// we could just set r[0] = s[0]	
+		my_union(r[0], s[0], s[1]);
+		return true; 
+	}
 	// ----------------------------------------------------------------------
 	// reverse Hessian sparsity routine called by CppAD
 	bool user_tan_rev_hes_sparse(
@@ -298,15 +318,29 @@ bool user_tan(void)
 	ok   &= NearEqual(ddw[0], w[0]*tanp  + w[1]*tanhp , eps, eps);
 	ok   &= NearEqual(ddw[1], w[0]*tanpp + w[1]*tanhpp, eps, eps);
 
-	// Compute the sparsity pattern for f.
+	// Forward mode computation of sparsity pattern for f.
 	size_t q = n;
-	CppAD::vectorBool r(q); // user vectorBool because m and n are small
-	r[0] = true;
-	CppAD::vectorBool s(m);
+	// user vectorBool because m and n are small
+	CppAD::vectorBool r(q), s(m * q);
+	r[0] = true;            // propogate sparsity for x[0]
 	s    = f.ForSparseJac(q, r);
-	ok  &= (s[0] == true);
-	ok  &= (s[1] == true);
-	ok  &= (s[2] == false);
+	ok  &= (s[0] == true);  // u[0] depends on x[0]
+	ok  &= (s[1] == true);  // u[1] depends on x[0]
+	ok  &= (s[2] == false); // u[2] does not depend on x[0]
+
+	// Reverse mode computation of sparsity pattern for f.
+	size_t p = m;
+	CppAD::vectorBool S(p * m), R(p * n);
+	// Sparsity pattern for identity matrix
+	size_t i, j;
+	for(i = 0; i < p; i++)
+	{	for(j = 0; j < m; j++)
+			S[i * p + j] = (i == j);
+	}
+	R    = f.RevSparseJac(p, S);
+	ok  &= (R[0] == true);  // u[0] depends on x[0]
+	ok  &= (R[1] == true);  // u[1] depends on x[0]
+	ok  &= (R[2] == false); // u[2] does not depend on x[0]
 
 	// --------------------------------------------------------------------
 	// Free all temporary work space associated with user_atomic objects. 

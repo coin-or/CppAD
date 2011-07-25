@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	omp_alloc
 	iterator
 	bools
 	Microsoft
@@ -19,14 +20,12 @@ $spell
 	tanh
 	cos
 	booleans
-	parallelize
 	Jacobian
 	recomputed
 	Ipopt
 	Adolc
 	Fadbad
 	Sacado
-	Python
 	xml
 	hpp
 	CondExp
@@ -36,7 +35,6 @@ $spell
 	retape
 	cppad
 	nlp
-	Jacobians
 $$
 
 $section The CppAD Wish List$$
@@ -171,16 +169,21 @@ $index sparsity, pattern parallel$$
 $index pattern, sparsity parallel$$
 $index parallel, sparsity pattern$$
 
-$subhead OpenMP$$
-When using arrays of booleans for
-$cref/sparsity patterns/glossary/Sparsity Pattern/$$, 
-use OpenMP to parallelize the computation of the sparsity patterns.
-
 $subhead Faster Set Operations$$
+$list number$$
 The sparse set $code add_element$$ operation could be made faster
 by cashing the iterator where the $code std::set$$ inserts the 
 previous element. See the $code add_element$$ routine in the file
 $code sparse_set.hpp$$. 
+$lnext
+The memory allocation by standard set during sparsity calculations
+should be changed over to use $cref/omp_alloc/$$
+(requires making a standard allocator interface to $code omp_alloc$$).
+$lnext
+The $cref/user_atomic/$$ operations should allow the user to chose vectors
+of bits, instead of standard sets, for representing sets. This would
+be more efficient for most cases.
+$lend
 
 
 $head Speed Testing$$
