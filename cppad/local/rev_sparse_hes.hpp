@@ -518,6 +518,8 @@ VectorSet ADFun<Base>::RevSparseHes(size_t q,  const VectorSet& s)
 {	VectorSet h;
 	typedef typename VectorSet::value_type Set_type;
 
+	// Should check to make sure q is same as in previous call to
+	// forward sparse Jacobian.
 	RevSparseHesCase(
 		Set_type()    ,
 		q             ,

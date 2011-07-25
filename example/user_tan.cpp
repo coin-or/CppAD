@@ -219,7 +219,20 @@ namespace { // Begin empty namespace
 		vector<bool>&                         t ,
 		const vector< std::set<size_t> >&     u ,
 		vector< std::set<size_t> >&           v )
-	{	return false; }
+	{	// back propogate Jacobian sparsity. If users code only uses z,
+		// we could just set t[0] = s[0];
+		t[0] =  s[0] | s[1];
+
+		// back propogate Hessian sparsity, ...
+		my_union(v[0], u[0], u[1]);
+
+		// convert forward Jacobian sparsity to Hessian sparsity
+		// because tan and tanh are nonlinear
+		if( t[0] )
+			my_union(v[0], v[0], r[0]);
+
+		return true;
+	}
 	// ---------------------------------------------------------------------
 	// Declare the AD<double> routine user_tan(id, ax, ay)
 	CPPAD_USER_ATOMIC(
@@ -251,61 +264,61 @@ bool user_tan(void)
 
 	// range space vector 
 	size_t m = 3;
-	CPPAD_TEST_VECTOR< AD<double> > u(m);
+	CPPAD_TEST_VECTOR< AD<double> > f(m);
 
 	// temporary vector for user_tan computations
 	// (user_tan computes tan or tanh and its square)
 	CPPAD_TEST_VECTOR< AD<double> > z(2);
 
-	// call user tan function and store tan(x) in u[0] (ignore tan(x)^2)
+	// call user tan function and store tan(x) in f[0] (ignore tan(x)^2)
 	size_t id = 0;
 	user_tan(id, x, z);
-	u[0] = z[0];
+	f[0] = z[0];
 
-	// call user tanh function and store tanh(x) in u[1] (ignore tanh(x)^2)
+	// call user tanh function and store tanh(x) in f[1] (ignore tanh(x)^2)
 	id = 1;
 	user_tan(id, x, z);
-	u[1] = z[0];
+	f[1] = z[0];
 
-	// put a constant in u[2] (for sparsity pattern testing)
-	u[2] = 1.; 
+	// put a constant in f[2] (for sparsity pattern testing)
+	f[2] = 1.; 
 
-	// create f: x -> u and stop tape recording
-	CppAD::ADFun<double> f(x, u); 
+	// create f: x -> f and stop tape recording
+	CppAD::ADFun<double> F(x, f); 
 
 	// check value 
 	double tan = std::tan(x0);
-	ok &= NearEqual(u[0] , tan,  eps, eps);
+	ok &= NearEqual(f[0] , tan,  eps, eps);
 	double tanh = std::tanh(x0);
-	ok &= NearEqual(u[1] , tanh,  eps, eps);
+	ok &= NearEqual(f[1] , tanh,  eps, eps);
 
 	// compute first partial of f w.r.t. x[0] using forward mode
-	CPPAD_TEST_VECTOR<double> dx(n), du(m);
+	CPPAD_TEST_VECTOR<double> dx(n), df(m);
 	dx[0] = 1.;
-	du    = f.Forward(1, dx);
+	df    = F.Forward(1, dx);
 
 	// compute derivative of tan - tanh using reverse mode
 	CPPAD_TEST_VECTOR<double> w(m), dw(n);
 	w[0]  = 1.;
 	w[1]  = 1.;
-	dw    = f.Reverse(1, w);
+	dw    = F.Reverse(1, w);
 
 	// tan'(x)   = 1 + tan(x)  * tan(x) 
 	// tanh'(x)  = 1 - tanh(x) * tanh(x) 
 	double tanp  = 1. + tan * tan; 
 	double tanhp = 1. - tanh * tanh; 
-	ok   &= NearEqual(du[0], tanp, eps, eps);
-	ok   &= NearEqual(du[1], tanhp, eps, eps);
+	ok   &= NearEqual(df[0], tanp, eps, eps);
+	ok   &= NearEqual(df[1], tanhp, eps, eps);
 	ok   &= NearEqual(dw[0], w[0]*tanp + w[1]*tanhp, eps, eps);
 
 	// compute second partial of f w.r.t. x[0] using forward mode
-	CPPAD_TEST_VECTOR<double> ddx(n), ddu(m);
+	CPPAD_TEST_VECTOR<double> ddx(n), ddf(m);
 	ddx[0] = 0.;
-	ddu    = f.Forward(2, ddx);
+	ddf    = F.Forward(2, ddx);
 
 	// compute second derivative of tan - tanh using reverse mode
 	CPPAD_TEST_VECTOR<double> ddw(2);
-	ddw   = f.Reverse(2, w);
+	ddw   = F.Reverse(2, w);
 
 	// tan''(x)   = 2 *  tan(x) * tan'(x) 
 	// tanh''(x)  = - 2 * tanh(x) * tanh'(x) 
@@ -313,34 +326,48 @@ bool user_tan(void)
 	// corresponding second derivative.
 	double tanpp  =   2. * tan * tanp;
 	double tanhpp = - 2. * tanh * tanhp;
-	ok   &= NearEqual(2. * ddu[0], tanpp, eps, eps);
-	ok   &= NearEqual(2. * ddu[1], tanhpp, eps, eps);
+	ok   &= NearEqual(2. * ddf[0], tanpp, eps, eps);
+	ok   &= NearEqual(2. * ddf[1], tanhpp, eps, eps);
 	ok   &= NearEqual(ddw[0], w[0]*tanp  + w[1]*tanhp , eps, eps);
 	ok   &= NearEqual(ddw[1], w[0]*tanpp + w[1]*tanhpp, eps, eps);
 
-	// Forward mode computation of sparsity pattern for f.
+	// Forward mode computation of sparsity pattern for F.
 	size_t q = n;
 	// user vectorBool because m and n are small
-	CppAD::vectorBool r(q), s(m * q);
-	r[0] = true;            // propogate sparsity for x[0]
-	s    = f.ForSparseJac(q, r);
-	ok  &= (s[0] == true);  // u[0] depends on x[0]
-	ok  &= (s[1] == true);  // u[1] depends on x[0]
-	ok  &= (s[2] == false); // u[2] does not depend on x[0]
+	CppAD::vectorBool r1(q), s1(m * q);
+	r1[0] = true;            // propogate sparsity for x[0]
+	s1    = F.ForSparseJac(q, r1);
+	ok  &= (s1[0] == true);  // f[0] depends on x[0]
+	ok  &= (s1[1] == true);  // f[1] depends on x[0]
+	ok  &= (s1[2] == false); // f[2] does not depend on x[0]
 
-	// Reverse mode computation of sparsity pattern for f.
+	// Reverse mode computation of sparsity pattern for F.
 	size_t p = m;
-	CppAD::vectorBool S(p * m), R(p * n);
+	CppAD::vectorBool s2(p * m), r2(p * n);
 	// Sparsity pattern for identity matrix
 	size_t i, j;
 	for(i = 0; i < p; i++)
 	{	for(j = 0; j < m; j++)
-			S[i * p + j] = (i == j);
+			s2[i * p + j] = (i == j);
 	}
-	R    = f.RevSparseJac(p, S);
-	ok  &= (R[0] == true);  // u[0] depends on x[0]
-	ok  &= (R[1] == true);  // u[1] depends on x[0]
-	ok  &= (R[2] == false); // u[2] does not depend on x[0]
+	r2   = F.RevSparseJac(p, s2);
+	ok  &= (r2[0] == true);  // f[0] depends on x[0]
+	ok  &= (r2[1] == true);  // f[1] depends on x[0]
+	ok  &= (r2[2] == false); // f[2] does not depend on x[0]
+
+	// Hessian sparsity for f[0]
+	CppAD::vectorBool s3(m), h(q * n);
+	s3[0] = true;
+	s3[1] = false;
+	s3[2] = false;
+	h    = F.RevSparseHes(q, s3);
+	ok  &= (h[0] == true);  // Hessian is non-zero
+
+	// Hessian sparsity for f[2]
+	s3[0] = false;
+	s3[2] = true;
+	h    = F.RevSparseHes(q, s3);
+	ok  &= (h[0] == false);  // Hessian is zero
 
 	// --------------------------------------------------------------------
 	// Free all temporary work space associated with user_atomic objects. 
