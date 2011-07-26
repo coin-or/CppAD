@@ -52,8 +52,8 @@ enum OpCode {
 	BeginOp,  // used to mark the beginning of the tape
 	CExpOp,   // CondExp(cop, left, right, trueCase, falseCase)
 	ComOp,    // Compare(cop, result, left, right)
-	CosOp,    //  cos(variable)
 	CoshOp,   // cosh(variable)
+	CosOp,    //  cos(variable)
 	CSumOp,   // Cummulative summation (has variable number of arguments)
 	DisOp,    //  discrete::eval(index, variable)
 	DivpvOp,  //      parameter  / variable
@@ -61,32 +61,32 @@ enum OpCode {
 	DivvvOp,  //      variable   / variable
 	EndOp,    //  used to mark the end of the tape
 	ExpOp,    //  exp(variable)
+	InvOp,    //                             independent variable
 	LdpOp,    //    z[parameter]
 	LdvOp,    //    z[variable]
-	InvOp,    //                             independent variable
 	LogOp,    //  log(variable)
 	MulpvOp,  //      parameter  * variable
 	MulvvOp,  //      variable   * variable
 	ParOp,    //      parameter
-	PowvpOp,  //  pow(variable,    parameter)
 	PowpvOp,  //  pow(parameter,   variable)
+	PowvpOp,  //  pow(variable,    parameter)
 	PowvvOp,  //  pow(variable,    variable)
 	PripOp,   //      text         parameter
 	PrivOp,   //      text         parameter
-	SinOp,    //  sin(variable)
 	SinhOp,   // sinh(variable)
+	SinOp,    //  sin(variable)
 	SqrtOp,   // sqrt(variable)
 	StppOp,   //    z[parameter] = parameter
-	StvpOp,   //    z[variable]  = parameter
 	StpvOp,   //    z[parameter] = variable
+	StvpOp,   //    z[variable]  = parameter
 	StvvOp,   //    z[variable]  = variable
 	SubpvOp,  //      parameter  - variable
 	SubvpOp,  //      variable   - parameter
 	SubvvOp,  //      variable   - variable
 	// user atomic operation codes (note yet implemented)
+	UserOp,   //  start of a user atomic operaiton
 	UsrapOp,  //  this user atomic argument is a parameter
 	UsravOp,  //  this user atomic argument is a variable
-	UserOp,   //  start of a user atomic operaiton
 	UsrrpOp,  //  this user atomic result is a parameter
 	UsrrvOp   //  this user atomic result is a variable
 };
@@ -115,8 +115,8 @@ const size_t NumArgTable[] = {
 	0, // BeginOp
 	6, // CExpOp
 	4, // ComOp
-	1, // CosOp
 	1, // CoshOp
+	1, // CosOp
 	0, // CSumOp   (actually has a variable number of arguments, not zero)
 	2, // DisOp
 	2, // DivpvOp
@@ -124,31 +124,31 @@ const size_t NumArgTable[] = {
 	2, // DivvvOp
 	0, // EndOp
 	1, // ExpOp
+	0, // InvOp
 	3, // LdpOp
 	3, // LdvOp
-	0, // InvOp
 	1, // LogOp
-	2, // MulvvOp
 	2, // MulpvOp
+	2, // MulvvOp
 	1, // ParOp
-	2, // PowvpOp
 	2, // PowpvOp
+	2, // PowvpOp
 	2, // PowvvOp
 	2, // PripOp
 	2, // PrivOp
-	1, // SinOp
 	1, // SinhOp
+	1, // SinOp
 	1, // SqrtOp
 	3, // StppOp
-	3, // StvpOp
 	3, // StpvOp
+	3, // StvpOp
 	3, // StvvOp
 	2, // SubpvOp
 	2, // SubvpOp
 	2, // SubvvOp
+	4, // UserOp
 	1, // UsrapOp
 	1, // UsravOp
-	4, // UserOp
 	1, // UsrrpOp
 	0  // UsrrvOp
 };
@@ -211,8 +211,8 @@ const size_t NumResTable[] = {
 	1, // BeginOp  offsets first variable to have index one (not zero)
 	1, // CExpOp
 	0, // ComOp
-	2, // CosOp
 	2, // CoshOp
+	2, // CosOp
 	1, // CSumOp
 	1, // DisOp
 	1, // DivpvOp
@@ -220,34 +220,34 @@ const size_t NumResTable[] = {
 	1, // DivvvOp
 	0, // EndOp
 	1, // ExpOp
+	1, // InvOp
 	1, // LdpOp
 	1, // LdvOp
-	1, // InvOp
 	1, // LogOp
-	1, // MulvvOp
 	1, // MulpvOp
+	1, // MulvvOp
 	1, // ParOp
-	3, // PowvpOp
 	3, // PowpvOp
+	3, // PowvpOp
 	3, // PowvvOp
 	0, // PripOp
 	0, // PrivOp
-	2, // SinOp
 	2, // SinhOp
+	2, // SinOp
 	1, // SqrtOp
 	0, // StppOp
-	0, // StvpOp
 	0, // StpvOp
+	0, // StvpOp
 	0, // StvvOp
 	1, // SubpvOp
 	1, // SubvpOp
 	1, // SubvvOp
+	0, // UserOp
 	0, // UsrapOp
 	0, // UsravOp
-	0, // UserOp
 	0, // UsrrpOp
 	1, // UsrrvOp
-	0  // Not used: avoids warning by g++ 4.3.2 when pycppad builds
+	0  // Last entry not used: avoids warning by g++ 4.3.2 when pycppad builds
 };
 
 /*!

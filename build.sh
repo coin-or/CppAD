@@ -459,6 +459,7 @@ then
 		check_include_file.sh
 		check_include_omh.sh
 		check_makefile.sh
+		check_op_code.sh
 		check_svn_id.sh
 	"
 	for check in $list 
