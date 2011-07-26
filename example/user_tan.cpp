@@ -67,8 +67,8 @@ namespace { // Begin empty namespace
 		size_t                    m ,
 		const vector<bool>&      vx ,
 		vector<bool>&           vzy ,
-		const vector<double>&    tx ,
-		vector<double>&         tzy
+		const vector<float>&     tx ,
+		vector<float>&          tzy
 	)
 	{
 		assert( id == 0 || id == 1 );
@@ -102,7 +102,7 @@ namespace { // Begin empty namespace
 			tzy[n_order + 0] = tzy[0] * tzy[0];
 		}
 		else
-		{	double j_inv = 1. / double(j);
+		{	float j_inv = 1. / float(j);
 			if( id == 1 )
 				j_inv = - j_inv;
 
@@ -127,10 +127,10 @@ namespace { // Begin empty namespace
 		size_t                order ,
 		size_t                    n ,
 		size_t                    m ,
-		const vector<double>&    tx ,
-		const vector<double>&   tzy ,
-		vector<double>&          px ,
-		const vector<double>&   pzy
+		const vector<float>&     tx ,
+		const vector<float>&    tzy ,
+		vector<float>&           px ,
+		const vector<float>&    pzy
 	)
 	{
 		assert( id == 0 || id == 1 );
@@ -145,7 +145,7 @@ namespace { // Begin empty namespace
 		size_t j, k;
 
 		// copy because partials w.r.t. y and z need to change
-		vector<double> qzy = pzy;
+		vector<float> qzy = pzy;
 
 		// initialize accumultion of reverse mode partials
 		for(k = 0; k < n_order; k++)
@@ -153,7 +153,7 @@ namespace { // Begin empty namespace
 
 		// eliminate positive orders
 		for(j = order; j > 0; j--)
-		{	double j_inv = 1. / double(j);
+		{	float j_inv = 1. / float(j);
 			if( id == 1 )
 				j_inv = - j_inv;
 
@@ -259,11 +259,11 @@ namespace { // Begin empty namespace
 		return true;
 	}
 	// ---------------------------------------------------------------------
-	// Declare the AD<double> routine user_tan(id, ax, ay)
+	// Declare the AD<float> routine user_tan(id, ax, ay)
 	CPPAD_USER_ATOMIC(
 		user_tan                 , 
 		CPPAD_TEST_VECTOR        ,
-		double                   , 
+		float                    , 
 		user_tan_forward         , 
 		user_tan_reverse         ,
 		user_tan_for_jac_sparse  ,
@@ -276,83 +276,84 @@ bool user_tan(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	double eps = 10. * std::numeric_limits<double>::epsilon();
+	float eps = 10. * std::numeric_limits<float>::epsilon();
 
 	// domain space vector
 	size_t n  = 1;
-	double x0 = 0.5;
-	CPPAD_TEST_VECTOR< AD<double> > x(n);
-	x[0]      = x0;
+	float  x0 = 0.5;
+	CPPAD_TEST_VECTOR< AD<float> > ax(n);
+	ax[0]     = x0;
 
 	// declare independent variables and start tape recording
-	CppAD::Independent(x);
+	CppAD::Independent(ax);
 
 	// range space vector 
 	size_t m = 3;
-	CPPAD_TEST_VECTOR< AD<double> > f(m);
+	CPPAD_TEST_VECTOR< AD<float> > af(m);
 
 	// temporary vector for user_tan computations
 	// (user_tan computes tan or tanh and its square)
-	CPPAD_TEST_VECTOR< AD<double> > z(2);
+	CPPAD_TEST_VECTOR< AD<float> > az(2);
 
 	// call user tan function and store tan(x) in f[0] (ignore tan(x)^2)
 	size_t id = 0;
-	user_tan(id, x, z);
-	f[0] = z[0];
+	user_tan(id, ax, az);
+	af[0] = az[0];
 
 	// call user tanh function and store tanh(x) in f[1] (ignore tanh(x)^2)
 	id = 1;
-	user_tan(id, x, z);
-	f[1] = z[0];
+	user_tan(id, ax, az);
+	af[1] = az[0];
 
 	// put a constant in f[2] (for sparsity pattern testing)
-	f[2] = 1.; 
+	af[2] = 1.; 
 
 	// create f: x -> f and stop tape recording
-	CppAD::ADFun<double> F(x, f); 
+	CppAD::ADFun<float> F(ax, af); 
 
 	// check value 
-	double tan = std::tan(x0);
-	ok &= NearEqual(f[0] , tan,  eps, eps);
-	double tanh = std::tanh(x0);
-	ok &= NearEqual(f[1] , tanh,  eps, eps);
+	float tan = std::tan(x0);
+	ok &= NearEqual(af[0] , tan,  eps, eps);
+	float tanh = std::tanh(x0);
+	ok &= NearEqual(af[1] , tanh,  eps, eps);
 
 	// compute first partial of f w.r.t. x[0] using forward mode
-	CPPAD_TEST_VECTOR<double> dx(n), df(m);
+	CPPAD_TEST_VECTOR<float> dx(n), df(m);
 	dx[0] = 1.;
 	df    = F.Forward(1, dx);
 
 	// compute derivative of tan - tanh using reverse mode
-	CPPAD_TEST_VECTOR<double> w(m), dw(n);
+	CPPAD_TEST_VECTOR<float> w(m), dw(n);
 	w[0]  = 1.;
 	w[1]  = 1.;
 	dw    = F.Reverse(1, w);
 
 	// tan'(x)   = 1 + tan(x)  * tan(x) 
 	// tanh'(x)  = 1 - tanh(x) * tanh(x) 
-	double tanp  = 1. + tan * tan; 
-	double tanhp = 1. - tanh * tanh; 
+	float tanp  = 1. + tan * tan; 
+	float tanhp = 1. - tanh * tanh; 
 	ok   &= NearEqual(df[0], tanp, eps, eps);
 	ok   &= NearEqual(df[1], tanhp, eps, eps);
 	ok   &= NearEqual(dw[0], w[0]*tanp + w[1]*tanhp, eps, eps);
 
 	// compute second partial of f w.r.t. x[0] using forward mode
-	CPPAD_TEST_VECTOR<double> ddx(n), ddf(m);
+	CPPAD_TEST_VECTOR<float> ddx(n), ddf(m);
 	ddx[0] = 0.;
 	ddf    = F.Forward(2, ddx);
 
 	// compute second derivative of tan - tanh using reverse mode
-	CPPAD_TEST_VECTOR<double> ddw(2);
+	CPPAD_TEST_VECTOR<float> ddw(2);
 	ddw   = F.Reverse(2, w);
 
 	// tan''(x)   = 2 *  tan(x) * tan'(x) 
 	// tanh''(x)  = - 2 * tanh(x) * tanh'(x) 
 	// Note that second order Taylor coefficient for u half the
 	// corresponding second derivative.
-	double tanpp  =   2. * tan * tanp;
-	double tanhpp = - 2. * tanh * tanhp;
-	ok   &= NearEqual(2. * ddf[0], tanpp, eps, eps);
-	ok   &= NearEqual(2. * ddf[1], tanhpp, eps, eps);
+	float two    = 2;
+	float tanpp  =   two * tan * tanp;
+	float tanhpp = - two * tanh * tanhp;
+	ok   &= NearEqual(two * ddf[0], tanpp, eps, eps);
+	ok   &= NearEqual(two * ddf[1], tanhpp, eps, eps);
 	ok   &= NearEqual(ddw[0], w[0]*tanp  + w[1]*tanhp , eps, eps);
 	ok   &= NearEqual(ddw[1], w[0]*tanpp + w[1]*tanhpp, eps, eps);
 
@@ -394,11 +395,21 @@ bool user_tan(void)
 	h    = F.RevSparseHes(q, s3);
 	ok  &= (h[0] == false);  // Hessian is zero
 
+	// check tanh results for a large value of x
+	CPPAD_TEST_VECTOR<float> x(n), f(m);
+	x[0]  = std::numeric_limits<float>::max() / two;
+	f     = F.Forward(0, x);
+	tanh  = 1.;
+	ok   &= NearEqual(f[1], tanh, eps, eps);
+	df    = F.Forward(1, dx);
+	tanhp = 0.;
+	ok   &= NearEqual(df[1], tanhp, eps, eps);
+ 
 	// --------------------------------------------------------------------
 	// Free all temporary work space associated with user_atomic objects. 
 	// (If there are future calls to user atomic functions, they will 
 	// create new temporary work space.)
-	CppAD::user_atomic<double>::clear();
+	CppAD::user_atomic<float>::clear();
 
 	return ok;
 }
