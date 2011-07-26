@@ -71,9 +71,9 @@ namespace { // Begin empty namespace
 		vector<double>&         tzy
 	)
 	{
+		assert( id == 0 || id == 1 );
 		assert( n == 1 );
 		assert( m == 2 );
-		assert( id == 0 || id == 1 );
 		assert( tx.size() >= (order+1) * n );
 		assert( tzy.size() >= (order+1) * m );
 
@@ -132,9 +132,10 @@ namespace { // Begin empty namespace
 		vector<double>&          px ,
 		const vector<double>&   pzy
 	)
-	{	assert( n == 1 );
-		assert( m == 2 );
+	{
 		assert( id == 0 || id == 1 );
+		assert( n == 1 );
+		assert( m == 2 );
 		assert( tx.size() >= (order+1) * n );
 		assert( tzy.size() >= (order+1) * m );
 		assert( px.size() >= (order+1) * n );
@@ -187,7 +188,14 @@ namespace { // Begin empty namespace
 		size_t                                q ,
 		const vector< std::set<size_t> >&     r ,
 		vector< std::set<size_t> >&           s )
-	{	// sparsity for z and y are the same as for x
+	{
+		assert( n == 1 );
+		assert( m == 2 );
+		assert( id == 0 || id == 1 );
+		assert( r.size() >= n );
+		assert( s.size() >= m );
+
+		// sparsity for z and y are the same as for x
 		s[0] = r[0];
 		s[1] = r[0];
 
@@ -202,7 +210,14 @@ namespace { // Begin empty namespace
 		size_t                                q ,
 		vector< std::set<size_t> >&           r ,
 		const vector< std::set<size_t> >&     s )
-	{	// note that, if the users code only uses z, and not y,
+	{
+		assert( n == 1 );
+		assert( m == 2 );
+		assert( id == 0 || id == 1 );
+		assert( r.size() >= n );
+		assert( s.size() >= m );
+
+		// note that, if the users code only uses z, and not y,
 		// we could just set r[0] = s[0]	
 		my_union(r[0], s[0], s[1]);
 		return true; 
@@ -219,7 +234,17 @@ namespace { // Begin empty namespace
 		vector<bool>&                         t ,
 		const vector< std::set<size_t> >&     u ,
 		vector< std::set<size_t> >&           v )
-	{	// back propogate Jacobian sparsity. If users code only uses z,
+	{
+		assert( n == 1 );
+		assert( m == 2 );
+		assert( id == 0 || id == 1 );
+		assert( r.size() >= n );
+		assert( s.size() >= m );
+		assert( t.size() >= n );
+		assert( u.size() >= m );
+		assert( v.size() >= n );
+
+		// back propogate Jacobian sparsity. If users code only uses z,
 		// we could just set t[0] = s[0];
 		t[0] =  s[0] | s[1];
 

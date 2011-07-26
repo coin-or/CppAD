@@ -59,6 +59,11 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-25$$
+Finish the $cref/user_atomic/$$ example $cref user_tan.cpp$$.
+This is also a design and implementation of the routines necessary
+to make $code tan$$ and $code tanh$$ CppAD atomic operations.
+
 $head 07-18$$
 The reverse mode formulas for $latex Z(t)$$ need to involve 
 the lower order Taylor coefficients for $latex Y(t)$$.
