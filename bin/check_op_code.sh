@@ -55,6 +55,17 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
+# check OpName 
+sed -n -e '/char \*OpName\[\]/,/^[ 	]*};/p' cppad/local/op_code.hpp | \
+	sed -e '/char \*OpName\[\]/d' -e '/^[ 	]*};/d' \
+	-e 's|^[ 	]*"||' -e 's|".*|Op|' > bin/op_code.5.$$
+#
+if ! diff bin/op_code.1.$$ bin/op_code.5.$$ 
+then
+	echo "check_op_code.sh: OpName list is not in alphabetical order"
+	exit 1
+fi
+# -----------------------------------------------------------------------------
 # clean up
 rm bin/op_code.*.$$
 echo "bin/check_op_code.sh: OK"
