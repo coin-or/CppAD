@@ -113,6 +113,7 @@ test_more_SOURCES  = \
 	sub.cpp \
 	sub_eq.cpp \
 	sub_zero.cpp \
+	tan.cpp \
 	track_new_del.cpp \
 	value.cpp \
 	vec_ad.cpp \

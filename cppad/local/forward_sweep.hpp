@@ -535,6 +535,13 @@ size_t forward_sweep(
 			break;
 			// -------------------------------------------------
 
+			case TanOp:
+			// variables: tan(x), tan(x)^2
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+			forward_tan_op(d, i_var, arg[0], J, Taylor);
+			break;
+			// -------------------------------------------------
+
 			case UserOp:
 			// start or end an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );

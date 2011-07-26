@@ -83,6 +83,7 @@ enum OpCode {
 	SubpvOp,  //      parameter  - variable
 	SubvpOp,  //      variable   - parameter
 	SubvvOp,  //      variable   - variable
+	TanOp,    //  tan(variable)
 	// user atomic operation codes (note yet implemented)
 	UserOp,   //  start of a user atomic operaiton
 	UsrapOp,  //  this user atomic argument is a parameter
@@ -146,6 +147,7 @@ const size_t NumArgTable[] = {
 	2, // SubpvOp
 	2, // SubvpOp
 	2, // SubvvOp
+	1, // TanOp
 	4, // UserOp
 	1, // UsrapOp
 	1, // UsravOp
@@ -242,6 +244,7 @@ const size_t NumResTable[] = {
 	1, // SubpvOp
 	1, // SubvpOp
 	1, // SubvvOp
+	2, // TanOp
 	0, // UserOp
 	0, // UsrapOp
 	0, // UsravOp
@@ -441,6 +444,7 @@ void printOp(
 		"Subpv" ,
 		"Subvp" ,
 		"Subvv" ,
+		"Tan"   ,
 		"User"  ,
 		"Usrap" ,
 		"Usrav" ,
@@ -564,6 +568,7 @@ void printOp(
 		case SinhOp:
 		case SqrtOp:
 		case UsravOp:
+		case TanOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 		printOpField(os, "  v=", ind[0], ncol);
 		break;

@@ -426,7 +426,6 @@ void ReverseSweep(
 			case PrivOp:
 			// no result so nothing to do
 			break;
-
 			// -------------------------------------------------
 
 			case SinOp:
@@ -487,6 +486,14 @@ void ReverseSweep(
 			CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
 			reverse_subvp_op(
 				d, i_var, arg, parameter, J, Taylor, K, Partial
+			);
+			break;
+			// -------------------------------------------------
+
+			case TanOp:
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+			reverse_tan_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
 			);
 			break;
 			// --------------------------------------------------

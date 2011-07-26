@@ -3,7 +3,7 @@
 # define CPPAD_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -45,6 +45,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/sparse_binary_op.hpp>
 # include <cppad/local/sparse_unary_op.hpp>
 # include <cppad/local/store_op.hpp>
+# include <cppad/local/tan_op.hpp>
 
 
 # endif

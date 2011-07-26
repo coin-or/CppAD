@@ -540,6 +540,16 @@ void RevHesSweep(
 			break;
 			// -------------------------------------------------
 
+			case TanOp:
+			// tan and tan^2 must come in pairs
+			// but i_var should only be used here
+			CPPAD_ASSERT_NARG_NRES(op, 1, 2)
+			reverse_sparse_hessian_nonlinear_unary_op(
+			i_var, arg[0], RevJac, for_jac_sparse, rev_hes_sparse
+			);
+			break;
+			// -------------------------------------------------
+
 			case UserOp:
 			// start or end an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );

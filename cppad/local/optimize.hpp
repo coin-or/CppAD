@@ -925,6 +925,7 @@ void optimize(
 			case SinOp:
 			case SinhOp:
 			case SqrtOp:
+			case TanOp:
 			if( tape[i_var].connect != not_connected )
 				tape[arg[0]].connect = yes_connected;
 			break; // --------------------------------------------
@@ -1286,6 +1287,7 @@ void optimize(
 			case SinOp:
 			case SinhOp:
 			case SqrtOp:
+			case TanOp:
 			match_var = optimize_unary_match(
 				tape                ,  // inputs 
 				i_var               ,

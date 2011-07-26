@@ -3,7 +3,7 @@
 # define CPPAD_STD_MATH_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -230,11 +230,9 @@ $latex \[
 \] $$
 
 $subhead tan$$
-This function is special in that it's derivatives are calculated
-using the relation
 $latex \[
 \begin{array}{lcr}
-        \tan (x) & = & \sin(x) / \cos(x)
+        \D{[ \tan (x) ]}{x} & = & 1 + \tan (x)^2
 \end{array}
 \] $$
 
@@ -281,37 +279,32 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
 
-        CPPAD_STANDARD_MATH_UNARY_AD(acos, AcosOp)
-        CPPAD_STANDARD_MATH_UNARY_AD(asin, AsinOp)
-        CPPAD_STANDARD_MATH_UNARY_AD(atan, AtanOp)
-        CPPAD_STANDARD_MATH_UNARY_AD(cos, CosOp)
-        CPPAD_STANDARD_MATH_UNARY_AD(cosh, CoshOp)
-        CPPAD_STANDARD_MATH_UNARY_AD(exp, ExpOp)
-        CPPAD_STANDARD_MATH_UNARY_AD(log, LogOp)
-	// log10
-	template <class Base>
-	inline AD<Base> log10(const AD<Base> &x)
-	{	return CppAD::log(x) / CppAD::log( Base(10) ); }
-	template <class Base>
-	inline AD<Base> log10(const VecAD_reference<Base> &x)
-	{	return CppAD::log(x.ADBase()) / CppAD::log( Base(10) ); }
-        CPPAD_STANDARD_MATH_UNARY_AD(sin, SinOp)
-        CPPAD_STANDARD_MATH_UNARY_AD(sinh, SinhOp)
-        CPPAD_STANDARD_MATH_UNARY_AD(sqrt, SqrtOp)
-        // tan
-	template <class Base>
-	inline AD<Base> tan(const AD<Base> &x)
-	{	return CppAD::sin(x) / CppAD::cos(x); }
-	template <class Base>
-	inline AD<Base> tan(const VecAD_reference<Base> &x)
-	{	return CppAD::sin(x.ADBase()) / CppAD::cos(x.ADBase()); }
-        // tanh
-	template <class Base>
-	inline AD<Base> tanh(const AD<Base> &x)
-	{	return CppAD::sinh(x) / CppAD::cosh(x); }
-	template <class Base>
-	inline AD<Base> tanh(const VecAD_reference<Base> &x)
-	{	return CppAD::sinh(x.ADBase()) / CppAD::cosh(x.ADBase()); }
+     CPPAD_STANDARD_MATH_UNARY_AD(acos, AcosOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(asin, AsinOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(atan, AtanOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(cos, CosOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(cosh, CoshOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(exp, ExpOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(log, LogOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(sin, SinOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(sinh, SinhOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(sqrt, SqrtOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(tan, TanOp)
+
+     // log10
+     template <class Base>
+     inline AD<Base> log10(const AD<Base> &x)
+     {	return CppAD::log(x) / CppAD::log( Base(10) ); }
+     template <class Base>
+     inline AD<Base> log10(const VecAD_reference<Base> &x)
+     {	return CppAD::log(x.ADBase()) / CppAD::log( Base(10) ); }
+     // tanh
+     template <class Base>
+     inline AD<Base> tanh(const AD<Base> &x)
+     {	return CppAD::sinh(x) / CppAD::cosh(x); }
+     template <class Base>
+     inline AD<Base> tanh(const VecAD_reference<Base> &x)
+     {	return CppAD::sinh(x.ADBase()) / CppAD::cosh(x.ADBase()); }
 }
 
 # undef CPPAD_STANDARD_MATH_UNARY_AD

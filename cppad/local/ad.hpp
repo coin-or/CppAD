@@ -179,6 +179,7 @@ public:
 	inline AD sin(void) const;
 	inline AD sinh(void) const;
 	inline AD sqrt(void) const;
+	inline AD tan(void) const;
 
 	// ----------------------------------------------------------
 	// static public member functions
