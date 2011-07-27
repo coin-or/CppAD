@@ -238,7 +238,7 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case AcosOp:
-                        // results: sqrt(1 - x * x), acos(x) 
+                        // sqrt(1 - x * x), acos(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_acos_op(
 				d, i_var, arg[0], J, Taylor, K, Partial
@@ -247,7 +247,7 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case AsinOp:
-                        // results: sqrt(1 - x * x), sin(x) 
+                        // sqrt(1 - x * x), asin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_asin_op(
 				d, i_var, arg[0], J, Taylor, K, Partial
@@ -256,7 +256,7 @@ void ReverseSweep(
 			// --------------------------------------------------
 
 			case AtanOp:
-                        // results: 1 + x * x, atan(x) 
+                        // 1 + x * x, atan(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_atan_op(
 				d, i_var, arg[0], J, Taylor, K, Partial

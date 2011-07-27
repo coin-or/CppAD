@@ -63,6 +63,7 @@ sed -n -e '/char \*OpName\[\]/,/^[ 	]*};/p' cppad/local/op_code.hpp | \
 if ! diff bin/op_code.1.$$ bin/op_code.5.$$ 
 then
 	echo "check_op_code.sh: OpName list is not in alphabetical order"
+	rm bin/op_code.*.$$
 	exit 1
 fi
 # -----------------------------------------------------------------------------

@@ -203,21 +203,21 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case AcosOp:
-			// results: sqrt(1 - x * x), acos(x) 
+			// sqrt(1 - x * x), acos(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_acos_op_0(i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case AsinOp:
-			// results: sqrt(1 - x * x), asin(x) 
+			// sqrt(1 - x * x), asin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_asin_op_0(i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case AtanOp:
-			// results: 1 + x * x, atan(x) 
+			// 1 + x * x, atan(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_atan_op_0(i_var, arg[0], J, Taylor);
 			break;
@@ -250,14 +250,14 @@ size_t forward0sweep(
 			// ---------------------------------------------------
 
 			case CosOp:
-			// results: sin(x), cos(x)
+			// sin(x), cos(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_cos_op_0(i_var, arg[0], J, Taylor);
 			break;
 			// ---------------------------------------------------
 
 			case CoshOp:
-			// variables: sinh(x), cosh(x)
+			// sinh(x), cosh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_cosh_op_0(i_var, arg[0], J, Taylor);
 			break;
@@ -390,14 +390,14 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case SinOp:
-			// variables: cos(x), sin(x)
+			// cos(x), sin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_sin_op_0(i_var, arg[0], J, Taylor);
 			break;
 			// -------------------------------------------------
 
 			case SinhOp:
-			// variables: cosh(x), sinh(x)
+			// cosh(x), sinh(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_sinh_op_0(i_var, arg[0], J, Taylor);
 			break;
@@ -482,7 +482,7 @@ size_t forward0sweep(
 			// -------------------------------------------------
 
 			case TanOp:
-			// variables: tan(x), tan(x)^2
+			// tan(x)^2, tan(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
 			forward_tan_op_0(i_var, arg[0], J, Taylor);
 			break;

@@ -188,8 +188,7 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case AcosOp:
-			// acos(x) and sqrt(1 - x * x) are computed in pairs
-			// but ivar + 1 should only be used here
+			// sqrt(1 - x * x), acos(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
@@ -198,8 +197,7 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case AsinOp:
-			// asin(x) and sqrt(1 - x * x) are computed in pairs
-			// but ivar + 1 should only be used here
+			// sqrt(1 - x * x), asin(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
@@ -208,8 +206,7 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case AtanOp:
-			// atan(x) and 1 + x * x must be computed in pairs
-			// but ivar + 1 should only be used here
+			// 1 + x * x, atan(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
@@ -242,8 +239,7 @@ void ForJacSweep(
 			// --------------------------------------------------
 
 			case CosOp:
-			// cosine and sine must come in pairs
-			// but ivar should only be used here
+			// sin(x), cos(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
@@ -252,8 +248,7 @@ void ForJacSweep(
 			// ---------------------------------------------------
 
 			case CoshOp:
-			// hyperbolic cosine and sine must come in pairs
-			// but ivar should only be used here
+			// sinh(x), cosh(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
@@ -402,8 +397,7 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case SinOp:
-			// sine and cosine must come in pairs
-			// but ivar should only be used here
+			// cos(x), sin(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
@@ -412,8 +406,7 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case SinhOp:
-			// hyperbolic sine and cosine must come in pairs
-			// but ivar should only be used here
+			// cosh(x), sinh(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
@@ -490,8 +483,7 @@ void ForJacSweep(
 			// -------------------------------------------------
 
 			case TanOp:
-			// tan and tan^2 must come in pairs
-			// but ivar should only be used here
+			// tan(x)^2, tan(x)
 			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
 			forward_sparse_jacobian_unary_op(
 				i_var, arg[0], var_sparsity
