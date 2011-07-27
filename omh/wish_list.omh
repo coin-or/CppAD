@@ -194,21 +194,6 @@ to run under MS Windows.
 Run the CppAD $cref/speed/$$ tests on a set of different machines
 and operating systems.
 
-$head Tan and Tanh$$
-$index tanh$$
-$index tan$$
-The AD $code tan$$ and $code tanh$$ functions
-are implemented using the AD $code sin$$, $code cos$$, $code sinh$$
-and $code cosh$$ functions.
-They could be improved by making them atomic using the equations
-$latex \[
-\begin{array}{rcl}
-	\tan^{(1)} (x)  & = & 1 + \tan (x)^2 \\
-	\tanh^{(1)} (x) & = & 1 - \tanh (x)^2
-\end{array}
-\] $$
-see $cref/tan_forward/$$ and  $cref/tan_reverse/$$.
-
 $head Tracing$$
 $index operation, sequence tracing$$
 $index sequence, operation tracing$$

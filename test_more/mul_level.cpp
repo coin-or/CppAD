@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -153,7 +153,7 @@ bool Two(void)
 
 # ifdef CPPAD_ADOLC_TEST
 
-bool Three(void) 
+bool adolc(void) 
 {	bool ok = true;                   // initialize test result
 
 	typedef adouble      ADdouble;         // for first level of taping
@@ -220,6 +220,46 @@ bool Three(void)
 
 # endif // CPPAD_ADOLC_TEST
 
+bool std_math(void)
+{	bool ok = true;
+	using CppAD::AD;
+	using CppAD::Independent;
+	using CppAD::ADFun;
+	double eps = std::numeric_limits<double>::epsilon();
+
+
+	typedef AD<double>      ADdouble; // for first level of taping
+	typedef AD<ADdouble>   ADDdouble; // for second level of taping
+	size_t n = 1;         // number independent variables
+	size_t m = 1;         // number dependent and independent variables
+
+	CPPAD_TEST_VECTOR<double>       x(n),   y(m);
+	CPPAD_TEST_VECTOR<ADdouble>    ax(n),  ay(m);
+	CPPAD_TEST_VECTOR<ADDdouble>  aax(n), aay(m);
+
+	// create af(x) = tanh(x)
+	aax[0] = 1.;
+	Independent( aax );
+	aay[0] = tanh(aax[0]);
+	ADFun<ADdouble> af(aax, aay);
+
+	// create g(x) = af(x)
+	ax[0] = 1.;
+	Independent( ax );
+	ay = af.Forward(0, ax);
+	ADFun<double> g(ax, ay);
+
+	// evaluate h(x) = g(x) 
+	x[0] = 1.;
+	y = g.Forward(0, x);
+
+	// check result
+	double check  = tanh(x[0]);
+	ok &= CppAD::NearEqual(y[0], check, eps, eps);
+
+	return ok;
+}
+
 } // END empty namespace
 
 bool mul_level(void)
@@ -227,7 +267,9 @@ bool mul_level(void)
 	ok     &= One();
 	ok     &= Two();
 # ifdef CPPAD_ADOLC_TEST
-	ok     &= Three();
+	ok     &= adolc();
 # endif
+	ok     &= std_math();
+
 	return ok;
 }

@@ -3,7 +3,7 @@
 # define CPPAD_STD_MATH_UNARY_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -104,13 +104,13 @@ $end
 
 # include <cmath>
 
-# define CPPAD_STANDARD_MATH_UNARY(Name)                             \
-                                                                     \
-	inline float Name(const float &x)                            \
-	{	return std::Name(x); }                               \
-                                                                     \
-	inline double Name(const double &x)                          \
-	{	return std::Name(x); }
+# define CPPAD_STANDARD_MATH_UNARY(Name)   \
+                                           \
+     inline float Name(const float &x)     \
+     {    return std::Name(x); }           \
+                                           \
+     inline double Name(const double &x)   \
+     {    return std::Name(x); }
 
 namespace CppAD {
 

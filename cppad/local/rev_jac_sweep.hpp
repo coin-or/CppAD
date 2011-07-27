@@ -494,6 +494,15 @@ void RevJacSweep(
 			break;
 			// -------------------------------------------------
 
+			case TanhOp:
+			// tanh(x)^2, tanh(x)
+			CPPAD_ASSERT_NARG_NRES(op, 1, 2);
+			reverse_sparse_jacobian_unary_op(
+				i_var, arg[0], var_sparsity
+			);
+			break;
+			// -------------------------------------------------
+
 			case UserOp:
 			// start or end atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );

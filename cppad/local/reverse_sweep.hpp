@@ -496,6 +496,14 @@ void ReverseSweep(
 				d, i_var, arg[0], J, Taylor, K, Partial
 			);
 			break;
+			// -------------------------------------------------
+
+			case TanhOp:
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+			reverse_tanh_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
+			);
+			break;
 			// --------------------------------------------------
 
 			case UserOp:

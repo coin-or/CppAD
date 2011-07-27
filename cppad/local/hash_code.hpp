@@ -81,7 +81,7 @@ hash coded and zero is returned:
 
 \li unary operators:
 AbsOp, AcosOp, AsinOp, AtanOp, CosOp, CoshOp, DisOp,
-ExpOp, LogOp, SinOp, SinhOp, SqrtOp, TanOp
+ExpOp, LogOp, SinOp, SinhOp, SqrtOp, TanOp, TanhOp
 
 \li binary operators where first argument is a parameter:
 AddpvOp, DivpvOp, MulpvOp, PowpvOp, SubpvOp, 
@@ -218,6 +218,7 @@ unsigned short hash_code(
 		case SinhOp:
 		case SqrtOp:
 		case TanOp:
+		case TanhOp:
 		v = reinterpret_cast<const unsigned short*>(arg + 0);
 		i = short_addr_t;
 		while(i--)

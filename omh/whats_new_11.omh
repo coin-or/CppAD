@@ -59,6 +59,10 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-27$$
+Make $code tan$$ and $code tanh$$ $cref/atomic/glossary/Operation/Atomic/$$
+operations; see $cref tan_forward$$ and $cref tan_reverse$$.
+
 $head 07-25$$
 Finish the $cref/user_atomic/$$ example $cref user_tan.cpp$$.
 This is also a design and implementation of the routines necessary
@@ -79,7 +83,7 @@ $cref/forward/user_atomic/forward/$$ callback function.
 $lnext
 Derive the theory for including the tangent and hyperbolic tangent
 as CppAD atomic operations $cref/tan_forward/$$ and $cref/tan_reverse/$$; 
-see the wish list item $cref/Tan and Tanh/WishList/Tan and Tanh/$$.
+see the wish list item $code Tan and Tanh$$.
 $lnext
 Implement and test forward mode calculation of derivative for
 the tangent and hyperbolic tangent functions; 

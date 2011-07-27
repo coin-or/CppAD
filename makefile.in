@@ -470,6 +470,7 @@ nobase_myinclude_HEADERS = \
 	cppad/local/sub_eq.hpp \
 	cppad/local/sub.hpp \
 	cppad/local/sub_op.hpp \
+	cppad/local/tanh_op.hpp \
 	cppad/local/tan_op.hpp \
 	cppad/local/tape_link.hpp \
 	cppad/local/test_vector.hpp \

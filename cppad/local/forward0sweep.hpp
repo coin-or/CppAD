@@ -488,6 +488,13 @@ size_t forward0sweep(
 			break;
 			// -------------------------------------------------
 
+			case TanhOp:
+			// tanh(x)^2, tanh(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+			forward_tanh_op_0(i_var, arg[0], J, Taylor);
+			break;
+			// -------------------------------------------------
+
 			case UserOp:
 			// start or end an atomic operation sequence
 			CPPAD_ASSERT_UNKNOWN( NumRes( UserOp ) == 0 );

@@ -237,11 +237,9 @@ $latex \[
 \] $$
 
 $subhead tanh$$
-This function is also special in that it's derivatives are calculated
-using the relation
 $latex \[
 \begin{array}{lcr}
-        \tanh (x) & = & \sinh(x) / \cosh(x)
+        \D{[ \tanh (x) ]}{x} & = & 1 - \tanh (x)^2
 \end{array}
 \] $$
 
@@ -253,6 +251,9 @@ $end
 
 # define CPPAD_STANDARD_MATH_UNARY_AD(Name, Op)                   \
     template <class Base>                                         \
+    inline AD<Base> Name(const AD<Base> &x)                       \
+    {   return x.Name(); }                                        \
+    template <class Base>                                         \
     inline AD<Base> AD<Base>::Name (void) const                   \
     {                                                             \
         AD<Base> result;                                          \
@@ -263,15 +264,12 @@ $end
         {   CPPAD_ASSERT_UNKNOWN( NumRes(Op) <= 2 );              \
             CPPAD_ASSERT_UNKNOWN( NumArg(Op) == 1 );              \
             ADTape<Base> *tape = tape_this();                     \
-            tape->Rec_.PutArg(taddr_);                             \
-            result.taddr_ = tape->Rec_.PutOp(Op);                  \
+            tape->Rec_.PutArg(taddr_);                            \
+            result.taddr_ = tape->Rec_.PutOp(Op);                 \
             result.id_    = tape->id_;                            \
         }                                                         \
         return result;                                            \
     }                                                             \
-    template <class Base>                                         \
-    inline AD<Base> Name(const AD<Base> &x)                       \
-    {   return x.Name(); }                                        \
     template <class Base>                                         \
     inline AD<Base> Name(const VecAD_reference<Base> &x)          \
     {   return Name( x.ADBase() ); }
@@ -290,21 +288,15 @@ namespace CppAD {
      CPPAD_STANDARD_MATH_UNARY_AD(sinh, SinhOp)
      CPPAD_STANDARD_MATH_UNARY_AD(sqrt, SqrtOp)
      CPPAD_STANDARD_MATH_UNARY_AD(tan, TanOp)
+     CPPAD_STANDARD_MATH_UNARY_AD(tanh, TanhOp)
 
      // log10
      template <class Base>
      inline AD<Base> log10(const AD<Base> &x)
-     {	return CppAD::log(x) / CppAD::log( Base(10) ); }
+     {    return CppAD::log(x) / CppAD::log( Base(10) ); }
      template <class Base>
      inline AD<Base> log10(const VecAD_reference<Base> &x)
-     {	return CppAD::log(x.ADBase()) / CppAD::log( Base(10) ); }
-     // tanh
-     template <class Base>
-     inline AD<Base> tanh(const AD<Base> &x)
-     {	return CppAD::sinh(x) / CppAD::cosh(x); }
-     template <class Base>
-     inline AD<Base> tanh(const VecAD_reference<Base> &x)
-     {	return CppAD::sinh(x.ADBase()) / CppAD::cosh(x.ADBase()); }
+     {    return CppAD::log(x.ADBase()) / CppAD::log( Base(10) ); }
 }
 
 # undef CPPAD_STANDARD_MATH_UNARY_AD
