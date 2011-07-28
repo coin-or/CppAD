@@ -334,6 +334,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\parameter.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\poly.cpp"
 				>
 			</File>
@@ -419,6 +423,10 @@
 			</File>
 			<File
 				RelativePath=".\sub_zero.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\tan.cpp"
 				>
 			</File>
 			<File

@@ -102,7 +102,7 @@ namespace { // Begin empty namespace
 			tzy[n_order + 0] = tzy[0] * tzy[0];
 		}
 		else
-		{	float j_inv = 1. / float(j);
+		{	float j_inv = 1.f / float(j);
 			if( id == 1 )
 				j_inv = - j_inv;
 
@@ -153,7 +153,7 @@ namespace { // Begin empty namespace
 
 		// eliminate positive orders
 		for(j = order; j > 0; j--)
-		{	float j_inv = 1. / float(j);
+		{	float j_inv = 1.f / float(j);
 			if( id == 1 )
 				j_inv = - j_inv;
 
@@ -168,14 +168,14 @@ namespace { // Begin empty namespace
 
 			// H_{z^{(k)}} += H_{y^{(j-1)}} * z^{(j-k-1)} * 2. 
 			for(k = 0; k < j; k++)
-				qzy[k] += qzy[n_order + j-1] * tzy[j-k-1] * 2.; 
+				qzy[k] += qzy[n_order + j-1] * tzy[j-k-1] * 2.f; 
 		}
 
 		// eliminate order zero
 		if( id == 0 )
-			px[0] += qzy[0] * (1. + tzy[n_order + 0]);
+			px[0] += qzy[0] * (1.f + tzy[n_order + 0]);
 		else
-			px[0] += qzy[0] * (1. - tzy[n_order + 0]);
+			px[0] += qzy[0] * (1.f - tzy[n_order + 0]);
 
 		return true; 
 	}
@@ -276,7 +276,7 @@ bool user_tan(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	float eps = 10. * std::numeric_limits<float>::epsilon();
+	float eps = 10.f * std::numeric_limits<float>::epsilon();
 
 	// domain space vector
 	size_t n  = 1;
@@ -330,8 +330,8 @@ bool user_tan(void)
 
 	// tan'(x)   = 1 + tan(x)  * tan(x) 
 	// tanh'(x)  = 1 - tanh(x) * tanh(x) 
-	float tanp  = 1. + tan * tan; 
-	float tanhp = 1. - tanh * tanh; 
+	float tanp  = 1.f + tan * tan; 
+	float tanhp = 1.f - tanh * tanh; 
 	ok   &= NearEqual(df[0], tanp, eps, eps);
 	ok   &= NearEqual(df[1], tanhp, eps, eps);
 	ok   &= NearEqual(dw[0], w[0]*tanp + w[1]*tanhp, eps, eps);

@@ -634,6 +634,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\user_tan.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\value.cpp"
 				>
 			</File>

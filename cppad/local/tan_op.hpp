@@ -62,7 +62,7 @@ inline void forward_tan_op(
 		y[j] = z[j] * z[j];
 	}
 	else
-	{	Base base_j(j);
+	{	Base base_j = static_cast<Base>(j);
 
 		z[j] = x[j];
 		for(k = 1; k <= j; k++)
