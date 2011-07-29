@@ -148,13 +148,13 @@ private:
 
 	\param thread [in]
 	Thread for which we are increasing the number of bytes in use
-	(must be < CPPAD_MAX_NUM_THREADS).
+	(must be less than the $cref max_num_threads$$ setting).
 	Durring parallel execution, this must be the thread 
 	that is currently executing.
 	*/
 	static void inc_inuse(size_t inc, size_t thread)
 	{	
-		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS);
+		CPPAD_ASSERT_UNKNOWN( thread < max_num_threads(0) );
 		CPPAD_ASSERT_UNKNOWN( 
 			thread == get_thread_num() || (! in_parallel()) 
 		);
@@ -196,13 +196,13 @@ private:
 
 	\param thread [in]
 	Thread for which we are decreasing the number of bytes in use
-	(must be < CPPAD_MAX_NUM_THREADS).
+	(must be less than the $cref max_num_threads$$ setting).
 	Durring parallel execution, this must be the thread 
 	that is currently executing.
 	*/
 	static void dec_inuse(size_t dec, size_t thread)
 	{	
-		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS);
+		CPPAD_ASSERT_UNKNOWN( thread < max_num_threads(0) );
 		CPPAD_ASSERT_UNKNOWN( 
 			thread == get_thread_num() || (! in_parallel()) 
 		);
@@ -634,7 +634,7 @@ $spell
 	omp_alloc
 $$
 
-$section Make Memory Available for Future Use by Same Thread$$
+$section Return Memory to omp_alloc$$
 
 $index return_memory, omp_alloc$$
 $index omp_alloc, return_memory$$
@@ -646,8 +646,10 @@ $head Syntax$$
 $codei%omp_alloc::return_memory(%v_ptr%)%$$
 
 $head Purpose$$
-Makes memory that is in use for a specific thread available (quickly)
-for future use (by the same thread).
+If $cref max_num_threads$$ is one,
+the memory is returned to the system.
+Otherwise, the memory is retained by $cref omp_alloc$$ for quick future use
+by the thread that allocated to memory.
 
 $head v_ptr$$
 This argument has prototype
@@ -675,7 +677,9 @@ $end
 */
 	/*!
  	Return memory that was obtained by \c get_memory.
-	The returned memory becomes available for use by 
+	If  <code>max_num_threads(0) == 1</code>,
+	the memory is returned to the system.
+	Otherwise, it is retained by \c omp_alloc and available for use by 
 	\c get_memory for this thread.
 
 	\param v_ptr [in]
@@ -732,13 +736,21 @@ $end
 		// remove v_ptr from inuse list
 		previous->next_  = node->next_;
 # endif
-		// add node to available list
+		// capacity bytes are removed from the inuse pool
+		dec_inuse(capacity, thread);
+
+		// check for case where we just return the memory to the system
+		if( max_num_threads(0) == 1 )
+		{	::operator delete( reinterpret_cast<void*>(node) );
+			return;
+		}
+
+		// add this node to available list for this thread and capacity
 		omp_alloc* available_root = root_available() + tc_index;
 		node->next_               = available_root->next_;
 		available_root->next_     = reinterpret_cast<void*>(node);
 
-		// adjust counts
-		dec_inuse(capacity, thread);
+		// capacity bytes are added to the available pool
 		inc_available(capacity, thread);
 	}
 /* -----------------------------------------------------------------------

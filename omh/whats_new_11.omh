@@ -61,6 +61,10 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 07-28$$
 $list number$$
+Change $cref return_memory$$ so that if $cref max_num_threads$$ is one
+(the default), $cref omp_alloc$$ does not hold onto memory
+(keep it available for the corresponding thread).
+$lnext
 Add files that were missing from the Microsoft Visual Studio
 $cref/examples/InstallWindows/Examples and Testing/$$ and
 $cref/more testing/InstallWindows/More Correctness Testing/$$

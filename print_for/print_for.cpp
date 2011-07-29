@@ -13,6 +13,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin print_for.cpp$$
 $spell
+	num
+	inuse
+	omp_alloc
+	bool
 	makefile
 	CppAD
 	cppad.hpp
@@ -44,27 +48,32 @@ $head Source Code$$
 $codep */
 # include <cppad/cppad.hpp>
 
-int main(void)
-{
-	using namespace CppAD;
+void print_for(void)
+{	// This program uses CppAD::vector (not CPPAD_TEST_VECTOR) because it 
+	// CppAD::vector uses omp_alloc and we want to check that when 
+	// omp_alloc::max_num_threads is one, there is no need to call 
+	// omp_alloc::free_available. Note all allocation is in this routine
 	using std::cout;
 	using std::endl;
+	using CppAD::AD;
+	using CppAD::vector;
+	using CppAD::PrintFor;
 
 	// independent variable vector
 	size_t n = 1;
-	CPPAD_TEST_VECTOR< AD<double> > X(n);
+	vector< AD<double> > X(n);
 	X[0] = 1.;
 	Independent(X);
 
 	// print a VecAD<double>::reference object that is a parameter
-	VecAD<double> V(1);
+	CppAD::VecAD<double> V(1);
 	AD<double> Zero(0);
 	V[Zero] = 0.;
 	PrintFor("v[0] = ", V[Zero]); 
 
 	// dependent variable vector 
 	size_t m = 1;
-	CPPAD_TEST_VECTOR< AD<double> > Y(m);
+	vector< AD<double> > Y(m);
 	Y[0] = V[Zero] + X[0];
 
 	// First print a newline to separate this from previous output,
@@ -72,10 +81,10 @@ int main(void)
 	PrintFor(  "\nv[0] + x[0] = ", Y[0]); 
 
 	// define f: x -> y and stop tape recording
-	ADFun<double> f(X, Y); 
+	CppAD::ADFun<double> f(X, Y); 
 
 	// zero order forward with x[0] = 2 
-	CPPAD_TEST_VECTOR<double> x(n);
+	vector<double> x(n);
 	x[0] = 2.;
 
 
@@ -88,6 +97,19 @@ int main(void)
 	// print a new line after output
 	std::cout << std::endl;
 
+	return;
+}
+int main(void)
+{	bool ok = true;
+	print_for();
+
+	size_t thread;
+	for(thread = 0; thread < 2; thread++)
+	{	ok &= CppAD::omp_alloc::inuse(thread) == 0;
+		ok &= CppAD::omp_alloc::available(thread) == 0;
+	}
+	if( ! ok )
+		return 1;
 	return 0;
 }
 /* $$
