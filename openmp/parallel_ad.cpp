@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 	// ---------------------------------------------------------------
 
 	// Inform the CppAD of the maximum number of threads that will be used
-	CppAD::omp_alloc::max_num_threads(n_thread);
+	CppAD::omp_alloc::set_max_num_threads(n_thread);
 	// check that no memory is in use or avialable at start
 	size_t thread;
 	for(thread = 0; thread < n_thread; thread++)

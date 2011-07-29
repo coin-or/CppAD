@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
 	bool ok = true;
 	
 	// Inform CppAD OpenMP memory allocator about number of threads
-	CppAD::omp_alloc::max_num_threads(size_t(n_thread));
+	CppAD::omp_alloc::set_max_num_threads(size_t(n_thread));
 
 	// Correctness check
 	double sum;
@@ -225,6 +225,12 @@ int main(int argc, char *argv[])
 		// report results
 		cout << "repeats_per_sec  = " << rate_vec[0] << endl;
 	}
+
+	// return all memory being held in available pool
+	size_t thread;
+	for(thread = 0; thread < size_t(n_thread); thread++)
+		CppAD::omp_alloc::free_available(thread);
+
 	// check all the threads for a CppAD memory leak
 	if( CppAD::memory_leak() )
 	{	ok = false;

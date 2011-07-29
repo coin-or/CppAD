@@ -166,17 +166,22 @@ bool omp_alloc_array(void)
 bool omp_alloc(void)
 {	bool ok  = true;
 
+	// check initial state of allocator
+	ok      &= CppAD::omp_alloc::get_max_num_threads() == 1;
+
 	// set the maximum number of threads greater than one
 	// so that omp_alloc holds onto memory
-	CppAD::omp_alloc::max_num_threads(2);
+	CppAD::omp_alloc::set_max_num_threads(2);
+	ok      &= CppAD::omp_alloc::get_max_num_threads() == 2;
 
-	// CppAD uses omp_alloc for fast memory allocation, and does not return 
-	// the memory to the system until you call free_avaiable.
-	size_t thread = CppAD::omp_alloc::get_thread_num();
-	CppAD::omp_alloc::free_available(thread);
-
+	// now use memory allocatore in state where it holds onto memory
 	ok      &= omp_alloc_bytes();
 	ok      &= omp_alloc_array();
+
+	// set the maximum number of threads back to one 
+	// so that omp_alloc no longer holds onto memory
+	CppAD::omp_alloc::set_max_num_threads(1);
+
 	return ok;
 }
 

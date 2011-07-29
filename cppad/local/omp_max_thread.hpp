@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin omp_max_thread$$
 $spell
+	num
 	omp
 	OpenMp
 	CppAD
@@ -26,7 +27,8 @@ $head Deprecated$$
 $index depreciated, omp_max_thread$$
 $index omp_max_thread, depreciated$$
 This routine has been deprecated.
-You should instead use the $cref/max_num_threads/$$ function.
+You should instead use the $cref/set_max_num_threads/max_num_threads/$$ 
+function.
 
 $head Syntax$$
 $syntax%AD<%Base%>::omp_max_thread(%number%)

@@ -282,7 +282,8 @@ int main(int argc, char *argv[])
 	cout << "use_ad   = " << use_ad   << endl;
 
 	// Inform the CppAD of the maximum number of threads that will be used
-	CppAD::omp_alloc::max_num_threads(n_thread);
+	CppAD::omp_alloc::set_max_num_threads(n_thread);
+
 	// check that no memory is in use or avialable at start
 	size_t thread;
 	for(thread = 0; thread < n_thread; thread++)
@@ -335,6 +336,10 @@ int main(int argc, char *argv[])
 			++i;
 		}
 	}
+
+	// return all memory being held in available pool
+	for(thread = 0; thread < n_thread; thread++)
+		CppAD::omp_alloc::free_available(thread);
 
 	// check all the threads for a CppAD memory leak
 	if( CppAD::memory_leak() )

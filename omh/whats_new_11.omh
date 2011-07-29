@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	num
 	Taylor
 	Tanh
 	Rosen
@@ -58,6 +59,16 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 07-29$$
+$list number$$
+The routines $cref/set_max_num_threads/max_num_threads/$$ and 
+$code get_max_num_threads$$ were created and the 
+routine $cref/max_num_threads/old_max_num_threads/$$ was deprecated.
+$lnext
+The functions $cref efficient$$ was deprecated because it 
+has not been shown to be useful.
+$lend
 
 $head 07-28$$
 $list number$$

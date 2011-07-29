@@ -108,7 +108,6 @@ $rref det_by_minor.cpp$$
 $rref det_of_minor.cpp$$
 $rref Div.cpp$$
 $rref DivEq.cpp$$
-$rref efficient.cpp$$
 $rref Eq.cpp$$
 $rref EqualOpSeq.cpp$$
 $rref Erf.cpp$$

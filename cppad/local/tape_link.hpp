@@ -39,7 +39,7 @@ is the base type corresponding to AD<Base> operations.
 
 \param thread
 is the index that identifes the current OpenMP thread.
-<tt>0 <= thread < omp_alloc::max_num_threads(0)</tt>.
+<tt>0 <= thread < omp_alloc::get_max_num_threads()</tt>.
 
 \return
 The return value \c r 
@@ -66,7 +66,7 @@ inline size_t * AD<Base>::id_handle(size_t thread)
 	// static objects will be zero initalized.
 	static size_t id_table[CPPAD_MAX_NUM_THREADS];
 
-	CPPAD_ASSERT_UNKNOWN( thread < omp_alloc::max_num_threads(0) );
+	CPPAD_ASSERT_UNKNOWN( thread < omp_alloc::get_max_num_threads() );
 	CPPAD_ASSERT_UNKNOWN( 
 		(id_table[thread] == 0)
 		| (id_table[thread] % CPPAD_MAX_NUM_THREADS == thread)
@@ -84,7 +84,7 @@ is the base type corresponding to AD<Base> operations.
 \param thread
 is the index that identifes the current OpenMP thread.
 If \c _OPENMP is not defined, \c thread must be zero.
-<tt>0 <= thread < omp_alloc::max_num_threads(0)</tt>.
+<tt>0 <= thread < omp_alloc::get_max_num_threads()</tt>.
 
 \return
 The return value \c r
@@ -99,7 +99,7 @@ template <class Base>
 inline ADTape<Base> ** AD<Base>::tape_handle(size_t thread)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static ADTape<Base> *tape_table[CPPAD_MAX_NUM_THREADS];
-	CPPAD_ASSERT_UNKNOWN( thread < omp_alloc::max_num_threads(0) );
+	CPPAD_ASSERT_UNKNOWN( thread < omp_alloc::get_max_num_threads() );
 	return tape_table + thread;
 }
 
@@ -113,7 +113,7 @@ is the base type corresponding to AD<Base> operations.
 \par thread
 is the index that identifes the current OpenMP thread.
 If \c _OPENMP is not defined, \c thread is zero.
-<tt>0 <= thread < omp_alloc::max_num_threads(0)</tt>.
+<tt>0 <= thread < omp_alloc::get_max_num_threads()</tt>.
 
 \return
 The return value \c r is a pointer to the tape that records AD<Base> operations
@@ -138,7 +138,7 @@ is the base type corresponding to AD<Base> operations.
 \par thread
 is the index that identifes the current OpenMP thread.
 If \c _OPENMP is not defined, \c thread is zero.
-<tt>0 <= thread < omp_alloc::max_num_threads(0)</tt>.
+<tt>0 <= thread < omp_alloc::get_max_num_threads()</tt>.
 
 \param id
 is the identifier for the tape that is currently recording
@@ -176,7 +176,7 @@ is the base type corresponding to AD<Base> operations.
 Let \c thread denote the current OpenMP thread number
 see \c omp_alloc::get_thread_num(). 
 If \c _OPENMP is not defined, \c thread is zero.
-It is a user error if <tt>thread >= omp_alloc::max_num_threads(0)</tt>.
+It is a user error if <tt>thread >= omp_alloc::get_max_num_threads()</tt>.
 
 \par tape_handle
 It is assumed that <tt>*tape_handle(thread) == CPPAD_NULL</tt>
@@ -208,7 +208,7 @@ size_t  AD<Base>::tape_new(void)
 	ADTape<Base> **tape = tape_handle(thread);
 
 	CPPAD_ASSERT_KNOWN(
-	thread < omp_alloc::max_num_threads(0),
+	thread < omp_alloc::get_max_num_threads(),
 	"Independent: An OpenMP thread number > current max_num_threads setting.\n"
 	"Use omp_alloc::max_num_threads to inform CppAD of the number of threads."
 	);
@@ -294,7 +294,7 @@ is the base type corresponding to AD<Base> operations.
 \par thread
 is the index that identifes the current OpenMP thread.
 If \c _OPENMP is not defined, \c thread is zero.
-<tt>0 <= thread < omp_alloc::max_num_threads(0)</tt>.
+<tt>0 <= thread < omp_alloc::get_max_num_threads()</tt>.
 
 \par id_
 This routine uses AD<Base>::id_ to determine the tape identifier 

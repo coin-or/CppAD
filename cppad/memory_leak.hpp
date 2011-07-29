@@ -82,7 +82,7 @@ File that implements a memory check at end of a CppAD program
 */
 
 /*!
-Function that check both the old memory allocator defined in track_new_del.hpp
+Function that checks both the old memory allocator defined in track_new_del.hpp
 and the new allocator \c omp_alloc for misuse that results in memory leaks:
 
 \return
@@ -98,6 +98,10 @@ inline bool memory_leak(void)
 		! omp_alloc::in_parallel(),
 		"attempt to use memory_leak in parallel execution mode."
 	);
+	CPPAD_ASSERT_KNOWN(
+		omp_alloc::get_max_num_threads() == 1,
+		"attempt to use memory_leak while max_num_threads > 1."
+	);
 	bool leak = false;
 	using std::cout;
 	using std::endl;
@@ -112,8 +116,7 @@ inline bool memory_leak(void)
 		{	leak = true;
 			cout << "omp_alloc::inuse(thread) = " << num_bytes << endl;
 		}
-		// dump the available memory pool being held for this thread
-		omp_alloc::free_available(thread);
+		// check that no memory is currently available for this thread
 		num_bytes = omp_alloc::available(thread);
 		if( num_bytes != 0 )
 		{	leak = true;

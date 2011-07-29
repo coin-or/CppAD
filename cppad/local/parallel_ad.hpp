@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin parallel_ad$$
 $spell
+	num
 	isnan
 	std
 $$
@@ -28,7 +29,7 @@ By default, for each $codei%AD<%Base%>%$$ class there is only one
 tape that records $cref/AD of Base/glossary/AD of Base/$$ operations.
 This tape is a global variable and hence it cannot be used
 by multiple OpenMP threads at the same time. 
-The $cref/max_num_threads/$$ function is used to set the 
+The $cref/set_max_num_threads/max_num_threads/$$ function is used to set the 
 maximum number of OpenMP threads that can be active in parallel mode.
 It is still necessary to inform each $codei%AD<%Base%>%$$ type 
 before using it in using $cref/parallel/in_parallel/$$ execution mode

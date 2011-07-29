@@ -290,10 +290,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\efficient.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\eq.cpp"
 				>
 			</File>
