@@ -96,10 +96,10 @@ $index OpenMP, initialize memory$$
 $index memory, initialize OpenMP$$
 $index initialize, OpenMP memory$$
 
-$head Deprecated$$
-This function has been deprecated, use 
-$cref/set_max_num_threads/max_num_threads/$$
-and $code get_max_num_threads$$ instead.
+$head Removed$$
+This function has been removed from the CppAD API.
+Use the function $cref/set_max_num_threads/max_num_threads/$$
+in its place.
 
 $head Syntax$$
 $codei%omp_alloc::max_num_threads(%number%)%$$
