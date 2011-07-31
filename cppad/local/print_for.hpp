@@ -32,59 +32,71 @@ $index forward, debug$$
 $section Printing AD Values During Forward Mode$$ 
 
 $head Syntax$$
-$syntax%PrintFor(%text%, %y%)%$$
-$pre
-$$
-$syntax%%f%.Forward(0, %x%)%$$
-
+$icode%f%.Forward(0, %x%)
+%$$
+$codei%PrintFor(%text%, %y%)
+%$$
+$codei%PrintFor(%text%, %y%, %z%)
+%$$
 
 $head Purpose$$
-The current value of an $syntax%AD<%Base%>%$$ 
-object $italic y$$ is the result of an AD of $italic Base$$ operation.
-This operation may be part of the 
-$xref/glossary/Operation/Sequence/operation sequence/1/$$
-that is transferred to an $xref/ADFun/$$ object $italic f$$.
-The $code ADFun$$ object can be evaluated at different values for the
+The $cref/zero order forward/ForwardZero/$$ syntax
+$icode%
+	f%.Forward(0, %x%)
+%$$
+results in a value for all of the variables in the 
+$xref/glossary/Operation/Sequence/operation sequence/1/$$ corresponding
+to $icode f$$.
+There is a value for the $codei%AD<%Base%>%$$ object $icode y$$,
+that corresponds to the value $icode x$$ for the  
 $cref/independent variables/glossary/Tape/Independent Variable/$$.
-This may result in a corresponding value for $italic y$$ 
-that is different from when the operation sequence was recorded.
-The routine $code PrintFor$$ requests a printing,
-when $syntax%%f%.Forward(0, %x%)%$$ is executed,
-of the value for $italic y$$ that corresponds to the 
-independent variable values specified by $italic x$$.
+Putting a $code PrintFor$$ in the operation sequence will
+cause the value of $icode y$$, corresponding to $icode x$$,
+to be printed during each zero order forward operation.
+
+$head f.Forward(0, x)$$
+The objects $icode f$$, $italic x$$, and the purpose
+for this operation, are documented in $cref/Forward/$$.
 
 $head text$$
-The argument $italic text$$ has prototype
-$syntax%
+The argument $icode text$$ has prototype
+$codei%
 	const char *%text%
 %$$
 The corresponding text is written to $code std::cout$$ before the 
-value of $italic y$$. 
+value of $icode y$$. 
 
 $head y$$
-The argument $italic y$$ has one of the following prototypes
-$syntax%
-	const AD<%Base%>               &%y%
-	const VecAD<%Base%>::reference &%y%
+The argument $icode y$$ has one of the following prototypes
+$codei%
+	const AD<%Base%>&               %y%
+	const VecAD<%Base%>::reference& %y%
 %$$
-The value of $italic y$$ that corresponds to $italic x$$
+The value of $icode y$$ that corresponds to $italic x$$
 is written to $code std::cout$$ during the execution of 
-$syntax%
+$codei%
 	%f%.Forward(0, %x%)
 %$$
 
-$head f.Forward(0, x)$$
-The objects $italic f$$, $italic x$$, and the purpose
-for this operation, are documented in $xref/Forward/$$.
-
-
+$head z$$
+If present, the argument $icode z$$ has one of the following prototypes
+$codei%
+	const AD<%Base%>&               %z%
+	const VecAD<%Base%>::reference& %z%
+%$$
+In this case
+the text and value of $icode y$$ will be printed if and only if
+$codei%
+	%z% <= 0.
+%$$.
+	
 $head Discussion$$
 This is can be helpful for understanding why tape evaluations
 have trouble, for example, if the result of a tape calculation
 is the IEEE code for not a number $code Nan$$.
 
 $head Alternative$$
-The $xref/Output/$$ section describes the normal 
+The $cref/Output/$$ section describes the normal 
 printing of values; i.e., printing when the corresponding
 code is executed.
 
@@ -93,7 +105,7 @@ $children%
 	print_for/print_for.cpp
 %$$
 The program
-$xref/print_for.cpp/$$
+$cref/print_for.cpp/$$
 is an example and test of this operation.
 The output of this program
 states the conditions for passing and failing the test.
@@ -102,39 +114,80 @@ $end
 ------------------------------------------------------------------------------
 */
 
+# include <cstring>
+
 namespace CppAD { 
 	template <class Base>
-	void PrintFor(const char *text, const AD<Base> &u)
-	{	ADTape<Base> *tape = AD<Base>::tape_ptr();
+	void PrintFor(const char *text, const AD<Base>& y, const AD<Base>& z)
+	{	CPPAD_ASSERT_NARG_NRES(PriOp, 4, 0);
+
+		ADTape<Base> *tape = AD<Base>::tape_ptr();
 		CPPAD_ASSERT_KNOWN(
 			tape != CPPAD_NULL,
-			"PrintFor: cannot use this function because no tape"
-			"\nis currently active (for this thread)."
+			"PrintFor: cannot use this function because no ADFun object"
+			"\nis currently being recorded (for this thread)."
 		);
+		CPPAD_ASSERT_KNOWN(
+			std::strlen(text) <= 1000 ,
+			"PrintFor: lenght of text is greater than 1000 characters"
+		);
+		size_t ind0, ind1, ind2, ind3;
+	
+		// ind[0] = base 2 preprsentation of the value [Var(y), Var(z)]
+		ind0 = 0;
 
-		if( Parameter(u) )
-		{	CPPAD_ASSERT_UNKNOWN( NumRes(PripOp) == 0 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(PripOp) == 2 );
-			// put operand addresses in tape
-			addr_t t = tape->Rec_.PutTxt(text);
-			addr_t p = tape->Rec_.PutPar(u.value_);
-			tape->Rec_.PutArg(t, p);
-			// put operator in the tape
-			tape->Rec_.PutOp(PripOp);
-		}
+		// ind[0] = address of text
+		ind1 = tape->Rec_.PutTxt(text);
+
+		// ind[2] = address for y
+		if( Parameter(y) )
+			ind2  = tape->Rec_.PutPar(y.value_);
 		else
-		{	CPPAD_ASSERT_UNKNOWN( NumRes(PrivOp) == 0 );
-			CPPAD_ASSERT_UNKNOWN( NumArg(PrivOp) == 2 );
-			// put operand addresses in tape
-			addr_t t = tape->Rec_.PutTxt(text);
-			tape->Rec_.PutArg(t, u.taddr_);
-			// put operator in the tape
-			tape->Rec_.PutOp(PrivOp);
+		{	ind0 += 1;
+			ind2  = y.taddr_;
 		}
+
+		// ind[3] = address for z
+		if( Parameter(z) )
+			ind3  = tape->Rec_.PutPar(z.value_);
+		else
+		{	ind0 += 2;
+			ind3  = z.taddr_;
+		}
+
+		// put the operator in the tape
+		tape->Rec_.PutArg(ind0, ind1, ind2, ind3);
+		tape->Rec_.PutOp(PriOp);
 	}
+	// Fold all other cases into the case above
 	template <class Base>
-	void PrintFor(const char *text, const VecAD_reference<Base> &u)
-	{	PrintFor(text, u.ADBase()); }
+	void PrintFor(const char *text, const AD<Base>& y)
+	{	PrintFor(text, y, AD<Base>(0) ); }
+	//
+	template <class Base>
+	void PrintFor(const char *text, const VecAD_reference<Base>& y)
+	{	PrintFor(text, y.ADBase(), AD<Base>(0) ); }
+	//
+	template <class Base>
+	void PrintFor(
+		const char                  *text   , 
+		const VecAD_reference<Base>& y      ,
+		const VecAD_reference<Base>& z      )
+	{	PrintFor(text, y.ADBase(), z.ADBase() ); }
+	//
+	template <class Base>
+	void PrintFor(
+		const char *text                    , 
+		const VecAD_reference<Base>& y      ,
+		const AD<Base>&              z      )
+	{	PrintFor(text, y.ADBase(), z ); }
+	//
+	template <class Base>
+	void PrintFor(
+		const char                  *text   , 
+		const AD<Base>&              y      ,
+		const VecAD_reference<Base>& z      )
+	{	PrintFor(text, y, z.ADBase() ); }
 }
 
 # endif

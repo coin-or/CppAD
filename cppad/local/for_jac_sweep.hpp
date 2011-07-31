@@ -385,14 +385,8 @@ void ForJacSweep(
 			break;
 			// -------------------------------------------------
 
-			case PripOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
-			var_sparsity.clear(i_var);
-			break;
-			// -------------------------------------------------
-
-			case PrivOp:
-			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
+			case PriOp:
+			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 			break;
 			// -------------------------------------------------
 

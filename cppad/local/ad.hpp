@@ -125,7 +125,7 @@ class AD {
 	friend std::ostream& operator << <Base>
 		(std::ostream &os, const AD<Base> &x);
 	friend void PrintFor <Base>
-		(const char *text, const AD<Base> &x);
+		(const char *text, const AD<Base>& y, const AD<Base>& z);
 
 public:
 	// type of value

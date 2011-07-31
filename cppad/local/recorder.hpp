@@ -436,9 +436,10 @@ template <class Base>
 inline size_t recorder<Base>::PutTxt(const char *text)
 {
 	// determine length of the text including terminating '\0'
-	size_t n;
-	for(n = 0; text[n] != '\0'; n++)
-		CPPAD_ASSERT_UNKNOWN( n < 1000 ); // should check in PrintFor
+	size_t n = 0;
+	while( text[n] != '\0' )
+		n++;
+	CPPAD_ASSERT_UNKNOWN( n <= 1000 ); 
 	n++;
 	CPPAD_ASSERT_UNKNOWN( text[n-1] == '\0' );
 

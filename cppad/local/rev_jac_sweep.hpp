@@ -389,14 +389,9 @@ void RevJacSweep(
 			break;
 			// -------------------------------------------------
 
-			case PripOp:
- 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
+			case PriOp:
+ 			CPPAD_ASSERT_NARG_NRES(op, 4, 0);
 
-			break;
-			// -------------------------------------------------
-
-			case PrivOp:
- 			CPPAD_ASSERT_NARG_NRES(op, 2, 0);
 			break;
 			// -------------------------------------------------
 

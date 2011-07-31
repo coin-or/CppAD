@@ -936,7 +936,6 @@ void optimize(
 			case DivpvOp:
 			case MulpvOp:
 			case PowpvOp:
-			case PrivOp:
 			if( tape[i_var].connect != not_connected )
 				tape[arg[1]].connect = yes_connected;
 			break; // --------------------------------------------
@@ -1022,8 +1021,7 @@ void optimize(
 			case EndOp:
 			case InvOp:
 			case ParOp:
-			case PripOp:
-			case StppOp:
+			case PriOp:
 			break;  // --------------------------------------------
 
 			// Load using a parameter index
@@ -1230,8 +1228,7 @@ void optimize(
 		bool keep;
 		switch( op )
 		{	case ComOp:
-			case PripOp:
-			case PrivOp:
+			case PriOp:
 			keep = false;
 			break;
 

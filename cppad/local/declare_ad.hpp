@@ -115,7 +115,7 @@ namespace CppAD {
 	
 	// PrintFor
 	template <class Base>
-	void PrintFor(const char *text, const AD<Base> &x);
+	void PrintFor(const char *text, const AD<Base>& y, const AD<Base>& z);
 
 	// Value
 	template <class Base> Base Value(const AD<Base> &x);

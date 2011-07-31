@@ -38,7 +38,7 @@ class ADTape {
 	// functions -----------------------------------------------------------
 	// PrintFor
 	friend void PrintFor <Base>
-		(const char *text, const AD<Base> &x);
+		(const char *text, const AD<Base>& y, const AD<Base>& z);
 	// CondExpOp
 	friend AD<Base> CondExpOp <Base> (
 		enum CompareOp  cop          ,

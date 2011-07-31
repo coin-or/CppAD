@@ -60,6 +60,15 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 07-31$$
+Add a conditional version of the $cref/PrintFor/$$ command
+$codei%
+	PrintFor(%text%, %y%, %z%)
+%$$
+which only prints when $icode%z% <= 0%$$.
+This is useful for error reporting during forward mode; i.e.,
+reporting when the argument to the $code log$$ function is not valid.
+
 $head 07-29$$
 $list number$$
 The routines $cref/set_max_num_threads/max_num_threads/$$ and 

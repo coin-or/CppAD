@@ -418,15 +418,10 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
-			case PripOp:
+			case PriOp:
 			// no result so nothing to do
 			break;
 			// --------------------------------------------------
-
-			case PrivOp:
-			// no result so nothing to do
-			break;
-			// -------------------------------------------------
 
 			case SinOp:
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );

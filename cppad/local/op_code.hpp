@@ -71,8 +71,7 @@ enum OpCode {
 	PowpvOp,  //  pow(parameter,   variable)
 	PowvpOp,  //  pow(variable,    parameter)
 	PowvvOp,  //  pow(variable,    variable)
-	PripOp,   //      text         parameter
-	PrivOp,   //      text         parameter
+	PriOp,    //  PrintFor(text, parameter or variable, parameter or variable)
 	SinhOp,   // sinh(variable)
 	SinOp,    //  sin(variable)
 	SqrtOp,   // sqrt(variable)
@@ -136,8 +135,7 @@ const size_t NumArgTable[] = {
 	2, // PowpvOp
 	2, // PowvpOp
 	2, // PowvvOp
-	2, // PripOp
-	2, // PrivOp
+	4, // PriOp
 	1, // SinhOp
 	1, // SinOp
 	1, // SqrtOp
@@ -234,8 +232,7 @@ const size_t NumResTable[] = {
 	3, // PowpvOp
 	3, // PowvpOp
 	3, // PowvvOp
-	0, // PripOp
-	0, // PrivOp
+	0, // PriOp
 	2, // SinhOp
 	2, // SinOp
 	1, // SqrtOp
@@ -435,8 +432,7 @@ void printOp(
 		"Powpv" ,
 		"Powvp" ,
 		"Powvv" ,
-		"Prip"  ,
-		"Priv"  ,
+		"Pri"   ,
 		"Sinh"  ,
 		"Sin"   ,
 		"Sqrt"  ,
@@ -595,16 +591,15 @@ void printOp(
 		}
 		break;
 
-		case PripOp:
-		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		os << "txt=\"" << Rec->GetTxt(ind[0]);
-		os << "\"  p=" << Rec->GetPar(ind[1]);
-		break;
-
-		case PrivOp:
-		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 2 );
-		os << "txt=\"" << Rec->GetTxt(ind[0]);
-		os << "\"  v=" << ind[1];
+		case PriOp:
+		CPPAD_ASSERT_NARG_NRES(op, 4, 0);
+		os << "txt=\"" << Rec->GetTxt(ind[1]) << "\"";
+		if( ind[0] & 1 )
+			printOpField(os, " vy=", ind[2], ncol);
+		else	printOpField(os, " py=", Rec->GetPar(ind[2]), ncol);
+		if( ind[0] & 2 )
+			printOpField(os, " vz=", ind[3], ncol);
+		else	printOpField(os, " pz=", Rec->GetPar(ind[3]), ncol);
 		break;
 
 		case BeginOp:

@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin print_for.cpp$$
 $spell
+	av
 	num
 	inuse
 	omp_alloc
@@ -61,27 +62,33 @@ void print_for(void)
 
 	// independent variable vector
 	size_t n = 1;
-	vector< AD<double> > X(n);
-	X[0] = 1.;
-	Independent(X);
+	vector< AD<double> > ax(n);
+	ax[0] = 1.;
+	Independent(ax);
 
 	// print a VecAD<double>::reference object that is a parameter
-	CppAD::VecAD<double> V(1);
+	CppAD::VecAD<double> av(1);
 	AD<double> Zero(0);
-	V[Zero] = 0.;
-	PrintFor("v[0] = ", V[Zero]); 
+	av[Zero] = 0.;
+	PrintFor("v[0] = ", av[Zero]); 
+
+	// Print a newline to separate this from previous output,
+	// then print an AD<double> object that is a variable.
+	PrintFor("\nv[0] + x[0] = ", av[0] + ax[0]); 
+
+	// A conditional print that will fail condition x[0] <= 0.
+	PrintFor("\n  2. + x[0] = ",   2. + ax[0], ax[0]);
+
+	// A conditional print that will pass condition x[0] - 2. <= 0.
+	PrintFor("\n  3. + x[0] = ",   3. + ax[0], ax[0] - 2.);
 
 	// dependent variable vector 
-	size_t m = 1;
-	vector< AD<double> > Y(m);
-	Y[0] = V[Zero] + X[0];
-
-	// First print a newline to separate this from previous output,
-	// then print an AD<double> object that is a variable.
-	PrintFor(  "\nv[0] + x[0] = ", Y[0]); 
+	size_t m = 2;
+	vector< AD<double> > ay(m);
+	ay[0] = av[Zero] + ax[0];
 
 	// define f: x -> y and stop tape recording
-	CppAD::ADFun<double> f(X, Y); 
+	CppAD::ADFun<double> f(ax, ay); 
 
 	// zero order forward with x[0] = 2 
 	vector<double> x(n);
@@ -90,7 +97,8 @@ void print_for(void)
 
 	cout << "v[0] = 0" << endl; 
 	cout << "v[0] + x[0] = 2" << endl; 
-	// Developer Note: ./makefile.am "Test passes" to begin next output line
+	cout << "  3. + x[0] = 5" << endl; 
+	// ./makefile.am expects "Test passes" at beginning of next output line
 	cout << "Test passes if two lines above repeat below:" << endl;
 	f.Forward(0, x);	
 
