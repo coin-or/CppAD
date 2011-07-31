@@ -114,8 +114,13 @@ namespace CppAD {
 	bool EqualOpSeq (const AD<Base> &u, const AD<Base> &v);
 	
 	// PrintFor
-	template <class Base>
-	void PrintFor(const char *text, const AD<Base>& y, const AD<Base>& z);
+	template <class Base> 
+	void PrintFor(
+		const AD<Base>&    flag   ,
+		const char*        before ,
+		const AD<Base>&    var    , 
+		const char*        after
+	);
 
 	// Value
 	template <class Base> Base Value(const AD<Base> &x);

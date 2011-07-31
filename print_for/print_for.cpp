@@ -77,10 +77,10 @@ void print_for(void)
 	PrintFor("\nv[0] + x[0] = ", av[0] + ax[0]); 
 
 	// A conditional print that will fail condition x[0] <= 0.
-	PrintFor("\n  2. + x[0] = ",   2. + ax[0], ax[0]);
+	PrintFor(ax[0], "\n  2. + x[0] = ",   2. + ax[0], "\n");
 
 	// A conditional print that will pass condition x[0] - 2. <= 0.
-	PrintFor("\n  3. + x[0] = ",   3. + ax[0], ax[0] - 2.);
+	PrintFor(ax[0] - 2., "\n  3. + x[0] = ",   3. + ax[0], "\n");
 
 	// dependent variable vector 
 	size_t m = 2;
@@ -99,11 +99,8 @@ void print_for(void)
 	cout << "v[0] + x[0] = 2" << endl; 
 	cout << "  3. + x[0] = 5" << endl; 
 	// ./makefile.am expects "Test passes" at beginning of next output line
-	cout << "Test passes if two lines above repeat below:" << endl;
+	cout << "Test passes if three lines above repeat below:" << endl;
 	f.Forward(0, x);	
-
-	// print a new line after output
-	std::cout << std::endl;
 
 	return;
 }

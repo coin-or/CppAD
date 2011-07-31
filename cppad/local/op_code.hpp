@@ -135,7 +135,7 @@ const size_t NumArgTable[] = {
 	2, // PowpvOp
 	2, // PowvpOp
 	2, // PowvvOp
-	4, // PriOp
+	5, // PriOp
 	1, // SinhOp
 	1, // SinOp
 	1, // SqrtOp
@@ -592,14 +592,15 @@ void printOp(
 		break;
 
 		case PriOp:
-		CPPAD_ASSERT_NARG_NRES(op, 4, 0);
-		os << "txt=\"" << Rec->GetTxt(ind[1]) << "\"";
+		CPPAD_ASSERT_NARG_NRES(op, 5, 0);
 		if( ind[0] & 1 )
-			printOpField(os, " vy=", ind[2], ncol);
-		else	printOpField(os, " py=", Rec->GetPar(ind[2]), ncol);
+			printOpField(os, " v=", ind[1], ncol);
+		else	printOpField(os, " p=", Rec->GetPar(ind[1]), ncol);
+		os << "before=\"" << Rec->GetTxt(ind[2]) << "\"";
 		if( ind[0] & 2 )
-			printOpField(os, " vz=", ind[3], ncol);
-		else	printOpField(os, " pz=", Rec->GetPar(ind[3]), ncol);
+			printOpField(os, " v=", ind[3], ncol);
+		else	printOpField(os, " p=", Rec->GetPar(ind[3]), ncol);
+		os << "after=\"" << Rec->GetTxt(ind[4]) << "\"";
 		break;
 
 		case BeginOp:

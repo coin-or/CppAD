@@ -124,9 +124,12 @@ class AD {
 	// output operations
 	friend std::ostream& operator << <Base>
 		(std::ostream &os, const AD<Base> &x);
-	friend void PrintFor <Base>
-		(const char *text, const AD<Base>& y, const AD<Base>& z);
-
+	friend void PrintFor <Base> (
+		const AD<Base>&    flag   ,
+		const char*        before ,
+		const AD<Base>&    var    , 
+		const char*        after
+	);
 public:
 	// type of value
 	typedef Base value_type;
