@@ -525,13 +525,39 @@ then
 	      cd work
 	#
 	dir=`pwd` 
-	echo "log=$dir/make_test.log"
-	echo "grep OK \$log # Gives a summary of progress for make command below"
-	echo "tail -f \$log # Follows the progress for make command below"
+	echo "To follow progress of 'make test' use"
+	echo "	../temp.sh ( OK | All | tail )"
+	cat << EOF > $log_dir/../temp.sh
+#! /bin/bash -e
+if [ "\$1" == "OK" ]
+then
+	echo "grep OK $dir/make_test.log"
+	grep OK $dir/make_test.log
+	exit 0
+fi
+if [ "\$1" == "All" ]
+then
+	echo "grep All $dir/make_test.log"
+	grep All $dir/make_test.log
+	exit 0
+fi
+if [ "\$1" == "tail" ]
+then
+	echo "tail -f $dir/make_test.log"
+	tail -f $dir/make_test.log
+	exit 0
+fi
+echo "usage: ../temp.sh option"
+echo "where option is one of following: OK, All, tail"
+EOF
+	chmod +x $log_dir/../temp.sh
 	#
 	# build and run all the tests
 	echo "make test                >& make_test.log"
 	      make test                >& make_test.log
+	#
+	echo "rm ../temp.sh"
+	rm $log_dir/../temp.sh
 	#
 	echo "cat make_test.log        >> $log_file"
 	      cat make_test.log        >> $log_dir/$log_file
