@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin print_for.cpp$$
 $spell
+	const
+	var
 	av
 	num
 	inuse
@@ -49,20 +51,30 @@ $head Source Code$$
 $codep */
 # include <cppad/cppad.hpp>
 
-void print_for(void)
-{	// This program uses CppAD::vector (not CPPAD_TEST_VECTOR) because it 
-	// CppAD::vector uses omp_alloc and we want to check that when 
-	// omp_alloc::max_num_threads is one, there is no need to call 
-	// omp_alloc::free_available. Note all allocation is in this routine
+namespace { 
 	using std::cout;
 	using std::endl;
 	using CppAD::AD;
-	using CppAD::vector;
-	using CppAD::PrintFor;
+
+	// use of PrintFor to check for invalid function arguments
+	AD<double> check_log(const AD<double>& y)
+	{	// check during recording
+		if( y <= 0. )
+			cout << "check_log: y = " << y << " is <= 0" << endl;
+
+		// check during zero order forward calculation
+		PrintFor(y, "check_log: y == ", y , " which is <= 0\n");
+
+		return log(y);
+	} 
+}
+
+void print_for(void)
+{	using CppAD::PrintFor;
 
 	// independent variable vector
 	size_t n = 1;
-	vector< AD<double> > ax(n);
+	CPPAD_TEST_VECTOR< AD<double> > ax(n);
 	ax[0] = 1.;
 	Independent(ax);
 
@@ -76,30 +88,34 @@ void print_for(void)
 	// then print an AD<double> object that is a variable.
 	PrintFor("\nv[0] + x[0] = ", av[0] + ax[0]); 
 
-	// A conditional print that will fail condition x[0] <= 0.
+	// A conditional print that will not generate output when x[0] = 2.
 	PrintFor(ax[0], "\n  2. + x[0] = ",   2. + ax[0], "\n");
 
-	// A conditional print that will pass condition x[0] - 2. <= 0.
+	// A conditional print that will generate output when x[0] = 2.
 	PrintFor(ax[0] - 2., "\n  3. + x[0] = ",   3. + ax[0], "\n");
+
+	// A log evaluations that will result in an error message when x[0] = 2.
+	AD<double> var     = 2. - ax[0];
+	AD<double> log_var = check_log(var);
 
 	// dependent variable vector 
 	size_t m = 2;
-	vector< AD<double> > ay(m);
+	CPPAD_TEST_VECTOR< AD<double> > ay(m);
 	ay[0] = av[Zero] + ax[0];
 
 	// define f: x -> y and stop tape recording
 	CppAD::ADFun<double> f(ax, ay); 
 
 	// zero order forward with x[0] = 2 
-	vector<double> x(n);
+	CPPAD_TEST_VECTOR<double> x(n);
 	x[0] = 2.;
-
 
 	cout << "v[0] = 0" << endl; 
 	cout << "v[0] + x[0] = 2" << endl; 
 	cout << "  3. + x[0] = 5" << endl; 
+	cout << "check_log: y == 0 which is <= 0" << endl;
 	// ./makefile.am expects "Test passes" at beginning of next output line
-	cout << "Test passes if three lines above repeat below:" << endl;
+	cout << "Test passes if four lines above repeat below:" << endl;
 	f.Forward(0, x);	
 
 	return;

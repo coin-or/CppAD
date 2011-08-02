@@ -32,66 +32,56 @@ $index variable, independent$$
 $section Declare Independent Variables and Start Recording$$
 
 $head Syntax$$
-$syntax%Independent(%x%)%$$
-
+$codei%Independent(%x%)%$$
 
 $head Purpose$$
-Start a recording the 
-$xref/glossary/AD of Base/AD of Base/$$ operations
-with $italic x$$ as the vector of independent variables.
+Start recording 
+$cref/AD of Base/glossary/AD of Base/$$ operations
+with $icode x$$ as the independent variable vector.
 Once the 
-AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$ is completed,
+$cref/operation sequence/glossary/Operation/Sequence/$$ is completed,
 it must be transferred to a function object; see below.
 
-$head Variables for a Tape$$
-A tape is create by the call 
-$syntax%
+$head Start Recording$$
+An operation sequence recording is started by the command
+$codei%
 	Independent(%x%)
 %$$
-The corresponding operation sequence is transferred to a function object,
-and the tape is deleted,
-using either (see $cref/ADFun<Base> f(x, y)/FunConstruct/$$)
-$syntax%
+
+$head Stop Recording$$
+The recording is stopped,
+and the operation sequence is transferred to the AD function object $icode f$$,
+using either the $cref/function constructor/FunConstruct/$$
+$codei%
 	ADFun<%Base%> %f%( %x%, %y%)
 %$$
-or using (see $cref/f.Dependent(x, y)/Dependent/$$)
-$syntax%
+or the $cref/dependent variable specifier/Dependent/$$
+$codei%
 	%f%.Dependent( %x%, %y%)
 %$$
-Between when the tape is created and when it is destroyed,
-we refer to the elements of $italic x$$, 
-and the values that depend on the elements of $italic x$$,
-as variables for the tape created by the call to $code Independent$$. 
+The only other way to stop a recording is using
+$cref/abort_recording/$$.
+Between when the recording is started and when it stopped,
+we refer to the elements of $icode x$$, 
+and the values that depend on the elements of $icode x$$,
+as $codei%AD<%Base%>%$$ variables. 
 
 $head x$$
-The vector $italic x$$ has prototype
-$syntax%
+The vector $icode x$$ has prototype
+$codei%
 	%VectorAD% &%x%
 %$$
-(see $italic VectorAD$$ below).
-The size of the vector $italic x$$, must be greater than zero,
+(see $icode VectorAD$$ below).
+The size of the vector $icode x$$, must be greater than zero,
 and is the number of independent variables for this
 AD operation sequence.
 
 $head VectorAD$$
-The type $italic VectorAD$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type/$$
-$syntax%AD<%Base%>%$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
+The type $icode VectorAD$$ must be a $cref/SimpleVector/$$ class with
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$
+$codei%AD<%Base%>%$$.
+The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
-
-$head Memory Leak$$
-A memory leak will result if
-a tape is create by a call to $code Independent$$
-and not deleted by a corresponding call to 
-$syntax%
-	ADFun<%Base%> %f%( %x%, %y%)
-%$$
-or using 
-$syntax%
-	%f%.Dependent( %x%, %y%)
-%$$
 
 $head OpenMP$$
 $index OpenMP, Independent$$
@@ -99,13 +89,14 @@ $index Independent, OpenMP$$
 In the case of multi-threading with OpenMP,
 the call to $code Independent$$
 and the corresponding call to
-$syntax%
+$codei%
 	ADFun<%Base%> %f%( %x%, %y%)
 %$$
 or 
-$syntax%
+$codei%
 	%f%.Dependent( %x%, %y%)
 %$$
+or $cref/abort_recording/$$,
 must be preformed by the same thread.
 
 $head Example$$
@@ -113,7 +104,7 @@ $children%
 	example/independent.cpp
 %$$
 The file
-$xref/Independent.cpp/$$
+$cref/Independent.cpp/$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 

@@ -41,17 +41,18 @@ $codei%PrintFor(%flag%, %before%, %var%, %after%)
 %$$
 
 $head Purpose$$
-The $cref/zero order forward/ForwardZero/$$ syntax
+The $cref/zero order forward/ForwardZero/$$ mode command
 $icode%
 	f%.Forward(0, %x%)
 %$$
-specifies $icode x$$ for the 
-$cref/independent variables/glossary/Tape/Independent Variable/$$.
-It also results in a value for all of the dependent variables in the 
+assigns the 
+$cref/independent variable/glossary/Tape/Independent Variable/$$ vector
+equal to $icode x$$.
+It then computes a value for all of the dependent variables in the 
 $xref/glossary/Operation/Sequence/operation sequence/1/$$ corresponding
 to $icode f$$.
 Putting a $code PrintFor$$ in the operation sequence will
-cause $icode var$$, corresponding to $icode x$$,
+cause the value of $icode var$$, corresponding to $icode x$$,
 to be printed during zero order forward operations.
 
 $head f.Forward(0, x)$$
@@ -91,7 +92,8 @@ $codei%
 Note that $icode var$$ may be a
 $cref/variable/glossary/Variable/$$ or 
 $cref/parameter/glossary/Parameter/$$.
-If it is a parameter, its value will not depend on the value of $icode x$$.
+(A parameters value does not depend on the value of 
+the independent variable vector $icode x$$.)
 
 $head after$$
 The argument $icode after$$ has prototype
@@ -102,8 +104,10 @@ This text is written to $code std::cout$$ after $icode var$$.
 	
 $head Discussion$$
 This is can be helpful for understanding why tape evaluations
-have trouble, for example, if the result of a tape calculation
-is the IEEE code for not a number $code Nan$$.
+have trouble.
+For example, if one of the operations in $icode f$$ is
+$codei%log(%var%)%$$ and $icode%var% <= 0%$$,
+the corresponding result will be $cref nan$$.
 
 $head Alternative$$
 The $cref/Output/$$ section describes the normal 
@@ -133,11 +137,11 @@ namespace CppAD {
 	{	CPPAD_ASSERT_NARG_NRES(PriOp, 5, 0);
 
 		ADTape<Base> *tape = AD<Base>::tape_ptr();
-		CPPAD_ASSERT_KNOWN(
-			tape != CPPAD_NULL,
-			"PrintFor: cannot use this function because no ADFun object"
-			"\nis currently being recorded (for this thread)."
-		);
+
+		// check for case where we are not recording operations
+		if( tape == CPPAD_NULL )
+			return;
+
 		CPPAD_ASSERT_KNOWN(
 			std::strlen(before) <= 1000 ,
 			"PrintFor: length of before is greater than 1000 characters"

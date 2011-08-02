@@ -60,6 +60,15 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-02$$
+$list number$$
+Change $cref/PrintFor/$$ so it no longer aborts execution when
+there is no operation sequence being recording; see
+$cref/start recording/Independent/Start Recording/$$.
+$lnext
+Improve the $cref print_for.cpp$$ example.
+$lend
+
 $head 07-31$$
 Add a conditional version of the $cref/PrintFor/$$ command
 $codei%
