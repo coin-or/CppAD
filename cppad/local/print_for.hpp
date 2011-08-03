@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin PrintFor$$
 $spell
+	pos
 	var
 	VecAD
 	std
@@ -37,7 +38,7 @@ $icode%f%.Forward(0, %x%)
 %$$
 $codei%PrintFor(%before%, %var%)
 %$$
-$codei%PrintFor(%flag%, %before%, %var%, %after%)
+$codei%PrintFor(%pos%, %before%, %var%, %after%)
 %$$
 
 $head Purpose$$
@@ -59,17 +60,15 @@ $head f.Forward(0, x)$$
 The objects $icode f$$, $italic x$$, and the purpose
 for this operation, are documented in $cref/Forward/$$.
 
-$head flag$$
-If present, the argument $icode flag$$ has one of the following prototypes
+$head pos$$
+If present, the argument $icode pos$$ has one of the following prototypes
 $codei%
-	const AD<%Base%>&               %flag%
-	const VecAD<%Base%>::reference& %flag%
+	const AD<%Base%>&               %pos%
+	const VecAD<%Base%>::reference& %pos%
 %$$
 In this case
 the text and $icode var$$ will be printed if and only if
-$codei%
-	%flag% <= 0.
-%$$.
+$icode pos$$ is not greater than zero and a finite number.
 
 $head before$$
 The argument $icode before$$ has prototype
@@ -132,7 +131,7 @@ $end
 
 namespace CppAD { 
 	template <class Base>
-	void PrintFor(const AD<Base>& flag, 
+	void PrintFor(const AD<Base>& pos, 
 		const char *before, const AD<Base>& var, const char* after)
 	{	CPPAD_ASSERT_NARG_NRES(PriOp, 5, 0);
 
@@ -152,15 +151,15 @@ namespace CppAD {
 		);
 		size_t ind0, ind1, ind2, ind3, ind4;
 	
-		// ind[0] = base 2 representation of the value [Var(flag), Var(var)]
+		// ind[0] = base 2 representation of the value [Var(pos), Var(var)]
 		ind0 = 0;
 
-		// ind[1] = address for flag
-		if( Parameter(flag) )
-			ind1  = tape->Rec_.PutPar(flag.value_);
+		// ind[1] = address for pos
+		if( Parameter(pos) )
+			ind1  = tape->Rec_.PutPar(pos.value_);
 		else
 		{	ind0 += 1;
-			ind1  = flag.taddr_;
+			ind1  = pos.taddr_;
 		}
 
 		// ind[2] = address of before
@@ -192,27 +191,27 @@ namespace CppAD {
 	//
 	template <class Base>
 	void PrintFor(
-		const VecAD_reference<Base>& flag   ,
+		const VecAD_reference<Base>& pos    ,
 		const char                  *before , 
 		const VecAD_reference<Base>& var    ,
 		const char                  *after  )
-	{	PrintFor(flag.ADBase(), before, var.ADBase(), after); }
+	{	PrintFor(pos.ADBase(), before, var.ADBase(), after); }
 	//
 	template <class Base>
 	void PrintFor(
-		const VecAD_reference<Base>& flag   ,
+		const VecAD_reference<Base>& pos    ,
 		const char                  *before , 
 		const AD<Base>&              var    ,
 		const char                  *after  )
-	{	PrintFor(flag.ADBase(), before, var, after); }
+	{	PrintFor(pos.ADBase(), before, var, after); }
 	//
 	template <class Base>
 	void PrintFor(
-		const AD<Base>&              flag   ,
+		const AD<Base>&              pos    ,
 		const char                  *before , 
 		const VecAD_reference<Base>& var    ,
 		const char                  *after  )
-	{	PrintFor(flag, before, var.ADBase(), after); }
+	{	PrintFor(pos, before, var.ADBase(), after); }
 }
 
 # endif

@@ -22,7 +22,7 @@ The C++ source code corresponding to this operation is
 \verbatim
 	f.Forward(0, x)
 	PrintFor(before, var)
-	PrintFor(flag, before, var, after)
+	PrintFor(pos, before, var, after)
 \endverbatim
 The PrintFor call puts the print operation on the tape
 and the print occurs during the zero order forward mode computation.
@@ -42,7 +42,7 @@ is the index of the next variable on the tape
 \param arg
 \a arg[0] & 1
 \n
-If this is zero, \a flag is a parameter. Otherwise it is a variable.
+If this is zero, \a pos is a parameter. Otherwise it is a variable.
 \n
 \a arg[0] & 2
 \n
@@ -51,15 +51,15 @@ If this is zero, \a var is a parameter. Otherwise it is a variable.
 \n
 \a arg[1]
 \n
-If \a flag is a parameter, <code>parameter[arg[1]]</code> is its value.
+If \a pos is a parameter, <code>parameter[arg[1]]</code> is its value.
 Othwise <code>taylor[ arg[1] * nc_taylor + 0 ]</code> is the zero
-order Taylor coefficient for \a flag.
+order Taylor coefficient for \a pos.
 \n
 \n
 \a arg[2]
 \n
 index of the text to be printed before \a var
-(provided that \a flag is less than or equal zero).
+if \a pos is not a positive value.
 \n
 \n
 \a arg[3]
@@ -72,7 +72,7 @@ order Taylor coefficient for \a var.
 \a arg[4]
 \n
 index of the text to be printed after \a var
-(provided that \a flag is less than or equal zero).
+if \a pos is not a positive value.
 
 \param num_text
 is the total number of text characters on the tape
@@ -100,7 +100,7 @@ Contains the value of variables.
 \li NumRes(PriOp)  == 0
 \li text          !=  CPPAD_NULL
 \li arg[1]         <  num_text
-\li if \a flag is a variable, arg[1] < i_z, otherwise arg[1] < num_par
+\li if \a pos is a variable, arg[1] < i_z, otherwise arg[1] < num_par
 \li if \a var is a variable, arg[3] < i_z, otherwise arg[3] < num_par
 */
 template <class Base>
@@ -113,19 +113,19 @@ inline void forward_pri_0(
 	const Base*   parameter   ,
 	size_t        nc_taylor   ,
 	const Base*   taylor      )
-{	Base flag, var;
+{	Base pos, var;
 	const char* before;
 	const char* after;
 	CPPAD_ASSERT_NARG_NRES(PriOp, 5, 0);
 
-	// flag
+	// pos
 	if( arg[0] & 1 )
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) <= i_z );
-		flag = taylor[ arg[1] * nc_taylor + 0 ];
+		pos = taylor[ arg[1] * nc_taylor + 0 ];
 	}
 	else
 	{	CPPAD_ASSERT_UNKNOWN( size_t(arg[1]) < num_par );
-		flag = parameter[ arg[1] ];
+		pos = parameter[ arg[1] ];
 	}
 
 	// before
@@ -146,7 +146,7 @@ inline void forward_pri_0(
 	CPPAD_ASSERT_UNKNOWN( size_t(arg[4]) < num_text );
 	after = text + arg[4];
 
-	if( LessThanOrZero( flag ) )
+	if( ! GreaterThanZero( pos ) )
 		std::cout << before << var << after;
 }
 

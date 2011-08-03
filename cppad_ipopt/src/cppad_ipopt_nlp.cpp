@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -180,7 +180,7 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 	// record r[k] for functions that do not need retaping
 	for(k = 0; k < K_; k++)
 	{	tape_ok_[k] = false;
-		 if( ! retape_[k] )
+		if( ! retape_[k] )
 		{	// Operation sequence does not depend on value 
 			// of u so record it once here in the constructor.
 			fg_info_->index(k, 0, I_, J_);
@@ -413,7 +413,7 @@ bool cppad_ipopt_nlp::eval_f(
 
 	// update tape_ok_ flag
 	for(k = 0; k < K_; k++) 
-	{	if( new_x && retape_[k] )
+	{	if( retape_[k] && (new_x || L_[k] > 1) )
 			tape_ok_[k] = false;
 	}
 
@@ -432,9 +432,7 @@ bool cppad_ipopt_nlp::eval_f(
 					J_              ,
 					r_fun_             // output
 				);
-				if( retape_[k] )
-					tape_ok_[k] = L_[k] <= 1;
-				else	tape_ok_[k] = true;
+				tape_ok_[k] = ! (retape_[k] || L_[k] > 1);
 			}
 			NumberVector u(q_[k]);
 			NumberVector r(p_[k]);
@@ -497,7 +495,7 @@ bool cppad_ipopt_nlp::eval_grad_f(
 
 	// update tape_ok_ flag
 	for(k = 0; k < K_; k++) 
-	{	if( new_x && retape_[k] )
+	{	if( retape_[k] && (new_x || L_[k] > 1) )
 			tape_ok_[k] = false;
 	}
 
@@ -516,9 +514,7 @@ bool cppad_ipopt_nlp::eval_grad_f(
 					J_              ,
 					r_fun_              // output
 				);
-				if( retape_[k] )
-					tape_ok_[k] = L_[k] <= 1;
-				else	tape_ok_[k] = true;
+				tape_ok_[k] = ! (retape_[k] || L_[k] > 1);
 			}
 			NumberVector u(q_[k]);
 			NumberVector w(p_[k]);
@@ -595,7 +591,7 @@ bool cppad_ipopt_nlp::eval_g(
 
 	// update tape_ok_ flag
 	for(k = 0; k < K_; k++) 
-	{	if( new_x && retape_[k] )
+	{	if( retape_[k] && (new_x || L_[k] > 1) )
 			tape_ok_[k] = false;
 	}
 
@@ -614,9 +610,7 @@ bool cppad_ipopt_nlp::eval_g(
 				r_fun_              // output
 			);
 		}
-		if( retape_[k] )
-			tape_ok_[k] = L_[k] <= 1;
-		else	tape_ok_[k] = true;
+		tape_ok_[k] = ! (retape_[k] || L_[k] > 1);
 		NumberVector u(q_[k]);
 		NumberVector r(p_[k]);
 		for(j = 0; j < q_[k]; j++)
@@ -726,7 +720,7 @@ bool cppad_ipopt_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 
 	// update tape_ok_ flag
 	for(k = 0; k < K_; k++) 
-	{	if( new_x && retape_[k] )
+	{	if( retape_[k] && (new_x || L_[k] > 1) )
 			tape_ok_[k] = false;
 	}
 
@@ -745,9 +739,7 @@ bool cppad_ipopt_nlp::eval_jac_g(Index n, const Number* x, bool new_x,
 				r_fun_              // output
 			);
 		}
-		if( retape_[k] )
-			tape_ok_[k] = L_[k] <= 1;
-		else	tape_ok_[k] = true;
+		tape_ok_[k] = ! (retape_[k] || L_[k] > 1);
 		NumberVector u(q_[k]);
 		NumberVector jac_r(p_[k] * q_[k]);
 		for(j = 0; j < q_[k]; j++)
@@ -883,7 +875,7 @@ bool cppad_ipopt_nlp::eval_h(Index n, const Number* x, bool new_x,
 
 	// update tape_ok_ flag
 	for(k = 0; k < K_; k++) 
-	{	if( new_x && retape_[k] )
+	{	if( retape_[k] && (new_x || L_[k] > 1) )
 			tape_ok_[k] = false;
 	}
 
@@ -909,9 +901,7 @@ bool cppad_ipopt_nlp::eval_h(Index n, const Number* x, bool new_x,
 					J_              ,
 					r_fun_              // output
 				);
-				if( retape_[k] )
-					tape_ok_[k] = L_[k] <= 1;
-				else	tape_ok_[k] = true;
+				tape_ok_[k] = ! (retape_[k] || L_[k] > 1);
 			}
 			NumberVector w(p_[k]);
 			NumberVector r_hes(q_[k] * q_[k]);

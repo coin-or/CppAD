@@ -60,6 +60,11 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-03$$
+Change $cref/PrintFor/$$ condition from less than or equal zero 
+to not greater than zero;i.e., not positive.
+This makes $code nan$$ print because it results in false for all comparisons.
+
 $head 08-02$$
 $list number$$
 Change $cref/PrintFor/$$ so it no longer aborts execution when
