@@ -398,7 +398,7 @@ $cref/size_var/seq_property/size_var/$$.
 $head 11-04$$
 Put text written to standard output in the documentation for the
 $cref/get_started.cpp/get_started.cpp/Output/$$ and 
-$cref/print_for.cpp/print_for.cpp/Output/$$ examples.
+$code print_for.cpp$$ examples.
 (Now documentation can be built from a subversion checkout with out
 needing to execute automake.)
 The $code PrintFor.cpp$$ and 

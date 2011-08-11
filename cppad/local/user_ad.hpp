@@ -3,7 +3,7 @@
 # define CPPAD_USER_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -56,7 +56,7 @@ $childtable%
 	cppad/local/ad_valued.hpp%
 	cppad/local/bool_valued.hpp%
 	cppad/local/vec_ad.hpp%
-	omh/base_require.omh
+	cppad/base_require.hpp
 %$$
 
 $end

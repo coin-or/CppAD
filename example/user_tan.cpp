@@ -276,7 +276,7 @@ bool user_tan(void)
 {	bool ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
-	float eps = 10.f * std::numeric_limits<float>::epsilon();
+	float eps = 10.f * CppAD::epsilon<float>();
 
 	// domain space vector
 	size_t n  = 1;

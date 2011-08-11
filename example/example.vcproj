@@ -290,6 +290,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\epsilon.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\eq.cpp"
 				>
 			</File>
@@ -515,6 +519,10 @@
 			</File>
 			<File
 				RelativePath=".\pow_int.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\print_for.cpp"
 				>
 			</File>
 			<File

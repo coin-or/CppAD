@@ -420,7 +420,7 @@ so that $code CppAD::vector<bool>$$ does not pack one bit per value
 $head 10-12$$
 Change the 
 $xref/InstallUnix/Configure/configure/$$ script so that compilation of the
-$xref/get_started.cpp/$$ and $xref/print_for.cpp/$$ examples are optional.
+$xref/get_started.cpp/$$ and $xref/print_for_cout.cpp/$$ examples are optional.
 $pre
 
 $$

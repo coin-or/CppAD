@@ -134,7 +134,8 @@ $$
 The problem with newer C++ compilers requiring more definitions before use
 also required the user to know about $code float$$ and $code double$$ 
 definitions for the standard math 
-functions in the CppAD namespace; see $cref/std_math_unary/$$.
+functions in the CppAD namespace; 
+see $cref/base_std_math/$$.
 $pre
 
 $$

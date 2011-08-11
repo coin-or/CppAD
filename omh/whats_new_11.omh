@@ -12,6 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	https
+	abs_geq
+	CondExpRel
 	num
 	Taylor
 	Tanh
@@ -60,6 +63,79 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 08-11$$
+Modify the CppAD trunk using the
+changes from svn revision 2044 to revision 2056 in the branch
+$codep
+	https://projects.coin-or.org/svn/CppAD/branches/base_require
+$$
+These changes are described below under the headings
+$cref/08-04/whats_new_11/08-11/08-04/$$ through 
+$cref/08-10/whats_new_11/08-11/08-10/$$.
+
+$subhead 08-10$$
+$list number$$
+Add the output stream optional argument $icode s$$ in
+$codei%
+	%f%.Forward(0, %x%, %s%)
+%$$
+See $cref/zero order forward mode/ForwardZero/$$ and $cref PrintFor$$.
+$lnext
+Improve $cref/omp_alloc.cpp/$$ example.
+$lend
+
+
+$subhead 08-09$$
+$list number$$
+$cref/Warning:/base_require/Warning/$$
+Add $cref/epsilon/base_require/epsilon/$$ to the
+$icode Base$$ type requirements.
+$lnext
+Extend $cref/epsilon/$$ to AD types.
+$lend
+
+$subhead 08-08$$
+$list number$$
+Improve the $cref/base_require/$$ documentation for
+$cref/standard math functions/base_std_math/$$.
+$lnext 
+$cref/Warning:/base_require/Warning/$$
+Add $code abs_geq$$ to the $cref/requirements/base_require/$$
+for a user defined $icode Base$$ type. 
+$lnext
+Check that zero order forward mode results are approximately equal,
+instead of exactly equal,
+after an $cref optimize$$ operation.
+This fixes a bug in the optimize correctness check
+(The  order of operations can be changed by $code optimize$$
+and hence the zero order forward mode results may not be exactly the same.)
+$lend
+
+$subhead 08-07$$
+Improve the $cref/base_require/$$ documentation for 
+$cref/EqualOpSeq/base_identical/EqualOpSeq/$$,
+$cref/Identical/base_identical/Identical/$$ 
+$cref/Integer/base_require/Integer/$$, and 
+$cref/Ordered/base_ordered/$$
+operations.
+
+$subhead 08-06$$
+Add the $cref/CondExpRel/base_cond_exp/CondExpRel/$$ paragraph to the 
+base requirements documentation. 
+This was missing and are required for
+$cref/CondExp/$$ to work with $codei%AD<%Base%>%$$ arguments
+and a non-standard $icode Base$$ type.
+
+$subhead 08-04$$
+$list number$$
+$cref/Warning:/base_require/Warning/$$
+Change the $cref/include/base_require/Include Order/$$ file name to
+$cref/base_require.hpp/base_require/$$.
+$lnext
+Use $cref base_float.hpp$$ and $cref base_double.hpp$$ as additional examples
+in the $code/CondExp/base_require/CondExp/$$ $icode Base$$ requirements.
+$lend
+
 $head 08-03$$
 Change $cref/PrintFor/$$ condition from less than or equal zero 
 to not greater than zero;i.e., not positive.
@@ -71,7 +147,7 @@ Change $cref/PrintFor/$$ so it no longer aborts execution when
 there is no operation sequence being recording; see
 $cref/start recording/Independent/Start Recording/$$.
 $lnext
-Improve the $cref print_for.cpp$$ example.
+Improve the $cref print_for_cout.cpp$$ example.
 $lend
 
 $head 07-31$$

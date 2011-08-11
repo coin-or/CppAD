@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -41,7 +41,7 @@ typedef CPPAD_TEST_VECTOR<ADComplex>   ADVector;
 
 // ----------------------------------------------------------------------------
 
-bool HesMinorDet()
+bool HesMinorDet(void)
 {	bool ok = true;
 
 	using namespace CppAD;

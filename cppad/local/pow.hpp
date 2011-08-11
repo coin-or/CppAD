@@ -107,13 +107,6 @@ $end
 //  BEGIN CppAD namespace
 namespace CppAD {
  
-// copy of standard functions in CppAD namespace
-inline float pow(const float &x, const float &y)
-{ return std::pow(x, y); }
-
-inline double pow(const double &x, const double &y)
-{ return std::pow(x, y); }
-
 // case where x and y are AD<Base> -----------------------------------------
 template <class Base> AD<Base> 
 pow(const AD<Base> &x, const AD<Base> &y)

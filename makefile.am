@@ -104,11 +104,11 @@ nobase_myinclude_HEADERS =  \
 	cppad/SpeedTest.h \
 	cppad/TrackNewDel.h \
 	\
+	cppad/base_require.hpp \
 	cppad/check_numeric_type.hpp \
 	cppad/check_simple_vector.hpp \
 	cppad/configure.hpp \
 	cppad/cppad.hpp \
-	cppad/declare.hpp \
 	cppad/elapsed_seconds.hpp \
 	cppad/error_handler.hpp \
 	cppad/local/abort_recording.hpp \
@@ -129,6 +129,10 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/atan2.hpp \
 	cppad/local/atan_op.hpp \
 	cppad/local/base_complex.hpp \
+	cppad/local/base_cond_exp.hpp \
+	cppad/local/base_double.hpp \
+	cppad/local/base_float.hpp \
+	cppad/local/base_std_math.hpp \
 	cppad/local/bender_quad.hpp \
 	cppad/local/bool_fun.hpp \
 	cppad/local/bool_valued.hpp \
@@ -153,6 +157,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/local/div.hpp \
 	cppad/local/div_op.hpp \
 	cppad/local/drivers.hpp \
+	cppad/local/epsilon.hpp \
 	cppad/local/equal_op_seq.hpp \
 	cppad/local/erf.hpp \
 	cppad/local/exp_op.hpp \
@@ -260,7 +265,6 @@ nobase_myinclude_HEADERS =  \
 	cppad/speed/sparse_evaluate.hpp \
 	cppad/speed_test.hpp \
 	cppad/speed/uniform_01.hpp \
-	cppad/std_math_unary.hpp \
 	cppad/track_new_del.hpp \
 	cppad/vector.hpp
 # End nobase_myinclude_HEADERS (check_makefile.sh uses this comment) 

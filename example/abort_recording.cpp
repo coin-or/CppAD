@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -36,7 +36,7 @@ $end
 
 bool abort_recording(void)
 {	bool ok = true;
-	double eps = 10. * std::numeric_limits<double>::epsilon();
+	double eps = 10. * CppAD::epsilon<double>();
 
 	using CppAD::AD;
 

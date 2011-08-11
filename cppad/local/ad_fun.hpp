@@ -258,7 +258,7 @@ public:
 
 	/// forward mode sweep
 	template <typename VectorBase>
-	VectorBase Forward(size_t p, const VectorBase &u);
+	VectorBase Forward(size_t p, const VectorBase& x, std::ostream& s);
 
 	/// reverse mode sweep
 	template <typename VectorBase>

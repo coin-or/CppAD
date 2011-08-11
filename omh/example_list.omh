@@ -108,6 +108,7 @@ $rref det_by_minor.cpp$$
 $rref det_of_minor.cpp$$
 $rref Div.cpp$$
 $rref DivEq.cpp$$
+$rref epsilon.cpp$$
 $rref Eq.cpp$$
 $rref EqualOpSeq.cpp$$
 $rref Erf.cpp$$
@@ -179,7 +180,8 @@ $rref ParVar.cpp$$
 $rref Poly.cpp$$
 $rref Pow.cpp$$
 $rref pow_int.cpp$$
-$rref print_for.cpp$$
+$rref print_for_cout.cpp$$
+$rref print_for_string.cpp$$
 $rref RevOne.cpp$$
 $rref RevSparseHes.cpp$$
 $rref RevSparseJac.cpp$$

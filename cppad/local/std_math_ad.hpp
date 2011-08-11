@@ -247,8 +247,6 @@ $end
 -------------------------------------------------------------------------------
 */
 
-# include <cppad/std_math_unary.hpp>
-
 # define CPPAD_STANDARD_MATH_UNARY_AD(Name, Op)                   \
     template <class Base>                                         \
     inline AD<Base> Name(const AD<Base> &x)                       \

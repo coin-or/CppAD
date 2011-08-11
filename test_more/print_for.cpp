@@ -10,57 +10,17 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin print_for_cout.cpp$$
-$spell
-	const
-	var
-	av
-	num
-	inuse
-	omp_alloc
-	bool
-	makefile
-	CppAD
-	cppad.hpp
-	std::cout
-	endl
-	namespace
-	newline
-	\nv
-	VecAD
-$$
-
-$section Printing During Forward Mode: Example and Test$$
-
-$index forward, mode print$$
-$index example, print forward mode$$
-$index print, example forward mode$$
-
-$head Running$$
-To build this program and run its correctness test,
-execute the following commands starting in the
-$cref/work directory/InstallUnix/Download/Work Directory/$$:
-$codei%
-	cd print_for
-	make test.sh
-	./test.sh
-%$$
-
-$head Source Code$$
-$codep */
+// modified version of test that used to be in ../print_for/print_for.cpp
 # include <cppad/cppad.hpp>
 
 namespace { 
-	using std::cout;
 	using std::endl;
 	using CppAD::AD;
 
 	// use of PrintFor to check for invalid function arguments
 	AD<double> check_log(const AD<double>& y)
 	{	// check during recording
-		if( y <= 0. )
-			cout << "check_log: y = " << y << " is <= 0" << endl;
+		CPPAD_ASSERT_UNKNOWN( y > 0. );
 
 		// check during zero order forward calculation
 		PrintFor(y, "check_log: y == ", y , " which is <= 0\n");
@@ -69,8 +29,12 @@ namespace {
 	} 
 }
 
-void print_for(void)
-{	using CppAD::PrintFor;
+bool print_for(void)
+{	bool ok = true;
+	using CppAD::PrintFor;
+
+	std::stringstream stream_out;   // stream that output is written to
+	std::string       string_check; // what we expect the output to be
 
 	// independent variable vector
 	size_t n = 1;
@@ -83,20 +47,24 @@ void print_for(void)
 	AD<double> Zero(0);
 	av[Zero] = 0.;
 	PrintFor("v[0] = ", av[Zero]); 
+	string_check += "v[0] = 0"; // v[0] == 0 during Forward(0, x)
 
 	// Print a newline to separate this from previous output,
 	// then print an AD<double> object that is a variable.
 	PrintFor("\nv[0] + x[0] = ", av[0] + ax[0]); 
+	string_check += "\nv[0] + x[0] = 2"; // x[0] == 2 during Forward(0, x) 
 
 	// A conditional print that will not generate output when x[0] = 2.
 	PrintFor(ax[0], "\n  2. + x[0] = ",   2. + ax[0], "\n");
 
 	// A conditional print that will generate output when x[0] = 2.
 	PrintFor(ax[0] - 2., "\n  3. + x[0] = ",   3. + ax[0], "\n");
+	string_check += "\n  3. + x[0] = 5\n";
 
 	// A log evaluations that will result in an error message when x[0] = 2.
 	AD<double> var     = 2. - ax[0];
 	AD<double> log_var = check_log(var);
+	string_check += "check_log: y == 0 which is <= 0\n";
 
 	// dependent variable vector 
 	size_t m = 2;
@@ -109,40 +77,9 @@ void print_for(void)
 	// zero order forward with x[0] = 2 
 	CPPAD_TEST_VECTOR<double> x(n);
 	x[0] = 2.;
+	f.Forward(0, x, stream_out);	
 
-	cout << "v[0] = 0" << endl; 
-	cout << "v[0] + x[0] = 2" << endl; 
-	cout << "  3. + x[0] = 5" << endl; 
-	cout << "check_log: y == 0 which is <= 0" << endl;
-	// ./makefile.am expects "Test passes" at beginning of next output line
-	cout << "Test passes if four lines above repeat below:" << endl;
-	f.Forward(0, x);	
-
-	return;
+	std::string string_out = stream_out.str();
+	ok &= string_out == string_check; 
+	return ok;
 }
-int main(void)
-{	bool ok = true;
-	print_for();
-
-	size_t thread;
-	for(thread = 0; thread < 2; thread++)
-	{	ok &= CppAD::omp_alloc::inuse(thread) == 0;
-		ok &= CppAD::omp_alloc::available(thread) == 0;
-	}
-	if( ! ok )
-		return 1;
-	return 0;
-}
-/* $$
-
-$head Output$$
-Executing the program above generates the following output:
-$codep
-	v[0] = 0
-	v[0] + x[0] = 2
-	Test passes if two lines above repeat below:
-	v[0] = 0
-	v[0] + x[0] = 2
-$$
-$end
-*/

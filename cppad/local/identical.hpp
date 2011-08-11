@@ -21,30 +21,6 @@ CPPAD_BEGIN_NAMESPACE
 Check if certain properties is true for any possible AD tape play back.
 */
 
-// Parameter ==============================================================
-/*!
-return true, used by <tt>IdenticalPar(AD<float>)</tt>.
-
-\param x
-not used.
-
-\return
-returns true.
-*/
-inline bool IdenticalPar(const float &x)
-{	return true; }
-// ---------------------------------------------------------------------------
-/*!
-return true, used by <tt>IdenticalPar(AD<double>)</tt>.
-
-\param x
-not used.
-
-\return
-returns true.
-*/
-inline bool IdenticalPar(const double &x)
-{	return true; }
 // ---------------------------------------------------------------------------
 /*!
 Determine if an AD<Base> object is a parameter, and could never have 
@@ -69,30 +45,6 @@ CPPAD_INLINE bool IdenticalPar(const AD<Base> &x)
 {	return Parameter(x) && IdenticalPar(x.value_); }
 // Zero ==============================================================
 /*!
-Check if a float is equal to zero, used by <tt>IdenticalZero(AD<float>)</tt>.
-
-\param x
-value we are checking.
-
-\return
-returns true iff the argument equals zero.
-*/
-inline bool IdenticalZero(const float &x)
-{	return (x == 0.); }
-// --------------------------------------------------------------------------
-/*!
-Check if a double is equal to zero, used by <tt>IdenticalZero(AD<double>)</tt>.
-
-\param x
-value we are checking.
-
-\return
-returns true iff the argument equals zero.
-*/
-inline bool IdenticalZero(const double &x)
-{	return (x == 0.); }
-// --------------------------------------------------------------------------
-/*!
 Determine if an AD<Base> is equal to zero,
 and must be equal zero during any tape playback.
 
@@ -108,30 +60,6 @@ CPPAD_INLINE bool IdenticalZero(const AD<Base> &x)
 {	return Parameter(x) && IdenticalZero(x.value_); }
 // One ==============================================================
 /*!
-Check if a float is equal to one, used by <tt>IdenticalOne(AD<float>)</tt>.
-
-\param x
-value we are checking.
-
-\return
-returns true iff the argument equals one.
-*/
-inline bool IdenticalOne(const float &x)
-{	return (x == 1.); }
-// --------------------------------------------------------------------------
-/*!
-Check if a double is equal to one, used by <tt>IdenticalOne(AD<double>)</tt>.
-
-\param x
-value we are checking.
-
-\return
-returns true iff the argument equals one.
-*/
-inline bool IdenticalOne(const double &x)
-{	return (x == 1.); }
-// --------------------------------------------------------------------------
-/*!
 Determine if an AD<Base> is equal to one,
 and must be equal one during any tape playback.
 
@@ -146,38 +74,6 @@ template <class Base>
 CPPAD_INLINE bool IdenticalOne(const AD<Base> &x)
 {	return Parameter(x) && IdenticalOne(x.value_); }
 // Equal ===================================================================
-/*!
-Check if two floats are equal, 
-used by <tt>IdenticalEqualPar(AD<float>, AD<float>)</tt>.
-
-\param x
-first float we are checking.
-
-\param y
-second float we are checking.
-
-\return
-returns true iff the arugments are equal.
-*/
-inline bool IdenticalEqualPar(const float &x, const float &y)
-{	return (x == y); }
-// --------------------------------------------------------------------------
-/*!
-Check if two doubles are equal, 
-used by <tt>IdenticalEqualPar(AD<double>, AD<double>)</tt>.
-
-\param x
-first double we are checking.
-
-\param y
-second double we are checking.
-
-\return
-returns true iff the arugments are equal.
-*/
-inline bool IdenticalEqualPar(const double &x, const double &y)
-{	return (x == y); }
-// --------------------------------------------------------------------------
 /*!
 Determine if two AD<Base> objects are equal, 
 and must be equal during any tape playback.

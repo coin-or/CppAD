@@ -14,6 +14,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
+	eps
+	std
+	abs_geq
+	fabs
 	cppad.hpp
 	undef
 	Lt
@@ -70,33 +74,15 @@ The file $cref/ode_taylor_adolc.cpp/$$ contains a more realistic
 
 
 $head Include File$$
-This file is included before $code <cppad/cppad.hpp>$$
-so it is necessary to define the error handler
-in addition to including
-$cref/declare.hpp/base_require/declare.hpp/$$
+This file $code base_adolc.hpp$$ requires $code adouble$$ to be defined.
+In addition it is included before $code <cppad/cppad.hpp>$$,
+but it is to include parts of CppAD that are used by this file.
+This is done with the following include command:
 $codep */
-# include <cppad/declare.hpp>
-# include <cppad/error_handler.hpp>
+# include <adolc/adouble.h>
+# include <cppad/base_require.hpp>
 
 /* $$
-
-$head Standard Math Functions Defined by Adolc Package$$
-The following $cref/required/base_require/$$ 
-functions are defined by the Adolc package:
-$pre
-$$
-$code acos$$,
-$code asin$$,
-$code atan$$,
-$code cos$$,
-$code cosh$$,
-$code exp$$,
-$code log$$,
-$code pow$$,
-$code sin$$,
-$code sinh$$,
-$code sqrt$$,
-$code tan$$.
 
 $head CondExpOp$$
 The type $code adouble$$ supports a conditional assignment function
@@ -191,6 +177,23 @@ namespace CppAD {
 }
 /* $$
 
+$head Integer$$
+$codep */
+	inline int Integer(const adouble &x)
+	{    return static_cast<int>( x.getValue() ); }
+/*$$
+
+$head epsilon$$
+$codep */
+namespace CppAD {
+	template <>
+	inline adouble epsilon<adouble>(void)
+	{	double eps = std::numeric_limits<double>::epsilon(); 
+		return adouble( eps );
+	}
+}
+/* $$
+
 $head Ordered$$
 $codep */
 	inline bool GreaterThanZero(const adouble &x)
@@ -201,13 +204,33 @@ $codep */
 	{    return (x < 0); }
 	inline bool LessThanOrZero(const adouble &x)
 	{    return (x <= 0); }
+	inline bool abs_geq(const adouble& x, const adouble& y)
+	{	return fabs(x) >= fabs(y); }
 /* $$
 
-$head Integer$$
-$codep */
-	inline int Integer(const adouble &x)
-	{    return static_cast<int>( x.getValue() ); }
-/* $$
+$head Unary Standard Math$$
+The following $cref/required/base_require/$$ functions 
+are defined by the Adolc package for the $code adouble$$ base case:
+$pre
+$$
+$code abs$$,
+$code acos$$,
+$code asin$$,
+$code atan$$,
+$code cos$$,
+$code cosh$$,
+$code exp$$,
+$code log$$,
+$code sin$$,
+$code sinh$$,
+$code sqrt$$,
+$code tan$$.
+
+$head pow$$
+This $cref/required/base_require/$$ function 
+is defined by the Adolc package for the $code adouble$$ base case.
+
 $end
 */
 # endif
+

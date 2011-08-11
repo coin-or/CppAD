@@ -3,7 +3,7 @@
 # define CPPAD_INTEGER_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -101,12 +101,6 @@ $end
 
 
 namespace CppAD {
-
-	inline int Integer(const float &x)
-	{	return static_cast<int>(x); }
-
-	inline int Integer(const double &x)
-	{	return static_cast<int>(x); }
 
 	template <class Base>
 	CPPAD_INLINE int Integer(const AD<Base> &x)

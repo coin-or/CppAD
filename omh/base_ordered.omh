@@ -1,0 +1,89 @@
+// $Id$$
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+/*
+$begin base_ordered$$
+$spell
+	abs_geq
+	const
+	bool
+	namespace
+	CppAD
+	inline
+$$
+
+$section Base Type Requirements for Ordered Comparisons$$
+
+$head Purpose$$
+The following operations 
+(in the CppAD namespace) are required to use the type
+$codei%AD<%Base%>%$$:
+
+$table
+$bold Syntax$$ $cnext $bold Result$$
+$rnext
+$icode%b% = GreaterThanZero(%x%)%$$   $pre  $$
+	$cnext $latex x > 0$$
+$rnext
+$icode%b% = GreaterThanOrZero(%x%)%$$ $pre  $$
+	$cnext $latex x \geq 0$$
+$rnext
+$icode%b% = LessThanZero(%x%)%$$      $pre  $$
+	$cnext $latex x < 0$$
+$rnext
+$icode%b% = LessThanOrZero(%x%)%$$    $pre  $$
+	$cnext $latex x \leq 0$$
+$rnext
+$icode%b% = abs_geq(%x%, %y%)%$$      $pre  $$
+	$cnext $latex |x| \geq |y|$$.
+$tend
+where the arguments and return value have the prototypes
+$codei%
+	const %Base%& %x%
+	const %Base%& %y%
+	bool  %%      %b%
+%$$
+
+$head Ordered Type$$
+If the type $icode Base$$ supports ordered operations,
+these functions should have their corresponding definitions.
+For example,
+$codei%
+namespace CppAD {
+	inline bool GreaterThanZero(const %Base% &x)
+	{	return (x > 0);
+	}
+}
+%$$
+The other functions would replace $code >$$ by the corresponding operator.
+For example, see
+$cref/float Ordered/base_float.hpp/Ordered/$$, and
+$cref/double Ordered/base_double.hpp/Ordered/$$.
+
+
+$head Not Ordered$$
+If the type $icode Base$$ does not support ordering,
+one might (but need not) define $code GreaterThanZero$$ as follows:
+$codei%
+namespace CppAD {
+	inline bool GreaterThanZero(const %Base% &x)
+	{	// attempt to use GreaterThanZero with a %Base% argument
+		assert(0);
+		return x;
+	}
+}
+%$$
+The other functions would have the corresponding definition.
+For example, see
+$cref/complex Ordered/base_complex.hpp/Ordered/$$.
+
+$end
+*/

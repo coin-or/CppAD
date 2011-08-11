@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -126,7 +126,7 @@ bool runge_45_2(void)
 	double tf    = Value(ad_tf);
 	double term  = 1;
 	double sum   = 0;
-	double eps   = 10. * std::numeric_limits<double>::epsilon();
+	double eps   = 10. * CppAD::epsilon<double>();
 	for(j = 0; j < n; j++)
 	{	sum += term;
 		ok &= NearEqual(xf[j], b[0] * sum, eps, eps);

@@ -275,7 +275,7 @@ fi
 if [ "$1" = "dist" ] 
 then
 	# ----------------------------------------------------------------------
-	# Things to do in the distribution directory
+	# Things to do in the original source directory
 	# ----------------------------------------------------------------------
 	echo "Only include the *.xml version of the documentation in distribution"
 	if ! grep < doc.omh > /dev/null \
@@ -300,6 +300,23 @@ then
 	#
 	echo "mv doc.omh.save doc.omh"
 	      mv doc.omh.save doc.omh
+	#
+	# Run automated checking of file names in original source directory
+	list="
+		check_example.sh
+		check_if_0.sh
+		check_include_def.sh
+		check_include_file.sh
+		check_include_omh.sh
+		check_makefile.sh
+		check_op_code.sh
+		check_svn_id.sh
+	"
+	for check in $list 
+	do
+		echo "bin/$check"
+		      bin/$check
+	done
 	# ----------------------------------------------------------------------
 	# Things to do in the work directory
 	# ----------------------------------------------------------------------
@@ -449,26 +466,6 @@ then
 	# start log for this test
 	echo "date > $log_file"
 	      date > $log_dir/$log_file
-	#
-	# Run automated checking of file names in original source directory
-	#
-	list="
-		check_example.sh
-		check_if_0.sh
-		check_include_def.sh
-		check_include_file.sh
-		check_include_omh.sh
-		check_makefile.sh
-		check_op_code.sh
-		check_svn_id.sh
-	"
-	for check in $list 
-	do
-		echo "bin/$check >> $log_file"
-		      bin/$check >> $log_dir/$log_file
-	done
-	# add a new line after last file check
-	echo ""             >> $log_dir/$log_file
 	# ----------------------------------------------------------------------
 	# Things to do in the work directory
 	# ----------------------------------------------------------------------

@@ -1081,6 +1081,35 @@ namespace {
 
 		return ok;
 	}
+	bool not_identically_equal(void)
+	{	bool ok = true;
+		using CppAD::AD;
+
+		// independent variable vector
+		size_t n = 5;
+		CPPAD_TEST_VECTOR< AD<double> > ax(n);
+		size_t j;
+		for(j = 0; j < n; j++)
+			ax[j] = 1. / 3.;
+		CppAD::Independent(ax);
+	
+		// dependent variable vector
+		size_t m = 1;
+		CPPAD_TEST_VECTOR< AD<double> > ay(m);
+		ay[0]       = 0.;
+		for(j = 0; j < n; j++)
+		{	if( j % 2 == 0 )
+				ay[0] += ax[j];
+			else	ay[0] -= ax[j];
+		}
+		CppAD::ADFun<double> f(ax, ay);
+	
+		// Used to fail assert in optimize that forward mode results
+		// are identically equal
+		f.optimize();
+	
+		return ok;
+	}
 }
 
 bool optimize(void)
@@ -1105,6 +1134,8 @@ bool optimize(void)
 	ok     &= cond_exp_depend();
 	// check user_atomic functions
 	ok     &= user_atomic_test();
+	// case where results are not identically equal
+	ok     &= not_identically_equal();
 
 	CppAD::user_atomic<double>::clear();
 	return ok;

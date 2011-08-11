@@ -3,7 +3,7 @@
 # define CPPAD_LU_SOLVE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -248,7 +248,7 @@ $end
 # include <vector>
 
 // link exp for float and double cases
-# include <cppad/std_math_unary.hpp>
+# include <cppad/base_require.hpp>
 
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/check_simple_vector.hpp>

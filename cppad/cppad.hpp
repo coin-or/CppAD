@@ -19,9 +19,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 \brief contains all the variables and functions defined by the CppAD package.
 */
 
-# include <cppad/declare.hpp>            // forward declarations need by user
-// ---------------------------------------------------------------------------
-# include <cppad/local/base_complex.hpp> // allow form complex Base types
+# include <cppad/base_require.hpp> // all base type requirements
 // ---------------------------------------------------------------------------
 // CppAD general purpose library routines (can be included separately)
 

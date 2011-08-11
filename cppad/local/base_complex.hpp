@@ -11,10 +11,16 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
+# include <limits>
+# include <complex>
+
 /*
 $begin base_complex.hpp$$
 $spell
-	omp_alloc
+	eps
+	abs_geq
+	Rel
+	Lt Le Eq Ge Gt
 	imag
 	gcc
 	isnan
@@ -58,38 +64,16 @@ $head See Also$$
 The file $cref/not_complex_ad.cpp/$$ contains an example using
 complex arithmetic where the function is not complex differentiable.
 
-$head Include File$$
+$head Include Order$$
 This file is included before $code <cppad/cppad.hpp>$$
 so it is necessary to define the error handler
 in addition to including
-$cref/declare.hpp/base_require/declare.hpp/$$
+$cref/base_require.hpp/base_require/Include Order/$$
 $codep */
 # include <limits>
 # include <complex>
-# include <cppad/declare.hpp>
-# include <cppad/error_handler.hpp>
-# include <cppad/omp_alloc.hpp>
+# include <cppad/base_require.hpp>
 # include <cppad/local/cppad_assert.hpp>
-/* $$
-
-$head isnan$$
-The gcc 4.1.1 complier defines the function
-$codei%
-	int std::complex<double>::isnan( std::complex<double> %z% )
-%$$
-(which is not specified in the C++ 1998 standard ISO/IEC 14882).
-This causes an ambiguity between the function above and the CppAD
-$cref/isnan/nan/$$ template function.
-We avoid this ambiguity by defining a non-template version of
-this function in the CppAD namespace.
-$codep */
-namespace CppAD {
-	inline bool isnan(const std::complex<double>& z)
-	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;	
-		static const double nan = std::numeric_limits<double>::quiet_NaN();
-		return (z != z) | (z.real() == nan) | (z.imag() == nan);
-	}
-}
 
 /* $$
 
@@ -116,6 +100,18 @@ namespace CppAD {
 	}
 }
 /* $$
+
+$head CondExpRel$$
+The following macro invocation
+$codep */
+namespace CppAD {
+	CPPAD_COND_EXP_REL( std::complex<double> )
+}
+/* $$
+used $code CondExpOp$$ above to
+define $codei%CondExp%Rel%$$ for $code std::complex<double>$$ arguments
+and $icode%Rel%$$ equal to
+$code Lt$$, $code Le$$, $code Eq$$, $code Ge$$, and $code Gt$$.
 
 $head EqualOpSeq$$
 Complex numbers do not carry operation sequence information. 
@@ -148,41 +144,27 @@ namespace CppAD {
 /* $$
 
 $head Ordered$$
-
+Complex types do not support comparison operators, 
 $codep */
+# undef  CPPAD_USER_MACRO
+# define CPPAD_USER_MACRO(Fun)                                     \
+inline bool Fun(const std::complex<double>& x)                     \
+{      CppAD::ErrorHandler::Call(                                  \
+               true     , __LINE__ , __FILE__ ,                    \
+               #Fun"(x)",                                          \
+               "Error: cannot use " #Fun " with x complex<double> " \
+       );                                                          \
+       return false;                                               \
+}
 namespace CppAD {
-	inline bool GreaterThanZero(const std::complex<double> &x)
-	{	CppAD::ErrorHandler::Call(
-			true     , __LINE__ , __FILE__ ,
-			"GreaterThanZero(x)",
-			"Error: cannot use GreaterThanZero with complex"
-		);
-		return false;
-	}
-	inline bool GreaterThanOrZero(const std::complex<double> &x)
-	{	CppAD::ErrorHandler::Call(
-			true     , __LINE__ , __FILE__ ,
-			"GreaterThanZero(x)",
-			"Error: cannot use GreaterThanZero with complex"
-		);
-		return false;
-	}
-	inline bool LessThanZero(const std::complex<double> &x)
-	{	CppAD::ErrorHandler::Call(
-			true     , __LINE__ , __FILE__ ,
-			"LessThanZero(x)",
-			"Error: cannot use LessThanZero with complex"
-		);
-		return false;
-	}
-	inline bool LessThanOrZero(const std::complex<double> &x)
-	{	CppAD::ErrorHandler::Call(
-			true     , __LINE__ , __FILE__ ,
-			"LessThanZero(x)",
-			"Error: cannot use LessThanZero with complex"
-		);
-		return false;
-	}
+	CPPAD_USER_MACRO(LessThanZero)
+	CPPAD_USER_MACRO(LessThanOrZero)
+	CPPAD_USER_MACRO(GreaterThanOrZero)
+	CPPAD_USER_MACRO(GreaterThanZero)
+	inline bool abs_geq(
+		const std::complex<double>& x , 
+		const std::complex<double>& y )
+	{	return std::abs(x) >= std::abs(y); }
 }
 /* $$
 
@@ -195,82 +177,112 @@ namespace CppAD {
 	inline int Integer(const std::complex<double> &x)
 	{	return static_cast<int>( x.real() ); }
 }
-/* $$
+/*$$
 
-$head Standard Functions$$
-
-$subhead Valid Complex Functions$$
-The following standard math functions,
-that are required by $cref/base_require/$$,
-are defined by 
-$code std::complex$$:
-$code cos$$,
-$code cosh$$,
-$code exp$$,
-$code log$$,
-$code pow$$,
-$code sin$$,
-$code sinh$$,
-$code sqrt$$.
+$head epsilon$$
+The standard double complex machine epsilon in a double,
+hence we must convert it to a complex to meet the prototype
+for the CppAD machine epsilon function.
 $codep */
-# define CPPAD_USER_MACRO(function)                                   \
-inline std::complex<double> function(const std::complex<double> &x)   \
-{	return std::function(x); }
-
 namespace CppAD {
-	CPPAD_USER_MACRO(cos)
-	CPPAD_USER_MACRO(cosh)
-	CPPAD_USER_MACRO(exp)
-	CPPAD_USER_MACRO(log)
-	inline std::complex<double> pow(
-		const std::complex<double> &x , 
-		const std::complex<double> &y )
-	{	return std::pow(x, y); }
-	CPPAD_USER_MACRO(sin)
-	CPPAD_USER_MACRO(sinh)
-	CPPAD_USER_MACRO(sqrt)
+	template <>
+	inline std::complex<double> epsilon< std::complex<double> >(void)
+	{	double eps = std::numeric_limits<double>::epsilon();
+		return std::complex<double>(eps, 0.);
+	}
 }
 /* $$
 
-$subhead Invalid Complex Functions$$
-The other standard math functions,
-(and $code abs$$) required by $cref/base_require/$$
-are not defined for complex types
-(see $cref/abs/abs/Complex Types/$$).
-Hence we make it an error to use them.
-(Note that the standard math functions are not defined in the CppAD namespace.)
+$head isnan$$
+The gcc 4.1.1 complier defines the function
+$codei%
+	int std::complex<double>::isnan( std::complex<double> %z% )
+%$$
+(which is not specified in the C++ 1998 standard ISO/IEC 14882).
+This causes an ambiguity between the function above and the CppAD
+$cref/isnan/nan/$$ template function.
+We avoid this ambiguity by defining a non-template version of
+this function in the CppAD namespace.
+$codep */
+namespace CppAD {
+	inline bool isnan(const std::complex<double>& z)
+	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;	
+		static const double nan = std::numeric_limits<double>::quiet_NaN();
+		return (z != z) | (z.real() == nan) | (z.imag() == nan);
+	}
+}
+/* $$
+
+$head Unary Standard Math$$
+The following macro invocations define unary standard math functions
+required to use $code AD< std::complex<double> >$$
+and that are valid with complex arguments:
+$codep */
+namespace CppAD {
+	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, cos)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, cosh)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, exp)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, log)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, sin)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, sinh)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, sqrt)
+}
+/* $$
+The following macro definition and invocations 
+define unary standard math functions
+required to use $code AD< std::complex<double> >$$
+and that are invalid with complex arguments:
 $codep */
 # undef  CPPAD_USER_MACRO
-# define CPPAD_USER_MACRO(function)                                          \
-inline std::complex<double> function(const std::complex<double> &x)          \
-{      CppAD::ErrorHandler::Call(                                            \
-               true     , __LINE__ , __FILE__ ,                              \
-               "std::complex<double>",                                       \
-               "Error: cannot use " #function " with complex<double> "       \
-       );                                                                    \
-       return std::complex<double>(0);                                       \
+# define CPPAD_USER_MACRO(Fun)                                     \
+inline std::complex<double> Fun(const std::complex<double>& x)     \
+{      CppAD::ErrorHandler::Call(                                  \
+               true     , __LINE__ , __FILE__ ,                    \
+               #Fun"(x)",                                          \
+               "Error: cannot use " #Fun " with x complex<double> " \
+       );                                                          \
+       return std::complex<double>(0);                             \
 }
-
 namespace CppAD {
+	CPPAD_USER_MACRO(abs)
 	CPPAD_USER_MACRO(acos)
 	CPPAD_USER_MACRO(asin)
 	CPPAD_USER_MACRO(atan)
 }
 /* $$
+
+$head pow $$
+The following defines a $code CppAD::pow$$ function that
+is required to use $code AD< std::complex<double> >$$:
+$codep */
+namespace CppAD {
+	inline std::complex<double> pow(
+		const std::complex<double> &x , 
+		const std::complex<double> &y )
+	{	return std::pow(x, y); }
+}
+/* $$
 $end
 */
-# define CPPAD_VALID_COMPLEX_CASE(function)                           \
-inline std::complex<float> function(const std::complex<float> &x)     \
-{	return std::function(x); }
-
-# define CPPAD_INVALID_COMPLEX_CASE(function)                                 \
-inline std::complex<float> function(const std::complex<float> &x)             \
-{	CppAD::ErrorHandler::Call(                                            \
-		true     , __LINE__ , __FILE__ ,                              \
-		"std::complex<float>",                                        \
-		"Error: cannot use " #function " with a complex type"         \
-	);                                                                    \
-	return std::complex<float>(0);                                        \
+# undef  CPPAD_USER_MACRO_ONE
+# define CPPAD_USER_MACRO_ONE(Fun)                                 \
+inline bool Fun(const std::complex<float>& x)                      \
+{      CppAD::ErrorHandler::Call(                                  \
+               true     , __LINE__ , __FILE__ ,                    \
+               #Fun"(x)",                                          \
+               "Error: cannot use " #Fun " with x complex<float> " \
+       );                                                          \
+       return false;                                               \
+}
+# undef  CPPAD_USER_MACRO_TWO
+# define CPPAD_USER_MACRO_TWO(Fun)                                 \
+inline std::complex<float> Fun(const std::complex<float>& x)       \
+{      CppAD::ErrorHandler::Call(                                  \
+               true     , __LINE__ , __FILE__ ,                    \
+               #Fun"(x)",                                          \
+               "Error: cannot use " #Fun " with x complex<float> " \
+       );                                                          \
+       return std::complex<float>(0);                              \
 }
 namespace CppAD {
 	// CondExpOp ------------------------------------------------------
@@ -287,6 +299,8 @@ namespace CppAD {
 		);
 		return std::complex<float>(0);
 	}
+	// CondExpRel --------------------------------------------------------
+	CPPAD_COND_EXP_REL( std::complex<float> )
 	// EqualOpSeq -----------------------------------------------------
 	inline bool EqualOpSeq(
 		const std::complex<float> &x , 
@@ -304,64 +318,47 @@ namespace CppAD {
 		const std::complex<float> &x, const std::complex<float> &y)
 	{	return (x == y); }
 	// Ordered --------------------------------------------------------
-	inline bool GreaterThanZero(const std::complex<float> &x)
-	{	CppAD::ErrorHandler::Call(
-			true     , __LINE__ , __FILE__ ,
-			"GreaterThanZero(x)",
-			"Error: cannot use GreaterThanZero with complex"
-		);
-		return false;
-	}
-	inline bool GreaterThanOrZero(const std::complex<float> &x)
-	{	CppAD::ErrorHandler::Call(
-			true     , __LINE__ , __FILE__ ,
-			"GreaterThanOrZero(x)",
-			"Error: cannot use GreaterThanOrZero with complex"
-		);
-		return false;
-	}
-	inline bool LessThanZero(const std::complex<float> &x)
-	{	CppAD::ErrorHandler::Call(
-			true     , __LINE__ , __FILE__ ,
-			"LessThanZero(x)",
-			"Error: cannot use LessThanZero with complex"
-		);
-		return false;
-	}
-	inline bool LessThanOrZero(const std::complex<float> &x)
-	{	CppAD::ErrorHandler::Call(
-			true     , __LINE__ , __FILE__ ,
-			"LessThanOrZero(x)",
-			"Error: cannot use LessThanOrZero with complex"
-		);
-		return false;
-	}
+	CPPAD_USER_MACRO_ONE(LessThanZero)
+	CPPAD_USER_MACRO_ONE(LessThanOrZero)
+	CPPAD_USER_MACRO_ONE(GreaterThanOrZero)
+	CPPAD_USER_MACRO_ONE(GreaterThanZero)
+	inline bool abs_geq(
+		const std::complex<float>& x , 
+		const std::complex<float>& y )
+	{	return std::abs(x) >= std::abs(y); }
 	// Integer ------------------------------------------------------
 	inline int Integer(const std::complex<float> &x)
 	{	return static_cast<int>( x.real() ); }
+	// epsilon -------------------------------------------------------
+	template <>
+	inline std::complex<float> epsilon< std::complex<float> >(void)
+	{	float eps = std::numeric_limits<float>::epsilon();
+		return std::complex<float>(eps, 0.);
+	}
+	// isnan -------------------------------------------------------------
+	inline bool isnan(const std::complex<float>& z)
+	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;	
+		static const float nan = std::numeric_limits<float>::quiet_NaN();
+		return (z != z) | (z.real() == nan) | (z.imag() == nan);
+	}
 	// Valid standard math functions --------------------------------
-	CPPAD_VALID_COMPLEX_CASE(cos)
-	CPPAD_VALID_COMPLEX_CASE(cosh)
-	CPPAD_VALID_COMPLEX_CASE(exp)
-	CPPAD_VALID_COMPLEX_CASE(log)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<float>, cos)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<float>, cosh)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<float>, exp)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<float>, log)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<float>, sin)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<float>, sinh)
+	CPPAD_STANDARD_MATH_UNARY(std::complex<float>, sqrt)
+	// Invalid standrd math functions -------------------------------
+	CPPAD_USER_MACRO_TWO(abs)
+	CPPAD_USER_MACRO_TWO(acos)
+	CPPAD_USER_MACRO_TWO(asin)
+	CPPAD_USER_MACRO_TWO(atan)
+	// The pow function
 	inline std::complex<float> pow(
 		const std::complex<float> &x , 
 		const std::complex<float> &y )
 	{	return std::pow(x, y); }
-	CPPAD_VALID_COMPLEX_CASE(sin)
-	CPPAD_VALID_COMPLEX_CASE(sinh)
-	CPPAD_VALID_COMPLEX_CASE(sqrt)
-	// Invalid standrd math functions -------------------------------
-	CPPAD_INVALID_COMPLEX_CASE(abs)
-	CPPAD_INVALID_COMPLEX_CASE(acos)
-	CPPAD_INVALID_COMPLEX_CASE(asin)
-	CPPAD_INVALID_COMPLEX_CASE(atan)
-	CPPAD_INVALID_COMPLEX_CASE(erf)
 }
-
-// preprocessor symbols that are local to this file
-# undef CPPAD_USER_MACRO
-# undef CPPAD_VALID_COMPLEX_CASE
-# undef CPPAD_INVALID_COMPLEX_CASE
 
 # endif

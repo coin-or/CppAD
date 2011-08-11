@@ -94,6 +94,7 @@ test_more_SOURCES  = \
 	poly.cpp \
 	pow.cpp \
 	pow_int.cpp \
+	print_for.cpp \
 	romberg_one.cpp \
 	rosen_34.cpp \
 	runge_45.cpp \

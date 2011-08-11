@@ -445,13 +445,13 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 
 	// use independent variable values to fill in values for others
 # if CPPAD_USE_FORWARD0SWEEP
-	compare_change_ = forward0sweep(
-		false, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
+	compare_change_ = forward0sweep(std::cout, false,
+		n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
 	);
 # else
 	size_t p = 0;
-	compare_change_ = forward_sweep(
-		false, p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
+	compare_change_ = forward_sweep(std::cout, false,
+		p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
 	);
 # endif
 	CPPAD_ASSERT_UNKNOWN( compare_change_ == 0 );

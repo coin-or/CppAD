@@ -58,6 +58,8 @@ class AD {
 	friend bool GreaterThanOrZero <Base> (const AD<Base> &x);
 	friend bool LessThanZero      <Base> (const AD<Base> &x);
 	friend bool LessThanOrZero    <Base> (const AD<Base> &x);
+	friend bool abs_geq           <Base>
+		(const AD<Base>& x, const AD<Base>& y);
 
 	// The identical property functions, see identical.hpp
 	friend bool IdenticalPar      <Base> (const AD<Base> &x);

@@ -102,7 +102,7 @@ $codei%
 This text is written to $code std::cout$$ after $icode var$$. 
 	
 $head Discussion$$
-This is can be helpful for understanding why tape evaluations
+This is helpful for understanding why tape evaluations
 have trouble.
 For example, if one of the operations in $icode f$$ is
 $codei%log(%var%)%$$ and $icode%var% <= 0%$$,
@@ -115,13 +115,18 @@ code is executed.
 
 $head Example$$
 $children%
-	print_for/print_for.cpp
+	print_for/print_for.cpp%
+	example/print_for.cpp
 %$$
 The program
-$cref/print_for.cpp/$$
-is an example and test of this operation.
+$cref/print_for_cout.cpp/$$
+is an example and test that prints to standard output.
 The output of this program
 states the conditions for passing and failing the test.
+The function
+$cref/print_for_string.cpp/$$
+is an example and test that prints to an standard string stream.
+This function automatically check for correct output.
 
 $end
 ------------------------------------------------------------------------------

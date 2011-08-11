@@ -201,7 +201,7 @@ bool BenderQuad(void)
 	CppAD::ADFun<double> Gfun(a_x, a_g);
 
 	// accuracy for checks
-	double eps = 10. * std::numeric_limits<double>::epsilon();
+	double eps = 10. * CppAD::epsilon<double>();
 
 	// check Jacobian
 	BAvector check_gx = Gfun.Jacobian(x);

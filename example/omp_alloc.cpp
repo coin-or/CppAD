@@ -39,12 +39,9 @@ bool omp_alloc_bytes(void)
 {	bool ok = true;
 	using CppAD::omp_alloc;
 
-	// check not in parallel mode
-	ok &= omp_alloc::in_parallel() == false;
-
 	// check initial memory values
 	size_t thread;
-	for(thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
+	for(thread = 0; thread < omp_alloc::get_max_num_threads(); thread++)
 	{	// how much memory is inuse
 		ok &= omp_alloc::inuse(thread) == 0;
 		// how much memory is being heald for this thread
@@ -54,7 +51,6 @@ bool omp_alloc_bytes(void)
 	// determine the currently executing thread
 	// (should be zero because not in parallel mode)
 	thread = omp_alloc::get_thread_num();
-	ok    &= thread == 0;
 
 	// repeatedly allocate enough memory for at least two size_t values.
 	size_t min_size_t = 2;
@@ -154,7 +150,7 @@ bool omp_alloc_array(void)
 	ok   &= omp_alloc::inuse(thread) == 0;
 	ok   &= omp_alloc::available(thread) - check < sizeof(my_char);
 
-	// free the memory for use by any thread
+	// free the memory for use by this thread
 	omp_alloc::free_available(thread);
 	ok &= omp_alloc::inuse(thread) == 0;
 	ok &= omp_alloc::available(thread) == 0;
@@ -165,18 +161,30 @@ bool omp_alloc_array(void)
 
 bool omp_alloc(void)
 {	bool ok  = true;
+	using CppAD::omp_alloc;
 
 	// check initial state of allocator
-	ok      &= CppAD::omp_alloc::get_max_num_threads() == 1;
+	ok  &= omp_alloc::get_max_num_threads() == 1;
 
 	// set the maximum number of threads greater than one
 	// so that omp_alloc holds onto memory
 	CppAD::omp_alloc::set_max_num_threads(2);
-	ok      &= CppAD::omp_alloc::get_max_num_threads() == 2;
+	ok  &= omp_alloc::get_max_num_threads() == 2;
+	size_t thread;
+	for(thread = 0; thread < 2; thread++)
+	{	ok &= omp_alloc::inuse(thread) == 0;
+		ok &= omp_alloc::available(thread) == 0;
+	}
 
 	// now use memory allocatore in state where it holds onto memory
-	ok      &= omp_alloc_bytes();
-	ok      &= omp_alloc_array();
+	ok   &= omp_alloc_bytes();
+	ok   &= omp_alloc_array();
+
+	// check that the tests have not held onto memory
+	for(thread = 0; thread < 2; thread++)
+	{	ok &= omp_alloc::inuse(thread) == 0;
+		ok &= omp_alloc::available(thread) == 0;
+	}
 
 	// set the maximum number of threads back to one 
 	// so that omp_alloc no longer holds onto memory

@@ -27,13 +27,13 @@ The C++ source code corresponding to this operation is
 The PrintFor call puts the print operation on the tape
 and the print occurs during the zero order forward mode computation.
 
-\par std::cout
-the results are printed on the C++ standard output stream.
-
 \tparam Base
 base type for the operator; i.e., this operation was recorded
 using AD< \a Base > and computations by this routine are done using type 
 \a Base .
+
+\param s_out
+the results are printed on this output stream.
 
 \param i_z
 is the index of the next variable on the tape
@@ -105,6 +105,7 @@ Contains the value of variables.
 */
 template <class Base>
 inline void forward_pri_0(
+	std::ostream& s_out       ,
 	size_t        i_z         ,
 	const addr_t* arg         ,
 	size_t        num_text    ,
@@ -147,7 +148,7 @@ inline void forward_pri_0(
 	after = text + arg[4];
 
 	if( ! GreaterThanZero( pos ) )
-		std::cout << before << var << after;
+		s_out << before << var << after;
 }
 
 CPPAD_END_NAMESPACE

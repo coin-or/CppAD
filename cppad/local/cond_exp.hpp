@@ -72,14 +72,14 @@ $icode Cop$$
 	$cnext $code >=$$
 	$cnext $code >$$
 $tend
-If $icode f$$ is the $xref/ADFun/$$ object corresponding to the
+If $icode f$$ is the $cref/ADFun/$$ object corresponding to the
 AD operation sequence,
 the assignment choice for $icode result$$
 in an AD conditional expression is made each time
-$xref/Forward//f.Forward/$$ is used to evaluate the zero order Taylor
+$cref/f.Forward/Forward/$$ is used to evaluate the zero order Taylor
 coefficients with new values for the 
 $cref/independent variables/glossary/Tape/Independent Variable/$$.
-This is in contrast to the $xref/Compare//AD comparison operators/$$
+This is in contrast to the $cref/AD comparison operators/Compare/$$
 which are boolean valued and not included in the AD operation sequence. 
 
 $head Rel$$
@@ -98,35 +98,35 @@ $codei%AD<%Base%>%$$.
 $head left$$
 The argument $icode left$$ has prototype
 $codei%
-	const %Type% &%left%
+	const %Type%& %left%
 %$$
 It specifies the value for the left side of the comparison operator.
  
 $head right$$
 The argument $icode right$$ has prototype
 $codei%
-	const %Type% &%right%
+	const %Type%& %right%
 %$$
 It specifies the value for the right side of the comparison operator.
 
 $head exp_if_true$$
 The argument $icode exp_if_true$$ has prototype
 $codei%
-	const %Type% &%exp_if_true%
+	const %Type%& %exp_if_true%
 %$$
 It specifies the return value if the result of the comparison is true.
 
 $head exp_if_false$$
 The argument $icode exp_if_false$$ has prototype
 $codei%
-	const %Type% &%exp_if_false%
+	const %Type%& %exp_if_false%
 %$$
 It specifies the return value if the result of the comparison is false.
 
 $head result$$
 The $icode result$$ has prototype
 $codei%
-	%Type% &%exp_if_false%
+	%Type%& %exp_if_false%
 %$$
 
 
@@ -156,13 +156,13 @@ $children%
 	example/cond_exp.cpp
 %$$
 The file
-$xref/CondExp.cpp/$$
+$cref/CondExp.cpp/$$
 contains an example and test of this function.   
 It returns true if it succeeds and false otherwise.
 
 $head Atan2$$
 The following implementation of the
-AD $xref/atan2/$$ function is a more complex
+AD $cref/atan2/$$ function is a more complex
 example of using conditional expressions:
 $code
 $verbatim%cppad/local/atan2.hpp%0%BEGIN CondExp%// END CondExp%$$
@@ -174,74 +174,6 @@ $end
 */
 //  BEGIN CppAD namespace
 namespace CppAD {
-
-// ------------ CondExpOp(cop, left, right, exp_if_true, exp_if_false) --------------
-// CompareType and ResultType are different for the forward and reverse
-// sparese calculations.
-template <class CompareType, class ResultType>
-CPPAD_INLINE ResultType CondExpTemplate( 
-	enum  CompareOp            cop ,
-	const CompareType        &left ,
-	const CompareType       &right , 
-	const ResultType     &exp_if_true , 
-	const ResultType    &exp_if_false )
-{	ResultType returnValue;
-	switch( cop )
-	{
-		case CompareLt:
-		if( left < right )
-			returnValue = exp_if_true;
-		else	returnValue = exp_if_false;
-		break;
-
-		case CompareLe:
-		if( left <= right )
-			returnValue = exp_if_true;
-		else	returnValue = exp_if_false;
-		break;
-
-		case CompareEq:
-		if( left == right )
-			returnValue = exp_if_true;
-		else	returnValue = exp_if_false;
-		break;
-
-		case CompareGe:
-		if( left >= right )
-			returnValue = exp_if_true;
-		else	returnValue = exp_if_false;
-		break;
-
-		case CompareGt:
-		if( left > right )
-			returnValue = exp_if_true;
-		else	returnValue = exp_if_false;
-		break;
-
-		default:
-		CPPAD_ASSERT_UNKNOWN(0);
-		returnValue = exp_if_true;
-	}
-	return returnValue;
-}
-
-inline float CondExpOp( 
-	enum CompareOp     cop ,
-	const float      &left ,
-	const float     &right , 
-	const float  &exp_if_true , 
-	const float &exp_if_false )
-{	return CondExpTemplate(cop, left, right, exp_if_true, exp_if_false);
-}
-
-inline double CondExpOp( 
-	enum CompareOp     cop ,
-	const double      &left ,
-	const double     &right , 
-	const double  &exp_if_true , 
-	const double &exp_if_false )
-{	return CondExpTemplate(cop, left, right, exp_if_true, exp_if_false);
-}
 
 template <class Base>
 CPPAD_INLINE AD<Base> CondExpOp(
@@ -418,49 +350,6 @@ CPPAD_INLINE AD<Base> CondExp(
 }
 
 # undef CPPAD_COND_EXP
-# define CPPAD_COND_EXP(Name, Op, Type)                             \
-	inline Type CondExp##Name(                                  \
-		const Type &left      ,                             \
-		const Type &right     ,                             \
-		const Type &exp_if_true  ,                             \
-		const Type &exp_if_false )                             \
-	{	Type returnValue;                                   \
-		if( left Op right )                                 \
-			returnValue = exp_if_true;                     \
-		else	returnValue = exp_if_false;                    \
-		return returnValue;                                 \
-	}
-
-// float
-CPPAD_COND_EXP(Lt,  <, float)
-CPPAD_COND_EXP(Le, <=, float)
-CPPAD_COND_EXP(Eq, ==, float)
-CPPAD_COND_EXP(Ge, >=, float)
-CPPAD_COND_EXP(Gt,  >, float)
-inline float CondExp(
-	const float &flag      , 
-	const float &exp_if_true  ,
-	const float &exp_if_false )
-{	
-	return CondExpGt(flag, float(0), exp_if_true, exp_if_false);
-}
-
-// double
-CPPAD_COND_EXP(Lt,  <, double)
-CPPAD_COND_EXP(Le, <=, double)
-CPPAD_COND_EXP(Eq, ==, double)
-CPPAD_COND_EXP(Ge, >=, double)
-CPPAD_COND_EXP(Gt,  >, double)
-inline double CondExp(
-	const double &flag      , 
-	const double &exp_if_true  ,
-	const double &exp_if_false )
-{	
-	return CondExpGt(flag, 0., exp_if_true, exp_if_false);
-}
-
-# undef CPPAD_COND_EXP
-
 } // END CppAD namespace
 
 # endif 

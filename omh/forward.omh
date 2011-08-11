@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,12 +12,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin ForwardZero$$
 $spell
+	std::cout
+	ostream
 	const
 	Taylor
 	dy
 	Jacobian
 $$
-
 $index Forward, order zero$$
 $index zero, order Forward$$
 $index order, zero Forward$$
@@ -25,64 +26,74 @@ $index order, zero Forward$$
 $section Zero Order Forward Mode: Function Values$$
 
 $head Syntax$$
-$syntax%%y% = %f%.Forward(0, %x%)%$$
-
-
+$icode%y% = %f%.Forward(0, %x%)
+%$$
+$icode%y% = %f%.Forward(x, %x%, %s%)%$$
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
-$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 The result of the syntax above is
 $latex \[
 	y = F(x)
 \] $$
-(See the $xref/FunCheck/Discussion/FunCheck discussion/$$ for
+(See the $cref/FunCheck discussion/FunCheck/Discussion/$$ for
 possible differences between $latex F(x)$$ and the algorithm that defined
 the operation sequence.)
 
 $head f$$
-The object $italic f$$ has prototype
-$syntax%
+The object $icode f$$ has prototype
+$codei%
 	ADFun<%Base%> %f%
 %$$
-Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$.
+Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$.
 After this call to $code Forward$$, the value returned by
-$syntax%
+$codei%
 	%f%.size_taylor()
 %$$
-will be equal to one (see $xref/size_taylor/$$).
+will be equal to one (see $cref/size_taylor/$$).
 
 $head x$$
-The argument $italic x$$ has prototype
-$syntax%
-	const %Vector% &%x%
+The argument $icode x$$ has prototype
+$codei%
+	const %Vector%& %x%
 %$$
-(see $xref/ForwardZero/Vector/Vector/$$ below)
+(see $cref/Vector/ForwardZero/Vector/$$ below)
 and its size 
-must be equal to $italic n$$, the dimension of the
-$xref/seq_property/Domain/domain/$$ space for $italic f$$.
+must be equal to $icode n$$, the dimension of the
+$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+
+$head s$$
+If the argument $icode s$$ is not present, $code std::cout$$
+is used in its place.
+Otherwise, this argument has prototype
+$codei%
+	std::ostream& %s%
+%$$
+It specifies where the output corresponding to $cref PrintFor$$,
+and this zero order forward mode call, will be written.
 
 $head y$$
-The result $italic y$$ has prototype
-$syntax%
+The result $icode y$$ has prototype
+$codei%
 	%Vector% %y%
 %$$
-(see $xref/ForwardZero/Vector/Vector/$$ below)
+(see $cref/Vector/ForwardZero/Vector/$$ below)
 and its value is $latex F(x)$$.
-The size of $italic y$$ 
-is equal to $italic m$$, the dimension of the
-$xref/seq_property/Range/range/$$ space for $italic f$$.
+The size of $icode y$$ 
+is equal to $icode m$$, the dimension of the
+$cref/range/seq_property/Range/$$ space for $icode f$$.
 
 $head Vector$$
-The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type/$$
-$italic Base$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
+The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$
+$icode Base$$.
+The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
 $head Example$$
 The file
-$xref/Forward.cpp/$$
+$cref/Forward.cpp/$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -104,12 +115,15 @@ $index order, one Forward$$
 
 
 $head Syntax$$
-$syntax%%dy% = %f%.Forward(1, %dx%)%$$
+$icode%dy% = %f%.Forward(1, %dx%)
+%$$
+$icode%dy% = %f%.Forward(1, %dx%, %s%)
+%$$
 
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
-$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 The result of the syntax above is
 $latex \[
 	dy = F^{(1)} (x) * dx
@@ -118,61 +132,64 @@ where $latex F^{(1)} (x)$$ is the Jacobian of $latex F$$
 evaluated at $latex x$$.
 
 $head f$$
-The object $italic f$$ has prototype
-$syntax%
+The object $icode f$$ has prototype
+$codei%
 	ADFun<%Base%> %f%
 %$$
-Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$.
+Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$.
 Before this call to $code Forward$$, the value returned by
-$syntax%
+$codei%
 	%f%.size_taylor()
 %$$
 must be greater than or equal one.
-After this call it will be will be two (see $xref/size_taylor/$$).
+After this call it will be will be two (see $cref/size_taylor/$$).
 
 $head x$$
-The vector $italic x$$ in expression for $italic dy$$ above
-corresponds to the previous call to $xref/ForwardZero/$$
-using this ADFun object $italic f$$; i.e.,
-$syntax%
+The vector $icode x$$ in expression for $icode dy$$ above
+corresponds to the previous call to $cref/ForwardZero/$$
+using this ADFun object $icode f$$; i.e.,
+$codei%
 	%f%.Forward(0, %x%)
 %$$
 If there is no previous call with the first argument zero,
-the value of the $xref/Independent//independent/$$ variables 
+the value of the $cref/independent/Independent/$$ variables 
 during the recording of the AD sequence of operations is used
-for $italic x$$.
+for $icode x$$.
 
 $head dx$$
-The argument $italic dx$$ has prototype
-$syntax%
-	const %Vector% &%x%
+The argument $icode dx$$ has prototype
+$codei%
+	const %Vector%& %x%
 %$$
-(see $xref/ForwardOne/Vector/Vector/$$ below)
+(see $cref/Vector/ForwardOne/Vector/$$ below)
 and its size 
-must be equal to $italic n$$, the dimension of the
-$xref/seq_property/Domain/domain/$$ space for $italic f$$.
+must be equal to $icode n$$, the dimension of the
+$cref/domain/seq_property/Domain/$$ space for $icode f$$.
+
+$head s$$
+The argument $icode s$$, if present, is not used during this operation.
 
 $head dy$$
-The result $italic dy$$ has prototype
-$syntax%
+The result $icode dy$$ has prototype
+$codei%
 	%Vector% %dy%
 %$$
-(see $xref/ForwardOne/Vector/Vector/$$ below)
+(see $cref/Vector/ForwardOne/Vector/$$ below)
 and its value is $latex F^{(1)} (x) * dx$$.
-The size of $italic dy$$ 
-is equal to $italic m$$, the dimension of the
-$xref/seq_property/Range/range/$$ space for $italic f$$.
+The size of $icode dy$$ 
+is equal to $icode m$$, the dimension of the
+$cref/range/seq_property/Range/$$ space for $icode f$$.
 
 $head Vector$$
-The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type/$$
-$italic Base$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
+The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$
+$icode Base$$.
+The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
 $head Example$$
 The file
-$xref/Forward.cpp/$$
+$cref/Forward.cpp/$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -180,6 +197,8 @@ $end
 --------------------------------------------------------------------------
 $begin ForwardAny$$
 $spell
+	std::cout
+	ostream
 	xk
 	xp
 	yp
@@ -199,17 +218,18 @@ $index derivative, forward mode$$
 $index calculate, forward mode$$
 
 $head Syntax$$
-$syntax%%y_p% = %f%.Forward(%p%, %x_p% )%$$
-$pre
-$$
+$icode%y_p% = %f%.Forward(%p%, %x_p% )
+%$$
+$icode%y_p% = %f%.Forward(%p%, %x_p%, %s%)
+%$$
 
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
-$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 Given a function $latex X : B \rightarrow B^n$$,
 defined by its 
-$xref/glossary/Taylor Coefficient/Taylor coefficients/$$,
+$cref/Taylor coefficients/glossary/Taylor Coefficient/$$,
 forward mode computes the Taylor coefficients for the function 
 $latex \[
 	Y (t) = F [ X(t) ]
@@ -217,12 +237,12 @@ $latex \[
 
 $subhead Function Values$$
 If you are using forward mode to compute values for $latex F(x)$$,
-$xref/ForwardZero/$$ is simpler to understand
+$cref/ForwardZero/$$ is simpler to understand
 than this explanation of the general case.
 
 $subhead Derivative Values$$
 If you are using forward mode to compute values for $latex F^{(1)} (x) * dx$$,
-$xref/ForwardOne/$$ is simpler to understand
+$cref/ForwardOne/$$ is simpler to understand
 than this explanation of the general case.
 
 $head X(t)$$
@@ -234,14 +254,14 @@ $latex \[
 \] $$ 
 For $latex k = 0, \ldots , p$$,
 the vector $latex x^{(k)}$$ above is defined as the value of 
-$italic x_k$$ in the previous call (counting this call) of the form
-$syntax%
+$icode x_k$$ in the previous call (counting this call) of the form
+$codei%
 	%f%.Forward(%k%, %x_k%)
 %$$ 
 If there is no previous call with $latex k = 0$$,
 $latex x^{(0)}$$ is the value of the independent variables when the 
 corresponding 
-AD of $italic Base$$
+AD of $icode Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$ was recorded.
 Note that 
 $latex x^{(k)}$$ is related to the $th k$$ derivative of $latex X(t)$$ by
@@ -268,62 +288,74 @@ $latex \[
 
 
 $head f$$
-The $xref/ADFun/$$ object $italic f$$ has prototype
-$syntax%
+The $cref/ADFun/$$ object $icode f$$ has prototype
+$codei%
 	ADFun<%Base%> %f%
 %$$
-Note that the $xref/ADFun/$$ object $italic f$$ is not $code const$$.
+Note that the $cref/ADFun/$$ object $icode f$$ is not $code const$$.
 Before this call to $code Forward$$, the value returned by
-$syntax%
+$codei%
 	%f%.size_taylor()
 %$$
 must be greater than or equal $latex p$$.
-After this call it will be will be $latex p+1$$ (see $xref/size_taylor/$$).
+After this call it will be will be $latex p+1$$ (see $cref/size_taylor/$$).
 
 $head p$$
-The argument $italic p$$ has prototype
-$syntax%
+The argument $icode p$$ has prototype
+$codei%
 	size_t %p%
 %$$
 and specifies the order of the Taylor coefficients to be calculated.
 
 $head x_p$$
-The argument $italic x_p$$ has prototype
-$syntax%
-	const %Vector% &%x_p%
+The argument $icode x_p$$ has prototype
+$codei%
+	const %Vector%& %x_p%
 %$$
-(see $xref/ForwardAny/Vector/Vector/$$ below)
+(see $cref/Vector/ForwardAny/Vector/$$ below)
 and its size 
-must be equal to $italic n$$, the dimension of the
-$xref/seq_property/Domain/domain/$$ space for $italic f$$.
+must be equal to $icode n$$, the dimension of the
+$cref/domain/seq_property/Domain/$$ space for $icode f$$.
 The $th p$$ order Taylor coefficient for $latex X(t)$$ 
 is defined by this value; i.e., $latex x^{(p)} = x\_p$$.
 (The lower order Taylor coefficients for $latex X(t)$$ are
 defined by previous calls to $code Forward$$.)
 
+$head s$$
+If the argument $icode s$$ is not present, $code std::cout$$
+is used in its place.
+Otherwise, this argument has prototype
+$codei%
+	std::ostream& %s%
+%$$
+If $icode%p% == 0%$$,
+$icode s$$ specifies where the output corresponding to $cref PrintFor$$
+will be written.
+If $icode%p% != 0%$$, $icode s$$ is not used.
+
 $head y_p$$
-The return value $italic y_p$$ has prototype
-$syntax%
+The return value $icode y_p$$ has prototype
+$codei%
 	%Vector% %y_p%
 %$$
-(see $xref/ForwardAny/Vector/Vector/$$ below)
+(see $cref/Vector/ForwardAny/Vector/$$ below)
 and its value is 
 The $th p$$ order Taylor coefficient for $latex Y(t)$$; i.e.,
 $latex y^{(p)} = y\_p$$. 
-The size of $italic y_p$$ 
-is equal to $italic m$$, the dimension of the
-$xref/seq_property/Range/range/$$ space for $italic f$$.
+The size of $icode y_p$$ 
+is equal to $icode m$$, the dimension of the
+$cref/range/seq_property/Range/$$ space for $icode f$$.
 
 $head Vector$$
-The type $italic Vector$$ must be a $xref/SimpleVector/$$ class with
-$xref/SimpleVector/Elements of Specified Type/elements of type/$$
-$italic Base$$.
-The routine $xref/CheckSimpleVector/$$ will generate an error message
+The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
+$cref/elements of type/SimpleVector/Elements of Specified Type/$$
+$icode Base$$.
+The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
 $head Zero Order$$
 In the case where $latex p = 0$$,
-the result $italic y_p$$ is given by
+the result $icode y_p$$ is given by
 $latex \[
 \begin{array}{rcl}
 y^{(0)} & = & (F \circ X) ( 0 ) \\
@@ -335,13 +367,13 @@ $latex p$$,
 $latex x^{(0)}$$, and 
 $latex y^{(0)}$$ above are replaced by
 $code 0$$, 
-$italic x$$, and 
-$italic y$$ 
-in $xref/ForwardZero/$$.
+$icode x$$, and 
+$icode y$$ 
+in $cref/ForwardZero/$$.
 
 $head First Order$$
 In the case where $latex p = 1$$,
-the result $italic y_p$$ is given by
+the result $icode y_p$$ is given by
 $latex \[
 \begin{array}{rcl}
 y^{(1)} & = & (F \circ X)^{(1)} ( 0 ) \\
@@ -355,15 +387,15 @@ $latex x^{(0)}$$,
 $latex x^{(1)}$$, and 
 $latex y^{(1)}$$ above are replaced by
 $code 1$$, 
-$italic x$$, 
-$italic dx$$, and 
-$italic dy$$ 
-in $xref/ForwardOne/$$.
+$icode x$$, 
+$icode dx$$, and 
+$icode dy$$ 
+in $cref/ForwardOne/$$.
 $pre
 
 $$
 Note that if $latex x^{(1)}$$ is the $th j$$ 
-$xref/glossary/Elementary Vector/elementary vector/$$
+$cref/elementary vector/glossary/Elementary Vector/$$
 $latex \[
 y^{(1)} = \D{F}{x_j} ( x^{(0)} ) 
 \] $$
@@ -371,7 +403,7 @@ y^{(1)} = \D{F}{x_j} ( x^{(0)} )
 $head Second Order$$
 In the case where $latex p = 2$$,
 the $th i$$ element of 
-the result $italic y_p$$ is given by
+the result $icode y_p$$ is given by
 $latex \[
 \begin{array}{rcl}
 y_i^{(2)} 
@@ -388,7 +420,7 @@ y_i^{(2)}
 \end{array}
 \] $$
 Note that if $latex x^{(1)}$$ is the $th j$$ 
-$xref/glossary/Elementary Vector/elementary vector/$$
+$cref/elementary vector/glossary/Elementary Vector/$$
 and $latex x^{(2)}$$ is zero,
 $latex \[
 \begin{array}{rcl}
@@ -396,7 +428,7 @@ $latex \[
 \end{array}
 \] $$
 If $latex x^{(1)}$$ is the sum of the $th j$$ and $th l$$ 
-$xref/glossary/Elementary Vector/elementary vectors/$$
+$cref/elementary vectors/glossary/Elementary Vector/$$
 and $latex x^{(2)}$$ is zero,
 $latex \[
 \begin{array}{rcl}
@@ -423,7 +455,7 @@ $latex \[
 
 $head Example$$
 The file
-$xref/Forward.cpp/$$
+$cref/Forward.cpp/$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -439,79 +471,79 @@ $$
 $section Number Taylor Coefficients, Per Variable, Currently Stored$$
 
 $head Syntax$$
-$syntax%%s% = %f%.size_taylor()%$$
+$icode%s% = %f%.size_taylor()%$$
 
 $subhead See Also$$
 $cref/seq_property/$$
 
 $head Purpose$$
 Determine the number of Taylor coefficients, per variable,
-currently calculated and stored in the ADFun object $italic f$$. 
+currently calculated and stored in the ADFun object $icode f$$. 
 See the discussion under 
-$xref/size_taylor/Constructor/Constructor/$$,
-$xref/size_taylor/Forward/Forward/$$, and
-$xref/size_taylor/capacity_taylor/capacity_taylor/$$
+$cref/Constructor/size_taylor/Constructor/$$,
+$cref/Forward/size_taylor/Forward/$$, and
+$cref/capacity_taylor/size_taylor/capacity_taylor/$$
 for a description of when this value can change.
 
 
 $head f$$
-The object $italic f$$ has prototype
-$syntax%
+The object $icode f$$ has prototype
+$codei%
 	const ADFun<%Base%> %f%
 %$$
 
 $head s$$
-The result $italic s$$ has prototype
-$syntax%
+The result $icode s$$ has prototype
+$codei%
 	size_t %s%
 %$$
 and is the number of Taylor coefficients, 
 per variable in the AD operation sequence,
-currently calculated and stored in the ADFun object $italic f$$.
+currently calculated and stored in the ADFun object $icode f$$.
 
 $head Constructor$$
-Directly after the $xref/FunConstruct/$$ syntax
-$syntax%
+Directly after the $cref/FunConstruct/$$ syntax
+$codei%
 	ADFun<%Base%> %f%(%x%, %y%)
 %$$
-the value of $italic s$$ returned by $code size_taylor$$ is one.
+the value of $icode s$$ returned by $code size_taylor$$ is one.
 This is because
 there is an implicit call to $code Forward$$ that computes
 the zero order Taylor coefficients during this constructor.
 
 $head Forward$$
-After a call to $xref/ForwardAny//Forward/$$ with the syntax
-$syntax%
+After a call to $cref/Forward/ForwardAny/$$ with the syntax
+$codei%
         %f%.Forward(%p%, %x_p%)
 %$$
-the value of $italic s$$ returned by $code size_taylor$$ 
+the value of $icode s$$ returned by $code size_taylor$$ 
 would be $latex p + 1$$.
 The call to $code Forward$$ above
 uses the lower order Taylor coefficients to compute and store 
 the $th p$$ order Taylor coefficients for all
-the variables in the operation sequence corresponding to $italic f$$.
-Thus there are $latex p + 1$$ (order zero through $italic p$$)
+the variables in the operation sequence corresponding to $icode f$$.
+Thus there are $latex p + 1$$ (order zero through $icode p$$)
 Taylor coefficients per variable.
 (You can determine the number of variables in the operation sequence
-using the $xref/seq_property/size_var/size_var/$$ function.)
+using the $cref/size_var/seq_property/size_var/$$ function.)
 
 $head capacity_taylor$$
 If the number of Taylor coefficients
-currently stored in $italic f$$ is less than or equal $italic c$$, 
-a call to $xref/capacity_taylor/$$ with the syntax
-$syntax%
+currently stored in $icode f$$ is less than or equal $icode c$$, 
+a call to $cref/capacity_taylor/$$ with the syntax
+$codei%
 	%f%.capacity_taylor(%c%)
 %$$
-does not affect the value $italic s$$ returned by $code size_taylor$$.
+does not affect the value $icode s$$ returned by $code size_taylor$$.
 Otherwise,
-the value $italic s$$ returned by $code size_taylor$$
-is equal to $italic c$$
+the value $icode s$$ returned by $code size_taylor$$
+is equal to $icode c$$
 (only Taylor coefficients of order zero through $latex c-1$$ 
 have been retained).
 
 $head Example$$
 The file
-$xref/Forward.cpp/$$
+$cref/Forward.cpp/$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
@@ -530,60 +562,60 @@ $index zero, order forward$$
 $index forward, zero order$$
 
 $head Syntax$$
-$syntax%%c% = %f%.CompareChange()%$$
+$icode%c% = %f%.CompareChange()%$$
 $pre
 $$
 $bold See Also$$
-$xref/FunCheck/$$
+$cref/FunCheck/$$
 
 
 $head Purpose$$
 We use $latex F : B^n \rightarrow B^m$$ to denote the
-$xref/glossary/AD Function/AD function/$$ corresponding to $italic f$$.
+$cref/AD function/glossary/AD Function/$$ corresponding to $icode f$$.
 This function may be not agree with the algorithm that was used
 to create the corresponding
-AD of $italic Base$$
+AD of $icode Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$
 because of changes in AD
-$xref/Compare//comparison/$$ results.
+$cref/comparison/Compare/$$ results.
 The $code CompareChange$$ function can be used to detect these changes.
 
 $head f$$
-The object $italic f$$ has prototype
-$syntax%
+The object $icode f$$ has prototype
+$codei%
 	const ADFun<%Base%> %f%
 %$$
 
 $head c$$
-The result $italic c$$ has prototype
-$syntax%
+The result $icode c$$ has prototype
+$codei%
 	size_t %c%
 %$$
 It is the number of 
-$syntax%AD<%Base%>%$$ $xref/Compare//comparison/$$ 
+$codei%AD<%Base%>%$$ $cref/comparison/Compare/$$ 
 operations,
-corresponding to the previous call to $xref/Forward/$$ 
-$syntax%
+corresponding to the previous call to $cref/Forward/$$ 
+$codei%
 	%f%.Forward(0, %x%)
 %$$
 that have a different result from
-when $italic F$$ was created by taping an algorithm.
+when $icode F$$ was created by taping an algorithm.
 
 $head Discussion$$
-If $italic c$$ is not zero, 
+If $icode c$$ is not zero, 
 the boolean values resulting from some of the 
-$xref/Compare//comparison operations/$$ corresponding to $italic x$$
+$cref/comparison operations/Compare/$$ corresponding to $icode x$$
 are different from when the 
-AD of $italic Base$$
+AD of $icode Base$$
 $xref/glossary/Operation/Sequence/operation sequence/1/$$ was created.
 In this case, you may want to re-tape the algorithm with the
 $cref/independent variables/glossary/Tape/Independent Variable/$$ 
-equal to the values in $italic x$$ 
+equal to the values in $icode x$$ 
 (so AD operation sequence properly represents the algorithm
 for this value of independent variables).
 On the other hand, re-taping the AD operation sequence usually takes 
-significantly more time than evaluation using $xref/ForwardZero/$$.
-If the functions values have not changed (see $xref/FunCheck/$$)
+significantly more time than evaluation using $cref/ForwardZero/$$.
+If the functions values have not changed (see $cref/FunCheck/$$)
 it may not be worth re-taping a new AD operation sequence. 
 
 $head Restrictions$$
@@ -600,7 +632,7 @@ $children%
 	example/compare_change.cpp
 %$$
 The file
-$xref/CompareChange.cpp/$$
+$cref/CompareChange.cpp/$$
 contains an example and test of this operation.
 They return true if they succeed and false otherwise.
 

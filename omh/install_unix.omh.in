@@ -14,6 +14,7 @@ $begin InstallUnix$$
 $escape $$
 $dollar ^$$
 $spell
+	cout
 	Addr
 	sizeof
 	op_arg
@@ -193,8 +194,8 @@ $rnext
 $cref/example/example.cpp/Running Tests/$$  
 	$cnext $title example.cpp$$ 
 $rnext
-$cref/print_for/print_for.cpp/Running/$$  
-	$cnext $title print_for.cpp$$ 
+$cref/print_for_cout/print_for_cout.cpp/Running/$$  
+	$cnext $title print_for_cout.cpp$$ 
 $rnext
 $cref/speed_example/speed_example.cpp/Running Tests/$$  
 	$cnext $title speed_example.cpp$$ 

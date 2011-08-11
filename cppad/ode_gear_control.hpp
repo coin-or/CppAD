@@ -3,7 +3,7 @@
 # define CPPAD_ODE_GEAR_CONTROL_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -369,7 +369,7 @@ $end
 */
 
 // link exp and log for float and double
-# include <cppad/std_math_unary.hpp>
+# include <cppad/base_require.hpp>
 
 # include <cppad/ode_gear.hpp>
 

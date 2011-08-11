@@ -29,13 +29,13 @@ echo "DryRun = $DryRun"
 # script to help in execution of svn merge command
 #
 # Name of the directory where the changes have been committed
-from_branch=branches/memory
+from_branch=branches/base_require
 #
 # Version of the repository corresponding to from_branch just before changes
-Start=1963
+Start=2044
 # 
 # Version of the repository corresponding to from_branch after the changes
-End=1983
+End=2056
 #
 # the svn merge command
 cmd="svn merge $DryRun -r $Start:$End"

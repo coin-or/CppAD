@@ -1672,6 +1672,7 @@ void ADFun<Base>::optimize(void)
 	size_t i, j, m = dep_taddr_.size();
 	CppAD::vector<Base> x(n), y(m), check(m);
 	bool check_zero_order = taylor_per_var_ > 0;
+	Base max_taylor(0);
 	if( check_zero_order )
 	{	// zero order coefficients for independent vars
 		for(j = 0; j < n; j++)
@@ -1683,6 +1684,11 @@ void ADFun<Base>::optimize(void)
 		for(i = 0; i < m; i++)
 		{	CPPAD_ASSERT_UNKNOWN( dep_taddr_[i] < total_num_var_ );
 			y[i] = taylor_[ dep_taddr_[i] * taylor_col_dim_ + 0];
+		}
+		// maximum zero order coefficient
+		for(i = 0; i < total_num_var_; i++)
+		{	if(  abs_geq(taylor_[i*taylor_col_dim_+0] , max_taylor) )
+				max_taylor = taylor_[i*taylor_col_dim_+0];
 		}
 	}
 # endif
@@ -1713,8 +1719,9 @@ void ADFun<Base>::optimize(void)
 		check = Forward(0, x);
 
 		// check results
+		Base eps = 10. * epsilon<Base>();
 		for(i = 0; i < m; i++) CPPAD_ASSERT_KNOWN( 
-			check[i] == y[i] ,
+			abs_geq( eps * max_taylor , check[i] - y[i] ) ,
 			"Error during check of f.optimize()."
 		);
 

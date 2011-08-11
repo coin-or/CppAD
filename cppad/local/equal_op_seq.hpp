@@ -3,7 +3,7 @@
 # define CPPAD_EQUAL_OP_SEQ_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,15 +27,16 @@ $index operation, equal sequence$$
 $index sequence, equal operation$$
 $index equal, operation sequence$$
 
-$section Check if Equal and Correspond to Same Operation Sequence$$
+$section Check if Two Value are Identically Equal$$
 
 $head Syntax$$
 $syntax%%b% = EqualOpSeq(%x%, %y%)%$$
 
 $head Purpose$$
-Determine if two $italic x$$ and $italic y$$ are equal, and
+Determine if two $italic x$$ and $italic y$$ are identically equal; i.e.,
+not only is $icode%x% == %y%$$ true, but
 if they are $cref/variables/glossary/Variable/$$,
-determine if they correspond to the same
+they correspond have the same
 $cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Motivation$$
@@ -102,10 +103,6 @@ $end
 
 
 namespace CppAD {
-	inline bool EqualOpSeq(const float &x, const float &y)
-	{	return x == y; }
-	inline bool EqualOpSeq(const double &x, const double &y)
-	{	return x == y; }
 	template <class Base>
 	CPPAD_INLINE bool EqualOpSeq(const AD<Base> &x, const AD<Base> &y)
 	{	
