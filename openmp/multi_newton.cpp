@@ -336,10 +336,13 @@ int main(int argc, char *argv[])
 			++i;
 		}
 	}
-
-	// return all memory being held in available pool
+	// Check that no memory currently in use, free avialable, and go back to
+	// single thread memory mode.
 	for(thread = 0; thread < n_thread; thread++)
-		CppAD::omp_alloc::free_available(thread);
+	{	ok &= CppAD::omp_alloc::inuse(thread) == 0; 
+		CppAD::omp_alloc::free_available(thread); 
+	}
+	CppAD::omp_alloc::set_max_num_threads(1);
 
 	// check all the threads for a CppAD memory leak
 	if( CppAD::memory_leak() )

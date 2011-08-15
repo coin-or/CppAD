@@ -111,6 +111,7 @@ int main(int argc, char *argv[])
 
 	// Inform the CppAD of the maximum number of threads that will be used
 	CppAD::omp_alloc::set_max_num_threads(n_thread);
+
 	// check that no memory is in use or avialable at start
 	size_t thread;
 	for(thread = 0; thread < n_thread; thread++)
@@ -121,35 +122,55 @@ int main(int argc, char *argv[])
 	CppAD::parallel_ad<double>();
 	
 
-	const double pi = 4. * atan(1.);
-	int k, n_k = 20;
-	CPPAD_TEST_VECTOR<bool> ok(n_k);
+	{	// Since maximum number of threads is greater than zero,
+		// CppAD::vector uses fast multi-threading memory allocation.
+		// Allocate this vector inside a block so it is destroyed before 
+		// check for memory leak checking.
+		const double pi = 4. * atan(1.);
+		int k, n_k = 20;
+		CppAD::vector<bool> ok(n_k);
 
 # ifdef _OPENMP
 # pragma omp parallel for
 # endif
-	for(k = 0; k < n_k; k++)
-	{	// CppAD::vector uses the omp_alloc fast OpenMP memory allocator
-		CppAD::vector< AD<double> > Theta(1), Z(1);
+		for(k = 0; k < n_k; k++)
+		{	// CppAD::vector uses the omp_alloc fast OpenMP memory allocator
+			CppAD::vector< AD<double> > Theta(1), Z(1);
 
-		Theta[0] = k * pi / double(n_k);
-		Independent(Theta);
-		AD<double> x = cos(Theta[0]);
-		AD<double> y = sin(Theta[0]);
-		Z[0]  = arc_tan( x, y );
-		CppAD::ADFun<double> f(Theta, Z); 
+			Theta[0] = k * pi / double(n_k);
+			Independent(Theta);
+			AD<double> x = cos(Theta[0]);
+			AD<double> y = sin(Theta[0]);
+			Z[0]  = arc_tan( x, y );
+			CppAD::ADFun<double> f(Theta, Z); 
 
-		// check function is the identity
-		ok[k]  = NearEqual(Z[0], Theta[0], 1e-10, 1e-10);
+			// check function is the identity
+			ok[k]  = NearEqual(Z[0], Theta[0], 1e-10, 1e-10);
 
-		// check derivative values
-		CppAD::vector<double> d_theta(1), d_z(1);
-		d_z = f.Forward(1, d_theta);
-		ok[k]  = NearEqual(d_z[0], 0., 1e-10, 1e-10);
+			// check derivative values
+			CppAD::vector<double> d_theta(1), d_z(1);
+			d_z = f.Forward(1, d_theta);
+			ok[k]  = NearEqual(d_z[0], 0., 1e-10, 1e-10);
+		}
+		// summarize results
+		for(k = 0; k < n_k; k++)
+			all_ok &= ok[k];
 	}
-	// summarize results
-	for(k = 0; k < n_k; k++)
-		all_ok &= ok[k];
+	// Check that no memory currently in use, free avialable, and go back to
+	// single thread memory mode.
+	for(thread = 0; thread < n_thread; thread++)
+	{	all_ok &= CppAD::omp_alloc::inuse(thread) == 0; 
+		CppAD::omp_alloc::free_available(thread); 
+	}
+	CppAD::omp_alloc::set_max_num_threads(1);
+
+	// check all the threads for a CppAD memory leak
+	if( CppAD::memory_leak() )
+	{	all_ok = false;
+		cout << "memory_leak = " << true << endl;
+	}
+	else	cout << "memory_leak = " << false << endl;
+
 
 	if( all_ok )
 		cout << "correctness_test = 'OK'" << endl;
