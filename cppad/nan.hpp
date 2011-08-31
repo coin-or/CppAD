@@ -139,13 +139,15 @@ $head Vector$$
 The type $icode Vector$$ must be a $cref/SimpleVector/$$ class with
 elements of type $icode Scalar$$.
 
-$head OpenMP$$
-For each value of $icode Scalar$$,
+$head Parallel Mode$$
+$index parallel, user_atomic$$
+$index user_atomic, parallel$$
+For each type $icode Scalar$$,
 the first call to
 $codei%
 	%b% = isnan(%s%)
 %$$
-must not be $cref/in_parallel/$$ execution mode; 
+must not be $cref/parallel/new_in_parallel/$$ execution mode; 
 see $code isnan$$ in $cref/parallel_ad/parallel_ad/isnan/$$.
 
 $children%
@@ -161,6 +163,9 @@ $end
 
 # include <cstddef>
 # include <cppad/local/cppad_assert.hpp>
+
+// needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# include <cppad/thread_alloc.hpp>
 
 # ifdef nan
 # undef nan

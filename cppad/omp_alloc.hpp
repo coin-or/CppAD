@@ -12,290 +12,17 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-
-# include <sstream>
-# include <limits>
-# include <memory>
-
+# include <cppad/thread_alloc.hpp>
 # ifdef _OPENMP
 # include <omp.h>
 # endif
 
-# ifdef _MSC_VER
-// Supress warning that Microsoft compiler changed its behavior and is now 
-// doing the correct thing at the statement:
-//			new(array + i) Type();
-# pragma warning(disable:4345)
-# endif
-
-# include <cppad/local/cppad_assert.hpp>
-# include <cppad/local/define.hpp>
 CPPAD_BEGIN_NAMESPACE
-/*!
-\file omp_alloc.hpp
-File used to define the CppAD OpenMP allocator class
-*/
-
-/*!
-\def CPPAD_MAX_NUM_CAPACITY
-Maximum number of different capacities the allocator will attempt.
-This must be larger than the log base two of numeric_limit<size_t>::max().
-*/
-# define CPPAD_MAX_NUM_CAPACITY 100
-
-/*!
-\def CPPAD_MIN_DOUBLE_CAPACITY
-Minimum number of double values that will fit in an allocation.
-*/
-# define CPPAD_MIN_DOUBLE_CAPACITY 16
-
-/*!
-\def CPPAD_TRACE_CAPACITY
-If NDEBUG is not defined, print all calls to \c get_memory and \c return_memory
-that correspond to this capacity and thread CPPAD_TRACE_THEAD.
-(Note that if CPPAD_TRACE_CAPACITY is zero, or any other value not in the list
-of capacities, no tracing will be done.)
-*/
-# define CPPAD_TRACE_CAPACITY 0
-
-/*!
-\def CPPAD_TRACE_THREAD
-If NDEBUG is not defined, print all calls to \c get_memory and \c return_memory
-that correspond to this thead and capacity CPPAD_TRACE_CAPACITY.
-*/
-# define CPPAD_TRACE_THREAD 0
-
-/*
-Note that Section 3.6.2 of ISO/IEC 14882:1998(E) states: "The storage for 
-objects with static storage duration (3.7.1) shall be zero-initialized
-(8.5) before any other initialization takes place."
-*/
-
-/*
-Capacity vector for memory allocation block sizes.
-*/
-
-class omp_alloc_capacity {
-public:
-	size_t number;
-	size_t value[CPPAD_MAX_NUM_CAPACITY];
-	omp_alloc_capacity(void)
-	{
-# ifdef _OPENMP
-		CPPAD_ASSERT_KNOWN( 
-		! omp_in_parallel() ,
-		"omp_alloc: parallel mode and max_num_threads has not been called."
-		);
-# endif
-		number           = 0;
-		size_t capacity  = CPPAD_MIN_DOUBLE_CAPACITY * sizeof(double);
-		while( capacity < std::numeric_limits<size_t>::max() / 2 )
-		{	CPPAD_ASSERT_UNKNOWN( number < CPPAD_MAX_NUM_CAPACITY );
-			value[number++] = capacity;
-			// next capactiy is 3/2 times the current one
-			capacity        = 3 * ( (capacity + 1) / 2 );
-		} 		 
-		CPPAD_ASSERT_UNKNOWN( number > 0 );
-	}
-};
-
-/*!
-Allocator class that works well with an OpenMP multi-threading environment.
-*/
 class omp_alloc{
 // ============================================================================
-private:
-	/// extra information (currently only used by create and delete array)
-	size_t             extra_;
-	/// an index that uniquely idenfifies both thread and capacity
-	size_t             tc_index_;
-	/// pointer to the next memory allocation with the the same tc_index_
-	void*              next_;
-	// ---------------------------------------------------------------------
-	/// make default constructor private. It is only used by the constructor
-	/// for \c root arrays below.
-	omp_alloc(void) : extra_(0), tc_index_(0), next_(0) 
-	{ }
-	// ---------------------------------------------------------------------
-	static const omp_alloc_capacity* capacity_info(void)
-	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-		static const omp_alloc_capacity capacity;
-		return &capacity;
-	}
-	// ---------------------------------------------------------------------
-	/// number of bytes of memory that are currently in use for each thread
-	static size_t* inuse_vector(void)
-	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-		static size_t inuse[CPPAD_MAX_NUM_THREADS];
-		return inuse;
-	}
-	// ---------------------------------------------------------------------
-	/// number of bytes that are currrently available for each thread; i.e.,
-	/// have been obtained for each thread and not yet returned to the system.
-	static size_t* available_vector(void)
-	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-		static size_t available[CPPAD_MAX_NUM_THREADS];
-		return available;
-	}
-
-	// -----------------------------------------------------------------------
-	/*!
- 	Increase the number of bytes of memory that are currently in use; i.e.,
-	that been obtained with \c get_memory and not yet returned. 
-
-	\param inc [in]
-	amount to increase memory in use.
-
-	\param thread [in]
-	Thread for which we are increasing the number of bytes in use
-	(must be less than the $cref max_num_threads$$ setting).
-	Durring parallel execution, this must be the thread 
-	that is currently executing.
-	*/
-	static void inc_inuse(size_t inc, size_t thread)
-	{	
-		CPPAD_ASSERT_UNKNOWN( thread < max_num_threads(0) );
-		CPPAD_ASSERT_UNKNOWN( 
-			thread == get_thread_num() || (! in_parallel()) 
-		);
-		size_t* inuse_vec = inuse_vector();
-		
-		// do the addition
-		size_t result = inuse_vec[thread] + inc;
-		CPPAD_ASSERT_UNKNOWN( result >= inuse_vec[thread] );
-
-		inuse_vec[thread] = result;
-	}
-	// -----------------------------------------------------------------------
-	/*!
- 	Increase the number of bytes of memory that are currently avaialble; i.e.,
-	have been obtained obtained from the system and are being held future use.
-
-	\copydetails inc_inuse
-	*/
-	static void inc_available(size_t inc, size_t thread)
-	{	
-		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS);
-		CPPAD_ASSERT_UNKNOWN( 
-			thread == get_thread_num() || (! in_parallel()) 
-		);
-		size_t* available_vec = available_vector();
-		// do the addition
-		size_t result = available_vec[thread] + inc;
-		CPPAD_ASSERT_UNKNOWN( result >= available_vec[thread] );
-
-		available_vec[thread] = result;
-	}
-	// -----------------------------------------------------------------------
-	/*!
- 	Decrease the number of bytes of memory that are currently in use; i.e.,
-	that been obtained with \c get_memory and not yet returned. 
-
-	\param dec [in]
-	amount to decrease number of bytes in use.
-
-	\param thread [in]
-	Thread for which we are decreasing the number of bytes in use
-	(must be less than the $cref max_num_threads$$ setting).
-	Durring parallel execution, this must be the thread 
-	that is currently executing.
-	*/
-	static void dec_inuse(size_t dec, size_t thread)
-	{	
-		CPPAD_ASSERT_UNKNOWN( thread < max_num_threads(0) );
-		CPPAD_ASSERT_UNKNOWN( 
-			thread == get_thread_num() || (! in_parallel()) 
-		);
-		size_t* inuse_vec = inuse_vector();
-		// do the subtraction
-		CPPAD_ASSERT_UNKNOWN( inuse_vec[thread] >= dec );
-		inuse_vec[thread] = inuse_vec[thread] - dec;
-	}
-	// -----------------------------------------------------------------------
-	/*!
- 	Decrease the number of bytes of memory that are currently avaialble; i.e.,
-	have been obtained obtained from the system and are being held future use.
-
-	\copydetails dec_inuse
-	*/
-	static void dec_available(size_t dec, size_t thread)
-	{	
-		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS);
-		CPPAD_ASSERT_UNKNOWN( 
-			thread == get_thread_num() || (! in_parallel()) 
-		);
-		size_t* available_vec = available_vector();
-		// do the subtraction
-		CPPAD_ASSERT_UNKNOWN( available_vec[thread] >= dec );
-		available_vec[thread] =  available_vec[thread] - dec;
-	}
-
-	// ----------------------------------------------------------------------
-	/// Vector of length CPPAD_MAX_NUM_THREADS times CPPAD_MAX_NUM_CAPACITIES 
-	/// for use as root nodes of inuse lists.
-	static omp_alloc* root_inuse(void)
-	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-		static omp_alloc  
-			root[CPPAD_MAX_NUM_THREADS * CPPAD_MAX_NUM_CAPACITY];
-		return root;
-	}
-
-	// ----------------------------------------------------------------------
-	/// Vector of length CPPAD_MAX_NUM_THREADS times CPPAD_MAX_NUM_CAPACITIES 
-	/// for use as root nodes of available lists.
-	static omp_alloc* root_available(void)
-	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-		static omp_alloc  
-			root[CPPAD_MAX_NUM_THREADS * CPPAD_MAX_NUM_CAPACITY];
-		return root;
-	}
-	/*!
-	Inform omp_alloc of the maximum number of OpenMP threads and enable 
-	parallel execution mode by initializing all statics in this file.
-
-	\param new_number [in]
-	If \c number is zero, we are only retreiving the current maximum
-	number of threads. Otherwise, we are setting and retreiving
-	maximum number of OpenMP threads.
-
-	\return
-	the previous value for the maximum number of threads
-	(directly before this call to max_num_threads).
-	*/
-	static size_t max_num_threads(size_t new_number)
-	{
-		CPPAD_ASSERT_UNKNOWN( new_number <= CPPAD_MAX_NUM_THREADS );
-		CPPAD_ASSERT_UNKNOWN( ! in_parallel() || (new_number == 0) );
-		static size_t number = 1;
-
-		// case where we just return current setting
-		if( new_number == 0 )
-			return number;
-
-		// Make sure that constructors for all static variables in this file 
-		// are called in sequential mode.	
-		capacity_info();
-		inuse_vector();
-		available_vector();
-		root_inuse();
-		root_available();
-		size_t cap_bytes;
-		void* v_ptr = get_memory(0, cap_bytes);
-
-		// free memory allocated by call to get_memory above
-		return_memory(v_ptr);
-		free_available( get_thread_num() );
-
-		// return value for this call
-		size_t old_number = number;
-		number            = new_number;
-		return old_number;
-	}
-
-// ============================================================================
 public:
 /*
-$begin max_num_threads$$
+$begin omp_max_num_threads$$
 $spell
 	inv
 	CppAD
@@ -304,20 +31,11 @@ $spell
 $$
 $section Set and Get Maximum Number of Threads for omp_alloc Allocator$$
 
+$head Deprecated$$
 $index set_max_num_threads, omp_alloc$$
 $index get_max_num_threads, omp_alloc$$
-
-$index omp_alloc, set_max_num_threads$$
-$index omp_alloc, get_max_num_threads$$
-
-$index parallel, set_max_num_threads$$
-$index parallel, get_max_num_threads$$
-
-$index threads, number of$$
-
-$index OpenMP, initialize memory$$
-$index memory, initialize OpenMP$$
-$index initialize, OpenMP memory$$
+Use the functions $cref/thread_alloc::parallel_setup/new_parallel_setup/$$
+and $cref/thread_alloc:num_threads/new_num_threads/$$ instead.
 
 $head Syntax$$
 $codei%omp_alloc::set_max_num_threads(%number%)
@@ -327,7 +45,7 @@ $icode%number% = omp_alloc::get_max_num_threads()
 
 $head Purpose$$
 By default there is only one thread and all execution is in sequential mode
-(not $cref/parallel/in_parallel/$$).
+(not $cref/parallel/omp_in_parallel/$$).
 
 $head number$$
 The argument and return value $icode number$$ has prototype
@@ -346,17 +64,8 @@ If there was no such previous call, the value one is returned
 
 $head Restrictions$$
 The function $code set_max_num_threads$$ must be called before 
-the program enters $cref/parallel/in_parallel/$$ execution mode.
+the program enters $cref/parallel/omp_in_parallel/$$ execution mode.
 In addition, this function cannot be called while in parallel mode.
-
-$head Example$$
-The routine $cref sum_i_inv.cpp$$
-is an example, speed test, and correctness test.
-If the preprocessor symbol $code _OPENMP$$ is defined,
-it uses parallel execution mode.
-As per the restriction above,
-$code sum_i_inv.cpp$$ calls $code set_max_num_threads$$
-before using parallel mode.
 
 $end
 */
@@ -365,35 +74,24 @@ $end
 	parallel execution mode by initializing all statics in this file.
 
 	\param number [in]
-	<aximum number of OpenMP threads.
+	maximum number of OpenMP threads.
 	*/
 	static void set_max_num_threads(size_t number)
-	{
-		CPPAD_ASSERT_KNOWN( 
-			number <= CPPAD_MAX_NUM_THREADS ,
-			"set_max_num_threads: number of threads is too large"
+	{	thread_alloc::parallel_setup(
+			number, omp_alloc::in_parallel, omp_alloc::get_thread_num
 		);
-		CPPAD_ASSERT_KNOWN( 
-			0 < number ,
-			"set_max_num_threads: number of threads is zero"
-		);
-		CPPAD_ASSERT_KNOWN(
-			! in_parallel() ,
-			"set_max_num_threads: called while in parallel mode."
-		);
-		max_num_threads(number);
 	}
 	/*!
 	Get the current maximum number of OpenMP threads that omp_alloc can use.
 
 	\return 
-	<aximum number of OpenMP threads.
+	maximum number of OpenMP threads.
 	*/
 	static size_t get_max_num_threads(void)
-	{	return max_num_threads(0); }
+	{	return thread_alloc::num_threads(); }
 
 /* -----------------------------------------------------------------------
-$begin in_parallel$$
+$begin omp_in_parallel$$
 
 $section Is The Current Execution in OpenMP Parallel Mode$$
 $spell
@@ -401,11 +99,10 @@ $spell
 	bool
 $$
 
+$head Deprecated$$
 $index in_parallel, omp_alloc$$
 $index omp_alloc, in_parallel$$
-$index parallel, execution$$
-$index execution, parallel$$
-$index sequential, execution$$
+Use the function $cref/thread_alloc::in_parallel/new_in_parallel/$$ instead.
 
 $head Syntax$$
 $icode%flag% = omp_alloc::in_parallel()%$$
@@ -441,7 +138,7 @@ $end
 	}
 
 /* -----------------------------------------------------------------------
-$begin get_thread_num$$
+$begin omp_get_thread_num$$
 $spell
 	CppAD
 	num
@@ -451,10 +148,10 @@ $$
 
 $section Get the Current OpenMP Thread Number$$
 
+$head Deprecated$$
 $index get_thread_num, omp_alloc$$
 $index omp_alloc, get_thread_num$$
-$index thread, current$$
-$index current, thread$$
+Use the function $cref/thread_alloc::thread_num/new_thread_num/$$ instead.
 
 $head Syntax$$
 $icode%thread% = omp_alloc::get_thread_num()%$$
@@ -481,17 +178,13 @@ $end
 	{
 # ifdef _OPENMP
 		size_t thread = static_cast<size_t>( omp_get_thread_num() );
-		CPPAD_ASSERT_KNOWN(
-			thread < CPPAD_MAX_NUM_THREADS,
-			"more than CPPAD_MAX_NUM_THREADS are running"
-		);
 		return thread;
 # else
 		return 0;
 # endif
 	}
 /* -----------------------------------------------------------------------
-$begin get_memory$$
+$begin omp_get_memory$$
 $spell
 	num
 	ptr
@@ -500,17 +193,17 @@ $$
 
 $section Get At Least A Specified Amount of Memory$$
 
+$head Deprecated$$
 $index get_thread_num, omp_alloc$$
 $index omp_alloc, get_thread_num$$
-$index memory, allocate$$
-$index allocate, memory$$
+Use the function $cref/thread_alloc::get_memory/new_get_memory/$$ instead.
 
 $head Syntax$$
 $icode%v_ptr% = omp_alloc::get_memory(%min_bytes%, %cap_bytes%)%$$
 
 $head Purpose$$
 Use $cref/omp_alloc/$$ to obtain a minimum number of bytes of memory
-(for use by the $cref/current thread/get_thread_num/$$).
+(for use by the $cref/current thread/omp_get_thread_num/$$).
 
 $head min_bytes$$
 This argument has prototype
@@ -573,101 +266,10 @@ $end
 	pointer to the beginning of the memory allocted for use.
  	*/
 	static void* get_memory(size_t min_bytes, size_t& cap_bytes)
-	{	// see first_trace below	
-		CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-
-		size_t num_cap = capacity_info()->number;
-		using std::cout;
-		using std::endl;
-
-		// determine the capacity for this request
-		size_t c_index   = 0;
-		const size_t* capacity_vec = capacity_info()->value;
-		while( capacity_vec[c_index] < min_bytes )
-		{	++c_index;	
-			CPPAD_ASSERT_UNKNOWN(c_index < num_cap );
-		}
-		cap_bytes = capacity_vec[c_index];
-
-		// determine the thread and capacity index
-		size_t thread    = get_thread_num();
-		size_t tc_index  = thread * num_cap + c_index;
-
-# ifndef NDEBUG
-		// trace allocation
-		static bool first_trace = true;
-		if(	cap_bytes == CPPAD_TRACE_CAPACITY && 
-		     thread    ==  CPPAD_TRACE_THREAD  && first_trace )
-		{	cout << endl;	
-			cout << "omp_alloc: Trace for Thread = " << thread;
-			cout << " and capacity = " << cap_bytes << endl;
-			if( first_trace )
-				first_trace = false;
-		}
-
-		// Root nodes for both lists. Note these are different for different 
-		// threads because tc_index is different for different threads.
-		omp_alloc* inuse_root     = root_inuse() + tc_index;
-# endif
-		omp_alloc* available_root = root_available() + tc_index;
-
-		// check if we already have a node we can use
-		void* v_node              = available_root->next_;
-		omp_alloc* node           = reinterpret_cast<omp_alloc*>(v_node);
-		if( node != 0 )
-		{	CPPAD_ASSERT_UNKNOWN( node->tc_index_ == tc_index );
-
-			// remove node from available list
-			available_root->next_ = node->next_;
-
-			// return value for get_memory
-			void* v_ptr = reinterpret_cast<void*>(node + 1);
-# ifndef NDEBUG
-			// add node to inuse list
-			node->next_           = inuse_root->next_;
-			inuse_root->next_     = v_node;
-
-			// trace allocation
-			if(	cap_bytes == CPPAD_TRACE_CAPACITY && 
-			     thread    ==  CPPAD_TRACE_THREAD   )
-			{	cout << "get_memory:    v_ptr = " << v_ptr << endl; } 
-# endif
-
-			// adjust counts
-			inc_inuse(cap_bytes, thread);
-			dec_available(cap_bytes, thread);
-
-			// return pointer to memory, do not inclue omp_alloc information
-			return v_ptr;
-		}
-
-		// Create a new node with omp_alloc information at front.
-		// This uses the system allocator, which is thread safe, but slower,
-		// because the thread might wait for a lock on the allocator.
-		v_node          = ::operator new(sizeof(omp_alloc) + cap_bytes);
-		node            = reinterpret_cast<omp_alloc*>(v_node);
-		node->tc_index_ = tc_index;
-		void* v_ptr     = reinterpret_cast<void*>(node + 1);
-
-# ifndef NDEBUG
-		// add node to inuse list
-		node->next_       = inuse_root->next_;
-		inuse_root->next_ = v_node;
-
-		// trace allocation
-		if( cap_bytes == CPPAD_TRACE_CAPACITY && 
-		    thread    == CPPAD_TRACE_THREAD    )
-		{	cout << "get_memory:    v_ptr = " << v_ptr << endl; }
-# endif
-
-		// adjust counts
-		inc_inuse(cap_bytes, thread);
-
-		return v_ptr;
-	}
+	{	return thread_alloc::get_memory(min_bytes, cap_bytes); }
 
 /* -----------------------------------------------------------------------
-$begin return_memory$$
+$begin omp_return_memory$$
 $spell
 	ptr
 	omp_alloc
@@ -675,17 +277,16 @@ $$
 
 $section Return Memory to omp_alloc$$
 
+$head Deprecated$$
 $index return_memory, omp_alloc$$
 $index omp_alloc, return_memory$$
-$index memory, available$$
-$index available, memory$$
-$index thread, available memory$$
+Use the function $cref/thread_alloc::return_memory/new_return_memory/$$ instead.
 
 $head Syntax$$
 $codei%omp_alloc::return_memory(%v_ptr%)%$$
 
 $head Purpose$$
-If $cref max_num_threads$$ is one,
+If $cref omp_max_num_threads$$ is one,
 the memory is returned to the system.
 Otherwise, the memory is retained by $cref omp_alloc$$ for quick future use
 by the thread that allocated to memory.
@@ -696,13 +297,13 @@ $codei%
 	void* %v_ptr%
 %$$.
 It must be a pointer to memory that is currently in use; i.e.
-obtained by a previous call to $cref/get_memory/$$ and not yet returned.
+obtained by a previous call to $cref omp_get_memory$$ and not yet returned.
 
 $head Thread$$
-Either the $cref/current thread/get_thread_num/$$ must be the same as during
-the corresponding call to $cref/get_memory/$$,
+Either the $cref/current thread/omp_get_thread_num/$$ must be the same as during
+the corresponding call to $cref omp_get_memory$$,
 or the current execution mode must be sequential 
-(not $cref/parallel/in_parallel/$$).
+(not $cref/parallel/omp_in_parallel/$$).
 
 $head NDEBUG$$
 If $code NDEBUG$$ is defined, $icode v_ptr$$ is not checked (this is faster).
@@ -731,80 +332,20 @@ $end
 	to \c get_memory.
  	*/
 	static void return_memory(void* v_ptr)
-	{	size_t num_cap   = capacity_info()->number;
-
-		omp_alloc* node  = reinterpret_cast<omp_alloc*>(v_ptr) - 1;
-		size_t tc_index  = node->tc_index_;
-		size_t thread    = tc_index / num_cap;
-		size_t c_index   = tc_index % num_cap;
-		size_t capacity  = capacity_info()->value[c_index];
-
-		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS );
-		CPPAD_ASSERT_KNOWN( 
-			thread == get_thread_num() || (! in_parallel()),
-			"Attempt to return memory for a different thread "
-			"while in parallel mode"
-		);
-
-# ifndef NDEBUG
-		// remove node from inuse list
-		void* v_node              = reinterpret_cast<void*>(node);
-		omp_alloc* inuse_root     = root_inuse() + tc_index;
-		omp_alloc* previous       = inuse_root;
-		while( (previous->next_ != 0) & (previous->next_ != v_node) )
-			previous = reinterpret_cast<omp_alloc*>(previous->next_);	
-
-		// check that v_ptr is valid
-		if( previous->next_ != v_node )
-		{	using std::endl;
-			std::ostringstream oss;
-			oss << "return_memory: attempt to return memory not in use";
-			oss << endl;
-			oss << "v_ptr    = " << v_ptr    << endl;   
-			oss << "thread   = " << thread   << endl;   
-			oss << "capacity = " << capacity << endl;   
-			oss << "See CPPAD_TRACE_THREAD & CPPAD_TRACE_CAPACITY in";
-			oss << endl << "# include <cppad/omp_alloc.hpp>" << endl;
-			CPPAD_ASSERT_KNOWN(false, oss.str().c_str()	); 
-		}
-
-		// trace option
-		if( capacity==CPPAD_TRACE_CAPACITY && thread==CPPAD_TRACE_THREAD )
-		{	std::cout << "return_memory: v_ptr = " << v_ptr << std::endl; }
-
-		// remove v_ptr from inuse list
-		previous->next_  = node->next_;
-# endif
-		// capacity bytes are removed from the inuse pool
-		dec_inuse(capacity, thread);
-
-		// check for case where we just return the memory to the system
-		if( max_num_threads(0) == 1 )
-		{	::operator delete( reinterpret_cast<void*>(node) );
-			return;
-		}
-
-		// add this node to available list for this thread and capacity
-		omp_alloc* available_root = root_available() + tc_index;
-		node->next_               = available_root->next_;
-		available_root->next_     = reinterpret_cast<void*>(node);
-
-		// capacity bytes are added to the available pool
-		inc_available(capacity, thread);
-	}
+	{	thread_alloc::return_memory(v_ptr); }
 /* -----------------------------------------------------------------------
-$begin free_available$$
+$begin omp_free_available$$
 $spell
 	omp_alloc
 $$
 
 $section Free Memory Currently Available for Quick Use by a Thread$$
 
+$head Deprecated$$
 $index free_available, omp_alloc$$
 $index omp_alloc, free_available$$
-$index free, available$$
-$index available, free$$
-$index thread, free memory$$
+Use the function $cref/thread_alloc::free_available/new_free_available/$$ 
+instead.
 
 $head Syntax$$
 $codei%omp_alloc::free_available(%thread%)%$$
@@ -818,9 +359,9 @@ This argument has prototype
 $codei%
 	size_t %thread%
 %$$
-Either $cref/get_thread_num/$$ must be the same as $icode thread$$,
+Either $cref omp_get_thread_num$$ must be the same as $icode thread$$,
 or the current execution mode must be sequential 
-(not $cref/parallel/in_parallel/$$).
+(not $cref/parallel/omp_in_parallel/$$).
 
 $head Example$$
 $cref/omp_alloc.cpp/$$
@@ -836,40 +377,9 @@ $end
 	in sequential (not parallel) execution mode.
 	*/
 	static void free_available(size_t thread)
-	{	CPPAD_ASSERT_KNOWN(
-			thread < CPPAD_MAX_NUM_THREADS,
-			"Attempt to free memory for a thread >= CPPAD_MAX_NUM_THREADS"
-		);
-		CPPAD_ASSERT_KNOWN( 
-			thread == get_thread_num() || (! in_parallel()),
-			"Attempt to free memory for a different thread "
-			"while in parallel mode"
-		);
-	
-		size_t num_cap = capacity_info()->number;
-		if( num_cap == 0 )
-			return;
-		const size_t*     capacity_vec  = capacity_info()->value;
-		size_t c_index, tc_index;
-		for(c_index = 0; c_index < num_cap; c_index++)
-		{	size_t capacity = capacity_vec[c_index];
-			tc_index                  = thread * num_cap + c_index;
-			omp_alloc* available_root = root_available() + tc_index;
-			void* v_ptr               = available_root->next_;
-			while( v_ptr != 0 )
-			{	omp_alloc* node = reinterpret_cast<omp_alloc*>(v_ptr); 
-				void* next      = node->next_;
-				::operator delete(v_ptr);
-				v_ptr           = next;
-
-				dec_available(capacity, thread);
-			}
-			available_root->next_ = 0;
-		}
-		CPPAD_ASSERT_UNKNOWN( available(thread) == 0 );
-	}
+	{	thread_alloc::free_available(thread); }
 /* -----------------------------------------------------------------------
-$begin inuse$$
+$begin omp_inuse$$
 $spell
 	num
 	inuse
@@ -878,13 +388,13 @@ $$
 
 $section Amount of Memory a Thread is Currently Using$$
 
+$head Deprecated$$
 $index inuse, omp_alloc$$
 $index omp_alloc, inuse$$
-$index use, memory$$
-$index thread, memory inuse$$
 
 $head Syntax$$
 $icode%num_bytes% = omp_alloc::inuse(%thread%)%$$
+Use the function $cref/thread_alloc::inuse/new_inuse/$$ instead.
 
 $head Purpose$$
 Memory being managed by $cref/omp_alloc/$$ has two states,
@@ -897,9 +407,9 @@ This argument has prototype
 $codei%
 	size_t %thread%
 %$$
-Either $cref/get_thread_num/$$ must be the same as $icode thread$$,
+Either $cref omp_get_thread_num$$ must be the same as $icode thread$$,
 or the current execution mode must be sequential 
-(not $cref/parallel/in_parallel/$$).
+(not $cref/parallel/omp_in_parallel/$$).
 
 $head num_bytes$$
 The return value has prototype
@@ -926,15 +436,9 @@ $end
 	The amount of memory in bytes.
 	*/
 	static size_t inuse(size_t thread)
-	{ 
-		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS);
-		CPPAD_ASSERT_UNKNOWN( 
-			thread == get_thread_num() || (! in_parallel()) 
-		);
-		return inuse_vector()[thread];
-	}
+	{	return thread_alloc::inuse(thread); } 
 /* -----------------------------------------------------------------------
-$begin available$$
+$begin omp_available$$
 $spell
 	num
 	omp_alloc
@@ -942,10 +446,10 @@ $$
 
 $section Amount of Memory Available for Quick Use by a Thread$$
 
+$head Deprecated$$
 $index available, omp_alloc$$
 $index omp_alloc, available$$
-$index memory, available$$
-$index thread, available memory$$
+Use the function $cref/thread_alloc::available/new_available/$$ instead.
 
 $head Syntax$$
 $icode%num_bytes% = omp_alloc::available(%thread%)%$$
@@ -961,9 +465,9 @@ This argument has prototype
 $codei%
 	size_t %thread%
 %$$
-Either $cref/get_thread_num/$$ must be the same as $icode thread$$,
+Either $cref omp_get_thread_num$$ must be the same as $icode thread$$,
 or the current execution mode must be sequential 
-(not $cref/parallel/in_parallel/$$).
+(not $cref/parallel/omp_in_parallel/$$).
 
 $head num_bytes$$
 The return value has prototype
@@ -983,15 +487,9 @@ $end
 	\copydetails inuse
 	*/
 	static size_t available(size_t thread)
-	{
-		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS);
-		CPPAD_ASSERT_UNKNOWN( 
-			thread == get_thread_num() || (! in_parallel()) 
-		);
-		return available_vector()[thread];
-	}
+	{	return thread_alloc::available(thread); } 
 /* -----------------------------------------------------------------------
-$begin create_array$$
+$begin omp_create_array$$
 $spell
 	omp_alloc
 	sizeof
@@ -999,10 +497,10 @@ $$
 
 $section Allocate Memory and Create A Raw Array$$
 
+$head Deprecated$$
 $index create_array, omp_alloc$$
 $index omp_alloc, create_array$$
-$index array, allocate$$
-$index allocate, array$$
+Use the function $cref/thread_alloc::create_array/new_create_array/$$ instead.
 
 $head Syntax$$
 $icode%array% = omp_alloc::create_array<%Type%>(%size_min%, %size_out%)%$$.
@@ -1040,16 +538,16 @@ $codei%
 It is array with $icode size_out$$ elements.
 The default constructor for $icode Type$$ is used to initialize the 
 elements of $icode array$$.
-Note that $cref/delete_array/$$
+Note that $cref omp_delete_array$$
 should be used to destroy the array when it is no longer needed.
 
 $head Delta$$
-The amount of memory $cref inuse$$ by the current thread, 
+The amount of memory $cref omp_inuse$$ by the current thread, 
 will increase $icode delta$$ where
 $codei%
 	sizeof(%Type%) * (%size_out% + 1) > %delta% >= sizeof(%Type%) * %size_out%
 %$$
-The $cref available$$ memory will decrease by $icode delta$$,
+The $cref omp_available$$ memory will decrease by $icode delta$$,
 (and the allocation will be faster)
 if a previous allocation with $icode size_min$$ between its current value
 and $icode size_out$$ is available. 
@@ -1082,28 +580,9 @@ $end
 	*/
 	template <class Type>
 	static Type* create_array(size_t size_min, size_t& size_out)
-	{	// minimum number of bytes to allocate
-		size_t min_bytes = size_min * sizeof(Type);
-		// do the allocation 
-		size_t num_bytes;
-		void*  v_ptr     = get_memory(min_bytes, num_bytes);
-		// This is where the array starts
-		Type*  array     = reinterpret_cast<Type*>(v_ptr);
-		// number of Type values in the allocation
-		size_out         = num_bytes / sizeof(Type);
-		// store this number in the extra field
-		omp_alloc* node  = reinterpret_cast<omp_alloc*>(v_ptr) - 1;
-		node->extra_     = size_out;
-
-		// call default constructor for each element
-		size_t i;
-		for(i = 0; i < size_out; i++)
-			new(array + i) Type();
-
-		return array;
-	}
+	{	return thread_alloc::create_array<Type>(size_min, size_out); }
 /* -----------------------------------------------------------------------
-$begin delete_array$$
+$begin omp_delete_array$$
 $spell
 	omp_alloc
 	sizeof
@@ -1111,18 +590,18 @@ $$
 
 $section Return A Raw Array to The Available Memory for a Thread$$
 
+$head Deprecated$$
 $index delete_array, omp_alloc$$
 $index omp_alloc, delete_array$$
-$index array, allocate$$
-$index allocate, array$$
+Use the function $cref/thread_alloc::delete_array/new_delete_array/$$ instead.
 
 $head Syntax$$
 $codei%omp_alloc::delete_array(%array%)%$$.
 
 $head Purpose$$
 Returns memory corresponding to a raw array 
-(create by $cref/create_array/$$) to the 
-$cref/available/$$ memory pool for the current thread.
+(create by $cref omp_create_array$$) to the 
+$cref omp_available$$ memory pool for the current thread.
 
 $head Type$$
 The type of the elements of the array.
@@ -1132,20 +611,20 @@ The argument $icode array$$ has prototype
 $codei%
 	%Type%* %array%
 %$$
-It is a value returned by $cref/create_array/$$ and not yet deleted.
+It is a value returned by $cref omp_create_array$$ and not yet deleted.
 The $icode Type$$ destructor is called for each element in the array.
 
 $head Thread$$
-The $cref/current thread/get_thread_num/$$ must be the
-same as when $cref/create_array/$$ returned the value $icode array$$.
+The $cref/current thread/omp_get_thread_num/$$ must be the
+same as when $cref omp_create_array$$ returned the value $icode array$$.
 There is an exception to this rule:
 when the current execution mode is sequential
-(not $cref/parallel/in_parallel/$$) the current thread number does not matter.
+(not $cref/parallel/omp_in_parallel/$$) the current thread number does not matter.
 
 $head Delta$$
-The amount of memory $cref inuse$$ will decrease by $icode delta$$,
-and the $cref available$$ memory will increase by $icode delta$$,
-where $cref/delta/create_array/Delta/$$ 
+The amount of memory $cref omp_inuse$$ will decrease by $icode delta$$,
+and the $cref omp_available$$ memory will increase by $icode delta$$,
+where $cref/delta/omp_create_array/Delta/$$ 
 is the same as for the corresponding call to $code create_array$$.
 
 $head Example$$
@@ -1170,98 +649,114 @@ $end
 	*/
 	template <class Type>
 	static void delete_array(Type* array)
-	{	// determine the number of values in the array
-		omp_alloc* node = reinterpret_cast<omp_alloc*>(array) - 1;
-		size_t size     = node->extra_;
-
-		// call destructor for each element
-		size_t i;
-		for(i = 0; i < size; i++)
-			(array + i)->~Type();
-
-		// return the memory to the available pool for this thread
-		omp_alloc::return_memory( reinterpret_cast<void*>(array) );
-	}
-// ----------------------------------------------------------------------------
-// Deprecated members of the user API; see omh/omp_alloc_dep.omh	
-// ----------------------------------------------------------------------------
-	/*!
-	\b Deprecated: Check if memory that is currently in use is an efficient 
-	allocation for a specified number of bytes.
-	
-
-	\param v_ptr [in]
-	Value of the pointer returned by \c get_memory and still in use.
-
-	\param num_bytes [in]
-	specifies the number of bytes of the memory allocated by \c v_ptr
-	that we want to use.
-
-	\par
-	We must either be in sequential (not parallel) execution mode,
-	or the current thread must be the same as for the corresponding call
-	to \c get_memory.
-
-	\return
-	If true, a call to \c get_memory with \c min_bytes equal to \c num_bytes
-	would result in a value for \c cap_bytes that is the same as when 
-	\c v_ptr was returned by \c get_memory; i.e.,
-	\c v_ptr is an efficient memory block for \c num_bytes bytes 
-	of information.
- 	*/
-	static bool efficient(void* v_ptr, size_t num_bytes)
-	{	size_t num_cap             = capacity_info()->number;
-		const size_t* capacity_vec = capacity_info()->value;
-
-		omp_alloc* node  = reinterpret_cast<omp_alloc*>(v_ptr) - 1;
-		size_t tc_index  = node->tc_index_;
-		size_t c_index   = tc_index % num_cap;
-		CPPAD_ASSERT_KNOWN(
-			c_index < num_cap,
-			"efficient: v_ptr was not returned by get_memory"
-		);
-		size_t  capacity  = capacity_vec[c_index];
-		bool flag         = num_bytes <= capacity;
-		if( c_index > 0 )
-			flag        &= capacity_vec[c_index-1] < num_bytes;
-# ifndef NDEBUG
-		size_t thread    = tc_index / num_cap;
-		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS );
-		CPPAD_ASSERT_KNOWN( 
-			thread == get_thread_num() || (! in_parallel()),
-			"Attempt to return memory for a different thread "
-			"while in parallel mode"
-		);
-		void* v_node           = reinterpret_cast<void*>(node);
-		omp_alloc* inuse_root  = root_inuse() + tc_index;
-		omp_alloc* previous    = inuse_root;
-		while( (previous->next_ != 0) & (previous->next_ != v_node) )
-			previous = reinterpret_cast<omp_alloc*>(previous->next_);	
-
-		// check that v_ptr is valid
-		if( previous->next_ != v_node )
-		{	using std::endl;
-			std::ostringstream oss;
-			oss << "efficient: attempt to v_ptr is not in use";
-			oss << endl;
-			oss << "v_ptr    = " << v_ptr    << endl;   
-			oss << "thread   = " << thread   << endl;   
-			oss << "capacity = " << capacity << endl;   
-			oss << "See CPPAD_TRACE_THREAD & CPPAD_TRACE_CAPACITY in";
-			oss << endl << "# include <cppad/omp_alloc.hpp>" << endl;
-			CPPAD_ASSERT_KNOWN(false, oss.str().c_str()	); 
-		}
-
-# endif
-		return flag;
-	}
+	{	thread_alloc::delete_array(array); }
 };
+/* --------------------------------------------------------------------------
+$begin omp_efficient$$
+$spell
+	omp_alloc
+	ptr
+	num
+	bool
+	const
+$$
 
+$section Check If A Memory Allocation is Efficient for Another Use$$
+
+$head Removed$$
+$index efficient, omp_alloc$$
+$index omp_alloc, efficient$$
+This function has been removed because speed tests seem to indicate
+it is just as fast, or faster, to free and then reallocate the memory.
+
+$head Syntax$$
+$codei%flag% = omp_alloc::efficient(%v_ptr%, %num_bytes%)%$$
+
+$head Purpose$$
+Check if memory that is currently in use is an efficient 
+allocation for a specified number of bytes.
+
+$head v_ptr$$
+This argument has prototype
+$codei%
+	const void* %v_ptr%
+%$$.
+It must be a pointer to memory that is currently in use; i.e.
+obtained by a previous call to $cref omp_get_memory$$ and not yet returned.
+
+$head num_bytes$$
+This argument has prototype
+$codei%
+	size_t %num_bytes%
+%$$
+It specifies the number of bytes of the memory allocated by $icode v_ptr$$ 
+that we want to use.
+
+$head flag$$
+The return value has prototype
+$codei%
+	bool %flag%
+%$$
+It is true, 
+a call to $code get_memory$$ with 
+$cref/min_bytes/omp_get_memory/min_bytes/$$
+equal to $icode num_bytes$$ would result in a value for
+$cref/cap_bytes/omp_get_memory/cap_bytes/$$ that is the same as when $code v_ptr$$
+was returned by $code get_memory$$; i.e.,
+$icode v_ptr$$ is an efficient memory block for $icode num_bytes$$
+bytes of information.
+
+$head Thread$$
+Either the $cref/current thread/omp_get_thread_num/$$ must be the same as during
+the corresponding call to $cref omp_get_memory$$,
+or the current execution mode must be sequential 
+(not $cref/parallel/omp_in_parallel/$$).
+
+$head NDEBUG$$
+If $code NDEBUG$$ is defined, $icode v_ptr$$ is not checked (this is faster).
+Otherwise, a list of in use pointers is searched to make sure
+that $icode v_ptr$$ is in the list. 
+
+$end
+---------------------------------------------------------------------------
+$begin old_max_num_threads$$
+$spell
+	inv
+	CppAD
+	num
+	omp_alloc
+$$
+$section Set Maximum Number of Threads for omp_alloc Allocator$$
+
+$head Removed$$
+$index max_num_threads, omp_alloc$$
+$index omp_alloc, max_num_threads$$
+This function has been removed from the CppAD API.
+Use the function $cref/thread_alloc::parallel_setup/new_parallel_setup/$$
+in its place.
+
+$head Syntax$$
+$codei%omp_alloc::max_num_threads(%number%)%$$
+
+$head Purpose$$
+By default there is only one thread and all execution is in sequential mode
+(not $cref/parallel/omp_in_parallel/$$).
+
+$head number$$
+The argument $icode number$$ has prototype
+$icode%
+	size_t %number%
+%$$ 
+It must be greater than zero and specifies the maximum number of 
+OpenMP threads that will be active at one time.
+
+$head Restrictions$$
+This function must be called before the program enters 
+$cref/parallel/omp_in_parallel/$$ execution mode.
+
+$end
+-------------------------------------------------------------------------------
+*/
 CPPAD_END_NAMESPACE
 
-// preprocessor symbols local to this file
-# undef CPPAD_MAX_NUM_CAPACITY
-# undef CPPAD_MIN_DOUBLE_CAPACITY
-# undef CPPAD_TRACE_CAPACITY
-# undef CPPAD_TRACE_THREAD
 # endif

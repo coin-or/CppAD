@@ -266,12 +266,14 @@ The dimension of the range space for $latex y = f (x)$$
 is specified by $cref/m/user_atomic/m/$$ $codei%= %ay%.size()%$$,
 which must be greater than zero.
 
-$subhead OpenMP$$
+$subhead Parallel Mode$$
+$index parallel, user_atomic$$
+$index user_atomic, parallel$$
 The first call to 
 $codei%
 	%afun%(%id%, %ax%, %ay%)
 %$$
-must not be in $cref/in_parallel/$$ execution mode.
+must not be in $cref/parallel/new_in_parallel/$$ mode.
 
 $head forward$$
 The macro argument $icode forward$$ is a
@@ -647,7 +649,7 @@ increase speed by avoiding system memory allocation calls.
 The function call $codei%
 	user_atomic<%Base%>::clear()
 %$$ 
-makes to work space available to $cref/omp_alloc/$$
+makes to work space $cref/available/new_available/$$ to
 for other uses by the same thread.
 This should be called when you are done using the 
 user atomic functions for a specific value of $icode Base$$.
@@ -671,6 +673,9 @@ $end
 */
 # include <set>
 # include <cppad/local/cppad_assert.hpp>
+
+// needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# include <cppad/thread_alloc.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -875,10 +880,9 @@ public:
 	, rjs_(rjs)
 	, rhs_(rhs)
 	, index_( List().size() )
-	{
-		CPPAD_ASSERT_KNOWN(
-			! omp_alloc::in_parallel() ,
-			"First call to this user atomic function is in parallel mode."
+	{	CPPAD_ASSERT_KNOWN(
+			! thread_alloc::in_parallel() ,
+			"First call to the function *afun is in parallel mode."
 		);
 		List().push_back(this);
 	}

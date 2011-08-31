@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20110811, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20110831, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -243,6 +243,18 @@ else
 fi 
 AC_SUBST(CXX_FLAGS_FADBAD, "$cxx_flags_fadbad")
 
+dnl The compiler OpenMP flags OPENMP_FLAGS ----------------------------------
+AC_MSG_CHECKING([OPENMP_FLAGS])
+AC_ARG_VAR(OPENMP_FLAGS,
+	[ flags that instruct compiler to interpret OpenMP directrives ]
+)
+if test "$OPENMP_FLAGS" != "" ; then
+	AC_MSG_RESULT([$OPENMP_FLAGS]) 
+else
+	AC_MSG_RESULT([no])
+fi 
+AM_CONDITIONAL(CppAD_OPENMP, test "$OPENMP_FLAGS" != "")
+
 dnl The type used for addresses in AD tapes [ default = unsigned int ] ---
 AC_MSG_CHECKING([TAPE_ADDR_TYPE])
 AC_ARG_VAR(TAPE_ADDR_TYPE, [type used for addresses in AD tapes])
@@ -348,13 +360,18 @@ dnl --------------------------------------------------------------------------
 dnl Check for C libraries
 
 dnl check for pthread library
-AC_SUBST(PTHREAD_LIB, "")
 AC_CHECK_LIB(
 	[pthread],
 	[pthread_create],
-	[PTHREAD_LIB="-lpthread"],
-	[PTHREAD_LIB=""]
+	[pthread="yes"],
+	[pthread="no"]
 )
+AM_CONDITIONAL(CppAD_PTHREAD, test "$pthread" = "yes")
+if test "$pthread" == "yes" ; then
+	AC_SUBST(PTHREAD_LIB,"-lpthread")
+else
+	AC_SUBST(PTHREAD_LIB,"")
+fi
 
 dnl check for dl library
 AC_SUBST(DL_LIB, "")
@@ -438,6 +455,7 @@ AC_CONFIG_FILES([
 	cppad_ipopt/test/makefile
 	introduction/get_started/makefile 
 	introduction/exp_apx/makefile
+	openmp/makefile
 	print_for/makefile
 	speed/adolc/makefile
 	speed/cppad/makefile 

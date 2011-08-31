@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin CheckSimpleVector$$
 $spell
+	alloc
 	const
 	cppad.hpp
 	CppAD
@@ -81,6 +82,13 @@ The file $code cppad/check_simple_vector.hpp$$ is included by $code cppad/cppad.
 but it can also be included separately with out the rest
 if the CppAD include files.
 
+$head Parallel Mode$$
+$index parallel, CheckSimpleVector$$
+$index CheckSimpleVector, parallel$$
+The routine $cref/thread_alloc::parallel_setup/new_parallel_setup/$$
+must be called before it
+can be used in $cref/parallel/new_in_parallel/$$ mode.
+
 $head Example$$
 $children%
 	example/check_simple_vector.cpp
@@ -99,7 +107,7 @@ $end
 # include <cstddef>
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/local/define.hpp>
-# include <cppad/omp_alloc.hpp>
+# include <cppad/thread_alloc.hpp>
 
 namespace CppAD {
 
@@ -123,7 +131,7 @@ namespace CppAD {
 		// objects with static storage duration (3.7.1) shall be zero-
 		// initialized (8.5) before any other initialization takes place."
 		static size_t count[CPPAD_MAX_NUM_THREADS];
-		size_t thread = omp_alloc::get_thread_num();
+		size_t thread = thread_alloc::thread_num();
 		if( count[thread] > 0  )
 			return;
 		count[thread]++;

@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_MULTI_NEWTON_INCLUDED
-# define CPPAD_MULTI_NEWTON_INCLUDED
+# ifndef CPPAD_NEWTON_METHOD_INCLUDED
+# define CPPAD_NEWTON_METHOD_INCLUDED
 
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
@@ -14,8 +14,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin multi_newton$$
+$begin openmp_newton_method$$
 $spell
+	openmp
 	df
 	xout
 	xlow
@@ -23,6 +24,7 @@ $spell
 	itr
 	CppAD
 	const
+	bool
 $$
 
 $index OpenMP, Newton's method$$
@@ -32,8 +34,9 @@ $index example, OpenMP Newton's method$$
 $section Multi-Threaded Newton's Method Routine$$
 
 $head Syntax$$
-$codei%multi_newton(
-	%xout%, %fun%, %n_grid%, %xlow%, %xup%, %epsilon%, %max_itr%)%$$
+$codei%newton_method(%xout%, 
+	%fun%, %n_sub%, %xlow%, %xup%, %epsilon%, %max_itr%, %use_openmp%
+)%$$
 
 
 $head Purpose$$
@@ -42,14 +45,14 @@ such that $latex f(x) = 0$$.
 
 $head Method$$
 For $latex i = 0 , \ldots , n$$,  
-we define the $th i$$ grid point $latex g_i$$ 
-and the $th i$$ interval $latex I_i$$ by
+we define the $th i$$ grid point $latex g_i$$ by
 $latex \[
-\begin{array}{rcl}
-	g_i & = & a \frac{n - i}{n} +  b \frac{i}{n}
-	\\
-	I_i & = & [ g_i , g_{i+1} ]
-\end{array}
+	g_i = a \frac{n - i}{n} +  b \frac{i}{n}
+\] $$
+For $latex i = 0 , \ldots , n-1$$,  
+we define the $th i$$ sub-interval of $latex [a, b]$$ by
+$latex \[
+	I_i = [ g_i , g_{i+1} ]
 \] $$
 Newton's method is applied starting
 at the center of each of the intervals $latex I_i$$ for
@@ -63,8 +66,8 @@ $codei%
 	CppAD::vector<double> &%xout%
 %$$
 The input size and value of the elements of $icode xout$$ do not matter.
-Upon return from $code multi_newton$$,
-the size of $icode xout$$ is less than $latex n$$ and
+Upon return from $code openmp_newton_method$$,
+the size of $icode xout$$ is less than or equal $latex n$$ and
 $latex \[
 	| f( xout[i] ) | \leq epsilon
 \] $$ 
@@ -93,13 +96,13 @@ $codei%
 The input values of $icode f$$ and $icode df$$ do not matter.
 Upon return they are $latex f(x)$$ and $latex f^{(1)} (x)$$ respectively.
 
-$head n_grid$$
-The argument $icode n_grid$$ has prototype
+$head n_sub$$
+The argument $icode n_sub$$ has prototype
 $codei%
-	size_t %n_grid%
+	size_t %n_sub%
 %$$
-It specifies the number of grid points; i.e., $latex n$$ 
-in the $cref/method/multi_newton/Method/$$ above.
+It specifies the number of sub-intervals; i.e., $latex n$$ 
+in the $cref/method/openmp_newton_method/Method/$$ above.
 
 $head xlow$$
 The argument $icode xlow$$ has prototype
@@ -107,7 +110,7 @@ $codei%
 	double %xlow%
 %$$
 It specifies the lower limit for the entire search; i.e., $latex a$$
-in the $cref/method/multi_newton/Method/$$ above.
+in the $cref/method/openmp_newton_method/Method/$$ above.
 
 $head xup$$
 The argument $icode xup$$ has prototype
@@ -115,7 +118,7 @@ $codei%
 	double %xup%
 %$$
 It specifies the upper limit for the entire search; i.e., $latex b$$
-in the $cref/method/multi_newton/Method/$$ above.
+in the $cref/method/openmp_newton_method/Method/$$ above.
 
 $head epsilon$$
 The argument $icode epsilon$$ has prototype
@@ -133,12 +136,25 @@ $codei%
 It specifies the maximum number of iterations of Newton's method to try
 before giving up on convergence.
 
+$head use_openmp$$
+The argument $icode use_openmp$$ has prototype
+$codei%
+	bool %use_openmp%
+%$$
+If it is true, OpenMP is used for the calculations,
+(and the number of threads is not changed).
+Otherwise, the calculation is done without multi-threading.
+
+
 $end
 ---------------------------------------------------------------------------
-$begin multi_newton.hpp$$
+$begin openmp_newton_method.hpp$$
+$spell
+	openmp
+$$
 
-$index multi_newton, source$$
-$index source, multi_newton$$
+$index openmp_newton_method, source$$
+$index source, openmp_newton_method$$
 $index example, OpenMP$$
 $index example, multi-thread$$
 $index OpenMP, example$$
@@ -148,7 +164,7 @@ $index multi-thread, example$$
 $section OpenMP Multi-Threading Newton's Method Source Code$$
 
 $code
-$verbatim%openmp/multi_newton.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%openmp/newton_method.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 $end
 ---------------------------------------------------------------------------
@@ -157,10 +173,7 @@ $end
 
 # include <cppad/cppad.hpp>
 # include <cassert>
-
-# ifdef _OPENMP
 # include <omp.h>
-# endif
 
 namespace { // BEGIN CppAD namespace
 
@@ -195,57 +208,73 @@ void one_newton(Fun& fun, double &fcur, double &xcur,
 }
 
 template <class Fun>
-void multi_newton(
+void newton_method(
 	CppAD::vector<double> &xout , 
 	Fun &fun                    , 
-	size_t n_grid               , 
+	size_t n_sub                , 
 	double xlow                 , 
 	double xup                  , 
 	double epsilon              , 
-	size_t max_itr              )
+	size_t max_itr              ,
+	bool   use_openmp           )
 {	using CppAD::AD;
 	using CppAD::vector;
 	using CppAD::abs;
 
 	// check argument values
 	assert( xlow < xup );
-	assert( n_grid > 0 );
+	assert( n_sub > 0 );
 
 	// OpenMP uses integers in place of size_t
-	int i, n = int(n_grid);
+	int i, n = int(n_sub);
 
 	// set up grid
-	vector<double> grid(n_grid + 1);
-	vector<double> fcur(n_grid), xcur(n_grid), xmid(n_grid);
-	double dx = (xup - xlow) / double(n_grid);
-	for(i = 0; size_t(i) < n_grid; i++)
+	vector<double> grid(n_sub + 1);
+	vector<double> fcur(n), xcur(n), xmid(n);
+	double dx = (xup - xlow) / double(n);
+	for(i = 0; i < n; i++)
 	{	grid[i] = xlow + i * dx;
 		xmid[i] = xlow + (i + .5) * dx;
 	}
-	grid[n_grid] = xup;
+	grid[n] = xup;
 
-# ifdef _OPENMP
+	if( use_openmp )
+	{
 # pragma omp parallel for 
-# endif
-	for(i = 0; i < n; i++) 
-	{	one_newton(
-			fun       , 
-			fcur[i]   ,
-			xcur[i]   ,
-			grid[i]   , 
-			xmid[i]   , 
-			grid[i+1] , 
-			epsilon   , 
-			max_itr
-		);
+		for(i = 0; i < n; i++) 
+		{	one_newton(
+				fun       , 
+				fcur[i]   ,
+				xcur[i]   ,
+				grid[i]   , 
+				xmid[i]   , 
+				grid[i+1] , 
+				epsilon   , 
+				max_itr
+			);
+		}
+// end omp parallel for 
+ 	}
+ 	else
+	{
+		for(i = 0; i < n; i++) 
+		{	one_newton(
+				fun       , 
+				fcur[i]   ,
+				xcur[i]   ,
+				grid[i]   , 
+				xmid[i]   , 
+				grid[i+1] , 
+				epsilon   , 
+				max_itr
+			);
+		}
 	}
-// end omp parallel for
-
 	// remove duplicates and points that are not solutions
 	double xlast  = xlow;
 	size_t ilast  = 0;
 	size_t n_zero = 0;
-	for(i = 0; size_t(i) < n_grid; i++)
+	for(i = 0; i < n; i++)
 	{	if( abs( fcur[i] ) <= epsilon )
 		{	if( n_zero == 0 )
 			{	xcur[n_zero++] = xlast = xcur[i];

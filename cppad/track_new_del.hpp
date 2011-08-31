@@ -34,7 +34,7 @@ $index memory, track$$
 $head Deprecated$$
 $index deprecated, track memory$$
 This routine has been deprecated.
-You should use the $cref/omp_alloc/$$ memory allocator instead
+You should use the $cref/thread_alloc/$$ memory allocator instead
 (which works better in both a single thread and 
 properly in multi-threading environment).
 
@@ -249,12 +249,13 @@ It has been deprecated; i.e.,
 it is still defined in the CppAD distribution, but it should
 not be used.
 
-$head OpenMP$$
-$index OpenMP, TrackCount$$
-$index TrackCount, OpenMP$$
-These routines cannot be used $cref/in_parallel/$$
+$head Multi-Threading$$
+$index multi-threading, TrackCount$$
+$index TrackCount, multi-threading$$
+$index thread, multi TrackCount$$
+These routines cannot be used $cref new_in_parallel$$
 execution mode.
-Use the $cref/omp_alloc/$$ routines instead.
+Use the $cref/thread_alloc/$$ routines instead.
 
 $head Example$$
 $children%
@@ -268,7 +269,7 @@ $end
 ------------------------------------------------------------------------------
 */
 # include <cppad/local/cppad_assert.hpp>
-# include <cppad/omp_alloc.hpp>
+# include <cppad/thread_alloc.hpp>
 # include <sstream>
 # include <string>
 
@@ -321,7 +322,7 @@ public:
 
 	// There is only one tracking list and it starts it here
 	static TrackElement *Root(void)
-	{	CPPAD_ASSERT_UNKNOWN( ! omp_alloc::in_parallel() );
+	{	CPPAD_ASSERT_UNKNOWN( ! thread_alloc::in_parallel() );
 		static TrackElement root;
 		return &root; 
 	}
@@ -329,7 +330,7 @@ public:
 	// Print one tracking element
 	static void Print(TrackElement* E)
 	{
-		CPPAD_ASSERT_UNKNOWN( ! omp_alloc::in_parallel() );
+		CPPAD_ASSERT_UNKNOWN( ! thread_alloc::in_parallel() );
 		using std::cout;
 		cout << "E = "         << E;
 		cout << ", E->next = " << E->next;
@@ -342,7 +343,7 @@ public:
 	// Print the linked list for a thread
 	static void Print(void)
 	{
-		CPPAD_ASSERT_UNKNOWN( ! omp_alloc::in_parallel() );
+		CPPAD_ASSERT_UNKNOWN( ! thread_alloc::in_parallel() );
 		using std::cout;
 		using std::endl;
 		TrackElement *E = Root();
@@ -365,7 +366,7 @@ inline void TrackError(
 	int         line,
 	const char *msg )
 {
-	CPPAD_ASSERT_UNKNOWN( ! omp_alloc::in_parallel() );
+	CPPAD_ASSERT_UNKNOWN( ! thread_alloc::in_parallel() );
 	std::ostringstream buf;
 	buf << routine
 	    << ": at line "
@@ -410,7 +411,7 @@ Type *TrackNewVec(
 	Type       * /* oldptr */ )
 {
 	CPPAD_ASSERT_KNOWN(
-		! omp_alloc::in_parallel() ,
+		! thread_alloc::in_parallel() ,
 		"attempt to use TrackNewVec in parallel execution mode."
 	);
 	// try to allocate the new memrory
@@ -468,7 +469,7 @@ void TrackDelVec(
 	Type       *oldptr  )
 {
 	CPPAD_ASSERT_KNOWN(
-		! omp_alloc::in_parallel() ,
+		! thread_alloc::in_parallel() ,
 		"attempt to use TrackDelVec in parallel execution mode."
 	);
 	TrackElement        *P;
@@ -519,7 +520,7 @@ Type *TrackExtend(
 	Type       *oldptr  ) 
 {	
 	CPPAD_ASSERT_KNOWN(
-		! omp_alloc::in_parallel() ,
+		! thread_alloc::in_parallel() ,
 		"attempt to use TrackExtend in parallel execution mode."
 	);
 
@@ -556,7 +557,7 @@ Type *TrackExtend(
 inline size_t TrackCount(const char *file, int line)
 {
 	CPPAD_ASSERT_KNOWN(
-		! omp_alloc::in_parallel() ,
+		! thread_alloc::in_parallel() ,
 		"attempt to use TrackCount in parallel execution mode."
 	);
 	size_t count = 0;

@@ -19,6 +19,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/define.hpp>
 # include <cppad/local/cppad_assert.hpp>
 
+// needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# include <cppad/thread_alloc.hpp>
+
 CPPAD_BEGIN_NAMESPACE
 /*! 
 \file op_code.hpp
@@ -398,7 +401,7 @@ void printOp(
 {	size_t i;
 	
 	CPPAD_ASSERT_KNOWN(
-		! omp_alloc::in_parallel() ,
+		! thread_alloc::in_parallel() ,
 		"cannot print trace of AD operations in parallel mode"
 	);
 	static const char *CompareOpName[] = 

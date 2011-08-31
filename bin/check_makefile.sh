@@ -10,7 +10,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/check_makefile.sh" ]
+if [ ! -e "bin/check_makefile.sh" ]
 then
 	echo "bin/check_makefile.sh: must be executed from its parent directory"
 	exit 1
@@ -54,7 +54,7 @@ ok="yes"
 for file in $list
 do
 	case $file in
-		( makefile.am | speed_cppad/makefile.am | work/* | svn_dist/* ) 
+		( makefile.am | openmp/makefile.am | work/* | svn_dist/* ) 
 		;;
 
 		(speed/example/makefile.am)

@@ -253,14 +253,17 @@ then
 #_build_test_only:	tape_addr_type="TAPE_ADDR_TYPE=int"
 	#
 	dir_list=`echo $dir_list | sed -e 's|\t\t*| |g'`
-	echo "../configure \\"
-	echo "$dir_list" | sed -e 's| | \\\n\t|g' -e 's|$| \\|' -e 's|^|\t|'
-	echo "	CXX_FLAGS=\"-Wall -ansi -pedantic-errors -std=c++98 -Wshadow\"\\"
-	echo "	$tape_addr_type --with-Documentation"
+	cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wshadow"
+cat << EOF
+../configure \\
+$dir_list \\
+CXX_FLAGS=\"$cxx_flags\" \\
+$tape_addr_type --with-Documentation OPENMP_FLAGS=-fopenmp
+EOF
 	#
 	../configure $dir_list \
-		CXX_FLAGS="-Wall -ansi -pedantic-errors -std=c++98 -Wshadow" \
-		$tape_addr_type --with-Documentation
+		CXX_FLAGS="$cxx_flags" \
+		$tape_addr_type --with-Documentation OPENMP_FLAGS=-fopenmp
 	#
 	for file in $configure_file_list
 	do
@@ -508,12 +511,6 @@ then
 	echo "./build.sh doxygen   >> $log_file"
 	      ./build.sh doxygen   >> $log_dir/$log_file
 	#
-	# openmp test script
-	for name in example_a11c parallel_ad sum_i_inv multi_newton
-	do
-		echo "openmp/run.sh $name >> $log_file"
-		      openmp/run.sh $name >> $log_dir/$log_file
-	done
 	# ----------------------------------------------------------------------
 	# Things to do in the work/disribution/work directory
 	# ----------------------------------------------------------------------
@@ -522,30 +519,42 @@ then
 	      cd work
 	#
 	dir=`pwd` 
-	echo "To follow progress of 'make test' use"
-	echo "	../temp.sh ( OK | All | tail )"
+	echo "To see progress in the 'make test' log file use"
+	echo "	../temp.sh ( OK | All | tail | follow | file )"
 	cat << EOF > $log_dir/../temp.sh
 #! /bin/bash -e
-if [ "\$1" == "OK" ]
-then
-	echo "grep OK $dir/make_test.log"
+case "\$1" in
+
+	OK)
 	grep OK $dir/make_test.log
 	exit 0
-fi
-if [ "\$1" == "All" ]
-then
-	echo "grep All $dir/make_test.log"
+	;;
+
+	All)
 	grep All $dir/make_test.log
 	exit 0
-fi
-if [ "\$1" == "tail" ]
-then
-	echo "tail -f $dir/make_test.log"
+	;;
+
+	tail)
+	tail $dir/make_test.log
+	exit 0
+	;;
+
+	follow)
 	tail -f $dir/make_test.log
 	exit 0
-fi
-echo "usage: ../temp.sh option"
-echo "where option is one of following: OK, All, tail"
+	;;
+
+	file)
+	echo "$dir/make_test.log"
+	exit 0
+	;;
+
+	*)
+	echo "usage: ../temp.sh option"
+	echo "where option is one of following: OK, All, tail, follow, file."
+	exit 1
+esac
 EOF
 	chmod +x $log_dir/../temp.sh
 	#

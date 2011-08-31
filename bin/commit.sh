@@ -23,7 +23,7 @@ for example this entire paragraph is preserved.
 dir/file.ext@ optional comment about this file.
 EOF
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/commit.sh" ]
+if [ ! -e "bin/commit.sh" ]
 then
 	echo "bin/commit.sh: must be executed from its parent directory"
 	rm bin/commit.1.$$

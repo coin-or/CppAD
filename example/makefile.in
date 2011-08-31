@@ -43,6 +43,7 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES = test_one.sh
 CONFIG_CLEAN_VPATH_FILES =
 am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
+	openmp_a11c.cpp openmp_ad.cpp pthread_a11c.cpp pthread_ad.cpp \
 	example.cpp abort_recording.cpp abs.cpp acos.cpp add.cpp \
 	add_eq.cpp ad_fun.cpp ad_in_c.cpp asin.cpp atan.cpp atan_2.cpp \
 	base_adolc.hpp bender_quad.cpp bool_fun.cpp vector_bool.cpp \
@@ -71,22 +72,28 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	rosen_34.cpp runge_45_1.cpp runge_45_2.cpp seq_property.cpp \
 	simple_vector.cpp sin.cpp sinh.cpp sparse_hessian.cpp \
 	sparse_jacobian.cpp sqrt.cpp stack_machine.cpp sub.cpp \
-	sub_eq.cpp tan.cpp tanh.cpp tape_index.cpp unary_minus.cpp \
-	unary_plus.cpp user_tan.cpp value.cpp var_2par.cpp vec_ad.cpp
+	sub_eq.cpp tan.cpp tanh.cpp tape_index.cpp thread_alloc.cpp \
+	unary_minus.cpp unary_plus.cpp user_tan.cpp value.cpp \
+	var_2par.cpp vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
-am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
-	abort_recording.$(OBJEXT) abs.$(OBJEXT) acos.$(OBJEXT) \
-	add.$(OBJEXT) add_eq.$(OBJEXT) ad_fun.$(OBJEXT) \
-	ad_in_c.$(OBJEXT) asin.$(OBJEXT) atan.$(OBJEXT) \
-	atan_2.$(OBJEXT) bender_quad.$(OBJEXT) bool_fun.$(OBJEXT) \
-	vector_bool.$(OBJEXT) check_numeric_type.$(OBJEXT) \
-	check_simple_vector.$(OBJEXT) checkpoint.$(OBJEXT) \
-	compare.$(OBJEXT) compare_change.$(OBJEXT) \
-	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) conj_grad.$(OBJEXT) \
-	copy_ad.$(OBJEXT) copy_base.$(OBJEXT) cos.$(OBJEXT) \
-	cosh.$(OBJEXT) cppad_vector.$(OBJEXT) default.$(OBJEXT) \
-	div.$(OBJEXT) div_eq.$(OBJEXT) epsilon.$(OBJEXT) eq.$(OBJEXT) \
+@CppAD_OPENMP_TRUE@am__objects_2 = openmp_a11c.$(OBJEXT) \
+@CppAD_OPENMP_TRUE@	openmp_ad.$(OBJEXT)
+@CppAD_PTHREAD_TRUE@am__objects_3 = pthread_a11c.$(OBJEXT) \
+@CppAD_PTHREAD_TRUE@	pthread_ad.$(OBJEXT)
+am_example_OBJECTS = $(am__objects_1) $(am__objects_2) \
+	$(am__objects_3) example.$(OBJEXT) abort_recording.$(OBJEXT) \
+	abs.$(OBJEXT) acos.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
+	ad_fun.$(OBJEXT) ad_in_c.$(OBJEXT) asin.$(OBJEXT) \
+	atan.$(OBJEXT) atan_2.$(OBJEXT) bender_quad.$(OBJEXT) \
+	bool_fun.$(OBJEXT) vector_bool.$(OBJEXT) \
+	check_numeric_type.$(OBJEXT) check_simple_vector.$(OBJEXT) \
+	checkpoint.$(OBJEXT) compare.$(OBJEXT) \
+	compare_change.$(OBJEXT) complex_poly.$(OBJEXT) \
+	cond_exp.$(OBJEXT) conj_grad.$(OBJEXT) copy_ad.$(OBJEXT) \
+	copy_base.$(OBJEXT) cos.$(OBJEXT) cosh.$(OBJEXT) \
+	cppad_vector.$(OBJEXT) default.$(OBJEXT) div.$(OBJEXT) \
+	div_eq.$(OBJEXT) epsilon.$(OBJEXT) eq.$(OBJEXT) \
 	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) error_handler.$(OBJEXT) \
 	exp.$(OBJEXT) for_one.$(OBJEXT) for_two.$(OBJEXT) \
 	forward.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
@@ -120,12 +127,13 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sqrt.$(OBJEXT) \
 	stack_machine.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
 	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
-	unary_minus.$(OBJEXT) unary_plus.$(OBJEXT) user_tan.$(OBJEXT) \
-	value.$(OBJEXT) var_2par.$(OBJEXT) vec_ad.$(OBJEXT)
+	thread_alloc.$(OBJEXT) unary_minus.$(OBJEXT) \
+	unary_plus.$(OBJEXT) user_tan.$(OBJEXT) value.$(OBJEXT) \
+	var_2par.$(OBJEXT) vec_ad.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
-example_DEPENDENCIES = $(am__DEPENDENCIES_1)
+example_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -215,6 +223,7 @@ MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
 OBJEXT = @OBJEXT@
+OPENMP_FLAGS = @OPENMP_FLAGS@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_DESCRIPTION = @PACKAGE_DESCRIPTION@
@@ -279,6 +288,20 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+@CppAD_OPENMP_FALSE@OPENMP_SRC_FILES = 
+#
+@CppAD_OPENMP_TRUE@OPENMP_SRC_FILES = openmp_a11c.cpp openmp_ad.cpp
+@CppAD_OPENMP_FALSE@OPENMP_EXTRA_FILES = openmp_a11c.cpp openmp_ad.cpp
+@CppAD_OPENMP_TRUE@OPENMP_EXTRA_FILES = 
+@CppAD_OPENMP_FALSE@OMP_FLAGS = 
+@CppAD_OPENMP_TRUE@OMP_FLAGS = -DCPPAD_OPENMP_EXAMPLES $(OPENMP_FLAGS)
+@CppAD_PTHREAD_FALSE@PTHREAD_SRC_FILES = 
+#
+@CppAD_PTHREAD_TRUE@PTHREAD_SRC_FILES = pthread_a11c.cpp  pthread_ad.cpp
+@CppAD_PTHREAD_FALSE@PTHREAD_EXTRA_FILES = pthread_a11c.cpp pthread_ad.cpp
+@CppAD_PTHREAD_TRUE@PTHREAD_EXTRA_FILES = 
+@CppAD_PTHREAD_FALSE@PTHREAD_FLAGS = 
+@CppAD_PTHREAD_TRUE@PTHREAD_FLAGS = -DCPPAD_PTHREAD_EXAMPLES
 @CppAD_ADOLC_FALSE@ADOLC_SRC_FILES = 
 #
 @CppAD_ADOLC_TRUE@ADOLC_SRC_FILES = mul_level_adolc.cpp ode_taylor_adolc.cpp
@@ -298,11 +321,23 @@ top_srcdir = @top_srcdir@
 # 
 # Microsoft project files an script to run a single test
 EXTRA_DIST = example.sln example.vcproj test_one.sh.in \
-	$(ADOLC_EXTRA_FILES)
+	$(ADOLC_EXTRA_FILES) \
+	$(OPENMP_EXTRA_FILES) \
+	$(PTHREAD_EXTRA_FILES) 
 
-@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
+@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -g \
+@CppAD_MS_COMPILER_FALSE@	$(ADOLC_FLAGS) \
+@CppAD_MS_COMPILER_FALSE@	$(OMP_FLAGS) \
+@CppAD_MS_COMPILER_FALSE@	$(PTHREAD_FLAGS) \
+@CppAD_MS_COMPILER_FALSE@	$(CXX_FLAGS)
+
 #
-@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -g $(ADOLC_FLAGS) $(CXX_FLAGS)
+@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -g \
+@CppAD_MS_COMPILER_TRUE@	$(ADOLC_FLAGS) \
+@CppAD_MS_COMPILER_TRUE@	$(OMP_FLAGS) \
+@CppAD_MS_COMPILER_TRUE@	$(PTHREAD_FLAGS) \
+@CppAD_MS_COMPILER_TRUE@	$(CXX_FLAGS)
+
 #
 AM_CPPFLAGS = -I. \
                    -I$(top_srcdir) \
@@ -311,11 +346,13 @@ AM_CPPFLAGS = -I. \
 
 
 #
-LDADD = $(ADOLC_LIB) 
+LDADD = $(ADOLC_LIB) $(PTHREAD_LIB)
 AM_LDFLAGS = $(ADOLC_LIB_DIRS) 
 #
 example_SOURCES = \
 	$(ADOLC_SRC_FILES) \
+	$(OPENMP_SRC_FILES) \
+	$(PTHREAD_SRC_FILES) \
 	 \
 	example.cpp \
 	abort_recording.cpp \
@@ -433,6 +470,7 @@ example_SOURCES = \
 	tan.cpp \
 	tanh.cpp \
 	tape_index.cpp \
+	thread_alloc.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
 	user_tan.cpp \
@@ -569,6 +607,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_taylor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ode_taylor_adolc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/omp_alloc.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/openmp_a11c.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/openmp_ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/opt_val_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/optimize.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/output.Po@am__quote@
@@ -577,6 +617,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pow_int.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_for.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pthread_a11c.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pthread_ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_one.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_hes.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rev_sparse_jac.Po@am__quote@
@@ -603,6 +645,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tan.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tanh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tape_index.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_alloc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unary_minus.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/unary_plus.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/user_tan.Po@am__quote@

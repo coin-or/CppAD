@@ -35,8 +35,9 @@ $codei%
 %$$
 
 $head Purpose$$
-This routine check for leaks in the $cref/omp_alloc/$$ memory allocation
-routines. The deprecated $cref/TrackNewDel/$$ routines are also checked.
+This routine check for leaks in the $cref thread_alloc$$ memory allocator.
+The deprecated routines in $cref/TrackNewDel/$$ and $cref omp_alloc$$
+are also checked.
 
 $head NDEBUG$$
 If $code NDEBUG$$ is defined,
@@ -45,14 +46,15 @@ Otherwise it returns true unless one of the conditions below occurs.
 
 $head inuse$$
 When this routine is called, it is assumed that no memory
-should be $cref/inuse/$$ for any thread.
+should be $cref new_inuse$$ or $cref omp_inuse$$ for any thread.
 If it is, a message is printed and this routine returns false.
 
 $head available$$
-This routine calls $cref/free_available/$$ for all the threads
-and then checks that no memory is left $cref/available/$$ for any thread;
+This routine 
+checks that no memory is $cref new_available$$ or $cref omp_available$$
+for any thread;
 i.e., it all has been returned to the system.
-If there is memory still available for this thread,
+If there is memory still available for a thread,
 this routine returns false. 
 
 $head TRACK_COUNT$$
@@ -63,16 +65,16 @@ $head Error Message$$
 If this routine returns false, it prints a message
 to standard output describing the condition before returning false.
 
-$head OpenMP$$
-This routine cannot be used $cref/in_parallel/$$
+$head Multi-Threading$$
+This routine cannot be used in $cref new_in_parallel$$
 execution mode.
 
 $end
 */
-
 # include <iostream>
 # include <cppad/local/define.hpp>
 # include <cppad/omp_alloc.hpp>
+# include <cppad/thread_alloc.hpp>
 # include <cppad/track_new_del.hpp>
 
 CPPAD_BEGIN_NAMESPACE
@@ -82,8 +84,10 @@ File that implements a memory check at end of a CppAD program
 */
 
 /*!
-Function that checks both the old memory allocator defined in track_new_del.hpp
-and the new allocator \c omp_alloc for misuse that results in memory leaks:
+Function that checks 
+allocator \c thread_alloc for misuse that results in memory leaks.
+The deprecated routines 
+in track_new_del.hpp and omp_alloc.hpp are also checked.
 
 \return
 returns \c true, if no error is detected and \c false otherwise.
@@ -94,20 +98,53 @@ output.
 */
 inline bool memory_leak(void)
 {
+	bool leak = false;
+	size_t thread;
+	using std::cout;
+	using std::endl;
+	using CppAD::thread_alloc;
+	using CppAD::omp_alloc;
+	// --------------------------------------------------------------------
+	// check thead_alloc
+	CPPAD_ASSERT_KNOWN(
+		! thread_alloc::in_parallel(),
+		"attempt to use thread_leak in parallel execution mode."
+	);
+	CPPAD_ASSERT_KNOWN(
+		! thread_alloc::in_parallel(),
+		"attempt to use thread_leak in parallel execution mode."
+	);
+	CPPAD_ASSERT_KNOWN(
+		thread_alloc::num_threads() == 1,
+		"attempt to use thread_leak while num_threads > 1."
+	);
+	for(thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
+	{
+		// check that no memory is currently in use for this thread
+		size_t num_bytes = thread_alloc::inuse(thread);
+		if( num_bytes != 0 )
+		{	leak = true;
+			cout << "thread_alloc::inuse(thread) = ";
+			cout << num_bytes << endl;
+		}
+		// check that no memory is currently available for this thread
+		num_bytes = thread_alloc::available(thread);
+		if( num_bytes != 0 )
+		{	leak = true;
+			cout << "thread_alloc::available(thread) = ";
+			cout << num_bytes << endl;
+		}
+	}
+	// -------------------------------------------------------------------
+	// check omp_alloc
 	CPPAD_ASSERT_KNOWN(
 		! omp_alloc::in_parallel(),
-		"attempt to use memory_leak in parallel execution mode."
+		"attempt to use thread_leak in parallel execution mode."
 	);
 	CPPAD_ASSERT_KNOWN(
 		omp_alloc::get_max_num_threads() == 1,
-		"attempt to use memory_leak while max_num_threads > 1."
+		"attempt to use thread_leak while num_threads > 1."
 	);
-	bool leak = false;
-	using std::cout;
-	using std::endl;
-
-	using CppAD::omp_alloc;
-	size_t thread;
 	for(thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
 	{
 		// check that no memory is currently in use for this thread
@@ -123,12 +160,12 @@ inline bool memory_leak(void)
 			cout << "omp_alloc::available(thread) = " << num_bytes << endl;
 		}
 	}
-
+	// ----------------------------------------------------------------------
+	// check track_new_del
 	if( CPPAD_TRACK_COUNT() != 0 )
 	{	leak = true;
 		CppAD::TrackElement::Print();
 	}
-
 	return leak;
 }
 

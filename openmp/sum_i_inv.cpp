@@ -11,56 +11,65 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin sum_i_inv.cpp$$
+$begin openmp_sum_i_inv.cpp$$
 $spell
+	num
+	bool
 	mega
 	inv
 	CppAD
 	parallelize
 $$
-$index OpenMP, example program$$
-$index example, OpenMP program$$
-$index program, OpenMP example$$
+$index OpenMP, speed$$
+$index speed, OpenMP$$
 
 
-$section Sum of 1/i Main Program$$
+$section OpenMP Sum of 1/i Example$$
 
 $head Syntax$$
-$syntax%sum_i_inv %n_thread% %repeat% %mega_sum%$$
+$icode%ok_out% = sum_i_inv(%rate_out%, %num_threads%, %mega_sum%)%$$
 
-$head Purpose$$
-Runs a timing test of computing
-$syntax%
-	1 + 1/2 + 1/3 + ... + 1/%n_sum%
+$head Summation$$
+Runs an example and test of 
+OpenMP multi-threaded computation of the sum
+$latex \[
+	1 + 1/2 + 1/3 + ... + 1/n
+\] $$
+
+$head ok_out$$
+This return value has prototype
+$codei%
+	bool %ok_out%
 %$$
-where $syntax%%n_sum% = 1,000,000 * %mega_sum%$$
+If it is true,
+$code sum_i_inv$$ passed the correctness test.
+Otherwise it is false.
 
-$head n_thread$$
-If the argument $italic n_thread$$ is equal to zero, 
-dynamic thread adjustment is used.
-Otherwise, $italic n_thread$$ must be a positive number
-specifying the number of OpenMP threads to use.
-
-$head repeat$$
-If the argument $italic repeat$$ is equal to zero,
-the number of times to repeat the calculation of the number of zeros
-in total interval is automatically determined.
-In this case, the rate of execution of the total solution is reported.
-$pre
-
-$$
-If the argument $italic repeat$$ is not equal to zero,
-it must be a positive integer.
-In this case $italic repeat$$ determination of the number of times 
-the calculation of the summation above.
-The rate of execution is not reported (it is assumed that the
-program execution time is being calculated some other way).
+$head rate_out$$
+This argument has prototype
+$codei%
+	size_t& %rate_out%
+%$$
+The input value of the argument does not matter.
+Upon return it is the number of times per second that
+$code sum_i_inv$$ can compute the 
+$cref/summation/openmp_sum_i_inv.cpp/Summation/$$.
 
 $head mega_sum$$
-Is the value of $italic mega_sum$$ in the summation
-(it must be greater than or equal to the number of threads).
+This argument has prototype
+$codei%
+	size_t& %mega_sum%
+%$$
+and is greater than zero.
+The value $latex n$$ in the 
+$cref/summation/openmp_sum_i_inv.cpp/Summation/$$.
+is equal to $latex 10^6$$ times $icode mega_sum$$. 
 
-$head Example Source$$
+$head Method$$
+Note that this routine starts all its summations with the
+smallest terms to reduce the effects of round off error.
+
+$head Source$$
 $code
 $verbatim%openmp/sum_i_inv.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
@@ -68,183 +77,134 @@ $$
 $end
 */
 // BEGIN PROGRAM
-# ifdef _OPENMP
-# include <omp.h>
-# endif
 
+# include <omp.h>
 # include <cassert>
-# ifdef _OPENMP
-# include <omp.h>
-# endif
-
 # include <cstring>
-# include <cppad/cppad.hpp>
+# include <limits>
+# include <vector>
+
+// Note there is no mention of parallel mode in the documentation for
+// speed_test (so it is safe to use without special consideration).
+# include <cppad/speed_test.hpp>
 
 namespace { // empty namespace
-	int n_thread;
-}
 
-double sum_using_one_thread(int start, int stop)
-{	// compute 1./start + 1./(start+1) + ... + 1./(stop-1)
-	double sum = 0.;
-	int i = stop;
-	while( i > start )
-	{	i--;
-		sum += 1. / double(i);	
+	// True if num_threads is greater that zero in previous call to sum_i_inv
+	bool use_openmp_;
+
+	// Same as num_threads in previous call to sum_i_inv,
+	// except that if that value is zero, this value is one.
+	size_t num_threads_;
+
+	double sum_using_one_thread(size_t start, size_t stop)
+	{	// sum =  1/(stop-1) + 1/(stop-2) + ... + 1/start
+		assert( stop > start );
+
+		double sum = 0.;
+		size_t i = stop;
+		while( i > start )
+		{	i--;
+			sum += 1. / double(i);	
+		}
+		return sum;
 	}
-	return sum;
-}
-double sum_using_multiple_threads(int n_sum)
-{	// compute 1. + 1./2 + ... + 1./n_sum
-	assert( n_sum >= n_thread );   // assume n_sum / n_thread > 1
+	double sum_using_multiple_threads(size_t n_sum)
+	{	// sum = 1/n_sum + 1/(n_sum-1) + ... + 1
+		assert( n_sum >= num_threads_ );
 
-	// limit holds start and stop values for each thread
-	CppAD::vector<int> limit(n_thread + 1);
-	int i;
-	for(i = 1; i < n_thread; i++)
-		limit[i] = (n_sum * i ) / n_thread;
-	limit[0]         = 1;
-	limit[n_thread]  = n_sum + 1;
+		// Limit holds start and stop values for each thread
+		std::vector<size_t> limit(num_threads_ + 1);
+		size_t i;
+		for(i = 1; i < num_threads_; i++)
+			limit[i] = (n_sum * i ) / num_threads_;
+		limit[0]         = 1;
+		limit[num_threads_]  = n_sum + 1;
 
-	// compute sum_one[i] = 1/limit[i] + ... + 1/(limit[i+1} - 1)
-	CppAD::vector<double> sum_one(n_thread);
-//--------------------------------------------------------------------------
-# ifdef _OPENMP
+		// sum_one[i] = 1/(limit[i+1]-1) + ... + 1/limit[i]
+		std::vector<double> sum_one(num_threads_);
+		if( use_openmp_ )
+		{	int j;
 # pragma omp parallel for 
-# endif
-	for(i = 0; i < n_thread; i++)
-		sum_one[i] = sum_using_one_thread(limit[i], limit[i+1]);
-// -------------------------------------------------------------------------
+			for(j = 0; j < int(num_threads_); j++)
+				sum_one[j] = sum_using_one_thread(limit[j], limit[j+1]);
+// end omp parallel for
+		}
+		else
+		{	for(i = 0; i < num_threads_; i++)
+				sum_one[i] = sum_using_one_thread(limit[i], limit[i+1]);
+		}
 
-	// compute sum_all = sum_one[0] + ... + sum_one[n_thread-1]
-	double sum_all = 0.;
-	for(i = 0; i < n_thread; i++)
-		sum_all += sum_one[i];
+		// sum_all = sum_one[num_threads-1] + ... + sum_one[0]
+		double sum_all = 0.;
+		i = num_threads_;
+		while(i--)
+			sum_all += sum_one[i];
 
-	return sum_all;
-}
-
-void test_once(double &sum, size_t mega_sum)
-{	assert( mega_sum >= 1 );
-	int n_sum = int(mega_sum * 1000000);
-	sum = sum_using_multiple_threads(n_sum); 
-	return;
-}
-
-void test_repeat(size_t size, size_t repeat)
-{	size_t i;
-	double sum;
-	for(i = 0; i < repeat; i++)
-		test_once(sum, size);
-	return;
-}
-
-int main(int argc, char *argv[])
-{
-	using std::cerr;
-	using std::cout;
-	using std::endl;
-
-	const char *usage = "sum_i_inv n_thread repeat mega_sum";
-	if( argc != 4 )
-	{	std::cerr << usage << endl;
-		exit(1);
+		return sum_all;
 	}
-	argv++;
-	// n_thread command line argument (store in empty namespace variable)
-	n_thread = std::atoi(*argv);
-	if( std::atoi(*argv) < 0 )
-	{	cerr << "sum_i_inv: n_thread is less than zero" << endl;
-		exit(1);
-	}
-	argv++;
 
-	// repeat command line argument
-	size_t repeat = std::atoi(*argv);
-	if( std::atoi(*argv) < 0 )
-	{	cerr << "sum_i_inv: repeat is less than zero" << endl;
-		exit(1);
+	void test_once(double &sum, size_t mega_sum)
+	{	assert( mega_sum >= 1 );
+		size_t n_sum = mega_sum * 1000000;
+		sum = sum_using_multiple_threads(n_sum); 
+		return;
 	}
-	argv++;
 
-	// mega_sum command line argument 
-	size_t mega_sum;
-	assert( std::atoi(*argv) > 0 );
-	mega_sum = size_t( std::atoi(*argv++) );
+	void test_repeat(size_t size, size_t repeat)
+	{	size_t i;
+		double sum;
+		for(i = 0; i < repeat; i++)
+			test_once(sum, size);
+		return;
+	}
+} // end empty namespace
+
+bool sum_i_inv(size_t& rate_out, size_t num_threads, size_t mega_sum)
+{	bool ok = true;
+	using std::vector;
+
+	// Set local namespace environment variables
+	use_openmp_   = (num_threads > 0);
+	if( num_threads == 0 )
+		num_threads_  = 1;
+	else	num_threads_  = num_threads;
+
+	if( use_openmp_ )
+	{	omp_set_dynamic(0);                    // off dynamic thread adjust
+		omp_set_num_threads(int(num_threads)); // set the number of threads 
+
+		// Not using CppAD memory allocation so
+		// thread_alloc::parallel_setup(num_threads, in_parallel, thread_num);
+	}
+
 
 	// minimum time for test (repeat until this much time)
 	double time_min = 1.;
 
-# ifdef _OPENMP
-	if( n_thread > 0 )
-	{	omp_set_dynamic(0);            // off dynamic thread adjust
-		omp_set_num_threads(n_thread); // set the number of threads 
-	}
-	// now determine the maximum number of threads
-	n_thread = omp_get_max_threads();
-	assert( n_thread > 0 );
-	// inform the user of the maximum number of threads
-	cout << "OPENMP   = '" << _OPENMP << "'" << endl;
-# else
-	cout << "OPENMP   = ''" << endl;
-	n_thread = 1;
-# endif
-	cout << "n_thread = " << n_thread << endl;
-	cout << "mega_sum = " << mega_sum << endl;
-	// initialize flag
-	bool ok = true;
-	
-	// Inform CppAD OpenMP memory allocator about number of threads
-	CppAD::omp_alloc::set_max_num_threads(size_t(n_thread));
+	// size of the one test case
+	vector<size_t> size_vec(1);
+	size_vec[0] = mega_sum;
 
-	// Correctness check
+	// run the test case
+	vector<size_t> rate_vec = CppAD::speed_test(
+		test_repeat, size_vec, time_min
+	);
+
+	// return the rate (times per second) at which test_once runs
+	rate_out = rate_vec[0];
+
+	// Call test_once for a correctness check
 	double sum;
 	test_once(sum, mega_sum);
-	double epsilon = 1e-6;
-	size_t i = 0;
-	size_t n_sum = mega_sum * 1000000;
-	while(i < n_sum)
-		sum -= 1. / double(++i); 
-	ok &= std::fabs(sum) <= epsilon;
+	double eps   = 1e3 * std::numeric_limits<double>::epsilon();
+	size_t i     = mega_sum * 1000000;
+	double check = 0.;
+	while(i)
+		check += 1. / double(i--); 
+	ok &= std::fabs(sum - check) <= eps;
 
-	if( repeat > 0 )
-	{	// run the calculation the requested number of time
-		test_repeat(mega_sum, repeat);
-	}
-	else
-	{	// actually time the calculation	 
-
-		// size of the one test case
-		CppAD::vector<size_t> size_vec(1);
-		size_vec[0] = mega_sum;
-
-		// run the test case
-		CppAD::vector<size_t> rate_vec =
-		CppAD::speed_test(test_repeat, size_vec, time_min);
-
-		// report results
-		cout << "repeats_per_sec  = " << rate_vec[0] << endl;
-	}
-	// Check that no memory currently in use, free avialable, and go back to
-	// single thread memory mode.
-	size_t thread;
-	for(thread = 0; thread < size_t(n_thread); thread++)
-	{	ok &= CppAD::omp_alloc::inuse(thread) == 0; 
-		CppAD::omp_alloc::free_available(thread); 
-	}
-	CppAD::omp_alloc::set_max_num_threads(1);
-
-	// check all the threads for a CppAD memory leak
-	if( CppAD::memory_leak() )
-	{	ok = false;
-		cout << "memory_leak = " << true << endl;
-	}
-	else	cout << "memory_leak = " << false << endl;
-	if( ok )
-		cout << "correctness_test = 'OK'" << endl;
-	else	cout << "correctness_test = 'Error'" << endl;
-
-	return static_cast<int>( ! ok );
+	return ok;
 }
 
 // END PROGRAM

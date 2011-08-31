@@ -1,0 +1,76 @@
+/* $Id$ */
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+$begin multi_thread$$
+$spell
+	alloc
+	CppAD
+	Rosen
+	Runge
+$$
+
+$section Using CppAD in a Multi-Threading Environment$$
+$index parallel, mode$$
+$index execution, parallel$$
+$index mode, parallel$$
+$index multi-threading$$
+
+$head Purpose$$
+Extra steps and care must be taken to use CppAD 
+in $cref/parallel/new_in_parallel/$$ execution mode. 
+This section collects this information in one place.
+
+
+$head parallel_setup$$
+Using any of the following routines in a multi-threading environment
+requires that $cref/thread_alloc::parallel_setup/new_parallel_setup/$$ 
+has been completed:
+$cref/CppAD::vector/CppAD_vector/Memory and Parallel Mode/$$,
+$cref/CheckSimpleVector/CheckSimpleVector/Parallel Mode/$$,
+$cref/CheckNumericType/CheckNumericType/Parallel Mode/$$,
+$cref/parallel_ad/$$.
+
+$head Parallel AD$$
+One must first call
+$cref/thread_alloc::parallel_setup/new_parallel_setup/$$ 
+and then call $cref/parallel_ad/$$ before using $code AD$$ types
+in $cref/parallel/new_in_parallel/$$ execution mode.
+
+$head Initialization$$
+The following routines must be called at least once before being used
+in parallel mode:
+$cref/CheckSimpleVector/CheckSimpleVector/Parallel Mode/$$,
+$cref/CheckNumericType/CheckNumericType/Parallel Mode/$$,
+$cref/discrete functions/Discrete/Parallel Mode/$$,
+$cref/nan/nan/Parallel Mode/$$,
+$cref/Rosen34/Rosen34/Parallel Mode/$$,
+$cref/Runge45/Runge45/Parallel Mode/$$.
+
+$head Same Thread$$
+Some operations must be preformed by the same thread:
+$cref/ADFun/FunConstruct/Parallel Mode/$$,
+$cref Independent$$, $cref Dependent$$.
+
+
+$head Parallel Prohibited$$
+The following routine cannot be called in parallel mode:
+$cref/ErrorHandler constructor/ErrorHandler/Constructor/Parallel Mode/$$.
+
+$contents%
+	cppad/local/parallel_ad.hpp%
+	example/openmp_a11c.cpp%
+	example/pthread_a11c.cpp%
+	example/openmp_ad.cpp%
+	example/pthread_ad.cpp%
+	openmp/run.cpp
+%$$
+
+$end

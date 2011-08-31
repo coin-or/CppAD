@@ -119,12 +119,14 @@ an $cref/ADFun/$$ object will compute the value of $icode name$$
 using the user provided $icode Base$$ version of this routine.
 All the derivatives of $icode name$$ will be evaluated as zero.
 
-$head OpenMP$$
+$head Parallel Mode$$
+$index discrete, parallel$$
+$index parallel, discrete$$
 The first call to 
 $codei%
 	%ay% = %name%(%ax%)
 %$$
-must not be in $cref/in_parallel/$$ execution mode.
+must not be in $cref/parallel/new_in_parallel/$$ execution mode.
 	
 
 $head Example$$
@@ -157,6 +159,9 @@ $end
 */
 # include <vector>
 # include <cppad/local/cppad_assert.hpp>
+
+// needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# include <cppad/thread_alloc.hpp>
 
 CPPAD_BEGIN_NAMESPACE
 /*!
@@ -211,9 +216,9 @@ private:
 	/*!
 	List of all objects in this class.
 
-	Can use CppAD::vector for debugging, but it will appear that 
+	If we use CppAD::vector for this vector, it will appear that 
 	there is a memory leak because this list is not distroyed before
-	omp_alloc::free_available(thread) is called by the test routines.
+	thread_alloc::free_available(thread) is called by the testing routines.
 	*/
 	static std::vector<discrete *>& List(void)
 	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
@@ -243,8 +248,8 @@ public:
 	, index_( List().size() )
 	{	
 		CPPAD_ASSERT_KNOWN(
-			! omp_alloc::in_parallel() ,
-			"First call to this discrete function is in parallel mode."
+			! thread_alloc::in_parallel() ,
+			"discrete: First call the function *Name is in parallel mode."
 		);
 		List().push_back(this);
 	}

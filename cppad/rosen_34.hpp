@@ -261,13 +261,15 @@ $cref/elements of type Scalar/SimpleVector/Elements of Specified Type/$$.
 The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head OpenMP$$
-For each value of 
+$head Parallel Mode$$
+$index parallel, Rosen34$$
+$index Rosen34, parallel$$
+For each set of types
 $cref/Scalar/Rosen34/Scalar/$$, 
 $cref/Vector/Rosen34/Vector/$$, and
 $cref/Fun/Rosen34/Fun/$$, 
 the first call to $code Rosen34$$
-must not be $cref/in_parallel/$$ execution mode.
+must not be $cref/parallel/new_in_parallel/$$ execution mode.
 
 $head Example$$
 $children%
@@ -293,6 +295,9 @@ $end
 # include <cppad/vector.hpp>
 # include <cppad/lu_factor.hpp>
 # include <cppad/lu_invert.hpp>
+
+// needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# include <cppad/thread_alloc.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 

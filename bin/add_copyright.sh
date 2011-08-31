@@ -10,7 +10,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/add_copyright.sh" ]
+if [ ! -e "bin/add_copyright.sh" ]
 then
 	echo "bin/add_copyright.sh: must be executed from its parent directory"
 	exit 1
@@ -18,14 +18,19 @@ fi
 # -----------------------------------------------------------------------------
 if [ "$1" == "" ]
 then
-	echo "./add_copyright.sh: file_name"
+	echo "bin/add_copyright.sh: file_name"
 	exit 1
 fi
 file_name="$1"
+if [ ! -e "$file_name" ]
+then
+	echo "$file_name does not exist"
+	exit 1
+fi
 ext=`echo $file_name | sed -e 's/.*\.//'`
 if [ "$ext" == "" ]
 then
-	echo "./add_copyright.sh: file_name does not have an extension"
+	echo "bin/add_copyright.sh: file_name does not have an extension"
 	exit 1
 fi
 #

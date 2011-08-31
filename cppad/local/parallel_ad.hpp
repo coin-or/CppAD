@@ -14,12 +14,13 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin parallel_ad$$
 $spell
+	CppAD
 	num
 	isnan
 	std
 $$
 
-$section Enable Parallel Mode AD Calculations$$
+$section Enable AD Calculations During Parallel Mode$$
 
 $head Syntax$$
 $codei%parallel_ad<%Base%>()%$$
@@ -28,29 +29,28 @@ $head Purpose$$
 By default, for each $codei%AD<%Base%>%$$ class there is only one 
 tape that records $cref/AD of Base/glossary/AD of Base/$$ operations.
 This tape is a global variable and hence it cannot be used
-by multiple OpenMP threads at the same time. 
-The $cref/set_max_num_threads/max_num_threads/$$ function is used to set the 
-maximum number of OpenMP threads that can be active in parallel mode.
+by multiple threads at the same time. 
+The $cref/parallel_setup/new_parallel_setup/$$ function informs CppAD of the
+maximum number of threads that can be active in parallel mode.
 It is still necessary to inform each $codei%AD<%Base%>%$$ type 
-before using it in using $cref/parallel/in_parallel/$$ execution mode
+before using it in using $cref/parallel/omp_in_parallel/$$ execution mode
 (and $code parallel_ad$$ does this).
 
 $head Restriction$$
-This function must be called before any $codei%AD<%Base%.%$$ objects are used
-in $cref/parallel/in_parallel/$$ execution mode.
+This function must be called before any $codei%AD<%Base>%$$ objects are used
+in $cref/parallel/new_in_parallel/$$ mode.
 
 $head isnan$$
 This routine has the side effect of calling
 $codei%
 	%b% = isnan(%s%)
 %$$
-where $icode s$$ has type 
-$icode%Base%$$, $codei%AD<%Base%>%$$, and
+where $icode s$$ has type $icode%Base%$$, $codei%AD<%Base%>%$$, and
 $codei%std::complex<double>%$$.
 
 $head Example$$
-The file $cref/parallel_ad.cpp/$$
-contains an example and test of this function.   
+The files $cref openmp_ad.cpp$$ and $cref pthread_ad.cpp$$
+contain examples and tests that use this function.   
 
 $end
 -----------------------------------------------------------------------------
@@ -69,8 +69,8 @@ static variables that my be used.
 template <class Base>
 void parallel_ad(void)
 {	CPPAD_ASSERT_KNOWN( 
-		! omp_alloc::in_parallel() ,
-		"parallel_ad: must be called before parallel execution."
+		! thread_alloc::in_parallel() ,
+		"parallel_ad must be called before entering parallel execution mode."
 	);
 
 	// ensure statics in following functions are initialized

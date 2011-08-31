@@ -69,8 +69,7 @@ $index test, cppad speed$$
 $section Speed Testing Main Program$$
 
 $head Syntax$$
-$codei%speed/%package%/%package% %test% %seed% %option_list% 
-%$$
+$codei%speed/%package%/%package% %test% %seed% %option_list%$$
 
 $head Purpose$$
 A version of this program runs the correctness tests

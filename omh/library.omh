@@ -51,7 +51,7 @@ $children%
 	cppad/local/lu_ratio.hpp%
 
 	cppad/vector.hpp%
-	omh/omp_alloc.omh%
+	omh/thread_alloc.omh%
 	cppad/memory_leak.hpp
 %$$
 
@@ -115,7 +115,7 @@ $head CppAD Support Template Library$$
 The classes listed are used to support CppAD calculations:
 $table
 $rref CppAD_vector$$
-$rref omp_alloc$$
+$rref thread_alloc$$
 $rref memory_leak$$
 $tend
 

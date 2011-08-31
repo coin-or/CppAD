@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_poly.cpp$$
 $spell
-	omp_alloc
+	alloc
 	retape
 	coef
 	cppad
@@ -48,7 +48,7 @@ $codep */
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/poly.hpp>
 # include <cppad/vector.hpp>
-# include <cppad/track_new_del.hpp>
+# include <cppad/thread_alloc.hpp>
 
 # include <adolc/adouble.h>
 # include <adolc/taping.h>
@@ -71,9 +71,9 @@ bool link_poly(
 	double f;      // function value
 	int i;         // temporary index
 
-	// set up for omp_alloc memory allocator (fast and checks for leaks)
-	using CppAD::omp_alloc; // the allocator
-	size_t capacity;        // capacity of an allocation
+	// Use thread_alloc memory allocator (fast and checks for leaks)
+	using CppAD::thread_alloc; // the allocator
+	size_t capacity;           // capacity of an allocation
 
 	// choose a vector of polynomial coefficients
 	CppAD::uniform_01(size, a);
@@ -87,14 +87,14 @@ bool link_poly(
 	adouble Z, P;
 
 	// allocate arguments to hos_forward
-	double* x0 = omp_alloc::create_array<double>(n, capacity);
-	double* y0 = omp_alloc::create_array<double>(m, capacity);
-	double** x = omp_alloc::create_array<double*>(n, capacity);
-	double** y = omp_alloc::create_array<double*>(m, capacity);
+	double* x0 = thread_alloc::create_array<double>(n, capacity);
+	double* y0 = thread_alloc::create_array<double>(m, capacity);
+	double** x = thread_alloc::create_array<double*>(n, capacity);
+	double** y = thread_alloc::create_array<double*>(m, capacity);
 	for(i = 0; i < n; i++)
-		x[i] = omp_alloc::create_array<double>(d, capacity);
+		x[i] = thread_alloc::create_array<double>(d, capacity);
 	for(i = 0; i < m; i++)
-		y[i] = omp_alloc::create_array<double>(d, capacity);
+		y[i] = thread_alloc::create_array<double>(d, capacity);
 
 	// Taylor coefficient for argument
 	x[0][0] = 1.;  // first order
@@ -156,14 +156,14 @@ bool link_poly(
 	}
 	// ------------------------------------------------------
 	// tear down
-	omp_alloc::delete_array(x0);
-	omp_alloc::delete_array(y0);
+	thread_alloc::delete_array(x0);
+	thread_alloc::delete_array(y0);
 	for(i = 0; i < n; i++)
-		omp_alloc::delete_array(x[i]);
+		thread_alloc::delete_array(x[i]);
 	for(i = 0; i < m; i++)
-		omp_alloc::delete_array(y[i]);
-	omp_alloc::delete_array(x);
-	omp_alloc::delete_array(y);
+		thread_alloc::delete_array(y[i]);
+	thread_alloc::delete_array(x);
+	thread_alloc::delete_array(y);
 
 	return true;
 }

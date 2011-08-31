@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 # include <algorithm>
-# include <cppad/omp_alloc.hpp>
+# include <cppad/thread_alloc.hpp>
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/local/op_code.hpp>
 
@@ -74,8 +74,8 @@ public:
 	: max_length_(max_length), length_(0), capacity_(0), data_(0)
 	{ }
 	// ----------------------------------------------------------------------
-	/// Destructor: returns allocated memory to \c omp_alloc; see \c extend.
-	/// If this is not plain old data, 
+	/// Destructor: returns allocated memory to \c thread_alloc; 
+	/// see \c extend.  If this is not plain old data, 
 	/// the destructor for each element is called.
 	~pod_vector(void)
 	{	if( capacity_ > 0 )
@@ -86,7 +86,7 @@ public:
 				for(i = 0; i < capacity_; i++)
 					(data_ + i)->~Type();
 			}
-			omp_alloc::return_memory(v_ptr); 
+			thread_alloc::return_memory(v_ptr); 
 		}
 	}
 	// ----------------------------------------------------------------------
@@ -119,7 +119,7 @@ public:
 	is called for each new element.
 
 	- This is the only routine that allocates memory for \c pod_vector.
-	and it uses omp_alloc for this allocation, hence this determines
+	and it uses thread_alloc for this allocation, hence this determines
 	which thread corresponds to this vector (when in parallel mode).
 
 	- If the resulting length of the vector would be more than \c max_length_,
@@ -144,7 +144,7 @@ public:
 		// get new memory and set capacity
 		size_t length_bytes = length_ * sizeof(Type);
 		size_t capacity_bytes;
-		void* v_ptr = omp_alloc::get_memory(length_bytes, capacity_bytes);
+		void* v_ptr = thread_alloc::get_memory(length_bytes, capacity_bytes);
 		capacity_   = capacity_bytes / sizeof(Type);
 		data_       = reinterpret_cast<Type*>(v_ptr);
 		CPPAD_ASSERT_UNKNOWN( length_ <= capacity_ );
@@ -167,7 +167,7 @@ public:
 			{	for(i = 0; i < old_capacity; i++)
 					(data_ + i)->~Type();
 			} 
-			omp_alloc::return_memory(v_ptr); 
+			thread_alloc::return_memory(v_ptr); 
 		}
 
 		// return value for extend(n) is the old length
@@ -229,7 +229,7 @@ public:
 					for(i = 0; i < capacity_; i++)
 						(data_ + i)->~Type();
 				}
-				omp_alloc::return_memory(v_ptr); 
+				thread_alloc::return_memory(v_ptr); 
 			}
 			length_ = capacity_ = 0;
 			extend( x.length_ );

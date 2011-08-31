@@ -17,6 +17,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin Independent$$
 $spell
+	alloc
+	num
 	Cpp
 	bool
 	const
@@ -83,11 +85,10 @@ $codei%AD<%Base%>%$$.
 The routine $cref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head OpenMP$$
-$index OpenMP, Independent$$
-$index Independent, OpenMP$$
-In the case of multi-threading with OpenMP,
-the call to $code Independent$$
+$head Parallel Mode$$
+$index parallel, Independent$$
+$index Independent, parallel$$
+The call to $code Independent$$,
 and the corresponding call to
 $codei%
 	ADFun<%Base%> %f%( %x%, %y%)
@@ -96,8 +97,9 @@ or
 $codei%
 	%f%.Dependent( %x%, %y%)
 %$$
-or $cref/abort_recording/$$,
-must be preformed by the same thread.
+or $cref abort_recording$$,
+must be preformed by the same thread; i.e.,
+$cref/thread_alloc::thread_num/new_thread_num/$$ must be the same.
 
 $head Example$$
 $children%

@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	pthread
 	https
 	abs_geq
 	CondExpRel
@@ -62,6 +63,82 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head branches/pthread$$
+The following changes have been made to the $code pthread$$ branch:
+
+$head 08-31$$
+$list number$$
+Move the $cref openmp_sum_i_inv.cpp$$ test from
+$code openmp/run.sh$$ to $code openmp/run.cpp$$.
+$lnext
+Change $code --with-openmp$$ to
+$cref/OPENMP_FLAGS=OpenmpFlags/InstallUnix/OpenmpFlags/$$ configure
+command line argument.
+$lend
+
+$head 08-30$$
+$list number$$
+Create the $cref%openmp/run.cpp%openmp_run.cpp%$$ program 
+and move the $cref openmp_newton_example.cpp$$ test from
+$code openmp/run.sh$$ to $code openmp/run.cpp$$.
+This uses $cref/configure/InstallUnix/Configure/$$
+information for building the tests.
+$lnext
+Document the $code --with-openmp$$ configure
+command line argument.
+$lnext
+Move $code openmp/multi_newton.hpp$$ to 
+$cref%openmp/newton_method.hpp%openmp_newton_method.hpp%$$ and
+$code openmp/multi_newton.cpp$$ to 
+$cref%openmp/newton_example.cpp%openmp_newton_example.cpp%$$.
+$lend
+
+$head 08-25$$
+$list number$$
+Replace $cref omp_alloc$$ by $cref thread_alloc$$ in 
+$cref multi_thread$$, the section on how to use CppAD in parallel.
+$lnext
+Implement $cref omp_alloc$$ as links to corresponding $cref thread_alloc$$
+sections.
+$lnext
+Create the $cref pthread_ad.cpp$$ example that does AD using the
+pthread library.
+In addition, fix some problems in $cref openmp_ad.cpp$$
+$lnext
+Move $code openmp/example_a11c.cpp$$ to 
+$cref|example/openmp_a11c.cpp|openmp_a11c.cpp|$$.
+$lnext
+Move $code openmp/parallel_ad.cpp$$ to 
+$cref|example/openmp_ad.cpp|openmp_ad.cpp|$$.
+$lend
+
+$head 08-23$$
+Beginning steps in replacing $cref omp_alloc$$ by $cref thread_alloc$$:
+$list number$$
+Replace $cref omp_alloc$$ by $cref thread_alloc$$
+in the $cref library$$.
+$lnext
+move $cref omp_alloc$$ to the deprecated section of the
+documentation.
+$lnext
+Change all $cref omp_alloc$$ section names to begin with $code omp_$$,
+and change all $cref thread_alloc$$ section names to begin with $code new_$$.
+$lnext
+Convert $cref CppAD_vector$$ from using $cref omp_alloc$$ to using
+$cref thread_alloc$$ for memory allocation.
+$lnext
+Extend the $cref memory_leak$$ routine to also check the
+$cref thread_alloc$$ allocator.
+$lend
+
+$head 08-21$$
+Create the OpenMP and pthread examples
+$cref/openmp_a11c.cpp/$$,
+$cref/pthread_a11c.cpp/$$, and
+$cref/openmp_ad.cpp/$$.
+Note that the OpenMP examples were originally in the $code openmp$$ directory,
+and have been moved, and modified to conform, to the normal example directory.
 
 $head 08-11$$
 Modify the CppAD trunk using the
@@ -161,19 +238,19 @@ reporting when the argument to the $code log$$ function is not valid.
 
 $head 07-29$$
 $list number$$
-The routines $cref/set_max_num_threads/max_num_threads/$$ and 
+The routines $cref/set_max_num_threads/omp_max_num_threads/$$ and 
 $code get_max_num_threads$$ were created.
 User's will need to replace calls to 
 $cref/max_num_threads/old_max_num_threads/$$ 
 by calls to $code set_max_num_threads$$.
 $lnext
-The functions $cref efficient$$ was deprecated because it 
+The functions $cref omp_efficient$$ was deprecated because it 
 has not been shown to be useful.
 $lend
 
 $head 07-28$$
 $list number$$
-Change $cref return_memory$$ so that if $cref max_num_threads$$ is one
+Change $cref omp_return_memory$$ so that if $cref omp_max_num_threads$$ is one
 (the default), $cref omp_alloc$$ does not hold onto memory
 (keep it available for the corresponding thread).
 $lnext
@@ -223,12 +300,12 @@ correctness and speed tests were out of date.
 This has been fixed; see 
 $cref/example and tests/InstallUnix/make/Examples and Tests/$$.
 $lnext
-Move $cref/parallel_ad.cpp/$$ from $code example$$ directory
+Move $code parallel_ad.cpp$$ from $code example$$ directory
 to $code openmp$$ directory (and convert it from a function to a program).
 $lnext
-Simplify $cref/example_a11c.cpp/$$ by making it just a correctness test.
+Simplify $code example_a11c.cpp$$ by making it just a correctness test.
 $lnext
-Change $cref/openmp_run.sh/$$ so that it runs correctness tests with
+Change $code openmp/run.sh$$ so that it runs correctness tests with
 the compiler debugging flags.
 $lend
 
@@ -236,29 +313,29 @@ $head 07-13$$
 $list number$$
 static hash code data that was begin used by multiple threads
 when recording $codei%AD<%Base%>%$$ operations 
-$cref/in_parallel/$$ execution mode. This has been fixed.
+$cref omp_in_parallel$$ execution mode. This has been fixed.
 $lnext
 Make the $cref/sparsity/Sparse/$$ calculations safe
-for use during $cref/in_parallel/$$ execution mode.
+for use during $cref omp_in_parallel$$ execution mode.
 $lnext
-Add the $cref/parallel_ad.cpp/$$ example.
+Add the $code parallel_ad.cpp$$ example.
 $lnext
-Change $cref/example_a11c.cpp/$$ example so that is just a correctness
+Change $code example_a11c.cpp$$ example so that is just a correctness
 (not speed) test.
 $lend
 
 $head 07-11$$
 $list number$$
 Change the upper limit for 
-$cref/max_num_threads/$$ from 32 to 48.
+$cref omp_max_num_threads$$ from 32 to 48.
 $lnext
-Add $cref/OpenMP/omp_parallel/$$ documentation for,
-$cref/nan/nan/OpenMP/$$,
-$cref/Rosen34/Rosen34/OpenMP/$$, and
-$cref/Runge45/Runge45/OpenMP/$$.
+Add $cref/parallel/new_in_parallel/$$ documentation for,
+$cref/nan/nan/Parallel Mode/$$,
+$cref/Rosen34/Rosen34/Parallel Mode/$$, and
+$cref/Runge45/Runge45/Parallel Mode/$$.
 $lnext
 Fix $cref CheckNumericType$$ and $cref CheckSimpleVector$$
-so they work properly when used $cref/in_parallel/$$ execution mode.
+so they work properly when used in parallel mode.
 $lend
 
 
@@ -266,12 +343,12 @@ $subhead openmp/run.sh$$
 The following changes were made to $code openmp/run.sh$$:
 $list number$$
 $lnext
-Change the 
-$cref/maximum number of threads/openmp_run.sh/Maximum Number of Threads/$$
+Change to $code openmp/run.sh$$
+maximum number of threads
 instead of specifying the entire set of values to be tested.
 $lnext
 Change settings for 
-$cref/multi_newton/openmp_run.sh/multi_newton/$$
+$code newton_example$$
 so that $code n_gird$$ is a multiple of the maximum number of threads.
 $lnext
 Report dynamic number of thread
@@ -281,30 +358,31 @@ Fix automatic removal of executables from $code openmp$$ directory
 (was commented out).
 $lnext
 The documentation for $code openmp/run.sh$$ was moved to the
-$cref/omp_parallel/$$ section.
+$code multi_thread$$ section.
 $lend
  
 
 $head 07-10$$
 $list number$$
-Add link to $tref Discrete$$ in $cref/omp_parallel/$$.
+Add link to $tref Discrete$$ in $cref multi_thread$$.
 $lnext
 Make use of the $cref/TrackNewDel/$$ routines
-$cref/in_parallel/$$ execution mode an error (it never worked properly); 
-see $cref/TrackNewDel OpenMP/TrackNewDel/OpenMP/$$.
+$cref omp_in_parallel$$ execution mode an error (it never worked properly); 
+see $cref/TrackNewDel multi-threading/TrackNewDel/Multi-Threading/$$.
 $lnext
 Change $cref/memory_leak/$$ so that it checks for a leak in all threads.
-This is what $cref/multi_newton.cpp/$$ and $cref/sum_i_inv.cpp/$$
+This is what $cref/openmp_newton_example.cpp/$$ and 
+$cref/openmp_sum_i_inv.cpp/$$
 assumed was being done.
 $lend
 
 $head 07-09$$
 All the OpenMP parallel execution requirements
-have been grouped in the section $cref/omp_parallel/$$.
+have been grouped in the section $cref multi_thread$$.
 
 $head 07-07$$
 Add the routine $cref/parallel_ad/$$ to fix bug when using
-$codei%AD<%Base%>%$$ in $cref/parallel/in_parallel/$$ execution mode.
+$codei%AD<%Base%>%$$ in $cref/parallel/omp_in_parallel/$$ execution mode.
 
 $head 06-23$$
 $list number$$
@@ -318,7 +396,7 @@ $codei%
 sometimes occurred.
 $lnext
 The routine $cref/omp_max_thread/$$ was deprecated, 
-use the routine $cref/max_num_threads/$$ instead.
+use the routine $cref omp_max_num_threads$$ instead.
 $lnext
 The deprecated routines have been grouped together in the
 $cref/deprecated/$$ section of the CppAD manual.
@@ -328,9 +406,10 @@ $head 06-21$$
 $list number$$
 The $code openmp/run.sh$$ routine was changed to use zero,
 instead of $code automatic$$, for automatic choice of
-$cref/number of repeats/openmp_run.sh/Number of Repeats/$$,
+$code openmp/run.sh$$
+number of repeats
 and 
-$cref/maximum number of threads/openmp_run.sh/Maximum Number of Threads/$$.
+maximum number of threads.
 
 $lnext
 The output of each of the OpenMP examples / speed tests
@@ -369,7 +448,7 @@ $cref/base type/base_require/$$ is not plain old data.
 
 $head 05-28$$
 $list number$$
-Add the $cref/efficient/$$ routine to the $cref/omp_alloc/$$ system.
+Add the $cref omp_efficient$$ routine to the $cref/omp_alloc/$$ system.
 $lnext
 Improve the $code omp_alloc$$ tracing so it prints the same pointer
 as returned to the user (not an offset version of that pointer).
@@ -400,9 +479,9 @@ $lnext
 The CppAD vector template class
 and the $cref/vectorBool/CppAD_vector/vectorBool/$$ class
 were modified to use the $code omp_alloc$$
-$cref/memory/CppAD_vector/Memory/$$ manager.
+$cref/memory/CppAD_vector/Memory and Parallel Mode/$$ manager.
 This should improves its speed of memory allocation
-$cref/in_parallel/$$ sections of a program.
+$cref omp_in_parallel$$ sections of a program.
 $lnext
 The $cref/speed_test/$$ argument
 $cref/size_vec/speed_test/size_vec/$$ call was by value,
@@ -474,14 +553,14 @@ The old speed tests have not been used for years and so have been deleted.
 $lend
 
 $head 04-20$$
-The $cref/openmp run.sh/openmp_run.sh/$$ script what changed
+The $code openmp/run.sh$$ script what changed
 to take an argument that specifies which tests is run
 (it no longer runs all the tests).
 Also improve the openmp test program output formatting.
 
 $head 04-19$$
 The $icode use_ad$$ option was added to the 
-$cref/multi_newton.cpp/$$ test case.
+$cref/openmp_newton_example.cpp/$$ test case.
 
 $head 03-19$$
 The subversion write protected directory 
@@ -518,7 +597,8 @@ This has been fixed.
 $head 02-17$$
 There was a mistake in $code openmp/run.sh$$ where it attempted
 to remove a non-existent file in the case where 
-$cref/openmp_flag/openmp_run.sh/OpenMP Flag/$$ was not $code ""$$.
+$code openmp/run.sh$$
+openmp_flag was not $code ""$$.
 This has been fixed.
 
 $head 02-15$$

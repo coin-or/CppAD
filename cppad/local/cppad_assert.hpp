@@ -167,8 +167,7 @@ execution is terminated and the source code line number is reported.
 
 /*!
 \def CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-Check that the first call to a routine is not during OpenMP parallel execution
-mode. 
+Check that the first call to a routine is not during parallel execution mode. 
 
 If \c NDEBUG is defined, this macro has no effect
 (not even the definition of (\c assert_first_call).
@@ -176,23 +175,19 @@ Otherwise, the variable
 \code
 	static bool assert_first_call
 \endcode
-is defined and if the first call is executed in OpenMP parallel mode,
+is defined and if the first call is executed in parallel mode,
 execution is terminated and the source code line number is reported.
 */
 # ifdef NDEBUG
 # define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 # else
-# ifndef _OPENMP
-# define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-# else
-# define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL                 \
-	static bool assert_first_call = true;                    \
-	CPPAD_ASSERT_KNOWN(                                      \
-		! (omp_in_parallel() && assert_first_call ),        \
-		"First call to this routine is in parallel mode."   \
-	);                                                       \
+# define CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL                           \
+	static bool assert_first_call = true;                              \
+	CPPAD_ASSERT_KNOWN(                                                \
+		! (CppAD::thread_alloc::in_parallel() && assert_first_call ), \
+		"In parallel mode and parallel_setup has not been called."    \
+	);                                                                 \
 	assert_first_call = false;
-# endif  // _OPENMP
-# endif  // _NDEBUG
+# endif
 
 # endif

@@ -14,6 +14,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <limits>
 # include <complex>
 
+// needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# include <cppad/thread_alloc.hpp>
+
 /*
 $begin base_complex.hpp$$
 $spell

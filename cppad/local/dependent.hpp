@@ -15,6 +15,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin Dependent$$
 $spell 
+	alloc
+	num
 	taylor_
 	ADvector
 	const
@@ -109,6 +111,22 @@ $syntax%
 	%f%.size_taylor()
 %$$ 
 is zero (see $xref/size_taylor/$$).
+
+$head Parallel Mode$$
+$index parallel, Dependent$$
+$index Dependent, parallel$$
+The call to $code Independent$$,
+and the corresponding call to
+$codei%
+	ADFun<%Base%> %f%( %x%, %y%)
+%$$
+or 
+$codei%
+	%f%.Dependent( %x%, %y%)
+%$$
+or $cref abort_recording$$,
+must be preformed by the same thread; i.e.,
+$cref/thread_alloc::thread_num/new_thread_num/$$ must be the same.
 
 $head Example$$
 The file

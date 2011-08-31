@@ -21,7 +21,7 @@ $contents%
 	omh/fun_deprecated.omh%
 	cppad/local/omp_max_thread.hpp%
 	cppad/track_new_del.hpp%
-	omh/omp_alloc_dep.omh
+	omh/omp_alloc.omh
 %$$
 
 $end

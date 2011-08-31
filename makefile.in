@@ -99,7 +99,7 @@ ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = cppad_ipopt/src cppad_ipopt/example cppad_ipopt/speed \
 	cppad_ipopt/test example introduction/get_started \
-	introduction/exp_apx print_for speed/src speed/adolc \
+	introduction/exp_apx openmp print_for speed/src speed/adolc \
 	speed/cppad speed/double speed/example speed/fadbad \
 	speed/profile speed/sacado test_more
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -194,6 +194,7 @@ MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
 OBJEXT = @OBJEXT@
+OPENMP_FLAGS = @OPENMP_FLAGS@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_DESCRIPTION = @PACKAGE_DESCRIPTION@
@@ -307,6 +308,12 @@ top_srcdir = @top_srcdir@
 @CppAD_IPOPT_CPPAD_TRUE@IPOPT_HEADER = \
 @CppAD_IPOPT_CPPAD_TRUE@	cppad_ipopt/src/cppad_ipopt_nlp.hpp
 
+@CppAD_OPENMP_FALSE@OPENMP_TESTS = 
+#
+# Did user specify with OpenMP
+@CppAD_OPENMP_TRUE@OPENMP_TESTS = openmp
+@CppAD_OPENMP_FALSE@OPENMP_DIRS = 
+@CppAD_OPENMP_TRUE@OPENMP_DIRS = openmp
 #
 # Is the library archiving program present
 @CppAD_HAVE_AR_TRUE@SPEED_TESTS = \
@@ -513,6 +520,7 @@ nobase_myinclude_HEADERS = \
 	cppad/speed/sparse_evaluate.hpp \
 	cppad/speed_test.hpp \
 	cppad/speed/uniform_01.hpp \
+	cppad/thread_alloc.hpp \
 	cppad/track_new_del.hpp \
 	cppad/vector.hpp
 
@@ -526,6 +534,7 @@ SUBDIRS = \
 	example \
 	introduction/get_started \
 	introduction/exp_apx \
+	$(OPENMP_DIRS) \
 	print_for \
 	$(SPEED_DIRS) \
 	test_more 
@@ -540,12 +549,7 @@ EXTRA_DIST = \
 	doc.omh.in \
 	doxyfile.in \
 	omh \
-	openmp/example_a11c.cpp \
-	openmp/multi_newton.cpp \
-	openmp/multi_newton.hpp \
-	openmp/parallel_ad.cpp \
 	openmp/sum_i_inv.cpp \
-	openmp/run.sh \
 	uw_copy_040507.html
 
 test_directory_list = \
@@ -553,6 +557,7 @@ test_directory_list = \
 	introduction/get_started \
 	introduction/exp_apx \
 	$(IPOPT_TESTS) \
+	$(OPENMP_TESTS) \
 	print_for \
 	$(SPEED_TESTS) \
 	test_more 

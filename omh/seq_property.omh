@@ -223,7 +223,7 @@ $codei%
 see $cref/TapeAddrType/InstallUnix/TapeAddrType/$$.
 Note that this is the minimal amount of memory that can hold
 the information corresponding to an operation sequence.
-The actual amount of memory allocated ($cref/inuse/$$)
+The actual amount of memory allocated ($cref new_inuse$$)
 for the operations sequence may be larger.
 
 $head Example$$

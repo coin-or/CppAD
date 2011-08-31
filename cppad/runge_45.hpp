@@ -212,13 +212,15 @@ $xref/SimpleVector/Elements of Specified Type/elements of type Scalar/$$.
 The routine $xref/CheckSimpleVector/$$ will generate an error message
 if this is not the case.
 
-$head OpenMP$$
-For each value of 
+$head Parallel Mode$$
+$index parallel, Runge45$$
+$index Runge45, parallel$$
+For each set of types
 $cref/Scalar/Runge45/Scalar/$$, 
 $cref/Vector/Runge45/Vector/$$, and
 $cref/Fun/Runge45/Fun/$$, 
 the first call to $code Runge45$$
-must not be $cref/in_parallel/$$ execution mode.
+must not be $cref/parallel/new_in_parallel/$$ execution mode.
 
 
 $head Example$$
@@ -250,6 +252,9 @@ $end
 # include <cppad/check_simple_vector.hpp>
 # include <cppad/check_numeric_type.hpp>
 # include <cppad/nan.hpp>
+
+// needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# include <cppad/thread_alloc.hpp>
 
 namespace CppAD { // BEGIN CppAD namespace
 

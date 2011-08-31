@@ -132,6 +132,8 @@ extern bool OdeStiff(void);
 extern bool ode_taylor(void);
 extern bool ode_taylor_adolc(void);
 extern bool omp_alloc(void);
+extern bool openmp_a11c(void);
+extern bool openmp_ad(void);
 extern bool opt_val_hes(void);
 extern bool optimize(void);
 extern bool Output(void);
@@ -140,6 +142,8 @@ extern bool Poly(void);
 extern bool Pow(void);
 extern bool pow_int(void);
 extern bool print_for(void);
+extern bool pthread_a11c(void);
+extern bool pthread_ad(void);
 extern bool reverse_any(void);
 extern bool reverse_one(void);
 extern bool reverse_three(void);
@@ -166,6 +170,7 @@ extern bool SubEq(void);
 extern bool Tan(void);
 extern bool Tanh(void);
 extern bool TapeIndex(void);
+extern bool thread_alloc(void);
 extern bool UnaryMinus(void);
 extern bool UnaryPlus(void);
 extern bool user_tan(void);
@@ -282,6 +287,8 @@ int main(void)
 	ok &= Run( OdeStiff,          "OdeStiff"         );
 	ok &= Run( ode_taylor,        "ode_taylor"       );
 	ok &= Run( omp_alloc,         "omp_alloc"        );
+	ok &= Run( openmp_a11c,       "openmp_a11c"      );
+	ok &= Run( openmp_ad,         "openmp_ad"        );
 	ok &= Run( opt_val_hes,       "opt_val_hes"      );
 	ok &= Run( optimize,          "optimize"         );
 	ok &= Run( Output,            "Output"           );
@@ -315,16 +322,24 @@ int main(void)
 	ok &= Run( Tan,               "Tan"              );
 	ok &= Run( Tanh,              "Tanh"             );
 	ok &= Run( TapeIndex,         "TapeIndex"        );
+	ok &= Run( thread_alloc,      "thread_alloc"     );
 	ok &= Run( UnaryMinus,        "UnaryMinus"       );
 	ok &= Run( UnaryPlus,         "UnaryPlus"        );
 	ok &= Run( user_tan,           "user_tan"        );
 	ok &= Run( Value,             "Value"            );
 	ok &= Run( Var2Par,           "Var2Par"          );
 	ok &= Run( vec_ad,            "vec_ad"           );
-
 # ifdef CPPAD_ADOLC_EXAMPLES
 	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );
 	ok &= Run( ode_taylor_adolc,  "ode_taylor_adolc" );
+# endif
+# ifdef CPPAD_OPENMP_EXAMPLES
+	ok &= Run( openmp_a11c,       "openmp_a11c"      );
+	ok &= Run( openmp_ad,         "openmp_ad"        );
+# endif
+# ifdef CPPAD_PTHREAD_EXAMPLES
+	ok &= Run( pthread_a11c,      "pthread_a11c"     );
+	ok &= Run( pthread_ad,        "pthread_ad"     );
 # endif
 	
 

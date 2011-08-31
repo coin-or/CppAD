@@ -10,7 +10,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/check_include_omh.sh" ]
+if [ ! -e "bin/check_include_omh.sh" ]
 then
 	echo "bin/check_include_omh.sh: must be executed from its parent directory"
 	exit 1
@@ -24,14 +24,13 @@ find . \( -name '*.cpp' \) -or \
        \( -name '*.hpp' \) -or \
        \( -name '*.omh' \) -or \
        \( -name '*.am' \) |
-	sed -e 's|./||' > bin/check_include_omh.1.$$
+	sed -e '/.\/work\//d' -e 's|./||' > bin/check_include_omh.1.$$
 list="
 	cpl1.0.txt
 	cppad/PowInt.h
 	cppad_ipopt/example/example_windows.bat
 	doc.omh
 	gpl2.txt
-	openmp/run.sh
 "
 for file in $list
 do

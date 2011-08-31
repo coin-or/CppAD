@@ -218,7 +218,7 @@ $childtable%
 	omh/introduction.omh%
 	cppad/local/user_ad.hpp%
 	cppad/local/ad_fun.hpp%
-	omh/omp_parallel.omh%
+	omh/multi_thread.omh%
 	omh/library.omh%
 	cppad_ipopt/src/cppad_ipopt_nlp.hpp%
 	omh/example.omh%

@@ -14,8 +14,28 @@
 # CppAD puts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
+if CppAD_OPENMP
+OPENMP_SRC_FILES   = openmp_a11c.cpp openmp_ad.cpp
+OPENMP_EXTRA_FILES = 
+OMP_FLAGS          = -DCPPAD_OPENMP_EXAMPLES $(OPENMP_FLAGS)
+else
+OPENMP_SRC_FILES   =
+OPENMP_EXTRA_FILES = openmp_a11c.cpp openmp_ad.cpp
+OMP_FLAGS          = 
+endif
+#
+if CppAD_PTHREAD
+PTHREAD_SRC_FILES   = pthread_a11c.cpp  pthread_ad.cpp
+PTHREAD_EXTRA_FILES = 
+PTHREAD_FLAGS       = -DCPPAD_PTHREAD_EXAMPLES
+else
+PTHREAD_SRC_FILES   =
+PTHREAD_EXTRA_FILES = pthread_a11c.cpp pthread_ad.cpp
+PTHREAD_FLAGS       = 
+endif
+#
 if CppAD_ADOLC
-ADOLC_SRC_FILES     = mul_level_adolc.cpp ode_taylor_adolc.cpp
+ADOLC_SRC_FILES    =  mul_level_adolc.cpp ode_taylor_adolc.cpp
 ADOLC_EXTRA_FILES  =
 ADOLC_INCLUDE      = -I$(ADOLC_DIR)/include 
 ADOLC_LIB          = -ladolc
@@ -38,14 +58,24 @@ endif
 # 
 # Microsoft project files an script to run a single test
 EXTRA_DIST        = example.sln example.vcproj test_one.sh.in \
-	$(ADOLC_EXTRA_FILES)
+	$(ADOLC_EXTRA_FILES) \
+	$(OPENMP_EXTRA_FILES) \
+	$(PTHREAD_EXTRA_FILES) 
 #
 check_PROGRAMS    = example 
 #
 if CppAD_MS_COMPILER
-AM_CXXFLAGS       = -EHsc -g $(ADOLC_FLAGS) $(CXX_FLAGS)
+AM_CXXFLAGS       = -EHsc -g \
+	$(ADOLC_FLAGS) \
+	$(OMP_FLAGS) \
+	$(PTHREAD_FLAGS) \
+	$(CXX_FLAGS)
 else
-AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
+AM_CXXFLAGS       = -g \
+	$(ADOLC_FLAGS) \
+	$(OMP_FLAGS) \
+	$(PTHREAD_FLAGS) \
+	$(CXX_FLAGS)
 endif
 #
 AM_CPPFLAGS       = -I. \
@@ -54,11 +84,13 @@ AM_CPPFLAGS       = -I. \
                     $(ADOLC_INCLUDE)
                     
 #
-LDADD             = $(ADOLC_LIB) 
+LDADD             = $(ADOLC_LIB) $(PTHREAD_LIB)
 AM_LDFLAGS        = $(ADOLC_LIB_DIRS) 
 #
 example_SOURCES   = \
 	$(ADOLC_SRC_FILES) \
+	$(OPENMP_SRC_FILES) \
+	$(PTHREAD_SRC_FILES) \
 	 \
 	example.cpp \
 	abort_recording.cpp \
@@ -176,6 +208,7 @@ example_SOURCES   = \
 	tan.cpp \
 	tanh.cpp \
 	tape_index.cpp \
+	thread_alloc.cpp \
 	unary_minus.cpp \
 	unary_plus.cpp \
 	user_tan.cpp \

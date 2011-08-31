@@ -83,6 +83,9 @@ $end
 */
 # include <cppad/local/cppad_assert.hpp>
 
+// needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+# include <cppad/thread_alloc.hpp>
+
 // BEGIN CppAD namespace
 namespace CppAD {   
 

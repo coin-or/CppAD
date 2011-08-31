@@ -40,9 +40,11 @@ When you construct a $code ErrorHandler$$ object,
 the current CppAD error handler is replaced by $icode handler$$.
 When the object is destructed, the previous CppAD error handler is restored.
 
-$subhead OpenMP$$
-The $code ErrorHandler$$ constructor and destructor cannot be called
-$cref/in_parallel/$$ execution mode.
+$subhead Parallel Mode$$
+$index parallel, ErrorHandler$$
+$index ErrorHandler, parallel$$
+The $code ErrorHandler$$ constructor and destructor cannot be called in
+$cref/parallel/new_in_parallel/$$ execution mode.
 Furthermore, this rule is not abided by, a raw C++ $code assert$$,
 instead of one that uses this error handler, will be generated.
 

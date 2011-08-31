@@ -10,7 +10,7 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/svn_merge.sh" ]
+if [ ! -e "bin/svn_merge.sh" ]
 then
 	echo "bin/svn_merge.sh: must be executed from its parent directory"
 	exit 1
@@ -29,13 +29,13 @@ echo "DryRun = $DryRun"
 # script to help in execution of svn merge command
 #
 # Name of the directory where the changes have been committed
-from_branch=branches/base_require
+from_branch=branches/pthread
 #
 # Version of the repository corresponding to from_branch just before changes
-Start=2044
+Start=2060
 # 
 # Version of the repository corresponding to from_branch after the changes
-End=2056
+End=2081
 #
 # the svn merge command
 cmd="svn merge $DryRun -r $Start:$End"

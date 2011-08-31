@@ -59,6 +59,15 @@ IPOPT_DIRS   =
 IPOPT_HEADER =
 endif
 #
+# Did user specify with OpenMP
+if CppAD_OPENMP
+OPENMP_TESTS   = openmp
+OPENMP_DIRS    = openmp
+else
+OPENMP_TESTS   =
+OPENMP_DIRS    =
+endif
+#
 # Is the library archiving program present
 if CppAD_HAVE_AR
 SPEED_TESTS = \
@@ -265,6 +274,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/speed/sparse_evaluate.hpp \
 	cppad/speed_test.hpp \
 	cppad/speed/uniform_01.hpp \
+	cppad/thread_alloc.hpp \
 	cppad/track_new_del.hpp \
 	cppad/vector.hpp
 # End nobase_myinclude_HEADERS (check_makefile.sh uses this comment) 
@@ -277,6 +287,7 @@ SUBDIRS =  \
 	example \
 	introduction/get_started \
 	introduction/exp_apx \
+	$(OPENMP_DIRS) \
 	print_for \
 	$(SPEED_DIRS) \
 	test_more 
@@ -290,12 +301,7 @@ EXTRA_DIST = \
 	doc.omh.in \
 	doxyfile.in \
 	omh \
-	openmp/example_a11c.cpp \
-	openmp/multi_newton.cpp \
-	openmp/multi_newton.hpp \
-	openmp/parallel_ad.cpp \
 	openmp/sum_i_inv.cpp \
-	openmp/run.sh \
 	uw_copy_040507.html
 
 test_directory_list = \
@@ -303,6 +309,7 @@ test_directory_list = \
 	introduction/get_started \
 	introduction/exp_apx \
 	$(IPOPT_TESTS) \
+	$(OPENMP_TESTS) \
 	print_for \
 	$(SPEED_TESTS) \
 	test_more 

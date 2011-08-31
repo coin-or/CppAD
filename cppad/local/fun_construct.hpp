@@ -15,6 +15,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin FunConstruct$$
 $spell 
+	alloc
+	num
 	Jac
 	bool
 	taylor_
@@ -189,13 +191,10 @@ $codei%
 	%g%.size_forward_set()  == %f%.size_forward_set()
 %$$
 
-$head OpenMP$$
-$index OpenMP, Dependent$$
-$index Dependent, OpenMP$$
-$index OpenMP, ADFun$$
-$index ADFun, OpenMP$$
-In the case of multi-threading with OpenMP,
-the call to $code Independent$$
+$head Parallel Mode$$
+$index parallel, ADFun$$
+$index ADFun, parallel$$
+The call to $code Independent$$,
 and the corresponding call to
 $codei%
 	ADFun<%Base%> %f%( %x%, %y%)
@@ -204,8 +203,9 @@ or
 $codei%
 	%f%.Dependent( %x%, %y%)
 %$$
-must be preformed by the same thread.
-
+or $cref abort_recording$$,
+must be preformed by the same thread; i.e.,
+$cref/thread_alloc::thread_num/new_thread_num/$$ must be the same.
 
 $head Example$$
 

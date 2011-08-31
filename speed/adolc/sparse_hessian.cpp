@@ -12,7 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin adolc_sparse_hessian.cpp$$
 $spell
-	omp_alloc
+	thread_alloc
 	arg
 	cppad
 	adouble
@@ -45,7 +45,7 @@ $index link_sparse_hessian$$
 $codep */
 # include <cppad/vector.hpp>
 # include <cppad/speed/uniform_01.hpp>
-# include <cppad/track_new_del.hpp>
+# include <cppad/thread_alloc.hpp>
 # include <cppad/speed/sparse_evaluate.hpp>
 
 # include <adolc/adouble.h>
@@ -69,9 +69,9 @@ bool link_sparse_hessian(
 	size_t ell = i.size();    // number of indices in i and j
 	double f;                 // function value
 
-	// set up for omp_alloc memory allocator (fast and checks for leaks)
-	using CppAD::omp_alloc; // the allocator
-	size_t capacity;        // capacity of an allocation
+	// use thread_alloc memory allocator (fast and checks for leaks)
+	using CppAD::thread_alloc; // the allocator
+	size_t capacity;           // capacity of an allocation
 
 	typedef CppAD::vector<double>  DblVector;
 	typedef CppAD::vector<adouble> ADVector;
@@ -82,11 +82,11 @@ bool link_sparse_hessian(
 	DblVector tmp(2 * ell);       // double temporary vector
 
 	// double version of domain space vector
-	double* x  = omp_alloc::create_array<double>(n, capacity);
+	double* x  = thread_alloc::create_array<double>(n, capacity);
 	// Hessian as computed by adolc
-	double** H = omp_alloc::create_array<double*>(n, capacity);
+	double** H = thread_alloc::create_array<double*>(n, capacity);
 	for(k = 0; k < n; k++)
-		H[k] = omp_alloc::create_array<double>(n, capacity);
+		H[k] = thread_alloc::create_array<double>(n, capacity);
 
 	// choose a value for x 
 	CppAD::uniform_01(n, x);
@@ -126,10 +126,10 @@ bool link_sparse_hessian(
 		{	h[ k * n + m] = H[k][m];
 			h[ m * n + k] = H[k][m];
 		}
-		omp_alloc::delete_array(H[k]);
+		thread_alloc::delete_array(H[k]);
 	}
-	omp_alloc::delete_array(H);
-	omp_alloc::delete_array(x);
+	thread_alloc::delete_array(H);
+	thread_alloc::delete_array(x);
 	return true;
 }
 /* $$

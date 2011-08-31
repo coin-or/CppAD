@@ -15,7 +15,7 @@
 # in place of "Common Public License Version 1.0." in all occurrences
 # of the message above.
 # -----------------------------------------------------------------------------
-if [ $0 != "bin/gpl_license.sh" ]
+if [ ! -e "bin/gpl_license.sh" ]
 then
 	echo "bin/gpl_license.sh: must be executed from its parent directory"
 	exit 1

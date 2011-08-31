@@ -14,6 +14,8 @@ $begin InstallUnix$$
 $escape $$
 $dollar ^$$
 $spell
+	fopenmp
+	openmp
 	cout
 	Addr
 	sizeof
@@ -158,13 +160,14 @@ $codei%
 	--prefix=%PrefixDir%                     \
 	--with-Documentation                   \
 	--with-stdvector                       \  
+	CXX_FLAGS=%CompilerFlags%                \
+	OPENMP_FLAGS=%OpenmpFlags%               \
 	POSTFIX_DIR=%PostfixDir%                 \
 	ADOLC_DIR=%AdolcDir%                     \
 	FADBAD_DIR=%FadbadDir%                   \
 	SADADO_DIR=%SacadoDir%                   \
 	BOOST_DIR=%BoostDir%                     \
 	IPOPT_DIR=%IpoptDir%                     \
-	CXX_FLAGS=%CompilerFlags%                \
 	TAPE_ADDR_TYPE=%TapeAddrType%
 %$$
 where only the $code configure$$ line need appear; i.e.,
@@ -327,6 +330,39 @@ $codep
 	std::vector
 $$
 (In this case $icode BoostDir$$ must not also be specified.)
+
+$head CompilerFlags$$
+$index compile, unix flags$$
+$index flags, unix compile$$
+If the command line argument $icode CompilerFlags$$ is present,
+it specifies compiler flags.
+For example,
+$codei%
+	CXX_FLAGS="-Wall -ansi"
+%$$
+would specify that warning flags $code -Wall$$
+and $code -ansi$$ should be included
+in all the C++ compile commands.
+The error and warning flags chosen must be valid options
+for the C++ compiler.
+The default value for $icode CompilerFlags$$ is the
+empty string.
+
+$head OpenmpFlags$$
+$index OpenMP, compile flags$$
+$index compile, OpenMP flags$$
+$index flags, OpenMP compile$$
+If the command line argument $icode OpenmpFlags$$ is present,
+it specifies the necessary flags so that the compiler will
+properly interpret OpenMP directives.
+In this case,
+the CppAD OpenMP correctness and speed tests will be built; e.g.,
+see $cref openmp_run.cpp$$ and $cref openmp_ad.cpp$$.
+For example, when using the GNU $code g++$$ compiler, 
+the following setting includes the OpenMP tests:
+$codei%
+	OPENMP_FLAGS=-fopenmp
+%$$
 
 $head PostfixDir$$
 $index configure, postfix directory$$
@@ -516,23 +552,6 @@ $codei%
 Once this has been done, you can execute the program
 $code ./speed$$ in the $code work/cppad_ipopt/speed$$ directory;
 see $cref/ipopt_ode_speed.cpp/$$.
-
-$head CompilerFlags$$
-$index compile, unix flags$$
-$index flags, unix compile$$
-If the command line argument $icode CompilerFlags$$ is present,
-it specifies compiler flags.
-For example,
-$codei%
-	CXX_FLAGS="-Wall -ansi"
-%$$
-would specify that warning flags $code -Wall$$
-and $code -ansi$$ should be included
-in all the C++ compile commands.
-The error and warning flags chosen must be valid options
-for the C++ compiler.
-The default value for $icode CompilerFlags$$ is the
-empty string.
 
 $head TapeAddrType$$
 $index memory, usage$$
