@@ -151,7 +151,7 @@ private:
 
 	\param thread [in]
 	Thread for which we are increasing the number of bytes in use
-	(must be less than $cref new_num_threads$$).
+	(must be less than \c num_threads).
 	Durring parallel execution, this must be the thread 
 	that is currently executing.
 	*/
@@ -199,7 +199,7 @@ private:
 
 	\param thread [in]
 	Thread for which we are decreasing the number of bytes in use
-	(must be less than the $cref new_num_threads$$).
+	(must be less than \c num_threads).
 	Durring parallel execution, this must be the thread 
 	that is currently executing.
 	*/
@@ -255,80 +255,80 @@ private:
 	/*!
 	Set and get the number of threads that are sharing memory.
 
-	\param new_number 
+	\param number_new 
 	If \c number is zero, we are only retreiving the current maximum
 	number of threads. Otherwise, we are setting and retreiving
 	maximum number of threads.
 
 	\return
 	the number of threads that are sharing memory.
-	If \c new_number is non-zero, the return value is equal to 
-	\c new_number.
+	If \c number_new is non-zero, the return value is equal to 
+	\c number_new.
 	*/
-	static size_t set_get_num_threads(size_t new_number)
-	{	static size_t user_number = 1;
+	static size_t set_get_num_threads(size_t number_new)
+	{	static size_t number_user = 1;
 
-		CPPAD_ASSERT_UNKNOWN( new_number <= CPPAD_MAX_NUM_THREADS );
-		CPPAD_ASSERT_UNKNOWN( ! in_parallel() || (new_number == 0) );
+		CPPAD_ASSERT_UNKNOWN( number_new <= CPPAD_MAX_NUM_THREADS );
+		CPPAD_ASSERT_UNKNOWN( ! in_parallel() || (number_new == 0) );
 
 		// case where we are changing the number of threads
-		if( new_number != 0 )
-			user_number = new_number;
+		if( number_new != 0 )
+			number_user = number_new;
 
-		return user_number;
+		return number_user;
 	}
 	/*!
 	Set and get the routine to use to determine if we are in parallel 
 	executiion mode.
 
 	\return 
-	If no call has been made to \c set_get_in_parallel with \a new_parallel
+	If no call has been made to \c set_get_in_parallel with \a parallel_new
 	non-zero, the return value is false.
 	Otherwise, it is the return value for the most recent version of
-	\a new_parallel (that is not zero). 
+	\a parallel_new (that is not zero). 
 	(Most recent includes this call to \c set_get_in_parallel.)
 
-	\param new_parallel [in]
+	\param parallel_new [in]
 	If this is zero (a null function pointer), then it is not used.
 	Otherwise, the function used to determine if we are in parallel mode
 	is replaced by this function.
 	*/
-	static bool set_get_in_parallel( bool (*new_parallel)(void)       )
-	{	static bool (*user_parallel)(void) = 0;
+	static bool set_get_in_parallel( bool (*parallel_new)(void)       )
+	{	static bool (*parallel_user)(void) = 0;
 
 		// case where we are setting new routine for parallel detection
-		if( new_parallel != 0 )
-			user_parallel = new_parallel;
-		if( user_parallel == 0 )
+		if( parallel_new != 0 )
+			parallel_user = parallel_new;
+		if( parallel_user == 0 )
 			return false;
 
-		return user_parallel();
+		return parallel_user();
 	}
 	/*!
 	Set and get the routine to use to determine the current thread number.
 
 	\return
-	If no call has been made to \c set_get_thread_num with \a new_thread_num
+	If no call has been made to \c set_get_thread_num with \a thread_num_new
 	non-zero, the return value is zero.
 	Otherwise, it is the return value for the most recent version of
-	\a new_thread_num (that is not zero). 
+	\a thread_num_new (that is not zero). 
 	(Most recent includes this call to \c set_get_thread_num.)
 
-	\param new_thread_num [in]
+	\param thread_num_new [in]
 	If this is zero (a null function pointer), then it is not used.
 	Otherwise, the function used to determine the current thread number
 	is replaced by this function.
 	*/
-	static size_t set_get_thread_num(size_t (*new_thread_num)(void)     )
-	{	static size_t (*user_thread_num)(void) = 0;
+	static size_t set_get_thread_num(size_t (*thread_num_new)(void)     )
+	{	static size_t (*thread_num_user)(void) = 0;
 
 		// case where we are setting new routine for determining thread number
-		if( new_thread_num != 0 )
-			user_thread_num = new_thread_num;
-		if( user_thread_num == 0 )
+		if( thread_num_new != 0 )
+			thread_num_user = thread_num_new;
+		if( thread_num_user == 0 )
 			return 0;
 
-		size_t thread = user_thread_num();
+		size_t thread = thread_num_user();
 		CPPAD_ASSERT_KNOWN(
 			thread < set_get_num_threads(0) ,
 			"parallel_setup: thread_num() >= num_threads"
