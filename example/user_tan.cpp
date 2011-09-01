@@ -83,13 +83,12 @@ namespace { // Begin empty namespace
 
 		// check if this is during the call to user_tan(id, ax, ay)
 		if( vx.size() > 0 )
-		{	assert( vx[0] == true  );
-			assert( vx.size() >= n );
+		{	assert( vx.size() >= n );
 			assert( vzy.size() >= m );
 			
 			// now setvzy
-			vzy[0] = true;
-			vzy[1] = true;
+			vzy[0] = vx[0];
+			vzy[1] = vx[0];
 		}
 
 		if( j == 0 )
@@ -305,8 +304,11 @@ bool user_tan(void)
 	user_tan(id, ax, az);
 	af[1] = az[0];
 
-	// put a constant in f[2] (for sparsity pattern testing)
-	af[2] = 1.; 
+	// put a constant in f[2] = tanh(1.) (for sparsity pattern testing)
+	CPPAD_TEST_VECTOR< AD<float> > one(1);
+	one[0] = 1.;
+	user_tan(id, one, az);
+	af[2] = az[0]; 
 
 	// create f: x -> f and stop tape recording
 	CppAD::ADFun<float> F(ax, af); 

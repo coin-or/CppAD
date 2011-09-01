@@ -960,8 +960,13 @@ public:
 # endif
 		// pass back values
 		for(i = 0; i < m; i++)
-			ay[i].value_ = y_[i];
-		//
+		{	ay[i].value_ = y_[i];
+
+			// initialize entire vector as a constant (not on tape)
+			ay[i].id_    = CPPAD_MAX_NUM_THREADS;
+			ay[i].taddr_ = 0;
+		}
+		// if tape is not null, ay is on the tape
 		if( tape != CPPAD_NULL )
 		{
 			// Note the actual number of results is m

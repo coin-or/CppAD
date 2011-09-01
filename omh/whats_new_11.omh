@@ -65,6 +65,7 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 09-01$$
+$list number$$
 Modify the CppAD trunk using the
 changes from svn revision 2060 to revision 2081 in the branch
 $codep
@@ -73,6 +74,15 @@ $$
 These changes are described below under the headings
 $cref/08-21/whats_new_11/09-01/08-21/$$ through 
 $cref/08-31/whats_new_11/09-01/08-31/$$.
+$lnext
+There was a bug in the $cref user_atomic$$ functions
+in the case where none of the elements of the argument to the function
+was a $cref/variable/glossary/Variable/$$.
+This has been fixed.
+In addition, $cref user_tan.cpp$$ generated an assert for this
+case and this has also been fixed (in addition to including an example
+for this case).
+$lend 
 
 $subhead 08-31$$
 $list number$$
