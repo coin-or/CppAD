@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin seq_property$$
 $spell 
+	inuse
 	Addr
 	CppAD
 	sizeof
@@ -223,7 +224,7 @@ $codei%
 see $cref/TapeAddrType/InstallUnix/TapeAddrType/$$.
 Note that this is the minimal amount of memory that can hold
 the information corresponding to an operation sequence.
-The actual amount of memory allocated ($cref new_inuse$$)
+The actual amount of memory allocated ($cref/inuse/ta_inuse/$$)
 for the operations sequence may be larger.
 
 $head Example$$

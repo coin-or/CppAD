@@ -30,7 +30,7 @@ By default, for each $codei%AD<%Base%>%$$ class there is only one
 tape that records $cref/AD of Base/glossary/AD of Base/$$ operations.
 This tape is a global variable and hence it cannot be used
 by multiple threads at the same time. 
-The $cref/parallel_setup/new_parallel_setup/$$ function informs CppAD of the
+The $cref/parallel_setup/ta_parallel_setup/$$ function informs CppAD of the
 maximum number of threads that can be active in parallel mode.
 It is still necessary to inform each $codei%AD<%Base%>%$$ type 
 before using it in using $cref/parallel/omp_in_parallel/$$ execution mode
@@ -38,7 +38,7 @@ before using it in using $cref/parallel/omp_in_parallel/$$ execution mode
 
 $head Restriction$$
 This function must be called before any $codei%AD<%Base>%$$ objects are used
-in $cref/parallel/new_in_parallel/$$ mode.
+in $cref/parallel/ta_in_parallel/$$ mode.
 
 $head isnan$$
 This routine has the side effect of calling

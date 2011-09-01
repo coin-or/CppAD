@@ -52,9 +52,9 @@ if the CppAD include files.
 $head Parallel Mode$$
 $index parallel, CheckNumericType$$
 $index CheckNumericType, parallel$$
-The routine $cref/thread_alloc::parallel_setup/new_parallel_setup/$$ 
+The routine $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$ 
 must be called before it
-can be used in $cref/parallel/new_in_parallel/$$ mode.
+can be used in $cref/parallel/ta_in_parallel/$$ mode.
 
 $head Example$$
 $children%

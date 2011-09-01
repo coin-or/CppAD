@@ -273,7 +273,7 @@ The first call to
 $codei%
 	%afun%(%id%, %ax%, %ay%)
 %$$
-must not be in $cref/parallel/new_in_parallel/$$ mode.
+must not be in $cref/parallel/ta_in_parallel/$$ mode.
 
 $head forward$$
 The macro argument $icode forward$$ is a
@@ -649,7 +649,7 @@ increase speed by avoiding system memory allocation calls.
 The function call $codei%
 	user_atomic<%Base%>::clear()
 %$$ 
-makes to work space $cref/available/new_available/$$ to
+makes to work space $cref/available/ta_available/$$ to
 for other uses by the same thread.
 This should be called when you are done using the 
 user atomic functions for a specific value of $icode Base$$.

@@ -338,7 +338,7 @@ private:
 // ============================================================================
 public:
 /*
-$begin new_parallel_setup$$
+$begin ta_parallel_setup$$
 $spell
 	alloc
 	num
@@ -397,7 +397,7 @@ $code%
 
 $head Restrictions$$
 The function $code parallel_setup$$ must be called before 
-the program enters $cref/parallel/new_in_parallel/$$ execution mode.
+the program enters $cref/parallel/ta_in_parallel/$$ execution mode.
 In addition, this function cannot be called while in parallel mode.
 
 $head Example$$
@@ -461,7 +461,7 @@ $end
 		free_available( thread_num() );
 	}
 /*
-$begin new_num_threads$$
+$begin ta_num_threads$$
 $spell
 	inv
 	CppAD
@@ -478,7 +478,7 @@ $head Syntax$$
 $icode%number% = thread_alloc::num_threads()%$$
 
 $head Purpose$$
-Determine the number of threads as set during $cref new_parallel_setup$$.
+Determine the number of threads as set during $cref/parallel_setup/ta_parallel_setup/$$.
 
 $head number$$
 The return value $icode number$$ has prototype
@@ -486,7 +486,7 @@ $icode%
 	size_t %number%
 %$$ 
 and is equal to the value of 
-$cref/num_threads/new_parallel_setup/num_threads/$$
+$cref/num_threads/ta_parallel_setup/num_threads/$$
 in the previous call to $icode parallel_setup$$.
 If there was no such previous call, the value one is returned.
 
@@ -501,7 +501,7 @@ $end
 	static size_t num_threads(void)
 	{	return set_get_num_threads(0); }
 /* -----------------------------------------------------------------------
-$begin new_in_parallel$$
+$begin ta_in_parallel$$
 
 $section Is The Current Execution in Parallel Mode$$
 $spell
@@ -542,7 +542,7 @@ $end
 	static bool in_parallel(void)
 	{	return set_get_in_parallel(0); }
 /* -----------------------------------------------------------------------
-$begin new_thread_num$$
+$begin ta_thread_num$$
 $spell
 	CppAD
 	num
@@ -581,7 +581,7 @@ $end
 	static size_t thread_num(void)
 	{	return set_get_thread_num(0); }
 /* -----------------------------------------------------------------------
-$begin new_get_memory$$
+$begin ta_get_memory$$
 $spell
 	num
 	ptr
@@ -600,7 +600,7 @@ $icode%v_ptr% = thread_alloc::get_memory(%min_bytes%, %cap_bytes%)%$$
 
 $head Purpose$$
 Use $cref/thread_alloc/$$ to obtain a minimum number of bytes of memory
-(for use by the $cref/current thread/new_thread_num/$$).
+(for use by the $cref/current thread/ta_thread_num/$$).
 
 $head min_bytes$$
 This argument has prototype
@@ -757,8 +757,9 @@ $end
 	}
 
 /* -----------------------------------------------------------------------
-$begin new_return_memory$$
+$begin ta_return_memory$$
 $spell
+	num
 	ptr
 	thread_alloc
 $$
@@ -775,7 +776,7 @@ $head Syntax$$
 $codei%thread_alloc::return_memory(%v_ptr%)%$$
 
 $head Purpose$$
-If $cref new_num_threads$$ is one,
+If $cref/num_threads/ta_num_threads/$$ is one,
 the memory is returned to the system.
 Otherwise, the memory is retained by $cref thread_alloc$$ for quick future use
 by the thread that allocated to memory.
@@ -786,13 +787,13 @@ $codei%
 	void* %v_ptr%
 %$$.
 It must be a pointer to memory that is currently in use; i.e.
-obtained by a previous call to $cref new_get_memory$$ and not yet returned.
+obtained by a previous call to $cref/get_memory/ta_get_memory/$$ and not yet returned.
 
 $head Thread$$
-Either the $cref/current thread/new_thread_num/$$ must be the same as during
-the corresponding call to $cref new_get_memory$$,
+Either the $cref/current thread/ta_thread_num/$$ must be the same as during
+the corresponding call to $cref/get_memory/ta_get_memory/$$,
 or the current execution mode must be sequential 
-(not $cref/parallel/new_in_parallel/$$).
+(not $cref/parallel/ta_in_parallel/$$).
 
 $head NDEBUG$$
 If $code NDEBUG$$ is defined, $icode v_ptr$$ is not checked (this is faster).
@@ -883,8 +884,9 @@ $end
 		inc_available(capacity, thread);
 	}
 /* -----------------------------------------------------------------------
-$begin new_free_available$$
+$begin ta_free_available$$
 $spell
+	num
 	thread_alloc
 $$
 
@@ -908,9 +910,9 @@ This argument has prototype
 $codei%
 	size_t %thread%
 %$$
-Either $cref new_thread_num$$ must be the same as $icode thread$$,
+Either $cref/thread_num/ta_thread_num/$$ must be the same as $icode thread$$,
 or the current execution mode must be sequential 
-(not $cref/parallel/new_in_parallel/$$).
+(not $cref/parallel/ta_in_parallel/$$).
 
 $head Example$$
 $cref/thread_alloc.cpp/$$
@@ -959,7 +961,7 @@ $end
 		CPPAD_ASSERT_UNKNOWN( available(thread) == 0 );
 	}
 /* -----------------------------------------------------------------------
-$begin new_inuse$$
+$begin ta_inuse$$
 $spell
 	num
 	inuse
@@ -987,9 +989,9 @@ This argument has prototype
 $codei%
 	size_t %thread%
 %$$
-Either $cref new_thread_num$$ must be the same as $icode thread$$,
+Either $cref/thread_num/ta_thread_num/$$ must be the same as $icode thread$$,
 or the current execution mode must be sequential 
-(not $cref/parallel/new_in_parallel/$$).
+(not $cref/parallel/ta_in_parallel/$$).
 
 $head num_bytes$$
 The return value has prototype
@@ -1024,7 +1026,7 @@ $end
 		return inuse_vector()[thread];
 	}
 /* -----------------------------------------------------------------------
-$begin new_available$$
+$begin ta_available$$
 $spell
 	num
 	thread_alloc
@@ -1051,9 +1053,9 @@ This argument has prototype
 $codei%
 	size_t %thread%
 %$$
-Either $cref new_thread_num$$ must be the same as $icode thread$$,
+Either $cref/thread_num/ta_thread_num/$$ must be the same as $icode thread$$,
 or the current execution mode must be sequential 
-(not $cref/parallel/new_in_parallel/$$).
+(not $cref/parallel/ta_in_parallel/$$).
 
 $head num_bytes$$
 The return value has prototype
@@ -1081,8 +1083,9 @@ $end
 		return available_vector()[thread];
 	}
 /* -----------------------------------------------------------------------
-$begin new_create_array$$
+$begin ta_create_array$$
 $spell
+	inuse
 	thread_alloc
 	sizeof
 $$
@@ -1131,16 +1134,16 @@ $codei%
 It is array with $icode size_out$$ elements.
 The default constructor for $icode Type$$ is used to initialize the 
 elements of $icode array$$.
-Note that $cref new_delete_array$$
+Note that $cref/delete_array/ta_delete_array/$$
 should be used to destroy the array when it is no longer needed.
 
 $head Delta$$
-The amount of memory $cref new_inuse$$ by the current thread, 
+The amount of memory $cref/inuse/ta_inuse/$$ by the current thread, 
 will increase $icode delta$$ where
 $codei%
 	sizeof(%Type%) * (%size_out% + 1) > %delta% >= sizeof(%Type%) * %size_out%
 %$$
-The $cref new_available$$ memory will decrease by $icode delta$$,
+The $cref/available/ta_available/$$ memory will decrease by $icode delta$$,
 (and the allocation will be faster)
 if a previous allocation with $icode size_min$$ between its current value
 and $icode size_out$$ is available. 
@@ -1195,8 +1198,9 @@ $end
 		return array;
 	}
 /* -----------------------------------------------------------------------
-$begin new_delete_array$$
+$begin ta_delete_array$$
 $spell
+	inuse
 	thread_alloc
 	sizeof
 	deallocate
@@ -1214,8 +1218,8 @@ $codei%thread_alloc::delete_array(%array%)%$$.
 
 $head Purpose$$
 Returns memory corresponding to an array created by 
-(create by $cref new_create_array$$) to the 
-$cref new_available$$ memory pool for the current thread.
+(create by $cref/create_array/ta_create_array/$$) to the 
+$cref/available/ta_available/$$ memory pool for the current thread.
 
 $head Type$$
 The type of the elements of the array.
@@ -1225,20 +1229,20 @@ The argument $icode array$$ has prototype
 $codei%
 	%Type%* %array%
 %$$
-It is a value returned by $cref new_create_array$$ and not yet deleted.
+It is a value returned by $cref/create_array/ta_create_array/$$ and not yet deleted.
 The $icode Type$$ destructor is called for each element in the array.
 
 $head Thread$$
-The $cref/current thread/new_thread_num/$$ must be the
-same as when $cref new_create_array$$ returned the value $icode array$$.
+The $cref/current thread/ta_thread_num/$$ must be the
+same as when $cref/create_array/ta_create_array/$$ returned the value $icode array$$.
 There is an exception to this rule:
 when the current execution mode is sequential
-(not $cref/parallel/new_in_parallel/$$) the current thread number does not matter.
+(not $cref/parallel/ta_in_parallel/$$) the current thread number does not matter.
 
 $head Delta$$
-The amount of memory $cref new_inuse$$ will decrease by $icode delta$$,
-and the $cref new_available$$ memory will increase by $icode delta$$,
-where $cref/delta/new_create_array/Delta/$$ 
+The amount of memory $cref/inuse/ta_inuse/$$ will decrease by $icode delta$$,
+and the $cref/available/ta_available/$$ memory will increase by $icode delta$$,
+where $cref/delta/ta_create_array/Delta/$$ 
 is the same as for the corresponding call to $code create_array$$.
 
 $head Example$$

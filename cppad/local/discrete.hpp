@@ -126,7 +126,7 @@ The first call to
 $codei%
 	%ay% = %name%(%ax%)
 %$$
-must not be in $cref/parallel/new_in_parallel/$$ execution mode.
+must not be in $cref/parallel/ta_in_parallel/$$ execution mode.
 	
 
 $head Example$$

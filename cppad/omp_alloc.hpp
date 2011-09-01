@@ -34,8 +34,8 @@ $section Set and Get Maximum Number of Threads for omp_alloc Allocator$$
 $head Deprecated$$
 $index set_max_num_threads, omp_alloc$$
 $index get_max_num_threads, omp_alloc$$
-Use the functions $cref/thread_alloc::parallel_setup/new_parallel_setup/$$
-and $cref/thread_alloc:num_threads/new_num_threads/$$ instead.
+Use the functions $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
+and $cref/thread_alloc:num_threads/ta_num_threads/$$ instead.
 
 $head Syntax$$
 $codei%omp_alloc::set_max_num_threads(%number%)
@@ -102,7 +102,7 @@ $$
 $head Deprecated$$
 $index in_parallel, omp_alloc$$
 $index omp_alloc, in_parallel$$
-Use the function $cref/thread_alloc::in_parallel/new_in_parallel/$$ instead.
+Use the function $cref/thread_alloc::in_parallel/ta_in_parallel/$$ instead.
 
 $head Syntax$$
 $icode%flag% = omp_alloc::in_parallel()%$$
@@ -151,7 +151,7 @@ $section Get the Current OpenMP Thread Number$$
 $head Deprecated$$
 $index get_thread_num, omp_alloc$$
 $index omp_alloc, get_thread_num$$
-Use the function $cref/thread_alloc::thread_num/new_thread_num/$$ instead.
+Use the function $cref/thread_alloc::thread_num/ta_thread_num/$$ instead.
 
 $head Syntax$$
 $icode%thread% = omp_alloc::get_thread_num()%$$
@@ -196,7 +196,7 @@ $section Get At Least A Specified Amount of Memory$$
 $head Deprecated$$
 $index get_thread_num, omp_alloc$$
 $index omp_alloc, get_thread_num$$
-Use the function $cref/thread_alloc::get_memory/new_get_memory/$$ instead.
+Use the function $cref/thread_alloc::get_memory/ta_get_memory/$$ instead.
 
 $head Syntax$$
 $icode%v_ptr% = omp_alloc::get_memory(%min_bytes%, %cap_bytes%)%$$
@@ -280,7 +280,7 @@ $section Return Memory to omp_alloc$$
 $head Deprecated$$
 $index return_memory, omp_alloc$$
 $index omp_alloc, return_memory$$
-Use the function $cref/thread_alloc::return_memory/new_return_memory/$$ instead.
+Use the function $cref/thread_alloc::return_memory/ta_return_memory/$$ instead.
 
 $head Syntax$$
 $codei%omp_alloc::return_memory(%v_ptr%)%$$
@@ -344,7 +344,7 @@ $section Free Memory Currently Available for Quick Use by a Thread$$
 $head Deprecated$$
 $index free_available, omp_alloc$$
 $index omp_alloc, free_available$$
-Use the function $cref/thread_alloc::free_available/new_free_available/$$ 
+Use the function $cref/thread_alloc::free_available/ta_free_available/$$ 
 instead.
 
 $head Syntax$$
@@ -394,7 +394,7 @@ $index omp_alloc, inuse$$
 
 $head Syntax$$
 $icode%num_bytes% = omp_alloc::inuse(%thread%)%$$
-Use the function $cref/thread_alloc::inuse/new_inuse/$$ instead.
+Use the function $cref/thread_alloc::inuse/ta_inuse/$$ instead.
 
 $head Purpose$$
 Memory being managed by $cref/omp_alloc/$$ has two states,
@@ -449,7 +449,7 @@ $section Amount of Memory Available for Quick Use by a Thread$$
 $head Deprecated$$
 $index available, omp_alloc$$
 $index omp_alloc, available$$
-Use the function $cref/thread_alloc::available/new_available/$$ instead.
+Use the function $cref/thread_alloc::available/ta_available/$$ instead.
 
 $head Syntax$$
 $icode%num_bytes% = omp_alloc::available(%thread%)%$$
@@ -500,7 +500,7 @@ $section Allocate Memory and Create A Raw Array$$
 $head Deprecated$$
 $index create_array, omp_alloc$$
 $index omp_alloc, create_array$$
-Use the function $cref/thread_alloc::create_array/new_create_array/$$ instead.
+Use the function $cref/thread_alloc::create_array/ta_create_array/$$ instead.
 
 $head Syntax$$
 $icode%array% = omp_alloc::create_array<%Type%>(%size_min%, %size_out%)%$$.
@@ -593,7 +593,7 @@ $section Return A Raw Array to The Available Memory for a Thread$$
 $head Deprecated$$
 $index delete_array, omp_alloc$$
 $index omp_alloc, delete_array$$
-Use the function $cref/thread_alloc::delete_array/new_delete_array/$$ instead.
+Use the function $cref/thread_alloc::delete_array/ta_delete_array/$$ instead.
 
 $head Syntax$$
 $codei%omp_alloc::delete_array(%array%)%$$.
@@ -732,7 +732,7 @@ $head Removed$$
 $index max_num_threads, omp_alloc$$
 $index omp_alloc, max_num_threads$$
 This function has been removed from the CppAD API.
-Use the function $cref/thread_alloc::parallel_setup/new_parallel_setup/$$
+Use the function $cref/thread_alloc::parallel_setup/ta_parallel_setup/$$
 in its place.
 
 $head Syntax$$

@@ -46,12 +46,12 @@ Otherwise it returns true unless one of the conditions below occurs.
 
 $head inuse$$
 When this routine is called, it is assumed that no memory
-should be $cref new_inuse$$ or $cref omp_inuse$$ for any thread.
+should be $cref/inuse/ta_inuse/$$ or $cref omp_inuse$$ for any thread.
 If it is, a message is printed and this routine returns false.
 
 $head available$$
 This routine 
-checks that no memory is $cref new_available$$ or $cref omp_available$$
+checks that no memory is $cref/available/ta_available/$$ or $cref omp_available$$
 for any thread;
 i.e., it all has been returned to the system.
 If there is memory still available for a thread,
@@ -66,7 +66,7 @@ If this routine returns false, it prints a message
 to standard output describing the condition before returning false.
 
 $head Multi-Threading$$
-This routine cannot be used in $cref new_in_parallel$$
+This routine cannot be used in $cref/in_parallel/ta_in_parallel/$$
 execution mode.
 
 $end

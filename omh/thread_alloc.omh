@@ -29,10 +29,10 @@ $head Purpose$$
 The C++ $code new$$ and $code delete$$ operators are thread safe,
 but this means that a thread may have to wait for a lock on these operations.
 Once memory is obtained for a thread, the $code thread_alloc$$ memory
-allocator keeps that memory $cref new_available$$ for the thread so that
+allocator keeps that memory $cref/available/ta_available/$$ for the thread so that
 it can be re-used without waiting for a lock.
 All the CppAD memory allocations use this utility. 
-The $cref new_free_available$$ function should be used to return memory
+The $cref/free_available/ta_free_available/$$ function should be used to return memory
 to the system (once it is no longer required by a thread).
 
 $head Include$$

@@ -99,7 +99,7 @@ $codei%
 %$$
 or $cref abort_recording$$,
 must be preformed by the same thread; i.e.,
-$cref/thread_alloc::thread_num/new_thread_num/$$ must be the same.
+$cref/thread_alloc::thread_num/ta_thread_num/$$ must be the same.
 
 $head Example$$
 $children%

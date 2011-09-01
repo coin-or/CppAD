@@ -44,7 +44,7 @@ $subhead Parallel Mode$$
 $index parallel, ErrorHandler$$
 $index ErrorHandler, parallel$$
 The $code ErrorHandler$$ constructor and destructor cannot be called in
-$cref/parallel/new_in_parallel/$$ execution mode.
+$cref/parallel/ta_in_parallel/$$ execution mode.
 Furthermore, this rule is not abided by, a raw C++ $code assert$$,
 instead of one that uses this error handler, will be generated.
 

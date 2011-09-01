@@ -253,7 +253,7 @@ $head Multi-Threading$$
 $index multi-threading, TrackCount$$
 $index TrackCount, multi-threading$$
 $index thread, multi TrackCount$$
-These routines cannot be used $cref new_in_parallel$$
+These routines cannot be used $cref/in_parallel/ta_in_parallel/$$
 execution mode.
 Use the $cref/thread_alloc/$$ routines instead.
 

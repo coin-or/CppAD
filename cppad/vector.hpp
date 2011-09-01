@@ -217,19 +217,19 @@ $index vector, thread_alloc$$
 These vectors use the OpenMP fast memory allocator $cref/thread_alloc/$$:
 
 $list number$$
-The routine $cref/parallel_setup/new_parallel_setup/$$ must
+The routine $cref/parallel_setup/ta_parallel_setup/$$ must
 be called before these vectors can be used 
-$cref/in parallel/new_in_parallel/$$.
+$cref/in parallel/ta_in_parallel/$$.
 $lnext
 Using these vectors affects the amount of memory 
-$cref/in_use/new_inuse/$$ and $cref/available/new_available/$$.
+$cref/in_use/ta_inuse/$$ and $cref/available/ta_available/$$.
 $lnext
 Calling $cref/resize/CppAD_vector/resize/$$ with a zero argument,
 makes the corresponding memory available (though $code thread_alloc$$)
 to the current thread.
 $lnext
 Available memory
-can then be completely freed using $cref new_free_available$$.
+can then be completely freed using $cref/free_available/ta_free_available/$$.
 $lend
 
 $head Example$$

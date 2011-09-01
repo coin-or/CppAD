@@ -336,7 +336,7 @@ $list number$$
 Change the upper limit for 
 $cref omp_max_num_threads$$ from 32 to 48.
 $lnext
-Add $cref/parallel/new_in_parallel/$$ documentation for,
+Add $cref/parallel/ta_in_parallel/$$ documentation for,
 $cref/nan/nan/Parallel Mode/$$,
 $cref/Rosen34/Rosen34/Parallel Mode/$$, and
 $cref/Runge45/Runge45/Parallel Mode/$$.
