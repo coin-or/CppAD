@@ -55,6 +55,15 @@ Upon return it is the number of times per second that
 $code sum_i_inv$$ can compute the 
 $cref/summation/openmp_sum_i_inv.cpp/Summation/$$.
 
+$head num_threads$$
+This argument has prototype
+$codei%
+	size_t %num_threads%
+%$$
+It specifies the number of OpenMP threads that are available for this test.
+If it is zero, the test is run without the OpenMP environment; 
+i.e. as a normal routine.
+
 $head mega_sum$$
 This argument has prototype
 $codei%
@@ -170,14 +179,9 @@ bool sum_i_inv(size_t& rate_out, size_t num_threads, size_t mega_sum)
 		num_threads_  = 1;
 	else	num_threads_  = num_threads;
 
+	// expect number of threads to already be set up
 	if( use_openmp_ )
-	{	omp_set_dynamic(0);                    // off dynamic thread adjust
-		omp_set_num_threads(int(num_threads)); // set the number of threads 
-
-		// Not using CppAD memory allocation so
-		// thread_alloc::parallel_setup(num_threads, in_parallel, thread_num);
-	}
-
+		ok &= num_threads == CppAD::thread_alloc::num_threads();
 
 	// minimum time for test (repeat until this much time)
 	double time_min = 1.;

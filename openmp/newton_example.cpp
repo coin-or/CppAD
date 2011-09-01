@@ -62,9 +62,14 @@ This argument has prototype
 $codei%
 	size_t %num_threads%
 %$$
-It specifies the number of OpenMP threads that will be used for the test.
-If it is zero, the test is run without the OpenMP environment; 
-i.e. as a normal routine.
+It specifies the number of OpenMP threads that 
+are available for this test.
+In addition, it is assumed that 
+$cref/parallel_setup/ta_parallel_setup/$$ has been informed of the
+number of threads and $cref parallel_ad$$ has enabled 
+$code AD<double>$$ for this number of threads.
+If $icode num_threads$$ is zero, 
+the test is run without the OpenMP environment; i.e. as a normal routine.
 
 $head n_zero$$
 This argument has prototype
@@ -229,10 +234,6 @@ namespace { // begin empty namespace
 			test_once(xout, size);
 		return;
 	}
-	bool in_parallel(void)
-	{	return static_cast<bool> ( omp_in_parallel() ); }
-	size_t thread_num(void)
-	{	return static_cast<size_t>( omp_get_thread_num() ); } 
 } // end empty namespace
 
 bool newton_example(
@@ -254,19 +255,9 @@ bool newton_example(
 	use_ad_     = use_ad;
 	use_openmp_ = num_threads > 0;
 
-	// expect to start out in single threaded allocation mode
-	ok &= 1 == CppAD::thread_alloc::num_threads();
-
+	// expect number of threads to already be set up
 	if( use_openmp_ )
-	{	omp_set_dynamic(0);                    // off dynamic thread adjust
-		omp_set_num_threads(int(num_threads)); // set the number of threads 
-
-		// setup CppAD memory allocation for parallel mode execution
-		thread_alloc::parallel_setup(num_threads, in_parallel, thread_num);
-
-		// enable use of AD<double> in parallel mode
-		CppAD::parallel_ad<double>();
-	}
+		ok &= num_threads == CppAD::thread_alloc::num_threads();
 
 	// minimum time for test (repeat until this much time)
 	double time_min = 1.;
@@ -292,10 +283,6 @@ bool newton_example(
 	size_t i   = 0;
 	for(i = 0; i < n_zero; i++)
 		ok &= std::fabs( xout[i] - pi * i) <= 2 * eps;
-
-	// return CppAD to normal single threaded allocation mode
-	if( use_openmp_ )
-		thread_alloc::parallel_setup(1, in_parallel, thread_num);
 
 	// return correctness check result
 	return  ok;

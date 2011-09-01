@@ -114,10 +114,15 @@ namespace {
 		std::cerr << error_msg << std::endl;
 		exit(1);
 	}
+	bool in_parallel(void)
+	{	return static_cast<bool> ( omp_in_parallel() ); }
+	size_t thread_num(void)
+	{	return static_cast<size_t>( omp_get_thread_num() ); } 
 }
 
 int main(int argc, char *argv[])
-{	size_t num_fail = 0;
+{	using CppAD::thread_alloc;
+	size_t num_fail = 0;
 	bool ok         = true;
 	using std::cout;
 
@@ -193,13 +198,32 @@ int main(int argc, char *argv[])
 
 	// run the test for each number of threads
 	CppAD::vector<size_t> rate_all(max_threads + 1);
-	size_t num_threads;
+	size_t num_threads, inuse_this_thread = 0;
 	for(num_threads = 0; num_threads <= max_threads; num_threads++)
-	{	if( run_sum_i_inv )
-			ok = sum_i_inv(rate_all[num_threads], num_threads, mega_sum);
+	{	// set the number of threads
+		if( num_threads > 1 )
+		{	// off dynamic thread adjust
+			omp_set_dynamic(0);
+			// set the number of threads 
+			omp_set_num_threads(int(num_threads));
+
+			// setup CppAD memory allocation for parallel mode execution
+			thread_alloc::parallel_setup(
+				num_threads, in_parallel, thread_num)
+			;
+			// enable use of AD<double> in parallel mode
+			CppAD::parallel_ad<double>();
+		}
+		// ammount of memory initialy inuse by thread zero
+		ok &= 0 == thread_alloc::thread_num();
+		inuse_this_thread = thread_alloc::inuse(0);
+
+		// run the requested test
+		if( run_sum_i_inv )
+			ok &= sum_i_inv(rate_all[num_threads], num_threads, mega_sum);
 		else
 		{	assert( run_newton_example );
-			ok = newton_example(
+			ok &= newton_example(
 				rate_all[num_threads] ,
 				num_threads           ,
 				n_zero                ,
@@ -207,6 +231,15 @@ int main(int argc, char *argv[])
 				n_sum                 ,
 				use_ad
 			);
+		}
+		// set back to one thread and fee all related memory
+		thread_alloc::parallel_setup(1, in_parallel, thread_num);
+		size_t thread;
+		for(thread = 0; thread < num_threads; thread++)
+		{	thread_alloc::free_available(thread);
+			if( thread == 0 )
+				ok &= thread_alloc::inuse(thread) == inuse_this_thread;
+			else	ok &= thread_alloc::inuse(thread) == 0;
 		}
 		if( ok )
 			cout << "OK:    " << test_name << ": ";
