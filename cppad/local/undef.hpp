@@ -19,7 +19,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # undef CPPAD_USE_FORWARD0SWEEP
 // # undef CPPAD_BEGIN_NAMESPACE
 // # undef CPPAD_END_NAMESPACE
-# undef CPPAD_INLINE
+# undef CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # undef CPPAD_NULL
 # undef CPPAD_MAX_NUM_THREADS
 # undef CPPAD_FOLD_ASSIGNMENT_OPERATOR

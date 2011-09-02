@@ -103,11 +103,13 @@ $end
 namespace CppAD {
 
 	template <class Base>
-	CPPAD_INLINE int Integer(const AD<Base> &x)
+	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+	int Integer(const AD<Base> &x)
 	{	return Integer(x.value_); }
 
 	template <class Base>
-	CPPAD_INLINE int Integer(const VecAD_reference<Base> &x)
+	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+	int Integer(const VecAD_reference<Base> &x)
 	{	return Integer( x.ADBase() ); }
 }
 # endif

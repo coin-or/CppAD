@@ -287,8 +287,6 @@ int main(void)
 	ok &= Run( OdeStiff,          "OdeStiff"         );
 	ok &= Run( ode_taylor,        "ode_taylor"       );
 	ok &= Run( omp_alloc,         "omp_alloc"        );
-	ok &= Run( openmp_a11c,       "openmp_a11c"      );
-	ok &= Run( openmp_ad,         "openmp_ad"        );
 	ok &= Run( opt_val_hes,       "opt_val_hes"      );
 	ok &= Run( optimize,          "optimize"         );
 	ok &= Run( Output,            "Output"           );

@@ -176,7 +176,8 @@ $end
 namespace CppAD {
 
 template <class Base>
-CPPAD_INLINE AD<Base> CondExpOp(
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+AD<Base> CondExpOp(
 	enum  CompareOp cop       ,
 	const AD<Base> &left      , 
 	const AD<Base> &right     , 
@@ -322,16 +323,17 @@ void ADTape<Base>::RecordCondExp(
 
 // ------------ CondExpOp(left, right, exp_if_true, exp_if_false) ----------------
 
-# define CPPAD_COND_EXP(Name)                                              \
-	template <class Base>                                              \
-	CPPAD_INLINE AD<Base> CondExp##Name(                                     \
+# define CPPAD_COND_EXP(Name)                                        \
+	template <class Base>                                           \
+	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION                           \
+	AD<Base> CondExp##Name(                                         \
 		const AD<Base> &left      ,                                \
 		const AD<Base> &right     ,                                \
-		const AD<Base> &exp_if_true  ,                                \
-		const AD<Base> &exp_if_false )                                \
-	{                                                                  \
+		const AD<Base> &exp_if_true  ,                             \
+		const AD<Base> &exp_if_false )                             \
+	{                                                               \
 		return CondExpOp(Compare##Name,                            \
-			left, right, exp_if_true, exp_if_false);                 \
+			left, right, exp_if_true, exp_if_false);              \
 	}
 
 // AD<Base>
@@ -341,7 +343,8 @@ CPPAD_COND_EXP(Eq)
 CPPAD_COND_EXP(Ge)
 CPPAD_COND_EXP(Gt)
 template <class Base>
-CPPAD_INLINE AD<Base> CondExp(
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+AD<Base> CondExp(
 	const AD<Base> &flag      , 
 	const AD<Base> &exp_if_true  ,
 	const AD<Base> &exp_if_false )

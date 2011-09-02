@@ -3,7 +3,7 @@
 # define CPPAD_NEAR_EQUAL_EXT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -131,47 +131,55 @@ namespace CppAD {
 
 // fold into base type and then use <cppad/near_equal.hpp>
 template <class Base>
-CPPAD_INLINE bool NearEqual(
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+bool NearEqual(
 const AD<Base> &x, const AD<Base> &y, const Base &r, const Base &a)
 {	return NearEqual(x.value_, y.value_, r, a);
 }
 
 template <class Base>
-CPPAD_INLINE bool NearEqual(
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+bool NearEqual(
 const Base &x, const AD<Base> &y, const Base &r, const Base &a)
 {	return NearEqual(x, y.value_, r, a);
 }
 
 template <class Base>
-CPPAD_INLINE bool NearEqual(
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+bool NearEqual(
 const AD<Base> &x, const Base &y, const Base &r, const Base &a)
 {	return NearEqual(x.value_, y, r, a);
 }
 
 // fold into AD type and then use cases above
 template <class Base>
-CPPAD_INLINE bool NearEqual(
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+bool NearEqual(
 	const VecAD_reference<Base> &x, const VecAD_reference<Base> &y, 
 	const Base &r, const Base &a)
 {	return NearEqual(x.ADBase(), y.ADBase(), r, a);
 }
 template <class Base>
-CPPAD_INLINE bool NearEqual(const VecAD_reference<Base> &x, const AD<Base> &y, 
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+bool NearEqual(const VecAD_reference<Base> &x, const AD<Base> &y, 
 	const Base &r, const Base &a)
 {	return NearEqual(x.ADBase(), y, r, a);
 }
 template <class Base>
-CPPAD_INLINE bool NearEqual(const VecAD_reference<Base> &x, const Base &y, 
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+bool NearEqual(const VecAD_reference<Base> &x, const Base &y, 
 	const Base &r, const Base &a)
 {	return NearEqual(x.ADBase(), y, r, a);
 }
 template <class Base>
-CPPAD_INLINE bool NearEqual(const AD<Base> &x, const VecAD_reference<Base> &y, 
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+bool NearEqual(const AD<Base> &x, const VecAD_reference<Base> &y, 
 	const Base &r, const Base &a)
 {	return NearEqual(x, y.ADBase(), r, a);
 }
 template <class Base>
-CPPAD_INLINE bool NearEqual(const Base &x, const VecAD_reference<Base> &y, 
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+bool NearEqual(const Base &x, const VecAD_reference<Base> &y, 
 	const Base &r, const Base &a)
 {	return NearEqual(x, y.ADBase(), r, a);
 }

@@ -3,7 +3,7 @@
 # define CPPAD_VAR2PAR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -72,14 +72,16 @@ $end
 namespace CppAD {
 
 template <class Base>
-CPPAD_INLINE AD<Base> Var2Par(const AD<Base> &x)
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+AD<Base> Var2Par(const AD<Base> &x)
 {	AD<Base> y(x.value_);
 	return y;
 }
 
 
 template <class Base>
-CPPAD_INLINE AD<Base> Var2Par(const VecAD_reference<Base> &x)
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+AD<Base> Var2Par(const VecAD_reference<Base> &x)
 {	AD<Base> y(x.ADBase()); 
 	y.id_ = 0;
 }

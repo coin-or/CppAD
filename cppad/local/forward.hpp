@@ -63,7 +63,7 @@ template <typename Vector>
 Vector ADFun<Base>::Forward(
 	size_t p                    , 
 	const Vector& x_p           , 
-	std::ostream& s = std::cout )
+	std::ostream& s             )
 {	// temporary indices
 	size_t i, j;
 

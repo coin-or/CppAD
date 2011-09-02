@@ -3,7 +3,7 @@
 # define CPPAD_PAR_VAR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-08 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -79,26 +79,30 @@ $end
 namespace CppAD {
 	// Parameter
 	template <class Base>
-	CPPAD_INLINE bool Parameter(const AD<Base> &x)
+	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+	bool Parameter(const AD<Base> &x)
 	{	size_t thread = x.id_ % CPPAD_MAX_NUM_THREADS;
 		return x.id_ != * AD<Base>::id_handle(thread); 
 	}
 
 	template <class Base>
-	CPPAD_INLINE bool Parameter(const VecAD<Base> &x)
+	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+	bool Parameter(const VecAD<Base> &x)
 	{	size_t thread = x.id_ % CPPAD_MAX_NUM_THREADS;
 		return x.id_ != * AD<Base>::id_handle(thread); 
 	}
 
 	// Variable
 	template <class Base>
-	CPPAD_INLINE bool Variable(const AD<Base> &x)
+	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+	bool Variable(const AD<Base> &x)
 	{	size_t thread = x.id_ % CPPAD_MAX_NUM_THREADS;
 		return x.id_ == * AD<Base>::id_handle(thread); 
 	}
 
 	template <class Base>
-	CPPAD_INLINE bool Variable(const VecAD<Base> &x)
+	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+	bool Variable(const VecAD<Base> &x)
 	{	size_t thread = x.id_ % CPPAD_MAX_NUM_THREADS;
 		return x.id_ == * AD<Base>::id_handle(thread); 
 	}

@@ -41,7 +41,8 @@ values that we are checking for identically a pamameter.
 returns true iff \c x is identically a parameter.
 */
 template <class Base>
-CPPAD_INLINE bool IdenticalPar(const AD<Base> &x)
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+bool IdenticalPar(const AD<Base> &x)
 {	return Parameter(x) && IdenticalPar(x.value_); }
 // Zero ==============================================================
 /*!
@@ -56,7 +57,8 @@ returns true if and only if
 \c x is equals zero and is identically a parameter \ref IdenticalPar.
 */
 template <class Base>
-CPPAD_INLINE bool IdenticalZero(const AD<Base> &x)
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+bool IdenticalZero(const AD<Base> &x)
 {	return Parameter(x) && IdenticalZero(x.value_); }
 // One ==============================================================
 /*!
@@ -71,7 +73,8 @@ returns true if and only if
 \c x is equals one and is identically a parameter \ref IdenticalPar.
 */
 template <class Base>
-CPPAD_INLINE bool IdenticalOne(const AD<Base> &x)
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+bool IdenticalOne(const AD<Base> &x)
 {	return Parameter(x) && IdenticalOne(x.value_); }
 // Equal ===================================================================
 /*!
@@ -89,7 +92,8 @@ returns true if and only if
 the arguments are equal and both identically parameters \ref IdenticalPar.
 */
 template <class Base>
-CPPAD_INLINE bool IdenticalEqualPar
+CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+bool IdenticalEqualPar
 (const AD<Base> &x, const AD<Base> &y)
 {	bool parameter;
 	parameter = ( Parameter(x) & Parameter(y) );

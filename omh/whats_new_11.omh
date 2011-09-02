@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	vcproj
 	pthread
 	https
 	abs_geq
@@ -65,9 +66,18 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 09-02$$
+$list number$$
 The OpenMP speed test program $cref/run.cpp/openmp_run.cpp/$$ was not setting 
 the number of threads for the one thread case (so dynamic thread adjustment was
 used). This has been fixed.
+$lnext
+The $cref thread_alloc.cpp$$ example was missing from the 
+Microsoft $code example/example.vcproj$$ file and a attempt was made
+to link to missing OpenMP routines (this has been fixed).
+In addition,
+some Microsoft compiler warning have been fixed; see the examples and tests
+at $cref InstallWindows$$.
+$lend
 
 $head 09-01$$
 $list number$$

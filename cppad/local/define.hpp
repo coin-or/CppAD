@@ -69,7 +69,7 @@ Used for end that matches the beginning of a CppAD namespace section
 
 
 /*!
-\def CPPAD_INLINE
+\def CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 A version of the inline command that works with MC compiler.
 
 Microsoft Visual C++ version 9.0 generates a warning if a template
@@ -85,12 +85,12 @@ and it contains the text
 	to a specialization of a function template
 \endverbatim
 This happens even if the function is not a specialization.
-The macro CPPAD_INLINE is defined as empty for Microsoft compilers.
+This macro is defined as empty for Microsoft compilers.
 */
 # ifdef _MSC_VER
-# define CPPAD_INLINE
+# define CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # else
-# define CPPAD_INLINE inline
+# define CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION inline
 # endif
 
 /*!

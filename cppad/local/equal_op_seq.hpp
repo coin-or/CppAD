@@ -104,7 +104,8 @@ $end
 
 namespace CppAD {
 	template <class Base>
-	CPPAD_INLINE bool EqualOpSeq(const AD<Base> &x, const AD<Base> &y)
+	CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
+	bool EqualOpSeq(const AD<Base> &x, const AD<Base> &y)
 	{	
 		if( Parameter(x) )
 		{	if( Parameter(y) )

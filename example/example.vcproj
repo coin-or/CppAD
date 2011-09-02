@@ -630,6 +630,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\thread_alloc.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\unary_minus.cpp"
 				>
 			</File>
