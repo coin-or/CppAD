@@ -77,6 +77,13 @@ to link to missing OpenMP routines (this has been fixed).
 In addition,
 some Microsoft compiler warning have been fixed; see the examples and tests
 at $cref InstallWindows$$.
+$lnext
+There was an oversight, 
+and $code CPPAD_MAX_NUM_THREAD$$
+was being set to 2 when $code _OPENMP$$ was not defined.
+This has been fixed and 
+$cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$ 
+has been documented and is now part of the CppAD API.
 $lend
 
 $head 09-01$$

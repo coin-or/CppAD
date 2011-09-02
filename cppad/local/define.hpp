@@ -106,21 +106,14 @@ it is defined when cppad/local/define.hpp is included.
  
 /*!
 \def CPPAD_MAX_NUM_THREADS
-Specifies the maximum number of OpenMp threads that can be used with CppAD.
+Specifies the maximum number of threads that CppAD can support.
 
-If it is not yet defined,
+The user may define CPPAD_MAX_NUM_THREADS before including any of the CppAD
+header files.  If it is not yet defined,
 it is defined when cppad/local/define.hpp is included.
-If the preprocessor symbol _OPENMP is defined, 
-CPPAD_MAX_NUM_THREADS is the maximum number of threads that CppAD can support.
-Otherwise, there will only be one thread but MAX_NUM_THREADS is 2 
-for testing purposes.
 */
 # ifndef CPPAD_MAX_NUM_THREADS
-# ifdef _OPENMP
 # define CPPAD_MAX_NUM_THREADS 48
-# else
-# define CPPAD_MAX_NUM_THREADS 2
-# endif
 # endif
 
 /*!

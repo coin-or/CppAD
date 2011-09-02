@@ -28,6 +28,20 @@ Extra steps and care must be taken to use CppAD
 in $cref/parallel/ta_in_parallel/$$ execution mode. 
 This section collects this information in one place.
 
+$head CPPAD_MAX_NUM_THREADS$$
+$index maximum, number of threads$$
+$index threads, maximum number of$$
+$index CPPAD_MAX_NUM_THREADS$$
+If the preprocessor symbol $code CPPAD_MAX_NUM_THREADS$$ is defined
+before including any CppAD header files,
+it must be an integer greater than or equal to 2
+that specifies an absolute maximum for 
+the number of threads that CppAD should support.
+Otherwise, CppAD may, or may not, define this preprocessor symbol
+and impose an unspecified absolute maximum of its own.
+Currently, CppAD sets this maximum to 48 and this maximum is only expected
+to increase if it does change.
+In the future, the need for this maximum may be eliminated.
 
 $head parallel_setup$$
 Using any of the following routines in a multi-threading environment

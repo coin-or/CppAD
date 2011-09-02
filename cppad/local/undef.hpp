@@ -21,7 +21,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 // # undef CPPAD_END_NAMESPACE
 # undef CPPAD_INLINE_FRIEND_TEMPLATE_FUNCTION
 # undef CPPAD_NULL
-# undef CPPAD_MAX_NUM_THREADS
 # undef CPPAD_FOLD_ASSIGNMENT_OPERATOR
 # undef CPPAD_FOLD_AD_VALUED_BINARY_OPERATOR
 # undef CPPAD_FOLD_BOOL_VALUED_BINARY_OPERATOR
