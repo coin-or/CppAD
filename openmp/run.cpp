@@ -201,7 +201,7 @@ int main(int argc, char *argv[])
 	size_t num_threads, inuse_this_thread = 0;
 	for(num_threads = 0; num_threads <= max_threads; num_threads++)
 	{	// set the number of threads
-		if( num_threads > 1 )
+		if( num_threads > 0 )
 		{	// off dynamic thread adjust
 			omp_set_dynamic(0);
 			// set the number of threads 
@@ -232,7 +232,7 @@ int main(int argc, char *argv[])
 				use_ad
 			);
 		}
-		// set back to one thread and fee all related memory
+		// set back to one thread and fee all avaialable memory
 		thread_alloc::parallel_setup(1, in_parallel, thread_num);
 		size_t thread;
 		for(thread = 0; thread < num_threads; thread++)
