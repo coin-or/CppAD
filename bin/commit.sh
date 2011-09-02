@@ -122,9 +122,13 @@ then
 	list=`cat bin/commit.1.$$`
 	for file in $list
 	do
-		# exclude */makefile.in from edits in bin/commit.sed
+		# exclude */makefile.in and *.vcproj files
+		# from edits in bin/commit.sed
 		local_file=`echo $file | sed -e 's|.*/||'`
-		if [ -f "$file" ] && [ "$local_file" != "makefile.in" ]
+		file_ext=`echo $file | sed -e 's|.*\.||'`
+		if [ -f "$file" ] &&  \
+		   [ "$local_file" != "makefile.in" ] && \
+		   [ "$file_ext" != "vcproj" ]
 		then
 			sed -f bin/commit.sed $file > bin/commit.2.$$
 			if ! diff $file bin/commit.2.$$ > /dev/null
