@@ -278,54 +278,67 @@ private:
 		return number_user;
 	}
 	/*!
-	Set and get the routine to use to determine if we are in parallel 
-	executiion mode.
+	Set routine routine to use to determine if we are in parallel 
+	executiion mode and get return values from that routine.
 
 	\return 
-	If no call has been made to \c set_get_in_parallel with \a parallel_new
-	non-zero, the return value is false.
-	Otherwise, it is the return value for the most recent version of
-	\a parallel_new (that is not zero). 
-	(Most recent includes this call to \c set_get_in_parallel.)
+	value for the most recent setting for \a parallel_new.
+	If the most recent setting is \c CPPAD_NULL (its initial value),
+	the return value is false.
+	Otherwise the function corresponding to the most recent setting
+	is called and its value returned by \c set_get_in_parallel.
 
 	\param parallel_new [in]
-	If this is zero (a null function pointer), then it is not used.
-	Otherwise, the function used to determine if we are in parallel mode
-	is replaced by this function.
-	*/
-	static bool set_get_in_parallel( bool (*parallel_new)(void)       )
-	{	static bool (*parallel_user)(void) = 0;
+	If \a set is false, \a parallel_new it is not used.
+	Otherwise, the current value of \c parallel_new becomes the
+	most recent setting for in_parallel.
 
-		// case where we are setting new routine for parallel detection
-		if( parallel_new != 0 )
+	\param set
+	If \a set is true, then \a parallel_new is becomes the most
+	recent setting for this \c set_get_in_parallel.
+	*/
+	static bool set_get_in_parallel(
+		bool (*parallel_new)(void) ,
+		bool set = false           )
+	{	static bool (*parallel_user)(void) = CPPAD_NULL;
+
+		if( set )
 			parallel_user = parallel_new;
-		if( parallel_user == 0 )
+
+		if( parallel_user == CPPAD_NULL )
 			return false;
 
 		return parallel_user();
 	}
 	/*!
-	Set and get the routine to use to determine the current thread number.
+	Set routine routine to use to determine the current thread number
+	and get return values from that routine.
 
-	\return
-	If no call has been made to \c set_get_thread_num with \a thread_num_new
-	non-zero, the return value is zero.
-	Otherwise, it is the return value for the most recent version of
-	\a thread_num_new (that is not zero). 
-	(Most recent includes this call to \c set_get_thread_num.)
+	\return 
+	returns value for the most recent setting for \a thread_num_new.
+	If the most recent setting is \c CPPAD_NULL (its initial value),
+	the return value is zero.
+	Otherwise the routine corresponding to the most recent setting
+	is called and its value returned by \c set_get_thread_num.
 
 	\param thread_num_new [in]
-	If this is zero (a null function pointer), then it is not used.
-	Otherwise, the function used to determine the current thread number
-	is replaced by this function.
-	*/
-	static size_t set_get_thread_num(size_t (*thread_num_new)(void)     )
-	{	static size_t (*thread_num_user)(void) = 0;
+	If \a set is false, \a thread_num_new it is not used.
+	Otherwise, the current value of \c thread_num_new becomes the
+	most recent setting for thread_num.
 
-		// case where we are setting new routine for determining thread number
-		if( thread_num_new != 0 )
+	\param set
+	If \a set is true, then \a thread_num_new is becomes the most
+	recent setting for this \c set_get_thread_num.
+	*/
+	static size_t set_get_thread_num(
+		size_t (*thread_num_new)(void)  ,
+		bool set = false                )
+	{	static size_t (*thread_num_user)(void) = CPPAD_NULL;
+
+		if( set )
 			thread_num_user = thread_num_new;
-		if( thread_num_user == 0 )
+
+		if( thread_num_user == CPPAD_NULL )
 			return 0;
 
 		size_t thread = thread_num_user();
@@ -374,6 +387,8 @@ $codei%
 %$$ 
 and must be greater than zero.
 It specifies the number of threads that are sharing memory.
+The case $icode%num_threads% == 1%$$ is a special case that is 
+used to terminate a multi-threading environment.
 
 $head in_parallel$$
 This function has prototype
@@ -383,6 +398,11 @@ $codei%
 It must return $code true$$ if there is more than one thread
 currently executing.
 Otherwise it can return false.
+$pre
+
+$$
+In the special case where $icode%num_threads% == 1%$$,
+the routine $icode in_parallel$$ is not used.
 
 $head thread_num$$
 This function has prototype
@@ -394,6 +414,8 @@ currently executing thread. Furthermore
 $code%
 	0 <= %thread_num%() < %num_threads%
 %$$.
+In the special case where $icode%num_threads% == 1%$$,
+the routine $icode thread_num$$ is not used.
 
 $head Restrictions$$
 The function $code parallel_setup$$ must be called before 
@@ -443,8 +465,15 @@ $end
 
 		// store these settings
 		set_get_num_threads(num_threads);
-		set_get_in_parallel(in_parallel);
-		set_get_thread_num(thread_num);
+		bool set = true;
+		if( num_threads == 1 )
+		{	set_get_in_parallel(CPPAD_NULL, set);
+			set_get_thread_num(CPPAD_NULL, set);
+		}
+		else
+		{	set_get_in_parallel(in_parallel, set);
+			set_get_thread_num(thread_num, set);
+		}
 
 		// Make sure that constructors for all static variables in this file 
 		// are called in sequential mode.	

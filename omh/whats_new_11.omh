@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	cygwin
 	vcproj
 	pthread
 	https
@@ -84,6 +85,14 @@ was being set to 2 when $code _OPENMP$$ was not defined.
 This has been fixed and 
 $cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$ 
 has been documented and is now part of the CppAD API.
+$lnext
+The $cref/pthread_ad.cpp/$$ test failed under cygwin. 
+This was because the previous test $cref/openmp_ad.cpp/$$ was
+set up calls to OpenMP routines that were still in effect
+when $code pthread_ad$$ ran.
+This has been fixed by making
+$icode%num_threads% == 1%$$ a special case in
+$cref/parallel_setup/ta_parallel_setup/$$.
 $lend
 
 $head 09-01$$
