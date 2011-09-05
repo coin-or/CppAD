@@ -91,20 +91,21 @@ namespace {
 	thread_info_t thread_vector[NUMBER_THREADS];
 
 	// ----------------------------------------------------------------------
-	// This function sets and gets the unique index for each thread
-	// 	0 <= index < number_threads
-	// if index < number_threads, then we first set the value for this thread
-	// and wait for other threads to do the same
-	size_t set_get_thread_num(size_t index_this)
+	// This function sets the pthread identifier corresponding to index_this
+	// (with the exception of the master thread which is already set).
+	// In addition, it waits for the other threads to do the same.
+	void set_thread_num(size_t index_this)
 	{	size_t index;
 		int rc;
 
-		// Check for case where we know it this is the master thread
-		if( ! multiple_threads_active )
-			return 0;
+		// no need to set thread numbers unless have multiple threads
+		assert( multiple_threads_active );
 
-		// pthread system unique identifier for this thread
+		// pthread unique identifier for this thread
 		pthread_t thread_this = pthread_self();
+
+		// pthread unique identifier for this master
+		pthread_t thread_zero = thread_vector[0].thread_id;
 
 		// If index_this is a valid index, set this thread_id and
 		// wait until all the thread_id values have been set.
@@ -118,16 +119,16 @@ namespace {
 				// no need for a lock on thread_vector[index_this].ok
 				thread_vector[index_this].ok &= (rc == 0);
 
-				pthread_t thread_zero;
 				if( index == 0 )
-				{	// pthread identity corresponding to master
-					thread_zero = thread_vector[index].thread_id;
-					// master has been before this call
+				{	// master set pthread identity for this thread	
+					assert(index_this > 0 || thread_zero == thread_this);
 				}
 				else if( index == index_this )
-				{	// pthread identity corresponding to this thread
-					thread_vector[index].thread_id = thread_this;
-					// this thread_it has just been set
+				{	if( index != 0 )
+					{	// pthread identity corresponding to this thread
+						thread_vector[index].thread_id = thread_this;
+						// this thread_it has just been set
+					}
 				}
 				else
 				{	// check if this thread_id has been set yet.
@@ -145,20 +146,7 @@ namespace {
 			if( all_set )
 				wait = false;
 		}
-
-		// convert thread_this to the corresponding thread index
-		index = 0;
-		for(index = 0; index < number_threads; index++)
-		{	// pthread system unique identifier for this index
-			pthread_t thread_compare = thread_vector[index].thread_id;
-
-			// check for a match
-			if( pthread_equal(thread_this, thread_compare) )
-				return index;
-		}
-		// no match error (thread_this is not in thread_vector).
-		assert(false);
-		return index;
+		return;
 	}
 
 	// ---------------------------------------------------------------------
@@ -169,8 +157,23 @@ namespace {
 	// ---------------------------------------------------------------------
 	// thread_num()
 	size_t thread_num(void)
-	{	// the get call to set_get_thread_num	
-		return set_get_thread_num(NUMBER_THREADS);
+	{
+		// pthread system unique identifier for this thread
+		pthread_t thread_this = pthread_self();
+
+		// convert thread_this to the corresponding thread index
+		size_t index = 0;
+		for(index = 0; index < number_threads; index++)
+		{	// pthread system unique identifier for this index
+			pthread_t thread_compare = thread_vector[index].thread_id;
+
+			// check for a match
+			if( pthread_equal(thread_this, thread_compare) )
+				return index;
+		}
+		// no match error (thread_this is not in thread_vector).
+		assert(false);
+		return number_threads;
 	}
 	// ====================================================================
 	// code for specific problem we are solving
@@ -226,9 +229,10 @@ namespace {
 		// Set put pthread unique identifier for this thread in
 		// thread_vector[index].thread_id
 		// and wait for other threads to do the same.
-		set_get_thread_num(index);
+		set_thread_num(index);
 		// ----------------------------------------------------------------
 		// Work for this thread
+		// (note that work[index] is only used by this thread)
 
 		// CppAD::vector uses the CppAD fast multi-threading allocator
 		CppAD::vector< AD<double> > Theta(1), Z(1);
