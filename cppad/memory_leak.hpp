@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin memory_leak$$
 $spell
+	alloc
 	hpp
 	bool
 	inuse
@@ -36,8 +37,9 @@ $codei%
 
 $head Purpose$$
 This routine check for leaks in the $cref thread_alloc$$ memory allocator.
-The deprecated routines in $cref/TrackNewDel/$$ and $cref omp_alloc$$
-are also checked.
+The deprecated routines in $cref/TrackNewDel/$$ is also checked.
+Memory errors in the deprecated routine $cref omp_alloc$$ are
+reported as being in $code thread_alloc$$.
 
 $head NDEBUG$$
 If $code NDEBUG$$ is defined,
@@ -133,31 +135,6 @@ inline bool memory_leak(void)
 		{	leak = true;
 			cout << "thread_alloc::available(thread) = ";
 			cout << num_bytes << endl;
-		}
-	}
-	// -------------------------------------------------------------------
-	// check omp_alloc
-	CPPAD_ASSERT_KNOWN(
-		! omp_alloc::in_parallel(),
-		"attempt to use thread_leak in parallel execution mode."
-	);
-	CPPAD_ASSERT_KNOWN(
-		omp_alloc::get_max_num_threads() == 1,
-		"attempt to use thread_leak while num_threads > 1."
-	);
-	for(thread = 0; thread < CPPAD_MAX_NUM_THREADS; thread++)
-	{
-		// check that no memory is currently in use for this thread
-		size_t num_bytes = omp_alloc::inuse(thread);
-		if( num_bytes != 0 )
-		{	leak = true;
-			cout << "omp_alloc::inuse(thread) = " << num_bytes << endl;
-		}
-		// check that no memory is currently available for this thread
-		num_bytes = omp_alloc::available(thread);
-		if( num_bytes != 0 )
-		{	leak = true;
-			cout << "omp_alloc::available(thread) = " << num_bytes << endl;
 		}
 	}
 	// ----------------------------------------------------------------------

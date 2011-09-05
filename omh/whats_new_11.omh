@@ -66,6 +66,11 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-05$$
+Simply and fix some problems with $cref pthread_ad.cpp$$,
+(including avoiding a 
+$cref/pthread_exit Bug in Cygwin/pthread_ad.cpp/pthread_exit Bug in Cygwin/$$).
+
 $head 09-02$$
 $list number$$
 The OpenMP speed test program $cref/run.cpp/openmp_run.cpp/$$ was not setting 
