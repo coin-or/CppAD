@@ -43,6 +43,7 @@ cmd="g++ test_one.cpp $*
 	-Wall -ansi -pedantic-errors -Wshadow
 	-g
 	-fopenmp
+	-lboost_thread-mt
 	-lpthread
 	-std=c++98 -DCPPAD_ADOLC_EXAMPLES
 	-I.. -I/usr/include/boost-1_33_1 

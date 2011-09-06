@@ -14,6 +14,32 @@
 # CppAD puts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
+if CppAD_ADOLC
+ADOLC_SRC_FILES    =  mul_level_adolc.cpp ode_taylor_adolc.cpp
+ADOLC_EXTRA_FILES  =
+ADOLC_INCLUDE      = -I$(ADOLC_DIR)/include 
+ADOLC_LIB          = -ladolc
+ADOLC_LIB_DIRS     = -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
+ADOLC_FLAGS        = -DCPPAD_ADOLC_EXAMPLES
+else
+ADOLC_SRC_FILES   =
+ADOLC_EXTRA_FILES =  mul_level_adolc.cpp ode_taylor_adolc.cpp
+ADOLC_INCLUDE     =
+ADOLC_LIB         =
+ADOLC_LIB_DIRS    =
+ADOLC_FLAGS       =
+endif
+#
+if CppAD_BTHREAD
+BTHREAD_SRC_FILES   = bthread_a11c.cpp  bthread_ad.cpp
+BTHREAD_EXTRA_FILES = 
+BTHREAD_FLAGS       = -DCPPAD_BTHREAD_EXAMPLES
+else
+BTHREAD_SRC_FILES   =
+BTHREAD_EXTRA_FILES = bthread_a11c.cpp  bthread_ad.cpp
+BTHREAD_FLAGS       = 
+endif
+#
 if CppAD_OPENMP
 OPENMP_SRC_FILES   = openmp_a11c.cpp openmp_ad.cpp
 OPENMP_EXTRA_FILES = 
@@ -34,22 +60,6 @@ PTHREAD_EXTRA_FILES = pthread_a11c.cpp pthread_ad.cpp
 PTHREAD_FLAGS       = 
 endif
 #
-if CppAD_ADOLC
-ADOLC_SRC_FILES    =  mul_level_adolc.cpp ode_taylor_adolc.cpp
-ADOLC_EXTRA_FILES  =
-ADOLC_INCLUDE      = -I$(ADOLC_DIR)/include 
-ADOLC_LIB          = -ladolc
-ADOLC_LIB_DIRS     = -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
-ADOLC_FLAGS        = -DCPPAD_ADOLC_EXAMPLES
-else
-ADOLC_SRC_FILES   =
-ADOLC_EXTRA_FILES =  mul_level_adolc.cpp ode_taylor_adolc.cpp
-ADOLC_INCLUDE     =
-ADOLC_LIB         =
-ADOLC_LIB_DIRS    =
-ADOLC_FLAGS       =
-endif
-#
 if CppAD_BOOSTVECTOR
 BOOST_INCLUDE = -I$(BOOST_DIR)
 else
@@ -59,6 +69,7 @@ endif
 # Microsoft project files an script to run a single test
 EXTRA_DIST        = example.sln example.vcproj test_one.sh.in \
 	$(ADOLC_EXTRA_FILES) \
+	$(BTHREAD_EXTRA_FILES) \
 	$(OPENMP_EXTRA_FILES) \
 	$(PTHREAD_EXTRA_FILES) 
 #
@@ -67,12 +78,14 @@ check_PROGRAMS    = example
 if CppAD_MS_COMPILER
 AM_CXXFLAGS       = -EHsc -g \
 	$(ADOLC_FLAGS) \
+	$(BTHREAD_FLAGS) \
 	$(OMP_FLAGS) \
 	$(PTHREAD_FLAGS) \
 	$(CXX_FLAGS)
 else
 AM_CXXFLAGS       = -g \
 	$(ADOLC_FLAGS) \
+	$(BTHREAD_FLAGS) \
 	$(OMP_FLAGS) \
 	$(PTHREAD_FLAGS) \
 	$(CXX_FLAGS)
@@ -84,14 +97,18 @@ AM_CPPFLAGS       = -I. \
                     $(ADOLC_INCLUDE)
                     
 #
-LDADD             = $(ADOLC_LIB) $(PTHREAD_LIB)
+LDADD             = \
+	$(ADOLC_LIB) \
+	$(BTHREAD_LIB)
+	$(PTHREAD_LIB)
 AM_LDFLAGS        = $(ADOLC_LIB_DIRS) 
 #
 example_SOURCES   = \
 	$(ADOLC_SRC_FILES) \
+	$(BTHREAD_SRC_FILES) \
 	$(OPENMP_SRC_FILES) \
 	$(PTHREAD_SRC_FILES) \
-	 \
+	\
 	example.cpp \
 	abort_recording.cpp \
 	abs.cpp \

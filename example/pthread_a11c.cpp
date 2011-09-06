@@ -21,11 +21,12 @@ $$
 $index OpenMP, example A.1.1c$$
 $index example, OpenMP A.1.1c$$
 $index A.1.1c, OpenMP example$$
+$index thread, OpenMP example$$
 
-$section A Simple Pthread Parallel: Example and Test$$
+$section A Simple Parallel Pthread Example and Test$$
 
 $head Purpose$$
-This example just demonstrates pthreads, and does not use CppAD at all.
+This example just demonstrates pthreads and does not use CppAD at all.
 
 $head Source Code$$
 $code

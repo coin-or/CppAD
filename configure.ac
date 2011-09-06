@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20110902, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20110906, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -381,7 +381,30 @@ AC_CHECK_LIB(
 	[DL_LIB="-ldl"],
 	[DL_LIB=""]
 )
-
+dnl --------------------------------------------------------------------------
+dnl check for C++ libraries
+AC_LANG_PUSH([C++])
+temporary=$LDFLAGS
+LDFLAGS="$LDFLAGS -lboost_thread-mt"
+AC_LINK_IFELSE(
+	[AC_LANG_PROGRAM(
+		[# include <boost/thread.hpp>],
+		[boost::thread mythread;]
+	)],
+	[boost_thread="yes"],
+	[boost_thread="noe"]
+)
+LDFLAGS="$temporary"
+AC_LANG_POP([C++])
+#
+AM_CONDITIONAL(CppAD_BTHREAD, test "$boost_thread" = "yes")
+if test "$boost_thread" == "yes" ; then
+	AC_SUBST(BTHREAD_LIB,"-lboost_thread-mt")
+	AC_MSG_RESULT([boost::thread library... yes])
+else
+	AC_SUBST(BTHREAD_LIB,"")
+	AC_MSG_RESULT([boost::thread library... no])
+fi
 dnl --------------------------------------------------------------------------
 dnl Library directories
 if test -e $IPOPT_DIR/lib/coin ; then

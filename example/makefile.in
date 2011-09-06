@@ -43,9 +43,10 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES = test_one.sh
 CONFIG_CLEAN_VPATH_FILES =
 am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
-	openmp_a11c.cpp openmp_ad.cpp pthread_a11c.cpp pthread_ad.cpp \
-	example.cpp abort_recording.cpp abs.cpp acos.cpp add.cpp \
-	add_eq.cpp ad_fun.cpp ad_in_c.cpp asin.cpp atan.cpp atan_2.cpp \
+	bthread_a11c.cpp bthread_ad.cpp openmp_a11c.cpp openmp_ad.cpp \
+	pthread_a11c.cpp pthread_ad.cpp example.cpp \
+	abort_recording.cpp abs.cpp acos.cpp add.cpp add_eq.cpp \
+	ad_fun.cpp ad_in_c.cpp asin.cpp atan.cpp atan_2.cpp \
 	base_adolc.hpp bender_quad.cpp bool_fun.cpp vector_bool.cpp \
 	check_numeric_type.cpp check_simple_vector.cpp checkpoint.cpp \
 	compare.cpp compare_change.cpp complex_poly.cpp cond_exp.cpp \
@@ -77,23 +78,25 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	var_2par.cpp vec_ad.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
-@CppAD_OPENMP_TRUE@am__objects_2 = openmp_a11c.$(OBJEXT) \
+@CppAD_BTHREAD_TRUE@am__objects_2 = bthread_a11c.$(OBJEXT) \
+@CppAD_BTHREAD_TRUE@	bthread_ad.$(OBJEXT)
+@CppAD_OPENMP_TRUE@am__objects_3 = openmp_a11c.$(OBJEXT) \
 @CppAD_OPENMP_TRUE@	openmp_ad.$(OBJEXT)
-@CppAD_PTHREAD_TRUE@am__objects_3 = pthread_a11c.$(OBJEXT) \
+@CppAD_PTHREAD_TRUE@am__objects_4 = pthread_a11c.$(OBJEXT) \
 @CppAD_PTHREAD_TRUE@	pthread_ad.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) $(am__objects_2) \
-	$(am__objects_3) example.$(OBJEXT) abort_recording.$(OBJEXT) \
-	abs.$(OBJEXT) acos.$(OBJEXT) add.$(OBJEXT) add_eq.$(OBJEXT) \
-	ad_fun.$(OBJEXT) ad_in_c.$(OBJEXT) asin.$(OBJEXT) \
-	atan.$(OBJEXT) atan_2.$(OBJEXT) bender_quad.$(OBJEXT) \
-	bool_fun.$(OBJEXT) vector_bool.$(OBJEXT) \
-	check_numeric_type.$(OBJEXT) check_simple_vector.$(OBJEXT) \
-	checkpoint.$(OBJEXT) compare.$(OBJEXT) \
-	compare_change.$(OBJEXT) complex_poly.$(OBJEXT) \
-	cond_exp.$(OBJEXT) conj_grad.$(OBJEXT) copy_ad.$(OBJEXT) \
-	copy_base.$(OBJEXT) cos.$(OBJEXT) cosh.$(OBJEXT) \
-	cppad_vector.$(OBJEXT) default.$(OBJEXT) div.$(OBJEXT) \
-	div_eq.$(OBJEXT) epsilon.$(OBJEXT) eq.$(OBJEXT) \
+	$(am__objects_3) $(am__objects_4) example.$(OBJEXT) \
+	abort_recording.$(OBJEXT) abs.$(OBJEXT) acos.$(OBJEXT) \
+	add.$(OBJEXT) add_eq.$(OBJEXT) ad_fun.$(OBJEXT) \
+	ad_in_c.$(OBJEXT) asin.$(OBJEXT) atan.$(OBJEXT) \
+	atan_2.$(OBJEXT) bender_quad.$(OBJEXT) bool_fun.$(OBJEXT) \
+	vector_bool.$(OBJEXT) check_numeric_type.$(OBJEXT) \
+	check_simple_vector.$(OBJEXT) checkpoint.$(OBJEXT) \
+	compare.$(OBJEXT) compare_change.$(OBJEXT) \
+	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) conj_grad.$(OBJEXT) \
+	copy_ad.$(OBJEXT) copy_base.$(OBJEXT) cos.$(OBJEXT) \
+	cosh.$(OBJEXT) cppad_vector.$(OBJEXT) default.$(OBJEXT) \
+	div.$(OBJEXT) div_eq.$(OBJEXT) epsilon.$(OBJEXT) eq.$(OBJEXT) \
 	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) error_handler.$(OBJEXT) \
 	exp.$(OBJEXT) for_one.$(OBJEXT) for_two.$(OBJEXT) \
 	forward.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
@@ -162,6 +165,7 @@ AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BOOST_DIR = @BOOST_DIR@
+BTHREAD_LIB = @BTHREAD_LIB@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -288,6 +292,26 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+@CppAD_ADOLC_FALSE@ADOLC_SRC_FILES = 
+#
+@CppAD_ADOLC_TRUE@ADOLC_SRC_FILES = mul_level_adolc.cpp ode_taylor_adolc.cpp
+@CppAD_ADOLC_FALSE@ADOLC_EXTRA_FILES = mul_level_adolc.cpp ode_taylor_adolc.cpp
+@CppAD_ADOLC_TRUE@ADOLC_EXTRA_FILES = 
+@CppAD_ADOLC_FALSE@ADOLC_INCLUDE = 
+@CppAD_ADOLC_TRUE@ADOLC_INCLUDE = -I$(ADOLC_DIR)/include 
+@CppAD_ADOLC_FALSE@ADOLC_LIB = 
+@CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc
+@CppAD_ADOLC_FALSE@ADOLC_LIB_DIRS = 
+@CppAD_ADOLC_TRUE@ADOLC_LIB_DIRS = -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
+@CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
+@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_EXAMPLES
+@CppAD_BTHREAD_FALSE@BTHREAD_SRC_FILES = 
+#
+@CppAD_BTHREAD_TRUE@BTHREAD_SRC_FILES = bthread_a11c.cpp  bthread_ad.cpp
+@CppAD_BTHREAD_FALSE@BTHREAD_EXTRA_FILES = bthread_a11c.cpp  bthread_ad.cpp
+@CppAD_BTHREAD_TRUE@BTHREAD_EXTRA_FILES = 
+@CppAD_BTHREAD_FALSE@BTHREAD_FLAGS = 
+@CppAD_BTHREAD_TRUE@BTHREAD_FLAGS = -DCPPAD_BTHREAD_EXAMPLES
 @CppAD_OPENMP_FALSE@OPENMP_SRC_FILES = 
 #
 @CppAD_OPENMP_TRUE@OPENMP_SRC_FILES = openmp_a11c.cpp openmp_ad.cpp
@@ -302,19 +326,6 @@ top_srcdir = @top_srcdir@
 @CppAD_PTHREAD_TRUE@PTHREAD_EXTRA_FILES = 
 @CppAD_PTHREAD_FALSE@PTHREAD_FLAGS = 
 @CppAD_PTHREAD_TRUE@PTHREAD_FLAGS = -DCPPAD_PTHREAD_EXAMPLES
-@CppAD_ADOLC_FALSE@ADOLC_SRC_FILES = 
-#
-@CppAD_ADOLC_TRUE@ADOLC_SRC_FILES = mul_level_adolc.cpp ode_taylor_adolc.cpp
-@CppAD_ADOLC_FALSE@ADOLC_EXTRA_FILES = mul_level_adolc.cpp ode_taylor_adolc.cpp
-@CppAD_ADOLC_TRUE@ADOLC_EXTRA_FILES = 
-@CppAD_ADOLC_FALSE@ADOLC_INCLUDE = 
-@CppAD_ADOLC_TRUE@ADOLC_INCLUDE = -I$(ADOLC_DIR)/include 
-@CppAD_ADOLC_FALSE@ADOLC_LIB = 
-@CppAD_ADOLC_TRUE@ADOLC_LIB = -ladolc
-@CppAD_ADOLC_FALSE@ADOLC_LIB_DIRS = 
-@CppAD_ADOLC_TRUE@ADOLC_LIB_DIRS = -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
-@CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
-@CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_EXAMPLES
 @CppAD_BOOSTVECTOR_FALSE@BOOST_INCLUDE = 
 #
 @CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
@@ -322,11 +333,13 @@ top_srcdir = @top_srcdir@
 # Microsoft project files an script to run a single test
 EXTRA_DIST = example.sln example.vcproj test_one.sh.in \
 	$(ADOLC_EXTRA_FILES) \
+	$(BTHREAD_EXTRA_FILES) \
 	$(OPENMP_EXTRA_FILES) \
 	$(PTHREAD_EXTRA_FILES) 
 
 @CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -g \
 @CppAD_MS_COMPILER_FALSE@	$(ADOLC_FLAGS) \
+@CppAD_MS_COMPILER_FALSE@	$(BTHREAD_FLAGS) \
 @CppAD_MS_COMPILER_FALSE@	$(OMP_FLAGS) \
 @CppAD_MS_COMPILER_FALSE@	$(PTHREAD_FLAGS) \
 @CppAD_MS_COMPILER_FALSE@	$(CXX_FLAGS)
@@ -334,6 +347,7 @@ EXTRA_DIST = example.sln example.vcproj test_one.sh.in \
 #
 @CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -g \
 @CppAD_MS_COMPILER_TRUE@	$(ADOLC_FLAGS) \
+@CppAD_MS_COMPILER_TRUE@	$(BTHREAD_FLAGS) \
 @CppAD_MS_COMPILER_TRUE@	$(OMP_FLAGS) \
 @CppAD_MS_COMPILER_TRUE@	$(PTHREAD_FLAGS) \
 @CppAD_MS_COMPILER_TRUE@	$(CXX_FLAGS)
@@ -346,14 +360,18 @@ AM_CPPFLAGS = -I. \
 
 
 #
-LDADD = $(ADOLC_LIB) $(PTHREAD_LIB)
+LDADD = \
+	$(ADOLC_LIB) \
+	$(BTHREAD_LIB)
+
 AM_LDFLAGS = $(ADOLC_LIB_DIRS) 
 #
 example_SOURCES = \
 	$(ADOLC_SRC_FILES) \
+	$(BTHREAD_SRC_FILES) \
 	$(OPENMP_SRC_FILES) \
 	$(PTHREAD_SRC_FILES) \
-	 \
+	\
 	example.cpp \
 	abort_recording.cpp \
 	abs.cpp \
@@ -539,6 +557,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atan_2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bender_quad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bool_fun.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bthread_a11c.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bthread_ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_numeric_type.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_simple_vector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/checkpoint.Po@am__quote@
@@ -864,6 +884,7 @@ uninstall-am:
 	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
 	uninstall-am
 
+	$(PTHREAD_LIB)
 
 test.sh: example$(EXEEXT)
 	echo "#! /bin/sh -e"  > test.sh

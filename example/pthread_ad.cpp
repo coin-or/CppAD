@@ -19,11 +19,12 @@ $spell
 	CppAD
 $$
 
-$section Simple Pthread Parallel AD: Example and Test$$
+$section Parallel Pthread AD: Example and Test$$
 
 $index pthread_ad, example$$
 $index AD, parallel pthread$$
 $index parallel, AD pthread$$
+$index thread, pthread AD$$
 
 $head Purpose$$
 This example demonstrates how CppAD can be used with multiple pthreads.
@@ -74,7 +75,7 @@ namespace {
 	size_t number_threads = NUMBER_THREADS; 
 
 	// The master thread switches the value of this variable
-	static bool multiple_threads_active = false;
+	static bool multiple_threads_may_be_active = false;
 
 	// general purpose vector with information for each thread
 	typedef struct {
@@ -99,7 +100,9 @@ namespace {
 		int rc;
 
 		// no need to set thread numbers unless have multiple threads
-		assert( multiple_threads_active );
+		assert( multiple_threads_may_be_active );
+		// check for valid index
+		assert(index_this < number_threads);
 
 		// pthread unique identifier for this thread
 		pthread_t thread_this = pthread_self();
@@ -109,7 +112,7 @@ namespace {
 
 		// If index_this is a valid index, set this thread_id and
 		// wait until all the thread_id values have been set.
-		bool wait = (index_this < number_threads);
+		bool wait = true;
 		while( wait )
 		{	bool all_set = true;
 			for(index = 0; index < number_threads; index++)
@@ -152,19 +155,19 @@ namespace {
 	// ---------------------------------------------------------------------
 	// in_parallel()
 	bool in_parallel(void)
-	{	return multiple_threads_active; }
+	{	return multiple_threads_may_be_active; }
 
 	// ---------------------------------------------------------------------
 	// thread_num()
 	size_t thread_num(void)
 	{
-		// pthread system unique identifier for this thread
+		// pthread unique identifier for this thread
 		pthread_t thread_this = pthread_self();
 
 		// convert thread_this to the corresponding thread index
 		size_t index = 0;
 		for(index = 0; index < number_threads; index++)
-		{	// pthread system unique identifier for this index
+		{	// pthread unique identifier for this index
 			pthread_t thread_compare = thread_vector[index].thread_id;
 
 			// check for a match
@@ -179,14 +182,12 @@ namespace {
 	// code for specific problem we are solving
 	// --------------------------------------------------------------------
 	using CppAD::AD;
-	using CppAD::NearEqual;
 
 	// vector with specific information for each thread
 	typedef struct {
 		// angle for this work 
 		double          theta;
-		// False if error related to this work,
-		// true otherwise.
+		// False if error related to this work, true otherwise.
 		bool            ok;
 	} work_info_t;
 	work_info_t work_vector[NUMBER_THREADS];
@@ -214,7 +215,8 @@ namespace {
 	// --------------------------------------------------------------------
 	// function that does the work for each thread
 	void* thread_work(void* thread_info_vptr)
-	{	bool ok = true;
+	{	using CppAD::NearEqual;
+		bool ok = true;
 
 		// ----------------------------------------------------------------
 		// Setup for this thread
@@ -226,8 +228,8 @@ namespace {
 		// index to problem specific information for this thread
 		size_t index = thread_info->thread_index;
 
-		// Set put pthread unique identifier for this thread in
-		// thread_vector[index].thread_id
+		// Put pthread unique identifier for this thread in
+		// 	thread_vector[index].thread_id
 		// and wait for other threads to do the same.
 		set_thread_num(index);
 		// ----------------------------------------------------------------
@@ -274,7 +276,6 @@ namespace {
 // This test routine is only called by the master thread (index = 0).
 bool pthread_ad(void)
 {	bool all_ok = true;
-	using CppAD::AD;
 	using CppAD::thread_alloc;
 
 	// Check that no memory is in use or avialable at start
@@ -309,7 +310,7 @@ bool pthread_ad(void)
 	CppAD::parallel_ad<double>();
 
 	// Now change in_parallel() to return true.
-	multiple_threads_active = true;
+	multiple_threads_may_be_active = true;
 	
 	// Data structure used by pthreads library.
 	pthread_t      thread[NUMBER_THREADS];
@@ -347,6 +348,9 @@ bool pthread_ad(void)
 		all_ok &= (rc == 0);
 	}
 
+	// Tell thread_alloc that we are in sequential execution mode.
+	multiple_threads_may_be_active = false;
+
 	// Summarize results.
 	for(index = 0; index < number_threads; index++)
 	{	all_ok &= thread_vector[index].ok;
@@ -360,9 +364,6 @@ bool pthread_ad(void)
 	{	rc      = pthread_mutex_destroy(&(thread_vector[index].mutex));
 		all_ok &= (rc == 0);
 	}
-
-	// Tell thread_alloc that we are in sequential execution mode.
-	multiple_threads_active = false;
 
 	// Check that no memory currently in use, and free avialable memory.
 	for(index = 0; index < number_threads; index++)

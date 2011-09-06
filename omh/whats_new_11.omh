@@ -66,6 +66,20 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 09-06$$
+$list number$$
+Add the 
+$href%
+	http://www.boost.org/doc/libs/1_47_0/doc/html/thread.html%
+	boost multi-threading
+%$$ 
+examples $cref bthread_a11c.cpp$$ and $cref bthread_ad.cpp$$.
+$lnext
+Improve documentation for
+$cref/thread_num/ta_parallel_setup/thread_num/$$ argument
+to $code parallel_setup$$.
+$lend
+
 $head 09-05$$
 Simply and fix some problems with $cref pthread_ad.cpp$$,
 (including avoiding a 

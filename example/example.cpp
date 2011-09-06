@@ -65,6 +65,8 @@ extern bool Atan(void);
 extern bool Atan2(void);
 extern bool BenderQuad(void);
 extern bool BoolFun(void);
+extern bool bthread_a11c(void);
+extern bool bthread_ad(void);
 extern bool vectorBool(void);
 extern bool CheckNumericType(void);
 extern bool checkpoint(void);
@@ -330,6 +332,10 @@ int main(void)
 # ifdef CPPAD_ADOLC_EXAMPLES
 	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );
 	ok &= Run( ode_taylor_adolc,  "ode_taylor_adolc" );
+# endif
+# ifdef CPPAD_BTHREAD_EXAMPLES
+	ok &= Run( bthread_a11c,      "bthread_a11c"     );
+	ok &= Run( bthread_ad,        "bthread_ad"       );
 # endif
 # ifdef CPPAD_OPENMP_EXAMPLES
 	ok &= Run( openmp_a11c,       "openmp_a11c"      );

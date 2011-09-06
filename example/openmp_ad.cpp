@@ -17,11 +17,12 @@ $spell
 	CppAD
 $$
 
-$section Simple OpenMP Parallel AD: Example and Test$$
+$section Parallel OpenMP AD: Example and Test$$
 
 $index openmp_ad, example$$
 $index AD, parallel OpenMP$$
 $index parallel, AD OpenMP$$
+$index thread, openmp AD$$
 
 $head Purpose$$
 This example demonstrates how CppAD can be used with multiple OpenMP threads.
