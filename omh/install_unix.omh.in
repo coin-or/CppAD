@@ -14,6 +14,7 @@ $begin InstallUnix$$
 $escape $$
 $dollar ^$$
 $spell
+	inv
 	fopenmp
 	openmp
 	cout
@@ -186,7 +187,13 @@ in the work directory.
 
 $subhead Examples and Tests$$
 Once you have executed the $code make$$ command,
-you can run the following correctness and speed tests:
+you can run the correctness and speed tests.
+The following command will build all the correctness and speed tests.
+In addition, it will run all the correctness tests:
+$codep
+	make test
+$$
+The following links describe how to build and run subsets of these tests:
 $table
 $cref/get_started/get_started.cpp/Running/$$  
 	$cnext $title get_started.cpp$$ 
@@ -245,7 +252,7 @@ $codei%
 %$$
 After executing $code make test.sh$$, you can run a profile speed test 
 by executing the command $code ./profile$$;
-see $cref/speed_main/$$ for the meaning of the command line
+see $cref speed_main$$ for the meaning of the command line
 options to this program.
 $pre
 
@@ -355,14 +362,34 @@ $index flags, OpenMP compile$$
 If the command line argument $icode OpenmpFlags$$ is present,
 it specifies the necessary flags so that the compiler will
 properly interpret OpenMP directives.
-In this case,
-the CppAD OpenMP correctness and speed tests will be built; e.g.,
-see $cref openmp_run.cpp$$ and $cref openmp_ad.cpp$$.
 For example, when using the GNU $code g++$$ compiler, 
 the following setting includes the OpenMP tests:
 $codei%
 	OPENMP_FLAGS=-fopenmp
 %$$
+If you specify configure command,
+the CppAD OpenMP correctness and speed tests will be built; i.e.,
+$table
+$bold Driver$$  $cnext 
+	$bold Test$$ $cnext 
+	$bold Description$$
+$rnext
+$cref/example.cpp/example.cpp/Running Tests/$$ $cnext
+	$cref openmp_a11c.cpp$$ $cnext
+	$title openmp_a11c.cpp$$
+$rnext
+$cref/example.cpp/example.cpp/Running Tests/$$ $cnext
+	$cref openmp_ad.cpp$$ $cnext
+	$title openmp_ad.cpp$$
+$rnext
+$cref/run.cpp/openmp_run.cpp/Running Tests/$$ $cnext
+	$cref/sum_i_inv.cpp/openmp_sum_i_inv.cpp/$$ $cnext
+	$title openmp_sum_i_inv.cpp$$
+$rnext
+$cref/run.cpp/openmp_run.cpp/Running Tests/$$ $cnext
+	$cref/newton_example.cpp/openmp_newton_example.cpp/$$ $cnext
+	$title openmp_newton_example.cpp$$
+$tend
 
 $head PostfixDir$$
 $index configure, postfix directory$$
@@ -395,7 +422,7 @@ $href%
 %$$
 installed on your system, you can 
 specify a value for $icode AdolcDir$$ in the 
-$xref/InstallUnix/Configure/configure/$$ command line.
+$cref/configure/InstallUnix/Configure/$$ command line.
 The value of $icode AdolcDir$$ must be such that
 $codei%
 	%AdolcDir%/include/adolc/adouble.h
@@ -410,7 +437,7 @@ $codei%
 %$$
 After executing $code make test.sh$$, you can run an Adolc speed tests 
 by executing the command $code ./adolc$$;
-see $cref/speed_main/$$ for the meaning of the command line
+see $cref speed_main$$ for the meaning of the command line
 options to this program.
 
 $subhead Linux$$
@@ -461,7 +488,7 @@ $codei%
 %$$
 After executing $code make test.sh$$, you can run a Fadbad speed tests 
 by executing the command $code ./fadbad$$;
-see $cref/speed_main/$$ for the meaning of the command line
+see $cref speed_main$$ for the meaning of the command line
 options to this program.
 
 
@@ -488,7 +515,7 @@ $codei%
 %$$
 After executing $code make test$$, you can run a Sacado speed tests 
 by executing the command $code ./sacado$$;
-see $cref/speed_main/$$ for the meaning of the command line
+see $cref speed_main$$ for the meaning of the command line
 options to this program.
 
 
@@ -551,7 +578,7 @@ $codei%
 %$$
 Once this has been done, you can execute the program
 $code ./speed$$ in the $code work/cppad_ipopt/speed$$ directory;
-see $cref/ipopt_ode_speed.cpp/$$.
+see $cref ipopt_ode_speed.cpp$$.
 
 $head TapeAddrType$$
 $index memory, usage$$

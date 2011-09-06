@@ -31,6 +31,15 @@ $codei%./run sum_i_inv %max_threads% %mega_sum%
 %$$ 
 $codei%./run newton_example %max_threads% %n_zero% %n_sub% %n_sum% %use_ad%$$ 
 
+$head Running Tests$$
+You can build this program and run the default version of its test
+parameters by executing the following commands:
+$codep
+	cd openmp
+	make test.sh
+	./test.sh
+$$
+
 $head Purpose$$
 Runs either the 
 $cref openmp_newton_example.cpp$$ or
