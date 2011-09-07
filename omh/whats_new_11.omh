@@ -78,6 +78,8 @@ $lnext
 Improve documentation for
 $cref/thread_num/ta_parallel_setup/thread_num/$$ argument
 to $code parallel_setup$$.
+$lnext
+More simplification of $cref bthread_ad.cpp$$ example.
 $lend
 
 $head 09-05$$

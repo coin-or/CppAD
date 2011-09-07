@@ -77,80 +77,19 @@ namespace {
 	// The master thread switches the value of this variable
 	static bool multiple_threads_may_be_active = false;
 
+	// Barrier used to wait for all thread identifiers to be set
+	pthread_barrier_t wait_for_thread_id;
+
 	// general purpose vector with information for each thread
 	typedef struct {
-		// Mutex used to synchronize access to this struct.
-		pthread_mutex_t mutex;
 		// pthread unique identifier for thread that uses this struct
 		pthread_t       thread_id;
 		// cppad unique identifier for thread that uses this struct
 		size_t          thread_index;
-		// False if error related to thread corresponding to this struct
-		// occurred, true otherwise.
+		// true if no error for this thread, false otherwise.
 		bool            ok;
 	} thread_info_t;
 	thread_info_t thread_vector[NUMBER_THREADS];
-
-	// ----------------------------------------------------------------------
-	// This function sets the pthread identifier corresponding to index_this
-	// (with the exception of the master thread which is already set).
-	// In addition, it waits for the other threads to do the same.
-	void set_thread_num(size_t index_this)
-	{	size_t index;
-		int rc;
-
-		// no need to set thread numbers unless have multiple threads
-		assert( multiple_threads_may_be_active );
-		// check for valid index
-		assert(index_this < number_threads);
-
-		// pthread unique identifier for this thread
-		pthread_t thread_this = pthread_self();
-
-		// pthread unique identifier for this master
-		pthread_t thread_zero = thread_vector[0].thread_id;
-
-		// If index_this is a valid index, set this thread_id and
-		// wait until all the thread_id values have been set.
-		bool wait = true;
-		while( wait )
-		{	bool all_set = true;
-			for(index = 0; index < number_threads; index++)
-			{	// get lock on thread_vector[index].thread_id	
-				rc  = pthread_mutex_lock( &(thread_vector[index].mutex) );
-
-				// no need for a lock on thread_vector[index_this].ok
-				thread_vector[index_this].ok &= (rc == 0);
-
-				if( index == 0 )
-				{	// master set pthread identity for this thread	
-					assert(index_this > 0 || thread_zero == thread_this);
-				}
-				else if( index == index_this )
-				{	if( index != 0 )
-					{	// pthread identity corresponding to this thread
-						thread_vector[index].thread_id = thread_this;
-						// this thread_it has just been set
-					}
-				}
-				else
-				{	// check if this thread_id has been set yet.
-					all_set &= ! pthread_equal(
-						thread_vector[index].thread_id, thread_zero
-					);
-				}
-
-				// free lock on thread_vector[index].thread_id
-				rc = pthread_mutex_unlock( &(thread_vector[index].mutex));
-
-				// no need for a lock on thread_vector.index_this].ok
-				thread_vector[index_this].ok &= (rc == 0);
-			}
-			if( all_set )
-				wait = false;
-		}
-		return;
-	}
 
 	// ---------------------------------------------------------------------
 	// in_parallel()
@@ -216,6 +155,7 @@ namespace {
 	// function that does the work for each thread
 	void* thread_work(void* thread_info_vptr)
 	{	using CppAD::NearEqual;
+		// start as true
 		bool ok = true;
 
 		// ----------------------------------------------------------------
@@ -228,10 +168,12 @@ namespace {
 		// index to problem specific information for this thread
 		size_t index = thread_info->thread_index;
 
-		// Put pthread unique identifier for this thread in
-		// 	thread_vector[index].thread_id
-		// and wait for other threads to do the same.
-		set_thread_num(index);
+		// Set pthread unique identifier for this thread
+		thread_vector[index].thread_id = pthread_self();
+
+		// Wait for other threads to do the same.
+		int rc = pthread_barrier_wait(&wait_for_thread_id);
+		ok    &= (rc == 0 || rc == PTHREAD_BARRIER_SERIAL_THREAD);
 		// ----------------------------------------------------------------
 		// Work for this thread
 		// (note that work[index] is only used by this thread)
@@ -257,7 +199,7 @@ namespace {
 		ok        &= NearEqual(d_z[0], 1., eps, eps);
 
 		// pass back ok information for this thread
-		work_vector[index].ok &= ok;
+		work_vector[index].ok = ok;
 
 		// It this is not the master thread, then terminate it.
 # if DEMONSTRATE_BUG_IN_CYGWIN
@@ -290,17 +232,13 @@ bool pthread_ad(void)
 	int    rc;
  	double pi = 4. * atan(1.);
 	for(index = 0; index < number_threads; index++)
-	{	// mutex
-		pthread_mutexattr_t* no_mutexattr = 0;
-		rc = pthread_mutex_init(&(thread_vector[index].mutex), no_mutexattr);
-		all_ok &= (rc == 0);
-		// thread_id (initialze all as same as master thread)
+	{	// thread_id (initialze all as same as master thread)
 		thread_vector[index].thread_id    = pthread_self();
 		// thread_index
 		thread_vector[index].thread_index = index;
 		// ok
 		thread_vector[index].ok           = true;
-		work_vector[index].ok             = true;
+		work_vector[index].ok             = false;
 		// theta 
 		work_vector[index].theta          = index * pi / number_threads;
 	}
@@ -311,8 +249,14 @@ bool pthread_ad(void)
 
 	// Now change in_parallel() to return true.
 	multiple_threads_may_be_active = true;
+
+	// initialize barrier as waiting for number_threads
+	pthread_barrierattr_t *no_barrierattr = 0;
+	rc = pthread_barrier_init(
+		&wait_for_thread_id, no_barrierattr, number_threads); 
+	all_ok &= (rc == 0);
 	
-	// Data structure used by pthreads library.
+	// structure used to cread the threads
 	pthread_t      thread[NUMBER_THREADS];
 	pthread_attr_t attr;
 	void*          thread_info_vptr;
@@ -360,10 +304,8 @@ bool pthread_ad(void)
 	// Free up the pthread resources that are no longer in use.
 	rc      = pthread_attr_destroy(&attr);
 	all_ok &= (rc == 0);
-	for(index = 0; index < number_threads; index++)
-	{	rc      = pthread_mutex_destroy(&(thread_vector[index].mutex));
-		all_ok &= (rc == 0);
-	}
+	rc      = pthread_barrier_destroy(&wait_for_thread_id);
+	all_ok &= (rc == 0);
 
 	// Check that no memory currently in use, and free avialable memory.
 	for(index = 0; index < number_threads; index++)
