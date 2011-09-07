@@ -42,7 +42,7 @@ to avoid the need to re-tape.
 
 $head Source Code$$
 $code
-$verbatim%example/pthread_ad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%example/bthread_ad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
