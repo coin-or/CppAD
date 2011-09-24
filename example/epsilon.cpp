@@ -28,6 +28,15 @@ $end
 */
 // BEGIN PROGRAM
 
+# ifdef _MSC_VER
+// Supress Microsoft compiler warning about possible loss of precision,
+// in the constructors (when converting to std::complex<float>)
+//	Type one = 1
+//	Type two = 2
+// 1 and 2 are small enough so no loss of precision when converting to float.
+# pragma warning(disable:4244)
+# endif
+
 # include <cppad/cppad.hpp>
 # include <complex>
 
