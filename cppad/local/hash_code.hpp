@@ -56,15 +56,14 @@ unsigned short hash_code(const Value& value)
 	);
 	CPPAD_ASSERT_UNKNOWN( sizeof(unsigned short) == 2 );
 	CPPAD_ASSERT_UNKNOWN( sizeof(value) % 2  == 0 );
-	unsigned short n   = sizeof(value) / 2;
-
-	const unsigned short* v;
-	size_t                i;
-	unsigned short        code;
-
-	v    = reinterpret_cast<const unsigned short*>(& value);
-	i    = n - 1;
-	code = v[i];
+	#
+	const unsigned short* v
+	         = reinterpret_cast<const unsigned short*>(& value);
+	#
+	size_t i = sizeof(value) / 2 - 1;
+	#
+	unsigned short code = v[i];
+	#
 	while(i--)
 		code += v[i];
 

@@ -13,12 +13,15 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin thread_alloc.cpp$$
 $spell
+	pthread
 	openmp
 $$
 
-$section OpenMP Memory Allocator: Example and Test$$
+$section Fast Multi-Threading Memory Allocator: Example and Test$$
 
 $index openmp, memory allocation$$
+$index pthread, memory allocation$$
+$index boost, multi-thread memory allocation$$
 $index multi-thread, memory allocation$$
 $index example, memory allocation$$
 $index test, memory allocation$$

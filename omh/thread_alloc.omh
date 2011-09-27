@@ -16,7 +16,7 @@ $spell
 	CppAD
 $$
 
-$section The CppAD Multi-Threading Memory Allocator$$
+$section A Fast Multi-Threading Memory Allocator$$
 
 $index multi-threading, memory allocation$$
 $index memory, multi-threading allocation$$
