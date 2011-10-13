@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20110906, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20111012, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -362,7 +362,7 @@ dnl Check for C libraries
 dnl check for pthread library
 AC_CHECK_LIB(
 	[pthread],
-	[pthread_create],
+	[pthread_barrier_wait],
 	[pthread="yes"],
 	[pthread="no"]
 )

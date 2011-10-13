@@ -194,6 +194,9 @@ cppad_ipopt_nlp::cppad_ipopt_nlp(
 				J_              ,
 				r_fun_              // output
 			);
+			// take time to optimize because only recording once
+			r_fun_[k].optimize();
+			// ok and will stay that way
 			tape_ok_[k] = true;
 		}
 	}

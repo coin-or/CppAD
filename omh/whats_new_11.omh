@@ -12,6 +12,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	Std
+	retape
 	cygwin
 	vcproj
 	pthread
@@ -65,6 +67,20 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 10-12$$
+$list number$$
+The MAC version of the $code pthread$$ library does not include the
+$code pthread_barrier_wait$$ function; i.e., is not compliant with
+the IEEE Std 1003.1, 2004 Edition for $code pthread$$.
+This caused the $cref pthread_ad.cpp$$ to fail to compile on the MAC.
+This has been fixed by not compiling the $code pthread$$ examples
+unless $code pthread_barrier_wait$$ is present.
+$lnext
+The $cref cppad_ipopt_nlp$$ routine has been changed to 
+$cref optimize$$ the functions $latex r_k (u)$$ such that
+$codei%retape(%k%)%$$ is false.
+$lend
 
 $head 09-06$$
 $list number$$
