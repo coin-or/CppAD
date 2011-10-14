@@ -68,6 +68,10 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-14$$
+Fix some compiler warnings about shadowed variables that were
+detected by $code g++$$ version $code 4.6.1 20110908$$.
+
 $head 10-12$$
 $list number$$
 The MAC version of the $code pthread$$ library does not include the

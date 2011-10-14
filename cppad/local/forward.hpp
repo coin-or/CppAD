@@ -112,7 +112,7 @@ Vector ADFun<Base>::Forward(
 		);
 # else
 		compare_change_ = forward_sweep(s, true,
-			n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
+			p, n, total_num_var_, &play_, taylor_col_dim_, taylor_.data()
 		);
 # endif
 	}

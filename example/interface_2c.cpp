@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-06 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -135,13 +135,12 @@ bool Interface2C(void)
 
 	// declare variables
 	float x, a[6], y, dyda[6], tmp[6];
-	size_t na, n, i;
+	size_t na, i;
 
 	// number of parameters (3 for each Gaussian)
 	na = 6;
 
-	// number of Gaussians
-	n  = na / 3;
+	// number of Gaussians: n  = na / 3;
 
 	// value of x
 	x = 1.;

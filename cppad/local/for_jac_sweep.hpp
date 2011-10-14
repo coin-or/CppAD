@@ -88,7 +88,6 @@ void ForJacSweep(
 	size_t        i_var;
 
 	const addr_t*   arg = 0;
-	const addr_t* arg_0 = 0;
 
 	size_t            i, j, k;
 
@@ -96,8 +95,8 @@ void ForJacSweep(
 	CPPAD_ASSERT_UNKNOWN( play->num_rec_var()  == numvar );
 	CPPAD_ASSERT_UNKNOWN( var_sparsity.n_set() == numvar );
 
-        // length of the parameter vector (used by CppAD assert macros)
-        const size_t num_par = play->num_rec_par();
+	// length of the parameter vector (used by CppAD assert macros)
+	const size_t num_par = play->num_rec_par();
 
 	// cum_sparsity accumulates sparsity pattern a cummulative sum
 	size_t limit = var_sparsity.end();
@@ -150,9 +149,8 @@ void ForJacSweep(
 # endif
 
 	// skip the BeginOp at the beginning of the recording
-        play->start_forward(op, arg, i_op, i_var);
+	play->start_forward(op, arg, i_op, i_var);
 	CPPAD_ASSERT_UNKNOWN( op == BeginOp );
-        arg_0 = arg;
 	while(op != EndOp)
 	{
 		// this op

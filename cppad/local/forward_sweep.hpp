@@ -173,19 +173,20 @@ size_t forward_sweep(
 	// length of the parameter vector (used by CppAD assert macros)
 	const size_t num_par = Rec->num_rec_par();
 
-	// length of the text vector (used by CppAD assert macros)
-	const size_t num_text = Rec->num_rec_text();
-
 	// pointer to the beginning of the parameter vector
 	const Base* parameter = 0;
 	if( num_par > 0 )
 		parameter = Rec->GetPar();
 
+# if ! CPPAD_USE_FORWARD0SWEEP
+	// length of the text vector (used by CppAD assert macros)
+	const size_t num_text = Rec->num_rec_text();
+
 	// pointer to the beginning of the text vector
 	const char* text = 0;
 	if( num_text > 0 )
 		text = Rec->GetTxt(0);
-	
+# endif
 
 	// skip the BeginOp at the beginning of the recording
 	Rec->start_forward(op, arg, i_op, i_var);
@@ -417,8 +418,8 @@ size_t forward_sweep(
 
 			case PriOp:
 # if ! CPPAD_USE_FORWARD0SWEEP
-			if( print ) forward_pri_0(s_out
-				arg, num_text, text, num_par, parameter
+			if( print ) forward_pri_0(s_out,
+				i_var, arg, num_text, text, num_par, parameter, J, Taylor
 			);
 # endif
 			break;

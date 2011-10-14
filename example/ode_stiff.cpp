@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -54,7 +54,7 @@ $end
 # include <cppad/cppad.hpp> 
 
 // To print the comparision, change the 0 to 1 on the next line.
-# define CppADOdeStiffPrint 0
+# define CPPAD_ODE_STIFF_PRINT 0
 
 namespace {
 	// --------------------------------------------------------------
@@ -166,20 +166,16 @@ bool OdeStiff(void)
 		double scur = .5;
 		double erel = 0.;
 
-		const char *method;
 		if( k == 0 )
-		{	method = "Rosen34";
-			xf = CppAD::OdeErrControl(rosen, ti, tf, 
+		{	xf = CppAD::OdeErrControl(rosen, ti, tf, 
 			xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep);
 		}
 		else if( k == 1 )
-		{	method = "Runge45";
-			xf = CppAD::OdeErrControl(runge, ti, tf, 
+		{	xf = CppAD::OdeErrControl(runge, ti, tf, 
 			xi, smin, smax, scur, eabs, erel, ef, maxabs, nstep);
 		}
 		else if( k == 2 )
-		{	method = "Gear5";
-			xf = CppAD::OdeGearControl(gear, M, ti, tf,
+		{	xf = CppAD::OdeGearControl(gear, M, ti, tf,
 			xi, smin, smax, sini, eabs, erel, ef, maxabs, nstep);
 		}
 		double x0 = exp(-a[0]*tf);
@@ -190,8 +186,10 @@ bool OdeStiff(void)
 			(exp(-a[1]*tf) - exp(-a[0]*tf))/(a[0] - a[1]);
 		ok &= CppAD::NearEqual(x1, xf[1], 0., eabs[1]);
 		ok &= CppAD::NearEqual(0., ef[1], 0., eabs[0]);
-# if CppADOdeStiffPrint
-		std::cout << "method     = " << method << std::endl;
+# if CPPAD_ODE_STIFF_PRINT
+		const char* method[]={ "Rosen34", "Runge45", "Gear5" };
+		std::cout << std::endl;
+		std::cout << "method     = " << method[k] << std::endl;
 		std::cout << "nstep      = " << nstep  << std::endl;
 		std::cout << "x0         = " << x0 << std::endl;
 		std::cout << "xf[0]      = " << xf[0] << std::endl;
