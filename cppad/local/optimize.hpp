@@ -22,7 +22,7 @@ $spell
 	cppad
 $$
 
-$section Optimize the Tape Corresponding to an ADFun object$$
+$section Optimize an ADFun Object Tape$$
 
 $index optimize$$
 $index tape, optimize$$
@@ -36,12 +36,12 @@ $icode%f%.optimize()%$$
 
 
 $head Purpose$$
-The operation sequence corresponding to an $cref/ADFun/$$ object can
+The operation sequence corresponding to an $cref ADFun$$ object can
 be very large and involve many operations; see the
-size functions in $cref/seq_property/$$.
-This enables one to reduce the number of operations
-and thereby reduce the time and the memory required to
-compute function and derivative values using an $code ADFun$$ object.
+size functions in $cref seq_property$$.
+The $icode%f%.optimize%$$ procedure reduces the number of operations,
+and thereby the time and the memory, required to
+compute function and derivative values. 
 
 $head f$$
 The object $icode f$$ has prototype
@@ -68,8 +68,8 @@ The $code optimize$$ member function
 may greatly reduce the number of variables 
 in the operation sequence; see $cref/size_var/seq_property/size_var/$$.
 If a $cref/zero order forward/ForwardZero/$$ calculation is done during
-the construction of f, it will require more memory
-and time that after the optimization procedure.
+the construction of $icode f$$, it will require more memory
+and time than required after the optimization procedure.
 In addition, it will need to be redone.
 For this reason, it is more efficient to use 
 $codei%
@@ -87,18 +87,18 @@ $cref/sequence constructors/FunConstruct/Sequence Constructor/$$.
 
 $head Comparison Operators$$
 Any comparison operators that are in the tape are removed by this operation.
-Hence the return value of $cref/CompareChange/$$ will always be zero
+Hence the return value of $cref CompareChange$$ will always be zero
 for an optimized tape (even if $code NDEBUG$$ is not defined).
 
 $head Checking Optimization$$
 $index NDEBUG$$
 If $code NDEBUG$$ is not defined
 and $cref/f.size_taylor()/size_taylor/$$ is greater than zero,
-a $cref/ForwardZero/$$ calculation is done using the optimized version
+a $cref ForwardZero$$ calculation is done using the optimized version
 of $icode f$$ and the results are checked to see that they are
 the same as before.
 If they are not the same, the
-$cref/ErrorHandler/$$ is called with a known error message
+$cref ErrorHandler$$ is called with a known error message
 related to $icode%f%.optimize()%$$.
 
 $head Example$$
@@ -106,7 +106,7 @@ $children%
 	example/optimize.cpp
 %$$
 The file
-$xref/optimize.cpp/$$
+$cref optimize.cpp$$
 contains an example and test of this operation.
 It returns true if it succeeds and false otherwise.
 
