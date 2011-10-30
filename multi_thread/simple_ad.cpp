@@ -66,8 +66,8 @@ $end
 # include "thread_team.hpp"
 # include "arc_tan.hpp"
 # include "simple_ad.hpp"
+# define NUMBER_THREADS  4
 
-# define NUMBER_THREADS 2
 namespace {
 	// structure with information for one thread
 	typedef struct {

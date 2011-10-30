@@ -40,7 +40,7 @@ $end
 # include <limits>
 # include <cmath>
 # include <cassert>
-# define NUMBER_THREADS 2
+# define NUMBER_THREADS 4
 
 # ifdef NDEBUG
 # define CHECK_ZERO(expression) expression

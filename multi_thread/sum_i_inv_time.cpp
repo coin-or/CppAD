@@ -163,7 +163,7 @@ bool sum_i_inv_time(size_t& rate_out, size_t num_threads, size_t mega_sum)
 	// Call test_once for a correctness check
 	double sum;
 	test_once(sum, mega_sum);
-	double eps   = 1e3 * std::numeric_limits<double>::epsilon();
+	double eps   = mega_sum * 1e3 * std::numeric_limits<double>::epsilon();
 	size_t i     = mega_sum * 1000000;
 	double check = 0.;
 	while(i)

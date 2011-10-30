@@ -300,7 +300,7 @@ bool multi_newton_setup(
 	size_t thread_num, num_out;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
 	{	if( thread_num < num_more  )
-			num_out = num_more;
+			num_out = num_min + 1;
 		else	num_out = num_min;
 
 		// when thread_num == 0, xlow_thread == xlow

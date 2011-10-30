@@ -629,10 +629,10 @@ test.sh: multi_thread$(EXEEXT)
 	echo "./multi_thread a11c"      >> test.sh
 	echo "./multi_thread simple_ad" >> test.sh
 	echo "#                 max_threads mega_sum" >> test.sh
-	echo "./multi_thread sum_i_inv    2        1" >> test.sh 
+	echo "./multi_thread sum_i_inv    4        1" >> test.sh 
 	echo "#"                                      >> test.sh
 	echo "#                 max_threads num_zero num_sub num_sum use_ad" >> test.sh
-	echo "./multi_thread multi_newton 2       20      30     500   true" >> test.sh 
+	echo "./multi_thread multi_newton 4       20      30     500   true" >> test.sh 
 	chmod +x test.sh
 
 test:: test.sh

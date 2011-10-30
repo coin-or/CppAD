@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	mega
 	inv
 	bthread
 	pthread
@@ -73,7 +74,20 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 10-30$$
+$list number$$
 Reorganize and improve the $cref multi_thread$$ section and its subsections.
+$lnext
+There was a bug in $cref multi_newton_work.cpp$$ that only showed up when
+the number of threads was greater than or equal 4.
+This has been fixed.
+In addition,
+$cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$
+was increased from 2 to 4 (to enable testing for this bug).
+$lnext
+The accuracy expected in the $cref sum_i_inv.cpp$$ results were failing
+when $cref/mega_sum/multi_thread.cpp/sum_i_inv/mega_sum/$$ was large.
+This check has been modified to include a correction for $icode mega_sum$$.
+$lend
 
 $head 10-29$$
 The following changes were merged in from $code branches/thread$$:

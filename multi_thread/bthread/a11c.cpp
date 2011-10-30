@@ -40,7 +40,7 @@ $end
 # include <limits>
 # include <cmath>
 # include <cassert>
-# define NUMBER_THREADS 2
+# define NUMBER_THREADS 4
 
 namespace { // Begin empty namespace
 	class worker_t

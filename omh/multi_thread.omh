@@ -34,8 +34,8 @@ $index threads, maximum number of$$
 $index CPPAD_MAX_NUM_THREADS$$
 If the preprocessor symbol $code CPPAD_MAX_NUM_THREADS$$ is defined
 before including any CppAD header files,
-it must be an integer greater than or equal to 2
-that specifies an absolute maximum for 
+it must be an integer greater than or equal to 4 and it
+specifies an absolute maximum for 
 the number of threads that CppAD should support.
 Otherwise, CppAD may, or may not, define this preprocessor symbol
 and impose an unspecified absolute maximum of its own.
