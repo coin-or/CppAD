@@ -20,7 +20,7 @@ $index AD, openmp team$$
 $index team, AD openmp$$
 
 $section OpenMP Implementation of a Team of AD Threads$$
-See $cref thread_team$$ for this routines specifications.
+See $cref thread_team.hpp$$ for this routines specifications.
 
 $code
 $verbatim%multi_thread/openmp/openmp_team.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -29,10 +29,9 @@ $$
 $end
 */
 // BEGIN PROGRAM
-
 # include <omp.h>
 # include <cppad/cppad.hpp>
-
+# include "../thread_team.hpp"
 
 namespace {
 	// number of threads in this team

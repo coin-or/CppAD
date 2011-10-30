@@ -72,6 +72,9 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 10-30$$
+Reorganize and improve the $cref multi_thread$$ section and its subsections.
+
 $head 10-29$$
 The following changes were merged in from $code branches/thread$$:
 
@@ -92,7 +95,7 @@ $lnext
 Make $cref arc_tan.cpp$$ 
 utility that can be used by multiple multi-threading tests.
 $lnext
-Create $cref thread_team$$ specifications,
+Create $cref thread_team.hpp$$ specifications,
 move OpenMP management to $cref openmp_team.cpp$$,
 Boost thread management to $cref bthread_team.cpp$$,
 and pthread management to $cref pthread_team.cpp$$.
@@ -104,7 +107,7 @@ $$
 would run the tests for the current directory.
 $lnext
 Extend the multi-threading speed tests
-$cref sum_i_inv$$ and $cref multi_newton$$ so they run
+$cref sum_i_inv.cpp$$ and $cref multi_newton.cpp$$ so they run
 using Boost threads and pthreads (as well as OpenMP threads).
 $lend
 

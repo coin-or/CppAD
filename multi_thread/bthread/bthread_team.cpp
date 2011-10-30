@@ -20,7 +20,7 @@ $index AD, bthread team$$
 $index team, AD bthread$$
 
 $section Boost Thread Implementation of a Team of AD Threads$$
-See $cref thread_team$$ for this routines specifications.
+See $cref thread_team.hpp$$ for this routines specifications.
 
 $code
 $verbatim%multi_thread/bthread/bthread_team.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
@@ -29,11 +29,10 @@ $$
 $end
 */
 // BEGIN PROGRAM
-
 # include <boost/thread.hpp>
 # include <cppad/cppad.hpp>
-
-# define MAX_NUMBER_THREADS        48
+# include "../thread_team.hpp"
+# define MAX_NUMBER_THREADS 48
 
 namespace {
 	// number of threads in the team
@@ -253,9 +252,11 @@ bool stop_team(void)
 
 	// now wait for the other threads to be destroyed
 	size_t thread_num;
+	ok &= thread_all_[0].bthread == 0;
 	for(thread_num = 1; thread_num < num_threads_; thread_num++)
 	{	thread_all_[thread_num].bthread->join();
 		delete thread_all_[thread_num].bthread;
+		thread_all_[thread_num].bthread = 0;
 	}
 	// now we are down to just the master thread (thread zero) 
 	sequential_execution_ = true;

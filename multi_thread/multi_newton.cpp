@@ -144,6 +144,11 @@ $codei%
 It specifies the number of threads that are available for this test.
 If it is zero, the test is run without the multi-threading environment.
 
+$childtable%
+	multi_thread/multi_newton_time.cpp%
+	multi_thread/multi_newton_work.cpp
+%$$
+
 $head Source$$
 $code
 $verbatim%multi_thread/multi_newton.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$

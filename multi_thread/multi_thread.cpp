@@ -45,24 +45,35 @@ $codei%./multi_thread multi_newton \
 $head Running Tests$$
 You can build this program and run the default version of its test
 parameters by executing the following commands:
-$codep
+$codei%
 	cd multi_thread/%threading%
 	make test
-$$
-where $icode threading$$ is $code openmp$$, $code bthread$$, or
-$code pthread$$.
+%$$
+If $cref/OpenmpFlags/InstallUnix/OpenmpFlags/$$ 
+are specified during configuration,
+you can preform the operation above with 
+$icode threading$$ equal to $code openmp$$.
+If pthreads with barriers are supported by your system,
+you can use $icode threading$$ equal to $code pthread$$.
+If boost threads have been installed,
+you can use $icode threading$$ equal to $code bthread$$.
 
 $head Purpose$$
 Runs the CppAD multi-threading examples and speed tests:
 
+$children%
+	multi_thread/openmp/a11c.cpp%
+	multi_thread/bthread/a11c.cpp%
+	multi_thread/pthread/a11c.cpp
+%$$
 $head a11c$$
 The examples 
 $cref openmp_a11c.cpp$$,
 $cref bthread_a11c.cpp$$, and
 $cref pthread_a11c.cpp$$
-demonstrate simple multi-threading using
+demonstrate simple multi-threading, 
+without algorithmic differentiation, using
 OpenMP, Boost threads, and pthreads respectively
-(without algorithmic differentiation).
 
 $head simple_ad$$
 The $cref simple_ad.cpp$$ routine
@@ -121,17 +132,9 @@ The command line argument $icode use_ad$$ is either
 $code true$$ or $code false$$ and has the same meaning as in
 $cref/multi_newton_time.cpp/multi_newton_time.cpp/use_ad/$$.
 
-$children%
-	multi_thread/openmp/a11c.cpp%
-	multi_thread/bthread/a11c.cpp%
-	multi_thread/pthread/a11c.cpp%
-	multi_thread/openmp/openmp_team.cpp%
-	multi_thread/pthread/pthread_team.cpp%
-	multi_thread/bthread/bthread_team.cpp
-%$$
 $head Threading System Specific Routines$$
 The following routines are used to link specific threading
-systems through the common interface $cref thread_team$$:
+systems through the common interface $cref thread_team.hpp$$:
 $table
 $rref openmp_team.cpp$$
 $rref bthread_team.cpp$$

@@ -21,7 +21,7 @@ $index AD, pthread team$$
 $index team, AD pthread$$
 
 $section Pthread Implementation of a Team of AD Threads$$
-See $cref thread_team$$ for this routines specifications.
+See $cref thread_team.hpp$$ for this routines specifications.
 
 $head Bug in Cygwin$$
 $index bug, cygwin pthread_exit$$
@@ -44,11 +44,10 @@ $$
 $end
 */
 // BEGIN PROGRAM
-
 # include <pthread.h>
 # include <cppad/cppad.hpp>
-
-# define MAX_NUMBER_THREADS        48
+# include "../thread_team.hpp"
+# define MAX_NUMBER_THREADS 48
 
 namespace {
 	// number of threads in the team

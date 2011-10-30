@@ -64,6 +64,11 @@ $codei%
 It specifies the number of threads that are available for this test.
 If it is zero, the test is run without a multi-threading environment.
 
+$childtable%
+	multi_thread/sum_i_inv_time.cpp%
+	multi_thread/sum_i_inv_work.cpp
+%$$
+
 $head Source$$
 $code
 $verbatim%multi_thread/sum_i_inv.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$

@@ -38,8 +38,8 @@ $end
 # include <limits>
 # include <cmath>
 # include <cassert>
+# define NUMBER_THREADS 2
 
-# define NUMBER_THREADS 4
 namespace {
 	// Beginning of Example A.1.1.1c of OpenMP 2.5 standard document ---------
 	void a1(int n, float *a, float *b)

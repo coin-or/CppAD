@@ -37,7 +37,7 @@ The $cref/atan2/$$ function uses $cref/CondExp/$$ operations
 to avoid the need to re-tape.
 
 $head thread_team$$
-The following three implementations of the $cref thread_team$$ specifications
+The following three implementations of the $cref thread_team.hpp$$ specifications
 are included:
 $table
 $rref openmp_team.cpp$$
@@ -67,8 +67,7 @@ $end
 # include "arc_tan.hpp"
 # include "simple_ad.hpp"
 
-# define NUMBER_THREADS            4
-
+# define NUMBER_THREADS 2
 namespace {
 	// structure with information for one thread
 	typedef struct {

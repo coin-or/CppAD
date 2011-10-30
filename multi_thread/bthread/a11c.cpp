@@ -40,7 +40,6 @@ $end
 # include <limits>
 # include <cmath>
 # include <cassert>
-
 # define NUMBER_THREADS 2
 
 namespace { // Begin empty namespace

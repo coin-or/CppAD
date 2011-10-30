@@ -80,8 +80,11 @@ $cref/ErrorHandler constructor/ErrorHandler/Constructor/Parallel Mode/$$.
 
 $childtable%
 	cppad/local/parallel_ad.hpp%
+	multi_thread/thread_team.hpp%
 	multi_thread/multi_thread.cpp%
-	omh/thread_utility.omh
+	multi_thread/simple_ad.cpp%
+	multi_thread/sum_i_inv.cpp%
+	multi_thread/multi_newton.cpp
 %$$
 
 $end
