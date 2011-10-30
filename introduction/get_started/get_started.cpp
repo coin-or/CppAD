@@ -161,8 +161,7 @@ execute the following commands starting in the
 $cref/work directory/InstallUnix/Download/Work Directory/$$:
 $codei%
 	cd introduction/get_started
-	make test.sh
-	./test.sh
+	make test
 %$$
 
 $end

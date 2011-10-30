@@ -51,3 +51,6 @@ test.sh: adolc$(EXEEXT)
 	echo "./adolc correct 123"        >> test.sh
 	echo "./adolc correct 123 retape" >> test.sh
 	chmod +x test.sh
+
+test: test.sh
+	./test.sh

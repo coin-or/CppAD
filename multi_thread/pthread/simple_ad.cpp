@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin pthread_ad.cpp$$
+$begin pthread_simple_ad.cpp$$
 $spell
 	Cygwin
 	pthread
@@ -19,12 +19,12 @@ $spell
 	CppAD
 $$
 
-$section Parallel Pthread AD: Example and Test$$
+$section Simple Pthread AD: Example and Test$$
 
-$index pthread_ad, example$$
-$index AD, parallel pthread$$
-$index parallel, AD pthread$$
-$index thread, pthread AD$$
+$index pthread, simple AD$$
+$index AD, simple pthread$$
+$index simple, AD pthread$$
+$index thread, pthread simple AD$$
 
 $head Purpose$$
 This example demonstrates how CppAD can be used with multiple pthreads.
@@ -54,7 +54,7 @@ see how to demonstrate this bug.
 
 $head Source Code$$
 $code
-$verbatim%example/pthread_ad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/pthread/simple_ad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -63,6 +63,7 @@ $end
 // BEGIN PROGRAM
 # include <pthread.h>
 # include <cppad/cppad.hpp>
+# include "../arc_tan.hpp"
 
 # define NUMBER_THREADS            4
 # define DEMONSTRATE_BUG_IN_CYGWIN 0
@@ -131,27 +132,6 @@ namespace {
 	} work_info_t;
 	work_info_t work_vector[NUMBER_THREADS];
 	// --------------------------------------------------------------------
-	// function that we are computing the derivative of
-	AD<double> arc_tan(const AD<double>& x, const AD<double>& y)
-	{	double pi  = 4. * atan(1.);
-		AD<double> theta;
-
-		// valid for first quadrant 
-		if( abs(x) > abs(y) )
-			theta = atan(abs(y) / abs(x));
-		else	theta = pi / 2. - atan(abs(x) / abs(y) ) ;
-
-		// valid for first or second quadrant
-		if( x < 0. )
-			theta = pi - theta;
-
-		// valid for any quadrant
-		if( y < 0. )
-			theta = - theta;
-
-		return theta;
-	}
-	// --------------------------------------------------------------------
 	// function that does the work for each thread
 	void* thread_work(void* thread_info_vptr)
 	{	using CppAD::NearEqual;
@@ -216,7 +196,7 @@ namespace {
 }
 
 // This test routine is only called by the master thread (index = 0).
-bool pthread_ad(void)
+bool simple_ad(void)
 {	bool all_ok = true;
 	using CppAD::thread_alloc;
 

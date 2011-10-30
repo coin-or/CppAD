@@ -561,7 +561,7 @@ The $xref/std_math_ad//AD standard math unary functions/$$
 $code sinh$$, and $code cosh$$ have been added. 
 In addition, more correctness testing 
 (
-$cref/More Testing/InstallUnix/make/More Testing/$$ , 
+$code test_more/test_more$$ , 
 $xref/InstallWindows/More Correctness Testing/windows/$$ 
 )
 has been added for the $code sin$$ and $code cos$$ functions.

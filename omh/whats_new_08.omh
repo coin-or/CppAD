@@ -423,11 +423,7 @@ $cref/Fedora/InstallUnix/Fedora/$$ operating systems.
 $head 01-11$$
 The CppAD correctness tests assume that machine epsilon is less
 than $code 1e-13$$. A test for this has been added to the
-$code test_more/test_more$$ program; see 
-$cref/--with-Testing/InstallUnix/make/More Testing/$$ 
-in Unix install instructions or
-$cref/more correctness testing/InstallWindows/More Correctness Testing/$$
-in Windows install instructions.
+$code test_more/test_more$$ program.
 
 $head 01-08$$
 Added a $cref/sparse_hessian/$$ routine and

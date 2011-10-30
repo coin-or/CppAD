@@ -693,7 +693,7 @@ to including multiple number of thread cases for each test.
 $pre
 
 $$
-Add the $cref/openmp_sum_i_inv.cpp/$$ OpenMP example case.
+Add the $cref sum_i_inv_time.cpp$$ OpenMP example case.
 $pre
 
 $$
@@ -806,7 +806,7 @@ so that so CppAD does not use the OpenMP $code threadprivate$$ command
 (some systems do not support this command).
 
 $subhead 03-15$$
-Add command line arguments to $cref/openmp_newton_example.cpp/$$, and
+Add command line arguments to $code openmp_newton_example.cpp$$, and
 modified $code openmp/run.sh$$ to allow for more flexible testing. 
 
 $subhead 03-14$$

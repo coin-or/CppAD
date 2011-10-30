@@ -23,8 +23,9 @@ echo "----------------------------------------------------------------------"
 find . \( -name '*.cpp' \) -or \
        \( -name '*.hpp' \) -or \
        \( -name '*.omh' \) -or \
-       \( -name '*.am' \) |
-	sed -e '/.\/work\//d' -e 's|./||' > bin/check_include_omh.1.$$
+       \( -name '*.am' \) | \
+	sed -e '/.\/work\//d' -e '/.\/new\//d' -e '/.\/doc\//d' -e 's|./||' \
+		> bin/check_include_omh.1.$$
 list="
 	cpl1.0.txt
 	cppad_ipopt/example/example_windows.bat

@@ -54,3 +54,6 @@ test.sh: cppad$(EXEEXT)
 	echo "./cppad correct 123 retape"   >> test.sh
 	echo "./cppad correct 123 optimize" >> test.sh
 	chmod +x test.sh
+
+test: test.sh
+	./test.sh

@@ -72,7 +72,6 @@ It does it calculations using \c Base operations.
 
 template <class Base>
 class ADFun {
-public:
 // ------------------------------------------------------------
 // Private member variables
 private:

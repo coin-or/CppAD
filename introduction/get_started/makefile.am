@@ -35,3 +35,6 @@ test.sh: get_started$(EXEEXT)
 	echo "#! /bin/sh -e"  > test.sh
 	echo "./get_started" >> test.sh
 	chmod +x test.sh
+
+test: test.sh
+	./test.sh

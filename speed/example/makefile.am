@@ -45,3 +45,6 @@ test.sh: example$(EXEEXT)
 	echo "#! /bin/sh -e"  > test.sh
 	echo "./example"     >> test.sh
 	chmod +x test.sh
+
+test: test.sh
+	./test.sh

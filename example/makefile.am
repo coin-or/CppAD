@@ -30,36 +30,6 @@ ADOLC_LIB_DIRS    =
 ADOLC_FLAGS       =
 endif
 #
-if CppAD_BTHREAD
-BTHREAD_SRC_FILES   = bthread_a11c.cpp  bthread_ad.cpp
-BTHREAD_EXTRA_FILES = 
-BTHREAD_FLAGS       = -DCPPAD_BTHREAD_EXAMPLES
-else
-BTHREAD_SRC_FILES   =
-BTHREAD_EXTRA_FILES = bthread_a11c.cpp  bthread_ad.cpp
-BTHREAD_FLAGS       = 
-endif
-#
-if CppAD_OPENMP
-OPENMP_SRC_FILES   = openmp_a11c.cpp openmp_ad.cpp
-OPENMP_EXTRA_FILES = 
-OMP_FLAGS          = -DCPPAD_OPENMP_EXAMPLES $(OPENMP_FLAGS)
-else
-OPENMP_SRC_FILES   =
-OPENMP_EXTRA_FILES = openmp_a11c.cpp openmp_ad.cpp
-OMP_FLAGS          = 
-endif
-#
-if CppAD_PTHREAD
-PTHREAD_SRC_FILES   = pthread_a11c.cpp  pthread_ad.cpp
-PTHREAD_EXTRA_FILES = 
-PTHREAD_FLAGS       = -DCPPAD_PTHREAD_EXAMPLES
-else
-PTHREAD_SRC_FILES   =
-PTHREAD_EXTRA_FILES = pthread_a11c.cpp pthread_ad.cpp
-PTHREAD_FLAGS       = 
-endif
-#
 if CppAD_BOOSTVECTOR
 BOOST_INCLUDE = -I$(BOOST_DIR)
 else
@@ -68,39 +38,22 @@ endif
 # 
 # Microsoft project files an script to run a single test
 EXTRA_DIST        = example.sln example.vcproj test_one.sh.in \
-	$(ADOLC_EXTRA_FILES) \
-	$(BTHREAD_EXTRA_FILES) \
-	$(OPENMP_EXTRA_FILES) \
-	$(PTHREAD_EXTRA_FILES) 
+	$(ADOLC_EXTRA_FILES)
 #
 check_PROGRAMS    = example 
 #
 if CppAD_MS_COMPILER
-AM_CXXFLAGS       = -EHsc -g \
-	$(ADOLC_FLAGS) \
-	$(BTHREAD_FLAGS) \
-	$(OMP_FLAGS) \
-	$(PTHREAD_FLAGS) \
-	$(CXX_FLAGS)
+AM_CXXFLAGS       = -EHsc -g $(ADOLC_FLAGS) 
 else
-AM_CXXFLAGS       = -g \
-	$(ADOLC_FLAGS) \
-	$(BTHREAD_FLAGS) \
-	$(OMP_FLAGS) \
-	$(PTHREAD_FLAGS) \
-	$(CXX_FLAGS)
+AM_CXXFLAGS       = -g $(ADOLC_FLAGS) 
 endif
 #
 AM_CPPFLAGS       = -I. \
                    -I$(top_srcdir) \
                     $(BOOST_INCLUDE) \
                     $(ADOLC_INCLUDE)
-                    
 #
-LDADD             = \
-	$(ADOLC_LIB) \
-	$(BTHREAD_LIB)
-	$(PTHREAD_LIB)
+LDADD             =  $(ADOLC_LIB)  $(BTHREAD_LIB) $(PTHREAD_LIB)
 AM_LDFLAGS        = $(ADOLC_LIB_DIRS) 
 #
 example_SOURCES   = \
@@ -237,3 +190,6 @@ test.sh: example$(EXEEXT)
 	echo "#! /bin/sh -e"  > test.sh
 	echo "./example "    >> test.sh 
 	chmod +x test.sh
+
+test: test.sh
+	./test.sh

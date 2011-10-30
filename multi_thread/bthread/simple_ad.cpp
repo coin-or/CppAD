@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin bthread_ad.cpp$$
+$begin bthread_simple_ad.cpp$$
 $spell
 	Cygwin
 	bthread
@@ -19,12 +19,12 @@ $spell
 	CppAD
 $$
 
-$section Parallel Boost Thread AD: Example and Test$$
+$section Simple Boost Thread AD: Example and Test$$
 
-$index boost, thread AD example$$
-$index AD, boost thread$$
-$index parallel, boost thread AD$$
-$index thread, boost AD$$
+$index boost, thread simple AD$$
+$index AD, simple boost thread$$
+$index simple, boost thread AD$$
+$index thread, boost simple AD$$
 
 $head Purpose$$
 This example demonstrates how CppAD can be used with multiple 
@@ -42,7 +42,7 @@ to avoid the need to re-tape.
 
 $head Source Code$$
 $code
-$verbatim%example/bthread_ad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/bthread/simple_ad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -51,6 +51,7 @@ $end
 // BEGIN PROGRAM
 # include <boost/thread.hpp>
 # include <cppad/cppad.hpp>
+# include "../arc_tan.hpp"
 
 # define NUMBER_THREADS            4
 
@@ -108,27 +109,6 @@ namespace {
 	// --------------------------------------------------------------------
 	using CppAD::AD;
 
-	// function that we are computing the derivative of
-	AD<double> arc_tan(const AD<double>& x, const AD<double>& y)
-	{	double pi  = 4. * atan(1.);
-		AD<double> theta;
-
-		// valid for first quadrant 
-		if( abs(x) > abs(y) )
-			theta = atan(abs(y) / abs(x));
-		else	theta = pi / 2. - atan(abs(x) / abs(y) ) ;
-
-		// valid for first or second quadrant
-		if( x < 0. )
-			theta = pi - theta;
-
-		// valid for any quadrant
-		if( y < 0. )
-			theta = - theta;
-
-		return theta;
-	}
-	//
 	class worker_t {
 	private:
 		// thread index corresponding to this work
@@ -184,7 +164,7 @@ namespace {
 }
 
 // This test routine is only called by the master thread (index = 0).
-bool bthread_ad(void)
+bool simple_ad(void)
 {	bool all_ok = true;
 	using CppAD::thread_alloc;
 

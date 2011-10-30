@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin openmp_run.cpp$$
+$begin openmp.cpp$$
 $spell
 	inv
 	mega
@@ -19,31 +19,40 @@ $spell
 	num
 	openmp
 $$
-$index OpenMP, run speed$$
-$index run, OpenMP speed$$
-$index speed, OpenMP run$$
+$index OpenMP, example$$
+$index OpenMP, speed$$
+$index OpenMP, test$$
+$index example, OpenMP$$
+$index speed, OpenMP$$
+$index test, OpenMP$$
 
 
-$section Run OpenMP Speed Tests$$
+$section Run OpenMP Examples and Speed Tests$$
 
 $head Syntax$$
-$codei%./run sum_i_inv %max_threads% %mega_sum%
+$codei%./openmp a11c
+%$$
+$codei%./openmp simple_ad
+%$$
+$codei%./openmp sum_i_inv %max_threads% %mega_sum%
 %$$ 
-$codei%./run newton_example %max_threads% %n_zero% %n_sub% %n_sum% %use_ad%$$ 
+$codei%./openmp newton_example %max_threads% %n_zero% %n_sub% %n_sum% %use_ad%$$ 
 
 $head Running Tests$$
 You can build this program and run the default version of its test
 parameters by executing the following commands:
 $codep
 	cd openmp
-	make test.sh
-	./test.sh
+	make test
 $$
 
 $head Purpose$$
-Runs either the 
-$cref openmp_newton_example.cpp$$ or
-$cref openmp_sum_i_inv.cpp$$ timing test.
+Runs either the examples
+$cref openmp_a11c.cpp$$, 
+$cref openmp_simple_ad.cpp$$,
+or the speed tests 
+$cref openmp_newton_example.cpp$$ 
+$cref openmp_sum_i_inv.cpp$$.
 
 $head max_threads$$
 If the argument $icode max_threads$$ is a non-negative integer specifying
@@ -92,24 +101,32 @@ $cref/openmp_newton_example.cpp/openmp_newton_example.cpp/use_ad/$$.
 
 $head Subroutines$$
 $childtable%
-	openmp/sum_i_inv.cpp%
-	openmp/newton_example.cpp
+	multi_thread/openmp/a11c.cpp%
+	multi_thread/openmp/simple_ad.cpp%
+	multi_thread/openmp/sum_i_inv.cpp%
+	multi_thread/openmp/newton_example.cpp%
+	multi_thread/openmp/setup_ad.cpp
 %$$
 
 $head Source$$
 $code
-$verbatim%openmp/run.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/openmp/openmp.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
 */
 // BEGIN PROGRAM
 
+# include <omp.h>
 # include <cppad/cppad.hpp>
 # include <cmath>
 # include <cstring>
 # include "newton_example.hpp"
 # include "sum_i_inv.hpp"
+# include "setup_ad.hpp"
+
+extern bool a11c(void);
+extern bool simple_ad(void);
 
 namespace {
 	size_t arg2size_t(
@@ -123,10 +140,6 @@ namespace {
 		std::cerr << error_msg << std::endl;
 		exit(1);
 	}
-	bool in_parallel(void)
-	{	return static_cast<bool> ( omp_in_parallel() ); }
-	size_t thread_num(void)
-	{	return static_cast<size_t>( omp_get_thread_num() ); } 
 }
 
 int main(int argc, char *argv[])
@@ -137,42 +150,56 @@ int main(int argc, char *argv[])
 
 	// commnd line usage message
 	const char *usage = 
-	"usage: ./run sum_i_inv      max_threads mega_sum\n"
-	"       ./run newton_example max_threads n_zero n_sub n_sum use_ad";
+	"usage: ./openmp a11c\n"
+	"       ./openmp simple_ad\n"
+	"       ./openmp sum_i_inv      max_threads mega_sum\n"
+	"       ./openmp newton_example max_threads n_zero n_sub n_sum use_ad";
 
 	// command line argument values (assign values to avoid compiler warnings)
 	size_t max_threads=0, mega_sum=0, n_zero=0, n_sub=0, n_sum=0;
 	bool use_ad=true;
 
-	if( argc < 4 )
-	{	std::cerr << "argc = " << argc << std::endl;	
-		std::cerr << usage << std::endl;
-		exit(1);
-	}
-	argv++;
-
-	const char* test_name = *argv++;
+	const char* test_name = *++argv;
+	bool run_a11c      = std::strcmp(test_name, "a11c") == 0;
+	bool run_simple_ad = std::strcmp(test_name, "simple_ad") == 0;
 	bool run_sum_i_inv = std::strcmp(test_name, "sum_i_inv") == 0;
 	bool run_newton_example = std::strcmp(test_name, "newton_example") == 0;
-	if( run_sum_i_inv )
+	ok = false;
+	if( run_a11c || run_simple_ad )
+		ok = (argc == 2);
+	else if( run_sum_i_inv )
 		ok = (argc == 4);  
 	else if( run_newton_example )
 		ok = (argc == 7);
-	else	ok = false;
+	//
 	if( ! ok )
-	{	std::cerr << "argc = " << argc << std::endl;	
+	{	std::cerr << "test_name = " << test_name << std::endl;	
+		std::cerr << "argc      = " << argc      << std::endl;	
 		std::cerr << usage << std::endl;
 		exit(1);
 	}
+	if( run_a11c || run_simple_ad )
+	{	if( run_a11c )
+			ok        = a11c();
+		else ok        = simple_ad();
+		if( ok )
+		{	cout << "OK:    " << test_name << std::endl;
+			exit(0);
+		}
+		else
+		{	 cout << "Error: " << test_name << std::endl;
+			exit(1);
+		}
+	}
 
 	// max_threads 
-	max_threads = arg2size_t( *argv++, 0, 
+	max_threads = arg2size_t( *++argv, 0, 
 		"run: max_threads is less than zero"
 	);
 
 	if( run_sum_i_inv )
 	{	// mega_sum
-		mega_sum = arg2size_t( *argv++, 1, 
+		mega_sum = arg2size_t( *++argv, 1, 
 			"run: mega_sum is less than one"
 		);
 	}
@@ -180,27 +207,29 @@ int main(int argc, char *argv[])
 	{	assert( run_newton_example );
 
 		// n_zero
-		n_zero = arg2size_t( *argv++, 2,
+		n_zero = arg2size_t( *++argv, 2,
 			"run: n_zero is less than two"
 		);
 
 		// n_sub
-		n_sub = arg2size_t( *argv++, 1,
+		n_sub = arg2size_t( *++argv, 1,
 			"run: n_sub is less than one"
 		);
        
 		// n_sum 
-		n_sum = arg2size_t( *argv++, 1,
+		n_sum = arg2size_t( *++argv, 1,
 			"run: n_sum is less than one"
 		);
 
 		// use_ad
+		++argv;
 		if( std::strcmp(*argv, "true") == 0 )
 			use_ad = true;
 		else if( std::strcmp(*argv, "false") == 0 )
 			use_ad = false;
 		else
-		{	std::cerr << "run: use_ad is not true or false" << std::endl;
+		{	std::cerr << "run: use_ad = '" << *argv;
+			std::cerr << "' is not true or false" << std::endl;
 			exit(1);
 		}
 	}
@@ -211,18 +240,8 @@ int main(int argc, char *argv[])
 	for(num_threads = 0; num_threads <= max_threads; num_threads++)
 	{	// set the number of threads
 		if( num_threads > 0 )
-		{	// off dynamic thread adjust
-			omp_set_dynamic(0);
-			// set the number of threads 
-			omp_set_num_threads(int(num_threads));
+			setup_ad(num_threads);
 
-			// setup CppAD memory allocation for parallel mode execution
-			thread_alloc::parallel_setup(
-				num_threads, in_parallel, thread_num)
-			;
-			// enable use of AD<double> in parallel mode
-			CppAD::parallel_ad<double>();
-		}
 		// ammount of memory initialy inuse by thread zero
 		ok &= 0 == thread_alloc::thread_num();
 		inuse_this_thread = thread_alloc::inuse(0);
@@ -241,8 +260,9 @@ int main(int argc, char *argv[])
 				use_ad
 			);
 		}
+
 		// set back to one thread and fee all avaialable memory
-		thread_alloc::parallel_setup(1, in_parallel, thread_num);
+		setup_ad(1);
 		size_t thread;
 		for(thread = 0; thread < num_threads; thread++)
 		{	thread_alloc::free_available(thread);

@@ -120,7 +120,7 @@ value of $latex x$$ (even re-taping is not necessary).
 
 $head Subroutines$$
 $children%
-	openmp/newton_method.hpp
+	multi_thread/openmp/newton_method.hpp
 %$$
 $table
 $rref openmp_newton_method$$
@@ -129,7 +129,7 @@ $tend
 
 $head Source$$
 $code
-$verbatim%openmp/newton_example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/openmp/newton_example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

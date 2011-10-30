@@ -30,7 +30,7 @@ This example just demonstrates pthreads and does not use CppAD at all.
 
 $head Source Code$$
 $code
-$verbatim%example/pthread_a11c.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/pthread/a11c.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 $end
 ----------------------------------------------------------------------------
@@ -70,7 +70,7 @@ namespace {
 	}
 }
 
-bool pthread_a11c(void)
+bool a11c(void)
 {	bool ok = true;
 
 	// Test setup

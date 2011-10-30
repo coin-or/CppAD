@@ -43,8 +43,7 @@ execute the following commands starting in the
 $cref/work directory/InstallUnix/Download/Work Directory/$$:
 $codei%
 	cd speed/sacado
-	make test.sh
-	./test.sh
+	make test
 %$$
 You can then run the corresponding speed tests 
 with the following command

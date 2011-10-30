@@ -59,19 +59,6 @@ valid for complex types by comparing real parts.
 In addition, use this change to extend $xref/LuRatio/$$ so 
 that it works with complex AD types.
 
-$head Debugging$$
-$index Debug$$
-The $cref/PrintFor/$$ command should be extended to print
-information depending on a condition.
-This will enable the CppAD user to generate error messages under specific
-certain conditions during $cref/zero order forward/ForwardZero/$$ mode.
-For example,
-$codei%
-	PrintFor(%text%, %y%, %z%)
-%$$
-could print the $icode text$$ followed by the value for the variable $icode y$$
-if and only if the variable $icode z$$ is less than or equal zero.
-
 
 $head Ipopt$$
 $index cppad_ipopt_nlp$$

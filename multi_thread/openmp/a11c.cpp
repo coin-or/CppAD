@@ -21,14 +21,14 @@ $index example, OpenMP A.1.1c$$
 $index A.1.1c, OpenMP example$$
 $index thread, OpenMP example$$
 
-$section A Simple Parallel OpenMP Example and Test$$
+$section A Simple OpenMP Example and Test$$
 
 $head Purpose$$
 This example just demonstrates OpenMP and does not use CppAD at all.
 
 $head Source Code$$
 $code
-$verbatim%example/openmp_a11c.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/openmp/a11c.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 $end
 ----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ namespace {
 	}
 	// End of Example A.1.1.1c of OpenMP 2.5 standard document ---------------
 }
-bool openmp_a11c(void)
+bool a11c(void)
 {	bool ok = true;
 
 	// Test setup

@@ -61,3 +61,6 @@ test.sh: example$(EXEEXT)
 	echo "export LD_LIBRARY_PATH=\"$(CPPAD_IPOPT_LD_PATH)\"" >> test.sh
 	echo "./example"     >> test.sh
 	chmod +x test.sh
+
+test: test.sh
+	./test.sh

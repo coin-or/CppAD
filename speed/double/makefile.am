@@ -52,3 +52,6 @@ test.sh: double$(EXEEXT)
 	echo "#! /bin/sh -e"            > test.sh
 	echo "./double correct 123"    >> test.sh
 	chmod +x test.sh
+
+test: test.sh
+	./test.sh

@@ -28,8 +28,7 @@ execute the following commands starting in the
 $cref/work directory/InstallUnix/Download/Work Directory/$$:
 $codei%
 	cd speed/example
-	make test.sh
-	./test.sh
+	make test
 %$$
 
 

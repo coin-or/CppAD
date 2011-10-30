@@ -188,10 +188,16 @@ in the work directory.
 $subhead Examples and Tests$$
 Once you have executed the $code make$$ command,
 you can run the correctness and speed tests.
+$pre
+
+$$
 The following command will build all the correctness and speed tests.
 In addition, it will run all the correctness tests:
 $codep
 	make test
+$$
+$pre
+
 $$
 The following links describe how to build and run subsets of these tests:
 $table
@@ -225,17 +231,13 @@ $rnext
 $cref/speed_sacado/speed_sacado/Running Tests/$$  
 	$cnext $title speed_sacado$$ 
 $tend
-
-$subhead More Testing$$
-$index test, more$$
-$index more, testing$$
-You can run a large number of correctness tests 
+In addition,
+you can run a large subset of correctness tests 
 (that are not intended to be examples)
 by executing the following commands starting in the work directory:
 $codei%
 	cd test_more
-	make test.sh
-	./test.sh
+	make test
 %$$
 
 $head Profiling CppAD$$
@@ -247,10 +249,9 @@ You can test that the results computed during this profiling are correct
 by executing the following commands starting in the work directory:
 $codei%
 	cd speed/profile
-	make test.sh
-	./test.sh
+	make test
 %$$
-After executing $code make test.sh$$, you can run a profile speed test 
+After executing $code make test$$, you can run a profile speed test 
 by executing the command $code ./profile$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
@@ -368,28 +369,8 @@ $codei%
 	OPENMP_FLAGS=-fopenmp
 %$$
 If you specify configure command,
-the CppAD OpenMP correctness and speed tests will be built; i.e.,
-$table
-$bold Driver$$  $cnext 
-	$bold Test$$ $cnext 
-	$bold Description$$
-$rnext
-$cref/example.cpp/example.cpp/Running Tests/$$ $cnext
-	$cref openmp_a11c.cpp$$ $cnext
-	$title openmp_a11c.cpp$$
-$rnext
-$cref/example.cpp/example.cpp/Running Tests/$$ $cnext
-	$cref openmp_ad.cpp$$ $cnext
-	$title openmp_ad.cpp$$
-$rnext
-$cref/run.cpp/openmp_run.cpp/Running Tests/$$ $cnext
-	$cref/sum_i_inv.cpp/openmp_sum_i_inv.cpp/$$ $cnext
-	$title openmp_sum_i_inv.cpp$$
-$rnext
-$cref/run.cpp/openmp_run.cpp/Running Tests/$$ $cnext
-	$cref/newton_example.cpp/openmp_newton_example.cpp/$$ $cnext
-	$title openmp_newton_example.cpp$$
-$tend
+the CppAD OpenMP correctness and speed tests will be built; see
+$cref%multi_thread/openmp/multi_thread.cpp%multi_thread.cpp%$$.
 
 $head PostfixDir$$
 $index configure, postfix directory$$
@@ -432,10 +413,9 @@ In this case, you can run the Adolc speed correctness tests
 by executing the following commands starting in the work directory:
 $codei%
 	cd speed/adolc
-	make test.sh
-	./test.sh
+	make test
 %$$
-After executing $code make test.sh$$, you can run an Adolc speed tests 
+After executing $code make test$$, you can run an Adolc speed tests 
 by executing the command $code ./adolc$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
@@ -483,10 +463,9 @@ In this case, you can run the Fadbad speed correctness tests
 by executing the following commands starting in the work directory:
 $codei%
 	cd speed/fadbad
-	make test.sh
-	./test.sh
+	make test
 %$$
-After executing $code make test.sh$$, you can run a Fadbad speed tests 
+After executing $code make test$$, you can run a Fadbad speed tests 
 by executing the command $code ./fadbad$$;
 see $cref speed_main$$ for the meaning of the command line
 options to this program.
@@ -510,8 +489,7 @@ In this case, you can run the Sacado speed correctness tests
 by executing the following commands starting in the work directory:
 $codei%
 	cd speed/sacado
-	make test.sh
-	./test.sh
+	make test
 %$$
 After executing $code make test$$, you can run a Sacado speed tests 
 by executing the command $code ./sacado$$;
@@ -565,16 +543,13 @@ $codei%
 	make
 	#
 	cd cppad_ipopt/example
-	make test.sh
-	./test.sh
+	make test
 	#
 	cd ../test
-	make test.sh
-	./test.sh
+	make test
 	#
 	cd ../speed
-	make test.sh
-	./test.sh
+	make test
 %$$
 Once this has been done, you can execute the program
 $code ./speed$$ in the $code work/cppad_ipopt/speed$$ directory;

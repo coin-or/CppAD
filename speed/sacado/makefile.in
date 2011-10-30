@@ -515,6 +515,9 @@ test.sh: sacado$(EXEEXT)
 	echo "./sacado correct 123"         >> test.sh
 	chmod +x test.sh
 
+test: test.sh
+	./test.sh
+
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

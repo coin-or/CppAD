@@ -97,11 +97,12 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
 	distdir dist dist-all distcheck
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = cppad_ipopt/src cppad_ipopt/example cppad_ipopt/speed \
-	cppad_ipopt/test example introduction/get_started \
-	introduction/exp_apx openmp print_for speed/src speed/adolc \
+DIST_SUBDIRS = multi_thread/bthread cppad_ipopt/src \
+	cppad_ipopt/example cppad_ipopt/speed cppad_ipopt/test \
+	multi_thread/openmp multi_thread/pthread speed/src speed/adolc \
 	speed/cppad speed/double speed/example speed/fadbad \
-	speed/profile speed/sacado test_more
+	speed/profile speed/sacado example introduction/get_started \
+	introduction/exp_apx print_for test_more
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -311,10 +312,22 @@ top_srcdir = @top_srcdir@
 
 @CppAD_OPENMP_FALSE@OPENMP_TESTS = 
 #
-# Did user specify with OpenMP
-@CppAD_OPENMP_TRUE@OPENMP_TESTS = openmp
+# Are we building the OpenMP examples and tests
+@CppAD_OPENMP_TRUE@OPENMP_TESTS = multi_thread/openmp
 @CppAD_OPENMP_FALSE@OPENMP_DIRS = 
-@CppAD_OPENMP_TRUE@OPENMP_DIRS = openmp
+@CppAD_OPENMP_TRUE@OPENMP_DIRS = multi_thread/openmp
+@CppAD_BTHREAD_FALSE@BTHREAD_TESTS = 
+#
+# Are we building the boost thread examples and tests
+@CppAD_BTHREAD_TRUE@BTHREAD_TESTS = multi_thread/bthread
+@CppAD_BTHREAD_FALSE@BTHREAD_DIRS = 
+@CppAD_BTHREAD_TRUE@BTHREAD_DIRS = multi_thread/bthread
+@CppAD_PTHREAD_FALSE@PTHREAD_TESTS = 
+#
+# Are we building the pthread thread examples and tests
+@CppAD_PTHREAD_TRUE@PTHREAD_TESTS = multi_thread/pthread
+@CppAD_PTHREAD_FALSE@PTHREAD_DIRS = 
+@CppAD_PTHREAD_TRUE@PTHREAD_DIRS = multi_thread/pthread
 #
 # Is the library archiving program present
 @CppAD_HAVE_AR_TRUE@SPEED_TESTS = \
@@ -531,13 +544,15 @@ nobase_myinclude_HEADERS = \
 # No objects or executables are required to install CppAD.
 # See 'make test' below for building the tests.
 SUBDIRS = \
+	$(BTHREAD_DIRS) \
 	$(IPOPT_DIRS) \
+	$(OPENMP_DIRS) \
+	$(PTHREAD_DIRS) \
+	$(SPEED_DIRS) \
 	example \
 	introduction/get_started \
 	introduction/exp_apx \
-	$(OPENMP_DIRS) \
 	print_for \
-	$(SPEED_DIRS) \
 	test_more 
 
 #
@@ -550,17 +565,18 @@ EXTRA_DIST = \
 	doc.omh.in \
 	doxyfile.in \
 	omh \
-	openmp/sum_i_inv.cpp \
 	uw_copy_040507.html
 
 test_directory_list = \
+	$(BTHREAD_TESTS) \
+	$(IPOPT_TESTS) \
+	$(OPENMP_TESTS) \
+	$(PTHREAD_TESTS) \
+	$(SPEED_TESTS) \
 	example \
 	introduction/get_started \
 	introduction/exp_apx \
-	$(IPOPT_TESTS) \
-	$(OPENMP_TESTS) \
 	print_for \
-	$(SPEED_TESTS) \
 	test_more 
 
 #

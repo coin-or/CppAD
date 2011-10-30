@@ -51,3 +51,6 @@ test.sh: sacado$(EXEEXT)
 	echo "#! /bin/sh -e"                 > test.sh
 	echo "./sacado correct 123"         >> test.sh
 	chmod +x test.sh
+
+test: test.sh
+	./test.sh

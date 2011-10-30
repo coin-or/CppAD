@@ -11,18 +11,18 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin openmp_ad.cpp$$
+$begin openmp_simple_ad.cpp$$
 $spell
 	openmp
 	CppAD
 $$
 
-$section Parallel OpenMP AD: Example and Test$$
+$section Simple OpenMP AD: Example and Test$$
 
-$index openmp_ad, example$$
-$index AD, parallel OpenMP$$
-$index parallel, AD OpenMP$$
-$index thread, openmp AD$$
+$index openmp, simple AD$$
+$index AD, simple OpenMP$$
+$index simple, OpenMP AD$$
+$index thread, simple OpenMP AD$$
 
 $head Purpose$$
 This example demonstrates how CppAD can be used with multiple OpenMP threads.
@@ -39,7 +39,7 @@ to avoid the need to re-tape.
 
 $head Source Code$$
 $code
-$verbatim%example/openmp_ad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/openmp/simple_ad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -48,46 +48,18 @@ $end
 // BEGIN PROGRAM
 # include <omp.h>
 # include <cppad/cppad.hpp>
+# include "../arc_tan.hpp"
+# include "setup_ad.hpp"
 
 # define NUMBER_THREADS 4
-namespace {
-	using CppAD::AD;
-	AD<double> arc_tan(const AD<double>& x, const AD<double>& y)
-	{	double pi  = 4. * atan(1.);
-		AD<double> theta;
 
-		// valid for first quadrant 
-		if( abs(x) > abs(y) )
-			theta = atan(abs(y) / abs(x));
-		else	theta = pi / 2. - atan(abs(x) / abs(y) ) ;
-
-		// valid for first or second quadrant
-		if( x < 0. )
-			theta = pi - theta;
-
-		// valid for any quadrant
-		if( y < 0. )
-			theta = - theta;
-
-		return theta;
-	}
-	bool in_parallel(void)
-	{	return static_cast<bool> ( omp_in_parallel() ); }
-	size_t thread_num(void)
-	{	return static_cast<size_t>( omp_get_thread_num() ); } 
-}
-
-bool openmp_ad(void)
+bool simple_ad(void)
 {	bool all_ok = true;
 	using CppAD::AD;
 	using CppAD::NearEqual;
 
 	// number of threads
 	size_t num_threads = NUMBER_THREADS; 
-
-	// Set the number of OpenMP threads
-	omp_set_dynamic(0); // turn off dynamic thread adjustment
-	omp_set_num_threads( size_t( num_threads ) );
 
 	// Check that no memory is in use or avialable at start
 	// (using thread_alloc in sequential mode)
@@ -97,9 +69,8 @@ bool openmp_ad(void)
 		all_ok &= CppAD::thread_alloc::available(thread) == 0; 
 	}
 
-	// Setup for using AD<double> in parallel mode
-	CppAD::thread_alloc::parallel_setup(num_threads, in_parallel, thread_num);
-	CppAD::parallel_ad<double>();
+	// Set the number of OpenMP threads
+	setup_ad(num_threads);
 
 	// Because maximum number of threads is greater than zero, CppAD::vector 
 	// uses fast multi-threading memory allocation.  Allocate this vector 
@@ -142,7 +113,7 @@ bool openmp_ad(void)
 
 	// return memory allocator to single threading mode
 	num_threads = 1;
-	CppAD::thread_alloc::parallel_setup(num_threads, in_parallel, thread_num);
+	setup_ad(num_threads);
 
 	return all_ok;
 }

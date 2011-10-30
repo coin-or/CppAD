@@ -30,8 +30,7 @@ execute the following commands starting in the
 $cref/work directory/InstallUnix/Download/Work Directory/$$:
 $codei%
 	cd introduction/exp_apx
-	make test.sh
-	./test.sh
+	make test
 %$$
 
 $head main.cpp$$

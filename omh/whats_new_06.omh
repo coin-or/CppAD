@@ -364,7 +364,7 @@ its dependence on the rest of CppAD was removed
 $head 11-12$$
 The 
 $cref/example.cpp/$$ and 
-$cref/test_more/InstallUnix/make/More Testing/$$ 
+$code test_more/test_more.cpp$$ 
 programs were
 changed to print out the number of tests that passed or failed instead
 of just "All the tests passed" or "At least one of the tests failed".

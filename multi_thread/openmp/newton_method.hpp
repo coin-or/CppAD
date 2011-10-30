@@ -164,7 +164,7 @@ $index multi-thread, example$$
 $section OpenMP Multi-Threading Newton's Method Source Code$$
 
 $code
-$verbatim%openmp/newton_method.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/openmp/newton_method.hpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 $end
 ---------------------------------------------------------------------------

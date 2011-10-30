@@ -80,7 +80,7 @@ smallest terms to reduce the effects of round off error.
 
 $head Source$$
 $code
-$verbatim%openmp/sum_i_inv.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/openmp/sum_i_inv.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end

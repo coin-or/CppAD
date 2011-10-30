@@ -55,3 +55,6 @@ test.sh: exp_apx$(EXEEXT)
 	echo "#! /bin/sh -e"  > test.sh
 	echo "./exp_apx"     >> test.sh
 	chmod +x test.sh
+
+test: test.sh
+	./test.sh

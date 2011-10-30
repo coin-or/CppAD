@@ -129,3 +129,6 @@ test.sh: test_more$(EXEEXT)
 	echo "#! /bin/sh -e"  > test.sh
 	echo "./test_more "  >> test.sh
 	chmod +x test.sh
+
+test: test.sh
+	./test.sh

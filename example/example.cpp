@@ -26,8 +26,7 @@ execute the following commands starting in the
 $cref/work directory/InstallUnix/Download/Work Directory/$$:
 $codei%
 	cd example
-	make test.sh
-	./test.sh
+	make test
 %$$
 There are a lot of tests, so this may take a while to compile.
 
@@ -65,8 +64,6 @@ extern bool Atan(void);
 extern bool Atan2(void);
 extern bool BenderQuad(void);
 extern bool BoolFun(void);
-extern bool bthread_a11c(void);
-extern bool bthread_ad(void);
 extern bool vectorBool(void);
 extern bool CheckNumericType(void);
 extern bool checkpoint(void);
@@ -134,8 +131,6 @@ extern bool OdeStiff(void);
 extern bool ode_taylor(void);
 extern bool ode_taylor_adolc(void);
 extern bool omp_alloc(void);
-extern bool openmp_a11c(void);
-extern bool openmp_ad(void);
 extern bool opt_val_hes(void);
 extern bool optimize(void);
 extern bool Output(void);
@@ -144,8 +139,6 @@ extern bool Poly(void);
 extern bool Pow(void);
 extern bool pow_int(void);
 extern bool print_for(void);
-extern bool pthread_a11c(void);
-extern bool pthread_ad(void);
 extern bool reverse_any(void);
 extern bool reverse_one(void);
 extern bool reverse_three(void);
@@ -333,19 +326,6 @@ int main(void)
 	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );
 	ok &= Run( ode_taylor_adolc,  "ode_taylor_adolc" );
 # endif
-# ifdef CPPAD_BTHREAD_EXAMPLES
-	ok &= Run( bthread_a11c,      "bthread_a11c"     );
-	ok &= Run( bthread_ad,        "bthread_ad"       );
-# endif
-# ifdef CPPAD_OPENMP_EXAMPLES
-	ok &= Run( openmp_a11c,       "openmp_a11c"      );
-	ok &= Run( openmp_ad,         "openmp_ad"        );
-# endif
-# ifdef CPPAD_PTHREAD_EXAMPLES
-	ok &= Run( pthread_a11c,      "pthread_a11c"     );
-	ok &= Run( pthread_ad,        "pthread_ad"     );
-# endif
-	
 
 	// check for errors
 	using std::cout;

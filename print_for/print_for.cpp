@@ -43,8 +43,7 @@ execute the following commands starting in the
 $cref/work directory/InstallUnix/Download/Work Directory/$$:
 $codei%
 	cd print_for
-	make test.sh
-	./test.sh
+	make test
 %$$
 
 $head Source Code$$

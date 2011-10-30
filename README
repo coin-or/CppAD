@@ -20,17 +20,17 @@ This version of the documentation has the mathematics displayed using MathML.
 Directories    Description
 ===========    ===========
 bin            Helper shell and sed scripts used for CppAD development.
+bug            Directory containing demonstration of known bugs (may be empty)
 cppad          CppAD include directory (will be copied to prefix/include)
 cppad_ipopt    The CppAD interface to the Ipopt optimizer.
 doc            Directory containing the CppAD user documentation.
 example        Most all the CppAD example files are here.
 introduction   Contains an introduction to Algorithmic Differentiation.
+multi_thread   Multi-threading examples and tests.
 omh            Files for user documentation only (in OMhelp input format).
-openmp         OpenMp support files.
 pkgconfig      pkg-config support files.
 print_for      Example printing during forward mode, pkg-config support files.
 speed          Speed comparison tests for CppAD and other AD packages.
-speed_cppad    Old (no longer used) CppAD speed tests.
 test_more      Extra tests that are not intended as examples.
 uw_copy*.html  UW policy on intellectual property.
 
