@@ -112,14 +112,11 @@ namespace {
 	}
 	// --------------------------------------------------------------------
 	// function that gets called by pthread_create
-	void* thread_work(void* thread_one_vptr)
-	{
-		// thread management information for this thread
-		thread_one_t* thread_one = 
-			static_cast<thread_one_t*>(thread_one_vptr);
+	void* thread_work(void* thread_num_vptr)
+	{	int rc;
 
 		// thread_num to problem specific information for this thread
-		size_t thread_num = thread_one->thread_num;
+		size_t thread_num = *static_cast<size_t*>(thread_num_vptr);
 
 		// In the special case where thread_job_ is join_enum,
 		// there are no more calls to wait_for_work_ or wait_for_job_.
@@ -138,7 +135,7 @@ namespace {
 				exit(1);
 			}
 			// All threads make a call to wait_for_work_
-			int rc = pthread_barrier_wait(&wait_for_work_);
+			rc = pthread_barrier_wait(&wait_for_work_);
 			thread_all_[thread_num].ok &= 
 				(rc == 0 || rc == PTHREAD_BARRIER_SERIAL_THREAD);
 
@@ -152,15 +149,17 @@ namespace {
 			thread_all_[thread_num].ok &= 
 				(rc == 0 || rc == PTHREAD_BARRIER_SERIAL_THREAD);
 		}
-		// It this is not the master thread, then terminate it.
+		if( thread_num == 0 )
+		{	std::cerr << "thread_work: join and thread_num = 0" << std::endl;
+			exit(1);
+		}
 # if DEMONSTRATE_BUG_IN_CYGWIN
-		if( ! pthread_equal(
-			thread_one->pthread_id, thread_all_[0].pthread_id) )
-		{	void* no_status = 0;
+		else
+		{	// Terminate this thread
+			void* no_status = 0;
 			pthread_exit(no_status);
 		}
 # endif
-		// return null pointer
 		return 0;
 	}
 }
@@ -168,6 +167,7 @@ namespace {
 bool start_team(size_t num_threads)
 {	using CppAD::thread_alloc;
 	bool ok = true;;
+	int rc;
 
 	if( num_threads > MAX_NUMBER_THREADS )
 	{	std::cerr << "start_team: num_threads greater than ";
@@ -195,7 +195,7 @@ bool start_team(size_t num_threads)
 
 	// initialize two barriers, one for work done, one for new job ready
 	pthread_barrierattr_t *no_barrierattr = 0;
-	int rc = pthread_barrier_init(
+	rc = pthread_barrier_init(
 		&wait_for_work_, no_barrierattr, num_threads
 	); 
 	ok &= (rc == 0);
@@ -205,14 +205,9 @@ bool start_team(size_t num_threads)
 	ok &= (rc == 0);
 	
 	// structure used to create the threads
-	pthread_t      pthread_id;
-	pthread_attr_t attr;
-	void*          thread_one_vptr;
-	//
-	rc  = pthread_attr_init(&attr);
-	ok &= (rc == 0);
-	rc  = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-	ok &= (rc == 0);
+	pthread_t       pthread_id;
+	// default for pthread_attr_setdetachstate is PTHREAD_CREATE_JOINABLE
+	pthread_attr_t* no_attr= 0;
 
 	// initial job for the threads
 	thread_job_           = init_enum;
@@ -226,25 +221,23 @@ bool start_team(size_t num_threads)
 	{	thread_all_[thread_num].ok         = true;
 		thread_all_[thread_num].thread_num = thread_num;
 		// Create the thread with thread number equal to thread_num
-		thread_one_vptr = static_cast<void*> (&(thread_all_[thread_num]));
+		void* thread_num_vptr = static_cast<void*> (
+			&(thread_all_[thread_num].thread_num)
+		);
 		rc = pthread_create(
 				&pthread_id ,
-				&attr       ,
+				no_attr     ,
 				thread_work ,
-				thread_one_vptr
+				thread_num_vptr
 		);
 		thread_all_[thread_num].pthread_id = pthread_id;
 		ok &= (rc == 0);
 	}
 
-	// Done creating threads and hence no longer need this attribute object
-	rc  = pthread_attr_destroy(&attr);
-	ok &= (rc == 0);
-
 	//  do work using this thread and then wait
 	//  until all threads have completed wait_for_work_
-	thread_one_vptr = static_cast<void*> (&(thread_all_[0]));
-	thread_work(thread_one_vptr);
+	void* thread_num_vptr = static_cast<void*> (&(thread_all_[0].thread_num));
+	thread_work(thread_num_vptr);
 
 	// Current state is all threads have completed wait_for_work_,
 	// and are at wait_for_job_.
@@ -256,7 +249,8 @@ bool start_team(size_t num_threads)
 }
 
 bool work_team(void worker(void))
-{
+{	int rc;
+
 	// Current state is all threads have completed wait_for_work_,
 	// and are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
@@ -266,19 +260,13 @@ bool work_team(void worker(void))
 	// set global version of this work routine
 	worker_ = worker;
 
-	// reset wait_for_work_ barrier
-	int rc = pthread_barrier_destroy(&wait_for_work_);
-	ok    &= (rc == 0);
-	pthread_barrierattr_t *no_barrierattr = 0;
-	rc     = pthread_barrier_init(
-		&wait_for_work_, no_barrierattr, num_threads_
-	); 
-	ok &= (rc == 0);
+	// barriers are automatically reset to original count level
+	// (cannot find this in specifications) so can use wait_for_work_ again.
 
 	// set the new job that other threads are waiting for
 	thread_job_ = work_enum;
 
-	// enter parallel exectuion soon as master thread completes wait_for_job_ 
+	// enter parallel execution soon as master thread completes wait_for_job_ 
 	if( num_threads_ > 1 )
 		sequential_execution_ = false;
 
@@ -286,18 +274,13 @@ bool work_team(void worker(void))
 	rc  = pthread_barrier_wait(&wait_for_job_);
 	ok &= (rc == 0 || rc == PTHREAD_BARRIER_SERIAL_THREAD);
 
-	// reset wait_for_job_
-	rc  = pthread_barrier_destroy(&wait_for_job_);
-	ok &= (rc == 0);
-	rc  = pthread_barrier_init(
-		&wait_for_job_, no_barrierattr, num_threads_
-	); 
-	ok &= (rc == 0);
+	// barriers are automatically reset to original count level so
+	// so can use wait_for_job_ again.
 
 	// Now do the work in this thread and then wait
 	// until all threads have completed wait_for_work_
-	void* thread_one_vptr = static_cast<void*> (&(thread_all_[0]));
-	thread_work(thread_one_vptr);
+	void* thread_num_vptr = static_cast<void*> (&(thread_all_[0].thread_num));
+	thread_work(thread_num_vptr);
 
 	// Current state is all threads have completed wait_for_work_,
 	// and are at wait_for_job_.
@@ -311,7 +294,9 @@ bool work_team(void worker(void))
 }
 
 bool stop_team(void)
-{	// Current state is all threads have completed wait_for_work_,
+{	int rc;
+
+	// Current state is all threads have completed wait_for_work_,
 	// and are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	bool ok = sequential_execution_;
@@ -323,10 +308,10 @@ bool stop_team(void)
 	// Enter parallel exectuion soon as master thread completes wait_for_job_ 
 	if( num_threads_ > 1 )
 			sequential_execution_ = false;
-	int rc  = pthread_barrier_wait(&wait_for_job_);
+	rc  = pthread_barrier_wait(&wait_for_job_);
 	ok &= (rc == 0 || rc == PTHREAD_BARRIER_SERIAL_THREAD);
 
-	// now wait for the other threads to be destroyed
+	// now wait for the other threads to exit 
 	size_t thread_num;
 	for(thread_num = 1; thread_num < num_threads_; thread_num++)
 	{	void* no_status = 0;
