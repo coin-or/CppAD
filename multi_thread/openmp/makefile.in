@@ -48,7 +48,6 @@ am_multi_thread_OBJECTS = multi_thread.$(OBJEXT) arc_tan.$(OBJEXT) \
 	sum_i_inv_work.$(OBJEXT) openmp_team.$(OBJEXT) a11c.$(OBJEXT)
 multi_thread_OBJECTS = $(am_multi_thread_OBJECTS)
 multi_thread_LDADD = $(LDADD)
-multi_thread_DEPENDENCIES =
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -204,16 +203,15 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-# AM_CXXFLAGS     = -g $(CXX_FLAGS) $(OPENMP_FLAGS)
-@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS) $(OPENMP_FLAGS)
+# AM_CXXFLAGS     = -g $(CXX_FLAGS)
+@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
 #
-# AM_CXXFLAGS     = -EHsc -g $(CXX_FLAGS) $(OPENMP_FLAGS)
-@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -DNDEBUG -O2 $(CXX_FLAGS) $(OPENMP_FLAGS)
+# AM_CXXFLAGS     = -EHsc -g $(CXX_FLAGS) 
+@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -DNDEBUG -O2 $(CXX_FLAGS) 
 #
-AM_CPPFLAGS = -I. -I$(top_srcdir) 
+AM_CPPFLAGS = -I. -I$(top_srcdir) $(OPENMP_FLAGS)
 #
-LDADD = 
-AM_LDFLAGS = 
+AM_LDFLAGS = $(OPENMP_FLAGS)
 #
 multi_thread_SOURCES = \
 	../multi_thread.cpp \

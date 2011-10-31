@@ -49,6 +49,9 @@ $end
 # include "../thread_team.hpp"
 # define MAX_NUMBER_THREADS 48
 
+// It seems that when a barrier is passed, its counter is automatically reset
+// to its original value and it can be used again, but where is this
+// stated in the pthreads speicifcations ?
 namespace {
 	// number of threads in the team
 	size_t num_threads_ = 1; 
@@ -68,10 +71,10 @@ namespace {
 
 	// structure with information for one thread
 	typedef struct {
-		// pthread unique identifier for thread that uses this struct
-		pthread_t       pthread_id;
 		// cppad unique identifier for thread that uses this struct
 		size_t          thread_num;
+		// pthread unique identifier for thread that uses this struct
+		pthread_t       pthread_id;
 		// true if no error for this thread, false otherwise.
 		bool            ok;
 	} thread_one_t;
@@ -118,47 +121,35 @@ namespace {
 		// thread_num to problem specific information for this thread
 		size_t thread_num = *static_cast<size_t*>(thread_num_vptr);
 
-		// In the special case where thread_job_ is join_enum,
-		// there are no more calls to wait_for_work_ or wait_for_job_.
-		while( thread_job_ != join_enum )
-		{	switch( thread_job_ )
-			{
-				case init_enum:
-				break;
+		// master thread does not use this routine
+		bool ok           = thread_num > 0; 
 
-				case work_enum:
-				worker_();
-				break;
-
-				default:
-				std::cerr << "thread_work: default case" << std::endl;
-				exit(1);
-			}
-			// All threads make a call to wait_for_work_
-			rc = pthread_barrier_wait(&wait_for_work_);
-			thread_all_[thread_num].ok &= 
-				(rc == 0 || rc == PTHREAD_BARRIER_SERIAL_THREAD);
-
-			// If this is the master, exit the loop.
-			// Master thread must make a call to wait_for_job_ elsewhere. 
-			if( thread_num == 0 )
-				return 0;
-
-			// All but the master thread make a call to wait_for_job_
+		while( true )
+		{
+			// Use wait_for_job_ to give master time in sequential mode
+			// (so it can change global infromation like thread_job_)
 			rc = pthread_barrier_wait(&wait_for_job_);
-			thread_all_[thread_num].ok &= 
-				(rc == 0 || rc == PTHREAD_BARRIER_SERIAL_THREAD);
+			ok &= (rc == 0 || rc == PTHREAD_BARRIER_SERIAL_THREAD);
+
+			// case where we are terminating this thread (no more work)
+			if( thread_job_ == join_enum )
+				break;
+
+			// only other case once wait_for_job_ barrier is passed (so far)
+			ok &= thread_job_ == work_enum;
+			worker_();
+
+			// Use wait_for_work_ to inform master that our work is done and
+			// that this thread will not use global information until 
+			// passing its barrier wait_for_job_ above.
+			rc = pthread_barrier_wait(&wait_for_work_);
+			ok &= (rc == 0 || rc == PTHREAD_BARRIER_SERIAL_THREAD);
 		}
-		if( thread_num == 0 )
-		{	std::cerr << "thread_work: join and thread_num = 0" << std::endl;
-			exit(1);
-		}
+		thread_all_[thread_num].ok = ok;
 # if DEMONSTRATE_BUG_IN_CYGWIN
-		else
-		{	// Terminate this thread
-			void* no_status = 0;
-			pthread_exit(no_status);
-		}
+		// Terminate this thread
+		void* no_status = 0;
+		pthread_exit(no_status);
 # endif
 		return 0;
 	}
@@ -178,11 +169,19 @@ bool start_team(size_t num_threads)
 	ok  = num_threads_ == 1;
 	ok &= sequential_execution_;
 
+	size_t thread_num;
+	for(thread_num = 0; thread_num < num_threads; thread_num++)
+	{	// Each thread gets a pointer to its version of this thread_num
+		// so it knows which section of thread_all_ it is working with
+		thread_all_[thread_num].thread_num = thread_num;
+
+		// initialize
+		thread_all_[thread_num].ok         = true;
+	}
+
 	// Set the information for this thread so thread_number will work
 	// for call to parallel_setup
 	thread_all_[0].pthread_id = pthread_self();
-	thread_all_[0].thread_num = 0;
-	thread_all_[0].ok         = true;
 
 	// Now that thread_number() has necessary information for the case
 	// num_threads_ == 1, and while still in sequential mode,
@@ -216,10 +215,8 @@ bool start_team(size_t num_threads)
 
 	// This master thread is already running, we need to create
 	// num_threads - 1 more threads
-	size_t thread_num;
 	for(thread_num = 1; thread_num < num_threads; thread_num++)
-	{	thread_all_[thread_num].ok         = true;
-		thread_all_[thread_num].thread_num = thread_num;
+	{	
 		// Create the thread with thread number equal to thread_num
 		void* thread_num_vptr = static_cast<void*> (
 			&(thread_all_[thread_num].thread_num)
@@ -234,13 +231,7 @@ bool start_team(size_t num_threads)
 		ok &= (rc == 0);
 	}
 
-	//  do work using this thread and then wait
-	//  until all threads have completed wait_for_work_
-	void* thread_num_vptr = static_cast<void*> (&(thread_all_[0].thread_num));
-	thread_work(thread_num_vptr);
-
-	// Current state is all threads have completed wait_for_work_,
-	// and are at wait_for_job_.
+	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	sequential_execution_ = true;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
@@ -251,8 +242,7 @@ bool start_team(size_t num_threads)
 bool work_team(void worker(void))
 {	int rc;
 
-	// Current state is all threads have completed wait_for_work_,
-	// and are at wait_for_job_.
+	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	bool ok = sequential_execution_;
 	ok     &= thread_number() == 0;
@@ -260,8 +250,6 @@ bool work_team(void worker(void))
 	// set global version of this work routine
 	worker_ = worker;
 
-	// barriers are automatically reset to original count level
-	// (cannot find this in specifications) so can use wait_for_work_ again.
 
 	// set the new job that other threads are waiting for
 	thread_job_ = work_enum;
@@ -274,16 +262,13 @@ bool work_team(void worker(void))
 	rc  = pthread_barrier_wait(&wait_for_job_);
 	ok &= (rc == 0 || rc == PTHREAD_BARRIER_SERIAL_THREAD);
 
-	// barriers are automatically reset to original count level so
-	// so can use wait_for_job_ again.
-
 	// Now do the work in this thread and then wait
 	// until all threads have completed wait_for_work_
-	void* thread_num_vptr = static_cast<void*> (&(thread_all_[0].thread_num));
-	thread_work(thread_num_vptr);
+	worker();
+	rc = pthread_barrier_wait(&wait_for_work_);
+	ok &= (rc == 0 || rc == PTHREAD_BARRIER_SERIAL_THREAD);
 
-	// Current state is all threads have completed wait_for_work_,
-	// and are at wait_for_job_.
+	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	sequential_execution_ = true;
 
@@ -296,8 +281,7 @@ bool work_team(void worker(void))
 bool stop_team(void)
 {	int rc;
 
-	// Current state is all threads have completed wait_for_work_,
-	// and are at wait_for_job_.
+	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	bool ok = sequential_execution_;
 	ok     &= thread_number() == 0;

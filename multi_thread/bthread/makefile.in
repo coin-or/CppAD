@@ -203,11 +203,11 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-# AM_CXXFLAGS     = -g $(CXX_FLAGS) $(BTHREAD_FLAGS)
-@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS) $(BTHREAD_FLAGS)
+# AM_CXXFLAGS     = -g $(CXX_FLAGS)
+@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -DNDEBUG -O2 $(CXX_FLAGS)
 #
-# AM_CXXFLAGS     = -EHsc -g $(CXX_FLAGS) $(BTHREAD_FLAGS)
-@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -DNDEBUG -O2 $(CXX_FLAGS) $(BTHREAD_FLAGS)
+# AM_CXXFLAGS     = -EHsc -g $(CXX_FLAGS) 
+@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -DNDEBUG -O2 $(CXX_FLAGS)
 #
 AM_CPPFLAGS = -I. -I$(top_srcdir) 
 #

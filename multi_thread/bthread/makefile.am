@@ -17,11 +17,11 @@ DEFS          =
 check_PROGRAMS    = multi_thread 
 #
 if CppAD_MS_COMPILER
-# AM_CXXFLAGS     = -EHsc -g $(CXX_FLAGS) $(BTHREAD_FLAGS)
-AM_CXXFLAGS       = -EHsc -DNDEBUG -O2 $(CXX_FLAGS) $(BTHREAD_FLAGS)
+# AM_CXXFLAGS     = -EHsc -g $(CXX_FLAGS) 
+AM_CXXFLAGS       = -EHsc -DNDEBUG -O2 $(CXX_FLAGS)
 else
-# AM_CXXFLAGS     = -g $(CXX_FLAGS) $(BTHREAD_FLAGS)
-AM_CXXFLAGS       = -DNDEBUG -O2 $(CXX_FLAGS) $(BTHREAD_FLAGS)
+# AM_CXXFLAGS     = -g $(CXX_FLAGS)
+AM_CXXFLAGS       = -DNDEBUG -O2 $(CXX_FLAGS)
 endif
 #
 AM_CPPFLAGS       = -I. -I$(top_srcdir) 
