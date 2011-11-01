@@ -100,35 +100,29 @@ namespace {
 	void thread_work(size_t thread_num)
 	{	bool ok = wait_for_work_ != 0;
 		ok     &= wait_for_job_  != 0;
-		thread_all_[thread_num].ok &= ok;
+		ok     &= thread_num     != 0;
 
-		// In the special case where thread_job_ is join_enum,
-		// there are no more calls to wait_for_work_ or wait_for_job_.
-		while( thread_job_ != join_enum )
-		{	switch( thread_job_ )
-			{
-				case init_enum:
+		while( true )
+		{
+			// Use wait_for_jog_ to give master time in sequential mode
+			// (so it can change global information like thread_job_)
+			wait_for_job_->wait();
+
+			// case where we are terminating this thread (no more work)
+			if( thread_job_ == join_enum)
 				break;
 
-				case work_enum:
-				worker_();
-				break;
+			// only other case once wait_for_job_ has been completed (so far)
+			ok &= thread_job_ == work_enum;
+			worker_();
 
-				default:
-				std::cerr << "thread_work: default case" << std::endl;
-				exit(1);
-			}
-			// All threads make a call to wait_for_work_
+			// Use wait_for_work_ to inform master that our work is done and
+			// that this thread will not use global infromation until
+			// passing its barrier wait_for_job_ above.
 			wait_for_work_->wait();
 
-			// If this is the master, exit the loop.
-			// Master thread must make a call to wait_for_job_ elsewhere.
-			if( thread_num == 0 )
-				return;
-
-			// All but the master thread make a call to wait_for_job_
-			wait_for_job_->wait();
 		}
+		thread_all_[thread_num].ok &= ok;
 		return;
 	}
 }
@@ -184,12 +178,7 @@ bool start_team(size_t num_threads)
 			thread_all_[thread_num].bthread->get_id();
 	}
 
-	// do work using this thread and then wait 
-	//  until all threads have completed wait_for_work_
-	thread_work(0); // this thread is number zero (master)
-
-	// Current state is all threads have completed wait_for_work_,
-	// and are at wait_for_job_.
+	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	sequential_execution_ = true;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
@@ -199,13 +188,12 @@ bool start_team(size_t num_threads)
 
 bool work_team(void worker(void))
 {
-	// Current state is all threads have completed wait_for_work_,
-	// and are at wait_for_job_.
+	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	bool ok = sequential_execution_;
 	ok     &= thread_number() == 0;
-	ok     &= wait_for_work_ != 0;
-	ok     &= wait_for_job_  != 0;
+	ok     &= wait_for_work_  != 0;
+	ok     &= wait_for_job_   != 0;
 
 	// set global version of this work routine
 	worker_ = worker;
@@ -220,10 +208,10 @@ bool work_team(void worker(void))
 
 	// Now do the work in this thread and then wait
 	// until all threads have completed wait_for_work_
-	thread_work(0); // this thread is number zero (master)
+	worker();
+	wait_for_work_->wait();
 
-	// Current state is all threads have completed wait_for_work_,
-	// and are at wait_for_job_.
+	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	sequential_execution_ = true;
 
@@ -234,8 +222,7 @@ bool work_team(void worker(void))
 }
 
 bool stop_team(void)
-{	// Current state is all threads have completed wait_for_work_,
-	// and are at wait_for_job_.
+{	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	bool ok = sequential_execution_;
 	ok     &= thread_number() == 0;
