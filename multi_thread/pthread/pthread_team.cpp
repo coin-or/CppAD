@@ -56,6 +56,13 @@ namespace {
 	// number of threads in the team
 	size_t num_threads_ = 1; 
 
+	// key for accessing thread specific informtion 
+	pthread_key_t thread_specific_key;
+
+	// no need to destroy thread specific information
+	void thread_specific_destructor(void* thread_num_vptr)
+	{	return; }
+
 	// type of the job currently being done by each thread
 	enum thread_job_t { init_enum, work_enum, join_enum } thread_job_;
 
@@ -93,36 +100,31 @@ namespace {
 	// ---------------------------------------------------------------------
 	// thread_number()
 	size_t thread_number(void)
-	{
-		// pthread unique identifier for this thread
-		pthread_t thread_this = pthread_self();
-
-		// convert thread_this to the corresponding thread_num
-		size_t thread_num = 0;
-		for(thread_num = 0; thread_num < num_threads_; thread_num++)
-		{	// pthread unique identifier for this thread_num
-			pthread_t thread_compare = thread_all_[thread_num].pthread_id;
-
-			// check for a match
-			if( pthread_equal(thread_this, thread_compare) )
-				return thread_num;
+	{	// get thread specific information
+		void*   thread_num_vptr = pthread_getspecific(thread_specific_key);	
+		size_t* thread_num_ptr  = static_cast<size_t*>(thread_num_vptr);
+		size_t  thread_num      = *thread_num_ptr;
+		if( thread_num > num_threads_ )
+		{	std::cerr << "thread_number: program error" << std::endl;
+			exit(1);
 		}
-		// no match error (thread_this is not in thread_all_).
-		std::cerr << "thread_number: unknown pthread id" << std::endl;
-		exit(1);
-
-		return 0;
+		return thread_num;
 	}
 	// --------------------------------------------------------------------
 	// function that gets called by pthread_create
 	void* thread_work(void* thread_num_vptr)
 	{	int rc;
+		bool ok = true;
+
+		// Set thread specific data where other routines can access it
+		rc = pthread_setspecific(thread_specific_key, thread_num_vptr);
+		ok &= rc == 0;
 
 		// thread_num to problem specific information for this thread
 		size_t thread_num = *static_cast<size_t*>(thread_num_vptr);
 
 		// master thread does not use this routine
-		bool ok           = thread_num > 0; 
+		ok &= thread_num > 0; 
 
 		while( true )
 		{
@@ -178,18 +180,26 @@ bool start_team(size_t num_threads)
 		// initialize
 		thread_all_[thread_num].ok         = true;
 	}
-
-	// Set the information for this thread so thread_number will work
-	// for call to parallel_setup
+	// Finish setup of thread_all_ for this thread
 	thread_all_[0].pthread_id = pthread_self();
 
-	// Now that thread_number() has necessary information for the case
-	// num_threads_ == 1, and while still in sequential mode,
+	// create a key for thread specific information
+	rc = pthread_key_create(&thread_specific_key, thread_specific_destructor); 
+	ok &= (rc == 0);
+
+	// set thread specific information for this (master thread)
+	void* thread_num_vptr = static_cast<void*>(&(thread_all_[0].thread_num));
+	rc = pthread_setspecific(thread_specific_key, thread_num_vptr);
+	ok &= (rc == 0);
+
+	// Now that thread_number() has necessary information for this thread
+	// (number zero), and while still in sequential mode,
 	// call setup for using CppAD::AD<double> in parallel mode.
 	thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
 	CppAD::parallel_ad<double>();
 
-	// now change num_threads_ to its final value.
+	// Now change num_threads_ to its final value. Waiting till now allows 
+	// calls to thread_number during parallel_setup to check thread_num == 0.
 	num_threads_ = num_threads;
 
 	// initialize two barriers, one for work done, one for new job ready
@@ -218,7 +228,7 @@ bool start_team(size_t num_threads)
 	for(thread_num = 1; thread_num < num_threads; thread_num++)
 	{	
 		// Create the thread with thread number equal to thread_num
-		void* thread_num_vptr = static_cast<void*> (
+		thread_num_vptr = static_cast<void*> (
 			&(thread_all_[thread_num].thread_num)
 		);
 		rc = pthread_create(
@@ -307,6 +317,9 @@ bool stop_team(void)
 
 	// now we are down to just the master thread (thread zero) 
 	sequential_execution_ = true;
+
+	// destroy the key for thread specific data
+	pthread_key_delete(thread_specific_key);
 
 	// destroy wait_for_work_
 	rc  = pthread_barrier_destroy(&wait_for_work_);
