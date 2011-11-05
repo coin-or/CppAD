@@ -104,7 +104,7 @@ namespace {
 		void*   thread_num_vptr = pthread_getspecific(thread_specific_key);	
 		size_t* thread_num_ptr  = static_cast<size_t*>(thread_num_vptr);
 		size_t  thread_num      = *thread_num_ptr;
-		if( thread_num > num_threads_ )
+		if( thread_num >= num_threads_ )
 		{	std::cerr << "thread_number: program error" << std::endl;
 			exit(1);
 		}
