@@ -176,9 +176,9 @@ namespace {
 
 int main(int argc, char *argv[])
 {	using CppAD::thread_alloc;
-	size_t num_fail = 0;
 	bool ok         = true;
 	using std::cout;
+	using std::endl;
 
 	// commnd line usage message
 	const char *usage = 
@@ -190,6 +190,12 @@ int main(int argc, char *argv[])
 	// command line argument values (assign values to avoid compiler warnings)
 	size_t num_zero=0, num_sub=0, num_sum=0;
 	bool use_ad=true;
+
+	// print command line as valid matlab/octave
+	cout << "command  = '" << argv[0];
+	for(int i = 1; i < argc; i++)
+		cout << " " << argv[i];
+	cout << "';" << endl;
 
 	ok = false;
 	const char* test_name = "";
@@ -206,9 +212,9 @@ int main(int argc, char *argv[])
 	else if( run_multi_newton )
 		ok = (argc == 7);
 	if( ! ok )
-	{	std::cerr << "test_name = " << test_name << std::endl;	
-		std::cerr << "argc      = " << argc      << std::endl;	
-		std::cerr << usage << std::endl;
+	{	std::cerr << "test_name = " << test_name << endl;	
+		std::cerr << "argc      = " << argc      << endl;	
+		std::cerr << usage << endl;
 		exit(1);
 	}
 	if( run_a11c || run_simple_ad )
@@ -216,11 +222,11 @@ int main(int argc, char *argv[])
 			ok        = a11c();
 		else ok        = simple_ad();
 		if( ok )
-		{	cout << "OK:    " << test_name << std::endl;
+		{	cout << "OK       = true;"  << endl;
 			exit(0);
 		}
 		else
-		{	 cout << "Error: " << test_name << std::endl;
+		{	cout << "OK       = false;" << endl;
 			exit(1);
 		}
 	}
@@ -263,16 +269,18 @@ int main(int argc, char *argv[])
 			use_ad = false;
 		else
 		{	std::cerr << "run: use_ad = '" << *argv;
-			std::cerr << "' is not true or false" << std::endl;
+			std::cerr << "' is not true or false" << endl;
 			exit(1);
 		}
 	}
 
 	// run the test for each number of threads
-	CppAD::vector<size_t> rate_all(max_threads + 1);
 	size_t num_threads, inuse_this_thread = 0;
+	cout << "rate_all = [" << endl;
 	for(num_threads = 0; num_threads <= max_threads; num_threads++)
-	{	// set the number of threads
+	{	size_t rate;
+
+		// set the number of threads
 		if( num_threads > 0 )
 			ok &= start_team(num_threads);
 
@@ -282,12 +290,12 @@ int main(int argc, char *argv[])
 
 		// run the requested test
 		if( run_sum_i_inv ) ok &= 
-			sum_i_inv_time(rate_all[num_threads], num_threads, mega_sum);
+			sum_i_inv_time(rate, num_threads, mega_sum);
 		else
 		{	ok &= run_multi_newton;
 			ok &= multi_newton_time(
-				rate_all[num_threads] ,
-				num_threads           ,
+				rate                    ,
+				num_threads             ,
 				num_zero                ,
 				num_sub                 ,
 				num_sum                 ,
@@ -305,26 +313,17 @@ int main(int argc, char *argv[])
 				ok &= thread_alloc::inuse(thread) == inuse_this_thread;
 			else	ok &= thread_alloc::inuse(thread) == 0;
 		}
-		if( ok )
-			cout << "OK:    " << test_name << ": ";
-		else
-		{	cout << "Error: " << test_name << ": ";
-			num_fail++;
-		}
-		cout << "num_threads = " << num_threads;
-		cout << ", rate = " << rate_all[num_threads] << std::endl;
+		cout << "\t" << rate << " % ";
+		if( num_threads == 0 )
+			cout << "no threading" << endl;
+		else	cout << num_threads << " threads" << endl;
 	}
-	cout << "rate_all = " << rate_all << std::endl;
-	if( num_fail == 0 )
-	{	cout << "All " << max_threads + 1 << " " << test_name;
-		cout  << " tests passed." << std::endl;
-	}
-	else
-	{	cout << num_fail << " " << test_name;
-		cout << " tests failed." << std::endl;
-	}
- 
-	return num_fail;
+	cout << "]" << endl;
+	if( ok )
+		cout << "OK       = true;"  << endl;
+	else cout << "OK       = false;" << endl;
+
+	return  ! ok;
 }
 
 // END PROGRAM
