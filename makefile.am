@@ -10,8 +10,9 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-# Note that configure.hpp is needed by VC++; i.e., for users that do not run
-# the configure script but rather use the project files 
+BUILT_SOURCES = $(top_srcdir)/cppad/configure.hpp
+$(top_srcdir)/cppad/configure.hpp: cppad/configure.hpp
+	cp cppad/configure.hpp $(top_srcdir)/cppad/configure.hpp 
 #
 if CppAD_POSTFIX
 postfix_dir  = $(POSTFIX_DIR)

@@ -261,7 +261,6 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@CppAD_POSTFIX_FALSE@postfix_dir = .
 
 # $Id$
 # -----------------------------------------------------------------------------
@@ -275,8 +274,8 @@ top_srcdir = @top_srcdir@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 #
-# Note that configure.hpp is needed by VC++; i.e., for users that do not run
-# the configure script but rather use the project files 
+BUILT_SOURCES = $(top_srcdir)/cppad/configure.hpp
+@CppAD_POSTFIX_FALSE@postfix_dir = .
 #
 @CppAD_POSTFIX_TRUE@postfix_dir = $(POSTFIX_DIR)
 @CppAD_ADOLC_FALSE@SPEED_ADOLC_TESTS = 
@@ -585,7 +584,8 @@ test_directory_list = \
 #
 pkgconfigdir = $(datadir)/pkgconfig
 pkgconfig_DATA = pkgconfig/cppad.pc
-all: all-recursive
+all: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
 am--refresh:
@@ -1014,14 +1014,16 @@ distcleancheck: distclean
 	       $(distcleancheck_listfiles) ; \
 	       exit 1; } >&2
 check-am: all-am
-check: check-recursive
+check: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) check-recursive
 all-am: makefile $(DATA) $(HEADERS)
 installdirs: installdirs-recursive
 installdirs-am:
 	for dir in "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(myincludedir)" "$(DESTDIR)$(myincludedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
-install: install-recursive
+install: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
 uninstall: uninstall-recursive
@@ -1046,6 +1048,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 @CppAD_DOCUMENTATION_FALSE@install-data-hook:
 clean: clean-recursive
 
@@ -1119,8 +1122,9 @@ ps-am:
 uninstall-am: uninstall-myincludeHEADERS \
 	uninstall-nobase_myincludeHEADERS uninstall-pkgconfigDATA
 
-.MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) ctags-recursive \
-	install-am install-data-am install-strip tags-recursive
+.MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) all check \
+	ctags-recursive install install-am install-data-am \
+	install-strip tags-recursive
 
 .PHONY: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) CTAGS GTAGS \
 	all all-am am--refresh check check-am clean clean-generic \
@@ -1141,6 +1145,8 @@ uninstall-am: uninstall-myincludeHEADERS \
 	uninstall-myincludeHEADERS uninstall-nobase_myincludeHEADERS \
 	uninstall-pkgconfigDATA
 
+$(top_srcdir)/cppad/configure.hpp: cppad/configure.hpp
+	cp cppad/configure.hpp $(top_srcdir)/cppad/configure.hpp 
 @CppAD_HAVE_AR_FALSE@	SPEED_DIRS =
 
 test: all 

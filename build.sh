@@ -69,9 +69,7 @@ else
 fi
 #
 # Files are created by the configure command and copied to the source tree
-# (This list is also in the gpl_license.sh file.)
 configure_file_list="
-	cppad/configure.hpp
 	doc.omh
 	doxyfile
 	example/test_one.sh
@@ -269,6 +267,14 @@ EOF
 	do
 		echo "cp $file ../$file"
 		cp $file ../$file
+		#
+		# change shell scripts to be executable
+		ext=`echo $file | sed -e 's/.*\.\([^.]*\)$/\1/'`
+		if [ "$ext" == "sh" ]
+		then
+			echo "chmod +x ../$file"
+			chmod +x ../$file
+		fi
 	done
 	#
 	echo "OK: ./build.sh configure"
