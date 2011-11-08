@@ -153,6 +153,7 @@ $end
 # include <cppad/cppad.hpp>
 # include <cmath>
 # include <cstring>
+# include <ctime>
 # include "thread_team.hpp"
 # include "simple_ad.hpp"
 # include "sum_i_inv_time.hpp"
@@ -191,8 +192,19 @@ int main(int argc, char *argv[])
 	size_t num_zero=0, num_sub=0, num_sum=0;
 	bool use_ad=true;
 
-	// print command line as valid matlab/octave
-	cout << "command  = '" << argv[0];
+	// print date and time 
+	std::time_t raw_time;
+	std::time(&raw_time);
+	const char* date_time = std::ctime(&raw_time);
+	cout << "date_time = " << date_time;
+	if( strchr(date_time, '\n') == '\0' )
+		cout << endl;
+
+	// print the threading system as a valid matlab/octave assignment
+	cout << "name_team = " << name_team() << endl;
+
+	// print command line 
+	cout << "command   = '" << argv[0];
 	for(int i = 1; i < argc; i++)
 		cout << " " << argv[i];
 	cout << "';" << endl;
@@ -222,11 +234,11 @@ int main(int argc, char *argv[])
 			ok        = a11c();
 		else ok        = simple_ad();
 		if( ok )
-		{	cout << "OK       = true;"  << endl;
+		{	cout << "OK        = true;"  << endl;
 			exit(0);
 		}
 		else
-		{	cout << "OK       = false;" << endl;
+		{	cout << "OK        = false;" << endl;
 			exit(1);
 		}
 	}
@@ -276,7 +288,8 @@ int main(int argc, char *argv[])
 
 	// run the test for each number of threads
 	size_t num_threads, inuse_this_thread = 0;
-	cout << "rate_all = [" << endl;
+	// print the rate for each test as an element of a column vector
+	cout << "rate_all  = [" << endl;
 	for(num_threads = 0; num_threads <= max_threads; num_threads++)
 	{	size_t rate;
 
@@ -319,6 +332,7 @@ int main(int argc, char *argv[])
 		else	cout << num_threads << " threads" << endl;
 	}
 	cout << "]" << endl;
+	// print correctness result as value of OK
 	if( ok )
 		cout << "OK       = true;"  << endl;
 	else cout << "OK       = false;" << endl;

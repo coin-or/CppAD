@@ -267,4 +267,7 @@ bool stop_team(void)
 
 	return ok;
 }
+
+const char* name_team(void)
+{	return "bthread"; }
 // END PROGRAM

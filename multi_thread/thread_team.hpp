@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /* 
 $begin thread_team.hpp$$
 $spell
+	const
 	cstddef
 	bool
 	pthread
@@ -37,6 +38,8 @@ $icode%ok% = start_team(%num_threads%)
 $icode%ok% = work_team(%worker%)
 %$$
 $icode%ok% = stop_team()
+%$$
+$icode%name% = name_team()
 %$$
 
 $head Purpose$$
@@ -85,6 +88,14 @@ $codei%
 	%thread_num% = 1 , ... , %num_threads%-1
 %$$
 
+$head name_team$$
+This routines returns a name that identifies this thread_team.
+The return value has prototype
+$icode%
+	const char* %name%
+%$$ 
+and is a statically allocated $code '\0'$$ terminated C string.
+
 $head Example Use$$
 Example use of these specifications can be found in the file
 $cref simple_ad.cpp$$.
@@ -109,6 +120,7 @@ $codep */
 extern bool start_team(size_t num_threads);
 extern bool work_team(void worker(void));
 extern bool stop_team(void);
+extern const char* name_team(void);
 /* $$
 $end
 */
