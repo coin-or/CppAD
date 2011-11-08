@@ -196,12 +196,13 @@ int main(int argc, char *argv[])
 	std::time_t raw_time;
 	std::time(&raw_time);
 	const char* date_time = std::ctime(&raw_time);
-	cout << "date_time = " << date_time;
-	if( strchr(date_time, '\n') == '\0' )
-		cout << endl;
+	cout << "date_time = '";
+	while( (*date_time != '\0') && (*date_time != '\n' ) )
+		cout << *date_time++;
+	cout << "';" << endl;
 
 	// print the threading system as a valid matlab/octave assignment
-	cout << "name_team = " << name_team() << endl;
+	cout << "name_team = '" << name_team() << "';" << endl;
 
 	// print command line 
 	cout << "command   = '" << argv[0];
@@ -331,7 +332,7 @@ int main(int argc, char *argv[])
 			cout << "no threading" << endl;
 		else	cout << num_threads << " threads" << endl;
 	}
-	cout << "]" << endl;
+	cout << "];" << endl;
 	// print correctness result as value of OK
 	if( ok )
 		cout << "OK       = true;"  << endl;

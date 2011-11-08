@@ -14,6 +14,7 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
@@ -33,7 +34,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 check_PROGRAMS = multi_thread$(EXEEXT)
 subdir = multi_thread/pthread
-DIST_COMMON = $(srcdir)/makefile.am $(srcdir)/makefile.in
+DIST_COMMON = $(dist_noinst_SCRIPTS) $(srcdir)/makefile.am \
+	$(srcdir)/makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -48,6 +50,7 @@ am_multi_thread_OBJECTS = multi_thread.$(OBJEXT) arc_tan.$(OBJEXT) \
 	sum_i_inv_work.$(OBJEXT) pthread_team.$(OBJEXT) a11c.$(OBJEXT)
 multi_thread_OBJECTS = $(am_multi_thread_OBJECTS)
 multi_thread_LDADD = $(LDADD)
+SCRIPTS = $(dist_noinst_SCRIPTS)
 DEFAULT_INCLUDES = 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -228,6 +231,8 @@ multi_thread_SOURCES = \
 	pthread_team.cpp         ../thread_team.hpp \
 	a11c.cpp 
 
+#
+dist_noinst_SCRIPTS = $(srcdir)/../test.sh
 all: all-am
 
 .SUFFIXES:
@@ -512,7 +517,7 @@ distdir: $(DISTFILES)
 check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
 check: check-am
-all-am: makefile
+all-am: makefile $(SCRIPTS)
 installdirs:
 install: install-am
 install-exec: install-exec-am
@@ -623,9 +628,12 @@ uninstall-am:
 	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
 	uninstall-am
 
-
-test: multi_thread$(EXEEXT) 
-	$(srcdir)/../test.sh
+#
+test.sh: multi_thread$(EXEEXT) 
+	cp $(srcdir)/../test.sh test.sh
+#
+test: test.sh
+	./test.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

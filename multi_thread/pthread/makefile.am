@@ -42,6 +42,11 @@ multi_thread_SOURCES   = \
 \
 	pthread_team.cpp         ../thread_team.hpp \
 	a11c.cpp 
-	
-test: multi_thread$(EXEEXT) 
-	$(srcdir)/../test.sh
+#
+dist_noinst_SCRIPTS = $(srcdir)/../test.sh
+#
+test.sh: multi_thread$(EXEEXT) 
+	cp $(srcdir)/../test.sh test.sh
+#
+test: test.sh
+	./test.sh
