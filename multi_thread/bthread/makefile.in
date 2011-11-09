@@ -47,7 +47,7 @@ am_multi_thread_OBJECTS = multi_thread.$(OBJEXT) arc_tan.$(OBJEXT) \
 	multi_newton_time.$(OBJEXT) multi_newton.$(OBJEXT) \
 	multi_newton_work.$(OBJEXT) simple_ad.$(OBJEXT) \
 	sum_i_inv_time.$(OBJEXT) sum_i_inv.$(OBJEXT) \
-	sum_i_inv_work.$(OBJEXT) bthread_team.$(OBJEXT) a11c.$(OBJEXT)
+	sum_i_inv_work.$(OBJEXT) team_bthread.$(OBJEXT) a11c.$(OBJEXT)
 multi_thread_OBJECTS = $(am_multi_thread_OBJECTS)
 multi_thread_LDADD = $(LDADD)
 SCRIPTS = $(dist_noinst_SCRIPTS)
@@ -228,7 +228,7 @@ multi_thread_SOURCES = \
 	../sum_i_inv.cpp         ../sum_i_inv.hpp \
 	../sum_i_inv_work.cpp    ../sum_i_inv_work.hpp \
 \
-	bthread_team.cpp         ../thread_team.hpp \
+	team_bthread.cpp         ../team_thread.hpp \
 	a11c.cpp
 
 #
@@ -282,7 +282,6 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/a11c.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/arc_tan.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bthread_team.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton_time.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton_work.Po@am__quote@
@@ -291,6 +290,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sum_i_inv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sum_i_inv_time.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sum_i_inv_work.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/team_bthread.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

@@ -10,7 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /* 
-$begin bthread_team.cpp$$
+$begin team_bthread.cpp$$
 $spell
 	bthread
 $$
@@ -20,10 +20,10 @@ $index AD, bthread team$$
 $index team, AD bthread$$
 
 $section Boost Thread Implementation of a Team of AD Threads$$
-See $cref thread_team.hpp$$ for this routines specifications.
+See $cref team_thread.hpp$$ for this routines specifications.
 
 $code
-$verbatim%multi_thread/bthread/bthread_team.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/bthread/team_bthread.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -31,7 +31,7 @@ $end
 // BEGIN PROGRAM
 # include <boost/thread.hpp>
 # include <cppad/cppad.hpp>
-# include "../thread_team.hpp"
+# include "../team_thread.hpp"
 # define MAX_NUMBER_THREADS 48
 
 namespace {
@@ -127,12 +127,12 @@ namespace {
 	}
 }
 
-bool start_team(size_t num_threads)
+bool team_start(size_t num_threads)
 {	using CppAD::thread_alloc;
 	bool ok = true;;
 
 	if( num_threads > MAX_NUMBER_THREADS )
-	{	std::cerr << "start_team: num_threads greater than ";
+	{	std::cerr << "team_start: num_threads greater than ";
 		std::cerr << MAX_NUMBER_THREADS << std::endl;
 		exit(1);
 	}
@@ -186,7 +186,7 @@ bool start_team(size_t num_threads)
 	return ok;
 }
 
-bool work_team(void worker(void))
+bool team_work(void worker(void))
 {
 	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
@@ -221,7 +221,7 @@ bool work_team(void worker(void))
 	return ok;
 }
 
-bool stop_team(void)
+bool team_stop(void)
 {	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	bool ok = sequential_execution_;
@@ -268,6 +268,6 @@ bool stop_team(void)
 	return ok;
 }
 
-const char* name_team(void)
+const char* team_name(void)
 {	return "bthread"; }
 // END PROGRAM

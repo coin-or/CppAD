@@ -78,7 +78,7 @@ $end
 */
 // BEGIN PROGRAM
 // general purpose multi-threading interface
-# include "thread_team.hpp"
+# include "team_thread.hpp"
 // special utilities for the sum_i_inv problem
 # include "sum_i_inv_work.hpp"
 
@@ -91,7 +91,7 @@ bool sum_i_inv(double& sum, size_t num_sum, size_t num_threads)
 
 	// now do the work for each thread
 	if( num_threads > 0 )
-		work_team( sum_i_inv_worker );
+		team_work( sum_i_inv_worker );
 	else	sum_i_inv_worker();
 
 	// now combine the result for all the threads

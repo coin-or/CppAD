@@ -37,12 +37,12 @@ The $cref/atan2/$$ function uses $cref/CondExp/$$ operations
 to avoid the need to re-tape.
 
 $head thread_team$$
-The following three implementations of the $cref thread_team.hpp$$ specifications
+The following three implementations of the $cref team_thread.hpp$$ specifications
 are included:
 $table
-$rref openmp_team.cpp$$
-$rref bthread_team.cpp$$
-$rref pthread_team.cpp$$
+$rref team_openmp.cpp$$
+$rref team_bthread.cpp$$
+$rref team_pthread.cpp$$
 $tend
 
 $children%
@@ -63,7 +63,7 @@ $end
 */
 // BEGIN PROGRAM
 # include <cppad/cppad.hpp>
-# include "thread_team.hpp"
+# include "team_thread.hpp"
 # include "arc_tan.hpp"
 # include "simple_ad.hpp"
 # define NUMBER_THREADS  4
@@ -134,9 +134,9 @@ bool simple_ad(void)
 		work_all_[thread_num].theta        = thread_num * pi / num_threads;
 	}
 
-	ok &= start_team(num_threads);
-	ok &= work_team(worker);
-	ok &= stop_team();
+	ok &= team_start(num_threads);
+	ok &= team_work(worker);
+	ok &= team_stop();
 
 
 	// Check that no memory currently in use, and free avialable memory.

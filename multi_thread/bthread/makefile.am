@@ -40,7 +40,7 @@ multi_thread_SOURCES   = \
 	../sum_i_inv.cpp         ../sum_i_inv.hpp \
 	../sum_i_inv_work.cpp    ../sum_i_inv_work.hpp \
 \
-	bthread_team.cpp         ../thread_team.hpp \
+	team_bthread.cpp         ../team_thread.hpp \
 	a11c.cpp
 #
 dist_noinst_SCRIPTS = $(srcdir)/../test.sh

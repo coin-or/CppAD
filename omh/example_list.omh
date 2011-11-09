@@ -91,7 +91,7 @@ $rref base_complex.hpp$$
 $rref BenderQuad.cpp$$
 $rref BoolFun.cpp$$
 $rref bthread_a11c.cpp$$
-$rref bthread_team.cpp$$
+$rref team_bthread.cpp$$
 $rref CheckNumericType.cpp$$
 $rref checkpoint.cpp$$
 $rref CheckSimpleVector.cpp$$
@@ -178,7 +178,7 @@ $rref ode_taylor.cpp$$
 $rref ode_taylor_adolc.cpp$$
 $rref omp_alloc.cpp$$
 $rref openmp_a11c.cpp$$
-$rref openmp_team.cpp$$
+$rref team_openmp.cpp$$
 $rref opt_val_hes.cpp$$
 $rref optimize.cpp$$
 $rref Output.cpp$$
@@ -189,7 +189,7 @@ $rref pow_int.cpp$$
 $rref print_for_cout.cpp$$
 $rref print_for_string.cpp$$
 $rref pthread_a11c.cpp$$
-$rref pthread_team.cpp$$
+$rref team_pthread.cpp$$
 $rref RevOne.cpp$$
 $rref RevSparseHes.cpp$$
 $rref RevSparseJac.cpp$$
@@ -224,7 +224,7 @@ $rref Tan.cpp$$
 $rref Tanh.cpp$$
 $rref TapeIndex.cpp$$
 $rref thread_alloc.cpp$$
-$rref thread_team.hpp$$
+$rref team_thread.hpp$$
 $rref UnaryMinus.cpp$$
 $rref UnaryPlus.cpp$$
 $rref user_tan.cpp$$

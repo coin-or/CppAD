@@ -40,13 +40,11 @@ function check_difference
 	rm bin/only_date.2.$$
 }
 # ---------------------------------------------------------------------
-list="AUTHORS"
 svn cat AUTHORS | sed > bin/only_date.1.$$ \
 	-e "s/, [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} *,/, $yyyy_mm_dd,/" \
 	-e '/$Id:.*$/d'
 check_difference AUTHORS
 # ---------------------------------------------------------------------
-list="$list configure"
 svn cat configure | sed > bin/only_date.1.$$ \
 	-e "s/CppAD [0-9]\{8\}[.0-9]*/CppAD $version/g" \
 	-e "s/VERSION='[0-9]\{8\}[.0-9]*'/VERSION='$version'/g" \
@@ -57,15 +55,18 @@ svn cat configure | sed > bin/only_date.1.$$ \
 	-e '/$Id:.*$/d'
 check_difference configure
 # ---------------------------------------------------------------------
-list="$list configure.ac"
 svn cat configure.ac | sed > bin/only_date.1.$$ \
      -e "s/(CppAD, [0-9]\{8\}[.0-9]* *,/(CppAD, $version,/" \
 	-e '/$Id:.*$/d'
 check_difference configure.ac
 # ---------------------------------------------------------------------
-list="$list cppad/configure.hpp"
-svn cat cppad/configure.hpp | sed > bin/only_date.1.$$ \
-	-e "s/cppad-[0-9]\{8\}[.0-9]*/cppad-$version/g" \
-	-e '/$Id:.*$/d'
-check_difference cppad/configure.hpp
+# configure.hpp is a special case beacuse it is changed by make, no configure
+change=`svn diff cppad/configure.hpp`
+if [ "$change" != "" ]
+then
+	svn cat cppad/configure.hpp | sed > bin/only_date.1.$$ \
+		-e "s/cppad-[0-9]\{8\}[.0-9]*/cppad-$version/g" \
+		-e '/$Id:.*$/d'
+	check_difference cppad/configure.hpp
+fi
 # ---------------------------------------------------------------------

@@ -159,7 +159,7 @@ $end
 */
 // BEGIN PROGRAM
 // general purpose multi-threading interface 
-# include "thread_team.hpp"
+# include "team_thread.hpp"
 // special utilities for the multi_newton problem
 # include "multi_newton_work.hpp"
 
@@ -185,7 +185,7 @@ bool multi_newton(
 
 	// now do the work for each thread
 	if( num_threads > 0 )
-		work_team( multi_newton_worker );
+		team_work( multi_newton_worker );
 	else	multi_newton_worker();
 
 	// now combine the result for all the threads

@@ -134,11 +134,11 @@ $cref/multi_newton_time.cpp/multi_newton_time.cpp/use_ad/$$.
 
 $head Threading System Specific Routines$$
 The following routines are used to link specific threading
-systems through the common interface $cref thread_team.hpp$$:
+systems through the common interface $cref team_thread.hpp$$:
 $table
-$rref openmp_team.cpp$$
-$rref bthread_team.cpp$$
-$rref pthread_team.cpp$$
+$rref team_openmp.cpp$$
+$rref team_bthread.cpp$$
+$rref team_pthread.cpp$$
 $tend
 
 $head Source$$
@@ -154,7 +154,7 @@ $end
 # include <cmath>
 # include <cstring>
 # include <ctime>
-# include "thread_team.hpp"
+# include "team_thread.hpp"
 # include "simple_ad.hpp"
 # include "sum_i_inv_time.hpp"
 # include "multi_newton_time.hpp"
@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
 	cout << "';" << endl;
 
 	// print the threading system as a valid matlab/octave assignment
-	cout << "name_team = '" << name_team() << "';" << endl;
+	cout << "team_name = '" << team_name() << "';" << endl;
 
 	// print command line 
 	cout << "command   = '" << argv[0];
@@ -296,7 +296,7 @@ int main(int argc, char *argv[])
 
 		// set the number of threads
 		if( num_threads > 0 )
-			ok &= start_team(num_threads);
+			ok &= team_start(num_threads);
 
 		// ammount of memory initialy inuse by thread zero
 		ok &= 0 == thread_alloc::thread_num();
@@ -319,7 +319,7 @@ int main(int argc, char *argv[])
 
 		// set back to one thread and fee all avaialable memory
 		if( num_threads > 0 )
-			ok &= stop_team();
+			ok &= team_stop();
 		size_t thread;
 		for(thread = 0; thread < num_threads; thread++)
 		{	thread_alloc::free_available(thread);

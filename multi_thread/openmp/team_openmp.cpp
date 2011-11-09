@@ -10,7 +10,7 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /* 
-$begin openmp_team.cpp$$
+$begin team_openmp.cpp$$
 $spell
 	openmp
 $$
@@ -20,10 +20,10 @@ $index AD, openmp team$$
 $index team, AD openmp$$
 
 $section OpenMP Implementation of a Team of AD Threads$$
-See $cref thread_team.hpp$$ for this routines specifications.
+See $cref team_thread.hpp$$ for this routines specifications.
 
 $code
-$verbatim%multi_thread/openmp/openmp_team.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/openmp/team_openmp.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -31,7 +31,7 @@ $end
 // BEGIN PROGRAM
 # include <omp.h>
 # include <cppad/cppad.hpp>
-# include "../thread_team.hpp"
+# include "../team_thread.hpp"
 
 namespace {
 	// number of threads in this team
@@ -46,7 +46,7 @@ namespace {
 	{	return static_cast<size_t>( omp_get_thread_num() ); } 
 }
 
-bool start_team(size_t num_threads)
+bool team_start(size_t num_threads)
 {
 	bool ok = ! in_parallel();
 	ok     &= thread_num() == 0;;
@@ -62,13 +62,13 @@ bool start_team(size_t num_threads)
 	CppAD::thread_alloc::parallel_setup(num_threads, in_parallel, thread_num);
 	CppAD::parallel_ad<double>();
 
-	// inform work_team of number of threads
+	// inform team_work of number of threads
 	num_threads_ = num_threads;
 
 	return ok;
 }
 
-bool work_team(void worker(void))
+bool team_work(void worker(void))
 {	bool ok = ! in_parallel();
 	ok     &= thread_num() == 0;;
 	ok     &= num_threads_ > 0;
@@ -83,12 +83,12 @@ bool work_team(void worker(void))
 	return ok;
 }
 
-bool stop_team(void)
+bool team_stop(void)
 {	bool ok = ! in_parallel();
 	ok     &= thread_num() == 0;;
 	ok     &= num_threads_ > 0;
 
-	// inform work_team of number of threads
+	// inform team_work of number of threads
 	num_threads_ = 1;
 
 	// Set the number of OpenMP threads to one
@@ -101,6 +101,6 @@ bool stop_team(void)
 	return ok;
 }
 
-const char* name_team(void)
+const char* team_name(void)
 {	return "openmp"; }
 // END PROGRAM

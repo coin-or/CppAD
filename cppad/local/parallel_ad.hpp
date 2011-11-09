@@ -50,9 +50,9 @@ $codei%std::complex<double>%$$.
 
 $head Example$$
 The files 
-$cref openmp_team.cpp$$, 
-$cref bthread_team.cpp$$, and
-$cref pthread_team.cpp$$, 
+$cref team_openmp.cpp$$, 
+$cref team_bthread.cpp$$, and
+$cref team_pthread.cpp$$, 
 contain examples and tests that implement this function.   
 
 $end
