@@ -59,6 +59,13 @@ The input value of the argument does not matter.
 Upon return it is the number of wall clock seconds required for 
 the multi-threaded Newton method can compute all the zeros.
 
+$head test_time$$
+Is the minimum amount of wall clock time that the test should take.
+The number of repeats for the test will be increased until this time
+is reached. 
+The reported $icode time_out$$ is the total wall clock time divided by the
+number of repeats.
+
 $head num_threads$$
 This argument has prototype
 $codei%
@@ -245,6 +252,7 @@ namespace { // empty namespace
 
 bool multi_newton_time(
 	double& time_out      ,
+	double  test_time     ,
 	size_t  num_threads   ,
 	size_t  num_zero      ,
 	size_t  num_sub       , 
@@ -269,11 +277,8 @@ bool multi_newton_time(
 		ok &= num_threads == CppAD::thread_alloc::num_threads();
 	else	ok &= 1           == CppAD::thread_alloc::num_threads();
 
-	// minimum time for test (repeat until this much time)
-	double time_min = 1.;
-
 	// run the test case and set time return value
-	time_out = CppAD::time_test(test_repeat, time_min);
+	time_out = CppAD::time_test(test_repeat, test_time);
 
 	// Call test_once for a correctness check
 	vector<double> xout;

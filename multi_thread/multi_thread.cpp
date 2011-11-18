@@ -37,10 +37,10 @@ $codei%./multi_thread a11c
 %$$
 $codei%./multi_thread simple_ad
 %$$
-$codei%./multi_thread sum_i_inv %max_threads% %mega_sum%
+$codei%./multi_thread sum_i_inv %test_time% %max_threads% %mega_sum%
 %$$ 
-$codei%./multi_thread multi_newton \
-	%max_threads% %num_zero% %num_sub% %num_sum% %use_ad%$$ 
+$codei%./multi_thread multi_newton %test_time% %max_threads% \
+	%num_zero% %num_sub% %num_sum% %use_ad%$$ 
 
 $head Running Tests$$
 You can build this program and run the default version of its test
@@ -59,7 +59,7 @@ If boost threads have been installed,
 you can use $icode threading$$ equal to $code bthread$$.
 
 $head Purpose$$
-Runs the CppAD multi-threading examples and speed tests:
+Runs the CppAD multi-threading examples and timing tests:
 
 $children%
 	multi_thread/openmp/a11c.cpp%
@@ -84,6 +84,13 @@ The $cref sum_i_inv_time.cpp$$ routine
 preforms a timing test for a multi-threading 
 example without algorithmic differentiation.
 
+$subhead test_time$$
+Is the minimum amount of wall clock time that the test should take.
+The number of repeats for the test will be increased until this time
+is reached. 
+The reported time is the total wall clock time divided by the
+number of repeats.
+
 $subhead max_threads$$
 If the argument $icode max_threads$$ is a non-negative integer specifying
 the maximum number of threads to use for the test.
@@ -102,6 +109,13 @@ $head multi_newton$$
 The $cref multi_newton_time.cpp$$ routine
 preforms a timing test for a multi-threading 
 example with algorithmic differentiation.
+
+$subhead test_time$$
+Is the minimum amount of wall clock time that the test should take.
+The number of repeats for the test will be increased until this time
+is reached. 
+The reported time is the total wall clock time divided by the
+number of repeats.
 
 $subhead max_threads$$
 If the argument $icode max_threads$$ is a non-negative integer specifying
@@ -172,6 +186,17 @@ namespace {
 		std::cerr << error_msg << std::endl;
 		exit(1);
 	}
+	size_t arg2double(
+		const char* arg       , 
+		double limit          , 
+		const char* error_msg )
+	{	double d = std::atof(arg);
+		if( d >= limit )
+			return d;
+		std::cerr << "value = " << d << std::endl;
+		std::cerr << error_msg << std::endl;
+		exit(1);
+	}
 }
 
 int main(int argc, char *argv[])
@@ -184,8 +209,9 @@ int main(int argc, char *argv[])
 	const char *usage = 
 	"./multi_thread a11c\n"
 	"./multi_thread simple_ad\n"
-	"./multi_thread sum_i_inv    max_threads mega_sum\n"
-	"./multi_thread multi_newton max_threads num_zero num_sub num_sum use_ad";
+	"./multi_thread sum_i_inv    test_time max_threads mega_sum\n"
+	"./multi_thread multi_newton test_time max_threads\\\n"
+	"	num_zero num_sub num_sum use_ad";
 
 	// command line argument values (assign values to avoid compiler warnings)
 	size_t num_zero=0, num_sub=0, num_sum=0;
@@ -208,9 +234,9 @@ int main(int argc, char *argv[])
 	if( run_a11c || run_simple_ad )
 		ok = (argc == 2);
 	else if( run_sum_i_inv )
-		ok = (argc == 4);  
+		ok = (argc == 5);  
 	else if( run_multi_newton )
-		ok = (argc == 7);
+		ok = (argc == 8);
 	if( ! ok )
 	{	std::cerr << "test_name = " << test_name << endl;	
 		std::cerr << "argc      = " << argc      << endl;	
@@ -230,6 +256,11 @@ int main(int argc, char *argv[])
 			exit(1);
 		}
 	}
+
+	// test_time 
+	double test_time = arg2double( *++argv, 0., 
+		"run: test_time is less than zero"
+	);
 
 	// max_threads 
 	size_t max_threads = arg2size_t( *++argv, 0, 
@@ -278,7 +309,7 @@ int main(int argc, char *argv[])
 	size_t num_threads, inuse_this_thread = 0;
 	cout << "time_all = [" << endl;
 	for(num_threads = 0; num_threads <= max_threads; num_threads++)
-	{	double time;
+	{	double time_out;
 
 		// set the number of threads
 		if( num_threads > 0 )
@@ -290,11 +321,12 @@ int main(int argc, char *argv[])
 
 		// run the requested test
 		if( run_sum_i_inv ) ok &= 
-			sum_i_inv_time(time, num_threads, mega_sum);
+			sum_i_inv_time(time_out, test_time, num_threads, mega_sum);
 		else
 		{	ok &= run_multi_newton;
 			ok &= multi_newton_time(
-				time                    ,
+				time_out                ,
+				test_time               ,
 				num_threads             ,
 				num_zero                ,
 				num_sub                 ,
@@ -313,7 +345,7 @@ int main(int argc, char *argv[])
 				ok &= thread_alloc::inuse(thread) == inuse_this_thread;
 			else	ok &= thread_alloc::inuse(thread) == 0;
 		}
-		cout << "\t" << time << " % ";
+		cout << "\t" << time_out << " % ";
 		if( num_threads == 0 )
 			cout << "no threading" << endl;
 		else	cout << num_threads << " threads" << endl;

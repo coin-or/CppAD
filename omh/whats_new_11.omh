@@ -73,12 +73,21 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 11-16$$
+
+$head 11-17$$
+$list number$$
 Create another speed testing routine $cref time_test$$ which is
 like $cref speed_test$$ but it returns the time instead of rate
 and as a $code double$$ instead of a $code size_t$$. 
 The use it for the timing tests in
 $cref sum_i_inv_time.cpp$$ and $cref multi_newton_time.cpp$$.
+$lnext
+Add $icode test_time$$ as a command line argument
+to the multi-threading $cref/sum_i_inv/multi_thread.cpp/sum_i_inv/$$
+and $cref/multi_newton/multi_thread.cpp/multi_newton/$$
+timing tests.
+$lend
+
 
 $head 11-09$$
 Change $code thread_team.hpp$$ to $cref team_thread.hpp$$ and do

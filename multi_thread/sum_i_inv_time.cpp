@@ -63,6 +63,13 @@ Upon return it is the number of wall clock seconds required for
 to compute the 
 $cref/summation/sum_i_inv_time.cpp/Purpose/$$.
 
+$head test_time$$
+Is the minimum amount of wall clock time that the test should take.
+The number of repeats for the test will be increased until this time
+is reached. 
+The reported $icode time_out$$ is the total wall clock time divided by the
+number of repeats.
+
 $head num_threads$$
 This argument has prototype
 $codei%
@@ -139,7 +146,8 @@ namespace { // empty namespace
 	}
 } // end empty namespace
 
-bool sum_i_inv_time(double& time_out, size_t num_threads, size_t mega_sum)
+bool sum_i_inv_time(
+	double& time_out, double test_time, size_t num_threads, size_t mega_sum)
 {	bool ok  = true;
 	using std::vector;
 
@@ -153,11 +161,8 @@ bool sum_i_inv_time(double& time_out, size_t num_threads, size_t mega_sum)
 	// expect number of threads to already be set up
 	ok &= num_threads == CppAD::thread_alloc::num_threads();
 
-	// minimum time for test (repeat until this much time)
-	double time_min = 1.;
-
 	// run the test case and set the time return value
-	time_out = CppAD::time_test(test_repeat, time_min);
+	time_out = CppAD::time_test(test_repeat, test_time);
 
 	// Call test_once for a correctness check
 	double sum;
