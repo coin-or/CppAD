@@ -73,8 +73,15 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-16$$
+Create another speed testing routine $cref time_test$$ which is
+like $cref speed_test$$ but it returns the time instead of rate
+and as a $code double$$ instead of a $code size_t$$. 
+The use it for the timing tests in
+$cref sum_i_inv_time.cpp$$ and $cref multi_newton_time.cpp$$.
+
 $head 11-09$$
-Change $code team_thread.hpp$$ to $cref team_thread.hpp$$ and do
+Change $code thread_team.hpp$$ to $cref team_thread.hpp$$ and do
 the same for all other names that ended in $code _team$$; e.g.,
 $cref team_openmp.cpp$$.
 

@@ -51,17 +51,27 @@ extern bool mat_sum_sq(void);
 extern bool ode_evaluate(void);
 extern bool sparse_evaluate(void);
 extern bool speed_test(void);
+extern bool time_test(void);
 
 namespace {
 	// function that runs one test
-	static size_t Run_ok_count    = 0;
-	static size_t Run_error_count = 0;
+	size_t Run_ok_count    = 0;
+	size_t Run_error_count = 0;
+	const char* exception_list[] = {
+		"elapsed_seconds",
+		"speed_test",
+		"time_test"
+	};
+	size_t n_exception = sizeof(exception_list) / sizeof(exception_list[0]);
 	bool Run(bool TestOk(void), std::string name)
 	{	bool ok               = true;
 		std::streamsize width =  20;         
 		std::cout.width( width );
 		std::cout.setf( std::ios_base::left );
 		std::cout << name;
+		bool exception = false;
+		for(size_t i = 0; i < n_exception; i++)
+			exception |= exception_list[i] == name;
 		//
 		ok &= name.size() < size_t(width);
 		ok &= TestOk();
@@ -69,10 +79,11 @@ namespace {
 		{	std::cout << "OK" << std::endl;
 			Run_ok_count++;
 		}
-		else if ( name == "elapsed_seconds" )
+		else if ( exception )
 		{	std::cout << "Error: perhaps too many other programs running";
 			std::cout << std::endl;
 			// no change to Run_ok_count
+			ok = true;
 		}
 		else
 		{	std::cout << "Error" << std::endl;
@@ -95,9 +106,11 @@ int main(void)
 	ok &= Run(mat_sum_sq,             "mat_sum_sq"    );
 	ok &= Run(ode_evaluate,         "ode_evaluate"    );
 	ok &= Run(sparse_evaluate,   "sparse_evaluate"    );
+	ok &= Run(speed_test,             "speed_test"    );
+	ok &= Run(time_test,               "time_test"    );
 
 	// check for memory leak in previous calculations
-	if( CPPAD_TRACK_COUNT() != 0 )
+	if( CppAD::memory_leak() )
 		cout << "Error: memroy leak detected" << endl;
 
 	assert( ok || (Run_error_count > 0) );
@@ -108,13 +121,6 @@ int main(void)
 	else	cout << int(Run_error_count) << " tests failed.";
 	cout << endl;
 
-	bool speed_test_ok = speed_test();
-	if( speed_test_ok )
-		cout << "speed_test also passed correctness test" << endl;
-	else
-	{	cout << "speed_test failed its correctness test" << endl;
-		cout << "(expected if other processes are running)" << endl;
-	}
 
 	return static_cast<int>( ! ok );
 }

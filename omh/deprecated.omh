@@ -11,17 +11,33 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin deprecated$$
 $spell
-	CppAD
+	Bool
+	CppADvector
 $$
 
 $section CppAD Deprecated API Features$$
 
-$contents%
+$children%
 	omh/include_deprecated.omh%
 	omh/fun_deprecated.omh%
 	cppad/local/omp_max_thread.hpp%
 	cppad/track_new_del.hpp%
 	omh/omp_alloc.omh
 %$$
+
+$table
+$cref/CppADCreateUnaryBool/BoolFun/Deprecated/$$  $cnext 
+	$title BoolFun$$ $rnext
+$cref/CppADCreateDiscrete/Discrete/Deprecated/$$  $cnext 
+	$title Discrete$$ $rnext
+$cref/CppADvector/test_vector/Deprecated/$$  $cnext 
+	$title test_vector$$ $rnext
+$rref include_deprecated$$
+$rref FunDeprecated$$
+$rref omp_max_thread$$
+$rref TrackNewDel$$
+$rref omp_alloc$$
+$tend
+
 
 $end

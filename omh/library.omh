@@ -28,6 +28,7 @@ $children%
 
 	cppad/near_equal.hpp%
 	cppad/speed_test.hpp%
+	cppad/time_test.hpp%
 
 	omh/numeric_type.omh%
 	cppad/check_numeric_type.hpp%
@@ -66,6 +67,7 @@ $head Some Testing Utilities$$
 The routines listed below are general purpose numerical testing routines:
 $table
 $rref NearEqual$$
+$rref time_test$$
 $rref speed_test$$
 $rref SpeedTest$$
 $tend

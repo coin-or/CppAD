@@ -294,6 +294,7 @@ nobase_myinclude_HEADERS =  \
 	cppad/speed_test.hpp \
 	cppad/speed/uniform_01.hpp \
 	cppad/thread_alloc.hpp \
+	cppad/time_test.hpp \
 	cppad/track_new_del.hpp \
 	cppad/vector.hpp
 # End nobase_myinclude_HEADERS (check_makefile.sh uses this comment) 

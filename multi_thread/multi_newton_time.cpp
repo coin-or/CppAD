@@ -28,7 +28,7 @@ $index newton, multi_thread AD speed$$
 $section Timing Test of Multi-Threaded Newton Method$$
 
 $head Syntax$$
-$icode%ok% = multi_newton_time(%rate_out%, %num_threads%, 
+$icode%ok% = multi_newton_time(%time_out%, %num_threads%, 
 	%num_zero%, %num_sub%, %num_sum%, %use_ad%
 )%$$ 
 
@@ -50,13 +50,13 @@ If it is true,
 $code multi_newton_time$$ passed the correctness test.
 Otherwise it is false.
 
-$head rate_out$$
+$head time_out$$
 This argument has prototype
 $codei%
-	size_t& %rate_out%
+	double& %time_out%
 %$$
 The input value of the argument does not matter.
-Upon return it is the number of times per second that
+Upon return it is the number of wall clock seconds required for 
 the multi-threaded Newton method can compute all the zeros.
 
 $head num_threads$$
@@ -140,6 +140,7 @@ $end
 */
 // BEGIN PROGRAM
 # include <cppad/cppad.hpp>
+# include <cppad/time_test.hpp>
 # include <cmath>
 # include <cstring>
 # include "multi_newton.hpp"
@@ -204,7 +205,7 @@ namespace { // empty namespace
 
 
 	// Run computation of all the zeros once
-	void test_once(CppAD::vector<double> &xout, size_t no_size)
+	void test_once(CppAD::vector<double> &xout)
 	{	if(  num_zero_ == 0 )
 		{	std::cerr << "multi_newton_time: num_zero == 0" << std::endl;
 			exit(1);
@@ -233,17 +234,17 @@ namespace { // empty namespace
 	}
 
 	// Repeat computation of all the zeros a specied number of times
-	void test_repeat(size_t size, size_t repeat)
+	void test_repeat(size_t repeat)
 	{	size_t i;
 		CppAD::vector<double> xout;
 		for(i = 0; i < repeat; i++)
-			test_once(xout, size);
+			test_once(xout);
 		return;
 	}
 } // end empty namespace
 
 bool multi_newton_time(
-	size_t& rate_out      ,
+	double& time_out      ,
 	size_t  num_threads   ,
 	size_t  num_zero      ,
 	size_t  num_sub       , 
@@ -271,21 +272,12 @@ bool multi_newton_time(
 	// minimum time for test (repeat until this much time)
 	double time_min = 1.;
 
-	// size of the one test case (not used)
-	vector<size_t> no_size_vec(1);
-
-	// run the test case
-	vector<size_t> rate_vec = CppAD::speed_test(
-		test_repeat, no_size_vec, time_min
-	);
-
-	// return the rate (times per second) at which test_once runs
-	rate_out = rate_vec[0];
+	// run the test case and set time return value
+	time_out = CppAD::time_test(test_repeat, time_min);
 
 	// Call test_once for a correctness check
 	vector<double> xout;
-	size_t no_size = 0;
-	test_once(xout, no_size);
+	test_once(xout);
 	double eps = 100. * CppAD::epsilon<double>();
 	double pi  = 4. * std::atan(1.);
 	ok        &= (xout.size() == num_zero);

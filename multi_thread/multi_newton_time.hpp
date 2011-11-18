@@ -13,7 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 bool multi_newton_time(
-	size_t& rate          ,
+	double& time_out      ,
 	size_t  num_thread    ,
 	size_t  num_zero      ,
 	size_t  num_sub       , 

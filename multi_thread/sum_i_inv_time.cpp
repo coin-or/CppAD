@@ -33,7 +33,7 @@ $index time, multi_thread summation$$
 $section Timing Test of Multi-Threaded Summation of 1/i$$
 
 $head Syntax$$
-$icode%ok% = sum_i_inv_time(%rate_out%, %num_threads%, %mega_sum%)%$$
+$icode%ok% = sum_i_inv_time(%time_out%, %num_threads%, %mega_sum%)%$$
 
 $head Purpose$$
 Runs a correctness and timing test for a multi-threaded 
@@ -53,14 +53,14 @@ If it is true,
 $code sum_i_inv_time$$ passed the correctness test.
 Otherwise it is false.
 
-$head rate_out$$
+$head time_out$$
 This argument has prototype
 $codei%
-	size_t& %rate_out%
+	double& %time_out%
 %$$
 The input value of the argument does not matter.
-Upon return it is the number of times per second that
-$code sum_i_inv_time$$ can compute the 
+Upon return it is the number of wall clock seconds required for
+to compute the 
 $cref/summation/sum_i_inv_time.cpp/Purpose/$$.
 
 $head num_threads$$
@@ -105,7 +105,7 @@ $end
 
 // Note there is no mention of parallel mode in the documentation for
 // speed_test (so it is safe to use without special consideration).
-# include <cppad/speed_test.hpp>
+# include <cppad/time_test.hpp>
 # include "sum_i_inv.hpp"
 
 namespace { // empty namespace
@@ -113,12 +113,15 @@ namespace { // empty namespace
 	// value of num_threads in previous call to sum_i_inv_time.
 	size_t num_threads_;
 
-	void test_once(double &sum, size_t mega_sum)
-	{	if( mega_sum < 1 )
+	// value of mega_sum in previous call to sum_i_inv_time.
+	size_t mega_sum_;
+
+	void test_once(double &sum)
+	{	if( mega_sum_ < 1 )
 		{	std::cerr << "sum_i_inv_time: mega_sum < 1" << std::endl;
 			exit(1);
 		}
-		size_t num_sum = mega_sum * 1000000;
+		size_t num_sum = mega_sum_ * 1000000;
 		bool ok = sum_i_inv(sum, num_sum, num_threads_); 
 		if( ! ok )
 		{	std::cerr << "sum_i_inv: error" << std::endl;
@@ -127,19 +130,24 @@ namespace { // empty namespace
 		return;
 	}
 
-	void test_repeat(size_t size, size_t repeat)
+	void test_repeat(size_t repeat)
 	{	size_t i;
 		double sum;
 		for(i = 0; i < repeat; i++)
-			test_once(sum, size);
+			test_once(sum);
 		return;
 	}
 } // end empty namespace
 
-bool sum_i_inv_time(size_t& rate_out, size_t num_threads, size_t mega_sum)
+bool sum_i_inv_time(double& time_out, size_t num_threads, size_t mega_sum)
 {	bool ok  = true;
 	using std::vector;
+
+	// arguments passed to sum_i_inv_time
 	num_threads_ = num_threads;
+	mega_sum_    = mega_sum;
+
+	// convert zero to actual number of threads
 	num_threads  = std::max(num_threads_, size_t(1));
 
 	// expect number of threads to already be set up
@@ -148,23 +156,14 @@ bool sum_i_inv_time(size_t& rate_out, size_t num_threads, size_t mega_sum)
 	// minimum time for test (repeat until this much time)
 	double time_min = 1.;
 
-	// size of the one test case
-	vector<size_t> size_vec(1);
-	size_vec[0] = mega_sum;
-
-	// run the test case
-	vector<size_t> rate_vec = CppAD::speed_test(
-		test_repeat, size_vec, time_min
-	);
-
-	// return the rate (times per second) at which test_once runs
-	rate_out = rate_vec[0];
+	// run the test case and set the time return value
+	time_out = CppAD::time_test(test_repeat, time_min);
 
 	// Call test_once for a correctness check
 	double sum;
-	test_once(sum, mega_sum);
-	double eps   = mega_sum * 1e3 * std::numeric_limits<double>::epsilon();
-	size_t i     = mega_sum * 1000000;
+	test_once(sum);
+	double eps   = mega_sum_ * 1e3 * std::numeric_limits<double>::epsilon();
+	size_t i     = mega_sum_ * 1000000;
 	double check = 0.;
 	while(i)
 		check += 1. / double(i--); 

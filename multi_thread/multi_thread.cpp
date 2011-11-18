@@ -153,7 +153,6 @@ $end
 # include <cppad/cppad.hpp>
 # include <cmath>
 # include <cstring>
-# include <ctime>
 # include "team_thread.hpp"
 # include "simple_ad.hpp"
 # include "sum_i_inv_time.hpp"
@@ -192,20 +191,8 @@ int main(int argc, char *argv[])
 	size_t num_zero=0, num_sub=0, num_sum=0;
 	bool use_ad=true;
 
-	// print date and time 
-	std::time_t raw_time;
-	std::time(&raw_time);
-	const char* date_time = std::ctime(&raw_time);
-	cout << "date_time = '";
-	while( (*date_time != '\0') && (*date_time != '\n' ) )
-		cout << *date_time++;
-	cout << "';" << endl;
-
-	// print the threading system as a valid matlab/octave assignment
-	cout << "team_name = '" << team_name() << "';" << endl;
-
-	// print command line 
-	cout << "command   = '" << argv[0];
+	// print command line as valid matlab/octave
+	cout << "command  = '" << argv[0];
 	for(int i = 1; i < argc; i++)
 		cout << " " << argv[i];
 	cout << "';" << endl;
@@ -235,11 +222,11 @@ int main(int argc, char *argv[])
 			ok        = a11c();
 		else ok        = simple_ad();
 		if( ok )
-		{	cout << "OK        = true;"  << endl;
+		{	cout << "OK       = true;"  << endl;
 			exit(0);
 		}
 		else
-		{	cout << "OK        = false;" << endl;
+		{	cout << "OK       = false;" << endl;
 			exit(1);
 		}
 	}
@@ -289,10 +276,9 @@ int main(int argc, char *argv[])
 
 	// run the test for each number of threads
 	size_t num_threads, inuse_this_thread = 0;
-	// print the rate for each test as an element of a column vector
-	cout << "rate_all  = [" << endl;
+	cout << "time_all = [" << endl;
 	for(num_threads = 0; num_threads <= max_threads; num_threads++)
-	{	size_t rate;
+	{	double time;
 
 		// set the number of threads
 		if( num_threads > 0 )
@@ -304,11 +290,11 @@ int main(int argc, char *argv[])
 
 		// run the requested test
 		if( run_sum_i_inv ) ok &= 
-			sum_i_inv_time(rate, num_threads, mega_sum);
+			sum_i_inv_time(time, num_threads, mega_sum);
 		else
 		{	ok &= run_multi_newton;
 			ok &= multi_newton_time(
-				rate                    ,
+				time                    ,
 				num_threads             ,
 				num_zero                ,
 				num_sub                 ,
@@ -327,13 +313,12 @@ int main(int argc, char *argv[])
 				ok &= thread_alloc::inuse(thread) == inuse_this_thread;
 			else	ok &= thread_alloc::inuse(thread) == 0;
 		}
-		cout << "\t" << rate << " % ";
+		cout << "\t" << time << " % ";
 		if( num_threads == 0 )
 			cout << "no threading" << endl;
 		else	cout << num_threads << " threads" << endl;
 	}
-	cout << "];" << endl;
-	// print correctness result as value of OK
+	cout << "]" << endl;
 	if( ok )
 		cout << "OK       = true;"  << endl;
 	else cout << "OK       = false;" << endl;

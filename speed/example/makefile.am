@@ -39,7 +39,8 @@ example_SOURCES   = \
 	mat_sum_sq.cpp \
 	ode_evaluate.cpp \
 	sparse_evaluate.cpp \
-	speed_test.cpp
+	speed_test.cpp \
+	time_test.cpp
 
 test.sh: example$(EXEEXT)
 	echo "#! /bin/sh -e"  > test.sh

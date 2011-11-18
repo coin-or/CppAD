@@ -40,7 +40,7 @@ $head Syntax$$
 $code # include <cppad/speed_test.hpp>$$
 $pre
 $$
-$syntax%%rate_vec% = speed_test(%test%, %size_vec%, %time_min%)%$$
+$icode%rate_vec% = speed_test(%test%, %size_vec%, %time_min%)%$$
 
 $head Purpose$$
 The $code speed_test$$ function executes a speed test
@@ -70,61 +70,61 @@ and it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 
 $head Vector$$
-We use $italic Vector$$ to denote a 
+We use $icode Vector$$ to denote a 
 $cref/simple vector class/SimpleVector/$$ with elements
 of type $code size_t$$.
 
 $head test$$
-The $code speed_test$$ argument $italic test$$ is a function with the syntax
-$syntax%
+The $code speed_test$$ argument $icode test$$ is a function with the syntax
+$codei%
 	%test%(%size%, %repeat%)
 %$$
 and its return value is $code void$$.
 
 $subhead size$$
-The $italic test$$ argument $italic size$$ has prototype
-$syntax%
+The $icode test$$ argument $icode size$$ has prototype
+$codei%
 	size_t %size%
 %$$
 It specifies the size for this test.
 
 $subhead repeat$$
-The $italic test$$ argument $italic repeat$$ has prototype
-$syntax%
+The $icode test$$ argument $icode repeat$$ has prototype
+$codei%
 	size_t %repeat%
 %$$
 It specifies the number of times to repeat the test.
 
 $head size_vec$$
-The $code speed_test$$ argument $italic size_vec$$ has prototype
-$syntax%
+The $code speed_test$$ argument $icode size_vec$$ has prototype
+$codei%
 	const %Vector%& %size_vec%
 %$$
 This vector determines the size for each of the tests problems.
 
 $head time_min$$
-The argument $italic time_min$$ has prototype
-$syntax%
+The argument $icode time_min$$ has prototype
+$codei%
 	double %time_min%
 %$$
 It specifies the minimum amount of time in seconds
-that the $italic test$$ routine should take.
-The $italic repeat$$ argument to $italic test$$ is increased
+that the $icode test$$ routine should take.
+The $icode repeat$$ argument to $icode test$$ is increased
 until this amount of execution time is reached.
 
 $head rate_vec$$
-The return value $italic rate_vec$$ has prototype
-$syntax%
-	%Vector% &%rate_vec%
+The return value $icode rate_vec$$ has prototype
+$codei%
+	%Vector%& %rate_vec%
 %$$ 
 We use $latex n$$ to denote its size which is the same as
-the vector $italic size_vec$$.
+the vector $icode size_vec$$.
 For $latex i = 0 , \ldots , n-1$$,
-$syntax%
+$codei%
 	%rate_vec%[%i%]
 %$$
-is the ratio of $italic repeat$$ divided by time in seconds
-for the problem with size $syntax%%size_vec%[%i%]%$$.
+is the ratio of $icode repeat$$ divided by time in seconds
+for the problem with size $icode%size_vec%[%i%]%$$.
 
 $head Timing$$
 If your system supports the unix $code gettimeofday$$ function,
@@ -137,11 +137,10 @@ $$
 in the context of the standard $code <ctime>$$ definitions.
 
 $children%
-	cppad/elapsed_seconds.hpp%
 	speed/example/speed_test.cpp
 %$$
 $head Example$$
-The routine $xref/speed_test.cpp/$$ is an example and test
+The routine $cref speed_test.cpp$$ is an example and test
 of $code speed_test$$.
 
 $end
@@ -215,7 +214,7 @@ $head Syntax$$
 $code # include <cppad/speed_test.hpp>$$
 $pre
 $$
-$syntax%SpeedTest(%Test%, %first%, %inc%, %last%)%$$
+$codei%SpeedTest(%Test%, %first%, %inc%, %last%)%$$
 
 
 $head Purpose$$
@@ -223,7 +222,7 @@ The $code SpeedTest$$ function executes a speed test
 for various sized problems
 and reports the results on standard output; i.e. $code std::cout$$.
 The size of each test problem is included in its report
-(unless $italic first$$ is equal to $italic last$$).
+(unless $icode first$$ is equal to $icode last$$).
 
 $head Motivation$$
 It is important to separate small calculation units
@@ -248,68 +247,68 @@ but it can also be included separately with out the rest of
 the $code CppAD$$ routines.
 
 $head Test$$
-The $code SpeedTest$$ argument $italic Test$$ is a function with the syntax
-$syntax%
+The $code SpeedTest$$ argument $icode Test$$ is a function with the syntax
+$codei%
 	%name% = %Test%(%size%, %repeat%)
 %$$
 
 $subhead size$$
-The $italic Test$$ argument $italic size$$ has prototype
-$syntax%
+The $icode Test$$ argument $icode size$$ has prototype
+$codei%
 	size_t %size%
 %$$
 It specifies the size for this test.
 
 $subhead repeat$$
-The $italic Test$$ argument $italic repeat$$ has prototype
-$syntax%
+The $icode Test$$ argument $icode repeat$$ has prototype
+$codei%
 	size_t %repeat%
 %$$
 It specifies the number of times to repeat the test.
 
 $subhead name$$
-The $italic Test$$ result $italic name$$ has prototype
-$syntax%
+The $icode Test$$ result $icode name$$ has prototype
+$codei%
 	std::string %name%
 %$$
 The results for this test are reported on $code std::cout$$
-with $italic name$$ as an identifier for the test.
+with $icode name$$ as an identifier for the test.
 It is assumed that,
 for the duration of this call to $code SpeedTest$$,
-$italic Test$$ will always return 
-the same value for $italic name$$.
-If $italic name$$ is the empty string, 
+$icode Test$$ will always return 
+the same value for $icode name$$.
+If $icode name$$ is the empty string, 
 no test name is reported by $code SpeedTest$$.
 
 $head first$$
-The $code SpeedTest$$ argument $italic first$$ has prototype
-$syntax%
+The $code SpeedTest$$ argument $icode first$$ has prototype
+$codei%
 	size_t %first%
 %$$
 It specifies the size of the first test problem reported by this call to 
 $code SpeedTest$$.
 	
 $head last$$
-The $code SpeedTest$$ argument $italic last$$ has prototype
-$syntax%
+The $code SpeedTest$$ argument $icode last$$ has prototype
+$codei%
 	size_t %last%
 %$$
 It specifies the size of the last test problem reported by this call to 
 $code SpeedTest$$.
 
 $head inc$$
-The $code SpeedTest$$ argument $italic inc$$ has prototype
-$syntax%
+The $code SpeedTest$$ argument $icode inc$$ has prototype
+$codei%
 	int %inc%
 %$$
 It specifies the increment between problem sizes; i.e.,
-all values of $italic size$$ in calls to $italic Test$$ are given by
-$syntax%
+all values of $icode size$$ in calls to $icode Test$$ are given by
+$codei%
 	%size% = %first% + %j% * %inc%
 %$$ 
-where $italic j$$ is a positive integer.
+where $icode j$$ is a positive integer.
 The increment can be positive or negative but it cannot be zero.
-The values $italic first$$, $italic last$$ and $italic inc$$ must 
+The values $icode first$$, $icode last$$ and $icode inc$$ must 
 satisfy the relation
 $latex \[
 	inc * ( last - first ) \geq 0
@@ -317,7 +316,7 @@ $latex \[
 
 $head rate$$
 The value displayed in the $code rate$$ column on $code std::cout$$
-is defined as the value of $italic repeat$$ divided by the 
+is defined as the value of $icode repeat$$ divided by the 
 corresponding elapsed execution time in seconds.
 The elapsed execution time is measured by the difference in
 $codep
@@ -330,13 +329,13 @@ $head Errors$$
 If one of the restrictions above is violated,
 the CppAD error handler is used to report the error.
 You can redefine this action using the instructions in
-$xref/ErrorHandler/$$
+$cref ErrorHandler$$
 
 $head Example$$
 $children%
 	speed/example/speed_program.cpp
 %$$
-The program $xref/speed_program.cpp/$$ is an example usage
+The program $cref speed_program.cpp$$ is an example usage
 of $code SpeedTest$$.
 
 $end
