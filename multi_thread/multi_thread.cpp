@@ -186,7 +186,7 @@ namespace {
 		std::cerr << error_msg << std::endl;
 		exit(1);
 	}
-	size_t arg2double(
+	double arg2double(
 		const char* arg       , 
 		double limit          , 
 		const char* error_msg )

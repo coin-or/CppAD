@@ -73,6 +73,25 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-18$$
+$list number$$
+The $cref multi_thread.cpp$$ program was truncating $icode test_time$$
+to the nearest integer.
+This has been fixed.
+$lnext
+The $cref time_test$$ routine has been made more efficient and now
+check for the case where only one execution of the test is necessary
+to achieve the desired $icode test_time$$
+(it used to always run at least two).
+$lnext
+The $cref sum_i_inv_time.cpp$$ and $cref multi_newton.cpp$$
+routines were calling the test an extra time at the end to check for
+correctness.
+The results of the last test are now cached and used for the correctness
+test so that an extra call is not necessary (to make the tests run faster
+when only a few repetitions are necessary).
+$lend
+ 
 
 $head 11-17$$
 $list number$$

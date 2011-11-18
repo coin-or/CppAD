@@ -95,7 +95,7 @@ until this amount of execution time (or more) is reached.
 $head time$$
 The return value $icode time$$ has prototype
 $codei%
-	%double% %time%
+	double %time%
 %$$ 
 and is the number of wall clock seconds that it took
 to execute $icode test$$ divided by the value used for $icode repeat$$.
@@ -146,11 +146,11 @@ the repetitions of the operation being timed.
 template <class Test>
 double time_test(Test test, double time_min )
 {
-	size_t repeat = 1;
+	size_t repeat = 0;
 	double s0     = elapsed_seconds();
 	double s1     = elapsed_seconds();
 	while( s1 - s0 < time_min )
-	{	repeat = 2 * repeat;
+	{	repeat = 2 * std::max(size_t(1), 2 * repeat);
 		s0     = elapsed_seconds();
 		test(repeat);
 		s1     = elapsed_seconds();

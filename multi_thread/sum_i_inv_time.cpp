@@ -125,13 +125,16 @@ namespace { // empty namespace
 	// value of mega_sum in previous call to sum_i_inv_time.
 	size_t mega_sum_;
 
-	void test_once(double &sum)
+	// value of sum resulting from most recent call to test_once
+	double sum_ = 0.;
+
+	void test_once(void)
 	{	if( mega_sum_ < 1 )
 		{	std::cerr << "sum_i_inv_time: mega_sum < 1" << std::endl;
 			exit(1);
 		}
 		size_t num_sum = mega_sum_ * 1000000;
-		bool ok = sum_i_inv(sum, num_sum, num_threads_); 
+		bool ok = sum_i_inv(sum_, num_sum, num_threads_); 
 		if( ! ok )
 		{	std::cerr << "sum_i_inv: error" << std::endl;
 			exit(1);
@@ -141,9 +144,8 @@ namespace { // empty namespace
 
 	void test_repeat(size_t repeat)
 	{	size_t i;
-		double sum;
 		for(i = 0; i < repeat; i++)
-			test_once(sum);
+			test_once();
 		return;
 	}
 } // end empty namespace
@@ -166,15 +168,13 @@ bool sum_i_inv_time(
 	// run the test case and set the time return value
 	time_out = CppAD::time_test(test_repeat, test_time);
 
-	// Call test_once for a correctness check
-	double sum;
-	test_once(sum);
+	// Correctness check
 	double eps   = mega_sum_ * 1e3 * std::numeric_limits<double>::epsilon();
 	size_t i     = mega_sum_ * 1000000;
 	double check = 0.;
 	while(i)
 		check += 1. / double(i--); 
-	ok &= std::fabs(sum - check) <= eps;
+	ok &= std::fabs(sum_ - check) <= eps;
 
 	return ok;
 }

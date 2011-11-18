@@ -160,6 +160,9 @@ namespace { // empty namespace
 	size_t num_sub_;    // number of sub-intervals to split calculation into
 	size_t num_sum_;    // larger values make f(x) take longer to calculate
 
+	// value of xout corresponding to most recent call to test_once
+	CppAD::vector<double> xout_;
+
 	// either fun_ad or fun_no depending on value of use_ad
 	void (*fun_)(double x, double& f, double& df) = 0;
 
@@ -212,7 +215,7 @@ namespace { // empty namespace
 
 
 	// Run computation of all the zeros once
-	void test_once(CppAD::vector<double> &xout)
+	void test_once(void)
 	{	if(  num_zero_ == 0 )
 		{	std::cerr << "multi_newton_time: num_zero == 0" << std::endl;
 			exit(1);
@@ -224,9 +227,9 @@ namespace { // empty namespace
 		size_t max_itr = 20;
 	
 		bool ok = multi_newton(
-			xout        ,
+			xout_       ,
 			fun_        ,
-			num_sub_      ,
+			num_sub_    ,
 			xlow        ,
 			xup         ,
 			eps         ,
@@ -243,9 +246,8 @@ namespace { // empty namespace
 	// Repeat computation of all the zeros a specied number of times
 	void test_repeat(size_t repeat)
 	{	size_t i;
-		CppAD::vector<double> xout;
 		for(i = 0; i < repeat; i++)
-			test_once(xout);
+			test_once();
 		return;
 	}
 } // end empty namespace
@@ -281,14 +283,12 @@ bool multi_newton_time(
 	time_out = CppAD::time_test(test_repeat, test_time);
 
 	// Call test_once for a correctness check
-	vector<double> xout;
-	test_once(xout);
 	double eps = 100. * CppAD::epsilon<double>();
 	double pi  = 4. * std::atan(1.);
-	ok        &= (xout.size() == num_zero);
+	ok        &= (xout_.size() == num_zero);
 	size_t i   = 0;
 	for(i = 0; i < num_zero; i++)
-		ok &= std::fabs( xout[i] - pi * i) <= 2 * eps;
+		ok &= std::fabs( xout_[i] - pi * i) <= 2 * eps;
 
 	// return correctness check result
 	return  ok;
