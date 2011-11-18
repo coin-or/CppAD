@@ -109,6 +109,8 @@ $end
 # include <cstring>
 # include <limits>
 # include <vector>
+# include <iostream>
+# include <cstdlib>
 
 // Note there is no mention of parallel mode in the documentation for
 // speed_test (so it is safe to use without special consideration).
