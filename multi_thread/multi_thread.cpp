@@ -350,7 +350,7 @@ int main(int argc, char *argv[])
 			cout << "no threading" << endl;
 		else	cout << num_threads << " threads" << endl;
 	}
-	cout << "]" << endl;
+	cout << "];" << endl;
 	if( ok )
 		cout << "OK       = true;"  << endl;
 	else cout << "OK       = false;" << endl;
