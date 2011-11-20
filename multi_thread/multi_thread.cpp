@@ -167,6 +167,7 @@ $end
 # include <cppad/cppad.hpp>
 # include <cmath>
 # include <cstring>
+# include <ctime>
 # include "team_thread.hpp"
 # include "simple_ad.hpp"
 # include "harmonic_time.hpp"
@@ -206,7 +207,7 @@ int main(int argc, char *argv[])
 	using std::endl;
 
 	// commnd line usage message
-	const char *usage = 
+	const char* usage = 
 	"./multi_thread a11c\n"
 	"./multi_thread simple_ad\n"
 	"./multi_thread harmonic    test_time max_threads mega_sum\n"
@@ -217,8 +218,24 @@ int main(int argc, char *argv[])
 	size_t num_zero=0, num_sub=0, num_sum=0;
 	bool use_ad=true;
 
+	// put the date and time in the output file
+	std::time_t rawtime;
+	std::time( &rawtime );
+	const char* gmt = std::asctime( std::gmtime( &rawtime ) );
+	size_t len = size_t( std::strlen(gmt) );
+	cout << "gmtime        = '";
+	for(size_t i = 0; i < len; i++) 
+		if( gmt[i] != '\n' ) cout << gmt[i];
+	cout << "';" << endl;
+
+	// CppAD version number
+	cout << "cppad_version = '" << CPPAD_PACKAGE_STRING << "';" << endl; 
+
+	// put the team name in the output file
+	cout << "team_name     = '" << team_name() << "';" << endl;
+
 	// print command line as valid matlab/octave
-	cout << "command  = '" << argv[0];
+	cout << "command       = '" << argv[0];
 	for(int i = 1; i < argc; i++)
 		cout << " " << argv[i];
 	cout << "';" << endl;
@@ -238,8 +255,8 @@ int main(int argc, char *argv[])
 	else if( run_multi_newton )
 		ok = (argc == 8);
 	if( ! ok )
-	{	std::cerr << "test_name = " << test_name << endl;	
-		std::cerr << "argc      = " << argc      << endl;	
+	{	std::cerr << "test_name     = " << test_name << endl;	
+		std::cerr << "argc          = " << argc      << endl;	
 		std::cerr << usage << endl;
 		exit(1);
 	}
@@ -248,11 +265,11 @@ int main(int argc, char *argv[])
 			ok        = a11c();
 		else ok        = simple_ad();
 		if( ok )
-		{	cout << "OK       = true;"  << endl;
+		{	cout << "OK            = true;"  << endl;
 			exit(0);
 		}
 		else
-		{	cout << "OK       = false;" << endl;
+		{	cout << "OK            = false;" << endl;
 			exit(1);
 		}
 	}
@@ -307,7 +324,7 @@ int main(int argc, char *argv[])
 
 	// run the test for each number of threads
 	size_t num_threads, inuse_this_thread = 0;
-	cout << "time_all = [" << endl;
+	cout << "time_all  = [" << endl;
 	for(num_threads = 0; num_threads <= max_threads; num_threads++)
 	{	double time_out;
 
@@ -352,8 +369,8 @@ int main(int argc, char *argv[])
 	}
 	cout << "];" << endl;
 	if( ok )
-		cout << "OK       = true;"  << endl;
-	else cout << "OK       = false;" << endl;
+		cout << "OK            = true;"  << endl;
+	else cout << "OK            = false;" << endl;
 
 	return  ! ok;
 }

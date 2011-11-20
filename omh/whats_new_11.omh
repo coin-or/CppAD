@@ -74,7 +74,13 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 11-20$$
+$list number$$
 Move $code sum_i_inv.cpp$$ to $cref harmonic.cpp$$.
+$lnext
+Include the date, time, CppAD version, and 
+$cref/team_name/team_thread.hpp/team_name/$$ in the
+$cref multi_thread.cpp$$ output.
+$lend
 
 $head 11-18$$
 $list number$$
