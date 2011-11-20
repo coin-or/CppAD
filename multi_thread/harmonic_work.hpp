@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_SUM_I_INV_WORK_INCLUDED
-# define CPPAD_SUM_I_INV_WORK_INCLUDED
+# ifndef CPPAD_HARMONIC_WORK_INCLUDED
+# define CPPAD_HARMONIC_WORK_INCLUDED
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
@@ -14,8 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 # include <cppad/cppad.hpp>
 
-extern void sum_i_inv_worker(void);
-extern bool sum_i_inv_setup(size_t num_sum, size_t num_threads);
-extern bool sum_i_inv_combine(double& sum);
+extern void harmonic_worker(void);
+extern bool harmonic_setup(size_t num_sum, size_t num_threads);
+extern bool harmonic_combine(double& sum);
 
 # endif

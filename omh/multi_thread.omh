@@ -83,7 +83,7 @@ $childtable%
 	multi_thread/team_thread.hpp%
 	multi_thread/multi_thread.cpp%
 	multi_thread/simple_ad.cpp%
-	multi_thread/sum_i_inv.cpp%
+	multi_thread/harmonic.cpp%
 	multi_thread/multi_newton.cpp
 %$$
 

@@ -46,8 +46,8 @@ CONFIG_CLEAN_VPATH_FILES =
 am_multi_thread_OBJECTS = multi_thread.$(OBJEXT) arc_tan.$(OBJEXT) \
 	multi_newton_time.$(OBJEXT) multi_newton.$(OBJEXT) \
 	multi_newton_work.$(OBJEXT) simple_ad.$(OBJEXT) \
-	sum_i_inv_time.$(OBJEXT) sum_i_inv.$(OBJEXT) \
-	sum_i_inv_work.$(OBJEXT) team_bthread.$(OBJEXT) a11c.$(OBJEXT)
+	harmonic_time.$(OBJEXT) harmonic.$(OBJEXT) \
+	harmonic_work.$(OBJEXT) team_bthread.$(OBJEXT) a11c.$(OBJEXT)
 multi_thread_OBJECTS = $(am_multi_thread_OBJECTS)
 multi_thread_LDADD = $(LDADD)
 SCRIPTS = $(dist_noinst_SCRIPTS)
@@ -224,9 +224,9 @@ multi_thread_SOURCES = \
 	../multi_newton.cpp      ../multi_newton.hpp \
 	../multi_newton_work.cpp ../multi_newton_work.hpp \
 	../simple_ad.cpp         ../simple_ad.hpp \
-	../sum_i_inv_time.cpp    ../sum_i_inv_time.hpp \
-	../sum_i_inv.cpp         ../sum_i_inv.hpp \
-	../sum_i_inv_work.cpp    ../sum_i_inv_work.hpp \
+	../harmonic_time.cpp    ../harmonic_time.hpp \
+	../harmonic.cpp         ../harmonic.hpp \
+	../harmonic_work.cpp    ../harmonic_work.hpp \
 \
 	team_bthread.cpp         ../team_thread.hpp \
 	a11c.cpp
@@ -282,14 +282,14 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/a11c.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/arc_tan.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/harmonic.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/harmonic_time.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/harmonic_work.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton_time.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton_work.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_thread.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simple_ad.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sum_i_inv.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sum_i_inv_time.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sum_i_inv_work.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/team_bthread.Po@am__quote@
 
 .cpp.o:
@@ -390,47 +390,47 @@ simple_ad.obj: ../simple_ad.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o simple_ad.obj `if test -f '../simple_ad.cpp'; then $(CYGPATH_W) '../simple_ad.cpp'; else $(CYGPATH_W) '$(srcdir)/../simple_ad.cpp'; fi`
 
-sum_i_inv_time.o: ../sum_i_inv_time.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sum_i_inv_time.o -MD -MP -MF $(DEPDIR)/sum_i_inv_time.Tpo -c -o sum_i_inv_time.o `test -f '../sum_i_inv_time.cpp' || echo '$(srcdir)/'`../sum_i_inv_time.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sum_i_inv_time.Tpo $(DEPDIR)/sum_i_inv_time.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../sum_i_inv_time.cpp' object='sum_i_inv_time.o' libtool=no @AMDEPBACKSLASH@
+harmonic_time.o: ../harmonic_time.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT harmonic_time.o -MD -MP -MF $(DEPDIR)/harmonic_time.Tpo -c -o harmonic_time.o `test -f '../harmonic_time.cpp' || echo '$(srcdir)/'`../harmonic_time.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/harmonic_time.Tpo $(DEPDIR)/harmonic_time.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../harmonic_time.cpp' object='harmonic_time.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sum_i_inv_time.o `test -f '../sum_i_inv_time.cpp' || echo '$(srcdir)/'`../sum_i_inv_time.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o harmonic_time.o `test -f '../harmonic_time.cpp' || echo '$(srcdir)/'`../harmonic_time.cpp
 
-sum_i_inv_time.obj: ../sum_i_inv_time.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sum_i_inv_time.obj -MD -MP -MF $(DEPDIR)/sum_i_inv_time.Tpo -c -o sum_i_inv_time.obj `if test -f '../sum_i_inv_time.cpp'; then $(CYGPATH_W) '../sum_i_inv_time.cpp'; else $(CYGPATH_W) '$(srcdir)/../sum_i_inv_time.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sum_i_inv_time.Tpo $(DEPDIR)/sum_i_inv_time.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../sum_i_inv_time.cpp' object='sum_i_inv_time.obj' libtool=no @AMDEPBACKSLASH@
+harmonic_time.obj: ../harmonic_time.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT harmonic_time.obj -MD -MP -MF $(DEPDIR)/harmonic_time.Tpo -c -o harmonic_time.obj `if test -f '../harmonic_time.cpp'; then $(CYGPATH_W) '../harmonic_time.cpp'; else $(CYGPATH_W) '$(srcdir)/../harmonic_time.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/harmonic_time.Tpo $(DEPDIR)/harmonic_time.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../harmonic_time.cpp' object='harmonic_time.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sum_i_inv_time.obj `if test -f '../sum_i_inv_time.cpp'; then $(CYGPATH_W) '../sum_i_inv_time.cpp'; else $(CYGPATH_W) '$(srcdir)/../sum_i_inv_time.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o harmonic_time.obj `if test -f '../harmonic_time.cpp'; then $(CYGPATH_W) '../harmonic_time.cpp'; else $(CYGPATH_W) '$(srcdir)/../harmonic_time.cpp'; fi`
 
-sum_i_inv.o: ../sum_i_inv.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sum_i_inv.o -MD -MP -MF $(DEPDIR)/sum_i_inv.Tpo -c -o sum_i_inv.o `test -f '../sum_i_inv.cpp' || echo '$(srcdir)/'`../sum_i_inv.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sum_i_inv.Tpo $(DEPDIR)/sum_i_inv.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../sum_i_inv.cpp' object='sum_i_inv.o' libtool=no @AMDEPBACKSLASH@
+harmonic.o: ../harmonic.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT harmonic.o -MD -MP -MF $(DEPDIR)/harmonic.Tpo -c -o harmonic.o `test -f '../harmonic.cpp' || echo '$(srcdir)/'`../harmonic.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/harmonic.Tpo $(DEPDIR)/harmonic.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../harmonic.cpp' object='harmonic.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sum_i_inv.o `test -f '../sum_i_inv.cpp' || echo '$(srcdir)/'`../sum_i_inv.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o harmonic.o `test -f '../harmonic.cpp' || echo '$(srcdir)/'`../harmonic.cpp
 
-sum_i_inv.obj: ../sum_i_inv.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sum_i_inv.obj -MD -MP -MF $(DEPDIR)/sum_i_inv.Tpo -c -o sum_i_inv.obj `if test -f '../sum_i_inv.cpp'; then $(CYGPATH_W) '../sum_i_inv.cpp'; else $(CYGPATH_W) '$(srcdir)/../sum_i_inv.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sum_i_inv.Tpo $(DEPDIR)/sum_i_inv.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../sum_i_inv.cpp' object='sum_i_inv.obj' libtool=no @AMDEPBACKSLASH@
+harmonic.obj: ../harmonic.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT harmonic.obj -MD -MP -MF $(DEPDIR)/harmonic.Tpo -c -o harmonic.obj `if test -f '../harmonic.cpp'; then $(CYGPATH_W) '../harmonic.cpp'; else $(CYGPATH_W) '$(srcdir)/../harmonic.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/harmonic.Tpo $(DEPDIR)/harmonic.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../harmonic.cpp' object='harmonic.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sum_i_inv.obj `if test -f '../sum_i_inv.cpp'; then $(CYGPATH_W) '../sum_i_inv.cpp'; else $(CYGPATH_W) '$(srcdir)/../sum_i_inv.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o harmonic.obj `if test -f '../harmonic.cpp'; then $(CYGPATH_W) '../harmonic.cpp'; else $(CYGPATH_W) '$(srcdir)/../harmonic.cpp'; fi`
 
-sum_i_inv_work.o: ../sum_i_inv_work.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sum_i_inv_work.o -MD -MP -MF $(DEPDIR)/sum_i_inv_work.Tpo -c -o sum_i_inv_work.o `test -f '../sum_i_inv_work.cpp' || echo '$(srcdir)/'`../sum_i_inv_work.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sum_i_inv_work.Tpo $(DEPDIR)/sum_i_inv_work.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../sum_i_inv_work.cpp' object='sum_i_inv_work.o' libtool=no @AMDEPBACKSLASH@
+harmonic_work.o: ../harmonic_work.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT harmonic_work.o -MD -MP -MF $(DEPDIR)/harmonic_work.Tpo -c -o harmonic_work.o `test -f '../harmonic_work.cpp' || echo '$(srcdir)/'`../harmonic_work.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/harmonic_work.Tpo $(DEPDIR)/harmonic_work.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../harmonic_work.cpp' object='harmonic_work.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sum_i_inv_work.o `test -f '../sum_i_inv_work.cpp' || echo '$(srcdir)/'`../sum_i_inv_work.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o harmonic_work.o `test -f '../harmonic_work.cpp' || echo '$(srcdir)/'`../harmonic_work.cpp
 
-sum_i_inv_work.obj: ../sum_i_inv_work.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT sum_i_inv_work.obj -MD -MP -MF $(DEPDIR)/sum_i_inv_work.Tpo -c -o sum_i_inv_work.obj `if test -f '../sum_i_inv_work.cpp'; then $(CYGPATH_W) '../sum_i_inv_work.cpp'; else $(CYGPATH_W) '$(srcdir)/../sum_i_inv_work.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/sum_i_inv_work.Tpo $(DEPDIR)/sum_i_inv_work.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../sum_i_inv_work.cpp' object='sum_i_inv_work.obj' libtool=no @AMDEPBACKSLASH@
+harmonic_work.obj: ../harmonic_work.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT harmonic_work.obj -MD -MP -MF $(DEPDIR)/harmonic_work.Tpo -c -o harmonic_work.obj `if test -f '../harmonic_work.cpp'; then $(CYGPATH_W) '../harmonic_work.cpp'; else $(CYGPATH_W) '$(srcdir)/../harmonic_work.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/harmonic_work.Tpo $(DEPDIR)/harmonic_work.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='../harmonic_work.cpp' object='harmonic_work.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o sum_i_inv_work.obj `if test -f '../sum_i_inv_work.cpp'; then $(CYGPATH_W) '../sum_i_inv_work.cpp'; else $(CYGPATH_W) '$(srcdir)/../sum_i_inv_work.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o harmonic_work.obj `if test -f '../harmonic_work.cpp'; then $(CYGPATH_W) '../harmonic_work.cpp'; else $(CYGPATH_W) '$(srcdir)/../harmonic_work.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

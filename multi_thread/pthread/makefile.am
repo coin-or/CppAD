@@ -36,9 +36,9 @@ multi_thread_SOURCES   = \
 	../multi_newton.cpp      ../multi_newton.hpp \
 	../multi_newton_work.cpp ../multi_newton_work.hpp \
 	../simple_ad.cpp         ../simple_ad.hpp \
-	../sum_i_inv_time.cpp    ../sum_i_inv_time.hpp \
-	../sum_i_inv.cpp         ../sum_i_inv.hpp \
-	../sum_i_inv_work.cpp    ../sum_i_inv_work.hpp \
+	../harmonic_time.cpp    ../harmonic_time.hpp \
+	../harmonic.cpp         ../harmonic.hpp \
+	../harmonic_work.cpp    ../harmonic_work.hpp \
 \
 	team_pthread.cpp         ../team_thread.hpp \
 	a11c.cpp 

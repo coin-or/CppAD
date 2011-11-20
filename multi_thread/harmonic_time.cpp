@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin sum_i_inv_time.cpp$$
+$begin harmonic_time.cpp$$
 $spell
 	openmp
 	pthreads
@@ -23,7 +23,7 @@ $spell
 	CppAD
 	parallelize
 $$
-$index sum_i_inv_time$$
+$index harmonic_time$$
 $index summation, multi_thread speed$$
 $index multi_thread, summation speed$$
 $index speed, multi_thread summation$$
@@ -33,11 +33,11 @@ $index time, multi_thread summation$$
 $section Timing Test of Multi-Threaded Summation of 1/i$$
 
 $head Syntax$$
-$icode%ok% = sum_i_inv_time(%time_out%, %num_threads%, %mega_sum%)%$$
+$icode%ok% = harmonic_time(%time_out%, %num_threads%, %mega_sum%)%$$
 
 $head Purpose$$
 Runs a correctness and timing test for a multi-threaded 
-computation of the summation
+computation of the harmonic series summation
 $latex \[
 	1 + 1/2 + 1/3 + ... + 1/n
 \] $$
@@ -50,7 +50,7 @@ $codei%
 	bool %ok%
 %$$
 If it is true,
-$code sum_i_inv_time$$ passed the correctness test.
+$code harmonic_time$$ passed the correctness test.
 Otherwise it is false.
 
 $head time_out$$
@@ -61,7 +61,7 @@ $codei%
 The input value of the argument does not matter.
 Upon return it is the number of wall clock seconds required for
 to compute the 
-$cref/summation/sum_i_inv_time.cpp/Purpose/$$.
+$cref/summation/harmonic_time.cpp/Purpose/$$.
 
 $head test_time$$
 Is the minimum amount of wall clock time that the test should take.
@@ -80,12 +80,12 @@ If it is zero, the test is run without the multi-threading environment and
 $codei%
 	1 == CppAD::thread_alloc::num_threads()
 %$$ 
-when $code sum_i_inv_time$$ is called.
+when $code harmonic_time$$ is called.
 If it is non-zero, the test is run with the multi-threading and
 $codei%
 	%num_threads% = CppAD::thread_alloc::num_threads()
 %$$ 
-when $code sum_i_inv_time$$ is called.
+when $code harmonic_time$$ is called.
 
 $head mega_sum$$
 This argument has prototype
@@ -94,12 +94,12 @@ $codei%
 %$$
 and is greater than zero.
 The value $latex n$$ in the 
-$cref/summation/sum_i_inv_time.cpp/Purpose/$$.
+$cref/summation/harmonic_time.cpp/Purpose/$$.
 is equal to $latex 10^6$$ times $icode mega_sum$$. 
 
 $head Source$$
 $code
-$verbatim%multi_thread/sum_i_inv_time.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/harmonic_time.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -115,14 +115,14 @@ $end
 // Note there is no mention of parallel mode in the documentation for
 // speed_test (so it is safe to use without special consideration).
 # include <cppad/time_test.hpp>
-# include "sum_i_inv.hpp"
+# include "harmonic.hpp"
 
 namespace { // empty namespace
 
-	// value of num_threads in previous call to sum_i_inv_time.
+	// value of num_threads in previous call to harmonic_time.
 	size_t num_threads_;
 
-	// value of mega_sum in previous call to sum_i_inv_time.
+	// value of mega_sum in previous call to harmonic_time.
 	size_t mega_sum_;
 
 	// value of sum resulting from most recent call to test_once
@@ -130,13 +130,13 @@ namespace { // empty namespace
 
 	void test_once(void)
 	{	if( mega_sum_ < 1 )
-		{	std::cerr << "sum_i_inv_time: mega_sum < 1" << std::endl;
+		{	std::cerr << "harmonic_time: mega_sum < 1" << std::endl;
 			exit(1);
 		}
 		size_t num_sum = mega_sum_ * 1000000;
-		bool ok = sum_i_inv(sum_, num_sum, num_threads_); 
+		bool ok = harmonic(sum_, num_sum, num_threads_); 
 		if( ! ok )
-		{	std::cerr << "sum_i_inv: error" << std::endl;
+		{	std::cerr << "harmonic: error" << std::endl;
 			exit(1);
 		}
 		return;
@@ -150,12 +150,12 @@ namespace { // empty namespace
 	}
 } // end empty namespace
 
-bool sum_i_inv_time(
+bool harmonic_time(
 	double& time_out, double test_time, size_t num_threads, size_t mega_sum)
 {	bool ok  = true;
 	using std::vector;
 
-	// arguments passed to sum_i_inv_time
+	// arguments passed to harmonic_time
 	num_threads_ = num_threads;
 	mega_sum_    = mega_sum;
 

@@ -73,6 +73,9 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-20$$
+Move $code sum_i_inv.cpp$$ to $cref harmonic.cpp$$.
+
 $head 11-18$$
 $list number$$
 The $cref multi_thread.cpp$$ program was truncating $icode test_time$$
@@ -84,7 +87,7 @@ check for the case where only one execution of the test is necessary
 to achieve the desired $icode test_time$$
 (it used to always run at least two).
 $lnext
-The $cref sum_i_inv_time.cpp$$ and $cref multi_newton.cpp$$
+The $code sum_i_inv_time.cpp$$ and $cref multi_newton.cpp$$
 routines were calling the test an extra time at the end to check for
 correctness.
 The results of the last test are now cached and used for the correctness
@@ -99,10 +102,10 @@ Create another speed testing routine $cref time_test$$ which is
 like $cref speed_test$$ but it returns the time instead of rate
 and as a $code double$$ instead of a $code size_t$$. 
 The use it for the timing tests in
-$cref sum_i_inv_time.cpp$$ and $cref multi_newton_time.cpp$$.
+$code sum_i_inv_time.cpp$$ and $cref multi_newton_time.cpp$$.
 $lnext
 Add $icode test_time$$ as a command line argument
-to the multi-threading $cref/sum_i_inv/multi_thread.cpp/sum_i_inv/$$
+to the multi-threading $code sum_i_inv$$
 and $cref/multi_newton/multi_thread.cpp/multi_newton/$$
 timing tests.
 $lend
@@ -138,8 +141,8 @@ In addition,
 $cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$
 was increased from 2 to 4 (to enable testing for this bug).
 $lnext
-The accuracy expected in the $cref sum_i_inv.cpp$$ results were failing
-when $cref/mega_sum/multi_thread.cpp/sum_i_inv/mega_sum/$$ was large.
+The accuracy expected in the $code  sum_i_inv.cpp$$ results were failing
+when $code mega_sum$$ was large.
 This check has been modified to include a correction for $icode mega_sum$$.
 $lend
 
@@ -175,7 +178,7 @@ $$
 would run the tests for the current directory.
 $lnext
 Extend the multi-threading speed tests
-$cref sum_i_inv.cpp$$ and $cref multi_newton.cpp$$ so they run
+$code sum_i_inv.cpp$$ and $cref multi_newton.cpp$$ so they run
 using Boost threads and pthreads (as well as OpenMP threads).
 $lend
 
@@ -268,7 +271,7 @@ $lend
 
 $subhead 08-31$$
 $list number$$
-Move the $cref sum_i_inv_time.cpp$$ test from
+Move the $code sum_i_inv_time.cpp$$ test from
 $code openmp/run.sh$$ to $code openmp/run.cpp$$.
 $lnext
 Change $code --with-openmp$$ to
@@ -571,7 +574,7 @@ see $cref/TrackNewDel multi-threading/TrackNewDel/Multi-Threading/$$.
 $lnext
 Change $cref/memory_leak/$$ so that it checks for a leak in all threads.
 This is what $code openmp_newton_example.cpp$$ and 
-$cref sum_i_inv_time.cpp$$
+$code sum_i_inv_time.cpp$$
 assumed was being done.
 $lend
 

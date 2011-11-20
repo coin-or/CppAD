@@ -11,25 +11,25 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin sum_i_inv.cpp$$
+$begin harmonic.cpp$$
 $spell
 	inv
 	num
 	bool
 $$
-$index sum_i_inv$$
-$index multi_thread, sum_i_inv$$
-$index sum_i_inv, multi_thread$$
-$index thread, multi sum_i_inv$$
+$index harmonic$$
+$index multi_thread, harmonic$$
+$index harmonic, multi_thread$$
+$index thread, multi harmonic$$
 
 
 $section Multi-Threaded Implementation of Summation of 1/i$$
 
 $head Syntax$$
-$icode%ok% = sum_i_inv(%sum%, %num_sum%, %num_threads%)%$$
+$icode%ok% = harmonic(%sum%, %num_sum%, %num_threads%)%$$
 
 $head Summation$$
-Multi-threaded computation of the sum
+Multi-threaded computation of the harmonic series summation
 $latex \[
 	s = 1 + 1/2 + 1/3 + ... + 1/n
 \] $$
@@ -39,7 +39,7 @@ This return value has prototype
 $codei%
 	bool %ok%
 %$$
-If this return value is false, an error occurred during $code sum_i_inv$$.
+If this return value is false, an error occurred during $code harmonic$$.
 
 $head sum$$
 This argument has prototype
@@ -65,13 +65,13 @@ It specifies the number of threads that are available for this test.
 If it is zero, the test is run without a multi-threading environment.
 
 $childtable%
-	multi_thread/sum_i_inv_time.cpp%
-	multi_thread/sum_i_inv_work.cpp
+	multi_thread/harmonic_time.cpp%
+	multi_thread/harmonic_work.cpp
 %$$
 
 $head Source$$
 $code
-$verbatim%multi_thread/sum_i_inv.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/harmonic.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -79,23 +79,23 @@ $end
 // BEGIN PROGRAM
 // general purpose multi-threading interface
 # include "team_thread.hpp"
-// special utilities for the sum_i_inv problem
-# include "sum_i_inv_work.hpp"
+// special utilities for the harmonic problem
+# include "harmonic_work.hpp"
 
-bool sum_i_inv(double& sum, size_t num_sum, size_t num_threads)
+bool harmonic(double& sum, size_t num_sum, size_t num_threads)
 {	// sum = 1/num_sum + 1/(num_sum-1) + ... + 1
 	bool ok = true;
 
 	// setup the work for num_threads_ threads
-	ok &= sum_i_inv_setup(num_sum, num_threads);
+	ok &= harmonic_setup(num_sum, num_threads);
 
 	// now do the work for each thread
 	if( num_threads > 0 )
-		team_work( sum_i_inv_worker );
-	else	sum_i_inv_worker();
+		team_work( harmonic_worker );
+	else	harmonic_worker();
 
 	// now combine the result for all the threads
-	ok &= sum_i_inv_combine(sum);
+	ok &= harmonic_combine(sum);
 
 	return ok;
 }

@@ -37,7 +37,7 @@ $codei%./multi_thread a11c
 %$$
 $codei%./multi_thread simple_ad
 %$$
-$codei%./multi_thread sum_i_inv %test_time% %max_threads% %mega_sum%
+$codei%./multi_thread harmonic %test_time% %max_threads% %mega_sum%
 %$$ 
 $codei%./multi_thread multi_newton %test_time% %max_threads% \
 	%num_zero% %num_sub% %num_sum% %use_ad%$$ 
@@ -79,8 +79,8 @@ $head simple_ad$$
 The $cref simple_ad.cpp$$ routine
 demonstrates simple multi-threading with algorithmic differentiation. 
 
-$head sum_i_inv$$
-The $cref sum_i_inv_time.cpp$$ routine
+$head harmonic$$
+The $cref harmonic_time.cpp$$ routine
 preforms a timing test for a multi-threading 
 example without algorithmic differentiation.
 
@@ -103,7 +103,7 @@ The value of zero corresponds to not using the multi-threading system.
 $subhead mega_sum$$
 The command line argument $icode mega_sum$$ 
 is an integer greater than or equal one and has the same meaning as in
-$cref/sum_i_inv_time.cpp/sum_i_inv_time.cpp/mega_sum/$$.
+$cref/harmonic_time.cpp/harmonic_time.cpp/mega_sum/$$.
 
 $head multi_newton$$
 The $cref multi_newton_time.cpp$$ routine
@@ -169,7 +169,7 @@ $end
 # include <cstring>
 # include "team_thread.hpp"
 # include "simple_ad.hpp"
-# include "sum_i_inv_time.hpp"
+# include "harmonic_time.hpp"
 # include "multi_newton_time.hpp"
 
 extern bool a11c(void);
@@ -209,7 +209,7 @@ int main(int argc, char *argv[])
 	const char *usage = 
 	"./multi_thread a11c\n"
 	"./multi_thread simple_ad\n"
-	"./multi_thread sum_i_inv    test_time max_threads mega_sum\n"
+	"./multi_thread harmonic    test_time max_threads mega_sum\n"
 	"./multi_thread multi_newton test_time max_threads\\\n"
 	"	num_zero num_sub num_sum use_ad";
 
@@ -229,11 +229,11 @@ int main(int argc, char *argv[])
 		test_name = *++argv;
 	bool run_a11c         = std::strcmp(test_name, "a11c")         == 0;
 	bool run_simple_ad    = std::strcmp(test_name, "simple_ad")    == 0;
-	bool run_sum_i_inv    = std::strcmp(test_name, "sum_i_inv")    == 0;
+	bool run_harmonic    = std::strcmp(test_name, "harmonic")    == 0;
 	bool run_multi_newton = std::strcmp(test_name, "multi_newton") == 0;
 	if( run_a11c || run_simple_ad )
 		ok = (argc == 2);
-	else if( run_sum_i_inv )
+	else if( run_harmonic )
 		ok = (argc == 5);  
 	else if( run_multi_newton )
 		ok = (argc == 8);
@@ -268,7 +268,7 @@ int main(int argc, char *argv[])
 	);
 
 	size_t mega_sum = 0; // assignment to avoid compiler warning
-	if( run_sum_i_inv )
+	if( run_harmonic )
 	{	// mega_sum
 		mega_sum = arg2size_t( *++argv, 1, 
 			"run: mega_sum is less than one"
@@ -320,8 +320,8 @@ int main(int argc, char *argv[])
 		inuse_this_thread = thread_alloc::inuse(0);
 
 		// run the requested test
-		if( run_sum_i_inv ) ok &= 
-			sum_i_inv_time(time_out, test_time, num_threads, mega_sum);
+		if( run_harmonic ) ok &= 
+			harmonic_time(time_out, test_time, num_threads, mega_sum);
 		else
 		{	ok &= run_multi_newton;
 			ok &= multi_newton_time(

@@ -17,7 +17,7 @@ echo
 ./multi_thread simple_ad
 echo
 # test_time=2 max_thread=4, mega_sum=1
-./multi_thread sum_i_inv 2 4 1
+./multi_thread harmonic 2 4 1
 echo
 # test_time= 2 max_thread=4, num_zero=20, num_sub=30, num_sum=500, use_ad=true
 ./multi_thread multi_newton 2 4 20 30 500 true

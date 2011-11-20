@@ -14,6 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /* 
 $begin team_thread.hpp$$
 $spell
+	pthreads
 	const
 	cstddef
 	bool
@@ -32,41 +33,32 @@ $index team, AD threads$$
 
 $head Syntax$$
 $codei%include "team_thread.hpp"
-%$$
-$icode%ok% = team_start(%num_threads%)
-%$$
-$icode%ok% = team_work(%worker%)
-%$$
-$icode%ok% = team_stop()
-%$$
-$icode%name% = team_name()
+%ok%   = team_start(%num_threads%)
+%ok%   = team_work(%worker%)
+%ok%   = team_stop()
+%name% = team_name()
 %$$
 
 $head Purpose$$
 These routines start, use, and stop a team of threads that can
 be used with the CppAD type $code AD<double>$$.
-These could be OpenMP, pthread, or Boost threads to name a few.
+For example,
+these could be OpenMP threads, pthreads, or Boost threads to name a few.
 
-$head thread_num$$
+$head Restrictions$$
 Calls to the routines
 $code team_start$$,
 $code team_work$$, and
-$code team_stop$$, must all have 
-$cref/thread_num/ta_thread_num/$$ equal to zero 
-(thread number zero is referred to as the master thread).
-
-$head in_parallel$$
-Calls to the routines
-$code team_start$$,
-$code team_work$$, and
-$code team_stop$$, must all have 
-$cref/in_parallel/ta_in_parallel/$$ equal to false; i.e.,
-these calls must be made in sequential execution mode.
-Execution will also be sequential when these calls return.
+$code team_stop$$, must all be done by the master thread; i.e.,
+$cref/thread_num/ta_thread_num/$$ must be zero.
+In addition, they must all be done in sequential execution mode; i.e.,
+when the master thread is the only thread that is running
+($cref/in_parallel/ta_in_parallel/$$ must be false).
 
 $head team_start$$
 The argument 
-$icode%num_threads% > 0%$$ specifies the number of threads in this team.
+$icode%num_threads% > 0%$$ has type $code size_t$$
+and specifies the number of threads in this team.
 This initializes both $code AD<double>$$ and $code team_work$$
 to be used with $icode num_threads$$.
 If $icode%num_threads% > 1%$$,
@@ -76,10 +68,13 @@ and put in a waiting state until $code team_work$$ is called.
 $head team_work$$
 This routine may be called one or more times
 between the call to $code team_start$$ and $code team_stop$$.
+The argument $icode worker$$ has type
+$codei%bool %worker%(void)%$$.
 Each call to $code team_work$$ runs $icode num_threads$$ versions
 of $icode worker$$ with the corresponding value of
-$icode/thread_num/ta_thread_num/$$ different for each thread,
-and between zero and $icode%num_threads% - 1%$$.
+$cref/thread_num/ta_thread_num/$$ 
+between zero and $icode%num_threads% - 1%$$ and
+different for each thread,
 
 $head team_stop$$
 This routine terminates all the other threads except for
@@ -95,6 +90,12 @@ $icode%
 	const char* %name%
 %$$ 
 and is a statically allocated $code '\0'$$ terminated C string.
+
+$head ok$$
+The return value $icode ok$$ has type $code bool$$.
+It is $code false$$ if an error is detected during the
+corresponding call.
+Otherwise it is $code true$$.
 
 $head Example Use$$
 Example use of these specifications can be found in the file

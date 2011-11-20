@@ -10,38 +10,39 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 /*
-$begin sum_i_inv_work.cpp$$
+$begin harmonic_work.cpp$$
 $spell
 	inv
 	num
 $$
-$index sum_i_inv_work$$
+$index harmonic_work$$
 
 $section Multi-threading Sum of 1/i Utility Routines$$ 
 
-$index sum_i_inv_setup$$
-$index sum_i_inv_worker$$
-$index sum_i_inv_combine$$
-$index setup, sum_i_inv$$
-$index worker, sum_i_inv$$
-$index combine, sum_i_inv$$
+$index harmonic_setup$$
+$index harmonic_worker$$
+$index harmonic_combine$$
+$index setup, harmonic$$
+$index worker, harmonic$$
+$index combine, harmonic$$
 
 
 $head Syntax$$
-$icode%ok% = sum_i_inv_setup(%num_sum%, %num_threads%)
+$icode%ok% = harmonic_setup(%num_sum%, %num_threads%)
 %$$
-$codei%sum_i_inv_worker()
+$codei%harmonic_worker()
 %$$
-$icode%ok% = sum_i_inv_combine(%sum%)
+$icode%ok% = harmonic_combine(%sum%)
 %$$
 
 $head Purpose$$
 These routines aid in the multi-threading computation of
+the harmonic series summation
 $latex \[
 	1 + 1/2 + 1/3 + ... + 1/n
 \] $$
 
-$head sum_i_inv_setup$$
+$head harmonic_setup$$
 Calling this function splits up the computation of the summation
 into different parts for each thread.
 
@@ -62,19 +63,19 @@ In the special case where $icode num_thread$$ is zero,
 the summation should be done by one thread, but without the overhead
 of the multi_threading system.
 
-$head sum_i_inv_worker$$
+$head harmonic_worker$$
 Calling this function does the computation for one thread.
-Following a call to $code sum_i_inv_setup$$,
+Following a call to $code harmonic_setup$$,
 this function should be called by each of the $icode num_threads$$ threads. 
 
-$head sum_i_inv_combine$$
+$head harmonic_combine$$
 After the $icode num_threads$$ threads have completed their
-calls to $code sum_i_inv_worker$$,
+calls to $code harmonic_worker$$,
 this function call will combine the results and return the final summation.
 
 $head Source$$
 $code
-$verbatim%multi_thread/sum_i_inv_work.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/harmonic_work.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 
@@ -82,11 +83,11 @@ $end
 */
 // BEGIN PROGRAM
 # include <cppad/cppad.hpp>
-# include "sum_i_inv_work.hpp"
+# include "harmonic_work.hpp"
 # define MAX_NUMBER_THREADS 48
 
 namespace {
-	// number of threads specified by previous call to sum_i_inv_setup
+	// number of threads specified by previous call to harmonic_setup
 	size_t num_threads_ = 0;
 
 	// structure with information for one thread
@@ -105,7 +106,7 @@ namespace {
 }
 // -----------------------------------------------------------------------
 // do the work for one thread
-void sum_i_inv_worker(void)
+void harmonic_worker(void)
 {	// sum =  1/(stop-1) + 1/(stop-2) + ... + 1/start
 	size_t thread_num  = CppAD::thread_alloc::thread_num();
 	size_t num_threads = std::max(num_threads_, size_t(1));
@@ -126,7 +127,7 @@ void sum_i_inv_worker(void)
 }
 // -----------------------------------------------------------------------
 // setup the work up for multiple threads
-bool sum_i_inv_setup(size_t num_sum, size_t num_threads)
+bool harmonic_setup(size_t num_sum, size_t num_threads)
 {	// sum = 1/num_sum + 1/(num_sum-1) + ... + 1
 	num_threads_ = num_threads;
 	num_threads  = std::max(num_threads_, size_t(1));
@@ -148,7 +149,7 @@ bool sum_i_inv_setup(size_t num_sum, size_t num_threads)
 }
 // -----------------------------------------------------------------------
 // get the result of the work 
-bool sum_i_inv_combine(double& sum)
+bool harmonic_combine(double& sum)
 {	// sum = 1/num_sum + 1/(num_sum-1) + ... + 1
 	bool ok            = true;
 	size_t num_threads = std::max(num_threads_, size_t(1));

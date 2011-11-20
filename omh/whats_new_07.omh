@@ -693,7 +693,7 @@ to including multiple number of thread cases for each test.
 $pre
 
 $$
-Add the $cref sum_i_inv_time.cpp$$ OpenMP example case.
+Add the $code sum_i_inv_time.cpp$$ OpenMP example case.
 $pre
 
 $$

@@ -217,9 +217,9 @@ $rref Sqrt.cpp$$
 $rref StackMachine.cpp$$
 $rref Sub.cpp$$
 $rref SubEq.cpp$$
-$rref sum_i_inv.cpp$$
-$rref sum_i_inv_time.cpp$$
-$rref sum_i_inv_work.cpp$$
+$rref harmonic.cpp$$
+$rref harmonic_time.cpp$$
+$rref harmonic_work.cpp$$
 $rref Tan.cpp$$
 $rref Tanh.cpp$$
 $rref TapeIndex.cpp$$
