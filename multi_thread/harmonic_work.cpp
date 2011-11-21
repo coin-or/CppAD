@@ -37,7 +37,7 @@ $icode%ok% = harmonic_combine(%sum%)
 
 $head Purpose$$
 These routines aid in the multi-threading computation of
-the harmonic series summation
+the summation that defines the harmonic series
 $latex \[
 	1 + 1/2 + 1/3 + ... + 1/n
 \] $$

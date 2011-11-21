@@ -29,7 +29,7 @@ $head Syntax$$
 $icode%ok% = harmonic(%sum%, %num_sum%, %num_threads%)%$$
 
 $head Summation$$
-Multi-threaded computation of the harmonic series summation
+Multi-threaded computation of the summation that defines the harmonic series 
 $latex \[
 	s = 1 + 1/2 + 1/3 + ... + 1/n
 \] $$

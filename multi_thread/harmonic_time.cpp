@@ -37,7 +37,7 @@ $icode%ok% = harmonic_time(%time_out%, %num_threads%, %mega_sum%)%$$
 
 $head Purpose$$
 Runs a correctness and timing test for a multi-threaded 
-computation of the harmonic series summation
+computation of the summation that defines the harmonic series 
 $latex \[
 	1 + 1/2 + 1/3 + ... + 1/n
 \] $$
