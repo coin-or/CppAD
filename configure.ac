@@ -406,7 +406,7 @@ LDFLAGS="$LDFLAGS_tmp -lboost_thread-mt"
 AC_LINK_IFELSE(
 	[AC_LANG_PROGRAM(
 		[# include <boost/thread.hpp>],
-		[boost::thread mythread;]
+		[boost::barrier wait(1);]
 	)],
 	[boost_thread="yes"],
 	[boost_thread="no"]

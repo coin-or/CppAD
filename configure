@@ -6285,7 +6285,7 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 int
 main ()
 {
-boost::thread mythread;
+boost::barrier wait(1);
 
   ;
   return 0;
