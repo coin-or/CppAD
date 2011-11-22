@@ -14,7 +14,7 @@
 # script used by */makefile.am to run a default case for all the the tests
 for program in openmp_test pthread_test bthread_test
 do
-	if [ -e 'openmp_test' ]
+	if [ -e "$program" ]
 	then
 		./$program a11c
 		echo
