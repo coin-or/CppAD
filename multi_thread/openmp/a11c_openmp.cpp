@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin openmp_a11c.cpp$$
+$begin a11c_openmp.cpp$$
 $spell
 	CppAD
 	const
@@ -28,7 +28,7 @@ This example just demonstrates OpenMP and does not use CppAD at all.
 
 $head Source Code$$
 $code
-$verbatim%multi_thread/openmp/a11c.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/openmp/a11c_openmp.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 $end
 ----------------------------------------------------------------------------

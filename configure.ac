@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20111108, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20111121, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -141,6 +141,23 @@ else
 fi
 AC_MSG_RESULT([$stdvector])
 
+dnl Are we using boost vectors ----------------------------------------
+AC_MSG_CHECKING([--with-boostvector])
+AC_ARG_WITH(boostvector, 
+	AC_HELP_STRING([--with-boostvector], [default is no]),
+	[boostvector="yes"],
+	[boostvector="no"]
+)
+AC_MSG_RESULT([$boostvector])
+if test "$boostvector$stdvector" = "yesyes" ; then
+	AC_MSG_ERROR([cannot have both --with-stdvector and --with-boostvector])
+fi
+if test "$boostvector" = "yes" ; then
+	AC_SUBST(CPPAD_BOOSTVECTOR, 1)
+else
+	AC_SUBST(CPPAD_BOOSTVECTOR, 0)
+fi
+
 dnl The postfix directiory corresponding to CppAD ------------------------
 AC_MSG_CHECKING([POSTFIX_DIR])
 AC_ARG_VAR(POSTFIX_DIR, 
@@ -218,14 +235,7 @@ AC_MSG_CHECKING([BOOST_DIR])
 AC_ARG_VAR(BOOST_DIR,
 	[parent directory directly above boost directory]
 )
-AM_CONDITIONAL(CppAD_BOOSTVECTOR, test "$BOOST_DIR" != "")
-if test "$BOOST_DIR" != "" ; then
-	AC_SUBST(CPPAD_BOOSTVECTOR, 1)
-	AC_MSG_RESULT([$BOOST_DIR])
-else
-	AC_SUBST(CPPAD_BOOSTVECTOR, 0)
-	AC_MSG_RESULT([no])
-fi
+AM_CONDITIONAL(CppAD_BOOST_DIR, test "$BOOST_DIR" != "")
 
 dnl The C++ compiler flags CXX_FLAGS -------------------------------------
 AC_SUBST(CXXFLAGS, "")
@@ -298,7 +308,7 @@ else
 fi
 
 dnl Determine which definition we are using for CPPAD_TEST_VECTOR
-if test "$stdvector$BOOST_DIR" = "no" ; then
+if test "$stdvector$boostvector" = "nono" ; then
 	AC_SUBST(CPPAD_CPPADVECTOR, 1)
 else 
 	AC_SUBST(CPPAD_CPPADVECTOR, 0)
@@ -384,27 +394,50 @@ AC_CHECK_LIB(
 dnl --------------------------------------------------------------------------
 dnl check for C++ libraries
 AC_LANG_PUSH([C++])
-temporary=$LDFLAGS
-LDFLAGS="$LDFLAGS -lboost_thread-mt"
+LDFLAGS_save=$LDFLAGS
+CXXFLAGS_save=$CXXFLAGS
+if test "$BOOST_DIR" != "" ; then
+	CXXFLAGS="-I$BOOST_DIR $CXXFLAGS"
+	LDFLAGS_tmp="$LDFLAGS_save -L$BOOST_DIR/lib"
+else
+	LDFLAGS_tmp="$LDFLAGS_save"
+fi
+LDFLAGS="$LDFLAGS_tmp -lboost_thread-mt"
 AC_LINK_IFELSE(
 	[AC_LANG_PROGRAM(
 		[# include <boost/thread.hpp>],
 		[boost::thread mythread;]
 	)],
 	[boost_thread="yes"],
-	[boost_thread="noe"]
+	[boost_thread="no"]
 )
-LDFLAGS="$temporary"
-AC_LANG_POP([C++])
-#
-AM_CONDITIONAL(CppAD_BTHREAD, test "$boost_thread" = "yes")
 if test "$boost_thread" == "yes" ; then
 	AC_SUBST(BTHREAD_LIB,"-lboost_thread-mt")
+else
+	LDFLAGS="$LDFLAGS_tmp -lboost_thread"
+	AC_LINK_IFELSE(
+		[AC_LANG_PROGRAM(
+			[# include <boost/thread.hpp>],
+			[boost::thread mythread;]
+		)],
+		[boost_thread="yes"],
+		[boost_thread="no"]
+	)
+	if test "$boost_thread" == "yes" ; then
+		AC_SUBST(BTHREAD_LIB,"-lboost_thread")
+	fi
+fi
+if test "$boost_thread" == "yes" ; then
 	AC_MSG_RESULT([boost::thread library... yes])
 else
 	AC_SUBST(BTHREAD_LIB,"")
 	AC_MSG_RESULT([boost::thread library... no])
 fi
+AM_CONDITIONAL(CppAD_BTHREAD, test "$boost_thread" = "yes")
+LDFLAGS=$LDFLAGS_save
+CXXFLAGS=$CXXFLAGS_save
+AC_LANG_POP([C++])
+#
 dnl --------------------------------------------------------------------------
 dnl Library directories
 if test -e $IPOPT_DIR/lib/coin ; then
@@ -478,9 +511,7 @@ AC_CONFIG_FILES([
 	cppad_ipopt/test/makefile
 	introduction/get_started/makefile 
 	introduction/exp_apx/makefile
-	multi_thread/bthread/makefile
-	multi_thread/openmp/makefile
-	multi_thread/pthread/makefile
+	multi_thread/makefile
 	print_for/makefile
 	speed/adolc/makefile
 	speed/cppad/makefile 

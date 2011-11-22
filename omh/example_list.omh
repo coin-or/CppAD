@@ -75,6 +75,9 @@ $comment
 $$
 
 $table
+$rref a11c_bthread.cpp$$
+$rref a11c_openmp.cpp$$
+$rref a11c_pthread.cpp$$
 $rref abort_recording.cpp$$
 $rref Abs.cpp$$
 $rref Acos.cpp$$
@@ -90,7 +93,6 @@ $rref base_adolc.hpp$$
 $rref base_complex.hpp$$
 $rref BenderQuad.cpp$$
 $rref BoolFun.cpp$$
-$rref bthread_a11c.cpp$$
 $rref team_bthread.cpp$$
 $rref CheckNumericType.cpp$$
 $rref checkpoint.cpp$$
@@ -177,7 +179,6 @@ $rref ode_evaluate.cpp$$
 $rref ode_taylor.cpp$$
 $rref ode_taylor_adolc.cpp$$
 $rref omp_alloc.cpp$$
-$rref openmp_a11c.cpp$$
 $rref team_openmp.cpp$$
 $rref opt_val_hes.cpp$$
 $rref optimize.cpp$$
@@ -188,7 +189,6 @@ $rref Pow.cpp$$
 $rref pow_int.cpp$$
 $rref print_for_cout.cpp$$
 $rref print_for_string.cpp$$
-$rref pthread_a11c.cpp$$
 $rref team_pthread.cpp$$
 $rref RevOne.cpp$$
 $rref RevSparseHes.cpp$$

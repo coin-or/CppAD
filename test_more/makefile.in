@@ -252,8 +252,8 @@ top_srcdir = @top_srcdir@
 @CppAD_ADOLC_TRUE@ADOLC_LIB_DIRS = -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 @CppAD_ADOLC_FALSE@ADOLC_FLAGS = 
 @CppAD_ADOLC_TRUE@ADOLC_FLAGS = -DCPPAD_ADOLC_TEST
-@CppAD_BOOSTVECTOR_FALSE@BOOST_INCLUDE = 
-@CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
+@CppAD_BOOST_DIR_FALSE@BOOST_INCLUDE = 
+@CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 #
 # Microsoft project files and script to run a single test
 EXTRA_DIST = test_more.sln test_more.vcproj test_one.sh.in 

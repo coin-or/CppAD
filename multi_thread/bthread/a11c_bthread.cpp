@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin bthread_a11c.cpp$$
+$begin a11c_bthread.cpp$$
 $spell
 	bthread
 	bthreads
@@ -30,7 +30,7 @@ This example just demonstrates Boost threads and does not use CppAD at all.
 
 $head Source Code$$
 $code
-$verbatim%multi_thread/bthread/a11c.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/bthread/a11c_bthread.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 $end
 ----------------------------------------------------------------------------

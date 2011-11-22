@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	boostvector
 	mega
 	inv
 	bthread
@@ -72,6 +73,12 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 11-21$$
+Separate $cref/--with-boostvector/InstallUnix/--with-boostvector/$$
+for $cref/BoostDir/InstallUnix/BoostDir/$$.
+This enables one to specify $icode BoostDir$$ for 
+$cref team_bthread.cpp$$ with out using boost vectors.
 
 $head 11-20$$
 $list number$$
@@ -213,7 +220,7 @@ $href%
 	http://www.boost.org/doc/libs/1_47_0/doc/html/thread.html%
 	boost multi-threading
 %$$ 
-examples $cref bthread_a11c.cpp$$ and $code bthread_simple_ad.cpp$$.
+examples $cref a11c_bthread.cpp$$ and $code bthread_simple_ad.cpp$$.
 $lnext
 Improve documentation for
 $cref/thread_num/ta_parallel_setup/thread_num/$$ argument
@@ -315,7 +322,7 @@ pthread library.
 In addition, fix some problems in $code openmp_simple_ad.cpp$$
 $lnext
 Move $code openmp/example_a11c.cpp$$ to 
-$cref|example/openmp_a11c.cpp|openmp_a11c.cpp|$$.
+$cref|example/a11c_openmp.cpp|a11c_openmp.cpp|$$.
 $lnext
 Move $code openmp/parallel_ad.cpp$$ to 
 $code openmp_simple_ad.cpp$$.
@@ -342,8 +349,8 @@ $lend
 
 $subhead 08-21$$
 Create the OpenMP and pthread examples
-$cref/openmp_a11c.cpp/$$,
-$cref/pthread_a11c.cpp/$$, and
+$cref/a11c_openmp.cpp/$$,
+$cref/a11c_pthread.cpp/$$, and
 $code openmp_simple_ad.cpp$$.
 These OpenMP examples were originally in the $code openmp$$ directory,
 and have been moved, and modified to conform, to the normal example directory.

@@ -60,33 +60,6 @@ IPOPT_DIRS   =
 IPOPT_HEADER =
 endif
 #
-# Are we building the OpenMP examples and tests
-if CppAD_OPENMP
-OPENMP_TESTS   = multi_thread/openmp
-OPENMP_DIRS    = multi_thread/openmp
-else
-OPENMP_TESTS   =
-OPENMP_DIRS    =
-endif
-#
-# Are we building the boost thread examples and tests
-if CppAD_BTHREAD
-BTHREAD_TESTS   = multi_thread/bthread
-BTHREAD_DIRS    = multi_thread/bthread
-else
-BTHREAD_TESTS   =
-BTHREAD_DIRS    =
-endif
-#
-# Are we building the pthread thread examples and tests
-if CppAD_PTHREAD
-PTHREAD_TESTS   = multi_thread/pthread
-PTHREAD_DIRS    = multi_thread/pthread
-else
-PTHREAD_TESTS   =
-PTHREAD_DIRS    =
-endif
-#
 # Is the library archiving program present
 if CppAD_HAVE_AR
 SPEED_TESTS = \
@@ -303,15 +276,13 @@ nobase_myinclude_HEADERS =  \
 # No objects or executables are required to install CppAD.
 # See 'make test' below for building the tests.
 SUBDIRS =  \
-	$(BTHREAD_DIRS) \
 	$(IPOPT_DIRS) \
-	$(OPENMP_DIRS) \
-	$(PTHREAD_DIRS) \
 	$(SPEED_DIRS) \
 	example \
 	introduction/get_started \
 	introduction/exp_apx \
 	print_for \
+	multi_thread \
 	test_more 
 #
 # note that bin/gpl_license.sh is deleted by dist-hook
@@ -326,14 +297,12 @@ EXTRA_DIST = \
 	uw_copy_040507.html
 
 test_directory_list = \
-	$(BTHREAD_TESTS) \
 	$(IPOPT_TESTS) \
-	$(OPENMP_TESTS) \
-	$(PTHREAD_TESTS) \
 	$(SPEED_TESTS) \
 	example \
 	introduction/get_started \
 	introduction/exp_apx \
+	multi_thread \
 	print_for \
 	test_more 
 

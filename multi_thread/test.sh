@@ -12,12 +12,19 @@
 # -----------------------------------------------------------------------------
 #! /bin/sh
 # script used by */makefile.am to run a default case for all the the tests
-./multi_thread a11c
-echo
-./multi_thread simple_ad
-echo
-# test_time=2 max_thread=4, mega_sum=1
-./multi_thread harmonic 2 4 1
-echo
-# test_time= 2 max_thread=4, num_zero=20, num_sub=30, num_sum=500, use_ad=true
-./multi_thread multi_newton 2 4 20 30 500 true
+for program in openmp_test pthread_test bthread_test
+do
+	if [ -e 'openmp_test' ]
+	then
+		./$program a11c
+		echo
+		./$program simple_ad
+		echo
+		# test_time=1 max_thread=4, mega_sum=1
+		./$program harmonic 1 4 1
+		echo
+		# test_time= 2 max_thread=4, 
+		# num_zero=20, num_sub=30, num_sum=500, use_ad=true
+		./$program multi_newton 2 4 20 30 500 true
+	fi
+done

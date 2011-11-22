@@ -220,11 +220,13 @@ then
 	dir_list="
 		--prefix=$CPPAD_DIR
 	"
-#_build_test_only:	if [ -e $BOOST_DIR/boost ]
-#_build_test_only:	then
+	if [ -e $BOOST_DIR/boost ]
+	then
+		dir_list="$dir_list
+			--with-boostvector BOOST_DIR=$BOOST_DIR"
 #_build_test_only:		dir_list="$dir_list 
-#_build_test_only:			BOOST_DIR=$BOOST_DIR"
-#_build_test_only:	fi
+#_build_test_only:			--with-boostvector"
+	fi
 	if [ -e $ADOLC_DIR/include/adolc ]
 	then
 		dir_list="$dir_list 

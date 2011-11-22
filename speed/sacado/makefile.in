@@ -200,9 +200,9 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@CppAD_BOOSTVECTOR_FALSE@BOOST_INCLUDE = 
+@CppAD_BOOST_DIR_FALSE@BOOST_INCLUDE = 
 #
-@CppAD_BOOSTVECTOR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
+@CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 #
 AM_CPPFLAGS = -I$(top_srcdir) -I$(SACADO_DIR)/include $(BOOST_INCLUDE)
 #

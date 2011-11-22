@@ -14,6 +14,7 @@ $begin InstallUnix$$
 $escape $$
 $dollar ^$$
 $spell
+	boostvector
 	inv
 	fopenmp
 	openmp
@@ -161,6 +162,7 @@ $codei%
 	--prefix=%PrefixDir%                     \
 	--with-Documentation                   \
 	--with-stdvector                       \  
+	--with-boostvector                     \  
 	CXX_FLAGS=%CompilerFlags%                \
 	OPENMP_FLAGS=%OpenmpFlags%               \
 	POSTFIX_DIR=%PostfixDir%                 \
@@ -329,6 +331,7 @@ $codei%
 
 $head --with-stdvector$$
 $index std::vector, unix$$
+$index vector, std$$
 The 
 $small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$
 template class is used for extensive examples and testing of CppAD.
@@ -337,7 +340,21 @@ the default definition this template class is replaced by
 $codep
 	std::vector
 $$
-(In this case $icode BoostDir$$ must not also be specified.)
+In this case $code --with-boostvector$$ must not also be specified.
+
+$head --with-boostvector$$
+$index boost, vector$$
+$index vector, boost$$
+The 
+$small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$
+template class is used for extensive examples and testing of CppAD.
+If the command line argument $code --with-boostvector$$ is specified,
+the default definition this template class is replaced by
+$codep
+	boost::numeric::ublas::vector
+$$
+In this case $code --with-stdvector$$ must not also be specified.
+See also, $cref/BoostDir/InstallUnix/BoostDir/$$
 
 $head CompilerFlags$$
 $index compile, unix flags$$
@@ -499,28 +516,18 @@ options to this program.
 
 $head BoostDir$$
 $index boost, unix$$
-The
-$small $cref/CPPAD_TEST_VECTOR/test_vector/$$ $$
-template class is used for extensive examples and testing of CppAD.
-The default definition for $code CPPAD_TEST_VECTOR$$ is
-$cref/CppAD::vector/CppAD_vector/$$.
 If the command line argument
 $codei%
 	BOOST_DIR=%BoostDir%
 %$$
-is present, it must be such that
+is present, it must be such that files
 $codei%
 	%BoostDir%/boost/numeric/ublas/vector.hpp
+	%BoostDir%/boost/thread.hpp
 %$$
-is a valid reference to the file $code vector.hpp$$.
-In this case, the default definition of $code CPPAD_TEST_VECTOR$$ 
-is replaced by
-$codep
-	boost::numeric::ublas::vector
-$$
-(see $href%http://www.boost.org%boost%$$).
-If $icode BoostDir$$ is present, the argument $code --with-stdvector$$
-must not be present.
+are present.
+In this case, these files will be used by CppAD.
+See also, $cref/--with-boostvector/InstallUnix/--with-boostvector/$$
 
 $head IpoptDir$$
 $index Ipopt, unix$$

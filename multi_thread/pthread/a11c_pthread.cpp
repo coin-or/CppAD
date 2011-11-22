@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin pthread_a11c.cpp$$
+$begin a11c_pthread.cpp$$
 $spell
 	pthread
 	pthreads
@@ -30,7 +30,7 @@ This example just demonstrates pthreads and does not use CppAD at all.
 
 $head Source Code$$
 $code
-$verbatim%multi_thread/pthread/a11c.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/pthread/a11c_pthread.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 $end
 ----------------------------------------------------------------------------

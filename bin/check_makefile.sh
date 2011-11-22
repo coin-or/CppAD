@@ -57,7 +57,7 @@ do
 		( makefile.am | work/* | svn_dist/* ) 
 		;;
 
-		(multi_thread/*/makefile.am)
+		(multi_thread/makefile.am)
 		;;
 
 		(speed/example/makefile.am)

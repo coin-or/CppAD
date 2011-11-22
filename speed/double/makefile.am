@@ -15,7 +15,7 @@
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-if CppAD_BOOSTVECTOR
+if CppAD_BOOST_DIR
 BOOST_INCLUDE = -I$(BOOST_DIR)
 else
 BOOST_INCLUDE =

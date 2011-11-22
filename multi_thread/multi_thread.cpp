@@ -33,20 +33,20 @@ $index thread, multi example$$
 $section Run Multi-Threading Examples and Speed Tests$$
 
 $head Syntax$$
-$codei%./multi_thread a11c
-%$$
-$codei%./multi_thread simple_ad
-%$$
-$codei%./multi_thread harmonic %test_time% %max_threads% %mega_sum%
+$codei%./%threading%_test a11c
+./%threading%_test simple_ad
+./%threading%_test harmonic %test_time% %max_threads% %mega_sum%
+./%threading%_test multi_newton %test_time% %max_threads% \
+	%num_zero% %num_sub% %num_sum% %use_ad%
 %$$ 
-$codei%./multi_thread multi_newton %test_time% %max_threads% \
-	%num_zero% %num_sub% %num_sum% %use_ad%$$ 
+where $icode threading$$ is either
+$code bthread$$, $code openmp$$, or $code pthread$$. 
 
 $head Running Tests$$
 You can build this program and run the default version of its test
 parameters by executing the following commands:
 $codei%
-	cd multi_thread/%threading%
+	cd multi_thread
 	make test
 %$$
 If $cref/OpenmpFlags/InstallUnix/OpenmpFlags/$$ 
@@ -62,15 +62,16 @@ $head Purpose$$
 Runs the CppAD multi-threading examples and timing tests:
 
 $children%
-	multi_thread/openmp/a11c.cpp%
-	multi_thread/bthread/a11c.cpp%
-	multi_thread/pthread/a11c.cpp
+	multi_thread/openmp/a11c_openmp.cpp%
+	multi_thread/bthread/a11c_bthread.cpp%
+	multi_thread/pthread/a11c_pthread.cpp
 %$$
+
 $head a11c$$
 The examples 
-$cref openmp_a11c.cpp$$,
-$cref bthread_a11c.cpp$$, and
-$cref pthread_a11c.cpp$$
+$cref a11c_openmp.cpp$$,
+$cref a11c_bthread.cpp$$, and
+$cref a11c_pthread.cpp$$
 demonstrate simple multi-threading, 
 without algorithmic differentiation, using
 OpenMP, Boost threads, and pthreads respectively
