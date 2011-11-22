@@ -24,12 +24,14 @@ if CppAD_BTHREAD
 # BTHREAD_LIB set to proper value in this case
 BTHREAD_TEST = bthread_test
 if CppAD_BOOST_DIR
-BOOST_INCLUDE = -I$(BOOST_DIR)
+BOOST_INCLUDE = -I$(BOOST_DIR)/include
+BOOST_LIB     = -L$(BOOST_DIR)/lib
 endif
 else
 # BTHREAD_LIB empty in this case
 BTHREAD_TEST = 
 BOOST_INCLUDE = 
+BOOST_LIB     = 
 endif
 #
 if CppAD_PTHREAD
@@ -50,7 +52,7 @@ endif
 #
 AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(OPENMP_FLAGS)
 #
-AM_LDFLAGS        = $(BTHREAD_LIB) $(OPENMP_FLAGS)
+AM_LDFLAGS        = $(BOOST_LIB) $(BTHREAD_LIB) $(OPENMP_FLAGS)
 #
 SHARED_SRC = \
 	multi_thread.cpp \
