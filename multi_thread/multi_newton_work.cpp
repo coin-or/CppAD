@@ -179,13 +179,15 @@ namespace {
 		// end of interval (worker input)
 		double xup; 
 		// vector of zero candidates (worker output)
-		// after call to multi_newton_setup:   xout.size() == num_out
-		// after call to multi_newton_combine: xout.size() == 0
-		vector<double> xout;  
-		// vector of function values for xout (worker output)
-		// after call to multi_newton_setup:   fout.size() == num_out
-		// after call to multi_newton_combine: fout.size() == 0
-		vector<double> fout;  
+		// after call to multi_newton_setup:   x.size() == 0
+		// after call to multi_newton_work:    x.size() is number of zeros
+		// after call to multi_newton_combine: x.size() == 0
+		vector<double> x;  
+		// vector of function values for x (worker output)
+		// after call to multi_newton_setup:   f.size() == 0
+		// after call to multi_newton_work:    f.size() == x.size()
+		// after call to multi_newton_combine: f.size() == 0
+		vector<double> f;  
 		// false if an error occurs, true otherwise (worker output)
 		bool   ok;
 	} work_one_t;
@@ -207,15 +209,15 @@ void multi_newton_worker(void)
 	size_t num_out       = work_all_[thread_num].num_out;
 	double xlow          = work_all_[thread_num].xlow;
 	double xup           = work_all_[thread_num].xup;
-	vector<double>& xout = work_all_[thread_num].xout;
-	vector<double>& fout = work_all_[thread_num].fout;
+	vector<double>& x    = work_all_[thread_num].x;
+	vector<double>& f    = work_all_[thread_num].f;
 
 	// check arguments
 	ok &= max_itr_ > 0;
 	ok &= num_out > 0;
 	ok &= xlow < xup;
-	ok &= xout.size() == num_out;
-	ok &= fout.size() == num_out;
+	ok &= x.size() == 0;
+	ok &= f.size() == 0;
 
 	// check for special case where there is nothing for this thread to do
 	if( num_out == 0 )
@@ -225,6 +227,7 @@ void multi_newton_worker(void)
 
 	// check for a zero on each sub-interval
 	size_t i;
+	double xlast = 0., flast = 0.; // do not matter when xout.size() == 0
 	for(i = 0; i < num_out; i++)
 	{
 		// note that when i == 0, xlow_i == xlow (exactly)
@@ -261,8 +264,20 @@ void multi_newton_worker(void)
 				more_itr = ++itr < max_itr_;
 			}
 		}
-		xout[i] = xcur;
-		fout[i] = fcur;
+		if( CppAD::abs( fcur ) < epsilon_ )
+		{	if( x.size() == 0 || CppAD::abs( xcur - xlast ) > sub_length_ ) 
+			{	x.push_back( xcur );
+				f.push_back( fcur );
+				xlast = xcur;
+				flast = fcur;
+			} 
+			else if( CppAD::abs( fcur ) < CppAD::abs( flast ) )
+			{	x[ x.size() - 1 ] = xcur;
+				f[ f.size() - 1 ] = fcur;
+				xlast = xcur;
+				flast = fcur;
+			}
+		}
 	}
 	work_all_[thread_num].ok = ok;
 }
@@ -318,8 +333,8 @@ bool multi_newton_setup(
 		work_all_[thread_num].num_out = num_out;
 		work_all_[thread_num].xlow    = xlow_thread;
 		work_all_[thread_num].xup     = xup_thread;
-		work_all_[thread_num].xout.resize(num_out);
-		work_all_[thread_num].fout.resize(num_out);
+		ok &= work_all_[thread_num].x.size() == 0;
+		ok &= work_all_[thread_num].f.size() == 0;
 
 		// in case this thread does not get called
 		work_all_[thread_num].ok = false;
@@ -339,31 +354,30 @@ bool multi_newton_combine(CppAD::vector<double>& xout)
 	double xlast = 0., flast = 0.;
 	size_t thread_num;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	size_t i, num_out = work_all_[thread_num].num_out;
-		for(i = 0; i < num_out; i++)
-		{	double fcur = work_all_[thread_num].fout[i];
-			double xcur = work_all_[thread_num].xout[i];
-			if( CppAD::abs( fcur ) <= epsilon_ )
-			{	if( xout.size() == 0 )
-				{	xout.push_back( xcur );
-					xlast = xcur;
-					flast = fcur;
-				}
-				else if( CppAD::abs( xcur - xlast ) > sub_length_ ) 
-				{	xout.push_back( xcur );
-					xlast = xcur;
-					flast = fcur;
-				}
-				else if( CppAD::abs( fcur ) < CppAD::abs( flast ) )
-				{	xout[ xout.size() - 1 ] = xcur;
-					xlast = xcur;
-					flast = fcur;
-				}
+	{	vector<double>& x = work_all_[thread_num].x;
+		vector<double>& f = work_all_[thread_num].f;
+
+		size_t i;
+		for(i = 0; i < x.size(); i++)
+		{	if( xout.size() == 0 )
+			{	xout.push_back( x[i] );
+				xlast = x[i];
+				flast = f[i];
+			}
+			else if( CppAD::abs( x[i] - xlast ) > sub_length_ ) 
+			{	xout.push_back( x[i] );
+				xlast = x[i];
+				flast = f[i];
+			}
+			else if( CppAD::abs( f[i] ) < CppAD::abs( flast ) )
+			{	xout[ xout.size() - 1 ] = x[i];
+				xlast = x[i];
+				flast = f[i];
 			}
 		}
 		ok &= work_all_[thread_num].ok;
 	}
-	// should call destruction for all the xout and fout vectors
+	// should call destruction for all the x and f vectors
 	work_all_.resize(0);
 	return ok;
 }
