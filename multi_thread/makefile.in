@@ -644,7 +644,7 @@ uninstall-am:
 
 #
 test.sh: $(OPENMP_TEST)$(EXEEXT) $(BTHREAD_TEST)$(EXEEXT) $(PTHREAD_TEST)$(EXEEXT)  
-	cp $(srcdir)/test.sh test.sh
+	if [ ! -e 'test.sh' ]; then cp $(srcdir)/test.sh test.sh ; fi
 #
 test: test.sh
 	./test.sh
