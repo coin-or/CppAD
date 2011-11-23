@@ -38,6 +38,9 @@ namespace {
 	// number of threads in the team
 	size_t num_threads_ = 1; 
 
+	// thread specific pointer the thread number (initialize as null)
+	boost::thread_specific_ptr<size_t> thread_num_ptr_(0);
+
 	// type of the job currently being done by each thread
 	enum thread_job_t { init_enum, work_enum, join_enum } thread_job_;
 
@@ -53,9 +56,10 @@ namespace {
 
 	// structure with information for one thread
 	typedef struct {
+		// The thread
 		boost::thread*       bthread;
-		// Boost unique identifier for thread that uses this struct
-		boost::thread::id    bthread_id;
+		// CppAD thread number as global (pointed to by thread_num_ptr_)
+		size_t               thread_num;
 		// true if no error for this thread, false otherwise.
 		bool                 ok;
 	} thread_one_t;
@@ -74,26 +78,8 @@ namespace {
 	// ---------------------------------------------------------------------
 	// thread_number()
 	size_t thread_number(void)
-	{	using boost::thread;
-
-		// bthread unique identifier for this thread
-		thread::id thread_this = boost::this_thread::get_id();
-
-		// convert thread_this to the corresponding thread_num
-		size_t thread_num = 0;
-		for(thread_num = 0; thread_num < num_threads_; thread_num++)
-		{	// Boost unique identifier for this thread_num
-			thread::id thread_compare = thread_all_[thread_num].bthread_id;
-
-			// check for a match
-			if( thread_this == thread_compare )
-				return thread_num;
-		}
-		// no match error (thread_this is not in thread_all_).
-		std::cerr << "thread_number: unknown boost::thread::id" << std::endl;
-		exit(1);
-
-		return 0;
+	{	// return thread_all_[thread_num].thread_num
+		return *thread_num_ptr_.get();
 	}
 	// --------------------------------------------------------------------
 	// function that gets called by boost thread constructor
@@ -101,6 +87,9 @@ namespace {
 	{	bool ok = wait_for_work_ != 0;
 		ok     &= wait_for_job_  != 0;
 		ok     &= thread_num     != 0;
+
+		// thread specific storage of thread number for this thread
+		thread_num_ptr_.reset(& thread_all_[thread_num].thread_num );
 
 		while( true )
 		{
@@ -142,11 +131,18 @@ bool team_start(size_t num_threads)
 	ok &= wait_for_job_  == 0;
 	ok &= sequential_execution_;
 
-	// Set the information for this thread so thread_number will work
-	// for call to parallel_setup
-	thread_all_[0].bthread_id = boost::this_thread::get_id();
-	thread_all_[0].bthread    = 0; // not used
-	thread_all_[0].ok         = true;
+	size_t thread_num;
+	for(thread_num = 0; thread_num < num_threads; thread_num++)
+	{	// Each thread gets a pointer to its version of this thread_num
+		// so it knows which section of thread_all it is working with
+		thread_all_[thread_num].thread_num = thread_num;
+
+		// initialize
+		thread_all_[thread_num].ok = true;
+		thread_all_[0].bthread     = 0;
+	}
+	// Finish setup of thread_all_ for this thread
+	thread_num_ptr_.reset(& thread_all_[0].thread_num);
 
 	// Now that thread_number() has necessary information for the case
 	// num_threads_ == 1, and while still in sequential mode,
@@ -168,21 +164,15 @@ bool team_start(size_t num_threads)
 
 	// This master thread is already running, we need to create
 	// num_threads - 1 more threads
-	size_t thread_num;
 	for(thread_num = 1; thread_num < num_threads; thread_num++)
-	{	thread_all_[thread_num].ok         = true;
-		// Create the thread with thread number equal to thread_num
+	{	// Create the thread with thread number equal to thread_num
 		thread_all_[thread_num].bthread = 
 			new boost::thread(thread_work, thread_num);
-		thread_all_[thread_num].bthread_id = 
-			thread_all_[thread_num].bthread->get_id();
 	}
 
 	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	sequential_execution_ = true;
-	for(thread_num = 0; thread_num < num_threads; thread_num++)
-		ok &= thread_all_[thread_num].ok;
 	return ok;
 }
 

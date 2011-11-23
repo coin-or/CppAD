@@ -244,8 +244,6 @@ bool team_start(size_t num_threads)
 	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	sequential_execution_ = true;
-	for(thread_num = 0; thread_num < num_threads; thread_num++)
-		ok &= thread_all_[thread_num].ok;
 	return ok;
 }
 
