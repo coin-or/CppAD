@@ -173,7 +173,7 @@ namespace {
 	// structure with information for one thread
 	typedef struct {
 		// number of sub intervals (worker input)
-		size_t num_out;
+		size_t num_sub;
 		// beginning of interval (worker input)
 		double xlow;
 		// end of interval (worker input)
@@ -201,12 +201,12 @@ namespace {
 void multi_newton_worker(void)
 {	using CppAD::vector;
 
-	// Split [xlow, xup] into num_out sub intervales and
+	// Split [xlow, xup] into num_sub sub intervales and
 	// look for one zero in each subinterval.
 	size_t thread_num    = CppAD::thread_alloc::thread_num();
 	size_t num_threads   = std::max(num_threads_, size_t(1));
 	bool   ok            = thread_num < num_threads;
-	size_t num_out       = work_all_[thread_num].num_out;
+	size_t num_sub       = work_all_[thread_num].num_sub;
 	double xlow          = work_all_[thread_num].xlow;
 	double xup           = work_all_[thread_num].xup;
 	vector<double>& x    = work_all_[thread_num].x;
@@ -214,13 +214,13 @@ void multi_newton_worker(void)
 
 	// check arguments
 	ok &= max_itr_ > 0;
-	ok &= num_out > 0;
+	ok &= num_sub > 0;
 	ok &= xlow < xup;
 	ok &= x.size() == 0;
 	ok &= f.size() == 0;
 
 	// check for special case where there is nothing for this thread to do
-	if( num_out == 0 )
+	if( num_sub == 0 )
 	{	work_all_[thread_num].ok = ok;
 		return;
 	}
@@ -228,13 +228,13 @@ void multi_newton_worker(void)
 	// check for a zero on each sub-interval
 	size_t i;
 	double xlast = 0., flast = 0.; // do not matter when xout.size() == 0
-	for(i = 0; i < num_out; i++)
+	for(i = 0; i < num_sub; i++)
 	{
 		// note that when i == 0, xlow_i == xlow (exactly)
 		double xlow_i = xlow + i * sub_length_;
 
-		// note that when i == num_out - 1, xup_i = xup (exactly)
-		double xup_i  = xup  - (num_out - i - 1) * sub_length_;
+		// note that when i == num_sub - 1, xup_i = xup (exactly)
+		double xup_i  = xup  - (num_sub - i - 1) * sub_length_;
 
 		// initial point for Newton iterations
 		double xcur = (xup_i + xlow_i) / 2.;
@@ -312,25 +312,25 @@ bool multi_newton_setup(
 	size_t num_min   = num_sub / num_threads;
 	size_t num_more  = num_sub % num_threads;
 	size_t sum_num   = 0;
-	size_t thread_num, num_out;
+	size_t thread_num, num_sub_thread;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
 	{	if( thread_num < num_more  )
-			num_out = num_min + 1;
-		else	num_out = num_min;
+			num_sub_thread = num_min + 1;
+		else	num_sub_thread = num_min;
 
 		// when thread_num == 0, xlow_thread == xlow
 		double xlow_thread = xlow + sum_num * sub_length_;
 
 		// when thread_num == num_threads - 1, xup_thread = xup 
-		double xup_thread = xlow + (sum_num + num_out) * sub_length_;
+		double xup_thread = xlow + (sum_num + num_sub_thread) * sub_length_;
 		if( thread_num == num_threads - 1 )
 			xup_thread = xup;
 
 		// update sum_num for next time through loop
-		sum_num += num_out;
+		sum_num += num_sub_thread;
 
 		// input information specific to this thread
-		work_all_[thread_num].num_out = num_out;
+		work_all_[thread_num].num_sub = num_sub_thread;
 		work_all_[thread_num].xlow    = xlow_thread;
 		work_all_[thread_num].xup     = xup_thread;
 		ok &= work_all_[thread_num].x.size() == 0;
