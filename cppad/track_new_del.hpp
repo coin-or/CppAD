@@ -256,14 +256,11 @@ It returns true, if it succeeds, and false otherwise.
 $end
 ------------------------------------------------------------------------------
 */
+# include <cppad/local/define.hpp>
 # include <cppad/local/cppad_assert.hpp>
 # include <cppad/thread_alloc.hpp>
 # include <sstream>
 # include <string>
-
-# ifndef CPPAD_NULL
-# define CPPAD_NULL	0
-# endif
 
 # ifndef CPPAD_TRACK_DEBUG
 # define CPPAD_TRACK_DEBUG 0

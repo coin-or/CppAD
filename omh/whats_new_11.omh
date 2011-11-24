@@ -74,6 +74,10 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-24$$
+Create $cref preprocessor$$ section with pointers to all the
+preprocessor symbols that are in the CppAD API.
+
 $head 11-21$$
 Separate $cref/--with-boostvector/InstallUnix/--with-boostvector/$$
 for $cref/BoostDir/InstallUnix/BoostDir/$$.

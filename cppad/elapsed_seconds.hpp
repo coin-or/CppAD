@@ -79,6 +79,7 @@ extern double microsoft_timer(void);
 # include <ctime>
 # endif
 
+// define CPPAD_NULL
 # include <cppad/local/define.hpp>
 
 // needed before one can use CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
@@ -88,10 +89,6 @@ CPPAD_BEGIN_NAMESPACE
 \file elapsed_seconds.hpp
 \brief Function that returns the elapsed seconds from first call.
 */
-
-# ifndef CPPAD_NULL
-# define CPPAD_NULL	0
-# endif
 
 /*!
 Returns the elapsed number since the first call to this function.

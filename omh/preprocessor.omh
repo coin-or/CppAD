@@ -51,6 +51,8 @@ $cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$
 $rnext
 $cref/CPPAD_USER_ATOMIC/user_atomic/$$
 $rnext
+$cref/CPPAD_TAPE_ADDR_TYPE/InstallUnix/TapeAddrType/$$
+$rnext
 $cref/CPPAD_TEST_VECTOR/test_vector/$$
 $tend
 

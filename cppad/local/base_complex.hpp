@@ -364,4 +364,9 @@ namespace CppAD {
 	{	return std::pow(x, y); }
 }
 
+// undefine macros only used by this file
+# undef CPPAD_USER_MACRO
+# undef CPPAD_USER_MACRO_ONE
+# undef CPPAD_USER_MACRO_TWO
+
 # endif
