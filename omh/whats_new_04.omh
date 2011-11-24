@@ -156,7 +156,7 @@ $pre
 
 $$
 The specifications for 
-$cref/preprocessor symbols/configure/Preprocessor Symbols/$$
+$cref/preprocessor symbols/preprocessor/$$
 state that all the CppAD preprocessor symbols
 begin with $code CppAD$$ 
 (so they do not conflict with other packages).

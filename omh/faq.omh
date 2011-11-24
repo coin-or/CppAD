@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -102,7 +102,7 @@ Some functions are real differentiable than are not complex differentiable
 (for example, the $xref/abs/Complex Types/complex abs function/$$).
 If you have to differentiate such functions, you should use
 $syntax%
-	std::complex< AD<%Base% >
+	std::complex< AD<%Base%> >
 %$$
 If you are sure that you will not need to take any real partials
 of complex valued function, it is more efficient to use
@@ -248,15 +248,19 @@ $head Speed$$
 $index speed$$
 $index NDEBUG$$
 How do I get the best speed performance out of CppAD ?
-$pre
 
-$$
+$subhead NDEBUG$$
 You should compile your code with optimization, without debugging,
 and with the preprocessor symbol $code NDEBUG$$ defined.
 (The $xref/speed_cppad/$$ tests do this.)
 Note that defining $code NDEBUG$$
 will turn off all of the error checking and reporting that
 is done using $xref/ErrorHandler/$$. 
+
+$subhead Optimize$$
+It is also possible that preforming a tape 
+$cref/optimization/optimize/$$ will improve the speed of evaluation
+more than the time required for the optimization.
 
 $head Tape Storage: Disk or Memory$$
 $index storage, tape$$

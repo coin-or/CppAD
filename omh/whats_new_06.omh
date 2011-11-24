@@ -485,7 +485,7 @@ of a Lagrangian.
 
 $head 10-18$$
 Document and fix possible conflicts for 
-$cref/preprocessor symbols/configure/Preprocessor Symbols/$$
+$cref/preprocessor symbols/preprocessor/$$
 that do not begin with $code CppAD$$ or $code CPPAD_$$.
 $pre
 

@@ -13,26 +13,6 @@ A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
-/*
-$begin configure$$
-$spell
-	CppAD
-$$
-
-$section Preprocessor Definitions Used by CppAD$$
-$index configure, symbol$$
-$index symbol, configure$$
-
-$head Preprocessor Symbols$$
-$index preprocessor, symbol$$
-$index symbol, processor$$
-All of the preprocessor symbols used by CppAD begin with
-$code CPPAD_$$
-(there are some deprecated symbols that begin with $code CppAD$$).
-
-$end
-*/
-
 /*!
  \file configure.hpp
 Replacement for config.h so that all preprocessor symbols begin with CPPAD_ 

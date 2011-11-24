@@ -184,9 +184,8 @@ $head Preprocessor Symbols$$
 $index symbol, preprocessor CppAD$$
 $index preprocessor, symbol CppAD$$
 $index CppAD, preprocessor symbol$$
-All the preprocessor symbols used by CppAD begin with eight
-$code CppAD$$ or $code CPPAD_$$; 
-see $cref/configure/$$ for the few exceptions to this rule.
+All the $cref preprocessor$$ symbols used by CppAD begin with eight
+$code CppAD$$ or $code CPPAD_$$.
 
 $head Namespace$$
 $index CppAD, namespace$$
@@ -222,7 +221,7 @@ $childtable%
 	omh/library.omh%
 	cppad_ipopt/src/cppad_ipopt_nlp.hpp%
 	omh/example.omh%
-	cppad/configure.hpp%
+	omh/preprocessor.omh%
 	omh/appendix.omh
 %$$
 

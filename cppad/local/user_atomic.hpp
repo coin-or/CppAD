@@ -36,6 +36,7 @@ $spell
 $$
 
 $section User Defined Atomic AD Functions$$
+$index CPPAD_USER_ATOMIC$$
 $index atomic, user function$$
 $index user, atomic function$$
 $index operation, user atomic$$

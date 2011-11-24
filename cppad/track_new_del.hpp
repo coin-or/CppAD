@@ -33,7 +33,7 @@ $index memory, track$$
 
 $head Deprecated$$
 $index deprecated, track memory$$
-This routine has been deprecated.
+All these routines have been deprecated.
 You should use the $cref/thread_alloc/$$ memory allocator instead
 (which works better in both a single thread and 
 properly in multi-threading environment).
@@ -142,13 +142,10 @@ $codei%
 	CppAD::TrackNewVec(__FILE__, __LINE__, %newlen%, %oldptr%)
 %$$
 
-$subhead Deprecated$$
+$subhead Previously Deprecated$$
 $index  CppADTrackNewVec$$
 The preprocessor macro $code CppADTrackNewVec$$ is the
-same as $code CPPAD_TRACK_NEW_VEC$$.
-It has been deprecated; i.e.,
-it is still defined in the CppAD distribution, but it should
-not be used.
+same as $code CPPAD_TRACK_NEW_VEC$$ and was previously deprecated.
 
 $head TrackDelVec$$
 $index TrackDelVec$$
@@ -175,13 +172,10 @@ $codei%
 	CppAD::TrackDelVec(__FILE__, __LINE__, %oldptr%)
 %$$
 
-$subhead Deprecated$$
+$subhead Previously Deprecated$$
 $index  CppADTrackDelVec$$
 The preprocessor macro $code CppADTrackDelVec$$ is the
-same as $code CPPAD_TRACK_DEL_VEC$$.
-It has been deprecated; i.e.,
-it is still defined in the CppAD distribution, but it should
-not be used.
+same as $code CPPAD_TRACK_DEL_VEC$$ was previously deprecated.
 
 $head TrackExtend$$
 $index TrackExtend$$
@@ -208,13 +202,10 @@ $codei%
 	CppAD::TrackExtend(__FILE__, __LINE__, %newlen%, %ncopy%, %oldptr%)
 %$$
 
-$subhead Deprecated$$
+$subhead Previously Deprecated$$
 $index  CppADTrackExtend$$
 The preprocessor macro $code CppADTrackExtend$$ is the
-same as $code CPPAD_TRACK_EXTEND$$.
-It has been deprecated; i.e.,
-it is still defined in the CppAD distribution, but it should
-not be used.
+same as $code CPPAD_TRACK_EXTEND$$ and was previously deprecated.
 
 $head TrackCount$$
 $index TrackCount$$
@@ -241,13 +232,10 @@ $codei%
 	CppAD::TrackCount(__FILE__, __LINE__)
 %$$
 
-$subhead Deprecated$$
+$subhead Previously Deprecated$$
 $index  CppADTrackNewVec$$
 The preprocessor macro $code CppADTrackCount$$ is the
-same as $code CPPAD_TRACK_COUNT$$.
-It has been deprecated; i.e.,
-it is still defined in the CppAD distribution, but it should
-not be used.
+same as $code CPPAD_TRACK_COUNT$$ and was previously deprecated.
 
 $head Multi-Threading$$
 $index multi-threading, TrackCount$$
