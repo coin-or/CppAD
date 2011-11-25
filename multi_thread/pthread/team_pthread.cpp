@@ -90,7 +90,7 @@ namespace {
 	thread_one_t thread_all_[MAX_NUMBER_THREADS];
 
 	// pointer to function that does the work for one thread
-	void (* worker_)(void) = 0;
+	void (* worker_)(void) = CPPAD_NULL;
 
 	// ---------------------------------------------------------------------
 	// in_parallel()
@@ -150,10 +150,10 @@ namespace {
 		thread_all_[thread_num].ok = ok;
 # if DEMONSTRATE_BUG_IN_CYGWIN
 		// Terminate this thread
-		void* no_status = 0;
+		void* no_status = CPPAD_NULL;
 		pthread_exit(no_status);
 # endif
-		return 0;
+		return CPPAD_NULL;
 	}
 }
 
@@ -203,7 +203,7 @@ bool team_start(size_t num_threads)
 	num_threads_ = num_threads;
 
 	// initialize two barriers, one for work done, one for new job ready
-	pthread_barrierattr_t *no_barrierattr = 0;
+	pthread_barrierattr_t* no_barrierattr = CPPAD_NULL;
 	rc = pthread_barrier_init(
 		&wait_for_work_, no_barrierattr, num_threads
 	); 
@@ -216,7 +216,7 @@ bool team_start(size_t num_threads)
 	// structure used to create the threads
 	pthread_t       pthread_id;
 	// default for pthread_attr_setdetachstate is PTHREAD_CREATE_JOINABLE
-	pthread_attr_t* no_attr= 0;
+	pthread_attr_t* no_attr= CPPAD_NULL;
 
 	// initial job for the threads
 	thread_job_           = init_enum;
@@ -306,7 +306,7 @@ bool team_stop(void)
 	// now wait for the other threads to exit 
 	size_t thread_num;
 	for(thread_num = 1; thread_num < num_threads_; thread_num++)
-	{	void* no_status = 0;
+	{	void* no_status = CPPAD_NULL;
 		rc      = pthread_join(
 			thread_all_[thread_num].pthread_id, &no_status
 		);

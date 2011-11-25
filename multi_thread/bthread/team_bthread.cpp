@@ -38,17 +38,21 @@ namespace {
 	// number of threads in the team
 	size_t num_threads_ = 1; 
 
+	// no need to cleanup up thread specific data 
+	void cleanup(size_t*)
+	{	return; }
+
 	// thread specific pointer the thread number (initialize as null)
-	boost::thread_specific_ptr<size_t> thread_num_ptr_(0);
+	boost::thread_specific_ptr<size_t> thread_num_ptr_(cleanup);
 
 	// type of the job currently being done by each thread
 	enum thread_job_t { init_enum, work_enum, join_enum } thread_job_;
 
 	// barrier used to wait for other threads to finish work
-	boost::barrier* wait_for_work_ = 0;
+	boost::barrier* wait_for_work_ = CPPAD_NULL;
 
 	// barrier used to wait for master thread to set next job
-	boost::barrier* wait_for_job_ = 0;
+	boost::barrier* wait_for_job_ = CPPAD_NULL;
 
 	// Are we in sequential mode; i.e., other threads are waiting for
 	// master thread to set up next job ?
@@ -68,7 +72,7 @@ namespace {
 	thread_one_t thread_all_[MAX_NUMBER_THREADS];
 
 	// pointer to function that does the work for one thread
-	void (* worker_)(void) = 0;
+	void (* worker_)(void) = CPPAD_NULL;
 
 	// ---------------------------------------------------------------------
 	// in_parallel()
@@ -84,9 +88,9 @@ namespace {
 	// --------------------------------------------------------------------
 	// function that gets called by boost thread constructor
 	void thread_work(size_t thread_num)
-	{	bool ok = wait_for_work_ != 0;
-		ok     &= wait_for_job_  != 0;
-		ok     &= thread_num     != 0;
+	{	bool ok = wait_for_work_ != CPPAD_NULL;
+		ok     &= wait_for_job_  != CPPAD_NULL;
+		ok     &= thread_num     != CPPAD_NULL;
 
 		// thread specific storage of thread number for this thread
 		thread_num_ptr_.reset(& thread_all_[thread_num].thread_num );
@@ -127,8 +131,8 @@ bool team_start(size_t num_threads)
 	}
 	// check that we currently do not have multiple threads running
 	ok  = num_threads_ == 1;
-	ok &= wait_for_work_ == 0;
-	ok &= wait_for_job_  == 0;
+	ok &= wait_for_work_ == CPPAD_NULL;
+	ok &= wait_for_job_  == CPPAD_NULL;
 	ok &= sequential_execution_;
 
 	size_t thread_num;
@@ -139,7 +143,7 @@ bool team_start(size_t num_threads)
 
 		// initialize
 		thread_all_[thread_num].ok = true;
-		thread_all_[0].bthread     = 0;
+		thread_all_[0].bthread     = CPPAD_NULL;
 	}
 	// Finish setup of thread_all_ for this thread
 	thread_num_ptr_.reset(& thread_all_[0].thread_num);
@@ -182,8 +186,8 @@ bool team_work(void worker(void))
 	// This master thread (thread zero) has not completed wait_for_job_
 	bool ok = sequential_execution_;
 	ok     &= thread_number() == 0;
-	ok     &= wait_for_work_  != 0;
-	ok     &= wait_for_job_   != 0;
+	ok     &= wait_for_work_  != CPPAD_NULL;
+	ok     &= wait_for_job_   != CPPAD_NULL;
 
 	// set global version of this work routine
 	worker_ = worker;
@@ -216,8 +220,8 @@ bool team_stop(void)
 	// This master thread (thread zero) has not completed wait_for_job_
 	bool ok = sequential_execution_;
 	ok     &= thread_number() == 0;
-	ok     &= wait_for_work_ != 0;
-	ok     &= wait_for_job_  != 0;
+	ok     &= wait_for_work_ != CPPAD_NULL;
+	ok     &= wait_for_job_  != CPPAD_NULL;
 
 	// set the new job that other threads are waiting for
 	thread_job_ = join_enum;
@@ -229,22 +233,22 @@ bool team_stop(void)
 
 	// now wait for the other threads to be destroyed
 	size_t thread_num;
-	ok &= thread_all_[0].bthread == 0;
+	ok &= thread_all_[0].bthread == CPPAD_NULL;
 	for(thread_num = 1; thread_num < num_threads_; thread_num++)
 	{	thread_all_[thread_num].bthread->join();
 		delete thread_all_[thread_num].bthread;
-		thread_all_[thread_num].bthread = 0;
+		thread_all_[thread_num].bthread = CPPAD_NULL;
 	}
 	// now we are down to just the master thread (thread zero) 
 	sequential_execution_ = true;
 
 	// destroy wait_for_work_
 	delete wait_for_work_;
-	wait_for_work_ = 0;
+	wait_for_work_ = CPPAD_NULL;
 
 	// destroy wait_for_job_
 	delete wait_for_job_;
-	wait_for_job_ = 0;
+	wait_for_job_ = CPPAD_NULL;
 
 	// check ok before changing num_threads_
 	for(thread_num = 0; thread_num < num_threads_; thread_num++)
