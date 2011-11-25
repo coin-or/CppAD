@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -23,10 +23,8 @@ namespace {
 		CheckSimpleVector<Scalar, CppAD::vector<Scalar> > (x, y);
 		CheckSimpleVector<Scalar, std::vector<Scalar>   > (x, y);
 		CheckSimpleVector<Scalar, std::valarray<Scalar> > (x, y);
-# if CPPAD_BOOSTVECTOR
-		typedef boost::numeric::ublas::vector<Scalar> boost_vector;
-		CheckSimpleVector<Scalar, boost_vector > (x, y);
-# endif
+		typedef CPPAD_TEST_VECTOR<Scalar> test_vector;
+		CheckSimpleVector<Scalar, test_vector > (x, y);
 	}
 }
 bool check_simple_vector(void)
