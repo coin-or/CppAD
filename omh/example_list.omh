@@ -164,7 +164,6 @@ $rref mul_level_adolc.cpp$$
 $rref multi_newton.cpp$$
 $rref multi_newton_time.cpp$$
 $rref multi_newton_work.cpp$$
-$rref multi_thread.cpp$$
 $rref nan.cpp$$
 $rref NearEqualExt.cpp$$
 $rref Near_Equal.cpp$$
@@ -180,6 +179,7 @@ $rref ode_taylor.cpp$$
 $rref ode_taylor_adolc.cpp$$
 $rref omp_alloc.cpp$$
 $rref team_openmp.cpp$$
+$rref thread_test.cpp$$
 $rref opt_val_hes.cpp$$
 $rref optimize.cpp$$
 $rref Output.cpp$$

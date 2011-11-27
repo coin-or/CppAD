@@ -11,6 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 $begin WishList$$
 $spell
+	Berger
 	namespace
 	omp_alloc
 	iterator
@@ -110,6 +111,14 @@ $index AD<double>, compile speed$$
 One could build a CppAD library for use with the type $code AD<double>$$.
 This would speed up compilation for the most common usage where
 the $italic Base$$ type is $code double$$.
+
+$head Memory$$
+The $cref thread_alloc$$ memory manager might be able to improve performance
+of the $cref/multi_newton/thread_test.cpp/multi_newton/$$ timing using the
+idea of allocating memory using a minimal chunk size. 
+See end of page 118 and beginning of 119 in the article 
+$italic {Hoard: a scalable memory allocator for multi-threaded applications$$,
+by E.D. Berger et. al.
 
 
 $head Multiple Arguments$$

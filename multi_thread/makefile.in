@@ -46,7 +46,7 @@ CONFIG_CLEAN_VPATH_FILES =
 @CppAD_OPENMP_TRUE@am__EXEEXT_1 = openmp_test$(EXEEXT)
 @CppAD_BTHREAD_TRUE@am__EXEEXT_2 = bthread_test$(EXEEXT)
 @CppAD_PTHREAD_TRUE@am__EXEEXT_3 = pthread_test$(EXEEXT)
-am__objects_1 = multi_thread.$(OBJEXT) arc_tan.$(OBJEXT) \
+am__objects_1 = thread_test.$(OBJEXT) arc_tan.$(OBJEXT) \
 	multi_newton_time.$(OBJEXT) multi_newton.$(OBJEXT) \
 	multi_newton_work.$(OBJEXT) simple_ad.$(OBJEXT) \
 	harmonic_time.$(OBJEXT) harmonic.$(OBJEXT) \
@@ -247,7 +247,7 @@ AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(OPENMP_FLAGS)
 AM_LDFLAGS = $(BOOST_LIB) $(BTHREAD_LIB) $(OPENMP_FLAGS)
 #
 SHARED_SRC = \
-	multi_thread.cpp \
+	thread_test.cpp \
 	team_thread.hpp  \
 \
 	arc_tan.cpp             arc_tan.hpp \
@@ -342,11 +342,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton_time.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton_work.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_thread.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simple_ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/team_bthread.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/team_openmp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/team_pthread.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_test.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

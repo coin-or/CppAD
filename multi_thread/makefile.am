@@ -55,7 +55,7 @@ AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(OPENMP_FLAGS)
 AM_LDFLAGS        = $(BOOST_LIB) $(BTHREAD_LIB) $(OPENMP_FLAGS)
 #
 SHARED_SRC = \
-	multi_thread.cpp \
+	thread_test.cpp \
 	team_thread.hpp  \
 \
 	arc_tan.cpp             arc_tan.hpp \

@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin multi_thread.cpp$$
+$begin thread_test.cpp$$
 $escape $$
 $spell
 	inv
@@ -23,10 +23,10 @@ $spell
 	openmp
 	bthread
 $$
-$index multi_thread, example$$
-$index multi_thread, speed$$
-$index speed, multi_thread$$
-$index example, multi_thread$$
+$index thread_test, example$$
+$index thread_test, speed$$
+$index speed, thread_test$$
+$index example, thread_test$$
 $index thread, multi example$$
 
 
@@ -49,9 +49,16 @@ $codei%
 	cd multi_thread
 	make test
 %$$
+After this operation you can run the syntax above
+for the different valid values of $icode threading$$:
+
+$subhead threading$$
+$index openmp, run tests$$
+$index pthread, run tests$$
+$index bthread, run tests$$
 If $cref/OpenmpFlags/InstallUnix/OpenmpFlags/$$ 
 are specified during configuration,
-you can preform the operation above with 
+you can execute the syntax above with
 $icode threading$$ equal to $code openmp$$.
 If pthreads with barriers are supported by your system,
 you can use $icode threading$$ equal to $code pthread$$.
@@ -158,7 +165,7 @@ $tend
 
 $head Source$$
 $code
-$verbatim%multi_thread/multi_thread.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/thread_test.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -209,11 +216,12 @@ int main(int argc, char *argv[])
 
 	// commnd line usage message
 	const char* usage = 
-	"./multi_thread a11c\n"
-	"./multi_thread simple_ad\n"
-	"./multi_thread harmonic    test_time max_threads mega_sum\n"
-	"./multi_thread multi_newton test_time max_threads\\\n"
-	"	num_zero num_sub num_sum use_ad";
+	"./<thread>_test a11c\n"
+	"./<thread>_test simple_ad\n"
+	"./<thread>_test harmonic    test_time max_threads mega_sum\n"
+	"./<thread>_test multi_newton test_time max_threads\\\n"
+	"	num_zero num_sub num_sum use_ad\\\n"
+	"where <thread> is bthread, openmp, or pthread";
 
 	// command line argument values (assign values to avoid compiler warnings)
 	size_t num_zero=0, num_sub=0, num_sum=0;
