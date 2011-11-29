@@ -148,9 +148,9 @@ double time_test(Test test, double time_min )
 {
 	size_t repeat = 0;
 	double s0     = elapsed_seconds();
-	double s1     = elapsed_seconds();
+	double s1     = s0;
 	while( s1 - s0 < time_min )
-	{	repeat = 2 * std::max(size_t(1), 2 * repeat);
+	{	repeat = std::max(size_t(1), 2 * repeat);
 		s0     = elapsed_seconds();
 		test(repeat);
 		s1     = elapsed_seconds();

@@ -74,6 +74,11 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 11-29$$
+THe $cref time_test$$ routine was still executing the 
+test at least twice, even if that was not necessary for the specified
+minimum time. This has been fixed.
+
 $head 11-27$$
 Move $code multi_thread.cpp$$ to $cref thread_test.cpp$$
 and fix its $cref/running/thread_test.cpp/Running Tests/$$ instructions.
