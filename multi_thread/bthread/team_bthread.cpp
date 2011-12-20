@@ -120,12 +120,12 @@ namespace {
 	}
 }
 
-bool team_start(size_t num_threads)
+bool team_create(size_t num_threads)
 {	using CppAD::thread_alloc;
 	bool ok = true;;
 
 	if( num_threads > MAX_NUMBER_THREADS )
-	{	std::cerr << "team_start: num_threads greater than ";
+	{	std::cerr << "team_create: num_threads greater than ";
 		std::cerr << MAX_NUMBER_THREADS << std::endl;
 		exit(1);
 	}
@@ -215,7 +215,7 @@ bool team_work(void worker(void))
 	return ok;
 }
 
-bool team_stop(void)
+bool team_destroy(void)
 {	// Current state is other threads are at wait_for_job_.
 	// This master thread (thread zero) has not completed wait_for_job_
 	bool ok = sequential_execution_;

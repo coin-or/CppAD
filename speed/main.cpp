@@ -22,7 +22,6 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/speed/uniform_01.hpp>
 # include <cppad/poly.hpp>
 # include <cppad/track_new_del.hpp>
-# include <cppad/omp_alloc.hpp>
 # include <cppad/memory_leak.hpp>
 
 # ifdef SPEED_ADOLC
@@ -533,10 +532,6 @@ int main(int argc, char *argv[])
 		default:
 		assert(0);
 	}
-	// print how much memory was used during the tests
-	using CppAD::omp_alloc;
-	size_t thread = omp_alloc::get_thread_num();
-	cout << "omp_alloc::available = " << omp_alloc::available(thread) << endl;
 # ifndef NDEBUG
 	// return memory for vectors that are still in scope
 	size_det_lu.resize(0);

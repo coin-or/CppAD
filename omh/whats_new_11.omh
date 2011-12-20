@@ -74,6 +74,17 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-20$$
+$list number$$
+Change $code team_start$$ to $cref/team_create/team_thread.hpp/team_create/$$
+and $code team_stop$$ to $cref/team_destroy/team_thread.hpp/team_destroy/$$.
+$lnext
+Change $code NDEBUG$$ mentions to include link to 
+$cref/NDEBUG/Faq/Speed/NDEBUG/$$.
+$lnext
+Improve $cref memory_leak$$ documentation.
+$lend
+
 $head 11-29$$
 THe $cref time_test$$ routine was still executing the 
 test at least twice, even if that was not necessary for the specified

@@ -305,9 +305,9 @@ top_srcdir = @top_srcdir@
 EXTRA_DIST = example.sln example.vcproj test_one.sh.in \
 	$(ADOLC_EXTRA_FILES)
 
-@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -g $(ADOLC_FLAGS) 
+@CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -g $(ADOLC_FLAGS)
 #
-@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -g $(ADOLC_FLAGS) 
+@CppAD_MS_COMPILER_TRUE@AM_CXXFLAGS = -EHsc -g $(ADOLC_FLAGS)
 #
 AM_CPPFLAGS = -I. \
                    -I$(top_srcdir) \
@@ -320,9 +320,6 @@ AM_LDFLAGS = $(ADOLC_LIB_DIRS)
 #
 example_SOURCES = \
 	$(ADOLC_SRC_FILES) \
-	$(BTHREAD_SRC_FILES) \
-	$(OPENMP_SRC_FILES) \
-	$(PTHREAD_SRC_FILES) \
 	\
 	example.cpp \
 	abort_recording.cpp \

@@ -33,9 +33,9 @@ $index team, AD threads$$
 
 $head Syntax$$
 $codei%include "team_thread.hpp"
-%ok%   = team_start(%num_threads%)
+%ok%   = team_create(%num_threads%)
 %ok%   = team_work(%worker%)
-%ok%   = team_stop()
+%ok%   = team_destroy()
 %name% = team_name()
 %$$
 
@@ -47,15 +47,15 @@ these could be OpenMP threads, pthreads, or Boost threads to name a few.
 
 $head Restrictions$$
 Calls to the routines
-$code team_start$$,
+$code team_create$$,
 $code team_work$$, and
-$code team_stop$$, must all be done by the master thread; i.e.,
+$code team_destroy$$, must all be done by the master thread; i.e.,
 $cref/thread_num/ta_thread_num/$$ must be zero.
 In addition, they must all be done in sequential execution mode; i.e.,
 when the master thread is the only thread that is running
 ($cref/in_parallel/ta_in_parallel/$$ must be false).
 
-$head team_start$$
+$head team_create$$
 The argument 
 $icode%num_threads% > 0%$$ has type $code size_t$$
 and specifies the number of threads in this team.
@@ -67,7 +67,7 @@ and put in a waiting state until $code team_work$$ is called.
 
 $head team_work$$
 This routine may be called one or more times
-between the call to $code team_start$$ and $code team_stop$$.
+between the call to $code team_create$$ and $code team_destroy$$.
 The argument $icode worker$$ has type
 $codei%bool %worker%(void)%$$.
 Each call to $code team_work$$ runs $icode num_threads$$ versions
@@ -76,7 +76,7 @@ $cref/thread_num/ta_thread_num/$$
 between zero and $icode%num_threads% - 1%$$ and
 different for each thread,
 
-$head team_stop$$
+$head team_destroy$$
 This routine terminates all the other threads except for
 thread number zero; i.e., it terminates the threads corresponding to
 $codei%
@@ -118,9 +118,9 @@ $head Source$$
 $codep */
 # include <cstddef> // for size_t
 
-extern bool team_start(size_t num_threads);
+extern bool team_create(size_t num_threads);
 extern bool team_work(void worker(void));
-extern bool team_stop(void);
+extern bool team_destroy(void);
 extern const char* team_name(void);
 /* $$
 $end

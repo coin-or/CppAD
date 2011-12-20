@@ -621,7 +621,7 @@ it may not be worth re-taping a new AD operation sequence.
 $head Restrictions$$
 $index NDEBUG, CompareChange$$
 Computation of this function requires extra operations in the tape.
-If $code NDEBUG$$ is defined,
+If $cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined,
 of if a tape $cref/optimization/optimize/$$ has been preformed,
 these operations are not included in the tape and
 the value of $icode c$$ is always zero (and does not correspond

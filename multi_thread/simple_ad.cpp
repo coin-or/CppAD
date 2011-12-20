@@ -134,9 +134,9 @@ bool simple_ad(void)
 		work_all_[thread_num].theta        = thread_num * pi / num_threads;
 	}
 
-	ok &= team_start(num_threads);
+	ok &= team_create(num_threads);
 	ok &= team_work(worker);
-	ok &= team_stop();
+	ok &= team_destroy();
 
 
 	// Check that no memory currently in use, and free avialable memory.

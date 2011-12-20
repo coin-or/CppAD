@@ -36,32 +36,31 @@ $codei%
 %$$
 
 $head Purpose$$
-This routine check for leaks in the $cref thread_alloc$$ memory allocator.
-The deprecated routines in $cref/TrackNewDel/$$ is also checked.
-Memory errors in the deprecated routine $cref omp_alloc$$ are
+This routine checks that the are no memory leaks 
+caused by improper use of $cref thread_alloc$$ memory allocator.
+The deprecated memory allocator $cref/TrackNewDel/$$ is also checked.
+Memory errors in the deprecated allocator $cref omp_alloc$$ are
 reported as being in $code thread_alloc$$.
 
-$head NDEBUG$$
-If $code NDEBUG$$ is defined,
-this routine returns true.
-Otherwise it returns true unless one of the conditions below occurs.
-
 $head inuse$$
-When this routine is called, it is assumed that no memory
-should be $cref/inuse/ta_inuse/$$ or $cref omp_inuse$$ for any thread.
-If it is, a message is printed and this routine returns false.
+It is assumed that, when $code memory_leak$$ is called,
+there should not be any memory
+$cref/inuse/ta_inuse/$$ or $cref omp_inuse$$ for any thread.
+If there is, a message is printed and $code memory_leak$$ returns false.
 
 $head available$$
-This routine 
-checks that no memory is $cref/available/ta_available/$$ or $cref omp_available$$
-for any thread;
+It is assumed that, when $code memory_leak$$ is called,
+there should not be any memory
+$cref/available/ta_available/$$ or $cref omp_available$$ for any thread;
 i.e., it all has been returned to the system.
 If there is memory still available for a thread,
-this routine returns false. 
+$code memory_leak$$ returns false. 
 
 $head TRACK_COUNT$$
-if $cref/TrackCount/TrackNewDel/TrackCount/$$ returns a non-zero value,
-this routine returns false.
+It is assumed that, when $code memory_leak$$ is called,
+$cref/TrackCount/TrackNewDel/TrackCount/$$ will return a zero value.
+If it returns a non-zero value, 
+$code memory_leak$$ returns false.
 
 $head Error Message$$
 If this routine returns false, it prints a message

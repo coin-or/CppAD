@@ -273,6 +273,11 @@ int main(int argc, char *argv[])
 	{	if( run_a11c )
 			ok        = a11c();
 		else ok        = simple_ad();
+		if( CppAD::memory_leak() )
+		{	ok = false;
+			cout << "memory_leak   = true;"  << endl;
+		}
+		else cout << "memory_leak   = false;" << endl;
 		if( ok )
 		{	cout << "OK            = true;"  << endl;
 			exit(0);
@@ -339,7 +344,7 @@ int main(int argc, char *argv[])
 
 		// set the number of threads
 		if( num_threads > 0 )
-			ok &= team_start(num_threads);
+			ok &= team_create(num_threads);
 
 		// ammount of memory initialy inuse by thread zero
 		ok &= 0 == thread_alloc::thread_num();
@@ -363,7 +368,7 @@ int main(int argc, char *argv[])
 
 		// set back to one thread and fee all avaialable memory
 		if( num_threads > 0 )
-			ok &= team_stop();
+			ok &= team_destroy();
 		size_t thread;
 		for(thread = 0; thread < num_threads; thread++)
 		{	thread_alloc::free_available(thread);
@@ -377,6 +382,13 @@ int main(int argc, char *argv[])
 		else	cout << num_threads << " threads" << endl;
 	}
 	cout << "];" << endl;
+	//
+	if( CppAD::memory_leak() )
+	{	ok = false;
+		cout << "memory_leak   = true;"  << endl;
+	}
+	else cout << "memory_leak   = false;" << endl;
+	//
 	if( ok )
 		cout << "OK            = true;"  << endl;
 	else cout << "OK            = false;" << endl;

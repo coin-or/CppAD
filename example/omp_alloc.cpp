@@ -23,6 +23,10 @@ $index multi-thread, memory allocation$$
 $index example, memory allocation$$
 $index test, memory allocation$$
 
+$head Deprecated$$
+This example is only intended to help convert calls to $cref omp_alloc$$
+to calls to $cref thread_alloc$$.
+
 $code
 $verbatim%example/omp_alloc.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$

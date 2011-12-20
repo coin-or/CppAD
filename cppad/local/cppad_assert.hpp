@@ -41,10 +41,15 @@ $codei%CPPAD_ASSERT_UNKNOWN(%exp%)%$$
 
 
 $head Purpose$$
-If the preprocessor symbol $code NDEBUG/$$ is not defined, 
-these CppAD macros are used to detect and report errors.
+These CppAD macros are used to detect and report errors.
 They are documented here because they correspond to the C++
 source code that the error is reported at.
+
+$head NDEBUG$$
+$index NDEBUG$$
+If the preprocessor symbol 
+$cref/NDEBUG/Faq/Speed/NDEBUG/$$ is defined,
+these macros do nothing; i.e., they are optimized out.
 
 $head Restriction$$
 The CppAD user should not uses these macros.

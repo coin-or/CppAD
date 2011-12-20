@@ -43,9 +43,9 @@ EXTRA_DIST        = example.sln example.vcproj test_one.sh.in \
 check_PROGRAMS    = example 
 #
 if CppAD_MS_COMPILER
-AM_CXXFLAGS       = -EHsc -g $(ADOLC_FLAGS) 
+AM_CXXFLAGS       = -EHsc -g $(ADOLC_FLAGS)
 else
-AM_CXXFLAGS       = -g $(ADOLC_FLAGS) 
+AM_CXXFLAGS       = -g $(ADOLC_FLAGS)
 endif
 #
 AM_CPPFLAGS       = -I. \
@@ -58,9 +58,6 @@ AM_LDFLAGS        = $(ADOLC_LIB_DIRS)
 #
 example_SOURCES   = \
 	$(ADOLC_SRC_FILES) \
-	$(BTHREAD_SRC_FILES) \
-	$(OPENMP_SRC_FILES) \
-	$(PTHREAD_SRC_FILES) \
 	\
 	example.cpp \
 	abort_recording.cpp \

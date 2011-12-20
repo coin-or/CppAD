@@ -262,7 +262,6 @@ bool multi_newton_time(
 	bool    use_ad
 ) 
 {	bool ok = true;
-	using CppAD::vector;
 	using CppAD::thread_alloc;
 
 	// Set local namespace environment variables
@@ -289,6 +288,9 @@ bool multi_newton_time(
 	size_t i   = 0;
 	for(i = 0; i < num_zero; i++)
 		ok &= std::fabs( xout_[i] - pi * i) <= 2 * eps;
+
+	// xout_ is a static variable, so resize it to free its memory
+	xout_.resize(0);
 
 	// return correctness check result
 	return  ok;
