@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -312,10 +312,7 @@ $head 10-05$$
 The process of converting the tape to operators was completed.
 In order to make this conversion, the binary user defined
 functions were removed.
-($href%
-	http://www.apl.washington.edu/people/professional_staff/goddard_r.html%
-	Bob Goddard
-%$$
+(Bob Goddard
 suggested a very nice way to keep the unary functions.)
 Another significant change was made to the user interface during this procedure,
 the standard math library functions

@@ -135,7 +135,7 @@ $cref/ode_taylor_adolc.cpp/$$.
 
 $lnext
 A set of programs for doing $cref/speed/$$ comparisons between
-$href%http://www.math.tu-dresden.de/~adol-c/%Adolc%$$,
+$href%https://projects.coin-or.org/ADOL-C%Adolc%$$,
 CppAD,
 $href%http://www.imm.dtu.dk/fadbad.html/%Fadbad%$$,
 and

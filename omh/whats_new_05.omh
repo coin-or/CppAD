@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_05$$
 $spell
+	html
 	Dir
 	cppad.hpp
 	acos
@@ -721,10 +722,7 @@ $head 06-25$$
 Some improvements were made to the 
 README, AUTHORS, COPYING, and INSTALL files.
 In addition, the file
-$href%
-	../UWCopy040507.html%
-	UWCopy040507.html
-%$$
+$code UWCopy040507.html$$
 which contains the University of Washington's copyright
 policy (see Section 2) was added to the distribution.
 

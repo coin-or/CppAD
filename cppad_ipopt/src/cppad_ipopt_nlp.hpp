@@ -68,7 +68,7 @@ $latex \[
 \] $$
 This is done using 
 $href%
-	https://www.coin-or.org/projects/Ipopt%
+	http://www.coin-or.org/projects/Ipopt.xml%
 	Ipopt
 %$$
 optimizer and 

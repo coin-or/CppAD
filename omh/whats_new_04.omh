@@ -1013,7 +1013,7 @@ The specifications for the routine $code FunForTwo$$
 was changed to use 
 $xref/glossary/Taylor Coefficient/Taylor coefficients/$$.
 This makes the interface to CppAD closer to the interface for
-$href%http://www.math.tu-dresden.de/~adol-c/%ADOLC%$$.
+$href%https://projects.coin-or.org/ADOL-C%ADOLC%$$.
 
 
 

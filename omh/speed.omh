@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -33,7 +33,7 @@ CppAD has a set of speed tests that are used to determine if
 certain changes improve its execution speed
 and to compare the C++ AD packages 
 $href%
-        http://www.math.tu-dresden.de/~adol-c/%
+        https://projects.coin-or.org/ADOL-C%
         Adolc
 %$$,
 $href%
