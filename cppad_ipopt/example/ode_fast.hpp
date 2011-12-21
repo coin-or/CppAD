@@ -35,6 +35,8 @@ $end
 # include "ode_problem.hpp"
 
 namespace {
+	using namespace cppad_ipopt;
+
 	class FG_fast : public cppad_ipopt_fg_info
 	{
 	private:

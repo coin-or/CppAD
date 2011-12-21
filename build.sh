@@ -577,14 +577,9 @@ EOF
 	echo "cat make_test.log        >> $log_file"
 	      cat make_test.log        >> $log_dir/$log_file
 	#
-	# Remove warnings due to global declarations in cppad_ipopt_nlp.hpp
-	# this needs to be fixed !!
-	if ( sed  < make_test.log \
-		-e '/sparse_jacobian.hpp:195:/d' \
-		-e '/cppad_ipopt_nlp.hpp:614:/d' \
-		-e '/sparse_hessian.hpp:209:/d' | grep ': *warning:' )
+	if grep ': *warning:' make_test.log
 	then 
-		echo "There are warnings in $dir/make.log"
+		echo "There are warnings in $dir/make_test.log"
 		exit 1
 	fi
 	# --------------------------------------------------------------------

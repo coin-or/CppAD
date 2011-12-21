@@ -56,6 +56,7 @@ $end
 # include <cppad_ipopt_nlp.hpp>
 
 namespace {
+	using namespace cppad_ipopt;
 
 	class FG_info : public cppad_ipopt_fg_info
 	{

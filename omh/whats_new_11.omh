@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_11$$
 $spell
+	namespace
 	boostvector
 	mega
 	inv
@@ -73,6 +74,23 @@ This section contains a list of the changes to CppAD during 2011
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 12-21$$
+The types 
+$code SizeVector$$,
+$code NumberVector$$,
+$code ADNumber$$, and
+$code ADVector$$,
+were in the global namespace and this was causing warnings 
+about the shadowing of these declarations. 
+The 
+$cref/cppad_ipopt namespace/cppad_ipopt_nlp/cppad_ipopt namespace/$$
+was created to avoid these problems.
+The simplest way to make old $cref cppad_ipopt_nlp$$ code work with this
+change is to use the command
+$codep
+	using namespace cppad_ipopt;
+$$
 
 $head 12-20$$
 $list number$$

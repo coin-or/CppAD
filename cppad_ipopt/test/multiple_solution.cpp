@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad_ipopt_nlp.hpp>
 
 namespace { // Begin empty namespace
+using namespace cppad_ipopt;
+
 // ---------------------------------------------------------------------------
 /*
 f(x)    = x[1]; k=0, ell=0, I[0] = 0, J[0] = 1

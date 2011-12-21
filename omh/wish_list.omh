@@ -64,18 +64,6 @@ that it works with complex AD types.
 $head Ipopt$$
 $index cppad_ipopt_nlp$$
 $list number$$
-The following types are declared globally when
-$cref/cppad_ipopt_nlp.hpp/cppad_ipopt_nlp/$$ is included:
-$code ADNumber$$,
-$code ADVector$$,
-$code SizeVector$$,
-$code NumberVector$$.
-This is not a good idea and causes warnings using $code g++$$ version
-4.6.1.
-One solution would be to create a $code CppAD::ipopt$$ namespace, 
-move $code cppad_ipopt$$ there, and deprecate the old interface.
-
-$lnext
 Create a separate documentation page for using $code cppad_ipopt_nlp$$
 with the $cref/simple representation/cppad_ipopt_nlp/Simple Representation/$$. 
 

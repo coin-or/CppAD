@@ -2,7 +2,7 @@
 # ifndef CPPAD_ODE_RUN_INCLUDED
 # define CPPAD_ODE_RUN_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -31,6 +31,7 @@ $end
 # include "ode_problem.hpp"
 
 namespace { // BEGIN empty namespace -----------------------------------------
+using namespace cppad_ipopt;
 
 template <class FG_info>
 void ipopt_ode_case(

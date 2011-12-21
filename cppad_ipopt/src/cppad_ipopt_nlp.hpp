@@ -15,6 +15,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin cppad_ipopt_nlp$$
 $dollar @$$
 $spell
+	namespace
 	dir
 	cppad
 	bool
@@ -76,6 +77,13 @@ $href%
 	CppAD
 %$$
 Algorithmic Differentiation package.
+
+$head cppad_ipopt namespace$$
+All of the declarations for these routines
+are in the $code cppad_ipopt$$ namespace 
+(not the $code CppAD$$ namespace).
+For example; $cref/SizeVector/cppad_ipopt_nlp/SizeVector/$$ below
+actually denotes the type $code cppad_ipopt::SizeVector$$.
 
 $head ipopt_library_paths$$
 If you are linking to a shared version of the Ipopt library,
@@ -605,6 +613,9 @@ $end
 \brief CppAD interface to Ipopt
 */
 
+// ---------------------------------------------------------------------------
+namespace cppad_ipopt {
+// ---------------------------------------------------------------------------
 
 /// A scalar value used to record operation sequence.
 typedef CppAD::AD<Ipopt::Number>       ADNumber;
@@ -1064,5 +1075,8 @@ public:
 };
 
 
+// ---------------------------------------------------------------------------
+} // end namespace cppad_ipopt
+// ---------------------------------------------------------------------------
 
 # endif

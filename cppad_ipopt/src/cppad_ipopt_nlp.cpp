@@ -30,6 +30,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cstdio>
 # endif
 
+// ---------------------------------------------------------------------------
+namespace cppad_ipopt {
+// ---------------------------------------------------------------------------
+
 
 /*! 
 Constructor for the \ref Nonlinear_Programming_Problem.
@@ -1133,3 +1137,7 @@ bool cppad_ipopt_nlp::intermediate_callback(
 	// std::cout << "intermediate_callback called" << std::endl;
 	return true;
 }
+
+// ---------------------------------------------------------------------------
+} // end namespace cppad_ipopt
+// ---------------------------------------------------------------------------

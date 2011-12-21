@@ -61,9 +61,8 @@ This preprocessor symbol makes it easier to compare these two options.
 Declares beginning of the CppAD namespace is a way not reconized by doxygen.
 
 \def CPPAD_END_NAMESPACE
-Used for end that matches the beginning of a CppAD namespace section
+Used for end that matches the beginning of a CppAD namespace section.
 */
-
 # define CPPAD_BEGIN_NAMESPACE namespace CppAD {
 # define CPPAD_END_NAMESPACE   }
 

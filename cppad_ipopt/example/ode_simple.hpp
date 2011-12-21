@@ -40,6 +40,8 @@ $end
 
 // define in the empty namespace
 namespace {
+	using namespace cppad_ipopt;
+
 	class FG_simple : public cppad_ipopt_fg_info
 	{
 	private:
