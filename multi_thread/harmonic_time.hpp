@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_HARMONIC_TME_INCLUDED
-# define CPPAD_HARMONIC_TME_INCLUDED
+# ifndef CPPAD_HARMONIC_TIME_INCLUDED
+# define CPPAD_HARMONIC_TIME_INCLUDED
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 

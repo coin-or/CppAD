@@ -41,11 +41,6 @@ then
 	exit 1
 fi
 #
-for name in example_a11c sum_i_inv multi_newton
-do
-	echo "openmp/run.sh $name"
-	openmp/run.sh $name
-done
 # ----------------------------------------------------------------------
 # Things to do in the svn_dist/work directory
 # ----------------------------------------------------------------------

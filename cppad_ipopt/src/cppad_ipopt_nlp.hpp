@@ -1,6 +1,6 @@
 /* $Id$ */
-# ifndef CPPAD_IPOPT_NLP_INCLUDED
-# define CPPAD_IPOPT_NLP_INCLUDED
+# ifndef CPPAD_CPPAD_IPOPT_NLP_INCLUDED
+# define CPPAD_CPPAD_IPOPT_NLP_INCLUDED
 /* --------------------------------------------------------------------------
 CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
