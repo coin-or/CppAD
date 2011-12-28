@@ -10,9 +10,72 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
+echo "Timing test of abs"
+cat << EOF > abs_time.cpp
+# include <cppad/cppad.hpp>
+
+namespace { // empty namespace
+	bool ok_ = true;
+
+	void test_once(void)
+	{	size_t n = 1000;
+		size_t m = 1;
+		CppAD::vector< CppAD::AD<double> > ax(n), ay(m);
+		size_t j;
+		for(j = 0; j < n; j++)
+			ax[j] = 0.; 
+		CppAD::Independent(ax);
+		for(j = 0; j < n; j++)
+			ay[0] += abs(ax[j]);
+		CppAD::ADFun<double> f(ax, ay);
+		CppAD::vector<double> x(n), dy(n);
+		for(j = 0; j < n; j++)
+			x[j] = double(n / 3 - j); 
+		dy =f.Jacobian(x); 
+		for(j = 0; j < n; j++)
+		{	if( x[j] < 0. )
+				ok_ &= dy[j] == -1.;
+			else if( x[j] == 0. )
+				ok_ &= dy[j] == 0.;
+			else
+				ok_ &= dy[j] == 1.;
+		}
+		return;
+	}
+	void test_repeat(size_t repeat)
+	{	size_t i;
+		for(i = 0; i < repeat; i++)
+			test_once();
+		return;
+	}
+} // end empty namespace
+
+int main(void)
+{
+	// run the test case and set the time return value
+	double test_time = 1.;
+	double time_out = CppAD::time_test(test_repeat, test_time);
+
+	size_t rate = size_t( 1. / time_out );
+	std::cout << "repeats per second = " << rate << std::endl;
+
+	// Correctness check
+	assert( ok_ );
+
+	return 0;
+}
+EOF
+echo "g++ -I $HOME/cppad/trunk -O2 -DNDEBUG abs_time.cpp -o abs_time"
+g++ -I $HOME/cppad/trunk -O2 -DNDEBUG abs_time.cpp -o abs_time
 #
-echo "Demonstrate a bug in multi level ad with abs function"
-cat << EOF > abs.cpp
+echo "rm abs_time.cpp"
+rm abs_time.cpp
+#
+echo "./abs_time"
+./abs_time
+# ---------------------------------------------------------------------------
+echo "Demonstrate bug in multi level ad with abs function"
+cat << EOF > abs_bug.cpp
 # include <cppad/cppad.hpp>
 int main(void)
 {	
@@ -59,11 +122,11 @@ int main(void)
 }
 EOF
 #
-echo "g++ -I $HOME/cppad/trunk abs.cpp -o abs"
-g++ -I $HOME/cppad/trunk abs.cpp -o abs
+echo "g++ -I $HOME/cppad/trunk abs_bug.cpp -o abs"
+g++ -I $HOME/cppad/trunk abs_bug.cpp -o abs
 #
-echo "rm abs.cpp"
-rm abs.cpp
+echo "rm abs_bug.cpp"
+rm abs_bug.cpp
 #
 echo "./abs"
 ./abs

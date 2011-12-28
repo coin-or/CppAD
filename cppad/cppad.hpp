@@ -40,6 +40,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/rosen_34.hpp>
 # include <cppad/runge_45.hpp>
 # include <cppad/speed_test.hpp>
+# include <cppad/time_test.hpp>
 # include <cppad/track_new_del.hpp>
 # include <cppad/thread_alloc.hpp>
 # include <cppad/vector.hpp>
