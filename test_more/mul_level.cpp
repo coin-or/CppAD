@@ -260,6 +260,58 @@ bool std_math(void)
 	return ok;
 }
 
+// supress this test until ../bug/abs.sh is fixed
+# ifdef CPPAD_NOT_DEFINED
+bool abs(void)
+{	bool ok = true;
+	using CppAD::AD;
+	using CppAD::Independent;
+	using CppAD::ADFun;
+	double eps = std::numeric_limits<double>::epsilon();
+
+
+	typedef AD<double>      ADdouble; // for first level of taping
+	typedef AD<ADdouble>   ADDdouble; // for second level of taping
+	size_t n = 1;         // number independent variables
+	size_t m = 1;         // number dependent and independent variables
+
+	CPPAD_TEST_VECTOR<double>       x(n),   y(m);
+	CPPAD_TEST_VECTOR<ADdouble>    ax(n),  ay(m);
+	CPPAD_TEST_VECTOR<ADDdouble>  aax(n), aay(m);
+
+	// create af(x) = abs(x)
+	aax[0] = 1.;
+	Independent( aax );
+	aay[0] = abs(aax[0]);
+	ADFun<ADdouble> af(aax, aay);
+
+	// create g(x) = af'(x)
+	ax[0] = 1.;
+	Independent( ax );
+	ay = af.Jacobian(ax);
+	ADFun<double> g(ax, ay);
+
+	// evaluate g(x) at same x as recording
+	x[0] = 1.;
+	y = g.Forward(0, x);
+
+	// check result
+	double check  = 1.;
+	ok &= CppAD::NearEqual(y[0], check, eps, eps);
+
+	// evaluate g(x) at different x from recording
+	// (but abs is an atomic operation so derivative should work)
+	x[0] = -1.;
+	y = g.Forward(0, x);
+
+	// check result
+	check  = -1.;
+	ok &= CppAD::NearEqual(y[0], check, eps, eps);
+
+	return ok;
+}
+# endif
+
 } // END empty namespace
 
 bool mul_level(void)
@@ -270,6 +322,9 @@ bool mul_level(void)
 	ok     &= adolc();
 # endif
 	ok     &= std_math();
+# ifdef CPPAD_NOT_DEFINED
+	ok     &= abs();
+# endif
 
 	return ok;
 }

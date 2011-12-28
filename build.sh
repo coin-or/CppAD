@@ -70,6 +70,7 @@ fi
 #
 # Files are created by the configure command and copied to the source tree
 configure_file_list="
+	cppad/configure.hpp
 	doc.omh
 	doxyfile
 	example/test_one.sh

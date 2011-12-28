@@ -39,17 +39,28 @@ cmd="g++ test_one.cpp $*
 	-std=c++98 -DCPPAD_ADOLC_TEST
 	-I.. -I/usr/include/boost-1_33_1
 "
-if [ -e @ADOLC_DIR@/include/adolc/adouble.h ]
+if [ -e @ADOLC_DIR@/include ]
 then
-	cmd="$cmd -I@ADOLC_DIR@/include -L@ADOLC_DIR@/lib -ladolc"
+	cmd="$cmd -I@ADOLC_DIR@/include"
 fi
-if [ -e @IPOPT_DIR@/lib/libipopt.a ]
+if [ -e @IPOPT_DIR@/include ]
 then
 	cmd="$cmd -I@IPOPT_DIR@/include"
-	cmd="$cmd -L@IPOPT_DIR@/lib -lipopt"
-	cmd="$cmd @FCLIBS@ @PTHREAD_LIB@ @DL_LIB@"
-	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@IPOPT_DIR@/lib"
 fi
+for lib in lib lib64
+do
+	if [ -e @ADOLC_DIR@/$lib ]
+	then
+		cmd="$cmd -L@ADOLC_DIR@/$lib -ladolc"
+		export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@ADOLC_DIR@/$lib"
+	fi
+	if [ -e @IPOPT_DIR@/$lib ]
+	then
+		cmd="$cmd -L@IPOPT_DIR@/$lib -lipopt"
+		cmd="$cmd @FCLIBS@ @PTHREAD_LIB@ @DL_LIB@"
+		export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:@IPOPT_DIR@/$lib"
+	fi
+done
 if [ "$1" == 'ndebug.cpp' ]
 then
 	cmd="$cmd -DNDEBUG"
