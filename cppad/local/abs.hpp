@@ -3,7 +3,7 @@
 # define CPPAD_ABS_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -29,58 +29,77 @@ $$
 
 $index abs, AD$$
 $index absolute, AD value$$
-$index value_, AD absolute$$
+$index value, AD absolute$$
 
 $section AD Absolute Value Function$$
 
 $head Syntax$$
-$syntax%%y% = abs(%x%)%$$
+$icode%y% = abs(%x%)%$$
 
 
 $head Purpose$$
 Evaluates the absolute value function.
 
-
 $head x$$
-The argument $italic x$$ has one of the following prototypes
-$syntax%
+The argument $icode x$$ has one of the following prototypes
+$codei%
 	const AD<%Base%>               &%x%
 	const VecAD<%Base%>::reference &%x%
 %$$
 
 $head y$$
-The result $italic y$$ has prototype
-$syntax%
+The result $icode y$$ has prototype
+$codei%
 	AD<%Base%> %y%
 %$$
 
 
 $head Operation Sequence$$
-This is an AD of $italic Base$$
-$xref/glossary/Operation/Atomic/atomic operation/1/$$
+This is an AD of $icode Base$$
+$cref/atomic operation/glossary/Operation/Atomic/$$
 and hence is part of the current
-AD of $italic Base$$
-$xref/glossary/Operation/Sequence/operation sequence/1/$$.
+AD of $icode Base$$
+$cref/operation sequence/glossary/Operation/Sequence/$$.
 
 $head Complex Types$$
 The function $code abs$$ is not defined for the AD type sequences
 above $code std::complex<float>$$ or $code std::complex<double>$$
 because the complex $code abs$$ function is not complex differentiable
-(see $xref/Faq/Complex Types/complex types faq/$$).
+(see $cref/complex types faq/Faq/Complex Types/$$).
 
-$head Directional Derivative$$
-$index directional, derivative abs$$
-$index derivative, directional abs$$
+$head Derivative$$
+CppAD defines the derivative of the $code abs$$ function is
+the $cref sign$$ function; i.e.,
+$latex \[
+{\rm abs}^{(1)} ( x ) = {\rm sign} (x ) = 
+\left\{ \begin{array}{rl}
+	+1 & {\rm if} \; x > 0 \\
+	0  & {\rm if} \; x = 0 \\
+	-1 & {\rm if} \; x < 0
+\end{array} \right.
+\] $$
+This used to be different; 
+see $cref/old derivative/abs/Old Derivative/$$ below.
+
+$head Example$$
+$children%
+	example/abs.cpp
+%$$
+The file
+$cref abs.cpp$$
+contains an example and test of this function.   
+It returns true if it succeeds and false otherwise.
+
+$head Old Derivative$$
 The derivative of the absolute value function is one for 
 $latex x > 0$$ and minus one for $latex x < 0$$.
-The subtitle issue is 
-how to compute its directional derivative
+CppAD used to compute its directional derivative
 what $latex x = 0$$.
 $pre
 
 $$
-The function corresponding to the argument $italic x$$ 
-and the result $italic y$$ are represented
+The function corresponding to the argument $icode x$$ 
+and the result $icode y$$ are represented
 by their Taylor coefficients; i.e.,
 $latex \[
 \begin{array}{rcl}
@@ -89,11 +108,11 @@ $latex \[
 	Y(t) & = & y^{(0)} (t) + y^{(1)} t + \cdots + y^{(p)} t^p
 \end{array}
 \] $$
-Note that $latex x^{(0)} = X(0)$$ is the value of $italic x$$ and
-$latex y^{(0)} = Y(0)$$ is the value of $italic y$$.
+Note that $latex x^{(0)} = X(0)$$ is the value of $icode x$$ and
+$latex y^{(0)} = Y(0)$$ is the value of $icode y$$.
 In the equations above, the order $latex p$$ is specified
-by a call to $xref/Forward/$$ or $xref/Reverse/$$ as follows:
-$syntax%
+by a call to $cref Forward$$ or $xref/Reverse/$$ as follows:
+$codei%
 	%f%.Forward(%p%, %dx%)
 	%f%.Reverse(%p%+1, %w%)
 %$$
@@ -113,16 +132,6 @@ y^{(\ell)}
 	- x^{(\ell)}  & {\rm if} \; x^{(k)} < 0
 \end{array} \right.
 \] $$
-
-
-$head Example$$
-$children%
-	example/abs.cpp
-%$$
-The file
-$xref/Abs.cpp/$$
-contains an example and test of this function.   
-It returns true if it succeeds and false otherwise.
 
 $end
 -------------------------------------------------------------------------------

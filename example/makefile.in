@@ -69,7 +69,7 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	reverse_two.cpp rev_one.cpp rev_sparse_hes.cpp \
 	rev_sparse_jac.cpp rev_two.cpp romberg_mul.cpp romberg_one.cpp \
 	rosen_34.cpp runge_45_1.cpp runge_45_2.cpp seq_property.cpp \
-	simple_vector.cpp sin.cpp sinh.cpp sparse_hessian.cpp \
+	simple_vector.cpp sign.cpp sin.cpp sinh.cpp sparse_hessian.cpp \
 	sparse_jacobian.cpp sqrt.cpp stack_machine.cpp sub.cpp \
 	sub_eq.cpp tan.cpp tanh.cpp tape_index.cpp thread_alloc.cpp \
 	unary_minus.cpp unary_plus.cpp user_tan.cpp value.cpp \
@@ -116,8 +116,8 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	rev_sparse_hes.$(OBJEXT) rev_sparse_jac.$(OBJEXT) \
 	rev_two.$(OBJEXT) romberg_mul.$(OBJEXT) romberg_one.$(OBJEXT) \
 	rosen_34.$(OBJEXT) runge_45_1.$(OBJEXT) runge_45_2.$(OBJEXT) \
-	seq_property.$(OBJEXT) simple_vector.$(OBJEXT) sin.$(OBJEXT) \
-	sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
+	seq_property.$(OBJEXT) simple_vector.$(OBJEXT) sign.$(OBJEXT) \
+	sin.$(OBJEXT) sinh.$(OBJEXT) sparse_hessian.$(OBJEXT) \
 	sparse_jacobian.$(OBJEXT) sqrt.$(OBJEXT) \
 	stack_machine.$(OBJEXT) sub.$(OBJEXT) sub_eq.$(OBJEXT) \
 	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
@@ -426,6 +426,7 @@ example_SOURCES = \
 	runge_45_2.cpp \
 	seq_property.cpp \
 	simple_vector.cpp \
+	sign.cpp \
 	sin.cpp \
 	sinh.cpp \
 	sparse_hessian.cpp \
@@ -596,6 +597,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runge_45_1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runge_45_2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/seq_property.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sign.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simple_vector.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sin.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sinh.Po@am__quote@

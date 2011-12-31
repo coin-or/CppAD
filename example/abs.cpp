@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -11,7 +11,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin Abs.cpp$$
+$begin abs.cpp$$
 $spell
 	abs
 $$
@@ -34,7 +34,7 @@ $end
 
 # include <cppad/cppad.hpp>
 
-bool Abs(void)
+bool abs(void)
 {	bool ok = true;
 
 	using CppAD::abs;
@@ -66,37 +66,35 @@ bool Abs(void)
 
 	// forward computation of partials w.r.t. a positive x[0] direction
 	size_t p = 1;
-	CPPAD_TEST_VECTOR<double> dx(n);
-	CPPAD_TEST_VECTOR<double> dy(m);
+	CPPAD_TEST_VECTOR<double> dx(n), dy(m);
 	dx[0] = 1.;
 	dy    = f.Forward(p, dx);
 	ok  &= (dy[0] == - dx[0]);
-	ok  &= (dy[1] == + dx[0]);
+	ok  &= (dy[1] ==   0.   ); // used to be ok  &= (dy[1] == + dx[0]);
 	ok  &= (dy[2] == + dx[0]);
 
 	// forward computation of partials w.r.t. a negative x[0] direction
 	dx[0] = -1.;
 	dy    = f.Forward(p, dx);
 	ok  &= (dy[0] == - dx[0]);
-	ok  &= (dy[1] == - dx[0]);
+	ok  &= (dy[1] ==   0.   ); // used to be ok  &= (dy[1] == - dx[0]);
 	ok  &= (dy[2] == + dx[0]);
 
 	// reverse computation of derivative of y[0] 
-	p    = 0;
-	CPPAD_TEST_VECTOR<double>  w(m);
-	CPPAD_TEST_VECTOR<double> dw(n);
+	p    = 1;
+	CPPAD_TEST_VECTOR<double>  w(m), dw(n);
 	w[0] = 1.; w[1] = 0.; w[2] = 0.;
-	dw   = f.Reverse(p+1, w);
+	dw   = f.Reverse(p, w);
 	ok  &= (dw[0] == -1.);
 
 	// reverse computation of derivative of y[1] 
 	w[0] = 0.; w[1] = 1.; w[2] = 0.;
-	dw   = f.Reverse(p+1, w);
+	dw   = f.Reverse(p, w);
 	ok  &= (dw[0] == 0.);
 
 	// reverse computation of derivative of y[2] 
 	w[0] = 0.; w[1] = 0.; w[2] = 1.;
-	dw   = f.Reverse(p+1, w);
+	dw   = f.Reverse(p, w);
 	ok  &= (dw[0] == 1.);
 
 	// use a VecAD<Base>::reference object with abs

@@ -81,11 +81,10 @@ $codep */
 /* $$
 
 $head CondExpOp$$
-The conditional expressions $cref/CondExp/$$ 
-requires ordered comparisons (e.g., $code <$$)
-and the C++ standard complex types do not allow for ordered comparisons.
-Thus, we make it an error to use the conditional comparisons 
-with complex types:
+The type $code std::complex<double>$$ does not supports the
+$code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators; see
+$cref/not ordered/base_cond_exp/CondExpTemplate/Not Ordered/$$.
+Hence its $code CondExpOp$$ function is defined by
 $codep */
 namespace CppAD {
 	inline std::complex<double> CondExpOp(
@@ -105,7 +104,7 @@ namespace CppAD {
 /* $$
 
 $head CondExpRel$$
-The following macro invocation
+The $cref/CPPAD_COND_EXP_REL/base_cond_exp/CondExpRel/$$ macro invocation
 $codep */
 namespace CppAD {
 	CPPAD_COND_EXP_REL( std::complex<double> )
@@ -216,10 +215,10 @@ namespace CppAD {
 }
 /* $$
 
-$head Unary Standard Math$$
-The following macro invocations define unary standard math functions
-required to use $code AD< std::complex<double> >$$
-and that are valid with complex arguments:
+$head Valid Unary Math$$
+The following macro invocations define the standard unary 
+math functions that are valid with complex arguments and are
+required to use $code AD< std::complex<double> >$$.
 $codep */
 namespace CppAD {
 	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, cos)
@@ -231,10 +230,11 @@ namespace CppAD {
 	CPPAD_STANDARD_MATH_UNARY(std::complex<double>, sqrt)
 }
 /* $$
-The following macro definition and invocations 
-define unary standard math functions
-required to use $code AD< std::complex<double> >$$
-and that are invalid with complex arguments:
+
+$head Invalid Unary Math$$
+The following macro definition and invocations define the standard unary 
+math functions that are invalid with complex arguments and are
+required to use $code AD< std::complex<double> >$$.
 $codep */
 # undef  CPPAD_USER_MACRO
 # define CPPAD_USER_MACRO(Fun)                                     \
@@ -251,6 +251,7 @@ namespace CppAD {
 	CPPAD_USER_MACRO(acos)
 	CPPAD_USER_MACRO(asin)
 	CPPAD_USER_MACRO(atan)
+	CPPAD_USER_MACRO(sign)
 }
 /* $$
 
@@ -357,6 +358,7 @@ namespace CppAD {
 	CPPAD_USER_MACRO_TWO(acos)
 	CPPAD_USER_MACRO_TWO(asin)
 	CPPAD_USER_MACRO_TWO(atan)
+	CPPAD_USER_MACRO_TWO(sign)
 	// The pow function
 	inline std::complex<float> pow(
 		const std::complex<float> &x , 

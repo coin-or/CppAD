@@ -55,8 +55,8 @@ enum OpCode {
 	BeginOp,  // used to mark the beginning of the tape
 	CExpOp,   // CondExp(cop, left, right, trueCase, falseCase)
 	ComOp,    // Compare(cop, result, left, right)
-	CoshOp,   // cosh(variable)
 	CosOp,    //  cos(variable)
+	CoshOp,   // cosh(variable)
 	CSumOp,   // Cummulative summation (has variable number of arguments)
 	DisOp,    //  discrete::eval(index, variable)
 	DivpvOp,  //      parameter  / variable
@@ -75,8 +75,9 @@ enum OpCode {
 	PowvpOp,  //  pow(variable,    parameter)
 	PowvvOp,  //  pow(variable,    variable)
 	PriOp,    //  PrintFor(text, parameter or variable, parameter or variable)
-	SinhOp,   // sinh(variable)
+	SignOp,   // sign(variable)
 	SinOp,    //  sin(variable)
+	SinhOp,   // sinh(variable)
 	SqrtOp,   // sqrt(variable)
 	StppOp,   //    z[parameter] = parameter
 	StpvOp,   //    z[parameter] = variable
@@ -85,8 +86,8 @@ enum OpCode {
 	SubpvOp,  //      parameter  - variable
 	SubvpOp,  //      variable   - parameter
 	SubvvOp,  //      variable   - variable
-	TanhOp,   //  tan(variable)
 	TanOp,    //  tan(variable)
+	TanhOp,   //  tan(variable)
 	// user atomic operation codes (note yet implemented)
 	UserOp,   //  start of a user atomic operaiton
 	UsrapOp,  //  this user atomic argument is a parameter
@@ -119,8 +120,8 @@ const size_t NumArgTable[] = {
 	0, // BeginOp
 	6, // CExpOp
 	4, // ComOp
-	1, // CoshOp
 	1, // CosOp
+	1, // CoshOp
 	0, // CSumOp   (actually has a variable number of arguments, not zero)
 	2, // DisOp
 	2, // DivpvOp
@@ -139,8 +140,9 @@ const size_t NumArgTable[] = {
 	2, // PowvpOp
 	2, // PowvvOp
 	5, // PriOp
-	1, // SinhOp
+	1, // SignOp
 	1, // SinOp
+	1, // SinhOp
 	1, // SqrtOp
 	3, // StppOp
 	3, // StpvOp
@@ -149,8 +151,8 @@ const size_t NumArgTable[] = {
 	2, // SubpvOp
 	2, // SubvpOp
 	2, // SubvvOp
-	1, // TanhOp
 	1, // TanOp
+	1, // TanhOp
 	4, // UserOp
 	1, // UsrapOp
 	1, // UsravOp
@@ -216,8 +218,8 @@ const size_t NumResTable[] = {
 	1, // BeginOp  offsets first variable to have index one (not zero)
 	1, // CExpOp
 	0, // ComOp
-	2, // CoshOp
 	2, // CosOp
+	2, // CoshOp
 	1, // CSumOp
 	1, // DisOp
 	1, // DivpvOp
@@ -236,8 +238,9 @@ const size_t NumResTable[] = {
 	3, // PowvpOp
 	3, // PowvvOp
 	0, // PriOp
-	2, // SinhOp
+	1, // SignOp
 	2, // SinOp
+	2, // SinhOp
 	1, // SqrtOp
 	0, // StppOp
 	0, // StpvOp
@@ -246,8 +249,8 @@ const size_t NumResTable[] = {
 	1, // SubpvOp
 	1, // SubvpOp
 	1, // SubvvOp
-	2, // TanhOp
 	2, // TanOp
+	2, // TanhOp
 	0, // UserOp
 	0, // UsrapOp
 	0, // UsravOp
@@ -393,7 +396,7 @@ void printOp(
 	const player<Base>   *Rec     ,
 	size_t                 i_var  , 
 	OpCode                 op     ,
-	const size_t          *ind    ,
+	const addr_t          *ind    ,
 	size_t                 nfz    ,
 	const  Value          *fz     ,
 	size_t                 nrz    ,
@@ -416,8 +419,8 @@ void printOp(
 		"Begin" ,
 		"CExp"  ,
 		"Com"   ,
-		"Cosh"  ,
 		"Cos"   ,
+		"Cosh"  ,
 		"CSum"  ,
 		"Dis"   ,
 		"Divpv" ,
@@ -436,8 +439,9 @@ void printOp(
 		"Powvp" ,
 		"Powvv" ,
 		"Pri"   ,
-		"Sinh"  ,
+		"Sign"  ,
 		"Sin"   ,
+		"Sinh"  ,
 		"Sqrt"  ,
 		"Stpp"  ,
 		"Stpv"  ,
@@ -446,8 +450,8 @@ void printOp(
 		"Subpv" ,
 		"Subvp" ,
 		"Subvv" ,
-		"Tanh"  ,
 		"Tan"   ,
+		"Tanh"  ,
 		"User"  ,
 		"Usrap" ,
 		"Usrav" ,
@@ -567,12 +571,13 @@ void printOp(
 		case CoshOp:
 		case ExpOp:
 		case LogOp:
+		case SignOp:
 		case SinOp:
 		case SinhOp:
 		case SqrtOp:
 		case UsravOp:
-		case TanhOp:
 		case TanOp:
+		case TanhOp:
 		CPPAD_ASSERT_UNKNOWN( NumArg(op) == 1 );
 		printOpField(os, "  v=", ind[0], ncol);
 		break;

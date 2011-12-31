@@ -14,6 +14,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_adolc.hpp$$
 $spell
+	Rel
+	codassign
 	eps
 	std
 	abs_geq
@@ -129,7 +131,6 @@ namespace CppAD {
 			case CompareGt: // left > right
 			condassign(result, left - right, trueCase, falseCase);
 			break;
-
 			default:
 			CppAD::ErrorHandler::Call(
 				true     , __LINE__ , __FILE__ ,
@@ -196,6 +197,7 @@ namespace CppAD {
 
 $head Ordered$$
 $codep */
+namespace CppAD {
 	inline bool GreaterThanZero(const adouble &x)
 	{    return (x > 0); }
 	inline bool GreaterThanOrZero(const adouble &x)
@@ -206,6 +208,7 @@ $codep */
 	{    return (x <= 0); }
 	inline bool abs_geq(const adouble& x, const adouble& y)
 	{	return fabs(x) >= fabs(y); }
+}
 /* $$
 
 $head Unary Standard Math$$
@@ -213,7 +216,6 @@ The following $cref/required/base_require/$$ functions
 are defined by the Adolc package for the $code adouble$$ base case:
 $pre
 $$
-$code abs$$,
 $code acos$$,
 $code asin$$,
 $code atan$$,
@@ -225,6 +227,34 @@ $code sin$$,
 $code sinh$$,
 $code sqrt$$,
 $code tan$$.
+
+$head sign$$
+This $cref/required/base_require/$$ function is defined using the 
+$code codassign$$ function so that its $code adouble$$ operation sequence
+does not depend on the value of $icode x$$.
+$codep */
+namespace CppAD {
+	inline adouble sign(const adouble& x)
+	{	adouble s_plus, s_minus;
+		// set s_plus to sign(x)/2,  except for case x == 0, s_plus = -.5
+		condassign(s_plus,  +x, -.5, .5);
+		// set s_minus to -sign(x)/2, except for case x == 0, s_minus = -.5
+		condassign(s_minus, -x, -.5, .5);
+		// set s to sign(x)
+		return s_plus - s_minus;
+	}
+}
+/* $$
+
+$head abs$$
+This $cref/required/base_require/$$ function uses the adolc $code fabs$$ 
+function:
+$codep */
+namespace CppAD {
+	inline adouble abs(const adouble& x)
+	{	return fabs(x); }
+}
+/* $$
 
 $head pow$$
 This $cref/required/base_require/$$ function 

@@ -385,6 +385,13 @@ size_t forward0sweep(
 			break;
 			// -------------------------------------------------
 
+			case SignOp:
+			// cos(x), sin(x)
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );
+			forward_sign_op_0(i_var, arg[0], J, Taylor);
+			break;
+			// -------------------------------------------------
+
 			case SinOp:
 			// cos(x), sin(x)
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar  );

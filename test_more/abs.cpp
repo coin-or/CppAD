@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -17,8 +17,8 @@ Test of directional derivative in AD< AD< double > > case.
 # include <cppad/cppad.hpp>
 
 
-bool Abs(void)
-{	// test if CppAD::abs uses if statement for value computations
+bool abs(void)
+{	// test if CppAD::abs uses if statement during forward computations
 	bool ok = true;
 
 	using CppAD::Independent;
@@ -26,40 +26,49 @@ bool Abs(void)
 	typedef CppAD::AD<double>      ADdouble;
 	typedef CppAD::AD< ADdouble > ADDdouble;
 
-	CPPAD_TEST_VECTOR< ADdouble > u(1);
-	u[0] = double(0);
-	Independent(u);
+	// af(x) = |x|
+	CPPAD_TEST_VECTOR< ADDdouble > aax(1), aay(1);
+	aax[0] = ADDdouble(0.);
+	CppAD::Independent(aax);
+	aay[0] = CppAD::abs(aax[0]);
+	CppAD::ADFun< ADdouble > af(aax, aay);
 
-	CPPAD_TEST_VECTOR< ADDdouble > v(1);
-	v[0] = ADDdouble(u[0]);
-	CppAD::Independent(v);
+	// f(x) = |x|
+	CPPAD_TEST_VECTOR< ADdouble > ax(1), ay(1);
+	ax[0] = ADdouble(0.);
+	CppAD::Independent(ax);
+	ay    = af.Forward(0, ax);
+	CppAD::ADFun<double> f(ax, ay);
 
-	CPPAD_TEST_VECTOR< ADDdouble > w(1);
-	w[0] = CppAD::abs(v[0]);
+	// compute derivative of af at a positive argument
+	CPPAD_TEST_VECTOR< ADdouble > adx(1), ady(1);
+	ax[0]  = 1.;
+	ay     = af.Forward(0, ax);
+	adx[0] = 1;
+	ady    = af.Forward(1, adx);
+	ok    &= (ady[0] == 1.);
 
-	// f(v) = |w|
-	CppAD::ADFun< ADdouble > f(v, w);
+	// compute derivative of af at a zero argument
+	ax[0]  = 0.;
+	ay     = af.Forward(0, ax);
+	adx[0] = 1;
+	ady    = af.Forward(1, adx);
+	ok    &= (ady[0] == 0.);
 
-	// extract the value of w
-	CPPAD_TEST_VECTOR< ADdouble > x(1);
-	x[0] = CppAD::Value(w[0]);
-	
-	// g(u) = |u|
-	CppAD::ADFun<double> g(u, x);
+	// compute derivative of f at zero argument
+	CPPAD_TEST_VECTOR<double> x(1), y(1), dx(1), dy(1);
+	x[0]  = 0.;
+	y     = f.Forward(0, x);
+	dx[0] = 1;
+	dy    = f.Forward(1, dx);
+	ok    &= (dy[0] == 0.);
 
-	// compute direction derivative of f at zero in positive direction
-	CPPAD_TEST_VECTOR< ADdouble > dv(1);
-	CPPAD_TEST_VECTOR< ADdouble > dw(1);
-	dv[0] = 1;
-	dw    = f.Forward(1, dv);
-	ok   &= (dw[0] == 1);
-
-	// compute direction derivative of g at zero in positive direction
-	CPPAD_TEST_VECTOR<double> du(1);
-	CPPAD_TEST_VECTOR<double> dx(1);
-	du[0] = 1;
-	dx    = g.Forward(1, du);
-	ok   &= (dx[0] == 1);
+	// compute derivative of af at a negative argument
+	x[0]  = -1.;
+	y     = f.Forward(0, x);
+	dx[0] = 1;
+	dy    = f.Forward(1, dx);
+	ok    &= (dy[0] == -1.);
 
 	return ok;
 }

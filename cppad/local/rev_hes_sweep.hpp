@@ -307,7 +307,7 @@ void RevHesSweep(
 
 			case DisOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1)
-
+			// derivativve is identically zero
 			break;
 			// -------------------------------------------------
 
@@ -435,6 +435,12 @@ void RevHesSweep(
 
 			case PriOp:
 			CPPAD_ASSERT_NARG_NRES(op, 5, 0);
+			break;
+			// -------------------------------------------------
+
+			case SignOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+			// Derivative is identiaclly zero
 			break;
 			// -------------------------------------------------
 

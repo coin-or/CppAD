@@ -164,6 +164,7 @@ example_SOURCES   = \
 	runge_45_2.cpp \
 	seq_property.cpp \
 	simple_vector.cpp \
+	sign.cpp \
 	sin.cpp \
 	sinh.cpp \
 	sparse_hessian.cpp \

@@ -81,7 +81,38 @@ must be defined and have the same prototype as $codei%CppAD::%Fun%$$.
 For example, 
 $cref/float/base_float.hpp/Unary Standard Math/$$,
 $cref/double/base_double.hpp/Unary Standard Math/$$, and
-$cref/complex/base_complex.hpp/Unary Standard Math/$$.
+$cref/complex valid unary math/base_complex.hpp/Valid Unary Math/$$.
+
+$head sign$$
+$index sign, base require$$
+$index base, sign require$$
+$index require, base sign$$
+The type $icode Base$$ must support the syntax
+$codei%
+	%y% = CppAD::sign(%x%)
+%$$
+which computes
+$latex \[
+z = \left\{ \begin{array}{ll} 
+	+1 & {\rm if} \; x > 0 \\
+	 0 & {\rm if} \; x = 0 \\
+	-1 & {\rm if} \; x < 0
+\end{array} \right.
+\] $$
+The arguments $icode x$$ has prototype
+$codei%
+	const %Base%& %x%
+%$$
+and the return value $icode z$$ has prototype
+$codei%
+	%Base% %z%
+%$$
+For example, see
+$cref/float/base_float.hpp/sign/$$,
+$cref/double/base_double.hpp/sign/$$.
+Note that, if ordered comparisons are not defined for the type $icode Base$$,
+the $code code sign$$ function should generate an assert if it is used; see
+$cref/complex invalid unary math/base_complex.hpp/Invalid Unary Math/$$.
 
 $head pow$$
 $index pow, base require$$
@@ -97,7 +128,7 @@ $codei%
 	const %Base%& %x%
 	const %Base%& %y%
 %$$
-The return value $icode z$$ has prototype
+and the return value $icode z$$ has prototype
 $codei%
 	%Base% %z%
 %$$
@@ -105,7 +136,6 @@ For example, see
 $cref/float/base_float.hpp/pow/$$,
 $cref/double/base_double.hpp/pow/$$, and
 $cref/complex/base_complex.hpp/pow/$$.
-
 
 $end
 -------------------------------------------------------------------------------

@@ -45,10 +45,10 @@ $index double, Base$$
 $section Enable use of AD<Base> where Base is double$$
 
 $head CondExpOp$$
-The type $code double$$ is a relatively simple type 
-that supports
-$code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators
-its $code CondExpOp$$ function is defined by
+The type $code double$$ is a relatively simple type that supports
+$code <$$, $code <=$$, $code ==$$, $code >=$$, and $code >$$ operators; see
+$cref/ordered type/base_cond_exp/CondExpTemplate/Ordered Type/$$.
+Hence its $code CondExpOp$$ function is defined by
 $codep */
 namespace CppAD {
 	inline double CondExpOp( 
@@ -63,7 +63,7 @@ namespace CppAD {
 /* $$
 
 $head CondExpRel$$
-The following macro invocation
+The $cref/CPPAD_COND_EXP_REL/base_cond_exp/CondExpRel/$$ macro invocation
 $codep */
 namespace CppAD {
 	CPPAD_COND_EXP_REL(double)
@@ -158,6 +158,21 @@ $codep */
 namespace CppAD {
 	inline double abs(const double& x)
 	{	return std::fabs(x); }
+}
+/* $$
+
+$head sign$$
+The following defines the $code CppAD::sign$$ function that
+is required to use $code AD<double>$$:
+$codep */
+namespace CppAD {
+	inline double sign(const double& x)
+	{	if( x > 0. )
+			return 1.;
+		if( x == 0. )
+			return 0.;
+		return -1.;
+	}
 }
 /* $$
 

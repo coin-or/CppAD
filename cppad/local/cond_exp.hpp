@@ -59,7 +59,7 @@ The relational $icode Rel$$ and comparison operator $icode Cop$$
 above have the following correspondence: 
 $codei%
 	%Rel%   Lt   Le   Eq   Ge   Gt
-	%Cop%    <   <=   ==    >   >=
+	%Cop%    <   <=   ==   >=   >
 %$$
 If $icode f$$ is the $cref ADFun$$ object corresponding to the
 AD operation sequence,

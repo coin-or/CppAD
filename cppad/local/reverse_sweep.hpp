@@ -423,6 +423,14 @@ void ReverseSweep(
 			break;
 			// --------------------------------------------------
 
+			case SignOp:
+			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
+			reverse_sign_op(
+				d, i_var, arg[0], J, Taylor, K, Partial
+			);
+			break;
+			// -------------------------------------------------
+
 			case SinOp:
 			CPPAD_ASSERT_UNKNOWN( i_var < numvar );
 			reverse_sin_op(

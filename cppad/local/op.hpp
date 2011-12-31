@@ -38,6 +38,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <cppad/local/parameter_op.hpp>
 # include <cppad/local/pow_op.hpp>
 # include <cppad/local/print_op.hpp>
+# include <cppad/local/sign_op.hpp>
 # include <cppad/local/sin_op.hpp>
 # include <cppad/local/sinh_op.hpp>
 # include <cppad/local/sqrt_op.hpp>

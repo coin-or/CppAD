@@ -269,7 +269,7 @@ void RevJacSweep(
 
 			case DisOp:
 			CPPAD_ASSERT_NARG_NRES(op, 2, 1);
-
+			// derivative is identically zero
 			break;
 			// -------------------------------------------------
 
@@ -391,6 +391,12 @@ void RevJacSweep(
 
 			case PriOp:
  			CPPAD_ASSERT_NARG_NRES(op, 5, 0);
+			break;
+			// -------------------------------------------------
+
+			case SignOp:
+			CPPAD_ASSERT_NARG_NRES(op, 1, 1);
+			// derivative is identically zero
 			break;
 			// -------------------------------------------------
 

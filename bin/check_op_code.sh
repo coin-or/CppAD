@@ -20,7 +20,7 @@ echo "bin/check_op_code.sh: checking that op codes are in alphabetical order:"
 # check enum list of codes are in alphabetical order
 sed -n -e '/^enum/,/^};/p' cppad/local/op_code.hpp | \
 	sed -e '/^enum/d' -e '/^};/d' \
-		-e 's/^[ 	]*//' -e 's/[, ].*//' -e '/^\/\//d' > bin/op_code.1.$$
+		-e 's/^[ 	]*//' -e 's/Op[, ].*//' -e '/^\/\//d' > bin/op_code.1.$$
 #
 sort --ignore-case bin/op_code.1.$$ > bin/op_code.2.$$
 if ! diff bin/op_code.1.$$ bin/op_code.2.$$ 
@@ -32,8 +32,12 @@ fi
 # -----------------------------------------------------------------------------
 # check NumArgTable
 sed -n -e '/NumArgTable\[\]/,/^};/p' cppad/local/op_code.hpp | \
-	sed -e '/NumArgTable\[\]/d' -e '/^};/d' \
-		-e 's|^[ 	]*[0-9],* *// *||' -e 's| .*||' > bin/op_code.3.$$
+	sed \
+		-e '/NumArgTable\[\]/d' \
+		-e '/^};/d' \
+		-e 's|^[ 	]*[0-9],* *// *||' \
+		-e 's|Op.*||' \
+		> bin/op_code.3.$$
 #
 if ! diff bin/op_code.1.$$ bin/op_code.3.$$ 
 then
@@ -44,8 +48,13 @@ fi
 # -----------------------------------------------------------------------------
 # check NumResTable (last line of NumResTable is not used)
 sed -n -e '/NumResTable\[\]/,/^};/p' cppad/local/op_code.hpp | \
-	sed -e '/NumResTable\[\]/d' -e '/^};/d' -e '/Last entry not used/d' \
-	-e 's|^[ 	]*[0-9],* *// *||' -e 's| .*||' > bin/op_code.4.$$
+	sed \
+		-e '/NumResTable\[\]/d' \
+		-e '/^};/d' \
+		-e '/Last entry not used/d' \
+		-e 's|^[ 	]*[0-9],* *// *||' \
+		-e 's|Op.*||' \
+		> bin/op_code.4.$$
 #
 if ! diff bin/op_code.1.$$ bin/op_code.4.$$ 
 then
@@ -57,8 +66,12 @@ fi
 # -----------------------------------------------------------------------------
 # check OpName 
 sed -n -e '/char \*OpName\[\]/,/^[ 	]*};/p' cppad/local/op_code.hpp | \
-	sed -e '/char \*OpName\[\]/d' -e '/^[ 	]*};/d' \
-	-e 's|^[ 	]*"||' -e 's|".*|Op|' > bin/op_code.5.$$
+	sed \
+		-e '/char \*OpName\[\]/d' \
+		-e '/^[ 	]*};/d' \
+		-e 's|^[ 	]*"||' \
+		-e 's|".*||' \
+		> bin/op_code.5.$$
 #
 if ! diff bin/op_code.1.$$ bin/op_code.5.$$ 
 then
