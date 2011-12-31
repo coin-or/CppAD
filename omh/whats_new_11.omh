@@ -75,6 +75,23 @@ This section contains a list of the changes to CppAD during 2011
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 12-30$$
+$list number$$
+There was a bug when using $cref abs$$ with an $code AD< AD<double> >$$
+argument, whereby the corresponding $code AD<double>$$ operation sequence
+depended on the value of the argument to the $code abs$$ function.  
+$lnext
+Change the specifications for the derivative of the $cref abs$$
+function to be the $cref sign$$ function; see to 
+$cref%old derivative%abs%Old Derivative%$$ specifications.
+$lnext
+Add the $cref sign$$ function to the $codei%AD<%Base%>%$$ list of
+available functions. 
+In addition, add the 
+$cref%sign%base_std_math%sign%$$ function to the list of
+$cref%base type requirements%base_require%$$.
+$lend
+
 $head 12-28$$
 The file $cref/time_test.hpp/time_test/Include/$$
 was not being included by $code cppad/cppad.hpp$$.
