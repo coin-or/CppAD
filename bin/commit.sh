@@ -11,7 +11,7 @@
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
 # replacement text for this commit
-cat << EOF > bin/commit.1.$$
+cat << EOF > bin/commit.user.$$
 This is a template file for making commits to the CppAD repository.
 Lines with no 'at' characters, are general comments not connected to 
 a specific file. Lines containing an 'at' character are "file name" 
@@ -26,7 +26,7 @@ EOF
 if [ ! -e "bin/commit.sh" ]
 then
 	echo "bin/commit.sh: must be executed from its parent directory"
-	rm bin/commit.1.$$
+	rm bin/commit.*.$$
 	exit 1
 fi
 # -----------------------------------------------------------------------
@@ -56,7 +56,7 @@ The files bin/commit.sh and bin/commit.sed cannot be commited this way; use
 	svn commit -m "your log message" bin/commit.sh bin/commit.sed
 for commits to these files.
 EOF
-	rm bin/commit.1.$$
+	rm bin/commit.*.$$
 	exit 1
 fi
 # -----------------------------------------------------------------------
@@ -68,58 +68,59 @@ do
 		echo "svn status $file"
 		svn status $file
 		echo "bin/commit.sh: aborting because $file changed"
-		rm bin/commit.1.$$
+		rm bin/commit.*.$$
 		exit 1
 	fi
 done
 # -----------------------------------------------------------------------
-if [ "$1" == 'list' ] || [ "$1" == 'edit' ]
-then
-	# -------------------------------------------------
-	unknown=`svn status | sed -n \
-		-e '/[/ ]junk\./d'  \
-		-e '/[/]test_one.cpp/d' \
-		-e '/[/]test_one.sh/d' \
-		-e '/^[?].*\.am$/p'  \
-		-e '/^[?].*\.cpp$/p'  \
-		-e '/^[?].*\.hpp$/p'  \
-		-e '/^[?].*\.in$/p'  \
-		-e '/^[?].*\.omh$/p'  \
-		-e '/^[?].*\.sh$/p'   | sed -e 's/^[?]//'`
-	msg="aborting because the following files are unknown to svn"
-	print_msg="no"
-	for file in $unknown
-	do
-		if [ ! -e "$file.in" ]
+# check for abort do to unknown files
+unknown=`svn status | sed -n \
+	-e '/[/ ]junk\./d'  \
+	-e '/[/]test_one.cpp/d' \
+	-e '/[/]test_one.sh/d' \
+	-e '/^[?].*\.am$/p'  \
+	-e '/^[?].*\.cpp$/p'  \
+	-e '/^[?].*\.hpp$/p'  \
+	-e '/^[?].*\.in$/p'  \
+	-e '/^[?].*\.omh$/p'  \
+	-e '/^[?].*\.sh$/p'   | sed -e 's/^[?]//'`
+msg="aborting because the following files are unknown to svn"
+print_msg="no"
+for file in $unknown
+do
+	if [ ! -e "$file.in" ]
+	then
+		if [ "$print_msg" == "no" ]
 		then
-			if [ "$print_msg" == "no" ]
-			then
-				echo "bin/commit.sh: $msg"
-				print_msg="yes"
-			fi
-			echo $file
+			echo "bin/commit.sh: $msg"
+			print_msg="yes"
 		fi
-	done
-	if [ "$print_msg" == "yes" ]
-	then
-		rm bin/commit.1.$$
-		exit 1
+		echo $file
 	fi
-	# -------------------------------------------------
-	svn status | sed -n -e '/^[ADMRC] /p' | \
-		sed -e 's/^[ADMRC] [+ ]*//' \
-			-e '/^bin\/commit.sh$/d' -e '/^bin\/commit.sed$/d' | \
-		sort -u > bin/commit.1.$$
-	# -------------------------------------------------
-	if [ "$1" == 'list' ]
-	then
-		cat bin/commit.1.$$
-		rm bin/commit.1.$$
-		exit 0
-	fi
-	# -------------------------------------------------
+done
+if [ "$print_msg" == "yes" ]
+then
+	rm bin/commit.*.$$
+	exit 1
+fi
+# -------------------------------------------------
+# list of files that changed
+svn status | sed -n -e '/^[ADMRC] /p' | \
+	sed -e 's/^[ADMRC] [+ ]*//' \
+		-e '/^bin\/commit.sh$/d' -e '/^bin\/commit.sed$/d' | \
+	sort -u > bin/commit.list.$$
+# -------------------------------------------------
+if [ "$1" == 'list' ]
+then
+	cat bin/commit.list.$$
+	rm bin/commit.*.$$
+	exit 0
+fi
+# -------------------------------------------------
+if [ "$1" == 'edit' ]
+then
 	abort="no"
-	list=`cat bin/commit.1.$$`
+	list=`cat bin/commit.list.$$`
 	for file in $list
 	do
 		# exclude */makefile.in and *.vcproj files
@@ -130,28 +131,25 @@ then
 		   [ "$local_file" != "makefile.in" ] && \
 		   [ "$file_ext" != "vcproj" ]
 		then
-			sed -f bin/commit.sed $file > bin/commit.2.$$
-			if ! diff $file bin/commit.2.$$ > /dev/null
+			sed -f bin/commit.sed $file > bin/commit.tmp.$$
+			if ! diff $file bin/commit.tmp.$$ > /dev/null
 			then
 				echo "---------------------------------------"
 				echo "bin/commit.sh: automatic changes to $file:"
-				if diff $file bin/commit.2.$$
+				if diff $file bin/commit.tmp.$$
 				then
 					echo "bin/commit.sh: program error"
-					rm bin/commit.2.$$
-					rm bin/commit.1.$$
+					rm bin/commit.*.$$
 					exit 1
 				fi
 				abort="yes"
 				if [ -x $file ]
 				then
-					mv bin/commit.2.$$ $file
+					mv bin/commit.tmp.$$ $file
 					chmod +x $file
 				else
-					mv bin/commit.2.$$ $file
+					mv bin/commit.tmp.$$ $file
 				fi
-			else
-				rm bin/commit.2.$$
 			fi
 		fi
 	done
@@ -159,7 +157,7 @@ then
 	then
 		echo "bin/commit.sh: aborting because of automatic edits above."
 		echo "If these edits are ok, rerun bin/commit.sh edit" 
-		rm bin/commit.1.$$
+		rm bin/commit.*.$$
 		exit 1
 	fi
 	#
@@ -168,7 +166,7 @@ then
 	#
 	echo "creating new bin/commit.sh"
 	sed -n -e '1,/@/p' bin/commit.sh.old | sed -e '/@/d' > bin/commit.sh
-	sed bin/commit.1.$$ -e 's/$/@/'                     >> bin/commit.sh
+	sed bin/commit.list.$$ -e 's/$/@/'                  >> bin/commit.sh
 	sed -n -e '/^EOF/,$p' bin/commit.sh.old             >> bin/commit.sh
 	#
 	echo "------------------------------------"
@@ -181,18 +179,23 @@ then
      echo "chmod +x bin/commit.sh"
            chmod +x bin/commit.sh
 	#
-	rm bin/commit.1.$$
+	rm bin/commit.*.$$
 	exit 0
 fi
 # -----------------------------------------------------------------------
-list=`sed -e '/@/! d' -e 's/@.*//' bin/commit.1.$$`
-msg=`sed -e '/@ *$/d' -e 's|.*/\([^/]*@\)|\1|' -e 's|@|:|' bin/commit.1.$$`
+if [ "$1" != 'run' ]
+then
+	echo "bin/commit.sh: program error"
+	exit 1
+fi
+list=`sed -e '/@/! d' -e 's/@.*//' bin/commit.user.$$`
+msg=`sed -e '/@ *$/d' -e 's|.*/\([^/]*@\)|\1|' -e 's|@|:|' bin/commit.user.$$`
 #
 if (echo $list | grep 'bin/commit.sh$' > /dev/null)
 then
 	echo "bin/commit.sh: cannot be used to commit changes to itself."
 	echo "remove it from the list of files in bin/commit.sh"
-	rm bin/commit.1.$$
+	rm bin/commit.*.$$
 	exit 1
 fi
 #
@@ -200,20 +203,18 @@ if (echo $list | grep 'bin/commit.sed$' > /dev/null)
 then
 	echo "bin/commit.sh: cannot be used to commit changes to bin/commit.sed"
 	echo "remove it from the list of files in bin/commit.sh"
-	rm bin/commit.1.$$
+	rm bin/commit.*.$$
 	exit 1
 fi
 #
-sed -f bin/commit.sed cppad/configure.hpp > bin/commit.2.$$
-if ! diff cppad/configure.hpp bin/commit.2.$$
+sed -f bin/commit.sed cppad/configure.hpp > bin/commit.tmp.$$
+if ! diff cppad/configure.hpp bin/commit.tmp.$$
 then
 	echo "bin/commit.sh run: unexpected values in cppad/configure.hpp"
-	rm bin/commit.1.$$
-	rm bin/commit.2.$$
+	rm bin/commit.*.$$
 	exit 1
 fi
-rm bin/commit.1.$$
-rm bin/commit.2.$$
+rm bin/commit.*.$$
 #
 echo "svn commit -m \""
 echo "$msg"
