@@ -83,6 +83,11 @@ echo "cp trunk/bin/new_stable.sh stable/$stable_version/bin/new_stable.sh"
 echo "cd stable/$stable_version"
       cd stable/$stable_version
 #
+# set the version number in configure.ac
+echo "automatic editing: $stable_version/configure.ac"
+sed -i configure.ac \
+	-e "s/AC_INIT(CppAD, [0-9]*,/AC_INIT(CppAD, $stable_version.0,/"
+#
 # set the value of stable version in corresponding new_release.sh
 echo "automatic editing: $stable_version/bin/new_release.sh"
 sed -i bin/new_release.sh \
