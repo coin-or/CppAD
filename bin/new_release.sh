@@ -50,18 +50,9 @@ then
 	echo "then commit the changes."
 	exit 1
 fi
-echo "svn revert cppad/config.h"
-      svn revert cppad/config.h
-if ! grep "PACKAGE_STRING.*CppAD.*$release_version" cppad/config.h > /dev/null
-then
-	echo bin/"new_release.sh: Version in cppad/config.h not $release_version."
-	echo "	./build.sh version automake configure"
-	echo "should fix this."
-	exit 1
-fi
 echo "svn revert cppad/configure.hpp"
       svn revert cppad/configure.hpp
-if ! grep "PACKAGE_STRING.*CppAD.*$release_version" \
+if ! grep "PACKAGE_STRING *\"cppad-$release_version\"" \
 	cppad/configure.hpp > /dev/null
 then
 	echo bin/"new_release.sh: Version in cppad/configure.hpp not $release_version."
