@@ -17,8 +17,8 @@ then
 fi
 # -----------------------------------------------------------------------------
 copy_from_trunk="keep"     # do (frist time), keep (use current), redo
-trunk_revision="1773"      # trunk revision number that stable corresponds to
-yyyy_mm_dd="2011-01-01"    # Date corresponding to this trunk revision
+trunk_revision="2241"      # trunk revision number that stable corresponds to
+yyyy_mm_dd="2012-01-01"    # Date corresponding to this trunk revision
 # -----------------------------------------------------------------------------
 echo "copy_from_trunk=$copy_from_trunk"
 echo "trunk_revision=$trunk_revision"
@@ -89,8 +89,8 @@ sed -i bin/new_release.sh \
 	-e "s/stable_version=.*/stable_version=\"$stable_version\"/"
 #
 # Inform build.sh that this is a stable version
-echo "automatic editing: $stable_version/bin/build.sh"
-sed -i bin/build.sh -e 's/^version_type=.*/version_type="stable"/'
+echo "automatic editing: $stable_version/build.sh"
+sed -i build.sh -e 's/^version_type=.*/version_type="stable"/'
 #
 # Set web for download of corresponding release version
 echo "automatic editing: $stable_version/omh/install_windows.omh.in"
@@ -110,9 +110,9 @@ cat << EOF
    All changed files should be present. Review the differences.
 2: If you find problems, fix trunk/bin/new_stable.sh, re-run it, and goto 1.
 3: In stable/$stable_version run the following command:
-      bin/build.sh all
+      ./build.sh all test
 4: If errors occur, fix trunk/bin/new_stable.sh, re-run it, and goto 1.
-5: Commit changes to trunk/bin/new_stable.sh.
+5: Commit changes to trunk/bin/new_stable.sh and trunk/bin/only_date.sh files.
 6: In stable/$stable_version commit changes using
 	bin/commit.sh edit
    then edit bin/commit.sh to change the comments and then run
