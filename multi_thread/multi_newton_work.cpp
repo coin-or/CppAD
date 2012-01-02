@@ -363,8 +363,9 @@ bool multi_newton_combine(CppAD::vector<double>& xout)
 	// remove duplicates and points that are not solutions
 	xout.resize(0);
 	bool   ok = true;
-	double xlast = CppAD::nan(0.);
 	size_t thread_num;
+	// initialize as more that sub_lenght_ / 2 from any possible solution 
+	double xlast = - sub_length_; 
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
 	{	vector<double>& x = work_all_[thread_num].x;
 
@@ -372,7 +373,7 @@ bool multi_newton_combine(CppAD::vector<double>& xout)
 		for(i = 0; i < x.size(); i++)
 		{	// check for case where this point is lower limit for this
 			// thread and upper limit for previous thread
-			if( (i == 0 ) || fabs(x[i] - xlast) > sub_length_ / 2. )  
+			if( fabs(x[i] - xlast) > sub_length_ / 2. )  
 			{	xout.push_back( x[i] );
 				xlast = x[i];
 			}
