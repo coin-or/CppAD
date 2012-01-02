@@ -1,0 +1,59 @@
+$Id$
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
+
+$begin whats_new_12$$
+$spell
+	CppAD
+	openmp
+$$
+
+$section CppAD Changes and Additions During 2012$$
+
+$head Introduction$$
+This section contains a list of the changes to CppAD during 2012
+(in reverse order by date).
+The purpose of this section is to
+assist you in learning about changes between various versions of CppAD.
+
+$head 01-02$$
+$list number$$
+The $cref thread_alloc$$ memory allocator was changed to avoid
+certain false sharing situations
+(cases where two different thread were changing and using memory
+that is on the same page of cache).
+On one tests machine, the execution time for the 32 thread case for the test
+$codep
+	./openmp_test multi_newton 1 32 1000 4800 10 true
+$$
+improved from  0.0302 seconds to 0.0135 seconds.
+
+$lnext
+There was a problem with the correctness test section of the
+$cref multi_newton_time.cpp$$ test.
+The convergence criteria, and correctness criteria,
+needed to be scaled by the largest argument values.
+This was a problem with over a hundred zeros were included in the test
+(and the largest argument value was $latex 100 \pi$$ or more).
+
+$lnext
+There was a problem with the way that
+$cref/multi_newton_combine/multi_newton_work.cpp/multi_newton_combine/$$
+joined two solutions into one.
+It is possible that one of the solutions that needs to be joined is on 
+the  boundary and very close to a solution in the next (or previous interval)
+that is not on the  boundary. In this case,
+the one with the smaller function value is chosen.
+
+$lend
+for the previous 
+
+$end

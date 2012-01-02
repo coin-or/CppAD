@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -223,7 +223,7 @@ namespace { // empty namespace
 		double pi      = 4. * std::atan(1.); 
 		double xlow    = 0.;
 		double xup     = (num_zero_ - 1) * pi;
-		double eps     = 100. * CppAD::epsilon<double>();
+		double eps     = xup * 100. * CppAD::epsilon<double>();
 		size_t max_itr = 20;
 	
 		bool ok = multi_newton(
@@ -282,8 +282,9 @@ bool multi_newton_time(
 	time_out = CppAD::time_test(test_repeat, test_time);
 
 	// Call test_once for a correctness check
-	double eps = 100. * CppAD::epsilon<double>();
-	double pi  = 4. * std::atan(1.);
+	double pi      = 4. * std::atan(1.); 
+	double xup     = (num_zero_ - 1) * pi;
+	double eps     = xup * 100. * CppAD::epsilon<double>();
 	ok        &= (xout_.size() == num_zero);
 	size_t i   = 0;
 	for(i = 0; i < num_zero; i++)
