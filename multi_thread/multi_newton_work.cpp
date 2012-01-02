@@ -199,7 +199,6 @@ namespace {
 // do the work for one thread
 void multi_newton_worker(void)
 {	using CppAD::vector;
-	using CppAD::abs;
 
 	// Split [xlow, xup] into num_sub intervales and
 	// look for one zero in each sub-interval.
@@ -246,7 +245,7 @@ void multi_newton_worker(void)
 		{	fun_(xcur, fcur, dfcur);
 
 			// check end of iterations
-			if( abs(fcur) <= epsilon_ )
+			if( fabs(fcur) <= epsilon_ )
 				more_itr = false;
 			if( (xcur == xlow_i ) & (fcur * dfcur > 0.) )
 				more_itr = false; 
@@ -263,29 +262,29 @@ void multi_newton_worker(void)
 				more_itr = ++itr < max_itr_;
 			}
 		}
-		if( abs( fcur ) <= epsilon_ )
+		if( fabs( fcur ) <= epsilon_ )
 		{	// check for case where xcur is lower bound for this 
 			// sub-interval and upper bound for previous sub-interval
-			if( abs(xcur - xlast) > sub_length_ / 2 )
+			if( fabs(xcur - xlast) > sub_length_ / 2 )
 			{	x.push_back( xcur );
 				xlast = xcur;
 				flast = fcur;
 			} 
-			else if( abs(fcur) < abs(flast) )
+			else if( fabs(fcur) < fabs(flast) )
 			{	x[ x.size() - 1] = xcur;
 				xlast            = xcur;
 				flast            = fcur;
 			}
 		}
-		if( abs( fcur ) <= epsilon_ )
+		if( fabs( fcur ) <= epsilon_ )
 		{	// check for case where xcur is lower bound for this 
 			// sub-interval and upper bound for previous sub-interval
-			if( abs(xcur - xlast) > sub_length_ / 2 )
+			if( fabs(xcur - xlast) > sub_length_ / 2 )
 			{	x.push_back( xcur );
 				xlast = xcur;
 				flast = fcur;
 			} 
-			else if( abs(fcur) < abs(flast) )
+			else if( fabs(fcur) < fabs(flast) )
 			{	x[ x.size() - 1] = xcur;
 				xlast            = xcur;
 				flast            = fcur;
@@ -381,7 +380,7 @@ bool multi_newton_combine(CppAD::vector<double>& xout)
 			{	double fcur, flast, df;
 				fun_(x[i],   fcur, df);
 				fun_(xlast, flast, df);
-				if( abs(fcur) < abs(flast) )
+				if( fabs(fcur) < fabs(flast) )
 				{	xout[ xout.size() - 1] = x[i];
 					xlast                  = x[i];
 				}

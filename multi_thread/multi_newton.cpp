@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -176,7 +176,6 @@ bool multi_newton(
 	bool ok = true;
 	using CppAD::AD;
 	using CppAD::vector;
-	using CppAD::abs;
 
 	// setup the work for num_threads threads
 	ok &= multi_newton_setup(
