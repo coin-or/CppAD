@@ -12,6 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_12$$
 $spell
+	xout
+	fabs
+	fcur
 	CppAD
 	openmp
 $$
@@ -23,6 +26,25 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-07$$
+$list number$$
+A duplicated code block beginning with
+$codep
+	if( fabs( fcur ) <= epsilon_ )
+$$
+was removed from the routine $code multi_newton_worker$$, in the file
+$cref multi_newton_work.cpp$$.
+
+$lnext
+The distance between solutions that are joined to one solution
+has been corrected from $latex (b - a) / (2 n )$$ to
+$latex (b - a) / n $$; see
+$cref/xout/multi_newton.cpp/xout/$$.
+The correction was in the file $cref multi_newton_work.cpp$$ where
+$code sub_length_ / 2$$ was change to $code sub_length_$$.
+
+$lend
 
 $head 01-02$$
 $list number$$

@@ -224,8 +224,8 @@ void multi_newton_worker(void)
 
 	// check for a zero on each sub-interval
 	size_t i;
-	double xlast = xlow - sub_length_; // far away
-	double flast = 1.;                 // large value
+	double xlast = xlow - 2 * sub_length_; // over sub_length_ away from x_low
+	double flast = 2 * epsilon_;           // any value > epsilon_ would do
 	for(i = 0; i < num_sub; i++)
 	{
 		// note that when i == 0, xlow_i == xlow (exactly)
@@ -265,21 +265,7 @@ void multi_newton_worker(void)
 		if( fabs( fcur ) <= epsilon_ )
 		{	// check for case where xcur is lower bound for this 
 			// sub-interval and upper bound for previous sub-interval
-			if( fabs(xcur - xlast) > sub_length_ / 2 )
-			{	x.push_back( xcur );
-				xlast = xcur;
-				flast = fcur;
-			} 
-			else if( fabs(fcur) < fabs(flast) )
-			{	x[ x.size() - 1] = xcur;
-				xlast            = xcur;
-				flast            = fcur;
-			}
-		}
-		if( fabs( fcur ) <= epsilon_ )
-		{	// check for case where xcur is lower bound for this 
-			// sub-interval and upper bound for previous sub-interval
-			if( fabs(xcur - xlast) > sub_length_ / 2 )
+			if( fabs(xcur - xlast) >= sub_length_ )
 			{	x.push_back( xcur );
 				xlast = xcur;
 				flast = fcur;
@@ -373,7 +359,7 @@ bool multi_newton_combine(CppAD::vector<double>& xout)
 		for(i = 0; i < x.size(); i++)
 		{	// check for case where this point is lower limit for this
 			// thread and upper limit for previous thread
-			if( fabs(x[i] - xlast) > sub_length_ / 2. )  
+			if( fabs(x[i] - xlast) >= sub_length_ )  
 			{	xout.push_back( x[i] );
 				xlast = x[i];
 			}

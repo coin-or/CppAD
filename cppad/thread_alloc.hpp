@@ -129,14 +129,14 @@ private:
 	// ---------------------------------------------------------------------
 	/// Structure of information for each thread
 	struct thread_alloc_info {
-		/// root of inuse list for this thread and each capacity
-		thread_alloc* root_inuse_;
-		/// root of available list for this thread and each capacity
-		thread_alloc* root_available_;
 		/// count of available bytes for this thread 
 		size_t        count_inuse_;
 		/// count of inuse bytes for this thread 
 		size_t        count_available_;
+		/// root of available list for this thread and each capacity
+		thread_alloc* root_available_;
+		/// root of inuse list for this thread and each capacity
+		thread_alloc* root_inuse_;
 	};
 	/*!
 	Get pointer to the information for this thread.
@@ -180,9 +180,12 @@ private:
 				2 * CPPAD_MAX_NUM_CAPACITY * sizeof(thread_alloc);
 			void* v_ptr       = ::operator new(size);
 			info              = reinterpret_cast<thread_alloc_info*>(v_ptr);
-			info->root_inuse_ = reinterpret_cast<thread_alloc*>(info + 1);
 			info->root_available_ = 
-				info->root_inuse_ + CPPAD_MAX_NUM_CAPACITY;
+				reinterpret_cast<thread_alloc*>(info + 1);
+			// If NDEBUG is true, this memory is not used, but it still
+			// helps separate this structure from one for the next thread.
+			info->root_inuse_ = 
+				info->root_available_ + CPPAD_MAX_NUM_CAPACITY;
 			//
 			all_info[thread] = info;
 
