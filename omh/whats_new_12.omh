@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_12$$
 $spell
+	lpthread
 	xout
 	fabs
 	fcur
@@ -26,6 +27,11 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-12$$
+The $code -lpthread$$ library was missing from the 
+$cref multi_thread$$ test program linker command.
+This has been fixed.
 
 $head 01-07$$
 $list number$$

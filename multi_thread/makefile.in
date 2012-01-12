@@ -244,7 +244,7 @@ top_srcdir = @top_srcdir@
 #
 AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(OPENMP_FLAGS)
 #
-AM_LDFLAGS = $(BOOST_LIB) $(BTHREAD_LIB) $(OPENMP_FLAGS)
+AM_LDFLAGS = $(BOOST_LIB) $(BTHREAD_LIB) $(PTHREAD_LIB) $(OPENMP_FLAGS)
 #
 SHARED_SRC = \
 	thread_test.cpp \

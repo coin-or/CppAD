@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -52,7 +52,7 @@ endif
 #
 AM_CPPFLAGS       = -I. -I$(top_srcdir) $(BOOST_INCLUDE) $(OPENMP_FLAGS)
 #
-AM_LDFLAGS        = $(BOOST_LIB) $(BTHREAD_LIB) $(OPENMP_FLAGS)
+AM_LDFLAGS        = $(BOOST_LIB) $(BTHREAD_LIB) $(PTHREAD_LIB) $(OPENMP_FLAGS)
 #
 SHARED_SRC = \
 	thread_test.cpp \
