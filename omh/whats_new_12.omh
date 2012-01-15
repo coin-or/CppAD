@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_12$$
 $spell
+	cppad-%yyyymmdd%
 	lpthread
 	xout
 	fabs
@@ -27,6 +28,13 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-15$$
+Fix $code make test$$ so it works when 
+$cref/configure/InstallUnix/Configure/$$ is run in the distribution directory
+$codei%cppad-%yyyymmdd%$$
+(not just when it is run in a different directory).
+
 
 $head 01-12$$
 The $code -lpthread$$ library was missing from the 
