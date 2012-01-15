@@ -256,7 +256,9 @@ top_srcdir = @top_srcdir@
 @CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 #
 # Microsoft project files and script to run a single test
-EXTRA_DIST = test_more.sln test_more.vcproj test_one.sh.in 
+EXTRA_DIST = test.sh \
+	test_more.sln test_more.vcproj test_one.sh.in 
+
 #
 AM_CPPFLAGS = -I. \
 	-I$(top_srcdir) \
@@ -678,13 +680,8 @@ ndebug.$(OBJEXT): ndebug.cpp
 	$(CXXCOMPILE) \
 	-DNDEBUG -c $(top_srcdir)/test_more/ndebug.cpp -o ndebug.$(OBJEXT)
 
-test.sh: test_more$(EXEEXT)
-	echo "#! /bin/sh -e"  > test.sh
-	echo "./test_more "  >> test.sh
-	chmod +x test.sh
-
-test: test.sh
-	./test.sh
+test: check
+	$(srcdir)/test.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

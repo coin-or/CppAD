@@ -1,6 +1,6 @@
 dnl $Id$
 dnl ---------------------------------------------------------------------------
-dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+dnl CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 dnl
 dnl CppAD is distributed under multiple licenses. This distribution is under
 dnl the terms of the
@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20120101, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20120115, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -496,6 +496,9 @@ AC_CONFIG_FILES([
 	cppad/configure.hpp
 	doxyfile
 	doc.omh
+	cppad_ipopt/example/test.sh
+	cppad_ipopt/speed/test.sh
+	cppad_ipopt/test/test.sh
 	example/test_one.sh
 	omh/install_unix.omh
 	omh/install_windows.omh
@@ -527,6 +530,30 @@ AC_CONFIG_FILES([
 dnl END AC_CONFIG_FILES 
 dnl the comment line above is used by ./new_stable.sh
 
+AC_CONFIG_COMMANDS(
+	[cppad_ipopt_example_test.sh],
+	[chmod +x cppad_ipopt/example/test.sh],
+)	[]
+AC_CONFIG_COMMANDS(
+	[cppad_ipopt_speed_test.sh],
+	[chmod +x cppad_ipopt/speed/test.sh],
+	[]
+)
+AC_CONFIG_COMMANDS(
+	[cppad_ipopt_test_test.sh],
+	[chmod +x cppad_ipopt/test/test.sh],
+	[]
+)
+AC_CONFIG_COMMANDS(
+	[example_test_one.sh],
+	[chmod +x example/test_one.sh],
+	[]
+)
+AC_CONFIG_COMMANDS(
+	[test_more_test_one.sh],
+	[chmod +x test_more/test_one.sh],
+	[]
+)
 
 dnl create all the requested output files
 AC_OUTPUT

@@ -1,3 +1,4 @@
+#! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
@@ -9,28 +10,4 @@
 # A copy of this license is included in the COPYING file of this distribution.
 # Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # -----------------------------------------------------------------------------
-#
-# automake input file
-#
-# CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
-DEFS          =
-#
-if CppAD_BOOST_DIR
-BOOST_INCLUDE = -I$(BOOST_DIR)
-else
-BOOST_INCLUDE =
-endif
-#
-# Microsoft project files
-EXTRA_DIST          =  test.sh \
-	get_started.sln get_started.vcproj
-#
-check_PROGRAMS      = get_started 
-#
-AM_CPPFLAGS         = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
-AM_CXXFLAGS         = -g $(CXX_FLAGS)
-#
-get_started_SOURCES = get_started.cpp
-#
-test: check
-	$(srcdir)/test.sh
+./fadbad correct 123

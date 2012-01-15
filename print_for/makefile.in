@@ -208,7 +208,9 @@ top_srcdir = @top_srcdir@
 
 #
 # Microsoft project files
-EXTRA_DIST = print_for.sln print_for.vcproj
+EXTRA_DIST = test.sh \
+	print_for.sln print_for.vcproj
+
 #
 AM_CPPFLAGS = -I. $(CPPAD_INCLUDE) $(BOOST_INCLUDE)
 #
@@ -475,16 +477,8 @@ uninstall-am:
 	uninstall-am
 
 
-test.sh: print_for$(EXEEXT)
-	echo "#! /bin/sh -e"                                     > test.sh
-	echo "./print_for | tee test.log"                       >> test.sh
-	echo "sed -e '/^Test passes/,\$$d' < test.log > test.1" >> test.sh
-	echo "sed -e '1,/^Test passes/d'   < test.log > test.2" >> test.sh
-	echo "if ! diff test.1 test.2 ; then exit 1 ; fi"       >> test.sh
-	chmod +x test.sh
-
-test: test.sh
-	./test.sh
+test: check
+	$(srcdir)/test.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

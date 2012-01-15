@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -31,7 +31,8 @@ CPPAD_INCLUDE = -I$(top_srcdir)
 endif
 #
 # Microsoft project files
-EXTRA_DIST        = print_for.sln print_for.vcproj
+EXTRA_DIST        =  test.sh \
+	print_for.sln print_for.vcproj
 #
 check_PROGRAMS    = print_for
 #
@@ -41,13 +42,5 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 #
 print_for_SOURCES = print_for.cpp
 
-test.sh: print_for$(EXEEXT)
-	echo "#! /bin/sh -e"                                     > test.sh
-	echo "./print_for | tee test.log"                       >> test.sh
-	echo "sed -e '/^Test passes/,\$$d' < test.log > test.1" >> test.sh
-	echo "sed -e '1,/^Test passes/d'   < test.log > test.2" >> test.sh
-	echo "if ! diff test.1 test.2 ; then exit 1 ; fi"       >> test.sh
-	chmod +x test.sh
-
-test: test.sh
-	./test.sh
+test: check
+	$(srcdir)/test.sh

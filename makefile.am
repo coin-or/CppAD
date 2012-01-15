@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -309,23 +309,19 @@ test_directory_list = \
 	test_more 
 
 test: all 
-	rm -f test.log
+	rm -f test.log 
 	touch test.log
-	rm -f test.sh
 	echo "#! /bin/sh -e"                               >  test.sh
 	for dir in $(test_directory_list) ; do (                        \
-		rm -f $$dir/test.sh                                        \
 		echo "#"                                      >> test.sh ; \
+		echo "echo \"Running make test in $$dir\""    >> test.sh ; \
 		echo "cd $$dir "                              >> test.sh ; \
-		echo "make test.sh"                           >> test.sh ; \
-		echo "echo \"Running test.sh in $$dir\""      >> test.sh ; \
-		echo "./test.sh"                              >> test.sh ; \
+		echo "make test"                              >> test.sh ; \
 		echo "cd $(ABS_TOP_BUILDDIR)"                 >> test.sh ; \
 	) done
 	echo "exit 0"                                      >> test.sh
 	chmod +x test.sh
 	./test.sh
-#
 #
 dist-hook:
 	rm -rf `find . -name .svn`

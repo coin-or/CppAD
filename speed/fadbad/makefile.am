@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -14,6 +14,8 @@
 #
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
+#
+EXTRA_DIST = test.sh
 #
 if CppAD_BOOST_DIR
 BOOST_INCLUDE = -I$(BOOST_DIR)
@@ -47,10 +49,5 @@ fadbad_SOURCES = \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
 
-test.sh: fadbad$(EXEEXT)
-	echo "#! /bin/sh -e"                 > test.sh
-	echo "./fadbad correct 123"         >> test.sh
-	chmod +x test.sh
-
-test: test.sh
-	./test.sh
+test: check
+	$(srcdir)/test.sh

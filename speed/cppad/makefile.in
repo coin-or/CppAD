@@ -203,7 +203,9 @@ top_srcdir = @top_srcdir@
 #
 @CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 #
-EXTRA_DIST = cppad.sln cppad.vcproj
+EXTRA_DIST = test.sh \
+	cppad.sln cppad.vcproj
+
 #
 AM_CPPFLAGS = -I$(top_srcdir) $(BOOST_INCLUDE)
 #
@@ -509,15 +511,8 @@ uninstall-am:
 	uninstall-am
 
 
-test.sh: cppad$(EXEEXT)
-	echo "#! /bin/sh -e"                 > test.sh
-	echo "./cppad correct 123"          >> test.sh
-	echo "./cppad correct 123 retape"   >> test.sh
-	echo "./cppad correct 123 optimize" >> test.sh
-	chmod +x test.sh
-
-test: test.sh
-	./test.sh
+test: check
+	$(srcdir)/test.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -13,6 +13,8 @@
 #
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
+#
+EXTRA_DIST = test.sh.in
 #
 if CppAD_BOOST_DIR
 BOOST_INCLUDE = -I$(BOOST_DIR)
@@ -45,11 +47,5 @@ test_more_SOURCES   = \
 	retape_k1_l1.cpp \
 	retape_k1_l2.cpp
 
-test.sh: test_more$(EXEEXT)
-	echo "#! /bin/sh -e"  > test.sh
-	echo "export LD_LIBRARY_PATH=\"$(CPPAD_IPOPT_LD_PATH)\"" >> test.sh
-	echo "./test_more"   >> test.sh
-	chmod +x test.sh
-
-test: test.sh
+test: check
 	./test.sh

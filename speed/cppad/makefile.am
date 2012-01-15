@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -21,7 +21,8 @@ else
 BOOST_INCLUDE =
 endif
 #
-EXTRA_DIST       = cppad.sln cppad.vcproj
+EXTRA_DIST       =  test.sh \
+	cppad.sln cppad.vcproj
 #
 check_PROGRAMS   = cppad 
 #
@@ -48,12 +49,5 @@ cppad_SOURCES = \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
 
-test.sh: cppad$(EXEEXT)
-	echo "#! /bin/sh -e"                 > test.sh
-	echo "./cppad correct 123"          >> test.sh
-	echo "./cppad correct 123 retape"   >> test.sh
-	echo "./cppad correct 123 optimize" >> test.sh
-	chmod +x test.sh
-
-test: test.sh
-	./test.sh
+test: check
+	$(srcdir)/test.sh

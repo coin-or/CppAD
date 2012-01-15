@@ -302,7 +302,8 @@ top_srcdir = @top_srcdir@
 @CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 # 
 # Microsoft project files an script to run a single test
-EXTRA_DIST = example.sln example.vcproj test_one.sh.in \
+EXTRA_DIST = test.sh \
+	example.sln example.vcproj test_one.sh.in \
 	$(ADOLC_EXTRA_FILES)
 
 @CppAD_MS_COMPILER_FALSE@AM_CXXFLAGS = -g $(ADOLC_FLAGS)
@@ -830,13 +831,8 @@ uninstall-am:
 	uninstall-am
 
 
-test.sh: example$(EXEEXT)
-	echo "#! /bin/sh -e"  > test.sh
-	echo "./example "    >> test.sh 
-	chmod +x test.sh
-
-test: test.sh
-	./test.sh
+test: check
+	$(srcdir)/test.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

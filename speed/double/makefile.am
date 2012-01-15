@@ -1,6 +1,6 @@
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -21,7 +21,8 @@ else
 BOOST_INCLUDE =
 endif
 #
-EXTRA_DIST       = double.sln double.vcproj
+EXTRA_DIST       =  test.sh \
+	double.sln double.vcproj
 #
 check_PROGRAMS   = double 
 #
@@ -48,10 +49,5 @@ double_SOURCES = \
 	sparse_hessian.cpp \
 	sparse_jacobian.cpp
 
-test.sh: double$(EXEEXT)
-	echo "#! /bin/sh -e"            > test.sh
-	echo "./double correct 123"    >> test.sh
-	chmod +x test.sh
-
-test: test.sh
-	./test.sh
+test: check
+	$(srcdir)/test.sh

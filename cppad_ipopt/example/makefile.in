@@ -33,13 +33,14 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 check_PROGRAMS = example$(EXEEXT)
 subdir = cppad_ipopt/example
-DIST_COMMON = $(srcdir)/makefile.am $(srcdir)/makefile.in
+DIST_COMMON = $(srcdir)/makefile.am $(srcdir)/makefile.in \
+	$(srcdir)/test.sh.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = test.sh
 CONFIG_CLEAN_VPATH_FILES =
 am_example_OBJECTS = example.$(OBJEXT) get_started.$(OBJEXT) \
 	ode_check.$(OBJEXT) ode_fast_check.$(OBJEXT) \
@@ -209,7 +210,8 @@ top_srcdir = @top_srcdir@
 @CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 # 
 # Microsoft project files (and ipopt install utility for Visual Studio)
-EXTRA_DIST = \
+EXTRA_DIST = test.sh \
+	\
 	example_windows.bat \
 	ode1.omh \
 	ode2.omh
@@ -279,6 +281,8 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+test.sh: $(top_builddir)/config.status $(srcdir)/test.sh.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
@@ -509,13 +513,7 @@ uninstall-am:
 	uninstall-am
 
 
-test.sh: example$(EXEEXT)
-	echo "#! /bin/sh -e"  > test.sh
-	echo "export LD_LIBRARY_PATH=\"$(CPPAD_IPOPT_LD_PATH)\"" >> test.sh
-	echo "./example"     >> test.sh
-	chmod +x test.sh
-
-test: test.sh
+test: check
 	./test.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

@@ -200,6 +200,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+#
+EXTRA_DIST = test.sh
 @CppAD_BOOST_DIR_FALSE@BOOST_INCLUDE = 
 #
 @CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
@@ -510,13 +512,8 @@ uninstall-am:
 	uninstall-am
 
 
-test.sh: sacado$(EXEEXT)
-	echo "#! /bin/sh -e"                 > test.sh
-	echo "./sacado correct 123"         >> test.sh
-	chmod +x test.sh
-
-test: test.sh
-	./test.sh
+test: check
+	$(srcdir)/test.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

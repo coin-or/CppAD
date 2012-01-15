@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -270,14 +270,6 @@ EOF
 	do
 		echo "cp $file ../$file"
 		cp $file ../$file
-		#
-		# change shell scripts to be executable
-		ext=`echo $file | sed -e 's/.*\.\([^.]*\)$/\1/'`
-		if [ "$ext" == "sh" ]
-		then
-			echo "chmod +x ../$file"
-			chmod +x ../$file
-		fi
 	done
 	#
 	echo "OK: ./build.sh configure"
