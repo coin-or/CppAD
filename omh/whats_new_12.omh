@@ -29,6 +29,15 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-16$$
+The test program $code multi_thread/test.sh$$ failed if the 
+$cref/OpenmpFlags/InstallUnix/OpenmpFlags/$$ not present in the
+$code configure$$ command.
+This has been fixed.
+In addition, this $code test.sh$$ has been made faster by cycling through
+the available threading systems instead of doing every system for every
+test. 
+
 $head 01-15$$
 Fix $code make test$$ so it works when 
 $cref/configure/InstallUnix/Configure/$$ is run in the distribution directory
