@@ -84,8 +84,5 @@ pthread_test_SOURCES = \
 #
 dist_noinst_SCRIPTS = test.sh
 #
-test.sh: $(OPENMP_TEST)$(EXEEXT) $(BTHREAD_TEST)$(EXEEXT) $(PTHREAD_TEST)$(EXEEXT)  
-	if [ ! -e 'test.sh' ]; then cp $(srcdir)/test.sh test.sh ; fi
-#
-test: test.sh
-	./test.sh
+test: check
+	$(srcdir)/test.sh

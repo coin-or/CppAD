@@ -12,6 +12,9 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_12$$
 $spell
+	makefile
+	hpp
+	gcc
 	cppad-%yyyymmdd%
 	lpthread
 	xout
@@ -28,6 +31,18 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-19$$
+$list number$$
+In cases where $code test.sh$$ is trivial,
+put its operations in corresponding makefile.
+$lnext
+Fix problem compiling $code cppad/speed/sparse_evaluate.hpp$$
+under gcc on Fedora 17.
+$lnext
+Run $code multi_thread/test.sh$$ from source directory
+(no need to copy to build directory).
+$lend
 
 $head 01-16$$
 The test program $code multi_thread/test.sh$$ failed if the 

@@ -643,11 +643,8 @@ uninstall-am:
 	uninstall-am
 
 #
-test.sh: $(OPENMP_TEST)$(EXEEXT) $(BTHREAD_TEST)$(EXEEXT) $(PTHREAD_TEST)$(EXEEXT)  
-	if [ ! -e 'test.sh' ]; then cp $(srcdir)/test.sh test.sh ; fi
-#
-test: test.sh
-	./test.sh
+test: check
+	$(srcdir)/test.sh
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
