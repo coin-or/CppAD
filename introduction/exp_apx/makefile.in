@@ -210,8 +210,7 @@ top_srcdir = @top_srcdir@
 @CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 #
 # Microsoft project files
-EXTRA_DIST = test.sh \
-	\
+EXTRA_DIST = \
 	exp_apx.sln \
 	exp_apx.vcproj \
 	exp_2.omh \
@@ -224,7 +223,7 @@ AM_CXXFLAGS = -g $(CXX_FLAGS)
 exp_apx_SOURCES = \
 	main.cpp \
 	exp_2.cpp \
-        exp_2.hpp \
+	exp_2.hpp \
 	exp_2_cppad.cpp \
 	exp_2_for1.cpp \
 	exp_2_for2.cpp \
@@ -515,7 +514,7 @@ uninstall-am:
 
 
 test: check
-	$(srcdir)/test.sh
+	./exp_apx
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

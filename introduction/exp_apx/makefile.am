@@ -21,8 +21,7 @@ BOOST_INCLUDE =
 endif
 #
 # Microsoft project files
-EXTRA_DIST        =  test.sh \
-	\
+EXTRA_DIST        =  \
 	exp_apx.sln \
 	exp_apx.vcproj \
 	exp_2.omh \
@@ -36,7 +35,7 @@ AM_CXXFLAGS       = -g $(CXX_FLAGS)
 exp_apx_SOURCES   = \
 	main.cpp \
 	exp_2.cpp \
-        exp_2.hpp \
+	exp_2.hpp \
 	exp_2_cppad.cpp \
 	exp_2_for1.cpp \
 	exp_2_for2.cpp \
@@ -53,4 +52,4 @@ exp_apx_SOURCES   = \
 	exp_eps_rev2.cpp
 
 test: check
-	$(srcdir)/test.sh
+	./exp_apx

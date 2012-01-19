@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -112,6 +112,8 @@ $end
 # include <cppad/speed/sparse_evaluate.hpp>
 # include <cppad/near_equal.hpp>
 
+// Link std::exp to spare_hessian_evaluate.hpp for doubles.
+# include <math.h>
 
 extern bool link_sparse_hessian(
 	size_t                     repeat     ,

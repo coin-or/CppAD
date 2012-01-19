@@ -21,7 +21,7 @@ else
 BOOST_INCLUDE =
 endif
 #
-EXTRA_DIST       =  test.sh \
+EXTRA_DIST       =  \
 	gprof.sed
 #
 check_PROGRAMS   = profile 
@@ -50,4 +50,4 @@ profile_SOURCES = \
 	../cppad/sparse_jacobian.cpp
 
 test: check
-	$(srcdir)/test.sh
+	./profile correct 123

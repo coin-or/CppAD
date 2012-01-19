@@ -21,8 +21,9 @@ else
 BOOST_INCLUDE =
 endif
 #
-EXTRA_DIST       =  test.sh \
-	double.sln double.vcproj
+EXTRA_DIST       =  \
+	double.sln \
+	double.vcproj
 #
 check_PROGRAMS   = double 
 #
@@ -50,4 +51,4 @@ double_SOURCES = \
 	sparse_jacobian.cpp
 
 test: check
-	$(srcdir)/test.sh
+	./double correct 123

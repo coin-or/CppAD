@@ -21,8 +21,9 @@ else
 BOOST_INCLUDE =
 endif
 #
-EXTRA_DIST       =  test.sh \
-	cppad.sln cppad.vcproj
+EXTRA_DIST       =  \
+	cppad.sln \
+	cppad.vcproj
 #
 check_PROGRAMS   = cppad 
 #
@@ -50,4 +51,6 @@ cppad_SOURCES = \
 	sparse_jacobian.cpp
 
 test: check
-	$(srcdir)/test.sh
+	./cppad correct 123
+	./cppad correct 123 retape
+	./cppad correct 123 optimize

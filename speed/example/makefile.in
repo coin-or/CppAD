@@ -204,8 +204,10 @@ top_srcdir = @top_srcdir@
 #
 @CppAD_BOOST_DIR_TRUE@BOOST_INCLUDE = -I$(BOOST_DIR)
 #
-EXTRA_DIST = test.sh \
-	example.sln example.vcproj speed_program.cpp
+EXTRA_DIST = \
+	example.sln \
+	example.vcproj \
+	speed_program.cpp
 
 #
 AM_CPPFLAGS = -I. -I$(top_srcdir) $(BOOST_INCLUDE)
@@ -496,7 +498,7 @@ uninstall-am:
 
 
 test: check
-	$(srcdir)/test.sh
+	./example
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -34,8 +34,10 @@ BOOST_INCLUDE =
 endif
 #
 # Microsoft project files and script to run a single test
-EXTRA_DIST        =  test.sh \
-	test_more.sln test_more.vcproj test_one.sh.in 
+EXTRA_DIST        =  \
+	test_more.sln \
+	test_more.vcproj \
+	test_one.sh.in 
 #
 check_PROGRAMS    = test_more
 #
@@ -127,4 +129,4 @@ ndebug.$(OBJEXT): ndebug.cpp
 	-DNDEBUG -c $(top_srcdir)/test_more/ndebug.cpp -o ndebug.$(OBJEXT)
 
 test: check
-	$(srcdir)/test.sh
+	./test_more

@@ -22,8 +22,9 @@ BOOST_INCLUDE =
 endif
 #
 # Microsoft project files
-EXTRA_DIST          =  test.sh \
-	get_started.sln get_started.vcproj
+EXTRA_DIST          =  \
+	get_started.sln \
+	get_started.vcproj
 #
 check_PROGRAMS      = get_started 
 #
@@ -33,4 +34,4 @@ AM_CXXFLAGS         = -g $(CXX_FLAGS)
 get_started_SOURCES = get_started.cpp
 #
 test: check
-	$(srcdir)/test.sh
+	./get_started

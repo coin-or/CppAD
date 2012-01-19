@@ -37,8 +37,10 @@ BOOST_INCLUDE =
 endif
 # 
 # Microsoft project files an script to run a single test
-EXTRA_DIST        =  test.sh \
-	example.sln example.vcproj test_one.sh.in \
+EXTRA_DIST        =  \
+	example.sln \
+	example.vcproj \
+	test_one.sh.in \
 	$(ADOLC_EXTRA_FILES)
 #
 check_PROGRAMS    = example 
@@ -186,4 +188,4 @@ example_SOURCES   = \
 	vec_ad.cpp 
 
 test: check
-	$(srcdir)/test.sh
+	./example

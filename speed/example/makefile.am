@@ -20,8 +20,10 @@ else
 BOOST_INCLUDE =
 endif
 #
-EXTRA_DIST        =  test.sh \
-	example.sln example.vcproj speed_program.cpp
+EXTRA_DIST        =  \
+	example.sln \
+	example.vcproj \
+	speed_program.cpp
 #
 check_PROGRAMS    = example 
 #
@@ -44,4 +46,4 @@ example_SOURCES   = \
 	time_test.cpp
 
 test: check
-	$(srcdir)/test.sh
+	./example

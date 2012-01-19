@@ -15,8 +15,6 @@
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
-EXTRA_DIST = test.sh
-#
 if CppAD_BOOST_DIR
 BOOST_INCLUDE = -I$(BOOST_DIR)
 else
@@ -49,4 +47,5 @@ adolc_SOURCES = \
 	sparse_jacobian.cpp
 
 test: check
-	$(srcdir)/test.sh
+	./adolc correct 123
+	./adolc correct 123 retape
