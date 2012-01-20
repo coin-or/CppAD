@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -28,23 +28,23 @@ $section Using Multiple Levels of AD$$
 
 
 $head Background$$
-If $italic f$$ is an $syntax%ADFun<%Base%>%$$ object,
+If $icode f$$ is an $codei%ADFun<%Base%>%$$ object,
 the vectors returned by 
-$xref/Forward//f.Forward/$$,
+$cref/f.Forward/Forward/$$,
 and
-$xref/Reverse//f.Reverse/$$,
-have values in the base type ($italic Base$$) and not
-$syntax%AD<%Base%>%$$.
+$cref/f.Reverse/Reverse/$$,
+have values in the base type ($icode Base$$) and not
+$codei%AD<%Base%>%$$.
 This reflects the fact that operations used to calculate
 these function values are not recorded by the tape corresponding to
-$syntax%AD<%Base%>%$$ operations. 
+$codei%AD<%Base%>%$$ operations. 
 
 $head Motivation$$
 Suppose that you uses derivatives of one or more inner functions
 as part of the operations 
 needed to compute an outer function.
 For example,
-the derivatives returned by $syntax%%f%.Forward%$$
+the derivatives returned by $icode%f%.Forward%$$
 might be used as part of 
 Taylor's method for solving ordinary
 differential equations. 
@@ -56,11 +56,11 @@ This can be accomplished in the following way:
 $list number$$
 The operations during the calculations of the function defining the
 differential equation could be preformed using the a class of the form
-$syntax% AD< AD<double> >%$$. 
+$codei% AD< AD<double> >%$$. 
 
 $lnext
 The operations during the calculation of Taylor's method
-could be preformed using the $syntax% AD<double>%$$ class.
+could be preformed using the $codei% AD<double>%$$ class.
 
 $lnext
 The results of the solution of the differential equation
@@ -70,78 +70,79 @@ $lend
 
 $head General Solution$$
 Provided that we are currently recording
-$syntax% AD<double>%$$ operations,
-and $italic fin$$ is an $syntax%ADFun< AD<double> >%$$ object,
+$codei% AD<double>%$$ operations,
+and $icode fin$$ is an $codei%ADFun< AD<double> >%$$ object,
 the operations used to compute the vectors
 returned by 
-$syntax%%fin%.Forward%$$,
-$syntax%%fin%.Rev%$$,
+$icode%fin%.Forward%$$,
+$icode%fin%.Rev%$$,
 and
-$syntax%%fin%.RevTwo%$$,
+$icode%fin%.RevTwo%$$,
 will be recorded on the tape corresponding to
-$syntax%AD<double>%$$ operations. 
+$codei%AD<double>%$$ operations. 
 
 
 $head General Procedure$$
 
 $subhead Start ADBaseTape$$
 The first step is to declare the independent variables using
-$syntax%
+$codei%
 	Independent(%x%)
 %$$
-where $italic x$$ is 
-a $cref/SimpleVector/$$ with elements of type $syntax%AD<double>%$$.
+where $icode x$$ is 
+a $cref SimpleVector$$ with elements of type $codei%AD<double>%$$.
 This will start recording a new tape of
-operations performed using $syntax%AD<double>%$$ class objects.
+operations performed using $codei%AD<double>%$$ class objects.
 
 $subhead Start ADDBaseTape$$
 The next step is to declare the independent variables using 
-$syntax%
+$codei%
 	Independent(%X%)
 %$$
-where $italic X$$ is 
-a $cref/SimpleVector/$$ with elements of type 
-$syntax%CPPAD_TEST_VECTOR< AD< AD<double> > >%$$.
+where $icode X$$ is 
+a $cref SimpleVector$$ with elements of type 
+$codei%CPPAD_TEST_VECTOR< AD< AD<double> > >%$$.
 This will start recording a new tape of 
-operations performed using $syntax%AD< AD<double> >%$$ class objects.
+operations performed using $codei%AD< AD<double> >%$$ class objects.
 
 $subhead Inner Function Calculations$$
 The next step is to calculation
 the inner functions 
-using $syntax%AD< AD<double> >%$$ class objects.
+using $codei%AD< AD<double> >%$$ class objects.
 
 $subhead Derivative of Inner Function$$
 The next step is to create the 
-$syntax%ADFun< AD<double> >%$$ function object $italic fin$$.
+$codei%ADFun< AD<double> >%$$ function object $icode fin$$.
 This will also stop recording of
-operations performed using $syntax%AD< AD<double> >%$$ class objects.
-The $italic fin$$ object can then be used to calculate
+operations performed using $codei%AD< AD<double> >%$$ class objects.
+The $icode fin$$ object can then be used to calculate
 the derivatives needed to compute the outer function.
 
 $subhead Outer Function$$
 The next step is to compute the 
 outer function
-using $syntax%AD<double>%$$ class objects.
+using $codei%AD<double>%$$ class objects.
 
 $subhead Derivative of Outer Function$$
 The next step is to create the 
-$syntax%ADFun<double>%$$ function object $italic fout$$.
+$codei%ADFun<double>%$$ function object $icode fout$$.
 This will also stop the recording of
-operations performed using $syntax%AD<double>%$$ class objects.
-The $italic fout$$ object can then be used to calculate
+operations performed using $codei%AD<double>%$$ class objects.
+The $icode fout$$ object can then be used to calculate
 the derivatives of the outer function.
 
 
 $children%
-	example/mul_level.cpp
+	example/mul_level.cpp%
+	example/change_const.cpp
 %$$
 
 $head Example$$
-The file
-$xref/mul_level.cpp/$$
-contains an example and test of this procedure.   
-It returns true if it succeeds and false otherwise.
-The file $xref/ode_taylor.cpp/$$ is a more complex example
+The files
+$cref mul_level.cpp$$ and $cref change_const.cpp$$
+contain an examples and tests of this procedure.   
+They return true if they succeed and false otherwise.
+The file $cref ode_taylor.cpp$$ is a more complex example
 use of multiple tapes.
 
 $end

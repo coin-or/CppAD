@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -65,6 +65,7 @@ extern bool Atan2(void);
 extern bool BenderQuad(void);
 extern bool BoolFun(void);
 extern bool vectorBool(void);
+extern bool change_const(void);
 extern bool CheckNumericType(void);
 extern bool checkpoint(void);
 extern bool CheckSimpleVector(void);
@@ -219,6 +220,7 @@ int main(void)
 	ok &= Run( BenderQuad,        "BenderQuad"       );
 	ok &= Run( BoolFun,           "BoolFun"          );
 	ok &= Run( vectorBool,        "vectorBool"       );
+	ok &= Run( change_const,      "change_const"     );
 	ok &= Run( CheckNumericType,  "CheckNumericType" );
 	ok &= Run( checkpoint,        "checkpoint"       );
 	ok &= Run( CheckSimpleVector, "CheckSimpleVector");

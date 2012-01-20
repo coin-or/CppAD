@@ -77,6 +77,7 @@ example_SOURCES   = \
 	bender_quad.cpp \
 	bool_fun.cpp \
 	vector_bool.cpp \
+	change_const.cpp \
 	check_numeric_type.cpp \
 	check_simple_vector.cpp \
 	checkpoint.cpp \

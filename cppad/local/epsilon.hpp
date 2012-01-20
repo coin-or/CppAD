@@ -2,7 +2,7 @@
 # ifndef CPPAD_EPSILON_INCLUDED
 # define CPPAD_EPSILON_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -27,16 +27,21 @@ $index epsilon, AD$$
 $section Machine Epsilon For AD Types$$
 
 $head Syntax$$
-$icode%eps% = epsilon< AD<%Base%> >()%$$
+$icode%eps% = epsilon<%Float%>()%$$
 
 $head Purpose$$
 Obtain the value of machine epsilon corresponding
-to the type $codei%AD<%Base%>%$$.
+to the type $icode%Float%$$.
+
+$head Float$$
+this type can either be $codei%AD<%Base%>%$$,
+or it can be $icode Base$$ for any $code%AD<%Base%>%$$ type;
+see $cref/base_require/base_require/epsilon/$$.
 
 $head eps$$
 The result $icode eps$$ has prototype
 $codei%
-	AD<%Base%> eps
+	%Float% eps
 %$$
 
 $head Example$$

@@ -226,6 +226,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\change_const.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\check_numeric_type.cpp"
 				>
 			</File>

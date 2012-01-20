@@ -32,6 +32,18 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-20$$
+$list number$$
+Add the example $cref change_const.cpp$$
+which shows how to compute derivatives of functions that have
+parameters that can change (but derivatives are not computed 
+with respect to these parameters).
+$lnext
+The documentation for machine $cref epsilon$$
+has been improved.
+(The fact that it can be used for $icode Base$$ types was missing.)
+$lend
+
 $head 01-19$$
 $list number$$
 In cases where $code test.sh$$ is trivial,
