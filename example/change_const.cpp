@@ -102,6 +102,10 @@ bool change_const(void)
 	CppAD::ADFun<double> g;
 	g.Dependent(a1_u, a1_J);
 
+	// remove extra variables used during the reconding of a1_f, 
+	// but not needed any more.
+	g.optimize();
+
 	// compute the Jacobian of f using zero order forward
 	// sweep with double values
 	CPPAD_TEST_VECTOR<double> J(nJ), u(nu);
