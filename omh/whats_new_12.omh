@@ -32,6 +32,10 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-23$$
+Change variable notation and use $cref optimize$$ in
+$cref mul_level.cpp$$.
+
 $head 01-20$$
 $list number$$
 Add the example $cref change_const.cpp$$

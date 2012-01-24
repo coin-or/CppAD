@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -77,55 +77,57 @@ namespace {
 bool mul_level(void) 
 {	bool ok = true;                          // initialize test result
 
-	typedef CppAD::AD<double>   ADdouble;    // for one level of taping
-	typedef CppAD::AD<ADdouble> ADDdouble;   // for two levels of taping
+	typedef CppAD::AD<double>    A1_double;  // for one level of taping
+	typedef CppAD::AD<A1_double> A2_double;  // for two levels of taping
 	size_t n = 5;                            // dimension for example
 	size_t j;                                // a temporary index variable
 
 	CPPAD_TEST_VECTOR<double>       x(n);
-	CPPAD_TEST_VECTOR<ADdouble>   a_x(n);
-	CPPAD_TEST_VECTOR<ADDdouble> aa_x(n);
+	CPPAD_TEST_VECTOR<A1_double>  a1_x(n), a1_v(n), a1_dy(1) ;
+	CPPAD_TEST_VECTOR<A2_double>  a2_x(n), a2_y(1);
 
 	// Values for the independent variables while taping the function f(x)
 	for(j = 0; j < n; j++)
-		aa_x[j] = double(j);
+		a2_x[j] = a1_x[j] = x[j] = double(j);
 	// Declare the independent variable for taping f(x)
-	CppAD::Independent(aa_x); 
+	CppAD::Independent(a2_x); 
 
 	// Use AD< AD<double> > to tape the evaluation of f(x)
-	CPPAD_TEST_VECTOR<ADDdouble> aa_f(1); 
-	aa_f[0] = f(aa_x); 
+	a2_y[0] = f(a2_x); 
 
-	// Declare a_F as the corresponding ADFun< AD<double> > function f(x)
+	// Declare a1_F as the corresponding ADFun< AD<double> > value a2_y
 	// (make sure we do not run zero order forward during constructor)
-	CppAD::ADFun<ADdouble> a_F;
-	a_F.Dependent(aa_x, aa_f);
+	CppAD::ADFun<A1_double> a1_F;
+	a1_F.Dependent(a2_x, a2_y);
 
 	// Values for the independent variables while taping f'(x) * v
-	for(j = 0; j < n; j++)
-		a_x[j] = double(j);
 	// Declare the independent variable for taping f'(x) * v
-	CppAD::Independent(a_x); 
+	CppAD::Independent(a1_x); 
 	// set the argument value x for computing f'(x) * v
-	a_F.Forward(0, a_x);
+	a1_F.Forward(0, a1_x);
 	// compute f'(x) * v
-	CPPAD_TEST_VECTOR<ADdouble> a_v(n);
-	CPPAD_TEST_VECTOR<ADdouble> a_df(1);
 	for(j = 0; j < n; j++)
-		a_v[j] = double(n - j);
-	a_df = a_F.Forward(1, a_v); 
+		a1_v[j] = double(n - j);
+	a1_dy = a1_F.Forward(1, a1_v); 
 
 	// declare dF as ADFun<double> function corresponding to f'(x) * v
-	CppAD::ADFun<double> df(a_x, a_df);
+	CppAD::ADFun<double> dF;
+	dF.Dependent(a1_x, a1_dy);
 
-	// compute the d/dx of f'(x) * v = f''(x) * v
+	// optimize out operations not necessary for function f'(x) * v
+	dF.optimize();
+
+	// Evaluate f'(x) * v
+	dF.Forward(0, x);
+
+	// compute the d/dx of f'(x) * v = f''(x) * v = v
 	CPPAD_TEST_VECTOR<double> w(1);
 	CPPAD_TEST_VECTOR<double> dw(n);
 	w[0] = 1.;
-	dw   = df.Reverse(1, w);
+	dw   = dF.Reverse(1, w);
 
 	for(j = 0; j < n; j++)
-		ok &= CppAD::NearEqual(dw[j], a_v[j], 1e-10, 1e-10);
+		ok &= CppAD::NearEqual(dw[j], a1_v[j], 1e-10, 1e-10);
 
 	return ok;
 }
