@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -51,6 +51,12 @@ $cref/CppAD::vector/CppAD_vector/Memory and Parallel Mode/$$,
 $cref/CheckSimpleVector/CheckSimpleVector/Parallel Mode/$$,
 $cref/CheckNumericType/CheckNumericType/Parallel Mode/$$,
 $cref/parallel_ad/$$.
+
+$head hold_memory$$
+Memory allocation should be much faster after calling
+$code hold_memory$$ with
+$cref/value/ta_hold_memory/value/$$ equal to true. 
+This should be true even if there is only one thread.
 
 $head Parallel AD$$
 One must first call

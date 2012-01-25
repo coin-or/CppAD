@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -184,7 +184,10 @@ bool thread_alloc(void)
 
 	// Tell thread_alloc that there are two threads so it starts holding
 	// onto memory (but actuall the there is only on thread with id zero).
-	thread_alloc::parallel_setup(2, in_parallel_false, thread_num_zero);
+	thread_alloc::parallel_setup( NUMBER_THREADS, 
+		in_parallel_false, thread_num_zero
+	);
+	thread_alloc::hold_memory(true);
 	ok  &= thread_alloc::num_threads() == 2;
 	ok  &= thread_alloc::thread_num() == 0;
 	ok  &= thread_alloc::in_parallel() == false;
@@ -197,6 +200,7 @@ bool thread_alloc(void)
 	
 	// return allocator to single thread mode
 	thread_alloc::parallel_setup(1, in_parallel_false, thread_num_zero);
+	thread_alloc::hold_memory(false);
 	return ok;
 }
 

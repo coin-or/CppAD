@@ -12,6 +12,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_12$$
 $spell
+	num
+	alloc
 	makefile
 	hpp
 	gcc
@@ -31,6 +33,24 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 01-24$$
+It used to be that $cref thread_alloc$$ did not hold onto memory
+when $icode num_threads$$ was one in the previous call to
+$cref/parallel_setup/ta_parallel_setup/$$.
+Holding onto memory is now controlled by the separate routine
+$cref/hold_memory/ta_hold_memory/$$.
+This give the user more control over the memory allocator
+and the ability to obtain a speed up even 
+when there is only one thread.
+To convert old code to the new interface, after each call to
+$codei%
+	thread_alloc::parallel_setup(%num_threads%, %in_parallel%, %thread_num%);
+%$$
+put the following call
+$codei%
+	thread_alloc::hold_memory(%num_threads% > 1);
+%$$
 
 $head 01-23$$
 Change variable notation and use $cref optimize$$ in

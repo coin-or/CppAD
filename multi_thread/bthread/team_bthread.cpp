@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -152,6 +152,7 @@ bool team_create(size_t num_threads)
 	// num_threads_ == 1, and while still in sequential mode,
 	// call setup for using CppAD::AD<double> in parallel mode.
 	thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
+	thread_alloc::hold_memory(true);
 	CppAD::parallel_ad<double>();
 
 	// now change num_threads_ to its final value.
@@ -258,6 +259,7 @@ bool team_destroy(void)
 	num_threads_ = 1;
 	using CppAD::thread_alloc;
 	thread_alloc::parallel_setup(num_threads_, in_parallel, thread_number);
+	thread_alloc::hold_memory(false);
 
 	return ok;
 }

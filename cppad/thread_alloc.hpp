@@ -138,6 +138,27 @@ private:
 		/// root of inuse list for this thread and each capacity
 		thread_alloc* root_inuse_;
 	};
+	// ---------------------------------------------------------------------
+	/*!
+ 	Set and Get hold available memory flag.
+
+	\param set [in]
+	if true, the value returned by this return is changed.
+
+	\param new_value [in]
+	if \a set is true, this is the new value returned by this routine.
+	Otherwise, \c new_value is ignored.
+
+	\return
+	the current setting for this routine (which is initially false).
+	*/
+	static bool set_get_hold_memory(bool set, bool new_value = false)
+	{	static bool value = false;
+		if( set )
+			value = new_value;
+		return value;
+	}
+	// ---------------------------------------------------------------------
 	/*!
 	Get pointer to the information for this thread.
 
@@ -425,6 +446,15 @@ $head Purpose$$
 By default there is only one thread and all execution is in sequential mode,
 i.e., multiple threads are not sharing the same memory; i.e.
 not in parallel mode.
+
+$head Speed$$
+It should be faster, even when $icode num_thread$$ is equal to one,
+for $code thread_alloc$$ to hold onto memory.
+This can be accomplished using the function call
+$codei%
+	thread_alloc::hold_memory(true)
+%$$
+see $cref/hold_memory/ta_hold_memory/$$.
 
 $head num_threads$$
 This argument has prototype
@@ -963,7 +993,7 @@ $end
 		dec_inuse(capacity, thread);
 
 		// check for case where we just return the memory to the system
-		if( num_threads() == 1 )
+		if( ! set_get_hold_memory(false) )
 		{	::operator delete( reinterpret_cast<void*>(node) );
 			return;
 		}
@@ -1057,6 +1087,52 @@ $end
 			thread_info(thread, true);
 		}
 	}
+/* -----------------------------------------------------------------------
+$begin ta_hold_memory$$
+$spell
+	alloc
+	num
+$$
+
+$section Control When Thread Alloc Retains Memory For Future Use$$
+$index thread_alloc, hold memory$$
+$index hold, thread_alloc memory$$
+$index memory, thread_alloc hold$$
+
+$head Syntax$$
+$codei%thread_alloc::hold_memory(%value%)%$$
+
+$head Purpose$$
+It should be faster, even when $icode num_thread$$ is equal to one,
+for $code thread_alloc$$ to hold onto memory.
+Calling $icode hold_memory$$ with $icode value$$ equal to true,
+instructs $code thread_alloc$$ to hold onto memory,
+and put it in the $cref/available/ta_available/$$ pool,
+after each call to $cref/return_memory/ta_return_memory/$$. 
+
+$head value$$
+If $icode value$$ is true,
+$code thread_alloc$$ with hold onto memory for future quick use.
+If it is false, future calls to $cref/return_memory/ta_return_memory/$$
+will return the corresponding memory to the system.
+
+$head free_available$$
+Memory that is held by $code thread_alloc$$ can be returned
+to the system using $cref/free_available/ta_free_available/$$.
+
+$end
+*/
+	/*!
+ 	Change the thread_alloc hold memory setting.
+
+	\param value [in]
+	New value for the thread_alloc hold memory setting.
+	*/
+	static void hold_memory(bool value)
+	{	bool set = true;
+		set_get_hold_memory(set, value);
+	}	
+	
 /* -----------------------------------------------------------------------
 $begin ta_inuse$$
 $spell
