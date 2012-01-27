@@ -34,6 +34,12 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-27$$
+There were some problems with 
+$cref/configure's/InstallUnix/Configure/$$ automatic detection of
+the boost multi-threading library. 
+These have been fixed.
+
 $head 01-24$$
 It used to be that $cref thread_alloc$$ did not hold onto memory
 when $icode num_threads$$ was one in the previous call to

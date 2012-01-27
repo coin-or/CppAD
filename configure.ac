@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20120120, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20120127, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -397,7 +397,7 @@ AC_LANG_PUSH([C++])
 LDFLAGS_save=$LDFLAGS
 CXXFLAGS_save=$CXXFLAGS
 if test "$BOOST_DIR" != "" ; then
-	CXXFLAGS="-I$BOOST_DIR $CXXFLAGS"
+	CXXFLAGS="-I$BOOST_DIR/include $CXXFLAGS"
 	LDFLAGS_tmp="$LDFLAGS_save -L$BOOST_DIR/lib"
 else
 	LDFLAGS_tmp="$LDFLAGS_save"
@@ -418,7 +418,7 @@ else
 	AC_LINK_IFELSE(
 		[AC_LANG_PROGRAM(
 			[# include <boost/thread.hpp>],
-			[boost::thread mythread;]
+			[boost::barrier wait(1);]
 		)],
 		[boost_thread="yes"],
 		[boost_thread="no"]
