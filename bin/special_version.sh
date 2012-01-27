@@ -1,5 +1,5 @@
 #! /bin/bash -e
-# $Id:$
+# $Id$
 # -----------------------------------------------------------------------------
 # CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
@@ -33,6 +33,11 @@ url='https://projects.coin-or.org/svn/CppAD/trunk'
 if [ -e "../special-$version" ]
 then
 	echo "Using the existing directory ../special-$version"
+	if [ -e ../special-$version/work ]
+	then
+		echo "rm -r ../special-$version/work"
+		rm -r ../special-$version/work
+	fi
 else
 	echo "svn checkout -r $cppad_revision $url ../special-$version"
 	svn checkout -r $cppad_revision $url ../special-$version
@@ -80,11 +85,20 @@ case "$1" in
 	exit 1
 	;;
 esac
-echo "./build.sh automake configure"
-./build.sh automake configure
+echo "mkdir work ; cd work"
+mkdir work ; cd work
+response='n'
+while [ "$response" != 'y' ]
+do
+	dir=`pwd`
+	echo "current working: $dir"
+	echo "Enter configure options on next line (no options is default)"
+	read -p "options: " options
+	echo "../configure $options"
+	read -p "Is this ok [y/n] ?" response
+done 
+echo "../configure $options"
+../configure $options
 #
-echo "cd work/multi_thread"
-cd work/multi_thread
-#
-echo "make test"
-make test
+echo "cd multi_thread ; make test"
+cd multi_thread ; make test
