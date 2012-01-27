@@ -6288,7 +6288,7 @@ if test "$BOOST_DIR" != "" ; then
 else
 	LDFLAGS_tmp="$LDFLAGS_save"
 fi
-LDFLAGS="$LDFLAGS_tmp -lboost_thread-mt"
+LDFLAGS="$LDFLAGS_tmp -lboost_thread"
 
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -6311,10 +6311,10 @@ fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 if test "$boost_thread" == "yes" ; then
-	BTHREAD_LIB="-lboost_thread-mt"
+	BTHREAD_LIB="-lboost_thread"
 
 else
-	LDFLAGS="$LDFLAGS_tmp -lboost_thread"
+	LDFLAGS="$LDFLAGS_tmp -lboost_thread-mt"
 	cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 # include <boost/thread.hpp>
@@ -6336,7 +6336,7 @@ fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 	if test "$boost_thread" == "yes" ; then
-		BTHREAD_LIB="-lboost_thread"
+		BTHREAD_LIB="-lboost_thread-mt"
 
 	fi
 fi

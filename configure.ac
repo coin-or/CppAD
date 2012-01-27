@@ -402,7 +402,7 @@ if test "$BOOST_DIR" != "" ; then
 else
 	LDFLAGS_tmp="$LDFLAGS_save"
 fi
-LDFLAGS="$LDFLAGS_tmp -lboost_thread-mt"
+LDFLAGS="$LDFLAGS_tmp -lboost_thread"
 AC_LINK_IFELSE(
 	[AC_LANG_PROGRAM(
 		[# include <boost/thread.hpp>],
@@ -412,9 +412,9 @@ AC_LINK_IFELSE(
 	[boost_thread="no"]
 )
 if test "$boost_thread" == "yes" ; then
-	AC_SUBST(BTHREAD_LIB,"-lboost_thread-mt")
+	AC_SUBST(BTHREAD_LIB,"-lboost_thread")
 else
-	LDFLAGS="$LDFLAGS_tmp -lboost_thread"
+	LDFLAGS="$LDFLAGS_tmp -lboost_thread-mt"
 	AC_LINK_IFELSE(
 		[AC_LANG_PROGRAM(
 			[# include <boost/thread.hpp>],
@@ -424,7 +424,7 @@ else
 		[boost_thread="no"]
 	)
 	if test "$boost_thread" == "yes" ; then
-		AC_SUBST(BTHREAD_LIB,"-lboost_thread")
+		AC_SUBST(BTHREAD_LIB,"-lboost_thread-mt")
 	fi
 fi
 if test "$boost_thread" == "yes" ; then
