@@ -26,6 +26,8 @@ cat << EOF
 	usage: bin/special_version.sh name
 	where name is one of the following: 2011, 2012.0 2012.1
 EOF
+	exit 1
+	;;
 esac
 version="$1"
 url='https://projects.coin-or.org/svn/CppAD/trunk'
@@ -62,9 +64,9 @@ case "$1" in
 
 	2012.0)
 	file='cppad/thread_alloc.hpp'
-	thread_alloc_revision='2253'
-	echo "svn cat -r $thread_alloc_revision $url/$file > $file"
-	svn cat -r $thread_alloc_revision $url/$file > $file
+	thread_alloc_revision='2249'
+	echo "svn cat $url/$file@$thread_alloc_revision > $file"
+	svn cat $url/$file@$thread_alloc_revision > $file
 	#
 	# Always hold onto memory
 	echo "sed -e 's/if( num_threads() == 1 )/if(false)/' -i $file"
