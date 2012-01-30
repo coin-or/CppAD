@@ -34,6 +34,12 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 01-30$$
+Make another attempt to fix linking with boost threads where the wrong
+version of the library is in the system include directory; i.e.,
+to have $cref/BOOST_DIR/InstallUnix/BoostDir/$$ override the default
+library.
+
 $head 01-27$$
 There were some problems with 
 $cref/configure's/InstallUnix/Configure/$$ automatic detection of
