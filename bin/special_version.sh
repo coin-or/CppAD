@@ -16,20 +16,20 @@ then
 	exit 1
 fi
 # ----------------------------------------------------------------------------
-case "$1" in
+version="$1"
+case "$version" in
 	2011 | 2012.0 | 2012.1 )
-	cppad_revision='2276'
+	subversion_revision='2279'
 	;;
 
 	*)
 cat << EOF
-	usage: bin/special_version.sh name
-	where name is one of the following: 2011, 2012.0 2012.1
+	usage: bin/special_version.sh version
+	where version is one of the following: 2011, 2012.0 2012.1
 EOF
 	exit 1
 	;;
 esac
-version="$1"
 url='https://projects.coin-or.org/svn/CppAD/trunk'
 # ----------------------------------------------------------------------------
 if [ -e "../special-$version" ]
@@ -41,8 +41,8 @@ then
 		rm -r ../special-$version/work
 	fi
 else
-	echo "svn checkout -r $cppad_revision $url ../special-$version"
-	svn checkout -r $cppad_revision $url ../special-$version
+	echo "svn checkout -r $subversion_revision $url ../special-$version"
+	svn checkout -r $subversion_revision $url ../special-$version
 fi
 echo "cd ../special-$version"
 cd ../special-$version
@@ -53,8 +53,6 @@ case "$1" in
 	for threading in $list
 	do
 		file="multi_thread/$threading/team_$threading.cpp"
-		#
-		echo "svn revert $file"
 		svn revert $file
 		#
 		echo "sed -e 's|hold_memory(true)|hold_memory(false)|;' -i $file"
@@ -87,8 +85,16 @@ case "$1" in
 	exit 1
 	;;
 esac
+#
+file='cppad/configure.hpp'
+text="# define CPPAD_PACKAGE_STRING"
+svn revert $file
+echo "sed -i $file -e \"s|^$text.*|\1 \"cppad-$version\"|\"" 
+sed -i $file -e "s|^\($text\) .*|\1 \"cppad-$version\"|" 
+#
 echo "mkdir work ; cd work"
 mkdir work ; cd work
+#
 response='n'
 while [ "$response" != 'y' ]
 do
