@@ -570,7 +570,7 @@ $end
 
 		// free memory allocated by call to get_memory above
 		return_memory(v_ptr);
-		free_available( set_get_thread_num(0) );
+		free_available( set_get_thread_num(CPPAD_NULL) );
 
 		// delay this so thread_num() call above is in previous mode
 		// (current setings may not yet be valid)
@@ -700,7 +700,7 @@ $end
 */
 	/// Get current thread number 
 	static size_t thread_num(void)
-	{	return set_get_thread_num(0); }
+	{	return set_get_thread_num(CPPAD_NULL); }
 /* -----------------------------------------------------------------------
 $begin ta_get_memory$$
 $spell

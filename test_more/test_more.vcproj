@@ -210,6 +210,11 @@
 				>
 			</File>
 			<File
+				RelativePath=".\base_alloc.cpp"
+				>
+			</File>
+			</File>
+			<File
 				RelativePath=".\check_simple_vector.cpp"
 				>
 			</File>

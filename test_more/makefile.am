@@ -62,6 +62,7 @@ test_more_SOURCES  = \
 	add_zero.cpp \
 	atan.cpp \
 	atan_2.cpp \
+	base_alloc.cpp \
 	check_simple_vector.cpp \
 	compare.cpp \
 	compare_change.cpp \

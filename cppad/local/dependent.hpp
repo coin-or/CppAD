@@ -3,7 +3,7 @@
 # define CPPAD_DEPENDENT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -142,6 +142,13 @@ $end
 // BEGIN CppAD namespace
 namespace CppAD {
 
+/*!
+Determine the \c tape corresponding to this exeuction thread and then use
+<code>Dependent(tape, y)</code> to store this tapes recording in a function.
+
+\param y [in]
+The dependent variable vector for the corresponding function.
+*/
 template <typename Base>
 template <typename ADvector>
 void ADFun<Base>::Dependent(const ADvector &y)
@@ -156,6 +163,19 @@ void ADFun<Base>::Dependent(const ADvector &y)
 	Dependent(tape, y);
 }
 
+
+/*!
+Determine the \c tape corresponding to this exeuction thread and then use
+<code>Dependent(tape, y)</code> to store this tapes recording in a function.
+
+\param x [in]
+The independent variable vector for this tape. This informaiton is
+also stored in the tape so a check is done to make sure it is correct
+(if NDEBUG is not defined).
+
+\param y [in]
+The dependent variable vector for the corresponding function.
+*/
 template <typename Base>
 template <typename ADvector>
 void ADFun<Base>::Dependent(const ADvector &x, const ADvector &y)
@@ -197,7 +217,18 @@ void ADFun<Base>::Dependent(const ADvector &x, const ADvector &y)
 	// code above just determines the tape and checks for errors
 	Dependent(tape, y);
 }
-		
+
+/*!
+Replace the floationg point operations sequence for this function object.
+
+\param tape
+is a tape that contains the new floating point operation sequence
+for this function.
+After this operation, all memory allocated for this tape is deleted.
+
+\param y
+The dependent variable vector for the function being stored in this object.
+*/
 
 template <typename Base>
 template <typename ADvector>
