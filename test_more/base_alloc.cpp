@@ -51,6 +51,12 @@ namespace {
 			ptrdbl_  = static_cast<double*>(v);
 			*ptrdbl_ = dbl;
 		}
+		my_base(const my_base& x)
+		{	size_t cap;
+			void *v  = thread_alloc::get_memory(sizeof(double), cap); 
+			ptrdbl_  = static_cast<double*>(v);
+			*ptrdbl_ = *x.ptrdbl_;
+		}
 		~my_base(void)
 		{	void* v  = static_cast<void*>(ptrdbl_);
 			thread_alloc::return_memory(v);
@@ -160,10 +166,18 @@ bool base_alloc(void)
 	
 
 	// y = x^2
-	CppAD::vector<my_ad>   a_x(1), a_y(1);
+	CppAD::vector<my_ad>   a_x, a_y;
+	a_x.resize(1);
 	a_x[0] = my_ad(1.);
 	CppAD::Independent(a_x);
+	a_y.resize(1);
 	a_y[0] = a_x[0];
+
+	// create a new parameter for each iteration of this loop
+	size_t i, N = 50;
+	for(i = 0; i < N; i++)
+		a_y[0] += double(i);
+		
 	CppAD::ADFun<my_base> f(a_x, a_y);
 
 	return ok;

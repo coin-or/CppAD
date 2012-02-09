@@ -3,7 +3,7 @@
 # define CPPAD_POD_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -165,7 +165,7 @@ public:
 		{	v_ptr = reinterpret_cast<void*>( old_data );
 			if( ! is_pod<Type>() )
 			{	for(i = 0; i < old_capacity; i++)
-					(data_ + i)->~Type();
+					(old_data + i)->~Type();
 			} 
 			thread_alloc::return_memory(v_ptr); 
 		}

@@ -35,9 +35,14 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 02-09$$
+$list number$$
 Add the $icode set_static$$ to $cref memory_leak$$.
-This is a precursor to testing base types that allocate memory
+This is necessary for testing base types that allocate memory
 for each element.
+$lnext
+Fix memory allocation bug in $code cppad/local/pod_vector.hpp$$
+when each element of the $cref/Base/base_require/$$ type allocated memory.
+$lend
 
 $head 01-30$$
 Make another attempt to fix linking with boost threads where the wrong
