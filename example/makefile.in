@@ -45,8 +45,8 @@ CONFIG_CLEAN_VPATH_FILES =
 am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	example.cpp abort_recording.cpp abs.cpp acos.cpp add.cpp \
 	add_eq.cpp ad_fun.cpp ad_in_c.cpp asin.cpp atan.cpp atan_2.cpp \
-	base_adolc.hpp bender_quad.cpp bool_fun.cpp vector_bool.cpp \
-	change_const.cpp check_numeric_type.cpp \
+	base_adolc.hpp base_alloc.hpp bender_quad.cpp bool_fun.cpp \
+	vector_bool.cpp change_const.cpp check_numeric_type.cpp \
 	check_simple_vector.cpp checkpoint.cpp compare.cpp \
 	compare_change.cpp complex_poly.cpp cond_exp.cpp conj_grad.cpp \
 	copy_ad.cpp copy_base.cpp cos.cpp cosh.cpp cppad_vector.cpp \
@@ -338,6 +338,7 @@ example_SOURCES = \
 	atan.cpp \
 	atan_2.cpp \
 	base_adolc.hpp \
+	base_alloc.hpp \
 	bender_quad.cpp \
 	bool_fun.cpp \
 	vector_bool.cpp \

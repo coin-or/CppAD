@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -444,7 +444,7 @@ $lend
 $subhead 08-09$$
 $list number$$
 $cref/Warning:/base_require/Warning/$$
-Add $cref/epsilon/base_require/epsilon/$$ to the
+Add $cref/epsilon/base_std_math/epsilon/$$ to the
 $icode Base$$ type requirements.
 $lnext
 Extend $cref/epsilon/$$ to AD types.

@@ -3,7 +3,7 @@
 # define CPPAD_BASE_STD_MATH_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,6 +16,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /* 
 $begin base_std_math$$
 $spell
+	isnan
+	alloc
 	std
 	acos
 	asin
@@ -64,6 +66,8 @@ $codei%
 	const %Base%& %x%
 	%Base%        %y%
 %$$
+For example,
+$cref/base_alloc/base_alloc.hpp/Unary Standard Math/$$,
 
 
 $head CPPAD_STANDARD_MATH_UNARY$$
@@ -79,9 +83,7 @@ $codei%
 This macro uses the functions $codei%std::%Fun%$$ which
 must be defined and have the same prototype as $codei%CppAD::%Fun%$$.
 For example, 
-$cref/float/base_float.hpp/Unary Standard Math/$$,
-$cref/double/base_double.hpp/Unary Standard Math/$$, and
-$cref/complex valid unary math/base_complex.hpp/Valid Unary Math/$$.
+$cref/float/base_float.hpp/Unary Standard Math/$$.
 
 $head sign$$
 $index sign, base require$$
@@ -108,8 +110,7 @@ $codei%
 	%Base% %z%
 %$$
 For example, see
-$cref/float/base_float.hpp/sign/$$,
-$cref/double/base_double.hpp/sign/$$.
+$cref/base_alloc/base_alloc.hpp/sign/$$.
 Note that, if ordered comparisons are not defined for the type $icode Base$$,
 the $code code sign$$ function should generate an assert if it is used; see
 $cref/complex invalid unary math/base_complex.hpp/Invalid Unary Math/$$.
@@ -133,9 +134,30 @@ $codei%
 	%Base% %z%
 %$$
 For example, see
-$cref/float/base_float.hpp/pow/$$,
-$cref/double/base_double.hpp/pow/$$, and
-$cref/complex/base_complex.hpp/pow/$$.
+$cref/base_alloc/base_alloc.hpp/pow/$$.
+
+
+$head epsilon$$
+$index epsilon, machine base$$
+$index machine, epsilon base$$
+$index base, machine epsilon$$
+The template specialization
+$codei%
+	%Base% CppAD::epsilon<%Base%>()
+%$$
+must return machine epsilon for the type $icode Base$$.
+For example, see
+$cref/base_alloc/base_alloc.hpp/epsilon/$$.
+
+$head isnan$$
+$index isnan, base type$$
+$index base, isnan$$ 
+If $icode Base$$ defines the $code isnan$$ function,
+you may also have to provide a definition in the CppAD namespace
+(to avoid a function ambiguity).
+For example, see
+$cref/base_complex/base_complex.hpp/isnan/$$.
+
 
 $end
 -------------------------------------------------------------------------------

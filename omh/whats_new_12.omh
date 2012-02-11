@@ -34,6 +34,17 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-10$$
+$list number$$
+Add the missing Base class requirements in
+the entire $cref base_member$$ section
+and under the $cref/Output Operator/base_require/Output Operator/$$
+in the $cref base_require$$ section.
+$lnext
+Add the $cref base_alloc.hpp$$ example.
+$lend
+
+
 $head 02-09$$
 $list number$$
 Add the $icode set_static$$ to $cref memory_leak$$.

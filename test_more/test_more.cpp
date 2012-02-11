@@ -26,7 +26,7 @@ extern bool Asin(void);
 extern bool Atan(void);
 extern bool Atan2(void);
 extern bool base_adolc(void);
-extern bool base_alloc(void);
+extern bool base_alloc_test(void);
 extern bool check_simple_vector(void);
 extern bool Compare(void);
 extern bool CompareChange(void);
@@ -129,7 +129,7 @@ int main(void)
 	ok &= Run( Asin,            "Asin"           );
 	ok &= Run( Atan,            "Atan"           );
 	ok &= Run( Atan2,           "Atan2"          );
-	ok &= Run( base_alloc,      "base_alloc"     );
+	ok &= Run( base_alloc_test, "base_alloc"     );
 	ok &= Run( check_simple_vector, "check_simple_vector" );
 	ok &= Run( Compare,         "Compare"        );
 	ok &= Run( CompareChange,   "CompareChange"  );

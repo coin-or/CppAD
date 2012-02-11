@@ -16,6 +16,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 ------------------------------------------------------------------------------
 $begin epsilon$$
 $spell
+	std
 	eps
 	CppAD
 	namespace
@@ -36,7 +37,7 @@ to the type $icode%Float%$$.
 $head Float$$
 this type can either be $codei%AD<%Base%>%$$,
 or it can be $icode Base$$ for any $code%AD<%Base%>%$$ type;
-see $cref/base_require/base_require/epsilon/$$.
+see $cref/base_std_math/base_std_math/epsilon/$$.
 
 $head eps$$
 The result $icode eps$$ has prototype

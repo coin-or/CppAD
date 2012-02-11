@@ -3,7 +3,7 @@
 # define CPPAD_BASE_REQUIRE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,9 +16,10 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 /*
 $begin base_require$$
 $spell
+	ostream
+	alloc
 	eps
 	std
-	isnan
 	Lt
 	Le
 	Eq
@@ -85,6 +86,19 @@ $head Numeric Type$$
 The type $icode Base$$ must support all the operations for a 
 $cref/NumericType/$$.
 
+$head Output Operator$$
+$index output, base operator$$
+$index base, output operator$$
+$index operator, base output$$
+The type $icode Base$$ must support the syntax
+$codei%
+	%os% << %x%
+%$$
+where $icode os$$ is an $code std::ostream&$$
+and $icode x$$ is a $code const base_alloc&$$.
+For example, see 
+$cref/base_alloc/base_alloc.hpp/Output Operator/$$.
+
 $head Integer$$
 $index Integer, base require$$
 $index base, Integer require$$
@@ -113,40 +127,16 @@ namespace CppAD {
 }
 %$$
 For example, see
-$cref/float/base_float.hpp/Integer/$$,
-$cref/double/base_double.hpp/Integer/$$, and
-$cref/complex/base_complex.hpp/Integer/$$.
-
-$head epsilon$$
-$index epsilon, machine base$$
-$index machine, epsilon base$$
-$index base, machine epsilon$$
-The template specialization
-$codei%
-	%Base% CppAD::epsilon<%Base%>()
-%$$
-must return machine epsilon for the type $icode Base$$.
-For example, see
-$cref/float/base_float.hpp/epsilon/$$,
-$cref/float/base_double.hpp/epsilon/$$, and
-$cref/float/base_complex.hpp/epsilon/$$,
-
-$head isnan$$
-If $icode Base$$ defines the $code isnan$$ function,
-you may also have to provide a definition in the CppAD namespace
-(to avoid a function ambiguity).
-For example, 
-$cref/complex isnan/base_complex.hpp/isnan/$$.
+$cref/base_float/base_float.hpp/Integer/$$ and
+$cref/base_alloc/base_alloc.hpp/Integer/$$.
 
 $childtable%
+	omh/base_member.omh%
 	cppad/local/base_cond_exp.hpp%
 	omh/base_identical.omh%
 	omh/base_ordered.omh%
 	cppad/local/base_std_math.hpp%
-	cppad/local/base_float.hpp%
-	cppad/local/base_double.hpp%
-	cppad/local/base_complex.hpp%
-	example/base_adolc.hpp
+	omh/base_example.omh
 %$$
 
 $end
