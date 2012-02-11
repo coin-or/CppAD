@@ -92,12 +92,16 @@ $codep */
 /* $$
 
 $head Boolean Operator Macro$$
-This macro is used for the 
+This macro can be used for the 
 $code base_alloc$$ binary operators that have a 
 $code bool$$ result; to be specific, 
 used with $icode op $$ equal to
 $code ==$$,
-$code !=$$
+$code !=$$,
+$code <$$,
+$code <=$$,
+$code >=$$, and
+$code >$$,
 $codep */
 # define BASE_ALLOC_BOOL_OPERATOR(op) const \
 	bool operator op (const base_alloc& x) const \
@@ -139,13 +143,15 @@ public:
 	{	void* v  = static_cast<void*>(ptrdbl_);
 		CppAD::thread_alloc::return_memory(v);
 	}
-	void operator=(const base_alloc& x)
-	{	*ptrdbl_ = *x.ptrdbl_; }
 	base_alloc operator-(void) const
 	{	base_alloc result;
 		*result.ptrdbl_ = - *ptrdbl_;
 		return result;
 	}
+	base_alloc operator+(void) const
+	{	return *this; }
+	void operator=(const base_alloc& x)
+	{	*ptrdbl_ = *x.ptrdbl_; }
 	BASE_ALLOC_ASSIGN_OPERATOR(+=)
 	BASE_ALLOC_ASSIGN_OPERATOR(-=)
 	BASE_ALLOC_ASSIGN_OPERATOR(*=)
@@ -154,8 +160,11 @@ public:
 	BASE_ALLOC_BINARY_OPERATOR(-)
 	BASE_ALLOC_BINARY_OPERATOR(*)
 	BASE_ALLOC_BINARY_OPERATOR(/)
-	BASE_ALLOC_BOOL_OPERATOR(!=)
 	BASE_ALLOC_BOOL_OPERATOR(==)
+	BASE_ALLOC_BOOL_OPERATOR(!=)
+	// The <= operator is not necessary for the base type requirements 
+	// (needed so we can use NearEqual with base_alloc arguments).
+	BASE_ALLOC_BOOL_OPERATOR(<=)
 };
 /* $$
 

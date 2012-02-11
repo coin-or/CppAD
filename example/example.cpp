@@ -62,6 +62,7 @@ extern bool ad_in_c(void);
 extern bool Asin(void);
 extern bool Atan(void);
 extern bool Atan2(void);
+extern bool base_require(void);
 extern bool BenderQuad(void);
 extern bool BoolFun(void);
 extern bool vectorBool(void);
@@ -217,6 +218,7 @@ int main(void)
 	ok &= Run( Asin,              "Asin"             );
 	ok &= Run( Atan,              "Atan"             );
 	ok &= Run( Atan2,             "Atan2"            );
+	ok &= Run( base_require,      "base_require"     );
 	ok &= Run( BenderQuad,        "BenderQuad"       );
 	ok &= Run( BoolFun,           "BoolFun"          );
 	ok &= Run( vectorBool,        "vectorBool"       );

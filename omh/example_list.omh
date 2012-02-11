@@ -92,6 +92,7 @@ $rref Atan2.cpp$$
 $rref base_adolc.hpp$$
 $rref base_alloc.hpp$$
 $rref base_complex.hpp$$
+$rref base_require.cpp$$
 $rref BenderQuad.cpp$$
 $rref BoolFun.cpp$$
 $rref team_bthread.cpp$$

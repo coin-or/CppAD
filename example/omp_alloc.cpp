@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -35,6 +35,7 @@ $end
 */
 // BEGIN PROGRAM
 # include <cppad/omp_alloc.hpp>
+# include <cppad/memory_leak.hpp>
 # include <vector>
 
 namespace { // Begin empty namespace
@@ -42,15 +43,13 @@ namespace { // Begin empty namespace
 bool omp_alloc_bytes(void)
 {	bool ok = true;
 	using CppAD::omp_alloc;
+	size_t thread;
 
 	// check initial memory values
-	size_t thread;
-	for(thread = 0; thread < omp_alloc::get_max_num_threads(); thread++)
-	{	// how much memory is inuse
-		ok &= omp_alloc::inuse(thread) == 0;
-		// how much memory is being heald for this thread
-		ok &= omp_alloc::available(thread) == 0;
-	}
+	ok &= ! CppAD::memory_leak();
+
+	// amount of static memory used by thread zero
+	size_t static_inuse = omp_alloc::inuse(0);
 
 	// determine the currently executing thread
 	// (should be zero because not in parallel mode)
@@ -81,19 +80,19 @@ bool omp_alloc_bytes(void)
 				ok &= ptr[k] == (i + j + k);
 		}
 		// check that n_inner * cap_bytes are inuse and none are available
-		ok &= omp_alloc::inuse(thread) == n_inner * cap_bytes;
+		ok &= omp_alloc::inuse(thread) == n_inner*cap_bytes + static_inuse;
 		ok &= omp_alloc::available(thread) == 0;
 		// return the memrory to omp_alloc
 		for(j = 0; j < n_inner; j++)
 			omp_alloc::return_memory(v_ptr[j]);
 		// check that now n_inner * cap_bytes are now available
 		// and none are in use
-		ok &= omp_alloc::inuse(thread) == 0;
+		ok &= omp_alloc::inuse(thread) == static_inuse;
 		ok &= omp_alloc::available(thread) == n_inner * cap_bytes;
 	}
 	// return all the available memory to the system
 	omp_alloc::free_available(thread);
-	ok &= omp_alloc::available(thread) == 0;
+	ok &= ! CppAD::memory_leak();
 	
 	return ok;
 }
@@ -114,8 +113,9 @@ bool omp_alloc_array(void)
 
 	// check initial memory values
 	size_t thread = omp_alloc::get_thread_num();
-	ok &= omp_alloc::inuse(thread) == 0;
-	ok &= omp_alloc::available(thread) == 0;
+	ok &= thread == 0;
+	ok &= ! CppAD::memory_leak();
+	size_t static_inuse = omp_alloc::inuse(0);
 
 	// initial allocation of an array
 	size_t  size_min  = 3;
@@ -144,20 +144,20 @@ bool omp_alloc_array(void)
 
 	// check the amount of inuse and available memory
 	// (an extra size_t value is used for each memory block).
-	size_t check = sizeof(my_char)*(size_one + size_two);
+	size_t check = static_inuse + sizeof(my_char)*(size_one + size_two);
 	ok   &= omp_alloc::inuse(thread) - check < sizeof(my_char);
 	ok   &= omp_alloc::available(thread) == 0;
 
 	// delete the arrays 
 	omp_alloc::delete_array(array_one);
 	omp_alloc::delete_array(array_two);
-	ok   &= omp_alloc::inuse(thread) == 0;
+	ok   &= omp_alloc::inuse(thread) == static_inuse;
+	check = sizeof(my_char)*(size_one + size_two);
 	ok   &= omp_alloc::available(thread) - check < sizeof(my_char);
 
 	// free the memory for use by this thread
 	omp_alloc::free_available(thread);
-	ok &= omp_alloc::inuse(thread) == 0;
-	ok &= omp_alloc::available(thread) == 0;
+	ok &= ! CppAD::memory_leak();
 
 	return ok;
 }
@@ -166,6 +166,7 @@ bool omp_alloc_array(void)
 bool omp_alloc(void)
 {	bool ok  = true;
 	using CppAD::omp_alloc;
+	size_t thread;
 
 	// check initial state of allocator
 	ok  &= omp_alloc::get_max_num_threads() == 1;
@@ -174,21 +175,14 @@ bool omp_alloc(void)
 	// so that omp_alloc holds onto memory
 	CppAD::omp_alloc::set_max_num_threads(2);
 	ok  &= omp_alloc::get_max_num_threads() == 2;
-	size_t thread;
-	for(thread = 0; thread < 2; thread++)
-	{	ok &= omp_alloc::inuse(thread) == 0;
-		ok &= omp_alloc::available(thread) == 0;
-	}
+	ok  &= ! CppAD::memory_leak();  
 
-	// now use memory allocatore in state where it holds onto memory
+	// now use memory allocator in state where it holds onto memory
 	ok   &= omp_alloc_bytes();
 	ok   &= omp_alloc_array();
 
 	// check that the tests have not held onto memory
-	for(thread = 0; thread < 2; thread++)
-	{	ok &= omp_alloc::inuse(thread) == 0;
-		ok &= omp_alloc::available(thread) == 0;
-	}
+	ok  &= ! CppAD::memory_leak();  
 
 	// set the maximum number of threads back to one 
 	// so that omp_alloc no longer holds onto memory

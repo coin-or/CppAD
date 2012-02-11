@@ -75,6 +75,7 @@ example_SOURCES   = \
 	atan_2.cpp \
 	base_adolc.hpp \
 	base_alloc.hpp \
+	base_require.cpp \
 	bender_quad.cpp \
 	bool_fun.cpp \
 	vector_bool.cpp \

@@ -34,6 +34,21 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 02-11$$
+$list number$$
+The requirements in 
+$cref base_member$$ were missing from the $cref base_require$$ documentation.
+In addition,
+the $cref base_require.cpp$$ example has been added.
+$lend
+The specifications for $cref memory_leak$$ where changes so that
+calling routine specifies the amount of static memory to add.
+In addition,
+it is now possible to call 
+$code memory_leak$$ when $cref/num_threads/ta_num_threads/$$ 
+is greater than one
+(still can't be in parallel mode).
+
 $head 02-10$$
 $list number$$
 Add the missing Base class requirements in

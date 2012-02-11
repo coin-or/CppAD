@@ -31,7 +31,7 @@ $index static, memory leak check$$
 $head Syntax$$
 $icode%flag% = %memory_leak()
 %$$
-$icode%flag% = %memory_leak(%set_static%)%$$
+$icode%flag% = %memory_leak(%add_static%)%$$
 
 $head Purpose$$
 This routine checks that the are no memory leaks 
@@ -40,26 +40,40 @@ The deprecated memory allocator $cref/TrackNewDel/$$ is also checked.
 Memory errors in the deprecated $cref omp_alloc$$ allocator are
 reported as being in $code thread_alloc$$.
 
-$head set_static$$
+$head thread$$
+It is assumed that $cref/in_parallel()/ta_in_parallel/$$ is false
+and $cref/thread_num/ta_thread_num/$$ is zero when
+$code memory_leak$$ is called.
+
+$head add_static$$
+This argument has prototype
+$codei%
+	size_t %add_static%
+%$$
+and its default value is zero.
 Static variables hold onto memory forever.
-If the argument $icode set_static$$ is present (and true),
-$code memory_leak$$ sets the amount of memory that
-is $cref/inuse/ta_inuse/$$ and corresponds to static variables in the program.
-It therefore necessary to call to all the routines that
-have static variables and that allocate memory using
-$cref/get_memory/ta_get_memory/$$ before making a call
-with $icode set_static$$ true.
-It is also necessary to have no other $code inuse$$ memory when
-$icode set_static$$ is called.
+If the argument $icode add_static$$ is present (and non-zero),
+$code memory_leak$$ adds this amount of memory to the
+$cref/inuse/ta_inuse/$$ sum that corresponds to 
+static variables in the program.
+A call with $icode add_static$$ should be make after
+a routine that has static variables which
+use $cref/get_memory/ta_get_memory/$$ to allocate memory.
+The value of $icode add_static$$ should be the difference of
+$codei%
+	thread_alloc::inuse(0)
+%$$
+before and after the call.
 Since multiple statics may be allocated in different places in the program,
-it is OK to use this option more that once.
+it is expected that there will be multiple calls
+that use this option.
 
 $head flag$$
 The return value $icode flag$$ has prototype
 $codei%
 	bool %flag%
 %$$
-If $icode set_static$$ is true,
+If $icode add_static$$ is non-zero,
 the return value for $code memory_leak$$ is false.
 Otherwise, the return value for $code memory_leak$$ should be false
 (indicating that the only allocated memory corresponds to static variables).
@@ -76,7 +90,7 @@ It is assumed that, when $code memory_leak$$ is called,
 there should not be any memory
 $cref/available/ta_available/$$ or $cref omp_available$$ for any thread;
 i.e., it all has been returned to the system.
-If there is memory still available for a thread,
+If there is memory still available for any thread,
 $code memory_leak$$ returns false. 
 
 $head TRACK_COUNT$$
@@ -89,10 +103,6 @@ $head Error Message$$
 If this is the first call to $code memory_leak$$, no message is printed.
 Otherwise, if it returns true, an error message is printed
 to standard output describing the memory leak that was detected.
-
-$head Multi-Threading$$
-This routine can only be called when the number of threads
-$cref/num_threads/ta_num_threads/$$ is one.
 
 $end
 */
@@ -113,23 +123,28 @@ Function that checks
 allocator \c thread_alloc for misuse that results in memory leaks.
 Deprecated routines in track_new_del.hpp and omp_alloc.hpp are also checked.
 
+\param add_static [in]
+The amount specified by \c add_static is added to the amount
+of memory that is expected to be used by thread zero for static variables.
+
 \return
-If this is the first call to \c memory_leak, the return value is \c true
-and the amount of <code>thread_alloc::inuse()</code> memory corresponding
-to thread zero is set.
+If \c add_static is non-zero, the return value is \c false.
+Otherwise, if one of the following errors is detected,
+the return value is \c true:
 
-If this not the first call, if the return value is \c true,
-if thread zero does not have the expected amount of inuse memory,
-if one of the other threads has any inuse memory,
-or any thread has available memory.
-
-returns \c true, if no error is detected and \c false otherwise.
+\li
+Thread zero does not have the expected amount of inuse memory
+(for static variables).
+\li
+A thread, other than thread zero, has any inuse memory.
+\li
+Any thread has available memory.
 
 \par
 If an error is detected, diagnostic information is printed to standard
 output.
 */
-inline bool memory_leak(bool set_static = false)
+inline bool memory_leak(size_t add_static = 0)
 {	// CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL not necessary given asserts below
 	static size_t thread_zero_static_inuse     = 0;
 	using std::cout;
@@ -137,25 +152,20 @@ inline bool memory_leak(bool set_static = false)
 	using CppAD::thread_alloc;
 	using CppAD::omp_alloc;
 	// --------------------------------------------------------------------
-	// check thead_alloc
 	CPPAD_ASSERT_KNOWN(
 		! thread_alloc::in_parallel(),
-		"attempt to use thread_leak in parallel execution mode."
+		"memory_leak: in_parallel() is true."
 	);
 	CPPAD_ASSERT_KNOWN(
-		! thread_alloc::in_parallel(),
-		"attempt to use thread_leak in parallel execution mode."
+		! thread_alloc::thread_num() != 0,
+		"memory_leak: thread_num() is not zero."
 	);
-	CPPAD_ASSERT_KNOWN(
-		thread_alloc::num_threads() == 1,
-		"attempt to use thread_leak while num_threads > 1."
-	);
-	if( set_static )
-	{	thread_zero_static_inuse  = thread_alloc::inuse(0);
-		return true;
-	}
-	bool leak     = false;
-	size_t thread = 0;
+	if( add_static != 0 )
+	{	thread_zero_static_inuse += add_static;
+		return false;
+	} 
+	bool leak                 = false;
+	size_t thread             = 0;
 
 	// check that memory in use for thread zero corresponds to statics
 	size_t num_bytes = thread_alloc::inuse(thread);

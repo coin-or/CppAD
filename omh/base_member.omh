@@ -52,6 +52,14 @@ $icode%Base z%(%d%)%$$
 
 $head Copy Constructor$$
 $icode%Base z%(%x%)%$$
+
+$head Unary Operators$$
+For $code op$$ equal to
+$code +$$,
+$code -$$
+the following operation must be supported:
+$codei%
+	%z% = %op% %x%$$
  
 $head Assignment Operators$$
 For $icode op$$ equal to
@@ -74,8 +82,10 @@ $codei%
  
 $head Bool Operators$$
 For $icode op$$ equal to
+$code ==$$,
 $code !=$$,
-$code ==$$ the following operation must be supported:
+$code <=$$,
+the following operation must be supported:
 $codei%
 	%b% = %x% %op% %y%$$
 

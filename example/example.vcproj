@@ -218,6 +218,11 @@
 				>
 			</File>
 			<File
+				RelativePath=".\base_require.cpp"
+				>
+			</File>
+			</File>
+			<File
 				RelativePath=".\bender_quad.cpp"
 				>
 			</File>
