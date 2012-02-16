@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -156,6 +156,21 @@ empty code (if a Microsoft Visual C++ is used).
 If it is shown to be faster and does not slow down CppAD with other compilers,
 non-friend functions should be used to map these operations
 to member functions so that both can be compiled inline.
+
+$head Variable Pairs$$
+Suppose that $icode x$$ is a variable 
+and $codei%sin(%x%)%$$ is used in an expression.
+The extra expression $codei%cos(%x%)%$$ is also computed
+during a $cref Forward$$ calculation.
+This is because the derivative of the original expression
+is expressed in terms of the values of the other expression.
+In general, 
+the representation of the derivative of an expression to order $icode p$$ 
+may include the derivative of another expression to order $icode%p%-1%$$.
+In our example, if only the value $codei%sin(%x%)%$$ 
+is requested, it is not necessary to compute $codei%cos(%x%)%$$.
+We should remove the computation of extra expressions derivatives that are 
+not need to compute the requested derivative of the original expression. 
 
 $head Software Guidelines$$
 
