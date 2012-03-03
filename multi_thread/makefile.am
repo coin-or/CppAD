@@ -61,7 +61,7 @@ SHARED_SRC = \
 	multi_newton_time.cpp   multi_newton_time.hpp \
 	multi_newton.cpp        multi_newton.hpp \
 	multi_newton_work.cpp   multi_newton_work.hpp \
-	simple_ad.cpp           simple_ad.hpp \
+	team_example.cpp        team_example.hpp \
 	harmonic_time.cpp      harmonic_time.hpp \
 	harmonic.cpp           harmonic.hpp \
 	harmonic_work.cpp      harmonic_work.hpp 

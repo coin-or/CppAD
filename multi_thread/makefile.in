@@ -48,8 +48,8 @@ CONFIG_CLEAN_VPATH_FILES =
 @CppAD_PTHREAD_TRUE@am__EXEEXT_3 = pthread_test$(EXEEXT)
 am__objects_1 = thread_test.$(OBJEXT) multi_newton_time.$(OBJEXT) \
 	multi_newton.$(OBJEXT) multi_newton_work.$(OBJEXT) \
-	simple_ad.$(OBJEXT) harmonic_time.$(OBJEXT) harmonic.$(OBJEXT) \
-	harmonic_work.$(OBJEXT)
+	team_example.$(OBJEXT) harmonic_time.$(OBJEXT) \
+	harmonic.$(OBJEXT) harmonic_work.$(OBJEXT)
 am_bthread_test_OBJECTS = $(am__objects_1) team_bthread.$(OBJEXT) \
 	a11c_bthread.$(OBJEXT)
 bthread_test_OBJECTS = $(am_bthread_test_OBJECTS)
@@ -252,7 +252,7 @@ SHARED_SRC = \
 	multi_newton_time.cpp   multi_newton_time.hpp \
 	multi_newton.cpp        multi_newton.hpp \
 	multi_newton_work.cpp   multi_newton_work.hpp \
-	simple_ad.cpp           simple_ad.hpp \
+	team_example.cpp        team_example.hpp \
 	harmonic_time.cpp      harmonic_time.hpp \
 	harmonic.cpp           harmonic.hpp \
 	harmonic_work.cpp      harmonic_work.hpp 
@@ -339,8 +339,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton_time.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/multi_newton_work.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simple_ad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/team_bthread.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/team_example.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/team_openmp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/team_pthread.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_test.Po@am__quote@

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -34,7 +34,7 @@ $section Run Multi-Threading Examples and Speed Tests$$
 
 $head Syntax$$
 $codei%./%threading%_test a11c
-./%threading%_test simple_ad
+./%threading%_test team_example
 ./%threading%_test harmonic %test_time% %max_threads% %mega_sum%
 ./%threading%_test multi_newton %test_time% %max_threads% \
 	%num_zero% %num_sub% %num_sum% %use_ad%
@@ -83,8 +83,8 @@ demonstrate simple multi-threading,
 without algorithmic differentiation, using
 OpenMP, Boost threads, and pthreads respectively
 
-$head simple_ad$$
-The $cref simple_ad.cpp$$ routine
+$head team_example$$
+The $cref team_example.cpp$$ routine
 demonstrates simple multi-threading with algorithmic differentiation. 
 
 $head harmonic$$
@@ -177,7 +177,7 @@ $end
 # include <cstring>
 # include <ctime>
 # include "team_thread.hpp"
-# include "simple_ad.hpp"
+# include "team_example.hpp"
 # include "harmonic_time.hpp"
 # include "multi_newton_time.hpp"
 
@@ -217,7 +217,7 @@ int main(int argc, char *argv[])
 	// commnd line usage message
 	const char* usage = 
 	"./<thread>_test a11c\n"
-	"./<thread>_test simple_ad\n"
+	"./<thread>_test team_example\n"
 	"./<thread>_test harmonic    test_time max_threads mega_sum\n"
 	"./<thread>_test multi_newton test_time max_threads\\\n"
 	"	num_zero num_sub num_sum use_ad\\\n"
@@ -254,10 +254,10 @@ int main(int argc, char *argv[])
 	if( argc > 1 )
 		test_name = *++argv;
 	bool run_a11c         = std::strcmp(test_name, "a11c")         == 0;
-	bool run_simple_ad    = std::strcmp(test_name, "simple_ad")    == 0;
-	bool run_harmonic    = std::strcmp(test_name, "harmonic")    == 0;
+	bool run_team_example = std::strcmp(test_name, "team_example")    == 0;
+	bool run_harmonic     = std::strcmp(test_name, "harmonic")    == 0;
 	bool run_multi_newton = std::strcmp(test_name, "multi_newton") == 0;
-	if( run_a11c || run_simple_ad )
+	if( run_a11c || run_team_example )
 		ok = (argc == 2);
 	else if( run_harmonic )
 		ok = (argc == 5);  
@@ -269,10 +269,10 @@ int main(int argc, char *argv[])
 		std::cerr << usage << endl;
 		exit(1);
 	}
-	if( run_a11c || run_simple_ad )
+	if( run_a11c || run_team_example )
 	{	if( run_a11c )
 			ok        = a11c();
-		else ok        = simple_ad();
+		else ok        = team_example();
 		if( CppAD::memory_leak() )
 		{	ok = false;
 			cout << "memory_leak   = true;"  << endl;

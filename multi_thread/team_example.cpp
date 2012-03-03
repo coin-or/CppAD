@@ -11,20 +11,19 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin simple_ad.cpp$$
+$begin team_example.cpp$$
 $spell
 	CppAD
 $$
 
-$section A Simple Multi-Threading AD: Example and Test$$
+$section Using a Team of AD Threads: Example and Test$$
 
-$index thread, multiple simple AD$$
-$index AD, simple multi_thread$$
-$index simple, multi_thread AD$$
+$index thread, team example AD$$
+$index AD, example team$$
+$index example, team AD$$
 
 $head Purpose$$
-This example demonstrates how CppAD can be used in a 
-multi-threading environment.
+This example demonstrates how use a team threads with CppAD.
 
 $head thread_team$$
 The following three implementations of the 
@@ -37,7 +36,7 @@ $tend
 
 $head Source Code$$
 $code
-$verbatim%multi_thread/simple_ad.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/team_example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -89,7 +88,7 @@ namespace {
 }
 
 // This test routine is only called by the master thread (thread_num = 0).
-bool simple_ad(void)
+bool team_example(void)
 {	bool ok = true;
 	using CppAD::thread_alloc;
 

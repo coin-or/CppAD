@@ -36,13 +36,15 @@ assist you in learning about changes between various versions of CppAD.
 
 $head 03-02$$
 $list number$$
-The multi-threading $cref simple_ad.cpp$$ example was changed to use 
+Change the name $code simple_ad.cpp$$ to $cref team_example.cpp$$
+$lnext
+The multi-threading $code team_example.cpp$$ example was changed to use 
 $latex f(x) = \sqrt{ x^2 }$$ instead of the function
 $latex {\rm atan2} [ \sin(x) , \cos (x) ]$$
 (both functions should behave like the identity function $latex f(x) = x$$).
 This enabled the removal of $code multi_thread/arc_tan.cpp$$.
 $lnext
-In $cref simple_ad.cpp$$ check that all of the threads
+In $cref team_example.cpp$$ check that all of the threads
 pass their individual test; i.e. $codei%work_all_[%thread_num%]%.ok%$$
 is true for all $icode thread_num$$.
 $lend
