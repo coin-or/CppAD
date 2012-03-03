@@ -240,7 +240,7 @@ Update the README file.
 $lnext
 Remove the $code bug/optimize.sh$$ file (no longer a bug).
 $lnext
-Make $cref arc_tan.cpp$$ 
+Make $code arc_tan.cpp$$ 
 utility that can be used by multiple multi-threading tests.
 $lnext
 Create $cref team_thread.hpp$$ specifications,

@@ -1,6 +1,6 @@
 // $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,7 +16,7 @@ $spell
 	CppAD
 $$
 
-$section Simple Multi-Threading AD: Example and Test$$
+$section A Simple Multi-Threading AD: Example and Test$$
 
 $index thread, multiple simple AD$$
 $index AD, simple multi_thread$$
@@ -26,31 +26,13 @@ $head Purpose$$
 This example demonstrates how CppAD can be used in a 
 multi-threading environment.
 
-$head Discussion$$
-The function $code arc_tan$$ below
-is an implementation of the inverse tangent function where the
-$cref/operation sequence/glossary/Operation/Sequence/$$ depends on the
-argument values. 
-Hence the function needs to be re-taped 
-for different argument values.
-The $cref/atan2/$$ function uses $cref/CondExp/$$ operations
-to avoid the need to re-tape.
-
 $head thread_team$$
-The following three implementations of the $cref team_thread.hpp$$ specifications
-are included:
+The following three implementations of the 
+$cref team_thread.hpp$$ specifications are included:
 $table
 $rref team_openmp.cpp$$
 $rref team_bthread.cpp$$
 $rref team_pthread.cpp$$
-$tend
-
-$children%
-	multi_thread/arc_tan.cpp
-%$$
-$head arc_tan$$
-$table
-$rref arc_tan.cpp$$
 $tend
 
 $head Source Code$$
@@ -64,15 +46,13 @@ $end
 // BEGIN PROGRAM
 # include <cppad/cppad.hpp>
 # include "team_thread.hpp"
-# include "arc_tan.hpp"
-# include "simple_ad.hpp"
 # define NUMBER_THREADS  4
 
 namespace {
 	// structure with information for one thread
 	typedef struct {
-		// angle for this work (worker input)
-		double          theta;
+		// function argument (worker input)
+		double          x;
 		// false if an error occurs, true otherwise (worker output)
 		bool            ok;
 	} work_one_t;
@@ -87,23 +67,21 @@ namespace {
 		size_t thread_num = CppAD::thread_alloc::thread_num();
 
 		// CppAD::vector uses the CppAD fast multi-threading allocator
-		CppAD::vector< AD<double> > Theta(1), Z(1);
-		Theta[0] = work_all_[thread_num].theta;
-		Independent(Theta);
-		AD<double> x = cos(Theta[0]);
-		AD<double> y = sin(Theta[0]);
-		Z[0]  = arc_tan( x, y );
-		CppAD::ADFun<double> f(Theta, Z); 
+		CppAD::vector< AD<double> > ax(1), ay(1);
+		ax[0] = work_all_[thread_num].x;
+		Independent(ax);
+		ay[0] = sqrt( ax[0] * ax[0] );
+		CppAD::ADFun<double> f(ax, ay); 
 
 		// Check function value corresponds to the identity 
 		double eps = 10. * CppAD::epsilon<double>();
-		ok        &= NearEqual(Z[0], Theta[0], eps, eps);
+		ok        &= NearEqual(ay[0], ax[0], eps, eps);
 
 		// Check derivative value corresponds to the identity.
-		CppAD::vector<double> d_theta(1), d_z(1);
-		d_theta[0] = 1.;
-		d_z        = f.Forward(1, d_theta);
-		ok        &= NearEqual(d_z[0], 1., eps, eps);
+		CppAD::vector<double> d_x(1), d_y(1);
+		d_x[0] = 1.;
+		d_y    = f.Forward(1, d_x);
+		ok    &= NearEqual(d_x[0], 1., eps, eps);
 
 		// pass back ok information for this thread
 		work_all_[thread_num].ok = ok;
@@ -126,18 +104,21 @@ bool simple_ad(void)
 	}
 
 	// initialize work_all_
- 	double pi = 4. * atan(1.);
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
 	{	// set to value by worker for this thread
-		work_all_[thread_num].ok           = false;
+		work_all_[thread_num].ok = false;
 		// theta 
-		work_all_[thread_num].theta        = thread_num * pi / num_threads;
+		work_all_[thread_num].x  = double(thread_num);
 	}
 
 	ok &= team_create(num_threads);
 	ok &= team_work(worker);
 	ok &= team_destroy();
 
+	// Check that all the threads were called and succeeded
+	for(thread_num = 0; thread_num < num_threads; thread_num++)
+		ok &= work_all_[thread_num].ok;
+	
 
 	// Check that no memory currently in use, and free avialable memory.
 	for(thread_num = 0; thread_num < num_threads; thread_num++)

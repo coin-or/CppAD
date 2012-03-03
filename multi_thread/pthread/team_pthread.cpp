@@ -56,8 +56,8 @@ namespace {
 	// number of threads in the team
 	size_t num_threads_ = 1; 
 
-	// key for accessing thread specific informtion 
-	pthread_key_t thread_specific_key;
+	// key for accessing thread specific information 
+	pthread_key_t thread_specific_key_;
 
 	// no need to destroy thread specific information
 	void thread_specific_destructor(void* thread_num_vptr)
@@ -101,7 +101,7 @@ namespace {
 	// thread_number()
 	size_t thread_number(void)
 	{	// get thread specific information
-		void*   thread_num_vptr = pthread_getspecific(thread_specific_key);	
+		void*   thread_num_vptr = pthread_getspecific(thread_specific_key_);	
 		size_t* thread_num_ptr  = static_cast<size_t*>(thread_num_vptr);
 		size_t  thread_num      = *thread_num_ptr;
 		if( thread_num >= num_threads_ )
@@ -117,7 +117,7 @@ namespace {
 		bool ok = true;
 
 		// Set thread specific data where other routines can access it
-		rc = pthread_setspecific(thread_specific_key, thread_num_vptr);
+		rc = pthread_setspecific(thread_specific_key_, thread_num_vptr);
 		ok &= rc == 0;
 
 		// thread_num to problem specific information for this thread
@@ -184,12 +184,12 @@ bool team_create(size_t num_threads)
 	thread_all_[0].pthread_id = pthread_self();
 
 	// create a key for thread specific information
-	rc = pthread_key_create(&thread_specific_key, thread_specific_destructor); 
+	rc = pthread_key_create(&thread_specific_key_,thread_specific_destructor); 
 	ok &= (rc == 0);
 
 	// set thread specific information for this (master thread)
 	void* thread_num_vptr = static_cast<void*>(&(thread_all_[0].thread_num));
-	rc = pthread_setspecific(thread_specific_key, thread_num_vptr);
+	rc = pthread_setspecific(thread_specific_key_, thread_num_vptr);
 	ok &= (rc == 0);
 
 	// Now that thread_number() has necessary information for this thread
@@ -318,7 +318,7 @@ bool team_destroy(void)
 	sequential_execution_ = true;
 
 	// destroy the key for thread specific data
-	pthread_key_delete(thread_specific_key);
+	pthread_key_delete(thread_specific_key_);
 
 	// destroy wait_for_work_
 	rc  = pthread_barrier_destroy(&wait_for_work_);

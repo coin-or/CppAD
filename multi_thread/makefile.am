@@ -58,7 +58,6 @@ SHARED_SRC = \
 	thread_test.cpp \
 	team_thread.hpp  \
 \
-	arc_tan.cpp             arc_tan.hpp \
 	multi_newton_time.cpp   multi_newton_time.hpp \
 	multi_newton.cpp        multi_newton.hpp \
 	multi_newton_work.cpp   multi_newton_work.hpp \
