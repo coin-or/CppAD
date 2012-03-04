@@ -3,7 +3,7 @@
 # define CPPAD_USER_ATOMIC_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -942,7 +942,7 @@ public:
 			ok = (tape_id == 0) | Parameter(ax[j]) | (tape_id == ax[j].id_);
 			if( ! ok )
 			{	msg = msg + name_ + 
-				": ax contains variables from different OpenMP threads.";
+				": ax contains variables from different threads.";
 				CPPAD_ASSERT_KNOWN(false, msg.c_str());
 			}
 # endif

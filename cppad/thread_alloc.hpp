@@ -533,6 +533,16 @@ $end
 		bool (*in_parallel)(void)  ,
 		size_t (*thread_num)(void) )
 	{
+		// Special case where we go back to single thread mode right away
+		// (previous settings may no longer be valid)
+		if( num_threads == 1 )
+		{	bool set = true;
+			set_get_num_threads(num_threads);
+			set_get_in_parallel(CPPAD_NULL, set);
+			set_get_thread_num(CPPAD_NULL, set);
+			return;
+		}
+
 		CPPAD_ASSERT_KNOWN( 
 			num_threads <= CPPAD_MAX_NUM_THREADS ,
 			"parallel_setup: num_threads is too large"
@@ -542,23 +552,13 @@ $end
 			"parallel_setup: num_threads == zero"
 		);
 		CPPAD_ASSERT_KNOWN( 
-			in_parallel != 0 ,
-			"parallel_setup: the function pointer in_parallel == zero"
+			in_parallel != CPPAD_NULL ,
+			"parallel_setup: num_threads != 1 and in_parallel == CPPAD_NULL"
 		);
 		CPPAD_ASSERT_KNOWN( 
-			thread_num != 0 ,
-			"parallel_setup: the function pointer thread_num == zero"
+			thread_num != CPPAD_NULL ,
+			"parallel_setup: num_threads != 1 and thread_num == CPPAD_NULL"
 		);
-
-		// go back to single thread mode right away
-		// (previous settings may no longer be valid)
-		if( num_threads == 1 )
-		{	bool set = true;
-			set_get_num_threads(num_threads);
-			set_get_in_parallel(CPPAD_NULL, set);
-			set_get_thread_num(CPPAD_NULL, set);
-			return;
-		}
 
 		// Make sure that constructors for all static variables in this file 
 		// are called in sequential mode.	

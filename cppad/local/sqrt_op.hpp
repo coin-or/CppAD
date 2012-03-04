@@ -3,7 +3,7 @@
 # define CPPAD_SQRT_OP_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -54,6 +54,10 @@ inline void forward_sqrt_op(
 		z[j] = sqrt( x[0] );
 	else
 	{
+		CPPAD_ASSERT_KNOWN(
+			x[0] != Base(0),
+			"Forward: attempt to take derivatve of square root of zero"
+		)
 		z[j] = Base(0);
 		for(k = 1; k < j; k++)
 			z[j] -= Base(k) * z[k] * z[j-k];
@@ -127,11 +131,18 @@ inline void reverse_sqrt_op(
 	const Base* z  = taylor  + i_z * nc_taylor;
 	Base* pz       = partial + i_z * nc_partial;
 
+	CPPAD_ASSERT_KNOWN(
+		z[0] != Base(0),
+		"Reverse: attempt to take derivatve of square root of zero"
+	)
+
 	// number of indices to access
 	size_t j = d;
 	size_t k;
 	while(j)
-	{	// scale partial w.r.t. z[j]
+	{
+
+		// scale partial w.r.t. z[j]
 		pz[j]   /= z[0];
 
 		pz[0]   -= pz[j] * z[j];

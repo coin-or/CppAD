@@ -207,6 +207,8 @@ $rref runge_45_1.cpp$$
 $rref runge_45_2.cpp$$
 $rref seq_property.cpp$$
 $rref team_example.cpp$$
+$rref simple_ad_openmp.cpp$$
+$rref simple_ad_pthread.cpp$$
 $rref SimpleVector.cpp$$
 $rref Sin.cpp$$
 $rref Sinh.cpp$$

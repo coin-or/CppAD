@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20120302, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20120304, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -413,7 +413,7 @@ if test "$BOOST_DIR" == '' && test "$boost_thread_found" == 'no' ; then
 	)
 fi
 if test "$BOOST_DIR" != '' && test "$boost_thread_found" == 'no' ; then
-	bthread_lib="$BOOST_DIR/lib/libboost_thread-mt.so"
+	bthread_lib="$BOOST_DIR/../lib/libboost_thread-mt.so"
 	LDFLAGS="$LDFLAGS_save $bthread_lib"
 	AC_LINK_IFELSE(
 		[AC_LANG_PROGRAM(
@@ -425,7 +425,7 @@ if test "$BOOST_DIR" != '' && test "$boost_thread_found" == 'no' ; then
 	)
 fi
 if test "$BOOST_DIR" != '' && test "$boost_thread_found" == 'no' ; then
-	bthread_lib="$BOOST_DIR/lib/libboost_thread-mt.a"
+	bthread_lib="$BOOST_DIR/../lib/libboost_thread-mt.a"
 	LDFLAGS="$LDFLAGS_save $bthread_lib"
 	AC_LINK_IFELSE(
 		[AC_LANG_PROGRAM(
@@ -449,7 +449,7 @@ if test "$BOOST_DIR" == '' && test "$boost_thread_found" == 'no' ; then
 	)
 fi
 if test "$BOOST_DIR" != '' && test "$boost_thread_found" == 'no' ; then
-	bthread_lib="$BOOST_DIR/lib/libboost_thread.so"
+	bthread_lib="$BOOST_DIR/../lib/libboost_thread.so"
 	LDFLAGS="$LDFLAGS_save $bthread_lib"
 	AC_LINK_IFELSE(
 		[AC_LANG_PROGRAM(
@@ -461,7 +461,7 @@ if test "$BOOST_DIR" != '' && test "$boost_thread_found" == 'no' ; then
 	)
 fi
 if test "$BOOST_DIR" != '' && test "$boost_thread_found" == 'no' ; then
-	bthread_lib="$BOOST_DIR/lib/libboost_thread.a"
+	bthread_lib="$BOOST_DIR/../lib/libboost_thread.a"
 	LDFLAGS="$LDFLAGS_save $bthread_lib"
 	AC_LINK_IFELSE(
 		[AC_LANG_PROGRAM(

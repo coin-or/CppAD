@@ -258,7 +258,7 @@ bool team_destroy(void)
 	// now inform CppAD that there is only one thread
 	num_threads_ = 1;
 	using CppAD::thread_alloc;
-	thread_alloc::parallel_setup(num_threads_, in_parallel, thread_number);
+	thread_alloc::parallel_setup(num_threads_, CPPAD_NULL, CPPAD_NULL);
 	thread_alloc::hold_memory(false);
 
 	return ok;

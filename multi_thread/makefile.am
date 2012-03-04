@@ -69,17 +69,20 @@ SHARED_SRC = \
 bthread_test_SOURCES = \
 	$(SHARED_SRC) \
 	bthread/team_bthread.cpp \
-	bthread/a11c_bthread.cpp 
+	bthread/a11c_bthread.cpp  \
+	bthread/simple_ad_bthread.cpp
 #
 openmp_test_SOURCES = \
 	$(SHARED_SRC) \
 	openmp/team_openmp.cpp \
-	openmp/a11c_openmp.cpp 
+	openmp/a11c_openmp.cpp  \
+	openmp/simple_ad_openmp.cpp 
 #
 pthread_test_SOURCES = \
 	$(SHARED_SRC) \
 	pthread/team_pthread.cpp \
-	pthread/a11c_pthread.cpp 
+	pthread/a11c_pthread.cpp  \
+	pthread/simple_ad_pthread.cpp 
 #
 dist_noinst_SCRIPTS = test.sh
 #

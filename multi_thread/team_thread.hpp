@@ -97,21 +97,30 @@ It is $code false$$ if an error is detected during the
 corresponding call.
 Otherwise it is $code true$$.
 
-$head Example Use$$
-Example use of these specifications can be found in the file
-$cref team_example.cpp$$.
-
 $children%
 	multi_thread/openmp/team_openmp.cpp%
 	multi_thread/bthread/team_bthread.cpp%
 	multi_thread/pthread/team_pthread.cpp
 %$$
+
+$head Example Use$$
+Example use of these specifications can be found in the file
+$cref team_example.cpp$$.
+
 $head Example Implementation$$
 Example implementations of these specifications can be found in the files:
 $table
 $rref team_openmp.cpp$$
 $rref team_bthread.cpp$$
 $rref team_pthread.cpp$$
+$tend
+
+$head Speed Test of Implementation$$
+Speed tests of using CppAD with the team implementations above 
+can be found in:
+$table
+$rref harmonic.cpp$$
+$rref multi_newton.cpp$$
 $tend
 
 $head Source$$

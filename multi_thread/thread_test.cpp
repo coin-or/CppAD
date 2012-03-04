@@ -34,6 +34,7 @@ $section Run Multi-Threading Examples and Speed Tests$$
 
 $head Syntax$$
 $codei%./%threading%_test a11c
+./%threading%_test simple_ad
 ./%threading%_test team_example
 ./%threading%_test harmonic %test_time% %max_threads% %mega_sum%
 ./%threading%_test multi_newton %test_time% %max_threads% \
@@ -71,7 +72,16 @@ Runs the CppAD multi-threading examples and timing tests:
 $children%
 	multi_thread/openmp/a11c_openmp.cpp%
 	multi_thread/bthread/a11c_bthread.cpp%
-	multi_thread/pthread/a11c_pthread.cpp
+	multi_thread/pthread/a11c_pthread.cpp%
+
+	multi_thread/openmp/simple_ad_openmp.cpp%
+	multi_thread/pthread/simple_ad_pthread.cpp%
+
+	multi_thread/team_example.cpp%
+	multi_thread/harmonic.cpp%
+	multi_thread/multi_newton.cpp%
+
+	multi_thread/team_thread.hpp
 %$$
 
 $head a11c$$
@@ -81,7 +91,15 @@ $cref a11c_bthread.cpp$$, and
 $cref a11c_pthread.cpp$$
 demonstrate simple multi-threading, 
 without algorithmic differentiation, using
-OpenMP, Boost threads, and pthreads respectively
+
+$head simple_ad$$
+The examples 
+$cref simple_ad_openmp.cpp$$ and
+$cref simple_ad_pthread.cpp$$
+demonstrate simple multi-threading, 
+with algorithmic differentiation, using
+OpenMP, and pthreads respectively.
+($code simple_ad_bthread.cpp$$ is not yet implemented).
 
 $head team_example$$
 The $cref team_example.cpp$$ routine
@@ -154,8 +172,8 @@ The command line argument $icode use_ad$$ is either
 $code true$$ or $code false$$ and has the same meaning as in
 $cref/multi_newton_time.cpp/multi_newton_time.cpp/use_ad/$$.
 
-$head Threading System Specific Routines$$
-The following routines are used to link specific threading
+$head Team Implementations$$
+The following routines are used to implement the specific threading
 systems through the common interface $cref team_thread.hpp$$:
 $table
 $rref team_openmp.cpp$$
@@ -182,6 +200,7 @@ $end
 # include "multi_newton_time.hpp"
 
 extern bool a11c(void);
+extern bool simple_ad(void);
 
 namespace {
 	size_t arg2size_t(
@@ -217,6 +236,7 @@ int main(int argc, char *argv[])
 	// commnd line usage message
 	const char* usage = 
 	"./<thread>_test a11c\n"
+	"./<thread>_test simple_ad\n"
 	"./<thread>_test team_example\n"
 	"./<thread>_test harmonic    test_time max_threads mega_sum\n"
 	"./<thread>_test multi_newton test_time max_threads\\\n"
@@ -254,10 +274,11 @@ int main(int argc, char *argv[])
 	if( argc > 1 )
 		test_name = *++argv;
 	bool run_a11c         = std::strcmp(test_name, "a11c")         == 0;
-	bool run_team_example = std::strcmp(test_name, "team_example")    == 0;
-	bool run_harmonic     = std::strcmp(test_name, "harmonic")    == 0;
+	bool run_simple_ad    = std::strcmp(test_name, "simple_ad")    == 0;
+	bool run_team_example = std::strcmp(test_name, "team_example") == 0;
+	bool run_harmonic     = std::strcmp(test_name, "harmonic")     == 0;
 	bool run_multi_newton = std::strcmp(test_name, "multi_newton") == 0;
-	if( run_a11c || run_team_example )
+	if( run_a11c || run_simple_ad || run_team_example )
 		ok = (argc == 2);
 	else if( run_harmonic )
 		ok = (argc == 5);  
@@ -269,10 +290,12 @@ int main(int argc, char *argv[])
 		std::cerr << usage << endl;
 		exit(1);
 	}
-	if( run_a11c || run_team_example )
+	if( run_a11c || run_simple_ad || run_team_example )
 	{	if( run_a11c )
 			ok        = a11c();
-		else ok        = team_example();
+		else if( run_simple_ad )
+			ok        = simple_ad();
+		else	ok        = team_example();
 		if( CppAD::memory_leak() )
 		{	ok = false;
 			cout << "memory_leak   = true;"  << endl;

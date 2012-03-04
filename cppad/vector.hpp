@@ -3,7 +3,7 @@
 # define CPPAD_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -214,7 +214,8 @@ $lend
 $head Memory and Parallel Mode$$
 $index thread_alloc, vector$$
 $index vector, thread_alloc$$
-These vectors use the OpenMP fast memory allocator $cref/thread_alloc/$$:
+These vectors use the multi-threaded fast memory allocator 
+$cref/thread_alloc/$$:
 
 $list number$$
 The routine $cref/parallel_setup/ta_parallel_setup/$$ must

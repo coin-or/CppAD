@@ -215,6 +215,9 @@ fi
 # configure
 if [ "$1" == "configure" ]
 then
+	log_dir=`pwd`
+	log_file="$1.log"
+	#
 	echo "cd work"
 	cd work
 	#
@@ -256,13 +259,14 @@ then
 	dir_list=`echo $dir_list | sed -e 's|\t\t*| |g'`
 	cxx_flags="-Wall -ansi -pedantic-errors -std=c++98 -Wshadow"
 cat << EOF
-../configure \\
+../configure > $log_file \\
 $dir_list \\
 CXX_FLAGS=\"$cxx_flags\" \\
 $tape_addr_type --with-Documentation OPENMP_FLAGS=-fopenmp
 EOF
 	#
-	../configure $dir_list \
+	../configure > $log_dir/$log_file \
+		$dir_list \
 		CXX_FLAGS="$cxx_flags" \
 		$tape_addr_type --with-Documentation OPENMP_FLAGS=-fopenmp
 	#
@@ -430,8 +434,12 @@ then
 		echo "cp work/cppad-$version.$ext.tgz doc/cppad-$version.$ext.tgz"
 		cp work/cppad-$version.$ext.tgz doc/cppad-$version.$ext.tgz
 	done
+	#
 	echo "cp -r doxydoc doc/doxydoc"
 	cp -r doxydoc doc/doxydoc
+	#
+	echo "cp *.log doc"
+	cp *.log doc
 	#
 	echo "OK: ./build.sh copy2doc"
 	exit 0
@@ -603,19 +611,19 @@ fi
 cat << EOF
 usage: ./build.sh option_1 option_2 ...
 
-options                                                               requires
--------                                                               --------
-version:   set version in AUTHORS, configure.ac, configure, ...
-automake:  run the tools required by autoconf and automake.
-configure: run the configure script in the work directory.            automake
-dist:      create the distribution file work/cppad-version.cpl.tgz.   configure
-omhelp:    build all formats of user documentation in doc/*.          configure
-doxygen:   build developer documentation in doxydoc/*.                configure
-gpl:       create work/*.gpl.zip and work/*.cpl.zip.                  dist
-copy2doc:  copy tarballs and doxygen output into doc directory.       gpl
+options                                                            requires
+-------                                                            --------
+version:  set version in AUTHORS, configure.ac, configure, ...
+automake: run the tools required by autoconf and automake.
+configure:run the configure script in the work directory.          automake
+dist:     create the distribution file work/cppad-version.cpl.tgz. configure
+omhelp:   build all formats of user documentation in doc/*.        configure
+doxygen:  build developer documentation in doxydoc/*.              configure
+gpl:      create work/*.gpl.zip and work/*.cpl.zip.                dist
+copy2doc: copy logs, tarballs & doxygen output into doc directory. dist,doxygen
 
-all:       $all_cases
-test:      use tarball to make test and put result in build_test.log. dist
+all:      $all_cases
+test:     use tarball to make test and put result in build_test.log. dist
 EOF
 #
 exit 1

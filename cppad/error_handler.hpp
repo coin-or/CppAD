@@ -2,7 +2,7 @@
 # ifndef CPPAD_ERROR_HANDLER_INCLUDED
 # define CPPAD_ERROR_HANDLER_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -195,10 +195,6 @@ private:
 	{	using std::cerr;
 		using std::endl;
 
-# ifdef _OPENMP
-		int thread_num = omp_get_thread_num();
-# endif
-
 		cerr << CPPAD_PACKAGE_STRING;
 		if( known )
 			cerr << " error from a known source:" << endl;
@@ -209,9 +205,6 @@ private:
 		cerr << "    "     << exp                     << endl;
 		cerr << "at line " << line << " in the file " << endl;
 		cerr << "    "     << file                    << endl;
-# ifdef _OPENMP
-		cerr << "OpenMP: thread_num = " << thread_num << endl;
-# endif
 
 		// terminate program execution
 		assert(false);

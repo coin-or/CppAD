@@ -11,32 +11,25 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
 
 /*
-$begin team_example.cpp$$
+$begin simple_ad_openmp.cpp$$
 $spell
+	openmp
 	CppAD
 $$
 
-$section Using a Team of AD Threads: Example and Test$$
+$section A Simple OpenMP AD: Example and Test$$
 
-$index thread, team example AD$$
-$index AD, example team$$
-$index example, team AD$$
+$index openmp, simple AD$$
+$index AD, simple openmp$$
+$index simple, openmp AD$$
 
 $head Purpose$$
-This example demonstrates how use a team threads with CppAD.
-
-$head thread_team$$
-The following three implementations of the 
-$cref team_thread.hpp$$ specifications are included:
-$table
-$rref team_openmp.cpp$$
-$rref team_bthread.cpp$$
-$rref team_pthread.cpp$$
-$tend
+This example demonstrates how CppAD can be used in a 
+OpenMP multi-threading environment.
 
 $head Source Code$$
 $code
-$verbatim%multi_thread/team_example.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
+$verbatim%multi_thread/openmp/simple_ad_openmp.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
 $$
 
 $end
@@ -44,10 +37,12 @@ $end
 */
 // BEGIN PROGRAM
 # include <cppad/cppad.hpp>
-# include "team_thread.hpp"
+# include <omp.h>
 # define NUMBER_THREADS  4
 
 namespace {
+	using CppAD::thread_alloc;
+
 	// structure with information for one thread
 	typedef struct {
 		// function argument (worker input)
@@ -63,7 +58,7 @@ namespace {
 	{	using CppAD::NearEqual;
 		using CppAD::AD;
 		bool ok = true;
-		size_t thread_num = CppAD::thread_alloc::thread_num();
+		size_t thread_num = thread_alloc::thread_num();
 
 		// CppAD::vector uses the CppAD fast multi-threading allocator
 		CppAD::vector< AD<double> > ax(1), ay(1);
@@ -85,12 +80,18 @@ namespace {
 		// pass back ok information for this thread
 		work_all_[thread_num].ok = ok;
 	}
+	// ------------------------------------------------------------------
+	// used to inform CppAD when we are in parallel execution mode
+	bool in_parallel(void)
+	{	return static_cast<bool>( omp_in_parallel() ); }
+	// used to inform CppAD of the current thread number
+	size_t thread_number(void)
+	{	return static_cast<size_t>( omp_get_thread_num() ); }
 }
 
 // This test routine is only called by the master thread (thread_num = 0).
-bool team_example(void)
+bool simple_ad(void)
 {	bool ok = true;
-	using CppAD::thread_alloc;
 
 	size_t num_threads = NUMBER_THREADS;
 
@@ -106,13 +107,26 @@ bool team_example(void)
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
 	{	// set to value by worker for this thread
 		work_all_[thread_num].ok = false;
-		// theta 
+		// argumet value for this thread 
 		work_all_[thread_num].x  = double(thread_num) + 1.;
 	}
 
-	ok &= team_create(num_threads);
-	ok &= team_work(worker);
-	ok &= team_destroy();
+	// turn off dynamic thread adjustment
+	omp_set_dynamic(0);
+
+	// set the number of OpenMP threads
+	omp_set_num_threads( int(num_threads) );
+
+	// setup for using CppAD::AD<double> in parallel
+	thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
+	thread_alloc::hold_memory(true);
+	CppAD::parallel_ad<double>();
+
+	// execute worker in parallel
+# pragma omp parallel for
+	for(thread_num = 0; thread_num < num_threads; thread_num++)
+		worker();
+// end omp parallel for
 
 	// Check that all the threads were called and succeeded
 	for(thread_num = 0; thread_num < num_threads; thread_num++)

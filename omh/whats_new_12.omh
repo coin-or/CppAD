@@ -34,6 +34,16 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-03$$
+$list number$$
+Add the examples 
+$cref simple_ad_openmp.cpp$$ and $cref simple_ad_pthread.cpp$$.
+$lnext
+Fix bug in finding boost multi-threading library
+(due to fact that $cref/BOOST_DIR/InstallUnix/BoostDir/$$ 
+is not the prefix during the boost installation).
+$lend
+
 $head 03-02$$
 $list number$$
 Change the name $code simple_ad.cpp$$ to $cref team_example.cpp$$

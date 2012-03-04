@@ -3,7 +3,7 @@
 # define CPPAD_TAPE_LINK_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -41,7 +41,7 @@ that records AD<Base> operations for the specified thread.
 is the base type corresponding to AD<Base> operations.
 
 \param thread
-is the index that identifes the current OpenMP thread.
+is the index that identifes the current thread.
 <tt>0 <= thread < thread_alloc::num_threads()</tt>.
 
 \return
@@ -85,7 +85,7 @@ that records AD<Base> operations for the specified thread.
 is the base type corresponding to AD<Base> operations.
 
 \param thread
-is the index that identifes the current OpenMP thread.
+is the index that identifes the current thread.
 If \c _OPENMP is not defined, \c thread must be zero.
 <tt>0 <= thread < thread_alloc::num_threads()</tt>.
 
@@ -114,7 +114,7 @@ that records AD<Base> operations for the current thread.
 is the base type corresponding to AD<Base> operations.
 
 \par thread
-is the index that identifes the current OpenMP thread.
+is the index that identifes the current thread.
 If \c _OPENMP is not defined, \c thread is zero.
 <tt>0 <= thread < thread_alloc::num_threads()</tt>.
 
@@ -139,7 +139,7 @@ that records AD<Base> operations for the current thread.
 is the base type corresponding to AD<Base> operations.
 
 \par thread
-is the index that identifes the current OpenMP thread.
+is the index that identifes the current thread.
 If \c _OPENMP is not defined, \c thread is zero.
 <tt>0 <= thread < thread_alloc::num_threads()</tt>.
 
@@ -162,7 +162,7 @@ inline ADTape<Base> *AD<Base>::tape_ptr(size_t id)
 	size_t thread = id % CPPAD_MAX_NUM_THREADS;
 	CPPAD_ASSERT_KNOWN(
 		thread == thread_alloc::thread_num(),
-		"Attempt to use an AD variable in two different OpenMP threads."
+		"Attempt to use an AD variable in two different threads."
 	);
 	CPPAD_ASSERT_UNKNOWN( id == *id_handle(thread) );
 	CPPAD_ASSERT_UNKNOWN( *tape_handle(thread) != CPPAD_NULL );
@@ -176,7 +176,7 @@ Create a new tape that records AD<Base> operations for current thread.
 is the base type corresponding to AD<Base> operations.
 
 \par thread
-Let \c thread denote the current OpenMP thread number
+Let \c thread denote the current thread number
 see \c thread_alloc::thread_num(). 
 If \c _OPENMP is not defined, \c thread is zero.
 It is a user error if <tt>thread >= thread_alloc::num_threads()</tt>.
@@ -240,7 +240,7 @@ Is the identifer for the tape that is recording AD<Base> operations
 for this thread.
 
 \par thread
-Let \c thread denote the current OpenMP thread number
+Let \c thread denote the current thread number
 \c thread_alloc::thread_num(). 
 If \c _OPENMP is not defined, \c thread is zero.
 It must hold that <tt>thread = id_old % CPPAD_MAX_NUM_THREADS</tt>.
@@ -295,7 +295,7 @@ Get a pointer to tape that records AD<Base> operations for the current thread.
 is the base type corresponding to AD<Base> operations.
 
 \par thread
-is the index that identifes the current OpenMP thread.
+is the index that identifes the current thread.
 If \c _OPENMP is not defined, \c thread is zero.
 <tt>0 <= thread < thread_alloc::num_threads()</tt>.
 
