@@ -61,6 +61,8 @@ do
 	then
 		./$program a11c
 		echo
+		./$program simple_ad
+		echo
 		./$program team_example
 		echo
 	fi

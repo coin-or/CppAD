@@ -37,15 +37,6 @@ $end
 # include <cppad/memory_leak.hpp>
 # include <vector>
 
-# define NUMBER_THREADS 2
-
-namespace {
-	// Setup for one thread in sequential execution mode
-	bool in_parallel_false(void)
-	{	return false; }
-	size_t thread_num_zero(void)
-	{	return 0; }
-}
 
 namespace { // Begin empty namespace
 
@@ -178,18 +169,16 @@ bool thread_alloc(void)
 {	bool ok  = true;
 	using CppAD::thread_alloc;
 
-	// check initial state of allocator
+	// check that there is only on thread
 	ok  &= thread_alloc::num_threads() == 1;
-
-	// Tell thread_alloc that there are two threads so it starts holding
-	// onto memory (but actuall the there is only on thread with id zero).
-	thread_alloc::parallel_setup( NUMBER_THREADS, 
-		in_parallel_false, thread_num_zero
-	);
-	thread_alloc::hold_memory(true);
-	ok  &= thread_alloc::num_threads() == 2;
+	// so thread number must be zero
 	ok  &= thread_alloc::thread_num() == 0;
+	// and we are in sequential execution mode
 	ok  &= thread_alloc::in_parallel() == false;
+
+	// Instruct thread_alloc to hold onto memory.  This makes memory 
+	// allocation faster (especially when there are multiple threads).
+	thread_alloc::hold_memory(true);
 
 	// run raw allocation tests
 	ok &= raw_allocate();
@@ -197,8 +186,7 @@ bool thread_alloc(void)
 	// run typed allocation tests
 	ok &= type_allocate();
 	
-	// return allocator to single thread mode
-	thread_alloc::parallel_setup(1, in_parallel_false, thread_num_zero);
+	// return allocator to its default mode
 	thread_alloc::hold_memory(false);
 	return ok;
 }

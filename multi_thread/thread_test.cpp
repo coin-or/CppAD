@@ -75,6 +75,7 @@ $children%
 	multi_thread/pthread/a11c_pthread.cpp%
 
 	multi_thread/openmp/simple_ad_openmp.cpp%
+	multi_thread/bthread/simple_ad_bthread.cpp%
 	multi_thread/pthread/simple_ad_pthread.cpp%
 
 	multi_thread/team_example.cpp%
@@ -94,12 +95,13 @@ without algorithmic differentiation, using
 
 $head simple_ad$$
 The examples 
-$cref simple_ad_openmp.cpp$$ and
+$cref simple_ad_openmp.cpp$$,
+$cref simple_ad_bthread.cpp$$,
+and
 $cref simple_ad_pthread.cpp$$
 demonstrate simple multi-threading, 
 with algorithmic differentiation, using
-OpenMP, and pthreads respectively.
-($code simple_ad_bthread.cpp$$ is not yet implemented).
+OpenMP, boost threads and pthreads respectively.
 
 $head team_example$$
 The $cref team_example.cpp$$ routine

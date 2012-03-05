@@ -97,7 +97,7 @@ bool team_destroy(void)
 
 	// inform CppAD no longer in multi-threading mode
 	using CppAD::thread_alloc;
-	thread_alloc::parallel_setup(num_threads_, in_parallel, thread_num);
+	thread_alloc::parallel_setup(num_threads_, CPPAD_NULL, CPPAD_NULL);
 	thread_alloc::hold_memory(false);
 
 	return ok;

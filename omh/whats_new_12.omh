@@ -37,7 +37,9 @@ assist you in learning about changes between various versions of CppAD.
 $head 03-03$$
 $list number$$
 Add the examples 
-$cref simple_ad_openmp.cpp$$ and $cref simple_ad_pthread.cpp$$.
+$cref simple_ad_openmp.cpp$$,
+$cref simple_ad_bthread.cpp$$
+and $cref simple_ad_pthread.cpp$$.
 $lnext
 Fix bug in finding boost multi-threading library
 (due to fact that $cref/BOOST_DIR/InstallUnix/BoostDir/$$ 

@@ -139,6 +139,10 @@ bool simple_ad(void)
 		thread_alloc::free_available(thread_num); 
 	}
 
+	// now inform CppAD that there is only one thread
+	thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
+	thread_alloc::hold_memory(false);
+
 	return ok;
 }
 // END PROGRAM
