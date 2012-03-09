@@ -488,7 +488,7 @@ $codei%
 It must return a thread number that uniquely identifies the
 currently executing thread. 
 Furthermore
-$code%
+$codei%
 	0 <= %thread_num%() < %num_threads%
 %$$.
 In the special case where $icode%num_threads% == 1%$$,
@@ -508,9 +508,9 @@ In addition, this function cannot be called while in parallel mode.
 
 $head Example$$
 The files 
-$cref team_openmp.cpp$$, 
-$cref team_bthread.cpp$$, and
-$cref team_pthread.cpp$$, 
+$cref simple_ad_openmp.cpp$$, 
+$cref simple_ad_bthread.cpp$$, and
+$cref simple_ad_pthread.cpp$$, 
 contain examples and tests that use this function.   
 
 $end
