@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_12$$
 $spell
+	valgrind
 	num
 	alloc
 	makefile
@@ -33,6 +34,19 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-11$$
+There was a bug in $cref thread_alloc$$ where extra memory was held
+onto even if $cref/hold_memory/ta_hold_memory/$$ was never called
+and only one thread was used by the program. 
+This caused $code valgrind --show-reachable=yes$$ to generate an error message.
+If $cref/multiple threads/multi_thread/$$ are used,
+one should free this 
+$cref/extra memory/ta_free_available/Purpose/Extra Memory/$$
+for threads other than thread zero.
+If $code hold_memory$$ is used,
+one should call $cref/free_available/ta_free_available/$$ for all threads. 
+
 
 $head 03-03$$
 $list number$$

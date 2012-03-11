@@ -75,6 +75,13 @@ Only one of these objects should be created and used as a
 static variable inside of the \c thread_alloc::capacity_info function.
 */
 
+/*!
+Allocator class that works well with an multi-threading environment.
+*/
+class thread_alloc{
+// ============================================================================
+private:
+
 class thread_alloc_capacity {
 public:
 	/// number of capacity values actually used
@@ -116,13 +123,6 @@ public:
 	{ }
 };
 
-
-/*!
-Allocator class that works well with an multi-threading environment.
-*/
-class thread_alloc{
-// ============================================================================
-private:
 	// ---------------------------------------------------------------------
 	/// Vector of fixed capacity values for this allocator
 	static const thread_alloc_capacity* capacity_info(void)
@@ -190,23 +190,30 @@ private:
 	static thread_alloc_info* thread_info(
 		size_t             thread          ,
 		bool               clear = false   )
-	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-		static thread_alloc_info* all_info[CPPAD_MAX_NUM_THREADS];
+	{	static thread_alloc_info* all_info[CPPAD_MAX_NUM_THREADS];
+		static thread_alloc_info  zero_info;
+
+		CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+
 		CPPAD_ASSERT_UNKNOWN( thread < CPPAD_MAX_NUM_THREADS );
 
 		thread_alloc_info* info = all_info[thread];
 		if( clear )
 		{	if( info != CPPAD_NULL )
-			{	::operator delete( reinterpret_cast<void*>(info) );
+			{	if( thread != 0 )
+					::operator delete( reinterpret_cast<void*>(info) );
 				info             = CPPAD_NULL;
 				all_info[thread] = info;
 			}
 		}
 		else if( info == CPPAD_NULL )
-		{	size_t size = sizeof(thread_alloc_info);
-			void* v_ptr = ::operator new(size);
-			info        = reinterpret_cast<thread_alloc_info*>(v_ptr);
-
+		{	if( thread == 0 )
+				info = &zero_info;
+			else
+			{	size_t size = sizeof(thread_alloc_info);
+				void* v_ptr = ::operator new(size);
+				info        = reinterpret_cast<thread_alloc_info*>(v_ptr);
+			}
 			all_info[thread] = info;
 
 			// initialize the information record
@@ -1013,6 +1020,9 @@ $spell
 $$
 
 $section Free Memory Currently Available for Quick Use by a Thread$$
+$spell
+	inuse
+$$
 
 $index free_available, thread_alloc$$
 $index thread_alloc, free_available$$
@@ -1024,8 +1034,17 @@ $head Syntax$$
 $codei%thread_alloc::free_available(%thread%)%$$
 
 $head Purpose$$
-Free memory, currently available for quick use by a specific thread, 
-for general future use.
+Return to the system all the memory that is currently being
+$cref/held/ta_hold_memory/$$ for quick use by the specified thread.
+
+$subhead Extra Memory$$
+In the case where $icode%thread% > 0%$$,
+some extra memory is used to track allocations by the specified thread.
+If 
+$codei%
+	thread_alloc::inuse(%thread%) == 0
+%$$
+the extra memory is also returned to the system.
 
 $head thread$$
 This argument has prototype
@@ -1114,9 +1133,11 @@ If $icode value$$ is true,
 $code thread_alloc$$ with hold onto memory for future quick use.
 If it is false, future calls to $cref/return_memory/ta_return_memory/$$
 will return the corresponding memory to the system.
+By default (when $code hold_memory$$ has not been called)
+$code thread_alloc$$ does not hold onto memory.
 
 $head free_available$$
-Memory that is held by $code thread_alloc$$ can be returned
+Memory that is being held by $code thread_alloc$$ can be returned
 to the system using $cref/free_available/ta_free_available/$$.
 
 $end
