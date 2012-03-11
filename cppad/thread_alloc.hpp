@@ -81,68 +81,67 @@ Allocator class that works well with an multi-threading environment.
 class thread_alloc{
 // ============================================================================
 private:
+	
+	class capacity_t {
+	public:
+		/// number of capacity values actually used
+		size_t number;
+		/// the different capacity values
+		size_t value[CPPAD_MAX_NUM_CAPACITY];
+		/// ctor
+		capacity_t(void)
+		{	// Cannot figure out how to call thread_alloc::in_parallel here. 
+			// CPPAD_ASSERT_UNKNOWN( 
+			// 	! thread_alloc::in_parallel() , "thread_alloc: "
+			//	"parallel mode and parallel_setup not yet called."
+			// );
+			number           = 0;
+			size_t capacity  = CPPAD_MIN_DOUBLE_CAPACITY * sizeof(double);
+			while( capacity < std::numeric_limits<size_t>::max() / 2 )
+			{	CPPAD_ASSERT_UNKNOWN( number < CPPAD_MAX_NUM_CAPACITY );
+				value[number++] = capacity;
+				// next capactiy is 3/2 times the current one
+				capacity        = 3 * ( (capacity + 1) / 2 );
+			} 		 
+			CPPAD_ASSERT_UNKNOWN( number > 0 );
+		}
+	};
 
-class thread_alloc_capacity {
-public:
-	/// number of capacity values actually used
-	size_t number;
-	/// the different capacity values
-	size_t value[CPPAD_MAX_NUM_CAPACITY];
-	/// ctor
-	thread_alloc_capacity(void)
-	{
-		// Cannot figure out how to call thread_alloc::in_parallel from here.
-		// CPPAD_ASSERT_KNOWN( 
-		// ! thread_alloc::in_parallel() ,
-		// "thread_alloc: in parallel mode and parallel_setup not yet called."
-		// );
-		number           = 0;
-		size_t capacity  = CPPAD_MIN_DOUBLE_CAPACITY * sizeof(double);
-		while( capacity < std::numeric_limits<size_t>::max() / 2 )
-		{	CPPAD_ASSERT_UNKNOWN( number < CPPAD_MAX_NUM_CAPACITY );
-			value[number++] = capacity;
-			// next capactiy is 3/2 times the current one
-			capacity        = 3 * ( (capacity + 1) / 2 );
-		} 		 
-		CPPAD_ASSERT_UNKNOWN( number > 0 );
-	}
-};
-
-class thread_alloc_block {
-public:
-	/// extra information (currently only used by create and delete array)
-	size_t             extra_;
-	/// an index that uniquely idenfifies both thread and capacity
-	size_t             tc_index_;
-	/// pointer to the next memory allocation with the the same tc_index_
-	void*              next_;
-	// ---------------------------------------------------------------------
-	/// make default constructor private. It is only used by the constructor
-	/// for `root arrays below.
-	thread_alloc_block(void) : extra_(0), tc_index_(0), next_(0) 
-	{ }
-};
+	class block_t {
+	public:
+		/// extra information (currently used by create and delete array)
+		size_t             extra_;
+		/// an index that uniquely idenfifies both thread and capacity
+		size_t             tc_index_;
+		/// pointer to the next memory allocation with the the same tc_index_
+		void*              next_;
+		// -----------------------------------------------------------------
+		/// make default constructor private. It is only used by constructor
+		/// for `root arrays below.
+		block_t(void) : extra_(0), tc_index_(0), next_(0) 
+		{ }
+	};
 
 	// ---------------------------------------------------------------------
 	/// Vector of fixed capacity values for this allocator
-	static const thread_alloc_capacity* capacity_info(void)
+	static const capacity_t* capacity_info(void)
 	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-		static const thread_alloc_capacity capacity;
+		static const capacity_t capacity;
 		return &capacity;
 	}
 	// ---------------------------------------------------------------------
 	/// Structure of information for each thread
 	struct thread_alloc_info {
 		/// count of available bytes for this thread 
-		size_t        count_inuse_;
+		size_t  count_inuse_;
 		/// count of inuse bytes for this thread 
-		size_t        count_available_;
+		size_t  count_available_;
 		/// root of available list for this thread and each capacity
-		thread_alloc_block root_available_[CPPAD_MAX_NUM_CAPACITY];
+		block_t root_available_[CPPAD_MAX_NUM_CAPACITY];
 		/// root of inuse list for this thread and each capacity
 		/// If NDEBUG is true, this memory is not used, but it still
 		/// helps separate this structure from one for the next thread.
-		thread_alloc_block root_inuse_[CPPAD_MAX_NUM_CAPACITY];
+		block_t root_inuse_[CPPAD_MAX_NUM_CAPACITY];
 	};
 	// ---------------------------------------------------------------------
 	/*!
@@ -825,13 +824,13 @@ $end
 
 		// Root nodes for both lists. Note these are different for different 
 		// threads because tc_index is different for different threads.
-		thread_alloc_block* inuse_root     = info->root_inuse_ + c_index;
+		block_t* inuse_root     = info->root_inuse_ + c_index;
 # endif
-		thread_alloc_block* available_root = info->root_available_ + c_index;
+		block_t* available_root = info->root_available_ + c_index;
 
 		// check if we already have a node we can use
 		void* v_node              = available_root->next_;
-		thread_alloc_block* node           = reinterpret_cast<thread_alloc_block*>(v_node);
+		block_t* node             = reinterpret_cast<block_t*>(v_node);
 		if( node != 0 )
 		{	CPPAD_ASSERT_UNKNOWN( node->tc_index_ == tc_index );
 
@@ -862,8 +861,8 @@ $end
 		// Create a new node with thread_alloc information at front.
 		// This uses the system allocator, which is thread safe, but slower,
 		// because the thread might wait for a lock on the allocator.
-		v_node          = ::operator new(sizeof(thread_alloc_block) + cap_bytes);
-		node            = reinterpret_cast<thread_alloc_block*>(v_node);
+		v_node          = ::operator new(sizeof(block_t) + cap_bytes);
+		node            = reinterpret_cast<block_t*>(v_node);
 		node->tc_index_ = tc_index;
 		void* v_ptr     = reinterpret_cast<void*>(node + 1);
 
@@ -952,7 +951,7 @@ $end
 	static void return_memory(void* v_ptr)
 	{	size_t num_cap   = capacity_info()->number;
 
-		thread_alloc_block* node  = reinterpret_cast<thread_alloc_block*>(v_ptr) - 1;
+		block_t* node    = reinterpret_cast<block_t*>(v_ptr) - 1;
 		size_t tc_index  = node->tc_index_;
 		size_t thread    = tc_index / num_cap;
 		size_t c_index   = tc_index % num_cap;
@@ -968,11 +967,11 @@ $end
 		thread_alloc_info* info = thread_info(thread);
 # ifndef NDEBUG
 		// remove node from inuse list
-		void* v_node                 = reinterpret_cast<void*>(node);
-		thread_alloc_block* inuse_root     = info->root_inuse_ + c_index;
-		thread_alloc_block* previous       = inuse_root;
+		void* v_node         = reinterpret_cast<void*>(node);
+		block_t* inuse_root  = info->root_inuse_ + c_index;
+		block_t* previous    = inuse_root;
 		while( (previous->next_ != 0) & (previous->next_ != v_node) )
-			previous = reinterpret_cast<thread_alloc_block*>(previous->next_);	
+			previous = reinterpret_cast<block_t*>(previous->next_);	
 
 		// check that v_ptr is valid
 		if( previous->next_ != v_node )
@@ -1005,9 +1004,9 @@ $end
 		}
 
 		// add this node to available list for this thread and capacity
-		thread_alloc_block* available_root = info->root_available_ + c_index;
-		node->next_               = available_root->next_;
-		available_root->next_     = reinterpret_cast<void*>(node);
+		block_t* available_root = info->root_available_ + c_index;
+		node->next_             = available_root->next_;
+		available_root->next_   = reinterpret_cast<void*>(node);
 
 		// capacity bytes are added to the available pool
 		inc_available(capacity, thread);
@@ -1087,13 +1086,13 @@ $end
 		thread_alloc_info* info = thread_info(thread);
 		for(c_index = 0; c_index < num_cap; c_index++)
 		{	size_t capacity = capacity_vec[c_index];
-			thread_alloc_block* available_root = info->root_available_ + c_index;
-			void* v_ptr               = available_root->next_;
+			block_t* available_root = info->root_available_ + c_index;
+			void* v_ptr             = available_root->next_;
 			while( v_ptr != 0 )
-			{	thread_alloc_block* node = reinterpret_cast<thread_alloc_block*>(v_ptr); 
-				void* next      = node->next_;
+			{	block_t* node = reinterpret_cast<block_t*>(v_ptr); 
+				void* next    = node->next_;
 				::operator delete(v_ptr);
-				v_ptr           = next;
+				v_ptr         = next;
 
 				dec_available(capacity, thread);
 			}
@@ -1382,7 +1381,7 @@ $end
 		// number of Type values in the allocation
 		size_out         = num_bytes / sizeof(Type);
 		// store this number in the extra field
-		thread_alloc_block* node  = reinterpret_cast<thread_alloc_block*>(v_ptr) - 1;
+		block_t* node    = reinterpret_cast<block_t*>(v_ptr) - 1;
 		node->extra_     = size_out;
 
 		// call default constructor for each element
@@ -1464,7 +1463,7 @@ $end
 	template <class Type>
 	static void delete_array(Type* array)
 	{	// determine the number of values in the array
-		thread_alloc_block* node = reinterpret_cast<thread_alloc_block*>(array) - 1;
+		block_t* node = reinterpret_cast<block_t*>(array) - 1;
 		size_t size     = node->extra_;
 
 		// call destructor for each element
