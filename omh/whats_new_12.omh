@@ -38,8 +38,11 @@ assist you in learning about changes between various versions of CppAD.
 $head 03-11$$
 There was a bug in $cref thread_alloc$$ where extra memory was held
 onto even if $cref/hold_memory/ta_hold_memory/$$ was never called
-and only one thread was used by the program. 
-This caused $code valgrind --show-reachable=yes$$ to generate an error message.
+and only one thread was used by the program.  This caused 
+$codei%
+	valgrind --leak-check=full --show-reachable=yes
+%$$
+to generate an error message.
 If $cref/multiple threads/multi_thread/$$ are used,
 one should free this 
 $cref/extra memory/ta_free_available/Purpose/Extra Memory/$$
