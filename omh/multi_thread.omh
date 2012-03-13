@@ -56,7 +56,7 @@ $head hold_memory$$
 Memory allocation should be much faster after calling
 $code hold_memory$$ with
 $cref/value/ta_hold_memory/value/$$ equal to true. 
-This should be true even if there is only one thread.
+This may even be true if there is only one thread.
 
 $head Parallel AD$$
 One must first call

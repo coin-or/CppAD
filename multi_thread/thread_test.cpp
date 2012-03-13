@@ -40,8 +40,6 @@ $codei%./%threading%_test a11c
 ./%threading%_test multi_newton %test_time% %max_threads% \
 	%num_zero% %num_sub% %num_sum% %use_ad%
 %$$ 
-where $icode threading$$ is either
-$code bthread$$, $code openmp$$, or $code pthread$$. 
 
 $head Running Tests$$
 You can build this program and run the default version of its test
@@ -91,7 +89,7 @@ $cref a11c_openmp.cpp$$,
 $cref a11c_bthread.cpp$$, and
 $cref a11c_pthread.cpp$$
 demonstrate simple multi-threading, 
-without algorithmic differentiation, using
+without algorithmic differentiation.
 
 $head simple_ad$$
 The examples 
@@ -105,12 +103,13 @@ OpenMP, boost threads and pthreads respectively.
 
 $head team_example$$
 The $cref team_example.cpp$$ routine
-demonstrates simple multi-threading with algorithmic differentiation. 
+demonstrates simple multi-threading with algorithmic differentiation
+and using a $cref/team of threads/team_thread.hpp/$$. 
 
 $head harmonic$$
 The $cref harmonic_time.cpp$$ routine
 preforms a timing test for a multi-threading 
-example without algorithmic differentiation.
+example without algorithmic differentiation using a team of threads.
 
 $subhead test_time$$
 Is the minimum amount of wall clock time that the test should take.
@@ -136,7 +135,7 @@ $cref/harmonic_time.cpp/harmonic_time.cpp/mega_sum/$$.
 $head multi_newton$$
 The $cref multi_newton_time.cpp$$ routine
 preforms a timing test for a multi-threading 
-example with algorithmic differentiation.
+example with algorithmic differentiation using a team of threads.
 
 $subhead test_time$$
 Is the minimum amount of wall clock time that the test should take.

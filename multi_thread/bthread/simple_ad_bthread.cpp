@@ -76,6 +76,10 @@ namespace {
 		// function argument (worker input)
 		double          x;
 		// false if an error occurs, true otherwise (worker output)
+		// (This value is changed by corresponding thread and hence may
+		// lead to false sharing. In general, it may be better to use a 
+		// pointer to memory that has separate cache for each thread.)
+		// for
 		bool            ok;
 	} thread_one_t;
 	// vector with information for all threads
