@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_12$$
 $spell
+	Debian
 	valgrind
 	num
 	alloc
@@ -34,6 +35,16 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 03-17$$
+Debian recently converted the default shell from $code bash$$ to $code dash$$
+(which caused $code multi_thread/test.sh$$ to fail).
+This has been fixed.
+In general, Debian's policy is that $code bin/sh$$ will be a 
+$href%
+http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html%
+Posix Shell
+%$$.
 
 $head 03-11$$
 There was a bug in $cref thread_alloc$$ where extra memory was held

@@ -19,15 +19,28 @@ next_program() {
 	then
 		i_program='0'
 	fi
-	program=${program_list[$i_program]}
+	case $i_program in
+		0)
+		program=`echo "$program_list" | sed -e 's| \([^ ]*\).*|\1|'`
+		;;
+
+		1)
+		program=`echo "$program_list" | sed -e 's| [^ ]* \([^ ]*\).*|\1|'`
+		;;
+
+		2)
+		program=`echo "$program_list" | sed -e 's| [^ ]* [^ ]* ||'`
+		;;
+	esac
 }
-n_program='0'
+n_program='3'
+program_list=' openmp_test pthread_test bthread_test'
 for program in openmp_test pthread_test bthread_test
 do
-	if [ -e $program ]
+	if [ ! -e "$program" ]
 	then
-		program_list[$n_program]=$program
-		(( n_program = n_program + 1 ))
+		program_list=`echo "$program_list" | sed -e "s| $program||"`
+		(( n_program = n_program - 1 ))
 	fi
 done
 if [ "$n_program" == '0' ]
@@ -62,8 +75,6 @@ do
 		./$program a11c
 		echo
 		./$program simple_ad
-		echo
-		./$program team_example
 		echo
 	fi
 done

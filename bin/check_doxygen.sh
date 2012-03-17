@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -27,8 +27,16 @@ let doxygen_version=$doxygen_version
 if (( $doxygen_version <= 155 ))
 then
 	doxygen_version=`doxygen --version`
-	echo "doxygen version $doxygen_version is less than 1.5.6."
+	echo "doxygen version $doxygen_version is <= 1.5.6"
 	echo "Hence it is to old to check for warnings or errors."
+	exit 0
+fi
+if (( $doxygen_version == 163 ))
+then
+	doxygen_version=`doxygen --version`
+	echo "doxygen version $doxygen_version is == 1.6.3"
+	echo "Hence it has a problem with warnings about missing # defines;"
+	echo "see http://comments.gmane.org/gmane.text.doxygen.general/8594"
 	exit 0
 fi
 list=`head doxygen.err`
