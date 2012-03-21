@@ -30,68 +30,37 @@ namespace {
 	// used to inform CppAD of current thread number thread_number()
 	size_t thread_number(void)
 	{	return static_cast<bool>( omp_get_thread_num() ); }
-	// ---------------------------------------------------------------------
+
 	// structure with information for one thread
 	typedef struct {
 		// function object (worker input)
-		CppAD::ADFun<double> fun;
+		CppAD::vector<double> x;
 	} thread_one_t;
+
 	// vector with information for all threads
 	thread_one_t thread_all_[NUMBER_THREADS];
+
 	// --------------------------------------------------------------------
 	// function that does the work for one thread
-	void* worker(void)
-	{	using CppAD::NearEqual;
-		using CppAD::AD;
-		bool ok = true;
-
+	void worker(void)
+	{
 		size_t thread_num = thread_number();
-		CppAD::ADFun<double>* fun= &(thread_all_[thread_num].fun);
-
-		CppAD::vector< double > x(1), y(1);
-		x[0]=1.0;
-
-
-		std::stringstream stream;
-
-		// perform CppAD_FUN_OBJECT FORWARD0
-		y=fun->Forward(0,x);
-
-		stream << "thread_num = " << thread_num;
-		stream << ", y[0] = " << y[0] << std::endl;
-		std::cout << stream.str();
-
-		// no return value
-		return CPPAD_NULL;
+		thread_all_[thread_num].x.resize(1);
+		thread_all_[thread_num].x[0]=static_cast<double>(thread_num);
 	}
 }
 
 // This test routine is only called by the master thread (thread_num = 0).
-bool simple_ad(void)
-{	
-	// create function object
-	CppAD::vector< CppAD::AD<double> > x(1), y(1);
-	x[0]=3.78;
-	CppAD::Independent(x);
-	y[0]=sin(x[0]);
-  
-	CppAD::ADFun<double> fun;
-	fun.Dependent(x,y);
-
+bool alloc_global(void)
+{	bool ok = true;
+	
 	size_t num_threads = NUMBER_THREADS;
-
-	// initialize thread_all_ 
-	size_t thread_num;
-	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	// make a copy of ADFun object for this thread 
-		thread_all_[thread_num].fun        = fun;
-	}
 
 	// call setup for using CppAD::AD<double> in parallel mode.
 	thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
-	CppAD::parallel_ad<double>();
 	
 	// Execute the worker function in parallel
+	int thread_num;
 # pragma omp parallel for
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
 		worker();
@@ -100,10 +69,17 @@ bool simple_ad(void)
 	// now inform CppAD that there is only one thread
 	thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
 
-	return true;
+	for(thread_num = 0; thread_num < num_threads; thread_num++)
+	{	// check calculations by this thread
+		ok &= thread_all_[thread_num].x[0] == static_cast<double>(thread_num);
+		// free memory that was allocated by this thread
+		thread_all_[thread_num].x.resize(0);
+	}
+
+	return ok;
 }
 int main(void)
-{	bool ok = simple_ad();
+{	bool ok = alloc_global();
 	std::cout << "OK = " << ok << std::endl;
 	return int(! ok);
 } 
