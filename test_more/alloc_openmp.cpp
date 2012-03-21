@@ -1,20 +1,14 @@
-#! /bin/bash -e
-# $Id$
-# -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
-#
-# CppAD is distributed under multiple licenses. This distribution is under
-# the terms of the 
-#                     Common Public License Version 1.0.
-#
-# A copy of this license is included in the COPYING file of this distribution.
-# Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
-# -----------------------------------------------------------------------------
-#!/bin/bash -e
-echo "$0"
-name=`echo $0 | sed -e 's|.*/||' -e 's|\..*||'`
-echo "create $name.cpp"
-cat << EOF > $name.cpp
+/* $Id$ */
+/* --------------------------------------------------------------------------
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
+
+CppAD is distributed under multiple licenses. This distribution is under
+the terms of the 
+                    Common Public License Version 1.0.
+
+A copy of this license is included in the COPYING file of this distribution.
+Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
+-------------------------------------------------------------------------- */
 // BEGIN PROGRAM
 # include <cppad/cppad.hpp>
 # include <omp.h>
@@ -51,13 +45,15 @@ namespace {
 }
 
 // Test routine called by the master thread (thread_num = 0).
-bool alloc_global(void)
+bool alloc_openmp(void)
 {	bool ok = true;
 	
-	size_t num_threads = NUMBER_THREADS;
+	int num_threads = NUMBER_THREADS;
 
 	// call setup for using thread_alloc in parallel mode.
-	thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
+	thread_alloc::parallel_setup(
+		size_t(num_threads), in_parallel, thread_number
+	);
 	
 	// Execute the worker function in parallel
 	int thread_num;
@@ -73,23 +69,10 @@ bool alloc_global(void)
 	{	// check calculations by this thread in parallel model
 		ok &= thread_all_[thread_num].x[0] == static_cast<double>(thread_num);
 
-		// free memory that was allocated by thread thread_num
+		// test having master thread (thread number zero) 
+		// free memory that was allocated by thread number thread_num.
 		thread_all_[thread_num].x.resize(0);
 	}
 
 	return ok;
 }
-int main(void)
-{	bool ok = alloc_global();
-	std::cout << "OK = " << ok << std::endl;
-	return int(! ok);
-} 
-EOF
-echo "g++ -g $name.cpp -I$HOME/cppad/trunk -fopenmp -o $name"
-g++ -g $name.cpp -I$HOME/cppad/trunk -fopenmp -o $name
-#
-echo "./$name"
-./$name
-#
-echo "rm $name $name.cpp"
-rm $name $name.cpp

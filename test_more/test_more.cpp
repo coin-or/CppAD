@@ -22,6 +22,7 @@ extern bool Acos(void);
 extern bool Add(void);
 extern bool AddEq(void);
 extern bool AddZero(void);
+extern bool alloc_openmp(void);
 extern bool Asin(void);
 extern bool Atan(void);
 extern bool Atan2(void);
@@ -194,6 +195,9 @@ int main(void)
 
 # ifdef CPPAD_ADOLC_TEST
 	ok &= Run( base_adolc,      "base_adolc"     );
+# endif
+# ifdef CPPAD_OPENMP_TEST
+	ok &= Run( alloc_openmp,    "alloc_openmp"   );
 # endif
 
 	// check for errors

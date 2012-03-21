@@ -36,7 +36,7 @@ to the type $icode%Float%$$.
 
 $head Float$$
 this type can either be $codei%AD<%Base%>%$$,
-or it can be $icode Base$$ for any $code%AD<%Base%>%$$ type;
+or it can be $icode Base$$ for any $codei%AD<%Base%>%$$ type;
 see $cref/base_std_math/base_std_math/epsilon/$$.
 
 $head eps$$

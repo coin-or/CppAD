@@ -289,7 +289,9 @@ private:
 	*/
 	static void dec_inuse(size_t dec, size_t thread)
 	{	
-		CPPAD_ASSERT_UNKNOWN( thread < num_threads() );
+		CPPAD_ASSERT_UNKNOWN(
+			thread < num_threads() || (! in_parallel())
+		);
 		CPPAD_ASSERT_UNKNOWN( 
 			thread == thread_num() || (! in_parallel()) 
 		);
@@ -903,7 +905,7 @@ $head Syntax$$
 $codei%thread_alloc::return_memory(%v_ptr%)%$$
 
 $head Purpose$$
-If $cref/num_threads/ta_num_threads/$$ is one,
+If $cref/hold_memory/ta_hold_memory/$$ is false,
 the memory is returned to the system.
 Otherwise, the memory is retained by $cref thread_alloc$$ for quick future use
 by the thread that allocated to memory.
@@ -914,7 +916,8 @@ $codei%
 	void* %v_ptr%
 %$$.
 It must be a pointer to memory that is currently in use; i.e.
-obtained by a previous call to $cref/get_memory/ta_get_memory/$$ and not yet returned.
+obtained by a previous call to 
+$cref/get_memory/ta_get_memory/$$ and not yet returned.
 
 $head Thread$$
 Either the $cref/current thread/ta_thread_num/$$ must be the same as during

@@ -14,18 +14,19 @@
 # CppAD pusts all it's preprocessor definitions in the cppad/configure.hpp
 DEFS          =
 #
+if CppAD_OPENMP
+OPENMP_SRC_FILES   = alloc_openmp.cpp 
+else
+OPENMP_SRC_FILES   =
+endif
 if CppAD_ADOLC
 ADOLC_SRC_FILES   = base_adolc.cpp 
 ADOLC_INCLUDE     = -I$(ADOLC_DIR)/include 
-ADOLC_LIB         = -ladolc
-ADOLC_LIB_DIRS    = -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
-ADOLC_FLAGS       = -DCPPAD_ADOLC_TEST
+ADOLC_LIB         = -ladolc -L$(ADOLC_DIR)/lib -L$(ADOLC_DIR)/lib64
 else
 ADOLC_SRC_FILES   =
 ADOLC_INCLUDE     =
 ADOLC_LIB         =
-ADOLC_LIB_DIRS    =
-ADOLC_FLAGS       =
 endif
 if CppAD_BOOST_DIR
 BOOST_INCLUDE = -I$(BOOST_DIR)
@@ -44,15 +45,16 @@ check_PROGRAMS    = test_more
 AM_CPPFLAGS       = -I. \
 	-I$(top_srcdir) \
 	$(BOOST_INCLUDE) \
-	$(ADOLC_INCLUDE) 
+	$(ADOLC_INCLUDE) \
+	$(OPENMP_FLAGS)
 #
 AM_CXXFLAGS       = -g $(ADOLC_FLAGS) $(CXX_FLAGS)
 #
-LDADD             = $(ADOLC_LIB) 
-AM_LDFLAGS        = $(ADOLC_LIB_DIRS)
+AM_LDFLAGS        = $(ADOLC_LIB) $(OPENMP_FLAGS)
 #
 test_more_SOURCES  = \
 	$(ADOLC_SRC_FILES) \
+	$(OPENMP_SRC_FILES) \
 	test_more.cpp \
 	abs.cpp \
 	acos.cpp \

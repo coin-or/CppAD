@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the 
@@ -91,8 +91,8 @@ then
 	echo "cd work/speed/src; make clean; make"
 	cd work/speed/src; make clean; make
 	#
-	echo "cd ../cppad; make clean; make test.sh"
-	cd ../cppad; make clean; make test.sh
+	echo "cd ../cppad; make clean; make test"
+	cd ../cppad; make clean; make test
 	#
 	# run speed test for the current version
 	opt=`echo $options | sed -e 's|_||g'`
@@ -124,8 +124,8 @@ then
 	echo "cd work/speed/src; make clean; make"
 	cd work/speed/src; make clean; make
 	#
-	echo "cd ../cppad; make clean; make test.sh"
-	cd ../cppad; make clean; make test.sh
+	echo "cd ../cppad; make clean; make test"
+	cd ../cppad; make clean; make test
 	#
 	#
 	# run speed test for the new version
