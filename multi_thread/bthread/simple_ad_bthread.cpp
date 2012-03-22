@@ -42,16 +42,15 @@ $end
 # define NUMBER_THREADS  4
 
 namespace {
+	// =====================================================================
+	// General purpose code you can copy to your application
+	// =====================================================================
 	using CppAD::thread_alloc;
 	// ------------------------------------------------------------------
 	// thread specific point to the thread number (initialize as null)
 	void cleanup(size_t*)
 	{	return; }
 	boost::thread_specific_ptr<size_t> thread_num_ptr_(cleanup);
-
-	// no need to destroy thread specific information
-	void thread_specific_destructor(void* thread_num_vptr)
-	{	return; }
 
 	// Are we in sequential mode; i.e., other threads are waiting for
 	// master thread to set up next job ?
@@ -69,54 +68,37 @@ namespace {
 	// ---------------------------------------------------------------------
 	// structure with information for one thread
 	typedef struct {
-		// The thread
-		boost::thread*  bthread;
 		// number for this thread (thread specific points here)
 		size_t          thread_num;
-		// function argument (worker input)
-		double          x;
-		// false if an error occurs, true otherwise (worker output)
-		// (This value is changed by corresponding thread and hence may
-		// lead to false sharing. In general, it may be better to use a 
-		// pointer to memory that has separate cache for each thread.)
-		// for
+		// pointer to this boost thread
+		boost::thread*  bthread;
+		// false if an error occurs, true otherwise
 		bool            ok;
+		// pointer to problem specific information
+		void*           info;
 	} thread_one_t;
 	// vector with information for all threads
 	thread_one_t thread_all_[NUMBER_THREADS];
 	// --------------------------------------------------------------------
-	// function that does the work for one thread
-	void worker(size_t thread_num)
-	{	using CppAD::NearEqual;
-		using CppAD::AD;
-		bool ok = true;
+	// function that initializes the thread and then calls actual worker
+	bool worker(size_t thread_num);
+	void run_worker(size_t thread_num)
+	{	bool ok = true;
 
-		// thread_num for this thread
-		if( thread_num > 0 )
-		{	// This is not the master thread, so thread specific infromation
-			// has not yet been set so other routines know thread number.
-			thread_num_ptr_.reset(& thread_all_[thread_num].thread_num);
-		}
+		// The master thread should call worker directly
+		ok &= thread_num != 0;
 
-		// check the value of thread_alloc::thread_num()
+		// This is not the master thread, so thread specific infromation
+		// has not yet been set. We use it to inform other routines
+		// of this threads number.
+		// We must do this before calling thread_alloc::thread_num().
+		thread_num_ptr_.reset(& thread_all_[thread_num].thread_num);
+
+		// Check the value of thread_alloc::thread_num().
 		ok = thread_num == thread_alloc::thread_num();
 
-		// CppAD::vector uses the CppAD fast multi-threading allocator
-		CppAD::vector< AD<double> > ax(1), ay(1);
-		ax[0] = thread_all_[thread_num].x;
-		Independent(ax);
-		ay[0] = sqrt( ax[0] * ax[0] );
-		CppAD::ADFun<double> f(ax, ay); 
-
-		// Check function value corresponds to the identity 
-		double eps = 10. * CppAD::epsilon<double>();
-		ok        &= NearEqual(ay[0], ax[0], eps, eps);
-
-		// Check derivative value corresponds to the identity.
-		CppAD::vector<double> d_x(1), d_y(1);
-		d_x[0] = 1.;
-		d_y    = f.Forward(1, d_x);
-		ok    &= NearEqual(d_x[0], 1., eps, eps);
+		// Now do the work
+		ok &= worker(thread_num);
 
 		// pass back ok information for this thread
 		thread_all_[thread_num].ok = ok;
@@ -124,11 +106,51 @@ namespace {
 		// no return value
 		return;
 	}
+	// =====================================================================
+	// End of General purpose code 
+	// =====================================================================
+	// structure with problem specific information
+	typedef struct {
+		// function argument (worker input)
+		double          x;
+		// This structure would also have return information in it,
+		// but this example only returns the ok flag
+	} problem_specific;
+	// ---------------------------------------------------------------------
+	// function that does the work for one thread
+	bool worker(size_t thread_num)
+	{	bool ok = true;
+
+		// get pointer to problem specific information for this thread
+		problem_specific* info = static_cast<problem_specific*>(
+			thread_all_[thread_num].info
+		);
+
+		// CppAD::vector uses the CppAD fast multi-threading allocator
+		CppAD::vector< CppAD::AD<double> > ax(1), ay(1);
+		ax[0] = info->x;
+		Independent(ax);
+		ay[0] = sqrt( ax[0] * ax[0] );
+		CppAD::ADFun<double> f(ax, ay); 
+
+		// Check function value corresponds to the identity 
+		double eps = 10. * CppAD::epsilon<double>();
+		ok        &= CppAD::NearEqual(ay[0], ax[0], eps, eps);
+
+		// Check derivative value corresponds to the identity.
+		CppAD::vector<double> d_x(1), d_y(1);
+		d_x[0] = 1.;
+		d_y    = f.Forward(1, d_x);
+		ok    &= CppAD::NearEqual(d_x[0], 1., eps, eps);
+
+		return ok;
+	}
 }
 
 // This test routine is only called by the master thread (thread_num = 0).
 bool simple_ad(void)
 {	bool ok = true;
+	using CppAD::thread_alloc;
 
 	size_t num_threads = NUMBER_THREADS;
 
@@ -140,14 +162,19 @@ bool simple_ad(void)
 		ok &= thread_alloc::available(thread_num) == 0; 
 	}
 
-	// initialize thread_all_ (execpt for pthread_id)
+	// initialize thread_all_ (except for bthread) 
+	problem_specific* info;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
 	{	// pointed to by thread specific info for this thread
 		thread_all_[thread_num].thread_num = thread_num;
-		// argument value for this thread 
-		thread_all_[thread_num].x          = double(thread_num) + 1.;
 		// initialize as false to make sure worker gets called
 		thread_all_[thread_num].ok         = false;
+		// problem specific information
+		size_t min_bytes(sizeof(info)), cap_bytes;
+		void*  v_ptr = thread_alloc::get_memory(min_bytes, cap_bytes);
+		thread_all_[thread_num].info = v_ptr;
+		info         = static_cast<problem_specific*>(v_ptr);
+		info->x      = double(thread_num) + 1.;
 	}
 	// master bthread number
 	thread_num_ptr_.reset(& thread_all_[0].thread_num);
@@ -168,11 +195,15 @@ bool simple_ad(void)
 	
 		// Create the thread with thread number equal to thread_num
 		thread_all_[thread_num].bthread = 
-			new boost::thread(worker, thread_num);
+			new boost::thread(run_worker, thread_num);
 	}
 
 	// now call worker for the master thread
-	worker(thread_all_[0].thread_num);
+	thread_num = thread_alloc::thread_num();
+	ok &= thread_num == 0;
+	ok &= worker(thread_num);
+	// just to make the loop over all threads simpler
+	thread_all_[thread_num].ok = ok;
 
 	// now wait for the other threads to finish 
 	for(thread_num = 1; thread_num < num_threads; thread_num++)
@@ -185,21 +216,22 @@ bool simple_ad(void)
 	// Back to sequential execution mode
 	sequential_execution_ = true;
 
-
-	// Check that all the threads were called and succeeded
-	for(thread_num = 0; thread_num < num_threads; thread_num++)
-		ok &= thread_all_[thread_num].ok;
-
-	// Check that no memory currently in use, and free avialable memory.
-	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	ok &= thread_alloc::inuse(thread_num) == 0; 
-		thread_alloc::free_available(thread_num); 
-	}
-
 	// now inform CppAD that there is only one thread
-	using CppAD::thread_alloc;
 	thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
 	thread_alloc::hold_memory(false);
+
+	// go down so that free memory for other threads before memory for master
+	thread_num = num_threads;
+	while(thread_num--)
+	{	// check that this thread was called and successful
+		ok &= thread_all_[thread_num].ok;
+		// delete problem specific information
+		thread_alloc::return_memory( thread_all_[thread_num].info );
+		// check that there is no longer any memory inuse by this thread
+		ok &= thread_alloc::inuse(thread_num) == 0; 
+		// return all memory being held for future use by this thread
+		thread_alloc::free_available(thread_num); 
+	}
 
 	return ok;
 }
