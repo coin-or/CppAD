@@ -207,6 +207,8 @@ bool simple_ad(void)
 	thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
 	thread_alloc::hold_memory(true);
 	CppAD::parallel_ad<double>();
+	// inform CppAD that we now may be in parallel execution mode
+	sequential_execution_ = false;
 	
 	// structure used to create the threads
 	pthread_t       pthread_id;
@@ -216,10 +218,7 @@ bool simple_ad(void)
 	// This master thread is already running, we need to create
 	// num_threads - 1 more threads
 	for(thread_num = 1; thread_num < num_threads; thread_num++)
-	{	// inform CppAD that we are now in parallel execution mode
-		sequential_execution_ = false;
-	
-		// Create the thread with thread number equal to thread_num
+	{	// Create the thread with thread number equal to thread_num
 		thread_num_vptr = static_cast<void*> (
 			&(thread_all_[thread_num].thread_num)
 		);
@@ -249,7 +248,7 @@ bool simple_ad(void)
 		ok &= (rc == 0);
 	}
 
-	// Back to sequential execution mode
+	// Inform CppAD that we now are definately back to sequential execution
 	sequential_execution_ = true;
 
 	// now inform CppAD that there is only one thread

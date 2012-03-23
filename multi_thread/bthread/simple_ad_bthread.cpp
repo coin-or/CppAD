@@ -185,15 +185,14 @@ bool simple_ad(void)
 	thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
 	thread_alloc::hold_memory(true);
 	CppAD::parallel_ad<double>();
+	// inform CppAD that we now may be in parallel execution mode
+	sequential_execution_ = false;
 	
 	// This master thread is already running, we need to create
 	// num_threads - 1 more threads
 	thread_all_[0].bthread = CPPAD_NULL;
 	for(thread_num = 1; thread_num < num_threads; thread_num++)
-	{	// inform CppAD that we are now in parallel execution mode
-		sequential_execution_ = false;
-	
-		// Create the thread with thread number equal to thread_num
+	{	// Create the thread with thread number equal to thread_num
 		thread_all_[thread_num].bthread = 
 			new boost::thread(run_worker, thread_num);
 	}
@@ -213,7 +212,7 @@ bool simple_ad(void)
 	}
 
 
-	// Back to sequential execution mode
+	// Inform CppAD that we are definately bakc to sequential execution mode
 	sequential_execution_ = true;
 
 	// now inform CppAD that there is only one thread

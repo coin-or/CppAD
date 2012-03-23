@@ -36,7 +36,7 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 03-022$$
+$head 03-22$$
 Improve, the multi-threading examples
 $cref simple_ad_openmp.cpp$$,
 $cref simple_ad_bthread.cpp$$, and
