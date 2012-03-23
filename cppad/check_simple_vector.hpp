@@ -128,14 +128,10 @@ namespace CppAD {
 	template <class Scalar, class Vector>
 	void CheckSimpleVector(const Scalar& x, const Scalar& y)
 	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
-		// Section 3.6.2 of ISO/IEC 14882:1998(E) states: "The storage for 
-		// objects with static storage duration (3.7.1) shall be zero-
-		// initialized (8.5) before any other initialization takes place."
-		static size_t count[CPPAD_MAX_NUM_THREADS];
-		size_t thread = thread_alloc::thread_num();
-		if( count[thread] > 0  )
+		static size_t count;
+		if( count > 0  )
 			return;
-		count[thread]++;
+		count++;
 
 		// value_type must be type of elements of Vector
 		typedef typename Vector::value_type value_type;
