@@ -3,7 +3,7 @@
 # define CPPAD_CHECK_SIMPLE_VECTOR_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -127,7 +127,8 @@ namespace CppAD {
 
 	template <class Scalar, class Vector>
 	void CheckSimpleVector(const Scalar& x, const Scalar& y)
-	{	// Section 3.6.2 of ISO/IEC 14882:1998(E) states: "The storage for 
+	{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+		// Section 3.6.2 of ISO/IEC 14882:1998(E) states: "The storage for 
 		// objects with static storage duration (3.7.1) shall be zero-
 		// initialized (8.5) before any other initialization takes place."
 		static size_t count[CPPAD_MAX_NUM_THREADS];

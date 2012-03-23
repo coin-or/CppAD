@@ -2,7 +2,7 @@
 # ifndef CPPAD_PARALLEL_AD_INCLUDED
 # define CPPAD_PARALLEL_AD_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -44,6 +44,13 @@ $codei%
 %$$
 where $icode s$$ has type $icode%Base%$$, $codei%AD<%Base%>%$$, and
 $codei%std::complex<double>%$$.
+
+$head CheckSimpleVector$$
+This routine has the side effect of calling the routines
+$codei%
+	CheckSimpleVector< %Type%, CppAD::vector<%Type%> >()
+%$$
+where $icode Type$$ is $icode Base$$ and $codei%AD<%Base%>%$$.
 
 $head Example$$
 The files 
@@ -98,6 +105,8 @@ void parallel_ad(void)
 	erf_template( AD<Base>(0.) );
 	isnan( Base(0.) );
 	isnan( AD<Base>(0.) );
+	CheckSimpleVector< Base, CppAD::vector<Base> >();
+	CheckSimpleVector< AD<Base>, CppAD::vector< AD<Base> > >();
 
 }
 

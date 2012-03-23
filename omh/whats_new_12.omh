@@ -36,11 +36,25 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
-$head 03-22$$
+
+$head 03-23$$
+$list number$$
 Improve, the multi-threading examples
 $cref simple_ad_openmp.cpp$$,
 $cref simple_ad_bthread.cpp$$, and
 $cref simple_ad_pthread.cpp$$.
+This includes separating generic code that can be used for all applications
+from problem specific code.
+$lnext
+Add initialization of statics in 
+$cref/CheckSimpleVector/parallel_ad/CheckSimpleVector/$$ 
+during $code parallel_ad$$ call.
+These statics are required to use 
+$cref/CppAD::vector/CppAD_vector/$$.
+$lnext
+Add a debugging check to make sure $cref CheckSimpleVector$$
+is initialized in sequential mode.
+$lend
 
 $head 03-21$$
 Fix an incorrect error check in $code thread_alloc$$

@@ -41,6 +41,13 @@ $end
 # define NUMBER_THREADS  4
 
 namespace {
+	// structure with problem specific information
+	typedef struct {
+		// function argument (worker input)
+		double          x;
+		// This structure would also have return information in it,
+		// but this example only returns the ok flag
+	} problem_specific;
 	// =====================================================================
 	// General purpose code you can copy to your application
 	// =====================================================================
@@ -57,33 +64,60 @@ namespace {
 	// structure with information for one thread
 	typedef struct {
 		// false if an error occurs, true otherwise (worker output)
-		bool            ok;
-		// pointer to problem specific information
-		void*           info;
+		bool               ok;
 	} thread_one_t;
 	// vector with information for all threads
 	thread_one_t thread_all_[NUMBER_THREADS];
+	// ------------------------------------------------------------------
+	// function that calls all the workers
+	bool worker(problem_specific* info);
+	bool run_all_workers(size_t num_threads, problem_specific* info_all[])
+	{	bool ok = true;
+
+		// initialize thread_all_ 
+		size_t thread_num;
+		for(thread_num = 0; thread_num < num_threads; thread_num++)
+		{	// initialize as false to make sure gets called for all threads
+			thread_all_[thread_num].ok         = false;
+		}
+
+		// turn off dynamic thread adjustment
+		omp_set_dynamic(0);
+
+		// set the number of OpenMP threads
+		omp_set_num_threads( int(num_threads) );
+
+		// setup for using CppAD::AD<double> in parallel
+		thread_alloc::parallel_setup(
+			num_threads, in_parallel, thread_number
+		);
+		thread_alloc::hold_memory(true);
+		CppAD::parallel_ad<double>();
+
+		// execute worker in parallel
+# pragma omp parallel for
+	for(thread_num = 0; thread_num < num_threads; thread_num++)
+		thread_all_[thread_num].ok = worker(info_all[thread_num]);
+// end omp parallel for
+
+		// now inform CppAD that there is only one thread
+		thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
+		thread_alloc::hold_memory(false);
+
+		// check to ok flag returned by during calls to work by other threads
+		for(thread_num = 1; thread_num < num_threads; thread_num++)
+			ok &= thread_all_[thread_num].ok;
+
+		return ok;
+	}
 	// =====================================================================
 	// End of General purpose code
 	// =====================================================================
-	// structure with problem specific information
-	typedef struct {
-		// function argument (worker input)
-		double          x;
-		// This structure would also have return information in it,
-		// but this example only returns the ok flag
-	} problem_specific;
 	// function that does the work for one thread
-	void worker(void)
+	bool worker(problem_specific* info)
 	{	using CppAD::NearEqual;
 		using CppAD::AD;
 		bool ok = true;
-		size_t thread_num = thread_alloc::thread_num();
-
-		// get pointer to problem specific information for this thread
-		problem_specific* info = static_cast<problem_specific*>(
-			thread_all_[thread_num].info
-		);
 
 		// CppAD::vector uses the CppAD fast multi-threading allocator
 		CppAD::vector< AD<double> > ax(1), ay(1);
@@ -102,15 +136,11 @@ namespace {
 		d_y    = f.Forward(1, d_x);
 		ok    &= NearEqual(d_x[0], 1., eps, eps);
 
-		// pass back ok information for this thread
-		thread_all_[thread_num].ok = ok;
+		return ok;
 	}
 }
-
-// This test routine is only called by the master thread (thread_num = 0).
 bool simple_ad(void)
 {	bool ok = true;
-
 	size_t num_threads = NUMBER_THREADS;
 
 	// Check that no memory is in use or avialable at start
@@ -121,47 +151,25 @@ bool simple_ad(void)
 		ok &= thread_alloc::available(thread_num) == 0; 
 	}
 
-	// initialize thread_all_
-	problem_specific* info;
+	// initialize info_all
+	problem_specific *info, *info_all[NUMBER_THREADS];
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	// initialize as false to make sure worker gets called
-		thread_all_[thread_num].ok = false;
-		// problem specific information
+	{	// problem specific information
 		size_t min_bytes(sizeof(info)), cap_bytes;
 		void*  v_ptr = thread_alloc::get_memory(min_bytes, cap_bytes);
-		thread_all_[thread_num].info = v_ptr;
 		info         = static_cast<problem_specific*>(v_ptr);
 		info->x      = double(thread_num) + 1.;
+		info_all[thread_num] = info;
 	}
 
-	// turn off dynamic thread adjustment
-	omp_set_dynamic(0);
-
-	// set the number of OpenMP threads
-	omp_set_num_threads( int(num_threads) );
-
-	// setup for using CppAD::AD<double> in parallel
-	thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
-	thread_alloc::hold_memory(true);
-	CppAD::parallel_ad<double>();
-
-	// execute worker in parallel
-# pragma omp parallel for
-	for(thread_num = 0; thread_num < num_threads; thread_num++)
-		worker();
-// end omp parallel for
-
-	// now inform CppAD that there is only one thread
-	thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
-	thread_alloc::hold_memory(false);
+	ok &= run_all_workers(num_threads, info_all);
 
 	// go down so that free memory for other threads before memory for master
 	thread_num = num_threads;
 	while(thread_num--)
-	{	// check that this thread was called and successful
-		ok &= thread_all_[thread_num].ok;
-		// delete problem specific information
-		thread_alloc::return_memory( thread_all_[thread_num].info );
+	{	// delete problem specific information
+		void* v_ptr = static_cast<void*>( info_all[thread_num] );
+		thread_alloc::return_memory( v_ptr );
 		// check that there is no longer any memory inuse by this thread
 		ok &= thread_alloc::inuse(thread_num) == 0; 
 		// return all memory being held for future use by this thread

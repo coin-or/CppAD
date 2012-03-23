@@ -42,6 +42,13 @@ $end
 # define NUMBER_THREADS  4
 
 namespace {
+	// structure with problem specific information
+	typedef struct {
+		// function argument (worker input)
+		double          x;
+		// This structure would also have return information in it,
+		// but this example only returns the ok flag
+	} problem_specific;
 	// =====================================================================
 	// General purpose code you can copy to your application
 	// =====================================================================
@@ -69,20 +76,20 @@ namespace {
 	// structure with information for one thread
 	typedef struct {
 		// number for this thread (thread specific points here)
-		size_t          thread_num;
+		size_t            thread_num;
 		// pointer to this boost thread
-		boost::thread*  bthread;
+		boost::thread*    bthread;
 		// false if an error occurs, true otherwise
-		bool            ok;
+		bool              ok;
 		// pointer to problem specific information
-		void*           info;
+		problem_specific* info;
 	} thread_one_t;
 	// vector with information for all threads
 	thread_one_t thread_all_[NUMBER_THREADS];
 	// --------------------------------------------------------------------
 	// function that initializes the thread and then calls actual worker
-	bool worker(size_t thread_num);
-	void run_worker(size_t thread_num)
+	bool worker(size_t thread_num, problem_specific* info);
+	void run_one_worker(size_t thread_num)
 	{	bool ok = true;
 
 		// The master thread should call worker directly
@@ -98,7 +105,7 @@ namespace {
 		ok = thread_num == thread_alloc::thread_num();
 
 		// Now do the work
-		ok &= worker(thread_num);
+		ok &= worker(thread_num, thread_all_[thread_num].info);
 
 		// pass back ok information for this thread
 		thread_all_[thread_num].ok = ok;
@@ -106,25 +113,78 @@ namespace {
 		// no return value
 		return;
 	}
+	// ----------------------------------------------------------------------
+	// function that calls all the workers
+	bool run_all_workers(size_t num_threads, problem_specific* info_all[])
+	{	bool ok = true;
+
+		// initialize thread_all_ (execpt for pthread_id)
+		size_t thread_num;
+		for(thread_num = 0; thread_num < num_threads; thread_num++)
+		{	// pointed to by thread specific info for this thread
+			thread_all_[thread_num].thread_num = thread_num;
+			// initialize as false to make sure worker gets called by other
+			// threads. Note that thread_all_[0].ok does not get used
+			thread_all_[thread_num].ok         = false;
+			// problem specific information
+			thread_all_[thread_num].info       = info_all[thread_num];
+		}
+
+		// master bthread number
+		thread_num_ptr_.reset(& thread_all_[0].thread_num);
+
+		// Now thread_number() has necessary information for this thread
+		// (number zero), and while still in sequential mode,
+		// call setup for using CppAD::AD<double> in parallel mode.
+		thread_alloc::parallel_setup(
+			num_threads, in_parallel, thread_number
+		);
+		thread_alloc::hold_memory(true);
+		CppAD::parallel_ad<double>();
+
+		// inform CppAD that we now may be in parallel execution mode
+		sequential_execution_ = false;
+	
+		// This master thread is already running, we need to create
+		// num_threads - 1 more threads
+		thread_all_[0].bthread = CPPAD_NULL;
+		for(thread_num = 1; thread_num < num_threads; thread_num++)
+		{	// Create the thread with thread number equal to thread_num
+			thread_all_[thread_num].bthread = 
+				new boost::thread(run_one_worker, thread_num);
+		}
+
+		// now call worker for the master thread
+		thread_num = thread_alloc::thread_num();
+		ok &= thread_num == 0;
+		ok &= worker(thread_num, thread_all_[thread_num].info);
+
+		// now wait for the other threads to finish 
+		for(thread_num = 1; thread_num < num_threads; thread_num++)
+		{	thread_all_[thread_num].bthread->join();
+			delete thread_all_[thread_num].bthread;
+			thread_all_[thread_num].bthread = CPPAD_NULL;
+		}
+
+		// Inform CppAD that we now are definately back to sequential mode
+		sequential_execution_ = true;
+
+		// now inform CppAD that there is only one thread
+		thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
+		thread_alloc::hold_memory(false);
+
+		// check to ok flag returned by during calls to work by other threads
+		for(thread_num = 1; thread_num < num_threads; thread_num++)
+			ok &= thread_all_[thread_num].ok;
+
+		return ok;
+	}
 	// =====================================================================
 	// End of General purpose code 
 	// =====================================================================
-	// structure with problem specific information
-	typedef struct {
-		// function argument (worker input)
-		double          x;
-		// This structure would also have return information in it,
-		// but this example only returns the ok flag
-	} problem_specific;
-	// ---------------------------------------------------------------------
 	// function that does the work for one thread
-	bool worker(size_t thread_num)
+	bool worker(size_t thread_num, problem_specific* info)
 	{	bool ok = true;
-
-		// get pointer to problem specific information for this thread
-		problem_specific* info = static_cast<problem_specific*>(
-			thread_all_[thread_num].info
-		);
 
 		// CppAD::vector uses the CppAD fast multi-threading allocator
 		CppAD::vector< CppAD::AD<double> > ax(1), ay(1);
@@ -146,12 +206,8 @@ namespace {
 		return ok;
 	}
 }
-
-// This test routine is only called by the master thread (thread_num = 0).
 bool simple_ad(void)
 {	bool ok = true;
-	using CppAD::thread_alloc;
-
 	size_t num_threads = NUMBER_THREADS;
 
 	// Check that no memory is in use or avialable at start
@@ -162,70 +218,25 @@ bool simple_ad(void)
 		ok &= thread_alloc::available(thread_num) == 0; 
 	}
 
-	// initialize thread_all_ (except for bthread) 
-	problem_specific* info;
+	// initialize info_all
+	problem_specific *info, *info_all[NUMBER_THREADS];
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	// pointed to by thread specific info for this thread
-		thread_all_[thread_num].thread_num = thread_num;
-		// initialize as false to make sure worker gets called
-		thread_all_[thread_num].ok         = false;
-		// problem specific information
+	{	// problem specific information
 		size_t min_bytes(sizeof(info)), cap_bytes;
 		void*  v_ptr = thread_alloc::get_memory(min_bytes, cap_bytes);
-		thread_all_[thread_num].info = v_ptr;
 		info         = static_cast<problem_specific*>(v_ptr);
 		info->x      = double(thread_num) + 1.;
-	}
-	// master bthread number
-	thread_num_ptr_.reset(& thread_all_[0].thread_num);
-
-	// Now that thread_number() has necessary information for this thread
-	// (number zero), and while still in sequential mode,
-	// call setup for using CppAD::AD<double> in parallel mode.
-	thread_alloc::parallel_setup(num_threads, in_parallel, thread_number);
-	thread_alloc::hold_memory(true);
-	CppAD::parallel_ad<double>();
-	// inform CppAD that we now may be in parallel execution mode
-	sequential_execution_ = false;
-	
-	// This master thread is already running, we need to create
-	// num_threads - 1 more threads
-	thread_all_[0].bthread = CPPAD_NULL;
-	for(thread_num = 1; thread_num < num_threads; thread_num++)
-	{	// Create the thread with thread number equal to thread_num
-		thread_all_[thread_num].bthread = 
-			new boost::thread(run_worker, thread_num);
+		info_all[thread_num] = info;
 	}
 
-	// now call worker for the master thread
-	thread_num = thread_alloc::thread_num();
-	ok &= thread_num == 0;
-	ok &= worker(thread_num);
-	// just to make the loop over all threads simpler
-	thread_all_[thread_num].ok = ok;
-
-	// now wait for the other threads to finish 
-	for(thread_num = 1; thread_num < num_threads; thread_num++)
-	{	thread_all_[thread_num].bthread->join();
-		delete thread_all_[thread_num].bthread;
-		thread_all_[thread_num].bthread = CPPAD_NULL;
-	}
-
-
-	// Inform CppAD that we are definately bakc to sequential execution mode
-	sequential_execution_ = true;
-
-	// now inform CppAD that there is only one thread
-	thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
-	thread_alloc::hold_memory(false);
+	ok &= run_all_workers(num_threads, info_all);
 
 	// go down so that free memory for other threads before memory for master
 	thread_num = num_threads;
 	while(thread_num--)
-	{	// check that this thread was called and successful
-		ok &= thread_all_[thread_num].ok;
-		// delete problem specific information
-		thread_alloc::return_memory( thread_all_[thread_num].info );
+	{	// delete problem specific information
+		void* v_ptr = static_cast<void*>( info_all[thread_num] );
+		thread_alloc::return_memory( v_ptr );
 		// check that there is no longer any memory inuse by this thread
 		ok &= thread_alloc::inuse(thread_num) == 0; 
 		// return all memory being held for future use by this thread
