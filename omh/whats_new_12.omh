@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_12$$
 $spell
+	Taylor
 	Debian
 	valgrind
 	num
@@ -36,6 +37,11 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-26$$
+Calling $code taylor_capacity$$, with to with capacity equal to zero,
+was not
+$cref/freeing memory/capacity_taylor/c/Freeing Memory/$$.
+This has been fixed.
 
 $head 03-23$$
 $list number$$

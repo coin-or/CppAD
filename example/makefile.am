@@ -78,7 +78,7 @@ example_SOURCES   = \
 	base_require.cpp \
 	bender_quad.cpp \
 	bool_fun.cpp \
-	vector_bool.cpp \
+	capacity_taylor.cpp \
 	change_const.cpp \
 	check_numeric_type.cpp \
 	check_simple_vector.cpp \
@@ -188,7 +188,8 @@ example_SOURCES   = \
 	user_tan.cpp \
 	value.cpp \
 	var_2par.cpp \
-	vec_ad.cpp 
+	vec_ad.cpp  \
+	vector_bool.cpp 
 
 test: check
 	./example

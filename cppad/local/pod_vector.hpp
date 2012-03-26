@@ -71,7 +71,7 @@ public:
 	inline pod_vector(
 		size_t max_length = std::numeric_limits<size_t>::max()
 	) 
-	: max_length_(max_length), length_(0), capacity_(0), data_(0)
+	: max_length_(max_length), length_(0), capacity_(0), data_(CPPAD_NULL)
 	{ }
 	// ----------------------------------------------------------------------
 	/// Destructor: returns allocated memory to \c thread_alloc; 
@@ -201,6 +201,25 @@ public:
 	{	length_ = 0;
 		return;
 	}	
+	// ----------------------------------------------------------------------
+	/*!
+ 	Remove all the elements from this vector and delete its memory.
+	*/
+	void free(void)
+	{	if( capacity_ > 0 )
+		{	void* v_ptr = reinterpret_cast<void*>( data_ );
+			if( ! is_pod<Type>() )
+			{	// call destructor for each element
+				size_t i;
+				for(i = 0; i < capacity_; i++)
+					(data_ + i)->~Type();
+			}
+			thread_alloc::return_memory(v_ptr); 
+		}
+		data_     = CPPAD_NULL;
+		capacity_ = 0;
+		length_   = 0;
+	}
 	/// vector assignment operator
 	/// If the resulting length of the vector would be more than 
 	/// \c max_length_, and \c NDEBUG is not defined, 

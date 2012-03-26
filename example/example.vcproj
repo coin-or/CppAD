@@ -230,6 +230,11 @@
 				RelativePath=".\bool_fun.cpp"
 				>
 			</File>
+			</File>
+			<File
+				RelativePath=".\capacity_taylor.cpp"
+				>
+			</File>
 			<File
 				RelativePath=".\change_const.cpp"
 				>

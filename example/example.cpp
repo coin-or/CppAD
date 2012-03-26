@@ -65,7 +65,7 @@ extern bool Atan2(void);
 extern bool base_require(void);
 extern bool BenderQuad(void);
 extern bool BoolFun(void);
-extern bool vectorBool(void);
+extern bool capacity_taylor(void);
 extern bool change_const(void);
 extern bool CheckNumericType(void);
 extern bool checkpoint(void);
@@ -175,6 +175,7 @@ extern bool user_tan(void);
 extern bool Value(void);
 extern bool Var2Par(void);
 extern bool vec_ad(void);
+extern bool vectorBool(void);
 
 namespace {
 	// function that runs one test
@@ -221,7 +222,7 @@ int main(void)
 	ok &= Run( base_require,      "base_require"     );
 	ok &= Run( BenderQuad,        "BenderQuad"       );
 	ok &= Run( BoolFun,           "BoolFun"          );
-	ok &= Run( vectorBool,        "vectorBool"       );
+	ok &= Run( capacity_taylor,   "capacity_taylor"  );
 	ok &= Run( change_const,      "change_const"     );
 	ok &= Run( CheckNumericType,  "CheckNumericType" );
 	ok &= Run( checkpoint,        "checkpoint"       );
@@ -328,6 +329,7 @@ int main(void)
 	ok &= Run( Value,             "Value"            );
 	ok &= Run( Var2Par,           "Var2Par"          );
 	ok &= Run( vec_ad,            "vec_ad"           );
+	ok &= Run( vectorBool,        "vectorBool"       );
 # ifdef CPPAD_ADOLC_EXAMPLES
 	ok &= Run( mul_level_adolc,   "mul_level_adolc"  );
 	ok &= Run( ode_taylor_adolc,  "ode_taylor_adolc" );

@@ -46,7 +46,7 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	example.cpp abort_recording.cpp abs.cpp acos.cpp add.cpp \
 	add_eq.cpp ad_fun.cpp ad_in_c.cpp asin.cpp atan.cpp atan_2.cpp \
 	base_adolc.hpp base_alloc.hpp base_require.cpp bender_quad.cpp \
-	bool_fun.cpp vector_bool.cpp change_const.cpp \
+	bool_fun.cpp capacity_taylor.cpp change_const.cpp \
 	check_numeric_type.cpp check_simple_vector.cpp checkpoint.cpp \
 	compare.cpp compare_change.cpp complex_poly.cpp cond_exp.cpp \
 	conj_grad.cpp copy_ad.cpp copy_base.cpp cos.cpp cosh.cpp \
@@ -74,7 +74,7 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	sparse_jacobian.cpp sqrt.cpp stack_machine.cpp sub.cpp \
 	sub_eq.cpp tan.cpp tanh.cpp tape_index.cpp thread_alloc.cpp \
 	unary_minus.cpp unary_plus.cpp user_tan.cpp value.cpp \
-	var_2par.cpp vec_ad.cpp
+	var_2par.cpp vec_ad.cpp vector_bool.cpp
 @CppAD_ADOLC_TRUE@am__objects_1 = mul_level_adolc.$(OBJEXT) \
 @CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
@@ -82,7 +82,7 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	add.$(OBJEXT) add_eq.$(OBJEXT) ad_fun.$(OBJEXT) \
 	ad_in_c.$(OBJEXT) asin.$(OBJEXT) atan.$(OBJEXT) \
 	atan_2.$(OBJEXT) base_require.$(OBJEXT) bender_quad.$(OBJEXT) \
-	bool_fun.$(OBJEXT) vector_bool.$(OBJEXT) \
+	bool_fun.$(OBJEXT) capacity_taylor.$(OBJEXT) \
 	change_const.$(OBJEXT) check_numeric_type.$(OBJEXT) \
 	check_simple_vector.$(OBJEXT) checkpoint.$(OBJEXT) \
 	compare.$(OBJEXT) compare_change.$(OBJEXT) \
@@ -125,7 +125,7 @@ am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	tan.$(OBJEXT) tanh.$(OBJEXT) tape_index.$(OBJEXT) \
 	thread_alloc.$(OBJEXT) unary_minus.$(OBJEXT) \
 	unary_plus.$(OBJEXT) user_tan.$(OBJEXT) value.$(OBJEXT) \
-	var_2par.$(OBJEXT) vec_ad.$(OBJEXT)
+	var_2par.$(OBJEXT) vec_ad.$(OBJEXT) vector_bool.$(OBJEXT)
 example_OBJECTS = $(am_example_OBJECTS)
 example_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -342,7 +342,7 @@ example_SOURCES = \
 	base_require.cpp \
 	bender_quad.cpp \
 	bool_fun.cpp \
-	vector_bool.cpp \
+	capacity_taylor.cpp \
 	change_const.cpp \
 	check_numeric_type.cpp \
 	check_simple_vector.cpp \
@@ -452,7 +452,8 @@ example_SOURCES = \
 	user_tan.cpp \
 	value.cpp \
 	var_2par.cpp \
-	vec_ad.cpp 
+	vec_ad.cpp  \
+	vector_bool.cpp 
 
 all: all-am
 
@@ -516,6 +517,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/base_require.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bender_quad.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bool_fun.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/capacity_taylor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/change_const.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_numeric_type.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_simple_vector.Po@am__quote@

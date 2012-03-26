@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -54,11 +54,6 @@ bool ForwardCases(void)
 	// create f: X -> Y and stop tape recording
 	CppAD::ADFun<double> f(X, Y);
 
-	// The highest order Forward mode calculation below is is second order.
-	// This corresponds to three Taylor coefficients per variable 
-	// (zero, first, and second order).
-	f.capacity_taylor(3);  // pre-allocate memory for speed of execution
-
 	// initially, the variable values during taping are stored in f
 	ok &= f.size_taylor() == 1;
 
@@ -94,14 +89,6 @@ bool ForwardCases(void)
 	double F_00 = 2. * y_2[0]; // second partial F w.r.t. x[0], x[0]
 	ok         &= NearEqual(F_00, 2.*x[1], 1e-10, 1e-10);
 	ok         &= f.size_taylor() == 3;
-
-	// suppose we no longer need second order Taylor coefficients
-	f.capacity_taylor(2);
-	ok &= f.size_taylor() == 2;
-
-	// actually we no longer need any Taylor coefficients
-	f.capacity_taylor(0);
-	ok &= f.size_taylor() == 0;
 
 	return ok;
 }
