@@ -3,7 +3,7 @@
 # define CPPAD_OPTIMIZE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -1696,11 +1696,11 @@ void ADFun<Base>::optimize(void)
 	// create the optimized recording
 	CppAD::optimize<Base>(n, dep_taddr_, &play_, &rec);
 
-	// now replace the recording
-	play_ = rec;
-
 	// number of variables in the recording
 	total_num_var_ = rec.num_rec_var();
+
+	// now replace the recording
+	play_.get(rec);
 
 	// free memory allocated for sparse Jacobian calculation
 	// (the results are no longer valid)
@@ -1708,7 +1708,7 @@ void ADFun<Base>::optimize(void)
 	for_jac_sparse_set_.resize(0,0);
 
 	// free old Taylor coefficient memory
-	taylor_.erase();
+	taylor_.free();
 	taylor_per_var_ = 0;
 	taylor_col_dim_ = 0;
 

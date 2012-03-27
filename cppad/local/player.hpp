@@ -3,7 +3,7 @@
 # define CPPAD_PLAYER_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -77,28 +77,31 @@ public:
  	Moving an operation sequence from a recorder to a player
  
 	\param rec
-	the object that was used to record the operation sequence.
+	the object that was used to record the operation sequence.  After this 
+	operation, the state of the recording is no longer defined. For example,
+	the \c pod_vector member variables in \c this have been swapped with
+	\c rec .
  	*/
-	void operator=(const recorder<Base> &rec)
+	void get(recorder<Base>& rec)
 	{	size_t i;
 
 		// Var
 		num_rec_var_        = rec.num_rec_var_;
 
 		// Op
-		rec_op_             = rec.rec_op_;
+		rec_op_.swap(rec.rec_op_);
 
 		// VecInd
-		rec_vecad_ind_      = rec.rec_vecad_ind_;
+		rec_vecad_ind_.swap(rec.rec_vecad_ind_);
 
 		// Arg
-		rec_op_arg_         = rec.rec_op_arg_;
+		rec_op_arg_.swap(rec.rec_op_arg_);
 
 		// Par
-		rec_par_            = rec.rec_par_;
+		rec_par_.swap(rec.rec_par_);
 
 		// Txt
-		rec_text_           = rec.rec_text_;
+		rec_text_.swap(rec.rec_text_);
 
 		// set the number of VecAD vectors
 		num_rec_vecad_vec_ = 0;

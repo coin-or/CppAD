@@ -270,9 +270,9 @@ void ADFun<Base>::Dependent(ADTape<Base> *tape, const ADvector &y)
 	total_num_var_ = tape->Rec_.num_rec_var();
 
 	// now that each dependent variable has a place in the tape,
-	// and there is a EndOp at the end of the tape,
-	// we can make a copy for this function and erase the tape.
-	play_ = tape->Rec_;
+	// and there is a EndOp at the end of the tape, we can transfer the 
+	// recording to the player and and erase the tape.
+	play_.get(tape->Rec_);
 
 	// now we can delete the tape
 	AD<Base>::tape_delete( tape->id_ );

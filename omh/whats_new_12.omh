@@ -37,6 +37,11 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 03-27$$
+Reduce the amount of memory allocation and copying of information during
+a $cref Dependent$$ operation or an $code ADFun$$
+$cref/sequence constructor/FunConstruct/Sequence Constructor/$$.
+
 $head 03-26$$
 Calling $code taylor_capacity$$, with to with capacity equal to zero,
 was not
