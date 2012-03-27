@@ -188,7 +188,7 @@ void ADFun<Base>::Dependent(const ADvector &x, const ADvector &y)
 		Variable(x[0]),
 		"Dependent: independent variable vector has been changed."
 	);
-	ADTape<Base> *tape = AD<Base>::tape_ptr(x[0].id_);
+	ADTape<Base> *tape = AD<Base>::tape_ptr(x[0].tape_id_);
 	CPPAD_ASSERT_KNOWN(
 		tape->size_independent_ == x.size(),
 		"Dependent: independent variable vector has been changed."
@@ -201,13 +201,13 @@ void ADFun<Base>::Dependent(const ADvector &x, const ADvector &y)
 		"ADFun<Base>: independent variable vector has been changed."
 		);
 		CPPAD_ASSERT_KNOWN(
-		x[j].id_ == x[0].id_,
+		x[j].tape_id_ == x[0].tape_id_,
 		"ADFun<Base>: independent variable vector has been changed."
 		);
 	}
 	for(i = 0; i < y.size(); i++)
 	{	CPPAD_ASSERT_KNOWN(
-		CppAD::Parameter( y[i] ) | (y[i].id_ == x[0].id_) ,
+		CppAD::Parameter( y[i] ) | (y[i].tape_id_ == x[0].tape_id_) ,
 		"ADFun<Base>: dependent vector contains a variable for"
 		"\na different tape (thread) than the independent variables."
 		);

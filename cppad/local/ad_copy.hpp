@@ -3,7 +3,7 @@
 # define CPPAD_AD_COPY_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -101,7 +101,7 @@ template <class Base>
 inline AD<Base>::AD(const AD &x) 
 {
 	value_   = x.value_;
-	id_     = x.id_;
+	tape_id_     = x.id_;
 	taddr_  = x.taddr_;
 
 	return;
@@ -109,7 +109,7 @@ inline AD<Base>::AD(const AD &x)
 template <class Base>
 inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
 {	value_   = right.value_;
-	id_     = right.id_;
+	tape_id_     = right.id_;
 	taddr_  = right.taddr_;
 
 	// check that all variables are parameters while tape is empty
@@ -123,18 +123,18 @@ inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
 
 // Constructor and assignment from Base type
 // Initilaize id_ to CPPAD_MAX_NUM_THREADS, so that following conditions hold 
-// id_ != 0 , id_ % CPPAD_MAX_NUM_THREADS == 0, id_ != any recording tape id.
+// id_ != 0 , tape_id_ % CPPAD_MAX_NUM_THREADS == 0, tape_id_ != any recording tape id.
 // taddr_ is not used, set anyway to avoid compile warning.
 template <class Base>
 inline AD<Base>::AD(const Base &b) 
 : value_(b)
-, id_(CPPAD_MAX_NUM_THREADS)
+, tape_id_(CPPAD_MAX_NUM_THREADS)
 , taddr_(0)
 { }	
 template <class Base>
 inline AD<Base>& AD<Base>::operator=(const Base &b)
 {	value_ = b;
-	id_    = CPPAD_MAX_NUM_THREADS;
+	tape_id_    = CPPAD_MAX_NUM_THREADS;
 
 	// check that this is a parameter
 	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
@@ -156,7 +156,7 @@ template <class Base>
 template <class T>
 inline AD<Base>::AD(const T &t) 
 : value_(Base(t))
-, id_(CPPAD_MAX_NUM_THREADS)
+, tape_id_(CPPAD_MAX_NUM_THREADS)
 , taddr_(0)
 { }
 template <class Base>

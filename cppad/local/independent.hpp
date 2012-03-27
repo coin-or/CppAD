@@ -3,7 +3,7 @@
 # define CPPAD_INDEPENDENT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -144,7 +144,7 @@ void ADTape<Base>::Independent(VectorAD &x)
 	for(j = 0; j < n; j++)
 	{	// tape address for this independent variable
 		x[j].taddr_ = Rec_.PutOp(InvOp);
-		x[j].id_    = id_;
+		x[j].tape_id_    = id_;
 		CPPAD_ASSERT_UNKNOWN( size_t(x[j].taddr_) == j+1 );
 		CPPAD_ASSERT_UNKNOWN( Variable(x[j] ) );
 	}

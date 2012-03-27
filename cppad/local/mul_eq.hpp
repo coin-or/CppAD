@@ -3,7 +3,7 @@
 # define CPPAD_MUL_EQ_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,8 +24,8 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 		tape_id = tape->id_;
 
 	// id_ setting for parameters cannot match 0
-	bool var_left  = id_       == tape_id;
-	bool var_right = right.id_ == tape_id;
+	bool var_left  = tape_id_       == tape_id;
+	bool var_right = right.tape_id_ == tape_id;
 	CPPAD_ASSERT_KNOWN(
 		Parameter(*this) || var_left ,
 		"*=: left operand is a variable for a different thread"
@@ -50,7 +50,7 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 			// put operator in the tape
 			taddr_ = tape->Rec_.PutOp(MulvvOp);
 			// make this a variable
-			CPPAD_ASSERT_UNKNOWN( id_ == tape_id );
+			CPPAD_ASSERT_UNKNOWN( tape_id_ == tape_id );
 		}
 		else if( IdenticalOne( right.value_ ) )
 		{	// this = variable * 1
@@ -71,7 +71,7 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 			// put operator in the tape
 			taddr_ = tape->Rec_.PutOp(MulpvOp);
 			// make this a variable
-			CPPAD_ASSERT_UNKNOWN( id_ == tape_id );
+			CPPAD_ASSERT_UNKNOWN( tape_id_ == tape_id );
 		}
 	}
 	else if( var_right  )
@@ -80,7 +80,7 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 		}
 		else if( IdenticalOne(left) )
 		{	// this = 1 * right
-			make_variable(right.id_, right.taddr_);
+			make_variable(right.tape_id_, right.taddr_);
 		}
 		else
 		{	// this = parameter * variable
@@ -93,7 +93,7 @@ AD<Base>& AD<Base>::operator *= (const AD<Base> &right)
 			// put operator in the tape
 			taddr_ = tape->Rec_.PutOp(MulpvOp);
 			// make this a variable
-			id_ = tape_id;
+			tape_id_ = tape_id;
 		}
 	}
 	return *this;

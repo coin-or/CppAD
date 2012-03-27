@@ -3,7 +3,7 @@
 # define CPPAD_POW_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -116,8 +116,8 @@ pow(const AD<Base> &x, const AD<Base> &y)
 		tape_id = tape->id_;
 
 	// id_ setting for parameters cannot match 0
-	bool var_x = x.id_  == tape_id;
-	bool var_y = y.id_ == tape_id;
+	bool var_x = x.tape_id_  == tape_id;
+	bool var_y = y.tape_id_ == tape_id;
 	CPPAD_ASSERT_KNOWN(
 		Parameter(x) || var_x ,
 		"pow: first argument is a variable for a different thread"
@@ -144,7 +144,7 @@ pow(const AD<Base> &x, const AD<Base> &y)
 			result.taddr_ = tape->Rec_.PutOp(PowvvOp);
 
 			// make result a variable
-			result.id_ = tape_id;
+			result.tape_id_ = tape_id;
 		}
 		else if( IdenticalZero( y.value_ ) )
 		{	// result = variable^0
@@ -162,7 +162,7 @@ pow(const AD<Base> &x, const AD<Base> &y)
 			result.taddr_ = tape->Rec_.PutOp(PowvpOp);
 
 			// make result a variable
-			result.id_ = tape_id;
+			result.tape_id_ = tape_id;
 		}
 	}
 	else if( var_y )
@@ -182,7 +182,7 @@ pow(const AD<Base> &x, const AD<Base> &y)
 			result.taddr_ = tape->Rec_.PutOp(PowpvOp);
 
 			// make result a variable
-			result.id_ = tape_id;
+			result.tape_id_ = tape_id;
 		}
 	}
 	return result;

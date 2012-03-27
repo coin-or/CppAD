@@ -3,7 +3,7 @@
 # define CPPAD_STD_MATH_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -264,7 +264,7 @@ $end
             ADTape<Base> *tape = tape_this();                     \
             tape->Rec_.PutArg(taddr_);                            \
             result.taddr_ = tape->Rec_.PutOp(Op);                 \
-            result.id_    = tape->id_;                            \
+            result.tape_id_    = tape->id_;                            \
         }                                                         \
         return result;                                            \
     }                                                             \

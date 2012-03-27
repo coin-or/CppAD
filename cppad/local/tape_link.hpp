@@ -302,7 +302,7 @@ If \c _OPENMP is not defined, \c thread is zero.
 \par id_
 This routine uses AD<Base>::id_ to determine the tape identifier 
 corresponding to the current object.
-It must hold that <tt>thread = id_ % CPPAD_MAX_NUM_THREADS</tt>.
+It must hold that <tt>thread = tape_id_ % CPPAD_MAX_NUM_THREADS</tt>.
 Note this routine should be faster when NDEBUG is defined (?) than
 calling \c tape_ptr without the \c id argument.
 
@@ -317,8 +317,8 @@ template <class Base>
 inline ADTape<Base> *AD<Base>::tape_this(void) const
 {	
 
-	size_t thread = id_ % CPPAD_MAX_NUM_THREADS;
-	CPPAD_ASSERT_UNKNOWN( id_ == *id_handle(thread) );
+	size_t thread = tape_id_ % CPPAD_MAX_NUM_THREADS;
+	CPPAD_ASSERT_UNKNOWN( tape_id_ == *id_handle(thread) );
 	CPPAD_ASSERT_UNKNOWN( *tape_handle(thread) != CPPAD_NULL );
 	return *tape_handle(thread);
 }

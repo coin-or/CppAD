@@ -3,7 +3,7 @@
 # define CPPAD_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -215,10 +215,11 @@ private:
 	Base value_;
 
 	// Tape identifier corresponding to taddr
-	// This is a variable if and only if id_ == *id_handle()
-	// For parameters id_ is CPPAD_MAX_NUM_THREADS, so that following hold
-	// id_ != 0 , id_ % CPPAD_MAX_NUM_THREADS == 0, id_ != *id_handle().
-	CPPAD_TAPE_ID_TYPE id_;
+	// This is a variable if and only if tape_id_ == *id_handle()
+	// For parameters tape_id_ is CPPAD_MAX_NUM_THREADS, so that following 
+	// holds: tape_id_ != 0 , tape_id_ % CPPAD_MAX_NUM_THREADS == 0, 
+	// tape_id_ != *id_handle().
+	CPPAD_TAPE_ID_TYPE tape_id_;
 
 	// taddr_ in tape for this variable 
 	addr_t taddr_;
@@ -227,7 +228,7 @@ private:
 	//
 	void make_parameter(void)
 	{	CPPAD_ASSERT_UNKNOWN( Variable(*this) );  // currently a var
-		id_ = CPPAD_MAX_NUM_THREADS;
+		tape_id_ = CPPAD_MAX_NUM_THREADS;
 	}
 	//
 	// Make this parameter a new variable 
@@ -236,8 +237,8 @@ private:
 	{	CPPAD_ASSERT_UNKNOWN( Parameter(*this) ); // currently a par
 		CPPAD_ASSERT_UNKNOWN( taddr > 0 );        // sure valid taddr
 
-		taddr_ = taddr;
-		id_    = id;
+		taddr_   = taddr;
+		tape_id_ = id;
 	}
 	// ---------------------------------------------------------------
 	// tape linking functions

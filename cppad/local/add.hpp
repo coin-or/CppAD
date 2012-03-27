@@ -3,7 +3,7 @@
 # define CPPAD_ADD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -24,8 +24,8 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 		tape_id = tape->id_;
 
 	// id_ setting for parameters cannot match 0
-	bool var_left  = left.id_  == tape_id;
-	bool var_right = right.id_ == tape_id;
+	bool var_left  = left.tape_id_  == tape_id;
+	bool var_right = right.tape_id_ == tape_id;
 	CPPAD_ASSERT_KNOWN(
 		Parameter(left) || var_left ,
 		"+: left operand is a variable for a different thread"
@@ -50,11 +50,11 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(AddvvOp);
 			// make result a variable
-			result.id_ = tape_id;
+			result.tape_id_ = tape_id;
 		}
 		else if( IdenticalZero(right.value_) )
 		{	// result = variable + 0
-			result.make_variable(left.id_, left.taddr_);
+			result.make_variable(left.tape_id_, left.taddr_);
 		}
 		else
 		{	// result = variable  + parameter
@@ -68,13 +68,13 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(AddpvOp);
 			// make result a variable
-			result.id_ = tape_id;
+			result.tape_id_ = tape_id;
 		}
 	}
 	else if( var_right )
 	{	if( IdenticalZero(left.value_) )
 		{	// result = 0 + variable
-			result.make_variable(right.id_, right.taddr_);
+			result.make_variable(right.tape_id_, right.taddr_);
 		}
 		else
 		{	// result = parameter + variable
@@ -87,7 +87,7 @@ AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
 			// put operator in the tape
 			result.taddr_ = tape->Rec_.PutOp(AddpvOp);
 			// make result a variable
-			result.id_ = tape_id;
+			result.tape_id_ = tape_id;
 		}
 	}
 	return result;

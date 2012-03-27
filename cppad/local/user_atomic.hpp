@@ -936,10 +936,10 @@ public:
 			vx_[j]  = Variable( ax[j] );
 			if ( (tape == CPPAD_NULL) & vx_[j] )
 			{	tape    = ax[j].tape_this();
-				tape_id = ax[j].id_;
+				tape_id = ax[j].tape_id_;
 			}
 # ifndef NDEBUG
-			ok = (tape_id == 0) | Parameter(ax[j]) | (tape_id == ax[j].id_);
+			ok = (tape_id == 0) | Parameter(ax[j]) | (tape_id == ax[j].tape_id_);
 			if( ! ok )
 			{	msg = msg + name_ + 
 				": ax contains variables from different threads.";
@@ -964,7 +964,7 @@ public:
 		{	ay[i].value_ = y_[i];
 
 			// initialize entire vector as a constant (not on tape)
-			ay[i].id_    = CPPAD_MAX_NUM_THREADS;
+			ay[i].tape_id_    = CPPAD_MAX_NUM_THREADS;
 			ay[i].taddr_ = 0;
 		}
 		// if tape is not null, ay is on the tape
@@ -1007,7 +1007,7 @@ public:
 			for(i = 0; i < m; i++)
 			{	if( vy_[i] )
 				{	ay[i].taddr_ = tape->Rec_.PutOp(UsrrvOp);
-					ay[i].id_    = tape_id;
+					ay[i].tape_id_    = tape_id;
 				}
 				else
 				{	addr_t p = tape->Rec_.PutPar(ay[i].value_);

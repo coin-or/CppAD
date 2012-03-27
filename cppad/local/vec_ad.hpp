@@ -3,7 +3,7 @@
 # define CPPAD_VEC_AD_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -383,7 +383,7 @@ public:
 		// index corresponding to this element
 		if( Variable(*vec_) )
 		{
-			ADTape<Base> *tape = AD<Base>::tape_ptr(vec_->id_);
+			ADTape<Base> *tape = AD<Base>::tape_ptr(vec_->tape_id_);
 			CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
 			CPPAD_ASSERT_UNKNOWN( vec_->offset_ > 0  );
 	
@@ -399,7 +399,7 @@ public:
 				// put operator in the tape, x_ is a parameter
 				result.taddr_ = tape->Rec_.PutOp(LdpOp);
 				// change result to variable for this load
-				result.id_ = tape->id_;
+				result.tape_id_ = tape->id_;
 			} 
 			else
 			{	CPPAD_ASSERT_UNKNOWN( NumRes(LdvOp) == 1 );
@@ -409,7 +409,7 @@ public:
 				{	// kludge that should not be needed
 					// if x_ instead of i is used for index
 					// in the tape
-					x_.id_    = vec_->id_;
+					x_.tape_id_    = vec_->tape_id_;
 					x_.taddr_ = tape->RecordParOp(
 						x_.value_
 					);
@@ -425,7 +425,7 @@ public:
 				// put operator in the tape, x_ is a variable
 				result.taddr_ = tape->Rec_.PutOp(LdvOp);
 				// change result to variable for this load
-				result.id_ = tape->id_;
+				result.tape_id_ = tape->id_;
 			}
 		}
 		return result;
@@ -453,25 +453,25 @@ private:
 	size_t offset_; 
 
 	// tape id corresponding to the offset
-	size_t id_;
+	size_t tape_id_;
 public:
 	// declare the user's view of this type here
 	typedef VecAD_reference<Base> reference;
 
 	// default constructor
-	// initialize id_ same as for default constructor; see default.hpp
+	// initialize tape_id_ same as for default constructor; see default.hpp
 	VecAD(void) 
 	: length_(0) 
 	, offset_(0)
-	, id_(CPPAD_MAX_NUM_THREADS)
+	, tape_id_(CPPAD_MAX_NUM_THREADS)
 	{	CPPAD_ASSERT_UNKNOWN( Parameter(*this) ); }
 
 	// constructor 
-	// initialize id_ same as for parameters; see ad_copy.hpp
+	// initialize tape_id_ same as for parameters; see ad_copy.hpp
 	VecAD(size_t n) 
 	: length_(n)
 	, offset_(0)
-	, id_(CPPAD_MAX_NUM_THREADS)
+	, tape_id_(CPPAD_MAX_NUM_THREADS)
 	{	if( length_ > 0 )
 		{	size_t i;
 			Base zero(0);
@@ -527,7 +527,7 @@ public:
 			return VecAD_reference<Base>(this, x);
 
 		CPPAD_ASSERT_KNOWN( 
-			Parameter(*this) | Parameter(x) | (id_ == x.id_),
+			Parameter(*this) | Parameter(x) | (tape_id_ == x.tape_id_),
 			"VecAD: vector and index are variables for"
 			" different tapes."
 		);
@@ -535,13 +535,13 @@ public:
 		if( Parameter(*this) )
 		{	// must place a copy of vector in tape
 			offset_ = 
-			AD<Base>::tape_ptr(x.id_)->AddVec(length_, data_);
+			AD<Base>::tape_ptr(x.tape_id_)->AddVec(length_, data_);
 
 			// advance pointer by one so is always > 0
 			offset_++; 
 
 			// tape id corresponding to this offest
-			id_ = x.id_;
+			tape_id_ = x.tape_id_;
 		}
 
 		return VecAD_reference<Base>(this, x); 
@@ -561,12 +561,12 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
 	CPPAD_ASSERT_UNKNOWN( y.taddr_ > 0 );
 
 	CPPAD_ASSERT_KNOWN( 
-		Parameter(*vec_) | (vec_->id_ == y.id_),
+		Parameter(*vec_) | (vec_->tape_id_ == y.tape_id_),
 		"VecAD assignment: vector and new element value are variables"
 		"\nfor different tapes."
 	);
 
-	ADTape<Base> *tape = AD<Base>::tape_ptr(y.id_);
+	ADTape<Base> *tape = AD<Base>::tape_ptr(y.tape_id_);
 	CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
 	if( Parameter(*vec_) )
 	{	// must place a copy of vector in tape
@@ -576,7 +576,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
 		(vec_->offset_)++; 
 
 		// tape id corresponding to this offest
-		vec_->id_ = y.id_;
+		vec_->tape_id_ = y.tape_id_;
 	}
 	CPPAD_ASSERT_UNKNOWN( Variable(*vec_) );
 
@@ -626,7 +626,7 @@ void VecAD_reference<Base>::operator=(const Base &y)
 	if( Parameter(*vec_) )
 		return;
 
-	ADTape<Base> *tape = AD<Base>::tape_ptr(vec_->id_);
+	ADTape<Base> *tape = AD<Base>::tape_ptr(vec_->tape_id_);
 	CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
 
 	// put value of the parameter y in the tape

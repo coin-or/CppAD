@@ -3,7 +3,7 @@
 # define CPPAD_FUN_CONSTRUCT_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -400,7 +400,7 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 		Variable(x[0]),
 		"ADFun<Base>: independent variable vector has been changed."
 	);
-	ADTape<Base> *tape = AD<Base>::tape_ptr(x[0].id_);
+	ADTape<Base> *tape = AD<Base>::tape_ptr(x[0].tape_id_);
 	CPPAD_ASSERT_KNOWN(
 		tape->size_independent_ == x.size(),
 		"ADFun<Base>: independent variable vector has been changed."
@@ -414,13 +414,13 @@ ADFun<Base>::ADFun(const VectorAD &x, const VectorAD &y)
 		"ADFun<Base>: independent variable vector has been changed."
 		);
 		CPPAD_ASSERT_KNOWN(
-		x[j].id_ == x[0].id_,
+		x[j].tape_id_ == x[0].tape_id_,
 		"ADFun<Base>: independent variable vector has been changed."
 		);
 	}
 	for(i = 0; i < m; i++)
 	{	CPPAD_ASSERT_KNOWN(
-		CppAD::Parameter( y[i] ) | (y[i].id_ == x[0].id_) ,
+		CppAD::Parameter( y[i] ) | (y[i].tape_id_ == x[0].tape_id_) ,
 		"ADFun<Base>: dependent vector contains variables for"
 		"\na different tape than the independent variables."
 		);

@@ -3,7 +3,7 @@
 # define CPPAD_DISCRETE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -277,7 +277,7 @@ public:
 			// put operator in the tape
 			ay.taddr_ = tape->Rec_.PutOp(DisOp);
 			// make result a variable
-			ay.id_    = tape->id_;
+			ay.tape_id_    = tape->id_;
 
 			CPPAD_ASSERT_UNKNOWN( Variable(ay) );
 		} 
