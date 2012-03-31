@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20120327, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20120331, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -540,7 +540,6 @@ dnl AC_CONFIG_FILES(file-list) for each file in the list, configure will
 dnl read file.in, do its substitutions, and create file
 AC_CONFIG_FILES([ 
 	cppad/configure.hpp
-	doxyfile
 	doc.omh
 	cppad_ipopt/example/test.sh
 	cppad_ipopt/speed/test.sh

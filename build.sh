@@ -72,7 +72,6 @@ fi
 configure_file_list="
 	cppad/configure.hpp
 	doc.omh
-	doxyfile
 	example/test_one.sh
 	omh/install_unix.omh
 	omh/install_windows.omh
@@ -403,6 +402,9 @@ then
 	#
 	echo "mkdir doxydoc"
 	mkdir doxydoc
+	#
+	echo "bin/doxyfile.sh $version"
+	bin/doxyfile.sh $version
 	#
 	echo "doxygen doxyfile"
 	doxygen doxyfile

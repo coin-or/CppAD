@@ -294,7 +294,6 @@ EXTRA_DIST = \
 	cpl1.0.txt \
 	doc \
 	doc.omh.in \
-	doxyfile.in \
 	omh \
 	uw_copy_040507.html
 
