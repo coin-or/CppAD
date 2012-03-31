@@ -309,27 +309,32 @@ $end
 */
 # include <cppad/local/pod_vector.hpp>
 
+// Use this define to get around a bug in doxygen 1.7.5.
+// To be explicit, the documentiion for the routines in tape_link.hpp
+// you use this typedef in place of the macro below.
+# define CPPAD_VEC_AD_TYPEDEF_ADBASE  typedef AD<Base> AD_Base
+
 # define CPPAD_VEC_AD_COMPUTED_ASSIGNMENT(op, name)                     \
 VecAD_reference& operator op (const VecAD_reference<Base> &right)       \
 {	CPPAD_ASSERT_KNOWN(                                                \
-		0,                                                      \
-		"Cannot use a ADVec element on left side of" name       \
-	);                                                              \
-	return *this;                                                   \
+		0,                                                            \
+		"Cannot use a ADVec element on left side of" name             \
+	);                                                                 \
+	return *this;                                                      \
 }                                                                       \
 VecAD_reference& operator op (const AD<Base> &right)                    \
 {	CPPAD_ASSERT_KNOWN(                                                \
-		0,                                                      \
-		"Cannot use a ADVec element on left side of" name       \
-	);                                                              \
-	return *this;                                                   \
+		0,                                                            \
+		"Cannot use a ADVec element on left side of" name             \
+	);                                                                 \
+	return *this;                                                      \
 }                                                                       \
 VecAD_reference& operator op (const Base &right)                        \
 {	CPPAD_ASSERT_KNOWN(                                                \
-		0,                                                      \
-		"Cannot use a ADVec element on left side of" name       \
-	);                                                              \
-	return *this;                                                   \
+		0,                                                            \
+		"Cannot use a ADVec element on left side of" name             \
+	);                                                                 \
+	return *this;                                                      \
 }
 
 
@@ -345,8 +350,9 @@ class VecAD_reference {
 	friend class ADTape<Base>;
 
 private:
+	CPPAD_VEC_AD_TYPEDEF_ADBASE;    // define ADBase as AD<Base>
 	VecAD<Base>      *vec_;         // pointer to entire vector
-	mutable AD<Base>  x_;           // index for this element
+	mutable AD_Base     x_;         // index for this element
 public:
 	VecAD_reference(VecAD<Base> *v, const AD<Base> &x) 
 		: vec_( v ) , x_(x)
@@ -682,5 +688,6 @@ std::ostream& operator << (std::ostream &os, const VecAD<Base> &v)
 
 // preprocessor symbols that are local to this file
 # undef CPPAD_VEC_AD_COMPUTED_ASSIGNMENT
+# undef CPPAD_VEC_AD_TYPEDEF_ADBASE
 
 # endif
