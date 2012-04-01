@@ -91,46 +91,72 @@ $end
 ------------------------------------------------------------------------------
 */
 
-//  BEGIN CppAD namespace
-namespace CppAD {
+CPPAD_BEGIN_NAMESPACE
 
-/*
-// use default copy constructor and assignment operator
-// because they may be optimized better by the compiler
+/*!
+\file ad_copy.hpp
+AD<Base> constructors and and copy operations.
+
+\defgroup ad_copy_hpp ad_copy.hpp
+*/
+/* \{ */
+
+/*!
+\page AD_Base_Default
+Use default copy constructor and assignment operator
+because they may be optimized better than the code below:
+\code
 template <class Base>
 inline AD<Base>::AD(const AD &x) 
 {
 	value_   = x.value_;
-	tape_id_     = x.id_;
-	taddr_  = x.taddr_;
+	tape_id_ = x.tape_id_;
+	taddr_    = x.taddr_;
 
 	return;
 }
 template <class Base>
 inline AD<Base>& AD<Base>::operator=(const AD<Base> &right)
-{	value_   = right.value_;
-	tape_id_     = right.id_;
-	taddr_  = right.taddr_;
-
-	// check that all variables are parameters while tape is empty
-	CPPAD_ASSERT_UNKNOWN(
-		Parameter(*this) || (tape_this() != CPPAD_NULL)
-	);
+{	value_    = right.value_;
+	tape_id_  = right.tape_id_;
+	taddr_    = right.taddr_;
 
 	return *this;
 }
+\endcode
 */
 
-// Constructor and assignment from Base type
-// Initilaize id_ to CPPAD_MAX_NUM_THREADS, so that following conditions hold 
-// id_ != 0 , tape_id_ % CPPAD_MAX_NUM_THREADS == 0, tape_id_ != any recording tape id.
-// taddr_ is not used, set anyway to avoid compile warning.
+/*!
+Constructor from Base type.
+
+\tparam Base
+Base type for this AD object.
+
+\param b
+is the Base type value corresponding to this AD object.
+The tape identifier will be an invalid tape identifier,
+so this object is initially a parameter.
+*/
 template <class Base>
 inline AD<Base>::AD(const Base &b) 
 : value_(b)
 , tape_id_(CPPAD_MAX_NUM_THREADS)
 , taddr_(0)
-{ }	
+{	// check that this is a parameter
+	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
+}	
+
+/*!
+Assignment to Base type value.
+
+\tparam Base
+Base type for this AD object.
+
+\param b
+is the Base type value being assignment to this AD object.
+The tape identifier will be an invalid tape identifier,
+so this object is initially a parameter.
+*/
 template <class Base>
 inline AD<Base>& AD<Base>::operator=(const Base &b)
 {	value_ = b;
@@ -142,16 +168,39 @@ inline AD<Base>& AD<Base>::operator=(const Base &b)
 	return *this;
 }
 
-// constructor and assignment from VecAD_reference<Base>
+/*!
+Constructor from an ADVec<Base> element drops the vector information.
+
+\tparam Base
+Base type for this AD object.
+*/
 template <class Base>
 inline AD<Base>::AD(const VecAD_reference<Base> &x)
 {	*this = x.ADBase(); }
+
+/*!
+Assignment to an ADVec<Base> element drops the vector information.
+
+\tparam Base
+Base type for this AD object.
+*/
 template <class Base>
 inline AD<Base>& AD<Base>::operator=(const VecAD_reference<Base> &x)
 {	return *this = x.ADBase(); }
 
-// constructor and assignment from any other type 
-// taddr_ is not used, set anyway to avoid compile warning.
+/*!
+Constructor from any other type acts link constructor from Base type. 
+
+\tparam Base
+Base type for this AD object.
+
+\tparam T
+is the the type that is being converted to AD<Base>.
+There must be a constructor for Base from Type.
+
+\param t
+is the object that is being converted from T to AD<Base>.
+*/
 template <class Base>
 template <class T>
 inline AD<Base>::AD(const T &t) 
@@ -159,12 +208,27 @@ inline AD<Base>::AD(const T &t)
 , tape_id_(CPPAD_MAX_NUM_THREADS)
 , taddr_(0)
 { }
+
+
+/*!
+Assignment from any other type acts link assignment from Base type. 
+
+\tparam Base
+Base type for this AD object.
+
+\tparam T
+is the the type that is being assigned to AD<Base>.
+There must be an assignment for Base from Type.
+
+\param t
+is the object that is being assigned to an AD<Base> object.
+*/
 template <class Base>
 template <class T>
 inline AD<Base>& AD<Base>::operator=(const T &t)
 {	return *this = Base(t); }
 
 
-} // END CppAD namespace
-
+/* \} */
+CPPAD_END_NAMESPACE
 # endif
