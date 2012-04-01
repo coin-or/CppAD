@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # $Id$
 # -----------------------------------------------------------------------------
-# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+# CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 #
 # CppAD is distributed under multiple licenses. This distribution is under
 # the terms of the
@@ -27,7 +27,7 @@ dir=`pwd | sed -e 's|.*/[Cc][Pp][Pp][Aa][Dd]/||'`
 check="stable/$stable_version"
 if [ "$dir" != "$check" ]
 then
-	echo bin/"new_stable.sh: must execute this script in $check"
+	echo bin/"new_release.sh: must execute this script in $check"
 	exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -55,17 +55,9 @@ echo "svn revert cppad/configure.hpp"
 if ! grep "PACKAGE_STRING *\"cppad-$release_version\"" \
 	cppad/configure.hpp > /dev/null
 then
-	echo bin/"new_release.sh: Version in cppad/configure.hpp not $release_version."
+	echo "bin/new_release.sh: cppad/configure.hpp version not $release_version."
 	echo "	./build.sh version automake configure"
 	echo "should fix this."
-	exit 1
-fi
-# -----------------------------------------------------------------------------
-# check stable version 
-dir=`pwd | sed -e 's|.*/[Cc][Pp][Pp][Aa][Dd]/||'`
-if [ "$dir" != "stable/$stable_version" ]
-then
-	echo bin/"new_release.sh: must execute this command in stable/$stable_version"
 	exit 1
 fi
 # -----------------------------------------------------------------------------
