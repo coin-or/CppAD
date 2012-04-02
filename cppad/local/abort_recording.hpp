@@ -3,7 +3,7 @@
 # define CPPAD_ABORT_RECORDING_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-10 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -56,7 +56,7 @@ $end
 namespace CppAD {
 	template <typename Base>
 	void AD<Base>::abort_recording(void)
-	{	ADTape<Base> *tape = AD<Base>::tape_ptr();
+	{	ADTape<Base>* tape = AD<Base>::tape_ptr();
 		if( tape != CPPAD_NULL )
 			AD<Base>::tape_delete( tape->id_ );
 	}

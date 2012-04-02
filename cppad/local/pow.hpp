@@ -110,26 +110,22 @@ namespace CppAD {
 // case where x and y are AD<Base> -----------------------------------------
 template <class Base> AD<Base> 
 pow(const AD<Base> &x, const AD<Base> &y)
-{	ADTape<Base> *tape = AD<Base>::tape_ptr();
-	size_t tape_id = 0;
-	if( tape != CPPAD_NULL )
-		tape_id = tape->id_;
-
-	// id_ setting for parameters cannot match 0
-	bool var_x = x.tape_id_  == tape_id;
-	bool var_y = y.tape_id_ == tape_id;
-	CPPAD_ASSERT_KNOWN(
-		Parameter(x) || var_x ,
-		"pow: first argument is a variable for a different thread"
-	);
-	CPPAD_ASSERT_KNOWN(
-		Parameter(y) || var_y ,
-		"pow: second argument is a variable for a different thread"
-	);
-
+{
+	// compute the Base part
 	AD<Base> result;
 	result.value_  = pow(x.value_, y.value_);
 	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
+
+	// check if there is a recording in progress
+	ADTape<Base>* tape = AD<Base>::tape_ptr();
+	if( tape == CPPAD_NULL )
+		return result;
+	size_t tape_id = tape->id_;
+
+	// tape_id cannot match the default value for tape_id_; i.e., 0
+	CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
+	bool var_x = x.tape_id_ == tape_id;
+	bool var_y = y.tape_id_ == tape_id;
 
 	if( var_x )
 	{	if( var_y )

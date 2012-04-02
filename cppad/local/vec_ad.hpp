@@ -389,7 +389,7 @@ public:
 		// index corresponding to this element
 		if( Variable(*vec_) )
 		{
-			ADTape<Base> *tape = AD<Base>::tape_ptr(vec_->tape_id_);
+			ADTape<Base>* tape = AD<Base>::tape_ptr(vec_->tape_id_);
 			CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
 			CPPAD_ASSERT_UNKNOWN( vec_->offset_ > 0  );
 	
@@ -572,7 +572,7 @@ void VecAD_reference<Base>::operator=(const AD<Base> &y)
 		"\nfor different tapes."
 	);
 
-	ADTape<Base> *tape = AD<Base>::tape_ptr(y.tape_id_);
+	ADTape<Base>* tape = AD<Base>::tape_ptr(y.tape_id_);
 	CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
 	if( Parameter(*vec_) )
 	{	// must place a copy of vector in tape
@@ -632,7 +632,7 @@ void VecAD_reference<Base>::operator=(const Base &y)
 	if( Parameter(*vec_) )
 		return;
 
-	ADTape<Base> *tape = AD<Base>::tape_ptr(vec_->tape_id_);
+	ADTape<Base>* tape = AD<Base>::tape_ptr(vec_->tape_id_);
 	CPPAD_ASSERT_UNKNOWN( tape != CPPAD_NULL );
 
 	// put value of the parameter y in the tape

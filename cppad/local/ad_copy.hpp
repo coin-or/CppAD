@@ -140,7 +140,7 @@ so this object is initially a parameter.
 template <class Base>
 inline AD<Base>::AD(const Base &b) 
 : value_(b)
-, tape_id_(CPPAD_MAX_NUM_THREADS)
+, tape_id_(0)
 , taddr_(0)
 {	// check that this is a parameter
 	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
@@ -159,8 +159,8 @@ so this object is initially a parameter.
 */
 template <class Base>
 inline AD<Base>& AD<Base>::operator=(const Base &b)
-{	value_ = b;
-	tape_id_    = CPPAD_MAX_NUM_THREADS;
+{	value_   = b;
+	tape_id_ = 0;
 
 	// check that this is a parameter
 	CPPAD_ASSERT_UNKNOWN( Parameter(*this) );
@@ -205,7 +205,7 @@ template <class Base>
 template <class T>
 inline AD<Base>::AD(const T &t) 
 : value_(Base(t))
-, tape_id_(CPPAD_MAX_NUM_THREADS)
+, tape_id_(0)
 , taddr_(0)
 { }
 

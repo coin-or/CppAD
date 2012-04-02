@@ -48,22 +48,21 @@ It returns true if it succeeds and false otherwise.
 $end
 ------------------------------------------------------------------------------
 */
-//  BEGIN CppAD namespace
-namespace CppAD {
+CPPAD_BEGIN_NAMESPACE
 
-// default constructor
-//
-// Initilaize id_ to CPPAD_MAX_NUM_THREADS, so that following conditions hold 
-// id_ != 0 , tape_tape_id_ % CPPAD_MAX_NUM_THREADS == 0, tape_tape_id_ != any recording tape id.
-// taddr_ is not used, set anyway to avoid compile warning.
-// value_ = 0 so complex of AD will work, see comments in not_complex_ad.cpp.
+/*!
+Default Constructor.
+
+\tparam Base
+Base type for this AD object.
+*/
 template <class Base>
 inline AD<Base>::AD(void) 
-: value_(Base(0))
-, tape_id_(CPPAD_MAX_NUM_THREADS)
+: value_()
+, tape_id_(0)
 , taddr_(0)
-{ }	
+{ }
 
-} // END CppAD namespace
+CPPAD_END_NAMESPACE
 
 # endif

@@ -215,10 +215,6 @@ private:
 	Base value_;
 
 	// Tape identifier corresponding to taddr
-	// This is a variable if and only if tape_id_ == *id_handle()
-	// For parameters tape_id_ is CPPAD_MAX_NUM_THREADS, so that following 
-	// holds: tape_id_ != 0 , tape_id_ % CPPAD_MAX_NUM_THREADS == 0, 
-	// tape_id_ != *id_handle().
 	CPPAD_TAPE_ID_TYPE tape_id_;
 
 	// taddr_ in tape for this variable 
@@ -228,7 +224,7 @@ private:
 	//
 	void make_parameter(void)
 	{	CPPAD_ASSERT_UNKNOWN( Variable(*this) );  // currently a var
-		tape_id_ = CPPAD_MAX_NUM_THREADS;
+		tape_id_ = 0;
 	}
 	//
 	// Make this parameter a new variable 
@@ -244,15 +240,15 @@ private:
 	// tape linking functions
 	// 
 	// not static
-	inline ADTape<Base> *tape_this(void) const;
+	inline ADTape<Base>* tape_this(void) const;
 	//
 	// static 
-	inline static size_t        *id_handle (size_t thread);
-	inline static ADTape<Base> **tape_handle(size_t thread);
-	static size_t                tape_new(void);
-	static void                  tape_delete(size_t id);
-	inline static ADTape<Base>  *tape_ptr(void);
-	inline static ADTape<Base>  *tape_ptr(size_t id);
+	inline static size_t*        tape_id_ptr(size_t thread);
+	inline static ADTape<Base>** tape_handle(size_t thread);
+	static ADTape<Base>*         tape_new(void);
+	static void                  tape_delete(size_t tape_id);
+	inline static ADTape<Base>*  tape_ptr(void);
+	inline static ADTape<Base>*  tape_ptr(size_t tape_id);
 }; 
 // ---------------------------------------------------------------------------
 

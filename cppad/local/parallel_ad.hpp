@@ -98,7 +98,7 @@ void parallel_ad(void)
 
 
 	// statics that depend on the value of Base
-	AD<Base>::id_handle(0);
+	AD<Base>::tape_id_ptr(0);
 	AD<Base>::tape_handle(0);	
 	discrete<Base>::List();
 	erf_template( Base(0.) );

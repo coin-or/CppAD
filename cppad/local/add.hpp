@@ -18,26 +18,22 @@ namespace CppAD {
 
 template <class Base>
 AD<Base> operator + (const AD<Base> &left , const AD<Base> &right)
-{	ADTape<Base> *tape = AD<Base>::tape_ptr();
-	size_t tape_id = 0;
-	if( tape != CPPAD_NULL )
-		tape_id = tape->id_;
-
-	// id_ setting for parameters cannot match 0
-	bool var_left  = left.tape_id_  == tape_id;
-	bool var_right = right.tape_id_ == tape_id;
-	CPPAD_ASSERT_KNOWN(
-		Parameter(left) || var_left ,
-		"+: left operand is a variable for a different thread"
-	);
-	CPPAD_ASSERT_KNOWN(
-		Parameter(right) || var_right ,
-		"+: right operand is a variable for a different thread"
-	);
-
+{
+	// compute the Base part of this AD object
 	AD<Base> result;
 	result.value_  = left.value_ + right.value_;
 	CPPAD_ASSERT_UNKNOWN( Parameter(result) );
+
+	// check if there is a recording in progress
+	ADTape<Base>* tape = AD<Base>::tape_ptr();
+	if( tape == CPPAD_NULL )
+		return result;
+	size_t tape_id = tape->id_;
+
+	// tape_id cannot match the default value for tape_id_; i.e., 0
+	CPPAD_ASSERT_UNKNOWN( tape_id > 0 );
+	bool var_left  = left.tape_id_  == tape_id;
+	bool var_right = right.tape_id_ == tape_id;
 
 	if( var_left )
 	{	if( var_right )
