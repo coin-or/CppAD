@@ -40,10 +40,12 @@ Pointer to the tape identifier for this AD<Base> class and the specific thread.
 is the base type for this AD<Base> class.
 
 \param thread
-is the thread number
+is the thread number; i.e.,
 \code
-0 <= thread == thread_alloc::thread_num()
+thread == thread_alloc::thread_num()
 \endcode
+If this condition is not satisfied, and \c NDEBUG is not defined,
+a CPPAD_ASSERT_UNKNOWN is generated.
 
 \return
 is a pointer to the tape identifier for this thread
@@ -52,8 +54,6 @@ and AD<Base> class.
 template <class Base>
 inline size_t* AD<Base>::tape_id_ptr(size_t thread)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-	// Section 3.6.2 of the 1998 C++ standard specifies that storage for
-	// static objects will be zero initalized.
 	static size_t tape_id_table[CPPAD_MAX_NUM_THREADS];
 	CPPAD_ASSERT_UNKNOWN( thread == thread_alloc::thread_num() );
 
@@ -66,11 +66,14 @@ Handle for the tape for this AD<Base> class and the specific thread.
 \tparam Base
 is the base type for this AD<Base> class.
 
+
 \param thread
-is the thread number
+is the thread number; i.e.,
 \code
-0 <= thread == thread_alloc::thread_num()
+thread == thread_alloc::thread_num()
 \endcode
+If this condition is not satisfied, and \c NDEBUG is not defined,
+a CPPAD_ASSERT_UNKNOWN is generated.
 
 \return
 is a handle for the  AD<Base> class and the specified thread.
@@ -79,7 +82,8 @@ template <class Base>
 inline ADTape<Base>** AD<Base>::tape_handle(size_t thread)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static ADTape<Base>* tape_table[CPPAD_MAX_NUM_THREADS];
-	CPPAD_ASSERT_UNKNOWN( thread < thread_alloc::num_threads() );
+	CPPAD_ASSERT_UNKNOWN( thread == thread_alloc::thread_num() );
+
 	return tape_table + thread;
 }
 

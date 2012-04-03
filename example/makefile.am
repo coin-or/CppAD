@@ -68,6 +68,8 @@ example_SOURCES   = \
 	acos.cpp \
 	add.cpp \
 	add_eq.cpp \
+	ad_assign.cpp \
+	ad_ctor.cpp \
 	ad_fun.cpp \
 	ad_in_c.cpp \
 	asin.cpp \
@@ -88,16 +90,12 @@ example_SOURCES   = \
 	complex_poly.cpp \
 	cond_exp.cpp \
 	conj_grad.cpp \
-	copy_ad.cpp \
-	copy_base.cpp \
 	cos.cpp \
 	cosh.cpp \
 	cppad_vector.cpp \
-	default.cpp \
 	div.cpp \
 	div_eq.cpp \
 	epsilon.cpp \
-	eq.cpp \
 	equal_op_seq.cpp \
 	erf.cpp \
 	error_handler.cpp \

@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -471,7 +471,7 @@ and other packages use of the same symbol names.
 $head 06-06$$
 Using complex of an AD type (instead of AD of complex) was not working
 correctly in $cref/not_complex_ad.cpp/$$ because the 
-$cref/default/Default/$$ constructor for an AD object has an unspecified value.
+$cref/default constructor/ad_ctor/$$ for an AD object has an unspecified value.
 This has been fixed for the complex type by changing the default constructor
 to use value zero. 
 $pre

@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -16,7 +16,9 @@ Old Copy example now used just for valiadation testing
 
 # include <cppad/cppad.hpp>
 
-bool Copy(void)
+namespace { // begin empty namespace
+
+bool copy_older(void)
 {	bool ok = true;
 
 	using namespace CppAD;
@@ -67,4 +69,116 @@ bool Copy(void)
 	return ok;
 }
 
+bool copy_ad(void)
+{	bool ok = true;   // initialize test result flag
+	using CppAD::AD;  // so can use AD in place of CppAD::AD
+
+	// domain space vector
+	size_t n = 1;
+	CPPAD_TEST_VECTOR< AD<double> > x(n);
+	x[0]     = 2.;
+
+	// declare independent variables and start tape recording
+	CppAD::Independent(x);
+
+	// create an AD<double> that does not depend on x
+	AD<double> b = 3.;   
+
+	// use copy constructor 
+	AD<double> u(x[0]);    
+	AD<double> v = b;
+
+	// check which are parameters
+	ok &= Variable(u);
+	ok &= Parameter(v);
+
+	// range space vector
+	size_t m = 2;
+	CPPAD_TEST_VECTOR< AD<double> > y(m);
+	y[0]  = u;
+	y[1]  = v;
+
+	// create f: x -> y and vectors used for derivative calculations
+	CppAD::ADFun<double> f(x, y);
+	CPPAD_TEST_VECTOR<double> dx(n);
+	CPPAD_TEST_VECTOR<double> dy(m);
+ 
+ 	// check parameters flags
+ 	ok &= ! f.Parameter(0);
+ 	ok &=   f.Parameter(1);
+
+	// check function values
+	ok &= ( y[0] == 2. );
+	ok &= ( y[1] == 3. );
+
+	// forward computation of partials w.r.t. x[0]
+	dx[0] = 1.;
+	dy    = f.Forward(1, dx);
+	ok   &= ( dy[0] == 1. );   // du / dx
+	ok   &= ( dy[1] == 0. );   // dv / dx
+
+	return ok;
+}
+bool copy_base(void)
+{	bool ok = true;    // initialize test result flag
+	using CppAD::AD;   // so can use AD in place of CppAD::AD
+
+	// construct directly from Base where Base is double 
+	AD<double> x(1.); 
+
+	// construct from a type that converts to Base where Base is double
+	AD<double> y = 2;
+
+	// construct from a type that converts to Base where Base = AD<double>
+	AD< AD<double> > z(3); 
+
+	// check that resulting objects are parameters
+	ok &= Parameter(x);
+	ok &= Parameter(y);
+	ok &= Parameter(z);
+
+	// check values of objects (compare AD<double> with double)
+	ok &= ( x == 1.);
+	ok &= ( y == 2.);
+	ok &= ( Value(z) == 3.);
+
+	// user constructor through the static_cast template function
+	x   = static_cast < AD<double> >( 4 );
+	z  = static_cast < AD< AD<double> > >( 5 );
+
+	ok &= ( x == 4. );
+	ok &= ( Value(z) == 5. );
+
+	return ok;
+}
+bool default_ctor(void)
+{	bool ok = true;
+	using CppAD::AD;
+
+	// default AD constructor
+	AD<double> x, y;
+
+	// check that they are parameters
+	ok &= Parameter(x);
+	ok &= Parameter(y);
+
+	// assign them values
+	x = 3.; 
+	y = 4.;
+
+	// just check a simple operation
+	ok &= (x + y == 7.);
+
+	return ok;
+}
+
 // END PROGRAM
+} // end empty namespace
+bool copy(void)
+{	bool ok = true;
+	ok &= copy_older();
+	ok &= copy_ad();
+	ok &= copy_base();
+	ok &= default_ctor();
+	return ok;
+}

@@ -233,7 +233,7 @@ Add operation sequence tracing to the user API and documentation.
 $head VecAD$$
 $index VecAD, improve assignment$$
 Make assignment operation in $cref/VecAD/$$ like
-assignment in $cref/ad_copy/$$.
+assignment in $cref ad_ctor$$ and $cref ad_assign$$.
 This will fix slicing to $code int$$ when assigning
 from $code double$$ to 
 $code VecAD< AD<double> >::reference$$ object.

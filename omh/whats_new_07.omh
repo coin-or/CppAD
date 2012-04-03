@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -601,9 +601,9 @@ $pre
 
 $$
 This slicing has also been fixed in the 
-$cref/assignment/ad_copy/Syntax/Assignment/$$ operation.
+$cref/assignment/ad_assign/$$ operation.
 In addition, the assignment and copy operations
-have been grouped together in the documentation; see $cref/ad_copy/$$.
+have been grouped together in the documentation; see $cref ad_ctor$$ and $cref ad_assign$$.
 
 
 $head 05-25$$

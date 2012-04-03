@@ -182,6 +182,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ad_assign.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ad_ctor.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\abs.cpp"
 				>
 			</File>
@@ -272,14 +280,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\copy_ad.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\copy_base.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\cos.cpp"
 				>
 			</File>
@@ -292,10 +292,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\default.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\div.cpp"
 				>
 			</File>
@@ -305,10 +301,6 @@
 			</File>
 			<File
 				RelativePath=".\epsilon.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\eq.cpp"
 				>
 			</File>
 			<File

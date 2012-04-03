@@ -25,36 +25,37 @@ fi
 version="$1"
 echo "create bin/doxyfile.$$"
 cat << EOF > bin/doxyfile.$$
-PROJECT_NAME            = "CppAD: A C++ Algorithmic Differentiation Package"
-PROJECT_NUMBER          = $version
-OUTPUT_DIRECTORY        = doxydoc
 ALWAYS_DETAILED_SEC     = YES
-INLINE_INHERITED_MEMB   = YES
-FULL_PATH_NAMES         = NO
-QT_AUTOBRIEF            = YES
-MULTILINE_CPP_IS_BRIEF  = YES
-INHERIT_DOCS            = NO
-SEPARATE_MEMBER_PAGES   = YES
-TAB_SIZE                = 5
 BUILTIN_STL_SUPPORT     = YES
-SUBGROUPING             = NO
 EXTRACT_ALL             = YES
+EXTRACT_LOCAL_CLASSES   = NO
 EXTRACT_PRIVATE         = YES
 EXTRACT_STATIC          = YES
-EXTRACT_LOCAL_CLASSES   = NO
-SHOW_INCLUDE_FILES      = NO
-SORT_MEMBER_DOCS        = NO
-SHOW_DIRECTORIES        = YES
-WARN_NO_PARAMDOC        = YES
-WARN_LOGFILE            = doxygen.err
-INPUT                   = ./cppad  ./cppad/local ./cppad_ipopt/src
 FILE_PATTERNS           =  *.hpp  *.cpp
-SOURCE_BROWSER          = YES
-STRIP_CODE_COMMENTS     = NO
+FULL_PATH_NAMES         = NO
+GENERATE_LATEX          = NO
+GENERATE_TREEVIEW       = YES
+INHERIT_DOCS            = NO
+INLINE_INHERITED_MEMB   = YES
+INPUT                   = ./cppad  ./cppad/local ./cppad_ipopt/src
+MULTILINE_CPP_IS_BRIEF  = YES
+OUTPUT_DIRECTORY        = doxydoc
+PROJECT_NAME            = "CppAD: A C++ Algorithmic Differentiation Package"
+PROJECT_NUMBER          = $version
+QT_AUTOBRIEF            = YES
 REFERENCED_BY_RELATION  = YES
 REFERENCES_LINK_SOURCE  = NO
+SEPARATE_MEMBER_PAGES   = YES
+SHOW_DIRECTORIES        = YES
+SHOW_INCLUDE_FILES      = NO
+SORT_MEMBER_DOCS        = NO
+SOURCE_BROWSER          = YES
+STRIP_CODE_COMMENTS     = NO
+SUBGROUPING             = NO
+TAB_SIZE                = 5
 VERBATIM_HEADERS        = NO
-GENERATE_TREEVIEW       = YES
+WARN_LOGFILE            = doxygen.err
+WARN_NO_PARAMDOC        = YES
 EOF
 sed \
 	-e 's/^/s|^\\(/' \

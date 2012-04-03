@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-07 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -9,31 +9,13 @@ the terms of the
 A copy of this license is included in the COPYING file of this distribution.
 Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 -------------------------------------------------------------------------- */
-
 /*
-$begin Eq.cpp$$
-$spell
-	Cpp
-	cstddef
-$$
-
-$section AD Assignment Operator: Example and Test$$
-
-$index assignment, AD$$
-$index example, AD assignment$$
-$index test, AD assignment$$
-
-$code
-$verbatim%example/eq.cpp%0%// BEGIN PROGRAM%// END PROGRAM%1%$$
-$$
-
-$end
+Old example, now used just for validation testing
 */
-// BEGIN PROGRAM
 
 # include <cppad/cppad.hpp>
 
-bool Eq(void)
+bool assign(void)
 {	bool ok = true;
 	using CppAD::AD;
 
@@ -103,5 +85,3 @@ bool Eq(void)
 
 	return ok;
 }
-
-// END PROGRAM

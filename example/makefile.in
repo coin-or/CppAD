@@ -44,14 +44,14 @@ CONFIG_CLEAN_FILES = test_one.sh
 CONFIG_CLEAN_VPATH_FILES =
 am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 	example.cpp abort_recording.cpp abs.cpp acos.cpp add.cpp \
-	add_eq.cpp ad_fun.cpp ad_in_c.cpp asin.cpp atan.cpp atan_2.cpp \
-	base_adolc.hpp base_alloc.hpp base_require.cpp bender_quad.cpp \
-	bool_fun.cpp capacity_taylor.cpp change_const.cpp \
-	check_numeric_type.cpp check_simple_vector.cpp checkpoint.cpp \
-	compare.cpp compare_change.cpp complex_poly.cpp cond_exp.cpp \
-	conj_grad.cpp copy_ad.cpp copy_base.cpp cos.cpp cosh.cpp \
-	cppad_vector.cpp default.cpp div.cpp div_eq.cpp epsilon.cpp \
-	eq.cpp equal_op_seq.cpp erf.cpp error_handler.cpp exp.cpp \
+	add_eq.cpp ad_assign.cpp ad_ctor.cpp ad_fun.cpp ad_in_c.cpp \
+	asin.cpp atan.cpp atan_2.cpp base_adolc.hpp base_alloc.hpp \
+	base_require.cpp bender_quad.cpp bool_fun.cpp \
+	capacity_taylor.cpp change_const.cpp check_numeric_type.cpp \
+	check_simple_vector.cpp checkpoint.cpp compare.cpp \
+	compare_change.cpp complex_poly.cpp cond_exp.cpp conj_grad.cpp \
+	cos.cpp cosh.cpp cppad_vector.cpp div.cpp div_eq.cpp \
+	epsilon.cpp equal_op_seq.cpp erf.cpp error_handler.cpp exp.cpp \
 	for_one.cpp for_two.cpp forward.cpp for_sparse_jac.cpp \
 	fun_assign.cpp fun_check.cpp hes_lagrangian.cpp hes_lu_det.cpp \
 	hes_minor_det.cpp hessian.cpp hes_times_dir.cpp \
@@ -79,17 +79,17 @@ am__example_SOURCES_DIST = mul_level_adolc.cpp ode_taylor_adolc.cpp \
 @CppAD_ADOLC_TRUE@	ode_taylor_adolc.$(OBJEXT)
 am_example_OBJECTS = $(am__objects_1) example.$(OBJEXT) \
 	abort_recording.$(OBJEXT) abs.$(OBJEXT) acos.$(OBJEXT) \
-	add.$(OBJEXT) add_eq.$(OBJEXT) ad_fun.$(OBJEXT) \
-	ad_in_c.$(OBJEXT) asin.$(OBJEXT) atan.$(OBJEXT) \
-	atan_2.$(OBJEXT) base_require.$(OBJEXT) bender_quad.$(OBJEXT) \
+	add.$(OBJEXT) add_eq.$(OBJEXT) ad_assign.$(OBJEXT) \
+	ad_ctor.$(OBJEXT) ad_fun.$(OBJEXT) ad_in_c.$(OBJEXT) \
+	asin.$(OBJEXT) atan.$(OBJEXT) atan_2.$(OBJEXT) \
+	base_require.$(OBJEXT) bender_quad.$(OBJEXT) \
 	bool_fun.$(OBJEXT) capacity_taylor.$(OBJEXT) \
 	change_const.$(OBJEXT) check_numeric_type.$(OBJEXT) \
 	check_simple_vector.$(OBJEXT) checkpoint.$(OBJEXT) \
 	compare.$(OBJEXT) compare_change.$(OBJEXT) \
 	complex_poly.$(OBJEXT) cond_exp.$(OBJEXT) conj_grad.$(OBJEXT) \
-	copy_ad.$(OBJEXT) copy_base.$(OBJEXT) cos.$(OBJEXT) \
-	cosh.$(OBJEXT) cppad_vector.$(OBJEXT) default.$(OBJEXT) \
-	div.$(OBJEXT) div_eq.$(OBJEXT) epsilon.$(OBJEXT) eq.$(OBJEXT) \
+	cos.$(OBJEXT) cosh.$(OBJEXT) cppad_vector.$(OBJEXT) \
+	div.$(OBJEXT) div_eq.$(OBJEXT) epsilon.$(OBJEXT) \
 	equal_op_seq.$(OBJEXT) erf.$(OBJEXT) error_handler.$(OBJEXT) \
 	exp.$(OBJEXT) for_one.$(OBJEXT) for_two.$(OBJEXT) \
 	forward.$(OBJEXT) for_sparse_jac.$(OBJEXT) \
@@ -332,6 +332,8 @@ example_SOURCES = \
 	acos.cpp \
 	add.cpp \
 	add_eq.cpp \
+	ad_assign.cpp \
+	ad_ctor.cpp \
 	ad_fun.cpp \
 	ad_in_c.cpp \
 	asin.cpp \
@@ -352,16 +354,12 @@ example_SOURCES = \
 	complex_poly.cpp \
 	cond_exp.cpp \
 	conj_grad.cpp \
-	copy_ad.cpp \
-	copy_base.cpp \
 	cos.cpp \
 	cosh.cpp \
 	cppad_vector.cpp \
-	default.cpp \
 	div.cpp \
 	div_eq.cpp \
 	epsilon.cpp \
-	eq.cpp \
 	equal_op_seq.cpp \
 	erf.cpp \
 	error_handler.cpp \
@@ -507,6 +505,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abort_recording.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/abs.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/acos.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_assign.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_ctor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_fun.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ad_in_c.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/add.Po@am__quote@
@@ -527,16 +527,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/complex_poly.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cond_exp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/conj_grad.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/copy_ad.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/copy_base.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cos.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cosh.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cppad_vector.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/default.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/div_eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/epsilon.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/eq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/equal_op_seq.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/erf.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/error_handler.Po@am__quote@

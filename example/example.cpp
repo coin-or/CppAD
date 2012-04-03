@@ -53,6 +53,8 @@ $end
 
 // external complied tests
 extern bool abort_recording(void);
+extern bool ad_assign(void);
+extern bool ad_ctor(void);
 extern bool abs(void);
 extern bool Acos(void);
 extern bool Add(void);
@@ -75,16 +77,12 @@ extern bool CompareChange(void);
 extern bool complex_poly(void);
 extern bool CondExp(void);
 extern bool conj_grad(void);
-extern bool CopyAD(void);
-extern bool CopyBase(void);
 extern bool Cos(void);
 extern bool Cosh(void);
 extern bool CppAD_vector(void);
-extern bool Default(void);
 extern bool Div(void);
 extern bool DivEq(void);
 extern bool epsilon(void);
-extern bool Eq(void);
 extern bool EqualOpSeq(void);
 extern bool Erf(void);
 extern bool ErrorHandler(void);
@@ -210,6 +208,8 @@ int main(void)
 
 	// external compiled tests
 	ok &= Run( abort_recording,   "abort_recording"  );
+	ok &= Run( ad_assign,         "ad_assign"        );
+	ok &= Run( ad_ctor,           "ad_ctor"          );
 	ok &= Run( abs,               "abs"              );
 	ok &= Run( Acos,              "Acos"             );
 	ok &= Run( Add,               "Add"              );
@@ -232,16 +232,12 @@ int main(void)
 	ok &= Run( complex_poly,      "complex_poly"     );
 	ok &= Run( CondExp,           "CondExp"          );
 	ok &= Run( conj_grad,         "conj_grad"        );
-	ok &= Run( CopyAD,            "CopyAD"           );
-	ok &= Run( CopyBase,          "CopyBase"         );
 	ok &= Run( Cos,               "Cos"              );
 	ok &= Run( Cosh,              "Cosh"             );
 	ok &= Run( CppAD_vector,      "CppAD_vector"     );
-	ok &= Run( Default,           "Default"          );
 	ok &= Run( Div,               "Div"              );
 	ok &= Run( DivEq,             "DivEq"            );
 	ok &= Run( epsilon,           "epsilon"          );
-	ok &= Run( Eq,                "Eq"               );
 	ok &= Run( EqualOpSeq,        "EqualOpSeq"       );
 	ok &= Run( Erf,               "Erf"              );
 	ok &= Run( ErrorHandler,      "ErrorHandler"     );

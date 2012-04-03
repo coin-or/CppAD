@@ -364,8 +364,9 @@ nobase_myinclude_HEADERS = \
 	cppad/local/abs.hpp \
 	cppad/local/abs_op.hpp \
 	cppad/local/acos_op.hpp \
+	cppad/local/ad_assign.hpp \
 	cppad/local/ad_binary.hpp \
-	cppad/local/ad_copy.hpp \
+	cppad/local/ad_ctor.hpp \
 	cppad/local/add_eq.hpp \
 	cppad/local/add.hpp \
 	cppad/local/add_op.hpp \
@@ -397,7 +398,6 @@ nobase_myinclude_HEADERS = \
 	cppad/local/cppad_assert.hpp \
 	cppad/local/csum_op.hpp \
 	cppad/local/declare_ad.hpp \
-	cppad/local/default.hpp \
 	cppad/local/define.hpp \
 	cppad/local/dependent.hpp \
 	cppad/local/discrete.hpp \

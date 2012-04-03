@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-09 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -46,8 +46,7 @@ the operation sequence.)
 $head AD of Base$$
 An object is called an AD of $italic Base$$ object its type is 
 either $syntax%AD<%Base%>%$$ 
-(see $cref/default/Default/$$ or 
-$cref/constructor/ad_copy/Syntax/Constructor/$$)
+(see the default and copy $cref/constructors/ad_ctor/$$ 
 or $syntax%VecAD<%Base%>::reference%$$ (see $xref/VecAD/$$)
 for some $italic Base$$ type.
 

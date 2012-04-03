@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -12,6 +12,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 $begin whats_new_03$$
 $spell
+	Eq.cpp
 	cppad.hpp
 	Hess
 	Taylor
@@ -357,7 +358,7 @@ These other independent variable partials were not initialized
 to zero before the reverse calculation and hence had what ever
 value was left by the previous mode calculation.
 This has been fixed and the 
-$xref/Eq.cpp/$$ example has been changed to test for this case.
+$code Eq.cpp$$ example has been changed to test for this case.
 $pre
 
 $$
@@ -679,7 +680,7 @@ $code Speed/SpeedTest$$.
 
 $head 07-30$$
 The
-$cref/assignment/ad_copy/Syntax/Assignment/$$
+$cref/assignment/ad_assign/$$
 operator was changed so the it returns a reference to
 the target.
 This allows for statements of the form
@@ -690,8 +691,8 @@ i.e., multiple assignments.
 
 $head 07-29$$
 If the 
-$cref/AD copy constructor/ad_copy/Syntax/Constructor/$$ constructor or 
-$cref/assignment/ad_copy/Syntax/Assignment/$$ operator
+$cref/AD copy constructor/ad_ctor/$$ constructor or 
+$cref/assignment/ad_assign/$$ operator
 used an
 $cref/independent variable/glossary/Tape/Independent Variable/$$
 for its source value,
@@ -703,8 +704,8 @@ $head 07-26$$
 The $syntax%AD<%Base%>%$$ data structure
 was changed to include a doubly linked list of variables.
 This enabled  the
-$cref/AD copy constructor/ad_copy/Syntax/Constructor/$$ constructor and 
-$cref/assignment/ad_copy/Syntax/Assignment/$$ operator
+$cref/AD copy constructor/ad_ctor/$$ constructor and 
+$cref/assignment/ad_assign/$$ operator
 to create multiple references to
 the same place in the tape.
 This reduced the size of the tape and increased the speed 

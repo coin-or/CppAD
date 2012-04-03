@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -972,7 +972,7 @@ $pre
 $$
 Mention the $xref/VecAD/VecAD<Base>::reference/VecAD<Base>::reference/$$ case 
 and generally improve 
-$xref/Value/$$, $xref/Output/$$ and $cref/assignment/ad_copy/Syntax/Assignment/$$ documentation
+$xref/Value/$$, $xref/Output/$$ and $cref/assignment/ad_assign/$$ documentation
 and examples.
 $pre
 
@@ -1115,19 +1115,19 @@ $pre
 
 $$
 The documentation and examples have been improved for the following sections:
-$cref/assignment/ad_copy/Syntax/Assignment/$$, $xref/UnaryPlus/$$, $xref UnaryMinus$$.
+$cref/assignment/ad_assign/$$, $xref/UnaryPlus/$$, $xref UnaryMinus$$.
 
 $head 02-11$$
 The documentation and examples have been improved for the following sections:
-$xref/Default/$$, 
-$cref/ad_copy/$$, and
+$cref ad_ctor$$, 
+$cref ad_ctor$$ and $cref ad_assign$$, and
 $xref/Value/$$.
 
 $head 02-10$$
 This is the beginning of a pass to improve the documentation: 
 The documentation sections 
-The CopyBase (formerly FromBase and now part of $cref/ad_copy/$$) and 
-$cref/AD copy constructor/ad_copy/Syntax/Constructor/$$ 
+The CopyBase (formerly FromBase and now part of $cref ad_ctor$$ and $cref ad_assign$$) and 
+$cref/AD copy constructor/ad_ctor/$$ 
 (formerly Copy) documentation has been modified.
 $pre
 
