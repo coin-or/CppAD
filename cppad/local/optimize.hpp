@@ -1161,7 +1161,7 @@ void optimize(
 	// -------------------------------------------------------------
 
 	// Erase all information in the recording
-	rec->Erase();
+	rec->free();
 
 	// Initilaize table mapping hash code to variable index in tape
 	// as pointing to the BeginOp at the beginning of the tape

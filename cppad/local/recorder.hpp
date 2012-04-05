@@ -2,7 +2,7 @@
 # ifndef CPPAD_RECORDER_INCLUDED
 # define CPPAD_RECORDER_INCLUDED
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -72,20 +72,20 @@ public:
 	{ }
 
 	/*!
-	Erase all information in recording.
+	Frees all information in recording.
 
-	Erases the operation sequence store in this recording 
+	Frees the operation sequence store in this recording 
 	(the operation sequence is empty after this operation).
 	The buffers used to store the current recording are returned
 	to the system (so as to conserve on memory).
 	*/
-	void Erase(void)
+	void free(void)
 	{	num_rec_var_  = 0;
-		rec_op_.erase();
-		rec_vecad_ind_.erase();
-		rec_op_arg_.erase();
-		rec_par_.erase();
-		rec_text_.erase();
+		rec_op_.free();
+		rec_vecad_ind_.free();
+		rec_op_arg_.free();
+		rec_par_.free();
+		rec_text_.free();
 	}
 	/// Start recording the next operator in the operation sequence.
 	inline size_t PutOp(OpCode op);

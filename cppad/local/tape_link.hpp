@@ -180,7 +180,9 @@ The value of <tt>*tape_id_ptr(thread)</tt> will be advanced by
 */
 template <class Base>
 ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
-{
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
+	static ADTape<Base> tape_table[CPPAD_MAX_NUM_THREADS];
+
 	size_t thread       = thread_alloc::thread_num();
 	size_t* tape_id     = tape_id_ptr(thread);
 	ADTape<Base>** tape = tape_handle(thread);
@@ -194,11 +196,12 @@ ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 	{	case tape_manage_new:
 		// tape for this thread must be null at the start
 		CPPAD_ASSERT_UNKNOWN( *tape  == CPPAD_NULL );
-		*tape = new ADTape<Base>( *tape_id );
+		tape_table[thread].id_ = *tape_id;
+		*tape = tape_table + thread;
 		break;
 
 		case tape_manage_delete:
-		CPPAD_ASSERT_UNKNOWN( *tape  != CPPAD_NULL );
+		CPPAD_ASSERT_UNKNOWN( *tape  == tape_table + thread );
 		CPPAD_ASSERT_UNKNOWN( *tape_id == (*tape)->id_ );
 		CPPAD_ASSERT_KNOWN(
 			size_t( std::numeric_limits<CPPAD_TAPE_ID_TYPE>::max() )
@@ -206,10 +209,11 @@ ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 			"To many different tapes given the type used for "
 			"CPPAD_TAPE_ID_TYPE"
 		);
-		// advance tape identifier
+		// advance tape identfier so all AD<Base> variables become parameters
 		*tape_id  += CPPAD_MAX_NUM_THREADS;
-		// delete the old tape for this thread
-		delete ( *tape );
+		// free memory corresponding to recording in the old tape 
+		tape_table[thread].Rec_.free();
+		// inform rest of CppAD that no tape recording for this thread
 		*tape = CPPAD_NULL;
 	}
 	return *tape;
