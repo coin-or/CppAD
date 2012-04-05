@@ -58,7 +58,7 @@ namespace CppAD {
 	void AD<Base>::abort_recording(void)
 	{	ADTape<Base>* tape = AD<Base>::tape_ptr();
 		if( tape != CPPAD_NULL )
-			AD<Base>::tape_delete( tape->id_ );
+			AD<Base>::tape_manage(tape_manage_delete);
 	}
 }
 

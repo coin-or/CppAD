@@ -25,6 +25,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 
+typedef enum { tape_manage_new, tape_manage_delete } tape_manage_job;
+
 template <class Base>
 class AD {
 	// enable use of AD<Base> in parallel mode
@@ -245,8 +247,7 @@ private:
 	// static 
 	inline static size_t*        tape_id_ptr(size_t thread);
 	inline static ADTape<Base>** tape_handle(size_t thread);
-	static ADTape<Base>*         tape_new(void);
-	static void                  tape_delete(size_t tape_id);
+	static ADTape<Base>*         tape_manage(tape_manage_job job);
 	inline static ADTape<Base>*  tape_ptr(void);
 	inline static ADTape<Base>*  tape_ptr(size_t tape_id);
 }; 

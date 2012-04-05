@@ -40,26 +40,22 @@ Pointer to the tape identifier for this AD<Base> class and the specific thread.
 is the base type for this AD<Base> class.
 
 \param thread
-is the thread number.
+is the thread number; i.e.,
+\code
+thread == thread_alloc::thread_num()
+\endcode
+If this condition is not satisfied, and \c NDEBUG is not defined,
+a CPPAD_ASSERT_UNKNOWN is generated.
 
 \return
-is a pointer to the tape identifier for the specified thread
-and this AD<Base> class.
-
-\par CPPAD_ASSERT_UNKNOWN
-If we are in prallel exectuion mode, the following condition is asserted:
-\code
-	thread == thread_alloc::thread_num()
-\endcode
+is a pointer to the tape identifier for this thread
+and AD<Base> class.
 */
 template <class Base>
 inline size_t* AD<Base>::tape_id_ptr(size_t thread)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static size_t tape_id_table[CPPAD_MAX_NUM_THREADS];
-	CPPAD_ASSERT_UNKNOWN( 
-		(! thread_alloc::in_parallel() ) ||
-		(thread == thread_alloc::thread_num())
-	);
+	CPPAD_ASSERT_UNKNOWN( thread == thread_alloc::thread_num() );
 
 	return tape_id_table + thread;
 }
@@ -70,26 +66,24 @@ Handle for the tape for this AD<Base> class and the specific thread.
 \tparam Base
 is the base type for this AD<Base> class.
 
+
 \param thread
-is the thread number.
+is the thread number; i.e.,
+\code
+thread == thread_alloc::thread_num()
+\endcode
+If this condition is not satisfied, and \c NDEBUG is not defined,
+a CPPAD_ASSERT_UNKNOWN is generated.
 
 \return
 is a handle for the  AD<Base> class and the specified thread.
-
-\par CPPAD_ASSERT_UNKNOWN
-If we are in prallel exectuion mode, the following condition is asserted:
-\code
-	thread == thread_alloc::thread_num()
-\endcode
 */
 template <class Base>
 inline ADTape<Base>** AD<Base>::tape_handle(size_t thread)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static ADTape<Base>* tape_table[CPPAD_MAX_NUM_THREADS];
-	CPPAD_ASSERT_UNKNOWN( 
-		(! thread_alloc::in_parallel()) || 
-		(thread == thread_alloc::thread_num())
-	);
+	CPPAD_ASSERT_UNKNOWN( thread == thread_alloc::thread_num() );
+
 	return tape_table + thread;
 }
 
@@ -132,8 +126,8 @@ It must hold that the current thread is
 and that there is a tape recording AD<Base> operations 
 for this thread.
 If this is not the currently executing thread, 
-an attempt is being made to recorad a variable from a different thread 
-on the tape for this thread which is a user error.
+a variable from a different thread is being recorded on the
+tape for this thread which is a user error.
 
 \return
 is a pointer to the tape that is currently recording AD<Base> operations
@@ -150,8 +144,9 @@ inline ADTape<Base>* AD<Base>::tape_ptr(size_t tape_id)
 	CPPAD_ASSERT_UNKNOWN( *tape_handle(thread) != CPPAD_NULL );
 	return *tape_handle(thread); 
 }
+
 /*!
-Create a new tape that records AD<Base> operations for current thread
+Create and delete tapes that record AD<Base> operations for current thread.
 
 \par thread
 the current thread is given by
@@ -162,109 +157,62 @@ thread = thread_alloc::thread_num()
 \tparam Base
 is the base type corresponding to AD<Base> operations.
 
-\par tape_handle
-It is assumed that
-\code
-*tape_handle(thread) == CPPAD_NULL
-\endcode
-when \c tape_new is called; i.e., there is no tape currently recording
-AD<Base> operations for the current thread.
+\param job
+This argument determines if we are creating a new tape, or deleting an
+old one.
+- \c tape_manage_new :
+Creates and a new tape. 
+It is assumed that there is no tape recording AD<Base> operations
+for this thread when \c tape_manate is called.
+It the input value of <tt>*tape_id_ptr(thread)</tt> is zero,
+it will be changed to <tt>thread + CPPAD_MAX_NUM_THREADS</tt>.
+The id for the new tape will be <tt>*tape_id_ptr(thread)</tt>.
+- \c tape_manage_delete :
+It is assumed that there is a tape recording AD<Base> operations
+for this thread when \c tape_manage is called.
+The value of <tt>*tape_id_ptr(thread)</tt> will be advanced by
+\c CPPAD_MAX_NUM_THREADS.
 
-\par tape_id_ptr
-The value of \c tape_id_ptr is modified in the following way:
-\code
-*tape_id_ptr(thread) = *tape_id_ptr(thread) + CPPAD_MAX_NUM_THREADS
-\endcode
-The new tape identifier is the identifier for the newly created tape.
 
 \return
-the return value <tt>*tape_handle(thread)</tt>
-is a ponter to a newly created tape for recording AD<Base> operations 
-by the current thread. 
-The corresponding tape identifier is <tt>*tape_id_ptr(thread)</tt>
-If the input value of this identifier is zero,
-it is set to <tt>thread + 2 * CPPAD_MAX_NUM_THREADS</tt>.
-Otherwise, this value is not modified by \c tape_new.
+- <tt>job == tape_manage_new</tt>: a pointer to the new tape is returned.
+- <tt>job == tape_manage_delete</tt>: the value \c CPPAD_NULL is returned.
 */
 template <class Base>
-ADTape<Base>*  AD<Base>::tape_new(void)
+ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 {
 	size_t thread       = thread_alloc::thread_num();
 	size_t* tape_id     = tape_id_ptr(thread);
 	ADTape<Base>** tape = tape_handle(thread);
-	CPPAD_ASSERT_KNOWN(
-		thread < thread_alloc::num_threads(),
-		"Independent: current thread_num is greater than num_threads;\n"
-		"See parallel_setup for setting these values."
-	);
 
-	// initialize so that id > 1 and thread == id % CPPAD_MAX_NUM_THREADS
+	// initialize so that id > 0 and thread == id % CPPAD_MAX_NUM_THREADS
 	if( *tape_id == 0 )
-		*tape_id = thread + 2 * CPPAD_MAX_NUM_THREADS;
-	// else *tape_id has been set to its new value by tape_delete
+		*tape_id = thread + CPPAD_MAX_NUM_THREADS;
+	CPPAD_ASSERT_UNKNOWN( *tape_id % CPPAD_MAX_NUM_THREADS == thread );
 
-	// tape for this thread must be null at the start
-	CPPAD_ASSERT_UNKNOWN( *tape  == CPPAD_NULL );
-	*tape = new ADTape<Base>( *tape_id );
+	switch(job)
+	{	case tape_manage_new:
+		// tape for this thread must be null at the start
+		CPPAD_ASSERT_UNKNOWN( *tape  == CPPAD_NULL );
+		*tape = new ADTape<Base>( *tape_id );
+		break;
 
+		case tape_manage_delete:
+		CPPAD_ASSERT_UNKNOWN( *tape  != CPPAD_NULL );
+		CPPAD_ASSERT_UNKNOWN( *tape_id == (*tape)->id_ );
+		CPPAD_ASSERT_KNOWN(
+			size_t( std::numeric_limits<CPPAD_TAPE_ID_TYPE>::max() )
+			- CPPAD_MAX_NUM_THREADS > *tape_id,
+			"To many different tapes given the type used for "
+			"CPPAD_TAPE_ID_TYPE"
+		);
+		// advance tape identifier
+		*tape_id  += CPPAD_MAX_NUM_THREADS;
+		// delete the old tape for this thread
+		delete ( *tape );
+		*tape = CPPAD_NULL;
+	}
 	return *tape;
-}
-
-/*!
-Delete the new tape that was recording AD<Base> operations for current thread
-
-\par thread
-the current thread must be
-\code
-	thread = tape_id % CPPAD_MAX_NUM_THREADS
-\endcode
-
-\tparam Base
-is the base type corresponding to AD<Base> operations.
-
-\par tape_handle
-It is assumed that
-\code
-*tape_handle(thread) != CPPAD_NULL
-\endcode
-when \c tape_new is called; i.e., there is a tape currently recording
-AD<Base> operations for the current thread.
-
-\param tape_id
-this must be the identifier for the tape that is recording 
-AD<Base> operations for the current thread
-(and it is also the value of <tt>*tape_id_ptr(thread)</tt>
-when this routine is called.
-The new value for this threads tape identifier and pointer are 
-\code
-*tape_id_ptr(thread) = *tape_id_ptr(thread) + CPPAD_MAX_NUM_THREADS
-*tape_handle(thread) = CPPAD_NULL
-\endcode
-*/
-template <class Base>
-void  AD<Base>::tape_delete(size_t tape_id)
-{
-	size_t thread        = tape_id % CPPAD_MAX_NUM_THREADS;
-	ADTape<Base>** tape  = tape_handle(thread);
-	CPPAD_ASSERT_KNOWN(
-		thread == thread_alloc::thread_num(),
-		"AD tape recording must stop in same thread as it started in."
-	);
-	CPPAD_ASSERT_UNKNOWN( *tape != CPPAD_NULL );
-	CPPAD_ASSERT_UNKNOWN( tape_id == *tape_id_ptr(thread)  );
-	CPPAD_ASSERT_UNKNOWN( tape_id == (*tape)->id_ );
-
-	CPPAD_ASSERT_KNOWN(size_t(std::numeric_limits<CPPAD_TAPE_ID_TYPE>::max())
-		- CPPAD_MAX_NUM_THREADS > tape_id,
-		"To many different tapes given the type used for CPPAD_TAPE_ID_TYPE"
-	);
-	// advance tape identifier
-	*tape_id_ptr(thread)  += CPPAD_MAX_NUM_THREADS;
-	// delete the old tape for this thread
-	delete ( *tape );
-	*tape = CPPAD_NULL;
-
-	return;
 }
 
 /*!

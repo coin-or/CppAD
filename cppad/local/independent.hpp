@@ -163,7 +163,7 @@ inline void Independent(VectorAD &x)
 		"a previous tape is still active (for this thread).\n"
 		"AD<Base>::abort_recording() would abort this previous recording."
 	);
-	ADTape<Base>* tape = ADBase::tape_new();
+	ADTape<Base>* tape = ADBase::tape_manage(tape_manage_new);
 	tape->Independent(x); 
 }
 
