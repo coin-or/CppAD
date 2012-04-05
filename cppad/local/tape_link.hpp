@@ -40,22 +40,26 @@ Pointer to the tape identifier for this AD<Base> class and the specific thread.
 is the base type for this AD<Base> class.
 
 \param thread
-is the thread number; i.e.,
-\code
-thread == thread_alloc::thread_num()
-\endcode
-If this condition is not satisfied, and \c NDEBUG is not defined,
-a CPPAD_ASSERT_UNKNOWN is generated.
+is the thread number.
 
 \return
-is a pointer to the tape identifier for this thread
-and AD<Base> class.
+is a pointer to the tape identifier for the specified thread
+and this AD<Base> class.
+
+\par CPPAD_ASSERT_UNKNOWN
+If we are in prallel exectuion mode, the following condition is asserted:
+\code
+	thread == thread_alloc::thread_num()
+\endcode
 */
 template <class Base>
 inline size_t* AD<Base>::tape_id_ptr(size_t thread)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static size_t tape_id_table[CPPAD_MAX_NUM_THREADS];
-	CPPAD_ASSERT_UNKNOWN( thread == thread_alloc::thread_num() );
+	CPPAD_ASSERT_UNKNOWN( 
+		(! thread_alloc::in_parallel() ) ||
+		(thread == thread_alloc::thread_num())
+	);
 
 	return tape_id_table + thread;
 }
@@ -66,24 +70,26 @@ Handle for the tape for this AD<Base> class and the specific thread.
 \tparam Base
 is the base type for this AD<Base> class.
 
-
 \param thread
-is the thread number; i.e.,
-\code
-thread == thread_alloc::thread_num()
-\endcode
-If this condition is not satisfied, and \c NDEBUG is not defined,
-a CPPAD_ASSERT_UNKNOWN is generated.
+is the thread number.
 
 \return
 is a handle for the  AD<Base> class and the specified thread.
+
+\par CPPAD_ASSERT_UNKNOWN
+If we are in prallel exectuion mode, the following condition is asserted:
+\code
+	thread == thread_alloc::thread_num()
+\endcode
 */
 template <class Base>
 inline ADTape<Base>** AD<Base>::tape_handle(size_t thread)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
 	static ADTape<Base>* tape_table[CPPAD_MAX_NUM_THREADS];
-	CPPAD_ASSERT_UNKNOWN( thread == thread_alloc::thread_num() );
-
+	CPPAD_ASSERT_UNKNOWN( 
+		(! thread_alloc::in_parallel()) || 
+		(thread == thread_alloc::thread_num())
+	);
 	return tape_table + thread;
 }
 
@@ -126,8 +132,8 @@ It must hold that the current thread is
 and that there is a tape recording AD<Base> operations 
 for this thread.
 If this is not the currently executing thread, 
-a variable from a different thread is being recorded on the
-tape for this thread which is a user error.
+an attempt is being made to recorad a variable from a different thread 
+on the tape for this thread which is a user error.
 
 \return
 is a pointer to the tape that is currently recording AD<Base> operations
@@ -144,7 +150,6 @@ inline ADTape<Base>* AD<Base>::tape_ptr(size_t tape_id)
 	CPPAD_ASSERT_UNKNOWN( *tape_handle(thread) != CPPAD_NULL );
 	return *tape_handle(thread); 
 }
-
 /*!
 Create a new tape that records AD<Base> operations for current thread
 
