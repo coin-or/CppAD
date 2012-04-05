@@ -59,6 +59,10 @@ $cref team_bthread.cpp$$, and
 $cref team_pthread.cpp$$, 
 contain examples and tests that implement this function.   
 
+$head Restriction$$
+There cannot be a tape recording $codei%AD<%Base%>%$$ operations
+when this routine is called.
+
 $end
 -----------------------------------------------------------------------------
 */
@@ -78,6 +82,10 @@ void parallel_ad(void)
 {	CPPAD_ASSERT_KNOWN( 
 		! thread_alloc::in_parallel() ,
 		"parallel_ad must be called before entering parallel execution mode."
+	);
+	CPPAD_ASSERT_KNOWN(
+		AD<Base>::tape_ptr() == CPPAD_NULL ,
+		"parallel_ad cannot be called while a tape recording is in progress"
 	);
 
 	// ensure statics in following functions are initialized
@@ -100,6 +108,8 @@ void parallel_ad(void)
 	// statics that depend on the value of Base
 	AD<Base>::tape_id_ptr(0);
 	AD<Base>::tape_handle(0);	
+	AD<Base>::tape_manage(tape_manage_new);
+	AD<Base>::tape_manage(tape_manage_delete);
 	discrete<Base>::List();
 	erf_template( Base(0.) );
 	erf_template( AD<Base>(0.) );

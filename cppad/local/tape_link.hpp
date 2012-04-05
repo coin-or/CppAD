@@ -34,6 +34,33 @@ The routines that connect the AD<Base> class to the corresponding tapes
 
 
 /*!
+Handle to the tape identifier for this AD<Base> class and the specific thread.
+
+\tparam Base
+is the base type for this AD<Base> class.
+
+\param thread
+is the thread number; i.e.,
+\code
+thread == thread_alloc::thread_num()
+\endcode
+If this condition is not satisfied, and \c NDEBUG is not defined,
+a CPPAD_ASSERT_UNKNOWN is generated.
+
+\return
+is a handle to the tape identifier for this thread
+and AD<Base> class.
+*/
+template <class Base>
+inline size_t** AD<Base>::tape_id_handle(size_t thread)
+{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
+	static size_t* tape_id_table[CPPAD_MAX_NUM_THREADS];
+	CPPAD_ASSERT_UNKNOWN( thread == thread_alloc::thread_num() );
+
+	return tape_id_table + thread;
+}
+
+/*!
 Pointer to the tape identifier for this AD<Base> class and the specific thread.
 
 \tparam Base
@@ -53,12 +80,7 @@ and AD<Base> class.
 */
 template <class Base>
 inline size_t* AD<Base>::tape_id_ptr(size_t thread)
-{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-	static size_t tape_id_table[CPPAD_MAX_NUM_THREADS];
-	CPPAD_ASSERT_UNKNOWN( thread == thread_alloc::thread_num() );
-
-	return tape_id_table + thread;
-}
+{	return *tape_id_handle(thread); }
 
 /*!
 Handle for the tape for this AD<Base> class and the specific thread.
@@ -163,10 +185,11 @@ old one.
 - \c tape_manage_new :
 Creates and a new tape. 
 It is assumed that there is no tape recording AD<Base> operations
-for this thread when \c tape_manate is called.
-It the input value of <tt>*tape_id_ptr(thread)</tt> is zero,
-it will be changed to <tt>thread + CPPAD_MAX_NUM_THREADS</tt>.
-The id for the new tape will be <tt>*tape_id_ptr(thread)</tt>.
+for this thread when \c tape_manage is called.
+It the input value of <tt>*tape_id_handle(thread)</tt> is \c CPPAD_NULL,
+it will be changed to a non-zero pointer and the corresponding value
+of <tt>*tape_id_ptr(thread)</tt> will be set to
+<tt>thread + CPPAD_MAX_NUM_THREADS</tt>.
 - \c tape_manage_delete :
 It is assumed that there is a tape recording AD<Base> operations
 for this thread when \c tape_manage is called.
@@ -183,34 +206,39 @@ ADTape<Base>*  AD<Base>::tape_manage(tape_manage_job job)
 {	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL
 	static ADTape<Base> tape_table[CPPAD_MAX_NUM_THREADS];
 
-	size_t thread       = thread_alloc::thread_num();
-	size_t* tape_id     = tape_id_ptr(thread);
-	ADTape<Base>** tape = tape_handle(thread);
+	size_t thread        = thread_alloc::thread_num();
+	size_t** tape_id     = tape_id_handle(thread);
+	ADTape<Base>** tape  = tape_handle(thread);
 
-	// initialize so that id > 0 and thread == id % CPPAD_MAX_NUM_THREADS
-	if( *tape_id == 0 )
-		*tape_id = thread + CPPAD_MAX_NUM_THREADS;
-	CPPAD_ASSERT_UNKNOWN( *tape_id % CPPAD_MAX_NUM_THREADS == thread );
+	// make sure tape_id_handle(thread) is pointing to the proper place
+	if( *tape_id == CPPAD_NULL )
+		*tape_id   = &tape_table[thread].id_;
+	CPPAD_ASSERT_UNKNOWN( *tape_id == &tape_table[thread].id_ );
+
+	// initialize tape id > 0 and thread == tape id % CPPAD_MAX_NUM_THREADS
+	if( **tape_id == 0 )
+		**tape_id = thread + CPPAD_MAX_NUM_THREADS;
+	
+	// make sure tape_id value is valid for this thread
+	CPPAD_ASSERT_UNKNOWN( **tape_id % CPPAD_MAX_NUM_THREADS == thread );
 
 	switch(job)
 	{	case tape_manage_new:
 		// tape for this thread must be null at the start
 		CPPAD_ASSERT_UNKNOWN( *tape  == CPPAD_NULL );
-		tape_table[thread].id_ = *tape_id;
 		*tape = tape_table + thread;
 		break;
 
 		case tape_manage_delete:
 		CPPAD_ASSERT_UNKNOWN( *tape  == tape_table + thread );
-		CPPAD_ASSERT_UNKNOWN( *tape_id == (*tape)->id_ );
 		CPPAD_ASSERT_KNOWN(
 			size_t( std::numeric_limits<CPPAD_TAPE_ID_TYPE>::max() )
-			- CPPAD_MAX_NUM_THREADS > *tape_id,
+			- CPPAD_MAX_NUM_THREADS > **tape_id,
 			"To many different tapes given the type used for "
 			"CPPAD_TAPE_ID_TYPE"
 		);
 		// advance tape identfier so all AD<Base> variables become parameters
-		*tape_id  += CPPAD_MAX_NUM_THREADS;
+		**tape_id  += CPPAD_MAX_NUM_THREADS;
 		// free memory corresponding to recording in the old tape 
 		tape_table[thread].Rec_.free();
 		// inform rest of CppAD that no tape recording for this thread

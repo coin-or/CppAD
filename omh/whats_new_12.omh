@@ -13,6 +13,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	inorder
 	pthread
 	helgrind
 	Taylor
@@ -39,6 +40,11 @@ This section contains a list of the changes to CppAD during 2012
 (in reverse order by date).
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
+
+$head 04-05$$
+The restriction was added that
+$cref parallel_ad$$ cannot be called while a tape is being recorded.
+This was necessary inorder to initialize some new statics in the tape.
 
 $head 04-01$$
 Fixed a race condition when using CppAD with 
