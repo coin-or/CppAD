@@ -173,6 +173,8 @@ private:
 	\param clear
 	If \a clear is true, then the information pointer for this thread
 	is deleted and the \c CPPAD_NULL pointer is returned.
+	There must be no memory currently in either the inuse or avaialble
+	lists when this routine is called.
 
 	\return
 	is the current informaiton pointer for this thread.
@@ -199,7 +201,20 @@ private:
 		thread_alloc_info* info = all_info[thread];
 		if( clear )
 		{	if( info != CPPAD_NULL )
-			{	if( thread != 0 )
+			{
+# ifndef NDEBUG
+				CPPAD_ASSERT_UNKNOWN(
+					info->count_inuse_     == 0 &&
+					info->count_available_ == 0
+				);
+				for(size_t c = 0; c < CPPAD_MAX_NUM_CAPACITY; c++)
+				{	CPPAD_ASSERT_UNKNOWN(
+						info->root_inuse_[c].next_     == CPPAD_NULL &&
+						info->root_available_[c].next_ == CPPAD_NULL
+					);
+				}
+# endif
+				if( thread != 0 )
 					::operator delete( reinterpret_cast<void*>(info) );
 				info             = CPPAD_NULL;
 				all_info[thread] = info;
