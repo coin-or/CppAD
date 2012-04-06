@@ -1,6 +1,6 @@
 $Id$
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -52,8 +52,7 @@ $children%
 	cppad/local/lu_ratio.hpp%
 
 	cppad/vector.hpp%
-	omh/thread_alloc.omh%
-	cppad/memory_leak.hpp
+	omh/thread_alloc.omh
 %$$
 
 $head Error Handler$$

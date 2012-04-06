@@ -803,7 +803,7 @@ $end
 	The actual number of bytes of memory obtained for use.
 
 	\return
-	pointer to the beginning of the memory allocted for use.
+	pointer to the beginning of the memory allocated for use.
  	*/
 	static void* get_memory(size_t min_bytes, size_t& cap_bytes)
 	{	// see first_trace below	
@@ -1491,6 +1491,59 @@ $end
 
 		// return the memory to the available pool for this thread
 		thread_alloc::return_memory( reinterpret_cast<void*>(array) );
+	}
+/* -----------------------------------------------------------------------
+$begin ta_free_all$$
+$spell
+	alloc
+	bool
+	inuse
+$$
+
+$section Free All Memory That Was Allocated for Use by thread_alloc$$ 
+
+$index free, all thread_alloc$$
+$index thread_alloc, free all$$
+
+$head Syntax$$
+$icode%ok% = thread_alloc::free_all()%$$.
+
+$head Purpose$$
+Returns all memory that was used by $code thread_alloc$$ to the system.
+
+$head ok$$
+The return value $icode ok$$ has prototype
+$codei%
+	bool %ok%
+%$$
+Its value will be $code true$$ if all the memory can be freed.
+This requires that for all $icode thread$$ indices, there is no memory 
+$cref/inuse/ta_inuse/$$; i.e.,
+$codei%
+	0 == thread_alloc::inuse(%thread%)
+%$$
+Otherwise, the return value will be false.
+
+$head Example$$
+$cref/thread_alloc.cpp/$$
+$end 
+*/
+	/*!
+	Return to the system all thread_alloc memory that is not currently inuse.
+
+	\return
+	If no \c thread_alloc memory is currently inuse, 
+	all memory is returned to the system and the return value is true.
+	Otherwise the return value is false.
+	*/
+	static bool free_all(void)
+	{	bool ok = true;
+		size_t thread = CPPAD_MAX_NUM_THREADS;
+		while(thread--)
+		{	ok &= inuse(thread) == 0;
+			free_available(thread);
+		}
+		return ok;
 	}
 };
 

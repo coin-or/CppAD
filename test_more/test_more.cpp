@@ -14,7 +14,7 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 # include <iostream>
 
 // memory leak checker
-# include <cppad/memory_leak.hpp>
+# include <cppad/thread_alloc.hpp>
 
 // various examples / tests
 extern bool abs(void);
@@ -132,7 +132,6 @@ int main(void)
 	ok &= Run( assign,          "assign"         );
 	ok &= Run( Atan,            "Atan"           );
 	ok &= Run( Atan2,           "Atan2"          );
-	ok &= Run( base_alloc_test, "base_alloc"     );
 	ok &= Run( check_simple_vector, "check_simple_vector" );
 	ok &= Run( Compare,         "Compare"        );
 	ok &= Run( CompareChange,   "CompareChange"  );
@@ -206,15 +205,18 @@ int main(void)
 	using std::cout;
 	using std::endl;
 	assert( ok || (Run_error_count > 0) );
-	if( CppAD::memory_leak() )
+	if( CppAD::thread_alloc::free_all() )
+	{	Run_ok_count++;
+		cout << "OK:    " << "No memory leak detected" << endl;
+	}
+	else
 	{	ok = false;
 		Run_error_count++;
 		cout << "Error: " << "memory leak detected" << endl;
 	}
-	else
-	{	Run_ok_count++;
-		cout << "OK:    " << "No memory leak detected" << endl;
-	}
+	// Run base_require after memory leak check because base_alloc.hpp uses
+	// thread_alloc to allocate memory for static copies of nan.
+	ok &= Run( base_alloc_test, "base_alloc"     );
 	// convert int(size_t) to avoid warning on _MSC_VER systems
 	if( ok )
 		cout << "All " << int(Run_ok_count) << " tests passed." << endl;

@@ -28,6 +28,11 @@ $index leak, memory$$
 $index check, memory leak$$
 $index static, memory leak check$$
 
+$head Deprecated$$
+$index deprecated, memory leak$$
+This routine has been deprecated.
+You should instead use the routine $cref ta_free_all$$.
+
 $head Syntax$$
 $icode%flag% = %memory_leak()
 %$$

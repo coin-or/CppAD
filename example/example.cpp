@@ -48,8 +48,8 @@ $end
 // standard string
 # include <string>
 
-// memory leak utility
-# include <cppad/memory_leak.hpp>
+// memory utility
+# include <cppad/thread_alloc.hpp>
 
 // external complied tests
 extern bool abort_recording(void);
@@ -219,7 +219,6 @@ int main(void)
 	ok &= Run( Asin,              "Asin"             );
 	ok &= Run( Atan,              "Atan"             );
 	ok &= Run( Atan2,             "Atan2"            );
-	ok &= Run( base_require,      "base_require"     );
 	ok &= Run( BenderQuad,        "BenderQuad"       );
 	ok &= Run( BoolFun,           "BoolFun"          );
 	ok &= Run( capacity_taylor,   "capacity_taylor"  );
@@ -335,15 +334,18 @@ int main(void)
 	using std::cout;
 	using std::endl;
 	assert( ok || (Run_error_count > 0) );
-	if( CppAD::memory_leak() )
+	if( CppAD::thread_alloc::free_all() )
+	{	Run_ok_count++;
+		cout << "OK:    " << "No memory leak detected" << endl;
+	}
+	else
 	{	ok = false;
 		Run_error_count++;
 		cout << "Error: " << "memory leak detected" << endl;
 	}
-	else
-	{	Run_ok_count++;
-		cout << "OK:    " << "No memory leak detected" << endl;
-	}
+	// Run base_require after memory leak check because base_alloc.hpp uses
+	// thread_alloc to allocate memory for static copies of nan.
+	ok &= Run( base_require,      "base_require"     );
 	// convert int(size_t) to avoid warning on _MSC_VER systems
 	if( ok )
 		cout << "All " << int(Run_ok_count) << " tests passed." << endl;

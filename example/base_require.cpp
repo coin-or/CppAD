@@ -48,17 +48,6 @@ bool base_require(void)
 	ok &= thread == 0;
 	size_t inuse_before = thread_alloc::inuse(thread);
 
-	// Make sure static memory correspoding to isnan is allocated
-	// (which may be used by CppAD forward mode for error checking).
-	CppAD::isnan( base_alloc(0.) );
-	CppAD::isnan( ad_base_alloc(0.) );
-
-	// now determine if we need to inform memory_leak of this memory
-	// (or if it had been previously allocated)
-	size_t inuse_after = thread_alloc::inuse(thread);
-	if( inuse_after > inuse_before )
-		CppAD::memory_leak( inuse_after - inuse_before );
-
 	// y = x^2
 	size_t n = 1, m = 2;
 	CPPAD_TEST_VECTOR<ad_base_alloc> a_x(n), a_y(m);

@@ -42,10 +42,16 @@ The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
 $head 04-06$$
+$list number$$
 A change was made to the way that the tapes were managed to reduce 
 false sharing during $cref/multi-threading/multi_thread/$$.
 Because of this change, it is now suggest that the user call 
 $cref parallel_ad$$ after the multi-threading section of the program.
+$lnext
+The routine $cref ta_free_all$$ was created to make it easier 
+to manage memory and the routine $cref memory_leak$$ 
+was deprecated.
+$lend
 
 $head 04-05$$
 The restriction was added that

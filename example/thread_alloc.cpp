@@ -45,11 +45,11 @@ bool raw_allocate(void)
 	using CppAD::thread_alloc;
 	size_t thread;
 
-	// check that no memory is initilaly inuse or available
-	ok &= ! CppAD::memory_leak();
+	// check that no memory is initilaly inuse 
+	ok &= thread_alloc::free_all();
 
 	// amount of static memory used by thread zero
-	size_t static_inuse = thread_alloc::inuse(0);
+	size_t static_inuse = 0;
 
 	// repeatedly allocate enough memory for at least two size_t values.
 	size_t min_size_t = 2;
@@ -112,8 +112,8 @@ bool type_allocate(void)
 	// check initial memory values
 	size_t thread = thread_alloc::thread_num();
 	ok &= thread == 0;
-	ok &= ! CppAD::memory_leak();
-	size_t static_inuse = thread_alloc::inuse(0);
+	ok &= thread_alloc::free_all();
+	size_t static_inuse = 0;
 
 	// initial allocation of an array
 	size_t  size_min  = 3;

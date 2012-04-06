@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -56,14 +56,14 @@ int main(void)
 	using std::cout;
 	using std::endl;
 	assert( ok || (Run_error_count > 0) );
-	if( CppAD::memory_leak() )
+	if( CppAD::thread_alloc::free_all() )
+	{	Run_ok_count++;
+		cout << "OK:    " << "No memory leak detected" << endl;
+	}
+	else
 	{	ok = false;
 		Run_error_count++;
 		cout << "Error: " << "memory leak detected" << endl;
-	}
-	else
-	{	Run_ok_count++;
-		cout << "OK:    " << "No memory leak detected" << endl;
 	}
 	// convert int(size_t) to avoid warning on _MSC_VER systems
 	if( ok )

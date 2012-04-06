@@ -297,19 +297,16 @@ int main(int argc, char *argv[])
 		else if( run_simple_ad )
 			ok        = simple_ad();
 		else	ok        = team_example();
-		if( CppAD::memory_leak() )
-		{	ok = false;
-			cout << "memory_leak   = true;"  << endl;
-		}
-		else cout << "memory_leak   = false;" << endl;
-		if( ok )
-		{	cout << "OK            = true;"  << endl;
-			exit(0);
-		}
+		if( thread_alloc::free_all() )
+			cout << "free_all      = true;"  << endl;
 		else
-		{	cout << "OK            = false;" << endl;
-			exit(1);
+		{	ok = false;
+			cout << "free_all      = false;" << endl;
 		}
+		if( ok )
+			cout << "OK            = true;"  << endl;
+		else cout << "OK            = false;" << endl;
+		return ! ok;
 	}
 
 	// test_time 
@@ -407,12 +404,12 @@ int main(int argc, char *argv[])
 	}
 	cout << "];" << endl;
 	//
-	if( CppAD::memory_leak() )
+	if( thread_alloc::free_all() )
+		cout << "free_all      = true;"  << endl;
+	else
 	{	ok = false;
-		cout << "memory_leak   = true;"  << endl;
+		cout << "free_all      = false;" << endl;
 	}
-	else cout << "memory_leak   = false;" << endl;
-	//
 	if( ok )
 		cout << "OK            = true;"  << endl;
 	else cout << "OK            = false;" << endl;
