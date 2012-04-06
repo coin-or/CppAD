@@ -157,7 +157,7 @@ inline bool memory_leak(size_t add_static = 0)
 		"memory_leak: in_parallel() is true."
 	);
 	CPPAD_ASSERT_KNOWN(
-		! thread_alloc::thread_num() != 0,
+		thread_alloc::thread_num() == 0,
 		"memory_leak: thread_num() is not zero."
 	);
 	if( add_static != 0 )

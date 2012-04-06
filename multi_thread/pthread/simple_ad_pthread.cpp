@@ -214,6 +214,7 @@ namespace {
 		// now inform CppAD that there is only one thread
 		thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
 		thread_alloc::hold_memory(false);
+		CppAD::parallel_ad<double>();
 
 		// destroy the key for thread specific data
 		pthread_key_delete(thread_specific_key_);

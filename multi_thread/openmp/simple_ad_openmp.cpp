@@ -103,6 +103,7 @@ namespace {
 		// now inform CppAD that there is only one thread
 		thread_alloc::parallel_setup(1, CPPAD_NULL, CPPAD_NULL);
 		thread_alloc::hold_memory(false);
+		CppAD::parallel_ad<double>();
 
 		// check to ok flag returned by during calls to work by other threads
 		for(thread_num = 1; thread_num < num_threads; thread_num++)

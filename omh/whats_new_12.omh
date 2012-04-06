@@ -41,6 +41,12 @@ This section contains a list of the changes to CppAD during 2012
 The purpose of this section is to
 assist you in learning about changes between various versions of CppAD.
 
+$head 04-06$$
+A change was made to the way that the tapes were managed to reduce 
+false sharing during $cref/multi-threading/multi_thread/$$.
+Because of this change, it is now suggest that the user call 
+$cref parallel_ad$$ after the multi-threading section of the program.
+
 $head 04-05$$
 The restriction was added that
 $cref parallel_ad$$ cannot be called while a tape is being recorded.

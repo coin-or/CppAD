@@ -25,7 +25,11 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 
 CPPAD_BEGIN_NAMESPACE
 
-typedef enum { tape_manage_new, tape_manage_delete } tape_manage_job;
+typedef enum {
+	tape_manage_new, 
+	tape_manage_delete, 
+	tape_manage_clear
+} tape_manage_job;
 
 template <class Base>
 class AD {

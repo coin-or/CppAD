@@ -337,6 +337,7 @@ bool team_destroy(void)
 	using CppAD::thread_alloc;
 	thread_alloc::parallel_setup(num_threads_, CPPAD_NULL, CPPAD_NULL);
 	thread_alloc::hold_memory(false);
+	CppAD::parallel_ad<double>();
 
 	return ok;
 }

@@ -26,16 +26,23 @@ $head Syntax$$
 $codei%parallel_ad<%Base%>()%$$
 
 $head Purpose$$
+The function
+$codei%parallel_ad<%Base%>()%$$
+must be called before any $codei%AD<%Base>%$$ objects are used
+in $cref/parallel/ta_in_parallel/$$ mode.
+In addition, if this routine is called after one is done using 
+parallel mode, it will free extra memory used to keep track of 
+the multiple $codei%AD<%Base%>%$$ tapes required for parallel execution.
+
+$head Discussion$$
 By default, for each $codei%AD<%Base%>%$$ class there is only one 
 tape that records $cref/AD of Base/glossary/AD of Base/$$ operations.
 This tape is a global variable and hence it cannot be used
 by multiple threads at the same time. 
 The $cref/parallel_setup/ta_parallel_setup/$$ function informs CppAD of the
 maximum number of threads that can be active in parallel mode.
-The function
-$codei%parallel_ad<%Base%>()%$$
-must be called before any $codei%AD<%Base>%$$ objects are used
-in $cref/parallel/ta_in_parallel/$$ mode.
+This routine does extra setup 
+(and teardown) for the particular $icode Base$$ type.
 
 $head isnan$$
 This routine has the side effect of calling
@@ -60,8 +67,8 @@ $cref team_pthread.cpp$$,
 contain examples and tests that implement this function.   
 
 $head Restriction$$
-There cannot be a tape recording $codei%AD<%Base%>%$$ operations
-when this routine is called.
+This routine cannot be called in parallel mode or while
+there is a tape recording $codei%AD<%Base%>%$$ operations.
 
 $end
 -----------------------------------------------------------------------------
@@ -106,10 +113,9 @@ void parallel_ad(void)
 
 
 	// statics that depend on the value of Base
-	AD<Base>::tape_id_ptr(0);
+	AD<Base>::tape_id_handle(0);
 	AD<Base>::tape_handle(0);	
-	AD<Base>::tape_manage(tape_manage_new);
-	AD<Base>::tape_manage(tape_manage_delete);
+	AD<Base>::tape_manage(tape_manage_clear);
 	discrete<Base>::List();
 	erf_template( Base(0.) );
 	erf_template( AD<Base>(0.) );
