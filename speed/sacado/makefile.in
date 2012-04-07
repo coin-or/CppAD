@@ -216,7 +216,7 @@ AM_CXXFLAGS = -O2 -DNDEBUG -DSPEED_SACADO \
 # AM_CXXFLAGS   = -g $(CXX_FLAGS) $(CXX_FLAGS) -DSPEED_SACADO -DRAD_AUTO_AD_Const
 # END DEBUG
 #
-LDADD = -lspeed -lsacado
+LDADD = -lspeed -lsacado -lteuchos
 AM_LDFLAGS = -L../src -L$(SACADO_DIR)/lib
 #
 sacado_SOURCES = \

@@ -13,6 +13,8 @@ Please visit http://www.coin-or.org/CppAD/ for information on other licenses.
 $begin whats_new_12$$
 $dollar @$$
 $spell
+	-lteuchos
+	trilinos
 	inorder
 	pthread
 	helgrind
@@ -51,6 +53,11 @@ $lnext
 The routine $cref ta_free_all$$ was created to make it easier 
 to manage memory and the routine $cref memory_leak$$ 
 was deprecated.
+$lnext
+Add the $code -lteuchos$$ flag to the link line for the
+$cref speed_sacado$$ tests.
+(This was not necessary for $code trilinos-10.8.3$$
+but is necessary for $code trilinos-10.10.1$$)
 $lend
 
 $head 04-05$$
