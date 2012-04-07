@@ -3,7 +3,7 @@
 # define CPPAD_ERF_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -91,10 +91,9 @@ namespace CppAD {
 
 template <class Type>
 Type erf_template(const Type &x)
-{	CPPAD_ASSERT_FIRST_CALL_NOT_PARALLEL;
-	using CppAD::exp;
-	static const Type a = static_cast<Type>(993./880.);
-	static const Type b = static_cast<Type>(89./880.); 
+{	using CppAD::exp;
+	const Type a = static_cast<Type>(993./880.);
+	const Type b = static_cast<Type>(89./880.); 
 
 	return tanh( (a + b * x * x) * x );
 }

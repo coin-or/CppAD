@@ -117,8 +117,6 @@ void parallel_ad(void)
 	AD<Base>::tape_handle(0);	
 	AD<Base>::tape_manage(tape_manage_clear);
 	discrete<Base>::List();
-	erf_template( Base(0.) );
-	erf_template( AD<Base>(0.) );
 	isnan( Base(0.) );
 	isnan( AD<Base>(0.) );
 	CheckSimpleVector< Base, CppAD::vector<Base> >();
