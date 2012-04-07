@@ -1,6 +1,6 @@
 /* $Id$ */
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -87,6 +87,8 @@ $end
 # define MAX_NUMBER_THREADS 48
 
 namespace {
+	using CppAD::thread_alloc;
+
 	// number of threads specified by previous call to harmonic_setup
 	size_t num_threads_ = 0;
 
@@ -102,17 +104,18 @@ namespace {
 		bool   ok;
 	} work_one_t;
 	// vector with information for all threads
-	work_one_t work_all_[MAX_NUMBER_THREADS];
+	// (use pointers instead of values to avoid false sharing)
+	work_one_t* work_all_[MAX_NUMBER_THREADS];
 }
 // -----------------------------------------------------------------------
 // do the work for one thread
 void harmonic_worker(void)
 {	// sum =  1/(stop-1) + 1/(stop-2) + ... + 1/start
-	size_t thread_num  = CppAD::thread_alloc::thread_num();
+	size_t thread_num  = thread_alloc::thread_num();
 	size_t num_threads = std::max(num_threads_, size_t(1));
 	bool   ok          = thread_num < num_threads;
-	size_t start       = work_all_[thread_num].start;
-	size_t stop        = work_all_[thread_num].stop;
+	size_t start       = work_all_[thread_num]->start;
+	size_t stop        = work_all_[thread_num]->stop;
 	double sum         = 0.;
 
 	ok &= stop > start;
@@ -122,8 +125,8 @@ void harmonic_worker(void)
 		sum += 1. / double(i);	
 	}
 
-	work_all_[thread_num].sum = sum;
-	work_all_[thread_num].ok  = ok;
+	work_all_[thread_num]->sum = sum;
+	work_all_[thread_num]->ok  = ok;
 }
 // -----------------------------------------------------------------------
 // setup the work up for multiple threads
@@ -131,20 +134,27 @@ bool harmonic_setup(size_t num_sum, size_t num_threads)
 {	// sum = 1/num_sum + 1/(num_sum-1) + ... + 1
 	num_threads_ = num_threads;
 	num_threads  = std::max(num_threads_, size_t(1));
-	bool ok      = num_threads == CppAD::thread_alloc::num_threads();
+	bool ok      = num_threads == thread_alloc::num_threads();
 	ok          &= num_sum >= num_threads;
 
-	work_all_[0].start = 1;
 	size_t thread_num;
-	for(thread_num = 1; thread_num < num_threads; thread_num++)
-	{	size_t index        = (num_sum * thread_num) / num_threads;
-		work_all_[thread_num-1].stop = index; 
-		work_all_[thread_num].start  = index;
-
-		// in case this thread does not get called
-		work_all_[thread_num].ok = false;
+	for(thread_num = 0; thread_num < num_threads; thread_num++)
+	{	// allocate separate memory for this thread to avoid false sharing
+		size_t min_bytes(sizeof(work_one_t)), cap_bytes;
+		void* v_ptr = thread_alloc::get_memory(min_bytes, cap_bytes);
+		work_all_[thread_num] = static_cast<work_one_t*>(v_ptr);
+		// in case this thread's worker does not get called
+		work_all_[thread_num]->ok = false;
+		// parameters that define the work for this and previous thread
+		if( thread_num == 0 )
+			work_all_[0]->start = 1;
+		else
+		{	size_t index  = (num_sum * thread_num) / num_threads;
+			work_all_[thread_num-1]->stop = index; 
+			work_all_[thread_num]->start  = index;
+		}
 	}
-	work_all_[num_threads-1].stop = num_sum + 1;
+	work_all_[num_threads-1]->stop = num_sum + 1;
 	return ok;
 }
 // -----------------------------------------------------------------------
@@ -153,11 +163,23 @@ bool harmonic_combine(double& sum)
 {	// sum = 1/num_sum + 1/(num_sum-1) + ... + 1
 	bool ok            = true;
 	size_t num_threads = std::max(num_threads_, size_t(1));
-	sum     = 0.;
-	size_t thread_num;
-	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	sum += work_all_[thread_num].sum;
-		ok  &= work_all_[thread_num].ok;
+	sum                = 0.;
+
+	// go down so that free memory for other threads before memory for master
+	size_t thread_num = num_threads;
+	while(thread_num--)
+	{	// check that this tread was ok with the work it did
+		ok  &= work_all_[thread_num]->ok;
+		// add this threads contribution to the sum
+		sum += work_all_[thread_num]->sum;
+		// delete problem specific information 
+		void* v_ptr = static_cast<void*>( work_all_[thread_num] );
+		thread_alloc::return_memory( v_ptr );
+		// check that there is no longer any memory inuse by this thread
+		// (for general applications, the master might still be using memory)
+		ok &= thread_alloc::inuse(thread_num) == 0;
+		// return all memory being held for future use by this thread
+		thread_alloc::free_available(thread_num);
 	}
 	return ok;
 }

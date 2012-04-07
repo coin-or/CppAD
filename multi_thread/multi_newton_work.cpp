@@ -158,7 +158,11 @@ $end
 # include <cppad/cppad.hpp>
 # include "multi_newton_work.hpp"
 
+# define USE_THREAD_ALLOC_FOR_WORK_ALL 1
+
 namespace {
+	using CppAD::thread_alloc;
+
 	// This vector template class frees all memory when resized to zero.
 	// In addition, its memory allocation works well during multi-threading.
 	using CppAD::vector;
@@ -191,9 +195,10 @@ namespace {
 		bool   ok;
 	} work_one_t;
 	// vector with information for all threads
-	// after call to multi_newton_setup:   thread_all.size() == num_threads
-	// after call to multi_newton_combine: thread_all.size() == 0
-	vector<work_one_t> work_all_;
+	// after call to multi_newton_setup:   work_all.size() == num_threads
+	// after call to multi_newton_combine: work_all.size() == 0
+	// (use pointers instead of values to avoid false sharing)
+	vector<work_one_t*> work_all_;
 }
 // -----------------------------------------------------------------------
 // do the work for one thread
@@ -202,13 +207,13 @@ void multi_newton_worker(void)
 
 	// Split [xlow, xup] into num_sub intervales and
 	// look for one zero in each sub-interval.
-	size_t thread_num    = CppAD::thread_alloc::thread_num();
+	size_t thread_num    = thread_alloc::thread_num();
 	size_t num_threads   = std::max(num_threads_, size_t(1));
 	bool   ok            = thread_num < num_threads;
-	size_t num_sub       = work_all_[thread_num].num_sub;
-	double xlow          = work_all_[thread_num].xlow;
-	double xup           = work_all_[thread_num].xup;
-	vector<double>& x    = work_all_[thread_num].x;
+	size_t num_sub       = work_all_[thread_num]->num_sub;
+	double xlow          = work_all_[thread_num]->xlow;
+	double xup           = work_all_[thread_num]->xup;
+	vector<double>& x    = work_all_[thread_num]->x;
 
 	// check arguments
 	ok &= max_itr_ > 0;
@@ -218,7 +223,7 @@ void multi_newton_worker(void)
 
 	// check for special case where there is nothing for this thread to do
 	if( num_sub == 0 )
-	{	work_all_[thread_num].ok = ok;
+	{	work_all_[thread_num]->ok = ok;
 		return;
 	}
 
@@ -277,7 +282,7 @@ void multi_newton_worker(void)
 			}
 		}
 	}
-	work_all_[thread_num].ok = ok;
+	work_all_[thread_num]->ok = ok;
 }
 // -----------------------------------------------------------------------
 // setup the work up for multiple threads
@@ -292,7 +297,7 @@ bool multi_newton_setup(
 {
 	num_threads_ = num_threads;
 	num_threads  = std::max(num_threads_, size_t(1));
-	bool ok      = num_threads == CppAD::thread_alloc::num_threads();
+	bool ok      = num_threads == thread_alloc::num_threads();
 
 	// inputs that are same for all threads
 	epsilon_ = epsilon;
@@ -312,7 +317,22 @@ bool multi_newton_setup(
 	size_t sum_num   = 0;  // sum with respect to thread of num_sub
 	size_t thread_num, num_sub_thread;
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	// number of sub-intervalse for this thread
+	{
+# if  USE_THREAD_ALLOC_FOR_WORK_ALL
+		// allocate separate memory for this thread to avoid false sharing
+		size_t min_bytes(sizeof(work_one_t)), cap_bytes;
+		void* v_ptr = thread_alloc::get_memory(min_bytes, cap_bytes);
+		work_all_[thread_num] = static_cast<work_one_t*>(v_ptr);
+
+		// thread_alloc is a raw memory allocator; i.e., it does not call
+		// the constructor for the objects it creates. The CppAD::vector
+		// class requires it's constructor to be called so we do it here
+		new(& (work_all_[thread_num]->x) ) vector<double>();
+# else
+		work_all_[thread_num] = new work_one_t;
+# endif
+
+		// number of sub-intervalse for this thread
 		if( thread_num < num_more  )
 			num_sub_thread = num_min + 1;
 		else	num_sub_thread = num_min;
@@ -329,13 +349,13 @@ bool multi_newton_setup(
 		sum_num += num_sub_thread;
 
 		// input information specific to this thread
-		work_all_[thread_num].num_sub = num_sub_thread;
-		work_all_[thread_num].xlow    = xlow_thread;
-		work_all_[thread_num].xup     = xup_thread;
-		ok &= work_all_[thread_num].x.size() == 0;
+		work_all_[thread_num]->num_sub = num_sub_thread;
+		work_all_[thread_num]->xlow    = xlow_thread;
+		work_all_[thread_num]->xup     = xup_thread;
+		ok &= work_all_[thread_num]->x.size() == 0;
 
 		// in case this thread does not get called
-		work_all_[thread_num].ok = false;
+		work_all_[thread_num]->ok = false;
 	}
 	ok &= sum_num == num_sub;
 	return ok;
@@ -350,10 +370,11 @@ bool multi_newton_combine(CppAD::vector<double>& xout)
 	xout.resize(0);
 	bool   ok = true;
 	size_t thread_num;
+
 	// initialize as more that sub_lenght_ / 2 from any possible solution 
 	double xlast = - sub_length_; 
 	for(thread_num = 0; thread_num < num_threads; thread_num++)
-	{	vector<double>& x = work_all_[thread_num].x;
+	{	vector<double>& x = work_all_[thread_num]->x;
 
 		size_t i;
 		for(i = 0; i < x.size(); i++)
@@ -373,10 +394,35 @@ bool multi_newton_combine(CppAD::vector<double>& xout)
 				}
 			}
 		}
-		ok &= work_all_[thread_num].ok;
+		ok &= work_all_[thread_num]->ok;
 	}
-	// should call destruction for all the x and f vectors
+
+	// go down so free memory for other threads before memory for master
+	thread_num = num_threads;
+	while(thread_num--)
+	{
+# if USE_THREAD_ALLOC_FOR_WORK_ALL
+		// call the destructor for CppAD::vector destructor
+		work_all_[thread_num]->x.~vector<double>();
+		// delete the raw memory allocation 
+		void* v_ptr = static_cast<void*>( work_all_[thread_num] );
+		thread_alloc::return_memory( v_ptr );
+# else
+		delete work_all_[thread_num];
+# endif
+		// Note that xout corresponds to memroy that is inuse by master
+		// (so we can only chech have freed all their memory). 
+		if( thread_num > 0 )
+		{	// check that there is no longer any memory inuse by this thread
+			ok &= thread_alloc::inuse(thread_num) == 0;
+			// return all memory being held for future use by this thread
+			thread_alloc::free_available(thread_num);
+		}
+	}
+	// now we are done with the work_all_ vector so free its memory
+	// (becasue it is a static variable)
 	work_all_.resize(0);
+
 	return ok;
 }
 // END PROGRAM

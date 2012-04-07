@@ -76,5 +76,7 @@ do
 		echo
 		./$program simple_ad
 		echo
+		./$program team_example
+		echo
 	fi
 done

@@ -53,6 +53,8 @@ $end
 // to its original value and it can be used again, but where is this
 // stated in the pthreads speicifcations ?
 namespace {
+	using CppAD::thread_alloc;
+
 	// number of threads in the team
 	size_t num_threads_ = 1; 
 
@@ -158,8 +160,7 @@ namespace {
 }
 
 bool team_create(size_t num_threads)
-{	using CppAD::thread_alloc;
-	bool ok = true;;
+{	bool ok = true;;
 	int rc;
 
 	if( num_threads > MAX_NUMBER_THREADS )
@@ -334,7 +335,6 @@ bool team_destroy(void)
 
 	// now inform CppAD that there is only one thread
 	num_threads_ = 1;
-	using CppAD::thread_alloc;
 	thread_alloc::parallel_setup(num_threads_, CPPAD_NULL, CPPAD_NULL);
 	thread_alloc::hold_memory(false);
 	CppAD::parallel_ad<double>();
