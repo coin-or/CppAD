@@ -14,6 +14,7 @@ $begin InstallUnix$$
 $escape $$
 $dollar ^$$
 $spell
+	num
 	cxx
 	boostvector
 	inv
@@ -164,6 +165,7 @@ $codei%
 	--with-Documentation                    \
 	--with-stdvector                        \  
 	--with-boostvector                      \  
+	MAX_NUM_THREADS=%max_num_threads%         \
 	CXX_FLAGS=%cxx_flags%                     \
 	OPENMP_FLAGS=%openmp_flags%               \
 	POSTFIX_DIR=%postfix_dir%                 \
@@ -356,6 +358,12 @@ $codep
 $$
 In this case $code --with-stdvector$$ must not also be specified.
 See also, $cref/boost_dir/InstallUnix/boost_dir/$$
+
+$head max_num_threads$$
+this specifies the value for the default value for the preprocessor symbol
+$cref/CPPAD_MAX_NUM_THREADS/multi_thread/CPPAD_MAX_NUM_THREADS/$$.
+It must be greater than or equal to four; i.e.,
+$icode%max_num_threads% >= 4%$$.
 
 $head cxx_flags$$
 $index compile, unix flags$$

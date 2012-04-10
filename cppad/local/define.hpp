@@ -3,7 +3,7 @@
 # define CPPAD_DEFINE_INCLUDED
 
 /* --------------------------------------------------------------------------
-CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-11 Bradley M. Bell
+CppAD: C++ Algorithmic Differentiation: Copyright (C) 2003-12 Bradley M. Bell
 
 CppAD is distributed under multiple licenses. This distribution is under
 the terms of the 
@@ -103,18 +103,6 @@ it is defined when cppad/local/define.hpp is included.
 # define CPPAD_NULL     0
 # endif
  
-/*!
-\def CPPAD_MAX_NUM_THREADS
-Specifies the maximum number of threads that CppAD can support.
-
-The user may define CPPAD_MAX_NUM_THREADS before including any of the CppAD
-header files.  If it is not yet defined,
-it is defined when cppad/local/define.hpp is included.
-*/
-# ifndef CPPAD_MAX_NUM_THREADS
-# define CPPAD_MAX_NUM_THREADS 48
-# endif
-
 /*!
 \def CPPAD_FOLD_ASSIGNMENT_OPERATOR(Op)
 Declares automatic coercion for certain AD assignment operations.

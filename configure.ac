@@ -12,7 +12,7 @@ dnl ---------------------------------------------------------------------------
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl   package   version              bug-report
-AC_INIT(CppAD, 20120331, cppad@list.coin-or.org)
+AC_INIT(CppAD, 20120410, cppad@list.coin-or.org)
 AC_SUBST(PACKAGE_URL, "http://www.coin-or.org/CppAD")
 AC_SUBST(PACKAGE_DESCRIPTION, "Differentiation of C++ Algorithms")
 
@@ -236,6 +236,11 @@ AC_ARG_VAR(BOOST_DIR,
 	[parent directory directly above boost directory]
 )
 AM_CONDITIONAL(CppAD_BOOST_DIR, test "$BOOST_DIR" != "")
+if test "$BOOST_DIR" != "" ; then
+	AC_MSG_RESULT([$BOOST_DIR])
+else
+	AC_MSG_RESULT([no])
+fi
 
 dnl The C++ compiler flags CXX_FLAGS -------------------------------------
 AC_SUBST(CXXFLAGS, "")
@@ -264,6 +269,25 @@ else
 	AC_MSG_RESULT([no])
 fi 
 AM_CONDITIONAL(CppAD_OPENMP, test "$OPENMP_FLAGS" != "")
+
+dnl The compiler OpenMP flags MAX_NUM_THREADS -------------------------------
+AC_MSG_CHECKING([MAX_NUM_THREADS])
+AC_ARG_VAR(MAX_NUM_THREADS,
+	[ maximum number of threads that can be used with CppAD ]
+)
+if test "$MAX_NUM_THREADS" != "" ; then
+	AC_MSG_RESULT([$MAX_NUM_THREADS]) 
+  	if test "$MAX_NUM_THREADS" -lt "4" ; then
+		AC_MSG_ERROR(
+			[ MAX_NUM_THREADS=$MAX_NUM_THREADS is less than 4 ]
+		)
+	fi
+	max_num_threads="$MAX_NUM_THREADS"
+else
+	AC_MSG_RESULT([no, using default value 4])
+	max_num_threads="4"
+fi 
+AC_SUBST(CPPAD_MAX_NUM_THREADS, [$max_num_threads])
 
 dnl The type used for addresses in AD tapes [ default = unsigned int ] ---
 AC_MSG_CHECKING([TAPE_ADDR_TYPE])
